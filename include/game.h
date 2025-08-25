@@ -62,6 +62,9 @@ struct _SubCharacter;
 #define HAS_MAP(mapIdx) \
     ((((u32*)&g_SavegamePtr->hasMapsFlags_164)[(mapIdx) / 32] >> ((mapIdx) % 32)) & (1 << 0))
 
+#define WeaponId_AttackVariantGet(weaponId, type) \
+	((weaponId) + ((type) * 10))
+
 /** Each map has its own messages, with the first 15 hardcoded to be the same. */
 typedef enum _MapMsgIdx
 {
@@ -465,27 +468,39 @@ typedef enum _CommonPickupItemType
     CommonPickupItemId_ShotgunShells  = 5
 } s_CommonPickupItemType;
 
+
+typedef enum _AttackInputType
+{
+	AttackInputType_Tap      = 0,
+	AttackInputType_Hold     = 1,
+	AttackInputType_Multitap = 2
+} e_AttackInputType;
+
 /** @brief Equipped weapon IDs. Derivative of `e_InventoryItemId`.
  *
  * Maybe weapon state instead?
- * Name is likely inacurrate as some of values from the few uses of this enum
- * change in certain cases. Examples:
+ * In intances where this enum is used in code related to melee weapons
+ * the Id changes depending in the attack the player is performing. For example:
  *
- * The kitchen knife ID changes to 10 if the user holds the Action
- * button and 20 if they tap rapidly.
+ * If the player perform a tap attack the id doesn't change, if they perform a hold
+ * attack the Id is multiplied by 10 and if the player performs a multitap attack
+ * the Id multiplies by 20.
  *
- * The axe ID changes to 17 or 27 depending on whether the user presses or holds Action.
+ *
+ * See `func_80071968`.
  */
 typedef enum _EquippedWeaponId
 {
     EquippedWeaponId_KitchenKnife   = 0,
     EquippedWeaponId_SteelPipe      = 1,
     EquippedWeaponId_RockDrill      = 2,
-
+    EquippedWeaponId_Unk3           = 3,
     EquippedWeaponId_Hammer         = 4,
     EquippedWeaponId_Chainsaw       = 5,
     EquippedWeaponId_Katana         = 6,
     EquippedWeaponId_Axe            = 7,
+    EquippedWeaponId_Unk8           = 8,
+    EquippedWeaponId_Unk9           = 9,
 
     EquippedWeaponId_Handgun        = 32,
     EquippedWeaponId_HuntingRifle   = 33,
@@ -528,23 +543,23 @@ typedef enum _PlayerBone
 
 typedef enum _PlayerFlags
 {
-    PlayerFlag_None           = 0,
-    PlayerFlag_Unk0           = 1 << 0,
-    PlayerFlag_Unk1           = 1 << 1,
-    PlayerFlag_Unk2           = 1 << 2,
-    PlayerFlag_Unk3           = 1 << 3,
-    PlayerFlag_Unk4           = 1 << 4,
-    PlayerFlag_Unk5           = 1 << 5,
-    PlayerFlag_Unk6           = 1 << 6,
-    PlayerFlag_Unk7           = 1 << 7, // Not used anywhere yet.
-    PlayerFlag_Unk8           = 1 << 8,
-    PlayerFlag_Unk9           = 1 << 9,
-    PlayerFlag_Unk10          = 1 << 10,
-    PlayerFlag_Unk11          = 1 << 11,
-    PlayerFlag_Unk12          = 1 << 12,
-    PlayerFlag_Unk13          = 1 << 13,
-    PlayerFlag_DamageReceived = 1 << 14,
-    PlayerFlag_Unk15          = 1 << 15
+    PlayerFlag_None             = 0,
+    PlayerFlag_Unk0             = 1 << 0,
+    PlayerFlag_Shoot            = 1 << 1,
+    PlayerFlag_Unk2             = 1 << 2,
+    PlayerFlag_WallStopAnimKind = 1 << 3, // Depending on the frame the player suddenly stopped running it could reproduce one of two animations, mainly differing in which leg Harry extends.
+    PlayerFlag_Unk4             = 1 << 4,
+    PlayerFlag_Unk5             = 1 << 5, // PlayerFlag_MoveBackward?
+    PlayerFlag_Unk6             = 1 << 6,
+    PlayerFlag_Unk7             = 1 << 7, // Not used anywhere yet.
+    PlayerFlag_Unk8             = 1 << 8,
+    PlayerFlag_Unk9             = 1 << 9,
+    PlayerFlag_Unk10            = 1 << 10, // PlayerFlag_MeleeAttack?
+    PlayerFlag_Unk11            = 1 << 11, // PlayerFlag_GunAttack?
+    PlayerFlag_Unk12            = 1 << 12,
+    PlayerFlag_Unk13            = 1 << 13,
+    PlayerFlag_DamageReceived   = 1 << 14,
+    PlayerFlag_Moving           = 1 << 15
 } e_PlayerFlags;
 
 /** @brief Names for each character index used in the game, `g_Chara_FileInfo` array associates each character ID with anim/model/texture files. */
@@ -715,7 +730,7 @@ typedef struct _Savegame
     s32             mapMarkingFlags_1D4[2];   //----------------------------------------
     s32             mapMarkingFlags_1DC;      // These 3 are one `u32 mapMarkingFlags[25];` (or maybe `u8 mapMarkingFlags[100];`?) See Sparagas' `MapMarkingsFlags` struct for details of every bit.
     s32             mapMarkingFlags_1E0[22];  //----------------------------------------
-    s32             field_238;                // Another player health store?
+    q19_12          healthSaturation_238;     /** Range [0, 300]. Ampoules give extra health that get stored. If the player if loose health then the stored extra health will slowly start to sum to player's health, in any case extra health will start to reduce progressively even if the player has full health. */
     s16             pickedUpItemCount_23C;
     s8              field_23E;
     u8              field_23F;
@@ -937,27 +952,27 @@ STATIC_ASSERT_SIZEOF(s_800D5710, 0x34);
 // Probably easier to do that after it's merged with rest of code.
 typedef struct _SubCharaPropertiesPlayer
 {
-    s32 field_E4;
-    s32 afkTimer_E8; // Increments every tick for 10 seconds before AFK anim starts.
-    s32 positionY_EC;
-    s32 field_F0;
-    s32 field_F4;
-    s32 runTimer_F8;      // Tick counter?
-    s32 exertionTimer_FC; // Counts ~20 seconds worth of ticks while running and caps at 0x23000.
-    s32 field_100;
-    s32 field_104;    // Distance?
-    s32 runTimer_108; // `FP_TIME` format timer?.
-    u8  field_10C;    // Player SFX pitch?
-    u8  field_10D;
-    s8  unk_10E[6];
-    s32 field_114;
-    s16 field_118;
-    s8  unk_11A[2];
-    s32 flags_11C; /** `e_PlayerFlags`. */
-    s16 field_120;
-    s16 field_122;
-    s16 field_124;
-    s16 field_126;
+    s32    field_E4;
+    q19_12 afkTimer_E8; // Increments every tick for 10 seconds before AFK anim starts.
+    q19_12 positionY_EC;
+    s32    field_F0;
+    s32    field_F4;
+    s32    runTimer_F8;      // Tick counter?
+    q19_12 exertionTimer_FC; // Counts ~20 seconds worth of ticks while running and caps at 0x23000.
+    s32    field_100;
+    s32    field_104;    // Distance?
+    q19_12 runTimer_108; // `FP_TIME` format timer?.
+    u8     field_10C;    // Player SFX pitch?
+    u8     field_10D;
+    s8     unk_10E[6];
+    q19_12 gasWeaponPowerTimer_114; // Timer for the rock drill and chainsaw power.
+    s16    field_118;
+    s8     unk_11A[2];
+    s32    flags_11C; /** `e_PlayerFlags`. */
+    s16    field_120; // Angle which the player turns when doing a quick turn. In order words, some sort of holder for angle Y.
+    s16    field_122; // Some sort of X angle for the player. Specially used when aiming an enemy.
+    s16    field_124;
+    q3_12  playerMoveDistance_126; // Used to indicate how much the player should move foward.
 } s_SubCharaPropertiesPlayer;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPlayer, 68);
 
@@ -1003,22 +1018,21 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter_D8, 8);
 
 typedef struct _SubCharacter
 {
-    s_Model model_0;
+    s_Model model_0;           // In player: Manage the half lower part of Harry's body animations (legs and feet).
     VECTOR3 position_18;       /** `Q19.12` */
     SVECTOR rotation_24;       // Maybe `SVECTOR3` instead of `SVECTOR` because 4th field is copy of `.xy` field.
     SVECTOR rotationSpeed_2C;  /** Range [-0x700, 0x700]. */
-    s32     field_34;
+    q19_12  field_34;          // Character Y Position?
     s32     moveSpeed_38;
     s16     headingAngle_3C;
     s16     flags_3E;
-    s8      field_40; // In player: Index of the NPC attacking the player.
-                      // In NPCs: Unknown.
-    s8      field_41; // In player: Indicates what attack has been performed on player.
-                      // In NPCs: The ID (from `e_EquippedWeaponId`) of the weapon which is being used for attack.
+    s8      field_40;          // In player: Index of the NPC attacking the player.
+                               // In NPCs: Unknown.
+    s8      attackReceived_41; // Indicates what attack has been performed to the character. For enemies is based on `e_EquippedWeaponId` enum.
     s8      unk_42[2];
     s16     field_44;
     s8      field_46; // In player: The ID (from `e_EquippedWeaponId`) of the weapon which player is using.
-                      // This is not the same as `field_41`, as this value only resets when player is aiming.
+                      // This is not the same as `attackReceived_41`, as this value only resets when player is aiming.
                       // In NPCs: Indicates attack performed on player.
     s8      field_47;
     s8      unk_48[4];
@@ -1070,15 +1084,16 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
 
 typedef struct _MainCharacterExtra
 {
-    s_Model model_0; // For player, this is a copy of `model_0` in its corresponding `s_SubCharacter`.
-    s32     field_18;
-    s32     field_1C; // Harm animation index?
-    s32     field_20; // Some kind of anim state related to current action (running, walking, sidestepping, etc.).
-    s32     field_24; // Some kind of anim state related to current action (running, walking, sidestepping, etc.). Sometimes same as above, but not always.
-    s32     field_28; // Forcefully setting to 1 opens options menu.
+    s_Model model_0;           // Manages upper half body's animations (torso, arms, head).
+    q19_12  field_18;
+    s32     state_1C;          /** `e_PlayerState` */
+    s32     upperBodyState_20; /** `e_PlayerUpperBodyState` */
+    s32     lowerBodyState_24; /** `e_PlayerLowerBodyState` */
+    s32     field_28;          // Related to item interactions. Forcing specific values opens options menu, a behaviour is caused by `func_800373CC`.
 } s_MainCharacterExtra;
 STATIC_ASSERT_SIZEOF(s_MainCharacterExtra, 44);
 
+// Based on SH2 symbols this struct should be named `shPlayerWork` and `chara_0` should be `player`.
 typedef struct _MainCharacter
 {
     s_SubCharacter       chara_0;
@@ -1246,11 +1261,14 @@ typedef struct _SysWork
     u8              silentYesSelection_2350_4       : 4; /** `bool` */
     u32             inventoryItemSelectedIdx_2351   : 8;
     u32             flags_2352                      : 8;
-    s32             field_2353                      : 8; // Some index into `npcs_1A0`.
-    s8              field_2354[4];                       // Size dervied from `func_80070320`.
+    s8              enemyTargetIdx_2353; // Index of the enemy that is being attacked by the player.
+    s8              field_2354[4];       // Size dervied from `func_80070320`.
     u8              field_2358;
     s8              unk_2359[1];
-    u8              field_235A; // Assumed type.
+    u8              field_235A; /** If the player stop walking or running forward the value (as a bit) changes
+                                 * to 00000001 and if the player stop walking backward the value changes
+                                 * to 00000010.
+                                 */
     s8              unk_235B[1];
     GsCOORDINATE2*  field_235C;
     VECTOR3         field_2360; // Position?

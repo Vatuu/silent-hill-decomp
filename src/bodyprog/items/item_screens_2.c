@@ -2,6 +2,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/item_screens.h"
+#include "bodyprog/player_logic.h"
 #include "bodyprog/math.h"
 
 const s32 rodataPad_80025EAC = 0;
@@ -1140,7 +1141,7 @@ void Inventory_ItemUse(s32 inventoryItemIdx) // 0x8004E6D4
     {
         if (Math_Distance2dCheck(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.npcs_1A0[0].position_18, FP_METER(0.7f)) == 0 &&
             ABS(g_SysWork.player_4C.chara_0.position_18.vy - g_SysWork.npcs_1A0[0].position_18.vy) < FP_METER(0.3f) &&
-            g_SysWork.player_4C.extra_128.field_1C == 0 &&
+            g_SysWork.player_4C.extra_128.state_1C == PlayerState_None &&
             g_SavegamePtr->items_0[inventoryItemIdx].id_0 == InventoryItemId_UnknownLiquid)
         {
             g_Gfx_Inventory_SelectionBordersDraw = 1;

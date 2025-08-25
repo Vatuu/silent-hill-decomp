@@ -2,6 +2,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/item_screens.h"
+#include "bodyprog/player_logic.h"
 #include "bodyprog/math.h"
 
 void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
@@ -15,11 +16,11 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
     s_Model* modelPtr0;
     s_Model* modelPtr1;
 
-    func_8007F1CC();
+    Game_PlayerMovementsReset();
 
-    temp = g_SysWork.player_4C.extra_128.field_1C;
+    temp = g_SysWork.player_4C.extra_128.state_1C;
 
-    if (g_SysWork.player_4C.extra_128.field_1C < 2 && temp >= 0)
+    if (g_SysWork.player_4C.extra_128.state_1C < 2 && temp >= 0)
     {
         if (D_800C3950 != g_SysWork.playerCombatInfo_38.equippedWeapon_F)
         {
@@ -36,28 +37,28 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
         if (temp_v0 == 2 && g_SysWork.playerCombatInfo_38.equippedWeapon_F != temp_v0)
         {
         Inventory_ExitAnimEquippedItemUpdate_block:
-            g_SysWork.player_4C.chara_0.field_44                       = 0;
-            g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
+            g_SysWork.player_4C.chara_0.field_44                                     = 0;
+            g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
         }
 
-        switch (g_SysWork.player_4C.extra_128.field_24)
+        switch (g_SysWork.player_4C.extra_128.lowerBodyState_24)
         {
-            case 9:
-            case 10:
-            case 11:
-            case 29:
-            case 30:
+            case PlayerLowerBodyState_QuickTurnRight:
+            case PlayerLowerBodyState_QuickTurnLeft:
+            case PlayerLowerBodyState_Run_BackwardJump:
+            case PlayerLowerBodyState_AimQuickTurnRight:
+            case PlayerLowerBodyState_AimQuickTurnLeft:
                 break;
 
             default:
 
-                if (g_SysWork.player_4C.extra_128.field_1C == 1 && (s8)D_800C3950 != g_SysWork.playerCombatInfo_38.equippedWeapon_F)
+                if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_Combat && (s8)D_800C3950 != g_SysWork.playerCombatInfo_38.equippedWeapon_F)
                 {
-                    g_SysWork.player_4C.extra_128.field_1C                     = 0;
+                    g_SysWork.player_4C.extra_128.state_1C                     = PlayerState_None;
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C = PlayerFlag_None;
                 }
 
-                if (g_SysWork.player_4C.extra_128.field_24 >= 20 && g_SysWork.playerCombatInfo_38.equippedWeapon_F != NO_VALUE &&
+                if (g_SysWork.player_4C.extra_128.lowerBodyState_24 >= PlayerLowerBodyState_Aim && g_SysWork.playerCombatInfo_38.equippedWeapon_F != NO_VALUE &&
                     (s8)D_800C3950 == g_SysWork.playerCombatInfo_38.equippedWeapon_F)
                 {
                     extraModelPtr0 = &g_SysWork.player_4C.extra_128.model_0;
@@ -83,14 +84,14 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
                     extraModelPtr1->anim_4.keyframeIdx0_8             = 0;
                     g_SysWork.player_4C.chara_0.model_0.state_2       = 0;
                     g_SysWork.player_4C.chara_0.model_0.stateStep_3   = 0;
-                    g_SysWork.player_4C.extra_128.field_20            = 0;
-                    g_SysWork.player_4C.extra_128.field_24            = 0;
+                    g_SysWork.player_4C.extra_128.upperBodyState_20   = PlayerUpperBodyState_None;
+                    g_SysWork.player_4C.extra_128.lowerBodyState_24   = PlayerLowerBodyState_None;
                     g_SysWork.player_4C.extra_128.model_0.state_2     = 0;
                     g_SysWork.player_4C.extra_128.model_0.stateStep_3 = 0;
                 }
 
-                g_SysWork.player_4C.chara_0.properties_E4.player.field_126   = 0;
-                g_SysWork.player_4C.chara_0.properties_E4.player.afkTimer_E8 = 0;
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+                g_SysWork.player_4C.chara_0.properties_E4.player.afkTimer_E8            = 0;
         }
     }
 
@@ -230,7 +231,7 @@ s32 Inventory_HyperBlasterFunctionalTest() // 0x8004C4F8
     {
         if ((g_SavegamePtr->clearGameEndings_24B & GameEndingFlag_Ufo) != 0)
         {
-            // Game completed with some condition met?
+            // Game completed with Ufo ending.
             return 2;
         }
 
@@ -240,6 +241,7 @@ s32 Inventory_HyperBlasterFunctionalTest() // 0x8004C4F8
                g_GameWork.controllers_38[1].analogController_0.terminal_type  == PadTerminalType_GunControllerKonami;
     }
 
+	// Neither of the conditions has been completed.
     return 0;
 }
 
@@ -263,7 +265,7 @@ void func_8004C564(u8 arg0, s32 arg1) // 0x8004C564
             D_800C3961 = 32;
 
             func_8008B398();
-            g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
+            g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
             break;
 
         case 1:
@@ -310,10 +312,10 @@ void func_8004C564(u8 arg0, s32 arg1) // 0x8004C564
                 if (D_800C3961 == 0)
                 {
                     func_8008B398();
-                    D_800C3963                                                 = 0;
-                    D_800C3962                                                 = 0;
-                    g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
-                    g_SysWork.player_4C.chara_0.field_44                       = 0;
+                    D_800C3963                                                               = 0;
+                    D_800C3962                                                               = 0;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+                    g_SysWork.player_4C.chara_0.field_44                                     = 0;
                 }
             }
             break;
@@ -326,8 +328,8 @@ void func_8004C564(u8 arg0, s32 arg1) // 0x8004C564
                     func_8008B438(0, 0, 0);
                     func_8008B3E4(0);
 
-                    g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
-                    D_800C3963                                                -= 2;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+                    D_800C3963                                                              -= 2;
                 }
             }
             break;

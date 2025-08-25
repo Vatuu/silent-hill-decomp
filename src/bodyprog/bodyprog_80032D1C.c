@@ -2290,7 +2290,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
         hasInput = true;
     }
 
-    g_SysWork.player_4C.chara_0.properties_E4.player.field_114 = 0;
+    g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
     func_8004C564(g_SysWork.playerCombatInfo_38.equippedWeapon_F, EquippedWeaponId_RockDrill);
 
     if (g_MapMsg_MainIdx != mapMsgIdx)
@@ -3077,7 +3077,7 @@ void func_80037E78(s_SubCharacter* chara) // 0x80037E78
     // TODO: Strange `chara->headingAngle_3C` access.
     if (chara->health_B0 <= 0 && (*(s32*)&chara->headingAngle_3C & 0x600000) == 0x200000)
     {
-        idx = chara->field_41;
+        idx = chara->attackReceived_41;
         if (idx < 39)
         {
             cond = D_800AD4C8[idx].field_10 == 3;
@@ -3244,7 +3244,7 @@ void GameState_InGame_Update() // 0x80038BD4
         Demo_DemoRandSeedRestore();
 
         player = &g_SysWork.player_4C.chara_0;
-        Player_Logic_Update(player, FS_BUFFER_0, g_SysWork.playerBoneCoords_890);
+        Player_Update(player, FS_BUFFER_0, g_SysWork.playerBoneCoords_890);
 
         Demo_DemoRandSeedRestore();
         func_8003F170();
@@ -3280,7 +3280,7 @@ void SysState_Gameplay_Update() // 0x80038BD4
 
     playerChara = &g_SysWork.player_4C.chara_0;
 
-    func_800373CC(~playerChara->field_41 != 0);
+    func_800373CC(~playerChara->attackReceived_41 != 0);
     Savegame_MapRoomIdxSet();
 
     switch (FP_ROUND_SCALED(playerChara->health_B0, 10, Q12_SHIFT))
