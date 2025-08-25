@@ -77,7 +77,12 @@ s32 func_800D1E5C() // 0x800D1E5C
 
 #include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800D2048
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D2054);
+void func_800D2054(void) {
+    g_SysWork.playerCombatInfo_38.equippedWeapon_F = EquippedWeaponId_Handgun;
+    func_8003CD6C(&g_SysWork.playerCombatInfo_38);
+    g_SysWork.playerCombatInfo_38.equippedWeapon_F = NO_VALUE;
+    func_8003D03C();
+}
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D2094);
 
