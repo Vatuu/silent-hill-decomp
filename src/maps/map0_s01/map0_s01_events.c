@@ -4,10 +4,6 @@
 #include "maps/map0/map0_s01.h"
 #include "maps/shared.h"
 
-//INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01_events", func_800DA980);
-//
-//
-
 #define StateStepIncrement_afterTime sharedFunc_800DA8E8_0_s01
 void StateStepIncrement_afterTime(s32* timer, s32 incBy, s32 minTime, s32 maxTime, s32 setTimerToMax, s32 incrementStateIndex);
 
@@ -24,11 +20,13 @@ void func_800DA980()
     s_SubCharacter* chara1;
     u8 temp_s0_5;
 
+#define CUTSCENE_SKIP (52)
+
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
         g_SysWork.sysStateStep_C > 5 &&
         g_SysWork.sysStateStep_C < 47)
     {
-        SysWork_NextStateStepSet(52);
+        SysWork_NextStateStepSet(CUTSCENE_SKIP);
     }
     
     switch (g_SysWork.sysStateStep_C)
@@ -61,7 +59,7 @@ void func_800DA980()
         
         case 2:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 0x4D, false);
-            func_8008616C(0, 0, 0, 0, 0);
+            func_8008616C(0, false, 0, 0, false);
             func_800D2054();
             SysWork_StateStepIncrement();
             break;
@@ -71,7 +69,7 @@ void func_800DA980()
             SysWork_StateStepIncrement();
         
         case 4:
-            func_8008616C(1, 0, 0, 0, 0);
+            func_8008616C(1, false, 0, 0, false);
             break;
         
         case 5:
@@ -79,16 +77,16 @@ void func_800DA980()
             SysWork_StateStepIncrement();
         
         case 6:
-            StateStepIncrement_afterTime(&g_timer1, 0x7CCC, 0, 0x5000, false, true);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(7.8f), FP_TIME(0.0f), FP_TIME(5.0f), false, true);
             break;
         
         case 7:
-            StateStepIncrement_afterTime(&g_timer1, 0x7CCC, 0, 0x1A000, true, false);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(7.8f), FP_TIME(0.0f), FP_TIME(26.0f), true, false);
             func_800869E4(15, &g_SdCmdIndex, g_SdCmdTable); // was i dreaming ?
             break;
         
         case 8:
-            StateStepIncrement_afterTime(&g_timer1, 0x7CCC, 0, 0x1A000, true, true);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(7.8f), FP_TIME(0.0f), FP_TIME(26.0f), true, true);
             break;
         
         case 9:
@@ -111,7 +109,7 @@ void func_800DA980()
                     break;
 
                 case 12:
-                    if (g_timer1 == 0x30000 && D_800DE251 == 2)
+                    if (g_timer1 == FP_TIME(48.0f) && D_800DE251 == 2)
                     {
                         SysWork_NextStateStepSet(13);
                     }
@@ -122,9 +120,9 @@ void func_800DA980()
                     break;
             }
             
-            StateStepIncrement_afterTime(&g_timer1, 0x4000, 0x1B000, 0x30000, true, false);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(4.0f), FP_TIME(27.0f), FP_TIME(48.0f), true, false);
             
-            if (D_800DE251 == 0 && g_timer1 > 0x26000)
+            if (D_800DE251 == 0 && g_timer1 > FP_TIME(38.0f))
             {
                 func_80085EB8(0, &g_SysWork.npcs_1A0[0], 0xA, false);
                 func_80085EB8(0, &g_SysWork.player_4C.chara_0, 0x6E, false);
@@ -141,12 +139,12 @@ void func_800DA980()
             break;
         
         case 14:
-            StateStepIncrement_afterTime(&g_timer1, 0x3000, 0x31000, 0x8B000, true, false);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(3.0f), FP_TIME(49.0f), FP_TIME(139.0f), true, false);
             func_800869E4(25, &g_SdCmdIndex, g_SdCmdTable); // have you seen a little girl?
             break;
         
         case 15:
-            g_timer1 = 0x8C000;
+            g_timer1 = FP_TIME(140.0f);
             SysWork_StateStepIncrement();
         
         case 16:
@@ -154,7 +152,7 @@ void func_800DA980()
             break;
         
         case 17:
-            func_80085E6C(0x1333, 0);
+            func_80085E6C(FP_TIME(1.2f), 0);
             break;
         
         case 18:
@@ -162,7 +160,7 @@ void func_800DA980()
             SysWork_StateStepIncrement();
         
         case 19:
-            StateStepIncrement_afterTime(&g_timer1, 0xA000, 0x8D000, 0x98000, false, true);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(10.0f), FP_TIME(141.0f), FP_TIME(152.0f), false, true);
             break;
         
         case 20:
@@ -170,7 +168,7 @@ void func_800DA980()
             SysWork_StateStepIncrement();
         
         case 21:
-            StateStepIncrement_afterTime(&g_timer1, 0xA000, 0x8D000, 0x9F000, true, true);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(10.0f), FP_TIME(141.0f), FP_TIME(159.0f), true, true);
             func_8004729C(4108);
             break;
         
@@ -180,7 +178,7 @@ void func_800DA980()
             SysWork_StateStepIncrement();
         
         case 23:
-            StateStepIncrement_afterTime(&g_timer1, 0xA000, 0xA0000, 0xAD000, true, false);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(10.0f), FP_TIME(160.0f), FP_TIME(173.0f), true, false);
             MapMsg_DisplayAndHandleSelection(0, 0x2B, 0, 0, 0, 0);
             Gfx_DebugStringPosition(30, 30);
             break;
@@ -190,7 +188,7 @@ void func_800DA980()
             SysWork_StateStepIncrement();
         
         case 25:
-            StateStepIncrement_afterTime(&g_timer1, 0xA000, 0xAE000, 0xB8000, true, false);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(10.0f), FP_TIME(174.0f), FP_TIME(184.0f), true, false);
             func_800869E4(44, &g_SdCmdIndex, g_SdCmdTable);
             break;
             
@@ -200,7 +198,7 @@ void func_800DA980()
             SysWork_StateStepIncrement();
         
         case 27:
-            StateStepIncrement_afterTime(&g_timer1, 0xA000, 0xB9000, 0xC2000, true, false);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(10.0f), FP_TIME(185.0f), FP_TIME(194.0f), true, false);
             func_800869E4(45, &g_SdCmdIndex, g_SdCmdTable);
             break;
         
@@ -215,7 +213,7 @@ void func_800DA980()
             break;
             
         case 30:
-            func_80085E6C(0x1800, 0);
+            func_80085E6C(FP_TIME(1.5f), 0);
             break;
             
         case 31:
@@ -227,7 +225,7 @@ void func_800DA980()
             SysWork_StateStepIncrement();
         
         case 33:
-            StateStepIncrement_afterTime(&g_timer1, 0x14000, 0xCF000, 0xDE000, true, true);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(20.0f), FP_TIME(207.0f), FP_TIME(222.0f), true, true);
             break;
         
         case 34:
@@ -235,17 +233,17 @@ void func_800DA980()
             SysWork_StateStepIncrement();
         
         case 35:
-            StateStepIncrement_afterTime(&g_timer1, 0x5000, 0xDF000, 0xFB000, true, false);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(5.0f), FP_TIME(223.0f), FP_TIME(251.0f), true, false);
             func_800869E4(0x33, &g_SdCmdIndex, g_SdCmdTable);
             break;
         
         case 36:
-            StateStepIncrement_afterTime(&g_timer1, 0x5000, 0xDF000, 0xFB000, true, false);
-            func_80085E6C(0x999, 0);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(5.0f), FP_TIME(223.0f), FP_TIME(251.0f), true, false);
+            func_80085E6C(FP_TIME(0.6f), 0);
             break;
         
         case 37:
-            StateStepIncrement_afterTime(&g_timer1, 0x5000, 0xDF000, 0xFB000, true, false);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(5.0f), FP_TIME(223.0f), FP_TIME(251.0f), true, false);
             func_800869E4(0x37, &g_SdCmdIndex, g_SdCmdTable);
             break;
         
@@ -255,12 +253,12 @@ void func_800DA980()
             SysWork_StateStepIncrement();
         
         case 39:
-            StateStepIncrement_afterTime(&g_timer1, 0xA000, 0xFC000, 0x118000, true, false);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(10.0f), FP_TIME(252.0f), FP_TIME(280.0f), true, false);
             func_800869E4(0x39, &g_SdCmdIndex, g_SdCmdTable);
             break;
         
         case 40:
-            StateStepIncrement_afterTime(&g_timer1, 0xA000, 0xFC000, 0x118000, true, true);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(10.0f), FP_TIME(252.0f), FP_TIME(280.0f), true, true);
             break;
         
         case 41:
@@ -268,12 +266,12 @@ void func_800DA980()
             SysWork_StateStepIncrement();
         
         case 42:
-            StateStepIncrement_afterTime(&g_timer1, 0xA000, 0x119000, 0x128000, true, true);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(10.0f), FP_TIME(281.0f), FP_TIME(296.0f), true, true);
             break;
         
         case 43:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 0x33, false);
-            g_timer1 = 0x129000;
+            g_timer1 = FP_TIME(297.0f);
             SysWork_StateStepIncrement();
         
         case 44:
@@ -286,7 +284,7 @@ void func_800DA980()
             SysWork_StateStepIncrement();
         
         case 46:
-            StateStepIncrement_afterTime(&g_timer1, 0xA000, 0x120000 | 0xA000, 0x134000, true, true);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(10.0f), FP_TIME(298.0f), FP_TIME(308.0f), true, true);
             break;
         
         case 47:
@@ -299,24 +297,24 @@ void func_800DA980()
             func_80088F94(g_SysWork.npcs_1A0,0 ,0);
             Sd_EngineCmd(19);
             Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcCoords_FC0[0], NO_VALUE, 0, 0);
-            func_80086470(3, InventoryItemId_Handgun, 15, false); // TODO: 15 bullets default. One func has a constant for this.
+            func_80086470(3, InventoryItemId_Handgun, InventoryItemCount_HandgunAmmo, false);
             SysWork_StateStepIncrement();
         
         case 49:
-            func_8008616C(2, 1, 0, 0, 0);
+            func_8008616C(2, true, 0, 0, false);
             break;
         
         case 50:
-            g_timer1 = 0x134000;
-            func_80085E6C(0x800, 0);
+            g_timer1 = FP_TIME(308.0);
+            func_80085E6C(FP_TIME(0.5f), 0);
             break;
         
         case 51:
             SysWork_StateStepReset();
             break;
         
-        case 52:
-            func_8008616C(2, 1, 0, 0, 0);
+        case CUTSCENE_SKIP:
+            func_8008616C(2, true, 0, 0, false);
             break;
         
         case 53:

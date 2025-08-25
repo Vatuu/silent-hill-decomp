@@ -2623,7 +2623,7 @@ void func_80040014();
  * @param soundPos Sound source position.
  * @return Stereo sound balance in the range [-127, 127], where values affect the left-right channel balance.
  */
-s8 Sound_StereoBalanceGet(VECTOR3* soundPos);
+s8 Sound_StereoBalanceGet(const VECTOR3* soundPos);
 
 bool func_80040B74(s32 arg0);
 
@@ -3055,13 +3055,13 @@ void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara);
 s32 func_8005D974();
 
 /** Spatial SFX func? */
-void func_8005DC1C(s32 sfx, VECTOR3* pos, s32 arg2, s32 soundType); // Types assumed.
+void func_8005DC1C(s32 sfx, const VECTOR3* pos, s32 volume, s32 soundType); // Types assumed.
 
 /** Spatial SFX func? */
-void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 soundType, s32 pitch);
+void func_8005DC3C(s32 sfx, const VECTOR3* pos, s32 volume, s32 soundType, s32 pitch);
 
 /** Spatial SFX func? */
-void func_8005DD44(s32 sfx, VECTOR3* pos, s32 arg2, s8 pitch); // Types assumed.
+void func_8005DD44(s32 sfx, VECTOR3* pos, s32 volume, s8 pitch); // Types assumed.
 
 s32 func_8005F680(s_func_800699F8* arg0);
 
@@ -3081,9 +3081,9 @@ void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* header);
 /** Unused func? `volatile` needed for match. */
 s_DmsInterval* func_8008CA60(volatile s32 unused, s32 idx, s_DmsHeader* header);
 
-void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, char* charaName, s32 time, s_DmsHeader* header);
+void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, s32 time, s_DmsHeader* header);
 
-void Dms_CharacterGetStartPosRot(VECTOR3* pos, SVECTOR3* rot, char* charaName, s32 time, s_DmsHeader* header);
+void Dms_CharacterGetStartPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, s32 time, s_DmsHeader* header);
 
 s32 Dms_CharacterFindIdxByName(char* name, s_DmsHeader* header);
 

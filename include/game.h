@@ -359,6 +359,14 @@ typedef enum _InventoryCmdId
     InventoryCmdId_Unk11         = 11 // Flashlight in daytime?
 } e_InventoryCmdId;
 
+/** @brief Default item count for different itep types. */
+typedef enum _InventoryItemCount
+{
+    InventoryItemCount_Default     = 1,
+    InventoryItemCount_HandgunAmmo = 15,
+    InventoryItemCount_ShotgunAmmo = 6,
+    InventoryItemCount_RifleAmmo   = 6,
+} e_InventoryItemCount;
 /** @brief Inventory item IDs. */
 typedef enum _InventoryItemId
 {

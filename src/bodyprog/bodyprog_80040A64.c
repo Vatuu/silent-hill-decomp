@@ -11,7 +11,7 @@
  * - Animation funcs
  */
 
-s8 Sound_StereoBalanceGet(VECTOR3* soundPos) // 0x80040A64
+s8 Sound_StereoBalanceGet(const VECTOR3* soundPos) // 0x80040A64
 {
     #define STEREO_BALANCE_RANGE 127
 
