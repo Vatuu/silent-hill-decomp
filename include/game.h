@@ -1208,7 +1208,7 @@ typedef struct _SysWork
     s32             sysStateStep_C; /** Current state step of `sysState_8` the game is in. */
     s32             field_10;       // Sometimes assigned to same thing as `sysStateStep_C`. Contains selected entry index from pickup item dialogs?
     s32             field_14;
-    s32             field_18;
+    s32             field_18; // probably a vector3
     s32             timer_1C;
     s32             timer_20;
     s32             timer_24;
