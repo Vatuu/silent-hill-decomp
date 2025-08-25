@@ -1374,7 +1374,7 @@ void func_80088D34(s32 idx) // 0x80088D34
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Chara_Spawn); // 0x80088D78
 
-void func_80088F94(s_SubCharacter* chara) // 0x80088F94
+void func_80088F94(s_SubCharacter* chara, s32 unused1, s32 unsued2) // 0x80088F94
 {
     u8   temp0;
     s32* temp1;

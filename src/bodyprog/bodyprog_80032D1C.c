@@ -2403,7 +2403,6 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                             Sd_PlaySfx(Sfx_Confirm, 0, 64);
                         }
 
-                        // Exit 480i mode (used by map screen).
                         if (g_SysWork.silentYesSelection_2350_4)
                         {
                             g_SysWork.silentYesSelection_2350_4 = false;
