@@ -66,9 +66,9 @@ def parse_yaml_for_comments(yaml_file):
         'rodata': ['.rodata', 'rodata', '.rdata'],
         'text': ['.text', 'asm', 'hasm', 'asmtu', 'c', 'cpp'],
         'data': ['.data', 'data'],
-        'sdata': ['.sdata'],
+        'sdata': ['.sdata', 'sdata'],
         'bss': ['.bss', 'bss'],
-        'sbss': ['.sbss'],
+        'sbss': ['.sbss', 'sbss'],
         'pad': ['pad']  # Special handling - no section header
     }
 
