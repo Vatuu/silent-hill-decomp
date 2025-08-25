@@ -71,12 +71,6 @@ extern u8 D_800DE250;
 
 extern u8 D_800DE251;
 
-// From bodyprog.
-//=============================================
-void Chara_Spawn(s32, s32, s32, s32, s32, s32);
-void func_800D2054();
-//=============================================
-
 /** `arg0` is a struct pointer, might be `s_SubCharacter`. */
 void func_800D2364(s32 arg0);
 

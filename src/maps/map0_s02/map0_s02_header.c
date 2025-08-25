@@ -13,11 +13,6 @@
 #define func_800CCE44 (0x800CCE44)
 #define func_800CD6BC (0x800CD6BC)
 
-#define sharedData_800DFB64_0_s00 (0x800D03C4)
-#define sharedData_800DFB68_0_s00 (0x800D03C8)
-#define sharedData_800DFB6C_0_s00 (0x800D03CC)
-#define sharedData_800DFB70_0_s00 (0x800D03D0)
-
 extern u8 D_800CFD90[];
 extern s_func_800625F4 D_800D03DC[100];
 extern s_BloodSplat D_800D0BAC[50];
@@ -151,10 +146,10 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .func_178 = func_800CCE44,
     .func_17C = func_800CD6BC,
     .func_180 = sharedFunc_800D0E04_0_s00,
-    .windSpeedX_184 = sharedData_800DFB64_0_s00,
-    .windSpeedZ_188 = sharedData_800DFB68_0_s00,
-    .data_18C = sharedData_800DFB6C_0_s00,
-    .data_190 = sharedData_800DFB70_0_s00,
+    .windSpeedX_184 = (void*)&sharedData_800DFB64_0_s00,
+    .windSpeedZ_188 = (void*)&sharedData_800DFB68_0_s00,
+    .data_18C = (void*)&sharedData_800DFB6C_0_s00,
+    .data_190 = (void*)&sharedData_800DFB70_0_s00,
     .charaUpdateFuncs_194 = {},
     .charaGroupIds_248 = {},
     .charaSpawns_24C = {},

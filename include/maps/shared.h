@@ -91,8 +91,6 @@ extern u16 sharedData_800E5768_1_s02;
 
 extern s32 sharedData_800CAB70_0_s00; // Type assumed.
 
-extern s32 sharedData_800DFB6C_0_s00;
-extern s32 sharedData_800DFB70_0_s00;
 extern s32 sharedData_800E0CA8_0_s00;
 extern s32 sharedData_800E0CAC_0_s00;
 extern u32 sharedData_800E0CB0_0_s00;
@@ -181,6 +179,8 @@ extern s_AnimInfo sharedData_800DFFD8_7_s01[]; // `Ai_BloodyLisa` related?
 
 extern s32 sharedData_800DFB64_0_s00;
 extern s32 sharedData_800DFB68_0_s00;
+extern s32 sharedData_800DFB6C_0_s00;
+extern s32 sharedData_800DFB70_0_s00;
 
 extern s32 sharedData_800DD58C_0_s00;
 extern s32 sharedData_800E32CC_0_s00;
