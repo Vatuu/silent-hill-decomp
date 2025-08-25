@@ -20,11 +20,6 @@ struct _SubCharacter;
 #define MEMORY_CARD_SLOT_COUNT   2
 #define CONTROLLER_COUNT_MAX     2
 
-#define DEFAULT_PICKUP_ITEM_COUNT      1
-#define HANDGUN_AMMO_PICKUP_ITEM_COUNT 15
-#define SHOTGUN_AMMO_PICKUP_ITEM_COUNT 6
-#define RIFLE_AMMO_PICKUP_ITEM_COUNT   6
-
 #define EVENT_FLAG5_FIRST_TIME_SAVE_GAME (1 << 26)
 
 #define MAP_MSG_CODE_MARKER         '~' /** Message code start. */
@@ -364,6 +359,14 @@ typedef enum _InventoryCmdId
     InventoryCmdId_Unk11         = 11 // Flashlight in daytime?
 } e_InventoryCmdId;
 
+/** @brief Default item count for different itep types. */
+typedef enum _InventoryItemCount
+{
+    InventoryItemCount_Default     = 1,
+    InventoryItemCount_HandgunAmmo = 15,
+    InventoryItemCount_ShotgunAmmo = 6,
+    InventoryItemCount_RifleAmmo   = 6,
+} e_InventoryItemCount;
 /** @brief Inventory item IDs. */
 typedef enum _InventoryItemId
 {

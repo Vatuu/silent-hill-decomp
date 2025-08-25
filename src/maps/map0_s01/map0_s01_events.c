@@ -4,28 +4,29 @@
 #include "maps/map0/map0_s01.h"
 #include "maps/shared.h"
 
-void sharedFunc_800DA8E8_0_s01(s32* timer, s32 incBy, s32 minTime, s32 maxTime, s32 setTimerToMax, s32 incrementStateIndex);
+#define StateStepIncrement_afterTime sharedFunc_800DA8E8_0_s01
+void StateStepIncrement_afterTime(s32* timer, s32 incBy, s32 minTime, s32 maxTime, s32 setTimerToMax, s32 incrementStateIndex);
 
-extern VECTOR3 g_CutsceneCameraLookAtTarget;
-extern s32 g_Timer0;
-extern u8 g_SoundCmdIdx;
+extern VECTOR3 g_cutsceneCameraLookAt;
+extern s32 g_timer1;
+extern u8 g_SdCmdIndex;
 extern const VECTOR3 D_800CC8FC;
 extern const char D_800CC908[];
 extern const char D_800CC910[];
 
 void func_800DA980()
 {
-    #define CUTSCENE_SKIP_STATE 52
-
-    u8              temp_s0_5;
     s_SubCharacter* chara0;
     s_SubCharacter* chara1;
+    u8 temp_s0_5;
+
+#define CUTSCENE_SKIP (52)
 
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
         g_SysWork.sysStateStep_C > 5 &&
         g_SysWork.sysStateStep_C < 47)
     {
-        SysWork_NextStateStepSet(CUTSCENE_SKIP_STATE);
+        SysWork_NextStateStepSet(CUTSCENE_SKIP);
     }
     
     switch (g_SysWork.sysStateStep_C)
@@ -38,7 +39,7 @@ void func_800DA980()
             g_SysWork.flags_22A4 |= 1 << 3;
             g_SavegamePtr->flags_AC &= ~(1 << 0);
             g_SysWork.flags_22A4 |= (1 << 5) | (1 << 9);
-            g_SoundCmdIdx = 0;
+            g_SdCmdIndex = 0;
             D_800DE250 = 0;
             D_800DE251 = 0;
             
@@ -49,7 +50,7 @@ void func_800DA980()
             func_80088D0C();
             Chara_Spawn(Chara_Cybil, 0, FP_METER(4.4f), FP_METER(269.9f), FP_METER(0.0f), 2);
             
-            g_Timer0 = 0;
+            g_timer1 = 0;
             SysWork_StateStepIncrement();
         
         case 1:
@@ -76,16 +77,16 @@ void func_800DA980()
             SysWork_StateStepIncrement();
         
         case 6:
-            sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(7.8f), FP_TIME(0.0f), FP_TIME(5.0f), false, true);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(7.8f), FP_TIME(0.0f), FP_TIME(5.0f), false, true);
             break;
         
         case 7:
-            sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(7.8f), FP_TIME(0.0f), FP_TIME(26.0f), true, false);
-            func_800869E4(15, &g_SoundCmdIdx, g_SoundCmds); // was i dreaming ?
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(7.8f), FP_TIME(0.0f), FP_TIME(26.0f), true, false);
+            func_800869E4(15, &g_SdCmdIndex, g_SdCmdTable); // was i dreaming ?
             break;
         
         case 8:
-            sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(7.8f), FP_TIME(0.0f), FP_TIME(26.0f), true, true);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(7.8f), FP_TIME(0.0f), FP_TIME(26.0f), true, true);
             break;
         
         case 9:
@@ -100,28 +101,28 @@ void func_800DA980()
             switch (g_SysWork.sysStateStep_C)
             {
                 case 10:
-                    func_800869E4(16, &g_SoundCmdIdx, g_SoundCmds); // how do you feel ?
+                    func_800869E4(16, &g_SdCmdIndex, g_SdCmdTable); // how do you feel ?
                     break;
                 
                 case 11:
-                    func_800869E4(17, &g_SoundCmdIdx, g_SoundCmds); // like i've been hit...
+                    func_800869E4(17, &g_SdCmdIndex, g_SdCmdTable); // like i've been hit...
                     break;
 
                 case 12:
-                    if (g_Timer0 == FP_TIME(48.0f) && D_800DE251 == 2)
+                    if (g_timer1 == FP_TIME(48.0f) && D_800DE251 == 2)
                     {
                         SysWork_NextStateStepSet(13);
                     }
                     break;
                 
                 case 13:
-                    func_800869E4(18, &g_SoundCmdIdx, g_SoundCmds); // glad to hear it.
+                    func_800869E4(18, &g_SdCmdIndex, g_SdCmdTable); // glad to hear it.
                     break;
             }
             
-            sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(4.0f), FP_TIME(27.0f), FP_TIME(48.0f), true, false);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(4.0f), FP_TIME(27.0f), FP_TIME(48.0f), true, false);
             
-            if (D_800DE251 == 0 && g_Timer0 > FP_TIME(38.0f))
+            if (D_800DE251 == 0 && g_timer1 > FP_TIME(38.0f))
             {
                 func_80085EB8(0, &g_SysWork.npcs_1A0[0], 0xA, false);
                 func_80085EB8(0, &g_SysWork.player_4C.chara_0, 0x6E, false);
@@ -138,20 +139,20 @@ void func_800DA980()
             break;
         
         case 14:
-            sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(3.0f), FP_TIME(49.0f), FP_TIME(139.0f), true, false);
-            func_800869E4(25, &g_SoundCmdIdx, g_SoundCmds); // have you seen a little girl?
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(3.0f), FP_TIME(49.0f), FP_TIME(139.0f), true, false);
+            func_800869E4(25, &g_SdCmdIndex, g_SdCmdTable); // have you seen a little girl?
             break;
         
         case 15:
-            g_Timer0 = FP_TIME(140.0f);
+            g_timer1 = FP_TIME(140.0f);
             SysWork_StateStepIncrement();
         
         case 16:
-            func_800869E4(35, &g_SoundCmdIdx, g_SoundCmds); // whats your name?
+            func_800869E4(35, &g_SdCmdIndex, g_SdCmdTable); // whats your name ?
             break;
         
         case 17:
-            func_80085E6C(FP_TIME(1.2f), false);
+            func_80085E6C(FP_TIME(1.2f), 0);
             break;
         
         case 18:
@@ -159,7 +160,7 @@ void func_800DA980()
             SysWork_StateStepIncrement();
         
         case 19:
-            sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(10.0f), FP_TIME(141.0f), FP_TIME(152.0f), false, true);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(10.0f), FP_TIME(141.0f), FP_TIME(152.0f), false, true);
             break;
         
         case 20:
@@ -167,7 +168,7 @@ void func_800DA980()
             SysWork_StateStepIncrement();
         
         case 21:
-            sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(10.0f), FP_TIME(141.0f), FP_TIME(159.0f), true, true);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(10.0f), FP_TIME(141.0f), FP_TIME(159.0f), true, true);
             func_8004729C(4108);
             break;
         
@@ -177,7 +178,7 @@ void func_800DA980()
             SysWork_StateStepIncrement();
         
         case 23:
-            sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(10.0f), FP_TIME(160.0f), FP_TIME(173.0f), true, false);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(10.0f), FP_TIME(160.0f), FP_TIME(173.0f), true, false);
             MapMsg_DisplayAndHandleSelection(0, 0x2B, 0, 0, 0, 0);
             Gfx_DebugStringPosition(30, 30);
             break;
@@ -187,8 +188,8 @@ void func_800DA980()
             SysWork_StateStepIncrement();
         
         case 25:
-            sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(10.0f), FP_TIME(174.0f), FP_TIME(184.0f), true, false);
-            func_800869E4(44, &g_SoundCmdIdx, g_SoundCmds);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(10.0f), FP_TIME(174.0f), FP_TIME(184.0f), true, false);
+            func_800869E4(44, &g_SdCmdIndex, g_SdCmdTable);
             break;
             
         case 26:
@@ -197,26 +198,26 @@ void func_800DA980()
             SysWork_StateStepIncrement();
         
         case 27:
-            sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(10.0f), FP_TIME(185.0f), FP_TIME(194.0f), true, false);
-            func_800869E4(45, &g_SoundCmdIdx, g_SoundCmds);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(10.0f), FP_TIME(185.0f), FP_TIME(194.0f), true, false);
+            func_800869E4(45, &g_SdCmdIndex, g_SdCmdTable);
             break;
         
         case 28:
-            g_Timer0 = 0xC3000;
+            g_timer1 = 0xC3000;
             
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 5, false);
             SysWork_StateStepIncrement();
         
         case 29:
-            func_800869E4(46, &g_SoundCmdIdx, g_SoundCmds); // it's dangerous out there
+            func_800869E4(46, &g_SdCmdIndex, g_SdCmdTable); // it's dangerous out there
             break;
             
         case 30:
-            func_80085E6C(FP_TIME(1.5f), false);
+            func_80085E6C(FP_TIME(1.5f), 0);
             break;
             
         case 31:
-            func_800869E4(49, &g_SoundCmdIdx, g_SoundCmds);
+            func_800869E4(49, &g_SdCmdIndex, g_SdCmdTable);
             break;
             
         case 32:
@@ -224,7 +225,7 @@ void func_800DA980()
             SysWork_StateStepIncrement();
         
         case 33:
-            sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(20.0f), FP_TIME(207.0f), FP_TIME(222.0f), true, true);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(20.0f), FP_TIME(207.0f), FP_TIME(222.0f), true, true);
             break;
         
         case 34:
@@ -232,18 +233,18 @@ void func_800DA980()
             SysWork_StateStepIncrement();
         
         case 35:
-            sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(5.0f), FP_TIME(223.0f), FP_TIME(251.0f), true, false);
-            func_800869E4(0x33, &g_SoundCmdIdx, g_SoundCmds);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(5.0f), FP_TIME(223.0f), FP_TIME(251.0f), true, false);
+            func_800869E4(0x33, &g_SdCmdIndex, g_SdCmdTable);
             break;
         
         case 36:
-            sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(5.0f), FP_TIME(223.0f), FP_TIME(251.0f), true, false);
-            func_80085E6C(FP_TIME(0.6f), false);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(5.0f), FP_TIME(223.0f), FP_TIME(251.0f), true, false);
+            func_80085E6C(FP_TIME(0.6f), 0);
             break;
         
         case 37:
-            sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(5.0f), FP_TIME(223.0f), FP_TIME(251.0f), true, false);
-            func_800869E4(0x37, &g_SoundCmdIdx, g_SoundCmds);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(5.0f), FP_TIME(223.0f), FP_TIME(251.0f), true, false);
+            func_800869E4(0x37, &g_SdCmdIndex, g_SdCmdTable);
             break;
         
         case 38:
@@ -252,12 +253,12 @@ void func_800DA980()
             SysWork_StateStepIncrement();
         
         case 39:
-            sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(10.0f), FP_TIME(252.0f), FP_TIME(280.0f), true, false);
-            func_800869E4(0x39, &g_SoundCmdIdx, g_SoundCmds);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(10.0f), FP_TIME(252.0f), FP_TIME(280.0f), true, false);
+            func_800869E4(0x39, &g_SdCmdIndex, g_SdCmdTable);
             break;
         
         case 40:
-            sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(10.0f), FP_TIME(252.0f), FP_TIME(280.0f), true, true);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(10.0f), FP_TIME(252.0f), FP_TIME(280.0f), true, true);
             break;
         
         case 41:
@@ -265,16 +266,16 @@ void func_800DA980()
             SysWork_StateStepIncrement();
         
         case 42:
-            sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(10.0f), FP_TIME(281.0f), FP_TIME(296.0f), true, true);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(10.0f), FP_TIME(281.0f), FP_TIME(296.0f), true, true);
             break;
         
         case 43:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 0x33, false);
-            g_Timer0 = FP_TIME(297.0f);
+            g_timer1 = FP_TIME(297.0f);
             SysWork_StateStepIncrement();
         
         case 44:
-            func_800869E4(0x3A, &g_SoundCmdIdx, g_SoundCmds);
+            func_800869E4(0x3A, &g_SdCmdIndex, g_SdCmdTable);
             break;
         
         case 45:
@@ -283,7 +284,7 @@ void func_800DA980()
             SysWork_StateStepIncrement();
         
         case 46:
-            sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(10.0f), FP_TIME(298.0f), FP_TIME(308.0f), true, true);
+            StateStepIncrement_afterTime(&g_timer1, FP_TIME(10.0f), FP_TIME(298.0f), FP_TIME(308.0f), true, true);
             break;
         
         case 47:
@@ -296,7 +297,7 @@ void func_800DA980()
             func_80088F94(g_SysWork.npcs_1A0,0 ,0);
             Sd_EngineCmd(19);
             Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcCoords_FC0[0], NO_VALUE, 0, 0);
-            func_80086470(3, InventoryItemId_Handgun, HANDGUN_AMMO_PICKUP_ITEM_COUNT, false);
+            func_80086470(3, InventoryItemId_Handgun, InventoryItemCount_HandgunAmmo, false);
             SysWork_StateStepIncrement();
         
         case 49:
@@ -304,15 +305,15 @@ void func_800DA980()
             break;
         
         case 50:
-            g_Timer0 = FP_TIME(308.0);
-            func_80085E6C(FP_TIME(0.5f), false);
+            g_timer1 = FP_TIME(308.0);
+            func_80085E6C(FP_TIME(0.5f), 0);
             break;
         
         case 51:
             SysWork_StateStepReset();
             break;
         
-        case CUTSCENE_SKIP_STATE:
+        case CUTSCENE_SKIP:
             func_8008616C(2, true, 0, 0, false);
             break;
         
@@ -335,22 +336,22 @@ void func_800DA980()
             Sd_EngineCmd(23);
             
             g_SavegamePtr->eventFlags_168[1] |= 1 << 17;
-            g_Timer0 = NO_VALUE;
+            g_timer1 = NO_VALUE;
             break;
     }
     
-    if (g_Timer0 >= 0)
+    if (g_timer1 >= 0)
     {
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_Timer0, FS_BUFFER_11));
-        vcUserCamTarget(&g_CutsceneCameraPositionTarget, NULL, true);
-        vcUserWatchTarget(&g_CutsceneCameraLookAtTarget, NULL, true);
-        Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, &D_800CC908, g_Timer0, FS_BUFFER_11);
+        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_cutsceneCameraTarget, &g_cutsceneCameraLookAt, NULL, g_timer1, FS_BUFFER_11));
+        vcUserCamTarget(&g_cutsceneCameraTarget, NULL, true);
+        vcUserWatchTarget(&g_cutsceneCameraLookAt, NULL, true);
+        Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, &D_800CC908, g_timer1, FS_BUFFER_11);
         
         if (D_800DE250 != 0)
         {
             chara0 = &g_SysWork.npcs_1A0[0];
             chara0->model_0.anim_4.flags_2 |= AnimFlag_Visible;
-            Dms_CharacterGetPosRot(&chara0->position_18, &chara0->rotation_24, &D_800CC910, g_Timer0, FS_BUFFER_11);
+            Dms_CharacterGetPosRot(&chara0->position_18, &chara0->rotation_24, &D_800CC910, g_timer1, FS_BUFFER_11);
             return;
         }
         
@@ -360,47 +361,35 @@ void func_800DA980()
 }
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01_events", func_800DB790);
-
-const VECTOR3 D_800CCA1C =
-{
+const VECTOR3 D_800CCA1C = {
     0x00000CCC,
     0xFFFFE99A,
     0x0010BB33,
 };
-
-const VECTOR3 D_800CCA28 =
-{
+const VECTOR3 D_800CCA28 = {
     0x000004CC,
     0xFFFFE99A,
     0x0010BB33,
 };
-
-const VECTOR3 D_800CCA34 =
-{
+const VECTOR3 D_800CCA34 = {
     0x00000CCC,
     0xFFFFE334,
-    0x0010BB33
+    0x0010BB33,
 };
-
-const VECTOR3 D_800CCA40 =
-{
+const VECTOR3 D_800CCA40 = {
     0x00000CCC,
     0xFFFFE99A,
-    0x00111E66
+    0x00111E66,
 };
-
-const VECTOR3 D_800CCA4C =
-{
+const VECTOR3 D_800CCA4C = {
     0x000004CC,
     0xFFFFE99A,
-    0x00111E66
+    0x00111E66,
 };
-
-const VECTOR3 D_800CCA58 =
-{
+const VECTOR3 D_800CCA58 = {
     0x00000CCC,
     0xFFFFE334,
-    0x00108199
+    0x00108199,
 };
 
 const char D_800CCA64[] = "BIRD";
@@ -437,11 +426,11 @@ void func_800DBAA0() // 0x800DBAA0
             g_SysWork.player_4C.chara_0.position_18.vz = FP_METER(269.7f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(5.0f);
 
-            g_Timer0 = Q19_12(26.0f);
+            g_timer1 = Q19_12(26.0f);
 
             func_8008616C(0, true, 3, 0, false);
 
-            g_SoundCmdIdx = 0;
+            g_SdCmdIndex = 0;
             SysWork_StateStepIncrement();
 
         case 1:
@@ -457,16 +446,16 @@ void func_800DBAA0() // 0x800DBAA0
             SysWork_StateStepIncrement();
 
         case 4:
-            var_a1     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q19_12(15.0f), Q12_SHIFT);
-            g_Timer0 = MIN(var_a1, Q19_12(37.0f));
-            if (g_Timer0 >= Q19_12(37.0f))
+            var_a1     = g_timer1 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q19_12(15.0f), Q12_SHIFT);
+            g_timer1 = MIN(var_a1, Q19_12(37.0f));
+            if (g_timer1 >= Q19_12(37.0f))
             {
                 SysWork_StateStepIncrement();
             }
             break;
 
         case 5:
-            func_800869E4(0x3E, &g_SoundCmdIdx, &D_800DE124);
+            func_800869E4(0x3E, &g_SdCmdIndex, &D_800DE124);
             break;
 
         case 6:
@@ -474,7 +463,7 @@ void func_800DBAA0() // 0x800DBAA0
             break;
 
         case 7:
-            func_800869E4(0x3F, &g_SoundCmdIdx, &D_800DE124);
+            func_800869E4(0x3F, &g_SdCmdIndex, &D_800DE124);
             break;
 
         case 8:
@@ -482,16 +471,16 @@ void func_800DBAA0() // 0x800DBAA0
             SysWork_StateStepIncrement();
 
         case 9:
-            var_a1     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q19_12(15.0f), Q12_SHIFT);
-            g_Timer0 = MIN(var_a1, Q19_12(52.0f));
-            if (g_Timer0 >= Q19_12(52.0f))
+            var_a1     = g_timer1 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q19_12(15.0f), Q12_SHIFT);
+            g_timer1 = MIN(var_a1, Q19_12(52.0f));
+            if (g_timer1 >= Q19_12(52.0f))
             {
                 SysWork_StateStepIncrement();
             }
             break;
 
         case 10:
-            g_Timer0 = MAX(g_Timer0, Q19_12(53.0f));
+            g_timer1 = MAX(g_timer1, Q19_12(53.0f));
             D_800E23A1 = 0x80;
             Savegame_EventFlagSetAlt(EventFlag_45);
             
@@ -503,10 +492,10 @@ void func_800DBAA0() // 0x800DBAA0
             SysWork_StateStepIncrement();
 
         case 12:
-            var_a1     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q19_12(15.0f), Q12_SHIFT);
-            g_Timer0 = MIN(var_a1, Q19_12(75.0f));
+            var_a1     = g_timer1 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q19_12(15.0f), Q12_SHIFT);
+            g_timer1 = MIN(var_a1, Q19_12(75.0f));
 
-            if (g_Timer0 >= Q19_12(75.0f))
+            if (g_timer1 >= Q19_12(75.0f))
             {
                 SysWork_StateStepIncrement();
             }
@@ -517,14 +506,14 @@ void func_800DBAA0() // 0x800DBAA0
 
             D_800E23A1 = 0xE0;
             Savegame_EventFlagSetAlt(EventFlag_46);
-            g_Timer0 = Q19_12(76.0f);
+            g_timer1 = Q19_12(76.0f);
 
             SysWork_StateStepIncrement();
 
         case 14:
-            var_a1     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q19_12(18.0f), Q12_SHIFT);
-            g_Timer0 = MIN(var_a1, Q19_12(115.0f));
-            if (g_Timer0 >= Q19_12(115.0f))
+            var_a1     = g_timer1 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q19_12(18.0f), Q12_SHIFT);
+            g_timer1 = MIN(var_a1, Q19_12(115.0f));
+            if (g_timer1 >= Q19_12(115.0f))
             {
                 SysWork_StateStepIncrement();
             }
@@ -536,9 +525,9 @@ void func_800DBAA0() // 0x800DBAA0
             SysWork_StateStepIncrement();
 
         case 16:
-            var_a1     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q19_12(18.0f), Q12_SHIFT);
-            g_Timer0 = MIN(var_a1, Q19_12(146.0f));
-            if (g_Timer0 >= Q19_12(146.0f))
+            var_a1     = g_timer1 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q19_12(18.0f), Q12_SHIFT);
+            g_timer1 = MIN(var_a1, Q19_12(146.0f));
+            if (g_timer1 >= Q19_12(146.0f))
             {
                 SysWork_StateStepIncrement();
             }
@@ -551,9 +540,9 @@ void func_800DBAA0() // 0x800DBAA0
             SysWork_StateStepIncrement();
 
         case 18:
-            var_a1     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q19_12(18.0f), Q12_SHIFT);
-            g_Timer0 = MIN(var_a1, Q19_12(147.0f));
-            if (g_Timer0 >= Q19_12(147.0f))
+            var_a1     = g_timer1 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q19_12(18.0f), Q12_SHIFT);
+            g_timer1 = MIN(var_a1, Q19_12(147.0f));
+            if (g_timer1 >= Q19_12(147.0f))
             {
                 SysWork_StateStepIncrement();
             }
@@ -564,9 +553,9 @@ void func_800DBAA0() // 0x800DBAA0
             SysWork_StateStepIncrement();
 
         case 20:
-            var_a1     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q19_12(18.0f), Q12_SHIFT);
-            g_Timer0 = MIN(var_a1, Q19_12(154.0f));
-            if (g_Timer0 >= Q19_12(154.0f))
+            var_a1     = g_timer1 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q19_12(18.0f), Q12_SHIFT);
+            g_timer1 = MIN(var_a1, Q19_12(154.0f));
+            if (g_timer1 >= Q19_12(154.0f))
             {
                 SysWork_StateStepIncrement();
             }
@@ -577,7 +566,7 @@ void func_800DBAA0() // 0x800DBAA0
             func_800D39F4(g_SysWork.npcs_1A0);
             func_8008616C(0, false, 2, 0, false);
 
-            g_Timer0 = NO_VALUE;
+            g_timer1 = NO_VALUE;
 
             vcReturnPreAutoCamWork(1);
 
@@ -591,20 +580,20 @@ void func_800DBAA0() // 0x800DBAA0
             break;
     }
 
-    if (g_Timer0 >= 0)
+    if (g_timer1 >= 0)
     {
-        Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, &D_800CC908, g_Timer0, FS_BUFFER_11);
+        Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, &D_800CC908, g_timer1, FS_BUFFER_11);
 
         if (g_SysWork.sysStateStep_C >= 20)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, D_800CCA64, g_Timer0, FS_BUFFER_11);
+            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, D_800CCA64, g_timer1, FS_BUFFER_11);
             g_SysWork.npcs_1A0[0].position_18.vx += FP_MULTIPLY(Math_Sin(g_SysWork.npcs_1A0[0].rotation_24.vy), FP_METER(0.2f), Q12_SHIFT);
             g_SysWork.npcs_1A0[0].position_18.vz += FP_MULTIPLY(Math_Cos(g_SysWork.npcs_1A0[0].rotation_24.vy), FP_METER(0.2f), Q12_SHIFT);
         }
 
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_Timer0, FS_BUFFER_11));
-        vcUserCamTarget(&g_CutsceneCameraPositionTarget, NULL, true);
-        vcUserWatchTarget(&g_CutsceneCameraLookAtTarget, NULL, true);
+        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_cutsceneCameraTarget, &g_cutsceneCameraLookAt, NULL, g_timer1, FS_BUFFER_11));
+        vcUserCamTarget(&g_cutsceneCameraTarget, NULL, true);
+        vcUserWatchTarget(&g_cutsceneCameraLookAt, NULL, true);
     }
 }
 
@@ -696,9 +685,9 @@ void Event_MapItemTake() // 0x800DC3C8
             Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, D_800CCA64, 0, FS_BUFFER_11);
 
             // Set camera.
-            vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, 0, FS_BUFFER_11));
-            vcUserCamTarget(&g_CutsceneCameraPositionTarget, NULL, true);
-            vcUserWatchTarget(&g_CutsceneCameraLookAtTarget, NULL, true);
+            vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_cutsceneCameraTarget, &g_cutsceneCameraLookAt, NULL, 0, FS_BUFFER_11));
+            vcUserCamTarget(&g_cutsceneCameraTarget, NULL, true);
+            vcUserWatchTarget(&g_cutsceneCameraLookAt, NULL, true);
 
             // Warp player.
             g_SysWork.player_4C.chara_0.position_18.vx = FP_METER(4.585938f);
@@ -765,11 +754,11 @@ void Event_HandgunItemTake() // 0x800DC8C8
             func_8004690C(Sfx_Unk1322);
 
             g_SavegamePtr->eventFlags_168[1] &= ~(1 << 20);
-            g_SoundCmdIdx                        = 0;
+            g_SdCmdIndex                        = 0;
             SysWork_StateStepIncrement();
 
         case 1:
-            func_800869E4(68, &g_SoundCmdIdx, &D_800DE128); // This_is_not_a_dream!
+            func_800869E4(68, &g_SdCmdIndex, &D_800DE128); // This_is_not_a_dream!
             break;
 
         default:
@@ -840,7 +829,7 @@ void func_800DC9C8() // 0x800DC9C8
         func_8003ED74(6, 3);
     }
 
-    g_Timer0 = 0;
+    g_timer1 = 0;
     D_800E2560 = 0;
 
     // There are 6 NPCs max. Maybe related?

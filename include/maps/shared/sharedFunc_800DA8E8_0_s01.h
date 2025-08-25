@@ -1,22 +1,21 @@
-// `StateStepIncrement_AfterTime`
-void sharedFunc_800DA8E8_0_s01(s32* timer, s32 inc, s32 timeMin, s32 timeMax, bool setTimerToMax, bool incStateIdx) // 0x800DA8E8
+void sharedFunc_800DA8E8_0_s01(s32* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x800DA8E8
 {
-    if (*timer < timeMin)
+    if (*arg0 < arg2)
     {
-        *timer = timeMin;
+        *arg0 = arg2;
         return;
     }
 
-    *timer += FP_MULTIPLY_PRECISE(g_DeltaTime0, inc, Q12_SHIFT);
+    *arg0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, arg1, Q12_SHIFT);
 
-    if (timeMax < *timer)
+    if (arg3 < *arg0)
     {
-        if (setTimerToMax)
+        if (arg4 != 0)
         {
-            *timer = timeMax;
+            *arg0 = arg3;
         }
 
-        if (incStateIdx)
+        if (arg5 != 0)
         {
             SysWork_StateStepIncrement();
         }
