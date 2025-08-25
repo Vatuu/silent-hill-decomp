@@ -1972,7 +1972,7 @@ s32 func_80069B24(VECTOR3* vec0, VECTOR3* vec1, s_SubCharacter* chara) // 0x8006
     s32 var1;
 
     var0 = SetSp(0x1F8003D8);
-    var1 = func_80069BA8(vec0, vec1, chara, func_80069FFC(vec0, vec1, chara));
+    var1 = func_80069BA8(vec0, vec1, chara, func_80069FFC(vec0, vec1, chara)); // TODO: Backtrack all references to `vec0`, i think it should be `s_func_8006A178*`
     SetSp(var0);
     return var1; 
 }
@@ -1981,7 +1981,47 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80069BA8); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80069DF0); // 0x80069DF0
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80069FFC); // 0x80069FFC
+s32 func_80069FFC(s_func_8006A178* arg0, VECTOR3* arg1, s_SubCharacter* chara) // 0x80069FFC
+{
+    s_func_80069FFC sp28;
+    VECTOR3         sp40;
+    s32             sp50;
+    s32             sp54;
+    s32             var_s1;
+
+    sp28.field_0.vx = chara->position_18.vx + chara->field_D8.field_4;
+    sp28.field_0.vy = chara->position_18.vy - FP_METER(0.02f);
+    sp28.field_0.vz = chara->position_18.vz + chara->field_D8.field_6;
+
+    if (func_800426E4(chara->position_18.vx, chara->position_18.vz) == 0)
+    {
+        func_8006A178(arg0, 0, 0, 0, 0x8000);
+        return 1;
+    }
+
+    sp28.field_C.vy = chara->field_C8;
+    sp28.field_C.vx = chara->field_CA;
+    sp28.field_C.vz = chara->field_D4;
+
+    sp28.field_12 = chara->field_E0_8;
+
+    sp40 = *arg1;
+
+    switch (chara->model_0.charaId_0)
+    {
+        case 1:
+        case 4:
+        case 5:
+        case 12:
+            var_s1 = 1;
+            break;
+        default:
+            var_s1 = 0;
+            break;
+    }
+
+    return func_8006A4A8(arg0, &sp40, &sp28, var_s1, func_800425D8(&sp50), sp50, 0, 0, func_8006A1A4(&sp54, chara, 1), sp54);
+}
 
 void func_8006A178(s_func_8006A178* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8006A178
 {

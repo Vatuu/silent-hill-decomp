@@ -1657,6 +1657,13 @@ typedef struct _s_800AFBF4
 } s_800AFBF4;
 STATIC_ASSERT_SIZEOF(s_800AFBF4, 12);
 
+typedef struct
+{
+    VECTOR3  field_0;
+    SVECTOR3 field_C;
+    s8       field_12;
+} s_func_80069FFC;
+
 // ========
 // GLOBALS
 // ========
@@ -3395,6 +3402,8 @@ void func_800699E4(s_IpdCollisionData* collData);
 void func_800699F8(s_func_800699F8* coll, s32 posX, s32 posZ);
 
 s32 func_80069B24(VECTOR3* vec0, VECTOR3* vec1, s_SubCharacter* chara);
+
+s32 func_80069FFC(s_func_8006A178* arg0, VECTOR3* arg1, s_SubCharacter* chara);
 
 void func_8006A178(s_func_8006A178* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
