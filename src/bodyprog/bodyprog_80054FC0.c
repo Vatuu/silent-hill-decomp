@@ -1966,13 +1966,13 @@ void func_800699F8(s_func_800699F8* coll, s32 posX, s32 posZ) // 0x800699F8
     coll->field_6 = sp38.field_8C;
 }
 
-s32 func_80069B24(VECTOR3* vec0, VECTOR3* vec1, s_SubCharacter* chara) // 0x80069B24
+s32 func_80069B24(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara) // 0x80069B24
 {
     s32 var0; 
     s32 var1;
 
     var0 = SetSp(0x1F8003D8);
-    var1 = func_80069BA8(vec0, vec1, chara, func_80069FFC(vec0, vec1, chara)); // TODO: Backtrack all references to `vec0`, i think it should be `s_func_8006A178*`
+    var1 = func_80069BA8(arg0, arg1, chara, func_80069FFC(arg0, arg1, chara));
     SetSp(var0);
     return var1; 
 }
@@ -1981,7 +1981,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80069BA8); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80069DF0); // 0x80069DF0
 
-s32 func_80069FFC(s_func_8006A178* arg0, VECTOR3* arg1, s_SubCharacter* chara) // 0x80069FFC
+s32 func_80069FFC(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara) // 0x80069FFC
 {
     s_func_80069FFC sp28;
     VECTOR3         sp40;
@@ -2023,11 +2023,11 @@ s32 func_80069FFC(s_func_8006A178* arg0, VECTOR3* arg1, s_SubCharacter* chara) /
     return func_8006A4A8(arg0, &sp40, &sp28, var_s1, func_800425D8(&sp50), sp50, 0, 0, func_8006A1A4(&sp54, chara, 1), sp54);
 }
 
-void func_8006A178(s_func_8006A178* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8006A178
+void func_8006A178(s_800C4590* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8006A178
 {
-    arg0->field_0  = arg1;
-    arg0->field_4  = arg2;
-    arg0->field_8  = arg3;
+    arg0->field_0.vx = arg1;
+    arg0->field_0.vy = arg2;
+    arg0->field_0.vz = arg3;
     arg0->field_12 = 0;
     arg0->field_10 = 0;
     arg0->field_14 = 0;
@@ -9412,7 +9412,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
         sp30.vz = sp20.vz;
     }
 
-    func_80069B24(&D_800C4590.field_0, &sp20, chara);
+    func_80069B24(&D_800C4590, &sp20, chara);
 
     if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP1_S05)
     {
