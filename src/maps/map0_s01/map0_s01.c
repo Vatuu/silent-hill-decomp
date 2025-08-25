@@ -419,7 +419,56 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D6EC4);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D7120);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D71F0);
+s32 func_800D71F0(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
+{
+    s32 var_v1;
+    s32 sq;
+
+    if (arg1 == 0)
+    {
+        return arg0;
+    }
+    if (arg2 != 0)
+    {
+        if (arg1 < 0)
+        {
+            arg1 = -arg1;
+        }
+
+        sq = (FP_MULTIPLY_PRECISE(arg2, arg2, 12) << 12);
+        sq /= (arg1*2);
+
+        if (arg3 <= 0)
+        {
+            arg3 = -arg3;
+        }
+
+        if (arg3 < sq)
+        {
+            var_v1 = SquareRoot12(FP_MULTIPLY_PRECISE(arg3, arg1 * 2, 12));
+            if (var_v1 == 0)
+            {
+                var_v1 = 1;
+            }
+
+            if (arg2 > 0)
+            {
+                if (var_v1 < arg2)
+                {
+                    arg2 = var_v1;
+                }
+            }
+            else
+            {
+                if (arg2 < -var_v1)
+                {
+                    arg2 = -var_v1;
+                }
+            }
+        }
+    }
+    return func_800D7120(arg0, arg1, arg2);
+}
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D72E8);
 
