@@ -11,9 +11,9 @@
  * - Animation funcs
  */
 
-s8 Sound_StereoBalanceGet(VECTOR3* pos) // 0x80040A64
+s8 Sound_StereoBalanceGet(VECTOR3* soundPos) // 0x80040A64
 {
-    #define SOUND_STEREO_BALANCE_RANGE 127
+    #define STEREO_BALANCE_RANGE 127
 
     VECTOR3 camPos;
     VECTOR  vec0;
@@ -28,17 +28,17 @@ s8 Sound_StereoBalanceGet(VECTOR3* pos) // 0x80040A64
         return 0;
     }
 
-    // Compute normal from input and camera positions.
+    // Compute normal from camera and sound source positions.
     vwGetViewPosition(&camPos);
-    vec0.vx = (pos->vx - camPos.vx) >> 6;
-    vec0.vy = (pos->vy - camPos.vy) >> 6;
-    vec0.vz = (pos->vz - camPos.vz) >> 6;
+    vec0.vx = (soundPos->vx - camPos.vx) >> 6;
+    vec0.vy = (soundPos->vy - camPos.vy) >> 6;
+    vec0.vz = (soundPos->vz - camPos.vz) >> 6;
     VectorNormal(&vec0, &vec1);
 
     // Compute stereo balance.
     Vw_CoordHierarchyMatrixCompute(vwGetViewCoord(), &mat);
     dot     = Math_MultiplyMatrix(mat, vec1);
-    balance = CLAMP(dot, -SOUND_STEREO_BALANCE_RANGE, SOUND_STEREO_BALANCE_RANGE);
+    balance = CLAMP(dot, -STEREO_BALANCE_RANGE, STEREO_BALANCE_RANGE);
     return balance;
 }
 

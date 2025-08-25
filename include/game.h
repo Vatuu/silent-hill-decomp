@@ -1217,7 +1217,7 @@ typedef struct _SysWork
     s32             timer_20;
     s32             timer_24;
     s32             field_28;
-    s32             timer_2C;
+    q19_12          timer_2C; // Cutscene message timer?
     s32             field_30;
     s8              unk_34[4];
     s_PlayerCombat  playerCombatInfo_38; // Something related to weapons and attack. This is a struct as `func_8003CD6C` requires one and `GameFs_MapLoad` input is pointing here.

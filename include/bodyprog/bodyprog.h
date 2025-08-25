@@ -2408,11 +2408,11 @@ void func_800317CC(s_FsImageDesc* image0, s_FsImageDesc* image1, s16 arg2);
 
 void func_80031AAC(s_FsImageDesc* image);
 
-/** @brief Apply motion blur to scene.
+/** @brief Applies motion blur to the scene.
  *
- * This is used only in the loading screen.
+ * Used only in the loading screen.
  */
-s32 Gfx_MotionBlur(s32 arg0); // 0x80031CCC
+s32 Gfx_MotionBlur(s32 arg0);
 
 void Gfx_DebugStringPosition(s16 x, s16 y);
 
@@ -2521,7 +2521,13 @@ s32 func_8003F6F0(s32 arg0, s32 arg1, s32 arg2);
 
 void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s32 weight);
 
-/** @brief Computes the weighted average of `a` and `b`. */
+/** @brief Computes the weighted average of `a` and `b`.
+ *
+ * @param a First value.
+ * @param b Second value.
+ * @param weight Weight as a fixed-point alpha in Q3.12, range `[0, 4096]`. 
+ * @return Weighted average of `a` and `b`.
+ */
 s32 Math_WeightedAverageGet(s32 a, s32 b, s32 weight);
 
 void func_8003FCB0(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructUnk3* arg2, s32 arg3);
@@ -2538,8 +2544,12 @@ void func_80040004(s_800BCE18* arg0);
 
 void func_80040014();
 
-/** Computes stereo sound balance. */
-s8 Sound_StereoBalanceGet(VECTOR3* pos);
+/** @brief Computes the stereo sound balance based on the relative position to the camera.
+ *
+ * @param soundPos Sound source position.
+ * @return Stereo sound balance in the range [-127, 127], where values affect the left-right channel balance.
+ */
+s8 Sound_StereoBalanceGet(VECTOR3* soundPos);
 
 bool func_80040B74(s32 arg0);
 
@@ -2920,7 +2930,7 @@ void func_8005B424(VECTOR3* vec0, VECTOR3* vec1);
 
 void func_80056464(s_PlmHeader* plmHeader, s32 fileIdx, s32* arg2, s32 arg3);
 
-void func_80056504(s_PlmHeader* plmHeader, char* newStr, s_FsImageDesc* arg2, s32 arg3);
+void func_80056504(s_PlmHeader* plmHeader, char* newStr, s_FsImageDesc* image, s32 arg3);
 
 void func_8005660C(s_PlmTexList* plmTexList, s_FsImageDesc* image, s32 arg2);
 
@@ -3054,7 +3064,7 @@ void func_80085DC0(bool arg0, s32 sysStateStep);
 
 void func_80085DF0();
 
-void func_80085E6C(s32 arg0, s32 arg1);
+void func_80085E6C(s32 delay, bool arg1);
 
 void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool arg3);
 
