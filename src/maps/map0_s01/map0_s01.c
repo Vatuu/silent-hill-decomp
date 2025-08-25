@@ -161,7 +161,44 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedSymbol_800D3B0C_0_s
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D3CC4);
 
+#ifdef NON_MATCHING // TODO .rodata
+void func_800D3DFC(s_SubCharacter* arg0)
+{
+    s32 angle; // i think this is angle
+    s32 temp_a0;
+    s32 temp_v0;
+
+    temp_a0 = arg0->field_40;
+    if (temp_a0 < 0x20)
+    {
+        temp_v0 = g_MapOverlayHeader.charaSpawns_24C[0][temp_a0].flags_6;
+        switch (temp_v0)
+        {
+            case 1:
+            case 8:
+            case 9:
+                angle = 0;
+                break;
+            case 10:
+                angle = Q19_12(1.0f);
+                break;
+            case 2:
+            case 3:
+                angle = Q19_12(0.3f);
+                break;
+            default:
+                angle = Q19_12(0.7f);
+                break;
+        }
+        if (func_80080514(temp_a0) >= angle)
+        {
+            func_80037DC4(arg0);
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D3DFC);
+#endif
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D3EB8);
 
