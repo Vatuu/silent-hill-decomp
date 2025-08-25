@@ -1667,12 +1667,12 @@ s32 func_8005D974() // 0x8005D974
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005D9B8); // 0x8005D9B8
 
-void func_8005DC1C(s32 sfx, VECTOR3* pos, s32 arg2, s32 soundType)
+void func_8005DC1C(s32 sfx, const VECTOR3* pos, s32 arg2, s32 soundType)
 {
     func_8005DC3C(sfx, pos, arg2, soundType, 0);
 }
 
-void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 soundType, s32 pitch) // 0x8005DC3C
+void func_8005DC3C(s32 sfx, const VECTOR3* pos, s32 arg2, s32 soundType, s32 pitch) // 0x8005DC3C
 {
     s32 vol1;
     s32 balance;
