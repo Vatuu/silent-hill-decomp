@@ -20,11 +20,13 @@ void func_800DA980()
     s_SubCharacter* chara1;
     u8 temp_s0_5;
 
+#define CUTSCENE_SKIP (52)
+
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
         g_SysWork.sysStateStep_C > 5 &&
         g_SysWork.sysStateStep_C < 47)
     {
-        SysWork_NextStateStepSet(52);
+        SysWork_NextStateStepSet(CUTSCENE_SKIP);
     }
     
     switch (g_SysWork.sysStateStep_C)
@@ -57,7 +59,7 @@ void func_800DA980()
         
         case 2:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 0x4D, false);
-            func_8008616C(0, 0, 0, 0, 0);
+            func_8008616C(0, false, 0, 0, false);
             func_800D2054();
             SysWork_StateStepIncrement();
             break;
@@ -67,7 +69,7 @@ void func_800DA980()
             SysWork_StateStepIncrement();
         
         case 4:
-            func_8008616C(1, 0, 0, 0, 0);
+            func_8008616C(1, false, 0, 0, false);
             break;
         
         case 5:
@@ -299,7 +301,7 @@ void func_800DA980()
             SysWork_StateStepIncrement();
         
         case 49:
-            func_8008616C(2, 1, 0, 0, 0);
+            func_8008616C(2, true, 0, 0, false);
             break;
         
         case 50:
@@ -311,8 +313,8 @@ void func_800DA980()
             SysWork_StateStepReset();
             break;
         
-        case 52:
-            func_8008616C(2, 1, 0, 0, 0);
+        case CUTSCENE_SKIP:
+            func_8008616C(2, true, 0, 0, false);
             break;
         
         case 53:
