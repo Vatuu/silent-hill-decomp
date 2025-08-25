@@ -66,7 +66,7 @@ const char* g_MapMessages[] =
     "\tI_have_more_important_stuff_to_do. ~E ",
 };
 
-const VECTOR3 D_800CC8FC = {0x00000CCC, 0xFFFFECCD, 0x0010D800};
-const char D_800CC908[] = "HERO";
-const char D_800CC910[] = "SIBYL";
+const VECTOR3 D_800CC8FC   = { 0x00000CCC, 0xFFFFECCD, 0x0010D800 };
+const char    D_800CC908[] = "HERO";
+const char    D_800CC910[] = "SIBYL";
 

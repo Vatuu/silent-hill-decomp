@@ -1047,27 +1047,27 @@ void Event_CommonItemTake(u32 pickupType, s32 globalPickupId) // 0x800879FC
     switch (pickupType)
     {
         case CommonPickupItemId_FirstAidKit:
-            Event_ItemTake(InventoryItemId_FirstAidKit, InventoryItemCount_Default, globalPickupId, MapMsgIdx_FirstAidSelect);
+            Event_ItemTake(InventoryItemId_FirstAidKit, DEFAULT_PICKUP_ITEM_COUNT, globalPickupId, MapMsgIdx_FirstAidSelect);
             break;
 
         case CommonPickupItemId_HealthDrink:
-            Event_ItemTake(InventoryItemId_HealthDrink, InventoryItemCount_Default, globalPickupId, MapMsgIdx_HealthDrinkSelect);
+            Event_ItemTake(InventoryItemId_HealthDrink, DEFAULT_PICKUP_ITEM_COUNT, globalPickupId, MapMsgIdx_HealthDrinkSelect);
             break;
 
         case CommonPickupItemId_Ampoule:
-            Event_ItemTake(InventoryItemId_Ampoule, InventoryItemCount_Default, globalPickupId, MapMsgIdx_AmpouleSelect);
+            Event_ItemTake(InventoryItemId_Ampoule, DEFAULT_PICKUP_ITEM_COUNT, globalPickupId, MapMsgIdx_AmpouleSelect);
             break;
 
         case CommonPickupItemId_HandgunBullets:
-            Event_ItemTake(InventoryItemId_HandgunBullets, ammoCountMult * InventoryItemCount_HandgunAmmo, globalPickupId, MapMsgIdx_HandgunAmmoSelect);
+            Event_ItemTake(InventoryItemId_HandgunBullets, ammoCountMult * HANDGUN_AMMO_PICKUP_ITEM_COUNT, globalPickupId, MapMsgIdx_HandgunAmmoSelect);
             break;
 
         case CommonPickupItemId_ShotgunShells:
-            Event_ItemTake(InventoryItemId_ShotgunShells, ammoCountMult * InventoryItemCount_ShotgunAmmo, globalPickupId, MapMsgIdx_ShotgunAmmoSelect);
+            Event_ItemTake(InventoryItemId_ShotgunShells, ammoCountMult * SHOTGUN_AMMO_PICKUP_ITEM_COUNT, globalPickupId, MapMsgIdx_ShotgunAmmoSelect);
             break;
 
         case CommonPickupItemId_RifleShells:
-            Event_ItemTake(InventoryItemId_RifleShells, ammoCountMult * InventoryItemCount_RifleAmmo, globalPickupId, MapMsgIdx_RifleAmmoSelect);
+            Event_ItemTake(InventoryItemId_RifleShells, ammoCountMult * RIFLE_AMMO_PICKUP_ITEM_COUNT, globalPickupId, MapMsgIdx_RifleAmmoSelect);
             break;
     }
 }

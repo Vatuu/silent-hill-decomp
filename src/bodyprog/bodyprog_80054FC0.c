@@ -1667,12 +1667,12 @@ s32 func_8005D974() // 0x8005D974
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005D9B8); // 0x8005D9B8
 
-void func_8005DC1C(s32 sfx, const VECTOR3* pos, s32 volume, s32 soundType)
+void func_8005DC1C(s32 sfx, const VECTOR3* pos, s32 vol, s32 soundType)
 {
-    func_8005DC3C(sfx, pos, volume, soundType, 0);
+    func_8005DC3C(sfx, pos, vol, soundType, 0);
 }
 
-void func_8005DC3C(s32 sfx, const VECTOR3* pos, s32 volume, s32 soundType, s32 pitch) // 0x8005DC3C
+void func_8005DC3C(s32 sfx, const VECTOR3* pos, s32 vol, s32 soundType, s32 pitch) // 0x8005DC3C
 {
     s32 vol1;
     s32 balance;
@@ -1687,22 +1687,22 @@ void func_8005DC3C(s32 sfx, const VECTOR3* pos, s32 volume, s32 soundType, s32 p
         balance = Sound_StereoBalanceGet(pos);
     }
 
-    if (volume >= 0x100)
+    if (vol >= 0x100)
     {
-        volume = 0xFF;
+        vol = 0xFF;
     }
-    else if (volume < 0)
+    else if (vol < 0)
     {
-        volume = 0;
+        vol = 0;
     }
 
     if (!(soundType & (1 << 1)))
     {
-        vol1 = func_8005D9B8(pos, volume);
+        vol1 = func_8005D9B8(pos, vol);
     }
     else
     {
-        vol1 = volume;
+        vol1 = vol;
     }
 
     if (vol1 >= 0x100)
@@ -1720,7 +1720,7 @@ void func_8005DC3C(s32 sfx, const VECTOR3* pos, s32 volume, s32 soundType, s32 p
     }
 }
 
-void func_8005DD44(s32 sfx, VECTOR3* pos, s32 volume, s8 pitch) // 0x8005DD44
+void func_8005DD44(s32 sfx, VECTOR3* pos, s32 vol, s8 pitch) // 0x8005DD44
 {
     s32 vol;
     s32 balance;
@@ -1734,16 +1734,16 @@ void func_8005DD44(s32 sfx, VECTOR3* pos, s32 volume, s8 pitch) // 0x8005DD44
         balance = Sound_StereoBalanceGet(pos);
     }
 
-    if (volume >= 256)
+    if (vol >= 256)
     {
-        volume = 255;
+        vol = 255;
     }
-    else if (volume < 0)
+    else if (vol < 0)
     {
-        volume = 0;
+        vol = 0;
     }
 
-    vol = func_8005D9B8(pos, volume);
+    vol = func_8005D9B8(pos, vol);
     if (vol >= 256)
     {
         vol = 255;

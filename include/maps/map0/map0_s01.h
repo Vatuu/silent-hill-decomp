@@ -50,14 +50,14 @@ extern u16 D_800DE124;
 
 extern u16 D_800DE128;
 
-extern s32 g_timer1;
+extern s32 g_Timer0;
 
-extern u8 g_SdCmdIndex;
+extern u8 g_SoundCmdIdx;
 
 extern u8 D_800E23A1;
 
-extern VECTOR3 g_cutsceneCameraTarget;
-extern VECTOR3 g_cutsceneCameraLookAt;
+extern VECTOR3 g_CutsceneCameraPositionTarget;
+extern VECTOR3 g_CutsceneCameraLookAtTarget;
 void Chara_Spawn(s32, s32, s32, s32, s32, s32);
 void func_800D2054();
 
@@ -67,7 +67,7 @@ extern s16 D_800E2560;
 /** Size might be 6. Possibly related to NPCs. */
 extern s_800BCE18_2BEC_0 D_800E2570[];
 
-extern u16 g_SdCmdTable[];
+extern u16 g_SoundCmds[];
 extern u8 D_800DE250;
 extern u8 D_800DE251;
 
@@ -78,7 +78,7 @@ s32 func_800D7440(VECTOR* vec0, VECTOR* vec1, s_SubCharacter* chara);
 
 void func_800D76A0(s_SubCharacter* chara);
 
-void func_800D7E88(s_Model* model);
+s32 func_800D7E88(s_Model* model);
 
 void func_800D8714(s_SubCharacter*, s32, s32);
 

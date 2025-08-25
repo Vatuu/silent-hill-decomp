@@ -3055,13 +3055,13 @@ void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara);
 s32 func_8005D974();
 
 /** Spatial SFX func? */
-void func_8005DC1C(s32 sfx, const VECTOR3* pos, s32 volume, s32 soundType); // Types assumed.
+void func_8005DC1C(s32 sfx, const VECTOR3* pos, s32 vol, s32 soundType); // Types assumed.
 
 /** Spatial SFX func? */
-void func_8005DC3C(s32 sfx, const VECTOR3* pos, s32 volume, s32 soundType, s32 pitch);
+void func_8005DC3C(s32 sfx, const VECTOR3* pos, s32 vol, s32 soundType, s32 pitch);
 
 /** Spatial SFX func? */
-void func_8005DD44(s32 sfx, VECTOR3* pos, s32 volume, s8 pitch); // Types assumed.
+void func_8005DD44(s32 sfx, VECTOR3* pos, s32 vol, s8 pitch); // Types assumed.
 
 s32 func_8005F680(s_func_800699F8* arg0);
 
