@@ -74,6 +74,10 @@ extern u8 D_800DE251;
 /** `arg0` is a struct pointer, might be `s_SubCharacter`. */
 void func_800D2364(s32 arg0);
 
+void func_800D3CC4(s_SubCharacter* chara);
+
+void func_800D3DFC(s_SubCharacter* chara);
+
 s32 func_800D7440(VECTOR* vec0, VECTOR* vec1, s_SubCharacter* chara);
 
 void func_800D76A0(s_SubCharacter* chara);
@@ -118,6 +122,8 @@ void func_800DC9C8();
 void func_800DD2EC(s32 arg0);
 
 s32 func_800D1E5C();
+
+void func_800D2054(void);
 
 s32 func_800D20FC();
 

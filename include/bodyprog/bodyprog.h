@@ -3954,7 +3954,7 @@ void func_8007FDE0(s8, s32* sfx, s8* pitch, s8*);
 s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1);
 
 /** Generates a random angle? */
-s32 func_80080514();
+s32 func_80080514(void);
 
 /** Computes (abs(value) - subtractor) * copysign(value). */
 s32 Math_PreservedSignSubtract(s32 val, s32 subtractor);

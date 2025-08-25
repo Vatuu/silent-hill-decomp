@@ -2015,6 +2015,7 @@ s32 func_80069FFC(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara) // 0x8
         case 12:
             var_s1 = 1;
             break;
+
         default:
             var_s1 = 0;
             break;
@@ -11513,7 +11514,7 @@ s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1) // 0x80080478
     return (ratan2(unk, y1 - y0) << 16) | atan2Delta;
 }
 
-s32 func_80080514() // 0x80080514
+s32 func_80080514(void) // 0x80080514
 {
     s32 rand16;
 

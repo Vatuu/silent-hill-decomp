@@ -77,7 +77,8 @@ s32 func_800D1E5C() // 0x800D1E5C
 
 #include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800D2048
 
-void func_800D2054(void) {
+void func_800D2054(void)
+{
     g_SysWork.playerCombatInfo_38.equippedWeapon_F = EquippedWeaponId_Handgun;
     func_8003CD6C(&g_SysWork.playerCombatInfo_38);
     g_SysWork.playerCombatInfo_38.equippedWeapon_F = NO_VALUE;
@@ -165,57 +166,64 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D3AC0);
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedSymbol_800D3B0C_0_s01); // 0x800D3B0C
 
 #ifdef NON_MATCHING // TODO .rodata
-void func_800D3CC4(s_SubCharacter* arg0)
+void func_800D3CC4(s_SubCharacter* chara)
 {
-    u32 temp_v0;
-    s32 var_s1;
+    u32  keyframeIdx;
+    bool cond;
 
-    sharedData_800E21D0_0_s01 |= 0x80000000;
-    var_s1 = 0;
-    switch (arg0->model_0.stateStep_3)
+    sharedData_800E21D0_0_s01 |= 1 << 31;
+    cond = false;
+
+    switch (chara->model_0.stateStep_3)
     {
         case 0:
-            var_s1 = 1;
-            arg0->model_0.anim_4.animIdx_0 = 0x2F;
-            arg0->model_0.stateStep_3 = 1;
+            cond = true;
+            chara->model_0.anim_4.animIdx_0 = 47;
+            chara->model_0.stateStep_3 = 1;
             break;
 
         case 2:
-            var_s1 = 1;
-            arg0->model_0.anim_4.animIdx_0 = 0x31;
-            arg0->model_0.stateStep_3 = 3;
-            /* fallthrough */
+            cond = true;
+            chara->model_0.anim_4.animIdx_0 = 49;
+            chara->model_0.stateStep_3 = 3;
+
         case 1:
         case 3:
-            arg0->properties_E4.player.flags_11C |= 0x10000;
-            /* fallthrough */
+            chara->properties_E4.player.flags_11C |= 1 << 16;
+
         default:
             break;
+
         case 4:
-            var_s1 = 1;
-            arg0->model_0.anim_4.animIdx_0 = 0x1F;
-            arg0->model_0.stateStep_3 = 5;
-            /* fallthrough */
+            cond = true;
+            chara->model_0.anim_4.animIdx_0 = 31;
+            chara->model_0.stateStep_3 = 5;
+
         case 5:
-            arg0->properties_E4.player.flags_11C &= 0xFFFEFFFF;
+            chara->properties_E4.player.flags_11C &= ~(1 << 16);
             break;
+
         case 6:
-            if (arg0->model_0.anim_4.animIdx_0 == 0x27) {
-                arg0->model_0.stateStep_3 = 7;
+            if (chara->model_0.anim_4.animIdx_0 == 39)
+            {
+                chara->model_0.stateStep_3 = 7;
             }
             break;
+
         case 7:
-            arg0->model_0.state_2 = 0;
-            arg0->model_0.stateStep_3 = 0xD;
-            sharedSymbol_800D3B0C_0_s01(arg0);
+            chara->model_0.state_2 = 0;
+            chara->model_0.stateStep_3 = 13;
+            sharedSymbol_800D3B0C_0_s01(chara);
             break;
     }
-    func_800D2C0C(arg0, 0);
-    if (var_s1 != 0)
+
+    func_800D2C0C(chara, 0);
+
+    if (cond)
     {
-        temp_v0 = func_80044918(&arg0->model_0.anim_4)->keyframeIdx0_C;
-        arg0->model_0.anim_4.keyframeIdx0_8 = temp_v0;
-        arg0->model_0.anim_4.time_4 = FP_TO(temp_v0, Q12_SHIFT);
+        keyframeIdx = func_80044918(&chara->model_0.anim_4)->keyframeIdx0_C;
+        chara->model_0.anim_4.keyframeIdx0_8 = keyframeIdx;
+        chara->model_0.anim_4.time_4 = FP_TIME(keyframeIdx);
     }
 }
 #else
@@ -223,37 +231,39 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D3CC4);
 #endif
 
 #ifdef NON_MATCHING // TODO .rodata
-void func_800D3DFC(s_SubCharacter* arg0)
+void func_800D3DFC(s_SubCharacter* chara)
 {
-    s32 angle; // i think this is angle
-    s32 temp_a0;
-    s32 temp_v0;
+    s32 angle; // Maybe not angle.
+    s32 flags;
 
-    temp_a0 = arg0->field_40;
-    if (temp_a0 < 0x20)
+    if (chara->field_40 < 0x20)
     {
-        temp_v0 = g_MapOverlayHeader.charaSpawns_24C[0][temp_a0].flags_6;
-        switch (temp_v0)
+        flags = g_MapOverlayHeader.charaSpawns_24C[0][chara->field_40].flags_6;
+        switch (flags)
         {
             case 1:
             case 8:
             case 9:
-                angle = 0;
+                angle = FP_ANGLE(0.0f);
                 break;
+
             case 10:
-                angle = Q19_12(1.0f);
+                angle = FP_ANGLE(360.0f);
                 break;
+
             case 2:
             case 3:
-                angle = Q19_12(0.3f);
+                angle = FP_ANGLE(108.0f);
                 break;
+
             default:
-                angle = Q19_12(0.7f);
+                angle = FP_ANGLE(252.0f);
                 break;
         }
-        if (func_80080514(temp_a0) >= angle)
+
+        if (func_80080514() >= angle)
         {
-            func_80037DC4(arg0);
+            func_80037DC4(chara);
         }
     }
 }
