@@ -72,7 +72,7 @@ void func_800DBAA0() // 0x800DBAA0
             break;
 
         case 6:
-            func_80085E6C(0x800, 0);
+            func_80085E6C(FP_TIME(0.5f), false);
             break;
 
         case 7:
@@ -97,7 +97,7 @@ void func_800DBAA0() // 0x800DBAA0
             D_800E23A1 = 0x80;
             Savegame_EventFlagSetAlt(EventFlag_45);
             
-            func_80085E6C(0x1800, 0);
+            func_80085E6C(FP_TIME(1.5f), false);
             break;
 
         case 11:

@@ -516,12 +516,12 @@ void func_80056464(s_PlmHeader* plmHeader, s32 fileIdx, s32* arg2, s32 arg3) // 
     func_80056558(plmHeader, sp10, arg2, arg3);
 }
 
-void func_80056504(s_PlmHeader* plmHeader, char* newStr, s_FsImageDesc* arg2, s32 arg3) // 0x80056504
+void func_80056504(s_PlmHeader* plmHeader, char* newStr, s_FsImageDesc* image, s32 arg3) // 0x80056504
 {
     char sp10[8];
 
     StringCopy(sp10, newStr);
-    func_80056558(plmHeader, sp10, arg2, arg3);
+    func_80056558(plmHeader, sp10, image, arg3);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80056558); // 0x80056558

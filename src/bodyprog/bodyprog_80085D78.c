@@ -39,20 +39,20 @@ void func_80085DF0() // 0x80085DF0
 {
     g_SysWork.timer_2C += g_DeltaTime1;
 
-    if (g_MapOverlayHeader.func_EC() != NULL || g_SysWork.timer_2C > 4096)
+    if (g_MapOverlayHeader.func_EC() != NULL || g_SysWork.timer_2C > FP_TIME(1.0f))
     {
         SysWork_StateStepIncrement();
     }
 }
 
-void func_80085E6C(s32 arg0, s32 arg1) // 0x80085E6C
+void func_80085E6C(s32 delay, bool arg1) // 0x80085E6C
 {
-    s32 unkTime;
+    s32 elapsedTime;
 
-    unkTime            = g_SysWork.timer_2C + g_DeltaTime1;
-    g_SysWork.timer_2C = unkTime;
+    elapsedTime        = g_SysWork.timer_2C + g_DeltaTime1;
+    g_SysWork.timer_2C = elapsedTime;
 
-    if (arg0 < unkTime)
+    if (delay < elapsedTime)
     {
         func_80085D78(arg1);
     }
@@ -789,7 +789,7 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
             g_SysWork.field_10++;
 
         case 1:
-            func_80085E6C(0x333, 1);
+            func_80085E6C(FP_TIME(0.2f), true);
             break;
         
         case 2:
