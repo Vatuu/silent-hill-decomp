@@ -3114,7 +3114,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_800382EC); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_80038354); // 0x80038354
 
-bool Math_Distance2dCheck(VECTOR3* pos0, VECTOR3* pos1, s32 radius) // 0x80038A6C
+bool Math_Distance2dCheck(const VECTOR3* pos0, const VECTOR3* pos1, s32 radius) // 0x80038A6C
 {
     s32 deltaX;
     s32 deltaZ;
@@ -3149,17 +3149,16 @@ bool Math_Distance2dCheck(VECTOR3* pos0, VECTOR3* pos1, s32 radius) // 0x80038A6
     return sum > radiusSqr;
 }
 
-s32 func_80038B44(VECTOR3* pos) // 0x80038B44
+s32 Camera_Distance2dGet(const VECTOR3* pos) // 0x80038B44
 {
     VECTOR3 camPos;
-    s32     x;
-    s32     y;
+    s32     deltaX;
+    s32     deltaY;
 
     vwGetViewPosition(&camPos);
-
-    x = (camPos.vx - pos->vx) >> 6;
-    y = (camPos.vz - pos->vz) >> 6;
-    return FP_MULTIPLY_PRECISE(x, x, Q12_SHIFT) + FP_MULTIPLY_PRECISE(y, y, Q12_SHIFT);
+    deltaX = (camPos.vx - pos->vx) >> 6;
+    deltaY = (camPos.vz - pos->vz) >> 6;
+    return FP_MULTIPLY_PRECISE(deltaX, deltaX, Q12_SHIFT) + FP_MULTIPLY_PRECISE(deltaY, deltaY, Q12_SHIFT);
 }
 
 void GameState_InGame_Update() // 0x80038BD4

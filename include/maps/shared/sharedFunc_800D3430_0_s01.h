@@ -14,7 +14,7 @@ s32 sharedFunc_800D3430_0_s01(s_SubCharacter* chara, s32* arg1, s32* arg2)
 
     if (arg1 != NULL)
     {
-        *arg1 = Math_Distance2d(&chara->position_18, (VECTOR3*)&chara->properties_E4.npc.field_104);
+        *arg1 = Math_Distance2dGet(&chara->position_18, (VECTOR3*)&chara->properties_E4.npc.field_104);
     }
 
     if (arg2 != NULL)

@@ -74,7 +74,32 @@ void func_80041074(s32 arg0, void* arg1, SVECTOR* arg2, VECTOR3* arg3) // 0x8004
     func_800414E0(arg0, &sp18, arg1, sp28, sp2C);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800410D8); // 0x800410D8
+void func_800410D8(VECTOR3* pos0, s32* arg1, s32* arg2, SVECTOR* rot, VECTOR3* pos1)
+{
+    MATRIX        mat;
+    SVECTOR       vec0;
+    GsCOORDINATE2 coord;
+    VECTOR        vec1;
+    VECTOR        vec2;
+    s32           flag;
+
+    memset(&vec0, 0, sizeof(SVECTOR));
+
+    coord.super      = NULL;
+    coord.workm      = GsIDMATRIX;
+    coord.workm.t[0] = FP_FROM(pos1->vx, Q4_SHIFT);
+    coord.workm.t[1] = FP_FROM(pos1->vy, Q4_SHIFT);
+    coord.workm.t[2] = FP_FROM(pos1->vz, Q4_SHIFT);
+    coord.flg        = true;
+
+    func_80049AF8(&coord, &mat);
+    SetRotMatrix(&mat);
+    SetTransMatrix(&mat);
+    RotTrans(&vec0, &vec1, &flag);
+    ApplyRotMatrix(rot, &vec2);
+    func_8004122C(arg1, arg2, &vec1, &vec2);
+    func_8004137C(pos0, &vec1, &vec2, ReadGeomScreen());
+}
 
 void func_8004122C(s32* angle0, s32* angle1, VECTOR* arg2, VECTOR* arg3) // 0x8004122C
 {

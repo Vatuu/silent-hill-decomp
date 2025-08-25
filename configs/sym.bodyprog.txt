@@ -289,6 +289,7 @@ Gfx_MapMsg_Draw                             = 0x800365B8; // type:func
 Gfx_MapMsg_SelectionUpdate                  = 0x80036B5C; // type:func
 Chara_PositionUpdateFromParams              = 0x800371E8; // type:func
 Math_Distance2dCheck                        = 0x80038A6C; // type:func
+Camera_Distance2dGet                        = 0x80038B44; // type:func
 GameState_InGame_Update                     = 0x80038BD4; // type:func
 SysState_Gameplay_Update                    = 0x80038F6C; // type:func
 SysState_GamePaused_Update                  = 0x800391E8; // type:func
@@ -487,10 +488,12 @@ Game_SavegameResetPlayer                    = 0x8007E530; // type:func
 GameFs_PlayerMapAnimLoad                    = 0x8007EB64; // type:func
 Player_AnimGetSomething                     = 0x8007F308; // type:func
 Math_ShortestAngle                          = 0x8007FB34; // type:func
-Math_Distance2d                             = 0x8008037C; // type:func
+Math_DistanceGet                            = 0x800802CC; // type:func
+Math_Distance2dGet                          = 0x8008037C; // type:func
+Input_SelectClickSet                        = 0x80080458; // type:func
 Math_PreservedSignSubtract                  = 0x80080594; // type:func
 Math_MulFixed                               = 0x800808D4; // type:func
-Math_GetMagnitudeShift                      = 0x800808F8; // type:func
+Math_MagnitudeShiftGet                      = 0x800808F8; // type:func
 
 //---------------------------------------------------------------
 //--- PA: 0x05BDE0   VA: 0x80080940   subsegment: c, view/vc_main

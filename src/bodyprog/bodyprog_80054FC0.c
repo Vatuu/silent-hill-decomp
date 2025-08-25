@@ -11420,7 +11420,7 @@ void func_8007FD4C(s32 arg0) // 0x8007FD4C
 // Large function.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007FDE0); // 0x8007FDE0
 
-s32 func_800802CC(VECTOR3* pos0, VECTOR3* pos1) // 0x800802CC
+s32 Math_DistanceGet(const VECTOR3* pos0, const VECTOR3* pos1) // 0x800802CC
 {
     s32 deltaX = pos1->vx - pos0->vx;
     s32 deltaY = pos1->vy - pos0->vy;
@@ -11430,7 +11430,7 @@ s32 func_800802CC(VECTOR3* pos0, VECTOR3* pos1) // 0x800802CC
                         FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT));
 }
 
-s32 Math_Distance2d(VECTOR3* pos0, VECTOR3* pos1) // 0x8008037C
+s32 Math_Distance2dGet(const VECTOR3* pos0, const VECTOR3* pos1) // 0x8008037C
 {
     s32 deltaX = pos1->vx - pos0->vx;
     s32 deltaZ = pos1->vz - pos0->vz;
@@ -11440,7 +11440,7 @@ s32 Math_Distance2d(VECTOR3* pos0, VECTOR3* pos1) // 0x8008037C
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800803FC); // 0x800803FC
 
-void func_80080458() // 0x80080458
+void Input_SelectClickSet() // 0x80080458
 {
     g_Controller1->btnsClicked_10 |= ControllerFlag_Select;
 }
@@ -11654,7 +11654,7 @@ s32 Math_MulFixed(s32 val0, s32 val1, s32 shift) // 0x800808D4
     return (val0 << (32 - shift)) | (lo >> shift);
 }
 
-s32 Math_GetMagnitudeShift(s32 mag) // 0x800808F8
+s32 Math_MagnitudeShiftGet(s32 mag) // 0x800808F8
 {
     #define THRESHOLD_0 (1 << 14)
     #define THRESHOLD_1 ((1 << 18) - 1)

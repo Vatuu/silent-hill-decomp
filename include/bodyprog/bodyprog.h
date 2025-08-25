@@ -2634,7 +2634,7 @@ bool func_80040B74(s32 arg0);
 
 void func_80041074(s32 arg0, void* arg1, SVECTOR* arg2, VECTOR3* arg3);
 
-void func_800410D8(VECTOR3*, s32*, s32*, SVECTOR*, VECTOR3*);
+void func_800410D8(VECTOR3* pos0, s32* arg1, s32* arg2, SVECTOR* rot, VECTOR3* pos1);
 
 void func_8004122C(s32* angle0, s32* angle1, VECTOR* arg2, VECTOR* arg3);
 
@@ -2776,8 +2776,6 @@ void func_80045D28(u8 caseArg);
 
 void sd_init();
 
-u8 func_80045B28();
-
 void sd_work_init();
 
 u8 Sd_PlaySfx(u16 sfx, s8 balance, u8 vol);
@@ -2840,8 +2838,6 @@ void func_800478DC(u8 cmd);
 
 void func_80047A70();
 
-void func_8004729C(u16);
-
 void Sd_SetVolBgm(s16 volLeft, s16 volRight);
 
 void Sd_SetVolXa(s16 volLeft, s16 volRight);
@@ -2901,8 +2897,6 @@ void func_800485D8();
 
 /** Boolean. */
 u8 func_80048954(s32 com, u8* param, u8* res);
-
-void func_8004729C(u16);
 
 /** Returns `true` if player has usable ammo in inventory (i.e. ammo + gun needed for it, or gun with ammo loaded). */
 s32 func_8004C328();
@@ -3274,8 +3268,6 @@ void func_8008992C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32));
 void func_800899BC(s_SysWork_2514* arg0, s32 arg1);
 
 bool func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u8* arg3);
-
-void func_8008992C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32));
 
 s32 func_8008A0CC(); /** Returns 0. */
 
@@ -3653,16 +3645,42 @@ void func_80037E78(s_SubCharacter* chara);
 
 s32 func_800382B0(s32 arg0);
 
-s32 func_800802CC(VECTOR3* pos0, VECTOR3* pos1);
+/** @brief Computes the distance between two positions.
+ *
+ * @param pos0 First position.
+ * @param pos1 Second position.
+ * @return Distance between positions.
+ */
+s32 Math_DistanceGet(const VECTOR3* pos0, const VECTOR3* pos1);
 
-/** @brief Returns the distance on the XZ plane between two positions. */
-s32 Math_Distance2d(VECTOR3* pos0, VECTOR3* pos1);
+/** @brief Computes the 2D distance on the XZ plane between two positions.
+ *
+ * @param pos0 First position.
+ * @param pos1 Second position.
+ * @return 2D distance between positions.
+ */
+s32 Math_Distance2dGet(const VECTOR3* pos0, const VECTOR3* pos1);
 
-/** @brief Performs a distance check on the XZ plane between two positions. */
-bool Math_Distance2dCheck(VECTOR3* pos0, VECTOR3* pos1, s32 radius);
+/** @brief Forces a clicked controller input status for `ControllerFlag_Select`. */
+void Input_SelectClickSet();
 
-/** Computes the 2D distance on the XZ plane between the input position and the camera position. */
-s32 func_80038B44(VECTOR3* pos);
+/** @brief Performs a 2D distance check on the XZ plane between two positions.
+ *
+ * @param pos0 First position.
+ * @param pos1 Second position.
+ * @param radius Intersection radius.
+ * @return `true` if the 2D distance exceeds the radius, `false` otherwise.
+ */
+bool Math_Distance2dCheck(const VECTOR3* pos0, const VECTOR3* pos1, s32 radius);
+
+/** @brief Computes the 2D distance on the XZ plane from the reference position to the camera.
+ *
+ * TODO: What's `>> 6` doing?
+ *
+ * @param pos Reference position.
+ * @return 2D distance to the camera.
+ */
+s32 Camera_Distance2dGet(const VECTOR3* pos);
 
 void func_80037F24(s32);
 
@@ -3694,11 +3712,7 @@ s8 func_80039F90();
 
 void SysState_ReadMessage_Update(s32 arg0);
 
-void SysWork_SavegameUpdatePlayer();
-
 void func_8003A16C();
-
-void SysWork_SavegameReadPlayer();
 
 void SysState_SaveMenu_Update();
 
@@ -3866,8 +3880,6 @@ void func_8007E5AC();
 
 void func_8007E860();
 
-void func_8007E9C4();
-
 /** Loads player animations for a given map. Maybe for cutscenes? */
 void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 
@@ -3902,12 +3914,6 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord);
 void func_8007E9C4();
 
 void func_8007F14C(u8 arg0);
-
-void func_8007F32C();
-
-void func_8007FB94(s_SubCharacter*, s_MainCharacterExtra*, s32);
-
-void func_8007FD4C(s32);
 
 /** Resets several global variables to 0. */
 void func_8007F1CC();
@@ -3946,9 +3952,6 @@ void func_8007FD4C(s32 arg0);
 /** Returns data in last 3 pointer args. */
 void func_8007FDE0(s8, s32* sfx, s8* pitch, s8*);
 
-/** Forces ControllerFlag_Select button press. */
-void func_80080458();
-
 s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1);
 
 /** Generates a random angle? */
@@ -3972,7 +3975,7 @@ s32 func_80080884(s32 posX, s32 posZ);
 s32 func_800808AC(s32 posX, s32 posZ);
 
 /** Returns a Q shift based on a magnitude. */
-s32 Math_GetMagnitudeShift(s32 mag);
+s32 Math_MagnitudeShiftGet(s32 mag);
 
 s32 func_80080A10();
 

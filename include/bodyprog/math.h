@@ -228,8 +228,8 @@
 /** @brief Converts floating-point degrees to unsigned fixed-point degrees in Q3.12 format, range `[0, 4096]`.
  * Mapping is direct.
  *
- * @note 1 degree = 11.377778.
- * 
+ * @note 1 degree = 11.377778 units.
+ *
  * @param deg Degrees as `float`.
  * @return Unsigned fixed-point degrees in Q3.12, range `[0, 4096]` (`s16`).
  */
@@ -265,7 +265,7 @@
 /** @brief Converts floating-point radians in the range `[-PI, PI]` to fixed-point radians in the range `[0, 0x5000]`.
  * Mapping is direct.
  *
- * @note Pi = 10240.
+ * @note Pi = 10240 units.
  *
  * @param rad Radians as `float`.
  * @return Fixed-point radians, range `[0, 0x5000]` (`s32`).
@@ -276,7 +276,7 @@
 
 /** @brief Converts floating-point meters to fixed-point meters in Q19.12 format.
  *
- * @note 1 meter = 4096.
+ * @note 1 meter = 4096 units.
  *
  * @param met Meters as `float`.
  * @return Fixed-point meters in Q19.12 (`s32`).
@@ -286,7 +286,7 @@
 
 /** @brief Converts floating-point seconds to fixed-point seconds in Q19.12 format.
  *
- * @note 1 second == 4096.
+ * @note 1 second == 4096 units.
  *
  * @param sec Seconds as `float`.
  * @return Fixed-point seconds in Q19.12 (`s32`).
