@@ -96,8 +96,7 @@ void func_800DA7FC();
 
 void Gfx_LoadingScreen_StageString();
 
-/** Event function. */
-void func_800DBAA0();
+void Event_AirScreamerIntroCutscene();
 
 void Event_PocketRadioItemTake();
 
@@ -117,7 +116,7 @@ void Event_EmptyFunction();
 void Event_HealthItemTake();
 
 /** @brief Handles the handgun pickup event. */
-void Event_HandgunItemTake();
+void Event_AirScreamerDie();
 
 void func_800DC9C8();
 
@@ -129,6 +128,7 @@ void func_800D2054(void);
 
 s32 func_800D20FC();
 
-void func_800DB790(void);
+void Event_ToBeContinued(void);
+void Event_CafeCutscene();
 
 #endif
