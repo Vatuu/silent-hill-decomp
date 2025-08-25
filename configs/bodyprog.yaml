@@ -91,7 +91,7 @@ segments:
                                              # Jumptable: `func_8007EBBC`
                                              # Jumptable: `func_8007F14C`
                                              
-      - [0x5C80, rodata] # Jumptable: `func_8007FDE0` and part of `func_80071CE8`
+      - [0x5C80, rodata] # Jumptable: `func_8007FDE0` and part of `Player_LogicUpdate`
       
       - [0x5CF0, .rodata, view/vc_main]      # Jumptable: `vcRetFarWatchRate`
                                              # Jumptable: `vcSetFlagsByCamMvType`

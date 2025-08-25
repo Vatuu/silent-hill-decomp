@@ -20,6 +20,11 @@ struct _SubCharacter;
 #define MEMORY_CARD_SLOT_COUNT   2
 #define CONTROLLER_COUNT_MAX     2
 
+#define DEFAULT_PICKUP_ITEM_COUNT      1
+#define HANDGUN_AMMO_PICKUP_ITEM_COUNT 15
+#define SHOTGUN_AMMO_PICKUP_ITEM_COUNT 6
+#define RIFLE_AMMO_PICKUP_ITEM_COUNT   6
+
 #define EVENT_FLAG5_FIRST_TIME_SAVE_GAME (1 << 26)
 
 #define MAP_MSG_CODE_MARKER         '~' /** Message code start. */
@@ -56,6 +61,9 @@ struct _SubCharacter;
 /** @brief Checks if a specified map has been collected. */
 #define HAS_MAP(mapIdx) \
     ((((u32*)&g_SavegamePtr->hasMapsFlags_164)[(mapIdx) / 32] >> ((mapIdx) % 32)) & (1 << 0))
+
+#define WeaponId_AttackVariantGet(weaponId, type) \
+	((weaponId) + ((type) * 10))
 
 /** Each map has its own messages, with the first 15 hardcoded to be the same. */
 typedef enum _MapMsgIdx
@@ -359,7 +367,6 @@ typedef enum _InventoryCmdId
     InventoryCmdId_Unk11         = 11 // Flashlight in daytime?
 } e_InventoryCmdId;
 
-/** @brief Inventory item IDs. */
 typedef enum _InventoryItemId
 {
     InventoryItemId_Empty                = NO_VALUE,
@@ -461,16 +468,24 @@ typedef enum _CommonPickupItemType
     CommonPickupItemId_ShotgunShells  = 5
 } s_CommonPickupItemType;
 
+
+typedef enum _AttackInputType
+{
+	AttackInputType_Tap      = 0,
+	AttackInputType_Hold     = 1,
+	AttackInputType_Multitap = 2
+} e_AttackInputType;
+
 /** @brief Equipped weapon IDs. Derivative of `e_InventoryItemId`.
  *
  * Maybe weapon state instead?
- * Name is likely inacurrate as some of values from the few uses of this enum
- * change in certain cases. Examples:
+ * In intances where this enum is used in code related to melee weapons
+ * the Id changes depending in the attack the player is performing. For example:
  *
- * The kitchen knife ID changes to 10 if the user holds the Action
- * button and 20 if they tap rapidly.
+ * If the player perform a tap attack the id doesn't change, if they perform a hold
+ * attack the Id is multiplied by 10 and if the player performs a multitap attack
+ * the Id multiplies by 20.
  *
- * The axe ID changes to 17 or 27 depending on whether the user presses or holds Action.
  *
  * See `func_80071968`.
  */
@@ -528,23 +543,23 @@ typedef enum _PlayerBone
 
 typedef enum _PlayerFlags
 {
-    PlayerFlag_None               = 0,
-    PlayerFlag_Unk0               = 1 << 0,
-    PlayerFlag_Shoot              = 1 << 1,
-    PlayerFlag_Unk2               = 1 << 2,
+    PlayerFlag_None             = 0,
+    PlayerFlag_Unk0             = 1 << 0,
+    PlayerFlag_Shoot            = 1 << 1,
+    PlayerFlag_Unk2             = 1 << 2,
     PlayerFlag_WallStopAnimKind = 1 << 3, // Depending on the frame the player suddenly stopped running it could reproduce one of two animations, mainly differing in which leg Harry extends.
-    PlayerFlag_Unk4               = 1 << 4,
-    PlayerFlag_Unk5               = 1 << 5, // PlayerFlag_MoveBackward?
-    PlayerFlag_Unk6               = 1 << 6,
-    PlayerFlag_Unk7               = 1 << 7, // Not used anywhere yet.
-    PlayerFlag_Unk8               = 1 << 8,
-    PlayerFlag_Unk9               = 1 << 9,
-    PlayerFlag_Unk10              = 1 << 10, // PlayerFlag_MeleeAttack?
-    PlayerFlag_Unk11              = 1 << 11, // PlayerFlag_GunAttack?
-    PlayerFlag_Unk12              = 1 << 12,
-    PlayerFlag_Unk13              = 1 << 13,
-    PlayerFlag_DamageReceived     = 1 << 14,
-    PlayerFlag_Moving             = 1 << 15
+    PlayerFlag_Unk4             = 1 << 4,
+    PlayerFlag_Unk5             = 1 << 5, // PlayerFlag_MoveBackward?
+    PlayerFlag_Unk6             = 1 << 6,
+    PlayerFlag_Unk7             = 1 << 7, // Not used anywhere yet.
+    PlayerFlag_Unk8             = 1 << 8,
+    PlayerFlag_Unk9             = 1 << 9,
+    PlayerFlag_Unk10            = 1 << 10, // PlayerFlag_MeleeAttack?
+    PlayerFlag_Unk11            = 1 << 11, // PlayerFlag_GunAttack?
+    PlayerFlag_Unk12            = 1 << 12,
+    PlayerFlag_Unk13            = 1 << 13,
+    PlayerFlag_DamageReceived   = 1 << 14,
+    PlayerFlag_Moving           = 1 << 15
 } e_PlayerFlags;
 
 /** @brief Names for each character index used in the game, `g_Chara_FileInfo` array associates each character ID with anim/model/texture files. */
@@ -938,8 +953,8 @@ STATIC_ASSERT_SIZEOF(s_800D5710, 0x34);
 typedef struct _SubCharaPropertiesPlayer
 {
     s32    field_E4;
-    s32    afkTimer_E8; // Increments every tick for 10 seconds before AFK anim starts.
-    s32    positionY_EC;
+    q19_12 afkTimer_E8; // Increments every tick for 10 seconds before AFK anim starts.
+    q19_12 positionY_EC;
     s32    field_F0;
     s32    field_F4;
     s32    runTimer_F8;      // Tick counter?
@@ -1208,7 +1223,7 @@ typedef struct _SysWork
     s32             sysStateStep_C; /** Current state step of `sysState_8` the game is in. */
     s32             field_10;       // Sometimes assigned to same thing as `sysStateStep_C`. Contains selected entry index from pickup item dialogs?
     s32             field_14;
-    s32             field_18;
+    s32             field_18; // probably a vector3
     s32             timer_1C;
     s32             timer_20;
     s32             timer_24;

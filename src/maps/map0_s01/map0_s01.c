@@ -77,7 +77,13 @@ s32 func_800D1E5C() // 0x800D1E5C
 
 #include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800D2048
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D2054);
+void func_800D2054(void)
+{
+    g_SysWork.playerCombatInfo_38.equippedWeapon_F = EquippedWeaponId_Handgun;
+    func_8003CD6C(&g_SysWork.playerCombatInfo_38);
+    g_SysWork.playerCombatInfo_38.equippedWeapon_F = NO_VALUE;
+    func_8003D03C();
+}
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D2094);
 
@@ -159,9 +165,111 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D3AC0);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedSymbol_800D3B0C_0_s01); // 0x800D3B0C
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D3CC4);
+#ifdef NON_MATCHING // TODO .rodata
+void func_800D3CC4(s_SubCharacter* chara)
+{
+    u32  keyframeIdx;
+    bool cond;
 
+    sharedData_800E21D0_0_s01 |= 1 << 31;
+    cond = false;
+
+    switch (chara->model_0.stateStep_3)
+    {
+        case 0:
+            cond = true;
+            chara->model_0.anim_4.animIdx_0 = 47;
+            chara->model_0.stateStep_3 = 1;
+            break;
+
+        case 2:
+            cond = true;
+            chara->model_0.anim_4.animIdx_0 = 49;
+            chara->model_0.stateStep_3 = 3;
+
+        case 1:
+        case 3:
+            chara->properties_E4.player.flags_11C |= 1 << 16;
+
+        default:
+            break;
+
+        case 4:
+            cond = true;
+            chara->model_0.anim_4.animIdx_0 = 31;
+            chara->model_0.stateStep_3 = 5;
+
+        case 5:
+            chara->properties_E4.player.flags_11C &= ~(1 << 16);
+            break;
+
+        case 6:
+            if (chara->model_0.anim_4.animIdx_0 == 39)
+            {
+                chara->model_0.stateStep_3 = 7;
+            }
+            break;
+
+        case 7:
+            chara->model_0.state_2 = 0;
+            chara->model_0.stateStep_3 = 13;
+            sharedSymbol_800D3B0C_0_s01(chara);
+            break;
+    }
+
+    func_800D2C0C(chara, 0);
+
+    if (cond)
+    {
+        keyframeIdx = func_80044918(&chara->model_0.anim_4)->keyframeIdx0_C;
+        chara->model_0.anim_4.keyframeIdx0_8 = keyframeIdx;
+        chara->model_0.anim_4.time_4 = FP_TIME(keyframeIdx);
+    }
+}
+#else
+INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D3CC4);
+#endif
+
+#ifdef NON_MATCHING // TODO .rodata
+void func_800D3DFC(s_SubCharacter* chara)
+{
+    s32 angle; // Maybe not angle.
+    s32 flags;
+
+    if (chara->field_40 < 0x20)
+    {
+        flags = g_MapOverlayHeader.charaSpawns_24C[0][chara->field_40].flags_6;
+        switch (flags)
+        {
+            case 1:
+            case 8:
+            case 9:
+                angle = FP_ANGLE(0.0f);
+                break;
+
+            case 10:
+                angle = FP_ANGLE(360.0f);
+                break;
+
+            case 2:
+            case 3:
+                angle = FP_ANGLE(108.0f);
+                break;
+
+            default:
+                angle = FP_ANGLE(252.0f);
+                break;
+        }
+
+        if (func_80080514() >= angle)
+        {
+            func_80037DC4(chara);
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D3DFC);
+#endif
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D3EB8);
 
@@ -311,7 +419,56 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D6EC4);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D7120);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D71F0);
+s32 func_800D71F0(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
+{
+    s32 var_v1;
+    s32 sq;
+
+    if (arg1 == 0)
+    {
+        return arg0;
+    }
+    if (arg2 != 0)
+    {
+        if (arg1 < 0)
+        {
+            arg1 = -arg1;
+        }
+
+        sq = (FP_MULTIPLY_PRECISE(arg2, arg2, 12) << 12);
+        sq /= (arg1*2);
+
+        if (arg3 <= 0)
+        {
+            arg3 = -arg3;
+        }
+
+        if (arg3 < sq)
+        {
+            var_v1 = SquareRoot12(FP_MULTIPLY_PRECISE(arg3, arg1 * 2, 12));
+            if (var_v1 == 0)
+            {
+                var_v1 = 1;
+            }
+
+            if (arg2 > 0)
+            {
+                if (var_v1 < arg2)
+                {
+                    arg2 = var_v1;
+                }
+            }
+            else
+            {
+                if (arg2 < -var_v1)
+                {
+                    arg2 = -var_v1;
+                }
+            }
+        }
+    }
+    return func_800D7120(arg0, arg1, arg2);
+}
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D72E8);
 

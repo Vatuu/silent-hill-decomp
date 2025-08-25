@@ -293,6 +293,7 @@ Gfx_MapMsg_Draw                             = 0x800365B8; // type:func
 Gfx_MapMsg_SelectionUpdate                  = 0x80036B5C; // type:func
 Chara_PositionUpdateFromParams              = 0x800371E8; // type:func
 Math_Distance2dCheck                        = 0x80038A6C; // type:func
+Camera_Distance2dGet                        = 0x80038B44; // type:func
 GameState_InGame_Update                     = 0x80038BD4; // type:func
 SysState_Gameplay_Update                    = 0x80038F6C; // type:func
 SysState_GamePaused_Update                  = 0x800391E8; // type:func
@@ -327,7 +328,7 @@ Gfx_MainMenu_FogDraw                        = 0x8003BA08; // type:func
 Gfx_MainMenu_FogRandomize                   = 0x8003BAC4; // type:func
 Gfx_MainMenu_FogScatter                     = 0x8003BBF4; // type:func
 Gfx_MainMenu_FogUpdate                      = 0x8003BC8C; // type:func
-UnknownMapTableIdxGet                     = 0x8003BD2C; // type:func
+UnknownMapTableIdxGet                       = 0x8003BD2C; // type:func
 GameFs_BgEtcGfxLoad                         = 0x8003BE6C; // type:func
 GameFs_BgItemLoad                           = 0x8003BE9C; // type:func
 GameFs_FlameGfxLoad                         = 0x8003E710; // type:func
@@ -347,11 +348,11 @@ vcMakeHeroHeadPos                           = 0x8004047C; // type:func
 vcAddOfsToPos                               = 0x80040518; // type:func
 vcSetRefPosAndSysRef2CamParam               = 0x800405C4; // type:func
 vcSetRefPosAndCamPosAngByPad                = 0x800406D4; // type:func
-Sound_StereoBalanceGet                      = 0x80040A64; // type:func
 
 //--------------------------------------------------------------------
 //--- PA: 0x01BF04   VA: 0x80040A64   subsegment: c, bodyprog_80040A64
 //--------------------------------------------------------------------
+Sound_StereoBalanceGet                      = 0x80040A64; // type:func
 IpdHeader_CollisionDataGet                  = 0x80043BA4; // type:func
 IpdHeader_FixOffsets                        = 0x80043BC4; // type:func
 IpdHeader_FixHeaderOffsets                  = 0x80043DA4; // type:func
@@ -490,6 +491,7 @@ Player_CharaTurn_1                          = 0x80071224; // type:func
 Player_CharaRotate                          = 0x80071284; // type:func
 Player_MovementStateReset                   = 0x800713B4; // type:func
 Player_Update                               = 0x800717D0; // type:func
+Player_LogicUpdate                          = 0x80071CE8; // type:func
 Player_UpperBodyStateUpdate                 = 0x80073FC0; // type:func
 Player_UpperBodyUpdate                      = 0x80074254; // type:func
 Player_CombatAnimUpdate.234                 = 0x80074350; // filename:Player_CombatAnimUpdate type:func - Generated compilation result adds .234 at name end for some reason.
@@ -505,11 +507,13 @@ Game_PlayerMovementsReset                   = 0x8007F1CC; // type:func
 Player_AnimGetSomething                     = 0x8007F308; // type:func
 Player_Controller                           = 0x8007F32C; // type:func
 Math_ShortestAngle                          = 0x8007FB34; // type:func
-Game_GasWeaponPowerTimerValue               = 0x8007FD3C;
-Math_Distance2d                             = 0x8008037C; // type:func
+Game_GasWeaponPowerTimerValue               = 0x8007FD3C; // type:func
+Math_DistanceGet                            = 0x800802CC; // type:func
+Math_Distance2dGet                          = 0x8008037C; // type:func
+Input_SelectClickSet                        = 0x80080458; // type:func
 Math_PreservedSignSubtract                  = 0x80080594; // type:func
 Math_MulFixed                               = 0x800808D4; // type:func
-Math_GetMagnitudeShift                      = 0x800808F8; // type:func
+Math_MagnitudeShiftGet                      = 0x800808F8; // type:func
 
 //---------------------------------------------------------------
 //--- PA: 0x05BDE0   VA: 0x80080940   subsegment: c, view/vc_main

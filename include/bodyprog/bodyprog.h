@@ -31,91 +31,96 @@
 
 typedef enum _Sfx
 {
-    Sfx_Base      = 1280,
-
-    Sfx_StartGame = Sfx_Base + 1, // `SND/FIRST.VAB`
-
-    Sfx_Denied    = Sfx_Base + 24, // `1ST/BASE.VAB` onward, but loaded out of order?
-    Sfx_Back      = Sfx_Base + 25,
-    Sfx_Cancel    = Sfx_Base + 26,
-    Sfx_Confirm   = Sfx_Base + 27, // TODO: Continue this pattern.
-
-    Sfx_Unk1309   = 1309,
-    Sfx_Unk1310   = 1310,
-    
-    Sfx_Stumble0  = 1314,
+    Sfx_Base        = 1280,
+				    
+    Sfx_StartGame   = Sfx_Base + 1,  // `SND/FIRST.VAB`
+				    
+    Sfx_Denied      = Sfx_Base + 24, // `1ST/BASE.VAB` onward, but loaded out of order?
+    Sfx_Back        = Sfx_Base + 25,
+    Sfx_Cancel      = Sfx_Base + 26,
+    Sfx_Confirm     = Sfx_Base + 27, // TODO: Continue this pattern.
+				    
+    Sfx_Unk1309     = 1309,
+    Sfx_Unk1310     = 1310,
+				    
+    Sfx_Stumble0    = 1314,
 
     Sfx_HeavyBreath = 1320,
-    Sfx_Unk1321   = 1321,
-    Sfx_Unk1322   = 1322,
-    Sfx_Unk1323   = 1323,
-    Sfx_Unk1324   = 1324,
-
-    Sfx_Stumble1  = 1333,
-
-    Sfx_Unk1336   = 1336,
-    Sfx_Unk1337   = 1337,
-    Sfx_Unk1338   = 1338,
-    Sfx_Unk1339   = 1339,
-    Sfx_Unk1340   = 1340,
-    Sfx_Unk1341   = 1341,
-
-    Sfx_Unk1351   = 1351,
-    Sfx_Unk1352   = 1352,
-
-    Sfx_Unk1354   = 1354,
-
-    Sfx_Unk1358   = 1358,
-    Sfx_Unk1359   = 1359,
-    Sfx_Unk1360   = 1360,
-    Sfx_Unk1361   = 1361,
-
-    Sfx_Unk1387   = 1387,
-
-    Sfx_Unk1391   = 1391,
-
-    Sfx_Unk1396   = 1396,
-    Sfx_Unk1397   = 1397,
-    Sfx_Unk1398   = 1398,
-    Sfx_Unk1399   = 1399,
-
-    Sfx_Unk1418   = 1418,
-
-    Sfx_Unk1431   = 1431,
-    Sfx_Unk1432   = 1432,
-
-    Sfx_Unk1458   = 1458,
-    Sfx_Unk1459   = 1459,
-
-    Sfx_Unk1487   = 1487,
-
-    Sfx_Unk1490   = 1490,
-    Sfx_Unk1491   = 1491,
-
-    Sfx_Unk1501   = 1501,
-    Sfx_Unk1502   = 1502,
-
-    Sfx_Unk1504   = 1504,
-    Sfx_Unk1505   = 1505,
-
-    Sfx_Unk1521   = 1521,
-
-    Sfx_Unk1525   = 1525,
-
-    Sfx_Unk1527   = 1527,
-
-    Sfx_Unk1567   = 1567,
-
-    Sfx_Unk1590   = 1590,
-
-    Sfx_Unk1601   = 1601,
-    Sfx_Unk1602   = 1602,
-
-    Sfx_Unk1604   = 1604,
-    Sfx_Unk1605   = 1605,
-
-    Sfx_Unk1609   = 1609,
-    Sfx_Unk1610   = 1610,
+    Sfx_Unk1321     = 1321,
+    Sfx_Unk1322     = 1322,
+    Sfx_Unk1323     = 1323,
+    Sfx_Unk1324     = 1324,
+				    
+    Sfx_Stumble1    = 1333,
+				    
+    Sfx_Unk1336     = 1336,
+    Sfx_Unk1337     = 1337,
+    Sfx_Unk1338     = 1338,
+    Sfx_Unk1339     = 1339,
+    Sfx_Unk1340     = 1340,
+    Sfx_Unk1341     = 1341,
+				    
+    Sfx_Unk1351     = 1351,
+    Sfx_Unk1352     = 1352,
+				    
+    Sfx_Unk1354     = 1354,
+				    
+    Sfx_Unk1357     = 1357,
+    Sfx_Unk1358     = 1358,
+    Sfx_Unk1359     = 1359,
+    Sfx_Unk1360     = 1360,
+    Sfx_Unk1361     = 1361,
+				    
+    Sfx_Unk1373     = 1373,
+    Sfx_Unk1374     = 1374,
+    Sfx_Unk1375     = 1375,
+				    
+    Sfx_Unk1387     = 1387,
+				    
+    Sfx_Unk1391     = 1391,
+				    
+    Sfx_Unk1396     = 1396,
+    Sfx_Unk1397     = 1397,
+    Sfx_Unk1398     = 1398,
+    Sfx_Unk1399     = 1399,
+				    
+    Sfx_Unk1418     = 1418,
+				    
+    Sfx_Unk1431     = 1431,
+    Sfx_Unk1432     = 1432,
+				    
+    Sfx_Unk1458     = 1458,
+    Sfx_Unk1459     = 1459,
+				    
+    Sfx_Unk1487     = 1487,
+				    
+    Sfx_Unk1490     = 1490,
+    Sfx_Unk1491     = 1491,
+				    
+    Sfx_Unk1501     = 1501,
+    Sfx_Unk1502     = 1502,
+				    
+    Sfx_Unk1504     = 1504,
+    Sfx_Unk1505     = 1505,
+				    
+    Sfx_Unk1521     = 1521,
+				    
+    Sfx_Unk1525     = 1525,
+				    
+    Sfx_Unk1527     = 1527,
+				    
+    Sfx_Unk1567     = 1567,
+				    
+    Sfx_Unk1590     = 1590,
+				    
+    Sfx_Unk1601     = 1601,
+    Sfx_Unk1602     = 1602,
+				    
+    Sfx_Unk1604     = 1604,
+    Sfx_Unk1605     = 1605,
+				    
+    Sfx_Unk1609     = 1609,
+    Sfx_Unk1610     = 1610,
 } e_Sfx;
 
 typedef enum _MainMenuEntry
@@ -267,19 +272,6 @@ typedef struct _s_func_800699F8
     u8     unk_9[3];
 } s_func_800699F8;
 STATIC_ASSERT_SIZEOF(s_func_800699F8, 12);
-
-typedef struct
-{
-    s32 field_0;
-    s32 field_4;
-    s32 field_8;
-    s32 field_C;
-    s16 field_10;
-    s16 field_12;
-    s8  field_14;
-    s8  unk_15[3];
-    s32 field_18;
-} s_func_8006A178;
 
 typedef struct
 {
@@ -1638,9 +1630,19 @@ typedef struct
 {
     VECTOR3 field_0;
     s32     field_C; // Y height?
-    s8      unk10[4];
+    s16     field_10;
+    s16     field_12;
     s8      field_14;
+    s8      unk_15[3];
+    s32     field_18;
 } s_800C4590;
+
+typedef struct
+{
+    VECTOR3  field_0;
+    SVECTOR3 field_C;
+    s8       field_12;
+} s_func_80069FFC;
 
 // ========
 // GLOBALS
@@ -2554,13 +2556,13 @@ void func_80040014();
  * @param soundPos Sound source position.
  * @return Stereo sound balance in the range [-127, 127], where values affect the left-right channel balance.
  */
-s8 Sound_StereoBalanceGet(VECTOR3* soundPos);
+s8 Sound_StereoBalanceGet(const VECTOR3* soundPos);
 
 bool func_80040B74(s32 arg0);
 
 void func_80041074(s32 arg0, void* arg1, SVECTOR* arg2, VECTOR3* arg3);
 
-void func_800410D8(VECTOR3*, s32*, s32*, SVECTOR*, VECTOR3*);
+void func_800410D8(VECTOR3* pos0, s32* arg1, s32* arg2, SVECTOR* rot, VECTOR3* pos1);
 
 void func_8004122C(s32* angle0, s32* angle1, VECTOR* arg2, VECTOR* arg3);
 
@@ -2702,8 +2704,6 @@ void func_80045D28(u8 caseArg);
 
 void sd_init();
 
-u8 func_80045B28();
-
 void sd_work_init();
 
 u8 Sd_PlaySfx(u16 sfx, s8 balance, u8 vol);
@@ -2766,8 +2766,6 @@ void func_800478DC(u8 cmd);
 
 void func_80047A70();
 
-void func_8004729C(u16);
-
 void Sd_SetVolBgm(s16 volLeft, s16 volRight);
 
 void Sd_SetVolXa(s16 volLeft, s16 volRight);
@@ -2827,8 +2825,6 @@ void func_800485D8();
 
 /** Boolean. */
 u8 func_80048954(s32 com, u8* param, u8* res);
-
-void func_8004729C(u16);
 
 /** Returns `true` if player has usable ammo in inventory (i.e. ammo + gun needed for it, or gun with ammo loaded). */
 s32 func_8004C328();
@@ -2989,13 +2985,13 @@ void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara);
 s32 func_8005D974();
 
 /** Spatial SFX func? */
-void func_8005DC1C(s32 sfx, VECTOR3* pos, s32 arg2, s32 soundType); // Types assumed.
+void func_8005DC1C(s32 sfx, const VECTOR3* pos, s32 volume, s32 soundType); // Types assumed.
 
 /** Spatial SFX func? */
-void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 soundType, s32 pitch);
+void func_8005DC3C(s32 sfx, const VECTOR3* pos, s32 volume, s32 soundType, s32 pitch);
 
 /** Spatial SFX func? */
-void func_8005DD44(s32 sfx, VECTOR3* pos, s32 arg2, s8 pitch); // Types assumed.
+void func_8005DD44(s32 sfx, VECTOR3* pos, s32 volume, s8 pitch); // Types assumed.
 
 s32 func_8005F680(s_func_800699F8* arg0);
 
@@ -3015,9 +3011,9 @@ void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* header);
 /** Unused func? `volatile` needed for match. */
 s_DmsInterval* func_8008CA60(volatile s32 unused, s32 idx, s_DmsHeader* header);
 
-void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, char* charaName, s32 time, s_DmsHeader* header);
+void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, s32 time, s_DmsHeader* header);
 
-void Dms_CharacterGetStartPosRot(VECTOR3* pos, SVECTOR3* rot, char* charaName, s32 time, s_DmsHeader* header);
+void Dms_CharacterGetStartPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, s32 time, s_DmsHeader* header);
 
 s32 Dms_CharacterFindIdxByName(char* name, s_DmsHeader* header);
 
@@ -3156,7 +3152,7 @@ bool func_80088D0C();
 
 void func_80088D34(s32 idx);
 
-void func_80088F94(s_SubCharacter* chara);
+void func_80088F94(s_SubCharacter* chara, s32 unused1, s32 unused2);
 
 void func_80088FF4(s32 groupIdx, s32 spawnIdx, s32 spawnFlags);
 
@@ -3203,8 +3199,6 @@ void func_8008992C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32));
 void func_800899BC(s_SysWork_2514* arg0, s32 arg1);
 
 bool func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u8* arg3);
-
-void func_8008992C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32));
 
 s32 func_8008A0CC(); /** Returns 0. */
 
@@ -3323,9 +3317,11 @@ void func_800699E4(s_IpdCollisionData* collData);
 /** Getter for 2D point collision? */
 void func_800699F8(s_func_800699F8* coll, s32 posX, s32 posZ);
 
-s32 func_80069B24(VECTOR3* vec0, VECTOR3* vec1, s_SubCharacter* chara);
+s32 func_80069B24(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara);
 
-void func_8006A178(s_func_8006A178* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+s32 func_80069FFC(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara);
+
+void func_8006A178(s_800C4590* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 s32 func_8006A1A4(s32 arg0, s_SubCharacter* chara, s32 arg2);
 
@@ -3576,16 +3572,42 @@ void func_80037E78(s_SubCharacter* chara);
 
 s32 func_800382B0(s32 arg0);
 
-s32 func_800802CC(VECTOR3* pos0, VECTOR3* pos1);
+/** @brief Computes the distance between two positions.
+ *
+ * @param pos0 First position.
+ * @param pos1 Second position.
+ * @return Distance between positions.
+ */
+s32 Math_DistanceGet(const VECTOR3* pos0, const VECTOR3* pos1);
 
-/** @brief Returns the distance on the XZ plane between two positions. */
-s32 Math_Distance2d(VECTOR3* pos0, VECTOR3* pos1);
+/** @brief Computes the 2D distance on the XZ plane between two positions.
+ *
+ * @param pos0 First position.
+ * @param pos1 Second position.
+ * @return 2D distance between positions.
+ */
+s32 Math_Distance2dGet(const VECTOR3* pos0, const VECTOR3* pos1);
 
-/** @brief Performs a distance check on the XZ plane between two positions. */
-bool Math_Distance2dCheck(VECTOR3* pos0, VECTOR3* pos1, s32 radius);
+/** @brief Forces a clicked controller input status for `ControllerFlag_Select`. */
+void Input_SelectClickSet();
 
-/** Computes the 2D distance on the XZ plane between the input position and the camera position. */
-s32 func_80038B44(VECTOR3* pos);
+/** @brief Performs a 2D distance check on the XZ plane between two positions.
+ *
+ * @param pos0 First position.
+ * @param pos1 Second position.
+ * @param radius Intersection radius.
+ * @return `true` if the 2D distance exceeds the radius, `false` otherwise.
+ */
+bool Math_Distance2dCheck(const VECTOR3* pos0, const VECTOR3* pos1, s32 radius);
+
+/** @brief Computes the 2D distance on the XZ plane from the reference position to the camera.
+ *
+ * TODO: What's `>> 6` doing?
+ *
+ * @param pos Reference position.
+ * @return 2D distance to the camera.
+ */
+s32 Camera_Distance2dGet(const VECTOR3* pos);
 
 void func_80037F24(s32);
 
@@ -3617,11 +3639,7 @@ s8 func_80039F90();
 
 void SysState_ReadMessage_Update(s32 arg0);
 
-void SysWork_SavegameUpdatePlayer();
-
 void func_8003A16C();
-
-void SysWork_SavegameReadPlayer();
 
 void SysState_SaveMenu_Update();
 
@@ -3789,8 +3807,6 @@ void func_8007E5AC();
 
 void func_8007E860();
 
-void func_8007E9C4();
-
 /** Loads player animations for a given map. Maybe for cutscenes? */
 void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 
@@ -3801,8 +3817,6 @@ bool func_80071620(u8, s_SubCharacter*, s32, s32 sfx);
 
 /** Player anim handler? */
 void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, void* arg2, GsCOORDINATE2* coord);
-
-void func_80071CE8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord);
 
 void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord);
 
@@ -3818,6 +3832,9 @@ void func_8007F14C(u8 arg0);
 void func_8007FB94(s_SubCharacter*, s_MainCharacterExtra*, s32);
 
 void func_8007FD4C(s32);
+
+/** Resets several global variables to 0. */
+void func_8007F1CC();
 
 void func_8007F250(u8* ptr, s8 disableDamage);
 
@@ -3847,13 +3864,10 @@ void func_8007FD4C(s32 arg0);
 /** Returns data in last 3 pointer args. */
 void func_8007FDE0(s8, s32* sfx, s8* pitch, s8*);
 
-/** Forces ControllerFlag_Select button press. */
-void func_80080458();
-
 s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1);
 
 /** Generates a random angle? */
-s32 func_80080514();
+s32 func_80080514(void);
 
 /** Computes (abs(value) - subtractor) * copysign(value). */
 s32 Math_PreservedSignSubtract(s32 val, s32 subtractor);
@@ -3873,7 +3887,7 @@ s32 func_80080884(s32 posX, s32 posZ);
 s32 func_800808AC(s32 posX, s32 posZ);
 
 /** Returns a Q shift based on a magnitude. */
-s32 Math_GetMagnitudeShift(s32 mag);
+s32 Math_MagnitudeShiftGet(s32 mag);
 
 s32 func_80080A10();
 

@@ -34,8 +34,6 @@ sharedData_800CAA98_0_s01     = 0x800CAA98; // type:s32 - unknown type
 //------------------------------------------------------------------------
 //--- PA: 0x0034F8   VA: 0x800CCA70   subsegment: .rodata, map0_s01_events
 //------------------------------------------------------------------------
-g_ImageBufferRect             = 0x800CCAC8;
-
 
 
 //================================================
@@ -206,3 +204,10 @@ g_EventThing4A0               = 0x800E24A0;
 g_EventThing4D0               = 0x800E24D0;
 g_EventThing500               = 0x800E2500;
 g_EventThing530               = 0x800E2530;
+g_Timer0 = 0x800E239C; // type:s32
+g_SoundCmdIdx = 0x800E23A0; // type:u8
+g_CutsceneCameraPositionTarget = 0x800E2380; // type:VECTOR3
+g_CutsceneCameraLookAtTarget = 0x800E2390; // type:VECTOR3
+g_SoundCmds = 0x800DE0CC; // type:s16
+D_800DE251 = 0x800DE251; // type:u8
+D_800CC8FC = 0x800CC8FC;

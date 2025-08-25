@@ -52,13 +52,13 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
 
             default:
 
-                if (g_SysWork.player_4C.extra_128.state_1C == 1 && (s8)D_800C3950 != g_SysWork.playerCombatInfo_38.equippedWeapon_F)
+                if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_Combat && (s8)D_800C3950 != g_SysWork.playerCombatInfo_38.equippedWeapon_F)
                 {
-                    g_SysWork.player_4C.extra_128.state_1C                     = 0;
+                    g_SysWork.player_4C.extra_128.state_1C                     = PlayerState_None;
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C = PlayerFlag_None;
                 }
 
-                if (g_SysWork.player_4C.extra_128.lowerBodyState_24 >= 20 && g_SysWork.playerCombatInfo_38.equippedWeapon_F != NO_VALUE &&
+                if (g_SysWork.player_4C.extra_128.lowerBodyState_24 >= PlayerLowerBodyState_Aim && g_SysWork.playerCombatInfo_38.equippedWeapon_F != NO_VALUE &&
                     (s8)D_800C3950 == g_SysWork.playerCombatInfo_38.equippedWeapon_F)
                 {
                     extraModelPtr0 = &g_SysWork.player_4C.extra_128.model_0;
@@ -78,19 +78,19 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
                     modelPtr1      = &g_SysWork.player_4C.chara_0.model_0;
                     extraModelPtr1 = &g_SysWork.player_4C.extra_128.model_0;
 
-                    modelPtr1->anim_4.animIdx_0                          = 3;
-                    modelPtr1->anim_4.keyframeIdx0_8                     = 0;
-                    extraModelPtr1->anim_4.animIdx_0                     = 3;
-                    extraModelPtr1->anim_4.keyframeIdx0_8                = 0;
-                    g_SysWork.player_4C.chara_0.model_0.state_2          = 0;
-                    g_SysWork.player_4C.chara_0.model_0.stateStep_3      = 0;
-                    g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
-                    g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
-                    g_SysWork.player_4C.extra_128.model_0.state_2        = 0;
-                    g_SysWork.player_4C.extra_128.model_0.stateStep_3    = 0;
+                    modelPtr1->anim_4.animIdx_0                       = 3;
+                    modelPtr1->anim_4.keyframeIdx0_8                  = 0;
+                    extraModelPtr1->anim_4.animIdx_0                  = 3;
+                    extraModelPtr1->anim_4.keyframeIdx0_8             = 0;
+                    g_SysWork.player_4C.chara_0.model_0.state_2       = 0;
+                    g_SysWork.player_4C.chara_0.model_0.stateStep_3   = 0;
+                    g_SysWork.player_4C.extra_128.upperBodyState_20   = PlayerUpperBodyState_None;
+                    g_SysWork.player_4C.extra_128.lowerBodyState_24   = PlayerLowerBodyState_None;
+                    g_SysWork.player_4C.extra_128.model_0.state_2     = 0;
+                    g_SysWork.player_4C.extra_128.model_0.stateStep_3 = 0;
                 }
 
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
                 g_SysWork.player_4C.chara_0.properties_E4.player.afkTimer_E8            = 0;
         }
     }

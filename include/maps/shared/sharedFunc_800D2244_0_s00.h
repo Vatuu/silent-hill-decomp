@@ -12,7 +12,7 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
 
     if (arg0 != 0)
     {
-        g_SysWork.player_4C.extra_128.state_1C         = PlayerState_None;
+        g_SysWork.player_4C.extra_128.state_1C          = PlayerState_None;
         g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
         g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
 
@@ -29,12 +29,10 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
     else
     {
         g_SysWork.player_4C.extra_128.state_1C = 0;
-
         player->model_0.stateStep_3 = 0;
         player->model_0.state_2     = 0;
         extra->model_0.stateStep_3  = 0;
         extra->model_0.state_2      = 0;
-
         g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
         g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
     }
@@ -48,19 +46,19 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
     func_8003D01C();
 #endif
 
-    g_Player_IsShooting            = 0;
-    g_Player_IsAttacking           = 0;
-    g_Player_IsHoldAttack          = 0;
-    g_Player_IsAiming              = 0;
-    g_Player_IsRunning             = 0;
-    g_Player_IsMovingBackward      = 0;
-    g_Player_IsMovingForward       = 0;
+    g_Player_IsShooting          = 0;
+    g_Player_IsAttacking         = 0;
+    g_Player_IsHoldAttack        = 0;
+    g_Player_IsAiming            = 0;
+    g_Player_IsRunning           = 0;
+    g_Player_IsMovingBackward    = 0;
+    g_Player_IsMovingForward     = 0;
     g_Player_IsSteppingRightTap  = 0;
     g_Player_IsSteppingRightHold = 0;
-    g_Player_IsTurningRight       = 0;
+    g_Player_IsTurningRight      = 0;
     g_Player_IsSteppingLeftTap   = 0;
     g_Player_IsSteppingLeftHold  = 0;
-    g_Player_IsTurningLeft        = 0;
+    g_Player_IsTurningLeft       = 0;
 
     g_SysWork.playerCombatInfo_38.isAiming_13 = false;
 

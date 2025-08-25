@@ -441,7 +441,7 @@ void Player_MovementStateReset(s_SubCharacter* chara, e_PlayerLowerBodyState sta
 /** Audio related. */
 s32 func_800713E8(s32 animIdx, s_SubCharacter* chara, s32 arg2, s32 arg3, s32 arg4, s8 arg5);
 
-/** @brief Main update function for player logic.
+/** @brief Main update function for player functionality.
  *
  * @note SH2 symbols have a similar function named `PlayerFunction`, but code-wise they
  * doesn't share many similarities.
@@ -449,6 +449,9 @@ s32 func_800713E8(s32 animIdx, s_SubCharacter* chara, s32 arg2, s32 arg3, s32 ar
 void Player_Update(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord); // 0x800717D0
 
 void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, void* arg2, GsCOORDINATE2* coord); // 0x80071968
+
+/** @brief Main update function for player logic. */
+void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord); // 0x80071CE8
 
 /** @brief Updates `g_SysWork.player_4C.extra_128.upperBodyState_20` and prepares
  * transitions between running to and from walking animations.

@@ -21,7 +21,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
     playerChara->properties_E4.player.afkTimer_E8      = 0;
     playerChara->properties_E4.player.exertionTimer_FC = 0;
 
-    if (g_SysWork.player_4C.extra_128.state_1C == 52)
+    if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_Unk52)
     {
         if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
         {
@@ -56,20 +56,20 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
         {
             case 3:
                 g_SysWork.player_4C.extra_128.state_1C         = PlayerState_Unk56;
-				playerChara->model_0.stateStep_3                     = 0;
-				playerChara->model_0.state_2                         = 0;
-				extra->model_0.stateStep_3                           = 0;
-				extra->model_0.state_2                               = 0;
+				playerChara->model_0.stateStep_3               = 0;
+				playerChara->model_0.state_2                   = 0;
+				extra->model_0.stateStep_3                     = 0;
+				extra->model_0.state_2                         = 0;
 				g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
 				g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                 break;
 
             case 4:
-                g_SysWork.player_4C.extra_128.state_1C         = PlayerState_Unk57;
-				playerChara->model_0.stateStep_3                     = 0;
-				playerChara->model_0.state_2                         = 0;
-				extra->model_0.stateStep_3                           = 0;
-				extra->model_0.state_2                               = 0;
+                g_SysWork.player_4C.extra_128.state_1C          = PlayerState_Unk57;
+				playerChara->model_0.stateStep_3                = 0;
+				playerChara->model_0.state_2                    = 0;
+				extra->model_0.stateStep_3                      = 0;
+				extra->model_0.state_2                          = 0;
 				g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
 				g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                 break;
@@ -77,14 +77,14 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 
         if (D_800C4606 != 0)
         {
-            g_SysWork.player_4C.extra_128.state_1C         = PlayerState_Unk52;
-            playerChara->model_0.stateStep_3                     = 0;
-            playerChara->model_0.state_2                         = 0;
-            extra->model_0.stateStep_3                           = 0;
-            extra->model_0.state_2                               = 0;
+            g_SysWork.player_4C.extra_128.state_1C          = PlayerState_Unk52;
+            playerChara->model_0.stateStep_3                = 0;
+            playerChara->model_0.state_2                    = 0;
+            extra->model_0.stateStep_3                      = 0;
+            extra->model_0.state_2                          = 0;
             g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
             g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
-            D_800C4606                                           = 0;
+            D_800C4606                                      = 0;
         }
 
         g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = 0;
@@ -94,7 +94,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
     func_800699F8(&sp10, playerChara->position_18.vx, playerChara->position_18.vz);
     func_8007FDE0(sp10.field_8, &sfx, &pitch, &sp25);
 
-    if (g_SysWork.player_4C.extra_128.state_1C == 52)
+    if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_Unk52)
     {
         if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Moving)
         {

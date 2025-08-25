@@ -2810,7 +2810,7 @@ s32 Vc_VectorMagnitudeCalc(s32 x, s32 y, s32 z) // 0x80085B1C
     s32 shift;
 
     mag   = MAX(MAX(ABS(x), ABS(y)), ABS(z));
-    shift = Math_GetMagnitudeShift(mag);
+    shift = Math_MagnitudeShiftGet(mag);
     x   >>= shift;
     y   >>= shift;
     z   >>= shift;
