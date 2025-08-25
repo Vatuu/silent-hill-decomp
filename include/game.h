@@ -472,21 +472,18 @@ typedef enum _CommonPickupItemType
  *
  * The axe ID changes to 17 or 27 depending on whether the user presses or holds Action.
  *
- * Check `func_80071968`.
+ * See `func_80071968`.
  */
 typedef enum _EquippedWeaponId
 {
     EquippedWeaponId_KitchenKnife   = 0,
     EquippedWeaponId_SteelPipe      = 1,
     EquippedWeaponId_RockDrill      = 2,
-	
     EquippedWeaponId_Unk3           = 3,
-
     EquippedWeaponId_Hammer         = 4,
     EquippedWeaponId_Chainsaw       = 5,
     EquippedWeaponId_Katana         = 6,
     EquippedWeaponId_Axe            = 7,
-	
     EquippedWeaponId_Unk8           = 8,
     EquippedWeaponId_Unk9           = 9,
 
@@ -535,15 +532,15 @@ typedef enum _PlayerFlags
     PlayerFlag_Unk0               = 1 << 0,
     PlayerFlag_Shoot              = 1 << 1,
     PlayerFlag_Unk2               = 1 << 2,
-    PlayerFlag_AbruptStopAnimKind = 1 << 3, // Depending on the animation frame in which the player suddenly stopped running it could reproduce one of two animations, mainly differing in which leg Harry extends.
+    PlayerFlag_WallStopAnimKind = 1 << 3, // Depending on the frame the player suddenly stopped running it could reproduce one of two animations, mainly differing in which leg Harry extends.
     PlayerFlag_Unk4               = 1 << 4,
-    PlayerFlag_Unk5               = 1 << 5, // PlayerFlag_BackwardMove?
+    PlayerFlag_Unk5               = 1 << 5, // PlayerFlag_MoveBackward?
     PlayerFlag_Unk6               = 1 << 6,
     PlayerFlag_Unk7               = 1 << 7, // Not used anywhere yet.
     PlayerFlag_Unk8               = 1 << 8,
     PlayerFlag_Unk9               = 1 << 9,
-    PlayerFlag_Unk10              = 1 << 10, // PlayerFlag_Attack_Melee?
-    PlayerFlag_Unk11              = 1 << 11, // PlayerFlag_Attack_Gun_Hold?
+    PlayerFlag_Unk10              = 1 << 10, // PlayerFlag_MeleeAttack?
+    PlayerFlag_Unk11              = 1 << 11, // PlayerFlag_GunAttack?
     PlayerFlag_Unk12              = 1 << 12,
     PlayerFlag_Unk13              = 1 << 13,
     PlayerFlag_DamageReceived     = 1 << 14,
@@ -1072,13 +1069,12 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
 
 typedef struct _MainCharacterExtra
 {
-    s_Model model_0;              // Manage the half upper part of Harry's body animations (torso, arms and head).
+    s_Model model_0;           // Manages upper half body's animations (torso, arms, head).
     q19_12  field_18;
-    s32     playerState_1C;         // `e_PlayerState`.
-    s32     playerUpperMovement_20; // `e_PlayerUpperMovement` Handler for Harry's actions perfomed by his upper part
-    s32     playerLowerMovement_24; // `e_PlayerLowerMovement` Handler for Harry's actions perfomed by his lower part.
-    s32     field_28;               // Related to item interactions.
-                                    // Forcing specific values opens options menu. This behaviour is cause by `func_800373CC`.
+    s32     state_1C;          /** `e_PlayerState` */
+    s32     upperBodyState_20; /** `e_PlayerUpperBodyState` */
+    s32     lowerBodyState_24; /** `e_PlayerLowerBodyState` */
+    s32     field_28;          // Related to item interactions. Forcing specific values opens options menu, a behaviour is caused by `func_800373CC`.
 } s_MainCharacterExtra;
 STATIC_ASSERT_SIZEOF(s_MainCharacterExtra, 44);
 

@@ -42,11 +42,16 @@ typedef enum _Sfx
 
     Sfx_Unk1309   = 1309,
     Sfx_Unk1310   = 1310,
+    
+    Sfx_Stumble0  = 1314,
 
+    Sfx_HeavyBreath = 1320,
     Sfx_Unk1321   = 1321,
     Sfx_Unk1322   = 1322,
     Sfx_Unk1323   = 1323,
     Sfx_Unk1324   = 1324,
+
+    Sfx_Stumble1  = 1333,
 
     Sfx_Unk1336   = 1336,
     Sfx_Unk1337   = 1337,
@@ -3791,7 +3796,8 @@ void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 
 void func_80070DF0(s_MainCharacterExtra*, s_SubCharacter*, s32, s32);
 
-s32 func_80071620(u8, s_SubCharacter*, s32, s32);
+/** Special player SFX handler for heavy breath and damage. */
+bool func_80071620(u8, s_SubCharacter*, s32, s32 sfx);
 
 /** Player anim handler? */
 void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, void* arg2, GsCOORDINATE2* coord);

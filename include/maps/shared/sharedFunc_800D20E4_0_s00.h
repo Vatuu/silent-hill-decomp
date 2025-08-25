@@ -23,7 +23,7 @@ void sharedFunc_800D20E4_0_s00()
     chara->properties_E4.player.runTimer_F8      = 0;
     chara->properties_E4.player.exertionTimer_FC = 0;
 
-    g_SysWork.player_4C.extra_128.playerState_1C = PlayerState_Unk52;
+    g_SysWork.player_4C.extra_128.state_1C = PlayerState_Unk52;
     chara->model_0.stateStep_3                   = 0;
     chara->model_0.state_2                       = 0;
     extra->model_0.stateStep_3                   = 0;
@@ -36,15 +36,15 @@ void sharedFunc_800D20E4_0_s00()
     g_Player_IsRunning             = 0;
     g_Player_IsMovingBackward      = 0;
     g_Player_IsMovingForward       = 0;
-    g_Player_IsStepping_Right_Tap  = 0;
-    g_Player_IsStepping_Right_Hold = 0;
-    g_Player_IsTurning_Right       = 0;
-    g_Player_IsStepping_Left_Tap   = 0;
-    g_Player_IsStepping_Left_Hold  = 0;
-    g_Player_IsTurning_Left        = 0;
+    g_Player_IsSteppingRightTap  = 0;
+    g_Player_IsSteppingRightHold = 0;
+    g_Player_IsTurningRight       = 0;
+    g_Player_IsSteppingLeftTap   = 0;
+    g_Player_IsSteppingLeftHold  = 0;
+    g_Player_IsTurningLeft        = 0;
 
-    g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_None;
-    g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_None;
+    g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
+    g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
 
     sharedData_800E39D8_0_s00 = 0;
 

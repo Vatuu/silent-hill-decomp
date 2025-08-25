@@ -12,9 +12,9 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
 
     if (arg0 != 0)
     {
-        g_SysWork.player_4C.extra_128.playerState_1C         = PlayerState_None;
-        g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_None;
-        g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_None;
+        g_SysWork.player_4C.extra_128.state_1C         = PlayerState_None;
+        g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
+        g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
 
         player->model_0.anim_4.animIdx_0      = 53;
         player->model_0.anim_4.keyframeIdx0_8 = 503;
@@ -28,15 +28,15 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
     }
     else
     {
-        g_SysWork.player_4C.extra_128.playerState_1C = 0;
+        g_SysWork.player_4C.extra_128.state_1C = 0;
 
         player->model_0.stateStep_3 = 0;
         player->model_0.state_2     = 0;
         extra->model_0.stateStep_3  = 0;
         extra->model_0.state_2      = 0;
 
-        g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_None;
-        g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_None;
+        g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
+        g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
     }
 
     player->attackReceived_41 = NO_VALUE;
@@ -55,12 +55,12 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
     g_Player_IsRunning             = 0;
     g_Player_IsMovingBackward      = 0;
     g_Player_IsMovingForward       = 0;
-    g_Player_IsStepping_Right_Tap  = 0;
-    g_Player_IsStepping_Right_Hold = 0;
-    g_Player_IsTurning_Right       = 0;
-    g_Player_IsStepping_Left_Tap   = 0;
-    g_Player_IsStepping_Left_Hold  = 0;
-    g_Player_IsTurning_Left        = 0;
+    g_Player_IsSteppingRightTap  = 0;
+    g_Player_IsSteppingRightHold = 0;
+    g_Player_IsTurningRight       = 0;
+    g_Player_IsSteppingLeftTap   = 0;
+    g_Player_IsSteppingLeftHold  = 0;
+    g_Player_IsTurningLeft        = 0;
 
     g_SysWork.playerCombatInfo_38.isAiming_13 = false;
 

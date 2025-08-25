@@ -29,7 +29,7 @@ void sharedFunc_800D2C7C_0_s00(s32 arg0)
             break;
     }
 
-    g_SysWork.player_4C.extra_128.playerState_1C = arg0;
+    g_SysWork.player_4C.extra_128.state_1C = arg0;
 
     chara->model_0.stateStep_3 = 0;
     chara->model_0.state_2     = 0;
@@ -37,6 +37,6 @@ void sharedFunc_800D2C7C_0_s00(s32 arg0)
     extra->model_0.stateStep_3 = 0;
     extra->model_0.state_2     = 0;
 
-    g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_None;
-    g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_None;
+    g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
+    g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
 }

@@ -18,9 +18,9 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
 
     Game_PlayerMovementsReset();
 
-    temp = g_SysWork.player_4C.extra_128.playerState_1C;
+    temp = g_SysWork.player_4C.extra_128.state_1C;
 
-    if (g_SysWork.player_4C.extra_128.playerState_1C < 2 && temp >= 0)
+    if (g_SysWork.player_4C.extra_128.state_1C < 2 && temp >= 0)
     {
         if (D_800C3950 != g_SysWork.playerCombatInfo_38.equippedWeapon_F)
         {
@@ -41,24 +41,24 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
             g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
         }
 
-        switch (g_SysWork.player_4C.extra_128.playerLowerMovement_24)
+        switch (g_SysWork.player_4C.extra_128.lowerBodyState_24)
         {
-            case PlayerLowerMovement_QuickTurn_Right:
-            case PlayerLowerMovement_QuickTurn_Left:
-            case PlayerLowerMovement_Run_BackwardJump:
-            case PlayerLowerMovement_Aim_QuickTurn_Right:
-            case PlayerLowerMovement_Aim_QuickTurn_Left:
+            case PlayerLowerBodyState_QuickTurnRight:
+            case PlayerLowerBodyState_QuickTurnLeft:
+            case PlayerLowerBodyState_Run_BackwardJump:
+            case PlayerLowerBodyState_AimQuickTurnRight:
+            case PlayerLowerBodyState_AimQuickTurnLeft:
                 break;
 
             default:
 
-                if (g_SysWork.player_4C.extra_128.playerState_1C == 1 && (s8)D_800C3950 != g_SysWork.playerCombatInfo_38.equippedWeapon_F)
+                if (g_SysWork.player_4C.extra_128.state_1C == 1 && (s8)D_800C3950 != g_SysWork.playerCombatInfo_38.equippedWeapon_F)
                 {
-                    g_SysWork.player_4C.extra_128.playerState_1C                     = 0;
+                    g_SysWork.player_4C.extra_128.state_1C                     = 0;
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C = PlayerFlag_None;
                 }
 
-                if (g_SysWork.player_4C.extra_128.playerLowerMovement_24 >= 20 && g_SysWork.playerCombatInfo_38.equippedWeapon_F != NO_VALUE &&
+                if (g_SysWork.player_4C.extra_128.lowerBodyState_24 >= 20 && g_SysWork.playerCombatInfo_38.equippedWeapon_F != NO_VALUE &&
                     (s8)D_800C3950 == g_SysWork.playerCombatInfo_38.equippedWeapon_F)
                 {
                     extraModelPtr0 = &g_SysWork.player_4C.extra_128.model_0;
@@ -84,8 +84,8 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
                     extraModelPtr1->anim_4.keyframeIdx0_8                = 0;
                     g_SysWork.player_4C.chara_0.model_0.state_2          = 0;
                     g_SysWork.player_4C.chara_0.model_0.stateStep_3      = 0;
-                    g_SysWork.player_4C.extra_128.playerUpperMovement_20 = PlayerUpperMovement_None;
-                    g_SysWork.player_4C.extra_128.playerLowerMovement_24 = PlayerLowerMovement_None;
+                    g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
+                    g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                     g_SysWork.player_4C.extra_128.model_0.state_2        = 0;
                     g_SysWork.player_4C.extra_128.model_0.stateStep_3    = 0;
                 }
