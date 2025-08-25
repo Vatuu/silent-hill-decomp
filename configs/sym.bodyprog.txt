@@ -35,6 +35,7 @@ g_GameWorkPtr                               = 0x80024D54; // type:u32
 //------------------------------------------------------
 //--- PA: 0x0001F8   VA: 0x80024D58   subsegment: rodata
 //------------------------------------------------------
+g_UnknownMapTable0                          = 0x8002500C; // type:UnkStruct2_Mo size:0xF0
 
 //--------------------------------------------------------------------------
 //--- PA: 0x000618   VA: 0x80025178   subsegment: .rodata, bodyprog_80032D1C
@@ -298,7 +299,7 @@ SysState_GamePaused_Update                  = 0x800391E8; // type:func
 SysState_OptionsMenu_Update                 = 0x80039344; // type:func
 SysState_StatusMenu_Update                  = 0x80039568; // type:func
 GameState_LoadStatusScreen_Update           = 0x800395C0; // type:func
-SysState_Unk3_Update                        = 0x800396D4; // type:func
+SysState_MapScreen_Update                   = 0x800396D4; // type:func
 GameState_LoadMapScreen_Update              = 0x8003991C; // type:func
 SysState_Fmv_Update                         = 0x80039A58; // type:func
 SysState_LoadArea_Update                    = 0x80039C40; // type:func
@@ -326,12 +327,13 @@ Gfx_MainMenu_FogDraw                        = 0x8003BA08; // type:func
 Gfx_MainMenu_FogRandomize                   = 0x8003BAC4; // type:func
 Gfx_MainMenu_FogScatter                     = 0x8003BBF4; // type:func
 Gfx_MainMenu_FogUpdate                      = 0x8003BC8C; // type:func
+UnknownMapTableIdxGet                     = 0x8003BD2C; // type:func
 GameFs_BgEtcGfxLoad                         = 0x8003BE6C; // type:func
 GameFs_BgItemLoad                           = 0x8003BE9C; // type:func
 GameFs_FlameGfxLoad                         = 0x8003E710; // type:func
 Game_TurnFlashlightOn                       = 0x8003ECBC; // type:func
 Game_TurnFlashlightOff                      = 0x8003ECE4; // type:func
-Math_GetWeightedAverage                     = 0x8003F7E4; // type:func
+Math_WeightedAverageGet                     = 0x8003F7E4; // type:func
 
 //---------------------------------------------------------------
 //--- PA: 0x01B4EC   VA: 0x8004004C   subsegment: c, view/vc_util
@@ -345,6 +347,7 @@ vcMakeHeroHeadPos                           = 0x8004047C; // type:func
 vcAddOfsToPos                               = 0x80040518; // type:func
 vcSetRefPosAndSysRef2CamParam               = 0x800405C4; // type:func
 vcSetRefPosAndCamPosAngByPad                = 0x800406D4; // type:func
+Sound_StereoBalanceGet                      = 0x80040A64; // type:func
 
 //--------------------------------------------------------------------
 //--- PA: 0x01BF04   VA: 0x80040A64   subsegment: c, bodyprog_80040A64
@@ -468,6 +471,7 @@ Gfx_Items_RenderInit                        = 0x80054558; // type:func
 Inventory_ExitAnimFixes                     = 0x80054634; // type:func
 Gfx_Items_Display                           = 0x80054720; // type:func
 Gfx_Items_SetAmbientLighting                = 0x80054928; // type:func
+Gfx_PickupItemAnimate                       = 0x80054AD8; // type:func
 Inventory_AddSpecialItem                    = 0x80054CAC; // type:func
 
 //--------------------------------------------------------------------
@@ -477,6 +481,7 @@ Items_AmmoReloadCalculation                 = 0x80054FC0; // type:func
 PlmHeader_FixOffsets                        = 0x800560FC; // type:func
 ObjList_FixOffsets                          = 0x800561A4; // type:func
 PlmHeader_ObjectCountGet                    = 0x80056C80; // type:func
+StringCopy                                  = 0x80056D64; // type:func
 func_800571D0                               = 0x800571D0; // type:func size:0x58 - Fix for truncated function.
 GameState_MapScreen_Update                  = 0x80066EB0; // type:func
 IpdColData_FixOffsets                       = 0x8006993C; // type:func
@@ -575,10 +580,12 @@ vcGetXZSumDistFromLimArea                   = 0x80085C80; // type:func
 //--------------------------------------------------------------------
 //--- PA: 0x061218   VA: 0x80085D78   subsegment: c, bodyprog_80085D78
 //--------------------------------------------------------------------
+MapMsg_DisplayAndHandleSelection            = 0x800860B0; // type:func
 Camera_TranslationSet                       = 0x80086A94; // type:func
 Camera_RotationSet                          = 0x80086B70; // type:func
-Pickup_ItemTake                             = 0x800877B8; // type:func
-Pickup_CommonItemTake                       = 0x800879FC; // type:func
+Event_ItemTake                              = 0x800877B8; // type:func
+Event_CommonItemTake                        = 0x800879FC; // type:func
+Event_MapTake                               = 0x80087AF4; // type:func
 Chara_Load                                  = 0x80088C7C; // type:func
 Chara_Spawn                                 = 0x80088D78; // type:func
 DmsHeader_FixOffsets                        = 0x8008C9A0; // type:func
@@ -1133,8 +1140,8 @@ GsSortObject4J                              = 0x80095FEC; // type:func
 //-------------------------------------------------------------------------
 // Custom Konami rotation matrix library?
 // TODO: identify the other RotMatrix funcs here
-shRsin                                      = 0x8009687C; // type:func
-shRcos                                      = 0x8009689C; // type:func
+Math_Sin                                    = 0x8009687C; // type:func
+Math_Cos                                    = 0x8009689C; // type:func
 shRotMatrixZ                                = 0x800968BC; // type:func
 
 //------------------------------------------------------------------
@@ -1894,9 +1901,10 @@ midi_smf_stat                               = 0x800A8D00; // type:func
 //================================================
 
 
-//-----------------------------------------------------------------------
-//--- PA: 0x084238   VA: 0x800A8D98   subsegment: data, bodyprog_800A8D98
-//-----------------------------------------------------------------------
+//------------------------------------------------------------------------
+//--- PA: 0x084238   VA: 0x800A8D98   subsegment: .data, bodyprog_800A8D98
+//------------------------------------------------------------------------
+g_BackgroundColor                           = 0x800A8E58;
 // vw globals from SH2
 vcNullRoadArray                             = 0x800A8F44; // _VC_ROAD_DATA[2]
 g_ObjectTable0                              = 0x800A8F74; // type:s8
@@ -1904,11 +1912,23 @@ g_ObjectTable1                              = 0x800A8FC4; // type:s8
 g_DeltaTime1                                = 0x800A8FEC; // type:s32
 g_IntervalVBlanks                           = 0x800A8FF0; // type:s32
 g_Chara_FileInfo                            = 0x800A90FC; // type:CharaFileInfo size:0x2D0
+g_Demo_FrameCount                           = 0x800A9768; // type:s32
+g_UnknownFrameCounter                       = 0x800A976C; // type:s32
 g_PrevVBlanks                               = 0x800A9770; // type:s32
+g_GameStateUpdateFuncs                      = 0x800A977C;
 g_SlotElementSelectedIdx                    = 0x800A97D4;
 g_SelectedSaveSlotIdx                       = 0x800A97D6;
+g_UnknownEngineCmdTable0                    = 0x800A9804;
+g_UnknownEngineCmdTable1                    = 0x800A9858; // type:u16
+g_UnknownEngineCmdTable2                    = 0x800A98AC;
 g_MapMsg_CurrentIdx                         = 0x800A99AC; // type:s32
 g_MapMsg_SelectFlashTimer                   = 0x800A99B0; // type:s16
+g_FullscreenMapTimFileIdxs                  = 0x800A99B4;
+g_MapMarkingTimFileIdxs                     = 0x800A99CC;
+
+//-----------------------------------------------------------------------
+//--- PA: 0x084EA4   VA: 0x800A9A04   subsegment: data, bodyprog_800A9074
+//-----------------------------------------------------------------------
 g_MapEventIdx                               = 0x800A9A14; // type:u32
 
 //------------------------------------------------------------------------
@@ -1957,6 +1977,7 @@ g_Inventory_HealthStatusScanlinePosition    = 0x800AE19A;
 g_Inventory_ItemNameTimer                   = 0x800AE19C;
 g_Inventory_DescriptionRollTimer            = 0x800AE1A0;
 g_Inventory_ScrollTransitionTimer           = 0x800AE1A4;
+g_PickupItemAnimState                       = 0x800AE1AC;
 g_Player_GrabFree_InputCount                = 0x800AF20C;
 g_Player_IsInWalkToRunTransition            = 0x800AF214;
 g_Player_DisableControl                     = 0x800AF215;

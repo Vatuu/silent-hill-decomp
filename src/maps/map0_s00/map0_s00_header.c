@@ -4,7 +4,7 @@
 #include "maps/map0/map0_s00.h"
 
 // Undefined functions, unknown signature.
-#define func_800D94F8 (void(*)(void))0x800D94F8
+#define func_800D94F8 (void(*)(s32))0x800D94F8 // Based on the signature of a func in map0_s01.
 #define func_800DBE68 (void(*)(void))0x800DBE68
 #define func_800DBF08 (void(*)(void))0x800DBF08
 #define func_800DC1E8 (void(*)(void))0x800DC1E8
@@ -31,14 +31,19 @@
 #define func_800DB94C (void(*)(void))0x800DB94C
 #define func_800DBE00 (void(*)(void))0x800DBE00
 
+#define sharedData_800DFB64_0_s00 (0x800DFB64)
+#define sharedData_800DFB68_0_s00 (0x800DFB68)
+#define sharedData_800DFB6C_0_s00 (0x800DFB6C)
+#define sharedData_800DFB70_0_s00 (0x800DFB70)
+
 extern u8 D_800DF754[];
-extern s_func_800625F4 D_800DFB7C[];
-extern s32 D_800E0B1C[];
+extern s_func_800625F4 D_800DFB7C[200];
+extern s_BloodSplat D_800E0B1C[150];
 
 extern s_AnimInfo g_AnimInfo[];
 void (*g_LoadScreenFuncs[])() = 
 {
-    0,
+    NULL,
     Gfx_LoadingScreen_PlayerRun,
     Gfx_LoadingScreen_BackgroundTexture,
     Gfx_LoadingScreen_StageString
@@ -52,7 +57,7 @@ s_AreaLoadParams g_MapAreaLoadParams[] =
 void (*g_MapEventFuncs[])() = 
 {
     func_800D9610,
-    0x00000000,
+    NULL,
     func_800D9748,
     func_800D9D98,
     func_800DA028,
@@ -73,16 +78,16 @@ void (*g_MapEventFuncs[])() =
 const u32 D_800C9578 = 0x00000000; // rodata 0
 const s_MapOverlayHeader g_MapOverlayHeader = 
 {
-    .field_0 = (s_UnkStruct2_Mo*)0x8002500C,
+    .field_0 = &g_UnknownMapTable0[0],
     .getMapRoomIdxFunc_4 = sharedFunc_800D92AC_0_s00,
-    .field_8 = 0x22,
-    .unk_9 = { 0x00, 0x00, 0x00 },
+    .field_8 = 34,
+    .unk_9 = { 0, 0, 0 },
     .func_C = sharedFunc_800D929C_0_s00,
     .func_10 = func_800D94F8,
-    .field_14 = 0x03, // Flags?
-    .field_15 = 0x02,
-    .field_16 = 0x01,
-    .field_17 = 0x02,
+    .field_14 = 0x3, // Flags?
+    .field_15 = 0x2,
+    .field_16 = 0x1,
+    .field_17 = 0x2,
     .loadingScreenFuncs_18 = g_LoadScreenFuncs,
     .mapAreaLoadParams_1C = g_MapAreaLoadParams,
     .mapEventFuncs_20 = g_MapEventFuncs,
@@ -94,41 +99,41 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .field_38 = (s_UnkStruct3_Mo*)0x800DD4EC,
     .func_3C = func_800DBE68,
     .func_40 = func_800DBF08,
-    .func_44 = 0,
+    .func_44 = NULL,
     .func_48 = func_800DC1E8,
-    .table200Items_4C = D_800DFB7C,
-    .always200_50 = 0x000000C8,
-    .table76Items_54 = D_800E0B1C,
-    .always150_58 = 0x00000096,
-    .always0_5C = 0x00000000,
-    .always0_60 = 0x00000000,
-    .always0_64 = 0x00000000,
-    .always0_68 = 0x00000000,
-    .func_6C = 0x00000000,
-    .func_70 = 0x00000000,
-    .func_74 = 0x00000000,
-    .func_78 = 0x00000000,
-    .unk_7C = 0x00000000,
-    .func_80 = 0x00000000,
-    .func_84 = 0x00000000,
-    .unk_88 = 0x00000000,
-    .func_8C = 0x00000000,
-    .func_90 = 0x00000000,
-    .unk_94 = 0x00000000,
-    .unk_98 = 0x00000000,
-    .unk_9C = 0x00000000,
-    .unk_A0 = 0x00000000,
-    .func_A4 = 0x00000000,
-    .func_A8 = 0x00000000,
-    .func_AC = 0x00000000,
-    .func_B0 = 0x00000000,
-    .func_B4 = 0x00000000,
+    .unkTable1_4C = D_800DFB7C,
+    .unkTable1Len_50 = ARRAY_SIZE(D_800DFB7C),
+    .bloodSplats_54 = D_800E0B1C,
+    .bloodSplatsLen_58 = ARRAY_SIZE(D_800E0B1C),
+    .always0_5C = 0,
+    .always0_60 = 0,
+    .always0_64 = 0,
+    .always0_68 = 0,
+    .func_6C = NULL,
+    .func_70 = NULL,
+    .func_74 = NULL,
+    .func_78 = NULL,
+    .unk_7C = 0,
+    .func_80 = NULL,
+    .func_84 = NULL,
+    .unk_88 = 0,
+    .func_8C = NULL,
+    .func_90 = NULL,
+    .unk_94 = 0,
+    .unk_98 = 0,
+    .unk_9C = 0,
+    .unk_A0 = 0,
+    .func_A4 = NULL,
+    .func_A8 = NULL,
+    .func_AC = NULL,
+    .func_B0 = NULL,
+    .func_B4 = NULL,
     .func_B8 = func_800D0E34,
     .func_BC = func_800D1C38,
     .func_C0 = sharedFunc_800D209C_0_s00,
     .func_C4 = sharedFunc_800D20D8_0_s00,
-    .func_C8 = sharedFunc_800D20E4_0_s00,
-    .func_CC = sharedFunc_800D2244_0_s00,
+    .freezePlayerControl_C8 = sharedFunc_800D20E4_0_s00,
+    .unfreezePlayerControl_CC = sharedFunc_800D2244_0_s00,
     .func_D0 = func_800D23EC,
     .func_D4 = sharedFunc_800D2C7C_0_s00,
     .func_D8 = sharedFunc_800D2D2C_0_s00,
@@ -164,10 +169,10 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .func_14C = sharedFunc_800D9188_0_s00,
     .func_150 = sharedFunc_800D921C_0_s00,
     .func_154 = sharedFunc_800D923C_0_s00,
-    .func_158 = 0x00000000,
-    .func_15C = 0x00000000,
-    .func_160 = 0x00000000,
-    .func_164 = 0x00000000,
+    .func_158 = NULL,
+    .func_15C = NULL,
+    .func_160 = NULL,
+    .func_164 = NULL,
     .func_168 = func_800CB6B0,
     .func_16C = sharedFunc_800D08B8_0_s00,
     .func_170 = sharedFunc_800D0A60_0_s00,
@@ -175,59 +180,59 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .func_178 = func_800D0E24,
     .func_17C = func_800D0E2C,
     .func_180 = sharedFunc_800D0E04_0_s00,
-    .windSpeedX_184 = 0x800DFB64, // sharedData_800DFB64_0_s00`
-    .windSpeedZ_188 = 0x800DFB68, // sharedData_800DFB68_0_s00`
-    .data_18C = 0x800DFB6C, // sharedData_800DFB6C_0_s00`
-    .data_190 = 0x800DFB70, // sharedData_800DFB70_0_s00`
+    .windSpeedX_184 = sharedData_800DFB64_0_s00,
+    .windSpeedZ_188 = sharedData_800DFB68_0_s00,
+    .data_18C = sharedData_800DFB6C_0_s00,
+    .data_190 = sharedData_800DFB70_0_s00,
     .charaUpdateFuncs_194 =
     {
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
         Ai_Stalker_Update,
         Ai_Stalker_Update,
         Ai_Stalker_Update,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
         Ai_Cheryl_Update,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
-        0x00000000,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL
     },
-    .charaGroupIds_248 = {}, // 4 zeros.
+    .charaGroupIds_248 = {},
     .charaSpawns_24C =
     {
         #include "chara_spawns.h"
@@ -239,5 +244,5 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .unk_84C = 
     {
         #include "header_last_unknown_chunk.h"
-    },
+    }
 };

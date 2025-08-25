@@ -109,12 +109,12 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00_2", func_800D8A00);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00_2", func_800D94F8);
 
-/** Debug function??? It is unused here... */
+/** Debug function? */
 void Gfx_LoadingScreen_StageString() // 0x800D95D4
 {
     g_Gfx_ScreenFade = 7;
     Gfx_DebugStringPosition(100, 100);
-    Gfx_DebugStringDraw(&D_800CAE7C); // String "STAGE 0-0"
+    Gfx_DebugStringDraw(&D_800CAE7C);
 }
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00_2", func_800D9610);
@@ -151,31 +151,19 @@ void func_800DB870() // 0x800DB870
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
-            g_SysWork.sysStateStep_C++;
+            SysWork_StateStepIncrement();
 
         case 1:
             func_80085DF0();
             break;
 
         case 2:
-            func_800860B0(false, 26, 0, 0, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 26, 0, 0, 0, false);
             break;
 
         default:
             sharedFunc_800D2244_0_s00(0);
-
-            g_SysWork.sysState_8     = 0;
-            g_SysWork.timer_24       = 0;
-            g_SysWork.sysStateStep_C = 0;
-            g_SysWork.field_28       = 0;
-            g_SysWork.field_10       = 0;
-            g_SysWork.timer_2C       = 0;
-            g_SysWork.field_14       = 0;
+            SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }
@@ -191,13 +179,7 @@ void func_800DBE00() // 0x800DBE00
     Sd_EngineCmd(22);
     func_800892A4(4);
 
-    g_SysWork.sysState_8                       = 0;
-    g_SysWork.timer_24                         = 0;
-    g_SysWork.sysStateStep_C                   = 0;
-    g_SysWork.field_28                         = 0;
-    g_SysWork.field_10                         = 0;
-    g_SysWork.timer_2C                         = 0;
-    g_SysWork.field_14                         = 0;
+    SysWork_StateSetNext(SysState_Gameplay);
     g_SysWork.player_4C.chara_0.position_18.vy = 0;
 }
 

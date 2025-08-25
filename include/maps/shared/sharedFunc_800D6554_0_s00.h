@@ -32,12 +32,12 @@ void sharedFunc_800D6554_0_s00(s_SubCharacter* chara)
         return;
     }
 
-    chara->properties_E4.player.properties_E4[3] = g_SysWork.player_4C.chara_0.position_18.vx;
-    chara->properties_E4.player.properties_E4[4] = g_SysWork.player_4C.chara_0.position_18.vz;
+    chara->properties_E4.player.field_F0 = g_SysWork.player_4C.chara_0.position_18.vx;
+    chara->properties_E4.player.field_F4 = g_SysWork.player_4C.chara_0.position_18.vz;
 
     if (someDist < FP_METER(1.2f) && someRotY < FP_ANGLE(180.0f))
     {
-        flags = &chara->properties_E4.player.properties_E4[1];
+        flags = &chara->properties_E4.player.afkTimer_E8;
         if (!(*flags & (1 << 1)))
         {
             chara->model_0.state_2 = 3;
@@ -49,9 +49,9 @@ void sharedFunc_800D6554_0_s00(s_SubCharacter* chara)
 
         chara->model_0.anim_4.animIdx_0 = 60;
 
-        *GET_PROPERTY_LOW(chara->properties_E4.player.properties_E4[6])  = 0x37;
-        *GET_PROPERTY_HIGH(chara->properties_E4.player.properties_E4[6]) = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 0x1AB;
-        *GET_PROPERTY_LOW(chara->properties_E4.player.properties_E4[1]) |= 1 << 10;
+        *GET_PROPERTY_LOW(chara->properties_E4.player.exertionTimer_FC)  = 0x37;
+        *GET_PROPERTY_HIGH(chara->properties_E4.player.exertionTimer_FC) = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 0x1AB;
+        *GET_PROPERTY_LOW(chara->properties_E4.player.afkTimer_E8) |= 1 << 10;
 
         sharedFunc_800D7E04_0_s00(chara, 0x553);
     }

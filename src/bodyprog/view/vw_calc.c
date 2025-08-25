@@ -38,23 +38,23 @@ void vwRenewalXZVelocityToTargetPos(s32* velo_x, s32* velo_z, VECTOR3* now_pos, 
 
     temp_v0 = ratan2(tgt_pos->vx - now_pos->vx, tgt_pos->vz - now_pos->vz);
 
-    // `shSinCosV` is called in SH2 while SH just calls `shRsin`/`shRcos` and does nothing with result.
-    unused.vx = shRsin(temp_v0);
-    unused.vy = shRcos(temp_v0);
+    // `shSinCosV` is called in SH2 while SH just calls `Math_Sin`/`Math_Cos` and does nothing with result.
+    unused.vx = Math_Sin(temp_v0);
+    unused.vy = Math_Cos(temp_v0);
 
     ratan2(*velo_x, *velo_z);
 
     add_spd = Math_MulFixed(accel, g_DeltaTime0, Q12_SHIFT);
-    *velo_x += FP_MULTIPLY(add_spd, shRsin(temp_v0), Q12_SHIFT);
-    *velo_z += FP_MULTIPLY(add_spd, shRcos(temp_v0), Q12_SHIFT);
+    *velo_x += FP_MULTIPLY(add_spd, Math_Sin(temp_v0), Q12_SHIFT);
+    *velo_z += FP_MULTIPLY(add_spd, Math_Cos(temp_v0), Q12_SHIFT);
 
     temp_v0_2 = Vc_VectorMagnitudeCalc(*velo_x, 0, *velo_z);
     if (total_max_spd < temp_v0_2)
     {
         temp_s1_2 = temp_v0_2 - total_max_spd;
         ang_y = ratan2(*velo_x, *velo_z);
-        *velo_x -= Math_MulFixed(temp_s1_2, shRsin(ang_y), Q12_SHIFT);
-        *velo_z -= Math_MulFixed(temp_s1_2, shRcos(ang_y), Q12_SHIFT);
+        *velo_x -= Math_MulFixed(temp_s1_2, Math_Sin(ang_y), Q12_SHIFT);
+        *velo_z -= Math_MulFixed(temp_s1_2, Math_Cos(ang_y), Q12_SHIFT);
     }
 
     temp_s1_3    = tgt_pos->vx - now_pos->vx;
@@ -77,8 +77,8 @@ void vwLimitOverLimVector(s32* vec_x, s32* vec_z, s32 lim_vec_len, s16 lim_vec_a
     s32 lim_spd_dir_x;
     s32 lim_spd_dir_z;
 
-    lim_spd_dir_x = shRsin(lim_vec_ang_y);
-    lim_spd_dir_z = shRcos(lim_vec_ang_y);
+    lim_spd_dir_x = Math_Sin(lim_vec_ang_y);
+    lim_spd_dir_z = Math_Cos(lim_vec_ang_y);
 
     over_spd = (Math_MulFixed(*vec_x, lim_spd_dir_x, Q12_SHIFT) + Math_MulFixed(*vec_z, lim_spd_dir_z, Q12_SHIFT)) - lim_vec_len;
     if (over_spd > 0)
@@ -93,8 +93,8 @@ void vwDecreaseSideOfVector(s32* vec_x, s32* vec_z, s32 dec_val, s32 max_side_ve
     s32 temp_s1;
     s32 var_s1;
 
-    var_s1 = Math_MulFixed(*vec_x, shRsin(dir_ang_y + FP_ANGLE(90.0f)), Q12_SHIFT) +
-             Math_MulFixed(*vec_z, shRcos(dir_ang_y + FP_ANGLE(90.0f)), Q12_SHIFT);
+    var_s1 = Math_MulFixed(*vec_x, Math_Sin(dir_ang_y + FP_ANGLE(90.0f)), Q12_SHIFT) +
+             Math_MulFixed(*vec_z, Math_Cos(dir_ang_y + FP_ANGLE(90.0f)), Q12_SHIFT);
 
     temp_s1 = var_s1;
     var_s1  = CLAMP(var_s1, -max_side_vec_len, max_side_vec_len);
@@ -115,8 +115,8 @@ void vwDecreaseSideOfVector(s32* vec_x, s32* vec_z, s32 dec_val, s32 max_side_ve
         }
     }
 
-    *vec_x += Math_MulFixed(var_s1 - temp_s1, shRsin(dir_ang_y + FP_ANGLE(90.0f)), Q12_SHIFT);
-    *vec_z += Math_MulFixed(var_s1 - temp_s1, shRcos(dir_ang_y + FP_ANGLE(90.0f)), Q12_SHIFT);
+    *vec_x += Math_MulFixed(var_s1 - temp_s1, Math_Sin(dir_ang_y + FP_ANGLE(90.0f)), Q12_SHIFT);
+    *vec_z += Math_MulFixed(var_s1 - temp_s1, Math_Cos(dir_ang_y + FP_ANGLE(90.0f)), Q12_SHIFT);
 }
 
 s32 vwRetNewVelocityToTargetVal(s32 now_spd, s32 mv_pos, s32 tgt_pos, s32 accel, s32 total_max_spd, s32 dec_val_lim_spd)
@@ -814,10 +814,10 @@ void vwAngleToVector(SVECTOR* vec, SVECTOR* ang, s32 r) // 0x8004A66C
 {
     s32 entou_r; // "Entou" means "cylinder" in Japanese. Refers to 2D radius on XZ plane.
     
-    entou_r = FP_MULTIPLY(r, shRcos(ang->vx), Q12_SHIFT);
-    vec->vy = FP_MULTIPLY(-r, shRsin(ang->vx), Q12_SHIFT);
-    vec->vx = FP_MULTIPLY(entou_r, shRsin(ang->vy), Q12_SHIFT);
-    vec->vz = FP_MULTIPLY(entou_r, shRcos(ang->vy), Q12_SHIFT);
+    entou_r = FP_MULTIPLY(r, Math_Cos(ang->vx), Q12_SHIFT);
+    vec->vy = FP_MULTIPLY(-r, Math_Sin(ang->vx), Q12_SHIFT);
+    vec->vx = FP_MULTIPLY(entou_r, Math_Sin(ang->vy), Q12_SHIFT);
+    vec->vz = FP_MULTIPLY(entou_r, Math_Cos(ang->vy), Q12_SHIFT);
 }
 
 s32 vwVectorToAngle(SVECTOR* ang, SVECTOR* vec) // 0x8004A714

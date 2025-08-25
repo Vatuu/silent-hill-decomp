@@ -151,8 +151,6 @@ s32 func_800C9874() // 0x800C9874
 
 void GameState_KcetLogo_Update() // 0x800C99A4
 {
-    s_GameWork* ptr;
-
     while (g_GameWork.gameState_594 == GameState_KcetLogo)
     {
         Joy_Update();
@@ -218,53 +216,48 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                 break;
 
             case 5:
-                if ((s32)g_GameWork.gameStateStep_598[1] < 3)
+                while (g_GameWork.gameStateStep_598[1] < 3)
                 {
-                    ptr = g_GameWorkConst; 
-                    do
+                    switch (g_GameWork.gameStateStep_598[1])
                     {
-                        switch ((s32)g_GameWork.gameStateStep_598[1])
-                        {
-                            case 0:
-                                func_8002E94C(2, D_800BCD40, 0, 0);
+                        case 0:
+                            func_8002E94C(2, D_800BCD40, 0, 0);
+                            g_GameWork.gameStateStep_598[2] = 0;
+                            g_GameWork.gameStateStep_598[1]++;
+
+                        case 1:
+                            if (func_8002E990() != 1)
+                            {
                                 g_GameWork.gameStateStep_598[2] = 0;
                                 g_GameWork.gameStateStep_598[1]++;
+                            }
+                            break;
 
-                            case 1:
-                                if (func_8002E990() != 1)
-                                {
-                                    g_GameWork.gameStateStep_598[2] = 0;
-                                    g_GameWork.gameStateStep_598[1]++;
-                                }
-                                break;
+                        case 2:
+                            if (g_GameWorkConst->config_0.optAutoLoad_25)
+                            {
+                                Fs_QueueStartRead(FILE_VIN_SAVELOAD_BIN, FS_BUFFER_1);
+                                Fs_QueueStartSeek(FILE_TIM_SAVELOAD_TIM);
+                                D_800CA4F0.field_0 = 4;
+                            }
+                            else
+                            {
+                                GameFs_StreamBinLoad();
+                                GameFs_TitleGfxSeek();
+                                D_800CA4F0.field_0 = 6;
+                            }
 
-                            case 2:
-                                if ((s8)ptr->config_0.optAutoLoad_25 != 0)
-                                {
-                                    Fs_QueueStartRead(FILE_VIN_SAVELOAD_BIN, FS_BUFFER_1);
-                                    Fs_QueueStartSeek(FILE_TIM_SAVELOAD_TIM);
-                                    D_800CA4F0.field_0 = 4;
-                                }
-                                else 
-                                {
-                                    GameFs_StreamBinLoad();
-                                    GameFs_TitleGfxSeek();
-                                    D_800CA4F0.field_0 = 6;
-                                }
-
-                                g_GameWork.gameStateStep_598[2] = 0;
-                                g_GameWork.gameStateStep_598[1]++;
-                                break;
-                        }
-
-                        func_80033548();
-                        func_8002EB88();
-                        VSync(0);
+                            g_GameWork.gameStateStep_598[2] = 0;
+                            g_GameWork.gameStateStep_598[1]++;
+                            break;
                     }
-                    while ((s32)g_GameWork.gameStateStep_598[1] < 3);
+
+                    func_80033548();
+                    func_8002EB88();
+                    VSync(0);
                 }
 
-                g_GameWork.gameStateStep_598[0] = 6u;
+                g_GameWork.gameStateStep_598[0] = 6;
                 g_SysWork.timer_20              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
@@ -310,13 +303,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                     g_GameWork.gameStateStep_598[1] = 0;
                     g_GameWork.gameStateStep_598[2] = 0;
 
-                    g_SysWork.sysState_8     = 0;
-                    g_SysWork.timer_24       = 0;
-                    g_SysWork.sysStateStep_C = 0;
-                    g_SysWork.field_28       = 0;
-                    g_SysWork.field_10       = 0;
-                    g_SysWork.timer_2C       = 0;
-                    g_SysWork.field_14       = 0;
+                    SysWork_StateSetNext(SysState_Gameplay);
 
                     g_GameWork.gameStateStep_598[0] = g_GameWork.gameState_594;
                     g_GameWork.gameState_594        = D_800CA4F0.field_0;

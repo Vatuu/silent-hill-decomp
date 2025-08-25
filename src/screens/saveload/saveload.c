@@ -721,7 +721,7 @@ void Gfx_SavedFlashDraw() // 0x801E3E78
 
     if (rowIdx < 5)
     {
-        sin  = shRsin((g_Gfx_SaveFlashTimer << 10) / SAVE_FLASH_TIMER_MAX);
+        sin  = Math_Sin((g_Gfx_SaveFlashTimer << 10) / SAVE_FLASH_TIMER_MAX);
         poly = (POLY_F4*)GsOUT_PACKET_P;
         setPolyF4(poly);
         setSemiTrans(poly, 1);
@@ -2056,14 +2056,12 @@ void Savegame_ContinueLogic() // 0x801E6F38
         case ContinueState_0:
             func_8002E830();
 
-            D_800A97D7 = 1;
-
-            // Backup current savegame? Does anything ever restore from this?
+            D_800A97D7             = 1;
             g_GameWork.autosave_90 = g_GameWork.savegame_30C;
 
             Game_PlayerInit();
             
-            g_SysWork.flags_2298 = SysWorkProcessFlag_LoadSave;
+            g_SysWork.processFlags_2298 = SysWorkProcessFlag_LoadSave;
 
             GameFs_MapLoad(g_SavegamePtr->mapOverlayId_A4);
 

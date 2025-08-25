@@ -18,11 +18,7 @@ void func_80085D78(bool arg0) // 0x80085D78
         return;
     }
 
-    g_SysWork.field_28 = 0;
-    g_SysWork.field_10 = 0;
-    g_SysWork.timer_2C = 0;
-    g_SysWork.field_14 = 0;
-    g_SysWork.sysStateStep_C++;
+    SysWork_StateStepIncrement();
 }
 
 void func_80085DC0(bool arg0, s32 sysStateStep) // 0x80085DC0
@@ -35,11 +31,7 @@ void func_80085DC0(bool arg0, s32 sysStateStep) // 0x80085DC0
     }
     else
     {
-        g_SysWork.sysStateStep_C = sysStateStep;
-        g_SysWork.field_28       = 0;
-        g_SysWork.field_10       = 0;
-        g_SysWork.timer_2C       = 0;
-        g_SysWork.field_14       = 0;
+        SysWork_NextStateStepSet(sysStateStep);
     }
 }
 
@@ -49,11 +41,7 @@ void func_80085DF0() // 0x80085DF0
 
     if (g_MapOverlayHeader.func_EC() != NULL || g_SysWork.timer_2C > 4096)
     {
-        g_SysWork.field_28 = 0;
-        g_SysWork.field_10 = 0;
-        g_SysWork.timer_2C = 0;
-        g_SysWork.field_14 = 0;
-        g_SysWork.sysStateStep_C++;
+        SysWork_StateStepIncrement();
     }
 }
 
@@ -70,27 +58,27 @@ void func_80085E6C(s32 arg0, s32 arg1) // 0x80085E6C
     }
 }
 
-void func_80085EB8(u32 arg0, s_SubCharacter* chara0, s_SubCharacter* chara1, s32 arg3) // 0x80085EB8
+void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool arg3) // 0x80085EB8
 {
     s32 res;
 
     switch (arg0)
     {
         case 0:
-            if (chara0 == &g_SysWork.player_4C.chara_0)
+            if (chara == &g_SysWork.player_4C.chara_0)
             {
-                g_MapOverlayHeader.func_D4(chara1);
+                g_MapOverlayHeader.func_D4(arg2);
             }
             else 
             {
-                g_MapOverlayHeader.func_124(chara0);
+                g_MapOverlayHeader.func_124(chara);
             }
             break;
 
         case 1:
-            if (chara0 == &g_SysWork.player_4C.chara_0)
+            if (chara == &g_SysWork.player_4C.chara_0)
             {
-                res = g_MapOverlayHeader.func_E8(chara0);
+                res = g_MapOverlayHeader.func_E8(chara);
                 if (res == 1) 
                 {
                     func_80085D78(arg3);
@@ -98,7 +86,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara0, s_SubCharacter* chara1, s32
             }
             else
             {
-                res = g_MapOverlayHeader.func_138(chara0);
+                res = g_MapOverlayHeader.func_138(chara);
                 if (res == 1)
                 {
                     func_80085D78(arg3);
@@ -107,36 +95,36 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara0, s_SubCharacter* chara1, s32
             break;
 
         case 2:
-            if (chara0 == &g_SysWork.player_4C.chara_0)
+            if (chara == &g_SysWork.player_4C.chara_0)
             {
                 g_MapOverlayHeader.func_DC();
             }
             else
             {
-                g_MapOverlayHeader.func_12C(chara0);
+                g_MapOverlayHeader.func_12C(chara);
             }
             break;
 
         case 3:
-            if (chara0 == &g_SysWork.player_4C.chara_0)
+            if (chara == &g_SysWork.player_4C.chara_0)
             {
-                g_MapOverlayHeader.func_E4(chara0, chara1);
+                g_MapOverlayHeader.func_E4(chara, arg2);
             }
             else 
             {
-                g_MapOverlayHeader.func_134(chara0);
+                g_MapOverlayHeader.func_134(chara);
             }
             break;
 
         case 4:
-            if (chara0 == &g_SysWork.player_4C.chara_0)
+            if (chara == &g_SysWork.player_4C.chara_0)
             {
-                g_MapOverlayHeader.func_E4(chara0, chara1);
+                g_MapOverlayHeader.func_E4(chara, arg2);
                 g_MapOverlayHeader.func_D8();
             }
             else 
             {
-                g_MapOverlayHeader.func_128(chara0);
+                g_MapOverlayHeader.func_128(chara);
             }
             break;
     }
@@ -154,37 +142,37 @@ void func_8008605C(s32 arg0, s32 arg1, s32 arg2, bool arg3) // 0x8008605C
     }
 }
 
-void func_800860B0(bool arg0, s32 mapMsgIdx, s32 arg2, s32 arg3, s32 sysStateStep, bool arg5) // 0x800860B0
+void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 entry0, s32 entry1, s32 entry2, bool arg5) // 0x800860B0
 {
     s32 var;
 
     var = Gfx_MapMsg_Draw(mapMsgIdx);
-    if (var <= 0)
+    if (var <= MapMsgState_Idle)
     {
         return;
     }
     
-    if (!arg0)
+    if (!hasSelection)
     {
         func_80085D78(arg5);
         return;
     }
 
-    if (var == 1)
+    if (var == MapMsgState_SelectEntry0)
     {
-        func_80085DC0(arg5, arg2);
+        func_80085DC0(arg5, entry0);
     }
-    if (var == 2)
+    if (var == MapMsgState_SelectEntry1)
     {
-        func_80085DC0(arg5, arg3);
+        func_80085DC0(arg5, entry1);
     }
-    if (var == 3)
+    if (var == MapMsgState_SelectEntry2)
     {
-        func_80085DC0(arg5, sysStateStep);
+        func_80085DC0(arg5, entry2);
     }
 }
 
-void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8008616C
+void func_8008616C(s32 arg0, bool arg1, s32 arg2, s32 arg3, bool arg4) // 0x8008616C
 {
     s32 caseVar;
     s32 var0;
@@ -208,7 +196,7 @@ void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800861
                 D_800B5C30 = arg3;
             }
 
-            if (arg1 != 0)
+            if (arg1)
             {
                 if (arg2 == 0)
                 {
@@ -276,7 +264,7 @@ const RECT D_8002AB10 =  // 0x8002AB10 .rodata
     (SCREEN_WIDTH / 5) * 3, SCREEN_HEIGHT
 };
 
-void func_800862F8(s32 arg0, s32 itemId, s32 arg2) // 0x800862F8
+void func_800862F8(s32 arg0, s32 itemId, bool arg2) // 0x800862F8
 {
     s32 switchVar;
 
@@ -306,7 +294,7 @@ void func_800862F8(s32 arg0, s32 itemId, s32 arg2) // 0x800862F8
             {
                 g_SysWork.field_14++;
                 
-                if (Fs_QueueDoThingWhenEmpty() != 0)
+                if (Fs_QueueDoThingWhenEmpty())
                 {
                     func_80085D78(arg2);
                 }
@@ -314,7 +302,7 @@ void func_800862F8(s32 arg0, s32 itemId, s32 arg2) // 0x800862F8
             break;
 
         case 1:
-            if (Fs_QueueDoThingWhenEmpty() != 0)
+            if (Fs_QueueDoThingWhenEmpty())
             {
                 func_80085D78(arg2);
             }
@@ -395,7 +383,7 @@ void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, bool arg3) // 0x800
             g_SysWork.field_14++;
 
         case 1:
-            if (Fs_QueueDoThingWhenEmpty() == 0)
+            if (!Fs_QueueDoThingWhenEmpty())
             {
                 break;
             }
@@ -474,8 +462,8 @@ void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
             StoreImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(0);
 
-            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[idx], FS_BUFFER_2, &g_MapImg);
-            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[idx], FS_BUFFER_1, &g_MapMarkerAtlasImg);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[idx], FS_BUFFER_2, &g_MapImg);
+            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdxs[idx], FS_BUFFER_1, &g_MapMarkerAtlasImg);
 
             Gfx_Init(SCREEN_WIDTH, 1);
             GsSwapDispBuff();
@@ -514,25 +502,21 @@ s32 func_8008694C(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 idx)
 {
     D_800C4710[idx] += g_DeltaTime0;
     D_800C4710[idx] = (arg3 < D_800C4710[idx]) ? arg3 : D_800C4710[idx];
-    return (arg0 * shRsin(arg1 + ((arg2 * D_800C4710[idx]) / arg3))) >> 12;
+    return (arg0 * Math_Sin(arg1 + ((arg2 * D_800C4710[idx]) / arg3))) >> 12;
 }
 
 void func_800869E4(s32 mapMsgIdx, u8* arg1, u16* arg2) // 0x800869E4
 {
-    s32 ret;
+    s32 mapMsgState;
 
     g_SysWork.field_22A0 |= 1 << 5;
 
-    ret = Gfx_MapMsg_Draw(mapMsgIdx);
-    if (ret == 1)
+    mapMsgState = Gfx_MapMsg_Draw(mapMsgIdx);
+    if (mapMsgState == MapMsgState_SelectEntry0)
     {
-        g_SysWork.field_28 = 0;
-        g_SysWork.field_10 = 0;
-        g_SysWork.timer_2C = 0;
-        g_SysWork.field_14 = 0;
-        g_SysWork.sysStateStep_C++;
+        SysWork_StateStepIncrement();
     }
-    else if (ret == NO_VALUE)
+    else if (mapMsgState == MapMsgState_Finish)
     {
         Sd_EngineCmd(arg2[*arg1]);
         *arg1 += 1;
@@ -540,7 +524,7 @@ void func_800869E4(s32 mapMsgIdx, u8* arg1, u16* arg2) // 0x800869E4
 }
 
 void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPosOffset,
-                           s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCamFlag) // 0x80086A94
+                           s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCam) // 0x80086A94
 {
     VECTOR3         posTarget;
     VC_CAM_MV_PARAM camTranslationParams;
@@ -560,7 +544,7 @@ void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPo
     }
 
     // Set acceleration on XZ plane.
-    if (xzAccel == 0)
+    if (xzAccel == FP_METER(0.0f))
     {
         camTranslationParams.accel_xz = cam_mv_prm_user.accel_xz;
     }
@@ -570,7 +554,7 @@ void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPo
     }
 
     // Set acceleration on Y axis.
-    if (yAccel == 0)
+    if (yAccel == FP_METER(0.0f))
     {
         camTranslationParams.accel_y = cam_mv_prm_user.accel_y;
     }
@@ -580,7 +564,7 @@ void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPo
     }
 
     // Set max speed on XZ plane.
-    if (xzSpeedMax == 0)
+    if (xzSpeedMax == FP_METER(0.0f))
     {
         camTranslationParams.max_spd_xz = cam_mv_prm_user.max_spd_xz;
     }
@@ -590,7 +574,7 @@ void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPo
     }
 
     // Set max speed on Y axis.
-    if (ySpeedMax == 0)
+    if (ySpeedMax == FP_METER(0.0f))
     {
         camTranslationParams.max_spd_y = cam_mv_prm_user.max_spd_y;
     }
@@ -600,11 +584,11 @@ void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPo
     }
 
     // Set camera position target.
-    vcUserCamTarget(&posTarget, &camTranslationParams, warpCamFlag);
+    vcUserCamTarget(&posTarget, &camTranslationParams, warpCam);
 }
 
 void Camera_RotationSet(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s32 zLookAtOffset,
-                        s32 xAngularAccel, s32 yAngularAccel, s32 xAngularSpeedMax, s32 yAngularSpeedMax, bool warpLookAtFlag) // 0x80086B70
+                        s32 xAngularAccel, s32 yAngularAccel, s32 xAngularSpeedMax, s32 yAngularSpeedMax, bool warpLookAt) // 0x80086B70
 {
     VECTOR3           lookAtTarget;
     VC_WATCH_MV_PARAM camRotParams;
@@ -665,15 +649,15 @@ void Camera_RotationSet(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s
 
     // Set camera flags and rotation target.
     vcWorkSetFlags(0, VC_VISIBLE_CHARA_F);
-    vcUserWatchTarget(&lookAtTarget, &camRotParams, warpLookAtFlag);
+    vcUserWatchTarget(&lookAtTarget, &camRotParams, warpLookAt);
 }
 
-void func_80086C58(s_SubCharacter* chara0, s_SubCharacter* chara1) // 0x80086C58
+void func_80086C58(s_SubCharacter* chara, s32 arg1) // 0x80086C58
 {
     switch (g_SysWork.field_10)
     {
         case 0:
-            func_80085EB8(0, chara0, chara1, 0);
+            func_80085EB8(0, chara, arg1, 0);
 
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
@@ -681,15 +665,11 @@ void func_80086C58(s_SubCharacter* chara0, s_SubCharacter* chara1) // 0x80086C58
             break;
 
         case 1:
-            func_80085EB8(1, chara0, NULL, 1);
+            func_80085EB8(1, chara, 0, 1);
             break;
 
         default:
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
-            g_SysWork.sysStateStep_C++;
+            SysWork_StateStepIncrement();
             break;
     }
 }
@@ -699,7 +679,7 @@ void func_80086D04(s_SubCharacter* chara) // 0x80086D04
     switch (g_SysWork.field_10)
     {
         case 0:
-            func_80085EB8(3, chara, NULL, 0);
+            func_80085EB8(3, chara, 0, 0);
 
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
@@ -707,60 +687,56 @@ void func_80086D04(s_SubCharacter* chara) // 0x80086D04
             break;
 
         case 1:
-            func_80085EB8(1, chara, NULL, 1);
+            func_80085EB8(1, chara, 0, 1);
             break;
 
         default:
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
-            g_SysWork.sysStateStep_C++;
+            SysWork_StateStepIncrement();
             break;
     }
 }
 
-void func_80086DA8(s32 arg0, s32 arg1)
+void func_80086DA8(s32 itemId, s32 arg1) // 0x80086DA8
 {
     switch (g_SysWork.field_10)
     {
         case 0:
-            func_8008616C(0, 1, 0, arg1, 0);
+            func_8008616C(0, true, 0, arg1, false);
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
         case 1:
-            func_800862F8(7, arg0, 1);
+            func_800862F8(7, itemId, true);
             break;
 
         default:
-            func_8008616C(1, 1, 0, 0, 0);
+            func_8008616C(1, true, 0, 0, false);
             break;
     }
 }
 
-void func_80086E50(s32 arg0, s32 arg1, s32 arg2)
+void func_80086E50(s32 itemId, s32 arg1, s32 arg2) // 0x80086E50
 {
     switch (g_SysWork.field_10)
     {
         case 0:
-            func_8008616C(0, 1, 0, arg1, 0);
+            func_8008616C(0, true, 0, arg1, false);
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
         case 1:
-            func_800862F8(7, arg0, 1);
+            func_800862F8(7, itemId, true);
             break;
 
         case 2:
-            func_8008616C(1, 1, 0, 0, 1);
+            func_8008616C(1, true, 0, 0, true);
             break;
 
         default:
-            func_800862F8(2, 0, 0);
-            func_8008616C(2, 0, 0, arg2, 0);
+            func_800862F8(2, InventoryItemId_Unequipped, false);
+            func_8008616C(2, false, 0, arg2, false);
     }
 }
 
@@ -768,17 +744,13 @@ void func_80086F44(s32 arg0, s32 arg1) // 0x80086F44
 {
     if (g_SysWork.field_10 == 0)
     {
-        func_800862F8(2, 0, 0);
-        func_8008616C(2, 1, 0, arg1, 1);
+        func_800862F8(2, InventoryItemId_Unequipped, false);
+        func_8008616C(2, true, 0, arg1, true);
         return;
     }
 
-    func_8008616C(0, 0, 0, arg0, 0);
-    g_SysWork.field_28 = 0;
-    g_SysWork.field_10 = 0;
-    g_SysWork.timer_2C = 0;
-    g_SysWork.field_14 = 0;
-    g_SysWork.sysStateStep_C++;
+    func_8008616C(0, false, 0, arg0, false);
+    SysWork_StateStepIncrement();
 }
 
 void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
@@ -809,7 +781,7 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
     switch (g_SysWork.field_10)
     {
         case 0:
-            g_MapOverlayHeader.func_C8();
+            g_MapOverlayHeader.freezePlayerControl_C8();
             func_8005DC1C(sfx, pos, 0x80, 0);
             
             g_SysWork.timer_2C = 0;
@@ -821,53 +793,43 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
             break;
         
         case 2:
-            func_800860B0(false, mapMsgIdx, 0, 0, 0, true);
+            MapMsg_DisplayAndHandleSelection(false, mapMsgIdx, 0, 0, 0, true);
             break;
 
         default:
-            g_MapOverlayHeader.func_CC(0);
+            g_MapOverlayHeader.unfreezePlayerControl_CC(0);
 
-            g_SysWork.sysState_8     = 0;
-            g_SysWork.timer_24       = 0;
-            g_SysWork.sysStateStep_C = 0;
-            g_SysWork.field_28       = 0;
-            g_SysWork.field_10       = 0;
-            g_SysWork.timer_2C       = 0;
-            g_SysWork.field_14       = 0;
+            SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }
 
-void func_8008716C(s32 arg0, s32 arg1, s32 arg2) // 0x8008716C
+void func_8008716C(s32 itemId, s32 arg1, s32 arg2) // 0x8008716C
 {
-    s32 var;
-
     switch (g_SysWork.field_10)
     {
         case 0:
-            g_MapOverlayHeader.func_C8();
-            func_8008616C(0, 1, 0, arg1, 0);
+            g_MapOverlayHeader.freezePlayerControl_C8();
+            func_8008616C(0, true, 0, arg1, false);
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
         case 1:
-            func_800862F8(7, arg0, 1);
+            func_800862F8(7, itemId, true);
             break;
 
         case 2:
-            func_8008616C(1, 1, 0, 0, 1);
+            func_8008616C(1, true, 0, 0, true);
             break;
 
         case 3:
-            func_800862F8(2, 0, 0);
-
-            var = 0;
-            func_8008616C(2, var, 0, arg2, 1);
+            func_800862F8(2, InventoryItemId_Unequipped, false);
+            func_8008616C(2, false, 0, arg2, true);
             break;
 
         case 4:
-            func_800862F8(2, 0, 0);
+            func_800862F8(2, InventoryItemId_Unequipped, false);
 
             if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
                                                  g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
@@ -879,79 +841,57 @@ void func_8008716C(s32 arg0, s32 arg1, s32 arg2) // 0x8008716C
             break;
 
         case 5:
-            func_800862F8(2, 0, 0);
-
-            var = 1;
-            func_8008616C(2, var, 0, arg2, 1);
+            func_800862F8(2, InventoryItemId_Unequipped, false);
+            func_8008616C(2, true, 0, arg2, true);
             break;
 
         default:
-            func_8008616C(0, 0, 0, arg1, 0);
-            g_MapOverlayHeader.func_CC(0);
-
-            g_SysWork.sysState_8     = 0;
-            g_SysWork.timer_24       = 0;
-            g_SysWork.sysStateStep_C = 0;
-            g_SysWork.field_28       = 0;
-            g_SysWork.field_10       = 0;
-            g_SysWork.timer_2C       = 0;
-            g_SysWork.field_14       = 0;
+            func_8008616C(0, false, 0, arg1, false);
+            g_MapOverlayHeader.unfreezePlayerControl_CC(0);
+            SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }
 
-void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 mapMsgIdx) // 0x80087360
+void func_80087360(s32 itemId, s32 arg1, s32 arg2, s32 mapMsgIdx) // 0x80087360
 {
-    s32 var;
-
     switch (g_SysWork.field_10)
     {
         case 0:
-            g_MapOverlayHeader.func_C8();
-            func_8008616C(0, 1, 0, arg1, 0);
+            g_MapOverlayHeader.freezePlayerControl_C8();
+            func_8008616C(0, true, 0, arg1, false);
 
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
         case 1:
-            func_800862F8(7, arg0, 1);
+            func_800862F8(7, itemId, true);
             break;
 
         case 2:
-            func_8008616C(1, 1, 0, 0, 1);
+            func_8008616C(1, true, 0, 0, true);
             break;
 
         case 3:
-            func_800862F8(2, 0, 0);
-
-            var = 0;
-            func_8008616C(2, var, 0, arg2,1);
+            func_800862F8(2, InventoryItemId_Unequipped, false);
+            func_8008616C(2, false, 0, arg2, true);
             break;
 
         case 4:
-            func_800862F8(2, 0, 0);
-            func_800860B0(false, mapMsgIdx, 0, 0, 0, true);
+            func_800862F8(2, InventoryItemId_Unequipped, false);
+            MapMsg_DisplayAndHandleSelection(false, mapMsgIdx, 0, 0, 0, true);
             break;
         
         case 5:
-            func_800862F8(2, 0, 0);
-
-            var = 1;
-            func_8008616C(2, var, 0, arg2, 1);
+            func_800862F8(2, InventoryItemId_Unequipped, false);
+            func_8008616C(2, true, 0, arg2, true);
             break;
 
         default:
-            func_8008616C(0, 0, 0, arg1, 0);
-            g_MapOverlayHeader.func_CC(0);
-
-            g_SysWork.sysState_8     = 0;
-            g_SysWork.timer_24       = 0;
-            g_SysWork.sysStateStep_C = 0;
-            g_SysWork.field_28       = 0;
-            g_SysWork.field_10       = 0;
-            g_SysWork.timer_2C       = 0;
-            g_SysWork.field_14       = 0;
+            func_8008616C(0, false, 0, arg1, false);
+            g_MapOverlayHeader.unfreezePlayerControl_CC(0);
+            SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }
@@ -961,32 +901,32 @@ void func_80087540(s32 itemId, s32 itemCount, s32 arg2, s32 mapMsgIdx0, s32 mapM
     switch (g_SysWork.field_10)
     {
         case 0:
-            g_MapOverlayHeader.func_C8();
-            func_8008616C(0, 1, 0, itemCount, 0);
+            g_MapOverlayHeader.freezePlayerControl_C8();
+            func_8008616C(0, true, 0, itemCount, false);
 
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
         case 1:
-            func_800862F8(7, itemId, 1);
+            func_800862F8(7, itemId, true);
             break;
 
         case 2:
-            func_8008616C(1, 1, 0, 0, 1);
+            func_8008616C(1, true, 0, 0, true);
             break;
 
         case 3:
-            func_800862F8(2, 0, 0);
-            func_8008616C(2, 0, 0, arg2, 1);
+            func_800862F8(2, InventoryItemId_Unequipped, false);
+            func_8008616C(2, false, 0, arg2, true);
             break;
 
         case 4:
-            func_800862F8(2, 0, 0);
+            func_800862F8(2, InventoryItemId_Unequipped, false);
             
             if (mapMsgIdx0 != MapMsgCode_None)
             {
-                func_800860B0(false, mapMsgIdx0, 0, 0, 0, true);
+                MapMsg_DisplayAndHandleSelection(false, mapMsgIdx0, 0, 0, 0, true);
                 break;
             }
 
@@ -1000,35 +940,27 @@ void func_80087540(s32 itemId, s32 itemCount, s32 arg2, s32 mapMsgIdx0, s32 mapM
             break;
 
         case 5:
-            D_800A8E58 = 0x30;
-            func_800862F8(2, 0, 0);
-
-            func_800860B0(false, mapMsgIdx1, 0, 0, 0, true);
+            g_BackgroundColor = 0x30;
+            func_800862F8(2, InventoryItemId_Unequipped, false);
+            MapMsg_DisplayAndHandleSelection(false, mapMsgIdx1, 0, 0, 0, true);
             break;
 
         case 6:
-            D_800A8E58 = 0x30;
+            g_BackgroundColor = 0x30;
 
-            func_800862F8(2, 0, 0);
-            func_8008616C(2, 1, 0, arg2, 1);
+            func_800862F8(2, InventoryItemId_Unequipped, false);
+            func_8008616C(2, true, 0, arg2, true);
             break;
 
         default:
-            func_8008616C(0, 0, 0, itemCount, 0);
-            g_MapOverlayHeader.func_CC(0);
-
-            g_SysWork.sysState_8     = 0;
-            g_SysWork.timer_24       = 0;
-            g_SysWork.sysStateStep_C = 0;
-            g_SysWork.field_28       = 0;
-            g_SysWork.field_10       = 0;
-            g_SysWork.timer_2C       = 0;
-            g_SysWork.field_14       = 0;
+            func_8008616C(0, false, 0, itemCount, false);
+            g_MapOverlayHeader.unfreezePlayerControl_CC(0);
+            SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }
 
-void Pickup_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx) // 0x800877B8
+void Event_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx) // 0x800877B8
 {
     s32 i            = itemId;
     s32 mapMsgIdxCpy = mapMsgIdx;
@@ -1056,59 +988,56 @@ void Pickup_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgId
 
     switch (g_SysWork.field_10)
     {
-        case 0:
-            g_MapOverlayHeader.func_C8();
+        case 0: // Freeze player and start loading item model.
+            g_MapOverlayHeader.freezePlayerControl_C8();
             func_80086470(0, itemId, 0, false);
 
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
-        case 1:
+        case 1: // Loading model.
             func_80086470(1, itemId, 0, true);
             break;
 
-        case 2: // "Yes" entry selected?
-            if (func_80054AD8(itemId))
+        case 2:
+            // `Gfx_PickupItemAnimate` scales model up and returns `false`,
+            // then starts rotating it and returns `true`.
+            if (Gfx_PickupItemAnimate(itemId))
             {
-                func_800860B0(true, mapMsgIdxCpy, 3, NO_VALUE, 0, true);
+                MapMsg_DisplayAndHandleSelection(true, mapMsgIdxCpy, 3, NO_VALUE, 0, true); // 3 is "Yes", `NO_VALUE` is "No".
             }
 
             // Flag pickup item as collected.
             g_SavegamePtr->eventFlags_168[globalPickupId >> 5] |= 1 << (globalPickupId & 0x1F);
             break;
 
-        case 3:
+        case 3: // "Yes" selected.
             func_80086470(3, itemId, itemCount, false);
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
-        default: // "No" entry selected?
-            // Flag pickup item as uncollected.
+        default:
+            // Flag pickup item as uncollected. Selecting 'No' sets `field_10` to `NO_VALUE`.
             if (g_SysWork.field_10 == NO_VALUE)
             {
                 g_SavegamePtr->eventFlags_168[globalPickupId >> 5] &= ~(1 << (globalPickupId & 0x1F));
             }
 
-            g_MapOverlayHeader.func_CC(0);
-            g_SysWork.sysState_8     = 0;
-            g_SysWork.timer_24       = 0;
-            g_SysWork.sysStateStep_C = 0;
-            g_SysWork.field_28       = 0;
-            g_SysWork.field_10       = 0;
-            g_SysWork.timer_2C       = 0;
-            g_SysWork.field_14       = 0;
+            g_MapOverlayHeader.unfreezePlayerControl_CC(0);
+            SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }
 
-void Pickup_CommonItemTake(u32 pickupType, s32 globalPickupId) // 0x800879FC
+void Event_CommonItemTake(u32 pickupType, s32 globalPickupId) // 0x800879FC
 {
     #define EASY_DIFFICULTY_AMMO_COUNT_MULT_MIN 2
     #define HANDGUN_AMMO_COUNT_BASE             15
     #define SHOTGUN_AMMO_COUNT_BASE             6
     #define RIFLE_AMMO_COUNT_BASE               6
+    #define DEFAULT_ITEM_COUNT                  1
 
     s32 ammoCountMult;
 
@@ -1123,32 +1052,32 @@ void Pickup_CommonItemTake(u32 pickupType, s32 globalPickupId) // 0x800879FC
     switch (pickupType)
     {
         case CommonPickupItemId_FirstAidKit:
-            Pickup_ItemTake(InventoryItemId_FirstAidKit, 1, globalPickupId, 5);
+            Event_ItemTake(InventoryItemId_FirstAidKit, DEFAULT_ITEM_COUNT, globalPickupId, MapMsgIdx_FirstAidSelect);
             break;
 
         case CommonPickupItemId_HealthDrink:
-            Pickup_ItemTake(InventoryItemId_HealthDrink, 1, globalPickupId, 6);
+            Event_ItemTake(InventoryItemId_HealthDrink, DEFAULT_ITEM_COUNT, globalPickupId, MapMsgIdx_HealthDrinkSelect);
             break;
 
         case CommonPickupItemId_Ampoule:
-            Pickup_ItemTake(InventoryItemId_Ampoule, 1, globalPickupId, 7);
+            Event_ItemTake(InventoryItemId_Ampoule, DEFAULT_ITEM_COUNT, globalPickupId, MapMsgIdx_AmpouleSelect);
             break;
 
         case CommonPickupItemId_HandgunBullets:
-            Pickup_ItemTake(InventoryItemId_HandgunBullets, ammoCountMult * HANDGUN_AMMO_COUNT_BASE, globalPickupId, 8);
+            Event_ItemTake(InventoryItemId_HandgunBullets, ammoCountMult * HANDGUN_AMMO_COUNT_BASE, globalPickupId, MapMsgIdx_HandgunAmmoSelect);
             break;
 
         case CommonPickupItemId_ShotgunShells:
-            Pickup_ItemTake(InventoryItemId_ShotgunShells, ammoCountMult * SHOTGUN_AMMO_COUNT_BASE, globalPickupId, 10);
+            Event_ItemTake(InventoryItemId_ShotgunShells, ammoCountMult * SHOTGUN_AMMO_COUNT_BASE, globalPickupId, MapMsgIdx_ShotgunAmmoSelect);
             break;
 
         case CommonPickupItemId_RifleShells:
-            Pickup_ItemTake(InventoryItemId_RifleShells, ammoCountMult * RIFLE_AMMO_COUNT_BASE, globalPickupId, 9);
+            Event_ItemTake(InventoryItemId_RifleShells, ammoCountMult * RIFLE_AMMO_COUNT_BASE, globalPickupId, MapMsgIdx_RifleAmmoSelect);
             break;
     }
 }
 
-void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF4
+void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF4
 {
     static const RECT D_8002ABA4 =
     {
@@ -1164,28 +1093,28 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
     switch (g_SysWork.field_10)
     {
         case 0:
-            g_MapOverlayHeader.func_C8();
-            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[mapFlagIdx]);
+            g_MapOverlayHeader.freezePlayerControl_C8();
+            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[mapFlagIdx]);
 
             g_SysWork.timer_2C = 0;
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
         case 1:
-            func_8008616C(2, 1, 0, 0, 1);
+            func_8008616C(2, true, 0, 0, true);
             break;
 
         case 2:
             DrawSync(0);
             StoreImage(&D_8002ABA4, IMAGE_BUFFER);
             DrawSync(0);
-            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[mapFlagIdx], FS_BUFFER_2, &g_MapImg);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[mapFlagIdx], FS_BUFFER_2, &g_MapImg);
             Gfx_Init(0x140, 1);
 
             g_IntervalVBlanks = 1;
 
             GsSwapDispBuff();
-            func_8008616C(0, 0, 0, 0, 0);
+            func_8008616C(0, false, 0, 0, false);
             Fs_QueueWaitForEmpty();
 
             g_SysWork.timer_2C = 0;
@@ -1193,10 +1122,10 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             g_SysWork.field_10++;
 
         case 3:
-            D_800A8E58 = 0x58;
+            g_BackgroundColor = 0x58;
 
             Gfx_BackgroundSpriteDraw(&g_MapImg);
-            func_800860B0(true, mapMsgIdx, 4, 5, 0, true);
+            MapMsg_DisplayAndHandleSelection(true, mapMsgIdx, 4, 5, 0, true); // 4 is "No", 5 is "Yes".
             break;
 
         case 4:
@@ -1239,33 +1168,27 @@ void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             g_SysWork.field_10++;
 
         case 5:
-            D_800A8E58 = 0x58;
+            g_BackgroundColor = 0x58;
 
             Gfx_BackgroundSpriteDraw(&g_MapImg);
-            func_8008616C(2, 1, 0, 0, 1);
+            func_8008616C(2, true, 0, 0, true);
             break;
 
         default:
             LoadImage(&D_8002ABA4, IMAGE_BUFFER);
             DrawSync(0);
             Gfx_Init(0x140, 0);
-            func_8008616C(0, 0, 0, 0, 0);
-            g_MapOverlayHeader.func_CC(0);
+            func_8008616C(0, false, 0, 0, false);
 
-            g_SysWork.sysState_8     = 0;
-            g_SysWork.timer_24       = 0;
-            g_SysWork.sysStateStep_C = 0;
-            g_SysWork.field_28       = 0;
-            g_SysWork.field_10       = 0;
-            g_SysWork.timer_2C       = 0;
-            g_SysWork.field_14       = 0;
+            g_MapOverlayHeader.unfreezePlayerControl_CC(0);
+            SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }
 
 void func_80087EA8(s32 cmd) // 0x80087EA8
 {
-    if (func_800358A8(cmd) == 0)
+    if (!func_800358A8(cmd))
     {
         return;
     }
@@ -1275,7 +1198,7 @@ void func_80087EA8(s32 cmd) // 0x80087EA8
 
 void func_80087EDC(s32 arg0) // 0x80087EDC
 {
-    if (func_80045B28() || Fs_QueueDoThingWhenEmpty() == 0)
+    if (func_80045B28() || !Fs_QueueDoThingWhenEmpty())
     {
         return;
     }
@@ -1283,7 +1206,7 @@ void func_80087EDC(s32 arg0) // 0x80087EDC
     switch (g_SysWork.field_10)
     {
         case 0:
-            if (func_800358A8(arg0) == 0)
+            if (!func_800358A8(arg0))
             {
                 g_SysWork.field_10 = 3;
                 g_SysWork.timer_2C = 0;
@@ -1428,11 +1351,11 @@ void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6,
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088370); // 0x80088370
 
-bool Chara_Load(s32 arg0, s8 arg1, GsCOORDINATE2* coord, s8 arg3, void* arg4, s_FsImageDesc* image) // 0x80088C7C
+bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 arg3, s_PlmHeader* plmHeader, s_FsImageDesc* tex) // 0x80088C7C
 {
-    func_80035338(arg0 + 1, arg1, NULL, coord);
+    func_80035338(arg0 + 1, charaId, NULL, coord);
     func_8003D5B4(arg3);
-    func_8003D6E0(arg1, arg0, arg4, image);
+    func_8003D6E0(charaId, arg0, plmHeader, tex);
     return true;
 }
 
@@ -1570,7 +1493,7 @@ s32 func_80089128() // 0x80089128
     return var_s5;
 }
 
-// Forward declare pointers used below
+// Forward declare pointers used below.
 extern const u32 D_8002AF04[];
 extern const u32 D_8002AF08[];
 extern const u32 D_8002AF20[];
@@ -1587,64 +1510,64 @@ extern const u32 D_8002AF70[];
 
 const s_8002AC04 D_8002AC04[] =
 {
-    // 2nd field is used as index into `D_800AFD08` funcptr array
-    // Seems each function takes different kind of params in 5th/6th fields
-    // #0 5th field is some kind of index/counter
-    // #1 5th field is pointer to another D_8002AC04 entry
-    // #2 5th field points to some data that comes after this array
-    // #3 5th field is always 0
-    // #4 5th field is index/counter
-    { NULL, 3, 2, 0, 0, 0 },
-    { NULL, 3, 3, 0, 0, 0 },
-    { NULL, 3, 1, 0, 0, 0 },
-    { NULL, 3, 0, 0, 0, 0 },
-    { NULL, 3, 4, 0, 0, 0 },
-    { &D_8002AC04[22], 0, 0, 0, 5, 0 },
-    { &D_8002AC04[25], 0, 32, 0, 6, 0 },
-    { &D_8002AC04[26], 0, 32, 0, 7, 0 },
-    { &D_8002AC04[27], 0, 32, 0, 8, 0 },
-    { &D_8002AC04[23], 0, 32, 0, 9, 0 },
-    { &D_8002AC04[24], 0, 32, 0, 10, 0 },
-    { &D_8002AC04[5], 1, 0, 0, &D_8002AC04[6], 0 },
-    { &D_8002AC04[31], 0, 32, 0, 12, 0 },
-    { &D_8002AC04[34], 0, 32, 0, 12, 0 },
-    { &D_8002AC04[37], 0, 32, 0, 12, 0 },
-    { &D_8002AC04[40], 0, 32, 0, 12, 0 },
-    { &D_8002AC04[43], 0, 32, 0, 12, 0 },
-    { &D_8002AC04[46], 0, 32, 0, 12, 0 },
-    { &D_8002AC04[28], 0, 32, 0, 18, 0 },
-    { &D_8002AC04[29], 0, 32, 0, 19, 0 },
-    { NULL, 4, 0, 0xFFFF, 20, -255 },
-    { NULL, 4, 1, 0xFFFF, 21, -255 },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF70, 0x1009002D },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF64, 0x10300180 },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF5C, 0x10180090 },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF54, 0x100F005A },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF48, 0x900F0096 },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF3C, 0x100C0060 },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF3C, 0x100C0060 },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF34, 0x100F004B },
-    { NULL, 0, 0, 0x0000, 0, 0 },
-    { NULL, 2, 0, 0xFFFF, &D_8002AF2C, 0xF0258 },
-    { NULL, 0, 0, 0x0000, 0, 0 },
-    { NULL, 0, 0, 0x0000, 0, 0 },
-    { NULL, 2, 0, 0xFFFF, &D_8002AF28, 0xF01E0 },
-    { NULL, 0, 0, 0x0000, 0, 0 },
-    { NULL, 0, 0, 0x0000, 0, 0 },
-    { NULL, 2, 0, 0xFFFF, &D_8002AF24, 0xF01A4 },
-    { NULL, 0, 0, 0x0000, 0, 0 },
-    { NULL, 0, 0, 0x0000, 0, 0 },
-    { NULL, 2, 0, 0xFFFF, &D_8002AF20, 0xF0168 },
-    { NULL, 0, 0, 0x0000, 0, 0 },
-    { NULL, 0, 0, 0x0000, 0, 0 },
-    { NULL, 2, 0, 0xFFFF, &D_8002AF20, 0xF010E },
-    { NULL, 0, 0, 0x0000, 0, 0 },
-    { NULL, 0, 0, 0x0000, 0, 0 },
-    { &D_8002AC04[47], 2, 0, 0xFFFF, &D_8002AF08, 0xF0B40 },
-    { &D_8002AC04[47], 2, 0, 0xFFFF, &D_8002AF04, 0xF001E },
+    // 2nd field is used as index into `D_800AFD08` funcptr array.
+    // Seems each function takes different kind of params in 5th/6th fields:
+    // #0 5th field is some kind of index/counter.
+    // #1 5th field is pointer to another `D_8002AC04` entry.
+    // #2 5th field points to some data that comes after this array.
+    // #3 5th field is always 0.
+    // #4 5th field is index/counter.
+    { NULL, 3, 2, 0, 0, {} },
+    { NULL, 3, 3, 0, 0, {} },
+    { NULL, 3, 1, 0, 0, {} },
+    { NULL, 3, 0, 0, 0, {} },
+    { NULL, 3, 4, 0, 0, {} },
+    { &D_8002AC04[22], 0, 0, 0, 5, {} },
+    { &D_8002AC04[25], 0, 32, 0, 6, {} },
+    { &D_8002AC04[26], 0, 32, 0, 7, {} },
+    { &D_8002AC04[27], 0, 32, 0, 8, {} },
+    { &D_8002AC04[23], 0, 32, 0, 9, {} },
+    { &D_8002AC04[24], 0, 32, 0, 10, {} },
+    { &D_8002AC04[5], 1, 0, 0, &D_8002AC04[6], {} },
+    { &D_8002AC04[31], 0, 32, 0, 12, {} },
+    { &D_8002AC04[34], 0, 32, 0, 12, {} },
+    { &D_8002AC04[37], 0, 32, 0, 12, {} },
+    { &D_8002AC04[40], 0, 32, 0, 12, {} },
+    { &D_8002AC04[43], 0, 32, 0, 12, {} },
+    { &D_8002AC04[46], 0, 32, 0, 12, {} },
+    { &D_8002AC04[28], 0, 32, 0, 18, {} },
+    { &D_8002AC04[29], 0, 32, 0, 19, {} },
+    { NULL, 4, 0, 0xFFFF, 20, { .u32 = -255 } },
+    { NULL, 4, 1, 0xFFFF, 21, { .u32 = -255 } },
+    { NULL, 2, 1, 0xFFFF, &D_8002AF70, { 0x2D, 9, 1, 0 } },
+    { NULL, 2, 1, 0xFFFF, &D_8002AF64, { 0x180, 0x30, 1, 0 } },
+    { NULL, 2, 1, 0xFFFF, &D_8002AF5C, { 0x90, 0x18, 1, 0 } },
+    { NULL, 2, 1, 0xFFFF, &D_8002AF54, { 0x5A, 0xF, 1, 0 } },
+    { NULL, 2, 1, 0xFFFF, &D_8002AF48, { 0x96, 0xF, 1, 1 } },
+    { NULL, 2, 1, 0xFFFF, &D_8002AF3C, { 0x60, 0xC, 1, 0 } },
+    { NULL, 2, 1, 0xFFFF, &D_8002AF3C, { 0x60, 0xC, 1, 0 } },
+    { NULL, 2, 1, 0xFFFF, &D_8002AF34, { 0x4B, 0xF, 1, 0 } },
+    { NULL, 0, 0, 0x0000, 0, {} },
+    { NULL, 2, 0, 0xFFFF, &D_8002AF2C, { 0x258, 0xF, 0, 0 } },
+    { NULL, 0, 0, 0x0000, 0, {} },
+    { NULL, 0, 0, 0x0000, 0, {} },
+    { NULL, 2, 0, 0xFFFF, &D_8002AF28, { 0x1E0, 0xF, 0, 0 } },
+    { NULL, 0, 0, 0x0000, 0, {} },
+    { NULL, 0, 0, 0x0000, 0, {} },
+    { NULL, 2, 0, 0xFFFF, &D_8002AF24, { 0x1A4, 0xF, 0, 0 } },
+    { NULL, 0, 0, 0x0000, 0, {} },
+    { NULL, 0, 0, 0x0000, 0, {} },
+    { NULL, 2, 0, 0xFFFF, &D_8002AF20, { 0x168, 0xF, 0, 0 } },
+    { NULL, 0, 0, 0x0000, 0, {} },
+    { NULL, 0, 0, 0x0000, 0, {} },
+    { NULL, 2, 0, 0xFFFF, &D_8002AF20, { 0x10E, 0xF, 0, 0 } },
+    { NULL, 0, 0, 0x0000, 0, {} },
+    { NULL, 0, 0, 0x0000, 0, {} },
+    { &D_8002AC04[47], 2, 0, 0xFFFF, &D_8002AF08, { 0xB40, 0xF, 0, 0 } },
+    { &D_8002AC04[47], 2, 0, 0xFFFF, &D_8002AF04, { 0x1E, 0xF, 0, 0 } },
 };
 
-// TODO: Figure out what kind of data this is, the array above has some entries pointing to it, all of them using funcptr #2 (func_80089DF0)
+// TODO: Figure out what kind of data this is. The array above has some entries pointing to it, all of them using funcptr #2 (`func_80089DF0`).
 // Not sure why they'd all be different sizes though.
 const u32 D_8002AF04[] = { 0 };
 const u32 D_8002AF08[] = { 0x8000184, 0x61000003, 0x81000000, 1, 0x181, 0x10000 };
@@ -1705,17 +1628,17 @@ void func_800893D0(q19_12 arg0) // 0x800893D0
 {
     u32 var;
 
-    if (arg0 > FP_TO(25, Q12_SHIFT)) // 25 in Q19.12.
+    if (arg0 > FP_TO(25, Q12_SHIFT))
     {
         var = 200;
     }
-    else if (arg0 < FP_TO(5, Q12_SHIFT)) // 5 in Q19.12.
+    else if (arg0 < FP_TO(5, Q12_SHIFT))
     {
         var = 100;
     }
     else 
     {
-        var = ((arg0 + FP_TO(15, Q12_SHIFT)) / FP_TO(5, Q12_SHIFT)) * 25; // 15 and 5 in Q19.12.
+        var = ((arg0 + FP_TO(15, Q12_SHIFT)) / FP_TO(5, Q12_SHIFT)) * 25;
     }
     
     func_800892DC(10, var);
@@ -1838,11 +1761,11 @@ bool func_8008973C(s_SysWork_2514* arg0, s32 arg1, s_8002AC04* ptr, u32* arg3)
             break;
 
         case 5:
-            func_8008989C(arg0, ptr->field_6, ptr->field_C);
+            func_8008989C(arg0, ptr->field_6, ptr->field_C.u32);
             break;
 
         case 6:
-            func_8008992C(arg0, ptr->field_6, ptr->field_C);
+            func_8008992C(arg0, ptr->field_6, ptr->field_C.u32);
             break;
 
         case 7:
@@ -2003,7 +1926,10 @@ s32 func_8008A0CC() // 0x8008A0CC
     return 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A0D4); // 0x8008A0D4
+s64 func_8008A0D4(void) // 0x8008A0D4
+{
+    return 0;
+}
 
 s32 func_8008A0E4(s32 arg0, e_EquippedWeaponId weaponId, s_SubCharacter* chara, s_PlayerCombat* combat, s32 arg4, s16 arg5, s16 arg6) // 0x8008A0E4
 {
@@ -2020,7 +1946,7 @@ s32 func_8008A0E4(s32 arg0, e_EquippedWeaponId weaponId, s_SubCharacter* chara, 
     var_t1    = chara->field_44;
     modelAnim = &chara->model_0.anim_4;
 
-    if (g_DeltaTime0 == 0 || g_SysWork.sysState_8 != 0)
+    if (g_DeltaTime0 == FP_TIME(0.0f) || g_SysWork.sysState_8 != SysState_Gameplay)
     {
         return NO_VALUE;
     }
@@ -2077,19 +2003,16 @@ s32 func_8008A0E4(s32 arg0, e_EquippedWeaponId weaponId, s_SubCharacter* chara, 
     if (temp_a1 != 0)
     {
         var_a0 = var_v0_2;
-        if (count > 0)
+        while (count > 0)
         {
-            while (count > 0)
+            if (temp_a1 & var_a0)
             {
-                if (temp_a1 & var_a0)
-                {
-                    ret = count;
-                    break;
-                }
-
-                var_a0 *= 2; // Or `<<= 1`.
-                count--;
+                ret = count;
+                break;
             }
+
+            var_a0 *= 2; // Or `<<= 1`.
+            count--;
         }
     }
 
@@ -2108,8 +2031,8 @@ s32 func_8008A0E4(s32 arg0, e_EquippedWeaponId weaponId, s_SubCharacter* chara, 
     return ret;
 }
 
-// TODO: .rodata migration.
-#ifdef NON_MATCHING
+const s32 g_rodataPad_8002AF9C[2] = { 0, 0 }; // TODO: Might indicate split nearby?
+
 u8 func_8008A270(s32 idx) // 0x8008A270
 {
     switch (idx)
@@ -2132,12 +2055,7 @@ u8 func_8008A270(s32 idx) // 0x8008A270
 
     return D_800AD4C8[idx].field_E;
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A270);
-#endif
 
-// TODO: .rodata migration.
-#ifdef NON_MATCHING
 u8 func_8008A2E0(s32 arg0)
 {
     if (g_SysWork.field_275C > 0x100000)
@@ -2163,9 +2081,6 @@ u8 func_8008A2E0(s32 arg0)
 
     return D_800AD4C8[arg0].field_F;
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A2E0); // 0x8008A2E0
-#endif
 
 s32 func_8008A35C(s_800AD4C8* arg0, s32 arg1) // 0x8008A35C
 {
@@ -2439,7 +2354,7 @@ void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyfr
 
 s16 func_8008CDBC(s16 angle) // 0x8008CDBC
 {
-    return (96 * shRcos(angle / 2)) / shRsin(angle / 2);
+    return (96 * Math_Cos(angle / 2)) / Math_Sin(angle / 2);
 }
 
 s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, s32 time, s_DmsHeader* header) // 0x8008CE1C

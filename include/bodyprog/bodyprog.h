@@ -33,9 +33,9 @@ typedef enum _Sfx
 {
     Sfx_Base      = 1280,
 
-    Sfx_StartGame = Sfx_Base + 1, // `FIRST.VAB`
+    Sfx_StartGame = Sfx_Base + 1, // `SND/FIRST.VAB`
 
-    Sfx_Denied    = Sfx_Base + 24,
+    Sfx_Denied    = Sfx_Base + 24, // `1ST/BASE.VAB` onward, but loaded out of order?
     Sfx_Back      = Sfx_Base + 25,
     Sfx_Cancel    = Sfx_Base + 26,
     Sfx_Confirm   = Sfx_Base + 27, // TODO: Continue this pattern.
@@ -142,6 +142,14 @@ typedef enum _PrimitiveType
     PrimitiveType_S32  = 5
 } e_PrimitiveType;
 
+typedef enum _LoadingScreenId
+{
+    LoadingScreenId_None              = 0,
+    LoadingScreenId_PlayerRun         = 1,
+    LoadingScreenId_BackgroundTexture = 2,
+    LoadingScreenId_StageString       = 3
+} e_LoadingScreenId;
+
 // ================
 // UNKNOWN STRUCTS
 // ================
@@ -163,7 +171,19 @@ typedef struct _s_8002AC04
     u8                  field_5;
     u16                 field_6;
     s32                 field_8;
-    s32                 field_C;
+    union
+    {
+        // `func_80089DF0` reads `field_C` as bitfield, other `D_800AFD08` funcptrs read as `u32`?
+        // TODO: Some funcs also treat `field_8` differently, should probably be part of union too.
+        struct
+        {
+            u32 field_C_0  : 16;
+            u32 field_C_16 : 12;
+            u32 field_C_28 : 3;
+            u32 field_C_31 : 1;
+        } bitField;
+        u32 u32;
+    } field_C;
 } s_8002AC04;
 STATIC_ASSERT_SIZEOF(s_8002AC04, 16);
 
@@ -220,9 +240,9 @@ typedef struct
 
 typedef struct
 {
-    s32 field_0;
-    s32 field_4;
-    s16 field_8;
+    s32 vx_0;
+    s32 vz_4;
+    s16 vy_8;
     s8  unk_A;
     s8  field_B;
     s8  field_C;
@@ -964,17 +984,6 @@ typedef struct
     s16 field_8;
 } s_800BCE18_0_0_C;
 
-typedef struct
-{
-    s16 field_0;
-    s16 field_2;
-    s16 unk_4;
-    u8  field_6;
-    u8  unk_7;
-    s32 field_8;
-    s_800BCE18_0_0_C* field_C;
-} s_sub_800BCE18_0;
-
 // Looks similar to `s_Skeleton`
 typedef struct
 {
@@ -982,18 +991,29 @@ typedef struct
     u8            field_1;
     u8            unk_2[2];
     s32           field_4;
-    void*         field_8;
-    s_FsImageDesc field_C;
+    s_PlmHeader*  plmHeader_8;
+    s_FsImageDesc texture_C;
     s_Skeleton    field_14; // Could be different struct?
 } s_800BCE18_0_CC; // Unknown size.
 
 typedef struct
 {
-    s_sub_800BCE18_0* field_0;
+    s16               field_0;
+    s16               field_2;
+    s16               field_4;
+    u8                field_6;
+    u8                field_7;
+    s32*              field_8; // Pointer to some other const data or `NULL`.
+    s_800BCE18_0_0_C* field_C; // Pointer to some other const data.
+} s_UnkStruct2_Mo;
+
+typedef struct
+{
+    s_UnkStruct2_Mo*  field_0;
     s8                field_4;
     u8                unk_5[3];
-    VECTOR3           field_8; // Position.
-    s32               field_14;
+    VECTOR3           field_8;               // Position.
+    s32               field_14;              // Used frequently as `s_PlmHeader*`, but code adds file lengths to it. Could just be `u8*` pointing to current file data?
     s_800BCE18_0_CC*  field_18[Chara_Count]; // Per-character data? So far only seen accessed by `map4_s03::800D59EC` which calls `func_8003BE50(Chara_Twinfeeler)`.
     s_800BCE18_0_CC   field_CC;
     u8                unk_D0[368];
@@ -1189,7 +1209,7 @@ typedef struct
     s16 field_4;
     s16 field_6;
     s16 field_8;
-    s16 field_A;
+    s16 field_A; // Pitch?
     s16 volumeLeft_C;
     s16 volumeRight_E;
 } s_800C1698;
@@ -1282,15 +1302,15 @@ typedef struct
 /** Holds file IDs of anim/model/texture for each `e_CharacterId`, along with some data used in VC camera code. */
 typedef struct
 {
-    s16   animFileIdx;
-    s16   modelFileIdx;
-    s16   textureFileIdx : 16;
-    u16   field_6        : 10;
-    u16   field_6_10     : 6;
-    void* field_8;
-    u16   field_C_0 : 2;
-    s32   field_C_2 : 14;
-    u16   unk_C_16  : 16;
+    s16            animFileIdx;
+    s16            modelFileIdx;
+    s16            textureFileIdx : 16;
+    u16            field_6        : 10;
+    u16            field_6_10     : 6;
+    s_FsImageDesc* field_8; // Guessed type.
+    u16            field_C_0  : 2;
+    s32            field_C_2  : 14;
+    u16            field_C_16 : 16;
 } s_CharaFileInfo;
 STATIC_ASSERT_SIZEOF(s_CharaFileInfo, 16);
 
@@ -1395,16 +1415,18 @@ typedef struct
 } s_800AFE24; // Size: 85
 
 /** Part of map headers, pointer passed to `Chara_PositionUpdateFromParams`. */
+/** TODO: Rename to `PointOfInterest` to match SilentHillMapExaminer name? The array inside map header seems more for holding data for points on the map rather than just chara positioning. */
+/** This also makes use of union from 0x4 - 0x8 for different kinds of params, see https://github.com/Sparagas/Silent-Hill/blob/6ec81b26b8cb21dad6518037a4de31f151476e60/010%20Editor%20-%20Binary%20Templates/sh1_overlays.bt#L177 */
 typedef struct _AreaLoadParams
 {
-    q19_12 char_x_0;
-    u32    mapIdx_4_0     : 5;
-    u32    field_4_5      : 4;
-    u32    field_4_9      : 3;
-    u32    field_4_12     : 4;
-    u32    rotationY_4_16 : 8;
-    u32    field_4_24     : 8;
-    q19_12 char_z_8;
+    q19_12 char_x_0; // TODO: Rename to `positionX_0`.
+    u32    mapIdx_4_0          : 5; /** `e_Current2dMapIdx` */
+    u32    field_4_5           : 4;
+    u32    loadingScreenId_4_9 : 3; /** `e_LoadingScreenId`` */
+    u32    field_4_12          : 4;
+    u32    rotationY_4_16      : 8; /** Degrees in Q3.12, range [0, 256]. */
+    u32    field_4_24          : 8;
+    q19_12 char_z_8; // TODO: Rename to `positionZ_8`.
 } s_AreaLoadParams;
 
 typedef struct
@@ -1435,30 +1457,34 @@ typedef struct s_UnkStruct_MapOverlay
 
 typedef struct
 {
-    u8 unk_0[6];
-    u8 field_6;
-} s_UnkStruct2_Mo;
-
-typedef struct
-{
     s16 field_0;
     s16 field_2;
     s16 field_4;
     s16 field_6;
 } s_UnkStruct3_Mo; // Probable size: 8 bytes.
 
+/** Guessed based on in-debugger observation during gameplay.
+ * Everything is inited to 0xFFFF and some data is written when I get hit by monsters.
+ * Might be more generic 'particles / decals' struct
+ */
+typedef struct
+{
+    u16 unk_0;
+    u16 unk_2;
+} s_BloodSplat;
+
 /** TODO: `g_MapOverlayHeader` is part of the map overlay BIN files. Maybe should be moved to `maps/shared.h`. 
- *  If field has a comment that lists only certain map(s) it means all others set this field to 0
- *  func(?) means the signature is unknown and a default void() was selected for now
- * */
+ * If field has a comment that lists only certain map(s) it means all others set this field to 0.
+ * func(?) means the signature is unknown and a default void() was selected for now.
+ */
 typedef struct _MapOverlayHeader
 {
     s_UnkStruct2_Mo*  field_0;
-    s8                (*getMapRoomIdxFunc_4)(s32 x, s32 y); // Called by `Savegame_MapRoomIdxSet`.
+    u8                (*getMapRoomIdxFunc_4)(s32 x, s32 y); // Called by `Savegame_MapRoomIdxSet`.
     s8                field_8;
     s8                unk_9[3];
-    void              (*func_C)(); // func(?).
-    s32               (*func_10)();
+    s32               (*func_C)();
+    void              (*func_10)(s32 arg);
     s8                field_14; // Flags?
     u8                field_15;
     s8                field_16;
@@ -1476,10 +1502,10 @@ typedef struct _MapOverlayHeader
     void              (*func_40)();
     void              (*func_44)();
     void              (*func_48)(); // func(?).
-    s_func_800625F4*  table200Items_4C; //unknown purpose, but all maps have an array[200] of this (4000 zero bytes)
-    s32               always200_50;
-    s32*              table76Items_54; //unknown purpose, but all maps have an array[76] of this (304 zero bytes)
-    s32               always150_58;
+    s_func_800625F4*  unkTable1_4C;
+    s32               unkTable1Len_50;
+    s_BloodSplat*     bloodSplats_54;
+    s32               bloodSplatsLen_58;
     s32               always0_5C;
     s32               always0_60;
     s32               always0_64;
@@ -1507,15 +1533,15 @@ typedef struct _MapOverlayHeader
     void              (*func_BC)(s_SubCharacter*, s_MainCharacterExtra*, GsCOORDINATE2*);
     void              (*func_C0)(); // func(?).
     void              (*func_C4)(); // func(?).
-    void              (*func_C8)();
-    void              (*func_CC)(s32);
+    void              (*freezePlayerControl_C8)();
+    void              (*unfreezePlayerControl_CC)(s32);
     s32               (*func_D0)(s32, void*, s16, s32); // 0x800C964C
-    s32               (*func_D4)(s_SubCharacter*);      // Assumed return type.
+    s32               (*func_D4)(s32);                  // Assumed return type.
     void              (*func_D8)();                     // Assumed return type.
     void              (*func_DC)();                     // Assumed return type.
     void              (*func_E0)(); // func(?).
-    s32               (*func_E4)(s_SubCharacter*, s_SubCharacter*); // Assumed return type.
-    s64               (*func_E8)(s_SubCharacter*);                  // Is it really `s64`???
+    s32               (*func_E4)(s_SubCharacter*, s32); // Assumed return type.
+    s64               (*func_E8)(s_SubCharacter*);      // Is it really `s64`???
     s32               (*func_EC)();
     void              (*func_F0)(); // func(?).
     void              (*func_F4)(); // func(?).
@@ -1562,7 +1588,7 @@ typedef struct _MapOverlayHeader
     s8                charaGroupIds_248[4];                                              /** `e_CharacterId` values where if `s_SpawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
     s_SpawnInfo       charaSpawns_24C[2][16];                                            /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `func_80037F24`. */
     VC_ROAD_DATA      roadDataList_3CC[48];
-    u32                unk_84C[512];
+    u32               unk_84C[512];
 } s_MapOverlayHeader;
 STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 4172); // Size incomplete.
 
@@ -1578,7 +1604,7 @@ typedef struct
 typedef struct
 {
     s8 maxIdx_0;
-    u8 selectedIdx_1;
+    u8 selectedEntryIdx_1;
     u8 unk_2;
     u8 cancelIdx_3;
 } s_MapMsgSelect;
@@ -1618,7 +1644,7 @@ typedef struct
 extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: Part of main exe, move to `main/` headers?
 
 /** Some sort of struct inside RODATA, likely a constant. */
-extern s32 D_8002500C;
+extern s_UnkStruct2_Mo g_UnknownMapTable0[16];
 
 extern char D_8002510C[]; // "\aNow_loading."
 
@@ -1643,7 +1669,7 @@ extern u_Filename D_8002B2CC;
 
 extern s32 g_MapMsg_WidthTable[];
 
-extern u8 D_800A8E58;
+extern u8 g_BackgroundColor;
 
 extern DR_MODE D_800A8E5C[];
 
@@ -1659,37 +1685,22 @@ extern s32 D_800A8F40;
 
 extern GsOT D_800A8F9C[];
 
-extern s_FsImageDesc g_Font16AtlasImg; // 0x800A8FF4
-
-extern s_FsImageDesc g_KonamiLogoImg; // 0x800A8FFC
-
-extern s_FsImageDesc g_KcetLogoImg; // 0x800A9004
-
-extern s_FsImageDesc g_TitleImg; // 0x800A9014
-
-extern s_FsImageDesc g_MapImg; // 0x800A901C
-
+extern s_FsImageDesc g_Font16AtlasImg;    // 0x800A8FF4
+extern s_FsImageDesc g_KonamiLogoImg;     // 0x800A8FFC
+extern s_FsImageDesc g_KcetLogoImg;       // 0x800A9004
+extern s_FsImageDesc g_TitleImg;          // 0x800A9014
+extern s_FsImageDesc g_MapImg;            // 0x800A901C
 extern s_FsImageDesc g_MapMarkerAtlasImg; // 0x800A9024
-
 extern s_FsImageDesc g_ItemInspectionImg; // 0x800A902C
-
 extern s_FsImageDesc D_800A9034;
-
 extern s_FsImageDesc D_800A905C;
-
-extern s_FsImageDesc g_ControllerButtonAtlasImg; // 0x800A903C
-
-extern s_FsImageDesc g_BrightnessScreenImg0; // 0x800A9044
-
-extern s_FsImageDesc g_BrightnessScreenImg1; // 0x800A904C
-
-extern s_FsImageDesc g_DeathTipImg; // 0x800A9054
-
-extern s_FsImageDesc g_HealthPortraitImg; // 0x800A905C
-
+extern s_FsImageDesc g_ControllerButtonAtlasImg;   // 0x800A903C
+extern s_FsImageDesc g_BrightnessScreenImg0;       // 0x800A9044
+extern s_FsImageDesc g_BrightnessScreenImg1;       // 0x800A904C
+extern s_FsImageDesc g_DeathTipImg;                // 0x800A9054
+extern s_FsImageDesc g_HealthPortraitImg;          // 0x800A905C
 extern s_FsImageDesc g_InventoryKeyItemTextureImg; // 0x800A9064
-
-extern s_FsImageDesc g_FirstAidKitItemTextureImg; // 0x800A906C
+extern s_FsImageDesc g_FirstAidKitItemTextureImg;  // 0x800A906C
 
 /** Some intentory item texture (`ITEM/TIM07.TIM`). */
 extern s_FsImageDesc D_800A9074;
@@ -1708,7 +1719,7 @@ extern s_StructUnk3 D_800A952C;
 
 extern u16 D_800A9774[];
 
-extern u16 D_800A9858[];
+extern u16 g_UnknownEngineCmdTable1[];
 
 extern s_800C37D4 D_800A986C[];
 
@@ -1720,10 +1731,8 @@ extern s32 D_800A9A24;
 /** Z. */
 extern s32 D_800A9A28;
 
-/** Related to character animation allocation handling.
- * Size could also be 45/0x2D as last 3 bytes are empty.
- */
-extern s8 D_800A98FC[48];
+/** Related to character animation allocation handling. */
+extern s8 D_800A98FC[Chara_Count];
 
 /** Related to main menu fog randomization. */
 extern s32 D_800A9EAC;
@@ -1739,17 +1748,17 @@ extern s_FsImageDesc D_800A9EC4;
 extern s_FsImageDesc D_800A9FA8;
 
 /** `Demo_FrameCount` */
-extern s32 D_800A9768;
+extern s32 g_Demo_FrameCount;
 
-extern s32 D_800A976C;
+extern s32 g_UnknownFrameCounter;
 
 /** Function pointer array, maybe state funcs of some kind. */
-extern void (*D_800A977C[])();
+extern void (*g_GameStateUpdateFuncs[])();
 
 /** Related to sound commands. */
-extern u16 D_800A9804[];
+extern u16 g_UnknownEngineCmdTable0[];
 
-extern u16 D_800A98AC[];
+extern u16 g_UnknownEngineCmdTable2[];
 
 /** `D_800A992C` and `D_800A9944` are likely the same variable or they are inside a struct.
  * `D_800A992C` has values that seem related to the player, while `D_800A9944`
@@ -1759,7 +1768,7 @@ extern u16 D_800A98AC[];
  */
 extern s_800A992C D_800A992C[];
 
-extern u8 D_800A9944;
+extern u8 D_800A9944[];
 
 /** Player anim info? */
 extern s_AnimInfo D_800A998C;
@@ -1772,21 +1781,15 @@ extern s32 D_800A999C;
 
 extern s32 D_800A99A0;
 
-extern u8 D_800A99A4[];
+extern u8 D_800A99A4[8];
 
-/** Map message index. */
 extern s32 g_MapMsg_CurrentIdx;
 
-/** FP time value for map message. */
 extern s16 g_MapMsg_SelectFlashTimer;
 
-/** Map flags. */
-extern s8 D_800A99B4[];
+extern s8 g_FullscreenMapTimFileIdxs[24];
 
-/** Array of indices?
- * Related to map markings. Used to indicate which file to load based on the current overlay.
- */
-extern s8 D_800A99CC[];
+extern s8 g_MapMarkingTimFileIdxs[56];
 
 extern s_FsImageDesc D_800A9A04;
 
@@ -1944,9 +1947,11 @@ extern u8 D_800AE187;
 
 extern s16 D_800AE1A8;
 
-extern s32 D_800AE1AC;
+extern s32 g_PickupItemAnimState;
 
 extern s32 D_800AE1B0;
+
+extern s16 D_800AE520[];
 
 /** Angle? */
 extern s16 D_800AF210;
@@ -2141,6 +2146,7 @@ extern s8 D_800C15B4;
 
 extern s32 D_800C15B8;
 
+/** Absolute SFX index. */
 extern s16 D_800C15BC;
 
 extern s16 D_800C15BE;
@@ -2182,6 +2188,7 @@ extern u16 D_800C165A;
 
 extern u16 D_800C1666;
 
+/** `bool` | is stereo enabled? */
 extern u8 D_800C166A;
 
 extern s8 D_800C166C;
@@ -2387,7 +2394,7 @@ extern u8 D_800AD480[24];
 
 extern s_800AD4C8 D_800AD4C8[70];
 
-extern s_MapOverlayHeader g_MapOverlayHeader; // 0x800C957C
+extern const s_MapOverlayHeader g_MapOverlayHeader; // 0x800C957C
 
 // ==========
 // FUNCTIONS
@@ -2451,7 +2458,7 @@ void func_8003943C();
  * After playback, savegame gets `D_800BCDD8->eventFlagNum_2` event flag set. */
 void SysState_Fmv_Update();
 
-s32 func_8003BD2C();
+s32 UnknownMapTableIdxGet();
 
 void func_8003C1AC(s_800BCE18_0_CC* arg0);
 
@@ -2460,7 +2467,7 @@ void func_8003C1AC(s_800BCE18_0_CC* arg0);
  * passed are pointers to `g_MapOverlayHeader` (`arg0`), the player's
  * aX position (`arg1`), and the player's Z position (`arg2`).
  */
-void func_8003C220(s_sub_800BCE18_0** arg0, s32 arg1, s32 arg2);
+void func_8003C220(s_UnkStruct2_Mo** arg0, s32 arg1, s32 arg2);
 
 /** Unknown bodyprog func. Called by `Fs_QueueDoThingWhenEmpty`. */
 s32 func_8003C850();
@@ -2493,7 +2500,7 @@ void func_8003D160();
 
 void func_8003D5B4(s8 arg0);
 
-void func_8003D6E0(s32 arg0, s32 arg1, void* arg2, s_FsImageDesc* arg3);
+void func_8003D6E0(s32 arg0, s32 arg1, s_PlmHeader* plmHeader, s_FsImageDesc* tex);
 
 /** Param types assumed. */
 void func_8003DD80(s32 idx, s32 arg1); // Called by some chara init funcs.
@@ -2514,8 +2521,8 @@ s32 func_8003F6F0(s32 arg0, s32 arg1, s32 arg2);
 
 void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s32 weight);
 
-/** Computes the weighted average of `a` and `b`. */
-s32 Math_GetWeightedAverage(s32 a, s32 b, s32 weight);
+/** @brief Computes the weighted average of `a` and `b`. */
+s32 Math_WeightedAverageGet(s32 a, s32 b, s32 weight);
 
 void func_8003FCB0(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructUnk3* arg2, s32 arg3);
 
@@ -2531,7 +2538,8 @@ void func_80040004(s_800BCE18* arg0);
 
 void func_80040014();
 
-s8 func_80040A64(VECTOR3* pos);
+/** Computes stereo sound balance. */
+s8 Sound_StereoBalanceGet(VECTOR3* pos);
 
 bool func_80040B74(s32 arg0);
 
@@ -2641,7 +2649,7 @@ void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
 /** Something related to player weapon position. Takes coords to arm bones. */
 void func_80044F14(GsCOORDINATE2* coord, s16 z, s16 x, s16 y);
 
-s8 func_80044F6C(s8* ptr, s32 arg1);
+s8 func_80044F6C(s8* ptr, bool arg1);
 
 /** Skeleton setup? Assigns bones pointer for the skeleton and resets fields. */
 void func_80044FE0(s_Skeleton* skel, s_Bone* bones, u8 boneCount);
@@ -2659,10 +2667,10 @@ void func_80045108(s_Skeleton* arg0, s_PlmHeader* plmHeader, u8* arg2, s32 arg3)
 void func_800451B0(s_Skeleton* skel, s_PlmHeader* plmHeader, s32* arg2);
 
 /** Anim func. Traverses skeleton bones to set flags/mask. */
-void func_800453E8(s_Skeleton* skel, s32 cond);
+void func_800453E8(s_Skeleton* skel, bool cond);
 
 /** Does something with skeleton bones. `arg0` is a struct pointer. */
-void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond);
+void func_80045468(s_Skeleton* skel, s32* arg1, bool cond);
 
 /** Passes a command to the sound driver. Plays SFX among other things. */
 void Sd_EngineCmd(u32 cmd);
@@ -2683,13 +2691,13 @@ u8 func_80045B28();
 
 void sd_work_init();
 
-u8 Sd_PlaySfx(u16 sfx, s8 arg1, u8 vol);
+u8 Sd_PlaySfx(u16 sfx, s8 balance, u8 vol);
 
 /** SFX func. */
-void func_800463C0(u16 sfx, s8 arg1, u8 vol, s8 arg3);
+void func_800463C0(u16 sfx, s8 balance, u8 vol, s8 pitch);
 
 /** SFX func. */
-void func_80046620(u16 sfx, s8 arg1, u8 vol, s8 arg3);
+void func_80046620(u16 sfx, s8 balance, u8 vol, s8 pitch);
 
 /** Sound command func. Unknown category. */
 void func_800468EC();
@@ -2825,7 +2833,7 @@ void func_8005487C(s32);
 
 void func_80054A04(u8 arg0);
 
-bool func_80054AD8(u8 itemId);
+bool Gfx_PickupItemAnimate(u8 itemId);
 
 /** @brief Calculates the ammo needed to reload the equipped gun.
  * @param `currentAmmo` pointer to the variable holding the current amount of loaded ammunition of the equipped weapon.
@@ -2871,6 +2879,8 @@ u8 func_80055D78(void*, void*, s32);
 
 void func_80055E90(CVECTOR* color, u8 fadeAmount);
 
+void func_80055ECC(CVECTOR* color, SVECTOR3* arg1, SVECTOR3* arg2, MATRIX* mat);
+
 u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* mat);
 
 void PlmHeader_FixOffsets(s_PlmHeader* plmHeader);
@@ -2910,7 +2920,7 @@ void func_8005B424(VECTOR3* vec0, VECTOR3* vec1);
 
 void func_80056464(s_PlmHeader* plmHeader, s32 fileIdx, s32* arg2, s32 arg3);
 
-void func_80056504(s_PlmHeader* plmHeader, char* newStr, s32* arg2, s32 arg3);
+void func_80056504(s_PlmHeader* plmHeader, char* newStr, s_FsImageDesc* arg2, s32 arg3);
 
 void func_8005660C(s_PlmTexList* plmTexList, s_FsImageDesc* image, s32 arg2);
 
@@ -2933,7 +2943,7 @@ void func_80056C8C(s_Bone* bone, s_PlmHeader* plmHeader, s32 objListIdx);
 
 bool func_80056CB4(s_800BCE18_2BEC_0* arg0, s_PlmHeader* plmHeader, s_800BCE18_2BEC_0_10* arg2);
 
-void func_80056D64(char* prevStr, char* newStr);
+void StringCopy(char* prevStr, char* newStr);
 
 void func_80057090(s_func_80057344* arg0, s_func_80057090* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5);
 
@@ -2966,9 +2976,11 @@ s32 func_8005D974();
 /** Spatial SFX func? */
 void func_8005DC1C(s32 sfx, VECTOR3* pos, s32 arg2, s32 soundType); // Types assumed.
 
-void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 soundType, s32 arg4);
+/** Spatial SFX func? */
+void func_8005DC3C(s32 sfx, VECTOR3* pos, s32 arg2, s32 soundType, s32 pitch);
 
-void func_8005DD44(s32, VECTOR3*, s32, s8); // Types assumed.
+/** Spatial SFX func? */
+void func_8005DD44(s32 sfx, VECTOR3* pos, s32 arg2, s8 pitch); // Types assumed.
 
 s32 func_8005F680(s_func_800699F8* arg0);
 
@@ -3044,19 +3056,21 @@ void func_80085DF0();
 
 void func_80085E6C(s32 arg0, s32 arg1);
 
-void func_80085EB8(u32 arg0, s_SubCharacter* chara0, s_SubCharacter* chara1, s32 arg3);
+void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool arg3);
 
 void func_8008605C(s32 arg0, s32 arg1, s32 arg2, bool arg3);
 
-/** `arg2` is anothet `sysStateStep`. Something to do with the pickup item dialog? */
-void func_800860B0(bool arg0, s32 mapMsgIdx, s32 arg2, s32 arg3, s32 sysStateStep, bool arg5);
+/** TODO: Detailed doc here.
+ * Enry arguments correspond to selectable dialog menu entries.
+ */
+void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 entry0, s32 entry1, s32 entry2, bool arg5);
 
 /** Handles giving the player items.
  * `arg3` is some FP time value or picked up item count depending on the value of `arg2`.
  */
-void func_8008616C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void func_8008616C(s32 arg0, bool arg1, s32 arg2, s32 arg3, bool arg4);
 
-void func_800862F8(s32 arg0, s32 itemId, s32 arg2);
+void func_800862F8(s32 arg0, s32 itemId, bool arg2);
 
 void func_80086470(u32 switchVar, s32 arg1, s32 arg2, bool arg3);
 
@@ -3075,33 +3089,34 @@ void func_800868DC(s32 idx);
 void func_800869E4(s32 mapMsgIdx, u8* arg1, u16* arg2);
 
 void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPosOffset,
-                           s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCamFlag);
+                           s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCam);
 
 void Camera_RotationSet(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s32 zLookAtOffset,
-                        s32 xAngularAccel, s32 yAngularAccel, s32 xAngularSpeedMax, s32 yAngularSpeedMax, bool warpLookAtFlag);
+                        s32 xAngularAccel, s32 yAngularAccel, s32 xAngularSpeedMax, s32 yAngularSpeedMax, bool warpLookAt);
 
-void func_80086C58(s_SubCharacter* chara0, s_SubCharacter* chara1);
+void func_80086C58(s_SubCharacter* chara, s32 arg1);
 
 void func_80086D04(s_SubCharacter* chara);
 
-void func_80086DA8(s32 arg0, s32 arg1);
+void func_80086DA8(s32 itemId, s32 arg1);
+
+void func_80086E50(s32 itemId, s32 arg1, s32 arg2);
 
 void func_80086F44(s32 arg0, s32 arg1);
 
 void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos);
 
-void func_8008716C(s32 arg0, s32 arg1, s32 arg2);
+void func_8008716C(s32 itemId, s32 arg1, s32 arg2);
 
 void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 mapMsgIdx);
 
 void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 mapMsgIdx0, s32 mapMsgIdx1);
 
-void Pickup_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx);
+void Event_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx);
 
-void Pickup_CommonItemTake(u32 pickupType, s32 globalPickupId);
+void Event_CommonItemTake(u32 pickupType, s32 globalPickupId);
 
-/** Inventory drawing? */
-void func_80087AF4(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx);
+void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx);
 
 void func_80087EA8(s32 cmd);
 
@@ -3120,7 +3135,7 @@ Could `arg5` be a struct pointer?
 `func_8003D6E0` uses this function and in the last argument
 it input `arg5` and `arg5` is an undetermined function pointer
 */
-bool Chara_Load(s32 arg0, s8 arg1, GsCOORDINATE2* coord, s8 arg3, void* arg4, s_FsImageDesc* image);
+bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 arg3, s_PlmHeader* plmHeader, s_FsImageDesc* tex);
 
 bool func_80088D0C();
 
@@ -3176,7 +3191,9 @@ bool func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2
 
 void func_8008992C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32));
 
-s32 func_8008A0CC();
+s32 func_8008A0CC(); /** Returns 0. */
+
+s64 func_8008A0D4(void); /** Returns 0. */
 
 s32 func_8008A0E4(s32 arg0, e_EquippedWeaponId weaponId, s_SubCharacter* chara, s_PlayerCombat* combat, s32 arg4, s16 arg5, s16 arg6);
 
@@ -3256,6 +3273,8 @@ void func_8005BF0C(s16 unused, s16 x, s16 y);
 
 /** Angle func. */
 s16 func_8005BF38(s16 angle);
+
+s16 func_8005C7B0(s32 arg0);
 
 /** `arg0` type assumed. */
 void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3);
@@ -3410,8 +3429,6 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, s32 arg1);
 
 void func_800348C0();
 
-void GameState_LoadScreen_Update();
-
 /** Handles `g_GameWork.gameStateStep_598[0]`.
  * Used to handle map loading and room changes.
  */
@@ -3530,6 +3547,8 @@ void func_80037388();
 
 bool func_800378D4(s_AreaLoadParams* areaLoadParams);
 
+bool func_80037A4C(s_AreaLoadParams* areaLoadParams);
+
 bool func_80037C5C(s_func_80037A4C* arg0);
 
 void func_80037DC4(s_SubCharacter* chara);
@@ -3557,8 +3576,6 @@ void func_80037F24(s32);
 
 void func_80038354();
 
-void GameState_InGame_Update();
-
 void SysState_Gameplay_Update();
 
 void SysState_GamePaused_Update();
@@ -3571,9 +3588,7 @@ void SysState_StatusMenu_Update();
 
 void GameState_LoadStatusScreen_Update();
 
-void SysState_Unk3_Update();
-
-void GameState_LoadMapScreen_Update();
+void SysState_MapScreen_Update();
 
 void SysState_Fmv_Update();
 
@@ -3603,13 +3618,9 @@ void SysState_EventPlaySound_Update();
 
 void SysState_GameOver_Update();
 
-void GameState_MapEvent_Update();
-
 // ====================
 // Main menu functions - TODO: Maybe a split around here?
 // ====================
-
-void GameState_MainMenu_Update();
 
 void MainMenu_SelectedOptionIdxReset();
 
@@ -3690,7 +3701,7 @@ void func_8003D354(s32* arg0, s32 arg1);
 /** Texture UV setup for NPCs. */
 void func_8003D3BC(s_FsImageDesc* img, s32 arg1, s32 arg2);
 
-s32 func_8003D7D4(u32 arg0, s32 arg1, void* arg2, s_FsImageDesc* img);
+s32 func_8003D7D4(u32 arg0, s32 arg1, s_PlmHeader* plmHeader, s_FsImageDesc* tex);
 
 /** Something related to animations. */
 void func_8003D938();
@@ -3818,7 +3829,7 @@ q19_12 Game_GasWeaponPowerTimerValue();
 void func_8007FD4C(s32 arg0);
 
 /** Returns data in last 3 pointer args. */
-void func_8007FDE0(s8, s32*, s8*, s8*);
+void func_8007FDE0(s8, s32* sfx, s8* pitch, s8*);
 
 /** Forces ControllerFlag_Select button press. */
 void func_80080458();
@@ -3852,4 +3863,24 @@ s32 func_80080A10();
 
 u8 func_8008A2E0(s32 arg0);
 
+void GameState_Unk0_Update();
+void GameState_StartMovieIntro_Update();
+void GameState_DeathLoadScreen_Update();
+void GameState_MovieIntroAlternate_Update();
+void GameState_MovieIntro_Update();
+void GameState_MainMenu_Update();
+void GameState_MovieOpening_Update();
+void GameState_LoadScreen_Update();
+void GameState_InGame_Update();
+void GameState_MapEvent_Update();
+void GameState_ExitMovie_Update();
+void GameState_ItemScreens_Update();
+void GameState_MapScreen_Update();
+void GameState_SaveScreen_Update();
+void GameState_DebugMoviePlayer_Update();
+void GameState_Options_Update();
+void GameState_LoadMapScreen_Update();
+void GameState_Unk15_Update();
+
+void Game_TurnFlashlightOff();
 #endif

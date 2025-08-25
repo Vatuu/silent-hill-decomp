@@ -49,3 +49,4 @@ _spu_RQ               = 0x800231A0;
 StMode                = 0x800231E8;
 DsReadyCallback       = 0x801E34E0;
 DsDataCallback        = 0x801E3508;
+g_UnknownMapTable0    = 0x8002500C;

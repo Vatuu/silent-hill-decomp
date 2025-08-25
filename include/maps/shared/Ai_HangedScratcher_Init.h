@@ -129,6 +129,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
         var_s2 = FP_FLOAT_TO(3.6f, Q12_SHIFT);
     }
 
+    // TODO: Use `Rng_GenerateInt`.
     chara->properties_E4.larvalStalker.properties_E8[9].val16[0] = ((s32)Rng_Rand16() % (var_s0 >> 2)) + ((var_s0 * 3) >> 2);
     chara->properties_E4.larvalStalker.properties_E8[9].val16[1] = ((s32)Rng_Rand16() % (var_s2 >> 2)) + ((var_s2 * 3) >> 2);
 

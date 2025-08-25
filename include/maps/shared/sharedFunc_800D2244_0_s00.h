@@ -81,7 +81,7 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
     player->flags_3E &= ~CharaFlag_Unk4;
     player->field_E0_8 = 3;
 
-    Player_AnimFlag_Set(AnimFlag_Unk1);
+    Player_AnimFlagsSet(AnimFlag_Unk1);
 
     D_800C45F8.vx = player->position_18.vx;
     D_800C45F8.vz = player->position_18.vz;

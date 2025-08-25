@@ -594,7 +594,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
         }
     }
     
-    temp_t3   = (shRcos(g_Gfx_Inventory_SelectionBordersDraw << 7) * shRcos(g_Gfx_Inventory_SelectionBordersDraw << 7) * 0x10) >> 0x10;
+    temp_t3   = (Math_Cos(g_Gfx_Inventory_SelectionBordersDraw << 7) * Math_Cos(g_Gfx_Inventory_SelectionBordersDraw << 7) * 0x10) >> 0x10;
     new_var   = SelectionOuline_InnerLine[*arg0].field_0.vx;
     new_var  -= SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_0.vx;
     temp_a2_2 = SelectionOuline_InnerLine[*arg0].field_0.vx + FP_FROM((new_var) * temp_t3, Q12_SHIFT);
@@ -800,7 +800,7 @@ static inline s16 GetUvOrRandom()
 {
     if (D_800AE198 == 1) 
     {
-        D_800AE1A8 = Rng_Rand16() % 134;
+        D_800AE1A8 = Rng_Rand16() % 134; // TODO: `Rng_GenerateInt(Rng_Rand16(), 0, 133)` doesn't match.
         return D_800AE1A8;
     }
     else
@@ -835,11 +835,11 @@ void Gfx_Inventory_HealthStatusDraw()
     ot     = &g_ObjectTable0[g_ObjectTableIdx];
     health = g_SysWork.player_4C.chara_0.health_B0;
 
-    if (health < FP_FLOAT_TO(10.0f, Q12_SHIFT))
+    if (health < Q19_12(10.0f))
     {
         healthStage = 3;
     } 
-    else if (health < FP_FLOAT_TO(50.0f, Q12_SHIFT))
+    else if (health < Q19_12(50.0f))
     {
         healthStage = 2;
     }
@@ -857,7 +857,7 @@ void Gfx_Inventory_HealthStatusDraw()
         {
             if (i == 2)
             {
-                if (g_SysWork.player_4C.chara_0.health_B0 != FP_FLOAT_TO(100.0f, Q12_SHIFT) &&
+                if (g_SysWork.player_4C.chara_0.health_B0 != Q19_12(100.0f) &&
                     ((Rng_Rand16() % ((g_SysWork.player_4C.chara_0.health_B0 >> 13) + 2) == 0) || D_800AE198 != 0))
                 {
                     D_800AE198++;
@@ -2324,10 +2324,10 @@ void func_800549A0() // 0x800549A0
 
 void func_80054A04(u8 itemId) // 0x80054A04
 {
-    D_800AE187 = itemId;
-    D_800AE180 = 0;
-    D_800AE1AC = 0;
-    D_800AE1B0 = 0;
+    D_800AE187            = itemId;
+    D_800AE180            = 0;
+    g_PickupItemAnimState = 0;
+    D_800AE1B0            = 0;
 
     D_800C3E18[9]                          = NO_VALUE;
     g_Items_Items3dData0[9].rotation_10.vz = 0;
@@ -2352,7 +2352,7 @@ void func_80054A04(u8 itemId) // 0x80054A04
     Gfx_ItemScreens_CameraSet(&D_800C3B48, &D_800C3AE8, &D_800C3B38, 0);
 }
 
-bool func_80054AD8(u8 itemId) // 0x80054AD8
+bool Gfx_PickupItemAnimate(u8 itemId) // 0x80054AD8
 {
     s32            temp_a1;
     s16            x;
@@ -2364,12 +2364,12 @@ bool func_80054AD8(u8 itemId) // 0x80054AD8
     g_Items_Items3dData1[9].coord.t[0] = 0;
     g_Items_Items3dData1[9].coord.t[2] = -0x20B0;
 
-    switch (D_800AE1AC) 
+    switch (g_PickupItemAnimState) 
     {
         case 0:
             if (D_800AE1B0 >= 0x800) 
             {
-                D_800AE1AC = 1;
+                g_PickupItemAnimState = 1;
             }
 
             ptr     = &g_Items_Items3dData0[0];
@@ -2391,7 +2391,7 @@ bool func_80054AD8(u8 itemId) // 0x80054AD8
             g_Items_Items3dData0[9].scale_0.vz = FP_FLOAT_TO(1.0f, Q12_SHIFT);
             g_Items_Items3dData0[9].scale_0.vy = FP_FLOAT_TO(1.0f, Q12_SHIFT);
             g_Items_Items3dData0[9].scale_0.vx = FP_FLOAT_TO(1.0f, Q12_SHIFT);
-            D_800AE1AC = 2;
+            g_PickupItemAnimState = 2;
             break;
     }
 
@@ -2413,7 +2413,7 @@ bool func_80054AD8(u8 itemId) // 0x80054AD8
     func_8004BD74(9, obj, 2);
     PopMatrix();
 
-    return D_800AE1AC > 0;
+    return g_PickupItemAnimState > 0;
 }
 
 // TODO: RODATA migration.

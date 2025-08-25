@@ -18,8 +18,8 @@ void sharedFunc_800CED44_3_s02(s_SubCharacter* chara, GsCOORDINATE2* coord)
     scaleRestoreShift = ((u32)(moveAmt + SHRT_MAX) >= USHRT_MAX) ? 4 : 0;
     scaleReduceShift  = scaleRestoreShift >> 1;
 
-    vec.vx = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, shRsin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
-    vec.vz = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, shRcos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    vec.vx = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    vec.vz = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
     vec.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
 
     chara->position_18.vx += vec.vx;

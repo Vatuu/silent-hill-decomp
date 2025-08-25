@@ -14,7 +14,7 @@ void sharedFunc_800D7560_0_s01(s_SubCharacter* chara)
     rot                        = &chara->rotation_24;
     func_80096E78(rot, mat);
 
-    if ((chara->properties_E4.player.properties_E4[1] & 0xF) == 3)
+    if ((chara->properties_E4.player.afkTimer_E8 & 0xF) == 3)
     {
         scale = &sharedData_800DD870_0_s01;
         ScaleMatrix(mat, scale);
@@ -33,10 +33,10 @@ void sharedFunc_800D7560_0_s01(s_SubCharacter* chara)
     }
     else
     {
-        sinHeadingAngle = shRsin(headingAngle);
+        sinHeadingAngle = Math_Sin(headingAngle);
         offsetX         = FP_MULTIPLY_PRECISE(sinHeadingAngle, -0x2B8, Q12_SHIFT);
 
-        cosHeadingAngle = shRcos(headingAngle);
+        cosHeadingAngle = Math_Cos(headingAngle);
         offsetZ         = FP_MULTIPLY_PRECISE(cosHeadingAngle, -0x2B8, Q12_SHIFT);
     }
 

@@ -9,7 +9,7 @@ void sharedFunc_800D983C_1_s02(s_SubCharacter* chara)
     {
         if (chara->moveSpeed_38 > 0)
         {
-            newMoveSpeed = chara->moveSpeed_38 - FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 4.0f, Q12_SHIFT);
+            newMoveSpeed = chara->moveSpeed_38 - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 4.0f, Q12_SHIFT);
             if (newMoveSpeed < 0)
             {
                 newMoveSpeed = 0;
@@ -17,7 +17,7 @@ void sharedFunc_800D983C_1_s02(s_SubCharacter* chara)
         }
         else
         {
-            newMoveSpeed = chara->moveSpeed_38 + FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 4.0f, Q12_SHIFT);
+            newMoveSpeed = chara->moveSpeed_38 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 4.0f, Q12_SHIFT);
             if (newMoveSpeed > 0)
             {
                 newMoveSpeed = 0;

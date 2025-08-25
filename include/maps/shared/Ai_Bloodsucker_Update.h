@@ -50,7 +50,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coord
 
     if (chara->properties_E4.larvalStalker.properties_E8[1].val32 < chara->properties_E4.larvalStalker.properties_E8[2].val32)
     {
-        chara->properties_E4.larvalStalker.properties_E8[1].val32 += FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 0.5f, Q12_SHIFT);
+        chara->properties_E4.larvalStalker.properties_E8[1].val32 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.5f, Q12_SHIFT);
 
         if (chara->properties_E4.larvalStalker.properties_E8[1].val32 > chara->properties_E4.larvalStalker.properties_E8[2].val32)
         {
@@ -59,7 +59,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coord
     }
     else if (chara->properties_E4.larvalStalker.properties_E8[1].val32 > chara->properties_E4.larvalStalker.properties_E8[2].val32)
     {
-        chara->properties_E4.larvalStalker.properties_E8[1].val32 -= FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 0.5f, Q12_SHIFT);
+        chara->properties_E4.larvalStalker.properties_E8[1].val32 -= FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.5f, Q12_SHIFT);
 
         if (chara->properties_E4.larvalStalker.properties_E8[1].val32 < chara->properties_E4.larvalStalker.properties_E8[2].val32)
         {
@@ -78,7 +78,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coord
             Sd_EngineCmd(Sfx_Unk1527);
         }
 
-        chara->properties_E4.larvalStalker.properties_E8[3].val32 += FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 2.0f, Q12_SHIFT);
+        chara->properties_E4.larvalStalker.properties_E8[3].val32 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 2.0f, Q12_SHIFT);
 
         if (chara->properties_E4.larvalStalker.properties_E8[3].val32 > FP_FLOAT_TO(1.0f, Q12_SHIFT))
         {
@@ -89,7 +89,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coord
     }
     else if (chara->properties_E4.larvalStalker.properties_E8[13].val32 & (1 << 1))
     {
-        chara->properties_E4.larvalStalker.properties_E8[3].val32 -= FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 2.0f, Q12_SHIFT);
+        chara->properties_E4.larvalStalker.properties_E8[3].val32 -= FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 2.0f, Q12_SHIFT);
 
         if (chara->properties_E4.larvalStalker.properties_E8[3].val32 < 0)
         {

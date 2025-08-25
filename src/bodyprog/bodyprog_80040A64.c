@@ -11,31 +11,35 @@
  * - Animation funcs
  */
 
-/** Audio related. */
-s8 func_80040A64(VECTOR3* pos) // 0x80040A64
+s8 Sound_StereoBalanceGet(VECTOR3* pos) // 0x80040A64
 {
+    #define SOUND_STEREO_BALANCE_RANGE 127
+
     VECTOR3 camPos;
     VECTOR  vec0;
     VECTOR  vec1;
     MATRIX  mat;
     s32     dot;
-    s32     res;
+    s32     balance;
 
-    if (g_GameWork.config_0.optSoundType_1E != 0)
+    // If monoural sound type, default to balance of 0.
+    if (g_GameWork.config_0.optSoundType_1E)
     {
         return 0;
     }
 
+    // Compute normal from input and camera positions.
     vwGetViewPosition(&camPos);
     vec0.vx = (pos->vx - camPos.vx) >> 6;
     vec0.vy = (pos->vy - camPos.vy) >> 6;
     vec0.vz = (pos->vz - camPos.vz) >> 6;
     VectorNormal(&vec0, &vec1);
 
+    // Compute stereo balance.
     Vw_CoordHierarchyMatrixCompute(vwGetViewCoord(), &mat);
-    dot = FP_MULTIPLY_MATRIX(mat, vec1);
-    res = CLAMP(dot, -127, 127);
-    return res;
+    dot     = Math_MultiplyMatrix(mat, vec1);
+    balance = CLAMP(dot, -SOUND_STEREO_BALANCE_RANGE, SOUND_STEREO_BALANCE_RANGE);
+    return balance;
 }
 
 void func_80040B6C() {}
@@ -44,7 +48,7 @@ bool func_80040B74(s32 arg0) // 0x80040B74
 {
     s32 i;
 
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < ARRAY_SIZE(D_800BCE18.field_0); i++)
     {
         if (D_800BCE18.field_0[i].field_CC.field_0 == arg0)
         {
@@ -500,16 +504,16 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004393C); // 0x
 void func_80043A24(GsOT* ot, s32 arg1) // 0x80043A24
 {
     s_800C117C* ptr;
-    s32         ret;
+    s32         status;
 
-    ret = func_80041ADC(D_800C1020.field_138.queueIdx_8);
+    status = func_80041ADC(D_800C1020.field_138.queueIdx_8);
 
-    if (ret == 1)
+    if (status == 1)
     {
         return;
     }
 
-    if (!(ret == 0 || (ret == 2 && D_800C1020.field_138.plmHeader_0->isLoaded_2)))
+    if (!(status == 0 || (status == 2 && D_800C1020.field_138.plmHeader_0->isLoaded_2)))
     {
         return;
     }
@@ -973,7 +977,7 @@ void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     model->anim_4.keyframeIdx1_A = newKeyframeIdx1;
 
     // Sine-based easing?
-    sinVal = shRsin((newKeyframeIdx1 / 2) - FP_ALPHA(0.25f));
+    sinVal = Math_Sin((newKeyframeIdx1 / 2) - FP_ALPHA(0.25f));
     alpha  = (sinVal / 2) + FP_ALPHA(0.5f);
 
     // Clamp new time to keyframe 0 or 1.
@@ -1009,11 +1013,11 @@ void func_80044F14(GsCOORDINATE2* coord, s16 z, s16 x, s16 y) // 0x80044F14
     MulMatrix(&coord->coord, (MATRIX*)0x1F800008);
 }
 
-s8 func_80044F6C(s8* ptr, s32 arg1) // 0x80044F6C
+s8 func_80044F6C(s8* ptr, bool arg1) // 0x80044F6C
 {
     s8 temp;
 
-    if (arg1 != 0)
+    if (arg1)
     {
         D_800C15B0 = ptr;
     }
@@ -1044,13 +1048,12 @@ void func_80044FE0(s_Skeleton* skel, s_Bone* bones, u8 boneCount) // 0x80044FE0
 
 void func_80045014(s_Skeleton* skel) // 0x80045014
 {
-    s_Bone* bone = skel->bones_8;
+    s_Bone* bone;
 
     // Traverse bone hierarchy and clear flags.
-    while (bone < &skel->bones_8[skel->boneCount_0])
+    for (bone = &skel->bones_8[0]; bone < &skel->bones_8[skel->boneCount_0]; bone++)
     {
         bone->flags_0 = 0;
-        bone++;
     }
 }
 
@@ -1107,21 +1110,21 @@ void func_80045108(s_Skeleton* skel, s_PlmHeader* plmHeader, u8* arg2, s32 arg3)
     }
 
     func_80045258(skel1, &skel->bones_8[boneIdx], skel->boneIdx_1 - boneIdx, plmHeader); // Very wierd third argument.
-    func_800453E8(skel, 0);
+    func_800453E8(skel, false);
 }
 
 void func_800451B0(s_Skeleton* skel, s_PlmHeader* plmHeader, s32* arg2) // 0x800451B0
 {
     s32 var;
     
-    var = func_80044F6C(arg2, 1);
+    var = func_80044F6C(arg2, true);
 
     while (var != -2)
     {
         func_80056C8C(&skel->bones_8[skel->boneIdx_1], plmHeader, var);
 
         skel->boneIdx_1++;
-        var = func_80044F6C(arg2, 0);
+        var = func_80044F6C(arg2, false);
     }
 }
 
@@ -1135,21 +1138,14 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800452EC); // 0x
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045360); // 0x80045360
 
 // `cond` may actually be another `s_Skeleton` pointer.
-void func_800453E8(s_Skeleton* skel, s32 cond) // 0x800453E8
+void func_800453E8(s_Skeleton* skel, bool cond) // 0x800453E8
 {
     s_Bone* bone;
 
-    // Check if skeleton has bones.
-    bone = skel->bones_8;
-    if (bone >= &skel->bones_8[skel->boneCount_0])
-    {
-        return;
-    }
-
     // Traverse bone hierarchy and set flags according to cond.
-    while (bone < &skel->bones_8[skel->boneCount_0])
+    for (bone = &skel->bones_8[0]; bone < &skel->bones_8[skel->boneCount_0]; bone++)
     {
-        if (cond != 0)
+        if (cond)
         {
             bone->flags_0 &= ~(1 << 31);
         }
@@ -1157,12 +1153,10 @@ void func_800453E8(s_Skeleton* skel, s32 cond) // 0x800453E8
         {
             bone->flags_0 |= 1 << 31;
         }
-        
-        bone++;
     }
 }
 
-void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond) // 0x80045468
+void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
 {
     s_Bone* bone;
     s32     status;
@@ -1170,7 +1164,7 @@ void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond) // 0x80045468
     bone = skel->bones_8;
 
     // Get skeleton status?
-    status = func_80044F6C(arg1, 1);
+    status = func_80044F6C(arg1, true);
     if (status == -2)
     {
         return;
@@ -1179,7 +1173,7 @@ void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond) // 0x80045468
     // Traverse bone hierarchy and set flags according to some condition.
     do
     {
-        if (cond != 0)
+        if (cond)
         {
             bone[status].flags_0 &= ~(1 << 31);
         }
@@ -1188,7 +1182,7 @@ void func_80045468(s_Skeleton* skel, s32* arg1, s32 cond) // 0x80045468
             bone[status].flags_0 |= 1 << 31;
         }
         
-        status = func_80044F6C(arg1, 0);
+        status = func_80044F6C(arg1, false);
     }
     while (status != -2);
 }

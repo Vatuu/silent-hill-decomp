@@ -166,9 +166,6 @@ bool func_8008F434(s32 arg0)
         case 12:
         case 13:
             return false;
-
-        default:
-            break;
     }
 
     return true;
@@ -206,7 +203,7 @@ s32 func_8008F470(s32 caseArg)
 
 void Demo_ExitDemo() // 0x8008F4E4
 {
-    D_800A9768            = 0xEA24;
+    g_Demo_FrameCount     = 999 * TICKS_PER_SECOND;
     g_Demo_CurFrameData   = NULL;
     g_Demo_DemoStep       = 0;
     g_SysWork.flags_22A4 |= 1 << 8;
@@ -247,11 +244,10 @@ void Demo_DemoRandSeedAdvance() // 0x8008F598
 
 bool Demo_Update() // 0x8008F5D8
 {
-    s32               var0;
-    s32               var1;
-    u32               demoStep;
-    s_ControllerData* cont;
-    s_GameWork*       work;
+    s32         var0;
+    s32         var1;
+    u32         demoStep;
+    s_GameWork* gameWork;
 
     var0       = D_800AFDF0;
     var1       = D_800C489C;
@@ -280,24 +276,24 @@ bool Demo_Update() // 0x8008F5D8
         return false;
     }
 
-    if (func_8008F434(var0) == 0 || func_8008F434(g_Gfx_ScreenFade) == 0 || var1 != 0)
+    if (!func_8008F434(var0) || !func_8008F434(g_Gfx_ScreenFade) || var1 != 0)
     {
         g_Demo_CurFrameData = NULL;
         return true;
     }
 
-    work = &g_GameWork;
-    switch (func_8008F470(work->gameState_594))
+    gameWork = &g_GameWork;
+    switch (func_8008F470(gameWork->gameState_594))
     {
         case 1:
             g_Demo_CurFrameData = &g_Demo_PlayFileBufferPtr[g_Demo_DemoStep];
-            if (g_Demo_CurFrameData->gameStateExpected_8 != work->gameState_594)
+            if (g_Demo_CurFrameData->gameStateExpected_8 != gameWork->gameState_594)
             {
                 Gfx_DebugStringPosition(8, 0x50);
                 Gfx_DebugStringDraw(D_8002B2D8); // "STEP ERROR:[H:"
                 Gfx_DebugStringDraw(Math_IntegerToString(2, g_Demo_CurFrameData->gameStateExpected_8));
                 Gfx_DebugStringDraw(D_8002B2E8); // "]/[M:"
-                Gfx_DebugStringDraw(Math_IntegerToString(2, work->gameState_594));
+                Gfx_DebugStringDraw(Math_IntegerToString(2, gameWork->gameState_594));
                 Gfx_DebugStringDraw(D_8002B2F0); // "]"
 
                 g_Demo_CurFrameData = NULL;
@@ -336,7 +332,7 @@ bool Demo_ControllerDataUpdate() // 0x8008F7CC
         return true;
     }
 
-    D_800A9768 = 0;
+    g_Demo_FrameCount = 0;
 
     if (g_Demo_CurFrameData != NULL)
     {

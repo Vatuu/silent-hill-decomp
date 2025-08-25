@@ -2,8 +2,8 @@
 void sharedFunc_800D5B3C_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
 {
     s_func_800699F8 sp18;
-    s32             sp28;
-    s8              sp2C;
+    s32             sfx;
+    s8              pitch;
     s8              sp2D; // Type asssumed.
     s32             tempVal;
 
@@ -25,21 +25,21 @@ void sharedFunc_800D5B3C_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
     }
 
     func_800699F8(&sp18, chara->position_18.vx, chara->position_18.vz);
-    func_8007FDE0(sp18.field_8, &sp28, &sp2C, &sp2D);
+    func_8007FDE0(sp18.field_8, &sfx, &pitch, &sp2D);
 
     if (chara->properties_E4.larvalStalker.properties_E8[0].val32 == 6)
     {
         if (chara->model_0.anim_4.keyframeIdx0_8 < 13)
         {
-            sharedFunc_800D908C_0_s00(3, chara, 12, 27, sp28, sp2C);
+            sharedFunc_800D908C_0_s00(3, chara, 12, 27, sfx, pitch);
         }
         else if (chara->model_0.anim_4.keyframeIdx0_8 < 50)
         {
-            sharedFunc_800D908C_0_s00(3, chara, 49, 27, sp28, sp2C);
+            sharedFunc_800D908C_0_s00(3, chara, 49, 27, sfx, pitch);
         }
         else
         {
-            sharedFunc_800D908C_0_s00(3, chara, 92, 69, sp28, sp2C);
+            sharedFunc_800D908C_0_s00(3, chara, 92, 69, sfx, pitch);
         }
     }
 

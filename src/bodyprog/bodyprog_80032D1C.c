@@ -75,22 +75,13 @@ void GameState_Unk0_Update() // 0x80032D1C
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
 
-                g_SysWork.sysState_8     = 0;
-                g_SysWork.timer_24       = 0;
-                g_SysWork.sysStateStep_C = 0;
-                g_SysWork.field_28       = 0;
-                g_SysWork.field_10       = 0;
-                g_SysWork.timer_2C       = 0;
-                g_SysWork.field_14       = 0;
+                SysWork_StateSetNext(SysState_Gameplay);
 
                 g_GameWork.gameStateStep_598[0] = gameState;
                 g_GameWork.gameState_594        = gameState + 1;
                 g_GameWork.gameStatePrev_590    = gameState;
                 g_GameWork.gameStateStep_598[0] = 0;
             }
-            break;
-
-        default:
             break;
     }
 
@@ -103,13 +94,12 @@ void MainLoop() // 0x80032EE0
 {
     #define TICKS_PER_SECOND_MIN (TICKS_PER_SECOND / 4)
     #define H_BLANKS_PER_TICK    263
-    #define ONE_SEC_FIXED        FP_FLOAT_TO(1.0f, Q12_SHIFT)
 
     #define H_BLANKS_PER_SECOND               (H_BLANKS_PER_TICK * TICKS_PER_SECOND)              // 15780
-    #define H_BLANKS_TO_SEC_CONVERSION_FACTOR ((float)ONE_SEC_FIXED / (float)H_BLANKS_PER_SECOND) // 0.25956907477f
+    #define H_BLANKS_TO_SEC_CONVERSION_FACTOR ((float)FP_TIME(1.0f) / (float)H_BLANKS_PER_SECOND) // 0.25956907477f
 
     #define H_BLANKS_PER_FRAME_MIN   (H_BLANKS_PER_SECOND / TICKS_PER_SECOND_MIN)                    // 1052
-    #define H_BLANKS_FP_TO_SEC_SCALE (s32)(H_BLANKS_TO_SEC_CONVERSION_FACTOR * (float)ONE_SEC_FIXED) // 1063
+    #define H_BLANKS_FP_TO_SEC_SCALE (s32)(H_BLANKS_TO_SEC_CONVERSION_FACTOR * (float)FP_TIME(1.0f)) // 1063
     #define H_BLANKS_UNKNOWN_SCALE   10419                                                           // TODO: Somehow derive this value.
     #define V_BLANKS_MAX             4
 
@@ -148,7 +138,8 @@ void MainLoop() // 0x80032EE0
 
         g_ObjectTableIdx = GsGetActiveBuff();
 
-        if (g_GameWork.gameState_594 >= GameState_MainLoadScreen && g_GameWork.gameState_594 < GameState_MapEvent)
+        if (g_GameWork.gameState_594 == GameState_MainLoadScreen ||
+            g_GameWork.gameState_594 == GameState_InGame)
         {
             GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_ObjectTableIdx << 17));
         }
@@ -167,7 +158,7 @@ void MainLoop() // 0x80032EE0
         g_SysWork.field_22A0 = 0;
 
         // Call update function for current GameState.
-        D_800A977C[g_GameWork.gameState_594]();
+        g_GameStateUpdateFuncs[g_GameWork.gameState_594]();
 
         Demo_Update();
         Demo_GameRandSeedSet();
@@ -240,15 +231,11 @@ void MainLoop() // 0x80032EE0
                 g_VBlanks     = VSync(-1) - g_PrevVBlanks;
                 g_PrevVBlanks = VSync(-1);
 
-                if (g_VBlanks < g_IntervalVBlanks)
+                while (g_VBlanks < g_IntervalVBlanks)
                 {
-                    do
-                    {
-                        VSync(0);
-                        g_VBlanks++;
-                        g_PrevVBlanks++;
-                    }
-                    while (g_VBlanks < g_IntervalVBlanks);
+                    VSync(0);
+                    g_VBlanks++;
+                    g_PrevVBlanks++;
                 }
             }
 
@@ -373,7 +360,8 @@ bool func_80033548() // 0x80033548
     func_8002E7BC();
     func_8002E85C();
 
-    if (g_GameWork.gameState_594 == GameState_Unk10 || g_GameWork.gameState_594 == GameState_KcetLogo)
+    if (g_GameWork.gameState_594 == GameState_Unk10 ||
+        g_GameWork.gameState_594 == GameState_KcetLogo)
     {
         g_SaveScreenPlayerState = 2;
     }
@@ -742,21 +730,21 @@ s32 MainLoop_ShouldWarmReset() // 0x80034108
         return 0;
     }
 
-    if (g_GameWork.gameState_594 == GameState_Unk10 && (g_GameWork.gameStateStep_598[0] - 2) < 2u)
+    if (g_GameWork.gameState_594 == GameState_Unk10 && (g_GameWork.gameStateStep_598[0] == 2 || g_GameWork.gameStateStep_598[0] == 3))
     {
         return 0;
     }
 
     if (g_SysWork.flags_22A4 & (1 << 1))
     {
-        if (D_800A9768 > 1800)
+        if (g_Demo_FrameCount > (TICKS_PER_SECOND * 30))
         {
             return 2;
         }
     }
     else
     {
-        D_800A9768 = 0;
+        g_Demo_FrameCount = 0;
     }
 
     if (g_GameWork.gameState_594 == GameState_MainMenu)
@@ -767,10 +755,10 @@ s32 MainLoop_ShouldWarmReset() // 0x80034108
     // Reset something.
     if ((g_Controller0->btnsHeld_C & RESET_BTN_FLAGS) != RESET_BTN_FLAGS)
     {
-        D_800A976C = 0;
+        g_UnknownFrameCounter = 0;
     }
 
-    if (D_800A976C >= 121)
+    if (g_UnknownFrameCounter >= 121)
     {
         return 2; 
     }
@@ -842,13 +830,7 @@ void Game_WarmBoot() // 0x80034264
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;
 
-    g_SysWork.sysState_8     = SysState_Gameplay;
-    g_SysWork.timer_24       = 0;
-    g_SysWork.sysStateStep_C = 0;
-    g_SysWork.field_28       = 0;
-    g_SysWork.field_10       = 0;
-    g_SysWork.timer_2C       = 0;
-    g_SysWork.field_14       = 0;
+    SysWork_StateSetNext(SysState_Gameplay);
 
     g_Gfx_ScreenFade = 6;
 
@@ -1124,7 +1106,7 @@ bool func_8003483C(u16* arg0) // 0x8003483C
 
 void func_800348C0() // 0x800348C0
 {
-    bzero(&D_800A9944, 0x48);
+    bzero(&D_800A992C[1], 0x48);
 }
 
 void GameState_LoadScreen_Update() // 0x800348E8
@@ -1169,12 +1151,12 @@ void GameFs_MapStartup() // 0x80034964
             g_GameWork.background2dColor_G_58D = 0;
             g_GameWork.background2dColor_B_58E = 0;
 
-            if (g_SysWork.flags_2298 == SysWorkProcessFlag_RoomTransition)
+            if (g_SysWork.processFlags_2298 == SysWorkProcessFlag_RoomTransition)
             {
                 AreaLoad_UpdatePlayerPosition();
                 g_GameWork.gameStateStep_598[0] = 7;
             }
-            else if (g_SysWork.flags_2298 == SysWorkProcessFlag_BootDemo)
+            else if (g_SysWork.processFlags_2298 == SysWorkProcessFlag_BootDemo)
             {
                 g_DemoLoadAttempCount           = 0;
                 g_GameWork.gameStateStep_598[0] = 1;
@@ -1238,14 +1220,14 @@ void GameFs_MapStartup() // 0x80034964
             break;
 
         case 4:
-            if (g_SysWork.flags_2298 == SysWorkProcessFlag_OverlayTransition)
+            if (g_SysWork.processFlags_2298 == SysWorkProcessFlag_OverlayTransition)
             {
                 AreaLoad_UpdatePlayerPosition();
             }
-            else if (g_SysWork.flags_2298 == SysWorkProcessFlag_LoadSave ||
-                     g_SysWork.flags_2298 == SysWorkProcessFlag_Continue)
+            else if (g_SysWork.processFlags_2298 == SysWorkProcessFlag_LoadSave ||
+                     g_SysWork.processFlags_2298 == SysWorkProcessFlag_Continue)
             {
-                g_SysWork.loadingScreenIndex_2281 = 1;
+                g_SysWork.loadingScreenIdx_2281 = LoadingScreenId_PlayerRun;
             }
 
             g_GameWork.gameStateStep_598[0]++;
@@ -1274,7 +1256,7 @@ void GameFs_MapStartup() // 0x80034964
             }
 
             func_8003C220(&g_MapOverlayHeader, g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz);
-            if (g_SysWork.flags_2298 == SysWorkProcessFlag_OverlayTransition)
+            if (g_SysWork.processFlags_2298 == SysWorkProcessFlag_OverlayTransition)
             {
                 func_80037188();
             }
@@ -1291,13 +1273,13 @@ void GameFs_MapStartup() // 0x80034964
         case 9:
             if (func_80035780() == 0)
             {
-                g_GameWork.gameState_594 = 10;
+                g_GameWork.gameState_594 = GameState_MainLoadScreen;
                 Game_StateStepIncrement();
             }
             break;
 
         case 10:
-            if (g_SysWork.flags_2298 == SysWorkProcessFlag_BootDemo && !(g_SysWork.flags_22A4 & (1 << 1)))
+            if (g_SysWork.processFlags_2298 == SysWorkProcessFlag_BootDemo && !(g_SysWork.flags_22A4 & (1 << 1)))
             {
                 Demo_Start();
                 g_SysWork.flags_22A4 |= 1 << 1;
@@ -1312,7 +1294,7 @@ void GameFs_MapStartup() // 0x80034964
         case 11:
             if (g_SysWork.timer_1C >= 60)
             {
-                if (g_SysWork.flags_2298 == SysWorkProcessFlag_RoomTransition)
+                if (g_SysWork.processFlags_2298 == SysWorkProcessFlag_RoomTransition)
                 {
                     func_80034F18();
                 }
@@ -1321,7 +1303,7 @@ void GameFs_MapStartup() // 0x80034964
                     Game_InGameInit();
                 }
 
-                if (g_SysWork.flags_2298 <= (u32)SysWorkProcessFlag_OverlayTransition)
+                if (g_SysWork.processFlags_2298 <= (u32)SysWorkProcessFlag_OverlayTransition)
                 {
                     func_80039F54();
                 }
@@ -1351,11 +1333,11 @@ void GameFs_MapStartup() // 0x80034964
 
 void Gfx_LoadingScreenDraw() // 0x80034E58
 {
-    if (g_SysWork.loadingScreenIndex_2281 != 0 && g_GameWork.gameStateStep_598[0] < 10)
+    if (g_SysWork.loadingScreenIdx_2281 != LoadingScreenId_None && g_GameWork.gameStateStep_598[0] < 10)
     {
         g_Gfx_ScreenFade = 7;
         D_800B5C30       = FP_TIME(0.8f);
-        g_MapOverlayHeader.loadingScreenFuncs_18[g_SysWork.loadingScreenIndex_2281]();
+        g_MapOverlayHeader.loadingScreenFuncs_18[g_SysWork.loadingScreenIdx_2281]();
     }
 
     Gfx_MotionBlur(2);
@@ -1394,28 +1376,25 @@ void func_80034F18() // 0x80034F18
 
 void Game_InGameInit() // 0x80034FB8
 {
-    s32        mapOverlayId;
-    s_SysWork* sysWork;
+    s32 mapOvlId;
 
-    mapOverlayId = g_SavegamePtr->mapOverlayId_A4;
+    mapOvlId = g_SavegamePtr->mapOverlayId_A4;
 
     vcInitCamera(&g_MapOverlayHeader, &g_SysWork.player_4C.chara_0.position_18);
 
-    sysWork = &g_SysWork;
-
-    vcSetCameraUseWarp(&g_SysWork.player_4C.chara_0.position_18, sysWork->cameraAngleY_237A);
+    vcSetCameraUseWarp(&g_SysWork.player_4C.chara_0.position_18, g_SysWork.cameraAngleY_237A);
     func_80040004(&g_MapOverlayHeader);
     func_80035B58(0);
     func_8003D95C();
     func_8003EBA0();
 
-    g_MapOverlayHeader.func_168(NULL, (void*)mapOverlayId, (void*)NO_VALUE);
+    g_MapOverlayHeader.func_168(NULL, (void*)mapOvlId, (void*)NO_VALUE);
 
     func_80034EC8();
 
-    sysWork->field_2280 = 5;
+    g_SysWork.field_2280 = 5;
 
-    func_8005E650(mapOverlayId);
+    func_8005E650(mapOvlId);
     func_80037124();
     func_8007E8C0();
     func_80037F24(0);
@@ -1424,7 +1403,7 @@ void Game_InGameInit() // 0x80034FB8
     func_8007EBBC();
     GameFs_Tim00TIMLoad();
     Fs_QueueWaitForEmpty();
-    GameFs_MapItemsModelLoad(mapOverlayId);
+    GameFs_MapItemsModelLoad(mapOvlId);
 }
 
 void Game_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
@@ -1485,7 +1464,7 @@ void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
     func_8005E0DC(mapIdx);
     GameFs_PlayerMapAnimLoad(mapIdx);
 
-    if (g_SysWork.flags_2298 & UNK_FLAGS)
+    if (g_SysWork.processFlags_2298 & UNK_FLAGS)
     {
         func_8003CD6C(&g_SysWork.playerCombatInfo_38);
     }
@@ -1744,7 +1723,7 @@ void func_800358DC(s32 cmd) // 0x800358DC
     }
 
     g_GameWork.soundCmd_5B2 = cmd;
-    Sd_EngineCmd(D_800A9804[cmd]);
+    Sd_EngineCmd(g_UnknownEngineCmdTable0[cmd]);
 }
 
 void func_80035924() // 0x80035924
@@ -1757,7 +1736,7 @@ void func_80035924() // 0x80035924
         return;
     }
 
-    Sd_EngineCmd(D_800A9858[cmd]);
+    Sd_EngineCmd(g_UnknownEngineCmdTable1[cmd]);
 }
 
 void func_8003596C() // 0x8003596C
@@ -1818,7 +1797,7 @@ s32 func_80035AB0(s32 arg0) // 0x80035AB0
 void func_80035AC8(s32 idx) // 0x80035AC8
 {
     g_GameWork.field_5B3 = idx;
-    Sd_EngineCmd(D_800A98AC[idx]);
+    Sd_EngineCmd(g_UnknownEngineCmdTable2[idx]);
 }
 
 // ========================================
@@ -1862,9 +1841,9 @@ void Gfx_LoadingScreen_PlayerRun() // 0x80035BE0
     boneCoords = g_SysWork.playerBoneCoords_890;
     model      = &g_SysWork.player_4C.chara_0.model_0;
 
-    if (g_SysWork.sysState_8 == 0)
+    if (g_SysWork.sysState_8 == SysState_Gameplay)
     {
-        if (g_SysWork.flags_2298 == SysWorkProcessFlag_OverlayTransition)
+        if (g_SysWork.processFlags_2298 == SysWorkProcessFlag_OverlayTransition)
         {
             AreaLoad_UpdatePlayerPosition();
         }
@@ -1878,8 +1857,8 @@ void Gfx_LoadingScreen_PlayerRun() // 0x80035BE0
 
         vcUserWatchTarget(&camLookAt, NULL, true);
 
-        camLookAt.vx -= shRsin(g_SysWork.player_4C.chara_0.rotation_24.vy - FP_ANGLE(22.5f)) * 2;
-        temp          = shRcos(g_SysWork.player_4C.chara_0.rotation_24.vy - FP_ANGLE(22.5f));
+        camLookAt.vx -= Math_Sin(g_SysWork.player_4C.chara_0.rotation_24.vy - FP_ANGLE(22.5f)) * 2;
+        temp          = Math_Cos(g_SysWork.player_4C.chara_0.rotation_24.vy - FP_ANGLE(22.5f));
         camLookAt.vy  = FP_METER(-1.0f);
         camLookAt.vz -= temp * 2;
 
@@ -1893,7 +1872,7 @@ void Gfx_LoadingScreen_PlayerRun() // 0x80035BE0
         model->anim_4.time_4                       = FP_TIME(26.0f);
         g_SysWork.player_4C.chara_0.position_18.vy = FP_METER(0.2f);
 
-        D_800A9990 = model->anim_4.animIdx_0;
+        /*D_800A9990*/ D_800A998C.field_4 = model->anim_4.animIdx_0;
 
         func_80035B04(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, boneCoords);
         g_SysWork.sysState_8++;
@@ -1915,7 +1894,7 @@ void func_80035DB4(s32 arg0) // 0x80035DB4
 
     if (g_MapOverlayHeader.func_10)
     {
-        g_MapOverlayHeader.func_10();
+        g_MapOverlayHeader.func_10(arg0);
         if (arg0 == 0 && D_800BCD5C == 0)
         {
             func_80035F4C(1, 0xF0000, 0);
@@ -2047,7 +2026,7 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
 
         if (i == temp_s7) 
         {
-            var_t0 = FP_MULTIPLY_FLOAT((s64)g_DeltaTime1, 0.25f, Q12_SHIFT);
+            var_t0 = FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime1, 0.25f, Q12_SHIFT);
             if (g_SysWork.field_22A0 & (1 << 1)) 
             {
                 var_a0 = FP_FLOAT_TO(1.0f, Q12_SHIFT);
@@ -2257,8 +2236,8 @@ u32 func_800364BC() // 0x800364BC
     D_800BCD58 += g_DeltaTime1 * 0x40001;
 
     var0  = 0x40000;
-    var0 += shRsin(D_800BCD58 >> 18) * 8;
-    var1  = shRsin((D_800BCD58 & 0xFFFF) / 16) * 32;
+    var0 += Math_Sin(D_800BCD58 >> 18) * 8;
+    var1  = Math_Sin((D_800BCD58 & 0xFFFF) / 16) * 32;
     return FP_FROM(var0 + var1, Q12_SHIFT);
 }
 
@@ -2287,6 +2266,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 {
     #define MSG_TIMER_MAX   (FP_TIME(524288.0f) - 1)
     #define FINISH_CUTSCENE 0xFF
+    #define FINISH_MAP_MSG  0xFF
 
     s32  temp_s1;
     s32  temp_v0;
@@ -2294,21 +2274,20 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
     s32  temp_v1_2;
     s32  var_a0;
     s32  var_a1;
-    s32  hasInput;
+    bool hasInput;
     s32  res;
     s32  var_v1;
     u16  var_a0_2;
     u32* new_var;
     s32  temp;
 
-    #define FINISH_MAP_MSG (0xff)
-
-    hasInput = 0;
+    // Check for user input.
+    hasInput = false;
     if ((g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
                                           g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)) ||
         (g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.skip_4))
     {
-        hasInput = 1;
+        hasInput = true;
     }
 
     g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
@@ -2322,23 +2301,23 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
     switch (g_SysWork.field_18)
     {
         case 0:
-            g_SysWork.mapMsgTimer_234C    = NO_VALUE;
-            g_MapMsg_Select.maxIdx_0      = NO_VALUE;
-            g_MapMsg_Select.selectedIdx_1 = 0;
-            g_MapMsg_AudioLoadBlock       = 0;
-            g_MapMsg_CurrentIdx           = mapMsgIdx;
-            g_MapMsg_StateMachineIdx1     = 0;
-            g_MapMsg_StateMachineIdx2     = 0;
-            g_MapMsg_MainIdx              = mapMsgIdx;
-            g_MapMsg_DisplayLength        = 0;
-            g_MapMsg_DisplayInc           = 2; // Advance 2 glyphs at a time.
+            g_SysWork.mapMsgTimer_234C         = NO_VALUE;
+            g_MapMsg_Select.maxIdx_0           = NO_VALUE;
+            g_MapMsg_Select.selectedEntryIdx_1 = 0;
+            g_MapMsg_AudioLoadBlock            = 0;
+            g_MapMsg_CurrentIdx                = mapMsgIdx;
+            g_MapMsg_StateMachineIdx1          = 0;
+            g_MapMsg_StateMachineIdx2          = 0;
+            g_MapMsg_MainIdx                   = mapMsgIdx;
+            g_MapMsg_DisplayLength             = 0;
+            g_MapMsg_DisplayInc                = 2; // Advance 2 glyphs at a time.
 
             func_8004B684();
             Gfx_MapMsg_CalculateWidths(g_MapMsg_CurrentIdx);
 
             D_800BCD74 = 1;
             g_SysWork.field_18++;
-            return NO_VALUE;
+            return MapMsgState_Finish;
 
         case 1:
             if (g_SysWork.field_22A0 & (1 << 5))
@@ -2384,7 +2363,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                 {
                     if (g_MapMsg_Select.maxIdx_0 == temp)
                     {
-                        if (!((g_MapMsg_AudioLoadBlock & (1 << 0)) || hasInput == 0) || 
+                        if (!((g_MapMsg_AudioLoadBlock & (1 << 0)) || !hasInput) || 
                             (g_MapMsg_AudioLoadBlock != 0 && g_SysWork.mapMsgTimer_234C == 0))
                         {
                             g_MapMsg_StateMachineIdx2 = FINISH_MAP_MSG;
@@ -2398,15 +2377,14 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                     } 
                     else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
                     {
-                        g_MapMsg_Select.maxIdx_0      = temp;
-                        g_MapMsg_Select.selectedIdx_1 = g_MapMsg_SelectCancelIdx3;
+                        g_MapMsg_Select.maxIdx_0           = temp;
+                        g_MapMsg_Select.selectedEntryIdx_1 = g_MapMsg_SelectCancelIdx3;
 
                         Sd_PlaySfx(Sfx_Cancel, 0, 64);
 
-                        // Exit 480i mode (used by map screen).
-                        if (g_SysWork.silentYesSelection_2350_4 != 0)
+                        if (g_SysWork.silentYesSelection_2350_4)
                         {
-                            g_SysWork.silentYesSelection_2350_4 = 0;
+                            g_SysWork.silentYesSelection_2350_4 = false;
                         }
 
                         g_MapMsg_StateMachineIdx2 = FINISH_MAP_MSG;
@@ -2416,26 +2394,26 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                     {
                         g_MapMsg_Select.maxIdx_0 = temp;
 
-                        if ((u8)g_MapMsg_Select.selectedIdx_1 == (s8)g_MapMsg_SelectCancelIdx3)
+                        if ((u8)g_MapMsg_Select.selectedEntryIdx_1 == (s8)g_MapMsg_SelectCancelIdx3)
                         {
                             Sd_PlaySfx(Sfx_Cancel, 0, 64);
                         }
-                        else if (g_SysWork.silentYesSelection_2350_4 == 0)
+                        else if (!g_SysWork.silentYesSelection_2350_4)
                         {
                             Sd_PlaySfx(Sfx_Confirm, 0, 64);
                         }
 
                         // Exit 480i mode (used by map screen).
-                        if (g_SysWork.silentYesSelection_2350_4 != 0)
+                        if (g_SysWork.silentYesSelection_2350_4)
                         {
-                            g_SysWork.silentYesSelection_2350_4 = 0;
+                            g_SysWork.silentYesSelection_2350_4 = false;
                         }
 
                         g_MapMsg_StateMachineIdx2 = FINISH_MAP_MSG;
                         break;
                     }
                 }
-                else if ((!(g_MapMsg_AudioLoadBlock & (1 << 0)) && hasInput != 0 && g_MapMsg_Select.maxIdx_0 != 0) ||
+                else if ((!(g_MapMsg_AudioLoadBlock & (1 << 0)) && hasInput && g_MapMsg_Select.maxIdx_0 != 0) ||
                          (g_MapMsg_AudioLoadBlock != 0 && g_SysWork.mapMsgTimer_234C == 0))
                 {
                     if (g_MapMsg_Select.maxIdx_0 != NO_VALUE)
@@ -2456,7 +2434,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                     if (g_MapMsg_AudioLoadBlock == MapMsgAudioLoadBlock_J2)
                     {
                         D_800BCD74 = 0;
-                        return 0;
+                        return MapMsgState_Idle;
                     }
 
                     if (g_SysWork.field_22A0 & (1 << 5))
@@ -2465,12 +2443,12 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                     }
 
                     D_800BCD74 = 1;
-                    return NO_VALUE;
+                    return MapMsgState_Finish;
                 }
             }
             else
             {
-                if (hasInput != 0)
+                if (hasInput)
                 {
                     g_MapMsg_DisplayLength = MAP_MESSAGE_DISPLAY_ALL_LENGTH;
                 }
@@ -2487,7 +2465,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 
     if (g_MapMsg_StateMachineIdx2 != FINISH_MAP_MSG)
     {
-        return 0;
+        return MapMsgState_Idle;;
     }
 
     g_SysWork.field_18                   = 0;
@@ -2499,7 +2477,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
         D_800BCD74 = 1;
     }
 
-    return g_MapMsg_Select.selectedIdx_1 + 1;
+    return g_MapMsg_Select.selectedEntryIdx_1 + 1;
 }
 
 s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
@@ -2539,7 +2517,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                 // All maps have "Yes" and "No" as messages 0 and 1, respectively.
                 for (i = 0; i < 2; i++)
                 {
-                    if ((u8)g_MapMsg_Select.selectedIdx_1 == i)
+                    if ((u8)g_MapMsg_Select.selectedEntryIdx_1 == i)
                     {
                         Gfx_StringSetColor(((g_MapMsg_SelectFlashTimer >> 10) * 3) + 4);
                     }
@@ -2564,7 +2542,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                 // `[idx + 3]`: "Option 3"
                 for (i = 0; i < mapMsgCode; i++)
                 {
-                    if ((u8)g_MapMsg_Select.selectedIdx_1 == i)
+                    if ((u8)g_MapMsg_Select.selectedEntryIdx_1 == i)
                     {
                         Gfx_StringSetColor(((g_MapMsg_SelectFlashTimer >> 10) * 3) + 4);
                     }
@@ -2579,19 +2557,19 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
             }
 
             if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickUp &&
-                (u8)g_MapMsg_Select.selectedIdx_1 != 0)
+                (u8)g_MapMsg_Select.selectedEntryIdx_1 != 0)
             {
                 g_MapMsg_SelectFlashTimer = FP_TIME(0.0f);
-                g_MapMsg_Select.selectedIdx_1--;
+                g_MapMsg_Select.selectedEntryIdx_1--;
 
                 Sd_PlaySfx(Sfx_Back, 0, 64);
             }
 
             if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickDown &&
-                (u8)g_MapMsg_Select.selectedIdx_1 != (mapMsgCode - 1))
+                (u8)g_MapMsg_Select.selectedEntryIdx_1 != (mapMsgCode - 1))
             {
                 g_MapMsg_SelectFlashTimer = FP_TIME(0.0f);
-                g_MapMsg_Select.selectedIdx_1++;
+                g_MapMsg_Select.selectedEntryIdx_1++;
 
                 Sd_PlaySfx(Sfx_Back, 0, 64);
             }
@@ -2832,34 +2810,33 @@ void func_80037188() // 0x80037188
 
 void Chara_PositionUpdateFromParams(s_AreaLoadParams* params) // 0x800371E8
 {
-    s32 rot;
+    s32 rotY;
     
-    rot = params->rotationY_4_16 * 16;
+    rotY = FP_ANGLE_PACKED_FROM(params->rotationY_4_16);
+    Math_SVectorSet(&g_SysWork.player_4C.chara_0.rotation_24, FP_ANGLE(0.0f), rotY, FP_ANGLE(0.0f));
 
-    Math_SVectorSet(&g_SysWork.player_4C.chara_0.rotation_24, 0, rot, 0);
-
-    g_SysWork.player_4C.chara_0.position_18.vy = 0;
+    g_SysWork.player_4C.chara_0.position_18.vy = FP_METER(0.0f);
     g_SysWork.player_4C.chara_0.position_18.vx = params->char_x_0;
     g_SysWork.player_4C.chara_0.position_18.vz = params->char_z_8;
 
     if (params->field_4_24 >= 2)
     {
-        g_SysWork.player_4C.chara_0.position_18.vx += FP_MULTIPLY_FLOAT((s64)shRsin(rot), 0.4f, Q12_SHIFT);
-        g_SysWork.player_4C.chara_0.position_18.vz += FP_MULTIPLY_FLOAT((s64)shRcos(rot), 0.4f, Q12_SHIFT);
+        g_SysWork.player_4C.chara_0.position_18.vx += FP_MULTIPLY_FLOAT_PRECISE(Math_Sin(rotY), 0.4f, Q12_SHIFT);
+        g_SysWork.player_4C.chara_0.position_18.vz += FP_MULTIPLY_FLOAT_PRECISE(Math_Cos(rotY), 0.4f, Q12_SHIFT);
     }
 
-    g_SysWork.loadingScreenIndex_2281 = params->field_4_9;
+    g_SysWork.loadingScreenIdx_2281 = params->loadingScreenId_4_9;
 
     if (params->mapIdx_4_0 == 24)
     {
-        g_SavegamePtr->current2dMapIdx_A9 = 0;
+        g_SavegamePtr->current2dMapIdx_A9 = Current2dMap_OtherPlaces;
     }
-    else if (params->mapIdx_4_0 != 0)
+    else if (params->mapIdx_4_0 != Current2dMap_OtherPlaces)
     {
         g_SavegamePtr->current2dMapIdx_A9 = params->mapIdx_4_0;
     }
 
-    g_SysWork.cameraAngleY_237A = rot;
+    g_SysWork.cameraAngleY_237A = rotY;
 
     func_8007E9C4();
     Savegame_MapRoomIdxSet();
@@ -2904,8 +2881,8 @@ bool func_800378D4(s_AreaLoadParams* areaLoadParams) // 0x800378D4
     if (g_MainLoop_FrameCount > D_800A9A20)
     {
         rotY       = g_SysWork.player_4C.chara_0.rotation_24.vy;
-        D_800A9A24 = g_SysWork.player_4C.chara_0.position_18.vx - (shRsin(rotY) >> 3);
-        D_800A9A28 = g_SysWork.player_4C.chara_0.position_18.vz - (shRcos(rotY) >> 3);
+        D_800A9A24 = g_SysWork.player_4C.chara_0.position_18.vx - (Math_Sin(rotY) >> 3);
+        D_800A9A28 = g_SysWork.player_4C.chara_0.position_18.vz - (Math_Cos(rotY) >> 3);
         D_800A9A20 = g_MainLoop_FrameCount;
     }
 
@@ -2942,7 +2919,86 @@ bool func_800378D4(s_AreaLoadParams* areaLoadParams) // 0x800378D4
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_80037A4C); // 0x80037A4C
+bool func_80037A4C(s_AreaLoadParams* areaLoadParams) // 0x80037A4C
+{
+    s32  temp_a0_2;
+    s32  temp_a2;
+    s32  halfCosPlayerRotY;
+    s32  temp_s2;
+    s32  halfSinRotY;
+    s32  temp_s4;
+    s32  deltaX;
+    s32  deltaZ;
+    s32  temp_v1;
+    s32  var_a0;
+    s32  var_a0_2;
+    s32  clampedHalfCosPlayerRotY;
+    bool cond;
+    s32  var_v1;
+    s32  scaledSinPlayerRotY;
+    s32  scaledCosRotY;
+
+    halfSinRotY   = Math_Sin(g_SysWork.player_4C.chara_0.rotation_24.vy) >> 1;
+    scaledCosRotY = -Math_Cos(FP_ANGLE_PACKED_FROM(areaLoadParams->rotationY_4_16)) * areaLoadParams->field_4_24;
+
+    clampedHalfCosPlayerRotY = halfSinRotY;
+
+    temp_a0_2 = scaledCosRotY >> 4;
+    deltaX    = areaLoadParams->char_x_0 - g_SysWork.player_4C.chara_0.position_18.vx;
+    temp_s2   = deltaX - temp_a0_2;
+    temp_s4   = deltaX + temp_a0_2;
+
+    clampedHalfCosPlayerRotY = MAX(halfSinRotY, 0);
+
+    if (temp_s4 >= temp_s2)
+    {
+        cond = clampedHalfCosPlayerRotY < temp_s2;
+    }
+    else
+    {
+        cond = clampedHalfCosPlayerRotY < temp_s4;
+    }
+
+    if (!cond)
+    {
+        if (MIN(halfSinRotY, 0) <= MAX(temp_s2, temp_s4))
+        {
+            halfCosPlayerRotY   = Math_Cos(g_SysWork.player_4C.chara_0.rotation_24.vy) >> 1;
+            scaledSinPlayerRotY = Math_Sin(FP_ANGLE_PACKED_FROM(areaLoadParams->rotationY_4_16)) * areaLoadParams->field_4_24;
+
+            clampedHalfCosPlayerRotY = halfCosPlayerRotY;
+
+            temp_a0_2 = scaledSinPlayerRotY >> 4;
+            deltaZ    = areaLoadParams->char_z_8 - g_SysWork.player_4C.chara_0.position_18.vz;
+            temp_v1   = deltaZ - temp_a0_2;
+            temp_a2   = deltaZ + temp_a0_2;
+
+            clampedHalfCosPlayerRotY = MAX(halfCosPlayerRotY, 0);
+
+            if (temp_a2 >= temp_v1)
+            {
+                cond = clampedHalfCosPlayerRotY < temp_v1;
+            }
+            else
+            {
+                cond = clampedHalfCosPlayerRotY < temp_a2;
+            }
+
+            if (!cond)
+            {
+                if (MIN(halfCosPlayerRotY, 0) <= MAX(temp_v1, temp_a2) &&
+                   (((temp_s2 * halfCosPlayerRotY) - (halfSinRotY * temp_v1)) <= 0) && ((temp_s4 * halfCosPlayerRotY) - (halfSinRotY * temp_a2)) >= 0 &&
+                   ((-temp_s2 * (temp_a2 - temp_v1)) + ((temp_s4 - temp_s2) * temp_v1)) >= 0)
+                {
+                    return (((halfSinRotY - temp_s2) * (temp_a2 - temp_v1)) -
+                            ((temp_s4 - temp_s2) * (halfCosPlayerRotY - temp_v1))) < 1;
+                }
+            }
+        }
+    }
+
+    return false;
+}
 
 bool func_80037C5C(s_func_80037A4C* arg0) // 0x80037C5C
 {
@@ -2973,16 +3029,16 @@ bool func_80037C5C(s_func_80037A4C* arg0) // 0x80037C5C
     }
 
     angle    = -(arg0->field_6 << 20) >> 16;
-    sinAngle = shRsin(angle);
+    sinAngle = Math_Sin(angle);
 
-    temp = FP_FROM((-deltaX * sinAngle) + (deltaZ * shRcos(angle)), Q12_SHIFT);
+    temp = FP_FROM((-deltaX * sinAngle) + (deltaZ * Math_Cos(angle)), Q12_SHIFT);
     if (temp > 0x4000)
     {
         return false;
     }
 
-    cosAngle = shRcos(angle);
-    temp_v0  = FP_FROM((deltaX * cosAngle) + (deltaZ * shRsin(angle)), Q12_SHIFT);
+    cosAngle = Math_Cos(angle);
+    temp_v0  = FP_FROM((deltaX * cosAngle) + (deltaZ * Math_Sin(angle)), Q12_SHIFT);
 
     if (shift8Field_7 < ABS(temp_v0))
     {
@@ -3132,7 +3188,7 @@ void GameState_InGame_Update() // 0x80038BD4
             break;
     }
 
-    if (g_SysWork.sysState_8 != 0 && g_SysWork.player_4C.chara_0.health_B0 <= 0)
+    if (g_SysWork.sysState_8 != SysState_Gameplay && g_SysWork.player_4C.chara_0.health_B0 <= 0)
     {
         SysWork_StateSetNext(SysState_Gameplay);
     }
@@ -3156,10 +3212,10 @@ void GameState_InGame_Update() // 0x80038BD4
         g_DeltaTime0 = 0;
         g_SysStateFuncs[g_SysWork.sysState_8]();
 
-        if (g_SysWork.sysState_8 == 0)
+        if (g_SysWork.sysState_8 == SysState_Gameplay)
         {
             func_800373CC(1);
-            if (D_800A9A10 != 0xF)
+            if (D_800A9A10 != SysState_Unk15)
             {
                 SysWork_StateSetNext(D_800A9A10);
             }
@@ -3222,7 +3278,9 @@ void GameState_InGame_Update() // 0x80038BD4
 void SysState_Gameplay_Update() // 0x80038BD4
 {
     s32             state;
-    s_SubCharacter* playerChara = &g_SysWork.player_4C.chara_0;
+    s_SubCharacter* playerChara;
+
+    playerChara = &g_SysWork.player_4C.chara_0;
 
     func_800373CC(~playerChara->attackReceived_41 != 0);
     Savegame_MapRoomIdxSet();
@@ -3253,9 +3311,6 @@ void SysState_Gameplay_Update() // 0x80038BD4
         case 6:
             func_800892A4(12);
             break;
-
-        default:
-            break;
     }
 
     if (g_SysWork.player_4C.chara_0.health_B0 <= FP_FLOAT_TO(0.0f, Q12_SHIFT))
@@ -3284,7 +3339,7 @@ void SysState_Gameplay_Update() // 0x80038BD4
         g_SysWork.timer_2C       = 0;
         g_SysWork.field_14       = 0;
     }
-    else if (func_8007F26C() == 1)
+    else if (func_8007F26C() == true)
     {
         return;
     }
@@ -3301,8 +3356,8 @@ void SysState_Gameplay_Update() // 0x80038BD4
     }
     else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18)
     {
-        //SysWork_StateSetNext(SysState_Unk3); // TODO: Doesn't match?
-        g_SysWork.sysState_8     = SysState_Unk3;
+        //SysWork_StateSetNext(SysState_MapScreen); // TODO: Doesn't match?
+        g_SysWork.sysState_8     = SysState_MapScreen;
         g_SysWork.timer_24       = 0;
         g_SysWork.sysStateStep_C = 0;
         g_SysWork.field_28       = 0;
@@ -3316,7 +3371,9 @@ void SysState_Gameplay_Update() // 0x80038BD4
         SysWork_StateSetNext(SysState_OptionsMenu);
     }
 
-    if ((u32)(g_SysWork.sysState_8 - 1) < SysState_Unk3)
+    if (g_SysWork.sysState_8 == SysState_OptionsMenu ||
+        g_SysWork.sysState_8 == SysState_StatusMenu ||
+        g_SysWork.sysState_8 == SysState_MapScreen)
     {
         g_SysWork.flags_22A4 |= 1 << 7;
     }
@@ -3389,9 +3446,6 @@ void SysState_OptionsMenu_Update() // 0x80039344
 
                 g_SysWork.sysStateStep_C++;
             }
-            break;
-
-        default:
             break;
     }
 
@@ -3485,9 +3539,6 @@ void func_8003943C()
         case MapOverlayId_MAP0_S00:
             func_8004690C(Sfx_Unk1358);
             break;
-
-        default:
-            break;
     }
 }
 
@@ -3505,13 +3556,7 @@ void SysState_StatusMenu_Update() // 0x80039568
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;
 
-    g_SysWork.sysState_8     = 0;
-    g_SysWork.timer_24       = 0;
-    g_SysWork.sysStateStep_C = 0;
-    g_SysWork.field_28       = 0;
-    g_SysWork.field_10       = 0;
-    g_SysWork.timer_2C       = 0;
-    g_SysWork.field_14       = 0;
+    SysWork_StateSetNext(SysState_Gameplay);
 
     g_GameWork.gameStateStep_598[0] = gameState;
     g_GameWork.gameStatePrev_590    = gameState;
@@ -3544,13 +3589,13 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
 
     Gfx_MotionBlur(2);
 
-    if (Fs_QueueDoThingWhenEmpty() != 0)
+    if (Fs_QueueDoThingWhenEmpty())
     {
         Game_StateSetNext(GameState_InventoryScreen);
     }
 }
 
-void SysState_Unk3_Update() // 0x800396D4
+void SysState_MapScreen_Update() // 0x800396D4
 {
     s32         idx;
     s_Savegame* save;
@@ -3558,9 +3603,9 @@ void SysState_Unk3_Update() // 0x800396D4
     if (!HAS_MAP(g_SavegamePtr->current2dMapIdx_A9))
     {
         if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18 ||
-            Gfx_MapMsg_Draw(MapMsgIdx_NoMap) > 0)
+            Gfx_MapMsg_Draw(MapMsgIdx_NoMap) > MapMsgState_Idle)
         {
-            SysWork_StateSetNext(GameState_Unk0);
+            SysWork_StateSetNext(SysState_Gameplay);
         }
     }
     else if ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1)) && !g_SysWork.field_2388.isFlashlightOn_15 &&
@@ -3568,21 +3613,21 @@ void SysState_Unk3_Update() // 0x800396D4
               (g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & (1 << 0))))
     {
         if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18 ||
-            Gfx_MapMsg_Draw(MapMsgIdx_TooDarkForMap) > 0)
+            Gfx_MapMsg_Draw(MapMsgIdx_TooDarkForMap) > MapMsgState_Idle)
         {
-            SysWork_StateSetNext(GameState_Unk0);
+            SysWork_StateSetNext(SysState_Gameplay);
         }
     }
     else
     {
         if (g_SysWork.sysStateStep_C == 0)
         {
-            if (D_800A99CC[g_SavegamePtr->current2dMapIdx_A9] != NO_VALUE)
+            if (g_MapMarkingTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9] != NO_VALUE)
             {
-                Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[g_SavegamePtr->current2dMapIdx_A9], FS_BUFFER_1, &g_MapMarkerAtlasImg);
+                Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9], FS_BUFFER_1, &g_MapMarkerAtlasImg);
             }
 
-            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[g_SavegamePtr->current2dMapIdx_A9]);
+            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9]);
 
             g_Gfx_ScreenFade = 2;
             D_800B5C30       = FP_TIME(0.0f);
@@ -3610,18 +3655,18 @@ void GameState_LoadMapScreen_Update() // 0x8003991C
 
         save = g_SavegamePtr;
 
-        if (D_800A99CC[save->current2dMapIdx_A9] != NO_VALUE)
+        if (g_MapMarkingTimFileIdxs[save->current2dMapIdx_A9] != NO_VALUE)
         {
-            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[save->current2dMapIdx_A9], FS_BUFFER_1, &g_MapMarkerAtlasImg);
+            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdxs[save->current2dMapIdx_A9], FS_BUFFER_1, &g_MapMarkerAtlasImg);
         }
 
-        Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[save->current2dMapIdx_A9], FS_BUFFER_2, &g_MapImg);
+        Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[save->current2dMapIdx_A9], FS_BUFFER_2, &g_MapImg);
         g_GameWork.gameStateStep_598[0]++;
     }
 
     Gfx_MotionBlur(2);
 
-    if (Fs_QueueDoThingWhenEmpty() != 0)
+    if (Fs_QueueDoThingWhenEmpty())
     {
         Game_StateSetNext(GameState_MapScreen);
     }
@@ -3629,7 +3674,7 @@ void GameState_LoadMapScreen_Update() // 0x8003991C
 
 void SysState_Fmv_Update() // 0x80039A58
 {
-    #define BASE_FILE_IDX 2072
+    #define BASE_AUDIO_FILE_IDX FILE_XA_ZC_14392
 
     switch (g_SysWork.sysStateStep_C)
     {
@@ -3644,9 +3689,6 @@ void SysState_Fmv_Update() // 0x80039A58
                 GameFs_StreamBinLoad();
                 g_SysWork.sysStateStep_C++;
             }
-            break;
-
-        default:
             break;
     }
 
@@ -3663,9 +3705,9 @@ void SysState_Fmv_Update() // 0x80039A58
     func_800892A4(0);
     func_80089128();
 
-    // Start playing movie. File to play is based on file ID `BASE_FILE_IDX - g_MapEventIdx`.
+    // Start playing movie. File to play is based on file ID `BASE_AUDIO_FILE_IDX - g_MapEventIdx`.
     // Blocks until movie has finished playback or user has skipped it.
-    open_main(BASE_FILE_IDX - g_MapEventIdx, g_FileTable[BASE_FILE_IDX - g_MapEventIdx].blockCount);
+    open_main(BASE_AUDIO_FILE_IDX - g_MapEventIdx, g_FileTable[BASE_AUDIO_FILE_IDX - g_MapEventIdx].blockCount_0_13);
 
     func_800892A4(1);
 
@@ -3681,7 +3723,7 @@ void SysState_Fmv_Update() // 0x80039A58
     Game_StateSetNext(GameState_InGame);
 
     // If flag is set, returns to `GameState_InGame` with `gameStateStep[0]` = 1.
-    if ((g_MapEventParam->flags_8 >> 13) & (1 << 1)) // `flags_8 & (1 << 14)`? Does shift imply bitfield?
+    if (g_MapEventParam->flags_8_13 & (1 << 1))
     {
         g_GameWork.gameStateStep_598[0] = 1;
     }
@@ -3689,14 +3731,13 @@ void SysState_Fmv_Update() // 0x80039A58
 
 void SysState_LoadArea_Update() // 0x80039C40
 {
-    s32               var0;
     u32               var1;
     s_AreaLoadParams* areaLoadParams;
 
-    g_SysWork.field_229C = 0;
-    g_SysWork.loadingScreenIndex_2281 = D_800BCDB0.field_4_9;
-    g_SysWork.field_2283 = (g_MapEventParam->flags_8 >> 19) & 0x1F;
-    g_SysWork.field_2282 = (g_MapEventParam->flags_8 >> 13) & 0x3F;
+    g_SysWork.field_229C            = 0;
+    g_SysWork.loadingScreenIdx_2281 = D_800BCDB0.loadingScreenId_4_9;
+    g_SysWork.field_2283            = g_MapEventParam->field_8_19;
+    g_SysWork.field_2282            = g_MapEventParam->flags_8_13;
 
     Sd_EngineCmd(SfxPairs[g_SysWork.field_2283].sfx_0);
 
@@ -3706,7 +3747,7 @@ void SysState_LoadArea_Update() // 0x80039C40
         g_SysWork.flags_22A4 |= 1 << 10;
     }
 
-    memcpy(&D_800BCDB0, &g_MapOverlayHeader.mapAreaLoadParams_1C[(g_MapEventParam->flags_8 >> 5) & 0xFF], sizeof(s_AreaLoadParams));
+    D_800BCDB0 = g_MapOverlayHeader.mapAreaLoadParams_1C[g_MapEventParam->pointOfInterestIdx_8_5];
 
     if (D_800BCDB0.field_4_24 == 1)
     {
@@ -3716,27 +3757,28 @@ void SysState_LoadArea_Update() // 0x80039C40
         D_800BCDB0.char_z_8 += var1;
     }
 
-    if (g_SysWork.sysState_8 == 5)
+    // Handle `SysState_LoadArea0` and `SysState_LoadArea1`.
+    // TODO: Document what the difference here is.
+    if (g_SysWork.sysState_8 == SysState_LoadArea0)
     {
-        g_SysWork.flags_2298           = SysWorkProcessFlag_OverlayTransition;
-        g_SavegamePtr->mapOverlayId_A4 = (g_MapEventParam->flags_8 >> 25) & 0x3F; // This doesn't match when `flags_8` is defined as bitfields.
+        g_SysWork.processFlags_2298    = SysWorkProcessFlag_OverlayTransition;
+        g_SavegamePtr->mapOverlayId_A4 = g_MapEventParam->mapOverlayIdx_8_25;
         GameFs_MapLoad(g_SavegamePtr->mapOverlayId_A4);
     }
     else
     {
-        g_SysWork.flags_2298 = SysWorkProcessFlag_RoomTransition;
-        func_8003640C((g_MapEventParam->flags_8 >> 25) & 0x3F);
+        g_SysWork.processFlags_2298 = SysWorkProcessFlag_RoomTransition;
+        func_8003640C(g_MapEventParam->mapOverlayIdx_8_25);
 
-        var0 = (g_MapOverlayHeader.mapAreaLoadParams_1C[(g_MapEventParam->flags_8 >> 5) & 0xFF].field_4_5);
-        if (var0 != 0)
+        if (g_MapOverlayHeader.mapAreaLoadParams_1C[g_MapEventParam->pointOfInterestIdx_8_5].field_4_5 != 0)
         {
-            g_SysWork.field_2349 = var0 - 1;
+            g_SysWork.field_2349 = g_MapOverlayHeader.mapAreaLoadParams_1C[g_MapEventParam->pointOfInterestIdx_8_5].field_4_5 - 1;
         }
     }
 
     Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
 
-    if ((g_MapEventParam->flags_8 >> 24) & (1 << 0))
+    if (g_MapEventParam->field_8_24)
     {
         g_SysWork.flags_22A4 |= 1 << 6;
     }
@@ -3762,7 +3804,7 @@ void func_80039F54() // 0x80039F54
 
 s8 func_80039F90() // 0x80039F90
 {
-    if (g_SysWork.flags_2298 & (SysWorkProcessFlag_RoomTransition | SysWorkProcessFlag_OverlayTransition))
+    if (g_SysWork.processFlags_2298 & (SysWorkProcessFlag_RoomTransition | SysWorkProcessFlag_OverlayTransition))
     {
         return g_SysWork.field_2282;
     }
@@ -3778,7 +3820,7 @@ void SysState_ReadMessage_Update(s32 arg0) // 0x80039FB8
 
     i = arg0;
 
-    if (!((g_MapEventParam->flags_8 >> 13) & (1 << 0)) && !(g_SysWork.flags_22A4 & (1 << 5)))
+    if (!(g_MapEventParam->flags_8_13 & (1 << 0)) && !(g_SysWork.flags_22A4 & (1 << 5)))
     {
         for (i = 0; i < NPC_COUNT_MAX; i++) 
         {
@@ -3801,35 +3843,34 @@ void SysState_ReadMessage_Update(s32 arg0) // 0x80039FB8
 
     if (g_SysWork.field_18 == 0)
     {
-        g_MapOverlayHeader.func_C8(i);
+        g_MapOverlayHeader.freezePlayerControl_C8(i);
     }
 
     switch (Gfx_MapMsg_Draw(g_MapEventIdx)) 
     {
-        case -1:
+        case MapMsgState_Finish:
             break;
 
-        case 0:
+        case MapMsgState_Idle:
             break;
         
-        case 1:
+        case MapMsgState_SelectEntry0:
             Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
 
-            func = &g_MapOverlayHeader.func_CC;
+            func = &g_MapOverlayHeader.unfreezePlayerControl_CC;
 
             SysWork_StateSetNext(SysState_Gameplay);
 
             (*func)(0);
-            break;
-
-        default:
             break;
     }
 }
 
 void SysWork_SavegameUpdatePlayer() // 0x8003A120
 {
-    s_Savegame* save = g_SavegamePtr;
+    s_Savegame* save;
+
+    save = g_SavegamePtr;
 
     save->locationId_A8       = g_MapEventIdx;
     save->playerPositionX_244 = g_SysWork.player_4C.chara_0.position_18.vx;
@@ -3872,26 +3913,18 @@ void SysState_SaveMenu_Update() // 0x8003A230
             {
                 GameFs_SaveLoadBinLoad();
 
-                g_Gfx_ScreenFade   = 2;
-                g_SysWork.field_28 = 0;
-                g_SysWork.field_10 = 0;
-                g_SysWork.timer_2C = 0;
-                g_SysWork.field_14 = 0;
-                g_SysWork.sysStateStep_C++;
+                g_Gfx_ScreenFade = 2;
+                SysWork_StateStepIncrement();
             }
 
-            else if (Gfx_MapMsg_Draw(MapMsgIdx_SaveGame) == 1)
+            else if (Gfx_MapMsg_Draw(MapMsgIdx_SaveGame) == MapMsgState_SelectEntry0)
             {
                 g_SavegamePtr->eventFlags_168[5] |= EVENT_FLAG5_FIRST_TIME_SAVE_GAME;
 
                 GameFs_SaveLoadBinLoad();
 
                 g_Gfx_ScreenFade   = 2;
-                g_SysWork.field_28 = 0;
-                g_SysWork.field_10 = 0;
-                g_SysWork.timer_2C = 0;
-                g_SysWork.field_14 = 0;
-                g_SysWork.sysStateStep_C++;
+                SysWork_StateStepIncrement();
             }
             break;
         
@@ -3912,28 +3945,19 @@ void SysState_SaveMenu_Update() // 0x8003A230
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
 
-                g_SysWork.sysState_8     = 0;
-                g_SysWork.timer_24       = 0;
-                g_SysWork.sysStateStep_C = 0;
-                g_SysWork.field_28       = 0;
-                g_SysWork.field_10       = 0;
-                g_SysWork.timer_2C       = 0;
-                g_SysWork.field_14       = 0;
+                SysWork_StateSetNext(SysState_Gameplay);
 
                 g_GameWork.gameStateStep_598[0] = gameState;
                 g_GameWork.gameStatePrev_590    = gameState;
                 g_GameWork.gameStateStep_598[0] = 0;
             }
             break;
-
-        default:
-            break;
     }
 }
 
 void SysState_EventCallFunc_Update() // 0x8003A3C8
 {
-    if ((g_MapEventParam->flags_8 >> 13) & 0x3F)
+    if (g_MapEventParam->flags_8_13 != 0)
     {
         Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
     }
@@ -3946,7 +3970,7 @@ void SysState_EventSetFlag_Update() // 0x8003A460
 {
     g_DeltaTime0 = D_800BCD84;
     Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
-    g_SysWork.sysState_8 = 0;
+    g_SysWork.sysState_8 = SysState_Gameplay;
 }
 
 void SysState_EventPlaySound_Update() // 0x8003A4B4
@@ -3956,7 +3980,7 @@ void SysState_EventPlaySound_Update() // 0x8003A4B4
     Sd_EngineCmd(((u16)g_MapEventIdx + 0x500) & 0xFFFF);
 
     Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
-    g_SysWork.sysState_8 = 0;
+    g_SysWork.sysState_8 = SysState_Gameplay;
 }
 
 void SysState_GameOver_Update() // 0x8003A52C
@@ -3973,7 +3997,7 @@ void SysState_GameOver_Update() // 0x8003A52C
     switch (g_SysWork.sysStateStep_C)
     {
         case 0:
-            g_MapOverlayHeader.func_C8();
+            g_MapOverlayHeader.freezePlayerControl_C8();
             g_SysWork.field_28 = 0;
 
             if (g_GameWork.autosave_90.continueCount_27B < 99)
@@ -4008,7 +4032,7 @@ void SysState_GameOver_Update() // 0x8003A52C
                 }
             }
 
-            randTipVal = (s32)Rng_Rand16() % randTipVal;
+            randTipVal = Rng_GenerateInt(Rng_Rand16(), 0, randTipVal - 1);
 
             // `randTipVal` seems to go unused after loop, gets checked during loop and can cause early exit,
             // thereby affecting what `tipIdx` will contain.
@@ -4045,11 +4069,11 @@ void SysState_GameOver_Update() // 0x8003A52C
             SysWork_StateStepIncrement();
 
         case 1:
-            func_8008616C(2, 1, 0, FP_TIME(0.5f), 0);
+            func_8008616C(2, true, 0, FP_TIME(0.5f), false);
             break;
 
         case 2:
-            func_8008616C(0, 0, 0, FP_TIME(0.5f), 0);
+            func_8008616C(0, false, 0, FP_TIME(0.5f), false);
             SysWork_StateStepIncrement();
 
         case 3:
@@ -4068,18 +4092,13 @@ void SysState_GameOver_Update() // 0x8003A52C
         case 4:
             Gfx_StringSetPosition(SCREEN_POSITION_X(32.5f), SCREEN_POSITION_Y(43.5f));
             Gfx_StringDraw("\aGAME_OVER", 0x63);
-            func_8008616C(2, 1, 0, FP_TIME(2.0f), 0);
+            func_8008616C(2, true, 0, FP_TIME(2.0f), false);
             break;
 
         case 5:
             if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
             {
-                // TODO: Create `inline SysWork_StateStepReset` if other code matching is needed.
-                g_SysWork.sysStateStep_C = NO_VALUE;
-                g_SysWork.field_28       = 0;
-                g_SysWork.field_10       = 0;
-                g_SysWork.timer_2C       = 0;
-                g_SysWork.field_14       = 0;
+                SysWork_StateStepReset();
                 break;
             }
             else
@@ -4090,7 +4109,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             }
 
         case 6:
-            func_8008616C(2, 0, 0, FP_TIME(2.0f), 0);
+            func_8008616C(2, false, 0, FP_TIME(2.0f), false);
             g_SysWork.field_28 = 0;
             Gfx_BackgroundSpriteDraw(&g_DeathTipImg);
             break;
@@ -4117,12 +4136,12 @@ void SysState_GameOver_Update() // 0x8003A52C
 
         case 8:
             Gfx_BackgroundSpriteDraw(&g_DeathTipImg);
-            func_8008616C(2, 1, 0, FP_TIME(2.0f), 0);
+            func_8008616C(2, true, 0, FP_TIME(2.0f), false);
             break;
 
         default:
-            g_MapOverlayHeader.func_CC(0);
-            SysWork_StateSetNext(0);
+            g_MapOverlayHeader.unfreezePlayerControl_CC(0);
+            SysWork_StateSetNext(SysState_Gameplay);
             Game_WarmBoot();
             break;
     }
@@ -4142,7 +4161,7 @@ void GameState_MapEvent_Update() // 0x8003AA4C
         g_GameWork.gameStateStep_598[0] = 1;
     }
 
-    D_800A9A0C = (g_Gfx_ScreenFade & 0x7) == 5 && Fs_QueueDoThingWhenEmpty() != 0;
+    D_800A9A0C = (g_Gfx_ScreenFade & 0x7) == 5 && Fs_QueueDoThingWhenEmpty();
 
     Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
 

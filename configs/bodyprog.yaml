@@ -97,13 +97,7 @@ segments:
                                              # Jumptable: `vcSetFlagsByCamMvType`
                                              # Jumptable: `vcMixSelfViewEffectToWatchTgtPos`
       - [0x5F9C, .rodata, bodyprog_80085D78] # Jumptables
-      - [0x643C, rodata]
-      # - [0x604C, .rodata, bodyprog_80085D78] # Jumptable: `func_80087AF4`
-      # - [0x6064, rodata]
-      # - [0x641C, .rodata, bodyprog_80085D78] # Jumptable: `func_8008973C`
-      # - [0x6444, rodata]
-      # - [0x64A4, .rodata, bodyprog_80085D78] # Jumptable: `func_8008A2E0`
-      # - [0x6504, rodata]
+      - [0x6504, rodata]
       - [0x679C, .rodata, credits]
       - [0x6A6C, rodata]
       - [0x6A74, lib, libcd, iso9660, .rdata]
@@ -315,7 +309,8 @@ segments:
       - [0x82458,   c, libsd/smf_mid]
 
       # .data section
-      - [0x84238, data, bodyprog_800A8D98]
+      - [0x84238, .data, bodyprog_800A8D98]
+      - [0x84EA4, data, bodyprog_800A9074]
       - [0x84ECC, .data, syswork_functable]
       - [0x84F08, data, bodyprog_800A9A68]
       - [0x84F2C, .data, bodyprog_8003AB28]

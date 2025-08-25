@@ -60,7 +60,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
         
         if (playIntroFmv != 0)
         {
-            g_SysWork.flags_2298 = SysWorkProcessFlag_BootDemo;
+            g_SysWork.processFlags_2298 = SysWorkProcessFlag_BootDemo;
         }
         else
         {
@@ -192,7 +192,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                         }
 
                         Game_PlayerInit();
-                        g_SysWork.flags_2298 = SysWorkProcessFlag_Continue;
+                        g_SysWork.processFlags_2298 = SysWorkProcessFlag_Continue;
                         GameFs_MapLoad(g_SavegamePtr->mapOverlayId_A4);
                         break;
 
@@ -280,7 +280,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 Game_SavegameInitialize(0, g_MainMenu_NewGameSelectedDifficultyIdx - 1);
                 Game_PlayerInit();
 
-                g_SysWork.flags_2298 = SysWorkProcessFlag_NewGame;
+                g_SysWork.processFlags_2298 = SysWorkProcessFlag_NewGame;
 
                 GameFs_MapLoad(MapOverlayId_MAP0_S00);
                 GameFs_StreamBinLoad();
@@ -489,15 +489,9 @@ void Gfx_MainMenu_DifficultyTextDraw(s32 arg0) // 0x8003B678
 
 void Gfx_MainMenu_BackgroundDraw() // 0x8003B758
 {
-    if (g_SysWork.sysState_8 == 0)
+    if (g_SysWork.sysState_8 == SysState_Gameplay)
     {
-        g_SysWork.sysState_8     = 1;
-        g_SysWork.timer_24       = 0;
-        g_SysWork.sysStateStep_C = 0;
-        g_SysWork.field_28       = 0;
-        g_SysWork.field_10       = 0;
-        g_SysWork.timer_2C       = 0;
-        g_SysWork.field_14       = 0;
+        SysWork_StateSetNext(SysState_OptionsMenu);
         func_8003BCF4();
     }
 
@@ -598,8 +592,8 @@ void Gfx_MainMenu_FogRandomize() // 0x8003BAC4
 
     ptr         = D_800BCDE0;
     ptr1        = ptr + 441;
-    D_800A9EAC += 4 + ((s32)Rng_Rand16() & 0x7);
-    val         = FP_MULTIPLY(shRsin(D_800A9EAC), 10, Q12_SHIFT) - 122;
+    D_800A9EAC += 4 + ((s32)Rng_Rand16() & 0x7); // TODO: Range is [4, 11]. Can't use `Rng_GenerateInt`.
+    val         = FP_MULTIPLY(Math_Sin(D_800A9EAC), 10, Q12_SHIFT) - 122;
     ptr2        = ptr + 461;
 
     for (i = 20; i >= 0; i--)
@@ -609,13 +603,13 @@ void Gfx_MainMenu_FogRandomize() // 0x8003BAC4
 
     for (i = 0; i < 16; i++)
     {
-        idx       = (s32)Rng_Rand16() % MAIN_MENU_FOG_COUNT;
+        idx       = Rng_GenerateInt(Rng_Rand16(), 0, MAIN_MENU_FOG_COUNT - 1);
         ptr1[idx] = NO_VALUE;
     }
 
     for (i = 0; i < 9; i++)
     {
-        idx       = (s32)Rng_Rand16() % MAIN_MENU_FOG_COUNT;
+        idx       = Rng_GenerateInt(Rng_Rand16(), 0, MAIN_MENU_FOG_COUNT - 1);
         ptr1[idx] = 0;
     }
 }
@@ -681,10 +675,9 @@ void func_8003BCF4() // 0x8003BCF4
 // UNKNOWN - IN-GAME LOOP RELATED
 // ========================================
 
-// TODO: Remake this whenever we have further context of `D_8002500C`.
-s32 func_8003BD2C() // 0x8003BD2C
+s32 UnknownMapTableIdxGet() // 0x8003BD2C
 {
-    return ((s32*)D_800BCE18.field_0[0].field_0 - &D_8002500C) >> 2;
+    return D_800BCE18.field_0[0].field_0 - g_UnknownMapTable0;
 }
 
 void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
@@ -694,7 +687,7 @@ void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
     D_800BCE14 = func_80069810();
     var_s0     = D_800BCE14;
 
-    switch (func_8003BD2C())
+    switch (UnknownMapTableIdxGet())
     {
         case 0:
             if (chara->position_18.vx >= FP_METER(191.6f) && chara->position_18.vx <= FP_METER(198.8f) && 
@@ -764,12 +757,11 @@ extern s_800C4168 const D_800C4168;
 s32 func_8003BF60(s32 x, s32 z) // 0x8003BF60
 {
     s32               ret;
-    s8                val;
     s_800BCE18_0_0_C* ptr;
 
     ret = 0;
 
-    if (g_SavegamePtr->mapOverlayId_A4 == 0)
+    if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP0_S00)
     {
         return 1;
     }
@@ -777,23 +769,17 @@ s32 func_8003BF60(s32 x, s32 z) // 0x8003BF60
     if (D_800BCE18.field_0[0].field_0->field_C != NULL)
     {
         ptr = D_800BCE18.field_0[0].field_0->field_C;
-        val = ptr->field_0;
-     
-        if (val != NO_VALUE)
-        {
-            do 
-            {
-                if (x >= (ptr->field_2 << 8) && (ptr->field_4 << 8) >= x &&
-                    z >= (ptr->field_6 << 8) && (ptr->field_8 << 8) >= z &&
-                    ret < val)
-                {
-                    ret = val;
-                }
 
-                ptr++;
-                val = ptr->field_0;
+        while (ptr->field_0 != NO_VALUE)
+        {
+            if (x >= (ptr->field_2 << 8) && (ptr->field_4 << 8) >= x &&
+                z >= (ptr->field_6 << 8) && (ptr->field_8 << 8) >= z &&
+                ret < ptr->field_0)
+            {
+                ret = ptr->field_0;
             }
-            while (val != NO_VALUE);
+
+            ptr++;
         }
     }
 
@@ -860,15 +846,15 @@ void func_8003C1AC(s_800BCE18_0_CC* arg0) // 0x8003C1AC
     arg0->field_0 = 0;
     arg0->field_1 = 0;
     arg0->field_4 = 0;
-    arg0->field_8 = (s32)(Fs_GetFileSize(FILE_CHARA_HERO_ILM) + 0x800FEE00);
-    arg0->field_C = sp10;
+    arg0->plmHeader_8 = (s_PlmHeader*)((void*)0x800FEE00 + Fs_GetFileSize(FILE_CHARA_HERO_ILM));
+    arg0->texture_C   = sp10;
 }
 
-void func_8003C220(s_sub_800BCE18_0** arg0, s32 arg1, s32 arg2) // 0x8003C220
+void func_8003C220(s_UnkStruct2_Mo** arg0, s32 arg1, s32 arg2) // 0x8003C220
 {
     s32               var_a2;
     u8                temp_v1;
-    s_sub_800BCE18_0* ptr;
+    s_UnkStruct2_Mo*  ptr;
 
     D_800BCE18.field_0[0].field_0 = *arg0;
     temp_v1 = (*arg0)->field_6;
@@ -889,7 +875,7 @@ void func_8003C220(s_sub_800BCE18_0** arg0, s32 arg1, s32 arg2) // 0x8003C220
     ptr = *arg0;
     func_800421D8(&ptr->field_2, ptr->field_0, var_a2, ((ptr->field_6 >> 2) ^ 1) & (1 << 0), 0, 0);
 
-    if (*arg0 == &D_8002500C) 
+    if (*arg0 == &g_UnknownMapTable0[0]) 
     {
         func_80041ED0(0x467, -1, 8);
     }
@@ -959,10 +945,10 @@ void func_8003C3AC() // 0x8003C3AC
     moveDist = (chara->moveSpeed_38 * FP_METER(5.5f)) / 16015; // TODO: `FP_METER(3.91f)`? What's this doing?
     moveDist = CLAMP(moveDist, FP_METER(0.0f), FP_METER(5.5f));
 
-    pos0.vx += FP_MULTIPLY_PRECISE(moveDist, shRsin(chara->headingAngle_3C), Q12_SHIFT);
-    pos0.vz += FP_MULTIPLY_PRECISE(moveDist, shRcos(chara->headingAngle_3C), Q12_SHIFT);
+    pos0.vx += FP_MULTIPLY_PRECISE(moveDist, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
+    pos0.vz += FP_MULTIPLY_PRECISE(moveDist, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
 
-    if (D_800BCE18.field_0[0].field_0 == &D_8002500C &&
+    if (D_800BCE18.field_0[0].field_0 == &g_UnknownMapTable0[0] &&
         chara->position_18.vx >= FP_METER(-40.0f) && chara->position_18.vx <= FP_METER(40.0f) &&
         chara->position_18.vz >= FP_METER(200.0f) && chara->position_18.vz <= FP_METER(240.0f))
     {
@@ -978,17 +964,17 @@ void func_8003C3AC() // 0x8003C3AC
         flags1 = D_800BCE18.field_0[0].field_0->field_6;
         if (!(flags1 & 0x4) || !(flags1 & 0x3))
         {
-            var_s1 = FP_MULTIPLY(shRcos(pos2.vx), FP_METER(9.0f), Q12_SHIFT);
+            var_s1 = FP_MULTIPLY(Math_Cos(pos2.vx), FP_METER(9.0f), Q12_SHIFT);
         }
         else
         {
             var_s1 = FP_METER(0.0f);
         }
         
-        temp_s0_2 = FP_MULTIPLY(var_s1, shRsin(pos2.vy), Q12_SHIFT);
+        temp_s0_2 = FP_MULTIPLY(var_s1, Math_Sin(pos2.vy), Q12_SHIFT);
         temp_s0_2 = CLAMP(temp_s0_2, FP_METER(-6.0f), FP_METER(6.0f));
 
-        temp_v1_4 = FP_MULTIPLY(var_s1, shRcos(pos2.vy), Q12_SHIFT);
+        temp_v1_4 = FP_MULTIPLY(var_s1, Math_Cos(pos2.vy), Q12_SHIFT);
         temp_v1_4 = CLAMP(temp_v1_4, FP_METER(-6.0f), FP_METER(6.0f));
 
         pos1.vx += temp_s0_2;
@@ -997,15 +983,15 @@ void func_8003C3AC() // 0x8003C3AC
         if (Vc_VectorMagnitudeCalc(pos1.vx - chara->position_18.vx, 0, pos1.vz - chara->position_18.vz) > 0x10000)
         {
             var_s1  = FP_METER(14.0f);
-            pos1.vx = chara->position_18.vx + FP_MULTIPLY(shRsin(pos2.vy), var_s1, Q12_SHIFT);
-            pos1.vz = chara->position_18.vz + FP_MULTIPLY(shRcos(pos2.vy), var_s1, Q12_SHIFT);
+            pos1.vx = chara->position_18.vx + FP_MULTIPLY(Math_Sin(pos2.vy), var_s1, Q12_SHIFT);
+            pos1.vz = chara->position_18.vz + FP_MULTIPLY(Math_Cos(pos2.vy), var_s1, Q12_SHIFT);
         }
     } 
     else
     {
         pos1     = chara->position_18;
-        pos1.vx += FP_FROM(FP_TO(shRsin(chara->rotation_24.vy), Q12_SHIFT), Q12_SHIFT);
-        pos1.vz += FP_FROM(FP_TO(shRcos(chara->rotation_24.vy), Q12_SHIFT), Q12_SHIFT);
+        pos1.vx += FP_FROM(FP_TO(Math_Sin(chara->rotation_24.vy), Q12_SHIFT), Q12_SHIFT);
+        pos1.vz += FP_FROM(FP_TO(Math_Cos(chara->rotation_24.vy), Q12_SHIFT), Q12_SHIFT);
     }
 
     flags0 = D_800BCE18.field_0[0].field_0->field_6;
@@ -1061,7 +1047,7 @@ void func_8003C8F8(s_800BCE18_2BEC_0* arg0, char* newStr) // 0x8003C8F8
     arg0->field_10.field_9 = 0;
     arg0->field_0          = 0;
 
-    func_80056D64(arg0->field_10.string_0, newStr);
+    StringCopy(arg0->field_10.string_0, newStr);
 
     arg0->field_10.field_8 = 0;
 }
@@ -1455,7 +1441,7 @@ void func_8003D160() // 0x8003D160
     s32              queueIdx;
     s_800BCE18*      ptr;
     s_800BCE18_0_CC* ptr2;
-    void*            addr = (void*)0x800FE600;
+    s_PlmHeader*     addr = (void*)0x800FE600;
 
     func_8003D3BC(&img, 1, 0);
 
@@ -1466,11 +1452,11 @@ void func_8003D160() // 0x8003D160
     Fs_QueueStartRead(g_Chara_FileInfo[1].modelFileIdx, addr);
     queueIdx = Fs_QueueStartReadTim(g_Chara_FileInfo[1].textureFileIdx, FS_BUFFER_1, &img);
 
-    D_800BCE18.field_164C.field_0 = 1;
-    ptr2->field_1                 = 0;
-    ptr2->field_4                 = queueIdx;
-    ptr2->field_8                 = addr;
-    D_800BCE18.field_164C.field_C = img;
+    D_800BCE18.field_164C.field_0   = 1;
+    ptr2->field_1                   = 0;
+    ptr2->field_4                   = queueIdx;
+    ptr2->plmHeader_8               = addr;
+    D_800BCE18.field_164C.texture_C = img;
 }
 
 s32 func_8003D21C(s_MapOverlayHeader* arg0) // 0x8003D21C
@@ -1509,7 +1495,7 @@ s32 func_8003D21C(s_MapOverlayHeader* arg0) // 0x8003D21C
             if (var_s3 != 0) 
             {
                 func_8003D3BC(&img, ids, i);
-                ret = func_8003D7D4(ids, i, D_800BCE18.field_0[0].field_14, &img);
+                ret = func_8003D7D4(ids, i, (s_PlmHeader*)D_800BCE18.field_0[0].field_14, &img);
             }
 
             func_8003D354(&D_800BCE18.field_0[0].field_14, ids);
@@ -1601,10 +1587,10 @@ void func_8003D468(s32 arg0, s32 arg1) // 0x8003D468
     s_800BCE18_0_CC* temp_s0;
 
     temp_s0 = D_800BCE18.field_0[0].field_18[arg0];
-    func_80056244(temp_s0->field_8);
+    func_80056244(temp_s0->plmHeader_8);
 
-    rect.x = temp_s0->field_C.clutX;
-    rect.y = temp_s0->field_C.clutY;
+    rect.x = temp_s0->texture_C.clutX;
+    rect.y = temp_s0->texture_C.clutY;
     rect.w = 16;
     rect.h = 16;
 
@@ -1634,8 +1620,8 @@ void func_8003D550(s32 arg0, s32 arg1) // 0x8003D550
     s_800BCE18_0_CC* ptr;
 
     ptr = D_800BCE18.field_0[0].field_18[arg0];
-    func_80056464(ptr->field_8, g_Chara_FileInfo[arg0].textureFileIdx, &ptr->field_C, arg1);
-    func_80056954(ptr->field_8);
+    func_80056464(ptr->plmHeader_8, g_Chara_FileInfo[arg0].textureFileIdx, &ptr->texture_C, arg1);
+    func_80056954(ptr->plmHeader_8);
 }
 
 void func_8003D5B4(s8 flags) // 0x8003D5B4
@@ -1665,7 +1651,7 @@ void func_8003D5B4(s8 flags) // 0x8003D5B4
         fileIdx = ptr->field_0;
         if (fileIdx != 0)
         {
-            temp = ptr->field_8 + Fs_GetFileSize(g_Chara_FileInfo[fileIdx].modelFileIdx);
+            temp = (s32)ptr->plmHeader_8 + Fs_GetFileSize(g_Chara_FileInfo[fileIdx].modelFileIdx);
             if (D_800BCE18.field_0[0].field_14 < temp)
             {
                 D_800BCE18.field_0[0].field_14 = temp;
@@ -1683,47 +1669,47 @@ void func_8003D6A4(s_800BCE18_0_CC* arg0) // 0x8003D6A4
     }
 }
 
-void func_8003D6E0(s32 arg0, s32 arg1, void* arg2, s_FsImageDesc* arg3) // 0x8003D6E0
+void func_8003D6E0(s32 arg0, s32 arg1, s_PlmHeader* plmHeader, s_FsImageDesc* tex) // 0x8003D6E0
 {
     s_FsImageDesc img;
-    void*         var_s0;
+    s_PlmHeader*  plmHeaderPtr;
 
-    if (arg2 != NULL) 
+    if (plmHeader != NULL)
     {
-        var_s0 = arg2;
+        plmHeaderPtr = plmHeader;
     } 
     else if (D_800BCE18.field_0[arg1].field_CC.field_0 != 0) 
     {
-        var_s0 = D_800BCE18.field_0[arg1].field_CC.field_8;
+        plmHeaderPtr = D_800BCE18.field_0[arg1].field_CC.plmHeader_8;
     } 
     else 
     {
-        var_s0 = D_800BCE18.field_0[0].field_14;
-        func_8003D354(&D_800BCE18.field_0[0].field_14, arg0);
+        plmHeaderPtr = (s_PlmHeader*)D_800BCE18.field_0[0].field_14;
+        func_8003D354(&D_800BCE18.field_0[0].field_14, arg0); // Increments `field_14`?
     }
 
-    if (arg3 != NULL) 
+    if (tex != NULL)
     {
-        img = *arg3;
+        img = *tex;
     } 
     else 
     {
         func_8003D3BC(&img, arg0, arg1);
     }
 
-    func_8003D7D4(arg0, arg1, var_s0, &img);
+    func_8003D7D4(arg0, arg1, plmHeaderPtr, &img);
 }
 
-s32 func_8003D7D4(u32 arg0, s32 arg1, void* arg2, s_FsImageDesc* img) // 0x8003D7D4
+s32 func_8003D7D4(u32 arg0, s32 arg1, s_PlmHeader* plmHeader, s_FsImageDesc* tex) // 0x8003D7D4
 {
     s32              queueIdx;
     s32              idx;
     s_800BCE18_0_CC* ptr;
-    s_FsImageDesc*   img0;
+    s_FsImageDesc*   img;
 
     ptr = &D_800BCE18.field_0[arg1].field_CC;
     idx = ptr->field_0;
-    img0 = &ptr->field_C;
+    img = &ptr->texture_C;
 
     if (arg0 == 0) 
     {
@@ -1735,7 +1721,7 @@ s32 func_8003D7D4(u32 arg0, s32 arg1, void* arg2, s_FsImageDesc* img) // 0x8003D
     {
         if (arg0 == idx) 
         {
-            if (arg2 == ptr->field_8 && memcmp(img, img0, sizeof(s_FsImageDesc)) == 0)
+            if (plmHeader == ptr->plmHeader_8 && memcmp(tex, img, sizeof(s_FsImageDesc)) == 0)
             {
                 return 0;
             }
@@ -1746,18 +1732,18 @@ s32 func_8003D7D4(u32 arg0, s32 arg1, void* arg2, s_FsImageDesc* img) // 0x8003D
 
     D_800BCE18.field_0[0].field_18[arg0] = ptr;
 
-    queueIdx = Fs_QueueStartRead(g_Chara_FileInfo[arg0].modelFileIdx, arg2);
+    queueIdx = Fs_QueueStartRead(g_Chara_FileInfo[arg0].modelFileIdx, plmHeader);
 
     if (g_Chara_FileInfo[arg0].textureFileIdx != NO_VALUE) 
     {
-        queueIdx = Fs_QueueStartReadTim(g_Chara_FileInfo[arg0].textureFileIdx, FS_BUFFER_1, img);
+        queueIdx = Fs_QueueStartReadTim(g_Chara_FileInfo[arg0].textureFileIdx, FS_BUFFER_1, tex);
     }
 
-    ptr->field_0 = arg0;
-    ptr->field_1 = 0;
-    ptr->field_4 = queueIdx;
-    ptr->field_8 = arg2;
-    ptr->field_C = *img;
+    ptr->field_0     = arg0;
+    ptr->field_1     = 0;
+    ptr->field_4     = queueIdx;
+    ptr->plmHeader_8 = plmHeader;
+    ptr->texture_C   = *tex;
 
     return queueIdx;
 }
@@ -1793,16 +1779,16 @@ void func_8003D9C8(s_800BCE18_0_CC* arg0) // 0x8003D9C8
     {
         arg0->field_1 = 1;
 
-        PlmHeader_FixOffsets(arg0->field_8);
-        func_80056464(arg0->field_8, g_Chara_FileInfo[arg0->field_0].textureFileIdx, &arg0->field_C, g_Chara_FileInfo[arg0->field_0].field_6_10 & 3);
+        PlmHeader_FixOffsets(arg0->plmHeader_8);
+        func_80056464(arg0->plmHeader_8, g_Chara_FileInfo[arg0->field_0].textureFileIdx, &arg0->texture_C, g_Chara_FileInfo[arg0->field_0].field_6_10 % 4);
 
         skel = &arg0->field_14;
 
-        func_80056954(arg0->field_8);
+        func_80056954(arg0->plmHeader_8);
         func_80044FE0(skel, &arg0->field_14.field_C, 56); // TODO: Can't fit `s_Bone` at `field_C`. Check `s_Skeleton` size.
-        func_8004506C(skel, arg0->field_8);
+        func_8004506C(skel, arg0->plmHeader_8);
         func_800452EC(skel);
-        func_800453E8(skel, 1);
+        func_800453E8(skel, true);
     }
 }
 
@@ -1910,28 +1896,28 @@ void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
     temp_s0 = arg1 & 0xF;
     if (temp_s0 != 0)
     {
-        func_80045468(skel, &D_800A9ECC, 0);
+        func_80045468(skel, &D_800A9ECC, false);
 
         switch (temp_s0)
         {
             case 1:
-                func_80045468(skel, &D_800A9ED0, 1);
+                func_80045468(skel, &D_800A9ED0, true);
                 break;
 
             case 2:
-                func_80045468(skel, &D_800A9ED4, 1);
+                func_80045468(skel, &D_800A9ED4, true);
                 break;
 
             case 3:
-                func_80045468(skel, &D_800A9ED8, 1);
+                func_80045468(skel, &D_800A9ED8, true);
                 break;
 
             case 4:
-                func_80045468(skel, &D_800A9EDC, 1);
+                func_80045468(skel, &D_800A9EDC, true);
                 break;
 
             case 5:
-                func_80045468(skel, &D_800A9EE0, 1);
+                func_80045468(skel, &D_800A9EE0, true);
                 break;
 
             default:
@@ -1942,16 +1928,16 @@ void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
     temp_s0 = arg1 & 0xF0;
     if (temp_s0 != 0)
     {
-        func_80045468(skel, &D_800A9EE4, 0);
+        func_80045468(skel, &D_800A9EE4, false);
 
         switch (temp_s0)
         {
             case 16:
-                func_80045468(skel, &D_800A9EE8, 1);
+                func_80045468(skel, &D_800A9EE8, true);
                 break;
 
             case 32:
-                func_80045468(skel, &D_800A9EEC, 1);
+                func_80045468(skel, &D_800A9EEC, true);
                 break;
 
             default:
@@ -1970,13 +1956,13 @@ void func_8003DF84(s_Skeleton* skel, s32 arg1) // 0x8003DF84
         switch (temp_v1)
         {
             case 1:
-                func_80045468(skel, &D_800A9EF4, 0);
-                func_80045468(skel, &D_800A9EF0, 1);
+                func_80045468(skel, &D_800A9EF4, false);
+                func_80045468(skel, &D_800A9EF0, true);
                 break;
 
             case 2:
-                func_80045468(skel, &D_800A9EF0, 0);
-                func_80045468(skel, &D_800A9EF4, 1);
+                func_80045468(skel, &D_800A9EF0, false);
+                func_80045468(skel, &D_800A9EF4, true);
                 break;
 
             default:
@@ -1990,13 +1976,13 @@ void func_8003DF84(s_Skeleton* skel, s32 arg1) // 0x8003DF84
         switch (temp_v1)
         {
             case 16:
-                func_80045468(skel, &D_800A9EFC, 0);
-                func_80045468(skel, &D_800A9EF8, 1);
+                func_80045468(skel, &D_800A9EFC, false);
+                func_80045468(skel, &D_800A9EF8, true);
                 break;
 
             case 32:
-                func_80045468(skel, &D_800A9EF8, 0);
-                func_80045468(skel, &D_800A9EFC, 1);
+                func_80045468(skel, &D_800A9EF8, false);
+                func_80045468(skel, &D_800A9EFC, true);
                 break;
 
             default:
@@ -2015,13 +2001,13 @@ void func_8003E08C(s_Skeleton* skel, s32 arg1) // 0x8003E08C
         switch (temp_v1)
         {
             case 1:
-                func_80045468(skel, &D_800A9F04, 0);
-                func_80045468(skel, &D_800A9F00, 1);
+                func_80045468(skel, &D_800A9F04, false);
+                func_80045468(skel, &D_800A9F00, true);
                 break;
 
             case 2:
-                func_80045468(skel, &D_800A9F00, 0);
-                func_80045468(skel, &D_800A9F04, 1);
+                func_80045468(skel, &D_800A9F00, false);
+                func_80045468(skel, &D_800A9F04, true);
                 break;
 
             default:
@@ -2035,13 +2021,13 @@ void func_8003E08C(s_Skeleton* skel, s32 arg1) // 0x8003E08C
         switch (temp_v1)
         {
             case 16:
-                func_80045468(skel, &D_800A9F0C, 0);
-                func_80045468(skel, &D_800A9F08, 1);
+                func_80045468(skel, &D_800A9F0C, false);
+                func_80045468(skel, &D_800A9F08, true);
                 break;
 
             case 32:
-                func_80045468(skel, &D_800A9F08, 0);
-                func_80045468(skel, &D_800A9F0C, 1);
+                func_80045468(skel, &D_800A9F08, false);
+                func_80045468(skel, &D_800A9F0C, true);
                 break;
 
             default:
@@ -2057,20 +2043,20 @@ void func_8003E194(s_Skeleton* skel, s32 arg1) // 0x8003E194
     temp_s0 = arg1 & 0xF;
     if (temp_s0 != 0)
     {
-        func_80045468(skel, &D_800A9F10, 0);
+        func_80045468(skel, &D_800A9F10, false);
 
         switch (temp_s0)
         {
             case 1:
-                func_80045468(skel, &D_800A9F14, 1);
+                func_80045468(skel, &D_800A9F14, true);
                 break;
 
             case 2:
-                func_80045468(skel, &D_800A9F18, 1);
+                func_80045468(skel, &D_800A9F18, true);
                 break;
 
             case 3:
-                func_80045468(skel, &D_800A9F1C, 1);
+                func_80045468(skel, &D_800A9F1C, true);
                 break;
 
             default:
@@ -2086,24 +2072,24 @@ void func_8003E238(s_Skeleton* skel, s32 arg1) // 0x8003E238
     var_s0 = arg1 & 0xF;
     if (var_s0 != 0)
     {
-        func_80045468(skel, &D_800A9F20, 0);
+        func_80045468(skel, &D_800A9F20, false);
 
         switch (var_s0)
         {
             case 1:
-                func_80045468(skel, &D_800A9F28, 1);
+                func_80045468(skel, &D_800A9F28, true);
                 break;
 
             case 2:
-                func_80045468(skel, &D_800A9F2C, 1);
+                func_80045468(skel, &D_800A9F2C, true);
                 break;
 
             case 3:
-                func_80045468(skel, &D_800A9F30, 1);
+                func_80045468(skel, &D_800A9F30, true);
                 break;
 
             case 4:
-                func_80045468(skel, &D_800A9F34, 1);
+                func_80045468(skel, &D_800A9F34, true);
                 break;
 
             default:
@@ -2115,20 +2101,20 @@ void func_8003E238(s_Skeleton* skel, s32 arg1) // 0x8003E238
     var_s0 = arg1 & 0xF0;
     if (var_s0 != 0)
     {
-        func_80045468(skel, &D_800A9F38, 0);
+        func_80045468(skel, &D_800A9F38, false);
 
         switch (var_s0)
         {
             case 16:
-                func_80045468(skel, &D_800A9F3C, 1);
+                func_80045468(skel, &D_800A9F3C, true);
                 break;
 
             case 32:
-                func_80045468(skel, &D_800A9F40, 1);
+                func_80045468(skel, &D_800A9F40, true);
                 break;
 
             case 48:
-                func_80045468(skel, &D_800A9F44, 1);
+                func_80045468(skel, &D_800A9F44, true);
                 break;
 
             default:
@@ -2147,13 +2133,13 @@ void func_8003E388(s_Skeleton* skel, s32 arg1) // 0x8003E388
         switch (temp_a1)
         {
             case 1:
-                func_80045468(skel, &D_800A9F4C, 0);
-                func_80045468(skel, &D_800A9F48, 1);
+                func_80045468(skel, &D_800A9F4C, false);
+                func_80045468(skel, &D_800A9F48, true);
                 break;
 
             case 2:
-                func_80045468(skel, &D_800A9F48, 0);
-                func_80045468(skel, &D_800A9F4C, 1);
+                func_80045468(skel, &D_800A9F48, false);
+                func_80045468(skel, &D_800A9F4C, true);
                 break;
 
             default:
@@ -2172,13 +2158,13 @@ void func_8003E414(s_Skeleton* skel, s32 arg1) // 0x8003E414
         switch (temp_a1)
         {
             case 1:
-                func_80045468(skel, &D_800A9F50, 0);
-                func_80045468(skel, &D_800A9F54, 1);
+                func_80045468(skel, &D_800A9F50, false);
+                func_80045468(skel, &D_800A9F54, true);
                 break;
 
             case 2:
-                func_80045468(skel, &D_800A9F54, 0);
-                func_80045468(skel, &D_800A9F50, 1);
+                func_80045468(skel, &D_800A9F54, false);
+                func_80045468(skel, &D_800A9F50, true);
                 break;
 
             default:
@@ -2194,20 +2180,20 @@ void func_8003E4A0(s_Skeleton* skel, s32 arg1) // 0x8003E4A0
     temp_s0 = arg1 & 0xF;
     if (temp_s0 != 0)
     {
-        func_80045468(skel, &D_800A9F58, 0);
+        func_80045468(skel, &D_800A9F58, false);
 
         switch (temp_s0)
         {
             case 1:
-                func_80045468(skel, &D_800A9F60, 1);
+                func_80045468(skel, &D_800A9F60, true);
                 break;
 
             case 2:
-                func_80045468(skel, &D_800A9F64, 1);
+                func_80045468(skel, &D_800A9F64, true);
                 break;
 
             case 3:
-                func_80045468(skel, &D_800A9F68, 1);
+                func_80045468(skel, &D_800A9F68, true);
                 break;
 
             default:
@@ -2226,20 +2212,20 @@ void func_8003E544(s_Skeleton* skel, s32 arg1) // 0x8003E544
         return;
     }
 
-    func_80045468(skel, &D_800A9F6C, 0);
+    func_80045468(skel, &D_800A9F6C, false);
 
     switch (temp_s0)
     {
         case 1:
-            func_80045468(skel, &D_800A9F74, 1);
+            func_80045468(skel, &D_800A9F74, true);
             break;
 
         case 2:
-            func_80045468(skel, &D_800A9F78, 1);
+            func_80045468(skel, &D_800A9F78, true);
             break;
 
         case 3:
-            func_80045468(skel, &D_800A9F7C, 1);
+            func_80045468(skel, &D_800A9F7C, true);
             break;
 
         default:
@@ -2783,10 +2769,10 @@ s32 func_8003F4DC(GsCOORDINATE2** arg0, SVECTOR* rot, s32 arg2, s32 arg3, u32 ar
             break;
     }
 
-    rot->vy = -shRsin(vec.vx);
-    temp    = shRcos(vec.vx);
-    rot->vz = FP_MULTIPLY(temp, shRcos(vec.vy), Q12_SHIFT);
-    rot->vx = FP_MULTIPLY(temp, shRsin(vec.vy), Q12_SHIFT);
+    rot->vy = -Math_Sin(vec.vx);
+    temp    = Math_Cos(vec.vx);
+    rot->vz = FP_MULTIPLY(temp, Math_Cos(vec.vy), Q12_SHIFT);
+    rot->vx = FP_MULTIPLY(temp, Math_Sin(vec.vy), Q12_SHIFT);
     return res;
 }
 
@@ -2848,7 +2834,7 @@ s32 func_8003F6F0(s32 arg0, s32 arg1, s32 arg2) // 0x8003F6F0
     return ((arg0 - arg1) << (Q12_SHIFT - shift)) / ((arg2 - arg1) >> shift);
 }
 
-s32 Math_GetWeightedAverage(s32 a, s32 b, s32 weight) // 0x8003F7E4
+s32 Math_WeightedAverageGet(s32 a, s32 b, s32 weight) // 0x8003F7E4
 {
     return Math_MulFixed(a, FP_ALPHA(1.0f) - weight, Q12_SHIFT) + Math_MulFixed(b, weight, Q12_SHIFT);
 }
@@ -2878,33 +2864,33 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s
 
     if (arg1->field_2C == FP_ALPHA(0.0f))
     {
-        arg0->field_2C = Math_GetWeightedAverage(0, arg2->field_2C, weight1);
+        arg0->field_2C = Math_WeightedAverageGet(0, arg2->field_2C, weight1);
     }
     else
     {
-        arg0->field_2C = Math_GetWeightedAverage(arg1->field_2C, arg2->field_2C, weight0);
+        arg0->field_2C = Math_WeightedAverageGet(arg1->field_2C, arg2->field_2C, weight0);
     }
 
     if (arg1->field_0.field_0.s_field_0.field_0 & (1 << 0))
     {
         if (arg2->field_0.field_0.s_field_0.field_0 & (1 << 0))
         {
-            arg0->field_0.field_0.s_field_0.field_1 = Math_GetWeightedAverage(arg1->field_0.field_0.s_field_0.field_1, arg2->field_0.field_0.s_field_0.field_1, weight);
+            arg0->field_0.field_0.s_field_0.field_1 = Math_WeightedAverageGet(arg1->field_0.field_0.s_field_0.field_1, arg2->field_0.field_0.s_field_0.field_1, weight);
         }
         else
         {
-            arg0->field_0.field_0.s_field_0.field_1 = Math_GetWeightedAverage(arg1->field_0.field_0.s_field_0.field_1, arg2->field_0.field_0.s_field_0.field_1, weight1);
+            arg0->field_0.field_0.s_field_0.field_1 = Math_WeightedAverageGet(arg1->field_0.field_0.s_field_0.field_1, arg2->field_0.field_0.s_field_0.field_1, weight1);
         }
     }
     else
     {
         if (arg2->field_0.field_0.s_field_0.field_0 & (1 << 0))
         {
-            arg0->field_0.field_0.s_field_0.field_1 = Math_GetWeightedAverage(arg1->field_0.field_0.s_field_0.field_1, arg2->field_0.field_0.s_field_0.field_1, weight0);
+            arg0->field_0.field_0.s_field_0.field_1 = Math_WeightedAverageGet(arg1->field_0.field_0.s_field_0.field_1, arg2->field_0.field_0.s_field_0.field_1, weight0);
         }
         else
         {
-            arg0->field_0.field_0.s_field_0.field_1 = Math_GetWeightedAverage(arg1->field_0.field_0.s_field_0.field_1, arg2->field_0.field_0.s_field_0.field_1, weight);
+            arg0->field_0.field_0.s_field_0.field_1 = Math_WeightedAverageGet(arg1->field_0.field_0.s_field_0.field_1, arg2->field_0.field_0.s_field_0.field_1, weight);
         }
     }
 
@@ -2941,9 +2927,9 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s
         func_8003FD38(arg0, arg1, arg2, weight, weight, weight);
     }
 
-    arg0->field_0.field_8 = Math_GetWeightedAverage(arg1->field_0.field_8, arg2->field_0.field_8, weight);
-    arg0->field_0.field_A = Math_GetWeightedAverage(arg1->field_0.field_A, arg2->field_0.field_A, weight);
-    arg0->field_0.field_C = Math_GetWeightedAverage(arg1->field_0.field_C, arg2->field_0.field_C, weight);
+    arg0->field_0.field_8 = Math_WeightedAverageGet(arg1->field_0.field_8, arg2->field_0.field_8, weight);
+    arg0->field_0.field_A = Math_WeightedAverageGet(arg1->field_0.field_A, arg2->field_0.field_A, weight);
+    arg0->field_0.field_C = Math_WeightedAverageGet(arg1->field_0.field_C, arg2->field_0.field_C, weight);
 
     if (arg1->field_0.field_0.s_field_0.field_2 == 1 && arg2->field_0.field_0.s_field_0.field_2 == 2)
     {
@@ -2952,7 +2938,7 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s
             weight2                                 = FP_MULTIPLY(weight, FP_ALPHA(1.2f), Q12_SHIFT);
             weight2                                 = CLAMP(weight2, FP_ALPHA(0.0f), FP_ALPHA(1.0f));
             arg0->field_0.field_0.s_field_0.field_2 = arg1->field_0.field_0.s_field_0.field_2;
-            arg0->field_0.field_4                   = Math_GetWeightedAverage(arg1->field_0.field_4, 0, weight2);
+            arg0->field_0.field_4                   = Math_WeightedAverageGet(arg1->field_0.field_4, 0, weight2);
         }
         else
         {
@@ -2960,7 +2946,7 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s
             weight2                                 = CLAMP(weight2, FP_ALPHA(0.0f), FP_ALPHA(1.0f));
             arg0->field_0.field_0.s_field_0.field_2 = arg2->field_0.field_0.s_field_0.field_2;
             weight0                                 = arg2->field_0.field_4;
-            arg0->field_0.field_4                   = Math_GetWeightedAverage(FP_ALPHA(0.0f), weight0, weight2);
+            arg0->field_0.field_4                   = Math_WeightedAverageGet(FP_ALPHA(0.0f), weight0, weight2);
         }
     }
     else if (arg1->field_0.field_0.s_field_0.field_2 == 2 && arg2->field_0.field_0.s_field_0.field_2 == 1)
@@ -2970,14 +2956,14 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s
             weight2                                 = weight * 6;
             weight2                                 = CLAMP(weight2, FP_ALPHA(0.0f), FP_ALPHA(1.0f));
             arg0->field_0.field_0.s_field_0.field_2 = arg1->field_0.field_0.s_field_0.field_2;
-            arg0->field_0.field_4                   = Math_GetWeightedAverage(arg1->field_0.field_4, FP_ALPHA(0.0f), weight2);
+            arg0->field_0.field_4                   = Math_WeightedAverageGet(arg1->field_0.field_4, FP_ALPHA(0.0f), weight2);
         }
         else
         {
             weight2                                 = FP_MULTIPLY(weight - FP_ALPHA(1.0f / 6.0f), FP_ALPHA(1.2f), Q12_SHIFT);
             weight2                                 = CLAMP(weight2, FP_ALPHA(0.0f), FP_ALPHA(1.0f));
             arg0->field_0.field_0.s_field_0.field_2 = arg2->field_0.field_0.s_field_0.field_2;
-            arg0->field_0.field_4                   = Math_GetWeightedAverage(FP_ALPHA(0.0f), arg2->field_0.field_4, weight2);
+            arg0->field_0.field_4                   = Math_WeightedAverageGet(FP_ALPHA(0.0f), arg2->field_0.field_4, weight2);
         }
     }
     else
@@ -2998,7 +2984,7 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s
             arg0->field_0.field_0.s_field_0.field_2 = arg2->field_0.field_0.s_field_0.field_2;
         }
 
-        arg0->field_0.field_4 = Math_GetWeightedAverage(arg1->field_0.field_4, arg2->field_0.field_4, weight);
+        arg0->field_0.field_4 = Math_WeightedAverageGet(arg1->field_0.field_4, arg2->field_0.field_4, weight);
     }
 
     if (arg1->field_0.field_18.vec_0[0] == 0 && arg2->field_0.field_18.vec_0[0] != 0)
@@ -3024,16 +3010,16 @@ void func_8003FD38(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s
 {
     if (arg1->field_2E != arg2->field_2E)
     {
-        arg0->field_2E = Math_GetWeightedAverage(arg1->field_2E, arg2->field_2E, weight0);
+        arg0->field_2E = Math_WeightedAverageGet(arg1->field_2E, arg2->field_2E, weight0);
     }
     else
     {
         arg0->field_2E = arg2->field_2E;
     }
 
-    arg0->field_30         = Math_GetWeightedAverage(arg1->field_30, arg2->field_30, weight0);
-    arg0->field_0.field_10 = Math_GetWeightedAverage(arg1->field_0.field_10, arg2->field_0.field_10, weight1);
-    arg0->field_0.field_6  = Math_GetWeightedAverage(arg1->field_0.field_6, arg2->field_0.field_6, weight0);
+    arg0->field_30         = Math_WeightedAverageGet(arg1->field_30, arg2->field_30, weight0);
+    arg0->field_0.field_10 = Math_WeightedAverageGet(arg1->field_0.field_10, arg2->field_0.field_10, weight1);
+    arg0->field_0.field_6  = Math_WeightedAverageGet(arg1->field_0.field_6, arg2->field_0.field_6, weight0);
 
     LoadAverageCol(arg1->field_0.field_14.vec_0, arg2->field_0.field_14.vec_0, FP_ALPHA(1.0f) - alphaTo, alphaTo, arg0->field_0.field_14.vec_0);
 }

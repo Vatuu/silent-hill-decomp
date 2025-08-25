@@ -624,8 +624,8 @@ bool func_801E3970() // 0x801E3970
         {
             temp_a1 = (var_s5 * 0x1000) / 120;
             temp_a1 = FP_MULTIPLY_PRECISE((0x1000 - temp_a1), 0x36F, Q12_SHIFT);
-            sin     = -shRsin(temp_a1);
-            cos     = shRcos(temp_a1);
+            sin     = -Math_Sin(temp_a1);
+            cos     = Math_Cos(temp_a1);
             func_8009185C(0, 0, 0xF0, 0x1000, 0, 0x22000, 0xF0000, 0xB33, cos, sin);
         }
         // Zoom in.

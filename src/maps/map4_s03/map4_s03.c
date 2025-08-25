@@ -182,8 +182,8 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D2ED0);
 void Ai_Twinfeeler_TextureLoad() // 0x800D3038
 {
     // TODO: Does game ever use this texture afterward?
-    // After this `Ai_Twinfeeler_Init` checks `Fs_QueueDoThingWhenEmpty != 0` before proceeding.
-    // Could it be some preload/warm-up before the actual enemy file loads? If so this func should be renamed.
+    // After this `Ai_Twinfeeler_Init` checks `Fs_QueueDoThingWhenEmpty()` before proceeding.
+    // Could it be some preload/warm-up before the actual enemy file loads? If so, this func should be renamed.
     Fs_QueueStartReadTim(FILE_TEST_WARMTEST_TIM, FS_BUFFER_1, &D_800A9094);
 }
 
@@ -462,12 +462,12 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D6554);
         return;
     }
 
-    chara->properties_E4.player.properties_E4[3].val32 = g_SysWork.player_4C.chara_0.position_18.vx;
-    chara->properties_E4.player.properties_E4[4].val32 = g_SysWork.player_4C.chara_0.position_18.vz;
+    chara->properties_E4.player.field_F0.val32 = g_SysWork.player_4C.chara_0.position_18.vx;
+    chara->properties_E4.player.field_F4.val32 = g_SysWork.player_4C.chara_0.position_18.vz;
 
     if (someDist < FP_METER(1.2f) && someRotY < FP_ANGLE(11.25f))
     {
-        if (!(chara->properties_E4.player.properties_E4[1].val16[0] & (1 << 1)))
+        if (!(chara->properties_E4.player.afkTimer_E8.val16[0] & (1 << 1)))
         {
             chara->model_0.state_2 = 3;
         }
@@ -478,9 +478,9 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D6554);
 
         chara->model_0.anim_4.animIdx_0 = 60;
 
-        chara->properties_E4.player.properties_E4[6].val16[0] = 0x37;
-        chara->properties_E4.player.properties_E4[6].val16[1] = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 0x1AB;
-        chara->properties_E4.player.properties_E4[1].val16[0] |= 1 << 10;
+        chara->properties_E4.player.exertionTimer_FC.val16[0] = 0x37;
+        chara->properties_E4.player.exertionTimer_FC.val16[1] = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 0x1AB;
+        chara->properties_E4.player.afkTimer_E8.val16[0] |= 1 << 10;
 
         func_800D7E04(chara, 0x553);
     }

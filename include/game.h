@@ -4,14 +4,15 @@
 #include "gpu.h"
 #include "types.h"
 
-#define TICKS_PER_SECOND 60 // Game has a variable timestep with 60 ticks max.
+struct _SubCharacter;
+
+#define TICKS_PER_SECOND 60 /** Game has a variable timestep with 60 ticks max. */
 
 #define SCREEN_WIDTH                   320
 #define SCREEN_HEIGHT                  240
 #define FRAMEBUFFER_HEIGHT_PROGRESSIVE 224
 #define FRAMEBUFFER_HEIGHT_INTERLACED  (FRAMEBUFFER_HEIGHT_PROGRESSIVE * 2)
 
-#define CHARA_PROPERTY_COUNT_MAX 10
 #define NPC_COUNT_MAX            6
 #define INVENTORY_ITEM_COUNT_MAX 40
 #define INPUT_ACTION_COUNT       14
@@ -21,20 +22,20 @@
 
 #define EVENT_FLAG5_FIRST_TIME_SAVE_GAME (1 << 26)
 
-#define MAP_MSG_CODE_MARKER         '~'
-#define MAP_MSG_CODE_NEWLINE        'N' // Newline.
-#define MAP_MSG_CODE_END            'E' // End message.
-#define MAP_MSG_CODE_LINE_POSITION  'L' // Set next line position.
-#define MAP_MSG_CODE_JUMP           'J' // Jump timer.
-#define MAP_MSG_CODE_HIGH_RES       'H' // High-resolution glyph drawing.
-#define MAP_MSG_CODE_MIDDLE         'M' // Align center.
-#define MAP_MSG_CODE_TAB            'T' // Inset line.
-#define MAP_MSG_CODE_COLOR          'C' // Set color.
-#define MAP_MSG_CODE_DISPLAY_ALL    'D' // Display message instantly without roll.
-#define MAP_MSG_CODE_SELECT         'S' // Display dialog prompt.
+#define MAP_MSG_CODE_MARKER         '~' /** Message code start. */
+#define MAP_MSG_CODE_COLOR          'C' /** Set color. */
+#define MAP_MSG_CODE_DISPLAY_ALL    'D' /** Display message instantly without roll. */
+#define MAP_MSG_CODE_END            'E' /** End message. */
+#define MAP_MSG_CODE_HIGH_RES       'H' /** High-resolution glyph drawing. */
+#define MAP_MSG_CODE_JUMP           'J' /** Jump timer. */
+#define MAP_MSG_CODE_LINE_POSITION  'L' /** Set next line position. */
+#define MAP_MSG_CODE_MIDDLE         'M' /** Align center. */
+#define MAP_MSG_CODE_NEWLINE        'N' /** Newline. */
+#define MAP_MSG_CODE_SELECT         'S' /** Display dialog prompt with selectable entries. */
+#define MAP_MSG_CODE_TAB            'T' /** Inset line. */
 
-#define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400  // Causes an entire message to display instantly by using a long string length.
-#define GLYPH_TABLE_ASCII_OFFSET       '\'' // Subtracted from ASCII bytes to get index to some string-related table.
+#define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400  /** Hack. Long string length is used to display a whole message instantly. */
+#define GLYPH_TABLE_ASCII_OFFSET       '\'' /** Subtracted from ASCII bytes to get index to some string-related table. */
 
 /** @brief Converts a floating-point X screen position in percent to a fixed-point X screen coodinate. */
 #define SCREEN_POSITION_X(percent) \
@@ -55,9 +56,6 @@
 /** @brief Checks if a specified map has been collected. */
 #define HAS_MAP(mapIdx) \
     ((((u32*)&g_SavegamePtr->hasMapsFlags_164)[(mapIdx) / 32] >> ((mapIdx) % 32)) & (1 << 0))
-
-/** Forward declarations. */
-struct _SubCharacter;
 
 /** Each map has its own messages, with the first 15 hardcoded to be the same. */
 typedef enum _MapMsgIdx
@@ -89,6 +87,19 @@ typedef enum _MapMsgCode
     MapMsgCode_SetByT      = 88,
     MapMsgCode_AlignCenter = 99
 } e_MapMsgCode;
+
+/** @brief Map message states.
+ *
+ * Return states used by `MapMsg_Draw`.
+ */
+typedef enum _MapMsgState
+{
+    MapMsgState_Finish       = NO_VALUE, /** Initial setup complete, cutscene timer complete, or input to continue from user received. */
+    MapMsgState_Idle         = 0,        /** Continue displaying message. */
+    MapMsgState_SelectEntry0 = 1,        /** First entry selected in selection dialog. */
+    MapMsgState_SelectEntry1 = 2,        /** Second entry selected in selection dialog. */
+    MapMsgState_SelectEntry2 = 3,        /** Third entry selected in selection dialog. */
+} e_MapMsgState;
 
 typedef enum _MapMsgAudioLoadBlock
 {
@@ -202,7 +213,6 @@ typedef enum _Current2dMapIdx
     Current2dMap_AltHospital3F  = 23
 } e_Current2dMapIdx;
 
-// TODO: Pick better name.
 typedef enum _SysWorkProcessFlags
 {
     SysWorkProcessFlag_None              = 0,
@@ -317,7 +327,7 @@ typedef enum _SysState
     SysState_Gameplay       = 0,
     SysState_OptionsMenu    = 1,
     SysState_StatusMenu     = 2,
-    SysState_Unk3           = 3,
+    SysState_MapScreen      = 3,
     SysState_Fmv            = 4,
     SysState_LoadArea0      = 5,
     SysState_LoadArea1      = 6,
@@ -540,21 +550,6 @@ typedef enum _PlayerFlags
     PlayerFlag_Moving             = 1 << 15
 } e_PlayerFlags;
 
-/** @brief Player property indices. */
-typedef enum _PlayerProperty
-{
-    PlayerProperty_Unk0          = 0,
-    PlayerProperty_AfkTimer      = 1, // Increments every tick for 10 seconds before AFK anim starts.
-    PlayerProperty_PositionY     = 2,
-    PlayerProperty_Unk3          = 3,
-    PlayerProperty_Unk4          = 4,
-    PlayerProperty_RunTimer0     = 5, // Increments indefinitely, but more slowly than `PlayerProperty_RunTimer1`.
-    PlayerProperty_ExertionTimer = 6, // Counts ~20 seconds worth of ticks while running and caps at 0x23000.
-    PlayerProperty_Unk7          = 7,
-    PlayerProperty_Unk8          = 8, // Distance?
-    PlayerProperty_RunTimer1     = 9  // Increments every tick indefinitely.
-} e_PlayerProperty;
-
 /** @brief Names for each character index used in the game, `g_Chara_FileInfo` array associates each character ID with anim/model/texture files. */
 typedef enum _CharacterId
 {
@@ -756,7 +751,7 @@ typedef struct _Savegame
     u8              meleeKillCount_25D;
     u8              meleeKillCountB_25E; // Can't be packed if used as `u16`.
     u8              rangedKillCount_25F;
-    u32             field_260 : 28;
+    u32             field_260          : 28;
     s32             gameDifficulty_260 : 4;  /** `e_GameDifficulty`. */
     u16             firedShotCount_264;      /** Missed shot count = firedShotCount - (closeRangeShotCount + midRangeShotCount + longRangeShotCount). */
     u16             closeRangeShotCount_266; /** Only hits counted. */
@@ -774,14 +769,21 @@ typedef struct _Savegame
 } s_Savegame;
 STATIC_ASSERT_SIZEOF(s_Savegame, 636);
 
+/** TODO: Known as `Trigger` in SilentHillMapExaminer: https://github.com/ItEndsWithTens/SilentHillMapExaminer/blob/master/src/SHME.ExternalTool.Guts/Trigger.cs */
 typedef struct _EventParam
 {
     u8  unk_0[2];
     s16 eventFlagId_2;
     u8  unk_4[1];
-    u8  field_5;
+    u8  field_5; // Something related to pickup items.
     u8  unk_6[2];
-    u32 flags_8;
+    u32 triggerType_8_0        : 5;
+    u32 pointOfInterestIdx_8_5 : 8; /** Index into `g_MapOverlayHeader.mapAreaLoadParams_1C`. */
+    u32 flags_8_13             : 6;
+    u32 field_8_19             : 5;
+    u32 field_8_24             : 1;
+    u32 mapOverlayIdx_8_25     : 6;
+    u32 field_8_31             : 1;
 } s_EventParam;
 STATIC_ASSERT_SIZEOF(s_EventParam, 12);
 
@@ -793,11 +795,11 @@ typedef struct _SaveUserConfig
     u8                 optSoundType_1E;           /** `bool` | Stereo: `false`, Monaural: `true`, default: Stereo. */
     u8                 optVolumeBgm_1F;           /** Range: [0, 128] with steps of 8, default: 16. */
     u8                 optVolumeSe_20;            /** Range: [0, 128] with steps of 8, default: 16. */
-    u8                 optVibrationEnabled_21;    /** Weird `bool`. Off: 0, On: 128, default: On. */
+    u8                 optVibrationEnabled_21;    /** `bool` | Off: 0, On: 128, default: On. */
     u8                 optBrightness_22;          /** Range: [0, 7], default: 3. */
     u8                 optExtraWeaponCtrl_23;     /** `bool` | Switch: `false`, Press: `true`, default: Press. */
     u8                 optExtraBloodColor_24;     /** `e_BloodColor` | Default: Normal. */
-    s8                 optAutoLoad_25;            /** Off: `false`, On: `true`, default: Off. */
+    s8                 optAutoLoad_25;            /** `bool` | Off: `false`, On: `true`, default: Off. */
     u8                 unk_26;
     u8                 optExtraOptionsEnabled_27; /** Holds unlocked option flags. */
     s8                 optExtraViewCtrl_28;       /** `bool` | Normal: `false`, Reverse: `true`, default: Normal. */
@@ -878,7 +880,7 @@ typedef struct _AnimInfo
     void (*funcPtr_0)(struct _SubCharacter*, s32, GsCOORDINATE2*, struct _AnimInfo*); // TODO: `funcPtr_0` signature doesn't currently match `Anim_Update`.
     u8  field_4;
     s8  hasVariableTimeDelta_5;
-    u8  animIdx_6;
+    s8  animIdx_6;
     u8  unk_7;
     union
     {
@@ -936,25 +938,28 @@ STATIC_ASSERT_SIZEOF(s_800D5710, 0x34);
 
 // TODO: Re-offset `s_SubCharaPropertiesPlayer` / `s_SubCharaPropertiesNpc`.
 // Probably easier to do that after it's merged with rest of code.
-typedef struct _SubCharPropertiesPlayer
+typedef struct _SubCharaPropertiesPlayer
 {
-    s32    properties_E4[CHARA_PROPERTY_COUNT_MAX]; // TODO: Integrate as `u_Property`.
-	// Element 1: Timer for triggering the idle state.
-	// Element 5: Timer for triggering the abrupt stop animation.
-	// Element 6: Metric for how tired is Harry after running. (q19_12)
-	// Element 8: Timer related to combat.
-	// Element 9: Metric for how much has the player run in order to trigger the stumble animation in case the player crashes into a wall. (q19_12)
-	// `e_PlayerProperty`
-    u8     field_10C;
+    s32    field_E4;
+    s32    afkTimer_E8; // Increments every tick for 10 seconds before AFK anim starts.
+    s32    positionY_EC;
+    s32    field_F0;
+    s32    field_F4;
+    s32    runTimer_F8;      // Tick counter?
+    q19_12 exertionTimer_FC; // Counts ~20 seconds worth of ticks while running and caps at 0x23000.
+    s32    field_100;
+    s32    field_104;    // Distance?
+    q19_12 runTimer_108; // `FP_TIME` format timer?.
+    u8     field_10C;    // Player SFX pitch?
     u8     field_10D;
     s8     unk_10E[6];
     q19_12 gasWeaponPowerTimer_114; // Timer for the rock drill and chainsaw power.
     s16    field_118;
     s8     unk_11A[2];
     s32    flags_11C; /** `e_PlayerFlags`. */
-    q3_12  field_120; // Angle which the player turns when doing a quick turn. In order words, some sort of holder for angle Y.
-    q3_12  field_122; // Some sort of X angle for the player. Specially used when aiming an enemy.
-    q3_12  field_124;
+    s16    field_120; // Angle which the player turns when doing a quick turn. In order words, some sort of holder for angle Y.
+    s16    field_122; // Some sort of X angle for the player. Specially used when aiming an enemy.
+    s16    field_124;
     q3_12  playerMoveDistance_126; // Used to indicate how much the player should move foward.
 } s_SubCharaPropertiesPlayer;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPlayer, 68);
@@ -1203,11 +1208,11 @@ STATIC_ASSERT_SIZEOF(s_SysWork_2514, 56);
 typedef struct _SysWork
 {
     s8              unk_0[8];
-    s32             sysState_8;     /** e_SysState */
-    s32             sysStateStep_C; // Current step/state of `sysState_8` game is in.
+    s32             sysState_8;     /** `e_SysState` */
+    s32             sysStateStep_C; /** Current state step of `sysState_8` the game is in. */
     s32             field_10;       // Sometimes assigned to same thing as `sysStateStep_C`. Contains selected entry index from pickup item dialogs?
     s32             field_14;
-    s32             field_18; // `s_Skeleton` array pointer?
+    s32             field_18;
     s32             timer_1C;
     s32             timer_20;
     s32             timer_24;
@@ -1222,7 +1227,7 @@ typedef struct _SysWork
     GsCOORDINATE2   unkCoords_E30[5];  // Might be part of previous array for 5 extra coords which go unused.
     GsCOORDINATE2   npcCoords_FC0[60]; // Dynamic coord buffer? 10 coords per NPC (given max of 6 NPCs).
     s8              field_2280;        // Maybe NPC AI data past this point.
-    s8              loadingScreenIndex_2281;
+    s8              loadingScreenIdx_2281;
     s8              field_2282;
     s8              field_2283; // Index into `SfxPairs`.
     u16             field_2284[3];
@@ -1230,7 +1235,7 @@ typedef struct _SysWork
     s32             field_228C;
     s32             field_2290;
     s8              unk_2294[4];
-    s32             flags_2298; /** `e_SysWorkProcessFlags` */
+    s32             processFlags_2298; /** `e_SysWorkProcessFlags` */
     s32             field_229C;
     s32             field_22A0; // Flags.
     s32             flags_22A4;
@@ -1241,8 +1246,8 @@ typedef struct _SysWork
     u8              field_234B_0 : 4;
     u8              field_234B_4 : 4;
     s32             mapMsgTimer_234C;
-    u8              enableHighResGlyphs_2350_0      : 4; /** Boolean. */
-    u8              silentYesSelection_2350_4       : 4;
+    u8              enableHighResGlyphs_2350_0      : 4; /** `bool` */
+    u8              silentYesSelection_2350_4       : 4; /** `bool` */
     u32             inventoryItemSelectedIdx_2351   : 8;
     u32             flags_2352                      : 8;
     s8              enemyTargetIdx_2353; // Index of the enemy that is being attacked by the player.
@@ -1302,7 +1307,7 @@ extern s32 g_PrevVBlanks;     // 0x800A9770
 extern s32 g_VBlanks;         // 0x800B5C34
 extern s32 g_UncappedVBlanks; // 0x800B5C38
 
-/** @brief Sets the SysState to be used in the next game update. */
+/** @brief Sets `sysState` in `g_SysWork` for the next tick. */
 static inline void SysWork_StateSetNext(e_SysState sysState)
 {
     g_SysWork.sysState_8     = sysState;
@@ -1314,7 +1319,7 @@ static inline void SysWork_StateSetNext(e_SysState sysState)
     g_SysWork.field_14       = 0;
 }
 
-/** @brief Increments the `sysStateStep` index in `g_SysWork`. */
+/** @brief Increments `sysStateStep` in `g_SysWork` for the next tick. */
 static inline void SysWork_StateStepIncrement()
 {
     g_SysWork.field_28 = 0;
@@ -1324,10 +1329,32 @@ static inline void SysWork_StateStepIncrement()
     g_SysWork.sysStateStep_C++;
 }
 
+/** @brief Sets `sysStateStep` in `g_SysWork` for the next tick. */
+static inline void SysWork_NextStateStepSet(s32 sysStateStep)
+{
+    g_SysWork.sysStateStep_C = sysStateStep;
+    g_SysWork.field_28       = 0;
+    g_SysWork.field_10       = 0;
+    g_SysWork.timer_2C       = 0;
+    g_SysWork.field_14       = 0;
+}
+
+/** @brief Resets `sysStateStep` in `g_SysWork` for the next tick. */
+static inline void SysWork_StateStepReset()
+{
+    g_SysWork.sysStateStep_C = NO_VALUE;
+    g_SysWork.field_28       = 0;
+    g_SysWork.field_10       = 0;
+    g_SysWork.timer_2C       = 0;
+    g_SysWork.field_14       = 0;
+}
+
 /** @brief Clears state steps twice for some reason? Only used once below, others use regular `Game_StateSetNext`. */
 static inline void Game_StateSetNext_ClearStateSteps(e_GameState gameState)
 {
-    e_GameState prevState = g_GameWork.gameState_594;
+    e_GameState prevState;
+
+    prevState = g_GameWork.gameState_594;
 
     g_GameWork.gameState_594        = gameState;
     g_SysWork.timer_1C              = 0;
@@ -1349,7 +1376,9 @@ static inline void Game_StateSetNext_ClearStateSteps(e_GameState gameState)
  */
 static inline void Game_StateSetNext(e_GameState gameState)
 {
-    e_GameState prevState = g_GameWork.gameState_594;
+    e_GameState prevState;
+
+    prevState = g_GameWork.gameState_594;
 
     g_GameWork.gameState_594 = gameState;
 
@@ -1371,7 +1400,9 @@ static inline void Game_StateSetNext(e_GameState gameState)
  */
 static inline void Game_StateSetPrevious()
 {
-    e_GameState prevState = g_GameWork.gameState_594;
+    e_GameState prevState;
+
+    prevState = g_GameWork.gameState_594;
 
     g_SysWork.timer_1C = 0;
     g_SysWork.timer_20 = 0;
@@ -1390,23 +1421,34 @@ static inline void Game_StateSetPrevious()
 /** @brief Sets the given flag ID inside the savegame event flags array. */
 static inline void Savegame_EventFlagSet(u32 flagId)
 {
-    s16 flagIdx = flagId / 32;
-    s16 flagBit = flagId % 32;
+    s16 flagIdx;
+    s16 flagBit;
+
+    flagIdx = flagId / 32;
+    flagBit = flagId % 32;
 
     g_SavegamePtr->eventFlags_168[flagIdx] |= 1 << flagBit;
 }
+
+/** @brief Sets the given flag ID inside the savegame event flags array.
+ *
+ * @note This macro version seems to work better for `func_800DBAA0` than the `Savegame_EventFlagSet` inline above.
+ * Maybe other code depends on how the inline worked though.
+ */
+#define Savegame_EventFlagSetAlt(flagIdx) \
+    (g_SavegamePtr->eventFlags_168[(flagIdx) / 32] |= 1 << ((flagIdx) % 32))
 
 /** @brief Checks if the given flag ID is set inside the array of 16-bit flag values. */
 static inline s32 Flags16b_IsSet(u16* array, s32 flagId)
 {
     // BUG: `>> 5` divides `flagId` by 32 to get array index, but array is of 16-bit values.
-    // Maybe copy paste from `u32` version of func.
+    // Maybe copy-paste from `u32` version of func.
     return (array[flagId >> 5] >> (flagId & 0x1F)) & (1 << 0);
 }
 
 /** @brief Sets the given animation flag on both player character and player extra data. */
 // TODO: Move to separate character/player header.
-static inline void Player_AnimFlag_Set(u32 flag)
+static inline void Player_AnimFlagsSet(u32 flags)
 {
     s_MainCharacterExtra* extra;
     s_SubCharacter*       chara;
@@ -1414,8 +1456,8 @@ static inline void Player_AnimFlag_Set(u32 flag)
     extra = &g_SysWork.player_4C.extra_128;
     chara = &g_SysWork.player_4C.chara_0;
 
-    extra->model_0.anim_4.flags_2 |= flag;
-    chara->model_0.anim_4.flags_2 |= flag;
+    extra->model_0.anim_4.flags_2 |= flags;
+    chara->model_0.anim_4.flags_2 |= flags;
 }
 
 #endif

@@ -3,12 +3,18 @@
 
 #include "common.h"
 
+/** @brief Global variable storing the current random seed for the `Rng_Rand32`
+ * function. The value is updated with each call to the RNG functions.
+ */
+extern u32 g_RngSeed;
+
 /** @brief Tests if a probability is met.
  *
- * This macro evaluates the probability by performing a bitwise AND
+ * Evaluates the probability by performing a bitwise AND
  * operation with a mask that has the specified number of consecutive
  * low bits set to 1.
  *
+ * @note
  * Bits | Mask   | Chance     | Percent
  * -----|--------|------------|---------
  * 1    | 0x1    | 1 in 2     | 50%
@@ -27,68 +33,72 @@
  * 14   | 0x3FFF | 1 in 16384 | 0.006%
  * 15   | 0x7FFF | 1 in 32768 | 0.003%
  * 16   | 0xFFFF | 1 in 65536 | 0.002%
+ *
+ * @param bits Number of consecutive bits to use in the probability test.
+ * @return `>0` if the probability is met, `0` otherwise.
  */
-#define TEST_RNG(bits) \
+#define Rng_TestProbabilityBits(bits) \
     (Rng_Rand16() & ((1 << (bits)) - 1))
 
-/** @brief Generates an integer in the range `[low, high]` from a random input. */
-#define GENERATE_INT(rand, low, high) \
-    (((rand) % (((high) - (low)) + 1)) + (low))
-
-/** @brief Global variable storing the current random seed for the `Rng_Rand32`
- * function. The value is updated with each call to the RNG functions.
- */
-extern u32 g_RngSeed;
+/** @brief Generates an integer in the range `[low, high]` from a random input.
+ *
+ * @param rand Random base value.
+ * @param low Lower range.
+ * @param high Upper range.
+ * @return Random `s32` in the range `[low, high]`.
+*/
+#define Rng_GenerateInt(rand, low, high) \
+    (((s32)(rand) % (((high) - (low)) + 1)) + (low))
 
 /** @brief Generates a new random 32-bit unsigned integer and updates
  * `g_RngSeed`.
  *
- * This function implements a Linear Congruential Generator (LCG) Random Number
+ * Implements a Linear Congruential Generator (LCG) Random Number
  * Generator (RNG) algorithm, as outlined in "Numerical Recipes" (Second
  * Edition, Chapter 7.1, An Even Quicker Generator). It produces a pseudo-random
  * 32-bit unsigned integer value.
  *
- * @return A new pseudo-random 32-bit unsigned integer (`u32`).
+ * @return New pseudo-random 32-bit unsigned integer (`u32`).
  */
 u32 Rng_Rand32();
 
 /** @brief Generates a new random 16-bit unsigned integer.
  * 
- * This function calls `Rng_Rand32` to generate a random number, then
+ * Calls `Rng_Rand32` to generate a random number, then
  * shifts the result right to produce a value within the range
  * of `[0, 0x7FFF]`.
  *
- * @return A random positive 16-bit unsigned integer as a 32-bit unsigned
+ * @return Random positive 16-bit unsigned integer as a 32-bit unsigned
  * integer (`u32`).
  */
 u32 Rng_Rand16();
 
 /** @brief Returns the current random seed value.
  *
- * This function retrieves and returns the current value of the global variable
+ * Retrieves and returns the current value of the global variable
  * `g_RngSeed`.
  *
- * @return The current random seed as a 32-bit unsigned integer (`u32`).
+ * @return Current random seed as a 32-bit unsigned integer (`u32`).
  */
 u32 Rng_GetSeed();
 
 /** @brief Sets the random seed to a specified value.
  *
- * This function updates the global variable `g_RngSeed` with the given
+ * Updates the global variable `g_RngSeed` with the given
  * seed value.
  *
- * @param newSeed The new seed value to be set, as a 32-bit unsigned integer
+ * @param newSeed New seed value to be set, as a 32-bit unsigned integer
  * (`u32`).
  */
 void Rng_SetSeed(u32 newSeed);
 
 /** @brief Generates a new random 12-bit short integer.
  *
- * This function calls `Rng_Rand32` to generate a random number, then
+ * Calls `Rng_Rand32` to generate a random number, then
  * shifts the result right to produce a value within the range
  * of `0` to `0xFFF` (12-bit).
  *
- * @return A random 12-bit short integer in the range `[0, 0xFFF]`.
+ * @return Random 12-bit short integer in the range `[0, 0xFFF]`.
  */
 u16 Rng_Rand12();
 

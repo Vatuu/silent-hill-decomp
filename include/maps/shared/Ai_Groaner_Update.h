@@ -25,10 +25,10 @@ void Ai_Groaner_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords)
 
         if (chara->model_0.state_2 != var)
         {
-            *(u16*)&chara->properties_E4.player.properties_E4[1] &= ~(1 << 8);
+            *(u16*)&chara->properties_E4.player.afkTimer_E8 &= ~(1 << 8);
         }
 
-        if ((u16)chara->properties_E4.player.properties_E4[1] & (1 << 7))
+        if ((u16)chara->properties_E4.player.afkTimer_E8 & (1 << 7))
         {
             chara->flags_3E |= CharaFlag_Unk3;
         }

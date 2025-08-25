@@ -39,7 +39,7 @@ void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image) // 0x800314EC
             sprt = (SPRT*)packet;
 
             addPrimFast(ot, sprt, 4);
-            setRGBC0(sprt, D_800A8E58, D_800A8E58, D_800A8E58, 0x64);
+            setRGBC0(sprt, g_BackgroundColor, g_BackgroundColor, g_BackgroundColor, 0x64);
 
             if (y == 0)
             {
@@ -71,7 +71,7 @@ void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image) // 0x800314EC
 
     GsOUT_PACKET_P        = packet;
     g_SysWork.field_22A0 |= 1 << 0;
-    D_800A8E58            = 0x80;
+    g_BackgroundColor     = 0x80;
 }
 
 void func_800317CC(s_FsImageDesc* image0, s_FsImageDesc* image1, s16 arg2) // 0x800317CC
@@ -130,7 +130,7 @@ void func_800317CC(s_FsImageDesc* image0, s_FsImageDesc* image1, s16 arg2) // 0x
 
 void func_80031AAC(s_FsImageDesc* image) // 0x80031AAC
 {
-    volatile s32 pad; // Is there a better solution?
+    volatile s32 pad; // TODO: Is there a better solution?
     s32          i;
     s32          xOffset;
     u8           tPageY;
@@ -161,16 +161,16 @@ void func_80031AAC(s_FsImageDesc* image) // 0x80031AAC
 
         setSemiTrans(poly, 0);
 
-        *((u16*)&poly->r0) = D_800A8E58 + (D_800A8E58 << 8);
-        poly->b0           = D_800A8E58;
+        *((u16*)&poly->r0) = g_BackgroundColor + (g_BackgroundColor << 8);
+        poly->b0           = g_BackgroundColor;
 
         addPrim(&g_ObjectTable0[g_ObjectTableIdx].org[2], poly);
         poly++;
     }
 
-    GsOUT_PACKET_P = (PACKET*)poly;
+    GsOUT_PACKET_P        = (PACKET*)poly;
     g_SysWork.field_22A0 |= 1 << 0;
-    D_800A8E58 = 0x80;
+    g_BackgroundColor     = 0x80;
 }
 
 s32 Gfx_MotionBlur(s32 arg0) // 0x80031CCC
@@ -471,17 +471,14 @@ void Settings_ScreenXYSet(s32 x, s32 y) // 0x800324F4
 
 void Settings_DispEnvXYSet(DISPENV* display, s32 x, s32 y) // 0x80032524
 {
-    s_GameWork* gameWorkPtr;
+    x = CLAMP(x, -11, 11);
+    y = CLAMP(y, -8, 8);
 
-    x = (x < -11) ? -11 : ((x > 11) ? 11 : x);
-    y = (y < -8)  ? -8  : ((y > 8)  ? 8  : y);
+    g_GameWorkConst->config_0.optScreenPosX_1C = x;
+    g_GameWorkConst->config_0.optScreenPosY_1D = y;
 
-    gameWorkPtr = g_GameWorkConst;
-    gameWorkPtr->config_0.optScreenPosX_1C = x;
-    gameWorkPtr->config_0.optScreenPosY_1D = y;
-
-    display->screen.x = gameWorkPtr->config_0.optScreenPosX_1C;
-    display->screen.y = gameWorkPtr->config_0.optScreenPosY_1D + 8;
+    display->screen.x = g_GameWorkConst->config_0.optScreenPosX_1C;
+    display->screen.y = g_GameWorkConst->config_0.optScreenPosY_1D + 8;
 }
 
 void func_800325A4(DR_MODE* arg0) // 0x800325A4
@@ -659,7 +656,7 @@ void func_80032904()
             g_SysWork.field_30++;
 
         case 19:
-            D_800A8F40 += FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 1.0f, Q12_SHIFT);
+            D_800A8F40 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.0f, Q12_SHIFT);
 
             if (D_800A8F40 >= 0xFFF)
             {
@@ -680,7 +677,7 @@ void func_80032904()
             break;
 
         case 23:
-            D_800A8F40 -= FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 1.0f, Q12_SHIFT);
+            D_800A8F40 -= FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.0f, Q12_SHIFT);
 
             if (D_800A8F40 <= 0)
             {
@@ -715,8 +712,8 @@ void func_80032904()
 
 void Gfx_VSyncCallback() // 0x80032b80
 {
-    D_800A9768++;
-    D_800A976C++;
+    g_Demo_FrameCount++;
+    g_UnknownFrameCounter++;
 
     g_SysWork.timer_1C++;
     g_SysWork.timer_20++;

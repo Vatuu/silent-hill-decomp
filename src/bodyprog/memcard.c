@@ -1197,7 +1197,7 @@ void Savegame_SaveBlockInit(s_PsxSaveBlock* saveBlock, s8 blockCount, s32 saveId
 
     bzero(saveBlock->field_44, 0x1C);
 
-    OpenTIM(D_800A8D98);
+    OpenTIM(&D_800A8D98);
     ReadTIM(&iconTexture);
 
     memcpy(saveBlock->iconPalette_60, iconTexture.caddr, iconTexture.crect->w * iconTexture.crect->h * 2);

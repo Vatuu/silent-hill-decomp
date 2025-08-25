@@ -91,7 +91,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
                 }
 
                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
-                g_SysWork.player_4C.chara_0.properties_E4.player.properties_E4[1]       = 0;
+                g_SysWork.player_4C.chara_0.properties_E4.player.afkTimer_E8            = 0;
         }
     }
 

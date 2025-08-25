@@ -334,7 +334,7 @@ bool Fs_QueueAllocEntryData(s_FsQueueEntry* entry);
 
 /** @brief Check if the specified read operation entry can be processed.
  *
- * Checks if loading `entry` will clobber any memory that was allocated for pending entries in the queue,
+ * Checks if loading `entry` will clobber any memory that was allocated for pending entries in the queue
  * or memory that's used for post-loading.
  *
  * @param entry Entry to check against.

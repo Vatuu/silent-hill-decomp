@@ -51,7 +51,7 @@ INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CDD9C);
 
 #include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CE370
 
-s32 func_800CE548()
+s32 func_800CE548(void) // 0x800CE548
 {
     return 0;
 }
@@ -82,7 +82,7 @@ void func_800CE758(void) {}
 
 void func_800CE760(void) {}
 
-s32 func_800CE768()
+s32 func_800CE768(void) // 0x800CE768
 {
     return 0;
 }
@@ -97,21 +97,100 @@ void func_800CE770(void) {}
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800CE7DC
 
-INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CE7EC);
+INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", Map_RoomIdxGet); // 0x800CE7EC
 
-INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CE884);
+void func_800CE884(s32 arg0) // 0x800CE884
+{
+    if (arg0 != 0)
+    {
+        func_800CE8B8();
+        return;
+    }
 
-INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CE8B8);
+    func_800CE934();
+}
+
+void func_800CE8B8(void) // 0x800CE8B8
+{
+    switch (g_SavegamePtr->mapRoomIdx_A5)
+    {
+        case 5:
+            func_8003640C(6);
+            break;
+
+        case 18:
+            func_8003640C(!(g_SavegamePtr->eventFlags_190[1] & (1 << 27)) ? 29 : 7);
+            break;
+
+        case 17:
+            func_8003640C(7);
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CE934);
 
-void func_800CEBC0(void) {}
+void Gfx_LoadingScreen_StageString(void) {}
 
-INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CEBC8);
+// TODO: .rodata migration.
+#ifdef NON_MATCHING
+void Event_HealthOrAmmoItemTake(void) // 0x800CEBC8
+{
+    u32 pickupType;
+    s32 globalPickupId;
 
-void func_800CEC7C(void) {}
+    pickupType     = CommonPickupItemId_FirstAidKit;
+    globalPickupId = 0;
+    switch (g_MapEventParam->field_5)
+    {
+        case 29:
+            pickupType     = CommonPickupItemId_FirstAidKit;
+            globalPickupId = 598;
+            break;
 
-INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CEC84);
+        case 30:
+            pickupType     = CommonPickupItemId_HealthDrink;
+            globalPickupId = 599;
+            break;
+            
+        case 31:
+            pickupType     = CommonPickupItemId_HealthDrink;
+            globalPickupId = 600;
+            break;
+
+        case 32:
+            pickupType     = CommonPickupItemId_HealthDrink;
+            globalPickupId = 601;
+            break;
+
+        case 33:
+            pickupType     = CommonPickupItemId_HandgunBullets;
+            globalPickupId = 602;
+            break;
+
+        case 34:
+            pickupType     = CommonPickupItemId_HealthDrink;
+            globalPickupId = 603;
+            break;
+
+        case 35:
+            pickupType     = CommonPickupItemId_HealthDrink;
+            globalPickupId = 604;
+            break;
+    }
+
+    Event_CommonItemTake(pickupType, globalPickupId);
+}
+#else
+INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", Event_HealthOrAmmoItemTake);
+#endif
+
+void Event_EmptyFunction(void) {}
+
+void Event_GasolineTankItemTake(void) // 0x800CEC84
+{
+    Event_ItemTake(InventoryItemId_GasolineTank, 1, 60, 19);
+}
 
 INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CECB0);
 

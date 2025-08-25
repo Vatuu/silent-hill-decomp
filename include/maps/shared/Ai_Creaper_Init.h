@@ -64,7 +64,7 @@ void Ai_Creaper_Init(s_SubCharacter* chara)
 
     if (i == NPC_COUNT_MAX)
     {
-        // No other Creaper present.
+        // No other Creapers present.
         sharedData_800E57CC_1_s02 = 0;
     }
 
@@ -95,15 +95,15 @@ void Ai_Creaper_Init(s_SubCharacter* chara)
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        chara->properties_E4.larvalStalker.properties_E8[9].val16[0] = FP_MULTIPLY_FLOAT((s64)(FP_FLOAT_TO(BASE_EASY_VAL, Q12_SHIFT) + ((s32)Rng_Rand16() % FP_FLOAT_TO(RAND_EASY_MAX, Q12_SHIFT))), 2.0f, Q12_SHIFT);
+        chara->properties_E4.larvalStalker.properties_E8[9].val16[0] = FP_MULTIPLY_FLOAT_PRECISE((FP_FLOAT_TO(BASE_EASY_VAL, Q12_SHIFT) + ((s32)Rng_Rand16() % FP_FLOAT_TO(RAND_EASY_MAX, Q12_SHIFT))), 2.0f, Q12_SHIFT);
     }
     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
     {
-        chara->properties_E4.larvalStalker.properties_E8[9].val16[0] = FP_MULTIPLY_FLOAT((s64)(FP_FLOAT_TO(BASE_NORMAL_VAL, Q12_SHIFT) + ((s32)Rng_Rand16() % FP_FLOAT_TO(RAND_NORMAL_MAX, Q12_SHIFT))), 2.0f, Q12_SHIFT);
+        chara->properties_E4.larvalStalker.properties_E8[9].val16[0] = FP_MULTIPLY_FLOAT_PRECISE((FP_FLOAT_TO(BASE_NORMAL_VAL, Q12_SHIFT) + ((s32)Rng_Rand16() % FP_FLOAT_TO(RAND_NORMAL_MAX, Q12_SHIFT))), 2.0f, Q12_SHIFT);
     }
     else
     {
-        chara->properties_E4.larvalStalker.properties_E8[9].val16[0] = FP_MULTIPLY_FLOAT((s64)(FP_FLOAT_TO(BASE_HARD_VAL, Q12_SHIFT) + ((s32)Rng_Rand16() % FP_FLOAT_TO(RAND_HARD_MAX, Q12_SHIFT))), 2.0f, Q12_SHIFT);
+        chara->properties_E4.larvalStalker.properties_E8[9].val16[0] = FP_MULTIPLY_FLOAT_PRECISE((FP_FLOAT_TO(BASE_HARD_VAL, Q12_SHIFT) + ((s32)Rng_Rand16() % FP_FLOAT_TO(RAND_HARD_MAX, Q12_SHIFT))), 2.0f, Q12_SHIFT);
     }
 
 #ifdef MAP5_S00

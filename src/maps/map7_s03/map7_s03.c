@@ -181,8 +181,8 @@ void func_800D3C80(s_SubCharacter* chara, GsCOORDINATE2* coord)
     scaleRestoreShift = ((u32)(moveDist + SHRT_MAX) >= USHRT_MAX) ? 4 : 0;
     scaleReduceShift  = scaleRestoreShift >> 1;
 
-    vec.vx = (u32)FP_MULTIPLY_PRECISE(moveDist >> scaleReduceShift, shRsin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
-    vec.vz = (u32)FP_MULTIPLY_PRECISE(moveDist >> scaleReduceShift, shRcos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    vec.vx = (u32)FP_MULTIPLY_PRECISE(moveDist >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    vec.vz = (u32)FP_MULTIPLY_PRECISE(moveDist >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
     vec.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
 
     chara->position_18.vx += vec.vx;
@@ -273,7 +273,7 @@ void Ai_LittleIncubus_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coo
         D_800EDA00 = 0;
     }
 
-    D_800EDA00 += FP_MULTIPLY_FLOAT((s64)g_DeltaTime0, 10.0f, Q12_SHIFT);
+    D_800EDA00 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 10.0f, Q12_SHIFT);
     var_a2 = FP_TO(D_800EDA00, Q12_SHIFT) / FP_TO(80, Q12_SHIFT);
 
     temp_s0 = var_a2;
@@ -283,7 +283,7 @@ void Ai_LittleIncubus_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coo
         var_a2 = FP_TO(1, Q12_SHIFT);
     }
 
-    temp_s0 = shRsin(var_a2 >> 2);
+    temp_s0 = Math_Sin(var_a2 >> 2);
 
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
@@ -785,7 +785,7 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
     chara->headingAngle_3C  = chara->rotation_24.vy;
     chara->flags_3E        |= CharaFlag_Unk3;
 
-    localChara->properties_E4.player.properties_E4[3] = 0;
+    localChara->properties_E4.player.field_F0 = 0;
 
     if (chara->model_0.stateStep_3 == 0)
     {
@@ -811,11 +811,11 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
-        localChara->properties_E4.player.properties_E4[4] = FP_TO(300, Q12_SHIFT);
+        localChara->properties_E4.player.field_F4 = FP_TO(300, Q12_SHIFT);
     }
     else
     {
-        localChara->properties_E4.player.properties_E4[4] = FP_TO(30, Q12_SHIFT);
+        localChara->properties_E4.player.field_F4 = FP_TO(30, Q12_SHIFT);
     }
 
     func_800DD67C(&chara->position_18, chara, coords);

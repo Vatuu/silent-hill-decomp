@@ -3,10 +3,10 @@
 void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord)
 {
     s_func_800699F8 sp10;
-    s32             sp20;
-    s8              sp24;
+    s32             sfx;
+    s8              pitch;
     s8              sp25;
-    s32             unused;
+    s32             unused; // @unused Unknown purpose.
     s32             newMoveSpeed;
 
     unused                    = 0;
@@ -18,14 +18,14 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 
     func_8004C564(0, -1);
 
-    playerChara->properties_E4.player.properties_E4[1] = 0;
-    playerChara->properties_E4.player.properties_E4[6] = 0;
+    playerChara->properties_E4.player.afkTimer_E8      = 0;
+    playerChara->properties_E4.player.exertionTimer_FC = 0;
 
     if (g_SysWork.player_4C.extra_128.playerState_1C == 52)
     {
         if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
         {
-            g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= ((g_DeltaTime0 * FP_FLOAT_TO(0.4f, Q12_SHIFT)) / FP_FLOAT_TO(0.1f / 3.0f, Q12_SHIFT)) * 2;
+            g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= ((g_DeltaTime0 * FP_TIME(0.4f)) / FP_TIME(0.1f / 3.0f)) * 2;
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < 0)
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
@@ -92,7 +92,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
     }
 
     func_800699F8(&sp10, playerChara->position_18.vx, playerChara->position_18.vz);
-    func_8007FDE0(sp10.field_8, &sp20, &sp24, &sp25);
+    func_8007FDE0(sp10.field_8, &sfx, &pitch, &sp25);
 
     if (g_SysWork.player_4C.extra_128.playerState_1C == 52)
     {
@@ -100,9 +100,9 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
         {
             if (playerChara->model_0.anim_4.animIdx_0 == g_SysWork.player_4C.extra_128.playerState_1C)
             {
-                func_8005DD44(sp20, &playerChara->position_18, 64, sp24);
+                func_8005DD44(sfx, &playerChara->position_18, 64, pitch);
 
-                playerChara->properties_E4.player.field_10C                 = sp24 + 16;
+                playerChara->properties_E4.player.field_10C                 = pitch + 16;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
             }
         }

@@ -345,7 +345,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
         case 25:
             if ((g_Gfx_ScreenFade & 0x7) == 5)
             {
-                if (Fs_QueueDoThingWhenEmpty() != 0)
+                if (Fs_QueueDoThingWhenEmpty())
                 {
                     g_Demo_ReproducedCount = 0;
 
@@ -775,11 +775,11 @@ void Inventory_Logic() // 0x8004D518
                 {
                     Sd_PlaySfx(Sfx_Confirm, 64, 64);
 
-                    if (D_800A99CC[g_SavegamePtr->current2dMapIdx_A9] != NO_VALUE)
+                    if (g_MapMarkingTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9] != NO_VALUE)
                     {
-                        Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + D_800A99CC[g_SavegamePtr->current2dMapIdx_A9], FS_BUFFER_1, &g_MapMarkerAtlasImg);
+                        Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9], FS_BUFFER_1, &g_MapMarkerAtlasImg);
                     }
-                    Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + D_800A99B4[g_SavegamePtr->current2dMapIdx_A9]);
+                    Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9]);
 
                     g_Gfx_ScreenFade                = 2;
                     g_GameWork.gameStateStep_598[1] = 19;
