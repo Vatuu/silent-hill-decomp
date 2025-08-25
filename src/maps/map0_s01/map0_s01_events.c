@@ -4,10 +4,6 @@
 #include "maps/map0/map0_s01.h"
 #include "maps/shared.h"
 
-//INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01_events", func_800DA980);
-//
-//
-
 #define StateStepIncrement_afterTime sharedFunc_800DA8E8_0_s01
 void StateStepIncrement_afterTime(s32* timer, s32 incBy, s32 minTime, s32 maxTime, s32 setTimerToMax, s32 incrementStateIndex);
 
@@ -299,7 +295,7 @@ void func_800DA980()
             func_80088F94(g_SysWork.npcs_1A0,0 ,0);
             Sd_EngineCmd(19);
             Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcCoords_FC0[0], NO_VALUE, 0, 0);
-            func_80086470(3, InventoryItemId_Handgun, 15, false); // TODO: 15 bullets default. One func has a constant for this.
+            func_80086470(3, InventoryItemId_Handgun, InventoryItemCount_HandgunAmmo, false);
             SysWork_StateStepIncrement();
         
         case 49:
