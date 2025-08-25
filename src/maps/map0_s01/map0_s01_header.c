@@ -39,7 +39,7 @@ void (*g_LoadScreenFuncs[])() =
     Gfx_LoadingScreen_StageString
 };
 
-s_AreaLoadParams g_MapAreaLoadParams[] =
+s_MapPointOfInterest g_MapAreaLoadParams[] =
 {
     #include "area_load_params.h"
 };
