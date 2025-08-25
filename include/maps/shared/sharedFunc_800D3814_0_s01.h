@@ -30,7 +30,7 @@ s32 sharedFunc_800D3814_0_s01(s_SubCharacter* chara)
         dist = FP_METER(0.0f);
     }
     
-    if (D_800C457E != 0)
+    if (g_Player_IsAiming != 0)
     {
         distProp8 = func_8007FD2C(invDist);
         if (distProp8 > FP_METER(2.0f))
@@ -42,7 +42,7 @@ s32 sharedFunc_800D3814_0_s01(s_SubCharacter* chara)
             dist += distProp8;
         }
 
-        if (chara == &g_SysWork.npcs_1A0[g_SysWork.field_2353])
+        if (chara == &g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353])
         {
             dist += FP_METER(1.0f);
         }

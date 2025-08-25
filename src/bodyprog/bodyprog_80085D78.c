@@ -1926,7 +1926,7 @@ s64 func_8008A0D4(void) // 0x8008A0D4
     return 0;
 }
 
-s32 func_8008A0E4(s32 arg0, s16 arg1, s_SubCharacter* chara, s_PlayerCombat* combat, s32 arg4, s16 arg5, s16 arg6) // 0x8008A0E4
+s32 func_8008A0E4(s32 arg0, e_EquippedWeaponId weaponId, s_SubCharacter* chara, s_PlayerCombat* combat, s32 arg4, s16 arg5, s16 arg6) // 0x8008A0E4
 {
     s32          var_t1;
     s32          temp_a1;
@@ -1965,7 +1965,7 @@ s32 func_8008A0E4(s32 arg0, s16 arg1, s_SubCharacter* chara, s_PlayerCombat* com
         chara->field_44 = 0;
     }
 
-    chara->field_46 = arg1;
+    chara->field_46 = weaponId;
     if (!(modelAnim->animIdx_0 & (1 << 0)))
     {
         chara->field_44 = 0;
@@ -2013,7 +2013,7 @@ s32 func_8008A0E4(s32 arg0, s16 arg1, s_SubCharacter* chara, s_PlayerCombat* com
 
     if (chara->model_0.charaId_0 != Chara_Hero)
     {
-        if (g_SysWork.player_4C.chara_0.field_41 != NO_VALUE)
+        if (g_SysWork.player_4C.chara_0.attackReceived_41 != NO_VALUE)
         {
             ret = 0;
         }
@@ -2230,9 +2230,7 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B664); // 0x8008B664
 #endif
 
-/** This does something the color of the Hyper Blaster beam. Calls
- * `Game_HyperBlasterBeamColorGet`, which returns the color the player is currently using.
- */
+/** Main attack handling function. */
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B714); // 0x8008B714
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008BF84); // 0x8008BF84

@@ -42,11 +42,16 @@ typedef enum _Sfx
 
     Sfx_Unk1309   = 1309,
     Sfx_Unk1310   = 1310,
+    
+    Sfx_Stumble0  = 1314,
 
+    Sfx_HeavyBreath = 1320,
     Sfx_Unk1321   = 1321,
     Sfx_Unk1322   = 1322,
     Sfx_Unk1323   = 1323,
     Sfx_Unk1324   = 1324,
+
+    Sfx_Stumble1  = 1333,
 
     Sfx_Unk1336   = 1336,
     Sfx_Unk1337   = 1337,
@@ -220,7 +225,7 @@ typedef struct
     u8  field_1;
     u8  unk_2[18];
     s32 field_14;
-} s_D_800C45C8;
+} s_800C45C8;
 
 typedef struct
 {
@@ -1267,7 +1272,7 @@ typedef struct
     s32           field_54;
     SVECTOR       field_58;
     VECTOR3       field_60; // Type assumed.
-    SVECTOR       field_6C;
+    SVECTOR       field_6C; // Player current angles?
     SVECTOR       field_74;
     SVECTOR       field_7C;
     u8            unk_84[72];
@@ -1302,7 +1307,7 @@ typedef struct
     u8  unk_0[4];
     s16 field_4;
     s16 field_6;
-} s_D_800C44F0;
+} s_800C44F0; // Probable size: 8 bytes.
 
 /** Holds file IDs of anim/model/texture for each `e_CharacterId`, along with some data used in VC camera code. */
 typedef struct
@@ -1466,7 +1471,7 @@ typedef struct
     s16 field_2;
     s16 field_4;
     s16 field_6;
-} s_UnkStruct3_Mo;
+} s_UnkStruct3_Mo; // Probable size: 8 bytes.
 
 /** Guessed based on in-debugger observation during gameplay.
  * Everything is inited to 0xFFFF and some data is written when I get hit by monsters.
@@ -1642,21 +1647,6 @@ typedef struct
     s8      field_14;
 } s_800C4590;
 
-/** Anim switch struct? */
-typedef struct _s_800AFBF4
-{
-    s16 sfx_0;
-    s16 sfx_2;
-    u8  unk_4[2];
-    u8  animIdx_6;
-    u8  field_7;
-    u8  field_8;
-    u8  field_9;
-    u8  field_A;
-    u8  unk_B;
-} s_800AFBF4;
-STATIC_ASSERT_SIZEOF(s_800AFBF4, 12);
-
 // ========
 // GLOBALS
 // ========
@@ -1681,7 +1671,7 @@ extern RECT D_80028A20;
 
 extern s_AnimInfo D_80028B94[];
 
-extern s_D_800C44F0 D_800294F4[];
+extern s_800C44F0 D_800294F4[];
 
 extern s_AnimInfo* D_800297B8;
 
@@ -1979,17 +1969,11 @@ extern s16 D_800AF210;
 /** Angle? */
 extern s16 D_800AF212;
 
-extern s8 D_800AF217;
-
-extern s32 D_800AF20C;
-
-extern s32 D_800AF21C;
-
 extern u8 D_800AF220;
 
 extern s32 D_800AF224;
 
-extern s_AnimInfo g_MaybePlayerAnims[]; // Maybe part of bigger struct.
+extern s_AnimInfo g_MaybePlayerAnims[]; // Maybe part of bigger struct. 0x800AF228
 
 extern s16 D_800AF506;
 
@@ -2001,14 +1985,6 @@ extern s16 D_800AF624;
 
 /** Keyframe index. */
 extern s16 D_800AF626;
-
-extern s32 D_800AFBE8;
-
-extern s32 D_800AFBEC;
-
-extern s32 D_800AFBF0;
-
-extern s_800AFBF4 D_800AFBF4[];
 
 extern s_800AFC78 D_800AFC78; // Maybe different struct.
 
@@ -2049,7 +2025,7 @@ extern GsF_LIGHT D_800C3AC8[];
 
 extern GsDOBJ2 D_800C3E08;
 
-extern u8 D_800AD4A0[];
+extern u8 g_Items_GunsMaxLoadAmmo[36]; // Max loaded ammo that a weapon can hold. 0x800AD4A0
 
 extern const char* g_ItemNames[];
 
@@ -2354,24 +2330,14 @@ extern s32 D_800C44D4;
 extern s_PlayerCombat D_800C44E0;
 
 /** Table of player keyframe indices. Purpose unknown. */
-extern s_D_800C44F0 D_800C44F0[10];
+extern s_800C44F0 D_800C44F0[10];
 
-extern VECTOR3 D_800C4540;
+// Enemy target.
+extern VECTOR3 g_TargetEnemyPosition; // 0x800C4540
 
-/** FP time. */
-extern s32 D_800C454C;
+extern s16 D_800C4554; // Timer?
 
-extern s32 D_800C4550;
-
-extern s16 D_800C4554;
-
-extern s16 D_800C4556;
-
-extern s32 D_800C4558;
-
-extern s32 D_800C455C;
-
-extern s_800AFBF4 D_800C4570;
+extern s16 D_800C4556; // Timer?
 
 extern s16 D_800AEEDC[][2]; // Type assumed.
 
@@ -2381,51 +2347,16 @@ extern s16 D_800AF070[]; // Type assumed.
 
 extern s16 D_800AF1FC[]; // Type assumed.
 
-/** SFX. */
-extern s16 D_800C4574;
-
-/** Anim index. */
-extern u8 D_800C4577;
-
-extern u16 D_800C457E;
-
-extern u16 D_800C4580;
-
-extern u16 D_800C4582;
-
-extern u16 D_800C4584; // Is player moving left (in-game)?
-
-extern u16 D_800C4586; // Is player moving right (in-game)?
-
 extern s8 D_800C4588;
 
 extern s_800C4590 D_800C4590;
 
-extern u16 D_800C45AC;
-
-extern u16 D_800C45AE;
-
 extern VECTOR3 D_800C45B0; // Assumed type
 
-extern u16 D_800C45BC;
-
-extern u16 D_800C45BE;
-
-extern u16 D_800C45C0;
-
-extern s_D_800C45C8 D_800C45C8;
-
-/** SFX? */
-extern s32 D_800C45DC;
-
-extern u16 D_800C45E8;
+extern s_800C45C8 D_800C45C8;
 
 /** Related to game difficulty. Maybe multiplier? */
 extern s32 D_800C45EC;
-
-extern u16 D_800C45F0;
-
-extern u16 D_800C4604;
 
 extern u8 D_800C4606;
 
@@ -2909,8 +2840,6 @@ s32 func_8004C328();
 
 void func_8004C564(u8, s32);
 
-void func_8004C8DC();
-
 // TODO: Can probably create status enums for the below funcs' return values to avoid magic,
 // but other funcs using similar return patterns should be identified first if they exist.
 
@@ -2926,7 +2855,12 @@ void func_80054A04(u8 arg0);
 
 bool Gfx_PickupItemAnimate(u8 itemId);
 
-void func_80054FC0(s32* arg0, s32* arg1, u8 idx);
+/** @brief Calculates the ammo needed to reload the equipped gun.
+ * @param `currentAmmo` pointer to the variable holding the current amount of loaded ammunition of the equipped weapon.
+ * @param `availableAmmo` pointer to the variable holding the current amount of available ammunition for the equipped weapon.
+ * @param `gunIdx` Index of the gun being reloaded. `e_EquippedWeaponId`.
+ */
+void Items_AmmoReloadCalculation(s32* currentAmmo, s32* availableAmmo, u8 gunIdx); // 0x80054FC0
 
 void func_80055028();
 
@@ -3281,7 +3215,7 @@ s32 func_8008A0CC(); /** Returns 0. */
 
 s64 func_8008A0D4(void); /** Returns 0. */
 
-s32 func_8008A0E4(s32 arg0, s16 arg1, s_SubCharacter* chara, s_PlayerCombat* combat, s32 arg4, s16 arg5, s16 arg6);
+s32 func_8008A0E4(s32 arg0, e_EquippedWeaponId weaponId, s_SubCharacter* chara, s_PlayerCombat* combat, s32 arg4, s16 arg5, s16 arg6);
 
 u8 func_8008A270(s32 idx);
 
@@ -3473,13 +3407,7 @@ s32 func_8007029C(s_SubCharacter* chara, s32 arg1, s16 angle);
 
 void func_800705E4(GsCOORDINATE2*, s32, s32, s32, s32);
 
-void func_80070B84(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3);
-
-void func_80074254(s_SubCharacter* chara, s_MainCharacterExtra* extra);
-
 void func_8007D6E0();
-
-s32 func_8007D6F0(s_SubCharacter* chara, s_D_800C45C8* arg1);
 
 void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2);
 
@@ -3871,21 +3799,10 @@ void func_8007E9C4();
 /** Loads player animations for a given map. Maybe for cutscenes? */
 void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 
-/** Used when exiting the inventory screen. */
-void func_8007EBBC();
-
 void func_80070DF0(s_MainCharacterExtra*, s_SubCharacter*, s32, s32);
 
-// `arg0` is `s_SubCharacter` pointer?
-void func_800711C4(s32 arg0, s32 arg1);
-
-s32 func_80071620(u8, s_SubCharacter*, s32, s32);
-
-void func_80071224(s32 arg0, s32 arg1);
-
-void func_80071284(s32 arg0);
-
-void func_800713B4(s_SubCharacter* chara, s32 arg1);
+/** Special player SFX handler for heavy breath and damage. */
+bool func_80071620(u8, s_SubCharacter*, s32, s32 sfx);
 
 /** Player anim handler? */
 void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, void* arg2, GsCOORDINATE2* coord);
@@ -3903,14 +3820,9 @@ void func_8007E9C4();
 
 void func_8007F14C(u8 arg0);
 
-void func_8007F32C();
-
 void func_8007FB94(s_SubCharacter*, s_MainCharacterExtra*, s32);
 
 void func_8007FD4C(s32);
-
-/** Resets several global variables to 0. */
-void func_8007F1CC();
 
 void func_8007F250(u8* ptr, s8 disableDamage);
 
@@ -3923,12 +3835,6 @@ bool func_8007F2AC();
 /** Gets something from the player's current animation? */
 s16 Player_AnimGetSomething();
 
-/** Something to do with player control. */
-void func_8007F32C();
-
-/** Player func. */
-bool func_8007F95C();
-
 void Math_ShortestAngle(s16 angleFrom, s16 angleTo, s16* outShortestAngle);
 
 void func_8007FB94(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 arg2);
@@ -3938,8 +3844,8 @@ void func_8007FC48(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 arg2)
 /** Gets property 8 from player. */
 s32 func_8007FD2C();
 
-/** Gets something from player. */
-s32 func_8007FD3C();
+/** @unused Gets current value from the power timer for gas based weapons. */
+q19_12 Game_GasWeaponPowerTimerValue();
 
 void func_8007FD4C(s32 arg0);
 
