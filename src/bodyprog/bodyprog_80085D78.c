@@ -12,7 +12,7 @@ void func_80085D78(bool arg0) // 0x80085D78
 {
     if (arg0)
     {
-        g_SysWork.timer_2C = 0;
+        g_SysWork.timer_2C = FP_TIME(0.0f);
         g_SysWork.field_14 = 0;
         g_SysWork.field_10++;
         return;
@@ -26,7 +26,7 @@ void func_80085DC0(bool arg0, s32 sysStateStep) // 0x80085DC0
     if (arg0)
     {
         g_SysWork.field_10 = sysStateStep;
-        g_SysWork.timer_2C = 0;
+        g_SysWork.timer_2C = FP_TIME(0.0f);
         g_SysWork.field_14 = 0;
     }
     else
@@ -659,7 +659,7 @@ void func_80086C58(s_SubCharacter* chara, s32 arg1) // 0x80086C58
         case 0:
             func_80085EB8(0, chara, arg1, 0);
 
-            g_SysWork.timer_2C = 0;
+            g_SysWork.timer_2C = FP_TIME(0.0f);
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
             break;
@@ -681,7 +681,7 @@ void func_80086D04(s_SubCharacter* chara) // 0x80086D04
         case 0:
             func_80085EB8(3, chara, 0, 0);
 
-            g_SysWork.timer_2C = 0;
+            g_SysWork.timer_2C = FP_TIME(0.0f);
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
             break;
@@ -702,7 +702,7 @@ void func_80086DA8(s32 fileIdx, s32 arg1) // 0x80086DA8
     {
         case 0:
             func_8008616C(0, true, 0, arg1, false);
-            g_SysWork.timer_2C = 0;
+            g_SysWork.timer_2C = FP_TIME(0.0f);
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
@@ -722,7 +722,7 @@ void func_80086E50(s32 fileIdx, s32 arg1, s32 arg2) // 0x80086E50
     {
         case 0:
             func_8008616C(0, true, 0, arg1, false);
-            g_SysWork.timer_2C = 0;
+            g_SysWork.timer_2C = FP_TIME(0.0f);
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
@@ -784,7 +784,7 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
             g_MapOverlayHeader.freezePlayerControl_C8();
             func_8005DC1C(sfx, pos, 0x80, 0);
             
-            g_SysWork.timer_2C = 0;
+            g_SysWork.timer_2C = FP_TIME(0.0f);
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
@@ -811,7 +811,7 @@ void func_8008716C(s32 itemId, s32 arg1, s32 arg2) // 0x8008716C
         case 0:
             g_MapOverlayHeader.freezePlayerControl_C8();
             func_8008616C(0, true, 0, arg1, false);
-            g_SysWork.timer_2C = 0;
+            g_SysWork.timer_2C = FP_TIME(0.0f);
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
@@ -834,7 +834,7 @@ void func_8008716C(s32 itemId, s32 arg1, s32 arg2) // 0x8008716C
             if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
                                                  g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
-                g_SysWork.timer_2C = 0;
+                g_SysWork.timer_2C = FP_TIME(0.0f);
                 g_SysWork.field_14 = 0;
                 g_SysWork.field_10++;
             }
@@ -861,7 +861,7 @@ void func_80087360(s32 fileIdx, s32 arg1, s32 arg2, s32 mapMsgIdx) // 0x80087360
             g_MapOverlayHeader.freezePlayerControl_C8();
             func_8008616C(0, true, 0, arg1, false);
 
-            g_SysWork.timer_2C = 0;
+            g_SysWork.timer_2C = FP_TIME(0.0f);
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
@@ -904,7 +904,7 @@ void func_80087540(s32 fileIdx, s32 itemCount, s32 arg2, s32 mapMsgIdx0, s32 map
             g_MapOverlayHeader.freezePlayerControl_C8();
             func_8008616C(0, true, 0, itemCount, false);
 
-            g_SysWork.timer_2C = 0;
+            g_SysWork.timer_2C = FP_TIME(0.0f);
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
@@ -933,7 +933,7 @@ void func_80087540(s32 fileIdx, s32 itemCount, s32 arg2, s32 mapMsgIdx0, s32 map
             if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
                                                  g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
-                g_SysWork.timer_2C = 0;
+                g_SysWork.timer_2C = FP_TIME(0.0f);
                 g_SysWork.field_14 = 0;
                 g_SysWork.field_10++;
             }
@@ -992,7 +992,7 @@ void Event_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx
             g_MapOverlayHeader.freezePlayerControl_C8();
             func_80086470(0, itemId, 0, false);
 
-            g_SysWork.timer_2C = 0;
+            g_SysWork.timer_2C = FP_TIME(0.0f);
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
@@ -1014,7 +1014,7 @@ void Event_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx
 
         case 3: // "Yes" selected.
             func_80086470(3, itemId, itemCount, false);
-            g_SysWork.timer_2C = 0;
+            g_SysWork.timer_2C = FP_TIME(0.0f);
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
@@ -1091,7 +1091,7 @@ void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             g_MapOverlayHeader.freezePlayerControl_C8();
             Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[mapFlagIdx]);
 
-            g_SysWork.timer_2C = 0;
+            g_SysWork.timer_2C = FP_TIME(0.0f);
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
@@ -1112,7 +1112,7 @@ void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             func_8008616C(0, false, 0, 0, false);
             Fs_QueueWaitForEmpty();
 
-            g_SysWork.timer_2C = 0;
+            g_SysWork.timer_2C = FP_TIME(0.0f);
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
 
@@ -1158,7 +1158,7 @@ void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             }
 
             g_SavegamePtr->eventFlags_168[eventFlagIdx >> 5] |= 1 << (eventFlagIdx & 0x1F);
-            g_SysWork.timer_2C                                = 0;
+            g_SysWork.timer_2C                                = FP_TIME(0.0f);
             g_SysWork.field_14                                = 0;
             g_SysWork.field_10++;
 
@@ -1204,12 +1204,12 @@ void func_80087EDC(s32 arg0) // 0x80087EDC
             if (!func_800358A8(arg0))
             {
                 g_SysWork.field_10 = 3;
-                g_SysWork.timer_2C = 0;
+                g_SysWork.timer_2C = FP_TIME(0.0f);
                 g_SysWork.field_14 = 0;
                 return;
             }
             
-            g_SysWork.timer_2C    = 0;
+            g_SysWork.timer_2C    = FP_TIME(0.0f);
             g_SysWork.field_14    = 0;
             g_SysWork.field_22A0 |= 1 << 7;
             g_SysWork.field_10++;
@@ -1219,7 +1219,7 @@ void func_80087EDC(s32 arg0) // 0x80087EDC
             g_SysWork.field_22A0 |= 1 << 7;
             Sd_EngineCmd(23);
             
-            g_SysWork.timer_2C = 0;
+            g_SysWork.timer_2C = FP_TIME(0.0f);
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
             return;
@@ -1231,7 +1231,7 @@ void func_80087EDC(s32 arg0) // 0x80087EDC
             {
                 func_800358DC(arg0);
                 
-                g_SysWork.timer_2C = 0;
+                g_SysWork.timer_2C = FP_TIME(0.0f);
                 g_SysWork.field_14 = 0;
                 g_SysWork.field_10++;
             }
@@ -1264,7 +1264,7 @@ void func_80088048() // 0x80088048
             func_80035E1C();
             Sd_EngineCmd(18);
             
-            g_SysWork.timer_2C = 0;
+            g_SysWork.timer_2C = FP_TIME(0.0f);
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
             break;
@@ -1302,7 +1302,7 @@ void func_800880F0(s32 arg0) // 0x800880F0
                 Sd_EngineCmd(23);
             }
 
-            g_SysWork.timer_2C = 0;
+            g_SysWork.timer_2C = FP_TIME(0.0f);
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
             break;
