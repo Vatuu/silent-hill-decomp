@@ -225,7 +225,7 @@ extern s32 g_ExtraOptionsMenu_BulletMultMax;
  */
 void GameState_Options_Update(void);
 
-/** @brief Controller for the extra options menu.
+/** @brief Top-level controller for the extra options menu.
  *
  * Scratch: https://decomp.me/scratch/HRrIM
  */
@@ -233,7 +233,7 @@ void Options_ExtraOptionsMenu_Control(void);
 
 /** @brief Controller for the main options menu.
  *
- * Handles menu states according to user input as well as graphics draw calls.
+ * Handles menu states, user input, and graphics draw calls.
  *
  * Scratch: https://decomp.me/scratch/N0xvj
  */
@@ -263,26 +263,26 @@ void Options_MainOptionsMenu_SfxVolumeBarDraw(void);
 */
 void Options_MainOptionsMenu_VolumeBarDraw(bool isSfx, u8 vol);
 
-/** @brief Draws a heading and entry strings in the extra options menu.
+/** @brief Draws the top heading and all listed entry strings in the extra options menu.
  *
  * Scratch: https://decomp.me/scratch/IYutD
  */
 void Options_ExtraOptionsMenu_EntryStringsDraw(void);
 
-/** @brief Draws a heading entry strings in the main options menu.
+/** @brief Draws the top heading and all listed entry strings in the main options menu.
  *
  * Scratch: https://decomp.me/scratch/cbqqU
  */
 void Options_MainOptionsMenu_EntryStringsDraw(void);
 
-/** @brief Draws bullet points next to entries and the highlight indicating the
+/** @brief Draws gold bullet points to the left of listed entries and the highlight indicating the
  * selected entry in the extra options menu.
  * 
  * Scratch: https://decomp.me/scratch/ghUNv
  */
 void Options_ExtraOptionsMenu_SelectionHighlightDraw(void);
 
-/** @brief Draws bullet points next to entries and the highlight indicating the
+/** @brief Draws gold bullet points to the left of listed entries and the highlight indicating the
  * selected entry in the main options menu.
  *
  * Scratch: https://decomp.me/scratch/2gTWn
@@ -295,13 +295,13 @@ void Options_MainOptionsMenu_SelectionHighlightDraw(void);
  */
 void Options_Menu_VignetteDraw(void);
 
-/** @brief Draws configuration strings and other visual elements in the extra options menu.
+/** @brief Draws configuration strings and blue arrows to the right of the listed entries in the extra options menu.
  *
  * Scratch: https://decomp.me/scratch/GW3Mi
  */
 void Options_ExtraOptionsMenu_ConfigDraw(void);
 
-/** @brief Draws configuration strings and other visual elements in the main options menu.
+/** @brief Draws configuration strings and blue arrows to the right of the listed entries in the main options menu.
  *
  * Scratch: https://decomp.me/scratch/5fuLW
  */
@@ -319,9 +319,8 @@ void Options_MainOptionsMenu_ConfigDraw(void);
 */
 void Options_ScreenPosMenu_Control(void);
 
-/** @brief Draws arrows in the screen position options menu.
+/** @brief Draws the arrows at the edges of the screen indicating input directions in the screen position options menu.
  *
- * Draws the blue up, down, left, and right arrows with flowing color gradients at the edges of the screen.
  * Depending on the directional input from the user, it also draws a cyan border around the arrow
  * corresponding to the direction.
  * Called by `Options_ScreenPosMenu_Control`.
@@ -330,11 +329,11 @@ void Options_ScreenPosMenu_Control(void);
  */
 void Options_ScreenPosMenu_ArrowsDraw(void);
 
-/** @brief Draws the box containing the screen position configuration.
+/** @brief Draws the screen position configuration string and its background box.
  *
  * Scratch: https://decomp.me/scratch/TOnxP
  */
-void Options_ScreenPosMenu_IndicatorDraw(void);
+void Options_ScreenPosMenu_ConfigDraw(void);
 
 // ===============
 // `brightness.c`
@@ -348,18 +347,16 @@ void Options_ScreenPosMenu_IndicatorDraw(void);
 */
 void Options_BrightnessMenu_Control(void);
 
-/** @brief Draws the string representing the light level in the brightness options menu. */
-void Options_BrightnessMenu_LevelStringDraw(void);
+/** @brief Draws the string indicating the light level in the brightness options menu. */
+void Options_BrightnessMenu_ConfigDraw(void);
 
-/** @brief Draws arrows in the brightness options menu.
+/** @brief Draws arrows on the left and right edges of the screen indicating input directions in the brightness options menu.
  *
- * Handles drawing of the blue left and right arrows with flowing color gradients at the sides of the screen.
- * Depending on the direction input from the user, it also draws a cyan border around the arrow
+ * Depending on the directional input from the user, it also draws a cyan border around the arrow
  * corresponding to the direction.
+ * Called by `Options_BrightnessMenu_Control`.
  *
  * Scratch: TODO
- *
- * Called by `Options_BrightnessMenu_Control`.
  */
 void Options_BrightnessMenu_ArrowsDraw(void);
 
@@ -367,9 +364,9 @@ void Options_BrightnessMenu_ArrowsDraw(void);
 // `selection_graphics.c`
 // =======================
 
-/** @brief Draws a UI selection highlight.
+/** @brief Draws a scaling entry selection highlight in the main and extra options menus.
  *
- * Handles drawing of the underline and upward shadow gradient used to highlight the selected entry
+ * The highlight Handles drawing of the underline and upward shadow gradient used to highlight the selected entry
  * in the main and extra options menus.
  * Called by `Options_MainOptionsMenu_SelectionHighlightDraw` and `Options_ExtraOptionsMenu_SelectionHighlightDraw`.
  *
@@ -377,16 +374,12 @@ void Options_BrightnessMenu_ArrowsDraw(void);
  *
  * @param line Reference line for the position and width of the highlight.
  * @param hasShadow If a shadow is to be drawn along with an underline.
- *                  `true` for a shadow,
- *                  `false` for no shadow.
+ *                  `true` for a shadow, `false` for no shadow.
  * @param invertGradient Whether to invert the color gradient of the underline. Non-functional.
  */
 void Options_Selection_HighlightDraw(s_Line2d* line, bool hasShadow, bool invertGradient);
 
-/** @brief Draws a UI arrow.
- *
- * Handles drawing of elements for the blue arrows used to indicate possible directions of navigation
- * for certain selected entries in the main and extra options menus.
+/** @brief Draws a blue flashing arrow element used with certain listed entries in the main and extra options menus.
  *
  * @note Called twice if the arrow requires a border, with `isFlashing` passed as `false` in the second call.
  *
@@ -394,16 +387,14 @@ void Options_Selection_HighlightDraw(s_Line2d* line, bool hasShadow, bool invert
  *
  * @param arrow 2D polygon of the arrow element.
  * @param isFlashing Whether to draw the arrow element with a flowing color gradient.
- *                   `true` for a dark blue and cyan gradient drawn in front,
- *                   `false` for a solid cyan color drawn behind.
+ *                   `true` for an element with a dark blue and cyan gradient drawn in front,
+ *                   `false` for an element with a solid cyan color drawn behind.
  * @param resetColor @unused No meaningful purpose.
 */
 void Options_Selection_ArrowDraw(s_Triangle2d* arrow, bool isFlashing, bool resetColor);
 
-/** @brief Draws a UI bullet point.
+/** @brief Draws a gold bullet point element used next to listed entries in the main and extra options menus.
  *
- * Handles drawing of elements of the gold bullet points placed next to entries in the main and extra options menus.
- * 
  * @note Called twice to build a whole bullet point, with `isCenter` passed as `true` and `false` on consecutive calls.
  *
  * Scratch: https://decomp.me/scratch/A88oo

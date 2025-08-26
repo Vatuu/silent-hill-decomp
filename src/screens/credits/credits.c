@@ -422,7 +422,7 @@ bool func_801E3684() // 0x801E3684
     s32  var_s5;
     s32  var_s6;
     s32  var_v1;
-    bool ret;
+    bool result;
 
     temp_v1 = D_800C48F0 * 2;
     var_s0  = (s32)((temp_v1 - 504) * D_801E5E80);
@@ -451,17 +451,17 @@ bool func_801E3684() // 0x801E3684
 
     if (temp_fp != 0)
     {
-        ret    = var_s6 < -23;
+        result    = var_s6 < -23;
         var_s4 = -1;
 
-        if (ret)
+        if (result)
         {
             var_s6 = -24;
         }
     }
     else
     {
-        ret    = false;
+        result    = false;
         var_s4 = -1;
     }
 
@@ -494,7 +494,7 @@ bool func_801E3684() // 0x801E3684
         }
     }
 
-    return ret;
+    return result;
 }
 
 void func_801E386C() // 0x801E386C

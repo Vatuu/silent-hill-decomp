@@ -1543,7 +1543,7 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
     GsOUT_PACKET_P = packet;
 
     Options_ScreenPosMenu_ArrowsDraw();
-    Options_ScreenPosMenu_IndicatorDraw();
+    Options_ScreenPosMenu_ConfigDraw();
 }
 
 void Options_ScreenPosMenu_ArrowsDraw(void) // 0x801E5A08
@@ -1609,7 +1609,7 @@ void Options_ScreenPosMenu_ArrowsDraw(void) // 0x801E5A08
     }
 }
 
-void Options_ScreenPosMenu_IndicatorDraw(void) // 0x801E5CBC
+void Options_ScreenPosMenu_ConfigDraw(void) // 0x801E5CBC
 {
     GsOT*    ot = &g_ObjectTable1[g_ObjectTableIdx];
     s32      i;
@@ -1755,10 +1755,10 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
 
     func_8003E5E8(g_GameWork.config_0.optBrightness_22);
     Options_BrightnessMenu_ArrowsDraw();
-    Options_BrightnessMenu_LevelStringDraw();
+    Options_BrightnessMenu_ConfigDraw();
 }
 
-void Options_BrightnessMenu_LevelStringDraw(void) // 0x801E6238
+void Options_BrightnessMenu_ConfigDraw(void) // 0x801E6238
 {
     const char* LEVEL_STR = "LEVEL_________"; // 0x801E2C64
 

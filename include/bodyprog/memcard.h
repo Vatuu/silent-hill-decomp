@@ -15,7 +15,7 @@
 // ENUMS
 // ========
 
-typedef enum
+typedef enum _CardState
 {
     CardState_Idle          = 0,
     CardState_Init          = 1,
@@ -27,7 +27,7 @@ typedef enum
     CardState_FileReadWrite = 7
 } e_CardState;
 
-typedef enum
+typedef enum _CardIoMode
 {
     CardIoMode_Init    = 0,
     CardIoMode_DirRead = 1, // TODO: Not sure if this is actual purpose yet.
@@ -36,24 +36,22 @@ typedef enum
     CardIoMode_Create  = 4,
 } e_CardIoMode;
 
-typedef enum
+typedef enum _CardResult
 {
-    CardResult_NotConnected = 0, // "Card not connected"
-    CardResult_Success      = 1, // Default code returned when no errors occur?
-    CardResult_InitError    = 2, // `Savegame_CardState_Init` `EvSpNEW` "No writing after connection".
-    CardResult_InitComplete = 3, // `Savegame_CardState_Init` `EvSpIOE` "Connected".
-    CardResult_LoadError    = 4, // `Savegame_CardState_Load` `EvSpNEW` "Uninitialized card".
-    CardResult_5            = 5, // `Savegame_CardState_DirRead` when `g_CardWork.field_70 == 1`.
-    CardResult_6            = 6, // `Savegame_CardState_DirRead` when `g_CardWork.field_70 != 1`.
-
-    CardResult_FileCreateError = 7,  // `Savegame_CardState_FileCreate` after 15 retries.
-    CardResult_FileOpenError   = 8,  // `Savegame_CardState_FileOpen` after 15 retries.
-    CardResult_FileSeekError   = 9,  // `Savegame_CardState_FileReadWrite` after 15 retries.
-    CardResult_FileIoError     = 10, // `Savegame_CardState_FileReadWrite` after 15 retries.
-    CardResult_FileIoComplete  = 11, // `Savegame_CardState_FileReadWrite` `EvSpIOE` "Completed".
-
-    CardResult_100 = 100, // Used outside of main memcard code.
-    CardResult_101 = 101, // Used outside of main memcard code.
+    CardResult_NotConnected    = 0,   /** "Card not connected". */
+    CardResult_Success         = 1,   /** Default code returned when no errors occur. */
+    CardResult_InitError       = 2,   /** `Savegame_CardState_Init` `EvSpNEW` "No writing after connection". */
+    CardResult_InitComplete    = 3,   /** `Savegame_CardState_Init` `EvSpIOE` "Connected". */
+    CardResult_LoadError       = 4,   /** `Savegame_CardState_Load` `EvSpNEW` "Uninitialized card". */
+    CardResult_NewDevice       = 5,   /** `Savegame_CardState_DirRead` when `g_CardWork.hasNewDevice_70`. */
+    CardResult_NoNewDevice     = 6,   /** `Savegame_CardState_DirRead` when `!g_CardWork.hasNewDevice_70`. */
+    CardResult_FileCreateError = 7,   /** `Savegame_CardState_FileCreate` after 15 retries. */
+    CardResult_FileOpenError   = 8,   /** `Savegame_CardState_FileOpen` after 15 retries. */
+    CardResult_FileSeekError   = 9,   /** `Savegame_CardState_FileReadWrite` after 15 retries. */
+    CardResult_FileIoError     = 10,  /** `Savegame_CardState_FileReadWrite` after 15 retries. */
+    CardResult_FileIoComplete  = 11,  /** `Savegame_CardState_FileReadWrite` `EvSpIOE` "Completed". */
+    CardResult_Full            = 100, /** Used outside main memcard code. */
+    CardResult_DamagedData     = 101  /** Used outside main memcard code. */
 } e_CardResult;
 
 // ================
@@ -114,7 +112,7 @@ typedef struct
     s32   seekOffset_64;
     void* dataBuffer_68;
     s32   dataSize_6C;
-    s32   field_70; // Set by `Savegame_CardState_Init` `EvSpNEW` "No writing after connection"?
+    bool  hasNewDevice_70;
     s32   fileHandle_74;
     s32   retryCount_78;
     s32   field_7C;
@@ -124,7 +122,7 @@ STATIC_ASSERT_SIZEOF(s_CardWork, 128);
 typedef struct
 {
     s32                          memoryCardStatus_0;
-    s8                           isFileUsed_4[16]; 
+    s8                           isFileUsed_4[16];
     s_MemCardInfo_BasicSaveInfo* basicSaveInfo_14;
     s32                          field_18;
 } s_MemCardBasicInfo;
@@ -198,6 +196,7 @@ extern s_CardDirectory D_800B2628;
 
 extern s32 D_800B2774;
 
+/** File index. */
 extern s32 D_800B2778;
 
 extern s_MemCardInfo_BasicSaveInfo D_800B4580[CARD_DEVICE_FILE_COUNT];
@@ -258,7 +257,7 @@ void Savegame_GameMemDataClear(s32 deviceId);
 
 void Savegame_CardFileUsageClear(s32 deviceId);
 
-s32 Savegame_CardFilesAreAllUnused(s32 deviceId);
+bool Savegame_CardFilesAreAllUnused(s32 deviceId);
 
 void func_8002E7BC();
 

@@ -290,8 +290,8 @@ void Gfx_SaveEntryBorder(s_SavegameEntry* saveEntry, s_SavegameEntry* nextSaveEn
 
 void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1);
 
-/** Flashes savegame entry after saving sucessfully. */
-void Gfx_SavegameEntryDrawFlash();
+/** @brief Draws a flash on the selected save menu entry after saving sucessfully. */
+void Savegame_SaveEntryFlashDraw();
 
 /** @brief Derivative of `Gfx_SaveSlotMemCardMsgBoxDraw`
  * this draws a flash which appears during an unusual

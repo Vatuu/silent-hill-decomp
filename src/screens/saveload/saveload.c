@@ -517,28 +517,23 @@ void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1) // 0x801E3910
         case MemCardState_Save:
             switch (arg1)
             {
-                // Memory card removed.
-                case 0:
+                case CardResult_NotConnected:
                     strIdx = 1; 
                     break;
 
-                // Now saving.
-                case 1:
+                case CardResult_Success:
                     strIdx = 3; 
                     break;
 
-                // Unable to create new file.
-                case 7:
+                case CardResult_FileCreateError:
                     strIdx = 4;
                     break;
 
-                // Finished saving.
-                case 11:
+                case CardResult_FileIoComplete:
                     strIdx = 5; 
                     break;
 
-                // Failed to save.
-                case 10:
+                case CardResult_FileIoError:
                     strIdx = 6; 
                     break;
 
@@ -552,32 +547,27 @@ void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1) // 0x801E3910
             switch (arg1)
             {
                 // Now loading.
-                case 1:
+                case CardResult_Success:
                     strIdx = 11;
                     break;
 
-                // Data is damaged.
-                case 101:
+                case CardResult_DamagedData:
                     strIdx = 8;
                     break;
 
-                // Failed to load.
-                case 10:
+                case CardResult_FileIoError:
                     strIdx = 9;
                     break;
 
-                // Finished loading.
-                case 11:
+                case CardResult_FileIoComplete:
                     strIdx = 10;
                     break;
 
-                // Memory card removed.
-                case 0:
+                case CardResult_NotConnected:
                     strIdx = 1;
                     break;
 
-                // Memory card removed.
-                case 100:
+                case CardResult_Full:
                     strIdx = 1;
                     break;
 
