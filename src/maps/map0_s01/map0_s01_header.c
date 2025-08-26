@@ -17,7 +17,6 @@
 #define func_800CE000 ((void(*)())0x800CE000)
 #define func_800CFFD8 ((void(*)())0x800CFFD8)
 #define func_800D0850 ((void(*)())0x800D0850)
-#define func_800DA980 ((void(*)())0x800DA980)
 
 extern u8 D_800DDFB8[];
 extern s_AnimInfo g_AnimInfo[];
@@ -43,15 +42,15 @@ void (*g_MapEventFuncs[])() =
     NULL,
     NULL,
     Event_HealthItemTake,
-    func_800DA980,
-    func_800DB790,
-    func_800DBAA0,
+    Event_CafeCutscene,
+    Event_ToBeContinued, // Demo event, unused in full version.
+    Event_AirScreamerIntroCutscene,
     Event_KitchenKnifeItemTake,
     Event_FlashlightItemTake,
     Event_MapItemTake,
     Event_PocketRadioItemTake,
     Event_EmptyFunction,
-    Event_HandgunItemTake
+    Event_AirScreamerDie
 };
 
 const u32 D_800C9578 = 0x00000000; // rodata 0

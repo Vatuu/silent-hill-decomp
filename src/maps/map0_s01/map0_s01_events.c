@@ -11,7 +11,7 @@ extern const VECTOR3 D_800CC8FC;
 extern const char D_800CC908[];
 extern const char D_800CC910[];
 
-void func_800DA980()
+void Event_CafeCutscene()
 {
     #define CUTSCENE_SKIP_STATE 52
 
@@ -357,7 +357,7 @@ void func_800DA980()
     }
 }
 
-void func_800DB790(void) // 0x800DB790
+void Event_ToBeContinued(void) // 0x800DB790
 {
     switch (g_SysWork.sysStateStep_C)
     {
@@ -493,7 +493,7 @@ static inline void EventPositionSet(s_EventPosition* eventPos, s32 x, s32 y, s32
     eventPos->field_10 = arg5;
 }
 
-void func_800DBAA0() // 0x800DBAA0
+void Event_AirScreamerIntroCutscene() // 0x800DBAA0
 {
     s32 var_a1;
 
@@ -544,7 +544,7 @@ void func_800DBAA0() // 0x800DBAA0
             break;
 
         case 5:
-            func_800869E4(0x3E, &g_SoundCmdIdx, &D_800DE124);
+            func_800869E4(0x3E, &g_SoundCmdIdx, &D_800DE124); // "What's that ?"
             break;
 
         case 6:
@@ -552,7 +552,7 @@ void func_800DBAA0() // 0x800DBAA0
             break;
 
         case 7:
-            func_800869E4(0x3F, &g_SoundCmdIdx, &D_800DE124);
+            func_800869E4(0x3F, &g_SoundCmdIdx, &D_800DE124); // "Huh? Radio?"
             break;
 
         case 8:
@@ -833,7 +833,7 @@ void Event_HealthItemTake() // 0x800DC864
     Event_CommonItemTake(pickupType, globalPickupId);
 }
 
-void Event_HandgunItemTake() // 0x800DC8C8
+void Event_AirScreamerDie() // 0x800DC8C8
 {
     switch (g_SysWork.sysStateStep_C)
     {
