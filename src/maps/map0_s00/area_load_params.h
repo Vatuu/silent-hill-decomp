@@ -324,7 +324,7 @@
       .field_4_5      = 0,
       .loadingScreenId_4_9 = LoadingScreenId_None,
       .field_4_12     = 0,
-      .rotationY_4_16 = FP_ANGLE_PACKED(9.0),
+      .rotationY_4_16 = FP_ANGLE_PACKED(9.0f),
       .field_4_24     = 6,
       .char_z_8       = FP_METER(245.0f)
    },
@@ -354,7 +354,7 @@
       .field_4_5      = 0,
       .loadingScreenId_4_9 = LoadingScreenId_None,
       .field_4_12     = 0,
-      .rotationY_4_16 = FP_ANGLE_PACKED(9.0),
+      .rotationY_4_16 = FP_ANGLE_PACKED(9.0f),
       .field_4_24     = 6,
       .char_z_8       = FP_METER(228.0f)
    },
