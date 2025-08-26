@@ -1428,20 +1428,19 @@ typedef struct
     s32  field_54;
 } s_800AFE24; // Size: 85
 
-/** Part of map headers, pointer passed to `Chara_PositionUpdateFromParams`. */
-/** TODO: Rename to `PointOfInterest` to match SilentHillMapExaminer name? The array inside map header seems more for holding data for points on the map rather than just chara positioning. */
+/** Part of map headers, pointer passed to `Chara_PositionUpdateFromPoi`. */
 /** This also makes use of union from 0x4 - 0x8 for different kinds of params, see https://github.com/Sparagas/Silent-Hill/blob/6ec81b26b8cb21dad6518037a4de31f151476e60/010%20Editor%20-%20Binary%20Templates/sh1_overlays.bt#L177 */
-typedef struct _AreaLoadParams
+typedef struct _MapPointOfInterest
 {
-    q19_12 char_x_0; // TODO: Rename to `positionX_0`.
+    q19_12 positionX_0;
     u32    mapIdx_4_0          : 5; /** `e_Current2dMapIdx` */
     u32    field_4_5           : 4;
     u32    loadingScreenId_4_9 : 3; /** `e_LoadingScreenId`` */
     u32    field_4_12          : 4;
     u32    rotationY_4_16      : 8; /** Degrees in Q3.12, range [0, 256]. */
     u32    field_4_24          : 8;
-    q19_12 char_z_8; // TODO: Rename to `positionZ_8`.
-} s_AreaLoadParams;
+    q19_12 positionZ_8;
+} s_MapPointOfInterest;
 
 typedef struct
 {
@@ -1504,7 +1503,7 @@ typedef struct _MapOverlayHeader
     s8                field_16;
     s8                field_17;
     void              (**loadingScreenFuncs_18)();
-    s_AreaLoadParams* mapAreaLoadParams_1C;
+    s_MapPointOfInterest* mapAreaLoadParams_1C;
     void              (**mapEventFuncs_20)(); /** Points to array of event functions. */
     u8*               unk_24;
     GsCOORDINATE2*    field_28;
@@ -2168,7 +2167,7 @@ extern s32 D_800BCD90[];
 
 extern s_800BCDA8 D_800BCDA8[2];
 
-extern s_AreaLoadParams D_800BCDB0;
+extern s_MapPointOfInterest D_800BCDB0;
 
 /** Related to special item interactions. */
 extern s32 D_800BCDC0[5];
@@ -2506,7 +2505,7 @@ void func_80032D1C();
 /** Bodyprog entrypoint. Called by `main`. */
 void MainLoop();
 
-void Chara_PositionUpdateFromParams(s_AreaLoadParams* params);
+void Chara_PositionUpdateFromPoi(s_MapPointOfInterest* mapPoi);
 
 void func_8003943C();
 
@@ -3616,9 +3615,9 @@ void func_80037334();
 
 void func_80037388();
 
-bool func_800378D4(s_AreaLoadParams* areaLoadParams);
+bool func_800378D4(s_MapPointOfInterest* mapPoi);
 
-bool func_80037A4C(s_AreaLoadParams* areaLoadParams);
+bool func_80037A4C(s_MapPointOfInterest* mapPoi);
 
 bool func_80037C5C(s_func_80037A4C* arg0);
 
