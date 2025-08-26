@@ -253,6 +253,7 @@ Gfx_ScreenRefresh                           = 0x800323C8; // type:func
 Gfx_Init                                    = 0x80032428; // type:func
 Settings_ScreenXYSet                        = 0x800324F4; // type:func
 Settings_DispEnvXYSet                       = 0x80032524; // type:func
+Gfx_FadeInProgress                          = 0x800325F8; // type:func
 func_8003289C.70                            = 0x8003289C; // filename:func_8003289C type:func The generated result of the compilation for some reason adds .66 at name end.
 Gfx_VSyncCallback                           = 0x80032B80; // type:func
 GameFs_TitleGfxSeek                         = 0x80032BD0; // type:func
@@ -1909,6 +1910,7 @@ midi_smf_stat                               = 0x800A8D00; // type:func
 //--- PA: 0x084238   VA: 0x800A8D98   subsegment: .data, bodyprog_800A8D98
 //------------------------------------------------------------------------
 g_BackgroundColor                           = 0x800A8E58;
+g_screenFadeProgress                        = 0x800A8E94; // type:s32
 // vw globals from SH2
 vcNullRoadArray                             = 0x800A8F44; // _VC_ROAD_DATA[2]
 g_ObjectTable0                              = 0x800A8F74; // type:s8
@@ -2268,6 +2270,8 @@ g_CardWork                                  = 0x800B5488; // size:0x80
 D_800B5508                                  = 0x800B5508; // size:0x718
 g_Gfx_DebugStringPosition0                  = 0x800B5C20; // type:DVECTOR size:4
 g_Gfx_DebugStringPosition1                  = 0x800B5C24; // type:DVECTOR size:4
+g_oldScreenFadeProgress                     = 0x800B5C28; // type:s32
+g_screnFadeTimestep                         = 0x800B5C30; // type:s32
 g_VBlanks                                   = 0x800B5C34; // type:s32
 g_UncappedVBlanks                           = 0x800B5C38; // type:s32
 g_DeltaTime0                                = 0x800B5CC0; // type:s32 - Q19.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..).
@@ -2570,7 +2574,3 @@ smf_song                                    = 0x800C8B00;
 g_MapOverlayHeader                          = 0x800C957C; // type:MapOverlayHeader size:0x84C - size incomplete
 D_800FE5F8                                  = 0x800FE5F8; // ignore:True - Fixes fake missmatch in `Demo_Update`.
 hack_D_800FE5FC_fix                         = 0x800FE5FC; // ignore:true - Part of temp memory block at 800FDE00, has to be unsymbolized for C to match.
-g_screnFadeTimestep = 0x800B5C30; // type:s32
-g_screenFadeProgress = 0x800A8E94; // type:s32
-g_oldScreenFadeProgress = 0x800B5C28; // type:s32
-Gfx_FadeInProgress = 0x800325F8; // type:func
