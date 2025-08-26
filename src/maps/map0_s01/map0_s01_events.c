@@ -357,7 +357,114 @@ void func_800DA980()
     }
 }
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01_events", func_800DB790);
+void func_800DB790(void)
+{
+    s32 var_a0;
+    s32 var_a1;
+
+    switch (g_SysWork.sysStateStep_C)
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            g_SysWork.field_28 = 0;
+            g_SysWork.field_10 = 0;
+            g_SysWork.timer_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.sysStateStep_C += 1;
+            /* fallthrough */
+        case 1:
+            func_8008616C(0, true, 0, 0, false);
+            func_800862F8(0, 0x719, false);
+            g_SysWork.field_28 = 0;
+            g_SysWork.field_10 = 0;
+            g_SysWork.timer_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.sysStateStep_C += 1;
+            /* fallthrough */
+        case 2:
+            func_8008616C(1, true, 0, 0, false);
+            return;
+        case 3:
+            var_a0 = 1;
+            var_a1 = 0;
+            func_800862F8(var_a0, var_a1, false);
+            return;
+        case 4:
+            func_8008616C(0, false, 0, 0x2000, false);
+            g_SysWork.field_28 = 0;
+            g_SysWork.field_10 = 0;
+            g_SysWork.timer_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.sysStateStep_C += 1;
+            /* fallthrough */
+        case 5:
+            func_800862F8(2, 0, false);
+            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+            {
+                g_SysWork.field_28 = 0;
+                g_SysWork.field_10 = 0;
+                g_SysWork.timer_2C = 0;
+                g_SysWork.field_14 = 0;
+                g_SysWork.sysStateStep_C += 1;
+            }
+            func_80085E6C(0x4000, false);
+            if (g_SysWork.sysStateStep_C == 7)
+            {
+                g_SysWork.sysStateStep_C = 6;
+                return;
+            }
+            return;
+        case 7:
+            var_a0 = 7;
+            var_a1 = 0x717;
+            func_800862F8(var_a0, var_a1, false);
+            return;
+        case 8:
+            func_8008616C(0, false, 0, 0x1800, false);
+            func_8004690C(0x529U);
+            func_8004690C(0x52AU);
+            g_SysWork.field_28 = 0;
+            g_SysWork.field_10 = 0;
+            g_SysWork.timer_2C = 0;
+            g_SysWork.field_14 = 0;
+            g_SysWork.sysStateStep_C += 1;
+            /* fallthrough */
+        case 9:
+            func_800862F8(2, 0, false);
+            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+            {
+                g_SysWork.field_28 = 0;
+                g_SysWork.field_10 = 0;
+                g_SysWork.timer_2C = 0;
+                g_SysWork.field_14 = 0;
+                g_SysWork.sysStateStep_C += 1;
+            }
+            func_80085E6C(0x4000, false);
+            if (g_SysWork.sysStateStep_C == 0xB)
+            {
+                g_SysWork.sysStateStep_C = 0xA;
+                return;
+            }
+            break;
+        case 6:
+        case 10:
+            func_800862F8(2, 0, false);
+            func_8008616C(2, true, 0, 0x1800, false);
+            return;
+        default:
+            sharedFunc_800D2244_0_s00(0);
+            g_SysWork.sysState_8 = 0;
+            g_SysWork.timer_24 = 0;
+            g_SysWork.sysStateStep_C = 0;
+            g_SysWork.field_28 = 0;
+            g_SysWork.field_10 = 0;
+            g_SysWork.timer_2C = 0;
+            g_SysWork.field_14 = 0;
+            Game_WarmBoot();
+            g_SysWork.field_22A0 |= 1;
+            break;
+    }
+}
 
 const VECTOR3 D_800CCA1C =
 {

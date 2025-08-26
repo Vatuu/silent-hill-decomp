@@ -127,4 +127,6 @@ void func_800D2054(void);
 
 s32 func_800D20FC();
 
+void func_800DB790(void);
+
 #endif

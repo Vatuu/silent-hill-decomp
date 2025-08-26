@@ -18,7 +18,6 @@
 #define func_800CFFD8 ((void(*)())0x800CFFD8)
 #define func_800D0850 ((void(*)())0x800D0850)
 #define func_800DA980 ((void(*)())0x800DA980)
-#define func_800DB790 ((void(*)())0x800DB790)
 
 extern u8 D_800DDFB8[];
 extern s_AnimInfo g_AnimInfo[];
