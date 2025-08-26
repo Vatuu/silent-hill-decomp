@@ -64,7 +64,7 @@ void Savegame_CardCleanInit() // 0x8002E630
 
     Savegame_CardInit();
 
-    D_800B5480 = 0;
+    D_800B5480 = false;
 
     // Clear arrays.
     bzero(&D_800B5508, sizeof(s_800B5508));
@@ -139,12 +139,12 @@ void func_8002E7BC() // 0x8002E7BC
 {
     s_800B55E8* ptr;
 
-    if (D_800B5480 == 1)
+    if (D_800B5480 == true)
     {
         return;
     }
 
-    D_800B5480 = 1;
+    D_800B5480 = true;
     func_8002E8E4();
     Savegame_CardEventsInit();
 
@@ -154,9 +154,9 @@ void func_8002E7BC() // 0x8002E7BC
 
 void func_8002E830() // 0x8002E830
 {
-    if (D_800B5480 != 0) 
+    if (D_800B5480) 
     {
-        D_800B5480 = 0;
+        D_800B5480 = false;
         Savegame_CardEventsClose();
     }
 }
@@ -272,7 +272,7 @@ s32 Savegame_CardFileUsageFreeCount(s32 deviceId) // 0x8002EA78
     return D_800B5508.devices_0[deviceId].field_18 - Savegame_CardFileUsageCount(deviceId);
 }
 
-s32 func_8002EABC(s32* outDeviceId, s32* outFileIdx, s32* outSaveIdx) // 0x8002EABC
+bool func_8002EABC(s32* outDeviceId, s32* outFileIdx, s32* outSaveIdx) // 0x8002EABC
 {
     s_func_8002FE70 sp10;
     s32             i;
@@ -308,7 +308,7 @@ void func_8002EB88() // 0x8002EB88
 {
     s_800B55E8* ptr;
 
-    if (D_800B5480 == 0)
+    if (!D_800B5480)
     {
         return;
     }

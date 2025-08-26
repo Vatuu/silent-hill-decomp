@@ -411,8 +411,6 @@ bool func_801E3684() // 0x801E3684
     s32  sp10;
     s32  sp14;
     s32  sp18;
-    s8*  temp_s0;
-    s32* var_s2;
     s32  temp_fp;
     s32  temp_v1;
     s32  var_s0;
@@ -423,6 +421,8 @@ bool func_801E3684() // 0x801E3684
     s32  var_s6;
     s32  var_v1;
     bool result;
+    s8*  temp_s0;
+    s32* var_s2;
 
     temp_v1 = D_800C48F0 * 2;
     var_s0  = (s32)((temp_v1 - 504) * D_801E5E80);

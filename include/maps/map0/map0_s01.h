@@ -96,10 +96,13 @@ void func_800DA7FC();
 
 void Gfx_LoadingScreen_StageString();
 
+/** @brief Handles the Air Screamer cutscene in the cafe. */
 void Event_AirScreamerIntroCutscene();
 
+/** @brief Handles the pocket radio item pickup event. */
 void Event_PocketRadioItemTake();
 
+/** @brief Handles the flashlight item pickup event. */
 void Event_FlashlightItemTake();
 
 /** @brief Handles the Silent Hill town map pickup event in the cafe.
@@ -115,8 +118,8 @@ void Event_EmptyFunction();
 /** @brief Handles a first aid kit or health drink pickup event. */
 void Event_HealthItemTake();
 
-/** @brief Handles the handgun pickup event. */
-void Event_AirScreamerDie();
+/** @brief Handles the Air Screamer death event. */
+void Event_AirScreamerDeath();
 
 void func_800DC9C8();
 
@@ -128,7 +131,9 @@ void func_800D2054(void);
 
 s32 func_800D20FC();
 
+/** @brief @unused Handles the demo end screen event seen in demo builds. */
 void Event_ToBeContinued(void);
+
 void Event_CafeCutscene();
 
 #endif

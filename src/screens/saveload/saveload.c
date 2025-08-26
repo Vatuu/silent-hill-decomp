@@ -415,10 +415,6 @@ void Gfx_SaveScreenDraw(s_SavegameEntry* saveEntry, s32 saveIdx, s32 slotIdx) //
             {
                 Gfx_SaveSlotBoxDraw(slotIdx, g_SlotElementCount[slotIdx], g_SlotElementSelectedIdx[slotIdx], g_Gfx_SelectedSaveOffsetsY[slotIdx]);
             }
-
-            break;
-
-        default:
             break;
     }
 
@@ -621,9 +617,6 @@ void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1) // 0x801E3910
             {
                 g_IsGameSaving = 0;
             }
-            break;
-
-        default:
             break;
     }
 }
@@ -1880,13 +1873,7 @@ void Savegame_FormatLogic() // 0x801E69E8
                     g_GameWork.gameStateStep_598[1] = MemCardFormatState_0;
                     g_GameWork.gameStateStep_598[2] = 0;
                     break;
-
-                default:
-                    break;
             }
-            break;
-
-        default:
             break;
     }
 }
@@ -1964,9 +1951,6 @@ void Savegame_SaveLogic() // 0x801E6B18
                     g_GameWork.gameStateStep_598[2] = 0;
                     break;
             }
-            break;
-
-        default:
             break;
     }
 }
@@ -2071,9 +2055,6 @@ void Savegame_ContinueLogic() // 0x801E6F38
             }
             break;
         }
-
-        default:
-            break;
     }
 }
 
@@ -2156,9 +2137,6 @@ void Gfx_MemCardState() // 0x801E7244
         case MemCardState_Save:
         case MemCardState_Load:
             Gfx_MemCardStateDraw(g_MemCardState, func_8002E990());
-            break;
-
-        default:
             break;
     }
 }

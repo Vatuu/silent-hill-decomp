@@ -201,7 +201,7 @@ extern s32 D_800B2778;
 
 extern s_MemCardInfo_BasicSaveInfo D_800B4580[CARD_DEVICE_FILE_COUNT];
 
-extern s32 D_800B5480;
+extern bool D_800B5480;
 
 extern s_CardWork g_CardWork; // 0x800B5488
 
@@ -290,7 +290,7 @@ s32 Savegame_CardFileUsageCount(s32 deviceId);
 
 s32 Savegame_CardFileUsageFreeCount(s32 deviceId);
 
-s32 func_8002EABC(s32* outDeviceId, s32* outFileIdx, s32* outSaveIdx);
+bool func_8002EABC(s32* outDeviceId, s32* outFileIdx, s32* outSaveIdx);
 
 void func_8002EB88(); // Return type assumed.
 

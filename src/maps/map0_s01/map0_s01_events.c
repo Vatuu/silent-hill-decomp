@@ -55,8 +55,8 @@ void Event_CafeCutscene()
             break;
         
         case 2:
-            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 0x4D, false);
-            func_8008616C(0, false, 0, 0, false);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 77, false);
+            func_8008616C(0, false, 0, FP_TIME(0.0f), false);
             func_800D2054();
             SysWork_StateStepIncrement();
             break;
@@ -66,7 +66,7 @@ void Event_CafeCutscene()
             SysWork_StateStepIncrement();
         
         case 4:
-            func_8008616C(1, false, 0, 0, false);
+            func_8008616C(1, false, 0, FP_TIME(0.0f), false);
             break;
         
         case 5:
@@ -79,7 +79,7 @@ void Event_CafeCutscene()
         
         case 7:
             sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(7.8f), FP_TIME(0.0f), FP_TIME(26.0f), true, false);
-            func_800869E4(15, &g_SoundCmdIdx, g_SoundCmds); // was i dreaming ?
+            func_800869E4(15, &g_SoundCmdIdx, g_SoundCmds); // "Was I dreaming?""
             break;
         
         case 8:
@@ -87,7 +87,7 @@ void Event_CafeCutscene()
             break;
         
         case 9:
-            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 0x4E, false);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 78, false);
             D_800DE250 = 1;
             SysWork_StateStepIncrement();
         
@@ -98,11 +98,11 @@ void Event_CafeCutscene()
             switch (g_SysWork.sysStateStep_C)
             {
                 case 10:
-                    func_800869E4(16, &g_SoundCmdIdx, g_SoundCmds); // how do you feel ?
+                    func_800869E4(16, &g_SoundCmdIdx, g_SoundCmds); // "How do you feel?""
                     break;
 
                 case 11:
-                    func_800869E4(17, &g_SoundCmdIdx, g_SoundCmds); // like i've been hit...
+                    func_800869E4(17, &g_SoundCmdIdx, g_SoundCmds); // "Like I've been hit...""
                     break;
 
                 case 12:
@@ -113,7 +113,7 @@ void Event_CafeCutscene()
                     break;
 
                 case 13:
-                    func_800869E4(18, &g_SoundCmdIdx, g_SoundCmds); // glad to hear it.
+                    func_800869E4(18, &g_SoundCmdIdx, g_SoundCmds); // "Glad to hear it.""
                     break;
             }
 
@@ -121,8 +121,8 @@ void Event_CafeCutscene()
 
             if (D_800DE251 == 0 && g_Timer0 > FP_TIME(38.0f))
             {
-                func_80085EB8(0, &g_SysWork.npcs_1A0[0], 0xA, false);
-                func_80085EB8(0, &g_SysWork.player_4C.chara_0, 0x6E, false);
+                func_80085EB8(0, &g_SysWork.npcs_1A0[0], 10, false);
+                func_80085EB8(0, &g_SysWork.player_4C.chara_0, 110, false);
                 
                 D_800DE251++;
             }
@@ -137,7 +137,7 @@ void Event_CafeCutscene()
 
         case 14:
             sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(3.0f), FP_TIME(49.0f), FP_TIME(139.0f), true, false);
-            func_800869E4(25, &g_SoundCmdIdx, g_SoundCmds); // have you seen a little girl?
+            func_800869E4(25, &g_SoundCmdIdx, g_SoundCmds); // "Have you seen a little girl?""
             break;
 
         case 15:
@@ -145,7 +145,7 @@ void Event_CafeCutscene()
             SysWork_StateStepIncrement();
 
         case 16:
-            func_800869E4(35, &g_SoundCmdIdx, g_SoundCmds); // whats your name ?
+            func_800869E4(35, &g_SoundCmdIdx, g_SoundCmds); // "What's your name?""
             break;
 
         case 17:
@@ -153,7 +153,7 @@ void Event_CafeCutscene()
             break;
 
         case 18:
-            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 0x5D, false);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 93, false);
             SysWork_StateStepIncrement();
 
         case 19:
@@ -161,7 +161,7 @@ void Event_CafeCutscene()
             break;
 
         case 20:
-            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 0x35, false);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 53, false);
             SysWork_StateStepIncrement();
 
         case 21:
@@ -176,7 +176,7 @@ void Event_CafeCutscene()
 
         case 23:
             sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(10.0f), FP_TIME(160.0f), FP_TIME(173.0f), true, false);
-            MapMsg_DisplayAndHandleSelection(0, 0x2B, 0, 0, 0, 0);
+            MapMsg_DisplayAndHandleSelection(false, 43, 0, 0, 0, false);
             Gfx_DebugStringPosition(30, 30);
             break;
 
@@ -190,7 +190,7 @@ void Event_CafeCutscene()
             break;
 
         case 26:
-            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 0x33, false);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 8, 0);
             SysWork_StateStepIncrement();
 
@@ -206,7 +206,7 @@ void Event_CafeCutscene()
             SysWork_StateStepIncrement();
 
         case 29:
-            func_800869E4(46, &g_SoundCmdIdx, g_SoundCmds); // it's dangerous out there
+            func_800869E4(46, &g_SoundCmdIdx, g_SoundCmds); // "It's dangerous out there."
             break;
 
         case 30:
@@ -231,7 +231,7 @@ void Event_CafeCutscene()
 
         case 35:
             sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(5.0f), FP_TIME(223.0f), FP_TIME(251.0f), true, false);
-            func_800869E4(0x33, &g_SoundCmdIdx, g_SoundCmds);
+            func_800869E4(51, &g_SoundCmdIdx, g_SoundCmds);
             break;
 
         case 36:
@@ -241,7 +241,7 @@ void Event_CafeCutscene()
 
         case 37:
             sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(5.0f), FP_TIME(223.0f), FP_TIME(251.0f), true, false);
-            func_800869E4(0x37, &g_SoundCmdIdx, g_SoundCmds);
+            func_800869E4(55, &g_SoundCmdIdx, g_SoundCmds);
             break;
 
         case 38:
@@ -251,7 +251,7 @@ void Event_CafeCutscene()
 
         case 39:
             sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(10.0f), FP_TIME(252.0f), FP_TIME(280.0f), true, false);
-            func_800869E4(0x39, &g_SoundCmdIdx, g_SoundCmds);
+            func_800869E4(57, &g_SoundCmdIdx, g_SoundCmds);
             break;
 
         case 40:
@@ -272,11 +272,11 @@ void Event_CafeCutscene()
             SysWork_StateStepIncrement();
 
         case 44:
-            func_800869E4(0x3A, &g_SoundCmdIdx, g_SoundCmds);
+            func_800869E4(58, &g_SoundCmdIdx, g_SoundCmds);
             break;
 
         case 45:
-            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 0x5A, false);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 90, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 1, false);
             SysWork_StateStepIncrement();
 
@@ -287,7 +287,7 @@ void Event_CafeCutscene()
         case 47:
             D_800DE250 = 0;
 
-            func_8005DC1C(Sfx_Unk1357, &D_800CC8FC, 0x80, 0);
+            func_8005DC1C(Sfx_Unk1357, &D_800CC8FC, 128, 0);
             SysWork_StateStepIncrement();
 
         case 48:
@@ -298,7 +298,7 @@ void Event_CafeCutscene()
             SysWork_StateStepIncrement();
 
         case 49:
-            func_8008616C(2, true, 0, 0, false);
+            func_8008616C(2, true, 0, FP_TIME(0.0f), false);
             break;
 
         case 50:
@@ -311,7 +311,7 @@ void Event_CafeCutscene()
             break;
 
         case CUTSCENE_SKIP_STATE:
-            func_8008616C(2, true, 0, 0, false);
+            func_8008616C(2, true, 0, FP_TIME(0.0f), false);
             break;
 
         case 53:
@@ -328,8 +328,8 @@ void Event_CafeCutscene()
             SysWork_StateSetNext(0);
 
             vcReturnPreAutoCamWork(1);
-            func_8008616C(0, false, 2, 0, false);
-            func_8008616C(0, false, 0, 0, false);
+            func_8008616C(0, false, 2, FP_TIME(0.0f), false);
+            func_8008616C(0, false, 0, FP_TIME(0.0f), false);
             Sd_EngineCmd(23);
 
             g_SavegamePtr->eventFlags_168[1] |= 1 << 17;
@@ -366,12 +366,12 @@ void Event_ToBeContinued(void) // 0x800DB790
             SysWork_StateStepIncrement();
 
         case 1:
-            func_8008616C(0, true, 0, 0, false);
+            func_8008616C(0, true, 0, FP_TIME(0.0f), false);
             func_800862F8(0, FILE_TIM_CONTINUE_TIM, false);
             SysWork_StateStepIncrement();
 
         case 2:
-            func_8008616C(1, true, 0, 0, false);
+            func_8008616C(1, true, 0, FP_TIME(0.0f), false);
             return;
 
         case 3:
@@ -379,7 +379,7 @@ void Event_ToBeContinued(void) // 0x800DB790
             return;
 
         case 4:
-            func_8008616C(0, false, 0, 0x2000, false);
+            func_8008616C(0, false, 0, FP_TIME(2.0f), false);
             SysWork_StateStepIncrement();
 
         case 5:
@@ -389,7 +389,7 @@ void Event_ToBeContinued(void) // 0x800DB790
                 SysWork_StateStepIncrement();
             }
 
-            func_80085E6C(0x4000, false);
+            func_80085E6C(FP_TIME(4.0f), false);
 
             if (g_SysWork.sysStateStep_C == 7)
             {
@@ -402,7 +402,7 @@ void Event_ToBeContinued(void) // 0x800DB790
             break;
 
         case 8:
-            func_8008616C(0, false, 0, 0x1800, false);
+            func_8008616C(0, false, 0, FP_TIME(1.5f), false);
             func_8004690C(Sfx_Unk1321);
             func_8004690C(Sfx_Unk1322);
             SysWork_StateStepIncrement();
@@ -426,7 +426,7 @@ void Event_ToBeContinued(void) // 0x800DB790
         case 6:
         case 10:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            func_8008616C(2, true, 0, 0x1800, false);
+            func_8008616C(2, true, 0, FP_TIME(1.5f), false);
             break;
 
         default:
@@ -517,7 +517,7 @@ void Event_AirScreamerIntroCutscene() // 0x800DBAA0
 
             g_Timer0 = Q19_12(26.0f);
 
-            func_8008616C(0, true, 3, 0, false);
+            func_8008616C(0, true, 3, FP_TIME(0.0f), false);
 
             g_SoundCmdIdx = 0;
             SysWork_StateStepIncrement();
@@ -544,7 +544,7 @@ void Event_AirScreamerIntroCutscene() // 0x800DBAA0
             break;
 
         case 5:
-            func_800869E4(0x3E, &g_SoundCmdIdx, &D_800DE124); // "What's that ?"
+            func_800869E4(62, &g_SoundCmdIdx, &D_800DE124); // "What's that?"
             break;
 
         case 6:
@@ -552,7 +552,7 @@ void Event_AirScreamerIntroCutscene() // 0x800DBAA0
             break;
 
         case 7:
-            func_800869E4(0x3F, &g_SoundCmdIdx, &D_800DE124); // "Huh? Radio?"
+            func_800869E4(63, &g_SoundCmdIdx, &D_800DE124); // "Huh? Radio?"
             break;
 
         case 8:
@@ -653,7 +653,7 @@ void Event_AirScreamerIntroCutscene() // 0x800DBAA0
         case 21:
             Savegame_EventFlagSetAlt(EventFlag_47);
             func_800D39F4(g_SysWork.npcs_1A0);
-            func_8008616C(0, false, 2, 0, false);
+            func_8008616C(0, false, 2, FP_TIME(0.0f), false);
 
             g_Timer0 = NO_VALUE;
 
@@ -688,13 +688,13 @@ void Event_AirScreamerIntroCutscene() // 0x800DBAA0
 
 void Event_PocketRadioItemTake() // 0x800DC34C
 {
-    Event_ItemTake(InventoryItemId_PocketRadio, 1, 37, 64);
+    Event_ItemTake(InventoryItemId_PocketRadio, DEFAULT_PICKUP_ITEM_COUNT, 37, 64);
     g_SavegamePtr->flags_AC |= 1 << 0;
 }
 
 void Event_FlashlightItemTake() // 0x800DC394
 {
-    Event_ItemTake(InventoryItemId_Flashlight, 1, 36, 61);
+    Event_ItemTake(InventoryItemId_Flashlight, DEFAULT_PICKUP_ITEM_COUNT, 36, 61);
     Game_TurnFlashlightOff();
 }
 
@@ -710,7 +710,7 @@ void Event_MapItemTake() // 0x800DC3C8
             SysWork_StateStepIncrement();
 
         case 1:
-            func_8008616C(2, true, 0, 0, false);
+            func_8008616C(2, true, 0, FP_TIME(0.0f), false);
             break;
 
         case 2:
@@ -723,7 +723,7 @@ void Event_MapItemTake() // 0x800DC3C8
             g_IntervalVBlanks = 1;
 
             GsSwapDispBuff();
-            func_8008616C(0, false, 0, 0, false);
+            func_8008616C(0, false, 0, FP_TIME(0.0f), false);
             Fs_QueueWaitForEmpty();
             SysWork_StateStepIncrement();
 
@@ -738,7 +738,7 @@ void Event_MapItemTake() // 0x800DC3C8
             LoadImage(&IMG_BUFFER_RECT, IMAGE_BUFFER);
             DrawSync(0);
             Gfx_Init(SCREEN_WIDTH, 0);
-            func_8008616C(0, false, 0, 0, false);
+            func_8008616C(0, false, 0, FP_TIME(0.0f), false);
             SysWork_StateStepReset();
             break;
 
@@ -753,14 +753,14 @@ void Event_MapItemTake() // 0x800DC3C8
             g_BackgroundColor = 88;
 
             Gfx_BackgroundSpriteDraw(&g_MapImg);
-            func_8008616C(2, true, 0, 0, false);
+            func_8008616C(2, true, 0, FP_TIME(0.0f), false);
             break;
 
         case 8:
             LoadImage(&IMG_BUFFER_RECT, IMAGE_BUFFER);
             DrawSync(0);
             Gfx_Init(SCREEN_WIDTH, 0);
-            func_8008616C(0, false, 0, 0, false);
+            func_8008616C(0, false, 0, FP_TIME(0.0f), false);
             SysWork_StateStepIncrement();
 
         case 9:
@@ -791,7 +791,7 @@ void Event_MapItemTake() // 0x800DC3C8
             SysWork_StateStepIncrement();
 
         case 11:
-            func_8008616C(1, false, 0, 0, false);
+            func_8008616C(1, false, 0, FP_TIME(0.0f), false);
             break;
 
         default:
@@ -803,7 +803,7 @@ void Event_MapItemTake() // 0x800DC3C8
 
 void Event_KitchenKnifeItemTake() // 0x800DC830
 {
-    Event_ItemTake(InventoryItemId_KitchenKnife, 1, 35, 60);
+    Event_ItemTake(InventoryItemId_KitchenKnife, DEFAULT_PICKUP_ITEM_COUNT, 35, 60);
 }
 
 /** Presumably a pickup function. Maybe debug or something unused and commented out. */
@@ -833,7 +833,7 @@ void Event_HealthItemTake() // 0x800DC864
     Event_CommonItemTake(pickupType, globalPickupId);
 }
 
-void Event_AirScreamerDie() // 0x800DC8C8
+void Event_AirScreamerDeath() // 0x800DC8C8
 {
     switch (g_SysWork.sysStateStep_C)
     {

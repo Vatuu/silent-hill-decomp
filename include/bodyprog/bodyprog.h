@@ -2078,8 +2078,8 @@ extern DVECTOR g_Gfx_DebugStringPosition1;
 
 extern s32 D_800B5C28;
 
-/** Used as both FP time value or picked up item count? */
-extern s32 D_800B5C30;
+/** FP time. */
+extern q19_12 D_800B5C30;
 
 extern s_800B5C40 D_800B5C40[];
 
@@ -3130,10 +3130,8 @@ void func_8008605C(s32 arg0, s32 arg1, s32 arg2, bool arg3);
  */
 void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 entry0, s32 entry1, s32 entry2, bool arg5);
 
-/** Handles giving the player items.
- * `arg3` is some FP time value or picked up item count depending on the value of `arg2`.
- */
-void func_8008616C(s32 arg0, bool arg1, s32 arg2, s32 arg3, bool arg4);
+/** Handles giving the player items. */
+void func_8008616C(s32 arg0, bool arg1, s32 arg2, s32 unkTime, bool arg4);
 
 void func_800862F8(s32 arg0, s32 fileIdx, bool arg2);
 
@@ -3163,19 +3161,19 @@ void func_80086C58(s_SubCharacter* chara, s32 arg1);
 
 void func_80086D04(s_SubCharacter* chara);
 
-void func_80086DA8(s32 fileIdx, s32 arg1);
+void func_80086DA8(s32 fileIdx, s32 unkTime);
 
-void func_80086E50(s32 fileIdx, s32 arg1, s32 arg2);
+void func_80086E50(s32 fileIdx, s32 unkTime0, s32 unkTime1);
 
-void func_80086F44(s32 arg0, s32 arg1);
+void func_80086F44(s32 unkTime0, s32 unkTime1);
 
 void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos);
 
-void func_8008716C(s32 itemId, s32 arg1, s32 arg2);
+void func_8008716C(s32 itemId, s32 unkTime0, s32 unkTime1);
 
-void func_80087360(s32 fileIdx, s32 arg1, s32 arg2, s32 mapMsgIdx);
+void func_80087360(s32 fileIdx, s32 unkTime0, s32 unkTime1, s32 mapMsgIdx);
 
-void func_80087540(s32 fileIdx, s32 itemCount, s32 arg2, s32 mapMsgIdx0, s32 mapMsgIdx1);
+void func_80087540(s32 fileIdx, s32 unkTime0, s32 unkTime1, s32 mapMsgIdx0, s32 mapMsgIdx1);
 
 void Event_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx);
 

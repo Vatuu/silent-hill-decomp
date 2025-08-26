@@ -225,7 +225,7 @@ extern s32 g_ExtraOptionsMenu_BulletMultMax;
  */
 void GameState_Options_Update(void);
 
-/** @brief Top-level controller for the extra options menu.
+/** @brief Controller for the extra options menu.
  *
  * Scratch: https://decomp.me/scratch/HRrIM
  */

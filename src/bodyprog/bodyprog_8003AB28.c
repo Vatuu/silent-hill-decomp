@@ -2627,7 +2627,9 @@ void func_8003F170() // 0x8003F170
     u8              temp_v1;
     s32             temp;
     s_StructUnk3*   ptr2;
-    s_SysWork_2288* ptr = &g_SysWork.field_2388;
+    s_SysWork_2288* ptr;
+
+    ptr = &g_SysWork.field_2388;
 
     if (g_SysWork.field_2388.isFlashlightOn_15)
     {
