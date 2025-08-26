@@ -483,7 +483,7 @@ void Settings_DispEnvXYSet(DISPENV* display, s32 x, s32 y) // 0x80032524
 
 void func_800325A4(DR_MODE* arg0) // 0x800325A4
 {
-    if (g_Gfx_ScreenFade & 8) 
+    if (g_Gfx_ScreenFade & ScreenFade_Flag_White) 
     {
         SetDrawMode(arg0, 0, 1, 32, NULL);
     }
@@ -493,9 +493,9 @@ void func_800325A4(DR_MODE* arg0) // 0x800325A4
     }
 }
 
-int func_800325F8() // 0x800325F8
+int Gfx_FadeInProgress() // 0x800325F8
 {
-    return FP_FLOAT_TO(1.0f, Q12_SHIFT) - D_800B5C28;
+    return FP_FLOAT_TO(1.0f, Q12_SHIFT) - g_oldScreenFadeProgress;
 }
 
 void func_8003260C() // 0x8003260C
@@ -508,93 +508,93 @@ void func_8003260C() // 0x8003260C
 
     drMode     = &D_800A8E5C[g_ObjectTableIdx];
     tile       = &D_800A8E74[g_ObjectTableIdx];
-    D_800B5C28 = D_800A8E94;
+    g_oldScreenFadeProgress = g_screenFadeProgress;
 
     switch (g_Gfx_ScreenFade)
     {
-        case 2:
-        case 10:
-            D_800A8E94 = 0;
+        case ScreenFade_FadeOutStart:
+        case ScreenFade_FadeOutStart | ScreenFade_Flag_White:
+            g_screenFadeProgress = 0;
             g_Gfx_ScreenFade++;
 
-        case 3:
-        case 11:
+        case ScreenFade_FadeOutSteps:
+        case ScreenFade_FadeOutSteps | ScreenFade_Flag_White:
             func_800325A4(drMode);
             queueLength = Fs_QueueGetLength();
 
-            if (D_800B5C30 > FP_TIME(0.0f))
+            if (g_screnFadeTimestep > FP_TIME(0.0f))
             {
-                timeStep = D_800B5C30;
+                timeStep = g_screnFadeTimestep;
             }
             else
             {
                 timeStep = FP_TIME(3.0f) / (queueLength + 1);
             }
 
-            D_800A8E94 += FP_MULTIPLY_PRECISE(timeStep, g_DeltaTime1, Q12_SHIFT);
+            g_screenFadeProgress += FP_MULTIPLY_PRECISE(timeStep, g_DeltaTime1, Q12_SHIFT);
 
-            if (D_800A8E94 >= 0xFFF)
+            if (g_screenFadeProgress >= FP_TIME(1.0f)-1)
             {
-                D_800A8E94 = 0xFFF;
+                g_screenFadeProgress = FP_TIME(1.0f)-1;
                 g_Gfx_ScreenFade++;
             }
 
-            tile->r0 = FP_FROM(D_800A8E94, Q4_SHIFT);
-            tile->g0 = FP_FROM(D_800A8E94, Q4_SHIFT);
-            tile->b0 = FP_FROM(D_800A8E94, Q4_SHIFT);
+            tile->r0 = FP_FROM(g_screenFadeProgress, Q4_SHIFT);
+            tile->g0 = FP_FROM(g_screenFadeProgress, Q4_SHIFT);
+            tile->b0 = FP_FROM(g_screenFadeProgress, Q4_SHIFT);
             break;
 
-        case 4:
-        case 12:
-            D_800B5C30 = FP_TIME(0.0f);
+        case ScreenFade_ResetTimeStep:
+        case ScreenFade_ResetTimeStep | ScreenFade_Flag_White:
+            g_screnFadeTimestep = FP_TIME(0.0f);
 
-        case 6:
-        case 14:
-            D_800A8E94 = 0xFFF;
+        case ScreenFade_FadeInStart:
+        case ScreenFade_FadeInStart | ScreenFade_Flag_White:
+            g_screenFadeProgress = 0xFFF;
             g_Gfx_ScreenFade++;
 
-        case 5:
-        case 13:
+        case ScreenFade_FadeOutComplete:
+        case ScreenFade_FadeOutComplete | ScreenFade_Flag_White:
             func_800325A4(drMode);
-            tile->r0 = FP_FROM(D_800A8E94, Q4_SHIFT);
-            tile->g0 = FP_FROM(D_800A8E94, Q4_SHIFT);
-            tile->b0 = FP_FROM(D_800A8E94, Q4_SHIFT);
+            tile->r0 = FP_FROM(g_screenFadeProgress, Q4_SHIFT);
+            tile->g0 = FP_FROM(g_screenFadeProgress, Q4_SHIFT);
+            tile->b0 = FP_FROM(g_screenFadeProgress, Q4_SHIFT);
             break;
 
-        case 7:
-        case 15:
+        case ScreenFade_FadeInSteps:
+        case ScreenFade_FadeInSteps | ScreenFade_Flag_White:
             func_800325A4(drMode);
 
-            if (D_800B5C30 > FP_TIME(0.0f))
+            if (g_screnFadeTimestep > FP_TIME(0.0f))
             {
-                timeStep = D_800B5C30;
+                timeStep = g_screnFadeTimestep;
             }
             else
             {
                 timeStep = FP_TIME(3.0f);
             }
 
-            D_800A8E94 -= FP_MULTIPLY_PRECISE(timeStep, g_DeltaTime1, Q12_SHIFT);
+            g_screenFadeProgress -= FP_MULTIPLY_PRECISE(timeStep, g_DeltaTime1, Q12_SHIFT);
 
-            if (D_800A8E94 <= 0)
+            if (g_screenFadeProgress <= 0)
             {
-                D_800A8E94       = 0;
-                g_Gfx_ScreenFade = 0;
+                g_screenFadeProgress = 0;
+                g_Gfx_ScreenFade     = ScreenFade_Reset;
                 return;
             }
 
-            tile->r0 = FP_FROM(D_800A8E94, Q4_SHIFT);
-            tile->g0 = FP_FROM(D_800A8E94, Q4_SHIFT);
-            tile->b0 = FP_FROM(D_800A8E94, Q4_SHIFT);
+            tile->r0 = FP_FROM(g_screenFadeProgress, Q4_SHIFT);
+            tile->g0 = FP_FROM(g_screenFadeProgress, Q4_SHIFT);
+            tile->b0 = FP_FROM(g_screenFadeProgress, Q4_SHIFT);
             break;
 
-        case 0:
-            D_800B5C30       = FP_TIME(0.0f);
-            D_800A8E94       = 0;
-            g_Gfx_ScreenFade = 1;
+        case ScreenFade_Reset:
+            g_screnFadeTimestep  = FP_TIME(0.0f);
+            g_screenFadeProgress = 0;
+            g_Gfx_ScreenFade     = ScreenFade_None;
             return;
 
-        case 1:
+        case ScreenFade_None:
             return;
     }
 

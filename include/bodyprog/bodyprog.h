@@ -1726,7 +1726,7 @@ extern DR_MODE D_800A8E5C[];
 
 extern TILE D_800A8E74[];
 
-extern s32 D_800A8E94;
+extern s32 g_screenFadeProgress;
 
 extern DR_MODE D_800A8E98[];
 
@@ -2076,10 +2076,9 @@ extern DVECTOR g_Gfx_DebugStringPosition0;
 
 extern DVECTOR g_Gfx_DebugStringPosition1;
 
-extern s32 D_800B5C28;
+extern s32 g_oldScreenFadeProgress;
 
-/** FP time. */
-extern q19_12 D_800B5C30;
+extern s32 g_screnFadeTimestep;
 
 extern s_800B5C40 D_800B5C40[];
 
@@ -2494,7 +2493,7 @@ void Settings_DispEnvXYSet(DISPENV* display, s32 x, s32 y);
 
 void func_800325A4(DR_MODE* arg0);
 
-int func_800325F8();
+int Gfx_FadeInProgress();
 
 void func_80032904();
 

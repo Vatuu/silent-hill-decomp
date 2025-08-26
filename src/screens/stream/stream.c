@@ -16,7 +16,7 @@ void GameState_StartMovieIntro_Update() // 0x801E2654
     {
         case 0:
             VSync(8);
-            g_Gfx_ScreenFade = 6;
+            g_Gfx_ScreenFade = ScreenFade_FadeInStart;
             GameFs_TitleGfxLoad();
             g_GameWork.gameStateStep_598[0]++;
             break;
@@ -24,13 +24,13 @@ void GameState_StartMovieIntro_Update() // 0x801E2654
         case 1:
             if (g_Controller0->btnsHeld_C != 0 || g_SysWork.timer_1C > 300)
             {
-                g_Gfx_ScreenFade                = 3;
+                g_Gfx_ScreenFade                = ScreenFade_FadeOutSteps;
                 g_GameWork.gameStateStep_598[0] = 2;
             }
             break;
 
         case 2:
-            if ((g_Gfx_ScreenFade & 0x7) == 5)
+            if (GFX_SCREEN_FADE_COMPLETE())
             {
                 Fs_QueueWaitForEmpty();
                 Game_StateSetNext(GameState_MovieIntro);
@@ -53,7 +53,7 @@ void GameState_MovieIntro_Update() // 0x801E279C
     open_main(fileIdx, 0);
     Game_StateSetNext(GameState_MainMenu);
 
-    D_800B5C30 = FP_TIME(1.0f);
+    g_screnFadeTimestep = FP_TIME(1.0f);
 }
 
 void GameState_MovieOpening_Update() // 0x801E2838
@@ -105,7 +105,7 @@ void GameState_MovieIntroAlternate_Update() // 0x801E2A24
     open_main(FILE_XA_C1_20670, 2060); // Second param looks like file ID for `FILE_XA_M6_02112`, but is actually frame count?
     Game_StateSetNext(GameState_MainMenu);
 
-    D_800B5C30 = FP_TIME(1.0f);
+    g_screnFadeTimestep = FP_TIME(1.0f);
 }
 
 s32 max_frame = 0; // 0x801E3F40
