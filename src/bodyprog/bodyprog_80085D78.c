@@ -1367,7 +1367,99 @@ void func_80088D34(s32 idx) // 0x80088D34
     func_800445A4(D_800A992C[idx].animFile1_8, D_800A992C[idx].npcCoords_14);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", Chara_Spawn); // 0x80088D78
+s32 Chara_Spawn(s32 charaId, s32 arg1, s32 posX, s32 posZ, s16 posY, u32 stateStep) // 0x80088D78
+{
+	#define HAS_FLAG(ptr, idx) \
+		((((u32*)ptr)[(idx) >> 5] >> ((idx) & 0x1F)) & (1 << 0))
+
+	#define SET_FLAG(ptr, idx) \
+		((((u32*)ptr)[(idx) >> 5] |= (1 << 0) << ((idx) & 0x1F)))
+	
+    s_func_800699F8 sp10;
+    s32 i;
+    s32 var_a0;
+    s32 arg1_1;
+    s_SubCharacter* var_s6;
+
+
+    if (charaId <= Chara_MonsterCybil && arg1 < 0x40)
+    {
+        arg1_1 = 0x1F;
+        arg1_1 = arg1 & arg1_1;
+    }
+    else
+    {
+        arg1_1 = 0;
+    }
+    
+    if (charaId <= Chara_MonsterCybil)
+    {
+        if (HAS_FLAG(&g_SysWork.field_228C, arg1_1))
+        {
+            for (i = 0; i < NPC_COUNT_MAX; i++) 
+            {
+                if (g_SysWork.npcs_1A0[i].field_40 == arg1_1)
+                {
+                    return i;
+                }
+            }
+            
+            return NPC_COUNT_MAX;
+        }
+        
+        var_a0 = 0;
+        for (i = 0; i < NPC_COUNT_MAX; i++)
+        {
+            if (g_SysWork.npcs_1A0[i].model_0.charaId_0 != Chara_None)
+            { 
+                var_a0++;
+            }
+        }
+        
+        if (var_a0 >= g_SysWork.field_2280)
+        {
+            return 0;
+        }
+    }
+
+    for(i = 0; i < NPC_COUNT_MAX; i++)
+    {
+        // Skip NPC slot if empty.
+        if (g_SysWork.npcs_1A0[i].model_0.charaId_0 != Chara_None)
+        {
+            continue;
+        }
+
+        bzero(&g_SysWork.npcs_1A0[i], sizeof(s_SubCharacter));
+        
+        g_SysWork.npcs_1A0[i].model_0.charaId_0 = charaId;
+        g_SysWork.npcs_1A0[i].field_40 = arg1_1;
+        
+        if (charaId <= Chara_MonsterCybil && arg1 < 0x40)
+        {
+            SET_FLAG(&g_SysWork.field_228C, arg1_1);
+        }
+
+        SET_FLAG(&g_SysWork.field_2290, i);
+        
+        g_SysWork.npcs_1A0[i].model_0.state_2 = 0;
+        g_SysWork.npcs_1A0[i].model_0.stateStep_3 = stateStep;
+        g_SysWork.npcs_1A0[i].position_18.vx = posX;
+        
+        func_800699F8(&sp10, posX, posZ);
+        
+        g_SysWork.npcs_1A0[i].position_18.vy = sp10.groundHeight_0;
+        g_SysWork.npcs_1A0[i].position_18.vz = posZ;
+        g_SysWork.npcs_1A0[i].rotation_24.vy = posY;
+
+        var_s6 = &g_SysWork.npcs_1A0[i];
+        var_s6->model_0.anim_4.flags_2 |= 2;
+        
+        return i;
+    }
+
+    return NPC_COUNT_MAX;
+}
 
 void func_80088F94(s_SubCharacter* chara, s32 unused1, s32 unsued2) // 0x80088F94
 {

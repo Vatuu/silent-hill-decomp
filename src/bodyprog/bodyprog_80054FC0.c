@@ -1445,7 +1445,78 @@ void func_8005A900(s_ObjHeader* objHeader, s32 offset, s_GteScratchData* scratch
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005AA08); // 0x8005AA08
+u8 func_8005AA08(s_ObjHeader* header, s32 arg1, s_GteScratchData2* scratchData) // 0x8005AA08
+{
+	// Same as gte_strgb3, but takes in a VECTOR3 pointer to store results
+	// (Not sure why this was needed, the func that uses it also ends up calling the normal gte_strgb3 too)
+	#define gte_strgb3_vec( r0 ) __asm__ volatile (			\
+		"swc2	$20, 0( %0 );"					\
+		"swc2	$21, 4( %0 );"					\
+		"swc2	$22, 8( %0 )"					\
+		:							            \
+		: "r"( r0 )						        \
+		: "memory" )
+	
+    CVECTOR sp0;
+    s_ObjNormal* var_a3;
+    VECTOR3* var_t0;
+
+    if (header->normalCount_2 == 0)
+    {
+        return;
+    }
+    
+    sp0.cd = 0;
+    gte_ldrgb(&sp0);
+    
+    var_a3 = header->normals_10;
+    *(u32*)&scratchData->u.normal.field_3DC = *(u32*)&var_a3[0];
+    scratchData->u.normal.field_3E0[0].vx = scratchData->u.normal.field_3DC.nx << 5;
+    scratchData->u.normal.field_3E0[0].vy = scratchData->u.normal.field_3DC.ny << 5;
+    scratchData->u.normal.field_3E0[0].vz = scratchData->u.normal.field_3DC.nz << 5;
+    
+    *(u32*)&scratchData->u.normal.field_3DC = *(u32*)&var_a3[1];
+    scratchData->u.normal.field_3E0[1].vx = scratchData->u.normal.field_3DC.nx << 5;
+    scratchData->u.normal.field_3E0[1].vy = scratchData->u.normal.field_3DC.ny << 5;
+    scratchData->u.normal.field_3E0[1].vz = scratchData->u.normal.field_3DC.nz << 5;
+    
+    *(u32*)&scratchData->u.normal.field_3DC = *(u32*)&var_a3[2];
+    var_a3 += 3;
+    scratchData->u.normal.field_3E0[2].vx = scratchData->u.normal.field_3DC.nx << 5;
+    scratchData->u.normal.field_3E0[2].vy = scratchData->u.normal.field_3DC.ny << 5;
+    scratchData->u.normal.field_3E0[2].vz = scratchData->u.normal.field_3DC.nz << 5;
+
+    var_t0 = &scratchData->field_21C[arg1];
+    
+    gte_ldv3c(scratchData->u.normal.field_3E0);
+    gte_nct();
+
+    while(var_a3 < &header->normals_10[header->normalCount_2])
+    {
+        *(u32*)&scratchData->u.normal.field_3DC = *(u32*)&var_a3[0];
+        scratchData->u.normal.field_3E0[0].vx = scratchData->u.normal.field_3DC.nx << 5;
+        scratchData->u.normal.field_3E0[0].vy = scratchData->u.normal.field_3DC.ny << 5;
+        scratchData->u.normal.field_3E0[0].vz = scratchData->u.normal.field_3DC.nz << 5;
+        
+        *(u32*)&scratchData->u.normal.field_3DC = *(u32*)&var_a3[1];
+        scratchData->u.normal.field_3E0[1].vx = scratchData->u.normal.field_3DC.nx << 5;
+        scratchData->u.normal.field_3E0[1].vy = scratchData->u.normal.field_3DC.ny << 5;
+        scratchData->u.normal.field_3E0[1].vz = scratchData->u.normal.field_3DC.nz << 5;
+        
+        *(u32*)&scratchData->u.normal.field_3DC = *(u32*)&var_a3[2];
+        var_a3 += 3;
+        scratchData->u.normal.field_3E0[2].vx = scratchData->u.normal.field_3DC.nx << 5;
+        scratchData->u.normal.field_3E0[2].vy = scratchData->u.normal.field_3DC.ny << 5;
+        scratchData->u.normal.field_3E0[2].vz = scratchData->u.normal.field_3DC.nz << 5;
+        
+        gte_strgb3_vec(var_t0); // Store result of previous `gte_nct` call
+        var_t0++;
+        gte_ldv3c(scratchData->u.normal.field_3E0);
+        gte_nct();
+    }
+    
+    gte_strgb3(&var_t0->vx, &var_t0->vy, &var_t0->vz); // Store result from the final `gte_nct`
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005AC50); // 0x8005AC50
 
@@ -2043,7 +2114,7 @@ void func_8006A178(s_800C4590* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006A1A4); // 0x8006A1A4
 
-s32 func_8006A3B4(s32 arg0, s32 arg1, s32 arg2) // 0x8006A3B4
+s32 func_8006A3B4(s32 arg0, VECTOR* arg1, s32 arg2) // 0x8006A3B4
 {
     s32 var0;
     s32 var1;
@@ -2060,7 +2131,14 @@ s32 func_8006A3B4(s32 arg0, s32 arg1, s32 arg2) // 0x8006A3B4
     return var1;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006A42C); // 0x8006A42C
+void func_8006A42C(s32 arg0, VECTOR3* arg1, s32 arg2) // 0x8006A42C
+{
+    VECTOR3 sp28;
+    s32 sp38;
+    sp28 = *arg1;
+
+    func_8006A4A8(arg0, &sp28, arg2, 0, func_800425D8(&sp38), sp38, 0, 0, 0, 0);
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006A4A8); // 0x8006A4A8
 
@@ -3272,9 +3350,91 @@ void func_80070B84(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3) // 0x800
     while (0);
 }
 
+// Matched with register swap issues.
+// Scratch: https://decomp.me/scratch/AItzp
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80070CF0); // 0x80070CF0
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80070DF0); // 0x80070DF0
+void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 arg2, s32 arg3)  // 0x80070DF0
+{
+    s16 sp10;
+    s16 temp_a1;
+
+    if (extra->model_0.stateStep_3 == 0) 
+    {
+        extra->model_0.anim_4.animIdx_0 = arg3 - 1;
+        extra->model_0.stateStep_3++;
+    }
+    
+    if (chara->model_0.stateStep_3 == 0) 
+    {
+        chara->model_0.anim_4.animIdx_0 = arg3 - 1;
+        chara->model_0.stateStep_3++;
+    }
+    
+    temp_a1 = (ratan2((g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].position_18.vx + g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].field_D8.field_0) - g_SysWork.playerCombatInfo_38.field_0.vx, 
+                      (g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].position_18.vz + g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].field_D8.field_2) - g_SysWork.playerCombatInfo_38.field_0.vz) + 0x1000) & 0xFFF;
+    chara->rotation_24.pad = temp_a1;
+    Math_ShortestAngle(chara->rotation_24.vy, temp_a1, &sp10);
+    
+    if (ABS(sp10) >= 0x60) 
+    {
+        if (sp10 < 0) 
+        {
+            chara->rotation_24.vy -= 0x60;
+        } 
+        else 
+        {
+            chara->rotation_24.vy += 0x60;
+        }
+    }
+    
+    if (extra->model_0.anim_4.keyframeIdx0_8 >= g_MaybePlayerAnims[arg3].keyframeIdx0_C + D_800AD4C8[arg2].field_E && 
+        g_MaybePlayerAnims[arg3].keyframeIdx0_C + D_800AD4C8[arg2].field_E + D_800AD4C8[arg2].field_F >= extra->model_0.anim_4.keyframeIdx0_8)
+    {
+        g_SysWork.playerCombatInfo_38.equippedWeapon_F = arg2;
+		
+        if (!(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk2)) 
+        {
+            chara->field_44                                             = 1;
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk2;
+        }
+    }
+    
+    if (arg3 == 0x31 && (chara->model_0.anim_4.animIdx_0 & 1)) 
+    {
+        g_SysWork.player_4C.chara_0.field_D8.field_0 = FP_MULTIPLY(D_800AF014[chara->model_0.anim_4.keyframeIdx0_8 - 0x1C9], Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
+        g_SysWork.player_4C.chara_0.field_D8.field_2 = -FP_MULTIPLY(D_800AF014[chara->model_0.anim_4.keyframeIdx0_8 - 0x1C9], Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
+        g_SysWork.player_4C.chara_0.field_D8.field_4 = 0;
+        g_SysWork.player_4C.chara_0.field_D8.field_6 = 0;
+    }
+    
+    if (arg3 == 0x33 && (chara->model_0.anim_4.animIdx_0 & 1)) 
+    {
+        g_SysWork.player_4C.chara_0.field_D8.field_0 = FP_MULTIPLY(D_800AF04C[chara->model_0.anim_4.keyframeIdx0_8 - 0x1E5], Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
+        g_SysWork.player_4C.chara_0.field_D8.field_2 = -FP_MULTIPLY(D_800AF04C[chara->model_0.anim_4.keyframeIdx0_8 - 0x1E5], Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
+        g_SysWork.player_4C.chara_0.field_D8.field_4 = 0;
+        g_SysWork.player_4C.chara_0.field_D8.field_6 = 0;
+    }
+    
+    if (chara->model_0.anim_4.animIdx_0 == arg3 && chara->model_0.anim_4.keyframeIdx0_8 == g_MaybePlayerAnims[arg3].keyframeIdx1_E)
+    {
+        g_SysWork.player_4C.extra_128.state_1C                      = 0;
+        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
+        chara->model_0.stateStep_3                                  = 0;
+        chara->model_0.state_2                                      = 0;
+        extra->model_0.stateStep_3                                  = 0;
+        extra->model_0.state_2                                      = 0;
+        g_SysWork.player_4C.extra_128.upperBodyState_20             = 0;
+        g_SysWork.player_4C.extra_128.lowerBodyState_24             = 0;
+        g_SysWork.player_4C.chara_0.field_D8.field_6                = 0;
+        g_SysWork.player_4C.chara_0.field_D8.field_4                = 0;
+        g_SysWork.player_4C.chara_0.field_D8.field_2                = 0;
+        g_SysWork.player_4C.chara_0.field_D8.field_0                = 0;
+        g_SysWork.playerCombatInfo_38.equippedWeapon_F              = g_SavegamePtr->equippedWeapon_AA == 0 ? -1 : g_SavegamePtr->equippedWeapon_AA + 0x80;
+        g_SysWork.enemyTargetIdx_2353                               = NO_VALUE;
+        g_SysWork.playerCombatInfo_38.isAiming_13                   = 0;
+    }
+}
 
 void Player_CharaTurn_0(s_SubCharacter* chara, e_PlayerLowerBodyState currentState) // 0x800711C4
 {
@@ -4588,7 +4748,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                 extra->model_0.state_2                          = 0;
                 g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                 g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
-                chara->flags_3E                                 = 1 << 3;
+                chara->flags_3E                                |= 1 << 3;
             }
             break;
         
@@ -10864,6 +11024,8 @@ void func_8007E860() // 0x8007E860
     }
 }
 
+// Matched with displaced instruction.
+// Scratch: https://decomp.me/scratch/uu71G
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8007E8C0); // 0x8007E8C0
 
 void func_8007E9C4() // 0x8007E9C4

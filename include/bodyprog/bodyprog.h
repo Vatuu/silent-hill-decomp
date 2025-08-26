@@ -173,6 +173,13 @@ typedef struct
     u16 sfx_2;
 } s_AreaLoadSfx;
 
+typedef struct
+{
+    VECTOR3  field_0;
+    SVECTOR3 field_C;
+    s8       field_12;
+} s_func_80069FFC;
+
 // Exception, as one of the unidentified structs uses this.
 typedef struct _s_8002AC04
 {
@@ -1639,10 +1646,37 @@ typedef struct
 
 typedef struct
 {
-    VECTOR3  field_0;
-    SVECTOR3 field_C;
-    s8       field_12;
-} s_func_80069FFC;
+    DVECTOR screenXy_0[90];
+    u16 screenZ_168[18];
+    s16 field_18C[72];
+    s32 field_21C[39]; // used as VECTOR3?
+    u8 field_2B8[200];
+    MATRIX field_380;
+    s_ObjNormal field_3A0;
+    DVECTOR screenPos_3A4;
+    s32 depthP_3A8;
+    SVECTOR field_3AC;
+    u8 unk_3B4[36];
+    CVECTOR field_3D8;
+
+    // Different functions access different data at 0x3DC onwards.
+    // Union works for it, but also possible those functions just took different s_GteScratchData structs.
+    union
+    {
+        struct
+        {
+            DVECTOR  screenPos_3DC;
+            s32      depthP_3E0;
+            MATRIX   field_3E4;
+        } vertex;
+        
+        struct
+        {
+            s_ObjNormal field_3DC;
+            SVECTOR field_3E0[3];
+        } normal;
+    } u;
+} s_GteScratchData2;
 
 // ========
 // GLOBALS
@@ -2339,6 +2373,10 @@ extern s16 D_800C4556; // Timer?
 extern s16 D_800AEEDC[][2]; // Type assumed.
 
 extern s16 D_800AEF78[][2]; //  Type assumed.
+
+extern s16 D_800AF014[];
+
+extern s16 D_800AF04C[];
 
 extern s16 D_800AF070[]; // Type assumed.
 
@@ -3325,7 +3363,9 @@ void func_8006A178(s_800C4590* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 s32 func_8006A1A4(s32 arg0, s_SubCharacter* chara, s32 arg2);
 
-s32 func_8006A3B4(s32 arg0, s32 arg1, s32 arg2);
+s32 func_8006A4A8(s32, s32*, s32, s32, s32, s32, s32, s32, s32, s32);
+
+s32 func_8006A3B4(s32 arg0, VECTOR* arg1, s32 arg2);
 
 void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* vec, s_func_8006AB50* arg2, s32 arg3);
 

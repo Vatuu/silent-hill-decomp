@@ -321,7 +321,7 @@ extern s8 g_Player_RockDrill_DirectionAttack; // 0x800AF217
 extern s32 D_800AF21C; // 0x800AF21C
 
 /** @brief Counts the amount inputs the player has pressed in order to free himselft from a grab. */
-extern s32 g_Player_GrabFree_InputCount;
+extern s32 g_Player_GrabFree_InputCount; // 0x800AF20C
 
 /** @brief Attack animation currently playing. */
 extern s32 g_Player_AttackAnimIdx; // 0x800AFBE8
