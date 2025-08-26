@@ -3161,7 +3161,7 @@ void func_8008716C(s32 itemId, s32 arg1, s32 arg2);
 
 void func_80087360(s32 fileIdx, s32 arg1, s32 arg2, s32 mapMsgIdx);
 
-void func_80087540(s32 ileIdx, s32 itemCount, s32 arg2, s32 mapMsgIdx0, s32 mapMsgIdx1);
+void func_80087540(s32 fileIdx, s32 itemCount, s32 arg2, s32 mapMsgIdx0, s32 mapMsgIdx1);
 
 void Event_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx);
 
@@ -3371,7 +3371,7 @@ s32 func_8006A4A8(s32, s32*, s32, s32, s32, s32, s32, s32, s32, s32);
 
 s32 func_8006A3B4(s32 arg0, VECTOR* arg1, s32 arg2);
 
-void func_8006A42C(s32 arg0, VECTOR3* arg1, s32 arg2);
+s32 func_8006A42C(s32 arg0, VECTOR3* arg1, s32 arg2);
 
 void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* vec, s_func_8006AB50* arg2, s32 arg3);
 
@@ -3893,7 +3893,7 @@ bool func_8007F2AC();
 /** Gets something from the player's current animation? */
 s16 Player_AnimGetSomething();
 
-/** @brief Computes the shortest angle between `angleFrom` and `angleTo` and stores the result in `shortestAngle`.
+/** @brief Computes the shortest angle between `angleFrom` and `angleTo`, outputting the result to `shortestAngle`.
  *
  * @param angleFrom First angle in Q3.12, range `[0, 4096]`.
  * @param angleTo Second angle in Q3.12, range `[0, 4096]`.

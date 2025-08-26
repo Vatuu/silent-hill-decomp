@@ -2131,14 +2131,14 @@ s32 func_8006A3B4(s32 arg0, VECTOR* arg1, s32 arg2) // 0x8006A3B4
     return var1;
 }
 
-void func_8006A42C(s32 arg0, VECTOR3* arg1, s32 arg2) // 0x8006A42C
+s32 func_8006A42C(s32 arg0, VECTOR3* arg1, s32 arg2) // 0x8006A42C
 {
     VECTOR3 sp28;
     s32     sp38;
 
     sp28 = *arg1;
 
-    func_8006A4A8(arg0, &sp28, arg2, 0, func_800425D8(&sp38), sp38, 0, 0, 0, 0);
+    return func_8006A4A8(arg0, &sp28, arg2, 0, func_800425D8(&sp38), sp38, 0, 0, 0, 0);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006A4A8); // 0x8006A4A8
