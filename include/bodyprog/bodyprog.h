@@ -380,11 +380,11 @@ typedef struct
     s8                 unk_75[5];
     s16                field_7A;
     s32                field_7C;
-    s32                field_80;
-    s32                field_84;
-    s32                field_88;
-    s32                field_8C;
-    s32                field_90;
+    s32                field_80; // X
+    s32                field_84; // Z
+    s32                field_88; // X
+    s32                field_8C; // Z
+    s32                field_90; // `bool`?
     s32                field_94;
     s16                field_98;
     s16                field_9A;
@@ -711,8 +711,8 @@ typedef struct _PlmHeader
     s32           queueIdx_1000;
 } s_PlmHeader;
 
- typedef struct _IpdCollisionData_10
- {
+typedef struct _IpdCollisionData_10
+{
     s16 field_0;
     s16 field_2;
     s16 field_4;
@@ -1646,21 +1646,21 @@ typedef struct
 
 typedef struct
 {
-    DVECTOR screenXy_0[90];
-    u16 screenZ_168[18];
-    s16 field_18C[72];
-    s32 field_21C[39]; // used as VECTOR3?
-    u8 field_2B8[200];
-    MATRIX field_380;
+    DVECTOR     screenXy_0[90];
+    u16         screenZ_168[18];
+    s16         field_18C[72];
+    s32         field_21C[39]; // Used as `VECTOR3`?
+    u8          field_2B8[200];
+    MATRIX      field_380;
     s_ObjNormal field_3A0;
-    DVECTOR screenPos_3A4;
-    s32 depthP_3A8;
-    SVECTOR field_3AC;
-    u8 unk_3B4[36];
-    CVECTOR field_3D8;
+    DVECTOR     screenPos_3A4;
+    s32         depthP_3A8;
+    SVECTOR     field_3AC;
+    u8          unk_3B4[36];
+    CVECTOR     field_3D8;
 
     // Different functions access different data at 0x3DC onwards.
-    // Union works for it, but also possible those functions just took different s_GteScratchData structs.
+    // Union works for it, but also possible those functions just took different `s_GteScratchData` structs.
     union
     {
         struct
@@ -1673,7 +1673,7 @@ typedef struct
         struct
         {
             s_ObjNormal field_3DC;
-            SVECTOR field_3E0[3];
+            SVECTOR     field_3E0[3];
         } normal;
     } u;
 } s_GteScratchData2;
@@ -2954,6 +2954,8 @@ void func_8005A838(s_GteScratchData* scratchData, s32 scale);
 
 void func_8005A900(s_ObjHeader* objHeader, s32 offset, s_GteScratchData* scratchData, MATRIX* mat);
 
+u8 func_8005AA08(s_ObjHeader* objHeader, s32 arg1, s_GteScratchData2* scratchData);
+
 /** Related to enviroment textures. */
 void func_8005B1A0(s_800C1450_58* arg0, char* arg1, s32 arg2, u8 arg3, s32 arg4, s32 arg5, s16 arg6, s16 arg7);
 
@@ -3119,7 +3121,7 @@ void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 entr
  */
 void func_8008616C(s32 arg0, bool arg1, s32 arg2, s32 arg3, bool arg4);
 
-void func_800862F8(s32 arg0, s32 itemId, bool arg2);
+void func_800862F8(s32 arg0, s32 fileIdx, bool arg2);
 
 void func_80086470(u32 switchVar, s32 arg1, s32 arg2, bool arg3);
 
@@ -3147,9 +3149,9 @@ void func_80086C58(s_SubCharacter* chara, s32 arg1);
 
 void func_80086D04(s_SubCharacter* chara);
 
-void func_80086DA8(s32 itemId, s32 arg1);
+void func_80086DA8(s32 fileIdx, s32 arg1);
 
-void func_80086E50(s32 itemId, s32 arg1, s32 arg2);
+void func_80086E50(s32 fileIdx, s32 arg1, s32 arg2);
 
 void func_80086F44(s32 arg0, s32 arg1);
 
@@ -3157,9 +3159,9 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos);
 
 void func_8008716C(s32 itemId, s32 arg1, s32 arg2);
 
-void func_80087360(s32 arg0, s32 arg1, s32 arg2, s32 mapMsgIdx);
+void func_80087360(s32 fileIdx, s32 arg1, s32 arg2, s32 mapMsgIdx);
 
-void func_80087540(s32 arg0, s32 arg1, s32 arg2, s32 mapMsgIdx0, s32 mapMsgIdx1);
+void func_80087540(s32 ileIdx, s32 itemCount, s32 arg2, s32 mapMsgIdx0, s32 mapMsgIdx1);
 
 void Event_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx);
 
@@ -3189,6 +3191,8 @@ bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 arg3, s_PlmHeader
 bool func_80088D0C();
 
 void func_80088D34(s32 idx);
+
+s32 Chara_Spawn(s32 charaId, s32 arg1, s32 posX, s32 posZ, s16 posY, u32 stateStep);
 
 void func_80088F94(s_SubCharacter* chara, s32 unused1, s32 unused2);
 
@@ -3367,6 +3371,8 @@ s32 func_8006A4A8(s32, s32*, s32, s32, s32, s32, s32, s32, s32, s32);
 
 s32 func_8006A3B4(s32 arg0, VECTOR* arg1, s32 arg2);
 
+void func_8006A42C(s32 arg0, VECTOR3* arg1, s32 arg2);
+
 void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* vec, s_func_8006AB50* arg2, s32 arg3);
 
 void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2);
@@ -3396,7 +3402,7 @@ void func_8006CA18(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s_func_8
 
 s16 func_8006CB90(s_func_8006CC44* arg0);
 
-s32 func_8006CC44(s32 arg0, s32 arg1, s_func_8006CC44* arg2);
+s32 func_8006CC44(s32 x, s32 z, s_func_8006CC44* arg2);
 
 void func_8006D7EC(s_func_8006D7EC_0* arg0, s_func_8006D7EC_1* arg1, s_func_8006D7EC_1* arg2);
 
@@ -3850,7 +3856,7 @@ void func_8007E860();
 /** Loads player animations for a given map. Maybe for cutscenes? */
 void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 
-void func_80070DF0(s_MainCharacterExtra*, s_SubCharacter*, s32, s32);
+void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 arg2, s32 arg3);
 
 /** Special player SFX handler for heavy breath and damage. */
 bool func_80071620(u8, s_SubCharacter*, s32, s32 sfx);
@@ -3887,7 +3893,13 @@ bool func_8007F2AC();
 /** Gets something from the player's current animation? */
 s16 Player_AnimGetSomething();
 
-void Math_ShortestAngle(s16 angleFrom, s16 angleTo, s16* outShortestAngle);
+/** @brief Computes the shortest angle between `angleFrom` and `angleTo` and stores the result in `shortestAngle`.
+ *
+ * @param angleFrom First angle in Q3.12, range `[0, 4096]`.
+ * @param angleTo Second angle in Q3.12, range `[0, 4096]`.
+ * @param shortestAngle Shortest angle output in Q3.12, range `[0, 4096]`.
+ */
+void Math_ShortestAngle(s16 angleFrom, s16 angleTo, s16* shortestAngle);
 
 void func_8007FB94(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 arg2);
 

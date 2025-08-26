@@ -357,111 +357,84 @@ void func_800DA980()
     }
 }
 
-void func_800DB790(void)
+void func_800DB790(void) // 0x800DB790
 {
-    s32 var_a0;
-    s32 var_a1;
-
     switch (g_SysWork.sysStateStep_C)
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
-            g_SysWork.sysStateStep_C += 1;
-            /* fallthrough */
+            SysWork_StateStepIncrement();
+
         case 1:
             func_8008616C(0, true, 0, 0, false);
-            func_800862F8(0, 0x719, false);
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
-            g_SysWork.sysStateStep_C += 1;
-            /* fallthrough */
+            func_800862F8(0, FILE_TIM_CONTINUE_TIM, false);
+            SysWork_StateStepIncrement();
+
         case 2:
             func_8008616C(1, true, 0, 0, false);
             return;
+
         case 3:
-            var_a0 = 1;
-            var_a1 = 0;
-            func_800862F8(var_a0, var_a1, false);
+            func_800862F8(1, FILE_1ST_2ZANKO80_TIM, false);
             return;
+
         case 4:
             func_8008616C(0, false, 0, 0x2000, false);
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
-            g_SysWork.sysStateStep_C += 1;
-            /* fallthrough */
+            SysWork_StateStepIncrement();
+
         case 5:
-            func_800862F8(2, 0, false);
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
-                g_SysWork.field_28 = 0;
-                g_SysWork.field_10 = 0;
-                g_SysWork.timer_2C = 0;
-                g_SysWork.field_14 = 0;
-                g_SysWork.sysStateStep_C += 1;
+                SysWork_StateStepIncrement();
             }
+
             func_80085E6C(0x4000, false);
+
             if (g_SysWork.sysStateStep_C == 7)
             {
                 g_SysWork.sysStateStep_C = 6;
-                return;
-            }
-            return;
-        case 7:
-            var_a0 = 7;
-            var_a1 = 0x717;
-            func_800862F8(var_a0, var_a1, false);
-            return;
-        case 8:
-            func_8008616C(0, false, 0, 0x1800, false);
-            func_8004690C(0x529U);
-            func_8004690C(0x52AU);
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
-            g_SysWork.sysStateStep_C += 1;
-            /* fallthrough */
-        case 9:
-            func_800862F8(2, 0, false);
-            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
-            {
-                g_SysWork.field_28 = 0;
-                g_SysWork.field_10 = 0;
-                g_SysWork.timer_2C = 0;
-                g_SysWork.field_14 = 0;
-                g_SysWork.sysStateStep_C += 1;
-            }
-            func_80085E6C(0x4000, false);
-            if (g_SysWork.sysStateStep_C == 0xB)
-            {
-                g_SysWork.sysStateStep_C = 0xA;
-                return;
             }
             break;
+
+        case 7:
+            func_800862F8(7, FILE_TIM_COMESOON_TIM, false);
+            break;
+
+        case 8:
+            func_8008616C(0, false, 0, 0x1800, false);
+            func_8004690C(Sfx_Unk1321);
+            func_8004690C(Sfx_Unk1322);
+            SysWork_StateStepIncrement();
+
+        case 9:
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+            {
+                SysWork_StateStepIncrement();
+            }
+
+            func_80085E6C(FP_TIME(4.0f), false);
+
+            if (g_SysWork.sysStateStep_C == 11)
+            {
+                g_SysWork.sysStateStep_C = 10;
+                break;
+            }
+            break;
+
         case 6:
         case 10:
-            func_800862F8(2, 0, false);
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             func_8008616C(2, true, 0, 0x1800, false);
-            return;
+            break;
+
         default:
             sharedFunc_800D2244_0_s00(0);
-            g_SysWork.sysState_8 = 0;
-            g_SysWork.timer_24 = 0;
-            g_SysWork.sysStateStep_C = 0;
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
+            SysWork_StateSetNext(SysState_Gameplay);
             Game_WarmBoot();
-            g_SysWork.field_22A0 |= 1;
+
+            g_SysWork.field_22A0 |= 1 << 0;
             break;
     }
 }

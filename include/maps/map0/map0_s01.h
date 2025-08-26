@@ -78,6 +78,8 @@ void func_800D3CC4(s_SubCharacter* chara);
 
 void func_800D3DFC(s_SubCharacter* chara);
 
+s32 func_800D71F0(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+
 s32 func_800D7440(VECTOR* vec0, VECTOR* vec1, s_SubCharacter* chara);
 
 void func_800D76A0(s_SubCharacter* chara);

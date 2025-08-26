@@ -264,7 +264,7 @@ const RECT D_8002AB10 =  // 0x8002AB10 .rodata
     (SCREEN_WIDTH / 5) * 3, SCREEN_HEIGHT
 };
 
-void func_800862F8(s32 arg0, s32 itemId, bool arg2) // 0x800862F8
+void func_800862F8(s32 arg0, s32 fileIdx, bool arg2) // 0x800862F8
 {
     s32 switchVar;
 
@@ -288,7 +288,7 @@ void func_800862F8(s32 arg0, s32 itemId, bool arg2) // 0x800862F8
     switch (switchVar)
     {
         case 0:
-            Fs_QueueStartReadTim(itemId, FS_BUFFER_1, &g_ItemInspectionImg);
+            Fs_QueueStartReadTim(fileIdx, FS_BUFFER_1, &g_ItemInspectionImg);
 
             if (arg0 != 0)
             {
@@ -319,7 +319,7 @@ void func_800862F8(s32 arg0, s32 itemId, bool arg2) // 0x800862F8
             break;
 
         case 4:
-            Fs_QueueStartReadTim(itemId, FS_BUFFER_1, &D_800A9A04);
+            Fs_QueueStartReadTim(fileIdx, FS_BUFFER_1, &D_800A9A04);
 
             if (arg0 == 8)
             {
@@ -696,7 +696,7 @@ void func_80086D04(s_SubCharacter* chara) // 0x80086D04
     }
 }
 
-void func_80086DA8(s32 itemId, s32 arg1) // 0x80086DA8
+void func_80086DA8(s32 fileIdx, s32 arg1) // 0x80086DA8
 {
     switch (g_SysWork.field_10)
     {
@@ -707,7 +707,7 @@ void func_80086DA8(s32 itemId, s32 arg1) // 0x80086DA8
             g_SysWork.field_10++;
 
         case 1:
-            func_800862F8(7, itemId, true);
+            func_800862F8(7, fileIdx, true);
             break;
 
         default:
@@ -716,7 +716,7 @@ void func_80086DA8(s32 itemId, s32 arg1) // 0x80086DA8
     }
 }
 
-void func_80086E50(s32 itemId, s32 arg1, s32 arg2) // 0x80086E50
+void func_80086E50(s32 fileIdx, s32 arg1, s32 arg2) // 0x80086E50
 {
     switch (g_SysWork.field_10)
     {
@@ -727,7 +727,7 @@ void func_80086E50(s32 itemId, s32 arg1, s32 arg2) // 0x80086E50
             g_SysWork.field_10++;
 
         case 1:
-            func_800862F8(7, itemId, true);
+            func_800862F8(7, fileIdx, true);
             break;
 
         case 2:
@@ -735,7 +735,7 @@ void func_80086E50(s32 itemId, s32 arg1, s32 arg2) // 0x80086E50
             break;
 
         default:
-            func_800862F8(2, InventoryItemId_Unequipped, false);
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             func_8008616C(2, false, 0, arg2, false);
     }
 }
@@ -744,7 +744,7 @@ void func_80086F44(s32 arg0, s32 arg1) // 0x80086F44
 {
     if (g_SysWork.field_10 == 0)
     {
-        func_800862F8(2, InventoryItemId_Unequipped, false);
+        func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
         func_8008616C(2, true, 0, arg1, true);
         return;
     }
@@ -824,12 +824,12 @@ void func_8008716C(s32 itemId, s32 arg1, s32 arg2) // 0x8008716C
             break;
 
         case 3:
-            func_800862F8(2, InventoryItemId_Unequipped, false);
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             func_8008616C(2, false, 0, arg2, true);
             break;
 
         case 4:
-            func_800862F8(2, InventoryItemId_Unequipped, false);
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
 
             if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
                                                  g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
@@ -841,7 +841,7 @@ void func_8008716C(s32 itemId, s32 arg1, s32 arg2) // 0x8008716C
             break;
 
         case 5:
-            func_800862F8(2, InventoryItemId_Unequipped, false);
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             func_8008616C(2, true, 0, arg2, true);
             break;
 
@@ -853,7 +853,7 @@ void func_8008716C(s32 itemId, s32 arg1, s32 arg2) // 0x8008716C
     }
 }
 
-void func_80087360(s32 itemId, s32 arg1, s32 arg2, s32 mapMsgIdx) // 0x80087360
+void func_80087360(s32 fileIdx, s32 arg1, s32 arg2, s32 mapMsgIdx) // 0x80087360
 {
     switch (g_SysWork.field_10)
     {
@@ -866,7 +866,7 @@ void func_80087360(s32 itemId, s32 arg1, s32 arg2, s32 mapMsgIdx) // 0x80087360
             g_SysWork.field_10++;
 
         case 1:
-            func_800862F8(7, itemId, true);
+            func_800862F8(7, fileIdx, true);
             break;
 
         case 2:
@@ -874,17 +874,17 @@ void func_80087360(s32 itemId, s32 arg1, s32 arg2, s32 mapMsgIdx) // 0x80087360
             break;
 
         case 3:
-            func_800862F8(2, InventoryItemId_Unequipped, false);
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             func_8008616C(2, false, 0, arg2, true);
             break;
 
         case 4:
-            func_800862F8(2, InventoryItemId_Unequipped, false);
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             MapMsg_DisplayAndHandleSelection(false, mapMsgIdx, 0, 0, 0, true);
             break;
         
         case 5:
-            func_800862F8(2, InventoryItemId_Unequipped, false);
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             func_8008616C(2, true, 0, arg2, true);
             break;
 
@@ -896,7 +896,7 @@ void func_80087360(s32 itemId, s32 arg1, s32 arg2, s32 mapMsgIdx) // 0x80087360
     }
 }
 
-void func_80087540(s32 itemId, s32 itemCount, s32 arg2, s32 mapMsgIdx0, s32 mapMsgIdx1) // 0x80087540
+void func_80087540(s32 fileIdx, s32 itemCount, s32 arg2, s32 mapMsgIdx0, s32 mapMsgIdx1) // 0x80087540
 {
     switch (g_SysWork.field_10)
     {
@@ -909,7 +909,7 @@ void func_80087540(s32 itemId, s32 itemCount, s32 arg2, s32 mapMsgIdx0, s32 mapM
             g_SysWork.field_10++;
 
         case 1:
-            func_800862F8(7, itemId, true);
+            func_800862F8(7, fileIdx, true);
             break;
 
         case 2:
@@ -917,12 +917,12 @@ void func_80087540(s32 itemId, s32 itemCount, s32 arg2, s32 mapMsgIdx0, s32 mapM
             break;
 
         case 3:
-            func_800862F8(2, InventoryItemId_Unequipped, false);
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             func_8008616C(2, false, 0, arg2, true);
             break;
 
         case 4:
-            func_800862F8(2, InventoryItemId_Unequipped, false);
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             
             if (mapMsgIdx0 != MapMsgCode_None)
             {
@@ -941,14 +941,14 @@ void func_80087540(s32 itemId, s32 itemCount, s32 arg2, s32 mapMsgIdx0, s32 mapM
 
         case 5:
             g_BackgroundColor = 0x30;
-            func_800862F8(2, InventoryItemId_Unequipped, false);
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             MapMsg_DisplayAndHandleSelection(false, mapMsgIdx1, 0, 0, 0, true);
             break;
 
         case 6:
             g_BackgroundColor = 0x30;
 
-            func_800862F8(2, InventoryItemId_Unequipped, false);
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             func_8008616C(2, true, 0, arg2, true);
             break;
 
@@ -1369,18 +1369,17 @@ void func_80088D34(s32 idx) // 0x80088D34
 
 s32 Chara_Spawn(s32 charaId, s32 arg1, s32 posX, s32 posZ, s16 posY, u32 stateStep) // 0x80088D78
 {
-	#define HAS_FLAG(ptr, idx) \
-		((((u32*)ptr)[(idx) >> 5] >> ((idx) & 0x1F)) & (1 << 0))
+    #define HAS_FLAG(ptr, idx) \
+        ((((u32*)ptr)[(idx) >> 5] >> ((idx) & 0x1F)) & (1 << 0))
 
-	#define SET_FLAG(ptr, idx) \
-		((((u32*)ptr)[(idx) >> 5] |= (1 << 0) << ((idx) & 0x1F)))
-	
+    #define SET_FLAG(ptr, idx) \
+        ((((u32*)ptr)[(idx) >> 5] |= (1 << 0) << ((idx) & 0x1F)))
+
     s_func_800699F8 sp10;
-    s32 i;
-    s32 var_a0;
-    s32 arg1_1;
+    s32             i;
+    s32             var_a0;
+    s32             arg1_1;
     s_SubCharacter* var_s6;
-
 
     if (charaId <= Chara_MonsterCybil && arg1 < 0x40)
     {
@@ -1391,7 +1390,7 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, s32 posX, s32 posZ, s16 posY, u32 stateSt
     {
         arg1_1 = 0;
     }
-    
+
     if (charaId <= Chara_MonsterCybil)
     {
         if (HAS_FLAG(&g_SysWork.field_228C, arg1_1))
@@ -1403,10 +1402,10 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, s32 posX, s32 posZ, s16 posY, u32 stateSt
                     return i;
                 }
             }
-            
+
             return NPC_COUNT_MAX;
         }
-        
+
         var_a0 = 0;
         for (i = 0; i < NPC_COUNT_MAX; i++)
         {
@@ -1415,7 +1414,7 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, s32 posX, s32 posZ, s16 posY, u32 stateSt
                 var_a0++;
             }
         }
-        
+
         if (var_a0 >= g_SysWork.field_2280)
         {
             return 0;
@@ -1431,30 +1430,30 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, s32 posX, s32 posZ, s16 posY, u32 stateSt
         }
 
         bzero(&g_SysWork.npcs_1A0[i], sizeof(s_SubCharacter));
-        
+
         g_SysWork.npcs_1A0[i].model_0.charaId_0 = charaId;
         g_SysWork.npcs_1A0[i].field_40 = arg1_1;
-        
+
         if (charaId <= Chara_MonsterCybil && arg1 < 0x40)
         {
             SET_FLAG(&g_SysWork.field_228C, arg1_1);
         }
 
         SET_FLAG(&g_SysWork.field_2290, i);
-        
+
         g_SysWork.npcs_1A0[i].model_0.state_2     = 0;
         g_SysWork.npcs_1A0[i].model_0.stateStep_3 = stateStep;
         g_SysWork.npcs_1A0[i].position_18.vx      = posX;
-        
+
         func_800699F8(&sp10, posX, posZ);
-        
+
         g_SysWork.npcs_1A0[i].position_18.vy = sp10.groundHeight_0;
         g_SysWork.npcs_1A0[i].position_18.vz = posZ;
         g_SysWork.npcs_1A0[i].rotation_24.vy = posY;
 
         var_s6                          = &g_SysWork.npcs_1A0[i];
         var_s6->model_0.anim_4.flags_2 |= 2;
-        
+
         return i;
     }
 

@@ -3110,7 +3110,7 @@ s32 func_800382B0(s32 arg0) // 0x800382B0
     return NO_VALUE;
 }
 
-// Improperly matched.
+// TODO: Improperly matched.
 // Scratch: https://decomp.me/scratch/nlBHl
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80032D1C", func_800382EC); // 0x800382EC
 
