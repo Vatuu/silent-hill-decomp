@@ -1424,7 +1424,7 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, s32 posX, s32 posZ, s16 posY, u32 stateSt
 
     for(i = 0; i < NPC_COUNT_MAX; i++)
     {
-        // Skip NPC slot if empty.
+        // Skip NPC slot if occupied.
         if (g_SysWork.npcs_1A0[i].model_0.charaId_0 != Chara_None)
         {
             continue;
@@ -1442,9 +1442,9 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, s32 posX, s32 posZ, s16 posY, u32 stateSt
 
         SET_FLAG(&g_SysWork.field_2290, i);
         
-        g_SysWork.npcs_1A0[i].model_0.state_2 = 0;
+        g_SysWork.npcs_1A0[i].model_0.state_2     = 0;
         g_SysWork.npcs_1A0[i].model_0.stateStep_3 = stateStep;
-        g_SysWork.npcs_1A0[i].position_18.vx = posX;
+        g_SysWork.npcs_1A0[i].position_18.vx      = posX;
         
         func_800699F8(&sp10, posX, posZ);
         
@@ -1452,7 +1452,7 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, s32 posX, s32 posZ, s16 posY, u32 stateSt
         g_SysWork.npcs_1A0[i].position_18.vz = posZ;
         g_SysWork.npcs_1A0[i].rotation_24.vy = posY;
 
-        var_s6 = &g_SysWork.npcs_1A0[i];
+        var_s6                          = &g_SysWork.npcs_1A0[i];
         var_s6->model_0.anim_4.flags_2 |= 2;
         
         return i;
