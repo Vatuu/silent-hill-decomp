@@ -2570,3 +2570,7 @@ smf_song                                    = 0x800C8B00;
 g_MapOverlayHeader                          = 0x800C957C; // type:MapOverlayHeader size:0x84C - size incomplete
 D_800FE5F8                                  = 0x800FE5F8; // ignore:True - Fixes fake missmatch in `Demo_Update`.
 hack_D_800FE5FC_fix                         = 0x800FE5FC; // ignore:true - Part of temp memory block at 800FDE00, has to be unsymbolized for C to match.
+g_screnFadeTimestep = 0x800B5C30; // type:s32
+g_screenFadeProgress = 0x800A8E94; // type:s32
+g_oldScreenFadeProgress = 0x800B5C28; // type:s32
+Gfx_FadeInProgress = 0x800325F8; // type:func

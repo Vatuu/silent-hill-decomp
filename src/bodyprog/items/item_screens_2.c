@@ -110,7 +110,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
 
             g_IntervalVBlanks = 1;
             g_Gfx_ScreenFade  = 6;
-            D_800B5C30        = FP_TIME(3.0f);
+            g_screnFadeTimestep        = FP_TIME(3.0f);
 
             func_80037188();
 
@@ -268,7 +268,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
 
             g_IntervalVBlanks                  = 1;
             g_Gfx_ScreenFade                   = 6;
-            D_800B5C30                         = FP_TIME(3.0f);
+            g_screnFadeTimestep                         = FP_TIME(3.0f);
             g_GameWork.background2dColor_R_58C = 0;
             g_GameWork.background2dColor_G_58D = 0;
             g_GameWork.background2dColor_B_58E = 0;
@@ -332,7 +332,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             break;
 
         case 24:
-            if ((g_Gfx_ScreenFade & 0x7) == 5)
+            if (GFX_SCREEN_FADE_COMPLETE())
             {
                 Gfx_ScreenRefresh(320, 0);
                 GameFs_SaveLoadBinLoad();
@@ -343,7 +343,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             break;
 
         case 25:
-            if ((g_Gfx_ScreenFade & 0x7) == 5)
+            if (GFX_SCREEN_FADE_COMPLETE())
             {
                 if (Fs_QueueDoThingWhenEmpty())
                 {

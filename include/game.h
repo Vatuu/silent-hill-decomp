@@ -65,6 +65,25 @@ struct _SubCharacter;
 #define WeaponId_AttackVariantGet(weaponId, type) \
 	((weaponId) + ((type) * 10))
 
+/** @brief Screen fade state machine indices. The flow is not linear */
+typedef enum _ScreenFade
+{
+    ScreenFade_Reset            = 0,
+    ScreenFade_None             = 1,
+    ScreenFade_FadeOutStart     = 2,
+    ScreenFade_FadeOutSteps     = 3,
+    ScreenFade_ResetTimeStep    = 4,
+    ScreenFade_FadeOutComplete  = 5,
+
+    ScreenFade_FadeInStart      = 6,
+    ScreenFade_FadeInSteps      = 7,
+    /* When FadeIn completes it goes to 0 (Reset) */
+    ScreenFade_Flag_White       = (1 << 3),
+    /* A lot of code uses & 7 to check for status while ignoring the white flag */
+    ScreenFade_Status           = 7,
+} e_ScreenFade;
+#define GFX_SCREEN_FADE_COMPLETE() ((g_Gfx_ScreenFade & ScreenFade_Status) == ScreenFade_FadeOutComplete)
+
 /** Each map has its own messages, with the first 15 hardcoded to be the same. */
 typedef enum _MapMsgIdx
 {
