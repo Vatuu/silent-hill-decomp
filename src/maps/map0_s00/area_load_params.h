@@ -1,710 +1,710 @@
    {
-      .char_x_0            = Q19_12(-6.199951f),
+      .char_x_0            = FP_METER(-6.199951f),
       .mapIdx_4_0          = 1,
       .field_4_5           = 0,
       .loadingScreenId_4_9 = 1,
       .field_4_12          = 0,
-      .rotationY_4_16      = 128,
+      .rotationY_4_16      = FP_ANGLE_PACKED(180.0f),
       .field_4_24          = 0,
-      .char_z_8            = Q19_12(160.5f)
+      .char_z_8            = FP_METER(160.5f)
    },
    {
-      .char_x_0       = Q19_12(-58.0f),
+      .char_x_0       = FP_METER(-58.0f),
       .mapIdx_4_0     = 0,
       .field_4_5      = 0,
       .loadingScreenId_4_9 = LoadingScreenId_None,
       .field_4_12     = 0,
-      .rotationY_4_16 = 64,
+      .rotationY_4_16 = FP_ANGLE_PACKED(90.0f),
       .field_4_24     = 0,
-      .char_z_8       = Q19_12(47.0f)
+      .char_z_8       = FP_METER(47.0f)
    },
    {
-      .char_x_0       = Q19_12(-37.099854f),
+      .char_x_0       = FP_METER(-37.099854f),
       .mapIdx_4_0     = 0,
       .field_4_5      = 0,
       .loadingScreenId_4_9 = LoadingScreenId_None,
       .field_4_12     = 0,
-      .rotationY_4_16 = 192,
+      .rotationY_4_16 = FP_ANGLE_PACKED(270.0f),
       .field_4_24     = 0,
-      .char_z_8       = Q19_12(124.399902f)
-   },
-   {
-      .char_x_0       = Q19_12(-252.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 128, 
-      .field_4_24     = 0, 
-      .char_z_8       = Q19_12(222.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(2.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 192, 
-      .field_4_24     = 0, 
-      .char_z_8       = Q19_12(271.399902f) 
-   },
-   {
-      .char_x_0       = Q19_12(30.099854f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 192, 
-      .field_4_24     = 12, 
-      .char_z_8       = Q19_12(154.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(-6.199951f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 4, 
-      .field_4_24     = 4, 
-      .char_z_8       = Q19_12(160.5f) 
-   },
-   {
-      .char_x_0       = Q19_12(-10.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 8, 
-      .field_4_24     = 4, 
-      .char_z_8       = Q19_12(144.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(4.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 48, 
-      .field_4_24     = 4, 
-      .char_z_8       = Q19_12(144.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(21.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 20, 
-      .field_4_24     = 4, 
-      .char_z_8       = Q19_12(144.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(-62.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 128, 
-      .field_4_24     = 96, 
-      .char_z_8       = Q19_12(90.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(-62.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 0, 
-      .field_4_24     = 96, 
-      .char_z_8       = Q19_12(100.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(-67.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 192, 
-      .field_4_24     = 104, 
-      .char_z_8       = Q19_12(115.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(-21.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 64, 
-      .field_4_24     = 200, 
-      .char_z_8       = Q19_12(120.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(-62.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 224, 
-      .field_4_24     = 128, 
-      .char_z_8       = Q19_12(126.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(-56.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 4, 
-      .field_4_24     = 24, 
-      .char_z_8       = Q19_12(126.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(-57.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 4, 
-      .field_4_24     = 16, 
-      .char_z_8       = Q19_12(116.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(-57.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 4, 
-      .field_4_24     = 16, 
-      .char_z_8       = Q19_12(108.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(-57.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 192, 
-      .field_4_24     = 16, 
-      .char_z_8       = Q19_12(47.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(-96.799805f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 64, 
-      .field_4_24     = 16, 
-      .char_z_8       = Q19_12(247.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(-110.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 0, 
-      .field_4_24     = 16, 
-      .char_z_8       = Q19_12(224.199951f) 
-   },
-   {
-      .char_x_0       = Q19_12(-190.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 0, 
-      .field_4_24     = 16, 
-      .char_z_8       = Q19_12(224.399902f) 
-   },
-   {
-      .char_x_0       = Q19_12(-270.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 128, 
-      .field_4_24     = 16, 
-      .char_z_8       = Q19_12(256.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(-256.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 192, 
-      .field_4_24     = 16, 
-      .char_z_8       = Q19_12(244.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(-260.5f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 64, 
-      .field_4_24     = 16, 
-      .char_z_8       = Q19_12(234.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(-255.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 64, 
-      .field_4_24     = 16, 
-      .char_z_8       = Q19_12(218.5f) 
-   },
-   {
-      .char_x_0       = Q19_12(-252.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 128, 
-      .field_4_24     = 16, 
-      .char_z_8       = Q19_12(222.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(-185.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 4, 
-      .field_4_24     = 4, 
-      .char_z_8       = Q19_12(227.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(-257.269775f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 38, 
-      .field_4_24     = 6, 
-      .char_z_8       = Q19_12(244.529785f) 
-   },
-   {
-      .char_x_0       = Q19_12(-257.769775f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 102, 
-      .field_4_24     = 14, 
-      .char_z_8       = Q19_12(243.679932f) 
-   },
-   {
-      .char_x_0       = Q19_12(-258.72998f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 166, 
-      .field_4_24     = 6, 
-      .char_z_8       = Q19_12(243.469971f) 
-   },
-   {
-      .char_x_0       = Q19_12(-258.22998f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 230, 
-      .field_4_24     = 14, 
-      .char_z_8       = Q19_12(244.319824f) 
-   },
-   {
-      .char_x_0       = Q19_12(-261.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 6, 
-      .field_4_24     = 6, 
-      .char_z_8       = Q19_12(245.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(-259.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 6, 
-      .field_4_24     = 6, 
-      .char_z_8       = Q19_12(237.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(-258.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 6, 
-      .field_4_24     = 6, 
-      .char_z_8       = Q19_12(229.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(-252.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 6, 
-      .field_4_24     = 6, 
-      .char_z_8       = Q19_12(228.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(-249.75f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 182, 
-      .field_4_24     = 4, 
-      .char_z_8       = Q19_12(217.899902f) 
-   },
-   {
-      .char_x_0       = Q19_12(-249.5f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 229, 
-      .field_4_24     = 4, 
-      .char_z_8       = Q19_12(218.349854f) 
-   },
-   {
-      .char_x_0       = Q19_12(-259.5f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 128, 
-      .field_4_24     = 24, 
-      .char_z_8       = Q19_12(241.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(-268.5f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 0, 
-      .field_4_24     = 8, 
-      .char_z_8       = Q19_12(245.799805f) 
-   },
-   {
-      .char_x_0       = Q19_12(-267.899902f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 58, 
-      .field_4_24     = 6, 
-      .char_z_8       = Q19_12(245.399902f) 
-   },
-   {
-      .char_x_0       = Q19_12(-268.399902f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 112, 
-      .field_4_24     = 8, 
-      .char_z_8       = Q19_12(244.799805f) 
-   },
-   {
-      .char_x_0       = Q19_12(-94.099854f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 0, 
-      .field_4_24     = 10, 
-      .char_z_8       = Q19_12(246.799805f) 
-   },
-   {
-      .char_x_0       = Q19_12(-94.099854f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 128, 
-      .field_4_24     = 10, 
-      .char_z_8       = Q19_12(246.799805f) 
-   },
-   {
-      .char_x_0       = Q19_12(-93.599854f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 64, 
-      .field_4_24     = 5, 
-      .char_z_8       = Q19_12(246.599854f) 
-   },
-   {
-      .char_x_0       = Q19_12(-93.599854f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 192, 
-      .field_4_24     = 5, 
-      .char_z_8       = Q19_12(246.599854f) 
-   },
-   {
-      .char_x_0       = Q19_12(-94.099854f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 0, 
-      .field_4_24     = 10, 
-      .char_z_8       = Q19_12(246.399902f) 
-   },
-   {
-      .char_x_0       = Q19_12(-94.099854f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 128, 
-      .field_4_24     = 10, 
-      .char_z_8       = Q19_12(246.399902f) 
-   },
-   {
-      .char_x_0       = Q19_12(-94.099854f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 64, 
-      .field_4_24     = 5, 
-      .char_z_8       = Q19_12(246.599854f) 
-   },
-   {
-      .char_x_0       = Q19_12(-94.099854f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 192, 
-      .field_4_24     = 5, 
-      .char_z_8       = Q19_12(246.599854f) 
-   },
-   {
-      .char_x_0       = Q19_12(-94.599854f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 64, 
-      .field_4_24     = 5, 
-      .char_z_8       = Q19_12(246.599854f) 
-   },
-   {
-      .char_x_0       = Q19_12(-94.599854f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 192, 
-      .field_4_24     = 5, 
-      .char_z_8       = Q19_12(246.599854f) 
-   },
-   {
-      .char_x_0       = Q19_12(-12.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 28, 
-      .field_4_24     = 19, 
-      .char_z_8       = Q19_12(205.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(-13.599854f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 143, 
-      .field_4_24     = 24, 
-      .char_z_8       = Q19_12(203.5f) 
-   },
-   {
-      .char_x_0       = Q19_12(-11.599854f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 96, 
-      .field_4_24     = 16, 
-      .char_z_8       = Q19_12(203.399902f) 
-   },
-   {
-      .char_x_0       = Q19_12(-9.5f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 128, 
-      .field_4_24     = 8, 
-      .char_z_8       = Q19_12(220.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(-8.5f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 146, 
-      .field_4_24     = 9, 
-      .char_z_8       = Q19_12(219.799805f) 
-   },
-   {
-      .char_x_0       = Q19_12(-7.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 128, 
-      .field_4_24     = 16, 
-      .char_z_8       = Q19_12(219.5f) 
-   },
-   {
-      .char_x_0       = Q19_12(-5.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 141, 
-      .field_4_24     = 16, 
-      .char_z_8       = Q19_12(219.099854f) 
-   },
-   {
-      .char_x_0       = Q19_12(-2.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 109, 
-      .field_4_24     = 35, 
-      .char_z_8       = Q19_12(219.799805f) 
-   },
-   {
-      .char_x_0       = Q19_12(1.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 143, 
-      .field_4_24     = 17, 
-      .char_z_8       = Q19_12(220.399902f) 
-   },
-   {
-      .char_x_0       = Q19_12(2.5f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 100, 
-      .field_4_24     = 9, 
-      .char_z_8       = Q19_12(220.399902f) 
-   },
-   {
-      .char_x_0       = Q19_12(5.5f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 155, 
-      .field_4_24     = 9, 
-      .char_z_8       = Q19_12(220.399902f) 
-   },
-   {
-      .char_x_0       = Q19_12(7.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 120, 
-      .field_4_24     = 16, 
-      .char_z_8       = Q19_12(220.199951f) 
-   },
-   {
-      .char_x_0       = Q19_12(10.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 150, 
-      .field_4_24     = 36, 
-      .char_z_8       = Q19_12(219.199951f) 
-   },
-   {
-      .char_x_0       = Q19_12(13.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 128, 
-      .field_4_24     = 16, 
-      .char_z_8       = Q19_12(218.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(15.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 109, 
-      .field_4_24     = 17, 
-      .char_z_8       = Q19_12(218.5f) 
-   },
-   {
-      .char_x_0       = Q19_12(17.0f), 
-      .mapIdx_4_0     = 0, 
-      .field_4_5      = 0, 
-      .loadingScreenId_4_9 = LoadingScreenId_None, 
-      .field_4_12     = 0, 
-      .rotationY_4_16 = 128, 
-      .field_4_24     = 16, 
-      .char_z_8       = Q19_12(219.0f) 
-   },
-   {
-      .char_x_0       = Q19_12(4.0f),
+      .char_z_8       = FP_METER(124.399902f)
+   },
+   {
+      .char_x_0       = FP_METER(-252.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(180.0f),
+      .field_4_24     = 0,
+      .char_z_8       = FP_METER(222.0f)
+   },
+   {
+      .char_x_0       = FP_METER(2.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(270.0f),
+      .field_4_24     = 0,
+      .char_z_8       = FP_METER(271.399902f)
+   },
+   {
+      .char_x_0       = FP_METER(30.099854f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(270.0f),
+      .field_4_24     = 12,
+      .char_z_8       = FP_METER(154.0f)
+   },
+   {
+      .char_x_0       = FP_METER(-6.199951f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(6.0f),
+      .field_4_24     = 4,
+      .char_z_8       = FP_METER(160.5f)
+   },
+   {
+      .char_x_0       = FP_METER(-10.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(12.0f),
+      .field_4_24     = 4,
+      .char_z_8       = FP_METER(144.0f)
+   },
+   {
+      .char_x_0       = FP_METER(4.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(68.0f),
+      .field_4_24     = 4,
+      .char_z_8       = FP_METER(144.0f)
+   },
+   {
+      .char_x_0       = FP_METER(21.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(29.0f),
+      .field_4_24     = 4,
+      .char_z_8       = FP_METER(144.0f)
+   },
+   {
+      .char_x_0       = FP_METER(-62.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(180.0f),
+      .field_4_24     = 96,
+      .char_z_8       = FP_METER(90.0f)
+   },
+   {
+      .char_x_0       = FP_METER(-62.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
+      .field_4_24     = 96,
+      .char_z_8       = FP_METER(100.0f)
+   },
+   {
+      .char_x_0       = FP_METER(-67.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(270.0f),
+      .field_4_24     = 104,
+      .char_z_8       = FP_METER(115.0f)
+   },
+   {
+      .char_x_0       = FP_METER(-21.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(90.0f),
+      .field_4_24     = 200,
+      .char_z_8       = FP_METER(120.0f)
+   },
+   {
+      .char_x_0       = FP_METER(-62.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(315.0f),
+      .field_4_24     = 128,
+      .char_z_8       = FP_METER(126.0f)
+   },
+   {
+      .char_x_0       = FP_METER(-56.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(6.0f),
+      .field_4_24     = 24,
+      .char_z_8       = FP_METER(126.0f)
+   },
+   {
+      .char_x_0       = FP_METER(-57.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(6.0f),
+      .field_4_24     = 16,
+      .char_z_8       = FP_METER(116.0f)
+   },
+   {
+      .char_x_0       = FP_METER(-57.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(6.0f),
+      .field_4_24     = 16,
+      .char_z_8       = FP_METER(108.0f)
+   },
+   {
+      .char_x_0       = FP_METER(-57.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(270.0f),
+      .field_4_24     = 16,
+      .char_z_8       = FP_METER(47.0f)
+   },
+   {
+      .char_x_0       = FP_METER(-96.799805f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(90.0f),
+      .field_4_24     = 16,
+      .char_z_8       = FP_METER(247.0f)
+   },
+   {
+      .char_x_0       = FP_METER(-110.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
+      .field_4_24     = 16,
+      .char_z_8       = FP_METER(224.199951f)
+   },
+   {
+      .char_x_0       = FP_METER(-190.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
+      .field_4_24     = 16,
+      .char_z_8       = FP_METER(224.399902f)
+   },
+   {
+      .char_x_0       = FP_METER(-270.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(180.0f),
+      .field_4_24     = 16,
+      .char_z_8       = FP_METER(256.0f)
+   },
+   {
+      .char_x_0       = FP_METER(-256.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(270.0f),
+      .field_4_24     = 16,
+      .char_z_8       = FP_METER(244.0f)
+   },
+   {
+      .char_x_0       = FP_METER(-260.5f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(90.0f),
+      .field_4_24     = 16,
+      .char_z_8       = FP_METER(234.0f)
+   },
+   {
+      .char_x_0       = FP_METER(-255.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(90.0f),
+      .field_4_24     = 16,
+      .char_z_8       = FP_METER(218.5f)
+   },
+   {
+      .char_x_0       = FP_METER(-252.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(180.0f),
+      .field_4_24     = 16,
+      .char_z_8       = FP_METER(222.0f)
+   },
+   {
+      .char_x_0       = FP_METER(-185.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(6.0f),
+      .field_4_24     = 4,
+      .char_z_8       = FP_METER(227.0f)
+   },
+   {
+      .char_x_0       = FP_METER(-257.269775f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(54.0f),
+      .field_4_24     = 6,
+      .char_z_8       = FP_METER(244.529785f)
+   },
+   {
+      .char_x_0       = FP_METER(-257.769775f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(144.0f),
+      .field_4_24     = 14,
+      .char_z_8       = FP_METER(243.679932f)
+   },
+   {
+      .char_x_0       = FP_METER(-258.72998f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(234.0f),
+      .field_4_24     = 6,
+      .char_z_8       = FP_METER(243.469971f)
+   },
+   {
+      .char_x_0       = FP_METER(-258.22998f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(324.0f),
+      .field_4_24     = 14,
+      .char_z_8       = FP_METER(244.319824f)
+   },
+   {
+      .char_x_0       = FP_METER(-261.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(9.0),
+      .field_4_24     = 6,
+      .char_z_8       = FP_METER(245.0f)
+   },
+   {
+      .char_x_0       = FP_METER(-259.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(9.0f),
+      .field_4_24     = 6,
+      .char_z_8       = FP_METER(237.0f)
+   },
+   {
+      .char_x_0       = FP_METER(-258.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(9.0f),
+      .field_4_24     = 6,
+      .char_z_8       = FP_METER(229.0f)
+   },
+   {
+      .char_x_0       = FP_METER(-252.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(9.0),
+      .field_4_24     = 6,
+      .char_z_8       = FP_METER(228.0f)
+   },
+   {
+      .char_x_0       = FP_METER(-249.75f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(256.0f),
+      .field_4_24     = 4,
+      .char_z_8       = FP_METER(217.899902f)
+   },
+   {
+      .char_x_0       = FP_METER(-249.5f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(323.0f),
+      .field_4_24     = 4,
+      .char_z_8       = FP_METER(218.349854f)
+   },
+   {
+      .char_x_0       = FP_METER(-259.5f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(180.0f),
+      .field_4_24     = 24,
+      .char_z_8       = FP_METER(241.0f)
+   },
+   {
+      .char_x_0       = FP_METER(-268.5f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
+      .field_4_24     = 8,
+      .char_z_8       = FP_METER(245.799805f)
+   },
+   {
+      .char_x_0       = FP_METER(-267.899902f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = 58,
+      .field_4_24     = 6,
+      .char_z_8       = FP_METER(245.399902f)
+   },
+   {
+      .char_x_0       = FP_METER(-268.399902f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = 112,
+      .field_4_24     = 8,
+      .char_z_8       = FP_METER(244.799805f)
+   },
+   {
+      .char_x_0       = FP_METER(-94.099854f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
+      .field_4_24     = 10,
+      .char_z_8       = FP_METER(246.799805f)
+   },
+   {
+      .char_x_0       = FP_METER(-94.099854f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(180.0f),
+      .field_4_24     = 10,
+      .char_z_8       = FP_METER(246.799805f)
+   },
+   {
+      .char_x_0       = FP_METER(-93.599854f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(90.0f),
+      .field_4_24     = 5,
+      .char_z_8       = FP_METER(246.599854f)
+   },
+   {
+      .char_x_0       = FP_METER(-93.599854f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(270.0f),
+      .field_4_24     = 5,
+      .char_z_8       = FP_METER(246.599854f)
+   },
+   {
+      .char_x_0       = FP_METER(-94.099854f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
+      .field_4_24     = 10,
+      .char_z_8       = FP_METER(246.399902f)
+   },
+   {
+      .char_x_0       = FP_METER(-94.099854f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(180.0f),
+      .field_4_24     = 10,
+      .char_z_8       = FP_METER(246.399902f)
+   },
+   {
+      .char_x_0       = FP_METER(-94.099854f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(90.0f),
+      .field_4_24     = 5,
+      .char_z_8       = FP_METER(246.599854f)
+   },
+   {
+      .char_x_0       = FP_METER(-94.099854f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(270.0f),
+      .field_4_24     = 5,
+      .char_z_8       = FP_METER(246.599854f)
+   },
+   {
+      .char_x_0       = FP_METER(-94.599854f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(90.0f),
+      .field_4_24     = 5,
+      .char_z_8       = FP_METER(246.599854f)
+   },
+   {
+      .char_x_0       = FP_METER(-94.599854f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(270.0f),
+      .field_4_24     = 5,
+      .char_z_8       = FP_METER(246.599854f)
+   },
+   {
+      .char_x_0       = FP_METER(-12.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = 28,
+      .field_4_24     = 19,
+      .char_z_8       = FP_METER(205.0f)
+   },
+   {
+      .char_x_0       = FP_METER(-13.599854f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = 143,
+      .field_4_24     = 24,
+      .char_z_8       = FP_METER(203.5f)
+   },
+   {
+      .char_x_0       = FP_METER(-11.599854f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = 96,
+      .field_4_24     = 16,
+      .char_z_8       = FP_METER(203.399902f)
+   },
+   {
+      .char_x_0       = FP_METER(-9.5f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(180.0f),
+      .field_4_24     = 8,
+      .char_z_8       = FP_METER(220.0f)
+   },
+   {
+      .char_x_0       = FP_METER(-8.5f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = 146,
+      .field_4_24     = 9,
+      .char_z_8       = FP_METER(219.799805f)
+   },
+   {
+      .char_x_0       = FP_METER(-7.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(180.0f),
+      .field_4_24     = 16,
+      .char_z_8       = FP_METER(219.5f)
+   },
+   {
+      .char_x_0       = FP_METER(-5.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = 141,
+      .field_4_24     = 16,
+      .char_z_8       = FP_METER(219.099854f)
+   },
+   {
+      .char_x_0       = FP_METER(-2.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = 109,
+      .field_4_24     = 35,
+      .char_z_8       = FP_METER(219.799805f)
+   },
+   {
+      .char_x_0       = FP_METER(1.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = 143,
+      .field_4_24     = 17,
+      .char_z_8       = FP_METER(220.399902f)
+   },
+   {
+      .char_x_0       = FP_METER(2.5f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = 100,
+      .field_4_24     = 9,
+      .char_z_8       = FP_METER(220.399902f)
+   },
+   {
+      .char_x_0       = FP_METER(5.5f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = 155,
+      .field_4_24     = 9,
+      .char_z_8       = FP_METER(220.399902f)
+   },
+   {
+      .char_x_0       = FP_METER(7.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = 120,
+      .field_4_24     = 16,
+      .char_z_8       = FP_METER(220.199951f)
+   },
+   {
+      .char_x_0       = FP_METER(10.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = 150,
+      .field_4_24     = 36,
+      .char_z_8       = FP_METER(219.199951f)
+   },
+   {
+      .char_x_0       = FP_METER(13.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(180.0f),
+      .field_4_24     = 16,
+      .char_z_8       = FP_METER(218.0f)
+   },
+   {
+      .char_x_0       = FP_METER(15.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = 109,
+      .field_4_24     = 17,
+      .char_z_8       = FP_METER(218.5f)
+   },
+   {
+      .char_x_0       = FP_METER(17.0f),
+      .mapIdx_4_0     = 0,
+      .field_4_5      = 0,
+      .loadingScreenId_4_9 = LoadingScreenId_None,
+      .field_4_12     = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(180.0f),
+      .field_4_24     = 16,
+      .char_z_8       = FP_METER(219.0f)
+   },
+   {
+      .char_x_0       = FP_METER(4.0f),
       .mapIdx_4_0     = 0,
       .field_4_5      = 0,
       .loadingScreenId_4_9 = LoadingScreenId_None,
       .field_4_12     = 0,
       .rotationY_4_16 = 60,
       .field_4_24     = 36,
-      .char_z_8       = Q19_12(220.0f)
+      .char_z_8       = FP_METER(220.0f)
    },
    {
-      .char_x_0       = Q19_12(-184.5f),
+      .char_x_0       = FP_METER(-184.5f),
       .mapIdx_4_0     = 0,
       .field_4_5      = 0,
       .loadingScreenId_4_9 = LoadingScreenId_None,
       .field_4_12     = 0,
-      .rotationY_4_16 = 2,
+      .rotationY_4_16 = FP_ANGLE_PACKED(3.0f),
       .field_4_24     = 4,
-      .char_z_8       = Q19_12(227.0f)
+      .char_z_8       = FP_METER(227.0f)
    },
    {
-      .char_x_0       = Q19_12(-185.0f),
+      .char_x_0       = FP_METER(-185.0f),
       .mapIdx_4_0     = 0,
       .field_4_5      = 0,
       .loadingScreenId_4_9 = LoadingScreenId_None,
       .field_4_12     = 0,
-      .rotationY_4_16 = 192,
+      .rotationY_4_16 = FP_ANGLE_PACKED(270.0f),
       .field_4_24     = 16,
-      .char_z_8       = Q19_12(227.0f)
+      .char_z_8       = FP_METER(227.0f)
    },

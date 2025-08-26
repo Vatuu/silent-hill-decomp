@@ -4,7 +4,7 @@
       .field_4_5      = 0,
       .loadingScreenId_4_9 = LoadingScreenId_None,
       .field_4_12     = 0,
-      .rotationY_4_16 = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
       .field_4_24     = 0,
       .char_z_8       = FP_METER(260.0f) 
    },
@@ -14,7 +14,7 @@
       .field_4_5      = 0,
       .loadingScreenId_4_9 = LoadingScreenId_None,
       .field_4_12     = 0,
-      .rotationY_4_16 = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
       .field_4_24     = 0,
       .char_z_8       = FP_METER(274.099854f) 
    },
@@ -24,7 +24,7 @@
       .field_4_5      = 0,
       .loadingScreenId_4_9 = LoadingScreenId_None,
       .field_4_12     = 0,
-      .rotationY_4_16 = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
       .field_4_24     = 0,
       .char_z_8       = FP_METER(267.299805f) 
    },
@@ -34,7 +34,7 @@
       .field_4_5      = 0,
       .loadingScreenId_4_9 = LoadingScreenId_None,
       .field_4_12     = 0,
-      .rotationY_4_16 = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
       .field_4_24     = 0,
       .char_z_8       = FP_METER(267.299805f) 
    },
@@ -44,7 +44,7 @@
       .field_4_5      = 0,
       .loadingScreenId_4_9 = LoadingScreenId_None,
       .field_4_12     = 0,
-      .rotationY_4_16 = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
       .field_4_24     = 0,
       .char_z_8       = FP_METER(273.899902f) 
    },
@@ -54,7 +54,7 @@
       .field_4_5      = 0,
       .loadingScreenId_4_9 = LoadingScreenId_None,
       .field_4_12     = 0,
-      .rotationY_4_16 = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
       .field_4_24     = 32,
       .char_z_8       = FP_METER(270.5f) 
    },
@@ -64,7 +64,7 @@
       .field_4_5      = 1,
       .loadingScreenId_4_9 = LoadingScreenId_None,
       .field_4_12     = 0,
-      .rotationY_4_16 = 64,
+      .rotationY_4_16 = FP_ANGLE_PACKED(90.0f),
       .field_4_24     = 8,
       .char_z_8       = FP_METER(269.5f) 
    },
@@ -74,7 +74,7 @@
       .field_4_5      = 3,
       .loadingScreenId_4_9 = LoadingScreenId_None,
       .field_4_12     = 0,
-      .rotationY_4_16 = 192,
+      .rotationY_4_16 = FP_ANGLE_PACKED(270.0f),
       .field_4_24     = 8,
       .char_z_8       = FP_METER(56.5f) 
    },
@@ -84,7 +84,7 @@
       .field_4_5      = 0,
       .loadingScreenId_4_9 = LoadingScreenId_None,
       .field_4_12     = 0,
-      .rotationY_4_16 = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
       .field_4_24     = 4,
       .char_z_8       = FP_METER(266.5f) 
    },
@@ -94,7 +94,7 @@
       .field_4_5      = 0,
       .loadingScreenId_4_9 = LoadingScreenId_None,
       .field_4_12     = 0,
-      .rotationY_4_16 = 192,
+      .rotationY_4_16 = FP_ANGLE_PACKED(270.0f),
       .field_4_24     = 3,
       .char_z_8       = FP_METER(274.5f) 
    },
@@ -104,7 +104,7 @@
       .field_4_5      = 0,
       .loadingScreenId_4_9 = LoadingScreenId_None,
       .field_4_12     = 0,
-      .rotationY_4_16 = 192,
+      .rotationY_4_16 = FP_ANGLE_PACKED(270.0f),
       .field_4_24     = 4,
       .char_z_8       = FP_METER(265.899902f) 
    },
@@ -114,7 +114,7 @@
       .field_4_5      = 0,
       .loadingScreenId_4_9 = LoadingScreenId_None,
       .field_4_12     = 0,
-      .rotationY_4_16 = 64,
+      .rotationY_4_16 = FP_ANGLE_PACKED(90.0f),
       .field_4_24     = 12,
       .char_z_8       = FP_METER(265.699951f) 
    },
@@ -124,7 +124,7 @@
       .field_4_5      = 0,
       .loadingScreenId_4_9 = LoadingScreenId_None,
       .field_4_12     = 0,
-      .rotationY_4_16 = 192,
+      .rotationY_4_16 = FP_ANGLE_PACKED(270.0f),
       .field_4_24     = 12,
       .char_z_8       = FP_METER(265.699951f) 
    },
@@ -134,7 +134,7 @@
       .field_4_5      = 0,
       .loadingScreenId_4_9 = LoadingScreenId_None,
       .field_4_12     = 0,
-      .rotationY_4_16 = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
       .field_4_24     = 0,
       .char_z_8       = FP_METER(273.699951f) 
    },
@@ -144,7 +144,7 @@
       .field_4_5      = 0,
       .loadingScreenId_4_9 = LoadingScreenId_None,
       .field_4_12     = 0,
-      .rotationY_4_16 = 0,
+      .rotationY_4_16 = FP_ANGLE_PACKED(0.0f),
       .field_4_24     = 0,
       .char_z_8       = FP_METER(267.5f) 
    }

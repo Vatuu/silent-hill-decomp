@@ -236,6 +236,17 @@
 #define FP_ANGLE(deg) \
     (s16)((deg) * ((float)FP_TO(1, Q12_SHIFT) / 360.0f))
 
+/** @brief Converts floating-point degrees to unsigned fixed-point degrees in Q3.12 format, packed range `[0, 256]`.
+ * Mapping is direct.
+ *
+ * @note 1 degree = 0.711111 units.
+ *
+ * @param deg Degrees as `float`.
+ * @return Unsigned fixed-point degrees in Q3.12, packed range `[0, 256]` (`s16`).
+ */
+#define FP_ANGLE_PACKED(deg) \
+    (s16)((deg) * ((float)FP_TO(1, Q8_SHIFT) / 360.0f))
+
 /** @brief Converts unsigned fixed-point degrees in Q3.12, packed range `[0, 256]` to
  * unsigned fixed-point degrees in Q3.12, range `[0, 4096]`.
  * Mapping is direct.

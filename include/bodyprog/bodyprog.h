@@ -902,8 +902,8 @@ typedef struct
     s32   queueEntryIdx_4;
     s16   fileChunkCoordX_8;
     s16   fileChunkCoordZ_A;
-    s32   field_C;  // Something to do with distance from file chunk edge.
-    s32   field_10; // Something to do with distance from file chunk edge.
+    s32   field_C;  // } Something to do with distance from file chunk edge.
+    s32   field_10; // }
 } s_80043338;
 
 typedef struct
@@ -1408,7 +1408,7 @@ typedef struct
     s16* field_C;  /** Points to 0x801E5C24, data size 400. */
     s32* field_10; /** Points to 0x801E5E40, data size 28, rgb24 + code. */
     u16  field_14; /** Tpage for `setDrawTPage`, calculated from `field_18` with `func_801E4BD4`. */
-    s16  field_16; /** Clut XY. */
+    s16  field_16; /** CLUT XY. */
     u32  field_18; /** Texture UV. */
     s32  field_1C;
     s16  field_20;
@@ -1456,7 +1456,7 @@ typedef struct _SpawnInfo
 {
     q19_12 positionX_0;
     s8     charaId_4;   /** `e_CharacterId` */
-    u8     rotationY_5; /** Multiplied by 16 to get `s_SubCharacter.rotation_24.vy` value. */
+    u8     rotationY_5; /** Degrees in Q3.12, range [0, 256]. */
     s8     flags_6;     /** Copied to `stateStep_3` in `s_Model`, with `state_2 = 0`. */
     s8     unk_7;
     q19_12 positionZ_8;
@@ -3913,7 +3913,7 @@ s16 Player_AnimGetSomething();
  * @param angleTo Second angle in Q3.12, range `[0, 4096]`.
  * @param shortestAngle Shortest angle output in Q3.12, range `[0, 4096]`.
  */
-void Math_ShortestAngle(s16 angleFrom, s16 angleTo, s16* shortestAngle);
+void Math_ShortestAngleGet(s16 angleFrom, s16 angleTo, s16* shortestAngle);
 
 void func_8007FB94(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 arg2);
 
