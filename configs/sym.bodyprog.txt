@@ -109,7 +109,7 @@ g_ItemVectors                               = 0x800262FC; // type:DVECTOR size:0
 //--------------------------------------------------------------------------
 
 //------------------------------------------------------
-//--- PA: 0x00643C   VA: 0x8002AF9C   subsegment: rodata
+//--- PA: 0x006504   VA: 0x8002B064   subsegment: rodata
 //------------------------------------------------------
 hack_vcSetWatchTgtXzPos_fix                 = 0x8002B2B4; // type:s32 - Some 0x80083500 value which coincidentally points to code inside vcSetWatchTgtXzPos, probably unrelated flags or something. A jtbl is right before this which spimdisasm tries to include, breaking vcSetWatchTgtXzPos build.
 
