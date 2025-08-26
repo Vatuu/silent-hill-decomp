@@ -496,7 +496,21 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800433B8); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043554); // 0x80043554
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043578); // 0x80043578
+bool func_80043578(s_80043578* arg0, s32 arg1, s32 arg2) // 0x80043578
+{
+    s32 i;
+
+    for (i = 0; i < D_800C1178; i++)
+    {
+        if (arg0[i].field_4 != NO_VALUE &&
+            arg1 == arg0[i].field_8 && arg2 == arg0[i].field_A)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800435E4); // 0x800435E4
 

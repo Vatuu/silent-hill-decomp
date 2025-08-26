@@ -11590,7 +11590,7 @@ bool func_8007F95C() // 0x8007F95C
     return false;
 }
 
-void Math_ShortestAngle(s16 angleFrom, s16 angleTo, s16* outShortestAngle) // 0x8007FB34
+void Math_ShortestAngle(s16 angleFrom, s16 angleTo, s16* shortestAngle) // 0x8007FB34
 {
     s16 adjAngle;
 
@@ -11598,24 +11598,24 @@ void Math_ShortestAngle(s16 angleFrom, s16 angleTo, s16* outShortestAngle) // 0x
     {
         if ((angleTo - angleFrom) < FP_ANGLE(180.0f)) 
         {
-            *outShortestAngle = angleTo - angleFrom;
+            *shortestAngle = angleTo - angleFrom;
         }
         else
         {
-            adjAngle          = angleTo  - FP_ANGLE(360.0f);
-            *outShortestAngle = adjAngle - angleFrom;
+            adjAngle       = angleTo  - FP_ANGLE(360.0f);
+            *shortestAngle = adjAngle - angleFrom;
         }
     }
     else
     {
         if ((angleFrom - angleTo) < FP_ANGLE(180.0f))
         {
-            *outShortestAngle = angleTo - angleFrom;
+            *shortestAngle = angleTo - angleFrom;
         }
         else
         {
-            adjAngle          = angleFrom - FP_ANGLE(360.0f);
-            *outShortestAngle = angleTo   - adjAngle;
+            adjAngle       = angleFrom - FP_ANGLE(360.0f);
+            *shortestAngle = angleTo   - adjAngle;
         }
     }
 }

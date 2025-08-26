@@ -175,6 +175,16 @@ typedef struct
 
 typedef struct
 {
+    s8  unk_0[4];
+    s32 field_4;
+    s16 field_8;
+    s16 field_A;
+    s8  unk_C[16];
+} s_80043578;
+STATIC_ASSERT_SIZEOF(s_80043578, 28);
+
+typedef struct
+{
     VECTOR3  field_0;
     SVECTOR3 field_C;
     s8       field_12;
@@ -2177,9 +2187,11 @@ extern s_800BCE18 D_800BCE18;
 
 extern s_800C1020 D_800C1020;
 
-extern s_800C1450 D_800C1450;
+extern s32 D_800C1178;
 
 extern s_800C117C D_800C117C[];
+
+extern s_800C1450 D_800C1450;
 
 extern s8* D_800C15B0;
 
@@ -2647,6 +2659,8 @@ s32 func_80042C04(s32 idx);
 s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 clip);
 
 void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, s32 clip);
+
+bool func_80043578(s_80043578* arg0, s32 arg1, s32 arg2);
 
 /** Maybe facilitates file chunk streaming as the player moves around the map. */
 s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s16 fileChunkCoordX, s16 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, s32 clip);
