@@ -483,7 +483,7 @@ void Settings_DispEnvXYSet(DISPENV* display, s32 x, s32 y) // 0x80032524
 
 void func_800325A4(DR_MODE* arg0) // 0x800325A4
 {
-    if (g_Gfx_ScreenFade & ScreenFade_Flag_White) 
+    if (g_Gfx_ScreenFade & ScreenFadeFlag_White) 
     {
         SetDrawMode(arg0, 0, 1, 32, NULL);
     }
@@ -495,7 +495,7 @@ void func_800325A4(DR_MODE* arg0) // 0x800325A4
 
 int Gfx_FadeInProgress() // 0x800325F8
 {
-    return FP_FLOAT_TO(1.0f, Q12_SHIFT) - g_oldScreenFadeProgress;
+    return FP_FLOAT_TO(1.0f, Q12_SHIFT) - g_PrevScreenFadeProgress;
 }
 
 void func_8003260C() // 0x8003260C
@@ -506,95 +506,95 @@ void func_8003260C() // 0x8003260C
     TILE*    tile;
     DR_MODE* drMode;
 
-    drMode     = &D_800A8E5C[g_ObjectTableIdx];
-    tile       = &D_800A8E74[g_ObjectTableIdx];
-    g_oldScreenFadeProgress = g_screenFadeProgress;
+    drMode                   = &D_800A8E5C[g_ObjectTableIdx];
+    tile                     = &D_800A8E74[g_ObjectTableIdx];
+    g_PrevScreenFadeProgress = g_ScreenFadeProgress;
 
     switch (g_Gfx_ScreenFade)
     {
-        case ScreenFade_FadeOutStart:
-        case ScreenFade_FadeOutStart | ScreenFade_Flag_White:
-            g_screenFadeProgress = 0;
+        case ScreenFadeState_FadeOutStart:
+        case ScreenFadeState_FadeOutStart | ScreenFadeFlag_White:
+            g_ScreenFadeProgress = 0;
             g_Gfx_ScreenFade++;
 
-        case ScreenFade_FadeOutSteps:
-        case ScreenFade_FadeOutSteps | ScreenFade_Flag_White:
+        case ScreenFadeState_FadeOutSteps:
+        case ScreenFadeState_FadeOutSteps | ScreenFadeFlag_White:
             func_800325A4(drMode);
             queueLength = Fs_QueueGetLength();
 
-            if (g_screnFadeTimestep > FP_TIME(0.0f))
+            if (g_ScreenFadeTimestep > FP_TIME(0.0f))
             {
-                timeStep = g_screnFadeTimestep;
+                timeStep = g_ScreenFadeTimestep;
             }
             else
             {
                 timeStep = FP_TIME(3.0f) / (queueLength + 1);
             }
 
-            g_screenFadeProgress += FP_MULTIPLY_PRECISE(timeStep, g_DeltaTime1, Q12_SHIFT);
+            g_ScreenFadeProgress += FP_MULTIPLY_PRECISE(timeStep, g_DeltaTime1, Q12_SHIFT);
 
-            if (g_screenFadeProgress >= FP_TIME(1.0f)-1)
+            if (g_ScreenFadeProgress >= (FP_TIME(1.0f) - 1))
             {
-                g_screenFadeProgress = FP_TIME(1.0f)-1;
+                g_ScreenFadeProgress = FP_TIME(1.0f) - 1;
                 g_Gfx_ScreenFade++;
             }
 
-            tile->r0 = FP_FROM(g_screenFadeProgress, Q4_SHIFT);
-            tile->g0 = FP_FROM(g_screenFadeProgress, Q4_SHIFT);
-            tile->b0 = FP_FROM(g_screenFadeProgress, Q4_SHIFT);
+            tile->r0 = FP_FROM(g_ScreenFadeProgress, Q4_SHIFT);
+            tile->g0 = FP_FROM(g_ScreenFadeProgress, Q4_SHIFT);
+            tile->b0 = FP_FROM(g_ScreenFadeProgress, Q4_SHIFT);
             break;
 
-        case ScreenFade_ResetTimeStep:
-        case ScreenFade_ResetTimeStep | ScreenFade_Flag_White:
-            g_screnFadeTimestep = FP_TIME(0.0f);
+        case ScreenFadeState_ResetTimeStep:
+        case ScreenFadeState_ResetTimeStep | ScreenFadeFlag_White:
+            g_ScreenFadeTimestep = FP_TIME(0.0f);
 
-        case ScreenFade_FadeInStart:
-        case ScreenFade_FadeInStart | ScreenFade_Flag_White:
-            g_screenFadeProgress = 0xFFF;
+        case ScreenFadeState_FadeInStart:
+        case ScreenFadeState_FadeInStart | ScreenFadeFlag_White:
+            g_ScreenFadeProgress = 0xFFF;
             g_Gfx_ScreenFade++;
 
-        case ScreenFade_FadeOutComplete:
-        case ScreenFade_FadeOutComplete | ScreenFade_Flag_White:
+        case ScreenFadeState_FadeOutComplete:
+        case ScreenFadeState_FadeOutComplete | ScreenFadeFlag_White:
             func_800325A4(drMode);
-            tile->r0 = FP_FROM(g_screenFadeProgress, Q4_SHIFT);
-            tile->g0 = FP_FROM(g_screenFadeProgress, Q4_SHIFT);
-            tile->b0 = FP_FROM(g_screenFadeProgress, Q4_SHIFT);
+            tile->r0 = FP_FROM(g_ScreenFadeProgress, Q4_SHIFT);
+            tile->g0 = FP_FROM(g_ScreenFadeProgress, Q4_SHIFT);
+            tile->b0 = FP_FROM(g_ScreenFadeProgress, Q4_SHIFT);
             break;
 
-        case ScreenFade_FadeInSteps:
-        case ScreenFade_FadeInSteps | ScreenFade_Flag_White:
+        case ScreenFadeState_FadeInSteps:
+        case ScreenFadeState_FadeInSteps | ScreenFadeFlag_White:
             func_800325A4(drMode);
 
-            if (g_screnFadeTimestep > FP_TIME(0.0f))
+            if (g_ScreenFadeTimestep > FP_TIME(0.0f))
             {
-                timeStep = g_screnFadeTimestep;
+                timeStep = g_ScreenFadeTimestep;
             }
             else
             {
                 timeStep = FP_TIME(3.0f);
             }
 
-            g_screenFadeProgress -= FP_MULTIPLY_PRECISE(timeStep, g_DeltaTime1, Q12_SHIFT);
+            g_ScreenFadeProgress -= FP_MULTIPLY_PRECISE(timeStep, g_DeltaTime1, Q12_SHIFT);
 
-            if (g_screenFadeProgress <= 0)
+            if (g_ScreenFadeProgress <= 0)
             {
-                g_screenFadeProgress = 0;
-                g_Gfx_ScreenFade     = ScreenFade_Reset;
+                g_ScreenFadeProgress = 0;
+                g_Gfx_ScreenFade     = ScreenFadeState_Reset;
                 return;
             }
 
-            tile->r0 = FP_FROM(g_screenFadeProgress, Q4_SHIFT);
-            tile->g0 = FP_FROM(g_screenFadeProgress, Q4_SHIFT);
-            tile->b0 = FP_FROM(g_screenFadeProgress, Q4_SHIFT);
+            tile->r0 = FP_FROM(g_ScreenFadeProgress, Q4_SHIFT);
+            tile->g0 = FP_FROM(g_ScreenFadeProgress, Q4_SHIFT);
+            tile->b0 = FP_FROM(g_ScreenFadeProgress, Q4_SHIFT);
             break;
 
-        case ScreenFade_Reset:
-            g_screnFadeTimestep  = FP_TIME(0.0f);
-            g_screenFadeProgress = 0;
-            g_Gfx_ScreenFade     = ScreenFade_None;
+        case ScreenFadeState_Reset:
+            g_ScreenFadeTimestep = FP_TIME(0.0f);
+            g_ScreenFadeProgress = 0;
+            g_Gfx_ScreenFade     = ScreenFadeState_None;
             return;
 
-        case ScreenFade_None:
+        case ScreenFadeState_None:
             return;
     }
 

@@ -1726,7 +1726,7 @@ extern DR_MODE D_800A8E5C[];
 
 extern TILE D_800A8E74[];
 
-extern s32 g_screenFadeProgress;
+extern s32 g_ScreenFadeProgress;
 
 extern DR_MODE D_800A8E98[];
 
@@ -2078,9 +2078,9 @@ extern DVECTOR g_Gfx_DebugStringPosition0;
 
 extern DVECTOR g_Gfx_DebugStringPosition1;
 
-extern s32 g_oldScreenFadeProgress;
+extern s32 g_PrevScreenFadeProgress;
 
-extern s32 g_screnFadeTimestep;
+extern s32 g_ScreenFadeTimestep;
 
 extern s_800B5C40 D_800B5C40[];
 
@@ -2611,6 +2611,7 @@ s8 Sound_StereoBalanceGet(const VECTOR3* soundPos);
 
 bool func_80040B74(s32 arg0);
 
+/** Related to the screen. */
 void func_80040BAC();
 
 void func_80040E7C(u8 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5);
@@ -3138,7 +3139,7 @@ void func_8008605C(s32 arg0, s32 arg1, s32 arg2, bool arg3);
 void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 entry0, s32 entry1, s32 entry2, bool arg5);
 
 /** Handles giving the player items. */
-void func_8008616C(s32 arg0, bool arg1, s32 arg2, s32 unkTime, bool arg4);
+void func_8008616C(s32 arg0, bool arg1, s32 arg2, s32 fadeTimestep, bool arg4);
 
 void func_800862F8(s32 arg0, s32 fileIdx, bool arg2);
 

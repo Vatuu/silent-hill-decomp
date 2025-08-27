@@ -1,8 +1,6 @@
 ## Code Conventions
 
-A summary of conventions used in the project is provided below, we also include a `clang-format` configuration that can help maintain consistent code style.
-
-Clang-format can be ran through git after staging changed files, `git clang-format` will reformat those files and leave any new formatted changes unstaged, you can then review the changes made with `git diff`, and then stage them with `git add`.
+A summary of conventions used in the project is provided below.
 
 ### Indentation
 Code should use the Allman indentation style, placing braces on separate lines with indentations of 4 spaces.
@@ -35,7 +33,7 @@ Global variables should be prefixed with `g_` and follow a similar format to fun
 `g_Demo_PrevRandSeed`
 
 #### Structures and Enums
-Struct names should be prefixed with `s_` and named according to their purpose. If the purpose is unknown, it can be associated with a static address: `s_[HexAddress]`, or a function that's known to use/initialize it: `s_func_[HexAddress]`.
+Struct names should be prefixed with `s_` and named according to their purpose. If the purpose is unknown, it can be associated with a static address: `s_[HexAddress]` or a function that's known to use it: `s_func_[HexAddress]`.
 
 Structure fields should be written in `camelCase` with a hex offset suffix. Keeping the offset as part of the name is useful in tracking each field's expected offset and more easily determining when any have moved around due to other changes. Fields known to be accessed but without a known purpose should be named `field_[HexOffset]`, while fields that are completely unknown or which serve as padding should be named as `unk_[HexOffset]` or `pad_[HexOffset]`. If the size of a struct is known, the `STATIC_ASSERT_SIZEOF` macro can be used to enforce it.
 
@@ -79,7 +77,7 @@ Custom primitive type aliases should be used (`s32`, `u32`, `s16`, etc.) instead
 
 Comments should be included above declarations in .h files to explain the purposes of functions, structures, and global variables.
 
-Doxygen-style tags should be included in the comment, `@brief A summary of the function`, `@param paramName Description of the parameter`, `@return Description of what is returned`.
+Doxygen-style tags should be included in the comment like this: `@brief A summary of the function`, `@param paramName Description of the parameter`, `@return Description of what is returned`.
 
 Code that appears to be unused by the game can also be tagged with `@unused`.
 
@@ -93,9 +91,9 @@ typedef struct _MyStruct
     s32     field_C;    // Maybe index?
 } s_MyStruct;
 
-/** @brief Do something.
+/** @brief Short description of what this function does.
  *
- * This function does something.
+ * Detailed description of what this function does if needed.
  *
  * @param dist My distance.
  * @return 0 if `dist` is greater than or equal to 0,

@@ -62,27 +62,32 @@ struct _SubCharacter;
 #define HAS_MAP(mapIdx) \
     ((((u32*)&g_SavegamePtr->hasMapsFlags_164)[(mapIdx) / 32] >> ((mapIdx) % 32)) & (1 << 0))
 
+#define GFX_IS_SCREEN_FADE_COMPLETE() \
+    ((g_Gfx_ScreenFade & ScreenFadeFlag_UnkStatus) == ScreenFadeState_FadeOutComplete)
+
 #define WeaponId_AttackVariantGet(weaponId, type) \
 	((weaponId) + ((type) * 10))
 
-/** @brief Screen fade state machine indices. The flow is not linear */
-typedef enum _ScreenFade
+/** @brief Screen fade states. The flow is not linear. */
+typedef enum _ScreenFadeState
 {
-    ScreenFade_Reset            = 0,
-    ScreenFade_None             = 1,
-    ScreenFade_FadeOutStart     = 2,
-    ScreenFade_FadeOutSteps     = 3,
-    ScreenFade_ResetTimeStep    = 4,
-    ScreenFade_FadeOutComplete  = 5,
+    ScreenFadeState_Reset           = 0,
+    ScreenFadeState_None            = 1,
+    ScreenFadeState_FadeOutStart    = 2,
+    ScreenFadeState_FadeOutSteps    = 3,
+    ScreenFadeState_ResetTimeStep   = 4,
+    ScreenFadeState_FadeOutComplete = 5,
+    ScreenFadeState_FadeInStart     = 6,
+    ScreenFadeState_FadeInSteps     = 7
+    
+} e_ScreenFadeState;
 
-    ScreenFade_FadeInStart      = 6,
-    ScreenFade_FadeInSteps      = 7,
-    /* When FadeIn completes it goes to 0 (Reset) */
-    ScreenFade_Flag_White       = (1 << 3),
-    /* A lot of code uses & 7 to check for status while ignoring the white flag */
-    ScreenFade_Status           = 7,
-} e_ScreenFade;
-#define GFX_SCREEN_FADE_COMPLETE() ((g_Gfx_ScreenFade & ScreenFade_Status) == ScreenFade_FadeOutComplete)
+/** @brief Screen fade flags. */
+typedef enum _ScreenFadeFlags
+{
+    ScreenFadeFlag_White     = 1 << 3,                        /** When fade-in completes, it resets to 0. */
+    ScreenFadeFlag_UnkStatus = (1 << 0) | (1 << 1) | (1 << 2) /** Often used to check for a status while ignoring `ScreenFadeFlag_White`. */
+} e_ScreenFadeFlags;
 
 /** Each map has its own messages, with the first 15 hardcoded to be the same. */
 typedef enum _MapMsgIdx

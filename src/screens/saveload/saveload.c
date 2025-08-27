@@ -1614,7 +1614,7 @@ void Savegame_ScreenInit() // 0x801E63C0
     }
 
     g_IntervalVBlanks = 1;
-    g_Gfx_ScreenFade  = ScreenFade_FadeInStart;
+    g_Gfx_ScreenFade  = ScreenFadeState_FadeInStart;
 
     g_GameWork.background2dColor_R_58C = 0;
     g_GameWork.background2dColor_G_58D = 0;
@@ -1732,7 +1732,7 @@ void Savegame_ScreenLogic() // 0x801E649C
             // Exit save screen.
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2) 
             {
-                g_Gfx_ScreenFade                = ScreenFade_FadeOutSteps;
+                g_Gfx_ScreenFade                = ScreenFadeState_FadeOutSteps;
                 g_GameWork.gameStateStep_598[1] = 2;
                 g_GameWork.gameStateStep_598[2] = 0;
 
@@ -1798,7 +1798,7 @@ void Savegame_ScreenLogic() // 0x801E649C
             break;
 
         case 2:
-            if (GFX_SCREEN_FADE_COMPLETE())
+            if (GFX_IS_SCREEN_FADE_COMPLETE())
             {
                 g_GameWork.background2dColor_R_58C = 0;
                 g_GameWork.background2dColor_G_58D = 0;
@@ -2039,14 +2039,14 @@ void Savegame_ContinueLogic() // 0x801E6F38
 
             GameFs_MapLoad(g_SavegamePtr->mapOverlayId_A4);
 
-            g_Gfx_ScreenFade = ScreenFade_FadeOutStart;
+            g_Gfx_ScreenFade = ScreenFadeState_FadeOutStart;
             g_GameWork.gameStateStep_598[1]++;
             g_GameWork.gameStateStep_598[2] = 0;
             break;
 
         case ContinueState_1:
         {
-            if (GFX_SCREEN_FADE_COMPLETE())
+            if (GFX_IS_SCREEN_FADE_COMPLETE())
             {
                 Fs_QueueWaitForEmpty();
                 Settings_ScreenAndVolUpdate();
@@ -2176,7 +2176,7 @@ void func_801E737C() // 0x801E737C
             g_GameWork.gameStateStep_598[0] = 1;
             g_GameWork.gameStateStep_598[1] = g_GameWork.gameStatePrev_590;
 
-            g_Gfx_ScreenFade = ScreenFade_FadeOutSteps;
+            g_Gfx_ScreenFade = ScreenFadeState_FadeOutSteps;
 
             GameFs_TitleGfxLoad();
         }

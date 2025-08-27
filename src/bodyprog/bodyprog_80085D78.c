@@ -174,15 +174,16 @@ void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 entr
 
 void func_8008616C(s32 arg0, bool arg1, s32 fadeType, s32 fadeTimestep, bool arg4) // 0x8008616C
 {
+    #define FADE_BLACK    0
+    #define FADE_WHITE    1
+    #define FADE_UNKNOWN  2 // TODO: Investigate. Some state machine flow logic when this is used.
+    #define FADE_UNK_FLAG 3 // TODO: Investigate.
+
     s32 caseVar;
     s32 var0;
     s32 var1;
-#define FADE_BLACK (0)
-#define FADE_WHITE (1)
-#define FADE_UNKNOWN (2) // TODO: Investigate. Some state machine flow logic when this is used.
-#define FADE_UNK_FLAG (3) // TODO: Investigate.
 
-    // If arg0 then field_14 dictates what happens. This is a field manipulated a lot in event/cutscene code
+    // If `arg0 != 2`, `field_14` dictates what happens. This field is manipulated often in event/cutscene code.
     if (arg0 != 2)
     {
         caseVar = arg0;
@@ -197,18 +198,18 @@ void func_8008616C(s32 arg0, bool arg1, s32 fadeType, s32 fadeTimestep, bool arg
         case 0:
             if (fadeType != FADE_UNKNOWN)
             {
-                g_screnFadeTimestep = fadeTimestep;
+                g_ScreenFadeTimestep = fadeTimestep;
             }
 
             if (arg1)
             {
                 if (fadeType == FADE_BLACK)
                 {
-                    g_Gfx_ScreenFade = ScreenFade_FadeOutSteps;
+                    g_Gfx_ScreenFade = ScreenFadeState_FadeOutSteps;
                 }
                 else if (fadeType == FADE_WHITE)
                 {
-                    g_Gfx_ScreenFade = ScreenFade_FadeOutSteps | ScreenFade_Flag_White;
+                    g_Gfx_ScreenFade = ScreenFadeState_FadeOutSteps | ScreenFadeFlag_White;
                 }
                 else
                 {
@@ -222,11 +223,11 @@ void func_8008616C(s32 arg0, bool arg1, s32 fadeType, s32 fadeTimestep, bool arg
             }
             else if (fadeType == FADE_BLACK)
             {
-                g_Gfx_ScreenFade = ScreenFade_FadeInSteps;
+                g_Gfx_ScreenFade = ScreenFadeState_FadeInSteps;
             }
             else if (fadeType == FADE_WHITE)
             {
-                g_Gfx_ScreenFade = ScreenFade_FadeInSteps | ScreenFade_Flag_White;
+                g_Gfx_ScreenFade = ScreenFadeState_FadeInSteps | ScreenFadeFlag_White;
             }
             else
             {
@@ -245,7 +246,7 @@ void func_8008616C(s32 arg0, bool arg1, s32 fadeType, s32 fadeTimestep, bool arg
             {
                 if (arg1 != 0 || g_Gfx_ScreenFade != caseVar)
                 {
-                    if (arg1 == caseVar && (g_Gfx_ScreenFade & 0x7) == ScreenFade_FadeOutComplete)
+                    if (arg1 == caseVar && (g_Gfx_ScreenFade & 0x7) == ScreenFadeState_FadeOutComplete)
                     {
                         func_80085D78(arg4);
                     }

@@ -59,7 +59,6 @@ bool func_80040B74(s32 arg0) // 0x80040B74
     return false;
 }
 
-// Related to the screen.
 void func_80040BAC() // 0x80040BAC
 {
     DVECTOR   posTable[17];
@@ -82,23 +81,23 @@ void func_80040BAC() // 0x80040BAC
         }
         else if (i < 6)
         {
-            posTable[i].vx = (g_GameWork.gsScreenWidth_588 >> 1) - ((g_GameWork.gsScreenWidth_588 >> 1) >> 1) * (i - 2);
+            posTable[i].vx = (g_GameWork.gsScreenWidth_588 >> 1) - (((g_GameWork.gsScreenWidth_588 >> 1) >> 1) * (i - 2));
             posTable[i].vy = g_GameWork.gsScreenHeight_58A >> 1;
         }
         else if (i < 10)
         {
             posTable[i].vx = -g_GameWork.gsScreenWidth_588 / 2;
-            posTable[i].vy = (g_GameWork.gsScreenHeight_58A >> 1) - ((g_GameWork.gsScreenHeight_58A >> 1) >> 1) * (i - 6);
+            posTable[i].vy = (g_GameWork.gsScreenHeight_58A >> 1) - (((g_GameWork.gsScreenHeight_58A >> 1) >> 1) * (i - 6));
         }
         else if (i < 14)
         {
-            posTable[i].vx = -g_GameWork.gsScreenWidth_588 / 2 + (g_GameWork.gsScreenWidth_588 >> 2) * (i - 10);
+            posTable[i].vx = (-g_GameWork.gsScreenWidth_588 / 2) + ((g_GameWork.gsScreenWidth_588 >> 2) * (i - 10));
             posTable[i].vy = -g_GameWork.gsScreenHeight_58A / 2;
         }
         else
         {
             posTable[i].vx = g_GameWork.gsScreenWidth_588 / 2;
-            posTable[i].vy = -g_GameWork.gsScreenHeight_58A / 2 + (g_GameWork.gsScreenHeight_58A >> 2) * (i - 14);
+            posTable[i].vy = -g_GameWork.gsScreenHeight_58A / 2 + ((g_GameWork.gsScreenHeight_58A >> 2) * (i - 14));
         }
     }
 
@@ -112,7 +111,7 @@ void func_80040BAC() // 0x80040BAC
         SetDrawTPage(page, 1, 1, 0x20);
 
         poly_g3 = packet + sizeof(DR_TPAGE) * 2;
-        poly_f4 = packet + sizeof(DR_TPAGE) * 2 + sizeof(POLY_G4) * 16 * 3 + sizeof(POLY_G3) * 16;
+        poly_f4 = packet + (sizeof(DR_TPAGE) * 2) + ((sizeof(POLY_G4) * 16) * 3) + (sizeof(POLY_G3) * 16);
 
         for (i = 0; i < 16; i++, poly_g3++, poly_f4++)
         {
@@ -125,7 +124,7 @@ void func_80040BAC() // 0x80040BAC
             *(s32*)&poly_f4->x3 = ptr[i % 16 + 1];
         }
 
-        poly_g4 = packet + sizeof(DR_TPAGE) * 2 + sizeof(POLY_G3) * 16;
+        poly_g4 = packet + (sizeof(DR_TPAGE) * 2) + (sizeof(POLY_G3) * 16);
 
         for (k = 0; k < 3; k++)
         {
@@ -140,18 +139,18 @@ void func_80040BAC() // 0x80040BAC
 
 void func_80040E7C(u8 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5) // 0x80040E7C
 {
-#define SET_RGB(r, g, b) \
-    (((r) & 0xFF) | ((g) & 0xFF) << 8 | ((b) & 0xFF) << 16)
+    #define SET_RGB(r, g, b) \
+        (((r) & 0xFF) | ((g) & 0xFF) << 8 | ((b) & 0xFF) << 16)
 
     u32      colorTable[4];
     s32      j;
     s32      i;
     s32      k;
+    u32      color;
     POLY_G3* poly_g3;
     POLY_F4* poly_f4;
     POLY_G4* poly_g4;
     PACKET*  packet;
-    u32      color;
 
     color = SET_RGB(arg0, arg1, arg2);
 
@@ -163,10 +162,10 @@ void func_80040E7C(u8 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5) // 0x80
     colorTable[3] = SET_RGB(arg3, arg4, arg5);
 
     for (i = 0; i < 2; i++,
-        packet += sizeof(DR_TPAGE) * 2 + sizeof(POLY_G4) * 16 * 3 + sizeof(POLY_G3) * 16 + sizeof(POLY_F4) * 16)
+        packet += (sizeof(DR_TPAGE) * 2) + ((sizeof(POLY_G4) * 16) * 3) + (sizeof(POLY_G3) * 16) + (sizeof(POLY_F4) * 16))
     {
-        poly_g3 = packet + sizeof(DR_TPAGE) * 2;
-        poly_f4 = packet + sizeof(DR_TPAGE) * 2 + sizeof(POLY_G4) * 16 * 3 + sizeof(POLY_G3) * 16;
+        poly_g3 = packet + (sizeof(DR_TPAGE) * 2);
+        poly_f4 = packet + (sizeof(DR_TPAGE) * 2) + ((sizeof(POLY_G4) * 16) * 3) + (sizeof(POLY_G3) * 16);
 
         for (j = 0; j < 16; j++, poly_g3++, poly_f4++)
         {
@@ -176,7 +175,7 @@ void func_80040E7C(u8 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5) // 0x80
             *(s32*)&poly_f4->r0 = colorTable[3] + (poly_f4->code << 24);
         }
 
-        poly_g4 = packet + sizeof(DR_TPAGE) * 2 + sizeof(POLY_G3) * 16;
+        poly_g4 = packet + (sizeof(DR_TPAGE) * 2) + (sizeof(POLY_G3) * 16);
 
         for (k = 0; k < 3; k++)
         {
@@ -289,7 +288,6 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0
 {
     s32      sp10[4];
     DVECTOR  sp20[4];
-    DVECTOR* var_s1_2;
     s32      temp_a1;
     s32      temp_a3;
     s32      temp_lo;
@@ -305,6 +303,7 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0
     s32      var_v0;
     s32      var_v1;
     s32      var_v1_2;
+    DVECTOR* var_s1_2;
     u32*     var_a1_3;
     u32*     var_t0;
     u32*     var_t1;
@@ -330,7 +329,7 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0
     }
 
     var_s0 = ((var_v0 >> 12) << 10) / arg1->vz;
-    var_v1 = var_s0 * (0x3000 - FP_MULTIPLY(var_s1, Math_Cos(arg4), 12));
+    var_v1 = var_s0 * (0x3000 - FP_MULTIPLY(var_s1, Math_Cos(arg4), Q12_SHIFT));
     var_s0 = var_v1 / 16384;
 
     sp10[0] = (var_s0 / 5);
@@ -422,7 +421,7 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0
     var_t0 = (u32*)PSX_SCRATCH;
 
     poly_g3 = &D_800BFBF0[g_ObjectTableIdx][sizeof(DR_TPAGE) * 2];
-    poly_f4 = &D_800BFBF0[g_ObjectTableIdx][sizeof(DR_TPAGE) * 2 + sizeof(POLY_G4) * 16 * 3 + sizeof(POLY_G3) * 16];
+    poly_f4 = &D_800BFBF0[g_ObjectTableIdx][(sizeof(DR_TPAGE) * 2) + ((sizeof(POLY_G4) * 16) * 3) + (sizeof(POLY_G3) * 16)];
 
     for (j = 0; j < 16; j++, poly_g3++, poly_f4++)
     {
@@ -440,18 +439,18 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0
     }
 
     var_t1  = (u32*)PSX_SCRATCH;
-    poly_g4 = &D_800BFBF0[g_ObjectTableIdx][sizeof(DR_TPAGE) * 2 + sizeof(POLY_G3) * 16];
+    poly_g4 = &D_800BFBF0[g_ObjectTableIdx][(sizeof(DR_TPAGE) * 2) + (sizeof(POLY_G3) * 16)];
 
     for (i = 0; i < 3; i++)
     {
-        var_a1_3 = var_t1 + i * 17;
+        var_a1_3 = var_t1 + (i * 17);
 
         for (j = 0; j < 16; j++, poly_g4++)
         {
             *(s32*)&poly_g4->x0 = var_a1_3[j];
             *(s32*)&poly_g4->x1 = var_a1_3[j + 1];
             *(s32*)&poly_g4->x2 = var_a1_3[17 + j];
-            *(s32*)&poly_g4->x3 = var_a1_3[17 + j + 1];
+            *(s32*)&poly_g4->x3 = var_a1_3[(17 + j) + 1];
 
             addPrim(&arg0->org[1], poly_g4);
         }
