@@ -1,43 +1,20 @@
 ## Code Conventions
-Code should use the Allman indentation style, placing braces on separate lines with indentations of 4 spaces. For pointers, `void* name` is preferred over `void *name`.
 
-Comments should be included above declarations in .h files to explain the purposes of functions, structures, and global variables. Example:
+A summary of conventions used in the project is provided below, we also include a `clang-format` configuration that can help maintain consistent code style.
 
-```C
-/** @brief Makes Harry fly.
- * 
- * Sets Harry's Y position to 100 world units.
- *
- * @param isFlying Fly status.
- * @param yPos Pointer to Harry's Y position.
- */
-void Hero_SetFly(bool isFlying, int* yPos) // 0x80012345
-{
-    if (isFlying)
-    {
-        *yPos = 100;
-    }
-}
-```
+Clang-format can be ran through git after staging changed files, `git clang-format` will reformat those files and leave any new formatted changes unstaged, you can then review the changes made with `git diff`, and then stage them with `git add`.
 
-#### Clang-format
-The repository includes a `clang-format` configuration to help ensure code consistency. Git also has a command to handle formatting any modified files.
+### Indentation
+Code should use the Allman indentation style, placing braces on separate lines with indentations of 4 spaces.
 
-We'd appreciate it if you could follow these steps prior to committing:
+### Pointers
+Placing the asterisk with the type name is preferred, e.g. `void* name` over `void *name`.
 
-1. Stage modified files:  
-   `git add src/`  
-   `git add include/`
-2. Run clang-format through git:  
-   `git clang-format`
-3. Review the changes with `git diff`, then re-stage and commit them:  
-   `git add src/`
-
-## Naming Conventions
+### Naming Conventions
 If a function, structure, or field's name is already known from an SDK library or from the symbols of another game, that name should be used.
 Otherwise, names can follow the formats below.
 
-### Functions
+#### Functions
 Function names should be written in PascalCase as follows:
 
 `[SystemName]_[Noun][Verb]`
@@ -49,16 +26,16 @@ Example:
 
 This allows functions to be grouped and sorted alphabetically, which can be useful when looking at the game in a disassembler.
 
-Function parameters should be written in `camelCase` without an offset suffix.
+Function parameters and locals should be written in `camelCase` without an offset suffix.
 
-### Globals
+#### Globals
 Global variables should be prefixed with `g_` and follow a similar format to function names. Example:
 
 `g_SysWork`  
 `g_Demo_PrevRandSeed`
 
-### Structures and Enums
-Struct names should be prefixed with `s_` and named according to their purpose. If the purpose is unknown, it can be associated with a static address: `s_[HexAddress]`.
+#### Structures and Enums
+Struct names should be prefixed with `s_` and named according to their purpose. If the purpose is unknown, it can be associated with a static address: `s_[HexAddress]`, or a function that's known to use/initialize it: `s_func_[HexAddress]`.
 
 Structure fields should be written in `camelCase` with a hex offset suffix. Keeping the offset as part of the name is useful in tracking each field's expected offset and more easily determining when any have moved around due to other changes. Fields known to be accessed but without a known purpose should be named `field_[HexOffset]`, while fields that are completely unknown or which serve as padding should be named as `unk_[HexOffset]` or `pad_[HexOffset]`. If the size of a struct is known, the `STATIC_ASSERT_SIZEOF` macro can be used to enforce it.
 
@@ -85,20 +62,28 @@ Example:
 ```C
 typedef enum _MyEnum
 {
-    MyEnum_Unk0          0,
-    MyEnum_Something     1,
-    MyEnum_SomethingElse 2
+    MyEnum_Unk0          = 0,
+    MyEnum_Something     = 1,
+    MyEnum_SomethingElse = 2
 } e_MyEnum;
 ```
 
-### Miscellaneous
+#### Miscellaneous
 Acronyms and abbreviations should be treated as words. Example:
 
 `GfxFunc` instead of `GFXFunc`, `myId` instead of `myID`.
 
 Custom primitive type aliases should be used (`s32`, `u32`, `s16`, etc.) instead of the defaults of the language to ensure type sizes are always clear.
 
-Use `/** */`-style comments for formal documentaion and `//`-style comments for casual development notes. Examples:
+### Commenting
+
+Comments should be included above declarations in .h files to explain the purposes of functions, structures, and global variables.
+
+Doxygen-style tags should be included in the comment, `@brief A summary of the function`, `@param paramName Description of the parameter`, `@return Description of what is returned`.
+
+Code that appears to be unused by the game can also be tagged with `@unused`.
+
+Use `/** */`-style comments for formal documentation and `//`-style comments for casual development notes. Examples:
 
 ```C
 /** @brief Stores my data. */
