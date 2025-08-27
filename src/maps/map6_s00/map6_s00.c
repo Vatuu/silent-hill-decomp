@@ -101,7 +101,7 @@ INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800D1420);
 
 #include "maps/shared/Ai_AirScreamer_Update.h" // 0x800D18FC
 
-INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", sharedFunc_800D21E4_0_s01); // 0x800D1970
+#include "maps/shared/sharedFunc_800D21E4_0_s01.h" // 0x800D1970
 
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", sharedFunc_800D2200_0_s01); // 0x800D198C
 

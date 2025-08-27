@@ -129,7 +129,7 @@ void func_800D2104() {}
 
 #include "maps/shared/Ai_AirScreamer_Update.h" // 0x800D2170
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D21E4_0_s01); // 0x800D21E4
+#include "maps/shared/sharedFunc_800D21E4_0_s01.h" // 0x800D21E4
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D2200_0_s01); // 0x800D2200
 
@@ -192,7 +192,7 @@ void func_800D3CC4(s_SubCharacter* chara)
     u32  keyframeIdx;
     bool cond;
 
-    sharedData_800E21D0_0_s01 |= 1 << 31;
+    sharedData_800E21D0_0_s01.flags_0 |= 1 << 31;
     cond = false;
 
     switch (chara->model_0.stateStep_3)
