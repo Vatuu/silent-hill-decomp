@@ -2253,7 +2253,63 @@ void func_8006AD44(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x800
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006AEAC); // 0x8006AEAC
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006B004); // 0x8006B004
+s32 func_8006B004(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x8006B004
+{
+    s32 var_a0;
+    s32 var_a3;
+    s32 temp_lo;
+    s32 temp_lo_2;
+    s32 temp_t3;
+    s32 temp_t4;
+    s32 var_a2;
+    s32 var_t0;
+
+    temp_lo   = collData->field_1C * collData->field_1E;
+    temp_t3   = temp_lo - 1;
+    temp_lo_2 = collData->field_1C * collData->field_1F;
+    temp_t4   = temp_lo_2 - 1;
+
+    var_a3 = arg0->field_4.positionX_18 - collData->posX_0;
+    var_t0 = arg0->field_4.field_20 - collData->posX_0;
+    if (var_t0 < var_a3)
+    {
+        var_t0 ^= var_a3;
+        var_a3 ^= var_t0;
+        var_t0 ^= var_a3;
+    }
+
+    var_a3 -= arg0->field_4.field_28;
+    var_t0 += arg0->field_4.field_28;
+
+    var_a0 = arg0->field_4.positionZ_1C - collData->posZ_4;
+    var_a2 = arg0->field_4.field_24 - collData->posZ_4;
+    if (var_a2 < var_a0)
+    {
+        var_a2 ^= var_a0;
+        var_a0 ^= var_a2;
+        var_a2 ^= var_a0;
+    }
+
+    var_a0 -= arg0->field_4.field_28;
+    var_a2 += arg0->field_4.field_28;
+
+    if ((temp_lo < var_a3) || (temp_lo_2 < var_a0) || (var_t0 < 0) || (var_a2 < 0))
+    {
+        return 0;
+    }
+
+    var_a3 = limitRange(var_a3, 0, temp_t3);
+    var_a0 = limitRange(var_a0, 0, temp_t4);
+    var_t0 = limitRange(var_t0, 0, temp_t3);
+    var_a2 = limitRange(var_a2, 0, temp_t4);
+
+    arg0->field_A0 = (var_a3 / collData->field_1C);
+    arg0->field_A1 = (var_a0 / collData->field_1C);
+    arg0->field_A2 = ((var_t0 / collData->field_1C) - arg0->field_A0) + 1;
+    arg0->field_A3 = ((var_a2 / collData->field_1C) - arg0->field_A1) + 1;
+
+    return 1;
+}
 
 void func_8006B1C8(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s_func_8006B1C8* arg2) // 0x8006B1C8
 {
