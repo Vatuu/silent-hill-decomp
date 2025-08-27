@@ -3172,19 +3172,19 @@ void func_80086C58(s_SubCharacter* chara, s32 arg1);
 
 void func_80086D04(s_SubCharacter* chara);
 
-void func_80086DA8(s32 fileIdx, s32 unkTime);
+void func_80086DA8(s32 fileIdx, s32 fadeTimestep);
 
-void func_80086E50(s32 fileIdx, s32 unkTime0, s32 unkTime1);
+void func_80086E50(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1);
 
-void func_80086F44(s32 unkTime0, s32 unkTime1);
+void func_80086F44(s32 fadeTimestep0, s32 fadeTimestep1);
 
 void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos);
 
-void func_8008716C(s32 itemId, s32 unkTime0, s32 unkTime1);
+void func_8008716C(s32 itemId, s32 fadeTimestep0, s32 fadeTimestep1);
 
-void func_80087360(s32 fileIdx, s32 unkTime0, s32 unkTime1, s32 mapMsgIdx);
+void func_80087360(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsgIdx);
 
-void func_80087540(s32 fileIdx, s32 unkTime0, s32 unkTime1, s32 mapMsgIdx0, s32 mapMsgIdx1);
+void func_80087540(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1);
 
 void Event_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx);
 
