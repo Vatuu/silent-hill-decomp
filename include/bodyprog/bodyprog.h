@@ -2107,19 +2107,20 @@ extern u16 D_800BCCB0;
 
 extern u16 D_800BCCB2;
 
-/** @brief Seems to handle the screen fade effect.
+/** @brief Packed screen fade effect data. Uses `e_ScreenFadeState` and `e_ScreenFadeFlags`.
  *
- * Accessed by `credits`, `options`, and `saveload`.
+ * Data is packed as follows:
+ * Bits 0-2: `e_ScreenFadeState`
+ * Bit  3:   `e_ScreenFadeFlags`
  *
+ * TODO: Reference enum entries for details below.
  * 0-1   - Nothing.
  * 2-5   - Fades to black and keeps the screen black.
  * 6-7   - Fades from black.
  * 10-15 - Fades to white and keeps the screen white.
  * 16    - Fades to black.
- *
- * @note Other values causes flickers, likely a bug.
  */
-extern s32 g_Gfx_ScreenFade; // 0x800BCD0C
+extern s32 g_Gfx_ScreenFade;
 
 extern s16 g_SavegameCount;
 

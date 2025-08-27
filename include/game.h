@@ -54,7 +54,6 @@ struct _SubCharacter;
 /** @brief Accessors for low and high parts of each character property, returns a pointer which can be read or written to. */
 #define GET_PROPERTY_LOW(prop) \
     ((u16*)&(prop))
-
 #define GET_PROPERTY_HIGH(prop) \
     ((u16*)&(prop) + 1)
 
@@ -62,13 +61,14 @@ struct _SubCharacter;
 #define HAS_MAP(mapIdx) \
     ((((u32*)&g_SavegamePtr->hasMapsFlags_164)[(mapIdx) / 32] >> ((mapIdx) % 32)) & (1 << 0))
 
+/** @brief Checks screen fade completion status. See `g_Gfx_ScreenFade` for bit layout. */
 #define GFX_IS_SCREEN_FADE_COMPLETE() \
-    ((g_Gfx_ScreenFade & ScreenFadeFlag_UnkStatus) == ScreenFadeState_FadeOutComplete)
+    ((g_Gfx_ScreenFade & ScreenFadeFlag_StateMask) == ScreenFadeState_FadeOutComplete)
 
 #define WeaponId_AttackVariantGet(weaponId, type) \
 	((weaponId) + ((type) * 10))
 
-/** @brief Screen fade states. The flow is not linear. */
+/** @brief Screen fade states used by `g_Gfx_ScreenFade`. The flow is not linear. */
 typedef enum _ScreenFadeState
 {
     ScreenFadeState_Reset           = 0,
@@ -79,14 +79,13 @@ typedef enum _ScreenFadeState
     ScreenFadeState_FadeOutComplete = 5,
     ScreenFadeState_FadeInStart     = 6,
     ScreenFadeState_FadeInSteps     = 7
-    
 } e_ScreenFadeState;
 
-/** @brief Screen fade flags. */
+/** @brief Screen fade flags used by `g_Gfx_ScreenFade`. */
 typedef enum _ScreenFadeFlags
 {
-    ScreenFadeFlag_White     = 1 << 3,                        /** When fade-in completes, it resets to 0. */
-    ScreenFadeFlag_UnkStatus = (1 << 0) | (1 << 1) | (1 << 2) /** Often used to check for a status while ignoring `ScreenFadeFlag_White`. */
+    ScreenFadeFlag_White     = 1 << 3,                        /** When fade-in completes, this is unset. */
+    ScreenFadeFlag_StateMask = (1 << 0) | (1 << 1) | (1 << 2) /** Masks out flag data and keeps state data. See `g_Gfx_ScreenFade` for bit layout. */
 } e_ScreenFadeFlags;
 
 /** Each map has its own messages, with the first 15 hardcoded to be the same. */
