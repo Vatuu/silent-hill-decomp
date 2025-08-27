@@ -137,11 +137,15 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
 
     chara->model_0.anim_4.keyframeIdx1_A = 0;
 
-    chara->health_B0 = FP_TO(4000, Q12_SHIFT);
-
+    // Set health.
+    chara->health_B0 = FP_HEALTH(4000.0f);
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
-        chara->health_B0 = FP_TO(6000, Q12_SHIFT);
+        chara->health_B0 = FP_HEALTH(6000.0f);
+    }
+    else
+    {
+        
     }
 
     chara->moveSpeed_38 = 0;
@@ -158,10 +162,10 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
         case 3:
             chara->model_0.state_2               = 5;
             chara->model_0.anim_4.animIdx_0      = 19;
-            chara->model_0.anim_4.time_4         = FP_TO(191, Q12_SHIFT);
+            chara->model_0.anim_4.time_4         = FP_TIME(191.0f);
             chara->model_0.anim_4.keyframeIdx0_8 = 191;
 
-            chara->properties_E4.larvalStalker.properties_E8[7].val16[1] = -0x90; // Could be FP_ANGLE(-12.7f); ?
+            chara->properties_E4.larvalStalker.properties_E8[7].val16[1] = -0x90; // Could be `FP_ANGLE(-12.7f)`?
             break;
         case 4:
             chara->position_18.vx = FP_FLOAT_TO(-114.5f, Q12_SHIFT);
@@ -170,7 +174,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
 
             chara->model_0.state_2               = 2;
             chara->model_0.anim_4.animIdx_0      = 19;
-            chara->model_0.anim_4.time_4         = FP_TO(191, Q12_SHIFT);
+            chara->model_0.anim_4.time_4         = FP_TIME(191.0f);
             chara->model_0.anim_4.keyframeIdx0_8 = 191;
             chara->rotation_24.vy                = FP_ANGLE(-90.0f);
             break;
@@ -180,7 +184,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, g_Ai_Floatstinger_AnimInfo);
 
-    chara->damageReceived_C0 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+    chara->damageReceived_C0 = FP_HEALTH(0.0f);
     chara->field_BC          = 0;
     chara->field_B8          = 0;
     chara->field_B4          = 0;

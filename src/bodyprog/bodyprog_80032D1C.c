@@ -1990,7 +1990,7 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
         var_t4 = D_800A99A4;
     }
 
-    if (g_SysWork.player_4C.chara_0.health_B0 <= 0 || g_SysWork.sysState_8 == SysState_GameOver)
+    if (g_SysWork.player_4C.chara_0.health_B0 <= FP_HEALTH(0.0f) || g_SysWork.sysState_8 == SysState_GameOver)
     {
         var_s1 &= 1 << 8;
         var_s1 |= 1 << 0;
@@ -3059,7 +3059,7 @@ void func_80037DC4(s_SubCharacter* chara) // 0x80037DC4
 
 void func_80037E40(s_SubCharacter* chara) // 0x80037E40
 {
-    if (chara->damageReceived_C0 > FP_FLOAT_TO(0.0f, Q12_SHIFT))
+    if (chara->damageReceived_C0 > FP_HEALTH(0.0f))
     {
         chara->flags_3E |= CharaFlag_Unk6;
     }
@@ -3075,7 +3075,7 @@ void func_80037E78(s_SubCharacter* chara) // 0x80037E78
     s32 cond;
 
     // TODO: Strange `chara->headingAngle_3C` access.
-    if (chara->health_B0 <= 0 && (*(s32*)&chara->headingAngle_3C & 0x600000) == 0x200000)
+    if (chara->health_B0 <= FP_HEALTH(0.0f) && (*(s32*)&chara->headingAngle_3C & 0x600000) == 0x200000)
     {
         idx = chara->attackReceived_41;
         if (idx < 39)
@@ -3182,13 +3182,13 @@ void GameState_InGame_Update() // 0x80038BD4
             Savegame_MapRoomIdxSet();
             func_800892A4(1);
 
-            g_IntervalVBlanks     = 2;
+            g_IntervalVBlanks = 2;
             g_GameWork.gameStateStep_598[0]++;
             g_SysWork.field_22A0 |= 1 << 6;
             break;
     }
 
-    if (g_SysWork.sysState_8 != SysState_Gameplay && g_SysWork.player_4C.chara_0.health_B0 <= 0)
+    if (g_SysWork.sysState_8 != SysState_Gameplay && g_SysWork.player_4C.chara_0.health_B0 <= FP_HEALTH(0.0f))
     {
         SysWork_StateSetNext(SysState_Gameplay);
     }
@@ -3313,7 +3313,7 @@ void SysState_Gameplay_Update() // 0x80038BD4
             break;
     }
 
-    if (g_SysWork.player_4C.chara_0.health_B0 <= FP_FLOAT_TO(0.0f, Q12_SHIFT))
+    if (g_SysWork.player_4C.chara_0.health_B0 <= FP_HEALTH(0.0f))
     {
         return;
     }

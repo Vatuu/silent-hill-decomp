@@ -835,11 +835,11 @@ void Gfx_Inventory_HealthStatusDraw()
     ot     = &g_ObjectTable0[g_ObjectTableIdx];
     health = g_SysWork.player_4C.chara_0.health_B0;
 
-    if (health < Q19_12(10.0f))
+    if (health < FP_HEALTH(10.0f))
     {
         healthStage = 3;
     } 
-    else if (health < Q19_12(50.0f))
+    else if (health < FP_HEALTH(50.0f))
     {
         healthStage = 2;
     }
@@ -857,7 +857,7 @@ void Gfx_Inventory_HealthStatusDraw()
         {
             if (i == 2)
             {
-                if (g_SysWork.player_4C.chara_0.health_B0 != Q19_12(100.0f) &&
+                if (g_SysWork.player_4C.chara_0.health_B0 != FP_HEALTH(100.0f) &&
                     ((Rng_Rand16() % ((g_SysWork.player_4C.chara_0.health_B0 >> 13) + 2) == 0) || D_800AE198 != 0))
                 {
                     D_800AE198++;
@@ -1042,11 +1042,11 @@ void Gfx_Inventory_HealthStatusDraw()
         }
     }
 
-    if (g_SysWork.player_4C.chara_0.health_B0 < FP_FLOAT_TO(10.0f, Q12_SHIFT))
+    if (g_SysWork.player_4C.chara_0.health_B0 < FP_HEALTH(10.0f))
     {
         healthStage = 3;
     }
-    else if (g_SysWork.player_4C.chara_0.health_B0 < FP_FLOAT_TO(50.0f, Q12_SHIFT))
+    else if (g_SysWork.player_4C.chara_0.health_B0 < FP_HEALTH(50.0f))
     {
         healthStage = 2;
     }
