@@ -106,7 +106,7 @@ Custom primitive type aliases (defined at `include/types.h`) should be used inst
 
 For pointers, `void* name` is preferred over `void *name`.
 
-It is heavily recommended to learn a little about PSX's fixed-point in order to apply them properly. Due the lack of floating point support PSX devs used this "fixed-point" types. We apply this types in order to create a more flexible and comprehensible code.
+It is heavily recommended to learn a little about PSX's fixed-point in order to apply them properly. Due the lack of floating point support PSX devs used this "fixed-point" types. We apply this types and some special convertion macros (see `include/bodyprog/math.h`) in order to create a more flexible and comprehensible code.
 
 ### Clang-format
 The repository includes a `clang-format` configuration to help ensure code consistency. Git also has a command to handle formatting any modified files.
@@ -205,7 +205,7 @@ typedef enum _MyEnum
 ```
 
 ### Defines/Macros
-Macros follow the same naming structure as functions while the format they should follow is `SCREAMING_SNAKE_CASE` and `camelCase` for the arguments.
+Macros named according to their purpose and the format they should follow is `SCREAMING_SNAKE_CASE` and `camelCase` for the arguments.
 
 ```C
 #define SCREEN_POSITION_X(percent) \
