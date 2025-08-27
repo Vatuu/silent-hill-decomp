@@ -46,19 +46,19 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
     func_8003D01C();
 #endif
 
-    g_Player_IsShooting          = 0;
-    g_Player_IsAttacking         = 0;
-    g_Player_IsHoldAttack        = 0;
-    g_Player_IsAiming            = 0;
-    g_Player_IsRunning           = 0;
-    g_Player_IsMovingBackward    = 0;
-    g_Player_IsMovingForward     = 0;
-    g_Player_IsSteppingRightTap  = 0;
-    g_Player_IsSteppingRightHold = 0;
-    g_Player_IsTurningRight      = 0;
-    g_Player_IsSteppingLeftTap   = 0;
-    g_Player_IsSteppingLeftHold  = 0;
-    g_Player_IsTurningLeft       = 0;
+    g_Player_IsShooting          = false;
+    g_Player_IsAttacking         = false;
+    g_Player_IsHoldAttack        = false;
+    g_Player_IsAiming            = false;
+    g_Player_IsRunning           = false;
+    g_Player_IsMovingBackward    = false;
+    g_Player_IsMovingForward     = false;
+    g_Player_IsSteppingRightTap  = false;
+    g_Player_IsSteppingRightHold = false;
+    g_Player_IsTurningRight      = false;
+    g_Player_IsSteppingLeftTap   = false;
+    g_Player_IsSteppingLeftHold  = false;
+    g_Player_IsTurningLeft       = false;
 
     g_SysWork.playerCombatInfo_38.isAiming_13 = false;
 
