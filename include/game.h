@@ -928,12 +928,15 @@ typedef struct _AnimInfo
 } s_AnimInfo;
 STATIC_ASSERT_SIZEOF(s_AnimInfo, 16);
 
+#define Anim_ModelAnimIdxGet(animStatus) \
+
+
 typedef struct _ModelAnimData
 {
     // Following 4 bytes might be packed into an s32 called `animStatus`,
     // implied by an original param name in `vcMixSelfViewEffectToWatchTgtPos`.
 
-    u8          animIdx_0;        // Sometimes checked like a bit field.
+    u8          animIdx_0;        // 
     u8          maybeSomeState_1; // State says if `animTime_4` is anim time or a func ptr? That field could be a union.
     u16         flags_2;          /** `e_AnimFlags` */
     q19_12      time_4;           /** Time along keyframe timeline. */ 
