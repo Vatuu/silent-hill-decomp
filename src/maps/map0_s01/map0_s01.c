@@ -85,7 +85,26 @@ void func_800D2054(void)
     func_8003D03C();
 }
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D2094);
+void func_800D2094(void) {
+    s_MainCharacter* pc;
+    s_MainCharacterExtra* player_extra;
+    pc = &g_SysWork.player_4C;
+
+    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q19_12(2.30f);
+    g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = Q19_12(0.5f);
+    D_800C4608 = Q19_12(0.5f);
+
+    g_SysWork.player_4C.extra_128.state_1C = 4;
+    pc->chara_0.model_0.stateStep_3 = 0;
+    pc->chara_0.model_0.state_2 = 0;
+
+    player_extra = &g_SysWork.player_4C.extra_128;
+    player_extra->model_0.stateStep_3 = 0;
+    player_extra->model_0.state_2 = 0;
+
+    g_SysWork.player_4C.extra_128.upperBodyState_20 = 0;
+    g_SysWork.player_4C.extra_128.lowerBodyState_24 = 0;
+}
 
 void func_800D20E4() {}
 
