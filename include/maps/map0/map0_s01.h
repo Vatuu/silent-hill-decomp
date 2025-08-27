@@ -136,4 +136,6 @@ void Event_ToBeContinued(void);
 
 void Event_CafeCutscene();
 
+void func_800D2094(void);
+
 #endif
