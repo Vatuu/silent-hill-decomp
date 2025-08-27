@@ -81,7 +81,7 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
                 break;
 
             case 3:
-                if (GFX_IS_SCREEN_FADE_COMPLETE())
+                if (Gfx_IsScreenFadeComplete())
                 {
                     Fs_QueueWaitForEmpty();
                     Game_StateSetNext(GameState_KcetLogo);
@@ -273,7 +273,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                 break;
 
             case 7:
-                if (GFX_IS_SCREEN_FADE_COMPLETE())
+                if (Gfx_IsScreenFadeComplete())
                 {
                     Settings_ScreenAndVolUpdate();
                     Gfx_Init(SCREEN_WIDTH, 0);

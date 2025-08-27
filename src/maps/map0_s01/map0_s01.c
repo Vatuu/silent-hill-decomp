@@ -77,7 +77,7 @@ s32 func_800D1E5C() // 0x800D1E5C
 
 #include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800D2048
 
-void func_800D2054(void)
+void func_800D2054(void) // 0x800D2054
 {
     g_SysWork.playerCombatInfo_38.equippedWeapon_F = EquippedWeaponId_Handgun;
     func_8003CD6C(&g_SysWork.playerCombatInfo_38);
@@ -85,25 +85,27 @@ void func_800D2054(void)
     func_8003D03C();
 }
 
-void func_800D2094(void) {
-    s_MainCharacter* pc;
-    s_MainCharacterExtra* player_extra;
-    pc = &g_SysWork.player_4C;
+void func_800D2094(void) // 0x800D2094
+{
+    s_MainCharacter*      player;
+    s_MainCharacterExtra* extra;
 
-    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q19_12(2.30f);
+    player = &g_SysWork.player_4C;
+
+    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = FP_METER(2.3f);
     g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = Q19_12(0.5f);
     D_800C4608 = Q19_12(0.5f);
 
-    g_SysWork.player_4C.extra_128.state_1C = 4;
-    pc->chara_0.model_0.stateStep_3 = 0;
-    pc->chara_0.model_0.state_2 = 0;
+    g_SysWork.player_4C.extra_128.state_1C = PlayerState_FallBackward;
+    player->chara_0.model_0.stateStep_3 = 0;
+    player->chara_0.model_0.state_2 = 0;
 
-    player_extra = &g_SysWork.player_4C.extra_128;
-    player_extra->model_0.stateStep_3 = 0;
-    player_extra->model_0.state_2 = 0;
+    extra = &g_SysWork.player_4C.extra_128;
+    extra->model_0.stateStep_3 = 0;
+    extra->model_0.state_2 = 0;
 
-    g_SysWork.player_4C.extra_128.upperBodyState_20 = 0;
-    g_SysWork.player_4C.extra_128.lowerBodyState_24 = 0;
+    g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
+    g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
 }
 
 void func_800D20E4() {}

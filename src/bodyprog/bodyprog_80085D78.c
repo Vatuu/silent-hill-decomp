@@ -246,7 +246,7 @@ void func_8008616C(s32 arg0, bool arg1, s32 fadeType, s32 fadeTimestep, bool arg
             {
                 if (arg1 != 0 || g_Gfx_ScreenFade != caseVar)
                 {
-                    if (arg1 == caseVar && GFX_IS_SCREEN_FADE_COMPLETE())
+                    if (arg1 == caseVar && Gfx_IsScreenFadeComplete())
                     {
                         func_80085D78(arg4);
                     }

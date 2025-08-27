@@ -332,7 +332,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             break;
 
         case 24:
-            if (GFX_IS_SCREEN_FADE_COMPLETE())
+            if (Gfx_IsScreenFadeComplete())
             {
                 Gfx_ScreenRefresh(320, 0);
                 GameFs_SaveLoadBinLoad();
@@ -343,7 +343,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             break;
 
         case 25:
-            if (GFX_IS_SCREEN_FADE_COMPLETE())
+            if (Gfx_IsScreenFadeComplete())
             {
                 if (Fs_QueueDoThingWhenEmpty())
                 {

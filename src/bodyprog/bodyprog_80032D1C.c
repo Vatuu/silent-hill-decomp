@@ -63,7 +63,7 @@ void GameState_Unk0_Update() // 0x80032D1C
             break;
 
         case 3:
-            if (GFX_IS_SCREEN_FADE_COMPLETE())
+            if (Gfx_IsScreenFadeComplete())
             {
                 Fs_QueueWaitForEmpty();
 
@@ -3223,7 +3223,7 @@ void GameState_InGame_Update() // 0x80038BD4
     }
     Demo_DemoRandSeedRestore();
 
-    D_800A9A0C = GFX_IS_SCREEN_FADE_COMPLETE() && Fs_QueueDoThingWhenEmpty() != 0;
+    D_800A9A0C = Gfx_IsScreenFadeComplete() && Fs_QueueDoThingWhenEmpty() != 0;
 
     if (!(g_SysWork.field_22A0 & (1 << 0)) && g_MapOverlayHeader.func_40 != NULL)
     {
@@ -4161,7 +4161,7 @@ void GameState_MapEvent_Update() // 0x8003AA4C
         g_GameWork.gameStateStep_598[0] = 1;
     }
 
-    D_800A9A0C = GFX_IS_SCREEN_FADE_COMPLETE() && Fs_QueueDoThingWhenEmpty();
+    D_800A9A0C = Gfx_IsScreenFadeComplete() && Fs_QueueDoThingWhenEmpty();
 
     Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
 

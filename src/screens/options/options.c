@@ -113,7 +113,7 @@ void GameState_Options_Update(void) // 0x801E2D44
             break;
 
         case OptionsMenuState_EnterScreenPos:
-            if (GFX_IS_SCREEN_FADE_COMPLETE())
+            if (Gfx_IsScreenFadeComplete())
             {
                 g_GameWork.gameStateStep_598[0] = OptionsMenuState_ScreenPos;
                 g_SysWork.timer_20              = 0;
@@ -127,7 +127,7 @@ void GameState_Options_Update(void) // 0x801E2D44
             break;
 
         case OptionsMenuState_EnterBrightness:
-            if (GFX_IS_SCREEN_FADE_COMPLETE())
+            if (Gfx_IsScreenFadeComplete())
             {
                 Fs_QueueWaitForEmpty();
 
@@ -145,7 +145,7 @@ void GameState_Options_Update(void) // 0x801E2D44
 
         case OptionsMenuState_EnterController:
             // Switch to controller binding menu.
-            if (GFX_IS_SCREEN_FADE_COMPLETE())
+            if (Gfx_IsScreenFadeComplete())
             {
                 g_GameWork.gameStateStep_598[0] = OptionsMenuState_Controller;
                 g_GameWork.gameStateStep_598[0] = OptionsMenuState_Controller;
@@ -168,7 +168,7 @@ void GameState_Options_Update(void) // 0x801E2D44
             break;
 
         case OptionsMenuState_LeaveMainOptions:
-            if (GFX_IS_SCREEN_FADE_COMPLETE())
+            if (Gfx_IsScreenFadeComplete())
             {
                 // TODO: Likely `Game_StateSetPrevious` inline, but `gameState_594`/`gameStatePrev_590` loads inside are switched?
 
@@ -191,7 +191,7 @@ void GameState_Options_Update(void) // 0x801E2D44
             break;
 
         case OptionsMenuState_EnterExtraOptions:
-            if (GFX_IS_SCREEN_FADE_COMPLETE())
+            if (Gfx_IsScreenFadeComplete())
             {
                 g_GameWork.gameStateStep_598[0]   = OptionsMenuState_ExtraOptions;
                 g_SysWork.timer_20                = 0;
@@ -203,7 +203,7 @@ void GameState_Options_Update(void) // 0x801E2D44
             break;
 
         case OptionsMenuState_LeaveExtraOptions:
-            if (GFX_IS_SCREEN_FADE_COMPLETE())
+            if (Gfx_IsScreenFadeComplete())
             {
                 g_GameWork.gameStateStep_598[0] = OptionsMenuState_EnterMainOptions;
                 g_SysWork.timer_20              = 0;
@@ -1443,7 +1443,7 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
 
         case ScreenPosMenuState_Leave:
             // Switch to previous menu.
-            if (GFX_IS_SCREEN_FADE_COMPLETE())
+            if (Gfx_IsScreenFadeComplete())
             {
                 g_Gfx_ScreenFade                   = ScreenFadeState_FadeInStart;
                 g_GameWork.gameStateStep_598[0]    = OptionsMenuState_LeaveScreenPos;
@@ -2177,7 +2177,7 @@ void Options_Controller_Control(void) // 0x801E69BC
 
         case ControllerMenuState_Leave:
             // Switch to previous menu.
-            if (GFX_IS_SCREEN_FADE_COMPLETE())
+            if (Gfx_IsScreenFadeComplete())
             {
                 g_Gfx_ScreenFade                = ScreenFadeState_FadeInStart;
                 g_GameWork.gameStateStep_598[0] = OptionsMenuState_LeaveController;

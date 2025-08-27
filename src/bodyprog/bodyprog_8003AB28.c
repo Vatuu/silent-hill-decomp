@@ -299,7 +299,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
         case MenuState_LoadGame:
         case MenuState_NewGameStart:
-            if (GFX_IS_SCREEN_FADE_COMPLETE())
+            if (Gfx_IsScreenFadeComplete())
             {
                 Gfx_ScreenRefresh(SCREEN_WIDTH, 0);
                 Fs_QueueWaitForEmpty();

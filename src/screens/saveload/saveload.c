@@ -1798,7 +1798,7 @@ void Savegame_ScreenLogic() // 0x801E649C
             break;
 
         case 2:
-            if (GFX_IS_SCREEN_FADE_COMPLETE())
+            if (Gfx_IsScreenFadeComplete())
             {
                 g_GameWork.background2dColor_R_58C = 0;
                 g_GameWork.background2dColor_G_58D = 0;
@@ -2046,7 +2046,7 @@ void Savegame_ContinueLogic() // 0x801E6F38
 
         case ContinueState_1:
         {
-            if (GFX_IS_SCREEN_FADE_COMPLETE())
+            if (Gfx_IsScreenFadeComplete())
             {
                 Fs_QueueWaitForEmpty();
                 Settings_ScreenAndVolUpdate();

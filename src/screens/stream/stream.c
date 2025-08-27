@@ -30,7 +30,7 @@ void GameState_StartMovieIntro_Update() // 0x801E2654
             break;
 
         case 2:
-            if (GFX_IS_SCREEN_FADE_COMPLETE())
+            if (Gfx_IsScreenFadeComplete())
             {
                 Fs_QueueWaitForEmpty();
                 Game_StateSetNext(GameState_MovieIntro);

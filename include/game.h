@@ -62,7 +62,7 @@ struct _SubCharacter;
     ((((u32*)&g_SavegamePtr->hasMapsFlags_164)[(mapIdx) / 32] >> ((mapIdx) % 32)) & (1 << 0))
 
 /** @brief Checks screen fade completion status. See `g_Gfx_ScreenFade` for bit layout. */
-#define GFX_IS_SCREEN_FADE_COMPLETE() \
+#define Gfx_IsScreenFadeComplete() \
     ((g_Gfx_ScreenFade & ScreenFadeFlag_StateMask) == ScreenFadeState_FadeOutComplete)
 
 #define WeaponId_AttackVariantGet(weaponId, type) \
@@ -948,7 +948,7 @@ typedef struct _Model
 {
     s8 charaId_0;      /** `e_CharacterId` */
     u8 paletteIdx_1;   /** Changes the texture palette index for this model. */
-    u8 state_2;        /** Current state for this model/character. 0 usually means it still has to be initialize. */
+    u8 state_2;        /** Current state for this model/character. 0 usually means it still has to be initialized. */
     u8 stateStep_3;    // Step number or temp data for the current `state_2`? In `s_MainCharacterExtra` always 1, set to 0 for 1 tick when anim state appears to change.
                        // Used differently in player's `s_SubCharacter`. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
     s_ModelAnim anim_4;
@@ -995,7 +995,7 @@ typedef struct _SubCharaPropertiesPlayer
     s32    flags_11C; /** `e_PlayerFlags`. */
     s16    field_120; // Angle which the player turns when doing a quick turn. In order words, some sort of holder for angle Y.
     s16    field_122; // Some sort of X angle for the player. Specially used when aiming an enemy.
-    s16    field_124;
+    s16    field_124; // Heading/move angle. Used when translating player.
     q3_12  playerMoveDistance_126; // Used to indicate how much the player should move foward.
 } s_SubCharaPropertiesPlayer;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPlayer, 68);
@@ -1117,7 +1117,7 @@ typedef struct _MainCharacterExtra
 } s_MainCharacterExtra;
 STATIC_ASSERT_SIZEOF(s_MainCharacterExtra, 44);
 
-// Based on SH2 symbols this struct should be named `shPlayerWork` and `chara_0` should be `player`.
+// TODO: Based on SH2 symbols this struct should be named `shPlayerWork` and `chara_0` should be `player`.
 typedef struct _MainCharacter
 {
     s_SubCharacter       chara_0;
