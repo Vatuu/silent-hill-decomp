@@ -846,7 +846,7 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
                     set_active_data_f = 0;
                     if (sc_p == &g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353])
                     {
-                        set_active_data_f = g_SysWork.playerCombatInfo_38.isAiming_13 > 0;
+                        set_active_data_f = g_SysWork.playerCombatInfo_38.isAiming_13 > false;
                     }
                 }
             }

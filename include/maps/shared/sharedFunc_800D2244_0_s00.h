@@ -28,7 +28,7 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
     }
     else
     {
-        g_SysWork.player_4C.extra_128.state_1C = 0;
+        g_SysWork.player_4C.extra_128.state_1C = PlayerState_None;
         player->model_0.stateStep_3 = 0;
         player->model_0.state_2     = 0;
         extra->model_0.stateStep_3  = 0;

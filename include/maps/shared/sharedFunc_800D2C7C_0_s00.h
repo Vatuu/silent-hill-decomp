@@ -1,7 +1,10 @@
-void sharedFunc_800D2C7C_0_s00(s32 arg0)
+void sharedFunc_800D2C7C_0_s00(s32 playerState)
 {
-    s_MainCharacterExtra* extra = &g_SysWork.player_4C.extra_128;
-    s_SubCharacter*       chara = &g_SysWork.player_4C.chara_0;
+    s_MainCharacterExtra* extra;
+    s_SubCharacter*       chara;
+
+    extra = &g_SysWork.player_4C.extra_128;
+    chara = &g_SysWork.player_4C.chara_0;
 
     extra = &g_SysWork.player_4C.extra_128;
     chara = &g_SysWork.player_4C.chara_0;
@@ -10,7 +13,7 @@ void sharedFunc_800D2C7C_0_s00(s32 arg0)
 
     D_800C4606 = 0;
 
-    switch (arg0)
+    switch (playerState)
     {
         case PlayerState_Unk54:
             D_800C457C = 0;
@@ -29,7 +32,7 @@ void sharedFunc_800D2C7C_0_s00(s32 arg0)
             break;
     }
 
-    g_SysWork.player_4C.extra_128.state_1C = arg0;
+    g_SysWork.player_4C.extra_128.state_1C = playerState;
 
     chara->model_0.stateStep_3 = 0;
     chara->model_0.state_2     = 0;

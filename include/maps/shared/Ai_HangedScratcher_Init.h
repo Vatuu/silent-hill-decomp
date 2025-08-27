@@ -12,12 +12,11 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
         chara->properties_E4.larvalStalker.properties_E8[i].val32 = 0;
     }
 
-    chara->health_B0 = FP_TO(350, Q12_SHIFT);
-
+    chara->health_B0 = FP_HEALTH(350.0f);
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
         // TODO: Weird health value, and not sure why `s64` is needed to match - maybe some `s64` multiply was optimized out?
-        healthHard       = FP_FLOAT_TO(472.44873f, Q12_SHIFT);
+        healthHard       = FP_HEALTH(472.44873f);
         chara->health_B0 = healthHard;
     }
 
@@ -28,7 +27,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, sharedData_800D91A0_5_s00);
 
-    chara->damageReceived_C0 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+    chara->damageReceived_C0 = FP_HEALTH(0.0f);
     chara->field_BC          = 0;
     chara->field_B8          = 0;
     chara->field_B4          = 0;
@@ -50,7 +49,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
                 chara->model_0.state_2 = 1;
             }
             chara->model_0.anim_4.animIdx_0      = 29;
-            chara->model_0.anim_4.time_4         = FP_TO(222, Q12_SHIFT);
+            chara->model_0.anim_4.time_4         = FP_TIME(222.0f);
             chara->model_0.anim_4.keyframeIdx0_8 = 222;
             chara->position_18.vy                = FP_FLOAT_TO(-3.6f, Q12_SHIFT);
             chara->rotation_24.vz                = FP_ANGLE(180.0f);
@@ -62,7 +61,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
         case 14:
             chara->model_0.state_2               = 5;
             chara->model_0.anim_4.animIdx_0      = 31;
-            chara->model_0.anim_4.time_4         = FP_TO(232, Q12_SHIFT);
+            chara->model_0.anim_4.time_4         = FP_TIME(232.0f);
             chara->model_0.anim_4.keyframeIdx0_8 = 232;
             chara->position_18.vy                = 0;
             chara->rotation_24.vz                = 0;
@@ -74,7 +73,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
         case 6:
             chara->model_0.state_2               = 6;
             chara->model_0.anim_4.animIdx_0      = 31;
-            chara->model_0.anim_4.time_4         = FP_TO(232, Q12_SHIFT);
+            chara->model_0.anim_4.time_4         = FP_TIME(232.0f);
             chara->model_0.anim_4.keyframeIdx0_8 = 232;
             chara->position_18.vy                = 0;
             chara->rotation_24.vz                = 0;
@@ -97,13 +96,13 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
 
                 case 19:
                     chara->model_0.anim_4.animIdx_0      = 5;
-                    chara->model_0.anim_4.time_4         = FP_TO(51, Q12_SHIFT);
+                    chara->model_0.anim_4.time_4         = FP_TIME(51.0f);
                     chara->model_0.anim_4.keyframeIdx0_8 = 51;
                     break;
 
                 case 20:
                     chara->model_0.anim_4.animIdx_0      = 7;
-                    chara->model_0.anim_4.time_4         = FP_TO(87, Q12_SHIFT);
+                    chara->model_0.anim_4.time_4         = FP_TIME(87.0f);
                     chara->model_0.anim_4.keyframeIdx0_8 = 87;
                     break;
             }

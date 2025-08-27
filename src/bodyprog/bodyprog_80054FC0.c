@@ -2253,7 +2253,7 @@ void func_8006AD44(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x800
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006AEAC); // 0x8006AEAC
 
-s32 func_8006B004(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x8006B004
+bool func_8006B004(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x8006B004
 {
     s32 var_a0;
     s32 var_a3;
@@ -2293,9 +2293,9 @@ s32 func_8006B004(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x8006
     var_a0 -= arg0->field_4.field_28;
     var_a2 += arg0->field_4.field_28;
 
-    if ((temp_lo < var_a3) || (temp_lo_2 < var_a0) || (var_t0 < 0) || (var_a2 < 0))
+    if (temp_lo < var_a3 || temp_lo_2 < var_a0 || var_t0 < 0 || var_a2 < 0)
     {
-        return 0;
+        return false;
     }
 
     var_a3 = limitRange(var_a3, 0, temp_t3);
@@ -2308,7 +2308,7 @@ s32 func_8006B004(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x8006
     arg0->field_A2 = ((var_t0 / collData->field_1C) - arg0->field_A0) + 1;
     arg0->field_A3 = ((var_a2 / collData->field_1C) - arg0->field_A1) + 1;
 
-    return 1;
+    return true;
 }
 
 void func_8006B1C8(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s_func_8006B1C8* arg2) // 0x8006B1C8
@@ -3479,21 +3479,21 @@ void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 arg2,
 
     if (chara->model_0.anim_4.animIdx_0 == arg3 && chara->model_0.anim_4.keyframeIdx0_8 == g_MaybePlayerAnims[arg3].keyframeIdx1_E)
     {
-        g_SysWork.player_4C.extra_128.state_1C                      = 0;
+        g_SysWork.player_4C.extra_128.state_1C                      = PlayerState_None;
         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
         chara->model_0.stateStep_3                                  = 0;
         chara->model_0.state_2                                      = 0;
         extra->model_0.stateStep_3                                  = 0;
         extra->model_0.state_2                                      = 0;
-        g_SysWork.player_4C.extra_128.upperBodyState_20             = 0;
-        g_SysWork.player_4C.extra_128.lowerBodyState_24             = 0;
+        g_SysWork.player_4C.extra_128.upperBodyState_20             = PlayerUpperBodyState_None;
+        g_SysWork.player_4C.extra_128.lowerBodyState_24             = PlayerLowerBodyState_None;
         g_SysWork.player_4C.chara_0.field_D8.field_6                = 0;
         g_SysWork.player_4C.chara_0.field_D8.field_4                = 0;
         g_SysWork.player_4C.chara_0.field_D8.field_2                = 0;
         g_SysWork.player_4C.chara_0.field_D8.field_0                = 0;
         g_SysWork.playerCombatInfo_38.equippedWeapon_F              = (g_SavegamePtr->equippedWeapon_AA == InventoryItemId_Unequipped) ? InventoryItemId_Empty : (g_SavegamePtr->equippedWeapon_AA + 128);
         g_SysWork.enemyTargetIdx_2353                               = NO_VALUE;
-        g_SysWork.playerCombatInfo_38.isAiming_13                   = 0;
+        g_SysWork.playerCombatInfo_38.isAiming_13                   = false;
     }
 }
 
@@ -5439,7 +5439,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
     chara->moveSpeed_38        = D_800C4550;
     chara->field_34           += g_DeltaTime2;
     chara->rotationSpeed_2C.vy = (D_800C454C << 8) / g_DeltaTime0;
-    coord->flg                 = 0;
+    coord->flg                 = false;
                 
     func_80096E78(&chara->rotation_24, &coord->coord);
 }
@@ -7095,7 +7095,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
                 if ((g_Player_IsAiming != 0 && g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_KitchenKnife) ||
                     g_SysWork.playerCombatInfo_38.isAiming_13)
                 {
-                    g_SysWork.playerCombatInfo_38.isAiming_13 = 1;
+                    g_SysWork.playerCombatInfo_38.isAiming_13 = true;
 
                     if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun)
                     {
@@ -7238,7 +7238,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
                 g_SysWork.enemyTargetIdx_2353                               = NO_VALUE;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk0;
                 g_SysWork.player_4C.extra_128.state_1C                      = PlayerState_None;
-                g_SysWork.playerCombatInfo_38.isAiming_13                   = 0;
+                g_SysWork.playerCombatInfo_38.isAiming_13                   = false;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk9;
 
                 if (g_SysWork.player_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_Aim ||

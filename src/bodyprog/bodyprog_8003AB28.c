@@ -1149,8 +1149,8 @@ void func_8003CBA4(s_800BCE18_2BEC* arg0) // 0x8003CBA4
     SVECTOR       vec;
     MATRIX        mats[2];
 
-    coord.flg   = 0;
-    coord.super = 0;
+    coord.flg   = false;
+    coord.super = NULL;
 
     coord.coord.t[0] = arg0->gsCoordinate0_4;
     coord.coord.t[1] = arg0->gsCoordinate1_4;
