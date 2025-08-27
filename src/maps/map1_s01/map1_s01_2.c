@@ -110,7 +110,7 @@ void Ai_Cat_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x
 
     if (var_a0 != 0)
     {
-        func_8005DD44(1447, &chara->position_18, 128, Rng_TestProbabilityBits(4) - 7); // TODO: Try using `RngGenerateInt` here.
+        func_8005DD44(1447, &chara->position_18, FP_VOLUME(0.5f), Rng_TestProbabilityBits(4) - 7); // TODO: Try using `RngGenerateInt` here.
         chara->properties_E4.larvalStalker.properties_E8[0].val8[0] ^= 1;
     }
 }

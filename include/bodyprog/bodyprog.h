@@ -45,6 +45,8 @@ typedef enum _Sfx
 				    
     Sfx_Stumble0    = 1314,
 
+    Sfx_Unk1317     = 1317,
+
     Sfx_HeavyBreath = 1320,
     Sfx_Unk1321     = 1321,
     Sfx_Unk1322     = 1322,
@@ -1438,7 +1440,7 @@ typedef struct _AreaLoadParams
     u32    field_4_5           : 4;
     u32    loadingScreenId_4_9 : 3; /** `e_LoadingScreenId`` */
     u32    field_4_12          : 4;
-    u32    rotationY_4_16      : 8; /** Degrees in Q3.12, range [0, 256]. */
+    u32    rotationY_4_16      : 8; /** Degrees in Q7.8, range [0, 256]. */
     u32    field_4_24          : 8;
     q19_12 char_z_8; // TODO: Rename to `positionZ_8`.
 } s_AreaLoadParams;
@@ -1456,7 +1458,7 @@ typedef struct _SpawnInfo
 {
     q19_12 positionX_0;
     s8     charaId_4;   /** `e_CharacterId` */
-    u8     rotationY_5; /** Degrees in Q3.12, range [0, 256]. */
+    u8     rotationY_5; /** Degrees in Q7.8, range [0, 256]. */
     s8     flags_6;     /** Copied to `stateStep_3` in `s_Model`, with `state_2 = 0`. */
     s8     unk_7;
     q19_12 positionZ_8;
@@ -3047,13 +3049,13 @@ void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara);
 s32 func_8005D974();
 
 /** Spatial SFX func? */
-void func_8005DC1C(s32 sfx, const VECTOR3* pos, s32 volume, s32 soundType); // Types assumed.
+void func_8005DC1C(s32 sfx, const VECTOR3* pos, s32 vol, s32 soundType); // Types assumed.
 
 /** Spatial SFX func? */
-void func_8005DC3C(s32 sfx, const VECTOR3* pos, s32 volume, s32 soundType, s32 pitch);
+void func_8005DC3C(s32 sfx, const VECTOR3* pos, s32 vol, s32 soundType, s32 pitch);
 
 /** Spatial SFX func? */
-void func_8005DD44(s32 sfx, VECTOR3* pos, s32 volume, s8 pitch); // Types assumed.
+void func_8005DD44(s32 sfx, VECTOR3* pos, s32 vol, s8 pitch); // Types assumed.
 
 s32 func_8005F680(s_func_800699F8* arg0);
 

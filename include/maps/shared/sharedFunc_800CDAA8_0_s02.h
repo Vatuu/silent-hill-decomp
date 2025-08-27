@@ -100,7 +100,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
         {
             if (playerChara->model_0.anim_4.animIdx_0 == g_SysWork.player_4C.extra_128.state_1C)
             {
-                func_8005DD44(sfx, &playerChara->position_18, 64, pitch);
+                func_8005DD44(sfx, &playerChara->position_18, FP_VOLUME(0.25f), pitch);
 
                 playerChara->properties_E4.player.field_10C                 = pitch + 16;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;

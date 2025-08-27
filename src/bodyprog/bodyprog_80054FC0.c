@@ -1742,17 +1742,17 @@ s32 func_8005D974() // 0x8005D974
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005D9B8); // 0x8005D9B8
 
-void func_8005DC1C(s32 sfx, const VECTOR3* pos, s32 volume, s32 soundType)
+void func_8005DC1C(s32 sfx, const VECTOR3* pos, s32 vol, s32 soundType)
 {
-    func_8005DC3C(sfx, pos, volume, soundType, 0);
+    func_8005DC3C(sfx, pos, vol, soundType, 0);
 }
 
-void func_8005DC3C(s32 sfx, const VECTOR3* pos, s32 volume, s32 soundType, s32 pitch) // 0x8005DC3C
+void func_8005DC3C(s32 sfx, const VECTOR3* pos, s32 vol, s32 soundType, s32 pitch) // 0x8005DC3C
 {
-    s32 vol1;
+    s32 volCpy;
     s32 balance;
 
-    // If sound is monaural.
+    // Get stereo balance.
     if (soundType & (1 << 0) || g_GameWork.config_0.optSoundType_1E)
     {
         balance = 0;
@@ -1762,44 +1762,46 @@ void func_8005DC3C(s32 sfx, const VECTOR3* pos, s32 volume, s32 soundType, s32 p
         balance = Sound_StereoBalanceGet(pos);
     }
 
-    if (volume >= 0x100)
+    // Clamp volume.
+    if (vol > FP_VOLUME(1.0f))
     {
-        volume = 0xFF;
+        vol = FP_VOLUME(1.0f);
     }
-    else if (volume < 0)
+    else if (vol < FP_VOLUME(0.0f))
     {
-        volume = 0;
+        vol = FP_VOLUME(0.0f);
     }
 
     if (!(soundType & (1 << 1)))
     {
-        vol1 = func_8005D9B8(pos, volume);
+        volCpy = func_8005D9B8(pos, vol);
     }
     else
     {
-        vol1 = volume;
+        volCpy = vol;
     }
 
-    if (vol1 >= 0x100)
+    if (volCpy > FP_VOLUME(1.0f))
     {
-        vol1 = 0xFF;
+        volCpy = FP_VOLUME(1.0f);
     }
 
     if (soundType & (1 << 2))
     {
-        func_800463C0(sfx, balance, ~vol1, pitch);
+        func_800463C0(sfx, balance, ~volCpy, pitch);
     }
     else
     {
-        Sd_PlaySfx(sfx, balance, ~vol1);
+        Sd_PlaySfx(sfx, balance, ~volCpy);
     }
 }
 
-void func_8005DD44(s32 sfx, VECTOR3* pos, s32 volume, s8 pitch) // 0x8005DD44
+void func_8005DD44(s32 sfx, VECTOR3* pos, s32 vol, s8 pitch) // 0x8005DD44
 {
-    s32 vol;
+    s32 volCpy;
     s32 balance;
 
+    // Get stereo balance.
     if (g_GameWork.config_0.optSoundType_1E)
     {
         balance = 0;
@@ -1809,22 +1811,23 @@ void func_8005DD44(s32 sfx, VECTOR3* pos, s32 volume, s8 pitch) // 0x8005DD44
         balance = Sound_StereoBalanceGet(pos);
     }
 
-    if (volume >= 256)
+    // Clamp volume.
+    if (vol > FP_VOLUME(1.0f))
     {
-        volume = 255;
+        vol = FP_VOLUME(1.0f);
     }
-    else if (volume < 0)
+    else if (vol < FP_VOLUME(0.0f))
     {
-        volume = 0;
-    }
-
-    vol = func_8005D9B8(pos, volume);
-    if (vol >= 256)
-    {
-        vol = 255;
+        vol = FP_VOLUME(0.0f);
     }
 
-    func_80046620(sfx & 0xFFFF, balance, ~vol & 0xFF, pitch);
+    volCpy = func_8005D9B8(pos, vol);
+    if (volCpy > FP_VOLUME(1.0f))
+    {
+        volCpy = FP_VOLUME(1.0f);
+    }
+
+    func_80046620(sfx & 0xFFFF, balance, ~volCpy & 0xFF, pitch);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005DE0C); // 0x8005DE0C
@@ -1849,8 +1852,9 @@ s32 func_8005F680(s_func_800699F8* arg0) // 0x8005F680
     s8 temp_v1;
 
     temp_v1 = arg0->field_8;
+
     var_a0 = 0;
-    if ((temp_v1 == 0) || (temp_v1 == 0xC) || (temp_v1 == 7))
+    if (temp_v1 == 0 || temp_v1 == 12 || temp_v1 == 7)
     {
         var_a0 = 1;
     }
@@ -3541,19 +3545,19 @@ s32 func_800713E8(s32 animIdx, s_SubCharacter* chara, s32 arg2, s32 arg3, s32 ar
                     case 11:
                     case 25:
                     case 27:
-                        func_8005DD44(arg4, &chara->position_18, 0x18, arg5);
+                        func_8005DD44(arg4, &chara->position_18, FP_VOLUME(0.095f), arg5);
                         chara->properties_E4.player.field_10C = arg5;
                         break;
 
                     default:
-                        func_8005DD44(arg4, &chara->position_18, 0x40, arg5);
+                        func_8005DD44(arg4, &chara->position_18, FP_VOLUME(0.25f), arg5);
                         chara->properties_E4.player.field_10C = arg5 + 0x10;
                         break;
                 }
             } 
             else 
             {
-                func_8005DD44(arg4, &chara->position_18, 0x80, arg5);
+                func_8005DD44(arg4, &chara->position_18, FP_VOLUME(0.5f), arg5);
                 chara->properties_E4.player.field_10C = arg5 + 0x40;
             } 
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk4;
@@ -3577,19 +3581,19 @@ s32 func_800713E8(s32 animIdx, s_SubCharacter* chara, s32 arg2, s32 arg3, s32 ar
                     case 11:
                     case 25:
                     case 27:
-                        func_8005DD44(arg4, &chara->position_18, 0x18, arg5);
+                        func_8005DD44(arg4, &chara->position_18, FP_VOLUME(0.095f), arg5);
                         chara->properties_E4.player.field_10C = arg5;
                         break;
 
                     default:
-                        func_8005DD44(arg4, &chara->position_18, 0x40, arg5);
+                        func_8005DD44(arg4, &chara->position_18, FP_VOLUME(0.25f), arg5);
                         chara->properties_E4.player.field_10C = arg5 + 0x10;
                         break;
                 }
             } 
             else 
             {
-                func_8005DD44(arg4, &chara->position_18, 0x80, arg5);
+                func_8005DD44(arg4, &chara->position_18, FP_VOLUME(0.5f), arg5);
                 chara->properties_E4.player.field_10C = arg5 + 0x40;
             }
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk5;
@@ -4983,7 +4987,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                     if (extra->model_0.state_2 == 0 && chara->position_18.vy >= chara->properties_E4.player.positionY_EC)
                     {
                         extra->model_0.state_2++;
-                        func_8005DC1C(1317, &chara->position_18, 32, 0);
+                        func_8005DC1C(Sfx_Unk1317, &chara->position_18, FP_VOLUME(0.125f), 0);
                         chara->properties_E4.player.field_10C = 128;
                         func_80089470();
                     }
@@ -4993,8 +4997,8 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                         chara->properties_E4.player.field_10D = 0;
                         if (chara->model_0.anim_4.animIdx_0 & 1)
                         {
-                            g_SysWork.player_4C.chara_0.field_C8 = D_800AEEDC[chara->model_0.anim_4.keyframeIdx0_8 - 0x17B][0];
-                            g_SysWork.player_4C.chara_0.field_CE = D_800AEEDC[chara->model_0.anim_4.keyframeIdx0_8 - 0x17B][1];
+                            g_SysWork.player_4C.chara_0.field_C8 = D_800AEEDC[chara->model_0.anim_4.keyframeIdx0_8 - 379][0];
+                            g_SysWork.player_4C.chara_0.field_CE = D_800AEEDC[chara->model_0.anim_4.keyframeIdx0_8 - 379][1];
                         }
                         
                         if (chara->model_0.anim_4.keyframeIdx0_8 == D_800AF506)
@@ -5884,7 +5888,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                     {
                         chara->field_44 = 1;
 
-                        func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx_0, &chara->position_18, 0x80, 0);
+                        func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx_0, &chara->position_18, FP_VOLUME(0.5f), 0);
 
                         chara->properties_E4.player.field_10C                       = 0x40;
                         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk2;
@@ -5930,18 +5934,18 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                         g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10--;
                         g_SavegamePtr->items_0[g_SysWork.playerCombatInfo_38.field_12].count_1--;
 
-                        func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx_0, &chara->position_18, 0x80, 0);
+                        func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx_0, &chara->position_18, FP_VOLUME(0.5f), 0);
                     }
                     else
                     {
-                        func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx_0, &chara->position_18, 0x30, 0);
+                        func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx_0, &chara->position_18, FP_VOLUME(0.19f), 0);
                     }
 
                     chara->properties_E4.player.field_10C = 0xC8;
                 }
                 else
                 {
-                    func_8005DC1C(g_Player_EquippedWeaponInfo.outOfAmmoSfx_4, &chara->position_18, 0x80, 0);
+                    func_8005DC1C(g_Player_EquippedWeaponInfo.outOfAmmoSfx_4, &chara->position_18, FP_VOLUME(0.5f), 0);
 
                     chara->properties_E4.player.field_10C = 32;
                     extra->model_0.anim_4.keyframeIdx0_8  = D_800C44F0[D_800AF220].field_6 - 3;
@@ -6962,7 +6966,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             if ((D_800AF624 + g_Player_EquippedWeaponInfo.field_9) <= extra->model_0.anim_4.keyframeIdx0_8 &&
                 !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk2))
             {
-                func_8005DC1C(g_Player_EquippedWeaponInfo.reloadSfx_2, &chara->position_18, 0x80, 0);
+                func_8005DC1C(g_Player_EquippedWeaponInfo.reloadSfx_2, &chara->position_18, FP_VOLUME(0.5f), 0);
 
                 chara->properties_E4.player.field_10C                       = 0x20;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk2;
@@ -9419,7 +9423,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                 ((chara->model_0.anim_4.animIdx_0 >= 53 && chara->model_0.anim_4.animIdx_0 <= 54) ||
                  chara->model_0.anim_4.animIdx_0 == 57))
             {
-                func_8005DD44(sfx, &chara->position_18, 24, pitch);
+                func_8005DD44(sfx, &chara->position_18, FP_VOLUME(0.095f), pitch);
 
                 chara->properties_E4.player.field_10C                        = pitch + 16;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
@@ -9428,7 +9432,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             if (chara->model_0.anim_4.keyframeIdx0_8 == 246 &&
                 !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk5))
             {
-                func_8005DD44(sfx, &chara->position_18, 128, sp1D);
+                func_8005DD44(sfx, &chara->position_18, FP_VOLUME(0.5f), sp1D);
 
                 chara->properties_E4.player.field_10C                       = sp1D + 32;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk5;
@@ -9853,7 +9857,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             if (chara->damageReceived_C0 != 0 && !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_DamageReceived))
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_DamageReceived;
-                func_8005DC1C(sfx, &chara->position_18, 32, 0);
+                func_8005DC1C(sfx, &chara->position_18, FP_VOLUME(0.125f), 0);
                 chara->properties_E4.player.field_10C = 0x40;
             }
 
@@ -10240,7 +10244,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
         if (!(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_DamageReceived))
         {
-            func_8005DC1C(sfx, &chara->position_18, 0x20, 0);
+            func_8005DC1C(sfx, &chara->position_18, FP_VOLUME(0.125f), 0);
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_DamageReceived;
             chara->properties_E4.player.field_10C = 0x40;
         }

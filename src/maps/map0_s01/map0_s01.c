@@ -116,7 +116,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D2274_0_s01
 
 void func_800D2364(s32 arg0) // 0x800D2364
 {
-    func_8005DC1C(Sfx_Unk1590, arg0 + 24, 128, 0);
+    func_8005DC1C(Sfx_Unk1590, arg0 + 24, FP_VOLUME(0.5f), 0);
 }
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D2390_0_s01); // 0x800D2390

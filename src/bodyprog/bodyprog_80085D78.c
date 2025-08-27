@@ -761,7 +761,7 @@ void func_80086F44(s32 unkTime0, s32 unkTime1) // 0x80086F44
 void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
 {
     s32 i;
-    
+
     if (!(g_SysWork.flags_22A4 & (1 << 5)))
     {
         // Run through NPCs.
@@ -773,13 +773,12 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
             {
                 continue;
             }
-
             break;
         }
 
         if (i != NPC_COUNT_MAX)
         {
-            g_DeltaTime0 = 0;
+            g_DeltaTime0 = FP_TIME(0.0f);
         }
     }
 
@@ -787,8 +786,8 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
     {
         case 0:
             g_MapOverlayHeader.freezePlayerControl_C8();
-            func_8005DC1C(sfx, pos, 0x80, 0);
-            
+            func_8005DC1C(sfx, pos, FP_VOLUME(0.5f), 0);
+
             g_SysWork.timer_2C = FP_TIME(0.0f);
             g_SysWork.field_14 = 0;
             g_SysWork.field_10++;
@@ -796,7 +795,7 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
         case 1:
             func_80085E6C(FP_TIME(0.2f), true);
             break;
-        
+
         case 2:
             MapMsg_DisplayAndHandleSelection(false, mapMsgIdx, 0, 0, 0, true);
             break;
@@ -2319,7 +2318,7 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
 
     if (sfx != 0)
     {
-        func_8005DC1C(sfx, pos, 0xC0, 0);
+        func_8005DC1C(sfx, pos, FP_VOLUME(0.75f), 0);
     }
 }
 #else

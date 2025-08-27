@@ -9,7 +9,7 @@ bool sharedFunc_800D908C_0_s00(s32 arg0, s_SubCharacter* chara, s32 arg2, s32 ar
     {
         if ((chara->properties_E4.larvalStalker.properties_E8[13].val32 & (1 << 4)) == 0)
         {
-            func_8005DD44(sfx, &chara->position_18, 128, pitch);
+            func_8005DD44(sfx, &chara->position_18, FP_VOLUME(0.5f), pitch);
             chara->properties_E4.larvalStalker.properties_E8[13].val32 |= 1 << 4;
             return true;
         }
@@ -23,7 +23,7 @@ bool sharedFunc_800D908C_0_s00(s32 arg0, s_SubCharacter* chara, s32 arg2, s32 ar
     {
         if ((chara->properties_E4.larvalStalker.properties_E8[13].val32 & (1 << 5)) == 0)
         {
-            func_8005DD44(sfx, &chara->position_18, 128, pitch);
+            func_8005DD44(sfx, &chara->position_18, FP_VOLUME(0.5f), pitch);
             chara->properties_E4.larvalStalker.properties_E8[13].val32 |= 1 << 5;
             return true;
         }

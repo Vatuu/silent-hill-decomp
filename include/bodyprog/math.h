@@ -111,7 +111,7 @@
 #define FP_FLOAT_TO(x, shift) \
     (s32)((x) * FP_TO(1, (shift)))
 
-/** @brief Converts a floating-point value to a fixed-point value in Q19.12 format.
+/** @brief Converts a floating-point value to a fixed-point value in Q19.12.
  *
  * @param val `float` to convert.
  * @return `val` converted to fixed-point Q19.12.
@@ -119,7 +119,7 @@
 #define Q19_12(val) \
     FP_FLOAT_TO((val), Q12_SHIFT)
 
-/** @brief Converts a floating-point value to a fixed-point value in Q7.8 format.
+/** @brief Converts a floating-point value to a fixed-point value in Q7.8.
  *
  * @param val `float` to convert.
  * @return `val` converted to fixed-point Q7.8.
@@ -198,16 +198,16 @@
 #define FP_MULTIPLY_FLOAT_PRECISE(aInt, bFlt, shift) \
     FP_MULTIPLY((s64)(aInt), FP_FLOAT_TO((bFlt), (shift)), (shift))
 
-/** @brief Converts a floating-point alpha in the range `[0.0f, 1.0f]` to a fixed-point alpha in Q3.12 format, range `[0, 4096]`.
+/** @brief Converts a floating-point alpha in the range `[0.0f, 1.0f]` to a fixed-point alpha in Q3.12, range `[0, 4096]`.
  * Mapping is direct.
  *
- * @param alpha Alpha as `float`.
+ * @param alpha Alpha (`float`).
  * @return Fixed-point alpha in Q3.12, range `[0, 4096]` (`s16`).
  */
 #define FP_ALPHA(alpha) \
     (s16)FP_FLOAT_TO((alpha), Q12_SHIFT)
 
-/** @brief Normalizes a fixed-point alpha in Q3.12 format to the range `[0, 4095]`.
+/** @brief Normalizes a fixed-point alpha in Q3.12 to the range `[0, 4095]`.
  *
  * @param alpha Fixed-point alpha.
  * @return Normalized fixed-point alpha in Q3.12, range `[0, 4095]`.
@@ -215,33 +215,42 @@
 #define FP_ALPHA_NORM(alpha) \
     ((alpha) & 0xFFF)
 
-// TODO: Maybe not appropriate for this project since it often results in ugly floats.
-/** @brief Converts a normalized color value in the range `[0.0f, 1.0f]` to an 8-bit color value in the range `[0, 255]`.
+/** @brief Converts a floating-point sound volume in the range `[0.0f, 1.0f]` to a fixed-point sound volume in Q0.8, range `[0, 255]`.
  * Mapping is direct.
  *
- * @param val Color component as `float`.
- * @return Fixed-point color component, range `[0, 255]`.
+ * @param vol Sound volume (`float`).
+ * @return Fixed-point sound volume in Q0.8, range `[0, 255]` (`u8`).
+ */
+#define FP_VOLUME(vol) \
+    (u8)CLAMP(FP_FLOAT_TO((vol), Q8_SHIFT), 0, FP_FLOAT_TO(1.0f, Q8_SHIFT) - 1)
+
+// TODO: Maybe not appropriate for this project since it often results in ugly floats.
+/** @brief Converts a normalized color value in the range `[0.0f, 1.0f]` to an 8-bit color value in Q0.8, range `[0, 255]`.
+ * Mapping is direct.
+ *
+ * @param val Color component (`float`).
+ * @return Fixed-point color component in Q0.8, range `[0, 255]` (`u8`).
  */
 #define FP_COLOR(val) \
     (u8)((val) * 0xFF)
 
-/** @brief Converts floating-point degrees to unsigned fixed-point degrees in Q3.12 format, range `[0, 4096]`.
+/** @brief Converts floating-point degrees to unsigned fixed-point degrees in Q3.12, range `[0, 4096]`.
  * Mapping is direct.
  *
  * @note 1 degree = 11.377778 units.
  *
- * @param deg Degrees as `float`.
+ * @param deg Degrees (`float`).
  * @return Unsigned fixed-point degrees in Q3.12, range `[0, 4096]` (`s16`).
  */
 #define FP_ANGLE(deg) \
     (s16)((deg) * ((float)FP_TO(1, Q12_SHIFT) / 360.0f))
 
-/** @brief Converts floating-point degrees to unsigned fixed-point degrees in Q6.8 format, packed range `[0, 256]`.
+/** @brief Converts floating-point degrees to unsigned fixed-point degrees in Q6.8, packed range `[0, 256]`.
  * Mapping is direct.
  *
  * @note 1 degree = 0.711111 units.
  *
- * @param deg Degrees as `float`.
+ * @param deg Degrees (`float`).
  * @return Unsigned fixed-point degrees in Q6.8, packed range `[0, 256]` (`s16`).
  */
 #define FP_ANGLE_PACKED(deg) \
@@ -257,7 +266,7 @@
 #define FP_ANGLE_PACKED_FROM(packedAngle) \
     (s16)((packedAngle) * 16)
 
-/** @brief Normalizes unsigned fixed-point degrees in Q3.12 format to the signed range `[-2048, 2047]`.
+/** @brief Normalizes unsigned fixed-point degrees in Q3.12 to the signed range `[-2048, 2047]`.
  *
  * @param angle Unsigned fixed-point degrees in Q3.12, range `[0, 4095]`.
  * @return Signed fixed-point degrees wrapped to the range `[-2048, 2047]` (`s16`).
@@ -265,7 +274,7 @@
 #define FP_ANGLE_NORM_S(angle) \
     (((angle) << 20) >> 20)
 
-/** @brief Normalizes signed fixed-point degrees in Q3.12 format to the unsigned range `[0, 4095]`.
+/** @brief Normalizes signed fixed-point degrees in Q3.12 to the unsigned range `[0, 4095]`.
  *
  * @param angle Signed fixed-point degrees in Q3.12, range `[-2048, 2047]`.
  * @return Unsigned fixed-point degrees wrapped to the range `[0, 4095]` (`s16`).
@@ -278,32 +287,42 @@
  *
  * @note Pi = 10240 units.
  *
- * @param rad Radians as `float`.
+ * @param rad Radians (`float`).
  * @return Fixed-point radians, range `[0, 0x5000]` (`s32`).
  */
 #define FP_RADIAN(rad)                                                                \
     (s32)(((((rad) < 0.0f) ? (PI + (PI - ABS(rad))) : (rad)) * ((float)FP_PI / PI)) * \
           (((rad) < 0.0f || (rad) >= PI) ? 1.0f : 2.0f))
 
-/** @brief Converts floating-point meters to fixed-point meters in Q19.12 format.
+/** @brief Converts floating-point meters to fixed-point meters in Q19.12.
  *
  * @note 1 meter = 4096 units.
  *
- * @param met Meters as `float`.
+ * @param met Meters (`float`).
  * @return Fixed-point meters in Q19.12 (`s32`).
  */
 #define FP_METER(met) \
     FP_FLOAT_TO((met), Q12_SHIFT)
 
-/** @brief Converts floating-point seconds to fixed-point seconds in Q19.12 format.
+/** @brief Converts floating-point seconds to fixed-point seconds in Q19.12.
  *
  * @note 1 second == 4096 units.
  *
- * @param sec Seconds as `float`.
+ * @param sec Seconds (`float`).
  * @return Fixed-point seconds in Q19.12 (`s32`).
  */
 #define FP_TIME(sec) \
     FP_FLOAT_TO((sec), Q12_SHIFT)
+
+/** @brief Converts floating-point health to fixed-point health in Q19.12.
+ *
+ * @note 1 health == 4096 units.
+ *
+ * @param health Health (`float`).
+ * @return Fixed-point health in Q19.12 (`s32`).
+ */
+#define FP_HEALTH(health) \
+    FP_FLOAT_TO((health), Q12_SHIFT)
 
 /** @brief Multiplies an integer in fixed-point Q format by a float converted to fixed-point Q format,
  * then converts the result back from the fixed-point Q format using a 64-bit intermediate via
@@ -317,7 +336,7 @@
 #define Math_MultiplyFloatPrecise(a, b, shift) \
     Math_MulFixed((a), FP_FLOAT_TO((b), (shift)), (shift))
 
-/** @brief Computes the dot product(?) of the first column of a matrix with a vector in Q17.15(?) format.
+/** @brief Computes the dot product(?) of the first column of a matrix with a vector in Q17.15(?).
  *
  * @param mat Input matrix.
  * @param vec Input vector.
@@ -328,18 +347,18 @@
            ((mat).m[1][0] * (vec).vy) + \
            ((mat).m[2][0] * (vec).vz)) >> 17)
 
-/** @brief Sets an `VECTOR3`'s components to `float`s converted to a fixed-point format.
+/** @brief Sets an `VECTOR3`'s components to `float`s converted to a fixed-point Q format.
  *
  * @param vec Output vector.
- * @param x X component as `float`.
- * @param y Y component as `float`.
- * @param z Z component as `float`.
+ * @param x X component (`float`).
+ * @param y Y component (`float`).
+ * @param z Z component (`float`).
  * @param shift Fixed-point shift.
  */
 #define Math_Vector3f(vec, x, y, z, shift) \
     Math_Vector3Set(vec, FP_FLOAT_TO(x, shift), FP_FLOAT_TO(y, shift), FP_FLOAT_TO(z, shift))
 
-/** @brief Normalizes unsigned fixed-point degrees in Q3.12 format to the signed range `[-2048, 2047]`.
+/** @brief Normalizes unsigned fixed-point degrees in Q3.12, range `[0, 4096]` to the signed range `[-2048, 2047]`.
  * Thin wrapper for `FP_ANGLE_NORM_S`.
  *
  * @param angle Unsigned fixed-point degrees in Q3.12, range `[0, 4096]`.
@@ -413,22 +432,22 @@ void func_80096E78(SVECTOR* rot, MATRIX* mat); // Another custom `vwRotMatrix[..
 s32 Math_MulFixed(s32 a, s32 b, s32 shift);
 
 // NOTE: Matched on decomp.me.
-/** @brief Computes the sine in Q19.12 format of degrees in Q3.12 format.
+/** @brief Computes the sine in Q19.12 format of degrees in Q3.12, range `[0, 4096]`.
  *
  * Possible original name: `shRsin`
  *
  * @param angle Fixed-point degrees in Q3.12, range `[0, 4096]`.
- * @return Sine in Q19.12 format, range `[0, 4096]`.
+ * @return Sine in Q19.12, range `[0, 4096]`.
  */
 s32 Math_Sin(s32 angle);
 
 // NOTE: Matched on decomp.me.
-/** @brief Computes the cosine in Q19.12 format of degrees in Q3.12 format.
+/** @brief Computes the cosine in Q19.12 format of degrees in Q3.12, range `[0, 4096]`.
  *
  * Possible original name: `shRcos`
  *
  * @param angle Fixed-point degrees in Q3.12, range `[0, 4096]`.
- * @return Cosine in Q19.12 format, range `[0, 4096]`.
+ * @return Cosine in Q19.12, range `[0, 4096]`.
  */
 s32 Math_Cos(s32 angle);
 
