@@ -2411,8 +2411,6 @@ extern s32 D_800C45EC;
 
 extern u8 D_800C4606;
 
-extern s32 D_800C4608;
-
 extern s32 D_800C4610;
 
 extern s32 D_800C4618;

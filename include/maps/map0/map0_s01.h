@@ -133,7 +133,7 @@ void func_800D2094(void);
 
 s32 func_800D20FC();
 
-/** @brief @unused Handles the demo end screen event seen in demo builds. */
+/** @brief @unused Handles the demo end screen event after the Air Screamer breaks through the cafe window. Seen in demo builds. */
 void Event_ToBeContinued(void);
 
 void Event_CafeCutscene();

@@ -995,7 +995,7 @@ typedef struct _SubCharaPropertiesPlayer
     s32    flags_11C; /** `e_PlayerFlags`. */
     s16    field_120; // Angle which the player turns when doing a quick turn. In order words, some sort of holder for angle Y.
     s16    field_122; // Some sort of X angle for the player. Specially used when aiming an enemy.
-    s16    field_124; // Heading/move angle. Used when translating player.
+    s16    headingAngle_124;
     q3_12  playerMoveDistance_126; // Used to indicate how much the player should move foward.
 } s_SubCharaPropertiesPlayer;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPlayer, 68);
@@ -1074,9 +1074,9 @@ typedef struct _SubCharacter
     VECTOR3 field_98;
     VECTOR3 field_A4;
     q19_12  health_B0;
-    s32     field_B4;          // X? - In player: Adds/subtracts if hurt by enemy.
-    s32     field_B8;          // Y? - In player: Adds/subtracts if hurt by enemy.
-    s32     field_BC;          // Z? - In player: Adds/subtracts if hurt by enemy.
+    s32     field_B4;          // X? } In player: Adds/subtracts if hurt by enemy. Related to heading angle?
+    s32     field_B8;          // Y? }
+    s32     field_BC;          // Z? }
     q19_12  damageReceived_C0;
     u16     deathTimer_C4;     // Part of `shBattleInfo` struct in SH2, may use something similar here.
     s16     timer_C6;          // Some sort of timer, value written by `Ai_LarvalStalker_Update`.

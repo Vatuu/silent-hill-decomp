@@ -407,6 +407,8 @@ extern u16 g_Player_IsMovingBackward; // 0x800C45F0
 /** @brief Defines if the player is triggering the running action. */
 extern u16 g_Player_IsRunning; // 0x800C4604
 
+extern s32 g_Player_HeadingAngle;
+
 /** Boolean.
  * @note Possibly inaccurrate name or buggy functionality. If enemies grab the
  * player with this set to `true`, the user will be unable to interact with anything.
@@ -436,7 +438,7 @@ void Player_CharaRotate(s32 speed); // 0x80071284
 /** @brief Clears movement variables and reset Harry's lower body part animation states in case
  * of switching the player state.
  */
-void Player_MovementStateReset(s_SubCharacter* chara, e_PlayerLowerBodyState state); // 0x800713B4
+void Player_MovementStateReset(s_SubCharacter* chara, e_PlayerLowerBodyState lowerBodyState); // 0x800713B4
 
 /** Audio related. */
 s32 func_800713E8(s32 animIdx, s_SubCharacter* chara, s32 arg2, s32 arg3, s32 arg4, s8 arg5);
@@ -487,7 +489,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x800771BC
 
 /** @brief Cancels movement when the player abruptly stop the running while stepping movement. */
-void Player_StepWallStop_MovementCancel(s_SubCharacter* chara, s32 arg1, s32 animIdx, s32 keyframeIdx, e_PlayerLowerBodyState playerState, q19_12 arg5, s32 aimingState); // 0x80077BB8
+void Player_StepWallStop_MovementCancel(s_SubCharacter* chara, s32 arg1, s32 animIdx, s32 keyframeIdx, e_PlayerLowerBodyState lowerBodyState, s32 headingAngle, s32 aimState); // 0x80077BB8
 
 /** @brief Main player movement function. */
 void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x80077D00

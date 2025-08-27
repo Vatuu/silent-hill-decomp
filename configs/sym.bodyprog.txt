@@ -2354,6 +2354,7 @@ g_Player_IsShooting                         = 0x800C45C0;
 g_Player_IsMovingForward                    = 0x800C45E8;
 g_Player_IsMovingBackward                   = 0x800C45F0;
 g_Player_IsRunning                          = 0x800C4604;
+g_Player_HeadingAngle                       = 0x800C4608;
 vcWatchMvPrmSt                              = 0x800C4630; // type:VC_WATCH_MV_PARAM size:0xC
 vcSelfViewTimer                             = 0x800C463C; // type:s32
 g_Demo_DemoFileIdx                          = 0x800C4840; // type:s32

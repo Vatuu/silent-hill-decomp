@@ -6,10 +6,10 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
     s32             sfx;
     s8              pitch;
     s8              sp25;
-    s32             unused; // @unused Unknown purpose.
+    s32             headingAngle; // Serves no meaaningful purpose as it's always `FP_ANGLE(0.0f)`.
     s32             newMoveSpeed;
 
-    unused                    = 0;
+    headingAngle              = FP_ANGLE(0.0f);
     sharedData_800D32A0_0_s02 = 0;
     sharedData_800E39D8_0_s00 = 0;
 
@@ -18,17 +18,17 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 
     func_8004C564(0, -1);
 
-    playerChara->properties_E4.player.afkTimer_E8      = 0;
-    playerChara->properties_E4.player.exertionTimer_FC = 0;
+    playerChara->properties_E4.player.afkTimer_E8      = FP_TIME(0.0f);
+    playerChara->properties_E4.player.exertionTimer_FC = FP_TIME(0.0f);
 
     if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_Unk52)
     {
-        if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
+        if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != FP_METER(0.0f))
         {
-            g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= ((g_DeltaTime0 * FP_TIME(0.4f)) / FP_TIME(0.1f / 3.0f)) * 2;
-            if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < 0)
+            g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= ((g_DeltaTime0 * FP_METER(0.4f)) / FP_METER(0.1f / 3.0f)) * 2;
+            if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < FP_METER(0.0f))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = FP_METER(0.0f);
             }
         }
 
@@ -87,8 +87,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             D_800C4606                                      = 0;
         }
 
-        g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = 0;
-        unused                                                     = 0;
+        g_SysWork.player_4C.chara_0.properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
+        headingAngle                                                      = FP_ANGLE(0.0f);
     }
 
     func_800699F8(&sp10, playerChara->position_18.vx, playerChara->position_18.vz);
@@ -115,7 +115,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
     newMoveSpeed = sharedData_800D32A0_0_s02;
 
     playerChara->rotation_24.vy  = FP_ANGLE_NORM_U((playerChara->rotation_24.vy + (sharedData_800E39D8_0_s00 >> 4)) + FP_ANGLE(360.0f));
-    playerChara->headingAngle_3C = FP_ANGLE_NORM_U(playerChara->rotation_24.vy + unused);
+    playerChara->headingAngle_3C = FP_ANGLE_NORM_U(playerChara->rotation_24.vy + headingAngle);
     playerChara->moveSpeed_38    = newMoveSpeed;
     playerChara->field_34       += g_DeltaTime2;
 

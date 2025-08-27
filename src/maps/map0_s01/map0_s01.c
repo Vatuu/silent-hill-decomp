@@ -93,8 +93,8 @@ void func_800D2094(void) // 0x800D2094
     player = &g_SysWork.player_4C;
 
     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = FP_METER(2.3f);
-    g_SysWork.player_4C.chara_0.properties_E4.player.field_124 = Q19_12(0.5f);
-    D_800C4608 = Q19_12(0.5f);
+    g_SysWork.player_4C.chara_0.properties_E4.player.headingAngle_124       = FP_ANGLE(180.0f);
+    g_Player_HeadingAngle                                                   = FP_ANGLE(180.0f);
 
     g_SysWork.player_4C.extra_128.state_1C = PlayerState_FallBackward;
     player->chara_0.model_0.stateStep_3 = 0;
