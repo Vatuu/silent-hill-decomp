@@ -928,9 +928,6 @@ typedef struct _AnimInfo
 } s_AnimInfo;
 STATIC_ASSERT_SIZEOF(s_AnimInfo, 16);
 
-#define Anim_ModelAnimIdxGet(animStatus) \
-
-
 typedef struct _ModelAnimData
 {
     // Following 4 bytes might be packed into an s32 called `animStatus`,

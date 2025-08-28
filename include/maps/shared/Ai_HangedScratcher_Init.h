@@ -48,6 +48,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
             {
                 chara->model_0.state_2 = 1;
             }
+
             chara->model_0.anim_4.animIdx_0      = 29;
             chara->model_0.anim_4.time_4         = FP_TIME(222.0f);
             chara->model_0.anim_4.keyframeIdx0_8 = 222;
