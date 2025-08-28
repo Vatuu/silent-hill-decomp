@@ -16,9 +16,9 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
         g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
         g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
 
-        player->model_0.anim_4.animIdx_0      = ANIM_STATUS_GET(26, true);
+        player->model_0.anim_4.status_0      = ANIM_STATUS_GET(26, true);
         player->model_0.anim_4.keyframeIdx0_8 = 503;
-        extra->model_0.anim_4.animIdx_0       = ANIM_STATUS_GET(26, true);
+        extra->model_0.anim_4.status_0       = ANIM_STATUS_GET(26, true);
         extra->model_0.anim_4.keyframeIdx0_8  = 503;
 
         player->model_0.anim_4.time_4         = FP_TO(503, Q12_SHIFT);

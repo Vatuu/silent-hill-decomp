@@ -1072,7 +1072,7 @@ s_AnimInfo* func_80044918(s_ModelAnim* anim) // 0x80044918
 
     animInfo_C  = anim->animInfo_C;
     animInfo_10 = anim->animInfo_10;
-    animStatus0 = anim->animIdx_0;
+    animStatus0 = anim->status_0;
     animStatus1 = anim->maybeSomeState_1;
 
     if (animInfo_10 != NULL && animStatus0 >= animStatus1)
@@ -1164,7 +1164,7 @@ void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     // Update anim status.
     if (setAnimIdx)
     {
-        model->anim_4.animIdx_0 = targetAnim->animIdx_6;
+        model->anim_4.status_0 = targetAnim->status_6;
     }
 }
 
@@ -1282,7 +1282,7 @@ void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     // Update anim status.
     if (setAnimIdx)
     {
-        model->anim_4.animIdx_0 = targetAnim->animIdx_6;
+        model->anim_4.status_0 = targetAnim->status_6;
     }
 }
 

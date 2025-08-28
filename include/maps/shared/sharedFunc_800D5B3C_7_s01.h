@@ -12,7 +12,7 @@ void sharedFunc_800D5B3C_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
     {
         if (chara->model_0.stateStep_3 == 0)
         {
-            chara->model_0.anim_4.animIdx_0 = ANIM_STATUS_GET(1, false);
+            chara->model_0.anim_4.status_0 = ANIM_STATUS_GET(1, false);
             chara->model_0.stateStep_3++;
         }
 

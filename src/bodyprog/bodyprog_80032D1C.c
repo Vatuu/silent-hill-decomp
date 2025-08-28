@@ -1872,7 +1872,7 @@ void Gfx_LoadingScreen_PlayerRun() // 0x80035BE0
         model->anim_4.time_4                       = FP_TIME(26.0f);
         g_SysWork.player_4C.chara_0.position_18.vy = FP_METER(0.2f);
 
-        D_800A998C.field_4 = model->anim_4.animIdx_0;
+        D_800A998C.field_4 = model->anim_4.status_0;
 
         func_80035B04(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, boneCoords);
         g_SysWork.sysState_8++;

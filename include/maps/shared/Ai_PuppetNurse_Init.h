@@ -80,7 +80,7 @@ void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, chara2->properties_E4.npc.field_124->animInfo_24);
 
-    chara->model_0.anim_4.animIdx_0      = ANIM_STATUS_GET(17, false);
+    chara->model_0.anim_4.status_0      = ANIM_STATUS_GET(17, false);
     chara->model_0.anim_4.keyframeIdx1_A = 0;
 
     chara2->properties_E4.npc.field_120 = 4096;

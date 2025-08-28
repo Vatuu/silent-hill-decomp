@@ -54,7 +54,7 @@ void Ai_Cat_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x
     if (chara->model_0.state_2 == 0)
     {
         chara->model_0.state_2                                      = 1;
-        chara->model_0.anim_4.animIdx_0                             = ANIM_STATUS_GET(3, true);
+        chara->model_0.anim_4.status_0                             = ANIM_STATUS_GET(3, true);
         chara->model_0.anim_4.time_4                                = FP_TO(7, Q12_SHIFT);
         chara->model_0.anim_4.keyframeIdx1_A                        = 0;
         chara->model_0.stateStep_3                                  = 0;
@@ -67,13 +67,13 @@ void Ai_Cat_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x
     {
         if (chara->model_0.state_2 == 2)
         {
-            chara->model_0.anim_4.animIdx_0      = ANIM_STATUS_GET(1, true);
+            chara->model_0.anim_4.status_0      = ANIM_STATUS_GET(1, true);
             chara->model_0.anim_4.time_4         = FP_TO(7, Q12_SHIFT);
             chara->model_0.anim_4.keyframeIdx0_8 = 7;
         }
         else if (chara->model_0.state_2 == 3)
         {
-            chara->model_0.anim_4.animIdx_0      = ANIM_STATUS_GET(2, true);
+            chara->model_0.anim_4.status_0      = ANIM_STATUS_GET(2, true);
             chara->model_0.anim_4.time_4         = FP_TO(23, Q12_SHIFT);
             chara->model_0.anim_4.keyframeIdx0_8 = 23;
         }
@@ -83,11 +83,11 @@ void Ai_Cat_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x
 
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
-    animInfo = &g_Ai_Cat_AnimInfo[chara->model_0.anim_4.animIdx_0];
+    animInfo = &g_Ai_Cat_AnimInfo[chara->model_0.anim_4.status_0];
     animInfo->funcPtr_0(chara, arg1, coords, animInfo);
 
     var_a0 = 0;
-    if (chara->model_0.anim_4.animIdx_0 == ANIM_STATUS_GET(1, true))
+    if (chara->model_0.anim_4.status_0 == ANIM_STATUS_GET(1, true))
     {
         if (((u8)chara->properties_E4.larvalStalker.properties_E8[0].val8[0] == 0 &&
              (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 20) < 3u) ||

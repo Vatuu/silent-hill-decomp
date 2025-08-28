@@ -78,7 +78,7 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* co
     if (chara->model_0.state_2 == 0)
     {
         chara->model_0.anim_4.keyframeIdx1_A = 0;
-        chara->model_0.anim_4.animIdx_0      = ANIM_STATUS_GET(2, true);
+        chara->model_0.anim_4.status_0      = ANIM_STATUS_GET(2, true);
         chara->model_0.anim_4.time_4         = 0;
         chara->model_0.anim_4.keyframeIdx0_8 = 0;
         chara->model_0.state_2++;
@@ -96,16 +96,16 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* co
 
     if (!(g_SavegamePtr->eventFlags_168[3] & (1 << 10)))
     {
-        if (chara->model_0.anim_4.animIdx_0 == ANIM_STATUS_GET(2, true))
+        if (chara->model_0.anim_4.status_0 == ANIM_STATUS_GET(2, true))
         {
-            chara->model_0.anim_4.animIdx_0 = ANIM_STATUS_GET(1, true);
+            chara->model_0.anim_4.status_0 = ANIM_STATUS_GET(1, true);
         }
 
         chara->field_E0_8 = 0;
     }
     else
     {
-        chara->model_0.anim_4.animIdx_0      = ANIM_STATUS_GET(3, true);
+        chara->model_0.anim_4.status_0      = ANIM_STATUS_GET(3, true);
         chara->model_0.anim_4.time_4         = FP_TIME(16.0f);
         chara->model_0.anim_4.keyframeIdx0_8 = 16;
         chara->field_E0_8                    = 3;
@@ -113,7 +113,7 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* co
 
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
-    structPtr = &D_800E1410[chara->model_0.anim_4.animIdx_0];
+    structPtr = &D_800E1410[chara->model_0.anim_4.status_0];
     structPtr->funcPtr_0(chara, arg1, coords, structPtr);
 
     chara->field_C8         = -0x4CC;

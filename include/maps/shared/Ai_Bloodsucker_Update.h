@@ -67,7 +67,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coord
         }
     }
 
-    animStatusDiv2 = chara->model_0.anim_4.animIdx_0 / 2;
+    animStatusDiv2 = chara->model_0.anim_4.status_0 / 2;
     stateStepMul2  = chara->model_0.stateStep_3 * 2;
 
     if (animStatusDiv2 == (stateStepMul2 + 23) / 2 || animStatusDiv2 == (stateStepMul2 + 17) / 2)

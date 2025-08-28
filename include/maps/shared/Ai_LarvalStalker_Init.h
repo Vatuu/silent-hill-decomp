@@ -4,7 +4,7 @@ void Ai_LarvalStalker_Init(s_SubCharacter* arg0)
 
     arg0->model_0.state_2               = 3;
     arg0->model_0.anim_4.time_4         = 0;
-    arg0->model_0.anim_4.animIdx_0      = ANIM_STATUS_GET(10, false);
+    arg0->model_0.anim_4.status_0      = ANIM_STATUS_GET(10, false);
     arg0->model_0.anim_4.time_4         = FP_TIME(162.0f);
     arg0->model_0.anim_4.keyframeIdx0_8 = 162;
 

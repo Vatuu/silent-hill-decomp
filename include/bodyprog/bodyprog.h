@@ -1474,9 +1474,9 @@ typedef struct s_UnkStruct_MapOverlay
 /** Contains loaded anim data? */
 typedef struct
 {
-    s16 field_0; /** Packed anim status. See `s_ModelAnimData::animIdx_0`. */
-    s16 field_2; /** Packed anim status. See `s_ModelAnimData::animIdx_0`. */
-    s16 field_4; /** Fixed-point anim time. */
+    s16 status_0; /** Packed anim status. See `s_ModelAnimData::status_0`. */
+    s16 status_2; /** Packed anim status. See `s_ModelAnimData::status_0`. */
+    s16 time_4;   /** Fixed-point anim time. */
     s16 field_6;
 } s_UnkStruct3_Mo; // Probable size: 8 bytes.
 

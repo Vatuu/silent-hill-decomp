@@ -770,7 +770,7 @@ s_AnimInfo D_800A998C =
     .funcPtr_0              = Anim_Update1,
     .field_4                = 0,
     .hasVariableTimeDelta_5 = 0,
-    .animIdx_6              = 0,
+    .status_6              = 0,
     .unk_7                  = 0,
     .timeDelta_8            = { .constTimeDelta = 0x8000 },
     .keyframeIdx0_C         = 0x001A,

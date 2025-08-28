@@ -49,7 +49,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
                 chara->model_0.state_2 = 1;
             }
 
-            chara->model_0.anim_4.animIdx_0      = ANIM_STATUS_GET(14, true);
+            chara->model_0.anim_4.status_0      = ANIM_STATUS_GET(14, true);
             chara->model_0.anim_4.time_4         = FP_TIME(222.0f);
             chara->model_0.anim_4.keyframeIdx0_8 = 222;
             chara->position_18.vy                = FP_FLOAT_TO(-3.6f, Q12_SHIFT);
@@ -61,7 +61,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
         case 7:
         case 14:
             chara->model_0.state_2               = 5;
-            chara->model_0.anim_4.animIdx_0      = ANIM_STATUS_GET(15, true);
+            chara->model_0.anim_4.status_0      = ANIM_STATUS_GET(15, true);
             chara->model_0.anim_4.time_4         = FP_TIME(232.0f);
             chara->model_0.anim_4.keyframeIdx0_8 = 232;
             chara->position_18.vy                = 0;
@@ -73,7 +73,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
 
         case 6:
             chara->model_0.state_2               = 6;
-            chara->model_0.anim_4.animIdx_0      = ANIM_STATUS_GET(15, true);
+            chara->model_0.anim_4.status_0      = ANIM_STATUS_GET(15, true);
             chara->model_0.anim_4.time_4         = FP_TIME(232.0f);
             chara->model_0.anim_4.keyframeIdx0_8 = 232;
             chara->position_18.vy                = FP_METER(0.0f);
@@ -90,19 +90,19 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
             switch (chara->model_0.stateStep_3)
             {
                 case 18:
-                    chara->model_0.anim_4.animIdx_0      = ANIM_STATUS_GET(1, true);
+                    chara->model_0.anim_4.status_0      = ANIM_STATUS_GET(1, true);
                     chara->model_0.anim_4.time_4         = FP_TIME(0.0f);
                     chara->model_0.anim_4.keyframeIdx0_8 = 0;
                     break;
 
                 case 19:
-                    chara->model_0.anim_4.animIdx_0      = ANIM_STATUS_GET(2, true);
+                    chara->model_0.anim_4.status_0      = ANIM_STATUS_GET(2, true);
                     chara->model_0.anim_4.time_4         = FP_TIME(51.0f);
                     chara->model_0.anim_4.keyframeIdx0_8 = 51;
                     break;
 
                 case 20:
-                    chara->model_0.anim_4.animIdx_0      = ANIM_STATUS_GET(3, true);
+                    chara->model_0.anim_4.status_0      = ANIM_STATUS_GET(3, true);
                     chara->model_0.anim_4.time_4         = FP_TIME(87.0f);
                     chara->model_0.anim_4.keyframeIdx0_8 = 87;
                     break;

@@ -1,6 +1,6 @@
 bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 sfx, s32 pitch)
 {
-    if (chara->model_0.anim_4.animIdx_0 != animStatus)
+    if (chara->model_0.anim_4.status_0 != animStatus)
     {
         return false;
     }

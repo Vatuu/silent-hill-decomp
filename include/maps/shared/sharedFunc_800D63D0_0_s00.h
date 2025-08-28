@@ -43,14 +43,14 @@ void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 moveSpeed)
 
     if (chara->moveSpeed_38 == 0 && !(chara->properties_E4.player.afkTimer_E8 & ((1 << 8) | (1 << 9))))
     {
-        newAnimStatus = (chara->model_0.anim_4.animIdx_0 == ANIM_STATUS_GET(31, true)) ? ANIM_STATUS_GET(0, true) : ANIM_STATUS_GET(0, false);
+        newAnimStatus = (chara->model_0.anim_4.status_0 == ANIM_STATUS_GET(31, true)) ? ANIM_STATUS_GET(0, true) : ANIM_STATUS_GET(0, false);
 
-        if (chara->model_0.anim_4.animIdx_0 == ANIM_STATUS_GET(32, true))
+        if (chara->model_0.anim_4.status_0 == ANIM_STATUS_GET(32, true))
         {
             newAnimStatus = ANIM_STATUS_GET(1, false);
         }
 
-        if (chara->model_0.anim_4.animIdx_0 == ANIM_STATUS_GET(33, true))
+        if (chara->model_0.anim_4.status_0 == ANIM_STATUS_GET(33, true))
         {
             newAnimStatus = ANIM_STATUS_GET(6, false);
         }
