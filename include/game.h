@@ -79,7 +79,7 @@ struct _SubCharacter;
  * @return Anim index.
  */
 #define ANIM_STATUS_IDX_GET(animStatus) \
-    (((animStatus) & ~(1 << 0)) >> 1)
+    ((animStatus) >> 1)
 
 /** @brief Checks if an anim is active.
  *
