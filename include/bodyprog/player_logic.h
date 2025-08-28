@@ -278,12 +278,12 @@ typedef enum _PlayerLowerBodyState
     PlayerLowerBodyState_Reload            = 35
 } e_PlayerLowerBodyState;
 
-// 53, 54 are idle animations and 57 is aiming while doing nothing.
 /** @brief Player animation IDs. */
 typedef enum _PlayerAnim
 {
     PlayerAnim_Idle      = 26,
-    PlayerAnim_IdleTired = 27
+    PlayerAnim_IdleTired = 27,
+    PlayerAnim_IdleAim   = 28 // Unsure.
 } s_PlayerAnim;
 
 // ========

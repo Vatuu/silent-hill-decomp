@@ -3356,7 +3356,7 @@ void func_8006342C(s32 invItemId, s16, s16, GsCOORDINATE2*);
 
 void func_8005CB20(s_SubCharacter*, void*, s16, s16);
 
-void func_800622B8(s32, s_SubCharacter*, s32, s32);
+void func_800622B8(s32, s_SubCharacter*, s32 animStatus, s32);
 
 void func_80066E40();
 

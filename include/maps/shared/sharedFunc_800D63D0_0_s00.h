@@ -1,19 +1,19 @@
-void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 arg1)
+void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 moveSpeed)
 {
     u16* flags;
-    s32  moveSpeed;
+    s32  curMoveSpeed;
     s32  newMoveSpeed;
-    s32  animVar;
+    s32  newAnimStatus;
 
     flags = &chara->properties_E4.player.afkTimer_E8;
 
-    moveSpeed = arg1;
+    curMoveSpeed = moveSpeed;
     if (!(*flags & (1 << 13)))
     {
-        moveSpeed = chara->moveSpeed_38;
-        if (moveSpeed > 0)
+        curMoveSpeed = chara->moveSpeed_38;
+        if (curMoveSpeed > 0)
         {
-            newMoveSpeed = moveSpeed - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.5f, Q12_SHIFT);
+            newMoveSpeed = curMoveSpeed - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.5f, Q12_SHIFT);
             if (newMoveSpeed < 0)
             {
                 newMoveSpeed = 0;
@@ -21,7 +21,7 @@ void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 arg1)
         }
         else
         {
-            newMoveSpeed = moveSpeed + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.5f, Q12_SHIFT);
+            newMoveSpeed = curMoveSpeed + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.5f, Q12_SHIFT);
             if (newMoveSpeed > 0)
             {
                 newMoveSpeed = 0;
@@ -34,7 +34,7 @@ void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 arg1)
     {
         chara->flags_3E &= ~CharaFlag_Unk2;
 
-        if (g_SysWork.enemyTargetIdx_2353 != func_8005C7D0(chara, moveSpeed))
+        if (g_SysWork.enemyTargetIdx_2353 != func_8005C7D0(chara, curMoveSpeed))
         {
             chara->health_B0  = NO_VALUE;
             chara->field_E0_8 = 0;
@@ -43,20 +43,23 @@ void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 arg1)
 
     if (chara->moveSpeed_38 == 0 && !(chara->properties_E4.player.afkTimer_E8 & ((1 << 8) | (1 << 9))))
     {
-        animVar = chara->model_0.anim_4.animIdx_0 == 63;
-        if (chara->model_0.anim_4.animIdx_0 == 65)
-        {
-            animVar = 2;
-        }
-        if (chara->model_0.anim_4.animIdx_0 == 67)
-        {
-            animVar = 12;
-        }
-        if (animVar != 0)
-        {
-            func_800622B8(3, chara, animVar, 3);
+        newAnimStatus = (chara->model_0.anim_4.animIdx_0 == ANIM_STATUS_GET(31, true)) ? ANIM_STATUS_GET(0, true) : ANIM_STATUS_GET(0, false);
 
-            flags = &chara->properties_E4.player.afkTimer_E8;
+        if (chara->model_0.anim_4.animIdx_0 == ANIM_STATUS_GET(32, true))
+        {
+            newAnimStatus = ANIM_STATUS_GET(1, false);
+        }
+
+        if (chara->model_0.anim_4.animIdx_0 == ANIM_STATUS_GET(33, true))
+        {
+            newAnimStatus = ANIM_STATUS_GET(6, false);
+        }
+
+        if (newAnimStatus != ANIM_STATUS_GET(0, false))
+        {
+            func_800622B8(3, chara, newAnimStatus, 3);
+
+            flags   = &chara->properties_E4.player.afkTimer_E8;
             *flags |= 1 << 9;
         }
     }

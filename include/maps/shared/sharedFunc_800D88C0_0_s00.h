@@ -4,7 +4,7 @@ void sharedFunc_800D88C0_0_s00(s_SubCharacter* playerChara, s32 arg1)
 
     if (arg1 != 0)
     {
-        playerChara->model_0.anim_4.animIdx_0      = 3;
+        playerChara->model_0.anim_4.animIdx_0      = ANIM_STATUS_GET(1, true);
         playerChara->model_0.anim_4.keyframeIdx0_8 = 0;
         playerChara->model_0.anim_4.time_4         = 0;
         playerChara->model_0.anim_4.keyframeIdx1_A = FP_TO(1, Q12_SHIFT);
@@ -12,7 +12,6 @@ void sharedFunc_800D88C0_0_s00(s_SubCharacter* playerChara, s32 arg1)
     else
     {
         playerChara->properties_E4.player.afkTimer_E8 = 0;
-
         playerChara->model_0.stateStep_3 = 0;
     }
 

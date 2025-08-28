@@ -37,13 +37,13 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 
         if (extra->model_0.stateStep_3 == 0)
         {
-            extra->model_0.anim_4.animIdx_0 = 52;
+            extra->model_0.anim_4.animIdx_0 = ANIM_STATUS_GET(26, false);
             extra->model_0.stateStep_3++;
         }
 
         if (playerChara->model_0.stateStep_3 == 0)
         {
-            playerChara->model_0.anim_4.animIdx_0 = 52;
+            playerChara->model_0.anim_4.animIdx_0 = ANIM_STATUS_GET(26, false);
             playerChara->model_0.stateStep_3++;
         }
 
@@ -98,6 +98,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
     {
         if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Moving)
         {
+            // TODO: State used as anim status??
             if (playerChara->model_0.anim_4.animIdx_0 == g_SysWork.player_4C.extra_128.state_1C)
             {
                 func_8005DD44(sfx, &playerChara->position_18, FP_VOLUME(0.25f), pitch);
