@@ -70,7 +70,7 @@ struct _SubCharacter;
  * @param isActive Active status (`bool`).
  * @return Packed anim status containing the anim index and active flag.
  */
-#define ANIM_STATUS_GET(animIdx, isActive) \
+#define ANIM_STATUS(animIdx, isActive) \
     (((animIdx) << 1) | ((isActive) ? (1 << 0) : 0x0))
 
 /** @brief Retrieves the anim index from a packed anim status.
@@ -86,7 +86,7 @@ struct _SubCharacter;
  * @param animStatus Packed anim status containing an anim index and active flag.
  * @return `true` if active, `false` otherwise.
  */
-#define ANIM_STATUS_IS_ACTIVE(animStatus) \
+#define IS_ANIM_STATUS_ACTIVE(animStatus) \
     ((animStatus) & (1 << 0))
 
 /** @brief Checks if a keyframe index is within the range `[low, high]`.

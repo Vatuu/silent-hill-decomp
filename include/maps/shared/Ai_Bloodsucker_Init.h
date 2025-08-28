@@ -7,7 +7,7 @@ static inline void Ai_Bloodsucker_AnimUpdateFromStep(s_SubCharacter* chara)
     {
         case 17:
             chara->model_0.state_2               = 1;
-            chara->model_0.anim_4.status_0      = ANIM_STATUS_GET(7, true);
+            chara->model_0.anim_4.status_0      = ANIM_STATUS(7, true);
             chara->model_0.stateStep_3           = 0;
             chara->model_0.anim_4.time_4         = FP_TIME(81.0f);
             chara->model_0.anim_4.keyframeIdx0_8 = 81;
