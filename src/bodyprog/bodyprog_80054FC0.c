@@ -6703,7 +6703,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             {
                 if (extra->model_0.stateStep_3 == 0)
                 {
-                    extra->model_0.anim_4.animIdx_0 = 58;
+                    extra->model_0.anim_4.animIdx_0 = ANIM_STATUS_GET(29, false);
                     extra->model_0.stateStep_3++;
                 }
             }
@@ -6711,7 +6711,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             {
                 if (extra->model_0.stateStep_3 == 0)
                 {
-                    extra->model_0.anim_4.animIdx_0 = 56;
+                    extra->model_0.anim_4.animIdx_0 = ANIM_STATUS_GET(28, false);
                     extra->model_0.stateStep_3++;
                 }
             }
@@ -6804,13 +6804,13 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             {
                 if (extra->model_0.stateStep_3 == 0)
                 {
-                    extra->model_0.anim_4.animIdx_0 = 64;
+                    extra->model_0.anim_4.animIdx_0 = ANIM_STATUS_GET(32, false);
                     extra->model_0.stateStep_3++;
                 }
             }
             else if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.animIdx_0 = 58;
+                extra->model_0.anim_4.animIdx_0 = ANIM_STATUS_GET(29, false);
                 extra->model_0.stateStep_3++;
             }
 
@@ -6833,8 +6833,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
                 switch (extra->model_0.anim_4.animIdx_0)
                 {
-                    case 59:
-                    case 65:
+                    case ANIM_STATUS_GET(29, true):
+                    case ANIM_STATUS_GET(32, true):
                         if (extra->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[D_800AF220].field_6)
                         {
                             chara->rotation_24.vy = temp_s1_2;
@@ -7016,7 +7016,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         case PlayerUpperBodyState_Reload:
             if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.animIdx_0 = 62;
+                extra->model_0.anim_4.animIdx_0 = ANIM_STATUS_GET(31, false);
                 extra->model_0.stateStep_3++;
             }
 
@@ -7036,7 +7036,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 g_SysWork.enemyTargetIdx_2353                               = NO_VALUE;
                 g_SysWork.player_4C.extra_128.state_1C                      = PlayerState_None;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
-                extra->model_0.anim_4.animIdx_0                             = 57;
+                extra->model_0.anim_4.animIdx_0                             = ANIM_STATUS_GET(28, true);
                 extra->model_0.anim_4.keyframeIdx0_8                        = 588;
                 extra->model_0.anim_4.time_4                                = 0x24C000;
 
@@ -7271,23 +7271,33 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
                     if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_Chainsaw ||
                         g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill)
                     {
-                        if ((extra->model_0.anim_4.animIdx_0 != 57 || extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[0].field_6) &&
-                            (extra->model_0.anim_4.animIdx_0 != 59 || extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[1].field_6) &&
-                            (extra->model_0.anim_4.animIdx_0 != 69 ||
-                             extra->model_0.anim_4.keyframeIdx0_8 < D_800C44F0[6].field_4 || D_800C44F0[6].field_6 < extra->model_0.anim_4.keyframeIdx0_8) &&
-                            (extra->model_0.anim_4.animIdx_0 != 61 || extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[2].field_6) &&
-                            (extra->model_0.anim_4.animIdx_0 != 63 || extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[3].field_6) &&
-                            (extra->model_0.anim_4.animIdx_0 != 67 || extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[5].field_6))
+                        if ((extra->model_0.anim_4.animIdx_0 != ANIM_STATUS_GET(28, true) ||
+                             extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[0].field_6) &&
+                            (extra->model_0.anim_4.animIdx_0 != ANIM_STATUS_GET(29, true) ||
+                             extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[1].field_6) &&
+                            (extra->model_0.anim_4.animIdx_0 != ANIM_STATUS_GET(34, true) ||
+                             extra->model_0.anim_4.keyframeIdx0_8 < D_800C44F0[6].field_4 ||
+                             D_800C44F0[6].field_6 < extra->model_0.anim_4.keyframeIdx0_8) &&
+                            (extra->model_0.anim_4.animIdx_0 != ANIM_STATUS_GET(30, true) ||
+                             extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[2].field_6) &&
+                            (extra->model_0.anim_4.animIdx_0 != ANIM_STATUS_GET(31, true) ||
+                             extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[3].field_6) &&
+                            (extra->model_0.anim_4.animIdx_0 != ANIM_STATUS_GET(33, true) ||
+                             extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[5].field_6))
                         {
                             break;
                         }
                     }
                     else
                     {
-                        if ((extra->model_0.anim_4.animIdx_0 != 57 || extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[0].field_6) &&
-                            (extra->model_0.anim_4.animIdx_0 != 59 || extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[1].field_6) &&
-                            (extra->model_0.anim_4.animIdx_0 != 61 || extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[2].field_6) &&
-                            (extra->model_0.anim_4.animIdx_0 != 63 || extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[3].field_6))
+                        if ((extra->model_0.anim_4.animIdx_0 != ANIM_STATUS_GET(28, true) ||
+                             extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[0].field_6) &&
+                            (extra->model_0.anim_4.animIdx_0 != ANIM_STATUS_GET(29, true) ||
+                             extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[1].field_6) &&
+                            (extra->model_0.anim_4.animIdx_0 != ANIM_STATUS_GET(30, true) ||
+                             extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[2].field_6) &&
+                            (extra->model_0.anim_4.animIdx_0 != ANIM_STATUS_GET(31, true) ||
+                             extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[3].field_6))
                         {
                             break;
                         }
@@ -7295,13 +7305,20 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
                 }
                 else
                 {
-                    if ((extra->model_0.anim_4.animIdx_0 != 57 || extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[0].field_6) &&
-                        (extra->model_0.anim_4.animIdx_0 != 59 || extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[1].field_6) &&
-                        (extra->model_0.anim_4.animIdx_0 != 61 || extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[2].field_6) &&
-                        (extra->model_0.anim_4.animIdx_0 != 63 || extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[3].field_6) &&
-                        (extra->model_0.anim_4.animIdx_0 != 65 || extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[4].field_6) &&
-                        (extra->model_0.anim_4.animIdx_0 != 73 || extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[8].field_6) &&
-                        (extra->model_0.anim_4.animIdx_0 != 69 || extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[6].field_4))
+                    if ((extra->model_0.anim_4.animIdx_0 != ANIM_STATUS_GET(28, true) ||
+                         extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[0].field_6) &&
+                        (extra->model_0.anim_4.animIdx_0 != ANIM_STATUS_GET(29, true) ||
+                         extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[1].field_6) &&
+                        (extra->model_0.anim_4.animIdx_0 != ANIM_STATUS_GET(30, true) ||
+                         extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[2].field_6) &&
+                        (extra->model_0.anim_4.animIdx_0 != ANIM_STATUS_GET(31, true) ||
+                         extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[3].field_6) &&
+                        (extra->model_0.anim_4.animIdx_0 != ANIM_STATUS_GET(32, true) ||
+                         extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[4].field_6) &&
+                        (extra->model_0.anim_4.animIdx_0 != ANIM_STATUS_GET(36, true) ||
+                         extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[8].field_6) &&
+                        (extra->model_0.anim_4.animIdx_0 != ANIM_STATUS_GET(34, true) ||
+                         extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[6].field_4))
                     {
                         break;
                     }
