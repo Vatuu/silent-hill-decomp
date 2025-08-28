@@ -49,7 +49,7 @@ void sharedFunc_800D5B3C_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
     chara->moveSpeed_38 = chara->properties_E4.larvalStalker.properties_E8[15].val16[1];
     chara->field_34    += g_DeltaTime2;
 
-    coords->flg = 0;
+    coords->flg = false;
 
     func_80096E78(&chara->rotation_24, &coords->coord);
 }

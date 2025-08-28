@@ -8,7 +8,7 @@
 void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
 {
     s8       temp_v0;
-    s32      temp;
+    s32      playerState;
     s_Model* modelPtr3;
     s_Model* extraModelPtr2;
     s_Model* extraModelPtr0;
@@ -18,9 +18,10 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
 
     Game_PlayerMovementsReset();
 
-    temp = g_SysWork.player_4C.extra_128.state_1C;
+    playerState = g_SysWork.player_4C.extra_128.state_1C;
 
-    if (g_SysWork.player_4C.extra_128.state_1C < 2 && temp >= 0)
+    if (g_SysWork.player_4C.extra_128.state_1C < PlayerState_Idle &&
+        playerState >= PlayerState_None)
     {
         if (D_800C3950 != g_SysWork.playerCombatInfo_38.equippedWeapon_F)
         {
@@ -123,7 +124,7 @@ s32 func_8004C328() // 0x8004C328
     hasHuntingRifle = false;
     hasShotgun      = false;
 
-    for (; (itemId = g_SavegamePtr->items_0[itemIdx].id_0) != 0; itemIdx++)
+    for (; (itemId = g_SavegamePtr->items_0[itemIdx].id_0) != InventoryItemId_Unequipped; itemIdx++)
     {
         if (itemId == InventoryItemId_HuntingRifle)
         {

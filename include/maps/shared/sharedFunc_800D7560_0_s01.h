@@ -9,9 +9,9 @@ void sharedFunc_800D7560_0_s01(s_SubCharacter* chara)
     SVECTOR* rot;
     VECTOR*  scale;
 
-    mat                        = sharedData_800E21D8_0_s01 + 1;
-    *sharedData_800E21D8_0_s01 = 0;
-    rot                        = &chara->rotation_24;
+    mat                                       = (s32*)(sharedData_800E21D0_0_s01.coords_8) + 1;
+    *(s32*)sharedData_800E21D0_0_s01.coords_8 = 0;
+    rot                                       = &chara->rotation_24;
     func_80096E78(rot, mat);
 
     if ((chara->properties_E4.player.afkTimer_E8 & 0xF) == 3)
@@ -27,7 +27,7 @@ void sharedFunc_800D7560_0_s01(s_SubCharacter* chara)
 
     headingAngle = rot->vy;
     offsetZ      = 0;
-    if (sharedData_800E21D0_0_s01 < 0)
+    if (sharedData_800E21D0_0_s01.flags_0 < 0)
     {
         offsetX = 0;
     }

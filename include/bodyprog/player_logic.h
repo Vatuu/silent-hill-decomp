@@ -278,6 +278,14 @@ typedef enum _PlayerLowerBodyState
     PlayerLowerBodyState_Reload            = 35
 } e_PlayerLowerBodyState;
 
+// 53, 54 are idle animations and 57 is aiming while doing nothing.
+/** @brief Player animation IDs. */
+typedef enum _PlayerAnim
+{
+    PlayerAnim_Idle      = 26,
+    PlayerAnim_IdleTired = 27
+} s_PlayerAnim;
+
 // ========
 // STRUCTS
 // ========
@@ -300,7 +308,7 @@ STATIC_ASSERT_SIZEOF(s_800AFBF4, 12);
 // GLOBALS
 // ========
 
-/** @brief Boolean. Defines if the player is transitioning from walking to running and vice-versa. */
+/** @brief `bool` | Determines if the player is transitioning from a walk to a run and vice-versa. */
 extern u8 g_Player_IsInWalkToRunTransition; // 0x800AF214
 
 /** Boolean. */
@@ -323,7 +331,7 @@ extern s32 D_800AF21C; // 0x800AF21C
 /** @brief Counts the amount inputs the player has pressed in order to free himselft from a grab. */
 extern s32 g_Player_GrabFree_InputCount; // 0x800AF20C
 
-/** @brief Attack animation currently playing. */
+/** @brief current attack animation. */
 extern s32 g_Player_AttackAnimIdx; // 0x800AFBE8
 
 /** @brief Indicates if a multiple button taps attack is being perfomed. */
@@ -339,20 +347,20 @@ extern s32 g_Player_MeleeAttackType; // 0x800AFBEC
 
 extern s_800AFBF4 D_800AFBF4[10]; // 0x800AFBF4
 
-/** @brief Used to indicate player rotation speed.
- * More context is required for asign it a name.
+/** @brief Player rotation speed.
+ * More context is required for a name.
  */
 extern q19_12 D_800C454C;
 
-/** @brief Used to indicate player movement speed.
- * More context is required for asign it a name.
+/** @brief Player movement speed.
+ * More context is required for a name.
  */
 extern q19_12 D_800C4550; // 0x800C4550
 
-/** @brief Used to cancel idle state in case of tapping the action or run button. */
+/** @brief Used to cancel the idle state if the Action or Run button is tapped. */
 extern s32 g_Player_ActionRunPressed; // 0x800C455C
 
-/** @brief Defines if the player is pressing a movement button or the right analog stick. */
+/** @brief Determines if the player is pressing a movement button or the right analog stick. */
 extern s32 g_Player_MovementInputDetected; // 0x800C4558
 
 extern s_800AFBF4 g_Player_EquippedWeaponInfo; // 0x800C4570

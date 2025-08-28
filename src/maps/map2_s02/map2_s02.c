@@ -97,7 +97,7 @@ INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800D024C);
 
 #include "maps/shared/Ai_AirScreamer_Update.h" // 0x800D0728
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800D21E4_0_s01); // 0x800D079C
+#include "maps/shared/sharedFunc_800D21E4_0_s01.h" // 0x800D079C
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800D2200_0_s01); // 0x800D07B8
 
@@ -109,7 +109,7 @@ INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800D2390_0_s01
 
 #include "maps/shared/Ai_AirScreamer_Init.h" // 0x800D0F2C
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800D2B00_0_s01); // 0x800D10B8
+#include "maps/shared/sharedFunc_800D2B00_0_s01.h" // 0x800D10B8
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800D2B10_0_s01); // 0x800D10C8
 

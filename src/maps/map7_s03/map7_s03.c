@@ -582,11 +582,11 @@ bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        chara->health_B0 = FP_TO(30000, Q12_SHIFT);
+        chara->health_B0 = FP_HEALTH(30000.0f);
     }
     else
     {
-        chara->health_B0 = FP_TO(40000, Q12_SHIFT);
+        chara->health_B0 = FP_HEALTH(40000.0f);
     }
 
     chara->moveSpeed_38     = 0;
@@ -623,12 +623,12 @@ bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
     }
 
     chara->model_0.anim_4.animIdx_0      = ANIM_STATUS_GET(3, false);
-    chara->model_0.anim_4.time_4         = FP_TO(338, Q12_SHIFT);
+    chara->model_0.anim_4.time_4         = FP_TIME(338.0f);
     chara->model_0.anim_4.keyframeIdx0_8 = 338;
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, g_Ai_Incubus_AnimInfo);
 
-    chara->damageReceived_C0 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+    chara->damageReceived_C0 = FP_HEALTH(0.0f);
     chara->field_BC          = 0;
     chara->field_B8          = 0;
     chara->field_B4          = 0;
@@ -770,11 +770,11 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        chara->health_B0 = FP_FLOAT_TO(17995.605f, Q12_SHIFT); // Some percentage taken from 30000?
+        chara->health_B0 = FP_HEALTH(17995.605f); // TODO: Some percentage taken from 30000?
     }
     else
     {
-        chara->health_B0 = FP_FLOAT_TO(30000.f, Q12_SHIFT);
+        chara->health_B0 = FP_HEALTH(30000.0f);
     }
 
     chara->moveSpeed_38     = 0;
@@ -800,11 +800,11 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
 
     chara->model_0.anim_4.animIdx_0      = ANIM_STATUS_GET(2, false);
     chara->model_0.anim_4.keyframeIdx0_8 = 115;
-    chara->model_0.anim_4.time_4         = FP_TO(115, Q12_SHIFT);
+    chara->model_0.anim_4.time_4         = FP_TIME(115.0f);
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, g_Ai_Unknown23_AnimInfo);
 
-    chara->damageReceived_C0 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+    chara->damageReceived_C0 = FP_HEALTH(0.0f);
     chara->field_BC          = 0;
     chara->field_B8          = 0;
     chara->field_B4          = 0;

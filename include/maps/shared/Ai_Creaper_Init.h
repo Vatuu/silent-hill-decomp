@@ -68,7 +68,7 @@ void Ai_Creaper_Init(s_SubCharacter* chara)
         sharedData_800E57CC_1_s02 = 0;
     }
 
-    chara->health_B0                                             = FP_TO(200, Q12_SHIFT);
+    chara->health_B0                                             = FP_HEALTH(200.0f);
     chara->properties_E4.larvalStalker.properties_E8[0].val16[0] = 0;
     chara->model_0.anim_4.keyframeIdx1_A                         = 0;
     chara->moveSpeed_38                                          = 0;
@@ -85,7 +85,7 @@ void Ai_Creaper_Init(s_SubCharacter* chara)
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, sharedData_800E0D38_1_s02);
 
-    chara->damageReceived_C0 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+    chara->damageReceived_C0 = FP_HEALTH(0.0f);
     chara->field_BC          = 0;
     chara->field_B8          = 0;
     chara->field_B4          = 0;

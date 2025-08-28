@@ -101,7 +101,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
             g_MainMenu_VisibleEntryFlags = (1 << MainMenuEntry_Start) | (1 << MainMenuEntry_Option);
 
-            if (g_GameWork.autosave_90.playerHealth_240 > Q19_12(0.0f))
+            if (g_GameWork.autosave_90.playerHealth_240 > FP_HEALTH(0.0f))
             {
                 g_MainMenu_VisibleEntryFlags = (1 << MainMenuEntry_Continue) | (1 << MainMenuEntry_Start) | (1 << MainMenuEntry_Option);
             }
@@ -182,7 +182,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 switch (g_MainMenu_SelectedEntry)
                 {
                     case MainMenuEntry_Continue:
-                        if (g_GameWork.autosave_90.playerHealth_240 > Q19_12(0.0f))
+                        if (g_GameWork.autosave_90.playerHealth_240 > FP_HEALTH(0.0f))
                         {
                             g_GameWork.savegame_30C = g_GameWork.autosave_90;
                         }
@@ -304,7 +304,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 Gfx_ScreenRefresh(SCREEN_WIDTH, 0);
                 Fs_QueueWaitForEmpty();
 
-                if (g_GameWork.autosave_90.playerHealth_240 > Q19_12(0.0f))
+                if (g_GameWork.autosave_90.playerHealth_240 > FP_HEALTH(0.0f))
                 {
                     nextGameStates[1] = 10;
                 }
@@ -1149,8 +1149,8 @@ void func_8003CBA4(s_800BCE18_2BEC* arg0) // 0x8003CBA4
     SVECTOR       vec;
     MATRIX        mats[2];
 
-    coord.flg   = 0;
-    coord.super = 0;
+    coord.flg   = false;
+    coord.super = NULL;
 
     coord.coord.t[0] = arg0->gsCoordinate0_4;
     coord.coord.t[1] = arg0->gsCoordinate1_4;

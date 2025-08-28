@@ -360,6 +360,8 @@
 
 /** @brief Modulates a distance according to delta time? Unclear what the `/ 136` is doing, but it's a common operation.
  *
+ * Possible better name: `Math_DeltaTimeDistScale`
+ *
  * @param dist Distance in fixed-point meters.
  * @return Modulated distance?
  */

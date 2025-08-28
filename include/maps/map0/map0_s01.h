@@ -129,7 +129,7 @@ s32 func_800D1E5C();
 
 void func_800D2054(void);
 
-void func_800D2094(void);
+void Player_FallBackward(void);
 
 s32 func_800D20FC();
 

@@ -1,8 +1,8 @@
 void sharedFunc_800CEFD0_1_s02(s32 arg0, s_sharedFunc_800CEFD0_1_s02* arg1, u16* arg2, s32* deltaTime)
 {
     s_func_800699F8              sp10;
-    s32                          temp_v1;
-    s32                          var_v0;
+    s32                          z;
+    s32                          x;
     s32                          var_t0;
     s32                          var_t1;
     s_sharedFunc_800CEFD0_1_s02* var_s0;
@@ -34,11 +34,11 @@ void sharedFunc_800CEFD0_1_s02(s32 arg0, s_sharedFunc_800CEFD0_1_s02* arg1, u16*
             var_s0->field_C.vz = var_s0->field_0.vz;
         }
 
-        var_v0  = abs(var_s0->field_0.vx);
-        temp_v1 = var_s0->field_0.vz;
+        x  = abs(var_s0->field_0.vx);
+        z = var_s0->field_0.vz;
 
-        if ((temp_v1 >= 0 && (var_v0 + temp_v1) > FP_METER(6.0f)) ||
-            (temp_v1 <  0 && (var_v0 - temp_v1) > FP_METER(6.0f)))
+        if ((z >= 0 && (x + z) > FP_METER(6.0f)) ||
+            (z <  0 && (x - z) > FP_METER(6.0f)))
         {
             if (sharedData_800DF158_1_s02 != 0)
             {

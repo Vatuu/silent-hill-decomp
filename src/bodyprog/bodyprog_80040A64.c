@@ -464,29 +464,29 @@ u32 func_80041ADC(s32 queueIdx) // 80041ADC
 {
     if (queueIdx == NO_VALUE)
     {
-        return 0;
+        return 0; // Invalid.
     }
-    else if (Fs_QueueIsEntryLoaded(queueIdx) == 0)
+    else if (!Fs_QueueIsEntryLoaded(queueIdx))
     {
-        return 1;
+        return 1; // Unloaded.
     }
 
-    return 2;
+    return 2; // Loaded.
 }
 
 u32 func_80041B1C(s_800C117C* arg0) // 0x80041B1C
 {
-    s32 temp_v0;
-    s32 newVar;
+    s32 queueState;
+    s32 queueStateCpy;
 
-    temp_v0 = func_80041ADC(arg0->queueIdx_4);
-    newVar  = temp_v0;
+    queueState    = func_80041ADC(arg0->queueIdx_4);
+    queueStateCpy = queueState;
 
-    if (newVar == 1)
+    if (queueStateCpy == 1)
     {
         return 1;
     }
-    else if ((newVar == 0) || (temp_v0 != 2))
+    else if ((queueStateCpy == 0) || (queueState != 2))
     {
         return 0;
     }
@@ -500,17 +500,17 @@ u32 func_80041B1C(s_800C117C* arg0) // 0x80041B1C
 
 s32 func_80041BA0(s_func_80041CB4* arg0) // 0x80041BA0
 {
-    s32 temp_v0;
-    s32 newVar;
+    s32 queueState;
+    s32 queueStateCpy;
 
-    temp_v0 = func_80041ADC(arg0->queueIdx_8);
-    newVar  = temp_v0;
+    queueState    = func_80041ADC(arg0->queueIdx_8);
+    queueStateCpy = queueState;
 
-    if (newVar == 1)
+    if (queueStateCpy == 1)
     {
         return 1;
     }
-    else if (newVar == 0 || temp_v0 != 2)
+    else if (queueStateCpy == 0 || queueState != 2)
     {
         return 0;
     }
@@ -842,17 +842,17 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004393C); // 0x
 
 void func_80043A24(GsOT* ot, s32 arg1) // 0x80043A24
 {
+    s32         queueState;
     s_800C117C* ptr;
-    s32         status;
 
-    status = func_80041ADC(D_800C1020.field_138.queueIdx_8);
+    queueState = func_80041ADC(D_800C1020.field_138.queueIdx_8);
 
-    if (status == 1)
+    if (queueState == 1)
     {
         return;
     }
 
-    if (!(status == 0 || (status == 2 && D_800C1020.field_138.plmHeader_0->isLoaded_2)))
+    if (!(queueState == 0 || (queueState == 2 && D_800C1020.field_138.plmHeader_0->isLoaded_2)))
     {
         return;
     }
@@ -965,22 +965,22 @@ bool func_80043D64(s_PlmTexList* texList) // 0x80043D64
     return false;
 }
 
-void IpdHeader_FixHeaderOffsets(s_IpdHeader* header) // 0x80043DA4
+void IpdHeader_FixHeaderOffsets(s_IpdHeader* ipdHeader) // 0x80043DA4
 {
     s_IpdModelBuffer* modelBuf;
 
-    header->plmHeader_4       = (u8*)header->plmHeader_4 + (u32)header;
-    header->modelInfo_14      = (u8*)header->modelInfo_14 + (u32)header;
-    header->modelBuffers_18   = (u8*)header->modelBuffers_18 + (u32)header;
-    header->modelOrderList_50 = (u8*)header->modelOrderList_50 + (u32)header;
+    ipdHeader->plmHeader_4       = (u8*)ipdHeader->plmHeader_4 + (u32)ipdHeader;
+    ipdHeader->modelInfo_14      = (u8*)ipdHeader->modelInfo_14 + (u32)ipdHeader;
+    ipdHeader->modelBuffers_18   = (u8*)ipdHeader->modelBuffers_18 + (u32)ipdHeader;
+    ipdHeader->modelOrderList_50 = (u8*)ipdHeader->modelOrderList_50 + (u32)ipdHeader;
 
-    for (modelBuf = &header->modelBuffers_18[0];
-         modelBuf < &header->modelBuffers_18[header->modelBufferCount_9];
+    for (modelBuf = &ipdHeader->modelBuffers_18[0];
+         modelBuf < &ipdHeader->modelBuffers_18[ipdHeader->modelBufferCount_9];
          modelBuf++)
     {
-        modelBuf->field_C  = (u8*)modelBuf->field_C + (u32)header;
-        modelBuf->field_10 = (u8*)modelBuf->field_10 + (u32)header;
-        modelBuf->field_14 = (u8*)modelBuf->field_14 + (u32)header;
+        modelBuf->field_C  = (u8*)modelBuf->field_C + (u32)ipdHeader;
+        modelBuf->field_10 = (u8*)modelBuf->field_10 + (u32)ipdHeader;
+        modelBuf->field_14 = (u8*)modelBuf->field_14 + (u32)ipdHeader;
     }
 }
 

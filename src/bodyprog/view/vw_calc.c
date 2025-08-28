@@ -299,7 +299,7 @@ void vbSetRefView(VbRVIEW* rview) // 0x800498D8
     SVECTOR       sp60;
     SVECTOR       sp68;
 
-    sp10.flg   = 0;
+    sp10.flg   = false;
     sp10.super = rview->super;
     sp68.vx    = rview->vr.vx - rview->vp.vx;
     sp68.vy    = rview->vr.vy - rview->vp.vy;
@@ -335,7 +335,7 @@ void Vw_CoordHierarchyMatrixCompute(GsCOORDINATE2* rootCoord, MATRIX* outMat) //
         parentCoord = curCoord->super;
 
         // Stop if node has already been processed.
-        if (curCoord->flg != 0)
+        if (curCoord->flg)
         {
             break;
         }
@@ -354,15 +354,15 @@ void Vw_CoordHierarchyMatrixCompute(GsCOORDINATE2* rootCoord, MATRIX* outMat) //
         }
     }
 
-    // If found at least one unprocessed node, process coord hierarchy downward.
+    // If at least one unprocessed node found, process coord hierarchy downward.
     if (prevCoord != NULL)
     {
         curCoord       = prevCoord;
-        rootCoord->sub = NULL;      // Detach child link to prevent cycles.
+        rootCoord->sub = NULL; // Detach child link to prevent cycles.
         do
         {
             prevCoord = curCoord->super;
-            curCoord->flg++;             // Mark node as processed.
+            curCoord->flg++; // Mark node as processed.
 
             // Compute cumulative transformation matrix.
             if (prevCoord == NULL)

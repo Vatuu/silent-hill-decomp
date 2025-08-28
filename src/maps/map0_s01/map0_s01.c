@@ -85,7 +85,7 @@ void func_800D2054(void) // 0x800D2054
     func_8003D03C();
 }
 
-void func_800D2094(void) // 0x800D2094
+void Player_FallBackward(void) // 0x800D2094
 {
     s_MainCharacter*      player;
     s_MainCharacterExtra* extra;
@@ -129,7 +129,7 @@ void func_800D2104() {}
 
 #include "maps/shared/Ai_AirScreamer_Update.h" // 0x800D2170
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D21E4_0_s01); // 0x800D21E4
+#include "maps/shared/sharedFunc_800D21E4_0_s01.h" // 0x800D21E4
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D2200_0_s01); // 0x800D2200
 
@@ -144,7 +144,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D2390_0_s01
 
 #include "maps/shared/Ai_AirScreamer_Init.h" // 0x800D2974
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D2B00_0_s01); // 0x800D2B00
+#include "maps/shared/sharedFunc_800D2B00_0_s01.h" // 0x800D2B00
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D2B10_0_s01); // 0x800D2B10
 
@@ -192,7 +192,7 @@ void func_800D3CC4(s_SubCharacter* chara)
     u32  keyframeIdx;
     bool cond;
 
-    sharedData_800E21D0_0_s01 |= 1 << 31;
+    sharedData_800E21D0_0_s01.flags_0 |= 1 << 31;
     cond = false;
 
     switch (chara->model_0.stateStep_3)

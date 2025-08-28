@@ -85,7 +85,7 @@ void Gfx_Items_ItemRotate(SVECTOR* arg0, GsCOORDINATE2* arg1) // 0x8004BCDC
 
     ScaleMatrix(&arg1->coord, &arg1->param->scale);
 
-    arg1->flg = 0;
+    arg1->flg = false;
 }
 
 void func_8004BD74(s32 arg0, GsDOBJ2* arg1, s32 arg2)  // 0x8004BD74
