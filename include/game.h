@@ -61,20 +61,43 @@ struct _SubCharacter;
 #define HAS_MAP(mapIdx) \
     ((((u32*)&g_SavegamePtr->hasMapsFlags_164)[(mapIdx) / 32] >> ((mapIdx) % 32)) & (1 << 0))
 
-#define ANIM_STATUS_GET(animIdx, isActive) \
-    (((animIdx) << 1) | ((isActive) ? 0x1 : 0x0))
-
-#define ANIM_STATUS_IDX_GET(animStatus) \
-    (((animStatus) & ~0x1) >> 1)
-
-#define ANIM_STATUS_IS_ACTIVE(animStatus) \
-    ((animStatus) & 0x1)
-
-#define ANIM_KEYFRAME_RANGE_CHECK(keyframe, low, high) \
-    ((keyframe) >= (low) && (keyframe) <= (high))
-
 #define WeaponId_AttackVariantGet(weaponId, type) \
 	((weaponId) + ((type) * 10))
+
+/** @brief Computes a packed anim status containing the anim index and active flag.
+ *
+ * @param animIdx Anim index.
+ * @param isActive Active status (`bool`).
+ * @return Packed anim status containing the anim index and active flag.
+ */
+#define ANIM_STATUS_GET(animIdx, isActive) \
+    (((animIdx) << 1) | ((isActive) ? (1 << 0) : 0x0))
+
+/** @brief Retrieves the anim index from a packed anim status.
+ *
+ * @param animStatus Packed anim status containing an anim index and active flag.
+ * @return Anim index.
+ */
+#define ANIM_STATUS_IDX_GET(animStatus) \
+    (((animStatus) & ~(1 << 0)) >> 1)
+
+/** @brief Checks if an anim is active.
+ *
+ * @param animStatus Packed anim status containing an anim index and active flag.
+ * @return `true` if active, `false` otherwise.
+ */
+#define ANIM_STATUS_IS_ACTIVE(animStatus) \
+    ((animStatus) & (1 << 0))
+
+/** @brief Checks if a keyframe index is within the range `[low, high]`.
+ *
+ * @param keyframe Keyframe index to check.
+ * @param low Low range.
+ * @param high High range.
+ * @return `true` if the keyframe index is within range, `false` otherwise.
+ */
+#define ANIM_KEYFRAME_RANGE_CHECK(keyframeIdx, low, high) \
+    ((keyframeIdx) >= (low) && (keyframeIdx) <= (high))
 
 /** @brief Screen fade states used by `g_Gfx_ScreenFade`. The flow is not linear. */
 typedef enum _ScreenFadeState

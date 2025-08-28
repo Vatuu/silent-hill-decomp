@@ -1440,7 +1440,7 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
             break;
 
         default:
-            cam_ang.vz = cam_ang.vz >> 1;
+            cam_ang.vz >>= 1;
             break;
     }
 

@@ -1473,7 +1473,7 @@ typedef struct s_UnkStruct_MapOverlay
 
 typedef struct
 {
-    s16 field_0;
+    s16 field_0; /** Packed anim status. See `s_ModelAnimData::animIdx_0`. */
     s16 field_2;
     s16 field_4;
     s16 field_6;

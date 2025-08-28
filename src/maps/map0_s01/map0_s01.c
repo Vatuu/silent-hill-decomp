@@ -199,13 +199,13 @@ void func_800D3CC4(s_SubCharacter* chara)
     {
         case 0:
             cond = true;
-            chara->model_0.anim_4.animIdx_0 = 47;
+            chara->model_0.anim_4.animIdx_0 = ANIM_STATUS_GET(23, true);
             chara->model_0.stateStep_3 = 1;
             break;
 
         case 2:
             cond = true;
-            chara->model_0.anim_4.animIdx_0 = 49;
+            chara->model_0.anim_4.animIdx_0 = ANIM_STATUS_GET(24, true);
             chara->model_0.stateStep_3 = 3;
 
         case 1:
@@ -217,7 +217,7 @@ void func_800D3CC4(s_SubCharacter* chara)
 
         case 4:
             cond = true;
-            chara->model_0.anim_4.animIdx_0 = 31;
+            chara->model_0.anim_4.animIdx_0 = ANIM_STATUS_GET(15, true);
             chara->model_0.stateStep_3 = 5;
 
         case 5:
@@ -225,7 +225,7 @@ void func_800D3CC4(s_SubCharacter* chara)
             break;
 
         case 6:
-            if (chara->model_0.anim_4.animIdx_0 == 39)
+            if (chara->model_0.anim_4.animIdx_0 == ANIM_STATUS_GET(19, true))
             {
                 chara->model_0.stateStep_3 = 7;
             }
@@ -543,20 +543,20 @@ s32 func_800D7440(VECTOR* vec0, VECTOR* vec1, s_SubCharacter* chara) // 0x800D74
 
 void func_800D76A0(s_SubCharacter* chara) // 0x800D76A0
 {
-    if (chara->model_0.anim_4.animIdx_0 == 47 ||
-        chara->model_0.anim_4.animIdx_0 == 27 ||
-        chara->model_0.anim_4.animIdx_0 == 29)
+    if (chara->model_0.anim_4.animIdx_0 == ANIM_STATUS_GET(23, true) ||
+        chara->model_0.anim_4.animIdx_0 == ANIM_STATUS_GET(13, true) ||
+        chara->model_0.anim_4.animIdx_0 == ANIM_STATUS_GET(14, true))
     {
         if (func_800D77D0(chara) != 0)
         {
-            chara->model_0.anim_4.animIdx_0 = 50;
+            chara->model_0.anim_4.animIdx_0 = ANIM_STATUS_GET(25, false);
         }
     }
-    else if(chara->model_0.anim_4.animIdx_0 == 51)
+    else if(chara->model_0.anim_4.animIdx_0 == ANIM_STATUS_GET(25, true))
     {
         if (func_800D77D0(chara) == 0)
         {
-            chara->model_0.anim_4.animIdx_0 = 46;
+            chara->model_0.anim_4.animIdx_0 = ANIM_STATUS_GET(23, false);
         }
     }
 }

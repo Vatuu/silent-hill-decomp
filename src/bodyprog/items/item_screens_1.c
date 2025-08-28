@@ -62,7 +62,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
                     (s8)D_800C3950 == g_SysWork.playerCombatInfo_38.equippedWeapon_F)
                 {
                     extraModelPtr0 = &g_SysWork.player_4C.extra_128.model_0;
-                    if (extraModelPtr0->anim_4.animIdx_0 >= 66)
+                    if (extraModelPtr0->anim_4.animIdx_0 >= ANIM_STATUS_GET(33, false))
                     {
                         modelPtr0                                         = &g_SysWork.player_4C.chara_0.model_0;
                         extraModelPtr0->anim_4.animIdx_0                 -= 10;
@@ -78,9 +78,9 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
                     modelPtr1      = &g_SysWork.player_4C.chara_0.model_0;
                     extraModelPtr1 = &g_SysWork.player_4C.extra_128.model_0;
 
-                    modelPtr1->anim_4.animIdx_0                       = 3;
+                    modelPtr1->anim_4.animIdx_0                       = ANIM_STATUS_GET(1, true);
                     modelPtr1->anim_4.keyframeIdx0_8                  = 0;
-                    extraModelPtr1->anim_4.animIdx_0                  = 3;
+                    extraModelPtr1->anim_4.animIdx_0                  = ANIM_STATUS_GET(1, true);
                     extraModelPtr1->anim_4.keyframeIdx0_8             = 0;
                     g_SysWork.player_4C.chara_0.model_0.state_2       = 0;
                     g_SysWork.player_4C.chara_0.model_0.stateStep_3   = 0;

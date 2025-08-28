@@ -17,9 +17,9 @@ void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, VECTOR3* chr_pos)
     vcInitVCSystem(map_overlay_ptr->roadDataList_3CC);
     vcStartCameraSystem();
 
-    g_SysWork.cameraAngleZ_237C   = 0;
+    g_SysWork.cameraAngleZ_237C   = FP_ANGLE(0.0f);
     g_SysWork.cameraRadiusXz_2380 = FP_METER(3.0f);
-    g_SysWork.cameraY_2384        = 0;
+    g_SysWork.cameraY_2384        = FP_METER(0.0f);
 }
 
 void vcSetCameraUseWarp(VECTOR3* chr_pos, s16 chr_ang_y) // 0x800400D4
@@ -27,9 +27,9 @@ void vcSetCameraUseWarp(VECTOR3* chr_pos, s16 chr_ang_y) // 0x800400D4
     VECTOR3 cam_pos;
     SVECTOR cam_ang;
 
-    cam_ang.vx = 0;
+    cam_ang.vx = FP_ANGLE(0.0f);
     cam_ang.vy = chr_ang_y;
-    cam_ang.vz = 0;
+    cam_ang.vz = FP_ANGLE(0.0f);
 
     cam_pos.vx = chr_pos->vx - FP_MULTIPLY_FLOAT(Math_Sin(chr_ang_y), 1.5f, Q12_SHIFT);
     cam_pos.vy = chr_pos->vy - FP_METER(1.7f);
@@ -52,7 +52,7 @@ void func_800401A0(s32 arg0) // 0x800401A0
     }
     else
     {
-        D_800BCE18.vcCameraInternalInfo_1BDC.ev_cam_rate = 0;
+        D_800BCE18.vcCameraInternalInfo_1BDC.ev_cam_rate = FP_METER(0.0f);
     }
 }
 
