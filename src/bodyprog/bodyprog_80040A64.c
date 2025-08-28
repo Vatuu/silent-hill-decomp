@@ -1067,21 +1067,21 @@ s_AnimInfo* func_80044918(s_ModelAnim* anim) // 0x80044918
 
     s_AnimInfo* animInfo_C;
     s_AnimInfo* animInfo_10;
-    u8          animIdx_0;
-    s32         animIdx_1;
+    u8          animStatus0;
+    s32         animStatus1;
 
     animInfo_C  = anim->animInfo_C;
     animInfo_10 = anim->animInfo_10;
-    animIdx_0   = anim->animIdx_0;
-    animIdx_1   = anim->maybeSomeState_1;
+    animStatus0 = anim->animIdx_0;
+    animStatus1 = anim->maybeSomeState_1;
 
-    if (animInfo_10 != NULL && animIdx_0 >= animIdx_1)
+    if (animInfo_10 != NULL && animStatus0 >= animStatus1)
     {
         animInfo_C  = animInfo_10;
-        animInfo_C -= animIdx_1;
+        animInfo_C -= animStatus1;
     }
 
-    return &animInfo_C[animIdx_0];
+    return &animInfo_C[animStatus0];
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044950); // 0x80044950
@@ -1161,7 +1161,7 @@ void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     model->anim_4.keyframeIdx0_8 = newKeyframeIdx0;
     model->anim_4.keyframeIdx1_A = 0;
 
-    // Update anim.
+    // Update anim status.
     if (setAnimIdx)
     {
         model->anim_4.animIdx_0 = targetAnim->animIdx_6;
@@ -1279,7 +1279,7 @@ void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     // Update frame 1.
     model->anim_4.keyframeIdx1_A = alpha;
 
-    // Update anim.
+    // Update anim status.
     if (setAnimIdx)
     {
         model->anim_4.animIdx_0 = targetAnim->animIdx_6;

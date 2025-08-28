@@ -1,7 +1,7 @@
-bool sharedFunc_800D9188_0_s00(s32 animIdx, s_SubCharacter* chara, s32 keyframeIdx, s32 sfx)
+bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, s32 sfx)
 {
     // TODO: Should probably be using `properties_E4.npc` struct instead.
-    if (chara->model_0.anim_4.animIdx_0 == animIdx)
+    if (chara->model_0.anim_4.animIdx_0 == animStatus)
     {
         if (chara->model_0.anim_4.keyframeIdx0_8 >= keyframeIdx)
         {

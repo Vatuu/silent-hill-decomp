@@ -963,7 +963,7 @@ typedef struct _ModelAnimData
 {
     u8          animIdx_0;        /** Is active: bit 0, Anim index: bits 1-7. Possible original name: `anim_status` */
                                   // TODO: Rename to `status_0`.
-    u8          maybeSomeState_1; // State says if `animTime_4` is anim time or a func ptr? That field could be a union.
+    u8          maybeSomeState_1; // State says if `animTime_4` is anim time/anim status or a func ptr? That field could be a union.
     u16         flags_2;          /** `e_AnimFlags` */
     q19_12      time_4;           /** Time along keyframe timeline. */ 
     s16         keyframeIdx0_8;
@@ -980,6 +980,7 @@ typedef struct _Model
     u8 state_2;        /** Current state for this model/character. 0 usually means it still has to be initialized. */
     u8 stateStep_3;    // Step number or temp data for the current `state_2`? In `s_MainCharacterExtra` always 1, set to 0 for 1 tick when anim state appears to change.
                        // Used differently in player's `s_SubCharacter`. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
+                       // Sometimes holds actual anim index?
     s_ModelAnim anim_4;
 } s_Model;
 STATIC_ASSERT_SIZEOF(s_Model, 24);

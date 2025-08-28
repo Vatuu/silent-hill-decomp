@@ -1471,11 +1471,12 @@ typedef struct s_UnkStruct_MapOverlay
     u8 field_0[34]; /** `e_InventoryItemId` */
 } s_UnkStruct_MO;
 
+/** Contains loaded anim data? */
 typedef struct
 {
     s16 field_0; /** Packed anim status. See `s_ModelAnimData::animIdx_0`. */
-    s16 field_2;
-    s16 field_4;
+    s16 field_2; /** Packed anim status. See `s_ModelAnimData::animIdx_0`. */
+    s16 field_4; /** Fixed-point anim time. */
     s16 field_6;
 } s_UnkStruct3_Mo; // Probable size: 8 bytes.
 
@@ -3924,9 +3925,11 @@ s16 Player_AnimGetSomething();
  */
 void Math_ShortestAngleGet(s16 angleFrom, s16 angleTo, s16* shortestAngle);
 
-void func_8007FB94(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 arg2);
+/** Anim func. */
+void func_8007FB94(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 animStatus);
 
-void func_8007FC48(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 arg2);
+/** Anim func. */
+void func_8007FC48(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 animStatus);
 
 /** Gets property 8 from player. */
 s32 func_8007FD2C();

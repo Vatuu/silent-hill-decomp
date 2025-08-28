@@ -4101,11 +4101,11 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
     s32           var_s6;
     s16           var_s7;
     s32           npcIdx;
-    s32           var_s3;
+    s32           animStatus;
     s_Model*      model;
     s32           temp;
 
-    var_s3 = 0;
+    animStatus = ANIM_STATUS_GET(0, false);
     
     Game_TimerUpdate();
     
@@ -4151,7 +4151,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
         g_MapOverlayHeader.func_108();
     }
     
-    if (g_DeltaTime0 != 0)
+    if (g_DeltaTime0 != FP_TIME(0.0f))
     {
         Player_Controller();
     }
@@ -4245,17 +4245,17 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             switch (g_SysWork.player_4C.extra_128.state_1C)
             {
                 case PlayerState_DamageThrownFront:
-                    var_s3      = 263;
+                    animStatus  = 263;
                     thrownState = PlayerState_OnFloorFront;
                     break;
                     
                 case PlayerState_DamageThrownBack:
-                    var_s3      = 264;
+                    animStatus  = 264;
                     thrownState = PlayerState_OnFloorBehind;
                     break;
             }
             
-            func_8007FB94(chara, extra, var_s3);
+            func_8007FB94(chara, extra, animStatus);
             
             if (chara->model_0.anim_4.keyframeIdx0_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
             {
@@ -4291,14 +4291,14 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             switch (g_SysWork.player_4C.extra_128.state_1C)
             {
                 case PlayerState_EnemyGrabPinnedFrontStart:
-                    var_s3            = 255;
+                    animStatus        = 255;
                     romperAttackState = PlayerState_EnemyGrabPinnedFront;
                     npcIdx            = g_SysWork.field_2354[0];
                     Math_ShortestAngleGet(chara->rotation_24.vy, FP_ANGLE_NORM_U(g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(180.0f)), &sp18);
                     break;
                     
                 case PlayerState_EnemyGrabPinnedBackStart:
-                    var_s3            = 257;
+                    animStatus        = 257;
                     romperAttackState = PlayerState_EnemyGrabPinnedBack;
                     npcIdx            = g_SysWork.field_2354[1];
                     Math_ShortestAngleGet(chara->rotation_24.vy, FP_ANGLE_NORM_U(g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(360.0f)), &sp18);
@@ -4306,7 +4306,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             }
             
             g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
-            func_8007FB94(chara, extra, var_s3);
+            func_8007FB94(chara, extra, animStatus);
             chara->field_D4 = 0x400;
             chara->field_D6 = 0;
             
@@ -4453,12 +4453,12 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                     switch (g_SysWork.player_4C.extra_128.state_1C)
                     {
                         case PlayerState_OnFloorFront:
-                            var_s3              = 0x109;
+                            animStatus          = 0x109;
                             playeGrabFree_State = PlayerState_GetUpFront;
                             break;
                         
                         case PlayerState_OnFloorBehind:
-                            var_s3              = 0x10A;
+                            animStatus          = 0x10A;
                             playeGrabFree_State = PlayerState_GetUpBack;
                             break;
                     }
@@ -4508,7 +4508,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                                 playeGrabFree_RequiredInputCount = 1600;
                             }
                             
-                            var_s3              = 0x100;
+                            animStatus          = 0x100;
                             playeGrabFree_State = PlayerState_EnemyReleasePinnedFront;
                             break;
                         
@@ -4526,7 +4526,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                                 playeGrabFree_RequiredInputCount = 2400;
                             }
                             
-                            var_s3              = 0x102;
+                            animStatus          = 0x102;
                             playeGrabFree_State = PlayerState_EnemyReleasePinnedBack;
                             break;
                     }
@@ -4602,7 +4602,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                         playeGrabFree_RequiredInputCount = 1600;
                     }
                     
-                    var_s3              = 0xE6;
+                    animStatus          = 0xE6;
                     playeGrabFree_State = PlayerState_EnemyReleaseUpperFront;
                     break;
                 
@@ -4625,7 +4625,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                         playeGrabFree_RequiredInputCount = 2000;
                     }
                     
-                    var_s3              = 0xEA;
+                    animStatus          = 0xEA;
                     playeGrabFree_State = PlayerState_EnemyReleaseUpperBack;
                     break;
                 
@@ -4645,7 +4645,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                         playeGrabFree_RequiredInputCount = 1400;
                     }
                     
-                    var_s3              = 0xEB;
+                    animStatus          = 0xEB;
                     playeGrabFree_State = PlayerState_EnemyReleaseLowerFront;
                     break;
                 
@@ -4665,7 +4665,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                         playeGrabFree_RequiredInputCount = 1600;
                     }
                     
-                    var_s3              = 0xEC;
+                    animStatus          = 0xEC;
                     playeGrabFree_State = PlayerState_EnemyReleaseLowerBack;
                     break;
                 
@@ -4685,7 +4685,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                         playeGrabFree_RequiredInputCount = 7200;
                     }
                     
-                    var_s3              = 0xFB;
+                    animStatus          = 0xFB;
                     playeGrabFree_State = PlayerState_EnemyReleaseUpperFront;
                     break;
                 
@@ -4705,7 +4705,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                         playeGrabFree_RequiredInputCount = 7200;
                     }
                     
-                    var_s3              = 0xFB;
+                    animStatus          = 0xFB;
                     playeGrabFree_State = PlayerState_EnemyReleaseUpperBack;
                     break;
             }
@@ -4777,7 +4777,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             }
                     
             g_Player_HeadingAngle = sp1A;
-            func_8007FB94(chara, extra, var_s3);
+            func_8007FB94(chara, extra, animStatus);
                     
             if (chara->health_B0 > FP_FLOAT_TO(0.0f, Q12_SHIFT) && (g_Player_MovementInputDetected | g_Player_ActionRunPressed) != 0)
             {
@@ -4856,61 +4856,61 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             switch (g_SysWork.player_4C.extra_128.state_1C)
             {
                 case PlayerState_GetUpFront:
-                    var_s3 = 0x10B;
+                    animStatus = 0x10B;
                     break;
                     
                 case PlayerState_GetUpBack:
-                    var_s3 = 0x10C;
+                    animStatus = 0x10C;
                     break;
                     
                 case PlayerState_EnemyReleasePinnedFront:
-                    var_s3 = 0x103;
+                    animStatus = 0x103;
                     break;
                     
                 case PlayerState_EnemyReleasePinnedBack:
-                    var_s3 = 0x104;
+                    animStatus = 0x104;
                     break;
                     
                 case PlayerState_EnemyReleaseUpperFront:
-                    var_s3 = 0xF0;
+                    animStatus = 0xF0;
                     break;
                     
                 case PlayerState_EnemyReleaseUpperBack:
-                    var_s3 = 0xF4;
+                    animStatus = 0xF4;
                     break;
                     
                 case PlayerState_Unk17:
-                    var_s3 = 0xF1;
+                    animStatus = 0xF1;
                     break;
                     
                 case PlayerState_Unk18:
-                    var_s3 = 0xF3;
+                    animStatus = 0xF3;
                     break;
                     
                 case PlayerState_EnemyReleaseLowerFront:
-                    var_s3 = 0xF5;
+                    animStatus = 0xF5;
                     break;
                     
                 case PlayerState_EnemyReleaseLowerBack:
-                    var_s3 = 0xF6;
+                    animStatus = 0xF6;
                     break;
                     
                 case PlayerState_DamageHead:
-                    var_s3 = 0xF2;
+                    animStatus = 0xF2;
                     break;
                     
                 case PlayerState_FallForward: 
-                    var_s3 = 0x2C;
+                    animStatus = 0x2C;
                     break;
                     
                 case PlayerState_FallBackward: 
-                    var_s3 = 0x2E;
+                    animStatus = 0x2E;
                     break;
             }
 
             if (!(g_SysWork.player_4C.extra_128.state_1C >= PlayerState_FallForward && g_SysWork.player_4C.extra_128.state_1C < PlayerState_KickEnemy))
             {
-                func_8007FB94(chara, extra, var_s3);
+                func_8007FB94(chara, extra, animStatus);
             }
             
             D_800C4550 = g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126;
@@ -5035,13 +5035,13 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                 case PlayerState_FallBackward:
                     if (extra->model_0.stateStep_3 == 0)
                     {
-                        extra->model_0.anim_4.animIdx_0 = var_s3;
+                        extra->model_0.anim_4.animIdx_0 = animStatus;
                         extra->model_0.stateStep_3++;
                     }
                     
                     if (chara->model_0.stateStep_3 == 0)
                     {
-                        chara->model_0.anim_4.animIdx_0 = var_s3;
+                        chara->model_0.anim_4.animIdx_0 = animStatus;
                         chara->model_0.stateStep_3++;
                     }
                     
@@ -11741,7 +11741,7 @@ void Math_ShortestAngleGet(s16 angleFrom, s16 angleTo, s16* shortestAngle) // 0x
     }
 }
 
-void func_8007FB94(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 arg2) // 0x8007FB94
+void func_8007FB94(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 animStatus) // 0x8007FB94
 {
     s32 i;
 
@@ -11752,7 +11752,7 @@ void func_8007FB94(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 arg2)
 
     for (i = 0; i < 40; i++)
     {
-        if (g_MapOverlayHeader.field_38[i].field_2 != arg2)
+        if (g_MapOverlayHeader.field_38[i].field_2 != animStatus)
         {
             continue;
         }
@@ -11776,7 +11776,7 @@ void func_8007FB94(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 arg2)
     }
 }
 
-void func_8007FC48(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 arg2) // 0x8007FC48
+void func_8007FC48(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 animStatus) // 0x8007FC48
 {
     s32 i;
 
@@ -11785,21 +11785,29 @@ void func_8007FC48(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 arg2)
         return;
     }
 
+    // TODO: 40 of what?
     for (i = 0; i < 40; i++)
     {
-        if (g_MapOverlayHeader.field_38[i].field_2 != arg2)
+        if (g_MapOverlayHeader.field_38[i].field_2 != animStatus)
         {
             continue;
         }
 
+        // Set active anim index.
         extra->model_0.anim_4.animIdx_0 = g_MapOverlayHeader.field_38[i].field_0 + 1;
         chara->model_0.anim_4.animIdx_0 = g_MapOverlayHeader.field_38[i].field_0 + 1;
+
+        // Increment state step.
         extra->model_0.stateStep_3++;
         chara->model_0.stateStep_3++;
-        extra->model_0.anim_4.time_4 = FP_TO(g_MapOverlayHeader.field_38[i].field_4, Q12_SHIFT);
+
+        // Set anim time.
+        extra->model_0.anim_4.time_4 = FP_TIME(g_MapOverlayHeader.field_38[i].field_4);
         D_800AF220                   = i;
-        chara->model_0.anim_4.time_4 = FP_TO(g_MapOverlayHeader.field_38[i].field_4, Q12_SHIFT);
+        chara->model_0.anim_4.time_4 = FP_TIME(g_MapOverlayHeader.field_38[i].field_4);
         i                            = 41;
+
+        // Increment state.
         extra->model_0.state_2++;
     }
 }

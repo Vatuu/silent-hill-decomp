@@ -9,7 +9,7 @@ void sharedSymbol_800D0ECC_3_s03(s_SubCharacter* chara)
         chara->model_0.anim_4.animIdx_0 = ((chara->model_0.stateStep_3 * 2) + 2);
     }
 
-    if (chara->model_0.anim_4.animIdx_0 & (1 << 0))
+    if (ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.animIdx_0))
     {
         chara->properties_E4.larvalStalker.properties_E8[2].val32 = FP_FLOAT_TO(0.30f, Q12_SHIFT);
     }

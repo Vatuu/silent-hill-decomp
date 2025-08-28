@@ -534,7 +534,7 @@ void sharedFunc_800D82B8_0_s01(s_SubCharacter*);
 s32 sharedFunc_800D929C_0_s00();
 s32 sharedFunc_800D2DAC_0_s00();
 s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara);
-bool sharedFunc_800D9188_0_s00(s32 animIdx, s_SubCharacter* chara, s32 keyframeIdx, s32 sfx);
+bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, s32 sfx);
 void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1);
 
 // `Ai_Lisa` related
