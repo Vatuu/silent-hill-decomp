@@ -57,12 +57,18 @@ typedef struct
     u8      unk_18[24];
 } s_sharedData_800E3148_1_s02;
 
+typedef struct {
+    u16 id;
+    u8  volume;
+    u8  __pad;
+} s_SfxVol;
 /** Likely maps onto another struct somewhere. Starts with an `s_AnimInfo`, has some index properties deeper in it. */
 typedef struct
 {
-    s_AnimInfo animInfo_0; // This might be a pointer instead - not enough clues available yet to tell.
-    s8         unk0[3330];
-    u_Property properties_D14[4]; // Read as 4 pairs of `u16`s.
+    s_AnimInfo  animInfo_0; // This might be a pointer instead - not enough clues available yet to tell.
+    s8          unk_10[3288];
+    s_SfxVol    sfx_CE8[11];
+    u_Property  properties_D14[4]; // Read as 4 pairs of `u16`s.
 } s_func_800D2E04;
 
 typedef struct
@@ -72,6 +78,8 @@ typedef struct
     GsCOORDINATE2* coords_8;
     MATRIX*        mat_C; // `MATRIX` array? Needs to be `s32` to match, weird.
 } s_sharedData_800E21D0_0_s01;
+
+extern s_SfxVol g_sfxTable0[46];
 
 /** Scale. */
 extern VECTOR sharedData_800DD870_0_s01;
@@ -483,7 +491,7 @@ bool sharedFunc_800D21E4_0_s01(s32, GsCOORDINATE2* coords);
 
 void sharedFunc_800D2200_0_s01(s_SubCharacter*);
 
-void sharedFunc_800D2274_0_s01(s_SubCharacter*);
+s32 sharedFunc_800D2274_0_s01(s_SubCharacter*);
 
 void sharedFunc_800D2390_0_s01(s_SubCharacter*);
 
