@@ -38,7 +38,28 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CF974);
 
 void func_800D0124() {}
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D012C);
+s32 func_800D012C(VECTOR3* pos)
+{
+    s32 dx;
+    s32 dz;
+    u32 caseVar;
+    VECTOR* playerPos;
+
+    caseVar = g_SysWork.field_234B_4;
+    switch (caseVar)
+    {
+        case 1:
+            return 1;
+        case 2:
+            playerPos = &g_SysWork.player_4C.chara_0.position_18;
+            dx = (playerPos->vx - pos->vx) >> 4;
+            dz = (playerPos->vz - pos->vz) >> 4;
+            return SquareRoot0((dx * dx) + (dz * dz)) < 0x100;
+        default:
+            break;
+    }
+    return 0;
+}
 
 #include "maps/shared/sharedFunc_800D01BC_0_s00.h" // 0x800D01BC
 
