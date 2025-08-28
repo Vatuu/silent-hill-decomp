@@ -662,7 +662,7 @@ void Event_AirScreamerIntroCutscene() // 0x800DBAA0
         default:
             sharedFunc_800D2244_0_s00(0);
             SysWork_StateSetNext(0);
-            Player_PushedOver();
+            Player_FallBackward();
 
             g_SysWork.flags_22A4 &= ~(1 << 5);
             g_SysWork.flags_22A4 &= ~(1 << 9);

@@ -85,7 +85,7 @@ void func_800D2054(void) // 0x800D2054
     func_8003D03C();
 }
 
-void Player_PushedOver(void) // 0x800D2094
+void Player_FallBackward(void) // 0x800D2094
 {
     s_MainCharacter*      player;
     s_MainCharacterExtra* extra;

@@ -65,12 +65,12 @@ typedef struct
     u_Property properties_D14[4]; // Read as 4 pairs of `u16`s.
 } s_func_800D2E04;
 
-typedef struct {
+typedef struct
+{
     s32            flags_0;
     s32            field_4;
     GsCOORDINATE2* coords_8;
-    /** `MATRIX` array? Needs to be `s32` to match, weird. */
-    MATRIX*        mat_C;
+    MATRIX*        mat_C; // `MATRIX` array? Needs to be `s32` to match, weird.
 } s_sharedData_800E21D0_0_s01;
 
 /** Scale. */
@@ -479,7 +479,7 @@ void Ai_Cybil_Init(s_SubCharacter* chara);
 
 void Ai_AirScreamer_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
 
-s32 sharedFunc_800D21E4_0_s01(s32, GsCOORDINATE2* coords);
+bool sharedFunc_800D21E4_0_s01(s32, GsCOORDINATE2* coords);
 
 void sharedFunc_800D2200_0_s01(s_SubCharacter*);
 
@@ -489,7 +489,7 @@ void sharedFunc_800D2390_0_s01(s_SubCharacter*);
 
 bool Ai_AirScreamer_Init(s_SubCharacter* chara);
 
-void sharedFunc_800D2B00_0_s01(s_SubCharacter*);
+void sharedFunc_800D2B00_0_s01(s_SubCharacter* chara);
 
 void sharedFunc_800D2B10_0_s01(s_SubCharacter*);
 
