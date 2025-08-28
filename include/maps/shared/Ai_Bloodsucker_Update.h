@@ -1,6 +1,6 @@
 void Ai_Bloodsucker_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords)
 {
-    u32 animIdxDiv2;
+    u32 animStatusDiv2;
     s32 stateStepMul2;
 
     if (chara->model_0.state_2 == 0)
@@ -67,10 +67,10 @@ void Ai_Bloodsucker_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coord
         }
     }
 
-    animIdxDiv2   = chara->model_0.anim_4.animIdx_0 / 2;
-    stateStepMul2 = chara->model_0.stateStep_3 * 2;
+    animStatusDiv2 = chara->model_0.anim_4.status_0 / 2;
+    stateStepMul2  = chara->model_0.stateStep_3 * 2;
 
-    if (animIdxDiv2 == (stateStepMul2 + 23) / 2 || animIdxDiv2 == (stateStepMul2 + 17) / 2)
+    if (animStatusDiv2 == (stateStepMul2 + 23) / 2 || animStatusDiv2 == (stateStepMul2 + 17) / 2)
     {
         if (!(chara->properties_E4.larvalStalker.properties_E8[13].val32 & (1 << 1)))
         {

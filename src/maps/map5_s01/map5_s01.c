@@ -443,21 +443,21 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800E1EF4);
 
 void func_800E2154(s_SubCharacter* chara) // 0x800E2154
 {
-    if (chara->model_0.anim_4.animIdx_0 == 47 ||
-        chara->model_0.anim_4.animIdx_0 == 27 ||
-        chara->model_0.anim_4.animIdx_0 == 29)
+    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(23, true) ||
+        chara->model_0.anim_4.status_0 == ANIM_STATUS(13, true) ||
+        chara->model_0.anim_4.status_0 == ANIM_STATUS(14, true))
     {
         if (func_800E2284(chara) != 0)
         {
-            chara->model_0.anim_4.animIdx_0 = 50;
+            chara->model_0.anim_4.status_0 = ANIM_STATUS(25, false);
             return;
         }
     }
-    else if (chara->model_0.anim_4.animIdx_0 == 51) 
+    else if (chara->model_0.anim_4.status_0 == ANIM_STATUS(25, true)) 
     {
         if (func_800E2284(chara) == 0)
         {
-            chara->model_0.anim_4.animIdx_0 = 46;
+            chara->model_0.anim_4.status_0 = ANIM_STATUS(23, false);
         }
     }
 }

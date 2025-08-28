@@ -30,8 +30,8 @@ static inline void Ai_Creaper_PropertiesUpdateFromStep(s_SubCharacter* chara)
     }
 
     chara->model_0.state_2               = 1;
-    chara->model_0.anim_4.animIdx_0      = 23;
-    chara->model_0.anim_4.time_4         = FP_TO(94, Q12_SHIFT);
+    chara->model_0.anim_4.status_0      = ANIM_STATUS(11, true);
+    chara->model_0.anim_4.time_4         = FP_TIME(94.0f);
     chara->model_0.anim_4.keyframeIdx0_8 = 94;
 }
 

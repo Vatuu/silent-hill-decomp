@@ -2060,7 +2060,7 @@ s32 func_8008A0E4(s32 arg0, e_EquippedWeaponId weaponId, s_SubCharacter* chara, 
     }
 
     chara->field_46 = weaponId;
-    if (!(modelAnim->animIdx_0 & (1 << 0)))
+    if (!(modelAnim->status_0 & (1 << 0)))
     {
         chara->field_44 = 0;
         chara->field_4C = 0;

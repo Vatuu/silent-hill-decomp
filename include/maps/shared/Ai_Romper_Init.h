@@ -47,7 +47,7 @@ void Ai_Romper_Init(s_SubCharacter* chara)
     }
 
     chara->model_0.state_2               = 2;
-    chara->model_0.anim_4.animIdx_0      = 31;
+    chara->model_0.anim_4.status_0      = ANIM_STATUS(15, true);
     chara->model_0.anim_4.time_4         = FP_TIME(147.0f);
     chara->model_0.anim_4.keyframeIdx0_8 = 147;
 

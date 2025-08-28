@@ -61,12 +61,43 @@ struct _SubCharacter;
 #define HAS_MAP(mapIdx) \
     ((((u32*)&g_SavegamePtr->hasMapsFlags_164)[(mapIdx) / 32] >> ((mapIdx) % 32)) & (1 << 0))
 
-/** @brief Checks screen fade completion status. See `g_Gfx_ScreenFade` for bit layout. */
-#define Gfx_IsScreenFadeComplete() \
-    ((g_Gfx_ScreenFade & ScreenFadeFlag_StateMask) == ScreenFadeState_FadeOutComplete)
-
 #define WeaponId_AttackVariantGet(weaponId, type) \
 	((weaponId) + ((type) * 10))
+
+/** @brief Packs an anim status containing the anim index and active flag.
+ *
+ * @param animIdx Anim index.
+ * @param isActive Active status (`bool`).
+ * @return Packed anim status containing the anim index and active flag.
+ */
+#define ANIM_STATUS(animIdx, isActive) \
+    (((animIdx) << 1) | ((isActive) ? (1 << 0) : 0x0))
+
+/** @brief Retrieves the anim index from a packed anim status.
+ *
+ * @param animStatus Packed anim status containing an anim index and active flag.
+ * @return Anim index.
+ */
+#define ANIM_STATUS_IDX_GET(animStatus) \
+    ((animStatus) >> 1)
+
+/** @brief Checks if an anim is active.
+ *
+ * @param animStatus Packed anim status containing an anim index and active flag.
+ * @return `true` if active, `false` otherwise.
+ */
+#define IS_ANIM_STATUS_ACTIVE(animStatus) \
+    ((animStatus) & (1 << 0))
+
+/** @brief Checks if a keyframe index is within the range `[low, high]`.
+ *
+ * @param keyframe Keyframe index to check.
+ * @param low Low range.
+ * @param high High range.
+ * @return `true` if the keyframe index is within range, `false` otherwise.
+ */
+#define ANIM_KEYFRAME_RANGE_CHECK(keyframeIdx, low, high) \
+    ((keyframeIdx) >= (low) && (keyframeIdx) <= (high))
 
 /** @brief Screen fade states used by `g_Gfx_ScreenFade`. The flow is not linear. */
 typedef enum _ScreenFadeState
@@ -916,7 +947,7 @@ typedef struct _AnimInfo
     void (*funcPtr_0)(struct _SubCharacter*, s32, GsCOORDINATE2*, struct _AnimInfo*); // TODO: `funcPtr_0` signature doesn't currently match `Anim_Update`.
     u8  field_4;
     s8  hasVariableTimeDelta_5;
-    u8  animIdx_6;
+    u8  status_6; /** Packed anim status. See `s_ModelAnimData::status_0`. */
     u8  unk_7;
     union
     {
@@ -930,15 +961,9 @@ STATIC_ASSERT_SIZEOF(s_AnimInfo, 16);
 
 typedef struct _ModelAnimData
 {
-    // Following 4 bytes might be packed into an s32 called `animStatus`,
-    // implied by an original param name in `vcMixSelfViewEffectToWatchTgtPos`.
-
-    // TODO: Bit 0 contains flag, bits 1-7 contain actual anim index.
-    u8          animIdx_0;
-    //u8          unkAnimFlag_0_0 : 1; /** `bool` | Unclear purpose, probably "is valid"? */
-    //u8          animIdx_0_1     : 7;
-
-    u8          maybeSomeState_1; // State says if `animTime_4` is anim time or a func ptr? That field could be a union.
+    u8          status_0;         /** Is active: bit 0, Anim index: bits 1-7. Possible original name: `anim_status` */
+                                  // TODO: Rename to `status_0`.
+    u8          maybeSomeState_1; // State says if `animTime_4` is anim time/anim status or a func ptr? That field could be a union.
     u16         flags_2;          /** `e_AnimFlags` */
     q19_12      time_4;           /** Time along keyframe timeline. */ 
     s16         keyframeIdx0_8;
@@ -955,6 +980,7 @@ typedef struct _Model
     u8 state_2;        /** Current state for this model/character. 0 usually means it still has to be initialized. */
     u8 stateStep_3;    // Step number or temp data for the current `state_2`? In `s_MainCharacterExtra` always 1, set to 0 for 1 tick when anim state appears to change.
                        // Used differently in player's `s_SubCharacter`. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
+                       // Sometimes holds actual anim index?
     s_ModelAnim anim_4;
 } s_Model;
 STATIC_ASSERT_SIZEOF(s_Model, 24);
@@ -1345,6 +1371,10 @@ extern s32 g_IntervalVBlanks; // 0x800A8FF0
 extern s32 g_PrevVBlanks;     // 0x800A9770
 extern s32 g_VBlanks;         // 0x800B5C34
 extern s32 g_UncappedVBlanks; // 0x800B5C38
+
+/** @brief Checks screen fade completion status. See `g_Gfx_ScreenFade` for bit layout. */
+#define Gfx_IsScreenFadeComplete() \
+    ((g_Gfx_ScreenFade & ScreenFadeFlag_StateMask) == ScreenFadeState_FadeOutComplete)
 
 /** @brief Sets `sysState` in `g_SysWork` for the next tick. */
 static inline void SysWork_StateSetNext(e_SysState sysState)

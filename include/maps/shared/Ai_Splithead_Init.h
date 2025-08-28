@@ -15,7 +15,7 @@ void Ai_Splithead_Init(s_SubCharacter* chara)
     }
 
     chara->model_0.state_2               = 8;
-    chara->model_0.anim_4.animIdx_0      = 21;
+    chara->model_0.anim_4.status_0      = ANIM_STATUS(10, true);
     chara->model_0.anim_4.time_4         = FP_TIME(162.0f);
     chara->model_0.anim_4.keyframeIdx0_8 = 162;
 

@@ -281,7 +281,7 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
 
     func_800D3B74(chara);
 
-    chara->model_0.anim_4.animIdx_0      = 16;
+    chara->model_0.anim_4.status_0      = ANIM_STATUS(8, false);
     chara->model_0.anim_4.time_4         = FP_TIME(258.0f);
     chara->model_0.anim_4.keyframeIdx0_8 = 258;
 
@@ -476,7 +476,7 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D6554);
             chara->model_0.state_2 = 2;
         }
 
-        chara->model_0.anim_4.animIdx_0 = 60;
+        chara->model_0.anim_4.status_0 = ANIM_STATUS(30, false);
 
         chara->properties_E4.player.exertionTimer_FC.val16[0] = 0x37;
         chara->properties_E4.player.exertionTimer_FC.val16[1] = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 0x1AB;

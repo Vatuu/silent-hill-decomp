@@ -1471,11 +1471,12 @@ typedef struct s_UnkStruct_MapOverlay
     u8 field_0[34]; /** `e_InventoryItemId` */
 } s_UnkStruct_MO;
 
+/** Contains loaded anim data? */
 typedef struct
 {
-    s16 field_0;
-    s16 field_2;
-    s16 field_4;
+    s16 status_0; /** Packed anim status. See `s_ModelAnimData::status_0`. */
+    s16 status_2; /** Packed anim status. See `s_ModelAnimData::status_0`. */
+    s16 time_4;   /** Fixed-point anim time. */
     s16 field_6;
 } s_UnkStruct3_Mo; // Probable size: 8 bytes.
 
@@ -3355,7 +3356,7 @@ void func_8006342C(s32 invItemId, s16, s16, GsCOORDINATE2*);
 
 void func_8005CB20(s_SubCharacter*, void*, s16, s16);
 
-void func_800622B8(s32, s_SubCharacter*, s32, s32);
+void func_800622B8(s32, s_SubCharacter*, s32 animStatus, s32);
 
 void func_80066E40();
 
@@ -3879,10 +3880,10 @@ void func_8007E860();
 /** Loads player animations for a given map. Maybe for cutscenes? */
 void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 
-void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 arg2, s32 arg3);
+void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 arg2, s32 animStatus);
 
 /** Special player SFX handler for heavy breath and damage. */
-bool func_80071620(u8, s_SubCharacter*, s32, s32 sfx);
+bool func_80071620(u8 animStatus, s_SubCharacter*, s32, s32 sfx);
 
 /** Player anim handler? */
 void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, void* arg2, GsCOORDINATE2* coord);
@@ -3924,9 +3925,11 @@ s16 Player_AnimGetSomething();
  */
 void Math_ShortestAngleGet(s16 angleFrom, s16 angleTo, s16* shortestAngle);
 
-void func_8007FB94(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 arg2);
+/** Anim func. */
+void func_8007FB94(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 animStatus);
 
-void func_8007FC48(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 arg2);
+/** Anim func. */
+void func_8007FC48(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 animStatus);
 
 /** Gets property 8 from player. */
 s32 func_8007FD2C();

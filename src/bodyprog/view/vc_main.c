@@ -1309,7 +1309,7 @@ void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, V
     }
 
     vcMixSelfViewEffectToWatchTgtPos(&w_p->watch_tgt_pos_7C, &w_p->watch_tgt_ang_z_8C, self_view_eff_rate,
-                                     w_p, &g_SysWork.playerBoneCoords_890[PlayerBone_Head].workm, g_SysWork.player_4C.chara_0.model_0.anim_4.animIdx_0);
+                                     w_p, &g_SysWork.playerBoneCoords_890[PlayerBone_Head].workm, g_SysWork.player_4C.chara_0.model_0.anim_4.status_0);
 
     if (w_p->watch_tgt_pos_7C.vy > w_p->watch_tgt_max_y_88)
     {
@@ -1427,12 +1427,12 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
 
     switch (anim_status)
     {
-        case 6:
-        case 7:
+        case ANIM_STATUS(3, false):
+        case ANIM_STATUS(3, true):
             break;
 
-        case 34:
-        case 35:
+        case ANIM_STATUS(17, false):
+        case ANIM_STATUS(17, true):
             if (w_p->nearest_enemy_2DC != NULL)
             {
                 cam_ang.vz = FP_ANGLE(0.0f);
@@ -1440,7 +1440,7 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
             break;
 
         default:
-            cam_ang.vz = cam_ang.vz >> 1;
+            cam_ang.vz >>= 1;
             break;
     }
 

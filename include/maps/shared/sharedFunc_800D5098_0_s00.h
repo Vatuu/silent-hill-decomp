@@ -11,10 +11,11 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* chara)
     s32 newMoveSpeed1;
     s32 var_v1;
 
-    #define SPEED_0_9 (FP_FLOAT_TO(0.9f, Q12_SHIFT))
-    #define SPEED_0_7 (FP_FLOAT_TO(0.7f, Q12_SHIFT))
+    #define SPEED_0_9 FP_FLOAT_TO(0.9f, Q12_SHIFT)
+    #define SPEED_0_7 FP_FLOAT_TO(0.7f, Q12_SHIFT)
 
-    if ((chara->model_0.anim_4.animIdx_0 >> 1) == 0x1E)
+    // TODO: `chara->model_0.anim_4.status_0 == ANIM_STATUS(30, false)` doesn't match?
+    if (ANIM_STATUS_IDX_GET(chara->model_0.anim_4.status_0) == 30)
     {
         chara->model_0.state_2 = 4;
         g_SysWork.field_228A &= ~(1 << 1);

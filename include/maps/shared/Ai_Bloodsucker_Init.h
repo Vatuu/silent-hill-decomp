@@ -1,15 +1,15 @@
 static inline void Ai_Bloodsucker_AnimUpdateFromStep(s_SubCharacter* chara)
 {
-    u32         temp_v0;
+    u32         stateStep;
     s_Savegame* save;
 
     switch (chara->model_0.stateStep_3)
     {
         case 17:
             chara->model_0.state_2               = 1;
-            chara->model_0.anim_4.animIdx_0      = 15;
+            chara->model_0.anim_4.status_0      = ANIM_STATUS(7, true);
             chara->model_0.stateStep_3           = 0;
-            chara->model_0.anim_4.time_4         = FP_TO(81, Q12_SHIFT);
+            chara->model_0.anim_4.time_4         = FP_TIME(81.0f);
             chara->model_0.anim_4.keyframeIdx0_8 = 81;
             return;
 
@@ -30,23 +30,23 @@ static inline void Ai_Bloodsucker_AnimUpdateFromStep(s_SubCharacter* chara)
             return;
     }
 
-    save = g_SavegamePtr; // TODO: Odd pointer copy, might be some inline flagcheck func?
+    save = g_SavegamePtr; // TODO: Odd pointer copy, might be some inline flag check func?
 
-    temp_v0 = chara->model_0.stateStep_3 - 18;
-
-    chara->model_0.stateStep_3 = temp_v0;
+    // Anim-related?
+    stateStep                  = chara->model_0.stateStep_3 - 18;
+    chara->model_0.stateStep_3 = stateStep;
 
     if (!(save->eventFlags_180[1] & (1 << 26)))
     {
-        chara->model_0.anim_4.animIdx_0 = (temp_v0 * 2) + 23;
+        chara->model_0.anim_4.status_0 = (stateStep * 2) + 23;
     }
     else
     {
-        chara->model_0.anim_4.animIdx_0 = (temp_v0 * 2) + 17;
+        chara->model_0.anim_4.status_0 = (stateStep * 2) + 17;
     }
 
-    chara->model_0.anim_4.time_4         = FP_TO(sharedData_800D5ABC_3_s03[chara->model_0.anim_4.animIdx_0].keyframeIdx0_C, Q12_SHIFT);
-    chara->model_0.anim_4.keyframeIdx0_8 = sharedData_800D5ABC_3_s03[chara->model_0.anim_4.animIdx_0].keyframeIdx0_C;
+    chara->model_0.anim_4.time_4         = FP_TO(sharedData_800D5ABC_3_s03[chara->model_0.anim_4.status_0].keyframeIdx0_C, Q12_SHIFT);
+    chara->model_0.anim_4.keyframeIdx0_8 = sharedData_800D5ABC_3_s03[chara->model_0.anim_4.status_0].keyframeIdx0_C;
 #endif
 }
 

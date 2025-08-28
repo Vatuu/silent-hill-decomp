@@ -105,7 +105,7 @@ void func_800CE5F0(s_SubCharacter* chara, s32 moveSpeed) // 0x800CE5F0
 
         func_80037DC4(chara);
 
-        if (chara->model_0.anim_4.animIdx_0 == 29)
+        if (chara->model_0.anim_4.status_0 == ANIM_STATUS(14, true))
         {
             func_800622B8(3, chara, 10, 5);
         }

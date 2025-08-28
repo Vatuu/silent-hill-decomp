@@ -278,13 +278,12 @@ typedef enum _PlayerLowerBodyState
     PlayerLowerBodyState_Reload            = 35
 } e_PlayerLowerBodyState;
 
-// 53, 54 are idle animations and 57 is aiming while doing nothing.
 /** @brief Player animation IDs. */
 typedef enum _PlayerAnim
 {
-    PlayerAnim_Idle = 53,
-
-    PlayerAnim_IdleTired = 55
+    PlayerAnim_Idle      = 26,
+    PlayerAnim_IdleTired = 27,
+    PlayerAnim_IdleAim   = 28 // Unsure. `_IdleAimHandgun`?
 } s_PlayerAnim;
 
 // ========
@@ -296,8 +295,8 @@ typedef struct _800AFBF4
     s16 attackSfx_0;
     s16 reloadSfx_2;
     s16 outOfAmmoSfx_4;
-    u8  animStopAiming_6;
-    u8  animAttack_7;
+    u8  animStopAiming_6; /** Packed anim status. See `s_ModelAnimData::status_0`. */
+    u8  animAttack_7;     /** Packed anim status. See `s_ModelAnimData::status_0`. */
     u8  animAttackHold_8;
     u8  field_9;
     u8  field_A; // Attack type?
@@ -449,8 +448,8 @@ void Player_CharaRotate(s32 speed); // 0x80071284
  */
 void Player_MovementStateReset(s_SubCharacter* chara, e_PlayerLowerBodyState lowerBodyState); // 0x800713B4
 
-/** Audio related. */
-s32 func_800713E8(s32 animIdx, s_SubCharacter* chara, s32 arg2, s32 arg3, s32 arg4, s8 arg5);
+/** Audio-related. */
+s32 func_800713E8(s32 animStatus, s_SubCharacter* chara, s32 arg2, s32 arg3, s32 arg4, s8 arg5);
 
 /** @brief Main update function for player functionality.
  *
@@ -498,7 +497,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x800771BC
 
 /** @brief Cancels movement when the player abruptly stop the running while stepping movement. */
-void Player_StepWallStop_MovementCancel(s_SubCharacter* chara, s32 arg1, s32 animIdx, s32 keyframeIdx, e_PlayerLowerBodyState lowerBodyState, s32 headingAngle, s32 aimState); // 0x80077BB8
+void Player_StepWallStop_MovementCancel(s_SubCharacter* chara, s32 arg1, s32 animStatus, s32 keyframeIdx, e_PlayerLowerBodyState lowerBodyState, s32 headingAngle, s32 aimState); // 0x80077BB8
 
 /** @brief Main player movement function. */
 void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x80077D00
