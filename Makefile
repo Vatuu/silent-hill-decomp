@@ -221,7 +221,7 @@ progress:
 
 expected: build
 	mkdir -p $(EXPECTED_DIR)
-	mv build/asm $(EXPECTED_DIR)/asm
+	mv $(BUILD_DIR)/asm $(EXPECTED_DIR)/asm
 
 iso:
 	$(INSERT_OVLS) $(INSERT_OVLS_FLAGS)

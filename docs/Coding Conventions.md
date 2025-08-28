@@ -21,7 +21,6 @@ s32 func_XXXXXXXX(s32 arg0)
 }
 ```
 
-
 ### Alignment
 
 #### Structs and enums
@@ -61,7 +60,7 @@ g_UncappedVBlanks = 0;
 ...
 ```
 
-If after three continous variable assignment, two or more struct fields values are assigned then a space should be applied only if where the code is encapsulated is doing anything else more than just assigning values for example:
+If after three continuous variable assignment, two or more struct fields values are assigned then a space should be applied only if where the code is encapsulated is doing anything else more than just assigning values for example:
 
 ```C
 ...
@@ -106,19 +105,56 @@ Custom primitive type aliases (defined at `include/types.h`) should be used inst
 
 For pointers, `void* name` is preferred over `void *name`.
 
-It is heavily recommended to learn a little about PSX's fixed-point in order to apply them properly. Due the lack of floating point support PSX devs used this "fixed-point" types. We apply this types and some special convertion macros (see `include/bodyprog/math.h`) in order to create a more flexible and comprehensible code.
+It is heavily recommended learning a little about PSX's fixed-point in order to apply them properly. Due to the lack of floating point support PSX devs used this "fixed-point" types. We apply this types and some special conversion macros (see `include/bodyprog/math.h`) in order to create a more flexible and comprehensible code.
+
+### Shared defines
+Under some instances we use defines in order to define the amount of elements a piece of code uses. The creation and usage of them depends entirely in the interpretation of the member working based on what can be seen in the code.
+
+See for examples:
+* `INVENTORY_ITEM_COUNT_MAX` used to define the amount of items the player can hold in the inventory and is normally used in many circumstances related to the code accessing to items data.
+* `MEMORY_CARD_SLOT_COUNT` used to define the amount of memory cards the player can connect to the game and it's generally used by array declarations and accessing memory card data.
+* `NPC_COUNT_MAX` used to define the max amount of NPCs the game can load and the code uses in the instances where it accesses to all of the currently loaded NPCs.
+
+### Conditionals
+We recommend under the possible the reduction of braces to only the needed.
+
+For example:
+```
+// Don't do this.
+if (!(g_Player_Health == FP_HEALTH(30.0f)) && (g_Player_Flag & (1 << 5)))
+
+
+// Do this.
+if (g_playerHealth != FP_HEALTH(30.0f) && g_Player_Flag & (1 << 5))
+```
+
+For boolean values don't use comparison operators.
+
+For example:
+```
+// Don't do this.
+if (g_Player_IsAlive == 1)
+
+if (g_Player_IsAlive != 1)
+
+
+// Do this.
+if (g_Player_IsAlive)
+
+if (!g_Player_IsAlive)
+```
 
 ### Clang-format
 The repository includes a `clang-format` configuration to help ensure code consistency. Git also has a command to handle formatting any modified files.
 
 We'd appreciate it if you could follow these steps prior to committing:
 
-1. Stage modified files:  
-   `git add src/`
-   `git add include/`
-2. Run clang-format through git:
-   `git clang-format`
-3. Review the changes with `git diff`, then re-stage and commit them:
+1. Stage modified files:</br>
+   `git add src/`</br>
+   `git add include/`</br>
+2. Run clang-format through git:</br>
+   `git clang-format`</br>
+3. Review the changes with `git diff`, then re-stage and commit them:</br>
    `git add src/`
 
 ## Naming Conventions
@@ -131,8 +167,7 @@ In case no name has been able to be located then follow the guidelines below:
 ### General
 Names should be written in a limited version of `Pascal_Snake_Case` as only after system names an undercore can be applied as follows:
 
-`[SystemName]_[Noun][Verb]`
-
+`[SystemName]_[Noun][Verb]`</br>
 `[SystemName]_[SubSystemName]_[Noun][Verb]`
 
 Acronyms and abbreviations should be treated as words. Example:
@@ -140,18 +175,14 @@ Acronyms and abbreviations should be treated as words. Example:
 `GfxFunc` instead of `GFXFunc`, `myId` instead of `myID`.
 
 ### Functions
-
 Function parameters should be written in `camelCase`.
 
 Examples:
 
-`Demo_GameGlobalsUpdate()`
-
-`Fs_QueueStartSeek(s32 fileIdx)`
-
-`GameState_KcetLogo_Update()`
-
-`Options_MainOptionsMenu_VolumeBarDraw(bool isSfx, u8 vol)`
+`Demo_GameGlobalsUpdate()`</br>
+`Fs_QueueStartSeek(s32 fileIdx)`</br>
+`GameState_KcetLogo_Update()`</br>
+`Options_MainOptionsMenu_VolumeBarDraw(bool isSfx, u8 vol)`</br>
 
 This allows functions to be grouped, which can be useful at the moment of comprehend the functionallity of a code.
 
@@ -160,10 +191,8 @@ Global variables should be prefixed with `g_` and follow a the previosuly stabli
 
 Examples:
 
-`g_LastSaveIdx`
-
-`g_Inventory_IsUpClicked`
-
+`g_LastSaveIdx`</br>
+`g_Inventory_IsUpClicked`</br>
 `g_Player_AttackAnimIdx`
 
 ### Structures
@@ -205,14 +234,20 @@ typedef enum _MyEnum
 ```
 
 ### Defines/Macros
-Macros named according to their purpose and the format they should follow is `SCREAMING_SNAKE_CASE` and `camelCase` for the arguments.
+Macros should be named according to their purpose. The format they should follow depends on what they produce:
+* In case of producing a constant value (for example: Screen position X) `SCREAMING_SNAKE_CASE` should be used.
+* In case of producing a set of intructions that get incrusted in the function (similar to inline functions) `Pascal_Snake_Case` should be used.
+In any case `camelCase` should be used for the arguments.
 
+For example:
 ```C
 #define SCREEN_POSITION_X(percent) \
     (s32)((SCREEN_WIDTH) * ((percent) / 100.0f))
 ```
 
-Defines should follow one more similar to enums or globals while using `SCREAMING_SNAKE_CASE` format. For example:
+Defines should be named according while using `SCREAMING_SNAKE_CASE` format.
+
+For example:
 ```C
 #define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400
 ```
@@ -254,7 +289,7 @@ s32 Math_MyFunc(s32 dist) // 0xXXXXXXXX
 }
 ```
 
-Documentation comments should be included above declarations in \*.h files to explain the purposes of functions and global variables and in case of being required of enums and structs, additionally add the . Example:
+Documentation comments should be included above declarations in \*.h files to explain the purposes of functions and global variables and in case of being required of enums, structs and macros. Additionally for documentation comments use the tags `@brief` for describing in a simpler way the purpose of the function, global variable, struct or enum and `@param` and `@return` for document the arguments and return value of a function in case it has them. Examples:
 
 Function:
 ```C
@@ -266,6 +301,15 @@ Function:
  * @param yPos: Pointer to Harry's Y position.
  */
 void Hero_SetFly(bool isFlying, int* yPos); // 0x80012345
+
+/** @brief Checks enemy's state.
+ *
+ * Checks the current state of the enemy being passed through the argument.
+ *
+ * @param enemyPtr: Pointer to enemy's struct.
+ * @return Value from `e_EnemyState`.
+ */
+s32 Enemy_StateCheck(s_EnemyStruct* enemyPtr); // 0x80012345
 ```
 
 Global variable:
@@ -274,7 +318,7 @@ Global variable:
 extern s32 g_Player_WeaponCurrentAmmo; // 0x800A2345
 ```
 
-For documentation comments use the tags `@brief`, `@param` and `@return` depending on what is being documented. Additionally use the tags  `@note`, `@unused` and `@bug` for additional documentation, document unused pieces of code and unintended game/code behaviour.
+Additionally use the tags  `@note`, `@unused` and `@bug` for additional documentation, document unused pieces of code and unintended game/code behaviour.
 
 ```C
 /** @unused Some boolean statuses for each save slot.
