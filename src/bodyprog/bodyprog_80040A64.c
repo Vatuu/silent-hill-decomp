@@ -460,18 +460,18 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0
     AddPrim(&arg0->org[1], &D_800BFBF0[g_ObjectTableIdx]);
 }
 
-u32 func_80041ADC(s32 queueIdx) // 80041ADC
+u32 Fs_QueueEntryLoadStatusGet(s32 queueIdx) // 80041ADC
 {
     if (queueIdx == NO_VALUE)
     {
-        return 0; // Invalid.
+        return FsQueueEntryLoadStatus_Invalid;
     }
     else if (!Fs_QueueIsEntryLoaded(queueIdx))
     {
-        return 1; // Unloaded.
+        return FsQueueEntryLoadStatus_Unloaded;
     }
 
-    return 2; // Loaded.
+    return FsQueueEntryLoadStatus_Loaded;
 }
 
 u32 func_80041B1C(s_800C117C* arg0) // 0x80041B1C
@@ -479,14 +479,15 @@ u32 func_80041B1C(s_800C117C* arg0) // 0x80041B1C
     s32 queueState;
     s32 queueStateCpy;
 
-    queueState    = func_80041ADC(arg0->queueIdx_4);
+    queueState    = Fs_QueueEntryLoadStatusGet(arg0->queueIdx_4);
     queueStateCpy = queueState;
 
-    if (queueStateCpy == 1)
+    if (queueStateCpy == FsQueueEntryLoadStatus_Unloaded)
     {
         return 1;
     }
-    else if ((queueStateCpy == 0) || (queueState != 2))
+    else if (queueStateCpy == FsQueueEntryLoadStatus_Invalid ||
+             queueState    != FsQueueEntryLoadStatus_Loaded)
     {
         return 0;
     }
@@ -503,14 +504,15 @@ s32 func_80041BA0(s_func_80041CB4* arg0) // 0x80041BA0
     s32 queueState;
     s32 queueStateCpy;
 
-    queueState    = func_80041ADC(arg0->queueIdx_8);
+    queueState    = Fs_QueueEntryLoadStatusGet(arg0->queueIdx_8);
     queueStateCpy = queueState;
 
-    if (queueStateCpy == 1)
+    if (queueStateCpy == FsQueueEntryLoadStatus_Unloaded)
     {
         return 1;
     }
-    else if (queueStateCpy == 0 || queueState != 2)
+    else if (queueStateCpy == FsQueueEntryLoadStatus_Invalid ||
+             queueState    != FsQueueEntryLoadStatus_Loaded)
     {
         return 0;
     }
@@ -646,7 +648,20 @@ void func_800420C0() // 0x800420C0
     func_80041D48();
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800420FC); // 0x800420FC
+void func_800420FC() // 0x800420FC
+{
+    s_func_80041CB4* ptr;
+
+    ptr = &D_800C1020.field_138;
+
+    if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
+        ptr->plmHeader_0->isLoaded_2)
+    {
+        func_80056BF8(D_800C1020.field_138.plmHeader_0);
+    }
+
+    func_80041CB4(&D_800C1020.field_138, D_800C1020.field_138.plmHeader_0);
+}
 
 s_800C1450_58* func_80042178(char* arg0) // 0x80042178
 {
@@ -676,7 +691,8 @@ void func_800421D8(char* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5)
     {
         if (arg1 != D_800C1020.field_138.field_4)
         {
-            if (func_80041ADC(D_800C1020.field_138.queueIdx_8) >= 2 && D_800C1020.field_138.plmHeader_0->isLoaded_2)
+            if (Fs_QueueEntryLoadStatusGet(D_800C1020.field_138.queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
+                D_800C1020.field_138.plmHeader_0->isLoaded_2)
             {
                 func_80056BF8(D_800C1020.field_138.plmHeader_0);
             }
@@ -845,14 +861,15 @@ void func_80043A24(GsOT* ot, s32 arg1) // 0x80043A24
     s32         queueState;
     s_800C117C* ptr;
 
-    queueState = func_80041ADC(D_800C1020.field_138.queueIdx_8);
+    queueState = Fs_QueueEntryLoadStatusGet(D_800C1020.field_138.queueIdx_8);
 
-    if (queueState == 1)
+    if (queueState == FsQueueEntryLoadStatus_Unloaded)
     {
         return;
     }
 
-    if (!(queueState == 0 || (queueState == 2 && D_800C1020.field_138.plmHeader_0->isLoaded_2)))
+    if (!(queueState == FsQueueEntryLoadStatus_Invalid ||
+          (queueState == FsQueueEntryLoadStatus_Loaded && D_800C1020.field_138.plmHeader_0->isLoaded_2)))
     {
         return;
     }
@@ -1084,7 +1101,7 @@ s_AnimInfo* func_80044918(s_ModelAnim* anim) // 0x80044918
     return &animInfo_C[animStatus0];
 }
 
-void func_80044950(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords)
+void func_80044950(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x80044950
 {
     s_AnimInfo* animInfo;
 

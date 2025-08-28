@@ -821,7 +821,7 @@ typedef struct
 {
     s_PlmHeader* plmHeader_0;
     s32          field_4;
-    s32          queueIdx_8; // Passed to `func_80041ADC`, thus the name.
+    s32          queueIdx_8; // Passed to `Fs_QueueEntryLoadStatusGet`, thus the name.
 } s_func_80041CB4;
 
 // Maybe a collection of matrices.
@@ -2628,8 +2628,12 @@ void func_8004137C(VECTOR3* result, VECTOR* vec0, VECTOR* vec1, s32 screenDist);
 
 void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4);
 
-/** Some kind of queue entry load status getter. */
-u32 func_80041ADC(s32 queueIdx);
+/** @brief Gets the load status of a queue entry by utilizing `Fs_QueueIsEntryLoaded`.
+ *
+ * @param queueIdx Index of the queue entry to check.
+ * @return Queue entry load status (`e_FsQueueEntryLoadStatus`);
+ */
+u32 Fs_QueueEntryLoadStatusGet(s32 queueIdx);
 
 /** Used for loading maps */
 void func_80041C24(s_PlmHeader* plmHeader, s32 arg1, s32 arg2);
@@ -2651,6 +2655,8 @@ void func_80041FF0();
 void func_8004201C();
 
 void func_800420C0();
+
+void func_800420FC();
 
 s_800C1450_58* func_80042178(char* arg0);
 
@@ -2710,6 +2716,8 @@ void func_800445A4(s_AnimFile*, GsCOORDINATE2*);
 s_AnimInfo* func_80044918(s_ModelAnim* anim);
 
 void func_800446D8(s_Skeleton*, GsCOORDINATE2*, s32, s32, s32);
+
+void func_80044950(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
 
 s32 func_800449AC(s_Model* model, s_AnimInfo* anim);
 

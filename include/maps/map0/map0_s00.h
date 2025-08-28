@@ -18,6 +18,8 @@ extern s32 D_800E3A30;
 
 void func_800D0124();
 
+bool func_800D012C(VECTOR3* pos);
+
 /** @brief 2D player distance check on XZ plane.
  *
  * Checks against a constant 2D distance of `FP_METER(40.0f)` between the player and two positions.

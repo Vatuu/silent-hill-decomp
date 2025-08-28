@@ -26,7 +26,6 @@ bool Fs_QueueAllocEntryData(s_FsQueueEntry* entry)
     {
         result = true;
     }
-
     return result;
 }
 
@@ -81,8 +80,10 @@ bool Fs_QueueTickSetLoc(s_FsQueueEntry* entry)
 
 bool Fs_QueueTickRead(s_FsQueueEntry* entry)
 {
+    s32 sectorCount;
+
     // Round up to sector boundary. Masking not needed because of `>> 11` below.
-    s32 sectorCount = ((entry->info->blockCount_0_13 * FS_BLOCK_SIZE) + FS_SECTOR_SIZE) - 1;
+    sectorCount = ((entry->info->blockCount_0_13 * FS_BLOCK_SIZE) + FS_SECTOR_SIZE) - 1;
     
     // Overflow check?
     if (sectorCount < 0)
@@ -95,7 +96,9 @@ bool Fs_QueueTickRead(s_FsQueueEntry* entry)
 
 bool Fs_QueueResetTick(s_FsQueueEntry* entry)
 {
-    bool result = false;
+    bool result;
+
+    result = false;
 
     g_FsQueue.resetTimer0++;
 

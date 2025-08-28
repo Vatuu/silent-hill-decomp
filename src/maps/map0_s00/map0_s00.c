@@ -38,27 +38,23 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CF974);
 
 void func_800D0124() {}
 
-s32 func_800D012C(VECTOR3* pos)
+bool func_800D012C(VECTOR3* pos) // 0x800D012C
 {
-    s32 dx;
-    s32 dz;
-    u32 caseVar;
-    VECTOR* playerPos;
+    s32 deltaX;
+    s32 deltaZ;
 
-    caseVar = g_SysWork.field_234B_4;
-    switch (caseVar)
+    switch (g_SysWork.field_234B_4)
     {
         case 1:
-            return 1;
+            return true;
+
         case 2:
-            playerPos = &g_SysWork.player_4C.chara_0.position_18;
-            dx = (playerPos->vx - pos->vx) >> 4;
-            dz = (playerPos->vz - pos->vz) >> 4;
-            return SquareRoot0((dx * dx) + (dz * dz)) < 0x100;
-        default:
-            break;
+            deltaX = (g_SysWork.player_4C.chara_0.position_18.vx - pos->vx) >> 4;
+            deltaZ = (g_SysWork.player_4C.chara_0.position_18.vz - pos->vz) >> 4;
+            return SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)) < 0x100;
     }
-    return 0;
+
+    return false;
 }
 
 #include "maps/shared/sharedFunc_800D01BC_0_s00.h" // 0x800D01BC
@@ -77,11 +73,11 @@ bool func_800D0600() // 0x800D0600
     // Check against first position.
     distX = ABS(g_SysWork.player_4C.chara_0.position_18.vx - D_800E32DC.position0_0.vx);
     distZ = g_SysWork.player_4C.chara_0.position_18.vz - D_800E32DC.position0_0.vz;
-    if (distZ >= 0 && (distX + distZ) < FIXED_DIST)
+    if (distZ >= FP_METER(0.0f) && (distX + distZ) < FIXED_DIST)
     {
         goto ret1;
     }
-    else if (distZ < 0 && (distX + (D_800E32DC.position0_0.vz - g_SysWork.player_4C.chara_0.position_18.vz)) < FIXED_DIST)
+    else if (distZ < FP_METER(0.0f) && (distX + (D_800E32DC.position0_0.vz - g_SysWork.player_4C.chara_0.position_18.vz)) < FIXED_DIST)
     {
         goto ret1;
     }
@@ -89,17 +85,17 @@ bool func_800D0600() // 0x800D0600
     // Check against against second position.
     distX = ABS(g_SysWork.player_4C.chara_0.position_18.vx - D_800E32DC.position1_C.vx);
     distZ = g_SysWork.player_4C.chara_0.position_18.vz - D_800E32DC.position1_C.vz;
-    if (distZ >= 0 && (distX + distZ) < FIXED_DIST)
+    if (distZ >= FP_METER(0.0f) && (distX + distZ) < FIXED_DIST)
     {
         goto ret1;
     }
-    else if (distZ < 0 && (distX + (D_800E32DC.position1_C.vz - g_SysWork.player_4C.chara_0.position_18.vz)) < FIXED_DIST)
+    else if (distZ < FP_METER(0.0f) && (distX + (D_800E32DC.position1_C.vz - g_SysWork.player_4C.chara_0.position_18.vz)) < FIXED_DIST)
     {
         goto ret1;
     }
     else
     {
-        // Ideally would return `false` here, but code matching requires jump to end.
+        // TODO: Ideally would return `false` here, but code matching requires jump to end.
         goto ret0;
     }
     

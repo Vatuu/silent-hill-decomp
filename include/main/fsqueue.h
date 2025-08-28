@@ -52,7 +52,7 @@
  * `FSQS_READ_RESET` and `FSQS_READ_CHECK` perform one check/tick iteration every time `Fs_QueueUpdate` is called
  * and only advance to the next state when they're done.
  */
-enum FsQueueReadState
+typedef enum _FsQueueReadState
 {
     FSQS_READ_ALLOCATE = 0, /** Allocate memory for the current read operation (`fsQueueAllocData`), if needed. */
     FSQS_READ_CHECK    = 1, /** Check if the current read operation can proceed (`Fs_QueueCanRead`). Goto next state if it can. */
@@ -60,34 +60,34 @@ enum FsQueueReadState
     FSQS_READ_READ     = 3, /** Read from CD (`Fs_QueueTickRead`). If failure, goto `FSQS_READ_RESET`. */
     FSQS_READ_SYNC     = 4, /** Wait for read to complete. If failure, goto `FSQS_READ_RESET`. */
     FSQS_READ_RESET    = 5  /** Tick the reset timers (`Fs_QueueResetTick`). When done, reset CD driver and goto `FSQS_READ_SETLOC`. */
-};
+} e_FsQueueReadState;
 
 /** @brief `FsQueue::state`s when processing a seek operation (`Fs_QueueUpdateSeek`).
  *
  * When `Fs_QueueUpdate` is called and the current operation is a seek, it will perform the corresponding action below.
  * Unless otherwise specified, success of that action will advance to the next state.
  */
-enum FsQueueSeekState
+typedef enum _FsQueueSeekState
 {
     FSQS_SEEK_SET_LOC = 0, /** Set seek sector from `info` (`Fs_QueueTickSetLoc`). */
     FSQS_SEEK_SEEKL   = 1, /** Start seeking to above location (via `CdControl(CdlSeekL, ...)`). */
     FSQS_SEEK_SYNC    = 2, /** Wait for seek to complete (`CdSync()`). If `CdlDiskError`, goto `FSQS_SEEK_RESET`. */
     FSQS_SEEK_RESET   = 3  /** See `FSQS_READ_RESET`. When done, reset CD driver and go to `FSQS_SEEK_SET_LOC`. */
-};
+} e_FsQueueSeekState;
 
 /** @brief Post-load states.
  *
- * When `Fs_QueueUpdate` is called it will perform an action on the current post load entry, if any,
+ * When `Fs_QueueUpdate` is called it will perform an action on the current post-load entry, if any,
  * according to `g_FsQueue.postLoadState`, which can have one of these values.
  *
  * See `FsQueue::postLoadState`.
  */
-enum FsQueuePostLoadState
+typedef enum _FsQueuePostLoadState
 {
     FSQS_POST_LOAD_INIT = 0, /** Check for allocated memory and proceed to `SKIP` or `EXEC`. */
     FSQS_POST_LOAD_SKIP = 1, /** Skip post-loading because this entry owns allocated memory. */
-    FSQS_POST_LOAD_EXEC = 2  /** Execute post load operation. */
-};
+    FSQS_POST_LOAD_EXEC = 2  /** Execute post-load operation. */
+ } e_FsQueuePostLoadState;
 
 /** @brief Post-load types.
  *
@@ -96,24 +96,35 @@ enum FsQueuePostLoadState
  *
  * See `FsQueueEntry::postLoad`.
  */
-enum FsQueuePostLoadType
+typedef enum _FsQueuePostLoadType
 {
     FS_POST_LOAD_NONE = 0, /** Do nothing. */
     FS_POST_LOAD_TIM  = 1, /** Parse TIM file (`Fs_QueuePostLoadTim`). Can use `extra.image`. */
     FS_POST_LOAD_ANM  = 2  /** Parse ANM file maybe (`Fs_QueuePostLoadAnm`). Always uses `extra.anm`. */
-};
+} e_FsQueuePostLoadType;
 
 /** @brief FS queue operation types.
  *
  * What to do for a queue entry.
  * See `s_FsQueueEntry::operation`.
  */
-enum FsQueueOperation
+typedef enum _FsQueueOperation
 {
     FS_OP_NONE = 0, /** Uninitialized. */
     FS_OP_SEEK = 1, /** Seek to file location on CD (`Fs_QueueUpdateSeek`). */
     FS_OP_READ = 2  /** Read from CD (`Fs_QueueUpdateRead`). */
-};
+} e_FsQueueOperation;
+
+/** @brief FS queue entry load statuses.
+ *
+ * See `Fs_QueueEntryLoadStatusGet`.
+ */
+typedef enum _FsQueueEntryLoadStatus
+{
+    FsQueueEntryLoadStatus_Invalid  = 0, /** Entry index is `NO_VALUE`. */
+    FsQueueEntryLoadStatus_Unloaded = 1, /** Not currently loaded. */
+    FsQueueEntryLoadStatus_Loaded   = 2  /** Currently loaded. */
+} e_FsQueueEntryLoadStatus;
 
 /** @brief Extra queue entry data describing where to upload a TIM after reading.
  * See `FsQueueExtra`.
@@ -164,13 +175,13 @@ typedef union _FsQueueExtra
 typedef struct _FsQueueEntry
 {
     const s_FileInfo* info;         /** Pointer to the file table entry of the file this entry is for. */
-    u8                operation;    /** What to do. See `FsQueueOperation`. */
-    u8                postLoad;     /** What to do after `operation` is done. See `FsQueuePostLoadType`. */
+    u8                operation;    /** What to do. See `e_FsQueueOperation`. */
+    u8                postLoad;     /** What to do after `operation` is done. See `e_FsQueuePostLoadType`. */
     u8                allocate;     /** Boolean. If `true`, allocate a buffer for `data` from `g_FsMemory`, otherwise use `externalData` */
     u8                unused0;      /** Unused or padding. */
     void*             externalData; /** Pointer to an external buffer. */
     u32               unused1;      /** Unused but set by `Fs_QueueEnqueue`. */
-    s_FsQueueExtra    extra;        /** Extra data, used during post load. */
+    s_FsQueueExtra    extra;        /** Extra data, used during post-load. */
     void*             data;         /** Output buffer. Either allocated or same as `externalData`. */
 } s_FsQueueEntry;
 
@@ -203,8 +214,8 @@ typedef struct _FsQueue
     s_FsQueuePtr   last;                     /** Index and address of the last added entry. */
     s_FsQueuePtr   read;                     /** Index and address the current operation entry to process. */
     s_FsQueuePtr   postLoad;                 /** Index and address of the current operation entry to post-process. */
-    u32            state;                    /** Current processing stage. `FsQueueReadState` for reads, `FsQueueSeekState` for seeks. */
-    u32            postLoadState;            /** Current postprocessing stage. See `FsQueuePostLoadState`. */
+    u32            state;                    /** Current processing stage. `e_FsQueueReadState` for reads, `e_FsQueueSeekState` for seeks. */
+    u32            postLoadState;            /** Current postprocessing stage. See `e_FsQueuePostLoadState`. */
     s32            resetTimer0;              /** Reset timer (lo). Increments up to 8, then incrementss `reset_timer_1`. See `Fs_QueueResetTick`. */
     s32            resetTimer1;              /** Reset timer (hi). When it reaches 9, `CdReset` is called. See `Fs_QueueResetTick`. */
 } s_FsQueue;
@@ -214,7 +225,7 @@ extern s_FsQueue g_FsQueue;
 
 /** @brief Check if queue entry index has been loaded and post-loaded.
  * 
- * @param queueIdx The index of the queue entry to check.
+ * @param queueIdx Index of the queue entry to check.
  * @return `true` if the entry has been fully processed, `false` otherwise.
  */
 bool Fs_QueueIsEntryLoaded(s32 queueIdx);
@@ -224,7 +235,7 @@ bool Fs_QueueIsEntryLoaded(s32 queueIdx);
  */
 s32 Fs_QueueGetLength();
 
-/** @brief Unknown. If queue is empty, call `func_8003c850`.
+/** @brief TODO: Unknown. If queue is empty, call `func_8003C850`.
  * @return `true` when queue is empty and the call succeeds, `false` otherwise.
  */
 bool Fs_QueueDoThingWhenEmpty();
@@ -280,8 +291,8 @@ s32 Fs_QueueStartReadAnm(s32 idx, s32 charaId, void* dest, GsCOORDINATE2* coords
  * Called by all of the `Fs_QueueStart...` functions.
  *
  * @param fileIdx File table index of the file to load/seek.
- * @param op Operation type (`FsQueueOperation`).
- * @param postLoad Postload type (`FsQueuePostLoadType`).
+ * @param op Operation type (`e_FsQueueOperation`).
+ * @param postLoad Post-load type (`e_FsQueuePostLoadType`).
  * @param alloc Whether to allocate owned memory for this operation (`s_FsQueueEntry::allocate`).
  * @param unused0 Value for `s_FsQueueEntry::unused1`. Seems to be unused.
  * @param extra Extra data for operation (`s_FsQueueEntry::extra`).
