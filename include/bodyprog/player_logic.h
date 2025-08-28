@@ -283,7 +283,7 @@ typedef enum _PlayerAnim
 {
     PlayerAnim_Idle      = 26,
     PlayerAnim_IdleTired = 27,
-    PlayerAnim_IdleAim   = 28 // Unsure.
+    PlayerAnim_IdleAim   = 28 // Unsure. `_IdleAimHandgun`?
 } s_PlayerAnim;
 
 // ========

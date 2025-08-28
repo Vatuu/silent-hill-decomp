@@ -61,26 +61,26 @@ void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
         case 0:
             chara->model_0.state_2               = 11;
             chara->model_0.stateStep_3           = 0;
-            chara->model_0.anim_4.time_4         = FP_TO(459, Q12_SHIFT);
+            chara->model_0.anim_4.time_4         = FP_TIME(459.0f);
             chara->model_0.anim_4.keyframeIdx0_8 = 459;
             break;
         case 1:
             chara->model_0.state_2               = 10;
             chara->model_0.stateStep_3           = 0;
-            chara->model_0.anim_4.time_4         = FP_TO(459, Q12_SHIFT);
+            chara->model_0.anim_4.time_4         = FP_TIME(459.0f);
             chara->model_0.anim_4.keyframeIdx0_8 = 459;
             break;
         case 2:
             chara->model_0.state_2               = 9;
             chara->model_0.stateStep_3           = 0;
-            chara->model_0.anim_4.time_4         = FP_TO(459, Q12_SHIFT);
+            chara->model_0.anim_4.time_4         = FP_TIME(459.0f);
             chara->model_0.anim_4.keyframeIdx0_8 = 459;
             break;
     }
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, chara2->properties_E4.npc.field_124->animInfo_24);
 
-    chara->model_0.anim_4.animIdx_0      = 34;
+    chara->model_0.anim_4.animIdx_0      = ANIM_STATUS_GET(17, false);
     chara->model_0.anim_4.keyframeIdx1_A = 0;
 
     chara2->properties_E4.npc.field_120 = 4096;
