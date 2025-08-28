@@ -133,9 +133,9 @@ For boolean values don't use comparison operators.
 For example:
 ```
 // Don't do this.
-if (g_Player_IsAlive == 1)
+if (g_Player_IsAlive == 0)
 
-if (g_Player_IsAlive != 1)
+if (g_Player_IsAlive != 0)
 
 
 // Do this.
