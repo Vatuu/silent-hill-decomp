@@ -1,10 +1,10 @@
-void sharedFunc_800D2B28_0_s01(s_SubCharacter* arg0)
+void sharedFunc_800D2B28_0_s01(s_SubCharacter* chara)
 {
-    arg0->moveSpeed_38 = 0;
-    arg0->field_34 = 0;
-    arg0->rotationSpeed_2C.vx = 0;
-    arg0->rotationSpeed_2C.vy = 0;
-    arg0->rotationSpeed_2C.vz = 0;
-    arg0->rotationSpeed_2C.pad = 0;
-    arg0->headingAngle_3C = (s16) (u16) arg0->rotation_24.vy;
+    chara->moveSpeed_38 = 0;
+    chara->field_34 = 0;
+    chara->rotationSpeed_2C.vx = FP_ANGLE(0.0f);
+    chara->rotationSpeed_2C.vy = FP_ANGLE(0.0f);
+    chara->rotationSpeed_2C.vz = FP_ANGLE(0.0f);
+    chara->rotationSpeed_2C.pad = 0;
+    chara->headingAngle_3C = chara->rotation_24.vy;
 }

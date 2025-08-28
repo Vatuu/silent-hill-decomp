@@ -211,4 +211,4 @@ g_EventThing4D0                = 0x800E24D0;
 g_EventThing500                = 0x800E2500;
 g_EventThing530                = 0x800E2530;
 Player_FallBackward            = 0x800D2094; // type:func
-g_sfxTable0                    = 0x800CB788; // type:SfxVol
+g_SfxVolumes                   = 0x800CB788; // type:SfxVolume

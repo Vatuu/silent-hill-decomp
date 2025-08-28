@@ -3113,7 +3113,7 @@ void func_8008D464();
 
 void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s32 arg3);
 
-void func_8008D5A0(VECTOR3*, s16);
+void func_8008D5A0(VECTOR3* arg0, s16 arg1);
 
 s32 func_8008D8C0(s16 x0, s32 x1, s32 x2);
 
@@ -3960,6 +3960,7 @@ bool func_8008074C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 /** Collision func? */
 void func_8008076C(s32 posX, s32 posZ);
 
+/** Returns ground height? */
 s32 func_80080884(s32 posX, s32 posZ);
 
 s32 func_800808AC(s32 posX, s32 posZ);
