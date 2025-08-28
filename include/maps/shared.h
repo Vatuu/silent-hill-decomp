@@ -65,6 +65,14 @@ typedef struct
     u_Property properties_D14[4]; // Read as 4 pairs of `u16`s.
 } s_func_800D2E04;
 
+typedef struct {
+    s32            flags_0;
+    s32            field_4;
+    GsCOORDINATE2* coords_8;
+    /** `MATRIX` array? Needs to be `s32` to match, weird. */
+    MATRIX*        mat_C;
+} s_sharedData_800E21D0_0_s01;
+
 /** Scale. */
 extern VECTOR sharedData_800DD870_0_s01;
 
@@ -79,9 +87,6 @@ extern VECTOR3 sharedData_800DE190_0_s01;
 extern s_func_800700F8_2 sharedData_800E2330_0_s01;
 
 extern u8 sharedData_800DF158_1_s02;
-
-/** `MATRIX` array? Needs to be `s32` to match, weird. */
-extern s32* sharedData_800E21D8_0_s01;
 
 extern s_sharedData_800E3148_1_s02 sharedData_800E3148_1_s02;
 
@@ -127,8 +132,7 @@ extern s_AnimInfo sharedData_800DD5A8_0_s00[]; // Used by `Ai_Stalker_Init`.
 extern s_AnimInfo sharedData_800E0D38_1_s02[];
 extern s8  sharedData_800E57CC_1_s02;
 
-// Pointer?
-extern s32 sharedData_800E21D0_0_s01;
+extern s_sharedData_800E21D0_0_s01 sharedData_800E21D0_0_s01;
 
 extern s_func_800D2E04 sharedData_800CAA98_0_s01; // Used by `Ai_AirScreamer_Init` / `sharedFunc_800D2BF4_0_s01`
 
@@ -475,7 +479,7 @@ void Ai_Cybil_Init(s_SubCharacter* chara);
 
 void Ai_AirScreamer_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
 
-void sharedFunc_800D21E4_0_s01(s32, GsCOORDINATE2* coords);
+s32 sharedFunc_800D21E4_0_s01(s32, GsCOORDINATE2* coords);
 
 void sharedFunc_800D2200_0_s01(s_SubCharacter*);
 
