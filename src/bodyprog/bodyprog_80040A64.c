@@ -969,7 +969,7 @@ bool func_80043D64(s_PlmTexList* texList) // 0x80043D64
 {
     char* charCode;
 
-    for (charCode = &texList->texName_0.str[7]; charCode >= &texList->texName_0.str[0]; charCode--)
+    for (charCode = &texList->textureName_0.str[7]; charCode >= &texList->textureName_0.str[0]; charCode--)
     {
         if (*charCode == '\0')
         {

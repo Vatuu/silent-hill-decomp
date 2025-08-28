@@ -683,7 +683,7 @@ typedef struct _PlmTexList_8
 
 typedef struct _PlmTexList
 {
-    u_Filename      texName_0;
+    u_Filename      textureName_0;
     s_PlmTexList_8* field_8;
     u8              field_C;
     u8              unk_D[1];
@@ -2693,6 +2693,7 @@ void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 
 
 void func_80043C7C(s_IpdHeader* ipdHeader, s32 arg1, s32* arg2, s32 arg3);
 
+/** Checks if IPD is loaded before returning texture count? */
 s32 func_80043D00(s_IpdHeader* ipdHeader);
 
 /** Returns inverse result of `func_80043D64`. */
@@ -2967,6 +2968,9 @@ u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* mat);
 void PlmHeader_FixOffsets(s_PlmHeader* plmHeader);
 
 void ObjList_FixOffsets(s_ObjList* objList, s_PlmHeader* plmHeader);
+
+/** Gets texture count? */
+s32 func_80056348(s32 (*arg0)(s_PlmTexList* texList), s_PlmHeader* plmHeader);
 
 /** TODO: Unknown `arg3`/`arg4` types. */
 void func_80059D50(s32 arg0, s_func_80057344* arg1, MATRIX* mat, void* arg3, void* arg4);

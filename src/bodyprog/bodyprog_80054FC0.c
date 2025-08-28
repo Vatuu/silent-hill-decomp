@@ -492,7 +492,22 @@ void ObjList_FixOffsets(s_ObjList* objList, s_PlmHeader* plmHeader) // 0x800561A
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80056244); // 0x80056244
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80056348); // 0x80056348
+s32 func_80056348(s32 (*arg0)(s_PlmTexList* texList), s_PlmHeader* plmHeader) // 0x80056348
+{
+    s32           count;
+    s_PlmTexList* tex;
+
+    count = 0;
+    for (tex = plmHeader->textureList_4; tex < (plmHeader->textureList_4 + plmHeader->textureCount_3); tex++)
+    {
+        if (arg0(tex))
+        {
+            count++;
+        }
+    }
+
+    return count;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800563E8); // 0x800563E8
 
@@ -1565,8 +1580,8 @@ void func_8005B3BC(char* filename, s_PlmTexList* plmTexList) // 0x8005B3BC
     // Some inline `memcpy`/`bcopy`/`strncpy`? those use `lwl`/`lwr`/`swl`/`swr` instead though
     // Example: casting `filename`/`arg1` to `u32*` and using `memcpy` does generate `lw`/`sw`,
     // but not in same order as this, guess it's some custom inline/macro instead.
-    *(u32*)&sp10[0] = *(u32*)&plmTexList->texName_0.str[0];
-    *(u32*)&sp10[4] = *(u32*)&plmTexList->texName_0.str[4];
+    *(u32*)&sp10[0] = *(u32*)&plmTexList->textureName_0.str[0];
+    *(u32*)&sp10[4] = *(u32*)&plmTexList->textureName_0.str[4];
     *(u32*)&sp10[8] = 0;
 
     strcat(sp10, D_80028544); // Copies `TIM` to end of `sp10` string.
