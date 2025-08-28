@@ -64,7 +64,7 @@ struct _SubCharacter;
 #define WeaponId_AttackVariantGet(weaponId, type) \
 	((weaponId) + ((type) * 10))
 
-/** @brief Computes a packed anim status containing the anim index and active flag.
+/** @brief Packs an anim status containing the anim index and active flag.
  *
  * @param animIdx Anim index.
  * @param isActive Active status (`bool`).
