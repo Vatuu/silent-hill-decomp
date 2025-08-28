@@ -947,7 +947,7 @@ typedef struct _AnimInfo
     void (*funcPtr_0)(struct _SubCharacter*, s32, GsCOORDINATE2*, struct _AnimInfo*); // TODO: `funcPtr_0` signature doesn't currently match `Anim_Update`.
     u8  field_4;
     s8  hasVariableTimeDelta_5;
-    u8  animIdx_6;
+    u8  animIdx_6; /** Packed anim status. See `s_ModelAnimData::animIdx_0`. */
     u8  unk_7;
     union
     {
@@ -961,7 +961,8 @@ STATIC_ASSERT_SIZEOF(s_AnimInfo, 16);
 
 typedef struct _ModelAnimData
 {
-    u8          animIdx_0;        /** TODO: Rename to `status_0`. Is active(?): bit 0, Anim index: bits 1-7. Possible original name: `anim_status` */
+    u8          animIdx_0;        /** Is active: bit 0, Anim index: bits 1-7. Possible original name: `anim_status` */
+                                  // TODO: Rename to `status_0`.
     u8          maybeSomeState_1; // State says if `animTime_4` is anim time or a func ptr? That field could be a union.
     u16         flags_2;          /** `e_AnimFlags` */
     q19_12      time_4;           /** Time along keyframe timeline. */ 
