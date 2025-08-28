@@ -1,7 +1,7 @@
 void Ai_Romper_Init(s_SubCharacter* chara)
 {
-#define BASE_HEALTH 450
-#define RAND_MAX 112.5f
+    #define ROMPER_HEALTH_BASE      FP_HEALTH(450.0f)
+    #define ROMPER_HEALTH_BONUS_MAX FP_HEALTH(112.5f)
 
     s32 i;
     s32 temp_a0;
@@ -12,13 +12,13 @@ void Ai_Romper_Init(s_SubCharacter* chara)
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        chara->health_B0 = FP_TO(BASE_HEALTH, Q12_SHIFT) - ((s32)Rng_Rand16() % FP_FLOAT_TO(RAND_MAX, Q12_SHIFT));
+        chara->health_B0 = ROMPER_HEALTH_BASE - ((s32)Rng_Rand16() % ROMPER_HEALTH_BONUS_MAX);
     }
     else
     {
         if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
         {
-            chara->health_B0 = FP_TO(BASE_HEALTH, Q12_SHIFT) + ((s32)Rng_Rand16() % FP_FLOAT_TO(RAND_MAX, Q12_SHIFT));
+            chara->health_B0 = ROMPER_HEALTH_BASE + ((s32)Rng_Rand16() % ROMPER_HEALTH_BONUS_MAX);
         }
         else
         {
@@ -32,7 +32,8 @@ void Ai_Romper_Init(s_SubCharacter* chara)
 
             // Shifts are equivalent to `var_v0_2 % 2048`.
             chara->health_B0 = FP_MULTIPLY_PRECISE(((temp_a0 - ((var_v0 >> 11) << 11)) + FP_FLOAT_TO(1.5f, Q12_SHIFT)),
-                                                   FP_TO(BASE_HEALTH, Q12_SHIFT), Q12_SHIFT);
+                                                   ROMPER_HEALTH_BASE,
+                                                   Q12_SHIFT);
         }
     }
 
@@ -47,7 +48,7 @@ void Ai_Romper_Init(s_SubCharacter* chara)
 
     chara->model_0.state_2               = 2;
     chara->model_0.anim_4.animIdx_0      = 31;
-    chara->model_0.anim_4.time_4         = FP_TO(147, Q12_SHIFT);
+    chara->model_0.anim_4.time_4         = FP_TIME(147.0f);
     chara->model_0.anim_4.keyframeIdx0_8 = 147;
 
     chara->properties_E4.larvalStalker.properties_E8[2].val16[0] = 6;
@@ -57,7 +58,7 @@ void Ai_Romper_Init(s_SubCharacter* chara)
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, sharedData_800EC954_2_s02);
 
-    chara->damageReceived_C0 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+    chara->damageReceived_C0 = FP_HEALTH(0.0f);
     chara->field_BC          = 0;
     chara->field_B8          = 0;
     chara->field_B4          = 0;

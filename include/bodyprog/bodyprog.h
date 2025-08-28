@@ -2693,7 +2693,7 @@ bool func_80043D44(s_PlmTexList* texList);
 
 bool func_80043D64(s_PlmTexList* texList);
 
-void IpdHeader_FixHeaderOffsets(s_IpdHeader* header);
+void IpdHeader_FixHeaderOffsets(s_IpdHeader* ipdHeader);
 
 /** @brief Assigns `s_ObjList` pointers to models in `s_IpdHeader` by searching the given `s_PlmHeader` array. */
 void IpdHeader_ModelLinkObjectLists(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 plmHeaderCount);
@@ -3400,7 +3400,7 @@ void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2)
 
 void func_8006AD44(s_func_8006CC44* arg0, s_IpdCollisionData* collData);
 
-s32 func_8006B004(s_func_8006CC44* arg0, s_IpdCollisionData* collData);
+bool func_8006B004(s_func_8006CC44* arg0, s_IpdCollisionData* collData);
 
 void func_8006B1C8(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s_func_8006B1C8* arg2);
 

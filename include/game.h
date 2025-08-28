@@ -754,11 +754,11 @@ typedef struct _Savegame
     s32             mapMarkingFlags_1D4[2];   //----------------------------------------
     s32             mapMarkingFlags_1DC;      // These 3 are one `u32 mapMarkingFlags[25];` (or maybe `u8 mapMarkingFlags[100];`?) See Sparagas' `MapMarkingsFlags` struct for details of every bit.
     s32             mapMarkingFlags_1E0[22];  //----------------------------------------
-    q19_12          healthSaturation_238;     /** Range [0, 300]. Ampoules give extra health that get stored. If the player if loose health then the stored extra health will slowly start to sum to player's health, in any case extra health will start to reduce progressively even if the player has full health. */
+    q19_12          healthSaturation_238;     /** Range: [0, 300]. Ampoules give extra health stored. If the player if loose health then the stored extra health will slowly start to sum to player's health, in any case extra health will start to reduce progressively even if the player has full health. */
     s16             pickedUpItemCount_23C;
     s8              field_23E;
     u8              field_23F;
-    q19_12          playerHealth_240;         /** Default: 100 */
+    q19_12          playerHealth_240;         /** Default: FP_HEALTH(100.0f) */
     q19_12          playerPositionX_244;
     q3_12           playerRotationY_248;      /** Range [0, 0.999755859375], positive Z: 0, clockwise rotation. It can be multiplied by 360 to get degrees. */
     u8              clearGameCount_24A;       /** Range [0, 99] */
@@ -933,7 +933,11 @@ typedef struct _ModelAnimData
     // Following 4 bytes might be packed into an s32 called `animStatus`,
     // implied by an original param name in `vcMixSelfViewEffectToWatchTgtPos`.
 
-    u8          animIdx_0;        // Sometimes checked like a bit field.
+    // TODO: Bit 0 contains flag, bits 1-7 contain actual anim index.
+    u8          animIdx_0;
+    //u8          unkAnimFlag_0_0 : 1; /** `bool` | Unclear purpose, probably "is valid"? */
+    //u8          animIdx_0_1     : 7;
+
     u8          maybeSomeState_1; // State says if `animTime_4` is anim time or a func ptr? That field could be a union.
     u16         flags_2;          /** `e_AnimFlags` */
     q19_12      time_4;           /** Time along keyframe timeline. */ 

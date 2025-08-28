@@ -1,7 +1,7 @@
 void Ai_Groaner_Init(s_SubCharacter* chara)
 {
-    #define GROANER_BASE_HEALTH 210
-    #define GROANER_RAND_MAX    70
+    #define GROANER_HEALTH_BASE      FP_HEALTH(210.0f)
+    #define GROANER_HEALTH_BONUS_MAX FP_HEALTH(70.0f)
 
     s32 i;
 
@@ -14,7 +14,7 @@ void Ai_Groaner_Init(s_SubCharacter* chara)
 
     chara->model_0.anim_4.keyframeIdx1_A = 0;
 
-    chara->health_B0 = Q19_12(GROANER_BASE_HEALTH) + ((s32)Rng_Rand16() % FP_TO(GROANER_RAND_MAX, Q12_SHIFT));
+    chara->health_B0 = GROANER_HEALTH_BASE + ((s32)Rng_Rand16() % GROANER_HEALTH_BONUS_MAX);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal && !Rng_TestProbabilityBits(3))
     {
@@ -44,7 +44,7 @@ void Ai_Groaner_Init(s_SubCharacter* chara)
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, sharedData_800EEB14_2_s00);
 
-    chara->damageReceived_C0 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+    chara->damageReceived_C0 = FP_HEALTH(0.0f);
     chara->field_BC          = 0;
     chara->field_B8          = 0;
     chara->field_B4          = 0;
@@ -53,7 +53,7 @@ void Ai_Groaner_Init(s_SubCharacter* chara)
     {
         chara->model_0.state_2                                        = 1;
         chara->model_0.anim_4.animIdx_0                               = 35;
-        chara->model_0.anim_4.time_4                                  = FP_TO(371, Q12_SHIFT);
+        chara->model_0.anim_4.time_4                                  = FP_TIME(371.0f);
         chara->model_0.anim_4.keyframeIdx0_8                          = 371;
         chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 5;
     }

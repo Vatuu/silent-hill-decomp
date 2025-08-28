@@ -30,13 +30,13 @@ void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 arg1)
         chara->moveSpeed_38 = newMoveSpeed;
     }
 
-    if (chara->health_B0 == 0)
+    if (chara->health_B0 == FP_HEALTH(0.0f))
     {
         chara->flags_3E &= ~CharaFlag_Unk2;
 
         if (g_SysWork.enemyTargetIdx_2353 != func_8005C7D0(chara, moveSpeed))
         {
-            chara->health_B0 = NO_VALUE;
+            chara->health_B0  = NO_VALUE;
             chara->field_E0_8 = 0;
         }
     }

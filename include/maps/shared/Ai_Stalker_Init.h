@@ -25,7 +25,7 @@ void Ai_Stalker_Init(s_SubCharacter* chara)
     chara->rotation_24.vx = 0;
 
     chara->model_0.anim_4.animIdx_0      = 61;
-    chara->model_0.anim_4.time_4         = FP_TO(477, Q12_SHIFT);
+    chara->model_0.anim_4.time_4         = FP_TIME(477.0f);
     chara->model_0.anim_4.keyframeIdx0_8 = 477;
 
     chara->headingAngle_3C = chara->rotation_24.vy;
@@ -68,7 +68,7 @@ void Ai_Stalker_Init(s_SubCharacter* chara)
         case 9:
             chara->model_0.state_2               = 12;
             chara->model_0.anim_4.animIdx_0      = 55;
-            chara->model_0.anim_4.time_4         = FP_TO(427, Q12_SHIFT);
+            chara->model_0.anim_4.time_4         = FP_TIME(427.0f);
             chara->model_0.anim_4.keyframeIdx0_8 = 427;
             chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 0;
             chara->field_E0_8 = 3;
@@ -77,7 +77,7 @@ void Ai_Stalker_Init(s_SubCharacter* chara)
         case 10:
             chara->model_0.state_2               = 11;
             chara->model_0.anim_4.animIdx_0      = 57;
-            chara->model_0.anim_4.time_4         = FP_TO(443, Q12_SHIFT);
+            chara->model_0.anim_4.time_4         = FP_TIME(443.0f);
             chara->model_0.anim_4.keyframeIdx0_8 = 443;
             chara->field_E0_8                    = 3;
             break;
@@ -85,7 +85,7 @@ void Ai_Stalker_Init(s_SubCharacter* chara)
         case 17:
             chara->model_0.state_2               = 13;
             chara->model_0.anim_4.animIdx_0      = 29;
-            chara->model_0.anim_4.time_4         = FP_TO(176, Q12_SHIFT);
+            chara->model_0.anim_4.time_4         = FP_TIME(176.0f);
             chara->model_0.anim_4.keyframeIdx0_8 = 176;
             chara->field_E0_8                    = 0;
             break;
@@ -100,7 +100,7 @@ void Ai_Stalker_Init(s_SubCharacter* chara)
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, sharedData_800DD5A8_0_s00);
 
-    chara->damageReceived_C0 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+    chara->damageReceived_C0 = FP_HEALTH(0.0f);
     chara->field_BC          = 0;
     chara->field_B8          = 0;
     chara->field_B4          = 0;

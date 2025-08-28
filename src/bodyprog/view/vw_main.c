@@ -62,9 +62,11 @@ void Vw_SetLookAtMatrix(VECTOR3* pos, VECTOR3* lookAt) // 0x80048AF4
 void vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, s32 ref_x, s32 ref_y, s32 ref_z, s16 cam_ang_y, s16 cam_ang_z, s32 cam_y, s32 cam_xz_r) // 0x80048BE0
 {
     SVECTOR view_ang;
-    MATRIX* view_mtx = &vwViewPointInfo.vwcoord.coord;
+    MATRIX* view_mtx;
 
-    vwViewPointInfo.vwcoord.flg   = 0;
+    view_mtx = &vwViewPointInfo.vwcoord.coord;
+
+    vwViewPointInfo.vwcoord.flg   = false;
     vwViewPointInfo.vwcoord.super = parent_p;
 
     view_ang.vy = cam_ang_y;
@@ -81,7 +83,7 @@ void vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, s32 ref_x, s32 ref_y, s32 re
 
 void vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, MATRIX* cammat) // 0x80048CF0
 {
-    vwViewPointInfo.vwcoord.flg   = 0;
+    vwViewPointInfo.vwcoord.flg   = false;
     vwViewPointInfo.vwcoord.super = pcoord;
     vwViewPointInfo.vwcoord.coord = *cammat;
 }
