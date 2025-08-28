@@ -266,7 +266,7 @@ void Ai_LittleIncubus_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coo
         chara->model_0.anim_4.keyframeIdx1_A = 0;
         chara->model_0.state_2               = 1;
         chara->model_0.stateStep_3           = 0;
-        chara->model_0.anim_4.animIdx_0      = 3;
+        chara->model_0.anim_4.animIdx_0      = ANIM_STATUS_GET(1, true);
         chara->model_0.anim_4.time_4         = 0;
         chara->model_0.anim_4.keyframeIdx0_8 = 0;
 
@@ -622,7 +622,7 @@ bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
         chara->model_0.stateStep_3 = 0;
     }
 
-    chara->model_0.anim_4.animIdx_0      = 6;
+    chara->model_0.anim_4.animIdx_0      = ANIM_STATUS_GET(3, false);
     chara->model_0.anim_4.time_4         = FP_TO(338, Q12_SHIFT);
     chara->model_0.anim_4.keyframeIdx0_8 = 338;
 
@@ -798,7 +798,7 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
         chara->model_0.stateStep_3 = 0;
     }
 
-    chara->model_0.anim_4.animIdx_0      = 4;
+    chara->model_0.anim_4.animIdx_0      = ANIM_STATUS_GET(2, false);
     chara->model_0.anim_4.keyframeIdx0_8 = 115;
     chara->model_0.anim_4.time_4         = FP_TO(115, Q12_SHIFT);
 

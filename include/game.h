@@ -61,9 +61,17 @@ struct _SubCharacter;
 #define HAS_MAP(mapIdx) \
     ((((u32*)&g_SavegamePtr->hasMapsFlags_164)[(mapIdx) / 32] >> ((mapIdx) % 32)) & (1 << 0))
 
-/** @brief Checks screen fade completion status. See `g_Gfx_ScreenFade` for bit layout. */
-#define Gfx_IsScreenFadeComplete() \
-    ((g_Gfx_ScreenFade & ScreenFadeFlag_StateMask) == ScreenFadeState_FadeOutComplete)
+#define ANIM_STATUS_GET(animIdx, isActive) \
+    (((animIdx) << 1) | ((isActive) ? 0x1 : 0x0))
+
+#define ANIM_STATUS_IDX_GET(animStatus) \
+    (((animStatus) & ~0x1) >> 1)
+
+#define ANIM_STATUS_IS_ACTIVE(animStatus) \
+    ((animStatus) & 0x1)
+
+#define ANIM_KEYFRAME_RANGE_CHECK(keyframe, low, high) \
+    ((keyframe) >= (low) && (keyframe) <= (high))
 
 #define WeaponId_AttackVariantGet(weaponId, type) \
 	((weaponId) + ((type) * 10))
@@ -930,10 +938,7 @@ STATIC_ASSERT_SIZEOF(s_AnimInfo, 16);
 
 typedef struct _ModelAnimData
 {
-    // Following 4 bytes might be packed into an s32 called `animStatus`,
-    // implied by an original param name in `vcMixSelfViewEffectToWatchTgtPos`.
-
-    u8          animIdx_0;        // Sometimes checked like a bit field.
+    u8          animIdx_0;        /** TODO: Rename to `status_0`. Is active(?): bit 0, Anim index: bits 1-7. Possible original name: `anim_status` */
     u8          maybeSomeState_1; // State says if `animTime_4` is anim time or a func ptr? That field could be a union.
     u16         flags_2;          /** `e_AnimFlags` */
     q19_12      time_4;           /** Time along keyframe timeline. */ 
@@ -1341,6 +1346,10 @@ extern s32 g_IntervalVBlanks; // 0x800A8FF0
 extern s32 g_PrevVBlanks;     // 0x800A9770
 extern s32 g_VBlanks;         // 0x800B5C34
 extern s32 g_UncappedVBlanks; // 0x800B5C38
+
+/** @brief Checks screen fade completion status. See `g_Gfx_ScreenFade` for bit layout. */
+#define Gfx_IsScreenFadeComplete() \
+    ((g_Gfx_ScreenFade & ScreenFadeFlag_StateMask) == ScreenFadeState_FadeOutComplete)
 
 /** @brief Sets `sysState` in `g_SysWork` for the next tick. */
 static inline void SysWork_StateSetNext(e_SysState sysState)

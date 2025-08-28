@@ -157,7 +157,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
     {
         case 3:
             chara->model_0.state_2               = 5;
-            chara->model_0.anim_4.animIdx_0      = 19;
+            chara->model_0.anim_4.animIdx_0      = ANIM_STATUS_GET(9, true);
             chara->model_0.anim_4.time_4         = FP_TO(191, Q12_SHIFT);
             chara->model_0.anim_4.keyframeIdx0_8 = 191;
 
@@ -169,7 +169,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
             chara->position_18.vz = FP_FLOAT_TO(108.0f, Q12_SHIFT);
 
             chara->model_0.state_2               = 2;
-            chara->model_0.anim_4.animIdx_0      = 19;
+            chara->model_0.anim_4.animIdx_0      = ANIM_STATUS_GET(9, true);
             chara->model_0.anim_4.time_4         = FP_TO(191, Q12_SHIFT);
             chara->model_0.anim_4.keyframeIdx0_8 = 191;
             chara->rotation_24.vy                = FP_ANGLE(-90.0f);

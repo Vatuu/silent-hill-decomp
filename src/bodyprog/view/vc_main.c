@@ -1427,12 +1427,12 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
 
     switch (anim_status)
     {
-        case 6:
-        case 7:
+        case ANIM_STATUS_GET(3, false):
+        case ANIM_STATUS_GET(3, true):
             break;
 
-        case 34:
-        case 35:
+        case ANIM_STATUS_GET(17, false):
+        case ANIM_STATUS_GET(17, true):
             if (w_p->nearest_enemy_2DC != NULL)
             {
                 cam_ang.vz = FP_ANGLE(0.0f);

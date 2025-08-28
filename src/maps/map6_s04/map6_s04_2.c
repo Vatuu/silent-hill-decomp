@@ -204,7 +204,7 @@ void Ai_Flauros_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) /
         chara->model_0.anim_4.keyframeIdx1_A = 0;
         chara->model_0.state_2               = 1;
         chara->model_0.stateStep_3           = 0;
-        chara->model_0.anim_4.animIdx_0      = 3;
+        chara->model_0.anim_4.animIdx_0      = ANIM_STATUS_GET(1, true);
         chara->model_0.anim_4.time_4         = 0;
         chara->model_0.anim_4.keyframeIdx0_8 = 0;
     }
@@ -245,7 +245,7 @@ void Ai_Parasite_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) 
         chara->model_0.anim_4.keyframeIdx1_A = 0;
         chara->model_0.state_2               = 1;
         chara->model_0.stateStep_3           = 0;
-        chara->model_0.anim_4.animIdx_0      = 3;
+        chara->model_0.anim_4.animIdx_0      = ANIM_STATUS_GET(1, true);
         chara->model_0.anim_4.time_4         = 0;
         chara->model_0.anim_4.keyframeIdx0_8 = 0;
     }
