@@ -287,8 +287,8 @@ typedef struct _800AFBF4
     s16 attackSfx_0;
     s16 reloadSfx_2;
     s16 outOfAmmoSfx_4;
-    u8  animStopAiming_6;
-    u8  animAttack_7; /** Packed anim status. See `s_ModelAnimData::animIdx_0`. */
+    u8  animStopAiming_6; /** Packed anim status. See `s_ModelAnimData::animIdx_0`. */
+    u8  animAttack_7;     /** Packed anim status. See `s_ModelAnimData::animIdx_0`. */
     u8  animAttackHold_8;
     u8  field_9;
     u8  field_A; // Attack type?
