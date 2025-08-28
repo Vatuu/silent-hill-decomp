@@ -2674,7 +2674,63 @@ void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s32 arg3) // 0x8008D470
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D5A0); // 0x8008D5A0
+void func_8008D5A0(VECTOR3* arg0, s16 arg1) // 0x8008D5A0
+{
+    RECT      sp10;
+    GsOT_TAG* temp_s3;
+    s32       var_t0;
+    TILE*     temp_s0;
+    DR_MOVE*  temp_s2;
+
+    temp_s2        = GsOUT_PACKET_P;
+    temp_s0        = GsOUT_PACKET_P + 0x18;
+    GsOUT_PACKET_P = GsOUT_PACKET_P + 0x28;
+
+    temp_s3 = &g_ObjectTable0[g_ObjectTableIdx].org[(arg0->vz + 2) >> 3];
+
+    var_t0 = 0;
+    if ((arg0->vx >= (-g_GameWork.gsScreenWidth_588 >> 1)) && ((g_GameWork.gsScreenWidth_588 >> 1) >= arg0->vx))
+    {
+        if ((arg0->vy >= (-g_GameWork.gsScreenHeight_58A >> 1)) && ((g_GameWork.gsScreenHeight_58A >> 1) >= arg0->vy) && (arg0->vz >= 0))
+        {
+            var_t0 = arg1 > 0x354;
+        }
+    }
+
+    if (var_t0 != 0)
+    {
+        SetTile(temp_s0);
+        temp_s0->r0 = -1;
+        temp_s0->g0 = -1;
+        temp_s0->b0 = -1;
+        temp_s0->x0 = arg0->vx;
+        temp_s0->y0 = arg0->vy;
+        temp_s0->w  = 1;
+        temp_s0->h  = 1;
+        AddPrim(temp_s3, temp_s0);
+
+        sp10.x = arg0->vx + (g_GameWork.gsScreenWidth_588 >> 1);
+        sp10.y = arg0->vy + ((u16)g_GameWork.gsScreenHeight_58A >> 1);
+        if (g_ObjectTableIdx == 1)
+        {
+            sp10.y += 0x20;
+        }
+        else
+        {
+            sp10.y += 0x100;
+        }
+    }
+    else
+    {
+        sp10.x = 0x310;
+        sp10.y = 0x71;
+    }
+    sp10.h = 8;
+    sp10.w = 8;
+
+    SetDrawMove(temp_s2, &sp10, (g_ObjectTableIdx * 8) + 0x310, 0x70);
+    AddPrim(g_ObjectTable0[g_ObjectTableIdx].org + 5, temp_s2);
+}
 
 void func_8008D78C()
 {
