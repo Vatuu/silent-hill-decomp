@@ -1084,7 +1084,13 @@ s_AnimInfo* func_80044918(s_ModelAnim* anim) // 0x80044918
     return &animInfo_C[animStatus0];
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044950); // 0x80044950
+void func_80044950(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords)
+{
+    s_AnimInfo* animInfo;
+
+    animInfo = func_80044918(&chara->model_0.anim_4);
+    animInfo->funcPtr_0(chara, arg1, coords, animInfo);
+}
 
 s32 func_800449AC(s_Model* model, s_AnimInfo* anim) // 0x800449AC
 {
