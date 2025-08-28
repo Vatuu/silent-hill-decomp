@@ -131,7 +131,7 @@ void func_800D2104() {}
 
 #include "maps/shared/sharedFunc_800D21E4_0_s01.h" // 0x800D21E4
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D2200_0_s01); // 0x800D2200
+#include "maps/shared/sharedFunc_800D2200_0_s01.h" // 0x800D2200
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D2274_0_s01); // 0x800D2274
 
