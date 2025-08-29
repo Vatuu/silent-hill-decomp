@@ -18,6 +18,7 @@
 //--- PA: 0x001278   VA: 0x800CA7F0   subsegment: rodata
 //------------------------------------------------------
 sharedData_800CAA98_0_s01   = 0x800CA898; // type:s32 - unknown type
+g_SfxVolumes                = 0x800CB588; // type:SfxVolume
 
 //---------------------------------------------------------------------
 //--- PA: 0x00300C   VA: 0x800CC584   subsegment: .rodata, map2_s02_msg
@@ -165,4 +166,3 @@ sharedData_800E39D8_0_s00   = 0x800F0974; // type:s32
 sharedData_800D32A0_0_s02   = 0x800F0978; // type:s32
 sharedData_800E21D0_0_s01   = 0x800F0984; // type:s32
 sharedData_800E2330_0_s01   = 0x800F0AE4; // type:s32 - unknown type
-g_SfxVolumes = 0x800CB588; // type:SfxVolume

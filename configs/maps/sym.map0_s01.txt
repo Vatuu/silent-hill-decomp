@@ -22,6 +22,7 @@
 //--- PA: 0x001288   VA: 0x800CA800   subsegment: rodata
 //------------------------------------------------------
 sharedData_800CAA98_0_s01      = 0x800CAA98; // type:s32 - unknown type
+g_SfxVolumes                   = 0x800CB788; // type:SfxVolume
 
 //---------------------------------------------------------------------
 //--- PA: 0x002568   VA: 0x800CBAE0   subsegment: .rodata, map0_s01_msg
@@ -65,6 +66,7 @@ sharedFunc_800D2D84_0_s00      = 0x800D1F6C; // type:func
 sharedFunc_800D2DAC_0_s00      = 0x800D1F94; // type:func
 sharedFunc_800D2E50_0_s00      = 0x800D2038; // type:func
 sharedFunc_800D2E60_0_s00      = 0x800D2048; // type:func
+Player_FallBackward            = 0x800D2094; // type:func
 sharedFunc_800D2EA4_0_s00      = 0x800D210C; // type:func
 sharedFunc_800D2EB4_0_s00      = 0x800D211C; // type:func
 sharedFunc_800D2EF4_0_s00      = 0x800D215C; // type:func
@@ -210,5 +212,3 @@ g_EventThing4A0                = 0x800E24A0;
 g_EventThing4D0                = 0x800E24D0;
 g_EventThing500                = 0x800E2500;
 g_EventThing530                = 0x800E2530;
-Player_FallBackward            = 0x800D2094; // type:func
-g_SfxVolumes                   = 0x800CB788; // type:SfxVolume
