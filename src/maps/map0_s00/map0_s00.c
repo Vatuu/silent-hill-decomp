@@ -59,7 +59,45 @@ bool func_800D012C(VECTOR3* pos) // 0x800D012C
 
 #include "maps/shared/sharedFunc_800D01BC_0_s00.h" // 0x800D01BC
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0274);
+void func_800D0274(s32 arg0, s_Particle* particle, u16* arg2) // 0x800D0274
+{
+    s_Particle* particleCopy;
+    particleCopy = particle;
+    switch (arg0)
+    {
+        case 0:
+            if (D_800DD592 != 0)
+            {
+                particle->type_1F = 0;
+            }
+            else
+            {
+                particle->type_1F = 1;
+            }
+
+            particleCopy->position0_0.vy = sharedData_800E323C_0_s00.vy;
+            particleCopy->movement_18.vz = 0;
+            particleCopy->movement_18.vx = 0;
+            particleCopy->movement_18.vy = 100;
+
+            sharedFunc_800D01BC_0_s00(arg2, particle, 5);
+            particleCopy->position1_C.vz = 0;
+            particleCopy->position1_C.vy = 0;
+            particleCopy->position1_C.vx = 0;
+            break;
+        case 1:
+            particleCopy->type_1F = 2;
+            particleCopy->position0_0.vy = sharedData_800E323C_0_s00.vy + Q19_12(Rng_GenerateInt(Rng_Rand16(), 0, 2));
+
+            particleCopy->position1_C.vy = sharedData_800E323C_0_s00.vy;
+            particleCopy->movement_18.vy = 150;
+            sharedFunc_800D01BC_0_s00(arg2, particle, 6);
+            particleCopy->position1_C.vx = particleCopy->position0_0.vx;
+            particleCopy->position1_C.vz = particleCopy->position0_0.vz;
+            break;
+    }
+    particleCopy->stateStep_1E++;
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0394);
 
