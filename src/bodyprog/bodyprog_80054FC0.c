@@ -2916,7 +2916,66 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006D01C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006D2B4); // 0x8006D2B4
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006D600); // 0x8006D600
+void func_8006D600(VECTOR3* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8006D600
+{
+    s32 temp_a2;
+    s16 temp_s0;
+    s16 temp_s3;
+    s16 temp;
+    s32 temp_s0_2;
+    s32 temp_s1;
+    s32 temp_s2;
+    s32 temp_s5;
+    s32 temp_s6;
+    s32 temp_v0;
+    s32 var_s0;
+    s32 var_v0_2;
+    s32 var_v1;
+
+    temp_s0 = FP_ALPHA_NORM(arg1);
+    temp_s3 = FP_ALPHA_NORM(arg2);
+    temp    = FP_ALPHA_NORM(arg3);
+    if (arg4 > 0x100)
+    {
+        arg4 = 0x100;
+    }
+
+    temp_s6 = FP_MULTIPLY(arg4, Math_Cos(temp_s0), 0xC);
+    var_s0  = temp;
+    temp_s5 = FP_MULTIPLY(arg4, Math_Sin(temp_s0), 0xC);
+    temp_s1 = arg0->vx - temp_s6;
+    temp_s2 = arg0->vz - temp_s5;
+    var_v1  = FP_ALPHA_NORM(ratan2(temp_s2, temp_s1));
+
+    if (var_v1 < temp_s3)
+    {
+        var_v1 += 0x1000;
+    }
+
+    if (var_s0 < temp_s3)
+    {
+        var_s0 += 0x1000;
+    }
+
+    temp_a2 = temp_s3 + 0x1000;
+    if (var_s0 < var_v1)
+    {
+        if (((var_s0 + temp_a2) >> 1) < var_v1)
+        {
+            var_s0 = temp_a2;
+        }
+        temp_s0_2 = Math_Sin(var_s0);
+        temp_v0   = Math_Cos(var_s0);
+        var_v0_2  = FP_MULTIPLY(temp_s1, temp_v0, 0xC) + FP_MULTIPLY(temp_s2, temp_s0_2, 0xC);
+
+        if (var_v0_2 < 0)
+        {
+            var_v0_2 = 0;
+        }
+        arg0->vx = temp_s6 + FP_MULTIPLY(var_v0_2, temp_v0, 0xC);
+        arg0->vz = temp_s5 + FP_MULTIPLY(var_v0_2, temp_s0_2, 0xC);
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006D774); // 0x8006D774
 
