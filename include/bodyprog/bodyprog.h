@@ -3444,6 +3444,8 @@ s16 func_8006CB90(s_func_8006CC44* arg0);
 
 s32 func_8006CC44(s32 x, s32 z, s_func_8006CC44* arg2);
 
+void func_8006D600(VECTOR3* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+
 void func_8006D7EC(s_func_8006D7EC_0* arg0, s_func_8006D7EC_1* arg1, s_func_8006D7EC_1* arg2);
 
 bool func_8006D90C(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2);
