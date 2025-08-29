@@ -48,7 +48,7 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
             case 0:
                 Gfx_Init(0x280, 1);
 
-                g_Gfx_ScreenFade     = ScreenFadeState_FadeInStart;
+                g_Gfx_ScreenFade     = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
                 g_ScreenFadeTimestep = FP_TIME(0.2f);
 
                 // Load `1ST/KONAMI2.TIM` (Konami logo).
@@ -74,7 +74,7 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
             case 2:
                 if (g_Controller0->btnsHeld_C != 0 || g_SysWork.timer_1C >= 181)
                 {
-                    g_Gfx_ScreenFade                = ScreenFadeState_FadeOutSteps;
+                    g_Gfx_ScreenFade                = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false);
                     g_ScreenFadeTimestep            = FP_TIME(0.2f);
                     g_GameWork.gameStateStep_598[0] = 3;
                 }
@@ -160,7 +160,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
             case 0:
                 Settings_RestoreDefaults();
 
-                g_Gfx_ScreenFade     = ScreenFadeState_FadeInStart;
+                g_Gfx_ScreenFade     = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
                 g_ScreenFadeTimestep = FP_TIME(0.2f);
 
                 GameFs_BgEtcGfxLoad();
@@ -170,7 +170,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                 break;
 
             case 1:
-                if (g_Gfx_ScreenFade == ScreenFadeState_None)
+                if (g_Gfx_ScreenFade == SCREEN_FADE_STATUS(ScreenFadeState_None, false))
                 {
                     Fs_QueueWaitForEmpty();
                     while (g_GameWork.gameStateStep_598[0] < 2)
@@ -266,7 +266,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
             case 6:
                 if (g_Controller0->btnsHeld_C != 0 || g_SysWork.timer_1C > 180)
                 {
-                    g_Gfx_ScreenFade     = ScreenFadeState_FadeOutSteps;
+                    g_Gfx_ScreenFade     = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false);
                     g_ScreenFadeTimestep = FP_TIME(0.2f);
                     g_GameWork.gameStateStep_598[0]++;
                 }

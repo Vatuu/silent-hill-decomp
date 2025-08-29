@@ -2108,11 +2108,11 @@ extern u16 D_800BCCB0;
 
 extern u16 D_800BCCB2;
 
-/** @brief Packed screen fade effect data. Uses `e_ScreenFadeState` and `e_ScreenFadeFlags`.
+/** @brief Packed screen fade effect data. Uses `e_ScreenFadeState`.
  *
  * Data is packed as follows:
- * Bits 0-2: `e_ScreenFadeState`
- * Bit  3:   `e_ScreenFadeFlags`
+ * State as `e_ScreenFadeState`: bits 0-2.
+ * Is white:                     bit 3.
  *
  * TODO: Reference enum entries for details below.
  * 0-1   - Nothing.

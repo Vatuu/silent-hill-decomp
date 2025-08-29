@@ -99,6 +99,25 @@ struct _SubCharacter;
 #define ANIM_KEYFRAME_RANGE_CHECK(keyframeIdx, low, high) \
     ((keyframeIdx) >= (low) && (keyframeIdx) <= (high))
 
+/** @brief Packs a screen fade status containing a fade state and white flag.
+ * See `g_Gfx_ScreenFade` for bit layout.
+ *
+ * @param state Screen fade state.
+ * @param isWhite White status (`bool`).
+ * @return Packed screen fade status containing a fade state and white flag.
+ */
+#define SCREEN_FADE_STATUS(state, isWhite) \
+    ((state) | ((isWhite) ? (1 << 3) : 0x0))
+
+/** @brief Checks if a screen fade is white.
+ * See `g_Gfx_ScreenFade` for bit layout.
+ *
+ * @param fadeStatus Packed screen fade status containing a fade state and white flag.
+ * @return `true` if white, `false` if black.
+ */
+#define IS_SCREEN_FADE_WHITE(fadeStatus) \
+    ((fadeStatus) & (1 << 3))
+
 /** @brief Screen fade states used by `g_Gfx_ScreenFade`. The flow is not linear. */
 typedef enum _ScreenFadeState
 {
@@ -111,13 +130,6 @@ typedef enum _ScreenFadeState
     ScreenFadeState_FadeInStart     = 6,
     ScreenFadeState_FadeInSteps     = 7
 } e_ScreenFadeState;
-
-/** @brief Screen fade flags used by `g_Gfx_ScreenFade`. */
-typedef enum _ScreenFadeFlags
-{
-    ScreenFadeFlag_White     = 1 << 3,                        /** When fade-in completes, this is unset. */
-    ScreenFadeFlag_StateMask = (1 << 0) | (1 << 1) | (1 << 2) /** Masks out flag data and keeps state data. See `g_Gfx_ScreenFade` for bit layout. */
-} e_ScreenFadeFlags;
 
 /** Each map has its own messages, with the first 15 hardcoded to be the same. */
 typedef enum _MapMsgIdx
@@ -1372,9 +1384,9 @@ extern s32 g_PrevVBlanks;     // 0x800A9770
 extern s32 g_VBlanks;         // 0x800B5C34
 extern s32 g_UncappedVBlanks; // 0x800B5C38
 
-/** @brief Checks screen fade completion status. See `g_Gfx_ScreenFade` for bit layout. */
+/** @brief Checks if a screen fade is complete. See `g_Gfx_ScreenFade` for bit layout. */
 #define Gfx_IsScreenFadeComplete() \
-    ((g_Gfx_ScreenFade & ScreenFadeFlag_StateMask) == ScreenFadeState_FadeOutComplete)
+    ((g_Gfx_ScreenFade & ((1 << 0) | (1 << 1) | (1 << 2))) == ScreenFadeState_FadeOutComplete)
 
 /** @brief Sets `sysState` in `g_SysWork` for the next tick. */
 static inline void SysWork_StateSetNext(e_SysState sysState)

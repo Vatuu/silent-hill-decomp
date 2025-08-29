@@ -113,10 +113,10 @@ bool func_801E2FC0() // 0x801E2FC0
 {
     switch (g_Gfx_ScreenFade)
     {
-        case ScreenFadeState_ResetTimeStep:
-        case ScreenFadeState_FadeOutComplete:
-        case ScreenFadeState_ResetTimeStep | ScreenFadeFlag_White:
-        case ScreenFadeState_FadeOutComplete | ScreenFadeFlag_White:
+        case SCREEN_FADE_STATUS(ScreenFadeState_ResetTimeStep, false):
+        case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, false):
+        case SCREEN_FADE_STATUS(ScreenFadeState_ResetTimeStep, true):
+        case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, true):
             if (Fs_QueueGetLength() != 0)
             {
                 break;
@@ -125,14 +125,14 @@ bool func_801E2FC0() // 0x801E2FC0
             Game_StateSetNext(GameState_Unk15);
             return true;
 
-        case ScreenFadeState_FadeOutStart:
-        case ScreenFadeState_FadeOutSteps:
-        case ScreenFadeState_FadeOutStart | ScreenFadeFlag_White:
-        case ScreenFadeState_FadeOutSteps | ScreenFadeFlag_White:
+        case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false):
+        case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false):
+        case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, true):
+        case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, true):
             break;
 
         default:
-            g_Gfx_ScreenFade     = ScreenFadeState_FadeOutStart | ScreenFadeFlag_White;
+            g_Gfx_ScreenFade     = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, true);
             g_ScreenFadeTimestep = FP_TIME(1.0f);
             break;
     }
@@ -161,13 +161,13 @@ bool func_801E3124() // 0x801E3124
         case 0:
             switch (g_Gfx_ScreenFade)
             {
-                case ScreenFadeState_FadeOutComplete | ScreenFadeFlag_White:
+                case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, true):
                     g_GameWork.background2dColor_R_58C = FP_COLOR(1.0f);
                     g_GameWork.background2dColor_G_58D = FP_COLOR(1.0f);
                     g_GameWork.background2dColor_B_58E = FP_COLOR(1.0f);
                     break;
 
-                case ScreenFadeState_FadeOutComplete:
+                case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, false):
                     g_GameWork.background2dColor_R_58C = FP_COLOR(0.0f);
                     g_GameWork.background2dColor_G_58D = FP_COLOR(0.0f);
                     g_GameWork.background2dColor_B_58E = FP_COLOR(0.0f);
@@ -186,11 +186,11 @@ bool func_801E3124() // 0x801E3124
 
             switch (g_Gfx_ScreenFade)
             {
-                case ScreenFadeState_FadeOutComplete | ScreenFadeFlag_White:
+                case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, true):
                     Gfx_ClearRectInterlaced(0, 32, 512, 448, FP_COLOR(1.0f), FP_COLOR(1.0f), FP_COLOR(1.0f));
                     break;
 
-                case ScreenFadeState_FadeOutComplete:
+                case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, false):
                     Gfx_ClearRectInterlaced(0, 32, 512, 448, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
                     break;
             }
@@ -229,7 +229,7 @@ s32 func_801E3304() // 0x801E3304
         if (g_GameWork.gameStateStep_598[1] == 0)
         {
             Gfx_Init(SCREEN_WIDTH, 0);
-            g_Gfx_ScreenFade = ScreenFadeState_Reset;
+            g_Gfx_ScreenFade = SCREEN_FADE_STATUS(ScreenFadeState_Reset, false);
             g_GameWork.gameStateStep_598[1]++;
         }
         else if (g_GameWork.gameStateStep_598[1] != 10)
@@ -282,12 +282,12 @@ bool func_801E342C() // 0x801E342C
         case 0:
             switch (g_Gfx_ScreenFade)
             {
-                case ScreenFadeState_FadeOutComplete | ScreenFadeFlag_White:
-                    g_Gfx_ScreenFade = ScreenFadeState_FadeInStart | ScreenFadeFlag_White;
+                case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, true):
+                    g_Gfx_ScreenFade = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, true);
                     break;
 
-                case ScreenFadeState_FadeOutComplete:
-                    g_Gfx_ScreenFade = ScreenFadeState_FadeInStart;
+                case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, false):
+                    g_Gfx_ScreenFade = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
                     break;
             }
 
@@ -313,13 +313,13 @@ bool func_801E342C() // 0x801E342C
             D_801E5E78--;
             if (D_801E5E78 <= 0)
             {
-                g_Gfx_ScreenFade                      = g_GameWork.gameStateStep_598[1];
+                g_Gfx_ScreenFade                = g_GameWork.gameStateStep_598[1];
                 g_GameWork.gameStateStep_598[1] = 3;
             }
             break;
 
         case 3:
-            if (g_Gfx_ScreenFade == ScreenFadeState_FadeOutComplete)
+            if (g_Gfx_ScreenFade == SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, false))
             {
                 g_GameWork.gameStateStep_598[1] = 4;
                 return true;

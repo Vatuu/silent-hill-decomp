@@ -112,7 +112,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00_2", func_800D94F8);
 /** Debug function? */
 void Gfx_LoadingScreen_StageString() // 0x800D95D4
 {
-    g_Gfx_ScreenFade = ScreenFadeState_FadeInSteps;
+    g_Gfx_ScreenFade = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, false);
     Gfx_DebugStringPosition(100, 100);
     Gfx_DebugStringDraw(&D_800CAE7C);
 }

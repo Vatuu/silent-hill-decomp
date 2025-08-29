@@ -483,7 +483,7 @@ void Settings_DispEnvXYSet(DISPENV* display, s32 x, s32 y) // 0x80032524
 
 void func_800325A4(DR_MODE* arg0) // 0x800325A4
 {
-    if (g_Gfx_ScreenFade & ScreenFadeFlag_White) 
+    if (IS_SCREEN_FADE_WHITE(g_Gfx_ScreenFade)) 
     {
         SetDrawMode(arg0, 0, 1, 32, NULL);
     }
@@ -512,13 +512,13 @@ void func_8003260C() // 0x8003260C
 
     switch (g_Gfx_ScreenFade)
     {
-        case ScreenFadeState_FadeOutStart:
-        case ScreenFadeState_FadeOutStart | ScreenFadeFlag_White:
+        case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false):
+        case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, true):
             g_ScreenFadeProgress = 0;
             g_Gfx_ScreenFade++;
 
-        case ScreenFadeState_FadeOutSteps:
-        case ScreenFadeState_FadeOutSteps | ScreenFadeFlag_White:
+        case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false):
+        case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, true):
             func_800325A4(drMode);
             queueLength = Fs_QueueGetLength();
 
@@ -544,25 +544,25 @@ void func_8003260C() // 0x8003260C
             tile->b0 = FP_FROM(g_ScreenFadeProgress, Q4_SHIFT);
             break;
 
-        case ScreenFadeState_ResetTimeStep:
-        case ScreenFadeState_ResetTimeStep | ScreenFadeFlag_White:
+        case SCREEN_FADE_STATUS(ScreenFadeState_ResetTimeStep, false):
+        case SCREEN_FADE_STATUS(ScreenFadeState_ResetTimeStep, true):
             g_ScreenFadeTimestep = FP_TIME(0.0f);
 
-        case ScreenFadeState_FadeInStart:
-        case ScreenFadeState_FadeInStart | ScreenFadeFlag_White:
+        case SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false):
+        case SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, true):
             g_ScreenFadeProgress = 0xFFF;
             g_Gfx_ScreenFade++;
 
-        case ScreenFadeState_FadeOutComplete:
-        case ScreenFadeState_FadeOutComplete | ScreenFadeFlag_White:
+        case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, false):
+        case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, true):
             func_800325A4(drMode);
             tile->r0 = FP_FROM(g_ScreenFadeProgress, Q4_SHIFT);
             tile->g0 = FP_FROM(g_ScreenFadeProgress, Q4_SHIFT);
             tile->b0 = FP_FROM(g_ScreenFadeProgress, Q4_SHIFT);
             break;
 
-        case ScreenFadeState_FadeInSteps:
-        case ScreenFadeState_FadeInSteps | ScreenFadeFlag_White:
+        case SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, false):
+        case SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, true):
             func_800325A4(drMode);
 
             if (g_ScreenFadeTimestep > FP_TIME(0.0f))
@@ -579,7 +579,7 @@ void func_8003260C() // 0x8003260C
             if (g_ScreenFadeProgress <= 0)
             {
                 g_ScreenFadeProgress = 0;
-                g_Gfx_ScreenFade     = ScreenFadeState_Reset;
+                g_Gfx_ScreenFade     = SCREEN_FADE_STATUS(ScreenFadeState_Reset, false);
                 return;
             }
 
@@ -588,13 +588,13 @@ void func_8003260C() // 0x8003260C
             tile->b0 = FP_FROM(g_ScreenFadeProgress, Q4_SHIFT);
             break;
 
-        case ScreenFadeState_Reset:
+        case SCREEN_FADE_STATUS(ScreenFadeState_Reset, false):
             g_ScreenFadeTimestep = FP_TIME(0.0f);
             g_ScreenFadeProgress = 0;
-            g_Gfx_ScreenFade     = ScreenFadeState_None;
+            g_Gfx_ScreenFade     = SCREEN_FADE_STATUS(ScreenFadeState_None, false);
             return;
 
-        case ScreenFadeState_None:
+        case SCREEN_FADE_STATUS(ScreenFadeState_None, false):
             return;
     }
 

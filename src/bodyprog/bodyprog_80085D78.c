@@ -205,11 +205,11 @@ void func_8008616C(s32 arg0, bool arg1, s32 fadeType, s32 fadeTimestep, bool arg
             {
                 if (fadeType == FADE_BLACK)
                 {
-                    g_Gfx_ScreenFade = ScreenFadeState_FadeOutSteps;
+                    g_Gfx_ScreenFade = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false);
                 }
                 else if (fadeType == FADE_WHITE)
                 {
-                    g_Gfx_ScreenFade = ScreenFadeState_FadeOutSteps | ScreenFadeFlag_White;
+                    g_Gfx_ScreenFade = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, true);
                 }
                 else
                 {
@@ -223,11 +223,11 @@ void func_8008616C(s32 arg0, bool arg1, s32 fadeType, s32 fadeTimestep, bool arg
             }
             else if (fadeType == FADE_BLACK)
             {
-                g_Gfx_ScreenFade = ScreenFadeState_FadeInSteps;
+                g_Gfx_ScreenFade = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, false);
             }
             else if (fadeType == FADE_WHITE)
             {
-                g_Gfx_ScreenFade = ScreenFadeState_FadeInSteps | ScreenFadeFlag_White;
+                g_Gfx_ScreenFade = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, true);
             }
             else
             {
