@@ -6,6 +6,35 @@
 #include "bodyprog/math/fixed_point.h"
 #include "bodyprog/math/arithmetic.h"
 
+/** @brief Constructs a `VECTOR3` in a fixed-point Q19.12 format.
+ *
+ * @param x X component (`float`).
+ * @param y Y component (`float`).
+ * @param z Z component (`float`).
+ * @return `VECTOR3` in a fixed-point Q19.12 format.
+ */
+#define VECTOR3(x, y, z) \
+    { Q19_12(x), Q19_12(y), Q19_12(z) }
+
+/** @brief Constructs an `SVECTOR` containing Euler angles in a fixed-point Q3.12 format.
+ *
+ * @param x X degree component (`float`).
+ * @param y Y degree component (`float`).
+ * @param z Z degree component (`float`).
+ * @return `SVECTOR` containing Euler angles in a fixed-point Q3.12 format.
+ */
+#define SVECTOR(x, y, z) \
+    { FP_ANGLE(x), FP_ANGLE(y), FP_ANGLE(z) }
+
+/** @brief Constructs a `DVECTOR` containing a screen position in 320x240 screen space.
+ *
+ * @param x X position in percent (`float`).
+ * @param z Y position in percent (`float`).
+ * @return `DVECTOR` containing a screen position in 320x240 screen space.
+ */
+#define DVECTOR(x, y) \
+    { SCREEN_POSITION_X(x), SCREEN_POSITION_Y(y) }
+
 /** @brief Multiplies an integer in fixed-point Q format by a float converted to fixed-point Q format,
  * then converts the result back from the fixed-point Q format using a 64-bit intermediate via
  * `Math_MulFixed` for higher precision.
