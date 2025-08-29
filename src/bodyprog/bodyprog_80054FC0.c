@@ -1730,7 +1730,7 @@ void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara) // 0x8005C814
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005C944); // 0x8005C944
 
-s32 func_8005CB20(s_SubCharacter* arg0, s_800C4590* arg1, s16 arg2, s16 arg3) // 0x8005CB20
+s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 arg2, s16 arg3) // 0x8005CB20
 {
     s_800C4590 sp10;
     VECTOR3    sp30;
@@ -1744,8 +1744,8 @@ s32 func_8005CB20(s_SubCharacter* arg0, s_800C4590* arg1, s16 arg2, s16 arg3) //
     s32        temp_v0_5;
     s32        ret;
 
-    temp_s6 = arg0->headingAngle_3C;
-    temp_s0 = FP_MULTIPLY_PRECISE(g_DeltaTime0, arg0->moveSpeed_38, 0xC);
+    temp_s6 = chara->headingAngle_3C;
+    temp_s0 = FP_MULTIPLY_PRECISE(g_DeltaTime0, chara->moveSpeed_38, 0xC);
     temp_s2 = ((temp_s0 + 0x7FFF) > 0xFFFEU) * 4;
     temp_s3 = temp_s2 >> 1;
 
@@ -1757,21 +1757,21 @@ s32 func_8005CB20(s_SubCharacter* arg0, s_800C4590* arg1, s16 arg2, s16 arg3) //
     temp_v0_4 = Math_Cos(temp_s6) >> temp_s3;
     sp30.vz   = (s32)FP_MULTIPLY_PRECISE(temp_s0_2, temp_v0_4, 0xC) << temp_s2;
 
-    temp_v0_5 = arg0->field_34;
+    temp_v0_5 = chara->field_34;
     sp30.vx += arg2;
     sp30.vy = FP_MULTIPLY_PRECISE(g_DeltaTime0, temp_v0_5, 0xC);
     sp30.vz += arg3;
 
-    ret = func_80069B24(&sp10, &sp30, arg0);
+    ret = func_80069B24(&sp10, &sp30, chara);
 
-    arg0->position_18.vx += sp10.field_0.vx;
-    arg0->position_18.vy += sp10.field_0.vy;
-    arg0->position_18.vz += sp10.field_0.vz;
+    chara->position_18.vx += sp10.field_0.vx;
+    chara->position_18.vy += sp10.field_0.vy;
+    chara->position_18.vz += sp10.field_0.vz;
 
-    if (arg0->position_18.vy > sp10.field_C)
+    if (chara->position_18.vy > sp10.field_C)
     {
-        arg0->position_18.vy = sp10.field_C;
-        arg0->field_34       = 0;
+        chara->position_18.vy = sp10.field_C;
+        chara->field_34       = 0;
     }
 
     if (arg1 != NULL)
