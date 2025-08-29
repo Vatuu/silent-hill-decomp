@@ -2007,6 +2007,8 @@ extern s32 D_800AE1B0;
 
 extern s16 D_800AE520[];
 
+extern s16 D_800AE564[];
+
 /** Angle? */
 extern s16 D_800AF210;
 
@@ -3057,8 +3059,10 @@ s32 func_8005C7D0(s_SubCharacter* chara, s32 moveSpeed);
 
 void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara);
 
+s32 func_8005D86C(s32 arg0);
+
 /** Looks like a clamping function. */
-s32 func_8005D974();
+s32 func_8005D974(s32 arg0);
 
 /** Spatial SFX func? */
 void func_8005DC1C(s32 sfx, const VECTOR3* pos, s32 vol, s32 soundType); // Types assumed.
@@ -3366,7 +3370,7 @@ void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3);
 
 void func_8006342C(s32 invItemId, s16, s16, GsCOORDINATE2*);
 
-void func_8005CB20(s_SubCharacter*, void*, s16, s16);
+s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 arg2, s16 arg3);
 
 void func_800622B8(s32, s_SubCharacter*, s32 animStatus, s32);
 

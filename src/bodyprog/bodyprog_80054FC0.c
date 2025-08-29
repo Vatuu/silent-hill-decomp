@@ -1730,18 +1730,117 @@ void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara) // 0x8005C814
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005C944); // 0x8005C944
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005CB20); // 0x8005CB20
+s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 arg2, s16 arg3) // 0x8005CB20
+{
+    s_800C4590 sp10;
+    VECTOR3    sp30;
+    s32        temp_s6;
+    s32        temp_s0;
+    s32        temp_s0_2;
+    s32        temp_s2;
+    s32        temp_s3;
+    s32        temp_v0_2;
+    s32        temp_v0_4;
+    s32        temp_v0_5;
+    s32        ret;
+
+    temp_s6 = chara->headingAngle_3C;
+    temp_s0 = FP_MULTIPLY_PRECISE(g_DeltaTime0, chara->moveSpeed_38, 0xC);
+    temp_s2 = ((temp_s0 + 0x7FFF) > 0xFFFEU) * 4;
+    temp_s3 = temp_s2 >> 1;
+
+    temp_v0_5 = Math_Sin(temp_s6);
+    temp_s0_2 = temp_s0 >> temp_s3;
+    temp_v0_2 = temp_v0_5 >> temp_s3;
+    sp30.vx   = (s32)FP_MULTIPLY_PRECISE(temp_s0_2, temp_v0_2, 0xC) << temp_s2;
+
+    temp_v0_4 = Math_Cos(temp_s6) >> temp_s3;
+    sp30.vz   = (s32)FP_MULTIPLY_PRECISE(temp_s0_2, temp_v0_4, 0xC) << temp_s2;
+
+    temp_v0_5 = chara->field_34;
+    sp30.vx += arg2;
+    sp30.vy = FP_MULTIPLY_PRECISE(g_DeltaTime0, temp_v0_5, 0xC);
+    sp30.vz += arg3;
+
+    ret = func_80069B24(&sp10, &sp30, chara);
+
+    chara->position_18.vx += sp10.field_0.vx;
+    chara->position_18.vy += sp10.field_0.vy;
+    chara->position_18.vz += sp10.field_0.vz;
+
+    if (chara->position_18.vy > sp10.field_C)
+    {
+        chara->position_18.vy = sp10.field_C;
+        chara->field_34       = 0;
+    }
+
+    if (arg1 != NULL)
+    {
+        *arg1 = sp10;
+    }
+
+    return ret;
+}
 
 // Important for combat.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005CD38); // 0x8005CD38
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005D50C); // 0x8005D50C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005D86C); // 0x8005D86C
-
-s32 func_8005D974() // 0x8005D974
+s32 func_8005D86C(s32 arg0) // 0x8005D86C
 {
-    s32 val = func_8005D86C();
+    s32 var_a0;
+    s32 var_v1;
+    s32 temp_a1;
+    s32 temp_a2;
+    s32 temp_a3;
+    s32 temp;
+
+    temp    = FP_ALPHA_NORM(arg0);
+    temp_a1 = FP_FROM(arg0, Q12_SHIFT);
+
+    if (temp_a1 >= 0xC)
+    {
+        return 0;
+    }
+    if (temp_a1 < -0x14)
+    {
+        return 0x7FFFFFFF;
+    }
+
+    temp_a2 = (arg0 & 0x7F) << 5;
+    temp_a3 = temp >> 7;
+
+    var_a0 = D_800AE564[temp_a3];
+    if (temp_a1 > 0)
+    {
+        var_a0 >>= temp_a1;
+    }
+    else if (temp_a1 < 0)
+    {
+        var_a0 <<= -temp_a1;
+    }
+
+    if (temp_a2 != 0)
+    {
+        var_v1 = D_800AE564[temp_a3 + 1];
+        if (temp_a1 > 0)
+        {
+            var_v1 >>= temp_a1;
+        }
+        else if (temp_a1 < 0)
+        {
+            var_v1 <<= -temp_a1;
+        }
+
+        var_a0 = FP_MULTIPLY_PRECISE(var_a0, 0x1000 - temp_a2, 0xC) + FP_MULTIPLY_PRECISE(var_v1, temp_a2, 0xC);
+    }
+    return var_a0;
+}
+
+s32 func_8005D974(s32 arg0) // 0x8005D974
+{
+    s32 val = func_8005D86C(arg0);
 
     if (val > 0x4000)
     {
