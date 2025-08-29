@@ -1,4 +1,3 @@
-
 #ifndef _BODYPROG_MATH_UTILS_H
 #define _BODYPROG_MATH_UTILS_H
 
@@ -54,7 +53,11 @@
 #define ABS(x) \
     (((x) < 0) ? -(x) : (x))
 
-/** @brief Computes the absolute value of an `s32` by shifting. */
+/** @brief Computes the absolute value of an `s32` by shifting.
+ *
+ * @param x Value.
+ * @return Absolute value of `x`.
+ */
 #define ABS_32(x) \
     (((x) ^ ((x) >> 31)) - ((x) >> 31))
 
