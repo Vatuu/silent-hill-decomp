@@ -21,7 +21,7 @@
  * @return `x` converted to fixed-point (`s32`).
  */
 #define FP_FLOAT_TO(x, shift) \
-    (s32)((x) * FP_TO(1, (shift)))
+    (s32)((x) * FP_TO(1, shift))
 
 /** @brief Converts an integer from a fixed-point Q format.
  *
@@ -40,7 +40,7 @@
  * @return `x` rounded and converted from fixed-point.
  */
 #define FP_ROUND_SCALED(x, scale, shift) \
-    (((x) + ((FP_TO(1, (shift)) * (scale)) - 1)) / (FP_TO(1, (shift)) * (scale)))
+    (((x) + ((FP_TO(1, shift) * (scale)) - 1)) / (FP_TO(1, shift) * (scale)))
 
 /** @brief Converts an integer from fixed-point Q format rounded toward 0.
  *
@@ -49,7 +49,7 @@
  * @return `x` rounded toward 0 and converted from fixed-point.
  */
 #define FP_ROUND_TO_ZERO(x, shift) \
-    ((s32)(FP_FROM((x), (shift)) + ((u32)(x) >> 31)) >> 1)
+    ((s32)(FP_FROM(x, shift) + ((u32)(x) >> 31)) >> 1)
 
 /** @brief Multiplies two integers in fixed-point Q format and converts the result from the fixed-point Q format.
  *
@@ -81,7 +81,7 @@
  * @return Product of `a` and `b` converted from fixed-point.
  */
 #define FP_MULTIPLY_FLOAT(aInt, bFlt, shift) \
-    FP_MULTIPLY((aInt), FP_FLOAT_TO((bFlt), (shift)), (shift))
+    FP_MULTIPLY(aInt, FP_FLOAT_TO(bFlt, shift), shift)
 
 /** @brief Multiplies an integer in fixed-point Q format by a float converted to fixed-point Q format,
  * then converts the result back from the fixed-point Q format using a 64-bit intermediate for higher precision.
@@ -92,55 +92,55 @@
  * @return Precise product of `a` and `b` converted from fixed-point.
  */
 #define FP_MULTIPLY_FLOAT_PRECISE(aInt, bFlt, shift) \
-    FP_MULTIPLY((s64)(aInt), FP_FLOAT_TO((bFlt), (shift)), (shift))
+    FP_MULTIPLY((s64)(aInt), FP_FLOAT_TO(bFlt, shift), (shift))
 
 /** @brief Converts a floating-point value to a fixed-point value in Q19.12.
  *
- * @param val Value to convert (`float`).
- * @return `val` converted to fixed-point Q19.12 (`s32`).
+ * @param x Value to convert (`float`).
+ * @return `x` converted to fixed-point Q19.12 (`s32`).
  */
-#define Q19_12(val) \
-    (s32)FP_FLOAT_TO((val), Q12_SHIFT)
+#define Q19_12(x) \
+    (s32)FP_FLOAT_TO(x, Q12_SHIFT)
 
 /** @brief Converts a floating-point value to a fixed-point value in Q23.8.
  *
- * @param val Value to convert (`float`).
- * @return `val` converted to fixed-point Q23.8 (`s32`).
+ * @param x Value to convert (`float`).
+ * @return `x` converted to fixed-point Q23.8 (`s32`).
  */
-#define Q23_8(val) \
-    (s32)FP_FLOAT_TO((val), Q8_SHIFT)
+#define Q23_8(x) \
+    (s32)FP_FLOAT_TO(x, Q8_SHIFT)
 
 /** @brief Converts a floating-point value to a fixed-point value in Q3.12.
  *
- * @param val Value to convert (`float`).
- * @return `val` converted to fixed-point Q3.12 (`s16`).
+ * @param x Value to convert (`float`).
+ * @return `x` converted to fixed-point Q3.12 (`s16`).
  */
-#define Q3_12(val) \
-    (s16)FP_FLOAT_TO((val), Q12_SHIFT)
+#define Q3_12(x) \
+    (s16)FP_FLOAT_TO(x, Q12_SHIFT)
 
 /** @brief Converts a floating-point value to a fixed-point value in Q7.8.
  *
- * @param val Value to convert (`float`).
- * @return `val` converted to fixed-point Q7.8 (`s16`).
+ * @param x Value to convert (`float`).
+ * @return `x` converted to fixed-point Q7.8 (`s16`).
  */
-#define Q7_8(val) \
-    (s16)FP_FLOAT_TO((val), Q8_SHIFT)
+#define Q7_8(x) \
+    (s16)FP_FLOAT_TO(x, Q8_SHIFT)
 
 /** @brief Converts a floating-point value to a fixed-point value in Q0.8.
  *
- * @param val Value to convert (`float`).
- * @return `val` converted to fixed-point Q0.8 ('u8`).
+ * @param x Value to convert (`float`).
+ * @return `x` converted to fixed-point Q0.8 ('u8`).
  */
-#define Q0_8(val) \
-    (u8)FP_FLOAT_TO((val), Q8_SHIFT)
+#define Q0_8(x) \
+    (u8)FP_FLOAT_TO(x, Q8_SHIFT)
 
 /** @brief Converts a floating-point value in Q19.12 to a fixed-point value in Q23.8.
  *
- * @param val Fixed-point value in Q19.12 to convert.
- * @return `val` converted to fixed-point Q23.8 (`s32`).
+ * @param x Fixed-point value in Q19.12 to convert.
+ * @return `x` converted to fixed-point Q23.8 (`s32`).
  */
-#define Q19_12_TO_Q23_8(val) \
-    (s32)(((val) >> 4))
+#define Q19_12_TO_Q23_8(x) \
+    (s32)((x) >> 4)
 
 /** @brief Converts a floating-point alpha in the range `[0.0f, 1.0f]` to a fixed-point alpha in Q3.12, range `[0, 4096]`.
  * Mapping is direct.
@@ -166,7 +166,7 @@
  * @return Fixed-point sound volume in Q0.8, range `[0, 255]` (`u8`).
  */
 #define FP_VOLUME(vol) \
-    (u8)CLAMP(FP_FLOAT_TO((vol), Q8_SHIFT), 0, FP_FLOAT_TO(1.0f, Q8_SHIFT) - 1)
+    (u8)CLAMP(FP_FLOAT_TO(vol, Q8_SHIFT), 0, FP_FLOAT_TO(1.0f, Q8_SHIFT) - 1)
 
 // TODO: Maybe not appropriate for this project since it often results in ugly floats.
 /** @brief Converts a normalized color value in the range `[0.0f, 1.0f]` to an 8-bit color value in Q0.8, range `[0, 255]`.

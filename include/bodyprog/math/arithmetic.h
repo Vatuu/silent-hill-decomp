@@ -45,6 +45,15 @@
 #define CLAMP(x, min, max) \
     (((x) < (min)) ? (min) : (((x) > (max)) ? (max) : (x)))
 
+/** @brief Floors a value to the closest step.
+ *
+ * @param x Value to be floored.
+ * @param step Flooring step.
+ * @return `x` floored to the closest `step`.
+ */
+#define FLOOR_TO_STEP(x, step) \
+    (((x) >= 0) ? ((x) / (step)) : (((x) - ((step) - 1)) / (step)))
+
 /** @brief Computes the absolute value.
  *
  * @param x Value.
