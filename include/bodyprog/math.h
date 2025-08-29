@@ -7,8 +7,12 @@
 #define FP_PI (0x5000 / 2)
 
 #define Q4_SHIFT  4  /** Used for: Q27.4 positions. */
-#define Q8_SHIFT  8  /** Used for: Q7.8 camera AABBs. */
+#define Q8_SHIFT  8  /** Used for: Q23.8 collision positions. Q7.8 camera AABBs. */
 #define Q12_SHIFT 12 /** Used for: Q3.12 alphas, angles. Q19.12 meters, timers, trigonometry. */
+
+// ==============
+// GENERAL UTILS
+// ==============
 
 /** @brief Squares a value.
  *
@@ -93,6 +97,10 @@
 #define DIFF_SIGN(a, b) \
     (((a) >= 0 && (b) < 0) || ((a) < 0 && (b) >= 0))
 
+// ==================
+// FIXED-POINT UTILS
+// ==================
+
 /** @brief Converts an integer to a fixed-point Q format.
  *
  * @param x `int` to convert.
@@ -117,7 +125,16 @@
  * @return `val` converted to fixed-point Q19.12.
  */
 #define Q19_12(val) \
-    FP_FLOAT_TO((val), Q12_SHIFT)
+    (s32)FP_FLOAT_TO((val), Q12_SHIFT)
+
+#define Q19_12_TO_Q3_12(val) \
+    (s32)(((val) >> 4))
+
+#define Q3_12(val) \
+    (s16)FP_FLOAT_TO((val), Q12_SHIFT)
+
+#define Q23_8(val) \
+    (s32)FP_FLOAT_TO((val), Q8_SHIFT)
 
 /** @brief Converts a floating-point value to a fixed-point value in Q7.8.
  *
@@ -125,7 +142,10 @@
  * @return `val` converted to fixed-point Q7.8.
  */
 #define Q7_8(val) \
-    FP_FLOAT_TO((val), Q8_SHIFT)
+    (s16)FP_FLOAT_TO((val), Q8_SHIFT)
+
+#define Q0_8(val) \
+    (u8)FP_FLOAT_TO((val), Q8_SHIFT)
 
 /** @brief Converts an integer from a fixed-point Q format.
  *
@@ -198,6 +218,10 @@
 #define FP_MULTIPLY_FLOAT_PRECISE(aInt, bFlt, shift) \
     FP_MULTIPLY((s64)(aInt), FP_FLOAT_TO((bFlt), (shift)), (shift))
 
+// ====================
+// FIXED_POINT FORMATS
+// ====================
+
 /** @brief Converts a floating-point alpha in the range `[0.0f, 1.0f]` to a fixed-point alpha in Q3.12, range `[0, 4096]`.
  * Mapping is direct.
  *
@@ -205,7 +229,7 @@
  * @return Fixed-point alpha in Q3.12, range `[0, 4096]` (`s16`).
  */
 #define FP_ALPHA(alpha) \
-    (s16)FP_FLOAT_TO((alpha), Q12_SHIFT)
+    (s16)Q3_12(alpha)
 
 /** @brief Normalizes a fixed-point alpha in Q3.12 to the range `[0, 4095]`.
  *
@@ -243,44 +267,44 @@
  * @return Unsigned fixed-point degrees in Q3.12, range `[0, 4096]` (`s16`).
  */
 #define FP_ANGLE(deg) \
-    (s16)((deg) * ((float)FP_TO(1, Q12_SHIFT) / 360.0f))
+    (s16)((deg) * ((float)Q3_12(1.0f) / 360.0f))
 
-/** @brief Converts floating-point degrees to unsigned fixed-point degrees in Q6.8, packed range `[0, 256]`.
+/** @brief Converts floating-point degrees to unsigned fixed-point degrees in Q7.8, packed range `[0, 256]`.
  * Mapping is direct.
  *
  * @note 1 degree = 0.711111 units.
  *
  * @param deg Degrees (`float`).
- * @return Unsigned fixed-point degrees in Q6.8, packed range `[0, 256]` (`s16`).
+ * @return Unsigned fixed-point degrees in Q7.8, packed range `[0, 256]` (`s16`).
  */
 #define FP_ANGLE_PACKED(deg) \
-    (s16)((deg) * ((float)FP_TO(1, Q8_SHIFT) / 360.0f))
+    (s16)((deg) * ((float)Q23_8(1.0f) / 360.0f))
 
-/** @brief Converts unsigned fixed-point degrees in Q6.8, packed range `[0, 256]` to
+/** @brief Converts unsigned fixed-point degrees in Q7.8, packed range `[0, 256]` to
  * unsigned fixed-point degrees in Q3.12, range `[0, 4096]`.
  * Mapping is direct.
  *
- * @param packedAngle Unsigned fixed-point degrees in Q6.8, packed range `[0, 256]`.
+ * @param packedDeg Unsigned fixed-point degrees in Q7.8, packed range `[0, 256]`.
  * @return Unsigned fixed-point degrees in Q3.12, range `[0, 4096]` (`s16`).
  */
-#define FP_ANGLE_PACKED_FROM(packedAngle) \
-    (s16)((packedAngle) * 16)
+#define FP_ANGLE_FROM_PACKED(packedDeg) \
+    (s16)((packedDeg) * 16)
 
 /** @brief Normalizes unsigned fixed-point degrees in Q3.12 to the signed range `[-2048, 2047]`.
  *
- * @param angle Unsigned fixed-point degrees in Q3.12, range `[0, 4095]`.
+ * @param deg Unsigned fixed-point degrees in Q3.12, range `[0, 4095]`.
  * @return Signed fixed-point degrees wrapped to the range `[-2048, 2047]` (`s16`).
  */
-#define FP_ANGLE_NORM_S(angle) \
-    (((angle) << 20) >> 20)
+#define FP_ANGLE_NORM_S(deg) \
+    (((deg) << 20) >> 20)
 
 /** @brief Normalizes signed fixed-point degrees in Q3.12 to the unsigned range `[0, 4095]`.
  *
- * @param angle Signed fixed-point degrees in Q3.12, range `[-2048, 2047]`.
+ * @param deg Signed fixed-point degrees in Q3.12, range `[-2048, 2047]`.
  * @return Unsigned fixed-point degrees wrapped to the range `[0, 4095]` (`s16`).
  */
-#define FP_ANGLE_NORM_U(angle) \
-    ((angle) & (FP_ANGLE(360.0f) - 1))
+#define FP_ANGLE_NORM_U(deg) \
+    ((deg) & (FP_ANGLE(360.0f) - 1))
 
 /** @brief Converts floating-point radians in the range `[-PI, PI]` to fixed-point radians in the range `[0, 0x5000]`.
  * Mapping is direct.
@@ -294,15 +318,33 @@
     (s32)(((((rad) < 0.0f) ? (PI + (PI - ABS(rad))) : (rad)) * ((float)FP_PI / PI)) * \
           (((rad) < 0.0f || (rad) >= PI) ? 1.0f : 2.0f))
 
-/** @brief Converts floating-point meters to fixed-point meters in Q19.12.
+/** @brief Converts floating-point meters to fixed-point world meters in Q19.12.
  *
  * @note 1 meter = 4096 units.
  *
  * @param met Meters (`float`).
- * @return Fixed-point meters in Q19.12 (`s32`).
+ * @return Fixed-point world meters in Q19.12 (`s32`).
  */
 #define FP_METER(met) \
-    FP_FLOAT_TO((met), Q12_SHIFT)
+    Q19_12(met)
+
+/** @brief Converts floating-point world meters in Q19.12 to fixed-point collision meters in Q23.8.
+ *
+ * @note 1 meter = 256 units.
+ *
+ * @param met Meters (`float`).
+ * @return Fixed-point collision meters in Q23.8 (`s32`).
+ */
+#define FP_METER_COLL(met) \
+    Q23_8(met)
+
+/** @brief Converts fixed-point world meters in Q19.12 to fixed-point collision meters in Q23.8.
+ *
+ * @param met Fixed-point world meters in Q19.12.
+ * @return Fixed-point collision meters in Q23.8 (`s32`).
+ */
+#define FP_METER_TO_COLL(met) \
+    Q19_12_TO_Q3_12(met)
 
 /** @brief Converts floating-point seconds to fixed-point seconds in Q19.12.
  *
@@ -312,7 +354,7 @@
  * @return Fixed-point seconds in Q19.12 (`s32`).
  */
 #define FP_TIME(sec) \
-    FP_FLOAT_TO((sec), Q12_SHIFT)
+    Q19_12(sec)
 
 /** @brief Converts floating-point health to fixed-point health in Q19.12.
  *
@@ -322,7 +364,7 @@
  * @return Fixed-point health in Q19.12 (`s32`).
  */
 #define FP_HEALTH(health) \
-    FP_FLOAT_TO((health), Q12_SHIFT)
+    Q19_12(health)
 
 /** @brief Multiplies an integer in fixed-point Q format by a float converted to fixed-point Q format,
  * then converts the result back from the fixed-point Q format using a 64-bit intermediate via
@@ -362,7 +404,7 @@
  *
  * Possible better name: `Math_DeltaTimeDistScale`
  *
- * @param dist Distance in fixed-point meters.
+ * @param dist Distance in fixed-point world meters.
  * @return Modulated distance?
  */
 #define Math_UnkDistTimeCalc(dist) \

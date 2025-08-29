@@ -2631,7 +2631,7 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4);
 /** @brief Gets the load status of a queue entry by utilizing `Fs_QueueIsEntryLoaded`.
  *
  * @param queueIdx Index of the queue entry to check.
- * @return Queue entry load status (`e_FsQueueEntryLoadStatus`);
+ * @return Queue entry load status (`e_FsQueueEntryLoadStatus`).
  */
 u32 Fs_QueueEntryLoadStatusGet(s32 queueIdx);
 

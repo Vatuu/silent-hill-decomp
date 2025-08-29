@@ -2811,7 +2811,7 @@ void Chara_PositionUpdateFromParams(s_AreaLoadParams* params) // 0x800371E8
 {
     s32 rotY;
     
-    rotY = FP_ANGLE_PACKED_FROM(params->rotationY_4_16);
+    rotY = FP_ANGLE_FROM_PACKED(params->rotationY_4_16);
     Math_SVectorSet(&g_SysWork.player_4C.chara_0.rotation_24, FP_ANGLE(0.0f), rotY, FP_ANGLE(0.0f));
 
     g_SysWork.player_4C.chara_0.position_18.vy = FP_METER(0.0f);
@@ -2938,7 +2938,7 @@ bool func_80037A4C(s_AreaLoadParams* areaLoadParams) // 0x80037A4C
     s32  scaledCosRotY;
 
     halfSinRotY   = Math_Sin(g_SysWork.player_4C.chara_0.rotation_24.vy) >> 1;
-    scaledCosRotY = -Math_Cos(FP_ANGLE_PACKED_FROM(areaLoadParams->rotationY_4_16)) * areaLoadParams->field_4_24;
+    scaledCosRotY = -Math_Cos(FP_ANGLE_FROM_PACKED(areaLoadParams->rotationY_4_16)) * areaLoadParams->field_4_24;
 
     clampedHalfCosPlayerRotY = halfSinRotY;
 
@@ -2963,7 +2963,7 @@ bool func_80037A4C(s_AreaLoadParams* areaLoadParams) // 0x80037A4C
         if (MIN(halfSinRotY, 0) <= MAX(temp_s2, temp_s4))
         {
             halfCosPlayerRotY   = Math_Cos(g_SysWork.player_4C.chara_0.rotation_24.vy) >> 1;
-            scaledSinPlayerRotY = Math_Sin(FP_ANGLE_PACKED_FROM(areaLoadParams->rotationY_4_16)) * areaLoadParams->field_4_24;
+            scaledSinPlayerRotY = Math_Sin(FP_ANGLE_FROM_PACKED(areaLoadParams->rotationY_4_16)) * areaLoadParams->field_4_24;
 
             clampedHalfCosPlayerRotY = halfCosPlayerRotY;
 
