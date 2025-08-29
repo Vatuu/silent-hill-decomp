@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_MATH_UTILS_H
-#define _BODYPROG_MATH_UTILS_H
+#ifndef _BODYPROG_MATH_ARITHMETIC_H
+#define _BODYPROG_MATH_ARITHMETIC_H
 
 /** @brief Squares a value.
  *

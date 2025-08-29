@@ -4,7 +4,7 @@
 #include <limits.h>
 #include "bodyprog/math/constants.h"
 #include "bodyprog/math/fixed_point.h"
-#include "bodyprog/math/utils.h"
+#include "bodyprog/math/arithmetic.h"
 
 /** @brief Multiplies an integer in fixed-point Q format by a float converted to fixed-point Q format,
  * then converts the result back from the fixed-point Q format using a 64-bit intermediate via

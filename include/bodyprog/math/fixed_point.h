@@ -3,7 +3,7 @@
 
 #include "types.h"
 #include "bodyprog/math/constants.h"
-#include "bodyprog/math/utils.h"
+#include "bodyprog/math/arithmetic.h"
 
 /** @brief Converts an integer to a fixed-point Q format.
  *
