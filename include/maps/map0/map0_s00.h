@@ -16,6 +16,8 @@ extern char D_800CAE7C[];
 
 extern s32 D_800E3A30;
 
+extern u8 D_800DD592;
+
 void func_800D0124();
 
 bool func_800D012C(VECTOR3* pos);
