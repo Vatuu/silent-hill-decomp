@@ -10,7 +10,25 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CB6B0);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CBC94);
 
+#ifdef NON_MATCHING
+// TODO. rodata migration.
+void func_800CBFB0(void) {
+    VECTOR3 vectors[4] = {
+        VECTOR3(-258.0f, -1.34f, 244.1f),
+        VECTOR3(-254.5f,  0.0f,  220.0f),
+        VECTOR3(-249.4f,  0.0f,  219.5f),
+        VECTOR3(-250.0f,  0.0f,  217.7f)
+    };
+    GsInitCoordinate2(NULL, (GsCOORDINATE2* ) &g_SysWork.unk_22A8[0x50]);
+    D_800DD594 = 1;
+    D_800DD593 = 1;
+    D_800E34EC = 20;
+    D_800E39AC = 60;
+    func_800D0394(2, vectors);
+}
+#else
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CBFB0);
+#endif
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CC04C);
 

@@ -18,6 +18,14 @@ extern s32 D_800E3A30;
 
 extern u8 D_800DD592;
 
+extern s8 D_800DD593;
+
+extern s8 D_800DD594;
+
+extern s8 D_800E34EC;
+
+extern s8 D_800E39AC;
+
 void func_800D0124();
 
 bool func_800D012C(VECTOR3* pos);
