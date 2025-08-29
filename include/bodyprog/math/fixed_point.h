@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "bodyprog/math/constants.h"
+#include "bodyprog/math/utils.h"
 
 /** @brief Converts an integer to a fixed-point Q format.
  *
@@ -247,6 +248,7 @@
 #define FP_METER(met) \
     Q19_12(met)
 
+// TODO: Find better name.
 /** @brief Converts floating-point world meters in Q19.12 to fixed-point collision meters in Q23.8.
  *
  * @note 1 meter = 256 units.
@@ -257,6 +259,7 @@
 #define FP_METER_COLL(met) \
     Q23_8(met)
 
+// TODO: Find better name.
 /** @brief Converts fixed-point world meters in Q19.12 to fixed-point collision meters in Q23.8.
  *
  * @param met Fixed-point world meters in Q19.12.
