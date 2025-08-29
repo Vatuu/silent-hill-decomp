@@ -109,27 +109,37 @@
 #define Q23_8(val) \
     (s32)FP_FLOAT_TO((val), Q8_SHIFT)
 
-#define Q19_12_TO_Q3_12(val) \
-    (s32)(((val) >> 4))
-
+/** @brief Converts a floating-point value to a fixed-point value in Q3.12.
+ *
+ * @param val Value to convert (`float`).
+ * @return `val` converted to fixed-point Q3.12 (`s16`).
+ */
 #define Q3_12(val) \
     (s16)FP_FLOAT_TO((val), Q12_SHIFT)
 
 /** @brief Converts a floating-point value to a fixed-point value in Q7.8.
  *
- * @param val `float` to convert.
- * @return `val` converted to fixed-point Q7.8.
+ * @param val Value to convert (`float`).
+ * @return `val` converted to fixed-point Q7.8 (`s16`).
  */
 #define Q7_8(val) \
     (s16)FP_FLOAT_TO((val), Q8_SHIFT)
 
 /** @brief Converts a floating-point value to a fixed-point value in Q0.8.
  *
- * @param val `float` to convert.
- * @return `val` converted to fixed-point Q0.8.
+ * @param val Value to convert (`float`).
+ * @return `val` converted to fixed-point Q0.8 ('u8`).
  */
 #define Q0_8(val) \
     (u8)FP_FLOAT_TO((val), Q8_SHIFT)
+
+/** @brief Converts a floating-point value in Q19.12 to a fixed-point value in Q23.8.
+ *
+ * @param val Fixed-point value in Q19.12 to convert.
+ * @return `val` converted to fixed-point Q23.8 (`s32`).
+ */
+#define Q19_12_TO_Q23_8(val) \
+    (s32)(((val) >> 4))
 
 /** @brief Converts a floating-point alpha in the range `[0.0f, 1.0f]` to a fixed-point alpha in Q3.12, range `[0, 4096]`.
  * Mapping is direct.
@@ -253,7 +263,7 @@
  * @return Fixed-point collision meters in Q23.8 (`s32`).
  */
 #define FP_METER_TO_COLL(met) \
-    Q19_12_TO_Q3_12(met)
+    Q19_12_TO_Q23_8(met)
 
 /** @brief Converts floating-point seconds to fixed-point seconds in Q19.12.
  *
