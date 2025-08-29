@@ -1737,11 +1737,60 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005CD38); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005D50C); // 0x8005D50C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005D86C); // 0x8005D86C
-
-s32 func_8005D974() // 0x8005D974
+s32 func_8005D86C(s32 arg0) // 0x8005D86C
 {
-    s32 val = func_8005D86C();
+    s32 var_a0;
+    s32 var_v1;
+    s32 temp_a1;
+    s32 temp_a2;
+    s32 temp_a3;
+    s32 temp;
+
+    temp    = FP_ALPHA_NORM(arg0);
+    temp_a1 = FP_FROM(arg0, Q12_SHIFT);
+
+    if (temp_a1 >= 0xC)
+    {
+        return 0;
+    }
+    if (temp_a1 < -0x14)
+    {
+        return 0x7FFFFFFF;
+    }
+
+    temp_a2 = (arg0 & 0x7F) << 5;
+    temp_a3 = temp >> 7;
+
+    var_a0 = D_800AE564[temp_a3];
+    if (temp_a1 > 0)
+    {
+        var_a0 >>= temp_a1;
+    }
+    else if (temp_a1 < 0)
+    {
+        var_a0 <<= -temp_a1;
+    }
+
+    if (temp_a2 != 0)
+    {
+        var_v1 = D_800AE564[temp_a3 + 1];
+        if (temp_a1 > 0)
+        {
+            var_v1 >>= temp_a1;
+        }
+        else if (temp_a1 < 0)
+        {
+            var_v1 <<= -temp_a1;
+        }
+
+        var_a0 = FP_MULTIPLY_PRECISE(var_a0, 0x1000 - temp_a2, 0xC) + FP_MULTIPLY_PRECISE(var_v1, temp_a2, 0xC);
+    }
+    return var_a0;
+}
+
+s32 func_8005D974(s32 arg0) // 0x8005D974
+{
+    s32 val = func_8005D86C(arg0);
 
     if (val > 0x4000)
     {
