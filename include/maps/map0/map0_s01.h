@@ -2,6 +2,7 @@
 #define _MAP0_S01_H
 
 #include "bodyprog/bodyprog.h"
+#include "game.h"
 #include "types.h"
 
 /** @brief Event flags specific to this map. */
@@ -72,21 +73,13 @@ extern u8 D_800DE250;
 extern u8 D_800DE251;
 
 /** `arg0` is a struct pointer, might be `s_SubCharacter`. */
-void func_800D2364(s32 arg0);
+void func_800D2364(s_SubCharacter* chara);
 
 void func_800D3CC4(s_SubCharacter* chara);
 
 void func_800D3DFC(s_SubCharacter* chara);
 
-s32 func_800D71F0(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-
-s32 func_800D7440(VECTOR* vec0, VECTOR* vec1, s_SubCharacter* chara);
-
-void func_800D76A0(s_SubCharacter* chara);
-
 void func_800D7E88(s_Model* model);
-
-void func_800D8714(s_SubCharacter*, s32, s32);
 
 void func_800DA778(s32 arg0);
 

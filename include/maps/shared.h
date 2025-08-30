@@ -1,6 +1,7 @@
 #ifndef _MAPS_SHARED_H
 #define _MAPS_SHARED_H
 
+#include "game.h"
 typedef enum
 {
     ParticleState_Spawn  = 0,
@@ -498,6 +499,8 @@ void sharedFunc_800D2200_0_s01(s_SubCharacter* chara);
 
 bool sharedFunc_800D2274_0_s01(s_SubCharacter* chara);
 
+void sharedFunc_800D2364_0_s01(s_SubCharacter* chara);
+
 void sharedFunc_800D2390_0_s01(s_SubCharacter*);
 
 bool Ai_AirScreamer_Init(s_SubCharacter* chara);
@@ -538,7 +541,17 @@ s32 sharedFunc_800D5274_0_s01();
 void sharedFunc_800D633C_0_s01(s_SubCharacter*);
 void sharedFunc_800D63A4_0_s01(s_SubCharacter*);
 void sharedFunc_800D6600_0_s01(s_SubCharacter*);
+
+s32 sharedFunc_800D7120_0_s01(s32, s32, s32);
+s32 sharedFunc_800D71F0_0_s01(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+
+s32 sharedFunc_800D7440_0_s01(VECTOR* vec0, VECTOR* vec1, s_SubCharacter* chara);
+
 void sharedFunc_800D7560_0_s01(s_SubCharacter* chara);
+
+void sharedFunc_800D76A0_0_s01(s_SubCharacter* chara);
+
+s32 sharedFunc_800D77D0_0_s01(s_SubCharacter*); // Assumed return type.
 
 void sharedFunc_800D7AB0_0_s01(s_SubCharacter*);
 
@@ -547,6 +560,10 @@ void sharedFunc_800D7EBC_0_s01(s_SubCharacter*);
 bool sharedFunc_800D81B0_0_s01(s_SubCharacter* chara);
 
 void sharedFunc_800D82B8_0_s01(s_SubCharacter*);
+
+void sharedFunc_800D8714_0_s01(s_SubCharacter*, s32, s32);
+
+void sharedFunc_800D87FC_0_s01(s_SubCharacter* chara);
 
 s32 sharedFunc_800D929C_0_s00();
 s32 sharedFunc_800D2DAC_0_s00();

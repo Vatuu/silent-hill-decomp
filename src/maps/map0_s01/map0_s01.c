@@ -135,10 +135,7 @@ void func_800D2104() {}
 
 #include "maps/shared/sharedFunc_800D2274_0_s01.h" // 0x800D2274
 
-void func_800D2364(s32 arg0) // 0x800D2364
-{
-    func_8005DC1C(Sfx_Unk1590, arg0 + 24, FP_VOLUME(0.5f), 0);
-}
+#include "maps/shared/sharedFunc_800D2364_0_s01.h" // 0x800D2364
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D2390_0_s01); // 0x800D2390
 
@@ -438,132 +435,21 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D6C7C);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D6EC4);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D7120);
+INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D7120_0_s01);
 
-s32 func_800D71F0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800D71F0
-{
-    s32 var_v1;
-    s32 arg2Sqr;
-
-    if (arg1 == 0)
-    {
-        return arg0;
-    }
-
-    if (arg2 != 0)
-    {
-        if (arg1 < 0)
-        {
-            arg1 = -arg1;
-        }
-
-        arg2Sqr  = FP_MULTIPLY_PRECISE(arg2, arg2, Q12_SHIFT) << Q12_SHIFT;
-        arg2Sqr /= arg1 * 2;
-
-        if (arg3 <= 0)
-        {
-            arg3 = -arg3;
-        }
-
-        if (arg3 < arg2Sqr)
-        {
-            var_v1 = SquareRoot12(FP_MULTIPLY_PRECISE(arg3, arg1 * 2, Q12_SHIFT));
-            if (var_v1 == 0)
-            {
-                var_v1 = 1;
-            }
-
-            if (arg2 > 0)
-            {
-                if (var_v1 < arg2)
-                {
-                    arg2 = var_v1;
-                }
-            }
-            else
-            {
-                if (arg2 < -var_v1)
-                {
-                    arg2 = -var_v1;
-                }
-            }
-        }
-    }
-
-    return func_800D7120(arg0, arg1, arg2);
-}
+#include "maps/shared/sharedFunc_800D71F0_0_s01.h" // 0x800D71F0
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D72E8);
 
-s32 func_800D7440(VECTOR* vec0, VECTOR* vec1, s_SubCharacter* chara) // 0x800D7440
-{
-    s32     temp_s2;
-    s32     posY;
-    s32     result;
-    s32     cond;
-    VECTOR* vecCpy;
-
-    vecCpy = vec0;
-
-    func_800D81D0(chara);
-    func_800D8714(chara, chara->moveSpeed_38, chara->headingAngle_3C);
-    func_800D87FC(chara);
-
-    result = func_80069B24(vecCpy, vec1, chara);
-
-    posY    = chara->position_18.vy;
-    temp_s2 = func_80080884(chara->position_18.vx + vecCpy->vx,
-                            chara->position_18.vz + vecCpy->vz);
-
-    if (sharedFunc_800D4A80_0_s01(chara) != 4)
-    {
-        if (vec1->vy > 0 && temp_s2 < (posY - FP_METER(0.5f)))
-        {
-            vecCpy->vx = 0;
-            vecCpy->vz = 0;
-        }
-    }
-    else if (temp_s2 < posY)
-    {
-        vecCpy->vx = 0;
-        vecCpy->vz = 0;
-    }
-
-    if ((FP_FROM(vec1->vx, Q4_SHIFT) != FP_FROM(vecCpy->vx, Q4_SHIFT)) ||
-        (FP_FROM(vec1->vz, Q4_SHIFT) != FP_FROM(vecCpy->vz, Q4_SHIFT)))
-    {
-        result = 1;
-    }
-
-    func_800D8244(chara);
-    return result;
-}
+#include "maps/shared/sharedFunc_800D7440_0_s01.h" // 0x800D7440
 
 #include "maps/shared/sharedFunc_800D7560_0_s01.h" // 0x800D7560
 
-void func_800D76A0(s_SubCharacter* chara) // 0x800D76A0
-{
-    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(23, true) ||
-        chara->model_0.anim_4.status_0 == ANIM_STATUS(13, true) ||
-        chara->model_0.anim_4.status_0 == ANIM_STATUS(14, true))
-    {
-        if (func_800D77D0(chara) != 0)
-        {
-            chara->model_0.anim_4.status_0 = ANIM_STATUS(25, false);
-        }
-    }
-    else if(chara->model_0.anim_4.status_0 == ANIM_STATUS(25, true))
-    {
-        if (func_800D77D0(chara) == 0)
-        {
-            chara->model_0.anim_4.status_0 = ANIM_STATUS(23, false);
-        }
-    }
-}
+#include "maps/shared/sharedFunc_800D76A0_0_s01.h" // 0x800D76A0
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D7714);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D77D0);
+INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D77D0_0_s01);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D7AB0_0_s01); // 0x800D7AB0
 
@@ -578,15 +464,15 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D7EBC_0_s01
 
 #include "maps/shared/sharedFunc_800D81B0_0_s01.h" // 0x800D81B0
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D81D0);
+INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D81D0_0_s01);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D8244);
+INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D8244_0_s01);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D82B8_0_s01); // 0x800D82B8
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D8714);
+INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D8714_0_s01);
 
-void func_800D87FC() {}
+#include "maps/shared/sharedFunc_800D87FC_0_s01.h" // 0x800D87FC
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D8804);
 
