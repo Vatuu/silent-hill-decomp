@@ -45,3 +45,67 @@ s_AnimInfo g_AnimInfo[] =
     { Anim_Update0, 115, 0, 115, 0, { FP_TIME(15.0f) }, 815,  815  },
     {} // End of list.
 };
+
+s_UnkStruct3_Mo g_mapHeaderTable_38[21] = {
+    { 0x4d4c, 0x0,   0x2a4, 0x2a5 },
+    { 0x4f4e, 0xca,  0x2a6, 0x2c9 },
+    { 0x5150, 0xd2,  0x2ca, 0x2dc },
+    { 0x5352, 0xd3,  0x2dd, 0x2ef },
+    { 0x5554, 0xd4,  0x2f0, 0x302 },
+    { 0x5756, 0xd5,  0x303, 0x315 },
+    { 0x5958, 0xf2,  0x316, 0x324 },
+    { 0x5b5a, 0x156, 0x325, 0x32f },
+    { 0x5d5c, 0x157, 0x330, 0x33a },
+    { 0x5f5e, 0x15f, 0x33b, 0x368 },
+    { 0x6160, 0x160, 0x369, 0x384 },
+    { 0x6362, 0x161, 0x385, 0x394 },
+    { 0x6564, 0x168, 0x395, 0x3b3 },
+    { 0x6766, 0x16b, 0x3b4, 0x402 },
+    { 0x6968, 0x16d, 0x403, 0x40d },
+    { 0x6b6a, 0x16e, 0x40e, 0x41e },
+    { 0x6d6c, 0x16f, 0x41f, 0x432 },
+    { 0x6f6e, 0x182, 0x433, 0x438 },
+    { 0x7170, 0x190, 0x439, 0x43c },
+    { 0x7372, 0x158, 0x32f, 0x32f },
+    {} // end of list
+};
+
+u8 g_LoadableItems[35] = {
+    InventoryItemId_HealthDrink,
+    InventoryItemId_FirstAidKit,
+    InventoryItemId_Ampoule,
+    InventoryItemId_KitchenKnife,
+    InventoryItemId_SteelPipe,
+    InventoryItemId_Hammer,
+    InventoryItemId_Chainsaw,
+    InventoryItemId_Axe,
+    InventoryItemId_Handgun,
+    InventoryItemId_HuntingRifle,
+    InventoryItemId_Shotgun,
+    InventoryItemId_HyperBlaster,
+    InventoryItemId_HandgunBullets,
+    InventoryItemId_RifleShells,
+    InventoryItemId_ShotgunShells,
+    InventoryItemId_Flashlight,
+    InventoryItemId_PocketRadio,
+    InventoryItemId_HouseKey,
+    InventoryItemId_KeyOfLion,
+    InventoryItemId_KeyOfWoodman,
+    InventoryItemId_KeyOfScarecrow,
+    InventoryItemId_KGordonKey,
+    InventoryItemId_DrawbridgeKey,
+    InventoryItemId_NoteToSchool,
+    InventoryItemId_NoteDoghouse,
+    InventoryItemId_Flauros,
+    InventoryItemId_AntiqueShopKey,
+    InventoryItemId_PlasticBottle,
+    InventoryItemId_UnknownLiquid,
+    InventoryItemId_VideoTape,
+    InventoryItemId_RockDrill,
+    InventoryItemId_GasolineTank,
+    InventoryItemId_ChannelingStone,
+    InventoryItemId_Katana,
+    0
+};
+
+u8 D_800DD78B = 0;
