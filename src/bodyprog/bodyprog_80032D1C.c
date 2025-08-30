@@ -2489,7 +2489,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
     s16 temp;
     s8* str;
 
-    mapMsgCode = Gfx_MapMsg_StringDraw(g_MapOverlayHeader.mapMessageStrings_30[mapMsgIdx], *arg1);
+    mapMsgCode = Gfx_MapMsg_StringDraw(g_MapOverlayHeader.mapMessages_30[mapMsgIdx], *arg1);
 
     g_MapMsg_SelectFlashTimer += g_DeltaTime1;
     if (g_MapMsg_SelectFlashTimer >= FP_TIME(0.5f))
@@ -2526,7 +2526,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                     }
 
                     Gfx_StringSetPosition(32, (STRING_LINE_OFFSET * i) + 98);
-                    Gfx_StringDraw(g_MapOverlayHeader.mapMessageStrings_30[i], MAP_MESSAGE_DISPLAY_ALL_LENGTH);
+                    Gfx_StringDraw(g_MapOverlayHeader.mapMessages_30[i], MAP_MESSAGE_DISPLAY_ALL_LENGTH);
                 }
 
                 mapMsgCode = 2;
@@ -2551,7 +2551,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                     }
 
                     Gfx_StringSetPosition(32, (STRING_LINE_OFFSET * i) + 96);
-                    Gfx_StringDraw(g_MapOverlayHeader.mapMessageStrings_30[(mapMsgIdx + i) + 1], MAP_MESSAGE_DISPLAY_ALL_LENGTH);
+                    Gfx_StringDraw(g_MapOverlayHeader.mapMessages_30[(mapMsgIdx + i) + 1], MAP_MESSAGE_DISPLAY_ALL_LENGTH);
                 }
             }
 

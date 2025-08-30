@@ -46,7 +46,7 @@ s_AnimInfo g_AnimInfos[] =
     {} // End of list.
 };
 
-s_UnkStruct3_Mo g_mapHeaderTable_38[21] =
+s_UnkStruct3_Mo g_MapHeaders_38[21] =
 {
     { 0x4D4C, 0x0,   0x2A4, 0x2A5 },
     { 0x4F4E, 0xCA,  0x2A6, 0x2C9 },
@@ -71,7 +71,7 @@ s_UnkStruct3_Mo g_mapHeaderTable_38[21] =
     {} // End of list.
 };
 
-u8 g_LoadableItems[35] =
+u8 g_LoadableInventoryItemIds[35] =
 {
     InventoryItemId_HealthDrink,
     InventoryItemId_FirstAidKit,

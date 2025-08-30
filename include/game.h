@@ -959,7 +959,7 @@ typedef struct _AnimInfo
     void (*funcPtr_0)(struct _SubCharacter*, s32, GsCOORDINATE2*, struct _AnimInfo*); // TODO: `funcPtr_0` signature doesn't currently match `Anim_Update`.
     u8  field_4; /** Packed anim status. See `s_ModelAnimData::status_0`. Unknown purpose for this one. */
     s8  hasVariableTimeDelta_5;
-    u8  status_6; /** Packed anim status. See `s_ModelAnimData::status_0`. */
+    u8  status_6; /** Packed anim status. See `s_ModelAnim::status_0`. */
     u8  unk_7;
     union
     {
@@ -971,7 +971,7 @@ typedef struct _AnimInfo
 } s_AnimInfo;
 STATIC_ASSERT_SIZEOF(s_AnimInfo, 16);
 
-typedef struct _ModelAnimData
+typedef struct _ModelAnim
 {
     u8          status_0;         /** Is active: bit 0, Anim index: bits 1-7. Possible original name: `anim_status` */
                                   // TODO: Rename to `status_0`.

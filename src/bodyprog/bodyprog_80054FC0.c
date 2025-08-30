@@ -2134,7 +2134,7 @@ void func_800699F8(s_func_800699F8* coll, s32 posX, s32 posZ) // 0x800699F8
     }
 
     sp10.position_0.vx = posX;
-    sp10.position_0.vy = FP_ANGLE(0.0f);
+    sp10.position_0.vy = FP_METER(0.0f);
     sp10.position_0.vz = posZ;
     sp10.rotation_C.vx = FP_ANGLE(0.0f);
     sp10.rotation_C.vy = FP_ANGLE(0.0f);
@@ -2188,7 +2188,7 @@ s32 func_80069FFC(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara) // 0x8
     sp28.field_0.vy = chara->position_18.vy - FP_METER(0.02f);
     sp28.field_0.vz = chara->position_18.vz + chara->field_D8.field_6;
 
-    if (func_800426E4(chara->position_18.vx, chara->position_18.vz) == 0)
+    if (func_800426E4(chara->position_18.vx, chara->position_18.vz) == NULL)
     {
         func_8006A178(arg0, 0, 0, 0, 0x8000);
         return 1;
@@ -2932,6 +2932,8 @@ void func_8006D600(VECTOR3* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8
     s32 var_s0;
     s32 var_v0_2;
     s32 var_v1;
+
+    // TODO: Angles here.
 
     temp_s0 = FP_ALPHA_NORM(arg1);
     temp_s3 = FP_ALPHA_NORM(arg2);

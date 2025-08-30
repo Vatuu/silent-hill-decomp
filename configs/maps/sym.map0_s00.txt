@@ -121,9 +121,9 @@ Gfx_LoadingScreen_StageString = 0x800D95D4; // type:func
 //-------------------------------------------------------------------------
 //--- PA: 0x013D44   VA: 0x800DD2BC   subsegment: .data, map0_s00_anim_info
 //-------------------------------------------------------------------------
-g_AnimInfos                    = 0x800DD2BC;
-g_mapHeaderTable_38           = 0x800DD4EC; // type:UnkStruct3_Mo size:0x90
-g_LoadableItems               = 0x800DD57C; // type:u8 size:0x08
+g_AnimInfos                   = 0x800DD2BC;
+g_MapHeaders_38               = 0x800DD4EC; // type:UnkStruct3_Mo size:0x90
+g_LoadableInventoryItemIds    = 0x800DD57C; // type:u8 size:0x08
 
 //--------------------------------------------------------------
 //--- PA: 0x01400C   VA: 0x800DD584   subsegment: data, map0_s00

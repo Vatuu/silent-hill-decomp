@@ -1100,13 +1100,16 @@ typedef struct
 {
     s_IpdHeader* ipdHeader_0;
     s32          queueIdx_4;
-    s16          field_8;
-    s16          field_A;
+    s16          field_8; // X cell coord?
+    s16          field_A; // Z cell coord?
     u8           unk_C[16];
 } s_800C117C;
 STATIC_ASSERT_SIZEOF(s_800C117C, 28);
 
-
+typedef struct
+{
+    s16 field_0[16];
+} s_800C1020_42C;
 typedef struct
 {
     s8              unk_0[28];
@@ -1468,8 +1471,8 @@ STATIC_ASSERT_SIZEOF(s_SpawnInfo, 12);
 /** Contains loaded anim data? */
 typedef struct
 {
-    s16 status_0; /** Packed anim status. See `s_ModelAnimData::status_0`. */
-    s16 status_2; /** Packed anim status. See `s_ModelAnimData::status_0`. */
+    s16 status_0; /** Packed anim status. See `s_ModelAnim::status_0`. */
+    s16 status_2; /** Packed anim status. See `s_ModelAnim::status_0`. */
     s16 time_4;   /** Fixed-point anim time. */
     s16 field_6;
 } s_UnkStruct3_Mo; // Probable size: 8 bytes.
@@ -1506,8 +1509,8 @@ typedef struct _MapOverlayHeader
     u8*               unk_24;
     GsCOORDINATE2*    field_28;
     u8*               loadableItems_2C;
-    const char**      mapMessageStrings_30;
-    s_AnimInfo*       animInfos_34; // Array.
+    const char**      mapMessages_30; // Array of strings.
+    s_AnimInfo*       animInfos_34;   // Array.
     s_UnkStruct3_Mo*  field_38;
     void              (*func_3C)(); // func(?).
     void              (*func_40)();

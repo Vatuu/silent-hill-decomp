@@ -245,7 +245,7 @@ void Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004ACF4
         g_MapMsg_WidthTable[i] = 0;
     }
 
-    mapMsg = g_MapOverlayHeader.mapMessageStrings_30[mapMsgIdx];
+    mapMsg = g_MapOverlayHeader.mapMessages_30[mapMsgIdx];
 
     for (j = 0; j < LINE_COUNT_MAX; )
     {

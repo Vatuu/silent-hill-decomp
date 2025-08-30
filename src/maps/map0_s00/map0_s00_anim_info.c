@@ -66,7 +66,7 @@ s_UnkStruct3_Mo g_MapHeaderTable_38[18] =
     {}, // End of list.
 };
 
-u8 g_LoadableItems[8] =
+u8 g_LoadableInventoryItemIds[8] =
 {
     InventoryItemId_HealthDrink,
     InventoryItemId_Chainsaw,
