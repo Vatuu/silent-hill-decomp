@@ -412,7 +412,10 @@ typedef struct
     u8                 unk_C9[1];
     s16                field_CA;
     u8                 unk_CC[4];
-    u8                 unk_D0[6];
+    u8                 field_D0;
+    s8                 unk_D1;
+    u16                field_D2;
+    s16                field_D4;
     s16                field_D6;
     u8                 field_D8;
     u8                 field_D9;
@@ -3374,6 +3377,8 @@ void func_8006342C(s32 invItemId, s16, s16, GsCOORDINATE2*);
 s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 arg2, s16 arg3);
 
 void func_800622B8(s32, s_SubCharacter*, s32 animStatus, s32);
+
+void func_80066D90();
 
 void func_80066E40();
 

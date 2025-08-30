@@ -2026,7 +2026,32 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80065B94); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80066184); // 0x80066184
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80066D90); // 0x80066D90
+void func_80066D90() // 0x80066D90
+{
+    s32       var_s1;
+    DR_TPAGE* var1; // Guessed type
+    TILE*     var2; // Guessed type
+
+    for (var_s1 = 0; var_s1 < 0x3F; var_s1++)
+    {
+        var1 = PSX_SCRATCH;
+        setlen(var1, 1);
+        var1->code[0] = 0xE1000240;
+        DrawPrim(var1);
+
+        var2 = PSX_SCRATCH;
+        setlen(var2, 3);
+        // Hacks. Maybe this is not a TILE?
+        *(s32*)&var2->r0 = 0x62080808;
+        *(s32*)&var2->x0 = 0xFF20FF60;
+        *(s32*)&var2->w  = 0x01C00140;
+        DrawPrim(var2);
+
+        Fs_QueueUpdate();
+        VSync(0);
+    }
+    Fs_QueueWaitForEmpty();
+}
 
 void func_80066E40() // 0x80066E40
 {
