@@ -371,6 +371,16 @@ typedef struct
     s32 field_4;
 } s_func_8006CC44_A8;
 
+typedef union
+{
+    s16 field_0;
+    struct
+    {
+        u8 field_0;
+        u8 field_1;
+    } s_field_0;
+} u_func_8006CC44_D8;
+
 typedef struct
 {
     u8                 field_0_0  : 8;
@@ -411,14 +421,13 @@ typedef struct
     u8                 field_C8;
     u8                 unk_C9[1];
     s16                field_CA;
-    u8                 unk_CC[4];
+    s32                field_CC;
     u8                 field_D0;
     s8                 unk_D1;
     u16                field_D2;
     s16                field_D4;
     s16                field_D6;
-    u8                 field_D8;
-    u8                 field_D9;
+    u_func_8006CC44_D8 field_D8;
     u8                 field_DA;
     u8                 field_DB;
     u8                 field_DC;
@@ -3434,6 +3443,8 @@ void func_8006B9C8(s_func_8006CC44* arg0);
 
 s32 func_8006BC34(s_func_8006BC34* arg0);
 
+void func_8006BCC4(s8*, s32, s32, s16, s16, s16);
+
 void func_8006BDDC(s_func_8006BDDC* arg0, s16 arg1, s16 arg2);
 
 void func_8006BE40(s_func_8006CC44* arg0);
@@ -3441,6 +3452,8 @@ void func_8006BE40(s_func_8006CC44* arg0);
 void func_8006C0C8(s_func_8006CC44*, s16, s16, s32);
 
 bool func_8006C1B8(u32 arg0, s16 arg1, s_func_8006C1B8* arg2);
+
+void func_8006C794(s_func_8006CC44* arg0, s32 arg1, s32 arg2);
 
 void func_8006C838(s_func_8006CC44* arg0, s_IpdCollisionData* collData);
 
