@@ -832,7 +832,8 @@ typedef struct
     s_ObjList* objList_8;
     s32        objListIdx_C;
     s8         field_10;
-    s8         unk_11[7];
+    s8         unk_11[3];
+    s32        field_14;
 } s_Bone;
 STATIC_ASSERT_SIZEOF(s_Bone, 24);
 
@@ -2752,6 +2753,9 @@ void func_80045108(s_Skeleton* arg0, s_PlmHeader* plmHeader, u8* arg2, s32 arg3)
 
 /** Anim func. */
 void func_800451B0(s_Skeleton* skel, s_PlmHeader* plmHeader, s32* arg2);
+
+/** Anim func. */
+void func_80045258(s_Skeleton** arg0, s_Bone* arg1, s32 arg2, s_PlmHeader* plmHeader);
 
 /** Anim func. Traverses skeleton bones to set flags/mask. */
 void func_800453E8(s_Skeleton* skel, bool cond);
