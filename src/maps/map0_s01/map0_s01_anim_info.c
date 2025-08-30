@@ -111,3 +111,8 @@ u8 g_LoadableItems[35] =
 };
 
 u8 D_800DD78B = 0;
+s32 sharedData_800DD78C_0_s01[2] = {};
+s8 D_800DD794 = 0;
+u8 sharedData_800DD591_0_s00 = 0;
+u8 sharedData_800DD796_0_s01 = 1;
+u8 __padding = 0;

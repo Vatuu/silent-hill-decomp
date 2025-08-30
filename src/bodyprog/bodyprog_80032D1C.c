@@ -1366,7 +1366,7 @@ void func_80034F18() // 0x80034F18
     if (g_SysWork.field_234A != 0)
     {
         g_MapOverlayHeader.func_16C(g_SysWork.field_2349, 0x7F);
-        g_MapOverlayHeader.func_168(NULL, g_SavegamePtr->mapOverlayId_A4, NULL);
+        g_MapOverlayHeader.func_168(0, g_SavegamePtr->mapOverlayId_A4, 0);
     }
 
     func_80034EC8();
@@ -1388,7 +1388,7 @@ void Game_InGameInit() // 0x80034FB8
     func_8003D95C();
     func_8003EBA0();
 
-    g_MapOverlayHeader.func_168(NULL, (void*)mapOvlId, (void*)NO_VALUE);
+    g_MapOverlayHeader.func_168(0, mapOvlId, NO_VALUE);
 
     func_80034EC8();
 

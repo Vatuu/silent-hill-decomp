@@ -1584,7 +1584,7 @@ typedef struct _MapOverlayHeader
     void              (*func_15C)(); // func(?) only map5_s01.
     void              (*func_160)(); // func(?) only map5_s01.
     void              (*func_164)(); // func(?) only map5_s01.
-    void              (*func_168)(void*, void*, void*);
+    void              (*func_168)(s32, s32, s32);
     void              (*func_16C)(VECTOR3*, s16);
     void              (*func_170)(); // func(?).
     void              (*func_174)(); // func(?).
