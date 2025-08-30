@@ -2948,6 +2948,8 @@ s32 func_800557DC();
 
 void func_80055814(s32 arg0);
 
+void func_80055A90(CVECTOR* arg0, CVECTOR* arg1, u8 arg2, s32 arg3);
+
 /** @brief Applies uniform lighting and fog shading to `color`, outputting to `result`.
  * The fog factor is derived from `arg2` via `D_800C4168.field_CC` and blends the lit color toward the far/fog color in `D_800C4168.field_1C/field_1D/field_1E`,
  * with lighting strength from `D_800C4168.field_20` applied equally on all axes.

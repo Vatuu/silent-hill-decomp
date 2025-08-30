@@ -280,7 +280,49 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800559A8); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80055A50); // 0x80055A50
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80055A90); // 0x80055A90
+void func_80055A90(CVECTOR* arg0, CVECTOR* arg1, u8 arg2, s32 arg3) // 0x80055A90
+{
+    s32 var_v1;
+
+    arg3 = arg3 >> 4;
+    if (arg3 < 0)
+    {
+        arg3 = 0;
+    }
+
+    if (arg3 < (1 << D_800C4168.field_14))
+    {
+        arg3 = D_800C4168.field_CC[(arg3 << 7) >> D_800C4168.field_14] << 4;
+    }
+    else
+    {
+        arg3 = 0xFF << 4;
+    }
+
+    var_v1 = 0x1000 - (D_800C4168.field_18 + arg3); //  D_800C4168.field_18
+    if (var_v1 < 0)
+    {
+        var_v1 = 0;
+    }
+
+    gte_lddp(var_v1);
+    gte_ldrgb(&D_800C4168.field_1C);
+
+    gte_SetFarColor(0, 0, 0);
+
+    gte_dpcs();
+
+    gte_strgb(arg0);
+
+    gte_lddp(arg3);
+    gte_ldrgb(&D_800C4168.field_28);
+
+    gte_ldsv_(arg2 << 5);
+
+    gte_dpcl();
+
+    gte_strgb(arg1);
+}
 
 void func_80055B74(CVECTOR* result, CVECTOR* color, s32 arg2) // 0x80055B74
 {
