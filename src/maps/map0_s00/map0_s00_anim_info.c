@@ -39,3 +39,41 @@ s_AnimInfo g_AnimInfo[] =
     { Anim_Update0, 109, 0, 109, 0, { FP_TIME(25.0f) }, 994, 1026 },
     {} // End of list.
 };
+
+/* Not sure if the time_4 field (3rd) is actually time.
+ * these numbers produce very small and non round numbers.
+ * I also seen some code read this field and add very small numbers like 4 or 32.
+ * This is why I don't use any FP macros here
+ */
+s_UnkStruct3_Mo g_MapHeaderTable_38[18] = {
+    { 0x4d4c, 0x0,   0x2a4, 0x2a5 },
+    { 0x4f4e, 0xca,  0x2a6, 0x2c9 },
+    { 0x5150, 0xd2,  0x2ca, 0x2dc },
+    { 0x5352, 0xd3,  0x2dd, 0x2ef },
+    { 0x5554, 0xd4,  0x2f0, 0x302 },
+    { 0x5756, 0xd5,  0x303, 0x315 },
+    { 0x5958, 0xeb,  0x316, 0x327 },
+    { 0x5b5a, 0xec,  0x328, 0x339 },
+    { 0x5d5c, 0xf5,  0x33a, 0x34b },
+    { 0x5f5e, 0xf6,  0x34c, 0x35d },
+    { 0x6160, 0x154, 0x35e, 0x372 },
+    { 0x6362, 0x155, 0x373, 0x387 },
+    { 0x6564, 0x156, 0x388, 0x392 },
+    { 0x6766, 0x157, 0x393, 0x39d },
+    { 0x6968, 0x15e, 0x39e, 0x3cc },
+    { 0x6b6a, 0x164, 0x3cd, 0x3e1 },
+    { 0x6d6c, 0x165, 0x3e2, 0x402 },
+    {}, // end of list
+};
+
+u8 g_LoadableItems[8] =
+{
+    InventoryItemId_HealthDrink,
+    InventoryItemId_Chainsaw,
+    InventoryItemId_HyperBlaster,
+    InventoryItemId_RockDrill,
+    InventoryItemId_GasolineTank,
+    InventoryItemId_ChannelingStone,
+    InventoryItemId_Katana,
+    0
+};

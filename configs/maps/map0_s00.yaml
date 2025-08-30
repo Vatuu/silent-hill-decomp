@@ -69,7 +69,7 @@ segments:
 
       # .data section
       - [0x13D44, .data, map0_s00_anim_info]
-      - [0x13F74, data, map0_s00]
+      - [0x1400C, data, map0_s00]
       - [0x15D98, .data, map0_s00_header]
       - [0x16140, .data, map0_s00_msg]
       - [0x161DC, data]
