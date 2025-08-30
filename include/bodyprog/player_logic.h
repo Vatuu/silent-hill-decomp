@@ -243,15 +243,15 @@ typedef enum _PlayerLowerBodyState
     PlayerLowerBodyState_None              = 0,
     PlayerLowerBodyState_WalkForward       = 1,
     PlayerLowerBodyState_RunForward        = 2,
-    PlayerLowerBodyState_RunWallStop       = 3,
+    PlayerLowerBodyState_RunForwardWallStop       = 3,
     PlayerLowerBodyState_WalkBackward      = 4,
     PlayerLowerBodyState_SidestepRight     = 5,
     PlayerLowerBodyState_SidestepLeft      = 6,
-    PlayerLowerBodyState_RunRight          = 7,
-    PlayerLowerBodyState_RunLeft           = 8,
+    PlayerLowerBodyState_RunRight          = 7, // } TODO: Check. Could be swapped.
+    PlayerLowerBodyState_RunLeft           = 8, // }
     PlayerLowerBodyState_QuickTurnRight    = 9,
     PlayerLowerBodyState_QuickTurnLeft     = 10,
-    PlayerLowerBodyState_Run_BackwardJump  = 11,
+    PlayerLowerBodyState_JumpBackward      = 11,
     PlayerLowerBodyState_Stumble           = 12,
     PlayerLowerBodyState_RunLeftWallStop   = 13,
     PlayerLowerBodyState_RunRightWallStop  = 14,
@@ -271,7 +271,7 @@ typedef enum _PlayerLowerBodyState
     PlayerLowerBodyState_AimRunLeft        = 28, // @unused
     PlayerLowerBodyState_AimQuickTurnRight = 29,
     PlayerLowerBodyState_AimQuickTurnLeft  = 30,
-    PlayerLowerBodyState_Unk31             = 31,
+    PlayerLowerBodyState_Unk31             = 31, // Something backward?
     PlayerLowerBodyState_Unk32             = 32,
     PlayerLowerBodyState_Unk33             = 33,
     PlayerLowerBodyState_Attack            = 34,
@@ -281,9 +281,36 @@ typedef enum _PlayerLowerBodyState
 /** @brief Player animation IDs. */
 typedef enum _PlayerAnim
 {
-    PlayerAnim_Idle      = 26,
-    PlayerAnim_IdleTired = 27,
-    PlayerAnim_IdleAim   = 28 // Unsure. `_IdleAimHandgun`?
+    PlayerAnim_WalkForward             = 2,
+    PlayerAnim_RunForward              = 3,
+    PlayerAnim_WalkBackward            = 4,
+    PlayerAnim_SidestepLeft            = 5,
+    PlayerAnim_SidestepRight           = 6,
+    PlayerAnim_RunLeft                 = 7,
+    PlayerAnim_RunRight                = 8,
+    PlayerAnim_RunForwardWallStopRight = 9,
+    PlayerAnim_RunForwardWallStopLeft  = 10, 
+    PlayerAnim_RunForwardStumble       = 11,
+    PlayerAnim_TurnLeft                = 12,
+    PlayerAnim_TurnRight               = 13,
+    PlayerAnim_QuickTurnRight          = 14,
+    PlayerAnim_QuickTurnLeft           = 15,
+    PlayerAnim_JumpBackward            = 16,
+    PlayerAnim_Unk17                   = 17, // Idle?
+    PlayerAnim_RunLeftWallStop         = 18,
+    PlayerAnim_RunLeftStumble          = 19,
+    PlayerAnim_RunRightWallStop        = 20,
+    PlayerAnim_RunRightStumble         = 21,
+    PlayerAnim_FallForward             = 22,
+    PlayerAnim_FallBackward            = 23,
+    PlayerAnim_Unk24                   = 24,
+    PlayerAnim_Unk25                   = 25,
+    PlayerAnim_Idle                    = 26,
+    PlayerAnim_IdleTired               = 27,
+    PlayerAnim_IdleAim                 = 28 // Unsure. `_IdleAimHandgun`?
+
+    // 29, 30, 31: some attack anim. Probably more combat anims afterward.
+    // From 120: Damage, enemy grab, enemy release anims.
 } s_PlayerAnim;
 
 // ========
@@ -449,7 +476,7 @@ void Player_CharaRotate(s32 speed); // 0x80071284
 void Player_MovementStateReset(s_SubCharacter* chara, e_PlayerLowerBodyState lowerBodyState); // 0x800713B4
 
 /** Audio-related. */
-s32 func_800713E8(s32 animStatus, s_SubCharacter* chara, s32 arg2, s32 arg3, s32 arg4, s8 arg5);
+bool func_800713E8(s32 animStatus, s_SubCharacter* chara, s32 arg2, s32 arg3, s32 arg4, s8 arg5);
 
 /** @brief Main update function for player functionality.
  *

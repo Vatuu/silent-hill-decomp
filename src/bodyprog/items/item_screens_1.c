@@ -46,7 +46,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
         {
             case PlayerLowerBodyState_QuickTurnRight:
             case PlayerLowerBodyState_QuickTurnLeft:
-            case PlayerLowerBodyState_Run_BackwardJump:
+            case PlayerLowerBodyState_JumpBackward:
             case PlayerLowerBodyState_AimQuickTurnRight:
             case PlayerLowerBodyState_AimQuickTurnLeft:
                 break;
