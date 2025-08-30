@@ -1315,7 +1315,7 @@ typedef struct
 {
     u8  unk_0[4];
     s16 field_4;
-    s16 field_6;
+    s16 field_6; // Keyframe index or time.
 } s_800C44F0; // Probable size: 8 bytes.
 
 /** Holds file IDs of anim/model/texture for each `e_CharacterId`, along with some data used in VC camera code. */
@@ -3954,8 +3954,8 @@ q19_12 Game_GasWeaponPowerTimerValue();
 
 void func_8007FD4C(s32 arg0);
 
-/** Returns data in last 3 pointer args. */
-void func_8007FDE0(s8, s32* sfx, s8* pitch, s8*);
+/** Returns data in last 3 pointer args. Outputs? */
+void func_8007FDE0(s8, s32* sfx, s8* pitch0, s8* pitch1);
 
 s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1);
 

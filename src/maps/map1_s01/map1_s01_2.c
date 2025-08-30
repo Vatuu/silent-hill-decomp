@@ -54,8 +54,8 @@ void Ai_Cat_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x
     if (chara->model_0.state_2 == 0)
     {
         chara->model_0.state_2                                      = 1;
-        chara->model_0.anim_4.status_0                             = ANIM_STATUS(3, true);
-        chara->model_0.anim_4.time_4                                = FP_TO(7, Q12_SHIFT);
+        chara->model_0.anim_4.status_0                              = ANIM_STATUS(3, true);
+        chara->model_0.anim_4.time_4                                = FP_TIME(7.0f);
         chara->model_0.anim_4.keyframeIdx1_A                        = 0;
         chara->model_0.stateStep_3                                  = 0;
         chara->model_0.anim_4.keyframeIdx0_8                        = 7;
@@ -68,13 +68,13 @@ void Ai_Cat_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x
         if (chara->model_0.state_2 == 2)
         {
             chara->model_0.anim_4.status_0      = ANIM_STATUS(1, true);
-            chara->model_0.anim_4.time_4         = FP_TO(7, Q12_SHIFT);
+            chara->model_0.anim_4.time_4         = FP_TIME(7.0f);
             chara->model_0.anim_4.keyframeIdx0_8 = 7;
         }
         else if (chara->model_0.state_2 == 3)
         {
             chara->model_0.anim_4.status_0      = ANIM_STATUS(2, true);
-            chara->model_0.anim_4.time_4         = FP_TO(23, Q12_SHIFT);
+            chara->model_0.anim_4.time_4         = FP_TIME(23.0f);
             chara->model_0.anim_4.keyframeIdx0_8 = 23;
         }
 
@@ -110,7 +110,8 @@ void Ai_Cat_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x
 
     if (var_a0 != 0)
     {
-        func_8005DD44(1447, &chara->position_18, FP_VOLUME(0.5f), Rng_TestProbabilityBits(4) - 7); // TODO: Try using `RngGenerateInt` here.
+        // TODO: Try using `RngGenerateInt` here. Randomized pitch.
+        func_8005DD44(1447, &chara->position_18, FP_VOLUME(0.5f), Rng_TestProbabilityBits(4) - 7);
         chara->properties_E4.larvalStalker.properties_E8[0].val8[0] ^= 1;
     }
 }
