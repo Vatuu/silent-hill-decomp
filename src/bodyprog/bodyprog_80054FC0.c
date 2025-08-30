@@ -1734,7 +1734,7 @@ s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 arg2, s16 arg3) /
 {
     s_800C4590 sp10;
     VECTOR3    sp30;
-    s32        temp_s6;
+    s32        headingAngle;
     s32        temp_s0;
     s32        temp_s0_2;
     s32        temp_s2;
@@ -1744,22 +1744,22 @@ s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 arg2, s16 arg3) /
     s32        temp_v0_5;
     s32        ret;
 
-    temp_s6 = chara->headingAngle_3C;
-    temp_s0 = FP_MULTIPLY_PRECISE(g_DeltaTime0, chara->moveSpeed_38, 0xC);
-    temp_s2 = ((temp_s0 + 0x7FFF) > 0xFFFEU) * 4;
+    headingAngle = chara->headingAngle_3C;
+    temp_s0 = FP_MULTIPLY_PRECISE(g_DeltaTime0, chara->moveSpeed_38, Q12_SHIFT);
+    temp_s2 = ((temp_s0 + 0x7FFF) > 0xFFFEu) * 4;
     temp_s3 = temp_s2 >> 1;
 
-    temp_v0_5 = Math_Sin(temp_s6);
+    temp_v0_5 = Math_Sin(headingAngle);
     temp_s0_2 = temp_s0 >> temp_s3;
     temp_v0_2 = temp_v0_5 >> temp_s3;
-    sp30.vx   = (s32)FP_MULTIPLY_PRECISE(temp_s0_2, temp_v0_2, 0xC) << temp_s2;
+    sp30.vx   = (s32)FP_MULTIPLY_PRECISE(temp_s0_2, temp_v0_2, Q12_SHIFT) << temp_s2;
 
-    temp_v0_4 = Math_Cos(temp_s6) >> temp_s3;
-    sp30.vz   = (s32)FP_MULTIPLY_PRECISE(temp_s0_2, temp_v0_4, 0xC) << temp_s2;
+    temp_v0_4 = Math_Cos(headingAngle) >> temp_s3;
+    sp30.vz   = (s32)FP_MULTIPLY_PRECISE(temp_s0_2, temp_v0_4, Q12_SHIFT) << temp_s2;
 
     temp_v0_5 = chara->field_34;
     sp30.vx += arg2;
-    sp30.vy = FP_MULTIPLY_PRECISE(g_DeltaTime0, temp_v0_5, 0xC);
+    sp30.vy = FP_MULTIPLY_PRECISE(g_DeltaTime0, temp_v0_5, Q12_SHIFT);
     sp30.vz += arg3;
 
     ret = func_80069B24(&sp10, &sp30, chara);
@@ -1799,11 +1799,11 @@ s32 func_8005D86C(s32 arg0) // 0x8005D86C
     temp    = FP_ALPHA_NORM(arg0);
     temp_a1 = FP_FROM(arg0, Q12_SHIFT);
 
-    if (temp_a1 >= 0xC)
+    if (temp_a1 >= 12)
     {
         return 0;
     }
-    if (temp_a1 < -0x14)
+    if (temp_a1 < -20)
     {
         return 0x7FFFFFFF;
     }
@@ -1833,8 +1833,9 @@ s32 func_8005D86C(s32 arg0) // 0x8005D86C
             var_v1 <<= -temp_a1;
         }
 
-        var_a0 = FP_MULTIPLY_PRECISE(var_a0, 0x1000 - temp_a2, 0xC) + FP_MULTIPLY_PRECISE(var_v1, temp_a2, 0xC);
+        var_a0 = FP_MULTIPLY_PRECISE(var_a0, 0x1000 - temp_a2, Q12_SHIFT) + FP_MULTIPLY_PRECISE(var_v1, temp_a2, Q12_SHIFT);
     }
+
     return var_a0;
 }
 
@@ -2935,14 +2936,15 @@ void func_8006D600(VECTOR3* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8
     temp_s0 = FP_ALPHA_NORM(arg1);
     temp_s3 = FP_ALPHA_NORM(arg2);
     temp    = FP_ALPHA_NORM(arg3);
+
     if (arg4 > 0x100)
     {
         arg4 = 0x100;
     }
 
-    temp_s6 = FP_MULTIPLY(arg4, Math_Cos(temp_s0), 0xC);
+    temp_s6 = FP_MULTIPLY(arg4, Math_Cos(temp_s0), Q12_SHIFT);
     var_s0  = temp;
-    temp_s5 = FP_MULTIPLY(arg4, Math_Sin(temp_s0), 0xC);
+    temp_s5 = FP_MULTIPLY(arg4, Math_Sin(temp_s0), Q12_SHIFT);
     temp_s1 = arg0->vx - temp_s6;
     temp_s2 = arg0->vz - temp_s5;
     var_v1  = FP_ALPHA_NORM(ratan2(temp_s2, temp_s1));
@@ -2964,16 +2966,18 @@ void func_8006D600(VECTOR3* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8
         {
             var_s0 = temp_a2;
         }
+
         temp_s0_2 = Math_Sin(var_s0);
         temp_v0   = Math_Cos(var_s0);
-        var_v0_2  = FP_MULTIPLY(temp_s1, temp_v0, 0xC) + FP_MULTIPLY(temp_s2, temp_s0_2, 0xC);
+        var_v0_2  = FP_MULTIPLY(temp_s1, temp_v0, Q12_SHIFT) + FP_MULTIPLY(temp_s2, temp_s0_2, Q12_SHIFT);
 
         if (var_v0_2 < 0)
         {
             var_v0_2 = 0;
         }
-        arg0->vx = temp_s6 + FP_MULTIPLY(var_v0_2, temp_v0, 0xC);
-        arg0->vz = temp_s5 + FP_MULTIPLY(var_v0_2, temp_s0_2, 0xC);
+
+        arg0->vx = temp_s6 + FP_MULTIPLY(var_v0_2, temp_v0, Q12_SHIFT);
+        arg0->vz = temp_s5 + FP_MULTIPLY(var_v0_2, temp_s0_2, Q12_SHIFT);
     }
 }
 

@@ -26,9 +26,14 @@ extern s8 D_800E34EC;
 
 extern s8 D_800E39AC;
 
+void func_800CBFB0(void);
+
 void func_800D0124();
 
+/** Probably collision function using collision space units. */
 bool func_800D012C(VECTOR3* pos);
+
+void func_800D0274(s32 arg0, s_Particle* part, u16* arg2);
 
 /** @brief 2D player distance check on XZ plane.
  *

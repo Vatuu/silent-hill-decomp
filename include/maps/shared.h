@@ -11,6 +11,7 @@ typedef enum
 typedef enum
 {
     ParticleType_Snow = 0,
+    ParticleType_Unk1 = 1,
     ParticleType_Rain = 2
 } e_ParticleType;
 

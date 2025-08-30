@@ -10,21 +10,24 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CB6B0);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CBC94);
 
+// TODO: .rodata migration.
 #ifdef NON_MATCHING
-// TODO. rodata migration.
-void func_800CBFB0(void) {
-    VECTOR3 vectors[4] = {
+void func_800CBFB0(void) // 0x800CBFB0
+{
+    VECTOR3 vecs[4] =
+    {
         VECTOR3(-258.0f, -1.34f, 244.1f),
         VECTOR3(-254.5f,  0.0f,  220.0f),
         VECTOR3(-249.4f,  0.0f,  219.5f),
         VECTOR3(-250.0f,  0.0f,  217.7f)
     };
-    GsInitCoordinate2(NULL, (GsCOORDINATE2* ) &g_SysWork.unk_22A8[0x50]);
+
+    GsInitCoordinate2(NULL, (GsCOORDINATE2*)&g_SysWork.unk_22A8[80]);
     D_800DD594 = 1;
     D_800DD593 = 1;
     D_800E34EC = 20;
     D_800E39AC = 60;
-    func_800D0394(2, vectors);
+    func_800D0394(2, vecs);
 }
 #else
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CBFB0);
@@ -77,44 +80,48 @@ bool func_800D012C(VECTOR3* pos) // 0x800D012C
 
 #include "maps/shared/sharedFunc_800D01BC_0_s00.h" // 0x800D01BC
 
-void func_800D0274(s32 arg0, s_Particle* particle, u16* arg2) // 0x800D0274
+void func_800D0274(s32 arg0, s_Particle* part, u16* arg2) // 0x800D0274
 {
-    s_Particle* particleCopy;
-    particleCopy = particle;
+    s_Particle* partCpy;
+
+    partCpy = part;
+
     switch (arg0)
     {
         case 0:
             if (D_800DD592 != 0)
             {
-                particle->type_1F = 0;
+                part->type_1F = ParticleType_Snow;
             }
             else
             {
-                particle->type_1F = 1;
+                part->type_1F = ParticleType_Unk1;
             }
 
-            particleCopy->position0_0.vy = sharedData_800E323C_0_s00.vy;
-            particleCopy->movement_18.vz = 0;
-            particleCopy->movement_18.vx = 0;
-            particleCopy->movement_18.vy = 100;
+            partCpy->position0_0.vy = sharedData_800E323C_0_s00.vy;
+            partCpy->movement_18.vz = FP_METER(0.0f);
+            partCpy->movement_18.vx = FP_METER(0.0f);
+            partCpy->movement_18.vy = 100;
 
-            sharedFunc_800D01BC_0_s00(arg2, particle, 5);
-            particleCopy->position1_C.vz = 0;
-            particleCopy->position1_C.vy = 0;
-            particleCopy->position1_C.vx = 0;
+            sharedFunc_800D01BC_0_s00(arg2, part, 5);
+            partCpy->position1_C.vz = FP_METER(0.0f);
+            partCpy->position1_C.vy = FP_METER(0.0f);
+            partCpy->position1_C.vx = FP_METER(0.0f);
             break;
-        case 1:
-            particleCopy->type_1F = 2;
-            particleCopy->position0_0.vy = sharedData_800E323C_0_s00.vy + Q19_12(Rng_GenerateInt(Rng_Rand16(), 0, 2));
 
-            particleCopy->position1_C.vy = sharedData_800E323C_0_s00.vy;
-            particleCopy->movement_18.vy = 150;
-            sharedFunc_800D01BC_0_s00(arg2, particle, 6);
-            particleCopy->position1_C.vx = particleCopy->position0_0.vx;
-            particleCopy->position1_C.vz = particleCopy->position0_0.vz;
+        case 1:
+            partCpy->type_1F = ParticleType_Rain;
+            partCpy->position0_0.vy = sharedData_800E323C_0_s00.vy + Q19_12(Rng_GenerateInt(Rng_Rand16(), 0, 2));
+
+            partCpy->position1_C.vy = sharedData_800E323C_0_s00.vy;
+            partCpy->movement_18.vy = 150;
+            sharedFunc_800D01BC_0_s00(arg2, part, 6);
+            partCpy->position1_C.vx = partCpy->position0_0.vx;
+            partCpy->position1_C.vz = partCpy->position0_0.vz;
             break;
     }
-    particleCopy->stateStep_1E++;
+
+    partCpy->stateStep_1E++;
 }
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0394);
