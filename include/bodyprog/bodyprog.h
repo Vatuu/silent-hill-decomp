@@ -1465,12 +1465,6 @@ typedef struct _SpawnInfo
 } s_SpawnInfo;
 STATIC_ASSERT_SIZEOF(s_SpawnInfo, 12);
 
-// Used to retrict the items that can be loaded in the overlay.
-typedef struct s_UnkStruct_MapOverlay
-{
-    u8 field_0[34]; /** `e_InventoryItemId` */
-} s_UnkStruct_MO;
-
 /** Contains loaded anim data? */
 typedef struct
 {
@@ -1511,7 +1505,7 @@ typedef struct _MapOverlayHeader
     void              (**mapEventFuncs_20)(); /** Points to array of event functions. */
     u8*               unk_24;
     GsCOORDINATE2*    field_28;
-    s_UnkStruct_MO*   field_2C;
+    u8*               loadableItems_2C;
     const char**      mapMessageStrings_30;
     s_AnimInfo*       animInfo_34;
     s_UnkStruct3_Mo*  field_38;
