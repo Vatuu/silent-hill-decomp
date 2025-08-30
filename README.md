@@ -405,14 +405,18 @@ Once the build has finished, a folder named `build` will be produced. The output
 Additional Make commands:
 * `build`: Builds the executable and overlays.
 * `check`: Builds the executable and overlays. After compilation, it compares checksums with the original files.
-* `clean-build`: Clears the project configuration without deleting files.
-* `clean-check`: Clears the project configuration without deleting files. After compilation, it compares checksums with the original files.
+* `clean-build`: Renegerate the project configuration and builds the executable and overlays.
+* `clean-check`: Renegerate the project configuration and builds the executable and overlays. After compilation, it compares checksums with the original files.
 * `objdiff-config`: Generates project configuration for [Objdiff.](https://github.com/encounter/objdiff)
 * `compilation-test`: Run progress and matching build processes for avoiding compilation errors.
 
-NOTE: `clean-build/clean-check` are obligatory if the configuration in the `Makefile` has been modified when intending to work on different overlays.
+NOTE: `clean-build/clean-check/compilation-test` are obligatory if the decompilation configuration files (inside `config` folder) or the `Makefile` has been modified when intending to work on different overlays.
 
 ## Contributing
 Contributions are welcome! Feel free to open a pull request. To help familiarize yourself with the decompilation workflow for *Silent Hill*, refer to our [Analysis Guide](https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/Analysis%20Guide.md). For contributions to the repository, please follow our [Coding Conventions](https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/Coding%20Conventions.md).
 
 You can also reach out to us by opening an issue or joining the `#silent-hill` channel on the [PS1/PS2 Decompilation](https://discord.gg/VwCPdfbxgm) Discord server.
+
+## Misc. Docs
+* [Game Technical Information.](https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/Game%20Information.md)
+* [Project's File Organization.](https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/Organization.md)
