@@ -4,7 +4,7 @@ s32 sharedFunc_800D2DAC_0_s00()
     s_AnimInfo* animInfo;   
 
     model    = &g_SysWork.player_4C.chara_0.model_0;
-    animInfo = &g_MapOverlayHeader.animInfo_34[model->anim_4.status_0 - ANIM_STATUS(38, false)];
+    animInfo = &g_MapOverlayHeader.animInfos_34[model->anim_4.status_0 - ANIM_STATUS(38, false)];
 
     if (animInfo->funcPtr_0 == Anim_Update0)
     {

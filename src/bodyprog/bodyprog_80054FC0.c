@@ -4552,8 +4552,8 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
 				    g_SysWork.player_4C.extra_128.state_1C < PlayerState_EnemyGrabPinnedFront)
                 {
                     temp = -0x8000;
-                    extra->model_0.anim_4.time_4 = (FP_TO(g_MapOverlayHeader.animInfo_34[chara->model_0.anim_4.status_0 - 76].keyframeIdx0_C, Q12_SHIFT) + model->anim_4.time_4) + temp;
-                    chara->model_0.anim_4.time_4 = (FP_TO(g_MapOverlayHeader.animInfo_34[chara->model_0.anim_4.status_0 - 76].keyframeIdx0_C, Q12_SHIFT) + model->anim_4.time_4) + temp;
+                    extra->model_0.anim_4.time_4 = (FP_TO(g_MapOverlayHeader.animInfos_34[chara->model_0.anim_4.status_0 - 76].keyframeIdx0_C, Q12_SHIFT) + model->anim_4.time_4) + temp;
+                    chara->model_0.anim_4.time_4 = (FP_TO(g_MapOverlayHeader.animInfos_34[chara->model_0.anim_4.status_0 - 76].keyframeIdx0_C, Q12_SHIFT) + model->anim_4.time_4) + temp;
                     chara->model_0.anim_4.keyframeIdx0_8 = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT);
                     extra->model_0.anim_4.keyframeIdx0_8 = FP_FROM(extra->model_0.anim_4.time_4, Q12_SHIFT);
                 }
@@ -11327,7 +11327,7 @@ void func_8007E860() // 0x8007E860
     for (i = 0; i < 8; i++)
     {
         startIdx                         = 92;
-        g_MaybePlayerAnims[startIdx + i] = g_MapOverlayHeader.animInfo_34[i + 16];
+        g_MaybePlayerAnims[startIdx + i] = g_MapOverlayHeader.animInfos_34[i + 16];
     }
 }
 

@@ -16,7 +16,7 @@
 extern u8 D_800CFD90[];
 extern s_func_800625F4 D_800D03DC[100];
 extern s_BloodSplat D_800D0BAC[50];
-extern s_AnimInfo g_AnimInfo[];
+extern s_AnimInfo g_AnimInfos[];
 
 void (*g_LoadScreenFuncs[])() =
 {
@@ -62,7 +62,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .field_28 = &g_SysWork.npcCoords_FC0[0],
     .loadableItems_2C = (u8*)0x800CFABC,
     .mapMessageStrings_30 = g_MapMessages,
-    .animInfo_34 = g_AnimInfo,
+    .animInfos_34 = g_AnimInfos,
     .field_38 = (s_UnkStruct3_Mo*)0x800CFA7C,
     .func_3C = func_800CED08,
     .func_40 = func_800CEFD4,

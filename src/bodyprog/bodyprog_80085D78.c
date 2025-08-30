@@ -2043,7 +2043,7 @@ s32 func_8008A0E4(s32 arg0, e_EquippedWeaponId weaponId, s_SubCharacter* chara, 
     if (chara == &g_SysWork.player_4C.chara_0)
     {
         anim1                       = D_800297B8;
-        anim0                       = g_MapOverlayHeader.animInfo_34;
+        anim0                       = g_MapOverlayHeader.animInfos_34;
         modelAnim->animInfo_C       = anim1;
         modelAnim->maybeSomeState_1 = 76;
         modelAnim->animInfo_10      = anim0;

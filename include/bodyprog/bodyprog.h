@@ -1507,7 +1507,7 @@ typedef struct _MapOverlayHeader
     GsCOORDINATE2*    field_28;
     u8*               loadableItems_2C;
     const char**      mapMessageStrings_30;
-    s_AnimInfo*       animInfo_34;
+    s_AnimInfo*       animInfos_34; // Array.
     s_UnkStruct3_Mo*  field_38;
     void              (*func_3C)(); // func(?).
     void              (*func_40)();

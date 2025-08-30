@@ -1,7 +1,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
 
-s_AnimInfo g_AnimInfo[] =
+s_AnimInfo g_AnimInfos[] =
 {
     { Anim_Update2, 76, 0, 77, 0, { FP_TIME(10.0f) }, -1, 676 },
     { Anim_Update0, 77, 0, 77, 0, { FP_TIME(10.0f) }, 676, 677 },

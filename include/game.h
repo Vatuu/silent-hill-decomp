@@ -957,7 +957,7 @@ STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 typedef struct _AnimInfo
 {
     void (*funcPtr_0)(struct _SubCharacter*, s32, GsCOORDINATE2*, struct _AnimInfo*); // TODO: `funcPtr_0` signature doesn't currently match `Anim_Update`.
-    u8  field_4;
+    u8  field_4; /** Packed anim status. See `s_ModelAnimData::status_0`. Unknown purpose for this one. */
     s8  hasVariableTimeDelta_5;
     u8  status_6; /** Packed anim status. See `s_ModelAnimData::status_0`. */
     u8  unk_7;

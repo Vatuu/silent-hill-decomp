@@ -35,7 +35,7 @@ extern u8 D_800DF754[];
 extern s_func_800625F4 D_800DFB7C[200];
 extern s_BloodSplat D_800E0B1C[150];
 
-extern s_AnimInfo g_AnimInfo[];
+extern s_AnimInfo g_AnimInfos[];
 extern s_UnkStruct3_Mo g_MapHeaderTable_38[18];
 extern u8 g_LoadableItems[8];
 
@@ -93,7 +93,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .field_28 = &g_SysWork.npcCoords_FC0[0],
     .loadableItems_2C = g_LoadableItems,
     .mapMessageStrings_30 = g_MapMessages,
-    .animInfo_34 = g_AnimInfo,
+    .animInfos_34 = g_AnimInfos,
     .field_38 = g_MapHeaderTable_38,
     .func_3C = func_800DBE68,
     .func_40 = func_800DBF08,
