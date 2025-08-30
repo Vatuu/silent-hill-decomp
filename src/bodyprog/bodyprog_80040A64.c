@@ -1491,7 +1491,25 @@ void func_800451B0(s_Skeleton* skel, s_PlmHeader* plmHeader, s32* arg2) // 0x800
 }
 
 // Anim func.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045258); // 0x80045258
+void func_80045258(s_Skeleton** arg0, s_Bone* arg1, s32 arg2, s_PlmHeader* plmHeader) // 0x80045258
+{
+    s_Bone* var_t0;
+    u8*     var_t1;
+
+    for (var_t1 = plmHeader->objectOrds_10; var_t1 < &plmHeader->objectOrds_10[plmHeader->objectCount_8]; var_t1++)
+    {
+        for (var_t0 = arg1; var_t0 < &arg1[arg2]; var_t0++)
+        {
+            if (var_t0->objListIdx_C == *var_t1)
+            {
+                *arg0 = (s_Skeleton*)var_t0;
+                arg0  = (s_Skeleton**)&var_t0->field_14;
+            }
+        }
+    }
+
+    *arg0 = NULL;
+}
 
 // Anim func.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800452EC); // 0x800452EC

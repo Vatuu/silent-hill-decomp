@@ -2068,7 +2068,32 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80065B94); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80066184); // 0x80066184
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80066D90); // 0x80066D90
+void func_80066D90() // 0x80066D90
+{
+    s32       var_s1;
+    DR_TPAGE* var1; // Guessed type
+    TILE*     var2; // Guessed type
+
+    for (var_s1 = 0; var_s1 < 0x3F; var_s1++)
+    {
+        var1 = PSX_SCRATCH;
+        setlen(var1, 1);
+        var1->code[0] = 0xE1000240;
+        DrawPrim(var1);
+
+        var2 = PSX_SCRATCH;
+        setlen(var2, 3);
+        // Hacks. Maybe this is not a TILE?
+        *(s32*)&var2->r0 = 0x62080808;
+        *(s32*)&var2->x0 = 0xFF20FF60;
+        *(s32*)&var2->w  = 0x01C00140;
+        DrawPrim(var2);
+
+        Fs_QueueUpdate();
+        VSync(0);
+    }
+    Fs_QueueWaitForEmpty();
+}
 
 void func_80066E40() // 0x80066E40
 {
@@ -2494,14 +2519,14 @@ void func_8006B1C8(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s_func_8
 
                     if (arg0->field_0_8 || arg0->field_0_9)
                     {
-                        if (arg0->field_D9 == 0xFF)
+                        if (arg0->field_D8.s_field_0.field_1 == 0xFF)
                         {
                             func_8006B9C8(arg0);
                         }
 
-                        if (arg0->field_D8 == 0xFF)
+                        if (arg0->field_D8.s_field_0.field_0 == 0xFF)
                         {
-                            func_8006B8F8(arg0->unk_CC); // TODO: `unk_CC` is struct? 56 bytes?
+                            func_8006B8F8(&arg0->field_CC); // TODO: `unk_CC` is struct? 56 bytes?
                             func_8006B9C8(arg0);
                         }
                     }
@@ -2526,8 +2551,8 @@ void func_8006B6E8(s_func_8006CC44* arg0, s_func_8006B1C8* arg1) // 0x8006B6E8
     s32                 temp_s4;
     s_func_8006CC44_A8* temp_s0;
 
-    temp_s1 = arg0->field_D8;
-    temp_s2 = arg0->field_D9;
+    temp_s1 = arg0->field_D8.s_field_0.field_0;
+    temp_s2 = arg0->field_D8.s_field_0.field_1;
     temp_s3 = arg0->field_DC;
     temp_s4 = arg0->field_DD;
 
@@ -2587,7 +2612,7 @@ void func_8006B9C8(s_func_8006CC44* arg0) // 0x8006B9C8
 {
     s32 field_28;
 
-    if (arg0->field_D9 == 0xFF && arg0->field_EE < 0 &&
+    if (arg0->field_D8.s_field_0.field_1 == 0xFF && arg0->field_EE < 0 &&
         (arg0->field_4.field_2C >= arg0->field_E0 || arg0->field_4.field_2C >= arg0->field_E6))
     {
         if (arg0->field_0_9 && arg0->field_F8 < arg0->field_4.field_28)
@@ -2810,7 +2835,21 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006C3D4); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006C45C); // 0x8006C45C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006C794); // 0x8006C794
+void func_8006C794(s_func_8006CC44* arg0, s32 arg1, s32 arg2) // 0x8006C794
+{
+    s32 new_var;
+
+    if (arg0->field_4.field_2C >= (arg0->field_D4 + (arg2 - arg0->field_D8.field_0)))
+    {
+        new_var = arg0->field_D0 + 52;
+        func_8006BCC4(&arg0->field_44,
+                      arg0->field_CC + new_var,
+                      arg1,
+                      arg0->field_98 - arg0->field_D2,
+                      arg0->field_9A - arg0->field_D6,
+                      arg0->field_4.field_28 + arg0->field_D8.field_0 - arg2);
+    }
+}
 
 void func_8006C838(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x8006C838
 {

@@ -371,6 +371,16 @@ typedef struct
     s32 field_4;
 } s_func_8006CC44_A8;
 
+typedef union
+{
+    s16 field_0;
+    struct
+    {
+        u8 field_0;
+        u8 field_1;
+    } s_field_0;
+} u_func_8006CC44_D8;
+
 typedef struct
 {
     u8                 field_0_0  : 8;
@@ -411,11 +421,13 @@ typedef struct
     u8                 field_C8;
     u8                 unk_C9[1];
     s16                field_CA;
-    u8                 unk_CC[4];
-    u8                 unk_D0[6];
+    s32                field_CC;
+    u8                 field_D0;
+    s8                 unk_D1;
+    u16                field_D2;
+    s16                field_D4;
     s16                field_D6;
-    u8                 field_D8;
-    u8                 field_D9;
+    u_func_8006CC44_D8 field_D8;
     u8                 field_DA;
     u8                 field_DB;
     u8                 field_DC;
@@ -832,7 +844,8 @@ typedef struct
     s_ObjList* objList_8;
     s32        objListIdx_C;
     s8         field_10;
-    s8         unk_11[7];
+    s8         unk_11[3];
+    s32        field_14;
 } s_Bone;
 STATIC_ASSERT_SIZEOF(s_Bone, 24);
 
@@ -2753,6 +2766,9 @@ void func_80045108(s_Skeleton* arg0, s_PlmHeader* plmHeader, u8* arg2, s32 arg3)
 /** Anim func. */
 void func_800451B0(s_Skeleton* skel, s_PlmHeader* plmHeader, s32* arg2);
 
+/** Anim func. */
+void func_80045258(s_Skeleton** arg0, s_Bone* arg1, s32 arg2, s_PlmHeader* plmHeader);
+
 /** Anim func. Traverses skeleton bones to set flags/mask. */
 void func_800453E8(s_Skeleton* skel, bool cond);
 
@@ -3373,6 +3389,8 @@ s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 arg2, s16 arg3);
 
 void func_800622B8(s32, s_SubCharacter*, s32 animStatus, s32);
 
+void func_80066D90();
+
 void func_80066E40();
 
 void func_80066E7C();
@@ -3427,6 +3445,8 @@ void func_8006B9C8(s_func_8006CC44* arg0);
 
 s32 func_8006BC34(s_func_8006BC34* arg0);
 
+void func_8006BCC4(s8*, s32, s32, s16, s16, s16);
+
 void func_8006BDDC(s_func_8006BDDC* arg0, s16 arg1, s16 arg2);
 
 void func_8006BE40(s_func_8006CC44* arg0);
@@ -3434,6 +3454,8 @@ void func_8006BE40(s_func_8006CC44* arg0);
 void func_8006C0C8(s_func_8006CC44*, s16, s16, s32);
 
 bool func_8006C1B8(u32 arg0, s16 arg1, s_func_8006C1B8* arg2);
+
+void func_8006C794(s_func_8006CC44* arg0, s32 arg1, s32 arg2);
 
 void func_8006C838(s_func_8006CC44* arg0, s_IpdCollisionData* collData);
 
