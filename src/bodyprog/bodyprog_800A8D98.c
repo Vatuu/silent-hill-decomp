@@ -754,14 +754,14 @@ s8 D_800A98FC[Chara_Count] =
 s_800A992C D_800A992C[4] =
 {
     {
-        .charaId0_0       = 1,
-        .charaId1_1       = 1,
+        .charaId0_0       = Chara_Hero,
+        .charaId1_1       = Chara_Hero,
         .unk_2            = { 0, 0 },
-        .animFile0_4      = 0x8010A600,
-        .animFile1_8      = (s_AnimFile*)0x8010A600,
-        .animFileSize1_C  = 0x0002E630,
-        .animFileSize2_10 = 0x0002E630,
-        .npcCoords_14     = NULL,
+        .animFile0_4      = FS_BUFFER_0,
+        .animFile1_8      = (s_AnimFile*)FS_BUFFER_0,
+        .animFileSize1_C  = 0x2E630,
+        .animFileSize2_10 = 0x2E630,
+        .npcCoords_14     = NULL
 //extern u8 D_800A9944[]; <-- Aforementioned 72 empty bytes below.
     }, {}, {}, {}
 };
@@ -769,12 +769,12 @@ s_AnimInfo D_800A998C =
 {
     .funcPtr_0              = Anim_Update1,
     .field_4                = 0,
-    .hasVariableTimeDelta_5 = 0,
-    .status_6              = 0,
+    .hasVariableTimeDelta_5 = false,
+    .status_6               = ANIM_STATUS(0, false),
     .unk_7                  = 0,
-    .timeDelta_8            = { .constTimeDelta = 0x8000 },
-    .keyframeIdx0_C         = 0x001A,
-    .keyframeIdx1_E         = 0x002C,
+    .timeDelta_8            = { .constTimeDelta = FP_TIME(8.0f) },
+    .keyframeIdx0_C         = 26,
+    .keyframeIdx1_E         = 44
 };
 u32 unknown_D_800A999C = 0x80025234;
 s32 D_800A99A0 = 0;
@@ -784,17 +784,17 @@ s16 g_MapMsg_SelectFlashTimer = 0;
 //s16 __padding = 0;
 s8 g_FullscreenMapTimFileIdxs[24] =
 {
-    0x00, 0x00, 0x01, 0x01, 0x09, 0x0C, 0x0A, 0x0B,
-    0x0D, 0x0C, 0x0A, 0x0B, 0x0D, 0x02, 0x03, 0x04,
-    0x08, 0x05, 0x06, 0x07, 0x08, 0x05, 0x06, 0x07
+    0, 0, 1, 1, 9, 12, 10, 11,
+    13, 12, 10, 11, 13, 2, 3, 4,
+    8, 5, 6, 7, 8, 5, 6, 7
 };
 s8 g_MapMarkingTimFileIdxs[56] =
 {
-    0xFF, 0x00, 0x01, 0x01, 0x01, 0x04, 0x04, 0x04,
-    0x04, 0x04, 0x04, 0x04, 0x04, 0x02, 0x02, 0x02,
-    0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03,
-    0x00, 0x00, 0x00, 0x00, 0x68, 0x53, 0x02, 0x80,
-    0x5C, 0x53, 0x02, 0x80, 0x50, 0x53, 0x02, 0x80,
-    0x44, 0x53, 0x02, 0x80, 0x38, 0x53, 0x02, 0x80,
-    0x2C, 0x53, 0x02, 0x80, 0x20, 0x53, 0x02, 0x80
+    255, 0, 1, 1, 1, 4, 4, 4,
+    4, 4, 4, 4, 4, 2, 2, 2,
+    3, 3, 3, 3, 3, 3, 3, 3,
+    0, 0, 0, 0, 104, 83, 2, 128,
+    92, 83, 2, 128, 80, 83, 2, 128,
+    68, 83, 2, 128, 56, 83, 2, 128,
+    44, 83, 2, 128, 32, 83, 2, 128
 };

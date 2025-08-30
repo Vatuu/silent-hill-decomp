@@ -70,9 +70,9 @@ bool func_800D012C(VECTOR3* pos) // 0x800D012C
             return true;
 
         case 2:
-            deltaX = (g_SysWork.player_4C.chara_0.position_18.vx - pos->vx) >> 4;
-            deltaZ = (g_SysWork.player_4C.chara_0.position_18.vz - pos->vz) >> 4;
-            return SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)) < 0x100;
+            deltaX = FP_METER_TO_COLL(g_SysWork.player_4C.chara_0.position_18.vx - pos->vx);
+            deltaZ = FP_METER_TO_COLL(g_SysWork.player_4C.chara_0.position_18.vz - pos->vz);
+            return SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)) < FP_METER_COLL(1.0f);
     }
 
     return false;
@@ -101,7 +101,7 @@ void func_800D0274(s32 arg0, s_Particle* part, u16* arg2) // 0x800D0274
             partCpy->position0_0.vy = sharedData_800E323C_0_s00.vy;
             partCpy->movement_18.vz = FP_METER(0.0f);
             partCpy->movement_18.vx = FP_METER(0.0f);
-            partCpy->movement_18.vy = 100;
+            partCpy->movement_18.vy = FP_METER(0.0245f);
 
             sharedFunc_800D01BC_0_s00(arg2, part, 5);
             partCpy->position1_C.vz = FP_METER(0.0f);
@@ -111,10 +111,10 @@ void func_800D0274(s32 arg0, s_Particle* part, u16* arg2) // 0x800D0274
 
         case 1:
             partCpy->type_1F = ParticleType_Rain;
-            partCpy->position0_0.vy = sharedData_800E323C_0_s00.vy + Q19_12(Rng_GenerateInt(Rng_Rand16(), 0, 2));
+            partCpy->position0_0.vy = sharedData_800E323C_0_s00.vy + FP_METER(Rng_GenerateInt(Rng_Rand16(), 0, 2));
 
             partCpy->position1_C.vy = sharedData_800E323C_0_s00.vy;
-            partCpy->movement_18.vy = 150;
+            partCpy->movement_18.vy = FP_METER(0.03675f);
             sharedFunc_800D01BC_0_s00(arg2, part, 6);
             partCpy->position1_C.vx = partCpy->position0_0.vx;
             partCpy->position1_C.vz = partCpy->position0_0.vz;

@@ -238,32 +238,32 @@
     (s32)(((((rad) < 0.0f) ? (PI + (PI - ABS(rad))) : (rad)) * ((float)FP_PI / PI)) * \
           (((rad) < 0.0f || (rad) >= PI) ? 1.0f : 2.0f))
 
-/** @brief Converts floating-point meters to fixed-point world meters in Q19.12.
+/** @brief Converts floating-point meters to fixed-point world space meters in Q19.12.
  *
  * @note 1 meter = 4096 units.
  *
  * @param met Meters (`float`).
- * @return Fixed-point world meters in Q19.12 (`s32`).
+ * @return Fixed-point world space meters in Q19.12 (`s32`).
  */
 #define FP_METER(met) \
     Q19_12(met)
 
 // TODO: Find better name.
-/** @brief Converts floating-point world meters in Q19.12 to fixed-point collision meters in Q23.8.
+/** @brief Converts floating-point world space meters in Q19.12 to fixed-point collision space meters in Q23.8.
  *
  * @note 1 meter = 256 units.
  *
  * @param met Meters (`float`).
- * @return Fixed-point collision meters in Q23.8 (`s32`).
+ * @return Fixed-point collision space meters in Q23.8 (`s32`).
  */
 #define FP_METER_COLL(met) \
     Q23_8(met)
 
 // TODO: Find better name.
-/** @brief Converts fixed-point world meters in Q19.12 to fixed-point collision meters in Q23.8.
+/** @brief Converts fixed-point world space meters in Q19.12 to fixed-point collision space meters in Q23.8.
  *
- * @param met Fixed-point world meters in Q19.12.
- * @return Fixed-point collision meters in Q23.8 (`s32`).
+ * @param met Fixed-point world space meters in Q19.12.
+ * @return Fixed-point collision space meters in Q23.8 (`s32`).
  */
 #define FP_METER_TO_COLL(met) \
     Q19_12_TO_Q23_8(met)

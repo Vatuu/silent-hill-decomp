@@ -2405,21 +2405,21 @@ static const char* CONTROLLER_MENU_ACTIONS_PANE_ENTRY_STRINGS[] =
  */
 static const u16 D_801E2D42 = 4160;
 
-DVECTOR g_ExtraOptions_SelectionHighlightFrom_Unused = { 0, 0 };
+DVECTOR g_ExtraOptions_SelectionHighlightFrom_Unused = DVECTOR(0.0f, 0.0f);
 
-DVECTOR g_ExtraOptions_SelectionHighlightTo_Unused = { 0, 0 };
+DVECTOR g_ExtraOptions_SelectionHighlightTo_Unused = DVECTOR(0.0f, 0.0f);
 
-DVECTOR g_MainOptions_SelectionHighlightFrom_Unused = { 0, 0 };
+DVECTOR g_MainOptions_SelectionHighlightFrom_Unused = DVECTOR(0.0f, 0.0f);
 
-DVECTOR g_MainOptions_SelectionHighlightTo_Unused = { 0, 0 };
+DVECTOR g_MainOptions_SelectionHighlightTo_Unused = DVECTOR(0.0f, 0.0f);
 
-DVECTOR g_ExtraOptions_SelectionHighlightFrom = { 0, 0 };
+DVECTOR g_ExtraOptions_SelectionHighlightFrom = DVECTOR(0.0f, 0.0f);
 
-DVECTOR g_ExtraOptions_SelectionHighlightTo = { 0, 0 };
+DVECTOR g_ExtraOptions_SelectionHighlightTo = DVECTOR(0.0f, 0.0f);
 
-DVECTOR g_MainOptions_SelectionHighlightFrom = { 0, 0 };
+DVECTOR g_MainOptions_SelectionHighlightFrom = DVECTOR(0.0f, 0.0f);
 
-DVECTOR g_MainOptions_SelectionHighlightTo = { 0, 0 };
+DVECTOR g_MainOptions_SelectionHighlightTo = DVECTOR(0.0f, 0.0f);
 
 s32 g_ScreenPosMenu_BackgroundFade = 0;
 

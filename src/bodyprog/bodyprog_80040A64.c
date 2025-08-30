@@ -1111,7 +1111,7 @@ void func_80044950(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x
 
 s32 func_800449AC(s_Model* model, s_AnimInfo* anim) // 0x800449AC
 {
-    if (anim->hasVariableTimeDelta_5 == 0)
+    if (!anim->hasVariableTimeDelta_5)
     {
         return anim->timeDelta_8.constTimeDelta;
     }
