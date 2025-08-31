@@ -1,15 +1,15 @@
 ## Code Conventions
 
 ### Format
-Code should use the Allman indentation style, placing braces on separate lines with indentations of 4 spaces.
+Code uses the Allman indentation style, placing braces on separate lines with indentations of 4 spaces.
 
 ```C
 s32 func_XXXXXXXX(s32 arg0)
-{	
+{
     if (globalVariable0 == 1)
     {
         return arg0 == 1;
-	}
+    }
     else if (globalVariable0 == 2)
     {
         return -1;
@@ -24,7 +24,7 @@ s32 func_XXXXXXXX(s32 arg0)
 ### Alignment
 
 #### Structs and enums
-When adding fields from structs and enums vertical align should be applied.
+When adding fields an entries to structs and enums, vertical alignment is applied.
 
 Structs:
 ```C
@@ -47,88 +47,80 @@ myEnum_Orange = 4
 ...
 ```
 
-
 #### Variables and struct fields
-In case a value is assigned for multiple local and global variables with different size names that are next to each other then they should be joined and apply vertical align.
+If a value is assigned to multiple stacked variables with names of varying lengths, vertical alignment of the `=` operator is applied.
 
 ```C
 ...
 var_s0            = 0;
-var_temp_a1       = 0;
+var_temp_a1      += 0;
 g_DeltaTime0      = 0;
 g_UncappedVBlanks = 0;
 ...
 ```
 
-If after three continuous variable assignment, two or more struct fields values are assigned then a space should be applied only if where the code is encapsulated is doing anything else more than just assigning values for example:
+If three or more variables can be logically grouped, a newline is applied between them.
 
 ```C
 ...
-if (!g_GlobalVariable0)
-{
-    var_a0      = 19;
-    var_s0      = 99;
-    var_s1      = True;
-    var_temp_a1 = 10;
-    
-    g_StructNumberXXXX.player_0.field_E3        = 0;
-    g_StructNumberXXXX.player_0.health_20       = 0;
-    g_StructNumberXXXX.playerSave_2024.field_F3 = 1;
-    
-    if (g_GlobalVariable1 == 30)
-    {
-        return func_XXXXXXXX;
-    }
-}
+var_a0      = 19;
+var_s0      = 99;
+var_s1      = true;
+var_temp_a1 = 10;
+
+g_GlobalVar.player_0.field_E3        = 0;
+g_GlobalVar.player_0.health_20       = 0;
+g_GlobalVar.playerSave_2024.field_F3 = 1;
 ...
 ```
 
-In case the code encapsulated is just doing value assignation all variables and struct fields should be joined together.
+If variable groups are mixed, they can be stacked together.
 
 ```C
 ...
-if (!g_GlobalVariable0)
-{
-    var_a0                                      = 19;
-    var_s0                                      = 99;
-    g_StructNumberXXXX.player_0.field_E3        = 0;
-    g_StructNumberXXXX.player_0.health_20       = 0;
-    var_s1                                      = True;
-    var_temp_a1                                 = 10;
-    g_StructNumberXXXX.playerSave_2024.field_F3 = 1;
-}
+var_a0                                      = 19;
+var_s0                                      = 99;
+g_StructNumberXXXX.player_0.field_E3        = 0;
+g_StructNumberXXXX.player_0.health_20       = 0;
+var_s1                                      = true;
+var_temp_a1                                 = 10;
+g_StructNumberXXXX.playerSave_2024.field_F3 = 1;
 ...
 ```
 
 ### Types
-Custom primitive type aliases (defined at `include/types.h`) should be used instead of the defaults of the language to ensure type sizes are always clear.
+Custom primitive type aliases such as `s32`, `s16`, `u16`, etc. (defined in `include/types.h`) are used instead of the idiomatic ones available in C to ensure type sizes are always clear.
 
 For pointers, `void* name` is preferred over `void *name`.
 
-It is heavily recommended learning a little about PSX's fixed-point in order to apply them properly. Due to the lack of floating point support PSX devs used this "fixed-point" types. We apply this types and some special conversion macros (see `include/bodyprog/math.h`) in order to create a more flexible and comprehensible code.
+It is recommended to learn a little about fixed-point math, as *Silent Hill* uses it extensively due to the lack of a floating-point unit in the PSX hardware. Special macros (see `include/bodyprog/math/fixed_point.h`) are provided for high-level abstractions of Q formats to make the code more flexible and comprehensible.
 
-### Shared defines
-Under some instances we use defines in order to define the amount of elements a piece of code uses. The creation and usage of them depends entirely in the interpretation of the member working based on what can be seen in the code.
+### Constants
+Use constants for commonly reused values to avoid magic.
 
-See for examples:
-* `INVENTORY_ITEM_COUNT_MAX` used to define the amount of items the player can hold in the inventory and is normally used in many circumstances related to the code accessing to items data.
-* `MEMORY_CARD_SLOT_COUNT` used to define the amount of memory cards the player can connect to the game and it's generally used by array declarations and accessing memory card data.
-* `NPC_COUNT_MAX` used to define the max amount of NPCs the game can load and the code uses in the instances where it accesses to all of the currently loaded NPCs.
+```
+#define INVENTORY_ITEM_COUNT_MAX 40
+
+s32  inventoryItems[INVENTORY_ITEM_COUNT_MAX];
+bool validInventoryItems[INVENTORY_ITEM_COUNT_MAX];
+...
+```
 
 ### Conditionals
-We recommend under the possible the reduction of braces to only the needed.
+Use parentheses judiciously to aid legibility (i.e. making the order of arithmetic operations clear or encapsulating bitwise checks).
 
 For example:
 ```
 // Don't do this.
-if (!(g_Player_Health == FP_HEALTH(30.0f)) && (g_Player_Flag & (1 << 5)))
+if ((!(g_Player_Health + 1 * 2 == FP_HEALTH(30.0f))) && (g_Player_SomeFlag & (1 << 5)) && (g_Player_IsAlive == 1))
 
 
 // Do this.
-if (g_playerHealth != FP_HEALTH(30.0f) && g_Player_Flag & (1 << 5))
+if ((g_player_Health + (1 * 2)) != FP_HEALTH(30.0f) && (g_Player_SomeFlag & (1 << 5)) && && g_Player_IsAlive == 1)
 ```
 
-For boolean values don't use comparison operators.
+For boolean values, avoid using comparison operators.
+Because the C language doesn't have a true `bool` type, a typedef is provided. Note that some boolean checks involving comparisons with values other than 0 still require a comparison operator in order for the compiled code to match.
 
 For example:
 ```
@@ -137,19 +129,22 @@ if (g_Player_IsAlive == 0)
 
 if (g_Player_IsAlive != 0)
 
+if (g_Player_IsAlive == 1)
 
 // Do this.
+if (!g_Player_IsAlive)
+
 if (g_Player_IsAlive)
 
-if (!g_Player_IsAlive)
+if (g_Player_IsAlive == true)
 ```
 
 ### Organization Tools
 
 #### Clang-format
-The repository includes a `clang-format` configuration to help ensure code consistency. Git also has a command to handle formatting any modified files.
+The repository includes a `clang-format` configuration to help enforce code consistency. Git also has a command to handle formatting modified files.
 
-We'd appreciate it if you could follow these steps prior to committing:
+Follow these steps prior to committing:
 
 1. Stage modified files:</br>
    `git add src/`</br>
@@ -160,39 +155,33 @@ We'd appreciate it if you could follow these steps prior to committing:
    `git add src/`
 
 #### configs_formatter.py
-The repository includes a Python script which rearrange symbol asignations order in `*.sym.txt` files based on the address. We'd appreciate if prior to committing you run it by using `python3 tools/configs_formatter.py`.
+A Python script is provided to rearrange registered symbol in `*.sym.txt` files based on addresses. Prior to committing, run it with `python3 tools/configs_formatter.py`.
 
 ## Naming Conventions
-If a function, enum or struct and most or all of their field's names are known that name should be used.
+If the original name of a function, enum, or struct and most of its variables, entries, or fields are known, those names should be used.
 
-Excepting the case of PS1's SDK (PSY-Q) it is recommended to put a comment either in the declaration or in the `*.sym.txt` file clarifying the name has been retrieved from another game. 
-
-In case no name has been able to be located then follow the guidelines below:
+If the original names are unknown, follow a systematic naming pattern.
 
 ### General
-Names should be written in a limited version of `Pascal_Snake_Case` as only after system names an undercore can be applied as follows:
+Function names are written in `PascalCase`, using non-contracted words and prefixed with the subsystem they belong to. The prefix allows functions to be grouped for visual reference.
 
 `[SystemName]_[Noun][Verb]`</br>
 `[SystemName]_[SubSystemName]_[Noun][Verb]`
 
-Acronyms and abbreviations should be treated as words. Example:
-
-`GfxFunc` instead of `GFXFunc`, `myId` instead of `myID`.
-
 ### Functions
-Function parameters should be written in `camelCase`.
-
-Examples:
+Function parameters are written in `camelCase` with the names contracted judiciously.
 
 `Demo_GameGlobalsUpdate()`</br>
 `Fs_QueueStartSeek(s32 fileIdx)`</br>
 `GameState_KcetLogo_Update()`</br>
 `Options_MainOptionsMenu_VolumeBarDraw(bool isSfx, u8 vol)`</br>
 
-This allows functions to be grouped, which can be useful at the moment of comprehend the functionallity of a code.
+Acronyms and abbreviations are treated as words.
+
+`Gfx_Function` instead of `GFX_Func`, `myId` instead of `myID`.
 
 ### Globals
-Global variables should be prefixed with `g_` and follow a the previosuly stablished naming format. Under this cases is not obligatory to follow it, but still heavily recommended to specify the system, specially under cases where names could cause confusion with other systems.
+Global variables are prefixed with `g_`. It's recommended to also use subsystem prefixes to avoid confusion with globals of other subsystems with similar names.
 
 Examples:
 
@@ -201,14 +190,15 @@ Examples:
 `g_Player_AttackAnimIdx`
 
 ### Structures
-Structs should be prefixed with `s_` and named according to their purpose.
+Structs are prefixed with `s_` and named according to their purpose in `PascalCase`.
 
-However there are many intances where a struct purpose can't be recognized.
-* In case the unrecognized struct it is declared in the code name the unrecognized struct using the address where it locates in this way: `s_[HexAddress]`
-* In case the unrecognized struct is from a function which uses a pointer struct variable name it the same way the function that is being decompiled is named, for example: `s_func_800625F4`
-* In case the unrecognized struct is part from another struct (either being a simple struct or a pointer one) name it the same way the main struct is named and add a underscore at the end of the name with the position where it is defined on the original struct, for example: `s_SysWork_2514`
+If a struct's purpose can't be deduced, name if after a related hex address.
+* If used in a global variable: `s_[GlobalVariableHexAddress]`.
+* If used as a parameter type in a function: `s_func_[FunctionHexAddress]`.
+* If used in the field of another struct: `s_[ParentStructName]_[FieldHexOffset]`.
 
-Struct fields should be written in pure `camelCase` and at the end the offset of the field in hexadecimal. Keeping the offset as part of the name is useful in tracking each field's expected offset and more easily determining when any have moved around due to other changes. Fields known to be accessed but without a known purpose should be named `field_[HexOffset]`, while fields that are completely unknown or which serve as padding should be named as `unk_[HexOffset]`. If the size of a struct is known, the `STATIC_ASSERT_SIZEOF` macro can be used to enforce it.
+Struct fields are written in `camelCase` and suffixed with a hexadecimal offset. Keeping the offset as part of the name helps track each field's expected offset and to easily determine when any have moved around due to changes.
+Fields known to be accessed but without a definitive purpose are named `field_[HexOffset]`, while fields completely unknown or which serve as padding are named `unk_[HexOffset]`. If the size of a struct is known definitively, use the `STATIC_ASSERT_SIZEOF` macro to enforce it.
 
 Example:
 
@@ -225,7 +215,7 @@ STATIC_ASSERT_SIZEOF(s_MyStruct, 806);
 ```
 
 ### Enumerators
-Enums should be prefixed with `e_` and named according to their purpose. Entries should be written in `PascalCase`, prefixed with the enum's name.
+Enums are prefixed with `e_` and named according to their purpose in `PascalCase`. Entries are also written in `PascalCase`, prefixed with the enum's name.
 
 Example:
 
@@ -239,45 +229,46 @@ typedef enum _MyEnum
 ```
 
 ### Defines/Macros
-Macros should be named according to their purpose. The format they should follow depends on what they produce:
-* In case of producing a constant value (for example: Screen position X) `SCREAMING_SNAKE_CASE` should be used.
-* In case of producing a set of intructions that get incrusted in the function (similar to inline functions) `Pascal_Snake_Case` should be used.
-In any case `camelCase` should be used for the arguments.
+Macros are named according to their purpose. The format they should follow depends on their utility.
+* Constants and constant-like macros: `SCREAMING_SNAKE_CASE`.
+* Function-like macros: `PascalCase` with a subsystem prefix.
+`camelCase` is used for macro parameters.
 
-For example:
+```C
+#define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400
+```
+
 ```C
 #define SCREEN_POSITION_X(percent) \
     (s32)((SCREEN_WIDTH) * ((percent) / 100.0f))
 ```
 
-Defines should be named according while using `SCREAMING_SNAKE_CASE` format.
-
-For example:
 ```C
-#define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400
+#define Rng_TestProbabilityBits(bits) \
+    (Rng_Rand16() & ((1 << (bits)) - 1))
 ```
 
 ## Comments
 Use `/** */`-style comments for formal documentation and `//`-style comments for casual development notes. Example:
 
-Struct (applies for enums):
+Structs (also applies for enums):
 ```C
 /** @brief Stores my data.
  *
- * This struct store my precious data no one should touch.
+ * This struct stores my precious data no one should touch.
  */
 typedef struct _MyStruct
 {
     VECTOR3 position_0; /** The position of my house.
                          *
                          * Totally serious description of the data inside the value
-                         * and it's usage.
+                         * and its usage.
                          */
-    s32     field_C;    // Maybe index?
+    s32     field_C;     // Maybe index?
 } s_MyStruct;
 ```
 
-Function (applies for macros):
+Functions (also applies for macros):
 ``` C
 s32 Math_MyFunc(s32 dist) // 0xXXXXXXXX
 {
@@ -294,9 +285,9 @@ s32 Math_MyFunc(s32 dist) // 0xXXXXXXXX
 }
 ```
 
-Documentation comments should be included above declarations in \*.h files to explain the purposes of functions and global variables and in case of being required of enums, structs and macros. Additionally for documentation comments use the tags `@brief` for describing in a simpler way the purpose of the function, global variable, struct or enum and `@param` and `@return` for document the arguments and return value of a function in case it has them. Examples:
+Documentation comments are included above declarations in \*.h files to explain the purposes of functions, global variables, enums, structs, and macros. They follow the Doxygen format.
 
-Function:
+Functions:
 ```C
 /** @brief Makes Harry fly.
  * 
@@ -317,13 +308,13 @@ void Hero_SetFly(bool isFlying, int* yPos); // 0x80012345
 s32 Enemy_StateCheck(s_EnemyStruct* enemyPtr); // 0x80012345
 ```
 
-Global variable:
+Global variables:
 ```C
 /** @brief Current count of ammo the player has. */
 extern s32 g_Player_WeaponCurrentAmmo; // 0x800A2345
 ```
 
-Additionally use the tags  `@note`, `@unused` and `@bug` for additional documentation, document unused pieces of code and unintended game/code behaviour.
+The tags `@note`, `@unused` and `@bug` are used to tag anything noteworthy.
 
 ```C
 /** @unused Some boolean statuses for each save slot.
@@ -335,14 +326,14 @@ extern s16 D_801E7514[2];
 
 /** @brief Main player colision handler.
  *
- * @bug If the player attack with the katana and in middle of the movement
- * get grabbed the colisions will behave incorrectly.
+ * @bug If the player attacks with the Katana and in middle of the movement,
+ * he can be grabbed as collision behaves incorrectly.
  */
 void Player_Colision(); // 0x8000XXXX
 
-/** @brief Struct on charge of the data for enemies.
+/** @brief Struct containing enemy data.
  *
- * @note Aparently the code uses this same struct for NPCs.
+ * @note Also used for NPCs.
  */
 typedef struct _EnemyStruct
 {
