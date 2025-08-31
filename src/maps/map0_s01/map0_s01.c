@@ -307,7 +307,119 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D0850);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D0C3C);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D16C4);
+void func_800D16C4(s_SubCharacter* arg0, s_MainCharacterExtra* arg2, GsCOORDINATE2* arg3) {
+    s_func_800699F8 sp10;
+    VECTOR3 sp20;
+    s32 headingAngle;
+    s16 temp_v0;
+    s32 temp_s0;
+    s32 moveAmt;
+
+    s32 temp_s2;
+
+    s16 temp_s3;
+    s32 scaleRestoreShift;
+    u32 scaleReduceShift;
+    //s32 flag;
+    //s32 precisionShiftLeft;
+    //s32 precisionShiftRight;
+    s32 temp_v0_2;
+    s32 temp_v0_3;
+    s32 temp_v1;
+    s32 moveSpeed;
+
+    s32 var_a0;
+
+    s32 var_s7;
+    s16 var_s0;
+    s16 var_v1;
+
+    temp_v1 = g_SysWork.player_4C.extra_128.state_1C;
+    var_s7 = temp_v1 < 0x3A;
+    if (temp_v1 == 0x35) {
+        var_s7 = 0;
+    }
+    if (var_s7 != 0)
+    {
+        func_800699F8(&sp10, arg0->position_18.vx, arg0->position_18.vz);
+        temp_s2 = FP_MULTIPLY(arg0->moveSpeed_38, Math_Sin(arg0->headingAngle_3C), 12);
+        temp_s0 = FP_MULTIPLY(arg0->moveSpeed_38, Math_Cos(arg0->headingAngle_3C), 12);
+
+        temp_s3 = Math_Cos(ABS(sp10.field_4) >> 3);
+        temp_v0 = Math_Cos(ABS(sp10.field_6) >> 3);
+
+        var_s0 = FP_MULTIPLY((FP_MULTIPLY(temp_s2, temp_s3, 12)), temp_s3, 12);
+        var_v1 = FP_MULTIPLY((FP_MULTIPLY(temp_s0, temp_v0, 12)), temp_v0, 12);
+    }
+    else
+    {
+        var_s0 = FP_MULTIPLY(arg0->moveSpeed_38, Math_Sin(arg0->headingAngle_3C), 12);
+        var_v1 = FP_MULTIPLY(arg0->moveSpeed_38, Math_Cos(arg0->headingAngle_3C), 12);
+    }
+    
+    if (arg0->moveSpeed_38 >= 0)
+    {
+        arg0->moveSpeed_38 = SquareRoot0(SQUARE(var_s0) + SQUARE(var_v1));
+    }
+    else
+    {
+        arg0->moveSpeed_38 = -SquareRoot0(SQUARE(var_s0) + SQUARE(var_v1));
+    }
+
+    moveSpeed = arg0->moveSpeed_38;
+    headingAngle = arg0->headingAngle_3C;
+    moveAmt = FP_MULTIPLY_PRECISE(moveSpeed, g_DeltaTime0, 12);
+
+    scaleRestoreShift = ((u32)(moveAmt + SHRT_MAX) >= USHRT_MAX) ? 4 : 0;
+    scaleReduceShift = scaleRestoreShift >> 1;
+    //sp20.vx = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift, 12) << scaleRestoreShift;
+    //sp20.vz = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift, 12) << scaleRestoreShift;
+    //sp20.vy = FP_MULTIPLY_PRECISE(arg0->field_34, g_DeltaTime0, 12);
+       
+    temp_v0_2 = Math_Sin(headingAngle) >> scaleReduceShift;
+    temp_s0 = moveAmt >> scaleReduceShift;
+    temp_s2 = FP_MULTIPLY_PRECISE(temp_s0, temp_v0_2, 12);
+    sp20.vx = temp_s2 << scaleRestoreShift;
+
+    temp_v0_3 = Math_Cos(headingAngle) >> scaleReduceShift;
+    temp_s2 = FP_MULTIPLY_PRECISE(temp_s0, temp_v0_3, 12);
+    sp20.vz = temp_s2 << scaleRestoreShift;
+    
+    sp20.vy = FP_MULTIPLY_PRECISE(arg0->field_34, g_DeltaTime0, 12);
+
+    if (var_s7 != 0) {
+        func_80069B24(&D_800C4590.field_0, &sp20, arg0);
+        arg0->position_18.vx += D_800C4590.field_0.vx;
+        arg0->position_18.vy += D_800C4590.field_0.vy;
+        arg0->position_18.vz += D_800C4590.field_0.vz;
+        if (D_800C4590.field_14 == 0) {
+            D_800C4590.field_C = arg0->properties_E4.player.positionY_EC;
+        }
+        if ( arg0->position_18.vy > D_800C4590.field_C) {
+            arg0->position_18.vy = D_800C4590.field_C;
+            arg0->field_34 = 0;
+        }
+    } else {
+        arg0->position_18.vx += sp20.vx;
+        arg0->position_18.vz += sp20.vz;
+        temp_v1 = g_SysWork.player_4C.extra_128.state_1C;
+        if ((temp_v1 < 0x57) || ((temp_v1 >= 0x59) && (temp_v1 != 0x6A))) {
+            arg0->position_18.vy = 0;
+        }
+        arg0->field_34 = 0;
+    }
+    if (g_DeltaTime0 == 0)
+    {
+        arg0->rotationSpeed_2C.vy = 0;
+    } 
+    else
+    {
+        arg0->rotationSpeed_2C.vy = (sharedData_800E39D8_0_s00 << 8) / g_DeltaTime0;
+    }
+    arg3->coord.t[0] = Q19_12_TO_Q23_8(arg0->position_18.vx);
+    arg3->coord.t[1] = Q19_12_TO_Q23_8(arg0->position_18.vy);
+    arg3->coord.t[2] = Q19_12_TO_Q23_8(arg0->position_18.vz);
+}
 
 #include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800D1B00
 
