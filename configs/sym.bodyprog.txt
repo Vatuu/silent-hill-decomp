@@ -354,7 +354,11 @@ vcSetRefPosAndCamPosAngByPad                = 0x800406D4; // type:func
 //--- PA: 0x01BF04   VA: 0x80040A64   subsegment: c, bodyprog_80040A64
 //--------------------------------------------------------------------
 Sound_StereoBalanceGet                      = 0x80040A64; // type:func
+PlmHeader_LoadStateGet                      = 0x80041BA0; // type:func
+IpdHeader_LoadStateGet                      = 0x80041B1C; // type:func
 Fs_QueueEntryLoadStatusGet                  = 0x80041ADC; // type:func
+IpdHeader_IsLoaded                          = 0x80042C04; // type:func
+IpdHeader_IsTextureLoaded                   = 0x80043B70; // type:func
 IpdHeader_CollisionDataGet                  = 0x80043BA4; // type:func
 IpdHeader_FixOffsets                        = 0x80043BC4; // type:func
 IpdHeader_FixHeaderOffsets                  = 0x80043DA4; // type:func
@@ -364,6 +368,7 @@ Anim_Update0                                = 0x800449F0; // type:func
 Anim_Update1                                = 0x80044B38; // type:func
 Anim_Update2                                = 0x80044CA4; // type:func
 Anim_Update3                                = 0x80044DF0; // type:func
+PlmHeader_IsTextureLoaded                   = 0x80056888; // type:func
 
 //--------------------------------------------------------------------------
 //--- PA: 0x020F1C   VA: 0x80045A7C   subsegment: c, libsd/bodyprog_80045A7C

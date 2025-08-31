@@ -474,7 +474,7 @@ u32 Fs_QueueEntryLoadStatusGet(s32 queueIdx) // 80041ADC
     return FsQueueEntryLoadStatus_Loaded;
 }
 
-u32 func_80041B1C(s_800C117C* arg0) // 0x80041B1C
+u32 IpdHeader_LoadStateGet(s_800C117C* arg0) // 0x80041B1C
 {
     s32 queueState;
     s32 queueStateCpy;
@@ -484,22 +484,22 @@ u32 func_80041B1C(s_800C117C* arg0) // 0x80041B1C
 
     if (queueStateCpy == FsQueueEntryLoadStatus_Unloaded)
     {
-        return 1;
+        return StaticModelLoadState_Unloaded;
     }
     else if (queueStateCpy == FsQueueEntryLoadStatus_Invalid ||
              queueState    != FsQueueEntryLoadStatus_Loaded)
     {
-        return 0;
+        return StaticModelLoadState_Invalid;
     }
-    else if (arg0->ipdHeader_0->isLoaded_1 && func_80043B70(arg0->ipdHeader_0))
+    else if (arg0->ipdHeader_0->isLoaded_1 && IpdHeader_IsTextureLoaded(arg0->ipdHeader_0))
     {
-        return 3;
+        return StaticModelLoadState_Loaded;
     }
 
-    return 2;
+    return StaticModelLoadState_Corrupted;
 }
 
-s32 func_80041BA0(s_func_80041CB4* arg0) // 0x80041BA0
+s32 PlmHeader_LoadStateGet(s_func_80041CB4* arg0) // 0x80041BA0
 {
     s32 queueState;
     s32 queueStateCpy;
@@ -509,19 +509,19 @@ s32 func_80041BA0(s_func_80041CB4* arg0) // 0x80041BA0
 
     if (queueStateCpy == FsQueueEntryLoadStatus_Unloaded)
     {
-        return 1;
+        return StaticModelLoadState_Unloaded;
     }
     else if (queueStateCpy == FsQueueEntryLoadStatus_Invalid ||
              queueState    != FsQueueEntryLoadStatus_Loaded)
     {
-        return 0;
+        return StaticModelLoadState_Invalid;
     }
-    else if (arg0->plmHeader_0->isLoaded_2 && func_80056888(arg0->plmHeader_0))
+    else if (arg0->plmHeader_0->isLoaded_2 && PlmHeader_IsTextureLoaded(arg0->plmHeader_0))
     {
-        return 3;
+        return StaticModelLoadState_Loaded;
     }
 
-    return 2;
+    return StaticModelLoadState_Corrupted;
 }
 
 void func_80041C24(s_PlmHeader* plmHeader, s32 arg1, s32 arg2) // 0x80041C24
@@ -545,7 +545,7 @@ void func_80041CB4(s_func_80041CB4* arg0, s_PlmHeader* plmHeader) // 0x80041CB4
     arg0->plmHeader_0 = plmHeader;
     func_80041CEC(plmHeader);
 
-    arg0->queueIdx_8 = NULL;
+    arg0->queueIdx_8 = 0;
     arg0->field_4    = NO_VALUE;
 }
 
@@ -770,9 +770,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800426E4); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004287C); // 0x8004287C
 
-s32 func_80042C04(s32 idx) // 0x80042C04
+bool IpdHeader_IsLoaded(s32 idx) // 0x80042C04
 {
-    return (func_80041B1C(&D_800C117C[idx]) < 3) ^ 1;
+    return IpdHeader_LoadStateGet(&D_800C117C[idx]) >= StaticModelLoadState_Loaded;
 }
 
 void func_80042C3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80042C3C
@@ -913,7 +913,7 @@ void func_80043A24(GsOT* ot, s32 arg1) // 0x80043A24
     ptr = &D_800C1020.field_15C[0];
     for (; ptr < &D_800C1020.field_15C[D_800C1020.field_158]; ptr++)
     {
-        if (func_80041B1C(ptr) >= 3 && func_80043B34(ptr, &D_800C1020))
+        if (IpdHeader_LoadStateGet(ptr) >= 3 && func_80043B34(ptr, &D_800C1020))
         {
             func_80044090(ptr->ipdHeader_0, D_800C1020.field_578, D_800C1020.field_57C, ot, arg1);
         }
@@ -930,14 +930,14 @@ bool func_80043B34(s_800C117C* arg0, s_800C1020* arg1)
     return arg1->field_588 != 0;
 }
 
-bool func_80043B70(s_IpdHeader* ipdHeader) // 0x80043B70
+bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHeader) // 0x80043B70
 {
     if (!ipdHeader->isLoaded_1)
     {
         return false;
     }
 
-    return func_80056888(ipdHeader->plmHeader_4);
+    return PlmHeader_IsTextureLoaded(ipdHeader->plmHeader_4);
 }
 
 s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHeader) // 0x80043BA4

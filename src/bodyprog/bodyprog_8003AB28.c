@@ -1183,7 +1183,7 @@ void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x800
 
     if (temp_a0 >= 3 && temp_a0 < 7)
     {
-        if (!func_80042C04(temp_a0 - 3))
+        if (!IpdHeader_IsLoaded(temp_a0 - 3))
         {
             arg0->field_10.field_9 = 0;
         }

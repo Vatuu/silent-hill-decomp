@@ -617,60 +617,60 @@ void func_800566B4(s_PlmHeader* plmHeader, s_FsImageDesc* image, s8 unused, s32 
 {
     char           filename[16];
     s32            i;
-    s_PlmTexList*  plmTexList;
+    s_PlmTexList*  texList;
     s_FsImageDesc* localImage;
 
     // Loop could be using `&image[i]`/`&arg0->field_4[i]` instead? Wasn't able to make that match though.
     localImage = image;
-    plmTexList = plmHeader->textureList_4;
+    texList    = plmHeader->textureList_4;
 
-    for (i = 0; i < plmHeader->textureCount_3; i++, plmTexList++, localImage++)
+    for (i = 0; i < plmHeader->textureCount_3; i++, texList++, localImage++)
     {
-        func_8005B3BC(filename, plmTexList);
+        func_8005B3BC(filename, texList);
         Fs_QueueStartReadTim(Fs_FindNextFile(filename, 0, startIdx), FS_BUFFER_9, localImage);
-        func_8005660C(plmTexList, localImage, arg4);
+        func_8005660C(texList, localImage, arg4);
     }
 }
 
-void func_80056774(s_PlmHeader* plmHeader, void* arg1, bool (*fnPtr)(s_PlmTexList* plmTexList), void* arg3, s32 arg4) // 0x80056774
+void func_80056774(s_PlmHeader* plmHeader, void* arg1, bool (*func)(s_PlmTexList* plmTexList), void* arg3, s32 arg4) // 0x80056774
 {
-    s_PlmTexList* plmTexList;
+    s_PlmTexList* tex;
 
-    for (plmTexList = &plmHeader->textureList_4[0]; plmTexList < &plmHeader->textureList_4[plmHeader->textureCount_3]; plmTexList++)
+    for (tex = &plmHeader->textureList_4[0]; tex < &plmHeader->textureList_4[plmHeader->textureCount_3]; tex++)
     {
-        if (plmTexList->field_C == 0 && plmTexList->field_8 == NULL && (fnPtr == NULL || fnPtr(plmTexList)))
+        if (tex->field_C == 0 && tex->field_8 == NULL && (func == NULL || func(tex)))
         {
-            plmTexList->field_8 = func_8005B1FC(plmTexList, arg1, FS_BUFFER_9, arg3, arg4);
-            if (plmTexList->field_8 != NULL)
+            tex->field_8 = func_8005B1FC(tex, arg1, FS_BUFFER_9, arg3, arg4);
+            if (tex->field_8 != NULL)
             {
-                func_8005660C(plmTexList, &plmTexList->field_8->imageDesc_0, arg4);
+                func_8005660C(tex, &tex->field_8->imageDesc_0, arg4);
             }
         }
     }
 }
 
-bool func_80056888(s_PlmHeader* plmHeader) // 0x80056888
+bool PlmHeader_IsTextureLoaded(s_PlmHeader* plmHeader) // 0x80056888
 {
-    s_PlmTexList* plmTexList;
+    s_PlmTexList* tex;
 
     if (!plmHeader->isLoaded_2)
     {
         return false;
     }
 
-    for (plmTexList = &plmHeader->textureList_4[0]; plmTexList < &plmHeader->textureList_4[plmHeader->textureCount_3]; plmTexList++)
+    for (tex = &plmHeader->textureList_4[0]; tex < &plmHeader->textureList_4[plmHeader->textureCount_3]; tex++)
     {
-        if (plmTexList->field_C != 0)
+        if (tex->field_C != 0)
         {
             continue;
         }
 
-        if (plmTexList->field_8 == NULL)
+        if (tex->field_8 == NULL)
         {
             return false;
         }
 
-        if (!Fs_QueueIsEntryLoaded(plmTexList->field_8->queueIdx_10))
+        if (!Fs_QueueIsEntryLoaded(tex->field_8->queueIdx_10))
         {
             return false;
         }
@@ -684,18 +684,18 @@ void func_80056954(s_PlmHeader* plmHeader) // 0x80056954
     s32           i;
     s32           j;
     s32           flags;
-    s_PlmTexList* plmTexList;
+    s_PlmTexList* tex;
 
-    for (i = 0, plmTexList = plmHeader->textureList_4; i < plmHeader->textureCount_3; i++, plmTexList++)
+    for (i = 0, tex = plmHeader->textureList_4; i < plmHeader->textureCount_3; i++, tex++)
     {
-        flags = (plmTexList->field_E != plmTexList->field_F) ? (1 << 0) : 0;
+        flags = (tex->field_E != tex->field_F) ? (1 << 0) : 0;
 
-        if (plmTexList->field_10 != plmTexList->field_12)
+        if (tex->field_10 != tex->field_12)
         {
             flags |= 1 << 1;
         }
 
-        if (plmTexList->field_14.u16 != plmTexList->field_16.u16)
+        if (tex->field_14.u16 != tex->field_16.u16)
         {
             flags |= 1 << 2;
         }
@@ -706,14 +706,14 @@ void func_80056954(s_PlmHeader* plmHeader) // 0x80056954
             {
                 if (plmHeader->magic_0 == PLM_HEADER_MAGIC)
                 {
-                    func_80056A88(&plmHeader->objectList_C[j], i, plmTexList, flags);
+                    func_80056A88(&plmHeader->objectList_C[j], i, tex, flags);
                 }
             }
 
-            plmTexList->field_F        = plmTexList->field_E;
-            plmTexList->field_12       = plmTexList->field_10;
-            plmTexList->field_16.u8[0] = plmTexList->field_14.u8[0];
-            plmTexList->field_16.u8[1] = plmTexList->field_14.u8[1];
+            tex->field_F        = tex->field_E;
+            tex->field_12       = tex->field_10;
+            tex->field_16.u8[0] = tex->field_14.u8[0];
+            tex->field_16.u8[1] = tex->field_14.u8[1];
         }
     }
 }

@@ -162,6 +162,14 @@ typedef enum _LoadingScreenId
     LoadingScreenId_StageString       = 3
 } e_LoadingScreenId;
 
+typedef enum _StaticModelLoadState
+{
+    StaticModelLoadState_Invalid   = 0,
+    StaticModelLoadState_Unloaded  = 1,
+    StaticModelLoadState_Corrupted = 2, // Maybe wrong name for this.
+    StaticModelLoadState_Loaded    = 3
+} e_StaticModelLoadState;
+
 // ================
 // UNKNOWN STRUCTS
 // ================
@@ -685,6 +693,7 @@ typedef struct _ObjList
 } s_ObjList;
 STATIC_ASSERT_SIZEOF(s_ObjList, 16);
 
+// Individual texture data.
 typedef struct _PlmTexList_8
 {
     s_FsImageDesc imageDesc_0;
@@ -828,7 +837,7 @@ typedef struct _IpdHeader
     s_IpdCollisionData collisionData_54;
 } s_IpdHeader;
 
-// Likely `D_800C1158`'s struct.
+// PLM data? Likely `D_800C1158`'s struct.
 typedef struct
 {
     s_PlmHeader* plmHeader_0;
@@ -1109,6 +1118,7 @@ typedef struct
 } s_800BCE18;
 STATIC_ASSERT_SIZEOF(s_800BCE18, 11260);
 
+// IPD data?
 typedef struct
 {
     s_IpdHeader* ipdHeader_0;
@@ -2211,6 +2221,7 @@ extern s_800C1020 D_800C1020;
 
 extern s32 D_800C1178;
 
+/** Collection of IPD file data? */
 extern s_800C117C D_800C117C[];
 
 extern s_800C1450 D_800C1450;
@@ -2682,11 +2693,12 @@ void func_800421D8(char* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5)
 /** @brief Turns two hex `char`s to their `int` hex value. */
 bool func_8004255C(s32* out, char firstHex, char secondHex);
 
-s32 func_80041BA0(s_func_80041CB4* arg0);
+s32 PlmHeader_LoadStateGet(s_func_80041CB4* arg0);
 
-u32 func_80041B1C(s_800C117C* arg0);
+u32 IpdHeader_LoadStateGet(s_800C117C* arg0);
 
-s32 func_80042C04(s32 idx);
+/** Checks if an IPD file is loaded? */
+bool IpdHeader_IsLoaded(s32 idx);
 
 void func_80042C3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
@@ -2704,7 +2716,8 @@ void func_80043A24(GsOT* ot, s32 arg1);
 
 bool func_80043B34(s_800C117C* arg0, s_800C1020* arg1);
 
-bool func_80043B70(s_IpdHeader* ipdHeader);
+/** Checks if PLM texture is loaded? */
+bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHeader);
 
 s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHeader);
 
@@ -3038,9 +3051,10 @@ void func_8005660C(s_PlmTexList* plmTexList, s_FsImageDesc* image, s32 arg2);
 void func_800566B4(s_PlmHeader* plmHeader, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4);
 
 /** Unknown `arg1` / `arg3` / `arg4` types. */
-void func_80056774(s_PlmHeader* plmHeader, void* arg1, bool (*fnPtr)(s_PlmTexList* plmTexList), void* arg3, s32 arg4);
+void func_80056774(s_PlmHeader* plmHeader, void* arg1, bool (*func)(s_PlmTexList* plmTexList), void* arg3, s32 arg4);
 
-bool func_80056888(s_PlmHeader* plmHeader);
+/** Checks if PLM textures are loaded? */
+bool PlmHeader_IsTextureLoaded(s_PlmHeader* plmHeader);
 
 void func_80056954(s_PlmHeader* plmHeader);
 
