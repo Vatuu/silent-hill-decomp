@@ -2083,6 +2083,8 @@ extern s32 D_800AFD60;
 
 extern s32 D_800AFD9C;
 
+extern SVECTOR D_800AFDB0;
+
 extern s32 D_800AFDEC;
 
 extern s_800AFE08 D_800AFE08;
