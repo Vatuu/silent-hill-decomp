@@ -10,33 +10,6 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800CCB8C);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800CD1F8);
 
-typedef struct {
-    VECTOR3 vec_0;
-    VECTOR3 vec_C;
-} s_6foo;
-
-typedef struct {
-    VECTOR3 vec0;
-    VECTOR3 viewPos_C;
-    SVECTOR svec18;
-    SVECTOR viewAngle_20;
-    s32     int28;
-} s_SomeVectors;
-
-#define g_Particles D_800DFBB0
-//s32 SetSp(s32, u32*, ?);                            /* extern */
-s32 func_800CE8A8(s_Particle*);                       /* extern */
-extern u8 D_800DD78B;
-extern s32 D_800DD798;
-extern s32 D_800DE160;
-extern s32 D_800DE164;
-extern s_SomeVectors D_800DFB40;
-extern s_SomeVectors D_800DFB70;
-extern s_Particle g_Particles[300];
-extern s32 D_800E214C;
-extern s32 D_800E2150;
-extern s_6foo D_800E2160;
-
 void func_800CE000(s32 arg1, s32 arg2, s32 arg3)
 {
     s32 temp_a2;
@@ -51,10 +24,10 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3)
     u32 temp_v1_2;
     u16 temp_v1_3;
     
-    func_80055434(&D_800DFB40.vec0);
-    D_800DFB40.int28 = func_8005545C(&D_800DFB40.svec18);
-    vwGetViewPosition(&D_800DFB40.viewPos_C);
-    vwGetViewAngle(&D_800DFB40.viewAngle_20);
+    func_80055434(&g_ParticleVectors1.vec0);
+    g_ParticleVectors1.field_28 = func_8005545C(&g_ParticleVectors1.svec18);
+    vwGetViewPosition(&g_ParticleVectors1.viewPos_C);
+    vwGetViewAngle(&g_ParticleVectors1.viewAngle_20);
 
     switch (arg3)
     {
@@ -259,7 +232,7 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3)
                 g_Particles[var_a0].stateStep_1E = 0;
             }
     }
-    D_800DFB70 = D_800DFB40;
+    g_ParticleVectors2 = g_ParticleVectors1;
 }
 
 

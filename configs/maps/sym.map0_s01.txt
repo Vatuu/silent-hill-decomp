@@ -225,3 +225,6 @@ g_EventThing4A0                = 0x800E24A0;
 g_EventThing4D0                = 0x800E24D0;
 g_EventThing500                = 0x800E2500;
 g_EventThing530                = 0x800E2530;
+g_ParticleVectors1 = 0x800DFB40; // type:ParticleVectors
+g_ParticleVectors2 = 0x800DFB70; // type:ParticleVectors
+g_Particles = 0x800DFBB0; // type:Particle size:0x2580
