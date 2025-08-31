@@ -1016,9 +1016,9 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 arg2,
     return 0;
 }
 
-bool IpdHeader_IsLoaded(s32 idx) // 0x80042C04
+bool IpdHeader_IsLoaded(s32 ipdIdx) // 0x80042C04
 {
-    return IpdHeader_LoadStateGet(&D_800C117C[idx]) >= StaticModelLoadState_Loaded;
+    return IpdHeader_LoadStateGet(&D_800C117C[ipdIdx]) >= StaticModelLoadState_Loaded;
 }
 
 void func_80042C3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80042C3C
@@ -1069,9 +1069,9 @@ s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, 
     if (clip != 0)
     {
         dist -= DIST_THRESHOLD;
-        if (dist < 0)
+        if (dist < FP_METER(0.0f))
         {
-            dist = 0;
+            dist = FP_METER(0.0f);
         }
     }
 

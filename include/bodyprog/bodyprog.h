@@ -2714,12 +2714,32 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ);
 
 s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 arg2, s32 arg3);
 
+s32* func_800425D8(s32* arg0);
+
+s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ);
+
+s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 arg2, s32 arg3);
+
+/** @brief Gets the load state of a PLM file.
+ *
+ * @param
+ * @return PLM file load state `(e_StaticModelLoadState`).
+ */
 s32 PlmHeader_LoadStateGet(s_func_80041CB4* arg0);
 
+/** @brief Gets the load state of an IPD file.
+ *
+ * @param
+ * @return IPD file load state `(e_StaticModelLoadState`).
+ */
 u32 IpdHeader_LoadStateGet(s_800C117C* arg0);
 
-/** Checks if an IPD file is loaded? */
-bool IpdHeader_IsLoaded(s32 idx);
+/** @brief Checks if an IPD file is loaded.
+ *
+ * @param ipdIdx IPD data index.
+ * @return `true` if the IPD file is loaded, `false` otherwise.
+ */
+bool IpdHeader_IsLoaded(s32 ipdIdx);
 
 void func_80042C3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
