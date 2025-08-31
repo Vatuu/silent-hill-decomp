@@ -6,25 +6,25 @@ Code should use the Allman indentation style, placing braces on separate lines w
 ```C
 s32 func_XXXXXXXX(s32 arg0)
 {	
-	if (globalVariable0 == 1)
-	{
-		return arg0 == 1;
+    if (globalVariable0 == 1)
+    {
+        return arg0 == 1;
 	}
-	else if (globalVariable0 == 2)
-	{
-		return -1;
-	}
-	else
-	{
-		return arg0 > 5
-	}
+    else if (globalVariable0 == 2)
+    {
+        return -1;
+    }
+    else
+    {
+        return arg0 > 5
+    }
 }
 ```
 
 ### Alignment
 
 #### Structs and enums
-When adding fields from structs and enums align assignment should be applied.
+When adding fields from structs and enums vertical align should be applied.
 
 Structs:
 ```C
@@ -49,7 +49,7 @@ myEnum_Orange = 4
 
 
 #### Variables and struct fields
-In case a value is assigned for multiple local and global variables with different size names that are next to each other then they should be joined and apply align assignment.
+In case a value is assigned for multiple local and global variables with different size names that are next to each other then they should be joined and apply vertical align.
 
 ```C
 ...
@@ -66,19 +66,19 @@ If after three continuous variable assignment, two or more struct fields values 
 ...
 if (!g_GlobalVariable0)
 {
-	var_a0      = 19;
-	var_s0      = 99;
-	var_s1      = True;
-	var_temp_a1 = 10;
-	
-	g_StructNumberXXXX.player_0.field_E3        = 0;
-	g_StructNumberXXXX.player_0.health_20       = 0;
-	g_StructNumberXXXX.playerSave_2024.field_F3 = 1;
-	
-	if (g_GlobalVariable1 == 30)
-	{
-		return func_XXXXXXXX;
-	}
+    var_a0      = 19;
+    var_s0      = 99;
+    var_s1      = True;
+    var_temp_a1 = 10;
+    
+    g_StructNumberXXXX.player_0.field_E3        = 0;
+    g_StructNumberXXXX.player_0.health_20       = 0;
+    g_StructNumberXXXX.playerSave_2024.field_F3 = 1;
+    
+    if (g_GlobalVariable1 == 30)
+    {
+        return func_XXXXXXXX;
+    }
 }
 ...
 ```
@@ -89,13 +89,13 @@ In case the code encapsulated is just doing value assignation all variables and 
 ...
 if (!g_GlobalVariable0)
 {
-	var_a0                                      = 19;
-	var_s0                                      = 99;
-	g_StructNumberXXXX.player_0.field_E3        = 0;
-	g_StructNumberXXXX.player_0.health_20       = 0;
-	var_s1                                      = True;
-	var_temp_a1                                 = 10;
-	g_StructNumberXXXX.playerSave_2024.field_F3 = 1;
+    var_a0                                      = 19;
+    var_s0                                      = 99;
+    g_StructNumberXXXX.player_0.field_E3        = 0;
+    g_StructNumberXXXX.player_0.health_20       = 0;
+    var_s1                                      = True;
+    var_temp_a1                                 = 10;
+    g_StructNumberXXXX.playerSave_2024.field_F3 = 1;
 }
 ...
 ```
@@ -144,7 +144,9 @@ if (g_Player_IsAlive)
 if (!g_Player_IsAlive)
 ```
 
-### Clang-format
+### Organization Tools
+
+#### Clang-format
 The repository includes a `clang-format` configuration to help ensure code consistency. Git also has a command to handle formatting any modified files.
 
 We'd appreciate it if you could follow these steps prior to committing:
@@ -156,6 +158,9 @@ We'd appreciate it if you could follow these steps prior to committing:
    `git clang-format`</br>
 3. Review the changes with `git diff`, then re-stage and commit them:</br>
    `git add src/`
+
+#### configs_formatter.py
+The repository includes a Python script which rearrange symbol asignations order in `*.sym.txt` files based on the address. We'd appreciate if prior to committing you run it by using `python3 tools/configs_formatter.py`.
 
 ## Naming Conventions
 If a function, enum or struct and most or all of their field's names are known that name should be used.
@@ -264,10 +269,10 @@ Struct (applies for enums):
 typedef struct _MyStruct
 {
     VECTOR3 position_0; /** The position of my house.
-	                     *
-						 * Totally serious description of the data inside the value
-						 * and it's usage.
-	                     */
+                         *
+                         * Totally serious description of the data inside the value
+                         * and it's usage.
+                         */
     s32     field_C;    // Maybe index?
 } s_MyStruct;
 ```
@@ -276,14 +281,14 @@ Function (applies for macros):
 ``` C
 s32 Math_MyFunc(s32 dist) // 0xXXXXXXXX
 {
-	// Normally this value is -1.
+    // Normally this value is -1.
     if (dist >= 0)
     {
         return 0;
     }
-	
-	do {} while(0) // Hack.
-	
+    
+    do {} while(0) // Hack.
+    
     // Value might be enum entry from `e_MyEnum`, but it's unclear right now.
     return 0x10;
 }
