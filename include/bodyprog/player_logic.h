@@ -313,10 +313,36 @@ typedef enum _PlayerAnim
     PlayerAnim_Unk29                   = 29, // } Some combat anims.
     PlayerAnim_Unk30                   = 30, // }
     PlayerAnim_Unk31                   = 31, // }
+    PlayerAnim_Unk32                   = 32,
+    PlayerAnim_Unk33                   = 33,
+    PlayerAnim_Unk34                   = 34,
+    PlayerAnim_Unk35                   = 35,
+    PlayerAnim_Unk36                   = 36,
 
-    // Probably more combat anims here.
+    // Probably combat anims and many cutscene anims here.
 
-    // From 120: Damage, enemy grab, enemy release anims.
+    // TODO: Anims ahead not entirely clear. Need to confirm before naming definitively. Some grab/release anims might be split in two, hence the gaps.
+
+    PlayerAnim_Unk115                  = 115, // Enemy grab torso front?
+
+    PlayerAnim_Unk117                  = 117, // Enemy grab torso back?
+    PlayerAnim_Unk118                  = 118, // Enemy grab legs back?
+
+    PlayerAnim_Unk120                  = 120, // Enemy release upper front?
+    PlayerAnim_Unk121                  = 121, // Damage head?
+    PlayerAnim_Unk122                  = 122, // Enemy release upper front?
+    PlayerAnim_Unk123                  = 123, // Enemy release lower back?
+
+    PlayerAnim_Unk125                  = 125, // Enemy grab neck front and back?
+
+    PlayerAnim_Unk127                  = 127, // Enemy grab pinned front?
+    PlayerAnim_Unk128                  = 128, // Enemy grab pinned back?
+    PlayerAnim_Unk129                  = 129, // Enemy release pinned front?
+    PlayerAnim_Unk130                  = 130, // Enemy release pinned back?
+    PlayerAnim_Unk131                  = 131, // Damage thrown front? Also used to recover from pinned grab.
+    PlayerAnim_Unk132                  = 132, // Damage thrown back? Also used to recover from pinned grab.
+    PlayerAnim_Unk133                  = 133, // Get up front?
+    PlayerAnim_Unk134                  = 134  // Get up back?
 } s_PlayerAnim;
 
 // ========
