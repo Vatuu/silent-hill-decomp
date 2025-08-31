@@ -2821,7 +2821,74 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008E51C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008E5B4); // 0x8008E5B4
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008E794); // 0x8008E794
+void func_8008E794(VECTOR3* arg0, s16 arg1, s32 arg2) // 0x8008E794
+{
+    VECTOR    sp10;
+    VECTOR    sp20;
+    MATRIX    sp30;
+    s32       sp50;
+    POLY_FT4* temp_s0;
+    s32       var_s1;
+    u32       var_v1;
+
+    memset(&sp20, 0, 0x10);
+    sp20.vx = arg0->vx >> 4;
+    sp20.vy = ((arg2 * 2) >> 4) - (arg0->vy >> 4);
+    sp20.vz = arg0->vz >> 4;
+    sp10    = sp20;
+
+    sp30 = GsWSMATRIX;
+    ApplyMatrixLV(&GsWSMATRIX, &sp10, &sp30.t);
+    sp30.t[0] += GsWSMATRIX.t[0];
+    sp30.t[1] += GsWSMATRIX.t[1];
+    sp30.t[2] += GsWSMATRIX.t[2];
+    SetTransMatrix(&sp30);
+
+    if ((RotTransPers(&D_800AFDB0, &sp20, &sp50, &sp50) * 4) >= 0x80)
+    {
+        temp_s0 = GsOUT_PACKET_P;
+        SetPolyFT4(temp_s0);
+        setSemiTrans(temp_s0, 1);
+
+        var_s1 = arg1 - 0x1C7;
+        if (var_s1 > 0x400)
+        {
+            var_s1 = 0x400;
+        }
+        if (Math_Sin(var_s1) >= 0)
+        {
+            var_v1 = Math_Sin(var_s1);
+        }
+        else
+        {
+            var_v1 = 0;
+        }
+
+        temp_s0->r0    = (var_v1 >> 6);
+        temp_s0->g0    = ((var_v1 * 7) >> 9);
+        temp_s0->b0    = ((var_v1 * 5) >> 9);
+        temp_s0->tpage = 0x2D;
+        temp_s0->clut  = 0x4E;
+        temp_s0->u0    = 0x40;
+        temp_s0->u1    = 0x40;
+        temp_s0->v0    = 0x1F;
+        temp_s0->v1    = 0;
+        temp_s0->u2    = 0x7F;
+        temp_s0->v2    = 0x1F;
+        temp_s0->u3    = 0x7F;
+        temp_s0->v3    = 0;
+        temp_s0->x0    = sp20.vx - 0x18;
+        temp_s0->y0    = ((u32)sp20.vx >> 16) - 0x30; // Are these hacks? I cant think of any other solutions
+        temp_s0->x1    = sp20.vx + 0x18;
+        temp_s0->y1    = ((u32)sp20.vx >> 16) - 0x30;
+        temp_s0->x2    = sp20.vx - 0x18;
+        temp_s0->y2    = ((u32)sp20.vx >> 16) + 0x30;
+        temp_s0->x3    = sp20.vx + 0x18;
+        temp_s0->y3    = ((u32)sp20.vx >> 16) + 0x30;
+        AddPrim(g_ObjectTable0[g_ObjectTableIdx].org + 0x281, temp_s0);
+        GsOUT_PACKET_P = temp_s0 + 1;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008EA68); // 0x8008EA68
 
