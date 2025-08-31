@@ -1490,25 +1490,24 @@ void func_800451B0(s_Skeleton* skel, s_PlmHeader* plmHeader, s32* arg2) // 0x800
     }
 }
 
-// Anim func.
-void func_80045258(s_Skeleton** arg0, s_Bone* arg1, s32 arg2, s_PlmHeader* plmHeader) // 0x80045258
+void func_80045258(s_Skeleton** skels, s_Bone* bones, s32 boneIdx, s_PlmHeader* plmHeader) // 0x80045258
 {
-    s_Bone* var_t0;
-    u8*     var_t1;
+    s_Bone* bone;
+    u8*     objOrd;
 
-    for (var_t1 = plmHeader->objectOrds_10; var_t1 < &plmHeader->objectOrds_10[plmHeader->objectCount_8]; var_t1++)
+    for (objOrd = plmHeader->objectOrds_10; objOrd < &plmHeader->objectOrds_10[plmHeader->objectCount_8]; objOrd++)
     {
-        for (var_t0 = arg1; var_t0 < &arg1[arg2]; var_t0++)
+        for (bone = bones; bone < &bones[boneIdx]; bone++)
         {
-            if (var_t0->objListIdx_C == *var_t1)
+            if (bone->objListIdx_C == *objOrd)
             {
-                *arg0 = (s_Skeleton*)var_t0;
-                arg0  = (s_Skeleton**)&var_t0->field_14;
+                *skels = (s_Skeleton*)bone;
+                skels  = (s_Skeleton**)&bone->field_14;
             }
         }
     }
 
-    *arg0 = NULL;
+    *skels = NULL;
 }
 
 // Anim func.

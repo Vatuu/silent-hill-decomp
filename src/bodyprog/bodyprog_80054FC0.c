@@ -299,7 +299,7 @@ void func_80055A90(CVECTOR* arg0, CVECTOR* arg1, u8 arg2, s32 arg3) // 0x80055A9
         arg3 = 0xFF << 4;
     }
 
-    var_v1 = 0x1000 - (D_800C4168.field_18 + arg3); //  D_800C4168.field_18
+    var_v1 = 0x1000 - (D_800C4168.field_18 + arg3); // `D_800C4168.field_18`
     if (var_v1 < 0)
     {
         var_v1 = 0;
@@ -2071,8 +2071,8 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80066184); // 0x
 void func_80066D90() // 0x80066D90
 {
     s32       var_s1;
-    DR_TPAGE* var1; // Guessed type
-    TILE*     var2; // Guessed type
+    DR_TPAGE* var1; // Guessed type.
+    TILE*     var2; // Guessed type.
 
     for (var_s1 = 0; var_s1 < 0x3F; var_s1++)
     {
@@ -2083,7 +2083,8 @@ void func_80066D90() // 0x80066D90
 
         var2 = PSX_SCRATCH;
         setlen(var2, 3);
-        // Hacks. Maybe this is not a TILE?
+
+        // @hack Maybe not `TILE`?
         *(s32*)&var2->r0 = 0x62080808;
         *(s32*)&var2->x0 = 0xFF20FF60;
         *(s32*)&var2->w  = 0x01C00140;
@@ -2092,6 +2093,7 @@ void func_80066D90() // 0x80066D90
         Fs_QueueUpdate();
         VSync(0);
     }
+
     Fs_QueueWaitForEmpty();
 }
 
@@ -2837,13 +2839,13 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006C45C); // 0x
 
 void func_8006C794(s_func_8006CC44* arg0, s32 arg1, s32 arg2) // 0x8006C794
 {
-    s32 new_var;
+    s32 var;
 
     if (arg0->field_4.field_2C >= (arg0->field_D4 + (arg2 - arg0->field_D8.field_0)))
     {
-        new_var = arg0->field_D0 + 52;
+        var = arg0->field_D0 + 52;
         func_8006BCC4(&arg0->field_44,
-                      arg0->field_CC + new_var,
+                      arg0->field_CC + var,
                       arg1,
                       arg0->field_98 - arg0->field_D2,
                       arg0->field_9A - arg0->field_D6,

@@ -2766,8 +2766,8 @@ void func_80045108(s_Skeleton* arg0, s_PlmHeader* plmHeader, u8* arg2, s32 arg3)
 /** Anim func. */
 void func_800451B0(s_Skeleton* skel, s_PlmHeader* plmHeader, s32* arg2);
 
-/** Anim func. */
-void func_80045258(s_Skeleton** arg0, s_Bone* arg1, s32 arg2, s_PlmHeader* plmHeader);
+/** Anim func. Param names are rough. */
+void func_80045258(s_Skeleton** skels, s_Bone* bones, s32 boneIdx, s_PlmHeader* plmHeader);
 
 /** Anim func. Traverses skeleton bones to set flags/mask. */
 void func_800453E8(s_Skeleton* skel, bool cond);

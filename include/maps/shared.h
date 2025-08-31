@@ -2,6 +2,7 @@
 #define _MAPS_SHARED_H
 
 #include "game.h"
+
 typedef enum
 {
     ParticleState_Spawn  = 0,
