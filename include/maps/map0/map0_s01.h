@@ -106,6 +106,8 @@ extern u8 D_800DE250;
 
 extern u8 D_800DE251;
 
+void func_800CE000(s32 arg1, s32 arg2, s32 arg3);
+
 s32 func_800CE8A8(s_Particle*);
 
 /** `arg0` is a struct pointer, might be `s_SubCharacter`. */
