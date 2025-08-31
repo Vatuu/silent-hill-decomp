@@ -2561,12 +2561,7 @@ s32 UnknownMapTableIdxGet();
 
 void func_8003C1AC(s_800BCE18_0_CC* arg0);
 
-/** TODO: Redo function with new context.
- * Used in `GameFs_MapStartup`, where the args
- * passed are pointers to `g_MapOverlayHeader` (`arg0`), the player's
- * aX position (`arg1`), and the player's Z position (`arg2`).
- */
-void func_8003C220(s_UnkStruct2_Mo** arg0, s32 arg1, s32 arg2);
+void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ);
 
 /** Unknown bodyprog func. Called by `Fs_QueueDoThingWhenEmpty`. */
 s32 func_8003C850();
