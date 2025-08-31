@@ -2,6 +2,7 @@
 #define _MAP0_S01_H
 
 #include "bodyprog/bodyprog.h"
+#include "maps/shared.h"
 #include "game.h"
 #include "types.h"
 
@@ -40,6 +41,39 @@ typedef struct
     char* field_1C;
 } s_800A99E4;
 
+typedef struct {
+    VECTOR3 vec_0;
+    VECTOR3 vec_C;
+} s_2Vectors;
+
+typedef struct {
+    VECTOR3 vec0;
+    VECTOR3 viewPos_C;
+    SVECTOR svec18;
+    SVECTOR viewAngle_20;
+    s32     field_28;
+} s_ParticleVectors;
+
+extern u8 D_800DD78B;
+
+extern s32 D_800DD798;
+
+extern s32 D_800DE160;
+
+extern s32 D_800DE164;
+
+extern s_ParticleVectors g_ParticleVectors1;
+
+extern s_ParticleVectors g_ParticleVectors2;
+
+extern s_Particle g_Particles[300];
+
+extern s32 D_800E214C;
+
+extern s32 D_800E2150;
+
+extern s_2Vectors D_800E2160;
+
 /** Relative file offset for map texture? */
 extern s8 D_800A99B5;
 
@@ -71,6 +105,8 @@ extern u16 g_SoundCmds[];
 extern u8 D_800DE250;
 
 extern u8 D_800DE251;
+
+s32 func_800CE8A8(s_Particle*);
 
 /** `arg0` is a struct pointer, might be `s_SubCharacter`. */
 void func_800D2364(s_SubCharacter* chara);

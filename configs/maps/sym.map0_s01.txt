@@ -10,10 +10,6 @@
 //--- PA: 0x000000   VA: 0x800C9578   subsegment: .rodata, map0_s01_header
 //------------------------------------------------------------------------
 
-//------------------------------------------------------
-//--- PA: 0x001050   VA: 0x800CA5C8   subsegment: rodata
-//------------------------------------------------------
-
 //-----------------------------------------------------------------
 //--- PA: 0x001238   VA: 0x800CA7B0   subsegment: .rodata, map0_s01
 //-----------------------------------------------------------------
@@ -199,7 +195,9 @@ sharedData_800DFB64_0_s00      = 0x800DE254; // type:s32
 sharedData_800DFB68_0_s00      = 0x800DE258; // type:s32
 sharedData_800DFB6C_0_s00      = 0x800DE25C; // type:s32
 sharedData_800DFB70_0_s00      = 0x800DE260; // type:s32
+g_ParticleVectors1             = 0x800DFB40; // type:ParticleVectors
 sharedData_800E0C6E_0_s00      = 0x800DFB62; // type:s16
+g_ParticleVectors2             = 0x800DFB70; // type:ParticleVectors
 sharedData_800E0CA8_0_s00      = 0x800DFB9C; // type:s32
 sharedData_800E0CAC_0_s00      = 0x800DFBA0; // type:s32
 sharedData_800E0CB0_0_s00      = 0x800DFBA4; // type:u32
@@ -207,6 +205,7 @@ sharedData_800E0CB4_0_s00      = 0x800DFBA8; // type:u16
 sharedData_800E0CB6_0_s00      = 0x800DFBAA; // type:u16
 sharedData_800E0CB8_0_s00      = 0x800DFBAC; // type:u16
 sharedData_800E0CBA_0_s00      = 0x800DFBAE; // type:s8
+g_Particles                    = 0x800DFBB0; // type:Particle size:0x2580
 sharedData_800E323C_0_s00      = 0x800E2130; // type:VECTOR3 size:0xC
 sharedData_800E324C_0_s00      = 0x800E2140; // type:VECTOR3 size:0xC
 sharedData_800E3260_0_s00      = 0x800E2154; // type:s16
