@@ -607,27 +607,30 @@ void func_80041E98() // 0x80041E98
     D_800C1020.field_0.field_1C = 512;
 }
 
-void func_80041ED0(s16 arg0, s32 arg1, s32 arg2) // 0x80041ED0
+void func_80041ED0(s16 arg0, s32 xIdx, s32 zIdx) // 0x80041ED0
 {
     s_800C117C*  ptr;
     s_IpdHeader* ipd;
 
-    ((s16*)&D_800C1020.field_42C[arg2])[arg1] = arg0;
+    ((s16*)&D_800C1020.field_42C[zIdx])[xIdx] = arg0;
 
-    for (ptr = D_800C1020.field_15C; (u32)ptr < (u32)&D_800C1020.field_15C[D_800C1020.field_158]; ptr++)
+    for (ptr = D_800C1020.field_15C; ptr < &D_800C1020.field_15C[D_800C1020.field_158]; ptr++)
     {
-        if (ptr->field_8 == arg1 && ptr->field_A == arg2)
+        if (ptr->field_8 != xIdx || ptr->field_A != zIdx)
         {
-            if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= 2U)
-            {
-                ipd = ptr->ipdHeader_0;
-                if (ipd->isLoaded_1 != 0)
-                {
-                    func_80056BF8(ipd->plmHeader_4);
-                }
-            }
-            ptr->queueIdx_4 = -1;
+            continue;
         }
+
+        if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
+        {
+            ipd = ptr->ipdHeader_0;
+            if (ipd->isLoaded_1)
+            {
+                func_80056BF8(ipd->plmHeader_4);
+            }
+        }
+
+        ptr->queueIdx_4 = NO_VALUE;
     }
 }
 
@@ -739,35 +742,36 @@ void func_800421D8(char* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5)
 
 void func_80042300(s_800C1020* arg0, s32 arg1) // 0x80042300
 {
-    s32          temp_s6;
+    s32          step;
     s32          i;
-    s32          var_s2;
     s32          var_s3;
     s_800C117C*  temp_s0;
-    s_IpdHeader* temp_v1;
+    s32 ipd0; // TODO: Should be `s_IpdHeader*` but doesn't match?
+    s_IpdHeader* ipd1;
 
-    var_s2  = arg0->field_150;
-    temp_s6 = (arg0->field_154 / arg1) & ~3;
+    ipd0  = arg0->field_150;
+    step = (arg0->field_154 / arg1) & ~0x3;
 
-    for (i = 0; i < 4; i++, var_s2 += temp_s6)
+    for (i = 0; i < 4; i++, ipd0 += step)
     {
         temp_s0 = &arg0->field_15C[i];
-        if (Fs_QueueEntryLoadStatusGet(temp_s0->queueIdx_4) >= 2U)
+
+        if (Fs_QueueEntryLoadStatusGet(temp_s0->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            temp_v1 = temp_s0->ipdHeader_0;
-            if (temp_v1->isLoaded_1 != 0)
+            ipd1 = temp_s0->ipdHeader_0;
+            if (ipd1->isLoaded_1)
             {
-                func_80056BF8(temp_v1->plmHeader_4);
+                func_80056BF8(ipd1->plmHeader_4);
             }
         }
 
-        temp_s0->queueIdx_4 = -1;
+        temp_s0->queueIdx_4 = NO_VALUE;
         temp_s0->field_10   = 0x7FFFFFFF;
         temp_s0->field_18   = 0;
 
         if (i < arg1)
         {
-            temp_s0->ipdHeader_0 = var_s2;
+            temp_s0->ipdHeader_0 = ipd0;
         }
         else
         {
@@ -787,23 +791,26 @@ void func_800423F4(s_800C1020* arg0, s32 arg1, s32 arg2) // 0x800423F4
 
     arg0->field_42C = (s_800C1020_42C*)&arg0->field_15C[13].unk_14;
 
-    for (i = -8; i < 0xB; i++)
+    for (i = -8; i < 11; i++)
     {
         for (j = -8; j < 8; j++)
         {
-            ((s16*)&arg0->field_42C[i])[j] = -1;
+            ((s16*)&arg0->field_42C[i])[j] = NO_VALUE;
         }
     }
 
-    for (k = arg2; k < 0x81A; k++)
+    // Run through all game files.
+    for (k = arg2; k < 2074; k++)
     {
         if (g_FileTable[k].type_8_18 == 6)
         {
             Fs_GetFileName(&sp10, k);
+
             if (strncmp(&sp10, arg0->field_144, arg0->field_148) == 0)
             {
                 temp_s0 = &sp10[arg0->field_148];
-                if (func_8004255C(&j, temp_s0[0], temp_s0[1]) && func_8004255C(&i, temp_s0[2], temp_s0[3]))
+                if (func_8004255C(&j, temp_s0[0], temp_s0[1]) &&
+                    func_8004255C(&i, temp_s0[2], temp_s0[3]))
                 {
                     ptr             = &arg0->field_42C[i];
                     ptr->field_0[j] = k;
@@ -860,29 +867,31 @@ bool func_8004255C(s32* out, char firstHex, char secondHex) // 0x8004255C
 
 s32* func_800425D8(s32* arg0) // 0x800425D8
 {
-    s_800C117C*         var_s0;
-    s_IpdCollisionData* temp_v0;
-    s_IpdHeader*        temp_a0_2;
+    s_800C117C*         ptr;
+    s_IpdCollisionData* collData;
+    s_IpdHeader*        ipd;
 
-    var_s0 = D_800C1020.field_15C;
+    ptr = D_800C1020.field_15C;
     *arg0  = 0;
 
-    while ((u32)var_s0 < (u32)&D_800C1020.field_15C[D_800C1020.field_158])
+    while (ptr < &D_800C1020.field_15C[D_800C1020.field_158])
     {
-        if (Fs_QueueEntryLoadStatusGet(var_s0->queueIdx_4) >= 2U)
+        if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            temp_a0_2 = var_s0->ipdHeader_0;
-            if (temp_a0_2->isLoaded_1 != 0)
+            ipd = ptr->ipdHeader_0;
+            if (ipd->isLoaded_1)
             {
-                temp_v0 = IpdHeader_CollisionDataGet(temp_a0_2);
-                if (temp_v0 != NULL)
+                collData = IpdHeader_CollisionDataGet(ipd);
+                if (collData != NULL)
                 {
-                    D_800C1010[(*arg0)++] = temp_v0;
+                    D_800C1010[(*arg0)++] = collData;
                 }
             }
         }
-        var_s0++;
+
+        ptr++;
     }
+
     return &D_800C1010[0];
 }
 
@@ -890,18 +899,18 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
 {
     s32          collX;
     s32          collZ;
-    s32          idxX;
-    s32          idxZ;
-    s_IpdHeader* ipdHeader;
+    s32          xIdx;
+    s32          zIdx;
+    s_IpdHeader* ipd;
     s_800C117C*  ptr;
 
-    // Convert to Q23_8 collision position.
-    collX = FP_FROM(posX, Q4_SHIFT);
-    collZ = FP_FROM(posZ, Q4_SHIFT);
+    // Convert position to collision space.
+    collX = FP_METER_TO_COLL(posX);
+    collZ = FP_METER_TO_COLL(posZ);
 
-    // Coords to cells in IPD collision data?
-    idxX = FLOOR_TO_STEP(collX, Q23_8(40.0f));
-    idxZ = FLOOR_TO_STEP(collZ, Q23_8(40.0f));
+    // Indices to cells in IPD collision data?
+    xIdx = FLOOR_TO_STEP(collX, FP_METER_COLL(40.0f));
+    zIdx = FLOOR_TO_STEP(collZ, FP_METER_COLL(40.0f));
 
     for (ptr = D_800C1020.field_15C; ptr < &D_800C1020.field_15C[D_800C1020.field_158]; ptr++)
     {
@@ -910,14 +919,14 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
             continue;
         }
 
-        ipdHeader = ptr->ipdHeader_0;
-        if (ipdHeader->isLoaded_1 && ptr->field_8 == idxX && ptr->field_A == idxZ)
+        ipd = ptr->ipdHeader_0;
+        if (ipd->isLoaded_1 && ptr->field_8 == xIdx && ptr->field_A == zIdx)
         {
-            return &ipdHeader->collisionData_54;
+            return &ipd->collisionData_54;
         }
     }
 
-    if (((s16*)(&D_800C1020.field_42C[idxZ]))[idxX] != NO_VALUE)
+    if (((s16*)(&D_800C1020.field_42C[zIdx]))[xIdx] != NO_VALUE)
     {
         return NULL;
     }
@@ -927,62 +936,66 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
     }
 }
 
-s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 arg2, s32 arg3) // 0x8004287C
+s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX, s32 posZ) // 0x8004287C
 {
     s_800C117C*      sp10[4];
     s32              sp20[4];
     s32              collX;
-    s32              idxZ;
-    s32              idxX;
+    s32              zIdx;
+    s32              xIdx;
     s32              collZ;
     s32              temp_t0;
     s32              i;
     s32              j;
     s32              k;
     s32              idx;
-    s_800C117C*      ptr2;
-    s_func_80041CB4* ptr;
+    s_800C117C*      ptr1;
+    s_func_80041CB4* ptr0;
 
-    ptr = &D_800C1020.field_138;
+    ptr0 = &D_800C1020.field_138;
 
-    collX = FP_FROM(arg2, Q4_SHIFT);
-    collZ = FP_FROM(arg3, Q4_SHIFT);
+    // Convert position to collision space.
+    collX = FP_METER_TO_COLL(posX);
+    collZ = FP_METER_TO_COLL(posZ);
 
-    if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_8) >= 2 && ptr->plmHeader_0->isLoaded_2 != 0 && func_80056CB4(arg0, D_800C1020.field_138.plmHeader_0, arg1))
+    if (Fs_QueueEntryLoadStatusGet(ptr0->queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
+        ptr0->plmHeader_0->isLoaded_2 &&
+        func_80056CB4(arg0, D_800C1020.field_138.plmHeader_0, arg1))
     {
         return 2;
     }
 
-    idxX = FLOOR_TO_STEP(collX, Q23_8(40.0f));
-    idxZ = FLOOR_TO_STEP(collZ, Q23_8(40.0f));
+    // Indices to cells in IPD collision data?
+    xIdx = FLOOR_TO_STEP(collX, FP_METER_COLL(40.0f));
+    zIdx = FLOOR_TO_STEP(collZ, FP_METER_COLL(40.0f));
 
-    for (ptr2 = D_800C1020.field_15C, idx = 0; (u32)ptr2 < (u32)&D_800C1020.field_15C[D_800C1020.field_158]; ptr2++)
+    for (ptr1 = D_800C1020.field_15C, idx = 0; ptr1 < &D_800C1020.field_15C[D_800C1020.field_158]; ptr1++)
     {
-        if (Fs_QueueEntryLoadStatusGet(ptr2->queueIdx_4) < 2)
+        if (Fs_QueueEntryLoadStatusGet(ptr1->queueIdx_4) < FsQueueEntryLoadStatus_Loaded)
         {
             continue;
         }
 
-        if (ptr2->ipdHeader_0->isLoaded_1 == 0)
+        if (!ptr1->ipdHeader_0->isLoaded_1)
         {
             continue;
         }
 
         if (D_800C1020.field_588 == 0)
         {
-            if (ptr2->field_8 == idxX && ptr2->field_A == idxZ)
+            if (ptr1->field_8 == xIdx && ptr1->field_A == zIdx)
             {
-                sp10[idx] = ptr2;
+                sp10[idx] = ptr1;
                 idx++;
                 break;
             }
         }
         else
         {
-            if (ptr2->field_8 >= (idxX - 1) && (idxX + 1) >= ptr2->field_8 && ptr2->field_A >= (idxZ - 1) && (idxZ + 1) >= ptr2->field_A)
+            if (ptr1->field_8 >= (xIdx - 1) && (xIdx + 1) >= ptr1->field_8 &&
+                ptr1->field_A >= (zIdx - 1) && (zIdx + 1) >= ptr1->field_A)
             {
-                temp_t0 = func_80042E2C(collX, collZ, ptr2->field_8, ptr2->field_A);
-
+                temp_t0 = func_80042E2C(collX, collZ, ptr1->field_8, ptr1->field_A);
                 for (i = 0; i < idx; i++)
                 {
                     if (temp_t0 < sp20[i])
@@ -991,7 +1004,7 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 arg2,
                     }
                 }
 
-                for (j = idx; j >= i + 1; j--)
+                for (j = idx; j >= (i + 1); j--)
                 {
                     sp20[j] = sp20[j - 1];
                     sp10[j] = sp10[j - 1];
@@ -999,17 +1012,17 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 arg2,
 
                 idx++;
                 sp20[j] = temp_t0;
-                sp10[j] = ptr2;
+                sp10[j] = ptr1;
             }
         }
     }
 
     for (k = 0; k < idx; k++)
     {
-        ptr2 = sp10[k];
-        if (func_80056CB4(arg0, ptr2->ipdHeader_0->plmHeader_4, arg1))
+        ptr1 = sp10[k];
+        if (func_80056CB4(arg0, ptr1->ipdHeader_0->plmHeader_4, arg1))
         {
-            return (ptr2 - D_800C1020.field_15C) + 3;
+            return (ptr1 - D_800C1020.field_15C) + 3;
         }
     }
 

@@ -1146,7 +1146,7 @@ typedef struct
     char               field_144[4]; // String.
     s32                field_148;    // String length.
     s32                field_14C;
-    s32                field_150;
+    s_IpdHeader*       field_150;
     s32                field_154;
     s32                field_158;     // Array length.
     s_800C117C         field_15C[20]; // Length guessed, could be less or more.
@@ -2687,7 +2687,7 @@ void func_80041D48();
 
 void func_80041E98();
 
-void func_80041ED0(s16 arg0, s32 arg1, s32 arg2);
+void func_80041ED0(s16 arg0, s32 xIdx, s32 zIdx);
 
 void func_80041FF0();
 
@@ -2712,13 +2712,7 @@ s32* func_800425D8(s32* arg0);
 
 s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ);
 
-s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 arg2, s32 arg3);
-
-s32* func_800425D8(s32* arg0);
-
-s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ);
-
-s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 arg2, s32 arg3);
+s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX, s32 posZ);
 
 /** @brief Gets the load state of a PLM file.
  *

@@ -518,17 +518,17 @@ void PlmHeader_FixOffsets(s_PlmHeader* plmHeader) // 0x800560FC
 
 void ObjList_FixOffsets(s_ObjList* objList, s_PlmHeader* plmHeader) // 0x800561A4
 {
-    s_ObjHeader* ptr;
+    s_ObjHeader* obj;
 
     objList->meshes_C = (u8*)objList->meshes_C + (u32)plmHeader;
 
-    for (ptr = &objList->meshes_C[0]; ptr < &objList->meshes_C[objList->meshCount_8]; ptr++)
+    for (obj = &objList->meshes_C[0]; obj < &objList->meshes_C[objList->meshCount_8]; obj++)
     {
-        ptr->primitives_4 = (u8*)ptr->primitives_4 + (u32)plmHeader;
-        ptr->vertexXy_8   = (u8*)ptr->vertexXy_8   + (u32)plmHeader;
-        ptr->vertexZ_C    = (u8*)ptr->vertexZ_C    + (u32)plmHeader;
-        ptr->normals_10   = (u8*)ptr->normals_10   + (u32)plmHeader;
-        ptr->unkPtr_14    = (u8*)ptr->unkPtr_14    + (u32)plmHeader;
+        obj->primitives_4 = (u8*)obj->primitives_4 + (u32)plmHeader;
+        obj->vertexXy_8   = (u8*)obj->vertexXy_8   + (u32)plmHeader;
+        obj->vertexZ_C    = (u8*)obj->vertexZ_C    + (u32)plmHeader;
+        obj->normals_10   = (u8*)obj->normals_10   + (u32)plmHeader;
+        obj->unkPtr_14    = (u8*)obj->unkPtr_14    + (u32)plmHeader;
     }
 }
 
@@ -760,12 +760,12 @@ void func_80056A88(s_ObjList* objList, s32 arg1, s_PlmTexList* plmTexList, s32 f
 
 void func_80056BF8(s_PlmHeader* plmHeader) // 0x80056BF8
 {
-    s_PlmTexList*   plmTexList;
+    s_PlmTexList*   tex;
     s_PlmTexList_8* temp_v1;
 
-    for (plmTexList = &plmHeader->textureList_4[0]; plmTexList < &plmHeader->textureList_4[plmHeader->textureCount_3]; plmTexList++)
+    for (tex = &plmHeader->textureList_4[0]; tex < &plmHeader->textureList_4[plmHeader->textureCount_3]; tex++)
     {
-        temp_v1 = plmTexList->field_8;
+        temp_v1 = tex->field_8;
         if (temp_v1 != NULL)
         {
             temp_v1->field_14--;
@@ -774,7 +774,7 @@ void func_80056BF8(s_PlmHeader* plmHeader) // 0x80056BF8
                 temp_v1->field_14 = 0;
             }
 
-            plmTexList->field_8 = NULL;
+            tex->field_8 = NULL;
         }
     }
 }
@@ -1900,30 +1900,34 @@ s32 func_8005D974(s32 arg0) // 0x8005D974
 s32 func_8005D9B8(VECTOR3* arg0, s32 arg1) // 0x8005D9B8
 {
     s32 temp_v0;
-    s32 vx;
-    s32 vy;
-    s32 vz;
+    s32 deltaX;
+    s32 deltaY;
+    s32 deltaZ;
     s32 var_s0;
     s32 var_v0;
 
     vwGetViewPosition(&D_800C42C0);
     D_800C42CC = &g_SysWork.player_4C.chara_0.position_18;
 
-    vx     = D_800C42C0.vx - D_800C42CC->vx;
-    vy     = D_800C42C0.vy - D_800C42CC->vy;
-    vz     = D_800C42C0.vz - D_800C42CC->vz;
-    var_s0 = func_8005D974((SquareRoot12(FP_MULTIPLY_PRECISE(vx, vx, 0xC) + FP_MULTIPLY_PRECISE(vy, vy, 0xC) + FP_MULTIPLY_PRECISE(vz, vz, 0xC)) - 0x2800) / 10);
+    deltaX = D_800C42C0.vx - D_800C42CC->vx;
+    deltaY = D_800C42C0.vy - D_800C42CC->vy;
+    deltaZ = D_800C42C0.vz - D_800C42CC->vz;
+    var_s0 = func_8005D974((SquareRoot12(FP_MULTIPLY_PRECISE(deltaX, deltaX, Q12_SHIFT) +
+                                         FP_MULTIPLY_PRECISE(deltaY, deltaY, Q12_SHIFT) +
+                                         FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT)) - 0x2800) / 10);
     if (var_s0 > 0x1000)
     {
         var_s0 = 0x1000;
     }
 
-    vx      = D_800C42CC->vx - arg0->vx;
-    vy      = D_800C42CC->vy - arg0->vy;
-    vz      = D_800C42CC->vz - arg0->vz;
-    temp_v0 = func_8005D974((SquareRoot12(FP_MULTIPLY_PRECISE(vx, vx, 0xC) + FP_MULTIPLY_PRECISE(vy, vy, 0xC) + FP_MULTIPLY_PRECISE(vz, vz, 0xC)) - 0x6000) / 4);
+    deltaX  = D_800C42CC->vx - arg0->vx;
+    deltaY  = D_800C42CC->vy - arg0->vy;
+    deltaZ  = D_800C42CC->vz - arg0->vz;
+    temp_v0 = func_8005D974((SquareRoot12(FP_MULTIPLY_PRECISE(deltaX, deltaX, Q12_SHIFT) +
+                                          FP_MULTIPLY_PRECISE(deltaY, deltaY, Q12_SHIFT) +
+                                          FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT)) - 0x6000) / 4);
 
-    var_v0 = FP_MULTIPLY_PRECISE(var_s0, temp_v0, 0xC);
+    var_v0 = FP_MULTIPLY_PRECISE(var_s0, temp_v0, Q12_SHIFT);
     if (var_v0 > 0x2000)
     {
         var_v0 = 0x2000;
@@ -1933,7 +1937,7 @@ s32 func_8005D9B8(VECTOR3* arg0, s32 arg1) // 0x8005D9B8
         var_v0 = 0;
     }
 
-    var_v0 = FP_MULTIPLY_PRECISE(arg1, var_v0, 0xC);
+    var_v0 = FP_MULTIPLY_PRECISE(arg1, var_v0, Q12_SHIFT);
     if (var_v0 > 0xFF)
     {
         var_v0 = 0xFF;
@@ -1942,6 +1946,7 @@ s32 func_8005D9B8(VECTOR3* arg0, s32 arg1) // 0x8005D9B8
     {
         var_v0 = 0;
     }
+
     return var_v0;
 }
 

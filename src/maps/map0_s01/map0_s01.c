@@ -10,129 +10,149 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800CCB8C);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800CD1F8);
 
-void func_800CE000(s32 arg1, s32 arg2, s32 arg3)
+void func_800CE000(s32 arg1, s32 arg2, s32 arg3) // 0x800CE000
 {
     s32 temp_a2;
     s32 temp_s0;
     s32 temp_s0_2;
     s32 temp_s0_3;
     s32 temp_v0;
-    s32 var_a0;
+    s32 i;
     s32 var_v0;
     s32 var_v0_3;
     u32 temp_t0;
     u32 temp_v1_2;
     u16 temp_v1_3;
     
-    func_80055434(&g_ParticleVectors1.vec0);
-    g_ParticleVectors1.field_28 = func_8005545C(&g_ParticleVectors1.svec18);
-    vwGetViewPosition(&g_ParticleVectors1.viewPos_C);
-    vwGetViewAngle(&g_ParticleVectors1.viewAngle_20);
+    func_80055434(&g_ParticleVectors0.vector_0);
+
+    g_ParticleVectors0.field_28 = func_8005545C(&g_ParticleVectors0.svec_18);
+    vwGetViewPosition(&g_ParticleVectors0.viewPosition_C);
+    vwGetViewAngle(&g_ParticleVectors0.viewRotation_20);
 
     switch (arg3)
     {
         case 0:
         case -1:
             sharedData_800DD591_0_s00 = 1;
-            D_800E2160.vec_0.vx = Q19_12(-0.30f);
-            D_800E2160.vec_0.vz = Q19_12(275.0f);
-            D_800E2160.vec_C.vx = Q19_12(-0.30f);
-            D_800E2160.vec_C.vz = Q19_12(265.0f);
+
+            D_800E2160.vector_0.vx = Q19_12(-0.30f);
+            D_800E2160.vector_0.vz = Q19_12(275.0f);
+            D_800E2160.vector_C.vx = Q19_12(-0.30f);
+            D_800E2160.vector_C.vz = Q19_12(265.0f);
+
             sharedData_800DD796_0_s01 = 1;
-            if (arg3 == -1) {
+
+            if (arg3 == -1)
+            {
                 g_SysWork.field_2349 = g_MapOverlayHeader.field_17;
                 g_SysWork.field_2348 = g_MapOverlayHeader.field_17;
             }
+
             D_800DD798 = 0;
             sharedData_800E324C_0_s00.vz = 0;
             g_SysWork.field_234A = 1;
             D_800DE160 = arg2;
+
             sharedData_800E324C_0_s00.vx = 0;
-            sharedData_800E0CB8_0_s00 = (sharedData_800E0CB0_0_s00 >> 0xC);
+            sharedData_800E0CB8_0_s00 = FP_FROM(sharedData_800E0CB0_0_s00, Q12_SHIFT);
             sharedData_800E0CB6_0_s00 = sharedData_800E0CB0_0_s00;
             sharedData_800E0CB4_0_s00 = sharedData_800E0CB0_0_s00;
+
             temp_s0 = SetSp(0x1F8003D8);
+
             sharedFunc_800CE59C_0_s01(g_Particles);
             SetSp(temp_s0);
             break;
 
         default:
             D_800DD78B = g_DeltaTime0 == 0;
+
             func_8003EDB8(&D_800E214C, &D_800E2150);
+
             if (sharedData_800E0CB6_0_s00 != sharedData_800E0CB4_0_s00)
             {
                 if (D_800DD78B == 0)
                 {
-                    D_800DD798 += 1;
+                    D_800DD798++;
                 }
-                var_a0 = D_800DD798;
-                temp_s0_2 = ((s32) (Math_Sin((var_a0 * 2) + Q19_12(0.75f)) * 150) >> 0xC) + 150;
-                temp_a2 = ((s32) (Math_Sin((D_800DD798 * 2) + Q19_12(0.5f)) * 150) >> 0xC) + 150;
-                temp_t0 = sharedData_800E0CB6_0_s00 >> 0xE;
+
+                temp_s0_2 = FP_MULTIPLY(Math_Sin(FP_ANGLE(270.0f) + (D_800DD798 * 2)), 150, Q12_SHIFT) + 150;
+                temp_a2 = FP_MULTIPLY(Math_Sin(FP_ANGLE(180.0f) + (D_800DD798 * 2)), 150, Q12_SHIFT) + 150;
+                temp_t0 = sharedData_800E0CB6_0_s00 >> 14;
                
-                for (var_a0 = 0; var_a0 < 2; var_a0++)
+                for (i = 0; i < 2; i++)
                 {
-                    temp_v1_2 = ((s32) sharedData_800E0CB4_0_s00 >> ((1 - var_a0) * 6)) & 0x3F;
-                    temp_v1_3 = ((u16) sharedData_800E0CB4_0_s00 >> 6) & 0x3F;
+                    temp_v1_2 = (sharedData_800E0CB4_0_s00 >> ((1 - i) * 6)) & 0x3F;
+                    temp_v1_3 = (sharedData_800E0CB4_0_s00 >> 6) & 0x3F;
                     temp_v0 = temp_v1_3;
+
                     switch (temp_v1_2)
                     {
                         case 0x4:
                         case 0x6:
-                            sharedData_800DD78C_0_s01[var_a0] = temp_s0_2;
+                            sharedData_800DD78C_0_s01[i] = temp_s0_2;
                             break;
+
                         case 0x5:
                         case 0x7:
                             var_v0 = temp_s0_2 * 2;
-                            sharedData_800DD78C_0_s01[var_a0] = var_v0;
+                            sharedData_800DD78C_0_s01[i] = var_v0;
                             break;
+
                         case 0x20:
                         case 0x30:
-                            sharedData_800DD78C_0_s01[var_a0] = temp_a2;
+                            sharedData_800DD78C_0_s01[i] = temp_a2;
                             break;
+
                         case 0x25:
                         case 0x27:
                         case 0x35:
                         case 0x37:
                             var_v0 = temp_s0_2 + 150;
-                            sharedData_800DD78C_0_s01[var_a0] = var_v0;
+                            sharedData_800DD78C_0_s01[i] = var_v0;
                             break;
+
                         case 0x28:
                         case 0x38:
                             var_v0 = temp_a2 * 2;
-                            sharedData_800DD78C_0_s01[var_a0] = var_v0;
+                            sharedData_800DD78C_0_s01[i] = var_v0;
                             break;
+
                         case 0x2C:
                         case 0x2E:
                         case 0x3C:
                         case 0x3E:
                             var_v0 = temp_a2 + 150;
-                            sharedData_800DD78C_0_s01[var_a0] = var_v0;
+                            sharedData_800DD78C_0_s01[i] = var_v0;
                             break;
+
                         case 0x0:
-                            sharedData_800DD78C_0_s01[var_a0] = 0;
+                            sharedData_800DD78C_0_s01[i] = 0;
                             break;
+
                         case 0x24:
                         case 0x26:
                         case 0x34:
                         case 0x36:
                             var_v0 = 150;
-                            sharedData_800DD78C_0_s01[var_a0] = var_v0;
+                            sharedData_800DD78C_0_s01[i] = var_v0;
                             break;
+
                         case 0x2D:
                         case 0x2F:
                         case 0x3D:
                         case 0x3F:
                             var_v0 = 300;
-                            sharedData_800DD78C_0_s01[var_a0] = var_v0;
+                            sharedData_800DD78C_0_s01[i] = var_v0;
                             break;
                     }
-                    
-                    if (var_a0 == 0)
+
+                    if (i == 0)
                     {
                         if (temp_t0 < 2)
                         {
-                            if ((temp_t0 != 1) || (sharedData_800E0CB4_0_s00 >> 0xE) < 2)
+                            if (temp_t0 != 1 || (sharedData_800E0CB4_0_s00 >> 14) < 2)
                             {
                                 sharedData_800DD796_0_s01 = 1;
                                 continue;
@@ -145,17 +165,18 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3)
                             case 0x6:
                             case 0x20:
                             case 0x30:
-                                var_v0_3 = sharedData_800DD78C_0_s01[var_a0] < (75 + 1);
+                                var_v0_3 = sharedData_800DD78C_0_s01[i] < (75 + 1);
                                 sharedData_800DD796_0_s01 = var_v0_3 ^ 1;
                                 break;
+
                             case 0x5:
                             case 0x7:
                             case 0x28:
                             case 0x38:
-                                var_v0_3 = sharedData_800DD78C_0_s01[var_a0] < (150 + 1);
+                                var_v0_3 = sharedData_800DD78C_0_s01[i] < (150 + 1);
                                 sharedData_800DD796_0_s01 = var_v0_3 ^ 1;
                                 break;
-        
+
                             case 0x8:
                             case 0x9:
                             case 0xA:
@@ -213,35 +234,40 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3)
                     D_800DD798 = 0;
                     g_SysWork.field_234A = 1;
                     sharedData_800E0CB6_0_s00 = sharedData_800E0CB4_0_s00;
+
                     switch ((sharedData_800E0CB8_0_s00 & 0xF) >> 2)
                     {
-                    case 0:
-                        sharedData_800DFB6C_0_s00 = 0;
-                        sharedData_800DFB70_0_s00 = 0;
-                        break;
-                    case 1:
-                        sharedData_800DFB6C_0_s00 = 1;
-                        sharedData_800DFB70_0_s00 = 0;
-                        break;
-                    case 2:
-                        sharedData_800DFB6C_0_s00 = 0;
-                        sharedData_800DFB70_0_s00 = 1;
-                        break;
+                        case 0:
+                            sharedData_800DFB6C_0_s00 = 0;
+                            sharedData_800DFB70_0_s00 = 0;
+                            break;
+
+                        case 1:
+                            sharedData_800DFB6C_0_s00 = 1;
+                            sharedData_800DFB70_0_s00 = 0;
+                            break;
+
+                        case 2:
+                            sharedData_800DFB6C_0_s00 = 0;
+                            sharedData_800DFB70_0_s00 = 1;
+                            break;
                     }
                 }
             }
 
             D_800DE164 = arg2;
             temp_s0_3 = SetSp(0x1F8003D8);
+
             func_800CE8A8(g_Particles);
             SetSp(temp_s0_3);
-            for(var_a0 = sharedData_800DD78C_0_s01[0] + sharedData_800DD78C_0_s01[1]; var_a0 < 300; var_a0++)
+
+            for(i = sharedData_800DD78C_0_s01[0] + sharedData_800DD78C_0_s01[1]; i < 300; i++)
             {
-                g_Particles[var_a0].stateStep_1E = 0;
+                g_Particles[i].stateStep_1E = 0;
             }
     }
 
-    g_ParticleVectors2 = g_ParticleVectors1;
+    g_ParticleVectors1 = g_ParticleVectors0;
 }
 
 

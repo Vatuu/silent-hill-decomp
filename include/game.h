@@ -1194,7 +1194,7 @@ typedef union
 typedef union
 {
     s32 field_0;
-    u8  vec_0[4];
+    u8  vector_0[4];
 } u_Color;
 
 typedef struct

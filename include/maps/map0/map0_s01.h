@@ -41,16 +41,18 @@ typedef struct
     char* field_1C;
 } s_800A99E4;
 
-typedef struct {
-    VECTOR3 vec_0;
-    VECTOR3 vec_C;
+typedef struct
+{
+    VECTOR3 vector_0;
+    VECTOR3 vector_C;
 } s_2Vectors;
 
-typedef struct {
-    VECTOR3 vec0;
-    VECTOR3 viewPos_C;
-    SVECTOR svec18;
-    SVECTOR viewAngle_20;
+typedef struct
+{
+    VECTOR3 vector_0;
+    VECTOR3 viewPosition_C;
+    SVECTOR svec_18;
+    SVECTOR viewRotation_20;
     s32     field_28;
 } s_ParticleVectors;
 
@@ -62,9 +64,9 @@ extern s32 D_800DE160;
 
 extern s32 D_800DE164;
 
-extern s_ParticleVectors g_ParticleVectors1;
+extern s_ParticleVectors g_ParticleVectors0;
 
-extern s_ParticleVectors g_ParticleVectors2;
+extern s_ParticleVectors g_ParticleVectors1;
 
 extern s_Particle g_Particles[300];
 

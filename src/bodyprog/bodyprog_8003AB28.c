@@ -852,18 +852,18 @@ void func_8003C1AC(s_800BCE18_0_CC* arg0) // 0x8003C1AC
 
 void func_8003C220(s_UnkStruct2_Mo** arg0, s32 arg1, s32 arg2) // 0x8003C220
 {
-    s32               var_a2;
-    u8                temp_v1;
-    s_UnkStruct2_Mo*  ptr;
+    s32              var_a2;
+    u8               temp_v1;
+    s_UnkStruct2_Mo* ptr;
 
     D_800BCE18.field_0[0].field_0 = *arg0;
     temp_v1 = (*arg0)->field_6;
 
-    if (temp_v1 & (1 << 0)) 
+    if (temp_v1 & (1 << 0))
     {
         var_a2 = 1;
     } 
-    else if (temp_v1 & (1 << 1)) 
+    else if (temp_v1 & (1 << 1))
     {
         var_a2 = 2;
     }
@@ -875,11 +875,11 @@ void func_8003C220(s_UnkStruct2_Mo** arg0, s32 arg1, s32 arg2) // 0x8003C220
     ptr = *arg0;
     func_800421D8(&ptr->field_2, ptr->field_0, var_a2, ((ptr->field_6 >> 2) ^ 1) & (1 << 0), 0, 0);
 
-    if (*arg0 == &g_UnknownMapTable0[0]) 
+    if (*arg0 == &g_UnknownMapTable0[0])
     {
-        func_80041ED0(0x467, -1, 8);
+        func_80041ED0(1127, -1, 8);
     }
-    
+
     func_80042C3C(arg1, arg2, arg1, arg2);
 }
 
@@ -2526,8 +2526,8 @@ void func_8003EDB8(s32* arg0, s32* arg1) // 0x8003EDB8
     s_SysWork_2288* ptr0;
     s_SysWork_2288* ptr1;
 
-    memcpy(arg0, &(ptr0 = &g_SysWork.field_2388)->field_1C[g_SysWork.field_2388.isFlashlightOn_15].field_0.field_20.vec_0[1], 4); // TODO: Is there a better solution?
-    memcpy(arg1, &(ptr1 = &g_SysWork.field_2388)->field_1C[g_SysWork.field_2388.isFlashlightOn_15].field_0.field_24.vec_0[1], 4);
+    memcpy(arg0, &(ptr0 = &g_SysWork.field_2388)->field_1C[g_SysWork.field_2388.isFlashlightOn_15].field_0.field_20.vector_0[1], 4); // TODO: Is there a better solution?
+    memcpy(arg1, &(ptr1 = &g_SysWork.field_2388)->field_1C[g_SysWork.field_2388.isFlashlightOn_15].field_0.field_24.vector_0[1], 4);
 }
 
 void func_8003EE30(s32 arg0, s8* arg1, s32 arg2, s32 arg3) // 0x8003EE30
@@ -2989,7 +2989,7 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s
         arg0->field_0.field_4 = Math_WeightedAverageGet(arg1->field_0.field_4, arg2->field_0.field_4, weight);
     }
 
-    if (arg1->field_0.field_18.vec_0[0] == 0 && arg2->field_0.field_18.vec_0[0] != 0)
+    if (arg1->field_0.field_18.vector_0[0] == 0 && arg2->field_0.field_18.vector_0[0] != 0)
     {
         func_8003FE04(&arg0->field_0, &arg1->field_0, &arg2->field_0, weight1);
     }
@@ -3004,8 +3004,8 @@ void func_8003FCB0(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructU
     s32 p0;
     
     p0 = FP_ALPHA(1.0f) - arg3;
-    LoadAverageCol(&arg1->field_20.vec_0[1], &arg2->field_20.vec_0[1], p0, arg3, &arg0->field_20.vec_0[1]);
-    LoadAverageCol(&arg1->field_24.vec_0[1], &arg2->field_24.vec_0[1], p0, arg3, &arg0->field_24.vec_0[1]);
+    LoadAverageCol(&arg1->field_20.vector_0[1], &arg2->field_20.vector_0[1], p0, arg3, &arg0->field_20.vector_0[1]);
+    LoadAverageCol(&arg1->field_24.vector_0[1], &arg2->field_24.vector_0[1], p0, arg3, &arg0->field_24.vector_0[1]);
 }
 
 void func_8003FD38(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s32 weight0, s32 weight1, s32 alphaTo) // 0x8003FD38
@@ -3023,7 +3023,7 @@ void func_8003FD38(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s
     arg0->field_0.field_10 = Math_WeightedAverageGet(arg1->field_0.field_10, arg2->field_0.field_10, weight1);
     arg0->field_0.field_6  = Math_WeightedAverageGet(arg1->field_0.field_6, arg2->field_0.field_6, weight0);
 
-    LoadAverageCol(arg1->field_0.field_14.vec_0, arg2->field_0.field_14.vec_0, FP_ALPHA(1.0f) - alphaTo, alphaTo, arg0->field_0.field_14.vec_0);
+    LoadAverageCol(arg1->field_0.field_14.vector_0, arg2->field_0.field_14.vector_0, FP_ALPHA(1.0f) - alphaTo, alphaTo, arg0->field_0.field_14.vector_0);
 }
 
 void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructUnk3* arg2, s32 alphaTo) // 0x8003FE04
@@ -3031,16 +3031,16 @@ void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructU
     s32 alphaFrom;
 
     alphaFrom = FP_ALPHA(1.0f) - alphaTo;
-    LoadAverageCol(&arg1->field_18.vec_0[1], &arg2->field_18.vec_0[1], alphaFrom, alphaTo, &arg0->field_18.vec_0[1]);
-    LoadAverageCol(&arg1->field_1C.vec_0[1], &arg2->field_1C.vec_0[1], alphaFrom, alphaTo, &arg0->field_1C.vec_0[1]);
+    LoadAverageCol(&arg1->field_18.vector_0[1], &arg2->field_18.vector_0[1], alphaFrom, alphaTo, &arg0->field_18.vector_0[1]);
+    LoadAverageCol(&arg1->field_1C.vector_0[1], &arg2->field_1C.vector_0[1], alphaFrom, alphaTo, &arg0->field_1C.vector_0[1]);
 
     if ((arg0->field_18.field_0 & ~0xFF) || (arg0->field_1C.field_0 & ~0xFF))
     {
-        arg0->field_18.vec_0[0] = 1;
+        arg0->field_18.vector_0[0] = 1;
     }
     else
     {
-        arg0->field_18.vec_0[0] = 0;
+        arg0->field_18.vector_0[0] = 0;
     }
 }
 
@@ -3069,12 +3069,12 @@ void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
     var_t0  = CLAMP(temp_v1, 0, 0xFF);
 
     func_80055330(arg0->field_0.field_0.s_field_0.field_2, arg0->field_0.field_6, arg0->field_0.field_0.s_field_0.field_1, arg0->field_0.field_8, arg0->field_0.field_A, arg0->field_0.field_C, var_t0);
-    func_800553C4(arg0->field_0.field_E != 0, arg0->field_0.field_14.vec_0[0], arg0->field_0.field_14.vec_0[1], arg0->field_0.field_14.vec_0[2]);
+    func_800553C4(arg0->field_0.field_E != 0, arg0->field_0.field_14.vector_0[0], arg0->field_0.field_14.vector_0[1], arg0->field_0.field_14.vector_0[2]);
 
     temp_a0 = arg0->field_0.field_10;
 
     func_80055840(temp_a0, temp_a0 + FP_FLOAT_TO(1.0f, Q12_SHIFT));
-    func_800553E0(arg0->field_0.field_18.vec_0[0], arg0->field_0.field_18.vec_0[1], arg0->field_0.field_18.vec_0[2], arg0->field_0.field_18.vec_0[3], arg0->field_0.field_1C.vec_0[1], arg0->field_0.field_1C.vec_0[2], arg0->field_0.field_1C.vec_0[3]);
+    func_800553E0(arg0->field_0.field_18.vector_0[0], arg0->field_0.field_18.vector_0[1], arg0->field_0.field_18.vector_0[2], arg0->field_0.field_18.vector_0[3], arg0->field_0.field_1C.vector_0[1], arg0->field_0.field_1C.vector_0[2], arg0->field_0.field_1C.vector_0[3]);
 }
 
 void func_80040004(s_800BCE18* arg0) // 0x80040004
