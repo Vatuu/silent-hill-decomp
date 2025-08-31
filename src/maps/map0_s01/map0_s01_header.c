@@ -13,7 +13,6 @@
 #define func_800D2054 ((void(*)())0x800D2054)
 #define func_800D2104 ((void(*)())0x800D2104)
 #define func_800D9C60 ((void(*)())0x800D9C60)
-#define func_800CE000 ((void(*)())0x800CE000)
 #define func_800CFFD8 ((void(*)())0x800CFFD8)
 #define func_800D0850 ((void(*)())0x800D0850)
 
