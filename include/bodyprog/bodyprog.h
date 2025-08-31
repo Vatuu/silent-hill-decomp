@@ -1125,7 +1125,10 @@ typedef struct
     s32          queueIdx_4;
     s16          field_8; // X cell coord?
     s16          field_A; // Z cell coord?
-    u8           unk_C[16];
+    u8           unk_C[4];
+    s32          field_10;
+    u8           unk_14[4];
+    s32          field_18;
 } s_800C117C;
 STATIC_ASSERT_SIZEOF(s_800C117C, 28);
 
@@ -1133,31 +1136,31 @@ typedef struct
 {
     s16 field_0[16];
 } s_800C1020_42C;
+STATIC_ASSERT_SIZEOF(s_800C1020_42C, 32);
+
 typedef struct
 {
-    s8              unk_0[28];
-    s16             field_1C;
-    s8              unk_1E[278];
-    s32             field_134;
-    s_func_80041CB4 field_138;
-    char            field_144[4]; // String.
-    s32             field_148;    // String length.
-    s32             field_14C;
-    s32             field_150;
-    s32             field_154;
-    s32             field_158;     // Array length.
-    s_800C117C      field_15C[20]; // Length guessed, could be less or more.
-    s8              unk_38C[160];
-    s_800C1020_42C* field_42C;
-    s32             field_430;
-    s8              unk_434[40];
-    s32             field_45C;
-    s8              unk_460[280];
-    s32             field_578;
-    s32             field_57C;
-    s32             field_580;
-    s32             field_584;
-    s32             field_588;
+    s_IpdCollisionData field_0;
+    s32                field_134;
+    s_func_80041CB4    field_138;
+    char               field_144[4]; // String.
+    s32                field_148;    // String length.
+    s32                field_14C;
+    s32                field_150;
+    s32                field_154;
+    s32                field_158;     // Array length.
+    s_800C117C         field_15C[20]; // Length guessed, could be less or more.
+    s8                 unk_38C[160];
+    s_800C1020_42C*    field_42C;
+    s32                field_430;
+    s8                 unk_434[40];
+    s32                field_45C;
+    s8                 unk_460[280];
+    s32                field_578;
+    s32                field_57C;
+    s32                field_580;
+    s32                field_584;
+    s32                field_588;
     // More may follow.
 } s_800C1020;
 
@@ -2217,6 +2220,8 @@ extern u16 D_800BCE14;
 
 extern s_800BCE18 D_800BCE18;
 
+extern s32 D_800C1010[];
+
 extern s_800C1020 D_800C1020;
 
 extern s32 D_800C1178;
@@ -2682,6 +2687,8 @@ void func_80041D48();
 
 void func_80041E98();
 
+void func_80041ED0(s16 arg0, s32 arg1, s32 arg2);
+
 void func_80041FF0();
 
 void func_8004201C();
@@ -2694,8 +2701,18 @@ s_800C1450_58* func_80042178(char* arg0);
 
 void func_800421D8(char* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
+void func_80042300(s_800C1020* arg0, s32 arg1);
+
+void func_800423F4(s_800C1020* arg0, s32 arg1, s32 arg2);
+
 /** @brief Turns two hex `char`s to their `int` hex value. */
 bool func_8004255C(s32* out, char firstHex, char secondHex);
+
+s32* func_800425D8(s32* arg0);
+
+s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ);
+
+s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 arg2, s32 arg3);
 
 s32 PlmHeader_LoadStateGet(s_func_80041CB4* arg0);
 
