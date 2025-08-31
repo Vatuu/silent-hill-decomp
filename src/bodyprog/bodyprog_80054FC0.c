@@ -1897,7 +1897,53 @@ s32 func_8005D974(s32 arg0) // 0x8005D974
     return val;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005D9B8); // 0x8005D9B8
+s32 func_8005D9B8(VECTOR3* arg0, s32 arg1) // 0x8005D9B8
+{
+    s32 temp_v0;
+    s32 vx;
+    s32 vy;
+    s32 vz;
+    s32 var_s0;
+    s32 var_v0;
+
+    vwGetViewPosition(&D_800C42C0);
+    D_800C42CC = &g_SysWork.player_4C.chara_0.position_18;
+
+    vx     = D_800C42C0.vx - D_800C42CC->vx;
+    vy     = D_800C42C0.vy - D_800C42CC->vy;
+    vz     = D_800C42C0.vz - D_800C42CC->vz;
+    var_s0 = func_8005D974((SquareRoot12(FP_MULTIPLY_PRECISE(vx, vx, 0xC) + FP_MULTIPLY_PRECISE(vy, vy, 0xC) + FP_MULTIPLY_PRECISE(vz, vz, 0xC)) - 0x2800) / 10);
+    if (var_s0 > 0x1000)
+    {
+        var_s0 = 0x1000;
+    }
+
+    vx      = D_800C42CC->vx - arg0->vx;
+    vy      = D_800C42CC->vy - arg0->vy;
+    vz      = D_800C42CC->vz - arg0->vz;
+    temp_v0 = func_8005D974((SquareRoot12(FP_MULTIPLY_PRECISE(vx, vx, 0xC) + FP_MULTIPLY_PRECISE(vy, vy, 0xC) + FP_MULTIPLY_PRECISE(vz, vz, 0xC)) - 0x6000) / 4);
+
+    var_v0 = FP_MULTIPLY_PRECISE(var_s0, temp_v0, 0xC);
+    if (var_v0 > 0x2000)
+    {
+        var_v0 = 0x2000;
+    }
+    else if (var_v0 < 0)
+    {
+        var_v0 = 0;
+    }
+
+    var_v0 = FP_MULTIPLY_PRECISE(arg1, var_v0, 0xC);
+    if (var_v0 > 0xFF)
+    {
+        var_v0 = 0xFF;
+    }
+    else if (var_v0 < 0)
+    {
+        var_v0 = 0;
+    }
+    return var_v0;
+}
 
 void func_8005DC1C(s32 sfx, const VECTOR3* pos, s32 vol, s32 soundType)
 {

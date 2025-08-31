@@ -2389,6 +2389,10 @@ extern u8 D_800C3E40;
 
 extern u16 D_800C42B4; // TODO: May be part of `s_800C4168`.
 
+extern VECTOR3 D_800C42C0;
+
+extern VECTOR3* D_800C42CC;
+
 extern u16 D_800C42D0;
 
 extern u16 D_800C42D2;
@@ -3099,6 +3103,8 @@ s32 func_8005D86C(s32 arg0);
 
 /** Looks like a clamping function. */
 s32 func_8005D974(s32 arg0);
+
+s32 func_8005D9B8(VECTOR3* arg0, s32 arg1);
 
 /** Spatial SFX func? */
 void func_8005DC1C(s32 sfx, const VECTOR3* pos, s32 vol, s32 soundType); // Types assumed.
