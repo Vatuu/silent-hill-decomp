@@ -10,9 +10,9 @@ A collection of all sorts of relevant information regarding the setup, dependenc
 
 - Sound library `libsd`: Support custom Konami `KDT1` MIDI files. This library was used among some PlayStation 1 and 2 Konami games with some tweaks among each game. Additionally Silent Hill 2's SOUNDCD.IRX and SOUNDHD.IRX files seem to based from the same library.
 
-- Math library, contains custom `sin`/`cos` lookup-table implementation along with several `RotMatrix` functions.
+- Math library: Contains custom `sin`/`cos` lookup-table implementation along with several `RotMatrix` functions.
 
-- Movie player `MOVIESYS`, based on slightly customized Psy-Q SDK sample code, used across several Konami PSX titles along with the non-playable SLED-01774 SH1 demo disc.
+- Movie player `MOVIESYS`: Based on slightly customized Psy-Q SDK sample code, used across several Konami PSX titles along with the non-playable SLED-01774 SH1 demo disc.
 
 ## File Formats
 
