@@ -1137,7 +1137,12 @@ typedef struct
     s32             field_154;
     s32             field_158;     // Array length.
     s_800C117C      field_15C[20]; // Length guessed, could be less or more.
-    s8              unk_38C[492];
+    s8              unk_38C[160];
+    s_800C1020_42C* field_42C;
+    s32             field_430;
+    s8              unk_434[40];
+    s32             field_45C;
+    s8              unk_460[280];
     s32             field_578;
     s32             field_57C;
     s32             field_580;
@@ -2682,6 +2687,8 @@ s32 func_80041BA0(s_func_80041CB4* arg0);
 u32 func_80041B1C(s_800C117C* arg0);
 
 s32 func_80042C04(s32 idx);
+
+void func_80042C3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 /** Gets distance to the edge of a file chunk? */
 s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 clip);
