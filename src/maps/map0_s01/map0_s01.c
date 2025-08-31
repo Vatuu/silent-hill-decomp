@@ -59,8 +59,10 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3)
         default:
             D_800DD78B = g_DeltaTime0 == 0;
             func_8003EDB8(&D_800E214C, &D_800E2150);
-            if (sharedData_800E0CB6_0_s00 != sharedData_800E0CB4_0_s00) {
-                if (D_800DD78B == 0) {
+            if (sharedData_800E0CB6_0_s00 != sharedData_800E0CB4_0_s00)
+            {
+                if (D_800DD78B == 0)
+                {
                     D_800DD798 += 1;
                 }
                 var_a0 = D_800DD798;
@@ -68,161 +70,167 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3)
                 temp_a2 = ((s32) (Math_Sin((D_800DD798 * 2) + Q19_12(0.5f)) * 150) >> 0xC) + 150;
                 temp_t0 = sharedData_800E0CB6_0_s00 >> 0xE;
                
-                for (var_a0 = 0; var_a0 < 2; var_a0++) {
+                for (var_a0 = 0; var_a0 < 2; var_a0++)
+                {
                     temp_v1_2 = ((s32) sharedData_800E0CB4_0_s00 >> ((1 - var_a0) * 6)) & 0x3F;
                     temp_v1_3 = ((u16) sharedData_800E0CB4_0_s00 >> 6) & 0x3F;
                     temp_v0 = temp_v1_3;
-                    switch (temp_v1_2) {                /* switch 1 */
-                        case 0x4:                           /* switch 1 */
-                        case 0x6:                           /* switch 1 */
+                    switch (temp_v1_2)
+                    {
+                        case 0x4:
+                        case 0x6:
                             sharedData_800DD78C_0_s01[var_a0] = temp_s0_2;
                             break;
-                        case 0x5:                           /* switch 1 */
-                        case 0x7:                           /* switch 1 */
+                        case 0x5:
+                        case 0x7:
                             var_v0 = temp_s0_2 * 2;
                             sharedData_800DD78C_0_s01[var_a0] = var_v0;
                             break;
-                        case 0x20:                          /* switch 1 */
-                        case 0x30:                          /* switch 1 */
+                        case 0x20:
+                        case 0x30:
                             sharedData_800DD78C_0_s01[var_a0] = temp_a2;
                             break;
-                        case 0x25:                          /* switch 1 */
-                        case 0x27:                          /* switch 1 */
-                        case 0x35:                          /* switch 1 */
-                        case 0x37:                          /* switch 1 */
+                        case 0x25:
+                        case 0x27:
+                        case 0x35:
+                        case 0x37:
                             var_v0 = temp_s0_2 + 150;
                             sharedData_800DD78C_0_s01[var_a0] = var_v0;
                             break;
-                        case 0x28:                          /* switch 1 */
-                        case 0x38:                          /* switch 1 */
+                        case 0x28:
+                        case 0x38:
                             var_v0 = temp_a2 * 2;
                             sharedData_800DD78C_0_s01[var_a0] = var_v0;
                             break;
-                        case 0x2C:                          /* switch 1 */
-                        case 0x2E:                          /* switch 1 */
-                        case 0x3C:                          /* switch 1 */
-                        case 0x3E:                          /* switch 1 */
+                        case 0x2C:
+                        case 0x2E:
+                        case 0x3C:
+                        case 0x3E:
                             var_v0 = temp_a2 + 150;
                             sharedData_800DD78C_0_s01[var_a0] = var_v0;
                             break;
-                        case 0x0:                           /* switch 1 */
+                        case 0x0:
                             sharedData_800DD78C_0_s01[var_a0] = 0;
                             break;
-                        case 0x24:                          /* switch 1 */
-                        case 0x26:                          /* switch 1 */
-                        case 0x34:                          /* switch 1 */
-                        case 0x36:                          /* switch 1 */
+                        case 0x24:
+                        case 0x26:
+                        case 0x34:
+                        case 0x36:
                             var_v0 = 150;
                             sharedData_800DD78C_0_s01[var_a0] = var_v0;
                             break;
-                        case 0x2D:                          /* switch 1 */
-                        case 0x2F:                          /* switch 1 */
-                        case 0x3D:                          /* switch 1 */
-                        case 0x3F:                          /* switch 1 */
+                        case 0x2D:
+                        case 0x2F:
+                        case 0x3D:
+                        case 0x3F:
                             var_v0 = 300;
                             sharedData_800DD78C_0_s01[var_a0] = var_v0;
                             break;
                     }
-        
-        
                     
-                    if (var_a0 == 0) {
-                        if (temp_t0 < 2U) {
-                            if (   (temp_t0 != 1) || ((u32) ((u16) sharedData_800E0CB4_0_s00 >> 0xE) < 2U)  ) {
+                    if (var_a0 == 0)
+                    {
+                        if (temp_t0 < 2)
+                        {
+                            if ((temp_t0 != 1) || (sharedData_800E0CB4_0_s00 >> 0xE) < 2)
+                            {
                                 sharedData_800DD796_0_s01 = 1;
                                 continue;
                             }
                         }
-        
-                        switch (temp_v0) {          /* switch 2 */
-                            case 0x4:                   /* switch 2 */
-                            case 0x6:                   /* switch 2 */
-                            case 0x20:                  /* switch 2 */
-                            case 0x30:                  /* switch 2 */
+
+                        switch (temp_v0)
+                        {
+                            case 0x4:
+                            case 0x6:
+                            case 0x20:
+                            case 0x30:
                                 var_v0_3 = sharedData_800DD78C_0_s01[var_a0] < (75 + 1);
                                 sharedData_800DD796_0_s01 = var_v0_3 ^ 1;
                                 break;
-                            case 0x5:                   /* switch 2 */
-                            case 0x7:                   /* switch 2 */
-                            case 0x28:                  /* switch 2 */
-                            case 0x38:                  /* switch 2 */
+                            case 0x5:
+                            case 0x7:
+                            case 0x28:
+                            case 0x38:
                                 var_v0_3 = sharedData_800DD78C_0_s01[var_a0] < (150 + 1);
                                 sharedData_800DD796_0_s01 = var_v0_3 ^ 1;
                                 break;
         
-                            case 0x8:                       /* switch 2 */
-                            case 0x9:                       /* switch 2 */
-                            case 0xA:                       /* switch 2 */
-                            case 0xB:                       /* switch 2 */
-                            case 0xC:                       /* switch 2 */
-                            case 0xD:                       /* switch 2 */
-                            case 0xE:                       /* switch 2 */
-                            case 0xF:                       /* switch 2 */
-                            case 0x10:                      /* switch 2 */
-                            case 0x11:                      /* switch 2 */
-                            case 0x12:                      /* switch 2 */
-                            case 0x13:                      /* switch 2 */
-                            case 0x14:                      /* switch 2 */
-                            case 0x15:                      /* switch 2 */
-                            case 0x16:                      /* switch 2 */
-                            case 0x17:                      /* switch 2 */
-                            case 0x18:                      /* switch 2 */
-                            case 0x19:                      /* switch 2 */
-                            case 0x1A:                      /* switch 2 */
-                            case 0x1B:                      /* switch 2 */
-                            case 0x1C:                      /* switch 2 */
-                            case 0x1D:                      /* switch 2 */
-                            case 0x1E:                      /* switch 2 */
-                            case 0x1F:                      /* switch 2 */
-                            case 0x21:                      /* switch 2 */
-                            case 0x22:                      /* switch 2 */
-                            case 0x23:                      /* switch 2 */
-                            case 0x24:                      /* switch 2 */
-                            case 0x25:                      /* switch 2 */
-                            case 0x26:                      /* switch 2 */
-                            case 0x27:                      /* switch 2 */
-                            case 0x29:                      /* switch 2 */
-                            case 0x2A:                      /* switch 2 */
-                            case 0x2B:                      /* switch 2 */
-                            case 0x2C:                      /* switch 2 */
-                            case 0x2D:                      /* switch 2 */
-                            case 0x2E:                      /* switch 2 */
-                            case 0x2F:                      /* switch 2 */
-                            case 0x31:                      /* switch 2 */
-                            case 0x32:                      /* switch 2 */
-                            case 0x33:                      /* switch 2 */
-                            case 0x34:                      /* switch 2 */
-                            case 0x35:                      /* switch 2 */
-                            case 0x36:                      /* switch 2 */
-                            case 0x37:                      /* switch 2 */
+                            case 0x8:
+                            case 0x9:
+                            case 0xA:
+                            case 0xB:
+                            case 0xC:
+                            case 0xD:
+                            case 0xE:
+                            case 0xF:
+                            case 0x10:
+                            case 0x11:
+                            case 0x12:
+                            case 0x13:
+                            case 0x14:
+                            case 0x15:
+                            case 0x16:
+                            case 0x17:
+                            case 0x18:
+                            case 0x19:
+                            case 0x1A:
+                            case 0x1B:
+                            case 0x1C:
+                            case 0x1D:
+                            case 0x1E:
+                            case 0x1F:
+                            case 0x21:
+                            case 0x22:
+                            case 0x23:
+                            case 0x24:
+                            case 0x25:
+                            case 0x26:
+                            case 0x27:
+                            case 0x29:
+                            case 0x2A:
+                            case 0x2B:
+                            case 0x2C:
+                            case 0x2D:
+                            case 0x2E:
+                            case 0x2F:
+                            case 0x31:
+                            case 0x32:
+                            case 0x33:
+                            case 0x34:
+                            case 0x35:
+                            case 0x36:
+                            case 0x37:
                             default:
                                 sharedData_800DD796_0_s01 = 1;
                                 break;
                         }
                     }
                 }
-        
-                if (D_800DD798 >= 0x200) {
+
+                if (D_800DD798 >= 0x200)
+                {
                     D_800DD798 = 0;
                     g_SysWork.field_234A = 1;
                     sharedData_800E0CB6_0_s00 = sharedData_800E0CB4_0_s00;
                     switch ((sharedData_800E0CB8_0_s00 & 0xF) >> 2)
-                    {                /* switch 3; irregular */
-                    case 0:                             /* switch 3 */
+                    {
+                    case 0:
                         sharedData_800DFB6C_0_s00 = 0;
                         sharedData_800DFB70_0_s00 = 0;
                         break;
-                    case 1:                             /* switch 3 */
+                    case 1:
                         sharedData_800DFB6C_0_s00 = 1;
                         sharedData_800DFB70_0_s00 = 0;
                         break;
-                    case 2:                             /* switch 3 */
+                    case 2:
                         sharedData_800DFB6C_0_s00 = 0;
                         sharedData_800DFB70_0_s00 = 1;
                         break;
                     }
                 }
             }
+
             D_800DE164 = arg2;
             temp_s0_3 = SetSp(0x1F8003D8);
             func_800CE8A8(g_Particles);
@@ -232,6 +240,7 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3)
                 g_Particles[var_a0].stateStep_1E = 0;
             }
     }
+
     g_ParticleVectors2 = g_ParticleVectors1;
 }
 
