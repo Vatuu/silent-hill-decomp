@@ -6,7 +6,6 @@
 #define func_800DCCF4 ((void(*)())0x800DCCF4)
 #define func_800CD1F8 ((void(*)())0x800CD1F8)
 #define func_800D0C3C ((void(*)())0x800D0C3C)
-#define func_800D16C4 ((void(*)())0x800D16C4)
 #define func_800D20E4 ((void(*)())0x800D20E4)
 #define func_800D20EC ((void(*)())0x800D20EC)
 #define func_800D20F4 ((void(*)())0x800D20F4)
