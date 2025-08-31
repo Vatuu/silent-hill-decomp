@@ -850,14 +850,14 @@ void func_8003C1AC(s_800BCE18_0_CC* arg0) // 0x8003C1AC
     arg0->texture_C   = sp10;
 }
 
-void func_8003C220(s_UnkStruct2_Mo** arg0, s32 arg1, s32 arg2) // 0x8003C220
+void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ) // 0x8003C220
 {
     s32              var_a2;
     u8               temp_v1;
     s_UnkStruct2_Mo* ptr;
 
-    D_800BCE18.field_0[0].field_0 = *arg0;
-    temp_v1 = (*arg0)->field_6;
+    D_800BCE18.field_0[0].field_0 = mapHeader->field_0;
+    temp_v1 = mapHeader->field_0->field_6;
 
     if (temp_v1 & (1 << 0))
     {
@@ -872,15 +872,15 @@ void func_8003C220(s_UnkStruct2_Mo** arg0, s32 arg1, s32 arg2) // 0x8003C220
         var_a2 = 4;
     }
 
-    ptr = *arg0;
+    ptr = mapHeader->field_0;
     func_800421D8(&ptr->field_2, ptr->field_0, var_a2, ((ptr->field_6 >> 2) ^ 1) & (1 << 0), 0, 0);
 
-    if (*arg0 == &g_UnknownMapTable0[0])
+    if (mapHeader->field_0 == &g_UnknownMapTable0[0])
     {
         func_80041ED0(1127, -1, 8);
     }
 
-    func_80042C3C(arg1, arg2, arg1, arg2);
+    func_80042C3C(playerPosX, playerPosZ, playerPosX, playerPosZ);
 }
 
 void func_8003C2EC() // 0x8003C2EC
