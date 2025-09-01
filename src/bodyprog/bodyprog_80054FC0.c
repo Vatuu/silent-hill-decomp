@@ -2077,7 +2077,45 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005E414); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005E650); // 0x8005E650
 
+// TODO: RODATA migration.
+#ifdef NON_MATCHING
+void func_8005E70C(void) // 0x8005E70C
+{
+    s32 index;
+    s16 len;
+    u8  temp_v0;
+
+    len = g_MapOverlayHeader.unkTable1Len_50;
+    for (index = 0; index < len; index++)
+    {
+        temp_v0 = g_MapOverlayHeader.unkTable1_4C[index].field_A;
+        switch (temp_v0)
+        {
+            case 1:
+            case 2:
+            case 3:
+            case 15:
+            case 16:
+            case 17:
+            case 20:
+            case 21:
+            case 22:
+                g_MapOverlayHeader.unkTable1_4C[index].field_A = 0;
+                break;
+        }
+    }
+
+    len = g_MapOverlayHeader.bloodSplatsLen_58;
+    for (index = 0; index < len; index++)
+    {
+        g_MapOverlayHeader.bloodSplats_54[index].unk_0 = -1;
+    }
+
+    D_800C4414 = 0;
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005E70C); // 0x8005E70C
+#endif
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005E7E0); // 0x8005E7E0
 

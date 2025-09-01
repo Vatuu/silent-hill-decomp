@@ -280,7 +280,7 @@ typedef struct
     s32 vx_0;
     s32 vz_4;
     s16 vy_8;
-    s8  unk_A;
+    s8  field_A;
     s8  field_B;
     s8  field_C;
     s8  field_D;
@@ -1511,8 +1511,7 @@ typedef struct
  */
 typedef struct
 {
-    u16 unk_0;
-    u16 unk_2;
+    s16 unk_0; // At this point, maybe its an array of u16?
 } s_BloodSplat;
 
 /** TODO: `g_MapOverlayHeader` is part of the map overlay BIN files. Maybe should be moved to `maps/shared.h`. 
@@ -1545,9 +1544,11 @@ typedef struct _MapOverlayHeader
     void              (*func_44)();
     void              (*func_48)(); // func(?).
     s_func_800625F4*  unkTable1_4C;
-    s32               unkTable1Len_50;
+    s16               unkTable1Len_50;
+    s8                unk_52[2];
     s_BloodSplat*     bloodSplats_54;
-    s32               bloodSplatsLen_58;
+    s16               bloodSplatsLen_58;
+    s8                unk_5A[2];
     s32               always0_5C;
     s32               always0_60;
     s32               always0_64;
@@ -2401,6 +2402,8 @@ extern u16 D_800C42D0;
 
 extern u16 D_800C42D2;
 
+extern s8 D_800C4414;
+
 // emoose: Also works: `extern u16 D_800C4478[];`, `arg0->field_4 = D_800C4478[0];`.
 // Didn't see any array accesses in Ghidra though, struct might be more likely.
 extern s_800C4478 D_800C4478;
@@ -3151,6 +3154,8 @@ s32 func_8005F680(s_func_800699F8* arg0);
 void func_8005DE0C(s32 sfx, VECTOR3*, s32, s32, s32); // Types assumed.
 
 void func_8005E0DC(s32 mapIdx); // Types assumed.
+
+void func_8005E70C();
 
 void func_8005E89C();
 
