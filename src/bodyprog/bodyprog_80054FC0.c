@@ -278,7 +278,19 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80055840); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800559A8); // 0x800559A8
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80055A50); // 0x80055A50
+u8 func_80055A50(s32 arg0)
+{
+    s32 temp;
+
+    temp = arg0 >> 4;
+    
+    if (temp >= (1 << D_800C4168.field_14))
+    {
+        return 0xFF;
+    }
+
+    return D_800C4168.field_CC[((temp << 7) >> D_800C4168.field_14)];
+}
 
 void func_80055A90(CVECTOR* arg0, CVECTOR* arg1, u8 arg2, s32 arg3) // 0x80055A90
 {

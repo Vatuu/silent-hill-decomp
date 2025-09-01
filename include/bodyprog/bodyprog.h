@@ -3010,6 +3010,8 @@ s32 func_800557DC();
 
 void func_80055814(s32 arg0);
 
+u8 func_80055A50(s32 arg0);
+
 void func_80055A90(CVECTOR* arg0, CVECTOR* arg1, u8 arg2, s32 arg3);
 
 /** @brief Applies uniform lighting and fog shading to `color`, outputting to `result`.
