@@ -67,13 +67,13 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3) // 0x800CE000
             break;
 
         default:
-            D_800DD78B = g_DeltaTime0 == 0;
+            sharedData_800DD78B_0_s01 = g_DeltaTime0 == 0;
 
             func_8003EDB8(&D_800E214C, &D_800E2150);
 
             if (sharedData_800E0CB6_0_s00 != sharedData_800E0CB4_0_s00)
             {
-                if (D_800DD78B == 0)
+                if (sharedData_800DD78B_0_s01 == 0)
                 {
                     D_800DD798++;
                 }
@@ -259,7 +259,7 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3) // 0x800CE000
             D_800DE164 = arg2;
             temp_s0_3 = SetSp(0x1F8003D8);
 
-            func_800CE8A8(g_Particles);
+            Particle_Update(g_Particles);
             SetSp(temp_s0_3);
 
             for(i = sharedData_800DD78C_0_s01[0] + sharedData_800DD78C_0_s01[1]; i < 300; i++)
@@ -276,17 +276,17 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3) // 0x800CE000
 
 #include "maps/shared/sharedFunc_800CE59C_0_s01.h" // 0x800CE59C
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800CE8A8);
+#include "maps/shared/Particle_Update.h" // 0x800CE8A8
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800CEE2C);
+INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800CEB24_0_s00); // 0x800CEE2C
 
 #include "maps/shared/sharedFunc_800CF2A4_0_s01.h" // 0x800CF2A4
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800CF3F4);
+INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800CEFD0_1_s02); // 0x800CF3F4
 
 #include "maps/shared/sharedFunc_800CFFF8_0_s00.h" // 0x800CF7BC
 
-void func_800CF8E8() {}
+#include "maps/shared/sharedFunc_800CE954_7_s03.h" // 0x800CF8E8
 
 #include "maps/shared/sharedFunc_800D01BC_0_s00.h" // 0x800CF8F0
 

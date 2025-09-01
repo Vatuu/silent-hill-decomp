@@ -33,7 +33,7 @@ void func_800CBFB0(void) // 0x800CBFB0
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CBFB0);
 #endif
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CC04C);
+#include "maps/shared/Particle_Update.h" // 0x800CC04C
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CC6E8);
 
@@ -47,17 +47,17 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CE02C);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CE544);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CEB24);
+INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800CEB24_0_s00); // 0x800CEB24
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CEFF4);
+INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800CEFF4_0_s00); // 0x800CEFF4
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CF7AC);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CF974);
+INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800CEFD0_1_s02); // 0x800CF974
 
 #include "maps/shared/sharedFunc_800CFFF8_0_s00.h" // 0x800CFFF8
 
-void func_800D0124() {}
+#include "maps/shared/sharedFunc_800CE954_7_s03.h" // 0x800D0124
 
 bool func_800D012C(VECTOR3* pos) // 0x800D012C
 {
@@ -80,7 +80,7 @@ bool func_800D012C(VECTOR3* pos) // 0x800D012C
 
 #include "maps/shared/sharedFunc_800D01BC_0_s00.h" // 0x800D01BC
 
-void func_800D0274(s32 arg0, s_Particle* part, u16* arg2) // 0x800D0274
+void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* arg2) // 0x800D0274
 {
     s_Particle* partCpy;
 

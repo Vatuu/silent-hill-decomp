@@ -47,26 +47,11 @@ typedef struct
     VECTOR3 vector_C;
 } s_2Vectors;
 
-typedef struct
-{
-    VECTOR3 vector_0;
-    VECTOR3 viewPosition_C;
-    SVECTOR svec_18;
-    SVECTOR viewRotation_20;
-    s32     field_28;
-} s_ParticleVectors;
-
-extern u8 D_800DD78B;
-
 extern s32 D_800DD798;
 
 extern s32 D_800DE160;
 
 extern s32 D_800DE164;
-
-extern s_ParticleVectors g_ParticleVectors0;
-
-extern s_ParticleVectors g_ParticleVectors1;
 
 extern s_Particle g_Particles[300];
 
@@ -109,8 +94,6 @@ extern u8 D_800DE250;
 extern u8 D_800DE251;
 
 void func_800CE000(s32 arg1, s32 arg2, s32 arg3);
-
-s32 func_800CE8A8(s_Particle*);
 
 void func_800D16C4(s_SubCharacter* arg0, s_MainCharacterExtra* arg2, GsCOORDINATE2* arg3);
 

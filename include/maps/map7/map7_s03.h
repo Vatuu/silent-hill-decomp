@@ -2,6 +2,7 @@
 #define _MAP7_S03_H
 
 extern s32 D_800EDA00;
+extern s16 D_800F23D0;
 
 extern s_AnimInfo g_Ai_LittleIncubus_AnimInfo[]; // 0x800EAFA8
 extern s_AnimInfo g_Ai_Incubus_AnimInfo[];       // 0x800EC808

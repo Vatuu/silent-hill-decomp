@@ -905,7 +905,7 @@ def print_usage():
     print("  --jtbl [JTBL_NAME] [MAP]    Add rodata for jtbl to map1.yaml")
     print("  --sortsyms [MAP_NAME]       Sort map symbols ('all' to sort all map symbol files)")
     print("  --compareFuncs [FUNC1_ASM_PATH] [FUNC2_ASM_PATH]    Compare two functions, print Levenshtein distance, write clean files for comparing")
-    print("  --similar [MAX_DIFF] [FN_PATH]   Search for funcs similar to FUNC_ASM_PATH, with max difference of MAX_DIFF")
+    print("  --similar [MAX_DIFF] [FUNC_ASM_PATH]   Search for funcs similar to FUNC_ASM_PATH, with max difference of MAX_DIFF")
 
 def main():
     import argparse

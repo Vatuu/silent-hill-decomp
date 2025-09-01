@@ -110,9 +110,9 @@ u8 g_LoadableInventoryItemIds[35] =
     InventoryItemId_Unequipped
 };
 
-u8 D_800DD78B = 0;
+u8 sharedData_800DD78B_0_s01 = 0;
 s32 sharedData_800DD78C_0_s01[2] = {};
-s8 D_800DD794 = 0;
+s8 sharedData_800DF158_1_s02 = 0;
 u8 sharedData_800DD591_0_s00 = 0;
 u8 sharedData_800DD796_0_s01 = 1;
 u8 __padding = 0;

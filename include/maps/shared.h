@@ -55,10 +55,44 @@ typedef struct
 
 typedef struct
 {
-    u8      unk_0[12];
-    VECTOR3 field_C;
-    u8      unk_18[24];
-} s_sharedData_800E3148_1_s02;
+    VECTOR3 vector_0;
+    VECTOR3 viewPosition_C;
+    SVECTOR svec_18;
+    SVECTOR viewRotation_20;
+    s32     field_28;
+} s_ParticleVectors;
+
+/**
+ * Seems to be custom boundaries for snow/rain particle systems.
+ * Only used in a small handful of maps, and not all fields are populated.
+ */
+typedef struct {
+    s32 field_0;
+    s32 field_4;
+    s32 field_8;
+    s32 field_C;
+    s32 field_10;
+    s32 field_14;
+    s32 field_18;
+    s32 field_1C;
+    s32 field_20;
+    s32 field_24;
+    s32 field_28;
+    s32 field_2C;
+    s32 field_30;
+    s32 field_34;
+    s32 field_38;
+    s32 field_3C;
+    s32 field_40;
+    s32 field_44;
+    s32 field_48;
+    s32 field_4C;
+    s32 field_50;
+    s32 field_54;
+    s32 field_58;
+    s32 field_5C;
+} s_func_800CB560;
+STATIC_ASSERT_SIZEOF(s_func_800CB560, 96);
 
 /** @brief Stores SFX ID and volume.
  * TODO: There's already an `s_Sfx` struct. Should harmonize the names once both are figured out.
@@ -102,12 +136,6 @@ extern VECTOR3 sharedData_800DE190_0_s01;
 extern s_func_800700F8_2 sharedData_800E2330_0_s01;
 
 extern u8 sharedData_800DF158_1_s02;
-
-extern s_sharedData_800E3148_1_s02 sharedData_800E3148_1_s02;
-
-extern s_sharedData_800E3148_1_s02 sharedData_800E3178_1_s02;
-
-extern u16 sharedData_800E5768_1_s02;
 
 extern s32 sharedData_800CAB70_0_s00; // Type assumed.
 
@@ -184,6 +212,7 @@ extern s32 sharedData_800D5CF4_3_s00; // Used by `Ai_Kaufmann_Init`.
 extern s_AnimInfo sharedData_800D5ABC_3_s03[]; // Used by `Ai_Bloodsucker_Init`.
 
 extern u8 sharedData_800DD591_0_s00;
+extern u8 sharedData_800DD78B_0_s01;
 extern u8 sharedData_800DD796_0_s01;
 
 /** `g_ParticlesAddedCounts`. Tracks how many total particles have been added. */
@@ -208,11 +237,15 @@ extern s32 sharedData_800D32A0_0_s02; // `sharedFunc_800CDAA8_0_s02`
 
 extern u16 sharedData_800D21E8_3_s00[];
 
+extern s_func_800CB560 sharedData_800E5768_1_s02;
+
+extern s_ParticleVectors g_ParticleVectors0;
+
+extern s_ParticleVectors g_ParticleVectors1;
+
 extern const char* g_MapMessages[]; // 0x800DF6B8
 
 bool sharedFunc_800CBBBC_0_s00();
-
-void sharedFunc_800CFFF8_0_s00(s32 arg0, s_func_800CFFF8* arg1);
 
 void sharedFunc_800D01BC_0_s00(u16* arg0, VECTOR3* arg1, s32 arg2);
 
@@ -315,6 +348,12 @@ void sharedFunc_800CF2A4_0_s01(s32 arg0, s_Particle* part, u16* rand, s32* delta
 /** Snow particle init. */
 void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* rand);
 
+s32 Particle_Update(s_Particle* partHead);
+void sharedFunc_800CEFF4_0_s00(s_Particle* part, s32 arg1);
+void sharedFunc_800CEB24_0_s00(s_Particle* part);
+void sharedFunc_800CFFF8_0_s00(s32 pass, s_func_800CFFF8* part, s16* rand); // TODO make this match for s_Particle
+void sharedFunc_800CE954_7_s03(s32 pass, s_Particle* part, s16* rand, s32* deltaTime);
+
 void sharedFunc_800DA8E8_0_s01(s32* timer, s32 inc, s32 timeMin, s32 timeMax, bool setTimerToMax, bool incStateStep);
 
 void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord);
@@ -334,7 +373,7 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter*);
 
 void sharedFunc_800D1DBC_1_s00(s_SubCharacter*);
 
-void sharedFunc_800CEFD0_1_s02(s32 arg0, s_sharedFunc_800CEFD0_1_s02* arg1, u16* arg2, s32* deltaTime);
+void sharedFunc_800CEFD0_1_s02(s32 arg0, s_sharedFunc_800CEFD0_1_s02* arg1, u16* arg2, s32* deltaTime); // TODO make this match for s_Particle
 
 /** @brief Sets a map overlay value based on a whether a game event flag is set. */
 void sharedFunc_800D0994_3_s00();

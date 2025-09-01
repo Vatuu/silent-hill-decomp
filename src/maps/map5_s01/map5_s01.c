@@ -30,17 +30,17 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800CE2B4);
 
 #include "maps/shared/sharedFunc_800CE59C_0_s01.h" // 0x800CE844
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800CEB50);
+#include "maps/shared/Particle_Update.h" // 0x800CEB50
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800CF250);
+INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800CEB24_0_s00); // 0x800CF250
 
 #include "maps/shared/sharedFunc_800CF2A4_0_s01.h" // 0x800CF720
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800CF870);
+INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800CEFD0_1_s02); // 0x800CF870
 
 #include "maps/shared/sharedFunc_800CFFF8_0_s00.h" // 0x800CFC38
 
-void func_800CFD64() {}
+#include "maps/shared/sharedFunc_800CE954_7_s03.h" // 0x800CFD64
 
 #include "maps/shared/sharedFunc_800D01BC_0_s00.h" // 0x800CFD6C
 
