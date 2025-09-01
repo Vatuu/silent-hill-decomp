@@ -3047,7 +3047,87 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006CC9C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006CF18); // 0x8006CF18
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006D01C); // 0x8006D01C
+void func_8006D01C(VECTOR3* arg0, VECTOR3* arg1, s16 arg2, s_func_8006CC44* arg3) // 0x8006D01C
+{
+    VECTOR3 sp10;
+    s32     temp_s0;
+    s32     temp_s1;
+    s32     temp_a0;
+    s32     temp_v0;
+
+    sp10.vx = FP_MULTIPLY(arg1->vx, arg2, 0xC);
+    sp10.vz = FP_MULTIPLY(arg1->vz, arg2, 0xC);
+
+    if (arg3->field_44  || arg3->field_74)
+    {
+        arg0->vx = 0;
+        arg0->vz = 0;
+        *arg1    = sp10;
+        func_8006D2B4(arg1, &arg3->field_44, arg2);
+        return;
+    }
+
+    if (!arg3->field_34)
+    {
+        *arg0    = sp10;
+        arg1->vz = 0;
+        arg1->vx = 0;
+        return;
+    }
+
+    if (arg2 < arg3->field_38)
+    {
+        arg3->field_34 = 0;
+        *arg0          = sp10;
+        arg1->vz       = 0;
+        arg1->vx       = 0;
+        return;
+    }
+
+    arg0->vx = FP_MULTIPLY(arg1->vx, arg3->field_38, 0xC);
+    arg0->vz = FP_MULTIPLY(arg1->vz, arg3->field_38, 0xC);
+    arg1->vx = sp10.vx - arg0->vx;
+    arg1->vz = sp10.vz - arg0->vz;
+
+    temp_s0 = arg3->field_3C;
+    temp_s1 = arg3->field_3E;
+    temp_a0 = SQUARE(temp_s0) + SQUARE(temp_s1);
+
+    if (temp_a0 < 0x100)
+    {
+        temp_a0 = SquareRoot0(temp_a0 * 0x100);
+        temp_s0 = (temp_s0 << 16) / temp_a0;
+        temp_s1 = (temp_s1 << 16) / temp_a0;
+    }
+    else
+    {
+        temp_a0 = SquareRoot0(temp_a0);
+        temp_s0 = (temp_s0 << 12) / temp_a0;
+        temp_s1 = (temp_s1 << 12) / temp_a0;
+    }
+
+    temp_v0  = ((arg1->vx * temp_s1) + (arg1->vz * -temp_s0)) >> 0xC;
+    arg1->vx = FP_MULTIPLY(temp_v0, temp_s1, 0xC);
+    arg1->vz = FP_MULTIPLY(temp_v0, -temp_s0, 0xC);
+
+    if (temp_s0 > 0x555)
+    {
+        arg0->vx += 0x10;
+    }
+    else if (temp_s0 < -0x555)
+    {
+        arg0->vx -= 0x10;
+    }
+
+    if (temp_s1 > 0x555)
+    {
+        arg0->vz += 0x10;
+    }
+    else if (temp_s1 < -0x555)
+    {
+        arg0->vz -= 0x10;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006D2B4); // 0x8006D2B4
 
