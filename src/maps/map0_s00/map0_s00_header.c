@@ -76,7 +76,7 @@ void (*g_MapEventFuncs[])() =
 const u32 D_800C9578 = 0x00000000; // rodata 0
 const s_MapOverlayHeader g_MapOverlayHeader = 
 {
-    .field_0 = &g_UnknownMapTable0[0],
+    .type_0 = &g_MapTypeTable[0],
     .getMapRoomIdxFunc_4 = sharedFunc_800D92AC_0_s00,
     .field_8 = 34,
     .unk_9 = { 0, 0, 0 },
