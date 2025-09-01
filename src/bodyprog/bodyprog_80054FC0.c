@@ -3294,7 +3294,32 @@ bool func_8006D90C(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2) // 0x8
     return arg0->field_0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006DA08); // 0x8006DA08
+bool func_8006DA08(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2, s_SubCharacter* chara) // 0x8006DA08
+{
+    s32 sp28;
+    s32 temp_v0;
+    s32 scratchPrev;
+    s32 scratchAddr;
+
+    temp_v0 = func_8006A1A4(&sp28, chara, 0);
+
+    arg0->field_0 = false;
+    if (func_8006DCE0((s32)PSX_SCRATCH, 0, 0, vec1, vec2, 0, 0, temp_v0, sp28) != 0)
+    {
+        scratchPrev   = SetSp((s32)PSX_SCRATCH_ADDR(0x3D8));
+        scratchAddr   = (s32)PSX_SCRATCH;
+        arg0->field_0 = func_8006DEB0(arg0, PSX_SCRATCH_ADDR(0));
+
+        SetSp(scratchPrev);
+    }
+
+    if (arg0->field_0 == 0)
+    {
+        func_8006DAE4(arg0, vec1, vec2, (s16) * (u16*)(&((u8*)scratchAddr)[92]));
+    }
+
+    return arg0->field_0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006DAE4); // 0x8006DAE4
 
@@ -3638,6 +3663,7 @@ bool func_8006FD90(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3) // 0x800
                   (chara->position_18.vy - chara->field_CE);
     }
 
+    // Maybe sp10 is not VECTOR3. Might need to rewrite this whole function if its `s_func_800700F8_2`?
     return func_8006DA08(&sp10, &sp30, &sp40, chara) == 0 || sp20.vx != 0;
 }
 
