@@ -921,7 +921,7 @@ void func_8003C3AC() // 0x8003C3AC
     SVECTOR         pos2;
     s32             temp_a1;
     s32             temp_a2;
-    s32             moveDist;
+    s32             moveAmt;
     s32             temp_s0_2;
     s32             temp_v0_3;
     s32             temp_v1;
@@ -942,11 +942,11 @@ void func_8003C3AC() // 0x8003C3AC
         pos0 = chara->position_18;
     }
 
-    moveDist = (chara->moveSpeed_38 * FP_METER(5.5f)) / 16015; // TODO: `FP_METER(3.91f)`? What's this doing?
-    moveDist = CLAMP(moveDist, FP_METER(0.0f), FP_METER(5.5f));
+    moveAmt = (chara->moveSpeed_38 * FP_METER(5.5f)) / 16015; // TODO: `FP_METER(3.91f)`? What's this doing?
+    moveAmt = CLAMP(moveAmt, FP_METER(0.0f), FP_METER(5.5f));
 
-    pos0.vx += FP_MULTIPLY_PRECISE(moveDist, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
-    pos0.vz += FP_MULTIPLY_PRECISE(moveDist, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
+    pos0.vx += FP_MULTIPLY_PRECISE(moveAmt, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
+    pos0.vz += FP_MULTIPLY_PRECISE(moveAmt, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
 
     if (D_800BCE18.field_0[0].field_0 == &g_UnknownMapTable0[0] &&
         chara->position_18.vx >= FP_METER(-40.0f) && chara->position_18.vx <= FP_METER(40.0f) &&

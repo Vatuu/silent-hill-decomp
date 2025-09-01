@@ -905,17 +905,6 @@ typedef struct
 
 typedef struct
 {
-    s8  unk_0;
-    s8  field_1;
-    s8  field_2;
-    s8  field_3;
-    s8  unk_4[80];
-    s32 field_54;
-    s32 field_58;
-} s_80044044;
-
-typedef struct
-{
     s16 field_0; // Flags?
 } s_8008D850;
 
@@ -2732,7 +2721,7 @@ u32 IpdHeader_LoadStateGet(s_800C117C* arg0);
  */
 bool IpdHeader_IsLoaded(s32 ipdIdx);
 
-void func_80042C3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1);
 
 /** Gets distance to the edge of a file chunk? */
 s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 clip);
@@ -2773,7 +2762,8 @@ void IpdHeader_ModelLinkObjectLists(s_IpdHeader* ipdHeader, s_PlmHeader** plmHea
 /** @brief Searches `s_PlmHeader` for objects with the given `objName`. */
 s_ObjList* PlmHeader_ObjectListSearch(u_Filename* objName, s_PlmHeader* plmHeader);
 
-void func_80044044(s_80044044* arg0, s32 arg1, s32 arg2);
+/** Sets IPD collision data grid coords? */
+void func_80044044(s_IpdHeader* ipd, s32 x, s32 z);
 
 /** Loads anim file? */
 void func_800445A4(s_AnimFile*, GsCOORDINATE2*);
@@ -3205,7 +3195,7 @@ s32 func_8008D8C0(s16 x0, s32 x1, s32 x2);
 
 void func_8008D990(s32, s32, VECTOR3*, s32, s32);
 
-void func_8008E794(VECTOR3*, s16, s32);
+void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2);
 
 void func_8008EA68(SVECTOR*, VECTOR3*, s32);
 
@@ -3440,7 +3430,7 @@ void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3);
 
 void func_8006342C(s32 invItemId, s16, s16, GsCOORDINATE2*);
 
-s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 arg2, s16 arg3);
+s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 x, s16 z);
 
 void func_800622B8(s32, s_SubCharacter*, s32 animStatus, s32);
 

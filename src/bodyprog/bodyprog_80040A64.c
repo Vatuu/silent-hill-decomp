@@ -1034,20 +1034,20 @@ bool IpdHeader_IsLoaded(s32 ipdIdx) // 0x80042C04
     return IpdHeader_LoadStateGet(&D_800C117C[ipdIdx]) >= StaticModelLoadState_Loaded;
 }
 
-void func_80042C3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80042C3C
+void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1) // 0x80042C3C
 {
     s32         temp_s0;
     s_800C117C* var_s0;
 
-    D_800C1020.field_578 = arg2;
-    D_800C1020.field_57C = arg3;
+    D_800C1020.field_578 = x1;
+    D_800C1020.field_57C = z1;
 
     if (D_800C1020.field_138.queueIdx_8 == NO_VALUE) 
     {
         D_800C1020.field_138.queueIdx_8 = Fs_QueueStartRead(D_800C1020.field_138.field_4, D_800C1020.field_138.plmHeader_0);
     }
 
-    func_80042EBC(&D_800C1020, arg0, arg1, arg2, arg3);
+    func_80042EBC(&D_800C1020, x0, z0, x1, z1);
 
     if (Fs_QueueEntryLoadStatusGet(D_800C1020.field_138.queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
         !D_800C1020.field_138.plmHeader_0->isLoaded_2) 
@@ -1074,14 +1074,12 @@ void func_80042C3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80042C3C
 
 s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 clip) // 0x80042DE8
 {
-    #define DIST_THRESHOLD FP_METER(1.0f)
-
     s32 dist;
 
     dist = func_80042E2C(FP_FROM(posX, Q4_SHIFT), FP_FROM(posZ, Q4_SHIFT), fileChunkCoordX, fileChunkCoordZ);
     if (clip != 0)
     {
-        dist -= DIST_THRESHOLD;
+        dist -= FP_METER(1.0f);
         if (dist < FP_METER(0.0f))
         {
             dist = FP_METER(0.0f);
@@ -1344,18 +1342,18 @@ s_ObjList* PlmHeader_ObjectListSearch(u_Filename* objName, s_PlmHeader* plmHeade
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043F88); // 0x80043F88
 
-void func_80044044(s_80044044* arg0, s32 arg1, s32 arg2) // 0x80044044
+void func_80044044(s_IpdHeader* ipd, s32 x, s32 z) // 0x80044044
 {
-    s32 var0;
-    s32 var1;
+    s32 gridX;
+    s32 gridZ;
 
-    var0 = arg0->field_2;
-    var1 = arg0->field_3;
+    gridX = ipd->levelGridX_2;
+    gridZ = ipd->levelGridY_3;
 
-    arg0->field_2 = arg1;
-    arg0->field_3 = arg2;
-    arg0->field_54 = (arg0->field_54 + ((arg1 - var0) * 0x2800));
-    arg0->field_58 = (arg0->field_58 + ((arg2 - var1) * 0x2800));
+    ipd->levelGridX_2             = x;
+    ipd->levelGridY_3             = z;
+    ipd->collisionData_54.posX_0 += (x - gridX) * 0x2800;
+    ipd->collisionData_54.posZ_4 += (z - gridZ) * 0x2800;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044090); // 0x80044090
