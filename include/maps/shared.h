@@ -239,6 +239,8 @@ extern u16 sharedData_800D21E8_3_s00[];
 
 extern s_func_800CB560 sharedData_800E5768_1_s02;
 
+extern s_Particle g_Particles[300];
+
 extern s_ParticleVectors g_ParticleVectors0;
 
 extern s_ParticleVectors g_ParticleVectors1;

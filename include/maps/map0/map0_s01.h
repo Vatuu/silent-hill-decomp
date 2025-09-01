@@ -53,8 +53,6 @@ extern s32 D_800DE160;
 
 extern s32 D_800DE164;
 
-extern s_Particle g_Particles[300];
-
 extern s32 D_800E214C;
 
 extern s32 D_800E2150;
