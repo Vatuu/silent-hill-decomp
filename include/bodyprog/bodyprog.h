@@ -399,7 +399,11 @@ typedef struct
     u16                field_2    : 16;
     s_func_8006ABC0    field_4;
     s32                field_34;
-    s8                 unk_38[12];
+    s16                field_38;
+    s8                 unk_3A[2];
+    s16                field_3C;
+    s16                field_3E;
+    s8                 unk_40[4];
     s8                 field_44;
     s8                 unk_45[5];
     s16                field_4A;
@@ -3509,6 +3513,8 @@ void func_8006CA18(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s_func_8
 s16 func_8006CB90(s_func_8006CC44* arg0);
 
 s32 func_8006CC44(s32 x, s32 z, s_func_8006CC44* arg2);
+
+void func_8006D01C(VECTOR3* arg0, VECTOR3* arg1, s16 arg2, s_func_8006CC44* arg3);
 
 void func_8006D600(VECTOR3* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
