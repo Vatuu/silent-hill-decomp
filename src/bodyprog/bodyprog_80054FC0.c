@@ -278,15 +278,15 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80055840); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800559A8); // 0x800559A8
 
-u8 func_80055A50(s32 arg0)
+u8 func_80055A50(s32 arg0) // 0x80055A50
 {
     s32 temp;
 
     temp = arg0 >> 4;
-    
+
     if (temp >= (1 << D_800C4168.field_14))
     {
-        return 0xFF;
+        return 255;
     }
 
     return D_800C4168.field_CC[((temp << 7) >> D_800C4168.field_14)];
@@ -565,7 +565,7 @@ s32 func_80056348(s32 (*arg0)(s_PlmTexList* texList), s_PlmHeader* plmHeader) //
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800563E8); // 0x800563E8
 
-void func_80056464(s_PlmHeader* plmHeader, s32 fileIdx, s32* arg2, s32 arg3) // 0x80056464
+void func_80056464(s_PlmHeader* plmHeader, s32 fileIdx, s_FsImageDesc* image, s32 arg3) // 0x80056464
 {
     char  sp10[8];
     char  sp18[16];
@@ -585,7 +585,7 @@ void func_80056464(s_PlmHeader* plmHeader, s32 fileIdx, s32* arg2, s32 arg3) // 
         *sp10Ptr++ = *sp18Ptr++;
     }
 
-    func_80056558(plmHeader, sp10, arg2, arg3);
+    func_80056558(plmHeader, sp10, image, arg3);
 }
 
 void func_80056504(s_PlmHeader* plmHeader, char* newStr, s_FsImageDesc* image, s32 arg3) // 0x80056504
@@ -596,7 +596,26 @@ void func_80056504(s_PlmHeader* plmHeader, char* newStr, s_FsImageDesc* image, s
     func_80056558(plmHeader, sp10, image, arg3);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80056558); // 0x80056558
+s32 func_80056558(s_PlmHeader* plmHeader, char* fileName, s_FsImageDesc* image, s32 arg3) // 0x80056558
+{
+    s_PlmTexList* texList;
+    u32*          texName;
+
+    for (texList = &plmHeader->textureList_4[0];
+         texList < &plmHeader->textureList_4[plmHeader->textureCount_3];
+         texList++)
+    {
+        texName = texList->textureName_0.u32;
+        if (texName[0] == *(u32*)&fileName[0] && texName[1] == *(u32*)&fileName[4])
+        {
+            texList->field_C = 1;
+            func_8005660C(texList, image, arg3);
+            return 1;
+        }
+    }
+
+    return 0;
+}
 
 void func_8005660C(s_PlmTexList* plmHeader, s_FsImageDesc* image, s32 arg2) // 0x8005660C
 {
