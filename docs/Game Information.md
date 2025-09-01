@@ -4,39 +4,40 @@ A collection of all sorts of relevant information regarding the setup, dependenc
 ## SDK
 
 - Psy-Q Version: 4.3.0 - seems to be correct, based on https://github.com/lab313ru/psx_psyq_signatures
+- - Aparently **Official Playstation Magazine Demo 16 (U)/OPM16** uses an previous version of the SDK.
 
 ## Libraries
 
-- Sound library `libsd`, supporting custom Konami `KDT1` MIDI files, also seen in the unreleased Konami International Rally Racing, Silent Hill 2's SOUNDCD.IRX and SOUNDHD.IRX files also seem based around the same library.
+- Sound library `libsd`: Support custom Konami `KDT1` MIDI files. This library was used among some PlayStation 1 and 2 Konami games with some tweaks among each game. Additionally Silent Hill 2's SOUNDCD.IRX and SOUNDHD.IRX files seem to based from the same library.
 
-- Math library, contains custom `sin`/`cos` lookup-table implementation along with several `RotMatrix` functions.
+- Math library: Contains custom `sin`/`cos` lookup-table implementation along with several `RotMatrix` functions.
 
-- Movie player `MOVIESYS`, based on slightly customized Psy-Q SDK sample code, used across several Konami PSX titles along with the non-playable SLED-01774 SH1 demo disc.
+- Movie player `MOVIESYS`: Based on slightly customized Psy-Q SDK sample code, used across several Konami PSX titles along with the non-playable SLED-01774 SH1 demo disc.
 
 ## File Formats
 
-Game makes use of custom file formats for models/cutscenes/levels, more information in [File Formats](/docs/File%20Formats.md) document.
+Game uses a mixture of custom file formats and some PSY-Q/Sony proprietary formats, more information in [File Formats](/docs/File%20Formats.md) document.
 
 ## Known Releases
 
 Several pre-release demos and versions were released during development, a table of known releases is listed below, the [silentassets](/tools/silentassets/extract.py) tool supports extracting from each version listed here.
 
 > [!NOTE]  
-> This repo only targets the **Silent Hill (U) v1.1** release, though other releases could give insights into parts of the code, or include code/data which may be useful for the decompilation.
+> This repo only targets the **Silent Hill (U) v1.1** release, though some other releases give insights into parts of the code, or include code/data which may be useful for the decompilation.
 
 | Date (YY-MM-DD) | Title | Game/disc code | Notes |
 |-|-|-|-|
 |  | **Partial Demos** |  |  |
-| 98-10-19 | Official Playstation Magazine Demo 16 (U) | SCUS-94278 | WKS.XE/XAS.XE containers. |
+| 98-10-19 | Official Playstation Magazine Demo 16 (U) | SCUS-94278 | WKS.XE/XAS.XE containers, Built with debug features enabled. |
 | 98-11-06 | Famitsuu Wave 2gatsu-gou Vol. 7 (J) | SLPM-80366 | WKS./XAS. containers. |
 | 98-11-06 | Silent Hill Trial Version (J) | SLPM-80363 | AKA Silent Hill Taikenban. |
 | 98-12-09 | Silent Hill Demo (G) | SLED-01774 | Demo video, only `MOVIESYS`/`movie_main` code. |
 | 98-12-16 | Silent Hill Demo (E) | SLED-01735 | - |
-| 99-01-16 | Silent Hill Demo CD (U) | SLUS-90050 | - |
+| 99-01-16 | Silent Hill Demo CD (U) | SLUS-90050 | Built with debug features enabled. |
 | 99-06-08 | Playstation Zone CD Vol. 10 (G) | SLED-02190 | WKS./XAS. containers, later reissued as `SCED-02420` & `SCED-04082` |
 | 99-06-16 | Silent Hill Demo (E) | SLED-02186 | - |
 |  | **Prototypes** |  |  |
-| 98-11-24 | Silent Hill Preview (U) | SLUS-45678 | WKS. container, includes `FILEINFO.H`, volume dated 98-10-24? |
+| 98-11-24 | Silent Hill Preview (U) | SLUS-45678 | WKS. container, includes `FILEINFO.H`, volume dated 98-10-24? Built with debug features enabled. |
 | 99-01-07 | Silent Hill Review (U) | SLUS-00707 | WKS. container. |
 | 99-01-17 | Silent Hill Trade Demo (U) | SLUS-80707 | Redump mentions "anti-modchip"? |
 | 99-01-22 | Silent Hill Beta (U) | SLUS-00707 | "Russian Bootleg", possibly scene pre-release. |

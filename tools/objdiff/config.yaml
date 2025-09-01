@@ -18,7 +18,6 @@ categories:
 
 expected_paths:
   asm: expected/asm
-  src: expected/src
 
 ignored_files:
   - main/header
