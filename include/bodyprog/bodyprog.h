@@ -1005,15 +1005,20 @@ typedef struct
 } s_800BCDA8;
 STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
 
+/* This is related to player movement/speed/animation (?). Function func_8003BF60 iterates
+ * over a table of these structs and returns id_0 of the entry that contains the input x and z coords.
+ * id_0 is always 1 or 2 and that in turns changes to 0x5000 or 0x4000 respectively (see Player_LowerBodyUpdate)
+ * Different parts of the map have different animation/movemenet/walking speed ?
+ */
 typedef struct
 {
-    s8 field_0;
-    u8 unk_1;
-    s16 field_2;
-    s16 field_4;
-    s16 field_6;
-    s16 field_8;
-} s_800BCE18_0_0_C;
+    s8 id_0;
+    // one byte of padding.
+    s16 minX_2;
+    s16 maxX_4;
+    s16 minZ_6;
+    s16 maxZ_8;
+} s_MapBounds;
 
 // Looks similar to `s_Skeleton`
 typedef struct
@@ -1029,18 +1034,17 @@ typedef struct
 
 typedef struct
 {
-    s16               field_0;
-    s16               field_2;
-    s16               field_4;
-    u8                field_6;
-    u8                field_7;
-    s32*              field_8; // Pointer to some other const data or `NULL`.
-    s_800BCE18_0_0_C* field_C; // Pointer to some other const data.
-} s_UnkStruct2_Mo;
+    s16          id_0;
+    char         tag_2[4];
+    u8           flags_6;
+    u8           flags_7;
+    s32*         field_8;  // Pointer to some other const data or `NULL`.
+    s_MapBounds* bounds_C; // Pointer to some other const data.
+} s_MapType;
 
 typedef struct
 {
-    s_UnkStruct2_Mo*  field_0;
+    s_MapType*        type_0;
     s8                field_4;
     u8                unk_5[3];
     VECTOR3           field_8;               // Position.
@@ -1517,7 +1521,7 @@ typedef struct
  */
 typedef struct _MapOverlayHeader
 {
-    s_UnkStruct2_Mo*  field_0;
+    s_MapType*        type_0;
     u8                (*getMapRoomIdxFunc_4)(s32 x, s32 y); // Called by `Savegame_MapRoomIdxSet`.
     s8                field_8;
     s8                unk_9[3];
@@ -1719,7 +1723,7 @@ typedef struct
 extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: Part of main exe, move to `main/` headers?
 
 /** Some sort of struct inside RODATA, likely a constant. */
-extern s_UnkStruct2_Mo g_UnknownMapTable0[16];
+extern s_MapType g_MapTypeTable[16];
 
 extern char D_8002510C[]; // "\aNow_loading."
 
@@ -2550,7 +2554,7 @@ void func_8003943C();
  * After playback, savegame gets `D_800BCDD8->eventFlagNum_2` event flag set. */
 void SysState_Fmv_Update();
 
-s32 UnknownMapTableIdxGet();
+s32 MapTypeGet();
 
 void func_8003C1AC(s_800BCE18_0_CC* arg0);
 
