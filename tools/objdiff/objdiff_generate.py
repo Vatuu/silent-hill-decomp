@@ -71,7 +71,7 @@ def main():
     logging.basicConfig(level = logging.INFO)
     config = _create_config()
 
-    expected_objects = _collect_objects(Path(config["expected_paths"]["asm"]), config) + _collect_objects(Path(config["expected_paths"]["src"]), config)
+    expected_objects = _collect_objects(Path(config["expected_paths"]["asm"]), config)
     
     logging.info(f"Accounting for {len(expected_objects)} objects.")
     units = []

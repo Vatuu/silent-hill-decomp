@@ -97,4 +97,13 @@
 #define DIFF_SIGN(a, b) \
     (((a) >= 0 && (b) < 0) || ((a) < 0 && (b) >= 0))
 
+/** @brief Scales large `x` before trigonometric multiplication.
+ *
+ * @note "Range-based scaling mechanism common in fixed-point DSP or low-level game engine math." - ChatGPT
+ *
+ * @param x Value to use for overflow computation.
+ * @return 4 if `x` overflows, 0 otherwise. */
+#define OVERFLOW_GUARD(x) \
+    (((u32)((x) + SHRT_MAX) >= USHRT_MAX) ? 4 : 0)
+
 #endif

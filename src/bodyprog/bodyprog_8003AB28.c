@@ -675,9 +675,9 @@ void func_8003BCF4() // 0x8003BCF4
 // UNKNOWN - IN-GAME LOOP RELATED
 // ========================================
 
-s32 UnknownMapTableIdxGet() // 0x8003BD2C
+s32 MapTypeGet() // 0x8003BD2C
 {
-    return D_800BCE18.field_0[0].field_0 - g_UnknownMapTable0;
+    return D_800BCE18.field_0[0].type_0 - g_MapTypeTable;
 }
 
 void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
@@ -687,7 +687,7 @@ void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
     D_800BCE14 = func_80069810();
     var_s0     = D_800BCE14;
 
-    switch (UnknownMapTableIdxGet())
+    switch (MapTypeGet())
     {
         case 0:
             if (chara->position_18.vx >= FP_METER(191.6f) && chara->position_18.vx <= FP_METER(198.8f) && 
@@ -756,8 +756,8 @@ extern s_800C4168 const D_800C4168;
 
 s32 func_8003BF60(s32 x, s32 z) // 0x8003BF60
 {
-    s32               ret;
-    s_800BCE18_0_0_C* ptr;
+    s32          ret;
+    s_MapBounds* ptr;
 
     ret = 0;
 
@@ -766,17 +766,17 @@ s32 func_8003BF60(s32 x, s32 z) // 0x8003BF60
         return 1;
     }
 
-    if (D_800BCE18.field_0[0].field_0->field_C != NULL)
+    if (D_800BCE18.field_0[0].type_0->bounds_C != NULL)
     {
-        ptr = D_800BCE18.field_0[0].field_0->field_C;
+        ptr = D_800BCE18.field_0[0].type_0->bounds_C;
 
-        while (ptr->field_0 != NO_VALUE)
+        while (ptr->id_0 != NO_VALUE)
         {
-            if (x >= (ptr->field_2 << 8) && (ptr->field_4 << 8) >= x &&
-                z >= (ptr->field_6 << 8) && (ptr->field_8 << 8) >= z &&
-                ret < ptr->field_0)
+            if (x >= (ptr->minX_2 << 8) && (ptr->maxX_4 << 8) >= x &&
+                z >= (ptr->minZ_6 << 8) && (ptr->maxZ_8 << 8) >= z &&
+                ret < ptr->id_0)
             {
-                ret = ptr->field_0;
+                ret = ptr->id_0;
             }
 
             ptr++;
@@ -852,12 +852,12 @@ void func_8003C1AC(s_800BCE18_0_CC* arg0) // 0x8003C1AC
 
 void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ) // 0x8003C220
 {
-    s32              var_a2;
-    u8               temp_v1;
-    s_UnkStruct2_Mo* ptr;
+    s32        var_a2;
+    u8         temp_v1;
+    s_MapType* ptr;
 
-    D_800BCE18.field_0[0].field_0 = mapHeader->field_0;
-    temp_v1 = mapHeader->field_0->field_6;
+    D_800BCE18.field_0[0].type_0 = mapHeader->type_0;
+    temp_v1 = mapHeader->type_0->flags_6;
 
     if (temp_v1 & (1 << 0))
     {
@@ -872,10 +872,10 @@ void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ
         var_a2 = 4;
     }
 
-    ptr = mapHeader->field_0;
-    func_800421D8(&ptr->field_2, ptr->field_0, var_a2, ((ptr->field_6 >> 2) ^ 1) & (1 << 0), 0, 0);
+    ptr = mapHeader->type_0;
+    func_800421D8(ptr->tag_2, ptr->id_0, var_a2, ((ptr->flags_6 >> 2) ^ 1) & (1 << 0), 0, 0);
 
-    if (mapHeader->field_0 == &g_UnknownMapTable0[0])
+    if (mapHeader->type_0 == &g_MapTypeTable[0])
     {
         func_80041ED0(1127, -1, 8);
     }
@@ -892,7 +892,7 @@ void func_8003C30C() // 0x8003C30C
 {
     u8 temp_v1;
 
-    temp_v1 = D_800BCE18.field_0[0].field_0->field_6;
+    temp_v1 = D_800BCE18.field_0[0].type_0->flags_6;
     
     if ((temp_v1 & 4) && (temp_v1 & 3)) 
     {
@@ -921,7 +921,7 @@ void func_8003C3AC() // 0x8003C3AC
     SVECTOR         pos2;
     s32             temp_a1;
     s32             temp_a2;
-    s32             moveDist;
+    s32             moveAmt;
     s32             temp_s0_2;
     s32             temp_v0_3;
     s32             temp_v1;
@@ -942,13 +942,13 @@ void func_8003C3AC() // 0x8003C3AC
         pos0 = chara->position_18;
     }
 
-    moveDist = (chara->moveSpeed_38 * FP_METER(5.5f)) / 16015; // TODO: `FP_METER(3.91f)`? What's this doing?
-    moveDist = CLAMP(moveDist, FP_METER(0.0f), FP_METER(5.5f));
+    moveAmt = (chara->moveSpeed_38 * FP_METER(5.5f)) / 16015; // TODO: `FP_METER(3.91f)`? What's this doing?
+    moveAmt = CLAMP(moveAmt, FP_METER(0.0f), FP_METER(5.5f));
 
-    pos0.vx += FP_MULTIPLY_PRECISE(moveDist, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
-    pos0.vz += FP_MULTIPLY_PRECISE(moveDist, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
+    pos0.vx += FP_MULTIPLY_PRECISE(moveAmt, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
+    pos0.vz += FP_MULTIPLY_PRECISE(moveAmt, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
 
-    if (D_800BCE18.field_0[0].field_0 == &g_UnknownMapTable0[0] &&
+    if (D_800BCE18.field_0[0].type_0 == &g_MapTypeTable[0] &&
         chara->position_18.vx >= FP_METER(-40.0f) && chara->position_18.vx <= FP_METER(40.0f) &&
         chara->position_18.vz >= FP_METER(200.0f) && chara->position_18.vz <= FP_METER(240.0f))
     {
@@ -961,7 +961,7 @@ void func_8003C3AC() // 0x8003C3AC
         vwGetViewPosition(&pos1);
         vwGetViewAngle(&pos2);
 
-        flags1 = D_800BCE18.field_0[0].field_0->field_6;
+        flags1 = D_800BCE18.field_0[0].type_0->flags_6;
         if (!(flags1 & 0x4) || !(flags1 & 0x3))
         {
             var_s1 = FP_MULTIPLY(Math_Cos(pos2.vx), FP_METER(9.0f), Q12_SHIFT);
@@ -994,7 +994,7 @@ void func_8003C3AC() // 0x8003C3AC
         pos1.vz += FP_FROM(FP_TO(Math_Cos(chara->rotation_24.vy), Q12_SHIFT), Q12_SHIFT);
     }
 
-    flags0 = D_800BCE18.field_0[0].field_0->field_6;
+    flags0 = D_800BCE18.field_0[0].type_0->flags_6;
     if ((flags0 & 0x4) && (flags0 & 0x3))
     {
         var_a1 = chara->position_18.vx / FP_METER(2.5f);
@@ -2430,11 +2430,10 @@ void func_8003EBA0() // 0x8003EBA0
 void func_8003EBF4(s_MapOverlayHeader* arg0) // 0x8003EBF4
 {
     s32         var_v1;
-    s8          temp_a0;
     u8          temp_a1;
     s_800A9F80* ptr;
 
-    temp_a1 = arg0->field_0->field_6;
+    temp_a1 = arg0->type_0->flags_6;
 
     var_v1 = 0;
 
@@ -2691,7 +2690,7 @@ void func_8003F170() // 0x8003F170
 
     temp = FP_MULTIPLY(func_8003F4DC(&sp60, &sp58, ptr2->field_0.field_4, ptr2->field_0.field_0.s_field_0.field_2, func_80080A10(), &g_SysWork), g_SysWork.field_2378, Q12_SHIFT);
 
-    func_800554C4(temp, ptr2->field_2C, sp60, g_SysWork.field_235C, &sp58, g_SysWork.field_2360.vx, g_SysWork.field_2360.vy, g_SysWork.field_2360.vz, D_800BCE18.field_0[0].field_0->field_8);
+    func_800554C4(temp, ptr2->field_2C, sp60, g_SysWork.field_235C, &sp58, g_SysWork.field_2360.vx, g_SysWork.field_2360.vy, g_SysWork.field_2360.vz, D_800BCE18.field_0[0].type_0->field_8);
     func_80055814(ptr2->field_30);
 
     if (ptr->field_154.field_0.field_0.s_field_0.field_0 & (1 << 3))

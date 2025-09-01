@@ -399,7 +399,11 @@ typedef struct
     u16                field_2    : 16;
     s_func_8006ABC0    field_4;
     s32                field_34;
-    s8                 unk_38[12];
+    s16                field_38;
+    s8                 unk_3A[2];
+    s16                field_3C;
+    s16                field_3E;
+    s8                 unk_40[4];
     s8                 field_44;
     s8                 unk_45[5];
     s16                field_4A;
@@ -905,17 +909,6 @@ typedef struct
 
 typedef struct
 {
-    s8  unk_0;
-    s8  field_1;
-    s8  field_2;
-    s8  field_3;
-    s8  unk_4[80];
-    s32 field_54;
-    s32 field_58;
-} s_80044044;
-
-typedef struct
-{
     s16 field_0; // Flags?
 } s_8008D850;
 
@@ -1012,15 +1005,20 @@ typedef struct
 } s_800BCDA8;
 STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
 
+/* This is related to player movement/speed/animation (?). Function func_8003BF60 iterates
+ * over a table of these structs and returns id_0 of the entry that contains the input x and z coords.
+ * id_0 is always 1 or 2 and that in turns changes to 0x5000 or 0x4000 respectively (see Player_LowerBodyUpdate)
+ * Different parts of the map have different animation/movemenet/walking speed ?
+ */
 typedef struct
 {
-    s8 field_0;
-    u8 unk_1;
-    s16 field_2;
-    s16 field_4;
-    s16 field_6;
-    s16 field_8;
-} s_800BCE18_0_0_C;
+    s8 id_0;
+    // one byte of padding.
+    s16 minX_2;
+    s16 maxX_4;
+    s16 minZ_6;
+    s16 maxZ_8;
+} s_MapBounds;
 
 // Looks similar to `s_Skeleton`
 typedef struct
@@ -1036,18 +1034,17 @@ typedef struct
 
 typedef struct
 {
-    s16               field_0;
-    s16               field_2;
-    s16               field_4;
-    u8                field_6;
-    u8                field_7;
-    s32*              field_8; // Pointer to some other const data or `NULL`.
-    s_800BCE18_0_0_C* field_C; // Pointer to some other const data.
-} s_UnkStruct2_Mo;
+    s16          id_0;
+    char         tag_2[4];
+    u8           flags_6;
+    u8           flags_7;
+    s32*         field_8;  // Pointer to some other const data or `NULL`.
+    s_MapBounds* bounds_C; // Pointer to some other const data.
+} s_MapType;
 
 typedef struct
 {
-    s_UnkStruct2_Mo*  field_0;
+    s_MapType*        type_0;
     s8                field_4;
     u8                unk_5[3];
     VECTOR3           field_8;               // Position.
@@ -1524,7 +1521,7 @@ typedef struct
  */
 typedef struct _MapOverlayHeader
 {
-    s_UnkStruct2_Mo*  field_0;
+    s_MapType*        type_0;
     u8                (*getMapRoomIdxFunc_4)(s32 x, s32 y); // Called by `Savegame_MapRoomIdxSet`.
     s8                field_8;
     s8                unk_9[3];
@@ -1726,7 +1723,7 @@ typedef struct
 extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: Part of main exe, move to `main/` headers?
 
 /** Some sort of struct inside RODATA, likely a constant. */
-extern s_UnkStruct2_Mo g_UnknownMapTable0[16];
+extern s_MapType g_MapTypeTable[16];
 
 extern char D_8002510C[]; // "\aNow_loading."
 
@@ -2557,7 +2554,7 @@ void func_8003943C();
  * After playback, savegame gets `D_800BCDD8->eventFlagNum_2` event flag set. */
 void SysState_Fmv_Update();
 
-s32 UnknownMapTableIdxGet();
+s32 MapTypeGet();
 
 void func_8003C1AC(s_800BCE18_0_CC* arg0);
 
@@ -2732,7 +2729,7 @@ u32 IpdHeader_LoadStateGet(s_800C117C* arg0);
  */
 bool IpdHeader_IsLoaded(s32 ipdIdx);
 
-void func_80042C3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1);
 
 /** Gets distance to the edge of a file chunk? */
 s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 clip);
@@ -2773,7 +2770,8 @@ void IpdHeader_ModelLinkObjectLists(s_IpdHeader* ipdHeader, s_PlmHeader** plmHea
 /** @brief Searches `s_PlmHeader` for objects with the given `objName`. */
 s_ObjList* PlmHeader_ObjectListSearch(u_Filename* objName, s_PlmHeader* plmHeader);
 
-void func_80044044(s_80044044* arg0, s32 arg1, s32 arg2);
+/** Sets IPD collision data grid coords? */
+void func_80044044(s_IpdHeader* ipd, s32 x, s32 z);
 
 /** Loads anim file? */
 void func_800445A4(s_AnimFile*, GsCOORDINATE2*);
@@ -3016,6 +3014,8 @@ s32 func_800557DC();
 
 void func_80055814(s32 arg0);
 
+u8 func_80055A50(s32 arg0);
+
 void func_80055A90(CVECTOR* arg0, CVECTOR* arg1, u8 arg2, s32 arg3);
 
 /** @brief Applies uniform lighting and fog shading to `color`, outputting to `result`.
@@ -3074,9 +3074,11 @@ void func_8005B3BC(char* filename, s_PlmTexList* plmTexList);
 
 void func_8005B424(VECTOR3* vec0, VECTOR3* vec1);
 
-void func_80056464(s_PlmHeader* plmHeader, s32 fileIdx, s32* arg2, s32 arg3);
+void func_80056464(s_PlmHeader* plmHeader, s32 fileIdx, s_FsImageDesc* image, s32 arg3);
 
 void func_80056504(s_PlmHeader* plmHeader, char* newStr, s_FsImageDesc* image, s32 arg3);
+
+s32 func_80056558(s_PlmHeader* plmHeader, char* fileName, s_FsImageDesc* image, s32 arg3);
 
 void func_8005660C(s_PlmTexList* plmTexList, s_FsImageDesc* image, s32 arg2);
 
@@ -3205,7 +3207,7 @@ s32 func_8008D8C0(s16 x0, s32 x1, s32 x2);
 
 void func_8008D990(s32, s32, VECTOR3*, s32, s32);
 
-void func_8008E794(VECTOR3*, s16, s32);
+void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2);
 
 void func_8008EA68(SVECTOR*, VECTOR3*, s32);
 
@@ -3440,7 +3442,7 @@ void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3);
 
 void func_8006342C(s32 invItemId, s16, s16, GsCOORDINATE2*);
 
-s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 arg2, s16 arg3);
+s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 x, s16 z);
 
 void func_800622B8(s32, s_SubCharacter*, s32 animStatus, s32);
 
@@ -3519,6 +3521,8 @@ void func_8006CA18(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s_func_8
 s16 func_8006CB90(s_func_8006CC44* arg0);
 
 s32 func_8006CC44(s32 x, s32 z, s_func_8006CC44* arg2);
+
+void func_8006D01C(VECTOR3* arg0, VECTOR3* arg1, s16 arg2, s_func_8006CC44* arg3);
 
 void func_8006D600(VECTOR3* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 

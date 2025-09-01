@@ -278,7 +278,19 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80055840); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800559A8); // 0x800559A8
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80055A50); // 0x80055A50
+u8 func_80055A50(s32 arg0) // 0x80055A50
+{
+    s32 temp;
+
+    temp = arg0 >> 4;
+
+    if (temp >= (1 << D_800C4168.field_14))
+    {
+        return 255;
+    }
+
+    return D_800C4168.field_CC[((temp << 7) >> D_800C4168.field_14)];
+}
 
 void func_80055A90(CVECTOR* arg0, CVECTOR* arg1, u8 arg2, s32 arg3) // 0x80055A90
 {
@@ -553,7 +565,7 @@ s32 func_80056348(s32 (*arg0)(s_PlmTexList* texList), s_PlmHeader* plmHeader) //
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_800563E8); // 0x800563E8
 
-void func_80056464(s_PlmHeader* plmHeader, s32 fileIdx, s32* arg2, s32 arg3) // 0x80056464
+void func_80056464(s_PlmHeader* plmHeader, s32 fileIdx, s_FsImageDesc* image, s32 arg3) // 0x80056464
 {
     char  sp10[8];
     char  sp18[16];
@@ -573,7 +585,7 @@ void func_80056464(s_PlmHeader* plmHeader, s32 fileIdx, s32* arg2, s32 arg3) // 
         *sp10Ptr++ = *sp18Ptr++;
     }
 
-    func_80056558(plmHeader, sp10, arg2, arg3);
+    func_80056558(plmHeader, sp10, image, arg3);
 }
 
 void func_80056504(s_PlmHeader* plmHeader, char* newStr, s_FsImageDesc* image, s32 arg3) // 0x80056504
@@ -584,7 +596,26 @@ void func_80056504(s_PlmHeader* plmHeader, char* newStr, s_FsImageDesc* image, s
     func_80056558(plmHeader, sp10, image, arg3);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_80056558); // 0x80056558
+s32 func_80056558(s_PlmHeader* plmHeader, char* fileName, s_FsImageDesc* image, s32 arg3) // 0x80056558
+{
+    s_PlmTexList* texList;
+    u32*          texName;
+
+    for (texList = &plmHeader->textureList_4[0];
+         texList < &plmHeader->textureList_4[plmHeader->textureCount_3];
+         texList++)
+    {
+        texName = texList->textureName_0.u32;
+        if (texName[0] == *(u32*)&fileName[0] && texName[1] == *(u32*)&fileName[4])
+        {
+            texList->field_C = 1;
+            func_8005660C(texList, image, arg3);
+            return 1;
+        }
+    }
+
+    return 0;
+}
 
 void func_8005660C(s_PlmTexList* plmHeader, s_FsImageDesc* image, s32 arg2) // 0x8005660C
 {
@@ -1772,7 +1803,7 @@ void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara) // 0x8005C814
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005C944); // 0x8005C944
 
-s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 arg2, s16 arg3) // 0x8005CB20
+s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 x, s16 z) // 0x8005CB20
 {
     s_800C4590 sp10;
     VECTOR3    sp30;
@@ -1788,7 +1819,7 @@ s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 arg2, s16 arg3) /
 
     headingAngle = chara->headingAngle_3C;
     temp_s0 = FP_MULTIPLY_PRECISE(g_DeltaTime0, chara->moveSpeed_38, Q12_SHIFT);
-    temp_s2 = ((temp_s0 + 0x7FFF) > 0xFFFEu) * 4;
+    temp_s2 = OVERFLOW_GUARD(temp_s0);
     temp_s3 = temp_s2 >> 1;
 
     temp_v0_5 = Math_Sin(headingAngle);
@@ -1800,9 +1831,9 @@ s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 arg2, s16 arg3) /
     sp30.vz   = (s32)FP_MULTIPLY_PRECISE(temp_s0_2, temp_v0_4, Q12_SHIFT) << temp_s2;
 
     temp_v0_5 = chara->field_34;
-    sp30.vx += arg2;
+    sp30.vx += x;
     sp30.vy = FP_MULTIPLY_PRECISE(g_DeltaTime0, temp_v0_5, Q12_SHIFT);
-    sp30.vz += arg3;
+    sp30.vz += z;
 
     ret = func_80069B24(&sp10, &sp30, chara);
 
@@ -3047,7 +3078,87 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006CC9C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006CF18); // 0x8006CF18
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006D01C); // 0x8006D01C
+void func_8006D01C(VECTOR3* arg0, VECTOR3* arg1, s16 arg2, s_func_8006CC44* arg3) // 0x8006D01C
+{
+    VECTOR3 sp10;
+    s32     temp_s0;
+    s32     temp_s1;
+    s32     temp_a0;
+    s32     temp_v0;
+
+    sp10.vx = FP_MULTIPLY(arg1->vx, arg2, 0xC);
+    sp10.vz = FP_MULTIPLY(arg1->vz, arg2, 0xC);
+
+    if (arg3->field_44  || arg3->field_74)
+    {
+        arg0->vx = 0;
+        arg0->vz = 0;
+        *arg1    = sp10;
+        func_8006D2B4(arg1, &arg3->field_44, arg2);
+        return;
+    }
+
+    if (!arg3->field_34)
+    {
+        *arg0    = sp10;
+        arg1->vz = 0;
+        arg1->vx = 0;
+        return;
+    }
+
+    if (arg2 < arg3->field_38)
+    {
+        arg3->field_34 = 0;
+        *arg0          = sp10;
+        arg1->vz       = 0;
+        arg1->vx       = 0;
+        return;
+    }
+
+    arg0->vx = FP_MULTIPLY(arg1->vx, arg3->field_38, 0xC);
+    arg0->vz = FP_MULTIPLY(arg1->vz, arg3->field_38, 0xC);
+    arg1->vx = sp10.vx - arg0->vx;
+    arg1->vz = sp10.vz - arg0->vz;
+
+    temp_s0 = arg3->field_3C;
+    temp_s1 = arg3->field_3E;
+    temp_a0 = SQUARE(temp_s0) + SQUARE(temp_s1);
+
+    if (temp_a0 < 0x100)
+    {
+        temp_a0 = SquareRoot0(temp_a0 * 0x100);
+        temp_s0 = (temp_s0 << 16) / temp_a0;
+        temp_s1 = (temp_s1 << 16) / temp_a0;
+    }
+    else
+    {
+        temp_a0 = SquareRoot0(temp_a0);
+        temp_s0 = (temp_s0 << 12) / temp_a0;
+        temp_s1 = (temp_s1 << 12) / temp_a0;
+    }
+
+    temp_v0  = ((arg1->vx * temp_s1) + (arg1->vz * -temp_s0)) >> 0xC;
+    arg1->vx = FP_MULTIPLY(temp_v0, temp_s1, 0xC);
+    arg1->vz = FP_MULTIPLY(temp_v0, -temp_s0, 0xC);
+
+    if (temp_s0 > 0x555)
+    {
+        arg0->vx += 0x10;
+    }
+    else if (temp_s0 < -0x555)
+    {
+        arg0->vx -= 0x10;
+    }
+
+    if (temp_s1 > 0x555)
+    {
+        arg0->vz += 0x10;
+    }
+    else if (temp_s1 < -0x555)
+    {
+        arg0->vz -= 0x10;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8006D2B4); // 0x8006D2B4
 

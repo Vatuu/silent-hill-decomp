@@ -93,7 +93,7 @@ extern u8 D_800DE251;
 
 void func_800CE000(s32 arg1, s32 arg2, s32 arg3);
 
-void func_800D16C4(s_SubCharacter* arg0, s_MainCharacterExtra* arg2, GsCOORDINATE2* arg3);
+void func_800D16C4(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord);
 
 /** `arg0` is a struct pointer, might be `s_SubCharacter`. */
 void func_800D2364(s_SubCharacter* chara);
@@ -109,7 +109,6 @@ void func_800DA778(s32 arg0);
 void func_800DA7AC();
 
 void func_800DA7FC();
-
 
 void Gfx_LoadingScreen_StageString();
 

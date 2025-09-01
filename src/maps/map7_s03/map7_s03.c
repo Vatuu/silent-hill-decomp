@@ -167,31 +167,29 @@ void func_800D3C80(s_SubCharacter* chara, GsCOORDINATE2* coord)
     VECTOR3 vec;
     s32     moveSpeed;
     s16     headingAngle;
-    s32     moveDist;
+    s32     moveAmt;
     s32     scaleRestoreShift;
     u32     scaleReduceShift;
 
     unused       = chara->position_18;
     moveSpeed    = chara->moveSpeed_38;
     headingAngle = chara->headingAngle_3C;
-    moveDist     = FP_MULTIPLY_PRECISE(moveSpeed, g_DeltaTime0, Q12_SHIFT);
+    moveAmt      = FP_MULTIPLY_PRECISE(moveSpeed, g_DeltaTime0, Q12_SHIFT);
 
-    // Overflow guard, scale large `moveDist` before trigonometric multiplication.
-    // "Range-based scaling mechanism common in fixed-point DSP or low-level game engine math." - chatgpt
-    scaleRestoreShift = ((u32)(moveDist + SHRT_MAX) >= USHRT_MAX) ? 4 : 0;
+    scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
     scaleReduceShift  = scaleRestoreShift >> 1;
 
-    vec.vx = (u32)FP_MULTIPLY_PRECISE(moveDist >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
-    vec.vz = (u32)FP_MULTIPLY_PRECISE(moveDist >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    vec.vx = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    vec.vz = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
     vec.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
 
     chara->position_18.vx += vec.vx;
     chara->position_18.vy  = 0;
     chara->position_18.vz += vec.vz;
 
-    coord->coord.t[0] = FP_FROM(chara->position_18.vx, Q4_SHIFT);
-    coord->coord.t[1] = FP_FROM(chara->position_18.vy, Q4_SHIFT);
-    coord->coord.t[2] = FP_FROM(chara->position_18.vz, Q4_SHIFT);
+    coord->coord.t[0] = Q19_12_TO_Q23_8(chara->position_18.vx);
+    coord->coord.t[1] = Q19_12_TO_Q23_8(chara->position_18.vy);
+    coord->coord.t[2] = Q19_12_TO_Q23_8(chara->position_18.vz);
 }
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D3E18);

@@ -50,5 +50,5 @@ StMode                = 0x800231E8;
 DsReadyCallback       = 0x801E34E0;
 DsDataCallback        = 0x801E3508;
 
-# HACK: Fix for splat/spimdisasm not recognizing `g_UnknownMapTable0` as referenced in certain maps, which only make use of later elements in the array.
-g_UnknownMapTable0    = 0x8002500C;
+# HACK: Fix for splat/spimdisasm not recognizing `g_MapTypeTable` as referenced in certain maps, which only make use of later elements in the array.
+g_MapTypeTable    = 0x8002500C;
