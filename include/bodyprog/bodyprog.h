@@ -3336,6 +3336,8 @@ void func_800894DC();
 
 void func_80089500();
 
+s32 func_80089524(s_SysWork_2514* arg0, s32 padInfoMode);
+
 s32 func_800895E4(s_SysWork_2514* arg0, s_8002AC04* arg1, u8 arg2);
 
 bool func_80089644(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s32 arg2, u32 arg3);

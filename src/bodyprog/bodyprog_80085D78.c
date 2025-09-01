@@ -1763,7 +1763,31 @@ void func_80089500() // 0x80089500
     func_800892DC(9, 0xA0);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089524); // 0x80089524
+s32 func_80089524(s_SysWork_2514* arg0, s32 padInfoMode) // 0x80089524
+{
+    s32             padState;
+    s32             cond;
+    u8              socket;
+    s_SysWork_2514* temp;
+
+    socket = arg0->field_0;
+    PadInfoMode(socket, 2, 0);
+
+    padState = PadGetState(socket);
+    cond     = PadInfoMode(socket, 3, 0) == padInfoMode;
+    if (!cond && padState == 6)
+    {
+        PadSetMainMode(socket, padInfoMode, 0);
+
+        cond = PadSetMainMode(socket, 1, 0);
+
+        temp            = &g_SysWork.field_2514;
+        temp->field_2_4 = 0;
+        temp->field_2_3 = 0;
+    }
+
+    return cond;
+}
 
 s32 func_800895E4(s_SysWork_2514* arg0, s_8002AC04* arg1, u8 arg2) // 0x800895E4
 {

@@ -1270,11 +1270,14 @@ typedef struct _s_SysWork_2514_18
 
 typedef struct
 {
-    u32               unk_0     : 8;
+    u32               field_0 : 8;
     u8                field_1   : 8;
     u32               field_2_0 : 1;
     u32               field_2_1 : 1;
-    u32               field_2_2 : 14;
+    u32               field_2_2 : 4;
+    u32               field_2_3 : 1;
+    u32               field_2_4 : 1;
+    u32               field_2_5 : 8;
     u8                unk_4[8];
     s_SysWork_2514_C* field_C;
     u8                unk_10[8];
