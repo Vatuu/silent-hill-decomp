@@ -29,11 +29,9 @@ s32 MemCmp(u8* src, u8* des, u32 num) // 0x800A6FB8
 
 u32 readMThd(u32 loc) // 0x800A6FFC
 {
-    extern char D_8002E538[4]; // "MThd"
-
     while (true)
     {
-        if (!MemCmp(D_8002E538, smf_song[smf_file_no].mf_data_ptr_504 + loc, 4))
+        if (!MemCmp("MThd", smf_song[smf_file_no].mf_data_ptr_504 + loc, 4))
         {
             return loc + 4;
         }
@@ -49,11 +47,9 @@ u32 readMThd(u32 loc) // 0x800A6FFC
 
 u32 readMTrk(u32 loc) // 0x800A70BC
 {
-    extern char D_8002E540[4]; // "MTrk"
-
     while (true)
     {
-        if (!MemCmp(D_8002E540, smf_song[smf_file_no].mf_data_ptr_504 + loc, 4))
+        if (!MemCmp("MTrk", smf_song[smf_file_no].mf_data_ptr_504 + loc, 4))
         {
             return loc + 4;
         }

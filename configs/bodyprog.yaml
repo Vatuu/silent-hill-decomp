@@ -59,47 +59,25 @@ segments:
     subalign: 4
     subsegments:
       # .rodata section
-      - [0x0, rodata]
+      - [0x0, .rodata, bodyprog]
       - [0x4, .rodata, memcard]
-      - [0x138, rodata]
-      - [0x144, .rodata, bodyprog_800314EC]
+      - [0x140, .rodata, bodyprog_800314EC]
       - [0x1E4, .rodata, globals]
-      - [0x4AC, rodata]                     # Stage/map data?
-      - [0x618, .rodata, bodyprog_80032D1C] # Jumptable: `SysState_Gameplay_Update`
-                                            # Jumptable: `func_8003943C`
-                                            # Jumptable and data: `SysState_GameOver_Update`
+      - [0x4AC, rodata] # Stage/map data? Migrate to `globals.c`.
+      - [0x618, .rodata, bodyprog_80032D1C]
       - [0x91C, .rodata, bodyprog_8003AB28]
-      - [0x1084, rodata]                              # Junk data?
-      - [0x109C, .rodata, libsd/bodyprog_80045A7C]    # Jumptable: `Sd_EngineCmd`
-                                                      # Jumptable: `func_80045BD8`
-      - [0x11C4, .rodata, libsd/bodyprog_CD_80047D50] # Jumptable: `func_800482D8`
-      - [0x1200, rodata]
-      - [0x1280, .rodata, text_draw] # Jumptable: `MapMsg_CalculateWidthTable`, `Gfx_MapMsg_StringDraw`
-      - [0x1328, rodata]
-      - [0x1334, .rodata, items/item_screens_1] # Jumptable: `func_8004C564`
+      - [0x1094, .rodata, libsd/bodyprog_80045A7C]
+      - [0x11C4, .rodata, libsd/bodyprog_CD_80047D50]
+      - [0x1208, .rodata, text_draw]
+      - [0x1330, .rodata, items/item_screens_1]
       - [0x1350, .rodata, items/item_screens_2]
       - [0x1770, .rodata, items/item_screens_3]
-      - [0x32F4, rodata]
-      - [0x54C0, .rodata, bodyprog_80054FC0] # Jumptable: `Player_UpperBodyStateUpdate`
-                                             # Jumptable: `Player_CombatAnimUpdate`
-                                             # Jumptable: `Player_MovementsSubStateUpdate`
-                                             # Jumptable: `Player_CombatStateUpdate`
-                                             # Jumptable: `Player_LowerBodyUpdate`
-                                             # Jumptable: `func_8007B924`
-                                             # Jumptable: `Player_ReceiveDamage`
-                                             # Jumptable: `func_8007D970`
-                                             # Jumptable: `func_8007EBBC`
-                                             # Jumptable: `func_8007F14C`
-                                             
-      - [0x5C80, rodata] # Jumptable: `func_8007FDE0` and part of `Player_LogicUpdate`
-      
-      - [0x5CF0, .rodata, view/vc_main]      # Jumptable: `vcRetFarWatchRate`
-                                             # Jumptable: `vcSetFlagsByCamMvType`
-                                             # Jumptable: `vcMixSelfViewEffectToWatchTgtPos`
-      - [0x5F9C, .rodata, bodyprog_80085D78] # Jumptables
-      - [0x6504, rodata]
-      - [0x679C, .rodata, credits]
-      - [0x6A6C, rodata]
+      - [0x39CC, rodata] # Part of `bodyprog_80055028` that can't be merge due inserting `D_80028B34` with INCLUDE_RODATA causes missalignment.
+      - [0x4BF0, .rodata, bodyprog_80055028]
+      - [0x5CF0, .rodata, view/vc_main]
+      - [0x5F9C, .rodata, bodyprog_80085D78]
+      - [0x6778, .rodata, demo]
+      - [0x6798, .rodata, credits]
       - [0x6A74, lib, libcd, iso9660, .rdata]
       - [0x6C64, lib, libcd, c_011, .rdata]
       - [0x6C84, lib, libgs, matrix, .rdata]
@@ -112,10 +90,7 @@ segments:
       - [0x96C4, lib, libspu, s_sva, .rdata]
       - [0x9704, lib, libspu, s_sca, .rdata]
       - [0x9744, .rodata, libsd/smf_io]
-      - [0x97DC, .rodata, libsd/smf_io]
-      - [0x99D8, rodata]
-      - [0x99E8, .rodata, libsd/smf_mid]
-      - [0x9AD0, rodata]
+      - [0x99D8, .rodata, libsd/smf_mid]
 
       # .text section
       - [0x9AD0,    c, memcard]
@@ -133,7 +108,7 @@ segments:
       - [0x27528,   c, items/item_screens_1]
       - [0x27D7C,   c, items/item_screens_2]
       - [0x2AA7C,   c, items/item_screens_3]
-      - [0x30460,   c, bodyprog_80054FC0]
+      - [0x30460,   c, bodyprog_80055028]
       - [0x5BDE0,   c, view/vc_main]
       - [0x61218,   c, bodyprog_80085D78]
       - [0x6A3C0,   c, demo]

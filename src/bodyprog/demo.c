@@ -290,11 +290,11 @@ bool Demo_Update() // 0x8008F5D8
             if (g_Demo_CurFrameData->gameStateExpected_8 != gameWork->gameState_594)
             {
                 Gfx_DebugStringPosition(8, 0x50);
-                Gfx_DebugStringDraw(D_8002B2D8); // "STEP ERROR:[H:"
+                Gfx_DebugStringDraw("STEP ERROR:[H:");
                 Gfx_DebugStringDraw(Math_IntegerToString(2, g_Demo_CurFrameData->gameStateExpected_8));
-                Gfx_DebugStringDraw(D_8002B2E8); // "]/[M:"
+                Gfx_DebugStringDraw("]/[M:");
                 Gfx_DebugStringDraw(Math_IntegerToString(2, gameWork->gameState_594));
-                Gfx_DebugStringDraw(D_8002B2F0); // "]"
+                Gfx_DebugStringDraw("]");
 
                 g_Demo_CurFrameData = NULL;
             }
@@ -315,6 +315,8 @@ bool Demo_Update() // 0x8008F5D8
     g_Demo_CurFrameData = NULL;
     return true;
 }
+
+const s16 unkRodata_8002B2F2 = 0x8008;
 
 bool Demo_ControllerDataUpdate() // 0x8008F7CC
 {

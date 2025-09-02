@@ -792,11 +792,13 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
     }  
 }
 #else
+INCLUDE_RODATA("asm/bodyprog/nonmatchings/items/item_screens_3", D_80027E54);
+
+INCLUDE_RODATA("asm/bodyprog/nonmatchings/items/item_screens_3", D_80027E9C);
+
 INCLUDE_ASM("asm/bodyprog/nonmatchings/items/item_screens_3", Gfx_Inventory_2dBackgroundDraw); // 0x8004FBCC
 #endif
 
-// TODO: RODATA migration.
-#ifdef NON_MATCHING
 static inline s16 GetUvOrRandom()
 {
     if (D_800AE198 == 1) 
@@ -1064,12 +1066,7 @@ void Gfx_Inventory_HealthStatusDraw()
         g_Inventory_HealthStatusScanlinePosition   = -300;
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/items/item_screens_3", Gfx_Inventory_HealthStatusDraw); // 0x80051020
-#endif
 
-// TODO: RODATA migration.
-#ifdef NON_MATCHING
 void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
 {
     s32 temp;
@@ -1316,9 +1313,6 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
             break;
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/items/item_screens_3", Gfx_Inventory_ItemDescriptionDraw); // 0x8005192C
-#endif
 
 void Gfx_Primitive2dTextureSet(s32 x, s32 y, s32 otIdx, s32 abr) // 0x80052088
 {
@@ -1362,8 +1356,6 @@ void Gfx_Results_ItemsDisplay() // 0x800521A8
     }
 }
 
-// TODO: RODATA migration.
-#ifdef NON_MATCHING
 void Gfx_Results_ItemsPosition() // 0x8005227C
 {
     s32 i;
@@ -1399,9 +1391,6 @@ void Gfx_Results_ItemsPosition() // 0x8005227C
         }
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/items/item_screens_3", Gfx_Results_ItemsPosition); // 0x8005227C
-#endif
 
 /** Name could be inaccurate.
  * Breaking this function call makes items no longer rotate,
@@ -1476,8 +1465,6 @@ void func_800539A4(s32 scrollDirection, s32 arg1) // 0x800539A4
  *   map being loaded.
  */
 
-// TODO: RODATA migration.
-#ifdef NON_MATCHING
 void GameFs_UniqueItemModelLoad(u8 itemId) // 0x80053B08
 {
     switch (itemId)
@@ -1776,9 +1763,6 @@ void GameFs_UniqueItemModelLoad(u8 itemId) // 0x80053B08
             break;
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/items/item_screens_3", GameFs_UniqueItemModelLoad); // 0x80053B08
-#endif
 
 void GameFs_Tim00TIMLoad() // 0x80053dA0
 {
@@ -1791,8 +1775,6 @@ void GameFs_Tim00TIMLoad() // 0x80053dA0
     g_SysWork.flags_2352 |= 1 << 0;
 }
 
-// TODO: RODATA migration.
-#ifdef NON_MATCHING
 void GameFs_MapItemsModelLoad(u32 mapId) // 0x80053DFC
 {
     if (!(g_SysWork.flags_2352 & (1 << 7)))
@@ -1887,12 +1869,7 @@ void GameFs_MapItemsModelLoad(u32 mapId) // 0x80053DFC
             break;
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/items/item_screens_3", GameFs_MapItemsModelLoad); // 0x80053DFC
-#endif
 
-// TODO: RODATA migration.
-#ifdef NON_MATCHING
 void GameFs_MapItemsTextureLoad(s32 mapId) // 0x80054024
 {
     switch (mapId)
@@ -1958,9 +1935,6 @@ void GameFs_MapItemsTextureLoad(s32 mapId) // 0x80054024
             break;
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/items/item_screens_3", GameFs_MapItemsTextureLoad); // 0x80054024
-#endif
 
 void func_800540A4(s8 arg0) // 0x800540A4
 {
@@ -2004,8 +1978,6 @@ void func_800540A4(s8 arg0) // 0x800540A4
     Fs_QueueStartReadTim(FILE_ITEM_HEROPIC2_TIM, FS_BUFFER_1, &g_HealthPortraitImg);
 }
 
-// TODO: RODATA migration.
-#ifdef NON_MATCHING
 // Item rendering related.
 void Gfx_Items_Render() // 0x80054200
 {
@@ -2131,9 +2103,6 @@ void Gfx_Items_Render() // 0x80054200
         }
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/items/item_screens_3", Gfx_Items_Render); // 0x80054200
-#endif
 
 void Gfx_Items_RenderInit() // 0x80054558
 {
@@ -2181,8 +2150,6 @@ void Inventory_ExitAnimFixes() // 0x80054634
     Inventory_ExitAnimEquippedItemUpdate(&field_F);
 }
 
-// TODO: RODATA migration.
-#ifdef NON_MATCHING
 void func_800546A8(s32 arg0) // 0x800546A8
 {
     switch ((u8)arg0)
@@ -2211,9 +2178,6 @@ void func_800546A8(s32 arg0) // 0x800546A8
             break;
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/items/item_screens_3", func_800546A8); // 0x800546A8
-#endif
 
 void Gfx_Items_Display(s_TmdFile* tmd, s32 arg1, s32 arg2) 
 {
@@ -2417,8 +2381,6 @@ bool Gfx_PickupItemAnimate(u8 itemId) // 0x80054AD8
     return g_PickupItemAnimState > 0;
 }
 
-// TODO: RODATA migration.
-#ifdef NON_MATCHING
 void Inventory_AddSpecialItem(u8 itemId, s32 itemCount) // 0x80054CAC
 {
     switch (itemId)
@@ -2504,6 +2466,31 @@ void Inventory_AddSpecialItem(u8 itemId, s32 itemCount) // 0x80054CAC
     g_SavegamePtr->items_0[g_SavegamePtr->inventorySlotCount_AB].count_1 = itemCount;
     g_SavegamePtr->inventorySlotCount_AB                                 = func_8004F190(g_SavegamePtr);
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/items/item_screens_3", Inventory_AddSpecialItem); // 0x80054CAC
-#endif
+
+void Items_AmmoReloadCalculation(s32* currentAmmo, s32* availableAmmo, u8 gunIdx) // 0x80054FC0
+{
+    s32 missingAmmo;
+
+    missingAmmo = g_Items_GunsMaxLoadAmmo[gunIdx] - *currentAmmo;
+    if (missingAmmo == 0)
+    {
+        return;
+    }
+
+    if (*availableAmmo >= missingAmmo)
+    {
+        *currentAmmo   += missingAmmo;
+        *availableAmmo -= missingAmmo;
+        return;
+    }
+	else
+	{
+		*currentAmmo  += *availableAmmo;
+		*availableAmmo = 0;
+		return;
+	}
+}
+
+// Likely the first pad is supposed to be generated in the file linking while the second being inserted at `bodyprog_80055028.c` directly.
+const s32 rodataPad_80028524 = 0;
+const s32 rodataPad_80028528 = 0;
