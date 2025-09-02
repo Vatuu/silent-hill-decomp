@@ -2679,7 +2679,7 @@ void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s_WaterZone *waterZones
 
     if (D_800C4818.field_1 == 0)
     {
-        wzPtr = func_8008E51C(FP_FROM(pos->vx, Q8_SHIFT), FP_FROM(pos->vz, Q8_SHIFT), waterZones);
+        wzPtr = Map_GetWaterZone(FP_FROM(pos->vx, Q8_SHIFT), FP_FROM(pos->vz, Q8_SHIFT), waterZones);
         if (wzPtr != NULL)
         {
             func_8008E5B4();
@@ -2837,7 +2837,7 @@ void func_8008E4EC(s_PlmHeader* plmHeader) // 0x8008E4EC
     func_80056504(plmHeader, D_8002B2CC.str, &D_800AFD9C, 1);
 }
 
-s_WaterZone* func_8008E51C(s32 posX, s32 posZ, s_WaterZone* zone)
+s_WaterZone* Map_GetWaterZone(s32 posX, s32 posZ, s_WaterZone* zone)
 {
     s_WaterZone* zonePtr;
     if (!zone)
