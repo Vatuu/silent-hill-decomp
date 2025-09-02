@@ -8013,8 +8013,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
     #define TRAVEL_DIST_MIN          1
 
     // Used for `player.playerMoveDistance_126`.
-    #define GET_MAX(x)         \
-        (((x) == 2) ? 0x5000 : (((x) == 0) ? 0x3800 : 0x4000))
+    #define GET_REAL_SPEED(x)         \
+        (((x) == SpeedZoneType_Fast) ? 0x5000 : (((x) == SpeedZoneType_Slow) ? 0x3800 : 0x4000))
 
     // Used for `player.playerMoveDistance_126`.
     #define GET_VAL(val, delta)     \
@@ -8024,7 +8024,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
     s32                    var_a2;
     s32                    travelDistStep;
-    s32                    temp_s1;
+    s32                    speedId;
     e_PlayerLowerBodyState temp_s3; // runningState?
     s32                    var_a3;
     s32                    aimState;
@@ -8041,7 +8041,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
     // Compute move distance step.
     temp_s3        = func_8007D6F0(chara, &D_800C45C8);
-    temp_s1        = func_8003BF60(chara->position_18.vx, chara->position_18.vz);
+    speedId        = Map_GetSpeedZone(chara->position_18.vx, chara->position_18.vz);
     var_a2         = SQUARE(chara->position_18.vx - D_800C45F8.vx);
     temp           = SQUARE(chara->position_18.vz - D_800C45F8.vz);
     travelDistStep = SquareRoot0(var_a2 + temp);
@@ -8564,7 +8564,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             {
                 D_800AF216 = ABS(g_Controller0->sticks_20.sticks_0.leftY);
 
-                var_a2 = GET_MAX(temp_s1);
+                var_a2 = GET_REAL_SPEED(speedId);
 
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < FP_METER(3.5f)) 
                 {
@@ -8584,7 +8584,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             {
                 if (D_800AF216 != 0)
                 {
-                    var_a2 = GET_MAX(temp_s1);
+                    var_a2 = GET_REAL_SPEED(speedId);
 
                     if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < FP_METER(3.5f)) 
                     {
@@ -8599,20 +8599,20 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
                     func_80070CF0(chara, FP_FLOAT_TO(2.0f, Q12_SHIFT), var_a2, var_a3, Math_UnkDistTimeCalc(FP_METER(0.4f)));
                 }
-                else if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 > GET_MAX(temp_s1))
+                else if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 > GET_REAL_SPEED(speedId))
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= Math_UnkDistTimeCalc(FP_METER(0.4f));
-                    if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < GET_MAX(temp_s1))
+                    if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < GET_REAL_SPEED(speedId))
                     {
-                        g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = GET_MAX(temp_s1);
+                        g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = GET_REAL_SPEED(speedId);
                     }
                 }
                 else
                 {
-                    if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < GET_MAX(temp_s1))
+                    if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < GET_REAL_SPEED(speedId))
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += GET_VAL(g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126, g_DeltaTime0);
-                        g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126  = CLAMP(g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126, 0, GET_MAX(temp_s1));
+                        g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126  = CLAMP(g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126, 0, GET_REAL_SPEED(speedId));
                     }
                 }
 

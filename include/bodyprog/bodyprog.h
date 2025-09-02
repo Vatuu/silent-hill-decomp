@@ -29,6 +29,13 @@
 // ENUMS
 // ======
 
+typedef enum _SpeedZoneType
+{
+    SpeedZoneType_Slow = 0,
+    SpeedZoneType_Norm = 1,
+    SpeedZoneType_Fast = 2,
+} e_SpeedZoneType;
+
 typedef enum _Sfx
 {
     Sfx_Base        = 1280,
@@ -1005,20 +1012,15 @@ typedef struct
 } s_800BCDA8;
 STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
 
-/*= This is related to player movement/speed/animation(?). Function `func_8003BF60` iterates
- * over a table of these structs and returns `id_0` of the entry that contains the input x and z coords.
- * `id_0` is always 1 or 2, and that in turn changes to 0x5000 or 0x4000, respectively (see `Player_LowerBodyUpdate`).
- * Different parts of the map have different animation/movemenet/walking speed?
- */
-typedef struct
+typedef struct _SpeedZone
 {
-    s8 id_0;
+    s8 speedIdx_0;
     // 1 byte of padding.
     s16 minX_2;
     s16 maxX_4;
     s16 minZ_6;
     s16 maxZ_8;
-} s_MapBounds;
+} s_SpeedZone;
 
 // Looks similar to `s_Skeleton`
 typedef struct
@@ -1032,14 +1034,14 @@ typedef struct
     s_Skeleton    field_14; // Could be different struct?
 } s_800BCE18_0_CC; // Unknown size.
 
-typedef struct
+typedef struct _MapType
 {
     s16          id_0;
     char         tag_2[4];
     u8           flags_6;
     u8           flags_7;
     s32*         field_8;  // Pointer to some other const data or `NULL`.
-    s_MapBounds* bounds_C; // Pointer to some other const data.
+    s_SpeedZone* speedZones_C;
 } s_MapType;
 
 typedef struct
@@ -1723,8 +1725,7 @@ typedef struct
 
 extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: Part of main exe, move to `main/` headers?
 
-/** Some sort of struct inside RODATA, likely a constant. */
-extern s_MapType g_MapTypes[16];
+extern const s_MapType g_MapTypes[16];
 
 extern char D_8002510C[]; // "\aNow_loading."
 
@@ -3871,7 +3872,7 @@ void GameFs_BgItemLoad();
 
 void func_8003BED0();
 
-s32 func_8003BF60(s32 x, s32 z);
+s32 Map_GetSpeedZone(s32 x, s32 z);
 
 /** Used in map loading. Something related to screen.
  * Removing it causes the game to get stuck at the loading screen.
