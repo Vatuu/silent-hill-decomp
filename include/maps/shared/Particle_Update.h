@@ -9,12 +9,8 @@ s32 Particle_Update(s_Particle* partHead)
     MATRIX mat1;
     
     VECTOR3 tmpVec;
-    s32 tmp;
     
     s_Particle* partIter;
-
-    u8 tmp2;
-    s32 timeTmp; //TODO: remove
 
     s16 rand;
     s32 pass;
@@ -543,9 +539,8 @@ s32 Particle_Update(s_Particle* partHead)
         defined(MAP6_S00) || defined(MAP6_S03)
         if (pass != 0)
         {
-            tmp = sharedData_800E32D0_0_s00 + sharedData_800DD78C_0_s01[pass];
-            sharedData_800E32D0_0_s00 = tmp;
-            sharedData_800E32D0_0_s00 = limitRange(tmp, 0, 135000);
+            sharedData_800E32D0_0_s00 += sharedData_800DD78C_0_s01[pass];
+            limitRange(sharedData_800E32D0_0_s00, 0, 135000);
         }
     #endif
         for(updateCount = updatePrev;
