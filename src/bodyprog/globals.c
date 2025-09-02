@@ -34,7 +34,7 @@ const s_foo_unknown D_80024D80[] =
     {}
 };
 
-const s_SpeedZone SpeedZones_80024DA4[] =
+const s_SpeedZone SpeedZones_THR[] =
 {
     { 2, -5120,  4480, -3840, 3200 },
     { 2, -640,   640,   3200, 3840 },
@@ -42,7 +42,7 @@ const s_SpeedZone SpeedZones_80024DA4[] =
     { NO_VALUE, 0, 0, 0, 0         } // End of list.
 };
 
-const s_SpeedZone SpeedZones_80024DCC[] =
+const s_SpeedZone SpeedZones_SP[] =
 {
     { SpeedZone_Fast,  -3840,  1280, -1920, 640  },
     { SpeedZone_Fast,  -640,   1280,  640,  1920 },
@@ -53,7 +53,7 @@ const s_SpeedZone SpeedZones_80024DCC[] =
 
 // 2 bytes of padding.
 
-const s_SpeedZone SpeedZones_80024E00[] =
+const s_SpeedZone SpeedZones_RSR[] =
 {
     { SpeedZone_Fast,  -1920,  1280, -3200, 640 },
     { SpeedZone_Norm,  -3200, -1920, -640,  0   },
@@ -62,7 +62,7 @@ const s_SpeedZone SpeedZones_80024E00[] =
 
 // 2 bytes of padding.
 
-const s_SpeedZone SpeedZones_80024E20[] =
+const s_SpeedZone SpeedZones_RSU[] =
 {
     { SpeedZone_Fast,  -3200,  0,     640,  2560 },
     { SpeedZone_Norm,  -3200, -1280, -1280, 640  },
@@ -71,7 +71,7 @@ const s_SpeedZone SpeedZones_80024E20[] =
 
 // 2 bytes of padding.
 
-const s_SpeedZone SpeedZones_80024E40[] =
+const s_SpeedZone SpeedZones_AP[] =
 {
     { SpeedZone_Fast,  -1280, 640, -1920, 640  },
     { SpeedZone_Norm,   0,    640,  1280, 1920 },
@@ -80,13 +80,13 @@ const s_SpeedZone SpeedZones_80024E40[] =
 
 // 2 bytes of padding.
 
-const s_SpeedZone SpeedZones_80024E60[] =
+const s_SpeedZone SpeedZones_DR[] =
 {
     { SpeedZone_Norm,  -12800, 13440, -12800, 13440 },
     { NO_VALUE, 0, 0, 0, 0            } // End of list.
 };
 
-const s_SpeedZone SpeedZones_80024E74[] =
+const s_SpeedZone SpeedZones_SC[] =
 {
     { SpeedZone_Norm,  -1920, -640,   640,  1280 },
     { SpeedZone_Norm,  -640,   0,     2560, 3200 },
@@ -101,7 +101,7 @@ const s_SpeedZone SpeedZones_80024E74[] =
 
 // 2 bytes of padding.
 
-const s_SpeedZone SpeedZones_80024ED0[] =
+const s_SpeedZone SpeedZones_SU[] =
 {
     { SpeedZone_Norm,  -1920, -640,   640,  1280 },
     { SpeedZone_Norm,  -640,   0,     2560, 3200 },
@@ -116,7 +116,7 @@ const s_SpeedZone SpeedZones_80024ED0[] =
 
 // 2 bytes of padding.
 
-const s_SpeedZone SpeedZones_80024F2C[] =
+const s_SpeedZone SpeedZones_HP[] =
 {
     { SpeedZone_Norm,  0, 640, 1920, 2560 },
     { SpeedZone_Norm,  0, 640, 0,    640  },
@@ -125,7 +125,7 @@ const s_SpeedZone SpeedZones_80024F2C[] =
 
 // 2 bytes of padding.
 
-const s_SpeedZone SpeedZones_80024F4C[] =
+const s_SpeedZone SpeedZones_HU[] =
 {
     { SpeedZone_Norm,   1280,  1920,  1920,  2560 },
     { SpeedZone_Norm,   0,     640,   0,     640  },
@@ -142,7 +142,7 @@ const s_SpeedZone SpeedZones_80024F4C[] =
 
 // 2 bytes of padding.
 
-const s_SpeedZone SpeedZones_80024FBC[] =
+const s_SpeedZone SpeedZones_ER[] =
 {
     { SpeedZone_Norm,  -1280, -640,  -640,   0    },
     { SpeedZone_Norm,  -1920, -640,  -1920, -1280 },
@@ -152,7 +152,7 @@ const s_SpeedZone SpeedZones_80024FBC[] =
     { NO_VALUE, 0, 0, 0, 0          } // End of list.
 };
 
-const s_SpeedZone SpeedZones_80024FF8[] =
+const s_SpeedZone SpeedZones_XXX[] =
 {
     { SpeedZone_Fast,  -12800, 13440, -12800, 13440 },
     { NO_VALUE, 0, 0, 0, 0            } // End of list.
@@ -160,20 +160,20 @@ const s_SpeedZone SpeedZones_80024FF8[] =
 
 const s_MapType g_MapTypes[16] =
 {
-    { 1370, "THR", 0, 0, NULL      ,SpeedZones_80024DA4},
-    { -1  , "SC" , 6, 0, NULL      ,SpeedZones_80024E74},
-    { -1  , "SU" , 6, 0, NULL      ,SpeedZones_80024ED0},
-    { 912 , "SPR", 0, 0, NULL      ,SpeedZones_80024DCC},
-    { 976 , "SPU", 0, 0, NULL      ,SpeedZones_80024DCC},
-    { 679 , "RSR", 0, 0, NULL      ,SpeedZones_80024E00},
-    { 738 , "RSU", 0, 0, NULL      ,SpeedZones_80024E20},
-    { 173 , "APR", 0, 0, NULL      ,SpeedZones_80024E40},
-    { 196 , "APU", 0, 0, NULL      ,SpeedZones_80024E40},
-    { -1  , "ER" , 6, 0, NULL      ,SpeedZones_80024FBC},
-    { -1  , "ER" , 6, 0, NULL      ,SpeedZones_80024FBC},
-    { 266 , "DR" , 0, 0, D_80024D5C,SpeedZones_80024E60},
-    { 265 , "DRU", 0, 0, D_80024D80,SpeedZones_80024E60},
-    { -1  , "HP" , 6, 0, NULL      ,SpeedZones_80024F2C},
-    { -1  , "HU" , 6, 0, NULL      ,SpeedZones_80024F4C},
-    { -1  , "XXX", 8, 0, NULL      ,SpeedZones_80024FF8}
+    { 1370, "THR", 0, 0, NULL      , SpeedZones_THR },
+    { -1  , "SC" , 6, 0, NULL      , SpeedZones_SC  },
+    { -1  , "SU" , 6, 0, NULL      , SpeedZones_SU  },
+    { 912 , "SPR", 0, 0, NULL      , SpeedZones_SP  },
+    { 976 , "SPU", 0, 0, NULL      , SpeedZones_SP  },
+    { 679 , "RSR", 0, 0, NULL      , SpeedZones_RSR },
+    { 738 , "RSU", 0, 0, NULL      , SpeedZones_RSU },
+    { 173 , "APR", 0, 0, NULL      , SpeedZones_AP  },
+    { 196 , "APU", 0, 0, NULL      , SpeedZones_AP  },
+    { -1  , "ER" , 6, 0, NULL      , SpeedZones_ER  },
+    { -1  , "ER" , 6, 0, NULL      , SpeedZones_ER  },
+    { 266 , "DR" , 0, 0, D_80024D5C, SpeedZones_DR  },
+    { 265 , "DRU", 0, 0, D_80024D80, SpeedZones_DR  },
+    { -1  , "HP" , 6, 0, NULL      , SpeedZones_HP  },
+    { -1  , "HU" , 6, 0, NULL      , SpeedZones_HU  },
+    { -1  , "XXX", 8, 0, NULL      , SpeedZones_XXX }
 };
