@@ -18,10 +18,10 @@
 extern u8 D_800DDFB8[];
 extern s_AnimInfo g_AnimInfos[];
 extern s_func_800625F4 D_800DE270[300];
-extern s_BloodSplat D_800DF9E0[150];
+extern s_BloodSplat g_Effect_BloodSplats[150];
 extern s32 D_800DFB10[];
 extern s_UnkStruct3_Mo g_MapHeaders_38[21];
-extern u8 g_LoadableInventoryItemIds[34];
+extern u8 g_LoadableInventoryItems[34];
 
 void (*g_LoadScreenFuncs[])() =
 {
@@ -55,7 +55,7 @@ void (*g_MapEventFuncs[])() =
 const u32 D_800C9578 = 0x00000000; // rodata 0
 const s_MapOverlayHeader g_MapOverlayHeader = 
 {
-    .type_0 = &g_MapTypeTable[0],
+    .type_0 = &g_MapTypes[0],
     .getMapRoomIdxFunc_4 = sharedFunc_800D92AC_0_s00,
     .field_8 = 34,
     .unk_9 = { 0, 0, 0 },
@@ -70,7 +70,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .mapEventFuncs_20 = g_MapEventFuncs,
     .unk_24 = D_800DDFB8,
     .field_28 = &g_SysWork.npcCoords_FC0[0],
-    .loadableItems_2C = g_LoadableInventoryItemIds,
+    .loadableItems_2C = g_LoadableInventoryItems,
     .mapMessages_30 = g_MapMessages,
     .animInfos_34 = g_AnimInfos,
     .field_38 = g_MapHeaders_38,
@@ -79,9 +79,9 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .func_44 = NULL,
     .func_48 = NULL,
     .unkTable1_4C = D_800DE270,
-    .unkTable1Len_50 = ARRAY_SIZE(D_800DE270),
-    .bloodSplats_54 = D_800DF9E0,
-    .bloodSplatsLen_58 = ARRAY_SIZE(D_800DF9E0),
+    .unkTable1Count_50 = ARRAY_SIZE(D_800DE270),
+    .bloodSplats_54 = g_Effect_BloodSplats,
+    .bloodSplatCount_58 = ARRAY_SIZE(g_Effect_BloodSplats),
     .always0_5C = 0,
     .always0_60 = 0,
     .always0_64 = 0,

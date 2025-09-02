@@ -9,12 +9,7 @@
 //----------------------------------------------------------------
 //--- PA: 0x000008   VA: 0x801E2608   subsegment: .rodata, options
 //----------------------------------------------------------------
-EXTRA_OPTION_str                                = 0x801E26CC;
-SettingsExtra_str                               = 0x801E2764;
 // Data
-OPTION_str                                      = 0x801E2784; // type:asciz
-Settings_str                                    = 0x801E280C;
-SettingsExtraOptions_str                        = 0x801E2A6C;
 
 
 

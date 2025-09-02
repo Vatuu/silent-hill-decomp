@@ -677,7 +677,7 @@ void func_8003BCF4() // 0x8003BCF4
 
 s32 MapTypeGet() // 0x8003BD2C
 {
-    return D_800BCE18.field_0[0].type_0 - g_MapTypeTable;
+    return D_800BCE18.field_0[0].type_0 - g_MapTypes;
 }
 
 void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
@@ -754,29 +754,29 @@ void func_8003BED0() // 0x8003BED0
 
 extern s_800C4168 const D_800C4168;
 
-s32 func_8003BF60(s32 x, s32 z) // 0x8003BF60
+s32 Map_GetSpeedZone(s32 x, s32 z) // 0x8003BF60
 {
     s32          ret;
-    s_MapBounds* ptr;
+    s_SpeedZone* ptr;
 
     ret = 0;
 
     if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP0_S00)
     {
-        return 1;
+        return SpeedZoneType_Norm;
     }
 
-    if (D_800BCE18.field_0[0].type_0->bounds_C != NULL)
+    if (D_800BCE18.field_0[0].type_0->speedZones_C != NULL)
     {
-        ptr = D_800BCE18.field_0[0].type_0->bounds_C;
+        ptr = D_800BCE18.field_0[0].type_0->speedZones_C;
 
-        while (ptr->id_0 != NO_VALUE)
+        while (ptr->speedIdx_0 != NO_VALUE)
         {
             if (x >= (ptr->minX_2 << 8) && (ptr->maxX_4 << 8) >= x &&
                 z >= (ptr->minZ_6 << 8) && (ptr->maxZ_8 << 8) >= z &&
-                ret < ptr->id_0)
+                ret < ptr->speedIdx_0)
             {
-                ret = ptr->id_0;
+                ret = ptr->speedIdx_0;
             }
 
             ptr++;
@@ -875,7 +875,7 @@ void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ
     ptr = mapHeader->type_0;
     func_800421D8(ptr->tag_2, ptr->id_0, var_a2, ((ptr->flags_6 >> 2) ^ 1) & (1 << 0), 0, 0);
 
-    if (mapHeader->type_0 == &g_MapTypeTable[0])
+    if (mapHeader->type_0 == &g_MapTypes[0])
     {
         func_80041ED0(1127, -1, 8);
     }
@@ -948,7 +948,7 @@ void func_8003C3AC() // 0x8003C3AC
     pos0.vx += FP_MULTIPLY_PRECISE(moveAmt, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
     pos0.vz += FP_MULTIPLY_PRECISE(moveAmt, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
 
-    if (D_800BCE18.field_0[0].type_0 == &g_MapTypeTable[0] &&
+    if (D_800BCE18.field_0[0].type_0 == &g_MapTypes[0] &&
         chara->position_18.vx >= FP_METER(-40.0f) && chara->position_18.vx <= FP_METER(40.0f) &&
         chara->position_18.vz >= FP_METER(200.0f) && chara->position_18.vz <= FP_METER(240.0f))
     {
@@ -1055,11 +1055,11 @@ void func_8003C8F8(s_800BCE18_2BEC_0* arg0, char* newStr) // 0x8003C8F8
 void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* pos, SVECTOR3* rot) // 0x8003C92C
 {
     s32              vy;
-    s32              coord1;
     s32              vx;
     s32              vz;
-    s32              coord0;
-    s32              coord2;
+    s32              coord1; // Q23.8
+    s32              coord0; // Q23.8
+    s32              coord2; // Q23.8
     s32              i;
     s32              ret;
     s_800BCE18_2BEC* ptr;
@@ -1086,9 +1086,9 @@ void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* pos, SVECTOR3* rot) // 0x80
             arg0->field_10.field_9 = ret;
         } 
 
-        coord0 = FP_FROM(pos->vx, Q4_SHIFT);
-        coord1 = FP_FROM(pos->vy, Q4_SHIFT);
-        coord2 = FP_FROM(pos->vz, Q4_SHIFT);
+        coord0 = Q19_12_TO_Q23_8(pos->vx);
+        coord1 = Q19_12_TO_Q23_8(pos->vy);
+        coord2 = Q19_12_TO_Q23_8(pos->vz);
         vx     = rot->vx >> 2;
         vz     = rot->vz >> 2;
         vy     = rot->vy;
@@ -2343,7 +2343,7 @@ void func_8003E740() // 0x8003E740
             D_800A9FB0 = 0;
         }
 
-        setRGB0(poly, D_800A9FB0 + 0x30, D_800A9FB0 + 0x30, D_800A9FB0 + 0x30);
+        setRGB0(poly, D_800A9FB0 + FP_COLOR(0.1875f), D_800A9FB0 + FP_COLOR(0.1875f), D_800A9FB0 + FP_COLOR(0.1875f));
         poly->tpage = 0x2C;
         poly->clut  = 0x1032;
 
@@ -3085,3 +3085,5 @@ void func_80040014() // 0x80040014
 {
     func_80069860(g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz, D_800BCE18.field_1BD8);
 };
+
+INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_8003AB28", D_80025BE4);

@@ -5,6 +5,8 @@
 #include "bodyprog/math.h"
 #include "main/fsqueue.h"
 
+const s32 rodataPad_8002B2F8 = 0;
+
 void func_8008F94C() // 0x8008F94C
 {
     s16 temp_s1;
@@ -1018,3 +1020,5 @@ void func_8009185C(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
     temp_t2             = arg5 + FP_MULTIPLY_PRECISE(arg3, temp_lo_7, Q12_SHIFT);
     D_800AFE24.field_54 = FP_MULTIPLY_PRECISE(temp_lo_4, temp_t2, Q12_SHIFT);
 }
+
+INCLUDE_RODATA("asm/bodyprog/nonmatchings/credits", D_8002B5CC);

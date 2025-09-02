@@ -183,18 +183,18 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
                 case 12:
                     g_GameWork.gameStateStep_598[1] = 1;
                     g_GameWork.gameStateStep_598[2] = 0;
-                    g_SysWork.field_10              = 3; // This specifically make it appear.
+                    g_SysWork.sysStateStep_C[1]     = 3; // This specifically make it appear.
                     g_SysWork.timer_2C              = 0;
-                    g_SysWork.field_14              = 0;
+                    g_SysWork.sysStateStep_C[2]     = 0;
                     break;
 
                 // "Too dark too look at the item" message. Triggers in circumstances like maps in Otherworld with the flashlight off.
                 case 16:
                     g_GameWork.gameStateStep_598[1] = 1;
                     g_GameWork.gameStateStep_598[2] = 0;
-                    g_SysWork.field_10              = 4; // This specifically make it appear.
+                    g_SysWork.sysStateStep_C[1]     = 4; // This specifically make it appear.
                     g_SysWork.timer_2C              = 0;
-                    g_SysWork.field_14              = 0;
+                    g_SysWork.sysStateStep_C[2]     = 0;
                     break;
 
                 default:
@@ -426,13 +426,13 @@ void Gfx_Results_Save() // 0x8004D1A0
             colorVar0  = i % 12;
             colorVar0 += ((i % 12) < 0) ? 3 : 0;
             colorVar1  = colorVar0 >> 2;
-            rgColor    = 0x60 - (colorVar1 << 6);
+            rgColor    = FP_COLOR(0.375f) - (colorVar1 << 6);
             setRGB0(line, rgColor, rgColor, 0xFF);
         } 
         else 
         {
             colorVar1 = ((i % 12) - 4) / 2;
-            rgColor   = 0x60 - (colorVar1 << 6);
+            rgColor   = FP_COLOR(0.375f) - (colorVar1 << 6);
             setRGB0(line, rgColor, rgColor, 0xFF);
         }
 
@@ -1306,17 +1306,17 @@ void Gfx_Inventory_CmdOptionsDraw() // 0x8004E864
 
             if (i != 0)
             {
-                setRGB0(poly, 0, 0xC0, 0x40);
-                setRGB1(poly, 0, 0, 0);
-                setRGB2(poly, 0, 0xC0, 0x40);
-                setRGB3(poly, 0, 0, 0);
+                setRGB0(poly, FP_COLOR(0.0f), FP_COLOR(0.75f), FP_COLOR(0.25f));
+                setRGB1(poly, FP_COLOR(0.0f), FP_COLOR(0.0f),  FP_COLOR(0.0f));
+                setRGB2(poly, FP_COLOR(0.0f), FP_COLOR(0.75f), FP_COLOR(0.25f));
+                setRGB3(poly, FP_COLOR(0.0f), FP_COLOR(0.0f),  FP_COLOR(0.0f));
             }
             else
             {
-                setRGB0(poly, 0, 0, 0);
-                setRGB1(poly, 0, 0xC0, 0x40);
-                setRGB2(poly, 0, 0, 0);
-                setRGB3(poly, 0, 0xC0, 0x40);
+                setRGB0(poly, FP_COLOR(0.0f), FP_COLOR(0.0f),  FP_COLOR(0.0f));
+                setRGB1(poly, FP_COLOR(0.0f), FP_COLOR(0.75f), FP_COLOR(0.25f));
+                setRGB2(poly, FP_COLOR(0.0f), FP_COLOR(0.0f),  FP_COLOR(0.0f));
+                setRGB3(poly, FP_COLOR(0.0f), FP_COLOR(0.75f), FP_COLOR(0.25f));
             }
 
             setXY4(poly,

@@ -147,7 +147,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00_2", func_800DB514);
 
 void func_800DB870() // 0x800DB870
 {
-    switch (g_SysWork.sysStateStep_C)
+    switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();

@@ -9,14 +9,6 @@
 #define SQUARE(x) \
     ((x) * (x))
 
-/** @brief Cubes a value.
- *
- * @param x Value to be cubed.
- * @return `x` cubed.
- */
-#define CUBE(x) \
-    ((x) * (x) * (x))
-
 /** @brief Determines the smaller of two values.
  *
  * @param a First value.

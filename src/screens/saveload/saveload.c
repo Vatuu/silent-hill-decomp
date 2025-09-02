@@ -663,13 +663,13 @@ void Gfx_WriteOptionSaveDraw(s32 arg0, s32 optionIdx) // 0x801E3C44
 
             if (time < 32)
             {
-                color = (time * 2) + 32;
+                color = (time * 2) + FP_COLOR(0.125f);
                 setRGB0(poly, color, color, 32);
             }
             else
             {
-                color = 96 - ((time - 32) * 2);
-                setRGB0(poly, color, color, 32);
+                color = FP_COLOR(0.375f) - ((time - 32) * 2);
+                setRGB0(poly, color, color, FP_COLOR(0.125f));
             }
 
             if (optionIdx != 0)
@@ -709,7 +709,7 @@ void Gfx_SavedFlashDraw() // 0x801E3E78
         setPolyF4(poly);
         setSemiTrans(poly, 1);
 
-        color = ~FP_FROM(sin * 0xFF, Q12_SHIFT);
+        color = ~FP_FROM(sin * FP_COLOR(1.0f), Q12_SHIFT);
         setRGB0(poly, color, color, color);
 
         setXY4(poly,
@@ -827,10 +827,10 @@ void Gfx_SaveSlotBorderDraw() // 0x801E4010
             setPolyG4(glowPoly);
             setSemiTrans(glowPoly, 1);
 
-            setRGB0(glowPoly, 0, 0x80, 0);
-            setRGB1(glowPoly, 0, 0, 0);
-            setRGB2(glowPoly, 0, 0x80, 0);
-            setRGB3(glowPoly, 0, 0, 0);
+            setRGB0(glowPoly, FP_COLOR(0.0f), FP_COLOR(0.5f), FP_COLOR(0.0f));
+            setRGB1(glowPoly, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
+            setRGB2(glowPoly, FP_COLOR(0.0f), FP_COLOR(0.5f), FP_COLOR(0.0f));
+            setRGB3(glowPoly, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
 
             setXY4(glowPoly,
                    borderGlowQuads[j][i].vertex0_0.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), borderGlowQuads[j][i].vertex0_0.vy,
@@ -1041,9 +1041,9 @@ void Gfx_SaveSlotBoxDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 se
             arrowPoly = (POLY_G3*)GsOUT_PACKET_P;
             setPolyG3(arrowPoly);
 
-            setRGB0(arrowPoly, 0xA0, 0xA0, 0xA0);
-            setRGB1(arrowPoly, 0xA0, 0xA0, 0xA0);
-            setRGB2(arrowPoly, 0xA0, 0xA0, 0xA0);
+            setRGB0(arrowPoly, FP_COLOR(0.625f), FP_COLOR(0.625f), FP_COLOR(0.625f));
+            setRGB1(arrowPoly, FP_COLOR(0.625f), FP_COLOR(0.625f), FP_COLOR(0.625f));
+            setRGB2(arrowPoly, FP_COLOR(0.625f), FP_COLOR(0.625f), FP_COLOR(0.625f));
 
             arrowOffsetX = (slotIdx * SLOT_COLUMN_OFFSET) - 139;
             setXY3(arrowPoly,
@@ -1558,12 +1558,12 @@ void Gfx_SaveDataInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
             setPolyG4(poly);
             setSemiTrans(poly, 1);
 
-            hasFlag = (flags & 0x10);
+            hasFlag = flags & 0x10;
 
             if (i != 0)
             {
-                setRGB0(poly, (hasFlag > 0) ? 0 : 0xFF, 0xFF, 0);
-                setRGB2(poly, (hasFlag > 0) ? 0 : 0xFF, 0xFF, 0);
+                setRGB0(poly, (hasFlag > 0) ? FP_COLOR(0.0f) : FP_COLOR(1.0f), FP_COLOR(1.0f), FP_COLOR(0.0f));
+                setRGB2(poly, (hasFlag > 0) ? FP_COLOR(0.0f) : FP_COLOR(1.0f), FP_COLOR(1.0f), FP_COLOR(0.0f));
                 setRGB1(poly, 0, 0, 0);
                 setRGB3(poly, 0, 0, 0);
                 setXY4(poly, -30, 89, -30, 93, 120, 89, 120, 93);
@@ -1572,8 +1572,8 @@ void Gfx_SaveDataInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
             {
                 setRGB0(poly, 0, 0, 0);
                 setRGB2(poly, 0, 0, 0);
-                setRGB1(poly, (hasFlag > 0) ? 0 : 0xFF, 0xFF, 0);
-                setRGB3(poly, (hasFlag > 0) ? 0 : 0xFF, 0xFF, 0);
+                setRGB1(poly, (hasFlag > 0) ? FP_COLOR(0.0f) : FP_COLOR(1.0f), FP_COLOR(1.0f), FP_COLOR(0.0f));
+                setRGB3(poly, (hasFlag > 0) ? FP_COLOR(0.0f) : FP_COLOR(1.0f), FP_COLOR(1.0f), FP_COLOR(0.0f));
                 setXY4(poly, -30, 85, -30, 89, 120, 85, 120, 89);
             }
 
@@ -1616,9 +1616,9 @@ void Savegame_ScreenInit() // 0x801E63C0
     g_IntervalVBlanks = 1;
     g_Gfx_ScreenFade  = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
 
-    g_GameWork.background2dColor_R_58C = 0;
-    g_GameWork.background2dColor_G_58D = 0;
-    g_GameWork.background2dColor_B_58E = 0;
+    g_GameWork.background2dColor_R_58C = FP_COLOR(0.0f);
+    g_GameWork.background2dColor_G_58D = FP_COLOR(0.0f);
+    g_GameWork.background2dColor_B_58E = FP_COLOR(0.0f);
 
     D_800BCD39 = 0;
     if (g_GameWork.gameState_594 == GameState_DeathLoadScreen || g_GameWork.gameState_594 == GameState_SaveScreen)
@@ -1634,7 +1634,7 @@ void Savegame_ScreenInit() // 0x801E63C0
 
     Savegame_ScreenSubInit();
 
-    g_SysWork.timer_20 = 0;
+    g_SysWork.timer_20 = FP_TIME(0.0f);
     g_GameWork.gameStateStep_598[0]++;
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;

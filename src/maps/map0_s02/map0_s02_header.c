@@ -15,7 +15,7 @@
 
 extern u8 D_800CFD90[];
 extern s_func_800625F4 D_800D03DC[100];
-extern s_BloodSplat D_800D0BAC[50];
+extern s_BloodSplat g_Effect_BloodSplats[50];
 extern s_AnimInfo g_AnimInfos[];
 
 void (*g_LoadScreenFuncs[])() =
@@ -45,7 +45,7 @@ void (*g_MapEventFuncs[])() =
 const u32 D_800C9578 = 0x00000000; // rodata 0
 const s_MapOverlayHeader g_MapOverlayHeader = 
 {
-    .type_0 = &g_MapTypeTable[9],
+    .type_0 = &g_MapTypes[9],
     .getMapRoomIdxFunc_4 = func_800CE7EC,
     .field_8 = 0xFF,
     .unk_9 = { 0, 0, 0 },
@@ -69,9 +69,9 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .func_44 = NULL,
     .func_48 = NULL,
     .unkTable1_4C = D_800D03DC,
-    .unkTable1Len_50 = ARRAY_SIZE(D_800D03DC),
-    .bloodSplats_54 = D_800D0BAC,
-    .bloodSplatsLen_58 = ARRAY_SIZE(D_800D0BAC),
+    .unkTable1Count_50 = ARRAY_SIZE(D_800D03DC),
+    .bloodSplats_54 = g_Effect_BloodSplats,
+    .bloodSplatCount_58 = ARRAY_SIZE(g_Effect_BloodSplats),
     .always0_5C = 0,
     .always0_60 = 0,
     .always0_64 = 0,

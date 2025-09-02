@@ -129,7 +129,7 @@ Gfx_LoadingScreen_StageString = 0x800D95D4; // type:func
 //-------------------------------------------------------------------------
 g_AnimInfos                   = 0x800DD2BC;
 g_MapHeaders_38               = 0x800DD4EC; // type:UnkStruct3_Mo size:0x90
-g_LoadableInventoryItemIds    = 0x800DD57C; // type:u8 size:0x08
+g_LoadableInventoryItems      = 0x800DD57C; // type:u8 size:0x08
 
 //--------------------------------------------------------------
 //--- PA: 0x01400C   VA: 0x800DD584   subsegment: data, map0_s00
@@ -164,6 +164,7 @@ sharedData_800DFB64_0_s00     = 0x800DFB64; // type:s32
 sharedData_800DFB68_0_s00     = 0x800DFB68; // type:s32
 sharedData_800DFB6C_0_s00     = 0x800DFB6C; // type:s32
 sharedData_800DFB70_0_s00     = 0x800DFB70; // type:s32
+g_Effect_BloodSplats          = 0x800E0B1C;
 g_ParticleVectors0            = 0x800E0C4C; // type:ParticleVectors
 sharedData_800E0C6E_0_s00     = 0x800E0C6E; // type:s16
 g_ParticleVectors1            = 0x800E0C7C; // type:ParticleVectors

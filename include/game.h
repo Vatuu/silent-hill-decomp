@@ -1270,11 +1270,14 @@ typedef struct _s_SysWork_2514_18
 
 typedef struct
 {
-    u32               unk_0     : 8;
+    u32               field_0   : 8;
     u8                field_1   : 8;
     u32               field_2_0 : 1;
     u32               field_2_1 : 1;
-    u32               field_2_2 : 14;
+    u32               field_2_2 : 4;
+    u32               field_2_3 : 1;
+    u32               field_2_4 : 1;
+    u32               field_2_5 : 8;
     u8                unk_4[8];
     s_SysWork_2514_C* field_C;
     u8                unk_10[8];
@@ -1285,11 +1288,9 @@ STATIC_ASSERT_SIZEOF(s_SysWork_2514, 56);
 typedef struct _SysWork
 {
     s8              unk_0[8];
-    s32             sysState_8;     /** `e_SysState` */
-    s32             sysStateStep_C; /** Current state step of `sysState_8` the game is in. */
-    s32             field_10;       // Sometimes assigned to same thing as `sysStateStep_C`. Contains selected entry index from pickup item dialogs?
-    s32             field_14;
-    s32             field_18;// Probably a `VECTOR3`.
+    s32             sysState_8;        /** `e_SysState` */
+    s32             sysStateStep_C[3]; /** Temp data used by current `sysState_8`. Can be another state ID or other data. */
+    s32             field_18; // Probably a `VECTOR3`.
     s32             timer_1C;
     s32             timer_20;
     s32             timer_24;
@@ -1346,15 +1347,15 @@ typedef struct _SysWork
     s16             cameraAngleY_237A;
     s16             cameraAngleZ_237C;
     s16             field_237E;
-    s32             cameraRadiusXz_2380;
-    s32             cameraY_2384;
+    q19_12          cameraRadiusXz_2380;
+    q19_12          cameraY_2384;
     s_SysWork_2288  field_2388;
     s32             field_2510;
     s_SysWork_2514  field_2514;
     u8              unk_254C[508];
     s16             field_2748[9];  // `func_80035ED0` loops over this.
     u8              unk_275A[2];
-    s32             field_275C; // `q19_12`?
+    s32             field_275C; // Q19_12?
     s32             field_2760;
     s32             field_2764;
 } s_SysWork;
@@ -1393,43 +1394,43 @@ extern s32 g_UncappedVBlanks; // 0x800B5C38
 /** @brief Sets `sysState` in `g_SysWork` for the next tick. */
 static inline void SysWork_StateSetNext(e_SysState sysState)
 {
-    g_SysWork.sysState_8     = sysState;
-    g_SysWork.timer_24       = 0;
-    g_SysWork.sysStateStep_C = 0;
-    g_SysWork.field_28       = 0;
-    g_SysWork.field_10       = 0;
-    g_SysWork.timer_2C       = 0;
-    g_SysWork.field_14       = 0;
+    g_SysWork.sysState_8        = sysState;
+    g_SysWork.timer_24          = 0;
+    g_SysWork.sysStateStep_C[0] = 0;
+    g_SysWork.field_28          = 0;
+    g_SysWork.sysStateStep_C[1] = 0;
+    g_SysWork.timer_2C          = 0;
+    g_SysWork.sysStateStep_C[2] = 0;
 }
 
 /** @brief Increments `sysStateStep` in `g_SysWork` for the next tick. */
 static inline void SysWork_StateStepIncrement()
 {
-    g_SysWork.field_28 = 0;
-    g_SysWork.field_10 = 0;
-    g_SysWork.timer_2C = 0;
-    g_SysWork.field_14 = 0;
-    g_SysWork.sysStateStep_C++;
+    g_SysWork.field_28          = 0;
+    g_SysWork.sysStateStep_C[1] = 0;
+    g_SysWork.timer_2C          = 0;
+    g_SysWork.sysStateStep_C[2] = 0;
+    g_SysWork.sysStateStep_C[0]++;
 }
 
 /** @brief Sets `sysStateStep` in `g_SysWork` for the next tick. */
 static inline void SysWork_NextStateStepSet(s32 sysStateStep)
 {
-    g_SysWork.sysStateStep_C = sysStateStep;
-    g_SysWork.field_28       = 0;
-    g_SysWork.field_10       = 0;
-    g_SysWork.timer_2C       = 0;
-    g_SysWork.field_14       = 0;
+    g_SysWork.sysStateStep_C[0] = sysStateStep;
+    g_SysWork.field_28          = 0;
+    g_SysWork.sysStateStep_C[1] = 0;
+    g_SysWork.timer_2C          = 0;
+    g_SysWork.sysStateStep_C[2] = 0;
 }
 
 /** @brief Resets `sysStateStep` in `g_SysWork` for the next tick. */
 static inline void SysWork_StateStepReset()
 {
-    g_SysWork.sysStateStep_C = NO_VALUE;
-    g_SysWork.field_28       = 0;
-    g_SysWork.field_10       = 0;
-    g_SysWork.timer_2C       = 0;
-    g_SysWork.field_14       = 0;
+    g_SysWork.sysStateStep_C[0] = NO_VALUE;
+    g_SysWork.field_28          = 0;
+    g_SysWork.sysStateStep_C[1] = 0;
+    g_SysWork.timer_2C          = 0;
+    g_SysWork.sysStateStep_C[2] = 0;
 }
 
 /** @brief Clears state steps twice for some reason? Only used once below, others use regular `Game_StateSetNext`. */

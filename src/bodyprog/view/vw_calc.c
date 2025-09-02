@@ -409,12 +409,12 @@ void func_80049B6C(GsCOORDINATE2* rootCoord, MATRIX* outMat0, MATRIX* outMat1) /
 
 void func_80049C2C(MATRIX* outMat, s32 x, s32 y, s32 z) // 0x80049C2C
 {
-    VECTOR in;
+    VECTOR in;  // Q23.8
     VECTOR out;
 
-    in.vx = FP_FROM(x, Q4_SHIFT);
-    in.vy = FP_FROM(y, Q4_SHIFT);
-    in.vz = FP_FROM(z, Q4_SHIFT);
+    in.vx = Q19_12_TO_Q23_8(x);
+    in.vy = Q19_12_TO_Q23_8(y);
+    in.vz = Q19_12_TO_Q23_8(z);
     ApplyMatrixLV(&GsWSMATRIX, &in, &out);
 
     // Copy matrix fields as 32-bit words. Maybe inlined `CopyMatrix` func?
@@ -433,7 +433,7 @@ bool Vw_AabbVisibleInScreenCheck(s32 xMin, s32 xMax, s32 yMin, s32 yMax, s32 zMi
 {
     s32     i;
     MATRIX  worldMat;
-    SVECTOR vertOffset;
+    SVECTOR vertOffset; // Q23.8
     DVECTOR screenPos;
     s32     depthDmy;
     s32     screenMinY;
@@ -456,9 +456,9 @@ bool Vw_AabbVisibleInScreenCheck(s32 xMin, s32 xMax, s32 yMin, s32 yMax, s32 zMi
 
     for (i = 0; i < BOX_VERT_COUNT; i++)
     {
-        vertOffset.vx = (i & (1 << 0)) ? FP_FROM(xMax - xMin, Q4_SHIFT) : 0;
-        vertOffset.vy = (i & (1 << 1)) ? FP_FROM(yMax - yMin, Q4_SHIFT) : 0;
-        vertOffset.vz = (i & (1 << 2)) ? FP_FROM(zMax - zMin, Q4_SHIFT) : 0;
+        vertOffset.vx = (i & (1 << 0)) ? Q19_12_TO_Q23_8(xMax - xMin) : Q23_8(0.0f);
+        vertOffset.vy = (i & (1 << 1)) ? Q19_12_TO_Q23_8(yMax - yMin) : Q23_8(0.0f);
+        vertOffset.vz = (i & (1 << 2)) ? Q19_12_TO_Q23_8(zMax - zMin) : Q23_8(0.0f);
 
         screenDepth = RotTransPers(&vertOffset, &screenPos, &depthDmy, &depthDmy) - 1;
 
@@ -833,7 +833,7 @@ s32 vwVectorToAngle(SVECTOR* ang, SVECTOR* vec) // 0x8004A714
 
     ang->vx = ratan2(-vec->vy, SquareRoot0(localVec.vx + localVec.vz));
     ang->vy = ratan2(vec->vx, vec->vz);
-    ang->vz = 0;
+    ang->vz = FP_ANGLE(0.0f);
     return ret_r;
 }
 

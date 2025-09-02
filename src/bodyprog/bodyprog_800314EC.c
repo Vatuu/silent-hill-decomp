@@ -10,6 +10,8 @@
 #include "main/fsqueue.h"
 #include "screens/stream/stream.h"
 
+const s32 rodataPad_80024CA0 = 0;
+
 void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image) // 0x800314EC
 {
     s32       baseYOffset;
@@ -39,7 +41,7 @@ void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image) // 0x800314EC
             sprt = (SPRT*)packet;
 
             addPrimFast(ot, sprt, 4);
-            setRGBC0(sprt, g_BackgroundColor, g_BackgroundColor, g_BackgroundColor, 0x64);
+            setRGBC0(sprt, g_BackgroundColor, g_BackgroundColor, g_BackgroundColor, FP_COLOR(0.390625f));
 
             if (y == 0)
             {
@@ -210,11 +212,11 @@ s32 Gfx_MotionBlur(s32 arg0) // 0x80031CCC
 
             if ((VSync(-1) % arg0) == 0)
             {
-                setRGBC0(sprt, 0x7F, 0x7F, 0x7F, PRIM_RECT | RECT_TEXTURE);
+                setRGBC0(sprt, FP_COLOR(0.49609375), FP_COLOR(0.49609375), FP_COLOR(0.49609375), PRIM_RECT | RECT_TEXTURE);
             }
             else
             {
-                setRGBC0(sprt, 0x80, 0x80, 0x80, PRIM_RECT | RECT_TEXTURE);
+                setRGBC0(sprt, FP_COLOR(0.5f), FP_COLOR(0.5f), FP_COLOR(0.5f), PRIM_RECT | RECT_TEXTURE);
             }
 
             setWH(sprt, 256, 224);
@@ -288,7 +290,7 @@ void Gfx_DebugStringDraw(char* str)
             default:
                 glyphSprt = (SPRT_8*)packet;
                 addPrimFast(ot, glyphSprt, 3);
-                setRGBC0(glyphSprt, 0x80, 0x80, 0x80, 0x74);
+                setRGBC0(glyphSprt, FP_COLOR(0.5f), FP_COLOR(0.5f), FP_COLOR(0.5f), 0x74);
                 setXY0Fast(glyphSprt, posX, posY);
 
                 charIdx = (char)toupper(charCode) - '*';
@@ -318,7 +320,7 @@ void Gfx_DebugStringDraw(char* str)
     *((u32*)&g_Gfx_DebugStringPosition1) = (posX & 0xFFFF) + (posY << 16);
     tPage                                = (DR_TPAGE*)packet;
 
-    setDrawTPage(tPage, 0, 1, 0x14);
+    setDrawTPage(tPage, 0, 1, 20);
     addPrim(ot, tPage);
 
     packet        += sizeof(DR_TPAGE);
@@ -750,12 +752,4 @@ void GameFs_SaveLoadBinLoad() // 0x80032CA8
 {
     Fs_QueueStartReadTim(FILE_TIM_SAVELOAD_TIM, FS_BUFFER_1, &g_ItemInspectionImg);
     Fs_QueueStartRead(FILE_VIN_SAVELOAD_BIN, FS_BUFFER_1);
-}
-
-void func_80032CE8()
-{
-    // TODO: D_8002510C .rodata comes after the rodata in `globals.c`
-    // This func (and maybe any related non-rodata funcs above) should probably be moved to `bodyprog_80032D1C.c`
-    Gfx_StringSetPosition(SCREEN_POSITION_X(33.75f), SCREEN_POSITION_Y(43.5f));
-    Gfx_StringDraw(D_8002510C, 100); // TODO: .rodata "\aNow_loading."
 }

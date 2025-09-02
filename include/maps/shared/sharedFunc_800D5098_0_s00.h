@@ -2,8 +2,6 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* chara)
 {
     s16 temp_3;
     s32 temp_s5;
-    s32 deltaX;
-    s32 deltaZ;
     s32 temp_v1;
     s32 temp_v1_2;
     s32 newMoveSpeed0;
@@ -31,9 +29,8 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* chara)
 
     if ((temp_v1 - 50) < 12u)
     {
-        deltaX  = (g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx) >> 6;
-        deltaZ  = (g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) >> 6;
-        temp_s5 = SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)) << 6;
+        temp_s5 = Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
+                                      g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz);
 
         for (i = 0; i < 6; i++)
         {

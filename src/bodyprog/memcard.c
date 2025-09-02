@@ -1951,3 +1951,5 @@ void Savegame_DevicePathGenerate(s32 deviceId, char* result) // 0x800314A4
     result[2] = '0' + ((deviceId & (1 << 2)) >> 2);
     result[3] = '0' + (deviceId & ((1 << 0) | (1 << 1)));
 }
+
+const s32 unused_Rodata_80024C98 = 0x8E080000;

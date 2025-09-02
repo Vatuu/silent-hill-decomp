@@ -392,9 +392,9 @@ Modern Linux distros require a virtual environment to be set up before installin
 
 You can set up an environment in the repo folder with the following:
 ```bash
-python3 -m venv .venv                      # Creates a `.venv` folder with the environment.
-source .venv/bin/activate                  # Activates the environment (needs to be run in every new terminal session).
-python3 -m pip install -r requirements.txt # Installs the project requirements from `requirements.txt`.
+python3 -m venv .venv                      # Creates `.venv` folder with environment.
+source .venv/bin/activate                  # Activates environment (must be run in every new terminal session).
+python3 -m pip install -r requirements.txt # Installs project requirements from `requirements.txt`.
 ```
 
 ### Build the code
@@ -405,12 +405,12 @@ Once the build has finished, a folder named `build` will be produced. The output
 Additional Make commands:
 * `build`: Builds the executable and overlays.
 * `check`: Builds the executable and overlays. After compilation, it compares checksums with the original files.
-* `clean-build`: Renegerate the project configuration and builds the executable and overlays.
-* `clean-check`: Renegerate the project configuration and builds the executable and overlays. After compilation, it compares checksums with the original files.
+* `clean-build`: Renegerates the project configuration and builds the executable and overlays.
+* `clean-check`: Renegerates the project configuration and builds the executable and overlays. After compilation, it compares checksums with the original files.
 * `objdiff-config`: Generates project configuration for [Objdiff.](https://github.com/encounter/objdiff)
 * `compilation-test`: Run progress and matching build processes for avoiding compilation errors.
 
-NOTE: `clean-build/clean-check/compilation-test` are obligatory if the decompilation configuration files (inside `config` folder) or the `Makefile` has been modified when intending to work on different overlays.
+NOTE: `clean-build/clean-check/compilation-test` is obligatory if the decompilation configuration files inside the `config` folder or the `Makefile` have been modified when intending to work on different overlays.
 
 ## Contributing
 Contributions are welcome! Feel free to open a pull request. To help familiarize yourself with the decompilation workflow for *Silent Hill*, refer to our [Analysis Guide](https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/Analysis%20Guide.md). For contributions to the repository, please follow our [Coding Conventions](https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/Coding%20Conventions.md).
@@ -418,5 +418,5 @@ Contributions are welcome! Feel free to open a pull request. To help familiarize
 You can also reach out to us by opening an issue or joining the `#silent-hill` channel on the [PS1/PS2 Decompilation](https://discord.gg/VwCPdfbxgm) Discord server.
 
 ## Misc. Docs
-* [Game Technical Information.](https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/Game%20Information.md)
-* [Project's File Organization.](https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/Organization.md)
+* [Technical Game Information](https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/Game%20Information.md)
+* [Project File Organization](https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/Organization.md)

@@ -58,6 +58,15 @@
            ((mat).m[1][0] * (vec).vy) + \
            ((mat).m[2][0] * (vec).vz)) >> 17)
 
+/** @brief Computes the magnitude of a 2D vector in Q19.12, using low-resolution intermediate components to avoid overflow.
+ *
+ * @param x X vector component.
+ * @param z Z vector component.
+ * @return 2D vector magnitude in Q19.12.
+ */
+#define Math_Vector2MagCalc(x, z) \
+    (SquareRoot0(SQUARE((x) >> 6) + SQUARE((z) >> 6)) << 6)
+    
 /** @brief Sets an `VECTOR3`'s components to `float`s converted to a fixed-point Q format.
  *
  * @param vec Output vector.
@@ -153,22 +162,22 @@ void func_80096E78(SVECTOR* rot, MATRIX* mat); // Another custom `vwRotMatrix[..
 s32 Math_MulFixed(s32 a, s32 b, s32 shift);
 
 // NOTE: Matched on decomp.me.
-/** @brief Computes the sine in Q19.12 format of degrees in Q3.12, range `[0, 4096]`.
+/** @brief Computes the sine in Q19.12 of degrees in Q3.12, integer range `[0, 4096]`.
  *
  * Possible original name: `shRsin`
  *
- * @param angle Fixed-point degrees in Q3.12, range `[0, 4096]`.
- * @return Sine in Q19.12, range `[0, 4096]`.
+ * @param angle Fixed-point degrees in Q3.12, integer range `[0, 4096]`.
+ * @return Sine in Q19.12, integer range `[0, 4096]`.
  */
 s32 Math_Sin(s32 angle);
 
 // NOTE: Matched on decomp.me.
-/** @brief Computes the cosine in Q19.12 format of degrees in Q3.12, range `[0, 4096]`.
+/** @brief Computes the cosine in Q19.12 of degrees in Q3.12, integer range `[0, 4096]`.
  *
  * Possible original name: `shRcos`
  *
- * @param angle Fixed-point degrees in Q3.12, range `[0, 4096]`.
- * @return Cosine in Q19.12, range `[0, 4096]`.
+ * @param angle Fixed-point degrees in Q3.12, integer range `[0, 4096]`.
+ * @return Cosine in Q19.12, integer range `[0, 4096]`.
  */
 s32 Math_Cos(s32 angle);
 

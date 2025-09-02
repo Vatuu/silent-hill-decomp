@@ -785,9 +785,9 @@ void Options_ExtraOptionsMenu_EntryStringsDraw(void) // 0x801E416C
 
     DVECTOR strPos = { 86, 20 };
 
-    char* EXTRA_OPTION_str = "EXTRA_OPTION_\x01\x01\x01\x01\x01S";
+    char* EXTRA_OPTIONS_STR = "EXTRA_OPTION_\x01\x01\x01\x01\x01S";
 
-    char* SettingsExtra_str[] =
+    char* ENTRY_STRS[] =
     {
         "Weapon_Control",
         "Blood_Color",
@@ -816,14 +816,14 @@ void Options_ExtraOptionsMenu_EntryStringsDraw(void) // 0x801E416C
     Gfx_StringSetColor(ColorId_White);
     Gfx_StringSetPosition(strPos.vx, strPos.vy);
     func_8004A8C0(8);
-    Gfx_StringDraw(EXTRA_OPTION_str, 99);
+    Gfx_StringDraw(EXTRA_OPTIONS_STR, 99);
 
     // Draw entry strings.
     for (i = 0; i < g_ExtraOptionsMenu_EntryCount; i++)
     {
         Gfx_StringSetPosition(LINE_BASE_X, LINE_BASE_Y + (i * LINE_OFFSET_Y));
         func_8004A8C0(8);
-        Gfx_StringDraw(SettingsExtra_str[i], 99);
+        Gfx_StringDraw(ENTRY_STRS[i], 99);
     }
 }
 
@@ -838,8 +838,9 @@ void Options_MainOptionsMenu_EntryStringsDraw(void) // 0x801E42EC
 
     DVECTOR strPos = { 121, 20 };
 
-    char* headingStr      = "OPTION_\x01\x01\x01\x01\x01S";
-    char* selectionStrs[] =
+    char* OPTIONS_STR = "OPTION_\x01\x01\x01\x01\x01S";
+
+    char* ENTRY_STRS[] =
     {
         "Exit",
         "Brightness_Level",
@@ -866,14 +867,14 @@ void Options_MainOptionsMenu_EntryStringsDraw(void) // 0x801E42EC
     Gfx_StringSetColor(ColorId_White);
     Gfx_StringSetPosition(strPos.vx, strPos.vy);
     func_8004A8C0(8);
-    Gfx_StringDraw(headingStr, 99);
+    Gfx_StringDraw(OPTIONS_STR, 99);
 
     // Draw entry strings.
     for (i = 0; i < MainOptionsMenuEntry_Count; i++)
     {
         Gfx_StringSetPosition(LINE_BASE_X, LINE_BASE_Y + (i * LINE_OFFSET_Y));
         func_8004A8C0(8);
-        Gfx_StringDraw(selectionStrs[i], 99);
+        Gfx_StringDraw(ENTRY_STRS[i], 99);
     }
 
     func_8004A8CC();
@@ -975,13 +976,13 @@ void Options_MainOptionsMenu_SelectionHighlightDraw(void) // 0x801E472C
     s_Quad2d bulletQuads[2];
     DVECTOR* quadVerts;
 
-    u8 selectionHighlightWidths[] = // 0x801E2858
+    u8 SELECTION_HIGHLIGHT_WIDTHS[] = // 0x801E2858
     {
         59, 169, 174, 156, 104, 112, 75, 129, 112
     };
 
     // 12x12 quad.
-    DVECTOR bulletQuadVertsFront[] = // 0x801E2864
+    DVECTOR BULLET_QUAD_VERTS_FRONT[] = // 0x801E2864
     {
         { -120, -55 },
         { -120, -43 },
@@ -990,7 +991,7 @@ void Options_MainOptionsMenu_SelectionHighlightDraw(void) // 0x801E472C
     };
 
     // 14x14 quad.
-    DVECTOR bulletQuadVertsBack[] = // 801E2874
+    DVECTOR BULLET_QUAD_VERTS_BACK[] = // 801E2874
     {
         { -121, -56 },
         { -121, -42 },
@@ -1001,9 +1002,9 @@ void Options_MainOptionsMenu_SelectionHighlightDraw(void) // 0x801E472C
     // Set active selection highlight position references.
     if (g_Options_SelectionHighlightTimer == 0)
     {
-        g_MainOptions_SelectionHighlightFrom.vx = selectionHighlightWidths[g_MainOptionsMenu_PrevSelectedEntry] + (65536 + HIGHLIGHT_OFFSET_X); // TODO
+        g_MainOptions_SelectionHighlightFrom.vx = SELECTION_HIGHLIGHT_WIDTHS[g_MainOptionsMenu_PrevSelectedEntry] + (65536 + HIGHLIGHT_OFFSET_X); // TODO
         g_MainOptions_SelectionHighlightFrom.vy = ((u16)g_MainOptionsMenu_PrevSelectedEntry * LINE_OFFSET_Y)    - HIGHLIGHT_OFFSET_Y;
-        g_MainOptions_SelectionHighlightTo.vx   = selectionHighlightWidths[g_MainOptionsMenu_SelectedEntry]     + (65536 + HIGHLIGHT_OFFSET_X); // TODO
+        g_MainOptions_SelectionHighlightTo.vx   = SELECTION_HIGHLIGHT_WIDTHS[g_MainOptionsMenu_SelectedEntry]     + (65536 + HIGHLIGHT_OFFSET_X); // TODO
         g_MainOptions_SelectionHighlightTo.vy   = ((u16)g_MainOptionsMenu_SelectedEntry * LINE_OFFSET_Y)        - HIGHLIGHT_OFFSET_Y;
     }
 
@@ -1027,10 +1028,10 @@ void Options_MainOptionsMenu_SelectionHighlightDraw(void) // 0x801E472C
         quadVerts = (DVECTOR*)&bulletQuads;
         for (j = 0; j < RECT_VERT_COUNT; j++)
         {
-            quadVerts[j].vx                   = bulletQuadVertsFront[j].vx;
-            quadVerts[j].vy                   = bulletQuadVertsFront[j].vy + (i * LINE_OFFSET_Y);
-            quadVerts[j + sizeof(DVECTOR)].vx = bulletQuadVertsBack[j].vx;
-            quadVerts[j + sizeof(DVECTOR)].vy = bulletQuadVertsBack[j].vy + (i * LINE_OFFSET_Y);
+            quadVerts[j].vx                   = BULLET_QUAD_VERTS_FRONT[j].vx;
+            quadVerts[j].vy                   = BULLET_QUAD_VERTS_FRONT[j].vy + (i * LINE_OFFSET_Y);
+            quadVerts[j + sizeof(DVECTOR)].vx = BULLET_QUAD_VERTS_BACK[j].vx;
+            quadVerts[j + sizeof(DVECTOR)].vy = BULLET_QUAD_VERTS_BACK[j].vy + (i * LINE_OFFSET_Y);
         }
 
         // Active selection bullet point.
@@ -1133,7 +1134,7 @@ void Options_ExtraOptionsMenu_ConfigDraw(void) // 0x801E4B2C
     };
 
     // TODO: Can this be split?
-    const char* SettingsExtraOptions_str[] =
+    const char* CONFIG_STRS[] =
     {
         "Press",
         "Switch",
@@ -1196,7 +1197,7 @@ void Options_ExtraOptionsMenu_ConfigDraw(void) // 0x801E4B2C
             case ExtraOptionsMenuEntry_WeaponCtrl:
                 strPosX = (g_GameWork.config_0.optExtraWeaponCtrl_23 != 0) ? 217 : 212;
                 Gfx_StringSetPosition(strPosX, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_WeaponCtrl));
-                Gfx_StringDraw(SettingsExtraOptions_str[!g_GameWork.config_0.optExtraWeaponCtrl_23], 10);
+                Gfx_StringDraw(CONFIG_STRS[!g_GameWork.config_0.optExtraWeaponCtrl_23], 10);
                 break;
 
             case ExtraOptionsMenuEntry_Blood:
@@ -1219,42 +1220,42 @@ void Options_ExtraOptionsMenu_ConfigDraw(void) // 0x801E4B2C
                         break;
                 }
 
-                Gfx_StringDraw(SettingsExtraOptions_str[g_ExtraOptionsMenu_SelectedBloodColorEntry + 2], 10);
+                Gfx_StringDraw(CONFIG_STRS[g_ExtraOptionsMenu_SelectedBloodColorEntry + 2], 10);
                 break;
 
             case ExtraOptionsMenuEntry_ViewCtrl:
                 strPosX = !g_GameWork.config_0.optExtraViewCtrl_28 ? 210 : 206;
                 Gfx_StringSetPosition(strPosX, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_ViewCtrl));
-                Gfx_StringDraw(SettingsExtraOptions_str[((g_GameWork.config_0.optExtraViewCtrl_28 != 0) ? 32 : 28) >> 2], 10);
+                Gfx_StringDraw(CONFIG_STRS[((g_GameWork.config_0.optExtraViewCtrl_28 != 0) ? 32 : 28) >> 2], 10);
                 break;
 
             case ExtraOptionsMenuEntry_RetreatTurn:
                 strPosX = !g_GameWork.config_0.optExtraRetreatTurn_2A ? 210 : 206;
                 Gfx_StringSetPosition(strPosX, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_RetreatTurn));
-                Gfx_StringDraw(SettingsExtraOptions_str[((g_GameWork.config_0.optExtraRetreatTurn_2A != 0) ? 32 : 28) >> 2], 10);
+                Gfx_StringDraw(CONFIG_STRS[((g_GameWork.config_0.optExtraRetreatTurn_2A != 0) ? 32 : 28) >> 2], 10);
                 break;
 
             case ExtraOptionsMenuEntry_MovementCtrl:
                 strPosX = !g_GameWork.config_0.optExtraWalkRunCtrl_2B ? 210 : 206;
                 Gfx_StringSetPosition(strPosX, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_MovementCtrl));
-                Gfx_StringDraw(SettingsExtraOptions_str[((g_GameWork.config_0.optExtraWalkRunCtrl_2B != 0) ? 32 : 28) >> 2], 10);
+                Gfx_StringDraw(CONFIG_STRS[((g_GameWork.config_0.optExtraWalkRunCtrl_2B != 0) ? 32 : 28) >> 2], 10);
                 break;
 
             case ExtraOptionsMenuEntry_AutoAiming:
                 strPosX = !g_GameWork.config_0.optExtraAutoAiming_2C ? 228 : 226;
                 Gfx_StringSetPosition(strPosX, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_AutoAiming));
-                Gfx_StringDraw(SettingsExtraOptions_str[((g_GameWork.config_0.optExtraAutoAiming_2C != 0) ? 40 : 36) >> 2], 10);
+                Gfx_StringDraw(CONFIG_STRS[((g_GameWork.config_0.optExtraAutoAiming_2C != 0) ? 40 : 36) >> 2], 10);
                 break;
 
             case ExtraOptionsMenuEntry_ViewMode:
                 strPosX = !g_GameWork.config_0.optExtraViewMode_29 ? 210 : 200;
                 Gfx_StringSetPosition(strPosX, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_ViewMode));
-                Gfx_StringDraw(SettingsExtraOptions_str[(g_GameWork.config_0.optExtraViewMode_29 ? 48 : 44) >> 2], 10);
+                Gfx_StringDraw(CONFIG_STRS[(g_GameWork.config_0.optExtraViewMode_29 ? 48 : 44) >> 2], 10);
                 break;
 
             case ExtraOptionsMenuEntry_BulletMult:
                 Gfx_StringSetPosition(230, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_BulletMult));
-                Gfx_StringDraw(SettingsExtraOptions_str[g_GameWork.config_0.optExtraBulletAdjust_2D + 13], 10);
+                Gfx_StringDraw(CONFIG_STRS[g_GameWork.config_0.optExtraBulletAdjust_2D + 13], 10);
                 break;
         }
     }
@@ -1616,7 +1617,7 @@ void Options_ScreenPosMenu_ConfigDraw(void) // 0x801E5CBC
     LINE_F2* line;
     POLY_F4* poly;
 
-    DVECTOR D_801E2C4C[] =
+    DVECTOR LINE_BASES[] =
     {
         { -60, 40 },
         { -60, 70 },
@@ -1624,7 +1625,7 @@ void Options_ScreenPosMenu_ConfigDraw(void) // 0x801E5CBC
         { 60, 40 }
     };
 
-    char* offsetStr[] =
+    char* AXIS_OFFSET_STRS[] =
     {
         "X:_",
         "Y:_"
@@ -1637,31 +1638,31 @@ void Options_ScreenPosMenu_ConfigDraw(void) // 0x801E5CBC
         setLineF2(line);
         setCodeWord(line, 0x40, (i < 2) ? 0xF0F0F0 : 0x808080);
 
-        setXY0Fast(line, (u16)(D_801E2C4C[i].vx - g_GameWorkConst->config_0.optScreenPosX_1C), D_801E2C4C[i].vy - g_GameWorkConst->config_0.optScreenPosY_1D);
-        setXY1Fast(line, (u16)(D_801E2C4C[(i + 1) & 3].vx - g_GameWorkConst->config_0.optScreenPosX_1C), D_801E2C4C[(i + 1) & 3].vy - g_GameWorkConst->config_0.optScreenPosY_1D);
+        setXY0Fast(line, (u16)(LINE_BASES[i].vx             - g_GameWorkConst->config_0.optScreenPosX_1C), LINE_BASES[i].vy             - g_GameWorkConst->config_0.optScreenPosY_1D);
+        setXY1Fast(line, (u16)(LINE_BASES[(i + 1) & 0x3].vx - g_GameWorkConst->config_0.optScreenPosX_1C), LINE_BASES[(i + 1) & 0x3].vy - g_GameWorkConst->config_0.optScreenPosY_1D);
 
-        addPrim((u8*)ot->org + 0x28, line);
+        addPrim((u8*)ot->org + 40, line);
         GsOUT_PACKET_P = (u8*)line + sizeof(LINE_F2);
     }
 
     poly = (POLY_F4*)GsOUT_PACKET_P;
     setPolyF4(poly);
 
-    setCodeWord(poly, 0x28, 0);
-    setXY0Fast(poly, (u16)(D_801E2C4C[0].vx - g_GameWorkConst->config_0.optScreenPosX_1C), D_801E2C4C[0].vy - g_GameWorkConst->config_0.optScreenPosY_1D);
-    setXY1Fast(poly, (u16)(D_801E2C4C[1].vx - g_GameWorkConst->config_0.optScreenPosX_1C), D_801E2C4C[1].vy - g_GameWorkConst->config_0.optScreenPosY_1D);
-    setXY2Fast(poly, (u16)(D_801E2C4C[3].vx - g_GameWorkConst->config_0.optScreenPosX_1C), D_801E2C4C[3].vy - g_GameWorkConst->config_0.optScreenPosY_1D);
-    setXY3Fast(poly, (u16)(D_801E2C4C[2].vx - g_GameWorkConst->config_0.optScreenPosX_1C), D_801E2C4C[2].vy - g_GameWorkConst->config_0.optScreenPosY_1D);
+    setCodeWord(poly, 40, 0);
+    setXY0Fast(poly, (u16)(LINE_BASES[0].vx - g_GameWorkConst->config_0.optScreenPosX_1C), LINE_BASES[0].vy - g_GameWorkConst->config_0.optScreenPosY_1D);
+    setXY1Fast(poly, (u16)(LINE_BASES[1].vx - g_GameWorkConst->config_0.optScreenPosX_1C), LINE_BASES[1].vy - g_GameWorkConst->config_0.optScreenPosY_1D);
+    setXY2Fast(poly, (u16)(LINE_BASES[3].vx - g_GameWorkConst->config_0.optScreenPosX_1C), LINE_BASES[3].vy - g_GameWorkConst->config_0.optScreenPosY_1D);
+    setXY3Fast(poly, (u16)(LINE_BASES[2].vx - g_GameWorkConst->config_0.optScreenPosX_1C), LINE_BASES[2].vy - g_GameWorkConst->config_0.optScreenPosY_1D);
 
-    addPrim((u8*)ot->org + 0x28, poly);
+    addPrim((u8*)ot->org + 40, poly);
     GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_F4);
 
     Gfx_StringSetPosition(108 - g_GameWorkConst->config_0.optScreenPosX_1C, 162 - g_GameWorkConst->config_0.optScreenPosY_1D);
-    Gfx_StringDraw(offsetStr[0], 10);
+    Gfx_StringDraw(AXIS_OFFSET_STRS[0], 10);
     Gfx_StringDrawInt(3, g_GameWorkConst->config_0.optScreenPosX_1C);
 
     Gfx_StringSetPosition(168 - g_GameWorkConst->config_0.optScreenPosX_1C, 162 - g_GameWorkConst->config_0.optScreenPosY_1D);
-    Gfx_StringDraw(offsetStr[1], 10);
+    Gfx_StringDraw(AXIS_OFFSET_STRS[1], 10);
     Gfx_StringDrawInt(3, g_GameWorkConst->config_0.optScreenPosY_1D);
 }
 
@@ -1694,7 +1695,7 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
                 if (g_GameWork.config_0.optBrightness_22 != 0)
                 {
                     g_GameWork.config_0.optBrightness_22--;
-                    Sd_PlaySfx(Sfx_Back, 0, 64);
+                    Sd_PlaySfx(Sfx_Back, 0, FP_VOLUME(0.25f));
                 }
             }
             if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickRight)
@@ -1702,7 +1703,7 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
                 if (g_GameWork.config_0.optBrightness_22 < 7)
                 {
                     g_GameWork.config_0.optBrightness_22++;
-                    Sd_PlaySfx(Sfx_Back, 0, 64);
+                    Sd_PlaySfx(Sfx_Back, 0, FP_VOLUME(0.25f));
                 }
             }
 
@@ -1712,11 +1713,11 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
             {
                 if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
                 {
-                    Sd_PlaySfx(Sfx_Confirm, 0, 64);
+                    Sd_PlaySfx(Sfx_Confirm, 0, FP_VOLUME(0.25f));
                 }
                 else
                 {
-                    Sd_PlaySfx(Sfx_Cancel, 0, 64);
+                    Sd_PlaySfx(Sfx_Cancel, 0, FP_VOLUME(0.25f));
                 }
 
                 g_Gfx_ScreenFade                = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
@@ -1736,9 +1737,9 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
                 g_SysWork.timer_20                 = 0;
                 g_GameWork.gameStateStep_598[1]    = 0;
                 g_GameWork.gameStateStep_598[2]    = 0;
-                g_GameWork.background2dColor_R_58C = 0;
-                g_GameWork.background2dColor_G_58D = 0;
-                g_GameWork.background2dColor_B_58E = 0;
+                g_GameWork.background2dColor_R_58C = FP_COLOR(0.0f);
+                g_GameWork.background2dColor_G_58D = FP_COLOR(0.0f);
+                g_GameWork.background2dColor_B_58E = FP_COLOR(0.0f);
             }
             break;
     }

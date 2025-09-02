@@ -516,3 +516,5 @@ u8 func_80048954(s32 com, u8* param, u8* res) // 0x80048954
 
     return true;
 }
+
+const s32 unused_Rodata_80025D60[2] = { 0x6A375A00, 0x892FBD00 }; // Unused.

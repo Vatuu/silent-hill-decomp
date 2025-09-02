@@ -200,6 +200,7 @@ sharedData_800DFB64_0_s00      = 0x800DE254; // type:s32
 sharedData_800DFB68_0_s00      = 0x800DE258; // type:s32
 sharedData_800DFB6C_0_s00      = 0x800DE25C; // type:s32
 sharedData_800DFB70_0_s00      = 0x800DE260; // type:s32
+g_Effect_BloodSplats           = 0x800DF9E0;
 g_ParticleVectors0             = 0x800DFB40; // type:ParticleVectors
 sharedData_800E0C6E_0_s00      = 0x800DFB62; // type:s16
 g_ParticleVectors1             = 0x800DFB70; // type:ParticleVectors

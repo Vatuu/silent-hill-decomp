@@ -843,8 +843,7 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E05DC);
 
 void func_800E0670(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800E0670
 {
-    s32 deltaX;
-    s32 deltaZ;
+    s32 dist;
 
     func_800DB608();
 
@@ -853,9 +852,9 @@ void func_800E0670(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800E0670
         func_800DFF60(chara, coord);
     }
 
-    deltaX = (g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx) >> 6;
-    deltaZ = (g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) >> 6;
-    if ((SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)) << 6) < FP_METER(2.5f) && func_800DFB04() == 0)
+    dist = Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
+                               g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz);
+    if (dist < FP_METER(2.5f) && func_800DFB04() == 0)
     {
         func_800DFA48(&g_SysWork.player_4C.chara_0.position_18, &chara->position_18);
     }

@@ -13,8 +13,8 @@ void func_80085D78(bool arg0) // 0x80085D78
     if (arg0)
     {
         g_SysWork.timer_2C = FP_TIME(0.0f);
-        g_SysWork.field_14 = 0;
-        g_SysWork.field_10++;
+        g_SysWork.sysStateStep_C[2] = 0;
+        g_SysWork.sysStateStep_C[1]++;
         return;
     }
 
@@ -25,9 +25,9 @@ void func_80085DC0(bool arg0, s32 sysStateStep) // 0x80085DC0
 {
     if (arg0)
     {
-        g_SysWork.field_10 = sysStateStep;
-        g_SysWork.timer_2C = FP_TIME(0.0f);
-        g_SysWork.field_14 = 0;
+        g_SysWork.sysStateStep_C[1] = sysStateStep;
+        g_SysWork.timer_2C          = FP_TIME(0.0f);
+        g_SysWork.sysStateStep_C[2] = 0;
     }
     else
     {
@@ -190,7 +190,7 @@ void func_8008616C(s32 arg0, bool arg1, s32 fadeType, s32 fadeTimestep, bool arg
     }
     else
     {
-        caseVar = g_SysWork.field_14;
+        caseVar = g_SysWork.sysStateStep_C[2];
     }
 
     switch (caseVar)
@@ -236,7 +236,7 @@ void func_8008616C(s32 arg0, bool arg1, s32 fadeType, s32 fadeTimestep, bool arg
 
             if (arg0 != 0)
             {
-                g_SysWork.field_14++;
+                g_SysWork.sysStateStep_C[2]++;
                 break;
             }
             break;
@@ -275,7 +275,7 @@ void func_800862F8(s32 arg0, s32 fileIdx, bool arg2) // 0x800862F8
 
     if (arg0 == 7)
     {
-        switchVar = g_SysWork.field_14;
+        switchVar = g_SysWork.sysStateStep_C[2];
     }
     else
     {
@@ -283,7 +283,7 @@ void func_800862F8(s32 arg0, s32 fileIdx, bool arg2) // 0x800862F8
         if (switchVar == 8)
         {
             switchVar = 1;
-            if (g_SysWork.field_14 == 0)
+            if (g_SysWork.sysStateStep_C[2] == 0)
             {
                 switchVar = 4;
             }
@@ -297,8 +297,8 @@ void func_800862F8(s32 arg0, s32 fileIdx, bool arg2) // 0x800862F8
 
             if (arg0 != 0)
             {
-                g_SysWork.field_14++;
-                
+                g_SysWork.sysStateStep_C[2]++;
+
                 if (Fs_QueueDoThingWhenEmpty())
                 {
                     func_80085D78(arg2);
@@ -328,7 +328,7 @@ void func_800862F8(s32 arg0, s32 fileIdx, bool arg2) // 0x800862F8
 
             if (arg0 == 8)
             {
-                g_SysWork.field_14 = 1;
+                g_SysWork.sysStateStep_C[2] = 1;
             }
             break;
 
@@ -350,9 +350,9 @@ void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, bool arg3) // 0x800
 {
     s32 switchVarCpy;
 
-    if (switchVar == 6 && g_SysWork.field_14 == 0)
+    if (switchVar == 6 && g_SysWork.sysStateStep_C[2] == 0)
     {
-        g_SysWork.field_14 = 2;
+        g_SysWork.sysStateStep_C[2] = 2;
     }
 
     switchVarCpy = switchVar;
@@ -369,7 +369,7 @@ void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, bool arg3) // 0x800
         }
         else
         {
-            switchVarCpy = g_SysWork.field_14;
+            switchVarCpy = g_SysWork.sysStateStep_C[2];
         }
     }
 
@@ -380,12 +380,12 @@ void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, bool arg3) // 0x800
             
             if (switchVar == 0)
             {
-                g_SysWork.field_10 += 0;
+                g_SysWork.sysStateStep_C[1] += 0;
                 g_SysWork.timer_2C  = 0;
-                g_SysWork.field_14  = 0;
+                g_SysWork.sysStateStep_C[2] = 0;
             }
 
-            g_SysWork.field_14++;
+            g_SysWork.sysStateStep_C[2]++;
 
         case 1:
             if (!Fs_QueueDoThingWhenEmpty())
@@ -401,11 +401,11 @@ void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, bool arg3) // 0x800
                 break;
             }
 
-            g_SysWork.field_14++;
+            g_SysWork.sysStateStep_C[2]++;
 
         case 2:
-            g_SysWork.field_14 = 0;
-            
+            g_SysWork.sysStateStep_C[2] = 0;
+
             if (switchVar == 3 || switchVar == 6)
             {
                 Inventory_AddSpecialItem(itemId, itemCount & 0xFF);
@@ -659,14 +659,14 @@ void Camera_RotationSet(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s
 
 void func_80086C58(s_SubCharacter* chara, s32 arg1) // 0x80086C58
 {
-    switch (g_SysWork.field_10)
+    switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
             func_80085EB8(0, chara, arg1, 0);
 
             g_SysWork.timer_2C = FP_TIME(0.0f);
-            g_SysWork.field_14 = 0;
-            g_SysWork.field_10++;
+            g_SysWork.sysStateStep_C[2] = 0;
+            g_SysWork.sysStateStep_C[1]++;
             break;
 
         case 1:
@@ -681,14 +681,14 @@ void func_80086C58(s_SubCharacter* chara, s32 arg1) // 0x80086C58
 
 void func_80086D04(s_SubCharacter* chara) // 0x80086D04
 {
-    switch (g_SysWork.field_10)
+    switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
             func_80085EB8(3, chara, 0, 0);
 
             g_SysWork.timer_2C = FP_TIME(0.0f);
-            g_SysWork.field_14 = 0;
-            g_SysWork.field_10++;
+            g_SysWork.sysStateStep_C[2] = 0;
+            g_SysWork.sysStateStep_C[1]++;
             break;
 
         case 1:
@@ -703,13 +703,13 @@ void func_80086D04(s_SubCharacter* chara) // 0x80086D04
 
 void func_80086DA8(s32 fileIdx, s32 fadeTimestep) // 0x80086DA8
 {
-    switch (g_SysWork.field_10)
+    switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
             func_8008616C(0, true, 0, fadeTimestep, false);
             g_SysWork.timer_2C = FP_TIME(0.0f);
-            g_SysWork.field_14 = 0;
-            g_SysWork.field_10++;
+            g_SysWork.sysStateStep_C[2] = 0;
+            g_SysWork.sysStateStep_C[1]++;
 
         case 1:
             func_800862F8(7, fileIdx, true);
@@ -723,13 +723,13 @@ void func_80086DA8(s32 fileIdx, s32 fadeTimestep) // 0x80086DA8
 
 void func_80086E50(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1) // 0x80086E50
 {
-    switch (g_SysWork.field_10)
+    switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
             func_8008616C(0, true, 0, fadeTimestep0, false);
             g_SysWork.timer_2C = FP_TIME(0.0f);
-            g_SysWork.field_14 = 0;
-            g_SysWork.field_10++;
+            g_SysWork.sysStateStep_C[2] = 0;
+            g_SysWork.sysStateStep_C[1]++;
 
         case 1:
             func_800862F8(7, fileIdx, true);
@@ -747,7 +747,7 @@ void func_80086E50(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1) // 0x80086
 
 void func_80086F44(s32 fadeTimestep0, s32 fadeTimestep1) // 0x80086F44
 {
-    if (g_SysWork.field_10 == 0)
+    if (g_SysWork.sysStateStep_C[1] == 0)
     {
         func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
         func_8008616C(2, true, 0, fadeTimestep1, true);
@@ -781,15 +781,15 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
         }
     }
 
-    switch (g_SysWork.field_10)
+    switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
             g_MapOverlayHeader.freezePlayerControl_C8();
             func_8005DC1C(sfx, pos, FP_VOLUME(0.5f), 0);
 
             g_SysWork.timer_2C = FP_TIME(0.0f);
-            g_SysWork.field_14 = 0;
-            g_SysWork.field_10++;
+            g_SysWork.sysStateStep_C[2] = 0;
+            g_SysWork.sysStateStep_C[1]++;
 
         case 1:
             func_80085E6C(FP_TIME(0.2f), true);
@@ -809,14 +809,14 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
 
 void func_8008716C(s32 itemId, s32 fadeTimestep0, s32 fadeTimestep1) // 0x8008716C
 {
-    switch (g_SysWork.field_10)
+    switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
             g_MapOverlayHeader.freezePlayerControl_C8();
             func_8008616C(0, true, 0, fadeTimestep0, false);
             g_SysWork.timer_2C = FP_TIME(0.0f);
-            g_SysWork.field_14 = 0;
-            g_SysWork.field_10++;
+            g_SysWork.sysStateStep_C[2] = 0;
+            g_SysWork.sysStateStep_C[1]++;
 
         case 1:
             func_800862F8(7, itemId, true);
@@ -838,8 +838,8 @@ void func_8008716C(s32 itemId, s32 fadeTimestep0, s32 fadeTimestep1) // 0x800871
                                                  g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
                 g_SysWork.timer_2C = FP_TIME(0.0f);
-                g_SysWork.field_14 = 0;
-                g_SysWork.field_10++;
+                g_SysWork.sysStateStep_C[2] = 0;
+                g_SysWork.sysStateStep_C[1]++;
             }
             break;
 
@@ -858,15 +858,15 @@ void func_8008716C(s32 itemId, s32 fadeTimestep0, s32 fadeTimestep1) // 0x800871
 
 void func_80087360(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsgIdx) // 0x80087360
 {
-    switch (g_SysWork.field_10)
+    switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
             g_MapOverlayHeader.freezePlayerControl_C8();
             func_8008616C(0, true, 0, fadeTimestep0, false);
 
             g_SysWork.timer_2C = FP_TIME(0.0f);
-            g_SysWork.field_14 = 0;
-            g_SysWork.field_10++;
+            g_SysWork.sysStateStep_C[2] = 0;
+            g_SysWork.sysStateStep_C[1]++;
 
         case 1:
             func_800862F8(7, fileIdx, true);
@@ -901,15 +901,15 @@ void func_80087360(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsg
 
 void func_80087540(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1) // 0x80087540
 {
-    switch (g_SysWork.field_10)
+    switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
             g_MapOverlayHeader.freezePlayerControl_C8();
             func_8008616C(0, true, 0, fadeTimestep0, false);
 
             g_SysWork.timer_2C = FP_TIME(0.0f);
-            g_SysWork.field_14 = 0;
-            g_SysWork.field_10++;
+            g_SysWork.sysStateStep_C[2] = 0;
+            g_SysWork.sysStateStep_C[1]++;
 
         case 1:
             func_800862F8(7, fileIdx, true);
@@ -937,8 +937,8 @@ void func_80087540(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsg
                                                  g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
                 g_SysWork.timer_2C = FP_TIME(0.0f);
-                g_SysWork.field_14 = 0;
-                g_SysWork.field_10++;
+                g_SysWork.sysStateStep_C[2] = 0;
+                g_SysWork.sysStateStep_C[1]++;
             }
             break;
 
@@ -989,15 +989,15 @@ void Event_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx
         }
     }
 
-    switch (g_SysWork.field_10)
+    switch (g_SysWork.sysStateStep_C[1])
     {
         case 0: // Freeze player and start loading item model.
             g_MapOverlayHeader.freezePlayerControl_C8();
             func_80086470(0, itemId, 0, false);
 
             g_SysWork.timer_2C = FP_TIME(0.0f);
-            g_SysWork.field_14 = 0;
-            g_SysWork.field_10++;
+            g_SysWork.sysStateStep_C[2] = 0;
+            g_SysWork.sysStateStep_C[1]++;
 
         case 1: // Loading model.
             func_80086470(1, itemId, 0, true);
@@ -1018,12 +1018,12 @@ void Event_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx
         case 3: // "Yes" selected.
             func_80086470(3, itemId, itemCount, false);
             g_SysWork.timer_2C = FP_TIME(0.0f);
-            g_SysWork.field_14 = 0;
-            g_SysWork.field_10++;
+            g_SysWork.sysStateStep_C[2] = 0;
+            g_SysWork.sysStateStep_C[1]++;
 
         default:
             // Flag pickup item as uncollected. Selecting 'No' sets `field_10` to `NO_VALUE`.
-            if (g_SysWork.field_10 == NO_VALUE)
+            if (g_SysWork.sysStateStep_C[1] == NO_VALUE)
             {
                 g_SavegamePtr->eventFlags_168[globalPickupId >> 5] &= ~(1 << (globalPickupId & 0x1F));
             }
@@ -1088,15 +1088,15 @@ void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
     g_DeltaTime0  = FP_TIME(0.0f);
     mapFlagIdxCpy = mapFlagIdx;
 
-    switch (g_SysWork.field_10)
+    switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
             g_MapOverlayHeader.freezePlayerControl_C8();
             Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[mapFlagIdx]);
 
             g_SysWork.timer_2C = FP_TIME(0.0f);
-            g_SysWork.field_14 = 0;
-            g_SysWork.field_10++;
+            g_SysWork.sysStateStep_C[2] = 0;
+            g_SysWork.sysStateStep_C[1]++;
 
         case 1:
             func_8008616C(2, true, 0, FP_TIME(0.0f), true);
@@ -1116,8 +1116,8 @@ void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             Fs_QueueWaitForEmpty();
 
             g_SysWork.timer_2C = FP_TIME(0.0f);
-            g_SysWork.field_14 = 0;
-            g_SysWork.field_10++;
+            g_SysWork.sysStateStep_C[2] = 0;
+            g_SysWork.sysStateStep_C[1]++;
 
         case 3:
             g_BackgroundColor = 0x58;
@@ -1161,9 +1161,10 @@ void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             }
 
             g_SavegamePtr->eventFlags_168[eventFlagIdx >> 5] |= 1 << (eventFlagIdx & 0x1F);
-            g_SysWork.timer_2C                                = FP_TIME(0.0f);
-            g_SysWork.field_14                                = 0;
-            g_SysWork.field_10++;
+
+            g_SysWork.timer_2C          = FP_TIME(0.0f);
+            g_SysWork.sysStateStep_C[2] = 0;
+            g_SysWork.sysStateStep_C[1]++;
 
         case 5:
             g_BackgroundColor = 0x58;
@@ -1200,31 +1201,31 @@ void func_80087EDC(s32 arg0) // 0x80087EDC
     {
         return;
     }
-    
-    switch (g_SysWork.field_10)
+
+    switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
             if (!func_800358A8(arg0))
             {
-                g_SysWork.field_10 = 3;
-                g_SysWork.timer_2C = FP_TIME(0.0f);
-                g_SysWork.field_14 = 0;
+                g_SysWork.sysStateStep_C[1] = 3;
+                g_SysWork.timer_2C          = FP_TIME(0.0f);
+                g_SysWork.sysStateStep_C[2] = 0;
                 return;
             }
             
-            g_SysWork.timer_2C    = FP_TIME(0.0f);
-            g_SysWork.field_14    = 0;
-            g_SysWork.field_22A0 |= 1 << 7;
-            g_SysWork.field_10++;
+            g_SysWork.timer_2C          = FP_TIME(0.0f);
+            g_SysWork.sysStateStep_C[2] = 0;
+            g_SysWork.field_22A0       |= 1 << 7;
+            g_SysWork.sysStateStep_C[1]++;
             return;
         
         case 1:
             g_SysWork.field_22A0 |= 1 << 7;
             Sd_EngineCmd(23);
             
-            g_SysWork.timer_2C = FP_TIME(0.0f);
-            g_SysWork.field_14 = 0;
-            g_SysWork.field_10++;
+            g_SysWork.timer_2C          = FP_TIME(0.0f);
+            g_SysWork.sysStateStep_C[2] = 0;
+            g_SysWork.sysStateStep_C[1]++;
             return;
         
         case 2:
@@ -1234,9 +1235,9 @@ void func_80087EDC(s32 arg0) // 0x80087EDC
             {
                 func_800358DC(arg0);
                 
-                g_SysWork.timer_2C = FP_TIME(0.0f);
-                g_SysWork.field_14 = 0;
-                g_SysWork.field_10++;
+                g_SysWork.timer_2C          = FP_TIME(0.0f);
+                g_SysWork.sysStateStep_C[2] = 0;
+                g_SysWork.sysStateStep_C[1]++;
             }
             break;
         
@@ -1261,15 +1262,15 @@ void func_80088048() // 0x80088048
         return;
     }
 
-    switch (g_SysWork.field_10)
+    switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
             func_80035E1C();
             Sd_EngineCmd(18);
             
-            g_SysWork.timer_2C = FP_TIME(0.0f);
-            g_SysWork.field_14 = 0;
-            g_SysWork.field_10++;
+            g_SysWork.timer_2C          = FP_TIME(0.0f);
+            g_SysWork.sysStateStep_C[2] = 0;
+            g_SysWork.sysStateStep_C[1]++;
             break;
 
         case 1:
@@ -1291,7 +1292,7 @@ void func_800880F0(s32 arg0) // 0x800880F0
         return;
     }
 
-    switch (g_SysWork.field_10)
+    switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
             func_80035E1C();
@@ -1305,9 +1306,9 @@ void func_800880F0(s32 arg0) // 0x800880F0
                 Sd_EngineCmd(23);
             }
 
-            g_SysWork.timer_2C = FP_TIME(0.0f);
-            g_SysWork.field_14 = 0;
-            g_SysWork.field_10++;
+            g_SysWork.timer_2C          = FP_TIME(0.0f);
+            g_SysWork.sysStateStep_C[2] = 0;
+            g_SysWork.sysStateStep_C[1]++;
             break;
 
         case 1:
@@ -1763,7 +1764,31 @@ void func_80089500() // 0x80089500
     func_800892DC(9, 0xA0);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089524); // 0x80089524
+bool func_80089524(s_SysWork_2514* arg0, s32 padInfoMode) // 0x80089524
+{
+    s32             padState;
+    bool            cond;
+    u8              socket;
+    s_SysWork_2514* temp;
+
+    socket = arg0->field_0;
+    PadInfoMode(socket, 2, 0);
+
+    padState = PadGetState(socket);
+    cond     = PadInfoMode(socket, 3, 0) == padInfoMode;
+    if (!cond && padState == 6)
+    {
+        PadSetMainMode(socket, padInfoMode, 0);
+
+        cond = PadSetMainMode(socket, 1, 0);
+
+        temp            = &g_SysWork.field_2514;
+        temp->field_2_4 = 0;
+        temp->field_2_3 = 0;
+    }
+
+    return cond;
+}
 
 s32 func_800895E4(s_SysWork_2514* arg0, s_8002AC04* arg1, u8 arg2) // 0x800895E4
 {
@@ -2259,8 +2284,6 @@ void func_8008B438(s32 arg0, s32 arg1, s32 arg2) // 0x8008B438
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B474); // 0x8008B474
 
-// TODO: RODATA migration.
-#ifdef NON_MATCHING
 void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
 {
     s32 sfx;
@@ -2320,9 +2343,6 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
         func_8005DC1C(sfx, pos, FP_VOLUME(0.75f), 0);
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B664); // 0x8008B664
-#endif
 
 /** Main attack handling function. */
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B714); // 0x8008B714
@@ -2865,9 +2885,9 @@ void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2) // 0x8008E794
             sinAngle0 = 0;
         }
 
-        poly->r0    = (sinAngle0 >> 6);
-        poly->g0    = ((sinAngle0 * 7) >> 9);
-        poly->b0    = ((sinAngle0 * 5) >> 9);
+        poly->r0    = sinAngle0 >> 6;
+        poly->g0    = (sinAngle0 * 7) >> 9;
+        poly->b0    = (sinAngle0 * 5) >> 9;
         poly->tpage = 45;
         poly->clut  = 0x4E;
         poly->u0    = 64;
@@ -2895,3 +2915,10 @@ void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2) // 0x8008E794
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008EA68); // 0x8008EA68
 
 void func_8008EF18() {}
+
+INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80085D78", hack_vcSetWatchTgtXzPos_fix);
+
+INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80085D78", D_8002B2BC);
+
+INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80085D78", D_8002B2CC);
+
