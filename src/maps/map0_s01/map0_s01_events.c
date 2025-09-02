@@ -20,13 +20,12 @@ void Event_CafeCutscene()
     s_SubCharacter* chara1;
 
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
-        g_SysWork.sysStateStep_C > 5 &&
-        g_SysWork.sysStateStep_C < 47)
+        g_SysWork.sysStateStep_C[0] > 5 && g_SysWork.sysStateStep_C[0] < 47)
     {
         SysWork_NextStateStepSet(CUTSCENE_SKIP_STATE);
     }
-    
-    switch (g_SysWork.sysStateStep_C)
+
+    switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
@@ -95,7 +94,7 @@ void Event_CafeCutscene()
         case 11:
         case 12:
         case 13:
-            switch (g_SysWork.sysStateStep_C)
+            switch (g_SysWork.sysStateStep_C[0])
             {
                 case 10:
                     func_800869E4(16, &g_SoundCmdIdx, g_SoundCmds); // "How do you feel?"
@@ -316,11 +315,11 @@ void Event_CafeCutscene()
 
         case 53:
             //SysWork_NextStateStepSet(48); // TODO: Doesn't match?
-            g_SysWork.sysStateStep_C = 48;
-            g_SysWork.field_28 = 0;
-            g_SysWork.field_10 = 0;
-            g_SysWork.timer_2C = 0;
-            g_SysWork.field_14 = 0;
+            g_SysWork.sysStateStep_C[0] = 48;
+            g_SysWork.field_28          = 0;
+            g_SysWork.sysStateStep_C[1] = 0;
+            g_SysWork.timer_2C          = 0;
+            g_SysWork.sysStateStep_C[2] = 0;
             break;
 
         default:
@@ -359,7 +358,7 @@ void Event_CafeCutscene()
 
 void Event_ToBeContinued(void) // 0x800DB790
 {
-    switch (g_SysWork.sysStateStep_C)
+    switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
@@ -391,9 +390,9 @@ void Event_ToBeContinued(void) // 0x800DB790
 
             func_80085E6C(FP_TIME(4.0f), false);
 
-            if (g_SysWork.sysStateStep_C == 7)
+            if (g_SysWork.sysStateStep_C[0] == 7)
             {
-                g_SysWork.sysStateStep_C = 6;
+                g_SysWork.sysStateStep_C[0] = 6;
             }
             break;
 
@@ -416,9 +415,9 @@ void Event_ToBeContinued(void) // 0x800DB790
 
             func_80085E6C(FP_TIME(4.0f), false);
 
-            if (g_SysWork.sysStateStep_C == 11)
+            if (g_SysWork.sysStateStep_C[0] == 11)
             {
-                g_SysWork.sysStateStep_C = 10;
+                g_SysWork.sysStateStep_C[0] = 10;
                 break;
             }
             break;
@@ -497,7 +496,7 @@ void Event_AirScreamerIntroCutscene() // 0x800DBAA0
 {
     s32 var_a1;
 
-    switch (g_SysWork.sysStateStep_C)
+    switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
@@ -673,7 +672,7 @@ void Event_AirScreamerIntroCutscene() // 0x800DBAA0
     {
         Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, &D_800CC908, g_Timer0, FS_BUFFER_11);
 
-        if (g_SysWork.sysStateStep_C >= 20)
+        if (g_SysWork.sysStateStep_C[0] >= 20)
         {
             Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, D_800CCA64, g_Timer0, FS_BUFFER_11);
             g_SysWork.npcs_1A0[0].position_18.vx += FP_MULTIPLY(Math_Sin(g_SysWork.npcs_1A0[0].rotation_24.vy), FP_METER(0.2f), Q12_SHIFT);
@@ -702,7 +701,7 @@ void Event_MapItemTake() // 0x800DC3C8
 {
     static const RECT IMG_BUFFER_RECT = { 320, 256, 160, 240 };
 
-    switch (g_SysWork.sysStateStep_C)
+    switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
@@ -835,7 +834,7 @@ void Event_HealthItemTake() // 0x800DC864
 
 void Event_AirScreamerDeath() // 0x800DC8C8
 {
-    switch (g_SysWork.sysStateStep_C)
+    switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();

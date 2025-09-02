@@ -4967,13 +4967,14 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                     {
                         g_MapOverlayHeader.func_DC();
                         //SysWork_StateSetNext(GameState_ExitMovie); // TODO: Doesn't match.
-                        g_SysWork.sysState_8                                                     = GameState_ExitMovie;
-                        g_SysWork.timer_24                                                       = 0;
-                        g_SysWork.sysStateStep_C                                                 = 0;
-                        g_SysWork.field_28                                                       = 0;
-                        g_SysWork.field_10                                                       = 0;
-                        g_SysWork.timer_2C                                                       = 0;
-                        g_SysWork.field_14                                                       = 0;
+                        g_SysWork.sysState_8        = GameState_ExitMovie;
+                        g_SysWork.timer_24          = 0;
+                        g_SysWork.sysStateStep_C[0] = 0;
+                        g_SysWork.field_28          = 0;
+                        g_SysWork.sysStateStep_C[1] = 0;
+                        g_SysWork.timer_2C          = 0;
+                        g_SysWork.sysStateStep_C[2] = 0;
+
                         chara->health_B0                                                         = FP_HEALTH(100.0f);
                         g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_TIME(0.0f);
                         return;
@@ -5066,13 +5067,13 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                         g_MapOverlayHeader.func_DC();
 
                         //SysWork_StateSetNext(GameState_ExitMovie); // TODO: Doesn't match.
-                        g_SysWork.sysState_8                                                     = GameState_ExitMovie;
-                        g_SysWork.timer_24                                                       = 0;
-                        g_SysWork.sysStateStep_C                                                 = 0;
-                        g_SysWork.field_28                                                       = 0;
-                        g_SysWork.field_10                                                       = 0;
-                        g_SysWork.timer_2C                                                       = 0;
-                        g_SysWork.field_14                                                       = 0;
+                        g_SysWork.sysState_8        = GameState_ExitMovie;
+                        g_SysWork.timer_24          = 0;
+                        g_SysWork.sysStateStep_C[0] = 0;
+                        g_SysWork.field_28          = 0;
+                        g_SysWork.sysStateStep_C[1] = 0;
+                        g_SysWork.timer_2C          = 0;
+                        g_SysWork.sysStateStep_C[2] = 0;
 
                         chara->health_B0                                                         = FP_HEALTH(100.0f);
                         g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_TIME(0.0f);
@@ -5683,13 +5684,13 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                 g_MapOverlayHeader.func_DC();
                 
                 //SysWork_StateSetNext(GameState_ExitMovie); // TODO: Doesn't match.
-                g_SysWork.sysState_8     = GameState_ExitMovie;
-                g_SysWork.timer_24       = 0;
-                g_SysWork.sysStateStep_C = 0;
-                g_SysWork.field_28       = 0;
-                g_SysWork.field_10       = 0;
-                g_SysWork.timer_2C       = 0;
-                g_SysWork.field_14       = 0;
+                g_SysWork.sysState_8        = GameState_ExitMovie;
+                g_SysWork.timer_24          = 0;
+                g_SysWork.sysStateStep_C[0] = 0;
+                g_SysWork.field_28          = 0;
+                g_SysWork.sysStateStep_C[1] = 0;
+                g_SysWork.timer_2C          = 0;
+                g_SysWork.sysStateStep_C[2] = 0;
                 
                 func_8007E9C4();
                 
@@ -5755,13 +5756,13 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                 g_MapOverlayHeader.func_DC();
                 
                 //SysWork_StateSetNext(GameState_ExitMovie); // TODO: Doesn't match.
-                g_SysWork.sysState_8     = GameState_ExitMovie;
-                g_SysWork.timer_24       = 0;
-                g_SysWork.sysStateStep_C = 0;
-                g_SysWork.field_28       = 0;
-                g_SysWork.field_10       = 0;
-                g_SysWork.timer_2C       = 0;
-                g_SysWork.field_14       = 0;
+                g_SysWork.sysState_8        = GameState_ExitMovie;
+                g_SysWork.timer_24          = 0;
+                g_SysWork.sysStateStep_C[0] = 0;
+                g_SysWork.field_28          = 0;
+                g_SysWork.sysStateStep_C[1] = 0;
+                g_SysWork.timer_2C          = 0;
+                g_SysWork.sysStateStep_C[2] = 0;
                 
                 func_8007E9C4();
                 
@@ -5787,13 +5788,13 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                 g_MapOverlayHeader.func_DC();
                 
                 //SysWork_StateSetNext(GameState_ExitMovie); // TODO: Doesn't match.
-                g_SysWork.sysState_8     = GameState_ExitMovie;
-                g_SysWork.timer_24       = 0;
-                g_SysWork.sysStateStep_C = 0;
-                g_SysWork.field_28       = 0;
-                g_SysWork.field_10       = 0;
-                g_SysWork.timer_2C       = 0;
-                g_SysWork.field_14       = 0;
+                g_SysWork.sysState_8        = GameState_ExitMovie;
+                g_SysWork.timer_24          = 0;
+                g_SysWork.sysStateStep_C[0] = 0;
+                g_SysWork.field_28          = 0;
+                g_SysWork.sysStateStep_C[1] = 0;
+                g_SysWork.timer_2C          = 0;
+                g_SysWork.sysStateStep_C[2] = 0;
                 
                 func_8007E9C4();
                 

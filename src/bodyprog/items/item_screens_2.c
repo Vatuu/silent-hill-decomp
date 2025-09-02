@@ -183,18 +183,18 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
                 case 12:
                     g_GameWork.gameStateStep_598[1] = 1;
                     g_GameWork.gameStateStep_598[2] = 0;
-                    g_SysWork.field_10              = 3; // This specifically make it appear.
+                    g_SysWork.sysStateStep_C[1]     = 3; // This specifically make it appear.
                     g_SysWork.timer_2C              = 0;
-                    g_SysWork.field_14              = 0;
+                    g_SysWork.sysStateStep_C[2]     = 0;
                     break;
 
                 // "Too dark too look at the item" message. Triggers in circumstances like maps in Otherworld with the flashlight off.
                 case 16:
                     g_GameWork.gameStateStep_598[1] = 1;
                     g_GameWork.gameStateStep_598[2] = 0;
-                    g_SysWork.field_10              = 4; // This specifically make it appear.
+                    g_SysWork.sysStateStep_C[1]     = 4; // This specifically make it appear.
                     g_SysWork.timer_2C              = 0;
-                    g_SysWork.field_14              = 0;
+                    g_SysWork.sysStateStep_C[2]     = 0;
                     break;
 
                 default:

@@ -3331,13 +3331,13 @@ void SysState_Gameplay_Update() // 0x80038BD4
     else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.pause_14)
     {
         //SysWork_StateSetNext(SysState_GamePaused); // TODO: Doesn't match?
-        g_SysWork.sysState_8     = SysState_GamePaused;
-        g_SysWork.timer_24       = 0;
-        g_SysWork.sysStateStep_C = 0;
-        g_SysWork.field_28       = 0;
-        g_SysWork.field_10       = 0;
-        g_SysWork.timer_2C       = 0;
-        g_SysWork.field_14       = 0;
+        g_SysWork.sysState_8        = SysState_GamePaused;
+        g_SysWork.timer_24          = 0;
+        g_SysWork.sysStateStep_C[0] = 0;
+        g_SysWork.field_28          = 0;
+        g_SysWork.sysStateStep_C[1] = 0;
+        g_SysWork.timer_2C          = 0;
+        g_SysWork.sysStateStep_C[2] = 0;
     }
     else if (func_8007F26C() == true)
     {
@@ -3346,25 +3346,25 @@ void SysState_Gameplay_Update() // 0x80038BD4
     else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.item_16)
     {
         //SysWork_StateSetNext(SysState_StatusMenu); // TODO: Doesn't match?
-        g_SysWork.sysState_8     = SysState_StatusMenu;
-        g_SysWork.timer_24       = 0;
-        g_SysWork.sysStateStep_C = 0;
-        g_SysWork.field_28       = 0;
-        g_SysWork.field_10       = 0;
-        g_SysWork.timer_2C       = 0;
-        g_SysWork.field_14       = 0;
+        g_SysWork.sysState_8        = SysState_StatusMenu;
+        g_SysWork.timer_24          = 0;
+        g_SysWork.sysStateStep_C[0] = 0;
+        g_SysWork.field_28          = 0;
+        g_SysWork.sysStateStep_C[1] = 0;
+        g_SysWork.timer_2C          = 0;
+        g_SysWork.sysStateStep_C[2] = 0;
     }
     else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18)
     {
         //SysWork_StateSetNext(SysState_MapScreen); // TODO: Doesn't match?
-        g_SysWork.sysState_8     = SysState_MapScreen;
-        g_SysWork.timer_24       = 0;
-        g_SysWork.sysStateStep_C = 0;
-        g_SysWork.field_28       = 0;
-        g_SysWork.field_10       = 0;
-        g_SysWork.timer_2C       = 0;
-        g_SysWork.field_14       = 0;
-        g_SysWork.field_18       = 0;
+        g_SysWork.sysState_8        = SysState_MapScreen;
+        g_SysWork.timer_24          = 0;
+        g_SysWork.sysStateStep_C[0] = 0;
+        g_SysWork.field_28          = 0;
+        g_SysWork.sysStateStep_C[1] = 0;
+        g_SysWork.timer_2C          = 0;
+        g_SysWork.sysStateStep_C[2] = 0;
+        g_SysWork.field_18          = 0;
     }
     else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.option_1A)
     {
@@ -3395,10 +3395,10 @@ void SysState_GamePaused_Update() // 0x800391E8
     func_80091380();
     Game_TimerUpdate();
 
-    if (g_SysWork.sysStateStep_C == 0)
+    if (g_SysWork.sysStateStep_C[0] == 0)
     {
         Sd_EngineCmd(3);
-        g_SysWork.sysStateStep_C++;
+        g_SysWork.sysStateStep_C[0]++;
     }
 
     // Debug button combo to bring up save screen from pause screen.
@@ -3431,12 +3431,12 @@ void SysState_OptionsMenu_Update() // 0x80039344
 {
     s32 gameState;
 
-    switch (g_SysWork.sysStateStep_C)
+    switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            g_Gfx_ScreenFade          = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
-            g_ScreenFadeTimestep      = FP_TIME(0.0f);
-            g_SysWork.sysStateStep_C = 1;
+            g_Gfx_ScreenFade            = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
+            g_ScreenFadeTimestep        = FP_TIME(0.0f);
+            g_SysWork.sysStateStep_C[0] = 1;
 
         case 1:
             if (func_8003C850() != 0)
@@ -3444,7 +3444,7 @@ void SysState_OptionsMenu_Update() // 0x80039344
                 Sd_EngineCmd(19);
                 GameFs_OptionBinLoad();
 
-                g_SysWork.sysStateStep_C++;
+                g_SysWork.sysStateStep_C[0]++;
             }
             break;
     }
@@ -3620,7 +3620,7 @@ void SysState_MapScreen_Update() // 0x800396D4
     }
     else
     {
-        if (g_SysWork.sysStateStep_C == 0)
+        if (g_SysWork.sysStateStep_C[0] == 0)
         {
             if (g_MapMarkingTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9] != NO_VALUE)
             {
@@ -3631,7 +3631,7 @@ void SysState_MapScreen_Update() // 0x800396D4
 
             g_Gfx_ScreenFade    = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
             g_ScreenFadeTimestep = FP_TIME(0.0f);
-            g_SysWork.sysStateStep_C++;
+            g_SysWork.sysStateStep_C[0]++;
         }
 
         if (D_800A9A0C != 0)
@@ -3676,18 +3676,18 @@ void SysState_Fmv_Update() // 0x80039A58
 {
     #define BASE_AUDIO_FILE_IDX FILE_XA_ZC_14392
 
-    switch (g_SysWork.sysStateStep_C)
+    switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            g_Gfx_ScreenFade         = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false);
-            D_800A9A0C               = 0;
-            g_SysWork.sysStateStep_C = 1;
+            g_Gfx_ScreenFade            = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false);
+            D_800A9A0C                  = 0;
+            g_SysWork.sysStateStep_C[0] = 1;
 
         case 1:
             if (func_8003C850() != 0)
             {
                 GameFs_StreamBinLoad();
-                g_SysWork.sysStateStep_C++;
+                g_SysWork.sysStateStep_C[0]++;
             }
             break;
     }
@@ -3904,7 +3904,7 @@ void SysState_SaveMenu_Update() // 0x8003A230
 
     func_80033548();
 
-    switch (g_SysWork.sysStateStep_C)
+    switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             SysWork_SavegameUpdatePlayer();
@@ -3994,7 +3994,7 @@ void SysState_GameOver_Update() // 0x8003A52C
     s32  randTipVal;
     u16* temp_a0;
 
-    switch (g_SysWork.sysStateStep_C)
+    switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             g_MapOverlayHeader.freezePlayerControl_C8();
@@ -4146,7 +4146,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             break;
     }
 
-    if (g_SysWork.sysStateStep_C >= 2 || g_GameWork.gameState_594 != GameState_InGame)
+    if (g_SysWork.sysStateStep_C[0] >= 2 || g_GameWork.gameState_594 != GameState_InGame)
     {
         g_SysWork.field_22A0 |= 1 << 0;
     }

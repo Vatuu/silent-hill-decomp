@@ -1109,9 +1109,9 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
     if (D_800AE185 != ((g_SavegamePtr->items_0[idx].id_0 >> 5) - 1) ||
         D_800AE186 != (g_SavegamePtr->items_0[idx].id_0 & 0x1F))
     {
-        g_SysWork.field_10               = 0;
+        g_SysWork.sysStateStep_C[1]      = 0;
         g_SysWork.timer_2C               = 0;
-        g_SysWork.field_14               = 0;
+        g_SysWork.sysStateStep_C[2]      = 0;
         g_Inventory_ItemNameTimer        = 0;
         g_Inventory_DescriptionRollTimer = 0;
         D_800AE18C                       = 0;
@@ -1249,17 +1249,17 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
     D_800AE185 = (g_SavegamePtr->items_0[idx].id_0 >> 5) - 1;
     D_800AE186 = g_SavegamePtr->items_0[idx].id_0 & 0x1F;
 
-    switch (g_SysWork.field_10) 
+    switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
             g_Inventory_ItemNameTimer++;
             Gfx_StringSetPosition(68, 200);
             if (Gfx_StringDraw(g_ItemNames[g_SavegamePtr->items_0[idx].id_0 - 32], g_Inventory_ItemNameTimer) == true)
             {
-                g_Inventory_ItemNameTimer = 100;
-                g_SysWork.timer_2C        = 0;
-                g_SysWork.field_14        = 0;
-                g_SysWork.field_10++;
+                g_Inventory_ItemNameTimer   = 100;
+                g_SysWork.timer_2C          = 0;
+                g_SysWork.sysStateStep_C[2] = 0;
+                g_SysWork.sysStateStep_C[1]++;
             }
             break;
 
@@ -1279,8 +1279,8 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
             {
                 g_Inventory_DescriptionRollTimer = 100;
                 g_SysWork.timer_2C               = 0;
-                g_SysWork.field_14               = 0;
-                g_SysWork.field_10++;
+                g_SysWork.sysStateStep_C[2]      = 0;
+                g_SysWork.sysStateStep_C[1]++;
             }
             break;
 
@@ -1291,7 +1291,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
             Gfx_StringDraw(g_ItemNames[g_SavegamePtr->items_0[idx].id_0 - 32], 100);
             Gfx_StringSetPosition(30, 232);
 
-            switch (g_SysWork.field_10) 
+            switch (g_SysWork.sysStateStep_C[1])
             {
                 case 2:
                     Gfx_StringDraw(g_ItemDescriptions[g_SavegamePtr->items_0[idx].id_0 - 32], 100);
