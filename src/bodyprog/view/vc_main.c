@@ -1333,7 +1333,7 @@ void vcMakeNormalWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang_z_p, VC_
     {
         ang.vx = Math_AngleNormalize(FP_TO((u8)w_p->cur_near_road_2B8.road_p_0->fix_ang_x_16, Q4_SHIFT));
         ang.vy = Math_AngleNormalize(FP_TO((u8)w_p->cur_near_road_2B8.road_p_0->fix_ang_y_17, Q4_SHIFT));
-        ang.vz = 0;
+        ang.vz = FP_ANGLE(0.0f);
 
         vwAngleToVector(&vec, &ang, FP_METER(0.25f));
 
@@ -1858,7 +1858,7 @@ void vcMakeIdealCamPosForFixAngCam(VECTOR3* ideal_pos, VC_WORK* w_p) // 0x80083A
 
     cam_angle_vec.vx = FP_TO(w_p->cur_near_road_2B8.road_p_0->fix_ang_x_16, Q4_SHIFT);
     cam_angle_vec.vy = FP_TO(w_p->cur_near_road_2B8.road_p_0->fix_ang_y_17, Q4_SHIFT);
-    cam_angle_vec.vz = 0;
+    cam_angle_vec.vz = FP_ANGLE(0.0f);
 
     // Not `FP_METER` distances ahead?
 

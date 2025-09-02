@@ -187,7 +187,7 @@
 #define FP_COLOR(comp) \
     (u8)CLAMP(FP_FLOAT_TO(comp, Q8_SHIFT), 0, FP_FLOAT_TO(1.0f, Q8_SHIFT) - 1)
 
-/** @brief Converts floating-point degrees to signed fixed-point Q3.12, range `[0, 4096]`.
+/** @brief Converts floating-point degrees to signed fixed-point Q3.12, integer range `[0, 4096]`.
  * Mapping is direct.
  *
  * This angle format is used in world space.
@@ -195,7 +195,7 @@
  * @note 1 degree = 11.377778 units.
  *
  * @param deg Degrees (`float`).
- * @return Unsigned fixed-point degrees in Q3.12, range `[0, 4096]` (`s16`).
+ * @return Unsigned fixed-point degrees in Q3.12, integer range `[0, 4096]` (`s16`).
  */
 #define FP_ANGLE(deg) \
     (s16)((deg) * ((float)Q3_12(1.0f) / 360.0f))
@@ -255,7 +255,7 @@
 
 /** @brief Converts floating-point meters to fixed-point Q19.12.
  *
- * This position/distance format is used in world space.
+ * This position format is used in world space.
  *
  * @note 1 meter = 4096 units.
  *
@@ -265,9 +265,10 @@
 #define FP_METER(met) \
     Q19_12(met)
 
+// TODO: Needs better name.
 /** @brief Converts floating-point meters to fixed-point Q23.8.
  *
- * This position/distance format is used in collision space.
+ * This position format is used in collision space and skeleton bones.
  *
  * @note 1 meter = 256 units.
  *
