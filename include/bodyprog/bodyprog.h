@@ -1517,18 +1517,6 @@ typedef struct
     s8  field_5;
 } s_Sfx;
 
-// TODO: Migrate `s_SpawnInfo` uses to `s_MapPoint2d`.
-typedef struct _SpawnInfo
-{
-    q19_12 positionX_0;
-    s8     charaId_4;   /** `e_CharacterId` */
-    u8     rotationY_5; /** Degrees in Q7.8, range [0, 256]. */
-    s8     flags_6;     /** Copied to `stateStep_3` in `s_Model`, with `state_2 = 0`. */
-    s8     unk_7;
-    q19_12 positionZ_8;
-} s_SpawnInfo;
-STATIC_ASSERT_SIZEOF(s_SpawnInfo, 12);
-
 /** Contains loaded anim data? */
 typedef struct
 {
@@ -1660,8 +1648,8 @@ typedef struct _MapOverlayHeader
     s32*              data_18C;
     s32*              data_190;
     void              (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
-    s8                charaGroupIds_248[4];                                              /** `e_CharacterId` values where if `s_SpawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
-    s_SpawnInfo       charaSpawns_24C[2][16];                                            /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `func_80037F24`. */
+    s8                charaGroupIds_248[4];                                              /** `e_CharacterId` values where if `s_MapPoint2d.data.spawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
+    s_MapPoint2d      charaSpawns_24C[2][16];                                            /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `func_80037F24`. */
     VC_ROAD_DATA      roadDataList_3CC[48];
     u32               unk_84C[512];
 } s_MapOverlayHeader;
