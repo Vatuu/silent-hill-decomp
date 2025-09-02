@@ -124,6 +124,13 @@ typedef enum _VC_ROAD_TYPE
 } VC_ROAD_TYPE;
 STATIC_ASSERT_SIZEOF(VC_ROAD_TYPE, 4);
 
+// Not defined in SH2 symbols, values taken from `vrDispMsgVC_ROAD_DIR_TYPE` SH2 debug func.
+typedef enum _VC_ROAD_DIR_TYPE
+{
+    VC_RD_DIR_Z = 0,
+    VC_RD_DIR_X = 1
+} VC_ROAD_DIR_TYPE;
+
 typedef enum _VC_AREA_SIZE_TYPE
 {
     VC_AREA_TINY    = 0,
@@ -224,7 +231,7 @@ STATIC_ASSERT_SIZEOF(VC_THROUGH_DOOR_CAM_PARAM, 28);
 typedef struct _VC_NEAR_ROAD_DATA
 {
     VC_ROAD_DATA* road_p_0;              /** Path. */
-    u8            rd_dir_type_4;
+    u8            rd_dir_type_4;         /** `VC_ROAD_DIR_TYPE` */
     u8            use_priority_5;
     u8            unk_6[2];
     s32           chara2road_sum_dist_8; /** Character to path distance squared? */

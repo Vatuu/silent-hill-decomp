@@ -1040,14 +1040,13 @@ bool vcSetCurNearRoadInVC_WORK(VC_WORK* w_p) // 0x800822B8
 
         old_cur_sum_dist = old_cur_p->chara2road_sum_dist_8;
 
-        // TODO: Needs new enum?
         switch (old_cur_p->rd_dir_type_4)
         {
-            case 0:
+            case VC_RD_DIR_Z:
                 old_cur_rd_ang_y = FP_ANGLE(0.0f);
                 break;
 
-            case 1:
+            case VC_RD_DIR_X:
                 old_cur_rd_ang_y = FP_ANGLE(90.0f);
                 break;
 
