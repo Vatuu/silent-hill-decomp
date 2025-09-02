@@ -36,7 +36,7 @@ void func_80055028() // 0x80055028
 
     D_800C4168.field_4C = 0;
     D_800C4168.field_50 = 0;
-    D_800C4168.field_4  = 0;
+    D_800C4168.waterZones_4  = 0;
     D_800C4168.field_18 = 0;
 
     gte_SetFarColor(0, 0, 0);
@@ -63,7 +63,7 @@ void func_800550D0() // 0x800550D0
 
     if (D_800C4168.field_0 == 1 && D_800C4168.field_50 != 0)
     {
-        func_8008D470(D_800C4168.field_50, &D_800C4168.field_58, &D_800C4168.field_60, D_800C4168.field_4);
+        func_8008D470(D_800C4168.field_50, &D_800C4168.field_58, &D_800C4168.field_60, D_800C4168.waterZones_4);
     }
 
     if (D_800C4168.field_8 > 0)
@@ -185,7 +185,7 @@ s32 func_80055490(SVECTOR* arg0) // 0x80055490
     return D_800C4168.field_54;
 }
 
-void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1, SVECTOR* svec, s32 x, s32 y, s32 z, s32 arg8) // 0x800554C4
+void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1, SVECTOR* svec, s32 x, s32 y, s32 z, s_WaterZone* waterZones) // 0x800554C4
 {
     MATRIX   mat;
     SVECTOR  tempSvec;
@@ -195,7 +195,7 @@ void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coo
 
     D_800C4168.field_54 = arg0;
     D_800C4168.field_50 = arg1;
-    D_800C4168.field_4  = arg8;
+    D_800C4168.waterZones_4  = waterZones;
 
     if (coord0 == NULL)
     {

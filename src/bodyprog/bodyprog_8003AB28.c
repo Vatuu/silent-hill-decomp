@@ -2690,7 +2690,10 @@ void func_8003F170() // 0x8003F170
 
     temp = FP_MULTIPLY(func_8003F4DC(&sp60, &sp58, ptr2->field_0.field_4, ptr2->field_0.field_0.s_field_0.field_2, func_80080A10(), &g_SysWork), g_SysWork.field_2378, Q12_SHIFT);
 
-    func_800554C4(temp, ptr2->field_2C, sp60, g_SysWork.field_235C, &sp58, g_SysWork.field_2360.vx, g_SysWork.field_2360.vy, g_SysWork.field_2360.vz, D_800BCE18.field_0[0].type_0->field_8);
+    func_800554C4(temp, ptr2->field_2C, sp60, g_SysWork.field_235C, &sp58, 
+                  g_SysWork.field_2360.vx, g_SysWork.field_2360.vy, g_SysWork.field_2360.vz,
+                  D_800BCE18.field_0[0].type_0->waterZones_8
+    );
     func_80055814(ptr2->field_30);
 
     if (ptr->field_154.field_0.field_0.s_field_0.field_0 & (1 << 3))

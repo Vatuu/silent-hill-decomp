@@ -932,15 +932,6 @@ typedef struct
 
 typedef struct
 {
-    u8  field_0;
-    s8  unk_1;
-    s16 field_2;
-    s8  unk_4[4];
-    s32 field_8;
-} s_8008E51C;
-
-typedef struct
-{
     u8 unk_0[6];
     u8 field_6;
 } s_AnimFile; // Size: 80?
@@ -1022,6 +1013,16 @@ typedef struct _SpeedZone
     s16 maxZ_8;
 } s_SpeedZone;
 
+typedef struct _WaterZone {
+    u8  enabled_0;
+    // 1 byte of padding.
+    s16 illumination_2;
+    s16 minX_4;
+    s16 maxX_6;
+    s16 minZ_8;
+    s16 maxZ_A;
+} s_WaterZone;
+
 // Looks similar to `s_Skeleton`
 typedef struct
 {
@@ -1040,7 +1041,7 @@ typedef struct _MapType
     char         tag_2[4];
     u8           flags_6;
     u8           flags_7;
-    s32*         field_8;  // Pointer to some other const data or `NULL`.
+    s_WaterZone* waterZones_8;
     s_SpeedZone* speedZones_C;
 } s_MapType;
 
@@ -1293,7 +1294,7 @@ typedef struct
     u8            field_1;
     u8            field_2;
     u8            field_3;
-    s32           field_4;
+    s_WaterZone*  waterZones_4;
     s32           field_8;
     s8            unk_C[8];
     s32           field_14;
@@ -3005,7 +3006,7 @@ s32 func_8005545C(SVECTOR* vec);
 
 s32 func_80055490(SVECTOR* arg0);
 
-void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1, SVECTOR* svec, s32 x, s32 y, s32 z, s32 arg8);
+void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1, SVECTOR* svec, s32 x, s32 y, s32 z, s_WaterZone* waterZones);
 
 void func_80055648(s32 arg0, SVECTOR* arg1);
 
@@ -3200,7 +3201,7 @@ void func_8008D454();
 
 void func_8008D464();
 
-void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s32 arg3);
+void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s_WaterZone *waterZones);
 
 void func_8008D5A0(VECTOR3* arg0, s16 arg1);
 
