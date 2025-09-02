@@ -1461,20 +1461,52 @@ typedef struct
     s32  field_54;
 } s_800AFE24; // Size: 85
 
-/** Part of map headers, pointer passed to `Chara_PositionUpdateFromParams`. */
-/** TODO: Rename to `PointOfInterest` to match SilentHillMapExaminer name? The array inside map header seems more for holding data for points on the map rather than just chara positioning. */
-/** This also makes use of union from 0x4 - 0x8 for different kinds of params, see https://github.com/Sparagas/Silent-Hill/blob/6ec81b26b8cb21dad6518037a4de31f151476e60/010%20Editor%20-%20Binary%20Templates/sh1_overlays.bt#L177 */
-typedef struct _AreaLoadParams
+/** @brief Contains X/Z coordinates, and optionally can include 4 bytes of any kind of data.
+ * Type of data usually depends on its usage, eg. character spawns will use `data.spawnInfo`, while `s_EventParam` includes a enum that specifies the kind of data it expects.
+ * Map headers include an array of these, which `s_EventParam` includes an index into. */
+typedef struct _MapPoint2d
 {
-    q19_12 char_x_0; // TODO: Rename to `positionX_0`.
-    u32    mapIdx_4_0          : 5; /** `e_Current2dMapIdx` */
-    u32    field_4_5           : 4;
-    u32    loadingScreenId_4_9 : 3; /** `e_LoadingScreenId`` */
-    u32    field_4_12          : 4;
-    u32    rotationY_4_16      : 8; /** Degrees in Q7.8, range [0, 256]. */
-    u32    field_4_24          : 8;
-    q19_12 char_z_8; // TODO: Rename to `positionZ_8`.
-} s_AreaLoadParams;
+    q19_12 positionX_0;
+    union
+    {
+        struct
+        {
+            u32 mapIdx_4_0          : 5; /** `e_Current2dMapIdx` */
+            u32 field_4_5           : 4;
+            u32 loadingScreenId_4_9 : 3; /** `e_LoadingScreenId`` */
+            u32 field_4_12          : 4;
+            u32 rotationY_4_16      : 8; /** Degrees in Q7.8, range [0, 256]. */
+            u32 field_4_24          : 8;
+        } areaLoad;
+        struct
+        {
+            s8 charaId_4;   /** `e_CharacterId` */
+            u8 rotationY_5; /** Degrees in Q7.8, range [0, 256]. */
+            s8 flags_6;     /** Copied to `stateStep_3` in `s_Model`, with `state_2 = 0`. */
+            s8 unk_7;
+        } spawnInfo;
+        struct
+        {
+            u32 unk_4_0  : 12;
+            u32 geo_4_12 : 12; // TODO: Figure out how this is decoded.
+            u32 unk_4_24 : 8;
+        } buttonPress;
+        struct
+        {
+            u32 unk_4_0      : 16;
+            u32 radiusX_4_16 : 8;
+            u32 radiusZ_4_24 : 8;
+        } touchAabb;
+        struct
+        {
+            u32 unk_4_0   : 16;
+            u32 geoA_4_16 : 8;
+            u32 geoB_4_24 : 8;
+        } touchObb;
+    } data;
+    q19_12 positionZ_8;
+} s_MapPoint2d;
+STATIC_ASSERT_SIZEOF(s_MapPoint2d, 12);
 
 typedef struct
 {
@@ -1485,6 +1517,7 @@ typedef struct
     s8  field_5;
 } s_Sfx;
 
+// TODO: Migrate `s_SpawnInfo` uses to `s_MapPoint2d`.
 typedef struct _SpawnInfo
 {
     q19_12 positionX_0;
@@ -1532,7 +1565,7 @@ typedef struct _MapOverlayHeader
     s8                field_16;
     s8                field_17;
     void              (**loadingScreenFuncs_18)();
-    s_AreaLoadParams* mapAreaLoadParams_1C;
+    s_MapPoint2d*     mapPointsOfInterest_1C;
     void              (**mapEventFuncs_20)(); /** Points to array of event functions. */
     u8*               unk_24;
     GsCOORDINATE2*    field_28;
@@ -2202,7 +2235,7 @@ extern s32 D_800BCD90[];
 
 extern s_800BCDA8 D_800BCDA8[2];
 
-extern s_AreaLoadParams D_800BCDB0;
+extern s_MapPoint2d D_800BCDB0;
 
 /** Related to special item interactions. */
 extern s32 D_800BCDC0[5];
@@ -2545,7 +2578,7 @@ void func_80032D1C();
 /** Bodyprog entrypoint. Called by `main`. */
 void MainLoop();
 
-void Chara_PositionUpdateFromParams(s_AreaLoadParams* params);
+void Chara_PositionUpdateFromParams(s_MapPoint2d* params);
 
 void func_8003943C();
 
@@ -3724,9 +3757,9 @@ void func_80037334();
 
 void func_80037388();
 
-bool func_800378D4(s_AreaLoadParams* areaLoadParams);
+bool func_800378D4(s_MapPoint2d* mapPoint);
 
-bool func_80037A4C(s_AreaLoadParams* areaLoadParams);
+bool func_80037A4C(s_MapPoint2d* mapPoint);
 
 bool func_80037C5C(s_func_80037A4C* arg0);
 
