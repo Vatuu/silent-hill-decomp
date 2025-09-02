@@ -754,29 +754,29 @@ void func_8003BED0() // 0x8003BED0
 
 extern s_800C4168 const D_800C4168;
 
-s32 func_8003BF60(s32 x, s32 z) // 0x8003BF60
+s32 Map_GetSpeedZone(s32 x, s32 z) // 0x8003BF60
 {
     s32          ret;
-    s_MapBounds* ptr;
+    s_SpeedZone* ptr;
 
     ret = 0;
 
     if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP0_S00)
     {
-        return 1;
+        return SpeedZone_Norm;
     }
 
-    if (D_800BCE18.field_0[0].type_0->bounds_C != NULL)
+    if (D_800BCE18.field_0[0].type_0->speedZones_C != NULL)
     {
-        ptr = D_800BCE18.field_0[0].type_0->bounds_C;
+        ptr = D_800BCE18.field_0[0].type_0->speedZones_C;
 
-        while (ptr->id_0 != NO_VALUE)
+        while (ptr->speedIdx_0 != NO_VALUE)
         {
             if (x >= (ptr->minX_2 << 8) && (ptr->maxX_4 << 8) >= x &&
                 z >= (ptr->minZ_6 << 8) && (ptr->maxZ_8 << 8) >= z &&
-                ret < ptr->id_0)
+                ret < ptr->speedIdx_0)
             {
-                ret = ptr->id_0;
+                ret = ptr->speedIdx_0;
             }
 
             ptr++;

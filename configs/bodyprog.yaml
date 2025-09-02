@@ -63,7 +63,7 @@ segments:
       - [0x4, .rodata, memcard]
       - [0x140, .rodata, bodyprog_800314EC]
       - [0x1E4, .rodata, globals]
-      - [0x4AC, rodata] # Stage/map data? Migrate to `globals.c`.
+      - [0x5AC, rodata] # Stage/map data? Migrate to `globals.c`.
       - [0x618, .rodata, bodyprog_80032D1C]
       - [0x91C, .rodata, bodyprog_8003AB28]
       - [0x1094, .rodata, libsd/bodyprog_80045A7C]

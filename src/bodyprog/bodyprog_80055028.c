@@ -8014,7 +8014,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
     // Used for `player.playerMoveDistance_126`.
     #define GET_MAX(x)         \
-        (((x) == 2) ? 0x5000 : (((x) == 0) ? 0x3800 : 0x4000))
+        (((x) == SpeedZone_Fast) ? 0x5000 : (((x) == SpeedZone_Slow) ? 0x3800 : 0x4000))
 
     // Used for `player.playerMoveDistance_126`.
     #define GET_VAL(val, delta)     \
@@ -8041,7 +8041,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
     // Compute move distance step.
     temp_s3        = func_8007D6F0(chara, &D_800C45C8);
-    temp_s1        = func_8003BF60(chara->position_18.vx, chara->position_18.vz);
+    temp_s1        = Map_GetSpeedZone(chara->position_18.vx, chara->position_18.vz);
     var_a2         = SQUARE(chara->position_18.vx - D_800C45F8.vx);
     temp           = SQUARE(chara->position_18.vz - D_800C45F8.vz);
     travelDistStep = SquareRoot0(var_a2 + temp);
