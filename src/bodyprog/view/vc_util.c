@@ -292,11 +292,11 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
     {
         if (g_Controller1->btnsHeld_C & ControllerFlag_LStickUp)
         {
-            vec0.vy -= 0x19;
+            vec0.vy -= Q23_8(0.1f);
         }
         if (g_Controller1->btnsHeld_C & ControllerFlag_LStickDown)
         {
-            vec0.vy += 0x19;
+            vec0.vy += Q23_8(0.1f);
         }
 
         if (g_Controller1->btnsHeld_C & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
@@ -344,7 +344,7 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
     {
         SVECTOR vec1;
 
-        // TODO: `Q23_8(5.0f)`? But `vwAngleToVector` expects Q19.12. Maybe an error.
+        // TODO: `Q23_8(5.0f)`? But `vwAngleToVector` expects Q19.12. Maybe an error by TS.
         vwAngleToVector(&vec1, &cam_ang, FP_METER(0.3125f));
 
         ref_pos->vx = Q23_8_TO_Q19_12(vec0.vx + vec1.vx);

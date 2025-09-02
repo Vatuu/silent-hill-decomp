@@ -3774,9 +3774,7 @@ void Input_SelectClickSet();
  */
 bool Math_Distance2dCheck(const VECTOR3* pos0, const VECTOR3* pos1, s32 radius);
 
-/** @brief Computes the 2D distance on the XZ plane from the reference position to the camera.
- *
- * TODO: What's `>> 6` doing?
+/** @brief Computes the squared 2D distance on the XZ plane from the reference position to the camera.
  *
  * @param pos Reference position.
  * @return 2D distance to the camera.

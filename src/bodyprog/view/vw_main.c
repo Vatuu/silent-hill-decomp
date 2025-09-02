@@ -76,9 +76,10 @@ void vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, s32 ref_x, s32 ref_y, s32 re
 
     func_80096E78(&view_ang, view_mtx);
 
-    view_mtx->t[0] = Q19_12_TO_Q23_8(ref_x) + FP_FROM(Q19_12_TO_Q23_8(cam_xz_r) * Math_Sin(cam_ang_y), Q12_SHIFT);
-    view_mtx->t[1] = Q19_12_TO_Q23_8(ref_y) + Q19_12_TO_Q23_8(cam_y);
-    view_mtx->t[2] = Q19_12_TO_Q23_8(ref_z) + FP_FROM(Q19_12_TO_Q23_8(cam_xz_r) * Math_Cos(cam_ang_y), Q12_SHIFT);
+    // TODO: What's happening here?
+    view_mtx->t[0] = (ref_x >> 4) + FP_MULTIPLY(cam_xz_r >> 4, Math_Sin(cam_ang_y), Q12_SHIFT);
+    view_mtx->t[1] = (ref_y >> 4) + (cam_y >> 4);
+    view_mtx->t[2] = (ref_z >> 4) + FP_MULTIPLY(cam_xz_r >> 4, Math_Cos(cam_ang_y), Q12_SHIFT);
 }
 
 void vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, MATRIX* cammat) // 0x80048CF0
@@ -88,12 +89,18 @@ void vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, MATRIX* cammat) // 0x80048
     vwViewPointInfo.vwcoord.coord = *cammat;
 }
 
-// Inlined into `vwSetViewInfo`, maybe `vwMatrixToPosition`?
-static inline void Math_MatrixToPosition(VECTOR3* pos, MATRIX* workm)
+/** @brief Converts a matrix transform in Q23.8 to Q19.12, outputting the result to `pos`.
+ *
+ * Possible original name: `vwMatrixToPosition`.
+ *
+ * @param `pos` Output position.
+ * @param `mat` Matrix to use for conversion.
+ */
+static inline void Math_MatrixToPosition(VECTOR3* pos, MATRIX* mat)
 {
-    pos->vx = Q23_8_TO_Q19_12(workm->t[0]);
-    pos->vy = Q23_8_TO_Q19_12(workm->t[1]);
-    pos->vz = Q23_8_TO_Q19_12(workm->t[2]);
+    pos->vx = Q23_8_TO_Q19_12(mat->t[0]);
+    pos->vy = Q23_8_TO_Q19_12(mat->t[1]);
+    pos->vz = Q23_8_TO_Q19_12(mat->t[2]);
 }
 
 void vwSetViewInfo() // 0x80048D48

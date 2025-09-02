@@ -2842,12 +2842,13 @@ s32 Camera_Distance2dGet(const VECTOR3* pos) // 0x80038B44
 {
     VECTOR3 camPos;
     s32     deltaX;
-    s32     deltaY;
+    s32     deltaZ;
 
+    // Something similar to `Math_Vector2MagCalc`?
     vwGetViewPosition(&camPos);
     deltaX = (camPos.vx - pos->vx) >> 6;
-    deltaY = (camPos.vz - pos->vz) >> 6;
-    return FP_MULTIPLY_PRECISE(deltaX, deltaX, Q12_SHIFT) + FP_MULTIPLY_PRECISE(deltaY, deltaY, Q12_SHIFT);
+    deltaZ = (camPos.vz - pos->vz) >> 6;
+    return FP_MULTIPLY_PRECISE(deltaX, deltaX, Q12_SHIFT) + FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT);
 }
 
 void GameState_InGame_Update() // 0x80038BD4

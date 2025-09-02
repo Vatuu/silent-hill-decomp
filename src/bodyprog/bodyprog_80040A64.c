@@ -16,8 +16,8 @@ s8 Sound_StereoBalanceGet(const VECTOR3* soundPos) // 0x80040A64
     #define STEREO_BALANCE_RANGE 127
 
     VECTOR3 camPos;
-    VECTOR  vec0;
-    VECTOR  vec1;
+    VECTOR  vec0; // Q27.4?
+    VECTOR  vec1; // Q19.12
     MATRIX  mat;
     s32     dot;
     s32     balance;
@@ -30,7 +30,7 @@ s8 Sound_StereoBalanceGet(const VECTOR3* soundPos) // 0x80040A64
 
     // Compute normal from camera and sound source positions.
     vwGetViewPosition(&camPos);
-    vec0.vx = (soundPos->vx - camPos.vx) >> 6;
+    vec0.vx = (soundPos->vx - camPos.vx) >> 6; // TODO: Use `Q19_12_TO_Q27_4` here?
     vec0.vy = (soundPos->vy - camPos.vy) >> 6;
     vec0.vz = (soundPos->vz - camPos.vz) >> 6;
     VectorNormal(&vec0, &vec1);
@@ -905,12 +905,12 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
     s_800C117C*  ptr;
 
     // Convert position to collision space.
-    collX = FP_METER_TO_COLL(posX);
-    collZ = FP_METER_TO_COLL(posZ);
+    collX = FP_METER_TO_GEO(posX);
+    collZ = FP_METER_TO_GEO(posZ);
 
     // Indices to cells in IPD collision data?
-    xIdx = FLOOR_TO_STEP(collX, FP_METER_COLL(40.0f));
-    zIdx = FLOOR_TO_STEP(collZ, FP_METER_COLL(40.0f));
+    xIdx = FLOOR_TO_STEP(collX, FP_METER_GEO(40.0f));
+    zIdx = FLOOR_TO_STEP(collZ, FP_METER_GEO(40.0f));
 
     for (ptr = D_800C1020.field_15C; ptr < &D_800C1020.field_15C[D_800C1020.field_158]; ptr++)
     {
@@ -955,8 +955,8 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
     ptr0 = &D_800C1020.field_138;
 
     // Convert position to collision space.
-    collX = FP_METER_TO_COLL(posX);
-    collZ = FP_METER_TO_COLL(posZ);
+    collX = FP_METER_TO_GEO(posX);
+    collZ = FP_METER_TO_GEO(posZ);
 
     if (Fs_QueueEntryLoadStatusGet(ptr0->queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
         ptr0->plmHeader_0->isLoaded_2 &&
@@ -966,8 +966,8 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
     }
 
     // Indices to cells in IPD collision data?
-    xIdx = FLOOR_TO_STEP(collX, FP_METER_COLL(40.0f));
-    zIdx = FLOOR_TO_STEP(collZ, FP_METER_COLL(40.0f));
+    xIdx = FLOOR_TO_STEP(collX, FP_METER_GEO(40.0f));
+    zIdx = FLOOR_TO_STEP(collZ, FP_METER_GEO(40.0f));
 
     for (ptr1 = D_800C1020.field_15C, idx = 0; ptr1 < &D_800C1020.field_15C[D_800C1020.field_158]; ptr1++)
     {

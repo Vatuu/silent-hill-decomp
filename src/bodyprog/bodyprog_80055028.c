@@ -3633,8 +3633,6 @@ bool func_8006FD90(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3) // 0x800
     VECTOR3 sp30;
     VECTOR3 sp40;
     s32     var1;
-    s32     deltaX;
-    s32     deltaZ;
     s32     dist;
     s32     var0;
     s32     temp;
@@ -3659,10 +3657,8 @@ bool func_8006FD90(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3) // 0x800
         var0 = FP_MULTIPLY((s64)var0, var1, Q12_SHIFT);
     }
 
-    deltaX = (g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx) >> 6;
-    deltaZ = (g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) >> 6;
-    dist   = SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)) << 6;
-
+    dist = Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
+                               g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz);
     temp = arg2 + FP_MULTIPLY((s64)arg3, var0, Q12_SHIFT);
     if (temp < dist)
     {

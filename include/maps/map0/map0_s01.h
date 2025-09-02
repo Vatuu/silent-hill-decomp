@@ -50,7 +50,7 @@ typedef struct
 typedef struct
 {
     VECTOR3 vector_0;
-    VECTOR3 viewPosition_C;
+    VECTOR3 viewPosition_C; // Q19.12
     SVECTOR svec_18;
     SVECTOR viewRotation_20;
     s32     field_28;

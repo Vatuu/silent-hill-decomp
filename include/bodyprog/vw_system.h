@@ -13,7 +13,7 @@ struct _MapOverlayHeader;
  * ANG:   Angle
  * ARY:   Array
  * DEFLT: Default
- * EV:    ?
+ * EV:    Event?
  * EXCL:  Exclusion
  * F:     Flag/flags
  * FIX:   Fixed in place
@@ -43,7 +43,7 @@ struct _MapOverlayHeader;
  * Entou:        "Cylinder" in Japanese. Refers to a 2D radius on the XZ plane.
  * Flipped:      ?
  * Limit area:   2D AABB parameters defining a camera path's spatial constraint.
- * Marge:        ?
+ * Marge:        Merge.
  * Near road:    Nearby camera path collision containing info about a path's relation to the player in space (distance, priority, etc.).
  *               An array of these is kept to track which path should take effect.
  * Oresen hokan: Polyline interpolation, linear interpolation over an array of values.

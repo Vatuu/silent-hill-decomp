@@ -58,6 +58,15 @@
            ((mat).m[1][0] * (vec).vy) + \
            ((mat).m[2][0] * (vec).vz)) >> 17)
 
+/** @brief Computes the magnitude of a 2D vector in Q19.12, using low-resolution intermediate components to avoid overflow.
+ *
+ * @param x X vector component.
+ * @param z Z vector component.
+ * @return 2D vector magnitude in Q19.12.
+ */
+#define Math_Vector2MagCalc(x, z) \
+    (SquareRoot0(SQUARE((x) >> 6) + SQUARE((z) >> 6)) << 6)
+    
 /** @brief Sets an `VECTOR3`'s components to `float`s converted to a fixed-point Q format.
  *
  * @param vec Output vector.

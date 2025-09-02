@@ -266,26 +266,33 @@
 #define FP_METER(met) \
     Q19_12(met)
 
-// TODO: Needs better name.
 /** @brief Converts floating-point meters to fixed-point Q23.8.
  *
- * This position format is used in collision space and skeleton bones.
+ * This position format is used in geometry space.
  *
  * @note 1 meter = 256 units.
  *
  * @param met Meters (`float`).
- * @return Fixed-point collision space meters in Q23.8 (`s32`).
+ * @return Fixed-point geometry space meters in Q23.8 (`s32`).
  */
-#define FP_METER_COLL(met) \
+#define FP_METER_GEO(met) \
     Q23_8(met)
 
 /** @brief Converts fixed-point world space meters in Q19.12 to Q23.8.
  *
  * @param met Fixed-point world space meters in Q19.12.
- * @return Fixed-point collision space meters in Q23.8 (`s32`).
+ * @return Fixed-point geometry space meters in Q23.8 (`s32`).
  */
-#define FP_METER_TO_COLL(met) \
+#define FP_METER_TO_GEO(met) \
     Q19_12_TO_Q23_8(met)
+
+/** @brief Converts fixed-point geometry space meters in Q23.8 to Q19.12.
+ *
+ * @param met Fixed-point world space meters in Q23.8.
+ * @return Fixed-point world space meters in Q19.12 (`s32`).
+ */
+#define FP_METER_FROM_GEO(met) \
+    Q23_8_TO_Q19_12(met)
 
 /** @brief Converts floating-point seconds to fixed-point Q19.12.
  *
