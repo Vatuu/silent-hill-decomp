@@ -64,7 +64,7 @@ segments:
       - [0x138, rodata]
       - [0x144, .rodata, bodyprog_800314EC]
       - [0x1E4, .rodata, globals]
-      - [0x1F8, rodata]                     # Stage/map data?
+      - [0x4AC, rodata]                     # Stage/map data?
       - [0x618, .rodata, bodyprog_80032D1C] # Jumptable: `SysState_Gameplay_Update`
                                             # Jumptable: `func_8003943C`
                                             # Jumptable and data: `SysState_GameOver_Update`
