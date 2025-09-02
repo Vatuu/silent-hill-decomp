@@ -280,7 +280,7 @@ typedef struct
     s32 vx_0;
     s32 vz_4;
     s16 vy_8;
-    s8  unk_A;
+    s8  field_A;
     s8  field_B;
     s8  field_C;
     s8  field_D;
@@ -1511,8 +1511,7 @@ typedef struct
  */
 typedef struct
 {
-    u16 unk_0;
-    u16 unk_2;
+    s16 unk_0; // At this point, maybe its an array of u16?
 } s_BloodSplat;
 
 /** TODO: `g_MapOverlayHeader` is part of the map overlay BIN files. Maybe should be moved to `maps/shared.h`. 
@@ -1545,9 +1544,11 @@ typedef struct _MapOverlayHeader
     void              (*func_44)();
     void              (*func_48)(); // func(?).
     s_func_800625F4*  unkTable1_4C;
-    s32               unkTable1Len_50;
+    s16               unkTable1Len_50;
+    s8                unk_52[2];
     s_BloodSplat*     bloodSplats_54;
-    s32               bloodSplatsLen_58;
+    s16               bloodSplatsLen_58;
+    s8                unk_5A[2];
     s32               always0_5C;
     s32               always0_60;
     s32               always0_64;
@@ -2401,6 +2402,8 @@ extern u16 D_800C42D0;
 
 extern u16 D_800C42D2;
 
+extern s8 D_800C4414;
+
 // emoose: Also works: `extern u16 D_800C4478[];`, `arg0->field_4 = D_800C4478[0];`.
 // Didn't see any array accesses in Ghidra though, struct might be more likely.
 extern s_800C4478 D_800C4478;
@@ -3152,6 +3155,8 @@ void func_8005DE0C(s32 sfx, VECTOR3*, s32, s32, s32); // Types assumed.
 
 void func_8005E0DC(s32 mapIdx); // Types assumed.
 
+void func_8005E70C();
+
 void func_8005E89C();
 
 void func_8005F6B0(s_SubCharacter*, s32*, s32, s32);
@@ -3335,6 +3340,8 @@ void func_800894B8(s32 arg0);
 void func_800894DC();
 
 void func_80089500();
+
+s32 func_80089524(s_SysWork_2514* arg0, s32 padInfoMode);
 
 s32 func_800895E4(s_SysWork_2514* arg0, s_8002AC04* arg1, u8 arg2);
 
@@ -3530,9 +3537,11 @@ void func_8006D7EC(s_func_8006D7EC_0* arg0, s_func_8006D7EC_1* arg1, s_func_8006
 
 bool func_8006D90C(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2);
 
-s32 func_8006DA08(VECTOR3*, VECTOR3*, VECTOR3*, s_SubCharacter*);
+bool func_8006DA08(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2, s_SubCharacter* chara);
 
 bool func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_SubCharacter* chara);
+
+bool func_8006DC18(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2);
 
 bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
 
