@@ -85,7 +85,6 @@ Event_GasolineTankItemTake    = 0x800CEC84; // type:func
 //--- PA: 0x006414   VA: 0x800CF98C   subsegment: data, map0_s02_anim_info
 //------------------------------------------------------------------------
 g_AnimInfos                   = 0x800CF98C;
-g_Effect_BloodSplats          = 0x800D0BAC;
 
 //--------------------------------------------------------------
 //--- PA: 0x006500   VA: 0x800CFA78   subsegment: data, map0_s02
@@ -111,6 +110,7 @@ sharedData_800DFB64_0_s00     = 0x800D03C4; // type:s32
 sharedData_800DFB68_0_s00     = 0x800D03C8; // type:s32
 sharedData_800DFB6C_0_s00     = 0x800D03CC; // type:s32
 sharedData_800DFB70_0_s00     = 0x800D03D0; // type:s32
+g_Effect_BloodSplats          = 0x800D0BAC;
 sharedData_800E0C6E_0_s00     = 0x800D0C3E; // type:s16
 sharedData_800E0CA8_0_s00     = 0x800D0C78; // type:s32
 sharedData_800E0CAC_0_s00     = 0x800D0C7C; // type:s32

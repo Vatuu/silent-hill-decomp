@@ -71,7 +71,7 @@ s_UnkStruct3_Mo g_MapHeaders_38[21] =
     {} // End of list.
 };
 
-u8 g_LoadableInventoryItemIds[35] =
+u8 g_LoadableInventoryItems[35] =
 {
     InventoryItemId_HealthDrink,
     InventoryItemId_FirstAidKit,

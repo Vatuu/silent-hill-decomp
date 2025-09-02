@@ -2085,7 +2085,7 @@ void func_8005E70C(void) // 0x8005E70C
     s16 count;
     u8  temp_v0;
 
-    count = g_MapOverlayHeader.unkTable1Count50;
+    count = g_MapOverlayHeader.unkTable1Count_50;
     for (i = 0; i < count; i++)
     {
         temp_v0 = g_MapOverlayHeader.unkTable1_4C[i].field_A;

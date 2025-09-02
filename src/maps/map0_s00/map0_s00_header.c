@@ -33,11 +33,11 @@
 
 extern u8 D_800DF754[];
 extern s_func_800625F4 D_800DFB7C[200];
-extern s_BloodSplat D_800E0B1C[150];
+extern s_BloodSplat g_Effect_BloodSplats[150];
 
 extern s_AnimInfo g_AnimInfos[];
 extern s_UnkStruct3_Mo g_MapHeaderTable_38[18];
-extern u8 g_LoadableInventoryItemIds[8];
+extern u8 g_LoadableInventoryItems[8];
 
 void (*g_LoadScreenFuncs[])() = 
 {
@@ -91,7 +91,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .mapEventFuncs_20 = g_MapEventFuncs,
     .unk_24 = D_800DF754,
     .field_28 = &g_SysWork.npcCoords_FC0[0],
-    .loadableItems_2C = g_LoadableInventoryItemIds,
+    .loadableItems_2C = g_LoadableInventoryItems,
     .mapMessages_30 = g_MapMessages,
     .animInfos_34 = g_AnimInfos,
     .field_38 = g_MapHeaderTable_38,
@@ -100,9 +100,9 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .func_44 = NULL,
     .func_48 = func_800DC1E8,
     .unkTable1_4C = D_800DFB7C,
-    .unkTable1Count50 = ARRAY_SIZE(D_800DFB7C),
-    .bloodSplats_54 = D_800E0B1C,
-    .bloodSplatCount_58 = ARRAY_SIZE(D_800E0B1C),
+    .unkTable1Count_50 = ARRAY_SIZE(D_800DFB7C),
+    .bloodSplats_54 = g_Effect_BloodSplats,
+    .bloodSplatCount_58 = ARRAY_SIZE(g_Effect_BloodSplats),
     .always0_5C = 0,
     .always0_60 = 0,
     .always0_64 = 0,
