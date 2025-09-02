@@ -20,21 +20,21 @@ typedef struct
     s32 unk8;
 } s_foo_unknown;
 
-const s_foo_unknown D_80024D5C[] =
+const static s_foo_unknown D_80024D5C[] =
 {
     { 0x00080001, 0x0500F880, 0x0280F880 },
     { 0x00080001, 0x02800000, 0x05000000 },
     {}
 };
 
-const s_foo_unknown D_80024D80[] =
+const static s_foo_unknown D_80024D80[] =
 {
     { 0x00080001, 0x0280F600, 0x0A00F600 },
     { 0x00080001, 0x0A00F600, 0x0280F600 },
     {}
 };
 
-const s_SpeedZone SpeedZones_THR[] =
+const static s_SpeedZone SpeedZones_THR[] =
 {
     { 2, -5120,  4480, -3840, 3200 },
     { 2, -640,   640,   3200, 3840 },
@@ -42,7 +42,7 @@ const s_SpeedZone SpeedZones_THR[] =
     { NO_VALUE, 0, 0, 0, 0         } // End of list.
 };
 
-const s_SpeedZone SpeedZones_SP[] =
+const static s_SpeedZone SpeedZones_SP[] =
 {
     { SpeedZone_Fast,  -3840,  1280, -1920, 640  },
     { SpeedZone_Fast,  -640,   1280,  640,  1920 },
@@ -53,7 +53,7 @@ const s_SpeedZone SpeedZones_SP[] =
 
 // 2 bytes of padding.
 
-const s_SpeedZone SpeedZones_RSR[] =
+const static s_SpeedZone SpeedZones_RSR[] =
 {
     { SpeedZone_Fast,  -1920,  1280, -3200, 640 },
     { SpeedZone_Norm,  -3200, -1920, -640,  0   },
@@ -62,7 +62,7 @@ const s_SpeedZone SpeedZones_RSR[] =
 
 // 2 bytes of padding.
 
-const s_SpeedZone SpeedZones_RSU[] =
+const static s_SpeedZone SpeedZones_RSU[] =
 {
     { SpeedZone_Fast,  -3200,  0,     640,  2560 },
     { SpeedZone_Norm,  -3200, -1280, -1280, 640  },
@@ -71,7 +71,7 @@ const s_SpeedZone SpeedZones_RSU[] =
 
 // 2 bytes of padding.
 
-const s_SpeedZone SpeedZones_AP[] =
+const static s_SpeedZone SpeedZones_AP[] =
 {
     { SpeedZone_Fast,  -1280, 640, -1920, 640  },
     { SpeedZone_Norm,   0,    640,  1280, 1920 },
@@ -80,13 +80,13 @@ const s_SpeedZone SpeedZones_AP[] =
 
 // 2 bytes of padding.
 
-const s_SpeedZone SpeedZones_DR[] =
+const static s_SpeedZone SpeedZones_DR[] =
 {
     { SpeedZone_Norm,  -12800, 13440, -12800, 13440 },
     { NO_VALUE, 0, 0, 0, 0            } // End of list.
 };
 
-const s_SpeedZone SpeedZones_SC[] =
+const static s_SpeedZone SpeedZones_SC[] =
 {
     { SpeedZone_Norm,  -1920, -640,   640,  1280 },
     { SpeedZone_Norm,  -640,   0,     2560, 3200 },
@@ -101,7 +101,7 @@ const s_SpeedZone SpeedZones_SC[] =
 
 // 2 bytes of padding.
 
-const s_SpeedZone SpeedZones_SU[] =
+const static s_SpeedZone SpeedZones_SU[] =
 {
     { SpeedZone_Norm,  -1920, -640,   640,  1280 },
     { SpeedZone_Norm,  -640,   0,     2560, 3200 },
@@ -116,7 +116,7 @@ const s_SpeedZone SpeedZones_SU[] =
 
 // 2 bytes of padding.
 
-const s_SpeedZone SpeedZones_HP[] =
+const static s_SpeedZone SpeedZones_HP[] =
 {
     { SpeedZone_Norm,  0, 640, 1920, 2560 },
     { SpeedZone_Norm,  0, 640, 0,    640  },
@@ -125,7 +125,7 @@ const s_SpeedZone SpeedZones_HP[] =
 
 // 2 bytes of padding.
 
-const s_SpeedZone SpeedZones_HU[] =
+const static s_SpeedZone SpeedZones_HU[] =
 {
     { SpeedZone_Norm,   1280,  1920,  1920,  2560 },
     { SpeedZone_Norm,   0,     640,   0,     640  },
@@ -142,7 +142,7 @@ const s_SpeedZone SpeedZones_HU[] =
 
 // 2 bytes of padding.
 
-const s_SpeedZone SpeedZones_ER[] =
+const static s_SpeedZone SpeedZones_ER[] =
 {
     { SpeedZone_Norm,  -1280, -640,  -640,   0    },
     { SpeedZone_Norm,  -1920, -640,  -1920, -1280 },
@@ -152,7 +152,7 @@ const s_SpeedZone SpeedZones_ER[] =
     { NO_VALUE, 0, 0, 0, 0          } // End of list.
 };
 
-const s_SpeedZone SpeedZones_XXX[] =
+const static s_SpeedZone SpeedZones_XXX[] =
 {
     { SpeedZone_Fast,  -12800, 13440, -12800, 13440 },
     { NO_VALUE, 0, 0, 0, 0            } // End of list.
