@@ -1511,7 +1511,7 @@ typedef struct
  * Everything is inited to 0xFFFF and some data is written when I get hit by monsters.
  * Might be more generic 'particles / decals' struct
  */
-typedef struct
+typedef struct _BloodSplat
 {
     s16 unk_0; // At this point, maybe its an array of u16?
 } s_BloodSplat;

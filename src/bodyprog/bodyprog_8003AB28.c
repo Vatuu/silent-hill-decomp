@@ -1055,11 +1055,11 @@ void func_8003C8F8(s_800BCE18_2BEC_0* arg0, char* newStr) // 0x8003C8F8
 void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* pos, SVECTOR3* rot) // 0x8003C92C
 {
     s32              vy;
-    s32              coord1;
     s32              vx;
     s32              vz;
-    s32              coord0;
-    s32              coord2;
+    s32              coord1; // Q23.8
+    s32              coord0; // Q23.8
+    s32              coord2; // Q23.8
     s32              i;
     s32              ret;
     s_800BCE18_2BEC* ptr;
@@ -1086,9 +1086,9 @@ void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* pos, SVECTOR3* rot) // 0x80
             arg0->field_10.field_9 = ret;
         } 
 
-        coord0 = FP_FROM(pos->vx, Q4_SHIFT);
-        coord1 = FP_FROM(pos->vy, Q4_SHIFT);
-        coord2 = FP_FROM(pos->vz, Q4_SHIFT);
+        coord0 = Q19_12_TO_Q23_8(pos->vx);
+        coord1 = Q19_12_TO_Q23_8(pos->vy);
+        coord2 = Q19_12_TO_Q23_8(pos->vz);
         vx     = rot->vx >> 2;
         vz     = rot->vz >> 2;
         vy     = rot->vy;

@@ -156,20 +156,20 @@ void vcMoveAndSetCamera(s32 in_connect_f, s32 change_debug_mode, s32 for_f, s32 
 
 void vcMakeHeroHeadPos(VECTOR3* head_pos) // 0x8004047C
 {
-    MATRIX  neck_lwm;
-    SVECTOR fpos;
+    MATRIX  neck_lwm; // Q23.8
+    SVECTOR fpos;     // Q23.8
     VECTOR  vec;
 
     Vw_CoordHierarchyMatrixCompute(&g_SysWork.playerBoneCoords_890[PlayerBone_Head], &neck_lwm);
 
-    fpos.vx = FP_METER(0.0f);
-    fpos.vy = FP_METER(-0.00625f);
-    fpos.vz = FP_METER(0.0f);
+    fpos.vx = Q23_8(0.0f);
+    fpos.vy = Q23_8(-0.1f);
+    fpos.vz = Q23_8(0.0f);
     ApplyMatrix(&neck_lwm, &fpos, &vec);
 
-    head_pos->vx = FP_TO(vec.vx + neck_lwm.t[0], Q4_SHIFT);
-    head_pos->vy = FP_TO(vec.vy + neck_lwm.t[1], Q4_SHIFT) - FP_METER(0.3f);
-    head_pos->vz = FP_TO(vec.vz + neck_lwm.t[2], Q4_SHIFT);
+    head_pos->vx = Q23_8_TO_Q19_12(vec.vx + neck_lwm.t[0]);
+    head_pos->vy = Q23_8_TO_Q19_12(vec.vy + neck_lwm.t[1]) - FP_METER(0.3f);
+    head_pos->vz = Q23_8_TO_Q19_12(vec.vz + neck_lwm.t[2]);
 }
 
 void vcAddOfsToPos(VECTOR3* out_pos, VECTOR3* in_pos, s16 ofs_xz_r, s16 ang_y, s32 ofs_y) // 0x80040518
@@ -221,9 +221,9 @@ void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p, s32 for_f
 
 void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x800406D4
 {
-    SVECTOR cam_ang;
-    VECTOR3 vec0;
-    VECTOR3 cam_pos;
+    SVECTOR cam_ang; // Q3.12
+    VECTOR3 vec0;    // Q23.8
+    VECTOR3 cam_pos; // Q19.12
     MATRIX  mat;
     s32     var0;
     s32     var1;
@@ -231,12 +231,13 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
 
     vwGetViewPosition(&cam_pos);
 
-    vec0.vx = FP_FROM(cam_pos.vx, Q4_SHIFT);
-    vec0.vy = FP_FROM(cam_pos.vy, Q4_SHIFT);
-    vec0.vz = FP_FROM(cam_pos.vz, Q4_SHIFT);
+    vec0.vx = Q19_12_TO_Q23_8(cam_pos.vx);
+    vec0.vy = Q19_12_TO_Q23_8(cam_pos.vy);
+    vec0.vz = Q19_12_TO_Q23_8(cam_pos.vz);
 
     vwGetViewAngle(&cam_ang);
 
+    // TODO: Demagic hex values. What Q format is being used?
     if (!(g_Controller1->btnsHeld_C & ControllerFlag_Circle))
     {
         if (g_Controller1->btnsHeld_C & ControllerFlag_LStickDown)
@@ -289,8 +290,6 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
     }
     else
     {
-        // TODO: Demagic hex values.
-
         if (g_Controller1->btnsHeld_C & ControllerFlag_LStickUp)
         {
             vec0.vy -= 0x19;
@@ -345,14 +344,15 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
     {
         SVECTOR vec1;
 
+        // TODO: `Q23_8(5.0f)`? But `vwAngleToVector` expects Q19.12. Maybe an error.
         vwAngleToVector(&vec1, &cam_ang, FP_METER(0.3125f));
 
-        ref_pos->vx = FP_TO(vec0.vx + vec1.vx, Q4_SHIFT);
-        ref_pos->vy = FP_TO(vec0.vy + vec1.vy, Q4_SHIFT);
-        ref_pos->vz = FP_TO(vec0.vz + vec1.vz, Q4_SHIFT);
+        ref_pos->vx = Q23_8_TO_Q19_12(vec0.vx + vec1.vx);
+        ref_pos->vy = Q23_8_TO_Q19_12(vec0.vy + vec1.vy);
+        ref_pos->vz = Q23_8_TO_Q19_12(vec0.vz + vec1.vz);
 
         sys_p->cameraAngleY_237A   = Math_AngleNormalize(cam_ang.vy + FP_ANGLE(180.0f));
-        sys_p->cameraY_2384        = FP_TO(-vec1.vy, Q4_SHIFT);
-        sys_p->cameraRadiusXz_2380 = FP_TO(SquareRoot0(SQUARE(vec1.vx) + SQUARE(vec1.vz)), Q4_SHIFT);
+        sys_p->cameraY_2384        = Q23_8_TO_Q19_12(-vec1.vy);
+        sys_p->cameraRadiusXz_2380 = Q23_8_TO_Q19_12(SquareRoot0(SQUARE(vec1.vx) + SQUARE(vec1.vz)));
     }
 }

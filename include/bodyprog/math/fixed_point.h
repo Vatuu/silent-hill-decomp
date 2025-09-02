@@ -134,13 +134,13 @@
 #define Q0_8(x) \
     (u8)FP_FLOAT_TO(x, Q8_SHIFT)
 
-/** @brief Converts a fixed-point value from Q19.12 to Q23.8.
+/** @brief Converts a fixed-point value from Q23.8 to Q19.12.
  *
- * @param x Fixed-point value in Q19.12 to convert.
- * @return `x` converted to fixed-point Q23.8 (`s32`).
+ * @param x Fixed-point value in Q23.8 to convert.
+ * @return `x` converted to fixed-point Q19.12 (`s32`).
  */
-#define Q19_12_TO_Q23_8(x) \
-    (s32)((x) >> 4)
+#define Q23_8_TO_Q19_12(x) \
+    (s32)((x) << 4)
 
 /** @brief Converts a fixed-point value from Q7.8 to Q3.12.
  *
@@ -150,8 +150,15 @@
 #define Q7_8_TO_Q3_12(x) \
     (s16)((x) << 4)
 
+/** @brief Converts a fixed-point value from Q19.12 to Q23.8.
+ *
+ * @param x Fixed-point value in Q19.12 to convert.
+ * @return `x` converted to fixed-point Q23.8 (`s32`).
+ */
+#define Q19_12_TO_Q23_8(x) \
+    (s32)((x) >> 4)
+
 /** @brief Converts a floating-point alpha in the range `[0.0f, 1.0f]` to fixed-point Q3.12, integer range `[0, 4096]`.
- * Mapping is direct.
  *
  * @param alpha Alpha (`float`).
  * @return Fixed-point alpha in Q3.12, integer range `[0, 4096]` (`s16`).
@@ -170,7 +177,6 @@
 // TODO: Volume and color byte alpha format might be more common, need to confirm.
 
 /** @brief Converts a normalized floating-point sound volume in the range `[0.0f, 1.0f]` to fixed-point Q0.8, integer range `[0, 255]`.
- * Mapping is direct.
  *
  * @param vol Sound volume (`float`).
  * @return Fixed-point sound volume in Q0.8, integer range `[0, 255]` (`u8`).
@@ -179,7 +185,6 @@
     (u8)CLAMP(FP_FLOAT_TO(vol, Q8_SHIFT), 0, FP_FLOAT_TO(1.0f, Q8_SHIFT) - 1)
 
 /** @brief Converts a normalized floating-point color component in the range `[0.0f, 1.0f]` to fixed-point Q0.8, integer range `[0, 255]`.
- * Mapping is direct.
  *
  * @param comp Color component (`float`).
  * @return Fixed-point color component in Q0.8, integer range `[0, 255]` (`u8`).
@@ -188,7 +193,6 @@
     (u8)CLAMP(FP_FLOAT_TO(comp, Q8_SHIFT), 0, FP_FLOAT_TO(1.0f, Q8_SHIFT) - 1)
 
 /** @brief Converts floating-point degrees to signed fixed-point Q3.12, integer range `[0, 4096]`.
- * Mapping is direct.
  *
  * This angle format is used in world space.
  *
@@ -200,24 +204,22 @@
 #define FP_ANGLE(deg) \
     (s16)((deg) * ((float)Q3_12(1.0f) / 360.0f))
 
-/** @brief Converts floating-point degrees to unsigned fixed-point in Q7.8, integer range `[0, 256]`.
- * Mapping is direct.
+/** @brief Converts floating-point degrees to unsigned fixed-point in Q0.8, integer range `[0, 255]`.
  *
  * This angle format is used in loaded level data.
  *
  * @note 1 degree = 0.711111 units.
  *
  * @param deg Degrees (`float`).
- * @return Unsigned fixed-point degrees in Q7.8, integer range `[0, 256]` (`s16`).
+ * @return Unsigned fixed-point degrees in Q0.8, integer range `[0, 255]` (`u8`).
  */
 #define FP_ANGLE_PACKED(deg) \
-    (s16)((deg) * ((float)Q23_8(1.0f) / 360.0f))
+    (u8)CLAMP(FP_FLOAT_TO((deg) / 360.0f, Q8_SHIFT), 0, FP_FLOAT_TO(1.0f, Q8_SHIFT) - 1)
 
-/** @brief Converts unsigned fixed-point degrees in Q7.8, integer range `[0, 256]` to
+/** @brief Converts unsigned fixed-point degrees in Q0.8, integer range `[0, 255]` to
  * unsigned fixed-point Q3.12, integer range `[0, 4096]`.
- * Mapping is direct.
  *
- * @param packedDeg Unsigned fixed-point degrees in Q7.8, integer range `[0, 256]`.
+ * @param packedDeg Unsigned fixed-point degrees in Q0.8, integer range `[0, 255]`.
  * @return Unsigned fixed-point degrees in Q3.12, integer range `[0, 4096]` (`s16`).
  */
 #define FP_ANGLE_FROM_PACKED(packedDeg) \
@@ -240,7 +242,6 @@
     ((deg) & (FP_ANGLE(360.0f) - 1))
 
 /** @brief Converts floating-point radians in the range `[-PI, PI]` to the fixed-point integer range `[0, 20480]`.
- * Mapping is direct.
  *
  * This angle format is only used in `vcSetDataToVwSystem`.
  *

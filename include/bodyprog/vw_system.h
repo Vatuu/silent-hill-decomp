@@ -203,14 +203,14 @@ typedef struct _VC_ROAD_DATA
     VC_ROAD_FLAGS     flags_10          : 8; /** `VC_ROAD_FLAGS` | Path flags. */
     VC_AREA_SIZE_TYPE area_size_type_11 : 2;
     VC_ROAD_TYPE      rd_type_11        : 3; /** Path type. */
-    u32               mv_y_type_11      : 3; /** `VC_CAM_MV_TYPE`? */
-    s32               lim_rd_max_hy_12  : 8; // In SH2 `max_hy/min_hy` are part of `VC_LIMIT_AREA`, in SH1 these are separate for some reason.
-    s32               lim_rd_min_hy_13  : 8;
-    s32               ofs_watch_hy_14   : 8;
+    u32               mv_y_type_11      : 3; /** `VC_CAM_MV_TYPE` */
+    s32               lim_rd_max_hy_12  : 8; /** Q? | In SH2 `max_hy/min_hy` are part of `VC_LIMIT_AREA`, in SH1 these are separate for some reason. */
+    s32               lim_rd_min_hy_13  : 8; /** Q? */
+    s32               ofs_watch_hy_14   : 8; /** Q? */
     u32               field_15          : 4;
     s16               cam_mv_type_14    : 4; /** `VC_CAM_MV_TYPE` */
-    s8                fix_ang_x_16;          /** NOTE: Part of union in SH2 `VC_ROAD_DATA`. */
-    s8                fix_ang_y_17;
+    s8                fix_ang_x_16;          /** Q0.8 | NOTE: Part of union in SH2 `VC_ROAD_DATA`. */
+    s8                fix_ang_y_17;          /** Q0.8 */
 } VC_ROAD_DATA;
 STATIC_ASSERT_SIZEOF(VC_ROAD_DATA, 24);
 
@@ -250,19 +250,19 @@ typedef struct _VC_WORK
     u8                        through_door_activate_init_f_C; /** `bool` */
     s8                        unk_D[3];
     VC_THROUGH_DOOR_CAM_PARAM through_door_10;
-    s16                       scr_half_ang_wy_2C;
-    s16                       scr_half_ang_wx_2E;
+    q3_12                     scr_half_ang_wy_2C;
+    q3_12                     scr_half_ang_wx_2E;
     s16                       geom_screen_dist_30;            /** Related to `GsSetProjection`/`g_GameSys.gs_y_res_58A`. */
     s16                       field_32;
     VC_CAM_MV_PARAM           user_cam_mv_prm_34;             /** Look parameters? */
-    VECTOR3                   cam_tgt_pos_44;                 /** Target position. */
-    VECTOR3                   cam_pos_50;                     /** Position. */
+    VECTOR3                   cam_tgt_pos_44;                 /** Target camera position. */
+    VECTOR3                   cam_pos_50;                     /** Q19.12 | Camera position. */
     s16                       cam_mv_ang_y_5C;                /** Angular velocity on the Y axis. */
     s8                        unk_5E[2];
-    VECTOR3                   cam_velo_60;                    /** Velocity. */
+    VECTOR3                   cam_velo_60;                    /** Q19.12 | Camera velocity. */
     s32                       old_cam_excl_area_r_6C;         /** Previous exclusion area radius. */
     VC_WATCH_MV_PARAM         user_watch_mv_prm_70;
-    VECTOR3                   watch_tgt_pos_7C;               /** Target look-at position. */
+    VECTOR3                   watch_tgt_pos_7C;               /** Q19.12 | Target look-at position. */
     s32                       watch_tgt_max_y_88;             /** Max look-at Y offset. */
     s16                       watch_tgt_ang_z_8C;             /** Target look-at Z angle. */
     SVECTOR                   cam_mat_ang_8E;                 /** Matrix rotation. */
@@ -287,7 +287,7 @@ typedef struct _VC_WORK
     s32                       chara_top_y_124;                               /** Locked-on character top height. */
     s32                       chara_center_y_128;                            /** Locked-on character center height. */
     s32                       chara_grnd_y_12C;                              /** Locked-on character height from the ground? */
-    VECTOR3                   chara_head_pos_130;                            /** Locked-on character head position. */
+    VECTOR3                   chara_head_pos_130;                            /** Q19.12 | Locked-on character head position. */
     s32                       chara_mv_spd_13C;                              /** Locked-on character movement speed. */
     s16                       chara_mv_ang_y_140;                            /** Locked-on character heading angle. */
     s16                       chara_ang_spd_y_142;                           /** Locked-on character heading angle angular speed. */
@@ -316,7 +316,7 @@ typedef struct _VW_VIEW_WORK
 {
     VbRVIEW       rview;
     GsCOORDINATE2 vwcoord;
-    VECTOR3       worldpos;
+    VECTOR3       worldpos; // Q19.12
     SVECTOR       worldang;
 } VW_VIEW_WORK;
 STATIC_ASSERT_SIZEOF(VW_VIEW_WORK, 132);
@@ -408,6 +408,7 @@ void vcInitVCSystem(VC_ROAD_DATA* vc_road_ary_list);
 void vcStartCameraSystem();
 void vcEndCameraSystem();
 void vcSetFirstCamWork(VECTOR3* cam_pos, s16 chara_eye_ang_y, s32 use_through_door_cam_f);
+void func_80080B58(GsCOORDINATE2* arg0, SVECTOR* arg1, VECTOR3* arg2);
 void vcWorkSetFlags(VC_FLAGS enable, VC_FLAGS disable);
 s32  Vc_LookAtOffsetYMaxSet(s32 lookAtOffsetYMax);
 void vcUserWatchTarget(VECTOR3* watch_tgt_pos, VC_WATCH_MV_PARAM* watch_prm_p, bool warp_watch_f);
@@ -469,7 +470,7 @@ void vcAdjCamOfsAngByOfsAngSpd(SVECTOR* ofs_ang, SVECTOR* ofs_ang_spd, SVECTOR* 
 void vcMakeCamMatAndCamAngByBaseAngAndOfsAng(SVECTOR* cam_mat_ang, MATRIX* cam_mat, SVECTOR* base_cam_ang, SVECTOR* ofs_cam_ang, VECTOR3* cam_pos);
 void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type);
 s32  vcCamMatNoise(s32 noise_w, s32 ang_spd1, s32 ang_spd2, s32 vcSelfViewTimer);
-s32  Vc_VectorMagnitudeCalc(s32 x, s32 y, s32 z);
+s32  Vc_VectorMagnitudeCalc(s32 x, s32 y, s32 z); // Q19.12
 s32  vcGetXZSumDistFromLimArea(s32* out_vec_x_p, s32* out_vec_z_p, s32 chk_wld_x, s32 chk_wld_z,
                                s32 lim_min_x, s32 lim_max_x, s32 lim_min_z, s32 lim_max_z, s32 can_ret_minus_dist_f);
 

@@ -34,27 +34,27 @@ void vwGetViewAngle(SVECTOR* ang) // 0x80048AC4
 
 void Vw_SetLookAtMatrix(VECTOR3* pos, VECTOR3* lookAt) // 0x80048AF4
 {
-    s32     deltaX;
-    s32     deltaY;
-    s32     deltaZ;
+    s32     deltaX; // Q23.8
+    s32     deltaY; // Q23.8
+    s32     deltaZ; // Q23.8
     MATRIX  viewMat;
     SVECTOR rot;
 
     // Compute direction vector components.
-    deltaX = FP_FROM(lookAt->vx - pos->vx, Q4_SHIFT);
-    deltaY = FP_FROM(lookAt->vy - pos->vy, Q4_SHIFT);
-    deltaZ = FP_FROM(lookAt->vz - pos->vz, Q4_SHIFT);
+    deltaX = Q19_12_TO_Q23_8(lookAt->vx - pos->vx);
+    deltaY = Q19_12_TO_Q23_8(lookAt->vy - pos->vy);
+    deltaZ = Q19_12_TO_Q23_8(lookAt->vz - pos->vz);
 
     // Compute camera rotation.
-    rot.vz = 0;
+    rot.vz = FP_ANGLE(0.0f);
     rot.vy = ratan2(deltaX, deltaZ);
     rot.vx = ratan2(-deltaY, SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)));
 
     // Compute view transform matrix and set global info.
     func_80096C94(&rot, &viewMat);
-    viewMat.t[0] = FP_FROM(pos->vx, Q4_SHIFT);
-    viewMat.t[1] = FP_FROM(pos->vy, Q4_SHIFT);
-    viewMat.t[2] = FP_FROM(pos->vz, Q4_SHIFT);
+    viewMat.t[0] = Q19_12_TO_Q23_8(pos->vx);
+    viewMat.t[1] = Q19_12_TO_Q23_8(pos->vy);
+    viewMat.t[2] = Q19_12_TO_Q23_8(pos->vz);
     vwSetViewInfoDirectMatrix(NULL, &viewMat);
 }
 
@@ -76,9 +76,9 @@ void vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, s32 ref_x, s32 ref_y, s32 re
 
     func_80096E78(&view_ang, view_mtx);
 
-    view_mtx->t[0] = FP_FROM(ref_x, Q4_SHIFT) + FP_FROM(FP_FROM(cam_xz_r, Q4_SHIFT) * Math_Sin(cam_ang_y), Q12_SHIFT);
-    view_mtx->t[1] = FP_FROM(ref_y, Q4_SHIFT) + FP_FROM(cam_y, Q4_SHIFT);
-    view_mtx->t[2] = FP_FROM(ref_z, Q4_SHIFT) + FP_FROM(FP_FROM(cam_xz_r, Q4_SHIFT) * Math_Cos(cam_ang_y), Q12_SHIFT);
+    view_mtx->t[0] = Q19_12_TO_Q23_8(ref_x) + FP_FROM(Q19_12_TO_Q23_8(cam_xz_r) * Math_Sin(cam_ang_y), Q12_SHIFT);
+    view_mtx->t[1] = Q19_12_TO_Q23_8(ref_y) + Q19_12_TO_Q23_8(cam_y);
+    view_mtx->t[2] = Q19_12_TO_Q23_8(ref_z) + FP_FROM(Q19_12_TO_Q23_8(cam_xz_r) * Math_Cos(cam_ang_y), Q12_SHIFT);
 }
 
 void vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, MATRIX* cammat) // 0x80048CF0
@@ -91,9 +91,9 @@ void vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, MATRIX* cammat) // 0x80048
 // Inlined into `vwSetViewInfo`, maybe `vwMatrixToPosition`?
 static inline void Math_MatrixToPosition(VECTOR3* pos, MATRIX* workm)
 {
-    pos->vx = FP_TO(workm->t[0], Q4_SHIFT);
-    pos->vy = FP_TO(workm->t[1], Q4_SHIFT);
-    pos->vz = FP_TO(workm->t[2], Q4_SHIFT);
+    pos->vx = Q23_8_TO_Q19_12(workm->t[0]);
+    pos->vy = Q23_8_TO_Q19_12(workm->t[1]);
+    pos->vz = Q23_8_TO_Q19_12(workm->t[2]);
 }
 
 void vwSetViewInfo() // 0x80048D48

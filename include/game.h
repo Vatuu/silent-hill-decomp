@@ -1345,15 +1345,15 @@ typedef struct _SysWork
     s16             cameraAngleY_237A;
     s16             cameraAngleZ_237C;
     s16             field_237E;
-    s32             cameraRadiusXz_2380;
-    s32             cameraY_2384;
+    q19_12          cameraRadiusXz_2380;
+    q19_12          cameraY_2384;
     s_SysWork_2288  field_2388;
     s32             field_2510;
     s_SysWork_2514  field_2514;
     u8              unk_254C[508];
     s16             field_2748[9];  // `func_80035ED0` loops over this.
     u8              unk_275A[2];
-    s32             field_275C; // `q19_12`?
+    s32             field_275C; // Q19_12?
     s32             field_2760;
     s32             field_2764;
 } s_SysWork;

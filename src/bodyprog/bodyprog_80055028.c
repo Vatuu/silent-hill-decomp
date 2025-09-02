@@ -191,7 +191,7 @@ void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coo
     SVECTOR  tempSvec;
     VECTOR   vec;
     VECTOR3* ptr;
-    VECTOR3* ptr2;
+    VECTOR3* ptr2; // Q19.12
 
     D_800C4168.field_54 = arg0;
     D_800C4168.field_50 = arg1;
@@ -218,16 +218,16 @@ void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coo
     {
         Vw_CoordHierarchyMatrixCompute(coord1, &mat);
 
-        tempSvec.vx = FP_FROM(x, Q4_SHIFT);
-        tempSvec.vy = FP_FROM(y, Q4_SHIFT);
-        tempSvec.vz = FP_FROM(z, Q4_SHIFT);
+        tempSvec.vx = Q19_12_TO_Q23_8(x);
+        tempSvec.vy = Q19_12_TO_Q23_8(y);
+        tempSvec.vz = Q19_12_TO_Q23_8(z);
 
         ApplyMatrix(&mat, &tempSvec, &vec);
 
         ptr2     = &D_800C4168.field_60;
-        ptr2->vx = (vec.vx + mat.t[0]) * 16;
-        ptr2->vy = (vec.vy + mat.t[1]) * 16;
-        ptr2->vz = (vec.vz + mat.t[2]) * 16;
+        ptr2->vx = Q23_8_TO_Q19_12(vec.vx + mat.t[0]);
+        ptr2->vy = Q23_8_TO_Q19_12(vec.vy + mat.t[1]);
+        ptr2->vz = Q23_8_TO_Q19_12(vec.vz + mat.t[2]);
     }
 
     vwVectorToAngle(&D_800C4168.field_6C, &D_800C4168.field_58);
@@ -242,7 +242,7 @@ s32 func_800557DC() // 0x800557DC
     MATRIX mat;
 
     func_80049C2C(&mat, D_800C4168.field_60.vx, D_800C4168.field_60.vy, D_800C4168.field_60.vz);
-    return mat.t[2] * 16;
+    return Q23_8_TO_Q19_12(mat.t[2]);
 }
 
 void func_80055814(s32 arg0) // 0x80055814
