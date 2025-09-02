@@ -1005,15 +1005,15 @@ typedef struct
 } s_800BCDA8;
 STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
 
-/* This is related to player movement/speed/animation (?). Function func_8003BF60 iterates
- * over a table of these structs and returns id_0 of the entry that contains the input x and z coords.
- * id_0 is always 1 or 2 and that in turns changes to 0x5000 or 0x4000 respectively (see Player_LowerBodyUpdate)
- * Different parts of the map have different animation/movemenet/walking speed ?
+/*= This is related to player movement/speed/animation(?). Function `func_8003BF60` iterates
+ * over a table of these structs and returns `id_0` of the entry that contains the input x and z coords.
+ * `id_0` is always 1 or 2, and that in turn changes to 0x5000 or 0x4000, respectively (see `Player_LowerBodyUpdate`).
+ * Different parts of the map have different animation/movemenet/walking speed?
  */
 typedef struct
 {
     s8 id_0;
-    // one byte of padding.
+    // 1 byte of padding.
     s16 minX_2;
     s16 maxX_4;
     s16 minZ_6;
@@ -1544,10 +1544,10 @@ typedef struct _MapOverlayHeader
     void              (*func_44)();
     void              (*func_48)(); // func(?).
     s_func_800625F4*  unkTable1_4C;
-    s16               unkTable1Len_50;
+    s16               unkTable1Count50;
     s8                unk_52[2];
     s_BloodSplat*     bloodSplats_54;
-    s16               bloodSplatsLen_58;
+    s16               bloodSplatCount_58;
     s8                unk_5A[2];
     s32               always0_5C;
     s32               always0_60;
@@ -1724,7 +1724,7 @@ typedef struct
 extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: Part of main exe, move to `main/` headers?
 
 /** Some sort of struct inside RODATA, likely a constant. */
-extern s_MapType g_MapTypeTable[16];
+extern s_MapType g_MapTypes[16];
 
 extern char D_8002510C[]; // "\aNow_loading."
 
@@ -3081,7 +3081,7 @@ void func_80056464(s_PlmHeader* plmHeader, s32 fileIdx, s_FsImageDesc* image, s3
 
 void func_80056504(s_PlmHeader* plmHeader, char* newStr, s_FsImageDesc* image, s32 arg3);
 
-s32 func_80056558(s_PlmHeader* plmHeader, char* fileName, s_FsImageDesc* image, s32 arg3);
+bool func_80056558(s_PlmHeader* plmHeader, char* fileName, s_FsImageDesc* image, s32 arg3);
 
 void func_8005660C(s_PlmTexList* plmTexList, s_FsImageDesc* image, s32 arg2);
 
@@ -3315,6 +3315,7 @@ void func_80088FF4(s32 groupIdx, s32 spawnIdx, s32 spawnFlags);
 
 bool func_8008F434(s32 arg0);
 
+/** Might retrun `bool`. */
 void func_80089090(s32 arg0);
 
 void func_800890B8();
@@ -3341,7 +3342,7 @@ void func_800894DC();
 
 void func_80089500();
 
-s32 func_80089524(s_SysWork_2514* arg0, s32 padInfoMode);
+bool func_80089524(s_SysWork_2514* arg0, s32 padInfoMode);
 
 s32 func_800895E4(s_SysWork_2514* arg0, s_8002AC04* arg1, u8 arg2);
 

@@ -35,7 +35,7 @@ g_GameWorkPtr                               = 0x80024D54; // type:u32
 //------------------------------------------------------
 //--- PA: 0x0001F8   VA: 0x80024D58   subsegment: rodata
 //------------------------------------------------------
-g_MapTypeTable                              = 0x8002500C; // type:MapType size:0xF0
+g_MapTypes                              = 0x8002500C; // type:MapType size:0xF0
 
 //--------------------------------------------------------------------------
 //--- PA: 0x000618   VA: 0x80025178   subsegment: .rodata, bodyprog_80032D1C

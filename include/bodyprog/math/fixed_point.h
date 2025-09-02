@@ -178,7 +178,6 @@
 #define FP_VOLUME(vol) \
     (u8)CLAMP(FP_FLOAT_TO(vol, Q8_SHIFT), 0, FP_FLOAT_TO(1.0f, Q8_SHIFT) - 1)
 
-// TODO: Maybe not appropriate for this project since it often results in ugly floats.
 /** @brief Converts a normalized floating-point color component in the range `[0.0f, 1.0f]` to fixed-point Q0.8, integer range `[0, 255]`.
  * Mapping is direct.
  *

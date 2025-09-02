@@ -85,6 +85,7 @@ Event_GasolineTankItemTake    = 0x800CEC84; // type:func
 //--- PA: 0x006414   VA: 0x800CF98C   subsegment: data, map0_s02_anim_info
 //------------------------------------------------------------------------
 g_AnimInfos                   = 0x800CF98C;
+g_Effect_BloodSplats          = 0x800D0BAC;
 
 //--------------------------------------------------------------
 //--- PA: 0x006500   VA: 0x800CFA78   subsegment: data, map0_s02

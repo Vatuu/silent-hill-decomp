@@ -426,13 +426,13 @@ void Gfx_Results_Save() // 0x8004D1A0
             colorVar0  = i % 12;
             colorVar0 += ((i % 12) < 0) ? 3 : 0;
             colorVar1  = colorVar0 >> 2;
-            rgColor    = 0x60 - (colorVar1 << 6);
+            rgColor    = FP_COLOR(0.375f) - (colorVar1 << 6);
             setRGB0(line, rgColor, rgColor, 0xFF);
         } 
         else 
         {
             colorVar1 = ((i % 12) - 4) / 2;
-            rgColor   = 0x60 - (colorVar1 << 6);
+            rgColor   = FP_COLOR(0.375f) - (colorVar1 << 6);
             setRGB0(line, rgColor, rgColor, 0xFF);
         }
 
@@ -1306,17 +1306,17 @@ void Gfx_Inventory_CmdOptionsDraw() // 0x8004E864
 
             if (i != 0)
             {
-                setRGB0(poly, 0, 0xC0, 0x40);
-                setRGB1(poly, 0, 0, 0);
-                setRGB2(poly, 0, 0xC0, 0x40);
-                setRGB3(poly, 0, 0, 0);
+                setRGB0(poly, FP_COLOR(0.0f), FP_COLOR(0.75f), FP_COLOR(0.25f));
+                setRGB1(poly, FP_COLOR(0.0f), FP_COLOR(0.0f),  FP_COLOR(0.0f));
+                setRGB2(poly, FP_COLOR(0.0f), FP_COLOR(0.75f), FP_COLOR(0.25f));
+                setRGB3(poly, FP_COLOR(0.0f), FP_COLOR(0.0f),  FP_COLOR(0.0f));
             }
             else
             {
-                setRGB0(poly, 0, 0, 0);
-                setRGB1(poly, 0, 0xC0, 0x40);
-                setRGB2(poly, 0, 0, 0);
-                setRGB3(poly, 0, 0xC0, 0x40);
+                setRGB0(poly, FP_COLOR(0.0f), FP_COLOR(0.0f),  FP_COLOR(0.0f));
+                setRGB1(poly, FP_COLOR(0.0f), FP_COLOR(0.75f), FP_COLOR(0.25f));
+                setRGB2(poly, FP_COLOR(0.0f), FP_COLOR(0.0f),  FP_COLOR(0.0f));
+                setRGB3(poly, FP_COLOR(0.0f), FP_COLOR(0.75f), FP_COLOR(0.25f));
             }
 
             setXY4(poly,

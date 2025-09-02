@@ -677,7 +677,7 @@ void func_8003BCF4() // 0x8003BCF4
 
 s32 MapTypeGet() // 0x8003BD2C
 {
-    return D_800BCE18.field_0[0].type_0 - g_MapTypeTable;
+    return D_800BCE18.field_0[0].type_0 - g_MapTypes;
 }
 
 void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
@@ -875,7 +875,7 @@ void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ
     ptr = mapHeader->type_0;
     func_800421D8(ptr->tag_2, ptr->id_0, var_a2, ((ptr->flags_6 >> 2) ^ 1) & (1 << 0), 0, 0);
 
-    if (mapHeader->type_0 == &g_MapTypeTable[0])
+    if (mapHeader->type_0 == &g_MapTypes[0])
     {
         func_80041ED0(1127, -1, 8);
     }
@@ -948,7 +948,7 @@ void func_8003C3AC() // 0x8003C3AC
     pos0.vx += FP_MULTIPLY_PRECISE(moveAmt, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
     pos0.vz += FP_MULTIPLY_PRECISE(moveAmt, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
 
-    if (D_800BCE18.field_0[0].type_0 == &g_MapTypeTable[0] &&
+    if (D_800BCE18.field_0[0].type_0 == &g_MapTypes[0] &&
         chara->position_18.vx >= FP_METER(-40.0f) && chara->position_18.vx <= FP_METER(40.0f) &&
         chara->position_18.vz >= FP_METER(200.0f) && chara->position_18.vz <= FP_METER(240.0f))
     {
@@ -2343,7 +2343,7 @@ void func_8003E740() // 0x8003E740
             D_800A9FB0 = 0;
         }
 
-        setRGB0(poly, D_800A9FB0 + 0x30, D_800A9FB0 + 0x30, D_800A9FB0 + 0x30);
+        setRGB0(poly, D_800A9FB0 + FP_COLOR(0.1875f), D_800A9FB0 + FP_COLOR(0.1875f), D_800A9FB0 + FP_COLOR(0.1875f));
         poly->tpage = 0x2C;
         poly->clut  = 0x1032;
 

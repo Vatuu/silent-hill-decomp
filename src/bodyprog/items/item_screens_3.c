@@ -323,7 +323,7 @@ void func_8004FB0C() // 0x8004FB0C
     poly = (POLY_F4*)GsOUT_PACKET_P;
 
     setPolyF4(poly);
-    setRGB0(poly, 0, 0, 0);
+    setRGB0(poly, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
     setXY4(poly,
            -160, -224,
            -160, -222,

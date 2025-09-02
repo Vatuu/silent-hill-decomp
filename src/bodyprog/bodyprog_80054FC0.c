@@ -46,17 +46,17 @@ void func_80055028() // 0x80055028
     D_800C4168.field_20 = 0x1000;
 
     // Likely a color triplet.
-    D_800C4168.field_28.r = 0x80;
-    D_800C4168.field_28.g = 0x80;
-    D_800C4168.field_28.b = 0x80;
+    D_800C4168.field_28.r = FP_COLOR(0.5f);
+    D_800C4168.field_28.g = FP_COLOR(0.5f);
+    D_800C4168.field_28.b = FP_COLOR(0.5f);
 
     D_800C4168.field_1 = 0;
     D_800C4168.field_2 = 0;
 
     // Likely a color triplet.
-    D_800C4168.field_1C.r = 0xFF;
-    D_800C4168.field_1C.g = 0xFF;
-    D_800C4168.field_1C.b = 0xFF;
+    D_800C4168.field_1C.r = FP_COLOR(1.0f);
+    D_800C4168.field_1C.g = FP_COLOR(1.0f);
+    D_800C4168.field_1C.b = FP_COLOR(1.0f);
 
     D_800C4168.field_4C = 0;
     D_800C4168.field_50 = 0;
@@ -289,7 +289,7 @@ u8 func_80055A50(s32 arg0) // 0x80055A50
         return 255;
     }
 
-    return D_800C4168.field_CC[((temp << 7) >> D_800C4168.field_14)];
+    return D_800C4168.field_CC[(temp << 7) >> D_800C4168.field_14];
 }
 
 void func_80055A90(CVECTOR* arg0, CVECTOR* arg1, u8 arg2, s32 arg3) // 0x80055A90
@@ -596,7 +596,7 @@ void func_80056504(s_PlmHeader* plmHeader, char* newStr, s_FsImageDesc* image, s
     func_80056558(plmHeader, sp10, image, arg3);
 }
 
-s32 func_80056558(s_PlmHeader* plmHeader, char* fileName, s_FsImageDesc* image, s32 arg3) // 0x80056558
+bool func_80056558(s_PlmHeader* plmHeader, char* fileName, s_FsImageDesc* image, s32 arg3) // 0x80056558
 {
     s_PlmTexList* texList;
     u32*          texName;
@@ -610,11 +610,11 @@ s32 func_80056558(s_PlmHeader* plmHeader, char* fileName, s_FsImageDesc* image, 
         {
             texList->field_C = 1;
             func_8005660C(texList, image, arg3);
-            return 1;
+            return true;
         }
     }
 
-    return 0;
+    return false;
 }
 
 void func_8005660C(s_PlmTexList* plmHeader, s_FsImageDesc* image, s32 arg2) // 0x8005660C
@@ -2081,14 +2081,14 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80054FC0", func_8005E650); // 0x
 #ifdef NON_MATCHING
 void func_8005E70C(void) // 0x8005E70C
 {
-    s32 index;
-    s16 len;
+    s32 i;
+    s16 count;
     u8  temp_v0;
 
-    len = g_MapOverlayHeader.unkTable1Len_50;
-    for (index = 0; index < len; index++)
+    count = g_MapOverlayHeader.unkTable1Count50;
+    for (i = 0; i < count; i++)
     {
-        temp_v0 = g_MapOverlayHeader.unkTable1_4C[index].field_A;
+        temp_v0 = g_MapOverlayHeader.unkTable1_4C[i].field_A;
         switch (temp_v0)
         {
             case 1:
@@ -2100,15 +2100,15 @@ void func_8005E70C(void) // 0x8005E70C
             case 20:
             case 21:
             case 22:
-                g_MapOverlayHeader.unkTable1_4C[index].field_A = 0;
+                g_MapOverlayHeader.unkTable1_4C[i].field_A = 0;
                 break;
         }
     }
 
-    len = g_MapOverlayHeader.bloodSplatsLen_58;
-    for (index = 0; index < len; index++)
+    count = g_MapOverlayHeader.bloodSplatCount_58;
+    for (i = 0; i < count; i++)
     {
-        g_MapOverlayHeader.bloodSplats_54[index].unk_0 = -1;
+        g_MapOverlayHeader.bloodSplats_54[i].unk_0 = NO_VALUE;
     }
 
     D_800C4414 = 0;
@@ -3124,8 +3124,8 @@ void func_8006D01C(VECTOR3* arg0, VECTOR3* arg1, s16 arg2, s_func_8006CC44* arg3
     s32     temp_a0;
     s32     temp_v0;
 
-    sp10.vx = FP_MULTIPLY(arg1->vx, arg2, 0xC);
-    sp10.vz = FP_MULTIPLY(arg1->vz, arg2, 0xC);
+    sp10.vx = FP_MULTIPLY(arg1->vx, arg2, Q12_SHIFT);
+    sp10.vz = FP_MULTIPLY(arg1->vz, arg2, Q12_SHIFT);
 
     if (arg3->field_44  || arg3->field_74)
     {
@@ -3153,8 +3153,8 @@ void func_8006D01C(VECTOR3* arg0, VECTOR3* arg1, s16 arg2, s_func_8006CC44* arg3
         return;
     }
 
-    arg0->vx = FP_MULTIPLY(arg1->vx, arg3->field_38, 0xC);
-    arg0->vz = FP_MULTIPLY(arg1->vz, arg3->field_38, 0xC);
+    arg0->vx = FP_MULTIPLY(arg1->vx, arg3->field_38, Q12_SHIFT);
+    arg0->vz = FP_MULTIPLY(arg1->vz, arg3->field_38, Q12_SHIFT);
     arg1->vx = sp10.vx - arg0->vx;
     arg1->vz = sp10.vz - arg0->vz;
 
@@ -3171,13 +3171,13 @@ void func_8006D01C(VECTOR3* arg0, VECTOR3* arg1, s16 arg2, s_func_8006CC44* arg3
     else
     {
         temp_a0 = SquareRoot0(temp_a0);
-        temp_s0 = (temp_s0 << 12) / temp_a0;
+        temp_s0 = (temp_s0 << 12) / temp_a0; // `Q12_SHIFT`?
         temp_s1 = (temp_s1 << 12) / temp_a0;
     }
 
-    temp_v0  = ((arg1->vx * temp_s1) + (arg1->vz * -temp_s0)) >> 0xC;
-    arg1->vx = FP_MULTIPLY(temp_v0, temp_s1, 0xC);
-    arg1->vz = FP_MULTIPLY(temp_v0, -temp_s0, 0xC);
+    temp_v0  = FP_FROM((arg1->vx * temp_s1) + (arg1->vz * -temp_s0), Q12_SHIFT);
+    arg1->vx = FP_MULTIPLY(temp_v0, temp_s1, Q12_SHIFT);
+    arg1->vz = FP_MULTIPLY(temp_v0, -temp_s0, Q12_SHIFT);
 
     if (temp_s0 > 0x555)
     {
@@ -3342,7 +3342,7 @@ bool func_8006DA08(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2, s_SubC
     temp_v0 = func_8006A1A4(&sp28, chara, 0);
 
     arg0->field_0 = false;
-    if (func_8006DCE0((s32)PSX_SCRATCH, 0, 0, vec1, vec2, 0, 0, temp_v0, sp28) != 0)
+    if (func_8006DCE0((s32)PSX_SCRATCH, 0, 0, vec1, vec2, 0, 0, temp_v0, sp28))
     {
         scratchPrev   = SetSp((s32)PSX_SCRATCH_ADDR(0x3D8));
         scratchAddr   = (s32)PSX_SCRATCH;
@@ -3399,7 +3399,7 @@ bool func_8006DC18(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2) // 0x8
     s32 scratchAddr;
 
     arg0->field_0 = false;
-    if (func_8006DCE0((s32)PSX_SCRATCH, 1, 0x4C, vec1, vec2, 0, 0, 0, 0) != 0)
+    if (func_8006DCE0((s32)PSX_SCRATCH, 1, 76, vec1, vec2, 0, 0, 0, 0))
     {
         scratchPrev   = SetSp((s32)PSX_SCRATCH_ADDR(0x3D8));
         scratchAddr   = (s32)PSX_SCRATCH;

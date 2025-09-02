@@ -1763,10 +1763,10 @@ void func_80089500() // 0x80089500
     func_800892DC(9, 0xA0);
 }
 
-s32 func_80089524(s_SysWork_2514* arg0, s32 padInfoMode) // 0x80089524
+bool func_80089524(s_SysWork_2514* arg0, s32 padInfoMode) // 0x80089524
 {
     s32             padState;
-    s32             cond;
+    bool            cond;
     u8              socket;
     s_SysWork_2514* temp;
 
@@ -2889,9 +2889,9 @@ void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2) // 0x8008E794
             sinAngle0 = 0;
         }
 
-        poly->r0    = (sinAngle0 >> 6);
-        poly->g0    = ((sinAngle0 * 7) >> 9);
-        poly->b0    = ((sinAngle0 * 5) >> 9);
+        poly->r0    = sinAngle0 >> 6;
+        poly->g0    = (sinAngle0 * 7) >> 9;
+        poly->b0    = (sinAngle0 * 5) >> 9;
         poly->tpage = 45;
         poly->clut  = 0x4E;
         poly->u0    = 64;
