@@ -8014,7 +8014,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
     // Used for `player.playerMoveDistance_126`.
     #define GET_REAL_SPEED(x)         \
-        (((x) == SpeedZone_Fast) ? 0x5000 : (((x) == SpeedZone_Slow) ? 0x3800 : 0x4000))
+        (((x) == SpeedZoneType_Fast) ? 0x5000 : (((x) == SpeedZoneType_Slow) ? 0x3800 : 0x4000))
 
     // Used for `player.playerMoveDistance_126`.
     #define GET_VAL(val, delta)     \

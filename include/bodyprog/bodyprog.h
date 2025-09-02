@@ -29,12 +29,12 @@
 // ENUMS
 // ======
 
-typedef enum
+typedef enum _SpeedZoneType
 {
-    SpeedZone_Slow = 0,
-    SpeedZone_Norm  = 1,
-    SpeedZone_Fast = 2,
-} e_SpeedZone;
+    SpeedZoneType_Slow = 0,
+    SpeedZoneType_Norm = 1,
+    SpeedZoneType_Fast = 2,
+} e_SpeedZoneType;
 
 typedef enum _Sfx
 {
@@ -1012,7 +1012,7 @@ typedef struct
 } s_800BCDA8;
 STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
 
-typedef struct
+typedef struct _SpeedZone
 {
     s8 speedIdx_0;
     // 1 byte of padding.
@@ -1034,7 +1034,7 @@ typedef struct
     s_Skeleton    field_14; // Could be different struct?
 } s_800BCE18_0_CC; // Unknown size.
 
-typedef struct
+typedef struct _MapType
 {
     s16          id_0;
     char         tag_2[4];
