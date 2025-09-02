@@ -2283,8 +2283,6 @@ void func_8008B438(s32 arg0, s32 arg1, s32 arg2) // 0x8008B438
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B474); // 0x8008B474
 
-// TODO: RODATA migration.
-#ifdef NON_MATCHING
 void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
 {
     s32 sfx;
@@ -2344,9 +2342,6 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
         func_8005DC1C(sfx, pos, FP_VOLUME(0.75f), 0);
     }
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B664); // 0x8008B664
-#endif
 
 /** Main attack handling function. */
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B714); // 0x8008B714
@@ -2919,3 +2914,10 @@ void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2) // 0x8008E794
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008EA68); // 0x8008EA68
 
 void func_8008EF18() {}
+
+INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80085D78", hack_vcSetWatchTgtXzPos_fix);
+
+INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80085D78", D_8002B2BC);
+
+INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80085D78", D_8002B2CC);
+

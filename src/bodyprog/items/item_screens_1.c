@@ -5,6 +5,8 @@
 #include "bodyprog/player_logic.h"
 #include "bodyprog/math.h"
 
+const s32 rodataPad_80025E90 = 0;
+
 void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
 {
     s8       temp_v0;

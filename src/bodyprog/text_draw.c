@@ -14,6 +14,12 @@
 #define DIALOG_CODE_SELECT          'S'
 #define DIALOG_CODE_HIGH_RESOLUTION 'H'
 
+const s32 rodataPad_80025D68 = 0;
+
+INCLUDE_RODATA("asm/bodyprog/nonmatchings/text_draw", g_12x16FontWidths);
+
+INCLUDE_RODATA("asm/bodyprog/nonmatchings/text_draw", g_MapMsg_Colors);
+
 void Gfx_StringSetPosition(s32 x, s32 y) // 0x8004A87C
 {
     #define OFFSET_X SCREEN_POSITION_X(50.0f)
@@ -835,3 +841,5 @@ void func_8004BB10() // 0x8004BB10
     GsFCALL4.g4[GsDivMODE_NDIV][GsLMODE_FOG]  = GsTMDfastG4LFG;
     GsFCALL4.tg4[GsDivMODE_NDIV][GsLMODE_FOG] = GsTMDfastTG4LFG;
 }
+
+const s32 unused_Rodata_80025E88 = 0xC9457F00; // Unused.

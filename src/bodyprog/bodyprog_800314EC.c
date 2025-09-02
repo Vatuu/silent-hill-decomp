@@ -10,6 +10,8 @@
 #include "main/fsqueue.h"
 #include "screens/stream/stream.h"
 
+const s32 rodataPad_80024CA0 = 0;
+
 void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image) // 0x800314EC
 {
     s32       baseYOffset;

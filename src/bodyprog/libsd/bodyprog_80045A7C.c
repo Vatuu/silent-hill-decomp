@@ -9,6 +9,8 @@
 #include "bodyprog/math.h"
 #include "main/fsqueue.h"
 
+const s32 rodataPad_80025BF4 = 0;
+
 extern CdlLOC D_800C15E8;
 
 /** This file could possibly be `sdmgr.c`, or
