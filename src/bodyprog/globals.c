@@ -9,28 +9,17 @@ s_GameWork* const       g_GameWorkPtr   = &g_GameWork;
 
 const u32 D_80024D58 = 0; // Nothing references it. Might be just padding.
 
-/** TODO: Figure out what this is. I'm only guessing this layout based
- * on the fact the last 3 words are zero and that matches the pattern of
- * using last empty entry as end of list. marker.
- */
-typedef struct
+const static s_WaterZone WaterLightZones0[] =
 {
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
-} s_foo_unknown;
-
-const static s_foo_unknown D_80024D5C[] =
-{
-    { 0x00080001, 0x0500F880, 0x0280F880 },
-    { 0x00080001, 0x02800000, 0x05000000 },
+    { 1, 8, 0xF880, 0x0500, 0xF880, 0x0280 },
+    { 1, 8, 0x0000, 0x0280, 0x0000, 0x0500 },
     {}
 };
 
-const static s_foo_unknown D_80024D80[] =
+const static s_WaterZone WaterLightZones1[] =
 {
-    { 0x00080001, 0x0280F600, 0x0A00F600 },
-    { 0x00080001, 0x0A00F600, 0x0280F600 },
+    { 1, 8, 0xF600, 0x0280, 0xF600, 0x0A00 },
+    { 1, 8, 0xF600, 0x0A00, 0xF600, 0x0280 },
     {}
 };
 
@@ -160,20 +149,20 @@ const static s_SpeedZone SpeedZones_XXX[] =
 
 const s_MapType g_MapTypes[16] =
 {
-    { 1370, "THR", 0, 0, NULL      , SpeedZones_THR },
-    { -1  , "SC" , 6, 0, NULL      , SpeedZones_SC  },
-    { -1  , "SU" , 6, 0, NULL      , SpeedZones_SU  },
-    { 912 , "SPR", 0, 0, NULL      , SpeedZones_SP  },
-    { 976 , "SPU", 0, 0, NULL      , SpeedZones_SP  },
-    { 679 , "RSR", 0, 0, NULL      , SpeedZones_RSR },
-    { 738 , "RSU", 0, 0, NULL      , SpeedZones_RSU },
-    { 173 , "APR", 0, 0, NULL      , SpeedZones_AP  },
-    { 196 , "APU", 0, 0, NULL      , SpeedZones_AP  },
-    { -1  , "ER" , 6, 0, NULL      , SpeedZones_ER  },
-    { -1  , "ER" , 6, 0, NULL      , SpeedZones_ER  },
-    { 266 , "DR" , 0, 0, D_80024D5C, SpeedZones_DR  },
-    { 265 , "DRU", 0, 0, D_80024D80, SpeedZones_DR  },
-    { -1  , "HP" , 6, 0, NULL      , SpeedZones_HP  },
-    { -1  , "HU" , 6, 0, NULL      , SpeedZones_HU  },
-    { -1  , "XXX", 8, 0, NULL      , SpeedZones_XXX }
+    { 1370, "THR", 0, 0, NULL            , SpeedZones_THR },
+    { -1  , "SC" , 6, 0, NULL            , SpeedZones_SC  },
+    { -1  , "SU" , 6, 0, NULL            , SpeedZones_SU  },
+    { 912 , "SPR", 0, 0, NULL            , SpeedZones_SP  },
+    { 976 , "SPU", 0, 0, NULL            , SpeedZones_SP  },
+    { 679 , "RSR", 0, 0, NULL            , SpeedZones_RSR },
+    { 738 , "RSU", 0, 0, NULL            , SpeedZones_RSU },
+    { 173 , "APR", 0, 0, NULL            , SpeedZones_AP  },
+    { 196 , "APU", 0, 0, NULL            , SpeedZones_AP  },
+    { -1  , "ER" , 6, 0, NULL            , SpeedZones_ER  },
+    { -1  , "ER" , 6, 0, NULL            , SpeedZones_ER  },
+    { 266 , "DR" , 0, 0, WaterLightZones0, SpeedZones_DR  },
+    { 265 , "DRU", 0, 0, WaterLightZones1, SpeedZones_DR  },
+    { -1  , "HP" , 6, 0, NULL            , SpeedZones_HP  },
+    { -1  , "HU" , 6, 0, NULL            , SpeedZones_HU  },
+    { -1  , "XXX", 8, 0, NULL            , SpeedZones_XXX }
 };
