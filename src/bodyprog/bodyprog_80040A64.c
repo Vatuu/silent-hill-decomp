@@ -1807,7 +1807,35 @@ void func_80045258(s_Skeleton** skels, s_Bone* bones, s32 boneIdx, s_PlmHeader* 
 }
 
 // Anim func.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800452EC); // 0x800452EC
+void func_800452EC(s_Skeleton* skel) // 0x800452EC
+{
+    s32                temp_a0;
+    s_func_800452EC*   var_a1;
+    s32                var_v0;
+    u32                temp_v1;
+    s_func_800452EC_8* temp_v0;
+
+    var_a1 = skel->field_4;
+
+    while (var_a1)
+    {
+        temp_v0 = var_a1->field_8;
+        temp_v1 = temp_v0->field_1 - 0x30;
+        temp_a0 = temp_v0->field_0 - 0x30;
+
+        if (temp_v1 < 0xA && temp_a0 >= 0 && temp_a0 < 0xA)
+        {
+            var_v0 = (temp_a0 * 0xA) + temp_v1;
+        }
+        else
+        {
+            var_v0 = 0;
+        }
+
+        var_a1->field_10 = var_v0;
+        var_a1           = var_a1->field_14;
+    }
+}
 
 // Anim func. Traverses skeleton bones for something.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045360); // 0x80045360

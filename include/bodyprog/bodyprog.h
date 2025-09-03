@@ -835,6 +835,22 @@ typedef struct
     s32          queueIdx_8; // Passed to `Fs_QueueEntryLoadStatusGet`, thus the name.
 } s_func_80041CB4;
 
+typedef struct
+{
+    u8 field_0;
+    u8 field_1;
+} s_func_800452EC_8;
+
+typedef struct
+{
+    s8                      unk_0[8];
+    s_func_800452EC_8*      field_8;
+    s8                      unk_C[4];
+    s8                      field_10;
+    s8                      unk_11[3];
+    struct s_func_800452EC* field_14;
+} s_func_800452EC;
+
 // Maybe a collection of matrices.
 typedef struct
 {
@@ -855,7 +871,7 @@ typedef struct
     u8      boneIdx_1; // Current bone index? Used in traversal.
     s8      field_2;
     s8      field_3;
-    s32     field_4;
+    s_func_800452EC* field_4;
     s_Bone* bones_8;
 
     // Maybe incorrect.
@@ -2802,6 +2818,9 @@ void func_800451B0(s_Skeleton* skel, s_PlmHeader* plmHeader, s32* arg2);
 
 /** Anim func. Param names are rough. */
 void func_80045258(s_Skeleton** skels, s_Bone* bones, s32 boneIdx, s_PlmHeader* plmHeader);
+
+/** Anim func. */
+void func_800452EC(s_Skeleton* skel);
 
 /** Anim func. Traverses skeleton bones to set flags/mask. */
 void func_800453E8(s_Skeleton* skel, bool cond);
