@@ -2341,15 +2341,15 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80069DF0); // 0x
 
 s32 func_80069FFC(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara) // 0x80069FFC
 {
-    s_func_80069FFC sp28;
+    s_func_8006AB50 sp28;
     VECTOR3         sp40;
     s32             sp50;
     s32             sp54;
     s32             var_s1;
 
-    sp28.field_0.vx = chara->position_18.vx + chara->field_D8.field_4;
-    sp28.field_0.vy = chara->position_18.vy - FP_METER(0.02f);
-    sp28.field_0.vz = chara->position_18.vz + chara->field_D8.field_6;
+    sp28.position_0.vx = chara->position_18.vx + chara->field_D8.field_4;
+    sp28.position_0.vy = chara->position_18.vy - FP_METER(0.02f);
+    sp28.position_0.vz = chara->position_18.vz + chara->field_D8.field_6;
 
     if (func_800426E4(chara->position_18.vx, chara->position_18.vz) == NULL)
     {
@@ -2357,9 +2357,9 @@ s32 func_80069FFC(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara) // 0x8
         return 1;
     }
 
-    sp28.field_C.vy = chara->field_C8;
-    sp28.field_C.vx = chara->field_CA;
-    sp28.field_C.vz = chara->field_D4;
+    sp28.rotation_C.vy = chara->field_C8;
+    sp28.rotation_C.vx = chara->field_CA;
+    sp28.rotation_C.vz = chara->field_D4;
 
     sp28.field_12 = chara->field_E0_8;
 

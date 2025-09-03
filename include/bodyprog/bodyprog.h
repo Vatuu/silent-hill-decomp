@@ -200,13 +200,6 @@ typedef struct
 } s_80043578;
 STATIC_ASSERT_SIZEOF(s_80043578, 28);
 
-typedef struct
-{
-    VECTOR3  field_0;
-    SVECTOR3 field_C;
-    s8       field_12;
-} s_func_80069FFC;
-
 // Exception, as one of the unidentified structs uses this.
 typedef struct _s_8002AC04
 {
