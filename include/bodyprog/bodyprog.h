@@ -318,17 +318,17 @@ typedef struct
 {
     s32     field_0;
     s32     field_4;
-    s32     field_8;
+    s32     field_8; // 2D distance.
     SVECTOR field_C;
     s16     directionX_14;
     s16     directionZ_16;
-    s32     positionX_18;
-    s32     positionZ_1C;
+    q23_8   positionX_18;
+    q23_8   positionZ_1C;
     s32     field_20;
     s32     field_24;
-    s16     field_28;
-    s16     field_2A;
-    s16     field_2C;
+    s16     field_28; // } `SVECTOR3`, packed rotation?
+    s16     field_2A; // }
+    s16     field_2C; // }
 } s_func_8006ABC0;
 
 typedef struct
@@ -502,7 +502,7 @@ typedef struct
     s8       unk_C[20];
     s32      field_20;
     s8       unk_24[8];
-    VECTOR3  field_2C;
+    VECTOR3  field_2C; // Q23.8
     s8       unk_38[4];
     s32      field_3C;
     s32      field_40;
@@ -510,7 +510,7 @@ typedef struct
     s8       unk_48[4];
     s16      field_4C;
     s16      field_4E;
-    SVECTOR3 field_50;
+    SVECTOR3 field_50; // Q23.8
     s8       unk_56[2];
     s16      field_58;
     s16      field_5A;
@@ -932,15 +932,6 @@ typedef struct
 
 typedef struct
 {
-    u8  field_0;
-    s8  unk_1;
-    s16 field_2;
-    s8  unk_4[4];
-    s32 field_8;
-} s_8008E51C;
-
-typedef struct
-{
     u8 unk_0[6];
     u8 field_6;
 } s_AnimFile; // Size: 80?
@@ -1022,6 +1013,17 @@ typedef struct _SpeedZone
     s16 maxZ_8;
 } s_SpeedZone;
 
+typedef struct _WaterZone
+{
+    u8  enabled_0;
+    // 1 byte of padding.
+    s16 illumination_2;
+    s16 minX_4; // } Q11.4?
+    s16 maxX_6; // }
+    s16 minZ_8; // }
+    s16 maxZ_A; // }
+} s_WaterZone;
+
 // Looks similar to `s_Skeleton`
 typedef struct
 {
@@ -1040,7 +1042,7 @@ typedef struct _MapType
     char         tag_2[4];
     u8           flags_6;
     u8           flags_7;
-    s32*         field_8;  // Pointer to some other const data or `NULL`.
+    s_WaterZone* waterZones_8;
     s_SpeedZone* speedZones_C;
 } s_MapType;
 
@@ -1290,21 +1292,22 @@ typedef struct
 typedef struct
 {
     u8            field_0;
-    u8            field_1;
+    u8            fogEnabled_1; // `bool`
     u8            field_2;
     u8            field_3;
-    s32           field_4;
-    s32           field_8;
-    s8            unk_C[8];
-    s32           field_14;
-    s32           field_18;
-    CVECTOR       field_1C;
+    s_WaterZone*  waterZones_4;
+    s32           screenBrightness_8;
+    s8            unk_C[4];
+    q23_8         drawDistance_10; // Name from SHME, "has no effect when fog is disabled".
+    s32           fogRelated_14;   // "FogThing1" from SHME, seems to affect distance where fog begins.
+    s32           fogRelated_18;   // "FogThing2" from SHME.
+    CVECTOR       fogColor_1C;
     s32           field_20;
     u8            field_24;
     u8            field_25;
     u8            field_26;
     s8            unk_27;
-    CVECTOR       field_28;
+    CVECTOR       worldTintColor_28;
     MATRIX        field_2C;
     s32           field_4C;
     s16           field_50;
@@ -1328,9 +1331,9 @@ typedef struct
 
 typedef struct
 {
-    u8      field_0;
-    u8      field_1;
-    u8      field_2;
+    u8      field_0; // `bool`?
+    u8      field_1; // `bool`?
+    u8      field_2; // `bool`?
     u8      field_3;
     s8      unk_4[4];
     s16     field_8;
@@ -1365,16 +1368,16 @@ STATIC_ASSERT_SIZEOF(s_CharaFileInfo, 16);
 
 typedef struct
 {
-    SVECTOR3 posTarget_0;
-    SVECTOR3 lookAtTarget_6;
+    SVECTOR3 posTarget_0;    // Q7.8
+    SVECTOR3 lookAtTarget_6; // Q7.8
     s16      field_C[2]; // `field_C[1]` gets passed to `vcChangeProjectionValue`.
 } s_DmsKeyframeCamera;
 STATIC_ASSERT_SIZEOF(s_DmsKeyframeCamera, 16);
 
 typedef struct
 {
-    SVECTOR3 position_0;
-    SVECTOR3 rotation_6;
+    SVECTOR3 position_0; // Q7.8
+    SVECTOR3 rotation_6; // Q7.8
 } s_DmsKeyframeCharacter;
 STATIC_ASSERT_SIZEOF(s_DmsKeyframeCharacter, 12);
 
@@ -1408,7 +1411,7 @@ typedef struct
     u8             field_3; // Usually 0, but sometimes filled in.
     u32            field_4; // Unknown, correlates with DMS file size.
     s_DmsInterval* intervalPtr_8;
-    VECTOR3        origin_C; // Origin point, gets added to character positions.
+    VECTOR3        origin_C; // Q23.8 | Origin point, gets added to character positions.
     s_DmsEntry*    characters_18;
     s_DmsEntry     camera_1C;
 } s_DmsHeader;
@@ -2731,14 +2734,14 @@ bool IpdHeader_IsLoaded(s32 ipdIdx);
 void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1);
 
 /** Gets distance to the edge of a file chunk? */
-s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 clip);
+s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, bool clip);
 
-void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, s32 clip);
+void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
 
 bool func_80043578(s_80043578* arg0, s32 arg1, s32 arg2);
 
 /** Maybe facilitates file chunk streaming as the player moves around the map. */
-s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s16 fileChunkCoordX, s16 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, s32 clip);
+s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s16 fileChunkCoordX, s16 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
 
 void func_80043A24(GsOT* ot, s32 arg1);
 
@@ -2994,7 +2997,7 @@ void func_800550D0();
 
 void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
 
-void func_800553C4(u8 arg0, u8 arg1, u8 arg2, u8 arg3);
+void Gfx_FogParamsSet(u8 fogEnabled, u8 fogColorR, u8 fogColorG, u8 fogColorB);
 
 void func_800553E0(u32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6);
 
@@ -3005,7 +3008,7 @@ s32 func_8005545C(SVECTOR* vec);
 
 s32 func_80055490(SVECTOR* arg0);
 
-void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1, SVECTOR* svec, s32 x, s32 y, s32 z, s32 arg8);
+void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1, SVECTOR* svec, s32 x, s32 y, s32 z, s_WaterZone* waterZones);
 
 void func_80055648(s32 arg0, SVECTOR* arg1);
 
@@ -3200,13 +3203,16 @@ void func_8008D454();
 
 void func_8008D464();
 
-void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s32 arg3);
+void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones);
 
 void func_8008D5A0(VECTOR3* arg0, s16 arg1);
 
 s32 func_8008D8C0(s16 x0, s32 x1, s32 x2);
 
 void func_8008D990(s32, s32, VECTOR3*, s32, s32);
+
+/** `posX` and `posX` appear to be in Q27.4. */
+s_WaterZone* Map_GetWaterZone(s32 posX, s32 posZ, s_WaterZone* waterZone);
 
 void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2);
 
@@ -3958,7 +3964,7 @@ u32 func_8003ED64();
 
 void func_8003EDA8();
 
-void func_8003EDB8(s32* arg0, s32* arg1);
+void func_8003EDB8(CVECTOR* arg0, CVECTOR* arg1);
 
 void func_8003EE30(s32 arg0, s8* arg1, s32 arg2, s32 arg3);
 

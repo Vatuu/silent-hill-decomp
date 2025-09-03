@@ -956,7 +956,7 @@ void func_8003C3AC() // 0x8003C3AC
         pos0.vz = FP_METER(200.0f);
     }
 
-    if (D_800C4168.field_1 != 0)
+    if (D_800C4168.fogEnabled_1)
     {
         vwGetViewPosition(&pos1);
         vwGetViewAngle(&pos2);
@@ -1086,9 +1086,9 @@ void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* pos, SVECTOR3* rot) // 0x80
             arg0->field_10.field_9 = ret;
         } 
 
-        coord0 = Q19_12_TO_Q23_8(pos->vx);
-        coord1 = Q19_12_TO_Q23_8(pos->vy);
-        coord2 = Q19_12_TO_Q23_8(pos->vz);
+        coord0 = FP_METER_TO_GEO(pos->vx);
+        coord1 = FP_METER_TO_GEO(pos->vy);
+        coord2 = FP_METER_TO_GEO(pos->vz);
         vx     = rot->vx >> 2;
         vz     = rot->vz >> 2;
         vy     = rot->vy;
@@ -1813,14 +1813,14 @@ void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4)
 
     if (arg3 != 0)
     {
-        sp20 = D_800C4168.field_28;
+        sp20 = D_800C4168.worldTintColor_28;
 
         func_80055330(D_800C4168.field_0, D_800C4168.field_20,
                       D_800C4168.field_3,
-                      FP_MULTIPLY_PRECISE(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, D_800C4168.field_28.r, Q12_SHIFT) << 5,
-                      FP_MULTIPLY_PRECISE(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, D_800C4168.field_28.g, Q12_SHIFT) << 5,
-                      FP_MULTIPLY_PRECISE(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, D_800C4168.field_28.b, Q12_SHIFT) << 5,
-                      D_800C4168.field_8);
+                      FP_MULTIPLY_PRECISE(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, D_800C4168.worldTintColor_28.r, Q12_SHIFT) << 5,
+                      FP_MULTIPLY_PRECISE(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, D_800C4168.worldTintColor_28.g, Q12_SHIFT) << 5,
+                      FP_MULTIPLY_PRECISE(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, D_800C4168.worldTintColor_28.b, Q12_SHIFT) << 5,
+                      D_800C4168.screenBrightness_8);
     }
 
     func_80045534(&D_800BCE18.field_0[0].field_18[arg0]->field_14, &g_ObjectTable0[g_ObjectTableIdx], arg2,
@@ -1828,7 +1828,7 @@ void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4)
 
     if (arg3 != 0)
     {
-        func_80055330(D_800C4168.field_0, D_800C4168.field_20, D_800C4168.field_3, sp20.r << 5, sp20.g << 5, sp20.b << 5, D_800C4168.field_8);
+        func_80055330(D_800C4168.field_0, D_800C4168.field_20, D_800C4168.field_3, sp20.r << 5, sp20.g << 5, sp20.b << 5, D_800C4168.screenBrightness_8);
     }
 }
 
@@ -2520,13 +2520,10 @@ void func_8003EDA8() // 0x8003EDA8
     g_SysWork.field_2388.field_14 = 1;
 }
 
-void func_8003EDB8(s32* arg0, s32* arg1) // 0x8003EDB8
+void func_8003EDB8(CVECTOR* arg0, CVECTOR* arg1) // 0x8003EDB8
 {
-    s_SysWork_2288* ptr0;
-    s_SysWork_2288* ptr1;
-
-    memcpy(arg0, &(ptr0 = &g_SysWork.field_2388)->field_1C[g_SysWork.field_2388.isFlashlightOn_15].field_0.field_20.vector_0[1], 4); // TODO: Is there a better solution?
-    memcpy(arg1, &(ptr1 = &g_SysWork.field_2388)->field_1C[g_SysWork.field_2388.isFlashlightOn_15].field_0.field_24.vector_0[1], 4);
+    *arg0 = g_SysWork.field_2388.field_1C[g_SysWork.field_2388.isFlashlightOn_15].field_0.field_21;
+    *arg1 = g_SysWork.field_2388.field_1C[g_SysWork.field_2388.isFlashlightOn_15].field_0.field_25;
 }
 
 void func_8003EE30(s32 arg0, s8* arg1, s32 arg2, s32 arg3) // 0x8003EE30
@@ -2690,7 +2687,9 @@ void func_8003F170() // 0x8003F170
 
     temp = FP_MULTIPLY(func_8003F4DC(&sp60, &sp58, ptr2->field_0.field_4, ptr2->field_0.field_0.s_field_0.field_2, func_80080A10(), &g_SysWork), g_SysWork.field_2378, Q12_SHIFT);
 
-    func_800554C4(temp, ptr2->field_2C, sp60, g_SysWork.field_235C, &sp58, g_SysWork.field_2360.vx, g_SysWork.field_2360.vy, g_SysWork.field_2360.vz, D_800BCE18.field_0[0].type_0->field_8);
+    func_800554C4(temp, ptr2->field_2C, sp60, g_SysWork.field_235C, &sp58, 
+                  g_SysWork.field_2360.vx, g_SysWork.field_2360.vy, g_SysWork.field_2360.vz,
+                  D_800BCE18.field_0[0].type_0->waterZones_8);
     func_80055814(ptr2->field_30);
 
     if (ptr->field_154.field_0.field_0.s_field_0.field_0 & (1 << 3))
@@ -2988,7 +2987,7 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s
         arg0->field_0.field_4 = Math_WeightedAverageGet(arg1->field_0.field_4, arg2->field_0.field_4, weight);
     }
 
-    if (arg1->field_0.field_18.vector_0[0] == 0 && arg2->field_0.field_18.vector_0[0] != 0)
+    if (arg1->field_0.field_18 == 0 && arg2->field_0.field_18 != 0)
     {
         func_8003FE04(&arg0->field_0, &arg1->field_0, &arg2->field_0, weight1);
     }
@@ -3003,8 +3002,8 @@ void func_8003FCB0(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructU
     s32 p0;
     
     p0 = FP_ALPHA(1.0f) - arg3;
-    LoadAverageCol(&arg1->field_20.vector_0[1], &arg2->field_20.vector_0[1], p0, arg3, &arg0->field_20.vector_0[1]);
-    LoadAverageCol(&arg1->field_24.vector_0[1], &arg2->field_24.vector_0[1], p0, arg3, &arg0->field_24.vector_0[1]);
+    LoadAverageCol(&arg1->field_21.r, &arg2->field_21.r, p0, arg3, &arg0->field_21.r);
+    LoadAverageCol(&arg1->field_25.r, &arg2->field_25.r, p0, arg3, &arg0->field_25.r);
 }
 
 void func_8003FD38(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s32 weight0, s32 weight1, s32 alphaTo) // 0x8003FD38
@@ -3022,7 +3021,7 @@ void func_8003FD38(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s
     arg0->field_0.field_10 = Math_WeightedAverageGet(arg1->field_0.field_10, arg2->field_0.field_10, weight1);
     arg0->field_0.field_6  = Math_WeightedAverageGet(arg1->field_0.field_6, arg2->field_0.field_6, weight0);
 
-    LoadAverageCol(arg1->field_0.field_14.vector_0, arg2->field_0.field_14.vector_0, FP_ALPHA(1.0f) - alphaTo, alphaTo, arg0->field_0.field_14.vector_0);
+    LoadAverageCol(&arg1->field_0.fogColor_14.r, &arg2->field_0.fogColor_14.r, FP_ALPHA(1.0f) - alphaTo, alphaTo, &arg0->field_0.fogColor_14.r);
 }
 
 void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructUnk3* arg2, s32 alphaTo) // 0x8003FE04
@@ -3030,22 +3029,23 @@ void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructU
     s32 alphaFrom;
 
     alphaFrom = FP_ALPHA(1.0f) - alphaTo;
-    LoadAverageCol(&arg1->field_18.vector_0[1], &arg2->field_18.vector_0[1], alphaFrom, alphaTo, &arg0->field_18.vector_0[1]);
-    LoadAverageCol(&arg1->field_1C.vector_0[1], &arg2->field_1C.vector_0[1], alphaFrom, alphaTo, &arg0->field_1C.vector_0[1]);
+    LoadAverageCol(&arg1->field_19.r, &arg2->field_19.r, alphaFrom, alphaTo, &arg0->field_19.r);
+    LoadAverageCol(&arg1->field_1D.r, &arg2->field_1D.r, alphaFrom, alphaTo, &arg0->field_1D.r);
 
-    if ((arg0->field_18.field_0 & ~0xFF) || (arg0->field_1C.field_0 & ~0xFF))
+    if ((arg0->field_19.r || arg0->field_19.g || arg0->field_19.b) ||
+        (arg0->field_1D.r || arg0->field_1D.g || arg0->field_1D.b))
     {
-        arg0->field_18.vector_0[0] = 1;
+        arg0->field_18 = 1;
     }
     else
     {
-        arg0->field_18.vector_0[0] = 0;
+        arg0->field_18 = 0;
     }
 }
 
 s32 func_8003FEC0(s_sub_StructUnk3* arg0) // 0x8003FEC0
 {
-    if (D_800C4168.field_1 != 0)
+    if (D_800C4168.fogEnabled_1)
     {
         return arg0->field_10;
     }
@@ -3068,12 +3068,12 @@ void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
     var_t0  = CLAMP(temp_v1, 0, 0xFF);
 
     func_80055330(arg0->field_0.field_0.s_field_0.field_2, arg0->field_0.field_6, arg0->field_0.field_0.s_field_0.field_1, arg0->field_0.field_8, arg0->field_0.field_A, arg0->field_0.field_C, var_t0);
-    func_800553C4(arg0->field_0.field_E != 0, arg0->field_0.field_14.vector_0[0], arg0->field_0.field_14.vector_0[1], arg0->field_0.field_14.vector_0[2]);
+    Gfx_FogParamsSet(arg0->field_0.field_E != 0, arg0->field_0.fogColor_14.r, arg0->field_0.fogColor_14.g, arg0->field_0.fogColor_14.b);
 
     temp_a0 = arg0->field_0.field_10;
 
     func_80055840(temp_a0, temp_a0 + FP_FLOAT_TO(1.0f, Q12_SHIFT));
-    func_800553E0(arg0->field_0.field_18.vector_0[0], arg0->field_0.field_18.vector_0[1], arg0->field_0.field_18.vector_0[2], arg0->field_0.field_18.vector_0[3], arg0->field_0.field_1C.vector_0[1], arg0->field_0.field_1C.vector_0[2], arg0->field_0.field_1C.vector_0[3]);
+    func_800553E0(arg0->field_0.field_18, arg0->field_0.field_19.r, arg0->field_0.field_19.g, arg0->field_0.field_19.b, arg0->field_0.field_1D.r, arg0->field_0.field_1D.g, arg0->field_0.field_1D.b);
 }
 
 void func_80040004(s_800BCE18* arg0) // 0x80040004

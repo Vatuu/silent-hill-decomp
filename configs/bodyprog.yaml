@@ -72,8 +72,9 @@ segments:
       - [0x1330, .rodata, items/item_screens_1]
       - [0x1350, .rodata, items/item_screens_2]
       - [0x1770, .rodata, items/item_screens_3]
-      - [0x39CC, rodata] # Part of `bodyprog_80055028` that can't be merge due inserting `D_80028B34` with INCLUDE_RODATA causes misalignment.
-      - [0x4BF0, .rodata, bodyprog_80055028]
+      - [0x39CC, .rodata, bodyprog_80055028]
+      - [0x4034, rodata] # Part of `bodyprog_800706E4` that can't be merged because inserting `D_80028B34` with `INCLUDE_RODATA` causes misalignment.
+      - [0x4BF0, .rodata, bodyprog_800706E4]
       - [0x5CF0, .rodata, view/vc_main]
       - [0x5F9C, .rodata, bodyprog_80085D78]
       - [0x6778, .rodata, demo]
@@ -109,7 +110,8 @@ segments:
       - [0x27528,   c, items/item_screens_1]
       - [0x27D7C,   c, items/item_screens_2]
       - [0x2AA7C,   c, items/item_screens_3]
-      - [0x30460,   c, bodyprog_80055028]
+      - [0x304C8,   c, bodyprog_80055028]
+      - [0x4BB84,   c, bodyprog_800706E4]
       - [0x5BDE0,   c, view/vc_main]
       - [0x61218,   c, bodyprog_80085D78]
       - [0x6A3C0,   c, demo]

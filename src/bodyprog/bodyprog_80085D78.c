@@ -2440,9 +2440,12 @@ void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, s32 
     keyframes = charaEntry->keyframes_C.character;
     Dms_CharacterKeyframeInterpolate(&curFrame, &keyframes[keyframePrev], &keyframes[keyframeNext], alpha);
 
-    pos->vx = FP_TO(curFrame.position_0.vx + header->origin_C.vx, Q4_SHIFT);
-    pos->vy = FP_TO(curFrame.position_0.vy + header->origin_C.vy, Q4_SHIFT);
-    pos->vz = FP_TO(curFrame.position_0.vz + header->origin_C.vz, Q4_SHIFT);
+    // Set position.
+    pos->vx = FP_METER_FROM_GEO(curFrame.position_0.vx + header->origin_C.vx);
+    pos->vy = FP_METER_FROM_GEO(curFrame.position_0.vy + header->origin_C.vy);
+    pos->vz = FP_METER_FROM_GEO(curFrame.position_0.vz + header->origin_C.vz);
+
+    // Set rotation.
     rot->vx = curFrame.rotation_6.vx;
     rot->vy = curFrame.rotation_6.vy;
     rot->vz = curFrame.rotation_6.vz;
@@ -2480,13 +2483,13 @@ s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2,
     func_8008D1D0(&keyframePrev, &keyframeNext, &alpha, time, camEntry, header);
     camProjValue = Dms_CameraKeyframeInterpolate(&curFrame, &camEntry->keyframes_C.camera[keyframePrev], &camEntry->keyframes_C.camera[keyframeNext], alpha);
 
-    posTarget->vx = FP_TO(curFrame.posTarget_0.vx + header->origin_C.vx, Q4_SHIFT);
-    posTarget->vy = FP_TO(curFrame.posTarget_0.vy + header->origin_C.vy, Q4_SHIFT);
-    posTarget->vz = FP_TO(curFrame.posTarget_0.vz + header->origin_C.vz, Q4_SHIFT);
+    posTarget->vx = FP_METER_FROM_GEO(curFrame.posTarget_0.vx + header->origin_C.vx);
+    posTarget->vy = FP_METER_FROM_GEO(curFrame.posTarget_0.vy + header->origin_C.vy);
+    posTarget->vz = FP_METER_FROM_GEO(curFrame.posTarget_0.vz + header->origin_C.vz);
 
-    lookAtTarget->vx = FP_TO(curFrame.lookAtTarget_6.vx + header->origin_C.vx, Q4_SHIFT);
-    lookAtTarget->vy = FP_TO(curFrame.lookAtTarget_6.vy + header->origin_C.vy, Q4_SHIFT);
-    lookAtTarget->vz = FP_TO(curFrame.lookAtTarget_6.vz + header->origin_C.vz, Q4_SHIFT);
+    lookAtTarget->vx = FP_METER_FROM_GEO(curFrame.lookAtTarget_6.vx + header->origin_C.vx);
+    lookAtTarget->vy = FP_METER_FROM_GEO(curFrame.lookAtTarget_6.vy + header->origin_C.vy);
+    lookAtTarget->vz = FP_METER_FROM_GEO(curFrame.lookAtTarget_6.vz + header->origin_C.vz);
 
     if (arg2 != NULL)
     {
@@ -2656,10 +2659,10 @@ void func_8008D464() // 0x8008D464
     D_800C4818.field_1 = 0;
 }
 
-void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s32 arg3) // 0x8008D470
+void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones) // 0x8008D470
 {
-    s32         var;
-    s_8008E51C* ptr;
+    s32          var;
+    s_WaterZone* waterZone;
 
     if (D_800C4818.field_0 == 0)
     {
@@ -2679,14 +2682,15 @@ void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s32 arg3) // 0x8008D470
 
     if (D_800C4818.field_1 == 0)
     {
-        ptr = func_8008E51C(FP_FROM(pos->vx, Q8_SHIFT), FP_FROM(pos->vz, Q8_SHIFT), arg3);
-        if (ptr != NULL)
+        // TODO: Conversion to Q27.4?
+        waterZone = Map_GetWaterZone(pos->vx >> 8, pos->vz >> 8, waterZones);
+        if (waterZone != NULL)
         {
             func_8008E5B4();
 
-            if (ptr->field_0 == 1)
+            if (waterZone->enabled_0 == true)
             {
-                var = FP_TO(ptr->field_2, Q8_SHIFT);
+                var = FP_TO(waterZone->illumination_2, Q8_SHIFT);
                 func_8008E794(pos, D_800C4818.field_20, var);
                 func_8008EA68(rot, pos, var);
             }
@@ -2837,7 +2841,26 @@ void func_8008E4EC(s_PlmHeader* plmHeader) // 0x8008E4EC
     func_80056504(plmHeader, D_8002B2CC.str, &D_800AFD9C, 1);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008E51C); // 0x8008E51C
+s_WaterZone* Map_GetWaterZone(s32 posX, s32 posZ, s_WaterZone* waterZone)
+{
+    s_WaterZone* zonePtr;
+
+    if (waterZone == NULL)
+    {
+        return NULL;
+    }
+
+    for (zonePtr = waterZone; zonePtr->enabled_0; zonePtr++)
+    {
+        if (posX >= zonePtr->minX_4 && posX < zonePtr->maxX_6 &&
+            posZ >= zonePtr->minZ_8 && posZ < zonePtr->maxZ_A)
+        {
+            return zonePtr;
+        }
+    }
+
+    return NULL;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008E5B4); // 0x8008E5B4
 

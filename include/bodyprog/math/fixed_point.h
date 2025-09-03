@@ -5,6 +5,10 @@
 #include "bodyprog/math/constants.h"
 #include "bodyprog/math/arithmetic.h"
 
+// =================================
+// Fixed-Point Utils and Arithmetic
+// =================================
+
 /** @brief Converts an integer to a fixed-point Q format.
  *
  * @param x `int` to convert.
@@ -94,6 +98,10 @@
 #define FP_MULTIPLY_FLOAT_PRECISE(aInt, bFlt, shift) \
     FP_MULTIPLY((s64)(aInt), (s64)FP_FLOAT_TO(bFlt, shift), (shift))
 
+// ====================================
+// Raw Fixed-Point Q Format Conversion
+// ====================================
+
 /** @brief Converts a floating-point value to fixed-point Q19.12.
  *
  * @param x Value to convert (`float`).
@@ -142,12 +150,12 @@
 #define Q23_8_TO_Q19_12(x) \
     (s32)((x) << 4)
 
-/** @brief Converts a fixed-point value from Q7.8 to Q3.12.
+/** @brief Converts a fixed-point value from Q0.8 to Q3.12.
  *
- * @param x Fixed-point value in Q7.8  to convert.
+ * @param x Fixed-point value in Q0.8 to convert.
  * @return `x` converted to fixed-point Q3.12 (`s16`).
  */
-#define Q7_8_TO_Q3_12(x) \
+#define Q0_8_TO_Q3_12(x) \
     (s16)((x) << 4)
 
 /** @brief Converts a fixed-point value from Q19.12 to Q23.8.
@@ -157,6 +165,18 @@
  */
 #define Q19_12_TO_Q23_8(x) \
     (s32)((x) >> 4)
+
+/** @brief Converts a fixed-point value from Q3.12 to Q0.8.
+ *
+ * @param x Fixed-point value in Q3.12 to convert.
+ * @return `x` converted to fixed-point Q0.8 (`u8`).
+ */
+#define Q3_12_TO_Q0_8(x) \
+    (u8)((x) >> 4)
+
+// =========================================
+// Abstract Fixed-Point Q Format Conversion
+// =========================================
 
 /** @brief Converts a floating-point alpha in the range `[0.0f, 1.0f]` to fixed-point Q3.12, integer range `[0, 4096]`.
  *
@@ -206,7 +226,7 @@
 
 /** @brief Converts floating-point degrees to unsigned fixed-point in Q0.8, integer range `[0, 255]`.
  *
- * This angle format is used in loaded level data.
+ * This angle format is used in map data.
  *
  * @note 1 degree = 0.711111 units.
  *
@@ -216,14 +236,23 @@
 #define FP_ANGLE_PACKED(deg) \
     (u8)CLAMP(FP_FLOAT_TO((deg) / 360.0f, Q8_SHIFT), 0, FP_FLOAT_TO(1.0f, Q8_SHIFT) - 1)
 
+/** @brief Converts signed fixed-point degrees in Q3.12, integer range `[0, 4096]` to
+ * unsigned fixed-point Q0.8, integer range `[0, 255]`.
+ *
+ * @param deg Unsigned fixed-point degrees in Q3.12, integer range `[0, 4096]`.
+ * @return Unsigned fixed-point degrees in Q0.8, integer range `[0, 255]` (`s16`).
+ */
+#define FP_ANGLE_TO_PACKED(deg) \
+    Q3_12_TO_Q0_8(deg);
+
 /** @brief Converts unsigned fixed-point degrees in Q0.8, integer range `[0, 255]` to
  * unsigned fixed-point Q3.12, integer range `[0, 4096]`.
  *
  * @param packedDeg Unsigned fixed-point degrees in Q0.8, integer range `[0, 255]`.
  * @return Unsigned fixed-point degrees in Q3.12, integer range `[0, 4096]` (`s16`).
  */
-#define FP_ANGLE_FROM_PACKED(packedDeg) \
-    Q7_8_TO_Q3_12(packedDeg)
+#define FP_ANGLE_FROM_PACKED(deg) \
+    Q0_8_TO_Q3_12(deg)
 
 /** @brief Normalizes unsigned fixed-point degrees in Q3.12 to the signed integer range `[-2048, 2047]`.
  *
@@ -254,9 +283,7 @@
     (s32)(((((rad) < 0.0f) ? (PI + (PI - ABS(rad))) : (rad)) * ((float)FP_PI / PI)) * \
           (((rad) < 0.0f || (rad) >= PI) ? 1.0f : 2.0f))
 
-/** @brief Converts floating-point meters to fixed-point Q19.12.
- *
- * This position format is used in world space.
+/** @brief Converts floating-point meters to fixed-point world space Q19.12.
  *
  * @note 1 meter = 4096 units.
  *
@@ -266,9 +293,7 @@
 #define FP_METER(met) \
     Q19_12(met)
 
-/** @brief Converts floating-point meters to fixed-point Q23.8.
- *
- * This position format is used in geometry space.
+/** @brief Converts floating-point meters to fixed-point geometry space Q23.8.
  *
  * @note 1 meter = 256 units.
  *
@@ -278,7 +303,7 @@
 #define FP_METER_GEO(met) \
     Q23_8(met)
 
-/** @brief Converts fixed-point world space meters in Q19.12 to Q23.8.
+/** @brief Converts fixed-point world space meters in Q19.12 to geometry space Q23.8.
  *
  * @param met Fixed-point world space meters in Q19.12.
  * @return Fixed-point geometry space meters in Q23.8 (`s32`).
@@ -286,7 +311,7 @@
 #define FP_METER_TO_GEO(met) \
     Q19_12_TO_Q23_8(met)
 
-/** @brief Converts fixed-point geometry space meters in Q23.8 to Q19.12.
+/** @brief Converts fixed-point geometry space meters in Q23.8 to world space Q19.12.
  *
  * @param met Fixed-point world space meters in Q23.8.
  * @return Fixed-point world space meters in Q19.12 (`s32`).

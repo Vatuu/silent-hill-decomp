@@ -27,14 +27,14 @@ g_SavegamePtr                               = 0x80024D48; // type:u32
 g_Controller0                               = 0x80024D4C; // type:u32
 g_Controller1                               = 0x80024D50; // type:u32
 g_GameWorkPtr                               = 0x80024D54; // type:u32
-
-//------------------------------------------------------
-//--- PA: 0x0004AC   VA: 0x8002500C   subsegment: rodata
-//------------------------------------------------------
 g_MapTypes                                  = 0x8002500C; // type:MapType size:0xF0
 
 //--------------------------------------------------------------------------
-//--- PA: 0x000618   VA: 0x80025178   subsegment: .rodata, bodyprog_80032D1C
+//--- PA: 0x0005AC   VA: 0x8002510C   subsegment: .rodata, bodyprog_80032D1C
+//--------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+//--- PA: 0x000618   VA: 0x80025178   subsegment: .rodata, bodyprog_80033548
 //--------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------
@@ -72,13 +72,17 @@ g_MapMsg_Colors                             = 0x80025DC0;
 //-----------------------------------------------------------------------------
 g_InventoryItemRotations                    = 0x800262FC; // type:DVECTOR size:0x380
 
-//------------------------------------------------------
-//--- PA: 0x0039CC   VA: 0x8002852C   subsegment: rodata
-//------------------------------------------------------
+//--------------------------------------------------------------------------
+//--- PA: 0x0039CC   VA: 0x8002852C   subsegment: .rodata, bodyprog_80055028
+//--------------------------------------------------------------------------
 hack_D_80028A18_fix                         = 0x80028A18; // type:s32
 
+//------------------------------------------------------
+//--- PA: 0x004034   VA: 0x80028B94   subsegment: rodata
+//------------------------------------------------------
+
 //--------------------------------------------------------------------------
-//--- PA: 0x004BF0   VA: 0x80029750   subsegment: .rodata, bodyprog_80055028
+//--- PA: 0x004BF0   VA: 0x80029750   subsegment: .rodata, bodyprog_800706E4
 //--------------------------------------------------------------------------
 hack_D_8002A844_fix                         = 0x8002A844; // type:s32
 
@@ -234,7 +238,7 @@ GameFs_OptionBinLoad                        = 0x80032C68; // type:func
 GameFs_SaveLoadBinLoad                      = 0x80032CA8; // type:func
 
 //--------------------------------------------------------------------
-//--- PA: 0x00E1BC   VA: 0x80032D1C   subsegment: c, bodyprog_80032D1C
+//--- PA: 0x00E188   VA: 0x80032CE8   subsegment: c, bodyprog_80032D1C
 //--------------------------------------------------------------------
 GameState_Unk0_Update                       = 0x80032D1C; // type:func
 MainLoop                                    = 0x80032EE0; // type:func
@@ -242,6 +246,10 @@ Settings_ScreenAndVolUpdate                 = 0x800333CC; // type:func
 Settings_RestoreDefaults                    = 0x8003342C; // type:func
 Settings_RestoreControlDefaults             = 0x80033480; // type:func
 nullsub_800334C8                            = 0x800334C8; // type:func
+
+//--------------------------------------------------------------------
+//--- PA: 0x00E9E8   VA: 0x80033548   subsegment: c, bodyprog_80033548
+//--------------------------------------------------------------------
 SysWork_Clear                               = 0x800340E0; // type:func
 MainLoop_ShouldWarmReset                    = 0x80034108; // type:func
 Game_WarmBoot                               = 0x80034264; // type:func
@@ -302,6 +310,7 @@ Gfx_MainMenu_FogUpdate                      = 0x8003BC8C; // type:func
 MapTypeGet                                  = 0x8003BD2C; // type:func
 GameFs_BgEtcGfxLoad                         = 0x8003BE6C; // type:func
 GameFs_BgItemLoad                           = 0x8003BE9C; // type:func
+Map_GetSpeedZone                            = 0x8003BF60; // type:func
 GameFs_FlameGfxLoad                         = 0x8003E710; // type:func
 Game_TurnFlashlightOn                       = 0x8003ECBC; // type:func
 Game_TurnFlashlightOff                      = 0x8003ECE4; // type:func
@@ -450,11 +459,12 @@ Gfx_Items_Display                           = 0x80054720; // type:func
 Gfx_Items_SetAmbientLighting                = 0x80054928; // type:func
 Gfx_PickupItemAnimate                       = 0x80054AD8; // type:func
 Inventory_AddSpecialItem                    = 0x80054CAC; // type:func
+Items_AmmoReloadCalculation                 = 0x80054FC0; // type:func
 
 //--------------------------------------------------------------------
-//--- PA: 0x030460   VA: 0x80054FC0   subsegment: c, bodyprog_80055028
+//--- PA: 0x0304C8   VA: 0x80055028   subsegment: c, bodyprog_80055028
 //--------------------------------------------------------------------
-Items_AmmoReloadCalculation                 = 0x80054FC0; // type:func
+Gfx_FogParamsSet                            = 0x800553C4; // type:func
 PlmHeader_FixOffsets                        = 0x800560FC; // type:func
 ObjList_FixOffsets                          = 0x800561A4; // type:func
 PlmHeader_IsTextureLoaded                   = 0x80056888; // type:func
@@ -463,6 +473,10 @@ StringCopy                                  = 0x80056D64; // type:func
 func_800571D0                               = 0x800571D0; // type:func size:0x58 - Fix for truncated function.
 GameState_MapScreen_Update                  = 0x80066EB0; // type:func
 IpdColData_FixOffsets                       = 0x8006993C; // type:func
+
+//--------------------------------------------------------------------
+//--- PA: 0x04BB84   VA: 0x800706E4   subsegment: c, bodyprog_800706E4
+//--------------------------------------------------------------------
 Player_CharaTurn_0                          = 0x800711C4; // type:func
 Player_CharaTurn_1                          = 0x80071224; // type:func
 Player_CharaRotate                          = 0x80071284; // type:func
@@ -578,6 +592,7 @@ Dms_CharacterKeyframeInterpolate            = 0x8008CC98; // type:func
 Dms_CameraGetTargetPos                      = 0x8008CE1C; // type:func
 Dms_CameraKeyframeInterpolate               = 0x8008CFEC; // type:func
 Math_LerpFixed12                            = 0x8008D3D4; // type:func
+Map_GetWaterZone                            = 0x8008E51C; // type:func
 
 //-------------------------------------------------------
 //--- PA: 0x06A3C0   VA: 0x8008EF20   subsegment: c, demo
@@ -2551,4 +2566,3 @@ smf_song                                    = 0x800C8B00;
 g_MapOverlayHeader                          = 0x800C957C; // type:MapOverlayHeader size:0x84C - size incomplete
 D_800FE5F8                                  = 0x800FE5F8; // ignore:True - Fixes fake missmatch in `Demo_Update`.
 hack_D_800FE5FC_fix                         = 0x800FE5FC; // ignore:true - Part of temp memory block at 800FDE00, has to be unsymbolized for C to match.
-Map_GetSpeedZone = 0x8003BF60; // type:func

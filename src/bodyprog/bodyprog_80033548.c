@@ -1493,11 +1493,10 @@ void func_80035AC8(s32 idx) // 0x80035AC8
 
 void func_80035B04(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord) // 0x80035B04
 {
-    coord->flg = false;
-
-    coord->coord.t[0] = FP_FROM(pos->vx, Q4_SHIFT);
-    coord->coord.t[1] = FP_FROM(pos->vy, Q4_SHIFT);
-    coord->coord.t[2] = FP_FROM(pos->vz, Q4_SHIFT);
+    coord->flg        = false;
+    coord->coord.t[0] = FP_METER_TO_GEO(pos->vx);
+    coord->coord.t[1] = FP_METER_TO_GEO(pos->vy);
+    coord->coord.t[2] = FP_METER_TO_GEO(pos->vz);
 
     func_80096E78(rot, (MATRIX*)&coord->coord);
 }

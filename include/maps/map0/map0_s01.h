@@ -53,9 +53,9 @@ extern s32 D_800DE160;
 
 extern s32 D_800DE164;
 
-extern s32 D_800E214C;
+extern CVECTOR D_800E214C;
 
-extern s32 D_800E2150;
+extern CVECTOR D_800E2150;
 
 extern s_2Vectors D_800E2160;
 
