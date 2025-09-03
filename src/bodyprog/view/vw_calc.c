@@ -412,9 +412,9 @@ void func_80049C2C(MATRIX* outMat, s32 x, s32 y, s32 z) // 0x80049C2C
     VECTOR in;  // Q23.8
     VECTOR out;
 
-    in.vx = Q19_12_TO_Q23_8(x);
-    in.vy = Q19_12_TO_Q23_8(y);
-    in.vz = Q19_12_TO_Q23_8(z);
+    in.vx = FP_METER_TO_GEO(x);
+    in.vy = FP_METER_TO_GEO(y);
+    in.vz = FP_METER_TO_GEO(z);
     ApplyMatrixLV(&GsWSMATRIX, &in, &out);
 
     // Copy matrix fields as 32-bit words. Maybe inlined `CopyMatrix` func?
@@ -456,9 +456,9 @@ bool Vw_AabbVisibleInScreenCheck(s32 xMin, s32 xMax, s32 yMin, s32 yMax, s32 zMi
 
     for (i = 0; i < BOX_VERT_COUNT; i++)
     {
-        vertOffset.vx = (i & (1 << 0)) ? Q19_12_TO_Q23_8(xMax - xMin) : Q23_8(0.0f);
-        vertOffset.vy = (i & (1 << 1)) ? Q19_12_TO_Q23_8(yMax - yMin) : Q23_8(0.0f);
-        vertOffset.vz = (i & (1 << 2)) ? Q19_12_TO_Q23_8(zMax - zMin) : Q23_8(0.0f);
+        vertOffset.vx = (i & (1 << 0)) ? FP_METER_TO_GEO(xMax - xMin) : FP_METER_GEO(0.0f);
+        vertOffset.vy = (i & (1 << 1)) ? FP_METER_TO_GEO(yMax - yMin) : FP_METER_GEO(0.0f);
+        vertOffset.vz = (i & (1 << 2)) ? FP_METER_TO_GEO(zMax - zMin) : FP_METER_GEO(0.0f);
 
         screenDepth = RotTransPers(&vertOffset, &screenPos, &depthDmy, &depthDmy) - 1;
 

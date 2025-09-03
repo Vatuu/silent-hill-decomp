@@ -2656,10 +2656,10 @@ void func_8008D464() // 0x8008D464
     D_800C4818.field_1 = 0;
 }
 
-void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s_WaterZone *waterZones) // 0x8008D470
+void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones) // 0x8008D470
 {
     s32          var;
-    s_WaterZone* wzPtr;
+    s_WaterZone* waterZone;
 
     if (D_800C4818.field_0 == 0)
     {
@@ -2679,14 +2679,15 @@ void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s_WaterZone *waterZones
 
     if (D_800C4818.field_1 == 0)
     {
-        wzPtr = Map_GetWaterZone(FP_FROM(pos->vx, Q8_SHIFT), FP_FROM(pos->vz, Q8_SHIFT), waterZones);
-        if (wzPtr != NULL)
+        // TODO: Conversion to Q27.4?
+        waterZone = Map_GetWaterZone(pos->vx >> 8, pos->vz >> 8, waterZones);
+        if (waterZone != NULL)
         {
             func_8008E5B4();
 
-            if (wzPtr->enabled_0 == 1)
+            if (waterZone->enabled_0 == true)
             {
-                var = FP_TO(wzPtr->illumination_2, Q8_SHIFT);
+                var = FP_TO(waterZone->illumination_2, Q8_SHIFT);
                 func_8008E794(pos, D_800C4818.field_20, var);
                 func_8008EA68(rot, pos, var);
             }
@@ -2837,21 +2838,24 @@ void func_8008E4EC(s_PlmHeader* plmHeader) // 0x8008E4EC
     func_80056504(plmHeader, D_8002B2CC.str, &D_800AFD9C, 1);
 }
 
-s_WaterZone* Map_GetWaterZone(s32 posX, s32 posZ, s_WaterZone* zone)
+s_WaterZone* Map_GetWaterZone(s32 posX, s32 posZ, s_WaterZone* waterZone)
 {
     s_WaterZone* zonePtr;
-    if (!zone)
+
+    if (waterZone == NULL)
     {
         return NULL;
     }
 
-    for (zonePtr = zone; zonePtr->enabled_0 != 0; zonePtr++)
+    for (zonePtr = waterZone; zonePtr->enabled_0; zonePtr++)
     {
-        if (posX >= zonePtr->minX_4 && posX < zonePtr->maxX_6 && posZ >= zonePtr->minZ_8 && posZ < zonePtr->maxZ_A)
+        if (posX >= zonePtr->minX_4 && posX < zonePtr->maxX_6 &&
+            posZ >= zonePtr->minZ_8 && posZ < zonePtr->maxZ_A)
         {
             return zonePtr;
         }
     }
+
     return NULL;
 }
 

@@ -187,9 +187,9 @@ void func_800D3C80(s_SubCharacter* chara, GsCOORDINATE2* coord)
     chara->position_18.vy  = 0;
     chara->position_18.vz += vec.vz;
 
-    coord->coord.t[0] = Q19_12_TO_Q23_8(chara->position_18.vx);
-    coord->coord.t[1] = Q19_12_TO_Q23_8(chara->position_18.vy);
-    coord->coord.t[2] = Q19_12_TO_Q23_8(chara->position_18.vz);
+    coord->coord.t[0] = FP_METER_TO_GEO(chara->position_18.vx);
+    coord->coord.t[1] = FP_METER_TO_GEO(chara->position_18.vy);
+    coord->coord.t[2] = FP_METER_TO_GEO(chara->position_18.vz);
 }
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D3E18);

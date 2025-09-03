@@ -213,9 +213,9 @@ void func_800410D8(VECTOR3* pos0, s32* arg1, s32* arg2, SVECTOR* rot, VECTOR3* p
 
     coord.super      = NULL;
     coord.workm      = GsIDMATRIX;
-    coord.workm.t[0] = FP_FROM(pos1->vx, Q4_SHIFT);
-    coord.workm.t[1] = FP_FROM(pos1->vy, Q4_SHIFT);
-    coord.workm.t[2] = FP_FROM(pos1->vz, Q4_SHIFT);
+    coord.workm.t[0] = FP_METER_TO_GEO(pos1->vx);
+    coord.workm.t[1] = FP_METER_TO_GEO(pos1->vy);
+    coord.workm.t[2] = FP_METER_TO_GEO(pos1->vz);
     coord.flg        = true;
 
     func_80049AF8(&coord, &mat);
@@ -1072,12 +1072,12 @@ void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1) // 0x80042C3C
     }
 }
 
-s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 clip) // 0x80042DE8
+s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, bool clip) // 0x80042DE8
 {
     s32 dist;
 
-    dist = func_80042E2C(FP_FROM(posX, Q4_SHIFT), FP_FROM(posZ, Q4_SHIFT), fileChunkCoordX, fileChunkCoordZ);
-    if (clip != 0)
+    dist = func_80042E2C(FP_METER_TO_GEO(posX), FP_METER_TO_GEO(posZ), fileChunkCoordX, fileChunkCoordZ);
+    if (clip)
     {
         dist -= FP_METER(1.0f);
         if (dist < FP_METER(0.0f))
@@ -1095,7 +1095,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042EBC); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800431E4); // 0x800431E4
 
-void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, s32 clip) // 0x80043338
+void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip) // 0x80043338
 {
     arg0->field_C  = func_80042DE8(posX0, posZ0, arg0->fileChunkCoordX_8, arg0->fileChunkCoordZ_A, clip);
     arg0->field_10 = func_80042DE8(posX1, posZ1, arg0->fileChunkCoordX_8, arg0->fileChunkCoordZ_A, clip);
@@ -1123,7 +1123,7 @@ bool func_80043578(s_80043578* arg0, s32 arg1, s32 arg2) // 0x80043578
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800435E4); // 0x800435E4
 
-s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s16 fileChunkCoordX, s16 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, s32 clip) // 0x800436D8
+s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s16 fileChunkCoordX, s16 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip) // 0x800436D8
 {
     // Return `NO_VALUE` if no file specified.
     if (fileIdx == NO_VALUE)

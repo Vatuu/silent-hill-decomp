@@ -58,7 +58,7 @@
            ((mat).m[1][0] * (vec).vy) + \
            ((mat).m[2][0] * (vec).vz)) >> 17)
 
-/** @brief Computes the magnitude of a 2D vector in Q19.12, using low-resolution intermediate components to avoid overflow.
+/** @brief Computes the magnitude of a 2D vector in Q19.12, using intermediate components in Q23.8 to avoid overflow.
  *
  * @param x X vector component.
  * @param z Z vector component.

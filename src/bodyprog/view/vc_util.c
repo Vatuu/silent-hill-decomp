@@ -162,14 +162,14 @@ void vcMakeHeroHeadPos(VECTOR3* head_pos) // 0x8004047C
 
     Vw_CoordHierarchyMatrixCompute(&g_SysWork.playerBoneCoords_890[PlayerBone_Head], &neck_lwm);
 
-    fpos.vx = Q23_8(0.0f);
-    fpos.vy = Q23_8(-0.1f);
-    fpos.vz = Q23_8(0.0f);
+    fpos.vx = FP_METER_GEO(0.0f);
+    fpos.vy = FP_METER_GEO(-0.1f);
+    fpos.vz = FP_METER_GEO(0.0f);
     ApplyMatrix(&neck_lwm, &fpos, &vec);
 
-    head_pos->vx = Q23_8_TO_Q19_12(vec.vx + neck_lwm.t[0]);
-    head_pos->vy = Q23_8_TO_Q19_12(vec.vy + neck_lwm.t[1]) - FP_METER(0.3f);
-    head_pos->vz = Q23_8_TO_Q19_12(vec.vz + neck_lwm.t[2]);
+    head_pos->vx = FP_METER_FROM_GEO(vec.vx + neck_lwm.t[0]);
+    head_pos->vy = FP_METER_FROM_GEO(vec.vy + neck_lwm.t[1]) - FP_METER(0.3f);
+    head_pos->vz = FP_METER_FROM_GEO(vec.vz + neck_lwm.t[2]);
 }
 
 void vcAddOfsToPos(VECTOR3* out_pos, VECTOR3* in_pos, s16 ofs_xz_r, s16 ang_y, s32 ofs_y) // 0x80040518
@@ -231,9 +231,9 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
 
     vwGetViewPosition(&cam_pos);
 
-    vec0.vx = Q19_12_TO_Q23_8(cam_pos.vx);
-    vec0.vy = Q19_12_TO_Q23_8(cam_pos.vy);
-    vec0.vz = Q19_12_TO_Q23_8(cam_pos.vz);
+    vec0.vx = FP_METER_TO_GEO(cam_pos.vx);
+    vec0.vy = FP_METER_TO_GEO(cam_pos.vy);
+    vec0.vz = FP_METER_TO_GEO(cam_pos.vz);
 
     vwGetViewAngle(&cam_ang);
 
@@ -292,11 +292,11 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
     {
         if (g_Controller1->btnsHeld_C & ControllerFlag_LStickUp)
         {
-            vec0.vy -= Q23_8(0.1f);
+            vec0.vy -= FP_METER_GEO(0.1f);
         }
         if (g_Controller1->btnsHeld_C & ControllerFlag_LStickDown)
         {
-            vec0.vy += Q23_8(0.1f);
+            vec0.vy += FP_METER_GEO(0.1f);
         }
 
         if (g_Controller1->btnsHeld_C & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
@@ -344,15 +344,15 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
     {
         SVECTOR vec1;
 
-        // TODO: `Q23_8(5.0f)`? But `vwAngleToVector` expects Q19.12. Maybe an error by TS.
+        // TODO: `FP_METER_GEO(5.0f)`? But `vwAngleToVector` expects `FP_METER`. Maybe an error by TS.
         vwAngleToVector(&vec1, &cam_ang, FP_METER(0.3125f));
 
-        ref_pos->vx = Q23_8_TO_Q19_12(vec0.vx + vec1.vx);
-        ref_pos->vy = Q23_8_TO_Q19_12(vec0.vy + vec1.vy);
-        ref_pos->vz = Q23_8_TO_Q19_12(vec0.vz + vec1.vz);
+        ref_pos->vx = FP_METER_FROM_GEO(vec0.vx + vec1.vx);
+        ref_pos->vy = FP_METER_FROM_GEO(vec0.vy + vec1.vy);
+        ref_pos->vz = FP_METER_FROM_GEO(vec0.vz + vec1.vz);
 
         sys_p->cameraAngleY_237A   = Math_AngleNormalize(cam_ang.vy + FP_ANGLE(180.0f));
-        sys_p->cameraY_2384        = Q23_8_TO_Q19_12(-vec1.vy);
-        sys_p->cameraRadiusXz_2380 = Q23_8_TO_Q19_12(SquareRoot0(SQUARE(vec1.vx) + SQUARE(vec1.vz)));
+        sys_p->cameraY_2384        = FP_METER_FROM_GEO(-vec1.vy);
+        sys_p->cameraRadiusXz_2380 = FP_METER_FROM_GEO(SquareRoot0(SQUARE(vec1.vx) + SQUARE(vec1.vz)));
     }
 }

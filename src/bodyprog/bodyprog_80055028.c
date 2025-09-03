@@ -218,16 +218,16 @@ void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coo
     {
         Vw_CoordHierarchyMatrixCompute(coord1, &mat);
 
-        tempSvec.vx = Q19_12_TO_Q23_8(x);
-        tempSvec.vy = Q19_12_TO_Q23_8(y);
-        tempSvec.vz = Q19_12_TO_Q23_8(z);
+        tempSvec.vx = FP_METER_TO_GEO(x);
+        tempSvec.vy = FP_METER_TO_GEO(y);
+        tempSvec.vz = FP_METER_TO_GEO(z);
 
         ApplyMatrix(&mat, &tempSvec, &vec);
 
         ptr2     = &D_800C4168.field_60;
-        ptr2->vx = Q23_8_TO_Q19_12(vec.vx + mat.t[0]);
-        ptr2->vy = Q23_8_TO_Q19_12(vec.vy + mat.t[1]);
-        ptr2->vz = Q23_8_TO_Q19_12(vec.vz + mat.t[2]);
+        ptr2->vx = FP_METER_FROM_GEO(vec.vx + mat.t[0]);
+        ptr2->vy = FP_METER_FROM_GEO(vec.vy + mat.t[1]);
+        ptr2->vz = FP_METER_FROM_GEO(vec.vz + mat.t[2]);
     }
 
     vwVectorToAngle(&D_800C4168.field_6C, &D_800C4168.field_58);
@@ -242,7 +242,7 @@ s32 func_800557DC() // 0x800557DC
     MATRIX mat;
 
     func_80049C2C(&mat, D_800C4168.field_60.vx, D_800C4168.field_60.vy, D_800C4168.field_60.vz);
-    return Q23_8_TO_Q19_12(mat.t[2]);
+    return FP_METER_FROM_GEO(mat.t[2]);
 }
 
 void func_80055814(s32 arg0) // 0x80055814
@@ -2454,16 +2454,18 @@ void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2)
 {
     s16 angleXz;
 
-    result->field_C.vx = FP_FROM(vec->vx, Q4_SHIFT);
-    result->field_C.vy = FP_FROM(vec->vy, Q4_SHIFT);
-    result->field_C.vz = FP_FROM(vec->vz, Q4_SHIFT);
+    result->field_C.vx = FP_METER_TO_GEO(vec->vx);
+    result->field_C.vy = FP_METER_TO_GEO(vec->vy);
+    result->field_C.vz = FP_METER_TO_GEO(vec->vz);
 
     result->field_8 = SquareRoot0(SQUARE(result->field_C.vx) + SQUARE(result->field_C.vz));
 
     if (result->field_8 != 0)
     {
+        // @unused
         result->directionX_14 = FP_METER(result->field_C.vx) / result->field_8;
         result->directionZ_16 = FP_METER(result->field_C.vz) / result->field_8;
+
         angleXz               = ratan2(result->field_C.vz, result->field_C.vx);
         result->directionX_14 = Math_Cos(angleXz);
         result->directionZ_16 = Math_Sin(angleXz);
@@ -2471,15 +2473,15 @@ void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2)
     else
     {
         result->directionX_14 = FP_METER(1.0f);
-        result->directionZ_16 = 0;
+        result->directionZ_16 = FP_METER(0.0f);
     }
 
-    result->field_28     = FP_FROM(arg2->rotation_C.vz, Q4_SHIFT);
-    result->positionX_18 = FP_FROM(arg2->position_0.vx, Q4_SHIFT);
-    result->positionZ_1C = FP_FROM(arg2->position_0.vz, Q4_SHIFT);
+    result->field_28     = FP_FROM(arg2->rotation_C.vz, Q4_SHIFT); // TODO: Packed angle?
+    result->positionX_18 = FP_METER_TO_GEO(arg2->position_0.vx);
+    result->positionZ_1C = FP_METER_TO_GEO(arg2->position_0.vz);
     result->field_20     = result->positionX_18 + result->field_C.vx;
     result->field_24     = result->positionZ_1C + result->field_C.vz;
-    result->field_2A     = FP_FROM(arg2->rotation_C.vy + arg2->position_0.vy, Q4_SHIFT);
+    result->field_2A     = FP_FROM(arg2->rotation_C.vy + arg2->position_0.vy, Q4_SHIFT); // TODO: Position + rotation? Seems wrong.
     result->field_2C     = FP_FROM(arg2->rotation_C.vx + arg2->position_0.vy, Q4_SHIFT);
     result->field_0      = arg2->field_12;
 }
@@ -3405,16 +3407,17 @@ bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VEC
     arg0->field_8  = 0x7FFF;
     arg0->field_20 = 0;
 
-    arg0->field_2C.vx = FP_FROM(pos0->vx, Q4_SHIFT);
-    arg0->field_2C.vy = FP_FROM(pos0->vy, Q4_SHIFT);
-    arg0->field_2C.vz = FP_FROM(pos0->vz, Q4_SHIFT);
+    arg0->field_2C.vx = FP_METER_TO_GEO(pos0->vx);
+    arg0->field_2C.vy = FP_METER_TO_GEO(pos0->vy);
+    arg0->field_2C.vz = FP_METER_TO_GEO(pos0->vz);
 
-    arg0->field_50.vx = FP_FROM(pos1->vx, Q4_SHIFT);
-    arg0->field_50.vy = FP_FROM(pos1->vy, Q4_SHIFT);
-    arg0->field_50.vz = FP_FROM(pos1->vz, Q4_SHIFT);
+    arg0->field_50.vx = FP_METER_TO_GEO(pos1->vx);
+    arg0->field_50.vy = FP_METER_TO_GEO(pos1->vy);
+    arg0->field_50.vz = FP_METER_TO_GEO(pos1->vz);
 
     arg0->field_3C = arg0->field_2C.vx + arg0->field_50.vx;
 
+    // `FP_METER_TO_GEO`?
     arg0->field_4C = FP_FROM(arg5, Q4_SHIFT);
     arg0->field_4E = FP_FROM(arg6, Q4_SHIFT);
 

@@ -1086,9 +1086,9 @@ void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* pos, SVECTOR3* rot) // 0x80
             arg0->field_10.field_9 = ret;
         } 
 
-        coord0 = Q19_12_TO_Q23_8(pos->vx);
-        coord1 = Q19_12_TO_Q23_8(pos->vy);
-        coord2 = Q19_12_TO_Q23_8(pos->vz);
+        coord0 = FP_METER_TO_GEO(pos->vx);
+        coord1 = FP_METER_TO_GEO(pos->vy);
+        coord2 = FP_METER_TO_GEO(pos->vz);
         vx     = rot->vx >> 2;
         vz     = rot->vz >> 2;
         vy     = rot->vy;
@@ -2692,8 +2692,7 @@ void func_8003F170() // 0x8003F170
 
     func_800554C4(temp, ptr2->field_2C, sp60, g_SysWork.field_235C, &sp58, 
                   g_SysWork.field_2360.vx, g_SysWork.field_2360.vy, g_SysWork.field_2360.vz,
-                  D_800BCE18.field_0[0].type_0->waterZones_8
-    );
+                  D_800BCE18.field_0[0].type_0->waterZones_8);
     func_80055814(ptr2->field_30);
 
     if (ptr->field_154.field_0.field_0.s_field_0.field_0 & (1 << 3))

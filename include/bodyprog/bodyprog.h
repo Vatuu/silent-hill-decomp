@@ -318,17 +318,17 @@ typedef struct
 {
     s32     field_0;
     s32     field_4;
-    s32     field_8;
+    s32     field_8; // 2D distance.
     SVECTOR field_C;
     s16     directionX_14;
     s16     directionZ_16;
-    s32     positionX_18;
-    s32     positionZ_1C;
+    q23_8   positionX_18;
+    q23_8   positionZ_1C;
     s32     field_20;
     s32     field_24;
-    s16     field_28;
-    s16     field_2A;
-    s16     field_2C;
+    s16     field_28; // } `SVECTOR3`, packed rotation?
+    s16     field_2A; // }
+    s16     field_2C; // }
 } s_func_8006ABC0;
 
 typedef struct
@@ -502,7 +502,7 @@ typedef struct
     s8       unk_C[20];
     s32      field_20;
     s8       unk_24[8];
-    VECTOR3  field_2C;
+    VECTOR3  field_2C; // Q23.8
     s8       unk_38[4];
     s32      field_3C;
     s32      field_40;
@@ -510,7 +510,7 @@ typedef struct
     s8       unk_48[4];
     s16      field_4C;
     s16      field_4E;
-    SVECTOR3 field_50;
+    SVECTOR3 field_50; // Q23.8
     s8       unk_56[2];
     s16      field_58;
     s16      field_5A;
@@ -1013,14 +1013,15 @@ typedef struct _SpeedZone
     s16 maxZ_8;
 } s_SpeedZone;
 
-typedef struct _WaterZone {
+typedef struct _WaterZone
+{
     u8  enabled_0;
     // 1 byte of padding.
     s16 illumination_2;
-    s16 minX_4;
-    s16 maxX_6;
-    s16 minZ_8;
-    s16 maxZ_A;
+    s16 minX_4; // } Q11.4?
+    s16 maxX_6; // }
+    s16 minZ_8; // }
+    s16 maxZ_A; // }
 } s_WaterZone;
 
 // Looks similar to `s_Skeleton`
@@ -1329,9 +1330,9 @@ typedef struct
 
 typedef struct
 {
-    u8      field_0;
-    u8      field_1;
-    u8      field_2;
+    u8      field_0; // `bool`?
+    u8      field_1; // `bool`?
+    u8      field_2; // `bool`?
     u8      field_3;
     s8      unk_4[4];
     s16     field_8;
@@ -2732,14 +2733,14 @@ bool IpdHeader_IsLoaded(s32 ipdIdx);
 void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1);
 
 /** Gets distance to the edge of a file chunk? */
-s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 clip);
+s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, bool clip);
 
-void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, s32 clip);
+void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
 
 bool func_80043578(s_80043578* arg0, s32 arg1, s32 arg2);
 
 /** Maybe facilitates file chunk streaming as the player moves around the map. */
-s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s16 fileChunkCoordX, s16 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, s32 clip);
+s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s16 fileChunkCoordX, s16 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
 
 void func_80043A24(GsOT* ot, s32 arg1);
 
@@ -3201,13 +3202,16 @@ void func_8008D454();
 
 void func_8008D464();
 
-void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s_WaterZone *waterZones);
+void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones);
 
 void func_8008D5A0(VECTOR3* arg0, s16 arg1);
 
 s32 func_8008D8C0(s16 x0, s32 x1, s32 x2);
 
 void func_8008D990(s32, s32, VECTOR3*, s32, s32);
+
+/** `posX` and `posX` appear to be in Q27.4. */
+s_WaterZone* Map_GetWaterZone(s32 posX, s32 posZ, s_WaterZone* waterZone);
 
 void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2);
 
