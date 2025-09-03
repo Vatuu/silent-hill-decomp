@@ -2740,7 +2740,7 @@ void func_8006B9C8(s_func_8006CC44* arg0) // 0x8006B9C8
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006BB50); // 0x8006BB50
 
-s32 func_8006BC34(s_func_8006BC34* arg0)
+s32 func_8006BC34(s_func_8006CC44* arg0)
 {
     s16 temp_a2;
     s16 temp_a3;
@@ -2778,7 +2778,7 @@ s32 func_8006BC34(s_func_8006BC34* arg0)
         }
     }
 
-    return arg0->field_30 - (s16)var_v0;
+    return arg0->field_4.field_2C - (s16)var_v0;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006BCC4); // 0x8006BCC4
