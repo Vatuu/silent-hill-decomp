@@ -2685,7 +2685,7 @@ bool func_80037A4C(s_AreaLoadParams* areaLoadParams) // 0x80037A4C
     return false;
 }
 
-bool func_80037C5C(s_func_80037A4C* arg0) // 0x80037C5C
+bool func_80037C5C(s_AreaLoadParams* areaLoadParams) // 0x80037C5C
 {
     s32 sinAngle;
     s32 cosAngle;
@@ -2697,15 +2697,15 @@ bool func_80037C5C(s_func_80037A4C* arg0) // 0x80037C5C
     s32 scale;
     u32 temp;
 
-    shift8Field_7 = arg0->field_7 << 8;
-    deltaX        = g_SysWork.player_4C.chara_0.position_18.vx - arg0->field_0;
+    shift8Field_7 = areaLoadParams->field_4_24 << 8;
+    deltaX        = g_SysWork.player_4C.chara_0.position_18.vx - areaLoadParams->char_x_0;
 
-    if (arg0->field_7 << 9 < ABS(deltaX))
+    if (areaLoadParams->field_4_24 << 9 < ABS(deltaX))
     {
         return false;
     }
 
-    deltaZ = g_SysWork.player_4C.chara_0.position_18.vz - arg0->field_8;
+    deltaZ = g_SysWork.player_4C.chara_0.position_18.vz - areaLoadParams->char_z_8;
     scale  = 2;
 
     if ((shift8Field_7 * scale) < ABS(deltaZ))
@@ -2713,7 +2713,7 @@ bool func_80037C5C(s_func_80037A4C* arg0) // 0x80037C5C
         return false;
     }
 
-    angle    = -(arg0->field_6 << 20) >> 16;
+    angle    = -(areaLoadParams->rotationY_4_16 << 20) >> 16;
     sinAngle = Math_Sin(angle);
 
     temp = FP_FROM((-deltaX * sinAngle) + (deltaZ * Math_Cos(angle)), Q12_SHIFT);

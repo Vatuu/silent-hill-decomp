@@ -774,6 +774,7 @@ typedef struct
     u8 field_1;
 } s_func_800452EC_8;
 
+// Probably Skeleton too.
 typedef struct
 {
     s8                      unk_0[8];
@@ -1567,15 +1568,6 @@ typedef struct _MapOverlayHeader
     u32               unk_84C[512];
 } s_MapOverlayHeader;
 STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 4172); // Size incomplete.
-
-typedef struct
-{
-    s32 field_0; // X
-    s8  unk_4[2];
-    u8  field_6;
-    u8  field_7;
-    s32 field_8; // Z
-} s_func_80037A4C;
 
 typedef struct
 {
@@ -3679,7 +3671,7 @@ bool func_800378D4(s_AreaLoadParams* areaLoadParams);
 
 bool func_80037A4C(s_AreaLoadParams* areaLoadParams);
 
-bool func_80037C5C(s_func_80037A4C* arg0);
+bool func_80037C5C(s_AreaLoadParams* areaLoadParams);
 
 void func_80037DC4(s_SubCharacter* chara);
 
