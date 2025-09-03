@@ -2881,11 +2881,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006BF88); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006C0C8); // 0x8006C0C8
 
-bool func_8006C1B8(u32 arg0, s16 arg1, s_func_8006C1B8* arg2) // 0x8006C1B8
+bool func_8006C1B8(u32 arg0, s16 arg1, s_func_8006CC44* arg2) // 0x8006C1B8
 {
     s32 var;
 
-    var = (arg2->field_C * arg1) >> 8;
+    var = (arg2->field_4.field_8 * arg1) >> 8;
     switch (arg0)
     {
         default:
