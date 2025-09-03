@@ -5,6 +5,10 @@
 #include "bodyprog/math/constants.h"
 #include "bodyprog/math/arithmetic.h"
 
+// =================================
+// Fixed-Point Utils and Arithmetic
+// =================================
+
 /** @brief Converts an integer to a fixed-point Q format.
  *
  * @param x `int` to convert.
@@ -94,6 +98,10 @@
 #define FP_MULTIPLY_FLOAT_PRECISE(aInt, bFlt, shift) \
     FP_MULTIPLY((s64)(aInt), (s64)FP_FLOAT_TO(bFlt, shift), (shift))
 
+// ====================================
+// Raw Fixed-Point Q Format Conversion
+// ====================================
+
 /** @brief Converts a floating-point value to fixed-point Q19.12.
  *
  * @param x Value to convert (`float`).
@@ -166,6 +174,10 @@
 #define Q3_12_TO_Q7_8(x) \
     (s16)((x) >> 4)
 
+// =========================================
+// Abstract Fixed-Point Q Format Conversion
+// =========================================
+
 /** @brief Converts a floating-point alpha in the range `[0.0f, 1.0f]` to fixed-point Q3.12, integer range `[0, 4096]`.
  *
  * @param alpha Alpha (`float`).
@@ -224,20 +236,20 @@
 #define FP_ANGLE_PACKED(deg) \
     (u8)CLAMP(FP_FLOAT_TO((deg) / 360.0f, Q8_SHIFT), 0, FP_FLOAT_TO(1.0f, Q8_SHIFT) - 1)
 
+/** @brief Converts signed fixed-point degrees in Q3.12, integer range `[0, 4096]` to
+ * unsigned fixed-point Q0.8, integer range `[0, 255]`.
+ *
+ * @param deg Unsigned fixed-point degrees in Q3.12, integer range `[0, 4096]`.
+ * @return Unsigned fixed-point degrees in Q0.8, integer range `[0, 255]` (`s16`).
+ */
+#define FP_ANGLE_TO_PACKED(deg) \
+    Q3_12_TO_Q7_8(deg);
+
 /** @brief Converts unsigned fixed-point degrees in Q0.8, integer range `[0, 255]` to
  * unsigned fixed-point Q3.12, integer range `[0, 4096]`.
  *
  * @param packedDeg Unsigned fixed-point degrees in Q0.8, integer range `[0, 255]`.
  * @return Unsigned fixed-point degrees in Q3.12, integer range `[0, 4096]` (`s16`).
- */
-#define FP_ANGLE_TO_PACKED(deg) \
-    Q3_12_TO_Q7_8(deg);
-
-/** @brief Converts signed fixed-point degrees in Q3.12, integer range `[0, 4096]` to
- * unsigned fixed-point Q0.8, integer range `[0, 255]`.
- *
- * @param packedDeg Unsigned fixed-point degrees in Q3.12, integer range `[0, 4096]`.
- * @return Unsigned fixed-point degrees in Q0.8, integer range `[0, 255]` (`s16`).
  */
 #define FP_ANGLE_FROM_PACKED(deg) \
     Q7_8_TO_Q3_12(deg)
