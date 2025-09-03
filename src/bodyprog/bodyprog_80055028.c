@@ -21,23 +21,21 @@ void func_80055028() // 0x80055028
     D_800C4168.field_0  = 0;
     D_800C4168.field_20 = 0x1000;
 
-    // Likely a color triplet.
-    D_800C4168.field_28.r = FP_COLOR(0.5f);
-    D_800C4168.field_28.g = FP_COLOR(0.5f);
-    D_800C4168.field_28.b = FP_COLOR(0.5f);
+    D_800C4168.worldTintColor_28.r = FP_COLOR(0.5f);
+    D_800C4168.worldTintColor_28.g = FP_COLOR(0.5f);
+    D_800C4168.worldTintColor_28.b = FP_COLOR(0.5f);
 
-    D_800C4168.field_1 = 0;
+    D_800C4168.fogEnabled_1 = false;
     D_800C4168.field_2 = 0;
 
-    // Likely a color triplet.
-    D_800C4168.field_1C.r = FP_COLOR(1.0f);
-    D_800C4168.field_1C.g = FP_COLOR(1.0f);
-    D_800C4168.field_1C.b = FP_COLOR(1.0f);
+    D_800C4168.fogColor_1C.r = FP_COLOR(1.0f);
+    D_800C4168.fogColor_1C.g = FP_COLOR(1.0f);
+    D_800C4168.fogColor_1C.b = FP_COLOR(1.0f);
 
     D_800C4168.field_4C = 0;
     D_800C4168.field_50 = 0;
     D_800C4168.waterZones_4  = 0;
-    D_800C4168.field_18 = 0;
+    D_800C4168.fogRelated_18 = 0;
 
     gte_SetFarColor(0, 0, 0);
 
@@ -66,13 +64,13 @@ void func_800550D0() // 0x800550D0
         func_8008D470(D_800C4168.field_50, &D_800C4168.field_58, &D_800C4168.field_60, D_800C4168.waterZones_4);
     }
 
-    if (D_800C4168.field_8 > 0)
+    if (D_800C4168.screenBrightness_8 > 0)
     {
         poly            = (POLY_G4*)GsOUT_PACKET_P;
         mode            = (DR_MODE*)(GsOUT_PACKET_P + sizeof(POLY_G4));
         GsOUT_PACKET_P += sizeof(POLY_G4) + sizeof(DR_MODE);
 
-        color0           = (D_800C4168.field_8 + (D_800C4168.field_8 << 8)) + (D_800C4168.field_8 << 16);
+        color0           = (D_800C4168.screenBrightness_8 + (D_800C4168.screenBrightness_8 << 8)) + (D_800C4168.screenBrightness_8 << 16);
         *(s32*)&poly->r3 = color0;
         *(s32*)&poly->r2 = color0;
         *(s32*)&poly->r1 = color0;
@@ -100,7 +98,7 @@ void func_800550D0() // 0x800550D0
     poly           = (POLY_G4*)(packet + 0xC);
     GsOUT_PACKET_P = packet + 0x30;
 
-    color2           = *(s32*)&D_800C4168.field_1C;
+    color2           = *(s32*)&D_800C4168.fogColor_1C;
     *(s32*)&poly->r3 = color2;
     *(s32*)&poly->r2 = color2;
     *(s32*)&poly->r1 = color2;
@@ -129,33 +127,33 @@ void func_800550D0() // 0x800550D0
 
 void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) // 0x80055330
 {
-    D_800C4168.field_0          = arg0;
-    D_800C4168.field_20         = arg1;
-    D_800C4168.field_3          = arg2;
-    D_800C4168.field_28.r       = arg3 >> 5;
-    D_800C4168.field_2C.m[0][2] = arg3;
-    D_800C4168.field_2C.m[0][1] = arg3;
-    D_800C4168.field_2C.m[0][0] = arg3;
-    D_800C4168.field_28.g       = arg4 >> 5;
-    D_800C4168.field_8          = arg6;
-    D_800C4168.field_28.b       = arg5 >> 5;
-    D_800C4168.field_2C.m[1][2] = (s16)arg4;
-    D_800C4168.field_2C.m[1][1] = (s16)arg4;
-    D_800C4168.field_2C.m[1][0] = (s16)arg4;
-    D_800C4168.field_2C.m[2][2] = (s16)arg5;
-    D_800C4168.field_2C.m[2][1] = (s16)arg5;
-    D_800C4168.field_2C.m[2][0] = (s16)arg5;
-    D_800C4168.field_24         = (arg3 * arg1) >> 17;
-    D_800C4168.field_25         = (arg4 * arg1) >> 17;
-    D_800C4168.field_26         = (arg5 * arg1) >> 17;
+    D_800C4168.field_0             = arg0;
+    D_800C4168.field_20            = arg1;
+    D_800C4168.field_3             = arg2;
+    D_800C4168.worldTintColor_28.r = arg3 >> 5;
+    D_800C4168.field_2C.m[0][2]    = arg3;
+    D_800C4168.field_2C.m[0][1]    = arg3;
+    D_800C4168.field_2C.m[0][0]    = arg3;
+    D_800C4168.worldTintColor_28.g = arg4 >> 5;
+    D_800C4168.screenBrightness_8  = arg6;
+    D_800C4168.worldTintColor_28.b = arg5 >> 5;
+    D_800C4168.field_2C.m[1][2]    = (s16)arg4;
+    D_800C4168.field_2C.m[1][1]    = (s16)arg4;
+    D_800C4168.field_2C.m[1][0]    = (s16)arg4;
+    D_800C4168.field_2C.m[2][2]    = (s16)arg5;
+    D_800C4168.field_2C.m[2][1]    = (s16)arg5;
+    D_800C4168.field_2C.m[2][0]    = (s16)arg5;
+    D_800C4168.field_24            = (arg3 * arg1) >> 17;
+    D_800C4168.field_25            = (arg4 * arg1) >> 17;
+    D_800C4168.field_26            = (arg5 * arg1) >> 17;
 }
 
 void func_800553C4(u8 arg0, u8 arg1, u8 arg2, u8 arg3) // 0x800553C4
 {
-    D_800C4168.field_1  = arg0;
-    D_800C4168.field_1C.r = arg1;
-    D_800C4168.field_1C.g = arg2;
-    D_800C4168.field_1C.b = arg3;
+    D_800C4168.fogEnabled_1  = arg0;
+    D_800C4168.fogColor_1C.r = arg1;
+    D_800C4168.fogColor_1C.g = arg2;
+    D_800C4168.fogColor_1C.b = arg3;
 }
 
 void func_800553E0(u32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6) // 0x800553E0
@@ -247,7 +245,7 @@ s32 func_800557DC() // 0x800557DC
 
 void func_80055814(s32 arg0) // 0x80055814
 {
-    D_800C4168.field_18 = FP_FLOAT_TO(1.0f, Q12_SHIFT) - func_800559A8(arg0);
+    D_800C4168.fogRelated_18 = FP_FLOAT_TO(1.0f, Q12_SHIFT) - func_800559A8(arg0);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80055840); // 0x80055840
@@ -260,12 +258,12 @@ u8 func_80055A50(s32 arg0) // 0x80055A50
 
     temp = arg0 >> 4;
 
-    if (temp >= (1 << D_800C4168.field_14))
+    if (temp >= (1 << D_800C4168.fogRelated_14))
     {
         return 255;
     }
 
-    return D_800C4168.field_CC[(temp << 7) >> D_800C4168.field_14];
+    return D_800C4168.field_CC[(temp << 7) >> D_800C4168.fogRelated_14];
 }
 
 void func_80055A90(CVECTOR* arg0, CVECTOR* arg1, u8 arg2, s32 arg3) // 0x80055A90
@@ -278,23 +276,23 @@ void func_80055A90(CVECTOR* arg0, CVECTOR* arg1, u8 arg2, s32 arg3) // 0x80055A9
         arg3 = 0;
     }
 
-    if (arg3 < (1 << D_800C4168.field_14))
+    if (arg3 < (1 << D_800C4168.fogRelated_14))
     {
-        arg3 = D_800C4168.field_CC[(arg3 << 7) >> D_800C4168.field_14] << 4;
+        arg3 = D_800C4168.field_CC[(arg3 << 7) >> D_800C4168.fogRelated_14] << 4;
     }
     else
     {
         arg3 = 0xFF << 4;
     }
 
-    var_v1 = 0x1000 - (D_800C4168.field_18 + arg3); // `D_800C4168.field_18`
+    var_v1 = 0x1000 - (D_800C4168.fogRelated_18 + arg3);
     if (var_v1 < 0)
     {
         var_v1 = 0;
     }
 
     gte_lddp(var_v1);
-    gte_ldrgb(&D_800C4168.field_1C);
+    gte_ldrgb(&D_800C4168.fogColor_1C);
 
     gte_SetFarColor(0, 0, 0);
 
@@ -303,7 +301,7 @@ void func_80055A90(CVECTOR* arg0, CVECTOR* arg1, u8 arg2, s32 arg3) // 0x80055A9
     gte_strgb(arg0);
 
     gte_lddp(arg3);
-    gte_ldrgb(&D_800C4168.field_28);
+    gte_ldrgb(&D_800C4168.worldTintColor_28);
 
     gte_ldsv_(arg2 << 5);
 
@@ -321,9 +319,9 @@ void func_80055B74(CVECTOR* result, CVECTOR* color, s32 arg2) // 0x80055B74
 
     var_t0 = D_800C4168.field_20 >> 5;
 
-    if (arg2 < (1 << D_800C4168.field_14))
+    if (arg2 < (1 << D_800C4168.fogRelated_14))
     {
-        var_v0 = D_800C4168.field_CC[(arg2 << 7) >> D_800C4168.field_14];
+        var_v0 = D_800C4168.field_CC[(arg2 << 7) >> D_800C4168.fogRelated_14];
     }
     else
     {
@@ -334,7 +332,7 @@ void func_80055B74(CVECTOR* result, CVECTOR* color, s32 arg2) // 0x80055B74
 
     gte_lddp(var_v0);
     gte_ldrgb(color);
-    gte_SetFarColor(D_800C4168.field_1C.r, D_800C4168.field_1C.g, D_800C4168.field_1C.b);
+    gte_SetFarColor(D_800C4168.fogColor_1C.r, D_800C4168.fogColor_1C.g, D_800C4168.fogColor_1C.b);
     gte_ldsv_(var_t0 << 5);
     gte_dpcl();
     gte_strgb(result);
@@ -350,11 +348,11 @@ void func_80055C3C(CVECTOR* result, CVECTOR* color, void* arg2, void* arg3, s32 
     var_s0  = arg5 >> 4;
     temp_a1 = func_80055D78(arg2, arg3, arg4);
 
-    if (D_800C4168.field_1 != 0)
+    if (D_800C4168.fogEnabled_1)
     {
-        if (var_s0 < (1 << D_800C4168.field_14))
+        if (var_s0 < (1 << D_800C4168.fogRelated_14))
         {
-            var_v0 = D_800C4168.field_CC[(var_s0 << 7) >> D_800C4168.field_14];
+            var_v0 = D_800C4168.field_CC[(var_s0 << 7) >> D_800C4168.fogRelated_14];
         }
         else
         {
@@ -363,7 +361,7 @@ void func_80055C3C(CVECTOR* result, CVECTOR* color, void* arg2, void* arg3, s32 
 
         gte_lddp(var_v0 << 4);
         gte_ldrgb(color);
-        gte_SetFarColor(D_800C4168.field_1C.r, D_800C4168.field_1C.g, D_800C4168.field_1C.b);
+        gte_SetFarColor(D_800C4168.fogColor_1C.r, D_800C4168.fogColor_1C.g, D_800C4168.fogColor_1C.b);
         gte_ldsv_(temp_a1 << 5);
 
         gte_dpcl();
@@ -392,7 +390,7 @@ void func_80055E90(CVECTOR* color, u8 fadeAmount) // 0x80055E90
     // Works similar to `gte_DpqColor` macro, but `gte_lddp`/`gte_ldrgb` are in wrong order?
 
     gte_lddp(alpha);
-    gte_ldrgb(&D_800C4168.field_28);
+    gte_ldrgb(&D_800C4168.worldTintColor_28);
     gte_dpcs();
 
     prev_cd = color->cd;
@@ -1260,11 +1258,11 @@ void func_8005A21C(s_func_80057344* arg0, void* arg1, void* arg2, MATRIX* mat) /
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    if (D_800C4168.field_1 != 0)
+    if (D_800C4168.fogEnabled_1)
     {
-        if (mat->t[2] < (1 << D_800C4168.field_14))
+        if (mat->t[2] < (1 << D_800C4168.fogRelated_14))
         {
-            var_v1 = 4096 - (D_800C4168.field_CC[(s32)(mat->t[2] << 7) >> D_800C4168.field_14] << 4);
+            var_v1 = 4096 - (D_800C4168.field_CC[(s32)(mat->t[2] << 7) >> D_800C4168.fogRelated_14] << 4);
         }
         else
         {
@@ -1319,7 +1317,7 @@ void func_8005A42C(s_GteScratchData* scratchData, s32 arg1) // 0x8005A42C
     s32 alpha = FP_ALPHA(1.0f) - FP_MULTIPLY(arg1, D_800C4168.field_20, Q12_SHIFT);
 
     gte_lddp(alpha);
-    gte_ldrgb(&D_800C4168.field_28);
+    gte_ldrgb(&D_800C4168.worldTintColor_28);
     gte_dpcs();
     gte_strgb(&scratchData->field_3D8);
 }
@@ -1449,9 +1447,9 @@ void func_8005A478(s_GteScratchData* scratchData, s32 alpha) // 0x8005A478
         var_a1 = 64;
     }
 
-    SetBackColor(FP_MULTIPLY(D_800C4168.field_24 + ((D_800C4168.field_28.r * var_a1) >> 7), alpha, Q12_SHIFT),
-                 FP_MULTIPLY(D_800C4168.field_25 + ((D_800C4168.field_28.g * var_a1) >> 7), alpha, Q12_SHIFT),
-                 FP_MULTIPLY(D_800C4168.field_26 + ((D_800C4168.field_28.b * var_a1) >> 7), alpha, Q12_SHIFT));
+    SetBackColor(FP_MULTIPLY(D_800C4168.field_24 + ((D_800C4168.worldTintColor_28.r * var_a1) >> 7), alpha, Q12_SHIFT),
+                 FP_MULTIPLY(D_800C4168.field_25 + ((D_800C4168.worldTintColor_28.g * var_a1) >> 7), alpha, Q12_SHIFT),
+                 FP_MULTIPLY(D_800C4168.field_26 + ((D_800C4168.worldTintColor_28.b * var_a1) >> 7), alpha, Q12_SHIFT));
 }
 
 void func_8005A838(s_GteScratchData* scratchData, s32 scale) // 0x8005A838

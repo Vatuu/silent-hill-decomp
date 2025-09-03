@@ -1292,21 +1292,22 @@ typedef struct
 typedef struct
 {
     u8            field_0;
-    u8            field_1;
+    u8            fogEnabled_1; // `bool`, name from SHME, needs confirming.
     u8            field_2;
     u8            field_3;
     s_WaterZone*  waterZones_4;
-    s32           field_8;
-    s8            unk_C[8];
-    s32           field_14;
-    s32           field_18;
-    CVECTOR       field_1C;
+    s32           screenBrightness_8; // Name from SHME, needs confirming.
+    s8            unk_C[4];
+    q23_8         drawDistance_10; // Name from SHME, needs confirming, "has no effect when fog is disabled".
+    s32           fogRelated_14;   // "FogThing1" from SHME
+    s32           fogRelated_18;   // "FogThing2" from SHME
+    CVECTOR       fogColor_1C;     // Name from SHME, needs confirming.
     s32           field_20;
     u8            field_24;
     u8            field_25;
     u8            field_26;
     s8            unk_27;
-    CVECTOR       field_28;
+    CVECTOR       worldTintColor_28; // Name from SHME, needs confirming.
     MATRIX        field_2C;
     s32           field_4C;
     s16           field_50;

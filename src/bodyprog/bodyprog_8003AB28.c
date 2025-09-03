@@ -956,7 +956,7 @@ void func_8003C3AC() // 0x8003C3AC
         pos0.vz = FP_METER(200.0f);
     }
 
-    if (D_800C4168.field_1 != 0)
+    if (D_800C4168.fogEnabled_1)
     {
         vwGetViewPosition(&pos1);
         vwGetViewAngle(&pos2);
@@ -1813,14 +1813,14 @@ void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4)
 
     if (arg3 != 0)
     {
-        sp20 = D_800C4168.field_28;
+        sp20 = D_800C4168.worldTintColor_28;
 
         func_80055330(D_800C4168.field_0, D_800C4168.field_20,
                       D_800C4168.field_3,
-                      FP_MULTIPLY_PRECISE(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, D_800C4168.field_28.r, Q12_SHIFT) << 5,
-                      FP_MULTIPLY_PRECISE(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, D_800C4168.field_28.g, Q12_SHIFT) << 5,
-                      FP_MULTIPLY_PRECISE(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, D_800C4168.field_28.b, Q12_SHIFT) << 5,
-                      D_800C4168.field_8);
+                      FP_MULTIPLY_PRECISE(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, D_800C4168.worldTintColor_28.r, Q12_SHIFT) << 5,
+                      FP_MULTIPLY_PRECISE(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, D_800C4168.worldTintColor_28.g, Q12_SHIFT) << 5,
+                      FP_MULTIPLY_PRECISE(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, D_800C4168.worldTintColor_28.b, Q12_SHIFT) << 5,
+                      D_800C4168.screenBrightness_8);
     }
 
     func_80045534(&D_800BCE18.field_0[0].field_18[arg0]->field_14, &g_ObjectTable0[g_ObjectTableIdx], arg2,
@@ -1828,7 +1828,7 @@ void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4)
 
     if (arg3 != 0)
     {
-        func_80055330(D_800C4168.field_0, D_800C4168.field_20, D_800C4168.field_3, sp20.r << 5, sp20.g << 5, sp20.b << 5, D_800C4168.field_8);
+        func_80055330(D_800C4168.field_0, D_800C4168.field_20, D_800C4168.field_3, sp20.r << 5, sp20.g << 5, sp20.b << 5, D_800C4168.screenBrightness_8);
     }
 }
 
@@ -3047,7 +3047,7 @@ void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructU
 
 s32 func_8003FEC0(s_sub_StructUnk3* arg0) // 0x8003FEC0
 {
-    if (D_800C4168.field_1 != 0)
+    if (D_800C4168.fogEnabled_1)
     {
         return arg0->field_10;
     }
