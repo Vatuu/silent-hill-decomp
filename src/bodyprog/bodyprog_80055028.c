@@ -2931,7 +2931,26 @@ bool func_8006C1B8(u32 arg0, s16 arg1, s_func_8006C1B8* arg2) // 0x8006C1B8
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006C248); // 0x8006C248
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006C3D4); // 0x8006C3D4
+s32 func_8006C3D4(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s32 idx) // 0x8006C3D4
+{
+    s_IpdCollisionData_18* temp_a1;
+
+    arg0->field_CC = collData;
+    arg0->field_D0 = idx;
+    temp_a1        = &collData->ptr_18[idx - collData->field_8_16];
+
+    if (!((arg0->field_2 >> temp_a1->field_0_8) & 0x1))
+    {
+        return 0;
+    }
+
+    arg0->field_D1         = temp_a1->field_0_5;
+    arg0->field_D2         = temp_a1->field_2;
+    arg0->field_D4         = temp_a1->field_4;
+    arg0->field_D6         = temp_a1->field_6;
+    arg0->field_D8.field_0 = temp_a1->field_8;
+    return 1;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006C45C); // 0x8006C45C
 

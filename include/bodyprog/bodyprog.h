@@ -440,9 +440,9 @@ typedef struct
     u8                 field_C8;
     u8                 unk_C9[1];
     s16                field_CA;
-    s32                field_CC;
+    s32                field_CC; // TODO: This is a `s_IpdCollisionData` pointer.
     u8                 field_D0;
-    s8                 unk_D1;
+    s8                 field_D1;
     u16                field_D2;
     s16                field_D4;
     s16                field_D6;
@@ -753,11 +753,13 @@ typedef struct _IpdCollisionData_18
 {
     u16 field_0_0  : 5;
     u16 field_0_5  : 3;
-    u16 field_0_8  : 3;
-    u16 field_0_11 : 4;
+    u16 field_0_8 : 4;
+    u16 field_0_12 : 3;
     u16 field_0_15 : 1;
-    u8  unk_2[2];
-    u8  unk_4[6];
+    u16 field_2;
+    u16 field_4;
+    u16 field_6;
+    u16 field_8;
 } s_IpdCollisionData_18;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData_18, 10);
 
