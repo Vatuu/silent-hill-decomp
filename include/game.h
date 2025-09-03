@@ -1191,12 +1191,6 @@ typedef union
     } s_field_0;
 } u_Unk0;
 
-typedef union
-{
-    s32 field_0;
-    u8  vector_0[4];
-} u_Color;
-
 typedef struct
 {
     u_Unk0  field_0;
@@ -1205,15 +1199,16 @@ typedef struct
     s16     field_8;
     s16     field_A;
     s16     field_C;
-    u8      field_E;
+    u8      field_E; // Fog enabled if not set to 0, `func_8003F08C` checks for values 0/1/2/3.
     s8      unk_F;
     s32     field_10;
-    u_Color field_14;
-    u_Color field_18;
-    u_Color field_1C;
-    u_Color field_20;
-    u_Color field_24;
-    s16     unk_28;
+    CVECTOR fogColor_14;
+    u8      field_18;
+    CVECTOR field_19;
+    CVECTOR field_1D;
+    CVECTOR field_21;
+    CVECTOR field_25;
+    u8      unk_29;
     s16     unk_2A;
 } s_sub_StructUnk3;
 STATIC_ASSERT_SIZEOF(s_sub_StructUnk3, 44);

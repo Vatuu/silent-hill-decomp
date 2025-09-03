@@ -2525,8 +2525,8 @@ void func_8003EDB8(s32* arg0, s32* arg1) // 0x8003EDB8
     s_SysWork_2288* ptr0;
     s_SysWork_2288* ptr1;
 
-    memcpy(arg0, &(ptr0 = &g_SysWork.field_2388)->field_1C[g_SysWork.field_2388.isFlashlightOn_15].field_0.field_20.vector_0[1], 4); // TODO: Is there a better solution?
-    memcpy(arg1, &(ptr1 = &g_SysWork.field_2388)->field_1C[g_SysWork.field_2388.isFlashlightOn_15].field_0.field_24.vector_0[1], 4);
+    memcpy(arg0, &(ptr0 = &g_SysWork.field_2388)->field_1C[g_SysWork.field_2388.isFlashlightOn_15].field_0.field_21.r, 4); // TODO: Is there a better solution?
+    memcpy(arg1, &(ptr1 = &g_SysWork.field_2388)->field_1C[g_SysWork.field_2388.isFlashlightOn_15].field_0.field_25.r, 4);
 }
 
 void func_8003EE30(s32 arg0, s8* arg1, s32 arg2, s32 arg3) // 0x8003EE30
@@ -2990,7 +2990,7 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s
         arg0->field_0.field_4 = Math_WeightedAverageGet(arg1->field_0.field_4, arg2->field_0.field_4, weight);
     }
 
-    if (arg1->field_0.field_18.vector_0[0] == 0 && arg2->field_0.field_18.vector_0[0] != 0)
+    if (arg1->field_0.field_18 == 0 && arg2->field_0.field_18 != 0)
     {
         func_8003FE04(&arg0->field_0, &arg1->field_0, &arg2->field_0, weight1);
     }
@@ -3005,8 +3005,8 @@ void func_8003FCB0(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructU
     s32 p0;
     
     p0 = FP_ALPHA(1.0f) - arg3;
-    LoadAverageCol(&arg1->field_20.vector_0[1], &arg2->field_20.vector_0[1], p0, arg3, &arg0->field_20.vector_0[1]);
-    LoadAverageCol(&arg1->field_24.vector_0[1], &arg2->field_24.vector_0[1], p0, arg3, &arg0->field_24.vector_0[1]);
+    LoadAverageCol(&arg1->field_21.r, &arg2->field_21.r, p0, arg3, &arg0->field_21.r);
+    LoadAverageCol(&arg1->field_25.r, &arg2->field_25.r, p0, arg3, &arg0->field_25.r);
 }
 
 void func_8003FD38(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s32 weight0, s32 weight1, s32 alphaTo) // 0x8003FD38
@@ -3024,7 +3024,7 @@ void func_8003FD38(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s
     arg0->field_0.field_10 = Math_WeightedAverageGet(arg1->field_0.field_10, arg2->field_0.field_10, weight1);
     arg0->field_0.field_6  = Math_WeightedAverageGet(arg1->field_0.field_6, arg2->field_0.field_6, weight0);
 
-    LoadAverageCol(arg1->field_0.field_14.vector_0, arg2->field_0.field_14.vector_0, FP_ALPHA(1.0f) - alphaTo, alphaTo, arg0->field_0.field_14.vector_0);
+    LoadAverageCol(&arg1->field_0.fogColor_14.r, &arg2->field_0.fogColor_14.r, FP_ALPHA(1.0f) - alphaTo, alphaTo, &arg0->field_0.fogColor_14.r);
 }
 
 void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructUnk3* arg2, s32 alphaTo) // 0x8003FE04
@@ -3032,16 +3032,17 @@ void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructU
     s32 alphaFrom;
 
     alphaFrom = FP_ALPHA(1.0f) - alphaTo;
-    LoadAverageCol(&arg1->field_18.vector_0[1], &arg2->field_18.vector_0[1], alphaFrom, alphaTo, &arg0->field_18.vector_0[1]);
-    LoadAverageCol(&arg1->field_1C.vector_0[1], &arg2->field_1C.vector_0[1], alphaFrom, alphaTo, &arg0->field_1C.vector_0[1]);
+    LoadAverageCol(&arg1->field_19.r, &arg2->field_19.r, alphaFrom, alphaTo, &arg0->field_19.r);
+    LoadAverageCol(&arg1->field_1D.r, &arg2->field_1D.r, alphaFrom, alphaTo, &arg0->field_1D.r);
 
-    if ((arg0->field_18.field_0 & ~0xFF) || (arg0->field_1C.field_0 & ~0xFF))
+    if ((arg0->field_19.r || arg0->field_19.g || arg0->field_19.b) ||
+        (arg0->field_1D.r || arg0->field_1D.g || arg0->field_1D.b))
     {
-        arg0->field_18.vector_0[0] = 1;
+        arg0->field_18 = 1;
     }
     else
     {
-        arg0->field_18.vector_0[0] = 0;
+        arg0->field_18 = 0;
     }
 }
 
@@ -3070,12 +3071,12 @@ void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
     var_t0  = CLAMP(temp_v1, 0, 0xFF);
 
     func_80055330(arg0->field_0.field_0.s_field_0.field_2, arg0->field_0.field_6, arg0->field_0.field_0.s_field_0.field_1, arg0->field_0.field_8, arg0->field_0.field_A, arg0->field_0.field_C, var_t0);
-    Gfx_FogParamsSet(arg0->field_0.field_E != 0, arg0->field_0.field_14.vector_0[0], arg0->field_0.field_14.vector_0[1], arg0->field_0.field_14.vector_0[2]);
+    Gfx_FogParamsSet(arg0->field_0.field_E != 0, arg0->field_0.fogColor_14.r, arg0->field_0.fogColor_14.g, arg0->field_0.fogColor_14.b);
 
     temp_a0 = arg0->field_0.field_10;
 
     func_80055840(temp_a0, temp_a0 + FP_FLOAT_TO(1.0f, Q12_SHIFT));
-    func_800553E0(arg0->field_0.field_18.vector_0[0], arg0->field_0.field_18.vector_0[1], arg0->field_0.field_18.vector_0[2], arg0->field_0.field_18.vector_0[3], arg0->field_0.field_1C.vector_0[1], arg0->field_0.field_1C.vector_0[2], arg0->field_0.field_1C.vector_0[3]);
+    func_800553E0(arg0->field_0.field_18, arg0->field_0.field_19.r, arg0->field_0.field_19.g, arg0->field_0.field_19.b, arg0->field_0.field_1D.r, arg0->field_0.field_1D.g, arg0->field_0.field_1D.b);
 }
 
 void func_80040004(s_800BCE18* arg0) // 0x80040004
