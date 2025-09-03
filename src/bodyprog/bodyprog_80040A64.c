@@ -546,7 +546,7 @@ void func_80041CB4(s_func_80041CB4* arg0, s_PlmHeader* plmHeader) // 0x80041CB4
     func_80041CEC(plmHeader);
 
     arg0->queueIdx_8 = 0;
-    arg0->field_4    = NO_VALUE;
+    arg0->fileIdx_4    = NO_VALUE;
 }
 
 void func_80041CEC(s_PlmHeader* plmHeader) // 0x80041CEC
@@ -612,7 +612,7 @@ void func_80041ED0(s16 arg0, s32 xIdx, s32 zIdx) // 0x80041ED0
     s_800C117C*  ptr;
     s_IpdHeader* ipd;
 
-    ((s16*)&D_800C1020.field_42C[zIdx])[xIdx] = arg0;
+    ((s16*)&D_800C1020.ipdGridCenter_42C[zIdx])[xIdx] = arg0;
 
     for (ptr = D_800C1020.field_15C; ptr < &D_800C1020.field_15C[D_800C1020.field_158]; ptr++)
     {
@@ -707,14 +707,14 @@ s_800C1450_58* func_80042178(char* arg0) // 0x80042178
     return NULL;
 }
 
-void func_800421D8(char* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x800421D8
+void func_800421D8(char* mapTag, s32 plmIdx, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x800421D8
 {
     D_800C1020.field_588 = arg3;
     D_800C1020.field_134 = arg5;
 
-    if (arg1 != NO_VALUE)
+    if (plmIdx != NO_VALUE)
     {
-        if (arg1 != D_800C1020.field_138.field_4)
+        if (plmIdx != D_800C1020.field_138.fileIdx_4)
         {
             if (Fs_QueueEntryLoadStatusGet(D_800C1020.field_138.queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
                 D_800C1020.field_138.plmHeader_0->isLoaded_2)
@@ -722,21 +722,21 @@ void func_800421D8(char* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5)
                 func_80056BF8(D_800C1020.field_138.plmHeader_0);
             }
 
-            D_800C1020.field_138.field_4 = arg1;
+            D_800C1020.field_138.fileIdx_4 = plmIdx;
             D_800C1020.field_138.queueIdx_8 = NO_VALUE;
         }
     }
 
-    if (D_800C1020.field_158 != arg2 || strcmp(arg0, D_800C1020.field_144) != 0)
+    if (D_800C1020.field_158 != arg2 || strcmp(mapTag, D_800C1020.mapTag_144) != 0)
     {
         func_80042300(&D_800C1020, arg2);
 
         D_800C1020.field_158 = arg2;
         D_800C1020.field_14C = arg4;
-        strcpy(D_800C1020.field_144, arg0);
+        strcpy(D_800C1020.mapTag_144, mapTag);
 
-        D_800C1020.field_148 = strlen(arg0);
-        func_800423F4(&D_800C1020, arg0, arg4);
+        D_800C1020.mapTagLen_148 = strlen(mapTag);
+        Map_MakeIpdGrid(&D_800C1020, mapTag, arg4);
     }
 }
 
@@ -779,48 +779,51 @@ void func_80042300(s_800C1020* arg0, s32 arg1) // 0x80042300
         }
     }
 }
-
-void func_800423F4(s_800C1020* arg0, s32 arg1, s32 arg2) // 0x800423F4
+/** @brief Locate all IPD files for a given map type.
+ * For example, map type THR:
+ * file 1100 is THR0205.IPD. ipdGridCenter_42C[2][5] = 1100;
+ */
+void Map_MakeIpdGrid(s_800C1020* arg0, char* mapTag, s32 arg2) // 0x800423F4
 {
     s8              sp10[256];
     s32             j;
     s32             i;
     s32             k;
-    s8*             temp_s0;
-    s_800C1020_42C* ptr;
+    s8*             filename_postfix;
+    s_IpdRow*       ptr;
 
-    arg0->field_42C = (s_800C1020_42C*)&arg0->field_15C[13].unk_14;
+    arg0->ipdGridCenter_42C = (s_IpdRow*)(&arg0->ipdGrid_1CC[8].idx[8]);
 
     for (i = -8; i < 11; i++)
     {
         for (j = -8; j < 8; j++)
         {
-            ((s16*)&arg0->field_42C[i])[j] = NO_VALUE;
+            ((s16*)&arg0->ipdGridCenter_42C[i])[j] = NO_VALUE;
         }
     }
-
+#define FILE_TYPE_IPD (6)
     // Run through all game files.
     for (k = arg2; k < 2074; k++)
     {
-        if (g_FileTable[k].type_8_18 == 6)
+        if (g_FileTable[k].type_8_18 == FILE_TYPE_IPD)
         {
-            Fs_GetFileName(&sp10, k);
+            Fs_GetFileName(sp10, k);
 
-            if (strncmp(&sp10, arg0->field_144, arg0->field_148) == 0)
+            if (strncmp(sp10, arg0->mapTag_144, arg0->mapTagLen_148) == 0)
             {
-                temp_s0 = &sp10[arg0->field_148];
-                if (func_8004255C(&j, temp_s0[0], temp_s0[1]) &&
-                    func_8004255C(&i, temp_s0[2], temp_s0[3]))
+                filename_postfix = &sp10[arg0->mapTagLen_148];
+                if (hex_to_s16(&j, filename_postfix[0], filename_postfix[1]) &&
+                    hex_to_s16(&i, filename_postfix[2], filename_postfix[3]))
                 {
-                    ptr             = &arg0->field_42C[i];
-                    ptr->field_0[j] = k;
+                    ptr         = &arg0->ipdGridCenter_42C[i];
+                    ptr->idx[j] = k;
                 }
             }
         }
     }
 }
 
-bool func_8004255C(s32* out, char firstHex, char secondHex) // 0x8004255C
+bool hex_to_s16(s32* out, char firstHex, char secondHex) // 0x8004255C
 {
     char low;
     char high;
@@ -926,7 +929,7 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
         }
     }
 
-    if (((s16*)(&D_800C1020.field_42C[zIdx]))[xIdx] != NO_VALUE)
+    if (((s16*)(&D_800C1020.ipdGridCenter_42C[zIdx]))[xIdx] != NO_VALUE)
     {
         return NULL;
     }
@@ -1044,7 +1047,7 @@ void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1) // 0x80042C3C
 
     if (D_800C1020.field_138.queueIdx_8 == NO_VALUE) 
     {
-        D_800C1020.field_138.queueIdx_8 = Fs_QueueStartRead(D_800C1020.field_138.field_4, D_800C1020.field_138.plmHeader_0);
+        D_800C1020.field_138.queueIdx_8 = Fs_QueueStartRead(D_800C1020.field_138.fileIdx_4, D_800C1020.field_138.plmHeader_0);
     }
 
     func_80042EBC(&D_800C1020, x0, z0, x1, z1);
