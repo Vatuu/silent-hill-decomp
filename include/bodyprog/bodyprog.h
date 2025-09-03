@@ -1292,22 +1292,22 @@ typedef struct
 typedef struct
 {
     u8            field_0;
-    u8            fogEnabled_1; // `bool`, name from SHME, needs confirming.
+    u8            fogEnabled_1; // `bool`
     u8            field_2;
     u8            field_3;
     s_WaterZone*  waterZones_4;
-    s32           screenBrightness_8; // Name from SHME, needs confirming.
+    s32           screenBrightness_8;
     s8            unk_C[4];
-    q23_8         drawDistance_10; // Name from SHME, needs confirming, "has no effect when fog is disabled".
-    s32           fogRelated_14;   // "FogThing1" from SHME
-    s32           fogRelated_18;   // "FogThing2" from SHME
-    CVECTOR       fogColor_1C;     // Name from SHME, needs confirming.
+    q23_8         drawDistance_10; // Name from SHME, "has no effect when fog is disabled".
+    s32           fogRelated_14;   // "FogThing1" from SHME, seems to affect distance where fog begins.
+    s32           fogRelated_18;   // "FogThing2" from SHME.
+    CVECTOR       fogColor_1C;
     s32           field_20;
     u8            field_24;
     u8            field_25;
     u8            field_26;
     s8            unk_27;
-    CVECTOR       worldTintColor_28; // Name from SHME, needs confirming.
+    CVECTOR       worldTintColor_28;
     MATRIX        field_2C;
     s32           field_4C;
     s16           field_50;
@@ -2997,7 +2997,7 @@ void func_800550D0();
 
 void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
 
-void func_800553C4(u8 arg0, u8 arg1, u8 arg2, u8 arg3);
+void Gfx_FogParamsSet(u8 fogEnabled, u8 fogColorR, u8 fogColorG, u8 fogColorB);
 
 void func_800553E0(u32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6);
 

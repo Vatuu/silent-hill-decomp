@@ -3070,7 +3070,7 @@ void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
     var_t0  = CLAMP(temp_v1, 0, 0xFF);
 
     func_80055330(arg0->field_0.field_0.s_field_0.field_2, arg0->field_0.field_6, arg0->field_0.field_0.s_field_0.field_1, arg0->field_0.field_8, arg0->field_0.field_A, arg0->field_0.field_C, var_t0);
-    func_800553C4(arg0->field_0.field_E != 0, arg0->field_0.field_14.vector_0[0], arg0->field_0.field_14.vector_0[1], arg0->field_0.field_14.vector_0[2]);
+    Gfx_FogParamsSet(arg0->field_0.field_E != 0, arg0->field_0.field_14.vector_0[0], arg0->field_0.field_14.vector_0[1], arg0->field_0.field_14.vector_0[2]);
 
     temp_a0 = arg0->field_0.field_10;
 

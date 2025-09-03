@@ -148,12 +148,12 @@ void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 arg3, s32 arg4, s32 arg5, s32
     D_800C4168.field_26            = (arg5 * arg1) >> 17;
 }
 
-void func_800553C4(u8 arg0, u8 arg1, u8 arg2, u8 arg3) // 0x800553C4
+void Gfx_FogParamsSet(u8 fogEnabled, u8 fogColorR, u8 fogColorG, u8 fogColorB) // 0x800553C4
 {
-    D_800C4168.fogEnabled_1  = arg0;
-    D_800C4168.fogColor_1C.r = arg1;
-    D_800C4168.fogColor_1C.g = arg2;
-    D_800C4168.fogColor_1C.b = arg3;
+    D_800C4168.fogEnabled_1  = fogEnabled;
+    D_800C4168.fogColor_1C.r = fogColorR;
+    D_800C4168.fogColor_1C.g = fogColorG;
+    D_800C4168.fogColor_1C.b = fogColorB;
 }
 
 void func_800553E0(u32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6) // 0x800553E0
