@@ -136,7 +136,27 @@ void Ai_GhostDoctor_Init(s_SubCharacter* chara) // 0x800D8BE0
     sharedFunc_800D923C_0_s00(chara);
 }
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D8C00);
+void func_800D8C00(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8C00
+{
+    if (chara->properties_E4.player.afkTimer_E8 == 0)
+    {
+        if (chara->model_0.stateStep_3 == 0)
+        {
+            chara->model_0.anim_4.status_0 = ANIM_STATUS(1, false);
+            chara->model_0.stateStep_3++;
+        }
+
+        if (chara->properties_E4.player.runTimer_F8 != 0)
+        {
+            chara->properties_E4.player.afkTimer_E8 = 0;
+            chara->model_0.stateStep_3 = 0;
+            chara->properties_E4.player.runTimer_F8 = 0;
+        }
+    }
+
+    coord->flg = false;
+    func_80096E78(&chara->rotation_24, &coord->coord);
+}
 
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800D8C74
 

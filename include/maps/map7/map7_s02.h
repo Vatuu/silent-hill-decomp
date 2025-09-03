@@ -15,7 +15,8 @@ void Character_CoordTransformUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord)
 
 void Ai_GhostDoctor_Init(s_SubCharacter* chara);
 
-void func_800D8C00(s_SubCharacter*, GsCOORDINATE2*);
+/** Likely takes Harry character based on property usage. */
+void func_800D8C00(s_SubCharacter* chara, GsCOORDINATE2* coord);
 
 void func_800D9864();
 
