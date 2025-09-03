@@ -1,4 +1,4 @@
-void sharedFunc_800CFFF8_0_s00(s32 arg0, s_func_800CFFF8* arg1)
+void sharedFunc_800CFFF8_0_s00(s32 arg0, s_func_800CFFF8* arg1, s16* rand)
 {
     s32 absX;
     s32 threshold;

@@ -16,15 +16,15 @@ void sharedFunc_800CEFD0_1_s02(s32 arg0, s_sharedFunc_800CEFD0_1_s02* arg1, u16*
 
     if (arg0 == 1)
     {
-        var_t0 = sharedData_800E3178_1_s02.field_C.vx - sharedData_800E3148_1_s02.field_C.vx;
-        var_t1 = sharedData_800E3178_1_s02.field_C.vz - sharedData_800E3148_1_s02.field_C.vz;
+        var_t0 = g_ParticleVectors1.viewPosition_C.vx - g_ParticleVectors0.viewPosition_C.vx;
+        var_t1 = g_ParticleVectors1.viewPosition_C.vz - g_ParticleVectors0.viewPosition_C.vz;
 
         var_s0->field_C.vx = var_s0->field_0.vx;
         var_s0->field_C.vz = var_s0->field_0.vz;
         var_s0->field_C.vy = var_s0->field_0.vy - var_s0->field_1A;
 
         var_s0->field_0.vx += ((sharedData_800DFB64_0_s00 + var_t0) * *deltaTime) / 136;
-        var_s0->field_1A   += sharedData_800E5768_1_s02;
+        var_s0->field_1A   += *(s32*)&sharedData_800E5768_1_s02; // TODO: Should be sharedData_800E5768_1_s02.field_0
         var_s0->field_0.vy += ((var_s0->field_1A << 2) * *deltaTime) / 136;
         var_s0->field_0.vz += ((sharedData_800DFB68_0_s00 + var_t1) * *deltaTime) / 136;
 
