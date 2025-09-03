@@ -440,9 +440,9 @@ typedef struct
     u8                 field_C8;
     u8                 unk_C9[1];
     s16                field_CA;
-    s32                field_CC;
+    s32                field_CC; // TODO: This is a `s_IpdCollisionData` pointer.
     u8                 field_D0;
-    s8                 unk_D1;
+    s8                 field_D1;
     u16                field_D2;
     s16                field_D4;
     s16                field_D6;
@@ -470,27 +470,6 @@ typedef struct
     s16                field_102;
     // TODO: May be incomplete. Maybe not, added the final padding based on `func_800699F8`
 } s_func_8006CC44;
-
-typedef struct
-{
-    s8       unk_0[8];
-    s32      field_8;
-    SVECTOR3 field_C;
-    s8       unk_12[2];
-    s16      field_14;
-    s16      field_16;
-    s32      field_18;
-    s32      field_1C;
-    s32      field_20;
-    s32      field_24;
-} s_func_8006D7EC_0;
-
-// Maybe `SVECTOR`.
-typedef struct
-{
-    s16 field_0;
-    s16 field_2;
-} s_func_8006D7EC_1;
 
 typedef struct
 {
@@ -774,11 +753,13 @@ typedef struct _IpdCollisionData_18
 {
     u16 field_0_0  : 5;
     u16 field_0_5  : 3;
-    u16 field_0_8  : 3;
-    u16 field_0_11 : 4;
+    u16 field_0_8 : 4;
+    u16 field_0_12 : 3;
     u16 field_0_15 : 1;
-    u8  unk_2[2];
-    u8  unk_4[6];
+    u16 field_2;
+    u16 field_4;
+    u16 field_6;
+    u16 field_8;
 } s_IpdCollisionData_18;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData_18, 10);
 
@@ -856,6 +837,22 @@ typedef struct
     s32          queueIdx_8; // Passed to `Fs_QueueEntryLoadStatusGet`, thus the name.
 } s_func_80041CB4;
 
+typedef struct
+{
+    u8 field_0;
+    u8 field_1;
+} s_func_800452EC_8;
+
+typedef struct
+{
+    s8                      unk_0[8];
+    s_func_800452EC_8*      field_8;
+    s8                      unk_C[4];
+    s8                      field_10;
+    s8                      unk_11[3];
+    struct s_func_800452EC* field_14;
+} s_func_800452EC;
+
 // Maybe a collection of matrices.
 typedef struct
 {
@@ -876,7 +873,7 @@ typedef struct
     u8      boneIdx_1; // Current bone index? Used in traversal.
     s8      field_2;
     s8      field_3;
-    s32     field_4;
+    s_func_800452EC* field_4;
     s_Bone* bones_8;
 
     // Maybe incorrect.
@@ -2228,6 +2225,8 @@ extern s32 D_800C1178;
 /** Collection of IPD file data? */
 extern s_800C117C D_800C117C[];
 
+extern s16 (*D_800C144C)[16]; // Maybe a struct?
+
 extern s_800C1450 D_800C1450;
 
 extern s8* D_800C15B0;
@@ -2738,6 +2737,8 @@ s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, 
 
 void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
 
+s16 func_80043554(s32 arg0, s32 arg1);
+
 bool func_80043578(s_80043578* arg0, s32 arg1, s32 arg2);
 
 /** Maybe facilitates file chunk streaming as the player moves around the map. */
@@ -2820,6 +2821,9 @@ void func_800451B0(s_Skeleton* skel, s_PlmHeader* plmHeader, s32* arg2);
 
 /** Anim func. Param names are rough. */
 void func_80045258(s_Skeleton** skels, s_Bone* bones, s32 boneIdx, s_PlmHeader* plmHeader);
+
+/** Anim func. */
+void func_800452EC(s_Skeleton* skel);
 
 /** Anim func. Traverses skeleton bones to set flags/mask. */
 void func_800453E8(s_Skeleton* skel, bool cond);
@@ -3536,11 +3540,15 @@ void func_8006D01C(VECTOR3* arg0, VECTOR3* arg1, s16 arg2, s_func_8006CC44* arg3
 
 void func_8006D600(VECTOR3* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
-void func_8006D7EC(s_func_8006D7EC_0* arg0, s_func_8006D7EC_1* arg1, s_func_8006D7EC_1* arg2);
+void func_8006D774(s_func_8006CC44* arg0, VECTOR3* arg1, VECTOR3* arg2);
+
+void func_8006D7EC(s_func_8006ABC0* arg0, SVECTOR* arg1, SVECTOR* arg2);
 
 bool func_8006D90C(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2);
 
 bool func_8006DA08(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2, s_SubCharacter* chara);
+
+void func_8006DAE4(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2, s32 arg3);
 
 bool func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_SubCharacter* chara);
 

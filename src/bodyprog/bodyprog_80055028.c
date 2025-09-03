@@ -2929,7 +2929,26 @@ bool func_8006C1B8(u32 arg0, s16 arg1, s_func_8006C1B8* arg2) // 0x8006C1B8
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006C248); // 0x8006C248
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006C3D4); // 0x8006C3D4
+s32 func_8006C3D4(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s32 idx) // 0x8006C3D4
+{
+    s_IpdCollisionData_18* temp_a1;
+
+    arg0->field_CC = collData;
+    arg0->field_D0 = idx;
+    temp_a1        = &collData->ptr_18[idx - collData->field_8_16];
+
+    if (!((arg0->field_2 >> temp_a1->field_0_8) & 0x1))
+    {
+        return 0;
+    }
+
+    arg0->field_D1         = temp_a1->field_0_5;
+    arg0->field_D2         = temp_a1->field_2;
+    arg0->field_D4         = temp_a1->field_4;
+    arg0->field_D6         = temp_a1->field_6;
+    arg0->field_D8.field_0 = temp_a1->field_8;
+    return 1;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006C45C); // 0x8006C45C
 
@@ -3242,41 +3261,59 @@ void func_8006D600(VECTOR3* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006D774); // 0x8006D774
+void func_8006D774(s_func_8006CC44* arg0, VECTOR3* arg1, VECTOR3* arg2) // 0x8006D774
+{
+    SVECTOR sp10; // Types assumed. SVECTOR3 might also work but there are 8 bytes between sp10 and sp18 and SVECTOR3 is only 6 bytes.
+    SVECTOR sp18;
 
-void func_8006D7EC(s_func_8006D7EC_0* arg0, s_func_8006D7EC_1* arg1, s_func_8006D7EC_1* arg2) // 0x8006D7EC
+    sp10.vx = FP_FROM(arg1->vx, Q4_SHIFT);
+    sp10.vy = FP_FROM(arg1->vz, Q4_SHIFT);
+    sp18.vx = FP_FROM(arg2->vx, Q4_SHIFT);
+    sp18.vy = FP_FROM(arg2->vz, Q4_SHIFT);
+
+    arg0->field_34 = 0;
+    arg0->field_44 = 0;
+    arg0->field_4A = 0;
+    arg0->field_4C = 0;
+    arg0->field_7A = 0;
+    arg0->field_74 = 0;
+
+    func_8006D7EC(&arg0->field_4, &sp10, &sp18);
+}
+
+void func_8006D7EC(s_func_8006ABC0* arg0, SVECTOR* arg1, SVECTOR* arg2) // 0x8006D7EC
 {
     s16 angle;
     s32 dist;
     s16 z;
 
-    arg0->field_C.vx = arg2->field_0;
+    arg0->field_C.vx = arg2->vx;
 
-    z                = arg2->field_2;
-    arg0->field_C.vz = arg2->field_2;
+    z                = arg2->vy;
+    arg0->field_C.vz = arg2->vy;
     dist             = SquareRoot0(SQUARE(arg0->field_C.vx) + SQUARE(z));
 
     arg0->field_8 = dist;
 
     if (dist != 0)
     {
-        arg0->field_14 = FP_TO(arg0->field_C.vx, Q12_SHIFT) / dist;
-        arg0->field_16 = FP_TO(arg0->field_C.vz, Q12_SHIFT) / arg0->field_8;
-        
-        angle          = ratan2(arg0->field_C.vz, arg0->field_C.vx);
-        arg0->field_14 = Math_Cos(angle);
-        arg0->field_16 = Math_Sin(angle);
+        arg0->directionX_14 = FP_TO(arg0->field_C.vx, Q12_SHIFT) / dist;
+        arg0->directionZ_16 = FP_TO(arg0->field_C.vz, Q12_SHIFT) / arg0->field_8;
+
+        angle               = ratan2(arg0->field_C.vz, arg0->field_C.vx);
+        arg0->directionX_14 = Math_Cos(angle);
+        arg0->directionZ_16 = Math_Sin(angle);
     }
     else
     {
-        arg0->field_14 = 0x1000;
-        arg0->field_16 = 0;
+        arg0->directionX_14 = 0x1000;
+        arg0->directionZ_16 = 0;
     }
 
-    arg0->field_18 = arg0->field_18 + arg1->field_0;
-    arg0->field_1C = arg0->field_1C + arg1->field_2;
-    arg0->field_20 = arg0->field_18 + arg0->field_C.vx;
-    arg0->field_24 = arg0->field_1C + arg0->field_C.vz;
+    arg0->positionX_18 = arg0->positionX_18 + arg1->vx;
+    arg0->positionZ_1C = arg0->positionZ_1C + arg1->vy;
+    arg0->field_20     = arg0->positionX_18 + arg0->field_C.vx;
+    arg0->field_24     = arg0->positionZ_1C + arg0->field_C.vz;
 }
 
 bool func_8006D90C(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2) // 0x8006D90C
@@ -3335,7 +3372,18 @@ bool func_8006DA08(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2, s_SubC
     return arg0->field_0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006DAE4); // 0x8006DAE4
+void func_8006DAE4(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2, s32 arg3) // 0x8006DAE4
+{
+    arg0->field_0  = 0;
+    arg0->field_1  = 0;
+    arg0->field_4  = vec1->vx + vec2->vx;
+    arg0->field_8  = vec1->vy + vec2->vy;
+    arg0->field_C  = vec1->vz + vec2->vz;
+    arg0->field_10 = 0;
+    arg0->field_14 = arg3 * 0x10;
+    arg0->field_18 = 0x1E00;
+    arg0->field_1C = 0;
+}
 
 static inline void func_8006DB3C_Inline(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, u16* p)
 {
