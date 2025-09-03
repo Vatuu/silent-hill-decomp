@@ -2776,7 +2776,7 @@ s32 func_8003F4DC(GsCOORDINATE2** arg0, SVECTOR* rot, s32 arg2, s32 arg3, u32 ar
     return res;
 }
 
-u32 func_8003F654(s_func_8003F654* arg0)
+u32 func_8003F654(s_SysWork_2288* arg0)
 {
     switch (arg0->field_0)
     {

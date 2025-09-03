@@ -2341,15 +2341,15 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80069DF0); // 0x
 
 s32 func_80069FFC(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara) // 0x80069FFC
 {
-    s_func_80069FFC sp28;
+    s_func_8006AB50 sp28;
     VECTOR3         sp40;
     s32             sp50;
     s32             sp54;
     s32             var_s1;
 
-    sp28.field_0.vx = chara->position_18.vx + chara->field_D8.field_4;
-    sp28.field_0.vy = chara->position_18.vy - FP_METER(0.02f);
-    sp28.field_0.vz = chara->position_18.vz + chara->field_D8.field_6;
+    sp28.position_0.vx = chara->position_18.vx + chara->field_D8.field_4;
+    sp28.position_0.vy = chara->position_18.vy - FP_METER(0.02f);
+    sp28.position_0.vz = chara->position_18.vz + chara->field_D8.field_6;
 
     if (func_800426E4(chara->position_18.vx, chara->position_18.vz) == NULL)
     {
@@ -2357,9 +2357,9 @@ s32 func_80069FFC(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara) // 0x8
         return 1;
     }
 
-    sp28.field_C.vy = chara->field_C8;
-    sp28.field_C.vx = chara->field_CA;
-    sp28.field_C.vz = chara->field_D4;
+    sp28.rotation_C.vy = chara->field_C8;
+    sp28.rotation_C.vx = chara->field_CA;
+    sp28.rotation_C.vz = chara->field_D4;
 
     sp28.field_12 = chara->field_E0_8;
 
@@ -2740,7 +2740,7 @@ void func_8006B9C8(s_func_8006CC44* arg0) // 0x8006B9C8
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006BB50); // 0x8006BB50
 
-s32 func_8006BC34(s_func_8006BC34* arg0)
+s32 func_8006BC34(s_func_8006CC44* arg0)
 {
     s16 temp_a2;
     s16 temp_a3;
@@ -2778,7 +2778,7 @@ s32 func_8006BC34(s_func_8006BC34* arg0)
         }
     }
 
-    return arg0->field_30 - (s16)var_v0;
+    return arg0->field_4.field_2C - (s16)var_v0;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006BCC4); // 0x8006BCC4
@@ -2881,11 +2881,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006BF88); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006C0C8); // 0x8006C0C8
 
-bool func_8006C1B8(u32 arg0, s16 arg1, s_func_8006C1B8* arg2) // 0x8006C1B8
+bool func_8006C1B8(u32 arg0, s16 arg1, s_func_8006CC44* arg2) // 0x8006C1B8
 {
     s32 var;
 
-    var = (arg2->field_C * arg1) >> 8;
+    var = (arg2->field_4.field_8 * arg1) >> 8;
     switch (arg0)
     {
         default:
@@ -3864,34 +3864,34 @@ s32 func_80070360(s_SubCharacter* chara, s32 someDist, s16 arg2) // 0x80070360
     return result;
 }
 
-void func_80070400(s_func_80070400_0* arg0, s_func_80070400_1* arg1, s_func_80070400_1* arg2) // 0x80070400
+void func_80070400(s_SubCharacter* chara, s_func_80070400_1* arg1, s_func_80070400_1* arg2) // 0x80070400
 {
     s32 alpha;
     s32 invAlpha;
 
     // Compute alpha.
-    if (arg0->field_4 & (1 << 0))
+    if (chara->model_0.anim_4.status_0 & (1 << 0))
     {
-        alpha = arg0->field_8 & 0xFFF;
+        alpha = chara->model_0.anim_4.time_4 & 0xFFF;
     }
     else
     {
-        alpha = arg0->field_E;
+        alpha = chara->model_0.anim_4.keyframeIdx1_A;
     }
 
     // Compute inverse alpha.
     invAlpha = FP_ALPHA(1.0f) - alpha;
 
-    arg0->field_C8 = FP_FROM((arg1->field_0 * invAlpha) + (arg2->field_0 * alpha), Q12_SHIFT);
-    arg0->field_CA = FP_FROM((arg1->field_2 * invAlpha) + (arg2->field_2 * alpha), Q12_SHIFT);
-    arg0->field_CC = FP_FROM((arg1->field_4 * invAlpha) + (arg2->field_4 * alpha), Q12_SHIFT);
-    arg0->field_CE = FP_FROM((arg1->field_6 * invAlpha) + (arg2->field_6 * alpha), Q12_SHIFT);
-    arg0->field_DC = FP_FROM((arg1->field_10 * invAlpha) + (arg2->field_10 * alpha), Q12_SHIFT);
-    arg0->field_DE = FP_FROM((arg1->field_12 * invAlpha) + (arg2->field_12 * alpha), Q12_SHIFT);
-    arg0->field_D4 = FP_FROM((arg1->field_8 * invAlpha) + (arg2->field_8 * alpha), Q12_SHIFT);
-    arg0->field_D8 = FP_FROM((arg1->field_C * invAlpha) + (arg2->field_C * alpha), Q12_SHIFT);
-    arg0->field_DA = FP_FROM((arg1->field_E * invAlpha) + (arg2->field_E * alpha), Q12_SHIFT);
-    arg0->field_D6 = FP_FROM((arg1->field_A * invAlpha) + (arg2->field_A * alpha), Q12_SHIFT);
+    chara->field_C8         = FP_FROM((arg1->field_0 * invAlpha) + (arg2->field_0 * alpha), Q12_SHIFT);
+    chara->field_CA         = FP_FROM((arg1->field_2 * invAlpha) + (arg2->field_2 * alpha), Q12_SHIFT);
+    chara->field_CC         = FP_FROM((arg1->field_4 * invAlpha) + (arg2->field_4 * alpha), Q12_SHIFT);
+    chara->field_CE         = FP_FROM((arg1->field_6 * invAlpha) + (arg2->field_6 * alpha), Q12_SHIFT);
+    chara->field_D8.field_4 = FP_FROM((arg1->field_10 * invAlpha) + (arg2->field_10 * alpha), Q12_SHIFT);
+    chara->field_D8.field_6 = FP_FROM((arg1->field_12 * invAlpha) + (arg2->field_12 * alpha), Q12_SHIFT);
+    chara->field_D4         = FP_FROM((arg1->field_8 * invAlpha) + (arg2->field_8 * alpha), Q12_SHIFT);
+    chara->field_D8.field_0 = FP_FROM((arg1->field_C * invAlpha) + (arg2->field_C * alpha), Q12_SHIFT);
+    chara->field_D8.field_2 = FP_FROM((arg1->field_E * invAlpha) + (arg2->field_E * alpha), Q12_SHIFT);
+    chara->field_D6         = FP_FROM((arg1->field_A * invAlpha) + (arg2->field_A * alpha), Q12_SHIFT);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800705E4); // 0x800705E4

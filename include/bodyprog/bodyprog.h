@@ -200,13 +200,6 @@ typedef struct
 } s_80043578;
 STATIC_ASSERT_SIZEOF(s_80043578, 28);
 
-typedef struct
-{
-    VECTOR3  field_0;
-    SVECTOR3 field_C;
-    s8       field_12;
-} s_func_80069FFC;
-
 // Exception, as one of the unidentified structs uses this.
 typedef struct _s_8002AC04
 {
@@ -260,22 +253,6 @@ typedef struct
     u8  unk_2[18];
     s32 field_14;
 } s_800C45C8;
-
-typedef struct
-{
-    s32 field_0;
-    s8* field_4;
-} s_func_8003F654;
-
-typedef struct
-{
-    s8  unk_0[4];
-    s16 field_4;
-    s8  unk_6[2];
-    s8  unk_8[3];
-    s8  unk_10[4];
-    s32 field_14;
-} s_func_8003FEC0;
 
 typedef struct
 {
@@ -340,35 +317,11 @@ typedef struct
 
 typedef struct
 {
-    s8  unk_0[48];
-    s16 field_30;
-    s8  unk_32[164];
-    s16 field_D6;
-    s8  unk_DA[8];
-    s32 field_E0;
-    s8  unk_E4[2];
-    u16 field_E6;
-    s8  unk_EA[2];
-    s32 field_EC;
-} s_func_8006BC34;
-
-typedef struct
-{
     s8  field_0;
     s8  unk_1;
     s16 field_2;
     s16 field_4;
 } s_func_8006BDDC;
-
-typedef struct
-{
-    s8  unk_0[12];
-    s32 field_C;
-    s8  unk_20[36];
-    s32 field_34;
-    s8  unk_38[2];
-    s16 field_3A;
-} s_func_8006C1B8;
 
 typedef struct
 {
@@ -407,7 +360,7 @@ typedef struct
     s_func_8006ABC0    field_4;
     s32                field_34;
     s16                field_38;
-    s8                 unk_3A[2];
+    s16                field_3A;
     s16                field_3C;
     s16                field_3E;
     s8                 unk_40[4];
@@ -556,28 +509,6 @@ typedef struct
     s32                field_1C;
     s_func_8006E490_20 field_20[2];
 } s_func_8006E490;
-
-typedef struct
-{
-    s8  unk_0[4];
-    u8  field_4;
-    s8  unk_5[3];
-    s32 field_8;
-    s8  unk_C[2];
-    s16 field_E;
-    s8  unk_F0[184];
-    s16 field_C8;
-    s16 field_CA;
-    s16 field_CC;
-    s16 field_CE;
-    s8  unk_D0[4];
-    s16 field_D4;
-    s16 field_D6;
-    s16 field_D8;
-    s16 field_DA;
-    s16 field_DC;
-    s16 field_DE;
-} s_func_80070400_0;
 
 typedef struct
 {
@@ -843,6 +774,7 @@ typedef struct
     u8 field_1;
 } s_func_800452EC_8;
 
+// Probably Skeleton too.
 typedef struct
 {
     s8                      unk_0[8];
@@ -1636,15 +1568,6 @@ typedef struct _MapOverlayHeader
     u32               unk_84C[512];
 } s_MapOverlayHeader;
 STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 4172); // Size incomplete.
-
-typedef struct
-{
-    s32 field_0; // X
-    s8  unk_4[2];
-    u8  field_6;
-    u8  field_7;
-    s32 field_8; // Z
-} s_func_80037A4C;
 
 typedef struct
 {
@@ -2607,7 +2530,7 @@ void func_8003EF10(s32 idx0, s32 idx1, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
 
 s32 func_8003F4DC(GsCOORDINATE2** arg0, SVECTOR* rot, s32 arg2, s32 arg3, u32 arg4, s_SysWork* sysWork);
 
-u32 func_8003F654(s_func_8003F654* arg0);
+u32 func_8003F654(s_SysWork_2288* arg0);
 
 s32 func_8003F6F0(s32 arg0, s32 arg1, s32 arg2);
 
@@ -3514,7 +3437,7 @@ void func_8006B6E8(s_func_8006CC44* arg0, s_func_8006B1C8* arg1);
 
 void func_8006B9C8(s_func_8006CC44* arg0);
 
-s32 func_8006BC34(s_func_8006BC34* arg0);
+s32 func_8006BC34(s_func_8006CC44* arg0);
 
 void func_8006BCC4(s8*, s32, s32, s16, s16, s16);
 
@@ -3524,7 +3447,7 @@ void func_8006BE40(s_func_8006CC44* arg0);
 
 void func_8006C0C8(s_func_8006CC44*, s16, s16, s32);
 
-bool func_8006C1B8(u32 arg0, s16 arg1, s_func_8006C1B8* arg2);
+bool func_8006C1B8(u32 arg0, s16 arg1, s_func_8006CC44* arg2);
 
 void func_8006C794(s_func_8006CC44* arg0, s32 arg1, s32 arg2);
 
@@ -3578,7 +3501,7 @@ bool func_80070320();
 
 s32 func_80070360(s_SubCharacter* chara, s32 someDist, s16 arg2);
 
-void func_80070400(s_func_80070400_0* arg0, s_func_80070400_1* arg1, s_func_80070400_1* arg2);
+void func_80070400(s_SubCharacter* chara, s_func_80070400_1* arg1, s_func_80070400_1* arg2);
 
 bool func_80070208(s_SubCharacter* chara, s32 arg1);
 
@@ -3748,7 +3671,7 @@ bool func_800378D4(s_AreaLoadParams* areaLoadParams);
 
 bool func_80037A4C(s_AreaLoadParams* areaLoadParams);
 
-bool func_80037C5C(s_func_80037A4C* arg0);
+bool func_80037C5C(s_AreaLoadParams* areaLoadParams);
 
 void func_80037DC4(s_SubCharacter* chara);
 
