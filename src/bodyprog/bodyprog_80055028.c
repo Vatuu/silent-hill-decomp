@@ -3337,7 +3337,18 @@ bool func_8006DA08(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2, s_SubC
     return arg0->field_0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006DAE4); // 0x8006DAE4
+void func_8006DAE4(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2, s32 arg3) // 0x8006DAE4
+{
+    arg0->field_0  = 0;
+    arg0->field_1  = 0;
+    arg0->field_4  = vec1->vx + vec2->vx;
+    arg0->field_8  = vec1->vy + vec2->vy;
+    arg0->field_C  = vec1->vz + vec2->vz;
+    arg0->field_10 = 0;
+    arg0->field_14 = arg3 * 0x10;
+    arg0->field_18 = 0x1E00;
+    arg0->field_1C = 0;
+}
 
 static inline void func_8006DB3C_Inline(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, u16* p)
 {
