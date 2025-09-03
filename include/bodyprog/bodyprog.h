@@ -256,22 +256,6 @@ typedef struct
 
 typedef struct
 {
-    s32 field_0;
-    s8* field_4;
-} s_func_8003F654;
-
-typedef struct
-{
-    s8  unk_0[4];
-    s16 field_4;
-    s8  unk_6[2];
-    s8  unk_8[3];
-    s8  unk_10[4];
-    s32 field_14;
-} s_func_8003FEC0;
-
-typedef struct
-{
     char pad[12];
 } s_func_8005B424;
 
@@ -2600,7 +2584,7 @@ void func_8003EF10(s32 idx0, s32 idx1, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
 
 s32 func_8003F4DC(GsCOORDINATE2** arg0, SVECTOR* rot, s32 arg2, s32 arg3, u32 arg4, s_SysWork* sysWork);
 
-u32 func_8003F654(s_func_8003F654* arg0);
+u32 func_8003F654(s_SysWork_2288* arg0);
 
 s32 func_8003F6F0(s32 arg0, s32 arg1, s32 arg2);
 
