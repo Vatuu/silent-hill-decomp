@@ -2227,6 +2227,8 @@ extern s32 D_800C1178;
 /** Collection of IPD file data? */
 extern s_800C117C D_800C117C[];
 
+extern s16 (*D_800C144C)[16]; // Maybe a struct?
+
 extern s_800C1450 D_800C1450;
 
 extern s8* D_800C15B0;
@@ -2736,6 +2738,8 @@ void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1);
 s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, bool clip);
 
 void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
+
+s16 func_80043554(s32 arg0, s32 arg1);
 
 bool func_80043578(s_80043578* arg0, s32 arg1, s32 arg2);
 

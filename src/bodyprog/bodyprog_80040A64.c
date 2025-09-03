@@ -1103,7 +1103,10 @@ void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1,
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800433B8); // 0x800433B8
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043554); // 0x80043554
+s16 func_80043554(s32 arg0, s32 arg1) // 0x80043554
+{
+    return D_800C144C[arg1][arg0];
+}
 
 bool func_80043578(s_80043578* arg0, s32 arg1, s32 arg2) // 0x80043578
 {
