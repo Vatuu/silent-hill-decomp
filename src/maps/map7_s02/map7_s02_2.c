@@ -118,17 +118,17 @@ void Ai_GhostDoctor_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coord
     }
 
     func_800D8C00(chara, coords);
-    func_800D8BAC(chara, coords);
+    Character_CoordTransformUpdate(chara, coords);
     func_800D8B64(chara, arg1, coords);
 }
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D8B64);
 
-void func_800D8BAC(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8BAC
+void Character_CoordTransformUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8BAC
 {
-    coord->coord.t[0] = FP_FROM(chara->position_18.vx, Q4_SHIFT);
-    coord->coord.t[1] = FP_FROM(chara->position_18.vy, Q4_SHIFT);
-    coord->coord.t[2] = FP_FROM(chara->position_18.vz, Q4_SHIFT);
+    coord->coord.t[0] = FP_METER_TO_GEO(chara->position_18.vx);
+    coord->coord.t[1] = FP_METER_TO_GEO(chara->position_18.vy);
+    coord->coord.t[2] = FP_METER_TO_GEO(chara->position_18.vz);
 }
 
 void Ai_GhostDoctor_Init(s_SubCharacter* chara) // 0x800D8BE0

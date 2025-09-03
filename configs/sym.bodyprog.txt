@@ -72,13 +72,17 @@ g_MapMsg_Colors                             = 0x80025DC0;
 //-----------------------------------------------------------------------------
 g_InventoryItemRotations                    = 0x800262FC; // type:DVECTOR size:0x380
 
-//------------------------------------------------------
-//--- PA: 0x0039CC   VA: 0x8002852C   subsegment: rodata
-//------------------------------------------------------
+//--------------------------------------------------------------------------
+//--- PA: 0x0039CC   VA: 0x8002852C   subsegment: .rodata, bodyprog_80055028
+//--------------------------------------------------------------------------
 hack_D_80028A18_fix                         = 0x80028A18; // type:s32
 
+//------------------------------------------------------
+//--- PA: 0x004034   VA: 0x80028B94   subsegment: rodata
+//------------------------------------------------------
+
 //--------------------------------------------------------------------------
-//--- PA: 0x004BF0   VA: 0x80029750   subsegment: .rodata, bodyprog_80055028
+//--- PA: 0x004BF0   VA: 0x80029750   subsegment: .rodata, bodyprog_800706E4
 //--------------------------------------------------------------------------
 hack_D_8002A844_fix                         = 0x8002A844; // type:s32
 
@@ -455,11 +459,11 @@ Gfx_Items_Display                           = 0x80054720; // type:func
 Gfx_Items_SetAmbientLighting                = 0x80054928; // type:func
 Gfx_PickupItemAnimate                       = 0x80054AD8; // type:func
 Inventory_AddSpecialItem                    = 0x80054CAC; // type:func
+Items_AmmoReloadCalculation                 = 0x80054FC0; // type:func
 
 //--------------------------------------------------------------------
-//--- PA: 0x030460   VA: 0x80054FC0   subsegment: c, bodyprog_80055028
+//--- PA: 0x0304C8   VA: 0x80055028   subsegment: c, bodyprog_80055028
 //--------------------------------------------------------------------
-Items_AmmoReloadCalculation                 = 0x80054FC0; // type:func
 PlmHeader_FixOffsets                        = 0x800560FC; // type:func
 ObjList_FixOffsets                          = 0x800561A4; // type:func
 PlmHeader_IsTextureLoaded                   = 0x80056888; // type:func
@@ -468,6 +472,10 @@ StringCopy                                  = 0x80056D64; // type:func
 func_800571D0                               = 0x800571D0; // type:func size:0x58 - Fix for truncated function.
 GameState_MapScreen_Update                  = 0x80066EB0; // type:func
 IpdColData_FixOffsets                       = 0x8006993C; // type:func
+
+//--------------------------------------------------------------------
+//--- PA: 0x04BB84   VA: 0x800706E4   subsegment: c, bodyprog_800706E4
+//--------------------------------------------------------------------
 Player_CharaTurn_0                          = 0x800711C4; // type:func
 Player_CharaTurn_1                          = 0x80071224; // type:func
 Player_CharaRotate                          = 0x80071284; // type:func

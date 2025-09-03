@@ -1717,12 +1717,17 @@ void vcSetWatchTgtYParam(VECTOR3* watch_pos, VC_WORK* w_p, s32 cam_mv_type, s32 
 
 void vcAdjustWatchYLimitHighWhenFarView(VECTOR3* watch_pos, VECTOR3* cam_pos, s16 sy) // 0x800835E0
 {
-    s16 max_cam_ang_x = ratan2(cam_pos->vy + FP_METER(5.0f), FP_METER(13.0f)) - ratan2(g_GameWork.gsScreenHeight_58A / 2, sy);
-    s32 dist          = Vc_VectorMagnitudeCalc(watch_pos->vx - cam_pos->vx, 0, watch_pos->vz - cam_pos->vz);
-    s16 cam_ang_x     = ratan2(-watch_pos->vy + cam_pos->vy, dist);
+    s16 max_cam_ang_x;
+    s32 dist;
+    s16 cam_ang_x;
+
+    max_cam_ang_x = ratan2(cam_pos->vy + FP_METER(5.0f), FP_METER(13.0f)) - ratan2(g_GameWork.gsScreenHeight_58A / 2, sy);
+    dist          = Vc_VectorMagnitudeCalc(watch_pos->vx - cam_pos->vx, 0, watch_pos->vz - cam_pos->vz);
+    cam_ang_x     = ratan2(-watch_pos->vy + cam_pos->vy, dist);
 
     if (cam_ang_x > max_cam_ang_x)
     {
+        // TODO: What Q format?
         s32 ofs_y     = FP_TO(((FP_FROM(dist, Q4_SHIFT)) * Math_Sin(max_cam_ang_x)) / Math_Cos(max_cam_ang_x), Q4_SHIFT);
         watch_pos->vy = cam_pos->vy - ofs_y;
     }

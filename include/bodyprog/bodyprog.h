@@ -1367,16 +1367,16 @@ STATIC_ASSERT_SIZEOF(s_CharaFileInfo, 16);
 
 typedef struct
 {
-    SVECTOR3 posTarget_0;
-    SVECTOR3 lookAtTarget_6;
+    SVECTOR3 posTarget_0;    // Q7.8
+    SVECTOR3 lookAtTarget_6; // Q7.8
     s16      field_C[2]; // `field_C[1]` gets passed to `vcChangeProjectionValue`.
 } s_DmsKeyframeCamera;
 STATIC_ASSERT_SIZEOF(s_DmsKeyframeCamera, 16);
 
 typedef struct
 {
-    SVECTOR3 position_0;
-    SVECTOR3 rotation_6;
+    SVECTOR3 position_0; // Q7.8
+    SVECTOR3 rotation_6; // Q7.8
 } s_DmsKeyframeCharacter;
 STATIC_ASSERT_SIZEOF(s_DmsKeyframeCharacter, 12);
 
@@ -1410,7 +1410,7 @@ typedef struct
     u8             field_3; // Usually 0, but sometimes filled in.
     u32            field_4; // Unknown, correlates with DMS file size.
     s_DmsInterval* intervalPtr_8;
-    VECTOR3        origin_C; // Origin point, gets added to character positions.
+    VECTOR3        origin_C; // Q23.8 | Origin point, gets added to character positions.
     s_DmsEntry*    characters_18;
     s_DmsEntry     camera_1C;
 } s_DmsHeader;

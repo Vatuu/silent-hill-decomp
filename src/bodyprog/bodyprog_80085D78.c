@@ -2440,9 +2440,12 @@ void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, s32 
     keyframes = charaEntry->keyframes_C.character;
     Dms_CharacterKeyframeInterpolate(&curFrame, &keyframes[keyframePrev], &keyframes[keyframeNext], alpha);
 
-    pos->vx = FP_TO(curFrame.position_0.vx + header->origin_C.vx, Q4_SHIFT);
-    pos->vy = FP_TO(curFrame.position_0.vy + header->origin_C.vy, Q4_SHIFT);
-    pos->vz = FP_TO(curFrame.position_0.vz + header->origin_C.vz, Q4_SHIFT);
+    // Set position.
+    pos->vx = FP_METER_FROM_GEO(curFrame.position_0.vx + header->origin_C.vx);
+    pos->vy = FP_METER_FROM_GEO(curFrame.position_0.vy + header->origin_C.vy);
+    pos->vz = FP_METER_FROM_GEO(curFrame.position_0.vz + header->origin_C.vz);
+
+    // Set rotation.
     rot->vx = curFrame.rotation_6.vx;
     rot->vy = curFrame.rotation_6.vy;
     rot->vz = curFrame.rotation_6.vz;
@@ -2480,13 +2483,13 @@ s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2,
     func_8008D1D0(&keyframePrev, &keyframeNext, &alpha, time, camEntry, header);
     camProjValue = Dms_CameraKeyframeInterpolate(&curFrame, &camEntry->keyframes_C.camera[keyframePrev], &camEntry->keyframes_C.camera[keyframeNext], alpha);
 
-    posTarget->vx = FP_TO(curFrame.posTarget_0.vx + header->origin_C.vx, Q4_SHIFT);
-    posTarget->vy = FP_TO(curFrame.posTarget_0.vy + header->origin_C.vy, Q4_SHIFT);
-    posTarget->vz = FP_TO(curFrame.posTarget_0.vz + header->origin_C.vz, Q4_SHIFT);
+    posTarget->vx = FP_METER_FROM_GEO(curFrame.posTarget_0.vx + header->origin_C.vx);
+    posTarget->vy = FP_METER_FROM_GEO(curFrame.posTarget_0.vy + header->origin_C.vy);
+    posTarget->vz = FP_METER_FROM_GEO(curFrame.posTarget_0.vz + header->origin_C.vz);
 
-    lookAtTarget->vx = FP_TO(curFrame.lookAtTarget_6.vx + header->origin_C.vx, Q4_SHIFT);
-    lookAtTarget->vy = FP_TO(curFrame.lookAtTarget_6.vy + header->origin_C.vy, Q4_SHIFT);
-    lookAtTarget->vz = FP_TO(curFrame.lookAtTarget_6.vz + header->origin_C.vz, Q4_SHIFT);
+    lookAtTarget->vx = FP_METER_FROM_GEO(curFrame.lookAtTarget_6.vx + header->origin_C.vx);
+    lookAtTarget->vy = FP_METER_FROM_GEO(curFrame.lookAtTarget_6.vy + header->origin_C.vy);
+    lookAtTarget->vz = FP_METER_FROM_GEO(curFrame.lookAtTarget_6.vz + header->origin_C.vz);
 
     if (arg2 != NULL)
     {
