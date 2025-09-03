@@ -3964,7 +3964,7 @@ u32 func_8003ED64();
 
 void func_8003EDA8();
 
-void func_8003EDB8(s32* arg0, s32* arg1);
+void func_8003EDB8(CVECTOR* arg0, CVECTOR* arg1);
 
 void func_8003EE30(s32 arg0, s8* arg1, s32 arg2, s32 arg3);
 

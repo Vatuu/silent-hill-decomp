@@ -70,9 +70,9 @@ extern s_ParticleVectors g_ParticleVectors1;
 
 extern s_Particle g_Particles[300];
 
-extern s32 D_800E214C;
+extern CVECTOR D_800E214C;
 
-extern s32 D_800E2150;
+extern CVECTOR D_800E2150;
 
 extern s_2Vectors D_800E2160;
 
