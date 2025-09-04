@@ -190,16 +190,6 @@ typedef struct
     u16 sfx_2;
 } s_AreaLoadSfx;
 
-typedef struct
-{
-    s8  unk_0[4];
-    s32 field_4;
-    s16 field_8;
-    s16 field_A;
-    s8  unk_C[16];
-} s_80043578;
-STATIC_ASSERT_SIZEOF(s_80043578, 28);
-
 // Exception, as one of the unidentified structs uses this.
 typedef struct _s_8002AC04
 {
@@ -1079,33 +1069,6 @@ STATIC_ASSERT_SIZEOF(s_IpdRow, 32);
 
 typedef struct
 {
-    s_IpdCollisionData field_0;
-    s32                field_134;
-    s_func_80041CB4    field_138;
-    char               mapTag_144[4];
-    s32                mapTagLen_148;
-    s32                field_14C;
-    s_IpdHeader*       field_150;
-    s32                field_154;
-    s32                ipdTableLen_158;
-    s_800C117C         ipdTable_15C[4]; // temp name.
-    s_IpdRow           ipdGrid_1CC[18];
-    s8                 unk_40C[32]; // could be just one extra row in the table above.
-    s_IpdRow*          ipdGridCenter_42C;
-    s32                field_430; // Sub-struct? `func_80042C3C` passes pointer of this to `IpdHeader_FixOffsets`
-    s8                 unk_434[40];
-    s32                field_45C; // Sub-struct? `func_80042C3C` passes pointer of this to `IpdHeader_FixOffsets`
-    s8                 unk_460[280];
-    s32                field_578;
-    s32                field_57C;
-    s32                field_580;
-    s32                field_584;
-    s32                field_588;
-    // More may follow.
-} s_800C1020;
-
-typedef struct
-{
     s8         field_0;
     s8         field_1;
     s8         field_2;
@@ -1133,6 +1096,31 @@ typedef struct
     s_800C1450_58 field_58[8];
     s_800C1450_58 field_118[2];
 } s_800C1450;
+STATIC_ASSERT_SIZEOF(s_800C1450, 328);
+
+typedef struct
+{
+    s_IpdCollisionData field_0;
+    s32                field_134;
+    s_func_80041CB4    field_138;
+    char               mapTag_144[4];
+    s32                mapTagLen_148;
+    s32                field_14C;
+    s_IpdHeader*       field_150;
+    s32                field_154;
+    s32                ipdTableLen_158;
+    s_800C117C         ipdTable_15C[4]; // temp name.
+    s_IpdRow           ipdGrid_1CC[18];
+    s8                 unk_40C[32];     // could be just one extra row in the table above.
+    s_IpdRow*          ipdGridCenter_42C;
+    s_800C1450         field_430;
+    s32                field_578;
+    s32                field_57C;
+    s32                field_580;
+    s32                field_584;
+    s32                field_588;
+} s_800C1020;
+STATIC_ASSERT_SIZEOF(s_800C1020, 1420);
 
 typedef struct
 {
@@ -2153,15 +2141,6 @@ extern s32 D_800C1010[];
 
 extern s_800C1020 D_800C1020;
 
-extern s32 D_800C1178;
-
-/** Collection of IPD file data? */
-extern s_800C117C D_800C117C[];
-
-extern s16 (*D_800C144C)[16]; // Maybe a struct?
-
-extern s_800C1450 D_800C1450;
-
 extern s8* D_800C15B0;
 
 extern s8 D_800C15B4;
@@ -2672,12 +2651,14 @@ void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1,
 
 void func_800433B8(s_800C1020* arg0);
 
-s16 func_80043554(s32 arg0, s32 arg1);
+s16 func_80043554(s32 gridX, s32 gridZ);
 
-bool func_80043578(s_80043578* arg0, s32 arg1, s32 arg2);
+bool func_80043578(s_800C117C* arg0, s32 arg1, s32 arg2);
 
 /** Maybe facilitates file chunk streaming as the player moves around the map. */
 s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s16 fileChunkCoordX, s16 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
+
+bool func_80043830(void);
 
 void func_80043A24(GsOT* ot, s32 arg1);
 
@@ -2688,9 +2669,9 @@ bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHeader);
 
 s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHeader);
 
-void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 plmHeaderCount, void* arg3, void* arg4, s32 arg5);
+void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 plmHeaderCount, s_800C1450_0* arg3, s_800C1450_0* arg4, s32 arg5);
 
-void func_80043C7C(s_IpdHeader* ipdHeader, void* arg1, void* arg2, s32 arg3);
+void func_80043C7C(s_IpdHeader* ipdHeader, s_800C1450_0* arg1, s_800C1450_0* arg2, s32 arg3);
 
 /** Checks if IPD is loaded before returning texture count? */
 s32 func_80043D00(s_IpdHeader* ipdHeader);
@@ -3028,8 +3009,8 @@ void func_8005660C(s_PlmTexList* plmTexList, s_FsImageDesc* image, s32 arg2);
 
 void func_800566B4(s_PlmHeader* plmHeader, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4);
 
-/** Unknown `arg1` / `arg3` / `arg4` types. */
-void func_80056774(s_PlmHeader* plmHeader, void* arg1, bool (*func)(s_PlmTexList* plmTexList), void* arg3, s32 arg4);
+/** Unknown `arg3` / `arg4` types. */
+void func_80056774(s_PlmHeader* plmHeader, s_800C1450_0* arg1, bool (*func)(s_PlmTexList* plmTexList), void* arg3, s32 arg4);
 
 /** Checks if PLM textures are loaded? */
 bool PlmHeader_IsTextureLoaded(s_PlmHeader* plmHeader);
@@ -3065,7 +3046,7 @@ void func_80057658(s_ObjHeader* header, s32 offset, s_GteScratchData* scratchDat
 
 void func_80057A3C(s_ObjHeader* header, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
 
-s_PlmTexList_8* func_8005B1FC(s_PlmTexList*, void*, void*, void*, s32);
+s_PlmTexList_8* func_8005B1FC(s_PlmTexList*, s_800C1450_0*, void*, void*, s32);
 
 void func_8005B55C(GsCOORDINATE2*);
 

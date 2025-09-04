@@ -637,7 +637,7 @@ void func_800566B4(s_PlmHeader* plmHeader, s_FsImageDesc* image, s8 unused, s32 
     }
 }
 
-void func_80056774(s_PlmHeader* plmHeader, void* arg1, bool (*func)(s_PlmTexList* plmTexList), void* arg3, s32 arg4) // 0x80056774
+void func_80056774(s_PlmHeader* plmHeader, s_800C1450_0* arg1, bool (*func)(s_PlmTexList* plmTexList), void* arg3, s32 arg4) // 0x80056774
 {
     s_PlmTexList* tex;
 
