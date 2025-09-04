@@ -2083,7 +2083,43 @@ void func_8005E70C(void) // 0x8005E70C
     D_800C4414 = 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005E7E0); // 0x8005E7E0
+s32 func_8005E7E0(s32 arg0) // 0x8005E7E0
+{
+    s32 var_a0;
+    s32 var_a1;
+    s32 var_v1;
+
+    var_a0 = D_800C4408;
+    var_a1 = 0;
+
+    while (var_a1 < g_MapOverlayHeader.unkTable1Count_50)
+    {
+        if (var_a0 >= g_MapOverlayHeader.unkTable1Count_50)
+        {
+            var_a0 = 0;
+        }
+
+        if (g_MapOverlayHeader.unkTable1_4C[var_a0].field_A != 0)
+        {
+            var_a1 += 1;
+            var_a0 += 1;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    if (var_a1 == g_MapOverlayHeader.unkTable1Count_50)
+    {
+        return NO_VALUE;
+    }
+
+    g_MapOverlayHeader.unkTable1_4C[var_a0].field_A = arg0;
+
+    D_800C4408 = var_a0 + 1;
+    return var_a0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005E89C); // 0x8005E89C
 

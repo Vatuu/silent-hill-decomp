@@ -264,7 +264,7 @@ typedef struct
     s32 vx_0;
     s32 vz_4;
     s16 vy_8;
-    s8  field_A;
+    u8  field_A;
     s8  field_B;
     s8  field_C;
     s8  field_D;
@@ -2332,6 +2332,8 @@ extern VECTOR3* D_800C42CC;
 extern u16 D_800C42D0;
 
 extern u16 D_800C42D2;
+
+extern s16 D_800C4408;
 
 extern s8 D_800C4414;
 
