@@ -4,14 +4,6 @@ bool Particle_Update(s_Particle* partHead)
 {
     #define SNOW_REST_TICKS_UPDATE_MAX 32
 
-    MATRIX      mat0;
-    MATRIX      mat1;
-    VECTOR3     prevPos;
-    s16         rand;
-    s32         pass;
-    s_Particle* partIter;
-
-    
 #if defined(MAP0_S00) || \
     defined(MAP1_S02) || defined(MAP1_S03) || \
     defined(MAP4_S02) || defined(MAP4_S03) || defined(MAP4_S04) || defined(MAP4_S05) || \
@@ -19,10 +11,15 @@ bool Particle_Update(s_Particle* partHead)
     defined(MAP6_S00) || defined(MAP6_S03)    
     s32 sp64;
 #endif
-
-    s32 density;
-    s32 updateCount;
-    s32 updatePrev;
+    MATRIX      mat0;
+    MATRIX      mat1;
+    VECTOR3     prevPos;
+    s16         rand;
+    s32         pass;
+    s32         density;
+    s32         updateCount;
+    s32         updatePrev;
+    s_Particle* partIter;
 
     density = 0;
 
@@ -140,8 +137,10 @@ bool Particle_Update(s_Particle* partHead)
     {
         sharedData_800DD591_0_s00 = 0;
     }
+
 #elif defined(MAP0_S02)
     sharedData_800DD591_0_s00 = 2;
+
     switch (g_SavegamePtr->mapRoomIdx_A5)
     {
         case 2:
@@ -161,21 +160,21 @@ bool Particle_Update(s_Particle* partHead)
             sharedData_800E5768_1_s02.field_50 = 0x11000;
             sharedData_800E5768_1_s02.field_54 = 0xFFF9D800;
             sharedData_800E5768_1_s02.field_5C = 0x11000;
-        break;
-        
+            break;
+
         case 3:
             sharedData_800E5768_1_s02.field_0 = 0xFFF6F000;
             sharedData_800E5768_1_s02.field_8 = 0xF800;
             sharedData_800E5768_1_s02.field_C = 0xFFF79000;
             sharedData_800E5768_1_s02.field_14 = 0xF800;
-        break;
-        
+            break;
+
         case 4:
             sharedData_800E5768_1_s02.field_0 = 0xFFF48000;
             sharedData_800E5768_1_s02.field_8 = 0x17000;
             sharedData_800E5768_1_s02.field_C = 0xFFF48000;
             sharedData_800E5768_1_s02.field_14 = 0x10000;
-        break;
+            break;
     }
 
 #elif defined(MAP1_S06)
@@ -186,7 +185,7 @@ bool Particle_Update(s_Particle* partHead)
         case 13:
         case 14:
             break;
-        
+
         default:
             return false;
     }
@@ -195,7 +194,7 @@ bool Particle_Update(s_Particle* partHead)
     switch (g_SavegamePtr->mapRoomIdx_A5)
     {
         case 3:
-            if (g_SysWork.player_4C.chara_0.position_18.vz > FP_METER(200.0f))
+            if (g_SysWork.player_4C.chara_0.position_18.vz > 0xC8000)
             {
                 sharedData_800DD591_0_s00 = 1;
                 sharedData_800E5768_1_s02.field_0 = -0x5000;
@@ -214,7 +213,7 @@ bool Particle_Update(s_Particle* partHead)
         case 7:
             if (g_SysWork.player_4C.chara_0.position_18.vx > FP_METER(-55.0f) && g_SysWork.player_4C.chara_0.position_18.vx < FP_METER(-33.0f) && 
                 g_SysWork.player_4C.chara_0.position_18.vz > FP_METER(-14.0f) && g_SysWork.player_4C.chara_0.position_18.vz < FP_METER(0.0f))
-                {
+            {
                     sharedData_800DD591_0_s00 = 10;
                     sharedData_800E5768_1_s02.field_0 = 0xFFFD3800;
                     sharedData_800E5768_1_s02.field_8 = 0xFFFF4CCD;
@@ -231,7 +230,7 @@ bool Particle_Update(s_Particle* partHead)
             }
             else if (g_SysWork.player_4C.chara_0.position_18.vx > FP_METER(-90.0f) && g_SysWork.player_4C.chara_0.position_18.vx < FP_METER(-56.0f) && 
                      g_SysWork.player_4C.chara_0.position_18.vz > FP_METER(-14.0f) && g_SysWork.player_4C.chara_0.position_18.vz < FP_METER(0.0f))
-                {
+            {
                     sharedData_800DD591_0_s00 = 10;
                     sharedData_800E5768_1_s02.field_0 = 0xFFFB1000;
                     sharedData_800E5768_1_s02.field_8 = 0xFFFF5800;
@@ -286,13 +285,14 @@ bool Particle_Update(s_Particle* partHead)
             {
                 sharedData_800DD591_0_s00 = 0;
             }
-            
+            break;
+
         case 6:
             if (g_SysWork.player_4C.chara_0.position_18.vx > FP_METER(-225.0f) && g_SysWork.player_4C.chara_0.position_18.vx < FP_METER(-195.0f) && 
                 g_SysWork.player_4C.chara_0.position_18.vz > FP_METER(-100.0f) && g_SysWork.player_4C.chara_0.position_18.vz < FP_METER(-72.0f))
             {
-                sharedData_800DD591_0_s00 = 10;
-                sharedData_800E5768_1_s02.field_0 = -851968;
+                sharedData_800DD591_0_s00 = 0xA;
+                sharedData_800E5768_1_s02.field_0 = -851968; // todo: change to hex
                 sharedData_800E5768_1_s02.field_8 = -380928;
                 sharedData_800E5768_1_s02.field_C = -851968;
                 sharedData_800E5768_1_s02.field_14 = -372736;
@@ -314,7 +314,7 @@ bool Particle_Update(s_Particle* partHead)
         case 27:
             if (g_SysWork.player_4C.chara_0.position_18.vx < FP_METER(-275.0f) && g_SysWork.player_4C.chara_0.position_18.vz < FP_METER(-175.0f))
             {
-                sharedData_800DD591_0_s00 = 10;
+                sharedData_800DD591_0_s00 = 0xA;
                 sharedData_800E5768_1_s02.field_0 = -1175552;
                 sharedData_800E5768_1_s02.field_8 = -747520;
                 sharedData_800E5768_1_s02.field_C = -1169408;
@@ -492,9 +492,9 @@ bool Particle_Update(s_Particle* partHead)
         }
         
         // Handle particles in this state.
-        for(updateCount = updatePrev;
-            updateCount < (updatePrev + sharedData_800DD78C_0_s01[pass]);
-            updateCount++, partIter++)
+        for (updateCount = updatePrev;
+             updateCount < (updatePrev + sharedData_800DD78C_0_s01[pass]);
+             updateCount++, partIter++)
         {
             // Keep only the lower 4 bits.
             // NOTE: &= 0xF would be faster, but this is what they've done.
@@ -579,7 +579,6 @@ bool Particle_Update(s_Particle* partHead)
                 }
             }
         }
-
         updatePrev += sharedData_800DD78C_0_s01[pass];
     }
 
@@ -600,7 +599,6 @@ bool Particle_Update(s_Particle* partHead)
             limitRange(sharedData_800E32D0_0_s00, 0, 135000);
         }
     #endif
-
         for(updateCount = updatePrev;
             updateCount < (updatePrev + sharedData_800DD78C_0_s01[pass]);
             updateCount++, partIter++)
@@ -635,7 +633,7 @@ bool Particle_Update(s_Particle* partHead)
     }
 
     ////////////////////////////////////////////////////////////////////////////
-    
+
     // Likely previous position for next particle system update.
     // Stores XZ position and rotation.
     sharedData_800E324C_0_s00.vx = prevPos.vx;

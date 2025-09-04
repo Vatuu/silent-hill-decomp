@@ -67,7 +67,7 @@ typedef struct
 /** Seems to be custom boundaries for snow/rain particle systems.
  * Only used in a small handful of maps, and not all fields are populated.
  *
- * Maybe 8 `VECTOR3`s holding positions in Q19.12?
+ * Maybe 8 `VECTOR3`s holding positions in Q19.12? Se4ms to be an inefficient AABB.
  */
 typedef struct
 {
