@@ -1688,7 +1688,22 @@ s_800C1450_58* func_8005B4BC(char* str, s_800C1450_0* arg1) // 0x8005B4BC
     return NULL;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005B55C); // 0x8005B55C
+void func_8005B55C(GsCOORDINATE2* arg0) // 0x8005B55C
+{
+    s_800AE204* var_s1;
+
+    D_800C42B8 = arg0;
+
+    for (var_s1 = &D_800AE204[0]; var_s1 < &D_800AE204[26]; var_s1++)
+    {
+        var_s1->field_10 = -Math_Cos(var_s1->field_4);
+        var_s1->field_C  = -Math_Sin(var_s1->field_4);
+        var_s1->field_E  = 0;
+        var_s1->field_18 = FP_MULTIPLY(var_s1->field_2, Math_Cos(var_s1->field_4), Q12_SHIFT);
+        var_s1->field_14 = FP_MULTIPLY(var_s1->field_2, Math_Sin(var_s1->field_4), Q12_SHIFT);
+        var_s1->field_16 = var_s1->field_0;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005B62C); // 0x8005B62C
 

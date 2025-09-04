@@ -1652,6 +1652,22 @@ typedef struct
     } u;
 } s_GteScratchData2;
 
+typedef struct
+{
+    s16 field_0;
+    s16 field_2;
+    s16 field_4;
+    s8  unk_8[6];
+    s16 field_C;
+    s16 field_E;
+    s16 field_10;
+    s8  unk_12[2];
+    s16 field_14;
+    s16 field_16;
+    s16 field_18;
+    s8  unk_1A[2];
+} s_800AE204;
+
 // ========
 // GLOBALS
 // ========
@@ -1955,6 +1971,8 @@ extern u8 D_800AE186;
 extern u8 D_800AE187;
 
 extern s16 D_800AE1A8;
+
+extern s_800AE204 D_800AE204[]; // Maybe length 26
 
 extern s32 g_PickupItemAnimState;
 
@@ -2324,6 +2342,8 @@ extern u8 D_800C3E40;
 // extern s_800C4168 D_800C4168;
 
 extern u16 D_800C42B4; // TODO: May be part of `s_800C4168`.
+
+extern GsCOORDINATE2* D_800C42B8;
 
 extern VECTOR3 D_800C42C0;
 
@@ -3069,7 +3089,7 @@ void func_80057A3C(s_ObjHeader* header, s32 offset, s_GteScratchData* scratchDat
 
 s_PlmTexList_8* func_8005B1FC(s_PlmTexList*, void*, void*, void*, s32);
 
-void func_8005B55C(GsCOORDINATE2*);
+void func_8005B55C(GsCOORDINATE2* arg0);
 
 s32 func_8005C7D0(s_SubCharacter* chara, s32 moveSpeed);
 
