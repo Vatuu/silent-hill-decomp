@@ -1251,7 +1251,7 @@ void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 
     func_80043C7C(ipdHeader, arg3, arg4, arg5);
     func_80056954(ipdHeader->plmHeader_4);
     IpdHeader_ModelLinkObjectLists(ipdHeader, plmHeaders, plmHeaderCount);
-    func_80043F88(ipdHeader, ipdHeader->modelInfo_14);
+    IpdHeader_ModelBufferLinkObjectLists(ipdHeader, ipdHeader->modelInfo_14);
 }
 
 void func_80043C7C(s_IpdHeader* ipdHeader, void* arg1, void* arg2, s32 arg3) // 0x80043C7C
@@ -1369,7 +1369,25 @@ s_ObjList* PlmHeader_ObjectListSearch(u_Filename* objName, s_PlmHeader* plmHeade
     return NULL;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043F88); // 0x80043F88
+void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHeader, s_IpdModelInfo* ipdModels) // 0x80043F88
+{
+    s_IpdModelBuffer*   modelBuffer;
+    s_IpdModelBuffer_C* unkData;
+
+    for (modelBuffer = ipdHeader->modelBuffers_18;
+         modelBuffer < &ipdHeader->modelBuffers_18[ipdHeader->modelBufferCount_9];
+         modelBuffer++)
+    {
+        for (unkData = &modelBuffer->field_C[0];
+             unkData < &modelBuffer->field_C[modelBuffer->field_0];
+             unkData++)
+        {
+            // unkData originally stores model idx, replace that with pointer to the models `objList_C`
+            s32 modelIdx       = (s32)unkData->objList_0;
+            unkData->objList_0 = ipdModels[modelIdx].objList_C;
+        }
+    }
+}
 
 void func_80044044(s_IpdHeader* ipd, s32 x, s32 z) // 0x80044044
 {
