@@ -3398,6 +3398,8 @@ s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 x, s16 z);
 
 void func_800622B8(s32, s_SubCharacter*, s32 animStatus, s32);
 
+void func_80064F04(VECTOR3* arg0, s8 arg1, s16 arg2);
+
 void func_80066D90();
 
 void func_80066E40();

@@ -2144,7 +2144,21 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80063A50); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80064334); // 0x80064334
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80064F04); // 0x80064F04
+void func_80064F04(VECTOR3* arg0, s8 arg1, s16 arg2) // 0x80064F04
+{
+    // arg0 type assumed
+    s32 temp_v0;
+
+    temp_v0 = func_8005E7E0(0x1F);
+    if (temp_v0 != -1)
+    {
+        g_MapOverlayHeader.unkTable1_4C[temp_v0].vx_0    = FP_FROM(arg0->vx, Q4_SHIFT);
+        g_MapOverlayHeader.unkTable1_4C[temp_v0].vy_8    = FP_FROM(arg0->vy, Q4_SHIFT);
+        g_MapOverlayHeader.unkTable1_4C[temp_v0].vz_4    = FP_FROM(arg0->vz, Q4_SHIFT);
+        g_MapOverlayHeader.unkTable1_4C[temp_v0].field_C = arg1;
+        g_MapOverlayHeader.unkTable1_4C[temp_v0].field_E = arg2;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80064FC0); // 0x80064FC0
 
