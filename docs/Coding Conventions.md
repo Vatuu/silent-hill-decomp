@@ -192,13 +192,18 @@ Examples:
 ### Structures
 Structs are prefixed with `s_` and named according to their purpose in `PascalCase`.
 
-If a struct's purpose can't be deduced, name if after a related hex address.
+If a struct's purpose can't be deduced, name it after a related hex address:
 * If used in a global variable: `s_[GlobalVariableHexAddress]`.
 * If used as a parameter type in a function: `s_func_[FunctionHexAddress]`.
 * If used in the field of another struct: `s_[ParentStructName]_[FieldHexOffset]`.
 
-Struct fields are written in `camelCase` and suffixed with a hexadecimal offset. Keeping the offset as part of the name helps track each field's expected offset and to easily determine when any have moved around due to changes.
-Fields known to be accessed but without a definitive purpose are named `field_[HexOffset]`, while fields completely unknown or which serve as padding are named `unk_[HexOffset]`. If the size of a struct is known definitively, use the `STATIC_ASSERT_SIZEOF` macro to enforce it.
+Struct fields are written in `camelCase` and suffixed with a hexadecimal offset. Keeping the offset as part of the name helps track each field's expected offset and allows to easily determine if any have moved around due to other changes.
+
+Bitfields also append the decimal bit index of each field to the field offset. The offset used for bitfields should be where the first bit resides, rather than the actual bits offset (eg. bit 8 should use the same field offset as bit 0, but with `_8` appended), as game code normally loads bitfields from the 0 bit and shifts/masks to retrieve values.
+
+Fields known to be accessed but without a definitive purpose are named `field_[HexOffset]`, while fields completely unknown or which serve as padding are named `unk_[HexOffset]`, if the field is only used to store power-of-2 flag values it can also be renamed to `flags_[HexOffset]`.
+
+If the size of a struct is known definitively (e.g. from `bzero` usages or loops using the struct), use the `STATIC_ASSERT_SIZEOF` macro to enforce it.
 
 Example:
 
@@ -209,9 +214,12 @@ typedef struct _MyStruct
     s_Entity entities_20[6];
     s32      field_320;
     u8       pad_324;
-    s8       unk_325[2];
+    s8       unk_325[3];
+    u32      field_328_0 : 3;
+    u32      field_328_3 : 5;
+    u32      field_328_8 : 8; // Even though this starts at 8th bit, the offset is where the bitfield began.
 } s_MyStruct;
-STATIC_ASSERT_SIZEOF(s_MyStruct, 806);
+STATIC_ASSERT_SIZEOF(s_MyStruct, 810);
 ```
 
 ### Enumerators
