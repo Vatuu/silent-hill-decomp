@@ -34,6 +34,8 @@ def convert_line(line):
         if part in skip_flags:
             skip_next = True
             continue
+        if part == "-o":
+            cleaned.append("-m32")
         cleaned.append(part)
 
     # Find source file (assumes it’s the last .c file)

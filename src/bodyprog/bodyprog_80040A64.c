@@ -582,23 +582,23 @@ void func_80041D48() // 0x80041D48
             y = 21;
         }
 
-        func_8005B1A0(&D_800C1450.field_58[i], 0, 0, y, 0, 0, x, j);
+        func_8005B1A0(&D_800C1020.field_430.field_58[i], 0, 0, y, 0, 0, x, j);
     }
 
-    func_8005B46C(&D_800C1450.field_0);
-    func_8005B474(&D_800C1450.field_0, D_800C1450.field_58, 8);
+    func_8005B46C(&D_800C1020.field_430.field_0);
+    func_8005B474(&D_800C1020.field_430.field_0, D_800C1020.field_430.field_58, 8);
 
     for (i = 0, y = 26, j = 0; i < 2; i++, x += 16)
     {
-        func_8005B1A0(&D_800C1450.field_118[i], 0, 0, y, (i & 0x1) * 32, 0, x, j);
+        func_8005B1A0(&D_800C1020.field_430.field_118[i], 0, 0, y, (i & 0x1) * 32, 0, x, j);
         if (i & 0x1)
         {
             y++;
         }
     }
 
-    func_8005B46C(&D_800C1450.field_2C);
-    func_8005B474(&D_800C1450.field_2C, D_800C1450.field_118, 2);
+    func_8005B46C(&D_800C1020.field_430.field_2C);
+    func_8005B474(&D_800C1020.field_430.field_2C, D_800C1020.field_430.field_118, 2);
 }
 
 void func_80041E98() // 0x80041E98
@@ -643,8 +643,8 @@ void func_8004201C() // 0x8004201C
 {
     s_800C1450_58* ptr;
 
-    ptr = &D_800C1450.field_58[0];
-    while (ptr < (&D_800C1450.field_58[8]))
+    ptr = &D_800C1020.field_430.field_58[0];
+    while (ptr < (&D_800C1020.field_430.field_58[8]))
     {
         if (ptr->field_14 == 0)
         {
@@ -654,8 +654,8 @@ void func_8004201C() // 0x8004201C
         ptr++;
     }
 
-    ptr = &D_800C1450.field_118[0];
-    while (ptr < (&D_800C1450.field_118[2]))
+    ptr = &D_800C1020.field_430.field_118[0];
+    while (ptr < (&D_800C1020.field_430.field_118[2]))
     {
         if (ptr->field_14 == 0)
         {
@@ -691,14 +691,14 @@ void func_800420FC() // 0x800420FC
 s_800C1450_58* func_80042178(char* arg0) // 0x80042178
 {
     s_800C1450_58* ptr;
-    
-    ptr = func_8005B4BC(arg0, &D_800C1450.field_0);
+
+    ptr = func_8005B4BC(arg0, &D_800C1020.field_430.field_0);
     if (ptr != NULL)
     {
         return ptr;
     }
 
-    ptr = func_8005B4BC(arg0, &D_800C1450.field_2C);
+    ptr = func_8005B4BC(arg0, &D_800C1020.field_430.field_2C);
     if (ptr != NULL)
     {
         return ptr;
@@ -1031,7 +1031,7 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
 
 bool IpdHeader_IsLoaded(s32 ipdIdx) // 0x80042C04
 {
-    return IpdHeader_LoadStateGet(&D_800C117C[ipdIdx]) >= StaticModelLoadState_Loaded;
+    return IpdHeader_LoadStateGet(&D_800C1020.ipdTable_15C[ipdIdx]) >= StaticModelLoadState_Loaded;
 }
 
 void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1) // 0x80042C3C
@@ -1052,21 +1052,21 @@ void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1) // 0x80042C3C
     if (Fs_QueueEntryLoadStatusGet(D_800C1020.field_138.queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
         !D_800C1020.field_138.plmHeader_0->isLoaded_2) 
     {
-        temp_s0              = D_800C1020.field_430;
-        D_800C1020.field_430 = 4;
+        temp_s0                              = D_800C1020.field_430.field_0.count_0;
+        D_800C1020.field_430.field_0.count_0 = 4;
 
         PlmHeader_FixOffsets(D_800C1020.field_138.plmHeader_0);
-        func_80056774(D_800C1020.field_138.plmHeader_0, &D_800C1020.field_430, NULL, D_800C1020.field_134, 1);
+        func_80056774(D_800C1020.field_138.plmHeader_0, &D_800C1020.field_430.field_0, NULL, D_800C1020.field_134, 1);
         func_80056954(D_800C1020.field_138.plmHeader_0);
 
-        D_800C1020.field_430 = temp_s0;
+        D_800C1020.field_430.field_0.count_0 = temp_s0;
     }
 
     for (var_s0 = D_800C1020.ipdTable_15C; var_s0 < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableSize_158]; var_s0++) 
     {
         if (Fs_QueueEntryLoadStatusGet(var_s0->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            IpdHeader_FixOffsets(var_s0->ipdHeader_0, &D_800C1020.field_138, 1, &D_800C1020.field_430, &D_800C1020.field_45C, D_800C1020.field_134);
+            IpdHeader_FixOffsets(var_s0->ipdHeader_0, &D_800C1020.field_138, 1, &D_800C1020.field_430.field_0, &D_800C1020.field_430.field_2C, D_800C1020.field_134);
             func_80044044(var_s0->ipdHeader_0, var_s0->field_8, var_s0->field_A);
         }
     }
@@ -1122,25 +1122,26 @@ void func_800433B8(s_800C1020* arg0) // 0x800433B8
         {
             if (ptr->ipdHeader_0->isLoaded_1 && (ptr->field_C <= 0 || ptr->field_10 <= 0))
             {
-                func_80043C7C(ptr->ipdHeader_0, &arg0->field_430, &arg0->field_45C, arg0->field_134);
+                func_80043C7C(ptr->ipdHeader_0, &arg0->field_430.field_0, &arg0->field_430.field_2C, arg0->field_134);
                 func_80056954(ptr->ipdHeader_0->plmHeader_4);
             }
         }
     }
 }
 
-s16 func_80043554(s32 arg0, s32 arg1) // 0x80043554
+s16 func_80043554(s32 gridX, s32 gridZ) // 0x80043554
 {
-    return D_800C144C[arg1][arg0];
+    // @hack
+    return ((s16*)&D_800C1020.ipdGridCenter_42C[gridZ])[gridX];
 }
 
-bool func_80043578(s_80043578* arg0, s32 arg1, s32 arg2) // 0x80043578
+bool func_80043578(s_800C117C* arg0, s32 arg1, s32 arg2) // 0x80043578
 {
     s32 i;
 
-    for (i = 0; i < D_800C1178; i++)
+    for (i = 0; i < D_800C1020.ipdTableLen_158; i++)
     {
-        if (arg0[i].field_4 != NO_VALUE &&
+        if (arg0[i].queueIdx_4 != NO_VALUE &&
             arg1 == arg0[i].field_8 && arg2 == arg0[i].field_A)
         {
             return true;
@@ -1174,7 +1175,35 @@ s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s16 fileChunkCoordX, s16 fileCh
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043740); // 0x80043740
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043830); // 0x80043830
+bool func_80043830(void) // 0x80043830
+{
+    s_800C117C* ptr;
+    s32         loadState;
+
+    for (ptr = &D_800C1020.ipdTable_15C[0];
+         ptr < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableLen_158];
+         ptr++)
+    {
+        loadState = IpdHeader_LoadStateGet(ptr);
+
+        if (loadState == 0 || loadState == 3 || (ptr->field_C > 0 && ptr->field_10 > 0))
+        {
+            continue;
+        }
+
+        if (!func_80043B34(ptr, &D_800C1020))
+        {
+            continue;
+        }
+
+        if (func_80042E2C(FP_METER_TO_GEO(D_800C1020.field_578), FP_METER_TO_GEO(D_800C1020.field_57C), ptr->field_8, ptr->field_A) <= 0x480)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004393C); // 0x8004393C
 
@@ -1236,7 +1265,7 @@ s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHeader) // 0x8004
     return NULL;
 }
 
-void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 plmHeaderCount, void* arg3, void* arg4, s32 arg5) // 0x80043BC4
+void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 plmHeaderCount, s_800C1450_0* arg3, s_800C1450_0* arg4, s32 arg5) // 0x80043BC4
 {
     if (ipdHeader->isLoaded_1)
     {
@@ -1254,7 +1283,7 @@ void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 
     IpdHeader_ModelBufferLinkObjectLists(ipdHeader, ipdHeader->modelInfo_14);
 }
 
-void func_80043C7C(s_IpdHeader* ipdHeader, void* arg1, void* arg2, s32 arg3) // 0x80043C7C
+void func_80043C7C(s_IpdHeader* ipdHeader, s_800C1450_0* arg1, s_800C1450_0* arg2, s32 arg3) // 0x80043C7C
 {
     if (!ipdHeader->isLoaded_1)
     {
