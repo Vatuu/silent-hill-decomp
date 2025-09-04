@@ -936,10 +936,10 @@ typedef struct _SpeedZone
 {
     s8 speedIdx_0;
     // 1 byte of padding.
-    s16 minX_2;
-    s16 maxX_4;
-    s16 minZ_6;
-    s16 maxZ_8;
+    s16 minX_2; // } Q11.4? Q7.8 fits more cleanly, but `Map_GetSpeedZone` uses `<< 8` for comparison with Q19.12 input position.
+    s16 maxX_4; // }
+    s16 minZ_6; // }
+    s16 maxZ_8; // }
 } s_SpeedZone;
 
 typedef struct _WaterZone
@@ -947,7 +947,7 @@ typedef struct _WaterZone
     u8  enabled_0;
     // 1 byte of padding.
     s16 illumination_2;
-    s16 minX_4; // } Q11.4?
+    s16 minX_4; // } Q11.4? Q7.8 fits more cleanly, but a call to `Map_GetWaterZone` uses `>> 8` with Q19.12 arg position.
     s16 maxX_6; // }
     s16 minZ_8; // }
     s16 maxZ_A; // }
