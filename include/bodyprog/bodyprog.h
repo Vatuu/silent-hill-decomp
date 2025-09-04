@@ -31,9 +31,9 @@
 
 typedef enum _SpeedZoneType
 {
-    SpeedZoneType_Slow = 0,
-    SpeedZoneType_Norm = 1,
-    SpeedZoneType_Fast = 2,
+    SpeedZoneType_Slow   = 0,
+    SpeedZoneType_Normal = 1,
+    SpeedZoneType_Fast   = 2,
 } e_SpeedZoneType;
 
 typedef enum _Sfx

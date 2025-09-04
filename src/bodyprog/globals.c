@@ -27,7 +27,7 @@ const static s_SpeedZone SPEED_ZONES_THR[] =
 {
     { 2, -5120,  4480, -3840, 3200 },
     { 2, -640,   640,   3200, 3840 },
-    { SpeedZoneType_Norm, -4480, -1280,  3200, 6400 },
+    { SpeedZoneType_Normal, -4480, -1280,  3200, 6400 },
     { NO_VALUE, 0, 0, 0, 0         } // End of list.
 };
 
@@ -35,8 +35,8 @@ const static s_SpeedZone SPEED_ZONES_SP[] =
 {
     { SpeedZoneType_Fast, -3840,  1280, -1920, 640  },
     { SpeedZoneType_Fast, -640,   1280,  640,  1920 },
-    { SpeedZoneType_Norm, -2560, -1280,  1280, 3840 },
-    { SpeedZoneType_Norm,  1280,  3200, -1920, 2560 },
+    { SpeedZoneType_Normal, -2560, -1280,  1280, 3840 },
+    { SpeedZoneType_Normal,  1280,  3200, -1920, 2560 },
     { NO_VALUE, 0, 0, 0, 0         } // End of list.
 };
 
@@ -45,7 +45,7 @@ const static s_SpeedZone SPEED_ZONES_SP[] =
 const static s_SpeedZone SPEED_ZONES_RSR[] =
 {
     { SpeedZoneType_Fast, -1920,  1280, -3200, 640 },
-    { SpeedZoneType_Norm, -3200, -1920, -640,  0   },
+    { SpeedZoneType_Normal, -3200, -1920, -640,  0   },
     { NO_VALUE, 0, 0, 0, 0        } // End of list.
 };
 
@@ -54,7 +54,7 @@ const static s_SpeedZone SPEED_ZONES_RSR[] =
 const static s_SpeedZone SPEED_ZONES_RSU[] =
 {
     { SpeedZoneType_Fast, -3200,  0,     640,  2560 },
-    { SpeedZoneType_Norm, -3200, -1280, -1280, 640  },
+    { SpeedZoneType_Normal, -3200, -1280, -1280, 640  },
     { NO_VALUE, 0, 0, 0, 0         } // End of list.
 };
 
@@ -63,7 +63,7 @@ const static s_SpeedZone SPEED_ZONES_RSU[] =
 const static s_SpeedZone SPEED_ZONES_AP[] =
 {
     { SpeedZoneType_Fast, -1280, 640, -1920, 640  },
-    { SpeedZoneType_Norm,  0,    640,  1280, 1920 },
+    { SpeedZoneType_Normal,  0,    640,  1280, 1920 },
     { NO_VALUE, 0, 0, 0, 0       } // End of list.
 };
 
@@ -71,20 +71,20 @@ const static s_SpeedZone SPEED_ZONES_AP[] =
 
 const static s_SpeedZone SPEED_ZONES_DR[] =
 {
-    { SpeedZoneType_Norm, -12800, 13440, -12800, 13440 },
+    { SpeedZoneType_Normal, -12800, 13440, -12800, 13440 },
     { NO_VALUE, 0, 0, 0, 0            } // End of list.
 };
 
 const static s_SpeedZone SPEED_ZONES_SC[] =
 {
-    { SpeedZoneType_Norm, -1920, -640,   640,  1280 },
-    { SpeedZoneType_Norm, -640,   0,     2560, 3200 },
-    { SpeedZoneType_Norm, -640,   0,     0,    640  },
-    { SpeedZoneType_Norm,  640,   1920,  640,  1280 },
-    { SpeedZoneType_Norm,  1920,  2560,  0,    640  },
-    { SpeedZoneType_Norm,  1920,  2560,  2560, 3200 },
-    { SpeedZoneType_Norm, -1280,  0,    -1280, 0    },
-    { SpeedZoneType_Norm,  640,   1280, -640,  0    },
+    { SpeedZoneType_Normal, -1920, -640,   640,  1280 },
+    { SpeedZoneType_Normal, -640,   0,     2560, 3200 },
+    { SpeedZoneType_Normal, -640,   0,     0,    640  },
+    { SpeedZoneType_Normal,  640,   1920,  640,  1280 },
+    { SpeedZoneType_Normal,  1920,  2560,  0,    640  },
+    { SpeedZoneType_Normal,  1920,  2560,  2560, 3200 },
+    { SpeedZoneType_Normal, -1280,  0,    -1280, 0    },
+    { SpeedZoneType_Normal,  640,   1280, -640,  0    },
     { NO_VALUE, 0, 0, 0, 0         } // End of list.
 };
 
@@ -92,14 +92,14 @@ const static s_SpeedZone SPEED_ZONES_SC[] =
 
 const static s_SpeedZone SPEED_ZONES_SU[] =
 {
-    { SpeedZoneType_Norm, -1920, -640,   640,  1280 },
-    { SpeedZoneType_Norm, -640,   0,     2560, 3200 },
-    { SpeedZoneType_Norm, -640,   0,     0,    640  },
-    { SpeedZoneType_Norm,  640,   1920,  640,  1280 },
-    { SpeedZoneType_Norm,  1920,  2560,  0,    640  },
-    { SpeedZoneType_Norm,  1920,  2560,  2560, 3200 },
-    { SpeedZoneType_Norm, -1280,  0,    -1280, 0    },
-    { SpeedZoneType_Norm,  0,     1280, -640,  0    },
+    { SpeedZoneType_Normal, -1920, -640,   640,  1280 },
+    { SpeedZoneType_Normal, -640,   0,     2560, 3200 },
+    { SpeedZoneType_Normal, -640,   0,     0,    640  },
+    { SpeedZoneType_Normal,  640,   1920,  640,  1280 },
+    { SpeedZoneType_Normal,  1920,  2560,  0,    640  },
+    { SpeedZoneType_Normal,  1920,  2560,  2560, 3200 },
+    { SpeedZoneType_Normal, -1280,  0,    -1280, 0    },
+    { SpeedZoneType_Normal,  0,     1280, -640,  0    },
     { NO_VALUE, 0, 0, 0, 0         } // End of list.
 };
 
@@ -107,8 +107,8 @@ const static s_SpeedZone SPEED_ZONES_SU[] =
 
 const static s_SpeedZone SPEED_ZONES_HP[] =
 {
-    { SpeedZoneType_Norm, 0, 640, 1920, 2560 },
-    { SpeedZoneType_Norm, 0, 640, 0,    640  },
+    { SpeedZoneType_Normal, 0, 640, 1920, 2560 },
+    { SpeedZoneType_Normal, 0, 640, 0,    640  },
     { NO_VALUE, 0, 0, 0, 0  } // End of list.
 };
 
@@ -116,16 +116,16 @@ const static s_SpeedZone SPEED_ZONES_HP[] =
 
 const static s_SpeedZone SPEED_ZONES_HU[] =
 {
-    { SpeedZoneType_Norm,  1280,  1920,  1920,  2560 },
-    { SpeedZoneType_Norm,  0,     640,   0,     640  },
-    { SpeedZoneType_Norm,  1920,  2560,  0,     640  },
-    { SpeedZoneType_Norm, -1920,  0,     1280,  1920 },
-    { SpeedZoneType_Norm, -1280,  0,    -1920, -1280 },
-    { SpeedZoneType_Norm, -2560, -1920, -1280, -640  },
-    { SpeedZoneType_Norm, -2560, -1920, -2560, -1920 },
-    { SpeedZoneType_Norm,  0,     1920, -2560, -1920 },
-    { SpeedZoneType_Norm,  1280,  2560, -1920, -1280 },
-    { SpeedZoneType_Norm,  640,   1280, -1280, -640  },
+    { SpeedZoneType_Normal,  1280,  1920,  1920,  2560 },
+    { SpeedZoneType_Normal,  0,     640,   0,     640  },
+    { SpeedZoneType_Normal,  1920,  2560,  0,     640  },
+    { SpeedZoneType_Normal, -1920,  0,     1280,  1920 },
+    { SpeedZoneType_Normal, -1280,  0,    -1920, -1280 },
+    { SpeedZoneType_Normal, -2560, -1920, -1280, -640  },
+    { SpeedZoneType_Normal, -2560, -1920, -2560, -1920 },
+    { SpeedZoneType_Normal,  0,     1920, -2560, -1920 },
+    { SpeedZoneType_Normal,  1280,  2560, -1920, -1280 },
+    { SpeedZoneType_Normal,  640,   1280, -1280, -640  },
     { NO_VALUE, 0, 0, 0, 0          } // End of list.
 };
 
@@ -133,11 +133,11 @@ const static s_SpeedZone SPEED_ZONES_HU[] =
 
 const static s_SpeedZone SPEED_ZONES_ER[] =
 {
-    { SpeedZoneType_Norm, -1280, -640,  -640,   0    },
-    { SpeedZoneType_Norm, -1920, -640,  -1920, -1280 },
-    { SpeedZoneType_Norm, -1920, -1280, -2560, -1920 },
-    { SpeedZoneType_Norm,  2560,  3200, -640,   0    },
-    { SpeedZoneType_Norm,  1280,  2560, -1920, -1280 },
+    { SpeedZoneType_Normal, -1280, -640,  -640,   0    },
+    { SpeedZoneType_Normal, -1920, -640,  -1920, -1280 },
+    { SpeedZoneType_Normal, -1920, -1280, -2560, -1920 },
+    { SpeedZoneType_Normal,  2560,  3200, -640,   0    },
+    { SpeedZoneType_Normal,  1280,  2560, -1920, -1280 },
     { NO_VALUE, 0, 0, 0, 0          } // End of list.
 };
 

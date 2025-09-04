@@ -763,7 +763,7 @@ s32 Map_GetSpeedZone(s32 x, s32 z) // 0x8003BF60
 
     if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP0_S00)
     {
-        return SpeedZoneType_Norm;
+        return SpeedZoneType_Normal;
     }
 
     if (D_800BCE18.field_0[0].type_0->speedZones_C != NULL)
