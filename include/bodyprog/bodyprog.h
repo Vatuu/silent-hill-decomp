@@ -1078,8 +1078,8 @@ typedef struct
     s32                field_14C;
     s_IpdHeader*       field_150;
     s32                field_154;
-    s32                field_158;     // Array length.
-    s_800C117C         field_15C[4];
+    s32                ipdTableLen_158;
+    s_800C117C         ipdTable_15C[4]; // temp name.
     s_IpdRow           ipdGrid_1CC[18];
     s8                 unk_40C[32]; // could be just one extra row in the table above.
     s_IpdRow*          ipdGridCenter_42C;
