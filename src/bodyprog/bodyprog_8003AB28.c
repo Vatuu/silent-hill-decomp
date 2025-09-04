@@ -873,7 +873,7 @@ void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ
     }
 
     ptr = mapHeader->type_0;
-    func_800421D8(ptr->tag_2, ptr->id_0, var_a2, ((ptr->flags_6 >> 2) ^ 1) & (1 << 0), 0, 0);
+    func_800421D8(ptr->tag_2, ptr->plmFileIdx_0, var_a2, ((ptr->flags_6 >> 2) ^ 1) & (1 << 0), 0, 0);
 
     if (mapHeader->type_0 == &g_MapTypes[0])
     {

@@ -764,7 +764,7 @@ typedef struct _IpdHeader
 typedef struct
 {
     s_PlmHeader* plmHeader_0;
-    s32          field_4;
+    s32          fileIdx_4;
     s32          queueIdx_8; // Passed to `Fs_QueueEntryLoadStatusGet`, thus the name.
 } s_func_80041CB4;
 
@@ -967,10 +967,10 @@ typedef struct
 
 typedef struct _MapType
 {
-    s16          id_0;
+    s16          plmFileIdx_0;
     char         tag_2[4];
     u8           flags_6;
-    u8           flags_7;
+    // 1 byte of padding.
     s_WaterZone* waterZones_8;
     s_SpeedZone* speedZones_C;
 } s_MapType;
@@ -1062,26 +1062,27 @@ typedef struct
 } s_800C117C;
 STATIC_ASSERT_SIZEOF(s_800C117C, 28);
 
-typedef struct
+typedef struct _IpdRow
 {
-    s16 field_0[16];
-} s_800C1020_42C;
-STATIC_ASSERT_SIZEOF(s_800C1020_42C, 32);
+    s16 idx[16];
+} s_IpdRow;
+STATIC_ASSERT_SIZEOF(s_IpdRow, 32);
 
 typedef struct
 {
     s_IpdCollisionData field_0;
     s32                field_134;
     s_func_80041CB4    field_138;
-    char               field_144[4]; // String.
-    s32                field_148;    // String length.
+    char               mapTag_144[4];
+    s32                mapTagLen_148;
     s32                field_14C;
     s_IpdHeader*       field_150;
     s32                field_154;
-    s32                field_158;     // Array length.
-    s_800C117C         field_15C[20]; // Length guessed, could be less or more.
-    s8                 unk_38C[160];
-    s_800C1020_42C*    field_42C;
+    s32                ipdTableLen_158;
+    s_800C117C         ipdTable_15C[4]; // temp name.
+    s_IpdRow           ipdGrid_1CC[18];
+    s8                 unk_40C[32]; // could be just one extra row in the table above.
+    s_IpdRow*          ipdGridCenter_42C;
     s32                field_430; // Sub-struct? `func_80042C3C` passes pointer of this to `IpdHeader_FixOffsets`
     s8                 unk_434[40];
     s32                field_45C; // Sub-struct? `func_80042C3C` passes pointer of this to `IpdHeader_FixOffsets`
@@ -2617,14 +2618,14 @@ void func_800420FC();
 
 s_800C1450_58* func_80042178(char* arg0);
 
-void func_800421D8(char* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+void func_800421D8(char* mapTag, s32 plmIdx, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
 void func_80042300(s_800C1020* arg0, s32 arg1);
 
-void func_800423F4(s_800C1020* arg0, s32 arg1, s32 arg2);
+void Map_MakeIpdGrid(s_800C1020* arg0, char* mapTag, s32 arg2);
 
 /** @brief Turns two hex `char`s to their `int` hex value. */
-bool func_8004255C(s32* out, char firstHex, char secondHex);
+bool hex_to_s16(s32* out, char firstHex, char secondHex);
 
 s32* func_800425D8(s32* arg0);
 
