@@ -1055,7 +1055,7 @@ typedef struct
     s32          queueIdx_4;
     s16          field_8; // X cell coord?
     s16          field_A; // Z cell coord?
-    u8           unk_C[4];
+    s32          field_C;
     s32          field_10;
     u8           unk_14[4];
     s32          field_18;
@@ -1082,9 +1082,9 @@ typedef struct
     s_800C117C         field_15C[20]; // Length guessed, could be less or more.
     s8                 unk_38C[160];
     s_800C1020_42C*    field_42C;
-    s32                field_430;
+    s32                field_430; // Sub-struct? `func_80042C3C` passes pointer of this to `IpdHeader_FixOffsets`
     s8                 unk_434[40];
-    s32                field_45C;
+    s32                field_45C; // Sub-struct? `func_80042C3C` passes pointer of this to `IpdHeader_FixOffsets`
     s8                 unk_460[280];
     s32                field_578;
     s32                field_57C;
@@ -2676,9 +2676,9 @@ bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHeader);
 
 s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHeader);
 
-void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 plmHeaderCount, s32 arg3, s32 arg4, s32 arg5);
+void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 plmHeaderCount, void* arg3, void* arg4, s32 arg5);
 
-void func_80043C7C(s_IpdHeader* ipdHeader, s32 arg1, s32* arg2, s32 arg3);
+void func_80043C7C(s_IpdHeader* ipdHeader, void* arg1, void* arg2, s32 arg3);
 
 /** Checks if IPD is loaded before returning texture count? */
 s32 func_80043D00(s_IpdHeader* ipdHeader);
@@ -2968,7 +2968,7 @@ void PlmHeader_FixOffsets(s_PlmHeader* plmHeader);
 void ObjList_FixOffsets(s_ObjList* objList, s_PlmHeader* plmHeader);
 
 /** Gets texture count? */
-s32 func_80056348(s32 (*arg0)(s_PlmTexList* texList), s_PlmHeader* plmHeader);
+s32 func_80056348(bool (*arg0)(s_PlmTexList* texList), s_PlmHeader* plmHeader);
 
 /** TODO: Unknown `arg3`/`arg4` types. */
 void func_80059D50(s32 arg0, s_func_80057344* arg1, MATRIX* mat, void* arg3, void* arg4);
