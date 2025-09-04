@@ -131,7 +131,10 @@ typedef enum _ScreenFadeState
     ScreenFadeState_FadeInSteps     = 7
 } e_ScreenFadeState;
 
-/** Each map has its own messages, with the first 15 hardcoded to be the same. */
+/** @brief Map message indices.
+ *
+ * @note Each map has its own messages, with the first 15 hardcoded to be the same.
+ */
 typedef enum _MapMsgIdx
 {
     MapMsgIdx_Yes               = 0,
@@ -172,7 +175,7 @@ typedef enum _MapMsgState
     MapMsgState_Idle         = 0,        /** Continue displaying message. */
     MapMsgState_SelectEntry0 = 1,        /** First entry selected in selection dialog. */
     MapMsgState_SelectEntry1 = 2,        /** Second entry selected in selection dialog. */
-    MapMsgState_SelectEntry2 = 3,        /** Third entry selected in selection dialog. */
+    MapMsgState_SelectEntry2 = 3         /** Third entry selected in selection dialog. */
 } e_MapMsgState;
 
 typedef enum _MapMsgAudioLoadBlock
@@ -183,6 +186,7 @@ typedef enum _MapMsgAudioLoadBlock
                                    // `J2` cutscenes use single audio file for all lines (e.g. video tape cutscene).
 } e_MapMsgAudioLoadBlock;
 
+/** @brief Map overlay IDs. */
 typedef enum _MapOverlayId
 {
     MapOverlayId_MAP0_S00 = 0,
@@ -230,6 +234,7 @@ typedef enum _MapOverlayId
     MapOverlayId_MAP7_S03 = 42
 } e_MapOverlayId;
 
+/** @brief Save location IDs. */
 typedef enum _SaveLocationId
 {
     SaveLocationId_Anywhere    = 0,
@@ -344,7 +349,7 @@ typedef enum _CharaFlags
     CharaFlag_Unk9 = 1 << 8
 } s_CharaFlags;
 
-/** @brief Color IDs used by strings displayed on the screen. */
+/** @brief Color IDs used by strings displayed in screen space. */
 typedef enum _ColorId
 {
     ColorId_Gold           = 0,
@@ -357,6 +362,7 @@ typedef enum _ColorId
     ColorId_White          = 7
 } e_ColorId;
 
+/** @brief Character animation flags. */
 typedef enum _AnimFlags
 {
     AnimFlag_None    = 0,
@@ -419,7 +425,7 @@ typedef enum _SysState
 /** @brief Inventory command IDs. */
 typedef enum _InventoryCmdId
 {
-    InventoryCmdId_UseHealth     = 0,  /** Text is "Use", but this one is used exclusively on health items. */
+    InventoryCmdId_UseHealth     = 0, /** Text is "Use", but this one is used exclusively on health items. */
     InventoryCmdId_Use           = 1,
     InventoryCmdId_Equip         = 2,
     InventoryCmdId_Unequip       = 3,
@@ -524,7 +530,8 @@ typedef enum _InventoryItemId
     InventoryItemId_GasolineTank         = 226
 } e_InventoryItemId;
 
-typedef enum _CommonPickupItemType
+/** @brief Common pickup item IDs. */
+typedef enum _CommonPickupItemId
 {
     CommonPickupItemId_FirstAidKit    = 0,
     CommonPickupItemId_HealthDrink    = 1,
@@ -532,9 +539,9 @@ typedef enum _CommonPickupItemType
     CommonPickupItemId_HandgunBullets = 3,
     CommonPickupItemId_RifleShells    = 4,
     CommonPickupItemId_ShotgunShells  = 5
-} s_CommonPickupItemType;
+} s_CommonPickupItemId;
 
-
+/** @brief Attack input types. */
 typedef enum _AttackInputType
 {
 	AttackInputType_Tap      = 0,

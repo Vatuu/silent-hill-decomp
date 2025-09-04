@@ -1037,6 +1037,7 @@ void Event_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx
 void Event_CommonItemTake(u32 pickupType, s32 globalPickupId) // 0x800879FC
 {
     #define EASY_DIFFICULTY_AMMO_COUNT_MULT_MIN 2
+
     s32 ammoCountMult;
 
     // Compute ammo count multiplier.

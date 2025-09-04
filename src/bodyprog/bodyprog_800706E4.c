@@ -97,7 +97,7 @@ void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 arg2,
         }
     }
 
-    if (extra->model_0.anim_4.keyframeIdx0_8 >= g_MaybePlayerAnims[animStatus].keyframeIdx0_C + D_800AD4C8[arg2].field_E && 
+    if (extra->model_0.anim_4.keyframeIdx0_8 >= (g_MaybePlayerAnims[animStatus].keyframeIdx0_C + D_800AD4C8[arg2].field_E) && 
         g_MaybePlayerAnims[animStatus].keyframeIdx0_C + D_800AD4C8[arg2].field_E + D_800AD4C8[arg2].field_F >= extra->model_0.anim_4.keyframeIdx0_8)
     {
         g_SysWork.playerCombatInfo_38.equippedWeapon_F = arg2;
@@ -109,8 +109,7 @@ void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 arg2,
         }
     }
 
-    if (animStatus == ANIM_STATUS(PlayerAnim_Unk24, true) &&
-        IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0))
+    if (animStatus == ANIM_STATUS(PlayerAnim_Kick, true) && IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0))
     {
         g_SysWork.player_4C.chara_0.field_D8.field_0 = FP_MULTIPLY(D_800AF014[chara->model_0.anim_4.keyframeIdx0_8 - 457], Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
         g_SysWork.player_4C.chara_0.field_D8.field_2 = -FP_MULTIPLY(D_800AF014[chara->model_0.anim_4.keyframeIdx0_8 - 457], Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
@@ -118,8 +117,7 @@ void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 arg2,
         g_SysWork.player_4C.chara_0.field_D8.field_6 = 0;
     }
 
-    if (animStatus == ANIM_STATUS(PlayerAnim_Unk25, true) &&
-        IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0)) 
+    if (animStatus == ANIM_STATUS(PlayerAnim_Stomp, true) && IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0)) 
     {
         g_SysWork.player_4C.chara_0.field_D8.field_0 = FP_MULTIPLY(D_800AF04C[chara->model_0.anim_4.keyframeIdx0_8 - 485], Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
         g_SysWork.player_4C.chara_0.field_D8.field_2 = -FP_MULTIPLY(D_800AF04C[chara->model_0.anim_4.keyframeIdx0_8 - 485], Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
@@ -806,13 +804,13 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
 
             if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Unk17, false);
+                extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_LookAround, false);
                 extra->model_0.stateStep_3++;
             }
             
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Unk17, false);
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_LookAround, false);
                 chara->model_0.stateStep_3++;
             }
             
@@ -2670,17 +2668,17 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             // Attack anim.
             if (extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk29, true) ||
                 extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk30, true) ||
-                extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk31, true) ||
+                extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunRecoil, true) ||
                 extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk29, true) ||
                 extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk30, true) ||
-                extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk31, true) ||
+                extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunRecoil, true) ||
                 extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk29, true) ||
                 extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk30, true) ||
-                extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk31, true))
+                extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunRecoil, true))
             {
                 if (extra->model_0.anim_4.keyframeIdx0_8 == D_800C44F0[D_800AF220].field_6)
                 {
-                    extra->model_0.anim_4.status_0      = ANIM_STATUS(PlayerAnim_IdleAim, true);
+                    extra->model_0.anim_4.status_0      = ANIM_STATUS(PlayerAnim_HandgunAim, true);
                     extra->model_0.anim_4.keyframeIdx0_8 = D_800C44F0[0].field_6;
                     extra->model_0.anim_4.time_4         = FP_TO(extra->model_0.anim_4.keyframeIdx0_8, Q12_SHIFT);
 
@@ -2761,7 +2759,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             {
                 if (extra->model_0.anim_4.keyframeIdx0_8 >= keyframeIdx1 &&
                     extra->model_0.anim_4.keyframeIdx0_8 < keyframeIdx0 &&
-                    extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk31, true) &&
+                    extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunRecoil, true) &&
                     (g_Player_IsAttacking || g_Player_IsShooting))
                 {
                     g_Player_IsMultiTapAttack = true;
@@ -2771,7 +2769,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
         if (g_Player_IsMultiTapAttack)
         {
-            if (extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk31, true) &&
+            if (extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunRecoil, true) &&
                 extra->model_0.anim_4.keyframeIdx0_8 >= keyframeIdx0)
             {
                 extra->model_0.stateStep_3 = 0;
@@ -3167,7 +3165,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 }
                 else
                 {
-                    extra->model_0.anim_4.status_0      = ANIM_STATUS(PlayerAnim_IdleAim, true);
+                    extra->model_0.anim_4.status_0      = ANIM_STATUS(PlayerAnim_HandgunAim, true);
                     extra->model_0.anim_4.keyframeIdx0_8 = D_800AF5C6;
                     extra->model_0.anim_4.time_4         = D_800AF5C6 << 12;
                 }
@@ -3179,7 +3177,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun)
             {
 				// Aim.
-                if (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_IdleAim, true) &&
+                if (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_HandgunAim, true) &&
                     extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk34, true))
                 {
                     if (g_Player_IsAttacking || g_Player_IsShooting)
@@ -3340,15 +3338,15 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 }
                 else if (extra->model_0.stateStep_3 == 0)
                 {
-                    extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_IdleAim, false);
+                    extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_HandgunAim, false);
                     extra->model_0.stateStep_3++;
                 }
 
                 if (((g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_Chainsaw &&
-                      extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_IdleAim, true) &&
+                      extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunAim, true) &&
                       extra->model_0.anim_4.keyframeIdx0_8 >= (D_800C44F0[0].field_4 + 5)) ||
                      (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill &&
-                      extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_IdleAim, true) &&
+                      extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunAim, true) &&
                       extra->model_0.anim_4.keyframeIdx0_8 >= (D_800C44F0[0].field_4 + 9))) &&
                     !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & 4))
                 {
@@ -3372,7 +3370,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             {
                 if (extra->model_0.stateStep_3 == 0)
                 {
-                    extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_IdleAim, false);
+                    extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_HandgunAim, false);
                     extra->model_0.stateStep_3++;
                 }
             }
@@ -3680,7 +3678,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         case PlayerUpperBodyState_Reload:
             if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Unk31, false);
+                extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_HandgunRecoil, false);
                 extra->model_0.stateStep_3++;
             }
 
@@ -3700,7 +3698,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 g_SysWork.enemyTargetIdx_2353                               = NO_VALUE;
                 g_SysWork.player_4C.extra_128.state_1C                      = PlayerState_None;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
-                extra->model_0.anim_4.status_0                             = ANIM_STATUS(PlayerAnim_IdleAim, true);
+                extra->model_0.anim_4.status_0                             = ANIM_STATUS(PlayerAnim_HandgunAim, true);
                 extra->model_0.anim_4.keyframeIdx0_8                        = 588;
                 extra->model_0.anim_4.time_4                                = 0x24C000;
 
@@ -3935,7 +3933,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
                     if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_Chainsaw ||
                         g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill)
                     {
-                        if ((extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_IdleAim, true) ||
+                        if ((extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_HandgunAim, true) ||
                              extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[0].field_6) &&
                             (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk29, true) ||
                              extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[1].field_6) &&
@@ -3944,7 +3942,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
                              D_800C44F0[6].field_6 < extra->model_0.anim_4.keyframeIdx0_8) &&
                             (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk30, true) ||
                              extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[2].field_6) &&
-                            (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk31, true) ||
+                            (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_HandgunRecoil, true) ||
                              extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[3].field_6) &&
                             (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk33, true) ||
                              extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[5].field_6))
@@ -3954,13 +3952,13 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
                     }
                     else
                     {
-                        if ((extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_IdleAim, true) ||
+                        if ((extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_HandgunAim, true) ||
                              extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[0].field_6) &&
                             (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk29, true) ||
                              extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[1].field_6) &&
                             (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk30, true) ||
                              extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[2].field_6) &&
-                            (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk31, true) ||
+                            (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_HandgunRecoil, true) ||
                              extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[3].field_6))
                         {
                             break;
@@ -3969,13 +3967,13 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
                 }
                 else
                 {
-                    if ((extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_IdleAim, true) ||
+                    if ((extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_HandgunAim, true) ||
                          extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[0].field_6) &&
                         (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk29, true) ||
                          extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[1].field_6) &&
                         (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk30, true) ||
                          extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[2].field_6) &&
-                        (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk31, true) ||
+                        (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_HandgunRecoil, true) ||
                          extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[3].field_6) &&
                         (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk32, true) ||
                          extra->model_0.anim_4.keyframeIdx0_8 != D_800C44F0[4].field_6) &&
@@ -4301,7 +4299,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                     }
                     else if (chara->model_0.stateStep_3 == 0)
                     {
-                        chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_IdleAim, false);
+                        chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_HandgunAim, false);
                         chara->model_0.stateStep_3++;
                     }
                 }
@@ -4333,7 +4331,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 {
                     if (chara->model_0.stateStep_3 == 0)
                     {
-                        chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_IdleAim, false);
+                        chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_HandgunAim, false);
                         chara->model_0.stateStep_3++;
                     }
                 }
@@ -4666,7 +4664,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                               extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk30, true)) && 
                             (g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_Chainsaw &&
                              g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill)) || 
-                            extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk31, true))
+                            extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunRecoil, true))
                         {
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk10;
                             chara->model_0.stateStep_3                                  = 0;
@@ -5071,7 +5069,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                               extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk30, true)) &&
                              (g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_Chainsaw &&
                               g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill)) || 
-                            extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk31, true))
+                            extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunRecoil, true))
                         {
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk10;
                             chara->model_0.stateStep_3                                  = 0;
@@ -5151,7 +5149,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                               extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk30, true)) &&
                              (g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_Chainsaw &&
                               g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill)) || 
-                              extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk31, true))
+                              extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunRecoil, true))
                         {
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk10;
                             chara->model_0.stateStep_3                                  = 0;
@@ -5231,7 +5229,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                               extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk30, true)) &&
                              (g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_Chainsaw &&
                               g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill)) || 
-                             extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk31, true))
+                             extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunRecoil, true))
                         {
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk10;
                             chara->model_0.stateStep_3                                  = 0;
@@ -5947,7 +5945,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                     }
                     else if (chara->model_0.stateStep_3 == 0)
                     {
-                        chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_IdleAim, false);
+                        chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_HandgunAim, false);
                         chara->model_0.stateStep_3++;
                     }
 
@@ -6003,7 +6001,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                             chara->model_0.stateStep_3++;
                         }
                     }
-                    else if (g_Player_IsShooting || extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk31, true))
+                    else if (g_Player_IsShooting || extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunRecoil, true))
                     {
                         if (chara->model_0.stateStep_3 == 0)
                         {
@@ -6069,7 +6067,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
         case PlayerLowerBodyState_Reload:
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Unk31, false);
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_HandgunRecoil, false);
                 chara->model_0.stateStep_3++;
             }
 
@@ -6183,7 +6181,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             if ((g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Moving) &&
                 ((chara->model_0.anim_4.status_0 >= ANIM_STATUS(PlayerAnim_Idle, true) &&
                   chara->model_0.anim_4.status_0 <= ANIM_STATUS(PlayerAnim_IdleTired, false)) ||
-                 chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_IdleAim, true)))
+                 chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunAim, true)))
             {
                 func_8005DD44(sfx, &chara->position_18, FP_VOLUME(0.095f), pitch0);
 
@@ -7575,7 +7573,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
 
         if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_HyperBlaster &&
             g_SysWork.playerCombatInfo_38.isAiming_13 &&
-            model->anim_4.status_0 >= ANIM_STATUS(PlayerAnim_IdleAim, true) && model->anim_4.keyframeIdx0_8 >= 574)
+            model->anim_4.status_0 >= ANIM_STATUS(PlayerAnim_HandgunAim, true) && model->anim_4.keyframeIdx0_8 >= 574)
         {
             if (g_SysWork.player_4C.extra_128.state_1C < PlayerState_Idle)
             {
