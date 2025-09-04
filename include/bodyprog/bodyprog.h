@@ -3100,6 +3100,8 @@ void func_8005E0DC(s32 mapIdx); // Types assumed.
 
 void func_8005E70C();
 
+s32 func_8005E7E0(s32 arg0);
+
 void func_8005E89C();
 
 void func_8005F6B0(s_SubCharacter*, s32*, s32, s32);
