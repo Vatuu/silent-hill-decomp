@@ -2520,10 +2520,10 @@ void func_8003EDA8() // 0x8003EDA8
     g_SysWork.field_2388.field_14 = 1;
 }
 
-void func_8003EDB8(CVECTOR* arg0, CVECTOR* arg1) // 0x8003EDB8
+void func_8003EDB8(CVECTOR* color0, CVECTOR* color1) // 0x8003EDB8
 {
-    *arg0 = g_SysWork.field_2388.field_1C[g_SysWork.field_2388.isFlashlightOn_15].field_0.field_21;
-    *arg1 = g_SysWork.field_2388.field_1C[g_SysWork.field_2388.isFlashlightOn_15].field_0.field_25;
+    *color0 = g_SysWork.field_2388.field_1C[g_SysWork.field_2388.isFlashlightOn_15].field_0.field_21;
+    *color1 = g_SysWork.field_2388.field_1C[g_SysWork.field_2388.isFlashlightOn_15].field_0.field_25;
 }
 
 void func_8003EE30(s32 arg0, s8* arg1, s32 arg2, s32 arg3) // 0x8003EE30

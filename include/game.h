@@ -1312,8 +1312,8 @@ typedef struct _SysWork
     s32             field_229C;
     s32             field_22A0; // Flags.
     s32             flags_22A4;
-    s8              unk_22A8[22]; // TODO: Confirmed `GsCOORDINATE2` at start.
-    VECTOR3         field_22C0;
+    s8              unk_22A8[22]; // TODO: Confirmed `GsCOORDINATE2` at start. 80 bytes. For particles only?
+    VECTOR3         field_22C0;   // TODO: Part of `GsCOORDINATE2` above.
     s8              unk_22CC[124];
     s8              field_2348   : 8;
     s8              field_2349   : 8; // Particle spawn multiplier?

@@ -67,7 +67,7 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3) // 0x800CE000
             break;
 
         default:
-            sharedData_800DD78B_0_s01 = g_DeltaTime0 == 0;
+            sharedData_800DD78B_0_s01 = g_DeltaTime0 == FP_TIME(0.0f);
 
             func_8003EDB8(&D_800E214C, &D_800E2150);
 
@@ -90,60 +90,60 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3) // 0x800CE000
 
                     switch (temp_v1_2)
                     {
-                        case 0x4:
-                        case 0x6:
+                        case 4:
+                        case 6:
                             sharedData_800DD78C_0_s01[i] = temp_s0_2;
                             break;
 
-                        case 0x5:
-                        case 0x7:
+                        case 5:
+                        case 7:
                             var_v0 = temp_s0_2 * 2;
                             sharedData_800DD78C_0_s01[i] = var_v0;
                             break;
 
-                        case 0x20:
-                        case 0x30:
+                        case 32:
+                        case 48:
                             sharedData_800DD78C_0_s01[i] = temp_a2;
                             break;
 
-                        case 0x25:
-                        case 0x27:
-                        case 0x35:
-                        case 0x37:
+                        case 37:
+                        case 39:
+                        case 53:
+                        case 55:
                             var_v0 = temp_s0_2 + 150;
                             sharedData_800DD78C_0_s01[i] = var_v0;
                             break;
 
-                        case 0x28:
-                        case 0x38:
+                        case 40:
+                        case 56:
                             var_v0 = temp_a2 * 2;
                             sharedData_800DD78C_0_s01[i] = var_v0;
                             break;
 
-                        case 0x2C:
-                        case 0x2E:
-                        case 0x3C:
-                        case 0x3E:
+                        case 44:
+                        case 46:
+                        case 60:
+                        case 62:
                             var_v0 = temp_a2 + 150;
                             sharedData_800DD78C_0_s01[i] = var_v0;
                             break;
 
-                        case 0x0:
+                        case 0:
                             sharedData_800DD78C_0_s01[i] = 0;
                             break;
 
-                        case 0x24:
-                        case 0x26:
-                        case 0x34:
-                        case 0x36:
+                        case 36:
+                        case 38:
+                        case 52:
+                        case 54:
                             var_v0 = 150;
                             sharedData_800DD78C_0_s01[i] = var_v0;
                             break;
 
-                        case 0x2D:
-                        case 0x2F:
-                        case 0x3D:
-                        case 0x3F:
+                        case 45:
+                        case 47:
+                        case 61:
+                        case 63:
                             var_v0 = 300;
                             sharedData_800DD78C_0_s01[i] = var_v0;
                             break;
@@ -162,67 +162,67 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3) // 0x800CE000
 
                         switch (temp_v0)
                         {
-                            case 0x4:
-                            case 0x6:
-                            case 0x20:
-                            case 0x30:
+                            case 4:
+                            case 6:
+                            case 32:
+                            case 48:
                                 var_v0_3 = sharedData_800DD78C_0_s01[i] < (75 + 1);
                                 sharedData_800DD796_0_s01 = var_v0_3 ^ 1;
                                 break;
 
-                            case 0x5:
-                            case 0x7:
-                            case 0x28:
-                            case 0x38:
+                            case 5:
+                            case 7:
+                            case 40:
+                            case 56:
                                 var_v0_3 = sharedData_800DD78C_0_s01[i] < (150 + 1);
                                 sharedData_800DD796_0_s01 = var_v0_3 ^ 1;
                                 break;
 
-                            case 0x8:
-                            case 0x9:
-                            case 0xA:
-                            case 0xB:
-                            case 0xC:
-                            case 0xD:
-                            case 0xE:
-                            case 0xF:
-                            case 0x10:
-                            case 0x11:
-                            case 0x12:
-                            case 0x13:
-                            case 0x14:
-                            case 0x15:
-                            case 0x16:
-                            case 0x17:
-                            case 0x18:
-                            case 0x19:
-                            case 0x1A:
-                            case 0x1B:
-                            case 0x1C:
-                            case 0x1D:
-                            case 0x1E:
-                            case 0x1F:
-                            case 0x21:
-                            case 0x22:
-                            case 0x23:
-                            case 0x24:
-                            case 0x25:
-                            case 0x26:
-                            case 0x27:
-                            case 0x29:
-                            case 0x2A:
-                            case 0x2B:
-                            case 0x2C:
-                            case 0x2D:
-                            case 0x2E:
-                            case 0x2F:
-                            case 0x31:
-                            case 0x32:
-                            case 0x33:
-                            case 0x34:
-                            case 0x35:
-                            case 0x36:
-                            case 0x37:
+                            case 8:
+                            case 9:
+                            case 10:
+                            case 11:
+                            case 12:
+                            case 13:
+                            case 14:
+                            case 15:
+                            case 16:
+                            case 17:
+                            case 18:
+                            case 19:
+                            case 20:
+                            case 21:
+                            case 22:
+                            case 23:
+                            case 24:
+                            case 25:
+                            case 26:
+                            case 27:
+                            case 28:
+                            case 29:
+                            case 30:
+                            case 31:
+                            case 33:
+                            case 34:
+                            case 35:
+                            case 36:
+                            case 37:
+                            case 38:
+                            case 39:
+                            case 41:
+                            case 42:
+                            case 43:
+                            case 44:
+                            case 45:
+                            case 46:
+                            case 47:
+                            case 49:
+                            case 50:
+                            case 51:
+                            case 52:
+                            case 53:
+                            case 54:
+                            case 55:
                             default:
                                 sharedData_800DD796_0_s01 = 1;
                                 break;
@@ -262,7 +262,7 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3) // 0x800CE000
             Particle_Update(g_Particles);
             SetSp(temp_s0_3);
 
-            for(i = sharedData_800DD78C_0_s01[0] + sharedData_800DD78C_0_s01[1]; i < 300; i++)
+            for(i = sharedData_800DD78C_0_s01[0] + sharedData_800DD78C_0_s01[1]; i < PARTICLE_COUNT_MAX; i++)
             {
                 g_Particles[i].stateStep_1E = 0;
             }

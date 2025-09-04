@@ -1810,9 +1810,9 @@ void func_80045258(s_Skeleton** skels, s_Bone* bones, s32 boneIdx, s_PlmHeader* 
 void func_800452EC(s_Skeleton* skel) // 0x800452EC
 {
     s32                temp_a0;
-    s_func_800452EC*   var_a1;
     s32                var_v0;
     u32                temp_v1;
+    s_func_800452EC*   var_a1;
     s_func_800452EC_8* temp_v0;
 
     var_a1 = skel->field_4;
@@ -1823,9 +1823,9 @@ void func_800452EC(s_Skeleton* skel) // 0x800452EC
         temp_v1 = temp_v0->field_1 - 0x30;
         temp_a0 = temp_v0->field_0 - 0x30;
 
-        if (temp_v1 < 0xA && temp_a0 >= 0 && temp_a0 < 0xA)
+        if (temp_v1 < 10 && temp_a0 >= 0 && temp_a0 < 10)
         {
-            var_v0 = (temp_a0 * 0xA) + temp_v1;
+            var_v0 = (temp_a0 * 10) + temp_v1;
         }
         else
         {

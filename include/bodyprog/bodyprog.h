@@ -684,7 +684,7 @@ typedef struct _IpdCollisionData_18
 {
     u16 field_0_0  : 5;
     u16 field_0_5  : 3;
-    u16 field_0_8 : 4;
+    u16 field_0_8  : 4;
     u16 field_0_12 : 3;
     u16 field_0_15 : 1;
     u16 field_2;
@@ -801,10 +801,10 @@ STATIC_ASSERT_SIZEOF(s_Bone, 24);
 // PROBABLY skeleton data.
 typedef struct
 {
-    u8      boneCount_0;
-    u8      boneIdx_1; // Current bone index? Used in traversal.
-    s8      field_2;
-    s8      field_3;
+    u8               boneCount_0;
+    u8               boneIdx_1; // Current bone index? Used in traversal.
+    s8               field_2;
+    s8               field_3;
     s_func_800452EC* field_4;
     s_Bone* bones_8;
 
@@ -2660,6 +2660,7 @@ s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, 
 
 void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
 
+/** Args are X and Z? */
 s16 func_80043554(s32 arg0, s32 arg1);
 
 bool func_80043578(s_80043578* arg0, s32 arg1, s32 arg2);
@@ -3449,6 +3450,8 @@ void func_8006C0C8(s_func_8006CC44*, s16, s16, s32);
 
 bool func_8006C1B8(u32 arg0, s16 arg1, s_func_8006CC44* arg2);
 
+bool func_8006C3D4(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s32 idx);
+
 void func_8006C794(s_func_8006CC44* arg0, s32 arg1, s32 arg2);
 
 void func_8006C838(s_func_8006CC44* arg0, s_IpdCollisionData* collData);
@@ -3465,6 +3468,7 @@ void func_8006D600(VECTOR3* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 void func_8006D774(s_func_8006CC44* arg0, VECTOR3* arg1, VECTOR3* arg2);
 
+/** `arg1` is likely Q23.8. */
 void func_8006D7EC(s_func_8006ABC0* arg0, SVECTOR* arg1, SVECTOR* arg2);
 
 bool func_8006D90C(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2);
@@ -3895,7 +3899,7 @@ u32 func_8003ED64();
 
 void func_8003EDA8();
 
-void func_8003EDB8(CVECTOR* arg0, CVECTOR* arg1);
+void func_8003EDB8(CVECTOR* color0, CVECTOR* color1);
 
 void func_8003EE30(s32 arg0, s8* arg1, s32 arg2, s32 arg3);
 

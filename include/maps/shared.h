@@ -3,6 +3,8 @@
 
 #include "game.h"
 
+#define PARTICLE_COUNT_MAX 300
+
 typedef enum
 {
     ParticleState_Spawn  = 0,
@@ -56,17 +58,19 @@ typedef struct
 typedef struct
 {
     VECTOR3 vector_0;
-    VECTOR3 viewPosition_C;
+    VECTOR3 viewPosition_C; // Q19.12
     SVECTOR svec_18;
     SVECTOR viewRotation_20;
     s32     field_28;
 } s_ParticleVectors;
 
-/**
- * Seems to be custom boundaries for snow/rain particle systems.
+/** Seems to be custom boundaries for snow/rain particle systems.
  * Only used in a small handful of maps, and not all fields are populated.
+ *
+ * Maybe 8 `VECTOR3`s holding positions in Q19.12?
  */
-typedef struct {
+typedef struct
+{
     s32 field_0;
     s32 field_4;
     s32 field_8;
@@ -153,10 +157,13 @@ extern s8 sharedData_800DD59C_0_s00;
 
 extern s16 sharedData_800E0C6E_0_s00;
 
+/** Related to particle position. */
 extern VECTOR3 sharedData_800E323C_0_s00;
 
+/** Previous particle position? */
 extern VECTOR3 sharedData_800E324C_0_s00;
 
+/** Previous particle Y angle? */
 extern s16 sharedData_800E3260_0_s00;
 
 extern s32 sharedData_800E39D8_0_s00;
@@ -225,8 +232,12 @@ extern s_AnimInfo sharedData_800DF174_0_s00[]; // Used by `sharedFunc_800D921C_0
 
 extern s_AnimInfo sharedData_800DFFD8_7_s01[]; // `Ai_BloodyLisa` related?
 
+/** Particle speed X. */
 extern s32 sharedData_800DFB64_0_s00;
+
+/** Particles speed Z. */
 extern s32 sharedData_800DFB68_0_s00;
+
 extern s32 sharedData_800DFB6C_0_s00;
 extern s32 sharedData_800DFB70_0_s00;
 
@@ -239,7 +250,7 @@ extern u16 sharedData_800D21E8_3_s00[];
 
 extern s_func_800CB560 sharedData_800E5768_1_s02;
 
-extern s_Particle g_Particles[300];
+extern s_Particle g_Particles[PARTICLE_COUNT_MAX];
 
 extern s_ParticleVectors g_ParticleVectors0;
 
@@ -350,10 +361,14 @@ void sharedFunc_800CF2A4_0_s01(s32 arg0, s_Particle* part, u16* rand, s32* delta
 /** Snow particle init. */
 void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* rand);
 
-s32 Particle_Update(s_Particle* partHead);
+bool Particle_Update(s_Particle* partHead);
+
 void sharedFunc_800CEFF4_0_s00(s_Particle* part, s32 arg1);
+
 void sharedFunc_800CEB24_0_s00(s_Particle* part);
-void sharedFunc_800CFFF8_0_s00(s32 pass, s_func_800CFFF8* part, s16* rand); // TODO make this match for s_Particle
+
+void sharedFunc_800CFFF8_0_s00(s32 pass, s_func_800CFFF8* part, s16* rand); // TODO: Make this match for `s_Particle`.
+
 void sharedFunc_800CE954_7_s03(s32 pass, s_Particle* part, s16* rand, s32* deltaTime);
 
 void sharedFunc_800DA8E8_0_s01(s32* timer, s32 inc, s32 timeMin, s32 timeMax, bool setTimerToMax, bool incStateStep);
