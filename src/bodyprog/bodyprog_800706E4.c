@@ -4190,7 +4190,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
     // Compute move distance step.
     temp_s3        = func_8007D6F0(chara, &D_800C45C8);
-    speedId        = Map_GetSpeedZone(chara->position_18.vx, chara->position_18.vz);
+    speedId        = Map_SpeedZoneGet(chara->position_18.vx, chara->position_18.vz);
     var_a2         = SQUARE(chara->position_18.vx - D_800C45F8.vx);
     temp           = SQUARE(chara->position_18.vz - D_800C45F8.vz);
     travelDistStep = SquareRoot0(var_a2 + temp);

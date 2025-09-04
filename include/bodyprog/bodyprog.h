@@ -945,7 +945,7 @@ typedef struct _SpeedZone
 {
     s8 speedIdx_0;
     // 1 byte of padding.
-    s16 minX_2; // } Q11.4? Q7.8 fits more cleanly, but `Map_GetSpeedZone` uses `<< 8` for comparison with Q19.12 input position.
+    s16 minX_2; // } Q11.4? Q7.8 fits more cleanly, but `Map_SpeedZoneGet` uses `<< 8` for comparison with Q19.12 input position.
     s16 maxX_4; // }
     s16 minZ_6; // }
     s16 maxZ_8; // }
@@ -956,7 +956,7 @@ typedef struct _WaterZone
     u8  enabled_0;
     // 1 byte of padding.
     s16 illumination_2;
-    s16 minX_4; // } Q11.4? Q7.8 fits more cleanly, but a call to `Map_GetWaterZone` uses `>> 8` with Q19.12 arg position.
+    s16 minX_4; // } Q11.4? Q7.8 fits more cleanly, but a call to `Map_WaterZoneGet` uses `>> 8` with Q19.12 arg position.
     s16 maxX_6; // }
     s16 minZ_8; // }
     s16 maxZ_A; // }
@@ -3168,7 +3168,7 @@ s32 func_8008D8C0(s16 x0, s32 x1, s32 x2);
 void func_8008D990(s32, s32, VECTOR3*, s32, s32);
 
 /** `posX` and `posX` appear to be in Q27.4. */
-s_WaterZone* Map_GetWaterZone(s32 posX, s32 posZ, s_WaterZone* waterZone);
+s_WaterZone* Map_WaterZoneGet(s32 posX, s32 posZ, s_WaterZone* waterZone);
 
 void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2);
 
@@ -3834,7 +3834,7 @@ void GameFs_BgItemLoad();
 
 void func_8003BED0();
 
-s32 Map_GetSpeedZone(s32 x, s32 z);
+s32 Map_SpeedZoneGet(s32 x, s32 z);
 
 /** Used in map loading. Something related to screen.
  * Removing it causes the game to get stuck at the loading screen.

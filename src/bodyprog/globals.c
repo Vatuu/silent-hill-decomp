@@ -33,8 +33,8 @@ const static s_SpeedZone SPEED_ZONES_THR[] =
 
 const static s_SpeedZone SPEED_ZONES_SP[] =
 {
-    { SpeedZoneType_Fast, -3840,  1280, -1920, 640  },
-    { SpeedZoneType_Fast, -640,   1280,  640,  1920 },
+    { SpeedZoneType_Fast,   -3840,  1280, -1920, 640  },
+    { SpeedZoneType_Fast,   -640,   1280,  640,  1920 },
     { SpeedZoneType_Normal, -2560, -1280,  1280, 3840 },
     { SpeedZoneType_Normal,  1280,  3200, -1920, 2560 },
     { NO_VALUE, 0, 0, 0, 0         } // End of list.
@@ -44,7 +44,7 @@ const static s_SpeedZone SPEED_ZONES_SP[] =
 
 const static s_SpeedZone SPEED_ZONES_RSR[] =
 {
-    { SpeedZoneType_Fast, -1920,  1280, -3200, 640 },
+    { SpeedZoneType_Fast,   -1920,  1280, -3200, 640 },
     { SpeedZoneType_Normal, -3200, -1920, -640,  0   },
     { NO_VALUE, 0, 0, 0, 0        } // End of list.
 };
@@ -53,7 +53,7 @@ const static s_SpeedZone SPEED_ZONES_RSR[] =
 
 const static s_SpeedZone SPEED_ZONES_RSU[] =
 {
-    { SpeedZoneType_Fast, -3200,  0,     640,  2560 },
+    { SpeedZoneType_Fast,   -3200,  0,     640,  2560 },
     { SpeedZoneType_Normal, -3200, -1280, -1280, 640  },
     { NO_VALUE, 0, 0, 0, 0         } // End of list.
 };

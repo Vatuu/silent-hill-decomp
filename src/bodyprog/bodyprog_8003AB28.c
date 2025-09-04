@@ -754,7 +754,7 @@ void func_8003BED0() // 0x8003BED0
 
 extern s_800C4168 const D_800C4168;
 
-s32 Map_GetSpeedZone(s32 x, s32 z) // 0x8003BF60
+s32 Map_SpeedZoneGet(s32 x, s32 z) // 0x8003BF60
 {
     s32          ret;
     s_SpeedZone* ptr;

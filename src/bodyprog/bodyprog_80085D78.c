@@ -2683,7 +2683,7 @@ void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones
     if (D_800C4818.field_1 == 0)
     {
         // TODO: Conversion to Q27.4? Zone bounds fit Q7.8 better, not sure what's happening.
-        waterZone = Map_GetWaterZone(pos->vx >> 8, pos->vz >> 8, waterZones);
+        waterZone = Map_WaterZoneGet(pos->vx >> 8, pos->vz >> 8, waterZones);
         if (waterZone != NULL)
         {
             func_8008E5B4();
@@ -2841,7 +2841,7 @@ void func_8008E4EC(s_PlmHeader* plmHeader) // 0x8008E4EC
     func_80056504(plmHeader, D_8002B2CC.str, &D_800AFD9C, 1);
 }
 
-s_WaterZone* Map_GetWaterZone(s32 posX, s32 posZ, s_WaterZone* waterZone)
+s_WaterZone* Map_WaterZoneGet(s32 posX, s32 posZ, s_WaterZone* waterZone)
 {
     s_WaterZone* zonePtr;
 
