@@ -3682,7 +3682,47 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006F3C4); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006F620); // 0x8006F620
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006F8FC); // 0x8006F8FC
+void func_8006F8FC(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s_func_8006F8FC* arg4) // 0x8006F8FC
+{
+    s32 temp_a0;
+    s32 temp_t0;
+    s32 temp_t2;
+    s32 temp_v1;
+
+    temp_t0 = FP_TO(arg4->field_0_1, Q12_SHIFT);
+    temp_v1 = FP_TO(arg4->field_0_1 + arg4->field_0_21, Q12_SHIFT);
+    temp_t2 = FP_TO(arg4->field_0_11, Q12_SHIFT);
+    temp_a0 = FP_TO(arg4->field_0_11 + arg4->field_0_25, Q12_SHIFT);
+
+    if (arg2 < temp_t0)
+    {
+        *arg0 = arg2 - temp_t0;
+    }
+    else
+    {
+        if (temp_v1 >= arg2)
+        {
+            *arg0 = 0;
+        }
+        else
+        {
+            *arg0 = arg2 - temp_v1;
+        }
+    }
+
+    if (arg3 < temp_t2)
+    {
+        *arg1 = arg3 - temp_t2;
+        return;
+    }
+    else if (temp_a0 >= arg3)
+    {
+        *arg1 = 0;
+        return;
+    }
+
+    *arg1 = arg3 - temp_a0;
+}
 
 s16 func_8006F99C(s_SubCharacter* chara, s32 arg1, s16 arg2) // 0x8006F99C
 {

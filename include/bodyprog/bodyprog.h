@@ -1668,6 +1668,17 @@ typedef struct
     s8  unk_1A[2];
 } s_800AE204;
 
+typedef struct
+{
+
+    s32 field_0_0 : 1;
+    s32 field_0_1 : 10;
+    s32 field_0_11 : 10;
+    u32 field_0_21 : 4;
+    u32 field_0_25 : 4;
+    u32 field_0_29 : 3;
+} s_func_8006F8FC;
+
 // ========
 // GLOBALS
 // ========
@@ -3525,6 +3536,8 @@ void func_8006E490(s_func_8006E490* arg0, u32 arg1, s32 arg2, s32 arg3);
 void func_8006F250(s_func_8006F250* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 void func_8006F338(s_func_8006F338* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+
+void func_8006F8FC(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s_func_8006F8FC* arg4);
 
 s16 func_8006F99C(s_SubCharacter* chara, s32 arg1, s16 arg2);
 
