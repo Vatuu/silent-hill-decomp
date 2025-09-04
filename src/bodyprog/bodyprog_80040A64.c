@@ -1103,31 +1103,27 @@ void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1,
 
 void func_800433B8(s_800C1020* arg0) // 0x800433B8
 {
-    s_800C117C* var_s1;
+    s_800C117C* ptr;
 
-    for (var_s1 = &arg0->field_15C[0];
-         var_s1 < &arg0->field_15C[arg0->field_158];
-         var_s1++)
+    for (ptr = &arg0->field_15C[0]; ptr < &arg0->field_15C[arg0->field_158]; ptr++)
     {
-        if (Fs_QueueEntryLoadStatusGet(var_s1->queueIdx_4) >= 2)
+        if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= 2)
         {
-            if (var_s1->ipdHeader_0->isLoaded_1 && var_s1->field_C > 0 && var_s1->field_10 > 0)
+            if (ptr->ipdHeader_0->isLoaded_1 && ptr->field_C > 0 && ptr->field_10 > 0)
             {
-                func_80056BF8(var_s1->ipdHeader_0->plmHeader_4);
+                func_80056BF8(ptr->ipdHeader_0->plmHeader_4);
             }
         }
     }
 
-    for (var_s1 = &arg0->field_15C[0];
-         var_s1 < &arg0->field_15C[arg0->field_158];
-         var_s1++)
+    for (ptr = &arg0->field_15C[0]; ptr < &arg0->field_15C[arg0->field_158]; ptr++)
     {
-        if (Fs_QueueEntryLoadStatusGet(var_s1->queueIdx_4) >= 2)
+        if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= 2)
         {
-            if (var_s1->ipdHeader_0->isLoaded_1 && (var_s1->field_C <= 0 || var_s1->field_10 <= 0))
+            if (ptr->ipdHeader_0->isLoaded_1 && (ptr->field_C <= 0 || ptr->field_10 <= 0))
             {
-                func_80043C7C(var_s1->ipdHeader_0, &arg0->field_430, &arg0->field_45C, arg0->field_134);
-                func_80056954(var_s1->ipdHeader_0->plmHeader_4);
+                func_80043C7C(ptr->ipdHeader_0, &arg0->field_430, &arg0->field_45C, arg0->field_134);
+                func_80056954(ptr->ipdHeader_0->plmHeader_4);
             }
         }
     }
