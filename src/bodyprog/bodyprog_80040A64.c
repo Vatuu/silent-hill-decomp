@@ -1108,7 +1108,7 @@ void func_800433B8(s_800C1020* arg0) // 0x800433B8
 {
     s_800C117C* ptr;
 
-    for (ptr = &arg0->field_15C[0]; ptr < &arg0->field_15C[arg0->field_158]; ptr++)
+    for (ptr = &arg0->ipdTable_15C[0]; ptr < &arg0->ipdTable_15C[arg0->ipdTableLen_158]; ptr++)
     {
         if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= 2)
         {
@@ -1119,7 +1119,7 @@ void func_800433B8(s_800C1020* arg0) // 0x800433B8
         }
     }
 
-    for (ptr = &arg0->field_15C[0]; ptr < &arg0->field_15C[arg0->field_158]; ptr++)
+    for (ptr = &arg0->ipdTable_15C[0]; ptr < &arg0->ipdTable_15C[arg0->ipdTableLen_158]; ptr++)
     {
         if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= 2)
         {
