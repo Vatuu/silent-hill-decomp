@@ -262,7 +262,7 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3) // 0x800CE000
             Particle_Update(g_Particles);
             SetSp(temp_s0_3);
 
-            for(i = sharedData_800DD78C_0_s01[0] + sharedData_800DD78C_0_s01[1]; i < PARTICLE_COUNT_MAX; i++)
+            for (i = sharedData_800DD78C_0_s01[0] + sharedData_800DD78C_0_s01[1]; i < PARTICLE_COUNT_MAX; i++)
             {
                 g_Particles[i].stateStep_1E = 0;
             }
@@ -416,7 +416,7 @@ void func_800D16C4(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
     if (g_DeltaTime0 == FP_TIME(0.0f))
     {
-        chara->rotationSpeed_2C.vy = 0;
+        chara->rotationSpeed_2C.vy = FP_ANGLE(0.0f);
     } 
     else
     {
