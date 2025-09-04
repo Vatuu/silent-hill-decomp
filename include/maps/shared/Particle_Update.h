@@ -512,8 +512,8 @@ bool Particle_Update(s_Particle* partHead)
                     defined(MAP7_S03)
                     if (partIter->type_1F >= 2)
                     {
-                        partIter->stateStep_1E = ParticleState_Spawn;
-                        partIter->type_1F = ParticleType_Snow;
+                        partIter->stateStep_1E = 0u;
+                        partIter->type_1F = 0u;
                     }
                 #endif
                     break;
@@ -526,8 +526,8 @@ bool Particle_Update(s_Particle* partHead)
                     defined(MAP6_S00) || defined(MAP6_S03)
                     if (partIter->type_1F < 2 || partIter->type_1F > 3)
                     {
-                        partIter->stateStep_1E = ParticleState_Spawn;
-                        partIter->type_1F = ParticleType_Rain;
+                        partIter->stateStep_1E = 0u;
+                        partIter->type_1F = 2u;
                     }
                 #endif
                     break;
