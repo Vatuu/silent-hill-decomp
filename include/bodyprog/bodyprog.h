@@ -1069,33 +1069,6 @@ STATIC_ASSERT_SIZEOF(s_IpdRow, 32);
 
 typedef struct
 {
-    s_IpdCollisionData field_0;
-    s32                field_134;
-    s_func_80041CB4    field_138;
-    char               mapTag_144[4];
-    s32                mapTagSize_148;
-    s32                field_14C;
-    s_IpdHeader*       field_150;
-    s32                field_154;
-    s32                ipdTableSize_158;
-    s_800C117C         ipdTable_15C[4]; // Temp name. Uses either 2 or 4 fields depending map type.
-    s_IpdRow           ipdGrid_1CC[18];
-    s8                 unk_40C[32]; // Could be extra unused row in table above.
-    s_IpdRow*          ipdGridCenter_42C;
-    s32                field_430; // Sub-struct? `func_80042C3C` passes pointer of this to `IpdHeader_FixOffsets`.
-    s8                 unk_434[40];
-    s32                field_45C; // Sub-struct? `func_80042C3C` passes pointer of this to `IpdHeader_FixOffsets`.
-    s8                 unk_460[280];
-    s32                field_578;
-    s32                field_57C;
-    s32                field_580;
-    s32                field_584;
-    s32                field_588;
-    // More may follow.
-} s_800C1020;
-
-typedef struct
-{
     s8         field_0;
     s8         field_1;
     s8         field_2;
@@ -1131,12 +1104,12 @@ typedef struct
     s32                field_134;
     s_func_80041CB4    field_138;
     char               mapTag_144[4];
-    s32                mapTagLen_148;
+    s32                mapTagSize_148;
     s32                field_14C;
     s_IpdHeader*       field_150;
     s32                field_154;
-    s32                ipdTableLen_158;
-    s_800C117C         ipdTable_15C[4]; // temp name.
+    s32                ipdTableSize_158;
+    s_800C117C         ipdTable_15C[4]; // Temp name. Uses either 2 or 4 fields depending map type.
     s_IpdRow           ipdGrid_1CC[18];
     s8                 unk_40C[32];     // could be just one extra row in the table above.
     s_IpdRow*          ipdGridCenter_42C;
