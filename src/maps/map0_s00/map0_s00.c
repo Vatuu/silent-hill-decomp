@@ -22,7 +22,7 @@ void func_800CBFB0(void) // 0x800CBFB0
         VECTOR3(-250.0f,  0.0f,  217.7f)
     };
 
-    GsInitCoordinate2(NULL, (GsCOORDINATE2*)&g_SysWork.unk_22A8[80]);
+    GsInitCoordinate2(NULL, &g_SysWork.coord_22F8);
     D_800DD594 = 1;
     D_800DD593 = 1;
     D_800E34EC = 20;

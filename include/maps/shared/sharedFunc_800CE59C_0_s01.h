@@ -45,7 +45,7 @@ void sharedFunc_800CE59C_0_s01(s_Particle* parts)
 
     deltaTime = FP_TIME(0.1f / 3.0f);
 
-    GsInitCoordinate2(NULL, (GsCOORDINATE2*)g_SysWork.unk_22A8);
+    GsInitCoordinate2(NULL, &g_SysWork.coord_22A8);
 
     // Reset states.
     for (i = 0, part = parts; i < SNOW_COUNT_MAX; i++, part++)

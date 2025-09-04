@@ -707,14 +707,14 @@ s_800C1450_58* func_80042178(char* arg0) // 0x80042178
     return NULL;
 }
 
-void func_800421D8(char* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x800421D8
+void func_800421D8(char* tag, s32 plmFileIdx, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x800421D8
 {
     D_800C1020.field_588 = arg3;
     D_800C1020.field_134 = arg5;
 
-    if (arg1 != NO_VALUE)
+    if (plmFileIdx != NO_VALUE)
     {
-        if (arg1 != D_800C1020.field_138.field_4)
+        if (plmFileIdx != D_800C1020.field_138.field_4)
         {
             if (Fs_QueueEntryLoadStatusGet(D_800C1020.field_138.queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
                 D_800C1020.field_138.plmHeader_0->isLoaded_2)
@@ -722,21 +722,21 @@ void func_800421D8(char* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5)
                 func_80056BF8(D_800C1020.field_138.plmHeader_0);
             }
 
-            D_800C1020.field_138.field_4 = arg1;
+            D_800C1020.field_138.field_4 = plmFileIdx;
             D_800C1020.field_138.queueIdx_8 = NO_VALUE;
         }
     }
 
-    if (D_800C1020.field_158 != arg2 || strcmp(arg0, D_800C1020.field_144) != 0)
+    if (D_800C1020.field_158 != arg2 || strcmp(tag, D_800C1020.field_144) != 0)
     {
         func_80042300(&D_800C1020, arg2);
 
         D_800C1020.field_158 = arg2;
         D_800C1020.field_14C = arg4;
-        strcpy(D_800C1020.field_144, arg0);
+        strcpy(D_800C1020.field_144, tag);
 
-        D_800C1020.field_148 = strlen(arg0);
-        func_800423F4(&D_800C1020, arg0, arg4);
+        D_800C1020.field_148 = strlen(tag);
+        func_800423F4(&D_800C1020, tag, arg4);
     }
 }
 

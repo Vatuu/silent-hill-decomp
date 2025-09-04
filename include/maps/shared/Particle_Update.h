@@ -48,7 +48,7 @@ bool Particle_Update(s_Particle* partHead)
     }
 #endif
     
-    GsInitCoordinate2(0, (GsCOORDINATE2*)g_SysWork.unk_22A8);
+    GsInitCoordinate2(0, &g_SysWork.coord_22A8);
 
     sharedData_800E323C_0_s00.vx = g_ParticleVectors0.viewPosition_C.vx + FP_FROM(Math_Sin(g_ParticleVectors0.viewRotation_20.vy) * FP_METER(3.0), Q12_SHIFT);
     sharedData_800E323C_0_s00.vz = g_ParticleVectors0.viewPosition_C.vz + FP_FROM(Math_Cos(g_ParticleVectors0.viewRotation_20.vy) * FP_METER(3.0), Q12_SHIFT);
@@ -69,12 +69,12 @@ bool Particle_Update(s_Particle* partHead)
 
     sharedData_800DF158_1_s02 = sharedFunc_800CBBBC_0_s00();
 
-    g_SysWork.field_22C0.vy = FP_METER_GEO(0.0f);
-    g_SysWork.field_22C0.vx = FP_METER_TO_GEO(sharedData_800E323C_0_s00.vx);
-    g_SysWork.field_22C0.vz = FP_METER_TO_GEO(sharedData_800E323C_0_s00.vz);
+    g_SysWork.coord_22A8.coord.t[1] = FP_METER_GEO(0.0f);
+    g_SysWork.coord_22A8.coord.t[0] = FP_METER_TO_GEO(sharedData_800E323C_0_s00.vx);
+    g_SysWork.coord_22A8.coord.t[2] = FP_METER_TO_GEO(sharedData_800E323C_0_s00.vz);
     
-    ((GsCOORDINATE2*)g_SysWork.unk_22A8)->flg = false;
-    func_80049B6C((GsCOORDINATE2*)g_SysWork.unk_22A8, &mat1, &mat0);
+    g_SysWork.coord_22A8.flg = false;
+    func_80049B6C(&g_SysWork.coord_22A8, &mat1, &mat0);
     gte_SetRotMatrix(&mat0);
     gte_SetTransMatrix(&mat0);
 
@@ -512,8 +512,8 @@ bool Particle_Update(s_Particle* partHead)
                     defined(MAP7_S03)
                     if (partIter->type_1F >= 2)
                     {
-                        partIter->stateStep_1E = 0u;
-                        partIter->type_1F = 0u;
+                        partIter->stateStep_1E = ParticleState_Spawn;
+                        partIter->type_1F = ParticleType_Snow;
                     }
                 #endif
                     break;
@@ -526,8 +526,8 @@ bool Particle_Update(s_Particle* partHead)
                     defined(MAP6_S00) || defined(MAP6_S03)
                     if (partIter->type_1F < 2 || partIter->type_1F > 3)
                     {
-                        partIter->stateStep_1E = 0u;
-                        partIter->type_1F = 2u;
+                        partIter->stateStep_1E = ParticleState_Spawn;
+                        partIter->type_1F = ParticleType_Rain;
                     }
                 #endif
                     break;

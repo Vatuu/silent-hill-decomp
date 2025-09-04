@@ -764,7 +764,7 @@ typedef struct _IpdHeader
 typedef struct
 {
     s_PlmHeader* plmHeader_0;
-    s32          field_4;
+    s32          field_4;    // PLM file index.
     s32          queueIdx_8; // Passed to `Fs_QueueEntryLoadStatusGet`, thus the name.
 } s_func_80041CB4;
 
@@ -2617,7 +2617,7 @@ void func_800420FC();
 
 s_800C1450_58* func_80042178(char* arg0);
 
-void func_800421D8(char* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+void func_800421D8(char* tag, s32 plmFileIdx, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
 void func_80042300(s_800C1020* arg0, s32 arg1);
 
