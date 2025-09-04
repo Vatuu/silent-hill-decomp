@@ -50,11 +50,11 @@ CheckOptions:
   - key:             readability-identifier-naming.StructCase
     value:           CamelCase
   - key:             readability-identifier-naming.StructPrefix
-    value:           's_'
+    value:           ''
   - key:             readability-identifier-naming.StructSuffix
     value:           ''
   - key:             readability-identifier-naming.StructIgnoredRegexp
-    value:           '^s_[A-Z][a-zA-Z0-9]*(?:_[0-9A-F]+)*$'
+    value:           "^(s_|_)[A-Z][A-Za-z0-9]*(_[0-9A-F]+)*$"
   - key:             readability-identifier-naming.TemplateParameterCase
     value:           UPPER_CASE
   - key:             readability-identifier-naming.TemplateParameterPrefix
