@@ -3563,7 +3563,23 @@ bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VEC
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006DEB0); // 0x8006DEB0
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006E0AC); // 0x8006E0AC
+void func_8006E0AC(s_func_8006DCE0* arg0, s_IpdCollisionData* arg1) // 0x8006E0AC
+{
+    // arg0 type might be wrong.
+    arg0->field_6C = arg1->posX_0;
+    arg0->field_70 = arg1->posZ_4;
+    arg0->field_74 = arg0->field_2C.vx - arg0->field_6C;
+    arg0->field_76 = arg0->field_2C.vz - arg0->field_70;
+    arg0->field_78 = arg0->field_74 + arg0->field_50.vx;
+    arg0->field_7A = arg0->field_76 + arg0->field_50.vz;
+    arg0->field_7C = arg1->field_1E;
+    arg0->field_80 = arg1->field_1F;
+    arg0->field_84 = arg1->field_1C;
+
+    func_8006E150(&arg0->field_6C,
+                  (u16)arg0->field_50.vx | ((u16)arg0->field_50.vy << 0x10),
+                  (u16)arg0->field_50.vz | ((u16)arg0->field_56 << 0x10));
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006E150); // 0x8006E150
 

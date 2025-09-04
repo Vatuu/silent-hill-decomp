@@ -443,7 +443,7 @@ typedef struct
     s16      field_4C;
     s16      field_4E;
     SVECTOR3 field_50; // Q23.8
-    s8       unk_56[2];
+    u16      field_56;
     s16      field_58;
     s16      field_5A;
     s16      field_5C;
@@ -452,6 +452,15 @@ typedef struct
     s8       unk_62[2];
     s32      field_64;
     s32      field_68;
+    s32      field_6C;
+    s32      field_70;
+    s16      field_74;
+    s16      field_76;
+    s16      field_78;
+    s16      field_7A;
+    s32      field_7C;
+    s32      field_80;
+    u16      field_84;
 } s_func_8006DCE0;
 
 typedef struct
@@ -3530,6 +3539,8 @@ bool func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_SubC
 bool func_8006DC18(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2);
 
 bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
+
+void func_8006E0AC(s_func_8006DCE0* arg0, s_IpdCollisionData* arg1);
 
 void func_8006E490(s_func_8006E490* arg0, u32 arg1, s32 arg2, s32 arg3);
 
