@@ -967,7 +967,7 @@ typedef struct
 
 typedef struct _MapType
 {
-    s16          id_0;
+    s16          plmFileIdx_0;
     char         tag_2[4];
     u8           flags_6;
     u8           flags_7;
