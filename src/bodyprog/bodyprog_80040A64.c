@@ -1101,7 +1101,33 @@ void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1,
     arg0->field_10 = func_80042DE8(posX1, posZ1, arg0->fileChunkCoordX_8, arg0->fileChunkCoordZ_A, clip);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800433B8); // 0x800433B8
+void func_800433B8(s_800C1020* arg0) // 0x800433B8
+{
+    s_800C117C* ptr;
+
+    for (ptr = &arg0->field_15C[0]; ptr < &arg0->field_15C[arg0->field_158]; ptr++)
+    {
+        if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= 2)
+        {
+            if (ptr->ipdHeader_0->isLoaded_1 && ptr->field_C > 0 && ptr->field_10 > 0)
+            {
+                func_80056BF8(ptr->ipdHeader_0->plmHeader_4);
+            }
+        }
+    }
+
+    for (ptr = &arg0->field_15C[0]; ptr < &arg0->field_15C[arg0->field_158]; ptr++)
+    {
+        if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= 2)
+        {
+            if (ptr->ipdHeader_0->isLoaded_1 && (ptr->field_C <= 0 || ptr->field_10 <= 0))
+            {
+                func_80043C7C(ptr->ipdHeader_0, &arg0->field_430, &arg0->field_45C, arg0->field_134);
+                func_80056954(ptr->ipdHeader_0->plmHeader_4);
+            }
+        }
+    }
+}
 
 s16 func_80043554(s32 arg0, s32 arg1) // 0x80043554
 {
@@ -1210,7 +1236,7 @@ s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHeader) // 0x8004
     return NULL;
 }
 
-void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 plmHeaderCount, s32 arg3, s32 arg4, s32 arg5) // 0x80043BC4
+void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 plmHeaderCount, void* arg3, void* arg4, s32 arg5) // 0x80043BC4
 {
     if (ipdHeader->isLoaded_1)
     {
@@ -1228,14 +1254,14 @@ void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_PlmHeader** plmHeaders, s32 
     func_80043F88(ipdHeader, ipdHeader->modelInfo_14);
 }
 
-void func_80043C7C(s_IpdHeader* ipdHeader, s32 arg1, s32* arg2, s32 arg3) // 0x80043C7C
+void func_80043C7C(s_IpdHeader* ipdHeader, void* arg1, void* arg2, s32 arg3) // 0x80043C7C
 {
     if (!ipdHeader->isLoaded_1)
     {
         return;
     }
 
-    if (arg1 != 0)
+    if (arg1 != NULL)
     {
         func_80056774(ipdHeader->plmHeader_4, arg1, &func_80043D44, arg3, 1);
     }
@@ -1253,7 +1279,7 @@ s32 func_80043D00(s_IpdHeader* ipdHeader) // 0x80043D00
         return 0;
     }
 
-    return func_80056348(&func_80043D64, ipdHeader->plmHeader_4);
+    return func_80056348(func_80043D64, ipdHeader->plmHeader_4);
 }
 
 bool func_80043D44(s_PlmTexList* texList) // 0x80043D44

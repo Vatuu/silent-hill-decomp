@@ -520,7 +520,7 @@ void ObjList_FixOffsets(s_ObjList* objList, s_PlmHeader* plmHeader) // 0x800561A
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80056244); // 0x80056244
 
-s32 func_80056348(s32 (*arg0)(s_PlmTexList* texList), s_PlmHeader* plmHeader) // 0x80056348
+s32 func_80056348(bool (*arg0)(s_PlmTexList* texList), s_PlmHeader* plmHeader) // 0x80056348
 {
     s32           count;
     s_PlmTexList* tex;
