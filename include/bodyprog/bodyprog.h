@@ -719,12 +719,21 @@ typedef struct _IpdCollisionData
     u8                     field_34[256];
 } s_IpdCollisionData;
 
+typedef struct _IpdModelBuffer_C
+{
+    s_ObjList* objList_0;
+    u8         unk_4[32];
+} s_IpdModelBuffer_C;
+STATIC_ASSERT_SIZEOF(s_IpdModelBuffer_C, 36);
+
 typedef struct _IpdModelBuffer
 {
-    u8    unk_0[12];
-    void* field_C;  // Pointer to unknown collision data.
-    void* field_10; // Pointer to unknown collision data.
-    void* field_14; // Pointer to unknown collision data.
+    u8                  field_0; // Count of `field_C` entries.
+    u8                  unk_1[3];
+    u8                  unk_4[8];
+    s_IpdModelBuffer_C* field_C;
+    void*               field_10; // Pointer to unknown collision data.
+    void*               field_14; // Pointer to unknown collision data.
 } s_IpdModelBuffer;
 STATIC_ASSERT_SIZEOF(s_IpdModelBuffer, 24);
 
@@ -2698,6 +2707,9 @@ void IpdHeader_ModelLinkObjectLists(s_IpdHeader* ipdHeader, s_PlmHeader** plmHea
 
 /** @brief Searches `s_PlmHeader` for objects with the given `objName`. */
 s_ObjList* PlmHeader_ObjectListSearch(u_Filename* objName, s_PlmHeader* plmHeader);
+
+/** @brief Assigns `s_ObjList` pointers to each `s_IpdModelBuffer` in `s_IpdHeader`. */
+void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHeader, s_IpdModelInfo* ipdModels);
 
 /** Sets IPD collision data grid coords? */
 void func_80044044(s_IpdHeader* ipd, s32 x, s32 z);
