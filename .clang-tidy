@@ -24,7 +24,7 @@ CheckOptions:
   - key:             readability-identifier-naming.ClassSuffix
     value:           _t
   - key:             readability-identifier-naming.FunctionCase
-    value:           lower_case
+    value:           CamelCase
   - key:             readability-identifier-naming.FunctionPrefix
     value:           ''
   - key:             readability-identifier-naming.FunctionSuffix
@@ -48,11 +48,13 @@ CheckOptions:
   - key:             readability-identifier-naming.PrivateMemberSuffix
     value:           _
   - key:             readability-identifier-naming.StructCase
-    value:           lower_case
+    value:           CamelCase
   - key:             readability-identifier-naming.StructPrefix
-    value:           ''
+    value:           's_'
   - key:             readability-identifier-naming.StructSuffix
     value:           ''
+  - key:             readability-identifier-naming.StructIgnoredRegexp
+    value:           '^s_[A-Z][a-zA-Z0-9]*(?:_[0-9A-F]+)*$'
   - key:             readability-identifier-naming.TemplateParameterCase
     value:           UPPER_CASE
   - key:             readability-identifier-naming.TemplateParameterPrefix
@@ -64,10 +66,12 @@ CheckOptions:
   - key:             readability-identifier-naming.TypeAliasSuffix
     value:           _t
   - key:             readability-identifier-naming.VariableCase
-    value:           lower_case
+    value:           camelBack
   - key:             readability-identifier-naming.VariablePrefix
     value:           ''
   - key:             readability-identifier-naming.VariableSuffix
     value:           ''
+  - key:             readability-identifier-naming.VariableIgnoredRegexp
+    value:           '^[a-z][a-zA-Z0-9]*(_[0-9A-F]+)?$'
 ...
 
