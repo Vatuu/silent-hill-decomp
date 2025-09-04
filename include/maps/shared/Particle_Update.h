@@ -144,36 +144,36 @@ bool Particle_Update(s_Particle* partHead)
     switch (g_SavegamePtr->mapRoomIdx_A5)
     {
         case 2:
-            sharedData_800E5768_1_s02.field_0 = 0xFFF9A800;
-            sharedData_800E5768_1_s02.field_8 = 0x17CCC;
-            sharedData_800E5768_1_s02.field_C = 0xFFF9A800;
-            sharedData_800E5768_1_s02.field_14 = 0x11000;
-            sharedData_800E5768_1_s02.field_18 = 0xFFF9D800;
-            sharedData_800E5768_1_s02.field_20 = 0x11000;
-            sharedData_800E5768_1_s02.field_24 = 0xFFF9D800;
-            sharedData_800E5768_1_s02.field_2C = 0x17CCC;
-            sharedData_800E5768_1_s02.field_30 = 0xFFF9D800;
-            sharedData_800E5768_1_s02.field_38 = 0x17CCC;
-            sharedData_800E5768_1_s02.field_3C = 0xFFF9A800;
-            sharedData_800E5768_1_s02.field_44 = 0x17CCC;
-            sharedData_800E5768_1_s02.field_48 = 0xFFF9A800;
-            sharedData_800E5768_1_s02.field_50 = 0x11000;
-            sharedData_800E5768_1_s02.field_54 = 0xFFF9D800;
-            sharedData_800E5768_1_s02.field_5C = 0x11000;
+            sharedData_800E5768_1_s02.corners_0[0].vx = 0xFFF9A800;
+            sharedData_800E5768_1_s02.corners_0[0].vz = 0x17CCC;
+            sharedData_800E5768_1_s02.corners_0[1].vx = 0xFFF9A800;
+            sharedData_800E5768_1_s02.corners_0[1].vz = 0x11000;
+            sharedData_800E5768_1_s02.corners_0[2].vx = 0xFFF9D800;
+            sharedData_800E5768_1_s02.corners_0[2].vz = 0x11000;
+            sharedData_800E5768_1_s02.corners_0[3].vx = 0xFFF9D800;
+            sharedData_800E5768_1_s02.corners_0[3].vz = 0x17CCC;
+            sharedData_800E5768_1_s02.corners_0[4].vx = 0xFFF9D800;
+            sharedData_800E5768_1_s02.corners_0[4].vz = 0x17CCC;
+            sharedData_800E5768_1_s02.corners_0[5].vx = 0xFFF9A800;
+            sharedData_800E5768_1_s02.corners_0[5].vz = 0x17CCC;
+            sharedData_800E5768_1_s02.corners_0[6].vx = 0xFFF9A800;
+            sharedData_800E5768_1_s02.corners_0[6].vz = 0x11000;
+            sharedData_800E5768_1_s02.corners_0[7].vx = 0xFFF9D800;
+            sharedData_800E5768_1_s02.corners_0[7].vz = 0x11000;
             break;
 
         case 3:
-            sharedData_800E5768_1_s02.field_0 = 0xFFF6F000;
-            sharedData_800E5768_1_s02.field_8 = 0xF800;
-            sharedData_800E5768_1_s02.field_C = 0xFFF79000;
-            sharedData_800E5768_1_s02.field_14 = 0xF800;
+            sharedData_800E5768_1_s02.corners_0[0].vx = 0xFFF6F000;
+            sharedData_800E5768_1_s02.corners_0[0].vz = 0xF800;
+            sharedData_800E5768_1_s02.corners_0[1].vx = 0xFFF79000;
+            sharedData_800E5768_1_s02.corners_0[1].vz = 0xF800;
             break;
 
         case 4:
-            sharedData_800E5768_1_s02.field_0 = 0xFFF48000;
-            sharedData_800E5768_1_s02.field_8 = 0x17000;
-            sharedData_800E5768_1_s02.field_C = 0xFFF48000;
-            sharedData_800E5768_1_s02.field_14 = 0x10000;
+            sharedData_800E5768_1_s02.corners_0[0].vx = 0xFFF48000;
+            sharedData_800E5768_1_s02.corners_0[0].vz = 0x17000;
+            sharedData_800E5768_1_s02.corners_0[1].vx = 0xFFF48000;
+            sharedData_800E5768_1_s02.corners_0[1].vz = 0x10000;
             break;
     }
 
@@ -197,12 +197,12 @@ bool Particle_Update(s_Particle* partHead)
             if (g_SysWork.player_4C.chara_0.position_18.vz > 0xC8000)
             {
                 sharedData_800DD591_0_s00 = 1;
-                sharedData_800E5768_1_s02.field_0 = -0x5000;
-                sharedData_800E5768_1_s02.field_4 = -0x4800;
-                sharedData_800E5768_1_s02.field_8 = 0xD3000;
-                sharedData_800E5768_1_s02.field_C = 0xF000;
-                sharedData_800E5768_1_s02.field_10 = -0x4800;
-                sharedData_800E5768_1_s02.field_14 = 0xD3000;
+                sharedData_800E5768_1_s02.corners_0[0].vx = -0x5000;
+                sharedData_800E5768_1_s02.corners_0[0].vy = -0x4800;
+                sharedData_800E5768_1_s02.corners_0[0].vz = 0xD3000;
+                sharedData_800E5768_1_s02.corners_0[1].vx = 0xF000;
+                sharedData_800E5768_1_s02.corners_0[1].vy = -0x4800;
+                sharedData_800E5768_1_s02.corners_0[1].vz = 0xD3000;
             }
             else
             {
@@ -215,35 +215,35 @@ bool Particle_Update(s_Particle* partHead)
                 g_SysWork.player_4C.chara_0.position_18.vz > FP_METER(-14.0f) && g_SysWork.player_4C.chara_0.position_18.vz < FP_METER(0.0f))
             {
                     sharedData_800DD591_0_s00 = 10;
-                    sharedData_800E5768_1_s02.field_0 = 0xFFFD3800;
-                    sharedData_800E5768_1_s02.field_8 = 0xFFFF4CCD;
-                    sharedData_800E5768_1_s02.field_C = 0xFFFD3800;
-                    sharedData_800E5768_1_s02.field_14 = 0xFFFF3000;
-                    sharedData_800E5768_1_s02.field_18 = 0xFFFD5000;
-                    sharedData_800E5768_1_s02.field_20 = 0xFFFF3000;
-                    sharedData_800E5768_1_s02.field_24 = 0xFFFD5000;
-                    sharedData_800E5768_1_s02.field_2C = 0xFFFF4CCD;
-                    sharedData_800E5768_1_s02.field_30 = 0xFFFD5000;
-                    sharedData_800E5768_1_s02.field_38 = 0xFFFF4CCD;
-                    sharedData_800E5768_1_s02.field_3C = 0xFFFD3800;
-                    sharedData_800E5768_1_s02.field_44 = 0xFFFF4CCD;
+                    sharedData_800E5768_1_s02.corners_0[0].vx = 0xFFFD3800;
+                    sharedData_800E5768_1_s02.corners_0[0].vz = 0xFFFF4CCD;
+                    sharedData_800E5768_1_s02.corners_0[1].vx = 0xFFFD3800;
+                    sharedData_800E5768_1_s02.corners_0[1].vz = 0xFFFF3000;
+                    sharedData_800E5768_1_s02.corners_0[2].vx = 0xFFFD5000;
+                    sharedData_800E5768_1_s02.corners_0[2].vz = 0xFFFF3000;
+                    sharedData_800E5768_1_s02.corners_0[3].vx = 0xFFFD5000;
+                    sharedData_800E5768_1_s02.corners_0[3].vz = 0xFFFF4CCD;
+                    sharedData_800E5768_1_s02.corners_0[4].vx = 0xFFFD5000;
+                    sharedData_800E5768_1_s02.corners_0[4].vz = 0xFFFF4CCD;
+                    sharedData_800E5768_1_s02.corners_0[5].vx = 0xFFFD3800;
+                    sharedData_800E5768_1_s02.corners_0[5].vz = 0xFFFF4CCD;
             }
             else if (g_SysWork.player_4C.chara_0.position_18.vx > FP_METER(-90.0f) && g_SysWork.player_4C.chara_0.position_18.vx < FP_METER(-56.0f) && 
                      g_SysWork.player_4C.chara_0.position_18.vz > FP_METER(-14.0f) && g_SysWork.player_4C.chara_0.position_18.vz < FP_METER(0.0f))
             {
                     sharedData_800DD591_0_s00 = 10;
-                    sharedData_800E5768_1_s02.field_0 = 0xFFFB1000;
-                    sharedData_800E5768_1_s02.field_8 = 0xFFFF5800;
-                    sharedData_800E5768_1_s02.field_C = 0xFFFB1000;
-                    sharedData_800E5768_1_s02.field_14 = 0xFFFF3000;
-                    sharedData_800E5768_1_s02.field_18 = 0xFFFBD800;
-                    sharedData_800E5768_1_s02.field_20 = 0xFFFF3000;
-                    sharedData_800E5768_1_s02.field_24 = 0xFFFBD800;
-                    sharedData_800E5768_1_s02.field_2C = 0xFFFF5800;
-                    sharedData_800E5768_1_s02.field_30 = 0xFFFBD800;
-                    sharedData_800E5768_1_s02.field_38 = 0xFFFF5800;
-                    sharedData_800E5768_1_s02.field_3C = 0xFFFB1000;
-                    sharedData_800E5768_1_s02.field_44 = 0xFFFF5800;
+                    sharedData_800E5768_1_s02.corners_0[0].vx = 0xFFFB1000;
+                    sharedData_800E5768_1_s02.corners_0[0].vz = 0xFFFF5800;
+                    sharedData_800E5768_1_s02.corners_0[1].vx = 0xFFFB1000;
+                    sharedData_800E5768_1_s02.corners_0[1].vz = 0xFFFF3000;
+                    sharedData_800E5768_1_s02.corners_0[2].vx = 0xFFFBD800;
+                    sharedData_800E5768_1_s02.corners_0[2].vz = 0xFFFF3000;
+                    sharedData_800E5768_1_s02.corners_0[3].vx = 0xFFFBD800;
+                    sharedData_800E5768_1_s02.corners_0[3].vz = 0xFFFF5800;
+                    sharedData_800E5768_1_s02.corners_0[4].vx = 0xFFFBD800;
+                    sharedData_800E5768_1_s02.corners_0[4].vz = 0xFFFF5800;
+                    sharedData_800E5768_1_s02.corners_0[5].vx = 0xFFFB1000;
+                    sharedData_800E5768_1_s02.corners_0[5].vz = 0xFFFF5800;
             }
             else
             {
@@ -256,30 +256,30 @@ bool Particle_Update(s_Particle* partHead)
                 g_SysWork.player_4C.chara_0.position_18.vz > FP_METER(136.0f))
             {
                 sharedData_800DD591_0_s00 = 10;
-                sharedData_800E5768_1_s02.field_0 = 0xFFF18000;
-                sharedData_800E5768_1_s02.field_8 = 0x97000;
-                sharedData_800E5768_1_s02.field_C = 0xFFF1B000;
-                sharedData_800E5768_1_s02.field_14 = 0x97000;
-                sharedData_800E5768_1_s02.field_18 = 0xFFF18000;
-                sharedData_800E5768_1_s02.field_20 = 0x9E000;
-                sharedData_800E5768_1_s02.field_24 = 0xFFF18000;
-                sharedData_800E5768_1_s02.field_2C = 0x97000;
-                sharedData_800E5768_1_s02.field_30 = 0xFFF1C000;
-                sharedData_800E5768_1_s02.field_38 = 0x97000;
-                sharedData_800E5768_1_s02.field_3C = 0xFFF1C000;
-                sharedData_800E5768_1_s02.field_44 = 0x9E000;
+                sharedData_800E5768_1_s02.corners_0[0].vx = 0xFFF18000;
+                sharedData_800E5768_1_s02.corners_0[0].vz = 0x97000;
+                sharedData_800E5768_1_s02.corners_0[1].vx = 0xFFF1B000;
+                sharedData_800E5768_1_s02.corners_0[1].vz = 0x97000;
+                sharedData_800E5768_1_s02.corners_0[2].vx = 0xFFF18000;
+                sharedData_800E5768_1_s02.corners_0[2].vz = 0x9E000;
+                sharedData_800E5768_1_s02.corners_0[3].vx = 0xFFF18000;
+                sharedData_800E5768_1_s02.corners_0[3].vz = 0x97000;
+                sharedData_800E5768_1_s02.corners_0[4].vx = 0xFFF1C000;
+                sharedData_800E5768_1_s02.corners_0[4].vz = 0x97000;
+                sharedData_800E5768_1_s02.corners_0[5].vx = 0xFFF1C000;
+                sharedData_800E5768_1_s02.corners_0[5].vz = 0x9E000;
             }
             else if (g_SysWork.player_4C.chara_0.position_18.vx <= FP_METER(-240.0f) && g_SysWork.player_4C.chara_0.position_18.vz > FP_METER(133.0f))
             {
                 sharedData_800DD591_0_s00 = 9;
-                sharedData_800E5768_1_s02.field_0 = 0xFFF05000;
-                sharedData_800E5768_1_s02.field_8 = 0x8E000;
-                sharedData_800E5768_1_s02.field_C = 0xFFF07CCD;
-                sharedData_800E5768_1_s02.field_14 = 0x8E000;
-                sharedData_800E5768_1_s02.field_18 = 0xFFF07CCD;
-                sharedData_800E5768_1_s02.field_20 = 0x8E000;
-                sharedData_800E5768_1_s02.field_24 = 0xFFF07CCD;
-                sharedData_800E5768_1_s02.field_2C = 0x93000;
+                sharedData_800E5768_1_s02.corners_0[0].vx = 0xFFF05000;
+                sharedData_800E5768_1_s02.corners_0[0].vz = 0x8E000;
+                sharedData_800E5768_1_s02.corners_0[1].vx = 0xFFF07CCD;
+                sharedData_800E5768_1_s02.corners_0[1].vz = 0x8E000;
+                sharedData_800E5768_1_s02.corners_0[2].vx = 0xFFF07CCD;
+                sharedData_800E5768_1_s02.corners_0[2].vz = 0x8E000;
+                sharedData_800E5768_1_s02.corners_0[3].vx = 0xFFF07CCD;
+                sharedData_800E5768_1_s02.corners_0[3].vz = 0x93000;
             }
             else
             {
@@ -292,18 +292,18 @@ bool Particle_Update(s_Particle* partHead)
                 g_SysWork.player_4C.chara_0.position_18.vz > FP_METER(-100.0f) && g_SysWork.player_4C.chara_0.position_18.vz < FP_METER(-72.0f))
             {
                 sharedData_800DD591_0_s00 = 0xA;
-                sharedData_800E5768_1_s02.field_0 = -851968; // todo: change to hex
-                sharedData_800E5768_1_s02.field_8 = -380928;
-                sharedData_800E5768_1_s02.field_C = -851968;
-                sharedData_800E5768_1_s02.field_14 = -372736;
-                sharedData_800E5768_1_s02.field_18 = -868352;
-                sharedData_800E5768_1_s02.field_20 = -372736;
-                sharedData_800E5768_1_s02.field_24 = -868352;
-                sharedData_800E5768_1_s02.field_2C = -380928;
-                sharedData_800E5768_1_s02.field_30 = -851968;
-                sharedData_800E5768_1_s02.field_38 = -372736;
-                sharedData_800E5768_1_s02.field_3C = -868352;
-                sharedData_800E5768_1_s02.field_44 = -372736;
+                sharedData_800E5768_1_s02.corners_0[0].vx = -851968;
+                sharedData_800E5768_1_s02.corners_0[0].vz = -380928;
+                sharedData_800E5768_1_s02.corners_0[1].vx = -851968;
+                sharedData_800E5768_1_s02.corners_0[1].vz = -372736;
+                sharedData_800E5768_1_s02.corners_0[2].vx = -868352;
+                sharedData_800E5768_1_s02.corners_0[2].vz = -372736;
+                sharedData_800E5768_1_s02.corners_0[3].vx = -868352;
+                sharedData_800E5768_1_s02.corners_0[3].vz = -380928;
+                sharedData_800E5768_1_s02.corners_0[4].vx = -851968;
+                sharedData_800E5768_1_s02.corners_0[4].vz = -372736;
+                sharedData_800E5768_1_s02.corners_0[5].vx = -868352;
+                sharedData_800E5768_1_s02.corners_0[5].vz = -372736;
             }
             else
             {
@@ -315,18 +315,18 @@ bool Particle_Update(s_Particle* partHead)
             if (g_SysWork.player_4C.chara_0.position_18.vx < FP_METER(-275.0f) && g_SysWork.player_4C.chara_0.position_18.vz < FP_METER(-175.0f))
             {
                 sharedData_800DD591_0_s00 = 0xA;
-                sharedData_800E5768_1_s02.field_0 = -1175552;
-                sharedData_800E5768_1_s02.field_8 = -747520;
-                sharedData_800E5768_1_s02.field_C = -1169408;
-                sharedData_800E5768_1_s02.field_14 = -747520;
-                sharedData_800E5768_1_s02.field_18 = -1169408;
-                sharedData_800E5768_1_s02.field_20 = -727040;
-                sharedData_800E5768_1_s02.field_24 = -1175552;
-                sharedData_800E5768_1_s02.field_2C = -727040;
-                sharedData_800E5768_1_s02.field_30 = -1169408;
-                sharedData_800E5768_1_s02.field_38 = -743424;
-                sharedData_800E5768_1_s02.field_3C = -1169408;
-                sharedData_800E5768_1_s02.field_44 = -730726;
+                sharedData_800E5768_1_s02.corners_0[0].vx = -1175552;
+                sharedData_800E5768_1_s02.corners_0[0].vz = -747520;
+                sharedData_800E5768_1_s02.corners_0[1].vx = -1169408;
+                sharedData_800E5768_1_s02.corners_0[1].vz = -747520;
+                sharedData_800E5768_1_s02.corners_0[2].vx = -1169408;
+                sharedData_800E5768_1_s02.corners_0[2].vz = -727040;
+                sharedData_800E5768_1_s02.corners_0[3].vx = -1175552;
+                sharedData_800E5768_1_s02.corners_0[3].vz = -727040;
+                sharedData_800E5768_1_s02.corners_0[4].vx = -1169408;
+                sharedData_800E5768_1_s02.corners_0[4].vz = -743424;
+                sharedData_800E5768_1_s02.corners_0[5].vx = -1169408;
+                sharedData_800E5768_1_s02.corners_0[5].vz = -730726;
             }
             else
             {
@@ -403,34 +403,34 @@ bool Particle_Update(s_Particle* partHead)
     if (g_SysWork.player_4C.chara_0.position_18.vz > FP_METER(-33.0f) && g_SysWork.player_4C.chara_0.position_18.vz < FP_METER(-20.0f) &&
         g_SysWork.player_4C.chara_0.position_18.vx > FP_METER(13.0f) && g_SysWork.player_4C.chara_0.position_18.vx < FP_METER(44.0f))
     {
-        sharedData_800E5768_1_s02.field_0 = 0x18000;
-        sharedData_800E5768_1_s02.field_8 = 0xFFFED000;
-        sharedData_800E5768_1_s02.field_C = 0x18000;
-        sharedData_800E5768_1_s02.field_14 = 0xFFFEA800;
-        sharedData_800E5768_1_s02.field_18 = 0x1F800;
-        sharedData_800E5768_1_s02.field_20 = 0xFFFEA800;
-        sharedData_800E5768_1_s02.field_24 = 0x1F800;
-        sharedData_800E5768_1_s02.field_2C = 0xFFFED000;
-        sharedData_800E5768_1_s02.field_30 = 0x18000;
-        sharedData_800E5768_1_s02.field_38 = 0xFFFEA800;
-        sharedData_800E5768_1_s02.field_3C = 0x1F800;
-        sharedData_800E5768_1_s02.field_44 = 0xFFFEA800;
+        sharedData_800E5768_1_s02.corners_0[0].vx = 0x18000;
+        sharedData_800E5768_1_s02.corners_0[0].vz = 0xFFFED000;
+        sharedData_800E5768_1_s02.corners_0[1].vx = 0x18000;
+        sharedData_800E5768_1_s02.corners_0[1].vz = 0xFFFEA800;
+        sharedData_800E5768_1_s02.corners_0[2].vx = 0x1F800;
+        sharedData_800E5768_1_s02.corners_0[2].vz = 0xFFFEA800;
+        sharedData_800E5768_1_s02.corners_0[3].vx = 0x1F800;
+        sharedData_800E5768_1_s02.corners_0[3].vz = 0xFFFED000;
+        sharedData_800E5768_1_s02.corners_0[4].vx = 0x18000;
+        sharedData_800E5768_1_s02.corners_0[4].vz = 0xFFFEA800;
+        sharedData_800E5768_1_s02.corners_0[5].vx = 0x1F800;
+        sharedData_800E5768_1_s02.corners_0[5].vz = 0xFFFEA800;
     }
     else if (g_SysWork.player_4C.chara_0.position_18.vz > FP_METER(-82.0f) && g_SysWork.player_4C.chara_0.position_18.vz < FP_METER(-56.0f) &&
              g_SysWork.player_4C.chara_0.position_18.vx > FP_METER(43.0f) && g_SysWork.player_4C.chara_0.position_18.vx < FP_METER(70.0f))
     {
-        sharedData_800E5768_1_s02.field_0 = 0x3AB33;
-        sharedData_800E5768_1_s02.field_8 = 0xFFFB9800;
-        sharedData_800E5768_1_s02.field_C = 0x3AB33;
-        sharedData_800E5768_1_s02.field_14 = 0xFFFBC000;
-        sharedData_800E5768_1_s02.field_18 = 0x36800;
-        sharedData_800E5768_1_s02.field_20 = 0xFFFBC000;
-        sharedData_800E5768_1_s02.field_24 = 0x36800;
-        sharedData_800E5768_1_s02.field_2C = 0xFFFB9800;
-        sharedData_800E5768_1_s02.field_30 = 0x36800;
-        sharedData_800E5768_1_s02.field_38 = 0xFFFB9800;
-        sharedData_800E5768_1_s02.field_3C = 0x3AB33;
-        sharedData_800E5768_1_s02.field_44 = 0xFFFB9800;
+        sharedData_800E5768_1_s02.corners_0[0].vx = 0x3AB33;
+        sharedData_800E5768_1_s02.corners_0[0].vz = 0xFFFB9800;
+        sharedData_800E5768_1_s02.corners_0[1].vx = 0x3AB33;
+        sharedData_800E5768_1_s02.corners_0[1].vz = 0xFFFBC000;
+        sharedData_800E5768_1_s02.corners_0[2].vx = 0x36800;
+        sharedData_800E5768_1_s02.corners_0[2].vz = 0xFFFBC000;
+        sharedData_800E5768_1_s02.corners_0[3].vx = 0x36800;
+        sharedData_800E5768_1_s02.corners_0[3].vz = 0xFFFB9800;
+        sharedData_800E5768_1_s02.corners_0[4].vx = 0x36800;
+        sharedData_800E5768_1_s02.corners_0[4].vz = 0xFFFB9800;
+        sharedData_800E5768_1_s02.corners_0[5].vx = 0x3AB33;
+        sharedData_800E5768_1_s02.corners_0[5].vz = 0xFFFB9800;
     }
     else
     {
@@ -443,17 +443,17 @@ bool Particle_Update(s_Particle* partHead)
     switch (g_SavegamePtr->mapRoomIdx_A5)
     {
         case 7:
-            sharedData_800E5768_1_s02.field_0 = 0x37800;
-            sharedData_800E5768_1_s02.field_8 = 0x3F000;
-            sharedData_800E5768_1_s02.field_C = 0x37800;
-            sharedData_800E5768_1_s02.field_14 = 0x3A000;
+            sharedData_800E5768_1_s02.corners_0[0].vx = 0x37800;
+            sharedData_800E5768_1_s02.corners_0[0].vz = 0x3F000;
+            sharedData_800E5768_1_s02.corners_0[1].vx = 0x37800;
+            sharedData_800E5768_1_s02.corners_0[1].vz = 0x3A000;
             break;
 
         case 8:
-            sharedData_800E5768_1_s02.field_0 = 0x64000;
-            sharedData_800E5768_1_s02.field_8 = 0x38800;
-            sharedData_800E5768_1_s02.field_C = 0x68000;
-            sharedData_800E5768_1_s02.field_14 = 0x38800;
+            sharedData_800E5768_1_s02.corners_0[0].vx = 0x64000;
+            sharedData_800E5768_1_s02.corners_0[0].vz = 0x38800;
+            sharedData_800E5768_1_s02.corners_0[1].vx = 0x68000;
+            sharedData_800E5768_1_s02.corners_0[1].vz = 0x38800;
             break;
 
         default:
