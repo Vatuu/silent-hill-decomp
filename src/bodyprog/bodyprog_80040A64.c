@@ -1295,12 +1295,12 @@ void func_80043C7C(s_IpdHeader* ipdHeader, s_800C1450_0* arg1, s_800C1450_0* arg
 
     if (arg1 != NULL)
     {
-        func_80056774(ipdHeader->plmHeader_4, arg1, &func_80043D44, arg3, 1);
+        func_80056774(ipdHeader->plmHeader_4, arg1, &PlmFilter_NameDoesNotEndWithH, arg3, 1);
     }
 
     if (arg2 != NULL)
     {
-        func_80056774(ipdHeader->plmHeader_4, arg2, &func_80043D64, arg3, 1);
+        func_80056774(ipdHeader->plmHeader_4, arg2, &PlmFilter_NameEndsWithH, arg3, 1);
     }
 }
 
@@ -1311,15 +1311,18 @@ s32 func_80043D00(s_IpdHeader* ipdHeader) // 0x80043D00
         return 0;
     }
 
-    return func_80056348(func_80043D64, ipdHeader->plmHeader_4);
+    return func_80056348(PlmFilter_NameEndsWithH, ipdHeader->plmHeader_4);
 }
 
-bool func_80043D44(s_PlmTexList* texList) // 0x80043D44
+bool PlmFilter_NameDoesNotEndWithH(s_PlmTexList* texList) // 0x80043D44
 {
-    return !func_80043D64(texList);
+    return !PlmFilter_NameEndsWithH(texList);
 }
 
-bool func_80043D64(s_PlmTexList* texList) // 0x80043D64
+/* Not sure what is the significance of textures that end with H.
+ * I've looked at all of them and can't find any pattern.
+ */
+bool PlmFilter_NameEndsWithH(s_PlmTexList* texList) // 0x80043D64
 {
     char* charCode;
 

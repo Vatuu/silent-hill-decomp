@@ -2676,10 +2676,10 @@ void func_80043C7C(s_IpdHeader* ipdHeader, s_800C1450_0* arg1, s_800C1450_0* arg
 /** Checks if IPD is loaded before returning texture count? */
 s32 func_80043D00(s_IpdHeader* ipdHeader);
 
-/** Returns inverse result of `func_80043D64`. */
-bool func_80043D44(s_PlmTexList* texList);
+/** Returns inverse result of `PlmFilter_NameEndsWithH`. */
+bool PlmFilter_NameDoesNotEndWithH(s_PlmTexList* texList);
 
-bool func_80043D64(s_PlmTexList* texList);
+bool PlmFilter_NameEndsWithH(s_PlmTexList* texList);
 
 void IpdHeader_FixHeaderOffsets(s_IpdHeader* ipdHeader);
 
