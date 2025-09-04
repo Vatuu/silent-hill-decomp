@@ -64,26 +64,26 @@ struct _SubCharacter;
 #define WeaponId_AttackVariantGet(weaponId, type) \
 	((weaponId) + ((type) * 10))
 
-/** @brief Packs an anim status containing the anim index and active flag.
+/** @brief Packs an animation status containing the animation index and active flag.
  *
- * @param animIdx Anim index.
+ * @param animIdx Animation index.
  * @param isActive Active status (`bool`).
- * @return Packed anim status containing the anim index and active flag.
+ * @return Packed animation status containing the animation index and active flag.
  */
 #define ANIM_STATUS(animIdx, isActive) \
-    (((animIdx) << 1) | ((isActive) ? (1 << 0) : 0x0))
+    (((animIdx) << 1) | ((isActive) ? (1 << 0) : 0))
 
-/** @brief Retrieves the anim index from a packed anim status.
+/** @brief Retrieves the animation index from a packed animation status.
  *
- * @param animStatus Packed anim status containing an anim index and active flag.
+ * @param animStatus Packed animation status containing an animation index and active flag.
  * @return Anim index.
  */
 #define ANIM_STATUS_IDX_GET(animStatus) \
     ((animStatus) >> 1)
 
-/** @brief Checks if an anim is active.
+/** @brief Checks if an animation is active.
  *
- * @param animStatus Packed anim status containing an anim index and active flag.
+ * @param animStatus Packed animation status containing an animation index and active flag.
  * @return `true` if active, `false` otherwise.
  */
 #define IS_ANIM_STATUS_ACTIVE(animStatus) \
@@ -107,7 +107,7 @@ struct _SubCharacter;
  * @return Packed screen fade status containing a fade state and white flag.
  */
 #define SCREEN_FADE_STATUS(state, isWhite) \
-    ((state) | ((isWhite) ? (1 << 3) : 0x0))
+    ((state) | ((isWhite) ? (1 << 3) : 0))
 
 /** @brief Checks if a screen fade is white.
  * See `g_Gfx_ScreenFade` for bit layout.

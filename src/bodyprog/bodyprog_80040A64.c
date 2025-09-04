@@ -1177,16 +1177,14 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043740); // 0x
 
 bool func_80043830(void) // 0x80043830
 {
-    s_800C117C* ptr;
     s32         loadState;
+    s_800C117C* ptr;
 
-    for (ptr = &D_800C1020.ipdTable_15C[0];
-         ptr < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableLen_158];
-         ptr++)
+    for (ptr = &D_800C1020.ipdTable_15C[0]; ptr < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableSize_158]; ptr++)
     {
         loadState = IpdHeader_LoadStateGet(ptr);
-
-        if (loadState == 0 || loadState == 3 || (ptr->field_C > 0 && ptr->field_10 > 0))
+        if (loadState == StaticModelLoadState_Invalid || loadState == StaticModelLoadState_Loaded ||
+            (ptr->field_C > 0 && ptr->field_10 > 0))
         {
             continue;
         }
@@ -1196,7 +1194,7 @@ bool func_80043830(void) // 0x80043830
             continue;
         }
 
-        if (func_80042E2C(FP_METER_TO_GEO(D_800C1020.field_578), FP_METER_TO_GEO(D_800C1020.field_57C), ptr->field_8, ptr->field_A) <= 0x480)
+        if (func_80042E2C(FP_METER_TO_GEO(D_800C1020.field_578), FP_METER_TO_GEO(D_800C1020.field_57C), ptr->field_8, ptr->field_A) <= FP_METER_GEO(4.5f))
         {
             return true;
         }
