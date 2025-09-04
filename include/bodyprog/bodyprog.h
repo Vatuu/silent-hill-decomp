@@ -575,9 +575,9 @@ typedef struct _ObjPrimitive
     u16 field_0;
     u16 field_2;
     u16 field_4;
-    u8  field_6_0 : 8;
-    s8  field_6_8 : 7;
-    u8  unk_6_15  : 1;
+    u8  field_6_0  : 8;
+    s8  field_6_8  : 7;
+    u8  field_6_15 : 1; // `bool`
     u16 field_8;
     u16 field_A;
     u8  unk_C[8];
@@ -2537,7 +2537,7 @@ s32 func_8003D444(s32 idx);
 void func_8003D550(s32 arg0, s32 arg1);
 
 /** Called by some chara init funcs, similar to `func_8003DD80`? */
-void func_8003D468(s32 arg0, s32 arg1);
+void func_8003D468(s32 arg0, bool flag);
 
 void func_8003D6A4(s_800BCE18_0_CC* arg0);
 
@@ -3004,6 +3004,8 @@ u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* mat);
 void PlmHeader_FixOffsets(s_PlmHeader* plmHeader);
 
 void ObjList_FixOffsets(s_ObjList* objList, s_PlmHeader* plmHeader);
+
+void func_80056244(s_PlmHeader* plmHeader, bool flag);
 
 /** Gets texture count? */
 s32 func_80056348(bool (*arg0)(s_PlmTexList* texList), s_PlmHeader* plmHeader);

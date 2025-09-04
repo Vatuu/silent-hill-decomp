@@ -518,7 +518,26 @@ void ObjList_FixOffsets(s_ObjList* objList, s_PlmHeader* plmHeader) // 0x800561A
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80056244); // 0x80056244
+void func_80056244(s_PlmHeader* plmHeader, bool flag) // 0x80056244
+{
+    s_ObjList*      objList;
+    s_ObjList*      obj;
+    s_ObjHeader*    mesh;
+    s_ObjPrimitive* prim;
+
+    objList = plmHeader->objectList_C;
+
+    for (obj = &objList[0]; obj < &objList[plmHeader->objectCount_8]; obj++)
+    {
+        for (mesh = &obj->meshes_C[0]; mesh < &obj->meshes_C[obj->meshCount_8]; mesh++)
+        {
+            for (prim = &mesh->primitives_4[0]; prim < &mesh->primitives_4[mesh->primitiveCount_0]; prim++)
+            {
+                prim->field_6_15 = flag;
+            }
+        }
+    }
+}
 
 s32 func_80056348(bool (*arg0)(s_PlmTexList* texList), s_PlmHeader* plmHeader) // 0x80056348
 {
