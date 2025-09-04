@@ -149,20 +149,20 @@ const static s_SpeedZone SPEED_ZONES_XXX[] =
 
 const s_MapType g_MapTypes[16] =
 {
-    { FILE_BG_THR_GLB_PLM, "THR", 0, 0, NULL,                SPEED_ZONES_THR },
-    { NO_VALUE,            "SC",  6, 0, NULL,                SPEED_ZONES_SC  },
-    { NO_VALUE,            "SU",  6, 0, NULL,                SPEED_ZONES_SU  },
-    { FILE_BG_SPR_GLB_PLM, "SPR", 0, 0, NULL,                SPEED_ZONES_SP  },
-    { FILE_BG_SPU_GLB_PLM, "SPU", 0, 0, NULL,                SPEED_ZONES_SP  },
-    { FILE_BG_RSR_GLB_PLM, "RSR", 0, 0, NULL,                SPEED_ZONES_RSR },
-    { FILE_BG_RSU_GLB_PLM, "RSU", 0, 0, NULL,                SPEED_ZONES_RSU },
-    { FILE_BG_APR_GLB_PLM, "APR", 0, 0, NULL,                SPEED_ZONES_AP  },
-    { FILE_BG_APU_GLB_PLM, "APU", 0, 0, NULL,                SPEED_ZONES_AP  },
-    { NO_VALUE,            "ER",  6, 0, NULL,                SPEED_ZONES_ER  },
-    { NO_VALUE,            "ER",  6, 0, NULL,                SPEED_ZONES_ER  },
-    { FILE_BG_DR_GLB_PLM,  "DR",  0, 0, WATER_LIGHT_ZONES_0, SPEED_ZONES_DR  },
-    { FILE_BG_DRU_GLB_PLM, "DRU", 0, 0, WATER_LIGHT_ZONES_1, SPEED_ZONES_DR  },
-    { NO_VALUE,            "HP",  6, 0, NULL,                SPEED_ZONES_HP  },
-    { NO_VALUE,            "HU",  6, 0, NULL,                SPEED_ZONES_HU  },
-    { NO_VALUE,            "XXX", 8, 0, NULL,                SPEED_ZONES_XXX }
+    { FILE_BG_THR_GLB_PLM, "THR", 0, NULL,                SPEED_ZONES_THR },
+    { NO_VALUE,            "SC",  6, NULL,                SPEED_ZONES_SC  },
+    { NO_VALUE,            "SU",  6, NULL,                SPEED_ZONES_SU  },
+    { FILE_BG_SPR_GLB_PLM, "SPR", 0, NULL,                SPEED_ZONES_SP  },
+    { FILE_BG_SPU_GLB_PLM, "SPU", 0, NULL,                SPEED_ZONES_SP  },
+    { FILE_BG_RSR_GLB_PLM, "RSR", 0, NULL,                SPEED_ZONES_RSR },
+    { FILE_BG_RSU_GLB_PLM, "RSU", 0, NULL,                SPEED_ZONES_RSU },
+    { FILE_BG_APR_GLB_PLM, "APR", 0, NULL,                SPEED_ZONES_AP  },
+    { FILE_BG_APU_GLB_PLM, "APU", 0, NULL,                SPEED_ZONES_AP  },
+    { NO_VALUE,            "ER",  6, NULL,                SPEED_ZONES_ER  },
+    { NO_VALUE,            "ER",  6, NULL,                SPEED_ZONES_ER  },
+    { FILE_BG_DR_GLB_PLM,  "DR",  0, WATER_LIGHT_ZONES_0, SPEED_ZONES_DR  },
+    { FILE_BG_DRU_GLB_PLM, "DRU", 0, WATER_LIGHT_ZONES_1, SPEED_ZONES_DR  },
+    { NO_VALUE,            "HP",  6, NULL,                SPEED_ZONES_HP  },
+    { NO_VALUE,            "HU",  6, NULL,                SPEED_ZONES_HU  },
+    { NO_VALUE,            "XXX", 8, NULL,                SPEED_ZONES_XXX }
 };
