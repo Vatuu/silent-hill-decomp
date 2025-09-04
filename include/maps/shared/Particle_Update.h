@@ -50,8 +50,8 @@ bool Particle_Update(s_Particle* partHead)
     
     GsInitCoordinate2(0, &g_SysWork.coord_22A8);
 
-    sharedData_800E323C_0_s00.vx = g_ParticleVectors0.viewPosition_C.vx + FP_FROM(Math_Sin(g_ParticleVectors0.viewRotation_20.vy) * FP_METER(3.0), Q12_SHIFT);
-    sharedData_800E323C_0_s00.vz = g_ParticleVectors0.viewPosition_C.vz + FP_FROM(Math_Cos(g_ParticleVectors0.viewRotation_20.vy) * FP_METER(3.0), Q12_SHIFT);
+    sharedData_800E323C_0_s00.vx = g_ParticleVectors0.viewPosition_C.vx + FP_MULTIPLY(Math_Sin(g_ParticleVectors0.viewRotation_20.vy), FP_METER(3.0), Q12_SHIFT);
+    sharedData_800E323C_0_s00.vz = g_ParticleVectors0.viewPosition_C.vz + FP_MULTIPLY(Math_Cos(g_ParticleVectors0.viewRotation_20.vy), FP_METER(3.0), Q12_SHIFT);
 #if defined(MAP1_S06)
     sharedData_800E323C_0_s00.vy = FP_METER(-10.0);
 #else
