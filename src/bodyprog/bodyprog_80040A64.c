@@ -607,16 +607,16 @@ void func_80041E98() // 0x80041E98
     D_800C1020.field_0.field_1C = 512;
 }
 
-void func_80041ED0(s16 arg0, s32 xIdx, s32 zIdx) // 0x80041ED0
+void Map_PlaceIpdAtGridPos(s16 ipdFileIdx, s32 x, s32 z) // 0x80041ED0
 {
     s_800C117C*  ptr;
     s_IpdHeader* ipd;
 
-    ((s16*)&D_800C1020.ipdGridCenter_42C[zIdx])[xIdx] = arg0;
+    ((s16*)&D_800C1020.ipdGridCenter_42C[z])[x] = ipdFileIdx;
 
     for (ptr = D_800C1020.ipdTable_15C; ptr < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableLen_158]; ptr++)
     {
-        if (ptr->field_8 != xIdx || ptr->field_A != zIdx)
+        if (ptr->field_8 != x || ptr->field_A != z)
         {
             continue;
         }
@@ -781,29 +781,29 @@ void func_80042300(s_800C1020* arg0, s32 arg1) // 0x80042300
 }
 /** @brief Locate all IPD files for a given map type.
  * For example, map type THR:
- * file 1100 is THR0205.IPD. ipdGridCenter_42C[2][5] = 1100;
+ * file 1100 is THR0205.IPD. ipdGridCenter_42C[5][2] = 1100;
  */
-void Map_MakeIpdGrid(s_800C1020* arg0, char* mapTag, s32 arg2) // 0x800423F4
+void Map_MakeIpdGrid(s_800C1020* arg0, char* mapTag, s32 fileIdxStart) // 0x800423F4
 {
     s8              sp10[256];
-    s32             j;
-    s32             i;
+    s32             x;
+    s32             z;
     s32             k;
     s8*             filename_postfix;
-    s_IpdRow*       ptr;
+    s_IpdColumn*    col;
 
-    arg0->ipdGridCenter_42C = (s_IpdRow*)(&arg0->ipdGrid_1CC[8].idx[8]);
+    arg0->ipdGridCenter_42C = (s_IpdColumn*)(&arg0->ipdGrid_1CC[8].idx[8]);
 
-    for (i = -8; i < 11; i++)
+    for (z = -8; z < 11; z++)
     {
-        for (j = -8; j < 8; j++)
+        for (x = -8; x < 8; x++)
         {
-            ((s16*)&arg0->ipdGridCenter_42C[i])[j] = NO_VALUE;
+            ((s16*)&arg0->ipdGridCenter_42C[z])[x] = NO_VALUE;
         }
     }
 #define FILE_TYPE_IPD (6)
     // Run through all game files.
-    for (k = arg2; k < 2074; k++)
+    for (k = fileIdxStart; k < 2074; k++)
     {
         if (g_FileTable[k].type_8_18 == FILE_TYPE_IPD)
         {
@@ -812,18 +812,18 @@ void Map_MakeIpdGrid(s_800C1020* arg0, char* mapTag, s32 arg2) // 0x800423F4
             if (strncmp(sp10, arg0->mapTag_144, arg0->mapTagLen_148) == 0)
             {
                 filename_postfix = &sp10[arg0->mapTagLen_148];
-                if (hex_to_s16(&j, filename_postfix[0], filename_postfix[1]) &&
-                    hex_to_s16(&i, filename_postfix[2], filename_postfix[3]))
+                if (hex_to_s8(&x, filename_postfix[0], filename_postfix[1]) &&
+                    hex_to_s8(&z, filename_postfix[2], filename_postfix[3]))
                 {
-                    ptr         = &arg0->ipdGridCenter_42C[i];
-                    ptr->idx[j] = k;
+                    col         = &arg0->ipdGridCenter_42C[z];
+                    col->idx[x] = k;
                 }
             }
         }
     }
 }
 
-bool hex_to_s16(s32* out, char firstHex, char secondHex) // 0x8004255C
+bool hex_to_s8(s32* out, char firstHex, char secondHex) // 0x8004255C
 {
     char low;
     char high;

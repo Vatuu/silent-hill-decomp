@@ -1064,8 +1064,8 @@ STATIC_ASSERT_SIZEOF(s_800C117C, 28);
 typedef struct _IpdRow
 {
     s16 idx[16];
-} s_IpdRow;
-STATIC_ASSERT_SIZEOF(s_IpdRow, 32);
+} s_IpdColumn;
+STATIC_ASSERT_SIZEOF(s_IpdColumn, 32);
 
 typedef struct
 {
@@ -1110,9 +1110,9 @@ typedef struct
     s32                field_154;
     s32                ipdTableLen_158;
     s_800C117C         ipdTable_15C[4]; // temp name.
-    s_IpdRow           ipdGrid_1CC[18];
+    s_IpdColumn        ipdGrid_1CC[18];
     s8                 unk_40C[32];     // could be just one extra row in the table above.
-    s_IpdRow*          ipdGridCenter_42C;
+    s_IpdColumn*       ipdGridCenter_42C;
     s_800C1450         field_430;
     s32                field_578;
     s32                field_57C;
@@ -2594,7 +2594,7 @@ void func_80041D48();
 
 void func_80041E98();
 
-void func_80041ED0(s16 arg0, s32 xIdx, s32 zIdx);
+void Map_PlaceIpdAtGridPos(s16 ipdFileIdx, s32 x, s32 z);
 
 void func_80041FF0();
 
@@ -2610,10 +2610,10 @@ void func_800421D8(char* mapTag, s32 plmIdx, s32 arg2, s32 arg3, s32 arg4, s32 a
 
 void func_80042300(s_800C1020* arg0, s32 arg1);
 
-void Map_MakeIpdGrid(s_800C1020* arg0, char* mapTag, s32 arg2);
+void Map_MakeIpdGrid(s_800C1020* arg0, char* mapTag, s32 fileIdxStart);
 
 /** @brief Turns two hex `char`s to their `int` hex value. */
-bool hex_to_s16(s32* out, char firstHex, char secondHex);
+bool hex_to_s8(s32* out, char firstHex, char secondHex);
 
 s32* func_800425D8(s32* arg0);
 
