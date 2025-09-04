@@ -29,6 +29,8 @@ CheckOptions:
     value:           ''
   - key:             readability-identifier-naming.FunctionSuffix
     value:           ''
+  - key:             readability-identifier-naming.FunctionIgnoredRegexp
+    value:           "^((func|sharedFunc)_[0-9A-Fa-f]+|[A-Z][a-zA-Z0-9]*(_[A-Z0-9][a-zA-Z0-9]*)*)$"
   - key:             readability-identifier-naming.GlobalConstantCase
     value:           UPPER_CASE
   - key:             readability-identifier-naming.GlobalConstantPrefix
