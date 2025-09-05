@@ -8,7 +8,7 @@ s32 sharedFunc_800D2DAC_0_s00()
 
     if (animInfo->funcPtr_0 == Anim_Update0)
     {
-        if (func_800449AC(model, animInfo) > 0)
+        if (func_800449AC(model, animInfo) > FP_TIME(0.0f))
         {
             return model->anim_4.keyframeIdx0_8 == animInfo->keyframeIdx1_E;
         }

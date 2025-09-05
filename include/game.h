@@ -975,7 +975,7 @@ typedef struct _AnimInfo
     {
         q19_12 constTimeDelta;
         q19_12 (*variableTimeDeltaFunc)();
-    } timeDelta_8;
+    } timeDelta_8; // Duration?
     s16 keyframeIdx0_C;
     s16 keyframeIdx1_E;
 } s_AnimInfo;
