@@ -1654,15 +1654,17 @@ typedef struct
     s16 field_0;
     s16 field_2;
     s16 field_4;
-    s8  unk_8[6];
+    s16 unk_6;
+    s16 unk_8;
+    s16 unk_A;
     s16 field_C;
     s16 field_E;
     s16 field_10;
-    s8  unk_12[2];
+    s16 unk_12;
     s16 field_14;
     s16 field_16;
     s16 field_18;
-    s8  unk_1A[2];
+    s16  unk_1A;
 } s_800AE204;
 
 typedef struct
