@@ -18,10 +18,10 @@ The table below summarizes each file format encountered so far, their known or s
 | .CMP | Unknown, found in 'TEST' folder, compressed? | - |
 | .DAT | Data for demo playback, contains button states for each frame. | - |
 | .DMS | Cutscene keyframe data. | [sh1_dms.bt](/docs/file_formats/sh1_dms.bt) |
-| .ILM | Skeletal models. | [sh1_models_draft.bt](https://github.com/Sparagas/Silent-Hill/blob/main/010%20Editor%20-%20Binary%20Templates/sh1_models_draft.bt) by Sparagas |
-| .IPD | Local static models. | [sh1_models_draft.bt](https://github.com/Sparagas/Silent-Hill/blob/main/010%20Editor%20-%20Binary%20Templates/sh1_models_draft.bt) by Sparagas, [sh_ipd2obj](https://github.com/belek666/sh_ipd2obj) by belek666 |
+| .ILM | Skeletal models. | [sh1_model.bt](https://github.com/Sparagas/Silent-Hill/blob/main/010%20Editor%20-%20Binary%20Templates/sh1_model.bt) by Sparagas |
+| .IPD | Local static models. | [sh1_model.bt](https://github.com/Sparagas/Silent-Hill/blob/main/010%20Editor%20-%20Binary%20Templates/sh1_model.bt) by Sparagas, [sh_ipd2obj](https://github.com/belek666/sh_ipd2obj) by belek666 |
 | .KDT | Konami MIDI tracker files. | [kdt-tool](https://github.com/Nisto/kdt-tool) by Nisto |
-| .PLM | Global static models. | [sh1_models_draft.bt](https://github.com/Sparagas/Silent-Hill/blob/main/010%20Editor%20-%20Binary%20Templates/sh1_models_draft.bt) by Sparagas, [sh_ipd2obj](https://github.com/belek666/sh_ipd2obj) by belek666 |
+| .PLM | Global static models. | [sh1_model.bt](https://github.com/Sparagas/Silent-Hill/blob/main/010%20Editor%20-%20Binary%20Templates/sh1_model.bt) by Sparagas, [sh_ipd2obj](https://github.com/belek666/sh_ipd2obj) by belek666 |
 | .TIM | PsyQ SDK texture container. | SDK `filefrmt.pdf` |
 | .TMD | PsyQ SDK 3D models, used exclusively on the item screen. | SDK `filefrmt.pdf` |
 | .VAB | PsyQ SDK audio container. | SDK `filefrmt.pdf` |
