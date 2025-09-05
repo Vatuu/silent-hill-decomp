@@ -785,7 +785,7 @@ void Map_MakeIpdGrid(s_800C1020* arg0, char* mapTag, s32 fileIdxStart) // 0x8004
     s8              sp10[256];
     s32             x;
     s32             z;
-    s32             k;
+    s32             i;
     s8*             filenameSuffix;
     s_IpdColumn*    col;
 
@@ -798,29 +798,29 @@ void Map_MakeIpdGrid(s_800C1020* arg0, char* mapTag, s32 fileIdxStart) // 0x8004
             ((s16*)&arg0->ipdGridCenter_42C[z])[x] = NO_VALUE;
         }
     }
-#define FILE_TYPE_IPD (6)
+
     // Run through all game files.
-    for (k = fileIdxStart; k < 2074; k++)
+    for (i = fileIdxStart; i < FS_FILE_COUNT; i++)
     {
-        if (g_FileTable[k].type_8_18 == FILE_TYPE_IPD)
+        if (g_FileTable[i].type_8_18 == FileType_Ipd)
         {
-            Fs_GetFileName(sp10, k);
+            Fs_GetFileName(sp10, i);
 
             if (strncmp(sp10, arg0->mapTag_144, arg0->mapTagSize_148) == 0)
             {
                 filenameSuffix = &sp10[arg0->mapTagSize_148];
-                if (ConvertHexToS16(&j, filenameSuffix[0], filenameSuffix[1]) &&
-                    ConvertHexToS16(&i, filenameSuffix[2], filenameSuffix[3]))
+                if (ConvertHexToS8(&x, filenameSuffix[0], filenameSuffix[1]) &&
+                    ConvertHexToS8(&z, filenameSuffix[2], filenameSuffix[3]))
                 {
                     col         = &arg0->ipdGridCenter_42C[z];
-                    col->idx[x] = k;
+                    col->idx[x] = i;
                 }
             }
         }
     }
 }
 
-bool ConvertHexToS16(s32* out, char hex0, char hex1) // 0x8004255C
+bool ConvertHexToS8(s32* out, char hex0, char hex1) // 0x8004255C
 {
     char low;
     char high;
