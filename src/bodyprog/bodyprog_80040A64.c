@@ -1139,7 +1139,7 @@ bool func_80043578(s_800C117C* arg0, s32 arg1, s32 arg2) // 0x80043578
 {
     s32 i;
 
-    for (i = 0; i < D_800C1020.ipdTableLen_158; i++)
+    for (i = 0; i < D_800C1020.ipdTableSize_158; i++)
     {
         if (arg0[i].queueIdx_4 != NO_VALUE &&
             arg1 == arg0[i].field_8 && arg2 == arg0[i].field_A)

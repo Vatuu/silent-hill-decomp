@@ -1238,6 +1238,7 @@ s32 func_8003CDA0(s32 itemIdx)
         default:
             fileIdx = NO_VALUE;
             break;
+
         case NO_VALUE:
         case 128:
         case 132:
@@ -1248,46 +1249,57 @@ s32 func_8003CDA0(s32 itemIdx)
             fileIdx      = NO_VALUE;
             ptr->field_8 = "HERO";
             break;
+
         case InventoryItemId_SteelPipe:
             fileIdx      = FILE_ITEM_PIPE_TIM;
             ptr->field_8 = "PIPE";
             break;
+
         case 164:
             fileIdx      = FILE_ITEM_PHONE_TIM;
             ptr->field_8 = "PHONE";
             break;
+
         case 165:
             fileIdx      = FILE_ITEM_FLAUROS_TIM;
             ptr->field_8 = "FLAUROS";
             break;
+
         case 166:
             fileIdx      = FILE_ITEM_AGLA_TIM;
             ptr->field_8 = "AGLA";
             break;
+
         case 167:
             fileIdx      = FILE_ITEM_BOTL_TIM;
             ptr->field_8 = "BOTL";
             break;
+
         case 168:
             fileIdx      = FILE_ITEM_BABY_TIM;
             ptr->field_8 = "BABY";
             break;
+
         case 169:
             fileIdx      = FILE_ITEM_BLOOD_TIM;
             ptr->field_8 = "BLOOD";
             break;
+
         case InventoryItemId_Chainsaw:
             fileIdx      = FILE_ITEM_CSAW_TIM;
             ptr->field_8 = "CSAW";
             break;
+
         case InventoryItemId_HyperBlaster:
             fileIdx      = FILE_ITEM_HPRGUN_TIM;
             ptr->field_8 = "HPRGUN";
             break;
+
         case InventoryItemId_RockDrill:
             fileIdx      = FILE_ITEM_DRILL_TIM;
             ptr->field_8 = "DRILL";
             break;
+
         case InventoryItemId_Katana:
             fileIdx      = FILE_ITEM_KATANA_TIM;
             ptr->field_8 = "KATANA";
@@ -1324,54 +1336,71 @@ s32 func_8003CDA0(s32 itemIdx)
         default:
             fileIdx = NO_VALUE;
             break;
+
         case InventoryItemId_KitchenKnife:
             fileIdx = FILE_ITEM_KNIFE_PLM;
             break;
+
         case InventoryItemId_SteelPipe:
             fileIdx = FILE_ITEM_PIPE_PLM;
             break;
+
         case InventoryItemId_Hammer:
             fileIdx = FILE_ITEM_HAMMER_PLM;
             break;
+
         case InventoryItemId_Axe:
             fileIdx = FILE_ITEM_AXE_PLM;
             break;
+
         case InventoryItemId_Handgun:
             fileIdx = FILE_ITEM_HANDGUN_PLM;
             break;
+
         case InventoryItemId_HuntingRifle:
             fileIdx = FILE_ITEM_RIFLE_PLM;
             break;
+
         case InventoryItemId_Shotgun:
             fileIdx = FILE_ITEM_SHOTGUN_PLM;
             break;
+
         case 164:
             fileIdx = FILE_ITEM_PHONE_PLM;
             break;
+
         case 165:
             fileIdx = FILE_ITEM_FLAUROS_PLM;
             break;
+
         case 166:
             fileIdx = FILE_ITEM_AGLA_PLM;
             break;
+
         case 167:
             fileIdx = FILE_ITEM_BOTL_PLM;
             break;
+
         case 168:
             fileIdx = FILE_ITEM_BABY_PLM;
             break;
+
         case 169:
             fileIdx = FILE_ITEM_BLOOD_PLM;
             break;
+
         case InventoryItemId_Chainsaw:
             fileIdx = FILE_ITEM_CSAW_PLM;
             break;
+
         case InventoryItemId_HyperBlaster:
             fileIdx = FILE_ITEM_HPRGUN_PLM;
             break;
+
         case InventoryItemId_RockDrill:
             fileIdx = FILE_ITEM_DRILL_PLM;
             break;
+
         case InventoryItemId_Katana:
             fileIdx = FILE_ITEM_KATANA_PLM;
             break;
@@ -1883,9 +1912,6 @@ void func_8003DD80(s32 idx, s32 arg1) // 0x8003DD80
         case 18:
             func_8003E544(&temp_a2->field_14, arg1);
             break;
-
-        default:
-            break;
     }
 }
 
@@ -1919,9 +1945,6 @@ void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
             case 5:
                 func_80045468(skel, &D_800A9EE0, true);
                 break;
-
-            default:
-                break;
         }
     }
 
@@ -1938,9 +1961,6 @@ void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
 
             case 32:
                 func_80045468(skel, &D_800A9EEC, true);
-                break;
-
-            default:
                 break;
         }
     }
@@ -1964,9 +1984,6 @@ void func_8003DF84(s_Skeleton* skel, s32 arg1) // 0x8003DF84
                 func_80045468(skel, &D_800A9EF0, false);
                 func_80045468(skel, &D_800A9EF4, true);
                 break;
-
-            default:
-                break;
         }
     }
 
@@ -1983,9 +2000,6 @@ void func_8003DF84(s_Skeleton* skel, s32 arg1) // 0x8003DF84
             case 32:
                 func_80045468(skel, &D_800A9EF8, false);
                 func_80045468(skel, &D_800A9EFC, true);
-                break;
-
-            default:
                 break;
         }
     }
@@ -2009,9 +2023,6 @@ void func_8003E08C(s_Skeleton* skel, s32 arg1) // 0x8003E08C
                 func_80045468(skel, &D_800A9F00, false);
                 func_80045468(skel, &D_800A9F04, true);
                 break;
-
-            default:
-                break;
         }
     }
 
@@ -2028,9 +2039,6 @@ void func_8003E08C(s_Skeleton* skel, s32 arg1) // 0x8003E08C
             case 32:
                 func_80045468(skel, &D_800A9F08, false);
                 func_80045468(skel, &D_800A9F0C, true);
-                break;
-
-            default:
                 break;
         }
     }
@@ -2057,9 +2065,6 @@ void func_8003E194(s_Skeleton* skel, s32 arg1) // 0x8003E194
 
             case 3:
                 func_80045468(skel, &D_800A9F1C, true);
-                break;
-
-            default:
                 break;
         }
     }
@@ -2091,9 +2096,6 @@ void func_8003E238(s_Skeleton* skel, s32 arg1) // 0x8003E238
             case 4:
                 func_80045468(skel, &D_800A9F34, true);
                 break;
-
-            default:
-                break;
         }
     }
 
@@ -2115,9 +2117,6 @@ void func_8003E238(s_Skeleton* skel, s32 arg1) // 0x8003E238
 
             case 48:
                 func_80045468(skel, &D_800A9F44, true);
-                break;
-
-            default:
                 break;
         }
     }
@@ -2141,9 +2140,6 @@ void func_8003E388(s_Skeleton* skel, s32 arg1) // 0x8003E388
                 func_80045468(skel, &D_800A9F48, false);
                 func_80045468(skel, &D_800A9F4C, true);
                 break;
-
-            default:
-                break;
         }
     }
 }
@@ -2165,9 +2161,6 @@ void func_8003E414(s_Skeleton* skel, s32 arg1) // 0x8003E414
             case 2:
                 func_80045468(skel, &D_800A9F54, false);
                 func_80045468(skel, &D_800A9F50, true);
-                break;
-
-            default:
                 break;
         }
     }
@@ -2194,9 +2187,6 @@ void func_8003E4A0(s_Skeleton* skel, s32 arg1) // 0x8003E4A0
 
             case 3:
                 func_80045468(skel, &D_800A9F68, true);
-                break;
-
-            default:
                 break;
         }
     }
@@ -2226,9 +2216,6 @@ void func_8003E544(s_Skeleton* skel, s32 arg1) // 0x8003E544
 
         case 3:
             func_80045468(skel, &D_800A9F7C, true);
-            break;
-
-        default:
             break;
     }
 }
@@ -2606,9 +2593,6 @@ void func_8003F08C(s_StructUnk3* arg0, s_sub_StructUnk3* arg1) // 0x8003F08C
 
         case 3:
             arg0->field_30 = arg1->field_10;
-            break;
-
-        default:
             break;
     }
 }
