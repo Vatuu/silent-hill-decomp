@@ -776,7 +776,7 @@ s_800A992C D_800A992C[4] =
 };
 s_AnimInfo D_800A998C =
 {
-    .updateFunc_0              = Anim_Update1,
+    .updateFunc_0           = Anim_Update1,
     .field_4                = 0,
     .hasVariableTimeDelta_5 = false,
     .status_6               = ANIM_STATUS(0, false),

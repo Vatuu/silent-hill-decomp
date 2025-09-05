@@ -2760,18 +2760,20 @@ void func_800445A4(s_AnimFile*, GsCOORDINATE2*);
 
 s_AnimInfo* func_80044918(s_ModelAnim* anim);
 
-void func_800446D8(s_Skeleton*, GsCOORDINATE2*, s32, s32, s32);
+void func_800446D8(s_Skeleton* skel, GsCOORDINATE2* coords, s32 keyframeIdx0, s32 keyframeIdx1, s32 alpha);
 
 void func_80044950(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
 
-s32 func_800449AC(s_Model* model, s_AnimInfo* anim);
+q19_12 func_800449AC(s_Model* model, s_AnimInfo* anim);
 
 /** Updates a character's animation, variant 0. First param might be `s_SubCharacter` instead.
  * Used for anim init?
  */
-void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
+void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coords, s_AnimInfo* animInfo);
 
-/** Updates a character's animation, variant 1. */
+/** Updates a character's animation, variant 1.
+ * Used for looped anims?
+ */
 void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
 
 /** Updates a character's animation, variant 2.

@@ -84,13 +84,13 @@ void Ai_MonsterCybil_Init(s_SubCharacter* chara, s_Model* extraModel) // 0x800D8
 
     g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[12].val16[1] = FP_ANGLE(90.0f);
 
-    chara->model_0.anim_4.flags_2 |= AnimFlag_Visible | AnimFlag_Unk1;
+    chara->model_0.anim_4.flags_2 |= AnimFlag_Visible | AnimFlag_Unlocked;
 
     chara->flags_3E |= CharaFlag_Unk9 | CharaFlag_Unk3;
 
     sharedData_800D16E4_2_s01 = 0;
 
-    extraModel->anim_4.flags_2 |= AnimFlag_Visible | AnimFlag_Unk1;
+    extraModel->anim_4.flags_2 |= AnimFlag_Visible | AnimFlag_Unlocked;
 
     chara->health_B0 = FP_HEALTH(4000.0f);
 

@@ -366,9 +366,9 @@ typedef enum _ColorId
 /** @brief Character animation flags. */
 typedef enum _AnimFlags
 {
-    AnimFlag_None    = 0,
-    AnimFlag_Unk1    = 1 << 0, // Movement unlocked?
-    AnimFlag_Visible = 1 << 1
+    AnimFlag_None     = 0,
+    AnimFlag_Unlocked = 1 << 0,
+    AnimFlag_Visible  = 1 << 1
 } e_AnimFlags;
 
 /** @brief State IDs used by the main game loop. The values are used as indices into the 0x800A977C function array. */
@@ -807,7 +807,7 @@ typedef struct _Savegame
     s32             mapMarkingFlags_1D4[2];   //----------------------------------------
     s32             mapMarkingFlags_1DC;      // These 3 are one `u32 mapMarkingFlags[25];` (or maybe `u8 mapMarkingFlags[100];`?) See Sparagas' `MapMarkingsFlags` struct for details of every bit.
     s32             mapMarkingFlags_1E0[22];  //----------------------------------------
-    q19_12          healthSaturation_238;     /** Range: [0, 300]. Ampoules give extra health stored. If the player if loose health then the stored extra health will slowly start to sum to player's health, in any case extra health will start to reduce progressively even if the player has full health. */
+    q19_12          healthSaturation_238;     /** Range: [0, 300]. Ampoules give extra stored health. If the player loses health, it will be slowly restored. */
     s16             pickedUpItemCount_23C;
     s8              field_23E;
     u8              field_23F;
@@ -820,9 +820,9 @@ typedef struct _Savegame
     q20_12          gameplayTimer_250;
     q20_12          runDistance_254;
     q20_12          walkDistance_258;
-    u8              isNextFearMode_25C             : 1; // Makes savegame entry text gold.
-    u8              add290Hours_25C_1              : 2; // Adds 290 hours per 1 bit, i.e. 290, 580, 870.
-    u8              pickedUpSpecialItemCount_25C_3 : 5; // Red/None: 0?, Yellow: 8, Green: 16, Rainbow: 24 (unobtainable).
+    u8              isNextFearMode_25C             : 1; /** Makes savegame entry text gold. */
+    u8              add290Hours_25C_1              : 2; /** Adds 290 hours per 1 bit, i.e. 290, 580, 870. */
+    u8              pickedUpSpecialItemCount_25C_3 : 5; /** Red/None: 0?, Yellow: 8, Green: 16, @unused Rainbow: 24. */
                                                         /** Sparagas' investigations indicate this variable should be
                                                          * two different variables. However, splitting it causes minor
                                                          * mismatches in some functions.
@@ -889,7 +889,7 @@ typedef struct _SaveUserConfig
     u8                 optExtraWeaponCtrl_23;     /** `bool` | Switch: `false`, Press: `true`, default: Press. */
     u8                 optExtraBloodColor_24;     /** `e_BloodColor` | Default: Normal. */
     s8                 optAutoLoad_25;            /** `bool` | Off: `false`, On: `true`, default: Off. */
-    u8                 unk_26;
+    u8                 unk_26;                    // Padding?
     u8                 optExtraOptionsEnabled_27; /** Holds unlocked option flags. */
     s8                 optExtraViewCtrl_28;       /** `bool` | Normal: `false`, Reverse: `true`, default: Normal. */
     s8                 optExtraViewMode_29;       /** `bool` | Normal: `false`, Self View: `true`, default: Normal. */
@@ -967,15 +967,15 @@ STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 typedef struct _AnimInfo
 {
     void (*updateFunc_0)(struct _SubCharacter*, s32, GsCOORDINATE2*, struct _AnimInfo*); // TODO: `updateFunc_0` signature doesn't currently match `Anim_Update`.
-    u8  field_4; /** Packed anim status. See `s_ModelAnimData::status_0`. Unknown purpose for this one. */
-    s8  hasVariableTimeDelta_5;
-    u8  status_6; /** Packed anim status. See `s_ModelAnim::status_0`. */
-    u8  field_7; // Maybe `isLooped_7`? Could also be padding.
+    u8  field_4;                /** Packed anim status. See `s_ModelAnimData::status_0`. Unknown purpose for this one. */
+    s8  hasVariableTimeDelta_5; // Or `hasVariableDuration_5`?
+    u8  status_6;               /** Packed anim status. See `s_ModelAnim::status_0`. */
+    u8  field_7;                // Maybe `isLooped_7`? Could also be padding.
     union
     {
-        q19_12 constTimeDelta;
-        q19_12 (*variableTimeDeltaFunc)();
-    } timeDelta_8; // Duration?
+        q19_12 constTimeDelta;             // Constant duration.
+        q19_12 (*variableTimeDeltaFunc)(); // Variable duration. Perhaps this is how enemy anim speed is controlled on harder difficulties.
+    } timeDelta_8;                         // Duration?
     s16 keyframeStartIdx_C;
     s16 keyframeEndIdx_E;
 } s_AnimInfo;
@@ -988,10 +988,10 @@ typedef struct _ModelAnim
     u8          maybeSomeState_1; // State says if `animTime_4` is anim time/anim status or a func ptr? That field could be a union.
     u16         flags_2;          /** `e_AnimFlags` */
     q19_12      time_4;           /** Time along keyframe timeline. */ 
-    s16         keyframeIdx0_8;
-    s16         keyframeIdx1_A;
-    s_AnimInfo* animInfo_C;
-    s_AnimInfo* animInfo_10;
+    s16         keyframeIdx0_8;   // Active keyframe.
+    s16         keyframeIdx1_A;   // Probably not a keyframe. Seems to be an alpha?
+    s_AnimInfo* animInfo_C;       // } Arrays of anim infos?
+    s_AnimInfo* animInfo_10;      // }
 } s_ModelAnim;
 STATIC_ASSERT_SIZEOF(s_ModelAnim, 20);
 
@@ -1048,7 +1048,7 @@ typedef struct _SubCharaPropertiesPlayer
     s16    field_120; // Angle which the player turns when doing a quick turn. In order words, some sort of holder for angle Y.
     s16    field_122; // Some sort of X angle for the player. Specially used when aiming an enemy.
     s16    headingAngle_124;
-    q3_12  playerMoveDistance_126; // Used to indicate how much the player should move foward.
+    q3_12  playerMoveDistance_126; // Used to indicate how much the player should move foward. Seems to be squared.
 } s_SubCharaPropertiesPlayer;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPlayer, 68);
 

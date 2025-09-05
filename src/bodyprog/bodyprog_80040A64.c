@@ -1476,83 +1476,86 @@ void func_80044950(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x
     animInfo->updateFunc_0(chara, arg1, coords, animInfo);
 }
 
-s32 func_800449AC(s_Model* model, s_AnimInfo* anim) // 0x800449AC
+q19_12 func_800449AC(s_Model* model, s_AnimInfo* anim) // 0x800449AC
 {
     if (!anim->hasVariableTimeDelta_5)
     {
         return anim->timeDelta_8.constTimeDelta;
     }
 
-    return anim->timeDelta_8.variableTimeDeltaFunc(); // The arguments might be passed here.
+    return anim->timeDelta_8.variableTimeDeltaFunc();
 }
 
-static inline s32 Anim_TimeStepGet(s_Model* model, s_AnimInfo* targetAnim)
+/** @brief Gets the time */
+static inline q19_12 Anim_TimeStepGet(s_Model* model, s_AnimInfo* targetAnim)
 {
-    s32 timeDelta;
+    q19_12 duration;
 
-    if (model->anim_4.flags_2 & AnimFlag_Unk1)
+    if (model->anim_4.flags_2 & AnimFlag_Unlocked)
     {
-        timeDelta = func_800449AC(model, targetAnim);
-        return FP_MULTIPLY_PRECISE(timeDelta, g_DeltaTime0, Q12_SHIFT);
+        duration = func_800449AC(model, targetAnim);
+        return FP_MULTIPLY_PRECISE(duration, g_DeltaTime0, Q12_SHIFT);
     }
 
-    return 0;
+    return FP_TIME(0.0f);
 }
 
-void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x800449F0
+void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coords, s_AnimInfo* animInfo) // 0x800449F0
 {
-    bool setAnimIdx;
+    bool setNewAnimStatus;
     s32  timeStep;
     s32  newTime;
-    s32  newKeyframeIdx0;
-    s32  targetTime;
+    s32  newKeyframeIdx;
+    s32  startTime;
+    s32  endTime;
     s32  alpha;
 
-    setAnimIdx = false;
+    setNewAnimStatus = false;
 
     // Get time step.
     timeStep = Anim_TimeStepGet(model, animInfo);
 
-    // Compute new time.
-    newTime         = model->anim_4.time_4;
-    newKeyframeIdx0 = FP_FROM(newTime, Q12_SHIFT);
-    if (timeStep != 0)
+    // Compute new time and keyframe index.
+    newTime        = model->anim_4.time_4;
+    newKeyframeIdx = FP_FROM(newTime, Q12_SHIFT);
+    if (timeStep != FP_TIME(0.0f))
     {
-        // Clamp new time against target time?
-        newTime   += timeStep;
-        targetTime = FP_TO(animInfo->keyframeEndIdx_E, Q12_SHIFT);
-        if (newTime < targetTime)
+        newTime += timeStep;
+
+        // Clamp new time to valid keyframe range.
+        endTime = FP_TIME(animInfo->keyframeEndIdx_E);
+        if (newTime >= endTime)
         {
-            targetTime = FP_TO(animInfo->keyframeStartIdx_C, Q12_SHIFT);
-            if (newTime <= targetTime)
-            {
-                newTime    = targetTime;
-                setAnimIdx = true;
-            }
+            newTime          = endTime;
+            setNewAnimStatus = true;
         }
         else
         {
-            newTime    = targetTime;
-            setAnimIdx = true;
+            startTime = FP_TIME(animInfo->keyframeStartIdx_C);
+            if (newTime <= startTime)
+            {
+                newTime          = startTime;
+                setNewAnimStatus = true;
+            }
         }
 
-        newKeyframeIdx0 = FP_FROM(newTime, Q12_SHIFT);
+        newKeyframeIdx = FP_FROM(newTime, Q12_SHIFT);
     }
 
     // Update skeleton.
     alpha = FP_ALPHA_NORM(newTime);
-    if ((model->anim_4.flags_2 & AnimFlag_Unk1) || (model->anim_4.flags_2 & AnimFlag_Visible))
+    if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
-        func_800446D8(skel, coord, newKeyframeIdx0, newKeyframeIdx0 + 1, alpha);
+        func_800446D8(skel, coords, newKeyframeIdx, newKeyframeIdx + 1, alpha);
     }
 
     // Update frame data.
     model->anim_4.time_4         = newTime;
-    model->anim_4.keyframeIdx0_8 = newKeyframeIdx0;
+    model->anim_4.keyframeIdx0_8 = newKeyframeIdx;
     model->anim_4.keyframeIdx1_A = 0;
 
-    // Update anim status.
-    if (setAnimIdx)
+    // Update anim status if anim started or ended.
+    if (setNewAnimStatus)
     {
         model->anim_4.status_0 = animInfo->status_6;
     }
@@ -1560,53 +1563,53 @@ void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
 
 void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044B38
 {
-    s32 keyframeIdx0;
-    s32 keyframeIdx1;
-    s32 nextKeyframeIdx;
-    s32 keyframeDelta;
-    s32 currentKeyframeTime;
-    s32 nextKeyframeTime;
-    s32 keyframeTimeDelta;
+    s32 startKeyframeIdx;
+    s32 endKeyframeIdx;
+    s32 nextStartKeyframeIdx;
+    s32 keyframeCount;
+    s32 startKeyframeTime;
+    s32 nextStartKeyframeTime;
+    s32 keyframeCountTime;
     s32 timeStep;
     s32 newTime;
     s32 newKeyframeIdx0;
     s32 newKeyframeIdx1;
     s32 alpha;
 
-    keyframeIdx0    = animInfo->keyframeStartIdx_C;
-    keyframeIdx1    = animInfo->keyframeEndIdx_E;
-    nextKeyframeIdx = keyframeIdx1 + 1;
-    keyframeDelta   = nextKeyframeIdx - keyframeIdx0;
+    startKeyframeIdx     = animInfo->keyframeStartIdx_C;
+    endKeyframeIdx       = animInfo->keyframeEndIdx_E;
+    nextStartKeyframeIdx = endKeyframeIdx + 1;
+    keyframeCount        = nextStartKeyframeIdx - startKeyframeIdx;
 
-    currentKeyframeTime = FP_TO(keyframeIdx0, Q12_SHIFT);
-    nextKeyframeTime    = FP_TO(nextKeyframeIdx, Q12_SHIFT);
-    keyframeTimeDelta   = FP_TO(keyframeDelta, Q12_SHIFT);
+    startKeyframeTime     = FP_TIME(startKeyframeIdx);
+    nextStartKeyframeTime = FP_TIME(nextStartKeyframeIdx);
+    keyframeCountTime     = FP_TIME(keyframeCount);
 
     // Get time step.
     timeStep = Anim_TimeStepGet(model, animInfo);
 
-    // Wrap new time to valid range?
+    // Wrap new time to valid keyframe range?
     newTime = model->anim_4.time_4 + timeStep;
-    while (newTime < currentKeyframeTime)
+    while (newTime < startKeyframeTime)
     {
-        newTime += keyframeTimeDelta;
+        newTime += keyframeCountTime;
     }
-    while (newTime >= nextKeyframeTime)
+    while (newTime >= nextStartKeyframeTime)
     {
-        newTime -= keyframeTimeDelta;
+        newTime -= keyframeCountTime;
     }
 
-    // Compute new keyframe 1.
+    // Compute new keyframe 1. Wrap to start to facilitate loop.
     newKeyframeIdx0 = FP_FROM(newTime, Q12_SHIFT);
     newKeyframeIdx1 = newKeyframeIdx0 + 1;
-    if (newKeyframeIdx1 == nextKeyframeIdx)
+    if (newKeyframeIdx1 == nextStartKeyframeIdx)
     {
-        newKeyframeIdx1 = keyframeIdx0;
+        newKeyframeIdx1 = startKeyframeIdx;
     }
 
     // Update skeleton.
     alpha = FP_ALPHA_NORM(newTime);
-    if ((model->anim_4.flags_2 & AnimFlag_Unk1) || (model->anim_4.flags_2 & AnimFlag_Visible))
+    if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
         func_800446D8(skel, coord, newKeyframeIdx0, newKeyframeIdx1, alpha);
     }
@@ -1614,63 +1617,63 @@ void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     // Update frame data.
     model->anim_4.time_4         = newTime;
     model->anim_4.keyframeIdx0_8 = newKeyframeIdx0;
-    model->anim_4.keyframeIdx1_A = 0;
+    model->anim_4.keyframeIdx1_A = FP_ALPHA(0.0f);
 }
 
 void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044CA4
 {
-    bool setAnimIdx;
-    s32  newKeyframeIdx0;
-    s32  newKeyframeIdx1;
+    bool setNewAnimStatus;
+    s32  startKeyframeIdx;
+    s32  endKeyframeIdx;
     s32  timeStep;
     s32  alpha;
     
-    setAnimIdx      = false;
-    newKeyframeIdx0 = animInfo->keyframeStartIdx_C;
-    newKeyframeIdx1 = animInfo->keyframeEndIdx_E;
+    setNewAnimStatus = false;
+    startKeyframeIdx = animInfo->keyframeStartIdx_C;
+    endKeyframeIdx   = animInfo->keyframeEndIdx_E;
 
-    // If no target frame 0 set, default to current frame index 0.
-    if (newKeyframeIdx0 == NO_VALUE)
+    // If no start keyframe exists, default to active keyframe.
+    if (startKeyframeIdx == NO_VALUE)
     {
-        newKeyframeIdx0 = model->anim_4.keyframeIdx0_8;
+        startKeyframeIdx = model->anim_4.keyframeIdx0_8;
     }
 
     // Get time step.
     timeStep = Anim_TimeStepGet(model, animInfo);
 
-    // Set time.
+    // Update time to start or end keyframe, whichever is closest.
     alpha  = model->anim_4.keyframeIdx1_A;
     alpha += timeStep;
     if (alpha >= FP_ALPHA(0.5f))
     {
-        model->anim_4.time_4 = FP_TO(newKeyframeIdx1, 12);
+        model->anim_4.time_4 = FP_TIME(endKeyframeIdx);
     }
     else
     {
-        model->anim_4.time_4 = FP_TO(newKeyframeIdx0, Q12_SHIFT);
+        model->anim_4.time_4 = FP_TIME(startKeyframeIdx);
     }
 
-    // Progress keyframes.
+    // Update frame data.
     if (alpha >= FP_ALPHA(1.0f))
     {
-        newKeyframeIdx0              = newKeyframeIdx1;
-        model->anim_4.keyframeIdx0_8 = newKeyframeIdx1;
+        startKeyframeIdx             = endKeyframeIdx;
+        model->anim_4.keyframeIdx0_8 = endKeyframeIdx;
         
-        alpha      = FP_ALPHA(0.0f);
-        setAnimIdx = true;
+        alpha         = FP_ALPHA(0.0f);
+        setNewAnimStatus = true;
     }
 
     // Update skeleton.
-    if ((model->anim_4.flags_2 & AnimFlag_Unk1) || (model->anim_4.flags_2 & AnimFlag_Visible))
+    if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
-        func_800446D8(skel, coord, newKeyframeIdx0, newKeyframeIdx1, alpha);
+        func_800446D8(skel, coord, startKeyframeIdx, endKeyframeIdx, alpha);
     }
 
-    // Update frame 1.
+    // Update alpha.
     model->anim_4.keyframeIdx1_A = alpha;
 
-    // Update anim status.
-    if (setAnimIdx)
+    // Update anim status if anim ended.
+    if (setNewAnimStatus)
     {
         model->anim_4.status_0 = animInfo->status_6;
     }
@@ -1678,57 +1681,57 @@ void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
 
 void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044DF0
 {
-    s32 keyframeIdx0;
-    s32 keyframeIdx1;
+    s32 startKeyframeIdx;
+    s32 endKeyframeIdx;
     s32 timeDelta;
     register s32 timeStep asm("v0"); // HACK: Manually set register to match.
-    s32 newKeyframeIdx1;
+    s32 alpha;
     s32 sinVal;
     s32 newTime;
-    s32 alpha;
+    s32 sinAlpha;
 
-    keyframeIdx0 = animInfo->keyframeStartIdx_C;
-    keyframeIdx1 = animInfo->keyframeEndIdx_E;
+    startKeyframeIdx = animInfo->keyframeStartIdx_C;
+    endKeyframeIdx   = animInfo->keyframeEndIdx_E;
 
-    // Compute time step. NOTE: Can't call `Anim_GetTimeStep` inline due to register constraints.
-    if (model->anim_4.flags_2 & AnimFlag_Unk1)
+    // Compute time step. TODO: Can't call `Anim_TimeStepGet` inline due to register constraints.
+    if (model->anim_4.flags_2 & AnimFlag_Unlocked)
     {
         timeDelta = func_800449AC(model, animInfo);
         timeStep  = FP_MULTIPLY_PRECISE(timeDelta, g_DeltaTime0, Q12_SHIFT);
     }
     else
     {
-        timeStep = 0;
+        timeStep = FP_TIME(0.0f);
     }
 
-    // Update keyframe 1.
-    newKeyframeIdx1              = model->anim_4.keyframeIdx1_A + timeStep;
-    model->anim_4.keyframeIdx1_A = newKeyframeIdx1;
+    // Update alpha.
+    alpha                        = model->anim_4.keyframeIdx1_A + timeStep;
+    model->anim_4.keyframeIdx1_A = alpha;
 
     // Sine-based easing?
-    sinVal = Math_Sin((newKeyframeIdx1 / 2) - FP_ALPHA(0.25f));
-    alpha  = (sinVal / 2) + FP_ALPHA(0.5f);
+    sinVal   = Math_Sin((alpha / 2) - FP_ALPHA(0.25f));
+    sinAlpha = (sinVal / 2) + FP_ALPHA(0.5f);
 
-    // Clamp new time to keyframe 0 or 1.
-    if (alpha >= FP_ALPHA(0.5f))
+    // Update time to start or end keyframe, whichever is closest.
+    if (sinAlpha >= FP_ALPHA(0.5f))
     {
-        newTime = FP_TO(keyframeIdx0, Q12_SHIFT);
+        newTime = FP_TIME(startKeyframeIdx);
     }
     else
     {
-        newTime = FP_TO(keyframeIdx1, Q12_SHIFT);
+        newTime = FP_TIME(endKeyframeIdx);
     }
 
     // Update time.
     model->anim_4.time_4 = newTime;
 
     // Update skeleton.
-    if ((model->anim_4.flags_2 & AnimFlag_Unk1) || (model->anim_4.flags_2 & AnimFlag_Visible))
+    if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
-        func_800446D8(skel, coord, keyframeIdx0, keyframeIdx1, alpha);
+        func_800446D8(skel, coord, startKeyframeIdx, endKeyframeIdx, sinAlpha);
     }
 
-    // Update keyframe 0.
+    // Update active keyframe.
     model->anim_4.keyframeIdx0_8 = FP_FROM(newTime, Q12_SHIFT);
 }
 

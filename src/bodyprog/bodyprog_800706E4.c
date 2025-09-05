@@ -701,15 +701,15 @@ void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, void* arg
     }
 
     g_SysWork.player_4C.extra_128.field_18 = FP_FLOAT_TO(0.5f, Q12_SHIFT) - 1;
-    chara->model_0.anim_4.status_0        = ANIM_STATUS(PlayerAnim_Unk0, false);
-    animInfo                               = &HARRY_BASE_ANIM_INFOS[0];
+    chara->model_0.anim_4.status_0         = ANIM_STATUS(PlayerAnim_Unk0, false);
+    animInfo                               = &HARRY_BASE_ANIM_INFOS[ANIM_STATUS(PlayerAnim_Unk0, false)];
     animInfo->updateFunc_0(chara, (s32)arg2, coord, animInfo);
 
     g_SysWork.player_4C.extra_128.field_18 = FP_FLOAT_TO(63.5f, Q12_SHIFT);
     animInfo                               = &HARRY_BASE_ANIM_INFOS[extra->model_0.anim_4.status_0];
     animInfo->updateFunc_0(&extra->model_0, (s32)arg2, coord, animInfo);
 
-    if (chara->model_0.anim_4.status_0 == HARRY_BASE_ANIM_INFOS[0].status_6)
+    if (chara->model_0.anim_4.status_0 == HARRY_BASE_ANIM_INFOS[ANIM_STATUS(PlayerAnim_Unk0, false)].status_6)
     {
         g_Player_IsInWalkToRunTransition = false;
     }
@@ -790,7 +790,6 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
     }
     
     if (g_DeltaTime0 != FP_TIME(0.0f))
-    if (g_DeltaTime0 != FP_TIME(0.0f))
     {
         Player_Controller();
     }
@@ -843,7 +842,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != FP_METER(0.0f))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= ((g_DeltaTime0 << 11) / 136);
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (g_DeltaTime0 << 11) / 136;
                 
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < FP_METER(0.0f))
                 {
@@ -7713,8 +7712,8 @@ void func_8007E5AC() // 0x8007E5AC
 
     g_SysWork.field_2358 = 0;
 
-    extraModel->anim_4.flags_2 |= AnimFlag_Unk1 | AnimFlag_Visible;
-    model->anim_4.flags_2      |= AnimFlag_Unk1 | AnimFlag_Visible;
+    extraModel->anim_4.flags_2 |= AnimFlag_Unlocked | AnimFlag_Visible;
+    model->anim_4.flags_2      |= AnimFlag_Unlocked | AnimFlag_Visible;
 
     g_SysWork.player_4C.chara_0.field_E0_8 = 3;
     g_Inventory_EquippedItem               = g_SavegamePtr->equippedWeapon_AA;
