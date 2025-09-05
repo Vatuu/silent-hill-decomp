@@ -258,6 +258,20 @@ s_800AE204 D_800AE204[26] =
     { 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0 },
     { 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0 }
 };
+
+u32 D_800AE4DC[] = //Used in func_8005B62C ( https://decomp.me/scratch/2BvV1 )
+{
+    0x800AE220,
+    0x00000003,
+    0xBF3F8000,
+    0x800AE204, // <- pointer to the table above (s_800AE204 D_800AE204[26])
+    0x0000000C,
+    0xBF3F8000,
+    0x800AE354,
+    0xFF670005,
+    0xBF3F8000,
+};
+
 void Inventory_DirectionalInputSet() // 0x8004F5DC
 {
     if (g_Controller0->sticks_20.sticks_0.leftY < -64 || g_Controller0->sticks_20.sticks_0.leftY >= 64 ||
