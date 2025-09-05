@@ -312,6 +312,13 @@ s16 D_800AE564[] =
     0x0140, 0x00E0
 };
 
+// https://decomp.me/scratch/q3B9W func_8005E414 accesses the table above using negative offsets from D_800AE5B8.
+// The last 0x10 bytes of the above table might be RECT as well.
+RECT D_800AE5B8[2] =
+{
+    {0x140, 0x100, 0x140, 0x0E0},
+    {0x0A0, 0x090, 0x0A0, 0x170},
+};
 void Inventory_DirectionalInputSet() // 0x8004F5DC
 {
     if (g_Controller0->sticks_20.sticks_0.leftY < -64 || g_Controller0->sticks_20.sticks_0.leftY >= 64 ||
