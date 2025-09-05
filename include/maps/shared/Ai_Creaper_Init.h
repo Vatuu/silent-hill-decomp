@@ -47,9 +47,8 @@ void Ai_Creaper_Init(s_SubCharacter* chara)
 
     s32 i;
 
-    i = 0;
-
     // Checks if any other Creaper NPCs are also present, making sure to skip this `s_SubCharacter` instance in the NPC array.
+    i = 0;
     do
     {
         if (chara == &g_SysWork.npcs_1A0[i] || g_SysWork.npcs_1A0[i].model_0.charaId_0 != Chara_Creaper)

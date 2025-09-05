@@ -984,7 +984,6 @@ STATIC_ASSERT_SIZEOF(s_AnimInfo, 16);
 typedef struct _ModelAnim
 {
     u8          status_0;         /** Is active: bit 0, Anim index: bits 1-7. Possible original name: `anim_status` */
-                                  // TODO: Rename to `status_0`.
     u8          maybeSomeState_1; // State says if `time_4` is anim time/anim status or a func ptr? That field could be a union.
     u16         flags_2;          /** `e_AnimFlags` */
     q19_12      time_4;           /** Time along absolute timeline. */ 
@@ -997,12 +996,12 @@ STATIC_ASSERT_SIZEOF(s_ModelAnim, 20);
 
 typedef struct _Model
 {
-    s8 charaId_0;      /** `e_CharacterId` */
-    u8 paletteIdx_1;   /** Changes the texture palette index for this model. */
-    u8 state_2;        /** Current state for this model/character. 0 usually means it still has to be initialized. */
-    u8 stateStep_3;    // Step number or temp data for the current `state_2`? In `s_MainCharacterExtra` always 1, set to 0 for 1 tick when anim state appears to change.
-                       // Used differently in player's `s_SubCharacter`. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
-                       // Sometimes holds actual anim index?
+    s8          charaId_0;      /** `e_CharacterId` */
+    u8          paletteIdx_1;   /** Changes the texture palette index for this model. */
+    u8          state_2;        /** Current state for this model/character. 0 usually means it still has to be initialized. */
+    u8          stateStep_3;    // Step number or temp data for the current `state_2`? In `s_MainCharacterExtra` always 1, set to 0 for 1 tick when anim state appears to change.
+                                // Used differently in player's `s_SubCharacter`. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
+                                // Sometimes holds actual anim index?
     s_ModelAnim anim_4;
 } s_Model;
 STATIC_ASSERT_SIZEOF(s_Model, 24);
@@ -1532,6 +1531,20 @@ static inline s32 Flags16b_IsSet(u16* array, s32 flagId)
     // BUG: `>> 5` divides `flagId` by 32 to get array index, but array is of 16-bit values.
     // Maybe copy-paste from `u32` version of func.
     return (array[flagId >> 5] >> (flagId & 0x1F)) & (1 << 0);
+}
+
+/** @brief Sets the animation of a character.
+ *
+ * @param chara Character to set animation for. TODO: Maybe should take `s_ModelAnim` instead? If fits better, also rename to `Anim_Set`.
+ * @param animStatus Packed anim status. See `s_ModelAnim::status_0`.
+ * @param keyframeIdx Active keyframe index.
+ */
+static inline void Character_AnimSet(s_SubCharacter* chara, s32 animStatus, s32 keyframeIdx)
+{
+    // TODO: Problem with header includes prevents commented macro use.
+    chara->model_0.anim_4.status_0      = animStatus;
+    chara->model_0.anim_4.time_4        = keyframeIdx << 12;//FP_TIME(keyframeIdx);
+    chara->model_0.anim_4.keyframeIdx_8 = keyframeIdx;
 }
 
 /** @brief Sets the given animation flag on both player character and player extra data. */
