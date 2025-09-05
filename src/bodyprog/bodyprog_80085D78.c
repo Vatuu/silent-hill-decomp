@@ -973,7 +973,7 @@ void Event_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx
         // Traverse NPCs.
         for (i = 0; i < NPC_COUNT_MAX; i++)
         {
-            if (!(g_SysWork.npcs_1A0[i].model_0.charaId_0 >= Chara_Hero &&
+            if (!(g_SysWork.npcs_1A0[i].model_0.charaId_0 >= Chara_Harry &&
                   g_SysWork.npcs_1A0[i].model_0.charaId_0 <= Chara_MonsterCybil) ||
                 g_SysWork.npcs_1A0[i].health_B0 <= FP_HEALTH(0.0f))
             {
@@ -2131,7 +2131,7 @@ s32 func_8008A0E4(s32 arg0, e_EquippedWeaponId weaponId, s_SubCharacter* chara, 
         }
     }
 
-    if (chara->model_0.charaId_0 != Chara_Hero)
+    if (chara->model_0.charaId_0 != Chara_Harry)
     {
         if (g_SysWork.player_4C.chara_0.attackReceived_41 != NO_VALUE)
         {

@@ -7703,8 +7703,8 @@ void func_8007E5AC() // 0x8007E5AC
 
     SysWork_SavegameReadPlayer();
 
-    g_SysWork.player_4C.chara_0.model_0.charaId_0   = Chara_Hero;
-    g_SysWork.player_4C.extra_128.model_0.charaId_0 = Chara_Hero;
+    g_SysWork.player_4C.chara_0.model_0.charaId_0   = Chara_Harry;
+    g_SysWork.player_4C.extra_128.model_0.charaId_0 = Chara_Harry;
     g_SysWork.player_4C.chara_0.field_D4            = 0x4CC;
     g_SysWork.player_4C.chara_0.field_D6            = 0x3AE;
 

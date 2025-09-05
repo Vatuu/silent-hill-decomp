@@ -636,11 +636,11 @@ typedef enum _PlayerFlags
     PlayerFlag_Moving         = 1 << 15
 } e_PlayerFlags;
 
-/** @brief Names for each character index used in the game, `g_Chara_FileInfo` array associates each character ID with anim/model/texture files. */
+/** @brief Character IDs. The `g_Chara_FileInfo` array associates each character ID with animimation, model, and texture files. */
 typedef enum _CharacterId
 {
     Chara_None             = 0,
-    Chara_Hero             = 1,
+    Chara_Harry            = 1,
     Chara_AirScreamer      = 2,
     Chara_NightFlutter     = 3,
     Chara_Groaner          = 4,

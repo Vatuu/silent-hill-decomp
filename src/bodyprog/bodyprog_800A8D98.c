@@ -763,8 +763,8 @@ s8 D_800A98FC[Chara_Count] =
 s_800A992C D_800A992C[4] =
 {
     {
-        .charaId0_0       = Chara_Hero,
-        .charaId1_1       = Chara_Hero,
+        .charaId0_0       = Chara_Harry,
+        .charaId1_1       = Chara_Harry,
         .unk_2            = { 0, 0 },
         .animFile0_4      = FS_BUFFER_0,
         .animFile1_8      = (s_AnimFile*)FS_BUFFER_0,
