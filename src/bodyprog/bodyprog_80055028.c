@@ -518,7 +518,26 @@ void ObjList_FixOffsets(s_ObjList* objList, s_PlmHeader* plmHeader) // 0x800561A
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80056244); // 0x80056244
+void func_80056244(s_PlmHeader* plmHeader, bool flag) // 0x80056244
+{
+    s_ObjList*      objList;
+    s_ObjList*      obj;
+    s_ObjHeader*    mesh;
+    s_ObjPrimitive* prim;
+
+    objList = plmHeader->objectList_C;
+
+    for (obj = &objList[0]; obj < &objList[plmHeader->objectCount_8]; obj++)
+    {
+        for (mesh = &obj->meshes_C[0]; mesh < &obj->meshes_C[obj->meshCount_8]; mesh++)
+        {
+            for (prim = &mesh->primitives_4[0]; prim < &mesh->primitives_4[mesh->primitiveCount_0]; prim++)
+            {
+                prim->field_6_15 = flag;
+            }
+        }
+    }
+}
 
 s32 func_80056348(bool (*arg0)(s_PlmTexList* texList), s_PlmHeader* plmHeader) // 0x80056348
 {
@@ -1688,7 +1707,22 @@ s_800C1450_58* func_8005B4BC(char* str, s_800C1450_0* arg1) // 0x8005B4BC
     return NULL;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005B55C); // 0x8005B55C
+void func_8005B55C(GsCOORDINATE2* arg0) // 0x8005B55C
+{
+    s_800AE204* var_s1;
+
+    D_800C42B8 = arg0;
+
+    for (var_s1 = &D_800AE204[0]; var_s1 < &D_800AE204[26]; var_s1++)
+    {
+        var_s1->field_10 = -Math_Cos(var_s1->field_4);
+        var_s1->field_C  = -Math_Sin(var_s1->field_4);
+        var_s1->field_E  = 0;
+        var_s1->field_18 = FP_MULTIPLY(var_s1->field_2, Math_Cos(var_s1->field_4), Q12_SHIFT);
+        var_s1->field_14 = FP_MULTIPLY(var_s1->field_2, Math_Sin(var_s1->field_4), Q12_SHIFT);
+        var_s1->field_16 = var_s1->field_0;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005B62C); // 0x8005B62C
 
@@ -2083,7 +2117,43 @@ void func_8005E70C(void) // 0x8005E70C
     D_800C4414 = 0;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005E7E0); // 0x8005E7E0
+s32 func_8005E7E0(s32 arg0) // 0x8005E7E0
+{
+    s32 var_a0;
+    s32 var_a1;
+    s32 var_v1;
+
+    var_a0 = D_800C4408;
+    var_a1 = 0;
+
+    while (var_a1 < g_MapOverlayHeader.unkTable1Count_50)
+    {
+        if (var_a0 >= g_MapOverlayHeader.unkTable1Count_50)
+        {
+            var_a0 = 0;
+        }
+
+        if (g_MapOverlayHeader.unkTable1_4C[var_a0].field_A != 0)
+        {
+            var_a1 += 1;
+            var_a0 += 1;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    if (var_a1 == g_MapOverlayHeader.unkTable1Count_50)
+    {
+        return NO_VALUE;
+    }
+
+    g_MapOverlayHeader.unkTable1_4C[var_a0].field_A = arg0;
+
+    D_800C4408 = var_a0 + 1;
+    return var_a0;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005E89C); // 0x8005E89C
 
@@ -2144,7 +2214,21 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80063A50); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80064334); // 0x80064334
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80064F04); // 0x80064F04
+void func_80064F04(VECTOR3* arg0, s8 arg1, s16 arg2) // 0x80064F04
+{
+    // arg0 type assumed
+    s32 temp_v0;
+
+    temp_v0 = func_8005E7E0(0x1F);
+    if (temp_v0 != -1)
+    {
+        g_MapOverlayHeader.unkTable1_4C[temp_v0].vx_0    = FP_FROM(arg0->vx, Q4_SHIFT);
+        g_MapOverlayHeader.unkTable1_4C[temp_v0].vy_8    = FP_FROM(arg0->vy, Q4_SHIFT);
+        g_MapOverlayHeader.unkTable1_4C[temp_v0].vz_4    = FP_FROM(arg0->vz, Q4_SHIFT);
+        g_MapOverlayHeader.unkTable1_4C[temp_v0].field_C = arg1;
+        g_MapOverlayHeader.unkTable1_4C[temp_v0].field_E = arg2;
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80064FC0); // 0x80064FC0
 
@@ -3498,7 +3582,23 @@ bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VEC
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006DEB0); // 0x8006DEB0
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006E0AC); // 0x8006E0AC
+void func_8006E0AC(s_func_8006DCE0* arg0, s_IpdCollisionData* arg1) // 0x8006E0AC
+{
+    // arg0 type might be wrong.
+    arg0->field_6C = arg1->posX_0;
+    arg0->field_70 = arg1->posZ_4;
+    arg0->field_74 = arg0->field_2C.vx - arg0->field_6C;
+    arg0->field_76 = arg0->field_2C.vz - arg0->field_70;
+    arg0->field_78 = arg0->field_74 + arg0->field_50.vx;
+    arg0->field_7A = arg0->field_76 + arg0->field_50.vz;
+    arg0->field_7C = arg1->field_1E;
+    arg0->field_80 = arg1->field_1F;
+    arg0->field_84 = arg1->field_1C;
+
+    func_8006E150(&arg0->field_6C,
+                  (u16)arg0->field_50.vx | ((u16)arg0->field_50.vy << 0x10),
+                  (u16)arg0->field_50.vz | ((u16)arg0->field_56 << 0x10));
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006E150); // 0x8006E150
 
@@ -3617,7 +3717,47 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006F3C4); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006F620); // 0x8006F620
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006F8FC); // 0x8006F8FC
+void func_8006F8FC(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s_func_8006F8FC* arg4) // 0x8006F8FC
+{
+    s32 temp_a0;
+    s32 temp_t0;
+    s32 temp_t2;
+    s32 temp_v1;
+
+    temp_t0 = FP_TO(arg4->field_0_1, Q12_SHIFT);
+    temp_v1 = FP_TO(arg4->field_0_1 + arg4->field_0_21, Q12_SHIFT);
+    temp_t2 = FP_TO(arg4->field_0_11, Q12_SHIFT);
+    temp_a0 = FP_TO(arg4->field_0_11 + arg4->field_0_25, Q12_SHIFT);
+
+    if (arg2 < temp_t0)
+    {
+        *arg0 = arg2 - temp_t0;
+    }
+    else
+    {
+        if (temp_v1 >= arg2)
+        {
+            *arg0 = 0;
+        }
+        else
+        {
+            *arg0 = arg2 - temp_v1;
+        }
+    }
+
+    if (arg3 < temp_t2)
+    {
+        *arg1 = arg3 - temp_t2;
+        return;
+    }
+    else if (temp_a0 >= arg3)
+    {
+        *arg1 = 0;
+        return;
+    }
+
+    *arg1 = arg3 - temp_a0;
+}
 
 s16 func_8006F99C(s_SubCharacter* chara, s32 arg1, s16 arg2) // 0x8006F99C
 {

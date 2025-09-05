@@ -1577,7 +1577,7 @@ s32 func_8003D444(s32 idx) // 0x8003D444
 
 void func_8003D460() {}
 
-void func_8003D468(s32 arg0, s32 arg1) // 0x8003D468
+void func_8003D468(s32 arg0, bool flag) // 0x8003D468
 {
     s16              data[256];
     RECT             rect;
@@ -1587,7 +1587,7 @@ void func_8003D468(s32 arg0, s32 arg1) // 0x8003D468
     s_800BCE18_0_CC* temp_s0;
 
     temp_s0 = D_800BCE18.field_0[0].field_18[arg0];
-    func_80056244(temp_s0->plmHeader_8);
+    func_80056244(temp_s0->plmHeader_8, flag);
 
     rect.x = temp_s0->texture_C.clutX;
     rect.y = temp_s0->texture_C.clutY;
@@ -1601,7 +1601,7 @@ void func_8003D468(s32 arg0, s32 arg1) // 0x8003D468
     {
         for (x = 0; x < 16; x++, i++)
         {
-            if (arg1 == 0)
+            if (!flag)
             {
                 data[i] &= 0x7FFF;
             }

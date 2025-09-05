@@ -254,7 +254,7 @@ typedef struct
     s32 vx_0;
     s32 vz_4;
     s16 vy_8;
-    s8  field_A;
+    u8  field_A;
     s8  field_B;
     s8  field_C;
     s8  field_D;
@@ -433,7 +433,7 @@ typedef struct
     s16      field_4C;
     s16      field_4E;
     SVECTOR3 field_50; // Q23.8
-    s8       unk_56[2];
+    u16      field_56;
     s16      field_58;
     s16      field_5A;
     s16      field_5C;
@@ -442,6 +442,15 @@ typedef struct
     s8       unk_62[2];
     s32      field_64;
     s32      field_68;
+    s32      field_6C;
+    s32      field_70;
+    s16      field_74;
+    s16      field_76;
+    s16      field_78;
+    s16      field_7A;
+    s32      field_7C;
+    s32      field_80;
+    u16      field_84;
 } s_func_8006DCE0;
 
 typedef struct
@@ -566,9 +575,9 @@ typedef struct _ObjPrimitive
     u16 field_0;
     u16 field_2;
     u16 field_4;
-    u8  field_6_0 : 8;
-    s8  field_6_8 : 7;
-    u8  unk_6_15  : 1;
+    u8  field_6_0  : 8;
+    s8  field_6_8  : 7;
+    u8  field_6_15 : 1; // `bool`
     u16 field_8;
     u16 field_A;
     u8  unk_C[8];
@@ -1640,6 +1649,32 @@ typedef struct
     } u;
 } s_GteScratchData2;
 
+typedef struct
+{
+    s16 field_0;
+    s16 field_2;
+    s16 field_4;
+    s8  unk_8[6];
+    s16 field_C;
+    s16 field_E;
+    s16 field_10;
+    s8  unk_12[2];
+    s16 field_14;
+    s16 field_16;
+    s16 field_18;
+    s8  unk_1A[2];
+} s_800AE204;
+
+typedef struct
+{
+    s32 field_0_0  : 1;
+    s32 field_0_1  : 10;
+    s32 field_0_11 : 10;
+    u32 field_0_21 : 4;
+    u32 field_0_25 : 4;
+    u32 field_0_29 : 3;
+} s_func_8006F8FC;
+
 // ========
 // GLOBALS
 // ========
@@ -1943,6 +1978,8 @@ extern u8 D_800AE186;
 extern u8 D_800AE187;
 
 extern s16 D_800AE1A8;
+
+extern s_800AE204 D_800AE204[]; // Maybe length 26
 
 extern s32 g_PickupItemAnimState;
 
@@ -2304,6 +2341,8 @@ extern u8 D_800C3E40;
 
 extern u16 D_800C42B4; // TODO: May be part of `s_800C4168`.
 
+extern GsCOORDINATE2* D_800C42B8;
+
 extern VECTOR3 D_800C42C0;
 
 extern VECTOR3* D_800C42CC;
@@ -2311,6 +2350,8 @@ extern VECTOR3* D_800C42CC;
 extern u16 D_800C42D0;
 
 extern u16 D_800C42D2;
+
+extern s16 D_800C4408;
 
 extern s8 D_800C4414;
 
@@ -2495,7 +2536,7 @@ s32 func_8003D444(s32 idx);
 void func_8003D550(s32 arg0, s32 arg1);
 
 /** Called by some chara init funcs, similar to `func_8003DD80`? */
-void func_8003D468(s32 arg0, s32 arg1);
+void func_8003D468(s32 arg0, bool flag);
 
 void func_8003D6A4(s_800BCE18_0_CC* arg0);
 
@@ -2977,6 +3018,8 @@ void PlmHeader_FixOffsets(s_PlmHeader* plmHeader);
 
 void ObjList_FixOffsets(s_ObjList* objList, s_PlmHeader* plmHeader);
 
+void func_80056244(s_PlmHeader* plmHeader, bool flag);
+
 /** Gets texture count? */
 s32 func_80056348(bool (*arg0)(s_PlmTexList* texList), s_PlmHeader* plmHeader);
 
@@ -3062,7 +3105,7 @@ void func_80057A3C(s_ObjHeader* header, s32 offset, s_GteScratchData* scratchDat
 
 s_PlmTexList_8* func_8005B1FC(s_PlmTexList*, s_800C1450_0*, void*, void*, s32);
 
-void func_8005B55C(GsCOORDINATE2*);
+void func_8005B55C(GsCOORDINATE2* arg0);
 
 s32 func_8005C7D0(s_SubCharacter* chara, s32 moveSpeed);
 
@@ -3092,6 +3135,8 @@ void func_8005DE0C(s32 sfx, VECTOR3*, s32, s32, s32); // Types assumed.
 void func_8005E0DC(s32 mapIdx); // Types assumed.
 
 void func_8005E70C();
+
+s32 func_8005E7E0(s32 arg0);
 
 void func_8005E89C();
 
@@ -3393,6 +3438,8 @@ s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 x, s16 z);
 
 void func_800622B8(s32, s_SubCharacter*, s32 animStatus, s32);
 
+void func_80064F04(VECTOR3* arg0, s8 arg1, s16 arg2);
+
 void func_80066D90();
 
 void func_80066E40();
@@ -3492,11 +3539,15 @@ bool func_8006DC18(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2);
 
 bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
 
+void func_8006E0AC(s_func_8006DCE0* arg0, s_IpdCollisionData* arg1);
+
 void func_8006E490(s_func_8006E490* arg0, u32 arg1, s32 arg2, s32 arg3);
 
 void func_8006F250(s_func_8006F250* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 void func_8006F338(s_func_8006F338* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+
+void func_8006F8FC(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s_func_8006F8FC* arg4);
 
 s16 func_8006F99C(s_SubCharacter* chara, s32 arg1, s16 arg2);
 
