@@ -608,7 +608,7 @@ STATIC_ASSERT_SIZEOF(s_ObjList, 16);
 typedef struct _PlmTexList_8
 {
     s_FsImageDesc imageDesc_0;
-    u8            unk_8[8];
+    u_Filename    textureName_8;
     u32           queueIdx_10;
     s8            field_14;
 } s_PlmTexList_8;
@@ -1084,8 +1084,8 @@ STATIC_ASSERT_SIZEOF(s_800C1450_58, 24);
 
 typedef struct
 {
-    s32            count_0;
-    s_800C1450_58* entries_4[10];
+    s32             count_0;
+    s_PlmTexList_8* entries_4[10];
 } s_800C1450_0;
 
 // Related to textures.
@@ -3046,7 +3046,7 @@ void func_80057658(s_ObjHeader* header, s32 offset, s_GteScratchData* scratchDat
 
 void func_80057A3C(s_ObjHeader* header, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
 
-s_PlmTexList_8* func_8005B1FC(s_PlmTexList*, s_800C1450_0*, void*, void*, s32);
+s_PlmTexList_8* func_8005B1FC(s_PlmTexList* arg0, s_800C1450_0* arg1, void* fs_buffer_9, void* arg3, s32 arg4);
 
 void func_8005B55C(GsCOORDINATE2*);
 
