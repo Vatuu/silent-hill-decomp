@@ -276,6 +276,14 @@ s_800AE4DC D_800AE4DC[3] = //Used in func_8005B62C ( https://decomp.me/scratch/2
     { &D_800AE204[12], 5,  0xFF67, 0, 0x80, 0x3F, 0xBF }, 
 };
 
+SVECTOR D_800AE500[4] =
+{
+    SVECTOR(0.0f,      255.65f,  255.65f),
+    SVECTOR(-255.65f,  0.0f,     255.65f),
+    SVECTOR(255.65f,   0.0f,     255.65f),
+    SVECTOR(0.0f,     -255.65f,  255.65f),
+};
+
 void Inventory_DirectionalInputSet() // 0x8004F5DC
 {
     if (g_Controller0->sticks_20.sticks_0.leftY < -64 || g_Controller0->sticks_20.sticks_0.leftY >= 64 ||
