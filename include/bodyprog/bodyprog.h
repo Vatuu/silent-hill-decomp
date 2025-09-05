@@ -617,7 +617,7 @@ STATIC_ASSERT_SIZEOF(s_ObjList, 16);
 typedef struct _PlmTexList_8
 {
     s_FsImageDesc imageDesc_0;
-    u8            unk_8[8];
+    u_Filename    textureName_8;
     u32           queueIdx_10;
     s8            field_14;
 } s_PlmTexList_8;
@@ -1073,8 +1073,8 @@ STATIC_ASSERT_SIZEOF(s_800C117C, 28);
 typedef struct _IpdRow
 {
     s16 idx[16];
-} s_IpdRow;
-STATIC_ASSERT_SIZEOF(s_IpdRow, 32);
+} s_IpdColumn;
+STATIC_ASSERT_SIZEOF(s_IpdColumn, 32);
 
 typedef struct
 {
@@ -1093,8 +1093,8 @@ STATIC_ASSERT_SIZEOF(s_800C1450_58, 24);
 
 typedef struct
 {
-    s32            count_0;
-    s_800C1450_58* entries_4[10];
+    s32             count_0;
+    s_PlmTexList_8* entries_4[10];
 } s_800C1450_0;
 
 // Related to textures.
@@ -1119,9 +1119,9 @@ typedef struct
     s32                field_154;
     s32                ipdTableLen_158;
     s_800C117C         ipdTable_15C[4]; // temp name.
-    s_IpdRow           ipdGrid_1CC[18];
+    s_IpdColumn        ipdGrid_1CC[18];
     s8                 unk_40C[32];     // could be just one extra row in the table above.
-    s_IpdRow*          ipdGridCenter_42C;
+    s_IpdColumn*       ipdGridCenter_42C;
     s_800C1450         field_430;
     s32                field_578;
     s32                field_57C;
@@ -2636,7 +2636,7 @@ void func_80041D48();
 
 void func_80041E98();
 
-void func_80041ED0(s16 arg0, s32 xIdx, s32 zIdx);
+void Map_PlaceIpdAtGridPos(s16 ipdFileIdx, s32 x, s32 z);
 
 void func_80041FF0();
 
@@ -2652,10 +2652,10 @@ void func_800421D8(char* mapTag, s32 plmIdx, s32 arg2, s32 arg3, s32 arg4, s32 a
 
 void func_80042300(s_800C1020* arg0, s32 arg1);
 
-void Map_MakeIpdGrid(s_800C1020* arg0, char* mapTag, s32 arg2);
+void Map_MakeIpdGrid(s_800C1020* arg0, char* mapTag, s32 fileIdxStart);
 
 /** @brief Turns two hex `char`s to their `int` hex value. */
-bool hex_to_s16(s32* out, char firstHex, char secondHex);
+bool hex_to_s8(s32* out, char firstHex, char secondHex);
 
 s32* func_800425D8(s32* arg0);
 
@@ -2718,10 +2718,10 @@ void func_80043C7C(s_IpdHeader* ipdHeader, s_800C1450_0* arg1, s_800C1450_0* arg
 /** Checks if IPD is loaded before returning texture count? */
 s32 func_80043D00(s_IpdHeader* ipdHeader);
 
-/** Returns inverse result of `func_80043D64`. */
-bool func_80043D44(s_PlmTexList* texList);
+/** Returns inverse result of `PlmFilter_NameEndsWithH`. */
+bool PlmFilter_NameDoesNotEndWithH(s_PlmTexList* texList);
 
-bool func_80043D64(s_PlmTexList* texList);
+bool PlmFilter_NameEndsWithH(s_PlmTexList* texList);
 
 void IpdHeader_FixHeaderOffsets(s_IpdHeader* ipdHeader);
 
@@ -3090,7 +3090,7 @@ void func_80057658(s_ObjHeader* header, s32 offset, s_GteScratchData* scratchDat
 
 void func_80057A3C(s_ObjHeader* header, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
 
-s_PlmTexList_8* func_8005B1FC(s_PlmTexList*, s_800C1450_0*, void*, void*, s32);
+s_PlmTexList_8* func_8005B1FC(s_PlmTexList* arg0, s_800C1450_0* arg1, void* fs_buffer_9, void* arg3, s32 arg4);
 
 void func_8005B55C(GsCOORDINATE2* arg0);
 

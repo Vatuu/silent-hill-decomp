@@ -656,7 +656,7 @@ void func_800566B4(s_PlmHeader* plmHeader, s_FsImageDesc* image, s8 unused, s32 
     }
 }
 
-void func_80056774(s_PlmHeader* plmHeader, s_800C1450_0* arg1, bool (*func)(s_PlmTexList* plmTexList), void* arg3, s32 arg4) // 0x80056774
+void func_80056774(s_PlmHeader* plmHeader, s_800C1450_0* arg1, bool (*func)(s_PlmTexList* plmFilter), void* arg3, s32 arg4) // 0x80056774
 {
     s_PlmTexList* tex;
 
@@ -1611,7 +1611,63 @@ void func_8005B1A0(s_800C1450_58* arg0, char* arg1, s32 arg2, u8 arg3, s32 arg4,
     arg0->field_10 = NO_VALUE;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005B1FC); // 0x8005B1FC
+#define cmp_str(a, b)\
+    ((a->textureName_0.u32[0] != b->textureName_8.u32[0]) || (a->textureName_0.u32[1] != b->textureName_8.u32[1]))
+
+s_PlmTexList_8* func_8005B1FC(s_PlmTexList* arg0, s_800C1450_0* arg1, void* fs_buffer_9, void* arg3, s32 arg4)
+{
+    s8 fileName[12];
+    s8 debugStr[12];
+    s32 fileId;
+    s32 i;
+    s32 lowestQueueIdx;
+    s_PlmTexList_8* tex;
+    s_PlmTexList_8* found;
+    u32 queueIdx;
+    
+    lowestQueueIdx = INT_MAX;
+    arg0->field_8 = NULL;
+    found = NULL;
+
+    for (i = 0; i < arg1->count_0; i++)
+    {
+        tex = arg1->entries_4[i];
+        if (!cmp_str(arg0, tex))
+        {
+            arg0->field_8 = tex;
+            tex->field_14++;
+            return tex;
+        }
+
+        queueIdx = tex->queueIdx_10;
+        if (((s32) queueIdx < lowestQueueIdx) && (tex->field_14 == 0))
+        {
+            lowestQueueIdx = queueIdx;
+            found = tex;
+        }
+    }
+
+    if (found == NULL)
+    {
+        return NULL;
+    }
+
+    func_8005B3BC(&fileName, arg0);
+    fileId = Fs_FindNextFile(&fileName, 0, (s32) arg3);
+    if (fileId == -1)
+    {
+        debugStr[12] = 0;
+        Gfx_DebugStringPosition(0x64, 0x50);
+        strncpy(&debugStr, &fileName, 0xC);
+        //Commented out Gfx_DebugStringDraw ?
+    }
+
+    found->queueIdx_10 = Fs_QueueStartReadTim(fileId, fs_buffer_9, &found->imageDesc_0);
+    found->field_14++;
+    found->textureName_8 = arg0->textureName_0;
+
+    return found;
+}
 
 void func_8005B370(s_800C1450_58* arg0) // 0x8005B370
 {
