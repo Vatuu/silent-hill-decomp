@@ -1982,7 +1982,7 @@ extern u8 D_800AE187;
 
 extern s16 D_800AE1A8;
 
-extern s_800AE204 D_800AE204[]; // Maybe length 26
+extern s_800AE204 D_800AE204[26]; // Maybe length 26
 
 extern s32 g_PickupItemAnimState;
 

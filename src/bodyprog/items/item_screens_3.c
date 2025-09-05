@@ -259,17 +259,21 @@ s_800AE204 D_800AE204[26] =
     { 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0 }
 };
 
-u32 D_800AE4DC[] = //Used in func_8005B62C ( https://decomp.me/scratch/2BvV1 )
+typedef struct {
+    s_800AE204* ptr_0;
+    s16          count_4;
+    s16          unk_6;
+    u8           unk_8;
+    u8           unk_9;
+    u8           unk_A;
+    u8           unk_B;
+} s_800AE4DC;
+
+s_800AE4DC D_800AE4DC[3] = //Used in func_8005B62C ( https://decomp.me/scratch/2BvV1 )
 {
-    0x800AE220,
-    0x00000003,
-    0xBF3F8000,
-    0x800AE204, // <- pointer to the table above (s_800AE204 D_800AE204[26])
-    0x0000000C,
-    0xBF3F8000,
-    0x800AE354,
-    0xFF670005,
-    0xBF3F8000,
+    { &D_800AE204[1],  3,  0,      0, 0x80, 0x3F, 0xBF },
+    { &D_800AE204[0],  12, 0,      0, 0x80, 0x3F, 0xBF },
+    { &D_800AE204[12], 5,  0xFF67, 0, 0x80, 0x3F, 0xBF }, 
 };
 
 void Inventory_DirectionalInputSet() // 0x8004F5DC
