@@ -77,10 +77,10 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* co
 
     if (chara->model_0.state_2 == 0)
     {
-        chara->model_0.anim_4.keyframeIdx1_A = 0;
+        chara->model_0.anim_4.alpha_A       = FP_ALPHA(0.0f);
         chara->model_0.anim_4.status_0      = ANIM_STATUS(2, true);
-        chara->model_0.anim_4.time_4         = 0;
-        chara->model_0.anim_4.keyframeIdx0_8 = 0;
+        chara->model_0.anim_4.time_4        = 0;
+        chara->model_0.anim_4.keyframeIdx_8 = 0;
         chara->model_0.state_2++;
         chara->position_18.vy = FP_METER(0.0f);
     }
@@ -107,7 +107,7 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* co
     {
         chara->model_0.anim_4.status_0      = ANIM_STATUS(3, true);
         chara->model_0.anim_4.time_4         = FP_TIME(16.0f);
-        chara->model_0.anim_4.keyframeIdx0_8 = 16;
+        chara->model_0.anim_4.keyframeIdx_8 = 16;
         chara->field_E0_8                    = 3;
     }
 

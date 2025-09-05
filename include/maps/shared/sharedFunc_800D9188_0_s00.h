@@ -3,7 +3,7 @@ bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyfra
     // TODO: Should probably be using `properties_E4.npc` struct instead.
     if (chara->model_0.anim_4.status_0 == animStatus)
     {
-        if (chara->model_0.anim_4.keyframeIdx0_8 >= keyframeIdx)
+        if (chara->model_0.anim_4.keyframeIdx_8 >= keyframeIdx)
         {
             if (!(chara->properties_E4.player.flags_11C & PlayerFlag_Unk13))
             {

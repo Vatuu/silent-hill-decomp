@@ -201,12 +201,12 @@ void Ai_Flauros_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) /
 
     if (chara->model_0.state_2 == 0)
     {
-        chara->model_0.anim_4.keyframeIdx1_A = 0;
-        chara->model_0.state_2               = 1;
-        chara->model_0.stateStep_3           = 0;
+        chara->model_0.anim_4.alpha_A       = FP_ALPHA(0.0f);
+        chara->model_0.state_2              = 1;
+        chara->model_0.stateStep_3          = 0;
         chara->model_0.anim_4.status_0      = ANIM_STATUS(1, true);
-        chara->model_0.anim_4.time_4         = 0;
-        chara->model_0.anim_4.keyframeIdx0_8 = 0;
+        chara->model_0.anim_4.time_4        = 0;
+        chara->model_0.anim_4.keyframeIdx_8 = 0;
     }
 
     if (chara->model_0.anim_4.time_4 <= FP_TO(21, Q12_SHIFT))
@@ -242,12 +242,12 @@ void Ai_Parasite_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) 
 
     if (chara->model_0.state_2 == 0)
     {
-        chara->model_0.anim_4.keyframeIdx1_A = 0;
-        chara->model_0.state_2               = 1;
-        chara->model_0.stateStep_3           = 0;
-        chara->model_0.anim_4.status_0       = ANIM_STATUS(1, true);
-        chara->model_0.anim_4.time_4         = 0;
-        chara->model_0.anim_4.keyframeIdx0_8 = 0;
+        chara->model_0.anim_4.alpha_A       = FP_ALPHA(0.0f);
+        chara->model_0.state_2              = 1;
+        chara->model_0.stateStep_3          = 0;
+        chara->model_0.anim_4.status_0      = ANIM_STATUS(1, true);
+        chara->model_0.anim_4.time_4        = 0;
+        chara->model_0.anim_4.keyframeIdx_8 = 0;
     }
 
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);

@@ -123,11 +123,11 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
     {
         if (func_800449AC(chara, animInfo) > FP_TIME(0.0f))
         {
-            return chara->model_0.anim_4.keyframeIdx0_8 == animInfo->keyframeEndIdx_E;
+            return chara->model_0.anim_4.keyframeIdx_8 == animInfo->keyframeEndIdx_E;
         }
         else
         {
-            return chara->model_0.anim_4.keyframeIdx0_8 == animInfo->keyframeStartIdx_C;
+            return chara->model_0.anim_4.keyframeIdx_8 == animInfo->keyframeStartIdx_C;
         }
     }
 

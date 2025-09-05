@@ -82,9 +82,9 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
                     extraModelPtr1 = &g_SysWork.player_4C.extra_128.model_0;
 
                     modelPtr1->anim_4.status_0                       = ANIM_STATUS(1, true);
-                    modelPtr1->anim_4.keyframeIdx0_8                  = 0;
+                    modelPtr1->anim_4.keyframeIdx_8                  = 0;
                     extraModelPtr1->anim_4.status_0                  = ANIM_STATUS(1, true);
-                    extraModelPtr1->anim_4.keyframeIdx0_8             = 0;
+                    extraModelPtr1->anim_4.keyframeIdx_8             = 0;
                     g_SysWork.player_4C.chara_0.model_0.state_2       = 0;
                     g_SysWork.player_4C.chara_0.model_0.stateStep_3   = 0;
                     g_SysWork.player_4C.extra_128.upperBodyState_20   = PlayerUpperBodyState_None;
@@ -101,17 +101,17 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
     modelPtr3      = &g_SysWork.player_4C.chara_0.model_0;
     extraModelPtr2 = &g_SysWork.player_4C.extra_128.model_0;
 
-    modelPtr3->anim_4.keyframeIdx1_A       = FP_ALPHA(1.0f);
-    extraModelPtr2->anim_4.keyframeIdx1_A  = FP_ALPHA(1.0f);
+    modelPtr3->anim_4.alpha_A       = FP_ALPHA(1.0f);
+    extraModelPtr2->anim_4.alpha_A  = FP_ALPHA(1.0f);
     g_SysWork.player_4C.extra_128.field_18 = 0x7FF;
-    modelPtr3->anim_4.time_4               = FP_TO(modelPtr3->anim_4.keyframeIdx0_8, Q12_SHIFT);
-    extraModelPtr2->anim_4.time_4          = FP_TO(extraModelPtr2->anim_4.keyframeIdx0_8, Q12_SHIFT);
+    modelPtr3->anim_4.time_4               = FP_TO(modelPtr3->anim_4.keyframeIdx_8, Q12_SHIFT);
+    extraModelPtr2->anim_4.time_4          = FP_TO(extraModelPtr2->anim_4.keyframeIdx_8, Q12_SHIFT);
 
-    func_800446D8((s_Skeleton*)FS_BUFFER_0, g_SysWork.playerBoneCoords_890, modelPtr3->anim_4.keyframeIdx0_8, modelPtr3->anim_4.keyframeIdx0_8, FP_FLOAT_TO(1, Q12_SHIFT));
+    func_800446D8((s_Skeleton*)FS_BUFFER_0, g_SysWork.playerBoneCoords_890, modelPtr3->anim_4.keyframeIdx_8, modelPtr3->anim_4.keyframeIdx_8, FP_FLOAT_TO(1, Q12_SHIFT));
 
     g_SysWork.player_4C.extra_128.field_18 = 0x3F800;
 
-    func_800446D8((s_Skeleton*)FS_BUFFER_0, g_SysWork.playerBoneCoords_890, extraModelPtr2->anim_4.keyframeIdx0_8, extraModelPtr2->anim_4.keyframeIdx0_8, FP_FLOAT_TO(1, Q12_SHIFT));
+    func_800446D8((s_Skeleton*)FS_BUFFER_0, g_SysWork.playerBoneCoords_890, extraModelPtr2->anim_4.keyframeIdx_8, extraModelPtr2->anim_4.keyframeIdx_8, FP_FLOAT_TO(1, Q12_SHIFT));
     func_8004C040();
 }
 

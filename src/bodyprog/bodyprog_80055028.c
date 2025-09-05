@@ -4016,7 +4016,7 @@ void func_80070400(s_SubCharacter* chara, s_func_80070400_1* arg1, s_func_800704
     }
     else
     {
-        alpha = chara->model_0.anim_4.keyframeIdx1_A;
+        alpha = chara->model_0.anim_4.alpha_A;
     }
 
     // Compute inverse alpha.

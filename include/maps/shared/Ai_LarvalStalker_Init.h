@@ -6,12 +6,12 @@ void Ai_LarvalStalker_Init(s_SubCharacter* arg0)
     arg0->model_0.anim_4.time_4         = 0;
     arg0->model_0.anim_4.status_0      = ANIM_STATUS(10, false);
     arg0->model_0.anim_4.time_4         = FP_TIME(162.0f);
-    arg0->model_0.anim_4.keyframeIdx0_8 = 162;
+    arg0->model_0.anim_4.keyframeIdx_8 = 162;
 
     arg0->properties_E4.larvalStalker.properties_E8[0].val16[0] = 0;
 
-    arg0->model_0.anim_4.keyframeIdx1_A = 0;
-    arg0->model_0.stateStep_3           = 0;
+    arg0->model_0.anim_4.alpha_A = FP_ALPHA(0.0f);
+    arg0->model_0.stateStep_3    = 0;
 
     ModelAnim_AnimInfoSet(&arg0->model_0.anim_4, LARVAL_STALKER_ANIM_INFOS);
 

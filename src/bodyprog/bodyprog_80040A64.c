@@ -1550,9 +1550,9 @@ void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coords, s_Ani
     }
 
     // Update frame data.
-    model->anim_4.time_4         = newTime;
-    model->anim_4.keyframeIdx0_8 = newKeyframeIdx;
-    model->anim_4.keyframeIdx1_A = 0;
+    model->anim_4.time_4        = newTime;
+    model->anim_4.keyframeIdx_8 = newKeyframeIdx;
+    model->anim_4.alpha_A       = FP_ALPHA(0.0f);
 
     // Update anim status if anim started or ended.
     if (setNewAnimStatus)
@@ -1616,8 +1616,8 @@ void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
 
     // Update frame data.
     model->anim_4.time_4         = newTime;
-    model->anim_4.keyframeIdx0_8 = newKeyframeIdx0;
-    model->anim_4.keyframeIdx1_A = FP_ALPHA(0.0f);
+    model->anim_4.keyframeIdx_8 = newKeyframeIdx0;
+    model->anim_4.alpha_A = FP_ALPHA(0.0f);
 }
 
 void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044CA4
@@ -1635,14 +1635,14 @@ void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     // If no start keyframe exists, default to active keyframe.
     if (startKeyframeIdx == NO_VALUE)
     {
-        startKeyframeIdx = model->anim_4.keyframeIdx0_8;
+        startKeyframeIdx = model->anim_4.keyframeIdx_8;
     }
 
     // Get time step.
     timeStep = Anim_TimeStepGet(model, animInfo);
 
     // Update time to start or end keyframe, whichever is closest.
-    alpha  = model->anim_4.keyframeIdx1_A;
+    alpha  = model->anim_4.alpha_A;
     alpha += timeStep;
     if (alpha >= FP_ALPHA(0.5f))
     {
@@ -1657,9 +1657,9 @@ void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     if (alpha >= FP_ALPHA(1.0f))
     {
         startKeyframeIdx             = endKeyframeIdx;
-        model->anim_4.keyframeIdx0_8 = endKeyframeIdx;
+        model->anim_4.keyframeIdx_8 = endKeyframeIdx;
         
-        alpha         = FP_ALPHA(0.0f);
+        alpha            = FP_ALPHA(0.0f);
         setNewAnimStatus = true;
     }
 
@@ -1670,7 +1670,7 @@ void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     }
 
     // Update alpha.
-    model->anim_4.keyframeIdx1_A = alpha;
+    model->anim_4.alpha_A = alpha;
 
     // Update anim status if anim ended.
     if (setNewAnimStatus)
@@ -1705,8 +1705,8 @@ void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     }
 
     // Update alpha.
-    alpha                        = model->anim_4.keyframeIdx1_A + timeStep;
-    model->anim_4.keyframeIdx1_A = alpha;
+    alpha                        = model->anim_4.alpha_A + timeStep;
+    model->anim_4.alpha_A = alpha;
 
     // Sine-based easing?
     sinVal   = Math_Sin((alpha / 2) - FP_ALPHA(0.25f));
@@ -1732,7 +1732,7 @@ void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     }
 
     // Update active keyframe.
-    model->anim_4.keyframeIdx0_8 = FP_FROM(newTime, Q12_SHIFT);
+    model->anim_4.keyframeIdx_8 = FP_FROM(newTime, Q12_SHIFT);
 }
 
 void func_80044F14(GsCOORDINATE2* coord, s16 z, s16 x, s16 y) // 0x80044F14

@@ -620,7 +620,7 @@ void func_800D3CC4(s_SubCharacter* chara)
     if (cond)
     {
         keyframeIdx = func_80044918(&chara->model_0.anim_4)->keyframeStartIdx_C;
-        chara->model_0.anim_4.keyframeIdx0_8 = keyframeIdx;
+        chara->model_0.anim_4.keyframeIdx_8 = keyframeIdx;
         chara->model_0.anim_4.time_4 = FP_TIME(keyframeIdx);
     }
 }

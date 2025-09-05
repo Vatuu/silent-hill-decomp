@@ -987,9 +987,9 @@ typedef struct _ModelAnim
                                   // TODO: Rename to `status_0`.
     u8          maybeSomeState_1; // State says if `time_4` is anim time/anim status or a func ptr? That field could be a union.
     u16         flags_2;          /** `e_AnimFlags` */
-    q19_12      time_4;           /** Time along absolute keyframe timeline. */ 
-    s16         keyframeIdx0_8;   /** Active keyframe along absolute keyframe timeline. */
-    s16         keyframeIdx1_A;   /** Q19.12 | Alpha along relative a timeline. */ 
+    q19_12      time_4;           /** Time along absolute timeline. */ 
+    s16         keyframeIdx_8;    /** Active keyframe along absolute timeline. */
+    q3_12       alpha_A;          /** Alpha along active anim. */ 
     s_AnimInfo* animInfo_C;       // } Arrays of anim infos?
     s_AnimInfo* animInfo_10;      // }
 } s_ModelAnim;
