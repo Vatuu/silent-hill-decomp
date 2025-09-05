@@ -187,7 +187,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map2_s00/map2_s00"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&unit=maps/map2_s00/map2_s00"/></a></td>
-            <td colspan=2>Old Silent Hill after finishing the school.</td>
+            <td colspan=2>Old Silent Hill.</td>
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?unit=maps/map2_s01/map2_s01"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&unit=maps/map2_s01/map2_s01"/></a></td>
