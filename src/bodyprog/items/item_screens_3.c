@@ -205,6 +205,29 @@ s16 __padding = 0;
 s32 g_PickupItemAnimState = 0;
 s32 D_800AE1B0 = 0;
 
+u32 D_800AE1B4[3] = { 0x00000000, 0x000000CC, 0xFFFFFEC9 }; // VECTOR3 ?
+// Referenced only by func_80055648 ( https://decomp.me/scratch/joGmE )
+// Doesn't look like VECTOR3 tbh. Each word is larger than the previous.
+u32 D_800AE1C0[] = {
+    0x00000000,
+    0x00000000,
+    0x00000026,
+    0x0000004C,
+    0x0000005E,
+    0x00000070,
+    0x00000085,
+    0x00000099,
+    0x000000B0,
+    0x000000BD,
+    0x000000D1,
+    0x000000DC,
+    0x000000E6,
+    0x000000F0,
+    0x000000F5,
+    0x000000FA,
+    0x000000FF,
+};
+
 void Inventory_DirectionalInputSet() // 0x8004F5DC
 {
     if (g_Controller0->sticks_20.sticks_0.leftY < -64 || g_Controller0->sticks_20.sticks_0.leftY >= 64 ||
