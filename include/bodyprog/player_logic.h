@@ -318,6 +318,9 @@ typedef enum _PlayerAnim
     PlayerAnim_Unk34                   = 34,
     PlayerAnim_Unk35                   = 35,
     PlayerAnim_Unk36                   = 36,
+    PlayerAnim_Unk37                   = 37,
+
+    // NOTE: Anims 28 and above are per-map. Will need separate enums or could do `#ifdef` magic here if it works.
 
     PlayerAnim_Death                   = 40,
 
