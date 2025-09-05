@@ -30,7 +30,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 {
     #define MAIN_MENU_GAME_STATE_COUNT 5
 
-    s32 nextGameStates[MAIN_MENU_GAME_STATE_COUNT] = // 0x80025480
+    s32 NEXT_GAME_STATES[MAIN_MENU_GAME_STATE_COUNT] = // 0x80025480
     {
         GameState_SaveScreen, 
         GameState_DeathLoadScreen,
@@ -306,7 +306,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
                 if (g_GameWork.autosave_90.playerHealth_240 > FP_HEALTH(0.0f))
                 {
-                    nextGameStates[1] = 10;
+                    NEXT_GAME_STATES[1] = 10;
                 }
 
                 if (g_MainMenu_SelectedEntry == MainMenuEntry_Start)
@@ -318,7 +318,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
                 prevState                       = g_GameWork.gameState_594;
                 g_GameWork.gameStateStep_598[0] = prevState;
-                g_GameWork.gameState_594        = nextGameStates[g_MainMenu_SelectedEntry];
+                g_GameWork.gameState_594        = NEXT_GAME_STATES[g_MainMenu_SelectedEntry];
                 g_SysWork.timer_1C              = 0;
                 g_GameWork.gameStatePrev_590    = prevState;
                 g_GameWork.gameStateStep_598[0] = 0;
@@ -406,7 +406,7 @@ void Gfx_MainMenu_MainTextDraw() // 0x8003B568
     #define COLUMN_POS_Y 184
     #define STR_OFFSET_Y 20
 
-    static const u8 MAIN_MENU_STR_OFFSETS_X[] = { 29, 50, 32, 39, 33 }; // @unused Element at index 4. See `g_MainMenu_VisibleEntryFlags`.
+    static const u8 STR_OFFSETS_X[] = { 29, 50, 32, 39, 33 }; // @unused Element at index 4. See `g_MainMenu_VisibleEntryFlags`.
 
     s32 i;
 
@@ -419,7 +419,7 @@ void Gfx_MainMenu_MainTextDraw() // 0x8003B568
             continue;
         }
 
-        Gfx_StringSetPosition(COLUMN_POS_X - MAIN_MENU_STR_OFFSETS_X[i], COLUMN_POS_Y + (i * STR_OFFSET_Y));
+        Gfx_StringSetPosition(COLUMN_POS_X - STR_OFFSETS_X[i], COLUMN_POS_Y + (i * STR_OFFSET_Y));
         Gfx_StringSetColor(ColorId_White);
 
         if (i == g_MainMenu_SelectedEntry)
@@ -456,15 +456,15 @@ void Gfx_MainMenu_DifficultyTextDraw(s32 arg0) // 0x8003B678
     #define COLUMN_POS_Y                    204
     #define STR_OFFSET_Y                    20
 
-    static const u8 DIFFICULTY_MENU_STR_OFFSETS_X[] = { 28, 43, 30, 76 };               // @unused Element at index 3. May have been a 4th selectable difficulty.
-    static const u8 DIFFICULTY_MENU_UNUSED[]        = { 0, 149, 171, 144, 0, 0, 0, 0 }; // @unused Unknown purpose.
+    static const u8 STR_OFFSETS_X[] = { 28, 43, 30, 76 };               // @unused Element at index 3 may have been a 4th selectable difficulty.
+    static const u8 UNUSED[]        = { 0, 149, 171, 144, 0, 0, 0, 0 }; // @unused Unknown purpose.
 
     s32 i;
 
     // Draw selection strings.
     for (i = 0; i < DIFFICULTY_MENU_SELECTION_COUNT; i++)
     {
-        Gfx_StringSetPosition(COLUMN_POS_X - DIFFICULTY_MENU_STR_OFFSETS_X[i], COLUMN_POS_Y + (i * STR_OFFSET_Y));
+        Gfx_StringSetPosition(COLUMN_POS_X - STR_OFFSETS_X[i], COLUMN_POS_Y + (i * STR_OFFSET_Y));
         Gfx_StringSetColor(ColorId_White);
 
         if (i == arg0)

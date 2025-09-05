@@ -40,10 +40,6 @@ g_MapTypes                                  = 0x8002500C; // type:MapType size:0
 //--------------------------------------------------------------------------
 //--- PA: 0x00091C   VA: 0x8002547C   subsegment: .rodata, bodyprog_8003AB28
 //--------------------------------------------------------------------------
-nextGameStates                              = 0x80025480;
-MAIN_MENU_STR_OFFSETS_X                     = 0x800254EC;
-DIFFICULTY_MENU_STR_OFFSETS_X               = 0x8002551C;
-DIFFICULTY_MENU_UNUSED                      = 0x80025520;
 
 //--------------------------------------------------------------------------------
 //--- PA: 0x001094   VA: 0x80025BF4   subsegment: .rodata, libsd/bodyprog_80045A7C

@@ -1840,7 +1840,9 @@ extern s32 g_MainMenuState;
 
 extern s32 g_MainMenu_SelectedEntry;
 
-/** Flags for which main menu entries should be visible. Flag (1 << 5) corresponts to the "EXTRA" option, which is unused and never set. */
+/** Flags for which main menu entries should be visible.
+ * @unused Flag (1 << 5) corresponds to the "EXTRA" option, which is unused and never set.
+ */
 extern u32 g_MainMenu_VisibleEntryFlags;
 
 /** Counts the amount of times that demos has been play in the current game session. */
@@ -2491,7 +2493,9 @@ int Gfx_FadeInProgress();
 
 void func_80032904();
 
-/** Draws some string in display space. */
+/** @unused Possibly a leftover from when the save menu was part of `BODYPROG.BIN`.
+ * Draws some string in display space.
+ */
 void func_80032CE8();
 
 void func_80032D1C();

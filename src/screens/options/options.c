@@ -802,7 +802,7 @@ void Options_ExtraOptionsMenu_EntryStringsDraw(void) // 0x801E416C
         "Bullet_Adjust"
     };
 
-    // @unused Likely older implementation of active highlight selection position reference setup found in `Options_ExtraGraphicsDraw`.
+    // @unused Likely an older implementation for active highlight selection position reference setup found in `Options_ExtraOptionsMenu_SelectionHighlightDraw`.
     if (g_Options_SelectionHighlightTimer == 0)
     {
         g_ExtraOptions_SelectionHighlightFrom_Unused.vx = LINE_BASE_X - LINE_OFFSET_X;
@@ -853,7 +853,7 @@ void Options_MainOptionsMenu_EntryStringsDraw(void) // 0x801E42EC
         "SE_Volume"
     };
 
-    // @unused Likely older implementation of active highlight selection position reference setup found in `Options_MainGraphicsDraw`.
+    // @unused Likely an older implementation for active highlight selection position reference setup found in `Options_MainOptionsMenu_SelectionHighlightDraw`.
     if (g_Options_SelectionHighlightTimer == 0)
     {
         g_MainOptions_SelectionHighlightFrom_Unused.vx = LINE_BASE_X - LINE_OFFSET_X;
@@ -1854,7 +1854,7 @@ void Options_Selection_HighlightDraw(s_Line2d* line, bool hasShadow, bool invert
     GsOUT_PACKET_P = (u8*)linePrim + sizeof(LINE_G2);
 
     // Draw shadow gradient.
-    // @unused Though a line can be drawn independently without a shadow, `hasShadow` is always passed as `true`.
+    // @unused A line can be drawn independently without a shadow, though `hasShadow` is always passed as `true`.
     if (hasShadow)
     {
         poly = (POLY_G4*)GsOUT_PACKET_P;
