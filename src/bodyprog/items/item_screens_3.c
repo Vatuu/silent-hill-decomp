@@ -259,16 +259,6 @@ s_800AE204 D_800AE204[26] =
     { 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0 }
 };
 
-typedef struct {
-    s_800AE204* ptr_0;
-    s16          count_4;
-    s16          unk_6;
-    u8           unk_8;
-    u8           unk_9;
-    u8           unk_A;
-    u8           unk_B;
-} s_800AE4DC;
-
 s_800AE4DC D_800AE4DC[3] = //Used in func_8005B62C ( https://decomp.me/scratch/2BvV1 )
 {
     { &D_800AE204[1],  3,  0,      0, 0x80, 0x3F, 0xBF },
@@ -320,7 +310,7 @@ RECT D_800AE5B8[2] =
     {0x0A0, 0x090, 0x0A0, 0x170},
 };
 
-u16 D_800AE5C8[2] = {0x01E0, 0x0170}; // used by SetDrawOffset
+u16 D_800AE5C8[2] = {0x01E0, 0x0170}; // passed to SetDrawOffset
 
 // https://decomp.me/scratch/HNL4n something to do with animations ?
 // var_s7 = *(((animStatus + 1) * 2) + &D_800AE5CC) - *((animStatus * 2) + &D_800AE5CC);

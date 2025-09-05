@@ -1678,6 +1678,16 @@ typedef struct
     u32 field_0_29 : 3;
 } s_func_8006F8FC;
 
+typedef struct {
+    s_800AE204* ptr_0;
+    s16          count_4;
+    s16          unk_6;
+    u8           unk_8;
+    u8           unk_9;
+    u8           unk_A;
+    u8           unk_B;
+} s_800AE4DC;
+
 // ========
 // GLOBALS
 // ========
@@ -1982,7 +1992,7 @@ extern u8 D_800AE187;
 
 extern s16 D_800AE1A8;
 
-extern s_800AE204 D_800AE204[26]; // Maybe length 26
+extern s_800AE204 D_800AE204[26];
 
 extern s32 g_PickupItemAnimState;
 
