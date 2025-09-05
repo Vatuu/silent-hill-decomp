@@ -99,7 +99,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00_2", func_800D8A00);
 
 #include "maps/shared/sharedFunc_800D9188_0_s00.h" // 0x800D9188
 
-#include "maps/shared/sharedFunc_800D921C_0_s00.h" // 0x800D921C
+#include "maps/shared/Anim_StartKeyframeIdxGet.h" // 0x800D921C
 
 #include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800D923C
 

@@ -83,7 +83,7 @@ void Ai_Creaper_Init(s_SubCharacter* chara)
 
     Ai_Creaper_PropertiesUpdateFromStep(chara);
 
-    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, sharedData_800E0D38_1_s02);
+    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, CREAPER_ANIM_INFOS);
 
     chara->damageReceived_C0 = FP_HEALTH(0.0f);
     chara->field_BC          = 0;

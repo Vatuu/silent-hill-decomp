@@ -130,7 +130,7 @@ sharedFunc_800D9064_0_s00      = 0x800DA2C4; // type:func
 sharedFunc_800D9078_0_s00      = 0x800DA2D8; // type:func
 sharedFunc_800D908C_0_s00      = 0x800DA2EC; // type:func
 sharedFunc_800D9188_0_s00      = 0x800DA3E8; // type:func
-sharedFunc_800D921C_0_s00      = 0x800DA49C; // type:func
+Anim_StartKeyframeIdxGet       = 0x800DA49C; // type:func
 sharedFunc_800D923C_0_s00      = 0x800DA4BC; // type:func
 sharedFunc_800D929C_0_s00      = 0x800DA51C; // type:func
 sharedFunc_800D92AC_0_s00      = 0x800DA52C; // type:func
@@ -175,7 +175,7 @@ sharedData_800DD796_0_s01      = 0x800DD796; // type:u8
 sharedData_800DD59C_0_s00      = 0x800DD79C; // type:u8
 sharedData_800DD870_0_s01      = 0x800DD870; // type:VECTOR3 size:0xC
 sharedData_800DD880_0_s01      = 0x800DD880; // type:VECTOR3 size:0xC
-sharedData_800DF174_0_s00      = 0x800DD890; // type:AnimInfo
+KAUFMANN_ANIM_INFOS            = 0x800DD890; // type:AnimInfo
 sharedData_800DF1FC_0_s00      = 0x800DDC98; // type:s32 unknown type
 sharedData_800DF2DC_0_s00      = 0x800DDD78; // type:s32 unknown type
 

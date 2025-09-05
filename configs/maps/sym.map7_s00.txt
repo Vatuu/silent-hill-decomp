@@ -72,7 +72,7 @@ sharedFunc_800D9064_0_s00   = 0x800CFCF0; // type:func
 sharedFunc_800D9078_0_s00   = 0x800CFD04; // type:func
 sharedFunc_800D908C_0_s00   = 0x800CFD18; // type:func
 sharedFunc_800D9188_0_s00   = 0x800CFE14; // type:func
-sharedFunc_800D921C_0_s00   = 0x800CFEC0; // type:func
+Anim_StartKeyframeIdxGet    = 0x800CFEC0; // type:func
 sharedFunc_800D923C_0_s00   = 0x800CFEE0; // type:func
 sharedFunc_800D929C_0_s00   = 0x800CFF40; // type:func
 sharedFunc_800DA8E8_0_s01   = 0x800D0ACC; // type:func
@@ -88,7 +88,7 @@ sharedFunc_800DA8E8_0_s01   = 0x800D0ACC; // type:func
 //--- PA: 0x00959C   VA: 0x800D2B14   subsegment: data, map7_s00
 //--------------------------------------------------------------
 sharedData_800DD59C_0_s00   = 0x800D2C9C; // type:u8
-sharedData_800DF174_0_s00   = 0x800D2CA8; // type:AnimInfo
+KAUFMANN_ANIM_INFOS         = 0x800D2CA8; // type:AnimInfo
 
 //-------------------------------------------------------------------
 //--- PA: 0x009ABC   VA: 0x800D3034   subsegment: .data, map7_s00_msg

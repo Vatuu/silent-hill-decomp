@@ -1473,7 +1473,7 @@ void func_80044950(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x
     s_AnimInfo* animInfo;
 
     animInfo = func_80044918(&chara->model_0.anim_4);
-    animInfo->funcPtr_0(chara, arg1, coords, animInfo);
+    animInfo->updateFunc_0(chara, arg1, coords, animInfo);
 }
 
 s32 func_800449AC(s_Model* model, s_AnimInfo* anim) // 0x800449AC
@@ -1486,7 +1486,7 @@ s32 func_800449AC(s_Model* model, s_AnimInfo* anim) // 0x800449AC
     return anim->timeDelta_8.variableTimeDeltaFunc(); // The arguments might be passed here.
 }
 
-static inline s32 Anim_GetTimeStep(s_Model* model, s_AnimInfo* targetAnim)
+static inline s32 Anim_TimeStepGet(s_Model* model, s_AnimInfo* targetAnim)
 {
     s32 timeDelta;
 
@@ -1499,7 +1499,7 @@ static inline s32 Anim_GetTimeStep(s_Model* model, s_AnimInfo* targetAnim)
     return 0;
 }
 
-void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* targetAnim) // 0x800449F0
+void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x800449F0
 {
     bool setAnimIdx;
     s32  timeStep;
@@ -1511,7 +1511,7 @@ void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     setAnimIdx = false;
 
     // Get time step.
-    timeStep = Anim_GetTimeStep(model, targetAnim);
+    timeStep = Anim_TimeStepGet(model, animInfo);
 
     // Compute new time.
     newTime         = model->anim_4.time_4;
@@ -1520,10 +1520,10 @@ void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     {
         // Clamp new time against target time?
         newTime   += timeStep;
-        targetTime = FP_TO(targetAnim->keyframeIdx1_E, Q12_SHIFT);
+        targetTime = FP_TO(animInfo->keyframeEndIdx_E, Q12_SHIFT);
         if (newTime < targetTime)
         {
-            targetTime = FP_TO(targetAnim->keyframeIdx0_C, Q12_SHIFT);
+            targetTime = FP_TO(animInfo->keyframeStartIdx_C, Q12_SHIFT);
             if (newTime <= targetTime)
             {
                 newTime    = targetTime;
@@ -1554,11 +1554,11 @@ void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     // Update anim status.
     if (setAnimIdx)
     {
-        model->anim_4.status_0 = targetAnim->status_6;
+        model->anim_4.status_0 = animInfo->status_6;
     }
 }
 
-void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* targetAnim) // 0x80044B38
+void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044B38
 {
     s32 keyframeIdx0;
     s32 keyframeIdx1;
@@ -1573,8 +1573,8 @@ void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     s32 newKeyframeIdx1;
     s32 alpha;
 
-    keyframeIdx0    = targetAnim->keyframeIdx0_C;
-    keyframeIdx1    = targetAnim->keyframeIdx1_E;
+    keyframeIdx0    = animInfo->keyframeStartIdx_C;
+    keyframeIdx1    = animInfo->keyframeEndIdx_E;
     nextKeyframeIdx = keyframeIdx1 + 1;
     keyframeDelta   = nextKeyframeIdx - keyframeIdx0;
 
@@ -1583,7 +1583,7 @@ void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     keyframeTimeDelta   = FP_TO(keyframeDelta, Q12_SHIFT);
 
     // Get time step.
-    timeStep = Anim_GetTimeStep(model, targetAnim);
+    timeStep = Anim_TimeStepGet(model, animInfo);
 
     // Wrap new time to valid range?
     newTime = model->anim_4.time_4 + timeStep;
@@ -1617,7 +1617,7 @@ void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     model->anim_4.keyframeIdx1_A = 0;
 }
 
-void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* targetAnim) // 0x80044CA4
+void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044CA4
 {
     bool setAnimIdx;
     s32  newKeyframeIdx0;
@@ -1626,8 +1626,8 @@ void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     s32  alpha;
     
     setAnimIdx      = false;
-    newKeyframeIdx0 = targetAnim->keyframeIdx0_C;
-    newKeyframeIdx1 = targetAnim->keyframeIdx1_E;
+    newKeyframeIdx0 = animInfo->keyframeStartIdx_C;
+    newKeyframeIdx1 = animInfo->keyframeEndIdx_E;
 
     // If no target frame 0 set, default to current frame index 0.
     if (newKeyframeIdx0 == NO_VALUE)
@@ -1636,7 +1636,7 @@ void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     }
 
     // Get time step.
-    timeStep = Anim_GetTimeStep(model, targetAnim);
+    timeStep = Anim_TimeStepGet(model, animInfo);
 
     // Set time.
     alpha  = model->anim_4.keyframeIdx1_A;
@@ -1672,11 +1672,11 @@ void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     // Update anim status.
     if (setAnimIdx)
     {
-        model->anim_4.status_0 = targetAnim->status_6;
+        model->anim_4.status_0 = animInfo->status_6;
     }
 }
 
-void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* targetAnim) // 0x80044DF0
+void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044DF0
 {
     s32 keyframeIdx0;
     s32 keyframeIdx1;
@@ -1687,13 +1687,13 @@ void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     s32 newTime;
     s32 alpha;
 
-    keyframeIdx0 = targetAnim->keyframeIdx0_C;
-    keyframeIdx1 = targetAnim->keyframeIdx1_E;
+    keyframeIdx0 = animInfo->keyframeStartIdx_C;
+    keyframeIdx1 = animInfo->keyframeEndIdx_E;
 
     // Compute time step. NOTE: Can't call `Anim_GetTimeStep` inline due to register constraints.
     if (model->anim_4.flags_2 & AnimFlag_Unk1)
     {
-        timeDelta = func_800449AC(model, targetAnim);
+        timeDelta = func_800449AC(model, animInfo);
         timeStep  = FP_MULTIPLY_PRECISE(timeDelta, g_DeltaTime0, Q12_SHIFT);
     }
     else

@@ -1,6 +1,6 @@
-s16 sharedFunc_800D921C_0_s00(s_SubCharacter* chara)
+s16 Anim_StartKeyframeIdxGet(s_SubCharacter* chara)
 {
-    // TODO: Not sure if any of these match sharedData_800DF174_0_s00 in other maps.
+    // TODO: Not sure if any of these match `KAUFMANN_ANIM_INFOS` in other maps.
 #if defined(MAP6_S01)
     extern s_AnimInfo D_800D35A0[];
     extern s_AnimInfo D_800D39A0[];
@@ -21,8 +21,8 @@ s16 sharedFunc_800D921C_0_s00(s_SubCharacter* chara)
     extern s_AnimInfo D_800EA5E0[];
     extern s_AnimInfo D_800EA920[];
     extern s_AnimInfo D_800EAA80[];
-    extern s_AnimInfo D_800EAC00[];
-    extern s_AnimInfo D_800EAC80[];
+    extern s_AnimInfo D_800EAC00[]; // Incubator.
+    extern s_AnimInfo D_800EAC80[]; // Kaufmann.
     extern s_AnimInfo D_800EAF60[];
 #endif
 
@@ -50,7 +50,7 @@ s16 sharedFunc_800D921C_0_s00(s_SubCharacter* chara)
             break;
 
         case Chara_Alessa:
-            animInfo = &sharedData_800D1B6C_3_s02[chara->model_0.anim_4.status_0];
+            animInfo = &ALESSA_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
 #elif defined(MAP7_S01)
@@ -63,7 +63,7 @@ s16 sharedFunc_800D921C_0_s00(s_SubCharacter* chara)
             break;
 
         case Chara_BloodyLisa:
-            animInfo = &sharedData_800DFFD8_7_s01[chara->model_0.anim_4.status_0];
+            animInfo = &BLOODY_LISA_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
 #elif defined(MAP7_S02)
@@ -121,10 +121,10 @@ s16 sharedFunc_800D921C_0_s00(s_SubCharacter* chara)
 
 #else
         default:
-            animInfo = &sharedData_800DF174_0_s00[chara->model_0.anim_4.status_0];
+            animInfo = &KAUFMANN_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 #endif
     }
 
-    return animInfo->keyframeIdx0_C;
+    return animInfo->keyframeStartIdx_C;
 }

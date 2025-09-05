@@ -619,7 +619,7 @@ void func_800D3CC4(s_SubCharacter* chara)
 
     if (cond)
     {
-        keyframeIdx = func_80044918(&chara->model_0.anim_4)->keyframeIdx0_C;
+        keyframeIdx = func_80044918(&chara->model_0.anim_4)->keyframeStartIdx_C;
         chara->model_0.anim_4.keyframeIdx0_8 = keyframeIdx;
         chara->model_0.anim_4.time_4 = FP_TIME(keyframeIdx);
     }
@@ -892,7 +892,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D9C60);
 
 #include "maps/shared/sharedFunc_800D9188_0_s00.h" // 0x800DA3E8
 
-#include "maps/shared/sharedFunc_800D921C_0_s00.h" // 0x800DA49C
+#include "maps/shared/Anim_StartKeyframeIdxGet.h" // 0x800DA49C
 
 #include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800DA4BC
 

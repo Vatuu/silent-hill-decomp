@@ -1478,7 +1478,7 @@ typedef struct _MapOverlayHeader
     GsCOORDINATE2*    field_28;
     u8*               loadableItems_2C;
     const char**      mapMessages_30; // Array of strings.
-    s_AnimInfo*       animInfos_34;   // Array.
+    s_AnimInfo*       animInfos_34;   // Map-specific anim infos for Harry (for anims 38+).
     s_UnkStruct3_Mo*  field_38;
     void              (*func_3C)(); // func(?).
     void              (*func_40)();
@@ -2001,7 +2001,7 @@ extern u8 D_800AF220;
 
 extern s32 D_800AF224;
 
-extern s_AnimInfo g_MaybePlayerAnims[]; // Maybe part of bigger struct. 0x800AF228
+extern s_AnimInfo HARRY_BASE_ANIM_INFOS[]; // Maybe part of bigger struct. 0x800AF228
 
 extern s16 D_800AF506;
 
@@ -2766,17 +2766,21 @@ void func_80044950(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
 
 s32 func_800449AC(s_Model* model, s_AnimInfo* anim);
 
-/** Updates a character's animation, variant 0. First param might be `s_SubCharacter` instead. */
-void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* targetAnim);
+/** Updates a character's animation, variant 0. First param might be `s_SubCharacter` instead.
+ * Used for anim init?
+ */
+void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
 
 /** Updates a character's animation, variant 1. */
-void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* targetAnim);
+void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
 
-/** Updates a character's animation, variant 2. */
-void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* targetAnim);
+/** Updates a character's animation, variant 2.
+ * The generic update func?
+ */
+void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
 
 /** Updates a character's animation, variant 3. */
-void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* targetAnim);
+void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
 
 /** Something related to player weapon position. Takes coords to arm bones. */
 void func_80044F14(GsCOORDINATE2* coord, s16 z, s16 x, s16 y);

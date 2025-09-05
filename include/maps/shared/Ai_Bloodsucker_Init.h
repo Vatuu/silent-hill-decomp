@@ -45,8 +45,8 @@ static inline void Ai_Bloodsucker_AnimUpdateFromStep(s_SubCharacter* chara)
         chara->model_0.anim_4.status_0 = (stateStep * 2) + 17;
     }
 
-    chara->model_0.anim_4.time_4         = FP_TO(sharedData_800D5ABC_3_s03[chara->model_0.anim_4.status_0].keyframeIdx0_C, Q12_SHIFT);
-    chara->model_0.anim_4.keyframeIdx0_8 = sharedData_800D5ABC_3_s03[chara->model_0.anim_4.status_0].keyframeIdx0_C;
+    chara->model_0.anim_4.time_4         = FP_TO(BLOODSUCKER_ANIM_INFOS[chara->model_0.anim_4.status_0].keyframeStartIdx_C, Q12_SHIFT);
+    chara->model_0.anim_4.keyframeIdx0_8 = BLOODSUCKER_ANIM_INFOS[chara->model_0.anim_4.status_0].keyframeStartIdx_C;
 #endif
 }
 
@@ -64,7 +64,7 @@ void Ai_Bloodsucker_Init(s_SubCharacter* chara)
 
     Ai_Bloodsucker_AnimUpdateFromStep(chara);
 
-    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, sharedData_800D5ABC_3_s03);
+    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, BLOODSUCKER_ANIM_INFOS);
 
     chara->damageReceived_C0 = FP_HEALTH(0.0f);
     chara->field_BC          = 0;

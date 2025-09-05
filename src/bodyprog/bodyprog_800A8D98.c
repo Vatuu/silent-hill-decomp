@@ -776,14 +776,14 @@ s_800A992C D_800A992C[4] =
 };
 s_AnimInfo D_800A998C =
 {
-    .funcPtr_0              = Anim_Update1,
+    .updateFunc_0              = Anim_Update1,
     .field_4                = 0,
     .hasVariableTimeDelta_5 = false,
     .status_6               = ANIM_STATUS(0, false),
-    .unk_7                  = 0,
+    .field_7                = 0,
     .timeDelta_8            = { .constTimeDelta = FP_TIME(8.0f) },
-    .keyframeIdx0_C         = 26,
-    .keyframeIdx1_E         = 44
+    .keyframeStartIdx_C     = 26,
+    .keyframeEndIdx_E       = 44
 };
 u32 unknown_D_800A999C = 0x80025234;
 s32 D_800A99A0 = 0;

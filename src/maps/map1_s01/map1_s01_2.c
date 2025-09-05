@@ -84,7 +84,7 @@ void Ai_Cat_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
     animInfo = &g_Ai_Cat_AnimInfo[chara->model_0.anim_4.status_0];
-    animInfo->funcPtr_0(chara, arg1, coords, animInfo);
+    animInfo->updateFunc_0(chara, arg1, coords, animInfo);
 
     var_a0 = 0;
     if (chara->model_0.anim_4.status_0 == ANIM_STATUS(1, true))

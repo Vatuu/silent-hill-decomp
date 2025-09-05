@@ -189,7 +189,7 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800DD764);
 // #include "maps/shared/sharedFunc_800D9188_0_s00.h" // 0x800DDEEC
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", sharedFunc_800D9188_0_s00); // 0x800DDEEC
 
-#include "maps/shared/sharedFunc_800D921C_0_s00.h" // 0x800DDFEC
+#include "maps/shared/Anim_StartKeyframeIdxGet.h" // 0x800DDFEC
 
 #include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800DE064
 
@@ -228,9 +228,9 @@ void Ai_Flauros_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) /
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
     animInfo = &g_Ai_Flauros_AnimInfo[chara->model_0.anim_4.status_0];
-    animInfo->funcPtr_0(chara, arg1, coords, animInfo);
+    animInfo->updateFunc_0(chara, arg1, coords, animInfo);
 
-    for (i = 6; i < 0xB; i++)
+    for (i = 6; i < 11; i++)
     {
         func_800705E4(coords, i, var_s1, var_s1, var_s1);
     }
@@ -245,7 +245,7 @@ void Ai_Parasite_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) 
         chara->model_0.anim_4.keyframeIdx1_A = 0;
         chara->model_0.state_2               = 1;
         chara->model_0.stateStep_3           = 0;
-        chara->model_0.anim_4.status_0      = ANIM_STATUS(1, true);
+        chara->model_0.anim_4.status_0       = ANIM_STATUS(1, true);
         chara->model_0.anim_4.time_4         = 0;
         chara->model_0.anim_4.keyframeIdx0_8 = 0;
     }
@@ -253,7 +253,7 @@ void Ai_Parasite_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) 
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
     animInfo = &g_Ai_Parasite_AnimInfo[chara->model_0.anim_4.status_0];
-    animInfo->funcPtr_0(chara, arg1, coords, animInfo);
+    animInfo->updateFunc_0(chara, arg1, coords, animInfo);
 }
 
 void func_800DE26C() {}

@@ -966,18 +966,18 @@ STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 /** @brief Const data passed over to `Anim_Update` funcs. Struct itself contains which `Anim_Update` func is to be called. */
 typedef struct _AnimInfo
 {
-    void (*funcPtr_0)(struct _SubCharacter*, s32, GsCOORDINATE2*, struct _AnimInfo*); // TODO: `funcPtr_0` signature doesn't currently match `Anim_Update`.
+    void (*updateFunc_0)(struct _SubCharacter*, s32, GsCOORDINATE2*, struct _AnimInfo*); // TODO: `updateFunc_0` signature doesn't currently match `Anim_Update`.
     u8  field_4; /** Packed anim status. See `s_ModelAnimData::status_0`. Unknown purpose for this one. */
     s8  hasVariableTimeDelta_5;
     u8  status_6; /** Packed anim status. See `s_ModelAnim::status_0`. */
-    u8  unk_7;
+    u8  field_7; // Maybe `isLooped_7`? Could also be padding.
     union
     {
         q19_12 constTimeDelta;
         q19_12 (*variableTimeDeltaFunc)();
     } timeDelta_8; // Duration?
-    s16 keyframeIdx0_C;
-    s16 keyframeIdx1_E;
+    s16 keyframeStartIdx_C;
+    s16 keyframeEndIdx_E;
 } s_AnimInfo;
 STATIC_ASSERT_SIZEOF(s_AnimInfo, 16);
 

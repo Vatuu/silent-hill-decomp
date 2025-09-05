@@ -98,7 +98,7 @@ void Ai_Stalker_Init(s_SubCharacter* chara)
     chara->properties_E4.larvalStalker.properties_E8[3].val32    = chara->position_18.vz;
     chara->properties_E4.larvalStalker.properties_E8[10].val32  = chara->health_B0;
 
-    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, sharedData_800DD5A8_0_s00);
+    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, STALKER_ANIM_INFOS);
 
     chara->damageReceived_C0 = FP_HEALTH(0.0f);
     chara->field_BC          = 0;

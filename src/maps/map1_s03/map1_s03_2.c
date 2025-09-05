@@ -114,7 +114,7 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* co
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
     structPtr = &D_800E1410[chara->model_0.anim_4.status_0];
-    structPtr->funcPtr_0(chara, arg1, coords, structPtr);
+    structPtr->updateFunc_0(chara, arg1, coords, structPtr);
 
     chara->field_C8         = -0x4CC;
     chara->field_D8.field_4 = 0xF5;

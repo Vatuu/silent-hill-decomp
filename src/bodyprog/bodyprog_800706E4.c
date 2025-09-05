@@ -97,8 +97,8 @@ void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 arg2,
         }
     }
 
-    if (extra->model_0.anim_4.keyframeIdx0_8 >= (g_MaybePlayerAnims[animStatus].keyframeIdx0_C + D_800AD4C8[arg2].field_E) && 
-        g_MaybePlayerAnims[animStatus].keyframeIdx0_C + D_800AD4C8[arg2].field_E + D_800AD4C8[arg2].field_F >= extra->model_0.anim_4.keyframeIdx0_8)
+    if (extra->model_0.anim_4.keyframeIdx0_8 >= (HARRY_BASE_ANIM_INFOS[animStatus].keyframeStartIdx_C + D_800AD4C8[arg2].field_E) && 
+        HARRY_BASE_ANIM_INFOS[animStatus].keyframeStartIdx_C + D_800AD4C8[arg2].field_E + D_800AD4C8[arg2].field_F >= extra->model_0.anim_4.keyframeIdx0_8)
     {
         g_SysWork.playerCombatInfo_38.equippedWeapon_F = arg2;
 
@@ -126,7 +126,7 @@ void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 arg2,
     }
 
     if (chara->model_0.anim_4.status_0 == animStatus &&
-        chara->model_0.anim_4.keyframeIdx0_8 == g_MaybePlayerAnims[animStatus].keyframeIdx1_E)
+        chara->model_0.anim_4.keyframeIdx0_8 == HARRY_BASE_ANIM_INFOS[animStatus].keyframeEndIdx_E)
     {
         g_SysWork.player_4C.extra_128.state_1C                      = PlayerState_None;
         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
@@ -691,25 +691,25 @@ void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, void* arg
     if (!g_Player_IsInWalkToRunTransition)
     {
         g_SysWork.player_4C.extra_128.field_18 = FP_FLOAT_TO(0.5f, Q12_SHIFT) - 1;
-        animInfo                               = &g_MaybePlayerAnims[chara->model_0.anim_4.status_0];
-        animInfo->funcPtr_0(&chara->model_0, (s32)arg2, coord, animInfo);
+        animInfo                               = &HARRY_BASE_ANIM_INFOS[chara->model_0.anim_4.status_0];
+        animInfo->updateFunc_0(&chara->model_0, (s32)arg2, coord, animInfo);
 
         g_SysWork.player_4C.extra_128.field_18 = FP_FLOAT_TO(63.5f, Q12_SHIFT);
-        animInfo                               = &g_MaybePlayerAnims[extra->model_0.anim_4.status_0];
-        animInfo->funcPtr_0(&extra->model_0, (s32)arg2, coord, animInfo);
+        animInfo                               = &HARRY_BASE_ANIM_INFOS[extra->model_0.anim_4.status_0];
+        animInfo->updateFunc_0(&extra->model_0, (s32)arg2, coord, animInfo);
         return;
     }
 
     g_SysWork.player_4C.extra_128.field_18 = FP_FLOAT_TO(0.5f, Q12_SHIFT) - 1;
     chara->model_0.anim_4.status_0        = ANIM_STATUS(PlayerAnim_Unk0, false);
-    animInfo                               = &g_MaybePlayerAnims[0];
-    animInfo->funcPtr_0(chara, (s32)arg2, coord, animInfo);
+    animInfo                               = &HARRY_BASE_ANIM_INFOS[0];
+    animInfo->updateFunc_0(chara, (s32)arg2, coord, animInfo);
 
     g_SysWork.player_4C.extra_128.field_18 = FP_FLOAT_TO(63.5f, Q12_SHIFT);
-    animInfo                               = &g_MaybePlayerAnims[extra->model_0.anim_4.status_0];
-    animInfo->funcPtr_0(&extra->model_0, (s32)arg2, coord, animInfo);
+    animInfo                               = &HARRY_BASE_ANIM_INFOS[extra->model_0.anim_4.status_0];
+    animInfo->updateFunc_0(&extra->model_0, (s32)arg2, coord, animInfo);
 
-    if (chara->model_0.anim_4.status_0 == g_MaybePlayerAnims[0].status_6)
+    if (chara->model_0.anim_4.status_0 == HARRY_BASE_ANIM_INFOS[0].status_6)
     {
         g_Player_IsInWalkToRunTransition = false;
     }
@@ -1013,8 +1013,8 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
 				    g_SysWork.player_4C.extra_128.state_1C < PlayerState_EnemyGrabPinnedFront)
                 {
                     temp = -0x8000;
-                    extra->model_0.anim_4.time_4 = (FP_TO(g_MapOverlayHeader.animInfos_34[chara->model_0.anim_4.status_0 - 76].keyframeIdx0_C, Q12_SHIFT) + model->anim_4.time_4) + temp;
-                    chara->model_0.anim_4.time_4 = (FP_TO(g_MapOverlayHeader.animInfos_34[chara->model_0.anim_4.status_0 - 76].keyframeIdx0_C, Q12_SHIFT) + model->anim_4.time_4) + temp;
+                    extra->model_0.anim_4.time_4 = (FP_TO(g_MapOverlayHeader.animInfos_34[chara->model_0.anim_4.status_0 - 76].keyframeStartIdx_C, Q12_SHIFT) + model->anim_4.time_4) + temp;
+                    chara->model_0.anim_4.time_4 = (FP_TO(g_MapOverlayHeader.animInfos_34[chara->model_0.anim_4.status_0 - 76].keyframeStartIdx_C, Q12_SHIFT) + model->anim_4.time_4) + temp;
                     chara->model_0.anim_4.keyframeIdx0_8 = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT);
                     extra->model_0.anim_4.keyframeIdx0_8 = FP_FROM(extra->model_0.anim_4.time_4, Q12_SHIFT);
                 }
@@ -2432,8 +2432,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
             g_SysWork.playerCombatInfo_38.equippedWeapon_F += g_Player_MeleeAttackType * 10;
 
-            D_800C44D0 = g_MaybePlayerAnims[g_Player_AttackAnimIdx].keyframeIdx0_C + D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_E;
-            D_800C44D4 = g_MaybePlayerAnims[g_Player_AttackAnimIdx].keyframeIdx0_C + D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_E +
+            D_800C44D0 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].keyframeStartIdx_C + D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_E;
+            D_800C44D4 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].keyframeStartIdx_C + D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_E +
                          D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_F;
         }
 
@@ -2790,8 +2790,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                     extra->model_0.stateStep_3++;
                 }
 
-                D_800C44D0 = g_MaybePlayerAnims[g_Player_AttackAnimIdx].keyframeIdx0_C + D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_E;
-                D_800C44D4 = g_MaybePlayerAnims[g_Player_AttackAnimIdx].keyframeIdx0_C + D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_E +
+                D_800C44D0 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].keyframeStartIdx_C + D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_E;
+                D_800C44D4 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].keyframeStartIdx_C + D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_E +
                              D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_F;
                 g_Player_IsMultiTapAttack = 0;
 
@@ -4639,15 +4639,15 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                             if (chara->model_0.anim_4.keyframeIdx0_8 >= 10 && chara->model_0.anim_4.keyframeIdx0_8 <= 11)
                             {
                                 g_SysWork.player_4C.extra_128.lowerBodyState_24             = PlayerLowerBodyState_RunForward;
-                                g_MaybePlayerAnims[0].keyframeIdx1_E                        = 36;
-                                g_MaybePlayerAnims[0].status_6                             = 7;
+                                HARRY_BASE_ANIM_INFOS[0].keyframeEndIdx_E                        = 36;
+                                HARRY_BASE_ANIM_INFOS[0].status_6                             = 7;
                                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk5;
                             }
                             else if (chara->model_0.anim_4.keyframeIdx0_8 >= 21 && chara->model_0.anim_4.keyframeIdx0_8 <= 22)
                             {
                                 g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunForward;
-                                g_MaybePlayerAnims[0].keyframeIdx1_E            = 26;
-                                g_MaybePlayerAnims[0].status_6                 = 7;
+                                HARRY_BASE_ANIM_INFOS[0].keyframeEndIdx_E            = 26;
+                                HARRY_BASE_ANIM_INFOS[0].status_6                 = 7;
                             }
                         }
                     }
@@ -4797,15 +4797,15 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                                  chara->model_0.anim_4.keyframeIdx0_8 <= 31)
                         {
                             g_SysWork.player_4C.extra_128.lowerBodyState_24 = temp_s3;
-                            g_MaybePlayerAnims[0].keyframeIdx1_E            = 8;
-                            g_MaybePlayerAnims[0].status_6                 = 5;
+                            HARRY_BASE_ANIM_INFOS[0].keyframeEndIdx_E            = 8;
+                            HARRY_BASE_ANIM_INFOS[0].status_6                 = 5;
                         }
                         else if (chara->model_0.anim_4.keyframeIdx0_8 >= 41 &&
                                  chara->model_0.anim_4.keyframeIdx0_8 <= 42)
                         {
                             g_SysWork.player_4C.extra_128.lowerBodyState_24 = temp_s3;
-                            g_MaybePlayerAnims[0].keyframeIdx1_E            = 20;
-                            g_MaybePlayerAnims[0].status_6                 = 5;
+                            HARRY_BASE_ANIM_INFOS[0].keyframeEndIdx_E            = 20;
+                            HARRY_BASE_ANIM_INFOS[0].status_6                 = 5;
                         }
                         break;
 
@@ -4818,15 +4818,15 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                                  chara->model_0.anim_4.keyframeIdx0_8 <= 31)
                         {
                             g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_WalkForward;
-                            g_MaybePlayerAnims[0].keyframeIdx1_E            = 8;
-                            g_MaybePlayerAnims[0].status_6                 = 5;
+                            HARRY_BASE_ANIM_INFOS[0].keyframeEndIdx_E            = 8;
+                            HARRY_BASE_ANIM_INFOS[0].status_6                 = 5;
                         }
                         else if (chara->model_0.anim_4.keyframeIdx0_8 >= 41 &&
                                  chara->model_0.anim_4.keyframeIdx0_8 <= 42)
                         {
                             g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_WalkForward;
-                            g_MaybePlayerAnims[0].keyframeIdx1_E            = 20;
-                            g_MaybePlayerAnims[0].status_6                 = 5;
+                            HARRY_BASE_ANIM_INFOS[0].keyframeEndIdx_E            = 20;
+                            HARRY_BASE_ANIM_INFOS[0].status_6                 = 5;
                         }
                         break;
 
@@ -4840,15 +4840,15 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                                     chara->model_0.anim_4.keyframeIdx0_8 <= 31)
                                 {
                                     g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_WalkForward;
-                                    g_MaybePlayerAnims[0].keyframeIdx1_E            = 8;
-                                    g_MaybePlayerAnims[0].status_6                 = 5;
+                                    HARRY_BASE_ANIM_INFOS[0].keyframeEndIdx_E            = 8;
+                                    HARRY_BASE_ANIM_INFOS[0].status_6                 = 5;
                                 }
                                 else if (chara->model_0.anim_4.keyframeIdx0_8 >= 41 &&
                                          chara->model_0.anim_4.keyframeIdx0_8 <= 42)
                                 {
                                     g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_WalkForward;
-                                    g_MaybePlayerAnims[0].keyframeIdx1_E            = 20;
-                                    g_MaybePlayerAnims[0].status_6                 = 5;
+                                    HARRY_BASE_ANIM_INFOS[0].keyframeEndIdx_E            = 20;
+                                    HARRY_BASE_ANIM_INFOS[0].status_6                 = 5;
                                 }
                             }
                             // Set stumble anim if crashed into a wall.
@@ -4877,15 +4877,15 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                                     chara->model_0.anim_4.keyframeIdx0_8 <= 31)
                                 {
                                     g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_WalkForward;
-                                    g_MaybePlayerAnims[0].keyframeIdx1_E            = 8;
-                                    g_MaybePlayerAnims[0].status_6                 = 5;
+                                    HARRY_BASE_ANIM_INFOS[0].keyframeEndIdx_E            = 8;
+                                    HARRY_BASE_ANIM_INFOS[0].status_6                 = 5;
                                 }
                                 else if (chara->model_0.anim_4.keyframeIdx0_8 >= 41 &&
                                          chara->model_0.anim_4.keyframeIdx0_8 <= 42)
                                 {
                                     g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_WalkForward;
-                                    g_MaybePlayerAnims[0].keyframeIdx1_E            = 20;
-                                    g_MaybePlayerAnims[0].status_6                 = 5;
+                                    HARRY_BASE_ANIM_INFOS[0].keyframeEndIdx_E            = 20;
+                                    HARRY_BASE_ANIM_INFOS[0].status_6                 = 5;
                                 }
                             }
                         }
@@ -7791,7 +7791,7 @@ void func_8007E860() // 0x8007E860
     for (i = 0; i < 8; i++)
     {
         startIdx                         = 92;
-        g_MaybePlayerAnims[startIdx + i] = g_MapOverlayHeader.animInfos_34[i + 16];
+        HARRY_BASE_ANIM_INFOS[startIdx + i] = g_MapOverlayHeader.animInfos_34[i + 16];
     }
 }
 
@@ -7991,7 +7991,7 @@ void func_8007EBBC() // 0x8007EBBC
 
     for (i = 56; i < 76; i++)
     {
-        g_MaybePlayerAnims[i] = D_80028B94[(i - 56) + var_a1];
+        HARRY_BASE_ANIM_INFOS[i] = D_80028B94[(i - 56) + var_a1];
     }
 
     for (i = 0; i < 10; i++)
@@ -8143,7 +8143,7 @@ bool func_8007F2AC() // 0x8007F2AC
 
 s16 Player_AnimGetSomething() // 0x8007F308
 {
-    return g_MaybePlayerAnims[g_SysWork.player_4C.chara_0.model_0.anim_4.status_0].keyframeIdx0_C;
+    return HARRY_BASE_ANIM_INFOS[g_SysWork.player_4C.chara_0.model_0.anim_4.status_0].keyframeStartIdx_C;
 }
 
 void Player_Controller() // 0x8007F32C
