@@ -182,6 +182,29 @@ const char* g_ItemDescriptions[] =
     "Fuel_for_chainsaws_and\n\t\t\t\t\trock_drills."
 };
 
+s32 D_800AE178 = 0;
+s32 g_Inventory_SelectedItemIdx = 0;
+s32 D_800AE180 = 0;
+u8 g_Inventory_EquippedItem = 0;
+u8 D_800AE185 = 0;
+u8 D_800AE186 = 0;
+u8 D_800AE187 = 0;
+u32 D_800AE188 = 0;
+s16 D_800AE18C = 0; // only ever set to 0, nothing reads it.
+s16 D_800AE18E = 0; // only ever set to 0, nothing reads it.
+s32 D_800AE190 = 0;
+s16 g_Inventory_HealthStatusScanlineTimer = 0;
+s16 g_Inventory_HealthStatusColorGradientTimer = 0;
+s16 D_800AE198 = 0;
+s16 g_Inventory_HealthStatusScanlinePosition = 0xFED4;
+s32 g_Inventory_ItemNameTimer = 0;
+s32 g_Inventory_DescriptionRollTimer = 0;
+s32 g_Inventory_ScrollTransitionTimer = 0;
+s16 D_800AE1A8 = 0;
+s16 __padding = 0;
+s32 g_PickupItemAnimState = 0;
+s32 D_800AE1B0 = 0;
+
 void Inventory_DirectionalInputSet() // 0x8004F5DC
 {
     if (g_Controller0->sticks_20.sticks_0.leftY < -64 || g_Controller0->sticks_20.sticks_0.leftY >= 64 ||
