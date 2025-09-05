@@ -319,6 +319,20 @@ RECT D_800AE5B8[2] =
     {0x140, 0x100, 0x140, 0x0E0},
     {0x0A0, 0x090, 0x0A0, 0x170},
 };
+
+u16 D_800AE5C8[2] = {0x01E0, 0x0170}; // used by SetDrawOffset
+
+// https://decomp.me/scratch/HNL4n something to do with animations ?
+// var_s7 = *(((animStatus + 1) * 2) + &D_800AE5CC) - *((animStatus * 2) + &D_800AE5CC);
+u16 D_800AE5CC[18] = 
+{
+    0x0000, 0x0001, 0x0004, 0x0007,
+    0x0009, 0x000B, 0x000D, 0x000F,
+    0x0011, 0x0014, 0x0017, 0x0018,
+    0x0019, 0x001C, 0x001E, 0x0020,
+    0x0022, 0x0000
+};
+
 void Inventory_DirectionalInputSet() // 0x8004F5DC
 {
     if (g_Controller0->sticks_20.sticks_0.leftY < -64 || g_Controller0->sticks_20.sticks_0.leftY >= 64 ||
