@@ -829,13 +829,6 @@ STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
 
 typedef struct
 {
-    u8    unk_0[4];
-    void* field_4;
-    // Likely incomplete.
-} s_func_80057090;
-
-typedef struct
-{
     s32        field_0;
     u8         unk_4[4];
     s_ObjList* field_8;
@@ -2995,11 +2988,11 @@ void func_80056244(s_PlmHeader* plmHeader, bool flag);
 /** Gets texture count? */
 s32 func_80056348(bool (*arg0)(s_PlmTexList* texList), s_PlmHeader* plmHeader);
 
-/** TODO: Unknown `arg3`/`arg4` types. */
-void func_80059D50(s32 arg0, s_func_80057344* arg1, MATRIX* mat, void* arg3, void* arg4);
+/** TODO: Unknown `arg3` type. */
+void func_80059D50(s32 arg0, s_func_80057344* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4);
 
-/** TODO: Unknown `arg1`/`arg2` types. */
-void func_8005A21C(s_func_80057344* arg0, void* arg1, void* arg2, MATRIX* mat);
+/** TODO: Unknown `arg2` type. */
+void func_8005A21C(s_func_80057344* arg0, GsOT_TAG* arg1, void* arg2, MATRIX* mat);
 
 /** @brief Computes a fog-shaded version of `D_800C4190` color using `arg1` as the distance factor?
  *  Stores the result at 0x3D8 into `arg0`.
@@ -3058,14 +3051,14 @@ bool func_80056CB4(s_800BCE18_2BEC_0* arg0, s_PlmHeader* plmHeader, s_800BCE18_2
 
 void StringCopy(char* prevStr, char* newStr);
 
-void func_80057090(s_func_80057344* arg0, s_func_80057090* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5);
+void func_80057090(s_func_80057344* arg0, GsOT* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5);
 
 s32 func_800571D0(u32 arg0);
 
 void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3);
 
-/** TODO: Unknown `arg1`/`arg2` types. */
-void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, MATRIX* mat);
+/** TODO: Unknown `arg2` type. */
+void func_80057344(s_func_80057344* arg0, GsOT_TAG* arg1, void* arg2, MATRIX* mat);
 
 void func_800574D4(s_ObjHeader* header, s_GteScratchData* scratchData);
 
