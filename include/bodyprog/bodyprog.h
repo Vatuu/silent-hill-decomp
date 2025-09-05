@@ -2496,7 +2496,7 @@ void func_80032904();
 /** @unused Possibly a leftover from when the save menu was part of `BODYPROG.BIN`.
  * Draws some string in display space.
  */
-void func_80032CE8();
+void SaveLoad_NowLoadingStringDraw();
 
 void func_80032D1C();
 

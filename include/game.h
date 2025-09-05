@@ -305,6 +305,7 @@ typedef enum _SysWorkProcessFlags
 
 typedef enum _ControllerFlags
 {
+    ControllerFlag_None         = 0,
     ControllerFlag_Select       = 1 << 0,
     ControllerFlag_L3           = 1 << 1,
     ControllerFlag_R3           = 1 << 2,
@@ -748,9 +749,11 @@ typedef struct _ControllerData
 } s_ControllerData;
 STATIC_ASSERT_SIZEOF(s_ControllerData, 44);
 
-/** Key bindings for input actions. */
-// TODO: Instead of `u16`s, it should use 1-bit packed 16-bit `u32`, similar to `ControllerFlags` but not an enum because it can have multiple values.
-// Only the first 16 values are counted (analog directions are not included). Also, D-Pad is not registered.
+/** @brief Controller key bindings for input actions.
+ *
+ * TODO: Instead of `u16`s, it should use 1-bit packed 16-bit `u32`, similar to `ControllerFlags` but not an enum because it can have multiple values.
+ * Only the first 16 values are counted (analog directions are not included). Also, D-Pad is not registered.
+ */
 typedef struct _ControllerConfig
 {
     u16 enter_0;

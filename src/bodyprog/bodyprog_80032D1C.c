@@ -16,7 +16,7 @@
 #include "main/rng.h"
 #include "screens/stream/stream.h"
 
-void func_80032CE8() // @unused Seems like leftover from when save menu was part of bodyprog.bin.
+void SaveLoad_NowLoadingStringDraw() // 0x80032CE8
 {
     Gfx_StringSetPosition(SCREEN_POSITION_X(33.75f), SCREEN_POSITION_Y(43.5f));
     Gfx_StringDraw("\x7Now_loading.", 100);
@@ -295,17 +295,64 @@ void Settings_RestoreControlDefaults(s32 arg0) // 0x80033480
 {
     u32  i;
     u16* ptr;
-    static const s_ControllerConfig defControls[3] =
+
+    static const s_ControllerConfig DEFAULT_CONTROLLER_CONFIGS[3] =
     {
-        { 0x4008, 0xB000, 0x0008, 0x4000, 0x0200, 0x2000, 0x8000, 0x0100, 0x0400, 0x0800, 0x0008, 0x0001, 0x1000, 0x0000 },
-        { 0x4008, 0xB000, 0x0008, 0x4000, 0x0800, 0x2000, 0x8000, 0x0400, 0x0100, 0x0200, 0x0008, 0x0001, 0x1000, 0x0000 },
-        { 0x4008, 0xB000, 0x0008, 0x4000, 0x0200, 0x2000, 0x8000, 0x0100, 0x0400, 0x0800, 0x0008, 0x1000, 0x0001, 0x0000 },
+        {
+            .enter_0      = ControllerFlag_Start | ControllerFlag_Cross,
+            .cancel_2     = ControllerFlag_Triangle | ControllerFlag_Circle | ControllerFlag_Square,
+            .skip_4       = ControllerFlag_Start,
+            .action_6     = ControllerFlag_Cross,
+            .aim_8        = ControllerFlag_R2,
+            .light_A      = ControllerFlag_Circle,
+            .run_C        = ControllerFlag_Square,
+            .view_E       = ControllerFlag_L2,
+            .stepLeft_10  = ControllerFlag_L1,
+            .stepRight_12 = ControllerFlag_R1,
+            .pause_14     = ControllerFlag_Start,
+            .item_16      = ControllerFlag_Select,
+            .map_18       = ControllerFlag_Triangle,
+            .option_1A    = ControllerFlag_None
+        },
+        {
+            .enter_0      = ControllerFlag_Start | ControllerFlag_Cross,
+            .cancel_2     = ControllerFlag_Triangle | ControllerFlag_Circle | ControllerFlag_Square,
+            .skip_4       = ControllerFlag_Start,
+            .action_6     = ControllerFlag_Cross,
+            .aim_8        = ControllerFlag_R1,
+            .light_A      = ControllerFlag_Circle,
+            .run_C        = ControllerFlag_Square,
+            .view_E       = ControllerFlag_L1,
+            .stepLeft_10  = ControllerFlag_L2,
+            .stepRight_12 = ControllerFlag_R2,
+            .pause_14     = ControllerFlag_Start,
+            .item_16      = ControllerFlag_Select,
+            .map_18       = ControllerFlag_Triangle,
+            .option_1A    = ControllerFlag_None
+        },
+        {
+            .enter_0      = ControllerFlag_Start | ControllerFlag_Cross,
+            .cancel_2     = ControllerFlag_Triangle | ControllerFlag_Circle | ControllerFlag_Square,
+            .skip_4       = ControllerFlag_Start,
+            .action_6     = ControllerFlag_Cross,
+            .aim_8        = ControllerFlag_R2,
+            .light_A      = ControllerFlag_Circle,
+            .run_C        = ControllerFlag_Square,
+            .view_E       = ControllerFlag_L2,
+            .stepLeft_10  = ControllerFlag_L1,
+            .stepRight_12 = ControllerFlag_R1,
+            .pause_14     = ControllerFlag_Start,
+            .item_16      = ControllerFlag_Triangle,
+            .map_18       = ControllerFlag_Select,
+            .option_1A    = ControllerFlag_None
+        },
     };
-    static const u8 __pad[8] = {};
+
+    static const u8 PAD[8] = {};
 
     for (i = 0, ptr = &g_GameWorkPtr->config_0.controllerConfig_0; i < INPUT_ACTION_COUNT; i++, ptr++)
     {
-        *ptr = (&defControls[arg0].enter_0)[i];
+        *ptr = (&DEFAULT_CONTROLLER_CONFIGS[arg0].enter_0)[i];
     }
 }
 
