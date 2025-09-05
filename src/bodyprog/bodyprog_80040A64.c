@@ -607,16 +607,16 @@ void func_80041E98() // 0x80041E98
     D_800C1020.field_0.field_1C = 512;
 }
 
-void func_80041ED0(s16 arg0, s32 xIdx, s32 zIdx) // 0x80041ED0
+void Map_PlaceIpdAtGridPos(s16 ipdFileIdx, s32 x, s32 z) // 0x80041ED0
 {
     s_800C117C*  ptr;
     s_IpdHeader* ipd;
 
-    ((s16*)&D_800C1020.ipdGridCenter_42C[zIdx])[xIdx] = arg0;
+    ((s16*)&D_800C1020.ipdGridCenter_42C[z])[x] = ipdFileIdx;
 
     for (ptr = D_800C1020.ipdTable_15C; ptr < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableSize_158]; ptr++)
     {
-        if (ptr->field_8 != xIdx || ptr->field_A != zIdx)
+        if (ptr->field_8 != x || ptr->field_A != z)
         {
             continue;
         }
@@ -641,7 +641,7 @@ void func_80041FF0() // 0x80041FF0
 
 void func_8004201C() // 0x8004201C
 {
-    s_800C1450_58* ptr;
+    s_PlmTexList_8* ptr;
 
     ptr = &D_800C1020.field_430.field_58[0];
     while (ptr < (&D_800C1020.field_430.field_58[8]))
@@ -688,9 +688,9 @@ void func_800420FC() // 0x800420FC
     func_80041CB4(&D_800C1020.field_138, D_800C1020.field_138.plmHeader_0);
 }
 
-s_800C1450_58* func_80042178(char* arg0) // 0x80042178
+s_PlmTexList_8* func_80042178(char* arg0) // 0x80042178
 {
-    s_800C1450_58* ptr;
+    s_PlmTexList_8* ptr;
 
     ptr = func_8005B4BC(arg0, &D_800C1020.field_430.field_0);
     if (ptr != NULL)
@@ -780,27 +780,27 @@ void func_80042300(s_800C1020* arg0, s32 arg1) // 0x80042300
     }
 }
 
-void Map_MakeIpdGrid(s_800C1020* arg0, char* mapTag, s32 arg2) // 0x800423F4
+void Map_MakeIpdGrid(s_800C1020* arg0, char* mapTag, s32 fileIdxStart) // 0x800423F4
 {
-    s8        sp10[256];
-    s32       j;
-    s32       i;
-    s32       k;
-    s8*       filenameSuffix;
-    s_IpdRow* ptr;
+    s8              sp10[256];
+    s32             x;
+    s32             z;
+    s32             k;
+    s8*             filenameSuffix;
+    s_IpdColumn*    col;
 
-    arg0->ipdGridCenter_42C = (s_IpdRow*)(&arg0->ipdGrid_1CC[8].idx[8]);
+    arg0->ipdGridCenter_42C = (s_IpdColumn*)(&arg0->ipdGrid_1CC[8].idx[8]);
 
-    for (i = -8; i < 11; i++)
+    for (z = -8; z < 11; z++)
     {
-        for (j = -8; j < 8; j++)
+        for (x = -8; x < 8; x++)
         {
-            ((s16*)&arg0->ipdGridCenter_42C[i])[j] = NO_VALUE;
+            ((s16*)&arg0->ipdGridCenter_42C[z])[x] = NO_VALUE;
         }
     }
 #define FILE_TYPE_IPD (6)
     // Run through all game files.
-    for (k = arg2; k < 2074; k++)
+    for (k = fileIdxStart; k < 2074; k++)
     {
         if (g_FileTable[k].type_8_18 == FILE_TYPE_IPD)
         {
@@ -812,8 +812,8 @@ void Map_MakeIpdGrid(s_800C1020* arg0, char* mapTag, s32 arg2) // 0x800423F4
                 if (ConvertHexToS16(&j, filenameSuffix[0], filenameSuffix[1]) &&
                     ConvertHexToS16(&i, filenameSuffix[2], filenameSuffix[3]))
                 {
-                    ptr         = &arg0->ipdGridCenter_42C[i];
-                    ptr->idx[j] = k;
+                    col         = &arg0->ipdGridCenter_42C[z];
+                    col->idx[x] = k;
                 }
             }
         }
@@ -1290,12 +1290,12 @@ void func_80043C7C(s_IpdHeader* ipdHeader, s_800C1450_0* arg1, s_800C1450_0* arg
 
     if (arg1 != NULL)
     {
-        func_80056774(ipdHeader->plmHeader_4, arg1, &func_80043D44, arg3, 1);
+        func_80056774(ipdHeader->plmHeader_4, arg1, &PlmFilter_NameDoesNotEndWithH, arg3, 1);
     }
 
     if (arg2 != NULL)
     {
-        func_80056774(ipdHeader->plmHeader_4, arg2, &func_80043D64, arg3, 1);
+        func_80056774(ipdHeader->plmHeader_4, arg2, &PlmFilter_NameEndsWithH, arg3, 1);
     }
 }
 
@@ -1306,15 +1306,18 @@ s32 func_80043D00(s_IpdHeader* ipdHeader) // 0x80043D00
         return 0;
     }
 
-    return func_80056348(func_80043D64, ipdHeader->plmHeader_4);
+    return func_80056348(PlmFilter_NameEndsWithH, ipdHeader->plmHeader_4);
 }
 
-bool func_80043D44(s_PlmTexList* texList) // 0x80043D44
+bool PlmFilter_NameDoesNotEndWithH(s_PlmTexList* texList) // 0x80043D44
 {
-    return !func_80043D64(texList);
+    return !PlmFilter_NameEndsWithH(texList);
 }
 
-bool func_80043D64(s_PlmTexList* texList) // 0x80043D64
+/* Not sure what is the significance of textures that end with H.
+ * I've looked at all of them and can't find any pattern.
+ */
+bool PlmFilter_NameEndsWithH(s_PlmTexList* texList) // 0x80043D64
 {
     char* charCode;
 
