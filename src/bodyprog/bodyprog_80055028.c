@@ -1596,19 +1596,19 @@ u8 func_8005AA08(s_ObjHeader* objHeader, s32 arg1, s_GteScratchData2* scratchDat
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005AC50); // 0x8005AC50
 
-void func_8005B1A0(s_800C1450_58* arg0, char* arg1, s32 arg2, u8 arg3, s32 arg4, s32 arg5, s16 arg6, s16 arg7) // 0x8005B1A0
+void func_8005B1A0(s_PlmTexList_8* arg0, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY) // 0x8005B1A0
 {
-    arg0->field_0 = arg2;
-    arg0->field_1 = arg3;
-    arg0->field_2 = arg4;
-    arg0->field_3 = arg5;
-    arg0->field_4 = arg6;
-    arg0->field_6 = arg7;
+    arg0->imageDesc_0.tPage[0] = tPage0;
+    arg0->imageDesc_0.tPage[1] = tPage1;
+    arg0->imageDesc_0.u        = u;
+    arg0->imageDesc_0.v        = v;
+    arg0->imageDesc_0.clutX    = clutX;
+    arg0->imageDesc_0.clutY    = clutY;
 
-    StringCopy(arg0->string_8.str, arg1);
+    StringCopy(arg0->textureName_8.str, texName);
 
     arg0->field_14 = 0;
-    arg0->field_10 = NO_VALUE;
+    arg0->queueIdx_10 = NO_VALUE;
 }
 
 #define cmp_str(a, b)\
@@ -1669,25 +1669,25 @@ s_PlmTexList_8* func_8005B1FC(s_PlmTexList* arg0, s_800C1450_0* arg1, void* fs_b
     return found;
 }
 
-void func_8005B370(s_800C1450_58* arg0) // 0x8005B370
+void func_8005B370(s_PlmTexList_8* arg0) // 0x8005B370
 {
     arg0->field_14 = 0;
 }
 
-void func_8005B378(s_800C1450_58* arg0, char* arg1) // 0x8005B378
+void func_8005B378(s_PlmTexList_8* arg0, char* arg1) // 0x8005B378
 {
     arg0->field_14 = 1;
-    arg0->field_10 = 0;
-    StringCopy(arg0->string_8.str, arg1);
+    arg0->queueIdx_10 = 0;
+    StringCopy(arg0->textureName_8.str, arg1);
 }
 
-void func_8005B3A4(s_800C1450_58* arg0) // 0x8005B3A4
+void func_8005B3A4(s_PlmTexList_8* arg0) // 0x8005B3A4
 {
-    arg0->string_8.u32[1] = 0;
-    arg0->string_8.u32[0] = 0;
+    arg0->textureName_8.u32[1] = 0;
+    arg0->textureName_8.u32[0] = 0;
 
     arg0->field_14 = 0;
-    arg0->field_10 = NO_VALUE;
+    arg0->queueIdx_10 = NO_VALUE;
 }
 
 void func_8005B3BC(char* filename, s_PlmTexList* plmTexList) // 0x8005B3BC
@@ -1727,10 +1727,10 @@ void func_8005B46C(s_800C1450_0* arg0) // 0x8005B46C
     arg0->count_0 = 0;
 }
 
-void func_8005B474(s_800C1450_0* arg0, s_800C1450_58* arg1, s32 idx) // 0x8005B474
+void func_8005B474(s_800C1450_0* arg0, s_PlmTexList_8* arg1, s32 idx) // 0x8005B474
 {
-    s_800C1450_58*  ptr;
-    s_800C1450_58** entryPtr;
+    s_PlmTexList_8*  ptr;
+    s_PlmTexList_8** entryPtr;
 
     entryPtr = arg0->entries_4;
     for (ptr = &arg1[0]; ptr < &arg1[idx];)
@@ -1740,11 +1740,11 @@ void func_8005B474(s_800C1450_0* arg0, s_800C1450_58* arg1, s32 idx) // 0x8005B4
     }
 }
 
-s_800C1450_58* func_8005B4BC(char* str, s_800C1450_0* arg1) // 0x8005B4BC
+s_PlmTexList_8* func_8005B4BC(char* str, s_800C1450_0* arg1) // 0x8005B4BC
 {
     char           prevStr[8];
     s32            i;
-    s_800C1450_58* ptr;
+    s_PlmTexList_8* ptr;
 
     StringCopy(prevStr, str);
 
@@ -1753,8 +1753,8 @@ s_800C1450_58* func_8005B4BC(char* str, s_800C1450_0* arg1) // 0x8005B4BC
         ptr = arg1->entries_4[i];
 
         // Fast string comparison.
-        if (ptr->field_10 != NO_VALUE &&
-            *(u32*)&prevStr[0] == ptr->string_8.u32[0] && *(u32*)&prevStr[4] == ptr->string_8.u32[1])
+        if (ptr->queueIdx_10 != NO_VALUE &&
+            *(u32*)&prevStr[0] == ptr->textureName_8.u32[0] && *(u32*)&prevStr[4] == ptr->textureName_8.u32[1])
         {
             return ptr;
         }

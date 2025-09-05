@@ -1078,21 +1078,6 @@ STATIC_ASSERT_SIZEOF(s_IpdColumn, 32);
 
 typedef struct
 {
-    s8         field_0;
-    s8         field_1;
-    s8         field_2;
-    s8         field_3;
-    s16        field_4;
-    s16        field_6;
-    u_Filename string_8;
-    s32        field_10;
-    s8         field_14;
-    u8         unk_15[3];
-} s_800C1450_58;
-STATIC_ASSERT_SIZEOF(s_800C1450_58, 24);
-
-typedef struct
-{
     s32             count_0;
     s_PlmTexList_8* entries_4[10];
 } s_800C1450_0;
@@ -1100,10 +1085,10 @@ typedef struct
 // Related to textures.
 typedef struct
 {
-    s_800C1450_0  field_0;
-    s_800C1450_0  field_2C;
-    s_800C1450_58 field_58[8];
-    s_800C1450_58 field_118[2];
+    s_800C1450_0   field_0;
+    s_800C1450_0   field_2C;
+    s_PlmTexList_8 field_58[8];
+    s_PlmTexList_8 field_118[2];
 } s_800C1450;
 STATIC_ASSERT_SIZEOF(s_800C1450, 328);
 
@@ -2646,7 +2631,7 @@ void func_800420C0();
 
 void func_800420FC();
 
-s_800C1450_58* func_80042178(char* arg0);
+s_PlmTexList_8* func_80042178(char* arg0);
 
 void func_800421D8(char* mapTag, s32 plmIdx, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
@@ -3031,13 +3016,13 @@ void func_8005A900(s_ObjHeader* objHeader, s32 offset, s_GteScratchData* scratch
 u8 func_8005AA08(s_ObjHeader* objHeader, s32 arg1, s_GteScratchData2* scratchData);
 
 /** Related to enviroment textures. */
-void func_8005B1A0(s_800C1450_58* arg0, char* arg1, s32 arg2, u8 arg3, s32 arg4, s32 arg5, s16 arg6, s16 arg7);
+void func_8005B1A0(s_PlmTexList_8* arg0, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY);
 
-void func_8005B370(s_800C1450_58* arg0);
+void func_8005B370(s_PlmTexList_8* arg0);
 
-void func_8005B378(s_800C1450_58* arg0, char* arg1);
+void func_8005B378(s_PlmTexList_8* arg0, char* arg1);
 
-void func_8005B3A4(s_800C1450_58* arg0);
+void func_8005B3A4(s_PlmTexList_8* arg0);
 
 void func_8005B3BC(char* filename, s_PlmTexList* plmTexList);
 
@@ -3404,9 +3389,9 @@ void GameFs_Tim00TIMLoad();
 void func_8005B46C(s_800C1450_0* arg0);
 
 /** Crucial for map loading. */
-void func_8005B474(s_800C1450_0* arg0, s_800C1450_58* arg1, s32 idx);
+void func_8005B474(s_800C1450_0* arg0, s_PlmTexList_8* arg1, s32 idx);
 
-s_800C1450_58* func_8005B4BC(char* str, s_800C1450_0* arg1);
+s_PlmTexList_8* func_8005B4BC(char* str, s_800C1450_0* arg1);
 
 /** Sets the debug string position. */
 void func_8005BF0C(s16 unused, s16 x, s16 y);

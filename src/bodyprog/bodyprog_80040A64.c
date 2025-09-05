@@ -641,7 +641,7 @@ void func_80041FF0() // 0x80041FF0
 
 void func_8004201C() // 0x8004201C
 {
-    s_800C1450_58* ptr;
+    s_PlmTexList_8* ptr;
 
     ptr = &D_800C1020.field_430.field_58[0];
     while (ptr < (&D_800C1020.field_430.field_58[8]))
@@ -688,9 +688,9 @@ void func_800420FC() // 0x800420FC
     func_80041CB4(&D_800C1020.field_138, D_800C1020.field_138.plmHeader_0);
 }
 
-s_800C1450_58* func_80042178(char* arg0) // 0x80042178
+s_PlmTexList_8* func_80042178(char* arg0) // 0x80042178
 {
-    s_800C1450_58* ptr;
+    s_PlmTexList_8* ptr;
 
     ptr = func_8005B4BC(arg0, &D_800C1020.field_430.field_0);
     if (ptr != NULL)
