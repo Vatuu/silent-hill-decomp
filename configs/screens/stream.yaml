@@ -2,7 +2,7 @@ name: Video stream logic overlay (STREAM)
 sha1: 2a0ffcbbb4f28d3bb66f7f73f18c1d4502cb2fe6
 options:
   basename: STREAM.BIN
-  target_path: assets/VIN/STREAM.BIN
+  target_path: assets/USA/VIN/STREAM.BIN
   base_path: ../..
   platform: psx
   compiler: GCC

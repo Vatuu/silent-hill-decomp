@@ -2,7 +2,7 @@ name: The MAP2_S00 map overlay (MAP2_S00)
 sha1: 61511d5987f09f972882ee35afe48ad2ea7c53a6
 options:
   basename: MAP2_S00.BIN
-  target_path: assets/VIN/MAP2_S00.BIN
+  target_path: assets/USA/VIN/MAP2_S00.BIN
   base_path: ../..
   platform: psx
   compiler: GCC

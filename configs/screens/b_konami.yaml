@@ -2,7 +2,7 @@ name: Boot screen overlay (B_KONAMI)
 sha1: 14829c61f976b261e0b89ee9f967f1be70a54fc6
 options:
   basename: B_KONAMI.BIN
-  target_path: assets/1ST/B_KONAMI.BIN
+  target_path: assets/USA/1ST/B_KONAMI.BIN
   base_path: ../..
   platform: psx
   compiler: GCC

@@ -2,7 +2,7 @@ name: Main Game Logic Overlay (BODYPROG)
 sha1: eb118537b0c3c1e5cccfa2c5d283b3119c5ec7a3
 options:
   basename: BODYPROG.BIN
-  target_path: assets/1ST/BODYPROG.BIN
+  target_path: assets/USA/1ST/BODYPROG.BIN
   base_path: ..
   platform: psx
   compiler: GCC

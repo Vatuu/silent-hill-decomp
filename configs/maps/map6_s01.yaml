@@ -2,7 +2,7 @@ name: The MAP6_S01 map overlay (MAP6_S01)
 sha1: 9b4d78ca0b255dc2aef2e3aaa72d2f191ca6b13a
 options:
   basename: MAP6_S01.BIN
-  target_path: assets/VIN/MAP6_S01.BIN
+  target_path: assets/USA/VIN/MAP6_S01.BIN
   base_path: ../..
   platform: psx
   compiler: GCC

@@ -2,7 +2,7 @@ name: Main Executable (SLUS_007.07)
 sha1: f38344565fb731befc52fd968eb5a667be37acf3
 options:
   basename: main
-  target_path: rom/SLUS_007.07
+  target_path: rom/USA/SLUS_007.07
   base_path: ..
   platform: psx
   compiler: GCC

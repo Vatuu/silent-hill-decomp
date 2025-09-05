@@ -7,11 +7,28 @@ NON_MATCHING   ?= 0
 SKIP_ASM       ?= 0
 
 # Names and Paths
+#
+# Versions supported
+#
+# Retail:
+# USA
 
-GAME_NAME := SLUS-00707
+GAME_VERSION = JAP-2
+
+ifeq ($(GAME_VERSION), USA)
+
+# RETAIL
+
+GAME_NAME        := SLUS-00707
+GAME_VERSION_DIR := USA
+GAME_FILE_EXE    := SLUS_007.07
+GAME_FILE_SILENT := SILENT.
+GAME_FILE_HILL   := HILL.
+
+endif
 
 ROM_DIR      := rom
-CONFIG_DIR   := configs
+CONFIG_DIR   := configs/$(GAME_VERSION_DIR)
 LINKER_DIR   := linkers
 IMAGE_DIR    := $(ROM_DIR)/image
 BUILD_DIR    := build
@@ -57,10 +74,10 @@ LD_FLAGS            := $(ENDIAN) $(OPT_FLAGS) -nostdlib --no-check-sections
 OBJCOPY_FLAGS       := -O binary
 OBJDUMP_FLAGS       := --disassemble-all --reloc --disassemble-zeroes -Mreg-names=32
 SPLAT_FLAGS         := --disassemble-all --make-full-disasm-for-code
-DUMPSXISO_FLAGS     := -x $(ROM_DIR) -s $(ROM_DIR)/layout.xml $(IMAGE_DIR)/$(GAME_NAME).bin
-MKPSXISO_FLAGS      := -y -q $(ROM_DIR)/shgame.xml
-SILENT_ASSETS_FLAGS := -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -fh $(ROM_DIR)/HILL. $(ASSETS_DIR)
-INSERT_OVLS_FLAGS   := -exe $(ROM_DIR)/SLUS_007.07 -fs $(ROM_DIR)/SILENT. -ftb $(ASSETS_DIR)/filetable.c.inc -b $(OUT_DIR) -xml $(ROM_DIR)/layout.xml -o $(ROM_DIR)
+DUMPSXISO_FLAGS     := -x "$(ROM_DIR)/$(GAME_VERSION)" -s "$(ROM_DIR)/$(GAME_VERSION)/layout.xml" "$(IMAGE_DIR)/$(GAME_NAME).bin"
+MKPSXISO_FLAGS      := -y -q "$(ROM_DIR)/$(GAME_VERSION)/rebuild.xml"
+SILENT_ASSETS_FLAGS := -exe "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_EXE)" -fs "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_SILENT)" -fh "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_HILL)" "$(ASSETS_DIR)/$(GAME_VERSION)"
+INSERT_OVLS_FLAGS   := -exe "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_EXE)" -fs "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_SILENT)" -ftb "$(ASSETS_DIR)/$(GAME_VERSION)/filetable.c.inc" -b $(OUT_DIR) -xml "$(ROM_DIR)/$(GAME_VERSION)/layout.xml" -o $(ROM_DIR)
 
 # Targets that will run tools/prebuild.sh after splat has finished, before being built.
 TARGET_PREBUILD  := main bodyprog screens/stream
@@ -81,7 +98,7 @@ define FlagsSwitch
 		$(eval MASPSX_FLAGS = --aspsx-version=2.77 --run-assembler --expand-div $(AS_FLAGS)), \
 		$(eval MASPSX_FLAGS = --aspsx-version=2.77 --run-assembler $(AS_FLAGS)))
 
-	$(eval _rel_path := $(patsubst build/src/maps/%,%,$(patsubst build/asm/maps/%,%,$(1))))
+	$(eval _rel_path := $(patsubst build/src/maps/%,%,$(patsubst build/${asm}/maps/%,%,$(1))))
 	$(eval _map_name := $(shell echo $(word 1, $(subst /, ,$(_rel_path))) | tr a-z A-Z))
 	$(if $(and $(findstring MAP,$(_map_name)),$(findstring _S,$(_map_name))), \
 		$(eval OVL_FLAGS := -D$(_map_name)), \
@@ -117,7 +134,7 @@ gen_o_files = $(addprefix $(BUILD_DIR)/, \
 get_yaml_path = $(addsuffix .yaml,$(addprefix $(CONFIG_DIR)/,$1))
 
 # Function to get target output path for given target.
-get_target_out = $(addprefix $(OUT_DIR)/,$(shell $(GET_YAML_TARGET) $(call get_yaml_path,$1)))
+get_target_out = $(patsubst $(OUT_DIR)/$(GAME_VERSION)%,$(OUT_DIR)%,$(addprefix $(OUT_DIR)/,$(shell $(GET_YAML_TARGET) $(call get_yaml_path,$1))))
 
 # Template definition for elf target.
 # First parameter should be source target with folder (e.g. screens/credits).
@@ -135,6 +152,9 @@ endef
 else
 
 define make_elf_target
+
+ifeq ($(GAME_VERSION), USA)
+
 $2: $2.elf
 	$(OBJCOPY) $(OBJCOPY_FLAGS) $$< $$@
 ifneq (,$(filter $1,$(TARGET_POSTBUILD)))
@@ -150,6 +170,22 @@ $2.elf: $(call gen_o_files, $1)
 		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_funcs_auto.$(notdir $1).txt \
 		-T $(CONFIG_DIR)/lib_externs.ld \
 		-o $$@
+
+else
+
+$2: $2.elf
+	$(OBJCOPY) $(OBJCOPY_FLAGS) $$< $$@
+
+$2.elf: $(call gen_o_files, $1)
+	@mkdir -p $(dir $2)
+	$(LD) $(LD_FLAGS) \
+		-Map $2.map \
+		-T $(LINKER_DIR)/$1.ld \
+		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_syms_auto.$(notdir $1).txt \
+		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_funcs_auto.$(notdir $1).txt \
+		-o $$@
+endif
+
 endef
 
 endif
@@ -169,7 +205,8 @@ endif
 
 ifeq ($(BUILD_SCREENS), 1)
 
-TARGET_SCREENS := b_konami credits options saveload stream
+TARGET_SCREENS := credits options saveload stream
+
 TARGET_SCREENS := $(addprefix $(TARGET_SCREENS_SRC_DIR)/,$(TARGET_SCREENS))
 
 endif
@@ -218,12 +255,11 @@ objdiff-config: regenerate
 	@$(MAKE) NON_MATCHING=1 SKIP_ASM=1 expected
 	@$(PYTHON) $(OBJDIFF_DIR)/objdiff_generate.py $(OBJDIFF_DIR)/config.yaml
 
-report:
-	@$(MAKE) BUILD_ENGINE=1 BUILD_SCREENS=1 BUILD_MAPS=1 objdiff-config
+report: objdiff-config
 	@$(OBJDIFF) report generate > $(BUILD_DIR)/progress.json
 
 check: build
-	@sha256sum --ignore-missing --check checksum.sha
+	@sha256sum --ignore-missing --check "$(CONFIG_DIR)/checksum.sha"
 
 progress:
 	$(MAKE) build NON_MATCHING=1 SKIP_ASM=1
@@ -237,6 +273,7 @@ iso:
 	$(MKPSXISO) $(MKPSXISO_FLAGS)
 
 extract:
+	rm -rf "$(ASSETS_DIR)/$(GAME_VERSION)"
 	$(DUMPSXISO) $(DUMPSXISO_FLAGS)
 	$(SILENT_ASSETS) $(SILENT_ASSETS_FLAGS)
 

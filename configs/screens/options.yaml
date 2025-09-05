@@ -2,7 +2,7 @@ name: Options screen overlay (OPTION)
 sha1: 229ffee4981d704b0afa87a2ea0298fd5038154f
 options:
   basename: OPTION.BIN
-  target_path: assets/VIN/OPTION.BIN
+  target_path: assets/USA/VIN/OPTION.BIN
   base_path: ../..
   platform: psx
   compiler: GCC

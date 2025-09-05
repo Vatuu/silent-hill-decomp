@@ -2,7 +2,7 @@ name: Credits roll overlay (STF_ROLL)
 sha1: 5a40c5ea20e9903804c5656c828869f8b858c2d1
 options:
   basename: STF_ROLL.BIN
-  target_path: assets/VIN/STF_ROLL.BIN
+  target_path: assets/USA/VIN/STF_ROLL.BIN
   base_path: ../..
   platform: psx
   compiler: GCC

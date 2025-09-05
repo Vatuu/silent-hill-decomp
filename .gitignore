@@ -10,6 +10,9 @@ permuter/
 expected/
 .venv/
 .cache/
+.splache
+.ninja_log
+build.ninja
 
 objdiff.json
 null.d

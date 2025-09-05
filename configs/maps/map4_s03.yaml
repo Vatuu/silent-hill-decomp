@@ -2,7 +2,7 @@ name: The MAP4_S03 map overlay (MAP4_S03)
 sha1: 0b5b1cb8f3b0159f0c20cc5f207404cb9941dd69
 options:
   basename: MAP4_S03.BIN
-  target_path: assets/VIN/MAP4_S03.BIN
+  target_path: assets/USA/VIN/MAP4_S03.BIN
   base_path: ../..
   platform: psx
   compiler: GCC

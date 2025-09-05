@@ -2,7 +2,7 @@ name: Save/Load screen overlay (SAVELOAD)
 sha1: af613b5c4b1ebb43a7ce6e5ecfd78262c5711e93
 options:
   basename: SAVELOAD.BIN
-  target_path: assets/VIN/SAVELOAD.BIN
+  target_path: assets/USA/VIN/SAVELOAD.BIN
   base_path: ../..
   platform: psx
   compiler: GCC
