@@ -38,7 +38,7 @@ void func_80070B84(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3) // 0x800
     { 
         if (arg1 < g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126)
         {
-            temp_v0                                                                 = g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 - ((Math_UnkDistTimeCalc(FP_METER(0.4f))) * 2);
+            temp_v0                                                                 = g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 - ((Math_DeltaTimeDistScale(FP_METER(0.4f))) * 2);
             g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = temp_v0;
             if (temp_v0 < arg1)
             {
@@ -50,7 +50,7 @@ void func_80070B84(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3) // 0x800
             new_var = &g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126;
             if (chara->model_0.anim_4.keyframeIdx0_8 >= arg3)
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = *new_var + Math_UnkDistTimeCalc(FP_TIME(0.4f));
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = *new_var + Math_DeltaTimeDistScale(FP_TIME(0.4f));
             }
 
             g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = CLAMP(*new_var, 0, arg1);
@@ -1479,7 +1479,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             {
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= Math_UnkDistTimeCalc(FP_METER(0.4f)) >> 1;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= Math_DeltaTimeDistScale(FP_METER(0.4f)) >> 1;
                     if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16 & 1)
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
@@ -1489,7 +1489,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             }
             else if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= Math_UnkDistTimeCalc(FP_METER(0.4f)) >> 2;
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= Math_DeltaTimeDistScale(FP_METER(0.4f)) >> 2;
 
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16 & 1)
                 {
@@ -4117,7 +4117,7 @@ void Player_StepWallStop_MovementCancel(s_SubCharacter* chara, s32 animStatus0, 
 
     if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != FP_METER(0.0f))
     {
-        g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (Math_UnkDistTimeCalc(FP_METER(0.4f))) >> 1;
+        g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (Math_DeltaTimeDistScale(FP_METER(0.4f))) >> 1;
         if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & (1 << 0))
         {
             g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = FP_METER(0.0f);
@@ -4233,7 +4233,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             {
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= Math_UnkDistTimeCalc(FP_METER(0.4f));
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= Math_DeltaTimeDistScale(FP_METER(0.4f));
                     if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & 1)
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
@@ -4242,7 +4242,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             }
             else if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (Math_UnkDistTimeCalc(FP_METER(0.4f))) * 2;
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (Math_DeltaTimeDistScale(FP_METER(0.4f))) * 2;
                 if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & 1)
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
@@ -4549,7 +4549,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             {
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != FP_METER(0.0f))
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (Math_UnkDistTimeCalc(FP_METER(0.4f))) * 2;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (Math_DeltaTimeDistScale(FP_METER(0.4f))) * 2;
 
                     if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & (1 << 0))
                     {
@@ -4575,7 +4575,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                     // Reduce speed if going too fast while walking.
                     else if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 > FP_METER(1.4f))
                     {
-                        g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (Math_UnkDistTimeCalc(FP_METER(0.4f))) * 2;
+                        g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (Math_DeltaTimeDistScale(FP_METER(0.4f))) * 2;
                         if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < FP_METER(1.4f))
                         {
                             g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = FP_METER(1.4f);
@@ -4585,7 +4585,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                     {
                         if (chara->model_0.anim_4.keyframeIdx0_8 >= 2)
                         {
-                            g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += Math_UnkDistTimeCalc(FP_METER(0.4f));
+                            g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += Math_DeltaTimeDistScale(FP_METER(0.4f));
                         }
                         
                         g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = CLAMP(g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126,
@@ -4717,7 +4717,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < FP_METER(3.5f)) 
                 {
-                    var_a3 = Math_UnkDistTimeCalc(FP_METER(0.75f));
+                    var_a3 = Math_DeltaTimeDistScale(FP_METER(0.75f));
                 } 
                 else 
                 {
@@ -4726,7 +4726,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                     var_a3 = temp >> 2;
                 }
 
-                func_80070CF0(chara, FP_FLOAT_TO(2.0f, Q12_SHIFT), var_a2, var_a3, Math_UnkDistTimeCalc(FP_METER(0.4f)));
+                func_80070CF0(chara, FP_FLOAT_TO(2.0f, Q12_SHIFT), var_a2, var_a3, Math_DeltaTimeDistScale(FP_METER(0.4f)));
             }
             // Stopped running.
             else
@@ -4737,7 +4737,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
                     if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < FP_METER(3.5f)) 
                     {
-                        var_a3 = Math_UnkDistTimeCalc(FP_METER(0.75f));
+                        var_a3 = Math_DeltaTimeDistScale(FP_METER(0.75f));
                     } 
                     else 
                     {
@@ -4746,11 +4746,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                         var_a3 = temp >> 2;
                     }
 
-                    func_80070CF0(chara, FP_FLOAT_TO(2.0f, Q12_SHIFT), var_a2, var_a3, Math_UnkDistTimeCalc(FP_METER(0.4f)));
+                    func_80070CF0(chara, FP_FLOAT_TO(2.0f, Q12_SHIFT), var_a2, var_a3, Math_DeltaTimeDistScale(FP_METER(0.4f)));
                 }
                 else if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 > GET_REAL_SPEED(speedId))
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= Math_UnkDistTimeCalc(FP_METER(0.4f));
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= Math_DeltaTimeDistScale(FP_METER(0.4f));
                     if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < GET_REAL_SPEED(speedId))
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = GET_REAL_SPEED(speedId);
@@ -4916,7 +4916,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
         case PlayerLowerBodyState_RunForwardWallStop:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (Math_UnkDistTimeCalc(FP_METER(0.4f))) >> 1;
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (Math_DeltaTimeDistScale(FP_METER(0.4f))) >> 1;
                 if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & (1 << 0))
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
@@ -4965,7 +4965,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             {
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= ((Math_UnkDistTimeCalc(FP_METER(0.4f))) * 2);
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= ((Math_DeltaTimeDistScale(FP_METER(0.4f))) * 2);
                     if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & (1 << 0))
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
@@ -4987,7 +4987,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 }
                 else if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 > FP_METER(1.15f))
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (Math_UnkDistTimeCalc(FP_METER(0.4f))) * 2;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (Math_DeltaTimeDistScale(FP_METER(0.4f))) * 2;
                     if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < FP_METER(1.15f))
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = FP_METER(1.15f);
@@ -4997,7 +4997,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 {
                     if (chara->model_0.anim_4.keyframeIdx0_8 >= 2)
                     {
-                        g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += Math_UnkDistTimeCalc(FP_METER(0.4f));
+                        g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += Math_DeltaTimeDistScale(FP_METER(0.4f));
                     }
                         
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = CLAMP(g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126,
@@ -5108,7 +5108,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
         case PlayerLowerBodyState_AimSidestepRight:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 > FP_METER(1.25f))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (Math_UnkDistTimeCalc(FP_METER(0.4f)));
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (Math_DeltaTimeDistScale(FP_METER(0.4f)));
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < FP_METER(1.25f))
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = FP_METER(1.25f);
@@ -5119,11 +5119,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 if (chara->model_0.anim_4.keyframeIdx0_8 >= 100 &&
                     chara->model_0.anim_4.keyframeIdx0_8 <= 111)
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += Math_UnkDistTimeCalc(FP_METER(0.4f));
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += Math_DeltaTimeDistScale(FP_METER(0.4f));
                 }
                 else if (chara->model_0.anim_4.keyframeIdx0_8 >= 112)
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= Math_UnkDistTimeCalc(FP_METER(0.4f));
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= Math_DeltaTimeDistScale(FP_METER(0.4f));
                 }
 
                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = CLAMP(g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126,
@@ -5189,7 +5189,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
         case PlayerLowerBodyState_AimSidestepLeft:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 > FP_METER(1.25f))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= Math_UnkDistTimeCalc(FP_METER(0.4f));
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= Math_DeltaTimeDistScale(FP_METER(0.4f));
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < FP_METER(1.25f))
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = FP_METER(1.25f);
@@ -5200,11 +5200,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 if (chara->model_0.anim_4.keyframeIdx0_8 >= 75 &&
                     chara->model_0.anim_4.keyframeIdx0_8 <= 86)
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += Math_UnkDistTimeCalc(FP_METER(0.4f));
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += Math_DeltaTimeDistScale(FP_METER(0.4f));
                 }
                 else if (chara->model_0.anim_4.keyframeIdx0_8 >= 87)
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= Math_UnkDistTimeCalc(FP_METER(0.4f));
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= Math_DeltaTimeDistScale(FP_METER(0.4f));
                 }
 
                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = CLAMP(g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126,
@@ -5269,7 +5269,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             chara->properties_E4.player.exertionTimer_FC += g_DeltaTime0;
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 > FP_METER(3.1739))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= Math_UnkDistTimeCalc(FP_METER(0.4f));
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= Math_DeltaTimeDistScale(FP_METER(0.4f));
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < FP_METER(3.1739))
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = FP_METER(3.1739);
@@ -5277,7 +5277,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             }
             else if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < FP_METER(3.1739))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += Math_UnkDistTimeCalc(FP_METER(0.75f));
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += Math_DeltaTimeDistScale(FP_METER(0.75f));
                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126  = CLAMP(g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126,
                                                                                                  FP_METER(0.0f),
                                                                                                  FP_METER(3.1739));
@@ -5360,7 +5360,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             chara->properties_E4.player.exertionTimer_FC += g_DeltaTime0;
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 > FP_METER(3.1739))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= Math_UnkDistTimeCalc(FP_METER(0.4f));
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= Math_DeltaTimeDistScale(FP_METER(0.4f));
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < FP_METER(3.1739))
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = FP_METER(3.1739);
@@ -5368,7 +5368,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             }
             else if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < FP_METER(3.1739))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += Math_UnkDistTimeCalc(FP_METER(0.75f));
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += Math_DeltaTimeDistScale(FP_METER(0.75f));
                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126  = CLAMP(g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126,
                                                                                                  FP_METER(0.0f),
                                                                                                  FP_METER(3.1739));
@@ -5717,7 +5717,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             {
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= ((Math_UnkDistTimeCalc(FP_METER(0.4f))) * 2);
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= ((Math_DeltaTimeDistScale(FP_METER(0.4f))) * 2);
                     if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & (1 << 0))
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
@@ -5758,7 +5758,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
         case PlayerLowerBodyState_Stumble:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != FP_METER(0.0f))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= ((Math_UnkDistTimeCalc(FP_METER(0.4f))) * 2) / 3;
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= ((Math_DeltaTimeDistScale(FP_METER(0.4f))) * 2) / 3;
                 if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & (1 << 0))
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = FP_METER(0.0f);
@@ -5767,7 +5767,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
             if (D_800C45DC <= FP_FLOAT_TO(0.5f, Q12_SHIFT) && g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != FP_METER(0.0f))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (Math_UnkDistTimeCalc(FP_METER(0.4f))) * 4;
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (Math_DeltaTimeDistScale(FP_METER(0.4f))) * 4;
                 if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & (1 << 0))
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = FP_METER(0.0f);
@@ -5798,7 +5798,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
         case PlayerLowerBodyState_RunLeftStumble:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != FP_METER(0.0f))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (Math_UnkDistTimeCalc(FP_METER(0.4f))) >> 2;
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (Math_DeltaTimeDistScale(FP_METER(0.4f))) >> 2;
                 if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & (1 << 0))
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = FP_METER(0.0f);
@@ -5836,7 +5836,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
         case PlayerLowerBodyState_RunRightStumble:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != FP_METER(0.0f))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (Math_UnkDistTimeCalc(FP_METER(0.4f))) >> 2;
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (Math_DeltaTimeDistScale(FP_METER(0.4f))) >> 2;
                 if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & (1 << 0))
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = FP_METER(0.0f);
@@ -5906,7 +5906,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             {
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != FP_METER(0.0f))
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= Math_UnkDistTimeCalc(FP_METER(0.4f));
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= Math_DeltaTimeDistScale(FP_METER(0.4f));
                     if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & (1 << 0))
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = FP_METER(0.0f);
@@ -7240,7 +7240,7 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                 D_800AF212 += 0x20;
             }
 
-            temp_a1_3 = Math_UnkDistTimeCalc(24);
+            temp_a1_3 = Math_DeltaTimeDistScale(24);
 
             if (D_800AF212 > 0)
             {
