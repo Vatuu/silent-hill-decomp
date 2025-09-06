@@ -1058,7 +1058,8 @@ typedef struct
     s16          field_A; // Z cell coord?
     s32          field_C;
     s32          field_10;
-    u8           unk_14[4];
+    u8           field_14;
+    s8           unk_15[3];
     s32          field_18;
 } s_800C117C;
 STATIC_ASSERT_SIZEOF(s_800C117C, 28);
@@ -2683,6 +2684,8 @@ void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1);
 
 /** Gets distance to the edge of a file chunk? */
 s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, bool clip);
+
+void func_800431E4(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
 void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
 

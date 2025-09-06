@@ -1096,7 +1096,41 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042E2C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042EBC); // 0x80042EBC
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800431E4); // 0x800431E4
+void func_800431E4(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x800431E4
+{
+    s_800C117C* ptr;
+
+    for (ptr = arg0->ipdTable_15C; ptr < arg0->ipdGrid_1CC; ptr++)
+    {
+        if (ptr->queueIdx_4 == NO_VALUE)
+        {
+            ptr->field_C  = 0x7FFFFFFF;
+            ptr->field_10 = 0x7FFFFFFF;
+        }
+        else 
+        {
+            func_80043338(ptr, arg1, arg2, arg3, arg4, arg5);
+        }
+
+        if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) < FsQueueEntryLoadStatus_Loaded || !ptr->ipdHeader_0->isLoaded_1)
+        {
+            ptr->field_14 = 0;
+        }
+        else
+        {
+            ptr->field_14 = func_80043D00(ptr->ipdHeader_0);
+        }
+
+        if (ptr->field_C > 0 && ptr->field_10 > 0)
+        {
+            ptr->field_18++;
+        }
+        else
+        {
+            ptr->field_18 = 0;
+        }
+    }
+}
 
 void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip) // 0x80043338
 {
