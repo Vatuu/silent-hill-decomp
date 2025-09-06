@@ -4,7 +4,9 @@ void sharedFunc_800D88C0_0_s00(s_SubCharacter* playerChara, s32 arg1)
 
     if (arg1 != 0)
     {
-        Character_AnimSet(playerChara, ANIM_STATUS(1, true), 0);
+        playerChara->model_0.anim_4.status_0      = ANIM_STATUS(1, true);
+        playerChara->model_0.anim_4.keyframeIdx_8 = 0;
+        playerChara->model_0.anim_4.time_4         = 0;
         playerChara->model_0.anim_4.alpha_A = FP_ALPHA(1.0f);
     }
     else

@@ -53,8 +53,7 @@ typedef enum _Sfx
     Sfx_Stumble0    = 1314,
 
     Sfx_Unk1317     = 1317,
-    Sfx_Unk1318     = 1318,
-    Sfx_Unk1319     = 1319,
+
     Sfx_HeavyBreath = 1320,
     Sfx_Unk1321     = 1321,
     Sfx_Unk1322     = 1322,

@@ -101,8 +101,8 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
     modelPtr3      = &g_SysWork.player_4C.chara_0.model_0;
     extraModelPtr2 = &g_SysWork.player_4C.extra_128.model_0;
 
-    modelPtr3->anim_4.alpha_A              = FP_ALPHA(1.0f);
-    extraModelPtr2->anim_4.alpha_A         = FP_ALPHA(1.0f);
+    modelPtr3->anim_4.alpha_A       = FP_ALPHA(1.0f);
+    extraModelPtr2->anim_4.alpha_A  = FP_ALPHA(1.0f);
     g_SysWork.player_4C.extra_128.field_18 = 0x7FF;
     modelPtr3->anim_4.time_4               = FP_TO(modelPtr3->anim_4.keyframeIdx_8, Q12_SHIFT);
     extraModelPtr2->anim_4.time_4          = FP_TO(extraModelPtr2->anim_4.keyframeIdx_8, Q12_SHIFT);

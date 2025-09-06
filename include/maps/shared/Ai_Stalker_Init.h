@@ -24,7 +24,9 @@ void Ai_Stalker_Init(s_SubCharacter* chara)
     chara->rotation_24.vz = 0;
     chara->rotation_24.vx = 0;
 
-    Character_AnimSet(chara, ANIM_STATUS(30, true), 477);
+    chara->model_0.anim_4.status_0      = ANIM_STATUS(30, true);
+    chara->model_0.anim_4.time_4         = FP_TIME(477.0f);
+    chara->model_0.anim_4.keyframeIdx_8 = 477;
 
     chara->headingAngle_3C = chara->rotation_24.vy;
 
@@ -64,22 +66,28 @@ void Ai_Stalker_Init(s_SubCharacter* chara)
             break;
 
         case 9:
-            chara->model_0.state_2 = 12;
-            Character_AnimSet(chara, ANIM_STATUS(27, true), 427);
+            chara->model_0.state_2               = 12;
+            chara->model_0.anim_4.status_0      = ANIM_STATUS(27, true);
+            chara->model_0.anim_4.time_4         = FP_TIME(427.0f);
+            chara->model_0.anim_4.keyframeIdx_8 = 427;
             chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 0;
             chara->field_E0_8 = 3;
             break;
 
         case 10:
-            chara->model_0.state_2 = 11;
-            Character_AnimSet(chara, ANIM_STATUS(28, true), 443);
-            chara->field_E0_8 = 3;
+            chara->model_0.state_2               = 11;
+            chara->model_0.anim_4.status_0      = ANIM_STATUS(28, true);
+            chara->model_0.anim_4.time_4         = FP_TIME(443.0f);
+            chara->model_0.anim_4.keyframeIdx_8 = 443;
+            chara->field_E0_8                    = 3;
             break;
 
         case 17:
-            chara->model_0.state_2 = 13;
-            Character_AnimSet(chara, ANIM_STATUS(14, true), 176);
-            chara->field_E0_8 = 0;
+            chara->model_0.state_2               = 13;
+            chara->model_0.anim_4.status_0      = ANIM_STATUS(14, true);
+            chara->model_0.anim_4.time_4         = FP_TIME(176.0f);
+            chara->model_0.anim_4.keyframeIdx_8 = 176;
+            chara->field_E0_8                    = 0;
             break;
     }
 
