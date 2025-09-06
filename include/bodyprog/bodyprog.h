@@ -2772,7 +2772,9 @@ void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
  */
 void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
 
-/** Updates a character's animation, variant 3. */
+/** Updates a character's animation, variant 3.
+ * Same as `Anim_Update2` but sine-based?
+ */
 void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
 
 /** Something related to player weapon position. Takes coords to arm bones. */

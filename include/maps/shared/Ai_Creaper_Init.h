@@ -29,10 +29,8 @@ static inline void Ai_Creaper_PropertiesUpdateFromStep(s_SubCharacter* chara)
         chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 6;
     }
 
-    chara->model_0.state_2               = 1;
-    chara->model_0.anim_4.status_0      = ANIM_STATUS(11, true);
-    chara->model_0.anim_4.time_4         = FP_TIME(94.0f);
-    chara->model_0.anim_4.keyframeIdx_8 = 94;
+    chara->model_0.state_2 = 1;
+    Character_AnimSet(chara, ANIM_STATUS(11, true), 94);
 }
 
 void Ai_Creaper_Init(s_SubCharacter* chara)

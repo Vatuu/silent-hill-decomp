@@ -49,35 +49,29 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
                 chara->model_0.state_2 = 1;
             }
 
-            chara->model_0.anim_4.status_0      = ANIM_STATUS(14, true);
-            chara->model_0.anim_4.time_4         = FP_TIME(222.0f);
-            chara->model_0.anim_4.keyframeIdx_8 = 222;
-            chara->position_18.vy                = FP_FLOAT_TO(-3.6f, Q12_SHIFT);
-            chara->rotation_24.vz                = FP_ANGLE(180.0f);
+            Character_AnimSet(chara, ANIM_STATUS(14, true), 222);
+            chara->position_18.vy = FP_FLOAT_TO(-3.6f, Q12_SHIFT);
+            chara->rotation_24.vz = FP_ANGLE(180.0f);
 
         default:
             break;
 
         case 7:
         case 14:
-            chara->model_0.state_2               = 5;
-            chara->model_0.anim_4.status_0      = ANIM_STATUS(15, true);
-            chara->model_0.anim_4.time_4         = FP_TIME(232.0f);
-            chara->model_0.anim_4.keyframeIdx_8 = 232;
-            chara->position_18.vy                = 0;
-            chara->rotation_24.vz                = 0;
+            chara->model_0.state_2 = 5;
+            Character_AnimSet(chara, ANIM_STATUS(15, true), 232);
+            chara->position_18.vy = 0;
+            chara->rotation_24.vz = 0;
             break;
 
         case 17:
             chara->properties_E4.larvalStalker.properties_E8[0].val16[1] = FP_FLOAT_TO(1.2f, Q12_SHIFT);
 
         case 6:
-            chara->model_0.state_2               = 6;
-            chara->model_0.anim_4.status_0      = ANIM_STATUS(15, true);
-            chara->model_0.anim_4.time_4         = FP_TIME(232.0f);
-            chara->model_0.anim_4.keyframeIdx_8 = 232;
-            chara->position_18.vy                = FP_METER(0.0f);
-            chara->rotation_24.vz                = FP_ANGLE(0.0f);
+            chara->model_0.state_2 = 6;
+            Character_AnimSet(chara, ANIM_STATUS(15, true), 232);
+            chara->position_18.vy = FP_METER(0.0f);
+            chara->rotation_24.vz = FP_ANGLE(0.0f);
             break;
 
         case 18:
@@ -90,21 +84,15 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
             switch (chara->model_0.stateStep_3)
             {
                 case 18:
-                    chara->model_0.anim_4.status_0      = ANIM_STATUS(1, true);
-                    chara->model_0.anim_4.time_4         = FP_TIME(0.0f);
-                    chara->model_0.anim_4.keyframeIdx_8 = 0;
+                    Character_AnimSet(chara, ANIM_STATUS(1, true), 0);
                     break;
 
                 case 19:
-                    chara->model_0.anim_4.status_0      = ANIM_STATUS(2, true);
-                    chara->model_0.anim_4.time_4         = FP_TIME(51.0f);
-                    chara->model_0.anim_4.keyframeIdx_8 = 51;
+                    Character_AnimSet(chara, ANIM_STATUS(2, true), 51);
                     break;
 
                 case 20:
-                    chara->model_0.anim_4.status_0      = ANIM_STATUS(3, true);
-                    chara->model_0.anim_4.time_4         = FP_TIME(87.0f);
-                    chara->model_0.anim_4.keyframeIdx_8 = 87;
+                    Character_AnimSet(chara, ANIM_STATUS(3, true), 87);
                     break;
             }
             break;

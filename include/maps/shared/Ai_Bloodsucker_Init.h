@@ -6,11 +6,9 @@ static inline void Ai_Bloodsucker_AnimUpdateFromStep(s_SubCharacter* chara)
     switch (chara->model_0.stateStep_3)
     {
         case 17:
-            chara->model_0.state_2               = 1;
-            chara->model_0.anim_4.status_0      = ANIM_STATUS(7, true);
-            chara->model_0.stateStep_3           = 0;
-            chara->model_0.anim_4.time_4         = FP_TIME(81.0f);
-            chara->model_0.anim_4.keyframeIdx_8 = 81;
+            chara->model_0.state_2     = 1;
+            chara->model_0.stateStep_3 = 0;
+            Character_AnimSet(chara, ANIM_STATUS(7, true), 81);
             return;
 
 #ifdef MAP7_S02 // MAP7_S02 skips rest of function.
@@ -45,7 +43,7 @@ static inline void Ai_Bloodsucker_AnimUpdateFromStep(s_SubCharacter* chara)
         chara->model_0.anim_4.status_0 = (stateStep * 2) + 17;
     }
 
-    chara->model_0.anim_4.time_4         = FP_TO(BLOODSUCKER_ANIM_INFOS[chara->model_0.anim_4.status_0].keyframeStartIdx_C, Q12_SHIFT);
+    chara->model_0.anim_4.time_4        = FP_TIME(BLOODSUCKER_ANIM_INFOS[chara->model_0.anim_4.status_0].keyframeStartIdx_C);
     chara->model_0.anim_4.keyframeIdx_8 = BLOODSUCKER_ANIM_INFOS[chara->model_0.anim_4.status_0].keyframeStartIdx_C;
 #endif
 }

@@ -1618,9 +1618,9 @@ void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     }
 
     // Update frame data.
-    model->anim_4.time_4         = newTime;
+    model->anim_4.time_4        = newTime;
     model->anim_4.keyframeIdx_8 = newKeyframeIdx0;
-    model->anim_4.alpha_A = FP_ALPHA(0.0f);
+    model->anim_4.alpha_A       = FP_ALPHA(0.0f);
 }
 
 void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044CA4
@@ -1659,7 +1659,7 @@ void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     // Update frame data.
     if (alpha >= FP_ALPHA(1.0f))
     {
-        startKeyframeIdx             = endKeyframeIdx;
+        startKeyframeIdx            = endKeyframeIdx;
         model->anim_4.keyframeIdx_8 = endKeyframeIdx;
         
         alpha            = FP_ALPHA(0.0f);
@@ -1708,7 +1708,7 @@ void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     }
 
     // Update alpha.
-    alpha                        = model->anim_4.alpha_A + timeStep;
+    alpha                 = model->anim_4.alpha_A + timeStep;
     model->anim_4.alpha_A = alpha;
 
     // Sine-based easing?
