@@ -770,6 +770,56 @@ u8 D_800AF220 = 0;
 // 3 bytes of padding
 s32 D_800AF224 = NO_VALUE;
 
+s32 func_800706E4(); // This function is used in the table below. It's nearly completely matched https://decomp.me/scratch/PBvwU
+s_AnimInfo g_MaybePlayerAnims[] =
+{
+    { Anim_Update2, 0,  0,  1,    0, { FP_TIME(10.0f) }, -1,  0    },
+    { Anim_Update1, 1,  0,  0xFF, 0, { FP_TIME(30.0f) }, -1,  1    },
+    { Anim_Update2, 2,  0,  3,    0, { FP_TIME(10.0f) }, -1,  0    },
+    { Anim_Update1, 3,  0,  0xFF, 0, { FP_TIME(0.0f)  }, 0,   0    },
+    { Anim_Update2, 4,  0,  5,    0, { FP_TIME(50.0f) }, -1,  1    },
+    { Anim_Update1, 5,  1,  0xFF, 0, { func_800706E4  }, 1,   23   },
+    { Anim_Update2, 6,  0,  7,    0, { FP_TIME(20.0f) }, -1,  26   },
+    { Anim_Update1, 7,  1,  0xFF, 0, { func_800706E4  }, 26,  45   },
+    { Anim_Update2, 8,  0,  9,    0, { FP_TIME(20.0f) }, -1,  46   },
+    { Anim_Update1, 9,  1,  0xFF, 0, { func_800706E4  }, 46,  69   },
+    { Anim_Update2, 10, 0,  11,   0, { FP_TIME(50.0f) }, -1,  70   },
+    { Anim_Update1, 11, 0,  0xFF, 0, { FP_TIME(30.0f) }, 70,  94   },
+    { Anim_Update2, 12, 0,  13,   0, { FP_TIME(50.0f) }, -1,  95   },
+    { Anim_Update1, 13, 0,  0xFF, 0, { FP_TIME(30.0f) }, 95,  119  },
+    { Anim_Update2, 14, 0,  15,   0, { FP_TIME(20.0f) }, -1,  121  },
+    { Anim_Update1, 15, 0,  0xFF, 0, { FP_TIME(20.0f) }, 121, 133  },
+    { Anim_Update2, 16, 0,  17,   0, { FP_TIME(20.0f) }, -1,  136  },
+    { Anim_Update1, 17, 0,  0xFF, 0, { FP_TIME(20.0f) }, 136, 148  },
+    { Anim_Update2, 18, 0,  19,   0, { FP_TIME(50.0f) }, -1,  150  },
+    { Anim_Update0, 19, 0,  19,   0, { FP_TIME(15.0f) }, 150, 159  },
+    { Anim_Update2, 20, 0,  21,   0, { FP_TIME(50.0f) }, -1,  160  },
+    { Anim_Update0, 21, 0,  21,   0, { FP_TIME(15.0f) }, 160, 169  },
+    { Anim_Update2, 22, 0,  23,   0, { FP_TIME(50.0f) }, -1,  170  },
+    { Anim_Update0, 23, 0,  23,   0, { FP_TIME(15.0f) }, 170, 179  },
+    { Anim_Update2, 24, 0,  25,   0, { FP_TIME(50.0f) }, -1,  180  },
+    { Anim_Update1, 25, 0,  0xFF, 0, { FP_TIME(15.0f) }, 180, 192  },
+    { Anim_Update2, 26, 0,  27,   0, { FP_TIME(50.0f) }, -1,  193  },
+    { Anim_Update1, 27, 0,  0xFF, 0, { FP_TIME(15.0f) }, 193, 205  },
+    { Anim_Update2, 28, 0,  29,   0, { FP_TIME(50.0f) }, -1,  206  },
+    { Anim_Update0, 29, 0,  29,   0, { FP_TIME(28.0f) }, 206, 217  },
+    { Anim_Update2, 30, 0,  31,   0, { FP_TIME(50.0f) }, -1,  219  },
+    { Anim_Update0, 31, 0,  31,   0, { FP_TIME(28.0f) }, 219, 230  },
+    { Anim_Update2, 32, 0,  33,   0, { FP_TIME(10.0f) }, -1,  240  },
+    { Anim_Update0, 33, 0,  33,   0, { FP_TIME(10.0f) }, 240, 247  },
+    { Anim_Update2, 34, 0,  35,   0, { FP_TIME(50.0f) }, -1,  248  },
+    { Anim_Update1, 35, 0,  0xFF, 0, { FP_TIME(7.0f)  }, 248, 320  },
+    { Anim_Update2, 36, 0,  37,   0, { FP_TIME(50.0f) }, -1,  321  },
+    { Anim_Update0, 37, 0,  37,   0, { FP_TIME(20.0f) }, 321, 336  },
+    { Anim_Update2, 38, 0,  39,   0, { FP_TIME(50.0f) }, -1,  337  },
+    { Anim_Update0, 39, 0,  39,   0, { FP_TIME(15.0f) }, 337, 349  },
+    { Anim_Update2, 40, 0,  41,   0, { FP_TIME(50.0f) }, -1,  350  },
+    { Anim_Update0, 41, 0,  41,   0, { FP_TIME(20.0f) }, 350, 365  },
+    { Anim_Update2, 42, 0,  43,   0, { FP_TIME(50.0f) }, -1,  366  },
+    { Anim_Update0, 43, 0,  43,   0, { FP_TIME(15.0f) }, 366, 378  },
+    { Anim_Update2, 44, 0,  45,   0, { FP_TIME(30.0f) }, -1,  387  },
+};
+
 void Inventory_DirectionalInputSet() // 0x8004F5DC
 {
     if (g_Controller0->sticks_20.sticks_0.leftY < -64 || g_Controller0->sticks_20.sticks_0.leftY >= 64 ||
