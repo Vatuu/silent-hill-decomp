@@ -78,15 +78,13 @@
 #define Math_Vector3f(vec, x, y, z, shift) \
     Math_Vector3Set(vec, FP_FLOAT_TO(x, shift), FP_FLOAT_TO(y, shift), FP_FLOAT_TO(z, shift))
 
-/** @brief Modulates a distance according to delta time? Unclear what the `/ 136` is doing, but it's a common operation.
- *
- * Possible better name: `Math_DeltaTimeDistScale`
+/** @brief Scales a distance according to a time step at 30 FPS.
  *
  * @param dist Distance in fixed-point world meters.
- * @return Modulated distance?
+ * @return Scaled distance.
  */
-#define Math_UnkDistTimeCalc(dist) \
-    ((g_DeltaTime0 * (dist)) / 136)
+#define Math_DeltaTimeDistScale(dist) \
+    ((g_DeltaTime0 * (dist)) / TIME_STEP_30_FPS)
 
 /** @brief Normalizes unsigned fixed-point degrees in Q3.12, range `[0, 4096]` to the signed range `[-2048, 2047]`.
  * Thin wrapper for `FP_ANGLE_NORM_S`.
