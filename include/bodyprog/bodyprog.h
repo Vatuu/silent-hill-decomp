@@ -2759,7 +2759,7 @@ void func_800446D8(s_Skeleton* skel, GsCOORDINATE2* coords, s32 keyframeIdx0, s3
 
 void func_80044950(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
 
-q19_12 func_800449AC(s_Model* model, s_AnimInfo* anim);
+q19_12 Anim_DurationGet(s_Model* model, s_AnimInfo* anim);
 
 /** Updates a character's animation, variant 0. First param might be `s_SubCharacter` instead.
  * Used for anim init?

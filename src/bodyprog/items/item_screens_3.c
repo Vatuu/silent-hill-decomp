@@ -773,7 +773,7 @@ u8 D_800AF220 = 0;
 // 3 bytes of padding.
 s32 D_800AF224 = NO_VALUE;
 
-s32 func_800706E4(); // This function is used in the table below. It's nearly completely matched https://decomp.me/scratch/PBvwU
+s32 func_800706E4(); // This function is used in the table below. It's nearly completely matched https://decomp.me/scratch/PBvwU.
 s_AnimInfo HARRY_BASE_ANIM_INFOS[57] =
 {
     { Anim_Update2, ANIM_STATUS(PlayerAnim_Unk0,                    false), false, ANIM_STATUS(PlayerAnim_Unk0,                    true), 0, { FP_TIME(10.0f) }, NO_VALUE, 0   },

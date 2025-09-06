@@ -974,9 +974,9 @@ typedef struct _AnimInfo
     u8  field_7;                // Maybe `isLooped_7`? Could also be padding.
     union
     {
-        q19_12 constTimeDelta;             // Constant duration.
-        q19_12 (*variableTimeDeltaFunc)(); // Variable duration. Perhaps this is how enemy anim speed is controlled on harder difficulties.
-    } timeDelta_8;                         // Duration?
+        q19_12 constTimeDelta;             // `constantDuration`
+        q19_12 (*variableTimeDeltaFunc)(); // `variableDurationFunc`
+    } timeDelta_8;                         // `duration_8` Not sure how the time scaling works. Something like `FP_TIME(sec * (TICKS_PER_SECOND / 2))`?
     s16 startKeyframeIdx_C;
     s16 endKeyframeIdx_E;
 } s_AnimInfo;

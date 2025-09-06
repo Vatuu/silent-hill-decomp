@@ -1479,7 +1479,7 @@ void func_80044950(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x
     animInfo->updateFunc_0(chara, arg1, coords, animInfo);
 }
 
-q19_12 func_800449AC(s_Model* model, s_AnimInfo* anim) // 0x800449AC
+q19_12 Anim_DurationGet(s_Model* model, s_AnimInfo* anim) // 0x800449AC
 {
     if (!anim->hasVariableTimeDelta_5)
     {
@@ -1496,7 +1496,7 @@ static inline q19_12 Anim_TimeStepGet(s_Model* model, s_AnimInfo* targetAnim)
 
     if (model->anim_4.flags_2 & AnimFlag_Unlocked)
     {
-        duration = func_800449AC(model, targetAnim);
+        duration = Anim_DurationGet(model, targetAnim);
         return FP_MULTIPLY_PRECISE(duration, g_DeltaTime0, Q12_SHIFT);
     }
 
@@ -1699,7 +1699,7 @@ void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     // Compute time step. TODO: Can't call `Anim_TimeStepGet` inline due to register constraints.
     if (model->anim_4.flags_2 & AnimFlag_Unlocked)
     {
-        timeDelta = func_800449AC(model, animInfo);
+        timeDelta = Anim_DurationGet(model, animInfo);
         timeStep  = FP_MULTIPLY_PRECISE(timeDelta, g_DeltaTime0, Q12_SHIFT);
     }
     else
