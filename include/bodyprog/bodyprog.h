@@ -829,13 +829,6 @@ STATIC_ASSERT_SIZEOF(s_Skeleton, 28);
 
 typedef struct
 {
-    u8    unk_0[4];
-    void* field_4;
-    // Likely incomplete.
-} s_func_80057090;
-
-typedef struct
-{
     s32        field_0;
     u8         unk_4[4];
     s_ObjList* field_8;
@@ -1389,7 +1382,7 @@ typedef struct
 
 /** Part of map headers, pointer passed to `Chara_PositionUpdateFromParams`. */
 /** TODO: Rename to `PointOfInterest` to match SilentHillMapExaminer name? The array inside map header seems more for holding data for points on the map rather than just chara positioning. */
-/** This also makes use of union from 0x4 - 0x8 for different kinds of params, see https://github.com/Sparagas/Silent-Hill/blob/6ec81b26b8cb21dad6518037a4de31f151476e60/010%20Editor%20-%20Binary%20Templates/sh1_overlays.bt#L177 */
+/** This also makes use of union from 0x4 - 0x8 for different kinds of params, see https://github.com/Sparagas/Silent-Hill/blob/87549363834af24c65f6432908b2b036f9a300ad/010%20Editor%20-%20Binary%20Templates/sh1_overlays.bt#L126 */
 typedef struct _AreaLoadParams
 {
     q19_12 char_x_0; // TODO: Rename to `positionX_0`.
@@ -1639,15 +1632,17 @@ typedef struct
     s16 field_0;
     s16 field_2;
     s16 field_4;
-    s8  unk_8[6];
+    s16 unk_6;
+    s16 unk_8;
+    s16 unk_A;
     s16 field_C;
     s16 field_E;
     s16 field_10;
-    s8  unk_12[2];
+    s16 unk_12;
     s16 field_14;
     s16 field_16;
     s16 field_18;
-    s8  unk_1A[2];
+    s16  unk_1A;
 } s_800AE204;
 
 typedef struct
@@ -1659,6 +1654,17 @@ typedef struct
     u32 field_0_25 : 4;
     u32 field_0_29 : 3;
 } s_func_8006F8FC;
+
+typedef struct
+{
+    s_800AE204* ptr_0;
+    s16         count_4;
+    s16         unk_6;
+    u8          unk_8;
+    u8          unk_9;
+    u8          unk_A;
+    u8          unk_B;
+} s_800AE4DC;
 
 // ========
 // GLOBALS
@@ -1966,7 +1972,7 @@ extern u8 D_800AE187;
 
 extern s16 D_800AE1A8;
 
-extern s_800AE204 D_800AE204[]; // Maybe length 26
+extern s_800AE204 D_800AE204[26];
 
 extern s32 g_PickupItemAnimState;
 
@@ -3019,11 +3025,11 @@ void func_80056244(s_PlmHeader* plmHeader, bool flag);
 /** Gets texture count? */
 s32 func_80056348(bool (*arg0)(s_PlmTexList* texList), s_PlmHeader* plmHeader);
 
-/** TODO: Unknown `arg3`/`arg4` types. */
-void func_80059D50(s32 arg0, s_func_80057344* arg1, MATRIX* mat, void* arg3, void* arg4);
+/** TODO: Unknown `arg3` type. */
+void func_80059D50(s32 arg0, s_func_80057344* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4);
 
-/** TODO: Unknown `arg1`/`arg2` types. */
-void func_8005A21C(s_func_80057344* arg0, void* arg1, void* arg2, MATRIX* mat);
+/** TODO: Unknown `arg2` type. */
+void func_8005A21C(s_func_80057344* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
 
 /** @brief Computes a fog-shaded version of `D_800C4190` color using `arg1` as the distance factor?
  *  Stores the result at 0x3D8 into `arg0`.
@@ -3082,14 +3088,14 @@ bool func_80056CB4(s_800BCE18_2BEC_0* arg0, s_PlmHeader* plmHeader, s_800BCE18_2
 
 void StringCopy(char* prevStr, char* newStr);
 
-void func_80057090(s_func_80057344* arg0, s_func_80057090* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5);
+void func_80057090(s_func_80057344* arg0, GsOT* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5);
 
 s32 func_800571D0(u32 arg0);
 
 void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3);
 
-/** TODO: Unknown `arg1`/`arg2` types. */
-void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, MATRIX* mat);
+/** TODO: Unknown `arg2` type. */
+void func_80057344(s_func_80057344* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
 
 void func_800574D4(s_ObjHeader* header, s_GteScratchData* scratchData);
 

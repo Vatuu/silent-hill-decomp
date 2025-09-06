@@ -861,10 +861,10 @@ void StringCopy(char* prevStr, char* newStr) // 0x80056D64
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80056D8C); // 0x80056D8C
 
-void func_80057090(s_func_80057344* arg0, s_func_80057090* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5) // 0x80057090
+void func_80057090(s_func_80057344* arg0, GsOT* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5) // 0x80057090
 {
     s_ObjList* objList;
-    void*      temp_s1;
+    GsOT_TAG*  temp_s1;
     s32        temp_a0;
 
     objList = arg0->field_8;
@@ -874,7 +874,7 @@ void func_80057090(s_func_80057344* arg0, s_func_80057090* arg1, void* arg2, MAT
         return;
     }
 
-    temp_s1 = arg1->field_4 + (func_800571D0(objList->field_B_1) * 4);
+    temp_s1 = &arg1->org[func_800571D0(objList->field_B_1)];
     temp_a0 = objList->field_B_4;
     if ((temp_a0 & 0xFF) != 0 && temp_a0 >= 0 && temp_a0 < 4) // HACK: `& 0xFF` needed for match.
     {
@@ -950,7 +950,7 @@ void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3) // 0x80
     gte_stsv(&D_800C4168.field_7C);
 }
 
-void func_80057344(s_func_80057344* arg0, void* arg1, void* arg2, MATRIX* mat) // 0x80057344
+void func_80057344(s_func_80057344* arg0, GsOT_TAG* arg1, void* arg2, MATRIX* mat) // 0x80057344
 {
     u32               normalOffset;
     u32               vertexOffset;
@@ -1246,7 +1246,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80057B7C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005801C); // 0x8005801C
 
-void func_80059D50(s32 arg0, s_func_80057344* arg1, MATRIX* mat, void* arg3, void* arg4) // 0x80059D50
+void func_80059D50(s32 arg0, s_func_80057344* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4) // 0x80059D50
 {
     s_GteScratchData* scratchData;
     s_ObjHeader*      mesh;
@@ -1266,7 +1266,7 @@ void func_80059D50(s32 arg0, s_func_80057344* arg1, MATRIX* mat, void* arg3, voi
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80059E34); // 0x80059E34
 
-void func_8005A21C(s_func_80057344* arg0, void* arg1, void* arg2, MATRIX* mat) // 0x8005A21C
+void func_8005A21C(s_func_80057344* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat) // 0x8005A21C
 {
     s16               var_v1;
     u32               normalOffset;
@@ -1327,7 +1327,7 @@ void func_8005A21C(s_func_80057344* arg0, void* arg1, void* arg2, MATRIX* mat) /
             func_8005AA08(mesh, normalOffset, scratchData);
         }
 
-        func_8005AC50(mesh, scratchData, arg1, arg2);
+        func_8005AC50(mesh, scratchData, otTag, arg2);
     }
 }
 

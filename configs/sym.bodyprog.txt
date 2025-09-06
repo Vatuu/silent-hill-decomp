@@ -2568,3 +2568,5 @@ D_800FE5F8                                  = 0x800FE5F8; // ignore:True - Fixes
 hack_D_800FE5FC_fix                         = 0x800FE5FC; // ignore:true - Part of temp memory block at 800FDE00, has to be unsymbolized for C to match.
 PlmFilter_NameDoesNotEndWithH = 0x80043D44; // type:func
 PlmFilter_NameEndsWithH = 0x80043D64; // type:func
+
+D_800AE204 = 0x800AE204; // size:0x2D8

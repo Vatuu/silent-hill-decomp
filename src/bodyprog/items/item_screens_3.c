@@ -182,6 +182,147 @@ const char* g_ItemDescriptions[] =
     "Fuel_for_chainsaws_and\n\t\t\t\t\trock_drills."
 };
 
+s32 D_800AE178 = 0;
+s32 g_Inventory_SelectedItemIdx = 0;
+s32 D_800AE180 = 0;
+u8 g_Inventory_EquippedItem = 0;
+u8 D_800AE185 = 0;
+u8 D_800AE186 = 0;
+u8 D_800AE187 = 0;
+u32 D_800AE188 = 0;
+s16 D_800AE18C = 0; // only ever set to 0, nothing reads it.
+s16 D_800AE18E = 0; // only ever set to 0, nothing reads it.
+s32 D_800AE190 = 0;
+s16 g_Inventory_HealthStatusScanlineTimer = 0;
+s16 g_Inventory_HealthStatusColorGradientTimer = 0;
+s16 D_800AE198 = 0;
+s16 g_Inventory_HealthStatusScanlinePosition = -300;
+s32 g_Inventory_ItemNameTimer = 0;
+s32 g_Inventory_DescriptionRollTimer = 0;
+s32 g_Inventory_ScrollTransitionTimer = 0;
+s16 D_800AE1A8 = 0;
+s16 __padding = 0;
+s32 g_PickupItemAnimState = 0;
+s32 D_800AE1B0 = 0;
+
+u32 D_800AE1B4[3] = { 0x00000000, 0x000000CC, 0xFFFFFEC9 }; // `VECTOR3`?
+// Referenced only by `func_80055648` (https://decomp.me/scratch/joGmE)
+// Doesn't look like `VECTOR3` tbh. Each word is larger than the previous.
+u32 D_800AE1C0[] =
+{
+    0x00000000,
+    0x00000000,
+    0x00000026,
+    0x0000004C,
+    0x0000005E,
+    0x00000070,
+    0x00000085,
+    0x00000099,
+    0x000000B0,
+    0x000000BD,
+    0x000000D1,
+    0x000000DC,
+    0x000000E6,
+    0x000000F0,
+    0x000000F5,
+    0x000000FA,
+    0x000000FF,
+};
+
+s_800AE204 D_800AE204[26] =
+{
+    { 89,   102,  1820, 542,  387,  0,    0,    0,    0,    0,    0,    0,    0,    0 },
+    { 21,   306,  3413, 573,  356,  0,    0,    0,    0,    0,    0,    0,    0,    0 },
+    { 4,    306,  682,  558,  356,  0,    0,    0,    0,    0,    0,    0,    0,    0 },
+    { -30,  289,  2275, 527,  418,  0,    0,    0,    0,    0,    0,    0,    0,    0 },
+    { -64,  255,  3072, 527,  465,  0,    0,    0,    0,    0,    0,    0,    0,    0 },
+    { -115, 306,  341,  449,  387,  0,    0,    0,    0,    0,    0,    0,    0,    0 },
+    { -200, 289,  1137, 589,  465,  0,    0,    0,    0,    0,    0,    0,    0,    0 },
+    { -285, 221,  2048, 496,  387,  0,    0,    0,    0,    0,    0,    0,    0,    0 },
+    { -370, 272,  2844, 465,  387,  0,    0,    0,    0,    0,    0,    0,    0,    0 },
+    { -455, 255,  3413, 449,  387,  0,    0,    0,    0,    0,    0,    0,    0,    0 },
+    { -642, 170,  0,    418,  310,  0,    0,    0,    0,    0,    0,    0,    0,    0 },
+    { -727, 136,  910,  387,  310,  0,    0,    0,    0,    0,    0,    0,    0,    0 },
+    { 13,   30,   2503, 270,  270,  0,    0,    0,    0,    0,    0,    0,    0,    0 },
+    { -64,  60,   568,  360,  240,  0,    0,    0,    0,    0,    0,    0,    0,    0 },
+    { -115, 100,  2048, 340,  190,  0,    0,    0,    0,    0,    0,    0,    0,    0 },
+    { -141, 30,   1137, 270,  240,  0,    0,    0,    0,    0,    0,    0,    0,    0 },
+    { -192, 70,   3640, 340,  180,  0,    0,    0,    0,    0,    0,    0,    0,    0 },
+    { 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0 },
+    { 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0 },
+    { 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0 },
+    { 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0 },
+    { 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0 },
+    { 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0 },
+    { 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0 },
+    { 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0 },
+    { 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0 }
+};
+
+s_800AE4DC D_800AE4DC[3] = // Used in `func_8005B62C` (https://decomp.me/scratch/2BvV1)
+{
+    { &D_800AE204[1],  3,  0,      0, 0x80, 0x3F, 0xBF },
+    { &D_800AE204[0],  12, 0,      0, 0x80, 0x3F, 0xBF },
+    { &D_800AE204[12], 5,  0xFF67, 0, 0x80, 0x3F, 0xBF }, 
+};
+
+SVECTOR D_800AE500[4] =
+{
+    SVECTOR(0.0f,      255.65f,  255.65f),
+    SVECTOR(-255.65f,  0.0f,     255.65f),
+    SVECTOR(255.65f,   0.0f,     255.65f),
+    SVECTOR(0.0f,     -255.65f,  255.65f),
+};
+
+s16 D_800AE520[] =
+{
+    0x03F6, 0x03E1, 0x03CD, 0x03B8,
+    0x03A4, 0x038F, 0x037B, 0x0366,
+    0x0351, 0x033B, 0x0326, 0x0310,
+    0x02FA, 0x02E4, 0x02CD, 0x02B6,
+    0x029E, 0x0286, 0x026E, 0x0254,
+    0x023A, 0x021F, 0x0203, 0x01E6,
+    0x01C7, 0x01A6, 0x0183, 0x015D,
+    0x0133, 0x0102, 0x00C5, 0x0057,
+    0x0000, 0x0000
+};
+
+s16 D_800AE564[] =
+{
+    0x1000, 0x0FCD, 0x0F52, 0x0EFE,
+    0x0EAC, 0x0E5B, 0x0E0C, 0x0DBF,
+    0x0D73, 0x0D2A, 0x0CE2, 0x0C9B,
+    0x0C56, 0x0C12, 0x0BD0, 0x0B8F,
+    0x0B50, 0x0B12, 0x0AD5, 0x0A9A,
+    0x0A5F, 0x0A26, 0x09EF, 0x09B8,
+    0x0983, 0x094F, 0x091C, 0x08EA,
+    0x08B9, 0x0889, 0x085A, 0x082C,
+    0x0800, 0x0000, 0x0000, 0x0020,
+    0x0140, 0x00E0, 0x0000, 0x0100,
+    0x0140, 0x00E0
+};
+
+// https://decomp.me/scratch/q3B9W `func_8005E414` accesses the table above using negative offsets from `D_800AE5B8`.
+// The last 0x10 bytes of the above table might be `RECT` as well.
+RECT D_800AE5B8[2] =
+{
+    { 0x140, 0x100, 0x140, 0x0E0 },
+    { 0x0A0, 0x090, 0x0A0, 0x170 }
+};
+
+u16 D_800AE5C8[2] = {0x01E0, 0x0170}; // Passed to `SetDrawOffset`.
+
+// https://decomp.me/scratch/HNL4n something to do with animations?
+// `var_s7 = *(((animStatus + 1) * 2) + &D_800AE5CC) - *((animStatus * 2) + &D_800AE5CC);`
+u16 D_800AE5CC[18] = 
+{
+    0x0000, 0x0001, 0x0004, 0x0007,
+    0x0009, 0x000B, 0x000D, 0x000F,
+    0x0011, 0x0014, 0x0017, 0x0018,
+    0x0019, 0x001C, 0x001E, 0x0020,
+    0x0022, 0x0000
+};
+
 void Inventory_DirectionalInputSet() // 0x8004F5DC
 {
     if (g_Controller0->sticks_20.sticks_0.leftY < -64 || g_Controller0->sticks_20.sticks_0.leftY >= 64 ||

@@ -345,7 +345,7 @@ void Settings_RestoreControlDefaults(s32 arg0) // 0x80033480
             .item_16      = ControllerFlag_Triangle,
             .map_18       = ControllerFlag_Select,
             .option_1A    = ControllerFlag_None
-        },
+        }
     };
 
     static const u8 PAD[8] = {};
