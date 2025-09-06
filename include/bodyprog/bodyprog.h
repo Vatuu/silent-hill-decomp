@@ -3617,18 +3617,6 @@ s32 MainLoop_ShouldWarmReset();
 
 void Game_WarmBoot();
 
-void Joy_Init();
-
-void Joy_ReadP1();
-
-void Joy_Update();
-
-void Joy_ControllerDataUpdate();
-
-void ControllerData_AnalogToDigital(s_ControllerData* cont, s32 arg1);
-
-void func_800348C0();
-
 /** Handles `g_GameWork.gameStateStep_598[0]`.
  * Used to handle map loading and room changes.
  */

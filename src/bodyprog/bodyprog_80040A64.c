@@ -1200,7 +1200,7 @@ s_800C117C* func_800435E4(s_800C117C* arg0, s32 arg1)
     var_t0 = 0;
     var_t2 = 0;
 
-    for (ptr = arg0; ptr < &arg0[D_800C1020.ipdTableLen_158]; ptr++)
+    for (ptr = arg0; ptr < &arg0[D_800C1020.ipdTableSize_158]; ptr++)
     {
         if (arg1 == 0) 
         {

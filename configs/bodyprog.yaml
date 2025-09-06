@@ -60,11 +60,13 @@ segments:
     subsegments:
       # .rodata section
       - [0x0, .rodata, bodyprog]
-      - [0x4, .rodata, memcard]
+      - [0x4, .rodata, memcard/memcard_1]
       - [0x140, .rodata, gfx/graphics_1]
       - [0x1E4, .rodata, globals]
-      - [0x5AC, .rodata, bodyprog_80032D1C]
-      - [0x618, .rodata, bodyprog_800334D8]
+      - [0x5AC, .rodata, saveload/bodyprog_80032D1C]
+      - [0x5BC, .rodata, settings_reset]
+      - [0x618, .rodata, memcard/memcard_2]
+      - [0x69C, .rodata, bodyprog_800348C0]
       - [0x91C, .rodata, bodyprog_8003AB28]
       - [0x1094, .rodata, libsd/bodyprog_80045A7C]
       - [0x11C4, .rodata, libsd/bodyprog_CD_80047D50]
@@ -94,11 +96,16 @@ segments:
       - [0x99D8, .rodata, libsd/smf_mid]
 
       # .text section
-      - [0x9AD0,    c, memcard]
+      - [0x9AD0,    c, memcard/memcard_1]
       - [0xC98C,    c, gfx/graphics_1]
-      - [0xE070,    c, fs_mainscreen]
-      - [0xE188,    c, bodyprog_80032D1C]
-      - [0xE9E8,    c, bodyprog_800334D8]
+      - [0xE070,    c, fs_main_screen]
+      - [0xE188,    c, saveload/bodyprog_80032D1C]
+      - [0xE1BC,    c, gamemain] # Name from SH2 symbols. This name also applies for SH4 instance too.
+      - [0xE86C,    c, settings_reset]
+      - [0xE978,    c, memcard/memcard_2]
+      - [0xF580,    c, warmboot]
+      - [0xF8BC,    c, controls/joy_1]
+      - [0xFD60,    c, bodyprog_800348C0]
       - [0x15FC8,   c, bodyprog_8003AB28]
       - [0x1B4EC,   c, view/vc_util]
       - [0x1BF04,   c, bodyprog_80040A64]
