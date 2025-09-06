@@ -2856,6 +2856,15 @@ s32 func_8008D8C0(s16 x0, s32 x1, s32 x2) // 0x8008D8C0
     return (res > FP_FLOAT_TO(24.0f, Q8_SHIFT)) ? FP_FLOAT_TO(24.0f, Q8_SHIFT) : res;
 }
 
+// Used by func_8008D990
+u16 D_800AFD7C[] =
+{
+    0xF839, 0xF889, 0xFA39, 0xFAE4,
+    0xFD56, 0xFDC8, 0xFF56, 0xFFEA,
+    0x0038, 0x018E, 0x01C7, 0x02AA,
+    0x04E3, 0x064F, 0x0688, 0x06E3
+};
+
 // Large function.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D990); // 0x8008D990
 
