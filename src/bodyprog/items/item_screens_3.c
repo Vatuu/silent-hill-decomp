@@ -837,7 +837,9 @@ u32 D_800AF5C8[23] = {}; //padding ?
 s16 D_800AF624 = 0;
 s16 D_800AF626 = 0;
 u32 D_800AF628[368] = {};
-
+s32 g_Player_AttackAnimIdx = 0;
+s32 g_Player_MeleeAttackType = 0;
+s32 g_Player_IsMultiTapAttack = 0;
 void Inventory_DirectionalInputSet() // 0x8004F5DC
 {
     if (g_Controller0->sticks_20.sticks_0.leftY < -64 || g_Controller0->sticks_20.sticks_0.leftY >= 64 ||
