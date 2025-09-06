@@ -107,11 +107,11 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
     modelPtr3->anim_4.time_4               = FP_TO(modelPtr3->anim_4.keyframeIdx_8, Q12_SHIFT);
     extraModelPtr2->anim_4.time_4          = FP_TO(extraModelPtr2->anim_4.keyframeIdx_8, Q12_SHIFT);
 
-    func_800446D8((s_Skeleton*)FS_BUFFER_0, g_SysWork.playerBoneCoords_890, modelPtr3->anim_4.keyframeIdx_8, modelPtr3->anim_4.keyframeIdx_8, FP_FLOAT_TO(1, Q12_SHIFT));
+    Anim_BoneUpdate((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords_890, modelPtr3->anim_4.keyframeIdx_8, modelPtr3->anim_4.keyframeIdx_8, FP_FLOAT_TO(1, Q12_SHIFT));
 
     g_SysWork.player_4C.extra_128.field_18 = 0x3F800;
 
-    func_800446D8((s_Skeleton*)FS_BUFFER_0, g_SysWork.playerBoneCoords_890, extraModelPtr2->anim_4.keyframeIdx_8, extraModelPtr2->anim_4.keyframeIdx_8, FP_FLOAT_TO(1, Q12_SHIFT));
+    Anim_BoneUpdate((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords_890, extraModelPtr2->anim_4.keyframeIdx_8, extraModelPtr2->anim_4.keyframeIdx_8, FP_FLOAT_TO(1, Q12_SHIFT));
     func_8004C040();
 }
 

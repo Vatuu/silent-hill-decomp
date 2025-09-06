@@ -768,6 +768,35 @@ typedef struct _IpdHeader
     s_IpdCollisionData collisionData_54;
 } s_IpdHeader;
 
+// See: https://github.com/laura-a-n-n/silent-hill-museum/blob/main/ksy/sh1anm.ksy
+typedef struct _AnmBindPose
+{
+    u8 bone;
+    s8 rotationDataIdx_1;
+    s8 translationDataIdx_2;
+    s8 translation[3]; // initial translation?
+} s_AnmBindPose;
+STATIC_ASSERT_SIZEOF(s_AnmBindPose, 6);
+
+// TODO: Might be same as `s_AnimFile`, but comment there mentions possible size 80?
+typedef struct _AnmHeader
+{
+    u16 dataOffset_0;
+    u8  rotationBoneCount_2;
+    u8  translationBoneCount_3;
+    u16 frameDataSize_4; // size per keyframe, `(rotationBoneCount_2 * 9) + (translationBoneCount_3 * 3)`?
+    u8  boneCount_6;
+    u8  unk_7;
+    u32 activeBones_8; // Holds bit indexes of each bone that should be updated.
+    u32 offset_C;      // in ANM files this points to another duplicate AnmFileHeader at the end of the file, alternately might be size of the main anm data
+    u16 frameCount_10;
+    u8  scaleLog2_12;
+    u8  rootYOffset_13;
+
+    s_AnmBindPose bindPoses_14[0]; // size = `boneCount_6`
+} s_AnmHeader;
+STATIC_ASSERT_SIZEOF(s_AnmHeader, 20);
+
 // PLM data? Likely `D_800C1158`'s struct.
 typedef struct
 {
@@ -2760,31 +2789,31 @@ void func_800445A4(s_AnimFile*, GsCOORDINATE2*);
 
 s_AnimInfo* func_80044918(s_ModelAnim* anim);
 
-void func_800446D8(s_Skeleton* skel, GsCOORDINATE2* coords, s32 keyframeIdx0, s32 keyframeIdx1, s32 alpha);
+void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyFrame0, s32 keyFrame1, s32 alpha);
 
-void func_80044950(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
+void func_80044950(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
 
 q19_12 Anim_DurationGet(s_Model* model, s_AnimInfo* anim);
 
 /** Updates a character's animation, variant 0. First param might be `s_SubCharacter` instead.
  * Used for anim init?
  */
-void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coords, s_AnimInfo* animInfo);
+void Anim_Update0(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coords, s_AnimInfo* animInfo);
 
 /** Updates a character's animation, variant 1.
  * Used for looped anims?
  */
-void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
+void Anim_Update1(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
 
 /** Updates a character's animation, variant 2.
  * The generic update func?
  */
-void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
+void Anim_Update2(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
 
 /** Updates a character's animation, variant 3.
  * Same as `Anim_Update2` but sine-based?
  */
-void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
+void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
 
 /** Something related to player weapon position. Takes coords to arm bones. */
 void func_80044F14(GsCOORDINATE2* coord, s16 z, s16 x, s16 y);

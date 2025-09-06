@@ -1548,8 +1548,114 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044420); // 0x
 // Removing the call from `Game_PlayerInit` causes the player model to not appear.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800445A4); // 0x800445A4
 
-// Anim func.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800446D8); // 0x800446D8
+void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyFrame0, s32 keyFrame1, s32 alpha) // 0x800446D8
+{
+    GsCOORDINATE2* coord;
+    s_AnmBindPose* bindPose;
+    s32            boneCount;
+    void*          frame0Data;
+    void*          frame0RotData;
+    void*          frame1Data;
+    void*          frame1RotData;
+    bool           isPlayerCoords;
+    u32            activeBoneIndexes;
+    s32            boneIdx;
+    s32            scaleLog2;
+    s32            boneTranslationDataIdx;
+    s32            boneRotationDataIdx;
+    s8*            frame0TranslationData;
+    s8*            frame1TranslationData;
+    s8*            frame0RotationData;
+    s8*            frame1RotationData;
+    s32            j;
+    s32            i;
+
+    boneCount     = anmHeader->boneCount_6;
+    frame0Data    = (u8*)anmHeader + anmHeader->dataOffset_0 + (anmHeader->frameDataSize_4 * keyFrame0);
+    frame0RotData = frame0Data + (anmHeader->translationBoneCount_3 * 3);
+    frame1Data    = (u8*)anmHeader + anmHeader->dataOffset_0 + (anmHeader->frameDataSize_4 * keyFrame1);
+    frame1RotData = frame1Data + (anmHeader->translationBoneCount_3 * 3);
+
+    isPlayerCoords = (boneCoords == &g_SysWork.playerBoneCoords_890[PlayerBone_Root]);
+    if (isPlayerCoords)
+    {
+        // For player, use inverted mask from player extra data
+        // TODO: `extra_128.field_18` holds bones that should be disabled?
+        activeBoneIndexes = ~g_SysWork.player_4C.extra_128.field_18;
+    }
+    else
+    {
+        activeBoneIndexes = anmHeader->activeBones_8;
+    }
+
+    // Skip root bone (index 0), start processing from bone 1
+    boneCoords = &boneCoords[1];
+    bindPose   = &anmHeader->bindPoses_14[1];
+
+    for (boneIdx = 1, coord = boneCoords;
+         boneIdx < boneCount;
+         boneIdx++, bindPose++, coord++)
+    {
+        // Process bones that are marked as active
+        if (activeBoneIndexes & (1 << boneIdx))
+        {
+            coord->flg = 0;
+            scaleLog2  = anmHeader->scaleLog2_12;
+
+            boneTranslationDataIdx = bindPose->translationDataIdx_2;
+            if (boneTranslationDataIdx >= 0)
+            {
+                frame0TranslationData = frame0Data + (boneTranslationDataIdx * 3); // 3 byte vector translation
+                frame1TranslationData = frame1Data + (boneTranslationDataIdx * 3);
+
+                // Interpolate each translation component (x, y, z)
+                for (i = 0; i < 3; i++)
+                {
+                    // Linear interpolation with scaling: frame0 + (frame1-frame0) * alpha
+                    coord->coord.t[i] = (*frame0TranslationData << scaleLog2) +
+                                        (((*frame1TranslationData - *frame0TranslationData) * alpha) >> (0xC - scaleLog2));
+
+                    frame0TranslationData += 1;
+                    frame1TranslationData += 1;
+                }
+
+                if (boneTranslationDataIdx == 0)
+                {
+                    coord->coord.t[1] -= anmHeader->rootYOffset_13; // TODO: Not sure of purpose of this yet.
+                }
+            }
+
+            boneRotationDataIdx = bindPose->rotationDataIdx_1;
+            if (boneRotationDataIdx >= 0)
+            {
+                frame0RotationData = frame0RotData + (boneRotationDataIdx * 9); // 9 byte rotation matrix
+                frame1RotationData = frame1RotData + (boneRotationDataIdx * 9);
+
+                // Interpolate rotation matrix
+                for (i = 0; i < 3; i++)
+                {
+                    for (j = 0; j < 3; j++)
+                    {
+                        coord->coord.m[i][j] = (*frame0RotationData << 5) +
+                                               (((*frame1RotationData - *frame0RotationData) * alpha) >> 7);
+
+                        frame0RotationData += 1;
+                        frame1RotationData += 1;
+                    }
+                }
+            }
+        }
+    }
+
+    // Copy player hip translation to torso
+    if (isPlayerCoords)
+    {
+        for (i = 0; i < 3; i++)
+        {
+            g_SysWork.playerBoneCoords_890[PlayerBone_Torso].coord.t[i] = g_SysWork.playerBoneCoords_890[PlayerBone_Hips].coord.t[i];
+        }
+    }
+}
 
 s_AnimInfo* func_80044918(s_ModelAnim* anim) // 0x80044918
 {
@@ -1574,12 +1680,12 @@ s_AnimInfo* func_80044918(s_ModelAnim* anim) // 0x80044918
     return &animInfo_C[animStatus0];
 }
 
-void func_80044950(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x80044950
+void func_80044950(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords) // 0x80044950
 {
     s_AnimInfo* animInfo;
 
     animInfo = func_80044918(&chara->model_0.anim_4);
-    animInfo->updateFunc_0(chara, arg1, coords, animInfo);
+    animInfo->updateFunc_0(chara, anmHeader, coords, animInfo);
 }
 
 q19_12 Anim_DurationGet(s_Model* model, s_AnimInfo* anim) // 0x800449AC
@@ -1606,7 +1712,7 @@ static inline q19_12 Anim_TimeStepGet(s_Model* model, s_AnimInfo* targetAnim)
     return FP_TIME(0.0f);
 }
 
-void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coords, s_AnimInfo* animInfo) // 0x800449F0
+void Anim_Update0(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coords, s_AnimInfo* animInfo) // 0x800449F0
 {
     bool setNewAnimStatus;
     s32  timeStep;
@@ -1652,7 +1758,7 @@ void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coords, s_Ani
     alpha = FP_ALPHA_NORM(newTime);
     if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
-        func_800446D8(skel, coords, newKeyframeIdx, newKeyframeIdx + 1, alpha);
+        Anim_BoneUpdate(anmHeader, coords, newKeyframeIdx, newKeyframeIdx + 1, alpha);
     }
 
     // Update frame data.
@@ -1667,7 +1773,7 @@ void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coords, s_Ani
     }
 }
 
-void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044B38
+void Anim_Update1(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044B38
 {
     s32 startKeyframeIdx;
     s32 endKeyframeIdx;
@@ -1717,7 +1823,7 @@ void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     alpha = FP_ALPHA_NORM(newTime);
     if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
-        func_800446D8(skel, coord, newKeyframeIdx0, newKeyframeIdx1, alpha);
+        Anim_BoneUpdate(anmHeader, coord, newKeyframeIdx0, newKeyframeIdx1, alpha);
     }
 
     // Update frame data.
@@ -1726,7 +1832,7 @@ void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     model->anim_4.alpha_A       = FP_ALPHA(0.0f);
 }
 
-void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044CA4
+void Anim_Update2(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044CA4
 {
     bool setNewAnimStatus;
     s32  startKeyframeIdx;
@@ -1772,7 +1878,7 @@ void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     // Update skeleton.
     if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
-        func_800446D8(skel, coord, startKeyframeIdx, endKeyframeIdx, alpha);
+        Anim_BoneUpdate(anmHeader, coord, startKeyframeIdx, endKeyframeIdx, alpha);
     }
 
     // Update alpha.
@@ -1785,7 +1891,7 @@ void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     }
 }
 
-void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044DF0
+void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044DF0
 {
     s32 startKeyframeIdx;
     s32 endKeyframeIdx;
@@ -1834,7 +1940,7 @@ void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     // Update skeleton.
     if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
-        func_800446D8(skel, coord, startKeyframeIdx, endKeyframeIdx, sinAlpha);
+        Anim_BoneUpdate(anmHeader, coord, startKeyframeIdx, endKeyframeIdx, sinAlpha);
     }
 
     // Update active keyframe.
