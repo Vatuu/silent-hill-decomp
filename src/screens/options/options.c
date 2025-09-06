@@ -1860,10 +1860,10 @@ void Options_Selection_HighlightDraw(s_Line2d* line, bool hasShadow, bool invert
         poly = (POLY_G4*)GsOUT_PACKET_P;
         setPolyG4(poly);
         setSemiTrans(poly, 1);
-        setRGB0(poly, 0, 0, 0);
-        setRGB1(poly, 0x60, 0x60, 0x60);
-        setRGB2(poly, 0, 0, 0);
-        setRGB3(poly, 0x60, 0x60, 0x60);
+        setRGB0(poly, FP_COLOR(0.0f),   FP_COLOR(0.0f),   FP_COLOR(0.0f));
+        setRGB1(poly, FP_COLOR(0.375f), FP_COLOR(0.375f), FP_COLOR(0.375f));
+        setRGB2(poly, FP_COLOR(0.0f),   FP_COLOR(0.0f),   FP_COLOR(0.0f));
+        setRGB3(poly, FP_COLOR(0.375f), FP_COLOR(0.375f), FP_COLOR(0.375f));
         setXY4(poly,
                localLine->vertex0_0.vx, localLine->vertex0_0.vy - STR_OFFSET_Y, localLine->vertex0_0.vx, localLine->vertex0_0.vy,
                localLine->vertex1_4.vx, localLine->vertex1_4.vy - STR_OFFSET_Y, localLine->vertex1_4.vx, localLine->vertex1_4.vy);
@@ -1984,15 +1984,15 @@ void Options_Selection_BulletPointDraw(s_Quad2d* quad, bool isCenter, bool isIna
             switch (isInactive)
             {
                 case false:
-                    setRGBC0(poly, 0xFF, 0xFF, 0xFF, 0x30);
-                    setRGBC1(poly, 0xA0, 0x80, 0x40, 0x30);
-                    setRGBC2(poly, 0x40, 0x40, 0x40, 0x30);
+                    setRGBC0(poly, FP_COLOR(1.0f),   FP_COLOR(1.0f),  FP_COLOR(1.0f),  0x30);
+                    setRGBC1(poly, FP_COLOR(0.625f), FP_COLOR(0.5f),  FP_COLOR(0.25f), 0x30);
+                    setRGBC2(poly, FP_COLOR(0.25f),  FP_COLOR(0.25f), FP_COLOR(0.25f), 0x30);
                     break;
 
                 case true:
-                    setRGBC0(poly, 0x80, 0x80, 0x80, 0x30);
-                    setRGBC1(poly, 0x28, 0x20, 0x10, 0x30);
-                    setRGBC2(poly, 0x10, 0x10, 0x10, 0x30);
+                    setRGBC0(poly, FP_COLOR(0.5f),     FP_COLOR(0.5f),    FP_COLOR(0.5f),    0x30);
+                    setRGBC1(poly, FP_COLOR(0.15625f), FP_COLOR(0.125f),  FP_COLOR(0.0625f), 0x30);
+                    setRGBC2(poly, FP_COLOR(0.0625f),  FP_COLOR(0.0625f), FP_COLOR(0.0625f), 0x30);
                     break;
             }
 
@@ -2017,15 +2017,15 @@ void Options_Selection_BulletPointDraw(s_Quad2d* quad, bool isCenter, bool isIna
             switch (isInactive)
             {
                 case false:
-                    setRGBC0(poly, 0xA0, 0x80, 0x40, 0x30);
-                    setRGBC1(poly, 0xFF, 0xFF, 0xFF, 0x30);
-                    setRGBC2(poly, 0xFF, 0xFF, 0xFF, 0x30);
+                    setRGBC0(poly, FP_COLOR(0.625f), FP_COLOR(0.5f), FP_COLOR(0.25f), 0x30);
+                    setRGBC1(poly, FP_COLOR(1.0f),   FP_COLOR(1.0f), FP_COLOR(1.0f),  0x30);
+                    setRGBC2(poly, FP_COLOR(1.0f),   FP_COLOR(1.0f), FP_COLOR(1.0f),  0x30);
                     break;
 
                 case true:
-                    setRGBC0(poly, 0x50, 0x40, 0x20, 0x30);
-                    setRGBC1(poly, 0xA0, 0xA0, 0xA0, 0x30);
-                    setRGBC2(poly, 0xA0, 0xA0, 0xA0, 0x30);
+                    setRGBC0(poly, FP_COLOR(0.3125f), FP_COLOR(0.25f), FP_COLOR(0.125f), 0x30);
+                    setRGBC1(poly, FP_COLOR(0.625f), FP_COLOR(0.625f), FP_COLOR(0.625f), 0x30);
+                    setRGBC2(poly, FP_COLOR(0.625f), FP_COLOR(0.625f), FP_COLOR(0.625f), 0x30);
                     break;
             }
 
