@@ -2442,12 +2442,17 @@ extern const s_MapOverlayHeader g_MapOverlayHeader; // 0x800C957C
 // ==========
 
 // `Gfx_DrawBackgroundImage`
-/** Draws a background image. */
+/** Draws a background image.
+ * Only applies for menus and the preview of maps when grabbing them.
+ */
 void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image);
 
-void func_800317CC(s_FsImageDesc* image0, s_FsImageDesc* image1, s16 arg2);
+void Gfx_BackgroundSpritesTransition(s_FsImageDesc* image0, s_FsImageDesc* image1, s16 arg2);
 
-void func_80031AAC(s_FsImageDesc* image);
+/** Draws a background image.
+ * Only applies for background images of notes or puzzles images.
+ */
+void Gfx_BackgroundSpriteDraw_2(s_FsImageDesc* image);
 
 /** @brief Applies motion blur to the scene.
  *
@@ -2460,7 +2465,7 @@ void Gfx_DebugStringPosition(s16 x, s16 y);
 /** Draws debug strings using 8x8 glyphs from `FONT8.TIM`. Valid `char` range: `[42, 95]` (`*` to `_`). */
 void Gfx_DebugStringDraw(char* str);
 
-void func_8003260C(); // Return type assumed.
+void Gfx_FadeUpdate(); // Return type assumed.
 
 char* Math_IntegerToString(s32 widthMin, s32 value);
 
@@ -2480,7 +2485,7 @@ void func_800325A4(DR_MODE* arg0);
 
 int Gfx_FadeInProgress();
 
-void func_80032904();
+void Gfx_CutsceneCameraStateUpdate();
 
 /** Draws some string in display space. */
 void func_80032CE8();
@@ -3551,7 +3556,7 @@ void func_8007D6E0();
 
 void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2);
 
-void func_8003289C(POLY_G4* arg0, s32 arg1);
+void Gfx_BlackBorderDraw(POLY_G4* arg0, s32 arg1);
 
 void Gfx_VSyncCallback();
 

@@ -15,9 +15,9 @@ scratchpad                                  = 0x1F800000; // size:0x400 ignore:T
 //--- PA: 0x000004   VA: 0x80024B64   subsegment: .rodata, memcard
 //----------------------------------------------------------------
 
-//--------------------------------------------------------------------------
-//--- PA: 0x000140   VA: 0x80024CA0   subsegment: .rodata, bodyprog_800314EC
-//--------------------------------------------------------------------------
+//-----------------------------------------------------------------------
+//--- PA: 0x000140   VA: 0x80024CA0   subsegment: .rodata, gfx/graphics_1
+//-----------------------------------------------------------------------
 
 //----------------------------------------------------------------
 //--- PA: 0x0001E4   VA: 0x80024D44   subsegment: .rodata, globals
@@ -34,7 +34,7 @@ g_MapTypes                                  = 0x8002500C; // type:MapType size:0
 //--------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------
-//--- PA: 0x000618   VA: 0x80025178   subsegment: .rodata, bodyprog_80033548
+//--- PA: 0x000618   VA: 0x80025178   subsegment: .rodata, bodyprog_800334D8
 //--------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------
@@ -214,10 +214,12 @@ Savegame_CardState_FileOpen                 = 0x80031184; // type:func
 Savegame_CardState_FileReadWrite            = 0x80031260; // type:func
 Savegame_DevicePathGenerate                 = 0x800314A4; // type:func
 
-//--------------------------------------------------------------------
-//--- PA: 0x00C98C   VA: 0x800314EC   subsegment: c, bodyprog_800314EC
-//--------------------------------------------------------------------
+//-----------------------------------------------------------------
+//--- PA: 0x00C98C   VA: 0x800314EC   subsegment: c, gfx/graphics_1
+//-----------------------------------------------------------------
 Gfx_BackgroundSpriteDraw                    = 0x800314EC; // type:func
+Gfx_BackgroundSpritesTransition             = 0x800317CC; // type:func
+Gfx_BackgroundSpriteDraw_2                  = 0x80031AAC; // type:func
 Gfx_MotionBlur                              = 0x80031CCC; // type:func
 Gfx_DebugStringPosition                     = 0x80031EFC; // type:func
 Gfx_DebugStringDraw                         = 0x80031F40; // type:func
@@ -228,8 +230,13 @@ Gfx_Init                                    = 0x80032428; // type:func
 Settings_ScreenXYSet                        = 0x800324F4; // type:func
 Settings_DispEnvXYSet                       = 0x80032524; // type:func
 Gfx_FadeInProgress                          = 0x800325F8; // type:func
-func_8003289C.70                            = 0x8003289C; // filename:func_8003289C type:func The generated result of the compilation for some reason adds .66 at name end.
+Gfx_FadeUpdate                              = 0x8003260C; // type:func
+Gfx_BlackBorderDraw.70                      = 0x8003289C; // filename:Gfx_BlackBorderDraw type:func The generated result of the compilation for some reason adds .66 at name end.
 Gfx_VSyncCallback                           = 0x80032B80; // type:func
+
+//----------------------------------------------------------------
+//--- PA: 0x00E070   VA: 0x80032BD0   subsegment: c, fs_mainscreen
+//----------------------------------------------------------------
 GameFs_TitleGfxSeek                         = 0x80032BD0; // type:func
 GameFs_TitleGfxLoad                         = 0x80032BF0; // type:func
 GameFs_StreamBinSeek                        = 0x80032C20; // type:func
@@ -248,7 +255,7 @@ Settings_RestoreControlDefaults             = 0x80033480; // type:func
 nullsub_800334C8                            = 0x800334C8; // type:func
 
 //--------------------------------------------------------------------
-//--- PA: 0x00E9E8   VA: 0x80033548   subsegment: c, bodyprog_80033548
+//--- PA: 0x00E9E8   VA: 0x80033548   subsegment: c, bodyprog_800334D8
 //--------------------------------------------------------------------
 SysWork_Clear                               = 0x800340E0; // type:func
 MainLoop_ShouldWarmReset                    = 0x80034108; // type:func
@@ -342,6 +349,8 @@ IpdHeader_IsLoaded                          = 0x80042C04; // type:func
 IpdHeader_IsTextureLoaded                   = 0x80043B70; // type:func
 IpdHeader_CollisionDataGet                  = 0x80043BA4; // type:func
 IpdHeader_FixOffsets                        = 0x80043BC4; // type:func
+PlmFilter_NameDoesNotEndWithH               = 0x80043D44; // type:func
+PlmFilter_NameEndsWithH                     = 0x80043D64; // type:func
 IpdHeader_FixHeaderOffsets                  = 0x80043DA4; // type:func
 IpdHeader_ModelLinkObjectLists              = 0x80043E50; // type:func
 PlmHeader_ObjectListSearch                  = 0x80043F2C; // type:func
@@ -2569,7 +2578,4 @@ smf_song                                    = 0x800C8B00;
 g_MapOverlayHeader                          = 0x800C957C; // type:MapOverlayHeader size:0x84C - size incomplete
 D_800FE5F8                                  = 0x800FE5F8; // ignore:True - Fixes fake missmatch in `Demo_Update`.
 hack_D_800FE5FC_fix                         = 0x800FE5FC; // ignore:true - Part of temp memory block at 800FDE00, has to be unsymbolized for C to match.
-PlmFilter_NameDoesNotEndWithH = 0x80043D44; // type:func
-PlmFilter_NameEndsWithH = 0x80043D64; // type:func
-
-D_800AE204 = 0x800AE204; // size:0x2D8
+D_800AE204                                  = 0x800AE204; // size:0x2D8

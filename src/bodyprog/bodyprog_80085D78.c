@@ -314,7 +314,7 @@ void func_800862F8(s32 arg0, s32 fileIdx, bool arg2) // 0x800862F8
             break;
 
         case 2:
-            func_80031AAC(&g_ItemInspectionImg);
+            Gfx_BackgroundSpriteDraw_2(&g_ItemInspectionImg);
             break;
 
         case 3:
@@ -333,7 +333,7 @@ void func_800862F8(s32 arg0, s32 fileIdx, bool arg2) // 0x800862F8
             break;
 
         case 5:
-            func_80031AAC(&D_800A9A04);
+            Gfx_BackgroundSpriteDraw_2(&D_800A9A04);
             break;
 
         case 6:

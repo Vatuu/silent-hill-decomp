@@ -233,7 +233,11 @@ extern s32 D_800BCD20[];
 
 extern u32 D_800BCD34;
 
-extern s8 g_SaveScreenPlayerState; // 2 - Saving, 3 - Loading.
+// Likely inacurrate name. Most of the time it is on state 3 even if the memory card is not inserted it is in 3.
+// But if player saves then it changes to 2.
+// Possibly could indicate if the game is trying to write or read the memory card.
+// 2 - Saving, 3 - Loading.
+extern s8 g_SaveScreenPlayerState;
 
 extern s8 D_800BCD39;
 
