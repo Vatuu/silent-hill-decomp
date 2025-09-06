@@ -8,6 +8,19 @@
 #include "bodyprog/math.h"
 #include "main/fsqueue.h"
 
+u8 D_800AFD04 = 0;
+u8 D_800AFD05 = 0;
+// 2 bytes of padding.
+
+bool (*D_800AFD08[])(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* ptr, u32* arg3) = 
+{
+    func_80089A30,
+    func_80089BB8,
+    func_80089DF0,
+    func_8008973C,
+    func_80089D0C
+};
+
 void func_80085D78(bool arg0) // 0x80085D78
 {
     if (arg0)
@@ -1840,7 +1853,7 @@ bool func_80089644(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s32 arg2, u32 ar
     return arg1->field_10 != NULL;
 }
 
-bool func_8008973C(s_SysWork_2514* arg0, s32 arg1, s_8002AC04* ptr, u32* arg3)
+bool func_8008973C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* ptr, u32* arg3)
 {
     if (!arg0 || arg1)
     {
@@ -1997,7 +2010,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089A30); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089BB8); // 0x80089BB8
 
-bool func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u8* arg3) // 0x80089D0C
+bool func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u32* arg3) // 0x80089D0C
 {
     if (arg0 == NULL || arg2 == NULL)
     {
