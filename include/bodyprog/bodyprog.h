@@ -2695,6 +2695,8 @@ s16 func_80043554(s32 gridX, s32 gridZ);
 
 bool func_80043578(s_800C117C* arg0, s32 arg1, s32 arg2);
 
+s_800C117C* func_800435E4(s_800C117C* arg0, s32 arg1);
+
 /** Maybe facilitates file chunk streaming as the player moves around the map. */
 s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s16 fileChunkCoordX, s16 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
 

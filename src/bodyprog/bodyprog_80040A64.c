@@ -1188,7 +1188,76 @@ bool func_80043578(s_800C117C* arg0, s32 arg1, s32 arg2) // 0x80043578
     return false;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800435E4); // 0x800435E4
+s_800C117C* func_800435E4(s_800C117C* arg0, s32 arg1)
+{
+    s32         var_t0;
+    s32         var_t2;
+    s32         var_v1;
+    u32         var_t3;
+    s32         var_a2;
+    s_800C117C* ptr;
+    s_800C117C* ret;
+
+    ret    = NULL;
+    var_t3 = 0;
+    var_t0 = 0;
+    var_t2 = 0;
+
+    for (ptr = arg0; ptr < &arg0[D_800C1020.ipdTableLen_158]; ptr++)
+    {
+        if (arg1 == 0) 
+        {
+            if (ptr->queueIdx_4 == NO_VALUE)
+            {
+                ret = ptr;
+                break;
+            }
+            else
+            {
+                if (var_t3 < ptr->field_18)
+                {
+                    var_t3 = ptr->field_18;
+                    ret = ptr;
+                }
+            }
+        }
+        else
+        {
+            if (ptr->queueIdx_4 == -1) 
+            {
+                var_a2 = 0;
+                
+                if (var_t0 == 0) 
+                {
+                    var_v1 = 0x7FFFFFFF;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            else
+            {
+                var_a2 = ptr->field_14;
+                var_v1 = ptr->field_C;
+                
+                if (var_v1 == 0)
+                {
+                    continue;
+                }
+            }
+
+            if (var_t0 < var_a2 || (var_a2 == var_t0 && var_t2 < var_v1))
+            {
+                var_t2 = var_v1;
+                ret    = ptr;
+                var_t0 = var_a2;
+            }
+        }
+    }
+
+    return ret;
+}
 
 s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s16 fileChunkCoordX, s16 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip) // 0x800436D8
 {
