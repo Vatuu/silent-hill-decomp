@@ -831,6 +831,12 @@ s_AnimInfo g_MaybePlayerAnims[57] =
     { Anim_Update1, 55, 1,  NO_VALUE, 0, { func_800706E4  }, 543, 567  },
     {} // end of list.
 };
+u8 __padding1[14] = {};
+s16 D_800AF5C6 = 0;
+u32 D_800AF5C8[23] = {}; //padding ?
+s16 D_800AF624 = 0;
+s16 D_800AF626 = 0;
+u32 D_800AF628[368] = {};
 
 void Inventory_DirectionalInputSet() // 0x8004F5DC
 {
