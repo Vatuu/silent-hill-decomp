@@ -771,7 +771,7 @@ u8 D_800AF220 = 0;
 s32 D_800AF224 = NO_VALUE;
 
 s32 func_800706E4(); // This function is used in the table below. It's nearly completely matched https://decomp.me/scratch/PBvwU
-s_AnimInfo g_MaybePlayerAnims[] =
+s_AnimInfo g_MaybePlayerAnims[57] =
 {
     { Anim_Update2, 0,  0,  1,    0, { FP_TIME(10.0f) }, -1,  0    },
     { Anim_Update1, 1,  0,  0xFF, 0, { FP_TIME(30.0f) }, -1,  1    },
@@ -818,6 +818,18 @@ s_AnimInfo g_MaybePlayerAnims[] =
     { Anim_Update2, 42, 0,  43,   0, { FP_TIME(50.0f) }, -1,  366  },
     { Anim_Update0, 43, 0,  43,   0, { FP_TIME(15.0f) }, 366, 378  },
     { Anim_Update2, 44, 0,  45,   0, { FP_TIME(30.0f) }, -1,  387  },
+    { Anim_Update0, 45, 0,  45,   0, { FP_TIME(20.0f) }, 387, 417  },
+    { Anim_Update2, 46, 0,  47,   0, { FP_TIME(30.0f) }, -1,  418  },
+    { Anim_Update0, 47, 0,  47,   0, { FP_TIME(20.0f) }, 418, 456  },
+    { Anim_Update2, 48, 0,  49,   0, { FP_TIME(5.0f)  }, -1,  457  },
+    { Anim_Update0, 49, 0,  49,   0, { FP_TIME(20.0f) }, 457, 484  },
+    { Anim_Update2, 50, 0,  51,   0, { FP_TIME(5.0f)  }, -1,  485  },
+    { Anim_Update0, 51, 0,  51,   0, { FP_TIME(20.0f) }, 485, 502  },
+    { Anim_Update2, 52, 0,  53,   0, { FP_TIME(5.0f)  }, -1,  503  },
+    { Anim_Update1, 53, 0,  0xFF, 0, { FP_TIME(10.0f) }, 503, 542  },
+    { Anim_Update2, 54, 0,  55,   0, { FP_TIME(5.0f)  }, -1,  543  },
+    { Anim_Update1, 55, 1,  0xFF, 0, { func_800706E4  }, 543, 567  },
+    {} // end of list.
 };
 
 void Inventory_DirectionalInputSet() // 0x8004F5DC

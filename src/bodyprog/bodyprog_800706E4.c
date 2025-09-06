@@ -1706,7 +1706,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                             g_SysWork.player_4C.chara_0.field_CE = D_800AEEDC[chara->model_0.anim_4.keyframeIdx0_8 - 379][1];
                         }
                         
-                        if (chara->model_0.anim_4.keyframeIdx0_8 == D_800AF506)
+                        if (chara->model_0.anim_4.keyframeIdx0_8 == g_MaybePlayerAnims[45].keyframeIdx1_E)
                         {
                             if (chara->position_18.vy > FP_METER(6.5f))
                             {
@@ -1745,7 +1745,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                             g_SysWork.player_4C.chara_0.field_CE = D_800AEF78[chara->model_0.anim_4.keyframeIdx0_8 - 0x1A2][1];
                         }
                         
-                        if (chara->model_0.anim_4.keyframeIdx0_8 == D_800AF526)
+                        if (chara->model_0.anim_4.keyframeIdx0_8 == g_MaybePlayerAnims[47].keyframeIdx1_E)
                         {
                             if (chara->position_18.vy > FP_METER(6.5f))
                             {
