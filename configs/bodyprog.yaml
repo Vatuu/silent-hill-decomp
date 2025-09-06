@@ -295,7 +295,7 @@ segments:
       - [0x84F2C, .data, bodyprog_8003AB28]
       - [0x84F4C, data, bodyprog_800A9AA0]
       - [0x89000, .data, items/item_screens_3]
-      - [0x89C14, data, bodyprog_800AE5F0]
+      - [0x89D40, data, bodyprog_800AE5F0]
       - [0x8B31C, lib, libcard, init, .data]
       - [0x8B32C, lib, libapi, pad, .data]
       - [0x8B33C, lib, libcd, cdrom, .data]
