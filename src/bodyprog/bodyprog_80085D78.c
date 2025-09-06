@@ -20,6 +20,13 @@ bool (*D_800AFD08[])(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* pt
     func_8008973C,
     func_80089D0C
 };
+s16 D_800AFD1C[] = // used by func_8008A3E0
+{
+    0x1000, 0x1000, 0x0800, 0x0555,
+    0x0400, 0x0333, 0x02AA, 0x0249,
+    0x0200, 0x01C7, 0x0199, 0x0174,
+    0x0155, 0x013B, 0x0124, 0x0111,
+};
 
 void func_80085D78(bool arg0) // 0x80085D78
 {
