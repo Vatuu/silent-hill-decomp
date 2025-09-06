@@ -2,6 +2,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/item_screens.h"
+#include "bodyprog/player_logic.h"
 #include "bodyprog/math.h"
 
 const s32 rodataPad_800262F8 = 0;
@@ -840,6 +841,22 @@ u32 D_800AF628[368] = {};
 s32 g_Player_AttackAnimIdx = 0;
 s32 g_Player_MeleeAttackType = 0;
 s32 g_Player_IsMultiTapAttack = 0;
+
+s_800AFBF4 D_800AFBF4[11] =
+{
+    {},
+    { 1293, 0,    0,    64, 62, 63, 0,  52, 0 },
+    { 1294, 0,    0,    64, 62, 63, 0,  52, 0 },
+    { 1295, 0,    0,    64, 62, 63, 0,  52, 0 },
+    { 1301, 0,    0,    64, 62, 63, 0,  52, 0 },
+    { 1303, 0,    0,    64, 58, 59, 0,  20, 0 },
+    { 1283, 1284, 1285, 66, 72, 61, 37, 37, 0 },
+    { 1290, 1291, 1292, 66, 72, 61, 24, 37, 0 },
+    { 1287, 1288, 1289, 66, 72, 61, 23, 37, 0 },
+    { 1299, 0,    0,    66, 72, 61, 0,  37, 0 },
+    { 1298, 0,    0,    64, 62, 63, 0,  52, 0 }
+};
+
 void Inventory_DirectionalInputSet() // 0x8004F5DC
 {
     if (g_Controller0->sticks_20.sticks_0.leftY < -64 || g_Controller0->sticks_20.sticks_0.leftY >= 64 ||
