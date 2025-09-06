@@ -407,7 +407,7 @@ extern s32 g_Player_IsMultiTapAttack; // 0x800AFBF0
 /** @brief `e_AttackInputType` | Attack type performed by the player. */
 extern s32 g_Player_MeleeAttackType; // 0x800AFBEC
 
-extern s_800AFBF4 D_800AFBF4[10]; // 0x800AFBF4
+extern s_800AFBF4 D_800AFBF4[11]; // 0x800AFBF4
 
 /** @brief Player rotation speed.
  * More context is required for a name.
