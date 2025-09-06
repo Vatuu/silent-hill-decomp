@@ -766,6 +766,9 @@ u8 D_800AF216 = 0;
 s8 g_Player_RockDrill_DirectionAttack = 0;
 u32 D_800AF218 = 0;
 s32 D_800AF21C = NO_VALUE;
+u8 D_800AF220 = 0;
+// 3 bytes of padding
+s32 D_800AF224 = NO_VALUE;
 
 void Inventory_DirectionalInputSet() // 0x8004F5DC
 {
