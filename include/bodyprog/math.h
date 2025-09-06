@@ -45,7 +45,7 @@
  * @return Product of `a` and `b` converted from fixed-point.
  */
 #define Math_MultiplyFloatPrecise(a, b, shift) \
-    Math_MulFixed((a), FP_FLOAT_TO((b), (shift)), (shift))
+    Math_MulFixed(a, FP_FLOAT_TO(b, shift), shift)
 
 /** @brief Computes the dot product(?) of the first column of a matrix with a vector in Q17.15(?).
  *
