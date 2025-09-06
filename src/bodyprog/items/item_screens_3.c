@@ -371,6 +371,21 @@ u8 D_800AE700[16] =
     0x48, 0x5E, 0x64, 0x64,
 };
 
+// layout based on func_800652F4
+typedef struct {
+    u8 unk_0;
+    u8 unk_1;
+    u8 unk_2;
+} s_800AE710;
+
+s_800AE710 D_800AE710[4] =
+{
+    {},
+    {0x4C, 0x27, 0x7F},
+    {},
+    {}
+};
+
 void Inventory_DirectionalInputSet() // 0x8004F5DC
 {
     if (g_Controller0->sticks_20.sticks_0.leftY < -64 || g_Controller0->sticks_20.sticks_0.leftY >= 64 ||
