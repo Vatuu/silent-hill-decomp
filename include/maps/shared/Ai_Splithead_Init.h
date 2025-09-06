@@ -4,7 +4,7 @@ void Ai_Splithead_Init(s_SubCharacter* chara)
 
     chara->health_B0                                             = FP_HEALTH(6.2256f);
     chara->properties_E4.larvalStalker.properties_E8[0].val16[0] = 0;
-    chara->model_0.anim_4.keyframeIdx1_A                         = 0;
+    chara->model_0.anim_4.alpha_A                                = FP_ALPHA(0.0f);
     chara->moveSpeed_38                                          = 0;
     chara->headingAngle_3C                                       = chara->rotation_24.vy;
     chara->field_E0_8                                            = 4;
@@ -17,7 +17,7 @@ void Ai_Splithead_Init(s_SubCharacter* chara)
     chara->model_0.state_2               = 8;
     chara->model_0.anim_4.status_0      = ANIM_STATUS(10, true);
     chara->model_0.anim_4.time_4         = FP_TIME(162.0f);
-    chara->model_0.anim_4.keyframeIdx0_8 = 162;
+    chara->model_0.anim_4.keyframeIdx_8 = 162;
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, sharedData_800D5888_1_s05);
 

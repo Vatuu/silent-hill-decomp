@@ -13,6 +13,6 @@ void Ai_Kaufmann_Init(s_SubCharacter* chara)
 #endif
 
 #ifdef MAP7_S02
-    func_8003D468(Chara_Kaufmann, 1);
+    func_8003D468(Chara_Kaufmann, true);
 #endif
 }

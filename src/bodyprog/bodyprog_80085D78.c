@@ -973,7 +973,7 @@ void Event_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx
         // Traverse NPCs.
         for (i = 0; i < NPC_COUNT_MAX; i++)
         {
-            if (!(g_SysWork.npcs_1A0[i].model_0.charaId_0 >= Chara_Hero &&
+            if (!(g_SysWork.npcs_1A0[i].model_0.charaId_0 >= Chara_Harry &&
                   g_SysWork.npcs_1A0[i].model_0.charaId_0 <= Chara_MonsterCybil) ||
                 g_SysWork.npcs_1A0[i].health_B0 <= FP_HEALTH(0.0f))
             {
@@ -1037,6 +1037,7 @@ void Event_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx
 void Event_CommonItemTake(u32 pickupType, s32 globalPickupId) // 0x800879FC
 {
     #define EASY_DIFFICULTY_AMMO_COUNT_MULT_MIN 2
+
     s32 ammoCountMult;
 
     // Compute ammo count multiplier.
@@ -2130,7 +2131,7 @@ s32 func_8008A0E4(s32 arg0, e_EquippedWeaponId weaponId, s_SubCharacter* chara, 
         }
     }
 
-    if (chara->model_0.charaId_0 != Chara_Hero)
+    if (chara->model_0.charaId_0 != Chara_Harry)
     {
         if (g_SysWork.player_4C.chara_0.attackReceived_41 != NO_VALUE)
         {
@@ -2682,8 +2683,8 @@ void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones
 
     if (D_800C4818.field_1 == 0)
     {
-        // TODO: Conversion to Q27.4?
-        waterZone = Map_GetWaterZone(pos->vx >> 8, pos->vz >> 8, waterZones);
+        // TODO: Conversion to Q27.4? Zone bounds fit Q7.8 better, not sure what's happening.
+        waterZone = Map_WaterZoneGet(pos->vx >> 8, pos->vz >> 8, waterZones);
         if (waterZone != NULL)
         {
             func_8008E5B4();
@@ -2841,7 +2842,7 @@ void func_8008E4EC(s_PlmHeader* plmHeader) // 0x8008E4EC
     func_80056504(plmHeader, D_8002B2CC.str, &D_800AFD9C, 1);
 }
 
-s_WaterZone* Map_GetWaterZone(s32 posX, s32 posZ, s_WaterZone* waterZone)
+s_WaterZone* Map_WaterZoneGet(s32 posX, s32 posZ, s_WaterZone* waterZone)
 {
     s_WaterZone* zonePtr;
 

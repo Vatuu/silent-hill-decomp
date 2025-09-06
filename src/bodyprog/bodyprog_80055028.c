@@ -1266,7 +1266,7 @@ void func_80059D50(s32 arg0, s_func_80057344* arg1, MATRIX* mat, void* arg3, GsO
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80059E34); // 0x80059E34
 
-void func_8005A21C(s_func_80057344* arg0, GsOT_TAG* arg1, void* arg2, MATRIX* mat) // 0x8005A21C
+void func_8005A21C(s_func_80057344* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat) // 0x8005A21C
 {
     s16               var_v1;
     u32               normalOffset;
@@ -1327,7 +1327,7 @@ void func_8005A21C(s_func_80057344* arg0, GsOT_TAG* arg1, void* arg2, MATRIX* ma
             func_8005AA08(mesh, normalOffset, scratchData);
         }
 
-        func_8005AC50(mesh, scratchData, arg1, arg2);
+        func_8005AC50(mesh, scratchData, otTag, arg2);
     }
 }
 
@@ -3069,7 +3069,7 @@ bool func_8006C1B8(u32 arg0, s16 arg1, s_func_8006CC44* arg2) // 0x8006C1B8
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006C248); // 0x8006C248
 
-s32 func_8006C3D4(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s32 idx) // 0x8006C3D4
+bool func_8006C3D4(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s32 idx) // 0x8006C3D4
 {
     s_IpdCollisionData_18* temp_a1;
 
@@ -3077,9 +3077,9 @@ s32 func_8006C3D4(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s32 idx) 
     arg0->field_D0 = idx;
     temp_a1        = &collData->ptr_18[idx - collData->field_8_16];
 
-    if (!((arg0->field_2 >> temp_a1->field_0_8) & 0x1))
+    if (!((arg0->field_2 >> temp_a1->field_0_8) & (1 << 0)))
     {
-        return 0;
+        return false;
     }
 
     arg0->field_D1         = temp_a1->field_0_5;
@@ -3087,7 +3087,7 @@ s32 func_8006C3D4(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s32 idx) 
     arg0->field_D4         = temp_a1->field_4;
     arg0->field_D6         = temp_a1->field_6;
     arg0->field_D8.field_0 = temp_a1->field_8;
-    return 1;
+    return true;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006C45C); // 0x8006C45C
@@ -3403,13 +3403,13 @@ void func_8006D600(VECTOR3* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8
 
 void func_8006D774(s_func_8006CC44* arg0, VECTOR3* arg1, VECTOR3* arg2) // 0x8006D774
 {
-    SVECTOR sp10; // Types assumed. SVECTOR3 might also work but there are 8 bytes between sp10 and sp18 and SVECTOR3 is only 6 bytes.
+    SVECTOR sp10; // Types assumed. `SVECTOR3` might also work but there are 8 bytes between sp10 and sp18 and `SVECTOR3` is only 6 bytes.
     SVECTOR sp18;
 
-    sp10.vx = FP_FROM(arg1->vx, Q4_SHIFT);
-    sp10.vy = FP_FROM(arg1->vz, Q4_SHIFT);
-    sp18.vx = FP_FROM(arg2->vx, Q4_SHIFT);
-    sp18.vy = FP_FROM(arg2->vz, Q4_SHIFT);
+    sp10.vx = FP_METER_TO_GEO(arg1->vx);
+    sp10.vy = FP_METER_TO_GEO(arg1->vz);
+    sp18.vx = FP_METER_TO_GEO(arg2->vx);
+    sp18.vy = FP_METER_TO_GEO(arg2->vz);
 
     arg0->field_34 = 0;
     arg0->field_44 = 0;
@@ -3520,7 +3520,7 @@ void func_8006DAE4(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2, s32 ar
     arg0->field_8  = vec1->vy + vec2->vy;
     arg0->field_C  = vec1->vz + vec2->vz;
     arg0->field_10 = 0;
-    arg0->field_14 = arg3 * 0x10;
+    arg0->field_14 = arg3 * 16;
     arg0->field_18 = 0x1E00;
     arg0->field_1C = 0;
 }
@@ -4072,7 +4072,7 @@ void func_80070400(s_SubCharacter* chara, s_func_80070400_1* arg1, s_func_800704
     }
     else
     {
-        alpha = chara->model_0.anim_4.keyframeIdx1_A;
+        alpha = chara->model_0.anim_4.alpha_A;
     }
 
     // Compute inverse alpha.

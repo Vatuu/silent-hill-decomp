@@ -65,26 +65,26 @@ struct _SubCharacter;
 #define WeaponId_AttackVariantGet(weaponId, type) \
 	((weaponId) + ((type) * 10))
 
-/** @brief Packs an anim status containing the anim index and active flag.
+/** @brief Packs an animation status containing the animation index and active flag.
  *
- * @param animIdx Anim index.
+ * @param animIdx Animation index.
  * @param isActive Active status (`bool`).
- * @return Packed anim status containing the anim index and active flag.
+ * @return Packed animation status containing the animation index and active flag.
  */
 #define ANIM_STATUS(animIdx, isActive) \
-    (((animIdx) << 1) | ((isActive) ? (1 << 0) : 0x0))
+    (((animIdx) << 1) | ((isActive) ? (1 << 0) : 0))
 
-/** @brief Retrieves the anim index from a packed anim status.
+/** @brief Retrieves the animation index from a packed animation status.
  *
- * @param animStatus Packed anim status containing an anim index and active flag.
+ * @param animStatus Packed animation status containing an animation index and active flag.
  * @return Anim index.
  */
 #define ANIM_STATUS_IDX_GET(animStatus) \
     ((animStatus) >> 1)
 
-/** @brief Checks if an anim is active.
+/** @brief Checks if an animation is active.
  *
- * @param animStatus Packed anim status containing an anim index and active flag.
+ * @param animStatus Packed animation status containing an animation index and active flag.
  * @return `true` if active, `false` otherwise.
  */
 #define IS_ANIM_STATUS_ACTIVE(animStatus) \
@@ -108,7 +108,7 @@ struct _SubCharacter;
  * @return Packed screen fade status containing a fade state and white flag.
  */
 #define SCREEN_FADE_STATUS(state, isWhite) \
-    ((state) | ((isWhite) ? (1 << 3) : 0x0))
+    ((state) | ((isWhite) ? (1 << 3) : 0))
 
 /** @brief Checks if a screen fade is white.
  * See `g_Gfx_ScreenFade` for bit layout.
@@ -132,7 +132,10 @@ typedef enum _ScreenFadeState
     ScreenFadeState_FadeInSteps     = 7
 } e_ScreenFadeState;
 
-/** Each map has its own messages, with the first 15 hardcoded to be the same. */
+/** @brief Map message indices.
+ *
+ * @note Each map has its own messages, with the first 15 hardcoded to be the same.
+ */
 typedef enum _MapMsgIdx
 {
     MapMsgIdx_Yes               = 0,
@@ -173,7 +176,7 @@ typedef enum _MapMsgState
     MapMsgState_Idle         = 0,        /** Continue displaying message. */
     MapMsgState_SelectEntry0 = 1,        /** First entry selected in selection dialog. */
     MapMsgState_SelectEntry1 = 2,        /** Second entry selected in selection dialog. */
-    MapMsgState_SelectEntry2 = 3,        /** Third entry selected in selection dialog. */
+    MapMsgState_SelectEntry2 = 3         /** Third entry selected in selection dialog. */
 } e_MapMsgState;
 
 typedef enum _MapMsgAudioLoadBlock
@@ -184,6 +187,7 @@ typedef enum _MapMsgAudioLoadBlock
                                    // `J2` cutscenes use single audio file for all lines (e.g. video tape cutscene).
 } e_MapMsgAudioLoadBlock;
 
+/** @brief Map overlay IDs. */
 typedef enum _MapOverlayId
 {
     MapOverlayId_MAP0_S00 = 0,
@@ -231,6 +235,7 @@ typedef enum _MapOverlayId
     MapOverlayId_MAP7_S03 = 42
 } e_MapOverlayId;
 
+/** @brief Save location IDs. */
 typedef enum _SaveLocationId
 {
     SaveLocationId_Anywhere    = 0,
@@ -301,6 +306,7 @@ typedef enum _SysWorkProcessFlags
 
 typedef enum _ControllerFlags
 {
+    ControllerFlag_None         = 0,
     ControllerFlag_Select       = 1 << 0,
     ControllerFlag_L3           = 1 << 1,
     ControllerFlag_R3           = 1 << 2,
@@ -345,7 +351,7 @@ typedef enum _CharaFlags
     CharaFlag_Unk9 = 1 << 8
 } s_CharaFlags;
 
-/** @brief Color IDs used by strings displayed on the screen. */
+/** @brief Color IDs used by strings displayed in screen space. */
 typedef enum _ColorId
 {
     ColorId_Gold           = 0,
@@ -358,11 +364,12 @@ typedef enum _ColorId
     ColorId_White          = 7
 } e_ColorId;
 
+/** @brief Character animation flags. */
 typedef enum _AnimFlags
 {
-    AnimFlag_None    = 0,
-    AnimFlag_Unk1    = 1 << 0, // Movement unlocked?
-    AnimFlag_Visible = 1 << 1
+    AnimFlag_None     = 0,
+    AnimFlag_Unlocked = 1 << 0,
+    AnimFlag_Visible  = 1 << 1
 } e_AnimFlags;
 
 /** @brief State IDs used by the main game loop. The values are used as indices into the 0x800A977C function array. */
@@ -420,7 +427,7 @@ typedef enum _SysState
 /** @brief Inventory command IDs. */
 typedef enum _InventoryCmdId
 {
-    InventoryCmdId_UseHealth     = 0,  /** Text is "Use", but this one is used exclusively on health items. */
+    InventoryCmdId_UseHealth     = 0, /** Text is "Use", but this one is used exclusively on health items. */
     InventoryCmdId_Use           = 1,
     InventoryCmdId_Equip         = 2,
     InventoryCmdId_Unequip       = 3,
@@ -525,7 +532,8 @@ typedef enum _InventoryItemId
     InventoryItemId_GasolineTank         = 226
 } e_InventoryItemId;
 
-typedef enum _CommonPickupItemType
+/** @brief Common pickup item IDs. */
+typedef enum _CommonPickupItemId
 {
     CommonPickupItemId_FirstAidKit    = 0,
     CommonPickupItemId_HealthDrink    = 1,
@@ -533,9 +541,9 @@ typedef enum _CommonPickupItemType
     CommonPickupItemId_HandgunBullets = 3,
     CommonPickupItemId_RifleShells    = 4,
     CommonPickupItemId_ShotgunShells  = 5
-} s_CommonPickupItemType;
+} s_CommonPickupItemId;
 
-
+/** @brief Attack input types. */
 typedef enum _AttackInputType
 {
 	AttackInputType_Tap      = 0,
@@ -630,11 +638,11 @@ typedef enum _PlayerFlags
     PlayerFlag_Moving         = 1 << 15
 } e_PlayerFlags;
 
-/** @brief Names for each character index used in the game, `g_Chara_FileInfo` array associates each character ID with anim/model/texture files. */
+/** @brief Character IDs. The `g_Chara_FileInfo` array associates each character ID with animimation, model, and texture files. */
 typedef enum _CharacterId
 {
     Chara_None             = 0,
-    Chara_Hero             = 1,
+    Chara_Harry            = 1,
     Chara_AirScreamer      = 2,
     Chara_NightFlutter     = 3,
     Chara_Groaner          = 4,
@@ -742,9 +750,11 @@ typedef struct _ControllerData
 } s_ControllerData;
 STATIC_ASSERT_SIZEOF(s_ControllerData, 44);
 
-/** Key bindings for input actions. */
-// TODO: Instead of `u16`s, it should use 1-bit packed 16-bit `u32`, similar to `ControllerFlags` but not an enum because it can have multiple values.
-// Only the first 16 values are counted (analog directions are not included). Also, D-Pad is not registered.
+/** @brief Controller key bindings for input actions.
+ *
+ * TODO: Instead of `u16`s, it should use 1-bit packed 16-bit `u32`, similar to `ControllerFlags` but not an enum because it can have multiple values.
+ * Only the first 16 values are counted (analog directions are not included). Also, D-Pad is not registered.
+ */
 typedef struct _ControllerConfig
 {
     u16 enter_0;
@@ -798,7 +808,7 @@ typedef struct _Savegame
     s32             mapMarkingFlags_1D4[2];   //----------------------------------------
     s32             mapMarkingFlags_1DC;      // These 3 are one `u32 mapMarkingFlags[25];` (or maybe `u8 mapMarkingFlags[100];`?) See Sparagas' `MapMarkingsFlags` struct for details of every bit.
     s32             mapMarkingFlags_1E0[22];  //----------------------------------------
-    q19_12          healthSaturation_238;     /** Range: [0, 300]. Ampoules give extra health stored. If the player if loose health then the stored extra health will slowly start to sum to player's health, in any case extra health will start to reduce progressively even if the player has full health. */
+    q19_12          healthSaturation_238;     /** Range: [0, 300]. Ampoules give extra stored health. If the player loses health, it will be slowly restored. */
     s16             pickedUpItemCount_23C;
     s8              field_23E;
     u8              field_23F;
@@ -811,9 +821,9 @@ typedef struct _Savegame
     q20_12          gameplayTimer_250;
     q20_12          runDistance_254;
     q20_12          walkDistance_258;
-    u8              isNextFearMode_25C             : 1; // Makes savegame entry text gold.
-    u8              add290Hours_25C_1              : 2; // Adds 290 hours per 1 bit, i.e. 290, 580, 870.
-    u8              pickedUpSpecialItemCount_25C_3 : 5; // Red/None: 0?, Yellow: 8, Green: 16, Rainbow: 24 (unobtainable).
+    u8              isNextFearMode_25C             : 1; /** Makes savegame entry text gold. */
+    u8              add290Hours_25C_1              : 2; /** Adds 290 hours per 1 bit, i.e. 290, 580, 870. */
+    u8              pickedUpSpecialItemCount_25C_3 : 5; /** Red/None: 0?, Yellow: 8, Green: 16, @unused Rainbow: 24. */
                                                         /** Sparagas' investigations indicate this variable should be
                                                          * two different variables. However, splitting it causes minor
                                                          * mismatches in some functions.
@@ -880,7 +890,7 @@ typedef struct _SaveUserConfig
     u8                 optExtraWeaponCtrl_23;     /** `bool` | Switch: `false`, Press: `true`, default: Press. */
     u8                 optExtraBloodColor_24;     /** `e_BloodColor` | Default: Normal. */
     s8                 optAutoLoad_25;            /** `bool` | Off: `false`, On: `true`, default: Off. */
-    u8                 unk_26;
+    u8                 unk_26;                    // Padding?
     u8                 optExtraOptionsEnabled_27; /** Holds unlocked option flags. */
     s8                 optExtraViewCtrl_28;       /** `bool` | Normal: `false`, Reverse: `true`, default: Normal. */
     s8                 optExtraViewMode_29;       /** `bool` | Normal: `false`, Self View: `true`, default: Normal. */
@@ -957,43 +967,42 @@ STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 /** @brief Const data passed over to `Anim_Update` funcs. Struct itself contains which `Anim_Update` func is to be called. */
 typedef struct _AnimInfo
 {
-    void (*funcPtr_0)(struct _SubCharacter*, s32, GsCOORDINATE2*, struct _AnimInfo*); // TODO: `funcPtr_0` signature doesn't currently match `Anim_Update`.
-    u8  field_4; /** Packed anim status. See `s_ModelAnimData::status_0`. Unknown purpose for this one. */
-    s8  hasVariableTimeDelta_5;
-    u8  status_6; /** Packed anim status. See `s_ModelAnim::status_0`. */
-    u8  unk_7;
+    void (*updateFunc_0)(struct _SubCharacter*, s32, GsCOORDINATE2*, struct _AnimInfo*); // TODO: `updateFunc_0` signature doesn't currently match `Anim_Update`.
+    u8  field_4;                /** Packed anim status. See `s_ModelAnimData::status_0`. Unknown purpose for this one. */
+    s8  hasVariableTimeDelta_5; // Or `hasVariableDuration_5`?
+    u8  status_6;               /** Packed anim status. See `s_ModelAnim::status_0`. */
+    u8  field_7;                // Maybe `isLooped_7`? Could also be padding.
     union
     {
-        q19_12 constTimeDelta;
-        q19_12 (*variableTimeDeltaFunc)();
-    } timeDelta_8;
-    s16 keyframeIdx0_C;
-    s16 keyframeIdx1_E;
+        q19_12 constTimeDelta;             // `constantDuration`
+        q19_12 (*variableTimeDeltaFunc)(); // `variableDurationFunc`
+    } timeDelta_8;                         // `duration_8` Not sure how the time scaling works. Something like `FP_TIME(sec * (TICKS_PER_SECOND / 2))`?
+    s16 startKeyframeIdx_C;
+    s16 endKeyframeIdx_E;
 } s_AnimInfo;
 STATIC_ASSERT_SIZEOF(s_AnimInfo, 16);
 
 typedef struct _ModelAnim
 {
     u8          status_0;         /** Is active: bit 0, Anim index: bits 1-7. Possible original name: `anim_status` */
-                                  // TODO: Rename to `status_0`.
-    u8          maybeSomeState_1; // State says if `animTime_4` is anim time/anim status or a func ptr? That field could be a union.
+    u8          maybeSomeState_1; // State says if `time_4` is anim time/anim status or a func ptr? That field could be a union.
     u16         flags_2;          /** `e_AnimFlags` */
-    q19_12      time_4;           /** Time along keyframe timeline. */ 
-    s16         keyframeIdx0_8;
-    s16         keyframeIdx1_A;
-    s_AnimInfo* animInfo_C;
-    s_AnimInfo* animInfo_10;
+    q19_12      time_4;           /** Time along absolute timeline. */ 
+    s16         keyframeIdx_8;    /** Active keyframe along absolute timeline. */
+    q3_12       alpha_A;          /** Alpha along active anim. */ 
+    s_AnimInfo* animInfo_C;       // } Arrays of anim infos?
+    s_AnimInfo* animInfo_10;      // }
 } s_ModelAnim;
 STATIC_ASSERT_SIZEOF(s_ModelAnim, 20);
 
 typedef struct _Model
 {
-    s8 charaId_0;      /** `e_CharacterId` */
-    u8 paletteIdx_1;   /** Changes the texture palette index for this model. */
-    u8 state_2;        /** Current state for this model/character. 0 usually means it still has to be initialized. */
-    u8 stateStep_3;    // Step number or temp data for the current `state_2`? In `s_MainCharacterExtra` always 1, set to 0 for 1 tick when anim state appears to change.
-                       // Used differently in player's `s_SubCharacter`. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
-                       // Sometimes holds actual anim index?
+    s8          charaId_0;      /** `e_CharacterId` */
+    u8          paletteIdx_1;   /** Changes the texture palette index for this model. */
+    u8          state_2;        /** Current state for this model/character. 0 usually means it still has to be initialized. */
+    u8          stateStep_3;    // Step number or temp data for the current `state_2`? In `s_MainCharacterExtra` always 1, set to 0 for 1 tick when anim state appears to change.
+                                // Used differently in player's `s_SubCharacter`. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
+                                // Sometimes holds actual anim index?
     s_ModelAnim anim_4;
 } s_Model;
 STATIC_ASSERT_SIZEOF(s_Model, 24);
@@ -1039,7 +1048,7 @@ typedef struct _SubCharaPropertiesPlayer
     s16    field_120; // Angle which the player turns when doing a quick turn. In order words, some sort of holder for angle Y.
     s16    field_122; // Some sort of X angle for the player. Specially used when aiming an enemy.
     s16    headingAngle_124;
-    q3_12  playerMoveDistance_126; // Used to indicate how much the player should move foward.
+    q3_12  playerMoveDistance_126; // Used to indicate how much the player should move foward. Seems to be squared.
 } s_SubCharaPropertiesPlayer;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPlayer, 68);
 
@@ -1313,9 +1322,8 @@ typedef struct _SysWork
     s32             field_229C;
     s32             field_22A0; // Flags.
     s32             flags_22A4;
-    s8              unk_22A8[22]; // TODO: Confirmed `GsCOORDINATE2` at start.
-    VECTOR3         field_22C0;
-    s8              unk_22CC[124];
+    GsCOORDINATE2   coord_22A8; // For particles only?
+    GsCOORDINATE2   coord_22F8; // Likely related to above.
     s8              field_2348   : 8;
     s8              field_2349   : 8; // Particle spawn multiplier?
     u8              field_234A   : 8;
@@ -1524,6 +1532,20 @@ static inline s32 Flags16b_IsSet(u16* array, s32 flagId)
     // BUG: `>> 5` divides `flagId` by 32 to get array index, but array is of 16-bit values.
     // Maybe copy-paste from `u32` version of func.
     return (array[flagId >> 5] >> (flagId & 0x1F)) & (1 << 0);
+}
+
+/** @brief Sets the animation of a character.
+ *
+ * @param chara Character to set animation for. TODO: Maybe should take `s_ModelAnim` instead? If fits better, also rename to `Anim_Set`.
+ * @param animStatus Packed anim status. See `s_ModelAnim::status_0`.
+ * @param keyframeIdx Active keyframe index.
+ */
+static inline void Character_AnimSet(s_SubCharacter* chara, s32 animStatus, s32 keyframeIdx)
+{
+    // TODO: Problem with header includes prevents commented macro use.
+    chara->model_0.anim_4.status_0      = animStatus;
+    chara->model_0.anim_4.time_4        = keyframeIdx << 12;//FP_TIME(keyframeIdx);
+    chara->model_0.anim_4.keyframeIdx_8 = keyframeIdx;
 }
 
 /** @brief Sets the given animation flag on both player character and player extra data. */

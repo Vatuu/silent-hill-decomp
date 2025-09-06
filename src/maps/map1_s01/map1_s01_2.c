@@ -56,9 +56,9 @@ void Ai_Cat_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x
         chara->model_0.state_2                                      = 1;
         chara->model_0.anim_4.status_0                              = ANIM_STATUS(3, true);
         chara->model_0.anim_4.time_4                                = FP_TIME(7.0f);
-        chara->model_0.anim_4.keyframeIdx1_A                        = 0;
+        chara->model_0.anim_4.alpha_A                               = FP_ALPHA(0.0f);
         chara->model_0.stateStep_3                                  = 0;
-        chara->model_0.anim_4.keyframeIdx0_8                        = 7;
+        chara->model_0.anim_4.keyframeIdx_8                         = 7;
         chara->position_18.vy                                       = 0;
         chara->properties_E4.larvalStalker.properties_E8[0].val8[0] = 0;
     }
@@ -69,13 +69,13 @@ void Ai_Cat_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x
         {
             chara->model_0.anim_4.status_0      = ANIM_STATUS(1, true);
             chara->model_0.anim_4.time_4         = FP_TIME(7.0f);
-            chara->model_0.anim_4.keyframeIdx0_8 = 7;
+            chara->model_0.anim_4.keyframeIdx_8 = 7;
         }
         else if (chara->model_0.state_2 == 3)
         {
             chara->model_0.anim_4.status_0      = ANIM_STATUS(2, true);
             chara->model_0.anim_4.time_4         = FP_TIME(23.0f);
-            chara->model_0.anim_4.keyframeIdx0_8 = 23;
+            chara->model_0.anim_4.keyframeIdx_8 = 23;
         }
 
         chara->model_0.stateStep_3++;
@@ -84,7 +84,7 @@ void Ai_Cat_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
     animInfo = &g_Ai_Cat_AnimInfo[chara->model_0.anim_4.status_0];
-    animInfo->funcPtr_0(chara, arg1, coords, animInfo);
+    animInfo->updateFunc_0(chara, arg1, coords, animInfo);
 
     var_a0 = 0;
     if (chara->model_0.anim_4.status_0 == ANIM_STATUS(1, true))

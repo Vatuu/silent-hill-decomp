@@ -128,7 +128,7 @@ sharedFunc_800D9064_0_s00      = 0x800D949C; // type:func
 sharedFunc_800D9078_0_s00      = 0x800D94B0; // type:func
 sharedFunc_800D908C_0_s00      = 0x800D94C4; // type:func
 sharedFunc_800D9188_0_s00      = 0x800D95C0; // type:func
-sharedFunc_800D921C_0_s00      = 0x800D9654; // type:func
+Anim_StartKeyframeIdxGet       = 0x800D9654; // type:func
 sharedFunc_800D923C_0_s00      = 0x800D96F4; // type:func
 sharedFunc_800D929C_0_s00      = 0x800D9754; // type:func
 sharedFunc_800DA8E8_0_s01      = 0x800DA1B0; // type:func
@@ -144,10 +144,10 @@ sharedFunc_800DA8E8_0_s01      = 0x800DA1B0; // type:func
 //--- PA: 0x01C1B8   VA: 0x800E5730   subsegment: data, map7_s02
 //--------------------------------------------------------------
 sharedData_800DD59C_0_s00      = 0x800E5B38; // type:u8
-sharedData_800DD5A8_0_s00      = 0x800E5B3C; // type:s32 unknown type
-sharedData_800DFFD8_7_s01      = 0x800E7948; // type:AnimInfo
-sharedData_800D5ABC_3_s03      = 0x800E7988; // type:AnimInfo
-sharedData_800DF174_0_s00      = 0x800E7FC8; // type:AnimInfo
+STALKER_ANIM_INFOS             = 0x800E5B3C; // type:s32 unknown type
+BLOODY_LISA_ANIM_INFOS         = 0x800E7948; // type:AnimInfo
+BLOODSUCKER_ANIM_INFOS         = 0x800E7988; // type:AnimInfo
+KAUFMANN_ANIM_INFOS            = 0x800E7FC8; // type:AnimInfo
 
 //-------------------------------------------------------------------
 //--- PA: 0x01F92C   VA: 0x800E8EA4   subsegment: .data, map7_s02_msg

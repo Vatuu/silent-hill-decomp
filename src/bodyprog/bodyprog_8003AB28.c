@@ -30,7 +30,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 {
     #define MAIN_MENU_GAME_STATE_COUNT 5
 
-    s32 nextGameStates[MAIN_MENU_GAME_STATE_COUNT] = // 0x80025480
+    s32 NEXT_GAME_STATES[MAIN_MENU_GAME_STATE_COUNT] = // 0x80025480
     {
         GameState_SaveScreen, 
         GameState_DeathLoadScreen,
@@ -306,7 +306,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
                 if (g_GameWork.autosave_90.playerHealth_240 > FP_HEALTH(0.0f))
                 {
-                    nextGameStates[1] = 10;
+                    NEXT_GAME_STATES[1] = 10;
                 }
 
                 if (g_MainMenu_SelectedEntry == MainMenuEntry_Start)
@@ -318,7 +318,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
                 prevState                       = g_GameWork.gameState_594;
                 g_GameWork.gameStateStep_598[0] = prevState;
-                g_GameWork.gameState_594        = nextGameStates[g_MainMenu_SelectedEntry];
+                g_GameWork.gameState_594        = NEXT_GAME_STATES[g_MainMenu_SelectedEntry];
                 g_SysWork.timer_1C              = 0;
                 g_GameWork.gameStatePrev_590    = prevState;
                 g_GameWork.gameStateStep_598[0] = 0;
@@ -406,7 +406,7 @@ void Gfx_MainMenu_MainTextDraw() // 0x8003B568
     #define COLUMN_POS_Y 184
     #define STR_OFFSET_Y 20
 
-    static const u8 MAIN_MENU_STR_OFFSETS_X[] = { 29, 50, 32, 39, 33 }; // @unused Element at index 4. See `g_MainMenu_VisibleEntryFlags`.
+    static const u8 STR_OFFSETS_X[] = { 29, 50, 32, 39, 33 }; // @unused Element at index 4. See `g_MainMenu_VisibleEntryFlags`.
 
     s32 i;
 
@@ -419,7 +419,7 @@ void Gfx_MainMenu_MainTextDraw() // 0x8003B568
             continue;
         }
 
-        Gfx_StringSetPosition(COLUMN_POS_X - MAIN_MENU_STR_OFFSETS_X[i], COLUMN_POS_Y + (i * STR_OFFSET_Y));
+        Gfx_StringSetPosition(COLUMN_POS_X - STR_OFFSETS_X[i], COLUMN_POS_Y + (i * STR_OFFSET_Y));
         Gfx_StringSetColor(ColorId_White);
 
         if (i == g_MainMenu_SelectedEntry)
@@ -456,15 +456,15 @@ void Gfx_MainMenu_DifficultyTextDraw(s32 arg0) // 0x8003B678
     #define COLUMN_POS_Y                    204
     #define STR_OFFSET_Y                    20
 
-    static const u8 DIFFICULTY_MENU_STR_OFFSETS_X[] = { 28, 43, 30, 76 };               // @unused Element at index 3. May have been a 4th selectable difficulty.
-    static const u8 DIFFICULTY_MENU_UNUSED[]        = { 0, 149, 171, 144, 0, 0, 0, 0 }; // @unused Unknown purpose.
+    static const u8 STR_OFFSETS_X[] = { 28, 43, 30, 76 };               // @unused Element at index 3 may have been a 4th selectable difficulty.
+    static const u8 UNUSED[]        = { 0, 149, 171, 144, 0, 0, 0, 0 }; // @unused Unknown purpose.
 
     s32 i;
 
     // Draw selection strings.
     for (i = 0; i < DIFFICULTY_MENU_SELECTION_COUNT; i++)
     {
-        Gfx_StringSetPosition(COLUMN_POS_X - DIFFICULTY_MENU_STR_OFFSETS_X[i], COLUMN_POS_Y + (i * STR_OFFSET_Y));
+        Gfx_StringSetPosition(COLUMN_POS_X - STR_OFFSETS_X[i], COLUMN_POS_Y + (i * STR_OFFSET_Y));
         Gfx_StringSetColor(ColorId_White);
 
         if (i == arg0)
@@ -754,7 +754,7 @@ void func_8003BED0() // 0x8003BED0
 
 extern s_800C4168 const D_800C4168;
 
-s32 Map_GetSpeedZone(s32 x, s32 z) // 0x8003BF60
+s32 Map_SpeedZoneGet(s32 x, s32 z) // 0x8003BF60
 {
     s32          ret;
     s_SpeedZone* ptr;
@@ -763,7 +763,7 @@ s32 Map_GetSpeedZone(s32 x, s32 z) // 0x8003BF60
 
     if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP0_S00)
     {
-        return SpeedZoneType_Norm;
+        return SpeedZoneType_Normal;
     }
 
     if (D_800BCE18.field_0[0].type_0->speedZones_C != NULL)
@@ -1238,6 +1238,7 @@ s32 func_8003CDA0(s32 itemIdx)
         default:
             fileIdx = NO_VALUE;
             break;
+
         case NO_VALUE:
         case 128:
         case 132:
@@ -1248,46 +1249,57 @@ s32 func_8003CDA0(s32 itemIdx)
             fileIdx      = NO_VALUE;
             ptr->field_8 = "HERO";
             break;
+
         case InventoryItemId_SteelPipe:
             fileIdx      = FILE_ITEM_PIPE_TIM;
             ptr->field_8 = "PIPE";
             break;
+
         case 164:
             fileIdx      = FILE_ITEM_PHONE_TIM;
             ptr->field_8 = "PHONE";
             break;
+
         case 165:
             fileIdx      = FILE_ITEM_FLAUROS_TIM;
             ptr->field_8 = "FLAUROS";
             break;
+
         case 166:
             fileIdx      = FILE_ITEM_AGLA_TIM;
             ptr->field_8 = "AGLA";
             break;
+
         case 167:
             fileIdx      = FILE_ITEM_BOTL_TIM;
             ptr->field_8 = "BOTL";
             break;
+
         case 168:
             fileIdx      = FILE_ITEM_BABY_TIM;
             ptr->field_8 = "BABY";
             break;
+
         case 169:
             fileIdx      = FILE_ITEM_BLOOD_TIM;
             ptr->field_8 = "BLOOD";
             break;
+
         case InventoryItemId_Chainsaw:
             fileIdx      = FILE_ITEM_CSAW_TIM;
             ptr->field_8 = "CSAW";
             break;
+
         case InventoryItemId_HyperBlaster:
             fileIdx      = FILE_ITEM_HPRGUN_TIM;
             ptr->field_8 = "HPRGUN";
             break;
+
         case InventoryItemId_RockDrill:
             fileIdx      = FILE_ITEM_DRILL_TIM;
             ptr->field_8 = "DRILL";
             break;
+
         case InventoryItemId_Katana:
             fileIdx      = FILE_ITEM_KATANA_TIM;
             ptr->field_8 = "KATANA";
@@ -1324,54 +1336,71 @@ s32 func_8003CDA0(s32 itemIdx)
         default:
             fileIdx = NO_VALUE;
             break;
+
         case InventoryItemId_KitchenKnife:
             fileIdx = FILE_ITEM_KNIFE_PLM;
             break;
+
         case InventoryItemId_SteelPipe:
             fileIdx = FILE_ITEM_PIPE_PLM;
             break;
+
         case InventoryItemId_Hammer:
             fileIdx = FILE_ITEM_HAMMER_PLM;
             break;
+
         case InventoryItemId_Axe:
             fileIdx = FILE_ITEM_AXE_PLM;
             break;
+
         case InventoryItemId_Handgun:
             fileIdx = FILE_ITEM_HANDGUN_PLM;
             break;
+
         case InventoryItemId_HuntingRifle:
             fileIdx = FILE_ITEM_RIFLE_PLM;
             break;
+
         case InventoryItemId_Shotgun:
             fileIdx = FILE_ITEM_SHOTGUN_PLM;
             break;
+
         case 164:
             fileIdx = FILE_ITEM_PHONE_PLM;
             break;
+
         case 165:
             fileIdx = FILE_ITEM_FLAUROS_PLM;
             break;
+
         case 166:
             fileIdx = FILE_ITEM_AGLA_PLM;
             break;
+
         case 167:
             fileIdx = FILE_ITEM_BOTL_PLM;
             break;
+
         case 168:
             fileIdx = FILE_ITEM_BABY_PLM;
             break;
+
         case 169:
             fileIdx = FILE_ITEM_BLOOD_PLM;
             break;
+
         case InventoryItemId_Chainsaw:
             fileIdx = FILE_ITEM_CSAW_PLM;
             break;
+
         case InventoryItemId_HyperBlaster:
             fileIdx = FILE_ITEM_HPRGUN_PLM;
             break;
+
         case InventoryItemId_RockDrill:
             fileIdx = FILE_ITEM_DRILL_PLM;
             break;
+
         case InventoryItemId_Katana:
             fileIdx = FILE_ITEM_KATANA_PLM;
             break;
@@ -1883,9 +1912,6 @@ void func_8003DD80(s32 idx, s32 arg1) // 0x8003DD80
         case 18:
             func_8003E544(&temp_a2->field_14, arg1);
             break;
-
-        default:
-            break;
     }
 }
 
@@ -1919,9 +1945,6 @@ void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
             case 5:
                 func_80045468(skel, &D_800A9EE0, true);
                 break;
-
-            default:
-                break;
         }
     }
 
@@ -1938,9 +1961,6 @@ void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
 
             case 32:
                 func_80045468(skel, &D_800A9EEC, true);
-                break;
-
-            default:
                 break;
         }
     }
@@ -1964,9 +1984,6 @@ void func_8003DF84(s_Skeleton* skel, s32 arg1) // 0x8003DF84
                 func_80045468(skel, &D_800A9EF0, false);
                 func_80045468(skel, &D_800A9EF4, true);
                 break;
-
-            default:
-                break;
         }
     }
 
@@ -1983,9 +2000,6 @@ void func_8003DF84(s_Skeleton* skel, s32 arg1) // 0x8003DF84
             case 32:
                 func_80045468(skel, &D_800A9EF8, false);
                 func_80045468(skel, &D_800A9EFC, true);
-                break;
-
-            default:
                 break;
         }
     }
@@ -2009,9 +2023,6 @@ void func_8003E08C(s_Skeleton* skel, s32 arg1) // 0x8003E08C
                 func_80045468(skel, &D_800A9F00, false);
                 func_80045468(skel, &D_800A9F04, true);
                 break;
-
-            default:
-                break;
         }
     }
 
@@ -2028,9 +2039,6 @@ void func_8003E08C(s_Skeleton* skel, s32 arg1) // 0x8003E08C
             case 32:
                 func_80045468(skel, &D_800A9F08, false);
                 func_80045468(skel, &D_800A9F0C, true);
-                break;
-
-            default:
                 break;
         }
     }
@@ -2057,9 +2065,6 @@ void func_8003E194(s_Skeleton* skel, s32 arg1) // 0x8003E194
 
             case 3:
                 func_80045468(skel, &D_800A9F1C, true);
-                break;
-
-            default:
                 break;
         }
     }
@@ -2091,9 +2096,6 @@ void func_8003E238(s_Skeleton* skel, s32 arg1) // 0x8003E238
             case 4:
                 func_80045468(skel, &D_800A9F34, true);
                 break;
-
-            default:
-                break;
         }
     }
 
@@ -2115,9 +2117,6 @@ void func_8003E238(s_Skeleton* skel, s32 arg1) // 0x8003E238
 
             case 48:
                 func_80045468(skel, &D_800A9F44, true);
-                break;
-
-            default:
                 break;
         }
     }
@@ -2141,9 +2140,6 @@ void func_8003E388(s_Skeleton* skel, s32 arg1) // 0x8003E388
                 func_80045468(skel, &D_800A9F48, false);
                 func_80045468(skel, &D_800A9F4C, true);
                 break;
-
-            default:
-                break;
         }
     }
 }
@@ -2165,9 +2161,6 @@ void func_8003E414(s_Skeleton* skel, s32 arg1) // 0x8003E414
             case 2:
                 func_80045468(skel, &D_800A9F54, false);
                 func_80045468(skel, &D_800A9F50, true);
-                break;
-
-            default:
                 break;
         }
     }
@@ -2194,9 +2187,6 @@ void func_8003E4A0(s_Skeleton* skel, s32 arg1) // 0x8003E4A0
 
             case 3:
                 func_80045468(skel, &D_800A9F68, true);
-                break;
-
-            default:
                 break;
         }
     }
@@ -2226,9 +2216,6 @@ void func_8003E544(s_Skeleton* skel, s32 arg1) // 0x8003E544
 
         case 3:
             func_80045468(skel, &D_800A9F7C, true);
-            break;
-
-        default:
             break;
     }
 }
@@ -2520,10 +2507,10 @@ void func_8003EDA8() // 0x8003EDA8
     g_SysWork.field_2388.field_14 = 1;
 }
 
-void func_8003EDB8(CVECTOR* arg0, CVECTOR* arg1) // 0x8003EDB8
+void func_8003EDB8(CVECTOR* color0, CVECTOR* color1) // 0x8003EDB8
 {
-    *arg0 = g_SysWork.field_2388.field_1C[g_SysWork.field_2388.isFlashlightOn_15].field_0.field_21;
-    *arg1 = g_SysWork.field_2388.field_1C[g_SysWork.field_2388.isFlashlightOn_15].field_0.field_25;
+    *color0 = g_SysWork.field_2388.field_1C[g_SysWork.field_2388.isFlashlightOn_15].field_0.field_21;
+    *color1 = g_SysWork.field_2388.field_1C[g_SysWork.field_2388.isFlashlightOn_15].field_0.field_25;
 }
 
 void func_8003EE30(s32 arg0, s8* arg1, s32 arg2, s32 arg3) // 0x8003EE30
@@ -2606,9 +2593,6 @@ void func_8003F08C(s_StructUnk3* arg0, s_sub_StructUnk3* arg1) // 0x8003F08C
 
         case 3:
             arg0->field_30 = arg1->field_10;
-            break;
-
-        default:
             break;
     }
 }

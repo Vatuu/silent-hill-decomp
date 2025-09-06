@@ -3,6 +3,8 @@
 
 #include "game.h"
 
+#define PARTICLE_COUNT_MAX 300
+
 typedef enum
 {
     ParticleState_Spawn  = 0,
@@ -56,41 +58,20 @@ typedef struct
 typedef struct
 {
     VECTOR3 vector_0;
-    VECTOR3 viewPosition_C;
+    VECTOR3 viewPosition_C; // Q19.12
     SVECTOR svec_18;
     SVECTOR viewRotation_20;
     s32     field_28;
 } s_ParticleVectors;
 
-/**
- * Seems to be custom boundaries for snow/rain particle systems.
+/** Seems to be custom boundaries for snow/rain particle systems.
  * Only used in a small handful of maps, and not all fields are populated.
+ *
+ * Maybe 8 `VECTOR3`s holding positions in Q19.12? Se4ms to be an inefficient AABB.
  */
-typedef struct {
-    s32 field_0;
-    s32 field_4;
-    s32 field_8;
-    s32 field_C;
-    s32 field_10;
-    s32 field_14;
-    s32 field_18;
-    s32 field_1C;
-    s32 field_20;
-    s32 field_24;
-    s32 field_28;
-    s32 field_2C;
-    s32 field_30;
-    s32 field_34;
-    s32 field_38;
-    s32 field_3C;
-    s32 field_40;
-    s32 field_44;
-    s32 field_48;
-    s32 field_4C;
-    s32 field_50;
-    s32 field_54;
-    s32 field_58;
-    s32 field_5C;
+typedef struct
+{
+    VECTOR3 corners_0[8];
 } s_func_800CB560;
 STATIC_ASSERT_SIZEOF(s_func_800CB560, 96);
 
@@ -153,10 +134,13 @@ extern s8 sharedData_800DD59C_0_s00;
 
 extern s16 sharedData_800E0C6E_0_s00;
 
+/** Related to particle position. */
 extern VECTOR3 sharedData_800E323C_0_s00;
 
+/** Previous particle position? */
 extern VECTOR3 sharedData_800E324C_0_s00;
 
+/** Previous particle Y angle? */
 extern s16 sharedData_800E3260_0_s00;
 
 extern s32 sharedData_800E39D8_0_s00;
@@ -167,13 +151,13 @@ extern s32 sharedData_800E3A24_0_s00;
 extern s32 sharedData_800E3A28_0_s00;
 extern s32 sharedData_800E3A2C_0_s00;
 
-extern s_AnimInfo sharedData_800DA6C8_0_s00[]; // Used by `Ai_LarvalStalker_Init`.
+extern s_AnimInfo LARVAL_STALKER_ANIM_INFOS[]; // Used by `Ai_LarvalStalker_Init`.
 
-extern s_AnimInfo sharedData_800DD5A8_0_s00[]; // Used by `Ai_Stalker_Init`.
+extern s_AnimInfo STALKER_ANIM_INFOS[]; // Used by `Ai_Stalker_Init`.
 
 // Two variables used by `Ai_Creaper_Init`.
-extern s_AnimInfo sharedData_800E0D38_1_s02[];
-extern s8  sharedData_800E57CC_1_s02;
+extern s_AnimInfo CREAPER_ANIM_INFOS[];
+extern s8 sharedData_800E57CC_1_s02;
 
 extern s_sharedData_800E21D0_0_s01 sharedData_800E21D0_0_s01;
 
@@ -204,12 +188,12 @@ extern s32 sharedData_800E237C_0_s01;
 extern s32 sharedData_800D16E0_2_s01;
 extern s8  sharedData_800D16E4_2_s01;
 
-extern s_AnimInfo sharedData_800D1B6C_3_s02[]; // `Ai_Alessa` related?
+extern s_AnimInfo ALESSA_ANIM_INFOS[];
 extern s32 sharedData_800D3150_3_s02; // Used by `Ai_Alessa_Init`.
 
 extern s32 sharedData_800D5CF4_3_s00; // Used by `Ai_Kaufmann_Init`.
 
-extern s_AnimInfo sharedData_800D5ABC_3_s03[]; // Used by `Ai_Bloodsucker_Init`.
+extern s_AnimInfo BLOODSUCKER_ANIM_INFOS[]; // Used by `Ai_Bloodsucker_Init`.
 
 extern u8 sharedData_800DD591_0_s00;
 extern u8 sharedData_800DD78B_0_s01;
@@ -221,12 +205,16 @@ extern s32 sharedData_800DD78C_0_s01[2];
 /** `g_ParticleSpawnCount`. Tracks how many particles have been added per call. */
 extern u8 sharedData_800E2156_0_s01;
 
-extern s_AnimInfo sharedData_800DF174_0_s00[]; // Used by `sharedFunc_800D921C_0_s00`, `Ai_Kaufmann` related?
+extern s_AnimInfo KAUFMANN_ANIM_INFOS[]; // Used by `Anim_StartKeyframeIdxGet`, `Ai_Kaufmann` related?
 
-extern s_AnimInfo sharedData_800DFFD8_7_s01[]; // `Ai_BloodyLisa` related?
+extern s_AnimInfo BLOODY_LISA_ANIM_INFOS[]; // `Ai_BloodyLisa` related?
 
+/** Particle speed X. */
 extern s32 sharedData_800DFB64_0_s00;
+
+/** Particles speed Z. */
 extern s32 sharedData_800DFB68_0_s00;
+
 extern s32 sharedData_800DFB6C_0_s00;
 extern s32 sharedData_800DFB70_0_s00;
 
@@ -239,7 +227,7 @@ extern u16 sharedData_800D21E8_3_s00[];
 
 extern s_func_800CB560 sharedData_800E5768_1_s02;
 
-extern s_Particle g_Particles[300];
+extern s_Particle g_Particles[PARTICLE_COUNT_MAX];
 
 extern s_ParticleVectors g_ParticleVectors0;
 
@@ -334,7 +322,7 @@ void sharedFunc_800D9064_0_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D9078_0_s00(s_SubCharacter* chara);
 
-s16 sharedFunc_800D921C_0_s00(s_SubCharacter* chara);
+s16 Anim_StartKeyframeIdxGet(s_SubCharacter* chara);
 
 /** Humanoid init function? */
 void sharedFunc_800D923C_0_s00(s_SubCharacter* chara);
@@ -350,10 +338,14 @@ void sharedFunc_800CF2A4_0_s01(s32 arg0, s_Particle* part, u16* rand, s32* delta
 /** Snow particle init. */
 void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* rand);
 
-s32 Particle_Update(s_Particle* partHead);
+bool Particle_Update(s_Particle* partHead);
+
 void sharedFunc_800CEFF4_0_s00(s_Particle* part, s32 arg1);
+
 void sharedFunc_800CEB24_0_s00(s_Particle* part);
-void sharedFunc_800CFFF8_0_s00(s32 pass, s_func_800CFFF8* part, s16* rand); // TODO make this match for s_Particle
+
+void sharedFunc_800CFFF8_0_s00(s32 pass, s_func_800CFFF8* part, s16* rand); // TODO: Make this match for `s_Particle`.
+
 void sharedFunc_800CE954_7_s03(s32 pass, s_Particle* part, s16* rand, s32* deltaTime);
 
 void sharedFunc_800DA8E8_0_s01(s32* timer, s32 inc, s32 timeMin, s32 timeMax, bool setTimerToMax, bool incStateStep);
@@ -608,8 +600,8 @@ void sharedFunc_800D8714_0_s01(s_SubCharacter*, s32, s32);
 void sharedFunc_800D87FC_0_s01(s_SubCharacter* chara);
 
 s32 sharedFunc_800D929C_0_s00();
-s32 sharedFunc_800D2DAC_0_s00();
-s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara);
+s32 sharedFunc_800D2DAC_0_s00(); // Player anim func. Checks if the active keyframe is at the start or end of the anim's range.
+s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara); // NPC anim func. Checks if the active keyframe is at the start or end of the anim's range.
 bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, s32 sfx);
 void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1);
 

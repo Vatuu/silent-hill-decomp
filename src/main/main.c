@@ -28,7 +28,7 @@ s_FsImageDesc g_MainImg0 =
 
 s_FsImageDesc g_MainImg1 =
 {
-    .tPage = { 0x00, 0x14 },
+    .tPage = { 0, 20 },
     .u     = 0,
     .v     = 240,
     .clutX = 0,

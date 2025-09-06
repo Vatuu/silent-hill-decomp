@@ -12,6 +12,6 @@ void Ai_Dahlia_Init(s_SubCharacter* chara)
 #endif
 
 #ifdef MAP7_S02
-    func_8003D468(Chara_Dahlia, 1);
+    func_8003D468(Chara_Dahlia, true);
 #endif
 }

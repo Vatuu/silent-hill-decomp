@@ -81,7 +81,7 @@ INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02_2", func_800D3C50);
 
 #include "maps/shared/sharedFunc_800D9188_0_s00.h" // 0x800D43D8
 
-#include "maps/shared/sharedFunc_800D921C_0_s00.h" // 0x800D44A0
+#include "maps/shared/Anim_StartKeyframeIdxGet.h" // 0x800D44A0
 
 #include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800D44AC
 

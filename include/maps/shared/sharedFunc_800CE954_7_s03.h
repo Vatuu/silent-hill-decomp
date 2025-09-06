@@ -1,9 +1,9 @@
 void sharedFunc_800CE954_7_s03(s32 pass, s_Particle* part, s16* rand, s32* deltaTime)
 {
 #if defined(MAP7_S03)
-    s_Particle *ptr;
-    s32 xDelta;
-    s32 zDelta;
+    s32         xDelta;
+    s32         zDelta;
+    s_Particle* ptr;
 
     ptr = part;
     
@@ -15,7 +15,7 @@ void sharedFunc_800CE954_7_s03(s32 pass, s_Particle* part, s16* rand, s32* delta
         part->position0_0.vx += xDelta;
         part->position0_0.vz += zDelta - ((*deltaTime) * 2);
 
-        if (ABS(part->position0_0.vx) + ABS(part->position0_0.vz) > FP_METER(8.0))
+        if ((ABS(part->position0_0.vx) + ABS(part->position0_0.vz)) > FP_METER(8.0))
         {
             if (sharedData_800DF158_1_s02 != 0)
             {
@@ -26,6 +26,7 @@ void sharedFunc_800CE954_7_s03(s32 pass, s_Particle* part, s16* rand, s32* delta
                 ptr->position0_0.vx = -ptr->position0_0.vx;
                 ptr->position0_0.vz = -ptr->position0_0.vz;
             }
+
             ptr->type_1F += 0xF0;
         }
     }

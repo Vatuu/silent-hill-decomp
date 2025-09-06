@@ -132,7 +132,7 @@ INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800CFFD8);
 
 #include "maps/shared/sharedFunc_800D9188_0_s00.h" // 0x800D0760
 
-#include "maps/shared/sharedFunc_800D921C_0_s00.h" // 0x800D0828
+#include "maps/shared/Anim_StartKeyframeIdxGet.h" // 0x800D0828
 
 #include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800D0848
 

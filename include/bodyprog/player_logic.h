@@ -240,49 +240,49 @@ typedef enum _PlayerUpperBodyState
 /** @brief Lower body player states. */
 typedef enum _PlayerLowerBodyState
 {
-    PlayerLowerBodyState_None              = 0,
-    PlayerLowerBodyState_WalkForward       = 1,
-    PlayerLowerBodyState_RunForward        = 2,
-    PlayerLowerBodyState_RunForwardWallStop       = 3,
-    PlayerLowerBodyState_WalkBackward      = 4,
-    PlayerLowerBodyState_SidestepRight     = 5,
-    PlayerLowerBodyState_SidestepLeft      = 6,
-    PlayerLowerBodyState_RunRight          = 7, // } TODO: Check. Could be swapped.
-    PlayerLowerBodyState_RunLeft           = 8, // }
-    PlayerLowerBodyState_QuickTurnRight    = 9,
-    PlayerLowerBodyState_QuickTurnLeft     = 10,
-    PlayerLowerBodyState_JumpBackward      = 11,
-    PlayerLowerBodyState_Stumble           = 12,
-    PlayerLowerBodyState_RunLeftWallStop   = 13,
-    PlayerLowerBodyState_RunRightWallStop  = 14,
-    PlayerLowerBodyState_RunRightStumble   = 16,
-    PlayerLowerBodyState_RunLeftStumble    = 15,
-    PlayerLowerBodyState_Unk17             = 17,
-    PlayerLowerBodyState_Unk18             = 18,
-    PlayerLowerBodyState_Unk19             = 19,
-    PlayerLowerBodyState_Aim               = 20,
-    PlayerLowerBodyState_AimWalkForward    = 21,
-    PlayerLowerBodyState_Unk22             = 22, // @unused `PlayerLowerBodyState_AimRunForward`?
-    PlayerLowerBodyState_Unk23             = 23, // @unused `PlayerLowerBodyState_AimRunWallStop`?
-    PlayerLowerBodyState_AimWalkBackward   = 24,
-    PlayerLowerBodyState_AimSidestepRight  = 25,
-    PlayerLowerBodyState_AimSidestepLeft   = 26,
-    PlayerLowerBodyState_AimRunRight       = 27, // @unused
-    PlayerLowerBodyState_AimRunLeft        = 28, // @unused
-    PlayerLowerBodyState_AimQuickTurnRight = 29,
-    PlayerLowerBodyState_AimQuickTurnLeft  = 30,
-    PlayerLowerBodyState_Unk31             = 31, // Something backward?
-    PlayerLowerBodyState_Unk32             = 32,
-    PlayerLowerBodyState_Unk33             = 33,
-    PlayerLowerBodyState_Attack            = 34,
-    PlayerLowerBodyState_Reload            = 35
+    PlayerLowerBodyState_None               = 0,
+    PlayerLowerBodyState_WalkForward        = 1,
+    PlayerLowerBodyState_RunForward         = 2,
+    PlayerLowerBodyState_RunForwardWallStop = 3,
+    PlayerLowerBodyState_WalkBackward       = 4,
+    PlayerLowerBodyState_SidestepRight      = 5,
+    PlayerLowerBodyState_SidestepLeft       = 6,
+    PlayerLowerBodyState_RunRight           = 7, // } TODO: Check. Could be swapped.
+    PlayerLowerBodyState_RunLeft            = 8, // }
+    PlayerLowerBodyState_QuickTurnRight     = 9,
+    PlayerLowerBodyState_QuickTurnLeft      = 10,
+    PlayerLowerBodyState_JumpBackward       = 11,
+    PlayerLowerBodyState_Stumble            = 12,
+    PlayerLowerBodyState_RunLeftWallStop    = 13,
+    PlayerLowerBodyState_RunRightWallStop   = 14,
+    PlayerLowerBodyState_RunRightStumble    = 16,
+    PlayerLowerBodyState_RunLeftStumble     = 15,
+    PlayerLowerBodyState_Unk17              = 17,
+    PlayerLowerBodyState_Unk18              = 18,
+    PlayerLowerBodyState_Unk19              = 19,
+    PlayerLowerBodyState_Aim                = 20,
+    PlayerLowerBodyState_AimWalkForward     = 21,
+    PlayerLowerBodyState_Unk22              = 22, // @unused `PlayerLowerBodyState_AimRunForward`?
+    PlayerLowerBodyState_Unk23              = 23, // @unused `PlayerLowerBodyState_AimRunWallStop`?
+    PlayerLowerBodyState_AimWalkBackward    = 24,
+    PlayerLowerBodyState_AimSidestepRight   = 25,
+    PlayerLowerBodyState_AimSidestepLeft    = 26,
+    PlayerLowerBodyState_AimRunRight        = 27, // @unused
+    PlayerLowerBodyState_AimRunLeft         = 28, // @unused
+    PlayerLowerBodyState_AimQuickTurnRight  = 29,
+    PlayerLowerBodyState_AimQuickTurnLeft   = 30,
+    PlayerLowerBodyState_Unk31              = 31, // Something backward?
+    PlayerLowerBodyState_Unk32              = 32,
+    PlayerLowerBodyState_Unk33              = 33,
+    PlayerLowerBodyState_Attack             = 34,
+    PlayerLowerBodyState_Reload             = 35
 } e_PlayerLowerBodyState;
 
-/** @brief Player animation IDs. */
+/** @brief Player animation indices. */
 typedef enum _PlayerAnim
 {
     PlayerAnim_Unk0                    = 0,
-    PlayerAnim_Unk1                    = 1,
+    PlayerAnim_Unk1                    = 1, // Start walk forward?
     PlayerAnim_WalkForward             = 2,
     PlayerAnim_RunForward              = 3,
     PlayerAnim_WalkBackward            = 4,
@@ -291,33 +291,40 @@ typedef enum _PlayerAnim
     PlayerAnim_RunLeft                 = 7,
     PlayerAnim_RunRight                = 8,
     PlayerAnim_RunForwardWallStopRight = 9,
-    PlayerAnim_RunForwardWallStopLeft  = 10, 
+    PlayerAnim_RunForwardWallStopLeft  = 10,
     PlayerAnim_RunForwardStumble       = 11,
     PlayerAnim_TurnLeft                = 12,
     PlayerAnim_TurnRight               = 13,
     PlayerAnim_QuickTurnRight          = 14,
     PlayerAnim_QuickTurnLeft           = 15,
     PlayerAnim_JumpBackward            = 16,
-    PlayerAnim_Unk17                   = 17, // `_Idle`?
+    PlayerAnim_LookAround              = 17,
     PlayerAnim_RunLeftWallStop         = 18,
     PlayerAnim_RunLeftStumble          = 19,
     PlayerAnim_RunRightWallStop        = 20,
     PlayerAnim_RunRightStumble         = 21,
     PlayerAnim_FallForward             = 22,
     PlayerAnim_FallBackward            = 23,
-    PlayerAnim_Unk24                   = 24,
-    PlayerAnim_Unk25                   = 25,
+    PlayerAnim_Kick                    = 24,
+    PlayerAnim_Stomp                   = 25,
     PlayerAnim_Idle                    = 26,
     PlayerAnim_IdleTired               = 27,
-    PlayerAnim_IdleAim                 = 28, // Unsure. `_IdleAimHandgun`?
-    PlayerAnim_Unk29                   = 29, // } Some combat anims.
+    PlayerAnim_HandgunAim              = 28,
+    PlayerAnim_Unk29                   = 29, // } Handgun.
     PlayerAnim_Unk30                   = 30, // }
-    PlayerAnim_Unk31                   = 31, // }
+    PlayerAnim_HandgunRecoil           = 31,
     PlayerAnim_Unk32                   = 32,
     PlayerAnim_Unk33                   = 33,
     PlayerAnim_Unk34                   = 34,
     PlayerAnim_Unk35                   = 35,
     PlayerAnim_Unk36                   = 36,
+    PlayerAnim_Unk37                   = 37,
+
+    // NOTE: Anims 28 and above are per-map. Will need separate enums or could do `#ifdef` magic here if it works.
+
+    PlayerAnim_Death                   = 40,
+
+    // 56 - duplicate stomp?
 
     // Probably combat anims and many cutscene anims here.
 
@@ -349,6 +356,7 @@ typedef enum _PlayerAnim
 // STRUCTS
 // ========
 
+/** TODO: Maybe `s_PlayerAttack` fits. */
 typedef struct _800AFBF4
 {
     s16 attackSfx_0;
@@ -396,12 +404,7 @@ extern s32 g_Player_AttackAnimIdx; // 0x800AFBE8
 /** @brief Indicates if a multiple button taps attack is being perfomed. */
 extern s32 g_Player_IsMultiTapAttack; // 0x800AFBF0
 
-/** @brief Used to asign the type of attack performed based on the .
- *
- * 0: Tap
- * 1: Hold
- * 2: Multiple taps
- */
+/** @brief `e_AttackInputType` | Attack type performed by the player. */
 extern s32 g_Player_MeleeAttackType; // 0x800AFBEC
 
 extern s_800AFBF4 D_800AFBF4[11]; // 0x800AFBF4
@@ -476,7 +479,8 @@ extern u16 g_Player_IsRunning; // 0x800C4604
 
 extern s32 g_Player_HeadingAngle;
 
-/** Boolean.
+/** `bool`
+ *
  * @note Possibly inaccurrate name or buggy functionality. If enemies grab the
  * player with this set to `true`, the user will be unable to interact with anything.
  */
@@ -490,7 +494,7 @@ extern VECTOR3 D_800C45F8;
 // FUNCTIONS
 // ==========
 
-/** Used for lock the view on a targer. */
+/** Used for enemy target locking. */
 void func_8005CD38(s32*, s32*, s_PlayerCombat*, s32, s32, s32);
 
 /** Used for running displacement. */
@@ -526,47 +530,42 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
  * transitions between running to and from walking animations.
  *
  * @param extra Pointer to `s_MainCharacterExtra` struct.
- * @param upperState Checks if `g_SysWork.player_4C.extra_128.upperBodyState_20` is not
- * the same being input in order to clear animation status.
- * @param unused Possibly intented to pass animation index.
- * @param arg3 Player turn state. This states will only affect the turn animations.
- * * 0 and 2: The player will be at idle state.
- * *       1: The player can be at any of the rotation state.
- * *       3: The player can be only at the left rotation state.
- * *       4: The player can be only at the right rotation state.
+ * @param upperState Check if `g_SysWork.player_4C.extra_128.upperBodyState_20` is not the same being input in order to clear animation status.
+ * @param unused @unused Possibly animation index.
+ * @param arg3 Player turn state. Only affects turn animations.
+ * * 0 and 2: Idle state.
+ * *       1: Any turn state.
+ * *       3: Left turn state.
+ * *       4: Right turn state.
  */
 void Player_UpperBodyStateUpdate(s_MainCharacterExtra* extra, e_PlayerUpperBodyState upperState, s32 unused, s32 arg3); // 0x80073FC0
 
-/** @brief Triggers animations and actions done by the upper half part of the player's body. */
+/** @brief Triggers animations and actions performed by the player's upper body. */
 void Player_UpperBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x80074254
 
-/** @brief Update animations and status related to player attack.
- * Returns true if animations where succefully finished, however,
- * it returns in case of making a multitap attack.
+/** @brief Updates animations and status related to player attacks.
+ * Returns `true` if animations where succefully finished and if performing a multitap attack.
  */
 bool Player_CombatAnimUpdate();
 
-/** @brief Main animation and state handler for the upper half part of Harry's body.
- * Returns true if combat animations where completed or if the player is player health
- * more than 60%.
+/** @brief Main animation and state handler for the player's upper body.
+ * Returns `true` if combat animations where completed or if the player's health is >60%.
  */
 bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x80075504
 
-/** @brief Update upper part states related to combat action. */
+/** @brief Updates upper body states related to combat. */
 void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x800771BC
 
-/** @brief Cancels movement when the player abruptly stop the running while stepping movement. */
+/** @brief Cancels movement when the player abruptly stops running sideways. */
 void Player_StepWallStop_MovementCancel(s_SubCharacter* chara, s32 arg1, s32 animStatus, s32 keyframeIdx, e_PlayerLowerBodyState lowerBodyState, s32 headingAngle, s32 aimState); // 0x80077BB8
 
 /** @brief Main player movement function. */
 void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x80077D00
 
-/** @brief Function with multiple purposes.
- * This function does:
- * * Asign the value used by a global that handles player movement.
+/** @brief Multiple purposes.
+ * * Assigns the value used by a global that handles player movement.
  * * Deals with the exhaustion variable (When Harry has been running for too long).
- * * Restart the animation state in case of the player no longer being with low health
- *   and exhausted.
+ * * Restarts the animation state if the player is not longer exhausted or has recovered health.
  * * Handles audio related to Harry's movements.
  */
 void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x8007B924
@@ -579,7 +578,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x800
  */
 void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x8007C800
 
-// Removing this function makes impossible to run.
+// Removing this function makes it impossible to run.
 s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1); // 0x8007D6F0
 
 void func_8007EBBC(); // 0x8007EBBC
@@ -588,7 +587,7 @@ void Game_PlayerMovementsReset(); // 0x8007F1CC
 
 void Player_Controller(); // 0x8007F32C
 
-/** @brief Defines if the player can stomp/kick a knocked enemy. */
+/** @brief Determines if the player can stomp or kick a knocked enemy. */
 bool func_8007F95C(); // 0x8007F95C
 
 #endif

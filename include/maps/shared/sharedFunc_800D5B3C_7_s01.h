@@ -29,11 +29,11 @@ void sharedFunc_800D5B3C_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
     if (chara->properties_E4.larvalStalker.properties_E8[0].val32 == 6)
     {
-        if (chara->model_0.anim_4.keyframeIdx0_8 < 13)
+        if (chara->model_0.anim_4.keyframeIdx_8 < 13)
         {
             sharedFunc_800D908C_0_s00(3, chara, 12, 27, sfx, pitch);
         }
-        else if (chara->model_0.anim_4.keyframeIdx0_8 < 50)
+        else if (chara->model_0.anim_4.keyframeIdx_8 < 50)
         {
             sharedFunc_800D908C_0_s00(3, chara, 49, 27, sfx, pitch);
         }

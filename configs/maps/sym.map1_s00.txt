@@ -116,8 +116,8 @@ sharedData_800DD78C_0_s01 = 0x800DA6B4; // type:s32
 sharedData_800DF158_1_s02 = 0x800DA6BC; // type:u8
 sharedData_800DD796_0_s01 = 0x800DA6BD; // type:u8
 sharedData_800DD59C_0_s00 = 0x800DA6C4; // type:u8
-sharedData_800DA6C8_0_s00 = 0x800DA6C8;
-sharedData_800DD5A8_0_s00 = 0x800DB048; // type:s32 unknown type
+LARVAL_STALKER_ANIM_INFOS = 0x800DA6C8;
+STALKER_ANIM_INFOS        = 0x800DB048; // type:s32 unknown type
 sharedData_800DCC14_1_s00 = 0x800DCC14; // type:u8
 
 //-------------------------------------------------------------------

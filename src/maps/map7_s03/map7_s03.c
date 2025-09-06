@@ -248,8 +248,8 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D5234);
 #include "maps/shared/sharedFunc_800D9188_0_s00.h" // 0x800D59BC
 
 // TODO: Requires rodata for jump table
-// #include "maps/shared/sharedFunc_800D921C_0_s00.h" // 0x800D5AA8
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800D921C_0_s00); // 0x800D5AA8
+// #include "maps/shared/Anim_StartKeyframeIdxGet.h" // 0x800D5AA8
+INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", Anim_StartKeyframeIdxGet); // 0x800D5AA8
 
 #include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800D5B68
 
@@ -261,12 +261,12 @@ void Ai_LittleIncubus_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coo
 
     if (chara->model_0.state_2 == 0)
     {
-        chara->model_0.anim_4.keyframeIdx1_A = 0;
-        chara->model_0.state_2               = 1;
-        chara->model_0.stateStep_3           = 0;
+        chara->model_0.anim_4.alpha_A       = FP_ALPHA(0.0f);
+        chara->model_0.state_2              = 1;
+        chara->model_0.stateStep_3          = 0;
         chara->model_0.anim_4.status_0      = ANIM_STATUS(1, true);
-        chara->model_0.anim_4.time_4         = 0;
-        chara->model_0.anim_4.keyframeIdx0_8 = 0;
+        chara->model_0.anim_4.time_4        = 0;
+        chara->model_0.anim_4.keyframeIdx_8 = 0;
 
         D_800EDA00 = 0;
     }
@@ -286,7 +286,7 @@ void Ai_LittleIncubus_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coo
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
     animInfo = &g_Ai_LittleIncubus_AnimInfo[chara->model_0.anim_4.status_0];
-    animInfo->funcPtr_0(chara, arg1, coords, animInfo);
+    animInfo->updateFunc_0(chara, arg1, coords, animInfo);
 
     func_800705E4(coords, 1, temp_s0, temp_s0, temp_s0);
     func_800705E4(coords, 7, temp_s0, temp_s0, temp_s0);
@@ -575,8 +575,8 @@ bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
     u8              curStateStep;
     s_SubCharacter* localChara; // TODO: Not sure why this is needed here, could be an inline in this func.
 
-    chara->model_0.anim_4.keyframeIdx1_A = 0;
-    localChara                           = chara;
+    chara->model_0.anim_4.alpha_A = FP_ALPHA(0.0f);
+    localChara                    = chara;
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
@@ -622,7 +622,7 @@ bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
 
     chara->model_0.anim_4.status_0      = ANIM_STATUS(3, false);
     chara->model_0.anim_4.time_4         = FP_TIME(338.0f);
-    chara->model_0.anim_4.keyframeIdx0_8 = 338;
+    chara->model_0.anim_4.keyframeIdx_8 = 338;
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, g_Ai_Incubus_AnimInfo);
 
@@ -764,7 +764,7 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
 
     localChara = chara;
 
-    chara->model_0.anim_4.keyframeIdx1_A = 0;
+    chara->model_0.anim_4.alpha_A = FP_ALPHA(0.0f);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
@@ -797,7 +797,7 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
     }
 
     chara->model_0.anim_4.status_0      = ANIM_STATUS(2, false);
-    chara->model_0.anim_4.keyframeIdx0_8 = 115;
+    chara->model_0.anim_4.keyframeIdx_8 = 115;
     chara->model_0.anim_4.time_4         = FP_TIME(115.0f);
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, g_Ai_Unknown23_AnimInfo);

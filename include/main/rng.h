@@ -45,7 +45,7 @@ extern u32 g_RngSeed;
  * @param rand Random base value.
  * @param low Lower range.
  * @param high Upper range.
- * @return Random `s32` in the range `[low, high]`.
+ * @return Random integer in the range `[low, high]` (`s32`).
 */
 #define Rng_GenerateInt(rand, low, high) \
     (((s32)(rand) % (((high) - (low)) + 1)) + (low))

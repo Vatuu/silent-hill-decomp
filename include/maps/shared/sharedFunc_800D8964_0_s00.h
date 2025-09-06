@@ -22,8 +22,8 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
     extern s_AnimInfo D_800EAC80[];
     extern s_AnimInfo D_800EAF60[];
 #endif
-    s_AnimInfo* animInfo = NULL;
 
+    s_AnimInfo* animInfo = NULL;
     switch (chara->model_0.charaId_0)
     {
 #if defined(MAP3_S02) || defined(MAP6_S02)
@@ -47,7 +47,7 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
             break;
 
         case Chara_Alessa:
-            animInfo = &sharedData_800D1B6C_3_s02[chara->model_0.anim_4.status_0];
+            animInfo = &ALESSA_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
 #elif defined(MAP7_S01)
@@ -60,7 +60,7 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
             break;
 
         case Chara_BloodyLisa:
-            animInfo = &sharedData_800DFFD8_7_s01[chara->model_0.anim_4.status_0];
+            animInfo = &BLOODY_LISA_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
 #elif defined(MAP7_S02)
@@ -73,7 +73,7 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
             break;
 
         case Chara_Kaufmann:
-            animInfo = &sharedData_800DF174_0_s00[chara->model_0.anim_4.status_0];
+            animInfo = &KAUFMANN_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
         case Chara_GhostDoctor:
@@ -114,24 +114,24 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
 
 #else
         default:
-            animInfo = &sharedData_800DF174_0_s00[chara->model_0.anim_4.status_0];
+            animInfo = &KAUFMANN_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 #endif
     }
 
-    if (animInfo->funcPtr_0 == Anim_Update0)
+    if (animInfo->updateFunc_0 == Anim_Update0)
     {
-        if (func_800449AC(chara, animInfo) > 0)
+        if (Anim_DurationGet(chara, animInfo) > FP_TIME(0.0f))
         {
-            return chara->model_0.anim_4.keyframeIdx0_8 == animInfo->keyframeIdx1_E;
+            return chara->model_0.anim_4.keyframeIdx_8 == animInfo->endKeyframeIdx_E;
         }
         else
         {
-            return chara->model_0.anim_4.keyframeIdx0_8 == animInfo->keyframeIdx0_C;
+            return chara->model_0.anim_4.keyframeIdx_8 == animInfo->startKeyframeIdx_C;
         }
     }
 
-    if (animInfo->funcPtr_0 == Anim_Update2)
+    if (animInfo->updateFunc_0 == Anim_Update2)
     {
         return -2;
     }
