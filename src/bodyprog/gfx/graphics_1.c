@@ -76,7 +76,7 @@ void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image) // 0x800314EC
     g_BackgroundColor     = 0x80;
 }
 
-void func_800317CC(s_FsImageDesc* image0, s_FsImageDesc* image1, s16 arg2) // 0x800317CC
+void Gfx_BackgroundSpritesTransition(s_FsImageDesc* image0, s_FsImageDesc* image1, s16 arg2) // 0x800317CC
 {
     volatile int   pad;
     s32            i;
@@ -130,7 +130,7 @@ void func_800317CC(s_FsImageDesc* image0, s_FsImageDesc* image1, s16 arg2) // 0x
     GsOUT_PACKET_P = (PACKET*)poly;
 }
 
-void func_80031AAC(s_FsImageDesc* image) // 0x80031AAC
+void Gfx_BackgroundSpriteDraw_2(s_FsImageDesc* image) // 0x80031AAC
 {
     volatile s32 pad; // TODO: Is there a better solution?
     s32          i;
@@ -500,7 +500,7 @@ int Gfx_FadeInProgress() // 0x800325F8
     return FP_FLOAT_TO(1.0f, Q12_SHIFT) - g_PrevScreenFadeProgress;
 }
 
-void func_8003260C() // 0x8003260C
+void Gfx_FadeUpdate() // 0x8003260C
 {
     s32      queueLength;
     s32      timeStep;
@@ -605,9 +605,9 @@ void func_8003260C() // 0x8003260C
     AddPrim(ot, drMode);
 }
 
-void func_80032904()
+void Gfx_CutsceneCameraStateUpdate()
 {
-    void func_8003289C(POLY_G4* poly, s32 color)
+    void Gfx_BlackBorderDraw(POLY_G4* poly, s32 color)
     {
         s32 i;
         s32 color0;
@@ -666,7 +666,7 @@ void func_80032904()
                 g_SysWork.field_30++;
             }
 
-            func_8003289C(poly, D_800A8F40);
+            Gfx_BlackBorderDraw(poly, D_800A8F40);
             break;
 
         case 20:
@@ -675,7 +675,7 @@ void func_80032904()
             g_SysWork.field_30++;
 
         case 21:
-            func_8003289C(poly, D_800A8F40);
+            Gfx_BlackBorderDraw(poly, D_800A8F40);
             break;
 
         case 23:
@@ -688,7 +688,7 @@ void func_80032904()
                 return;
             }
 
-            func_8003289C(poly, D_800A8F40);
+            Gfx_BlackBorderDraw(poly, D_800A8F40);
             break;
 
         case 0:
@@ -720,36 +720,4 @@ void Gfx_VSyncCallback() // 0x80032b80
     g_SysWork.timer_1C++;
     g_SysWork.timer_20++;
     g_SysWork.timer_24++;
-}
-
-void GameFs_TitleGfxSeek() // 0x80032bd0
-{
-    Fs_QueueStartSeek(FILE_TIM_TITLE_E_TIM);
-}
-
-void GameFs_TitleGfxLoad() // 0x80032bf0
-{
-    Fs_QueueStartReadTim(FILE_TIM_TITLE_E_TIM, FS_BUFFER_3, &g_TitleImg);
-}
-
-void GameFs_StreamBinSeek() // 0x80032C20
-{
-    Fs_QueueStartSeek(FILE_VIN_STREAM_BIN);
-}
-
-void GameFs_StreamBinLoad() // 0x80032C40
-{
-    Fs_QueueStartRead(FILE_VIN_STREAM_BIN, FS_BUFFER_1);
-}
-
-void GameFs_OptionBinLoad() // 0x80032C68
-{
-    Fs_QueueStartReadTim(FILE_TIM_OPTION_TIM, FS_BUFFER_1, &g_ItemInspectionImg);
-    Fs_QueueStartRead(FILE_VIN_OPTION_BIN, FS_BUFFER_1);
-}
-
-void GameFs_SaveLoadBinLoad() // 0x80032CA8
-{
-    Fs_QueueStartReadTim(FILE_TIM_SAVELOAD_TIM, FS_BUFFER_1, &g_ItemInspectionImg);
-    Fs_QueueStartRead(FILE_VIN_SAVELOAD_BIN, FS_BUFFER_1);
 }

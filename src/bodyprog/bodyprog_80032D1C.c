@@ -175,7 +175,7 @@ void MainLoop() // 0x80032EE0
             continue;
         }
 
-        func_8003260C();
+        Gfx_FadeUpdate();
         func_8002EB88();
         func_800485D8();
 
@@ -360,30 +360,3 @@ void nullsub_800334C8() {}
 
 void func_800334D0() {}
 
-// Possibly related to save functionallity
-s32 func_800334D8(s32 idx) // 0x800334D8
-{
-    s32 i;
-    s32 res;
-    s32 var0;
-    s32 var1;
-
-    res  = 0;
-    var0 = Savegame_CardFilesGetUsageBits(idx);
-
-    for (i = 0; i < 15; i++)
-    {
-        var1 = (var0 >> (i * 2)) & 0x3;
-        if (var1 == 1)
-        {
-            return 0;
-        }
-
-        if (var1 == 3)
-        {
-            res = 1;
-        }
-    }
-
-    return res;
-}

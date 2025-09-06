@@ -16,6 +16,33 @@
 #include "main/rng.h"
 #include "screens/stream/stream.h"
 
+s32 func_800334D8(s32 idx) // 0x800334D8
+{
+    s32 i;
+    s32 res;
+    s32 var0;
+    s32 var1;
+
+    res  = 0;
+    var0 = Savegame_CardFilesGetUsageBits(idx);
+
+    for (i = 0; i < 15; i++)
+    {
+        var1 = (var0 >> (i * 2)) & 0x3;
+        if (var1 == 1)
+        {
+            return 0;
+        }
+
+        if (var1 == 3)
+        {
+            res = 1;
+        }
+    }
+
+    return res;
+}
+
 static inline s32 WrapIdx(s32 idx)
 {
     return (idx < 0) ? (idx + 3) : idx;
@@ -2554,7 +2581,7 @@ void func_80037388() // 0x80037388
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80033548", func_800373CC); // 0x800373CC
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800334D8", func_800373CC); // 0x800373CC
 
 bool func_800378D4(s_AreaLoadParams* areaLoadParams) // 0x800378D4
 {
@@ -2775,7 +2802,7 @@ void func_80037E78(s_SubCharacter* chara) // 0x80037E78
 }
 
 /** Responsible for loading NPCs on the map. */
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80033548", func_80037F24); // 0x80037F24
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800334D8", func_80037F24); // 0x80037F24
 
 s32 func_800382B0(s32 arg0) // 0x800382B0
 {
@@ -2798,9 +2825,9 @@ s32 func_800382B0(s32 arg0) // 0x800382B0
 
 // TODO: Improperly matched.
 // Scratch: https://decomp.me/scratch/nlBHl
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80033548", func_800382EC); // 0x800382EC
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800334D8", func_800382EC); // 0x800382EC
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80033548", func_80038354); // 0x80038354
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800334D8", func_80038354); // 0x80038354
 
 bool Math_Distance2dCheck(const VECTOR3* pos0, const VECTOR3* pos1, s32 radius) // 0x80038A6C
 {
@@ -2917,7 +2944,7 @@ void GameState_InGame_Update() // 0x80038BD4
         g_MapOverlayHeader.func_40();
     }
 
-    func_80032904();
+    Gfx_CutsceneCameraStateUpdate();
     func_80035DB4(0);
     Demo_DemoRandSeedRestore();
     Demo_DemoRandSeedRestore();
