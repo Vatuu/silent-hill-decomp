@@ -110,7 +110,7 @@ sharedFunc_800D929C_0_s00 = 0x800D5434; // type:func
 //--- PA: 0x00FA68   VA: 0x800D8FE0   subsegment: data, map3_s05
 //--------------------------------------------------------------
 sharedData_800DD59C_0_s00 = 0x800D931C; // type:u8
-sharedData_800E0D38_1_s02 = 0x800D9328; // type:s32 unknown type
+CREAPER_ANIM_INFOS        = 0x800D9328; // type:s32 unknown type
 sharedData_800D5710_3_s03 = 0x800D9D80; // size:0xD0 - s_800D5710
 
 //-------------------------------------------------------------------

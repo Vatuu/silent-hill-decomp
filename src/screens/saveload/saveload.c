@@ -807,7 +807,7 @@ void Gfx_SaveSlotBorderDraw() // 0x801E4010
             borderLine = (LINE_F2*)GsOUT_PACKET_P;
             setLineF2(borderLine);
 
-            setRGB0(borderLine, 0, 0xFF, 0);
+            setRGB0(borderLine, FP_COLOR(0.0f), FP_COLOR(1.0f), FP_COLOR(0.0f));
 
             setXY2(borderLine,
                    borderLines[j][i].vertex0_0.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), borderLines[j][i].vertex0_0.vy,
@@ -864,15 +864,15 @@ void Gfx_SaveSlotMemCardMsgBoxShineDraw(s32 slotIdx) // 0x801E43C8
         setPolyF4(poly);
         setSemiTrans(poly, 1);
 
-        if ((u16)colorTimer < 32)
+        if ((u16)colorTimer < FP_COLOR(0.125f))
         {
-            color = (colorTimer * 2) + 32;
-            setRGB0(poly, color, color, 32);
+            color = (colorTimer * 2) + FP_COLOR(0.125f);
+            setRGB0(poly, color, color, FP_COLOR(0.125f));
         }
         else
         {
-            color = 96 - ((colorTimer - 32) * 2);
-            setRGB0(poly, color, color, 32);
+            color = FP_COLOR(0.375f) - ((colorTimer - FP_COLOR(0.125f)) * 2);
+            setRGB0(poly, color, color, FP_COLOR(0.125f));
         }
 
         setXY4(poly,
@@ -1062,10 +1062,10 @@ void Gfx_SaveSlotBoxDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 se
         trackPoly = (POLY_G4*)GsOUT_PACKET_P;
         setPolyG4(trackPoly);
 
-        setRGB0(trackPoly, 0x20, 0x20, 0x20);
-        setRGB1(trackPoly, 0x20, 0x20, 0x20);
-        setRGB2(trackPoly, 0x80, 0x80, 0x80);
-        setRGB3(trackPoly, 0x80, 0x80, 0x80);
+        setRGB0(trackPoly, FP_COLOR(0.125f), FP_COLOR(0.125f), FP_COLOR(0.125f));
+        setRGB1(trackPoly, FP_COLOR(0.125f), FP_COLOR(0.125f), FP_COLOR(0.125f));
+        setRGB2(trackPoly, FP_COLOR(0.5f),   FP_COLOR(0.5f),   FP_COLOR(0.5f));
+        setRGB3(trackPoly, FP_COLOR(0.5f),   FP_COLOR(0.5f),   FP_COLOR(0.5f));
 
         trackOffsetX = (slotIdx * SLOT_COLUMN_OFFSET) - 139;
         setXY4(trackPoly,
@@ -1083,7 +1083,7 @@ void Gfx_SaveSlotBoxDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 se
     setPolyF4(unkPoly);
     setSemiTrans(unkPoly, 1);
 
-    setRGB0(unkPoly, 0x30, 0x30, 0x30);
+    setRGB0(unkPoly, FP_COLOR(0.1875f), FP_COLOR(0.1875f), FP_COLOR(0.1875f));
 
     setXY4(unkPoly,
            (slotIdx * SLOT_COLUMN_OFFSET) - 139, -81,
@@ -1301,9 +1301,9 @@ void Gfx_SaveSlotMemCardMsgBoxSubDraw(s_LineBorder* borderLines, s_QuadBorder* b
         setSemiTrans(glowPoly, 1);
 
         setRGB0(glowPoly, coloredLine->r_8 / 2, coloredLine->g_A / 2, coloredLine->b_C / 2);
-        setRGB1(glowPoly, 0, 0, 0);
+        setRGB1(glowPoly, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
         setRGB2(glowPoly, coloredLine->r_8 / 2, coloredLine->g_A / 2, coloredLine->b_C / 2);
-        setRGB3(glowPoly, 0, 0, 0);
+        setRGB3(glowPoly, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
 
         glowLine = (s_Line2d*)&borderGlowQuads->quads_0[i].vertex2_8;
         setXY4(glowPoly,
@@ -1323,7 +1323,7 @@ void Gfx_SaveSlotMemCardMsgBoxSubDraw(s_LineBorder* borderLines, s_QuadBorder* b
     setPolyF4(unkPoly);
     setSemiTrans(unkPoly, 1);
 
-    setRGB0(unkPoly, 48, 48, 48);
+    setRGB0(unkPoly, FP_COLOR(0.1875f), FP_COLOR(0.1875f), FP_COLOR(0.1875f));
 
     setXY4(unkPoly,
            coloredLine->line_0.vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET),                                    coloredLine->line_0.vertex0_0.vy,
@@ -1378,10 +1378,10 @@ void Gfx_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
         poly_f3 = (POLY_F3*)GsOUT_PACKET_P;
         setPolyF3(poly_f3);
 
-        color = 0x30; // HACK
+        color = FP_COLOR(0.1875f); // HACK
 
         setSemiTrans(poly_f3, 1);
-        setRGB0(poly_f3, color, 0x30, 0x30);
+        setRGB0(poly_f3, color, FP_COLOR(0.1875f), FP_COLOR(0.1875f));
 
         setXY3(poly_f3,
                tris[i].vertex0_0.vx, tris[i].vertex0_0.vy,
@@ -1399,7 +1399,7 @@ void Gfx_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
     setPolyF4(poly_f4);
     setSemiTrans(poly_f4, 1);
 
-    setRGB0(poly_f4, 0x30, 0x30, 0x30);
+    setRGB0(poly_f4, FP_COLOR(0.1875f), FP_COLOR(0.1875f), FP_COLOR(0.1875f));
 
     setXY4(poly_f4,
            line->vertex0_0.vx,                      line->vertex0_0.vy,
@@ -1419,20 +1419,20 @@ void Gfx_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
 
         if (i & 0x1)
         {
-            setRGB0(line_g2, 0xA0, 0x80, 0x40);
-            setRGB1(line_g2, 0xB0, 0xB0, 0xB0);
+            setRGB0(line_g2, FP_COLOR(0.625f),  FP_COLOR(0.5f),    FP_COLOR(0.25f));
+            setRGB1(line_g2, FP_COLOR(0.6875f), FP_COLOR(0.6875f), FP_COLOR(0.6875f));
         }
         else
         {
-            setRGB0(line_g2, 0xB0, 0xB0, 0xB0);
-            setRGB1(line_g2, 0xA0, 0x80, 0x40);
+            setRGB0(line_g2, FP_COLOR(0.6875f), FP_COLOR(0.6875f), FP_COLOR(0.6875f));
+            setRGB1(line_g2, FP_COLOR(0.625f),  FP_COLOR(0.5f),    FP_COLOR(0.25f));
         }
 
         setXY2(line_g2,
                sp10[i].vx, sp10[i].vy,
                sp10[(i + 1) % 6].vx,sp10[(i + 1) % 6].vy);
 
-        addPrim((u8*)ot->org + 0x1C, line_g2);
+        addPrim((u8*)ot->org + 28, line_g2);
         GsOUT_PACKET_P = (u8*)line_g2 + sizeof(LINE_G2);
     }
 }
@@ -1533,13 +1533,13 @@ void Gfx_SaveDataInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
 
         digitCount = mins < 10;
 
-        Gfx_StringSetPosition(digitCount * 10 + 220, 178);
+        Gfx_StringSetPosition((digitCount * 10) + 220, 178);
         Gfx_StringDrawInt(2, mins);
         Gfx_StringDraw("_:_", 3);
 
         digitCount = sec < 10;
 
-        Gfx_StringSetPosition(digitCount * 10 + 254, 178);
+        Gfx_StringSetPosition((digitCount * 10) + 254, 178);
         Gfx_StringDrawInt(2, sec);
 
         if (!(flags & 0x18))
@@ -1564,14 +1564,14 @@ void Gfx_SaveDataInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
             {
                 setRGB0(poly, (hasFlag > 0) ? FP_COLOR(0.0f) : FP_COLOR(1.0f), FP_COLOR(1.0f), FP_COLOR(0.0f));
                 setRGB2(poly, (hasFlag > 0) ? FP_COLOR(0.0f) : FP_COLOR(1.0f), FP_COLOR(1.0f), FP_COLOR(0.0f));
-                setRGB1(poly, 0, 0, 0);
-                setRGB3(poly, 0, 0, 0);
+                setRGB1(poly, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
+                setRGB3(poly, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
                 setXY4(poly, -30, 89, -30, 93, 120, 89, 120, 93);
             }
             else
             {
-                setRGB0(poly, 0, 0, 0);
-                setRGB2(poly, 0, 0, 0);
+                setRGB0(poly, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
+                setRGB2(poly, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
                 setRGB1(poly, (hasFlag > 0) ? FP_COLOR(0.0f) : FP_COLOR(1.0f), FP_COLOR(1.0f), FP_COLOR(0.0f));
                 setRGB3(poly, (hasFlag > 0) ? FP_COLOR(0.0f) : FP_COLOR(1.0f), FP_COLOR(1.0f), FP_COLOR(0.0f));
                 setXY4(poly, -30, 85, -30, 89, 120, 85, 120, 89);

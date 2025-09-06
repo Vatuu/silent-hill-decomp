@@ -31,9 +31,9 @@
 
 typedef enum _SpeedZoneType
 {
-    SpeedZoneType_Slow = 0,
-    SpeedZoneType_Norm = 1,
-    SpeedZoneType_Fast = 2,
+    SpeedZoneType_Slow   = 0,
+    SpeedZoneType_Normal = 1,
+    SpeedZoneType_Fast   = 2,
 } e_SpeedZoneType;
 
 typedef enum _Sfx
@@ -683,7 +683,7 @@ typedef struct _IpdCollisionData_18
 {
     u16 field_0_0  : 5;
     u16 field_0_5  : 3;
-    u16 field_0_8 : 4;
+    u16 field_0_8  : 4;
     u16 field_0_12 : 3;
     u16 field_0_15 : 1;
     u16 field_2;
@@ -809,10 +809,10 @@ STATIC_ASSERT_SIZEOF(s_Bone, 24);
 // PROBABLY skeleton data.
 typedef struct
 {
-    u8      boneCount_0;
-    u8      boneIdx_1; // Current bone index? Used in traversal.
-    s8      field_2;
-    s8      field_3;
+    u8               boneCount_0;
+    u8               boneIdx_1; // Current bone index? Used in traversal.
+    s8               field_2;
+    s8               field_3;
     s_func_800452EC* field_4;
     s_Bone* bones_8;
 
@@ -937,10 +937,10 @@ typedef struct _SpeedZone
 {
     s8 speedIdx_0;
     // 1 byte of padding.
-    s16 minX_2;
-    s16 maxX_4;
-    s16 minZ_6;
-    s16 maxZ_8;
+    s16 minX_2; // } Q11.4? Q7.8 fits more cleanly, but `Map_SpeedZoneGet` uses `<< 8` for comparison with Q19.12 input position.
+    s16 maxX_4; // }
+    s16 minZ_6; // }
+    s16 maxZ_8; // }
 } s_SpeedZone;
 
 typedef struct _WaterZone
@@ -948,7 +948,7 @@ typedef struct _WaterZone
     u8  enabled_0;
     // 1 byte of padding.
     s16 illumination_2;
-    s16 minX_4; // } Q11.4?
+    s16 minX_4; // } Q11.4? Q7.8 fits more cleanly, but a call to `Map_WaterZoneGet` uses `>> 8` with Q19.12 arg position.
     s16 maxX_6; // }
     s16 minZ_8; // }
     s16 maxZ_A; // }
@@ -1092,14 +1092,14 @@ typedef struct
     s32                field_134;
     s_func_80041CB4    field_138;
     char               mapTag_144[4];
-    s32                mapTagLen_148;
+    s32                mapTagSize_148;
     s32                field_14C;
     s_IpdHeader*       field_150;
     s32                field_154;
-    s32                ipdTableLen_158;
-    s_800C117C         ipdTable_15C[4]; // temp name.
+    s32                ipdTableSize_158;
+    s_800C117C         ipdTable_15C[4]; // Temp name. Uses either 2 or 4 fields depending map type.
     s_IpdColumn        ipdGrid_1CC[18];
-    s8                 unk_40C[32];     // could be just one extra row in the table above.
+    s8                 unk_40C[32];     // Could be one extra row in table above.
     s_IpdColumn*       ipdGridCenter_42C;
     s_800C1450         field_430;
     s32                field_578;
@@ -1457,7 +1457,7 @@ typedef struct _MapOverlayHeader
     GsCOORDINATE2*    field_28;
     u8*               loadableItems_2C;
     const char**      mapMessages_30; // Array of strings.
-    s_AnimInfo*       animInfos_34;   // Array.
+    s_AnimInfo*       animInfos_34;   // Map-specific anim infos for Harry (for anims 38+).
     s_UnkStruct3_Mo*  field_38;
     void              (*func_3C)(); // func(?).
     void              (*func_40)();
@@ -1648,23 +1648,23 @@ typedef struct
 
 typedef struct
 {
-
-    s32 field_0_0 : 1;
-    s32 field_0_1 : 10;
+    s32 field_0_0  : 1;
+    s32 field_0_1  : 10;
     s32 field_0_11 : 10;
     u32 field_0_21 : 4;
     u32 field_0_25 : 4;
     u32 field_0_29 : 3;
 } s_func_8006F8FC;
 
-typedef struct {
+typedef struct
+{
     s_800AE204* ptr_0;
-    s16          count_4;
-    s16          unk_6;
-    u8           unk_8;
-    u8           unk_9;
-    u8           unk_A;
-    u8           unk_B;
+    s16         count_4;
+    s16         unk_6;
+    u8          unk_8;
+    u8          unk_9;
+    u8          unk_A;
+    u8          unk_B;
 } s_800AE4DC;
 
 // ========
@@ -1832,7 +1832,9 @@ extern s32 g_MainMenuState;
 
 extern s32 g_MainMenu_SelectedEntry;
 
-/** Flags for which main menu entries should be visible. Flag (1 << 5) corresponts to the "EXTRA" option, which is unused and never set. */
+/** Flags for which main menu entries should be visible.
+ * @unused Flag (1 << 5) corresponds to the "EXTRA" option, which is unused and never set.
+ */
 extern u32 g_MainMenu_VisibleEntryFlags;
 
 /** Counts the amount of times that demos has been play in the current game session. */
@@ -1991,7 +1993,7 @@ extern u8 D_800AF220;
 
 extern s32 D_800AF224;
 
-extern s_AnimInfo g_MaybePlayerAnims[]; // Maybe part of bigger struct. 0x800AF228
+extern s_AnimInfo HARRY_BASE_ANIM_INFOS[]; // Maybe part of bigger struct. 0x800AF228
 
 extern s16 D_800AF506;
 
@@ -2442,16 +2444,15 @@ extern const s_MapOverlayHeader g_MapOverlayHeader; // 0x800C957C
 // FUNCTIONS
 // ==========
 
-// `Gfx_DrawBackgroundImage`
 /** Draws a background image.
- * Only applies for menus and the preview of maps when grabbing them.
+ * Only applies to menus and the preview of maps when grabbing them.
  */
 void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image);
 
 void Gfx_BackgroundSpritesTransition(s_FsImageDesc* image0, s_FsImageDesc* image1, s16 arg2);
 
 /** Draws a background image.
- * Only applies for background images of notes or puzzles images.
+ * Only applies to background images of notes or puzzles images.
  */
 void Gfx_BackgroundSpriteDraw_2(s_FsImageDesc* image);
 
@@ -2488,8 +2489,10 @@ int Gfx_FadeInProgress();
 
 void Gfx_CutsceneCameraStateUpdate();
 
-/** Draws some string in display space. */
-void func_80032CE8();
+/** @unused Possibly a leftover from when the save menu was part of `BODYPROG.BIN`.
+ * Draws some string in display space.
+ */
+void SaveLoad_NowLoadingStringDraw();
 
 void func_80032D1C();
 
@@ -2522,6 +2525,7 @@ void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* pos, SVECTOR3* rot);
 
 void func_8003CD6C(s_PlayerCombat* arg0);
 
+/** Returns `bool`? */
 s32 func_8003CDA0(s32 invSlotIdx);
 
 void func_8003D01C();
@@ -2648,10 +2652,21 @@ void func_800421D8(char* mapTag, s32 plmIdx, s32 arg2, s32 arg3, s32 arg4, s32 a
 
 void func_80042300(s_800C1020* arg0, s32 arg1);
 
+/** @brief Locates all IPD files for a given map type.
+ *
+ * Example:
+ * Map type THR.
+ * `file 1100` is `THR0205.IPD`, `ipdGridCenter_42C[2][5] = 1100`.
+ */
 void Map_MakeIpdGrid(s_800C1020* arg0, char* mapTag, s32 fileIdxStart);
 
-/** @brief Turns two hex `char`s to their `int` hex value. */
-bool hex_to_s8(s32* out, char firstHex, char secondHex);
+/** @brief Converts two hex `char`s to an integer hex value.
+ *
+ * @param out Output hex `int`.
+ * @param hex0 First hex `char`.
+ * @param hex1 Second hex `char`.
+ */
+bool ConvertHexToS8(s32* out, char hex0, char hex1);
 
 s32* func_800425D8(s32* arg0);
 
@@ -2691,6 +2706,9 @@ void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1,
 
 void func_800433B8(s_800C1020* arg0);
 
+void func_800433B8(s_800C1020* arg0);
+
+/** Args are X and Z? */
 s16 func_80043554(s32 gridX, s32 gridZ);
 
 bool func_80043578(s_800C117C* arg0, s32 arg1, s32 arg2);
@@ -2742,23 +2760,31 @@ void func_800445A4(s_AnimFile*, GsCOORDINATE2*);
 
 s_AnimInfo* func_80044918(s_ModelAnim* anim);
 
-void func_800446D8(s_Skeleton*, GsCOORDINATE2*, s32, s32, s32);
+void func_800446D8(s_Skeleton* skel, GsCOORDINATE2* coords, s32 keyframeIdx0, s32 keyframeIdx1, s32 alpha);
 
 void func_80044950(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
 
-s32 func_800449AC(s_Model* model, s_AnimInfo* anim);
+q19_12 Anim_DurationGet(s_Model* model, s_AnimInfo* anim);
 
-/** Updates a character's animation, variant 0. First param might be `s_SubCharacter` instead. */
-void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* targetAnim);
+/** Updates a character's animation, variant 0. First param might be `s_SubCharacter` instead.
+ * Used for anim init?
+ */
+void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coords, s_AnimInfo* animInfo);
 
-/** Updates a character's animation, variant 1. */
-void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* targetAnim);
+/** Updates a character's animation, variant 1.
+ * Used for looped anims?
+ */
+void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
 
-/** Updates a character's animation, variant 2. */
-void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* targetAnim);
+/** Updates a character's animation, variant 2.
+ * The generic update func?
+ */
+void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
 
-/** Updates a character's animation, variant 3. */
-void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* targetAnim);
+/** Updates a character's animation, variant 3.
+ * Same as `Anim_Update2` but sine-based?
+ */
+void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
 
 /** Something related to player weapon position. Takes coords to arm bones. */
 void func_80044F14(GsCOORDINATE2* coord, s16 z, s16 x, s16 y);
@@ -3014,7 +3040,7 @@ s32 func_80056348(bool (*arg0)(s_PlmTexList* texList), s_PlmHeader* plmHeader);
 void func_80059D50(s32 arg0, s_func_80057344* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4);
 
 /** TODO: Unknown `arg2` type. */
-void func_8005A21C(s_func_80057344* arg0, GsOT_TAG* arg1, void* arg2, MATRIX* mat);
+void func_8005A21C(s_func_80057344* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
 
 /** @brief Computes a fog-shaded version of `D_800C4190` color using `arg1` as the distance factor?
  *  Stores the result at 0x3D8 into `arg0`.
@@ -3080,7 +3106,7 @@ s32 func_800571D0(u32 arg0);
 void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3);
 
 /** TODO: Unknown `arg2` type. */
-void func_80057344(s_func_80057344* arg0, GsOT_TAG* arg1, void* arg2, MATRIX* mat);
+void func_80057344(s_func_80057344* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
 
 void func_800574D4(s_ObjHeader* header, s_GteScratchData* scratchData);
 
@@ -3181,7 +3207,7 @@ s32 func_8008D8C0(s16 x0, s32 x1, s32 x2);
 void func_8008D990(s32, s32, VECTOR3*, s32, s32);
 
 /** `posX` and `posX` appear to be in Q27.4. */
-s_WaterZone* Map_GetWaterZone(s32 posX, s32 posZ, s_WaterZone* waterZone);
+s_WaterZone* Map_WaterZoneGet(s32 posX, s32 posZ, s_WaterZone* waterZone);
 
 void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2);
 
@@ -3493,6 +3519,8 @@ void func_8006C0C8(s_func_8006CC44*, s16, s16, s32);
 
 bool func_8006C1B8(u32 arg0, s16 arg1, s_func_8006CC44* arg2);
 
+bool func_8006C3D4(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s32 idx);
+
 void func_8006C794(s_func_8006CC44* arg0, s32 arg1, s32 arg2);
 
 void func_8006C838(s_func_8006CC44* arg0, s_IpdCollisionData* collData);
@@ -3509,6 +3537,7 @@ void func_8006D600(VECTOR3* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 void func_8006D774(s_func_8006CC44* arg0, VECTOR3* arg1, VECTOR3* arg2);
 
+/** `arg1` is likely Q23.8. */
 void func_8006D7EC(s_func_8006ABC0* arg0, SVECTOR* arg1, SVECTOR* arg2);
 
 bool func_8006D90C(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2);
@@ -3573,6 +3602,7 @@ void Settings_RestoreControlDefaults(s32 arg0);
 
 void nullsub_800334C8();
 
+// Possibly related to save functionallity.
 s32 func_800334D8(s32 idx);
 
 bool func_80033548();
@@ -3850,7 +3880,7 @@ void GameFs_BgItemLoad();
 
 void func_8003BED0();
 
-s32 Map_GetSpeedZone(s32 x, s32 z);
+s32 Map_SpeedZoneGet(s32 x, s32 z);
 
 /** Used in map loading. Something related to screen.
  * Removing it causes the game to get stuck at the loading screen.
@@ -3943,7 +3973,7 @@ u32 func_8003ED64();
 
 void func_8003EDA8();
 
-void func_8003EDB8(CVECTOR* arg0, CVECTOR* arg1);
+void func_8003EDB8(CVECTOR* color0, CVECTOR* color1);
 
 void func_8003EE30(s32 arg0, s8* arg1, s32 arg2, s32 arg3);
 

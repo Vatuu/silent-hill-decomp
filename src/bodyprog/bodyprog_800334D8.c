@@ -16,7 +16,6 @@
 #include "main/rng.h"
 #include "screens/stream/stream.h"
 
-// Possibly related to save functionallity
 s32 func_800334D8(s32 idx) // 0x800334D8
 {
     s32 i;
@@ -1582,7 +1581,7 @@ void Gfx_LoadingScreen_PlayerRun() // 0x80035BE0
 
         model->anim_4.flags_2                     |= AnimFlag_Visible;
         g_SysWork.player_4C.extra_128.field_18     = 0;
-        model->anim_4.flags_2                     |= AnimFlag_Unk1 | AnimFlag_Visible;
+        model->anim_4.flags_2                     |= AnimFlag_Unlocked | AnimFlag_Visible;
         model->anim_4.time_4                       = FP_TIME(26.0f);
         g_SysWork.player_4C.chara_0.position_18.vy = FP_METER(0.2f);
 

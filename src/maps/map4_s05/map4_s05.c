@@ -135,7 +135,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
 
     chara->properties_E4.larvalStalker.properties_E8[0].val16[0] = 0;
 
-    chara->model_0.anim_4.keyframeIdx1_A = 0;
+    chara->model_0.anim_4.alpha_A = FP_ALPHA(0.0f);
 
     // Set health.
     chara->health_B0 = FP_HEALTH(4000.0f);
@@ -163,7 +163,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
             chara->model_0.state_2               = 5;
             chara->model_0.anim_4.status_0      = ANIM_STATUS(9, true);
             chara->model_0.anim_4.time_4         = FP_TIME(191.0f);
-            chara->model_0.anim_4.keyframeIdx0_8 = 191;
+            chara->model_0.anim_4.keyframeIdx_8 = 191;
 
             chara->properties_E4.larvalStalker.properties_E8[7].val16[1] = -0x90; // Could be `FP_ANGLE(-12.7f)`?
             break;
@@ -175,7 +175,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
             chara->model_0.state_2               = 2;
             chara->model_0.anim_4.status_0      = ANIM_STATUS(9, true);
             chara->model_0.anim_4.time_4         = FP_TIME(191.0f);
-            chara->model_0.anim_4.keyframeIdx0_8 = 191;
+            chara->model_0.anim_4.keyframeIdx_8 = 191;
             chara->rotation_24.vy                = FP_ANGLE(-90.0f);
             break;
     }

@@ -40,10 +40,6 @@ g_MapTypes                                  = 0x8002500C; // type:MapType size:0
 //--------------------------------------------------------------------------
 //--- PA: 0x00091C   VA: 0x8002547C   subsegment: .rodata, bodyprog_8003AB28
 //--------------------------------------------------------------------------
-nextGameStates                              = 0x80025480;
-MAIN_MENU_STR_OFFSETS_X                     = 0x800254EC;
-DIFFICULTY_MENU_STR_OFFSETS_X               = 0x8002551C;
-DIFFICULTY_MENU_UNUSED                      = 0x80025520;
 
 //--------------------------------------------------------------------------------
 //--- PA: 0x001094   VA: 0x80025BF4   subsegment: .rodata, libsd/bodyprog_80045A7C
@@ -247,6 +243,7 @@ GameFs_SaveLoadBinLoad                      = 0x80032CA8; // type:func
 //--------------------------------------------------------------------
 //--- PA: 0x00E188   VA: 0x80032CE8   subsegment: c, bodyprog_80032D1C
 //--------------------------------------------------------------------
+SaveLoad_NowLoadingStringDraw               = 0x80032CE8; // type:func
 GameState_Unk0_Update                       = 0x80032D1C; // type:func
 MainLoop                                    = 0x80032EE0; // type:func
 Settings_ScreenAndVolUpdate                 = 0x800333CC; // type:func
@@ -317,7 +314,7 @@ Gfx_MainMenu_FogUpdate                      = 0x8003BC8C; // type:func
 MapTypeGet                                  = 0x8003BD2C; // type:func
 GameFs_BgEtcGfxLoad                         = 0x8003BE6C; // type:func
 GameFs_BgItemLoad                           = 0x8003BE9C; // type:func
-Map_GetSpeedZone                            = 0x8003BF60; // type:func
+Map_SpeedZoneGet                            = 0x8003BF60; // type:func
 GameFs_FlameGfxLoad                         = 0x8003E710; // type:func
 Game_TurnFlashlightOn                       = 0x8003ECBC; // type:func
 Game_TurnFlashlightOff                      = 0x8003ECE4; // type:func
@@ -344,7 +341,7 @@ Fs_QueueEntryLoadStatusGet                  = 0x80041ADC; // type:func
 IpdHeader_LoadStateGet                      = 0x80041B1C; // type:func
 PlmHeader_LoadStateGet                      = 0x80041BA0; // type:func
 Map_MakeIpdGrid                             = 0x800423F4; // type:func
-hex_to_s8                                   = 0x8004255C; // type:func
+ConvertHexToS8                              = 0x8004255C; // type:func
 IpdHeader_IsLoaded                          = 0x80042C04; // type:func
 IpdHeader_IsTextureLoaded                   = 0x80043B70; // type:func
 IpdHeader_CollisionDataGet                  = 0x80043BA4; // type:func
@@ -355,6 +352,7 @@ IpdHeader_FixHeaderOffsets                  = 0x80043DA4; // type:func
 IpdHeader_ModelLinkObjectLists              = 0x80043E50; // type:func
 PlmHeader_ObjectListSearch                  = 0x80043F2C; // type:func
 IpdHeader_ModelBufferLinkObjectLists        = 0x80043F88; // type:func
+Anim_DurationGet							= 0x800449AC; // type:func
 Anim_Update0                                = 0x800449F0; // type:func
 Anim_Update1                                = 0x80044B38; // type:func
 Anim_Update2                                = 0x80044CA4; // type:func
@@ -604,7 +602,7 @@ Dms_CharacterKeyframeInterpolate            = 0x8008CC98; // type:func
 Dms_CameraGetTargetPos                      = 0x8008CE1C; // type:func
 Dms_CameraKeyframeInterpolate               = 0x8008CFEC; // type:func
 Math_LerpFixed12                            = 0x8008D3D4; // type:func
-Map_GetWaterZone                            = 0x8008E51C; // type:func
+Map_WaterZoneGet                            = 0x8008E51C; // type:func
 
 //-------------------------------------------------------
 //--- PA: 0x06A3C0   VA: 0x8008EF20   subsegment: c, demo
@@ -1974,10 +1972,6 @@ g_Inventory_SelectionId                     = 0x800ADB5C; // type:u32
 //---------------------------------------------------------------------------
 g_ItemNames                                 = 0x800ADB60; // type:u32 size:0x30C
 g_ItemDescriptions                          = 0x800ADE6C; // type:u32 size:0x30C
-
-//-----------------------------------------------------------------------
-//--- PA: 0x089618   VA: 0x800AE178   subsegment: data, bodyprog_800AE178
-//-----------------------------------------------------------------------
 g_Inventory_SelectedItemIdx                 = 0x800AE17C;
 g_Inventory_EquippedItem                    = 0x800AE184;
 g_Inventory_HealthStatusScanlineTimer       = 0x800AE194;
@@ -1987,11 +1981,16 @@ g_Inventory_ItemNameTimer                   = 0x800AE19C;
 g_Inventory_DescriptionRollTimer            = 0x800AE1A0;
 g_Inventory_ScrollTransitionTimer           = 0x800AE1A4;
 g_PickupItemAnimState                       = 0x800AE1AC;
+D_800AE204                                  = 0x800AE204; // size:0x2D8
+
+//-----------------------------------------------------------------------
+//--- PA: 0x089A90   VA: 0x800AE5F0   subsegment: data, bodyprog_800AE5F0
+//-----------------------------------------------------------------------
 g_Player_GrabFree_InputCount                = 0x800AF20C;
 g_Player_IsInWalkToRunTransition            = 0x800AF214;
 g_Player_DisableControl                     = 0x800AF215;
 g_Player_RockDrill_DirectionAttack          = 0x800AF217;
-g_MaybePlayerAnims                          = 0x800AF228; // size:0x390
+HARRY_BASE_ANIM_INFOS                       = 0x800AF228; // size:0x390
 g_Player_AttackAnimIdx                      = 0x800AFBE8;
 g_Player_MeleeAttackType                    = 0x800AFBEC;
 g_Player_IsMultiTapAttack                   = 0x800AFBF0;
@@ -2578,5 +2577,4 @@ smf_song                                    = 0x800C8B00;
 g_MapOverlayHeader                          = 0x800C957C; // type:MapOverlayHeader size:0x84C - size incomplete
 D_800FE5F8                                  = 0x800FE5F8; // ignore:True - Fixes fake missmatch in `Demo_Update`.
 hack_D_800FE5FC_fix                         = 0x800FE5FC; // ignore:true - Part of temp memory block at 800FDE00, has to be unsymbolized for C to match.
-D_800AE204                                  = 0x800AE204; // size:0x2D8
 D_800AE8A0 = 0x800AE8A0; // size:0x51C

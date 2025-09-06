@@ -245,7 +245,7 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
 
     chara->field_D4 = FP_FLOAT_TO(0.3f, Q12_SHIFT);
 
-    chara->model_0.anim_4.keyframeIdx1_A = 0;
+    chara->model_0.anim_4.alpha_A = FP_ALPHA(0.0f);
 
     chara->moveSpeed_38    = 0;
     chara->headingAngle_3C = chara->rotation_24.vy;
@@ -283,7 +283,7 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
 
     chara->model_0.anim_4.status_0      = ANIM_STATUS(8, false);
     chara->model_0.anim_4.time_4         = FP_TIME(258.0f);
-    chara->model_0.anim_4.keyframeIdx0_8 = 258;
+    chara->model_0.anim_4.keyframeIdx_8 = 258;
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, g_Ai_Twinfeeler_AnimInfo);
 

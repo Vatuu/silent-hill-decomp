@@ -763,8 +763,8 @@ s8 D_800A98FC[Chara_Count] =
 s_800A992C D_800A992C[4] =
 {
     {
-        .charaId0_0       = Chara_Hero,
-        .charaId1_1       = Chara_Hero,
+        .charaId0_0       = Chara_Harry,
+        .charaId1_1       = Chara_Harry,
         .unk_2            = { 0, 0 },
         .animFile0_4      = FS_BUFFER_0,
         .animFile1_8      = (s_AnimFile*)FS_BUFFER_0,
@@ -776,14 +776,14 @@ s_800A992C D_800A992C[4] =
 };
 s_AnimInfo D_800A998C =
 {
-    .funcPtr_0              = Anim_Update1,
+    .updateFunc_0           = Anim_Update1,
     .field_4                = 0,
     .hasVariableTimeDelta_5 = false,
     .status_6               = ANIM_STATUS(0, false),
-    .unk_7                  = 0,
+    .field_7                = 0,
     .timeDelta_8            = { .constTimeDelta = FP_TIME(8.0f) },
-    .keyframeIdx0_C         = 26,
-    .keyframeIdx1_E         = 44
+    .startKeyframeIdx_C     = 26,
+    .endKeyframeIdx_E       = 44
 };
 u32 unknown_D_800A999C = 0x80025234;
 s32 D_800A99A0 = 0;

@@ -83,7 +83,7 @@ sharedFunc_800D9064_0_s00   = 0x800D0D04; // type:func
 sharedFunc_800D9078_0_s00   = 0x800D0D18; // type:func
 sharedFunc_800D908C_0_s00   = 0x800D0D2C; // type:func
 sharedFunc_800D9188_0_s00   = 0x800D0E28; // type:func
-sharedFunc_800D921C_0_s00   = 0x800D0EF0; // type:func
+Anim_StartKeyframeIdxGet    = 0x800D0EF0; // type:func
 sharedFunc_800D923C_0_s00   = 0x800D0EFC; // type:func
 sharedFunc_800D929C_0_s00   = 0x800D0F5C; // type:func
 sharedFunc_800DA8E8_0_s01   = 0x800D1348; // type:func
@@ -104,7 +104,7 @@ sharedData_800DF158_1_s02   = 0x800D332C; // type:u8
 sharedData_800DD591_0_s00   = 0x800D332D; // type:u8
 sharedData_800DD796_0_s01   = 0x800D332E; // type:u8
 sharedData_800DD59C_0_s00   = 0x800D3334; // type:u8
-sharedData_800DF174_0_s00   = 0x800D3338; // type:AnimInfo
+KAUFMANN_ANIM_INFOS         = 0x800D3338; // type:AnimInfo
 
 //-------------------------------------------------------------------
 //--- PA: 0x00A32C   VA: 0x800D38A4   subsegment: .data, map5_s03_msg

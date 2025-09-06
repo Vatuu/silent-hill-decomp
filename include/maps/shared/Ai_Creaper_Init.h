@@ -29,10 +29,8 @@ static inline void Ai_Creaper_PropertiesUpdateFromStep(s_SubCharacter* chara)
         chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 6;
     }
 
-    chara->model_0.state_2               = 1;
-    chara->model_0.anim_4.status_0      = ANIM_STATUS(11, true);
-    chara->model_0.anim_4.time_4         = FP_TIME(94.0f);
-    chara->model_0.anim_4.keyframeIdx0_8 = 94;
+    chara->model_0.state_2 = 1;
+    Character_AnimSet(chara, ANIM_STATUS(11, true), 94);
 }
 
 void Ai_Creaper_Init(s_SubCharacter* chara)
@@ -47,9 +45,8 @@ void Ai_Creaper_Init(s_SubCharacter* chara)
 
     s32 i;
 
-    i = 0;
-
     // Checks if any other Creaper NPCs are also present, making sure to skip this `s_SubCharacter` instance in the NPC array.
+    i = 0;
     do
     {
         if (chara == &g_SysWork.npcs_1A0[i] || g_SysWork.npcs_1A0[i].model_0.charaId_0 != Chara_Creaper)
@@ -70,7 +67,7 @@ void Ai_Creaper_Init(s_SubCharacter* chara)
 
     chara->health_B0                                             = FP_HEALTH(200.0f);
     chara->properties_E4.larvalStalker.properties_E8[0].val16[0] = 0;
-    chara->model_0.anim_4.keyframeIdx1_A                         = 0;
+    chara->model_0.anim_4.alpha_A                                = FP_ALPHA(0.0f);
     chara->moveSpeed_38                                          = 0;
     chara->headingAngle_3C                                       = chara->rotation_24.vy;
 
@@ -83,7 +80,7 @@ void Ai_Creaper_Init(s_SubCharacter* chara)
 
     Ai_Creaper_PropertiesUpdateFromStep(chara);
 
-    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, sharedData_800E0D38_1_s02);
+    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, CREAPER_ANIM_INFOS);
 
     chara->damageReceived_C0 = FP_HEALTH(0.0f);
     chara->field_BC          = 0;

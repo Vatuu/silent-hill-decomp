@@ -5,7 +5,7 @@ bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyfra
         return false;
     }
 
-    if (chara->model_0.anim_4.keyframeIdx0_8 >= keyframeIdx1)
+    if (chara->model_0.anim_4.keyframeIdx_8 >= keyframeIdx1)
     {
         if (!(chara->properties_E4.larvalStalker.properties_E8[13].val32 & (1 << 4)))
         {
@@ -19,7 +19,7 @@ bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyfra
         chara->properties_E4.larvalStalker.properties_E8[13].val32 &= ~(1 << 4);
     }
 
-    if (chara->model_0.anim_4.keyframeIdx0_8 >= keyframeIdx0)
+    if (chara->model_0.anim_4.keyframeIdx_8 >= keyframeIdx0)
     {
         if (!(chara->properties_E4.larvalStalker.properties_E8[13].val32 & (1 << 5)))
         {

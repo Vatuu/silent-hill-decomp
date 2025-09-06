@@ -531,7 +531,7 @@ void func_80041C24(s_PlmHeader* plmHeader, s32 arg1, s32 arg2) // 0x80041C24
 
     D_800C1020.field_150 = arg1;
     D_800C1020.field_154 = arg2;
-    D_800C1020.ipdTableLen_158 = 0;
+    D_800C1020.ipdTableSize_158 = 0;
     D_800C1020.field_588 = 1;
 
     func_80041D10(D_800C1020.ipdTable_15C, 4);
@@ -546,7 +546,7 @@ void func_80041CB4(s_func_80041CB4* arg0, s_PlmHeader* plmHeader) // 0x80041CB4
     func_80041CEC(plmHeader);
 
     arg0->queueIdx_8 = 0;
-    arg0->fileIdx_4    = NO_VALUE;
+    arg0->fileIdx_4  = NO_VALUE;
 }
 
 void func_80041CEC(s_PlmHeader* plmHeader) // 0x80041CEC
@@ -614,7 +614,7 @@ void Map_PlaceIpdAtGridPos(s16 ipdFileIdx, s32 x, s32 z) // 0x80041ED0
 
     ((s16*)&D_800C1020.ipdGridCenter_42C[z])[x] = ipdFileIdx;
 
-    for (ptr = D_800C1020.ipdTable_15C; ptr < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableLen_158]; ptr++)
+    for (ptr = D_800C1020.ipdTable_15C; ptr < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableSize_158]; ptr++)
     {
         if (ptr->field_8 != x || ptr->field_A != z)
         {
@@ -636,7 +636,7 @@ void Map_PlaceIpdAtGridPos(s16 ipdFileIdx, s32 x, s32 z) // 0x80041ED0
 
 void func_80041FF0() // 0x80041FF0
 {
-    func_80042300(&D_800C1020, D_800C1020.ipdTableLen_158);
+    func_80042300(&D_800C1020, D_800C1020.ipdTableSize_158);
 }
 
 void func_8004201C() // 0x8004201C
@@ -669,7 +669,7 @@ void func_8004201C() // 0x8004201C
 void func_800420C0() // 0x800420C0
 {
     func_800420FC();
-    func_80042300(&D_800C1020, D_800C1020.ipdTableLen_158);
+    func_80042300(&D_800C1020, D_800C1020.ipdTableSize_158);
     func_80041D48();
 }
 
@@ -727,15 +727,15 @@ void func_800421D8(char* mapTag, s32 plmIdx, s32 arg2, s32 arg3, s32 arg4, s32 a
         }
     }
 
-    if (D_800C1020.ipdTableLen_158 != arg2 || strcmp(mapTag, D_800C1020.mapTag_144) != 0)
+    if (D_800C1020.ipdTableSize_158 != arg2 || strcmp(mapTag, D_800C1020.mapTag_144) != 0)
     {
         func_80042300(&D_800C1020, arg2);
 
-        D_800C1020.ipdTableLen_158 = arg2;
+        D_800C1020.ipdTableSize_158 = arg2;
         D_800C1020.field_14C = arg4;
         strcpy(D_800C1020.mapTag_144, mapTag);
 
-        D_800C1020.mapTagLen_148 = strlen(mapTag);
+        D_800C1020.mapTagSize_148 = strlen(mapTag);
         Map_MakeIpdGrid(&D_800C1020, mapTag, arg4);
     }
 }
@@ -779,17 +779,14 @@ void func_80042300(s_800C1020* arg0, s32 arg1) // 0x80042300
         }
     }
 }
-/** @brief Locate all IPD files for a given map type.
- * For example, map type THR:
- * file 1100 is THR0205.IPD. ipdGridCenter_42C[5][2] = 1100;
- */
+
 void Map_MakeIpdGrid(s_800C1020* arg0, char* mapTag, s32 fileIdxStart) // 0x800423F4
 {
     s8              sp10[256];
     s32             x;
     s32             z;
-    s32             k;
-    s8*             filename_postfix;
+    s32             i;
+    s8*             filenameSuffix;
     s_IpdColumn*    col;
 
     arg0->ipdGridCenter_42C = (s_IpdColumn*)(&arg0->ipdGrid_1CC[8].idx[8]);
@@ -801,29 +798,29 @@ void Map_MakeIpdGrid(s_800C1020* arg0, char* mapTag, s32 fileIdxStart) // 0x8004
             ((s16*)&arg0->ipdGridCenter_42C[z])[x] = NO_VALUE;
         }
     }
-#define FILE_TYPE_IPD (6)
-    // Run through all game files.
-    for (k = fileIdxStart; k < 2074; k++)
-    {
-        if (g_FileTable[k].type_8_18 == FILE_TYPE_IPD)
-        {
-            Fs_GetFileName(sp10, k);
 
-            if (strncmp(sp10, arg0->mapTag_144, arg0->mapTagLen_148) == 0)
+    // Run through all game files.
+    for (i = fileIdxStart; i < FS_FILE_COUNT; i++)
+    {
+        if (g_FileTable[i].type_8_18 == FileType_Ipd)
+        {
+            Fs_GetFileName(sp10, i);
+
+            if (strncmp(sp10, arg0->mapTag_144, arg0->mapTagSize_148) == 0)
             {
-                filename_postfix = &sp10[arg0->mapTagLen_148];
-                if (hex_to_s8(&x, filename_postfix[0], filename_postfix[1]) &&
-                    hex_to_s8(&z, filename_postfix[2], filename_postfix[3]))
+                filenameSuffix = &sp10[arg0->mapTagSize_148];
+                if (ConvertHexToS8(&x, filenameSuffix[0], filenameSuffix[1]) &&
+                    ConvertHexToS8(&z, filenameSuffix[2], filenameSuffix[3]))
                 {
                     col         = &arg0->ipdGridCenter_42C[z];
-                    col->idx[x] = k;
+                    col->idx[x] = i;
                 }
             }
         }
     }
 }
 
-bool hex_to_s8(s32* out, char firstHex, char secondHex) // 0x8004255C
+bool ConvertHexToS8(s32* out, char hex0, char hex1) // 0x8004255C
 {
     char low;
     char high;
@@ -831,23 +828,23 @@ bool hex_to_s8(s32* out, char firstHex, char secondHex) // 0x8004255C
     char hexVal;
     bool isNumber;
 
-    high     = firstHex - '0';
+    high     = hex0 - '0';
     isNumber = high < 10;
 
     hexVal   = high;
     hexVal <<= 4;
     if (!isNumber)
     {
-        letterIdx = firstHex - 'A';
+        letterIdx = hex0 - 'A';
         if (letterIdx > 5)
         {
             return false;
         }
 
-        hexVal = (firstHex + 201) << 4;
+        hexVal = (hex0 + 201) << 4;
     }
 
-    low      = secondHex - '0';
+    low      = hex1 - '0';
     isNumber = low < 10;
     if (isNumber)
     {
@@ -855,13 +852,13 @@ bool hex_to_s8(s32* out, char firstHex, char secondHex) // 0x8004255C
     }
     else
     {
-        letterIdx = secondHex - 'A';
+        letterIdx = hex1 - 'A';
         if (letterIdx > 5)
         {
             return false;
         }
 
-        hexVal |= secondHex + 201;
+        hexVal |= hex1 + 201;
     }
 
     *out = (hexVal << 24) >> 24; // Sign extend.
@@ -877,7 +874,7 @@ s32* func_800425D8(s32* arg0) // 0x800425D8
     ptr = D_800C1020.ipdTable_15C;
     *arg0  = 0;
 
-    while (ptr < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableLen_158])
+    while (ptr < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableSize_158])
     {
         if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
@@ -915,7 +912,7 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
     xIdx = FLOOR_TO_STEP(collX, FP_METER_GEO(40.0f));
     zIdx = FLOOR_TO_STEP(collZ, FP_METER_GEO(40.0f));
 
-    for (ptr = D_800C1020.ipdTable_15C; ptr < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableLen_158]; ptr++)
+    for (ptr = D_800C1020.ipdTable_15C; ptr < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableSize_158]; ptr++)
     {
         if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) < FsQueueEntryLoadStatus_Loaded)
         {
@@ -972,7 +969,7 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
     xIdx = FLOOR_TO_STEP(collX, FP_METER_GEO(40.0f));
     zIdx = FLOOR_TO_STEP(collZ, FP_METER_GEO(40.0f));
 
-    for (ptr1 = D_800C1020.ipdTable_15C, idx = 0; ptr1 < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableLen_158]; ptr1++)
+    for (ptr1 = D_800C1020.ipdTable_15C, idx = 0; ptr1 < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableSize_158]; ptr1++)
     {
         if (Fs_QueueEntryLoadStatusGet(ptr1->queueIdx_4) < FsQueueEntryLoadStatus_Loaded)
         {
@@ -1065,7 +1062,7 @@ void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1) // 0x80042C3C
         D_800C1020.field_430.field_0.count_0 = temp_s0;
     }
 
-    for (var_s0 = D_800C1020.ipdTable_15C; var_s0 < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableLen_158]; var_s0++) 
+    for (var_s0 = D_800C1020.ipdTable_15C; var_s0 < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableSize_158]; var_s0++) 
     {
         if (Fs_QueueEntryLoadStatusGet(var_s0->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
@@ -1142,9 +1139,9 @@ void func_800433B8(s_800C1020* arg0) // 0x800433B8
 {
     s_800C117C* ptr;
 
-    for (ptr = &arg0->ipdTable_15C[0]; ptr < &arg0->ipdTable_15C[arg0->ipdTableLen_158]; ptr++)
+    for (ptr = &arg0->ipdTable_15C[0]; ptr < &arg0->ipdTable_15C[arg0->ipdTableSize_158]; ptr++)
     {
-        if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= 2)
+        if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
             if (ptr->ipdHeader_0->isLoaded_1 && ptr->field_C > 0 && ptr->field_10 > 0)
             {
@@ -1153,9 +1150,9 @@ void func_800433B8(s_800C1020* arg0) // 0x800433B8
         }
     }
 
-    for (ptr = &arg0->ipdTable_15C[0]; ptr < &arg0->ipdTable_15C[arg0->ipdTableLen_158]; ptr++)
+    for (ptr = &arg0->ipdTable_15C[0]; ptr < &arg0->ipdTable_15C[arg0->ipdTableSize_158]; ptr++)
     {
-        if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= 2)
+        if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
             if (ptr->ipdHeader_0->isLoaded_1 && (ptr->field_C <= 0 || ptr->field_10 <= 0))
             {
@@ -1176,7 +1173,7 @@ bool func_80043578(s_800C117C* arg0, s32 arg1, s32 arg2) // 0x80043578
 {
     s32 i;
 
-    for (i = 0; i < D_800C1020.ipdTableLen_158; i++)
+    for (i = 0; i < D_800C1020.ipdTableSize_158; i++)
     {
         if (arg0[i].queueIdx_4 != NO_VALUE &&
             arg1 == arg0[i].field_8 && arg2 == arg0[i].field_A)
@@ -1283,16 +1280,14 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043740); // 0x
 
 bool func_80043830(void) // 0x80043830
 {
-    s_800C117C* ptr;
     s32         loadState;
+    s_800C117C* ptr;
 
-    for (ptr = &D_800C1020.ipdTable_15C[0];
-         ptr < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableLen_158];
-         ptr++)
+    for (ptr = &D_800C1020.ipdTable_15C[0]; ptr < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableSize_158]; ptr++)
     {
         loadState = IpdHeader_LoadStateGet(ptr);
-
-        if (loadState == 0 || loadState == 3 || (ptr->field_C > 0 && ptr->field_10 > 0))
+        if (loadState == StaticModelLoadState_Invalid || loadState == StaticModelLoadState_Loaded ||
+            (ptr->field_C > 0 && ptr->field_10 > 0))
         {
             continue;
         }
@@ -1302,7 +1297,7 @@ bool func_80043830(void) // 0x80043830
             continue;
         }
 
-        if (func_80042E2C(FP_METER_TO_GEO(D_800C1020.field_578), FP_METER_TO_GEO(D_800C1020.field_57C), ptr->field_8, ptr->field_A) <= 0x480)
+        if (func_80042E2C(FP_METER_TO_GEO(D_800C1020.field_578), FP_METER_TO_GEO(D_800C1020.field_57C), ptr->field_8, ptr->field_A) <= FP_METER_GEO(4.5f))
         {
             return true;
         }
@@ -1332,7 +1327,7 @@ void func_80043A24(GsOT* ot, s32 arg1) // 0x80043A24
     }
 
     ptr = &D_800C1020.ipdTable_15C[0];
-    for (; ptr < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableLen_158]; ptr++)
+    for (; ptr < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableSize_158]; ptr++)
     {
         if (IpdHeader_LoadStateGet(ptr) >= 3 && func_80043B34(ptr, &D_800C1020))
         {
@@ -1584,263 +1579,266 @@ void func_80044950(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x
     s_AnimInfo* animInfo;
 
     animInfo = func_80044918(&chara->model_0.anim_4);
-    animInfo->funcPtr_0(chara, arg1, coords, animInfo);
+    animInfo->updateFunc_0(chara, arg1, coords, animInfo);
 }
 
-s32 func_800449AC(s_Model* model, s_AnimInfo* anim) // 0x800449AC
+q19_12 Anim_DurationGet(s_Model* model, s_AnimInfo* anim) // 0x800449AC
 {
     if (!anim->hasVariableTimeDelta_5)
     {
         return anim->timeDelta_8.constTimeDelta;
     }
 
-    return anim->timeDelta_8.variableTimeDeltaFunc(); // The arguments might be passed here.
+    return anim->timeDelta_8.variableTimeDeltaFunc();
 }
 
-static inline s32 Anim_GetTimeStep(s_Model* model, s_AnimInfo* targetAnim)
+/** @brief Gets the time */
+static inline q19_12 Anim_TimeStepGet(s_Model* model, s_AnimInfo* targetAnim)
 {
-    s32 timeDelta;
+    q19_12 duration;
 
-    if (model->anim_4.flags_2 & AnimFlag_Unk1)
+    if (model->anim_4.flags_2 & AnimFlag_Unlocked)
     {
-        timeDelta = func_800449AC(model, targetAnim);
-        return FP_MULTIPLY_PRECISE(timeDelta, (s64)g_DeltaTime0, Q12_SHIFT);
+        duration = Anim_DurationGet(model, targetAnim);
+        return FP_MULTIPLY_PRECISE(duration, g_DeltaTime0, Q12_SHIFT);
     }
 
-    return 0;
+    return FP_TIME(0.0f);
 }
 
-void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* targetAnim) // 0x800449F0
+void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coords, s_AnimInfo* animInfo) // 0x800449F0
 {
-    bool setAnimIdx;
+    bool setNewAnimStatus;
     s32  timeStep;
     s32  newTime;
-    s32  newKeyframeIdx0;
-    s32  targetTime;
+    s32  newKeyframeIdx;
+    s32  startTime;
+    s32  endTime;
     s32  alpha;
 
-    setAnimIdx = false;
+    setNewAnimStatus = false;
 
     // Get time step.
-    timeStep = Anim_GetTimeStep(model, targetAnim);
+    timeStep = Anim_TimeStepGet(model, animInfo);
 
-    // Compute new time.
-    newTime         = model->anim_4.time_4;
-    newKeyframeIdx0 = FP_FROM(newTime, Q12_SHIFT);
-    if (timeStep != 0)
+    // Compute new time and keyframe index.
+    newTime        = model->anim_4.time_4;
+    newKeyframeIdx = FP_FROM(newTime, Q12_SHIFT);
+    if (timeStep != FP_TIME(0.0f))
     {
-        // Clamp new time against target time?
-        newTime   += timeStep;
-        targetTime = FP_TO(targetAnim->keyframeIdx1_E, Q12_SHIFT);
-        if (newTime < targetTime)
+        newTime += timeStep;
+
+        // Clamp new time to valid keyframe range.
+        endTime = FP_TIME(animInfo->endKeyframeIdx_E);
+        if (newTime >= endTime)
         {
-            targetTime = FP_TO(targetAnim->keyframeIdx0_C, Q12_SHIFT);
-            if (newTime <= targetTime)
-            {
-                newTime    = targetTime;
-                setAnimIdx = true;
-            }
+            newTime          = endTime;
+            setNewAnimStatus = true;
         }
         else
         {
-            newTime    = targetTime;
-            setAnimIdx = true;
+            startTime = FP_TIME(animInfo->startKeyframeIdx_C);
+            if (newTime <= startTime)
+            {
+                newTime          = startTime;
+                setNewAnimStatus = true;
+            }
         }
 
-        newKeyframeIdx0 = FP_FROM(newTime, Q12_SHIFT);
+        newKeyframeIdx = FP_FROM(newTime, Q12_SHIFT);
     }
 
     // Update skeleton.
     alpha = FP_ALPHA_NORM(newTime);
-    if ((model->anim_4.flags_2 & AnimFlag_Unk1) || (model->anim_4.flags_2 & AnimFlag_Visible))
+    if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
-        func_800446D8(skel, coord, newKeyframeIdx0, newKeyframeIdx0 + 1, alpha);
+        func_800446D8(skel, coords, newKeyframeIdx, newKeyframeIdx + 1, alpha);
     }
 
     // Update frame data.
-    model->anim_4.time_4         = newTime;
-    model->anim_4.keyframeIdx0_8 = newKeyframeIdx0;
-    model->anim_4.keyframeIdx1_A = 0;
+    model->anim_4.time_4        = newTime;
+    model->anim_4.keyframeIdx_8 = newKeyframeIdx;
+    model->anim_4.alpha_A       = FP_ALPHA(0.0f);
 
-    // Update anim status.
-    if (setAnimIdx)
+    // Update anim status if anim started or ended.
+    if (setNewAnimStatus)
     {
-        model->anim_4.status_0 = targetAnim->status_6;
+        model->anim_4.status_0 = animInfo->status_6;
     }
 }
 
-void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* targetAnim) // 0x80044B38
+void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044B38
 {
-    s32 keyframeIdx0;
-    s32 keyframeIdx1;
-    s32 nextKeyframeIdx;
-    s32 keyframeDelta;
-    s32 currentKeyframeTime;
-    s32 nextKeyframeTime;
-    s32 keyframeTimeDelta;
+    s32 startKeyframeIdx;
+    s32 endKeyframeIdx;
+    s32 nextStartKeyframeIdx;
+    s32 keyframeCount;
+    s32 startKeyframeTime;
+    s32 nextStartKeyframeTime;
+    s32 keyframeCountTime;
     s32 timeStep;
     s32 newTime;
     s32 newKeyframeIdx0;
     s32 newKeyframeIdx1;
     s32 alpha;
 
-    keyframeIdx0    = targetAnim->keyframeIdx0_C;
-    keyframeIdx1    = targetAnim->keyframeIdx1_E;
-    nextKeyframeIdx = keyframeIdx1 + 1;
-    keyframeDelta   = nextKeyframeIdx - keyframeIdx0;
+    startKeyframeIdx     = animInfo->startKeyframeIdx_C;
+    endKeyframeIdx       = animInfo->endKeyframeIdx_E;
+    nextStartKeyframeIdx = endKeyframeIdx + 1;
+    keyframeCount        = nextStartKeyframeIdx - startKeyframeIdx;
 
-    currentKeyframeTime = FP_TO(keyframeIdx0, Q12_SHIFT);
-    nextKeyframeTime    = FP_TO(nextKeyframeIdx, Q12_SHIFT);
-    keyframeTimeDelta   = FP_TO(keyframeDelta, Q12_SHIFT);
+    startKeyframeTime     = FP_TIME(startKeyframeIdx);
+    nextStartKeyframeTime = FP_TIME(nextStartKeyframeIdx);
+    keyframeCountTime     = FP_TIME(keyframeCount);
 
     // Get time step.
-    timeStep = Anim_GetTimeStep(model, targetAnim);
+    timeStep = Anim_TimeStepGet(model, animInfo);
 
-    // Wrap new time to valid range?
+    // Wrap new time to valid keyframe range?
     newTime = model->anim_4.time_4 + timeStep;
-    while (newTime < currentKeyframeTime)
+    while (newTime < startKeyframeTime)
     {
-        newTime += keyframeTimeDelta;
+        newTime += keyframeCountTime;
     }
-    while (newTime >= nextKeyframeTime)
+    while (newTime >= nextStartKeyframeTime)
     {
-        newTime -= keyframeTimeDelta;
+        newTime -= keyframeCountTime;
     }
 
-    // Compute new keyframe 1.
+    // Compute new keyframe 1. Wrap to start to facilitate loop.
     newKeyframeIdx0 = FP_FROM(newTime, Q12_SHIFT);
     newKeyframeIdx1 = newKeyframeIdx0 + 1;
-    if (newKeyframeIdx1 == nextKeyframeIdx)
+    if (newKeyframeIdx1 == nextStartKeyframeIdx)
     {
-        newKeyframeIdx1 = keyframeIdx0;
+        newKeyframeIdx1 = startKeyframeIdx;
     }
 
     // Update skeleton.
     alpha = FP_ALPHA_NORM(newTime);
-    if ((model->anim_4.flags_2 & AnimFlag_Unk1) || (model->anim_4.flags_2 & AnimFlag_Visible))
+    if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
         func_800446D8(skel, coord, newKeyframeIdx0, newKeyframeIdx1, alpha);
     }
 
     // Update frame data.
-    model->anim_4.time_4         = newTime;
-    model->anim_4.keyframeIdx0_8 = newKeyframeIdx0;
-    model->anim_4.keyframeIdx1_A = 0;
+    model->anim_4.time_4        = newTime;
+    model->anim_4.keyframeIdx_8 = newKeyframeIdx0;
+    model->anim_4.alpha_A       = FP_ALPHA(0.0f);
 }
 
-void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* targetAnim) // 0x80044CA4
+void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044CA4
 {
-    bool setAnimIdx;
-    s32  newKeyframeIdx0;
-    s32  newKeyframeIdx1;
+    bool setNewAnimStatus;
+    s32  startKeyframeIdx;
+    s32  endKeyframeIdx;
     s32  timeStep;
     s32  alpha;
     
-    setAnimIdx      = false;
-    newKeyframeIdx0 = targetAnim->keyframeIdx0_C;
-    newKeyframeIdx1 = targetAnim->keyframeIdx1_E;
+    setNewAnimStatus = false;
+    startKeyframeIdx = animInfo->startKeyframeIdx_C;
+    endKeyframeIdx   = animInfo->endKeyframeIdx_E;
 
-    // If no target frame 0 set, default to current frame index 0.
-    if (newKeyframeIdx0 == NO_VALUE)
+    // If no start keyframe exists, default to active keyframe.
+    if (startKeyframeIdx == NO_VALUE)
     {
-        newKeyframeIdx0 = model->anim_4.keyframeIdx0_8;
+        startKeyframeIdx = model->anim_4.keyframeIdx_8;
     }
 
     // Get time step.
-    timeStep = Anim_GetTimeStep(model, targetAnim);
+    timeStep = Anim_TimeStepGet(model, animInfo);
 
-    // Set time.
-    alpha  = model->anim_4.keyframeIdx1_A;
+    // Update time to start or end keyframe, whichever is closest.
+    alpha  = model->anim_4.alpha_A;
     alpha += timeStep;
     if (alpha >= FP_ALPHA(0.5f))
     {
-        model->anim_4.time_4 = FP_TO(newKeyframeIdx1, 12);
+        model->anim_4.time_4 = FP_TIME(endKeyframeIdx);
     }
     else
     {
-        model->anim_4.time_4 = FP_TO(newKeyframeIdx0, Q12_SHIFT);
+        model->anim_4.time_4 = FP_TIME(startKeyframeIdx);
     }
 
-    // Progress keyframes.
+    // Update frame data.
     if (alpha >= FP_ALPHA(1.0f))
     {
-        newKeyframeIdx0              = newKeyframeIdx1;
-        model->anim_4.keyframeIdx0_8 = newKeyframeIdx1;
+        startKeyframeIdx            = endKeyframeIdx;
+        model->anim_4.keyframeIdx_8 = endKeyframeIdx;
         
-        alpha      = FP_ALPHA(0.0f);
-        setAnimIdx = true;
+        alpha            = FP_ALPHA(0.0f);
+        setNewAnimStatus = true;
     }
 
     // Update skeleton.
-    if ((model->anim_4.flags_2 & AnimFlag_Unk1) || (model->anim_4.flags_2 & AnimFlag_Visible))
+    if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
-        func_800446D8(skel, coord, newKeyframeIdx0, newKeyframeIdx1, alpha);
+        func_800446D8(skel, coord, startKeyframeIdx, endKeyframeIdx, alpha);
     }
 
-    // Update frame 1.
-    model->anim_4.keyframeIdx1_A = alpha;
+    // Update alpha.
+    model->anim_4.alpha_A = alpha;
 
-    // Update anim status.
-    if (setAnimIdx)
+    // Update anim status if anim ended.
+    if (setNewAnimStatus)
     {
-        model->anim_4.status_0 = targetAnim->status_6;
+        model->anim_4.status_0 = animInfo->status_6;
     }
 }
 
-void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* targetAnim) // 0x80044DF0
+void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044DF0
 {
-    s32 keyframeIdx0;
-    s32 keyframeIdx1;
+    s32 startKeyframeIdx;
+    s32 endKeyframeIdx;
     s32 timeDelta;
     register s32 timeStep asm("v0"); // HACK: Manually set register to match.
-    s32 newKeyframeIdx1;
+    s32 alpha;
     s32 sinVal;
     s32 newTime;
-    s32 alpha;
+    s32 sinAlpha;
 
-    keyframeIdx0 = targetAnim->keyframeIdx0_C;
-    keyframeIdx1 = targetAnim->keyframeIdx1_E;
+    startKeyframeIdx = animInfo->startKeyframeIdx_C;
+    endKeyframeIdx   = animInfo->endKeyframeIdx_E;
 
-    // Compute time step. NOTE: Can't call `Anim_GetTimeStep` inline due to register constraints.
-    if (model->anim_4.flags_2 & AnimFlag_Unk1)
+    // Compute time step. TODO: Can't call `Anim_TimeStepGet` inline due to register constraints.
+    if (model->anim_4.flags_2 & AnimFlag_Unlocked)
     {
-        timeDelta = func_800449AC(model, targetAnim);
-        timeStep  = FP_MULTIPLY_PRECISE(timeDelta, (s64)g_DeltaTime0, Q12_SHIFT);
+        timeDelta = Anim_DurationGet(model, animInfo);
+        timeStep  = FP_MULTIPLY_PRECISE(timeDelta, g_DeltaTime0, Q12_SHIFT);
     }
     else
     {
-        timeStep = 0;
+        timeStep = FP_TIME(0.0f);
     }
 
-    // Update keyframe 1.
-    newKeyframeIdx1              = model->anim_4.keyframeIdx1_A + timeStep;
-    model->anim_4.keyframeIdx1_A = newKeyframeIdx1;
+    // Update alpha.
+    alpha                 = model->anim_4.alpha_A + timeStep;
+    model->anim_4.alpha_A = alpha;
 
     // Sine-based easing?
-    sinVal = Math_Sin((newKeyframeIdx1 / 2) - FP_ALPHA(0.25f));
-    alpha  = (sinVal / 2) + FP_ALPHA(0.5f);
+    sinVal   = Math_Sin((alpha / 2) - FP_ALPHA(0.25f));
+    sinAlpha = (sinVal / 2) + FP_ALPHA(0.5f);
 
-    // Clamp new time to keyframe 0 or 1.
-    if (alpha >= FP_ALPHA(0.5f))
+    // Update time to start or end keyframe, whichever is closest.
+    if (sinAlpha >= FP_ALPHA(0.5f))
     {
-        newTime = FP_TO(keyframeIdx0, Q12_SHIFT);
+        newTime = FP_TIME(startKeyframeIdx);
     }
     else
     {
-        newTime = FP_TO(keyframeIdx1, Q12_SHIFT);
+        newTime = FP_TIME(endKeyframeIdx);
     }
 
     // Update time.
     model->anim_4.time_4 = newTime;
 
     // Update skeleton.
-    if ((model->anim_4.flags_2 & AnimFlag_Unk1) || (model->anim_4.flags_2 & AnimFlag_Visible))
+    if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
-        func_800446D8(skel, coord, keyframeIdx0, keyframeIdx1, alpha);
+        func_800446D8(skel, coord, startKeyframeIdx, endKeyframeIdx, sinAlpha);
     }
 
-    // Update keyframe 0.
-    model->anim_4.keyframeIdx0_8 = FP_FROM(newTime, Q12_SHIFT);
+    // Update active keyframe.
+    model->anim_4.keyframeIdx_8 = FP_FROM(newTime, Q12_SHIFT);
 }
 
 void func_80044F14(GsCOORDINATE2* coord, s16 z, s16 x, s16 y) // 0x80044F14
@@ -1992,9 +1990,9 @@ void func_80045258(s_Skeleton** skels, s_Bone* bones, s32 boneIdx, s_PlmHeader* 
 void func_800452EC(s_Skeleton* skel) // 0x800452EC
 {
     s32                temp_a0;
-    s_func_800452EC*   var_a1;
     s32                var_v0;
     u32                temp_v1;
+    s_func_800452EC*   var_a1;
     s_func_800452EC_8* temp_v0;
 
     var_a1 = skel->field_4;
@@ -2005,9 +2003,9 @@ void func_800452EC(s_Skeleton* skel) // 0x800452EC
         temp_v1 = temp_v0->field_1 - 0x30;
         temp_a0 = temp_v0->field_0 - 0x30;
 
-        if (temp_v1 < 0xA && temp_a0 >= 0 && temp_a0 < 0xA)
+        if (temp_v1 < 10 && temp_a0 >= 0 && temp_a0 < 10)
         {
-            var_v0 = (temp_a0 * 0xA) + temp_v1;
+            var_v0 = (temp_a0 * 10) + temp_v1;
         }
         else
         {

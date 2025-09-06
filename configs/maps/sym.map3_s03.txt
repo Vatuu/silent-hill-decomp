@@ -111,7 +111,7 @@ sharedFunc_800D929C_0_s00   = 0x800D1168; // type:func
 //--------------------------------------------------------------
 sharedData_800DD59C_0_s00   = 0x800D514C; // type:u8
 sharedData_800D5710_3_s03   = 0x800D5710; // size:0xD0 - s_800D5710
-sharedData_800D5ABC_3_s03   = 0x800D5ABC; // type:AnimInfo
+BLOODSUCKER_ANIM_INFOS      = 0x800D5ABC; // type:AnimInfo
 
 //-------------------------------------------------------------------
 //--- PA: 0x00CE6C   VA: 0x800D63E4   subsegment: .data, map3_s03_msg
