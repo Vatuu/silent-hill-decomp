@@ -13,7 +13,7 @@ The table below summarizes each file format encountered so far, their known or s
 
 | File Type | Purpose | Parser/Documentation |
 |-|-|-|
-| .ANM | Animation data | - |
+| .ANM | Animation data | [anm.ksy](https://github.com/laura-a-n-n/silent-hill-museum/blob/main/ksy/sh1anm.ksy) |
 | .BIN | Overlay code, loaded into memory when needed by the game. | - |
 | .CMP | Unknown, found in 'TEST' folder, compressed? | - |
 | .DAT | Data for demo playback, contains button states for each frame. | - |
