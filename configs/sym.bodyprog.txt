@@ -339,6 +339,8 @@ IpdHeader_IsLoaded                          = 0x80042C04; // type:func
 IpdHeader_IsTextureLoaded                   = 0x80043B70; // type:func
 IpdHeader_CollisionDataGet                  = 0x80043BA4; // type:func
 IpdHeader_FixOffsets                        = 0x80043BC4; // type:func
+PlmFilter_NameDoesNotEndWithH               = 0x80043D44; // type:func
+PlmFilter_NameEndsWithH                     = 0x80043D64; // type:func
 IpdHeader_FixHeaderOffsets                  = 0x80043DA4; // type:func
 IpdHeader_ModelLinkObjectLists              = 0x80043E50; // type:func
 PlmHeader_ObjectListSearch                  = 0x80043F2C; // type:func
@@ -1962,10 +1964,6 @@ g_Inventory_SelectionId                     = 0x800ADB5C; // type:u32
 //---------------------------------------------------------------------------
 g_ItemNames                                 = 0x800ADB60; // type:u32 size:0x30C
 g_ItemDescriptions                          = 0x800ADE6C; // type:u32 size:0x30C
-
-//-----------------------------------------------------------------------
-//--- PA: 0x089618   VA: 0x800AE178   subsegment: data, bodyprog_800AE178
-//-----------------------------------------------------------------------
 g_Inventory_SelectedItemIdx                 = 0x800AE17C;
 g_Inventory_EquippedItem                    = 0x800AE184;
 g_Inventory_HealthStatusScanlineTimer       = 0x800AE194;
@@ -1975,6 +1973,11 @@ g_Inventory_ItemNameTimer                   = 0x800AE19C;
 g_Inventory_DescriptionRollTimer            = 0x800AE1A0;
 g_Inventory_ScrollTransitionTimer           = 0x800AE1A4;
 g_PickupItemAnimState                       = 0x800AE1AC;
+D_800AE204                                  = 0x800AE204; // size:0x2D8
+
+//-----------------------------------------------------------------------
+//--- PA: 0x089A90   VA: 0x800AE5F0   subsegment: data, bodyprog_800AE5F0
+//-----------------------------------------------------------------------
 g_Player_GrabFree_InputCount                = 0x800AF20C;
 g_Player_IsInWalkToRunTransition            = 0x800AF214;
 g_Player_DisableControl                     = 0x800AF215;
@@ -2566,7 +2569,3 @@ smf_song                                    = 0x800C8B00;
 g_MapOverlayHeader                          = 0x800C957C; // type:MapOverlayHeader size:0x84C - size incomplete
 D_800FE5F8                                  = 0x800FE5F8; // ignore:True - Fixes fake missmatch in `Demo_Update`.
 hack_D_800FE5FC_fix                         = 0x800FE5FC; // ignore:true - Part of temp memory block at 800FDE00, has to be unsymbolized for C to match.
-PlmFilter_NameDoesNotEndWithH = 0x80043D44; // type:func
-PlmFilter_NameEndsWithH = 0x80043D64; // type:func
-
-D_800AE204 = 0x800AE204; // size:0x2D8
