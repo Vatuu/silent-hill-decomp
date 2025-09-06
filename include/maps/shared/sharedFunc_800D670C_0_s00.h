@@ -19,9 +19,7 @@ void sharedFunc_800D670C_0_s00(s_SubCharacter* chara)
     if (chara->model_0.stateStep_3 == 3)
     {
         chara->model_0.stateStep_3++;
-        chara->model_0.anim_4.status_0      = ANIM_STATUS(47, true);
-        chara->model_0.anim_4.keyframeIdx_8 = 294;
-        chara->model_0.anim_4.time_4         = FP_TO(294, Q12_SHIFT);
+        Character_AnimSet(chara, ANIM_STATUS(47, true), 294);
 
         if (chara->health_B0 != NO_VALUE)
         {

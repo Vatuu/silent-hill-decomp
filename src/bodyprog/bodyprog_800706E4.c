@@ -1012,8 +1012,8 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
 				    g_SysWork.player_4C.extra_128.state_1C < PlayerState_EnemyGrabPinnedFront)
                 {
                     temp = -0x8000;
-                    extra->model_0.anim_4.time_4 = (FP_TO(g_MapOverlayHeader.animInfos_34[chara->model_0.anim_4.status_0 - 76].keyframeStartIdx_C, Q12_SHIFT) + model->anim_4.time_4) + temp;
-                    chara->model_0.anim_4.time_4 = (FP_TO(g_MapOverlayHeader.animInfos_34[chara->model_0.anim_4.status_0 - 76].keyframeStartIdx_C, Q12_SHIFT) + model->anim_4.time_4) + temp;
+                    extra->model_0.anim_4.time_4 = (FP_TIME(g_MapOverlayHeader.animInfos_34[chara->model_0.anim_4.status_0 - 76].keyframeStartIdx_C) + model->anim_4.time_4) + temp;
+                    chara->model_0.anim_4.time_4 = (FP_TIME(g_MapOverlayHeader.animInfos_34[chara->model_0.anim_4.status_0 - 76].keyframeStartIdx_C) + model->anim_4.time_4) + temp;
                     chara->model_0.anim_4.keyframeIdx_8 = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT);
                     extra->model_0.anim_4.keyframeIdx_8 = FP_FROM(extra->model_0.anim_4.time_4, Q12_SHIFT);
                 }
@@ -1857,11 +1857,11 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             {
                 if ((g_MapOverlayHeader.field_38[D_800AF220].time_4 + 12) >= chara->model_0.anim_4.keyframeIdx_8)
                 {
-                    func_80071620(chara->model_0.anim_4.status_0, chara, g_MapOverlayHeader.field_38[D_800AF220].time_4 + 0xC, 0x526);
+                    func_80071620(chara->model_0.anim_4.status_0, chara, g_MapOverlayHeader.field_38[D_800AF220].time_4 + 0xC, Sfx_Unk1318);
                 }
                 else
                 {
-                    func_80071620(chara->model_0.anim_4.status_0, chara, g_MapOverlayHeader.field_38[D_800AF220].time_4 + 0x20, 0x527);
+                    func_80071620(chara->model_0.anim_4.status_0, chara, g_MapOverlayHeader.field_38[D_800AF220].time_4 + 0x20, Sfx_Unk1319);
                 }
                 
                 temp_a2 = D_800AF070[chara->model_0.anim_4.keyframeIdx_8 - g_MapOverlayHeader.field_38[D_800AF220].time_4];
@@ -2232,7 +2232,7 @@ void Player_UpperBodyStateUpdate(s_MainCharacterExtra* extra, e_PlayerUpperBodyS
 
             extra->model_0.anim_4.status_0      = charaModel->anim_4.status_0;
             extra->model_0.anim_4.keyframeIdx_8 = charaModel->anim_4.keyframeIdx_8;
-            extra->model_0.anim_4.time_4         = charaModel->anim_4.time_4;
+            extra->model_0.anim_4.time_4        = charaModel->anim_4.time_4;
             extra->model_0.stateStep_3++;
             break;
 
@@ -2244,7 +2244,7 @@ void Player_UpperBodyStateUpdate(s_MainCharacterExtra* extra, e_PlayerUpperBodyS
 
             extra->model_0.anim_4.status_0      = charaModel->anim_4.status_0;
             extra->model_0.anim_4.keyframeIdx_8 = charaModel->anim_4.keyframeIdx_8;
-            extra->model_0.anim_4.time_4         = charaModel->anim_4.time_4;
+            extra->model_0.anim_4.time_4        = charaModel->anim_4.time_4;
             extra->model_0.stateStep_3++;
             break;
     }
@@ -2647,13 +2647,13 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                     func_8005DC1C(g_Player_EquippedWeaponInfo.outOfAmmoSfx_4, &chara->position_18, FP_VOLUME(0.5f), 0);
 
                     chara->properties_E4.player.field_10C = 32;
-                    extra->model_0.anim_4.keyframeIdx_8  = D_800C44F0[D_800AF220].field_6 - 3;
+                    extra->model_0.anim_4.keyframeIdx_8   = D_800C44F0[D_800AF220].field_6 - 3;
                     extra->model_0.anim_4.time_4          = FP_TO(D_800C44F0[D_800AF220].field_6 - 3, Q12_SHIFT);
 
                     if (g_SysWork.player_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_Aim)
                     {
                         chara->model_0.anim_4.keyframeIdx_8 = D_800C44F0[D_800AF220].field_6 - 3;
-                        chara->model_0.anim_4.time_4         = FP_TO(D_800C44F0[D_800AF220].field_6 - 3, Q12_SHIFT);
+                        chara->model_0.anim_4.time_4        = FP_TO(D_800C44F0[D_800AF220].field_6 - 3, Q12_SHIFT);
                     }
                 }
             }

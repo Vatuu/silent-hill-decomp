@@ -83,5 +83,5 @@ void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
     chara->model_0.anim_4.status_0 = ANIM_STATUS(17, false);
     chara->model_0.anim_4.alpha_A  = FP_ALPHA(0.0f);
 
-    chara2->properties_E4.npc.field_120 = 4096;
+    chara2->properties_E4.npc.field_120 = FP_ANGLE(360.0f);
 }
