@@ -386,6 +386,19 @@ s_800AE710 D_800AE710[4] =
     {}
 };
 
+// Seems like a struct of 2 s32 based on func_80066184
+s32 D_800AE71C[] =
+{
+    0x00015AE1, 0xFFFEAEB9,
+    0x00017B33, 0xFFFEAEB9,
+    0x00015AE1, 0xFFFE8E67,
+    0x00017B33, 0xFFFE8E67,
+};
+
+// Some timer used in func_80066184
+q19_12 D_800AE73C = FP_TIME(-524256.0f);
+
+
 void Inventory_DirectionalInputSet() // 0x8004F5DC
 {
     if (g_Controller0->sticks_20.sticks_0.leftY < -64 || g_Controller0->sticks_20.sticks_0.leftY >= 64 ||
