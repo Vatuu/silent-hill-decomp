@@ -977,8 +977,8 @@ typedef struct _AnimInfo
         q19_12 constTimeDelta;             // Constant duration.
         q19_12 (*variableTimeDeltaFunc)(); // Variable duration. Perhaps this is how enemy anim speed is controlled on harder difficulties.
     } timeDelta_8;                         // Duration?
-    s16 keyframeStartIdx_C;
-    s16 keyframeEndIdx_E;
+    s16 startKeyframeIdx_C;
+    s16 endKeyframeIdx_E;
 } s_AnimInfo;
 STATIC_ASSERT_SIZEOF(s_AnimInfo, 16);
 

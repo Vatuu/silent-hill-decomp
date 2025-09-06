@@ -324,7 +324,7 @@ u16 D_800AE5CC[18] =
     0x0022, 0x0000
 };
 
-// https://decomp.me/scratch/HNL4n Referenced under if (g_GameWork.config_0.optExtraBloodColor_24 != 0xE) {
+// https://decomp.me/scratch/HNL4n Referenced under `if (g_GameWork.config_0.optExtraBloodColor_24 != 0xE)`
 // Similar access pattern to the table above.
 u16 D_800AE5F0[136] =
 {
@@ -363,7 +363,7 @@ u16 D_800AE5F0[136] =
     0x08A0, 0xEDF0, 0x02A0, 0x0220,
     0x0300, 0xEDA0, 0x02E0, 0xFD70,
 };
-// https://decomp.me/scratch/HNL4n temp_a0 = D_800AE700[animStatus];
+// https://decomp.me/scratch/HNL4n `temp_a0 = D_800AE700[animStatus];`
 u8 D_800AE700[16] =
 {
     0x64, 0x48, 0x48, 0x3C,
@@ -372,8 +372,9 @@ u8 D_800AE700[16] =
     0x48, 0x5E, 0x64, 0x64,
 };
 
-// layout based on func_800652F4
-typedef struct {
+// layout based on `func_800652F4`
+typedef struct
+{
     u8 unk_0;
     u8 unk_1;
     u8 unk_2;
@@ -387,7 +388,7 @@ s_800AE710 D_800AE710[4] =
     {}
 };
 
-// Seems like a struct of 2 s32 based on func_80066184
+// Seems like a struct of 2 s32 based on `func_80066184`.
 s32 D_800AE71C[] =
 {
     0x00015AE1, 0xFFFEAEB9,
@@ -399,9 +400,9 @@ s32 D_800AE71C[] =
 // Some timer used in func_80066184
 q19_12 D_800AE73C = FP_TIME(-524256.0f);
 
-//used by func_80068CC0 and GameState_MapScreen_Update.
-//I think this is save file flags related to
-//placing the markings on the map.
+// Used by `func_80068CC0` and `GameState_MapScreen_Update`.
+// I think this is save file flags related to
+// placing the markings on the map.
 u8 D_800AE740[] =
 {
     0x00, 0x00, 0x00, 0x00,
@@ -418,10 +419,10 @@ u8 D_800AE740[] =
     0x17, 0x15, 0x00, 0x16,
 };
 
-s32 D_800AE770 = 0; // GameState_MapScreen_Update uses this like a bool.
+s32 D_800AE770 = 0; // `GameState_MapScreen_Update` uses this like a `bool`.
 
-// D_800AE774. D_800AE7E4, D_800AE820 are used by func_80067914. Might one big table.
-// Seems like a pair of bytes (->unk0, ->unk1)
+// `D_800AE774`. `D_800AE7E4`, `D_800AE820` are used by `func_80067914`. Might one big table.
+// Seems like a pair of bytes `(->unk0, ->unk1)`
 u8 D_800AE774[112] =
 {
     0x00, 0x00, 0x00, 0x00, 0xD5, 0x5A, 0xD0, 0x48,
@@ -558,8 +559,9 @@ u32 D_800AE8A0[327] =
     0x0400C0F4, 0x04000000, 0x000AE5E0
 };
 
-// Used by func_80068E0C. Contains pointers to the table above.
-typedef struct {
+// Used by `func_80068E0C`. Contains pointers to the table above.
+typedef struct
+{
     u32* ptr_0;
     u32* ptr_4;
     s16  field_8;
@@ -768,73 +770,73 @@ s8 g_Player_RockDrill_DirectionAttack = 0;
 u32 D_800AF218 = 0;
 s32 D_800AF21C = NO_VALUE;
 u8 D_800AF220 = 0;
-// 3 bytes of padding
+// 3 bytes of padding.
 s32 D_800AF224 = NO_VALUE;
 
 s32 func_800706E4(); // This function is used in the table below. It's nearly completely matched https://decomp.me/scratch/PBvwU
 s_AnimInfo HARRY_BASE_ANIM_INFOS[57] =
 {
-    { Anim_Update2, ANIM_STATUS(0,  false), 0,  ANIM_STATUS(0,  true), 0, { FP_TIME(10.0f) }, NO_VALUE, 0   },
-    { Anim_Update1, ANIM_STATUS(0,  true),  0,  NO_VALUE,              0, { FP_TIME(30.0f) }, NO_VALUE, 1   },
-    { Anim_Update2, ANIM_STATUS(1,  false), 0,  ANIM_STATUS(1,  true), 0, { FP_TIME(10.0f) }, NO_VALUE, 0   },
-    { Anim_Update1, ANIM_STATUS(1,  true),  0,  NO_VALUE,              0, { FP_TIME(0.0f)  }, 0,        0   },
-    { Anim_Update2, ANIM_STATUS(2,  false), 0,  ANIM_STATUS(2,  true), 0, { FP_TIME(50.0f) }, NO_VALUE, 1   },
-    { Anim_Update1, ANIM_STATUS(2,  true),  1,  NO_VALUE,              0, { func_800706E4  }, 1,        23  },
-    { Anim_Update2, ANIM_STATUS(3,  false), 0,  ANIM_STATUS(3,  true), 0, { FP_TIME(20.0f) }, NO_VALUE, 26  },
-    { Anim_Update1, ANIM_STATUS(3,  true),  1,  NO_VALUE,              0, { func_800706E4  }, 26,       45  },
-    { Anim_Update2, ANIM_STATUS(4,  false), 0,  ANIM_STATUS(4,  true), 0, { FP_TIME(20.0f) }, NO_VALUE, 46  },
-    { Anim_Update1, ANIM_STATUS(4,  true),  1,  NO_VALUE,              0, { func_800706E4  }, 46,       69  },
-    { Anim_Update2, ANIM_STATUS(5,  false), 0,  ANIM_STATUS(5,  true), 0, { FP_TIME(50.0f) }, NO_VALUE, 70  },
-    { Anim_Update1, ANIM_STATUS(5,  true),  0,  NO_VALUE,              0, { FP_TIME(30.0f) }, 70,       94  },
-    { Anim_Update2, ANIM_STATUS(6,  false), 0,  ANIM_STATUS(6,  true), 0, { FP_TIME(50.0f) }, NO_VALUE, 95  },
-    { Anim_Update1, ANIM_STATUS(6,  true),  0,  NO_VALUE,              0, { FP_TIME(30.0f) }, 95,       119 },
-    { Anim_Update2, ANIM_STATUS(7,  false), 0,  ANIM_STATUS(7,  true), 0, { FP_TIME(20.0f) }, NO_VALUE, 121 },
-    { Anim_Update1, ANIM_STATUS(7,  true),  0,  NO_VALUE,              0, { FP_TIME(20.0f) }, 121,      133 },
-    { Anim_Update2, ANIM_STATUS(8,  false), 0,  ANIM_STATUS(8,  true), 0, { FP_TIME(20.0f) }, NO_VALUE, 136 },
-    { Anim_Update1, ANIM_STATUS(8,  true),  0,  NO_VALUE,              0, { FP_TIME(20.0f) }, 136,      148 },
-    { Anim_Update2, ANIM_STATUS(9,  false), 0,  ANIM_STATUS(9,  true), 0, { FP_TIME(50.0f) }, NO_VALUE, 150 },
-    { Anim_Update0, ANIM_STATUS(9,  true),  0,  ANIM_STATUS(9,  true), 0, { FP_TIME(15.0f) }, 150,      159 },
-    { Anim_Update2, ANIM_STATUS(10, false), 0,  ANIM_STATUS(10, true), 0, { FP_TIME(50.0f) }, NO_VALUE, 160 },
-    { Anim_Update0, ANIM_STATUS(10, true),  0,  ANIM_STATUS(10, true), 0, { FP_TIME(15.0f) }, 160,      169 },
-    { Anim_Update2, ANIM_STATUS(11, false), 0,  ANIM_STATUS(11, true), 0, { FP_TIME(50.0f) }, NO_VALUE, 170 },
-    { Anim_Update0, ANIM_STATUS(11, true),  0,  ANIM_STATUS(11, true), 0, { FP_TIME(15.0f) }, 170,      179 },
-    { Anim_Update2, ANIM_STATUS(12, false), 0,  ANIM_STATUS(12, true), 0, { FP_TIME(50.0f) }, NO_VALUE, 180 },
-    { Anim_Update1, ANIM_STATUS(12, true),  0,  NO_VALUE,              0, { FP_TIME(15.0f) }, 180,      192 },
-    { Anim_Update2, ANIM_STATUS(13, false), 0,  ANIM_STATUS(13, true), 0, { FP_TIME(50.0f) }, NO_VALUE, 193 },
-    { Anim_Update1, ANIM_STATUS(13, true),  0,  NO_VALUE,              0, { FP_TIME(15.0f) }, 193,      205 },
-    { Anim_Update2, ANIM_STATUS(14, false), 0,  ANIM_STATUS(14, true), 0, { FP_TIME(50.0f) }, NO_VALUE, 206 },
-    { Anim_Update0, ANIM_STATUS(14, true),  0,  ANIM_STATUS(14, true), 0, { FP_TIME(28.0f) }, 206,      217 },
-    { Anim_Update2, ANIM_STATUS(15, false), 0,  ANIM_STATUS(15, true), 0, { FP_TIME(50.0f) }, NO_VALUE, 219 },
-    { Anim_Update0, ANIM_STATUS(15, true),  0,  ANIM_STATUS(15, true), 0, { FP_TIME(28.0f) }, 219,      230 },
-    { Anim_Update2, ANIM_STATUS(16, false), 0,  ANIM_STATUS(16, true), 0, { FP_TIME(10.0f) }, NO_VALUE, 240 },
-    { Anim_Update0, ANIM_STATUS(16, true),  0,  ANIM_STATUS(16, true), 0, { FP_TIME(10.0f) }, 240,      247 },
-    { Anim_Update2, ANIM_STATUS(17, false), 0,  ANIM_STATUS(17, true), 0, { FP_TIME(50.0f) }, NO_VALUE, 248 },
-    { Anim_Update1, ANIM_STATUS(17, true),  0,  NO_VALUE,              0, { FP_TIME(7.0f)  }, 248,      320 },
-    { Anim_Update2, ANIM_STATUS(18, false), 0,  ANIM_STATUS(18, true), 0, { FP_TIME(50.0f) }, NO_VALUE, 321 },
-    { Anim_Update0, ANIM_STATUS(18, true),  0,  ANIM_STATUS(18, true), 0, { FP_TIME(20.0f) }, 321,      336 },
-    { Anim_Update2, ANIM_STATUS(19, false), 0,  ANIM_STATUS(19, true), 0, { FP_TIME(50.0f) }, NO_VALUE, 337 },
-    { Anim_Update0, ANIM_STATUS(19, true),  0,  ANIM_STATUS(19, true), 0, { FP_TIME(15.0f) }, 337,      349 },
-    { Anim_Update2, ANIM_STATUS(20, false), 0,  ANIM_STATUS(20, true), 0, { FP_TIME(50.0f) }, NO_VALUE, 350 },
-    { Anim_Update0, ANIM_STATUS(20, true),  0,  ANIM_STATUS(20, true), 0, { FP_TIME(20.0f) }, 350,      365 },
-    { Anim_Update2, ANIM_STATUS(21, false), 0,  ANIM_STATUS(21, true), 0, { FP_TIME(50.0f) }, NO_VALUE, 366 },
-    { Anim_Update0, ANIM_STATUS(21, true),  0,  ANIM_STATUS(21, true), 0, { FP_TIME(15.0f) }, 366,      378 },
-    { Anim_Update2, ANIM_STATUS(22, false), 0,  ANIM_STATUS(22, true), 0, { FP_TIME(30.0f) }, NO_VALUE, 387 },
-    { Anim_Update0, ANIM_STATUS(22, true),  0,  ANIM_STATUS(22, true), 0, { FP_TIME(20.0f) }, 387,      417 },
-    { Anim_Update2, ANIM_STATUS(23, false), 0,  ANIM_STATUS(23, true), 0, { FP_TIME(30.0f) }, NO_VALUE, 418 },
-    { Anim_Update0, ANIM_STATUS(23, true),  0,  ANIM_STATUS(23, true), 0, { FP_TIME(20.0f) }, 418,      456 },
-    { Anim_Update2, ANIM_STATUS(24, false), 0,  ANIM_STATUS(24, true), 0, { FP_TIME(5.0f)  }, NO_VALUE, 457 },
-    { Anim_Update0, ANIM_STATUS(24, true),  0,  ANIM_STATUS(24, true), 0, { FP_TIME(20.0f) }, 457,      484 },
-    { Anim_Update2, ANIM_STATUS(25, false), 0,  ANIM_STATUS(25, true), 0, { FP_TIME(5.0f)  }, NO_VALUE, 485 },
-    { Anim_Update0, ANIM_STATUS(25, true),  0,  ANIM_STATUS(25, true), 0, { FP_TIME(20.0f) }, 485,      502 },
-    { Anim_Update2, ANIM_STATUS(26, false), 0,  ANIM_STATUS(26, true), 0, { FP_TIME(5.0f)  }, NO_VALUE, 503 },
-    { Anim_Update1, ANIM_STATUS(26, true),  0,  NO_VALUE,              0, { FP_TIME(10.0f) }, 503,      542 },
-    { Anim_Update2, ANIM_STATUS(27, false), 0,  ANIM_STATUS(27, true), 0, { FP_TIME(5.0f)  }, NO_VALUE, 543 },
-    { Anim_Update1, ANIM_STATUS(27, true),  1,  NO_VALUE,              0, { func_800706E4  }, 543,      567 },
-    {} // end of list.
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_Unk0,                    false), false, ANIM_STATUS(PlayerAnim_Unk0,                    true), 0, { FP_TIME(10.0f) }, NO_VALUE, 0   },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_Unk0,                    true),  false, NO_VALUE,                                              0, { FP_TIME(30.0f) }, NO_VALUE, 1   },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_Unk1,                    false), false, ANIM_STATUS(PlayerAnim_Unk1,                    true), 0, { FP_TIME(10.0f) }, NO_VALUE, 0   },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_Unk1,                    true),  false, NO_VALUE,                                              0, { FP_TIME(0.0f)  }, 0,        0   },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_WalkForward,             false), false, ANIM_STATUS(PlayerAnim_WalkForward,             true), 0, { FP_TIME(50.0f) }, NO_VALUE, 1   },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_WalkForward,             true),  true,  NO_VALUE,                                              0, { func_800706E4  }, 1,        23  },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunForward,              false), false, ANIM_STATUS(PlayerAnim_RunForward,              true), 0, { FP_TIME(20.0f) }, NO_VALUE, 26  },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_RunForward,              true),  true,  NO_VALUE,                                              0, { func_800706E4  }, 26,       45  },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_WalkBackward,            false), false, ANIM_STATUS(PlayerAnim_WalkBackward,            true), 0, { FP_TIME(20.0f) }, NO_VALUE, 46  },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_WalkBackward,            true),  true,  NO_VALUE,                                              0, { func_800706E4  }, 46,       69  },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_SidestepLeft,            false), false, ANIM_STATUS(PlayerAnim_SidestepLeft,            true), 0, { FP_TIME(50.0f) }, NO_VALUE, 70  },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_SidestepLeft,            true),  false, NO_VALUE,                                              0, { FP_TIME(30.0f) }, 70,       94  },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_SidestepRight,           false), false, ANIM_STATUS(PlayerAnim_SidestepRight,           true), 0, { FP_TIME(50.0f) }, NO_VALUE, 95  },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_SidestepRight,           true),  false, NO_VALUE,                                              0, { FP_TIME(30.0f) }, 95,       119 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunLeft,                 false), false, ANIM_STATUS(PlayerAnim_RunLeft,                 true), 0, { FP_TIME(20.0f) }, NO_VALUE, 121 },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_RunLeft,                 true),  false, NO_VALUE,                                              0, { FP_TIME(20.0f) }, 121,      133 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunRight,                false), false, ANIM_STATUS(PlayerAnim_RunRight,                true), 0, { FP_TIME(20.0f) }, NO_VALUE, 136 },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_RunRight,                true),  false, NO_VALUE,                                              0, { FP_TIME(20.0f) }, 136,      148 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunForwardWallStopRight, false), false, ANIM_STATUS(PlayerAnim_RunForwardWallStopRight, true), 0, { FP_TIME(50.0f) }, NO_VALUE, 150 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunForwardWallStopRight, true),  false, ANIM_STATUS(PlayerAnim_RunForwardWallStopRight, true), 0, { FP_TIME(15.0f) }, 150,      159 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunForwardWallStopLeft,  false), false, ANIM_STATUS(PlayerAnim_RunForwardWallStopLeft,  true), 0, { FP_TIME(50.0f) }, NO_VALUE, 160 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunForwardWallStopLeft,  true),  false, ANIM_STATUS(PlayerAnim_RunForwardWallStopLeft,  true), 0, { FP_TIME(15.0f) }, 160,      169 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunForwardStumble,       false), false, ANIM_STATUS(PlayerAnim_RunForwardStumble,       true), 0, { FP_TIME(50.0f) }, NO_VALUE, 170 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunForwardStumble,       true),  false, ANIM_STATUS(PlayerAnim_RunForwardStumble,       true), 0, { FP_TIME(15.0f) }, 170,      179 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_TurnLeft,                false), false, ANIM_STATUS(PlayerAnim_TurnLeft,                true), 0, { FP_TIME(50.0f) }, NO_VALUE, 180 },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_TurnLeft,                true),  false, NO_VALUE,                                              0, { FP_TIME(15.0f) }, 180,      192 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_TurnRight,               false), false, ANIM_STATUS(PlayerAnim_TurnRight,               true), 0, { FP_TIME(50.0f) }, NO_VALUE, 193 },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_TurnRight,               true),  false, NO_VALUE,                                              0, { FP_TIME(15.0f) }, 193,      205 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_QuickTurnRight,          false), false, ANIM_STATUS(PlayerAnim_QuickTurnRight,          true), 0, { FP_TIME(50.0f) }, NO_VALUE, 206 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_QuickTurnRight,          true),  false, ANIM_STATUS(PlayerAnim_QuickTurnRight,          true), 0, { FP_TIME(28.0f) }, 206,      217 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_QuickTurnLeft,           false), false, ANIM_STATUS(PlayerAnim_QuickTurnLeft,           true), 0, { FP_TIME(50.0f) }, NO_VALUE, 219 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_QuickTurnLeft,           true),  false, ANIM_STATUS(PlayerAnim_QuickTurnLeft,           true), 0, { FP_TIME(28.0f) }, 219,      230 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_JumpBackward,            false), false, ANIM_STATUS(PlayerAnim_JumpBackward,            true), 0, { FP_TIME(10.0f) }, NO_VALUE, 240 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_JumpBackward,            true),  false, ANIM_STATUS(PlayerAnim_JumpBackward,            true), 0, { FP_TIME(10.0f) }, 240,      247 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_LookAround,              false), false, ANIM_STATUS(PlayerAnim_LookAround,              true), 0, { FP_TIME(50.0f) }, NO_VALUE, 248 },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_LookAround,              true),  false, NO_VALUE,                                              0, { FP_TIME(7.0f)  }, 248,      320 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunLeftWallStop,         false), false, ANIM_STATUS(PlayerAnim_RunLeftWallStop,         true), 0, { FP_TIME(50.0f) }, NO_VALUE, 321 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunLeftWallStop,         true),  false, ANIM_STATUS(PlayerAnim_RunLeftWallStop,         true), 0, { FP_TIME(20.0f) }, 321,      336 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunLeftStumble,          false), false, ANIM_STATUS(PlayerAnim_RunLeftStumble,          true), 0, { FP_TIME(50.0f) }, NO_VALUE, 337 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunLeftStumble,          true),  false, ANIM_STATUS(PlayerAnim_RunLeftStumble,          true), 0, { FP_TIME(15.0f) }, 337,      349 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunRightWallStop,        false), false, ANIM_STATUS(PlayerAnim_RunRightWallStop,        true), 0, { FP_TIME(50.0f) }, NO_VALUE, 350 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunRightWallStop,        true),  false, ANIM_STATUS(PlayerAnim_RunRightWallStop,        true), 0, { FP_TIME(20.0f) }, 350,      365 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunRightStumble,         false), false, ANIM_STATUS(PlayerAnim_RunRightStumble,         true), 0, { FP_TIME(50.0f) }, NO_VALUE, 366 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunRightStumble,         true),  false, ANIM_STATUS(PlayerAnim_RunRightStumble,         true), 0, { FP_TIME(15.0f) }, 366,      378 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_FallForward,             false), false, ANIM_STATUS(PlayerAnim_FallForward,             true), 0, { FP_TIME(30.0f) }, NO_VALUE, 387 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_FallForward,             true),  false, ANIM_STATUS(PlayerAnim_FallForward,             true), 0, { FP_TIME(20.0f) }, 387,      417 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_FallBackward,            false), false, ANIM_STATUS(PlayerAnim_FallBackward,            true), 0, { FP_TIME(30.0f) }, NO_VALUE, 418 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_FallBackward,            true),  false, ANIM_STATUS(PlayerAnim_FallBackward,            true), 0, { FP_TIME(20.0f) }, 418,      456 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_Kick,                    false), false, ANIM_STATUS(PlayerAnim_Kick,                    true), 0, { FP_TIME(5.0f)  }, NO_VALUE, 457 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_Kick,                    true),  false, ANIM_STATUS(PlayerAnim_Kick,                    true), 0, { FP_TIME(20.0f) }, 457,      484 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_Stomp,                   false), false, ANIM_STATUS(PlayerAnim_Stomp,                   true), 0, { FP_TIME(5.0f)  }, NO_VALUE, 485 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_Stomp,                   true),  false, ANIM_STATUS(PlayerAnim_Stomp,                   true), 0, { FP_TIME(20.0f) }, 485,      502 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_Idle,                    false), false, ANIM_STATUS(PlayerAnim_Idle,                    true), 0, { FP_TIME(5.0f)  }, NO_VALUE, 503 },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_Idle,                    true),  false, NO_VALUE,                                              0, { FP_TIME(10.0f) }, 503,      542 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_IdleTired,               false), false, ANIM_STATUS(PlayerAnim_IdleTired,               true), 0, { FP_TIME(5.0f)  }, NO_VALUE, 543 },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_IdleTired,               true),  true,  NO_VALUE,                                              0, { func_800706E4  }, 543,      567 },
+    {} // End of list.
 };
 u8 __padding1[14] = {};
 s16 D_800AF5C6 = 0;
-u32 D_800AF5C8[23] = {}; //padding ?
+u32 D_800AF5C8[23] = {}; // Padding?
 s16 D_800AF624 = 0;
 s16 D_800AF626 = 0;
 u32 D_800AF628[368] = {};

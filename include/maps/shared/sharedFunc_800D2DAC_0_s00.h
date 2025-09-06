@@ -12,11 +12,11 @@ s32 sharedFunc_800D2DAC_0_s00()
         // Check if anim has started or finished.
         if (func_800449AC(model, animInfo) > FP_TIME(0.0f))
         {
-            return model->anim_4.keyframeIdx_8 == animInfo->keyframeEndIdx_E;
+            return model->anim_4.keyframeIdx_8 == animInfo->endKeyframeIdx_E;
         }
         else
         {
-            return model->anim_4.keyframeIdx_8 == animInfo->keyframeStartIdx_C;
+            return model->anim_4.keyframeIdx_8 == animInfo->startKeyframeIdx_C;
         }
     }
 

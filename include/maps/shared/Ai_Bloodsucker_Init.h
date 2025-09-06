@@ -43,8 +43,8 @@ static inline void Ai_Bloodsucker_AnimUpdateFromStep(s_SubCharacter* chara)
         chara->model_0.anim_4.status_0 = (stateStep * 2) + 17;
     }
 
-    chara->model_0.anim_4.time_4        = FP_TIME(BLOODSUCKER_ANIM_INFOS[chara->model_0.anim_4.status_0].keyframeStartIdx_C);
-    chara->model_0.anim_4.keyframeIdx_8 = BLOODSUCKER_ANIM_INFOS[chara->model_0.anim_4.status_0].keyframeStartIdx_C;
+    chara->model_0.anim_4.time_4        = FP_TIME(BLOODSUCKER_ANIM_INFOS[chara->model_0.anim_4.status_0].startKeyframeIdx_C);
+    chara->model_0.anim_4.keyframeIdx_8 = BLOODSUCKER_ANIM_INFOS[chara->model_0.anim_4.status_0].startKeyframeIdx_C;
 #endif
 }
 

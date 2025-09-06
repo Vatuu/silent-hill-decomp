@@ -1526,7 +1526,7 @@ void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coords, s_Ani
         newTime += timeStep;
 
         // Clamp new time to valid keyframe range.
-        endTime = FP_TIME(animInfo->keyframeEndIdx_E);
+        endTime = FP_TIME(animInfo->endKeyframeIdx_E);
         if (newTime >= endTime)
         {
             newTime          = endTime;
@@ -1534,7 +1534,7 @@ void Anim_Update0(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coords, s_Ani
         }
         else
         {
-            startTime = FP_TIME(animInfo->keyframeStartIdx_C);
+            startTime = FP_TIME(animInfo->startKeyframeIdx_C);
             if (newTime <= startTime)
             {
                 newTime          = startTime;
@@ -1579,8 +1579,8 @@ void Anim_Update1(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     s32 newKeyframeIdx1;
     s32 alpha;
 
-    startKeyframeIdx     = animInfo->keyframeStartIdx_C;
-    endKeyframeIdx       = animInfo->keyframeEndIdx_E;
+    startKeyframeIdx     = animInfo->startKeyframeIdx_C;
+    endKeyframeIdx       = animInfo->endKeyframeIdx_E;
     nextStartKeyframeIdx = endKeyframeIdx + 1;
     keyframeCount        = nextStartKeyframeIdx - startKeyframeIdx;
 
@@ -1632,8 +1632,8 @@ void Anim_Update2(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     s32  alpha;
     
     setNewAnimStatus = false;
-    startKeyframeIdx = animInfo->keyframeStartIdx_C;
-    endKeyframeIdx   = animInfo->keyframeEndIdx_E;
+    startKeyframeIdx = animInfo->startKeyframeIdx_C;
+    endKeyframeIdx   = animInfo->endKeyframeIdx_E;
 
     // If no start keyframe exists, default to active keyframe.
     if (startKeyframeIdx == NO_VALUE)
@@ -1693,8 +1693,8 @@ void Anim_Update3(s_Model* model, s_Skeleton* skel, GsCOORDINATE2* coord, s_Anim
     s32 newTime;
     s32 sinAlpha;
 
-    startKeyframeIdx = animInfo->keyframeStartIdx_C;
-    endKeyframeIdx   = animInfo->keyframeEndIdx_E;
+    startKeyframeIdx = animInfo->startKeyframeIdx_C;
+    endKeyframeIdx   = animInfo->endKeyframeIdx_E;
 
     // Compute time step. TODO: Can't call `Anim_TimeStepGet` inline due to register constraints.
     if (model->anim_4.flags_2 & AnimFlag_Unlocked)

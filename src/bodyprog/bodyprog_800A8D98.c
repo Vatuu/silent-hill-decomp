@@ -782,8 +782,8 @@ s_AnimInfo D_800A998C =
     .status_6               = ANIM_STATUS(0, false),
     .field_7                = 0,
     .timeDelta_8            = { .constTimeDelta = FP_TIME(8.0f) },
-    .keyframeStartIdx_C     = 26,
-    .keyframeEndIdx_E       = 44
+    .startKeyframeIdx_C     = 26,
+    .endKeyframeIdx_E       = 44
 };
 u32 unknown_D_800A999C = 0x80025234;
 s32 D_800A99A0 = 0;

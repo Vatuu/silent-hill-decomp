@@ -126,5 +126,5 @@ s16 Anim_StartKeyframeIdxGet(s_SubCharacter* chara)
 #endif
     }
 
-    return animInfo->keyframeStartIdx_C;
+    return animInfo->startKeyframeIdx_C;
 }
