@@ -2369,7 +2369,43 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", GameState_MapScreen_U
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80067914); // 0x80067914
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80068CC0); // 0x80068CC0
+s32 func_80068CC0(s32 arg0)                                                // 0x80068CC0
+{
+    s32      index;
+    POLY_G3* pointer;
+
+    for (index = 0; index < 2; index++)
+    {
+        if (HAS_MAP(D_800AE740[index + arg0 * 2]))
+        {
+            pointer = GsOUT_PACKET_P;
+            setPolyG3(pointer);
+            if (index != 0)
+            {
+                setXY0Fast(pointer, 0, 216);
+                setXY1Fast(pointer, -8, 200);
+                setXY2Fast(pointer, 8, 200);
+            }
+            else
+            {
+                setXY0Fast(pointer, 0, -216);
+                setXY1Fast(pointer, -8, -200);
+                setXY2Fast(pointer, 8, -200);
+            }
+
+            *(u16*)&pointer->r0 = 0x1010;
+            pointer->b0         = 0xC4;
+            *(u16*)&pointer->r1 = 0x8080;
+            pointer->b1         = 0xC4;
+            *(u16*)&pointer->r2 = 0x8080;
+            pointer->b2         = 0xC4;
+
+            addPrim(&g_ObjectTable0[g_ObjectTableIdx].org[2], pointer);
+            GsOUT_PACKET_P = ++pointer;
+        }
+    }
+    return 1;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80068E0C); // 0x80068E0C
 

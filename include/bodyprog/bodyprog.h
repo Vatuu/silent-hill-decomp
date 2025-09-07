@@ -1977,6 +1977,8 @@ extern s16 D_800AE520[];
 
 extern s16 D_800AE564[];
 
+extern u8 D_800AE740[];
+
 /** Angle? */
 extern s16 D_800AF210;
 
@@ -3448,6 +3450,8 @@ void func_80066D90();
 void func_80066E40();
 
 void func_80066E7C();
+
+s32 func_80068CC0(s32 arg0);
 
 void func_800697EC();
 
