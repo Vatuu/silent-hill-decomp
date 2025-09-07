@@ -299,7 +299,7 @@ segments:
       - [0x84ECC, .data, syswork_functable]
       - [0x84F2C, .data, bodyprog_8003AB28]
       - [0x85468, .data, libsd/bodyprog_CD_80047D50]
-      - [0x85714, data, bodyprog_800A9AA0]
+      - [0x85A80, data, bodyprog_800A9AA0]
       - [0x89000, .data, items/item_screens_3]
       - [0x8B134, .data, view/vc_main]
       - [0x8B1A4, .data, bodyprog_80085D78]

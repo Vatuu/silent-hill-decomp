@@ -1205,19 +1205,11 @@ typedef struct
 typedef struct
 {
     s8  field_0;
-    s8  unk_1[1];
+    s8  unk_1;
     u16 field_2;
     u32 field_4;
     s32 field_8;
 } s_800C37D4;
-// Maybe the same.
-typedef struct
-{
-    u8  field_0;
-    s8  unk_1[3];
-    u32 field_4;
-    s32 field_8;
-} s_800C37D8;
 
 // Used in string parsing.
 typedef struct
@@ -1958,8 +1950,6 @@ extern u32 D_800A9FB0;
 
 extern s32 D_800A9FB4[];
 
-extern s_800C37D8 D_800AA274[];
-
 extern u8 D_800AA5E0[];
 
 extern u8 D_800AA604[][16];
@@ -2280,7 +2270,7 @@ extern s32 D_800C3994;
 
 extern u8 D_800C37D0;
 
-extern s_800C37D8* D_800C37D8;
+extern s_800C37D4* D_800C37D8;
 
 extern s_800C38B0 D_800C38B0;
 
