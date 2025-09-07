@@ -358,7 +358,7 @@ s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVEC
     rot_y = FP_TO(abs(Math_AngleNormalize(now_ang->vy - old_ang->vy)), Q12_SHIFT) / intrpt;
 
     // This (guessed) line is needed for regalloc match, but compiler just optimizes out since rot_x isn't used afterward.
-    // BUG: Maybe the Math_Cos call below was meant to use the result of this, but was somehow left using now_ang->vx?
+    // @bug Maybe the Math_Cos call below was meant to use the result of this, but was somehow left using now_ang->vx?
     rot_x = ((now_ang->vx - old_ang->vx) >= 0) ? now_ang->vx : old_ang->vx;
 
     rot_y = FP_MULTIPLY(rot_y, Math_Cos(now_ang->vx), Q12_SHIFT);

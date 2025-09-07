@@ -421,7 +421,7 @@ void toremoro_set() // 0x800A439C
 
 s32 pitch_bend_calc(PORT* p, u32 pit) // 0x800A441C
 {
-    u16 bendMultiplier = 2; // Hack to get regalloc order correct, not included in PS2 `AUDIO.IRX` syms.
+    u16 bendMultiplier = 2; // @hack: needed to get regalloc order correct, not included in PS2 `AUDIO.IRX` syms.
     s16 pitch;
 
     if (pit < 0x40U)
@@ -559,7 +559,7 @@ void replay_reverb_set(s16 acc) // 0x800A4748
             {
                 reverb.depth.left = reverb.depth.right = smf_song[acc].seq_reverb_depth_536;
                 smf_song[acc].seq_rev_set_flag_532     = 0;
-                return; // BUG: Returns before setting seq_reverb_depth_536 as reverb? (fixed in soundcd.irx)
+                return; // @bug returns before setting seq_reverb_depth_536 as reverb? (was fixed in later PS2 soundcd.irx)
             }
 
             SpuSetReverbModeParam(&reverb);

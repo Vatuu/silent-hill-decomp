@@ -784,16 +784,16 @@ typedef struct _AnmHeader
     u16 dataOffset_0;
     u8  rotationBoneCount_2;
     u8  translationBoneCount_3;
-    u16 frameDataSize_4; // size per keyframe, `(rotationBoneCount_2 * 9) + (translationBoneCount_3 * 3)`?
+    u16 frameDataSize_4; // Size per keyframe, `(rotationBoneCount_2 * 9) + (translationBoneCount_3 * 3)`?
     u8  boneCount_6;
     u8  unk_7;
     u32 activeBones_8; // Holds bit indexes of each bone that should be updated.
-    u32 offset_C;      // in ANM files this points to another duplicate AnmFileHeader at the end of the file, alternately might be size of the main anm data
+    u32 offset_C;      // In ANM files this points to another duplicate `s_AnmHeader` at end of the file, or might just be size of the main ANM data.
     u16 frameCount_10;
     u8  scaleLog2_12;
     u8  rootYOffset_13;
 
-    s_AnmBindPose bindPoses_14[0]; // size = `boneCount_6`
+    s_AnmBindPose bindPoses_14[0]; // Array size = `boneCount_6`
 } s_AnmHeader;
 STATIC_ASSERT_SIZEOF(s_AnmHeader, 20);
 
@@ -3098,6 +3098,9 @@ void func_8005B3BC(char* filename, s_PlmTexList* plmTexList);
 
 void func_8005B424(VECTOR3* vec0, VECTOR3* vec1);
 
+/** @unused, no refs to this func. */
+void func_800563E8(s_PlmHeader* plmHeader, s32 arg1, s32 arg2, s32 arg3);
+
 void func_80056464(s_PlmHeader* plmHeader, s32 fileIdx, s_FsImageDesc* image, s32 arg3);
 
 void func_80056504(s_PlmHeader* plmHeader, char* newStr, s_FsImageDesc* image, s32 arg3);
@@ -3188,7 +3191,7 @@ void DmsHeader_FixOffsets(s_DmsHeader* header);
 
 void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* header);
 
-/** Unused func? `volatile` needed for match. */
+/** @unused? `volatile` needed for match. */
 s_DmsInterval* func_8008CA60(volatile s32 unused, s32 idx, s_DmsHeader* header);
 
 void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, s32 time, s_DmsHeader* header);
@@ -3201,7 +3204,7 @@ void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, s32 
 
 void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 alpha);
 
-/** Unused function? Returns 96 * cotangent(angle / 2). Possibly camera/FOV related. */
+/** @unused? Returns 96 * cotangent(angle / 2). Possibly camera/FOV related. */
 s16 func_8008CDBC(s16 angle);
 
 s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, s32 time, s_DmsHeader* header);
@@ -3711,7 +3714,7 @@ void func_80035B58(s32 arg0);
 
 void func_80035B98();
 
-/** Unused and broken.
+/** @unused and broken.
  * Intended to draw a background image when a loading screen with the string "STAGE X-X" appears.
  */
 void Gfx_LoadingScreen_BackgroundTexture();

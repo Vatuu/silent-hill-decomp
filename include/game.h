@@ -1529,7 +1529,7 @@ static inline void Savegame_EventFlagSet(u32 flagId)
 /** @brief Checks if the given flag ID is set inside the array of 16-bit flag values. */
 static inline s32 Flags16b_IsSet(u16* array, s32 flagId)
 {
-    // BUG: `>> 5` divides `flagId` by 32 to get array index, but array is of 16-bit values.
+    // @bug: `>> 5` divides `flagId` by 32 to get array index, but array is of 16-bit values.
     // Maybe copy-paste from `u32` version of func.
     return (array[flagId >> 5] >> (flagId & 0x1F)) & (1 << 0);
 }

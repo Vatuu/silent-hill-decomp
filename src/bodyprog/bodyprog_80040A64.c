@@ -1896,7 +1896,7 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     s32 startKeyframeIdx;
     s32 endKeyframeIdx;
     s32 timeDelta;
-    register s32 timeStep asm("v0"); // HACK: Manually set register to match.
+    register s32 timeStep asm("v0"); // @hack: Manually set register to match.
     s32 alpha;
     s32 sinVal;
     s32 newTime;
