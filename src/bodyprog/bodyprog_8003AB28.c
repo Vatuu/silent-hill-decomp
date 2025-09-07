@@ -2346,8 +2346,20 @@ void func_8003E5E8(s32 arg0) // 0x8003E5E8
     GsOUT_PACKET_P = packet;
 }
 
+static s_800A9F80 D_800A9F80 = { 1, 1  };
+static s_800A9F80 D_800A9F84 = { 2, 2  };
+static s_800A9F80 D_800A9F88 = { 6, 3  };
+static s_800A9F80 D_800A9F8C = { 7, 4  };
+static s_800A9F80 D_800A9F90 = { 6, 10 }; // @unused
+static s_800A9F80 D_800A9F94 = { 6, 5  }; // @unused
+static s_800A9F80 D_800A9F98 = { 9, 9  };
+static s_800A9F80 D_800A9F9C = { 6, 6  }; // @unused
+static s_800A9F80 D_800A9FA0 = { 3, 3  }; // @unused
+static s_800A9F80 D_800A9FA4 = { 5, 5  }; // @unused
+
 void GameFs_FlameGfxLoad() // 0x8003E710
 {
+    static s_FsImageDesc D_800A9FA8 = { .tPage = {0, 12}, .u = 32, .v = 0, .clutX = 800, .clutY = 64 };
     Fs_QueueStartReadTim(FILE_TIM_FLAME_TIM, FS_BUFFER_1, &D_800A9FA8);
 }
 
@@ -2367,6 +2379,7 @@ void func_8003E740() // 0x8003E740
     s32       var_s5;
     POLY_FT4* poly;
     s32       temp_s2 = 0;
+    static u32 D_800A9FB0 = 0;
 
     if (g_DeltaTime0 != 0)
     {
@@ -2506,17 +2519,6 @@ void func_8003EBF4(s_MapOverlayHeader* arg0) // 0x8003EBF4
     s32         var_v1;
     u8          temp_a1;
     s_800A9F80* ptr;
-
-    static s_800A9F80 D_800A9F80 = { 1, 1  };
-    static s_800A9F80 D_800A9F84 = { 2, 2  };
-    static s_800A9F80 D_800A9F88 = { 6, 3  };
-    static s_800A9F80 D_800A9F8C = { 7, 4  };
-    static s_800A9F80 D_800A9F90 = { 6, 10 }; // @unused
-    static s_800A9F80 D_800A9F94 = { 6, 5  }; // @unused
-    static s_800A9F80 D_800A9F98 = { 9, 9  };
-    static s_800A9F80 D_800A9F9C = { 6, 6  }; // @unused
-    static s_800A9F80 D_800A9FA0 = { 3, 3  }; // @unused
-    static s_800A9F80 D_800A9FA4 = { 5, 5  }; // @unused
 
     temp_a1 = arg0->type_0->flags_6;
 
