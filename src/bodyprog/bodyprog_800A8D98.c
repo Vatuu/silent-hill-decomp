@@ -807,3 +807,6 @@ s8 g_MapMarkingTimFileIdxs[56] =
     68, 83, 2, 128, 56, 83, 2, 128,
     44, 83, 2, 128, 32, 83, 2, 128
 };
+
+s_FsImageDesc D_800A9A04 = { .tPage = {1, 21}, .clutX = 224, .clutY = 13 };
+
