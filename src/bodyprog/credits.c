@@ -19,15 +19,18 @@ s_800AFE08 D_800AFE08 =
     .field_6  = 0x18,
     .field_8  = 0x64FFFFFF,
     .field_C  = (s16*)0x801E5C24,
-    .field_10 = (s32*)0x801E5E24,
+    .field_10 = (s32*)0x801E5E24
 };
 
 s_800AFE24 D_800AFE24 =
 {
-    .field_6   = 24,
-    .field_8   = 0x2CFFFFFF,
-    .field_C   = (s16*)0x801E5C24,
-    .field_10  = (s32*)0x801E5E40,
+    .sub_0 =
+    {
+        .field_6   = 24,
+        .field_8   = 0x2CFFFFFF,
+        .field_C   = (s16*)0x801E5C24,
+        .field_10  = (s32*)0x801E5E40
+    },
     .field_1C  = 4096,
     .field_24  = 240,
     .field_30  = 0xF0000,
@@ -1019,15 +1022,15 @@ void func_8009185C(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
     temp_lo_4 = (arg6 + (s32)FP_MULTIPLY_PRECISE(arg3, temp_lo_2, Q12_SHIFT)) >> 2;
     temp_lo_4 = temp_t1 / temp_lo_4;
 
-    D_800AFE24.field_0  = 0;
-    D_800AFE24.field_2  = 0;
-    D_800AFE24.field_4  = 0;
-    D_800AFE24.field_6  = 24;
-    D_800AFE24.field_7  = 0;
-    D_800AFE24.field_8  = 0x2CFFFFFF;
-    D_800AFE24.field_18 = D_800AFE08.field_18;
-    D_800AFE24.field_16 = D_800AFE08.field_16;
-    D_800AFE24.field_14 = D_800AFE08.field_14;
+    D_800AFE24.sub_0.field_0  = 0;
+    D_800AFE24.sub_0.field_2  = 0;
+    D_800AFE24.sub_0.field_4  = 0;
+    D_800AFE24.sub_0.field_6  = 24;
+    D_800AFE24.sub_0.field_7  = 0;
+    D_800AFE24.sub_0.field_8  = 0x2CFFFFFF;
+    D_800AFE24.sub_0.field_18 = D_800AFE08.field_18;
+    D_800AFE24.sub_0.field_16 = D_800AFE08.field_16;
+    D_800AFE24.sub_0.field_14 = D_800AFE08.field_14;
     D_800AFE24.field_1C = arg3;
     D_800AFE24.field_20 = arg0;
     D_800AFE24.field_22 = arg1;
