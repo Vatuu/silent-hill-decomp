@@ -1958,12 +1958,6 @@ extern u32 D_800A9FB0;
 
 extern s32 D_800A9FB4[];
 
-extern u8* D_800A9FC8[];
-
-extern u8* D_800A9FD8[];
-
-extern u8* D_800A9FDC[];
-
 extern s_800C37D8 D_800AA274[];
 
 extern u8 D_800AA5E0[];
