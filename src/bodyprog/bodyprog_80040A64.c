@@ -1593,7 +1593,7 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyF
     void*          frame0RotData;
     void*          frame1Data;
     void*          frame1RotData;
-    bool           isPlayerCoords;
+    bool           isPlayer;
     u32            activeBoneIndexes;
     s32            boneIdx;
     s32            scaleLog2;
@@ -1612,10 +1612,10 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyF
     frame1Data    = (u8*)anmHeader + anmHeader->dataOffset_0 + (anmHeader->frameDataSize_4 * keyFrame1);
     frame1RotData = frame1Data + (anmHeader->translationBoneCount_3 * 3);
 
-    isPlayerCoords = (boneCoords == &g_SysWork.playerBoneCoords_890[PlayerBone_Root]);
-    if (isPlayerCoords)
+    // For player, use inverted mask of `extra_128.disabledAnimBones_18` to facilitate masking of upper and lower body.
+    isPlayer = (boneCoords == &g_SysWork.playerBoneCoords_890[PlayerBone_Root]);
+    if (isPlayer)
     {
-        // For player, use inverted mask of `extra_128.disabledAnimBones_18`
         activeBoneIndexes = ~g_SysWork.player_4C.extra_128.disabledAnimBones_18;
     }
     else
@@ -1683,7 +1683,7 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyF
     }
 
     // Copy player hip translation to torso
-    if (isPlayerCoords)
+    if (isPlayer)
     {
         for (i = 0; i < 3; i++)
         {

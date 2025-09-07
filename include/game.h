@@ -4,8 +4,8 @@
 #include "gpu.h"
 #include "types.h"
 
-struct _Model;
 struct _AnmHeader;
+struct _Model;
 
 #define TICKS_PER_SECOND 60                                            /** Game has a variable time step with 60 ticks max. */
 #define TIME_STEP_30_FPS FP_TIME(1.0f / (float)(TICKS_PER_SECOND / 2)) /** Time step at 30 FPS. */
@@ -102,22 +102,21 @@ struct _AnmHeader;
 #define ANIM_KEYFRAME_RANGE_CHECK(keyframeIdx, low, high) \
     ((keyframeIdx) >= (low) && (keyframeIdx) <= (high))
 
-/**
- * @brief Creates a bitmask with a contiguous range of bits set.
- * e.g. for use with `s_MainCharacterExtra::disabledAnimBones_18`
+/** @brief Creates a bitmask with a contiguous range of bits set.
+ * For use with `s_MainCharacterExtra::disabledAnimBones_18`.
  *
- * Generates an unsigned int mask with all bits set from `fromInclusive`
- * up to and including `toInclusive`.
+ * Generates an `unsigned int` mask with all bits in the range `[fromInclusive, toInclusive]` set.
  *
  * For example:
- * - BITMASK_RANGE(0, 2) -> 0b000...0111 (decimal 7)
- * - BITMASK_RANGE(4, 11) -> 0b000...111111110000 (decimal 4080)
+ * - `BITMASK_RANGE(0, 2)` -> 0b000...0111 (decimal 7)
+ * - `BITMASK_RANGE(4, 11)` -> 0b000...111111110000 (decimal 4080)
  *
- * @param fromInclusive  The index of the lowest bit to set (0 = least significant bit).
- * @param toInclusive    The index of the highest bit to set.
- * @return An unsigned int with the specified range of bits set to 1.
+ * @param fromInclusive Index of the lowest bit to set (0 = least significant bit).
+ * @param toInclusive Index of the highest bit to set.
+ * @return Bitmask with the specified range of bits set to 1 (`unsigned int`).
  */
-#define BITMASK_RANGE(fromInclusive, toInclusive) (((~0u << (fromInclusive)) & ~(~0u << ((toInclusive) + 1))))
+#define BITMASK_RANGE(fromInclusive, toInclusive) \
+    (((~0u << (fromInclusive)) & ~(~0u << ((toInclusive) + 1))))
 
 /** @brief Packs a screen fade status containing a fade state and white flag.
  * See `g_Gfx_ScreenFade` for bit layout.
@@ -610,7 +609,7 @@ typedef enum _EquippedWeaponId
     EquippedWeaponId_GasolineTank   = 98
 } e_EquippedWeaponId;
 
-/** @brief Player model bone indices. */
+/** @brief Player model bone indices. TODO: Specific to Harry rather than broad player handling, so should be called `HarryBone` instead? */
 typedef enum _PlayerBone
 {
     PlayerBone_Root          = 0,
@@ -1179,8 +1178,8 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
 
 typedef struct _MainCharacterExtra
 {
-    s_Model model_0;              // Manages upper half body's animations (torso, arms, head).
-    s32     disabledAnimBones_18; // Bit indexes of each disabled animation bone, can be created using `BITMASK_RANGE` macro.
+    s_Model model_0;              /** Manages upper half body's animations (torso, arms, head). */
+    s32     disabledAnimBones_18; /** Bitfield of disabled animation bones. Can be created using the `BITMASK_RANGE` macro. */
     s32     state_1C;             /** `e_PlayerState` */
     s32     upperBodyState_20;    /** `e_PlayerUpperBodyState` */
     s32     lowerBodyState_24;    /** `e_PlayerLowerBodyState` */
