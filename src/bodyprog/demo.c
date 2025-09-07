@@ -144,6 +144,8 @@ void Demo_GameRandSeedRestore() // 0x8008F370
     Rng_SetSeed(g_Demo_PrevRandSeed);
 }
 
+s32 D_800AFDEC = 0;
+
 void Demo_Start() // 0x8008F398
 {
     D_800AFDEC = 1;
@@ -262,6 +264,7 @@ bool Demo_Update() // 0x8008F5D8
     s32         var1;
     u32         demoStep;
     s_GameWork* gameWork;
+    static s32 D_800AFDF0 = 0;
 
     var0       = D_800AFDF0;
     var1       = D_800C489C;
