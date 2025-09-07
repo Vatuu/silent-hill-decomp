@@ -859,6 +859,13 @@ s_800AFBF4 D_800AFBF4[11] =
     { 1298, 0,    0,    64, 62, 63, 0,  52, 0 }
 };
 
+s_800AFC78 D_800AFC78 =
+{
+    .position_0 = {},
+    .field_C = {},
+    .field_18 = NO_VALUE
+};
+
 void Inventory_DirectionalInputSet() // 0x8004F5DC
 {
     if (g_Controller0->sticks_20.sticks_0.leftY < -64 || g_Controller0->sticks_20.sticks_0.leftY >= 64 ||

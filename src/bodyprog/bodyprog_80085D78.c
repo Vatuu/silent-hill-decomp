@@ -8,6 +8,25 @@
 #include "bodyprog/math.h"
 #include "main/fsqueue.h"
 
+u8 D_800AFD04 = 0;
+u8 D_800AFD05 = 0;
+// 2 bytes of padding.
+bool (*D_800AFD08[])(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* ptr, u32* arg3) = 
+{
+    func_80089A30,
+    func_80089BB8,
+    func_80089DF0,
+    func_8008973C,
+    func_80089D0C
+};
+s16 D_800AFD1C[] = // used by func_8008A3E0
+{
+    0x1000, 0x1000, 0x0800, 0x0555,
+    0x0400, 0x0333, 0x02AA, 0x0249,
+    0x0200, 0x01C7, 0x0199, 0x0174,
+    0x0155, 0x013B, 0x0124, 0x0111,
+};
+
 void func_80085D78(bool arg0) // 0x80085D78
 {
     if (arg0)
@@ -1841,7 +1860,7 @@ bool func_80089644(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s32 arg2, u32 ar
     return arg1->field_10 != NULL;
 }
 
-bool func_8008973C(s_SysWork_2514* arg0, s32 arg1, s_8002AC04* ptr, u32* arg3)
+bool func_8008973C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* ptr, u32* arg3)
 {
     if (!arg0 || arg1)
     {
@@ -1998,7 +2017,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089A30); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089BB8); // 0x80089BB8
 
-bool func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u8* arg3) // 0x80089D0C
+bool func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u32* arg3) // 0x80089D0C
 {
     if (arg0 == NULL || arg2 == NULL)
     {
@@ -2825,21 +2844,37 @@ s32 func_8008D8C0(s16 x0, s32 x1, s32 x2) // 0x8008D8C0
     s32 temp1;
     s32 res;
 
-    temp0 = vwOresenHokan(&D_800AFD3C, 2, x0, 0, FP_FLOAT_TO(16.0f, Q8_SHIFT));
-    temp1 = vwOresenHokan(&D_800AFD44, 7, x1, FP_FLOAT_TO(0.8f, Q8_SHIFT), FP_FLOAT_TO(13.0f, Q8_SHIFT));
-    res   = FP_MULTIPLY(vwOresenHokan(&D_800AFD60, 7, x2, FP_FLOAT_TO(3.335f, Q8_SHIFT), FP_FLOAT_TO(7.425f, Q8_SHIFT)), // Yucky floats, maybe these aren't distances?
+    static s32 y_ary0[2] = { 0, 0x1000 };
+    static s32 y_ary1[7] = { 0x4000, 0x14CC, 0x0E66, 0x0B33, 0x0800, 0x0599, 0x0333 };
+    static s32 y_ary2[7] = { 0x0266, 0x0333, 0x0400, 0x04CC, 0x0599, 0x0800, 0x14CC };
+
+    temp0 = vwOresenHokan(&y_ary0, ARRAY_SIZE(y_ary0), x0, 0, FP_FLOAT_TO(16.0f, Q8_SHIFT));
+    temp1 = vwOresenHokan(&y_ary1, ARRAY_SIZE(y_ary1), x1, FP_FLOAT_TO(0.8f, Q8_SHIFT), FP_FLOAT_TO(13.0f, Q8_SHIFT));
+    res   = FP_MULTIPLY(vwOresenHokan(&y_ary2, ARRAY_SIZE(y_ary2), x2, FP_FLOAT_TO(3.335f, Q8_SHIFT), FP_FLOAT_TO(7.425f, Q8_SHIFT)), // Yucky floats, maybe these aren't distances?
                         FP_MULTIPLY(temp0, temp1, Q12_SHIFT),
                         Q12_SHIFT);
 
     return (res > FP_FLOAT_TO(24.0f, Q8_SHIFT)) ? FP_FLOAT_TO(24.0f, Q8_SHIFT) : res;
 }
 
+// Used by func_8008D990
+u16 D_800AFD7C[] =
+{
+    0xF839, 0xF889, 0xFA39, 0xFAE4,
+    0xFD56, 0xFDC8, 0xFF56, 0xFFEA,
+    0x0038, 0x018E, 0x01C7, 0x02AA,
+    0x04E3, 0x064F, 0x0688, 0x06E3
+};
+
+static s_FsImageDesc img0 = { .tPage = { 0, 13 } };
+static s_FsImageDesc D_800AFDA4 = { .tPage = { 64, 3 }, .u = 224, .v = 0, .clutX = 32, .clutY = 32 };
+
 // Large function.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D990); // 0x8008D990
 
 void func_8008E4EC(s_PlmHeader* plmHeader) // 0x8008E4EC
 {
-    func_80056504(plmHeader, D_8002B2CC.str, &D_800AFD9C, 1);
+    func_80056504(plmHeader, D_8002B2CC.str, &img0, 1);
 }
 
 s_WaterZone* Map_WaterZoneGet(s32 posX, s32 posZ, s_WaterZone* waterZone)
@@ -2865,6 +2900,7 @@ s_WaterZone* Map_WaterZoneGet(s32 posX, s32 posZ, s_WaterZone* waterZone)
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008E5B4); // 0x8008E5B4
 
+u32 D_800AFDAC = 0;
 void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2) // 0x8008E794
 {
     VECTOR    sp10;
@@ -2874,6 +2910,7 @@ void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2) // 0x8008E794
     s32       angle0;
     u32       sinAngle0;
     POLY_FT4* poly;
+    static SVECTOR svec0 = {};
 
     memset(&sp20, 0, 16);
     sp20.vx = arg0->vx >> 4;
@@ -2888,7 +2925,7 @@ void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2) // 0x8008E794
     sp30.t[2] += GsWSMATRIX.t[2];
     SetTransMatrix(&sp30);
 
-    if ((RotTransPers(&D_800AFDB0, &sp20, &sp50, &sp50) * 4) >= 0x80)
+    if ((RotTransPers(&svec0, &sp20, &sp50, &sp50) * 4) >= 0x80)
     {
         poly = GsOUT_PACKET_P;
         SetPolyFT4(poly);

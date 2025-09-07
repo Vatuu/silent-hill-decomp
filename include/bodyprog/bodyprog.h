@@ -2041,15 +2041,6 @@ extern u8 D_800AFD04;
 
 extern u8 D_800AFD05;
 
-extern s32 (*D_800AFD08[])(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* ptr, u32* arg3); // Function pointer array.
-/*= {
-    func_80089A30,
-    func_80089BB8,
-    func_80089DF0,
-    func_8008973C,
-    func_80089D0C
-}*/
-
 extern s32 D_800AFD3C;
 
 extern s32 D_800AFD44;
@@ -3377,7 +3368,13 @@ s32 func_800895E4(s_SysWork_2514* arg0, s_8002AC04* arg1, u8 arg2);
 
 bool func_80089644(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s32 arg2, u32 arg3);
 
-bool func_8008973C(s_SysWork_2514* arg0, s32 arg1, s_8002AC04* ptr, u32* arg3);
+bool func_80089A30(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u32* arg3);
+
+bool func_80089BB8(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u32* arg3);
+
+bool func_80089DF0(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u32* arg3);
+
+bool func_8008973C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* ptr, u32* arg3);
 
 void func_80089840(s_SysWork_2514* arg0);
 
@@ -3387,7 +3384,7 @@ void func_8008992C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32));
 
 void func_800899BC(s_SysWork_2514* arg0, s32 arg1);
 
-bool func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u8* arg3);
+bool func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u32* arg3);
 
 s32 func_8008A0CC(); /** Returns 0. */
 

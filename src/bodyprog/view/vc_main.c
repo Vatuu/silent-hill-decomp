@@ -6,6 +6,24 @@
 
 #define MIN_IN_ROAD_DIST FP_METER(1.0f) // vcGetMinInRoadDist() in SH2, hardcoded to FP_METER(1.0f) in SH1.
 
+VC_NEAR_ROAD_DATA vcNullNearRoad =
+{
+    .road_p_0 = vcNullRoadArray,
+    .rd_dir_type_4 = {},
+    .use_priority_5 = {},
+    .unk_6 = {},
+    .chara2road_sum_dist_8 = 0,
+    .chara2road_vec_x_C = 0,
+    .chara2road_vec_z_10 = 0,
+    .rd_14 = { 0xE200, 0x1E00, 0xE200, 0x1E00 },
+    .sw_1C = { 0xE200, 0x1E00, 0xE200, 0x1E00 },
+};
+
+VC_WATCH_MV_PARAM deflt_watch_mv_prm = { 0x1333, 0x2333, 0x0385, 0x0B33 };
+VC_WATCH_MV_PARAM self_view_watch_mv_prm = { 0x1AE1, 0x3147, 0x070A, 0x1666 };
+VC_CAM_MV_PARAM cam_mv_prm_user = { 0xA000, 0x3000, 0x6000, 0x2000 };
+s32 excl_r_ary[9] = { 0x4000, 0x4000, 0x3B33, 0x3333, 0x2B33, 0x24CC, 0x1E66, 0x1800, 0x14CC };
+
 void vcInitVCSystem(VC_ROAD_DATA* vc_road_ary_list) // 0x80080940
 {
     vcWork.view_cam_active_f_0 = false;

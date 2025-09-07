@@ -5,8 +5,22 @@
 #include "main/fsqueue.h"
 #include "main/rng.h"
 
+s32 g_Demo_DemoId = 0;
+u16 g_Demo_RandSeed = 0;
+// 2 bytes of padding.
+s_DemoFrameData* g_Demo_PlayFileBufferPtr = (s_DemoFrameData*)0x800F5E00;
+
 bool Demo_SequenceAdvance(s32 incrementAmt) // 0x8008EF20
 {
+    static s_DemoFileInfo g_Demo_FileIds[DEMO_FILE_COUNT_MAX] = 
+    {
+        { FILE_MISC_DEMO0009_DAT, FILE_MISC_PLAY0009_DAT, 0 },
+        { FILE_MISC_DEMO000A_DAT, FILE_MISC_PLAY000A_DAT, 0 },
+        { FILE_MISC_DEMO0003_DAT, FILE_MISC_PLAY0003_DAT, 0 },
+        { FILE_MISC_DEMO000B_DAT, FILE_MISC_PLAY000B_DAT, 0 },
+        { FILE_MISC_DEMO0005_DAT, FILE_MISC_PLAY0005_DAT, 0 },
+    };
+
     g_Demo_DemoId += incrementAmt;
 
     while (true)
