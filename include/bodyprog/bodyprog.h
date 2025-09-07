@@ -904,7 +904,9 @@ STATIC_ASSERT_SIZEOF(s_800A992C, 24);
 typedef struct
 {
     u8  field_0;
-    u8  unk_1[3];
+    u8  unk_1;
+    u8  unk_2;
+    u8  unk_3;
     u32 field_4    : 24;
     u8  field_4_24 : 8;
     u32 field_8    : 24;
@@ -915,17 +917,18 @@ STATIC_ASSERT_SIZEOF(s_800AA894, 12);
 typedef struct
 {
     u16 field_0;
-    s8  unk_1[4];
+    u8  unk_2[4];
     s8  field_6;
     s8  unk_7;
     u8  field_8;
     u8  field_9;
-    s8  unk_A[4];
+    u8  unk_A[4];
     u8  field_E;
     u8  field_F;
     u8  field_10;
     u8  field_11;
-    s8  field_12[6];
+    u16 unk_12; // guessed
+    u32* unk_14; // some pointer, all entries have the same value D_800AD4C4
 } s_800AD4C8;
 STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
 
@@ -1952,8 +1955,6 @@ extern s32 D_800A9FB4[];
 
 extern u8 D_800AA5E0[];
 
-extern s_800AA894 D_800AA894[];
-
 extern s16 g_StringColorId; // 0x800AD498
 
 /** Index. */
@@ -2414,8 +2415,7 @@ extern s16 D_800C6E8E;
 
 extern u8 D_800C6E90;
 
-/** SFX data array. */
-extern s_Sfx D_800ACAA8[];
+extern s_Sfx g_Sfx_Table0[420];
 
 extern u8 D_800AD480[24];
 

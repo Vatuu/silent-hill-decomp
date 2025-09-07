@@ -20,6 +20,10 @@ INCLUDE_RODATA("asm/bodyprog/nonmatchings/text_draw", g_12x16FontWidths);
 
 INCLUDE_RODATA("asm/bodyprog/nonmatchings/text_draw", g_MapMsg_Colors);
 
+s16 g_StringColorId = 7;
+// 2 bytes of padding.
+s32 g_otIdx = 6;
+
 void Gfx_StringSetPosition(s32 x, s32 y) // 0x8004A87C
 {
     #define OFFSET_X SCREEN_POSITION_X(50.0f)
@@ -36,17 +40,17 @@ void Gfx_StringSetPosition(s32 x, s32 y) // 0x8004A87C
         g_StringPosition.vy = y - OFFSET_Y;
     }
 
-    D_800AD49C = 6;
+    g_otIdx = 6;
 }
 
 void func_8004A8C0(s32 arg0) // 0x8004A8C0
 {
-    D_800AD49C = arg0;
+    g_otIdx = arg0;
 }
 
 void func_8004A8CC() // 0x8004A8CC
 {
-    D_800AD49C = 6;
+    g_otIdx = 6;
 }
 
 void Gfx_StringSetColor(s16 colorId) // 0x8004A8DC
@@ -98,7 +102,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
     posY = g_StringPosition.vy;
 
     glyphColor = g_MapMsg_Colors[g_StringColorId];
-    ot         = &D_800B5C40[g_ObjectTableIdx].field_0[D_800AD49C];
+    ot         = &D_800B5C40[g_ObjectTableIdx].field_0[g_otIdx];
 
     if (!g_SysWork.enableHighResGlyphs_2350_0)
     {
