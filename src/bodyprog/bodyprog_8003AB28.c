@@ -1960,6 +1960,15 @@ void func_8003DD80(s32 idx, s32 arg1) // 0x8003DD80
 void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
 {
     s32 temp_s0;
+    static s32 D_800A9ECC = 0xFE16FD13;
+    static s32 D_800A9ED0 = 0x0000FE13;
+    static s32 D_800A9ED4 = 0x0000FE14;
+    static s32 D_800A9ED8 = 0x0000FE15;
+    static s32 D_800A9EDC = 0x0000FE16;
+    static s32 D_800A9EE0 = 0x000000FE;
+    static s32 D_800A9EE4 = 0x00FE1211;
+    static s32 D_800A9EE8 = 0x0000FE11;
+    static s32 D_800A9EEC = 0x0000FE12;
 
     temp_s0 = arg1 & 0xF;
     if (temp_s0 != 0)
@@ -2011,6 +2020,10 @@ void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
 void func_8003DF84(s_Skeleton* skel, s32 arg1) // 0x8003DF84
 {
     s32 temp_v1;
+    static s32 D_800A9EF0 = 0x0000FE14;
+    static s32 D_800A9EF4 = 0x00FE1514;
+    static s32 D_800A9EF8 = 0x0000FE12;
+    static s32 D_800A9EFC = 0x00FE1312;
 
     temp_v1 = arg1 & 0xF;
     if (temp_v1 != 0)
@@ -2050,6 +2063,10 @@ void func_8003DF84(s_Skeleton* skel, s32 arg1) // 0x8003DF84
 void func_8003E08C(s_Skeleton* skel, s32 arg1) // 0x8003E08C
 {
     s32 temp_v1;
+    static s32 D_800A9F00 = 0x0000FE02;
+    static s32 D_800A9F04 = 0x0000FE03;
+    static s32 D_800A9F08 = 0x0000FE00;
+    static s32 D_800A9F0C = 0x00FE0100;
 
     temp_v1 = arg1 & 0xF;
     if (temp_v1 != 0)
@@ -2089,6 +2106,10 @@ void func_8003E08C(s_Skeleton* skel, s32 arg1) // 0x8003E08C
 void func_8003E194(s_Skeleton* skel, s32 arg1) // 0x8003E194
 {
     s32 temp_s0;
+    static s32 D_800A9F10 = 0xFE03FD00;
+    static s32 D_800A9F14 = 0x0000FE00;
+    static s32 D_800A9F18 = 0x00FE0201;
+    static s32 D_800A9F1C = 0x0000FE03;
 
     temp_s0 = arg1 & 0xF;
     if (temp_s0 != 0)
@@ -2115,6 +2136,16 @@ void func_8003E194(s_Skeleton* skel, s32 arg1) // 0x8003E194
 void func_8003E238(s_Skeleton* skel, s32 arg1) // 0x8003E238
 {
     s32 var_s0;
+    static s32 D_800A9F20 = 0x06050403;
+    static s32 D_800A9F24 = 0x000000FE; // @unused
+    static s32 D_800A9F28 = 0x0000FE03;
+    static s32 D_800A9F2C = 0x0000FE04;
+    static s32 D_800A9F30 = 0x00FE0504;
+    static s32 D_800A9F34 = 0x00FE0603;
+    static s32 D_800A9F38 = 0xFE020100;
+    static s32 D_800A9F3C = 0x0000FE00;
+    static s32 D_800A9F40 = 0x0000FE01;
+    static s32 D_800A9F44 = 0x00FE0201;
 
     var_s0 = arg1 & 0xF;
     if (var_s0 != 0)
@@ -2167,6 +2198,8 @@ void func_8003E238(s_Skeleton* skel, s32 arg1) // 0x8003E238
 void func_8003E388(s_Skeleton* skel, s32 arg1) // 0x8003E388
 {
     s32 temp_a1;
+    static s32 D_800A9F48 = 0x0000FE05;
+    static s32 D_800A9F4C = 0x0000FE06;
 
     temp_a1 = arg1 & 0xF;
     if (temp_a1 != 0)
@@ -2189,6 +2222,8 @@ void func_8003E388(s_Skeleton* skel, s32 arg1) // 0x8003E388
 void func_8003E414(s_Skeleton* skel, s32 arg1) // 0x8003E414
 {
     s32 temp_a1;
+    static s32 D_800A9F50 = 0xFE19FD11;
+    static s32 D_800A9F54 = 0xFE22FD1A;
 
     temp_a1 = arg1 & 0x3;
     if (temp_a1 != 0)
@@ -2211,6 +2246,11 @@ void func_8003E414(s_Skeleton* skel, s32 arg1) // 0x8003E414
 void func_8003E4A0(s_Skeleton* skel, s32 arg1) // 0x8003E4A0
 {
     s32 temp_s0;
+    static s32 D_800A9F58 = 0x05040302;
+    static s32 D_800A9F5C = 0x00FE0706; // @unused
+    static s32 D_800A9F60 = 0x00FE0502;
+    static s32 D_800A9F64 = 0x00FE0603;
+    static s32 D_800A9F68 = 0x00FE0704;
 
     temp_s0 = arg1 & 0xF;
     if (temp_s0 != 0)
@@ -2237,6 +2277,11 @@ void func_8003E4A0(s_Skeleton* skel, s32 arg1) // 0x8003E4A0
 void func_8003E544(s_Skeleton* skel, s32 arg1) // 0x8003E544
 {
     s32 temp_s0;
+    static s32 D_800A9F6C = 0x05040302;
+    static s32 D_800A9F70 = 0x00FE0706; // @unused
+    static s32 D_800A9F74 = 0x00FE0502;
+    static s32 D_800A9F78 = 0x00FE0603;
+    static s32 D_800A9F7C = 0x00FE0704;
 
     temp_s0 = arg1 & 0xF;
     if (temp_s0 == 0)
@@ -2461,6 +2506,17 @@ void func_8003EBF4(s_MapOverlayHeader* arg0) // 0x8003EBF4
     s32         var_v1;
     u8          temp_a1;
     s_800A9F80* ptr;
+
+    static s_800A9F80 D_800A9F80 = { 1, 1  };
+    static s_800A9F80 D_800A9F84 = { 2, 2  };
+    static s_800A9F80 D_800A9F88 = { 6, 3  };
+    static s_800A9F80 D_800A9F8C = { 7, 4  };
+    static s_800A9F80 D_800A9F90 = { 6, 10 }; // @unused
+    static s_800A9F80 D_800A9F94 = { 6, 5  }; // @unused
+    static s_800A9F80 D_800A9F98 = { 9, 9  };
+    static s_800A9F80 D_800A9F9C = { 6, 6  }; // @unused
+    static s_800A9F80 D_800A9FA0 = { 3, 3  }; // @unused
+    static s_800A9F80 D_800A9FA4 = { 5, 5  }; // @unused
 
     temp_a1 = arg0->type_0->flags_6;
 
