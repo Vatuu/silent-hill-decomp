@@ -53,7 +53,8 @@ typedef enum _Sfx
     Sfx_Stumble0    = 1314,
 
     Sfx_Unk1317     = 1317,
-
+    Sfx_Unk1318     = 1318,
+    Sfx_Unk1319     = 1319,
     Sfx_HeavyBreath = 1320,
     Sfx_Unk1321     = 1321,
     Sfx_Unk1322     = 1322,
@@ -1045,7 +1046,7 @@ STATIC_ASSERT_SIZEOF(s_800BCE18_2BEC, 16);
 
 typedef struct
 {
-    s32           itemId_0; /** `e_InventoryItemId` or `e_CutsceneItemId` or `NO_VALUE` */
+    s32           itemId_0; /** `e_InventoryItemId` or `e_CutsceneItemId` */
     s32           field_4;
     char*         field_8;
     s_FsImageDesc imageDesc_C;
@@ -2502,7 +2503,7 @@ void func_8003C878(s32 arg0);
 
 void func_8003C8F8(s_800BCE18_2BEC_0* arg0, char* newStr);
 
-void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* pos, SVECTOR3* rot);
+void func_8003C92C(s_800BCE18_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* rot);
 
 void func_8003CD6C(s_PlayerCombat* combat);
 

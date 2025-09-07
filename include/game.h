@@ -355,7 +355,7 @@ typedef enum _ControllerFlags
     ControllerFlag_LStickLeft   = 1 << 27
 } e_ControllerFlags;
 
-/** @brief Flags with an unknown purpose used frequently for `s_SubCharacter::flags_3E`. */
+/** @brief Character flags. Used by `s_SubCharacter::flags_3E`. */
 typedef enum _CharaFlags
 {
     CharaFlag_None = 0,
@@ -1556,7 +1556,7 @@ static inline void Savegame_EventFlagSet(u32 flagId)
     (g_SavegamePtr->eventFlags_168[(flagIdx) / 32] |= 1 << ((flagIdx) % 32))
 
 /** @brief Checks if the given flag ID is set inside the array of 16-bit flag values. */
-static inline s32 Flags16b_IsSet(u16* array, s32 flagId)
+static inline s32 Flags16b_IsSet(const u16* array, s32 flagId)
 {
     // @bug: `>> 5` divides `flagId` by 32 to get array index, but array is of 16-bit values.
     // Maybe copy-paste from `u32` version of func.

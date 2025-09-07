@@ -2551,7 +2551,7 @@ void func_8008D1D0(s32* keyframePrev, s32* keyframeNext, s32* alpha, s32 time, s
         case 0:
             prevVal = FP_FROM(time, Q12_SHIFT);
             nextVal = prevVal + 1;
-            *alpha = time & 0xFFF;
+            *alpha = QX_12_NORM(time);
             break;
 
         case 1:
@@ -2563,7 +2563,7 @@ void func_8008D1D0(s32* keyframePrev, s32* keyframeNext, s32* alpha, s32 time, s
         case 2:
             prevVal = FP_FROM(time, Q12_SHIFT) - 1;
             nextVal = prevVal + 1;
-            *alpha = (time & 0xFFF) + 0x1000;
+            *alpha = QX_12_NORM(time) + FP_TIME(1.0f);
             break;
 
         default:

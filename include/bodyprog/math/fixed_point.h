@@ -174,6 +174,14 @@
 #define Q3_12_TO_Q0_8(x) \
     (u8)((x) >> 4)
 
+/** @brief Normalizes a fixed-point value in QX.12 to the integer range `[0, 4095]`.
+ *
+ * @param x Fixed-point value in QX.12 to normalize.
+ * @return Normalized fixed-point value in QX.12, integer range `[0, 4095]`.
+ */
+#define QX_12_NORM(x) \
+    ((x) & 0xFFF)
+
 // =========================================
 // Abstract Fixed-Point Q Format Conversion
 // =========================================
@@ -192,7 +200,7 @@
  * @return Normalized fixed-point alpha in Q3.12, integer range `[0, 4095]`.
  */
 #define FP_ALPHA_NORM(alpha) \
-    ((alpha) & 0xFFF)
+    QX_12_NORM(alpha)
 
 // TODO: Volume and color byte alpha format might be more common, need to confirm.
 

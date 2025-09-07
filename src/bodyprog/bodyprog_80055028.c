@@ -4093,7 +4093,7 @@ void func_80070400(s_SubCharacter* chara, s_func_80070400_1* arg1, s_func_800704
     // Compute alpha.
     if (chara->model_0.anim_4.status_0 & (1 << 0))
     {
-        alpha = chara->model_0.anim_4.time_4 & 0xFFF;
+        alpha = QX_12_NORM(chara->model_0.anim_4.time_4);
     }
     else
     {

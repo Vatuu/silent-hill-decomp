@@ -625,6 +625,7 @@ void Gfx_MainMenu_FogRandomize() // 0x8003BAC4
     s8* ptr;
     u8* ptr1;
     s8* ptr2;
+
     static s32 D_800A9EAC = 0;
 
     ptr         = D_800BCDE0;
@@ -764,7 +765,8 @@ s32 func_8003BE50(s32 idx) // 0x8003BE50
 
 void GameFs_BgEtcGfxLoad() // 0x8003BE6C
 {
-    static s_FsImageDesc img = { .tPage = {0, 12}, .clutX = 192 };
+    static s_FsImageDesc img = { .tPage = { 0, 12 }, .clutX = 192 };
+
     Fs_QueueStartReadTim(FILE_TIM_BG_ETC_TIM, FS_BUFFER_1, &img);
 }
 
@@ -775,8 +777,9 @@ void GameFs_BgItemLoad() // 0x8003BE9C
 
 void func_8003BED0() // 0x8003BED0
 {
-    static s_FsImageDesc imgTim = { .tPage = {0, 15}, .clutX = 176 };
-    static s_FsImageDesc imgEtc = { .tPage = {0, 12}, .v = 192, .clutX = 192 };
+    static s_FsImageDesc imgTim = { .tPage = { 0, 15 }, .clutX = 176 };
+    static s_FsImageDesc imgEtc = { .tPage = { 0, 12 }, .v = 192, .clutX = 192 };
+
     s_PlmHeader* D_800BE9FC = &D_800BCE18.field_1BE4;
 
     if (Fs_QueueIsEntryLoaded(D_800BE9FC->queueIdx_1000) == 0 || D_800BE9FC->isLoaded_2)
@@ -1094,13 +1097,13 @@ void func_8003C8F8(s_800BCE18_2BEC_0* arg0, char* newStr) // 0x8003C8F8
     arg0->field_10.field_8 = 0;
 }
 
-void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* pos, SVECTOR3* rot) // 0x8003C92C
+void func_8003C92C(s_800BCE18_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* rot) // 0x8003C92C
 {
     s32              vy;
     s32              vx;
     s32              vz;
-    s32              coord1; // Q23.8
     s32              coord0; // Q23.8
+    s32              coord1; // Q23.8
     s32              coord2; // Q23.8
     s32              i;
     s32              ret;
@@ -1115,7 +1118,7 @@ void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* pos, SVECTOR3* rot) // 0x80
 
             if (ret == 0)
             {
-                if (func_80056CB4(arg0, &D_800BCE18.field_1BE4, &arg0->field_10) == 0)
+                if (!func_80056CB4(arg0, &D_800BCE18.field_1BE4, &arg0->field_10))
                 {
                     return;
                 }
@@ -2359,7 +2362,8 @@ static s_800A9F80 D_800A9FA4 = { 5, 5  }; // @unused
 
 void GameFs_FlameGfxLoad() // 0x8003E710
 {
-    static s_FsImageDesc D_800A9FA8 = { .tPage = {0, 12}, .u = 32, .v = 0, .clutX = 800, .clutY = 64 };
+    static s_FsImageDesc D_800A9FA8 = { .tPage = { 0, 12 }, .u = 32, .v = 0, .clutX = 800, .clutY = 64 };
+
     Fs_QueueStartReadTim(FILE_TIM_FLAME_TIM, FS_BUFFER_1, &D_800A9FA8);
 }
 
@@ -2379,6 +2383,7 @@ void func_8003E740() // 0x8003E740
     s32       var_s5;
     POLY_FT4* poly;
     s32       temp_s2 = 0;
+
     static u32 D_800A9FB0 = 0;
 
     if (g_DeltaTime0 != 0)

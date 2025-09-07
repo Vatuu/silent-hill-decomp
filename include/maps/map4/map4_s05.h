@@ -3,7 +3,7 @@
 
 extern s32 D_800D7858;
 
-extern s16 D_800D785C;
+extern q3_12 D_800D785C;
 
 extern s_AnimInfo FLOATSTINGER_ANIM_INFOS[];
 

@@ -160,23 +160,19 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
     switch (chara->model_0.stateStep_3)
     {
         case 3:
-            chara->model_0.state_2               = 5;
-            chara->model_0.anim_4.status_0      = ANIM_STATUS(9, true);
-            chara->model_0.anim_4.time_4         = FP_TIME(191.0f);
-            chara->model_0.anim_4.keyframeIdx_8 = 191;
+            chara->model_0.state_2 = 5;
+            Character_AnimSet(chara, ANIM_STATUS(9, true), 191);
 
             chara->properties_E4.larvalStalker.properties_E8[7].val16[1] = -0x90; // Could be `FP_ANGLE(-12.7f)`?
             break;
         case 4:
-            chara->position_18.vx = FP_FLOAT_TO(-114.5f, Q12_SHIFT);
-            chara->position_18.vy = FP_FLOAT_TO(2.0f, Q12_SHIFT);
-            chara->position_18.vz = FP_FLOAT_TO(108.0f, Q12_SHIFT);
+            chara->position_18.vx = FP_METER(-114.5f);
+            chara->position_18.vy = FP_METER(2.0f);
+            chara->position_18.vz = FP_METER(108.0f);
 
-            chara->model_0.state_2               = 2;
-            chara->model_0.anim_4.status_0      = ANIM_STATUS(9, true);
-            chara->model_0.anim_4.time_4         = FP_TIME(191.0f);
-            chara->model_0.anim_4.keyframeIdx_8 = 191;
-            chara->rotation_24.vy                = FP_ANGLE(-90.0f);
+            chara->model_0.state_2 = 2;
+            Character_AnimSet(chara, ANIM_STATUS(9, true), 191);
+            chara->rotation_24.vy = FP_ANGLE(-90.0f);
             break;
     }
 
@@ -206,16 +202,16 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
-        D_800D785C = FP_FLOAT_TO(2.4f, Q12_SHIFT);
+        D_800D785C = Q19_12(2.4f);
         chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 0;
     }
     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        D_800D785C = FP_FLOAT_TO(4.0f, Q12_SHIFT);
+        D_800D785C = Q19_12(4.0f);
     }
     else
     {
-        D_800D785C = FP_FLOAT_TO(3.2f, Q12_SHIFT);
+        D_800D785C = Q19_12(3.2f);
     }
 }
 

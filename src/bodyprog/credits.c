@@ -7,7 +7,8 @@
 
 const s32 rodataPad_8002B2F8 = 0;
 
-struct {
+struct
+{
     char f0[5];
     char f1[5];
     char f2[5];
@@ -37,7 +38,7 @@ s_800AFE24 D_800AFE24 =
     .field_34  = 4096,
     .field_3C  = -4096,
     .field_48  = 4096,
-    .field_4C  = 4551,
+    .field_4C  = 4551
 };
 
 void func_8008F94C() // 0x8008F94C

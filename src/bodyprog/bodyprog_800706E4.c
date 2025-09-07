@@ -1865,11 +1865,11 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             {
                 if ((g_MapOverlayHeader.field_38[D_800AF220].time_4 + 12) >= chara->model_0.anim_4.keyframeIdx_8)
                 {
-                    func_80071620(chara->model_0.anim_4.status_0, chara, g_MapOverlayHeader.field_38[D_800AF220].time_4 + 0xC, 0x526);
+                    func_80071620(chara->model_0.anim_4.status_0, chara, g_MapOverlayHeader.field_38[D_800AF220].time_4 + 0xC, Sfx_Unk1318);
                 }
                 else
                 {
-                    func_80071620(chara->model_0.anim_4.status_0, chara, g_MapOverlayHeader.field_38[D_800AF220].time_4 + 0x20, 0x527);
+                    func_80071620(chara->model_0.anim_4.status_0, chara, g_MapOverlayHeader.field_38[D_800AF220].time_4 + 0x20, Sfx_Unk1319);
                 }
                 
                 temp_a2 = D_800AF070[chara->model_0.anim_4.keyframeIdx_8 - g_MapOverlayHeader.field_38[D_800AF220].time_4];
@@ -1883,7 +1883,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                     var_v1_5 = temp_a2;
                 }
                 
-                temp_s0_3                                    = temp_a2 + FP_MULTIPLY(var_v1_5 - temp_a2, chara->model_0.anim_4.time_4 & 0xFFF, Q12_SHIFT);
+                temp_s0_3                                    = temp_a2 + FP_MULTIPLY(var_v1_5 - temp_a2, QX_12_NORM(chara->model_0.anim_4.time_4), Q12_SHIFT);
                 g_SysWork.player_4C.chara_0.field_D8.field_0 = 0;
                 g_SysWork.player_4C.chara_0.field_D8.field_2 = 0;
                 g_SysWork.player_4C.chara_0.field_D8.field_4 = FP_MULTIPLY(temp_s0_3, Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
@@ -2473,8 +2473,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
             if (enemyAttackedIdx == g_SysWork.enemyTargetIdx_2353)
             {
-                chara->rotation_24.pad = (ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_0) - g_SysWork.player_4C.chara_0.position_18.vx,
-                                                (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_2) - g_SysWork.player_4C.chara_0.position_18.vz) + 0x1000) & 0xFFF;
+                chara->rotation_24.pad = QX_12_NORM(ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_0) - g_SysWork.player_4C.chara_0.position_18.vx,
+                                                           (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_2) - g_SysWork.player_4C.chara_0.position_18.vz) + 0x1000);
             }
             else
             {
@@ -2502,8 +2502,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
                 if (enemyAttackedIdx == g_SysWork.enemyTargetIdx_2353)
                 {
-                    temp_a1 = (ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_0) - g_SysWork.player_4C.chara_0.position_18.vx,
-                                      (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_2) - g_SysWork.player_4C.chara_0.position_18.vz) + 0x1000) & 0xFFF;
+                    temp_a1 = QX_12_NORM(ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_0) - g_SysWork.player_4C.chara_0.position_18.vx,
+                                                (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_2) - g_SysWork.player_4C.chara_0.position_18.vz) + 0x1000);
 
                     Math_ShortestAngleGet(chara->rotation_24.vy, temp_a1, &ssp20);
                     D_800C454C = g_DeltaTime0 * 0xF;
@@ -3222,12 +3222,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 playerTurn = (g_Player_IsTurningLeft != false) * 2;
             }
 
-            if ((extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk29, true) ||
-                 extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[1].field_6) &&
-                (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk30, true) ||
-                 extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[2].field_6) &&
-                (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk32, true) ||
-                 extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[4].field_6))
+            if ((extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk29, true) || extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[1].field_6) &&
+                (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk30, true) || extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[2].field_6) &&
+                (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk32, true) || extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[4].field_6))
             {
                 playerTurn = 0;
                 chara->properties_E4.player.field_100++;
@@ -3308,8 +3305,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
                 if (enemyAttackedIdx == g_SysWork.enemyTargetIdx_2353 && enemyAttackedIdx != NO_VALUE)
                 {
-                    chara->rotation_24.pad = (ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_0) - g_SysWork.player_4C.chara_0.position_18.vx,
-                                                    (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_2) - g_SysWork.player_4C.chara_0.position_18.vz) + 0x1000) & 0xFFF;
+                    chara->rotation_24.pad = QX_12_NORM(ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_0) - g_SysWork.player_4C.chara_0.position_18.vx,
+                                                               (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_2) - g_SysWork.player_4C.chara_0.position_18.vz) + 0x1000);
                 }
                 else
                 {
