@@ -11,9 +11,9 @@ scratchpad                                  = 0x1F800000; // size:0x400 ignore:T
 //--- PA: 0x000000   VA: 0x80024B60   subsegment: .rodata, bodyprog
 //-----------------------------------------------------------------
 
-//----------------------------------------------------------------
-//--- PA: 0x000004   VA: 0x80024B64   subsegment: .rodata, memcard
-//----------------------------------------------------------------
+//--------------------------------------------------------------------------
+//--- PA: 0x000004   VA: 0x80024B64   subsegment: .rodata, memcard/memcard_1
+//--------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------
 //--- PA: 0x000140   VA: 0x80024CA0   subsegment: .rodata, gfx/graphics_1
@@ -29,9 +29,9 @@ g_Controller1                               = 0x80024D50; // type:u32
 g_GameWorkPtr                               = 0x80024D54; // type:u32
 g_MapTypes                                  = 0x8002500C; // type:MapType size:0xF0
 
-//--------------------------------------------------------------------------
-//--- PA: 0x0005AC   VA: 0x8002510C   subsegment: .rodata, bodyprog_80032D1C
-//--------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------
+//--- PA: 0x0005AC   VA: 0x8002510C   subsegment: .rodata, saveload/bodyprog_80032D1C
+//-----------------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------
 //--- PA: 0x0005BC   VA: 0x8002511C   subsegment: .rodata, settings_reset
@@ -39,7 +39,11 @@ g_MapTypes                                  = 0x8002500C; // type:MapType size:0
 DEFAULT_CONTROLLER_CONFIGS                  = 0x8002511C;
 
 //--------------------------------------------------------------------------
-//--- PA: 0x000618   VA: 0x80025178   subsegment: .rodata, bodyprog_800334D8
+//--- PA: 0x000618   VA: 0x80025178   subsegment: .rodata, memcard/memcard_2
+//--------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+//--- PA: 0x00069C   VA: 0x800251FC   subsegment: .rodata, bodyprog_800348C0
 //--------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------
@@ -163,9 +167,9 @@ hack_vcSetWatchTgtXzPos_fix                 = 0x8002B2B4; // type:s32 - Some 0x8
 //================================================
 
 
-//----------------------------------------------------------
-//--- PA: 0x009AD0   VA: 0x8002E630   subsegment: c, memcard
-//----------------------------------------------------------
+//--------------------------------------------------------------------
+//--- PA: 0x009AD0   VA: 0x8002E630   subsegment: c, memcard/memcard_1
+//--------------------------------------------------------------------
 Savegame_CardCleanInit                      = 0x8002E630; // type:func
 Savegame_GameMemDataClear                   = 0x8002E6E4; // type:func
 Savegame_CardFileUsageClear                 = 0x8002E730; // type:func
@@ -233,11 +237,12 @@ Settings_DispEnvXYSet                       = 0x80032524; // type:func
 Gfx_FadeInProgress                          = 0x800325F8; // type:func
 Gfx_FadeUpdate                              = 0x8003260C; // type:func
 Gfx_BlackBorderDraw.70                      = 0x8003289C; // filename:Gfx_BlackBorderDraw type:func The generated result of the compilation for some reason adds .66 at name end.
+Gfx_CutsceneCameraStateUpdate               = 0x80032904; // type:func
 Gfx_VSyncCallback                           = 0x80032B80; // type:func
 
-//----------------------------------------------------------------
-//--- PA: 0x00E070   VA: 0x80032BD0   subsegment: c, fs_mainscreen
-//----------------------------------------------------------------
+//-----------------------------------------------------------------
+//--- PA: 0x00E070   VA: 0x80032BD0   subsegment: c, fs_main_screen
+//-----------------------------------------------------------------
 GameFs_TitleGfxSeek                         = 0x80032BD0; // type:func
 GameFs_TitleGfxLoad                         = 0x80032BF0; // type:func
 GameFs_StreamBinSeek                        = 0x80032C20; // type:func
@@ -245,9 +250,9 @@ GameFs_StreamBinLoad                        = 0x80032C40; // type:func
 GameFs_OptionBinLoad                        = 0x80032C68; // type:func
 GameFs_SaveLoadBinLoad                      = 0x80032CA8; // type:func
 
-//--------------------------------------------------------------------
-//--- PA: 0x00E188   VA: 0x80032CE8   subsegment: c, bodyprog_80032D1C
-//--------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//--- PA: 0x00E188   VA: 0x80032CE8   subsegment: c, saveload/bodyprog_80032D1C
+//-----------------------------------------------------------------------------
 SaveLoad_NowLoadingStringDraw               = 0x80032CE8; // type:func
 
 //-----------------------------------------------------------
@@ -265,16 +270,28 @@ Settings_RestoreControlDefaults             = 0x80033480; // type:func
 nullsub_800334C8                            = 0x800334C8; // type:func
 
 //--------------------------------------------------------------------
-//--- PA: 0x00E9E8   VA: 0x80033548   subsegment: c, bodyprog_800334D8
+//--- PA: 0x00E978   VA: 0x800334D8   subsegment: c, memcard/memcard_2
 //--------------------------------------------------------------------
+
+//-----------------------------------------------------------
+//--- PA: 0x00F580   VA: 0x800340E0   subsegment: c, warmboot
+//-----------------------------------------------------------
 SysWork_Clear                               = 0x800340E0; // type:func
 MainLoop_ShouldWarmReset                    = 0x80034108; // type:func
 Game_WarmBoot                               = 0x80034264; // type:func
+
+//-----------------------------------------------------------------
+//--- PA: 0x00F8BC   VA: 0x8003441C   subsegment: c, controls/joy_1
+//-----------------------------------------------------------------
 Joy_Init                                    = 0x8003441C; // type:func
 Joy_ReadP1                                  = 0x80034450; // type:func
 Joy_Update                                  = 0x8003446C; // type:func
 Joy_ControllerDataUpdate                    = 0x80034494; // type:func
 ControllerData_AnalogToDigital              = 0x80034670; // type:func
+
+//--------------------------------------------------------------------
+//--- PA: 0x00FD60   VA: 0x800348C0   subsegment: c, bodyprog_800348C0
+//--------------------------------------------------------------------
 GameState_LoadScreen_Update                 = 0x800348E8; // type:func
 GameFs_MapStartup                           = 0x80034964; // type:func
 Gfx_LoadingScreenDraw                       = 0x80034E58; // type:func
@@ -1996,10 +2013,6 @@ g_Inventory_DescriptionRollTimer            = 0x800AE1A0;
 g_Inventory_ScrollTransitionTimer           = 0x800AE1A4;
 g_PickupItemAnimState                       = 0x800AE1AC;
 D_800AE204                                  = 0x800AE204; // size:0x2D8
-
-//-----------------------------------------------------------------------
-//--- PA: 0x089A90   VA: 0x800AE5F0   subsegment: data, bodyprog_800AE5F0
-//-----------------------------------------------------------------------
 D_800AE8A0                                  = 0x800AE8A0; // size:0x51C
 g_Player_GrabFree_InputCount                = 0x800AF20C;
 g_Player_IsInWalkToRunTransition            = 0x800AF214;

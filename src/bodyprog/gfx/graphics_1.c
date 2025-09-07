@@ -605,7 +605,7 @@ void Gfx_FadeUpdate() // 0x8003260C
     AddPrim(ot, drMode);
 }
 
-void Gfx_CutsceneCameraStateUpdate()
+void Gfx_CutsceneCameraStateUpdate() // 0x80032904
 {
     void Gfx_BlackBorderDraw(POLY_G4* poly, s32 color)
     {
@@ -712,7 +712,7 @@ void Gfx_CutsceneCameraStateUpdate()
     }
 }
 
-void Gfx_VSyncCallback() // 0x80032b80
+void Gfx_VSyncCallback() // 0x80032B80
 {
     g_Demo_FrameCount++;
     g_UnknownFrameCounter++;
