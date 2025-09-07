@@ -1,9 +1,9 @@
 #ifndef _MAP6_S04_H
 #define _MAP6_S04_H
 
-extern s_AnimInfo g_Ai_Flauros_AnimInfo[];      // 0x800EAE80
-extern s_AnimInfo g_Ai_Parasite_AnimInfo[];     // 0x800EAEC0
-extern s_Model    g_Ai_MonsterCybil_ExtraModel; // 0x800ED540 - Some kind of attachment or another s_SubCharacter instance?
+extern s_AnimInfo FLAUROS_ANIM_INFOS[];
+extern s_AnimInfo PARASITE_ANIM_INFOS[];
+extern s_Model    g_Ai_MonsterCybil_ExtraModel; // Some kind of attachment or another `s_SubCharacter` instance?
 
 void Ai_MonsterCybil_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
 void Ai_MonsterCybil_Init(s_SubCharacter*, s_Model*);

@@ -4,9 +4,9 @@
 extern s32 D_800EDA00;
 extern s16 D_800F23D0;
 
-extern s_AnimInfo g_Ai_LittleIncubus_AnimInfo[]; // 0x800EAFA8
-extern s_AnimInfo g_Ai_Incubus_AnimInfo[];       // 0x800EC808
-extern s_AnimInfo g_Ai_Unknown23_AnimInfo[];     // 0x800ECE50
+extern s_AnimInfo LITTLE_INCUBUS_ANIM_INFOS[];
+extern s_AnimInfo INCUBUS_ANIM_INFOS[];
+extern s_AnimInfo UNKKOWN_23_ANIM_INFOS[];
 
 void Ai_BloodyIncubator_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
 void func_800D36F8(s_SubCharacter*, s32, GsCOORDINATE2*);

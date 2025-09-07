@@ -132,9 +132,9 @@ sharedData_800DD59C_0_s00   = 0x800EA1DC; // type:u8
 ALESSA_ANIM_INFOS           = 0x800EA920; // type:AnimInfo
 KAUFMANN_ANIM_INFOS         = 0x800EAC80; // type:AnimInfo
 BLOODY_LISA_ANIM_INFOS      = 0x800EAF60; // type:AnimInfo
-g_Ai_LittleIncubus_AnimInfo = 0x800EAFA8; // type:AnimInfo
-g_Ai_Incubus_AnimInfo       = 0x800EC808; // type:AnimInfo
-g_Ai_Unknown23_AnimInfo     = 0x800ECE50; // type:AnimInfo
+LITTLE_INCUBUS_ANIM_INFOS   = 0x800EAFA8; // type:AnimInfo
+INCUBUS_ANIM_INFOS          = 0x800EC808; // type:AnimInfo
+UNKKOWN_23_ANIM_INFOS       = 0x800ECE50; // type:AnimInfo
 
 //-------------------------------------------------------------------
 //--- PA: 0x023A74   VA: 0x800ECFEC   subsegment: .data, map7_s03_msg

@@ -285,7 +285,7 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
     chara->model_0.anim_4.time_4         = FP_TIME(258.0f);
     chara->model_0.anim_4.keyframeIdx_8 = 258;
 
-    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, g_Ai_Twinfeeler_AnimInfo);
+    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, TWINFEELER_ANIM_INFOS);
 
     chara->damageReceived_C0 = FP_HEALTH(0.0f);
     chara->field_BC          = 0;

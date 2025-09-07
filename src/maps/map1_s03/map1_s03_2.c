@@ -72,14 +72,12 @@ INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03_2", sharedFunc_800D99D0_1_s
 
 void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords) // 0x800DA284
 {
-    s_AnimInfo* structPtr;
+    s_AnimInfo* animInfo;
 
     if (chara->model_0.state_2 == 0)
     {
-        chara->model_0.anim_4.alpha_A       = FP_ALPHA(0.0f);
-        chara->model_0.anim_4.status_0      = ANIM_STATUS(2, true);
-        chara->model_0.anim_4.time_4        = 0;
-        chara->model_0.anim_4.keyframeIdx_8 = 0;
+        chara->model_0.anim_4.alpha_A = FP_ALPHA(0.0f);
+        Character_AnimSet(chara, ANIM_STATUS(2, true), 0);
         chara->model_0.state_2++;
         chara->position_18.vy = FP_METER(0.0f);
     }
@@ -112,8 +110,8 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsC
 
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
-    structPtr = &LOCKER_DEAD_BODY_ANIM_INFOS[chara->model_0.anim_4.status_0];
-    structPtr->updateFunc_0(&chara->model_0, anmHeader, coords, structPtr);
+    animInfo = &LOCKER_DEAD_BODY_ANIM_INFOS[chara->model_0.anim_4.status_0];
+    animInfo->updateFunc_0(&chara->model_0, anmHeader, coords, animInfo);
 
     chara->field_C8         = -0x4CC;
     chara->field_D8.field_4 = 0xF5;

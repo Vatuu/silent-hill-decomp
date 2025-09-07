@@ -182,7 +182,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
 
     chara->model_0.stateStep_3 = 0;
 
-    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, g_Ai_Floatstinger_AnimInfo);
+    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, FLOATSTINGER_ANIM_INFOS);
 
     chara->damageReceived_C0 = FP_HEALTH(0.0f);
     chara->field_BC          = 0;

@@ -285,7 +285,7 @@ void Ai_LittleIncubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCO
 
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
-    animInfo = &g_Ai_LittleIncubus_AnimInfo[chara->model_0.anim_4.status_0];
+    animInfo = &LITTLE_INCUBUS_ANIM_INFOS[chara->model_0.anim_4.status_0];
     animInfo->updateFunc_0(&chara->model_0, anmHeader, coords, animInfo);
 
     func_800705E4(coords, 1, temp_s0, temp_s0, temp_s0);
@@ -624,7 +624,7 @@ bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
     chara->model_0.anim_4.time_4         = FP_TIME(338.0f);
     chara->model_0.anim_4.keyframeIdx_8 = 338;
 
-    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, g_Ai_Incubus_AnimInfo);
+    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, INCUBUS_ANIM_INFOS);
 
     chara->damageReceived_C0 = FP_HEALTH(0.0f);
     chara->field_BC          = 0;
@@ -800,7 +800,7 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
     chara->model_0.anim_4.keyframeIdx_8 = 115;
     chara->model_0.anim_4.time_4         = FP_TIME(115.0f);
 
-    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, g_Ai_Unknown23_AnimInfo);
+    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, UNKKOWN_23_ANIM_INFOS);
 
     chara->damageReceived_C0 = FP_HEALTH(0.0f);
     chara->field_BC          = 0;

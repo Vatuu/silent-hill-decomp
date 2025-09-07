@@ -1,7 +1,7 @@
 #ifndef _MAP4_S03_H
 #define _MAP4_S03_H
 
-extern s_AnimInfo g_Ai_Twinfeeler_AnimInfo[]; // 0x800DAE90
+extern s_AnimInfo TWINFEELER_ANIM_INFOS[];
 
 void Ai_Twinfeeler_TextureLoad();
 void func_800D354C(VECTOR3*);

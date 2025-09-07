@@ -227,7 +227,7 @@ void Ai_Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINA
 
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
-    animInfo = &g_Ai_Flauros_AnimInfo[chara->model_0.anim_4.status_0];
+    animInfo = &FLAUROS_ANIM_INFOS[chara->model_0.anim_4.status_0];
     animInfo->updateFunc_0(&chara->model_0, anmHeader, coords, animInfo);
 
     for (i = 6; i < 11; i++)
@@ -252,7 +252,7 @@ void Ai_Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDIN
 
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
-    animInfo = &g_Ai_Parasite_AnimInfo[chara->model_0.anim_4.status_0];
+    animInfo = &PARASITE_ANIM_INFOS[chara->model_0.anim_4.status_0];
     animInfo->updateFunc_0(&chara->model_0, anmHeader, coords, animInfo);
 }
 

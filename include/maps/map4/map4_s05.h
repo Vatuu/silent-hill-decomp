@@ -5,7 +5,7 @@ extern s32 D_800D7858;
 
 extern s16 D_800D785C;
 
-extern s_AnimInfo g_Ai_Floatstinger_AnimInfo[]; // 0x800D7864
+extern s_AnimInfo FLOATSTINGER_ANIM_INFOS[];
 
 extern s16 D_800DB898;
 

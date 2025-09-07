@@ -83,7 +83,7 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2*
 
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
-    animInfo = &g_Ai_Cat_AnimInfo[chara->model_0.anim_4.status_0];
+    animInfo = &CAT_ANIM_INFOS[chara->model_0.anim_4.status_0];
     animInfo->updateFunc_0(&chara->model_0, anmHeader, coords, animInfo);
 
     var_a0 = 0;
