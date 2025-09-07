@@ -508,6 +508,42 @@ void func_8003B7BC() // 0x8003B7BC
     D_800BCDE0 = s0;
 }
 
+u32 D_800A9AAC[256] =
+{
+    0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000,
+    0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000,
+    0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000,
+    0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000,
+    0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000,
+    0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000,
+    0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000,
+    0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000,
+    0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A010101,
+    0x3A020202, 0x3A040403, 0x3A050505, 0x3A070706, 0x3A080807, 0x3A0A0A09, 0x3A0C0B0A, 0x3A0D0D0B,
+    0x3A0F0E0D, 0x3A10100E, 0x3A12120F, 0x3A131311, 0x3A151512, 0x3A171613, 0x3A181815, 0x3A1A1916,
+    0x3A1B1B17, 0x3A1D1C19, 0x3A1E1E1A, 0x3A20201C, 0x3A22211D, 0x3A23231E, 0x3A252420, 0x3A262621,
+    0x3A282722, 0x3A292924, 0x3A2B2A25, 0x3A2D2C26, 0x3A2E2D28, 0x3A302F29, 0x3A31312A, 0x3A33322C,
+    0x3A34342D, 0x3A36352E, 0x3A383730, 0x3A393831, 0x3A3B3A32, 0x3A3C3B34, 0x3A3E3D35, 0x3A403F37,
+    0x3A413F37, 0x3A424038, 0x3A434139, 0x3A444139, 0x3A45423A, 0x3A46433B, 0x3A47443B, 0x3A48443C,
+    0x3A49453D, 0x3A4A463D, 0x3A4B463E, 0x3A4C473F, 0x3A4D483F, 0x3A4E4940, 0x3A504941, 0x3A514A42,
+    0x3A524B42, 0x3A534C43, 0x3A544C44, 0x3A554D44, 0x3A564E45, 0x3A574E46, 0x3A584F46, 0x3A595047,
+    0x3A5A5148, 0x3A5B5148, 0x3A5C5249, 0x3A5D534A, 0x3A5F544B, 0x3A60544C, 0x3A61554D, 0x3A62564D,
+    0x3A63574E, 0x3A64574F, 0x3A655850, 0x3A665950, 0x3A685951, 0x3A695A52, 0x3A6A5B53, 0x3A6B5C53,
+    0x3A6C5C54, 0x3A6D5D55, 0x3A6E5E56, 0x3A6F5E56, 0x3A705F57, 0x3A716058, 0x3A726059, 0x3A736159,
+    0x3A74625A, 0x3A75635B, 0x3A77635C, 0x3A78645C, 0x3A79655D, 0x3A7A655E, 0x3A7B665F, 0x3A7C675F,
+    0x3A7D6860, 0x3A7E6861, 0x3A7F6962, 0x3A806A62, 0x3A816A63, 0x3A826B64, 0x3A836C65, 0x3A856D66,
+    0x3A806D67, 0x3A806E68, 0x3A816F68, 0x3A827069, 0x3A83706A, 0x3A84716B, 0x3A85726C, 0x3A86736D,
+    0x3A87746E, 0x3A88756E, 0x3A89766F, 0x3A897770, 0x3A8A7871, 0x3A8B7872, 0x3A8C7973, 0x3A8D7A74,
+    0x3A8E7B74, 0x3A8F7C75, 0x3A907D76, 0x3A917E77, 0x3A927F78, 0x3A928079, 0x3A93807A, 0x3A94817A,
+    0x3A95827B, 0x3A96837C, 0x3A97847D, 0x3A98857E, 0x3A99867F, 0x3A9A8780, 0x3A9B8881, 0x3A9C8982,
+    0x3A9C8A83, 0x3A9D8B84, 0x3A9E8C85, 0x3A9F8D86, 0x3AA08E87, 0x3AA08F88, 0x3AA18F89, 0x3AA2908A,
+    0x3AA3918B, 0x3AA4928C, 0x3AA4938D, 0x3AA5948E, 0x3AA6958F, 0x3AA7968F, 0x3AA79790, 0x3AA89891,
+    0x3AA99892, 0x3AAA9993, 0x3AAB9A94, 0x3AAB9B95, 0x3AAC9C96, 0x3AAD9D97, 0x3AAE9E98, 0x3AAF9F99,
+    0x3AAFA09A, 0x3AB0A19B, 0x3AB1A29C, 0x3AB2A29D, 0x3AB3A39E, 0x3AB3A49F, 0x3AB4A59F, 0x3AB5A6A0,
+    0x3AB6A7A1, 0x3AB6A8A2, 0x3AB7A9A3, 0x3AB8AAA4, 0x3AB9ABA5, 0x3ABAABA6, 0x3ABAACA7, 0x3ABBADA8,
+    0x3ABCAEA9, 0x3ABDAFAA, 0x3ABEB0AB, 0x3ABEB1AC, 0x3ABFB2AD, 0x3AC0B3AE, 0x3AC1B4AF, 0x3AC2B5B0
+};
+
 u32 func_8003B7FC(s32 idx) // 0x8003B7FC
 {
     u8  idx0 = D_800BCDE0[idx];
@@ -589,6 +625,7 @@ void Gfx_MainMenu_FogRandomize() // 0x8003BAC4
     s8* ptr;
     u8* ptr1;
     s8* ptr2;
+    static s32 D_800A9EAC = 0;
 
     ptr         = D_800BCDE0;
     ptr1        = ptr + 441;
@@ -650,12 +687,14 @@ void Gfx_MainMenu_FogScatter() // 0x8003BBF4
 
 void Gfx_MainMenu_FogUpdate() // 0x8003BC8C
 {
-    if (D_800A9EB0 == ((D_800A9EB0 / 5) * 5))
+    static s32 fogCounter = 0;
+
+    if (fogCounter == ((fogCounter / 5) * 5))
     {
-        Gfx_MainMenu_FogScatter(D_800A9EB0);
+        Gfx_MainMenu_FogScatter(fogCounter);
     }
 
-    D_800A9EB0++;
+    fogCounter++;
     Gfx_MainMenu_FogDraw();
 }
 
@@ -725,7 +764,8 @@ s32 func_8003BE50(s32 idx) // 0x8003BE50
 
 void GameFs_BgEtcGfxLoad() // 0x8003BE6C
 {
-    Fs_QueueStartReadTim(FILE_TIM_BG_ETC_TIM, FS_BUFFER_1, &D_800A9EB4);
+    static s_FsImageDesc img = { .tPage = {0, 12}, .clutX = 192 };
+    Fs_QueueStartReadTim(FILE_TIM_BG_ETC_TIM, FS_BUFFER_1, &img);
 }
 
 void GameFs_BgItemLoad() // 0x8003BE9C
@@ -735,6 +775,8 @@ void GameFs_BgItemLoad() // 0x8003BE9C
 
 void func_8003BED0() // 0x8003BED0
 {
+    static s_FsImageDesc imgTim = { .tPage = {0, 15}, .clutX = 176 };
+    static s_FsImageDesc imgEtc = { .tPage = {0, 12}, .v = 192, .clutX = 192 };
     s_PlmHeader* D_800BE9FC = &D_800BCE18.field_1BE4;
 
     if (Fs_QueueIsEntryLoaded(D_800BE9FC->queueIdx_1000) == 0 || D_800BE9FC->isLoaded_2)
@@ -743,8 +785,8 @@ void func_8003BED0() // 0x8003BED0
     }
 
     PlmHeader_FixOffsets(&D_800BCE18.field_1BE4);
-    func_80056504(&D_800BCE18.field_1BE4, "TIM00", &D_800A9EBC, 1);
-    func_80056504(&D_800BCE18.field_1BE4, "BG_ETC", &D_800A9EC4, 1);
+    func_80056504(&D_800BCE18.field_1BE4, "TIM00", &imgTim, 1);
+    func_80056504(&D_800BCE18.field_1BE4, "BG_ETC", &imgEtc, 1);
     func_80056954(&D_800BCE18.field_1BE4);
 }
 
@@ -1918,6 +1960,15 @@ void func_8003DD80(s32 idx, s32 arg1) // 0x8003DD80
 void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
 {
     s32 temp_s0;
+    static s32 D_800A9ECC = 0xFE16FD13;
+    static s32 D_800A9ED0 = 0x0000FE13;
+    static s32 D_800A9ED4 = 0x0000FE14;
+    static s32 D_800A9ED8 = 0x0000FE15;
+    static s32 D_800A9EDC = 0x0000FE16;
+    static s32 D_800A9EE0 = 0x000000FE;
+    static s32 D_800A9EE4 = 0x00FE1211;
+    static s32 D_800A9EE8 = 0x0000FE11;
+    static s32 D_800A9EEC = 0x0000FE12;
 
     temp_s0 = arg1 & 0xF;
     if (temp_s0 != 0)
@@ -1969,6 +2020,10 @@ void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
 void func_8003DF84(s_Skeleton* skel, s32 arg1) // 0x8003DF84
 {
     s32 temp_v1;
+    static s32 D_800A9EF0 = 0x0000FE14;
+    static s32 D_800A9EF4 = 0x00FE1514;
+    static s32 D_800A9EF8 = 0x0000FE12;
+    static s32 D_800A9EFC = 0x00FE1312;
 
     temp_v1 = arg1 & 0xF;
     if (temp_v1 != 0)
@@ -2008,6 +2063,10 @@ void func_8003DF84(s_Skeleton* skel, s32 arg1) // 0x8003DF84
 void func_8003E08C(s_Skeleton* skel, s32 arg1) // 0x8003E08C
 {
     s32 temp_v1;
+    static s32 D_800A9F00 = 0x0000FE02;
+    static s32 D_800A9F04 = 0x0000FE03;
+    static s32 D_800A9F08 = 0x0000FE00;
+    static s32 D_800A9F0C = 0x00FE0100;
 
     temp_v1 = arg1 & 0xF;
     if (temp_v1 != 0)
@@ -2047,6 +2106,10 @@ void func_8003E08C(s_Skeleton* skel, s32 arg1) // 0x8003E08C
 void func_8003E194(s_Skeleton* skel, s32 arg1) // 0x8003E194
 {
     s32 temp_s0;
+    static s32 D_800A9F10 = 0xFE03FD00;
+    static s32 D_800A9F14 = 0x0000FE00;
+    static s32 D_800A9F18 = 0x00FE0201;
+    static s32 D_800A9F1C = 0x0000FE03;
 
     temp_s0 = arg1 & 0xF;
     if (temp_s0 != 0)
@@ -2073,6 +2136,16 @@ void func_8003E194(s_Skeleton* skel, s32 arg1) // 0x8003E194
 void func_8003E238(s_Skeleton* skel, s32 arg1) // 0x8003E238
 {
     s32 var_s0;
+    static s32 D_800A9F20 = 0x06050403;
+    static s32 D_800A9F24 = 0x000000FE; // @unused
+    static s32 D_800A9F28 = 0x0000FE03;
+    static s32 D_800A9F2C = 0x0000FE04;
+    static s32 D_800A9F30 = 0x00FE0504;
+    static s32 D_800A9F34 = 0x00FE0603;
+    static s32 D_800A9F38 = 0xFE020100;
+    static s32 D_800A9F3C = 0x0000FE00;
+    static s32 D_800A9F40 = 0x0000FE01;
+    static s32 D_800A9F44 = 0x00FE0201;
 
     var_s0 = arg1 & 0xF;
     if (var_s0 != 0)
@@ -2125,6 +2198,8 @@ void func_8003E238(s_Skeleton* skel, s32 arg1) // 0x8003E238
 void func_8003E388(s_Skeleton* skel, s32 arg1) // 0x8003E388
 {
     s32 temp_a1;
+    static s32 D_800A9F48 = 0x0000FE05;
+    static s32 D_800A9F4C = 0x0000FE06;
 
     temp_a1 = arg1 & 0xF;
     if (temp_a1 != 0)
@@ -2147,6 +2222,8 @@ void func_8003E388(s_Skeleton* skel, s32 arg1) // 0x8003E388
 void func_8003E414(s_Skeleton* skel, s32 arg1) // 0x8003E414
 {
     s32 temp_a1;
+    static s32 D_800A9F50 = 0xFE19FD11;
+    static s32 D_800A9F54 = 0xFE22FD1A;
 
     temp_a1 = arg1 & 0x3;
     if (temp_a1 != 0)
@@ -2169,6 +2246,11 @@ void func_8003E414(s_Skeleton* skel, s32 arg1) // 0x8003E414
 void func_8003E4A0(s_Skeleton* skel, s32 arg1) // 0x8003E4A0
 {
     s32 temp_s0;
+    static s32 D_800A9F58 = 0x05040302;
+    static s32 D_800A9F5C = 0x00FE0706; // @unused
+    static s32 D_800A9F60 = 0x00FE0502;
+    static s32 D_800A9F64 = 0x00FE0603;
+    static s32 D_800A9F68 = 0x00FE0704;
 
     temp_s0 = arg1 & 0xF;
     if (temp_s0 != 0)
@@ -2195,6 +2277,11 @@ void func_8003E4A0(s_Skeleton* skel, s32 arg1) // 0x8003E4A0
 void func_8003E544(s_Skeleton* skel, s32 arg1) // 0x8003E544
 {
     s32 temp_s0;
+    static s32 D_800A9F6C = 0x05040302;
+    static s32 D_800A9F70 = 0x00FE0706; // @unused
+    static s32 D_800A9F74 = 0x00FE0502;
+    static s32 D_800A9F78 = 0x00FE0603;
+    static s32 D_800A9F7C = 0x00FE0704;
 
     temp_s0 = arg1 & 0xF;
     if (temp_s0 == 0)
@@ -2259,8 +2346,20 @@ void func_8003E5E8(s32 arg0) // 0x8003E5E8
     GsOUT_PACKET_P = packet;
 }
 
+static s_800A9F80 D_800A9F80 = { 1, 1  };
+static s_800A9F80 D_800A9F84 = { 2, 2  };
+static s_800A9F80 D_800A9F88 = { 6, 3  };
+static s_800A9F80 D_800A9F8C = { 7, 4  };
+static s_800A9F80 D_800A9F90 = { 6, 10 }; // @unused
+static s_800A9F80 D_800A9F94 = { 6, 5  }; // @unused
+static s_800A9F80 D_800A9F98 = { 9, 9  };
+static s_800A9F80 D_800A9F9C = { 6, 6  }; // @unused
+static s_800A9F80 D_800A9FA0 = { 3, 3  }; // @unused
+static s_800A9F80 D_800A9FA4 = { 5, 5  }; // @unused
+
 void GameFs_FlameGfxLoad() // 0x8003E710
 {
+    static s_FsImageDesc D_800A9FA8 = { .tPage = {0, 12}, .u = 32, .v = 0, .clutX = 800, .clutY = 64 };
     Fs_QueueStartReadTim(FILE_TIM_FLAME_TIM, FS_BUFFER_1, &D_800A9FA8);
 }
 
@@ -2280,6 +2379,7 @@ void func_8003E740() // 0x8003E740
     s32       var_s5;
     POLY_FT4* poly;
     s32       temp_s2 = 0;
+    static u32 D_800A9FB0 = 0;
 
     if (g_DeltaTime0 != 0)
     {
@@ -3029,6 +3129,7 @@ void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructU
 
 s32 func_8003FEC0(s_sub_StructUnk3* arg0) // 0x8003FEC0
 {
+    static s32 y_ary[5] = { 0x1C00, 0x6000, 0x9800, 0xC800, 0xF000 };
     if (D_800C4168.fogEnabled_1)
     {
         return arg0->field_10;
@@ -3036,7 +3137,7 @@ s32 func_8003FEC0(s_sub_StructUnk3* arg0) // 0x8003FEC0
 
     if (D_800C4168.field_0 == 1)
     {
-        return vwOresenHokan(D_800A9FB4, 5, arg0->field_4, 0, FP_FLOAT_TO(2.0f, Q12_SHIFT));
+        return vwOresenHokan(y_ary, ARRAY_SIZE(y_ary), arg0->field_4, 0, FP_FLOAT_TO(2.0f, Q12_SHIFT));
     }
 
     return FP_FLOAT_TO(20.0f, Q12_SHIFT);
