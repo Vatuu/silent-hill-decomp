@@ -382,6 +382,7 @@ IpdHeader_FixHeaderOffsets                  = 0x80043DA4; // type:func
 IpdHeader_ModelLinkObjectLists              = 0x80043E50; // type:func
 PlmHeader_ObjectListSearch                  = 0x80043F2C; // type:func
 IpdHeader_ModelBufferLinkObjectLists        = 0x80043F88; // type:func
+Anim_BoneInit                               = 0x800445A4; // type:func
 Anim_BoneUpdate                             = 0x800446D8; // type:func
 Anim_DurationGet                            = 0x800449AC; // type:func
 Anim_Update0                                = 0x800449F0; // type:func

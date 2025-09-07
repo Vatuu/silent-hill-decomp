@@ -771,14 +771,13 @@ typedef struct _IpdHeader
 // See: https://github.com/laura-a-n-n/silent-hill-museum/blob/main/ksy/sh1anm.ksy
 typedef struct _AnmBindPose
 {
-    u8 bone;
+    s8 parentBone;
     s8 rotationDataIdx_1;
     s8 translationDataIdx_2;
-    s8 translation[3]; // initial translation?
+    s8 translationInitial_3[3];
 } s_AnmBindPose;
 STATIC_ASSERT_SIZEOF(s_AnmBindPose, 6);
 
-// TODO: Might be same as `s_AnimFile`, but comment there mentions possible size 80?
 typedef struct _AnmHeader
 {
     u16 dataOffset_0;
@@ -891,17 +890,11 @@ typedef struct
 
 typedef struct
 {
-    u8 unk_0[6];
-    u8 field_6;
-} s_AnimFile; // Size: 80?
-
-typedef struct
-{
     s8             charaId0_0; /** `e_CharacterId`. */
     s8             charaId1_1; /** `e_CharacterId`. */
     s8             unk_2[2];
-    s32            animFile0_4;//s_AnimFile*    animFile0_4; // TODO: Needs to be a pointer.
-    s_AnimFile*    animFile1_8;
+    s32            animFile0_4;//s_AnmHeader*    animFile0_4; // TODO: Needs to be a pointer.
+    s_AnmHeader*   animFile1_8;
     s32            animFileSize1_C;
     s32            animFileSize2_10;
     GsCOORDINATE2* npcCoords_14;
@@ -2776,7 +2769,7 @@ void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHeader, s_IpdModelInfo
 void func_80044044(s_IpdHeader* ipd, s32 x, s32 z);
 
 /** Loads anim file? */
-void func_800445A4(s_AnimFile*, GsCOORDINATE2*);
+void Anim_BoneInit(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords);
 
 s_AnimInfo* func_80044918(s_ModelAnim* anim);
 
@@ -3679,10 +3672,10 @@ bool func_8003528C(s32 idx0, s32 idx1);
 s32 func_800352F8(s32 charaId);
 
 /** Either allocates or determines where to allocate animation data. */
-void func_80035338(s32 idx, e_CharacterId charaId, s_AnimFile* animFile, GsCOORDINATE2* coords);
+void func_80035338(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coords);
 
 /** Called by `Fs_QueuePostLoadAnm`. */
-void func_80035560(s32 idx, e_CharacterId charaId, s_AnimFile* animFile, GsCOORDINATE2* coord);
+void func_80035560(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coord);
 
 void func_8003569C();
 

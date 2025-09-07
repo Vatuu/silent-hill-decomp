@@ -1388,7 +1388,7 @@ bool func_80088D0C() // 0x80088D0C
 void func_80088D34(s32 idx) // 0x80088D34
 {
     idx++;
-    func_800445A4(D_800A992C[idx].animFile1_8, D_800A992C[idx].npcCoords_14);
+    Anim_BoneInit(D_800A992C[idx].animFile1_8, D_800A992C[idx].npcCoords_14);
 }
 
 s32 Chara_Spawn(s32 charaId, s32 arg1, s32 posX, s32 posZ, s16 posY, u32 stateStep) // 0x80088D78

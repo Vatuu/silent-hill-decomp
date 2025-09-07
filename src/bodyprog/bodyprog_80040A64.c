@@ -5,6 +5,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
 #include "main/fsqueue.h"
+#include "types.h"
 
 /** Known contents:
  * - Map loading funcs
@@ -1544,9 +1545,44 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044420); // 0x
 // ANIMATION
 // ========================================
 
-// Could be used to load the player model or to execute animations.
-// Removing the call from `Game_PlayerInit` causes the player model to not appear.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_800445A4); // 0x800445A4
+void Anim_BoneInit(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords) // 0x800445A4
+{
+    s_AnmBindPose* bindPose;
+    GsCOORDINATE2* coord;
+    s32 boneIdx;
+    s32 i;
+    s32 j;
+
+    GsInitCoordinate2(NULL, boneCoords);
+    
+    for(boneIdx = 1, bindPose = &anmHeader->bindPoses_14[1], coord = &boneCoords[1];
+        boneIdx < anmHeader->boneCount_6;
+        boneIdx++, bindPose++, coord++)
+    {        
+        coord->super = &boneCoords[anmHeader->bindPoses_14[boneIdx].parentBone];
+        
+        // If no translation for this bone, copy over `translationInitial_3`
+        if (bindPose->translationDataIdx_2 < 0)
+        {
+            for(i = 0; i < 3; i++)
+            {
+                coord->coord.t[i] = anmHeader->bindPoses_14[boneIdx].translationInitial_3[i] << anmHeader->scaleLog2_12;
+            }
+        }
+        
+        // If no rotation for this bone, create identity matrix.
+        if (bindPose->rotationDataIdx_1 < 0)
+        {
+            for (i = 0; i < 3; i++)
+            {
+                for (j = 0; j < 3; j++)
+                {
+                    coord->coord.m[i][j] = (j == i ? Q19_12(1.0f) : 0);
+                }
+            }
+        }
+    }
+}
 
 void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyFrame0, s32 keyFrame1, s32 alpha) // 0x800446D8
 {
