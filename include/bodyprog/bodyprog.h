@@ -2536,7 +2536,7 @@ void func_8003C8F8(s_800BCE18_2BEC_0* arg0, char* newStr);
 
 void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* pos, SVECTOR3* rot);
 
-void func_8003CD6C(s_PlayerCombat* arg0);
+void func_8003CD6C(s_PlayerCombat* combat);
 
 /** Returns `bool`? */
 s32 func_8003CDA0(s32 invSlotIdx);

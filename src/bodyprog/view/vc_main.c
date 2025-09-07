@@ -2,6 +2,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
+#include "bodyprog/player_logic.h"
 #include "bodyprog/vw_system.h"
 
 #define MIN_IN_ROAD_DIST FP_METER(1.0f) // vcGetMinInRoadDist() in SH2, hardcoded to FP_METER(1.0f) in SH1.
@@ -1326,7 +1327,7 @@ void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, V
     }
 
     vcMixSelfViewEffectToWatchTgtPos(&w_p->watch_tgt_pos_7C, &w_p->watch_tgt_ang_z_8C, self_view_eff_rate,
-                                     w_p, &g_SysWork.playerBoneCoords_890[PlayerBone_Head].workm, g_SysWork.player_4C.chara_0.model_0.anim_4.status_0);
+                                     w_p, &g_SysWork.playerBoneCoords_890[HarryBone_Head].workm, g_SysWork.player_4C.chara_0.model_0.anim_4.status_0);
 
     if (w_p->watch_tgt_pos_7C.vy > w_p->watch_tgt_max_y_88)
     {
@@ -1440,16 +1441,16 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
     vwMatrixToAngleYXZ(&cam_ang, head_mat);
     angle_delta_y = Math_AngleNormalize(cam_ang.vy - sys_work->player_4C.chara_0.rotation_24.vy);
 
-    // 4-step angle adjustment based on hardcoded anim indices.
+    // 4-step angle adjustment based on hardcoded anim statuses.
 
     switch (anim_status)
     {
-        case ANIM_STATUS(3, false):
-        case ANIM_STATUS(3, true):
+        case ANIM_STATUS(PlayerAnim_RunForward, false):
+        case ANIM_STATUS(PlayerAnim_RunForward, true):
             break;
 
-        case ANIM_STATUS(17, false):
-        case ANIM_STATUS(17, true):
+        case ANIM_STATUS(PlayerAnim_LookAround, false):
+        case ANIM_STATUS(PlayerAnim_LookAround, true):
             if (w_p->nearest_enemy_2DC != NULL)
             {
                 cam_ang.vz = FP_ANGLE(0.0f);
@@ -1463,18 +1464,18 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
 
     switch (anim_status)
     {
-        case 44:
-        case 45:
-        case 46:
-        case 47:
+        case ANIM_STATUS(PlayerAnim_FallForward, false):
+        case ANIM_STATUS(PlayerAnim_FallForward, true):
+        case ANIM_STATUS(PlayerAnim_FallBackward, false):
+        case ANIM_STATUS(PlayerAnim_FallBackward, true):
             break;
 
         default:
             cam_ang.vy = g_SysWork.player_4C.chara_0.rotation_24.vy;
             break;
 
-        case 34:
-        case 35:
+        case ANIM_STATUS(PlayerAnim_LookAround, false):
+        case ANIM_STATUS(PlayerAnim_LookAround, true):
             if (w_p->nearest_enemy_2DC != NULL)
             {
                 cam_ang.vy = g_SysWork.player_4C.chara_0.rotation_24.vy;
@@ -1485,8 +1486,8 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
             }
             break;
 
-        case 52:
-        case 53:
+        case ANIM_STATUS(PlayerAnim_Idle, false):
+        case ANIM_STATUS(PlayerAnim_Idle, true):
             abs_angle_delta_y = angle_delta_y;
             if (angle_delta_y < FP_ANGLE(0.0f))
             {
@@ -1509,14 +1510,14 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
             cam_ang.vy = g_SysWork.player_4C.chara_0.rotation_24.vy + corrected_angle_y;
             break;
 
-        case 4:
-        case 5:
-        case 6:
-        case 7:
-        case 24:
-        case 25:
-        case 26:
-        case 27:
+        case ANIM_STATUS(PlayerAnim_WalkForward, false):
+        case ANIM_STATUS(PlayerAnim_WalkForward, true):
+        case ANIM_STATUS(PlayerAnim_RunForward, false):
+        case ANIM_STATUS(PlayerAnim_RunForward, true):
+        case ANIM_STATUS(PlayerAnim_TurnLeft, false):
+        case ANIM_STATUS(PlayerAnim_TurnLeft, true):
+        case ANIM_STATUS(PlayerAnim_TurnRight, false):
+        case ANIM_STATUS(PlayerAnim_TurnRight, true):
             angle_delta_y = angle_delta_y >> 3;
             if (angle_delta_y >= FP_ANGLE(-10.0f))
             {
@@ -1537,20 +1538,20 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
 
     switch (anim_status)
     {
-        case 4:
+        case ANIM_STATUS(PlayerAnim_WalkForward, false):
             break;
 
-        case 54:
-        case 55:
+        case ANIM_STATUS(PlayerAnim_IdleExhausted, false):
+        case ANIM_STATUS(PlayerAnim_IdleExhausted, true):
             cam_ang.vx = cam_ang.vx >> 1;
 
-        case 52:
-        case 53:
+        case ANIM_STATUS(PlayerAnim_Idle, false):
+        case ANIM_STATUS(PlayerAnim_Idle, true):
             cam_ang.vx -= FP_ANGLE(8.0f);
             break;
 
-        case 34:
-        case 35:
+        case ANIM_STATUS(PlayerAnim_LookAround, false):
+        case ANIM_STATUS(PlayerAnim_LookAround, true):
             if (w_p->nearest_enemy_2DC != NULL)
             {
                 cam_ang.vx = FP_ANGLE(-7.0f);
@@ -1561,10 +1562,10 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
             }
             break;
 
-        case 24:
-        case 25:
-        case 26:
-        case 27:
+        case ANIM_STATUS(PlayerAnim_TurnLeft, false):
+        case ANIM_STATUS(PlayerAnim_TurnLeft, true):
+        case ANIM_STATUS(PlayerAnim_TurnRight, false):
+        case ANIM_STATUS(PlayerAnim_TurnRight, true):
             temp_dir = (g_SysWork.player_4C.chara_0.rotation_24.vy >> 7) & 0xF;
             if (temp_dir == 0 || temp_dir == 5)
             {
@@ -1581,18 +1582,18 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
             cam_ang.vx = FP_MULTIPLY(vertical_angle, FP_ANGLE(252.0f), Q12_SHIFT);
             break;
 
-        case 4:
-        case 5:
-        case 6:
-        case 7:
-        case 24:
-        case 25:
-        case 26:
-        case 27:
-        case 34:
-        case 35:
-        case 52:
-        case 53:
+        case ANIM_STATUS(PlayerAnim_WalkForward, false):
+        case ANIM_STATUS(PlayerAnim_WalkForward, true):
+        case ANIM_STATUS(PlayerAnim_RunForward, false):
+        case ANIM_STATUS(PlayerAnim_RunForward, true):
+        case ANIM_STATUS(PlayerAnim_TurnLeft, false):
+        case ANIM_STATUS(PlayerAnim_TurnLeft, true):
+        case ANIM_STATUS(PlayerAnim_TurnRight, false):
+        case ANIM_STATUS(PlayerAnim_TurnRight, true):
+        case ANIM_STATUS(PlayerAnim_LookAround, false):
+        case ANIM_STATUS(PlayerAnim_LookAround, true):
+        case ANIM_STATUS(PlayerAnim_Idle, false):
+        case ANIM_STATUS(PlayerAnim_Idle, true):
             cam_ang.vx = cam_ang.vx + (vertical_angle >> 1);
             break;
     }
@@ -2779,7 +2780,7 @@ void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type) // 0x80085884
     if (w_p->field_D8)
     {
         w_p->field_D8 = false;
-        vwSetCoordRefAndEntou(&g_SysWork.playerBoneCoords_890[PlayerBone_Head],
+        vwSetCoordRefAndEntou(&g_SysWork.playerBoneCoords_890[HarryBone_Head],
                               0, FP_METER(-0.05f), FP_METER(0.3f),
                               FP_ANGLE(180.0f), FP_ANGLE(0.0f), FP_METER(-0.2f), FP_METER(1.0f));
     }

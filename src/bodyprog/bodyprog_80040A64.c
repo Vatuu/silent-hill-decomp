@@ -1613,7 +1613,7 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyf
     frame1RotData = frame1Data + (anmHeader->translationBoneCount_3 * 3);
 
     // For player, use inverted mask of `extra_128.disabledAnimBones_18` to facilitate masking of upper and lower body.
-    isPlayer = (boneCoords == &g_SysWork.playerBoneCoords_890[PlayerBone_Root]);
+    isPlayer = (boneCoords == &g_SysWork.playerBoneCoords_890[HarryBone_Root]);
     if (isPlayer)
     {
         activeBoneIndexes = ~g_SysWork.player_4C.extra_128.disabledAnimBones_18;
@@ -1689,7 +1689,7 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyf
     {
         for (i = 0; i < 3; i++)
         {
-            g_SysWork.playerBoneCoords_890[PlayerBone_Torso].coord.t[i] = g_SysWork.playerBoneCoords_890[PlayerBone_Hips].coord.t[i];
+            g_SysWork.playerBoneCoords_890[HarryBone_Torso].coord.t[i] = g_SysWork.playerBoneCoords_890[HarryBone_Hips].coord.t[i];
         }
     }
 }

@@ -609,30 +609,30 @@ typedef enum _EquippedWeaponId
     EquippedWeaponId_GasolineTank   = 98
 } e_EquippedWeaponId;
 
-/** @brief Player model bone indices. TODO: Specific to Harry rather than broad player handling, so should be called `HarryBone` instead? */
-typedef enum _PlayerBone
+/** @brief Harry character model bone indices. */
+typedef enum _HarryBone
 {
-    PlayerBone_Root          = 0,
-    PlayerBone_Torso         = 1,
-    PlayerBone_Head          = 2,
-    PlayerBone_LeftShoulder  = 3,
-    PlayerBone_LeftUpperArm  = 4,
-    PlayerBone_LeftForearm   = 5,
-    PlayerBone_LeftHand      = 6,
-    PlayerBone_RightShoulder = 7,
-    PlayerBone_RightUpperArm = 8,
-    PlayerBone_RightForearm  = 9,
-    PlayerBone_RightHand     = 10,
-    PlayerBone_Hips          = 11,
-    PlayerBone_LeftThigh     = 12,
-    PlayerBone_LeftShin      = 13,
-    PlayerBone_LeftFoot      = 14,
-    PlayerBone_RightThigh    = 15,
-    PlayerBone_RightShin     = 16,
-    PlayerBone_RightFoot     = 17,
+    HarryBone_Root          = 0,
+    HarryBone_Torso         = 1,
+    HarryBone_Head          = 2,
+    HarryBone_LeftShoulder  = 3,
+    HarryBone_LeftUpperArm  = 4,
+    HarryBone_LeftForearm   = 5,
+    HarryBone_LeftHand      = 6,
+    HarryBone_RightShoulder = 7,
+    HarryBone_RightUpperArm = 8,
+    HarryBone_RightForearm  = 9,
+    HarryBone_RightHand     = 10,
+    HarryBone_Hips          = 11,
+    HarryBone_LeftThigh     = 12,
+    HarryBone_LeftShin      = 13,
+    HarryBone_LeftFoot      = 14,
+    HarryBone_RightThigh    = 15,
+    HarryBone_RightShin     = 16,
+    HarryBone_RightFoot     = 17,
 
-    PlayerBone_Count         = 18
-} s_PlayerBone;
+    HarryBone_Count         = 18
+} s_HarryBone;
 
 /** @brief Player control flags */
 typedef enum _PlayerFlags
@@ -1051,8 +1051,8 @@ typedef struct _SubCharaPropertiesPlayer
     q19_12 positionY_EC;
     s32    field_F0;
     s32    field_F4;
-    s32    runTimer_F8;      // Tick counter?
-    q19_12 exertionTimer_FC; // Counts ~20 seconds worth of ticks while running and caps at 0x23000.
+    s32    runTimer_F8; // Tick counter?
+    q19_12 exhaustionTimer_FC;
     s32    field_100;
     s32    field_104;    // Distance?
     q19_12 runTimer_108; // `FP_TIME` format timer?.
@@ -1324,7 +1324,7 @@ typedef struct _SysWork
     s_PlayerCombat  playerCombatInfo_38; // Something related to weapons and attack. This is a struct as `func_8003CD6C` requires one and `GameFs_MapLoad` input is pointing here.
     s_MainCharacter player_4C;
     s_SubCharacter  npcs_1A0[NPC_COUNT_MAX];
-    GsCOORDINATE2   playerBoneCoords_890[PlayerBone_Count];
+    GsCOORDINATE2   playerBoneCoords_890[HarryBone_Count];
     GsCOORDINATE2   unkCoords_E30[5];  // Might be part of previous array for 5 extra coords which go unused.
     GsCOORDINATE2   npcCoords_FC0[NPC_BONE_COUNT_MAX]; // Dynamic coord buffer? 10 coords per NPC (given max of 6 NPCs).
     s8              field_2280;        // Maybe NPC AI data past this point.

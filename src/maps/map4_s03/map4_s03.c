@@ -478,8 +478,8 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D6554);
 
         chara->model_0.anim_4.status_0 = ANIM_STATUS(30, false);
 
-        chara->properties_E4.player.exertionTimer_FC.val16[0] = 0x37;
-        chara->properties_E4.player.exertionTimer_FC.val16[1] = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 0x1AB;
+        chara->properties_E4.player.exhaustionTimer_FC.val16[0] = 0x37;
+        chara->properties_E4.player.exhaustionTimer_FC.val16[1] = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 0x1AB;
         chara->properties_E4.player.afkTimer_E8.val16[0] |= 1 << 10;
 
         func_800D7E04(chara, 0x553);

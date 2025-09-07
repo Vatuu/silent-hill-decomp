@@ -49,8 +49,8 @@ void sharedFunc_800D6554_0_s00(s_SubCharacter* chara)
 
         chara->model_0.anim_4.status_0 = ANIM_STATUS(30, false);
 
-        *GET_PROPERTY_LOW(chara->properties_E4.player.exertionTimer_FC)  = 0x37;
-        *GET_PROPERTY_HIGH(chara->properties_E4.player.exertionTimer_FC) = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 0x1AB;
+        *GET_PROPERTY_LOW(chara->properties_E4.player.exhaustionTimer_FC)  = 0x37;
+        *GET_PROPERTY_HIGH(chara->properties_E4.player.exhaustionTimer_FC) = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 0x1AB;
         *GET_PROPERTY_LOW(chara->properties_E4.player.afkTimer_E8) |= 1 << 10;
 
         sharedFunc_800D7E04_0_s00(chara, 0x553);
