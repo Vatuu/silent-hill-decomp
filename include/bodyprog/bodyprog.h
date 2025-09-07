@@ -1952,8 +1952,6 @@ extern s32 D_800A9FB4[];
 
 extern u8 D_800AA5E0[];
 
-extern u8 D_800AA604[][16];
-
 extern s_800AA894 D_800AA894[];
 
 extern s16 g_StringColorId; // 0x800AD498
