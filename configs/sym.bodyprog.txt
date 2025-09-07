@@ -2046,9 +2046,10 @@ g_Demo_RandSeed                             = 0x800AFDBC; // type:u16
 g_Demo_PlayFileBufferPtr                    = 0x800AFDC0; // type:s32
 g_Demo_FileIds                              = 0x800AFDC4; // type:DemoFileInfo size:0x28
 
-//-----------------------------------------------------------------------
-//--- PA: 0x08B28C   VA: 0x800AFDEC   subsegment: data, bodyprog_800AF5B8
-//-----------------------------------------------------------------------
+//--------------------------------------------------------------
+//--- PA: 0x08B294   VA: 0x800AFDF4   subsegment: .data, credits
+//--------------------------------------------------------------
+g_Credits_Digits                            = 0x800AFDF4;
 // c_008.o globals
 HADR0_5                                     = 0x800AFE0C;
 // c_009.o globals

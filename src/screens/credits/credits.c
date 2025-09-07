@@ -8,6 +8,9 @@
 #include "main/rng.h"
 #include "screens/credits/credits.h"
 
+extern s_800AFE08 D_800AFE08;
+extern s_800AFE24 D_800AFE24;
+
 s_801E5558 D_801E5558[6] =
 {
     {
@@ -1156,9 +1159,9 @@ void func_801E47E0(s32 arg0, s32 arg1) // 0x801E47E0
     s32  temp_v0_2;
     s32  temp_v0_3;
     s32  temp_v0_4;
-    bool check = D_800AFE24.field_0 != arg0;
+    bool check = D_800AFE24.sub_0.field_0 != arg0;
 
-    if (D_800AFE24.field_2 != arg1)
+    if (D_800AFE24.sub_0.field_2 != arg1)
     {
         temp_lo   = arg1 * D_800AFE24.field_3C;
         temp_t1   = D_800AFE24.field_24 << 0x16;
@@ -1175,9 +1178,9 @@ void func_801E47E0(s32 arg0, s32 arg1) // 0x801E47E0
         temp_t0   = FP_MULTIPLY_PRECISE(temp_lo_3, temp_v0, Q12_SHIFT);
         temp_v0_2 = D_800AFE24.field_28 + FP_MULTIPLY_PRECISE(D_800AFE24.field_1C, D_800AFE24.field_34, Q12_SHIFT);
 
-        D_800AFE24.field_0  = arg0;
-        D_800AFE24.field_2  = arg1;
-        D_800AFE24.field_4  = arg0;
+        D_800AFE24.sub_0.field_0  = arg0;
+        D_800AFE24.sub_0.field_2  = arg1;
+        D_800AFE24.sub_0.field_4  = arg0;
         D_800AFE24.field_40 = temp_t0;
         D_800AFE24.field_44 = FP_MULTIPLY_PRECISE(temp_lo_6, temp_v0, Q12_SHIFT);
         D_800AFE24.field_48 = FP_MULTIPLY_PRECISE(temp_lo_3, temp_v0_2, Q12_SHIFT) - FP_MULTIPLY_PRECISE(temp_lo_3, D_800AFE24.field_28, Q12_SHIFT);
@@ -1192,10 +1195,10 @@ void func_801E47E0(s32 arg0, s32 arg1) // 0x801E47E0
     }
     else if (check)
     {
-        temp_v0_4            = arg0 - D_800AFE24.field_0;
+        temp_v0_4            = arg0 - D_800AFE24.sub_0.field_0;
         temp_a2              = temp_v0_4 * D_800AFE24.field_48;
         temp_lo_15           = temp_v0_4 * D_800AFE24.field_4C;
-        D_800AFE24.field_0   = arg0;
+        D_800AFE24.sub_0.field_0   = arg0;
         D_800AFE24.field_40 += temp_a2;
         D_800AFE24.field_44 += temp_lo_15;
     }
@@ -1203,12 +1206,12 @@ void func_801E47E0(s32 arg0, s32 arg1) // 0x801E47E0
 
 void func_801E4B98(s32 r, s32 g, s32 b)
 {
-    D_800AFE24.field_8 = (r & 0xFF) | ((g & 0xFF) << 8) | ((b & 0xFF) << 16) | (GPU_COM_TF4 << 24);
+    D_800AFE24.sub_0.field_8 = (r & 0xFF) | ((g & 0xFF) << 8) | ((b & 0xFF) << 16) | (GPU_COM_TF4 << 24);
 }
 
 void func_801E4BC8(s8 arg0) // 0x801E4BC8
 {
-    D_800AFE24.field_6 = arg0;
+    D_800AFE24.sub_0.field_6 = arg0;
 }
 
 void func_801E4BD4(u32 arg0, u32 arg1) // 0x801E4BD4
@@ -1217,11 +1220,11 @@ void func_801E4BD4(u32 arg0, u32 arg1) // 0x801E4BD4
     u32 shiftedField_18;
     u32 maskedField_18;
 
-    D_800AFE24.field_7 = (arg0 != 0);
+    D_800AFE24.sub_0.field_7 = (arg0 != 0);
 
     if (arg1 < 4)
     {
-        maskedField_18  = D_800AFE24.field_18;
+        maskedField_18  = D_800AFE24.sub_0.field_18;
         shiftedField_18 = (maskedField_18 << 4) & 0x100;
 
         maskedField_18 &= 0xF;
@@ -1232,7 +1235,7 @@ void func_801E4BD4(u32 arg0, u32 arg1) // 0x801E4BD4
         shiftedArg1 |= shiftedField_18;
         shiftedArg1 |= (u8)maskedField_18;
 
-        D_800AFE24.field_14 = shiftedArg1;
+        D_800AFE24.sub_0.field_14 = shiftedArg1;
     }
 }
 
@@ -1241,10 +1244,10 @@ void func_801E4C1C(u8* str) // 0x801E4C1C
     PACKET* packet;
     GsOT*   ot;
 
-    s32 textX   = D_800AFE24.field_0;
-    s32 textY   = D_800AFE24.field_2;
-    s32 marginX = D_800AFE24.field_4;
-    s32 fontH   = D_800AFE24.field_6;
+    s32 textX   = D_800AFE24.sub_0.field_0;
+    s32 textY   = D_800AFE24.sub_0.field_2;
+    s32 marginX = D_800AFE24.sub_0.field_4;
+    s32 fontH   = D_800AFE24.sub_0.field_6;
     u32 colorCode;
 
     s32 var_a3 = D_800AFE24.field_40;
@@ -1254,11 +1257,11 @@ void func_801E4C1C(u8* str) // 0x801E4C1C
     s32 var_t4 = D_800AFE24.field_50;
     s32 var_t5 = D_800AFE24.field_54;
 
-    u32       clut       = (u16)D_800AFE24.field_16;
-    u32       tPage      = D_800AFE24.field_14;
-    s16*      widthTable = D_800AFE24.field_C;
-    s32*      colorTable = D_800AFE24.field_10;
-    u32       blendFlag  = (u8)D_800AFE24.field_7 << 25;
+    u32       clut       = (u16)D_800AFE24.sub_0.field_16;
+    u32       tPage      = D_800AFE24.sub_0.field_14;
+    s16*      widthTable = D_800AFE24.sub_0.field_C;
+    s32*      colorTable = D_800AFE24.sub_0.field_10;
+    u32       blendFlag  = (u8)D_800AFE24.sub_0.field_7 << 25;
     s32       charWidth;
     bool      textXChanged;
     bool      textYChanged;
@@ -1288,7 +1291,7 @@ void func_801E4C1C(u8* str) // 0x801E4C1C
     ot     = &D_800B5C58[g_ObjectTableIdx];
 
     charCode  = *str;
-    colorCode = D_800AFE24.field_8 | blendFlag; // RGB + code + semi-transparency flag.
+    colorCode = D_800AFE24.sub_0.field_8 | blendFlag; // RGB + code + semi-transparency flag.
 
     while (charCode != 0)
     {
@@ -1354,7 +1357,7 @@ void func_801E4C1C(u8* str) // 0x801E4C1C
         // Change font color.
         else if (charCode >= 1 && charCode < 8)
         {
-            colorCode = colorTable[charCode - 1] | ((u8)D_800AFE24.field_7 << 25);
+            colorCode = colorTable[charCode - 1] | ((u8)D_800AFE24.sub_0.field_7 << 25);
         }
         // Change font width table?
         else if (charCode >= 0xD0 && charCode < 0xD8)
@@ -1426,8 +1429,8 @@ void func_801E4C1C(u8* str) // 0x801E4C1C
 
             // Form feed.
             case 12:
-                textX        = D_800AFE24.field_0;
-                textY        = D_800AFE24.field_2;
+                textX        = D_800AFE24.sub_0.field_0;
+                textY        = D_800AFE24.sub_0.field_2;
                 textYChanged = true;
                 break;
 
@@ -1474,8 +1477,8 @@ void func_801E4C1C(u8* str) // 0x801E4C1C
     }
 
     GsOUT_PACKET_P      = packet;
-    D_800AFE24.field_0  = textX;
-    D_800AFE24.field_2  = textY;
+    D_800AFE24.sub_0.field_0  = textX;
+    D_800AFE24.sub_0.field_2  = textY;
     D_800AFE24.field_40 = var_a3;
     D_800AFE24.field_44 = var_t3;
     D_800AFE24.field_48 = var_t7;
