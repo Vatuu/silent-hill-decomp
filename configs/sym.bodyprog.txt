@@ -258,7 +258,7 @@ SaveLoad_NowLoadingStringDraw               = 0x80032CE8; // type:func
 //-----------------------------------------------------------
 //--- PA: 0x00E1BC   VA: 0x80032D1C   subsegment: c, gamemain
 //-----------------------------------------------------------
-GameState_Unk0_Update                       = 0x80032D1C; // type:func
+GameState_Init_Update                       = 0x80032D1C; // type:func
 MainLoop                                    = 0x80032EE0; // type:func
 
 //-----------------------------------------------------------------
@@ -524,6 +524,7 @@ Player_CharaTurn_1                          = 0x80071224; // type:func
 Player_CharaRotate                          = 0x80071284; // type:func
 Player_MovementStateReset                   = 0x800713B4; // type:func
 Player_Update                               = 0x800717D0; // type:func
+Player_AnimUpdate                           = 0x80071968; // type:func
 Player_LogicUpdate                          = 0x80071CE8; // type:func
 Player_UpperBodyStateUpdate                 = 0x80073FC0; // type:func
 Player_UpperBodyUpdate                      = 0x80074254; // type:func

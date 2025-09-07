@@ -367,7 +367,7 @@ void Player_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2*
             g_MapOverlayHeader.func_BC(chara, extra, coord);
         }
 
-        func_80071968(chara, extra, anmHeader, coord);
+        Player_AnimUpdate(chara, extra, anmHeader, coord);
         func_8007D090(chara, extra, coord);
     }
 
@@ -495,7 +495,7 @@ static inline void func_80071968_Switch1()
     }
 }
 
-void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, s_AnmHeader* anmHeader, GsCOORDINATE2* coord)
+void Player_AnimUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, s_AnmHeader* anmHeader, GsCOORDINATE2* coord) // 0x80071968
 {
     s_AnimInfo* animInfo;
 

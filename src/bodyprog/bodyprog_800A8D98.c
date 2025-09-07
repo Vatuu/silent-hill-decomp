@@ -599,7 +599,7 @@ u16 D_800A9774[] =
 
 void (*g_GameStateUpdateFuncs[])() =
 {
-    GameState_Unk0_Update,
+    GameState_Init_Update,
     (void (*)())0x800C95AC, // Konami Logo.
     (void (*)())0x800C99A4, // KCET Logo.
     GameState_StartMovieIntro_Update,

@@ -529,7 +529,7 @@ bool func_800713E8(s32 animStatus, s_SubCharacter* chara, s32 keyframe0, s32 key
 void Player_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coord); // 0x800717D0
 
 /** Player anim handler? */
-void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, s_AnmHeader* anmHeader, GsCOORDINATE2* coord); // 0x80071968
+void Player_AnimUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, s_AnmHeader* anmHeader, GsCOORDINATE2* coord); // 0x80071968
 
 /** @brief Main update function for player logic. */
 void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord); // 0x80071CE8

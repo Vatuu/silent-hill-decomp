@@ -393,7 +393,7 @@ typedef enum _AnimFlags
 /** @brief State IDs used by the main game loop. The values are used as indices into the 0x800A977C function array. */
 typedef enum _GameState
 {
-    GameState_Unk0                = 0,
+    GameState_Init                = 0,
     GameState_KonamiLogo          = 1,
     GameState_KcetLogo            = 2,
     GameState_StartMovieIntro     = 3,
@@ -549,6 +549,17 @@ typedef enum _InventoryItemId
     InventoryItemId_PocketRadio          = 225,
     InventoryItemId_GasolineTank         = 226
 } e_InventoryItemId;
+
+/** @brief Item IDs only used during cutscenes. */
+typedef enum _CutsceneItemId
+{
+    CutsceneItemId_Phone         = 164,
+    CutsceneItemId_Flauros       = 165,
+    CutsceneItemId_Aglaophotis   = 166,
+    CutsceneItemId_PlasticBottle = 167,
+    CutsceneItemId_Baby          = 168,
+    CutsceneItemId_Blood         = 169, // TODO: What is it used for?
+} e_CutsceneItemId;
 
 /** @brief Common pickup item IDs. */
 typedef enum _CommonPickupItemId

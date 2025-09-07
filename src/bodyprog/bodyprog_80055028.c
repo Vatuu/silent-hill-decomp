@@ -1675,12 +1675,16 @@ s_PlmTexList_8* func_8005B1FC(s_PlmTexList* arg0, s_800C1450_0* arg1, void* fs_b
 
     func_8005B3BC(&fileName, arg0);
     fileId = Fs_FindNextFile(&fileName, 0, (s32) arg3);
-    if (fileId == -1)
+    if (fileId == NO_VALUE)
     {
+        // Failed to find file, log filename to screen.
         debugStr[12] = 0;
-        Gfx_DebugStringPosition(0x64, 0x50);
+        Gfx_DebugStringPosition(100, 80);
         strncpy(&debugStr, &fileName, 0xC);
-        //Commented out Gfx_DebugStringDraw ?
+#ifdef DEBUG
+        // Code seen in 98-12-16 build.
+        Gfx_DebugStringDraw(debugStr);
+#endif
     }
 
     found->queueIdx_10 = Fs_QueueStartReadTim(fileId, fs_buffer_9, &found->imageDesc_0);

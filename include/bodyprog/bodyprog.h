@@ -1045,7 +1045,7 @@ STATIC_ASSERT_SIZEOF(s_800BCE18_2BEC, 16);
 
 typedef struct
 {
-    s32           field_0;
+    s32           itemId_0; /** `e_InventoryItemId` or `e_CutsceneItemId` or `NO_VALUE` */
     s32           field_4;
     char*         field_8;
     s_FsImageDesc imageDesc_C;
@@ -3492,7 +3492,7 @@ s32 func_80069FFC(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara);
 
 void func_8006A178(s_800C4590* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
-s32 func_8006A1A4(s32 arg0, s_SubCharacter* chara, s32 arg2);
+s32 func_8006A1A4(s32* arg0, s_SubCharacter* chara, s32 arg2);
 
 s32 func_8006A4A8(s32, s32*, s32, s32, s32, s32, s32, s32, s32, s32);
 
@@ -4082,7 +4082,7 @@ s32 func_80080A10();
 
 u8 func_8008A2E0(s32 arg0);
 
-void GameState_Unk0_Update();
+void GameState_Init_Update();
 void GameState_StartMovieIntro_Update();
 void GameState_DeathLoadScreen_Update();
 void GameState_MovieIntroAlternate_Update();

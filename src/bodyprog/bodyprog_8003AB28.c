@@ -806,7 +806,7 @@ void func_8003C0C0() // 0x8003C0C0
 {
     s_800BCE18_1BAC* ptr = &D_800BCE18.field_1BAC;
 
-    ptr->field_0  = NO_VALUE;
+    ptr->itemId_0 = NO_VALUE;
     ptr->field_14 = (s_PlmHeader*)(Fs_GetFileSize(FILE_CHARA_HERO_ILM) + 0x800FE600); // `field_14` defined as a pointer?
     ptr->field_18 = 0;
     ptr->field_1C = 0;
@@ -1201,7 +1201,7 @@ void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x800
 
 s32 func_8003CD5C() // 0x8003CD5C
 {
-    return D_800BCE18.field_1BAC.field_0;
+    return D_800BCE18.field_1BAC.itemId_0;
 }
 
 void func_8003CD6C(s_PlayerCombat* combat) // 0x8003CD6C
@@ -1226,12 +1226,12 @@ s32 func_8003CDA0(s32 itemIdx)
 
     ptr = &D_800BCE18.field_1BAC;
 
-    if (ptr->field_0 == itemIdx)
+    if (ptr->itemId_0 == itemIdx)
     {
         return 0;
     }
 
-    ptr->field_0 = itemIdx;
+    ptr->itemId_0 = itemIdx;
 
     switch (itemIdx)
     {
@@ -1255,32 +1255,32 @@ s32 func_8003CDA0(s32 itemIdx)
             ptr->field_8 = "PIPE";
             break;
 
-        case 164:
+        case CutsceneItemId_Phone:
             fileIdx      = FILE_ITEM_PHONE_TIM;
             ptr->field_8 = "PHONE";
             break;
 
-        case 165:
+        case CutsceneItemId_Flauros:
             fileIdx      = FILE_ITEM_FLAUROS_TIM;
             ptr->field_8 = "FLAUROS";
             break;
 
-        case 166:
+        case CutsceneItemId_Aglaophotis:
             fileIdx      = FILE_ITEM_AGLA_TIM;
             ptr->field_8 = "AGLA";
             break;
 
-        case 167:
+        case CutsceneItemId_PlasticBottle:
             fileIdx      = FILE_ITEM_BOTL_TIM;
             ptr->field_8 = "BOTL";
             break;
 
-        case 168:
+        case CutsceneItemId_Baby:
             fileIdx      = FILE_ITEM_BABY_TIM;
             ptr->field_8 = "BABY";
             break;
 
-        case 169:
+        case CutsceneItemId_Blood:
             fileIdx      = FILE_ITEM_BLOOD_TIM;
             ptr->field_8 = "BLOOD";
             break;
@@ -1365,27 +1365,27 @@ s32 func_8003CDA0(s32 itemIdx)
             fileIdx = FILE_ITEM_SHOTGUN_PLM;
             break;
 
-        case 164:
+        case CutsceneItemId_Phone:
             fileIdx = FILE_ITEM_PHONE_PLM;
             break;
 
-        case 165:
+        case CutsceneItemId_Flauros:
             fileIdx = FILE_ITEM_FLAUROS_PLM;
             break;
 
-        case 166:
+        case CutsceneItemId_Aglaophotis:
             fileIdx = FILE_ITEM_AGLA_PLM;
             break;
 
-        case 167:
+        case CutsceneItemId_PlasticBottle:
             fileIdx = FILE_ITEM_BOTL_PLM;
             break;
 
-        case 168:
+        case CutsceneItemId_Baby:
             fileIdx = FILE_ITEM_BABY_PLM;
             break;
 
-        case 169:
+        case CutsceneItemId_Blood:
             fileIdx = FILE_ITEM_BLOOD_PLM;
             break;
 
@@ -1435,9 +1435,9 @@ void func_8003D058() // 0x8003D058
 
     ptr0 = &D_800BCE18.field_1BAC;
 
-    if (ptr0->field_0 != NO_VALUE) 
+    if (ptr0->itemId_0 != NO_VALUE)
     {
-        if (ptr0->field_0 == 164)
+        if (ptr0->itemId_0 == CutsceneItemId_Phone)
         {
             coord = &g_SysWork.playerBoneCoords_890[HarryBone_LeftHand];
         } 
@@ -2658,7 +2658,7 @@ void func_8003F170() // 0x8003F170
 
         if (temp_v1 & (1 << 0))
         {
-            func_8003F08C(ptr2, &D_800A952C);
+            func_8003F08C(ptr2, &D_800A952C.field_0);
         }
         else if (temp_v1 & 2)
         {

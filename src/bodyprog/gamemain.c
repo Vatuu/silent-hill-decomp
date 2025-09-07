@@ -4,7 +4,7 @@
 #include "bodyprog/demo.h"
 #include "bodyprog/math.h"
 
-void GameState_Unk0_Update() // 0x80032D1C
+void GameState_Init_Update() // 0x80032D1C
 {
     s32 gameState;
     s32 unkGameStateVar;
