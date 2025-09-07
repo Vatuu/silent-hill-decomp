@@ -2,7 +2,6 @@
 
 #include "bodyprog/bodyprog.h"
 
-/** @unused Seems like leftover from when `SAVELOAD.BIN` was part of `BODYPROG.BIN`. */
 void SaveLoad_NowLoadingStringDraw() // 0x80032CE8
 {
     Gfx_StringSetPosition(SCREEN_POSITION_X(33.75f), SCREEN_POSITION_Y(43.5f));

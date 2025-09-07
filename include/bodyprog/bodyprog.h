@@ -786,7 +786,7 @@ typedef struct _AnmHeader
     u16 frameDataSize_4; // Size per keyframe, `(rotationBoneCount_2 * 9) + (translationBoneCount_3 * 3)`?
     u8  boneCount_6;
     u8  unk_7;
-    u32 activeBones_8; // Holds bit indexes of each bone that should be updated.
+    u32 activeBones_8; // Holds bit field of bones to update.
     u32 offset_C;      // In ANM files this points to another duplicate `s_AnmHeader` at end of the file, or might just be size of the main ANM data.
     u16 frameCount_10;
     u8  scaleLog2_12;
@@ -2773,7 +2773,7 @@ void Anim_BoneInit(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords);
 
 s_AnimInfo* func_80044918(s_ModelAnim* anim);
 
-void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyFrame0, s32 keyFrame1, s32 alpha);
+void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyframe0, s32 keyframe1, s32 alpha);
 
 void func_80044950(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
 
@@ -3082,7 +3082,7 @@ void func_8005B3BC(char* filename, s_PlmTexList* plmTexList);
 
 void func_8005B424(VECTOR3* vec0, VECTOR3* vec1);
 
-/** @unused, no refs to this func. */
+/** @unused No references. */
 void func_800563E8(s_PlmHeader* plmHeader, s32 arg1, s32 arg2, s32 arg3);
 
 void func_80056464(s_PlmHeader* plmHeader, s32 fileIdx, s_FsImageDesc* image, s32 arg3);
@@ -3188,7 +3188,7 @@ void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, s32 
 
 void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 alpha);
 
-/** @unused? Returns 96 * cotangent(angle / 2). Possibly camera/FOV related. */
+/** @unused? Returns `96 * cotangent(angle / 2)`. Possibly camera/FOV related. */
 s16 func_8008CDBC(s16 angle);
 
 s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, s32 time, s_DmsHeader* header);

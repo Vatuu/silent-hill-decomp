@@ -558,7 +558,7 @@ s32 func_80056348(bool (*arg0)(s_PlmTexList* texList), s_PlmHeader* plmHeader) /
 
 void func_800563E8(s_PlmHeader* plmHeader, s32 arg1, s32 arg2, s32 arg3) // 0x800563E8
 {
-    s32           var_t1;
+    s32           i;
     s_PlmTexList* texList;
 
     if (arg2 < 0)
@@ -566,16 +566,15 @@ void func_800563E8(s_PlmHeader* plmHeader, s32 arg1, s32 arg2, s32 arg3) // 0x80
         arg2 += 15;
     }
 
-    for (var_t1 = 0, texList = &plmHeader->textureList_4[0];
-         var_t1 < plmHeader->textureCount_3;
-         var_t1++, texList++)
+    for (i = 0, texList = &plmHeader->textureList_4[0];
+         i < plmHeader->textureCount_3;
+         i++, texList++)
     {
-        // TODO: bitfield stuff ?
-        // doesn't seem to match other uses of field_E/field_10 we've seen though..
+        // TODO: Bitfield stuff? Doesn't seem to match other uses of `field_E`/`field_10` we've seen though.
         u8  temp_a0 = texList->field_E;
         u16 temp_v1 = texList->field_10;
 
-        texList->field_E  = (((temp_a0 + arg1) & 0x1F) | (temp_a0 & 0xE0));
+        texList->field_E  = ((temp_a0 + arg1) & 0x1F) | (temp_a0 & 0xE0);
         texList->field_10 = ((temp_v1 + (arg2 >> 4)) & 0x3F) | ((temp_v1 + (arg3 << 6)) & 0x7FC0);
     }
 }
