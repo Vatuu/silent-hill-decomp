@@ -144,9 +144,11 @@ void Demo_GameRandSeedRestore() // 0x8008F370
     Rng_SetSeed(g_Demo_PrevRandSeed);
 }
 
+s32 g_Demo_Play = 0;
+
 void Demo_Start() // 0x8008F398
 {
-    D_800AFDEC = 1;
+    g_Demo_Play = 1;
     g_SysWork.flags_22A4 |= 1 << 1;
 
     Demo_GameGlobalsUpdate();
@@ -158,27 +160,27 @@ void Demo_Start() // 0x8008F398
 
 void Demo_Stop() // 0x8008f3f0
 {
-    D_800AFDEC = 0;
+    g_Demo_Play = 0;
     g_SysWork.flags_22A4 &= ~(1 << 1);
 
     Demo_GameGlobalsRestore(-3);
     Demo_GameRandSeedRestore();
 }
 
-bool func_8008F434(s32 arg0)
+bool Gfx_ScreenFadeIn_inProgress(s32 arg0)
 {
     s32 caseVar = arg0 & ~(1 << 0);
 
     switch (caseVar)
     {
-        case 2:
-        case 3:
-        case 4:
-        case 5:
-        case 10:
-        case 11:
-        case 12:
-        case 13:
+        case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false):
+        case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false):
+        case SCREEN_FADE_STATUS(ScreenFadeState_ResetTimeStep, false):
+        case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, false):
+        case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, true):
+        case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, true):
+        case SCREEN_FADE_STATUS(ScreenFadeState_ResetTimeStep, true):
+        case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, true):
             return false;
     }
 
@@ -262,11 +264,12 @@ bool Demo_Update() // 0x8008F5D8
     s32         var1;
     u32         demoStep;
     s_GameWork* gameWork;
+    static s32  prevScreenFade = 0;
 
-    var0       = D_800AFDF0;
-    var1       = D_800C489C;
-    D_800C489C = 0;
-    D_800AFDF0 = g_Gfx_ScreenFade;
+    var0           = prevScreenFade;
+    var1           = D_800C489C;
+    D_800C489C     = 0;
+    prevScreenFade = g_Gfx_ScreenFade;
 
     if (!(g_SysWork.flags_22A4 & (1 << 1)))
     {
@@ -290,7 +293,7 @@ bool Demo_Update() // 0x8008F5D8
         return false;
     }
 
-    if (!func_8008F434(var0) || !func_8008F434(g_Gfx_ScreenFade) || var1 != 0)
+    if (!Gfx_ScreenFadeIn_inProgress(var0) || !Gfx_ScreenFadeIn_inProgress(g_Gfx_ScreenFade) || var1 != 0)
     {
         g_Demo_CurFrameData = NULL;
         return true;

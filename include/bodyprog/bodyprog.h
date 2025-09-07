@@ -1374,17 +1374,7 @@ STATIC_ASSERT_SIZEOF(s_800AFE08, 28);
 /** @brief Used for UFO ending credits screen. */
 typedef struct
 {
-    s16  field_0;  /** Prim vertex X. */
-    s16  field_2;  /** Prim vertex Y. */
-    s16  field_4;  /** Width? */
-    s8   field_6;  /** Height?  */
-    s8   field_7;  /** Blend flag. */
-    s32  field_8;  /** Rgb24 color + code. */
-    s16* field_C;  /** Points to 0x801E5C24, data size 400. */
-    s32* field_10; /** Points to 0x801E5E40, data size 28, rgb24 + code. */
-    u16  field_14; /** Tpage for `setDrawTPage`, calculated from `field_18` with `func_801E4BD4`. */
-    s16  field_16; /** CLUT XY. */
-    u32  field_18; /** Texture UV. */
+    s_800AFE08 sub_0;
     s32  field_1C;
     s16  field_20;
     s16  field_22;
@@ -2045,10 +2035,6 @@ extern s32 D_800AFD9C;
 extern SVECTOR D_800AFDB0;
 
 extern s32 D_800AFDEC;
-
-extern s_800AFE08 D_800AFE08;
-
-extern s_800AFE24 D_800AFE24;
 
 extern s32 D_800B2618;
 

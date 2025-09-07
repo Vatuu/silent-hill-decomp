@@ -7,6 +7,39 @@
 
 const s32 rodataPad_8002B2F8 = 0;
 
+struct {
+    char f0[5];
+    char f1[5];
+    char f2[5];
+    char f3[5];
+} g_Credits_Digits = { "0.00", "0.00", "0.00", "0.00" };
+
+s_800AFE08 D_800AFE08 =
+{
+    .field_6  = 0x18,
+    .field_8  = 0x64FFFFFF,
+    .field_C  = (s16*)0x801E5C24,
+    .field_10 = (s32*)0x801E5E24
+};
+
+s_800AFE24 D_800AFE24 =
+{
+    .sub_0 =
+    {
+        .field_6   = 24,
+        .field_8   = 0x2CFFFFFF,
+        .field_C   = (s16*)0x801E5C24,
+        .field_10  = (s32*)0x801E5E40
+    },
+    .field_1C  = 4096,
+    .field_24  = 240,
+    .field_30  = 0xF0000,
+    .field_34  = 4096,
+    .field_3C  = -4096,
+    .field_48  = 4096,
+    .field_4C  = 4551,
+};
+
 void func_8008F94C() // 0x8008F94C
 {
     s16 temp_s1;
@@ -55,21 +88,21 @@ void func_8008F94C() // 0x8008F94C
         D_800C48C8 = D_800C48C8 * 100 / firedShotCount;
         D_800C48CC = ((100 - D_800C48C0) - D_800C48C4) - D_800C48C8;
 
-        D_800AFDF4.field_0[0] = (((D_800C48C0) / 100) % 10) + '0';
-        D_800AFDF4.field_0[2] = (((D_800C48C0) / 10) - (((D_800C48C0) / 100) * 10)) + '0';
-        D_800AFDF4.field_0[3] = ((D_800C48C0) % 10) + '0';
+        g_Credits_Digits.f0[0] = (((D_800C48C0) / 100) % 10) + '0';
+        g_Credits_Digits.f0[2] = (((D_800C48C0) / 10) - (((D_800C48C0) / 100) * 10)) + '0';
+        g_Credits_Digits.f0[3] = ((D_800C48C0) % 10) + '0';
 
-        D_800AFDF4.field_5[0] = (((D_800C48C4) / 100) % 10) + '0';
-        D_800AFDF4.field_5[2] = (((D_800C48C4) / 10) - (((D_800C48C4) / 100) * 10)) + '0';
-        D_800AFDF4.field_5[3] = ((D_800C48C4) % 10) + '0';
+        g_Credits_Digits.f1[0] = (((D_800C48C4) / 100) % 10) + '0';
+        g_Credits_Digits.f1[2] = (((D_800C48C4) / 10) - (((D_800C48C4) / 100) * 10)) + '0';
+        g_Credits_Digits.f1[3] = ((D_800C48C4) % 10) + '0';
 
-        D_800AFDF4.field_A[0] = (((D_800C48C8) / 100) % 10) + '0';
-        D_800AFDF4.field_A[2] = (((D_800C48C8) / 10) - (((D_800C48C8) / 100) * 10)) + '0';
-        D_800AFDF4.field_A[3] = ((D_800C48C8) % 10) + '0';
+        g_Credits_Digits.f2[0] = (((D_800C48C8) / 100) % 10) + '0';
+        g_Credits_Digits.f2[2] = (((D_800C48C8) / 10) - (((D_800C48C8) / 100) * 10)) + '0';
+        g_Credits_Digits.f2[3] = ((D_800C48C8) % 10) + '0';
 
-        D_800AFDF4.field_F[0] = (((D_800C48CC) / 100) % 10) + '0';
-        D_800AFDF4.field_F[2] = (((D_800C48CC) / 10) - (((D_800C48CC) / 100) * 10)) + '0';
-        D_800AFDF4.field_F[3] = ((D_800C48CC) % 10) + '0';
+        g_Credits_Digits.f3[0] = (((D_800C48CC) / 100) % 10) + '0';
+        g_Credits_Digits.f3[2] = (((D_800C48CC) / 10) - (((D_800C48CC) / 100) * 10)) + '0';
+        g_Credits_Digits.f3[3] = ((D_800C48CC) % 10) + '0';
     }
 
     temp_s1    = D_800C48AE + (D_800C48A2 * 60);
@@ -614,25 +647,25 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
             Gfx_StringDraw(D_8002B4C0[30], 0x20);
             Gfx_StringSetPosition(0x106, 0xC4);
             Gfx_StringSetColor(D_800C48E0.field_8);
-            Gfx_StringDraw(D_800AFDF4.field_0, 5);
+            Gfx_StringDraw(g_Credits_Digits.f0, 5);
             Gfx_StringSetColor(ColorId_White);
             Gfx_StringSetPosition(0x48, 0xD9);
             Gfx_StringDraw(D_8002B4C0[31], 0x20);
             Gfx_StringSetPosition(0x106, 0xD9);
             Gfx_StringSetColor(D_800C48E0.field_8);
-            Gfx_StringDraw(D_800AFDF4.field_5, 5);
+            Gfx_StringDraw(g_Credits_Digits.f1, 5);
             Gfx_StringSetColor(ColorId_White);
             Gfx_StringSetPosition(0x48, 0xEE);
             Gfx_StringDraw(D_8002B4C0[32], 0x20);
             Gfx_StringSetPosition(0x106, 0xEE);
             Gfx_StringSetColor(D_800C48E0.field_8);
-            Gfx_StringDraw(D_800AFDF4.field_A, 5);
+            Gfx_StringDraw(g_Credits_Digits.f2, 5);
             Gfx_StringSetColor(ColorId_White);
             Gfx_StringSetPosition(0x48, 0x103);
             Gfx_StringDraw(D_8002B4C0[33], 0x20);
             Gfx_StringSetPosition(0x106, 0x103);
             Gfx_StringSetColor(D_800C48E0.field_8);
-            Gfx_StringDraw(D_800AFDF4.field_F, 5);
+            Gfx_StringDraw(g_Credits_Digits.f3, 5);
         }
 
         Gfx_StringSetColor(ColorId_White);
@@ -989,15 +1022,15 @@ void func_8009185C(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
     temp_lo_4 = (arg6 + (s32)FP_MULTIPLY_PRECISE(arg3, temp_lo_2, Q12_SHIFT)) >> 2;
     temp_lo_4 = temp_t1 / temp_lo_4;
 
-    D_800AFE24.field_0  = 0;
-    D_800AFE24.field_2  = 0;
-    D_800AFE24.field_4  = 0;
-    D_800AFE24.field_6  = 24;
-    D_800AFE24.field_7  = 0;
-    D_800AFE24.field_8  = 0x2CFFFFFF;
-    D_800AFE24.field_18 = D_800AFE08.field_18;
-    D_800AFE24.field_16 = D_800AFE08.field_16;
-    D_800AFE24.field_14 = D_800AFE08.field_14;
+    D_800AFE24.sub_0.field_0  = 0;
+    D_800AFE24.sub_0.field_2  = 0;
+    D_800AFE24.sub_0.field_4  = 0;
+    D_800AFE24.sub_0.field_6  = 24;
+    D_800AFE24.sub_0.field_7  = 0;
+    D_800AFE24.sub_0.field_8  = 0x2CFFFFFF;
+    D_800AFE24.sub_0.field_18 = D_800AFE08.field_18;
+    D_800AFE24.sub_0.field_16 = D_800AFE08.field_16;
+    D_800AFE24.sub_0.field_14 = D_800AFE08.field_14;
     D_800AFE24.field_1C = arg3;
     D_800AFE24.field_20 = arg0;
     D_800AFE24.field_22 = arg1;

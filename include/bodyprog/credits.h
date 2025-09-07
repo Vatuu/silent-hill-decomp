@@ -30,21 +30,13 @@ typedef struct
     u8 unk_F;
 } s_800C48E0;
 
-typedef struct
-{
-    char field_0[5];
-    char field_5[5];
-    char field_A[5];
-    char field_F[5];
-} s_800AFDF4;
-
 // ========
 // GLOBALS
 // ========
 
 // Data below is likely part of a collected results data struct.
 
-extern s_800AFDF4 D_800AFDF4;
+//extern s_800AFDF4 D_800AFDF4;
 
 /** Savegame count. */
 extern s16 D_800C48A0;
