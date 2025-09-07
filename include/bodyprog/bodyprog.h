@@ -917,17 +917,17 @@ STATIC_ASSERT_SIZEOF(s_800AA894, 12);
 typedef struct
 {
     u16 field_0;
-    s8  unk_1[4];
+    u8  unk_2[4];
     s8  field_6;
     s8  unk_7;
     u8  field_8;
     u8  field_9;
-    s8  unk_A[4];
+    u8  unk_A[4];
     u8  field_E;
     u8  field_F;
     u8  field_10;
     u8  field_11;
-    s8  field_12[6];
+    u8  unk_12[6];
 } s_800AD4C8;
 STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
 
