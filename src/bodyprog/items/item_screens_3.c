@@ -830,8 +830,8 @@ s_AnimInfo HARRY_BASE_ANIM_INFOS[57] =
     { Anim_Update0, ANIM_STATUS(PlayerAnim_Stomp,                   true),  false, ANIM_STATUS(PlayerAnim_Stomp,                   true), 0, { FP_TIME(20.0f) }, 485,      502 },
     { Anim_Update2, ANIM_STATUS(PlayerAnim_Idle,                    false), false, ANIM_STATUS(PlayerAnim_Idle,                    true), 0, { FP_TIME(5.0f)  }, NO_VALUE, 503 },
     { Anim_Update1, ANIM_STATUS(PlayerAnim_Idle,                    true),  false, NO_VALUE,                                              0, { FP_TIME(10.0f) }, 503,      542 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_IdleTired,               false), false, ANIM_STATUS(PlayerAnim_IdleTired,               true), 0, { FP_TIME(5.0f)  }, NO_VALUE, 543 },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_IdleTired,               true),  true,  NO_VALUE,                                              0, { func_800706E4  }, 543,      567 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_IdleExhausted,           false), false, ANIM_STATUS(PlayerAnim_IdleExhausted,               true), 0, { FP_TIME(5.0f)  }, NO_VALUE, 543 },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_IdleExhausted,           true),  true,  NO_VALUE,                                              0, { func_800706E4  }, 543,      567 },
     {} // End of list.
 };
 u8 __padding1[14] = {};

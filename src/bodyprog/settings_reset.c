@@ -29,7 +29,7 @@ void Settings_RestoreControlDefaults(s32 arg0) // 0x80033480
 {
     u32  i;
     u16* ptr;
-    
+
     static const s_ControllerConfig DEFAULT_CONTROLLER_CONFIGS[3] =
     {
         {
@@ -81,8 +81,8 @@ void Settings_RestoreControlDefaults(s32 arg0) // 0x80033480
             .option_1A    = ControllerFlag_None
         }
     };
-	
-    static const u8 __pad[8] = {};
+
+    static const u8 __PAD[8] = {};
 
     for (i = 0, ptr = &g_GameWorkPtr->config_0.controllerConfig_0; i < INPUT_ACTION_COUNT; i++, ptr++)
     {
@@ -93,4 +93,3 @@ void Settings_RestoreControlDefaults(s32 arg0) // 0x80033480
 void nullsub_800334C8() {}
 
 void func_800334D0() {}
-

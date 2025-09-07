@@ -33,7 +33,7 @@ void func_80070B84(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3) // 0x800
 
     arg1 = arg1 + ((arg2 - arg1) * (var_v0 - 0x40) / 64);
 
-    // @hack: Wrapping in loop required for match.
+    // @hack Wrapping in loop required for match.
     do
     { 
         if (arg1 < g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126)
@@ -690,29 +690,29 @@ void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, void* arg
 
     if (!g_Player_IsInWalkToRunTransition)
     {
-        // Disable bones 0 - 10 before playing anim.
-        g_SysWork.player_4C.extra_128.disabledAnimBones_18 = BITMASK_RANGE(0, 10);
+        // Disable upper body bones before playing anim.
+        g_SysWork.player_4C.extra_128.disabledAnimBones_18 = BITMASK_RANGE(HarryBone_Root, HarryBone_RightHand);
 
         animInfo = &HARRY_BASE_ANIM_INFOS[chara->model_0.anim_4.status_0];
         animInfo->updateFunc_0(&chara->model_0, (s32)arg2, coord, animInfo);
 
-        // Re-enable bones above, disable bones 11-17
-        g_SysWork.player_4C.extra_128.disabledAnimBones_18 = BITMASK_RANGE(11, 17);
+        // Re-enable upper body bones, disable lower body bones.
+        g_SysWork.player_4C.extra_128.disabledAnimBones_18 = BITMASK_RANGE(HarryBone_Hips, HarryBone_RightFoot);
 
         animInfo = &HARRY_BASE_ANIM_INFOS[extra->model_0.anim_4.status_0];
         animInfo->updateFunc_0(&extra->model_0, (s32)arg2, coord, animInfo);
         return;
     }
 
-    // Disable bones 0 - 11 before playing anim.
-    g_SysWork.player_4C.extra_128.disabledAnimBones_18 = BITMASK_RANGE(0, 10);
+    // Disable upper body bones before playing anim.
+    g_SysWork.player_4C.extra_128.disabledAnimBones_18 = BITMASK_RANGE(HarryBone_Root, HarryBone_RightHand);
     chara->model_0.anim_4.status_0                     = ANIM_STATUS(PlayerAnim_Unk0, false);
 
     animInfo = &HARRY_BASE_ANIM_INFOS[ANIM_STATUS(PlayerAnim_Unk0, false)];
     animInfo->updateFunc_0(&chara->model_0, (s32)arg2, coord, animInfo);
 
-    // Re-enable bones above, disable bones 11-17
-    g_SysWork.player_4C.extra_128.disabledAnimBones_18 = BITMASK_RANGE(11, 17);
+    // Re-enable upper body bones, disable lower body bones.
+    g_SysWork.player_4C.extra_128.disabledAnimBones_18 = BITMASK_RANGE(HarryBone_Hips, HarryBone_RightFoot);
 
     animInfo = &HARRY_BASE_ANIM_INFOS[extra->model_0.anim_4.status_0];
     animInfo->updateFunc_0(&extra->model_0, (s32)arg2, coord, animInfo);
@@ -2827,7 +2827,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             }
 
 			// Set idle animation.
-            if (chara->properties_E4.player.exertionTimer_FC < FP_TIME(10.0f) && chara->health_B0 >= FP_HEALTH(30.0f))
+            if (chara->properties_E4.player.exhaustionTimer_FC < FP_TIME(10.0f) && chara->health_B0 >= FP_HEALTH(30.0f))
             {
                 if (extra->model_0.stateStep_3 == 0)
                 {
@@ -2857,7 +2857,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                     extra->model_0.stateStep_3 = 0;
                     if (extra->model_0.stateStep_3 == 0)
                     {
-                        extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_IdleTired, false);
+                        extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_IdleExhausted, false);
                         extra->model_0.stateStep_3++;
                     }
                 }
@@ -4267,7 +4267,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                     }
                 }
 	           // Checks if player has >=30% or <10% health to determine level of exertion.
-                else if (chara->properties_E4.player.exertionTimer_FC < FP_TIME(10.0f) && chara->health_B0 >= FP_HEALTH(30.0f))
+                else if (chara->properties_E4.player.exhaustionTimer_FC < FP_TIME(10.0f) && chara->health_B0 >= FP_HEALTH(30.0f))
                 {
                     if (chara->model_0.stateStep_3 == 0)
                     {
@@ -4277,7 +4277,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 }
                 else if (chara->model_0.stateStep_3 == 0)
                 {
-                    chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_IdleTired, false);
+                    chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_IdleExhausted, false);
                     chara->model_0.stateStep_3++;
                 }
             }
@@ -4512,14 +4512,14 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 				// Turn if idle.
                 if (g_Player_IsTurningLeft && chara->model_0.stateStep_3 == 1 &&
                     (chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Idle, true) ||
-                     chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_IdleTired, true)))
+                     chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_IdleExhausted, true)))
                 {
                     chara->model_0.stateStep_3      = 2;
                     chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_TurnLeft, false);
                 }
                 else if (g_Player_IsTurningRight && chara->model_0.stateStep_3 == 1 && 
                          (chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Idle, true) ||
-                          chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_IdleTired, true)))
+                          chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_IdleExhausted, true)))
                 {
                     chara->model_0.stateStep_3      = 2;
                     chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_TurnRight, false);
@@ -4712,7 +4712,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             break;
 
         case PlayerLowerBodyState_RunForward:
-            chara->properties_E4.player.exertionTimer_FC += g_DeltaTime0;
+            chara->properties_E4.player.exhaustionTimer_FC += g_DeltaTime0;
 
             if (g_Controller0->sticks_20.sticks_0.leftY < -0x3F)
             {
@@ -5271,7 +5271,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             break;
 
         case PlayerLowerBodyState_RunRight:
-            chara->properties_E4.player.exertionTimer_FC += g_DeltaTime0;
+            chara->properties_E4.player.exhaustionTimer_FC += g_DeltaTime0;
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 > FP_METER(3.1739))
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= Math_DeltaTimeDistScale(FP_METER(0.4f));
@@ -5362,7 +5362,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             break;
 
         case PlayerLowerBodyState_RunLeft:
-            chara->properties_E4.player.exertionTimer_FC += g_DeltaTime0;
+            chara->properties_E4.player.exhaustionTimer_FC += g_DeltaTime0;
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 > FP_METER(3.1739))
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= Math_DeltaTimeDistScale(FP_METER(0.4f));
@@ -6136,7 +6136,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         case PlayerLowerBodyState_RunLeft:
             if (IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0) && chara->model_0.anim_4.status_0 >= ANIM_STATUS(PlayerAnim_RunForward, true))
             {
-                chara->properties_E4.player.exertionTimer_FC += g_DeltaTime0;
+                chara->properties_E4.player.exhaustionTimer_FC += g_DeltaTime0;
             }
             break;
 
@@ -6146,20 +6146,20 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         case PlayerLowerBodyState_RunLeftStumble:
         case PlayerLowerBodyState_RunRightStumble:
         case PlayerLowerBodyState_Aim:
-            chara->properties_E4.player.exertionTimer_FC -= g_DeltaTime0 * 2;
+            chara->properties_E4.player.exhaustionTimer_FC -= g_DeltaTime0 * 2;
             break;
 
         default:
-            chara->properties_E4.player.exertionTimer_FC -= g_DeltaTime0;
+            chara->properties_E4.player.exhaustionTimer_FC -= g_DeltaTime0;
             break;
     }
 
-    chara->properties_E4.player.exertionTimer_FC = CLAMP(chara->properties_E4.player.exertionTimer_FC, FP_TIME(0.0f), FP_TIME(35.0f));
+    chara->properties_E4.player.exhaustionTimer_FC = CLAMP(chara->properties_E4.player.exhaustionTimer_FC, FP_TIME(0.0f), FP_TIME(35.0f));
 
     // Check if player has >=30% or <10% of health to determine exertion level.
-    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_IdleTired, true))
+    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_IdleExhausted, true))
     {
-        if (chara->properties_E4.player.exertionTimer_FC < FP_TIME(10.0f) &&
+        if (chara->properties_E4.player.exhaustionTimer_FC < FP_TIME(10.0f) &&
             chara->health_B0 >= FP_HEALTH(30.0f))
         {
             chara->model_0.stateStep_3 = 0;
@@ -6187,7 +6187,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
             if ((g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Moving) &&
                 ((chara->model_0.anim_4.status_0 >= ANIM_STATUS(PlayerAnim_Idle, true) &&
-                  chara->model_0.anim_4.status_0 <= ANIM_STATUS(PlayerAnim_IdleTired, false)) ||
+                  chara->model_0.anim_4.status_0 <= ANIM_STATUS(PlayerAnim_IdleExhausted, false)) ||
                  chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunAim, true)))
             {
                 func_8005DD44(sfx, &chara->position_18, FP_VOLUME(0.095f), pitch0);
@@ -7310,9 +7310,9 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
     if (g_SysWork.field_2358 != 0 && g_SysWork.player_4C.extra_128.state_1C < PlayerState_Unk58)
     {
-        func_80044F14(&g_SysWork.playerBoneCoords_890[PlayerBone_RightUpperArm], 0, 0x2D0, -0x64);
-        func_80044F14(&g_SysWork.playerBoneCoords_890[PlayerBone_RightForearm], -0xA0, 0x100, -0x15E);
-        func_80044F14(&g_SysWork.playerBoneCoords_890[PlayerBone_RightHand], 0x96, 0, 0);
+        func_80044F14(&g_SysWork.playerBoneCoords_890[HarryBone_RightUpperArm], 0, 0x2D0, -0x64);
+        func_80044F14(&g_SysWork.playerBoneCoords_890[HarryBone_RightForearm], -0xA0, 0x100, -0x15E);
+        func_80044F14(&g_SysWork.playerBoneCoords_890[HarryBone_RightHand], 0x96, 0, 0);
     }
 }
 
@@ -7420,9 +7420,9 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
     if (g_SysWork.player_4C.extra_128.lowerBodyState_24 < PlayerLowerBodyState_Aim)
     {
         vec     = &g_SysWork.playerCombatInfo_38.field_0;
-        vec->vx = g_SysWork.playerBoneCoords_890[PlayerBone_RightFoot].workm.t[0] * 16;
-        vec->vy = g_SysWork.playerBoneCoords_890[PlayerBone_RightFoot].workm.t[1] * 16;
-        vec->vz = g_SysWork.playerBoneCoords_890[PlayerBone_RightFoot].workm.t[2] * 16;
+        vec->vx = g_SysWork.playerBoneCoords_890[HarryBone_RightFoot].workm.t[0] * 16;
+        vec->vy = g_SysWork.playerBoneCoords_890[HarryBone_RightFoot].workm.t[1] * 16;
+        vec->vz = g_SysWork.playerBoneCoords_890[HarryBone_RightFoot].workm.t[2] * 16;
     }
     else
     {
@@ -7432,16 +7432,16 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
             case 8:
             case 9:
                 vec2     = &g_SysWork.playerCombatInfo_38.field_0;
-                vec2->vx = g_SysWork.playerBoneCoords_890[PlayerBone_RightFoot].workm.t[0] * 16;
-                vec2->vy = g_SysWork.playerBoneCoords_890[PlayerBone_RightFoot].workm.t[1] * 16;
-                vec2->vz = g_SysWork.playerBoneCoords_890[PlayerBone_RightFoot].workm.t[2] * 16;
+                vec2->vx = g_SysWork.playerBoneCoords_890[HarryBone_RightFoot].workm.t[0] * 16;
+                vec2->vy = g_SysWork.playerBoneCoords_890[HarryBone_RightFoot].workm.t[1] * 16;
+                vec2->vz = g_SysWork.playerBoneCoords_890[HarryBone_RightFoot].workm.t[2] * 16;
                 break;
 
             default:
                 vec3     = &g_SysWork.playerCombatInfo_38.field_0;
-                vec3->vx = g_SysWork.playerBoneCoords_890[PlayerBone_RightHand].workm.t[0] * 16;
-                vec3->vy = g_SysWork.playerBoneCoords_890[PlayerBone_RightHand].workm.t[1] * 16;
-                vec3->vz = g_SysWork.playerBoneCoords_890[PlayerBone_RightHand].workm.t[2] * 16;
+                vec3->vx = g_SysWork.playerBoneCoords_890[HarryBone_RightHand].workm.t[0] * 16;
+                vec3->vy = g_SysWork.playerBoneCoords_890[HarryBone_RightHand].workm.t[1] * 16;
+                vec3->vz = g_SysWork.playerBoneCoords_890[HarryBone_RightHand].workm.t[2] * 16;
                 break;
         }
     }
@@ -7468,7 +7468,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
             }
             else
             {
-                // @hack: Required for match.
+                // @hack Required for match.
                 do { chara->rotation_24.pad = chara->rotation_24.vy; } while (0);
 
                 sp98.vx = chara->rotation_24.pad;

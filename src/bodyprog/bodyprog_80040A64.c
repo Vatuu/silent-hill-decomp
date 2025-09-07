@@ -1547,11 +1547,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044420); // 0x
 
 void Anim_BoneInit(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords) // 0x800445A4
 {
-    s_AnmBindPose* bindPose;
-    GsCOORDINATE2* coord;
     s32            boneIdx;
     s32            i;
     s32            j;
+    s_AnmBindPose* bindPose;
+    GsCOORDINATE2* coord;
 
     GsInitCoordinate2(NULL, boneCoords);
 
@@ -1561,7 +1561,7 @@ void Anim_BoneInit(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords) // 0x80044
     {
         coord->super = &boneCoords[anmHeader->bindPoses_14[boneIdx].parentBone];
 
-        // If no translation for this bone, copy over `translationInitial_3`
+        // If no translation for this bone, copy over `translationInitial_3`.
         if (bindPose->translationDataIdx_2 < 0)
         {
             for (i = 0; i < 3; i++)
@@ -1577,45 +1577,45 @@ void Anim_BoneInit(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords) // 0x80044
             {
                 for (j = 0; j < 3; j++)
                 {
-                    coord->coord.m[i][j] = (j == i ? Q19_12(1.0f) : 0);
+                    coord->coord.m[i][j] = ((j == i) ? FP_ANGLE(360.0f) : FP_ANGLE(0.0f));
                 }
             }
         }
     }
 }
 
-void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyFrame0, s32 keyFrame1, s32 alpha) // 0x800446D8
+void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyframe0, s32 keyframe1, s32 alpha) // 0x800446D8
 {
-    GsCOORDINATE2* coord;
-    s_AnmBindPose* bindPose;
     s32            boneCount;
-    void*          frame0Data;
-    void*          frame0RotData;
-    void*          frame1Data;
-    void*          frame1RotData;
-    bool           isPlayerCoords;
+    bool           isPlayer;
     u32            activeBoneIndexes;
     s32            boneIdx;
     s32            scaleLog2;
     s32            boneTranslationDataIdx;
     s32            boneRotationDataIdx;
+    s32            j;
+    s32            i;
     s8*            frame0TranslationData;
     s8*            frame1TranslationData;
     s8*            frame0RotationData;
     s8*            frame1RotationData;
-    s32            j;
-    s32            i;
+    void*          frame0Data;
+    void*          frame0RotData;
+    void*          frame1Data;
+    void*          frame1RotData;
+    GsCOORDINATE2* coord;
+    s_AnmBindPose* bindPose;
 
     boneCount     = anmHeader->boneCount_6;
-    frame0Data    = (u8*)anmHeader + anmHeader->dataOffset_0 + (anmHeader->frameDataSize_4 * keyFrame0);
+    frame0Data    = (u8*)anmHeader + anmHeader->dataOffset_0 + (anmHeader->frameDataSize_4 * keyframe0);
     frame0RotData = frame0Data + (anmHeader->translationBoneCount_3 * 3);
-    frame1Data    = (u8*)anmHeader + anmHeader->dataOffset_0 + (anmHeader->frameDataSize_4 * keyFrame1);
+    frame1Data    = (u8*)anmHeader + anmHeader->dataOffset_0 + (anmHeader->frameDataSize_4 * keyframe1);
     frame1RotData = frame1Data + (anmHeader->translationBoneCount_3 * 3);
 
-    isPlayerCoords = (boneCoords == &g_SysWork.playerBoneCoords_890[PlayerBone_Root]);
-    if (isPlayerCoords)
+    // For player, use inverted mask of `extra_128.disabledAnimBones_18` to facilitate masking of upper and lower body.
+    isPlayer = (boneCoords == &g_SysWork.playerBoneCoords_890[HarryBone_Root]);
+    if (isPlayer)
     {
-        // For player, use inverted mask of `extra_128.disabledAnimBones_18`
         activeBoneIndexes = ~g_SysWork.player_4C.extra_128.disabledAnimBones_18;
     }
     else
@@ -1631,7 +1631,7 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyF
          boneIdx < boneCount;
          boneIdx++, bindPose++, coord++)
     {
-        // Process bones that are marked as active
+        // Process bones marked as active.
         if (activeBoneIndexes & (1 << boneIdx))
         {
             coord->flg = 0;
@@ -1640,18 +1640,19 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyF
             boneTranslationDataIdx = bindPose->translationDataIdx_2;
             if (boneTranslationDataIdx >= 0)
             {
-                frame0TranslationData = frame0Data + (boneTranslationDataIdx * 3); // 3 byte vector translation
+                // 3-byte vector translation.
+                frame0TranslationData = frame0Data + (boneTranslationDataIdx * 3);
                 frame1TranslationData = frame1Data + (boneTranslationDataIdx * 3);
 
-                // Interpolate each translation component (x, y, z)
+                // Interpolate XYZ translation components.
                 for (i = 0; i < 3; i++)
                 {
-                    // Linear interpolation with scaling: frame0 + (frame1-frame0) * alpha
+                    // Linear interpolation with scaling: `frame0 + (frame1 - frame0) * alpha`.
                     coord->coord.t[i] = (*frame0TranslationData << scaleLog2) +
-                                        (((*frame1TranslationData - *frame0TranslationData) * alpha) >> (0xC - scaleLog2));
+                                        (((*frame1TranslationData - *frame0TranslationData) * alpha) >> (Q12_SHIFT - scaleLog2));
 
-                    frame0TranslationData += 1;
-                    frame1TranslationData += 1;
+                    frame0TranslationData++;
+                    frame1TranslationData++;
                 }
 
                 if (boneTranslationDataIdx == 0)
@@ -1663,10 +1664,11 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyF
             boneRotationDataIdx = bindPose->rotationDataIdx_1;
             if (boneRotationDataIdx >= 0)
             {
-                frame0RotationData = frame0RotData + (boneRotationDataIdx * 9); // 9 byte rotation matrix
+                // 9-byte rotation matrix.
+                frame0RotationData = frame0RotData + (boneRotationDataIdx * 9);
                 frame1RotationData = frame1RotData + (boneRotationDataIdx * 9);
 
-                // Interpolate rotation matrix
+                // Interpolate rotation matrix.
                 for (i = 0; i < 3; i++)
                 {
                     for (j = 0; j < 3; j++)
@@ -1674,20 +1676,20 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyF
                         coord->coord.m[i][j] = (*frame0RotationData << 5) +
                                                (((*frame1RotationData - *frame0RotationData) * alpha) >> 7);
 
-                        frame0RotationData += 1;
-                        frame1RotationData += 1;
+                        frame0RotationData++;
+                        frame1RotationData++;
                     }
                 }
             }
         }
     }
 
-    // Copy player hip translation to torso
-    if (isPlayerCoords)
+    // Copy player hips translation to torso.
+    if (isPlayer)
     {
         for (i = 0; i < 3; i++)
         {
-            g_SysWork.playerBoneCoords_890[PlayerBone_Torso].coord.t[i] = g_SysWork.playerBoneCoords_890[PlayerBone_Hips].coord.t[i];
+            g_SysWork.playerBoneCoords_890[HarryBone_Torso].coord.t[i] = g_SysWork.playerBoneCoords_890[HarryBone_Hips].coord.t[i];
         }
     }
 }
@@ -1733,14 +1735,14 @@ q19_12 Anim_DurationGet(s_Model* model, s_AnimInfo* anim) // 0x800449AC
     return anim->timeDelta_8.variableTimeDeltaFunc();
 }
 
-/** @brief Gets the time */
-static inline q19_12 Anim_TimeStepGet(s_Model* model, s_AnimInfo* targetAnim)
+/** @brief Computes the time step of the target animation. */
+static inline q19_12 Anim_TimeStepGet(s_Model* model, s_AnimInfo* animInfo)
 {
     q19_12 duration;
 
     if (model->anim_4.flags_2 & AnimFlag_Unlocked)
     {
-        duration = Anim_DurationGet(model, targetAnim);
+        duration = Anim_DurationGet(model, animInfo);
         return FP_MULTIPLY_PRECISE(duration, g_DeltaTime0, Q12_SHIFT);
     }
 
@@ -1931,7 +1933,7 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     s32 startKeyframeIdx;
     s32 endKeyframeIdx;
     s32 timeDelta;
-    register s32 timeStep asm("v0"); // @hack: Manually set register to match.
+    register s32 timeStep asm("v0"); // @hack Manually set register to match.
     s32 alpha;
     s32 sinVal;
     s32 newTime;

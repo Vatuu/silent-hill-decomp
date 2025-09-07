@@ -514,7 +514,7 @@ void Event_AirScreamerIntroCutscene() // 0x800DBAA0
             g_SysWork.player_4C.chara_0.position_18.vz = FP_METER(269.7f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(5.0f);
 
-            g_Timer0 = Q19_12(26.0f);
+            g_Timer0 = FP_TIME(26.0f);
 
             func_8008616C(0, true, 3, FP_TIME(0.0f), false);
 
@@ -534,9 +534,9 @@ void Event_AirScreamerIntroCutscene() // 0x800DBAA0
             SysWork_StateStepIncrement();
 
         case 4:
-            var_a1     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q19_12(15.0f), Q12_SHIFT);
-            g_Timer0 = MIN(var_a1, Q19_12(37.0f));
-            if (g_Timer0 >= Q19_12(37.0f))
+            var_a1     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(15.0f), Q12_SHIFT);
+            g_Timer0 = MIN(var_a1, FP_TIME(37.0f));
+            if (g_Timer0 >= FP_TIME(37.0f))
             {
                 SysWork_StateStepIncrement();
             }
@@ -559,16 +559,16 @@ void Event_AirScreamerIntroCutscene() // 0x800DBAA0
             SysWork_StateStepIncrement();
 
         case 9:
-            var_a1     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q19_12(15.0f), Q12_SHIFT);
-            g_Timer0 = MIN(var_a1, Q19_12(52.0f));
-            if (g_Timer0 >= Q19_12(52.0f))
+            var_a1     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(15.0f), Q12_SHIFT);
+            g_Timer0 = MIN(var_a1, FP_TIME(52.0f));
+            if (g_Timer0 >= FP_TIME(52.0f))
             {
                 SysWork_StateStepIncrement();
             }
             break;
 
         case 10:
-            g_Timer0 = MAX(g_Timer0, Q19_12(53.0f));
+            g_Timer0 = MAX(g_Timer0, FP_TIME(53.0f));
             D_800E23A1 = 0x80;
             Savegame_EventFlagSetAlt(EventFlag_45);
             
@@ -580,10 +580,10 @@ void Event_AirScreamerIntroCutscene() // 0x800DBAA0
             SysWork_StateStepIncrement();
 
         case 12:
-            var_a1     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q19_12(15.0f), Q12_SHIFT);
-            g_Timer0 = MIN(var_a1, Q19_12(75.0f));
+            var_a1     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(15.0f), Q12_SHIFT);
+            g_Timer0 = MIN(var_a1, FP_TIME(75.0f));
 
-            if (g_Timer0 >= Q19_12(75.0f))
+            if (g_Timer0 >= FP_TIME(75.0f))
             {
                 SysWork_StateStepIncrement();
             }
@@ -594,14 +594,14 @@ void Event_AirScreamerIntroCutscene() // 0x800DBAA0
 
             D_800E23A1 = 0xE0;
             Savegame_EventFlagSetAlt(EventFlag_46);
-            g_Timer0 = Q19_12(76.0f);
+            g_Timer0 = FP_TIME(76.0f);
 
             SysWork_StateStepIncrement();
 
         case 14:
-            var_a1     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q19_12(18.0f), Q12_SHIFT);
-            g_Timer0 = MIN(var_a1, Q19_12(115.0f));
-            if (g_Timer0 >= Q19_12(115.0f))
+            var_a1   = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(18.0f), Q12_SHIFT);
+            g_Timer0 = MIN(var_a1, FP_TIME(115.0f));
+            if (g_Timer0 >= FP_TIME(115.0f))
             {
                 SysWork_StateStepIncrement();
             }
@@ -613,9 +613,9 @@ void Event_AirScreamerIntroCutscene() // 0x800DBAA0
             SysWork_StateStepIncrement();
 
         case 16:
-            var_a1     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q19_12(18.0f), Q12_SHIFT);
-            g_Timer0 = MIN(var_a1, Q19_12(146.0f));
-            if (g_Timer0 >= Q19_12(146.0f))
+            var_a1     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(18.0f), Q12_SHIFT);
+            g_Timer0 = MIN(var_a1, FP_TIME(146.0f));
+            if (g_Timer0 >= FP_TIME(146.0f))
             {
                 SysWork_StateStepIncrement();
             }
@@ -628,9 +628,9 @@ void Event_AirScreamerIntroCutscene() // 0x800DBAA0
             SysWork_StateStepIncrement();
 
         case 18:
-            var_a1     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q19_12(18.0f), Q12_SHIFT);
-            g_Timer0 = MIN(var_a1, Q19_12(147.0f));
-            if (g_Timer0 >= Q19_12(147.0f))
+            var_a1     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(18.0f), Q12_SHIFT);
+            g_Timer0 = MIN(var_a1, FP_TIME(147.0f));
+            if (g_Timer0 >= FP_TIME(147.0f))
             {
                 SysWork_StateStepIncrement();
             }
@@ -641,9 +641,9 @@ void Event_AirScreamerIntroCutscene() // 0x800DBAA0
             SysWork_StateStepIncrement();
 
         case 20:
-            var_a1     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q19_12(18.0f), Q12_SHIFT);
-            g_Timer0 = MIN(var_a1, Q19_12(154.0f));
-            if (g_Timer0 >= Q19_12(154.0f))
+            var_a1     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(18.0f), Q12_SHIFT);
+            g_Timer0 = MIN(var_a1, FP_TIME(154.0f));
+            if (g_Timer0 >= FP_TIME(154.0f))
             {
                 SysWork_StateStepIncrement();
             }

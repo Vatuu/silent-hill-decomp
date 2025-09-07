@@ -18,7 +18,7 @@
 // ======
 // ENUMS
 // ======
- 
+
 /** @brief Player states. */
 typedef enum _PlayerState
 {
@@ -308,7 +308,7 @@ typedef enum _PlayerAnim
     PlayerAnim_Kick                    = 24,
     PlayerAnim_Stomp                   = 25,
     PlayerAnim_Idle                    = 26,
-    PlayerAnim_IdleTired               = 27,
+    PlayerAnim_IdleExhausted           = 27,
     PlayerAnim_HandgunAim              = 28,
     PlayerAnim_Unk29                   = 29, // } Handgun.
     PlayerAnim_Unk30                   = 30, // }

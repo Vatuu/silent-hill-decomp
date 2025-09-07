@@ -238,7 +238,6 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, s32 arg1) // 0x80034
     cont->field_28 = processedInputFlags;
 }
 
-// @unused
 bool func_8003483C(u16* arg0) // 0x8003483C
 {
     if (g_Controller0->btnsClicked_10 & *(*arg0 + arg0))

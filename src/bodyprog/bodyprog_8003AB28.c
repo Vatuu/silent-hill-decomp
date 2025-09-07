@@ -1204,12 +1204,12 @@ s32 func_8003CD5C() // 0x8003CD5C
     return D_800BCE18.field_1BAC.field_0;
 }
 
-void func_8003CD6C(s_PlayerCombat* arg0) // 0x8003CD6C
+void func_8003CD6C(s_PlayerCombat* combat) // 0x8003CD6C
 {
     s32 itemId;
     s8  equippedWeaponId;
 
-    equippedWeaponId = arg0->equippedWeapon_F;
+    equippedWeaponId = combat->equippedWeapon_F;
     itemId           = NO_VALUE;
     if (equippedWeaponId != NO_VALUE)
     {
@@ -1439,11 +1439,11 @@ void func_8003D058() // 0x8003D058
     {
         if (ptr0->field_0 == 164)
         {
-            coord = &g_SysWork.playerBoneCoords_890[PlayerBone_LeftHand];
+            coord = &g_SysWork.playerBoneCoords_890[HarryBone_LeftHand];
         } 
         else 
         {
-            coord = &g_SysWork.playerBoneCoords_890[PlayerBone_RightHand];
+            coord = &g_SysWork.playerBoneCoords_890[HarryBone_RightHand];
         }
 
         if (Fs_QueueIsEntryLoaded(ptr0->field_4) != 0) 
@@ -2298,7 +2298,7 @@ void func_8003E740() // 0x8003E740
 
     poly = (POLY_FT4*)GsOUT_PACKET_P;
 
-    func_80049AF8(&g_SysWork.playerBoneCoords_890[PlayerBone_RightHand], &sp18);
+    func_80049AF8(&g_SysWork.playerBoneCoords_890[HarryBone_RightHand], &sp18);
     SetRotMatrix(&sp18);
     SetTransMatrix(&sp18);
 
@@ -2396,8 +2396,8 @@ void func_8003EB54() // 0x8003EB54
 {
     g_SysWork.field_2378 = FP_FLOAT_TO(1.0f, Q12_SHIFT);
 
-    g_SysWork.field_235C = &g_SysWork.playerBoneCoords_890[PlayerBone_Root];
-    g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[PlayerBone_Root];
+    g_SysWork.field_235C = &g_SysWork.playerBoneCoords_890[HarryBone_Root];
+    g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[HarryBone_Root];
 
     Math_Vector3Set(&g_SysWork.field_2360, FP_METER(0.0f), FP_METER(-0.2f), FP_METER(-2.0f));
     Math_SVectorSet(&g_SysWork.field_2370, FP_ANGLE(10.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
@@ -2407,8 +2407,8 @@ void func_8003EBA0() // 0x8003EBA0
 {
     g_SysWork.field_2378 = FP_FLOAT_TO(1.0f, Q12_SHIFT);
 
-    g_SysWork.field_235C = &g_SysWork.playerBoneCoords_890[PlayerBone_Torso];
-    g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[PlayerBone_Root];
+    g_SysWork.field_235C = &g_SysWork.playerBoneCoords_890[HarryBone_Torso];
+    g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[HarryBone_Root];
 
     Math_Vector3Set(&g_SysWork.field_2360, FP_METER(-0.08f), FP_METER(-0.28f), FP_METER(0.12f));
     Math_SVectorSet(&g_SysWork.field_2370, FP_ANGLE(-15.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));

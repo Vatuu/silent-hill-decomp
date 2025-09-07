@@ -1637,7 +1637,7 @@ void func_80036E48(u16* arg0, s16* arg1) // 0x80036E48
             }
         }
 
-        do { var_t3++; } while (0); // @hack: Required for match.
+        do { var_t3++; } while (0); // @hack Required for match.
         var_t7++;
         var_t2 += (D_800C3920 - 1) * 3;
     }
