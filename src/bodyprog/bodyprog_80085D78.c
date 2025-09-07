@@ -2900,7 +2900,6 @@ s_WaterZone* Map_GetWaterZone(s32 posX, s32 posZ, s_WaterZone* waterZone)
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008E5B4); // 0x8008E5B4
 
 u32 D_800AFDAC = 0;
-static SVECTOR svec0 = {};
 void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2) // 0x8008E794
 {
     VECTOR    sp10;
@@ -2910,6 +2909,7 @@ void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2) // 0x8008E794
     s32       angle0;
     u32       sinAngle0;
     POLY_FT4* poly;
+    static SVECTOR svec0 = {};
 
     memset(&sp20, 0, 16);
     sp20.vx = arg0->vx >> 4;
