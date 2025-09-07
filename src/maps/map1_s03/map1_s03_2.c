@@ -1,8 +1,8 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
+#include "maps/map1/map1_s03.h"
 #include "main/rng.h"
 #include "maps/shared.h"
-#include "maps/map1/map1_s03.h"
 
 #include "maps/shared/Ai_Stalker_Update.h" // 0x800D2DC0
 
@@ -112,7 +112,7 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsC
 
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
-    structPtr = &D_800E1410[chara->model_0.anim_4.status_0];
+    structPtr = &LOCKER_DEAD_BODY_ANIM_INFOS[chara->model_0.anim_4.status_0];
     structPtr->updateFunc_0(&chara->model_0, anmHeader, coords, structPtr);
 
     chara->field_C8         = -0x4CC;
