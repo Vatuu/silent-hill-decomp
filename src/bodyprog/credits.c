@@ -22,6 +22,21 @@ s_800AFE08 D_800AFE08 =
     .field_10 = (s32*)0x801E5E24,
 };
 
+s_800AFE24 D_800AFE24 =
+{
+    .field_6   = 24,
+    .field_8   = 0x2CFFFFFF,
+    .field_C   = (s16*)0x801E5C24,
+    .field_10  = (s32*)0x801E5E40,
+    .field_1C  = 4096,
+    .field_24  = 240,
+    .field_30  = 0xF0000,
+    .field_34  = 4096,
+    .field_3C  = -4096,
+    .field_48  = 4096,
+    .field_4C  = 4551,
+};
+
 void func_8008F94C() // 0x8008F94C
 {
     s16 temp_s1;
