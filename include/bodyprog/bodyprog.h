@@ -927,7 +927,8 @@ typedef struct
     u8  field_F;
     u8  field_10;
     u8  field_11;
-    u8  unk_12[6];
+    u16 unk_12; // guessed
+    u32* unk_14; // some pointer, all entries have the same value D_800AD4C4
 } s_800AD4C8;
 STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
 
