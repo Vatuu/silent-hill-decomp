@@ -1549,27 +1549,27 @@ void Anim_BoneInit(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords) // 0x80044
 {
     s_AnmBindPose* bindPose;
     GsCOORDINATE2* coord;
-    s32 boneIdx;
-    s32 i;
-    s32 j;
+    s32            boneIdx;
+    s32            i;
+    s32            j;
 
     GsInitCoordinate2(NULL, boneCoords);
-    
-    for(boneIdx = 1, bindPose = &anmHeader->bindPoses_14[1], coord = &boneCoords[1];
-        boneIdx < anmHeader->boneCount_6;
-        boneIdx++, bindPose++, coord++)
-    {        
+
+    for (boneIdx = 1, bindPose = &anmHeader->bindPoses_14[1], coord = &boneCoords[1];
+         boneIdx < anmHeader->boneCount_6;
+         boneIdx++, bindPose++, coord++)
+    {
         coord->super = &boneCoords[anmHeader->bindPoses_14[boneIdx].parentBone];
-        
+
         // If no translation for this bone, copy over `translationInitial_3`
         if (bindPose->translationDataIdx_2 < 0)
         {
-            for(i = 0; i < 3; i++)
+            for (i = 0; i < 3; i++)
             {
                 coord->coord.t[i] = anmHeader->bindPoses_14[boneIdx].translationInitial_3[i] << anmHeader->scaleLog2_12;
             }
         }
-        
+
         // If no rotation for this bone, create identity matrix.
         if (bindPose->rotationDataIdx_1 < 0)
         {
