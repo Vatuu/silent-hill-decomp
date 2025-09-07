@@ -3129,6 +3129,7 @@ void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructU
 
 s32 func_8003FEC0(s_sub_StructUnk3* arg0) // 0x8003FEC0
 {
+    static s32 y_ary[5] = { 0x1C00, 0x6000, 0x9800, 0xC800, 0xF000 };
     if (D_800C4168.fogEnabled_1)
     {
         return arg0->field_10;
@@ -3136,7 +3137,7 @@ s32 func_8003FEC0(s_sub_StructUnk3* arg0) // 0x8003FEC0
 
     if (D_800C4168.field_0 == 1)
     {
-        return vwOresenHokan(D_800A9FB4, 5, arg0->field_4, 0, FP_FLOAT_TO(2.0f, Q12_SHIFT));
+        return vwOresenHokan(y_ary, ARRAY_SIZE(y_ary), arg0->field_4, 0, FP_FLOAT_TO(2.0f, Q12_SHIFT));
     }
 
     return FP_FLOAT_TO(20.0f, Q12_SHIFT);
