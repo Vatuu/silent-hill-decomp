@@ -904,7 +904,9 @@ STATIC_ASSERT_SIZEOF(s_800A992C, 24);
 typedef struct
 {
     u8  field_0;
-    u8  unk_1[3];
+    u8  unk_1;
+    u8  unk_2;
+    u8  unk_3;
     u32 field_4    : 24;
     u8  field_4_24 : 8;
     u32 field_8    : 24;
@@ -1951,8 +1953,6 @@ extern u32 D_800A9FB0;
 extern s32 D_800A9FB4[];
 
 extern u8 D_800AA5E0[];
-
-extern s_800AA894 D_800AA894[];
 
 extern s16 g_StringColorId; // 0x800AD498
 
