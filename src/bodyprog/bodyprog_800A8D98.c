@@ -809,4 +809,11 @@ s8 g_MapMarkingTimFileIdxs[56] =
 };
 
 s_FsImageDesc D_800A9A04 = { .tPage = {1, 21}, .clutX = 224, .clutY = 13 };
-
+s32 D_800A9A0C = 0;
+s32 D_800A9A10 = 0;
+u32 g_MapEventIdx = 0;
+u32 D_800A9A18 = 0; // ?
+s32 D_800A9A1C = 0;
+s32 D_800A9A20 = 0;
+s32 D_800A9A24 = 0;
+s32 D_800A9A28 = 0;
