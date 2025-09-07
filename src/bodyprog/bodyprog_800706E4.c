@@ -691,13 +691,13 @@ void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, s_AnmHead
     if (!g_Player_IsInWalkToRunTransition)
     {
         // Disable upper body bones before playing anim.
-        g_SysWork.player_4C.extra_128.disabledAnimBones_18 = BITMASK_RANGE(HarryBone_Root, HarryBone_RightHand);
+        g_SysWork.player_4C.extra_128.disabledAnimBones_18 = HARRY_UPPER_BODY_BONE_MASK;
 
         animInfo = &HARRY_BASE_ANIM_INFOS[chara->model_0.anim_4.status_0];
         animInfo->updateFunc_0(&chara->model_0, anmHeader, coord, animInfo);
 
         // Re-enable upper body bones, disable lower body bones.
-        g_SysWork.player_4C.extra_128.disabledAnimBones_18 = BITMASK_RANGE(HarryBone_Hips, HarryBone_RightFoot);
+        g_SysWork.player_4C.extra_128.disabledAnimBones_18 = HARRY_LOWER_BODY_BONE_MASK;
 
         animInfo = &HARRY_BASE_ANIM_INFOS[extra->model_0.anim_4.status_0];
         animInfo->updateFunc_0(&extra->model_0, anmHeader, coord, animInfo);
@@ -705,14 +705,14 @@ void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, s_AnmHead
     }
 
     // Disable upper body bones before playing anim.
-    g_SysWork.player_4C.extra_128.disabledAnimBones_18 = BITMASK_RANGE(HarryBone_Root, HarryBone_RightHand);
+    g_SysWork.player_4C.extra_128.disabledAnimBones_18 = HARRY_UPPER_BODY_BONE_MASK;
     chara->model_0.anim_4.status_0                     = ANIM_STATUS(PlayerAnim_Unk0, false);
 
     animInfo = &HARRY_BASE_ANIM_INFOS[ANIM_STATUS(PlayerAnim_Unk0, false)];
     animInfo->updateFunc_0(&chara->model_0, anmHeader, coord, animInfo);
 
     // Re-enable upper body bones, disable lower body bones.
-    g_SysWork.player_4C.extra_128.disabledAnimBones_18 = BITMASK_RANGE(HarryBone_Hips, HarryBone_RightFoot);
+    g_SysWork.player_4C.extra_128.disabledAnimBones_18 = HARRY_LOWER_BODY_BONE_MASK;
 
     animInfo = &HARRY_BASE_ANIM_INFOS[extra->model_0.anim_4.status_0];
     animInfo->updateFunc_0(&extra->model_0, anmHeader, coord, animInfo);

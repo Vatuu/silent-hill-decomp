@@ -15,6 +15,13 @@
  * `upper_*_3D`
  */
 
+// ==========
+// CONSTANTS
+// ==========
+
+#define HARRY_UPPER_BODY_BONE_MASK BITMASK_RANGE(HarryBone_Root, HarryBone_RightHand)
+#define HARRY_LOWER_BODY_BONE_MASK BITMASK_RANGE(HarryBone_Hips, HarryBone_RightFoot)
+
 // ======
 // ENUMS
 // ======
