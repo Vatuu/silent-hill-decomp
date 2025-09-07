@@ -519,9 +519,10 @@ bool func_800713E8(s32 animStatus, s_SubCharacter* chara, s32 keyframe0, s32 key
  * @note SH2 symbols have a similar function named `PlayerFunction`, but code-wise they
  * doesn't share many similarities.
  */
-void Player_Update(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord); // 0x800717D0
+void Player_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coord); // 0x800717D0
 
-void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, void* arg2, GsCOORDINATE2* coord); // 0x80071968
+/** Player anim handler? */
+void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, s_AnmHeader* anmHeader, GsCOORDINATE2* coord); // 0x80071968
 
 /** @brief Main update function for player logic. */
 void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord); // 0x80071CE8

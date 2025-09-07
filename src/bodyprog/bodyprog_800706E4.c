@@ -315,7 +315,7 @@ bool func_800713E8(s32 animStatus, s_SubCharacter* chara, s32 keyframe0, s32 key
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800706E4", func_80071620); // 0x80071620
 
-void Player_Update(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord) // 0x800717D0
+void Player_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coord) // 0x800717D0
 {
     // Called by `GameState_InGame_Update`, might be player update function.
     // - `chara` always `&g_SysWork.player_4C.chara_0`.
@@ -367,7 +367,7 @@ void Player_Update(s_SubCharacter* chara, void* arg1, GsCOORDINATE2* coord) // 0
             g_MapOverlayHeader.func_BC(chara, extra, coord);
         }
 
-        func_80071968(chara, extra, arg1, coord);
+        func_80071968(chara, extra, anmHeader, coord);
         func_8007D090(chara, extra, coord);
     }
 
@@ -495,7 +495,7 @@ static inline void func_80071968_Switch1()
     }
 }
 
-void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, void* arg2, GsCOORDINATE2* coord)
+void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, s_AnmHeader* anmHeader, GsCOORDINATE2* coord)
 {
     s_AnimInfo* animInfo;
 
@@ -694,13 +694,13 @@ void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, void* arg
         g_SysWork.player_4C.extra_128.disabledAnimBones_18 = BITMASK_RANGE(HarryBone_Root, HarryBone_RightHand);
 
         animInfo = &HARRY_BASE_ANIM_INFOS[chara->model_0.anim_4.status_0];
-        animInfo->updateFunc_0(&chara->model_0, (s32)arg2, coord, animInfo);
+        animInfo->updateFunc_0(&chara->model_0, anmHeader, coord, animInfo);
 
         // Re-enable upper body bones, disable lower body bones.
         g_SysWork.player_4C.extra_128.disabledAnimBones_18 = BITMASK_RANGE(HarryBone_Hips, HarryBone_RightFoot);
 
         animInfo = &HARRY_BASE_ANIM_INFOS[extra->model_0.anim_4.status_0];
-        animInfo->updateFunc_0(&extra->model_0, (s32)arg2, coord, animInfo);
+        animInfo->updateFunc_0(&extra->model_0, anmHeader, coord, animInfo);
         return;
     }
 
@@ -709,13 +709,13 @@ void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, void* arg
     chara->model_0.anim_4.status_0                     = ANIM_STATUS(PlayerAnim_Unk0, false);
 
     animInfo = &HARRY_BASE_ANIM_INFOS[ANIM_STATUS(PlayerAnim_Unk0, false)];
-    animInfo->updateFunc_0(&chara->model_0, (s32)arg2, coord, animInfo);
+    animInfo->updateFunc_0(&chara->model_0, anmHeader, coord, animInfo);
 
     // Re-enable upper body bones, disable lower body bones.
     g_SysWork.player_4C.extra_128.disabledAnimBones_18 = BITMASK_RANGE(HarryBone_Hips, HarryBone_RightFoot);
 
     animInfo = &HARRY_BASE_ANIM_INFOS[extra->model_0.anim_4.status_0];
-    animInfo->updateFunc_0(&extra->model_0, (s32)arg2, coord, animInfo);
+    animInfo->updateFunc_0(&extra->model_0, anmHeader, coord, animInfo);
 
     if (chara->model_0.anim_4.status_0 == HARRY_BASE_ANIM_INFOS[ANIM_STATUS(PlayerAnim_Unk0, false)].status_6)
     {

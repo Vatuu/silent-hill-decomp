@@ -1722,7 +1722,7 @@ void func_80044950(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2*
     s_AnimInfo* animInfo;
 
     animInfo = func_80044918(&chara->model_0.anim_4);
-    animInfo->updateFunc_0(chara, anmHeader, coords, animInfo);
+    animInfo->updateFunc_0(&chara->model_0, anmHeader, coords, animInfo);
 }
 
 q19_12 Anim_DurationGet(s_Model* model, s_AnimInfo* anim) // 0x800449AC

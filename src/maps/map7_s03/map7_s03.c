@@ -253,7 +253,7 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", Anim_StartKeyframeIdxGet)
 
 #include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800D5B68
 
-void Ai_LittleIncubus_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x800D5BC8
+void Ai_LittleIncubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords) // 0x800D5BC8
 {
     s32         temp_s0;
     s32         var_a2;
@@ -286,7 +286,7 @@ void Ai_LittleIncubus_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coo
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
     animInfo = &g_Ai_LittleIncubus_AnimInfo[chara->model_0.anim_4.status_0];
-    animInfo->updateFunc_0(chara, arg1, coords, animInfo);
+    animInfo->updateFunc_0(&chara->model_0, anmHeader, coords, animInfo);
 
     func_800705E4(coords, 1, temp_s0, temp_s0, temp_s0);
     func_800705E4(coords, 7, temp_s0, temp_s0, temp_s0);

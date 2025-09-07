@@ -193,7 +193,7 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", sharedFunc_800D9188_0_s
 
 #include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800DE064
 
-void Ai_Flauros_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x800DE0C4
+void Ai_Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords) // 0x800DE0C4
 {
     s32         i;
     s32         var_s1;
@@ -228,7 +228,7 @@ void Ai_Flauros_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) /
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
     animInfo = &g_Ai_Flauros_AnimInfo[chara->model_0.anim_4.status_0];
-    animInfo->updateFunc_0(chara, arg1, coords, animInfo);
+    animInfo->updateFunc_0(&chara->model_0, anmHeader, coords, animInfo);
 
     for (i = 6; i < 11; i++)
     {
@@ -236,7 +236,7 @@ void Ai_Flauros_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) /
     }
 }
 
-void Ai_Parasite_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x800DE1CC
+void Ai_Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords) // 0x800DE1CC
 {
     s_AnimInfo* animInfo;
 
@@ -253,7 +253,7 @@ void Ai_Parasite_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) 
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
     animInfo = &g_Ai_Parasite_AnimInfo[chara->model_0.anim_4.status_0];
-    animInfo->updateFunc_0(chara, arg1, coords, animInfo);
+    animInfo->updateFunc_0(&chara->model_0, anmHeader, coords, animInfo);
 }
 
 void func_800DE26C() {}

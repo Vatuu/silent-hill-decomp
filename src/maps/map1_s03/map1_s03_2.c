@@ -2,8 +2,7 @@
 #include "bodyprog/math.h"
 #include "main/rng.h"
 #include "maps/shared.h"
-
-extern s_AnimInfo D_800E1410[8];
+#include "maps/map1/map1_s03.h"
 
 #include "maps/shared/Ai_Stalker_Update.h" // 0x800D2DC0
 
@@ -71,7 +70,7 @@ INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03_2", sharedFunc_800D9960_1_s
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03_2", sharedFunc_800D99D0_1_s02); // 0x800D9E48
 
-void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x800DA284
+void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords) // 0x800DA284
 {
     s_AnimInfo* structPtr;
 
@@ -114,7 +113,7 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* co
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
     structPtr = &D_800E1410[chara->model_0.anim_4.status_0];
-    structPtr->updateFunc_0(chara, arg1, coords, structPtr);
+    structPtr->updateFunc_0(&chara->model_0, anmHeader, coords, structPtr);
 
     chara->field_C8         = -0x4CC;
     chara->field_D8.field_4 = 0xF5;

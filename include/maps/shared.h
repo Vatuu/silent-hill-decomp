@@ -614,7 +614,7 @@ void Ai_Lisa_Init(s_SubCharacter* chara);
 
 // `Ai_BloodyLisa` related
 void Ai_BloodyLisa_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
-void sharedFunc_800D595C_7_s01(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coord);
+void sharedFunc_800D595C_7_s01(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coord);
 void sharedFunc_800D59A4_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void sharedFunc_800D5B3C_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords);
 bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 sfx, s32 pitch);
@@ -624,7 +624,7 @@ void Ai_BloodyLisa_Init(s_SubCharacter* chara);
 void Ai_Kaufmann_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
 void sharedSymbol_800CF470_3_s00(s_SubCharacter*, GsCOORDINATE2*);
 void sharedFunc_800CF2D8_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coord);
-void sharedFunc_800CF290_3_s00(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coord);
+void sharedFunc_800CF290_3_s00(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coord);
 void Ai_Kaufmann_Init(s_SubCharacter* chara);
 
 // `Ai_GhostChildAlessa` related
@@ -636,7 +636,7 @@ void Ai_GhostChildAlessa_Init(s_SubCharacter* chara);
 
 // `Ai_Alessa` related
 void Ai_Alessa_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
-void sharedFunc_800CECFC_3_s02(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coord);
+void sharedFunc_800CECFC_3_s02(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coord);
 void sharedFunc_800CED44_3_s02(s_SubCharacter* chara, GsCOORDINATE2* coord);
 void sharedFunc_800CEEDC_3_s02(s_SubCharacter*, GsCOORDINATE2*);
 void Ai_Alessa_Init(s_SubCharacter* chara);

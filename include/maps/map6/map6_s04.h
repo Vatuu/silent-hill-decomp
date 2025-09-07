@@ -14,4 +14,7 @@ void func_800D99E4(s_SubCharacter*, s_Model*, s32, GsCOORDINATE2*);
 void func_800D9AAC(s_SubCharacter*, s_Model*);
 void func_800DB4CC(s_SubCharacter*, s_Model*, GsCOORDINATE2*);
 
+void Ai_Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
+void Ai_Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
+
 #endif

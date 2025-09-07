@@ -20,6 +20,8 @@ void func_800D3C80(s_SubCharacter* chara, GsCOORDINATE2* coord);
 void func_800D3E18(s_SubCharacter*, GsCOORDINATE2*);
 void Ai_Incubator_Init(s_SubCharacter* chara);
 
+void Ai_LittleIncubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
+
 void func_800DB608();
 void func_800DD67C(VECTOR3*, s_SubCharacter*, GsCOORDINATE2*);
 void func_800DD98C(s32);
