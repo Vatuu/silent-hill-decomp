@@ -777,11 +777,11 @@ void Gfx_LoadingScreen_PlayerRun() // 0x80035BE0
         func_8003EB54();
         func_8003EEDC(0, 0);
 
-        model->anim_4.flags_2                     |= AnimFlag_Visible;
-        g_SysWork.player_4C.extra_128.field_18     = 0;
-        model->anim_4.flags_2                     |= AnimFlag_Unlocked | AnimFlag_Visible;
-        model->anim_4.time_4                       = FP_TIME(26.0f);
-        g_SysWork.player_4C.chara_0.position_18.vy = FP_METER(0.2f);
+        model->anim_4.flags_2                             |= AnimFlag_Visible;
+        g_SysWork.player_4C.extra_128.disabledAnimBones_18 = 0;
+        model->anim_4.flags_2                             |= AnimFlag_Unlocked | AnimFlag_Visible;
+        model->anim_4.time_4                               = FP_TIME(26.0f);
+        g_SysWork.player_4C.chara_0.position_18.vy         = FP_METER(0.2f);
 
         D_800A998C.field_4 = model->anim_4.status_0;
 

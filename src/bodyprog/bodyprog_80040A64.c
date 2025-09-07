@@ -1615,9 +1615,8 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyF
     isPlayerCoords = (boneCoords == &g_SysWork.playerBoneCoords_890[PlayerBone_Root]);
     if (isPlayerCoords)
     {
-        // For player, use inverted mask from player extra data
-        // TODO: `extra_128.field_18` holds bones that should be disabled?
-        activeBoneIndexes = ~g_SysWork.player_4C.extra_128.field_18;
+        // For player, use inverted mask of `extra_128.disabledAnimBones_18`
+        activeBoneIndexes = ~g_SysWork.player_4C.extra_128.disabledAnimBones_18;
     }
     else
     {

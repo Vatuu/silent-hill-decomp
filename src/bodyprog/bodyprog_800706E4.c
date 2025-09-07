@@ -690,23 +690,31 @@ void func_80071968(s_SubCharacter* chara, s_MainCharacterExtra* extra, void* arg
 
     if (!g_Player_IsInWalkToRunTransition)
     {
-        g_SysWork.player_4C.extra_128.field_18 = FP_FLOAT_TO(0.5f, Q12_SHIFT) - 1;
-        animInfo                               = &HARRY_BASE_ANIM_INFOS[chara->model_0.anim_4.status_0];
+        // Disable bones 0 - 10 before playing anim.
+        g_SysWork.player_4C.extra_128.disabledAnimBones_18 = BITMASK_RANGE(0, 10);
+
+        animInfo = &HARRY_BASE_ANIM_INFOS[chara->model_0.anim_4.status_0];
         animInfo->updateFunc_0(&chara->model_0, (s32)arg2, coord, animInfo);
 
-        g_SysWork.player_4C.extra_128.field_18 = FP_FLOAT_TO(63.5f, Q12_SHIFT);
-        animInfo                               = &HARRY_BASE_ANIM_INFOS[extra->model_0.anim_4.status_0];
+        // Re-enable bones above, disable bones 11-17
+        g_SysWork.player_4C.extra_128.disabledAnimBones_18 = BITMASK_RANGE(11, 17);
+
+        animInfo = &HARRY_BASE_ANIM_INFOS[extra->model_0.anim_4.status_0];
         animInfo->updateFunc_0(&extra->model_0, (s32)arg2, coord, animInfo);
         return;
     }
 
-    g_SysWork.player_4C.extra_128.field_18 = FP_FLOAT_TO(0.5f, Q12_SHIFT) - 1;
-    chara->model_0.anim_4.status_0         = ANIM_STATUS(PlayerAnim_Unk0, false);
-    animInfo                               = &HARRY_BASE_ANIM_INFOS[ANIM_STATUS(PlayerAnim_Unk0, false)];
-    animInfo->updateFunc_0(chara, (s32)arg2, coord, animInfo);
+    // Disable bones 0 - 11 before playing anim.
+    g_SysWork.player_4C.extra_128.disabledAnimBones_18 = BITMASK_RANGE(0, 10);
+    chara->model_0.anim_4.status_0                     = ANIM_STATUS(PlayerAnim_Unk0, false);
 
-    g_SysWork.player_4C.extra_128.field_18 = FP_FLOAT_TO(63.5f, Q12_SHIFT);
-    animInfo                               = &HARRY_BASE_ANIM_INFOS[extra->model_0.anim_4.status_0];
+    animInfo = &HARRY_BASE_ANIM_INFOS[ANIM_STATUS(PlayerAnim_Unk0, false)];
+    animInfo->updateFunc_0(&chara->model_0, (s32)arg2, coord, animInfo);
+
+    // Re-enable bones above, disable bones 11-17
+    g_SysWork.player_4C.extra_128.disabledAnimBones_18 = BITMASK_RANGE(11, 17);
+
+    animInfo = &HARRY_BASE_ANIM_INFOS[extra->model_0.anim_4.status_0];
     animInfo->updateFunc_0(&extra->model_0, (s32)arg2, coord, animInfo);
 
     if (chara->model_0.anim_4.status_0 == HARRY_BASE_ANIM_INFOS[ANIM_STATUS(PlayerAnim_Unk0, false)].status_6)
@@ -1112,8 +1120,8 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                     if (chara->health_B0 <= FP_HEALTH(0.0f) && chara->properties_E4.player.afkTimer_E8 <= FP_TIME(0.0f))
                     {
                         g_MapOverlayHeader.func_DC();
-                        //SysWork_StateSetNext(GameState_ExitMovie); // TODO: Doesn't match.
-                        g_SysWork.sysState_8        = GameState_ExitMovie;
+                        //SysWork_StateSetNext(SysState_GameOver); // TODO: Doesn't match.
+                        g_SysWork.sysState_8        = SysState_GameOver;
                         g_SysWork.timer_24          = 0;
                         g_SysWork.sysStateStep_C[0] = 0;
                         g_SysWork.field_28          = 0;
@@ -1212,8 +1220,8 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                     {
                         g_MapOverlayHeader.func_DC();
 
-                        //SysWork_StateSetNext(GameState_ExitMovie); // TODO: Doesn't match.
-                        g_SysWork.sysState_8        = GameState_ExitMovie;
+                        //SysWork_StateSetNext(SysState_GameOver); // TODO: Doesn't match.
+                        g_SysWork.sysState_8        = SysState_GameOver;
                         g_SysWork.timer_24          = 0;
                         g_SysWork.sysStateStep_C[0] = 0;
                         g_SysWork.field_28          = 0;
@@ -1829,8 +1837,8 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             {
                 g_MapOverlayHeader.func_DC();
                 
-                //SysWork_StateSetNext(GameState_ExitMovie); // TODO: Doesn't match.
-                g_SysWork.sysState_8        = GameState_ExitMovie;
+                //SysWork_StateSetNext(SysState_GameOver); // TODO: Doesn't match.
+                g_SysWork.sysState_8        = SysState_GameOver;
                 g_SysWork.timer_24          = 0;
                 g_SysWork.sysStateStep_C[0] = 0;
                 g_SysWork.field_28          = 0;
@@ -1901,8 +1909,8 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                 
                 g_MapOverlayHeader.func_DC();
                 
-                //SysWork_StateSetNext(GameState_ExitMovie); // TODO: Doesn't match.
-                g_SysWork.sysState_8        = GameState_ExitMovie;
+                //SysWork_StateSetNext(SysState_GameOver); // TODO: Doesn't match.
+                g_SysWork.sysState_8        = SysState_GameOver;
                 g_SysWork.timer_24          = 0;
                 g_SysWork.sysStateStep_C[0] = 0;
                 g_SysWork.field_28          = 0;
@@ -1933,8 +1941,8 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             {
                 g_MapOverlayHeader.func_DC();
                 
-                //SysWork_StateSetNext(GameState_ExitMovie); // TODO: Doesn't match.
-                g_SysWork.sysState_8        = GameState_ExitMovie;
+                //SysWork_StateSetNext(SysState_GameOver); // TODO: Doesn't match.
+                g_SysWork.sysState_8        = SysState_GameOver;
                 g_SysWork.timer_24          = 0;
                 g_SysWork.sysStateStep_C[0] = 0;
                 g_SysWork.field_28          = 0;

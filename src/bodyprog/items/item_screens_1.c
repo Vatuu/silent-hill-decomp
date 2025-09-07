@@ -103,13 +103,15 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
 
     modelPtr3->anim_4.alpha_A       = FP_ALPHA(1.0f);
     extraModelPtr2->anim_4.alpha_A  = FP_ALPHA(1.0f);
-    g_SysWork.player_4C.extra_128.field_18 = 0x7FF;
+
+    g_SysWork.player_4C.extra_128.disabledAnimBones_18 = BITMASK_RANGE(0, 10);
+
     modelPtr3->anim_4.time_4               = FP_TO(modelPtr3->anim_4.keyframeIdx_8, Q12_SHIFT);
     extraModelPtr2->anim_4.time_4          = FP_TO(extraModelPtr2->anim_4.keyframeIdx_8, Q12_SHIFT);
 
     Anim_BoneUpdate((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords_890, modelPtr3->anim_4.keyframeIdx_8, modelPtr3->anim_4.keyframeIdx_8, FP_FLOAT_TO(1, Q12_SHIFT));
 
-    g_SysWork.player_4C.extra_128.field_18 = 0x3F800;
+    g_SysWork.player_4C.extra_128.disabledAnimBones_18 = BITMASK_RANGE(11, 17);
 
     Anim_BoneUpdate((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords_890, extraModelPtr2->anim_4.keyframeIdx_8, extraModelPtr2->anim_4.keyframeIdx_8, FP_FLOAT_TO(1, Q12_SHIFT));
     func_8004C040();

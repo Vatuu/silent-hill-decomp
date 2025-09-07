@@ -324,7 +324,7 @@ void Event_CafeCutscene()
 
         default:
             sharedFunc_800D2244_0_s00(0);
-            SysWork_StateSetNext(0);
+            SysWork_StateSetNext(SysState_Gameplay);
 
             vcReturnPreAutoCamWork(1);
             func_8008616C(0, false, 2, FP_TIME(0.0f), false);
@@ -660,7 +660,7 @@ void Event_AirScreamerIntroCutscene() // 0x800DBAA0
 
         default:
             sharedFunc_800D2244_0_s00(0);
-            SysWork_StateSetNext(0);
+            SysWork_StateSetNext(SysState_Gameplay);
             Player_FallBackward();
 
             g_SysWork.flags_22A4 &= ~(1 << 5);
@@ -795,7 +795,7 @@ void Event_MapItemTake() // 0x800DC3C8
 
         default:
             sharedFunc_800D2244_0_s00(0);
-            SysWork_StateSetNext(0);
+            SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }
