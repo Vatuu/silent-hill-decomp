@@ -2412,8 +2412,7 @@ extern s16 D_800C6E8E;
 
 extern u8 D_800C6E90;
 
-/** SFX data array. */
-extern s_Sfx D_800ACAA8[];
+extern s_Sfx g_Sfx_Table0[420];
 
 extern u8 D_800AD480[24];
 
