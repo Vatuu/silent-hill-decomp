@@ -15,6 +15,7 @@ struct _SubCharacter;
 #define FRAMEBUFFER_HEIGHT_INTERLACED  (FRAMEBUFFER_HEIGHT_PROGRESSIVE * 2)
 
 #define NPC_COUNT_MAX            6
+#define NPC_BONE_COUNT_MAX       10 * NPC_COUNT_MAX
 #define INVENTORY_ITEM_COUNT_MAX 40
 #define INPUT_ACTION_COUNT       14
 #define SAVEGAME_FOOTER_MAGIC    0xDCDC
@@ -1308,7 +1309,7 @@ typedef struct _SysWork
     s_SubCharacter  npcs_1A0[NPC_COUNT_MAX];
     GsCOORDINATE2   playerBoneCoords_890[PlayerBone_Count];
     GsCOORDINATE2   unkCoords_E30[5];  // Might be part of previous array for 5 extra coords which go unused.
-    GsCOORDINATE2   npcCoords_FC0[60]; // Dynamic coord buffer? 10 coords per NPC (given max of 6 NPCs).
+    GsCOORDINATE2   npcCoords_FC0[NPC_BONE_COUNT_MAX]; // Dynamic coord buffer? 10 coords per NPC (given max of 6 NPCs).
     s8              field_2280;        // Maybe NPC AI data past this point.
     s8              loadingScreenIdx_2281;
     s8              field_2282;

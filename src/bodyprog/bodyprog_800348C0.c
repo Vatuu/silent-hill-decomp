@@ -513,7 +513,7 @@ void func_80035560(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOOR
             coordCpy += idx0 + 1;
 
             // Check for end of `g_SysWork.npcCoords_FC0` array.
-            if ((&coordCpy[animFile->boneCount_6] + 1) >= (u32)&g_SysWork.field_2280)
+            if ((&coordCpy[animFile->boneCount_6] + 1) >= &g_SysWork.npcCoords_FC0[NPC_BONE_COUNT_MAX])
             {
                 coordCpy = g_MapOverlayHeader.field_28;
             }
@@ -534,7 +534,7 @@ void func_8003569C() // 0x8003569C
 {
     s32            i;
     GsCOORDINATE2* coord;
-    s_AnmHeader*    animFile;
+    s_AnmHeader*   animFile;
 
     for (i = 1; i < 3; i++)
     {
@@ -545,7 +545,7 @@ void func_8003569C() // 0x8003569C
             coord   += D_800A992C[i].animFile1_8->boneCount_6 + 1;
 
             // Check for end of `g_SysWork.npcCoords_FC0` array.
-            if ((&coord[animFile->boneCount_6] + 1) >= &g_SysWork.field_2280)
+            if ((&coord[animFile->boneCount_6] + 1) >= &g_SysWork.npcCoords_FC0[NPC_BONE_COUNT_MAX])
             {
                 coord = g_MapOverlayHeader.field_28;
             }
