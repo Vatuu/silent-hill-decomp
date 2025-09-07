@@ -14,6 +14,14 @@ struct {
     char f3[5];
 } g_Credits_Digits = { "0.00", "0.00", "0.00", "0.00" };
 
+s_800AFE08 D_800AFE08 =
+{
+    .field_6  = 0x18,
+    .field_8  = 0x64FFFFFF,
+    .field_C  = (s16*)0x801E5C24,
+    .field_10 = (s32*)0x801E5E24,
+};
+
 void func_8008F94C() // 0x8008F94C
 {
     s16 temp_s1;
