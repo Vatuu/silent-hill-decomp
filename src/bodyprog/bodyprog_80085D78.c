@@ -2865,12 +2865,15 @@ u16 D_800AFD7C[] =
     0x04E3, 0x064F, 0x0688, 0x06E3
 };
 
+static s_FsImageDesc img0 = { .tPage = { 0, 13 } };
+static s_FsImageDesc D_800AFDA4 = { .tPage = { 64, 3 }, .u = 224, .v = 0, .clutX = 32, .clutY = 32 };
+
 // Large function.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D990); // 0x8008D990
 
 void func_8008E4EC(s_PlmHeader* plmHeader) // 0x8008E4EC
 {
-    func_80056504(plmHeader, D_8002B2CC.str, &D_800AFD9C, 1);
+    func_80056504(plmHeader, D_8002B2CC.str, &img0, 1);
 }
 
 s_WaterZone* Map_GetWaterZone(s32 posX, s32 posZ, s_WaterZone* waterZone)
@@ -2896,6 +2899,8 @@ s_WaterZone* Map_GetWaterZone(s32 posX, s32 posZ, s_WaterZone* waterZone)
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008E5B4); // 0x8008E5B4
 
+u32 D_800AFDAC = 0;
+static SVECTOR svec0 = {};
 void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2) // 0x8008E794
 {
     VECTOR    sp10;
@@ -2919,7 +2924,7 @@ void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2) // 0x8008E794
     sp30.t[2] += GsWSMATRIX.t[2];
     SetTransMatrix(&sp30);
 
-    if ((RotTransPers(&D_800AFDB0, &sp20, &sp50, &sp50) * 4) >= 0x80)
+    if ((RotTransPers(&svec0, &sp20, &sp50, &sp50) * 4) >= 0x80)
     {
         poly = GsOUT_PACKET_P;
         SetPolyFT4(poly);
