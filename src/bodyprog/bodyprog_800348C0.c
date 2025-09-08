@@ -30,6 +30,11 @@ s_MapMsgSelect g_MapMsg_Select = {};
 u8 g_MapMsg_AudioLoadBlock = 0;
 s8 g_MapMsg_SelectCancelIdx = 0;
 u32 D_800BCD7C = 0x00491021;
+u8 g_SysState_GameOver_TipIdx = 0;
+// 3 bytes of padding.
+s32 g_someTimer0 = 0;
+u32 D_800BCD88 = 0; // @unused padding ?
+u32 D_800BCD8C = 0; // @unused padding ?
 
 void func_800348C0() // 0x800348C0
 {
@@ -2101,11 +2106,11 @@ void GameState_InGame_Update() // 0x80038BD4
 
     if (g_DeltaTime0 != FP_TIME(0.0f))
     {
-        D_800BCD84 = g_DeltaTime0;
+        g_someTimer0 = g_DeltaTime0;
     }
     else
     {
-        D_800BCD84 = g_DeltaTime1;
+        g_someTimer0 = g_DeltaTime1;
     }
 
     if (g_SysWork.sysState_8 == SysState_Gameplay)
@@ -2729,12 +2734,12 @@ void SysState_ReadMessage_Update(s32 arg0) // 0x80039FB8
 
         if (i == 6)
         {
-            g_DeltaTime0 = D_800BCD84;
+            g_DeltaTime0 = g_someTimer0;
         }
     }
     else
     {
-        g_DeltaTime0 = D_800BCD84;
+        g_DeltaTime0 = g_someTimer0;
     }
 
     if (g_SysWork.field_18 == 0)
@@ -2858,20 +2863,20 @@ void SysState_EventCallFunc_Update() // 0x8003A3C8
         Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
     }
 
-    g_DeltaTime0 = D_800BCD84;
+    g_DeltaTime0 = g_someTimer0;
     g_MapOverlayHeader.mapEventFuncs_20[g_MapEventIdx]();
 }
 
 void SysState_EventSetFlag_Update() // 0x8003A460
 {
-    g_DeltaTime0 = D_800BCD84;
+    g_DeltaTime0 = g_someTimer0;
     Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
     g_SysWork.sysState_8 = SysState_Gameplay;
 }
 
 void SysState_EventPlaySound_Update() // 0x8003A4B4
 {
-    g_DeltaTime0 = D_800BCD84;
+    g_DeltaTime0 = g_someTimer0;
 
     Sd_EngineCmd(((u16)g_MapEventIdx + 0x500) & 0xFFFF);
 
@@ -2883,7 +2888,6 @@ void SysState_GameOver_Update() // 0x8003A52C
 {
     #define TIP_COUNT 15
 
-    extern u8   g_SysState_GameOver_TipIdx; // Only used in this func, maybe static.
 
     u16  seenTipIdxs[1];
     s32  tipIdx;
