@@ -409,7 +409,7 @@ void Gfx_Results_Save() // 0x8004D1A0
         {   2,  45,  46,  45 }
     };
 
-    GsOT* ot = &g_ObjectTable1[g_ActiveBuffer];
+    GsOT* ot = &g_OrderingTable2[g_ActiveBuffer];
 
     char* saveDialogStrs[] =
     {
@@ -1194,7 +1194,7 @@ void Gfx_Inventory_CmdOptionsDraw() // 0x8004E864
         "Look"
     };
 
-    ot = &g_ObjectTable1[g_ActiveBuffer];
+    ot = &g_OrderingTable2[g_ActiveBuffer];
 
     if (g_Inventory_SelectionId >= InventorySelectionId_ItemCmd &&
         g_Inventory_SelectionId <= InventorySelectionId_EquippedItemCmd)
@@ -1341,7 +1341,7 @@ void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId) // 0x8004EC7C
     s32      i;
     s8       timeStep;
 
-    GsOT* ot = &g_ObjectTable1[g_ActiveBuffer];
+    GsOT* ot = &g_OrderingTable2[g_ActiveBuffer];
 
     // TODO: Why the large values for some positions?
     s_Triangle2d arrowTris[] =

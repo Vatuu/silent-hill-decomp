@@ -98,14 +98,14 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
         nullsub_800334C8();
         VSync(0);
         GsSwapDispBuff();
-        GsDrawOt(&g_ObjectTable1[g_ActiveBuffer]);
+        GsDrawOt(&g_OrderingTable2[g_ActiveBuffer]);
 
         idx = GsGetActiveBuff();
         g_ActiveBuffer = idx;
         GsOUT_PACKET_P   = (PACKET*)(TEMP_MEMORY_ADDR + (idx << 15));
 
-        GsClearOt(0, 0, &g_ObjectTable0[idx]);
-        GsClearOt(0, 0, &g_ObjectTable1[g_ActiveBuffer]);
+        GsClearOt(0, 0, &g_OrderingTable0[idx]);
+        GsClearOt(0, 0, &g_OrderingTable2[g_ActiveBuffer]);
     }
 }
 
@@ -322,13 +322,13 @@ void GameState_KcetLogo_Update() // 0x800C99A4
         nullsub_800334C8();
         VSync(0);
         GsSwapDispBuff();
-        GsDrawOt(&g_ObjectTable1[g_ActiveBuffer]);
+        GsDrawOt(&g_OrderingTable2[g_ActiveBuffer]);
 
         g_ActiveBuffer = GsGetActiveBuff();
         GsOUT_PACKET_P   = (g_ActiveBuffer << 0xF) + (u32)TEMP_MEMORY_ADDR;
 
-        GsClearOt(0, 0, &g_ObjectTable0[g_ActiveBuffer]);
-        GsClearOt(0, 0, &g_ObjectTable1[g_ActiveBuffer]);
+        GsClearOt(0, 0, &g_OrderingTable0[g_ActiveBuffer]);
+        GsClearOt(0, 0, &g_OrderingTable2[g_ActiveBuffer]);
     }
 }
 

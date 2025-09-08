@@ -1960,8 +1960,8 @@ g_BackgroundColor                           = 0x800A8E58;
 g_ScreenFadeProgress                        = 0x800A8E94; // type:s32
 // vw globals from SH2
 vcNullRoadArray                             = 0x800A8F44; // _VC_ROAD_DATA[2]
-g_ObjectTable0                              = 0x800A8F74; // type:s8
-g_ObjectTable1                              = 0x800A8FC4; // type:s8
+g_OrderingTable0                              = 0x800A8F74; // type:s8
+g_OrderingTable2                              = 0x800A8FC4; // type:s8
 g_DeltaTime1                                = 0x800A8FEC; // type:s32
 g_IntervalVBlanks                           = 0x800A8FF0; // type:s32
 g_Chara_FileInfo                            = 0x800A90FC; // type:CharaFileInfo size:0x2D0

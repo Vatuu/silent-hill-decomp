@@ -141,8 +141,8 @@ void MainLoop() // 0x80032EE0
             GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_ActiveBuffer << 15));
         }
 
-        GsClearOt(0, 0, &g_ObjectTable0[g_ActiveBuffer]);
-        GsClearOt(0, 0, &g_ObjectTable1[g_ActiveBuffer]);
+        GsClearOt(0, 0, &g_OrderingTable0[g_ActiveBuffer]);
+        GsClearOt(0, 0, &g_OrderingTable2[g_ActiveBuffer]);
 
         g_SysWork.field_22A0 = 0;
 
@@ -245,8 +245,8 @@ void MainLoop() // 0x80032EE0
 
         // Draw objects?
         GsSwapDispBuff();
-        GsSortClear(g_GameWork.background2dColor_R_58C, g_GameWork.background2dColor_G_58D, g_GameWork.background2dColor_B_58E, &g_ObjectTable0[g_ActiveBuffer]);
-        GsDrawOt(&g_ObjectTable0[g_ActiveBuffer]);
-        GsDrawOt(&g_ObjectTable1[g_ActiveBuffer]);
+        GsSortClear(g_GameWork.background2dColor_R_58C, g_GameWork.background2dColor_G_58D, g_GameWork.background2dColor_B_58E, &g_OrderingTable0[g_ActiveBuffer]);
+        GsDrawOt(&g_OrderingTable0[g_ActiveBuffer]);
+        GsDrawOt(&g_OrderingTable2[g_ActiveBuffer]);
     }
 }

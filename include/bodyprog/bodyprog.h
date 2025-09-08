@@ -1699,8 +1699,6 @@ extern POLY_G4 D_800A8EB0[];
 
 extern s32 D_800A8F40;
 
-extern GsOT D_800A8F9C[];
-
 extern s_FsImageDesc g_Font16AtlasImg;    // 0x800A8FF4
 extern s_FsImageDesc g_KonamiLogoImg;     // 0x800A8FFC
 extern s_FsImageDesc g_KcetLogoImg;       // 0x800A9004

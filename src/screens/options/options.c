@@ -729,7 +729,7 @@ void Options_MainOptionsMenu_VolumeBarDraw(bool isSfx, u8 vol) // 0x801E3FB8
     GsOT*    ot;
     POLY_F4* poly;
 
-    ot       = &g_ObjectTable1[g_ActiveBuffer];
+    ot       = &g_OrderingTable2[g_ActiveBuffer];
     localVol = vol;
 
     // Draw bar notches.
@@ -1053,7 +1053,7 @@ void Options_MainOptionsMenu_SelectionHighlightDraw(void) // 0x801E472C
 
 void Options_Menu_VignetteDraw(void) // 0x801E49F0
 {
-    GsOT*    ot = &g_ObjectTable0[g_ActiveBuffer];
+    GsOT*    ot = &g_OrderingTable0[g_ActiveBuffer];
     s32      y0;
     s32      y1;
     s32      xy2;
@@ -1507,7 +1507,7 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
             setWH(tile, 2, 0xF0);
         }
 
-        addPrim(g_ObjectTable0[g_ActiveBuffer].org, (TILE*)packet);
+        addPrim(g_OrderingTable0[g_ActiveBuffer].org, (TILE*)packet);
         packet += sizeof(TILE);
     }
 
@@ -1539,7 +1539,7 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
             setWH(tile, 2, 0xF0);
         }
 
-        addPrim(g_ObjectTable0[g_ActiveBuffer].org, (TILE*)packet);
+        addPrim(g_OrderingTable0[g_ActiveBuffer].org, (TILE*)packet);
         packet += sizeof(TILE);
     }
 
@@ -1614,7 +1614,7 @@ void Options_ScreenPosMenu_ArrowsDraw(void) // 0x801E5A08
 
 void Options_ScreenPosMenu_ConfigDraw(void) // 0x801E5CBC
 {
-    GsOT*    ot = &g_ObjectTable1[g_ActiveBuffer];
+    GsOT*    ot = &g_OrderingTable2[g_ActiveBuffer];
     s32      i;
     LINE_F2* line;
     POLY_F4* poly;
@@ -1830,7 +1830,7 @@ void Options_Selection_HighlightDraw(s_Line2d* line, bool hasShadow, bool invert
     POLY_G4*  poly;
     GsOT*     ot;
 
-    ot        = &g_ObjectTable1[g_ActiveBuffer];
+    ot        = &g_OrderingTable2[g_ActiveBuffer];
     linePrim  = (LINE_G2*)GsOUT_PACKET_P;
     localLine = line;
 
@@ -1884,7 +1884,7 @@ void Options_Selection_ArrowDraw(s_Triangle2d* arrow, bool isFlashing, bool rese
     POLY_G3* arrowPoly;
     GsOT*    ot;
     
-    ot = &g_ObjectTable1[g_ActiveBuffer];
+    ot = &g_OrderingTable2[g_ActiveBuffer];
 
     // @unused `resetColor` doesn't serve any meaningful purpose.
     if (resetColor)
@@ -1969,7 +1969,7 @@ void Options_Selection_BulletPointDraw(s_Quad2d* quad, bool isCenter, bool isIna
 {
     #define QUAD_COUNT 2
 
-    GsOT*    ot = &g_ObjectTable1[g_ActiveBuffer];
+    GsOT*    ot = &g_OrderingTable2[g_ActiveBuffer];
     s32      i;
     POLY_G3* poly;
 

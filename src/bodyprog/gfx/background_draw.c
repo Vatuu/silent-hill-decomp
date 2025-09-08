@@ -113,7 +113,7 @@ void Gfx_BackgroundSpritesTransition(s_FsImageDesc* image0, s_FsImageDesc* image
             *((u16*)&poly->r0) = color + (color << 8);
             poly->b0           = color;
 
-            addPrim(g_ObjectTable0[g_ActiveBuffer].org, poly);
+            addPrim(g_OrderingTable0[g_ActiveBuffer].org, poly);
             poly++;
         }
     }
@@ -158,7 +158,7 @@ void Gfx_BackgroundSpriteDraw_2(s_FsImageDesc* image) // 0x80031AAC
         *((u16*)&poly->r0) = g_BackgroundColor + (g_BackgroundColor << 8);
         poly->b0           = g_BackgroundColor;
 
-        addPrim(&g_ObjectTable0[g_ActiveBuffer].org[2], poly);
+        addPrim(&g_OrderingTable0[g_ActiveBuffer].org[2], poly);
         poly++;
     }
 

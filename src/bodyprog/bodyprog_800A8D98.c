@@ -164,19 +164,19 @@ VC_ROAD_DATA vcNullRoadArray[] =
     },
 };
 
-GsOT g_ObjectTable0[] =
+GsOT g_OrderingTable0[2] =
 {
     { 0x0B, (GsOT_TAG*)0x800B5CC8, 0, 0, 0 },
     { 0x0B, (GsOT_TAG*)0x800B7CC8, 0, 0, 0 },
 };
 
-GsOT D_800A8F9C[] =
+GsOT g_OrderingTable1[2] =
 {
     { 0x09, (GsOT_TAG*)0x801E2600, 0, 0, 0 },
     { 0x09, (GsOT_TAG*)0x801E2E00, 0, 0, 0 },
 };
 
-GsOT g_ObjectTable1[] =
+GsOT g_OrderingTable2[2] =
 {
     { 0x04, (GsOT_TAG*)0x800B5C40, 0, 0, 0 },
     { 0x04, (GsOT_TAG*)0x800B5C80, 0, 0, 0 },

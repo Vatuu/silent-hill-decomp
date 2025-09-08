@@ -743,7 +743,7 @@ void func_8004B76C(char* str, s32 useFixedWidth) // 0x8004B76C
 
     glyphSprt  = (GsSPRITE*)PSX_SCRATCH_ADDR(0x30);
     *glyphSprt = D_800C38F8;
-    ot         = &g_ObjectTable1[g_ActiveBuffer];
+    ot         = &g_OrderingTable2[g_ActiveBuffer];
 
     // Parse string.
     while (*str != '\0')

@@ -1406,8 +1406,9 @@ extern s_ControllerData* const g_Controller0;   // 0x80024D4C
 extern s_ControllerData* const g_Controller1;   // 0x80024D50
 
 extern s32  g_ActiveBuffer; // 0x800B9FB8
-extern GsOT g_ObjectTable0[]; // 0x800A8F74
-extern GsOT g_ObjectTable1[]; // 0x800A8FC4
+extern GsOT g_OrderingTable0[2]; // 0x800A8F74
+extern GsOT g_OrderingTable1[2]; // 0x800A8F9C
+extern GsOT g_OrderingTable2[2]; // 0x800A8FC4
 
 extern q19_12        g_DeltaTime0;    // 0x800B5CC0
 extern q19_12        g_DeltaTime1;    // 0x800A8FEC
