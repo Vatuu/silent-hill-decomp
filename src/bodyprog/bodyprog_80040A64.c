@@ -2194,13 +2194,9 @@ void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
 
     // Get skeleton status?
     status = func_80044F6C(arg1, true);
-    if (status == -2)
-    {
-        return;
-    }
 
     // Traverse bone hierarchy and set flags according to some condition.
-    do
+    while (status != -2)
     {
         if (cond)
         {
@@ -2213,7 +2209,6 @@ void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
         
         status = func_80044F6C(arg1, false);
     }
-    while (status != -2);
 }
 
 // Maybe larger anim func.
