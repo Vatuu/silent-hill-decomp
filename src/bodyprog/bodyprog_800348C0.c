@@ -383,7 +383,7 @@ void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
         func_8003CD6C(&g_SysWork.playerCombatInfo_38);
     }
 
-    func_800546A8((u8)g_SysWork.playerCombatInfo_38.equippedWeapon_F);
+    func_800546A8(g_SysWork.playerCombatInfo_38.equippedWeapon_F);
 }
 
 // ========================================

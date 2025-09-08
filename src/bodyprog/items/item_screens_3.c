@@ -1,9 +1,12 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/credits.h"
 #include "bodyprog/item_screens.h"
-#include "bodyprog/player_logic.h"
 #include "bodyprog/math.h"
+#include "bodyprog/player_logic.h"
+#include "bodyprog/gfx/text_draw.h"
+#include "main/rng.h"
 
 const s32 rodataPad_800262F8 = 0;
 
@@ -1574,7 +1577,7 @@ static inline s16 GetUvOrRandom()
 {
     if (D_800AE198 == 1) 
     {
-        D_800AE1A8 = Rng_Rand16() % 134; // TODO: `Rng_GenerateInt(Rng_Rand16(), 0, 133)` doesn't match.
+        D_800AE1A8 = (s32)Rng_Rand16() % 134; // TODO: `Rng_GenerateInt(Rng_Rand16(), 0, 133)` doesn't match.
         return D_800AE1A8;
     }
     else
@@ -1632,7 +1635,7 @@ void Gfx_Inventory_HealthStatusDraw()
             if (i == 2)
             {
                 if (g_SysWork.player_4C.chara_0.health_B0 != FP_HEALTH(100.0f) &&
-                    ((Rng_Rand16() % ((g_SysWork.player_4C.chara_0.health_B0 >> 13) + 2) == 0) || D_800AE198 != 0))
+                    (((s32)Rng_Rand16() % ((g_SysWork.player_4C.chara_0.health_B0 >> 13) + 2) == 0) || D_800AE198 != 0))
                 {
                     D_800AE198++;
 
@@ -2756,8 +2759,6 @@ void Gfx_Items_Render() // 0x80054200
     s32  i;
     s32  saveItemsIdx;
     s32  inventoryItemsIdx;
-    s32* var_s1;
-    s32* var_s2;
 
     func_8004BFE8();
 
@@ -2917,13 +2918,13 @@ void Inventory_ExitAnimFixes() // 0x80054634
         g_SysWork.playerCombatInfo_38.isAiming_13      = false;
     }
 
-    func_800546A8((u8)g_SysWork.playerCombatInfo_38.equippedWeapon_F);
+    func_800546A8(g_SysWork.playerCombatInfo_38.equippedWeapon_F);
     Inventory_ExitAnimEquippedItemUpdate(&field_F);
 }
 
-void func_800546A8(s32 arg0) // 0x800546A8
+void func_800546A8(u8 arg0) // 0x800546A8
 {
-    switch ((u8)arg0)
+    switch (arg0)
     {
         case InventoryItemId_Unequipped:
             func_8003DD80(1, 34);

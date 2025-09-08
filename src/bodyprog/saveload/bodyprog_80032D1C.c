@@ -1,6 +1,7 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/text_draw.h"
 
 void SaveLoad_NowLoadingStringDraw() // 0x80032CE8
 {

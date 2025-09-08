@@ -2926,7 +2926,7 @@ void GameFs_UniqueItemModelLoad(u8 itemId);
 
 void GameFs_MapItemsTextureLoad(s32 mapId);
 
-void func_800546A8(s32 arg0);
+void func_800546A8(u8 arg0);
 
 void func_8005487C(s32);
 

@@ -3,10 +3,10 @@
 #include <libetc.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/memcard.h"
 #include "bodyprog/math.h"
+#include "bodyprog/gfx/text_draw.h"
 
 #define SAVE_FLASH_TIMER_MAX 40
 #define SLOT_COLUMN_OFFSET   150
@@ -248,7 +248,6 @@ void Gfx_SavegameEntryLocationNameDraw(s_SavegameEntry* saveEntry, s32 saveIdx, 
     s32 var0;
     s16 var1;
     s32 colorId;
-    u8* var2;
 
     var1 = g_HiddenElementsByDisplacement[slotIdx];
 
@@ -1460,7 +1459,6 @@ void Gfx_SaveDataInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
     s32                 i;
     s32                 digitCount;
     s32                 offset;
-    u32                 saveFlags;
     u32                 flags;
     u32                 timeInSec;
     s_SavegameMetadata* ptr;

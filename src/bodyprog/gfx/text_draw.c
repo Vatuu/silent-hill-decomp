@@ -265,8 +265,6 @@ void Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004ACF4
 
     s32 i;
     s32 j;
-    s8  tagCode;
-    s8  tagArg;
     s32 charCode;
     u8  msgCode;
     s32 msgArg;

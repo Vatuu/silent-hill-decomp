@@ -305,7 +305,13 @@ void Gfx_ItemScreens_RenderInit(u32* selectedItemId);
 /** Draws some rectangle. */
 void func_8004FB0C();
 
+void Gfx_Inventory_HealthStatusDraw();
+
+void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId);
+
 void Gfx_Results_ItemsDisplay(); //  0x800521A8
+
+void Gfx_Results_ItemsPosition();
 
 void Gfx_Primitive2dTextureSet(s32 x, s32 y, s32 otIdx, s32 abr); // 0x80052088
 
