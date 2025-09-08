@@ -339,9 +339,7 @@ segments:
       - [0x8C8DC, .data, libsd/smf_main]
       - [0x8DAB0, .data, memcard/memcard_1]
       - [0x910C0, .data, gfx/text_draw_debug]
-      #- [0x910E0, .data, ot]
       - [0x910E0, data, bodyprog_800B5C40]
-      #- [0x91160, data, bodyprog_800B1440]
 
       # .bss section
       - [0x9FD98, lib, libapi, first, .bss]

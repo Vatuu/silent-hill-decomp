@@ -349,7 +349,7 @@ Gfx_MainMenu_FogDraw                        = 0x8003BA08; // type:func
 Gfx_MainMenu_FogRandomize                   = 0x8003BAC4; // type:func
 Gfx_MainMenu_FogScatter                     = 0x8003BBF4; // type:func
 Gfx_MainMenu_FogUpdate                      = 0x8003BC8C; // type:func
-Map_TypeGet                                  = 0x8003BD2C; // type:func
+Map_TypeGet                                 = 0x8003BD2C; // type:func
 GameFs_BgEtcGfxLoad                         = 0x8003BE6C; // type:func
 GameFs_BgItemLoad                           = 0x8003BE9C; // type:func
 Map_SpeedZoneGet                            = 0x8003BF60; // type:func
@@ -2305,6 +2305,10 @@ _spu_FTable                                 = 0x800B12E4;
 //-----------------------------------------------------------------------
 //--- PA: 0x08C88C   VA: 0x800B13EC   subsegment: data, bodyprog_800B13EC
 //-----------------------------------------------------------------------
+
+//---------------------------------------------------------------------
+//--- PA: 0x08C8DC   VA: 0x800B143C   subsegment: .data, libsd/smf_main
+//---------------------------------------------------------------------
 // konami libsd globals (smf_def.c?)
 sd_interrupt_start_flag                     = 0x800B143C;
 sd_keyoff_mode                              = 0x800B1440;
@@ -2330,22 +2334,36 @@ smf_file_no                                 = 0x800B25BC;
 print_start                                 = 0x800B25C0;
 eof_char                                    = 0x800B25C4; // type:s8 size:3 static?
 chantype                                    = 0x800B25C8; // type:s32 static for readtrack?
+
+//------------------------------------------------------------------------
+//--- PA: 0x08DAB0   VA: 0x800B2610   subsegment: .data, memcard/memcard_1
+//------------------------------------------------------------------------
 g_MemCard_1_BasicSaveInfo                   = 0x800B2780;
 g_MemCard_2_BasicSaveInfo                   = 0x800B3680;
 // D_800B4580                                  = 0x800B4580;
 g_CardWork                                  = 0x800B5488; // size:0x80
 D_800B5508                                  = 0x800B5508; // size:0x718
+
+//--------------------------------------------------------------------------
+//--- PA: 0x0910C0   VA: 0x800B5C20   subsegment: .data, gfx/text_draw_debug
+//--------------------------------------------------------------------------
 g_Gfx_DebugStringPosition0                  = 0x800B5C20; // type:DVECTOR size:4
 g_Gfx_DebugStringPosition1                  = 0x800B5C24; // type:DVECTOR size:4
 g_PrevScreenFadeProgress                    = 0x800B5C28; // type:s32
 g_ScreenFadeTimestep                        = 0x800B5C30; // type:s32
 g_VBlanks                                   = 0x800B5C34; // type:s32
 g_UncappedVBlanks                           = 0x800B5C38; // type:s32
+
+//-----------------------------------------------------------------------
+//--- PA: 0x0910E0   VA: 0x800B5C40   subsegment: data, bodyprog_800B5C40
+//-----------------------------------------------------------------------
+g_OtTags0                                   = 0x800B5C40; // type:u32 size:0x200
 g_DeltaTime0                                = 0x800B5CC0; // type:s32 - Q19.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..).
+g_OtTags1                                   = 0x800B5CC4; // type:u32 size:0x4000
 g_DeltaTime2                                = 0x800B9CC8; // type:s32
 g_MainLoop_FrameCount                       = 0x800B9CCC;
 vcWork                                      = 0x800B9CD0; // type:VC_WORK size:0x2E8
-g_ActiveBuffer                            = 0x800B9FB8;
+g_ActiveBuffer                              = 0x800B9FB8;
 g_SysWork                                   = 0x800B9FC0; // type:SysWork size:0x2768 - should use s_SysWork here, but splat only supports custom structs with capital letter at beginning.
 g_GameWork                                  = 0x800BC728; // type:GameWork size:0x5D8
 g_Gfx_ScreenFade                            = 0x800BCD0C;
@@ -2642,5 +2660,3 @@ smf_song                                    = 0x800C8B00;
 g_MapOverlayHeader                          = 0x800C957C; // type:MapOverlayHeader size:0x84C - size incomplete
 D_800FE5F8                                  = 0x800FE5F8; // ignore:True - Fixes fake missmatch in `Demo_Update`.
 hack_D_800FE5FC_fix                         = 0x800FE5FC; // ignore:true - Part of temp memory block at 800FDE00, has to be unsymbolized for C to match.
-g_OtTags0 = 0x800B5C40; // type:u32 size:0x200
-g_OtTags1 = 0x800B5CC4; // type:u32 size:0x4000
