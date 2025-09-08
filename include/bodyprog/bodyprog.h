@@ -3941,7 +3941,12 @@ void func_8007E860();
 /** Loads player animations for a given map. Maybe for cutscenes? */
 void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 
+void func_80070B84(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3);
+
 void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 arg2, s32 animStatus);
+
+// Variable anim duration func for player. It's nearly completely matched https://decomp.me/scratch/PBvwU.
+s32 func_800706E4();
 
 /** Special player SFX handler for heavy breath and damage. */
 bool func_80071620(u8 animStatus, s_SubCharacter*, s32, s32 sfx);

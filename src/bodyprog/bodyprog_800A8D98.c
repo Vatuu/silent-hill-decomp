@@ -780,7 +780,7 @@ s_AnimInfo D_800A998C =
     .field_4                = 0,
     .hasVariableTimeDelta_5 = false,
     .status_6               = ANIM_STATUS(0, false),
-    .field_7                = 0,
+    .__pad_7                = 0,
     .timeDelta_8            = { .constTimeDelta = FP_TIME(8.0f) },
     .startKeyframeIdx_C     = 26,
     .endKeyframeIdx_E       = 44
