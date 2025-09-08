@@ -2025,9 +2025,9 @@ extern s32 g_PrevScreenFadeProgress;
 
 extern s32 g_ScreenFadeTimestep;
 
-extern u32 g_OtTags0[2][16];
+extern GsOT_TAG g_OtTags0[2][16];
 
-extern u32 g_OtTags1[2][2048];
+extern GsOT_TAG g_OtTags1[2][2048];
 
 extern s_SubCharacter D_800BA00C; // Often passed to `func_800700F8`, might not be full `s_SubCharacter`?
 
