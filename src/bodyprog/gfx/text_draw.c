@@ -678,7 +678,6 @@ void Gfx_MapMsg_DefaultStringInfoSet() // 0x8004B684
     g_SysWork.enableHighResGlyphs_2350_0 = false;
 }
 
-/** @unused */
 void func_8004B6D4(s16 arg0, s16 arg1) // 0x8004B6D4
 {
     if (arg0 != NO_VALUE)
@@ -693,7 +692,6 @@ void func_8004B6D4(s16 arg0, s16 arg1) // 0x8004B6D4
     }
 }
 
-/** @unused */
 void func_8004B74C(s16 arg0) // 0x8004B74C
 {
     if (arg0 < 0 || arg0 >= 5)
@@ -705,7 +703,6 @@ void func_8004B74C(s16 arg0) // 0x8004B74C
     D_800C391E = arg0;
 }
 
-/** @unused */
 void func_8004B76C(char* str, s32 useFixedWidth) // 0x8004B76C
 {
     #define GLYPH_SIZE_X       11
