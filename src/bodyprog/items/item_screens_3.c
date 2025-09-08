@@ -2955,11 +2955,11 @@ void Gfx_Items_Display(s_TmdFile* tmd, s32 arg1, s32 arg2)
 {
     u8                 var_v0;
     GsDOBJ2*           ptr;
-    struct TMD_STRUCT* objs;
+    struct TMD_STRUCT* models;
 
-    objs = tmd->objects_C;
+    models = tmd->models_c;
 
-    GsLinkObject4((u32)&objs[arg2], &g_Items_ItemsModelData[arg1], 0);
+    GsLinkObject4((u32)&models[arg2], &g_Items_ItemsModelData[arg1], 0);
 
     ptr         = &g_Items_ItemsModelData[arg1];
     ptr->coord2 = &g_Items_Items3dData1[arg1];
