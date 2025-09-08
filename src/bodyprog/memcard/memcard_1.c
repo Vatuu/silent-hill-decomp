@@ -85,7 +85,7 @@ void Savegame_CardCleanInit() // 0x8002E630
 
     // Clear arrays.
     bzero(&D_800B5508, sizeof(s_800B5508));
-    bzero(g_MemCard_1_BasicSaveInfo, 768);
+    bzero(g_MemCard_1_BasicSaveInfo, sizeof(s_MemCardInfo_BasicSaveInfo) * 3);
 
     for (i = 0; i < CARD_DEVICE_COUNT; i++)
     {
@@ -154,8 +154,6 @@ bool Savegame_CardFilesAreAllUnused(s32 deviceId) // 0x8002E76C
 
 void func_8002E7BC() // 0x8002E7BC
 {
-    s_800B55E8* ptr;
-
     if (D_800B5480 == true)
     {
         return;

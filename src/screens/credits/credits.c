@@ -504,9 +504,9 @@ bool func_801E3684() // 0x801E3684
 void func_801E386C() // 0x801E386C
 {
     s_801E5558* ptr;
-    s32            var0;
-    s64            var1;
-    s32            var2;
+    s32         var0;
+    s64         var1;
+    s32         var2;
 
     var2 = 5;
 

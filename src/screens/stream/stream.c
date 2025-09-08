@@ -5,9 +5,11 @@
 #include <libpress.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/gfx/screen_draw.h"
+#include "bodyprog/joy.h"
 #include "bodyprog/math.h"
 #include "bodyprog/libsd.h"
+#include "bodyprog/gfx/screen_draw.h"
+#include "bodyprog/gfx/text_draw.h"
 #include "main/fileinfo.h"
 #include "screens/stream/stream.h"
 
@@ -210,7 +212,7 @@ void movie_main(char* file_name, s32 f_size, s32 sector) // 0x801E2B9C
 
         while (strNextVlc(&m->dec) == NO_VALUE)
         {
-            frame_no = StGetBackloc(&loc);
+            frame_no = StGetBackloc((DslLOC*)&loc);
             if (max_frame < frame_no || frame_no <= 0)
             {
                 loc = file.pos;
@@ -338,7 +340,7 @@ int strNextVlc(DECENV* dec) // 0x801E3298
 {
     #define COUNT_MAX 2000
 
-    u_long* next, *strNext();
+    u_long* next;
 
     u_long count = COUNT_MAX;
     while ((next = strNext(dec)) == 0)

@@ -1088,9 +1088,94 @@ s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, 
     return dist;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042E2C); // 0x80042E2C
+s32 func_80042E2C(s32 xPos, s32 zPos, s32 xFileChunkCoord, s32 zFileChunkCoord) // 0x80042E2C
+{
+#define FILE_CHUNK_SIZE 0x2800
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80042EBC); // 0x80042EBC
+#define OUTSIDE_DIST(val, lo, hi)                               \
+    ((val) < (lo) ? (lo) - (val) : (hi) <= (val) ? (val) - (hi) \
+                                                 : 0)
+
+    s32 xFileChunkBound;
+    s32 zFileChunkBound;
+    s32 x;
+    s32 z;
+
+    xFileChunkBound = xFileChunkCoord * FILE_CHUNK_SIZE;
+    zFileChunkBound = zFileChunkCoord * FILE_CHUNK_SIZE;
+
+    x = OUTSIDE_DIST(xPos, xFileChunkBound, xFileChunkBound + FILE_CHUNK_SIZE);
+    z = OUTSIDE_DIST(zPos, zFileChunkBound, zFileChunkBound + FILE_CHUNK_SIZE);
+
+    return Vc_VectorMagnitudeCalc(x, 0, z);
+}
+
+s32 func_80042EBC(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x80042EBC
+{
+    s32           sp28;
+    s32           sp2C;
+    s32           sp30;
+    s32           temp_s1;
+    s32           temp_s3;
+    s32           temp_v0;
+    s32           temp_v0_2;
+    s32           temp_v0_4;
+    s32           j;
+    s32           i;
+    s32           var_v1;
+    s_80043338*   temp_v0_3;
+    s_80043338_0* temp_v1;
+
+    sp30 = NO_VALUE;
+    sp28 = FLOOR_TO_STEP(FP_METER_TO_GEO(arg1), FP_METER_GEO(40.0f));
+    sp2C = FLOOR_TO_STEP(FP_METER_TO_GEO(arg2), FP_METER_GEO(40.0f));
+
+    temp_v0 = FLOOR_TO_STEP(FP_METER_TO_GEO(arg3), FP_METER_GEO(40.0f));
+    var_v1  = FLOOR_TO_STEP(FP_METER_TO_GEO(arg4), FP_METER_GEO(40.0f));
+
+    arg0->field_580 = temp_v0;
+    arg0->field_584 = var_v1;
+
+    func_800431E4(arg0, arg1, arg2, arg3, arg4, arg0->field_588);
+    func_800433B8(arg0);
+
+    for (i = NO_VALUE; i < 2; i++)
+    {
+        for (j = NO_VALUE; j < 2; j++)
+        {
+            if (arg0->field_588 != 0 || (j == 0 && i == 0))
+            {
+                temp_s3 = sp2C + i;
+                temp_s1 = sp28 + j;
+
+                temp_v0_2 = func_80043554(temp_s1, temp_s3);
+                if (temp_v0_2 != NO_VALUE &&
+                    func_80042DE8(arg1, arg2, temp_s1, temp_s3, arg0->field_588) <= 0 &&
+                    !func_80043578(&arg0->ipdTable_15C[0], temp_s1, temp_s3))
+                {
+                    temp_v0_3 = func_800435E4(&arg0->ipdTable_15C[0], arg0->field_588);
+
+                    if (Fs_QueueEntryLoadStatusGet(temp_v0_3->queueEntryIdx_4) >= 2)
+                    {
+                        temp_v1 = temp_v0_3->destBuffer_0;
+                        if (temp_v1->field_1 != 0)
+                        {
+                            func_80056BF8(temp_v1->field_4);
+                        }
+                    }
+
+                    temp_v0_4 = func_800436D8(temp_v0_3, temp_v0_2, temp_s1, temp_s3, arg1, arg2, arg3, arg4, arg0->field_588);
+                    if (temp_v0_4 != NO_VALUE)
+                    {
+                        sp30 = temp_v0_4;
+                    }
+                }
+            }
+        }
+    }
+
+    return sp30;
+}
 
 void func_800431E4(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x800431E4
 {
@@ -1162,7 +1247,7 @@ void func_800433B8(s_800C1020* arg0) // 0x800433B8
     }
 }
 
-s16 func_80043554(s32 gridX, s32 gridZ) // 0x80043554
+s32 func_80043554(s32 gridX, s32 gridZ) // 0x80043554
 {
     // @hack
     return ((s16*)&D_800C1020.ipdGridCenter_42C[gridZ])[gridX];
@@ -1255,7 +1340,7 @@ s_800C117C* func_800435E4(s_800C117C* arg0, s32 arg1)
     return ret;
 }
 
-s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s16 fileChunkCoordX, s16 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip) // 0x800436D8
+s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip) // 0x800436D8
 {
     // Return `NO_VALUE` if no file specified.
     if (fileIdx == NO_VALUE)
@@ -1275,7 +1360,47 @@ s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s16 fileChunkCoordX, s16 fileCh
     return arg0->queueEntryIdx_4;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80043740); // 0x80043740
+s32 func_80043740() // 0x80043740
+{
+    s32         i;
+    s_800C117C* ptr;
+
+    switch (PlmHeader_LoadStateGet(&D_800C1020.field_138))
+    {
+        case 0:
+            break;
+
+        case 1:
+            return 0;
+
+        case 2:
+            return 0;
+    }
+
+    for (ptr = D_800C1020.ipdTable_15C, i = 0; i < D_800C1020.ipdTableSize_158; i++, ptr++)
+    {
+        switch (IpdHeader_LoadStateGet(ptr))
+        {
+            case 0:
+            case 3:
+                continue;
+        }
+
+        if (ptr->field_C <= 0)
+        {
+            return 0;
+        }
+
+        if (ptr->field_10 <= 0)
+        {
+            do
+            {
+            } while (0); // @hack
+            return 0;
+        }
+    }
+    return 1;
+}
 
 bool func_80043830(void) // 0x80043830
 {

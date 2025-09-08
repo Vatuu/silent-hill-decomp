@@ -2,6 +2,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/gfx/screen_draw.h"
+#include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/player_logic.h"
 #include "bodyprog/math.h"
@@ -221,8 +222,6 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
         case 18:
             if ((g_Gfx_ScreenFade & 0x7) == 5)
             {
-                s32 prevGameState;
-
                 Screen_Refresh(320, 0);
                 Fs_QueueWaitForEmpty();
                 func_8004C040();

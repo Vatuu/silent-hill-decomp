@@ -1,5 +1,7 @@
 #include "game.h"
 
+#include <libetc.h>
+
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/math.h"

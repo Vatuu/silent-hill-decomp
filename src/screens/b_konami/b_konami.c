@@ -5,9 +5,10 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
-#include "bodyprog/gfx/screen_draw.h"
+#include "bodyprog/joy.h"
 #include "bodyprog/math.h"
 #include "bodyprog/memcard.h"
+#include "bodyprog/gfx/screen_draw.h"
 #include "main/fsqueue.h"
 #include "screens/b_konami/b_konami.h"
 #include "screens/stream/stream.h"
@@ -447,7 +448,6 @@ void func_800CA2C8(s32 arg0) // 0x800CA2C8
     s32 var_s1; // `D_800CA508`
     u32 var_s2; // `D_800CA510`
     s32 expectedTime;
-    s32 var_v0;
 
     u32 temp_v0_2;
     u32 temp_v0_3;
@@ -455,7 +455,6 @@ void func_800CA2C8(s32 arg0) // 0x800CA2C8
     
     u8* var_s0;  // `D_800CA500`
     u8* temp_s5; // `D_800CA50C`
-    u8* temp_a0;
     u8* temp_s0;
     u8* var_s3; // `D_800CA504`
 
@@ -495,7 +494,6 @@ void func_800CA2C8(s32 arg0) // 0x800CA2C8
         }
 
         var_s2 = var_s2 / 2;
-        var_v0 = var_s2;
 
         if (!(var_s2 & (1 << 8)))
         {

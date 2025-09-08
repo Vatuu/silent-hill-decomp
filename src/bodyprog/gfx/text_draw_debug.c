@@ -1,5 +1,7 @@
 #include "game.h"
 
+#include <ctype.h>
+
 #include "bodyprog/bodyprog.h" // Only needed because of `D_800B5C58`.
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/math.h"
