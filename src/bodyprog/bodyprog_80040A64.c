@@ -1317,11 +1317,11 @@ bool func_8004393C(s32 posX, s32 posZ) // 0x8004393C
     
     if (D_800C1020.field_588 != 0)
     {
-        return func_80042E2C(FP_METER_TO_GEO(D_800C1020.field_578), FP_METER_TO_GEO(D_800C1020.field_57C), fileChunkCoordX, fileChunkCoordZ) < 0x481;
+        return func_80042E2C(FP_METER_TO_GEO(D_800C1020.field_578), FP_METER_TO_GEO(D_800C1020.field_57C), fileChunkCoordX, fileChunkCoordZ) <= FP_METER_GEO(4.5f);
     }
-    
+
     if (fileChunkCoordX == D_800C1020.field_580 &&
-       fileChunkCoordZ == D_800C1020.field_584)
+        fileChunkCoordZ == D_800C1020.field_584)
     {
         return true;
     }
@@ -2183,16 +2183,15 @@ void func_800452EC(s_Skeleton* skel) // 0x800452EC
     }
 }
 
-// Anim func. Traverses skeleton bones for something.
 void func_80045360(s_Skeleton* skel, s8* arg1) // 0x80045360
 {
-    s32 boneIndex;
+    s32 boneIdx;
     s32 status;
 
-    for (status = func_80044F6C(arg1, 1), boneIndex = 0; status != -2; boneIndex++)
+    for (status = func_80044F6C(arg1, true), boneIdx = 0; status != -2; boneIdx++)
     {
-        skel->bones_8[boneIndex].field_10 = status;
-        status = func_80044F6C(arg1, 0);
+        skel->bones_8[boneIdx].field_10 = status;
+        status = func_80044F6C(arg1, false);
     }
 }
 

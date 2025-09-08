@@ -2756,6 +2756,7 @@ void func_80045258(s_Skeleton** skels, s_Bone* bones, s32 boneIdx, s_PlmHeader* 
 /** Anim func. */
 void func_800452EC(s_Skeleton* skel);
 
+/** Anim func. Traverses skeleton bones for something. */
 void func_80045360(s_Skeleton* skel, s8* arg1);
 
 /** Anim func. Traverses skeleton bones to set flags/mask. */

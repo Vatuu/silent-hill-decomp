@@ -30,18 +30,6 @@ struct _Model;
 
 #define EVENT_FLAG5_FIRST_TIME_SAVE_GAME (1 << 26)
 
-#define MAP_MSG_CODE_MARKER         '~' /** Message code start. */
-#define MAP_MSG_CODE_COLOR          'C' /** Set color. */
-#define MAP_MSG_CODE_DISPLAY_ALL    'D' /** Display message instantly without roll. */
-#define MAP_MSG_CODE_END            'E' /** End message. */
-#define MAP_MSG_CODE_HIGH_RES       'H' /** High-resolution glyph drawing. */
-#define MAP_MSG_CODE_JUMP           'J' /** Jump timer. */
-#define MAP_MSG_CODE_LINE_POSITION  'L' /** Set next line position. */
-#define MAP_MSG_CODE_MIDDLE         'M' /** Align center. */
-#define MAP_MSG_CODE_NEWLINE        'N' /** Newline. */
-#define MAP_MSG_CODE_SELECT         'S' /** Display dialog prompt with selectable entries. */
-#define MAP_MSG_CODE_TAB            'T' /** Inset line. */
-
 #define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400  /** Hack. Long string length is used to display a whole message instantly. */
 #define GLYPH_TABLE_ASCII_OFFSET       '\'' /** Subtracted from ASCII bytes to get index to some string-related table. */
 
@@ -170,7 +158,7 @@ typedef enum _MapMsgIdx
     MapMsgIdx_DoorJammer        = 11,
     MapMsgIdx_DoorLocked        = 12,
     MapMsgIdx_DoorUnlocked      = 13,
-    MapMsgIdx_NowMaking         = 14  // Unused?
+    MapMsgIdx_NowMaking         = 14  // @unused?
 } e_MapMsgIdx;
 
 typedef enum _MapMsgCode

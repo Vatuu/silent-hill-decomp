@@ -4,25 +4,26 @@
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/math.h"
 
-#define DIALOG_CODE_NEWLINE         'N'
-#define DIALOG_CODE_JUMP_DELAY      'J'
-#define DIALOG_CODE_LINE_POSITION   'L'
-#define DIALOG_CODE_MIDDLE_ALIGN    'M'
-#define DIALOG_CODE_TAB             'T' // Unused.
-#define DIALOG_CODE_COLOR           'C'
-#define DIALOG_CODE_DISPLAY_ALL     'D'
-#define DIALOG_CODE_END             'E'
-#define DIALOG_CODE_SELECT          'S'
-#define DIALOG_CODE_HIGH_RESOLUTION 'H'
+#define MAP_MSG_CODE_MARKER         '~' /** Message code start. */
+#define MAP_MSG_CODE_COLOR          'C' /** Set color. */
+#define MAP_MSG_CODE_DISPLAY_ALL    'D' /** Display message instantly without roll. */
+#define MAP_MSG_CODE_END            'E' /** End message. */
+#define MAP_MSG_CODE_HIGH_RES       'H' /** High-resolution glyph drawing. */
+#define MAP_MSG_CODE_JUMP           'J' /** Jump timer. */
+#define MAP_MSG_CODE_LINE_POSITION  'L' /** Set next line position. */
+#define MAP_MSG_CODE_MIDDLE         'M' /** Align center. */
+#define MAP_MSG_CODE_NEWLINE        'N' /** Newline. */
+#define MAP_MSG_CODE_SELECT         'S' /** Display dialog prompt with selectable entries. */
+#define MAP_MSG_CODE_TAB            'T' /** Inset line. */
 
-const s32 __PADDING = 0;
+const s32 __PAD = 0;
 
 static const u8 FONT_12_X_16_GLYPH_WIDTHS[84] =
 {
-    3,  7,  7,  11, 11, 4,  10,  4,  6, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,  4,  4, 
-    10, 11, 10, 8,  13, 12, 12, 12, 13, 11, 11, 13, 12,  9,  9, 12, 12, 13, 12, 13, 11,
+     3,  7,  7, 11, 11,  4, 10,  4,  6, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,  4,  4, 
+    10, 11, 10,  8, 13, 12, 12, 12, 13, 11, 11, 13, 12,  9,  9, 12, 12, 13, 12, 13, 11,
     13, 12, 10, 11, 13, 12, 12, 12, 11, 12,  6,  4,  6,  8,  0,  3,  9, 10,  9,  9,  9,
-    7,  11, 11,  6,  6, 10,  6, 13, 11, 10, 11, 10,  8,  8,  7, 10, 10, 12, 10, 10,  9
+     7, 11, 11,  6,  6, 10,  6, 13, 11, 10, 11, 10,  8,  8,  7, 10, 10, 12, 10, 10,  9
 };
 
 static const u32 STRING_COLORS[ColorId_Count] =
@@ -43,8 +44,8 @@ static s16 g_StringColorId = ColorId_White;
 // 2 bytes of padding.
 
 /** Text index 2D layer.
- * In case of modifying `Gfx_StringSetPosition` to set it to
- * a value lower than 6 text will not be affected by the fade effect
+ * If modifying `Gfx_StringSetPosition`, when setting it to
+ * a value lower than 6, text will not be affected by the fade effect.
  */
 static s32 g_Strings2dLayerIdx = 6;
 

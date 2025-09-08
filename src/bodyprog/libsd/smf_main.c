@@ -13,14 +13,37 @@ u32 body_partly_size = 0;
 
 #include "smf_tables.h"
 
-s32 sd_reserved_voice = 0x18;
+s32 sd_reserved_voice = 24;
 u32 spu_reverb_sw = 0;
+
 u32 spu_ch_tbl[24] =
 {
-    0x00000001, 0x00000002, 0x00000004, 0x00000008, 0x00000010, 0x00000020, 0x00000040, 0x00000080,
-    0x00000100, 0x00000200, 0x00000400, 0x00000800, 0x00001000, 0x00002000, 0x00004000, 0x00008000,
-    0x00010000, 0x00020000, 0x00040000, 0x00080000, 0x00100000, 0x00200000, 0x00400000, 0x00800000,
+    1 << 0,
+    1 << 1,
+    1 << 2,
+    1 << 3,
+    1 << 4,
+    1 << 5,
+    1 << 6,
+    1 << 7,
+    1 << 8,
+    1 << 9,
+    1 << 10,
+    1 << 11,
+    1 << 12,
+    1 << 13,
+    1 << 14,
+    1 << 15,
+    1 << 16,
+    1 << 17,
+    1 << 18,
+    1 << 19,
+    1 << 20,
+    1 << 21,
+    1 << 22,
+    1 << 23
 };
+
 s32 sd_int_flag = 0;
 s32 sd_int_flag2 = 0;
 s32 smf_start_flag = 0;
@@ -32,10 +55,9 @@ s32 smf_file_no = 0;
 u32 print_start = 0;
 char eof_char[3] = { 0xFF, 0x2F, 0x00 };
 // 1 byte padding.
-s32 chantype[18] = {0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 1, 1, 2, 0, 0, 0 };
+s32 chantype[18] = { 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 1, 1, 2, 0, 0, 0 };
 
-
-extern s32 sd_timer_flag; // Only used in this file
+extern s32 sd_timer_flag; // Only used in this file.
 
 s32 smf_timer() // 0x800A6D18
 {
