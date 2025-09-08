@@ -1,11 +1,12 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/vc_util.h"
 #include "bodyprog/math.h"
 
 extern s32 g_VBlanks;
 
-void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, VECTOR3* chr_pos)
+void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, VECTOR3* chr_pos) // 0x8004004C
 {
     D_800BCE18.vcCameraInternalInfo_1BDC.mv_smooth   = 0;
     D_800BCE18.vcCameraInternalInfo_1BDC.ev_cam_rate = 0;

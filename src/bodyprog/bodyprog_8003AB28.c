@@ -715,7 +715,7 @@ void func_8003BCF4() // 0x8003BCF4
 // UNKNOWN - IN-GAME LOOP RELATED
 // ========================================
 
-s32 MapTypeGet() // 0x8003BD2C
+s32 Map_TypeGet() // 0x8003BD2C
 {
     return D_800BCE18.field_0[0].type_0 - g_MapTypes;
 }
@@ -727,7 +727,7 @@ void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
     D_800BCE14 = func_80069810();
     var_s0     = D_800BCE14;
 
-    switch (MapTypeGet())
+    switch (Map_TypeGet())
     {
         case 0:
             if (chara->position_18.vx >= FP_METER(191.6f) && chara->position_18.vx <= FP_METER(198.8f) && 

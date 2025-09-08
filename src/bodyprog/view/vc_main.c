@@ -419,7 +419,7 @@ VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p) // 0x80081428
 
 bool func_8008150C(s32 posX, s32 posZ)
 {
-    switch (MapTypeGet())
+    switch (Map_TypeGet())
     {
         case 0:
             if ((posX - FP_METER(201.8f)) > (u32)(u32)(FP_METER(28.2f) + 1))
@@ -1960,7 +1960,7 @@ void vcMakeIdealCamPosForThroughDoorCam(VECTOR3* ideal_pos, VC_WORK* w_p) // 0x8
         }
         else
         {
-            switch (MapTypeGet())
+            switch (Map_TypeGet())
             {
                 case 10:
                 case 13:

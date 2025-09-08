@@ -2459,7 +2459,7 @@ void func_8003943C();
  * After playback, savegame gets `D_800BCDD8->eventFlagNum_2` event flag set. */
 void SysState_Fmv_Update();
 
-s32 MapTypeGet();
+s32 Map_TypeGet();
 
 void func_8003C1AC(s_800BCE18_0_CC* arg0);
 
