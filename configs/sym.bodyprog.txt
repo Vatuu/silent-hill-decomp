@@ -61,8 +61,8 @@ DEFAULT_CONTROLLER_CONFIGS                  = 0x8002511C;
 //----------------------------------------------------------------------
 //--- PA: 0x001208   VA: 0x80025D68   subsegment: .rodata, gfx/text_draw
 //----------------------------------------------------------------------
-g_12x16FontWidths                           = 0x80025D6C;
-g_MapMsg_Colors                             = 0x80025DC0;
+FONT_12_X_16_GLYPH_WIDTHS                           = 0x80025D6C;
+STRING_COLORS                             = 0x80025DC0;
 
 //-----------------------------------------------------------------------------
 //--- PA: 0x001330   VA: 0x80025E90   subsegment: .rodata, items/item_screens_1
@@ -2012,7 +2012,7 @@ DIFFICULTY_MENU_ENTRY_STRINGS               = 0x800A9AA0;
 //--- PA: 0x088938   VA: 0x800AD498   subsegment: .data, gfx/text_draw
 //--------------------------------------------------------------------
 g_StringColorId                             = 0x800AD498; // type:s16
-g_Strings2dLayerIndex                       = 0x800AD49C;
+g_Strings2dLayerIdx                       = 0x800AD49C;
 
 //---------------------------------------------------------------------------
 //--- PA: 0x088940   VA: 0x800AD4A0   subsegment: .data, items/item_screens_3

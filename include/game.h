@@ -369,7 +369,7 @@ typedef enum _CharaFlags
     CharaFlag_Unk9 = 1 << 8
 } s_CharaFlags;
 
-/** @brief Color IDs used by strings displayed in screen space. */
+/** @brief Map message color IDs used by strings displayed in screen space. */
 typedef enum _ColorId
 {
     ColorId_Gold           = 0,
@@ -379,7 +379,9 @@ typedef enum _ColorId
     ColorId_Red            = 4,
     ColorId_GreenDuplicate = 5, // Gives same color as `ColorId_Green`. Unused?
     ColorId_LightGrey      = 6,
-    ColorId_White          = 7
+    ColorId_White          = 7,
+
+    ColorId_Count          = 8
 } e_ColorId;
 
 /** @brief Character animation flags. */

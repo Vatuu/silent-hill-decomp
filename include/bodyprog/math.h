@@ -35,6 +35,17 @@
 #define DVECTOR(x, y) \
     { SCREEN_POSITION_X(x), SCREEN_POSITION_Y(y) }
 
+/** @brief Packs an RGB + code color.
+ *
+ * @param r Red component.
+ * @param g Green component.
+ * @param b Blue component.
+ * @param code Code component.
+ * @return Packed RGB + code color.
+ */
+#define PACKED_COLOR(r, g, b, code) \
+    ((r) | ((g) << 8) | ((b) << 16) | ((code) << 24))
+
 /** @brief Multiplies an integer in fixed-point Q format by a float converted to fixed-point Q format,
  * then converts the result back from the fixed-point Q format using a 64-bit intermediate via
  * `Math_MulFixed` for higher precision.
