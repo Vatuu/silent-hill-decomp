@@ -5,6 +5,8 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/memcard.h"
 
+u8 D_800BCD10[8] = {0x00, 0x00, 0x00, 0x00, 0x80, 0x18, 0x13, 0x00}; // @unused 
+
 s32 func_800334D8(s32 idx) // 0x800334D8
 {
     s32 i;
