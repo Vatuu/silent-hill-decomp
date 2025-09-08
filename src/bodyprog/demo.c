@@ -2,6 +2,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
+#include "bodyprog/gfx/text_draw.h"
 #include "main/fsqueue.h"
 #include "main/rng.h"
 
@@ -163,7 +164,7 @@ void Demo_Stop() // 0x8008f3f0
     g_Demo_Play = 0;
     g_SysWork.flags_22A4 &= ~(1 << 1);
 
-    Demo_GameGlobalsRestore(-3);
+    Demo_GameGlobalsRestore();
     Demo_GameRandSeedRestore();
 }
 

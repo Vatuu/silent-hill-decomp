@@ -558,7 +558,7 @@ typedef enum _CutsceneItemId
     CutsceneItemId_Aglaophotis   = 166,
     CutsceneItemId_PlasticBottle = 167,
     CutsceneItemId_Baby          = 168,
-    CutsceneItemId_Blood         = 169, // TODO: What is it used for?
+    CutsceneItemId_BloodPack     = 169,
 } e_CutsceneItemId;
 
 /** @brief Common pickup item IDs. */

@@ -2,13 +2,10 @@
 
 #include <libetc.h>
 #include <libpad.h>
-#include <ctype.h>
 #include <strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/math.h"
 #include "main/fsqueue.h"
-#include "screens/stream/stream.h"
 
 void GameFs_TitleGfxSeek() // 0x80032bd0
 {

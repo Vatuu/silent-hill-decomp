@@ -5,9 +5,10 @@
 #include <strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/math.h"
 #include "bodyprog/memcard.h"
+#include "bodyprog/gfx/screen_draw.h"
+#include "bodyprog/gfx/text_draw.h"
 #include "main/fsqueue.h"
 #include "main/rng.h"
 #include "screens/stream/stream.h"
@@ -43,7 +44,6 @@ void GameState_MainMenu_Update() // 0x8003AB28
     s32         playIntroFmv;
     s32         prevGameDifficultyIdx;
     s32         nextGameDifficultyIdx;
-    s_Savegame* save;
     e_GameState prevState;
 
     func_80033548();
@@ -966,8 +966,6 @@ void func_8003C3AC() // 0x8003C3AC
     s32             temp_a2;
     s32             moveAmt;
     s32             temp_s0_2;
-    s32             temp_v0_3;
-    s32             temp_v1;
     s32             temp_v1_4;
     s32             var_a0;
     s32             var_a1;
@@ -1323,7 +1321,7 @@ s32 func_8003CDA0(s32 itemIdx)
             ptr->field_8 = "BABY";
             break;
 
-        case CutsceneItemId_Blood:
+        case CutsceneItemId_BloodPack:
             fileIdx      = FILE_ITEM_BLOOD_TIM;
             ptr->field_8 = "BLOOD";
             break;
@@ -1428,7 +1426,7 @@ s32 func_8003CDA0(s32 itemIdx)
             fileIdx = FILE_ITEM_BABY_PLM;
             break;
 
-        case CutsceneItemId_Blood:
+        case CutsceneItemId_BloodPack:
             fileIdx = FILE_ITEM_BLOOD_PLM;
             break;
 
@@ -1827,7 +1825,7 @@ void func_8003D938() // 0x8003D938
 
 void func_8003D95C() // 0x8003D95C
 {
-    s32 temp_a0;
+    s_800BCE18_0_CC* temp_a0;
     s32 i;
 
     for (i = 0; i < 45; i++)

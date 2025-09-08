@@ -295,7 +295,6 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0
     s32      temp_s0_3;
     s32      temp_s1;
     s32      temp_s2;
-    s32      temp_v1;
     s32      var_a0;
     s32      var_s0;
     s32      var_s1;
@@ -527,7 +526,7 @@ s32 PlmHeader_LoadStateGet(s_func_80041CB4* arg0) // 0x80041BA0
 
 void func_80041C24(s_PlmHeader* plmHeader, s32 arg1, s32 arg2) // 0x80041C24
 {
-    bzero(&D_800C1020, 1420);
+    bzero(&D_800C1020, sizeof(s_800C1020));
     func_80041CB4(&D_800C1020.field_138, plmHeader);
 
     D_800C1020.field_150 = arg1;
@@ -604,7 +603,7 @@ void func_80041D48() // 0x80041D48
 
 void func_80041E98() // 0x80041E98
 {
-    bzero(&D_800C1020, 308);
+    bzero(&D_800C1020.field_0, sizeof(s_IpdCollisionData));
     D_800C1020.field_0.field_1C = 512;
 }
 
@@ -745,15 +744,14 @@ void func_80042300(s_800C1020* arg0, s32 arg1) // 0x80042300
 {
     s32          step;
     s32          i;
-    s32          var_s3;
     s_800C117C*  temp_s0;
-    s32 ipd0; // TODO: Should be `s_IpdHeader*` but doesn't match?
+    s_IpdHeader* ipd0;
     s_IpdHeader* ipd1;
 
     ipd0  = arg0->field_150;
     step = (arg0->field_154 / arg1) & ~0x3;
 
-    for (i = 0; i < 4; i++, ipd0 += step)
+    for (i = 0; i < 4; i++, *(u8**)&ipd0 += step)
     {
         temp_s0 = &arg0->ipdTable_15C[i];
 
@@ -2019,8 +2017,6 @@ void func_80044F14(GsCOORDINATE2* coord, s16 z, s16 x, s16 y) // 0x80044F14
 
 s8 func_80044F6C(s8* ptr, bool arg1) // 0x80044F6C
 {
-    s8 temp;
-
     if (arg1)
     {
         D_800C15B0 = ptr;

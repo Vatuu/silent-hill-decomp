@@ -1,8 +1,10 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/credits.h"
 #include "bodyprog/math.h"
+#include "bodyprog/credits.h"
+#include "bodyprog/item_screens.h"
+#include "bodyprog/gfx/text_draw.h"
 #include "main/fsqueue.h"
 
 const s32 rodataPad_8002B2F8 = 0;

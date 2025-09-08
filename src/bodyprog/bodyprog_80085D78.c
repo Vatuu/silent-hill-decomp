@@ -200,8 +200,6 @@ void func_8008616C(s32 arg0, bool arg1, s32 fadeType, s32 fadeTimestep, bool arg
     #define FADE_UNK_FLAG 3 // TODO: Investigate.
 
     s32 caseVar;
-    s32 var0;
-    s32 var1;
 
     // If `arg0 != 2`, `field_14` dictates what happens. This field is manipulated often in event/cutscene code.
     if (arg0 != 2)
@@ -701,6 +699,7 @@ void func_80086C58(s_SubCharacter* chara, s32 arg1) // 0x80086C58
 
 void func_80086D04(s_SubCharacter* chara) // 0x80086D04
 {
+
     switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:

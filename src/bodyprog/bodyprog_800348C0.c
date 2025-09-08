@@ -11,6 +11,8 @@
 #include "bodyprog/math.h"
 #include "bodyprog/memcard.h"
 #include "bodyprog/player_logic.h"
+#include "bodyprog/gfx/screen_draw.h"
+#include "bodyprog/gfx/text_draw.h"
 #include "main/fsqueue.h"
 #include "main/mem.h"
 #include "main/rng.h"
@@ -412,7 +414,6 @@ bool func_8003528C(s32 idx0, s32 idx1) // 0x8003528C
 s32 func_800352F8(s32 charaId) // 0x800352F8
 {
     s32         i;
-    s_800A992C* ptr;
 
     for (i = 1; i < 4; i++)
     {
@@ -1180,16 +1181,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
     #define FINISH_MAP_MSG  0xFF
 
     s32  temp_s1;
-    s32  temp_v0;
-    s32  temp_v1;
-    s32  temp_v1_2;
-    s32  var_a0;
-    s32  var_a1;
     bool hasInput;
-    s32  res;
-    s32  var_v1;
-    u16  var_a0_2;
-    u32* new_var;
     s32  temp;
 
     // Check for user input.
@@ -1395,10 +1387,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
     #define STRING_LINE_OFFSET 16
 
     s32 i;
-    s32 posY;
     s32 mapMsgCode;
-    s16 temp;
-    s8* str;
 
     mapMsgCode = Gfx_MapMsg_StringDraw(g_MapOverlayHeader.mapMessages_30[mapMsgIdx], *arg1);
 
@@ -1691,12 +1680,9 @@ void func_80037124() // 0x80037124
 void func_80037154() // 0x80037154
 {
     s32         i;
-    s_800BCDA8* element;
 
     for (i = 0; i < 2; i++)
     {
-        element = &D_800BCDA8[i];
-
         D_800BCDA8[i].field_2 = NO_VALUE;
         D_800BCDA8[i].field_1 = NO_VALUE;
         D_800BCDA8[i].field_3 = 0;
@@ -1840,11 +1826,8 @@ bool func_80037A4C(s_AreaLoadParams* areaLoadParams) // 0x80037A4C
     s32  deltaX;
     s32  deltaZ;
     s32  temp_v1;
-    s32  var_a0;
-    s32  var_a0_2;
     s32  clampedHalfCosPlayerRotY;
     bool cond;
-    s32  var_v1;
     s32  scaledSinPlayerRotY;
     s32  scaledCosRotY;
 
@@ -2021,7 +2004,7 @@ s32 func_800382B0(s32 arg0) // 0x800382B0
     return NO_VALUE;
 }
 
-// TODO: Improperly matched.
+// TODO: GCC extension func, needs `func_80038354` matched.
 // Scratch: https://decomp.me/scratch/nlBHl
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800348C0", func_800382EC); // 0x800382EC
 
@@ -2189,7 +2172,6 @@ void GameState_InGame_Update() // 0x80038BD4
 
 void SysState_Gameplay_Update() // 0x80038BD4
 {
-    s32             state;
     s_SubCharacter* playerChara;
 
     playerChara = &g_SysWork.player_4C.chara_0;
@@ -2341,8 +2323,6 @@ void SysState_GamePaused_Update() // 0x800391E8
 
 void SysState_OptionsMenu_Update() // 0x80039344
 {
-    s32 gameState;
-
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
@@ -2509,9 +2489,6 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
 
 void SysState_MapScreen_Update() // 0x800396D4
 {
-    s32         idx;
-    s_Savegame* save;
-
     if (!HAS_MAP(g_SavegamePtr->current2dMapIdx_A9))
     {
         if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18 ||
@@ -2555,8 +2532,6 @@ void SysState_MapScreen_Update() // 0x800396D4
 
 void GameState_LoadMapScreen_Update() // 0x8003991C
 {
-    s_Savegame* save;
-
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
         DrawSync(0);
@@ -2565,14 +2540,12 @@ void GameState_LoadMapScreen_Update() // 0x8003991C
         func_8003943C();
         func_80066E40();
 
-        save = g_SavegamePtr;
-
-        if (g_MapMarkingTimFileIdxs[save->current2dMapIdx_A9] != NO_VALUE)
+        if (g_MapMarkingTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9] != NO_VALUE)
         {
-            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdxs[save->current2dMapIdx_A9], FS_BUFFER_1, &g_MapMarkerAtlasImg);
+            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9], FS_BUFFER_1, &g_MapMarkerAtlasImg);
         }
 
-        Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[save->current2dMapIdx_A9], FS_BUFFER_2, &g_MapImg);
+        Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9], FS_BUFFER_2, &g_MapImg);
         g_GameWork.gameStateStep_598[0]++;
     }
 

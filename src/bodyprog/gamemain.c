@@ -1,8 +1,13 @@
 #include "game.h"
 
+#include <libetc.h>
+
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
+#include "bodyprog/joy.h"
+#include "bodyprog/memcard.h"
 #include "bodyprog/gfx/screen_draw.h"
+#include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/math.h"
 
 void GameState_Boot_Update() // 0x80032D1C
