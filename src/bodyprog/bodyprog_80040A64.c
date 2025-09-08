@@ -1928,8 +1928,6 @@ void Anim_Update2(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     }
 }
 
-// INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", Anim_Update3); // 0x80045360
-
 void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044DF0
 {
     s32 startKeyframeIdx;
