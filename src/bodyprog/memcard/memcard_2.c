@@ -6,6 +6,22 @@
 #include "bodyprog/memcard.h"
 
 u8 D_800BCD10[8] = {0x00, 0x00, 0x00, 0x00, 0x80, 0x18, 0x13, 0x00}; // @unused 
+s32 D_800BCD18[2] = {};
+s32 D_800BCD20[2] = {};
+s16 g_SavegameCount = 0;
+// 2 bytes of padding.
+s_SavegameEntry* g_ActiveSavegameEntry = 0;
+u8 g_MemCardElementCount[MEMORY_CARD_SLOT_COUNT] = {};
+// bytes of padding.
+u32 D_800BCD34 = 0;
+s8 D_800BCD38 = 0;
+s8 D_800BCD39 = 0;
+s16 g_MemCardsTotalElementCount = 0;
+u8 g_SlotElementCount[MEMORY_CARD_SLOT_COUNT] = {};
+u8 g_SelectedSaveIdx = 0;
+s8 g_SelectedFileIdx = 0;
+//s8 D_800BCD40 = 0;
+
 
 s32 func_800334D8(s32 idx) // 0x800334D8
 {
