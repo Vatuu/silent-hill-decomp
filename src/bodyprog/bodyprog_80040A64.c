@@ -1588,7 +1588,7 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyf
 {
     s32            boneCount;
     bool           isPlayer;
-    u32            activeBoneIndexes;
+    u32            activeBoneIndices;
     s32            boneIdx;
     s32            scaleLog2;
     s32            boneTranslationDataIdx;
@@ -1603,7 +1603,7 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyf
     void*          frame0RotData;
     void*          frame1Data;
     void*          frame1RotData;
-    GsCOORDINATE2* coord;
+    GsCOORDINATE2* boneCoord;
     s_AnmBindPose* bindPose;
 
     boneCount     = anmHeader->boneCount_6;
@@ -1613,29 +1613,29 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyf
     frame1RotData = frame1Data + (anmHeader->translationBoneCount_3 * 3);
 
     // For player, use inverted mask of `extra_128.disabledAnimBones_18` to facilitate masking of upper and lower body.
-    isPlayer = (boneCoords == &g_SysWork.playerBoneCoords_890[HarryBone_Root]);
+    isPlayer = boneCoords == &g_SysWork.playerBoneCoords_890[HarryBone_Root];
     if (isPlayer)
     {
-        activeBoneIndexes = ~g_SysWork.player_4C.extra_128.disabledAnimBones_18;
+        activeBoneIndices = ~g_SysWork.player_4C.extra_128.disabledAnimBones_18;
     }
     else
     {
-        activeBoneIndexes = anmHeader->activeBones_8;
+        activeBoneIndices = anmHeader->activeBones_8;
     }
 
-    // Skip root bone (index 0), start processing from bone 1
+    // Skip root bone (index 0) and start processing from bone 1.
     boneCoords = &boneCoords[1];
     bindPose   = &anmHeader->bindPoses_14[1];
 
-    for (boneIdx = 1, coord = boneCoords;
+    for (boneIdx = 1, boneCoord = boneCoords;
          boneIdx < boneCount;
-         boneIdx++, bindPose++, coord++)
+         boneIdx++, bindPose++, boneCoord++)
     {
         // Process bones marked as active.
-        if (activeBoneIndexes & (1 << boneIdx))
+        if (activeBoneIndices & (1 << boneIdx))
         {
-            coord->flg = 0;
-            scaleLog2  = anmHeader->scaleLog2_12;
+            boneCoord->flg = false;
+            scaleLog2      = anmHeader->scaleLog2_12;
 
             boneTranslationDataIdx = bindPose->translationDataIdx_2;
             if (boneTranslationDataIdx >= 0)
@@ -1648,7 +1648,7 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyf
                 for (i = 0; i < 3; i++)
                 {
                     // Linear interpolation with scaling: `frame0 + (frame1 - frame0) * alpha`.
-                    coord->coord.t[i] = (*frame0TranslationData << scaleLog2) +
+                    boneCoord->coord.t[i] = (*frame0TranslationData << scaleLog2) +
                                         (((*frame1TranslationData - *frame0TranslationData) * alpha) >> (Q12_SHIFT - scaleLog2));
 
                     frame0TranslationData++;
@@ -1657,7 +1657,7 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyf
 
                 if (boneTranslationDataIdx == 0)
                 {
-                    coord->coord.t[1] -= anmHeader->rootYOffset_13; // TODO: Not sure of purpose of this yet.
+                    boneCoord->coord.t[1] -= anmHeader->rootYOffset_13; // TODO: Not sure of purpose of this yet.
                 }
             }
 
@@ -1673,8 +1673,8 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyf
                 {
                     for (j = 0; j < 3; j++)
                     {
-                        coord->coord.m[i][j] = (*frame0RotationData << 5) +
-                                               (((*frame1RotationData - *frame0RotationData) * alpha) >> 7);
+                        boneCoord->coord.m[i][j] = (*frame0RotationData << 5) +
+                                                   (((*frame1RotationData - *frame0RotationData) * alpha) >> 7);
 
                         frame0RotationData++;
                         frame1RotationData++;

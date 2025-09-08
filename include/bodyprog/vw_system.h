@@ -356,12 +356,12 @@ extern s32               vcSelfViewTimer;
 // vc_util.c
 
 void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, VECTOR3* chr_pos);
-void vcSetCameraUseWarp(VECTOR3* chr_pos, s16 chr_ang_y);
+void vcSetCameraUseWarp(const VECTOR3* chr_pos, s16 chr_ang_y);
 s32  vcRetCamMvSmoothF();
 void vcSetEvCamRate(s16 ev_cam_rate);
 void vcMoveAndSetCamera(s32 in_connect_f, s32 change_debug_mode, s32 for_f, s32 back_f, s32 right_f, s32 left_f, s32 up_f, s32 down_f);
 void vcMakeHeroHeadPos(VECTOR3* head_pos);
-void vcAddOfsToPos(VECTOR3* out_pos, VECTOR3* in_pos, s16 ofs_xz_r, s16 ang_y, s32 ofs_y);
+void vcAddOfsToPos(VECTOR3* out_pos, const VECTOR3* in_pos, s16 ofs_xz_r, s16 ang_y, s32 ofs_y);
 void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p, s32 for_f, s32 back_f, s32 right_f, s32 left_f, s32 up_f, s32 down_f);
 void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p);
 
@@ -371,21 +371,21 @@ void           vwInitViewInfo();
 GsCOORDINATE2* vwGetViewCoord();
 void           vwGetViewPosition(VECTOR3* pos);
 void           vwGetViewAngle(SVECTOR* ang);
-void           Vw_SetLookAtMatrix(VECTOR3* pos, VECTOR3* lookAt);
+void           Vw_SetLookAtMatrix(const VECTOR3* pos, const VECTOR3* lookAt);
 void           vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, s32 ref_x, s32 ref_y, s32 ref_z, s16 cam_ang_y, s16 cam_ang_z, s32 cam_y, s32 cam_xz_r);
-void           vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, MATRIX* cammat);
+void           vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, const MATRIX* cammat);
 void           vwSetViewInfo();
 void           Vw_ClampAngleRange(s16* angleMin, s16* angleMax, s16 angleConstraintMin, s16 angleConstraintMax);
 
 // vw_calc.c
 
-void vwRenewalXZVelocityToTargetPos(s32* velo_x, s32* velo_z, VECTOR3* now_pos, VECTOR3* tgt_pos, s32 tgt_r,
+void vwRenewalXZVelocityToTargetPos(s32* velo_x, s32* velo_z, const VECTOR3* now_pos, const VECTOR3* tgt_pos, s32 tgt_r,
                                     s32 accel, s32 total_max_spd, s32 dec_forwd_lim_spd, s32 dec_accel_side);
 void vwLimitOverLimVector(s32* vec_x, s32* vec_z, s32 lim_vec_len, s16 lim_vec_ang_y);
 void vwDecreaseSideOfVector(s32* vec_x, s32* vec_z, s32 dec_val, s32 max_side_vec_len, s16 dir_ang_y);
 s32  vwRetNewVelocityToTargetVal(s32 now_spd, s32 mv_pos, s32 tgt_pos, s32 accel, s32 total_max_spd, s32 dec_val_lim_spd);
 s32  vwRetNewAngSpdToTargetAng(s32 now_ang_spd, s16 now_ang, s16 tgt_ang, s32 accel_spd, s32 total_max_ang_spd, s32 dec_val_lim_spd);
-void vwMatrixToAngleYXZ(SVECTOR* ang, MATRIX* mat);
+void vwMatrixToAngleYXZ(SVECTOR* ang, const MATRIX* mat);
 void Vw_MultiplyAndTransformMatrix(MATRIX* transformMat, MATRIX* inMat, MATRIX* outMat);
 void vbSetWorldScreenMatrix(GsCOORDINATE2* coord);
 void vbSetRefView(VbRVIEW* rview);
@@ -396,11 +396,11 @@ void func_80049C2C(MATRIX* mat, s32 x, s32 y, s32 z);
 bool Vw_AabbVisibleInScreenCheck(s32 xMin, s32 xMax, s32 yMin, s32 yMax, s32 zMin, s32 zMax);
 bool Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ, s32 maxX, s32 maxY, s32 maxZ, u16 nearPlane, u16 farPlane);
 bool func_8004A54C(s_func_8004A54C* arg0);
-void vwAngleToVector(SVECTOR* vec, SVECTOR* ang, s32 r);
-s32  vwVectorToAngle(SVECTOR* ang, SVECTOR* vec);
+void vwAngleToVector(SVECTOR* vec, const SVECTOR* ang, s32 r);
+s32  vwVectorToAngle(SVECTOR* ang, const SVECTOR* vec);
 
 /** Performs linear interpolation between Y values based on an input X within the given range. */
-s32 vwOresenHokan(s32* y_ary, s32 y_suu, s32 input_x, s32 min_x, s32 max_x);
+s32 vwOresenHokan(const s32* y_ary, s32 y_suu, s32 input_x, s32 min_x, s32 max_x);
 
 // vc_main.c
 

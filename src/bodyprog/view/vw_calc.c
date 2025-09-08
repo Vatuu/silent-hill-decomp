@@ -8,7 +8,7 @@
 // Reference view transform?
 extern MATRIX D_800C3868;
 
-void vwRenewalXZVelocityToTargetPos(s32* velo_x, s32* velo_z, VECTOR3* now_pos, VECTOR3* tgt_pos, s32 tgt_r,
+void vwRenewalXZVelocityToTargetPos(s32* velo_x, s32* velo_z, const VECTOR3* now_pos, const VECTOR3* tgt_pos, s32 tgt_r,
                                     s32 accel, s32 total_max_spd, s32 dec_forwd_lim_spd, s32 dec_accel_side) // 0x80048F28
 {
 // SH2 locals
@@ -224,7 +224,7 @@ s32 func_80049530(VECTOR* arg0, VECTOR* arg1) // 0x80049530
         "sra    $v0, $v0, 2;" ::: "$12", "$13", "$14");
 }
 
-void vwMatrixToAngleYXZ(SVECTOR* ang, MATRIX* mat) // 0x800495D4
+void vwMatrixToAngleYXZ(SVECTOR* ang, const MATRIX* mat) // 0x800495D4
 {
     s32 r_xz = SquareRoot0((mat->m[0][2] * mat->m[0][2]) + (mat->m[2][2] * mat->m[2][2]));
     ang->vx  = ratan2(-mat->m[1][2], r_xz);
@@ -810,7 +810,7 @@ bool func_8004A54C(s_func_8004A54C* arg0) // 0x8004A54C
     return false;
 }
 
-void vwAngleToVector(SVECTOR* vec, SVECTOR* ang, s32 r) // 0x8004A66C
+void vwAngleToVector(SVECTOR* vec, const SVECTOR* ang, s32 r) // 0x8004A66C
 {
     s32 entou_r; // "Entou" means "cylinder" in Japanese. Refers to 2D radius on XZ plane.
     
@@ -820,7 +820,7 @@ void vwAngleToVector(SVECTOR* vec, SVECTOR* ang, s32 r) // 0x8004A66C
     vec->vz = FP_MULTIPLY(entou_r, Math_Cos(ang->vy), Q12_SHIFT);
 }
 
-s32 vwVectorToAngle(SVECTOR* ang, SVECTOR* vec) // 0x8004A714
+s32 vwVectorToAngle(SVECTOR* ang, const SVECTOR* vec) // 0x8004A714
 {
     VECTOR localVec;
     s32    ret_r;
@@ -837,7 +837,7 @@ s32 vwVectorToAngle(SVECTOR* ang, SVECTOR* vec) // 0x8004A714
     return ret_r;
 }
 
-s32 vwOresenHokan(s32* y_ary, s32 y_suu, s32 input_x, s32 min_x, s32 max_x) // 0x8004A7C8
+s32 vwOresenHokan(const s32* y_ary, s32 y_suu, s32 input_x, s32 min_x, s32 max_x) // 0x8004A7C8
 {
     // `y_ary` = array of Y values.
     // `y_suu` = `y_ary` size.

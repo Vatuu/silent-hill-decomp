@@ -626,13 +626,13 @@ void Gfx_MainMenu_FogRandomize() // 0x8003BAC4
     u8* ptr1;
     s8* ptr2;
 
-    static s32 D_800A9EAC = 0;
+    static s32 RAND = 0;
 
-    ptr         = D_800BCDE0;
-    ptr1        = ptr + 441;
-    D_800A9EAC += 4 + ((s32)Rng_Rand16() & 0x7); // TODO: Range is [4, 11]. Can't use `Rng_GenerateInt`.
-    val         = FP_MULTIPLY(Math_Sin(D_800A9EAC), 10, Q12_SHIFT) - 122;
-    ptr2        = ptr + 461;
+    ptr   = D_800BCDE0;
+    ptr1  = ptr + 441;
+    RAND += 4 + ((s32)Rng_Rand16() & 0x7); // TODO: Range is [4, 11]. Can't use `Rng_GenerateInt`.
+    val   = FP_MULTIPLY(Math_Sin(RAND), 10, Q12_SHIFT) - 122;
+    ptr2  = ptr + 461;
 
     for (i = 20; i >= 0; i--)
     {
@@ -688,14 +688,14 @@ void Gfx_MainMenu_FogScatter() // 0x8003BBF4
 
 void Gfx_MainMenu_FogUpdate() // 0x8003BC8C
 {
-    static s32 fogCounter = 0;
+    static s32 FOG_COUNT = 0;
 
-    if (fogCounter == ((fogCounter / 5) * 5))
+    if (FOG_COUNT == ((FOG_COUNT / 5) * 5))
     {
-        Gfx_MainMenu_FogScatter(fogCounter);
+        Gfx_MainMenu_FogScatter(FOG_COUNT);
     }
 
-    fogCounter++;
+    FOG_COUNT++;
     Gfx_MainMenu_FogDraw();
 }
 
@@ -765,9 +765,9 @@ s32 func_8003BE50(s32 idx) // 0x8003BE50
 
 void GameFs_BgEtcGfxLoad() // 0x8003BE6C
 {
-    static s_FsImageDesc img = { .tPage = { 0, 12 }, .clutX = 192 };
+    static s_FsImageDesc IMG = { .tPage = { 0, 12 }, .clutX = 192 };
 
-    Fs_QueueStartReadTim(FILE_TIM_BG_ETC_TIM, FS_BUFFER_1, &img);
+    Fs_QueueStartReadTim(FILE_TIM_BG_ETC_TIM, FS_BUFFER_1, &IMG);
 }
 
 void GameFs_BgItemLoad() // 0x8003BE9C
@@ -777,8 +777,8 @@ void GameFs_BgItemLoad() // 0x8003BE9C
 
 void func_8003BED0() // 0x8003BED0
 {
-    static s_FsImageDesc imgTim = { .tPage = { 0, 15 }, .clutX = 176 };
-    static s_FsImageDesc imgEtc = { .tPage = { 0, 12 }, .v = 192, .clutX = 192 };
+    static s_FsImageDesc IMG_TIM = { .tPage = { 0, 15 }, .clutX = 176 };
+    static s_FsImageDesc IMG_ETC = { .tPage = { 0, 12 }, .v = 192, .clutX = 192 };
 
     s_PlmHeader* D_800BE9FC = &D_800BCE18.field_1BE4;
 
@@ -788,8 +788,8 @@ void func_8003BED0() // 0x8003BED0
     }
 
     PlmHeader_FixOffsets(&D_800BCE18.field_1BE4);
-    func_80056504(&D_800BCE18.field_1BE4, "TIM00", &imgTim, 1);
-    func_80056504(&D_800BCE18.field_1BE4, "BG_ETC", &imgEtc, 1);
+    func_80056504(&D_800BCE18.field_1BE4, "TIM00", &IMG_TIM, 1);
+    func_80056504(&D_800BCE18.field_1BE4, "BG_ETC", &IMG_ETC, 1);
     func_80056954(&D_800BCE18.field_1BE4);
 }
 
@@ -1963,6 +1963,7 @@ void func_8003DD80(s32 idx, s32 arg1) // 0x8003DD80
 void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
 {
     s32 temp_s0;
+
     static s32 D_800A9ECC = 0xFE16FD13;
     static s32 D_800A9ED0 = 0x0000FE13;
     static s32 D_800A9ED4 = 0x0000FE14;
@@ -2023,6 +2024,7 @@ void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
 void func_8003DF84(s_Skeleton* skel, s32 arg1) // 0x8003DF84
 {
     s32 temp_v1;
+
     static s32 D_800A9EF0 = 0x0000FE14;
     static s32 D_800A9EF4 = 0x00FE1514;
     static s32 D_800A9EF8 = 0x0000FE12;
@@ -2066,6 +2068,7 @@ void func_8003DF84(s_Skeleton* skel, s32 arg1) // 0x8003DF84
 void func_8003E08C(s_Skeleton* skel, s32 arg1) // 0x8003E08C
 {
     s32 temp_v1;
+
     static s32 D_800A9F00 = 0x0000FE02;
     static s32 D_800A9F04 = 0x0000FE03;
     static s32 D_800A9F08 = 0x0000FE00;
@@ -2109,6 +2112,7 @@ void func_8003E08C(s_Skeleton* skel, s32 arg1) // 0x8003E08C
 void func_8003E194(s_Skeleton* skel, s32 arg1) // 0x8003E194
 {
     s32 temp_s0;
+
     static s32 D_800A9F10 = 0xFE03FD00;
     static s32 D_800A9F14 = 0x0000FE00;
     static s32 D_800A9F18 = 0x00FE0201;
@@ -2139,6 +2143,7 @@ void func_8003E194(s_Skeleton* skel, s32 arg1) // 0x8003E194
 void func_8003E238(s_Skeleton* skel, s32 arg1) // 0x8003E238
 {
     s32 var_s0;
+
     static s32 D_800A9F20 = 0x06050403;
     static s32 D_800A9F24 = 0x000000FE; // @unused
     static s32 D_800A9F28 = 0x0000FE03;
@@ -2201,6 +2206,7 @@ void func_8003E238(s_Skeleton* skel, s32 arg1) // 0x8003E238
 void func_8003E388(s_Skeleton* skel, s32 arg1) // 0x8003E388
 {
     s32 temp_a1;
+
     static s32 D_800A9F48 = 0x0000FE05;
     static s32 D_800A9F4C = 0x0000FE06;
 
@@ -2225,6 +2231,7 @@ void func_8003E388(s_Skeleton* skel, s32 arg1) // 0x8003E388
 void func_8003E414(s_Skeleton* skel, s32 arg1) // 0x8003E414
 {
     s32 temp_a1;
+
     static s32 D_800A9F50 = 0xFE19FD11;
     static s32 D_800A9F54 = 0xFE22FD1A;
 
@@ -2249,6 +2256,7 @@ void func_8003E414(s_Skeleton* skel, s32 arg1) // 0x8003E414
 void func_8003E4A0(s_Skeleton* skel, s32 arg1) // 0x8003E4A0
 {
     s32 temp_s0;
+
     static s32 D_800A9F58 = 0x05040302;
     static s32 D_800A9F5C = 0x00FE0706; // @unused
     static s32 D_800A9F60 = 0x00FE0502;
@@ -2280,6 +2288,7 @@ void func_8003E4A0(s_Skeleton* skel, s32 arg1) // 0x8003E4A0
 void func_8003E544(s_Skeleton* skel, s32 arg1) // 0x8003E544
 {
     s32 temp_s0;
+
     static s32 D_800A9F6C = 0x05040302;
     static s32 D_800A9F70 = 0x00FE0706; // @unused
     static s32 D_800A9F74 = 0x00FE0502;
@@ -2362,9 +2371,9 @@ static s_800A9F80 D_800A9FA4 = { 5, 5  }; // @unused
 
 void GameFs_FlameGfxLoad() // 0x8003E710
 {
-    static s_FsImageDesc D_800A9FA8 = { .tPage = { 0, 12 }, .u = 32, .v = 0, .clutX = 800, .clutY = 64 };
+    static s_FsImageDesc IMG_FLAME = { .tPage = { 0, 12 }, .u = 32, .v = 0, .clutX = 800, .clutY = 64 };
 
-    Fs_QueueStartReadTim(FILE_TIM_FLAME_TIM, FS_BUFFER_1, &D_800A9FA8);
+    Fs_QueueStartReadTim(FILE_TIM_FLAME_TIM, FS_BUFFER_1, &IMG_FLAME);
 }
 
 void func_8003E740() // 0x8003E740
@@ -3134,7 +3143,8 @@ void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructU
 
 s32 func_8003FEC0(s_sub_StructUnk3* arg0) // 0x8003FEC0
 {
-    static s32 y_ary[5] = { 0x1C00, 0x6000, 0x9800, 0xC800, 0xF000 };
+    static s32 Y_ARRAY[5] = { 0x1C00, 0x6000, 0x9800, 0xC800, 0xF000 };
+
     if (D_800C4168.fogEnabled_1)
     {
         return arg0->field_10;
@@ -3142,7 +3152,7 @@ s32 func_8003FEC0(s_sub_StructUnk3* arg0) // 0x8003FEC0
 
     if (D_800C4168.field_0 == 1)
     {
-        return vwOresenHokan(y_ary, ARRAY_SIZE(y_ary), arg0->field_4, 0, FP_FLOAT_TO(2.0f, Q12_SHIFT));
+        return vwOresenHokan(Y_ARRAY, ARRAY_SIZE(Y_ARRAY), arg0->field_4, 0, FP_FLOAT_TO(2.0f, Q12_SHIFT));
     }
 
     return FP_FLOAT_TO(20.0f, Q12_SHIFT);

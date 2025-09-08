@@ -22,7 +22,7 @@ void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, VECTOR3* chr_pos)
     g_SysWork.cameraY_2384        = FP_METER(0.0f);
 }
 
-void vcSetCameraUseWarp(VECTOR3* chr_pos, s16 chr_ang_y) // 0x800400D4
+void vcSetCameraUseWarp(const VECTOR3* chr_pos, s16 chr_ang_y) // 0x800400D4
 {
     VECTOR3 cam_pos;
     SVECTOR cam_ang;
@@ -172,7 +172,7 @@ void vcMakeHeroHeadPos(VECTOR3* head_pos) // 0x8004047C
     head_pos->vz = FP_METER_FROM_GEO(vec.vz + neck_lwm.t[2]);
 }
 
-void vcAddOfsToPos(VECTOR3* out_pos, VECTOR3* in_pos, s16 ofs_xz_r, s16 ang_y, s32 ofs_y) // 0x80040518
+void vcAddOfsToPos(VECTOR3* out_pos, const VECTOR3* in_pos, s16 ofs_xz_r, s16 ang_y, s32 ofs_y) // 0x80040518
 {
     out_pos->vx = in_pos->vx + FP_MULTIPLY(ofs_xz_r, Math_Sin(ang_y), Q12_SHIFT);
     out_pos->vz = in_pos->vz + FP_MULTIPLY(ofs_xz_r, Math_Cos(ang_y), Q12_SHIFT);

@@ -1763,9 +1763,6 @@ extern s32 D_800A9A28;
 /** Related to character animation allocation handling. */
 extern s8 D_800A98FC[Chara_Count];
 
-/** Related to main menu fog randomization. */
-extern s32 D_800A9EAC;
-
 extern s32 D_800A9EB0;
 
 extern s_FsImageDesc D_800A9EB4;
@@ -1773,8 +1770,6 @@ extern s_FsImageDesc D_800A9EB4;
 extern s_FsImageDesc D_800A9EBC;
 
 extern s_FsImageDesc D_800A9EC4;
-
-extern s_FsImageDesc D_800A9FA8;
 
 /** `Demo_FrameCount` */
 extern s32 g_Demo_FrameCount;
