@@ -1928,12 +1928,14 @@ void Anim_Update2(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     }
 }
 
+// INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", Anim_Update3); // 0x80045360
+
 void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044DF0
 {
     s32 startKeyframeIdx;
     s32 endKeyframeIdx;
     s32 timeDelta;
-    register s32 timeStep asm("v0"); // @hack Manually set register to match.
+    s32 timeStep;
     s32 alpha;
     s32 sinVal;
     s32 newTime;
@@ -1954,7 +1956,8 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     }
 
     // Update alpha.
-    alpha                 = model->anim_4.alpha_A + timeStep;
+    sinAlpha              = model->anim_4.alpha_A;
+    alpha                 = sinAlpha + timeStep;
     model->anim_4.alpha_A = alpha;
 
     // Sine-based easing?
@@ -1971,13 +1974,15 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
         newTime = FP_TIME(endKeyframeIdx);
     }
 
+    alpha = sinAlpha;
+
     // Update time.
     model->anim_4.time_4 = newTime;
 
     // Update skeleton.
     if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
-        Anim_BoneUpdate(anmHeader, coord, startKeyframeIdx, endKeyframeIdx, sinAlpha);
+        Anim_BoneUpdate(anmHeader, coord, startKeyframeIdx, endKeyframeIdx, alpha);
     }
 
     // Update active keyframe.
