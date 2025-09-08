@@ -499,7 +499,7 @@ u32 IpdHeader_LoadStateGet(s_800C117C* arg0) // 0x80041B1C
     return StaticModelLoadState_Corrupted;
 }
 
-s32 LmHeader_LoadStateGet(s_func_80041CB4* arg0) // 0x80041BA0
+u32 LmHeader_LoadStateGet(s_func_80041CB4* arg0) // 0x80041BA0
 {
     s32 queueState;
     s32 queueStateCpy;
@@ -1365,7 +1365,7 @@ s32 func_80043740() // 0x80043740
     s32         i;
     s_800C117C* ptr;
 
-    switch (PlmHeader_LoadStateGet(&D_800C1020.field_138))
+    switch (LmHeader_LoadStateGet(&D_800C1020.field_138))
     {
         case 0:
             break;

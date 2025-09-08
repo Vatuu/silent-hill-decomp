@@ -2606,7 +2606,7 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
  * @return LM file load state `(e_StaticModelLoadState`).
  */
 
-s32 LmHeader_LoadStateGet(s_func_80041CB4* arg0);
+u32 LmHeader_LoadStateGet(s_func_80041CB4* arg0);
 
 /** @brief Gets the load state of an IPD file.
  *
