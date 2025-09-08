@@ -237,7 +237,7 @@ extern u32 D_800BCD34;
 // If player saves, it changes to 2.
 // Possibly indicates if the game is trying to write or read the memory card.
 // 2 - Saving, 3 - Loading.
-extern s8 g_SaveScreenPlayerState; // 0x800BCD38
+extern s8 D_800BCD38; // 0x800BCD38
 
 extern s8 D_800BCD39;
 

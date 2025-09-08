@@ -1,4 +1,5 @@
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/math.h"
 #include "main/rng.h"
 #include "maps/map0/map0_s01.h"
@@ -717,7 +718,7 @@ void Event_MapItemTake() // 0x800DC3C8
             StoreImage(&IMG_BUFFER_RECT, IMAGE_BUFFER);
             DrawSync(0);
             Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B5, FS_BUFFER_2, &g_MapImg);
-            Gfx_Init(SCREEN_WIDTH, 1);
+            Screen_Init(SCREEN_WIDTH, 1);
 
             g_IntervalVBlanks = 1;
 
@@ -736,7 +737,7 @@ void Event_MapItemTake() // 0x800DC3C8
         case 5:
             LoadImage(&IMG_BUFFER_RECT, IMAGE_BUFFER);
             DrawSync(0);
-            Gfx_Init(SCREEN_WIDTH, 0);
+            Screen_Init(SCREEN_WIDTH, 0);
             func_8008616C(0, false, 0, FP_TIME(0.0f), false);
             SysWork_StateStepReset();
             break;
@@ -758,7 +759,7 @@ void Event_MapItemTake() // 0x800DC3C8
         case 8:
             LoadImage(&IMG_BUFFER_RECT, IMAGE_BUFFER);
             DrawSync(0);
-            Gfx_Init(SCREEN_WIDTH, 0);
+            Screen_Init(SCREEN_WIDTH, 0);
             func_8008616C(0, false, 0, FP_TIME(0.0f), false);
             SysWork_StateStepIncrement();
 

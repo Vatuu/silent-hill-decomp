@@ -15,9 +15,9 @@ scratchpad                                  = 0x1F800000; // size:0x400 ignore:T
 //--- PA: 0x000004   VA: 0x80024B64   subsegment: .rodata, memcard/memcard_1
 //--------------------------------------------------------------------------
 
-//-----------------------------------------------------------------------
-//--- PA: 0x000140   VA: 0x80024CA0   subsegment: .rodata, gfx/graphics_1
-//-----------------------------------------------------------------------
+//------------------------------------------------------------------------
+//--- PA: 0x000140   VA: 0x80024CA0   subsegment: .rodata, gfx/screen_draw
+//------------------------------------------------------------------------
 
 //----------------------------------------------------------------
 //--- PA: 0x0001E4   VA: 0x80024D44   subsegment: .rodata, globals
@@ -58,9 +58,9 @@ DEFAULT_CONTROLLER_CONFIGS                  = 0x8002511C;
 //--- PA: 0x0011C4   VA: 0x80025D24   subsegment: .rodata, libsd/bodyprog_CD_80047D50
 //-----------------------------------------------------------------------------------
 
-//------------------------------------------------------------------
-//--- PA: 0x001208   VA: 0x80025D68   subsegment: .rodata, text_draw
-//------------------------------------------------------------------
+//----------------------------------------------------------------------
+//--- PA: 0x001208   VA: 0x80025D68   subsegment: .rodata, gfx/text_draw
+//----------------------------------------------------------------------
 g_12x16FontWidths                           = 0x80025D6C;
 g_MapMsg_Colors                             = 0x80025DC0;
 
@@ -219,24 +219,32 @@ Savegame_CardState_FileOpen                 = 0x80031184; // type:func
 Savegame_CardState_FileReadWrite            = 0x80031260; // type:func
 Savegame_DevicePathGenerate                 = 0x800314A4; // type:func
 
-//-----------------------------------------------------------------
-//--- PA: 0x00C98C   VA: 0x800314EC   subsegment: c, gfx/graphics_1
-//-----------------------------------------------------------------
+//----------------------------------------------------------------------
+//--- PA: 0x00C98C   VA: 0x800314EC   subsegment: c, gfx/background_draw
+//----------------------------------------------------------------------
 Gfx_BackgroundSpriteDraw                    = 0x800314EC; // type:func
 Gfx_BackgroundSpritesTransition             = 0x800317CC; // type:func
 Gfx_BackgroundSpriteDraw_2                  = 0x80031AAC; // type:func
-Gfx_MotionBlur                              = 0x80031CCC; // type:func
+Gfx_2dBackgroundMotionBlur                  = 0x80031CCC; // type:func
+
+//----------------------------------------------------------------------
+//--- PA: 0x00D39C   VA: 0x80031EFC   subsegment: c, gfx/text_draw_debug
+//----------------------------------------------------------------------
 Gfx_DebugStringPosition                     = 0x80031EFC; // type:func
 Gfx_DebugStringDraw                         = 0x80031F40; // type:func
 Math_IntegerToString                        = 0x80032154; // type:func
-Gfx_ClearRectInterlaced                     = 0x80032358; // type:func
-Gfx_ScreenRefresh                           = 0x800323C8; // type:func
-Gfx_Init                                    = 0x80032428; // type:func
-Settings_ScreenXYSet                        = 0x800324F4; // type:func
-Settings_DispEnvXYSet                       = 0x80032524; // type:func
+
+//------------------------------------------------------------------
+//--- PA: 0x00D7F8   VA: 0x80032358   subsegment: c, gfx/screen_draw
+//------------------------------------------------------------------
+Screen_ClearRectInterlaced                  = 0x80032358; // type:func
+Screen_Refresh                              = 0x800323C8; // type:func
+Screen_Init                                 = 0x80032428; // type:func
+Screen_XYPosSet                             = 0x800324F4; // type:func
+Screen_DispEnvXYSet                         = 0x80032524; // type:func
 Gfx_FadeInProgress                          = 0x800325F8; // type:func
 Gfx_FadeUpdate                              = 0x8003260C; // type:func
-Gfx_BlackBorderDraw.70                      = 0x8003289C; // filename:Gfx_BlackBorderDraw type:func The generated result of the compilation for some reason adds .66 at name end.
+Gfx_BlackBorderDraw.56                      = 0x8003289C; // filename:Gfx_BlackBorderDraw type:func The generated result of the compilation for some reason adds .56 at name end.
 Gfx_CutsceneCameraStateUpdate               = 0x80032904; // type:func
 Gfx_VSyncCallback                           = 0x80032B80; // type:func
 
@@ -258,7 +266,7 @@ SaveLoad_NowLoadingStringDraw               = 0x80032CE8; // type:func
 //-----------------------------------------------------------
 //--- PA: 0x00E1BC   VA: 0x80032D1C   subsegment: c, gamemain
 //-----------------------------------------------------------
-GameState_Init_Update                       = 0x80032D1C; // type:func
+GameState_Boot_Update                       = 0x80032D1C; // type:func
 MainLoop                                    = 0x80032EE0; // type:func
 
 //-----------------------------------------------------------------
@@ -341,7 +349,7 @@ Gfx_MainMenu_FogDraw                        = 0x8003BA08; // type:func
 Gfx_MainMenu_FogRandomize                   = 0x8003BAC4; // type:func
 Gfx_MainMenu_FogScatter                     = 0x8003BBF4; // type:func
 Gfx_MainMenu_FogUpdate                      = 0x8003BC8C; // type:func
-MapTypeGet                                  = 0x8003BD2C; // type:func
+Map_TypeGet                                  = 0x8003BD2C; // type:func
 GameFs_BgEtcGfxLoad                         = 0x8003BE6C; // type:func
 GameFs_BgItemLoad                           = 0x8003BE9C; // type:func
 Map_SpeedZoneGet                            = 0x8003BF60; // type:func
@@ -441,18 +449,21 @@ vwAngleToVector                             = 0x8004A66C; // type:func
 vwVectorToAngle                             = 0x8004A714; // type:func
 vwOresenHokan                               = 0x8004A7C8; // type:func
 
-//------------------------------------------------------------
-//--- PA: 0x025D1C   VA: 0x8004A87C   subsegment: c, text_draw
-//------------------------------------------------------------
+//----------------------------------------------------------------
+//--- PA: 0x025D1C   VA: 0x8004A87C   subsegment: c, gfx/text_draw
+//----------------------------------------------------------------
 Gfx_StringSetPosition                       = 0x8004A87C; // type:func
+Gfx_StringsSet2dLayerIdx                    = 0x8004A8C0; // type:func
+Gfx_StringsReset2dLayerIdx                  = 0x8004A8CC; // type:func
 Gfx_StringSetColor                          = 0x8004A8DC; // type:func
 Gfx_StringDraw                              = 0x8004A8E8; // type:func
 Gfx_MapMsg_CalculateWidths                  = 0x8004ACF4; // type:func
 Gfx_MapMsg_StringDraw                       = 0x8004AF18; // type:func
+Gfx_MapMsg_DefaultStringInfoSet             = 0x8004B684;
 Gfx_StringDrawInt                           = 0x8004B9F8; // type:func
 
 //-------------------------------------------------------------------------
-//--- PA: 0x026FEC   VA: 0x8004BB4C   subsegment: c, items/item_screens_cam
+//--- PA: 0x026FB0   VA: 0x8004BB10   subsegment: c, items/item_screens_cam
 //-------------------------------------------------------------------------
 Gfx_ItemScreens_CameraSet                   = 0x8004BB4C; // type:func
 GameFs_TmdDataAlloc                         = 0x8004BCBC; // type:func
@@ -1966,20 +1977,12 @@ g_MapMsg_CurrentIdx                         = 0x800A99AC; // type:s32
 g_MapMsg_SelectFlashTimer                   = 0x800A99B0; // type:s16
 g_FullscreenMapTimFileIdxs                  = 0x800A99B4;
 g_MapMarkingTimFileIdxs                     = 0x800A99CC;
-
-//-----------------------------------------------------------------------
-//--- PA: 0x084EA4   VA: 0x800A9A04   subsegment: data, bodyprog_800A9074
-//-----------------------------------------------------------------------
 g_MapEventIdx                               = 0x800A9A14; // type:u32
 
 //------------------------------------------------------------------------
 //--- PA: 0x084ECC   VA: 0x800A9A2C   subsegment: .data, syswork_functable
 //------------------------------------------------------------------------
 g_SysStateFuncs                             = 0x800A9A2C; // type:u32 size:0x3C
-
-//-----------------------------------------------------------------------
-//--- PA: 0x084F08   VA: 0x800A9A68   subsegment: data, bodyprog_800A9A68
-//-----------------------------------------------------------------------
 g_MainMenuState                             = 0x800A9A74;
 g_MainMenu_SelectedEntry                    = 0x800A9A78;
 g_MainMenu_VisibleEntryFlags                = 0x800A9A7C;
@@ -1993,17 +1996,30 @@ g_PrevSavegameCount                         = 0x800A9A88;
 MAIN_MENU_ENTRY_STRINGS                     = 0x800A9A8C;
 DIFFICULTY_MENU_ENTRY_STRINGS               = 0x800A9AA0;
 
-//-----------------------------------------------------------------------
-//--- PA: 0x084F4C   VA: 0x800A9AAC   subsegment: data, bodyprog_800A9AA0
-//-----------------------------------------------------------------------
+//---------------------------------------------------------------------------------
+//--- PA: 0x085468   VA: 0x800A9FC8   subsegment: .data, libsd/bodyprog_CD_80047D50
+//---------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+//--- PA: 0x085A80   VA: 0x800AA5E0   subsegment: .data, libsd/bodyprog_80045A7C
+//------------------------------------------------------------------------------
+
+//-------------------------------------------------------------------
+//--- PA: 0x088920   VA: 0x800AD480   subsegment: .data, view/vw_calc
+//-------------------------------------------------------------------
+
+//--------------------------------------------------------------------
+//--- PA: 0x088938   VA: 0x800AD498   subsegment: .data, gfx/text_draw
+//--------------------------------------------------------------------
 g_StringColorId                             = 0x800AD498; // type:s16
+g_Strings2dLayerIndex                       = 0x800AD49C;
+
+//---------------------------------------------------------------------------
+//--- PA: 0x088940   VA: 0x800AD4A0   subsegment: .data, items/item_screens_3
+//---------------------------------------------------------------------------
 g_Items_GunsMaxLoadAmmo                     = 0x800AD4A0;
 g_Inventory_CmdSelectedIdx                  = 0x800ADB58; // type:s32
 g_Inventory_SelectionId                     = 0x800ADB5C; // type:u32
-
-//---------------------------------------------------------------------------
-//--- PA: 0x089000   VA: 0x800ADB60   subsegment: .data, items/item_screens_3
-//---------------------------------------------------------------------------
 g_ItemNames                                 = 0x800ADB60; // type:u32 size:0x30C
 g_ItemDescriptions                          = 0x800ADE6C; // type:u32 size:0x30C
 g_Inventory_SelectedItemIdx                 = 0x800AE17C;
@@ -2335,7 +2351,7 @@ g_Gfx_ScreenFade                            = 0x800BCD0C;
 g_SavegameCount                             = 0x800BCD28;
 g_ActiveSavegameEntry                       = 0x800BCD2C;
 g_MemCardElementCount                       = 0x800BCD30;
-g_SaveScreenPlayerState                     = 0x800BCD38;
+D_800BCD38                                  = 0x800BCD38;
 g_MemCardsTotalElementCount                 = 0x800BCD3A;
 g_SlotElementCount                          = 0x800BCD3C;
 g_SelectedSaveIdx                           = 0x800BCD3E;

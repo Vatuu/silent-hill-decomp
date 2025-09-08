@@ -1,10 +1,11 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/screen_draw.h"
 
 void Settings_ScreenAndVolUpdate() // 0x800333CC
 {
-    Settings_ScreenXYSet(g_GameWork.config_0.optScreenPosX_1C, g_GameWork.config_0.optScreenPosY_1D);
+    Screen_XYPosSet(g_GameWork.config_0.optScreenPosX_1C, g_GameWork.config_0.optScreenPosY_1D);
     Sd_EngineCmd((g_GameWork.config_0.optSoundType_1E != 0) ? 1 : 2);
     Sd_SetVolume(OPT_SOUND_VOLUME_MAX, g_GameWork.config_0.optVolumeBgm_1F, g_GameWork.config_0.optVolumeSe_20);
 }

@@ -6,6 +6,14 @@
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math.h"
 
+void func_8004BB10() // 0x8004BB10
+{
+    GsFCALL4.g3[GsDivMODE_NDIV][GsLMODE_FOG]  = GsTMDfastG3LFG;
+    GsFCALL4.tg3[GsDivMODE_NDIV][GsLMODE_FOG] = GsTMDfastTG3LFG;
+    GsFCALL4.g4[GsDivMODE_NDIV][GsLMODE_FOG]  = GsTMDfastG4LFG;
+    GsFCALL4.tg4[GsDivMODE_NDIV][GsLMODE_FOG] = GsTMDfastTG4LFG;
+}
+
 void Gfx_ItemScreens_CameraSet(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* vec, s32 arg3) // 0x8004BB4C
 {
     view->vr.vz = 10;

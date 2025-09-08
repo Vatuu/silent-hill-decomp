@@ -5,6 +5,7 @@
 #include <strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/math.h"
 #include "bodyprog/memcard.h"
 #include "main/fsqueue.h"
@@ -75,8 +76,8 @@ void GameState_MainMenu_Update() // 0x8003AB28
             g_GameWork.background2dColor_G_58D = 0;
             g_GameWork.background2dColor_B_58E = 0;
 
-            Gfx_ClearRectInterlaced(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
-            Gfx_Init(SCREEN_WIDTH, 1);
+            Screen_ClearRectInterlaced(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
+            Screen_Init(SCREEN_WIDTH, 1);
 
             g_IntervalVBlanks   = 1;
             g_Gfx_ScreenFade    = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
@@ -301,7 +302,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
         case MenuState_NewGameStart:
             if (Gfx_IsScreenFadeComplete())
             {
-                Gfx_ScreenRefresh(SCREEN_WIDTH, 0);
+                Screen_Refresh(SCREEN_WIDTH, 0);
                 Fs_QueueWaitForEmpty();
 
                 if (g_GameWork.autosave_90.playerHealth_240 > FP_HEALTH(0.0f))
@@ -381,7 +382,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
     *(s32*)0x1F800000 = 0x200000;
     *(s32*)0x1F800004 = 0x01C00140;
     ClearImage2((RECT*)0x1F800000, 0u, 0u, 0u);
-    Gfx_Init(SCREEN_WIDTH, 0);
+    Screen_Init(SCREEN_WIDTH, 0);
 }
 
 void MainMenu_SelectedOptionIdxReset() // 0x8003B550
@@ -715,7 +716,7 @@ void func_8003BCF4() // 0x8003BCF4
 // UNKNOWN - IN-GAME LOOP RELATED
 // ========================================
 
-s32 MapTypeGet() // 0x8003BD2C
+s32 Map_TypeGet() // 0x8003BD2C
 {
     return D_800BCE18.field_0[0].type_0 - g_MapTypes;
 }
@@ -727,7 +728,7 @@ void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
     D_800BCE14 = func_80069810();
     var_s0     = D_800BCE14;
 
-    switch (MapTypeGet())
+    switch (Map_TypeGet())
     {
         case 0:
             if (chara->position_18.vx >= FP_METER(191.6f) && chara->position_18.vx <= FP_METER(198.8f) && 

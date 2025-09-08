@@ -2,6 +2,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
+#include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/math.h"
 
 void SysWork_Clear() // 0x800340E0
@@ -74,7 +75,7 @@ void Game_WarmBoot() // 0x80034264
     e_GameState prevState;
 
     DrawSync(0);
-    Gfx_ClearRectInterlaced(0, 32, 512, 448, 0, 0, 0);
+    Screen_ClearRectInterlaced(0, 32, 512, 448, 0, 0, 0);
     func_800892A4(4);
     func_80089128();
     Sd_EngineCmd(19);

@@ -2,7 +2,6 @@
 #define _BODYPROG_H
 
 #include "game.h"
-#include "bodyprog/text_draw.h" // TODO: Add to .c files that make use of this instead of including here.
 #include "bodyprog/vw_system.h"
 #include "main/fsqueue.h"
 #include "types.h"
@@ -905,7 +904,9 @@ STATIC_ASSERT_SIZEOF(s_800A992C, 24);
 typedef struct
 {
     u8  field_0;
-    u8  unk_1[3];
+    u8  unk_1;
+    u8  unk_2;
+    u8  unk_3;
     u32 field_4    : 24;
     u8  field_4_24 : 8;
     u32 field_8    : 24;
@@ -916,17 +917,18 @@ STATIC_ASSERT_SIZEOF(s_800AA894, 12);
 typedef struct
 {
     u16 field_0;
-    s8  unk_1[4];
+    u8  unk_2[4];
     s8  field_6;
     s8  unk_7;
     u8  field_8;
     u8  field_9;
-    s8  unk_A[4];
+    u8  unk_A[4];
     u8  field_E;
     u8  field_F;
     u8  field_10;
     u8  field_11;
-    s8  field_12[6];
+    u16 unk_12; // guessed
+    u32* unk_14; // some pointer, all entries have the same value D_800AD4C4
 } s_800AD4C8;
 STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
 
@@ -1948,12 +1950,9 @@ extern s32 D_800A9FB4[];
 
 extern u8 D_800AA5E0[];
 
+extern u8 D_800AA604[][16];
+
 extern s_800AA894 D_800AA894[];
-
-extern s16 g_StringColorId; // 0x800AD498
-
-/** Index. */
-extern s32 D_800AD49C;
 
 extern u8 D_800AE185;
 
@@ -1972,6 +1971,8 @@ extern s32 D_800AE1B0;
 extern s16 D_800AE520[];
 
 extern s16 D_800AE564[];
+
+extern u8 D_800AE740[];
 
 /** Angle? */
 extern s16 D_800AF210;
@@ -2031,10 +2032,6 @@ extern u8 g_Items_GunsMaxLoadAmmo[36]; // Max loaded ammo that a weapon can hold
 extern const char* g_ItemNames[];
 
 extern const char* g_ItemDescriptions[];
-
-extern DVECTOR g_Gfx_DebugStringPosition0;
-
-extern DVECTOR g_Gfx_DebugStringPosition1;
 
 extern s32 g_PrevScreenFadeProgress;
 
@@ -2408,8 +2405,7 @@ extern s16 D_800C6E8E;
 
 extern u8 D_800C6E90;
 
-/** SFX data array. */
-extern s_Sfx D_800ACAA8[];
+extern s_Sfx g_Sfx_Table0[420];
 
 extern u8 D_800AD480[24];
 
@@ -2437,34 +2433,8 @@ void Gfx_BackgroundSpriteDraw_2(s_FsImageDesc* image);
  *
  * Used only in the loading screen.
  */
-s32 Gfx_MotionBlur(s32 arg0);
+s32 Gfx_2dBackgroundMotionBlur(s32 arg0);
 
-void Gfx_DebugStringPosition(s16 x, s16 y);
-
-/** Draws debug strings using 8x8 glyphs from `FONT8.TIM`. Valid `char` range: `[42, 95]` (`*` to `_`). */
-void Gfx_DebugStringDraw(char* str);
-
-void Gfx_FadeUpdate(); // Return type assumed.
-
-char* Math_IntegerToString(s32 widthMin, s32 value);
-
-void func_800321EC(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-
-void Gfx_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
-
-void Gfx_ScreenRefresh(s32 screenWidth, s32 isInterlaced);
-
-void Gfx_Init(s32 screenWidth, s32 isInterlaced);
-
-void Settings_ScreenXYSet(s32 x, s32 y);
-
-void Settings_DispEnvXYSet(DISPENV* display, s32 x, s32 y);
-
-void func_800325A4(DR_MODE* arg0);
-
-int Gfx_FadeInProgress();
-
-void Gfx_CutsceneCameraStateUpdate();
 
 /** @unused Possibly a leftover from when the save menu was part of `BODYPROG.BIN`.
  * Draws some string in display space.
@@ -2485,7 +2455,7 @@ void func_8003943C();
  * After playback, savegame gets `D_800BCDD8->eventFlagNum_2` event flag set. */
 void SysState_Fmv_Update();
 
-s32 MapTypeGet();
+s32 Map_TypeGet();
 
 void func_8003C1AC(s_800BCE18_0_CC* arg0);
 
@@ -3445,6 +3415,8 @@ void func_80066E40();
 
 void func_80066E7C();
 
+s32 func_80068CC0(s32 arg0);
+
 void func_800697EC();
 
 u16 func_80069810();
@@ -3575,10 +3547,6 @@ void func_800705E4(GsCOORDINATE2*, s32, s32, s32, s32);
 void func_8007D6E0();
 
 void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2);
-
-void Gfx_BlackBorderDraw(POLY_G4* arg0, s32 arg1);
-
-void Gfx_VSyncCallback();
 
 void Settings_ScreenAndVolUpdate();
 
@@ -4060,7 +4028,7 @@ s32 func_80080A10();
 
 u8 func_8008A2E0(s32 arg0);
 
-void GameState_Init_Update();
+void GameState_Boot_Update();
 void GameState_StartMovieIntro_Update();
 void GameState_DeathLoadScreen_Update();
 void GameState_MovieIntroAlternate_Update();

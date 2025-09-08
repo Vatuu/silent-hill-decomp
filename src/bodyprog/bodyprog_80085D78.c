@@ -4,6 +4,7 @@
 #include <strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math.h"
 #include "main/fsqueue.h"
@@ -489,7 +490,7 @@ void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
             Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[idx], FS_BUFFER_2, &g_MapImg);
             Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdxs[idx], FS_BUFFER_1, &g_MapMarkerAtlasImg);
 
-            Gfx_Init(SCREEN_WIDTH, 1);
+            Screen_Init(SCREEN_WIDTH, 1);
             GsSwapDispBuff();
             Fs_QueueWaitForEmpty();
             break;
@@ -501,7 +502,7 @@ void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
         case 2:
             LoadImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(0);
-            Gfx_Init(SCREEN_WIDTH, 0);
+            Screen_Init(SCREEN_WIDTH, 0);
             break;
 
         default:
@@ -1127,7 +1128,7 @@ void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             StoreImage(&D_8002ABA4, IMAGE_BUFFER);
             DrawSync(0);
             Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[mapFlagIdx], FS_BUFFER_2, &g_MapImg);
-            Gfx_Init(0x140, 1);
+            Screen_Init(0x140, 1);
 
             g_IntervalVBlanks = 1;
 
@@ -1196,7 +1197,7 @@ void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
         default:
             LoadImage(&D_8002ABA4, IMAGE_BUFFER);
             DrawSync(0);
-            Gfx_Init(0x140, 0);
+            Screen_Init(0x140, 0);
             func_8008616C(0, false, 0, FP_TIME(0.0f), false);
 
             g_MapOverlayHeader.unfreezePlayerControl_CC(0);

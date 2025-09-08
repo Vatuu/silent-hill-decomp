@@ -61,7 +61,7 @@ segments:
       # .rodata section
       - [0x0, .rodata, bodyprog]
       - [0x4, .rodata, memcard/memcard_1]
-      - [0x140, .rodata, gfx/graphics_1]
+      - [0x140, .rodata, gfx/screen_draw]
       - [0x1E4, .rodata, globals]
       - [0x5AC, .rodata, saveload/bodyprog_80032D1C]
       - [0x5BC, .rodata, settings_reset]
@@ -70,7 +70,7 @@ segments:
       - [0x91C, .rodata, bodyprog_8003AB28]
       - [0x1094, .rodata, libsd/bodyprog_80045A7C]
       - [0x11C4, .rodata, libsd/bodyprog_CD_80047D50]
-      - [0x1208, .rodata, text_draw]
+      - [0x1208, .rodata, gfx/text_draw]
       - [0x1330, .rodata, items/item_screens_1]
       - [0x1350, .rodata, items/item_screens_2]
       - [0x1770, .rodata, items/item_screens_3]
@@ -97,7 +97,9 @@ segments:
 
       # .text section
       - [0x9AD0,    c, memcard/memcard_1]
-      - [0xC98C,    c, gfx/graphics_1]
+      - [0xC98C,    c, gfx/background_draw]
+      - [0xD39C,    c, gfx/text_draw_debug]
+      - [0xD7F8,    c, gfx/screen_draw]
       - [0xE070,    c, fs_main_screen]
       - [0xE188,    c, saveload/bodyprog_80032D1C]
       - [0xE1BC,    c, gamemain] # Name from SH2 symbols. This name also applies for SH4 instance too.
@@ -113,8 +115,8 @@ segments:
       - [0x231F0,   c, libsd/bodyprog_CD_80047D50]
       - [0x23ED8,   c, view/vw_main]
       - [0x243C8,   c, view/vw_calc] # Contains part of SH2's `vb_main`?
-      - [0x25D1C,   c, text_draw]
-      - [0x26FEC,   c, items/item_screens_cam]
+      - [0x25D1C,   c, gfx/text_draw]
+      - [0x26FB0,   c, items/item_screens_cam]
       - [0x27528,   c, items/item_screens_1]
       - [0x27D7C,   c, items/item_screens_2]
       - [0x2AA7C,   c, items/item_screens_3]
@@ -300,8 +302,9 @@ segments:
       - [0x84F2C, .data, bodyprog_8003AB28]
       - [0x85468, .data, libsd/bodyprog_CD_80047D50]
       - [0x85A80, .data, libsd/bodyprog_80045A7C]
-      - [0x85D34, data, bodyprog_800A9AA0]
-      - [0x89000, .data, items/item_screens_3]
+      - [0x88920, .data, view/vw_calc]
+      - [0x88938, .data, gfx/text_draw]
+      - [0x88940, .data, items/item_screens_3]
       - [0x8B134, .data, view/vc_main]
       - [0x8B1A4, .data, bodyprog_80085D78]
       - [0x8B258, .data, demo]

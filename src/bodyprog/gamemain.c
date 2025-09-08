@@ -2,9 +2,10 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
+#include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/math.h"
 
-void GameState_Init_Update() // 0x80032D1C
+void GameState_Boot_Update() // 0x80032D1C
 {
     s32 gameState;
     s32 unkGameStateVar;
@@ -16,7 +17,7 @@ void GameState_Init_Update() // 0x80032D1C
             g_GameWork.background2dColor_G_58D = 0;
             g_GameWork.background2dColor_B_58E = 0;
 
-            Gfx_Init(SCREEN_WIDTH, 0);
+            Screen_Init(SCREEN_WIDTH, 0);
             g_SysWork.timer_20              = 0;
             g_GameWork.gameStateStep_598[1] = 0;
             g_GameWork.gameStateStep_598[2] = 0;
