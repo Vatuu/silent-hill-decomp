@@ -3,8 +3,8 @@
 #include <libetc.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/gfx/screen_draw.h"
+#include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math.h"
 #include "screens/options/options.h"
@@ -817,14 +817,14 @@ void Options_ExtraOptionsMenu_EntryStringsDraw(void) // 0x801E416C
     // Draw heading string.
     Gfx_StringSetColor(ColorId_White);
     Gfx_StringSetPosition(strPos.vx, strPos.vy);
-    Gfx_StringsSet2dLayerIdx(8);
+    Gfx_Strings2dLayerIdxSet(8);
     Gfx_StringDraw(EXTRA_OPTIONS_STR, 99);
 
     // Draw entry strings.
     for (i = 0; i < g_ExtraOptionsMenu_EntryCount; i++)
     {
         Gfx_StringSetPosition(LINE_BASE_X, LINE_BASE_Y + (i * LINE_OFFSET_Y));
-        Gfx_StringsSet2dLayerIdx(8);
+        Gfx_Strings2dLayerIdxSet(8);
         Gfx_StringDraw(ENTRY_STRS[i], 99);
     }
 }
@@ -868,14 +868,14 @@ void Options_MainOptionsMenu_EntryStringsDraw(void) // 0x801E42EC
     // Draw heading string.
     Gfx_StringSetColor(ColorId_White);
     Gfx_StringSetPosition(strPos.vx, strPos.vy);
-    Gfx_StringsSet2dLayerIdx(8);
+    Gfx_Strings2dLayerIdxSet(8);
     Gfx_StringDraw(OPTIONS_STR, 99);
 
     // Draw entry strings.
     for (i = 0; i < MainOptionsMenuEntry_Count; i++)
     {
         Gfx_StringSetPosition(LINE_BASE_X, LINE_BASE_Y + (i * LINE_OFFSET_Y));
-        Gfx_StringsSet2dLayerIdx(8);
+        Gfx_Strings2dLayerIdxSet(8);
         Gfx_StringDraw(ENTRY_STRS[i], 99);
     }
 
@@ -1376,7 +1376,7 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
     posX = g_GameWorkConst->config_0.optScreenPosX_1C;
     if (posX != g_ScreenPosMenu_PositionX || g_GameWorkConst->config_0.optScreenPosY_1D != g_ScreenPosMenu_PositionY)
     {
-        Screen_XYPosSet(posX, g_GameWorkConst->config_0.optScreenPosY_1D);
+        Screen_XyPositionSet(posX, g_GameWorkConst->config_0.optScreenPosY_1D);
     }
 
     g_ScreenPosMenu_PositionX = g_GameWorkConst->config_0.optScreenPosX_1C;

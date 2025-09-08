@@ -167,7 +167,7 @@ void Gfx_BackgroundSpriteDraw_2(s_FsImageDesc* image) // 0x80031AAC
     g_BackgroundColor     = 0x80;
 }
 
-s32 Gfx_2dBackgroundMotionBlur(s32 arg0) // 0x80031CCC
+bool Gfx_2dBackgroundMotionBlur(s32 arg0) // 0x80031CCC
 {
     s32       sp10;
     s32       i;
@@ -227,5 +227,5 @@ s32 Gfx_2dBackgroundMotionBlur(s32 arg0) // 0x80031CCC
     }
 
     GsOUT_PACKET_P = sprt;
-    return 0;
+    return false;
 }

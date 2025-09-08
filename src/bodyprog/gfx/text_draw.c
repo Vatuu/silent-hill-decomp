@@ -18,7 +18,7 @@
 const s32 rodataPad_80025D68 = 0;
 
 INCLUDE_RODATA("asm/bodyprog/nonmatchings/gfx/text_draw", g_12x16FontWidths);
-							 
+
 INCLUDE_RODATA("asm/bodyprog/nonmatchings/gfx/text_draw", g_MapMsg_Colors);
 
 s16 g_StringColorId = 7;
@@ -46,7 +46,7 @@ void Gfx_StringSetPosition(s32 x, s32 y) // 0x8004A87C
     g_Strings2dLayerIndex = 6;
 }
 
-void Gfx_StringsSet2dLayerIdx(s32 idx) // 0x8004A8C0
+void Gfx_Strings2dLayerIdxSet(s32 idx) // 0x8004A8C0
 {
     g_Strings2dLayerIndex = idx;
 }

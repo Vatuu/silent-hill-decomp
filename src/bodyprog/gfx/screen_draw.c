@@ -35,12 +35,12 @@ void Screen_Init(s32 screenWidth, s32 isInterlaced) // 0x80032428
     D_800C6E26 = FRAMEBUFFER_HEIGHT_PROGRESSIVE;
 
     GsInit3D();
-    Screen_XYPosSet(g_GameWorkConst->config_0.optScreenPosX_1C, g_GameWorkConst->config_0.optScreenPosY_1D);
+    Screen_XyPositionSet(g_GameWorkConst->config_0.optScreenPosX_1C, g_GameWorkConst->config_0.optScreenPosY_1D);
     GsSwapDispBuff();
     GsSwapDispBuff();
 }
 
-void Screen_XYPosSet(s32 x, s32 y) // 0x800324F4
+void Screen_XyPositionSet(s32 x, s32 y) // 0x800324F4
 {
     Screen_DispEnvXYSet(&GsDISPENV, x, y);
 }

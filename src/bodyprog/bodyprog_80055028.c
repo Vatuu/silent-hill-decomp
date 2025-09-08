@@ -2369,42 +2369,44 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", GameState_MapScreen_U
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80067914); // 0x80067914
 
-s32 func_80068CC0(s32 arg0)                                                // 0x80068CC0
+bool func_80068CC0(s32 arg0)                                                // 0x80068CC0
 {
-    s32      index;
-    POLY_G3* pointer;
+    s32      i;
+    POLY_G3* poly;
 
-    for (index = 0; index < 2; index++)
+    for (i = 0; i < 2; i++)
     {
-        if (HAS_MAP(D_800AE740[index + arg0 * 2]))
+        if (HAS_MAP(D_800AE740[i + arg0 * 2]))
         {
-            pointer = GsOUT_PACKET_P;
-            setPolyG3(pointer);
-            if (index != 0)
+            poly = GsOUT_PACKET_P;
+            setPolyG3(poly);
+
+            if (i != 0)
             {
-                setXY0Fast(pointer, 0, 216);
-                setXY1Fast(pointer, -8, 200);
-                setXY2Fast(pointer, 8, 200);
+                setXY0Fast(poly, 0, 216);
+                setXY1Fast(poly, -8, 200);
+                setXY2Fast(poly, 8, 200);
             }
             else
             {
-                setXY0Fast(pointer, 0, -216);
-                setXY1Fast(pointer, -8, -200);
-                setXY2Fast(pointer, 8, -200);
+                setXY0Fast(poly, 0, -216);
+                setXY1Fast(poly, -8, -200);
+                setXY2Fast(poly, 8, -200);
             }
 
-            *(u16*)&pointer->r0 = 0x1010;
-            pointer->b0         = 0xC4;
-            *(u16*)&pointer->r1 = 0x8080;
-            pointer->b1         = 0xC4;
-            *(u16*)&pointer->r2 = 0x8080;
-            pointer->b2         = 0xC4;
+            *(u16*)&poly->r0 = 0x1010;
+            poly->b0         = 0xC4;
+            *(u16*)&poly->r1 = 0x8080;
+            poly->b1         = 0xC4;
+            *(u16*)&poly->r2 = 0x8080;
+            poly->b2         = 0xC4;
 
-            addPrim(&g_ObjectTable0[g_ObjectTableIdx].org[2], pointer);
-            GsOUT_PACKET_P = ++pointer;
+            addPrim(&g_ObjectTable0[g_ObjectTableIdx].org[2], poly);
+            GsOUT_PACKET_P = ++poly;
         }
     }
-    return 1;
+
+    return true;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80068E0C); // 0x80068E0C

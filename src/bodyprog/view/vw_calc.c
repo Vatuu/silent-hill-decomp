@@ -535,12 +535,14 @@ bool Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ
     SVECTOR*                        temp_a2;
     SVECTOR*                        temp_a3;
     s_Vw_AabbVisibleInFrustumCheck* cullData;
+
     static u8 D_800AD480[24] =
     {
-        0x00, 0x01, 0x01, 0x02, 0x02, 0x03, 0x03, 0x00,
-        0x04, 0x05, 0x05, 0x06, 0x06, 0x07, 0x07, 0x04,
-        0x00, 0x04, 0x01, 0x05, 0x02, 0x06, 0x03, 0x07,
+        0, 1, 1, 2, 2, 3, 3, 0,
+        4, 5, 5, 6, 6, 7, 7, 4,
+        0, 4, 1, 5, 2, 6, 3, 7
     };
+
     flags0[2] = 0;
     flags0[1] = 0;
     flags0[0] = 0;

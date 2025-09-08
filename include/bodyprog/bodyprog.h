@@ -927,8 +927,8 @@ typedef struct
     u8  field_F;
     u8  field_10;
     u8  field_11;
-    u16 unk_12; // guessed
-    u32* unk_14; // some pointer, all entries have the same value D_800AD4C4
+    u16 unk_12;  // Guessed.
+    u32* unk_14; // Some pointer. All entries have the same value `D_800AD4C4`.
 } s_800AD4C8;
 STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
 
@@ -2433,8 +2433,7 @@ void Gfx_BackgroundSpriteDraw_2(s_FsImageDesc* image);
  *
  * Used only in the loading screen.
  */
-s32 Gfx_2dBackgroundMotionBlur(s32 arg0);
-
+bool Gfx_2dBackgroundMotionBlur(s32 arg0);
 
 /** @unused Possibly a leftover from when the save menu was part of `BODYPROG.BIN`.
  * Draws some string in display space.
@@ -3415,7 +3414,7 @@ void func_80066E40();
 
 void func_80066E7C();
 
-s32 func_80068CC0(s32 arg0);
+bool func_80068CC0(s32 arg0);
 
 void func_800697EC();
 
