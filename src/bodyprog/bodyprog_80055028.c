@@ -2482,7 +2482,7 @@ void func_80069844(s32 arg0) // 0x80069844
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80069860); // 0x80069860
 
-void IpdCollData_FixOffsets(s_IpdCollisionData* collData) // 0x8006993C
+void IpdColData_FixOffsets(s_IpdCollisionData* collData) // 0x8006993C
 {
     collData->ptr_C  = (u8*)collData->ptr_C + (u32)collData;
     collData->ptr_10 = (u8*)collData->ptr_10 + (u32)collData;

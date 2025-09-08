@@ -1519,7 +1519,7 @@ void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_LmHeader** lmHeaders, s32 lm
     ipdHeader->isLoaded_1 = true;
 
     IpdHeader_FixHeaderOffsets(ipdHeader);
-    IpdCollData_FixOffsets(&ipdHeader->collisionData_54);
+    IpdColData_FixOffsets(&ipdHeader->collisionData_54);
     LmHeader_FixOffsets(ipdHeader->lmHeader_4);
     func_8008E4EC(ipdHeader->lmHeader_4);
     func_80043C7C(ipdHeader, arg3, arg4, arg5);
