@@ -2037,16 +2037,7 @@ extern s32 g_PrevScreenFadeProgress;
 
 extern s32 g_ScreenFadeTimestep;
 
-extern s_800B5C40 D_800B5C40[];
-
-// TODO: Overlapped variables
-extern s8 D_800B5C50[][64];
-
-extern s8 D_800B5C54[][64];
-
-extern s8 D_800B5C58[][64];
-
-extern s32 D_800B5C7C;
+extern u32 D_800B5C40[2][16];
 
 extern s_800B5D04 D_800B5D04[];
 

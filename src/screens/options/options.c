@@ -2455,7 +2455,7 @@ void Options_ControllerMenu_EntriesDraw(bool isOnActionsPane, s32 presetsEntryId
     POLY_G4* poly;
     GsOT*    ot;
 
-    ot     = (GsOT*)((g_ObjectTableIdx << 6) + (u8*)&D_800B5C7C);
+    ot     = &D_800B5C40[g_ObjectTableIdx][15];
     poly   = &g_ControllerMenu_SelectionHighlightQuads[g_ObjectTableIdx];
     drMode = &g_ControllerMenu_SelectionHighlightDrawModes[g_ObjectTableIdx];
 

@@ -174,7 +174,7 @@ void Gfx_FadeUpdate() // 0x8003260C
             return;
     }
 
-    ot = &D_800B5C54[g_ObjectTableIdx];
+    ot = &D_800B5C40[g_ObjectTableIdx][5];
     AddPrim(ot, tile);
     AddPrim(ot, drMode);
 }
@@ -275,7 +275,7 @@ void Gfx_CutsceneCameraStateUpdate() // 0x80032904
             return;
     }
 
-    ot = &D_800B5C50[g_ObjectTableIdx];
+    ot = &D_800B5C40[g_ObjectTableIdx][4];
     AddPrim(ot, poly);
     AddPrim(ot, &poly[2]);
     AddPrim(ot, drMode);
