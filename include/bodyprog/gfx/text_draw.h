@@ -10,22 +10,9 @@
  * or text was using `font`.
  */
 
-/** Control codes used by `Gfx_StringDraw`.
- * (TODO: rename to actual purpose, update `Gfx_StringDraw` calls to use them) */
-#define STRING_CTRL_07 "\x07"
-#define STRING_CTRL_0A "\x0a"
-
 // ========
 // GLOBALS
 // ========
-
-extern s16 g_StringColorId; // 0x800AD498
-
-/** Text index 2D layer.
- * In case of modifying `Gfx_StringSetPosition` to set it to
- * a value lower than 6 text will not be affected by the fade effect
- */
-extern s32 g_Strings2dLayerIndex; // 0x800AD49C
 
 extern DVECTOR g_Gfx_DebugStringPosition0; // 0x800B5C20
 

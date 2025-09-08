@@ -21,11 +21,15 @@ INCLUDE_RODATA("asm/bodyprog/nonmatchings/gfx/text_draw", g_12x16FontWidths);
 							 
 INCLUDE_RODATA("asm/bodyprog/nonmatchings/gfx/text_draw", g_MapMsg_Colors);
 
-s16 g_StringColorId = 7;
+static s16 g_StringColorId = 7;
 
 // 2 bytes of padding.
 
-s32 g_Strings2dLayerIndex = 6;
+/** Text index 2D layer.
+ * In case of modifying `Gfx_StringSetPosition` to set it to
+ * a value lower than 6 text will not be affected by the fade effect
+ */
+static s32 g_Strings2dLayerIndex = 6;
 
 void Gfx_StringSetPosition(s32 x, s32 y) // 0x8004A87C
 {
