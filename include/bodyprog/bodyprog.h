@@ -1682,10 +1682,6 @@ extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: Part of main exe, move to
 
 extern const s_MapType g_MapTypes[16];
 
-extern u8 const g_12x16FontWidths[];
-
-extern u32 g_MapMsg_Colors[];
-
 extern char D_80028544[0x10];
 
 extern RECT D_80028A20;
