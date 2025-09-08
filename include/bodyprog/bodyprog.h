@@ -2037,7 +2037,7 @@ extern s32 g_PrevScreenFadeProgress;
 
 extern s32 g_ScreenFadeTimestep;
 
-extern u32 D_800B5C40[2][16];
+extern u32 g_OtTags0[2][16];
 
 extern s_800B5D04 D_800B5D04[];
 
