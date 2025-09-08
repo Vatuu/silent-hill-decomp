@@ -336,6 +336,8 @@ segments:
       - [0x8C36C, lib, libspu, zerobuf, .data]
       - [0x8C76C, lib, libspu, s_n2p, .data]
       - [0x8C88C, data, bodyprog_800B13EC]
+      - [0x8C8DC, .data, libsd/smf_main]
+      - [0x8CBC8, data, bodyprog_800B1440]
 
       # .bss section
       - [0x9FD98, lib, libapi, first, .bss]
