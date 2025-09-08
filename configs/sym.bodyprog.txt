@@ -378,6 +378,7 @@ Sound_StereoBalanceGet                      = 0x80040A64; // type:func
 Fs_QueueEntryLoadStatusGet                  = 0x80041ADC; // type:func
 IpdHeader_LoadStateGet                      = 0x80041B1C; // type:func
 PlmHeader_LoadStateGet                      = 0x80041BA0; // type:func
+Map_PlaceIpdAtGridPos                       = 0x80041ED0; // type:func
 Map_MakeIpdGrid                             = 0x800423F4; // type:func
 ConvertHexToS8                              = 0x8004255C; // type:func
 IpdHeader_IsLoaded                          = 0x80042C04; // type:func

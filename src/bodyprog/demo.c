@@ -396,11 +396,11 @@ bool Demo_GameRandSeedSet() // 0x8008F8A8
     }
 }
 
-s32 func_8008F914()
+s32 func_8008F914(s32 posX, s32 posZ)
 {
     if (g_SysWork.flags_22A4 & (1 << 1))
     {
-        return func_8004393C();
+        return func_8004393C(posX, posZ);
     }
 
     return 1;

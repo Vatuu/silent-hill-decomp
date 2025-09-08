@@ -8,6 +8,23 @@
 #include <strings.h>
 #include <sys/file.h>
 
+u32 D_800B2610[2] = { 0xFFFF0100, 0x1800FFFF };
+s32 D_800B2618 = 0;
+s32 D_800B261C = 0;
+s32 D_800B2620 = 0;
+s32 D_800B2624 = 0;
+s_CardDirectory D_800B2628 = {};
+s32 D_800B2774 = 0;
+s32 D_800B2778 = 0;
+s32 D_800B277C = 0;
+s_MemCardInfo_BasicSaveInfo g_MemCard_1_BasicSaveInfo[CARD_DEVICE_FILE_COUNT] = {};
+s_MemCardInfo_BasicSaveInfo g_MemCard_2_BasicSaveInfo[CARD_DEVICE_FILE_COUNT] = {};
+s_MemCardInfo_BasicSaveInfo D_800B4580[CARD_DEVICE_FILE_COUNT] = {};
+bool D_800B5480 = false;
+u32 D_800B5484 = 0;
+s_CardWork g_CardWork = {};
+s_800B5508 D_800B5508 = {};
+
 static inline void CardWork_ClearDirectoryFile(s32 idx)
 {
     strcpy(g_CardWork.cardDirectory_40->filenames_0[idx], ""); // 0x80024B64 .rodata

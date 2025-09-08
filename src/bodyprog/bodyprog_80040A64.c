@@ -1307,7 +1307,27 @@ bool func_80043830(void) // 0x80043830
     return false;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_8004393C); // 0x8004393C
+bool func_8004393C(s32 posX, s32 posZ) // 0x8004393C
+{
+    s32 fileChunkCoordX;
+    s32 fileChunkCoordZ;
+
+    fileChunkCoordX = FLOOR_TO_STEP(FP_METER_TO_GEO(posX), FP_METER_GEO(40.0f));
+    fileChunkCoordZ = FLOOR_TO_STEP(FP_METER_TO_GEO(posZ), FP_METER_GEO(40.0f));
+    
+    if (D_800C1020.field_588 != 0)
+    {
+        return func_80042E2C(FP_METER_TO_GEO(D_800C1020.field_578), FP_METER_TO_GEO(D_800C1020.field_57C), fileChunkCoordX, fileChunkCoordZ) < 0x481;
+    }
+    
+    if (fileChunkCoordX == D_800C1020.field_580 &&
+       fileChunkCoordZ == D_800C1020.field_584)
+    {
+        return true;
+    }
+
+    return false;
+}
 
 void func_80043A24(GsOT* ot, s32 arg1) // 0x80043A24
 {
@@ -1933,7 +1953,7 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     s32 startKeyframeIdx;
     s32 endKeyframeIdx;
     s32 timeDelta;
-    register s32 timeStep asm("v0"); // @hack Manually set register to match.
+    s32 timeStep;
     s32 alpha;
     s32 sinVal;
     s32 newTime;
@@ -1954,7 +1974,8 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     }
 
     // Update alpha.
-    alpha                 = model->anim_4.alpha_A + timeStep;
+    sinAlpha              = model->anim_4.alpha_A;
+    alpha                 = sinAlpha + timeStep;
     model->anim_4.alpha_A = alpha;
 
     // Sine-based easing?
@@ -1971,13 +1992,15 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
         newTime = FP_TIME(endKeyframeIdx);
     }
 
+    alpha = sinAlpha;
+
     // Update time.
     model->anim_4.time_4 = newTime;
 
     // Update skeleton.
     if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
-        Anim_BoneUpdate(anmHeader, coord, startKeyframeIdx, endKeyframeIdx, sinAlpha);
+        Anim_BoneUpdate(anmHeader, coord, startKeyframeIdx, endKeyframeIdx, alpha);
     }
 
     // Update active keyframe.
@@ -2161,7 +2184,17 @@ void func_800452EC(s_Skeleton* skel) // 0x800452EC
 }
 
 // Anim func. Traverses skeleton bones for something.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045360); // 0x80045360
+void func_80045360(s_Skeleton* skel, s8* arg1) // 0x80045360
+{
+    s32 boneIndex;
+    s32 status;
+
+    for (status = func_80044F6C(arg1, 1), boneIndex = 0; status != -2; boneIndex++)
+    {
+        skel->bones_8[boneIndex].field_10 = status;
+        status = func_80044F6C(arg1, 0);
+    }
+}
 
 // `cond` may actually be another `s_Skeleton` pointer.
 void func_800453E8(s_Skeleton* skel, bool cond) // 0x800453E8
@@ -2191,13 +2224,9 @@ void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
 
     // Get skeleton status?
     status = func_80044F6C(arg1, true);
-    if (status == -2)
-    {
-        return;
-    }
 
     // Traverse bone hierarchy and set flags according to some condition.
-    do
+    while (status != -2)
     {
         if (cond)
         {
@@ -2210,7 +2239,6 @@ void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
         
         status = func_80044F6C(arg1, false);
     }
-    while (status != -2);
 }
 
 // Maybe larger anim func.

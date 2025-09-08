@@ -4,6 +4,15 @@
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/math.h"
 
+DVECTOR g_Gfx_DebugStringPosition0 = {};
+DVECTOR g_Gfx_DebugStringPosition1 = {};
+s32 g_PrevScreenFadeProgress = 0;
+u32 D_800B5C2C = 0xD892383C;
+s32 g_ScreenFadeTimestep = 0;
+s32 g_VBlanks = 0;
+s32 g_UncappedVBlanks = 0;
+s32 __g_UncappedVBlanks = 0;
+
 void Gfx_DebugStringPosition(s16 x, s16 y) // 0x80031EFC
 {
     #define OFFSET_X SCREEN_POSITION_X(50.0f)

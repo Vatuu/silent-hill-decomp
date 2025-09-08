@@ -2662,6 +2662,8 @@ s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s16 fileChunkCoordX, s16 fileCh
 
 bool func_80043830(void);
 
+bool func_8004393C(s32 posX, s32 posZ);
+
 void func_80043A24(GsOT* ot, s32 arg1);
 
 bool func_80043B34(s_800C117C* arg0, s_800C1020* arg1);
@@ -2753,6 +2755,8 @@ void func_80045258(s_Skeleton** skels, s_Bone* bones, s32 boneIdx, s_PlmHeader* 
 
 /** Anim func. */
 void func_800452EC(s_Skeleton* skel);
+
+void func_80045360(s_Skeleton* skel, s8* arg1);
 
 /** Anim func. Traverses skeleton bones to set flags/mask. */
 void func_800453E8(s_Skeleton* skel, bool cond);
