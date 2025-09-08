@@ -357,7 +357,9 @@ typedef enum _CharaFlags
     CharaFlag_Unk9 = 1 << 8
 } s_CharaFlags;
 
-/** @brief Map message color IDs used by strings displayed in screen space. */
+/** @brief Map message color IDs used by strings displayed in screen space.
+ * TODO: Move to `text_draw.h`.
+ */
 typedef enum _ColorId
 {
     ColorId_Gold           = 0,

@@ -18,7 +18,7 @@ void Screen_Init(s32 screenWidth, s32 isInterlaced);
 
 void Screen_XyPositionSet(s32 x, s32 y);
 
-void Screen_DispEnvXYSet(DISPENV* display, s32 x, s32 y);
+void Screen_DisplayEnvXySet(DISPENV* display, s32 x, s32 y);
 
 void func_800325A4(DR_MODE* arg0);
 

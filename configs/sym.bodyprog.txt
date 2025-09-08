@@ -61,8 +61,8 @@ DEFAULT_CONTROLLER_CONFIGS                  = 0x8002511C;
 //----------------------------------------------------------------------
 //--- PA: 0x001208   VA: 0x80025D68   subsegment: .rodata, gfx/text_draw
 //----------------------------------------------------------------------
-FONT_12_X_16_GLYPH_WIDTHS                           = 0x80025D6C;
-STRING_COLORS                             = 0x80025DC0;
+FONT_12_X_16_GLYPH_WIDTHS                   = 0x80025D6C;
+STRING_COLORS                               = 0x80025DC0;
 
 //-----------------------------------------------------------------------------
 //--- PA: 0x001330   VA: 0x80025E90   subsegment: .rodata, items/item_screens_1
@@ -240,8 +240,8 @@ Math_IntegerToString                        = 0x80032154; // type:func
 Screen_ClearRectInterlaced                  = 0x80032358; // type:func
 Screen_Refresh                              = 0x800323C8; // type:func
 Screen_Init                                 = 0x80032428; // type:func
-Screen_XyPositionSet                             = 0x800324F4; // type:func
-Screen_DispEnvXYSet                         = 0x80032524; // type:func
+Screen_XyPositionSet                        = 0x800324F4; // type:func
+Screen_DisplayEnvXySet                      = 0x80032524; // type:func
 Gfx_FadeInProgress                          = 0x800325F8; // type:func
 Gfx_FadeUpdate                              = 0x8003260C; // type:func
 Gfx_BlackBorderDraw.56                      = 0x8003289C; // filename:Gfx_BlackBorderDraw type:func The generated result of the compilation adds .56 at name end for some reason.
@@ -349,7 +349,7 @@ Gfx_MainMenu_FogDraw                        = 0x8003BA08; // type:func
 Gfx_MainMenu_FogRandomize                   = 0x8003BAC4; // type:func
 Gfx_MainMenu_FogScatter                     = 0x8003BBF4; // type:func
 Gfx_MainMenu_FogUpdate                      = 0x8003BC8C; // type:func
-Map_TypeGet                                  = 0x8003BD2C; // type:func
+Map_TypeGet                                 = 0x8003BD2C; // type:func
 GameFs_BgEtcGfxLoad                         = 0x8003BE6C; // type:func
 GameFs_BgItemLoad                           = 0x8003BE9C; // type:func
 Map_SpeedZoneGet                            = 0x8003BF60; // type:func
@@ -663,7 +663,7 @@ Demo_GameRandSeedUpdate                     = 0x8008F33C; // type:func
 Demo_GameRandSeedRestore                    = 0x8008F370; // type:func
 Demo_Start                                  = 0x8008F398; // type:func
 Demo_Stop                                   = 0x8008F3F0; // type:func
-Gfx_ScreenFadeIn_IsInProgress				= 0x8008F434; // type:func
+Gfx_ScreenFadeIn_IsInProgress               = 0x8008F434; // type:func
 Demo_ExitDemo                               = 0x8008F4E4; // type:func
 Demo_DemoRandSeedBackup                     = 0x8008F528; // type:func
 Demo_DemoRandSeedRestore                    = 0x8008F560; // type:func
@@ -2013,7 +2013,7 @@ DIFFICULTY_MENU_ENTRY_STRINGS               = 0x800A9AA0;
 //--- PA: 0x088938   VA: 0x800AD498   subsegment: .data, gfx/text_draw
 //--------------------------------------------------------------------
 g_StringColorId                             = 0x800AD498; // type:s16
-g_Strings2dLayerIdx                       = 0x800AD49C;
+g_Strings2dLayerIdx                         = 0x800AD49C;
 
 //---------------------------------------------------------------------------
 //--- PA: 0x088940   VA: 0x800AD4A0   subsegment: .data, items/item_screens_3
@@ -2305,6 +2305,10 @@ _spu_FTable                                 = 0x800B12E4;
 //-----------------------------------------------------------------------
 //--- PA: 0x08C88C   VA: 0x800B13EC   subsegment: data, bodyprog_800B13EC
 //-----------------------------------------------------------------------
+
+//---------------------------------------------------------------------
+//--- PA: 0x08C8DC   VA: 0x800B143C   subsegment: .data, libsd/smf_main
+//---------------------------------------------------------------------
 // konami libsd globals (smf_def.c?)
 sd_interrupt_start_flag                     = 0x800B143C;
 sd_keyoff_mode                              = 0x800B1440;
@@ -2330,17 +2334,29 @@ smf_file_no                                 = 0x800B25BC;
 print_start                                 = 0x800B25C0;
 eof_char                                    = 0x800B25C4; // type:s8 size:3 static?
 chantype                                    = 0x800B25C8; // type:s32 static for readtrack?
+
+//------------------------------------------------------------------------
+//--- PA: 0x08DAB0   VA: 0x800B2610   subsegment: .data, memcard/memcard_1
+//------------------------------------------------------------------------
 g_MemCard_1_BasicSaveInfo                   = 0x800B2780;
 g_MemCard_2_BasicSaveInfo                   = 0x800B3680;
 // D_800B4580                                  = 0x800B4580;
 g_CardWork                                  = 0x800B5488; // size:0x80
 D_800B5508                                  = 0x800B5508; // size:0x718
+
+//--------------------------------------------------------------------------
+//--- PA: 0x0910C0   VA: 0x800B5C20   subsegment: .data, gfx/text_draw_debug
+//--------------------------------------------------------------------------
 g_Gfx_DebugStringPosition0                  = 0x800B5C20; // type:DVECTOR size:4
 g_Gfx_DebugStringPosition1                  = 0x800B5C24; // type:DVECTOR size:4
 g_PrevScreenFadeProgress                    = 0x800B5C28; // type:s32
 g_ScreenFadeTimestep                        = 0x800B5C30; // type:s32
 g_VBlanks                                   = 0x800B5C34; // type:s32
 g_UncappedVBlanks                           = 0x800B5C38; // type:s32
+
+//-----------------------------------------------------------------------
+//--- PA: 0x0910E0   VA: 0x800B5C40   subsegment: data, bodyprog_800B1440
+//-----------------------------------------------------------------------
 g_DeltaTime0                                = 0x800B5CC0; // type:s32 - Q19.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..).
 g_DeltaTime2                                = 0x800B9CC8; // type:s32
 g_MainLoop_FrameCount                       = 0x800B9CCC;

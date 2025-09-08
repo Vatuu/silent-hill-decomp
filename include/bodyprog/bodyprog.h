@@ -2759,7 +2759,9 @@ void func_800452EC(s_Skeleton* skel);
 /** Anim func. Traverses skeleton bones for something. */
 void func_80045360(s_Skeleton* skel, s8* arg1);
 
-/** Anim func. Traverses skeleton bones to set flags/mask. */
+/** Anim func. Traverses skeleton bones to set flags/mask.
+ * `cond` may actually be another `s_Skeleton` pointer.
+ */
 void func_800453E8(s_Skeleton* skel, bool cond);
 
 /** Does something with skeleton bones. `arg0` is a struct pointer. */

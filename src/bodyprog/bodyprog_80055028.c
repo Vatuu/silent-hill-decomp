@@ -2376,22 +2376,22 @@ bool func_80068CC0(s32 arg0)                                                // 0
 
     for (i = 0; i < 2; i++)
     {
-        if (HAS_MAP(D_800AE740[i + arg0 * 2]))
+        if (HAS_MAP(D_800AE740[i + (arg0 * 2)]))
         {
             poly = GsOUT_PACKET_P;
             setPolyG3(poly);
 
             if (i != 0)
             {
-                setXY0Fast(poly, 0, 216);
+                setXY0Fast(poly,  0, 216);
                 setXY1Fast(poly, -8, 200);
-                setXY2Fast(poly, 8, 200);
+                setXY2Fast(poly,  8, 200);
             }
             else
             {
-                setXY0Fast(poly, 0, -216);
+                setXY0Fast(poly,  0, -216);
                 setXY1Fast(poly, -8, -200);
-                setXY2Fast(poly, 8, -200);
+                setXY2Fast(poly,  8, -200);
             }
 
             *(u16*)&poly->r0 = 0x1010;

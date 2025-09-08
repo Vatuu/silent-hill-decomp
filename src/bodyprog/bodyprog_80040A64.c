@@ -2195,7 +2195,6 @@ void func_80045360(s_Skeleton* skel, s8* arg1) // 0x80045360
     }
 }
 
-// `cond` may actually be another `s_Skeleton` pointer.
 void func_800453E8(s_Skeleton* skel, bool cond) // 0x800453E8
 {
     s_Bone* bone;

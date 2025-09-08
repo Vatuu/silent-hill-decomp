@@ -42,10 +42,10 @@ void Screen_Init(s32 screenWidth, s32 isInterlaced) // 0x80032428
 
 void Screen_XyPositionSet(s32 x, s32 y) // 0x800324F4
 {
-    Screen_DispEnvXYSet(&GsDISPENV, x, y);
+    Screen_DisplayEnvXySet(&GsDISPENV, x, y);
 }
 
-void Screen_DispEnvXYSet(DISPENV* display, s32 x, s32 y) // 0x80032524
+void Screen_DisplayEnvXySet(DISPENV* display, s32 x, s32 y) // 0x80032524
 {
     x = CLAMP(x, -11, 11);
     y = CLAMP(y, -8, 8);
