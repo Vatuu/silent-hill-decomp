@@ -125,24 +125,24 @@ void MainLoop() // 0x80032EE0
             continue;
         }
 
-        g_ObjectTableIdx = GsGetActiveBuff();
+        g_GsActiveBuff = GsGetActiveBuff();
 
         if (g_GameWork.gameState_594 == GameState_MainLoadScreen ||
             g_GameWork.gameState_594 == GameState_InGame)
         {
-            GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_ObjectTableIdx << 17));
+            GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_GsActiveBuff << 17));
         }
         else if (g_GameWork.gameState_594 == GameState_InventoryScreen)
         {
-            GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_ObjectTableIdx * 40000));
+            GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_GsActiveBuff * 40000));
         }
         else
         {
-            GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_ObjectTableIdx << 15));
+            GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_GsActiveBuff << 15));
         }
 
-        GsClearOt(0, 0, &g_ObjectTable0[g_ObjectTableIdx]);
-        GsClearOt(0, 0, &g_ObjectTable1[g_ObjectTableIdx]);
+        GsClearOt(0, 0, &g_ObjectTable0[g_GsActiveBuff]);
+        GsClearOt(0, 0, &g_ObjectTable1[g_GsActiveBuff]);
 
         g_SysWork.field_22A0 = 0;
 
@@ -245,8 +245,8 @@ void MainLoop() // 0x80032EE0
 
         // Draw objects?
         GsSwapDispBuff();
-        GsSortClear(g_GameWork.background2dColor_R_58C, g_GameWork.background2dColor_G_58D, g_GameWork.background2dColor_B_58E, &g_ObjectTable0[g_ObjectTableIdx]);
-        GsDrawOt(&g_ObjectTable0[g_ObjectTableIdx]);
-        GsDrawOt(&g_ObjectTable1[g_ObjectTableIdx]);
+        GsSortClear(g_GameWork.background2dColor_R_58C, g_GameWork.background2dColor_G_58D, g_GameWork.background2dColor_B_58E, &g_ObjectTable0[g_GsActiveBuff]);
+        GsDrawOt(&g_ObjectTable0[g_GsActiveBuff]);
+        GsDrawOt(&g_ObjectTable1[g_GsActiveBuff]);
     }
 }

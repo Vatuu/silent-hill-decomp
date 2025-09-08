@@ -643,7 +643,7 @@ void Gfx_WriteOptionSaveDraw(s32 arg0, s32 optionIdx) // 0x801E3C44
 
     g_DisplaySaveDataInfo = 0;
     time                  = (u8)g_SysWork.timer_1C & 0x3F;
-    ot                    = &g_ObjectTable1[g_ObjectTableIdx];
+    ot                    = &g_ObjectTable1[g_GsActiveBuff];
 
     switch (D_801E750C)
     {
@@ -699,7 +699,7 @@ void Gfx_SavedFlashDraw() // 0x801E3E78
     u32      rowIdx;
     POLY_F4* poly;
 
-    ot      = &g_ObjectTable1[g_ObjectTableIdx];
+    ot      = &g_ObjectTable1[g_GsActiveBuff];
     slotIdx = ~g_LastSaveIdx[0] == 0;
     rowIdx = g_LastSaveIdx[slotIdx] - g_HiddenElementsByDisplacement[slotIdx];
 
@@ -798,7 +798,7 @@ void Gfx_SaveSlotBorderDraw() // 0x801E4010
         }
     };
 
-    ot = &g_ObjectTable1[g_ObjectTableIdx];
+    ot = &g_ObjectTable1[g_GsActiveBuff];
 
     // Draw green border around slot.
     for (i = 0; i < BORDER_PIXEL_WIDTH; i++)
@@ -857,7 +857,7 @@ void Gfx_SaveSlotMemCardMsgBoxShineDraw(s32 slotIdx) // 0x801E43C8
 
     temp       = ((u8)g_SysWork.timer_1C) & 0x3F;
     colorTimer = temp;
-    ot         = &g_ObjectTable1[g_ObjectTableIdx];
+    ot         = &g_ObjectTable1[g_GsActiveBuff];
 
     if (g_SelectedSaveSlotIdx == slotIdx)
     {
@@ -958,7 +958,7 @@ void Gfx_SaveSlotBoxDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 se
         0, 0, 0, 0, 0
     };
 
-    ot = &g_ObjectTable1[g_ObjectTableIdx];
+    ot = &g_ObjectTable1[g_GsActiveBuff];
 
     if (g_DisplaySaveDataInfo == 1 && slotIdx == g_SelectedSaveSlotIdx)
     {
@@ -1142,7 +1142,7 @@ void Gfx_SaveEntryBorderDraw(s_SavegameEntry* saveEntry, s_SavegameEntry* nextSa
     LINE_F2* borderLine;
     TILE*    cornerTile;
 
-    ot     = &g_ObjectTable1[g_ObjectTableIdx];
+    ot     = &g_ObjectTable1[g_GsActiveBuff];
     rowIdx = saveIdx - g_HiddenElementsByDisplacement[slotIdx];
 
     // Draw border around savegame entry.
@@ -1277,7 +1277,7 @@ void Gfx_SaveSlotMemCardMsgBoxSubDraw(s_LineBorder* borderLines, s_QuadBorder* b
     s_Line2d* glowLine;
     s32       i;
 
-    ot = &g_ObjectTable1[g_ObjectTableIdx];
+    ot = &g_ObjectTable1[g_GsActiveBuff];
 
     // Draw border around message.
     for (i = 0; i < 4; i++)
@@ -1372,7 +1372,7 @@ void Gfx_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
         }
     };
 
-    ot = &g_ObjectTable1[g_ObjectTableIdx];
+    ot = &g_ObjectTable1[g_GsActiveBuff];
 
     for (i = 0; i < 2; i++)
     {
@@ -1466,7 +1466,7 @@ void Gfx_SaveDataInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
     s_SavegameMetadata* ptr;
     POLY_G4*            poly;
 
-    ot = &g_ObjectTable1[g_ObjectTableIdx];
+    ot = &g_ObjectTable1[g_GsActiveBuff];
 
     g_ActiveSavegameEntry = GetActiveSavegameEntry(slotIdx);
 

@@ -127,7 +127,7 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
     posY = g_StringPosition.vy;
 
     glyphColor = g_MapMsg_Colors[g_StringColorId];
-    ot         = &g_OtTags0[g_ObjectTableIdx][g_Strings2dLayerIndex];
+    ot         = &g_OtTags0[g_GsActiveBuff][g_Strings2dLayerIndex];
 
     if (!g_SysWork.enableHighResGlyphs_2350_0)
     {
@@ -402,7 +402,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
     packet = NULL;
     result = 0;
 
-    ot                  = (GsOT*)&g_OtTags0[g_ObjectTableIdx][6];
+    ot                  = (GsOT*)&g_OtTags0[g_GsActiveBuff][6];
     color               = g_MapMsg_Colors[g_StringColorId];
     g_StringPosition.vx = -(g_MapMsg_WidthTable[0] >> 1);
 
@@ -743,7 +743,7 @@ void func_8004B76C(char* str, s32 useFixedWidth) // 0x8004B76C
 
     glyphSprt  = (GsSPRITE*)PSX_SCRATCH_ADDR(0x30);
     *glyphSprt = D_800C38F8;
-    ot         = &g_ObjectTable1[g_ObjectTableIdx];
+    ot         = &g_ObjectTable1[g_GsActiveBuff];
 
     // Parse string.
     while (*str != '\0')

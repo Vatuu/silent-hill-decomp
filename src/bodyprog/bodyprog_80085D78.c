@@ -1363,7 +1363,7 @@ void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6,
 
     setSemiTrans(poly, 0);
 
-    addPrim(g_ObjectTable0[g_ObjectTableIdx].org, poly);
+    addPrim(g_ObjectTable0[g_GsActiveBuff].org, poly);
     poly++;
 
     GsOUT_PACKET_P = (PACKET*)poly;
@@ -2730,7 +2730,7 @@ void func_8008D5A0(VECTOR3* arg0, s16 arg1) // 0x8008D5A0
     packet         = GsOUT_PACKET_P;
     tile           = GsOUT_PACKET_P + 24;
     GsOUT_PACKET_P = GsOUT_PACKET_P + 40;
-    ot             = &g_ObjectTable0[g_ObjectTableIdx].org[(arg0->vz + 2) >> 3];
+    ot             = &g_ObjectTable0[g_GsActiveBuff].org[(arg0->vz + 2) >> 3];
 
     cond = false;
     if (arg0->vx >= (-g_GameWork.gsScreenWidth_588 >> 1) && (g_GameWork.gsScreenWidth_588 >> 1) >= arg0->vx)
@@ -2755,7 +2755,7 @@ void func_8008D5A0(VECTOR3* arg0, s16 arg1) // 0x8008D5A0
 
         sp10.x = arg0->vx + (g_GameWork.gsScreenWidth_588 / 2);
         sp10.y = arg0->vy + (g_GameWork.gsScreenHeight_58A / 2);
-        if (g_ObjectTableIdx == 1)
+        if (g_GsActiveBuff == 1)
         {
             sp10.y += 32;
         }
@@ -2773,8 +2773,8 @@ void func_8008D5A0(VECTOR3* arg0, s16 arg1) // 0x8008D5A0
     sp10.h = 8;
     sp10.w = 8;
 
-    SetDrawMove(packet, &sp10, (g_ObjectTableIdx * 8) + 784, 112);
-    AddPrim(g_ObjectTable0[g_ObjectTableIdx].org + 5, packet);
+    SetDrawMove(packet, &sp10, (g_GsActiveBuff * 8) + 784, 112);
+    AddPrim(g_ObjectTable0[g_GsActiveBuff].org + 5, packet);
 }
 
 void func_8008D78C()
@@ -2822,7 +2822,7 @@ s32 func_8008D850() // 0x8008D850
     s_8008D850 unk; 
 
     rectX = 784;
-    if (g_ObjectTableIdx == 0)
+    if (g_GsActiveBuff == 0)
     {
         rectX = 792;
     }
@@ -2969,7 +2969,7 @@ void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2) // 0x8008E794
         poly->x3    = sp20.vx + 24;
         poly->y3    = ((u32)sp20.vx >> 16) + 48;
 
-        AddPrim(g_ObjectTable0[g_ObjectTableIdx].org + 641, poly);
+        AddPrim(g_ObjectTable0[g_GsActiveBuff].org + 641, poly);
         GsOUT_PACKET_P = poly + 1;
     }
 }
