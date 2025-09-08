@@ -20,6 +20,17 @@
 
 const s16 rodataPad_800251FC = 0;
 
+s32 g_MapMsg_StateMachineIdx1 = 0;
+s32 g_MapMsg_StateMachineIdx2 = 0;
+s32 g_MapMsg_DisplayLength = 0;
+s32 g_MapMsg_MainIdx = 0;
+s32 g_MapMsg_DisplayInc = 0;
+s32 D_800BCD74 = 0;
+s_MapMsgSelect g_MapMsg_Select = {};
+u8 g_MapMsg_AudioLoadBlock = 0;
+s8 g_MapMsg_SelectCancelIdx = 0;
+u32 D_800BCD7C = 0x00491021;
+
 void func_800348C0() // 0x800348C0
 {
     bzero(&D_800A992C[1], 0x48);
@@ -1281,7 +1292,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                     else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
                     {
                         g_MapMsg_Select.maxIdx_0           = temp;
-                        g_MapMsg_Select.selectedEntryIdx_1 = g_MapMsg_SelectCancelIdx3;
+                        g_MapMsg_Select.selectedEntryIdx_1 = g_MapMsg_SelectCancelIdx;
 
                         Sd_PlaySfx(Sfx_Cancel, 0, 64);
 
@@ -1297,7 +1308,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                     {
                         g_MapMsg_Select.maxIdx_0 = temp;
 
-                        if ((u8)g_MapMsg_Select.selectedEntryIdx_1 == (s8)g_MapMsg_SelectCancelIdx3)
+                        if ((u8)g_MapMsg_Select.selectedEntryIdx_1 == (s8)g_MapMsg_SelectCancelIdx)
                         {
                             Sd_PlaySfx(Sfx_Cancel, 0, 64);
                         }
@@ -1408,7 +1419,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
         case MapMsgCode_Select3:
         case MapMsgCode_Select4:
             g_MapMsg_Select.maxIdx_0  = 1;
-            g_MapMsg_SelectCancelIdx3 = (mapMsgCode == 3) ? 2 : 1;
+            g_MapMsg_SelectCancelIdx = (mapMsgCode == 3) ? 2 : 1;
 
             if (mapMsgCode == MapMsgCode_Select4)
             {

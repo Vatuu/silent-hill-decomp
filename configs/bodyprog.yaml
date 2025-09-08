@@ -342,6 +342,8 @@ segments:
       - [0x910E0, .data, gamemain]
       - [0x981B0, .data, memcard/memcard_2]
       - [0x981E8, data, bodyprog_800B5C40]
+      - [0x98200, .data, bodyprog_800348C0]
+      - [0x98220, data, bodyprog_800BCD80]
       #- [0x910E0, data, bodyprog_800B5C40]
 
       # .bss section
