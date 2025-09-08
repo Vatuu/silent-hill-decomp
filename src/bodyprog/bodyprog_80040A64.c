@@ -1365,7 +1365,7 @@ s32 func_80043740() // 0x80043740
     s32         i;
     s_800C117C* ptr;
 
-    switch (PlmHeader_LoadStateGet(&D_800C1020.field_138))
+    switch (LmHeader_LoadStateGet(&D_800C1020.field_138))
     {
         case 0:
             break;
