@@ -141,6 +141,6 @@ bool Demo_PresentIntervalUpdate();
 
 bool Demo_GameRandSeedSet();
 
-s32 func_8008F914();
+s32 func_8008F914(s32 posX, s32 posZ);
 
 #endif
