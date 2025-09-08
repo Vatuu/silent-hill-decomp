@@ -989,17 +989,17 @@ STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 typedef struct _AnimInfo
 {
     void (*updateFunc_0)(struct _Model*, struct _AnmHeader*, GsCOORDINATE2*, struct _AnimInfo*);
-    u8  field_4;                /** Packed anim status. See `s_ModelAnimData::status_0`. Unknown purpose for this one. */
-    s8  hasVariableTimeDelta_5; // Or `hasVariableDuration_5`?
-    u8  status_6;               /** Packed anim status. See `s_ModelAnim::status_0`. */
+    u8  status_4;                 /** Packed anim status. Init base? See `s_ModelAnimData::status_0`. */
+    s8  hasVariableDuration_5;    /** `bool` | Use `duration_8.variableFunc`: `true`, Use `duration_8.constant`: `false`. */
+    u8  status_6;                 /** Packed anim status. Link target? Sometimes `NO_VALUE`, unknown why. See `s_ModelAnim::status_0`. */
     u8  __pad_7;
     union
     {
-        q19_12 constTimeDelta;             // `constantDuration`
-        q19_12 (*variableTimeDeltaFunc)(); // `variableDurationFunc`
-    } timeDelta_8;                         // `duration_8` Not sure how the time scaling works. Something like `FP_TIME(sec * (TICKS_PER_SECOND / 2))`?
-    s16 startKeyframeIdx_C;
-    s16 endKeyframeIdx_E;
+        q19_12 constant;          /** Constant duration. */
+        q19_12 (*variableFunc)(); /** Variable duration via a function. Allows anims to play at variable speeds. */
+    } duration_8;                 /** Duration at 30 FPS. See `FP_TIME_ANIM`. */
+    s16 startKeyframeIdx_C;       /** Start keyframe index. Sometimes `NO_VALUE`, unknown why. */
+    s16 endKeyframeIdx_E;         /** End keyframe index. */
 } s_AnimInfo;
 STATIC_ASSERT_SIZEOF(s_AnimInfo, 16);
 

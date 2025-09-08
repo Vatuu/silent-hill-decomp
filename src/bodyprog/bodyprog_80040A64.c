@@ -1747,12 +1747,12 @@ void func_80044950(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2*
 
 q19_12 Anim_DurationGet(s_Model* model, s_AnimInfo* anim) // 0x800449AC
 {
-    if (!anim->hasVariableTimeDelta_5)
+    if (!anim->hasVariableDuration_5)
     {
-        return anim->timeDelta_8.constTimeDelta;
+        return anim->duration_8.constant;
     }
 
-    return anim->timeDelta_8.variableTimeDeltaFunc();
+    return anim->duration_8.variableFunc();
 }
 
 /** @brief Computes the time step of the target animation. */

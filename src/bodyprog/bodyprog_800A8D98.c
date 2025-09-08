@@ -777,13 +777,13 @@ s_800A992C D_800A992C[4] =
 s_AnimInfo D_800A998C =
 {
     .updateFunc_0           = Anim_Update1,
-    .field_4                = 0,
-    .hasVariableTimeDelta_5 = false,
-    .status_6               = ANIM_STATUS(0, false),
-    .__pad_7                = 0,
-    .timeDelta_8            = { .constTimeDelta = FP_TIME(8.0f) },
-    .startKeyframeIdx_C     = 26,
-    .endKeyframeIdx_E       = 44
+    .status_4               = 0,
+    .hasVariableDuration_5 = false,
+    .status_6              = ANIM_STATUS(0, false),
+    .__pad_7               = 0,
+    .duration_8            = { FP_TIME_ANIM(4.0f / 15.0f) },
+    .startKeyframeIdx_C    = 26,
+    .endKeyframeIdx_E      = 44
 };
 u32 unknown_D_800A999C = 0x80025234;
 s32 D_800A99A0 = 0;
