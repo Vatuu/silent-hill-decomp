@@ -167,7 +167,7 @@ void Demo_Stop() // 0x8008f3f0
     Demo_GameRandSeedRestore();
 }
 
-bool Gfx_ScreenFadeIn_inProgress(s32 arg0)
+bool Gfx_ScreenFadeIn_InProgress(s32 arg0)
 {
     s32 caseVar = arg0 & ~(1 << 0);
 
@@ -293,7 +293,7 @@ bool Demo_Update() // 0x8008F5D8
         return false;
     }
 
-    if (!Gfx_ScreenFadeIn_inProgress(var0) || !Gfx_ScreenFadeIn_inProgress(g_Gfx_ScreenFade) || var1 != 0)
+    if (!Gfx_ScreenFadeIn_InProgress(var0) || !Gfx_ScreenFadeIn_InProgress(g_Gfx_ScreenFade) || var1 != 0)
     {
         g_Demo_CurFrameData = NULL;
         return true;

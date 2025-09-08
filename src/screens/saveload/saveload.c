@@ -3,6 +3,7 @@
 #include <libetc.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/memcard.h"
 #include "bodyprog/math.h"
@@ -1694,7 +1695,7 @@ void Savegame_ScreenLogic() // 0x801E649C
                 g_SelectedFileIdx     = saveEntry->fileIdx_6;
                 g_SelectedSaveIdx     = saveEntry->elementIdx_7;
 
-                if (g_SaveScreenPlayerState == 2) 
+                if (D_800BCD38 == 2) 
                 {
                     if (saveEntry->currentScreenSessionSaves_0 == 31600)
                     {
@@ -1722,7 +1723,7 @@ void Savegame_ScreenLogic() // 0x801E649C
                         g_SysWork.timer_20               = FP_TIME(0.0f);
                         g_GameWork.gameStateStep_598[1]  = 0;
                         g_GameWork.gameStateStep_598[2]  = 0;
-                        g_GameWork.gameStateStep_598[0] += g_SaveScreenPlayerState;
+                        g_GameWork.gameStateStep_598[0] += D_800BCD38;
                     }
 
                     Sd_EngineCmd(Sfx_Confirm);
@@ -1816,7 +1817,7 @@ void Savegame_ScreenLogic() // 0x801E649C
                 }
                 else
                 {
-                    if (g_SaveScreenPlayerState == gameStateStep)
+                    if (D_800BCD38 == gameStateStep)
                     {
                         func_8002E830();
                         Game_StateSetNext(GameState_InGame);

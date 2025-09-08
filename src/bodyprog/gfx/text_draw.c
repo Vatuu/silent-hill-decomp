@@ -1,6 +1,7 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/math.h"
 
 #define DIALOG_CODE_NEWLINE         'N'
@@ -16,13 +17,15 @@
 
 const s32 rodataPad_80025D68 = 0;
 
-INCLUDE_RODATA("asm/bodyprog/nonmatchings/text_draw", g_12x16FontWidths);
-
-INCLUDE_RODATA("asm/bodyprog/nonmatchings/text_draw", g_MapMsg_Colors);
+INCLUDE_RODATA("asm/bodyprog/nonmatchings/gfx/text_draw", g_12x16FontWidths);
+							 
+INCLUDE_RODATA("asm/bodyprog/nonmatchings/gfx/text_draw", g_MapMsg_Colors);
 
 s16 g_StringColorId = 7;
+
 // 2 bytes of padding.
-s32 g_otIdx = 6;
+
+s32 g_Strings2dLayerIndex = 6;
 
 void Gfx_StringSetPosition(s32 x, s32 y) // 0x8004A87C
 {
@@ -40,17 +43,17 @@ void Gfx_StringSetPosition(s32 x, s32 y) // 0x8004A87C
         g_StringPosition.vy = y - OFFSET_Y;
     }
 
-    g_otIdx = 6;
+    g_Strings2dLayerIndex = 6;
 }
 
-void func_8004A8C0(s32 arg0) // 0x8004A8C0
+void Gfx_StringsSet2dLayerIdx(s32 idx) // 0x8004A8C0
 {
-    g_otIdx = arg0;
+    g_Strings2dLayerIndex = idx;
 }
 
-void func_8004A8CC() // 0x8004A8CC
+void Gfx_StringsReset2dLayerIdx() // 0x8004A8CC
 {
-    g_otIdx = 6;
+    g_Strings2dLayerIndex = 6;
 }
 
 void Gfx_StringSetColor(s16 colorId) // 0x8004A8DC
@@ -58,7 +61,7 @@ void Gfx_StringSetColor(s16 colorId) // 0x8004A8DC
     g_StringColorId = colorId;
 }
 
-bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
+bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
 {
     #define GLYPH_SIZE_X       12
     #define GLYPH_SIZE_Y       16
@@ -92,7 +95,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
 
     // Create local argument copies.
     strCpy  = str;
-    sizeCpy = size;
+    sizeCpy = strLength;
 
     packet = NULL;
     result = false;
@@ -102,7 +105,7 @@ bool Gfx_StringDraw(char* str, s32 size) // 0x8004A8E8
     posY = g_StringPosition.vy;
 
     glyphColor = g_MapMsg_Colors[g_StringColorId];
-    ot         = &D_800B5C40[g_ObjectTableIdx].field_0[g_otIdx];
+    ot         = &D_800B5C40[g_ObjectTableIdx].field_0[g_Strings2dLayerIndex];
 
     if (!g_SysWork.enableHighResGlyphs_2350_0)
     {
@@ -665,7 +668,7 @@ void func_8004B658() // 0x8004B658
     D_800C38F8.h         = 16;
 }
 
-void func_8004B684() // 0x8004B684
+void Gfx_MapMsg_DefaultStringInfoSet() // 0x8004B684
 {
     D_800C38B4.lineCount_0               = 1;
     D_800C38B0.field_0                   = 0;
@@ -675,6 +678,7 @@ void func_8004B684() // 0x8004B684
     g_SysWork.enableHighResGlyphs_2350_0 = false;
 }
 
+/** @unused */
 void func_8004B6D4(s16 arg0, s16 arg1) // 0x8004B6D4
 {
     if (arg0 != NO_VALUE)
@@ -689,6 +693,7 @@ void func_8004B6D4(s16 arg0, s16 arg1) // 0x8004B6D4
     }
 }
 
+/** @unused */
 void func_8004B74C(s16 arg0) // 0x8004B74C
 {
     if (arg0 < 0 || arg0 >= 5)
@@ -700,6 +705,7 @@ void func_8004B74C(s16 arg0) // 0x8004B74C
     D_800C391E = arg0;
 }
 
+/** @unused */
 void func_8004B76C(char* str, s32 useFixedWidth) // 0x8004B76C
 {
     #define GLYPH_SIZE_X       11
@@ -836,14 +842,6 @@ void Gfx_StringDrawInt(s32 widthMin, s32 val) // 0x8004B9F8
     // Draw numeric string.
     Gfx_StringDraw(str, 5);
     return;
-}
-
-void func_8004BB10() // 0x8004BB10
-{
-    GsFCALL4.g3[GsDivMODE_NDIV][GsLMODE_FOG]  = GsTMDfastG3LFG;
-    GsFCALL4.tg3[GsDivMODE_NDIV][GsLMODE_FOG] = GsTMDfastTG3LFG;
-    GsFCALL4.g4[GsDivMODE_NDIV][GsLMODE_FOG]  = GsTMDfastG4LFG;
-    GsFCALL4.tg4[GsDivMODE_NDIV][GsLMODE_FOG] = GsTMDfastTG4LFG;
 }
 
 const s32 unused_Rodata_80025E88 = 0xC9457F00; // Unused.

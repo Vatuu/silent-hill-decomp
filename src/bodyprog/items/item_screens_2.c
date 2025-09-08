@@ -1,9 +1,11 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/player_logic.h"
 #include "bodyprog/math.h"
+
 const s32 rodataPad_80025EAC = 0;
 
 static const s8 D_80025EB0[] =
@@ -104,8 +106,8 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
                 Inventory_AddSpecialItem(InventoryItemId_HyperBlaster, 1);
             }
 
-            Gfx_ClearRectInterlaced(0, 0x20, 0x140, 0x1C0, 0u, 0u, 0u);
-            Gfx_Init(0x140, 1);
+            Screen_ClearRectInterlaced(0, 0x20, 0x140, 0x1C0, 0u, 0u, 0u);
+            Screen_Init(0x140, 1);
 
             g_IntervalVBlanks    = 1;
             g_Gfx_ScreenFade     = 6;
@@ -221,7 +223,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             {
                 s32 prevGameState;
 
-                Gfx_ScreenRefresh(320, 0);
+                Screen_Refresh(320, 0);
                 Fs_QueueWaitForEmpty();
                 func_8004C040();
 
@@ -246,7 +248,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
         case 20:
             if ((g_Gfx_ScreenFade & 0x7) == 5)
             {
-                Gfx_ScreenRefresh(320, 0);
+                Screen_Refresh(320, 0);
                 Inventory_ExitAnimFixes();
 
                 g_SavegamePtr->inventorySlotCount_AB = func_8004F190(g_SavegamePtr);
@@ -262,8 +264,8 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
 
         // Results screen triggers here.
         case 21:
-            Gfx_ClearRectInterlaced(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
-            Gfx_Init(0x140, 1);
+            Screen_ClearRectInterlaced(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
+            Screen_Init(0x140, 1);
 
             g_IntervalVBlanks                  = 1;
             g_Gfx_ScreenFade                   = 6;
@@ -333,7 +335,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
         case 24:
             if (Gfx_IsScreenFadeComplete())
             {
-                Gfx_ScreenRefresh(320, 0);
+                Screen_Refresh(320, 0);
                 GameFs_SaveLoadBinLoad();
                 Fs_QueueWaitForEmpty();
                 Game_StateSetNext(GameState_Unk10);

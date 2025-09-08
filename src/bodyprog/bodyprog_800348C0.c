@@ -247,12 +247,12 @@ void Gfx_LoadingScreenDraw() // 0x80034E58
 {
     if (g_SysWork.loadingScreenIdx_2281 != LoadingScreenId_None && g_GameWork.gameStateStep_598[0] < 10)
     {
-        g_Gfx_ScreenFade    = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, false);
+        g_Gfx_ScreenFade     = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, false);
         g_ScreenFadeTimestep = FP_TIME(0.8f);
         g_MapOverlayHeader.loadingScreenFuncs_18[g_SysWork.loadingScreenIdx_2281]();
     }
 
-    Gfx_MotionBlur(2);
+    Gfx_2dBackgroundMotionBlur(2);
 }
 
 void func_80034EC8() // 0x80034EC8
@@ -1223,7 +1223,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
             g_MapMsg_DisplayLength             = 0;
             g_MapMsg_DisplayInc                = 2; // Advance 2 glyphs at a time.
 
-            func_8004B684();
+            Gfx_MapMsg_DefaultStringInfoSet();
             Gfx_MapMsg_CalculateWidths(g_MapMsg_CurrentIdx);
 
             D_800BCD74 = 1;
@@ -2499,7 +2499,7 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
         g_GameWork.gameStateStep_598[0]++;
     }
 
-    Gfx_MotionBlur(2);
+    Gfx_2dBackgroundMotionBlur(2);
 
     if (Fs_QueueDoThingWhenEmpty())
     {
@@ -2576,7 +2576,7 @@ void GameState_LoadMapScreen_Update() // 0x8003991C
         g_GameWork.gameStateStep_598[0]++;
     }
 
-    Gfx_MotionBlur(2);
+    Gfx_2dBackgroundMotionBlur(2);
 
     if (Fs_QueueDoThingWhenEmpty())
     {
@@ -2701,7 +2701,7 @@ void SysState_LoadArea_Update() // 0x80039C40
 
     g_SysWork.field_22A0 |= 1 << 0;
     Game_StateSetNext(GameState_MainLoadScreen);
-    Gfx_MotionBlur(1);
+    Gfx_2dBackgroundMotionBlur(1);
 }
 
 void AreaLoad_UpdatePlayerPosition() // 0x80039F30

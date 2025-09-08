@@ -5,6 +5,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
+#include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/math.h"
 #include "bodyprog/memcard.h"
 #include "main/fsqueue.h"
@@ -46,7 +47,7 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
         switch (g_GameWork.gameStateStep_598[0])
         {
             case 0:
-                Gfx_Init(0x280, 1);
+                Screen_Init(0x280, 1);
 
                 g_Gfx_ScreenFade     = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
                 g_ScreenFadeTimestep = FP_TIME(0.2f);
@@ -276,7 +277,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                 if (Gfx_IsScreenFadeComplete())
                 {
                     Settings_ScreenAndVolUpdate();
-                    Gfx_Init(SCREEN_WIDTH, 0);
+                    Screen_Init(SCREEN_WIDTH, 0);
 
                     switch (D_800CA4F0.field_0)
                     {

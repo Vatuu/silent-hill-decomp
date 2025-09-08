@@ -5,6 +5,7 @@
 #include <strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/math.h"
 #include "bodyprog/memcard.h"
 #include "main/fsqueue.h"
@@ -75,8 +76,8 @@ void GameState_MainMenu_Update() // 0x8003AB28
             g_GameWork.background2dColor_G_58D = 0;
             g_GameWork.background2dColor_B_58E = 0;
 
-            Gfx_ClearRectInterlaced(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
-            Gfx_Init(SCREEN_WIDTH, 1);
+            Screen_ClearRectInterlaced(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
+            Screen_Init(SCREEN_WIDTH, 1);
 
             g_IntervalVBlanks   = 1;
             g_Gfx_ScreenFade    = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
@@ -301,7 +302,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
         case MenuState_NewGameStart:
             if (Gfx_IsScreenFadeComplete())
             {
-                Gfx_ScreenRefresh(SCREEN_WIDTH, 0);
+                Screen_Refresh(SCREEN_WIDTH, 0);
                 Fs_QueueWaitForEmpty();
 
                 if (g_GameWork.autosave_90.playerHealth_240 > FP_HEALTH(0.0f))
@@ -381,7 +382,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
     *(s32*)0x1F800000 = 0x200000;
     *(s32*)0x1F800004 = 0x01C00140;
     ClearImage2((RECT*)0x1F800000, 0u, 0u, 0u);
-    Gfx_Init(SCREEN_WIDTH, 0);
+    Screen_Init(SCREEN_WIDTH, 0);
 }
 
 void MainMenu_SelectedOptionIdxReset() // 0x8003B550

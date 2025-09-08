@@ -2,7 +2,6 @@
 #define _BODYPROG_H
 
 #include "game.h"
-#include "bodyprog/text_draw.h" // TODO: Add to .c files that make use of this instead of including here.
 #include "bodyprog/vw_system.h"
 #include "main/fsqueue.h"
 #include "types.h"
@@ -1955,10 +1954,9 @@ extern s32 D_800A9FB4[];
 
 extern u8 D_800AA5E0[];
 
-extern s16 g_StringColorId; // 0x800AD498
+extern u8 D_800AA604[][16];
 
-/** Index. */
-extern s32 D_800AD49C;
+extern s_800AA894 D_800AA894[];
 
 extern u8 D_800AE185;
 
@@ -2038,10 +2036,6 @@ extern u8 g_Items_GunsMaxLoadAmmo[36]; // Max loaded ammo that a weapon can hold
 extern const char* g_ItemNames[];
 
 extern const char* g_ItemDescriptions[];
-
-extern DVECTOR g_Gfx_DebugStringPosition0;
-
-extern DVECTOR g_Gfx_DebugStringPosition1;
 
 extern s32 g_PrevScreenFadeProgress;
 
@@ -2443,34 +2437,8 @@ void Gfx_BackgroundSpriteDraw_2(s_FsImageDesc* image);
  *
  * Used only in the loading screen.
  */
-s32 Gfx_MotionBlur(s32 arg0);
+s32 Gfx_2dBackgroundMotionBlur(s32 arg0);
 
-void Gfx_DebugStringPosition(s16 x, s16 y);
-
-/** Draws debug strings using 8x8 glyphs from `FONT8.TIM`. Valid `char` range: `[42, 95]` (`*` to `_`). */
-void Gfx_DebugStringDraw(char* str);
-
-void Gfx_FadeUpdate(); // Return type assumed.
-
-char* Math_IntegerToString(s32 widthMin, s32 value);
-
-void func_800321EC(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-
-void Gfx_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
-
-void Gfx_ScreenRefresh(s32 screenWidth, s32 isInterlaced);
-
-void Gfx_Init(s32 screenWidth, s32 isInterlaced);
-
-void Settings_ScreenXYSet(s32 x, s32 y);
-
-void Settings_DispEnvXYSet(DISPENV* display, s32 x, s32 y);
-
-void func_800325A4(DR_MODE* arg0);
-
-int Gfx_FadeInProgress();
-
-void Gfx_CutsceneCameraStateUpdate();
 
 /** @unused Possibly a leftover from when the save menu was part of `BODYPROG.BIN`.
  * Draws some string in display space.
@@ -3584,10 +3552,6 @@ void func_8007D6E0();
 
 void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2);
 
-void Gfx_BlackBorderDraw(POLY_G4* arg0, s32 arg1);
-
-void Gfx_VSyncCallback();
-
 void Settings_ScreenAndVolUpdate();
 
 void Settings_RestoreDefaults();
@@ -4068,7 +4032,7 @@ s32 func_80080A10();
 
 u8 func_8008A2E0(s32 arg0);
 
-void GameState_Init_Update();
+void GameState_Boot_Update();
 void GameState_StartMovieIntro_Update();
 void GameState_DeathLoadScreen_Update();
 void GameState_MovieIntroAlternate_Update();
