@@ -1066,7 +1066,7 @@ void func_8003C3AC() // 0x8003C3AC
 s32 func_8003C850() // 0x8003C850
 {
     func_8003C3AC();
-    func_80043740();
+    return func_80043740();
 }
 
 void func_8003C878(s32 arg0) // 0x8003C878

@@ -868,10 +868,18 @@ typedef struct
     s16 field_0; // Flags?
 } s_8008D850;
 
+typedef struct
+{
+    u8  unk_0;
+    u8  field_1;
+    u8  unk_2[2];
+    s32 field_4;
+} s_80043338_0;
+
 // Maybe level stream data?
 typedef struct
 {
-    void* destBuffer_0;
+    s_80043338_0* destBuffer_0;
     s32   queueEntryIdx_4;
     s16   fileChunkCoordX_8;
     s16   fileChunkCoordZ_A;
@@ -2620,7 +2628,7 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
  * @param
  * @return PLM file load state `(e_StaticModelLoadState`).
  */
-s32 PlmHeader_LoadStateGet(s_func_80041CB4* arg0);
+u32 PlmHeader_LoadStateGet(s_func_80041CB4* arg0);
 
 /** @brief Gets the load state of an IPD file.
  *
@@ -2641,6 +2649,10 @@ void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1);
 /** Gets distance to the edge of a file chunk? */
 s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, bool clip);
 
+s32 func_80042E2C(s32 xPos, s32 zPos, s32 xFileChunkCoord, s32 zFileChunkCoord);
+
+s32 func_80042EBC(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+
 void func_800431E4(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
 void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
@@ -2650,14 +2662,16 @@ void func_800433B8(s_800C1020* arg0);
 void func_800433B8(s_800C1020* arg0);
 
 /** Args are X and Z? */
-s16 func_80043554(s32 gridX, s32 gridZ);
+s32 func_80043554(s32 gridX, s32 gridZ);
 
 bool func_80043578(s_800C117C* arg0, s32 arg1, s32 arg2);
 
 s_800C117C* func_800435E4(s_800C117C* arg0, s32 arg1);
 
 /** Maybe facilitates file chunk streaming as the player moves around the map. */
-s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s16 fileChunkCoordX, s16 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
+s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
+
+s32 func_80043740();
 
 bool func_80043830(void);
 
@@ -3926,8 +3940,6 @@ void func_8003EF74(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s32 arg2, s32
 void func_8003F08C(s_StructUnk3* arg0, s_sub_StructUnk3* arg1);
 
 void func_8003F170();
-
-void func_80043740();
 
 /** Resets player info in the savegame buffer (inventory, health, playtime). */
 void Game_SavegameResetPlayer();
