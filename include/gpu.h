@@ -60,7 +60,7 @@ typedef struct _ColoredLine2d
     u16      r_8;
     u16      g_A;
     u16      b_C;
-    u16      pad_E; // Maybe 4th component of a RGB+code struct?
+    u16      __pad_E; // Maybe 4th component of a RGB+code struct?
 } s_ColoredLine2d;
 STATIC_ASSERT_SIZEOF(s_ColoredLine2d, 16);
 

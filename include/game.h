@@ -992,7 +992,7 @@ typedef struct _AnimInfo
     u8  field_4;                /** Packed anim status. See `s_ModelAnimData::status_0`. Unknown purpose for this one. */
     s8  hasVariableTimeDelta_5; // Or `hasVariableDuration_5`?
     u8  status_6;               /** Packed anim status. See `s_ModelAnim::status_0`. */
-    u8  field_7;                // Maybe `isLooped_7`? Could also be padding.
+    u8  __pad_7;
     union
     {
         q19_12 constTimeDelta;             // `constantDuration`
