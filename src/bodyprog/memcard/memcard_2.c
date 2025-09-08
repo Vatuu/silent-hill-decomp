@@ -20,8 +20,22 @@ s16 g_MemCardsTotalElementCount = 0;
 u8 g_SlotElementCount[MEMORY_CARD_SLOT_COUNT] = {};
 u8 g_SelectedSaveIdx = 0;
 s8 g_SelectedFileIdx = 0;
-//s8 D_800BCD40 = 0;
+s8 D_800BCD40 = 0;
 
+u8 D_800BCD41 = 0x70;
+u8 D_800BCD42 = 0xE5;
+u8 D_800BCD43 = 0x8D;
+u8 D_800BCD44 = 0x05;
+u8 D_800BCD45 = 0x00;
+u8 D_800BCD46 = 0x02;
+u8 D_800BCD47 = 0x24;
+/*
+s32 g_DemoLoadAttempCount = 0;
+s32 D_800BCD4C = 0x24020028; // @unused
+s8 D_800BCD50[8] = {};
+u32 D_800BCD58 = 0;
+s32 D_800BCD5C;
+*/
 
 s32 func_800334D8(s32 idx) // 0x800334D8
 {

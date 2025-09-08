@@ -341,7 +341,7 @@ segments:
       - [0x910C0, .data, gfx/text_draw_debug]
       - [0x910E0, .data, gamemain]
       - [0x981B0, .data, memcard/memcard_2]
-      - [0x981E0, data, bodyprog_800B5C40]
+      - [0x981E8, data, bodyprog_800B5C40]
       #- [0x910E0, data, bodyprog_800B5C40]
 
       # .bss section
