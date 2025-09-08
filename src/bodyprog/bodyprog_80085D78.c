@@ -1370,11 +1370,11 @@ void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6,
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088370); // 0x80088370
 
-bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 arg3, s_PlmHeader* plmHeader, s_FsImageDesc* tex) // 0x80088C7C
+bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 arg3, s_LmHeader* lmHeader, s_FsImageDesc* tex) // 0x80088C7C
 {
     func_80035338(arg0 + 1, charaId, NULL, coord);
     func_8003D5B4(arg3);
-    func_8003D6E0(charaId, arg0, plmHeader, tex);
+    func_8003D6E0(charaId, arg0, lmHeader, tex);
     return true;
 }
 
@@ -2872,9 +2872,9 @@ static s_FsImageDesc D_800AFDA4 = { .tPage = { 64, 3 }, .u = 224, .v = 0, .clutX
 // Large function.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D990); // 0x8008D990
 
-void func_8008E4EC(s_PlmHeader* plmHeader) // 0x8008E4EC
+void func_8008E4EC(s_LmHeader* lmHeader) // 0x8008E4EC
 {
-    func_80056504(plmHeader, D_8002B2CC.str, &img0, 1);
+    func_80056504(lmHeader, D_8002B2CC.str, &img0, 1);
 }
 
 s_WaterZone* Map_WaterZoneGet(s32 posX, s32 posZ, s_WaterZone* waterZone)
