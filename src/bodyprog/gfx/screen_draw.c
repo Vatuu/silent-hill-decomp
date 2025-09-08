@@ -84,8 +84,8 @@ void Gfx_FadeUpdate() // 0x8003260C
     TILE*    tile;
     DR_MODE* drMode;
 
-    drMode                   = &D_800A8E5C[g_ObjectTableIdx];
-    tile                     = &D_800A8E74[g_ObjectTableIdx];
+    drMode                   = &D_800A8E5C[g_ActiveBuffer];
+    tile                     = &D_800A8E74[g_ActiveBuffer];
     g_PrevScreenFadeProgress = g_ScreenFadeProgress;
 
     switch (g_Gfx_ScreenFade)
@@ -176,7 +176,7 @@ void Gfx_FadeUpdate() // 0x8003260C
             return;
     }
 
-    ot = &D_800B5C54[g_ObjectTableIdx];
+    ot = &g_OtTags0[g_ActiveBuffer][5];
     AddPrim(ot, tile);
     AddPrim(ot, drMode);
 }
@@ -218,8 +218,8 @@ void Gfx_CutsceneCameraStateUpdate() // 0x80032904
     POLY_G4* poly;
     DR_MODE* drMode;
 
-    drMode = &D_800A8E98[g_ObjectTableIdx];
-    poly   = &D_800A8EB0[g_ObjectTableIdx];
+    drMode = &D_800A8E98[g_ActiveBuffer];
+    poly   = &D_800A8EB0[g_ActiveBuffer];
 
     vcSetEvCamRate(D_800A8F40);
 
@@ -277,7 +277,7 @@ void Gfx_CutsceneCameraStateUpdate() // 0x80032904
             return;
     }
 
-    ot = &D_800B5C50[g_ObjectTableIdx];
+    ot = &g_OtTags0[g_ActiveBuffer][4];
     AddPrim(ot, poly);
     AddPrim(ot, &poly[2]);
     AddPrim(ot, drMode);

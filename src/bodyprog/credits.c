@@ -420,7 +420,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
     s32      temp_v1;
     POLY_G4* poly;
 
-    GsOT* ot = &g_ObjectTable1[g_ObjectTableIdx];
+    GsOT* ot = &g_OrderingTable2[g_ActiveBuffer];
 
     char* D_8002B4C0[] =
     {

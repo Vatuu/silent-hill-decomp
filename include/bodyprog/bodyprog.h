@@ -940,16 +940,6 @@ typedef struct
 
 typedef struct
 {
-    s32 field_0[16];
-} s_800B5C40;
-
-typedef struct
-{
-    s32 unk_0[2048];
-} s_800B5D04;
-
-typedef struct
-{
     s8 field_0;
     s8 field_1;
     s8 field_2;
@@ -1709,8 +1699,6 @@ extern POLY_G4 D_800A8EB0[];
 
 extern s32 D_800A8F40;
 
-extern GsOT D_800A8F9C[];
-
 extern s_FsImageDesc g_Font16AtlasImg;    // 0x800A8FF4
 extern s_FsImageDesc g_KonamiLogoImg;     // 0x800A8FFC
 extern s_FsImageDesc g_KcetLogoImg;       // 0x800A9004
@@ -2037,20 +2025,9 @@ extern s32 g_PrevScreenFadeProgress;
 
 extern s32 g_ScreenFadeTimestep;
 
-extern s_800B5C40 D_800B5C40[];
+extern GsOT_TAG g_OtTags0[2][16];
 
-// TODO: Overlapped variables
-extern s8 D_800B5C50[][64];
-
-extern s8 D_800B5C54[][64];
-
-extern s8 D_800B5C58[][64];
-
-extern s32 D_800B5C7C;
-
-extern s_800B5D04 D_800B5D04[];
-
-extern u8 D_800B7CC4[][8192];
+extern GsOT_TAG g_OtTags1[2][2048];
 
 extern s_SubCharacter D_800BA00C; // Often passed to `func_800700F8`, might not be full `s_SubCharacter`?
 
