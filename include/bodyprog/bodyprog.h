@@ -3072,6 +3072,8 @@ s32 func_8005C7D0(s_SubCharacter* chara, s32 moveSpeed);
 
 void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara);
 
+s32 func_8005C944(s_SubCharacter* chara, s_800C4590* arg1);
+
 s32 func_8005D86C(s32 arg0);
 
 /** Looks like a clamping function. */

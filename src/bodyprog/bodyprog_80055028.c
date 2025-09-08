@@ -1885,7 +1885,50 @@ void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara) // 0x8005C814
     chara->field_D8.field_6 = FP_FROM((-temp_s2 * temp_v0) + (temp_s4 * temp_s1), Q12_SHIFT);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005C944); // 0x8005C944
+s32 func_8005C944(s_SubCharacter* chara, s_800C4590* arg1) // 0x8005C944
+{
+    s_800C4590 sp10;
+    VECTOR3    sp30;
+    s16        temp_s4;
+    s32        temp_s0;
+    s32        temp_s0_2;
+    s32        temp_s2;
+    s32        temp_s3;
+    s32        temp_v0;
+    s32        temp;
+    s32        ret;
+
+    temp_s4 = chara->headingAngle_3C;
+    temp_s0 = FP_MULTIPLY_PRECISE(g_DeltaTime0, chara->moveSpeed_38, 0xC);
+    temp_s2 = OVERFLOW_GUARD(temp_s0);
+    temp_s3 = temp_s2 >> 1;
+
+    temp      = Math_Sin(temp_s4);
+    temp_s0_2 = temp_s0 >> temp_s3;
+    temp_v0   = temp >> temp_s3;
+
+    sp30.vx = (s32)FP_MULTIPLY_PRECISE(temp_s0_2, temp_v0, 0xC) << temp_s2;
+    sp30.vz = (s32)FP_MULTIPLY_PRECISE(temp_s0_2, (Math_Cos(temp_s4) >> temp_s3), 0xC) << temp_s2;
+    sp30.vy = (s32)FP_MULTIPLY_PRECISE(g_DeltaTime0, chara->field_34, 0xC);
+
+    ret = func_80069B24(&sp10, (VECTOR3*)&sp30, chara);
+
+    chara->position_18.vx += sp10.field_0.vx;
+    chara->position_18.vy += sp10.field_0.vy;
+    chara->position_18.vz += sp10.field_0.vz;
+
+    if (chara->position_18.vy > sp10.field_C)
+    {
+        chara->position_18.vy = sp10.field_C;
+        chara->field_34       = 0;
+    }
+    if (arg1 != NULL)
+    {
+        *arg1 = sp10;
+    }
+
+    return ret;
+}
 
 s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 x, s16 z) // 0x8005CB20
 {
