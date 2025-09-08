@@ -940,16 +940,6 @@ typedef struct
 
 typedef struct
 {
-    s32 field_0[16];
-} s_800B5C40;
-
-typedef struct
-{
-    s32 unk_0[2048];
-} s_800B5D04;
-
-typedef struct
-{
     s8 field_0;
     s8 field_1;
     s8 field_2;
@@ -2039,9 +2029,7 @@ extern s32 g_ScreenFadeTimestep;
 
 extern u32 g_OtTags0[2][16];
 
-extern s_800B5D04 D_800B5D04[];
-
-extern u8 D_800B7CC4[][8192];
+extern u32 g_OtTags1[2][2048];
 
 extern s_SubCharacter D_800BA00C; // Often passed to `func_800700F8`, might not be full `s_SubCharacter`?
 

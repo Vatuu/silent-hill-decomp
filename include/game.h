@@ -1405,7 +1405,7 @@ extern s_Savegame* const       g_SavegamePtr;   // 0x80024D48
 extern s_ControllerData* const g_Controller0;   // 0x80024D4C
 extern s_ControllerData* const g_Controller1;   // 0x80024D50
 
-extern s32  g_GsActiveBuff; // 0x800B9FB8
+extern s32  g_ActiveBuffer; // 0x800B9FB8
 extern GsOT g_ObjectTable0[]; // 0x800A8F74
 extern GsOT g_ObjectTable1[]; // 0x800A8FC4
 

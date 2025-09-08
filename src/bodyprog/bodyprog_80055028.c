@@ -52,7 +52,7 @@ void func_800550D0() // 0x800550D0
     POLY_G4* poly;
     GsOT*    ot;
 
-    ot = &g_ObjectTable0[g_GsActiveBuff];
+    ot = &g_ObjectTable0[g_ActiveBuffer];
 
     if (D_800C4168.field_2 != 0)
     {
@@ -2400,7 +2400,7 @@ s32 func_80068CC0(s32 arg0)                                                // 0x
             *(u16*)&pointer->r2 = 0x8080;
             pointer->b2         = 0xC4;
 
-            addPrim(&g_ObjectTable0[g_GsActiveBuff].org[2], pointer);
+            addPrim(&g_ObjectTable0[g_ActiveBuffer].org[2], pointer);
             GsOUT_PACKET_P = ++pointer;
         }
     }

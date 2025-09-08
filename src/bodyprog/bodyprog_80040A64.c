@@ -421,8 +421,8 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0
 
     var_t0 = (u32*)PSX_SCRATCH;
 
-    poly_g3 = &D_800BFBF0[g_GsActiveBuff][sizeof(DR_TPAGE) * 2];
-    poly_f4 = &D_800BFBF0[g_GsActiveBuff][(sizeof(DR_TPAGE) * 2) + ((sizeof(POLY_G4) * 16) * 3) + (sizeof(POLY_G3) * 16)];
+    poly_g3 = &D_800BFBF0[g_ActiveBuffer][sizeof(DR_TPAGE) * 2];
+    poly_f4 = &D_800BFBF0[g_ActiveBuffer][(sizeof(DR_TPAGE) * 2) + ((sizeof(POLY_G4) * 16) * 3) + (sizeof(POLY_G3) * 16)];
 
     for (j = 0; j < 16; j++, poly_g3++, poly_f4++)
     {
@@ -440,7 +440,7 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0
     }
 
     var_t1  = (u32*)PSX_SCRATCH;
-    poly_g4 = &D_800BFBF0[g_GsActiveBuff][(sizeof(DR_TPAGE) * 2) + (sizeof(POLY_G3) * 16)];
+    poly_g4 = &D_800BFBF0[g_ActiveBuffer][(sizeof(DR_TPAGE) * 2) + (sizeof(POLY_G3) * 16)];
 
     for (i = 0; i < 3; i++)
     {
@@ -457,8 +457,8 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0
         }
     }
 
-    AddPrim(arg0->org, &D_800BFBF0[g_GsActiveBuff][8]);
-    AddPrim(&arg0->org[1], &D_800BFBF0[g_GsActiveBuff]);
+    AddPrim(arg0->org, &D_800BFBF0[g_ActiveBuffer][8]);
+    AddPrim(&arg0->org[1], &D_800BFBF0[g_ActiveBuffer]);
 }
 
 u32 Fs_QueueEntryLoadStatusGet(s32 queueIdx) // 80041ADC

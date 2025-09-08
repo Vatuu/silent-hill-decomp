@@ -19,7 +19,7 @@ void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image) // 0x800314EC
     SPRT*     sprt;
     PACKET*   packet;
 
-    ot             = (GsOT*)&D_800B7CC4[g_GsActiveBuff];
+    ot             = (GsOT*)&g_OtTags1[g_ActiveBuffer][1024*2];
     packet         = GsOUT_PACKET_P;
     baseYOffset    = -120 << (g_GameWork.gsScreenHeight_58A >> 8);
     textureShift   = image->tPage[0];
@@ -113,7 +113,7 @@ void Gfx_BackgroundSpritesTransition(s_FsImageDesc* image0, s_FsImageDesc* image
             *((u16*)&poly->r0) = color + (color << 8);
             poly->b0           = color;
 
-            addPrim(g_ObjectTable0[g_GsActiveBuff].org, poly);
+            addPrim(g_ObjectTable0[g_ActiveBuffer].org, poly);
             poly++;
         }
     }
@@ -158,7 +158,7 @@ void Gfx_BackgroundSpriteDraw_2(s_FsImageDesc* image) // 0x80031AAC
         *((u16*)&poly->r0) = g_BackgroundColor + (g_BackgroundColor << 8);
         poly->b0           = g_BackgroundColor;
 
-        addPrim(&g_ObjectTable0[g_GsActiveBuff].org[2], poly);
+        addPrim(&g_ObjectTable0[g_ActiveBuffer].org[2], poly);
         poly++;
     }
 
@@ -179,7 +179,7 @@ s32 Gfx_2dBackgroundMotionBlur(s32 arg0) // 0x80031CCC
     SPRT*     sprt;
     DR_TPAGE* tPage;
 
-    ot   = (GsOT*)&D_800B7CC4[g_GsActiveBuff];
+    ot   = (GsOT*)&g_OtTags1[g_ActiveBuffer][1024*2];
     sprt = (SPRT*)GsOUT_PACKET_P;
     sp10 = D_800C6E90;
 
@@ -196,8 +196,8 @@ s32 Gfx_2dBackgroundMotionBlur(s32 arg0) // 0x80031CCC
             else
             {
                 yOffset      = -112;
-                texUOffset   = (g_GsActiveBuff == 0) << 5;
-                tPageYOffset = g_GsActiveBuff << 8;
+                texUOffset   = (g_ActiveBuffer == 0) << 5;
+                tPageYOffset = g_ActiveBuffer << 8;
             }
 
             addPrimFast(ot, sprt, 4);

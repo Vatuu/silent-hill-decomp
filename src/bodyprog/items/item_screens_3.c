@@ -1090,7 +1090,7 @@ void func_8004FB0C() // 0x8004FB0C
     GsOT*    ot;
     POLY_F4* poly;
 
-    ot   = &g_ObjectTable1[g_GsActiveBuff];
+    ot   = &g_ObjectTable1[g_ActiveBuffer];
     poly = (POLY_F4*)GsOUT_PACKET_P;
 
     setPolyF4(poly);
@@ -1165,8 +1165,8 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
         { { 0xFFCE, 0xFF34 }, { 0x0092, 0x003C } }
     };
 
-    ot1 = &g_ObjectTable1[g_GsActiveBuff];
-    ot0 = &g_ObjectTable0[g_GsActiveBuff];
+    ot1 = &g_ObjectTable1[g_ActiveBuffer];
+    ot0 = &g_ObjectTable0[g_ActiveBuffer];
 
     temp_v1 = g_SysWork.timer_1C & 0x7F;
 
@@ -1606,7 +1606,7 @@ void Gfx_Inventory_HealthStatusDraw()
         0x00, 0xFF, 0x00, 0x00 
     };
 
-    ot     = &g_ObjectTable0[g_GsActiveBuff];
+    ot     = &g_ObjectTable0[g_ActiveBuffer];
     health = g_SysWork.player_4C.chara_0.health_B0;
 
     if (health < FP_HEALTH(10.0f))
@@ -2089,7 +2089,7 @@ void Gfx_Primitive2dTextureSet(s32 x, s32 y, s32 otIdx, s32 abr) // 0x80052088
 {
     GsOT*     ot0;
     GsOT*     ot1;
-    s32       idx   = g_GsActiveBuff;
+    s32       idx   = g_ActiveBuffer;
     DR_TPAGE* tPage = (DR_TPAGE*)GsOUT_PACKET_P;
 
     setDrawTPage(tPage, 0, 1, getTPage(0, abr, x, y));

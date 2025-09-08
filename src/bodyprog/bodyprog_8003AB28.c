@@ -611,7 +611,7 @@ void Gfx_MainMenu_FogDraw() // 0x8003BA08
     PACKET*   packet;
     GsOT_TAG* tag;
 
-    tag    = g_ObjectTable1[g_GsActiveBuff].org;
+    tag    = g_ObjectTable1[g_ActiveBuffer].org;
     packet = Gfx_MainMenu_FogPacketGet(&tag[6], GsOUT_PACKET_P);
     SetDrawMode((DR_MODE*)packet, 0, 1, 0x2A, NULL);
     addPrim(&tag[6], packet);
@@ -1081,7 +1081,7 @@ void func_8003C878(s32 arg0) // 0x8003C878
         Fs_QueueWaitForEmpty();
     }
 
-    func_80043A24(&g_ObjectTable0[g_GsActiveBuff], arg0);
+    func_80043A24(&g_ObjectTable0[g_ActiveBuffer], arg0);
     func_800550D0();
 }
 
@@ -1239,7 +1239,7 @@ void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x800
         return;
     }
 
-    func_80057090(arg0, &g_ObjectTable0[g_GsActiveBuff], 1, arg1, arg2, 0);
+    func_80057090(arg0, &g_ObjectTable0[g_ActiveBuffer], 1, arg1, arg2, 0);
 }
 
 s32 func_8003CD5C() // 0x8003CD5C
@@ -1502,7 +1502,7 @@ void func_8003D058() // 0x8003D058
             }
 
             func_80049B6C(coord, &mat1, &mat0);
-            func_80057090(&ptr0->field_18, &g_ObjectTable0[g_GsActiveBuff], 1, &mat0, &mat1, 0);
+            func_80057090(&ptr0->field_18, &g_ObjectTable0[g_ActiveBuffer], 1, &mat0, &mat1, 0);
         }
     }
 }
@@ -1895,7 +1895,7 @@ void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4)
                       D_800C4168.screenBrightness_8);
     }
 
-    func_80045534(&D_800BCE18.field_0[0].field_18[arg0]->field_14, &g_ObjectTable0[g_GsActiveBuff], arg2,
+    func_80045534(&D_800BCE18.field_0[0].field_18[arg0]->field_14, &g_ObjectTable0[g_ActiveBuffer], arg2,
                   coord, g_Chara_FileInfo[arg0].field_6 * 16, ret, g_Chara_FileInfo[arg0].field_8);
 
     if (arg3 != 0)
@@ -2317,7 +2317,7 @@ void func_8003E5E8(s32 arg0) // 0x8003E5E8
     LINE_G2*  line;
 
     packet = GsOUT_PACKET_P;
-    ot     = &g_ObjectTable0[g_GsActiveBuff].org[1];
+    ot     = &g_ObjectTable0[g_ActiveBuffer].org[1];
 
     for (i = -10; i < 11; i++)
     {
@@ -2485,7 +2485,7 @@ void func_8003E740() // 0x8003E740
         poly->v2 = 0x3F;
         poly->v3 = 0x3F;
 
-        AddPrim(&g_ObjectTable0[g_GsActiveBuff].org[var_s5], poly);
+        AddPrim(&g_ObjectTable0[g_ActiveBuffer].org[var_s5], poly);
         GsOUT_PACKET_P = (PACKET*)poly + sizeof(POLY_FT4);
     }
 }
