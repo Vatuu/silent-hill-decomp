@@ -170,7 +170,7 @@ void Gfx_SaveScreenBaseDraw() // 0x801E2EBC
         "SLOT2"
     };
 
-    Gfx_StringSetColor(ColorId_White);
+    Gfx_StringSetColor(StringColorId_White);
     
     for (i = 0; i < MEMORY_CARD_SLOT_COUNT; i++)
     {
@@ -201,7 +201,7 @@ void Gfx_SaveSlotFileStringDraw(s32 saveIdx, s32 slotIdx, s32 fileId, s32 entryT
 
     if (saveIdx == g_SlotElementSelectedIdx[slotIdx] && entryType >= SavegameEntryType_OutOfBlocks)
     {
-        Gfx_StringSetColor(ColorId_White);
+        Gfx_StringSetColor(StringColorId_White);
 
         // Draw "FILE" string.
         Gfx_StringSetPosition((slotIdx * OFFSET_X) + FILE_STR_MARGIN_X, POS_Y);
@@ -217,11 +217,11 @@ bool Gfx_SavegameEntryStringColorSet(s_SavegameMetadata* saveEntry) // 0x801E307
 {
     if (saveEntry != NULL && saveEntry->isNextFearMode_B)
     {
-        Gfx_StringSetColor(ColorId_Gold);
+        Gfx_StringSetColor(StringColorId_Gold);
         return true;
     }
 
-    Gfx_StringSetColor(ColorId_White);
+    Gfx_StringSetColor(StringColorId_White);
     return false;
 }
 
@@ -261,11 +261,11 @@ void Gfx_SavegameEntryLocationNameDraw(s_SavegameEntry* saveEntry, s32 saveIdx, 
         {
             if (g_IsNextFearMode != 0)
             {
-                colorId = ColorId_Gold;
+                colorId = StringColorId_Gold;
             }
             else
             {
-                colorId = ColorId_White;
+                colorId = StringColorId_White;
             }
             Gfx_StringSetColor(colorId);
         }
@@ -424,7 +424,7 @@ void Gfx_SaveScreenDraw(s_SavegameEntry* saveEntry, s32 saveIdx, s32 slotIdx) //
     }
 
     D_801E7514[slotIdx] = 1;
-    Gfx_StringSetColor(ColorId_White);
+    Gfx_StringSetColor(StringColorId_White);
 
     // Draw memory card message string.
     switch (entryType)
@@ -1470,7 +1470,7 @@ void Gfx_SaveDataInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
 
     if (g_ActiveSavegameEntry[selectedSaveIdx].type_4 == SavegameEntryType_NewFile)
     {
-        Gfx_StringSetColor(ColorId_White);
+        Gfx_StringSetColor(StringColorId_White);
         Gfx_StringSetPosition(66, 178);
         Gfx_StringDraw("You_need_1_free_block\n__to_create_a_new_file.", 0x32);
     }
@@ -1493,7 +1493,7 @@ void Gfx_SaveDataInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
         mins = (timeInSec / 60) % 60;
         sec  = timeInSec % 60;
 
-        Gfx_StringSetColor(ColorId_White);
+        Gfx_StringSetColor(StringColorId_White);
         Gfx_StringSetPosition(40, 178);
         Gfx_StringDraw("Data", 5);
 

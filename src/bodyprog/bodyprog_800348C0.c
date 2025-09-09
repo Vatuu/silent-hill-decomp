@@ -390,7 +390,7 @@ void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
     #define BASE_FILE_IDX FILE_VIN_MAP0_S00_BIN
 
     Fs_QueueStartRead(BASE_FILE_IDX + mapIdx, g_OvlDynamic);
-    func_8005E0DC(mapIdx); // Something related to events of the map and load of textures?
+    func_8005E0DC(mapIdx);
     GameFs_PlayerMapAnimLoad(mapIdx);
 
     // If the player spawns in the map with a weapon equipped (either because it's a demo
@@ -1261,7 +1261,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                 D_800BCD74 = 0;
             }
 
-            Gfx_StringSetColor(ColorId_White);
+            Gfx_StringSetColor(StringColorId_White);
             Gfx_StringSetPosition(40, 160);
 
             g_MapMsg_DisplayLength += g_MapMsg_DisplayInc;
@@ -1442,7 +1442,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                     }
                     else
                     {
-                        Gfx_StringSetColor(ColorId_White);
+                        Gfx_StringSetColor(StringColorId_White);
                     }
 
                     Gfx_StringSetPosition(32, (STRING_LINE_OFFSET * i) + 98);
@@ -1467,7 +1467,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                     }
                     else
                     {
-                        Gfx_StringSetColor(ColorId_White);
+                        Gfx_StringSetColor(StringColorId_White);
                     }
 
                     Gfx_StringSetPosition(32, (STRING_LINE_OFFSET * i) + 96);

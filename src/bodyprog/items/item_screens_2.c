@@ -71,7 +71,7 @@ void Game_TimerUpdate() // 0x8004C8DC
 
 void GameState_ItemScreens_Update() // 0x8004C9B0
 {
-    Gfx_StringSetColor(ColorId_White);
+    Gfx_StringSetColor(StringColorId_White);
     func_800363D0();
 
     // Update timer ff current screen is inventory.
@@ -1198,11 +1198,11 @@ void Gfx_Inventory_CmdOptionsDraw() // 0x8004E864
     if (g_Inventory_SelectionId >= InventorySelectionId_ItemCmd &&
         g_Inventory_SelectionId <= InventorySelectionId_EquippedItemCmd)
     {
-        Gfx_StringSetColor(ColorId_White);
+        Gfx_StringSetColor(StringColorId_White);
     }
     else
     {
-        Gfx_StringSetColor(ColorId_DarkGrey);
+        Gfx_StringSetColor(StringColorId_DarkGrey);
     }
 
     if (g_Inventory_SelectionId != InventorySelectionId_EquippedItem &&
@@ -1632,7 +1632,7 @@ void Gfx_Inventory_UnavailableMapText(s32 strIdx) // 0x0x8004F57C
     };
 
     Gfx_StringSetPosition(30, 232);
-    Gfx_StringSetColor(ColorId_White);
+    Gfx_StringSetColor(StringColorId_White);
     Gfx_StringDraw(strs[strIdx], 99);
 }
 

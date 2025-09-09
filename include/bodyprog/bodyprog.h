@@ -3112,7 +3112,7 @@ s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2,
 
 s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, s_DmsKeyframeCamera* frame0, s_DmsKeyframeCamera* frame1, s32 alpha);
 
-void Dms_IntervalGetStatus(s32* prevKeyframe, s32* nextKeyframe, s32* alpha, s32 time, s_DmsEntry* camEntry, s_DmsHeader* header);
+void Dms_IntervalStatusGet(s32* prevKeyframe, s32* nextKeyframe, s32* alpha, s32 time, s_DmsEntry* camEntry, s_DmsHeader* header);
 
 u32 func_8008D2C4(s32 time, s_DmsHeader* header);
 

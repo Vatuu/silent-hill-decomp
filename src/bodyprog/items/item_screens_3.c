@@ -1029,7 +1029,7 @@ void Gfx_ItemScreens_RenderInit(u32* selectedItemId) // 0x8004F764
         "Name:"
     };
 
-    Gfx_StringSetColor(ColorId_White);
+    Gfx_StringSetColor(StringColorId_White);
 
     // In inventory.
     if (g_GameWork.gameStateStep_598[1] < 21)
@@ -2017,7 +2017,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
             break;
     }
 
-    Gfx_StringSetColor(ColorId_White);
+    Gfx_StringSetColor(StringColorId_White);
 
     D_800AE185 = (g_SavegamePtr->items_0[idx].id_0 >> 5) - 1;
     D_800AE186 = g_SavegamePtr->items_0[idx].id_0 & 0x1F;

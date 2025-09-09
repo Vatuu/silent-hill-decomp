@@ -26,20 +26,21 @@ static const u8 FONT_12_X_16_GLYPH_WIDTHS[84] =
     7,  11, 11, 6,  6,  10, 6,  13, 11, 10, 11, 10, 8,  8,  7,  10, 10, 12, 10, 10, 9
 };
 
-static const u32 STRING_COLORS[ColorId_Count] =
+/** @brief See `e_StringColorId`. */
+static const u32 STRING_COLORS[StringColorId_Count] =
 {
-    PACKED_COLOR(FP_COLOR(0.625f),    FP_COLOR(0.5f),      FP_COLOR(0.25f),     0x64),
-    PACKED_COLOR(FP_COLOR(0.125f),    FP_COLOR(0.125f),    FP_COLOR(0.125f),    0x64),
-    PACKED_COLOR(FP_COLOR(0.09375f),  FP_COLOR(0.5f),      FP_COLOR(0.15625f),  0x64),
-    PACKED_COLOR(FP_COLOR(0.03125),   FP_COLOR(0.71875f),  FP_COLOR(0.375f),    0x64),
-    PACKED_COLOR(FP_COLOR(0.5f),      FP_COLOR(0.0f),      FP_COLOR(0.0f),      0x64),
-    PACKED_COLOR(FP_COLOR(0.09375f),  FP_COLOR(0.5f),      FP_COLOR(0.15625f),  0x64),
-    PACKED_COLOR(FP_COLOR(0.390625f), FP_COLOR(0.390625f), FP_COLOR(0.390625f), 0x64),
-    PACKED_COLOR(FP_COLOR(0.5f),      FP_COLOR(0.5f),      FP_COLOR(0.5f),      0x64)
+    PACKED_COLOR(0xA0, 0x80, 0x40, 0x64),
+    PACKED_COLOR(0x20, 0x20, 0x20, 0x64),
+    PACKED_COLOR(0x18, 0x80, 0x28, 0x64),
+    PACKED_COLOR(0x08, 0xB8, 0x60, 0x64),
+    PACKED_COLOR(0x80, 0x00, 0x00, 0x64),
+    PACKED_COLOR(0x18, 0x80, 0x28, 0x64),
+    PACKED_COLOR(0x64, 0x64, 0x64, 0x64),
+    PACKED_COLOR(0x80, 0x80, 0x80, 0x64)
 };
 
 /** `e_ColorId` */
-static s16 g_StringColorId = ColorId_White;
+static s16 g_StringColorId = StringColorId_White;
 
 // 2 bytes of padding.
 
@@ -694,7 +695,7 @@ void Gfx_MapMsg_DefaultStringInfoSet() // 0x8004B684
     D_800C38B0.field_0                   = 0;
     D_800C38B0.positionIdx_1             = 1;
     g_StringPositionX1                   = SCREEN_POSITION_X(-37.5f);
-    g_StringColorId                      = ColorId_White;
+    g_StringColorId                      = StringColorId_White;
     g_SysWork.enableHighResGlyphs_2350_0 = false;
 }
 

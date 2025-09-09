@@ -816,7 +816,7 @@ void Options_ExtraOptionsMenu_EntryStringsDraw(void) // 0x801E416C
     Math_Sin(g_Options_SelectionHighlightTimer << 7);
 
     // Draw heading string.
-    Gfx_StringSetColor(ColorId_White);
+    Gfx_StringSetColor(StringColorId_White);
     Gfx_StringSetPosition(strPos.vx, strPos.vy);
     Gfx_Strings2dLayerIdxSet(8);
     Gfx_StringDraw(EXTRA_OPTIONS_STR, 99);
@@ -867,7 +867,7 @@ void Options_MainOptionsMenu_EntryStringsDraw(void) // 0x801E42EC
     Math_Sin(g_Options_SelectionHighlightTimer << 7);
 
     // Draw heading string.
-    Gfx_StringSetColor(ColorId_White);
+    Gfx_StringSetColor(StringColorId_White);
     Gfx_StringSetPosition(strPos.vx, strPos.vy);
     Gfx_Strings2dLayerIdxSet(8);
     Gfx_StringDraw(OPTIONS_STR, 99);
@@ -1170,7 +1170,7 @@ void Options_ExtraOptionsMenu_ConfigDraw(void) // 0x801E4B2C
     s32 i;
     s32 j;
 
-    Gfx_StringSetColor(ColorId_White);
+    Gfx_StringSetColor(StringColorId_White);
 
     // Draw left/right arrows for subset of options.
     if (g_ExtraOptionsMenu_SelectedEntry < (u32)ExtraOptionsMenuEntry_Count) // TODO: Cast suggests `g_ExtraOptionsMenu_SelectedEntry` type might be unsigned.
@@ -1306,7 +1306,7 @@ void Options_MainOptionsMenu_ConfigDraw(void) // 0x801E4FFC
     s32 strIdx;
     s32 i;
 
-    Gfx_StringSetColor(ColorId_White);
+    Gfx_StringSetColor(StringColorId_White);
 
     // Draw left/right arrows for subset of options.
     if (g_MainOptionsMenu_SelectedEntry >= 4 && g_MainOptionsMenu_SelectedEntry < 9)
@@ -1766,7 +1766,7 @@ void Options_BrightnessMenu_ConfigDraw(void) // 0x801E6238
 {
     const char* LEVEL_STR = "LEVEL_________"; // 0x801E2C64
 
-    Gfx_StringSetColor(ColorId_White);
+    Gfx_StringSetColor(StringColorId_White);
     Gfx_StringSetPosition(SCREEN_POSITION_X(25.0f), SCREEN_POSITION_Y(79.5f));
     Gfx_StringDraw(LEVEL_STR, 20);
     Gfx_StringDrawInt(1, g_GameWork.config_0.optBrightness_22);
