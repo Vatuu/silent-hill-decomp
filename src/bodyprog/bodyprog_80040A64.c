@@ -804,7 +804,7 @@ void Map_MakeIpdGrid(s_800C1020* arg0, char* mapTag, s32 fileIdxStart) // 0x8004
     // Run through all game files.
     for (i = fileIdxStart; i < FS_FILE_COUNT; i++)
     {
-        if (g_FileTable[i].type_8_18 == FileType_Ipd)
+        if (g_FileTable[i].type_8_24 == FileType_Ipd)
         {
             Fs_GetFileName(sp10, i);
 

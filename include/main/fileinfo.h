@@ -51,11 +51,11 @@ typedef enum _FileType
 typedef struct _FileInfo
 {
     u32 startSector_0_0 : 19; /** Index of CD sector where file starts. */
-    u32 blockCount_0_13 : 12; /** Size of file in 256-byte blocks. */
+    u32 blockCount_0_19 : 12; /** Size of file in 256-byte blocks. */
     u32 pathIdx_4_0     : 4;  /** Index of path to file in `g_FilePaths`. */
     u32 name0123_4_4    : 24; /** First four 6-bit characters of file name. */
     u32 name4567_8_0    : 24; /** Second four 6-bit characters of file name. */
-    u32 type_8_18       : 4;  /** `s_FileType` | File type (and index of extension in `g_FileExts`). */
+    u32 type_8_24       : 4;  /** `s_FileType` | File type (and index of extension in `g_FileExts`). */
 } s_FileInfo;
 STATIC_ASSERT_SIZEOF(s_FileInfo, 12);
 

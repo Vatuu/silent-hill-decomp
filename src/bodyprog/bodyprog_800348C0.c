@@ -2614,7 +2614,7 @@ void SysState_Fmv_Update() // 0x80039A58
 
     // Start playing movie. File to play is based on file ID `BASE_AUDIO_FILE_IDX - g_MapEventIdx`.
     // Blocks until movie has finished playback or user has skipped it.
-    open_main(BASE_AUDIO_FILE_IDX - g_MapEventIdx, g_FileTable[BASE_AUDIO_FILE_IDX - g_MapEventIdx].blockCount_0_13);
+    open_main(BASE_AUDIO_FILE_IDX - g_MapEventIdx, g_FileTable[BASE_AUDIO_FILE_IDX - g_MapEventIdx].blockCount_0_19);
 
     func_800892A4(1);
 
