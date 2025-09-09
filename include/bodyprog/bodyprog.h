@@ -3154,6 +3154,8 @@ void func_8008D990(s32, s32, VECTOR3*, s32, s32);
 /** `posX` and `posX` appear to be in Q27.4. */
 s_WaterZone* Map_WaterZoneGet(s32 posX, s32 posZ, s_WaterZone* waterZone);
 
+void func_8008E5B4(void);
+
 void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2);
 
 void func_8008EA68(SVECTOR*, VECTOR3*, s32);

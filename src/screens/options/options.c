@@ -2566,7 +2566,7 @@ void Options_ControllerMenu_ButtonIconsDraw(s32 baseX, s32 baseY, u16 config) //
         packet = (u8*)prim + sizeof(SPRT);
         tpage  = (DR_TPAGE*)packet;
 
-        setDrawTPage(tpage, 0, 1, 7);
+        setDrawTPage(tpage, 0, 1, getTPageN(0, 0, 7, 0));
         AddPrim(ot, tpage);
         packet = (u8*)tpage + sizeof(DR_TPAGE);
     }

@@ -2866,8 +2866,7 @@ u16 D_800AFD7C[] =
     0x04E3, 0x064F, 0x0688, 0x06E3
 };
 
-static s_FsImageDesc img0 = { .tPage = { 0, 13 } };
-static s_FsImageDesc D_800AFDA4 = { .tPage = { 64, 3 }, .u = 224, .v = 0, .clutX = 32, .clutY = 32 };
+s_FsImageDesc img0 = { .tPage = { 0, 13 } }; // 0x800AFD9C
 
 // Large function.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D990); // 0x8008D990
@@ -2898,9 +2897,91 @@ s_WaterZone* Map_WaterZoneGet(s32 posX, s32 posZ, s_WaterZone* waterZone)
     return NULL;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008E5B4); // 0x8008E5B4
+void func_8008E5B4(void) // 0x8008E5B4
+{
+    typedef struct
+    {
+        GsOT_TAG  tag_0;
+        DR_AREA   area_4;
+        DR_OFFSET offset_10;
+        POLY_FT4  poly_1C[2];
+        DR_ENV    env_6C;
+    } s_func_8008E5B4;
 
-u32 D_800AFDAC = 0;
+    static RECT D_800AFDA4 = { 832, 224, 32, 32 };
+    static s32  D_800AFDAC = 0;
+
+    DRAWENV          drawEnv;
+    s32              temp_v0;
+    s_func_8008E5B4* packet;
+
+    GetDrawEnv(&drawEnv);
+    packet         = GsOUT_PACKET_P;
+    GsOUT_PACKET_P = &packet[1];
+
+    setlen(packet, 0);
+    TermPrim(packet);
+
+    SetDrawArea(&packet->area_4, &D_800AFDA4);
+    SetDrawOffset(&packet->offset_10, (u16*)&D_800AFDA4);
+    SetDrawEnv(&packet->env_6C, &drawEnv);
+
+    if (g_DeltaTime0 != 0)
+    {
+        D_800AFDAC += 1;
+    }
+
+    setRGBC0(&packet->poly_1C[1], 0x80, 0x80, 0x80, 0);
+    setRGBC0(&packet->poly_1C[0], 0x80, 0x80, 0x80, 0);
+
+    setPolyFT4(&packet->poly_1C[0]);
+    setPolyFT4(&packet->poly_1C[1]);
+    setSemiTrans(&packet->poly_1C[1], 1);
+
+    packet->poly_1C[1].tpage = 0x2D;
+    packet->poly_1C[0].tpage = 0x2D;
+
+    setXY0Fast(&packet->poly_1C[1], 0, 0);
+    setXY0Fast(&packet->poly_1C[0], 0, 0);
+    setXY1Fast(&packet->poly_1C[1], 32, 0);
+    setXY1Fast(&packet->poly_1C[0], 32, 0);
+    setXY2Fast(&packet->poly_1C[1], 0, 32);
+    setXY2Fast(&packet->poly_1C[0], 0, 32);
+    setXY3Fast(&packet->poly_1C[1], 32, 32);
+    setXY3Fast(&packet->poly_1C[0], 32, 32);
+
+    packet->poly_1C[1].clut = 0xE;
+    packet->poly_1C[0].clut = 0xE;
+
+    temp_v0               = (D_800AFDAC >> 1) & 0x1F;
+    packet->poly_1C[0].u0 = 0;
+    packet->poly_1C[0].v0 = temp_v0;
+    packet->poly_1C[0].u1 = 32;
+    packet->poly_1C[0].v1 = temp_v0;
+    packet->poly_1C[0].u2 = 0;
+    packet->poly_1C[0].v2 = temp_v0 + 32;
+    packet->poly_1C[0].u3 = 32;
+    packet->poly_1C[0].v3 = temp_v0 + 32;
+
+    temp_v0               = ((D_800AFDAC + 1) >> 2) & 0x1F;
+    packet->poly_1C[1].u0 = temp_v0;
+    packet->poly_1C[1].v0 = 8;
+    packet->poly_1C[1].u1 = temp_v0 + 32;
+    packet->poly_1C[1].v1 = 8;
+    packet->poly_1C[1].u2 = temp_v0;
+    packet->poly_1C[1].v2 = 40;
+    packet->poly_1C[1].u3 = temp_v0 + 32;
+    packet->poly_1C[1].v3 = 40;
+
+    AddPrim(packet, &packet->env_6C);
+    AddPrim(packet, &packet->poly_1C[1]);
+    AddPrim(packet, &packet->poly_1C[0]);
+    AddPrim(packet, &packet->area_4);
+    AddPrim(packet, &packet->offset_10);
+
+    DrawOTag((u32*)packet);
+}
+
 void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2) // 0x8008E794
 {
     VECTOR    sp10;
