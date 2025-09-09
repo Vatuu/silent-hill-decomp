@@ -68,10 +68,10 @@ u32 Rng_Rand32(void);
  * shifts the result right to produce a value within the range
  * of `[0, 0x7FFF]`.
  *
- * @return Random positive 16-bit unsigned integer as a 32-bit unsigned
- * integer (`u32`).
+ * @return Random positive 16-bit unsigned integer as a 32-bit signed
+ * integer (`s32`).
  */
-u32 Rng_Rand16(void);
+s32 Rng_Rand16(void);
 
 /** @brief Returns the current random seed value.
  *

@@ -110,8 +110,7 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2*
 
     if (var_a0 != 0)
     {
-        // TODO: Try using `RngGenerateInt` here. Randomized pitch.
-        func_8005DD44(1447, &chara->position_18, FP_VOLUME(0.5f), Rng_TestProbabilityBits(4) - 7);
+        func_8005DD44(1447, &chara->position_18, FP_VOLUME(0.5f), Rng_GenerateInt(Rng_Rand16(), 0, 15u) - 7);
         chara->properties_E4.larvalStalker.properties_E8[0].val8[0] ^= 1;
     }
 }
