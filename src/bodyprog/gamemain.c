@@ -10,6 +10,22 @@
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/math.h"
 
+GsOT_TAG g_OtTags0[2][16] = {};
+q19_12 g_DeltaTime0 = 0;
+GsOT_TAG g_OtTags1[2][2048] = {};
+u32 D_800B9CC4 = 0; // @unused Might be padding.
+q19_12 g_DeltaTime2 = 0;
+s32 g_MainLoop_FrameCount = 0;
+VC_WORK vcWork = {};
+s32 g_ActiveBuffer = 0;
+s32 D_800B9FBC = 0; // @unused Might be padding.
+s_SysWork g_SysWork = {};
+s_GameWork g_GameWork = {};
+s32 D_800BCD00 = 0; // @unused Might be padding.
+s32 D_800BCD04 = 0; // @unused Might be padding.
+s32 D_800BCD08 = 0; // @unused Might be padding.
+s32 g_Gfx_ScreenFade = 0;
+
 void GameState_Boot_Update() // 0x80032D1C
 {
     s32 gameState;

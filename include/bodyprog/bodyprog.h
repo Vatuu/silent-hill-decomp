@@ -1555,8 +1555,6 @@ typedef struct
 {
     s8 maxIdx_0;
     u8 selectedEntryIdx_1;
-    u8 unk_2;
-    u8 cancelIdx_3;
 } s_MapMsgSelect;
 
 typedef struct
@@ -2090,11 +2088,9 @@ extern s32 D_800BCD74;
 
 extern s_MapMsgSelect g_MapMsg_Select;
 
-/** TODO: These variables are part of `s_MapMsgSelect`, but must remain separate
- * because using struct fields instead of the direct addresses produces a mismatch.
- */
 extern u8 g_MapMsg_AudioLoadBlock;
-extern s8 g_MapMsg_SelectCancelIdx3;
+
+extern s8 g_MapMsg_SelectCancelIdx;
 
 extern s32 D_800BCD84;
 

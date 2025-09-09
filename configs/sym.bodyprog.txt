@@ -2357,7 +2357,7 @@ g_UncappedVBlanks                           = 0x800B5C38; // type:s32
 //-----------------------------------------------------------------------
 //--- PA: 0x0910E0   VA: 0x800B5C40   subsegment: data, bodyprog_800B5C40
 //-----------------------------------------------------------------------
-g_OtTags0                                   = 0x800B5C40; // type:u32 size:0x200
+g_OtTags0                                   = 0x800B5C40; // type:u32 size:0x80
 g_DeltaTime0                                = 0x800B5CC0; // type:s32 - Q19.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..).
 g_OtTags1                                   = 0x800B5CC4; // type:u32 size:0x4000
 g_DeltaTime2                                = 0x800B9CC8; // type:s32
