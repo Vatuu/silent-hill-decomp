@@ -630,7 +630,7 @@ void Gfx_MainMenu_FogRandomize() // 0x8003BAC4
 
     ptr         = D_800BCDE0;
     ptr1        = ptr + 441;
-    D_800A9EAC += 4 + (Rng_Rand16() & 0x7); // TODO: Range is [4, 11]. Can't use `Rng_GenerateInt`.
+    D_800A9EAC += 4 + Rng_GenerateInt(Rng_Rand16(), 0, 7u);
     val         = FP_MULTIPLY(Math_Sin(D_800A9EAC), 10, Q12_SHIFT) - 122;
     ptr2        = ptr + 461;
 
