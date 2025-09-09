@@ -337,14 +337,6 @@
 #define FP_TIME(sec) \
     Q19_12(sec)
 
-/** @brief Converts floating-point seconds to fixed-point animation time Q19.12.
- *
- * @param sec Seconds (`float`)
- * @return Fixed-point seconds in animation time Q19.12 (`s32`).
- */
-#define FP_TIME_ANIM(sec) \
-    Q19_12((sec) * (TICKS_PER_SECOND / 2))
-
 /** @brief Converts floating-point health to fixed-point Q19.12.
  *
  * @note 1 health == 4096 units.

@@ -997,7 +997,7 @@ typedef struct _AnimInfo
     {
         q19_12 constant;          /** Constant duration. */
         q19_12 (*variableFunc)(); /** Variable duration via a function. Allows anims to play at variable speeds. */
-    } duration_8;                 /** Duration at 30 FPS. See `FP_TIME_ANIM`. */
+    } duration_8;                 /** Duration as `Q19_12(frameCount)`. */
     s16 startKeyframeIdx_C;       /** Start keyframe index. Sometimes `NO_VALUE`, unknown why. */
     s16 endKeyframeIdx_E;         /** End keyframe index. */
 } s_AnimInfo;
@@ -1008,9 +1008,9 @@ typedef struct _ModelAnim
     u8          status_0;         /** Is active: bit 0, Anim index: bits 1-7. Possible original name: `anim_status` */
     u8          maybeSomeState_1; // State says if `time_4` is anim time/anim status or a func ptr? That field could be a union.
     u16         flags_2;          /** `e_AnimFlags` */
-    q19_12      time_4;           /** Time along absolute timeline. */ 
-    s16         keyframeIdx_8;    /** Active keyframe along absolute timeline. */
-    q3_12       alpha_A;          /** Alpha along active anim. */ 
+    q19_12      time_4;           /** Keyframe time. */ 
+    s16         keyframeIdx_8;    /** Active keyframe. */
+    q3_12       alpha_A;          /** Progress alpha. */ 
     s_AnimInfo* animInfo_C;       // } Arrays of anim infos?
     s_AnimInfo* animInfo_10;      // }
 } s_ModelAnim;
@@ -1018,12 +1018,12 @@ STATIC_ASSERT_SIZEOF(s_ModelAnim, 20);
 
 typedef struct _Model
 {
-    s8          charaId_0;      /** `e_CharacterId` */
-    u8          paletteIdx_1;   /** Changes the texture palette index for this model. */
-    u8          state_2;        /** Current state for this model/character. 0 usually means it still has to be initialized. */
-    u8          stateStep_3;    // Step number or temp data for the current `state_2`? In `s_MainCharacterExtra` always 1, set to 0 for 1 tick when anim state appears to change.
-                                // Used differently in player's `s_SubCharacter`. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
-                                // Sometimes holds actual anim index?
+    s8          charaId_0;    /** `e_CharacterId` */
+    u8          paletteIdx_1; /** Changes the texture palette index for this model. */
+    u8          state_2;      /** Current state for this model/character. 0 usually means it still has to be initialized. */
+    u8          stateStep_3;  // Step number or temp data for the current `state_2`? In `s_MainCharacterExtra` always 1, set to 0 for 1 tick when anim state appears to change.
+                              // Used differently in player's `s_SubCharacter`. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
+                              // Sometimes holds actual anim index?
     s_ModelAnim anim_4;
 } s_Model;
 STATIC_ASSERT_SIZEOF(s_Model, 24);

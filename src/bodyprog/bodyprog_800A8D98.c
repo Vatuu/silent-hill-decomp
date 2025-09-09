@@ -781,7 +781,7 @@ s_AnimInfo D_800A998C =
     .hasVariableDuration_5 = false,
     .status_6              = ANIM_STATUS(0, false),
     .__pad_7               = 0,
-    .duration_8            = { FP_TIME_ANIM(4.0f / 15.0f) },
+    .duration_8            = { Q19_12(8) },
     .startKeyframeIdx_C    = 26,
     .endKeyframeIdx_E      = 44
 };
@@ -808,7 +808,7 @@ s8 g_MapMarkingTimFileIdxs[56] =
     44, 83, 2, 128, 32, 83, 2, 128
 };
 
-s_FsImageDesc D_800A9A04 = { .tPage = {1, 21}, .clutX = 224, .clutY = 13 };
+s_FsImageDesc D_800A9A04 = { .tPage = { 1, 21 }, .clutX = 224, .clutY = 13 };
 s32 D_800A9A0C = 0;
 s32 D_800A9A10 = 0;
 u32 g_MapEventIdx = 0;
