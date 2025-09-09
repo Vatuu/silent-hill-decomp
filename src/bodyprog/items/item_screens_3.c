@@ -2,10 +2,10 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/credits.h"
+#include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math.h"
 #include "bodyprog/player_logic.h"
-#include "bodyprog/gfx/text_draw.h"
 #include "main/rng.h"
 
 const s32 rodataPad_800262F8 = 0;
@@ -1092,7 +1092,7 @@ void func_8004FB0C() // 0x8004FB0C
     GsOT*    ot;
     POLY_F4* poly;
 
-    ot   = &g_OrderingTable2[g_ActiveBuffer];
+    ot   = &g_OrderingTable2[g_ActiveBufferIdx];
     poly = (POLY_F4*)GsOUT_PACKET_P;
 
     setPolyF4(poly);
@@ -1167,8 +1167,8 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
         { { 0xFFCE, 0xFF34 }, { 0x0092, 0x003C } }
     };
 
-    ot1 = &g_OrderingTable2[g_ActiveBuffer];
-    ot0 = &g_OrderingTable0[g_ActiveBuffer];
+    ot1 = &g_OrderingTable2[g_ActiveBufferIdx];
+    ot0 = &g_OrderingTable0[g_ActiveBufferIdx];
 
     temp_v1 = g_SysWork.timer_1C & 0x7F;
 
@@ -1608,7 +1608,7 @@ void Gfx_Inventory_HealthStatusDraw()
         0x00, 0xFF, 0x00, 0x00 
     };
 
-    ot     = &g_OrderingTable0[g_ActiveBuffer];
+    ot     = &g_OrderingTable0[g_ActiveBufferIdx];
     health = g_SysWork.player_4C.chara_0.health_B0;
 
     if (health < FP_HEALTH(10.0f))
@@ -2091,7 +2091,7 @@ void Gfx_Primitive2dTextureSet(s32 x, s32 y, s32 otIdx, s32 abr) // 0x80052088
 {
     GsOT*     ot0;
     GsOT*     ot1;
-    s32       idx   = g_ActiveBuffer;
+    s32       idx   = g_ActiveBufferIdx;
     DR_TPAGE* tPage = (DR_TPAGE*)GsOUT_PACKET_P;
 
     setDrawTPage(tPage, 0, 1, getTPage(0, abr, x, y));

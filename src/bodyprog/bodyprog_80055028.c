@@ -52,7 +52,7 @@ void func_800550D0() // 0x800550D0
     POLY_G4* poly;
     GsOT*    ot;
 
-    ot = &g_OrderingTable0[g_ActiveBuffer];
+    ot = &g_OrderingTable0[g_ActiveBufferIdx];
 
     if (D_800C4168.field_2 != 0)
     {
@@ -539,15 +539,15 @@ void func_80056244(s_LmHeader* lmHeader, bool flag) // 0x80056244
     }
 }
 
-s32 func_80056348(bool (*arg0)(s_Material* material), s_LmHeader* lmHeader) // 0x80056348
+s32 func_80056348(bool (*arg0)(s_Material* mat), s_LmHeader* lmHeader) // 0x80056348
 {
     s32         count;
-    s_Material* material;
+    s_Material* mat;
 
     count = 0;
-    for (material = lmHeader->materials_4; material < (lmHeader->materials_4 + lmHeader->materialCount_3); material++)
+    for (mat = lmHeader->materials_4; mat < (lmHeader->materials_4 + lmHeader->materialCount_3); mat++)
     {
-        if (arg0(material))
+        if (arg0(mat))
         {
             count++;
         }
@@ -559,23 +559,23 @@ s32 func_80056348(bool (*arg0)(s_Material* material), s_LmHeader* lmHeader) // 0
 void func_800563E8(s_LmHeader* lmHeader, s32 arg1, s32 arg2, s32 arg3) // 0x800563E8
 {
     s32         i;
-    s_Material* material;
+    s_Material* mat;
 
     if (arg2 < 0)
     {
         arg2 += 15;
     }
 
-    for (i = 0, material = &lmHeader->materials_4[0];
+    for (i = 0, mat = &lmHeader->materials_4[0];
          i < lmHeader->materialCount_3;
-         i++, material++)
+         i++, mat++)
     {
         // TODO: Bitfield stuff? Doesn't seem to match other uses of `field_E`/`field_10` we've seen though.
-        u8  temp_a0 = material->field_E;
-        u16 temp_v1 = material->field_10;
+        u8  temp_a0 = mat->field_E;
+        u16 temp_v1 = mat->field_10;
 
-        material->field_E  = ((temp_a0 + arg1) & 0x1F) | (temp_a0 & 0xE0);
-        material->field_10 = ((temp_v1 + (arg2 >> 4)) & 0x3F) | ((temp_v1 + (arg3 << 6)) & 0x7FC0);
+        mat->field_E  = ((temp_a0 + arg1) & 0x1F) | (temp_a0 & 0xE0);
+        mat->field_10 = ((temp_v1 + (arg2 >> 4)) & 0x3F) | ((temp_v1 + (arg3 << 6)) & 0x7FC0);
     }
 }
 
@@ -612,18 +612,18 @@ void func_80056504(s_LmHeader* lmHeader, char* newStr, s_FsImageDesc* image, s32
 
 bool func_80056558(s_LmHeader* lmHeader, char* fileName, s_FsImageDesc* image, s32 arg3) // 0x80056558
 {
-    s_Material* material;
-    u32*        materialName;
+    s_Material* mat;
+    u32*        matName;
 
-    for (material = &lmHeader->materials_4[0];
-         material < &lmHeader->materials_4[lmHeader->materialCount_3];
-         material++)
+    for (mat = &lmHeader->materials_4[0];
+         mat < &lmHeader->materials_4[lmHeader->materialCount_3];
+         mat++)
     {
-        materialName = material->materialName_0.u32;
-        if (materialName[0] == *(u32*)&fileName[0] && materialName[1] == *(u32*)&fileName[4])
+        matName = mat->materialName_0.u32;
+        if (matName[0] == *(u32*)&fileName[0] && matName[1] == *(u32*)&fileName[4])
         {
-            material->field_C = 1;
-            func_8005660C(material, image, arg3);
+            mat->field_C = 1;
+            func_8005660C(mat, image, arg3);
             return true;
         }
     }
@@ -631,7 +631,7 @@ bool func_80056558(s_LmHeader* lmHeader, char* fileName, s_FsImageDesc* image, s
     return false;
 }
 
-void func_8005660C(s_Material* material, s_FsImageDesc* image, s32 arg2) // 0x8005660C
+void func_8005660C(s_Material* mat, s_FsImageDesc* image, s32 arg2) // 0x8005660C
 {
     s32 coeff;
 
@@ -651,44 +651,44 @@ void func_8005660C(s_Material* material, s_FsImageDesc* image, s32 arg2) // 0x80
             break;
     }
 
-    material->field_14.u8[0] = image->u * coeff;
-    material->field_14.u8[1] = image->v;
+    mat->field_14.u8[0] = image->u * coeff;
+    mat->field_14.u8[1] = image->v;
 
-    material->field_E  = ((image->tPage[0] & 0x3) << 7) | ((arg2 & 0x3) << 5) | (image->tPage[1] & (1 << 4)) | (image->tPage[1] & 0xF);
-    material->field_10 = (image->clutY << 6) | ((image->clutX >> 4) & 0x3F);
+    mat->field_E  = ((image->tPage[0] & 0x3) << 7) | ((arg2 & 0x3) << 5) | (image->tPage[1] & (1 << 4)) | (image->tPage[1] & 0xF);
+    mat->field_10 = (image->clutY << 6) | ((image->clutX >> 4) & 0x3F);
 }
 
 void func_800566B4(s_LmHeader* lmHeader, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4) // 0x800566B4
 {
     char           filename[16];
     s32            i;
-    s_Material*    material;
+    s_Material*    mat;
     s_FsImageDesc* localImage;
 
     // Loop could be using `&image[i]`/`&arg0->field_4[i]` instead? Wasn't able to make that match though.
     localImage = image;
-    material   = lmHeader->materials_4;
+    mat        = lmHeader->materials_4;
 
-    for (i = 0; i < lmHeader->materialCount_3; i++, material++, localImage++)
+    for (i = 0; i < lmHeader->materialCount_3; i++, mat++, localImage++)
     {
-        func_8005B3BC(filename, material);
+        func_8005B3BC(filename, mat);
         Fs_QueueStartReadTim(Fs_FindNextFile(filename, 0, startIdx), FS_BUFFER_9, localImage);
-        func_8005660C(material, localImage, arg4);
+        func_8005660C(mat, localImage, arg4);
     }
 }
 
-void func_80056774(s_LmHeader* lmHeader, s_800C1450_0* arg1, bool (*func)(s_Material* material), void* arg3, s32 arg4) // 0x80056774
+void func_80056774(s_LmHeader* lmHeader, s_800C1450_0* arg1, bool (*func)(s_Material* mat), void* arg3, s32 arg4) // 0x80056774
 {
-    s_Material* material;
+    s_Material* mats;
 
-    for (material = &lmHeader->materials_4[0]; material < &lmHeader->materials_4[lmHeader->materialCount_3]; material++)
+    for (mats = &lmHeader->materials_4[0]; mats < &lmHeader->materials_4[lmHeader->materialCount_3]; mats++)
     {
-        if (material->field_C == 0 && material->field_8 == NULL && (func == NULL || func(material)))
+        if (mats->field_C == 0 && mats->field_8 == NULL && (func == NULL || func(mats)))
         {
-            material->field_8 = func_8005B1FC(material, arg1, FS_BUFFER_9, arg3, arg4);
-            if (material->field_8 != NULL)
+            mats->field_8 = func_8005B1FC(mats, arg1, FS_BUFFER_9, arg3, arg4);
+            if (mats->field_8 != NULL)
             {
-                func_8005660C(material, &material->field_8->imageDesc_0, arg4);
+                func_8005660C(mats, &mats->field_8->imageDesc_0, arg4);
             }
         }
     }
@@ -696,26 +696,26 @@ void func_80056774(s_LmHeader* lmHeader, s_800C1450_0* arg1, bool (*func)(s_Mate
 
 bool LmHeader_IsTextureLoaded(s_LmHeader* lmHeader) // 0x80056888
 {
-    s_Material* material;
+    s_Material* mat;
 
     if (!lmHeader->isLoaded_2)
     {
         return false;
     }
 
-    for (material = &lmHeader->materials_4[0]; material < &lmHeader->materials_4[lmHeader->materialCount_3]; material++)
+    for (mat = &lmHeader->materials_4[0]; mat < &lmHeader->materials_4[lmHeader->materialCount_3]; mat++)
     {
-        if (material->field_C != 0)
+        if (mat->field_C != 0)
         {
             continue;
         }
 
-        if (material->field_8 == NULL)
+        if (mat->field_8 == NULL)
         {
             return false;
         }
 
-        if (!Fs_QueueIsEntryLoaded(material->field_8->queueIdx_10))
+        if (!Fs_QueueIsEntryLoaded(mat->field_8->queueIdx_10))
         {
             return false;
         }
@@ -729,18 +729,18 @@ void func_80056954(s_LmHeader* lmHeader) // 0x80056954
     s32         i;
     s32         j;
     s32         flags;
-    s_Material* material;
+    s_Material* mat;
 
-    for (i = 0, material = lmHeader->materials_4; i < lmHeader->materialCount_3; i++, material++)
+    for (i = 0, mat = lmHeader->materials_4; i < lmHeader->materialCount_3; i++, mat++)
     {
-        flags = (material->field_E != material->field_F) ? (1 << 0) : 0;
+        flags = (mat->field_E != mat->field_F) ? (1 << 0) : 0;
 
-        if (material->field_10 != material->field_12)
+        if (mat->field_10 != mat->field_12)
         {
             flags |= 1 << 1;
         }
 
-        if (material->field_14.u16 != material->field_16.u16)
+        if (mat->field_14.u16 != mat->field_16.u16)
         {
             flags |= 1 << 2;
         }
@@ -751,19 +751,19 @@ void func_80056954(s_LmHeader* lmHeader) // 0x80056954
             {
                 if (lmHeader->magic_0 == LM_HEADER_MAGIC)
                 {
-                    func_80056A88(&lmHeader->modelHeaders_C[j], i, material, flags);
+                    func_80056A88(&lmHeader->modelHeaders_C[j], i, mat, flags);
                 }
             }
 
-            material->field_F        = material->field_E;
-            material->field_12       = material->field_10;
-            material->field_16.u8[0] = material->field_14.u8[0];
-            material->field_16.u8[1] = material->field_14.u8[1];
+            mat->field_F        = mat->field_E;
+            mat->field_12       = mat->field_10;
+            mat->field_16.u8[0] = mat->field_14.u8[0];
+            mat->field_16.u8[1] = mat->field_14.u8[1];
         }
     }
 }
 
-void func_80056A88(s_ModelHeader* modelHeader, s32 arg1, s_Material* material, s32 flags) // 0x80056A88
+void func_80056A88(s_ModelHeader* modelHeader, s32 arg1, s_Material* mat, s32 flags) // 0x80056A88
 {
     u16           field_14;
     u16           field_16;
@@ -783,16 +783,16 @@ void func_80056A88(s_ModelHeader* modelHeader, s32 arg1, s_Material* material, s
             {
                 if (flags & (1 << 0))
                 {
-                    prim->field_6_0 = material->field_E;
+                    prim->field_6_0 = mat->field_E;
                 }
                 if (flags & (1 << 1))
                 {
-                    prim->field_2 = material->field_10 + (prim->field_2 - material->field_12);
+                    prim->field_2 = mat->field_10 + (prim->field_2 - mat->field_12);
                 }
                 if (flags & (1 << 2))
                 {
-                    field_16         = material->field_16.u16;
-                    field_14         = material->field_14.u16;
+                    field_16      = mat->field_16.u16;
+                    field_14      = mat->field_14.u16;
                     prim->field_0 = field_14 + (prim->field_0 - field_16);
                     prim->field_4 = field_14 + (prim->field_4 - field_16);
                     prim->field_8 = field_14 + (prim->field_8 - field_16);
@@ -805,12 +805,12 @@ void func_80056A88(s_ModelHeader* modelHeader, s32 arg1, s_Material* material, s
 
 void func_80056BF8(s_LmHeader* lmHeader) // 0x80056BF8
 {
-    s_Material*   material;
+    s_Material*   mat;
     s_Material_8* material_8;
 
-    for (material = &lmHeader->materials_4[0]; material < &lmHeader->materials_4[lmHeader->materialCount_3]; material++)
+    for (mat = &lmHeader->materials_4[0]; mat < &lmHeader->materials_4[lmHeader->materialCount_3]; mat++)
     {
-        material_8 = material->field_8;
+        material_8 = mat->field_8;
         if (material_8 != NULL)
         {
             material_8->field_14--;
@@ -819,7 +819,7 @@ void func_80056BF8(s_LmHeader* lmHeader) // 0x80056BF8
                 material_8->field_14 = 0;
             }
 
-            material->field_8 = NULL;
+            mat->field_8 = NULL;
         }
     }
 }
@@ -1335,7 +1335,7 @@ void func_8005A21C(s_800BCE18_2BEC_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX*
             break;
     }
 
-    modelHeader      = arg0->field_8;
+    modelHeader  = arg0->field_8;
     vertexOffset = modelHeader->vertexOffset_9;
     normalOffset = modelHeader->normalOffset_A;
 
@@ -1635,7 +1635,7 @@ void func_8005B1A0(s_Material_8* material_8, char* texName, u8 tPage0, u8 tPage1
 #define cmp_str(a, b)\
     ((a->materialName_0.u32[0] != b->textureName_8.u32[0]) || (a->materialName_0.u32[1] != b->textureName_8.u32[1]))
 
-s_Material_8* func_8005B1FC(s_Material* arg0, s_800C1450_0* arg1, void* fs_buffer_9, void* arg3, s32 arg4)
+s_Material_8* func_8005B1FC(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, void* arg3, s32 arg4)
 {
     s8            fileName[12];
     s8            debugStr[12];
@@ -1647,15 +1647,15 @@ s_Material_8* func_8005B1FC(s_Material* arg0, s_800C1450_0* arg1, void* fs_buffe
     u32 queueIdx;
     
     lowestQueueIdx = INT_MAX;
-    arg0->field_8 = NULL;
+    mat->field_8 = NULL;
     found = NULL;
 
     for (i = 0; i < arg1->count_0; i++)
     {
         tex = arg1->entries_4[i];
-        if (!cmp_str(arg0, tex))
+        if (!cmp_str(mat, tex))
         {
-            arg0->field_8 = tex;
+            mat->field_8 = tex;
             tex->field_14++;
             return tex;
         }
@@ -1673,7 +1673,7 @@ s_Material_8* func_8005B1FC(s_Material* arg0, s_800C1450_0* arg1, void* fs_buffe
         return NULL;
     }
 
-    func_8005B3BC(&fileName, arg0);
+    func_8005B3BC(&fileName, mat);
     fileId = Fs_FindNextFile(&fileName, 0, (s32) arg3);
     if (fileId == NO_VALUE)
     {
@@ -1687,9 +1687,9 @@ s_Material_8* func_8005B1FC(s_Material* arg0, s_800C1450_0* arg1, void* fs_buffe
 #endif
     }
 
-    found->queueIdx_10 = Fs_QueueStartReadTim(fileId, fs_buffer_9, &found->imageDesc_0);
+    found->queueIdx_10 = Fs_QueueStartReadTim(fileId, fsBuffer9, &found->imageDesc_0);
     found->field_14++;
-    found->textureName_8 = arg0->materialName_0;
+    found->textureName_8 = mat->materialName_0;
 
     return found;
 }
@@ -1889,7 +1889,7 @@ s32 func_8005C944(s_SubCharacter* chara, s_800C4590* arg1) // 0x8005C944
 {
     s_800C4590 sp10;
     VECTOR3    sp30;
-    s16        temp_s4;
+    s16        headingAngle;
     s32        temp_s0;
     s32        temp_s0_2;
     s32        temp_s2;
@@ -1898,18 +1898,18 @@ s32 func_8005C944(s_SubCharacter* chara, s_800C4590* arg1) // 0x8005C944
     s32        temp;
     s32        ret;
 
-    temp_s4 = chara->headingAngle_3C;
-    temp_s0 = FP_MULTIPLY_PRECISE(g_DeltaTime0, chara->moveSpeed_38, 0xC);
+    headingAngle = chara->headingAngle_3C;
+    temp_s0 = FP_MULTIPLY_PRECISE(g_DeltaTime0, chara->moveSpeed_38, Q12_SHIFT);
     temp_s2 = OVERFLOW_GUARD(temp_s0);
     temp_s3 = temp_s2 >> 1;
 
-    temp      = Math_Sin(temp_s4);
+    temp      = Math_Sin(headingAngle);
     temp_s0_2 = temp_s0 >> temp_s3;
     temp_v0   = temp >> temp_s3;
 
-    sp30.vx = (s32)FP_MULTIPLY_PRECISE(temp_s0_2, temp_v0, 0xC) << temp_s2;
-    sp30.vz = (s32)FP_MULTIPLY_PRECISE(temp_s0_2, (Math_Cos(temp_s4) >> temp_s3), 0xC) << temp_s2;
-    sp30.vy = (s32)FP_MULTIPLY_PRECISE(g_DeltaTime0, chara->field_34, 0xC);
+    sp30.vx = (s32)FP_MULTIPLY_PRECISE(temp_s0_2, temp_v0, Q12_SHIFT) << temp_s2;
+    sp30.vz = (s32)FP_MULTIPLY_PRECISE(temp_s0_2, Math_Cos(headingAngle) >> temp_s3, Q12_SHIFT) << temp_s2;
+    sp30.vy = (s32)FP_MULTIPLY_PRECISE(g_DeltaTime0, chara->field_34, Q12_SHIFT);
 
     ret = func_80069B24(&sp10, (VECTOR3*)&sp30, chara);
 
@@ -1922,6 +1922,7 @@ s32 func_8005C944(s_SubCharacter* chara, s_800C4590* arg1) // 0x8005C944
         chara->position_18.vy = sp10.field_C;
         chara->field_34       = 0;
     }
+
     if (arg1 != NULL)
     {
         *arg1 = sp10;
@@ -2444,7 +2445,7 @@ bool func_80068CC0(s32 arg0)                                                // 0
             *(u16*)&poly->r2 = 0x8080;
             poly->b2         = 0xC4;
 
-            addPrim(&g_OrderingTable0[g_ActiveBuffer].org[2], poly);
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], poly);
             GsOUT_PACKET_P = ++poly;
         }
     }
@@ -2484,7 +2485,7 @@ void func_80069844(s32 arg0) // 0x80069844
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80069860); // 0x80069860
 
-void IpdColData_FixOffsets(s_IpdCollisionData* collData) // 0x8006993C
+void IpdCollData_FixOffsets(s_IpdCollisionData* collData) // 0x8006993C
 {
     collData->ptr_C  = (u8*)collData->ptr_C + (u32)collData;
     collData->ptr_10 = (u8*)collData->ptr_10 + (u32)collData;

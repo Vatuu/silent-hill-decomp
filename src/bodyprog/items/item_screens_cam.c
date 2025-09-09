@@ -132,13 +132,13 @@ void func_8004BD74(s32 arg0, GsDOBJ2* arg1, s32 arg2)  // 0x8004BD74
 
     if (arg2 == 2)
     {
-        GsClearOt(0, 0, &g_OrderingTable1[g_ActiveBuffer]);
-        GsSortOt(&g_OrderingTable1[g_ActiveBuffer], &g_OrderingTable0[g_ActiveBuffer]);
-        GsSortObject4J(arg1, &g_OrderingTable1[g_ActiveBuffer], 1, (u32*)PSX_SCRATCH);
+        GsClearOt(0, 0, &g_OrderingTable1[g_ActiveBufferIdx]);
+        GsSortOt(&g_OrderingTable1[g_ActiveBufferIdx], &g_OrderingTable0[g_ActiveBufferIdx]);
+        GsSortObject4J(arg1, &g_OrderingTable1[g_ActiveBufferIdx], 1, (u32*)PSX_SCRATCH);
     }
     else
     {
-        GsSortObject4J(arg1, &g_OrderingTable0[g_ActiveBuffer], 1, (u32*)PSX_SCRATCH);
+        GsSortObject4J(arg1, &g_OrderingTable0[g_ActiveBufferIdx], 1, (u32*)PSX_SCRATCH);
     }
 }
 

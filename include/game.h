@@ -533,13 +533,14 @@ typedef enum _InventoryItemId
     InventoryItemId_Shotgun              = 162,
     InventoryItemId_HyperBlaster         = 163,
 	
-	/** @brief Item IDs only used during cutscenes. */
-    InventoryItemId_CS_Phone             = 164,
-    InventoryItemId_CS_Flauros           = 165,
-    InventoryItemId_CS_Aglaophotis       = 166,
-    InventoryItemId_CS_PlasticBottle     = 167,
-    InventoryItemId_CS_Baby              = 168,
-    InventoryItemId_CS_BloodPack         = 169,
+	/** Cutscene-only. */
+
+    InventoryItemId_Phone                = 164,
+    InventoryItemId_Flauros              = 165,
+    InventoryItemId_Aglaophotis          = 166,
+    InventoryItemId_PlasticBottle        = 167,
+    InventoryItemId_Baby                 = 168,
+    InventoryItemId_BloodPack            = 169,
 
     InventoryItemId_HandgunBullets       = 192,
     InventoryItemId_RifleShells          = 193,
@@ -1395,7 +1396,7 @@ extern s_Savegame* const       g_SavegamePtr;   // 0x80024D48
 extern s_ControllerData* const g_Controller0;   // 0x80024D4C
 extern s_ControllerData* const g_Controller1;   // 0x80024D50
 
-extern s32  g_ActiveBuffer; // 0x800B9FB8
+extern s32  g_ActiveBufferIdx; // 0x800B9FB8
 extern GsOT g_OrderingTable0[2]; // 0x800A8F74
 extern GsOT g_OrderingTable1[2]; // 0x800A8F9C
 extern GsOT g_OrderingTable2[2]; // 0x800A8FC4

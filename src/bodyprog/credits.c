@@ -1,10 +1,10 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/math.h"
 #include "bodyprog/credits.h"
-#include "bodyprog/item_screens.h"
 #include "bodyprog/gfx/text_draw.h"
+#include "bodyprog/item_screens.h"
+#include "bodyprog/math.h"
 #include "main/fsqueue.h"
 
 const s32 rodataPad_8002B2F8 = 0;
@@ -421,7 +421,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
     s32      temp_v1;
     POLY_G4* poly;
 
-    GsOT* ot = &g_OrderingTable2[g_ActiveBuffer];
+    GsOT* ot = &g_OrderingTable2[g_ActiveBufferIdx];
 
     char* D_8002B4C0[] =
     {

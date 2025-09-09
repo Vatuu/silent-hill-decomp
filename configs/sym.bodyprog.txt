@@ -527,7 +527,7 @@ LmHeader_ModelCountGet                      = 0x80056C80; // type:func
 StringCopy                                  = 0x80056D64; // type:func
 func_800571D0                               = 0x800571D0; // type:func size:0x58 - Fix for truncated function.
 GameState_MapScreen_Update                  = 0x80066EB0; // type:func
-IpdColData_FixOffsets                       = 0x8006993C; // type:func
+IpdCollData_FixOffsets                      = 0x8006993C; // type:func
 
 //--------------------------------------------------------------------
 //--- PA: 0x04BB84   VA: 0x800706E4   subsegment: c, bodyprog_800706E4
@@ -1961,8 +1961,8 @@ g_BackgroundColor                           = 0x800A8E58;
 g_ScreenFadeProgress                        = 0x800A8E94; // type:s32
 // vw globals from SH2
 vcNullRoadArray                             = 0x800A8F44; // _VC_ROAD_DATA[2]
-g_OrderingTable0                              = 0x800A8F74; // type:s8
-g_OrderingTable2                              = 0x800A8FC4; // type:s8
+g_OrderingTable0                            = 0x800A8F74; // type:s8
+g_OrderingTable2                            = 0x800A8FC4; // type:s8
 g_DeltaTime1                                = 0x800A8FEC; // type:s32
 g_IntervalVBlanks                           = 0x800A8FF0; // type:s32
 g_Chara_FileInfo                            = 0x800A90FC; // type:CharaFileInfo size:0x2D0
@@ -2348,10 +2348,6 @@ D_800B5508                                  = 0x800B5508; // size:0x718
 //--------------------------------------------------------------------------
 //--- PA: 0x0910C0   VA: 0x800B5C20   subsegment: .data, gfx/text_draw_debug
 //--------------------------------------------------------------------------
-
-//--------------------------------------------------------------------------
-//--- PA: 0x0910C0   VA: 0x800B5C20   subsegment: .data, gfx/text_draw_debug
-//--------------------------------------------------------------------------
 g_Gfx_DebugStringPosition0                  = 0x800B5C20; // type:DVECTOR size:4
 g_Gfx_DebugStringPosition1                  = 0x800B5C24; // type:DVECTOR size:4
 g_PrevScreenFadeProgress                    = 0x800B5C28; // type:s32
@@ -2359,19 +2355,23 @@ g_ScreenFadeTimestep                        = 0x800B5C30; // type:s32
 g_VBlanks                                   = 0x800B5C34; // type:s32
 g_UncappedVBlanks                           = 0x800B5C38; // type:s32
 
-//-----------------------------------------------------------------------
-//--- PA: 0x0910E0   VA: 0x800B5C40   subsegment: data, bodyprog_800B5C40
-//-----------------------------------------------------------------------
+//---------------------------------------------------------------
+//--- PA: 0x0910E0   VA: 0x800B5C40   subsegment: .data, gamemain
+//---------------------------------------------------------------
 g_OtTags0                                   = 0x800B5C40; // type:u32 size:0x80
 g_DeltaTime0                                = 0x800B5CC0; // type:s32 - Q19.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..).
 g_OtTags1                                   = 0x800B5CC4; // type:u32 size:0x4000
 g_DeltaTime2                                = 0x800B9CC8; // type:s32
 g_MainLoop_FrameCount                       = 0x800B9CCC;
 vcWork                                      = 0x800B9CD0; // type:VC_WORK size:0x2E8
-g_ActiveBuffer                              = 0x800B9FB8;
+g_ActiveBufferIdx                           = 0x800B9FB8;
 g_SysWork                                   = 0x800B9FC0; // type:SysWork size:0x2768 - should use s_SysWork here, but splat only supports custom structs with capital letter at beginning.
 g_GameWork                                  = 0x800BC728; // type:GameWork size:0x5D8
 g_Gfx_ScreenFade                            = 0x800BCD0C;
+
+//------------------------------------------------------------------------
+//--- PA: 0x0981B0   VA: 0x800BCD10   subsegment: .data, memcard/memcard_2
+//------------------------------------------------------------------------
 g_SavegameCount                             = 0x800BCD28;
 g_ActiveSavegameEntry                       = 0x800BCD2C;
 g_MemCardElementCount                       = 0x800BCD30;
@@ -2380,7 +2380,15 @@ g_MemCardsTotalElementCount                 = 0x800BCD3A;
 g_SlotElementCount                          = 0x800BCD3C;
 g_SelectedSaveIdx                           = 0x800BCD3E;
 g_SelectedFileIdx                           = 0x800BCD3F;
+
+//-----------------------------------------------------------------------
+//--- PA: 0x0981E8   VA: 0x800BCD48   subsegment: data, bodyprog_800B5C40
+//-----------------------------------------------------------------------
 g_DemoLoadAttempCount                       = 0x800BCD48;
+
+//------------------------------------------------------------------------
+//--- PA: 0x098200   VA: 0x800BCD60   subsegment: .data, bodyprog_800348C0
+//------------------------------------------------------------------------
 g_MapMsg_StateMachineIdx1                   = 0x800BCD60; // type:s32
 g_MapMsg_StateMachineIdx2                   = 0x800BCD64; // type:s32
 g_MapMsg_DisplayLength                      = 0x800BCD68; // type:s32
@@ -2390,6 +2398,10 @@ g_MapMsg_Select                             = 0x800BCD78; // type:MapMsgSelect
 g_MapMsg_AudioLoadBlock                     = 0x800BCD7A; // type:u8
 g_MapMsg_SelectCancelIdx3                   = 0x800BCD7B; // type:s8
 g_SysState_GameOver_TipIdx                  = 0x800BCD80; // type:u8
+
+//-----------------------------------------------------------------------
+//--- PA: 0x098230   VA: 0x800BCD90   subsegment: data, bodyprog_800BCD80
+//-----------------------------------------------------------------------
 g_MapEventParam                             = 0x800BCDD8; // type:u32 - pointer to `s_EventParam`.
 vcRefPosSt                                  = 0x800BCDF8; // type:VECTOR3 size:0xC
 D_800BCE18                                  = 0x800BCE18; // type:u8 size:0x2BEC - size incomplete, contains `vcCameraInternalInfo` and others.

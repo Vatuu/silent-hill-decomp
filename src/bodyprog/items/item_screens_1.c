@@ -166,7 +166,7 @@ bool func_8004C328() // 0x8004C328
             continue;
         }
 
-		// Checks if the player have ammo.
+		// Checks if player has ammo.
         switch (itemId)
         {
             case InventoryItemId_HuntingRifle:

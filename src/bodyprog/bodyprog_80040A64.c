@@ -420,8 +420,8 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0
 
     var_t0 = (u32*)PSX_SCRATCH;
 
-    poly_g3 = &D_800BFBF0[g_ActiveBuffer][sizeof(DR_TPAGE) * 2];
-    poly_f4 = &D_800BFBF0[g_ActiveBuffer][(sizeof(DR_TPAGE) * 2) + ((sizeof(POLY_G4) * 16) * 3) + (sizeof(POLY_G3) * 16)];
+    poly_g3 = &D_800BFBF0[g_ActiveBufferIdx][sizeof(DR_TPAGE) * 2];
+    poly_f4 = &D_800BFBF0[g_ActiveBufferIdx][(sizeof(DR_TPAGE) * 2) + ((sizeof(POLY_G4) * 16) * 3) + (sizeof(POLY_G3) * 16)];
 
     for (j = 0; j < 16; j++, poly_g3++, poly_f4++)
     {
@@ -439,7 +439,7 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0
     }
 
     var_t1  = (u32*)PSX_SCRATCH;
-    poly_g4 = &D_800BFBF0[g_ActiveBuffer][(sizeof(DR_TPAGE) * 2) + (sizeof(POLY_G3) * 16)];
+    poly_g4 = &D_800BFBF0[g_ActiveBufferIdx][(sizeof(DR_TPAGE) * 2) + (sizeof(POLY_G3) * 16)];
 
     for (i = 0; i < 3; i++)
     {
@@ -456,8 +456,8 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0
         }
     }
 
-    AddPrim(arg0->org, &D_800BFBF0[g_ActiveBuffer][8]);
-    AddPrim(&arg0->org[1], &D_800BFBF0[g_ActiveBuffer]);
+    AddPrim(arg0->org, &D_800BFBF0[g_ActiveBufferIdx][8]);
+    AddPrim(&arg0->org[1], &D_800BFBF0[g_ActiveBufferIdx]);
 }
 
 u32 Fs_QueueEntryLoadStatusGet(s32 queueIdx) // 80041ADC
@@ -1090,11 +1090,10 @@ s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, 
 
 s32 func_80042E2C(s32 xPos, s32 zPos, s32 xFileChunkCoord, s32 zFileChunkCoord) // 0x80042E2C
 {
-#define FILE_CHUNK_SIZE 0x2800
+    #define FILE_CHUNK_SIZE 0x2800
 
-#define OUTSIDE_DIST(val, lo, hi)                               \
-    ((val) < (lo) ? (lo) - (val) : (hi) <= (val) ? (val) - (hi) \
-                                                 : 0)
+    #define OUTSIDE_DIST(val, lo, hi) \
+        (((val) < (lo)) ? ((lo) - (val)) : (((hi) <= (val)) ? ((val) - (hi)) : 0))
 
     s32 xFileChunkBound;
     s32 zFileChunkBound;
@@ -1360,7 +1359,7 @@ s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s32 fileChunkCoordX, s32 fileCh
     return arg0->queueEntryIdx_4;
 }
 
-s32 func_80043740() // 0x80043740
+bool func_80043740() // 0x80043740
 {
     s32         i;
     s_800C117C* ptr;
@@ -1371,13 +1370,15 @@ s32 func_80043740() // 0x80043740
             break;
 
         case 1:
-            return 0;
+            return false;
 
         case 2:
-            return 0;
+            return false;
     }
 
-    for (ptr = D_800C1020.ipdTable_15C, i = 0; i < D_800C1020.ipdTableSize_158; i++, ptr++)
+    for (ptr = D_800C1020.ipdTable_15C, i = 0;
+         i < D_800C1020.ipdTableSize_158;
+         i++, ptr++)
     {
         switch (IpdHeader_LoadStateGet(ptr))
         {
@@ -1388,18 +1389,18 @@ s32 func_80043740() // 0x80043740
 
         if (ptr->field_C <= 0)
         {
-            return 0;
+            return false;
         }
 
         if (ptr->field_10 <= 0)
         {
-            do
-            {
-            } while (0); // @hack
-            return 0;
+            do {} while (0); // @hack
+
+            return false;
         }
     }
-    return 1;
+
+    return true;
 }
 
 bool func_80043830(void) // 0x80043830
@@ -1519,7 +1520,7 @@ void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_LmHeader** lmHeaders, s32 lm
     ipdHeader->isLoaded_1 = true;
 
     IpdHeader_FixHeaderOffsets(ipdHeader);
-    IpdColData_FixOffsets(&ipdHeader->collisionData_54);
+    IpdCollData_FixOffsets(&ipdHeader->collisionData_54);
     LmHeader_FixOffsets(ipdHeader->lmHeader_4);
     func_8008E4EC(ipdHeader->lmHeader_4);
     func_80043C7C(ipdHeader, arg3, arg4, arg5);
@@ -1556,19 +1557,19 @@ s32 func_80043D00(s_IpdHeader* ipdHeader) // 0x80043D00
     return func_80056348(LmFilter_NameEndsWithH, ipdHeader->lmHeader_4);
 }
 
-bool LmFilter_NameDoesNotEndWithH(s_Material* material) // 0x80043D44
+bool LmFilter_NameDoesNotEndWithH(s_Material* mat) // 0x80043D44
 {
-    return !LmFilter_NameEndsWithH(material);
+    return !LmFilter_NameEndsWithH(mat);
 }
 
 /* Not sure what is the significance of textures that end with H.
  * I've looked at all of them and can't find any pattern.
  */
-bool LmFilter_NameEndsWithH(s_Material* material) // 0x80043D64
+bool LmFilter_NameEndsWithH(s_Material* mat) // 0x80043D64
 {
     char* charCode;
 
-    for (charCode = &material->materialName_0.str[7]; charCode >= &material->materialName_0.str[0]; charCode--)
+    for (charCode = &mat->materialName_0.str[7]; charCode >= &mat->materialName_0.str[0]; charCode--)
     {
         if (*charCode == '\0')
         {

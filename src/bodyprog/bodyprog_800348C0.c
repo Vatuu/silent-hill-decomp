@@ -7,12 +7,12 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/credits.h"
 #include "bodyprog/demo.h"
+#include "bodyprog/gfx/screen_draw.h"
+#include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math.h"
 #include "bodyprog/memcard.h"
 #include "bodyprog/player_logic.h"
-#include "bodyprog/gfx/screen_draw.h"
-#include "bodyprog/gfx/text_draw.h"
 #include "main/fsqueue.h"
 #include "main/mem.h"
 #include "main/rng.h"
@@ -32,9 +32,9 @@ s8 g_MapMsg_SelectCancelIdx = 0;
 u32 D_800BCD7C = 0x00491021;
 u8 g_SysState_GameOver_TipIdx = 0;
 // 3 bytes of padding.
-s32 g_someTimer0 = 0;
-u32 D_800BCD88 = 0; // @unused padding ?
-u32 D_800BCD8C = 0; // @unused padding ?
+s32 g_SomeTimer0 = 0;
+u32 D_800BCD88 = 0; // @unused Padding?
+u32 D_800BCD8C = 0; // @unused Padding?
 
 void func_800348C0() // 0x800348C0
 {
@@ -393,12 +393,10 @@ void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
     func_8005E0DC(mapIdx); // Something related to events of the map and load of textures?
     GameFs_PlayerMapAnimLoad(mapIdx);
 
-    /** If the player spawn in the map with a weapon equipped (either because of being on a demo
-	* or because the player saved the game with a weapon equipped) this and the next function
-	* are on charge of making it appear and allocate it's data.
-	* @note This code has some special functionallity in case the player spawn without any equipped
-	* weapon.
-	*/
+    // If the player spawns in the map with a weapon equipped (either because it's a demo
+	// or because the player saved the game with a weapon equipped), this and the next function
+	// make it appear and allocate its data.
+	// @note This code has some special functionallity if player spawna without an equipped weapon.
     if (g_SysWork.processFlags_2298 & (SysWorkProcessFlag_NewGame | SysWorkProcessFlag_LoadSave
                                        | SysWorkProcessFlag_Continue | SysWorkProcessFlag_BootDemo))
     {
@@ -2112,11 +2110,11 @@ void GameState_InGame_Update() // 0x80038BD4
 
     if (g_DeltaTime0 != FP_TIME(0.0f))
     {
-        g_someTimer0 = g_DeltaTime0;
+        g_SomeTimer0 = g_DeltaTime0;
     }
     else
     {
-        g_someTimer0 = g_DeltaTime1;
+        g_SomeTimer0 = g_DeltaTime1;
     }
 
     if (g_SysWork.sysState_8 == SysState_Gameplay)
@@ -2740,12 +2738,12 @@ void SysState_ReadMessage_Update(s32 arg0) // 0x80039FB8
 
         if (i == 6)
         {
-            g_DeltaTime0 = g_someTimer0;
+            g_DeltaTime0 = g_SomeTimer0;
         }
     }
     else
     {
-        g_DeltaTime0 = g_someTimer0;
+        g_DeltaTime0 = g_SomeTimer0;
     }
 
     if (g_SysWork.field_18 == 0)
@@ -2869,20 +2867,20 @@ void SysState_EventCallFunc_Update() // 0x8003A3C8
         Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
     }
 
-    g_DeltaTime0 = g_someTimer0;
+    g_DeltaTime0 = g_SomeTimer0;
     g_MapOverlayHeader.mapEventFuncs_20[g_MapEventIdx]();
 }
 
 void SysState_EventSetFlag_Update() // 0x8003A460
 {
-    g_DeltaTime0 = g_someTimer0;
+    g_DeltaTime0 = g_SomeTimer0;
     Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
     g_SysWork.sysState_8 = SysState_Gameplay;
 }
 
 void SysState_EventPlaySound_Update() // 0x8003A4B4
 {
-    g_DeltaTime0 = g_someTimer0;
+    g_DeltaTime0 = g_SomeTimer0;
 
     Sd_EngineCmd(((u16)g_MapEventIdx + 0x500) & 0xFFFF);
 

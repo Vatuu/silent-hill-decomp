@@ -881,11 +881,11 @@ typedef struct
 typedef struct
 {
     s_80043338_0* destBuffer_0;
-    s32   queueEntryIdx_4;
-    s16   fileChunkCoordX_8;
-    s16   fileChunkCoordZ_A;
-    s32   field_C;  // } Something to do with distance from file chunk edge.
-    s32   field_10; // }
+    s32           queueEntryIdx_4;
+    s16           fileChunkCoordX_8;
+    s16           fileChunkCoordZ_A;
+    s32           field_C;  // } Something to do with distance from file chunk edge.
+    s32           field_10; // }
 } s_80043338;
 
 typedef struct
@@ -2591,12 +2591,11 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ);
 
 s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX, s32 posZ);
 
-/** @brief Gets the load state of a LM file.
+/** @brief Gets the load state of an LM file.
  *
  * @param
  * @return LM file load state `(e_StaticModelLoadState`).
  */
-
 u32 LmHeader_LoadStateGet(s_func_80041CB4* arg0);
 
 /** @brief Gets the load state of an IPD file.
@@ -2640,7 +2639,7 @@ s_800C117C* func_800435E4(s_800C117C* arg0, s32 arg1);
 /** Maybe facilitates file chunk streaming as the player moves around the map. */
 s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
 
-s32 func_80043740();
+bool func_80043740();
 
 bool func_80043830(void);
 
@@ -2663,9 +2662,9 @@ void func_80043C7C(s_IpdHeader* ipdHeader, s_800C1450_0* arg1, s_800C1450_0* arg
 s32 func_80043D00(s_IpdHeader* ipdHeader);
 
 /** Returns inverse result of `LmFilter_NameEndsWithH`. */
-bool LmFilter_NameDoesNotEndWithH(s_Material* material);
+bool LmFilter_NameDoesNotEndWithH(s_Material* mat);
 
-bool LmFilter_NameEndsWithH(s_Material* material);
+bool LmFilter_NameEndsWithH(s_Material* mat);
 
 void IpdHeader_FixHeaderOffsets(s_IpdHeader* ipdHeader);
 
@@ -2962,7 +2961,7 @@ void ModelHeader_FixOffsets(s_ModelHeader* modelHeader, s_LmHeader* lmHeader);
 void func_80056244(s_LmHeader* lmHeader, bool flag);
 
 /** Gets texture count? */
-s32 func_80056348(bool (*arg0)(s_Material* material), s_LmHeader* lmHeader);
+s32 func_80056348(bool (*arg0)(s_Material* mat), s_LmHeader* lmHeader);
 
 /** TODO: Unknown `arg3` type. */
 void func_80059D50(s32 arg0, s_800BCE18_2BEC_0* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4);
@@ -3006,19 +3005,19 @@ void func_80056504(s_LmHeader* lmHeader, char* newStr, s_FsImageDesc* image, s32
 
 bool func_80056558(s_LmHeader* lmHeader, char* fileName, s_FsImageDesc* image, s32 arg3);
 
-void func_8005660C(s_Material* material, s_FsImageDesc* image, s32 arg2);
+void func_8005660C(s_Material* mat, s_FsImageDesc* image, s32 arg2);
 
 void func_800566B4(s_LmHeader* lmHeader, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4);
 
 /** Unknown `arg3` / `arg4` types. */
-void func_80056774(s_LmHeader* lmHeader, s_800C1450_0* arg1, bool (*func)(s_Material* material), void* arg3, s32 arg4);
+void func_80056774(s_LmHeader* lmHeader, s_800C1450_0* arg1, bool (*func)(s_Material* mat), void* arg3, s32 arg4);
 
 /** Checks if LM textures are loaded? */
 bool LmHeader_IsTextureLoaded(s_LmHeader* lmHeader);
 
 void func_80056954(s_LmHeader* lmHeader);
 
-void func_80056A88(s_ModelHeader* modelHeader, s32 arg1, s_Material* material, s32 flags);
+void func_80056A88(s_ModelHeader* modelHeader, s32 arg1, s_Material* mat, s32 flags);
 
 void func_80056BF8(s_LmHeader* lmHeader);
 
@@ -3047,7 +3046,7 @@ void func_80057658(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scrat
 
 void func_80057A3C(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
 
-s_Material_8* func_8005B1FC(s_Material* material, s_800C1450_0* arg1, void* fs_buffer_9, void* arg3, s32 arg4);
+s_Material_8* func_8005B1FC(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, void* arg3, s32 arg4);
 
 void func_8005B55C(GsCOORDINATE2* arg0);
 
@@ -3412,7 +3411,7 @@ void func_8006982C(u16 arg0);
 
 void func_80069844(s32 arg0);
 
-void IpdColData_FixOffsets(s_IpdCollisionData* collData);
+void IpdCollData_FixOffsets(s_IpdCollisionData* collData);
 
 void func_80069994(s_IpdCollisionData* collData);
 
