@@ -14,7 +14,7 @@ void Ai_Groaner_Init(s_SubCharacter* chara)
 
     chara->model_0.anim_4.alpha_A = FP_ALPHA(0.0f);
 
-    chara->health_B0 = GROANER_HEALTH_BASE + ((s32)Rng_Rand16() % GROANER_HEALTH_BONUS_MAX);
+    chara->health_B0 = GROANER_HEALTH_BASE + (Rng_Rand16() % GROANER_HEALTH_BONUS_MAX);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal && !Rng_TestProbabilityBits(3))
     {

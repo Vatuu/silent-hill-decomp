@@ -1576,7 +1576,7 @@ static inline s16 GetUvOrRandom()
 {
     if (D_800AE198 == 1) 
     {
-        D_800AE1A8 = (s32)Rng_Rand16() % 134; // TODO: `Rng_GenerateInt(Rng_Rand16(), 0, 133)` doesn't match.
+        D_800AE1A8 = Rng_GenerateInt(Rng_Rand16(), 0, 133);
         return D_800AE1A8;
     }
     else
@@ -1634,7 +1634,7 @@ void Gfx_Inventory_HealthStatusDraw()
             if (i == 2)
             {
                 if (g_SysWork.player_4C.chara_0.health_B0 != FP_HEALTH(100.0f) &&
-                    (((s32)Rng_Rand16() % ((g_SysWork.player_4C.chara_0.health_B0 >> 13) + 2) == 0) || D_800AE198 != 0))
+                    ((Rng_Rand16() % ((g_SysWork.player_4C.chara_0.health_B0 >> 13) + 2) == 0) || D_800AE198 != 0))
                 {
                     D_800AE198++;
 

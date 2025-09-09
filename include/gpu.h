@@ -317,3 +317,16 @@ void SetPriority(PACKET*, s32, s32);
     : "r"(x), "r"(y), "r"(z))
 
 #endif
+
+#define gte_gte_ldvxy0() __asm__ volatile( \
+    "mtc2  $zero, $0;");
+
+#define gte_gte_ldvz0() __asm__ volatile( \
+    "mtc2  $zero, $1;");
+
+#define gte_stSZ3()                                   \
+    ({                                                \
+        u32 __r;                                      \
+        __asm__ volatile("mfc2 %0, $19" : "=r"(__r)); \
+        __r;                                          \
+    })

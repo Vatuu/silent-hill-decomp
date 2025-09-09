@@ -862,8 +862,8 @@ bool func_80056CB4(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BE
             if (modelHeader->modelName_0.u32[0] == sp10.u32[0] && modelHeader->modelName_0.u32[1] == sp10.u32[1])
             {
                 result        = true;
-                arg0->field_C = i;
-                arg0->field_8 = modelHeader;
+                arg0->field_0.field_C = i;
+                arg0->field_0.field_8 = modelHeader;
                 // TODO: `field_8` above used to be `s_800BCE18_2BEC_0_10*`, but this func showed it was `s_ModelHeader*`
                 // Unsure if all `s_800BCE18_2BEC_0_10` refs should be changed though since struct is different size.
             }
@@ -882,7 +882,7 @@ void StringCopy(char* prevStr, char* newStr) // 0x80056D64
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80056D8C); // 0x80056D8C
 
-void func_80057090(s_800BCE18_2BEC_0* arg0, GsOT* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5) // 0x80057090
+void func_80057090(s_800BCE18_2BEC_0_0* arg0, GsOT* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5) // 0x80057090
 {
     s_ModelHeader* modelHeader;
     GsOT_TAG*      temp_s1;
@@ -981,7 +981,7 @@ void func_80057344(s_800BCE18_2BEC_0* arg0, GsOT_TAG* arg1, void* arg2, MATRIX* 
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    modelHeader      = arg0->field_8;
+    modelHeader  = arg0->field_0.field_8;
     vertexOffset = modelHeader->vertexOffset_9;
     normalOffset = modelHeader->normalOffset_A;
 
@@ -1275,7 +1275,7 @@ void func_80059D50(s32 arg0, s_800BCE18_2BEC_0* arg1, MATRIX* mat, void* arg3, G
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    modelHeader = arg1->field_8;
+    modelHeader = arg1->field_0.field_8;
 
     for (meshHeader = &modelHeader->meshHeaders_C[0]; meshHeader < &modelHeader->meshHeaders_C[modelHeader->meshCount_8]; meshHeader++)
     {
@@ -1335,7 +1335,7 @@ void func_8005A21C(s_800BCE18_2BEC_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX*
             break;
     }
 
-    modelHeader  = arg0->field_8;
+    modelHeader  = arg0->field_0.field_8;
     vertexOffset = modelHeader->vertexOffset_9;
     normalOffset = modelHeader->normalOffset_A;
 

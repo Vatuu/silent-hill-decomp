@@ -44,7 +44,7 @@ extern u8 D_801E5E90[];
 
 extern u8 D_801E5FD0[];
 
-extern s32 D_801E600C; // Random 16-bit number.
+extern u32 D_801E600C; // Random 16-bit number.
 
 void func_801E2E28(s32 idx);
 

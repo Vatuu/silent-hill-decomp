@@ -721,18 +721,23 @@ typedef struct _IpdCollisionData
 typedef struct _IpdModelBuffer_C
 {
     s_ModelHeader* modelHeader_0;
-    u8             unk_4[32];
+    MATRIX         field_4;
 } s_IpdModelBuffer_C;
 STATIC_ASSERT_SIZEOF(s_IpdModelBuffer_C, 36);
 
 typedef struct _IpdModelBuffer
 {
     u8                  field_0; // Count of `field_C` entries.
-    u8                  unk_1[3];
-    u8                  unk_4[8];
+    u8                  field_1;
+    u8                  field_2;
+    s8                  unk_3;
+    s16                 field_4;
+    s16                 field_6;
+    s16                 field_8;
+    s16                 field_A;
     s_IpdModelBuffer_C* field_C;
-    void*               field_10; // Pointer to unknown collision data.
-    void*               field_14; // Pointer to unknown collision data.
+    SVECTOR*            field_10; // Pointer to unknown collision data, type assumed.
+    SVECTOR*            field_14; // Pointer to unknown collision data, type assumed.
 } s_IpdModelBuffer;
 STATIC_ASSERT_SIZEOF(s_IpdModelBuffer, 24);
 
@@ -806,16 +811,16 @@ typedef struct
 
 typedef struct
 {
-    u8 field_0;
-    u8 field_1;
-} s_func_800452EC_8;
+    s32            field_0;
+    GsCOORDINATE2* field_4;
+    s_ModelHeader* field_8;
+    s32            field_C;
+} s_800BCE18_2BEC_0_0;
 
 // Probably Skeleton too.
 typedef struct
 {
-    s8                      unk_0[8];
-    s_func_800452EC_8*      field_8;
-    s8                      unk_C[4];
+    s_800BCE18_2BEC_0_0     field_0;
     s8                      field_10;
     s8                      unk_11[3];
     struct s_func_800452EC* field_14;
@@ -839,7 +844,7 @@ typedef struct
 {
     u8               boneCount_0;
     u8               boneIdx_1; // Current bone index? Used in traversal.
-    s8               field_2;
+    u8               field_2;
     s8               field_3;
     s_func_800452EC* field_4;
     s_Bone* bones_8;
@@ -1015,10 +1020,7 @@ typedef struct
 
 typedef struct
 {
-    s32                  field_0;
-    s8                   unk_0[4];
-    s_ModelHeader*       field_8;
-    s32                  field_C;
+    s_800BCE18_2BEC_0_0  field_0;
     s_800BCE18_2BEC_0_10 field_10;
 } s_800BCE18_2BEC_0;
 STATIC_ASSERT_SIZEOF(s_800BCE18_2BEC_0, 28);
@@ -2680,6 +2682,10 @@ void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHeader, s_IpdModelInfo
 /** Sets IPD collision data grid coords? */
 void func_80044044(s_IpdHeader* ipd, s32 x, s32 z);
 
+void func_80044090(s_IpdHeader* arg0, s32 arg1, s32 arg2, GsOT* arg3, void* arg4);
+
+bool func_80044420(s_IpdModelBuffer* arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4);
+
 /** Loads anim file? */
 void Anim_BoneInit(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords);
 
@@ -2747,6 +2753,8 @@ void func_800453E8(s_Skeleton* skel, bool cond);
 
 /** Does something with skeleton bones. `arg0` is a struct pointer. */
 void func_80045468(s_Skeleton* skel, s32* arg1, bool cond);
+
+void func_80045534(s_Skeleton* arg0, GsOT* arg1, void* arg2, GsCOORDINATE2* arg3, s16 arg4, u16 arg5, s_FsImageDesc* arg6);
 
 /** Passes a command to the sound driver. Plays SFX among other things. */
 void Sd_EngineCmd(u32 cmd);
@@ -3029,7 +3037,9 @@ bool func_80056CB4(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BE
 
 void StringCopy(char* prevStr, char* newStr);
 
-void func_80057090(s_800BCE18_2BEC_0* arg0, GsOT* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5);
+void func_80056D8C(s16, s16, s16, s16, s32, s32, GsOT*, void*);
+
+void func_80057090(s_800BCE18_2BEC_0_0* arg0, GsOT* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5);
 
 s32 func_800571D0(u32 arg0);
 

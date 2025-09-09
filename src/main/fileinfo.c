@@ -80,7 +80,7 @@ void Fs_DecryptOverlay(s32* dst, const s32* src, s32 size)
 
 s32 Fs_GetFileSize(s32 fileIdx)
 {
-    return g_FileTable[fileIdx].blockCount_0_13 * FS_BLOCK_SIZE;
+    return g_FileTable[fileIdx].blockCount_0_19 * FS_BLOCK_SIZE;
 }
 
 void Fs_GetFileName(char* outName, s32 fileIdx)
@@ -117,7 +117,7 @@ void Fs_GetFileInfoName(char* outName, const s_FileInfo* const fileEntry)
         i++;
     }
 
-    fileType = fileEntry->type_8_18;
+    fileType = fileEntry->type_8_24;
 
     if (fileType == FS_INVALID_TYPE)
     {
@@ -178,7 +178,7 @@ void Fs_EncodeFileName(s32* outName0123, s32* outName4567, const char* srcName)
 
 s32 Fs_GetFileSectorAlignedSize(s32 fileIdx)
 {
-  return ALIGN(g_FileTable[fileIdx].blockCount_0_13 * FS_BLOCK_SIZE, FS_SECTOR_SIZE);
+  return ALIGN(g_FileTable[fileIdx].blockCount_0_19 * FS_BLOCK_SIZE, FS_SECTOR_SIZE);
 }
 
 s32 Fs_FindNextFileOfType(s32 fileType, s32 startIdx, s32 dir)
@@ -198,7 +198,7 @@ s32 Fs_FindNextFileOfType(s32 fileType, s32 startIdx, s32 dir)
             currentIdx = (dir < 0) ? (FS_FILE_COUNT - 1) : 0;
         }
 
-        if (g_FileTable[currentIdx].type_8_18 == fileType)
+        if (g_FileTable[currentIdx].type_8_24 == fileType)
         {
             return currentIdx;
         }
@@ -227,7 +227,7 @@ s32 Fs_FindNextFile(const char* name, s32 fileType, s32 startIdx)
     {
         if (fileEntry->name4567_8_0 == name4567 &&
             fileEntry->name0123_4_4 == name0123 &&
-            fileEntry->type_8_18    == fileType)
+            fileEntry->type_8_24    == fileType)
         {
             foundIdx = i;
             break;
