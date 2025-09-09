@@ -1086,7 +1086,7 @@ void func_8003C878(s32 arg0) // 0x8003C878
 void func_8003C8F8(s_800BCE18_2BEC_0* arg0, char* newStr) // 0x8003C8F8
 {
     arg0->field_10.field_9 = 0;
-    arg0->field_0          = 0;
+    arg0->field_0.field_0  = 0;
 
     StringCopy(arg0->field_10.string_0, newStr);
 
@@ -1219,7 +1219,7 @@ void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x800
         return;
     }
 
-    temp_s2 = arg0->field_8;
+    temp_s2 = arg0->field_0.field_8;
     temp_s1 = &arg0->field_10;
 
     if (temp_a0 >= 3 && temp_a0 < 7)
@@ -1866,7 +1866,7 @@ void func_8003D9C8(s_800BCE18_0_CC* arg0) // 0x8003D9C8
 void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4) // 0x8003DA9C
 {
     CVECTOR sp20 = { 0 };
-    u16     ret;
+    s16     ret;
 
     if (arg0 == 0)
     {

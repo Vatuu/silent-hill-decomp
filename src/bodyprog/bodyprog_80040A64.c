@@ -1,4 +1,5 @@
 #include "game.h"
+#include "inline_no_dmpsx.h"
 
 #include <strings.h>
 
@@ -11,6 +12,8 @@
  * - Map loading funcs
  * - Animation funcs
  */
+
+extern s_800C4168 const D_800C4168;
 
 s8 Sound_StereoBalanceGet(const VECTOR3* soundPos) // 0x80040A64
 {
@@ -1680,9 +1683,110 @@ void func_80044044(s_IpdHeader* ipd, s32 x, s32 z) // 0x80044044
     ipd->collisionData_54.posZ_4 += (z - gridZ) * 0x2800;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044090); // 0x80044090
+void func_80044090(s_IpdHeader* arg0, s32 arg1, s32 arg2, GsOT* arg3, void* arg4) // 0x80044090
+{
+    s_800BCE18_2BEC_0_0 sp18;
+    GsCOORDINATE2       sp28;
+    MATRIX              sp78;
+    MATRIX              sp98;
+    s32                 spB8;
+    s32                 spBC;
+    s32                 temp_s3;
+    s32                 temp_s5;
+    s32                 var_a0;
+    s32                 var_v1;
+    s_IpdModelBuffer*   temp_s2;
+    s_IpdModelBuffer_C* var_s0;
+    s32                 var_s4;
+    u8*                 temp_fp;
+    SVECTOR*            var_s1;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80044420); // 0x80044420
+    spB8 = FP_METER_TO_GEO(arg1);
+    spBC = FP_METER_TO_GEO(arg2);
+
+    temp_s5 = arg0->levelGridX_2 * FP_METER_GEO(40.0f);
+    temp_s3 = arg0->levelGridY_3 * FP_METER_GEO(40.0f);
+
+    var_v1 = FLOOR_TO_STEP(spB8 - temp_s5, FP_METER_GEO(8.0f));
+    var_a0 = FLOOR_TO_STEP(spBC - temp_s3, FP_METER_GEO(8.0f));
+
+    var_v1 = MAX(var_v1, 0);
+    var_a0 = MAX(var_a0, 0);
+    var_v1 = MIN(var_v1, 4);
+    var_a0 = MIN(var_a0, 4);
+
+    sp18.field_4 = &sp28;
+    sp28.flg     = 1;
+    sp18.field_0 = 0;
+    sp28.super   = NULL;
+
+    temp_fp = &arg0->textureCount_1C + (var_a0 * 10) + (var_v1 * 2);
+
+    for (var_s4 = temp_fp[0]; var_s4 < temp_fp[1] + temp_fp[0]; var_s4++)
+    {
+        temp_s2 = &arg0->modelBuffers_18[arg0->modelOrderList_50[var_s4]];
+
+        if (func_80044420(temp_s2, (spB8 - temp_s5), (spBC - temp_s3), temp_s5, temp_s3))
+        {
+            for (var_s0 = temp_s2->field_C; var_s0 < &temp_s2->field_C[temp_s2->field_0]; var_s0++)
+            {
+                sp18.field_8 = var_s0->modelHeader_0;
+                if (sp18.field_8 != NULL)
+                {
+                    sp28.workm       = var_s0->field_4;
+                    sp28.workm.t[0] += temp_s5;
+                    sp28.workm.t[2] += temp_s3;
+
+                    func_80049B6C(&sp28, &sp98, &sp78);
+                    func_80057090(&sp18, arg3, arg4, &sp78, &sp98, 0);
+                }
+            }
+
+            for (var_s1 = temp_s2->field_10; var_s1 < &temp_s2->field_10[temp_s2->field_1]; var_s1++)
+            {
+                switch ((s8)var_s1->pad)
+                {
+                    case 0:
+                        func_8005B62C(1, (var_s1->vx + temp_s5) * 0x10, var_s1->vy * 0x10, (var_s1->vz + temp_s3) * 0x10, arg3, arg4);
+                        break;
+
+                    case 1:
+                        func_8005B62C(2, (var_s1->vx + temp_s5) * 0x10, var_s1->vy * 0x10, (var_s1->vz + temp_s3) * 0x10, arg3, arg4);
+                        break;
+                }
+            }
+        }
+    }
+}
+
+bool func_80044420(s_IpdModelBuffer* arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4) // 0x80044420
+{
+    GsCOORDINATE2 coord;
+    MATRIX        mat;
+    SVECTOR*      ptr;
+
+    for (ptr = arg0->field_14; ptr < &arg0->field_14[arg0->field_2]; ptr++)
+    {
+        if (ptr->vx < arg1 && arg1 < ptr->vy && ptr->vz < arg2)
+        {
+            if (arg2 < ptr->pad)
+            {
+                coord.flg   = 1;
+                coord.super = NULL;
+                coord.workm = GsIDMATRIX;
+
+                coord.workm.t[0] = arg3;
+                coord.workm.t[1] = 0;
+                coord.workm.t[2] = arg4;
+
+                func_80049AF8(&coord, &mat);
+                return Vw_AabbVisibleInFrustumCheck(&mat, arg0->field_4, -0x800, arg0->field_8, arg0->field_6, 0x400, arg0->field_A, 0x1900, g_GameWork.gsScreenHeight_58A);
+            }
+        }
+    }
+
+    return false;
+}
 
 // ========================================
 // ANIMATION
@@ -2184,7 +2288,7 @@ void func_80045014(s_Skeleton* skel) // 0x80045014
 
 void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHeader) // 0x8004506C
 {
-    u8  sp10[3]; // Size unsure, this could be larger.
+    u8  sp10[4];                                           // Size unsure, this could be larger.
     s32 switchVar;
 
     switchVar = LmHeader_ModelCountGet(lmHeader);
@@ -2280,15 +2384,15 @@ void func_800452EC(s_Skeleton* skel) // 0x800452EC
     s32                var_v0;
     u32                temp_v1;
     s_func_800452EC*   var_a1;
-    s_func_800452EC_8* temp_v0;
+    s_ModelHeader*     temp_v0;
 
     var_a1 = skel->field_4;
 
     while (var_a1)
     {
-        temp_v0 = var_a1->field_8;
-        temp_v1 = temp_v0->field_1 - 0x30;
-        temp_a0 = temp_v0->field_0 - 0x30;
+        temp_v0 = var_a1->field_0.field_8;
+        temp_v1 = temp_v0->modelName_0.str[1] - '0';
+        temp_a0 = temp_v0->modelName_0.str[0] - '0';
 
         if (temp_v1 < 10 && temp_a0 >= 0 && temp_a0 < 10)
         {
@@ -2363,4 +2467,213 @@ void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
 }
 
 // Maybe larger anim func.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80040A64", func_80045534); // 0x80045534
+void func_80045534(s_Skeleton* arg0, GsOT* arg1, void* arg2, GsCOORDINATE2* arg3, s16 arg4, u16 arg5, s_FsImageDesc* arg6) // 0x80045534
+{
+    MATRIX           sp20;
+    MATRIX           sp40;
+    DVECTOR          sp60;
+    s32              temp_a1;
+    s16              var_fp;
+    s16              var_s3;
+    s16              var_s4;
+    s16              var_s5;
+    s16              var_s6;
+    s16              var_s7;
+    s32              temp_a0;
+    s32              temp_s0;
+    s32              temp_s1_2;
+    s32              temp_s1_3;
+    s32              temp_s1_4;
+    s32              temp_v1;
+    s32              var_s0;
+    s32              var_s2;
+    s32              var_s3_2;
+    s32              var_v0_2;
+    s32              var_v0_4;
+    s32              var_v0_5;
+    s_FsImageDesc*   var_s1;
+    s_func_800452EC* var_s0_2;
+
+    var_s5 = 0x7FFF;
+    var_s6 = 0x7FFF;
+    var_s4 = 0x7FFF;
+    var_s7 = -0x7FFF;
+    var_fp = -0x7FFF;
+    var_s3 = -0x7FFF;
+
+    if (arg0->field_2 == 0)
+    {
+        return;
+    }
+
+    var_s0 = -1;
+
+    if (arg6 != NULL)
+    {
+        for (var_s1 = arg6; var_s1->clutY != -1; var_s1++)
+        {
+            if (var_s0 != var_s1->clutY)
+            {
+                var_s0 = var_s1->clutY;
+                func_80049AF8(&arg3[var_s0], &sp20);
+                SetRotMatrix(&sp20);
+                SetTransMatrix(&sp20);
+            }
+
+            gte_ldv0(var_s1);
+            gte_rtps();
+            gte_stsxy(&sp60);
+            temp_a1 = gte_stSZ3();
+
+            if (sp60.vx < var_s5)
+            {
+                var_s5 = sp60.vx;
+            }
+
+            if (var_s7 < sp60.vx)
+            {
+                var_s7 = sp60.vx;
+            }
+
+            if (sp60.vy < var_s6)
+            {
+                var_s6 = sp60.vy;
+            }
+
+            if (var_fp < sp60.vy)
+            {
+                var_fp = sp60.vy;
+            }
+
+            if (temp_a1 < var_s4)
+            {
+                var_s4 = temp_a1;
+            }
+
+            if (var_s3 < temp_a1)
+            {
+                var_s3 = temp_a1;
+            }
+        }
+    }
+
+    for (var_s0_2 = arg0->field_4; var_s0_2 != NULL; var_s0_2 = var_s0_2->field_14)
+    {
+        if (var_s0_2->field_0.field_0 >= 0)
+        {
+            func_80049B6C(&arg3[(u8)var_s0_2->field_10], &sp40, &sp20);
+
+            if (var_s0_2->field_0.field_0 & 1)
+            {
+                sp20.m[2][2]         = 0;
+                *(s32*)&sp20.m[2][0] = 0;
+                *(s32*)&sp20.m[1][1] = 0;
+                *(s32*)&sp20.m[0][2] = 0;
+                *(s32*)&sp20.m[0][0] = 0;
+            }
+
+            func_80057090(&var_s0_2->field_0, arg1, arg2, &sp20, &sp40, arg5);
+
+            if (D_800C4168.fogEnabled_1)
+            {
+                gte_SetRotMatrix(&sp20);
+                gte_SetTransMatrix(&sp20);
+                gte_gte_ldvxy0();
+                gte_gte_ldvz0();
+                gte_rtps();
+                gte_stsxy(&sp60);
+                temp_a1 = gte_stSZ3();
+
+                if (sp60.vx < var_s5)
+                {
+                    var_s5 = sp60.vx;
+                }
+
+                if (var_s7 < sp60.vx)
+                {
+                    var_s7 = sp60.vx;
+                }
+
+                if (sp60.vy < var_s6)
+                {
+                    var_s6 = sp60.vy;
+                }
+
+                if (var_fp < sp60.vy)
+                {
+                    var_fp = sp60.vy;
+                }
+
+                if (temp_a1 < var_s4)
+                {
+                    var_s4 = temp_a1;
+                }
+
+                if (var_s3 < temp_a1)
+                {
+                    var_s3 = temp_a1;
+                }
+            }
+        }
+    }
+
+    if (D_800C4168.fogEnabled_1)
+    {
+        temp_s1_2 = g_SysWork.playerBoneCoords_890[1].coord.t[1];
+        temp_s1_2 = CLAMP(temp_s1_2, -0x200, 0);
+
+        temp_s1_2 += g_SysWork.player_4C.chara_0.position_18.vy >> 4;
+        temp_s1_3  = Math_MulFixed(g_SysWork.player_4C.chara_0.position_18.vx >> 4, GsWSMATRIX.m[2][0], Q12_SHIFT);
+        temp_s0    = Math_MulFixed(temp_s1_2, GsWSMATRIX.m[2][1], Q12_SHIFT);
+        temp_s1_4  = temp_s1_3 + temp_s0 + Math_MulFixed(g_SysWork.player_4C.chara_0.position_18.vz >> 4, GsWSMATRIX.m[2][2], Q12_SHIFT) + GsWSMATRIX.t[2];
+
+        var_s3_2 = (var_s4 + var_s3) >> 1;
+        temp_v1  = var_s3_2 - ((var_s3 - var_s4) >> 1);
+
+        temp_a0 = temp_v1 - 0x33;
+
+        if (temp_s1_4 >= (temp_v1 - 0x41A))
+        {
+            if (temp_s1_4 < (temp_v1 - 0x1A))
+            {
+                var_v0_2  = temp_s1_4 + 0x3E7;
+                var_v0_2 -= temp_a0;
+                var_v0_2  = FP_TO(var_v0_2, Q12_SHIFT);
+
+                if (var_v0_2 < 0)
+                {
+                    var_v0_2 += 0x3FF;
+                }
+
+                var_s3_2 += Math_MulFixed(temp_a0 - var_s3_2, var_v0_2 >> 0xA, Q12_SHIFT);
+            }
+            else if (temp_s1_4 < temp_a0)
+            {
+                var_s3_2 = temp_a0;
+            }
+            else if (temp_s1_4 < var_s3_2)
+            {
+                var_s3_2 = temp_s1_4;
+            }
+        }
+
+        var_s3_2 = MAX(var_s3_2, 4);
+
+        var_s2 = (var_s4 * 0x10) - arg4;
+        var_s2 = MAX(var_s2, 0);
+
+        var_s0   = ReadGeomScreen();
+        var_v0_4 = (arg4 >> 4) * var_s0;
+
+        if (var_s4 >= 5)
+        {
+            var_v0_5 = (var_v0_4 / var_s4) + 2;
+        }
+        else
+        {
+            var_v0_5 = (var_v0_4 / 4) + 2;
+        }
+
+        func_80056D8C((var_s5 - var_v0_5), (var_s6 - var_v0_5), (var_s7 + var_v0_5), (var_fp + var_v0_5), var_s3_2 * 0x10, var_s2, arg1, arg2);
+    }
+}
