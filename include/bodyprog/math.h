@@ -178,7 +178,7 @@ s32 Math_MulFixed(s32 a, s32 b, s32 shift);
  * @param angle Fixed-point degrees in Q3.12, integer range `[0, 4096]`.
  * @return Sine in Q19.12, integer range `[0, 4096]`.
  */
-s32 Math_Sin(s32 angle);
+q19_12 Math_Sin(s32 angle);
 
 // NOTE: Matched on decomp.me.
 /** @brief Computes the cosine in Q19.12 of degrees in Q3.12, integer range `[0, 4096]`.
@@ -188,7 +188,7 @@ s32 Math_Sin(s32 angle);
  * @param angle Fixed-point degrees in Q3.12, integer range `[0, 4096]`.
  * @return Cosine in Q19.12, integer range `[0, 4096]`.
  */
-s32 Math_Cos(s32 angle);
+q19_12 Math_Cos(s32 angle);
 
 MATRIX* shRotMatrixZ(s32, MATRIX*);
 

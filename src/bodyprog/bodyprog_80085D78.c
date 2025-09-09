@@ -1444,7 +1444,7 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, s32 posX, s32 posZ, s16 posY, u32 stateSt
         }
     }
 
-    for(i = 0; i < NPC_COUNT_MAX; i++)
+    for (i = 0; i < NPC_COUNT_MAX; i++)
     {
         // Skip NPC slot if occupied.
         if (g_SysWork.npcs_1A0[i].model_0.charaId_0 != Chara_None)
@@ -2603,7 +2603,7 @@ s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry) // 0x8008D330
     s32       keyframeIdx1;
     SVECTOR3* vec;
 
-    keyframeIdx0  = arg0;
+    keyframeIdx0 = arg0;
     vec = camEntry->svectorPtr_8;
 
     for (; vec < &camEntry->svectorPtr_8[camEntry->svectorCount_2]; vec++)
@@ -2730,7 +2730,8 @@ void func_8008D5A0(VECTOR3* arg0, s16 arg1) // 0x8008D5A0
     cond = false;
     if (arg0->vx >= (-g_GameWork.gsScreenWidth_588 >> 1) && (g_GameWork.gsScreenWidth_588 >> 1) >= arg0->vx)
     {
-        if (arg0->vy >= (-g_GameWork.gsScreenHeight_58A >> 1) && (g_GameWork.gsScreenHeight_58A >> 1) >= arg0->vy && arg0->vz >= 0)
+        if (arg0->vy >= (-g_GameWork.gsScreenHeight_58A >> 1) && (g_GameWork.gsScreenHeight_58A >> 1) >= arg0->vy &&
+            arg0->vz >= 0)
         {
             cond = arg1 > 0x354;
         }

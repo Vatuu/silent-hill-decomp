@@ -282,7 +282,7 @@ void func_80034EC8() // 0x80034EC8
 
     bzero(g_SysWork.npcs_1A0, NPC_COUNT_MAX * sizeof(s_SubCharacter));
 
-    for(i = 0; i < 4; i++)
+    for (i = 0; i < 4; i++)
     {
         g_SysWork.field_2284[i] = 0;
     }

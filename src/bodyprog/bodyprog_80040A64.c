@@ -562,7 +562,7 @@ void func_80041D10(s_800C117C* arg0, s32 size) // 0x80041D10
 {
     s_800C117C* ptr;
 
-    for(ptr = &arg0[0]; ptr < &arg0[size]; ptr++)
+    for (ptr = &arg0[0]; ptr < &arg0[size]; ptr++)
     {
         ptr->queueIdx_4 = NO_VALUE;
     }
@@ -1732,7 +1732,7 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyf
 {
     s32            boneCount;
     bool           isPlayer;
-    u32            activeBoneIndices;
+    u32            activeBoneIdxs;
     s32            boneIdx;
     s32            scaleLog2;
     s32            boneTranslationDataIdx;
@@ -1751,20 +1751,20 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyf
     s_AnmBindPose* bindPose;
 
     boneCount     = anmHeader->boneCount_6;
-    frame0Data    = (u8*)anmHeader + anmHeader->dataOffset_0 + (anmHeader->frameDataSize_4 * keyframe0);
+    frame0Data    = ((u8*)anmHeader + anmHeader->dataOffset_0) + (anmHeader->frameDataSize_4 * keyframe0);
     frame0RotData = frame0Data + (anmHeader->translationBoneCount_3 * 3);
-    frame1Data    = (u8*)anmHeader + anmHeader->dataOffset_0 + (anmHeader->frameDataSize_4 * keyframe1);
+    frame1Data    = ((u8*)anmHeader + anmHeader->dataOffset_0) + (anmHeader->frameDataSize_4 * keyframe1);
     frame1RotData = frame1Data + (anmHeader->translationBoneCount_3 * 3);
 
     // For player, use inverted mask of `extra_128.disabledAnimBones_18` to facilitate masking of upper and lower body.
     isPlayer = boneCoords == &g_SysWork.playerBoneCoords_890[HarryBone_Root];
     if (isPlayer)
     {
-        activeBoneIndices = ~g_SysWork.player_4C.extra_128.disabledAnimBones_18;
+        activeBoneIdxs = ~g_SysWork.player_4C.extra_128.disabledAnimBones_18;
     }
     else
     {
-        activeBoneIndices = anmHeader->activeBones_8;
+        activeBoneIdxs = anmHeader->activeBones_8;
     }
 
     // Skip root bone (index 0) and start processing from bone 1.
@@ -1776,7 +1776,7 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyf
          boneIdx++, bindPose++, boneCoord++)
     {
         // Process bones marked as active.
-        if (activeBoneIndices & (1 << boneIdx))
+        if (activeBoneIdxs & (1 << boneIdx))
         {
             boneCoord->flg = false;
             scaleLog2      = anmHeader->scaleLog2_12;
@@ -1793,7 +1793,7 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyf
                 {
                     // Linear interpolation with scaling: `frame0 + (frame1 - frame0) * alpha`.
                     boneCoord->coord.t[i] = (*frame0TranslationData << scaleLog2) +
-                                        (((*frame1TranslationData - *frame0TranslationData) * alpha) >> (Q12_SHIFT - scaleLog2));
+                                            (((*frame1TranslationData - *frame0TranslationData) * alpha) >> (Q12_SHIFT - scaleLog2));
 
                     frame0TranslationData++;
                     frame1TranslationData++;
@@ -2074,14 +2074,14 @@ void Anim_Update2(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
 
 void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044DF0
 {
-    s32 startKeyframeIdx;
-    s32 endKeyframeIdx;
-    s32 timeDelta;
-    s32 timeStep;
-    s32 alpha;
-    s32 sinVal;
-    s32 newTime;
-    s32 sinAlpha;
+    s32    startKeyframeIdx;
+    s32    endKeyframeIdx;
+    s32    timeDelta;
+    s32    timeStep;
+    s32    alpha;
+    q19_12 sinVal;
+    s32    newTime;
+    s32    newAlpha;
 
     startKeyframeIdx = animInfo->startKeyframeIdx_C;
     endKeyframeIdx   = animInfo->endKeyframeIdx_E;
@@ -2098,16 +2098,16 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     }
 
     // Update alpha.
-    sinAlpha              = model->anim_4.alpha_A;
-    alpha                 = sinAlpha + timeStep;
+    newAlpha              = model->anim_4.alpha_A;
+    alpha                 = newAlpha + timeStep;
     model->anim_4.alpha_A = alpha;
 
-    // Sine-based easing?
+    // Compute ease-out alpha.
     sinVal   = Math_Sin((alpha / 2) - FP_ALPHA(0.25f));
-    sinAlpha = (sinVal / 2) + FP_ALPHA(0.5f);
+    newAlpha = (sinVal / 2) + FP_ALPHA(0.5f);
 
     // Update time to start or end keyframe, whichever is closest.
-    if (sinAlpha >= FP_ALPHA(0.5f))
+    if (newAlpha >= FP_ALPHA(0.5f))
     {
         newTime = Q19_12(startKeyframeIdx);
     }
@@ -2116,7 +2116,7 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
         newTime = Q19_12(endKeyframeIdx);
     }
 
-    alpha = sinAlpha;
+    alpha = newAlpha;
 
     // Update time.
     model->anim_4.time_4 = newTime;

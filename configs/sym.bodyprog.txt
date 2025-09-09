@@ -649,6 +649,7 @@ Dms_CameraKeyframeInterpolate               = 0x8008CFEC; // type:func
 Dms_IntervalStatusGet                       = 0x8008D2C4; // type:func
 Math_LerpFixed12                            = 0x8008D3D4; // type:func
 Map_WaterZoneGet                            = 0x8008E51C; // type:func
+REVERB_DEPTHS								= 0x800AA5E0;
 
 //-------------------------------------------------------
 //--- PA: 0x06A3C0   VA: 0x8008EF20   subsegment: c, demo

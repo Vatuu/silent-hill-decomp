@@ -61,9 +61,6 @@ void Sd_EngineCmd(u32 cmd) // 0x80045A7C
         case 21:
         case 22:
             func_80046D3C(cmd);
-
-        default:
-            return;
     }
 }
 
@@ -216,9 +213,6 @@ void func_80045D28(u8 caseArg) // 0x80045D28
             D_800C167C = 0x7F;
             D_800C166A = true;
             return;
-
-        default:
-            break;
     }
 }
 
@@ -256,12 +250,12 @@ void sd_work_init() // 0x80045E44
     D_800C15F0.field_0 = CdlModeSpeed;
     func_80048954(CdlSetmode, &D_800C15F0.field_0, NULL);
 
-    for(D_800C15B8 = 0; D_800C15B8 < 31; D_800C15B8++)
+    for (D_800C15B8 = 0; D_800C15B8 < 31; D_800C15B8++)
     {
         D_800C16A8[D_800C15B8] = 0;
     }
 
-    for(D_800C15B8 = 0; D_800C15B8 < 24; D_800C15B8++)
+    for (D_800C15B8 = 0; D_800C15B8 < 24; D_800C15B8++)
     {
         D_800C15F8[D_800C15B8] = 0;
     }
@@ -658,15 +652,16 @@ void func_80046B78() // 0x80046B78
     D_800C1658.field_E = 0;
 }
 
-static u8 D_800AA5E0[36] =
+static u8 REVERB_DEPTHS[36] =
 {
-    0x14, 0x0A, 0x28, 0x28, 0x3C, 0x3C, 0x3C, 0x14,
-    0x14, 0x14, 0x28, 0x28, 0x3C, 0x3C, 0x3C, 0x3C,
-    0x28, 0x14, 0x14, 0x3C, 0x3C, 0x78, 0x14, 0x0A,
-    0x14, 0x3C, 0x14, 0x14, 0x78, 0x14, 0x14, 0x28,
-    0x28, 0x28, 0x14, 0x00
+    20, 10, 40, 40, 60,  60,  60, 20,
+    20, 20, 40, 40, 60,  60,  60, 60,
+    40, 20, 20, 60, 60,  120, 20, 10,
+    20, 60, 20, 20, 120, 20,  20, 40,
+    40, 40, 20, 0
 };
 
+// Sound volumes?
 static u8 D_800AA604[41][16] =
 {
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -759,7 +754,7 @@ void func_80046C54(u8 arg0, u8 arg1) // 0x80046C54
         for (i = 0; i < 15; i++)
         {
             var1 = D_800AA604[idx][i];
-            var0  = arg1;
+            var0 = arg1;
 
             if (var1 == arg0)
             {
@@ -2350,7 +2345,7 @@ void func_80047B24(s32 arg0) // 0x80047B24
 
 void func_80047B80() // 0x80047B80
 {
-    u8 temp_a0;
+    u8 depth;
     u8 var_a1;
     switch (D_800C1670.field_0)
     {
@@ -2374,10 +2369,10 @@ void func_80047B80() // 0x80047B80
 
             if (var_a1 >= 170 && var_a1 <= 204)
             {
-                temp_a0 = D_800AA5E0[var_a1 - 170];
-                if (temp_a0 != g_Sd_ReverbDepth)
+                depth = REVERB_DEPTHS[var_a1 - 170];
+                if (depth != g_Sd_ReverbDepth)
                 {
-                    Sd_SetReverbDepth(temp_a0);
+                    Sd_SetReverbDepth(depth);
                 }
             }
 

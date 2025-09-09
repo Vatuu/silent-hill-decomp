@@ -916,18 +916,18 @@ STATIC_ASSERT_SIZEOF(s_800AA894, 12);
 
 typedef struct
 {
-    u16 field_0;
-    u8  unk_2[4];
-    s8  field_6;
-    s8  unk_7;
-    u8  field_8;
-    u8  field_9;
-    u8  unk_A[4];
-    u8  field_E;
-    u8  field_F;
-    u8  field_10;
-    u8  field_11;
-    u16 unk_12;  // Guessed.
+    u16  field_0;
+    u8   unk_2[4];
+    s8   field_6;
+    s8   unk_7;
+    u8   field_8;
+    u8   field_9;
+    u8   unk_A[4];
+    u8   field_E;
+    u8   field_F;
+    u8   field_10;
+    u8   field_11;
+    u16  unk_12;  // Guessed.
     u32* unk_14; // Some pointer. All entries have the same value `D_800AD4C4`.
 } s_800AD4C8;
 STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
@@ -1345,7 +1345,7 @@ typedef struct
     s16  field_0;  /** Prim vertex X. */
     s16  field_2;  /** Prim vertex Y. */
     s16  field_4;  /** Width? */
-    s8   field_6;  /** Height?  */
+    s8   field_6;  /** Height? */
     s8   field_7;  /** Blend flag. */
     s32  field_8;  /** Rgb24 color + code. */
     s16* field_C;  /** Points to 0x801E5C24, data size 400. */
@@ -1930,7 +1930,7 @@ extern u32 D_800A9FB0;
 
 extern s32 D_800A9FB4[];
 
-extern u8 D_800AA5E0[];
+extern u8 REVERB_DEPTHS[];
 
 extern u8 D_800AA604[][16];
 
@@ -2800,7 +2800,7 @@ void func_80046B78();
 
 u8 func_80046BB4(u8 arg0);
 
-void func_80046C54(u8 arg0, u8 arg1);
+void func_80046C54(u8 arg0, u8 vol);
 
 /** Sound command func. Unknown category. */
 void func_80046D3C(u16 cmd);
