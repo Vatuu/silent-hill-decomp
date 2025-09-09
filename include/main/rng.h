@@ -48,7 +48,7 @@ extern u32 g_RngSeed;
  * @return Random integer in the range `[low, high]` (`s32`).
 */
 #define Rng_GenerateInt(rand, low, high) \
-    (((s32)(rand) % (((high) - (low)) + 1)) + (low))
+    ((s32)((rand) % (((high) - (low)) + 1)) + (low))
 
 /** @brief Generates a new random 32-bit unsigned integer and updates
  * `g_RngSeed`.
