@@ -637,7 +637,7 @@ void Inventory_Logic() // 0x8004D518
                 g_Gfx_Inventory_SelectionBordersDraw = 1;
                 g_Inventory_CmdSelectedIdx           = 0;
 
-                if (g_SavegamePtr->items_0[g_SysWork.playerCombatInfo_38.field_12].command_2 != InventoryCmdId_Unk11)
+                if (g_SavegamePtr->items_0[g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12].command_2 != InventoryCmdId_Unk11)
                 {
                     g_Inventory_SelectionId = InventorySelectionId_EquippedItemCmd;
                     Sd_PlaySfx(Sfx_Confirm, 0, 64);
@@ -823,7 +823,7 @@ void Inventory_Logic() // 0x8004D518
             }
             else
             {
-                curItemIdx = g_SysWork.playerCombatInfo_38.field_12;
+                curItemIdx = g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12;
             }
 
             switch (g_SavegamePtr->items_0[curItemIdx].command_2)
@@ -1049,7 +1049,7 @@ void Inventory_Logic() // 0x8004D518
                     case InventoryCmdId_Reload:
                         g_Gfx_Inventory_SelectionBordersDraw = 1;
 
-                        if (curItemIdx != g_SysWork.playerCombatInfo_38.field_12)
+                        if (curItemIdx != g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12)
                         {
                             g_GameWork.gameStateStep_598[1] = 8;
                             g_GameWork.gameStateStep_598[2] = 0;
@@ -1070,7 +1070,7 @@ void Inventory_Logic() // 0x8004D518
                             g_GameWork.gameStateStep_598[1] = 5;
                             g_GameWork.gameStateStep_598[2] = 0;
                         }
-                        else if (curItemIdx != g_SysWork.playerCombatInfo_38.field_12)
+                        else if (curItemIdx != g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12)
                         {
                             g_GameWork.gameStateStep_598[1] = 8;
                             g_GameWork.gameStateStep_598[2] = 0;
@@ -1091,7 +1091,7 @@ void Inventory_Logic() // 0x8004D518
                             g_GameWork.gameStateStep_598[1] = 6;
                             g_GameWork.gameStateStep_598[2] = 0;
                         }
-                        else if (curItemIdx != g_SysWork.playerCombatInfo_38.field_12)
+                        else if (curItemIdx != g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12)
                         {
                             g_GameWork.gameStateStep_598[1] = 8;
                             g_GameWork.gameStateStep_598[2] = 0;
@@ -1212,7 +1212,7 @@ void Gfx_Inventory_CmdOptionsDraw() // 0x8004E864
     }
     else
     {
-        idx = g_SysWork.playerCombatInfo_38.field_12;
+        idx = g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12;
     }
 
     switch (g_SavegamePtr->items_0[idx].command_2)
@@ -1567,7 +1567,7 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
         {
             if (g_SavegamePtr->items_0[i].id_0 == g_SavegamePtr->equippedWeapon_AA)
             {
-                g_SysWork.playerCombatInfo_38.field_12 = i;
+                g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12 = i;
 
                 if (g_SavegamePtr->equippedWeapon_AA >= InventoryItemId_Handgun)
                 {

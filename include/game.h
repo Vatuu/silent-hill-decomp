@@ -540,6 +540,14 @@ typedef enum _InventoryItemId
     InventoryItemId_HuntingRifle         = 161,
     InventoryItemId_Shotgun              = 162,
     InventoryItemId_HyperBlaster         = 163,
+	
+	/** @brief Item IDs only used during cutscenes. */
+    InventoryItemId_CS_Phone             = 164,
+    InventoryItemId_CS_Flauros           = 165,
+    InventoryItemId_CS_Aglaophotis       = 166,
+    InventoryItemId_CS_PlasticBottle     = 167,
+    InventoryItemId_CS_Baby              = 168,
+    InventoryItemId_CS_BloodPack         = 169,
 
     InventoryItemId_HandgunBullets       = 192,
     InventoryItemId_RifleShells          = 193,
@@ -550,16 +558,6 @@ typedef enum _InventoryItemId
     InventoryItemId_GasolineTank         = 226
 } e_InventoryItemId;
 
-/** @brief Item IDs only used during cutscenes. */
-typedef enum _CutsceneItemId
-{
-    CutsceneItemId_Phone         = 164,
-    CutsceneItemId_Flauros       = 165,
-    CutsceneItemId_Aglaophotis   = 166,
-    CutsceneItemId_PlasticBottle = 167,
-    CutsceneItemId_Baby          = 168,
-    CutsceneItemId_BloodPack     = 169,
-} e_CutsceneItemId;
 
 /** @brief Common pickup item IDs. */
 typedef enum _CommonPickupItemId
@@ -570,7 +568,7 @@ typedef enum _CommonPickupItemId
     CommonPickupItemId_HandgunBullets = 3,
     CommonPickupItemId_RifleShells    = 4,
     CommonPickupItemId_ShotgunShells  = 5
-} s_CommonPickupItemId;
+} e_CommonPickupItemId;
 
 /** @brief Attack input types. */
 typedef enum _AttackInputType
@@ -1213,7 +1211,7 @@ typedef struct _PlayerCombat
     s8      equippedWeapon_F; /** `e_EquippedWeaponId` */
     u8      currentWeaponAmmo_10;
     u8      totalWeaponAmmo_11;
-    s8      field_12;
+    s8      weaponInventoryIdx_12; /** Index of the currently equipped weapon in the inventory. */
     u8      isAiming_13; /** `bool` */
 } s_PlayerCombat;
 STATIC_ASSERT_SIZEOF(s_PlayerCombat, 20);

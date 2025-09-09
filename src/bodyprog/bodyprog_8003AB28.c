@@ -1245,22 +1245,23 @@ s32 func_8003CD5C() // 0x8003CD5C
     return D_800BCE18.field_1BAC.itemId_0;
 }
 
-void func_8003CD6C(s_PlayerCombat* combat) // 0x8003CD6C
+void func_8003CD6C(s_PlayerCombat* playerCombatInfo) // 0x8003CD6C
 {
+	#define INVENTORY_WEAPONS_ID_BASE InventoryItemId_KitchenKnife
     s32 itemId;
     s8  equippedWeaponId;
 
-    equippedWeaponId = combat->equippedWeapon_F;
+    equippedWeaponId = playerCombatInfo->equippedWeapon_F;
     itemId           = NO_VALUE;
     if (equippedWeaponId != NO_VALUE)
     {
-        itemId = equippedWeaponId + InventoryItemId_KitchenKnife;
+        itemId = equippedWeaponId + INVENTORY_WEAPONS_ID_BASE;
     }
 
     func_8003CDA0(itemId);
 }
 
-s32 func_8003CDA0(s32 itemIdx)
+s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
 {
     s32              fileIdx;
     s_800BCE18_1BAC* ptr;
@@ -1281,69 +1282,69 @@ s32 func_8003CDA0(s32 itemIdx)
             break;
 
         case NO_VALUE:
-        case 128:
-        case 132:
-        case 135:
-        case 160:
-        case 161:
-        case 162:
+        case InventoryItemId_KitchenKnife:
+        case InventoryItemId_Hammer:
+        case InventoryItemId_Axe:
+        case InventoryItemId_Handgun:
+        case InventoryItemId_HuntingRifle:
+        case InventoryItemId_Shotgun:
             fileIdx      = NO_VALUE;
-            ptr->field_8 = "HERO";
+            ptr->textureName_8 = "HERO";
             break;
 
         case InventoryItemId_SteelPipe:
             fileIdx      = FILE_ITEM_PIPE_TIM;
-            ptr->field_8 = "PIPE";
+            ptr->textureName_8 = "PIPE";
             break;
 
-        case CutsceneItemId_Phone:
+        case InventoryItemId_CS_Phone:
             fileIdx      = FILE_ITEM_PHONE_TIM;
-            ptr->field_8 = "PHONE";
+            ptr->textureName_8 = "PHONE";
             break;
 
-        case CutsceneItemId_Flauros:
+        case InventoryItemId_CS_Flauros:
             fileIdx      = FILE_ITEM_FLAUROS_TIM;
-            ptr->field_8 = "FLAUROS";
+            ptr->textureName_8 = "FLAUROS";
             break;
 
-        case CutsceneItemId_Aglaophotis:
+        case InventoryItemId_CS_Aglaophotis:
             fileIdx      = FILE_ITEM_AGLA_TIM;
-            ptr->field_8 = "AGLA";
+            ptr->textureName_8 = "AGLA";
             break;
 
-        case CutsceneItemId_PlasticBottle:
+        case InventoryItemId_CS_PlasticBottle:
             fileIdx      = FILE_ITEM_BOTL_TIM;
-            ptr->field_8 = "BOTL";
+            ptr->textureName_8 = "BOTL";
             break;
 
-        case CutsceneItemId_Baby:
+        case InventoryItemId_CS_Baby:
             fileIdx      = FILE_ITEM_BABY_TIM;
-            ptr->field_8 = "BABY";
+            ptr->textureName_8 = "BABY";
             break;
 
-        case CutsceneItemId_BloodPack:
+        case InventoryItemId_CS_BloodPack:
             fileIdx      = FILE_ITEM_BLOOD_TIM;
-            ptr->field_8 = "BLOOD";
+            ptr->textureName_8 = "BLOOD";
             break;
 
         case InventoryItemId_Chainsaw:
             fileIdx      = FILE_ITEM_CSAW_TIM;
-            ptr->field_8 = "CSAW";
+            ptr->textureName_8 = "CSAW";
             break;
 
         case InventoryItemId_HyperBlaster:
             fileIdx      = FILE_ITEM_HPRGUN_TIM;
-            ptr->field_8 = "HPRGUN";
+            ptr->textureName_8 = "HPRGUN";
             break;
 
         case InventoryItemId_RockDrill:
             fileIdx      = FILE_ITEM_DRILL_TIM;
-            ptr->field_8 = "DRILL";
+            ptr->textureName_8 = "DRILL";
             break;
 
         case InventoryItemId_Katana:
             fileIdx      = FILE_ITEM_KATANA_TIM;
-            ptr->field_8 = "KATANA";
+            ptr->textureName_8 = "KATANA";
             break;
     }
 
@@ -1406,27 +1407,27 @@ s32 func_8003CDA0(s32 itemIdx)
             fileIdx = FILE_ITEM_SHOTGUN_PLM;
             break;
 
-        case CutsceneItemId_Phone:
+        case InventoryItemId_CS_Phone:
             fileIdx = FILE_ITEM_PHONE_PLM;
             break;
 
-        case CutsceneItemId_Flauros:
+        case InventoryItemId_CS_Flauros:
             fileIdx = FILE_ITEM_FLAUROS_PLM;
             break;
 
-        case CutsceneItemId_Aglaophotis:
+        case InventoryItemId_CS_Aglaophotis:
             fileIdx = FILE_ITEM_AGLA_PLM;
             break;
 
-        case CutsceneItemId_PlasticBottle:
+        case InventoryItemId_CS_PlasticBottle:
             fileIdx = FILE_ITEM_BOTL_PLM;
             break;
 
-        case CutsceneItemId_Baby:
+        case InventoryItemId_CS_Baby:
             fileIdx = FILE_ITEM_BABY_PLM;
             break;
 
-        case CutsceneItemId_BloodPack:
+        case InventoryItemId_CS_BloodPack:
             fileIdx = FILE_ITEM_BLOOD_PLM;
             break;
 
@@ -1478,7 +1479,7 @@ void func_8003D058() // 0x8003D058
 
     if (ptr0->itemId_0 != NO_VALUE)
     {
-        if (ptr0->itemId_0 == CutsceneItemId_Phone)
+        if (ptr0->itemId_0 == InventoryItemId_CS_Phone)
         {
             coord = &g_SysWork.playerBoneCoords_890[HarryBone_LeftHand];
         } 
@@ -1494,7 +1495,7 @@ void func_8003D058() // 0x8003D058
             if (!lmHeader->isLoaded_2)
             {
                 LmHeader_FixOffsets(lmHeader);
-                func_80056504(lmHeader, ptr0->field_8, &ptr0->imageDesc_C, 1);
+                func_80056504(lmHeader, ptr0->textureName_8, &ptr0->imageDesc_C, 1);
                 func_80056954(lmHeader);
                 func_80056C8C(&ptr0->field_18, ptr0->field_14, 0);
             }

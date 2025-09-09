@@ -388,13 +388,19 @@ void Game_PlayerInit() // 0x80035178
 void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
 {
     #define BASE_FILE_IDX FILE_VIN_MAP0_S00_BIN
-    #define UNK_FLAGS     ((1 << 2) | (1 << 3) | (1 << 4) | (1 << 5))
 
     Fs_QueueStartRead(BASE_FILE_IDX + mapIdx, g_OvlDynamic);
-    func_8005E0DC(mapIdx);
+    func_8005E0DC(mapIdx); // Something related to events of the map and load of textures?
     GameFs_PlayerMapAnimLoad(mapIdx);
 
-    if (g_SysWork.processFlags_2298 & UNK_FLAGS)
+    /** If the player spawn in the map with a weapon equipped (either because of being on a demo
+	* or because the player saved the game with a weapon equipped) this and the next function
+	* are on charge of making it appear and allocate it's data.
+	* @note This code has some special functionallity in case the player spawn without any equipped
+	* weapon.
+	*/
+    if (g_SysWork.processFlags_2298 & (SysWorkProcessFlag_NewGame | SysWorkProcessFlag_LoadSave
+                                       | SysWorkProcessFlag_Continue | SysWorkProcessFlag_BootDemo))
     {
         func_8003CD6C(&g_SysWork.playerCombatInfo_38);
     }

@@ -241,6 +241,15 @@ void func_8004C040(); // 0x8004C040
  */
 void Inventory_ExitAnimEquippedItemUpdate(u8* arg0); // 0x8004C088
 
+/** Returns `true` if player has usable ammo in inventory (i.e. ammo + gun needed
+ * for it, or gun with ammo loaded) for the shotgun and the hunting rifle.
+ *
+ * @note Related to the ending unlockable in case of not having ammo, however, that
+ * ending requires to have the pistol out of ammo too. Also this function is trigger
+ * during the boss fight.
+ */
+bool func_8004C328(); // 0x8004C328
+
 /** @brief Used to check if the Hyper Blaster can be added to the inventory.
  *
  * @return -1 if it already exists in the inventory,

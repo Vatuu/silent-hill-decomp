@@ -1876,7 +1876,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
             break;
 
         default:
-            idx = g_SysWork.playerCombatInfo_38.field_12;
+            idx = g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12;
             break;
     }
     
@@ -2715,15 +2715,15 @@ void func_800540A4(s8 arg0) // 0x800540A4
     s32 i;
     s32 j;
 
-    if (g_SysWork.playerCombatInfo_38.field_12 != NO_VALUE)
+    if (g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12 != NO_VALUE)
     {
-        g_SavegamePtr->items_0[g_SysWork.playerCombatInfo_38.field_12].count_1 = g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10;
+        g_SavegamePtr->items_0[g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12].count_1 = g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10;
     }
 
     for (i = 0; i < g_SavegamePtr->inventorySlotCount_AB; i++)
     {
         if (g_SavegamePtr->items_0[i].id_0 >> 5 == 6 && 
-            g_SavegamePtr->items_0[i].id_0 == (g_SavegamePtr->items_0[g_SysWork.playerCombatInfo_38.field_12].id_0 + 32))
+            g_SavegamePtr->items_0[i].id_0 == (g_SavegamePtr->items_0[g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12].id_0 + 32))
         {
             g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11;
 
@@ -2922,26 +2922,26 @@ void Inventory_ExitAnimFixes() // 0x80054634
     Inventory_ExitAnimEquippedItemUpdate(&field_F);
 }
 
-void func_800546A8(u8 arg0) // 0x800546A8
+void func_800546A8(u8 weaponId) // 0x800546A8
 {
-    switch (arg0)
+    switch (weaponId)
     {
-        case InventoryItemId_Unequipped:
+        case EquippedWeaponId_KitchenKnife:
             func_8003DD80(1, 34);
             break;
 
-        case 1:
-        case 2:
-        case 4:
-        case 5:
-        case 6:
-        case 7:
+        case EquippedWeaponId_SteelPipe:
+        case EquippedWeaponId_Hammer:
+        case EquippedWeaponId_Chainsaw:
+        case EquippedWeaponId_Katana:
+        case EquippedWeaponId_Axe:
+        case EquippedWeaponId_RockDrill:
             func_8003DD80(1, 34);
             break;
 
-        case InventoryItemId_HealthDrink:
-        case InventoryItemId_FirstAidKit:
-        case InventoryItemId_Ampoule:
+        case EquippedWeaponId_Handgun:
+        case EquippedWeaponId_HuntingRifle:
+        case EquippedWeaponId_Shotgun:
             func_8003DD80(1, 19);
             break;
 

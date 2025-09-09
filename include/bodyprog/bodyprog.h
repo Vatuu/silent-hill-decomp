@@ -1039,12 +1039,12 @@ typedef struct
 {
     s32           itemId_0; /** `e_InventoryItemId` or `e_CutsceneItemId` or `NO_VALUE` */
     s32           field_4;
-    char*         field_8;
+    char*         textureName_8;
     s_FsImageDesc imageDesc_C;
     s_LmHeader*   field_14;
     s32           field_18;
     s32           field_1C;
-    s32           field_20;
+    s32           field_20; // This is a pointer.
 } s_800BCE18_1BAC;
 
 typedef struct
@@ -1053,7 +1053,7 @@ typedef struct
     u8                unk_1580[204];
     s_800BCE18_0_CC   field_164C;
     u8                unk_1650[1328];
-    s_800BCE18_1BAC   field_1BAC;
+    s_800BCE18_1BAC   field_1BAC; // Current item equipped?
     u8                unk_1BD0[8];
     s32               field_1BD8;
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; // Debug camera info.
@@ -2443,7 +2443,7 @@ void func_8003C8F8(s_800BCE18_2BEC_0* arg0, char* newStr);
 
 void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* pos, SVECTOR3* rot);
 
-void func_8003CD6C(s_PlayerCombat* combat);
+void func_8003CD6C(s_PlayerCombat* playerCombatInfo);
 
 /** Returns `bool`? */
 s32 func_8003CDA0(s32 invSlotIdx);
@@ -2888,9 +2888,6 @@ void func_800485D8();
 /** Boolean. */
 u8 func_80048954(s32 com, u8* param, u8* res);
 
-/** Returns `true` if player has usable ammo in inventory (i.e. ammo + gun needed for it, or gun with ammo loaded). */
-s32 func_8004C328();
-
 void func_8004C564(u8, s32);
 
 // TODO: Can probably create status enums for the below funcs' return values to avoid magic,
@@ -2900,7 +2897,7 @@ void GameFs_UniqueItemModelLoad(u8 itemId);
 
 void GameFs_MapItemsTextureLoad(s32 mapId);
 
-void func_800546A8(u8 arg0);
+void func_800546A8(u8 weaponId);
 
 void func_8005487C(s32);
 

@@ -122,7 +122,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
     func_8004C040();
 }
 
-s32 func_8004C328() // 0x8004C328
+bool func_8004C328() // 0x8004C328
 {
     u32 itemIdx;
     u8  itemId;
@@ -145,7 +145,7 @@ s32 func_8004C328() // 0x8004C328
             hasShotgun = true;
         }
 
-        if (g_SysWork.playerCombatInfo_38.field_12 != NO_VALUE && itemIdx == g_SysWork.playerCombatInfo_38.field_12)
+        if (g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12 != NO_VALUE && itemIdx == g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12)
         {
             if (itemId >= InventoryItemId_Handgun && itemId <= InventoryItemId_Shotgun)
             {
@@ -166,11 +166,11 @@ s32 func_8004C328() // 0x8004C328
             continue;
         }
 
+		// Checks if the player have ammo.
         switch (itemId)
         {
             case InventoryItemId_HuntingRifle:
             case InventoryItemId_Shotgun:
-                // Loaded ammo?
                 if (g_SavegamePtr->items_0[itemIdx].count_1 != 0)
                 {
                     return true;
