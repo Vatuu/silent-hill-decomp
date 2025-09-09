@@ -1890,7 +1890,7 @@ static inline q19_12 Anim_TimeStepGet(s_Model* model, s_AnimInfo* animInfo)
         return FP_MULTIPLY_PRECISE(duration, g_DeltaTime0, Q12_SHIFT);
     }
 
-    return FP_TIME(0.0f);
+    return Q19_12(0.0f);
 }
 
 void Anim_Update0(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coords, s_AnimInfo* animInfo) // 0x800449F0
@@ -1911,12 +1911,12 @@ void Anim_Update0(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coords,
     // Compute new time and keyframe index.
     newTime        = model->anim_4.time_4;
     newKeyframeIdx = FP_FROM(newTime, Q12_SHIFT);
-    if (timeStep != FP_TIME(0.0f))
+    if (timeStep != Q19_12(0.0f))
     {
         newTime += timeStep;
 
         // Clamp new time to valid keyframe range.
-        endTime = FP_TIME(animInfo->endKeyframeIdx_E);
+        endTime = Q19_12(animInfo->endKeyframeIdx_E);
         if (newTime >= endTime)
         {
             newTime          = endTime;
@@ -1924,7 +1924,7 @@ void Anim_Update0(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coords,
         }
         else
         {
-            startTime = FP_TIME(animInfo->startKeyframeIdx_C);
+            startTime = Q19_12(animInfo->startKeyframeIdx_C);
             if (newTime <= startTime)
             {
                 newTime          = startTime;
@@ -1960,9 +1960,9 @@ void Anim_Update1(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     s32 endKeyframeIdx;
     s32 nextStartKeyframeIdx;
     s32 keyframeCount;
-    s32 startKeyframeTime;
-    s32 nextStartKeyframeTime;
-    s32 keyframeCountTime;
+    s32 startTime;
+    s32 nextStartTime;
+    s32 duration;
     s32 timeStep;
     s32 newTime;
     s32 newKeyframeIdx0;
@@ -1974,22 +1974,22 @@ void Anim_Update1(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     nextStartKeyframeIdx = endKeyframeIdx + 1;
     keyframeCount        = nextStartKeyframeIdx - startKeyframeIdx;
 
-    startKeyframeTime     = FP_TIME(startKeyframeIdx);
-    nextStartKeyframeTime = FP_TIME(nextStartKeyframeIdx);
-    keyframeCountTime     = FP_TIME(keyframeCount);
+    startTime     = Q19_12(startKeyframeIdx);
+    nextStartTime = Q19_12(nextStartKeyframeIdx);
+    duration      = Q19_12(keyframeCount);
 
     // Get time step.
     timeStep = Anim_TimeStepGet(model, animInfo);
 
     // Wrap new time to valid keyframe range?
     newTime = model->anim_4.time_4 + timeStep;
-    while (newTime < startKeyframeTime)
+    while (newTime < startTime)
     {
-        newTime += keyframeCountTime;
+        newTime += duration;
     }
-    while (newTime >= nextStartKeyframeTime)
+    while (newTime >= nextStartTime)
     {
-        newTime -= keyframeCountTime;
+        newTime -= duration;
     }
 
     // Compute new keyframe 1. Wrap to start to facilitate loop.
@@ -2039,11 +2039,11 @@ void Anim_Update2(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     alpha += timeStep;
     if (alpha >= FP_ALPHA(0.5f))
     {
-        model->anim_4.time_4 = FP_TIME(endKeyframeIdx);
+        model->anim_4.time_4 = Q19_12(endKeyframeIdx);
     }
     else
     {
-        model->anim_4.time_4 = FP_TIME(startKeyframeIdx);
+        model->anim_4.time_4 = Q19_12(startKeyframeIdx);
     }
 
     // Update frame data.
@@ -2094,7 +2094,7 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     }
     else
     {
-        timeStep = FP_TIME(0.0f);
+        timeStep = Q19_12(0.0f);
     }
 
     // Update alpha.
@@ -2109,11 +2109,11 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     // Update time to start or end keyframe, whichever is closest.
     if (sinAlpha >= FP_ALPHA(0.5f))
     {
-        newTime = FP_TIME(startKeyframeIdx);
+        newTime = Q19_12(startKeyframeIdx);
     }
     else
     {
-        newTime = FP_TIME(endKeyframeIdx);
+        newTime = Q19_12(endKeyframeIdx);
     }
 
     alpha = sinAlpha;

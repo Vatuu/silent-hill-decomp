@@ -1320,8 +1320,8 @@ STATIC_ASSERT_SIZEOF(s_DmsEntry, 16);
 
 typedef struct
 {
-    s16 start;    // Start keyframe?
-    s16 duration; // Frame duration at 30FPS?
+    s16 startKeyframeIdx_0;
+    s16 frameCount_2; /** At 30FPS. */
 } s_DmsInterval;
 STATIC_ASSERT_SIZEOF(s_DmsInterval, 4);
 
@@ -3095,26 +3095,26 @@ void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* header);
 /** @unused? `volatile` needed for match. */
 s_DmsInterval* func_8008CA60(volatile s32 unused, s32 idx, s_DmsHeader* header);
 
-void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, s32 time, s_DmsHeader* header);
+void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, q19_12 time, s_DmsHeader* header);
 
 void Dms_CharacterGetStartPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, s32 time, s_DmsHeader* header);
 
 s32 Dms_CharacterFindIdxByName(char* name, s_DmsHeader* header);
 
-void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, s32 time, s_DmsHeader* header);
+void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q19_12 time, s_DmsHeader* header);
 
 void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 alpha);
 
 /** @unused? Returns `96 * cotangent(angle / 2)`. Possibly camera/FOV related. */
 s16 func_8008CDBC(s16 angle);
 
-s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, s32 time, s_DmsHeader* header);
+s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, q19_12 time, s_DmsHeader* header);
 
-s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, s_DmsKeyframeCamera* frame0, s_DmsKeyframeCamera* frame1, s32 alpha);
+s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, const s_DmsKeyframeCamera* frame0, const s_DmsKeyframeCamera* frame1, s32 alpha);
 
-void Dms_IntervalStatusGet(s32* prevKeyframe, s32* nextKeyframe, s32* alpha, s32 time, s_DmsEntry* camEntry, s_DmsHeader* header);
+void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, s32* alpha, q19_12 time, s_DmsEntry* camEntry, s_DmsHeader* header);
 
-u32 func_8008D2C4(s32 time, s_DmsHeader* header);
+u32 Dms_IntervalStatusGet(s32 time, s_DmsHeader* header);
 
 s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry);
 

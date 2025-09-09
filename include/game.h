@@ -995,8 +995,8 @@ typedef struct _AnimInfo
     union
     {
         q19_12 constant;          /** Constant duration. */
-        q19_12 (*variableFunc)(); /** Variable duration via a function. Allows anims to play at variable speeds. */
-    } duration_8;                 /** Duration as `Q19_12(frameCount)`. */
+        q19_12 (*variableFunc)(); /** Variable duration via a function. Allows animations to be sped up or slowed down. */
+    } duration_8;                 /** At 30FPS. */
     s16 startKeyframeIdx_C;       /** Start keyframe index. Sometimes `NO_VALUE`, unknown why. */
     s16 endKeyframeIdx_E;         /** End keyframe index. */
 } s_AnimInfo;
@@ -1007,7 +1007,7 @@ typedef struct _ModelAnim
     u8          status_0;         /** Is active: bit 0, Anim index: bits 1-7. Possible original name: `anim_status` */
     u8          maybeSomeState_1; // State says if `time_4` is anim time/anim status or a func ptr? That field could be a union.
     u16         flags_2;          /** `e_AnimFlags` */
-    q19_12      time_4;           /** Keyframe time. */ 
+    q19_12      time_4;           /** Time on timeline. */ 
     s16         keyframeIdx_8;    /** Active keyframe. */
     q3_12       alpha_A;          /** Progress alpha. */ 
     s_AnimInfo* animInfo_C;       // } Arrays of anim infos?
@@ -1037,7 +1037,7 @@ typedef union
 // TODO: Unsure if this struct is puppet doctor specific or shared with all characterss. Pointer gets set at puppetDoc+0x124.
 typedef struct
 {
-    s32         health_0;
+    q19_12      health_0;
     s8          unk_4[32];
     s_AnimInfo* animInfo_24;
     s8          unk_28[12];
@@ -1057,7 +1057,7 @@ typedef struct _SubCharaPropertiesPlayer
     q19_12 exhaustionTimer_FC;
     s32    field_100;
     s32    field_104;    // Distance?
-    q19_12 runTimer_108; // `FP_TIME` format timer?.
+    q19_12 runTimer_108;
     u8     field_10C;    // Player SFX pitch?
     u8     field_10D;
     s8     unk_10E[6];
@@ -1067,7 +1067,7 @@ typedef struct _SubCharaPropertiesPlayer
     s32    flags_11C; /** `e_PlayerFlags`. */
     s16    field_120; // Angle which the player turns when doing a quick turn. In order words, some sort of holder for angle Y.
     s16    field_122; // Some sort of X angle for the player. Specially used when aiming an enemy.
-    s16    headingAngle_124;
+    q7_8   headingAngle_124;
     q3_12  playerMoveDistance_126; // Used to indicate how much the player should move foward. Seems to be squared.
 } s_SubCharaPropertiesPlayer;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPlayer, 68);
@@ -1120,7 +1120,7 @@ typedef struct _SubCharacter
     SVECTOR rotationSpeed_2C;  /** Range [-0x700, 0x700]. */
     q19_12  field_34;          // Character Y Position?
     s32     moveSpeed_38;
-    s16     headingAngle_3C;
+    q7_8    headingAngle_3C;
     s16     flags_3E;
     s8      field_40;          // In player: Index of the NPC attacking the player.
                                // In NPCs: Unknown.
@@ -1565,7 +1565,7 @@ static inline void Character_AnimSet(s_SubCharacter* chara, s32 animStatus, s32 
 {
     // TODO: Problem with header includes prevents commented macro use.
     chara->model_0.anim_4.status_0      = animStatus;
-    chara->model_0.anim_4.time_4        = keyframeIdx << 12;//FP_TIME(keyframeIdx);
+    chara->model_0.anim_4.time_4        = keyframeIdx << 12;//Q19_12(keyframeIdx);
     chara->model_0.anim_4.keyframeIdx_8 = keyframeIdx;
 }
 
