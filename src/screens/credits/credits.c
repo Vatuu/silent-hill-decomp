@@ -270,7 +270,7 @@ bool func_801E342C() // 0x801E342C
         Sd_EngineCmd(19);
     }
 
-    ot   = (GsOT*)&D_800B7CC4[g_ObjectTableIdx];
+    ot   = (GsOT*)&g_OtTags1[g_ActiveBuffer][2048];
     tile = (TILE*)GsOUT_PACKET_P;
 
     addPrimFast(ot, tile, 3);
@@ -504,9 +504,9 @@ bool func_801E3684() // 0x801E3684
 void func_801E386C() // 0x801E386C
 {
     s_801E5558* ptr;
-    s32            var0;
-    s64            var1;
-    s32            var2;
+    s32         var0;
+    s64         var1;
+    s32         var2;
 
     var2 = 5;
 
@@ -737,7 +737,7 @@ void func_801E3E18(s32 arg0, s32 arg1) // 0x801E3E18
     s32* temp_t2;
 
     packet  = GsOUT_PACKET_P;
-    temp_t2 = &D_800B5C58[g_ObjectTableIdx];
+    temp_t2 = &g_OtTags0[g_ActiveBuffer][6];
     addr    = temp_t2 + 1;
     temp_a2 = D_801E600C;
 
@@ -1013,7 +1013,7 @@ void func_801E4394(u8* str) // 0x801E4394
     charCode   = *strPtr;
     colorCode  = D_800AFE08.field_8 | (blendFlag << 25); // RBG + code + semi-transparency flag.
     clut       = (u16)D_800AFE08.field_16;               // Clut Y, clut Y.
-    ot         = &D_800B5C58[g_ObjectTableIdx];
+    ot         = &g_OtTags0[g_ActiveBuffer][6];
 
     while (charCode != 0)
     {
@@ -1289,7 +1289,7 @@ void func_801E4C1C(u8* str) // 0x801E4C1C
     s32 idx;
 
     packet = GsOUT_PACKET_P;
-    ot     = &D_800B5C58[g_ObjectTableIdx];
+    ot     = &g_OtTags0[g_ActiveBuffer][6];
 
     charCode  = *str;
     colorCode = D_800AFE24.sub_0.field_8 | blendFlag; // RGB + code + semi-transparency flag.

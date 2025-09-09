@@ -2,6 +2,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/gfx/screen_draw.h"
+#include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/player_logic.h"
 #include "bodyprog/math.h"
@@ -221,8 +222,6 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
         case 18:
             if ((g_Gfx_ScreenFade & 0x7) == 5)
             {
-                s32 prevGameState;
-
                 Screen_Refresh(320, 0);
                 Fs_QueueWaitForEmpty();
                 func_8004C040();
@@ -409,7 +408,7 @@ void Gfx_Results_Save() // 0x8004D1A0
         {   2,  45,  46,  45 }
     };
 
-    GsOT* ot = &g_ObjectTable1[g_ObjectTableIdx];
+    GsOT* ot = &g_OrderingTable2[g_ActiveBuffer];
 
     char* saveDialogStrs[] =
     {
@@ -638,7 +637,7 @@ void Inventory_Logic() // 0x8004D518
                 g_Gfx_Inventory_SelectionBordersDraw = 1;
                 g_Inventory_CmdSelectedIdx           = 0;
 
-                if (g_SavegamePtr->items_0[g_SysWork.playerCombatInfo_38.field_12].command_2 != InventoryCmdId_Unk11)
+                if (g_SavegamePtr->items_0[g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12].command_2 != InventoryCmdId_Unk11)
                 {
                     g_Inventory_SelectionId = InventorySelectionId_EquippedItemCmd;
                     Sd_PlaySfx(Sfx_Confirm, 0, 64);
@@ -824,7 +823,7 @@ void Inventory_Logic() // 0x8004D518
             }
             else
             {
-                curItemIdx = g_SysWork.playerCombatInfo_38.field_12;
+                curItemIdx = g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12;
             }
 
             switch (g_SavegamePtr->items_0[curItemIdx].command_2)
@@ -1050,7 +1049,7 @@ void Inventory_Logic() // 0x8004D518
                     case InventoryCmdId_Reload:
                         g_Gfx_Inventory_SelectionBordersDraw = 1;
 
-                        if (curItemIdx != g_SysWork.playerCombatInfo_38.field_12)
+                        if (curItemIdx != g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12)
                         {
                             g_GameWork.gameStateStep_598[1] = 8;
                             g_GameWork.gameStateStep_598[2] = 0;
@@ -1071,7 +1070,7 @@ void Inventory_Logic() // 0x8004D518
                             g_GameWork.gameStateStep_598[1] = 5;
                             g_GameWork.gameStateStep_598[2] = 0;
                         }
-                        else if (curItemIdx != g_SysWork.playerCombatInfo_38.field_12)
+                        else if (curItemIdx != g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12)
                         {
                             g_GameWork.gameStateStep_598[1] = 8;
                             g_GameWork.gameStateStep_598[2] = 0;
@@ -1092,7 +1091,7 @@ void Inventory_Logic() // 0x8004D518
                             g_GameWork.gameStateStep_598[1] = 6;
                             g_GameWork.gameStateStep_598[2] = 0;
                         }
-                        else if (curItemIdx != g_SysWork.playerCombatInfo_38.field_12)
+                        else if (curItemIdx != g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12)
                         {
                             g_GameWork.gameStateStep_598[1] = 8;
                             g_GameWork.gameStateStep_598[2] = 0;
@@ -1194,7 +1193,7 @@ void Gfx_Inventory_CmdOptionsDraw() // 0x8004E864
         "Look"
     };
 
-    ot = &g_ObjectTable1[g_ObjectTableIdx];
+    ot = &g_OrderingTable2[g_ActiveBuffer];
 
     if (g_Inventory_SelectionId >= InventorySelectionId_ItemCmd &&
         g_Inventory_SelectionId <= InventorySelectionId_EquippedItemCmd)
@@ -1213,7 +1212,7 @@ void Gfx_Inventory_CmdOptionsDraw() // 0x8004E864
     }
     else
     {
-        idx = g_SysWork.playerCombatInfo_38.field_12;
+        idx = g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12;
     }
 
     switch (g_SavegamePtr->items_0[idx].command_2)
@@ -1341,7 +1340,7 @@ void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId) // 0x8004EC7C
     s32      i;
     s8       timeStep;
 
-    GsOT* ot = &g_ObjectTable1[g_ObjectTableIdx];
+    GsOT* ot = &g_OrderingTable2[g_ActiveBuffer];
 
     // TODO: Why the large values for some positions?
     s_Triangle2d arrowTris[] =
@@ -1568,7 +1567,7 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
         {
             if (g_SavegamePtr->items_0[i].id_0 == g_SavegamePtr->equippedWeapon_AA)
             {
-                g_SysWork.playerCombatInfo_38.field_12 = i;
+                g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12 = i;
 
                 if (g_SavegamePtr->equippedWeapon_AA >= InventoryItemId_Handgun)
                 {

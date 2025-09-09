@@ -2639,7 +2639,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                     if (g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_HyperBlaster)
                     {
                         g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10--;
-                        g_SavegamePtr->items_0[g_SysWork.playerCombatInfo_38.field_12].count_1--;
+                        g_SavegamePtr->items_0[g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12].count_1--;
 
                         func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx_0, &chara->position_18, FP_VOLUME(0.5f), 0);
                     }
@@ -7729,9 +7729,9 @@ void func_8007E5AC() // 0x8007E5AC
     {
         for (i = 0; g_SavegamePtr->items_0[i].id_0 != g_SavegamePtr->equippedWeapon_AA && i < INVENTORY_ITEM_COUNT_MAX; i++);
 
-        g_SysWork.playerCombatInfo_38.equippedWeapon_F     = g_SavegamePtr->equippedWeapon_AA + InventoryItemId_KitchenKnife;
-        g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10 = g_SavegamePtr->items_0[i].count_1;
-        g_SysWork.playerCombatInfo_38.field_12             = i;
+        g_SysWork.playerCombatInfo_38.equippedWeapon_F      = g_SavegamePtr->equippedWeapon_AA + InventoryItemId_KitchenKnife;
+        g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10  = g_SavegamePtr->items_0[i].count_1;
+        g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12 = i;
 
         if (temp_t0 == 4)
         {
@@ -7753,10 +7753,10 @@ void func_8007E5AC() // 0x8007E5AC
     }
     else
     {
-        g_SysWork.playerCombatInfo_38.equippedWeapon_F     = NO_VALUE;
-        g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10 = 0;
-        g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11   = 0;
-        g_SysWork.playerCombatInfo_38.field_12             = NO_VALUE;
+        g_SysWork.playerCombatInfo_38.equippedWeapon_F      = NO_VALUE;
+        g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10  = 0;
+        g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11    = 0;
+        g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12 = NO_VALUE;
     }
 
     g_SysWork.playerCombatInfo_38.isAiming_13 = false;

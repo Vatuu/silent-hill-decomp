@@ -1,5 +1,7 @@
 #include "game.h"
 
+#include <libpad.h>
+
 #include "bodyprog/joy.h"
 
 void Joy_Init() // 0x8003441C

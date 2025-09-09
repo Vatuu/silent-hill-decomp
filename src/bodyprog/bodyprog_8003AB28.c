@@ -5,9 +5,10 @@
 #include <strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/math.h"
 #include "bodyprog/memcard.h"
+#include "bodyprog/gfx/screen_draw.h"
+#include "bodyprog/gfx/text_draw.h"
 #include "main/fsqueue.h"
 #include "main/rng.h"
 #include "screens/stream/stream.h"
@@ -43,7 +44,6 @@ void GameState_MainMenu_Update() // 0x8003AB28
     s32         playIntroFmv;
     s32         prevGameDifficultyIdx;
     s32         nextGameDifficultyIdx;
-    s_Savegame* save;
     e_GameState prevState;
 
     func_80033548();
@@ -611,7 +611,7 @@ void Gfx_MainMenu_FogDraw() // 0x8003BA08
     PACKET*   packet;
     GsOT_TAG* tag;
 
-    tag    = g_ObjectTable1[g_ObjectTableIdx].org;
+    tag    = g_OrderingTable2[g_ActiveBuffer].org;
     packet = Gfx_MainMenu_FogPacketGet(&tag[6], GsOUT_PACKET_P);
     SetDrawMode((DR_MODE*)packet, 0, 1, 0x2A, NULL);
     addPrim(&tag[6], packet);
@@ -781,14 +781,14 @@ void func_8003BED0() // 0x8003BED0
     static s_FsImageDesc IMG_TIM = { .tPage = { 0, 15 }, .clutX = 176 };
     static s_FsImageDesc IMG_ETC = { .tPage = { 0, 12 }, .v = 192, .clutX = 192 };
 
-    s_PlmHeader* D_800BE9FC = &D_800BCE18.field_1BE4;
+    s_LmHeader* D_800BE9FC = &D_800BCE18.field_1BE4;
 
     if (Fs_QueueIsEntryLoaded(D_800BE9FC->queueIdx_1000) == 0 || D_800BE9FC->isLoaded_2)
     {
         return;
     }
 
-    PlmHeader_FixOffsets(&D_800BCE18.field_1BE4);
+    LmHeader_FixOffsets(&D_800BCE18.field_1BE4);
     func_80056504(&D_800BCE18.field_1BE4, "TIM00", &IMG_TIM, 1);
     func_80056504(&D_800BCE18.field_1BE4, "BG_ETC", &IMG_ETC, 1);
     func_80056954(&D_800BCE18.field_1BE4);
@@ -838,7 +838,7 @@ void func_8003C048() // 0x8003C048
 
     D_800BCE18.field_0[0].field_4 = 0;
 
-    func_80041C24((s_PlmHeader*)0x8016B600, 0x80175600, 0x2C000);
+    func_80041C24((s_LmHeader*)0x8016B600, 0x80175600, 0x2C000);
     func_800697EC();
 
     g_SysWork.field_2378 = FP_FLOAT_TO(1.0f, Q12_SHIFT);
@@ -853,7 +853,7 @@ void func_8003C0C0() // 0x8003C0C0
     s_800BCE18_1BAC* ptr = &D_800BCE18.field_1BAC;
 
     ptr->itemId_0 = NO_VALUE;
-    ptr->field_14 = (s_PlmHeader*)(Fs_GetFileSize(FILE_CHARA_HERO_ILM) + 0x800FE600); // `field_14` defined as a pointer?
+    ptr->field_14 = (s_LmHeader*)(Fs_GetFileSize(FILE_CHARA_HERO_ILM) + 0x800FE600); // `field_14` defined as a pointer?
     ptr->field_18 = 0;
     ptr->field_1C = 0;
     ptr->field_20 = 0;
@@ -892,7 +892,7 @@ void func_8003C1AC(s_800BCE18_0_CC* arg0) // 0x8003C1AC
     arg0->field_0 = 0;
     arg0->field_1 = 0;
     arg0->field_4 = 0;
-    arg0->plmHeader_8 = (s_PlmHeader*)((void*)0x800FEE00 + Fs_GetFileSize(FILE_CHARA_HERO_ILM));
+    arg0->lmHeader_8 = (s_LmHeader*)((void*)0x800FEE00 + Fs_GetFileSize(FILE_CHARA_HERO_ILM));
     arg0->texture_C   = sp10;
 }
 
@@ -969,8 +969,6 @@ void func_8003C3AC() // 0x8003C3AC
     s32             temp_a2;
     s32             moveAmt;
     s32             temp_s0_2;
-    s32             temp_v0_3;
-    s32             temp_v1;
     s32             temp_v1_4;
     s32             var_a0;
     s32             var_a1;
@@ -1071,7 +1069,7 @@ void func_8003C3AC() // 0x8003C3AC
 s32 func_8003C850() // 0x8003C850
 {
     func_8003C3AC();
-    func_80043740();
+    return func_80043740();
 }
 
 void func_8003C878(s32 arg0) // 0x8003C878
@@ -1084,7 +1082,7 @@ void func_8003C878(s32 arg0) // 0x8003C878
         Fs_QueueWaitForEmpty();
     }
 
-    func_80043A24(&g_ObjectTable0[g_ObjectTableIdx], arg0);
+    func_80043A24(&g_OrderingTable0[g_ActiveBuffer], arg0);
     func_800550D0();
 }
 
@@ -1242,7 +1240,7 @@ void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x800
         return;
     }
 
-    func_80057090(arg0, &g_ObjectTable0[g_ObjectTableIdx], 1, arg1, arg2, 0);
+    func_80057090(arg0, &g_OrderingTable0[g_ActiveBuffer], 1, arg1, arg2, 0);
 }
 
 s32 func_8003CD5C() // 0x8003CD5C
@@ -1250,22 +1248,23 @@ s32 func_8003CD5C() // 0x8003CD5C
     return D_800BCE18.field_1BAC.itemId_0;
 }
 
-void func_8003CD6C(s_PlayerCombat* combat) // 0x8003CD6C
+void func_8003CD6C(s_PlayerCombat* playerCombatInfo) // 0x8003CD6C
 {
+	#define INVENTORY_WEAPONS_ID_BASE InventoryItemId_KitchenKnife
     s32 itemId;
     s8  equippedWeaponId;
 
-    equippedWeaponId = combat->equippedWeapon_F;
+    equippedWeaponId = playerCombatInfo->equippedWeapon_F;
     itemId           = NO_VALUE;
     if (equippedWeaponId != NO_VALUE)
     {
-        itemId = equippedWeaponId + InventoryItemId_KitchenKnife;
+        itemId = equippedWeaponId + INVENTORY_WEAPONS_ID_BASE;
     }
 
     func_8003CDA0(itemId);
 }
 
-s32 func_8003CDA0(s32 itemIdx)
+s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
 {
     s32              fileIdx;
     s_800BCE18_1BAC* ptr;
@@ -1286,69 +1285,69 @@ s32 func_8003CDA0(s32 itemIdx)
             break;
 
         case NO_VALUE:
-        case 128:
-        case 132:
-        case 135:
-        case 160:
-        case 161:
-        case 162:
+        case InventoryItemId_KitchenKnife:
+        case InventoryItemId_Hammer:
+        case InventoryItemId_Axe:
+        case InventoryItemId_Handgun:
+        case InventoryItemId_HuntingRifle:
+        case InventoryItemId_Shotgun:
             fileIdx      = NO_VALUE;
-            ptr->field_8 = "HERO";
+            ptr->textureName_8 = "HERO";
             break;
 
         case InventoryItemId_SteelPipe:
             fileIdx      = FILE_ITEM_PIPE_TIM;
-            ptr->field_8 = "PIPE";
+            ptr->textureName_8 = "PIPE";
             break;
 
-        case CutsceneItemId_Phone:
+        case InventoryItemId_CS_Phone:
             fileIdx      = FILE_ITEM_PHONE_TIM;
-            ptr->field_8 = "PHONE";
+            ptr->textureName_8 = "PHONE";
             break;
 
-        case CutsceneItemId_Flauros:
+        case InventoryItemId_CS_Flauros:
             fileIdx      = FILE_ITEM_FLAUROS_TIM;
-            ptr->field_8 = "FLAUROS";
+            ptr->textureName_8 = "FLAUROS";
             break;
 
-        case CutsceneItemId_Aglaophotis:
+        case InventoryItemId_CS_Aglaophotis:
             fileIdx      = FILE_ITEM_AGLA_TIM;
-            ptr->field_8 = "AGLA";
+            ptr->textureName_8 = "AGLA";
             break;
 
-        case CutsceneItemId_PlasticBottle:
+        case InventoryItemId_CS_PlasticBottle:
             fileIdx      = FILE_ITEM_BOTL_TIM;
-            ptr->field_8 = "BOTL";
+            ptr->textureName_8 = "BOTL";
             break;
 
-        case CutsceneItemId_Baby:
+        case InventoryItemId_CS_Baby:
             fileIdx      = FILE_ITEM_BABY_TIM;
-            ptr->field_8 = "BABY";
+            ptr->textureName_8 = "BABY";
             break;
 
-        case CutsceneItemId_Blood:
+        case InventoryItemId_CS_BloodPack:
             fileIdx      = FILE_ITEM_BLOOD_TIM;
-            ptr->field_8 = "BLOOD";
+            ptr->textureName_8 = "BLOOD";
             break;
 
         case InventoryItemId_Chainsaw:
             fileIdx      = FILE_ITEM_CSAW_TIM;
-            ptr->field_8 = "CSAW";
+            ptr->textureName_8 = "CSAW";
             break;
 
         case InventoryItemId_HyperBlaster:
             fileIdx      = FILE_ITEM_HPRGUN_TIM;
-            ptr->field_8 = "HPRGUN";
+            ptr->textureName_8 = "HPRGUN";
             break;
 
         case InventoryItemId_RockDrill:
             fileIdx      = FILE_ITEM_DRILL_TIM;
-            ptr->field_8 = "DRILL";
+            ptr->textureName_8 = "DRILL";
             break;
 
         case InventoryItemId_Katana:
             fileIdx      = FILE_ITEM_KATANA_TIM;
-            ptr->field_8 = "KATANA";
+            ptr->textureName_8 = "KATANA";
             break;
     }
 
@@ -1411,27 +1410,27 @@ s32 func_8003CDA0(s32 itemIdx)
             fileIdx = FILE_ITEM_SHOTGUN_PLM;
             break;
 
-        case CutsceneItemId_Phone:
+        case InventoryItemId_CS_Phone:
             fileIdx = FILE_ITEM_PHONE_PLM;
             break;
 
-        case CutsceneItemId_Flauros:
+        case InventoryItemId_CS_Flauros:
             fileIdx = FILE_ITEM_FLAUROS_PLM;
             break;
 
-        case CutsceneItemId_Aglaophotis:
+        case InventoryItemId_CS_Aglaophotis:
             fileIdx = FILE_ITEM_AGLA_PLM;
             break;
 
-        case CutsceneItemId_PlasticBottle:
+        case InventoryItemId_CS_PlasticBottle:
             fileIdx = FILE_ITEM_BOTL_PLM;
             break;
 
-        case CutsceneItemId_Baby:
+        case InventoryItemId_CS_Baby:
             fileIdx = FILE_ITEM_BABY_PLM;
             break;
 
-        case CutsceneItemId_Blood:
+        case InventoryItemId_CS_BloodPack:
             fileIdx = FILE_ITEM_BLOOD_PLM;
             break;
 
@@ -1477,13 +1476,13 @@ void func_8003D058() // 0x8003D058
     MATRIX           mat1;
     GsCOORDINATE2*   coord;
     s_800BCE18_1BAC* ptr0;
-    s_PlmHeader*     plmHeader;
+    s_LmHeader*      lmHeader;
 
     ptr0 = &D_800BCE18.field_1BAC;
 
     if (ptr0->itemId_0 != NO_VALUE)
     {
-        if (ptr0->itemId_0 == CutsceneItemId_Phone)
+        if (ptr0->itemId_0 == InventoryItemId_CS_Phone)
         {
             coord = &g_SysWork.playerBoneCoords_890[HarryBone_LeftHand];
         } 
@@ -1494,18 +1493,18 @@ void func_8003D058() // 0x8003D058
 
         if (Fs_QueueIsEntryLoaded(ptr0->field_4) != 0) 
         {
-            plmHeader = ptr0->field_14;
+            lmHeader = ptr0->field_14;
 
-            if (!plmHeader->isLoaded_2)
+            if (!lmHeader->isLoaded_2)
             {
-                PlmHeader_FixOffsets(plmHeader);
-                func_80056504(plmHeader, ptr0->field_8, &ptr0->imageDesc_C, 1);
-                func_80056954(plmHeader);
+                LmHeader_FixOffsets(lmHeader);
+                func_80056504(lmHeader, ptr0->textureName_8, &ptr0->imageDesc_C, 1);
+                func_80056954(lmHeader);
                 func_80056C8C(&ptr0->field_18, ptr0->field_14, 0);
             }
 
             func_80049B6C(coord, &mat1, &mat0);
-            func_80057090(&ptr0->field_18, &g_ObjectTable0[g_ObjectTableIdx], 1, &mat0, &mat1, 0);
+            func_80057090(&ptr0->field_18, &g_OrderingTable0[g_ActiveBuffer], 1, &mat0, &mat1, 0);
         }
     }
 }
@@ -1516,7 +1515,7 @@ void func_8003D160() // 0x8003D160
     s32              queueIdx;
     s_800BCE18*      ptr;
     s_800BCE18_0_CC* ptr2;
-    s_PlmHeader*     addr = (void*)0x800FE600;
+    s_LmHeader*      addr = (void*)0x800FE600;
 
     func_8003D3BC(&img, 1, 0);
 
@@ -1530,7 +1529,7 @@ void func_8003D160() // 0x8003D160
     D_800BCE18.field_164C.field_0   = 1;
     ptr2->field_1                   = 0;
     ptr2->field_4                   = queueIdx;
-    ptr2->plmHeader_8               = addr;
+    ptr2->lmHeader_8                = addr;
     D_800BCE18.field_164C.texture_C = img;
 }
 
@@ -1570,7 +1569,7 @@ s32 func_8003D21C(s_MapOverlayHeader* arg0) // 0x8003D21C
             if (var_s3 != 0) 
             {
                 func_8003D3BC(&img, ids, i);
-                ret = func_8003D7D4(ids, i, (s_PlmHeader*)D_800BCE18.field_0[0].field_14, &img);
+                ret = func_8003D7D4(ids, i, (s_LmHeader*)D_800BCE18.field_0[0].field_14, &img);
             }
 
             func_8003D354(&D_800BCE18.field_0[0].field_14, ids);
@@ -1662,7 +1661,7 @@ void func_8003D468(s32 arg0, bool flag) // 0x8003D468
     s_800BCE18_0_CC* temp_s0;
 
     temp_s0 = D_800BCE18.field_0[0].field_18[arg0];
-    func_80056244(temp_s0->plmHeader_8, flag);
+    func_80056244(temp_s0->lmHeader_8, flag);
 
     rect.x = temp_s0->texture_C.clutX;
     rect.y = temp_s0->texture_C.clutY;
@@ -1695,8 +1694,8 @@ void func_8003D550(s32 arg0, s32 arg1) // 0x8003D550
     s_800BCE18_0_CC* ptr;
 
     ptr = D_800BCE18.field_0[0].field_18[arg0];
-    func_80056464(ptr->plmHeader_8, g_Chara_FileInfo[arg0].textureFileIdx, &ptr->texture_C, arg1);
-    func_80056954(ptr->plmHeader_8);
+    func_80056464(ptr->lmHeader_8, g_Chara_FileInfo[arg0].textureFileIdx, &ptr->texture_C, arg1);
+    func_80056954(ptr->lmHeader_8);
 }
 
 void func_8003D5B4(s8 flags) // 0x8003D5B4
@@ -1726,7 +1725,7 @@ void func_8003D5B4(s8 flags) // 0x8003D5B4
         fileIdx = ptr->field_0;
         if (fileIdx != 0)
         {
-            temp = (s32)ptr->plmHeader_8 + Fs_GetFileSize(g_Chara_FileInfo[fileIdx].modelFileIdx);
+            temp = (s32)ptr->lmHeader_8 + Fs_GetFileSize(g_Chara_FileInfo[fileIdx].modelFileIdx);
             if (D_800BCE18.field_0[0].field_14 < temp)
             {
                 D_800BCE18.field_0[0].field_14 = temp;
@@ -1744,22 +1743,22 @@ void func_8003D6A4(s_800BCE18_0_CC* arg0) // 0x8003D6A4
     }
 }
 
-void func_8003D6E0(s32 arg0, s32 arg1, s_PlmHeader* plmHeader, s_FsImageDesc* tex) // 0x8003D6E0
+void func_8003D6E0(s32 arg0, s32 arg1, s_LmHeader* lmHeader, s_FsImageDesc* tex) // 0x8003D6E0
 {
     s_FsImageDesc img;
-    s_PlmHeader*  plmHeaderPtr;
+    s_LmHeader*  plmHeaderPtr;
 
-    if (plmHeader != NULL)
+    if (lmHeader != NULL)
     {
-        plmHeaderPtr = plmHeader;
+        plmHeaderPtr = lmHeader;
     } 
     else if (D_800BCE18.field_0[arg1].field_CC.field_0 != 0) 
     {
-        plmHeaderPtr = D_800BCE18.field_0[arg1].field_CC.plmHeader_8;
+        plmHeaderPtr = D_800BCE18.field_0[arg1].field_CC.lmHeader_8;
     } 
     else 
     {
-        plmHeaderPtr = (s_PlmHeader*)D_800BCE18.field_0[0].field_14;
+        plmHeaderPtr = (s_LmHeader*)D_800BCE18.field_0[0].field_14;
         func_8003D354(&D_800BCE18.field_0[0].field_14, arg0); // Increments `field_14`?
     }
 
@@ -1775,7 +1774,7 @@ void func_8003D6E0(s32 arg0, s32 arg1, s_PlmHeader* plmHeader, s_FsImageDesc* te
     func_8003D7D4(arg0, arg1, plmHeaderPtr, &img);
 }
 
-s32 func_8003D7D4(u32 arg0, s32 arg1, s_PlmHeader* plmHeader, s_FsImageDesc* tex) // 0x8003D7D4
+s32 func_8003D7D4(u32 arg0, s32 arg1, s_LmHeader* lmHeader, s_FsImageDesc* tex) // 0x8003D7D4
 {
     s32              queueIdx;
     s32              idx;
@@ -1796,7 +1795,7 @@ s32 func_8003D7D4(u32 arg0, s32 arg1, s_PlmHeader* plmHeader, s_FsImageDesc* tex
     {
         if (arg0 == idx) 
         {
-            if (plmHeader == ptr->plmHeader_8 && memcmp(tex, img, sizeof(s_FsImageDesc)) == 0)
+            if (lmHeader == ptr->lmHeader_8 && memcmp(tex, img, sizeof(s_FsImageDesc)) == 0)
             {
                 return 0;
             }
@@ -1807,18 +1806,18 @@ s32 func_8003D7D4(u32 arg0, s32 arg1, s_PlmHeader* plmHeader, s_FsImageDesc* tex
 
     D_800BCE18.field_0[0].field_18[arg0] = ptr;
 
-    queueIdx = Fs_QueueStartRead(g_Chara_FileInfo[arg0].modelFileIdx, plmHeader);
+    queueIdx = Fs_QueueStartRead(g_Chara_FileInfo[arg0].modelFileIdx, lmHeader);
 
     if (g_Chara_FileInfo[arg0].textureFileIdx != NO_VALUE) 
     {
         queueIdx = Fs_QueueStartReadTim(g_Chara_FileInfo[arg0].textureFileIdx, FS_BUFFER_1, tex);
     }
 
-    ptr->field_0     = arg0;
-    ptr->field_1     = 0;
-    ptr->field_4     = queueIdx;
-    ptr->plmHeader_8 = plmHeader;
-    ptr->texture_C   = *tex;
+    ptr->field_0    = arg0;
+    ptr->field_1    = 0;
+    ptr->field_4    = queueIdx;
+    ptr->lmHeader_8 = lmHeader;
+    ptr->texture_C  = *tex;
 
     return queueIdx;
 }
@@ -1830,7 +1829,7 @@ void func_8003D938() // 0x8003D938
 
 void func_8003D95C() // 0x8003D95C
 {
-    s32 temp_a0;
+    s_800BCE18_0_CC* temp_a0;
     s32 i;
 
     for (i = 0; i < 45; i++)
@@ -1854,14 +1853,14 @@ void func_8003D9C8(s_800BCE18_0_CC* arg0) // 0x8003D9C8
     {
         arg0->field_1 = 1;
 
-        PlmHeader_FixOffsets(arg0->plmHeader_8);
-        func_80056464(arg0->plmHeader_8, g_Chara_FileInfo[arg0->field_0].textureFileIdx, &arg0->texture_C, g_Chara_FileInfo[arg0->field_0].field_6_10 % 4);
+        LmHeader_FixOffsets(arg0->lmHeader_8);
+        func_80056464(arg0->lmHeader_8, g_Chara_FileInfo[arg0->field_0].textureFileIdx, &arg0->texture_C, g_Chara_FileInfo[arg0->field_0].field_6_10 % 4);
 
         skel = &arg0->field_14;
 
-        func_80056954(arg0->plmHeader_8);
+        func_80056954(arg0->lmHeader_8);
         func_80044FE0(skel, &arg0->field_14.field_C, 56); // TODO: Can't fit `s_Bone` at `field_C`. Check `s_Skeleton` size.
-        func_8004506C(skel, arg0->plmHeader_8);
+        func_8004506C(skel, arg0->lmHeader_8);
         func_800452EC(skel);
         func_800453E8(skel, true);
     }
@@ -1898,7 +1897,7 @@ void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4)
                       D_800C4168.screenBrightness_8);
     }
 
-    func_80045534(&D_800BCE18.field_0[0].field_18[arg0]->field_14, &g_ObjectTable0[g_ObjectTableIdx], arg2,
+    func_80045534(&D_800BCE18.field_0[0].field_18[arg0]->field_14, &g_OrderingTable0[g_ActiveBuffer], arg2,
                   coord, g_Chara_FileInfo[arg0].field_6 * 16, ret, g_Chara_FileInfo[arg0].field_8);
 
     if (arg3 != 0)
@@ -2329,7 +2328,7 @@ void func_8003E5E8(s32 arg0) // 0x8003E5E8
     LINE_G2*  line;
 
     packet = GsOUT_PACKET_P;
-    ot     = &g_ObjectTable0[g_ObjectTableIdx].org[1];
+    ot     = &g_OrderingTable0[g_ActiveBuffer].org[1];
 
     for (i = -10; i < 11; i++)
     {
@@ -2499,7 +2498,7 @@ void func_8003E740() // 0x8003E740
         poly->v2 = 0x3F;
         poly->v3 = 0x3F;
 
-        AddPrim(&g_ObjectTable0[g_ObjectTableIdx].org[var_s5], poly);
+        AddPrim(&g_OrderingTable0[g_ActiveBuffer].org[var_s5], poly);
         GsOUT_PACKET_P = (PACKET*)poly + sizeof(POLY_FT4);
     }
 }

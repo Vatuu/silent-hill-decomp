@@ -227,9 +227,9 @@ extern s_SavegameEntry* g_ActiveSavegameEntry; // 0x800BCD2C
 
 extern u8 g_MemCardElementCount[MEMORY_CARD_SLOT_COUNT]; // 0x800BCD30
 
-extern s32 D_800BCD18[];
+extern s32 D_800BCD18[2];
 
-extern s32 D_800BCD20[];
+extern s32 D_800BCD20[2];
 
 extern u32 D_800BCD34;
 

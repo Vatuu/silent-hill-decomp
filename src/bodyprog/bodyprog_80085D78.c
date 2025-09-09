@@ -200,8 +200,6 @@ void func_8008616C(s32 arg0, bool arg1, s32 fadeType, s32 fadeTimestep, bool arg
     #define FADE_UNK_FLAG 3 // TODO: Investigate.
 
     s32 caseVar;
-    s32 var0;
-    s32 var1;
 
     // If `arg0 != 2`, `field_14` dictates what happens. This field is manipulated often in event/cutscene code.
     if (arg0 != 2)
@@ -701,6 +699,7 @@ void func_80086C58(s_SubCharacter* chara, s32 arg1) // 0x80086C58
 
 void func_80086D04(s_SubCharacter* chara) // 0x80086D04
 {
+
     switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
@@ -1363,7 +1362,7 @@ void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6,
 
     setSemiTrans(poly, 0);
 
-    addPrim(g_ObjectTable0[g_ObjectTableIdx].org, poly);
+    addPrim(g_OrderingTable0[g_ActiveBuffer].org, poly);
     poly++;
 
     GsOUT_PACKET_P = (PACKET*)poly;
@@ -1371,11 +1370,11 @@ void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6,
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088370); // 0x80088370
 
-bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 arg3, s_PlmHeader* plmHeader, s_FsImageDesc* tex) // 0x80088C7C
+bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 arg3, s_LmHeader* lmHeader, s_FsImageDesc* tex) // 0x80088C7C
 {
     func_80035338(arg0 + 1, charaId, NULL, coord);
     func_8003D5B4(arg3);
-    func_8003D6E0(charaId, arg0, plmHeader, tex);
+    func_8003D6E0(charaId, arg0, lmHeader, tex);
     return true;
 }
 
@@ -2730,7 +2729,7 @@ void func_8008D5A0(VECTOR3* arg0, s16 arg1) // 0x8008D5A0
     packet         = GsOUT_PACKET_P;
     tile           = GsOUT_PACKET_P + 24;
     GsOUT_PACKET_P = GsOUT_PACKET_P + 40;
-    ot             = &g_ObjectTable0[g_ObjectTableIdx].org[(arg0->vz + 2) >> 3];
+    ot             = &g_OrderingTable0[g_ActiveBuffer].org[(arg0->vz + 2) >> 3];
 
     cond = false;
     if (arg0->vx >= (-g_GameWork.gsScreenWidth_588 >> 1) && (g_GameWork.gsScreenWidth_588 >> 1) >= arg0->vx)
@@ -2755,7 +2754,7 @@ void func_8008D5A0(VECTOR3* arg0, s16 arg1) // 0x8008D5A0
 
         sp10.x = arg0->vx + (g_GameWork.gsScreenWidth_588 / 2);
         sp10.y = arg0->vy + (g_GameWork.gsScreenHeight_58A / 2);
-        if (g_ObjectTableIdx == 1)
+        if (g_ActiveBuffer == 1)
         {
             sp10.y += 32;
         }
@@ -2773,8 +2772,8 @@ void func_8008D5A0(VECTOR3* arg0, s16 arg1) // 0x8008D5A0
     sp10.h = 8;
     sp10.w = 8;
 
-    SetDrawMove(packet, &sp10, (g_ObjectTableIdx * 8) + 784, 112);
-    AddPrim(g_ObjectTable0[g_ObjectTableIdx].org + 5, packet);
+    SetDrawMove(packet, &sp10, (g_ActiveBuffer * 8) + 784, 112);
+    AddPrim(g_OrderingTable0[g_ActiveBuffer].org + 5, packet);
 }
 
 void func_8008D78C()
@@ -2822,7 +2821,7 @@ s32 func_8008D850() // 0x8008D850
     s_8008D850 unk; 
 
     rectX = 784;
-    if (g_ObjectTableIdx == 0)
+    if (g_ActiveBuffer == 0)
     {
         rectX = 792;
     }
@@ -2873,9 +2872,9 @@ static s_FsImageDesc D_800AFDA4 = { .tPage = { 64, 3 }, .u = 224, .v = 0, .clutX
 // Large function.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D990); // 0x8008D990
 
-void func_8008E4EC(s_PlmHeader* plmHeader) // 0x8008E4EC
+void func_8008E4EC(s_LmHeader* lmHeader) // 0x8008E4EC
 {
-    func_80056504(plmHeader, D_8002B2CC.str, &img0, 1);
+    func_80056504(lmHeader, D_8002B2CC.str, &img0, 1);
 }
 
 s_WaterZone* Map_WaterZoneGet(s32 posX, s32 posZ, s_WaterZone* waterZone)
@@ -2969,7 +2968,7 @@ void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2) // 0x8008E794
         poly->x3    = sp20.vx + 24;
         poly->y3    = ((u32)sp20.vx >> 16) + 48;
 
-        AddPrim(g_ObjectTable0[g_ObjectTableIdx].org + 641, poly);
+        AddPrim(g_OrderingTable0[g_ActiveBuffer].org + 641, poly);
         GsOUT_PACKET_P = poly + 1;
     }
 }

@@ -1,5 +1,7 @@
 #include "game.h"
 
+#include <abs.h>
+
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
 #include "bodyprog/player_logic.h"
@@ -1782,7 +1784,7 @@ void vcAutoRenewalCamTgtPos(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_CAM_MV_
         w_p->cam_tgt_pos_44 = ideal_pos;
     }
 
-    // TODO: Not sure what's going on here, doesn't seem to work as if statement.
+    // @hack Not sure what's going on here, doesn't seem to work as if statement.
     switch (cam_mv_type == VC_MV_SELF_VIEW)
     {
         case 0:

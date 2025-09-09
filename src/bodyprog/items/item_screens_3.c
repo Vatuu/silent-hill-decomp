@@ -1,9 +1,12 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/credits.h"
 #include "bodyprog/item_screens.h"
-#include "bodyprog/player_logic.h"
 #include "bodyprog/math.h"
+#include "bodyprog/player_logic.h"
+#include "bodyprog/gfx/text_draw.h"
+#include "main/rng.h"
 
 const s32 rodataPad_800262F8 = 0;
 
@@ -1089,7 +1092,7 @@ void func_8004FB0C() // 0x8004FB0C
     GsOT*    ot;
     POLY_F4* poly;
 
-    ot   = &g_ObjectTable1[g_ObjectTableIdx];
+    ot   = &g_OrderingTable2[g_ActiveBuffer];
     poly = (POLY_F4*)GsOUT_PACKET_P;
 
     setPolyF4(poly);
@@ -1164,8 +1167,8 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
         { { 0xFFCE, 0xFF34 }, { 0x0092, 0x003C } }
     };
 
-    ot1 = &g_ObjectTable1[g_ObjectTableIdx];
-    ot0 = &g_ObjectTable0[g_ObjectTableIdx];
+    ot1 = &g_OrderingTable2[g_ActiveBuffer];
+    ot0 = &g_OrderingTable0[g_ActiveBuffer];
 
     temp_v1 = g_SysWork.timer_1C & 0x7F;
 
@@ -1573,7 +1576,7 @@ static inline s16 GetUvOrRandom()
 {
     if (D_800AE198 == 1) 
     {
-        D_800AE1A8 = Rng_Rand16() % 134; // TODO: `Rng_GenerateInt(Rng_Rand16(), 0, 133)` doesn't match.
+        D_800AE1A8 = (s32)Rng_Rand16() % 134; // TODO: `Rng_GenerateInt(Rng_Rand16(), 0, 133)` doesn't match.
         return D_800AE1A8;
     }
     else
@@ -1605,7 +1608,7 @@ void Gfx_Inventory_HealthStatusDraw()
         0x00, 0xFF, 0x00, 0x00 
     };
 
-    ot     = &g_ObjectTable0[g_ObjectTableIdx];
+    ot     = &g_OrderingTable0[g_ActiveBuffer];
     health = g_SysWork.player_4C.chara_0.health_B0;
 
     if (health < FP_HEALTH(10.0f))
@@ -1631,7 +1634,7 @@ void Gfx_Inventory_HealthStatusDraw()
             if (i == 2)
             {
                 if (g_SysWork.player_4C.chara_0.health_B0 != FP_HEALTH(100.0f) &&
-                    ((Rng_Rand16() % ((g_SysWork.player_4C.chara_0.health_B0 >> 13) + 2) == 0) || D_800AE198 != 0))
+                    (((s32)Rng_Rand16() % ((g_SysWork.player_4C.chara_0.health_B0 >> 13) + 2) == 0) || D_800AE198 != 0))
                 {
                     D_800AE198++;
 
@@ -1872,7 +1875,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
             break;
 
         default:
-            idx = g_SysWork.playerCombatInfo_38.field_12;
+            idx = g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12;
             break;
     }
     
@@ -2088,13 +2091,13 @@ void Gfx_Primitive2dTextureSet(s32 x, s32 y, s32 otIdx, s32 abr) // 0x80052088
 {
     GsOT*     ot0;
     GsOT*     ot1;
-    s32       idx   = g_ObjectTableIdx;
+    s32       idx   = g_ActiveBuffer;
     DR_TPAGE* tPage = (DR_TPAGE*)GsOUT_PACKET_P;
 
     setDrawTPage(tPage, 0, 1, getTPage(0, abr, x, y));
 
-    ot1 = &g_ObjectTable1[idx];
-    ot0 = &g_ObjectTable0[idx];
+    ot1 = &g_OrderingTable2[idx];
+    ot0 = &g_OrderingTable0[idx];
 
     if (abr < 4)
     {
@@ -2711,15 +2714,15 @@ void func_800540A4(s8 arg0) // 0x800540A4
     s32 i;
     s32 j;
 
-    if (g_SysWork.playerCombatInfo_38.field_12 != NO_VALUE)
+    if (g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12 != NO_VALUE)
     {
-        g_SavegamePtr->items_0[g_SysWork.playerCombatInfo_38.field_12].count_1 = g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10;
+        g_SavegamePtr->items_0[g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12].count_1 = g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10;
     }
 
     for (i = 0; i < g_SavegamePtr->inventorySlotCount_AB; i++)
     {
         if (g_SavegamePtr->items_0[i].id_0 >> 5 == 6 && 
-            g_SavegamePtr->items_0[i].id_0 == (g_SavegamePtr->items_0[g_SysWork.playerCombatInfo_38.field_12].id_0 + 32))
+            g_SavegamePtr->items_0[i].id_0 == (g_SavegamePtr->items_0[g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12].id_0 + 32))
         {
             g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11;
 
@@ -2755,8 +2758,6 @@ void Gfx_Items_Render() // 0x80054200
     s32  i;
     s32  saveItemsIdx;
     s32  inventoryItemsIdx;
-    s32* var_s1;
-    s32* var_s2;
 
     func_8004BFE8();
 
@@ -2916,30 +2917,30 @@ void Inventory_ExitAnimFixes() // 0x80054634
         g_SysWork.playerCombatInfo_38.isAiming_13      = false;
     }
 
-    func_800546A8((u8)g_SysWork.playerCombatInfo_38.equippedWeapon_F);
+    func_800546A8(g_SysWork.playerCombatInfo_38.equippedWeapon_F);
     Inventory_ExitAnimEquippedItemUpdate(&field_F);
 }
 
-void func_800546A8(s32 arg0) // 0x800546A8
+void func_800546A8(u8 weaponId) // 0x800546A8
 {
-    switch ((u8)arg0)
+    switch (weaponId)
     {
-        case InventoryItemId_Unequipped:
+        case EquippedWeaponId_KitchenKnife:
             func_8003DD80(1, 34);
             break;
 
-        case 1:
-        case 2:
-        case 4:
-        case 5:
-        case 6:
-        case 7:
+        case EquippedWeaponId_SteelPipe:
+        case EquippedWeaponId_Hammer:
+        case EquippedWeaponId_Chainsaw:
+        case EquippedWeaponId_Katana:
+        case EquippedWeaponId_Axe:
+        case EquippedWeaponId_RockDrill:
             func_8003DD80(1, 34);
             break;
 
-        case InventoryItemId_HealthDrink:
-        case InventoryItemId_FirstAidKit:
-        case InventoryItemId_Ampoule:
+        case EquippedWeaponId_Handgun:
+        case EquippedWeaponId_HuntingRifle:
+        case EquippedWeaponId_Shotgun:
             func_8003DD80(1, 19);
             break;
 
@@ -2953,11 +2954,11 @@ void Gfx_Items_Display(s_TmdFile* tmd, s32 arg1, s32 arg2)
 {
     u8                 var_v0;
     GsDOBJ2*           ptr;
-    struct TMD_STRUCT* objs;
+    struct TMD_STRUCT* models;
 
-    objs = tmd->objects_C;
+    models = tmd->models_c;
 
-    GsLinkObject4((u32)&objs[arg2], &g_Items_ItemsModelData[arg1], 0);
+    GsLinkObject4((u32)&models[arg2], &g_Items_ItemsModelData[arg1], 0);
 
     ptr         = &g_Items_ItemsModelData[arg1];
     ptr->coord2 = &g_Items_Items3dData1[arg1];

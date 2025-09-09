@@ -165,14 +165,8 @@ void Vw_ClampAngleRange(s16* angleMin, s16* angleMax, s16 angleConstraintMin, s1
 
 s16 func_80048E3C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) // 0x80048E3C
 {
-    s16 var_v0;
-    s32 var_v0_3;
     s32 temp_a0;
     s16 temp_lo;
-    s32 temp_v0;
-    s32 var_a1;
-    s32 var_v0_2;
-    s16 new_var;
 
     if (arg1 > 0)
     {

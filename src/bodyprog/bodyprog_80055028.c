@@ -52,7 +52,7 @@ void func_800550D0() // 0x800550D0
     POLY_G4* poly;
     GsOT*    ot;
 
-    ot = &g_ObjectTable0[g_ObjectTableIdx];
+    ot = &g_OrderingTable0[g_ActiveBuffer];
 
     if (D_800C4168.field_2 != 0)
     {
@@ -478,60 +478,60 @@ u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* mat) // 0x80055F08
     return ret;
 }
 
-void PlmHeader_FixOffsets(s_PlmHeader* plmHeader) // 0x800560FC
+void LmHeader_FixOffsets(s_LmHeader* lmHeader) // 0x800560FC
 {
     s32 i;
 
-    if (plmHeader->isLoaded_2 == true)
+    if (lmHeader->isLoaded_2 == true)
     {
         return;
     }
-    plmHeader->isLoaded_2 = true;
+    lmHeader->isLoaded_2 = true;
 
     // Add memory address of header to pointer fields.
-    plmHeader->textureList_4 = (u8*)plmHeader->textureList_4 + (u32)plmHeader;
-    plmHeader->objectList_C  = (u8*)plmHeader->objectList_C  + (u32)plmHeader;
-    plmHeader->objectOrds_10 = (u8*)plmHeader->objectOrds_10 + (u32)plmHeader;
+    lmHeader->materials_4    = (u8*)lmHeader->materials_4    + (u32)lmHeader;
+    lmHeader->modelHeaders_C = (u8*)lmHeader->modelHeaders_C + (u32)lmHeader;
+    lmHeader->modelOrder_10  = (u8*)lmHeader->modelOrder_10  + (u32)lmHeader;
 
-    for (i = 0; i < plmHeader->objectCount_8; i++)
+    for (i = 0; i < lmHeader->modelCount_8; i++)
     {
-        if (plmHeader->magic_0 == PLM_HEADER_MAGIC)
+        if (lmHeader->magic_0 == LM_HEADER_MAGIC)
         {
-            ObjList_FixOffsets(&plmHeader->objectList_C[i], plmHeader);
+            ModelHeader_FixOffsets(&lmHeader->modelHeaders_C[i], lmHeader);
         }
     }
 }
 
-void ObjList_FixOffsets(s_ObjList* objList, s_PlmHeader* plmHeader) // 0x800561A4
+void ModelHeader_FixOffsets(s_ModelHeader* modelHeader, s_LmHeader* lmHeader) // 0x800561A4
 {
-    s_ObjHeader* obj;
+    s_MeshHeader* meshHeader;
 
-    objList->meshes_C = (u8*)objList->meshes_C + (u32)plmHeader;
+    modelHeader->meshHeaders_C = (u8*)modelHeader->meshHeaders_C + (u32)lmHeader;
 
-    for (obj = &objList->meshes_C[0]; obj < &objList->meshes_C[objList->meshCount_8]; obj++)
+    for (meshHeader = &modelHeader->meshHeaders_C[0]; meshHeader < &modelHeader->meshHeaders_C[modelHeader->meshCount_8]; meshHeader++)
     {
-        obj->primitives_4 = (u8*)obj->primitives_4 + (u32)plmHeader;
-        obj->vertexXy_8   = (u8*)obj->vertexXy_8   + (u32)plmHeader;
-        obj->vertexZ_C    = (u8*)obj->vertexZ_C    + (u32)plmHeader;
-        obj->normals_10   = (u8*)obj->normals_10   + (u32)plmHeader;
-        obj->unkPtr_14    = (u8*)obj->unkPtr_14    + (u32)plmHeader;
+        meshHeader->primitives_4 = (u8*)meshHeader->primitives_4 + (u32)lmHeader;
+        meshHeader->verticesXy_8 = (u8*)meshHeader->verticesXy_8 + (u32)lmHeader;
+        meshHeader->verticesZ_C  = (u8*)meshHeader->verticesZ_C  + (u32)lmHeader;
+        meshHeader->normals_10   = (u8*)meshHeader->normals_10   + (u32)lmHeader;
+        meshHeader->unkPtr_14    = (u8*)meshHeader->unkPtr_14    + (u32)lmHeader;
     }
 }
 
-void func_80056244(s_PlmHeader* plmHeader, bool flag) // 0x80056244
+void func_80056244(s_LmHeader* lmHeader, bool flag) // 0x80056244
 {
-    s_ObjList*      objList;
-    s_ObjList*      obj;
-    s_ObjHeader*    mesh;
-    s_ObjPrimitive* prim;
+    s_ModelHeader* modelHeader_tmp1;
+    s_ModelHeader* modelHeader_tmp2;
+    s_MeshHeader*  meshHeader;
+    s_Primitive*   prim;
 
-    objList = plmHeader->objectList_C;
+    modelHeader_tmp1 = lmHeader->modelHeaders_C;
 
-    for (obj = &objList[0]; obj < &objList[plmHeader->objectCount_8]; obj++)
+    for (modelHeader_tmp2 = &modelHeader_tmp1[0]; modelHeader_tmp2 < &modelHeader_tmp1[lmHeader->modelCount_8]; modelHeader_tmp2++)
     {
-        for (mesh = &obj->meshes_C[0]; mesh < &obj->meshes_C[obj->meshCount_8]; mesh++)
+        for (meshHeader = &modelHeader_tmp2->meshHeaders_C[0]; meshHeader < &modelHeader_tmp2->meshHeaders_C[modelHeader_tmp2->meshCount_8]; meshHeader++)
         {
-            for (prim = &mesh->primitives_4[0]; prim < &mesh->primitives_4[mesh->primitiveCount_0]; prim++)
+            for (prim = &meshHeader->primitives_4[0]; prim < &meshHeader->primitives_4[meshHeader->primitiveCount_0]; prim++)
             {
                 prim->field_6_15 = flag;
             }
@@ -539,15 +539,15 @@ void func_80056244(s_PlmHeader* plmHeader, bool flag) // 0x80056244
     }
 }
 
-s32 func_80056348(bool (*arg0)(s_PlmTexList* texList), s_PlmHeader* plmHeader) // 0x80056348
+s32 func_80056348(bool (*arg0)(s_Material* material), s_LmHeader* lmHeader) // 0x80056348
 {
-    s32           count;
-    s_PlmTexList* tex;
+    s32         count;
+    s_Material* material;
 
     count = 0;
-    for (tex = plmHeader->textureList_4; tex < (plmHeader->textureList_4 + plmHeader->textureCount_3); tex++)
+    for (material = lmHeader->materials_4; material < (lmHeader->materials_4 + lmHeader->materialCount_3); material++)
     {
-        if (arg0(tex))
+        if (arg0(material))
         {
             count++;
         }
@@ -556,30 +556,30 @@ s32 func_80056348(bool (*arg0)(s_PlmTexList* texList), s_PlmHeader* plmHeader) /
     return count;
 }
 
-void func_800563E8(s_PlmHeader* plmHeader, s32 arg1, s32 arg2, s32 arg3) // 0x800563E8
+void func_800563E8(s_LmHeader* lmHeader, s32 arg1, s32 arg2, s32 arg3) // 0x800563E8
 {
-    s32           i;
-    s_PlmTexList* texList;
+    s32         i;
+    s_Material* material;
 
     if (arg2 < 0)
     {
         arg2 += 15;
     }
 
-    for (i = 0, texList = &plmHeader->textureList_4[0];
-         i < plmHeader->textureCount_3;
-         i++, texList++)
+    for (i = 0, material = &lmHeader->materials_4[0];
+         i < lmHeader->materialCount_3;
+         i++, material++)
     {
         // TODO: Bitfield stuff? Doesn't seem to match other uses of `field_E`/`field_10` we've seen though.
-        u8  temp_a0 = texList->field_E;
-        u16 temp_v1 = texList->field_10;
+        u8  temp_a0 = material->field_E;
+        u16 temp_v1 = material->field_10;
 
-        texList->field_E  = ((temp_a0 + arg1) & 0x1F) | (temp_a0 & 0xE0);
-        texList->field_10 = ((temp_v1 + (arg2 >> 4)) & 0x3F) | ((temp_v1 + (arg3 << 6)) & 0x7FC0);
+        material->field_E  = ((temp_a0 + arg1) & 0x1F) | (temp_a0 & 0xE0);
+        material->field_10 = ((temp_v1 + (arg2 >> 4)) & 0x3F) | ((temp_v1 + (arg3 << 6)) & 0x7FC0);
     }
 }
 
-void func_80056464(s_PlmHeader* plmHeader, s32 fileIdx, s_FsImageDesc* image, s32 arg3) // 0x80056464
+void func_80056464(s_LmHeader* lmHeader, s32 fileIdx, s_FsImageDesc* image, s32 arg3) // 0x80056464
 {
     char  sp10[8];
     char  sp18[16];
@@ -599,31 +599,31 @@ void func_80056464(s_PlmHeader* plmHeader, s32 fileIdx, s_FsImageDesc* image, s3
         *sp10Ptr++ = *sp18Ptr++;
     }
 
-    func_80056558(plmHeader, sp10, image, arg3);
+    func_80056558(lmHeader, sp10, image, arg3);
 }
 
-void func_80056504(s_PlmHeader* plmHeader, char* newStr, s_FsImageDesc* image, s32 arg3) // 0x80056504
+void func_80056504(s_LmHeader* lmHeader, char* newStr, s_FsImageDesc* image, s32 arg3) // 0x80056504
 {
     char sp10[8];
 
     StringCopy(sp10, newStr);
-    func_80056558(plmHeader, sp10, image, arg3);
+    func_80056558(lmHeader, sp10, image, arg3);
 }
 
-bool func_80056558(s_PlmHeader* plmHeader, char* fileName, s_FsImageDesc* image, s32 arg3) // 0x80056558
+bool func_80056558(s_LmHeader* lmHeader, char* fileName, s_FsImageDesc* image, s32 arg3) // 0x80056558
 {
-    s_PlmTexList* texList;
-    u32*          texName;
+    s_Material* material;
+    u32*        materialName;
 
-    for (texList = &plmHeader->textureList_4[0];
-         texList < &plmHeader->textureList_4[plmHeader->textureCount_3];
-         texList++)
+    for (material = &lmHeader->materials_4[0];
+         material < &lmHeader->materials_4[lmHeader->materialCount_3];
+         material++)
     {
-        texName = texList->textureName_0.u32;
-        if (texName[0] == *(u32*)&fileName[0] && texName[1] == *(u32*)&fileName[4])
+        materialName = material->materialName_0.u32;
+        if (materialName[0] == *(u32*)&fileName[0] && materialName[1] == *(u32*)&fileName[4])
         {
-            texList->field_C = 1;
-            func_8005660C(texList, image, arg3);
+            material->field_C = 1;
+            func_8005660C(material, image, arg3);
             return true;
         }
     }
@@ -631,7 +631,7 @@ bool func_80056558(s_PlmHeader* plmHeader, char* fileName, s_FsImageDesc* image,
     return false;
 }
 
-void func_8005660C(s_PlmTexList* plmHeader, s_FsImageDesc* image, s32 arg2) // 0x8005660C
+void func_8005660C(s_Material* material, s_FsImageDesc* image, s32 arg2) // 0x8005660C
 {
     s32 coeff;
 
@@ -651,71 +651,71 @@ void func_8005660C(s_PlmTexList* plmHeader, s_FsImageDesc* image, s32 arg2) // 0
             break;
     }
 
-    plmHeader->field_14.u8[0] = image->u * coeff;
-    plmHeader->field_14.u8[1] = image->v;
+    material->field_14.u8[0] = image->u * coeff;
+    material->field_14.u8[1] = image->v;
 
-    plmHeader->field_E  = ((image->tPage[0] & 0x3) << 7) | ((arg2 & 0x3) << 5) | (image->tPage[1] & (1 << 4)) | (image->tPage[1] & 0xF);
-    plmHeader->field_10 = (image->clutY << 6) | ((image->clutX >> 4) & 0x3F);
+    material->field_E  = ((image->tPage[0] & 0x3) << 7) | ((arg2 & 0x3) << 5) | (image->tPage[1] & (1 << 4)) | (image->tPage[1] & 0xF);
+    material->field_10 = (image->clutY << 6) | ((image->clutX >> 4) & 0x3F);
 }
 
-void func_800566B4(s_PlmHeader* plmHeader, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4) // 0x800566B4
+void func_800566B4(s_LmHeader* lmHeader, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4) // 0x800566B4
 {
     char           filename[16];
     s32            i;
-    s_PlmTexList*  texList;
+    s_Material*    material;
     s_FsImageDesc* localImage;
 
     // Loop could be using `&image[i]`/`&arg0->field_4[i]` instead? Wasn't able to make that match though.
     localImage = image;
-    texList    = plmHeader->textureList_4;
+    material   = lmHeader->materials_4;
 
-    for (i = 0; i < plmHeader->textureCount_3; i++, texList++, localImage++)
+    for (i = 0; i < lmHeader->materialCount_3; i++, material++, localImage++)
     {
-        func_8005B3BC(filename, texList);
+        func_8005B3BC(filename, material);
         Fs_QueueStartReadTim(Fs_FindNextFile(filename, 0, startIdx), FS_BUFFER_9, localImage);
-        func_8005660C(texList, localImage, arg4);
+        func_8005660C(material, localImage, arg4);
     }
 }
 
-void func_80056774(s_PlmHeader* plmHeader, s_800C1450_0* arg1, bool (*func)(s_PlmTexList* plmFilter), void* arg3, s32 arg4) // 0x80056774
+void func_80056774(s_LmHeader* lmHeader, s_800C1450_0* arg1, bool (*func)(s_Material* material), void* arg3, s32 arg4) // 0x80056774
 {
-    s_PlmTexList* tex;
+    s_Material* material;
 
-    for (tex = &plmHeader->textureList_4[0]; tex < &plmHeader->textureList_4[plmHeader->textureCount_3]; tex++)
+    for (material = &lmHeader->materials_4[0]; material < &lmHeader->materials_4[lmHeader->materialCount_3]; material++)
     {
-        if (tex->field_C == 0 && tex->field_8 == NULL && (func == NULL || func(tex)))
+        if (material->field_C == 0 && material->field_8 == NULL && (func == NULL || func(material)))
         {
-            tex->field_8 = func_8005B1FC(tex, arg1, FS_BUFFER_9, arg3, arg4);
-            if (tex->field_8 != NULL)
+            material->field_8 = func_8005B1FC(material, arg1, FS_BUFFER_9, arg3, arg4);
+            if (material->field_8 != NULL)
             {
-                func_8005660C(tex, &tex->field_8->imageDesc_0, arg4);
+                func_8005660C(material, &material->field_8->imageDesc_0, arg4);
             }
         }
     }
 }
 
-bool PlmHeader_IsTextureLoaded(s_PlmHeader* plmHeader) // 0x80056888
+bool LmHeader_IsTextureLoaded(s_LmHeader* lmHeader) // 0x80056888
 {
-    s_PlmTexList* tex;
+    s_Material* material;
 
-    if (!plmHeader->isLoaded_2)
+    if (!lmHeader->isLoaded_2)
     {
         return false;
     }
 
-    for (tex = &plmHeader->textureList_4[0]; tex < &plmHeader->textureList_4[plmHeader->textureCount_3]; tex++)
+    for (material = &lmHeader->materials_4[0]; material < &lmHeader->materials_4[lmHeader->materialCount_3]; material++)
     {
-        if (tex->field_C != 0)
+        if (material->field_C != 0)
         {
             continue;
         }
 
-        if (tex->field_8 == NULL)
+        if (material->field_8 == NULL)
         {
             return false;
         }
 
-        if (!Fs_QueueIsEntryLoaded(tex->field_8->queueIdx_10))
+        if (!Fs_QueueIsEntryLoaded(material->field_8->queueIdx_10))
         {
             return false;
         }
@@ -724,147 +724,147 @@ bool PlmHeader_IsTextureLoaded(s_PlmHeader* plmHeader) // 0x80056888
     return true;
 }
 
-void func_80056954(s_PlmHeader* plmHeader) // 0x80056954
+void func_80056954(s_LmHeader* lmHeader) // 0x80056954
 {
-    s32           i;
-    s32           j;
-    s32           flags;
-    s_PlmTexList* tex;
+    s32         i;
+    s32         j;
+    s32         flags;
+    s_Material* material;
 
-    for (i = 0, tex = plmHeader->textureList_4; i < plmHeader->textureCount_3; i++, tex++)
+    for (i = 0, material = lmHeader->materials_4; i < lmHeader->materialCount_3; i++, material++)
     {
-        flags = (tex->field_E != tex->field_F) ? (1 << 0) : 0;
+        flags = (material->field_E != material->field_F) ? (1 << 0) : 0;
 
-        if (tex->field_10 != tex->field_12)
+        if (material->field_10 != material->field_12)
         {
             flags |= 1 << 1;
         }
 
-        if (tex->field_14.u16 != tex->field_16.u16)
+        if (material->field_14.u16 != material->field_16.u16)
         {
             flags |= 1 << 2;
         }
 
         if (flags)
         {
-            for (j = 0; j < plmHeader->objectCount_8; j++)
+            for (j = 0; j < lmHeader->modelCount_8; j++)
             {
-                if (plmHeader->magic_0 == PLM_HEADER_MAGIC)
+                if (lmHeader->magic_0 == LM_HEADER_MAGIC)
                 {
-                    func_80056A88(&plmHeader->objectList_C[j], i, tex, flags);
+                    func_80056A88(&lmHeader->modelHeaders_C[j], i, material, flags);
                 }
             }
 
-            tex->field_F        = tex->field_E;
-            tex->field_12       = tex->field_10;
-            tex->field_16.u8[0] = tex->field_14.u8[0];
-            tex->field_16.u8[1] = tex->field_14.u8[1];
+            material->field_F        = material->field_E;
+            material->field_12       = material->field_10;
+            material->field_16.u8[0] = material->field_14.u8[0];
+            material->field_16.u8[1] = material->field_14.u8[1];
         }
     }
 }
 
-void func_80056A88(s_ObjList* objList, s32 arg1, s_PlmTexList* plmTexList, s32 flags) // 0x80056A88
+void func_80056A88(s_ModelHeader* modelHeader, s32 arg1, s_Material* material, s32 flags) // 0x80056A88
 {
-    u16             field_14;
-    u16             field_16;
-    s_ObjHeader*    objHeader;
-    s_ObjPrimitive* objPrim;
+    u16           field_14;
+    u16           field_16;
+    s_MeshHeader* meshHeader;
+    s_Primitive*  prim;
 
-    for (objHeader = objList->meshes_C; objHeader < &objList->meshes_C[objList->meshCount_8]; objHeader++)
+    for (meshHeader = modelHeader->meshHeaders_C; meshHeader < &modelHeader->meshHeaders_C[modelHeader->meshCount_8]; meshHeader++)
     {
-        for (objPrim = objHeader->primitives_4; objPrim < &objHeader->primitives_4[objHeader->primitiveCount_0]; objPrim++)
+        for (prim = meshHeader->primitives_4; prim < &meshHeader->primitives_4[meshHeader->primitiveCount_0]; prim++)
         {
-            if (objPrim->field_6_8 == NO_VALUE)
+            if (prim->field_6_8 == NO_VALUE)
             {
-                objPrim->field_6_0 = 32;
+                prim->field_6_0 = 32;
             }
 
-            if (objPrim->field_6_8 == arg1)
+            if (prim->field_6_8 == arg1)
             {
                 if (flags & (1 << 0))
                 {
-                    objPrim->field_6_0 = plmTexList->field_E;
+                    prim->field_6_0 = material->field_E;
                 }
                 if (flags & (1 << 1))
                 {
-                    objPrim->field_2 = plmTexList->field_10 + (objPrim->field_2 - plmTexList->field_12);
+                    prim->field_2 = material->field_10 + (prim->field_2 - material->field_12);
                 }
                 if (flags & (1 << 2))
                 {
-                    field_16         = plmTexList->field_16.u16;
-                    field_14         = plmTexList->field_14.u16;
-                    objPrim->field_0 = field_14 + (objPrim->field_0 - field_16);
-                    objPrim->field_4 = field_14 + (objPrim->field_4 - field_16);
-                    objPrim->field_8 = field_14 + (objPrim->field_8 - field_16);
-                    objPrim->field_A = field_14 + (objPrim->field_A - field_16);
+                    field_16         = material->field_16.u16;
+                    field_14         = material->field_14.u16;
+                    prim->field_0 = field_14 + (prim->field_0 - field_16);
+                    prim->field_4 = field_14 + (prim->field_4 - field_16);
+                    prim->field_8 = field_14 + (prim->field_8 - field_16);
+                    prim->field_A = field_14 + (prim->field_A - field_16);
                 }
             }
         }
     }
 }
 
-void func_80056BF8(s_PlmHeader* plmHeader) // 0x80056BF8
+void func_80056BF8(s_LmHeader* lmHeader) // 0x80056BF8
 {
-    s_PlmTexList*   tex;
-    s_PlmTexList_8* temp_v1;
+    s_Material*   material;
+    s_Material_8* material_8;
 
-    for (tex = &plmHeader->textureList_4[0]; tex < &plmHeader->textureList_4[plmHeader->textureCount_3]; tex++)
+    for (material = &lmHeader->materials_4[0]; material < &lmHeader->materials_4[lmHeader->materialCount_3]; material++)
     {
-        temp_v1 = tex->field_8;
-        if (temp_v1 != NULL)
+        material_8 = material->field_8;
+        if (material_8 != NULL)
         {
-            temp_v1->field_14--;
-            if (temp_v1->field_14 < 0)
+            material_8->field_14--;
+            if (material_8->field_14 < 0)
             {
-                temp_v1->field_14 = 0;
+                material_8->field_14 = 0;
             }
 
-            tex->field_8 = NULL;
+            material->field_8 = NULL;
         }
     }
 }
 
-s32 PlmHeader_ObjectCountGet(s_PlmHeader* plmHeader) // 0x80056C80
+s32 LmHeader_ModelCountGet(s_LmHeader* lmHeader) // 0x80056C80
 {
-    return plmHeader->objectCount_8;
+    return lmHeader->modelCount_8;
 }
 
-void func_80056C8C(s_Bone* bone, s_PlmHeader* plmHeader, s32 objListIdx)
+void func_80056C8C(s_Bone* bone, s_LmHeader* lmHeader, s32 modelHeaderIdx)
 {
-    s_ObjList* objList = plmHeader->objectList_C;
+    s_ModelHeader* modelHeader = lmHeader->modelHeaders_C;
 
-    bone->objListIdx_C = objListIdx;
+    bone->modelHeaderIdx_C = modelHeaderIdx;
 
-    if (plmHeader->magic_0 == PLM_HEADER_MAGIC)
+    if (lmHeader->magic_0 == LM_HEADER_MAGIC)
     {
-        bone->objList_8 = &objList[objListIdx];
+        bone->modelHeader_8 = &modelHeader[modelHeaderIdx];
     }
 }
 
-bool func_80056CB4(s_800BCE18_2BEC_0* arg0, s_PlmHeader* plmHeader, s_800BCE18_2BEC_0_10* arg2) // 0x80056CB4
+bool func_80056CB4(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BEC_0_10* arg2) // 0x80056CB4
 {
-    u_Filename sp10;
-    s32        objListCount;
-    bool       result;
-    s32        i;
-    s_ObjList* objList;
+    u_Filename     sp10;
+    s32            modelHeaderCount;
+    bool           result;
+    s32            i;
+    s_ModelHeader* modelHeader;
 
     result = false;
 
     StringCopy(sp10.str, arg2->string_0);
 
-    objListCount = plmHeader->objectCount_8;
+    modelHeaderCount = lmHeader->modelCount_8;
 
-    if (plmHeader->magic_0 == PLM_HEADER_MAGIC)
+    if (lmHeader->magic_0 == LM_HEADER_MAGIC)
     {
-        for (i = 0, objList = &plmHeader->objectList_C[i]; i < objListCount; i++, objList++)
+        for (i = 0, modelHeader = &lmHeader->modelHeaders_C[i]; i < modelHeaderCount; i++, modelHeader++)
         {
-            if (objList->objName_0.u32[0] == sp10.u32[0] && objList->objName_0.u32[1] == sp10.u32[1])
+            if (modelHeader->modelName_0.u32[0] == sp10.u32[0] && modelHeader->modelName_0.u32[1] == sp10.u32[1])
             {
                 result        = true;
                 arg0->field_C = i;
-                arg0->field_8 = objList;
-                // TODO: `field_8` above used to be `s_800BCE18_2BEC_0_10*`, but this func showed it was `s_ObjList*`
+                arg0->field_8 = modelHeader;
+                // TODO: `field_8` above used to be `s_800BCE18_2BEC_0_10*`, but this func showed it was `s_ModelHeader*`
                 // Unsure if all `s_800BCE18_2BEC_0_10` refs should be changed though since struct is different size.
             }
         }
@@ -882,21 +882,21 @@ void StringCopy(char* prevStr, char* newStr) // 0x80056D64
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80056D8C); // 0x80056D8C
 
-void func_80057090(s_func_80057344* arg0, GsOT* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5) // 0x80057090
+void func_80057090(s_800BCE18_2BEC_0* arg0, GsOT* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5) // 0x80057090
 {
-    s_ObjList* objList;
-    GsOT_TAG*  temp_s1;
-    s32        temp_a0;
+    s_ModelHeader* modelHeader;
+    GsOT_TAG*      temp_s1;
+    s32            temp_a0;
 
-    objList = arg0->field_8;
+    modelHeader = arg0->field_8;
 
     if (arg0->field_0 < 0)
     {
         return;
     }
 
-    temp_s1 = &arg1->org[func_800571D0(objList->field_B_1)];
-    temp_a0 = objList->field_B_4;
+    temp_s1 = &arg1->org[func_800571D0(modelHeader->field_B_1)];
+    temp_a0 = modelHeader->field_B_4;
     if ((temp_a0 & 0xFF) != 0 && temp_a0 >= 0 && temp_a0 < 4) // @hack: `& 0xFF` needed for match.
     {
         func_80059D50(temp_a0, arg0, mat0, arg2, temp_s1);
@@ -908,7 +908,7 @@ void func_80057090(s_func_80057344* arg0, GsOT* arg1, void* arg2, MATRIX* mat0, 
             func_80057228(mat1, D_800C4168.field_54, &D_800C4168.field_58, &D_800C4168.field_60);
         }
 
-        if (objList->field_B_0)
+        if (modelHeader->field_B_0)
         {
             D_800C42B4 = arg5;
             func_8005A21C(arg0, temp_s1, arg2, mat0);
@@ -971,32 +971,32 @@ void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3) // 0x80
     gte_stsv(&D_800C4168.field_7C);
 }
 
-void func_80057344(s_func_80057344* arg0, GsOT_TAG* arg1, void* arg2, MATRIX* mat) // 0x80057344
+void func_80057344(s_800BCE18_2BEC_0* arg0, GsOT_TAG* arg1, void* arg2, MATRIX* mat) // 0x80057344
 {
     u32               normalOffset;
     u32               vertexOffset;
-    s_ObjHeader*      objHeader;
-    s_ObjList*        objList;
+    s_MeshHeader*     meshHeader;
+    s_ModelHeader*    modelHeader;
     s_GteScratchData* scratchData;
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    objList      = arg0->field_8;
-    vertexOffset = objList->vertexOffset_9;
-    normalOffset = objList->normalOffset_A;
+    modelHeader      = arg0->field_8;
+    vertexOffset = modelHeader->vertexOffset_9;
+    normalOffset = modelHeader->normalOffset_A;
 
     gte_lddqa(D_800C4168.field_4C);
     gte_lddqb_0();
 
-    for (objHeader = objList->meshes_C; objHeader < &objList->meshes_C[objList->meshCount_8]; objHeader++)
+    for (meshHeader = modelHeader->meshHeaders_C; meshHeader < &modelHeader->meshHeaders_C[modelHeader->meshCount_8]; meshHeader++)
     {
         if (vertexOffset != 0 || normalOffset != 0)
         {
-            func_8005759C(objHeader, scratchData, vertexOffset, normalOffset);
+            func_8005759C(meshHeader, scratchData, vertexOffset, normalOffset);
         }
         else
         {
-            func_800574D4(objHeader, scratchData);
+            func_800574D4(meshHeader, scratchData);
         }
 
         switch (D_800C4168.field_0)
@@ -1005,20 +1005,20 @@ void func_80057344(s_func_80057344* arg0, GsOT_TAG* arg1, void* arg2, MATRIX* ma
                 break;
 
             case 1:
-                func_80057658(objHeader, normalOffset, scratchData, &D_800C4168.field_74, &D_800C4168.field_7C);
+                func_80057658(meshHeader, normalOffset, scratchData, &D_800C4168.field_74, &D_800C4168.field_7C);
                 break;
 
             case 2:
-                func_80057A3C(objHeader, normalOffset, scratchData, &D_800C4168.field_74);
+                func_80057A3C(meshHeader, normalOffset, scratchData, &D_800C4168.field_74);
                 break;
         }
 
-        func_80057B7C(objHeader, vertexOffset, scratchData, mat);
-        func_8005801C(objHeader, scratchData, arg1, arg2);
+        func_80057B7C(meshHeader, vertexOffset, scratchData, mat);
+        func_8005801C(meshHeader, scratchData, arg1, arg2);
     }
 }
 
-void func_800574D4(s_ObjHeader* header, s_GteScratchData* scratchData) // 0x800574D4
+void func_800574D4(s_MeshHeader* meshHeader, s_GteScratchData* scratchData) // 0x800574D4
 {
     DVECTOR* vertexXy;
     s16*     vertexZ;
@@ -1029,10 +1029,10 @@ void func_800574D4(s_ObjHeader* header, s_GteScratchData* scratchData) // 0x8005
 
     screenXy = &scratchData->screenXy_0[0];
     var_a2   = &scratchData->field_18C[0]; // `screenZ`? There's already an earlier struct field though.
-    vertexXy = &header->vertexXy_8[0];
-    vertexZ  = &header->vertexZ_C[0];
+    vertexXy = &meshHeader->verticesXy_8[0];
+    vertexZ  = &meshHeader->verticesZ_C[0];
 
-    while (var_a2 < &scratchData->field_18C[header->vertexCount_1])
+    while (var_a2 < &scratchData->field_18C[meshHeader->vertexCount_1])
     {
         *(u32*)screenXy++ = *(u32*)vertexXy++;
 
@@ -1041,15 +1041,15 @@ void func_800574D4(s_ObjHeader* header, s_GteScratchData* scratchData) // 0x8005
         var_a2 += 2;
     }
 
-    while (screenXy < &scratchData->screenXy_0[header->vertexCount_1])
+    while (screenXy < &scratchData->screenXy_0[meshHeader->vertexCount_1])
     {
         *(u32*)screenXy++ = *(u32*)vertexXy++;
     }
 
-    unkPtr     = &header->unkPtr_14[0];
+    unkPtr     = &meshHeader->unkPtr_14[0];
     unkPtrDest = &scratchData->field_2B8[0];
 
-    while (unkPtrDest < &scratchData->field_2B8[header->unkCount_3])
+    while (unkPtrDest < &scratchData->field_2B8[meshHeader->unkCount_3])
     {
         *(u32*)unkPtrDest = *(u32*)unkPtr;
         unkPtr += 4;
@@ -1057,7 +1057,7 @@ void func_800574D4(s_ObjHeader* header, s_GteScratchData* scratchData) // 0x8005
     }
 }
 
-void func_8005759C(s_ObjHeader* header, s_GteScratchData* scratchData, s32 vertexOffset, s32 normalOffset) // 0x8005759C
+void func_8005759C(s_MeshHeader* meshHeader, s_GteScratchData* scratchData, s32 vertexOffset, s32 normalOffset) // 0x8005759C
 {
     s16* vertexZPtr;
     s16* field_18CPtr;
@@ -1069,39 +1069,39 @@ void func_8005759C(s_ObjHeader* header, s_GteScratchData* scratchData, s32 verte
     // Should be loop? Tried but no luck.
     screenXyPtr  = &scratchData->screenXy_0[vertexOffset];
     field_18CPtr = &scratchData->field_18C[vertexOffset];
-    vertexXyPtr  = header->vertexXy_8;
-    vertexZPtr   = header->vertexZ_C;
-    while (vertexXyPtr < &header->vertexXy_8[header->vertexCount_1])
+    vertexXyPtr  = meshHeader->verticesXy_8;
+    vertexZPtr   = meshHeader->verticesZ_C;
+    while (vertexXyPtr < &meshHeader->verticesXy_8[meshHeader->vertexCount_1])
     {
         *screenXyPtr++  = *vertexXyPtr++;
         *field_18CPtr++ = *vertexZPtr++;
     }
 
-    field_14Ptr  = header->unkPtr_14;
+    field_14Ptr  = meshHeader->unkPtr_14;
     field_2B8Ptr = &scratchData->field_2B8[normalOffset];
-    while (field_14Ptr < &header->unkPtr_14[header->unkCount_3])
+    while (field_14Ptr < &meshHeader->unkPtr_14[meshHeader->unkCount_3])
     {
         *field_2B8Ptr++ = *field_14Ptr++;
     }
 }
 
-void func_80057658(s_ObjHeader* header, s32 offset, s_GteScratchData* scratchData, SVECTOR3* arg3, SVECTOR* arg4) // 0x80057658
+void func_80057658(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scratchData, SVECTOR3* arg3, SVECTOR* arg4) // 0x80057658
 {
-    s32          geomOffsetX;
-    s32          geomOffsetY;
-    s32          geomScreen;
-    s32          temp_t9;
-    s32          var_a1;
-    s32          var_v1;
-    s32          temp_t2;
-    u8           temp_v1;
-    u8*          end;
-    u8*          var_t0;
-    s16*         temp_t8;
-    s32*         depthP;
-    MATRIX*      mat;
-    DVECTOR*     screenPos;
-    s_ObjNormal* normal;
+    s32       geomOffsetX;
+    s32       geomOffsetY;
+    s32       geomScreen;
+    s32       temp_t9;
+    s32       var_a1;
+    s32       var_v1;
+    s32       temp_t2;
+    u8        temp_v1;
+    u8*       end;
+    u8*       var_t0;
+    s16*      temp_t8;
+    s32*      depthP;
+    MATRIX*   mat;
+    DVECTOR*  screenPos;
+    s_Normal* normal;
 
     scratchData->field_3AC = *arg4; // 3AC changed to `SVECTOR`.
 
@@ -1122,7 +1122,7 @@ void func_80057658(s_ObjHeader* header, s32 offset, s_GteScratchData* scratchDat
     var_t0 = &scratchData->field_2B8[offset];
     mat    = &scratchData->field_380;
 
-    for (normal = header->normals_10; normal < &header->normals_10[header->normalCount_2]; normal++)
+    for (normal = meshHeader->normals_10; normal < &meshHeader->normals_10[meshHeader->normalCount_2]; normal++)
     {
         temp_t8   = &scratchData->field_380.m[2][0];
         screenPos = &scratchData->screenPos_3A4;
@@ -1219,13 +1219,13 @@ void func_80057658(s_ObjHeader* header, s32 offset, s_GteScratchData* scratchDat
     SetGeomScreen(geomScreen);
 }
 
-void func_80057A3C(s_ObjHeader* header, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec) // 0x80057A3C
+void func_80057A3C(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec) // 0x80057A3C
 {
-    s32          var_v1;
-    s32          temp_t2;
-    u8*          var_a3;
-    void*        endPtr;
-    s_ObjNormal* normal;
+    s32       var_v1;
+    s32       temp_t2;
+    u8*       var_a3;
+    void*     endPtr;
+    s_Normal* normal;
 
     scratchData->field_380.m[0][0] = lightVec->vx;
     scratchData->field_380.m[0][1] = lightVec->vy;
@@ -1235,7 +1235,7 @@ void func_80057A3C(s_ObjHeader* header, s32 offset, s_GteScratchData* scratchDat
     var_a3  = &scratchData->field_2B8[offset];
     temp_t2 = D_800C4168.field_20;
 
-    for (normal = header->normals_10; normal < &header->normals_10[header->normalCount_2]; normal++)
+    for (normal = meshHeader->normals_10; normal < &meshHeader->normals_10[meshHeader->normalCount_2]; normal++)
     {
         *(u32*)&scratchData->field_3A0 = *(u32*)normal;
 
@@ -1267,33 +1267,33 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80057B7C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005801C); // 0x8005801C
 
-void func_80059D50(s32 arg0, s_func_80057344* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4) // 0x80059D50
+void func_80059D50(s32 arg0, s_800BCE18_2BEC_0* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4) // 0x80059D50
 {
     s_GteScratchData* scratchData;
-    s_ObjHeader*      mesh;
-    s_ObjList*        objList;
+    s_MeshHeader*     meshHeader;
+    s_ModelHeader*    modelHeader;
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    objList = arg1->field_8;
+    modelHeader = arg1->field_8;
 
-    for (mesh = &objList->meshes_C[0]; mesh < &objList->meshes_C[objList->meshCount_8]; mesh++)
+    for (meshHeader = &modelHeader->meshHeaders_C[0]; meshHeader < &modelHeader->meshHeaders_C[modelHeader->meshCount_8]; meshHeader++)
     {
-        func_800574D4(mesh, scratchData);
-        func_80057B7C(mesh, 0, scratchData, mat);
-        func_80059E34(arg0, mesh, scratchData, arg3, arg4);
+        func_800574D4(meshHeader, scratchData);
+        func_80057B7C(meshHeader, 0, scratchData, mat);
+        func_80059E34(arg0, meshHeader, scratchData, arg3, arg4);
     }
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80059E34); // 0x80059E34
 
-void func_8005A21C(s_func_80057344* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat) // 0x8005A21C
+void func_8005A21C(s_800BCE18_2BEC_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat) // 0x8005A21C
 {
     s16               var_v1;
     u32               normalOffset;
     u32               vertexOffset;
-    s_ObjList*        temp_s1;
-    s_ObjHeader*      mesh;
+    s_ModelHeader*    modelHeader;
+    s_MeshHeader*     meshHeader;
     s_GteScratchData* scratchData;
 
     scratchData = PSX_SCRATCH_ADDR(0);
@@ -1335,20 +1335,20 @@ void func_8005A21C(s_func_80057344* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* m
             break;
     }
 
-    temp_s1      = arg0->field_8;
-    vertexOffset = temp_s1->vertexOffset_9;
-    normalOffset = temp_s1->normalOffset_A;
+    modelHeader      = arg0->field_8;
+    vertexOffset = modelHeader->vertexOffset_9;
+    normalOffset = modelHeader->normalOffset_A;
 
-    for (mesh = temp_s1->meshes_C; mesh < &temp_s1->meshes_C[temp_s1->meshCount_8]; mesh++)
+    for (meshHeader = modelHeader->meshHeaders_C; meshHeader < &modelHeader->meshHeaders_C[modelHeader->meshCount_8]; meshHeader++)
     {
-        func_8005A900(mesh, vertexOffset, scratchData, mat);
+        func_8005A900(meshHeader, vertexOffset, scratchData, mat);
 
         if (D_800C4168.field_0 != 0)
         {
-            func_8005AA08(mesh, normalOffset, scratchData);
+            func_8005AA08(meshHeader, normalOffset, scratchData);
         }
 
-        func_8005AC50(mesh, scratchData, otTag, arg2);
+        func_8005AC50(meshHeader, scratchData, otTag, arg2);
     }
 }
 
@@ -1507,14 +1507,14 @@ void func_8005A838(s_GteScratchData* scratchData, s32 scale) // 0x8005A838
                  FP_MULTIPLY(D_800C4168.field_26, scale, Q12_SHIFT));
 }
 
-void func_8005A900(s_ObjHeader* objHeader, s32 offset, s_GteScratchData* scratchData, MATRIX* mat) // 0x8005A900
+void func_8005A900(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scratchData, MATRIX* mat) // 0x8005A900
 {
     DVECTOR* inXy;  // Model-space XY input
     u16*     inZ;   // Model-space Z input
     DVECTOR* outXy; // Projected XY output buffer
     u16*     outZ;  // Projected Z output buffer
 
-    if (objHeader->vertexCount_1 == 0)
+    if (meshHeader->vertexCount_1 == 0)
     {
         return;
     }
@@ -1525,10 +1525,10 @@ void func_8005A900(s_ObjHeader* objHeader, s32 offset, s_GteScratchData* scratch
     outXy = &scratchData->screenXy_0[offset];
     outZ  = &scratchData->screenZ_168[offset];
 
-    inXy = objHeader->vertexXy_8;
-    inZ  = objHeader->vertexZ_C;
+    inXy = meshHeader->verticesXy_8;
+    inZ  = meshHeader->verticesZ_C;
 
-    while (outXy < &scratchData->screenXy_0[objHeader->vertexCount_1 + offset])
+    while (outXy < &scratchData->screenXy_0[meshHeader->vertexCount_1 + offset])
     {
         // Nearly same as `gte_RotTransPers3`, processes 3 vertices per iteration.
         gte_LoadVector0_1_2_XYZ(inXy, inZ);
@@ -1542,7 +1542,7 @@ void func_8005A900(s_ObjHeader* objHeader, s32 offset, s_GteScratchData* scratch
     }
 }
 
-u8 func_8005AA08(s_ObjHeader* objHeader, s32 arg1, s_GteScratchData2* scratchData) // 0x8005AA08
+u8 func_8005AA08(s_MeshHeader* meshHeader, s32 arg1, s_GteScratchData2* scratchData) // 0x8005AA08
 {
 	// Same as `gte_strgb3`, but takes `VECTOR3` pointer to store results.
 	// Not sure why this was needed, the func that uses it also ends up calling the normal `gte_strgb3` too.
@@ -1554,11 +1554,11 @@ u8 func_8005AA08(s_ObjHeader* objHeader, s32 arg1, s_GteScratchData2* scratchDat
         : "r"( r0 )                                 \
         : "memory" )
 
-    CVECTOR      sp0;
-    s_ObjNormal* var_a3;
-    VECTOR3*     var_t0;
+    CVECTOR   sp0;
+    s_Normal* var_a3;
+    VECTOR3*  var_t0;
 
-    if (objHeader->normalCount_2 == 0)
+    if (meshHeader->normalCount_2 == 0)
     {
         return;
     }
@@ -1566,7 +1566,7 @@ u8 func_8005AA08(s_ObjHeader* objHeader, s32 arg1, s_GteScratchData2* scratchDat
     sp0.cd = 0;
     gte_ldrgb(&sp0);
 
-    var_a3 = objHeader->normals_10;
+    var_a3 = meshHeader->normals_10;
     *(u32*)&scratchData->u.normal.field_3DC = *(u32*)&var_a3[0];
     scratchData->u.normal.field_3E0[0].vx = scratchData->u.normal.field_3DC.nx << 5;
     scratchData->u.normal.field_3E0[0].vy = scratchData->u.normal.field_3DC.ny << 5;
@@ -1588,7 +1588,7 @@ u8 func_8005AA08(s_ObjHeader* objHeader, s32 arg1, s_GteScratchData2* scratchDat
     gte_ldv3c(scratchData->u.normal.field_3E0);
     gte_nct();
 
-    while(var_a3 < &objHeader->normals_10[objHeader->normalCount_2])
+    while(var_a3 < &meshHeader->normals_10[meshHeader->normalCount_2])
     {
         *(u32*)&scratchData->u.normal.field_3DC = *(u32*)&var_a3[0];
         scratchData->u.normal.field_3E0[0].vx = scratchData->u.normal.field_3DC.nx << 5;
@@ -1617,33 +1617,33 @@ u8 func_8005AA08(s_ObjHeader* objHeader, s32 arg1, s_GteScratchData2* scratchDat
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005AC50); // 0x8005AC50
 
-void func_8005B1A0(s_PlmTexList_8* arg0, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY) // 0x8005B1A0
+void func_8005B1A0(s_Material_8* material_8, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY) // 0x8005B1A0
 {
-    arg0->imageDesc_0.tPage[0] = tPage0;
-    arg0->imageDesc_0.tPage[1] = tPage1;
-    arg0->imageDesc_0.u        = u;
-    arg0->imageDesc_0.v        = v;
-    arg0->imageDesc_0.clutX    = clutX;
-    arg0->imageDesc_0.clutY    = clutY;
+    material_8->imageDesc_0.tPage[0] = tPage0;
+    material_8->imageDesc_0.tPage[1] = tPage1;
+    material_8->imageDesc_0.u        = u;
+    material_8->imageDesc_0.v        = v;
+    material_8->imageDesc_0.clutX    = clutX;
+    material_8->imageDesc_0.clutY    = clutY;
 
-    StringCopy(arg0->textureName_8.str, texName);
+    StringCopy(material_8->textureName_8.str, texName);
 
-    arg0->field_14 = 0;
-    arg0->queueIdx_10 = NO_VALUE;
+    material_8->field_14 = 0;
+    material_8->queueIdx_10 = NO_VALUE;
 }
 
 #define cmp_str(a, b)\
-    ((a->textureName_0.u32[0] != b->textureName_8.u32[0]) || (a->textureName_0.u32[1] != b->textureName_8.u32[1]))
+    ((a->materialName_0.u32[0] != b->textureName_8.u32[0]) || (a->materialName_0.u32[1] != b->textureName_8.u32[1]))
 
-s_PlmTexList_8* func_8005B1FC(s_PlmTexList* arg0, s_800C1450_0* arg1, void* fs_buffer_9, void* arg3, s32 arg4)
+s_Material_8* func_8005B1FC(s_Material* arg0, s_800C1450_0* arg1, void* fs_buffer_9, void* arg3, s32 arg4)
 {
-    s8 fileName[12];
-    s8 debugStr[12];
-    s32 fileId;
-    s32 i;
-    s32 lowestQueueIdx;
-    s_PlmTexList_8* tex;
-    s_PlmTexList_8* found;
+    s8            fileName[12];
+    s8            debugStr[12];
+    s32           fileId;
+    s32           i;
+    s32           lowestQueueIdx;
+    s_Material_8* tex;
+    s_Material_8* found;
     u32 queueIdx;
     
     lowestQueueIdx = INT_MAX;
@@ -1689,41 +1689,41 @@ s_PlmTexList_8* func_8005B1FC(s_PlmTexList* arg0, s_800C1450_0* arg1, void* fs_b
 
     found->queueIdx_10 = Fs_QueueStartReadTim(fileId, fs_buffer_9, &found->imageDesc_0);
     found->field_14++;
-    found->textureName_8 = arg0->textureName_0;
+    found->textureName_8 = arg0->materialName_0;
 
     return found;
 }
 
-void func_8005B370(s_PlmTexList_8* arg0) // 0x8005B370
+void func_8005B370(s_Material_8* material_8) // 0x8005B370
 {
-    arg0->field_14 = 0;
+    material_8->field_14 = 0;
 }
 
-void func_8005B378(s_PlmTexList_8* arg0, char* arg1) // 0x8005B378
+void func_8005B378(s_Material_8* material_8, char* arg1) // 0x8005B378
 {
-    arg0->field_14 = 1;
-    arg0->queueIdx_10 = 0;
-    StringCopy(arg0->textureName_8.str, arg1);
+    material_8->field_14 = 1;
+    material_8->queueIdx_10 = 0;
+    StringCopy(material_8->textureName_8.str, arg1);
 }
 
-void func_8005B3A4(s_PlmTexList_8* arg0) // 0x8005B3A4
+void func_8005B3A4(s_Material_8* material_8) // 0x8005B3A4
 {
-    arg0->textureName_8.u32[1] = 0;
-    arg0->textureName_8.u32[0] = 0;
+    material_8->textureName_8.u32[1] = 0;
+    material_8->textureName_8.u32[0] = 0;
 
-    arg0->field_14 = 0;
-    arg0->queueIdx_10 = NO_VALUE;
+    material_8->field_14 = 0;
+    material_8->queueIdx_10 = NO_VALUE;
 }
 
-void func_8005B3BC(char* filename, s_PlmTexList* plmTexList) // 0x8005B3BC
+void func_8005B3BC(char* filename, s_Material* material_tmp) // 0x8005B3BC
 {
     char sp10[12];
 
     // Some inline `memcpy`/`bcopy`/`strncpy`? those use `lwl`/`lwr`/`swl`/`swr` instead though
     // Example: casting `filename`/`arg1` to `u32*` and using `memcpy` does generate `lw`/`sw`,
     // but not in same order as this, guess it's some custom inline/macro instead.
-    *(u32*)&sp10[0] = *(u32*)&plmTexList->textureName_0.str[0];
-    *(u32*)&sp10[4] = *(u32*)&plmTexList->textureName_0.str[4];
+    *(u32*)&sp10[0] = *(u32*)&material_tmp->materialName_0.str[0];
+    *(u32*)&sp10[4] = *(u32*)&material_tmp->materialName_0.str[4];
     *(u32*)&sp10[8] = 0;
 
     strcat(sp10, D_80028544); // Copies `TIM` to end of `sp10` string.
@@ -1752,10 +1752,10 @@ void func_8005B46C(s_800C1450_0* arg0) // 0x8005B46C
     arg0->count_0 = 0;
 }
 
-void func_8005B474(s_800C1450_0* arg0, s_PlmTexList_8* arg1, s32 idx) // 0x8005B474
+void func_8005B474(s_800C1450_0* arg0, s_Material_8* arg1, s32 idx) // 0x8005B474
 {
-    s_PlmTexList_8*  ptr;
-    s_PlmTexList_8** entryPtr;
+    s_Material_8*  ptr;
+    s_Material_8** entryPtr;
 
     entryPtr = arg0->entries_4;
     for (ptr = &arg1[0]; ptr < &arg1[idx];)
@@ -1765,23 +1765,23 @@ void func_8005B474(s_800C1450_0* arg0, s_PlmTexList_8* arg1, s32 idx) // 0x8005B
     }
 }
 
-s_PlmTexList_8* func_8005B4BC(char* str, s_800C1450_0* arg1) // 0x8005B4BC
+s_Material_8* func_8005B4BC(char* str, s_800C1450_0* arg1) // 0x8005B4BC
 {
-    char           prevStr[8];
-    s32            i;
-    s_PlmTexList_8* ptr;
+    char          prevStr[8];
+    s32           i;
+    s_Material_8* material_8;
 
     StringCopy(prevStr, str);
 
     for (i = 0; i < arg1->count_0; ++i)
     {
-        ptr = arg1->entries_4[i];
+        material_8 = arg1->entries_4[i];
 
         // Fast string comparison.
-        if (ptr->queueIdx_10 != NO_VALUE &&
-            *(u32*)&prevStr[0] == ptr->textureName_8.u32[0] && *(u32*)&prevStr[4] == ptr->textureName_8.u32[1])
+        if (material_8->queueIdx_10 != NO_VALUE &&
+            *(u32*)&prevStr[0] == material_8->textureName_8.u32[0] && *(u32*)&prevStr[4] == material_8->textureName_8.u32[1])
         {
-            return ptr;
+            return material_8;
         }
     }
 
@@ -1885,7 +1885,50 @@ void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara) // 0x8005C814
     chara->field_D8.field_6 = FP_FROM((-temp_s2 * temp_v0) + (temp_s4 * temp_s1), Q12_SHIFT);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005C944); // 0x8005C944
+s32 func_8005C944(s_SubCharacter* chara, s_800C4590* arg1) // 0x8005C944
+{
+    s_800C4590 sp10;
+    VECTOR3    sp30;
+    s16        temp_s4;
+    s32        temp_s0;
+    s32        temp_s0_2;
+    s32        temp_s2;
+    s32        temp_s3;
+    s32        temp_v0;
+    s32        temp;
+    s32        ret;
+
+    temp_s4 = chara->headingAngle_3C;
+    temp_s0 = FP_MULTIPLY_PRECISE(g_DeltaTime0, chara->moveSpeed_38, 0xC);
+    temp_s2 = OVERFLOW_GUARD(temp_s0);
+    temp_s3 = temp_s2 >> 1;
+
+    temp      = Math_Sin(temp_s4);
+    temp_s0_2 = temp_s0 >> temp_s3;
+    temp_v0   = temp >> temp_s3;
+
+    sp30.vx = (s32)FP_MULTIPLY_PRECISE(temp_s0_2, temp_v0, 0xC) << temp_s2;
+    sp30.vz = (s32)FP_MULTIPLY_PRECISE(temp_s0_2, (Math_Cos(temp_s4) >> temp_s3), 0xC) << temp_s2;
+    sp30.vy = (s32)FP_MULTIPLY_PRECISE(g_DeltaTime0, chara->field_34, 0xC);
+
+    ret = func_80069B24(&sp10, (VECTOR3*)&sp30, chara);
+
+    chara->position_18.vx += sp10.field_0.vx;
+    chara->position_18.vy += sp10.field_0.vy;
+    chara->position_18.vz += sp10.field_0.vz;
+
+    if (chara->position_18.vy > sp10.field_C)
+    {
+        chara->position_18.vy = sp10.field_C;
+        chara->field_34       = 0;
+    }
+    if (arg1 != NULL)
+    {
+        *arg1 = sp10;
+    }
+
+    return ret;
+}
 
 s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 x, s16 z) // 0x8005CB20
 {
@@ -2401,7 +2444,7 @@ bool func_80068CC0(s32 arg0)                                                // 0
             *(u16*)&poly->r2 = 0x8080;
             poly->b2         = 0xC4;
 
-            addPrim(&g_ObjectTable0[g_ObjectTableIdx].org[2], poly);
+            addPrim(&g_OrderingTable0[g_ActiveBuffer].org[2], poly);
             GsOUT_PACKET_P = ++poly;
         }
     }
@@ -2441,7 +2484,7 @@ void func_80069844(s32 arg0) // 0x80069844
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80069860); // 0x80069860
 
-void IpdCollData_FixOffsets(s_IpdCollisionData* collData) // 0x8006993C
+void IpdColData_FixOffsets(s_IpdCollisionData* collData) // 0x8006993C
 {
     collData->ptr_C  = (u8*)collData->ptr_C + (u32)collData;
     collData->ptr_10 = (u8*)collData->ptr_10 + (u32)collData;

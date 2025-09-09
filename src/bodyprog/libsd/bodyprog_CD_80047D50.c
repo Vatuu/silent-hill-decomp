@@ -433,19 +433,6 @@ const s32 g_rodataPad_80025D38 = 0;
 
 void func_800485D8() // 0x800485D8
 {
-    s16 temp_v0;
-    s16 temp_v0_2;
-    s16 temp_v0_4;
-    s16 temp_v0_6;
-    s16 temp_v0_7;
-    s16 var_a0;
-    s16 var_a1;
-    s32 temp_v0_3;
-    s32 temp_v0_5;
-    s32 var_v0;
-    s32 var_v0_2;
-    u32 temp_v1;
-
     D_800C37DD = D_800C16A8[0];
     switch (D_800C37DD)
     {

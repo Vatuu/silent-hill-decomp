@@ -40,7 +40,7 @@ void Gfx_StringSetColor(s16 colorId);
  */
 bool Gfx_StringDraw(char* str, s32 strLength);
 
-void MapMsg_CalculateWidthTable(s32 mapMsgIdx);
+void Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx);
 
 /** Draws string and returns map message index. */
 s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength);

@@ -5,9 +5,10 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
-#include "bodyprog/gfx/screen_draw.h"
+#include "bodyprog/joy.h"
 #include "bodyprog/math.h"
 #include "bodyprog/memcard.h"
+#include "bodyprog/gfx/screen_draw.h"
 #include "main/fsqueue.h"
 #include "screens/b_konami/b_konami.h"
 #include "screens/stream/stream.h"
@@ -98,14 +99,14 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
         nullsub_800334C8();
         VSync(0);
         GsSwapDispBuff();
-        GsDrawOt(&g_ObjectTable1[g_ObjectTableIdx]);
+        GsDrawOt(&g_OrderingTable2[g_ActiveBuffer]);
 
         idx = GsGetActiveBuff();
-        g_ObjectTableIdx = idx;
+        g_ActiveBuffer = idx;
         GsOUT_PACKET_P   = (PACKET*)(TEMP_MEMORY_ADDR + (idx << 15));
 
-        GsClearOt(0, 0, &g_ObjectTable0[idx]);
-        GsClearOt(0, 0, &g_ObjectTable1[g_ObjectTableIdx]);
+        GsClearOt(0, 0, &g_OrderingTable0[idx]);
+        GsClearOt(0, 0, &g_OrderingTable2[g_ActiveBuffer]);
     }
 }
 
@@ -322,13 +323,13 @@ void GameState_KcetLogo_Update() // 0x800C99A4
         nullsub_800334C8();
         VSync(0);
         GsSwapDispBuff();
-        GsDrawOt(&g_ObjectTable1[g_ObjectTableIdx]);
+        GsDrawOt(&g_OrderingTable2[g_ActiveBuffer]);
 
-        g_ObjectTableIdx = GsGetActiveBuff();
-        GsOUT_PACKET_P   = (g_ObjectTableIdx << 0xF) + (u32)TEMP_MEMORY_ADDR;
+        g_ActiveBuffer = GsGetActiveBuff();
+        GsOUT_PACKET_P   = (g_ActiveBuffer << 0xF) + (u32)TEMP_MEMORY_ADDR;
 
-        GsClearOt(0, 0, &g_ObjectTable0[g_ObjectTableIdx]);
-        GsClearOt(0, 0, &g_ObjectTable1[g_ObjectTableIdx]);
+        GsClearOt(0, 0, &g_OrderingTable0[g_ActiveBuffer]);
+        GsClearOt(0, 0, &g_OrderingTable2[g_ActiveBuffer]);
     }
 }
 
@@ -337,7 +338,7 @@ void Gfx_BootScreenImageSegmentDraw(s_FsImageDesc* image, s32 otz, s32 vramX, s3
     DR_TPAGE* tPage;
     SPRT*     prim     = (SPRT*)GsOUT_PACKET_P;
     u32       vramBase = image->tPage[1] + (u32)(vramX >> 8) + (((u32)(vramY >> 8)) << 4);
-    u32*      addr     = &D_800B5C40[g_ObjectTableIdx].field_0[otz];
+    u32*      addr     = &g_OtTags0[g_ActiveBuffer][otz];
 
     addPrimFast(addr, prim, 4);
     setCodeWord(prim, PRIM_RECT | RECT_TEXTURE, 0x808080);
@@ -369,7 +370,7 @@ void Gfx_KonamiScreenDraw() // 0x800C9FB8
     Gfx_BootScreenImageSegmentDraw(&g_KonamiLogoImg, 0xF, 256, 256, 128, 128, 64, 64);
 
     // Draw fading overlay tile.
-    ptr = (g_ObjectTableIdx << 4) + &D_800B5C7C;
+    ptr = &g_OtTags0[g_ActiveBuffer][15];
     addPrimFast(ptr, (TILE*)GsOUT_PACKET_P, 3);
     setCodeWord((TILE*)GsOUT_PACKET_P, PRIM_RECT, 0xFFFFFF);
     setXY0Fast((TILE*)GsOUT_PACKET_P, -SCREEN_WIDTH, -SCREEN_HEIGHT);
@@ -386,7 +387,7 @@ void Gfx_KcetScreenDraw() // 0x800CA120
     Gfx_BootScreenImageSegmentDraw(&g_KcetLogoImg, 0xF, 256, 0, 160, 160, 48, -80);
 
     // Draw fading overlay tile.
-    ptr = (g_ObjectTableIdx << 4) + &D_800B5C7C;
+    ptr = &g_OtTags0[g_ActiveBuffer][15];
     addPrimFast(ptr, (TILE*)GsOUT_PACKET_P, 3);
     setCodeWord((TILE*)GsOUT_PACKET_P, PRIM_RECT, 0xFFFFFF);
     setXY0Fast((TILE*)GsOUT_PACKET_P, -SCREEN_WIDTH, -SCREEN_HEIGHT);
@@ -447,7 +448,6 @@ void func_800CA2C8(s32 arg0) // 0x800CA2C8
     s32 var_s1; // `D_800CA508`
     u32 var_s2; // `D_800CA510`
     s32 expectedTime;
-    s32 var_v0;
 
     u32 temp_v0_2;
     u32 temp_v0_3;
@@ -455,7 +455,6 @@ void func_800CA2C8(s32 arg0) // 0x800CA2C8
     
     u8* var_s0;  // `D_800CA500`
     u8* temp_s5; // `D_800CA50C`
-    u8* temp_a0;
     u8* temp_s0;
     u8* var_s3; // `D_800CA504`
 
@@ -495,7 +494,6 @@ void func_800CA2C8(s32 arg0) // 0x800CA2C8
         }
 
         var_s2 = var_s2 / 2;
-        var_v0 = var_s2;
 
         if (!(var_s2 & (1 << 8)))
         {

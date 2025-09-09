@@ -1,9 +1,30 @@
 #include "game.h"
 
+#include <libetc.h>
+
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
+#include "bodyprog/joy.h"
+#include "bodyprog/memcard.h"
 #include "bodyprog/gfx/screen_draw.h"
+#include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/math.h"
+
+GsOT_TAG g_OtTags0[2][16] = {};
+q19_12 g_DeltaTime0 = 0;
+GsOT_TAG g_OtTags1[2][2048] = {};
+u32 D_800B9CC4 = 0; // @unused Might be padding.
+q19_12 g_DeltaTime2 = 0;
+s32 g_MainLoop_FrameCount = 0;
+VC_WORK vcWork = {};
+s32 g_ActiveBuffer = 0;
+s32 D_800B9FBC = 0; // @unused Might be padding.
+s_SysWork g_SysWork = {};
+s_GameWork g_GameWork = {};
+s32 D_800BCD00 = 0; // @unused Might be padding.
+s32 D_800BCD04 = 0; // @unused Might be padding.
+s32 D_800BCD08 = 0; // @unused Might be padding.
+s32 g_Gfx_ScreenFade = 0;
 
 void GameState_Boot_Update() // 0x80032D1C
 {
@@ -125,24 +146,24 @@ void MainLoop() // 0x80032EE0
             continue;
         }
 
-        g_ObjectTableIdx = GsGetActiveBuff();
+        g_ActiveBuffer = GsGetActiveBuff();
 
         if (g_GameWork.gameState_594 == GameState_MainLoadScreen ||
             g_GameWork.gameState_594 == GameState_InGame)
         {
-            GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_ObjectTableIdx << 17));
+            GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_ActiveBuffer << 17));
         }
         else if (g_GameWork.gameState_594 == GameState_InventoryScreen)
         {
-            GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_ObjectTableIdx * 40000));
+            GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_ActiveBuffer * 40000));
         }
         else
         {
-            GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_ObjectTableIdx << 15));
+            GsOUT_PACKET_P = (PACKET*)(TEMP_MEMORY_ADDR + (g_ActiveBuffer << 15));
         }
 
-        GsClearOt(0, 0, &g_ObjectTable0[g_ObjectTableIdx]);
-        GsClearOt(0, 0, &g_ObjectTable1[g_ObjectTableIdx]);
+        GsClearOt(0, 0, &g_OrderingTable0[g_ActiveBuffer]);
+        GsClearOt(0, 0, &g_OrderingTable2[g_ActiveBuffer]);
 
         g_SysWork.field_22A0 = 0;
 
@@ -245,8 +266,8 @@ void MainLoop() // 0x80032EE0
 
         // Draw objects?
         GsSwapDispBuff();
-        GsSortClear(g_GameWork.background2dColor_R_58C, g_GameWork.background2dColor_G_58D, g_GameWork.background2dColor_B_58E, &g_ObjectTable0[g_ObjectTableIdx]);
-        GsDrawOt(&g_ObjectTable0[g_ObjectTableIdx]);
-        GsDrawOt(&g_ObjectTable1[g_ObjectTableIdx]);
+        GsSortClear(g_GameWork.background2dColor_R_58C, g_GameWork.background2dColor_G_58D, g_GameWork.background2dColor_B_58E, &g_OrderingTable0[g_ActiveBuffer]);
+        GsDrawOt(&g_OrderingTable0[g_ActiveBuffer]);
+        GsDrawOt(&g_OrderingTable2[g_ActiveBuffer]);
     }
 }

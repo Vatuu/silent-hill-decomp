@@ -1,5 +1,7 @@
 #include "game.h"
 
+#include <ctype.h>
+
 #include "bodyprog/bodyprog.h" // Only needed because of `D_800B5C58`.
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/math.h"
@@ -51,7 +53,7 @@ void Gfx_DebugStringDraw(char* str) // 0x80031F40
     SPRT_8*   glyphSprt;
     DR_TPAGE* tPage;
 
-    ot     = (GsOT*)&D_800B5C58[g_ObjectTableIdx];
+    ot     = (GsOT*)&g_OtTags0[g_ActiveBuffer][6];
     strCpy = str;
     packet = GsOUT_PACKET_P;
     posX   = g_Gfx_DebugStringPosition1.vx;
