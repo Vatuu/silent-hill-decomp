@@ -267,7 +267,7 @@ s_CharaFileInfo g_Chara_FileInfo[] =
 /* LittleIncubus    */ {    FILE_ANIM_LITL_ANM,  FILE_CHARA_LITL_ILM,   FILE_CHARA_LITL_TIM,      64,          1,        NULL,         0,         0,          0 },
 /* GhostDoctor      */ {     FILE_ANIM_DOC_ANM,   FILE_CHARA_DOC_ILM,    FILE_CHARA_DOC_TIM,      64,          1,        NULL,         0,         0,          0 },
 /* Parasite         */ {     FILE_ANIM_ICU_ANM,   FILE_CHARA_ICU_ILM,    FILE_CHARA_ICU_TIM,      64,          1,        NULL,         0,         0,          0 },
-                       {} // End of list.
+/* Padlock          */ {                     0,                    0,                     0,       0,          0,        NULL,         0,         0,          0 }
 };
 
 s_sub_StructUnk3 D_800A93CC[] =
