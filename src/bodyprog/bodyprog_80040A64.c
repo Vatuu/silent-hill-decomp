@@ -1090,7 +1090,7 @@ s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, 
 
 s32 func_80042E2C(s32 xPos, s32 zPos, s32 xFileChunkCoord, s32 zFileChunkCoord) // 0x80042E2C
 {
-    #define FILE_CHUNK_SIZE 0x2800
+    #define FILE_CHUNK_SIZE FP_METER_GEO(40.0f)
 
     #define OUTSIDE_DIST(val, lo, hi) \
         (((val) < (lo)) ? ((lo) - (val)) : (((hi) <= (val)) ? ((val) - (hi)) : 0))

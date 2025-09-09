@@ -1301,32 +1301,32 @@ s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
             ptr->textureName_8 = "PIPE";
             break;
 
-        case InventoryItemId_Phone:
+        case InventoryItemId_CutscenePhone:
             fileIdx      = FILE_ITEM_PHONE_TIM;
             ptr->textureName_8 = "PHONE";
             break;
 
-        case InventoryItemId_Flauros:
+        case InventoryItemId_CutsceneFlauros:
             fileIdx      = FILE_ITEM_FLAUROS_TIM;
             ptr->textureName_8 = "FLAUROS";
             break;
 
-        case InventoryItemId_Aglaophotis:
+        case InventoryItemId_CutsceneAglaophotis:
             fileIdx      = FILE_ITEM_AGLA_TIM;
             ptr->textureName_8 = "AGLA";
             break;
 
-        case InventoryItemId_PlasticBottle:
+        case InventoryItemId_CutscenePlasticBottle:
             fileIdx      = FILE_ITEM_BOTL_TIM;
             ptr->textureName_8 = "BOTL";
             break;
 
-        case InventoryItemId_Baby:
+        case InventoryItemId_CutsceneBaby:
             fileIdx      = FILE_ITEM_BABY_TIM;
             ptr->textureName_8 = "BABY";
             break;
 
-        case InventoryItemId_BloodPack:
+        case InventoryItemId_CutsceneBloodPack:
             fileIdx      = FILE_ITEM_BLOOD_TIM;
             ptr->textureName_8 = "BLOOD";
             break;
@@ -1411,27 +1411,27 @@ s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
             fileIdx = FILE_ITEM_SHOTGUN_PLM;
             break;
 
-        case InventoryItemId_Phone:
+        case InventoryItemId_CutscenePhone:
             fileIdx = FILE_ITEM_PHONE_PLM;
             break;
 
-        case InventoryItemId_Flauros:
+        case InventoryItemId_CutsceneFlauros:
             fileIdx = FILE_ITEM_FLAUROS_PLM;
             break;
 
-        case InventoryItemId_Aglaophotis:
+        case InventoryItemId_CutsceneAglaophotis:
             fileIdx = FILE_ITEM_AGLA_PLM;
             break;
 
-        case InventoryItemId_PlasticBottle:
+        case InventoryItemId_CutscenePlasticBottle:
             fileIdx = FILE_ITEM_BOTL_PLM;
             break;
 
-        case InventoryItemId_Baby:
+        case InventoryItemId_CutsceneBaby:
             fileIdx = FILE_ITEM_BABY_PLM;
             break;
 
-        case InventoryItemId_BloodPack:
+        case InventoryItemId_CutsceneBloodPack:
             fileIdx = FILE_ITEM_BLOOD_PLM;
             break;
 
@@ -1483,7 +1483,7 @@ void func_8003D058() // 0x8003D058
 
     if (ptr0->itemId_0 != NO_VALUE)
     {
-        if (ptr0->itemId_0 == InventoryItemId_Phone)
+        if (ptr0->itemId_0 == InventoryItemId_CutscenePhone)
         {
             coord = &g_SysWork.playerBoneCoords_890[HarryBone_LeftHand];
         } 
@@ -1492,7 +1492,7 @@ void func_8003D058() // 0x8003D058
             coord = &g_SysWork.playerBoneCoords_890[HarryBone_RightHand];
         }
 
-        if (Fs_QueueIsEntryLoaded(ptr0->field_4) != 0) 
+        if (Fs_QueueIsEntryLoaded(ptr0->field_4)) 
         {
             lmHeader = ptr0->field_14;
 

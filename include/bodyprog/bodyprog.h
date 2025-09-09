@@ -1320,8 +1320,8 @@ STATIC_ASSERT_SIZEOF(s_DmsEntry, 16);
 
 typedef struct
 {
-    s16 start;
-    s16 duration;
+    s16 start;    // Start keyframe?
+    s16 duration; // Frame duration at 30FPS?
 } s_DmsInterval;
 STATIC_ASSERT_SIZEOF(s_DmsInterval, 4);
 
@@ -2438,7 +2438,7 @@ void func_8003C8F8(s_800BCE18_2BEC_0* arg0, char* newStr);
 
 void func_8003C92C(s_800BCE18_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* rot);
 
-void func_8003CD6C(s_PlayerCombat* playerCombatInfo);
+void func_8003CD6C(s_PlayerCombat* combat);
 
 /** Returns `bool`? */
 s32 func_8003CDA0(s32 invSlotIdx);
@@ -3077,6 +3077,7 @@ s32 func_8005F680(s_func_800699F8* arg0);
 /** Spatial SFX func? */
 void func_8005DE0C(s32 sfx, VECTOR3*, s32, s32, s32); // Types assumed.
 
+/** Something related to events of the map and loading of textures? */
 void func_8005E0DC(s32 mapIdx); // Types assumed.
 
 void func_8005E70C();
@@ -3111,8 +3112,7 @@ s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2,
 
 s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, s_DmsKeyframeCamera* frame0, s_DmsKeyframeCamera* frame1, s32 alpha);
 
-/** DMS func. */
-void func_8008D1D0(s32* keyframePrev, s32* keyframeNext, s32* alpha, s32 time, s_DmsEntry* camEntry, s_DmsHeader* header);
+void Dms_IntervalGetStatus(s32* prevKeyframe, s32* nextKeyframe, s32* alpha, s32 time, s_DmsEntry* camEntry, s_DmsHeader* header);
 
 u32 func_8008D2C4(s32 time, s_DmsHeader* header);
 

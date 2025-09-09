@@ -533,14 +533,12 @@ typedef enum _InventoryItemId
     InventoryItemId_Shotgun              = 162,
     InventoryItemId_HyperBlaster         = 163,
 	
-	/** Cutscene-only. */
-
-    InventoryItemId_Phone                = 164,
-    InventoryItemId_Flauros              = 165,
-    InventoryItemId_Aglaophotis          = 166,
-    InventoryItemId_PlasticBottle        = 167,
-    InventoryItemId_Baby                 = 168,
-    InventoryItemId_BloodPack            = 169,
+    InventoryItemId_CutscenePhone         = 164,
+    InventoryItemId_CutsceneFlauros       = 165,
+    InventoryItemId_CutsceneAglaophotis   = 166,
+    InventoryItemId_CutscenePlasticBottle = 167,
+    InventoryItemId_CutsceneBaby          = 168,
+    InventoryItemId_CutsceneBloodPack     = 169,
 
     InventoryItemId_HandgunBullets       = 192,
     InventoryItemId_RifleShells          = 193,

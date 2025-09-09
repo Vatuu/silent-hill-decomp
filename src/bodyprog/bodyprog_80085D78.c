@@ -2454,7 +2454,7 @@ void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, s32 
     s_DmsKeyframeCharacter  curFrame;
 
     charaEntry = &header->characters_18[charaIdx];
-    func_8008D1D0(&keyframePrev, &keyframeNext, &alpha, time, charaEntry, header);
+    Dms_IntervalGetStatus(&keyframePrev, &keyframeNext, &alpha, time, charaEntry, header);
 
     keyframes = charaEntry->keyframes_C.character;
     Dms_CharacterKeyframeInterpolate(&curFrame, &keyframes[keyframePrev], &keyframes[keyframeNext], alpha);
@@ -2499,7 +2499,7 @@ s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2,
 
     camEntry = &header->camera_1C;
 
-    func_8008D1D0(&keyframePrev, &keyframeNext, &alpha, time, camEntry, header);
+    Dms_IntervalGetStatus(&keyframePrev, &keyframeNext, &alpha, time, camEntry, header);
     camProjValue = Dms_CameraKeyframeInterpolate(&curFrame, &camEntry->keyframes_C.camera[keyframePrev], &camEntry->keyframes_C.camera[keyframeNext], alpha);
 
     posTarget->vx = FP_METER_FROM_GEO(curFrame.posTarget_0.vx + header->origin_C.vx);
@@ -2537,7 +2537,7 @@ s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, s_DmsKeyframeCame
     return result->field_C[1];
 }
 
-void func_8008D1D0(s32* keyframePrev, s32* keyframeNext, s32* alpha, s32 time, s_DmsEntry* camEntry, s_DmsHeader* header) // 0x8008D1D0
+void Dms_IntervalGetStatus(s32* prevKeyframe, s32* nextKeyframe, s32* alpha, s32 time, s_DmsEntry* camEntry, s_DmsHeader* header) // 0x8008D1D0
 {
     s32 prevVal;
     s32 nextVal;
@@ -2569,11 +2569,10 @@ void func_8008D1D0(s32* keyframePrev, s32* keyframeNext, s32* alpha, s32 time, s
             break;
     }
 
-    *keyframePrev = func_8008D330(prevVal, camEntry);
-    *keyframeNext = func_8008D330(nextVal, camEntry);
+    *prevKeyframe = func_8008D330(prevVal, camEntry);
+    *nextKeyframe = func_8008D330(nextVal, camEntry);
 }
 
-// Dms_IntervalGetStatus?
 u32 func_8008D2C4(s32 time, s_DmsHeader* header)
 {
     s_DmsInterval* interval;

@@ -350,7 +350,6 @@ Gfx_MainMenu_FogRandomize                   = 0x8003BAC4; // type:func
 Gfx_MainMenu_FogScatter                     = 0x8003BBF4; // type:func
 Gfx_MainMenu_FogUpdate                      = 0x8003BC8C; // type:func
 Map_TypeGet                                 = 0x8003BD2C; // type:func
-Map_TypeGet                                 = 0x8003BD2C; // type:func
 GameFs_BgEtcGfxLoad                         = 0x8003BE6C; // type:func
 GameFs_BgItemLoad                           = 0x8003BE9C; // type:func
 Map_SpeedZoneGet                            = 0x8003BF60; // type:func
@@ -647,6 +646,7 @@ Dms_CharacterGetPosRotByIdx                 = 0x8008CB90; // type:func
 Dms_CharacterKeyframeInterpolate            = 0x8008CC98; // type:func
 Dms_CameraGetTargetPos                      = 0x8008CE1C; // type:func
 Dms_CameraKeyframeInterpolate               = 0x8008CFEC; // type:func
+Dms_IntervalGetStatus                       = 0x8008D1D0; // type:func
 Math_LerpFixed12                            = 0x8008D3D4; // type:func
 Map_WaterZoneGet                            = 0x8008E51C; // type:func
 
