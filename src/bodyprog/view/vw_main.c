@@ -32,7 +32,7 @@ void vwGetViewAngle(SVECTOR* ang) // 0x80048AC4
     *ang = vwViewPointInfo.worldang;
 }
 
-void Vw_SetLookAtMatrix(VECTOR3* pos, VECTOR3* lookAt) // 0x80048AF4
+void Vw_SetLookAtMatrix(const VECTOR3* pos, const VECTOR3* lookAt) // 0x80048AF4
 {
     s32     deltaX; // Q23.8
     s32     deltaY; // Q23.8
@@ -82,7 +82,7 @@ void vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, s32 ref_x, s32 ref_y, s32 re
     view_mtx->t[2] = (ref_z >> 4) + FP_MULTIPLY(cam_xz_r >> 4, Math_Cos(cam_ang_y), Q12_SHIFT);
 }
 
-void vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, MATRIX* cammat) // 0x80048CF0
+void vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, const MATRIX* cammat) // 0x80048CF0
 {
     vwViewPointInfo.vwcoord.flg   = false;
     vwViewPointInfo.vwcoord.super = pcoord;

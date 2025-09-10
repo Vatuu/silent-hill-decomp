@@ -3,6 +3,33 @@
 
 #include "game.h"
 
+// TODO: Move to wherever it belongs.
+/*s_AnimInfo ALESSA_ANIM_INFOS[] =
+{
+    { Anim_Update2, ANIM_STATUS(0,  false), false, ANIM_STATUS(0,  false), 0, { Q19_12(0)  }, NO_VALUE, 0   },
+    { Anim_Update1, ANIM_STATUS(0,  true),  false, NO_VALUE,               0, { Q19_12(30) }, NO_VALUE, 1   },
+    { Anim_Update2, ANIM_STATUS(1,  false), false, ANIM_STATUS(10, true),  0, { Q19_12(5)  }, NO_VALUE, 0   },
+    { Anim_Update1, ANIM_STATUS(1,  true),  false, NO_VALUE,               0, { Q19_12(5)  }, 0,        15  },
+    { Anim_Update2, ANIM_STATUS(2,  false), false, ANIM_STATUS(10, true),  0, { Q19_12(5)  }, NO_VALUE, 16  },
+    { Anim_Update1, ANIM_STATUS(2,  true),  false, NO_VALUE,               0, { Q19_12(15) }, 16,       44  },
+    { Anim_Update2, ANIM_STATUS(3,  false), false, ANIM_STATUS(3,  true),  0, { Q19_12(10) }, NO_VALUE, 45  },
+    { Anim_Update0, ANIM_STATUS(3,  true),  false, ANIM_STATUS(3,  true),  0, { Q19_12(10) }, 45,       131 },
+    { Anim_Update2, ANIM_STATUS(4,  false), false, ANIM_STATUS(4,  true),  0, { Q19_12(20) }, NO_VALUE, 132 },
+    { Anim_Update0, ANIM_STATUS(4,  true),  false, ANIM_STATUS(4,  true),  0, { Q19_12(10) }, 132,      170 },
+    { Anim_Update2, ANIM_STATUS(5,  false), false, ANIM_STATUS(5,  true),  0, { Q19_12(10) }, NO_VALUE, 171 },
+    { Anim_Update0, ANIM_STATUS(5,  true),  false, ANIM_STATUS(5,  true),  0, { Q19_12(10) }, 171,      216 },
+    { Anim_Update2, ANIM_STATUS(6,  false), false, ANIM_STATUS(6,  true),  0, { Q19_12(1)  }, NO_VALUE, 217 },
+    { Anim_Update0, ANIM_STATUS(6,  true),  false, ANIM_STATUS(6,  true),  0, { Q19_12(10) }, 217,      237 },
+    { Anim_Update2, ANIM_STATUS(7,  true),  false, ANIM_STATUS(7,  true),  0, { Q19_12(1)  }, NO_VALUE, 238 },
+    { Anim_Update0, ANIM_STATUS(7,  true),  false, ANIM_STATUS(7,  true),  0, { Q19_12(10) }, 238,      288 },
+    { Anim_Update2, ANIM_STATUS(8,  false), false, ANIM_STATUS(8,  true),  0, { Q19_12(10) }, NO_VALUE, 289 },
+    { Anim_Update0, ANIM_STATUS(8,  true),  false, ANIM_STATUS(8,  true),  0, { Q19_12(10) }, 289,      309 },
+    { Anim_Update2, ANIM_STATUS(9,  false), false, ANIM_STATUS(9,  true),  0, { Q19_12(5)  }, NO_VALUE, 310 },
+    { Anim_Update1, ANIM_STATUS(9,  true),  false, NO_VALUE,               0, { Q19_12(3)  }, 310,      325 },
+    { Anim_Update2, ANIM_STATUS(10, false), false, ANIM_STATUS(10, true),  0, { Q19_12(5)  }, NO_VALUE, 326 },
+    { Anim_Update1, ANIM_STATUS(10, true),  false, NO_VALUE,               0, { Q19_12(3)  }, 326,      341 }
+};*/
+
 #define PARTICLE_COUNT_MAX 300
 
 typedef enum
@@ -82,7 +109,7 @@ typedef struct _SfxVolume
 {
     u16 id_0;
     u8  volume_2;
-    u8  pad_3;
+    u8  __pad_3;
 } s_SfxVolume;
 /** Likely maps onto another struct somewhere. Starts with an `s_AnimInfo`, has some index properties deeper in it. */
 typedef struct

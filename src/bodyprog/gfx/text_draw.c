@@ -4,50 +4,51 @@
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/math.h"
 
-#define DIALOG_CODE_NEWLINE         'N'
-#define DIALOG_CODE_JUMP_DELAY      'J'
-#define DIALOG_CODE_LINE_POSITION   'L'
-#define DIALOG_CODE_MIDDLE_ALIGN    'M'
-#define DIALOG_CODE_TAB             'T' // Unused.
-#define DIALOG_CODE_COLOR           'C'
-#define DIALOG_CODE_DISPLAY_ALL     'D'
-#define DIALOG_CODE_END             'E'
-#define DIALOG_CODE_SELECT          'S'
-#define DIALOG_CODE_HIGH_RESOLUTION 'H'
+#define MAP_MSG_CODE_MARKER        '~' /** Message code start. */
+#define MAP_MSG_CODE_COLOR         'C' /** Set color. */
+#define MAP_MSG_CODE_DISPLAY_ALL   'D' /** Display message instantly without roll. */
+#define MAP_MSG_CODE_END           'E' /** End message. */
+#define MAP_MSG_CODE_HIGH_RES      'H' /** High-resolution glyph drawing. */
+#define MAP_MSG_CODE_JUMP          'J' /** Jump timer. */
+#define MAP_MSG_CODE_LINE_POSITION 'L' /** Set next line position. */
+#define MAP_MSG_CODE_MIDDLE        'M' /** Align center. */
+#define MAP_MSG_CODE_NEWLINE       'N' /** Newline. */
+#define MAP_MSG_CODE_SELECT        'S' /** Display dialog prompt with selectable entries. */
+#define MAP_MSG_CODE_TAB           'T' /** Inset line. */
 
-const s32 rodataPad_80025D68 = 0;
+const s32 __PAD = 0;
 
-static const u8 g_12x16FontWidths[84] =
+static const u8 FONT_12_X_16_GLYPH_WIDTHS[84] =
 {
-    0x03, 0x07, 0x07, 0x0B, 0x0B, 0x04, 0x0A, 0x04, 0x06, 0x0A, 0x0A, 0x0A, 0x0A, 0x0A, 0x0A, 0x0A,
-    0x0A, 0x0A, 0x0A, 0x04, 0x04, 0x0A, 0x0B, 0x0A, 0x08, 0x0D, 0x0C, 0x0C, 0x0C, 0x0D, 0x0B, 0x0B,
-    0x0D, 0x0C, 0x09, 0x09, 0x0C, 0x0C, 0x0D, 0x0C, 0x0D, 0x0B, 0x0D, 0x0C, 0x0A, 0x0B, 0x0D, 0x0C,
-    0x0C, 0x0C, 0x0B, 0x0C, 0x06, 0x04, 0x06, 0x08, 0x00, 0x03, 0x09, 0x0A, 0x09, 0x09, 0x09, 0x07,
-    0x0B, 0x0B, 0x06, 0x06, 0x0A, 0x06, 0x0D, 0x0B, 0x0A, 0x0B, 0x0A, 0x08, 0x08, 0x07, 0x0A, 0x0A,
-    0x0C, 0x0A, 0x0A, 0x09
+    3,  7,  7,  11, 11, 4,  10, 4,  6,  10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 4,  4, 
+    10, 11, 10, 8,  13, 12, 12, 12, 13, 11, 11, 13, 12, 9,  9,  12, 12, 13, 12, 13, 11,
+    13, 12, 10, 11, 13, 12, 12, 12, 11, 12, 6,  4,  6,  8,  0,  3,  9,  10,  9, 9,  9,
+    7,  11, 11, 6,  6,  10, 6,  13, 11, 10, 11, 10, 8,  8,  7,  10, 10, 12, 10, 10, 9
 };
 
-static const u32 g_MapMsg_Colors[8] =
+/** @brief See `e_StringColorId`. */
+static const u32 STRING_COLORS[StringColorId_Count] =
 {
-    0x644080A0,
-    0x64202020,
-    0x64288018,
-    0x6460B808,
-    0x64000080,
-    0x64288018,
-    0x64646464,
-    0x64808080,
+    PACKED_COLOR(0xA0, 0x80, 0x40, 0x64),
+    PACKED_COLOR(0x20, 0x20, 0x20, 0x64),
+    PACKED_COLOR(0x18, 0x80, 0x28, 0x64),
+    PACKED_COLOR(0x08, 0xB8, 0x60, 0x64),
+    PACKED_COLOR(0x80, 0x00, 0x00, 0x64),
+    PACKED_COLOR(0x18, 0x80, 0x28, 0x64),
+    PACKED_COLOR(0x64, 0x64, 0x64, 0x64),
+    PACKED_COLOR(0x80, 0x80, 0x80, 0x64)
 };
 
-static s16 g_StringColorId = 7;
+/** `e_ColorId` */
+static s16 g_StringColorId = StringColorId_White;
 
 // 2 bytes of padding.
 
 /** Text index 2D layer.
- * In case of modifying `Gfx_StringSetPosition` to set it to
- * a value lower than 6 text will not be affected by the fade effect
+ * If modifying `Gfx_StringSetPosition`, when setting it to
+ * a value lower than 6, text will not be affected by the fade effect.
  */
-static s32 g_Strings2dLayerIndex = 6;
+static s32 g_Strings2dLayerIdx = 6;
 
 void Gfx_StringSetPosition(s32 x, s32 y) // 0x8004A87C
 {
@@ -65,17 +66,17 @@ void Gfx_StringSetPosition(s32 x, s32 y) // 0x8004A87C
         g_StringPosition.vy = y - OFFSET_Y;
     }
 
-    g_Strings2dLayerIndex = 6;
+    g_Strings2dLayerIdx = 6;
 }
 
-void Gfx_StringsSet2dLayerIdx(s32 idx) // 0x8004A8C0
+void Gfx_Strings2dLayerIdxSet(s32 idx) // 0x8004A8C0
 {
-    g_Strings2dLayerIndex = idx;
+    g_Strings2dLayerIdx = idx;
 }
 
 void Gfx_StringsReset2dLayerIdx() // 0x8004A8CC
 {
-    g_Strings2dLayerIndex = 6;
+    g_Strings2dLayerIdx = 6;
 }
 
 void Gfx_StringSetColor(s16 colorId) // 0x8004A8DC
@@ -126,8 +127,8 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
     posX = g_StringPosition.vx;
     posY = g_StringPosition.vy;
 
-    glyphColor = g_MapMsg_Colors[g_StringColorId];
-    ot         = &g_OtTags0[g_ActiveBuffer][g_Strings2dLayerIndex];
+    glyphColor = STRING_COLORS[g_StringColorId];
+    ot         = &g_OtTags0[g_ActiveBufferIdx][g_Strings2dLayerIdx];
 
     if (!g_SysWork.enableHighResGlyphs_2350_0)
     {
@@ -177,7 +178,7 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
                 glyphPoly = (POLY_FT4*)GsOUT_PACKET_P;
 
                 glyphIdx   = charCode - GLYPH_TABLE_ASCII_OFFSET;
-                glyphWidth = g_12x16FontWidths[glyphIdx];
+                glyphWidth = FONT_12_X_16_GLYPH_WIDTHS[glyphIdx];
 
                 setPolyFT4(glyphPoly);
                 setRGB0(glyphPoly, glyphColor, glyphColor >> 8, glyphColor >> 16);
@@ -207,7 +208,7 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
                 *((u32*)&glyphSprt->w) = 0x10000C;
                 
                 glyphIdx = charCode - GLYPH_TABLE_ASCII_OFFSET;
-                posX    += g_12x16FontWidths[glyphIdx];
+                posX    += FONT_12_X_16_GLYPH_WIDTHS[glyphIdx];
 
                 addPrimFast(ot, glyphSprt, 4);
                 *((u32*)&glyphSprt->r0)   = glyphColor;
@@ -234,7 +235,7 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
         // New color.
         else if (charCode >= '\x01' && charCode < '\b')
         {
-            glyphColor      = g_MapMsg_Colors[charCode];
+            glyphColor      = STRING_COLORS[charCode];
             g_StringColorId = charCode;
         }
         // Terminator.
@@ -357,7 +358,7 @@ void Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004ACF4
                     charCode = '^';
                 }
 
-                g_MapMsg_WidthTable[D_800C38B4.lineCount_0 - 1] += g_12x16FontWidths[charCode - GLYPH_TABLE_ASCII_OFFSET];
+                g_MapMsg_WidthTable[D_800C38B4.lineCount_0 - 1] += FONT_12_X_16_GLYPH_WIDTHS[charCode - GLYPH_TABLE_ASCII_OFFSET];
                 mapMsg++;
                 break;
         }
@@ -400,8 +401,8 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
     packet = NULL;
     result = 0;
 
-    ot                  = (GsOT*)&g_OtTags0[g_ActiveBuffer][6];
-    color               = g_MapMsg_Colors[g_StringColorId];
+    ot                  = (GsOT*)&g_OtTags0[g_ActiveBufferIdx][6];
+    color               = STRING_COLORS[g_StringColorId];
     g_StringPosition.vx = -(g_MapMsg_WidthTable[0] >> 1);
 
     if (!g_SysWork.enableHighResGlyphs_2350_0)
@@ -570,7 +571,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
                         break;
 
                     case MAP_MSG_CODE_COLOR:
-                        color           = g_MapMsg_Colors[codeArg];
+                        color           = STRING_COLORS[codeArg];
                         g_StringColorId = codeArg;
                         break;
 
@@ -611,7 +612,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
                 glyphPoly = (POLY_FT4*)GsOUT_PACKET_P;
 
                 idx       = charCode - CHARCODE_OFFSET;
-                charWidth = g_12x16FontWidths[charCode - CHARCODE_OFFSET];
+                charWidth = FONT_12_X_16_GLYPH_WIDTHS[charCode - CHARCODE_OFFSET];
 
                 setPolyFT4(glyphPoly);
                 setRGB0(glyphPoly, (s8)color, (s8)(color >> 8), (s8)(color >> 16));
@@ -641,7 +642,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
                 *((u32*)&glyphSprt->w) = 0x10000C;
 
                 idx        = charCode - CHARCODE_OFFSET;
-                glyphPosX += g_12x16FontWidths[idx];
+                glyphPosX += FONT_12_X_16_GLYPH_WIDTHS[idx];
 
                 addPrimFast(ot, glyphSprt, 4);
                 *((u32*)&glyphSprt->r0)   = color;
@@ -694,11 +695,10 @@ void Gfx_MapMsg_DefaultStringInfoSet() // 0x8004B684
     D_800C38B0.field_0                   = 0;
     D_800C38B0.positionIdx_1             = 1;
     g_StringPositionX1                   = SCREEN_POSITION_X(-37.5f);
-    g_StringColorId                      = ColorId_White;
+    g_StringColorId                      = StringColorId_White;
     g_SysWork.enableHighResGlyphs_2350_0 = false;
 }
 
-/** @unused */
 void func_8004B6D4(s16 arg0, s16 arg1) // 0x8004B6D4
 {
     if (arg0 != NO_VALUE)
@@ -713,7 +713,6 @@ void func_8004B6D4(s16 arg0, s16 arg1) // 0x8004B6D4
     }
 }
 
-/** @unused */
 void func_8004B74C(s16 arg0) // 0x8004B74C
 {
     if (arg0 < 0 || arg0 >= 5)
@@ -725,7 +724,6 @@ void func_8004B74C(s16 arg0) // 0x8004B74C
     D_800C391E = arg0;
 }
 
-/** @unused */
 void func_8004B76C(char* str, s32 useFixedWidth) // 0x8004B76C
 {
     #define GLYPH_SIZE_X       11
@@ -741,7 +739,7 @@ void func_8004B76C(char* str, s32 useFixedWidth) // 0x8004B76C
 
     glyphSprt  = (GsSPRITE*)PSX_SCRATCH_ADDR(0x30);
     *glyphSprt = D_800C38F8;
-    ot         = &g_OrderingTable2[g_ActiveBuffer];
+    ot         = &g_OrderingTable2[g_ActiveBufferIdx];
 
     // Parse string.
     while (*str != '\0')
@@ -760,7 +758,7 @@ void func_8004B76C(char* str, s32 useFixedWidth) // 0x8004B76C
                 } 
                 else 
                 {
-                    glyphSprt->w = g_12x16FontWidths[glyphIdx];
+                    glyphSprt->w = FONT_12_X_16_GLYPH_WIDTHS[glyphIdx];
                 }
 
                 glyphSprt->tpage = (tileRow & 0xF) | 0x10;

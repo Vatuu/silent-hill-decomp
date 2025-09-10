@@ -148,7 +148,7 @@ typedef struct _FsAnmDesc
 {
     u32 field_0; // Unknown index.
     u32 charaId_4;
-    u32 coords_8; /** `GsCOORDINATE2` pointer. */
+    u32 coords_8; /** TODO: `GsCOORDINATE2` pointer. */
 } s_FsAnmDesc;
 STATIC_ASSERT_SIZEOF(s_FsAnmDesc, 12);
 
@@ -269,7 +269,7 @@ s32 Fs_QueueStartRead(s32 fileIdx, void* dest);
  * @param image Where to upload the TIM in VRAM.
  * @return Index of the new queue entry.
  */
-s32 Fs_QueueStartReadTim(s32 fileIdx, void* dest, s_FsImageDesc* image);
+s32 Fs_QueueStartReadTim(s32 fileIdx, void* dest, const s_FsImageDesc* image);
 
 /** @brief Add a new ANM read operation to the queue.
  * Adds a read operation with `postLoad = FS_POST_LOAD_ANM`.
@@ -395,7 +395,7 @@ bool Fs_QueueResetTick(s_FsQueueEntry* entry);
  * @param entry PCDRV read operation entry to process.
  * @return `true` if succeeded, `false` otherwise.
  */
-bool Fs_QueueTickReadPcDvr(s_FsQueueEntry* entry);
+bool Fs_QueueTickReadPcDrv(s_FsQueueEntry* entry);
 
 /** @brief Ticks post-loading once.
  *

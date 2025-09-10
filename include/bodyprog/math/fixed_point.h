@@ -174,6 +174,14 @@
 #define Q3_12_TO_Q0_8(x) \
     (u8)((x) >> 4)
 
+/** @brief Extracts the fractional part of a value in fixed-point QX.12.
+ *
+ * @param x Fixed-point value in QX.12.
+ * @return Fractional part of `x` in QX.12.
+ */
+#define QX_12_FRACT(x) \
+    ((x) & 0xFFF)
+
 // =========================================
 // Abstract Fixed-Point Q Format Conversion
 // =========================================
@@ -192,9 +200,7 @@
  * @return Normalized fixed-point alpha in Q3.12, integer range `[0, 4095]`.
  */
 #define FP_ALPHA_NORM(alpha) \
-    ((alpha) & 0xFFF)
-
-// TODO: Volume and color byte alpha format might be more common, need to confirm.
+    QX_12_FRACT(alpha)
 
 /** @brief Converts a normalized floating-point sound volume in the range `[0.0f, 1.0f]` to fixed-point Q0.8, integer range `[0, 255]`.
  *
@@ -204,7 +210,18 @@
 #define FP_VOLUME(vol) \
     (u8)CLAMP(FP_FLOAT_TO(vol, Q8_SHIFT), 0, FP_FLOAT_TO(1.0f, Q8_SHIFT) - 1)
 
+/** @brief Converts a normalized floating-point analog stick value in the range `[-1.0f, 1.0f]` to fixed point Q0.7, integer range `[-128, 127]`.
+ *
+ * @param analog Analog stick value (`float`).
+ * @return Analog stick value in Q0.7, integer range `[-128, 127]`.
+ */
+#define FP_STICK(analog)                                                                                        \
+    (s8)(((analog) >= 0) ? CLAMP(FP_FLOAT_TO(analog, Q8_SHIFT) / 2, 0, (FP_FLOAT_TO(1.0f, Q8_SHIFT) / 2) - 1) : \
+                          -CLAMP(FP_FLOAT_TO(ABS(analog), Q8_SHIFT) / 2, 0, FP_FLOAT_TO(1.0f, Q8_SHIFT) / 2))
+
 /** @brief Converts a normalized floating-point color component in the range `[0.0f, 1.0f]` to fixed-point Q0.8, integer range `[0, 255]`.
+ *
+ * TODO: Deprecated, don't use. Doesn't make sense to have `float` color components in this project.
  *
  * @param comp Color component (`float`).
  * @return Fixed-point color component in Q0.8, integer range `[0, 255]` (`u8`).

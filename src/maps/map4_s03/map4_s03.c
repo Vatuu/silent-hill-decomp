@@ -281,10 +281,7 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
 
     func_800D3B74(chara);
 
-    chara->model_0.anim_4.status_0      = ANIM_STATUS(8, false);
-    chara->model_0.anim_4.time_4         = FP_TIME(258.0f);
-    chara->model_0.anim_4.keyframeIdx_8 = 258;
-
+    Character_AnimSet(chara, ANIM_STATUS(8, false), 258);
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, TWINFEELER_ANIM_INFOS);
 
     chara->damageReceived_C0 = FP_HEALTH(0.0f);
@@ -392,7 +389,7 @@ void Ai_Twinfeeler_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords
 
     if (chara->model_0.state_2 != 1 || Ai_Twinfeeler_Init(chara))
     {
-        if (g_DeltaTime0 != 0)
+        if (g_DeltaTime0 != FP_TIME(0.0))
         {
             func_800D3E58(chara);
             func_800D53B0(chara, coords);

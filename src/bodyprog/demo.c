@@ -145,11 +145,11 @@ void Demo_GameRandSeedRestore() // 0x8008F370
     Rng_SetSeed(g_Demo_PrevRandSeed);
 }
 
-s32 g_Demo_Play = 0;
+bool g_Demo_Play = false;
 
 void Demo_Start() // 0x8008F398
 {
-    g_Demo_Play = 1;
+    g_Demo_Play = true;
     g_SysWork.flags_22A4 |= 1 << 1;
 
     Demo_GameGlobalsUpdate();
@@ -161,18 +161,18 @@ void Demo_Start() // 0x8008F398
 
 void Demo_Stop() // 0x8008f3f0
 {
-    g_Demo_Play = 0;
+    g_Demo_Play = false;
     g_SysWork.flags_22A4 &= ~(1 << 1);
 
     Demo_GameGlobalsRestore();
     Demo_GameRandSeedRestore();
 }
 
-bool Gfx_ScreenFadeIn_InProgress(s32 arg0)
+bool Gfx_ScreenFadeIn_IsInProgress(s32 arg0)
 {
-    s32 caseVar = arg0 & ~(1 << 0);
+    s32 screenFadeStatus = arg0 & ~(1 << 0);
 
-    switch (caseVar)
+    switch (screenFadeStatus)
     {
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false):
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false):
@@ -265,7 +265,8 @@ bool Demo_Update() // 0x8008F5D8
     s32         var1;
     u32         demoStep;
     s_GameWork* gameWork;
-    static s32  prevScreenFade = 0;
+
+    static s32 prevScreenFade = 0;
 
     var0           = prevScreenFade;
     var1           = D_800C489C;
@@ -294,7 +295,7 @@ bool Demo_Update() // 0x8008F5D8
         return false;
     }
 
-    if (!Gfx_ScreenFadeIn_InProgress(var0) || !Gfx_ScreenFadeIn_InProgress(g_Gfx_ScreenFade) || var1 != 0)
+    if (!Gfx_ScreenFadeIn_IsInProgress(var0) || !Gfx_ScreenFadeIn_IsInProgress(g_Gfx_ScreenFade) || var1 != 0)
     {
         g_Demo_CurFrameData = NULL;
         return true;

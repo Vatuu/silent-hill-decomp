@@ -7,6 +7,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
 #include "bodyprog/item_screens.h"
+#include "bodyprog/joy.h"
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
 
@@ -1865,11 +1866,11 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             {
                 if ((g_MapOverlayHeader.field_38[D_800AF220].time_4 + 12) >= chara->model_0.anim_4.keyframeIdx_8)
                 {
-                    func_80071620(chara->model_0.anim_4.status_0, chara, g_MapOverlayHeader.field_38[D_800AF220].time_4 + 0xC, 0x526);
+                    func_80071620(chara->model_0.anim_4.status_0, chara, g_MapOverlayHeader.field_38[D_800AF220].time_4 + 0xC, Sfx_Unk1318);
                 }
                 else
                 {
-                    func_80071620(chara->model_0.anim_4.status_0, chara, g_MapOverlayHeader.field_38[D_800AF220].time_4 + 0x20, 0x527);
+                    func_80071620(chara->model_0.anim_4.status_0, chara, g_MapOverlayHeader.field_38[D_800AF220].time_4 + 0x20, Sfx_Unk1319);
                 }
                 
                 temp_a2 = D_800AF070[chara->model_0.anim_4.keyframeIdx_8 - g_MapOverlayHeader.field_38[D_800AF220].time_4];
@@ -1883,7 +1884,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                     var_v1_5 = temp_a2;
                 }
                 
-                temp_s0_3                                    = temp_a2 + FP_MULTIPLY(var_v1_5 - temp_a2, chara->model_0.anim_4.time_4 & 0xFFF, Q12_SHIFT);
+                temp_s0_3                                    = temp_a2 + FP_MULTIPLY(var_v1_5 - temp_a2, QX_12_FRACT(chara->model_0.anim_4.time_4), Q12_SHIFT);
                 g_SysWork.player_4C.chara_0.field_D8.field_0 = 0;
                 g_SysWork.player_4C.chara_0.field_D8.field_2 = 0;
                 g_SysWork.player_4C.chara_0.field_D8.field_4 = FP_MULTIPLY(temp_s0_3, Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
@@ -2473,8 +2474,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
             if (enemyAttackedIdx == g_SysWork.enemyTargetIdx_2353)
             {
-                chara->rotation_24.pad = (ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_0) - g_SysWork.player_4C.chara_0.position_18.vx,
-                                                (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_2) - g_SysWork.player_4C.chara_0.position_18.vz) + 0x1000) & 0xFFF;
+                chara->rotation_24.pad = QX_12_FRACT(ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_0) - g_SysWork.player_4C.chara_0.position_18.vx,
+                                                           (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_2) - g_SysWork.player_4C.chara_0.position_18.vz) + 0x1000);
             }
             else
             {
@@ -2502,8 +2503,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
                 if (enemyAttackedIdx == g_SysWork.enemyTargetIdx_2353)
                 {
-                    temp_a1 = (ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_0) - g_SysWork.player_4C.chara_0.position_18.vx,
-                                      (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_2) - g_SysWork.player_4C.chara_0.position_18.vz) + 0x1000) & 0xFFF;
+                    temp_a1 = QX_12_FRACT(ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_0) - g_SysWork.player_4C.chara_0.position_18.vx,
+                                                (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_2) - g_SysWork.player_4C.chara_0.position_18.vz) + 0x1000);
 
                     Math_ShortestAngleGet(chara->rotation_24.vy, temp_a1, &ssp20);
                     D_800C454C = g_DeltaTime0 * 0xF;
@@ -3222,12 +3223,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 playerTurn = (g_Player_IsTurningLeft != false) * 2;
             }
 
-            if ((extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk29, true) ||
-                 extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[1].field_6) &&
-                (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk30, true) ||
-                 extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[2].field_6) &&
-                (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk32, true) ||
-                 extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[4].field_6))
+            if ((extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk29, true) || extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[1].field_6) &&
+                (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk30, true) || extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[2].field_6) &&
+                (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk32, true) || extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[4].field_6))
             {
                 playerTurn = 0;
                 chara->properties_E4.player.field_100++;
@@ -3308,8 +3306,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
                 if (enemyAttackedIdx == g_SysWork.enemyTargetIdx_2353 && enemyAttackedIdx != NO_VALUE)
                 {
-                    chara->rotation_24.pad = (ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_0) - g_SysWork.player_4C.chara_0.position_18.vx,
-                                                    (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_2) - g_SysWork.player_4C.chara_0.position_18.vz) + 0x1000) & 0xFFF;
+                    chara->rotation_24.pad = QX_12_FRACT(ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_0) - g_SysWork.player_4C.chara_0.position_18.vx,
+                                                               (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_2) - g_SysWork.player_4C.chara_0.position_18.vz) + 0x1000);
                 }
                 else
                 {
@@ -4565,7 +4563,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             // Walking.
             else
             {
-                if (g_Controller0->sticks_20.sticks_0.leftY < -0x3F)
+                if (g_Controller0->sticks_20.sticks_0.leftY <= -STICK_THRESHOLD)
                 {
                     D_800AF216 = ABS(g_Controller0->sticks_20.sticks_0.leftY);
                     func_80070B84(chara, FP_METER(0.75f), FP_METER(1.4f), 2);
@@ -4714,7 +4712,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
         case PlayerLowerBodyState_RunForward:
             chara->properties_E4.player.exhaustionTimer_FC += g_DeltaTime0;
 
-            if (g_Controller0->sticks_20.sticks_0.leftY < -0x3F)
+            if (g_Controller0->sticks_20.sticks_0.leftY <= -STICK_THRESHOLD)
             {
                 D_800AF216 = ABS(g_Controller0->sticks_20.sticks_0.leftY);
 
@@ -4927,7 +4925,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
                 }
             }
-			
+
             // Depending on frame of gait cycle, set left or right wall stop anim variant.
             if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_WallStopRight)
             {
@@ -4978,7 +4976,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 }
             }
             // Walking backward.
-            else if (g_Controller0->sticks_20.sticks_0.leftY >= (1 << 6))
+            else if (g_Controller0->sticks_20.sticks_0.leftY >= STICK_THRESHOLD)
             {
                 D_800AF216 = ABS(g_Controller0->sticks_20.sticks_0.leftY);
                 func_80070B84(chara, FP_METER(0.75f), FP_METER(1.15f), 2);
@@ -8161,35 +8159,35 @@ void Player_Controller() // 0x8007F32C
     g_Player_IsSteppingLeftTap  = (g_Player_IsSteppingLeftTap * 2) & 0x3F;
     g_Player_IsSteppingRightTap = (g_Player_IsSteppingRightTap * 2) & 0x3F;
 
-    if (g_Controller0->sticks_20.sticks_0.leftY < -0x40 || g_Controller0->sticks_20.sticks_0.leftY >= 0x40 ||
-        g_Controller0->sticks_20.sticks_0.leftX < -0x40 || g_Controller0->sticks_20.sticks_0.leftX >= 0x40)
+    if (g_Controller0->sticks_20.sticks_0.leftY < -STICK_THRESHOLD || g_Controller0->sticks_20.sticks_0.leftY >= STICK_THRESHOLD ||
+        g_Controller0->sticks_20.sticks_0.leftX < -STICK_THRESHOLD || g_Controller0->sticks_20.sticks_0.leftX >= STICK_THRESHOLD)
     {
-        g_Player_IsTurningLeft        = g_Controller0->sticks_20.sticks_0.leftX < -0x40 ? ABS(g_Controller0->sticks_20.sticks_0.leftX + 0x40) : 0;
-        g_Player_IsTurningRight       = g_Controller0->sticks_20.sticks_0.leftX >= 0x40 ? g_Controller0->sticks_20.sticks_0.leftX - 0x3F : 0;
-        g_Player_IsMovingForward      |= g_Controller0->sticks_20.sticks_0.leftY < -0x40;
-        g_Player_IsMovingBackward      = (g_Controller0->sticks_20.sticks_0.leftY < 0x40) ^ 1;
+        g_Player_IsTurningLeft         = g_Controller0->sticks_20.sticks_0.leftX < -STICK_THRESHOLD ? ABS(g_Controller0->sticks_20.sticks_0.leftX + STICK_THRESHOLD) : 0;
+        g_Player_IsTurningRight        = g_Controller0->sticks_20.sticks_0.leftX >= STICK_THRESHOLD ? (g_Controller0->sticks_20.sticks_0.leftX - (STICK_THRESHOLD - 1)) : 0;
+        g_Player_IsMovingForward      |= g_Controller0->sticks_20.sticks_0.leftY < -STICK_THRESHOLD;
+        g_Player_IsMovingBackward      = (g_Controller0->sticks_20.sticks_0.leftY < STICK_THRESHOLD) ^ 1;
         g_Player_MovementInputDetected = g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.stepLeft_10 |
-                                          (ControllerFlag_LStickUp2 | ControllerFlag_LStickRight2 | ControllerFlag_LStickDown2 | ControllerFlag_LStickLeft2) |
-                                          g_GameWorkPtr->config_0.controllerConfig_0.stepRight_12 | g_GameWorkPtr->config_0.controllerConfig_0.aim_8);
+                                                                          (ControllerFlag_LStickUp2 | ControllerFlag_LStickRight2 | ControllerFlag_LStickDown2 | ControllerFlag_LStickLeft2) |
+                                                                          g_GameWorkPtr->config_0.controllerConfig_0.stepRight_12 | g_GameWorkPtr->config_0.controllerConfig_0.aim_8);
     }
     else
     {
-        g_Player_IsTurningLeft        = ((g_Controller0->btnsHeld_C & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)) == ControllerFlag_LStickLeft) << 6;
-        g_Player_IsTurningRight       = ((g_Controller0->btnsHeld_C & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)) == ControllerFlag_LStickRight) << 6;
+        g_Player_IsTurningLeft         = ((g_Controller0->btnsHeld_C & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)) == ControllerFlag_LStickLeft) << 6;
+        g_Player_IsTurningRight        = ((g_Controller0->btnsHeld_C & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)) == ControllerFlag_LStickRight) << 6;
         g_Player_IsMovingForward      |= (g_Controller0->btnsHeld_C & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)) == ControllerFlag_LStickUp;
         g_Player_IsMovingBackward      = (g_Controller0->btnsHeld_C & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)) == ControllerFlag_LStickDown;
         g_Player_MovementInputDetected = g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.stepLeft_10 |
-                                          (ControllerFlag_LStickUp | ControllerFlag_LStickRight | ControllerFlag_LStickDown | ControllerFlag_LStickLeft) |
-                                          g_GameWorkPtr->config_0.controllerConfig_0.stepRight_12 | g_GameWorkPtr->config_0.controllerConfig_0.aim_8);
+                                                                          (ControllerFlag_LStickUp | ControllerFlag_LStickRight | ControllerFlag_LStickDown | ControllerFlag_LStickLeft) |
+                                                                          g_GameWorkPtr->config_0.controllerConfig_0.stepRight_12 | g_GameWorkPtr->config_0.controllerConfig_0.aim_8);
     }
 
     g_Player_IsSteppingLeftHold  = (g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.stepLeft_10) &&
-                                     !(g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.stepRight_12);
+                                  !(g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.stepRight_12);
 
     g_Player_IsSteppingRightHold = (g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.stepRight_12) &&
-                                     !(g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.stepLeft_10);
+                                  !(g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.stepLeft_10);
 
-    g_Player_IsSteppingLeftTap  |= (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.stepLeft_10) != 0;
+    g_Player_IsSteppingLeftTap  |= (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.stepLeft_10)  != 0;
     g_Player_IsSteppingRightTap |= (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.stepRight_12) != 0;
 
     if (g_GameWork.config_0.optExtraWalkRunCtrl_2B)
@@ -8210,8 +8208,8 @@ void Player_Controller() // 0x8007F32C
         g_Player_IsAiming = g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.aim_8;
     }
 
-    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun // If weapon is a gun.
-	    && g_SysWork.player_4C.extra_128.lowerBodyState_24 >= PlayerLowerBodyState_Aim)
+    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun && // Weapon is gun.
+	    g_SysWork.player_4C.extra_128.lowerBodyState_24 >= PlayerLowerBodyState_Aim)
     {
         g_Player_IsShooting  = g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.action_6;
         g_Player_IsAttacking = g_Player_IsShooting;

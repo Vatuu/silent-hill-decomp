@@ -124,7 +124,7 @@ bool Fs_QueueResetTick(s_FsQueueEntry* entry)
     return result;
 }
 
-bool Fs_QueueTickReadPcDvr(s_FsQueueEntry* entry)
+bool Fs_QueueTickReadPcDrv(s_FsQueueEntry* entry)
 {
     s32         handle;
     s32         temp;

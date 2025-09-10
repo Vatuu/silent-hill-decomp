@@ -1,15 +1,16 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/math.h"
 #include "bodyprog/credits.h"
-#include "bodyprog/item_screens.h"
 #include "bodyprog/gfx/text_draw.h"
+#include "bodyprog/item_screens.h"
+#include "bodyprog/math.h"
 #include "main/fsqueue.h"
 
 const s32 rodataPad_8002B2F8 = 0;
 
-struct {
+struct
+{
     char f0[5];
     char f1[5];
     char f2[5];
@@ -39,7 +40,7 @@ s_800AFE24 D_800AFE24 =
     .field_34  = 4096,
     .field_3C  = -4096,
     .field_48  = 4096,
-    .field_4C  = 4551,
+    .field_4C  = 4551
 };
 
 void func_8008F94C() // 0x8008F94C
@@ -420,7 +421,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
     s32      temp_v1;
     POLY_G4* poly;
 
-    GsOT* ot = &g_OrderingTable2[g_ActiveBuffer];
+    GsOT* ot = &g_OrderingTable2[g_ActiveBufferIdx];
 
     char* D_8002B4C0[] =
     {
@@ -460,7 +461,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
         "No_aiming_shots"
     };
 
-    Gfx_StringSetColor(ColorId_White);
+    Gfx_StringSetColor(StringColorId_White);
 
     if (g_GameWork.gameStateStep_598[1] < 0x17)
     {
@@ -496,7 +497,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
         Gfx_StringSetPosition(0x11E - ((temp_s1 - 1) * 0xA), 7);
         Gfx_StringSetColor(D_800C48E0.field_2);
         Gfx_StringDrawInt(3, D_800C48A0);
-        Gfx_StringSetColor(ColorId_White);
+        Gfx_StringSetColor(StringColorId_White);
 
         temp_s1 = func_8009134C(D_800C48D1);
         Gfx_StringSetPosition(0x18, 0x1C);
@@ -504,7 +505,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
         Gfx_StringSetPosition(0x11E - ((temp_s1 - 1) * 0xA), 0x1C);
         Gfx_StringSetColor(D_800C48E0.field_3);
         Gfx_StringDrawInt(3, D_800C48D1);
-        Gfx_StringSetColor(ColorId_White);
+        Gfx_StringSetColor(StringColorId_White);
 
         temp_s1 = func_8009134C(D_800C48A2);
         Gfx_StringSetPosition(0x18, 0x31);
@@ -522,7 +523,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
         Gfx_StringDrawInt(2, D_800C48AF);
         Gfx_StringSetPosition(0x120, 0x31);
         Gfx_StringDraw(D_8002B4C0[10], 5);
-        Gfx_StringSetColor(ColorId_White);
+        Gfx_StringSetColor(StringColorId_White);
 
         temp_s1 = func_8009134C(D_800C48A4);
         Gfx_StringSetPosition(0x18, 0x46);
@@ -583,7 +584,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
 
         Gfx_StringSetPosition(0x124, 0x70);
         Gfx_StringDraw(")", 1);
-        Gfx_StringSetColor(ColorId_White);
+        Gfx_StringSetColor(StringColorId_White);
         
         temp_s1 = func_8009134C(D_800C48B0);
         Gfx_StringSetPosition(0x18, -0x23);
@@ -591,7 +592,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
         Gfx_StringSetPosition(0x11E - ((temp_s1 - 1) * 0xA), -0x23);
         Gfx_StringSetColor(D_800C48E0.field_1);
         Gfx_StringDrawInt(3, D_800C48B0);
-        Gfx_StringSetColor(ColorId_White);
+        Gfx_StringSetColor(StringColorId_White);
         Gfx_StringSetPosition(0x18, -0xE);
         Gfx_StringDraw(D_8002B4C0[19], 0x14);
         Gfx_StringSetColor(D_800C48E0.field_0);
@@ -627,13 +628,13 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
                 break;
         }
         
-        Gfx_StringSetColor(ColorId_White);
+        Gfx_StringSetColor(StringColorId_White);
         Gfx_StringSetPosition(0x18, 0x9A);
         Gfx_StringDraw(D_8002B4C0[27], 0x20);
         Gfx_StringSetPosition(0x128 - (func_8009134C(D_800C48B8) * 0xA), 0x9A);
         Gfx_StringSetColor(D_800C48E0.field_7);
         Gfx_StringDrawInt(4, D_800C48B8);
-        Gfx_StringSetColor(ColorId_White);
+        Gfx_StringSetColor(StringColorId_White);
         Gfx_StringSetPosition(0x18, 0x85);
         Gfx_StringDraw(D_8002B4C0[28], 0x20);
         Gfx_StringSetPosition(0x128 - (func_8009134C(D_800C48BA) * 0xA), 0x85);
@@ -642,7 +643,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
 
         if (D_800C48BC)
         {
-            Gfx_StringSetColor(ColorId_White);
+            Gfx_StringSetColor(StringColorId_White);
             Gfx_StringSetPosition(0x18, 0xAF);
             Gfx_StringDraw(D_8002B4C0[29], 0x20);
             Gfx_StringSetPosition(0x48, 0xC4);
@@ -650,19 +651,19 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
             Gfx_StringSetPosition(0x106, 0xC4);
             Gfx_StringSetColor(D_800C48E0.field_8);
             Gfx_StringDraw(g_Credits_Digits.f0, 5);
-            Gfx_StringSetColor(ColorId_White);
+            Gfx_StringSetColor(StringColorId_White);
             Gfx_StringSetPosition(0x48, 0xD9);
             Gfx_StringDraw(D_8002B4C0[31], 0x20);
             Gfx_StringSetPosition(0x106, 0xD9);
             Gfx_StringSetColor(D_800C48E0.field_8);
             Gfx_StringDraw(g_Credits_Digits.f1, 5);
-            Gfx_StringSetColor(ColorId_White);
+            Gfx_StringSetColor(StringColorId_White);
             Gfx_StringSetPosition(0x48, 0xEE);
             Gfx_StringDraw(D_8002B4C0[32], 0x20);
             Gfx_StringSetPosition(0x106, 0xEE);
             Gfx_StringSetColor(D_800C48E0.field_8);
             Gfx_StringDraw(g_Credits_Digits.f2, 5);
-            Gfx_StringSetColor(ColorId_White);
+            Gfx_StringSetColor(StringColorId_White);
             Gfx_StringSetPosition(0x48, 0x103);
             Gfx_StringDraw(D_8002B4C0[33], 0x20);
             Gfx_StringSetPosition(0x106, 0x103);
@@ -670,7 +671,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
             Gfx_StringDraw(g_Credits_Digits.f3, 5);
         }
 
-        Gfx_StringSetColor(ColorId_White);
+        Gfx_StringSetColor(StringColorId_White);
         Gfx_StringSetPosition(0x18, 0x124);
         Gfx_StringDraw(D_8002B4C0[25], 0x14);
 
@@ -680,7 +681,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
         }
         else
         {
-            Gfx_StringSetColor(ColorId_White);
+            Gfx_StringSetColor(StringColorId_White);
         }
 
         temp_v1 = D_800C48B5 / 10;
@@ -729,7 +730,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
             }
         }
 
-        Gfx_StringSetColor(ColorId_White);
+        Gfx_StringSetColor(StringColorId_White);
 
         for (i = 0; i < 2; i++)
         {

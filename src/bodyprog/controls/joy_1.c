@@ -3,6 +3,7 @@
 #include <libpad.h>
 
 #include "bodyprog/joy.h"
+#include "bodyprog/math.h"
 
 void Joy_Init() // 0x8003441C
 {
@@ -12,7 +13,9 @@ void Joy_Init() // 0x8003441C
 
 void Joy_ReadP1() // 0x80034450
 {
-    s_ControllerData* cont = &g_GameWork.controllers_38[0];
+    s_ControllerData* cont;
+
+    cont = &g_GameWork.controllers_38[0];
 
     // NOTE: `memcpy` is close, reads `rawController_5B4` as two `s32`s, but doesn't give match.
     // memcpy(&cont->analogController_0, &g_GameWork.rawController_5B4, sizeof(s_AnalogController));
@@ -152,16 +155,16 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, s32 arg1) // 0x80034
             val                    = xorShiftedRawAnalog >> 24;
             xorShiftedRawAnalog  <<= 8;
 
-            if (val < -0x40)
+            if (val < -STICK_THRESHOLD)
             {
-                normalizedAnalogData |= (val + 0x40) & 0xFF;
-                negativeDirBitIdx     = 23 - (axisIdx & 1);
+                normalizedAnalogData |= (val + STICK_THRESHOLD) & 0xFF;
+                negativeDirBitIdx     = 23 - (axisIdx & (1 << 0));
                 btnsHeld             |= 1 << (negativeDirBitIdx - (axisIdx * 2));
             }
-            else if (val >= 0x40)
+            else if (val >= STICK_THRESHOLD)
             {
-                normalizedAnalogData |= (val - 0x3F) & 0xFF;
-                positiveDirBitIdx     = ((axisIdx & 0x1) + 21);
+                normalizedAnalogData |= (val - (STICK_THRESHOLD - 1)) & 0xFF;
+                positiveDirBitIdx     = (axisIdx & 0x1) + 21;
                 btnsHeld             |= 1 << (positiveDirBitIdx - ((axisIdx >> 1) * 4));
             }
         }
@@ -177,6 +180,7 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, s32 arg1) // 0x80034
     processedInputFlags      = normalizedAnalogData;
     cont->sticks_20.rawData_0 = signedRawAnalog;
 
+    // TODO: Demagic hex values. Analog stick or button flags?
     if (cont == g_Controller0)
     {
         if (!(processedInputFlags & 0xFF000000))

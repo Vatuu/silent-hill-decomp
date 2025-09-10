@@ -87,48 +87,48 @@ POLY_G4 D_800A8EB0[] =
         0x0, 0x0, 0x0, 0x3A,
         0xFF60, 0xFF90,
         0x0, 0x0, 0x0, 0x0,
-        0xa0, 0xFF90,
+        0xA0, 0xFF90,
         0x0, 0x0, 0x0, 0x0,
         0xFF60, 0xFFA0,
         0x0, 0x0, 0x0, 0x0,
-        0xa0, 0xFFA0,
+        0xA0, 0xFFA0,
     },
     {
         0x8000000,
         0x0, 0x0, 0x0, 0x3A,
         0xFF60, 0xFF90,
         0x0, 0x0, 0x0, 0x0,
-        0xa0, 0xFF90,
+        0xA0, 0xFF90,
         0x0, 0x0, 0x0, 0x0,
         0xFF60, 0xFFA0,
         0x0, 0x0, 0x0, 0x0,
-        0xa0, 0xFFA0,
+        0xA0, 0xFFA0,
     },
     {
         0x8000000,
         0x0, 0x0, 0x0, 0x3A,
         0xFF60, 0x70,
         0x0, 0x0, 0x0, 0x0,
-        0xa0, 0x70,
+        0xA0, 0x70,
         0x0, 0x0, 0x0, 0x0,
         0xFF60, 0x60,
         0x0, 0x0, 0x0, 0x0,
-        0xa0, 0x60,
+        0xA0, 0x60,
     },
     {
         0x8000000,
         0x0, 0x0, 0x0, 0x3A,
         0xFF60, 0x70,
         0x0, 0x0, 0x0, 0x0,
-        0xa0, 0x70,
+        0xA0, 0x70,
         0x0, 0x0, 0x0, 0x0,
         0xFF60, 0x60,
         0x0, 0x0, 0x0, 0x0,
-        0xa0, 0x60,
+        0xA0, 0x60,
     },
 };
 
-s32 D_800A8F40 = 0x00000000;
+s32 D_800A8F40 = 0;
 
 VC_ROAD_DATA vcNullRoadArray[] =
 {
@@ -166,23 +166,23 @@ VC_ROAD_DATA vcNullRoadArray[] =
 
 GsOT g_OrderingTable0[2] =
 {
-    { 0x0B, &g_OtTags1[0][1], 0, 0, 0 },
-    { 0x0B, &g_OtTags1[1][1], 0, 0, 0 },
+    { 11, &g_OtTags1[0][1], 0, 0, 0 },
+    { 11, &g_OtTags1[1][1], 0, 0, 0 },
 };
 
 GsOT g_OrderingTable1[2] =
 {
-    { 0x09, (GsOT_TAG*)0x801E2600, 0, 0, 0 },
-    { 0x09, (GsOT_TAG*)0x801E2E00, 0, 0, 0 },
+    { 9, (GsOT_TAG*)0x801E2600, 0, 0, 0 },
+    { 9, (GsOT_TAG*)0x801E2E00, 0, 0, 0 },
 };
 
 GsOT g_OrderingTable2[2] =
 {
-    { 0x04, &g_OtTags0[0][0], 0, 0, 0 },
-    { 0x04, &g_OtTags0[1][0], 0, 0, 0 },
+    { 4, &g_OtTags0[0][0], 0, 0, 0 },
+    { 4, &g_OtTags0[1][0], 0, 0, 0 },
 };
 
-q19_12 g_DeltaTime1      = 0x00000044;
+q19_12 g_DeltaTime1      = 68;
 s32    g_IntervalVBlanks = 1;
 
 s_FsImageDesc g_Font16AtlasImg             = { { 0,   16  }, 0,    240, 304, 511 };
@@ -207,7 +207,7 @@ s_FsImageDesc D_800A9084                   = { { 0,   11  }, 0,    0,   304, 0  
 s_FsImageDesc D_800A908C                   = { { 0,   13  }, 0,    0,   224, 0   };
 s_FsImageDesc D_800A9094                   = { { 0,   13  }, 0,    128, 224, 8   };
 s_FsImageDesc g_Font24AtlasImg             = { { 0,   31  }, 0,    0,   960, 496 };
-/* Not sure if these are really `s_FsImageDesc`. Seems lausible but not sure about negative values here. */
+/* Not sure if these are really `s_FsImageDesc`. Seems plausible but not sure about negative values here. */
 s_FsImageDesc D_800A90A4                   = { { 0,   0   }, 35,   0,   35,  3   };
 s_FsImageDesc D_800A90AC                   = { { 0,   0   }, 0,    0,   0,  -1   };
 s_FsImageDesc D_800A90B4                   = { { 0,   0   }, 15,   0,  -53,  10  };
@@ -220,54 +220,54 @@ s_FsImageDesc D_800A90E4                   = { { 153, 0   }, 94,   0,  -38,  15 
 s_FsImageDesc D_800A90EC                   = { { 51,  0   }, 125,  0,  -56,  14  };
 s_FsImageDesc D_800A90F4                   = { { 0,   0   }, 0,    0,   0,   -1  };
 
-s_CharaFileInfo g_Chara_FileInfo[] =
+s_CharaFileInfo CHARA_FILE_INFOS[] =
 {
-/* `Chara_` name       {           animFileIdx,         modelFileIdx,        textureFileIdx, field_6, field_6_10,     field_8, field_C_0, field_C_2, field_C_16 } */
-/* None             */ {                    -1,                    0,                     0,       0,          0,        NULL,         0,         0,          0 },
-/* Harry            */ { FILE_ANIM_HB_BASE_ANM,  FILE_CHARA_HERO_ILM,   FILE_CHARA_HERO_TIM,      64,          1,        NULL,         0,      -179,          0 },
-/* AirScreamer      */ {    FILE_ANIM_BIRD_ANM,  FILE_CHARA_BIRD_ILM, FILE_CHARA_REBIRD_TIM,      64,          2, &D_800A90B4,         0,      -153,          0 },
-/* NightFlutter     */ {    FILE_ANIM_BIRD_ANM,   FILE_CHARA_BD2_ILM,    FILE_CHARA_BD2_TIM,      64,          2, &D_800A90B4,         0,      -153,          0 },
-/* Groaner          */ {     FILE_ANIM_DOG_ANM,   FILE_CHARA_DOG_ILM,    FILE_CHARA_DOG_TIM,      64,          2,        NULL,         0,      -179,          0 },
-/* Wormhead         */ {     FILE_ANIM_DOG_ANM,   FILE_CHARA_DG2_ILM,    FILE_CHARA_DG2_TIM,      64,          2,        NULL,         0,      -179,          0 },
-/* LarvalStalker    */ {    FILE_ANIM_CLD1_ANM,  FILE_CHARA_CLD1_ILM,   FILE_CHARA_CLD1_TIM,      64,          2,        NULL,         0,      -128,          0 },
-/* Stalker          */ {    FILE_ANIM_CLD2_ANM,  FILE_CHARA_CLD2_ILM,   FILE_CHARA_CLD2_TIM,      64,          2,        NULL,         0,      -204,          0 },
-/* GreyChild        */ {    FILE_ANIM_CLD2_ANM,  FILE_CHARA_CLD3_ILM,   FILE_CHARA_CLD3_TIM,      64,          1,        NULL,         0,      -204,          0 },
-/* Mumbler          */ {    FILE_ANIM_CLD2_ANM,  FILE_CHARA_CLD4_ILM,   FILE_CHARA_CLD4_TIM,      64,          1,        NULL,         0,      -204,          0 },
-/* HangedScratcher  */ {     FILE_ANIM_SLT_ANM,   FILE_CHARA_SLT_ILM,    FILE_CHARA_SLT_TIM,      64,          2,        NULL,         0,      -153,          0 },
-/* Creaper          */ {     FILE_ANIM_COC_ANM,   FILE_CHARA_COC_ILM,    FILE_CHARA_COC_TIM,      64,          2,        NULL,         0,      -128,          0 },
-/* Romper           */ {    FILE_ANIM_JACK_ANM,  FILE_CHARA_JACK_ILM,   FILE_CHARA_JACK_TIM,      76,          2, &D_800A90A4,         1,      -204,          0 },
-/* UnusedChicken    */ {     FILE_ANIM_CKN_ANM,   FILE_CHARA_CKN_ILM,    FILE_CHARA_CKN_TIM,       0,          2,        NULL,         0,      -230,          0 },
-/* Splithead        */ {     FILE_ANIM_FAT_ANM,   FILE_CHARA_FAT_ILM,    FILE_CHARA_FAT_TIM,       0,          2,        NULL,         0,      -179,          0 },
-/* Floatstinger     */ {     FILE_ANIM_MTH_ANM,   FILE_CHARA_MTH_ILM,   FILE_CHARA_MOTH_TIM,       0,          1,        NULL,         0,      -588,          0 },
-/* PuppetNurse      */ {     FILE_ANIM_PRS_ANM,   FILE_CHARA_PRS_ILM,    FILE_CHARA_PRS_TIM,      64,          2,        NULL,         0,      -230,          0 },
-/* DummyNurse       */ {   FILE_ANIM_DUMMY_ANM, FILE_CHARA_DUMMY_ILM,              NO_VALUE,      64,          2,        NULL,         0,      -230,          0 },
-/* PuppetDoctor     */ {     FILE_ANIM_PRS_ANM,  FILE_CHARA_PRSD_ILM,   FILE_CHARA_PRSD_TIM,      64,          2,        NULL,         0,      -230,          0 },
-/* DummyDoctor      */ {   FILE_ANIM_DUMMY_ANM, FILE_CHARA_DUMMY_ILM,              NO_VALUE,      64,          2,        NULL,         0,      -230,          0 },
-/* Twinfeeler       */ {     FILE_ANIM_WRM_ANM,   FILE_CHARA_WRM_ILM,   FILE_CHARA_WORM_TIM,       0,          2,        NULL,         0,      -179,          0 },
-/* Bloodsucker      */ {     FILE_ANIM_ROD_ANM,   FILE_CHARA_ROD_ILM,    FILE_CHARA_ROD_TIM,       0,          2,        NULL,         0,      -179,          0 },
-/* Incubus          */ {     FILE_ANIM_BOS_ANM,   FILE_CHARA_BOS_ILM,    FILE_CHARA_BOS_TIM,       0,          1,        NULL,         2,         0,          0 },
-/* Unknown23        */ {     FILE_ANIM_MAR_ANM,   FILE_CHARA_MAR_ILM,    FILE_CHARA_MAR_TIM,       0,          0,        NULL,         2,         0,          0 },
-/* MonsterCybil     */ {     FILE_ANIM_MSB_ANM,   FILE_CHARA_MSB_ILM,    FILE_CHARA_MSB_TIM,      64,          2,        NULL,         0,      -345,          0 },
-/* LockerDeadBody   */ {    FILE_ANIM_DEAD_ANM,  FILE_CHARA_DEAD_ILM,   FILE_CHARA_DEAD_TIM,      64,          2,        NULL,         0,      -128,          0 },
-/* Cybil            */ {     FILE_ANIM_SBL_ANM, FILE_CHARA_SIBYL_ILM,  FILE_CHARA_SIBYL_TIM,      76,          2,        NULL,         0,      -128,          0 },
-/* EndingCybil      */ {    FILE_ANIM_SBL2_ANM, FILE_CHARA_SIBYL_ILM,  FILE_CHARA_SIBYL_TIM,      64,          2,        NULL,         0,      -128,          0 },
-/* Cheryl           */ {     FILE_ANIM_SRL_ANM,   FILE_CHARA_SRL_ILM,    FILE_CHARA_SRL_TIM,      64,          2,        NULL,         0,      -128,          0 },
-/* Cat              */ {     FILE_ANIM_CAT_ANM,   FILE_CHARA_CAT_ILM,    FILE_CHARA_CAT_TIM,      64,          2,        NULL,         0,      -128,          0 },
-/* Dahlia           */ {      FILE_ANIM_DA_ANM, FILE_CHARA_DARIA_ILM,  FILE_CHARA_DARIA_TIM,      64,          1,        NULL,         0,      -128,          0 },
-/* EndingDahlia     */ {     FILE_ANIM_DA2_ANM, FILE_CHARA_DARIA_ILM,  FILE_CHARA_DARIA_TIM,      64,          1,        NULL,         0,      -128,          0 },
-/* Lisa             */ {      FILE_ANIM_LS_ANM,  FILE_CHARA_LISA_ILM,   FILE_CHARA_LISA_TIM,      64,          2,        NULL,         0,      -128,          0 },
-/* BloodyLisa       */ {     FILE_ANIM_BLS_ANM, FILE_CHARA_BLISA_ILM,  FILE_CHARA_BLISA_TIM,      64,          2,        NULL,         0,      -128,          0 },
-/* Alessa           */ {      FILE_ANIM_AR_ANM,    FILE_CHARA_AR_ILM,     FILE_CHARA_AR_TIM,      64,          1,        NULL,         0,      -128,          0 },
-/* GhostChildAlessa */ {     FILE_ANIM_TAR_ANM,   FILE_CHARA_TAR_ILM,    FILE_CHARA_TAR_TIM,      64,          1,        NULL,         0,      -128,          0 },
-/* Incubator        */ {     FILE_ANIM_MAR_ANM,   FILE_CHARA_MAR_ILM,    FILE_CHARA_MAR_TIM,      64,          1,        NULL,         0,      -128,          0 },
-/* BloodyIncubator  */ {     FILE_ANIM_BAR_ANM,   FILE_CHARA_BAR_ILM,    FILE_CHARA_BAR_TIM,      64,          1,        NULL,         0,      -128,          0 },
-/* Kaufmann         */ {     FILE_ANIM_KAU_ANM,   FILE_CHARA_KAU_ILM,    FILE_CHARA_KAU_TIM,      64,          1,        NULL,         0,      -128,          0 },
-/* EndingKaufmann   */ {    FILE_ANIM_KAU2_ANM,   FILE_CHARA_KAU_ILM,    FILE_CHARA_KAU_TIM,      64,          1,        NULL,         0,      -128,          0 },
-/* Flauros          */ {    FILE_ANIM_BFLU_ANM,  FILE_CHARA_BFLU_ILM,   FILE_CHARA_BFLU_TIM,      64,          1,        NULL,         0,         0,          0 },
-/* LittleIncubus    */ {    FILE_ANIM_LITL_ANM,  FILE_CHARA_LITL_ILM,   FILE_CHARA_LITL_TIM,      64,          1,        NULL,         0,         0,          0 },
-/* GhostDoctor      */ {     FILE_ANIM_DOC_ANM,   FILE_CHARA_DOC_ILM,    FILE_CHARA_DOC_TIM,      64,          1,        NULL,         0,         0,          0 },
-/* Parasite         */ {     FILE_ANIM_ICU_ANM,   FILE_CHARA_ICU_ILM,    FILE_CHARA_ICU_TIM,      64,          1,        NULL,         0,         0,          0 },
-/* Padlock          */ {                     0,                    0,                     0,       0,          0,        NULL,         0,         0,          0 }
+/* `Chara_` name       { `animFileIdx`          `modelFileIdx`        `textureFileIdx`       `field_6` `field_6_10` `field_8`    `field_C_0` `field_C_2` `field_C_16` } */
+/* None             */ {  NO_VALUE,              0,                    0,                     0,        0,           NULL,        0,          0,           0          },
+/* Harry            */ {  FILE_ANIM_HB_BASE_ANM, FILE_CHARA_HERO_ILM,  FILE_CHARA_HERO_TIM,   64,       1,           NULL,        0,         -179,         0          },
+/* AirScreamer      */ {  FILE_ANIM_BIRD_ANM,    FILE_CHARA_BIRD_ILM,  FILE_CHARA_REBIRD_TIM, 64,       2,           &D_800A90B4, 0,         -153,         0          },
+/* NightFlutter     */ {  FILE_ANIM_BIRD_ANM,    FILE_CHARA_BD2_ILM,   FILE_CHARA_BD2_TIM,    64,       2,           &D_800A90B4, 0,         -153,         0          },
+/* Groaner          */ {  FILE_ANIM_DOG_ANM,     FILE_CHARA_DOG_ILM,   FILE_CHARA_DOG_TIM,    64,       2,           NULL,        0,         -179,         0          },
+/* Wormhead         */ {  FILE_ANIM_DOG_ANM,     FILE_CHARA_DG2_ILM,   FILE_CHARA_DG2_TIM,    64,       2,           NULL,        0,         -179,         0          },
+/* LarvalStalker    */ {  FILE_ANIM_CLD1_ANM,    FILE_CHARA_CLD1_ILM,  FILE_CHARA_CLD1_TIM,   64,       2,           NULL,        0,         -128,         0          },
+/* Stalker          */ {  FILE_ANIM_CLD2_ANM,    FILE_CHARA_CLD2_ILM,  FILE_CHARA_CLD2_TIM,   64,       2,           NULL,        0,         -204,         0          },
+/* GreyChild        */ {  FILE_ANIM_CLD2_ANM,    FILE_CHARA_CLD3_ILM,  FILE_CHARA_CLD3_TIM,   64,       1,           NULL,        0,         -204,         0          },
+/* Mumbler          */ {  FILE_ANIM_CLD2_ANM,    FILE_CHARA_CLD4_ILM,  FILE_CHARA_CLD4_TIM,   64,       1,           NULL,        0,         -204,         0          },
+/* HangedScratcher  */ {  FILE_ANIM_SLT_ANM,     FILE_CHARA_SLT_ILM,   FILE_CHARA_SLT_TIM,    64,       2,           NULL,        0,         -153,         0          },
+/* Creaper          */ {  FILE_ANIM_COC_ANM,     FILE_CHARA_COC_ILM,   FILE_CHARA_COC_TIM,    64,       2,           NULL,        0,         -128,         0          },
+/* Romper           */ {  FILE_ANIM_JACK_ANM,    FILE_CHARA_JACK_ILM,  FILE_CHARA_JACK_TIM,   76,       2,           &D_800A90A4, 1,         -204,         0          },
+/* Chicken          */ {  FILE_ANIM_CKN_ANM,     FILE_CHARA_CKN_ILM,   FILE_CHARA_CKN_TIM,    0,        2,           NULL,        0,         -230,         0          }, /** @unused */
+/* Splithead        */ {  FILE_ANIM_FAT_ANM,     FILE_CHARA_FAT_ILM,   FILE_CHARA_FAT_TIM,    0,        2,           NULL,        0,         -179,         0          },
+/* Floatstinger     */ {  FILE_ANIM_MTH_ANM,     FILE_CHARA_MTH_ILM,   FILE_CHARA_MOTH_TIM,   0,        1,           NULL,        0,         -588,         0          },
+/* PuppetNurse      */ {  FILE_ANIM_PRS_ANM,     FILE_CHARA_PRS_ILM,   FILE_CHARA_PRS_TIM,    64,       2,           NULL,        0,         -230,         0          },
+/* DummyNurse       */ {  FILE_ANIM_DUMMY_ANM,   FILE_CHARA_DUMMY_ILM, NO_VALUE,              64,       2,           NULL,        0,         -230,         0          },
+/* PuppetDoctor     */ {  FILE_ANIM_PRS_ANM,     FILE_CHARA_PRSD_ILM,  FILE_CHARA_PRSD_TIM,   64,       2,           NULL,        0,         -230,         0          },
+/* DummyDoctor      */ {  FILE_ANIM_DUMMY_ANM,   FILE_CHARA_DUMMY_ILM, NO_VALUE,              64,       2,           NULL,        0,         -230,         0          },
+/* Twinfeeler       */ {  FILE_ANIM_WRM_ANM,     FILE_CHARA_WRM_ILM,   FILE_CHARA_WORM_TIM,   0,        2,           NULL,        0,         -179,         0          },
+/* Bloodsucker      */ {  FILE_ANIM_ROD_ANM,     FILE_CHARA_ROD_ILM,   FILE_CHARA_ROD_TIM,    0,        2,           NULL,        0,         -179,         0          },
+/* Incubus          */ {  FILE_ANIM_BOS_ANM,     FILE_CHARA_BOS_ILM,   FILE_CHARA_BOS_TIM,    0,        1,           NULL,        2,          0,           0          },
+/* Unknown23        */ {  FILE_ANIM_MAR_ANM,     FILE_CHARA_MAR_ILM,   FILE_CHARA_MAR_TIM,    0,        0,           NULL,        2,          0,           0          },
+/* MonsterCybil     */ {  FILE_ANIM_MSB_ANM,     FILE_CHARA_MSB_ILM,   FILE_CHARA_MSB_TIM,    64,       2,           NULL,        0,         -345,         0          },
+/* LockerDeadBody   */ {  FILE_ANIM_DEAD_ANM,    FILE_CHARA_DEAD_ILM,  FILE_CHARA_DEAD_TIM,   64,       2,           NULL,        0,         -128,         0          },
+/* Cybil            */ {  FILE_ANIM_SBL_ANM,     FILE_CHARA_SIBYL_ILM, FILE_CHARA_SIBYL_TIM,  76,       2,           NULL,        0,         -128,         0          },
+/* EndingCybil      */ {  FILE_ANIM_SBL2_ANM,    FILE_CHARA_SIBYL_ILM, FILE_CHARA_SIBYL_TIM,  64,       2,           NULL,        0,         -128,         0          },
+/* Cheryl           */ {  FILE_ANIM_SRL_ANM,     FILE_CHARA_SRL_ILM,   FILE_CHARA_SRL_TIM,    64,       2,           NULL,        0,         -128,         0          },
+/* Cat              */ {  FILE_ANIM_CAT_ANM,     FILE_CHARA_CAT_ILM,   FILE_CHARA_CAT_TIM,    64,       2,           NULL,        0,         -128,         0          },
+/* Dahlia           */ {  FILE_ANIM_DA_ANM,      FILE_CHARA_DARIA_ILM, FILE_CHARA_DARIA_TIM,  64,       1,           NULL,        0,         -128,         0          },
+/* EndingDahlia     */ {  FILE_ANIM_DA2_ANM,     FILE_CHARA_DARIA_ILM, FILE_CHARA_DARIA_TIM,  64,       1,           NULL,        0,         -128,         0          },
+/* Lisa             */ {  FILE_ANIM_LS_ANM,      FILE_CHARA_LISA_ILM,  FILE_CHARA_LISA_TIM,   64,       2,           NULL,        0,         -128,         0          },
+/* BloodyLisa       */ {  FILE_ANIM_BLS_ANM,     FILE_CHARA_BLISA_ILM, FILE_CHARA_BLISA_TIM,  64,       2,           NULL,        0,         -128,         0          },
+/* Alessa           */ {  FILE_ANIM_AR_ANM,      FILE_CHARA_AR_ILM,    FILE_CHARA_AR_TIM,     64,       1,           NULL,        0,         -128,         0          },
+/* GhostChildAlessa */ {  FILE_ANIM_TAR_ANM,     FILE_CHARA_TAR_ILM,   FILE_CHARA_TAR_TIM,    64,       1,           NULL,        0,         -128,         0          },
+/* Incubator        */ {  FILE_ANIM_MAR_ANM,     FILE_CHARA_MAR_ILM,   FILE_CHARA_MAR_TIM,    64,       1,           NULL,        0,         -128,         0          },
+/* BloodyIncubator  */ {  FILE_ANIM_BAR_ANM,     FILE_CHARA_BAR_ILM,   FILE_CHARA_BAR_TIM,    64,       1,           NULL,        0,         -128,         0          },
+/* Kaufmann         */ {  FILE_ANIM_KAU_ANM,     FILE_CHARA_KAU_ILM,   FILE_CHARA_KAU_TIM,    64,       1,           NULL,        0,         -128,         0          },
+/* EndingKaufmann   */ {  FILE_ANIM_KAU2_ANM,    FILE_CHARA_KAU_ILM,   FILE_CHARA_KAU_TIM,    64,       1,           NULL,        0,         -128,         0          },
+/* Flauros          */ {  FILE_ANIM_BFLU_ANM,    FILE_CHARA_BFLU_ILM,  FILE_CHARA_BFLU_TIM,   64,       1,           NULL,        0,          0,           0          },
+/* LittleIncubus    */ {  FILE_ANIM_LITL_ANM,    FILE_CHARA_LITL_ILM,  FILE_CHARA_LITL_TIM,   64,       1,           NULL,        0,          0,           0          },
+/* GhostDoctor      */ {  FILE_ANIM_DOC_ANM,     FILE_CHARA_DOC_ILM,   FILE_CHARA_DOC_TIM,    64,       1,           NULL,        0,          0,           0          },
+/* Parasite         */ {  FILE_ANIM_ICU_ANM,     FILE_CHARA_ICU_ILM,   FILE_CHARA_ICU_TIM,    64,       1,           NULL,        0,          0,           0          },
+/* Padlock          */ {  0,                     0,                    0,                     0,        0,           NULL,        0,          0,           0          }
 };
 
 s_sub_StructUnk3 D_800A93CC[] =
@@ -778,13 +778,13 @@ s_800A992C D_800A992C[4] =
 s_AnimInfo D_800A998C =
 {
     .updateFunc_0           = Anim_Update1,
-    .field_4                = 0,
-    .hasVariableTimeDelta_5 = false,
-    .status_6               = ANIM_STATUS(0, false),
-    .field_7                = 0,
-    .timeDelta_8            = { .constTimeDelta = FP_TIME(8.0f) },
-    .startKeyframeIdx_C     = 26,
-    .endKeyframeIdx_E       = 44
+    .status_4               = 0,
+    .hasVariableDuration_5 = false,
+    .status_6              = ANIM_STATUS(0, false),
+    .__pad_7               = 0,
+    .duration_8            = { Q19_12(8) },
+    .startKeyframeIdx_C    = 26,
+    .endKeyframeIdx_E      = 44
 };
 u32 unknown_D_800A999C = 0x80025234;
 s32 D_800A99A0 = 0;
@@ -809,7 +809,7 @@ s8 g_MapMarkingTimFileIdxs[56] =
     44, 83, 2, 128, 32, 83, 2, 128
 };
 
-s_FsImageDesc D_800A9A04 = { .tPage = {1, 21}, .clutX = 224, .clutY = 13 };
+s_FsImageDesc D_800A9A04 = { .tPage = { 1, 21 }, .clutX = 224, .clutY = 13 };
 s32 D_800A9A0C = 0;
 s32 D_800A9A10 = 0;
 u32 g_MapEventIdx = 0;

@@ -5,10 +5,10 @@
 #include <strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/math.h"
-#include "bodyprog/memcard.h"
 #include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/gfx/text_draw.h"
+#include "bodyprog/math.h"
+#include "bodyprog/memcard.h"
 #include "main/fsqueue.h"
 #include "main/rng.h"
 #include "screens/stream/stream.h"
@@ -421,7 +421,7 @@ void Gfx_MainMenu_MainTextDraw() // 0x8003B568
         }
 
         Gfx_StringSetPosition(COLUMN_POS_X - STR_OFFSETS_X[i], COLUMN_POS_Y + (i * STR_OFFSET_Y));
-        Gfx_StringSetColor(ColorId_White);
+        Gfx_StringSetColor(StringColorId_White);
 
         if (i == g_MainMenu_SelectedEntry)
         {
@@ -466,7 +466,7 @@ void Gfx_MainMenu_DifficultyTextDraw(s32 arg0) // 0x8003B678
     for (i = 0; i < DIFFICULTY_MENU_SELECTION_COUNT; i++)
     {
         Gfx_StringSetPosition(COLUMN_POS_X - STR_OFFSETS_X[i], COLUMN_POS_Y + (i * STR_OFFSET_Y));
-        Gfx_StringSetColor(ColorId_White);
+        Gfx_StringSetColor(StringColorId_White);
 
         if (i == arg0)
         {
@@ -611,7 +611,7 @@ void Gfx_MainMenu_FogDraw() // 0x8003BA08
     PACKET*   packet;
     GsOT_TAG* tag;
 
-    tag    = g_OrderingTable2[g_ActiveBuffer].org;
+    tag    = g_OrderingTable2[g_ActiveBufferIdx].org;
     packet = Gfx_MainMenu_FogPacketGet(&tag[6], GsOUT_PACKET_P);
     SetDrawMode((DR_MODE*)packet, 0, 1, 0x2A, NULL);
     addPrim(&tag[6], packet);
@@ -626,13 +626,14 @@ void Gfx_MainMenu_FogRandomize() // 0x8003BAC4
     s8* ptr;
     u8* ptr1;
     s8* ptr2;
-    static s32 D_800A9EAC = 0;
 
-    ptr         = D_800BCDE0;
-    ptr1        = ptr + 441;
-    D_800A9EAC += Rng_GenerateInt(Rng_Rand16(), 4, 11u);
-    val         = FP_MULTIPLY(Math_Sin(D_800A9EAC), 10, Q12_SHIFT) - 122;
-    ptr2        = ptr + 461;
+    static s32 RAND = 0;
+
+    ptr   = D_800BCDE0;
+    ptr1  = ptr + 441;
+    RAND += Rng_GenerateInt(Rng_Rand16(), 4, 11u);
+    val   = FP_MULTIPLY(Math_Sin(RAND), 10, Q12_SHIFT) - 122;
+    ptr2  = ptr + 461;
 
     for (i = 20; i >= 0; i--)
     {
@@ -688,14 +689,14 @@ void Gfx_MainMenu_FogScatter() // 0x8003BBF4
 
 void Gfx_MainMenu_FogUpdate() // 0x8003BC8C
 {
-    static s32 fogCounter = 0;
+    static s32 FOG_COUNT = 0;
 
-    if (fogCounter == ((fogCounter / 5) * 5))
+    if (FOG_COUNT == ((FOG_COUNT / 5) * 5))
     {
-        Gfx_MainMenu_FogScatter(fogCounter);
+        Gfx_MainMenu_FogScatter(FOG_COUNT);
     }
 
-    fogCounter++;
+    FOG_COUNT++;
     Gfx_MainMenu_FogDraw();
 }
 
@@ -765,8 +766,9 @@ s32 func_8003BE50(s32 idx) // 0x8003BE50
 
 void GameFs_BgEtcGfxLoad() // 0x8003BE6C
 {
-    static s_FsImageDesc img = { .tPage = {0, 12}, .clutX = 192 };
-    Fs_QueueStartReadTim(FILE_TIM_BG_ETC_TIM, FS_BUFFER_1, &img);
+    static s_FsImageDesc IMG = { .tPage = { 0, 12 }, .clutX = 192 };
+
+    Fs_QueueStartReadTim(FILE_TIM_BG_ETC_TIM, FS_BUFFER_1, &IMG);
 }
 
 void GameFs_BgItemLoad() // 0x8003BE9C
@@ -776,8 +778,9 @@ void GameFs_BgItemLoad() // 0x8003BE9C
 
 void func_8003BED0() // 0x8003BED0
 {
-    static s_FsImageDesc imgTim = { .tPage = {0, 15}, .clutX = 176 };
-    static s_FsImageDesc imgEtc = { .tPage = {0, 12}, .v = 192, .clutX = 192 };
+    static s_FsImageDesc IMG_TIM = { .tPage = { 0, 15 }, .clutX = 176 };
+    static s_FsImageDesc IMG_ETC = { .tPage = { 0, 12 }, .v = 192, .clutX = 192 };
+
     s_LmHeader* D_800BE9FC = &D_800BCE18.field_1BE4;
 
     if (Fs_QueueIsEntryLoaded(D_800BE9FC->queueIdx_1000) == 0 || D_800BE9FC->isLoaded_2)
@@ -786,8 +789,8 @@ void func_8003BED0() // 0x8003BED0
     }
 
     LmHeader_FixOffsets(&D_800BCE18.field_1BE4);
-    func_80056504(&D_800BCE18.field_1BE4, "TIM00", &imgTim, 1);
-    func_80056504(&D_800BCE18.field_1BE4, "BG_ETC", &imgEtc, 1);
+    func_80056504(&D_800BCE18.field_1BE4, "TIM00", &IMG_TIM, 1);
+    func_80056504(&D_800BCE18.field_1BE4, "BG_ETC", &IMG_ETC, 1);
     func_80056954(&D_800BCE18.field_1BE4);
 }
 
@@ -1079,7 +1082,7 @@ void func_8003C878(s32 arg0) // 0x8003C878
         Fs_QueueWaitForEmpty();
     }
 
-    func_80043A24(&g_OrderingTable0[g_ActiveBuffer], arg0);
+    func_80043A24(&g_OrderingTable0[g_ActiveBufferIdx], arg0);
     func_800550D0();
 }
 
@@ -1093,13 +1096,13 @@ void func_8003C8F8(s_800BCE18_2BEC_0* arg0, char* newStr) // 0x8003C8F8
     arg0->field_10.field_8 = 0;
 }
 
-void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* pos, SVECTOR3* rot) // 0x8003C92C
+void func_8003C92C(s_800BCE18_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* rot) // 0x8003C92C
 {
     s32              vy;
     s32              vx;
     s32              vz;
-    s32              coord1; // Q23.8
     s32              coord0; // Q23.8
+    s32              coord1; // Q23.8
     s32              coord2; // Q23.8
     s32              i;
     s32              ret;
@@ -1114,7 +1117,7 @@ void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* pos, SVECTOR3* rot) // 0x80
 
             if (ret == 0)
             {
-                if (func_80056CB4(arg0, &D_800BCE18.field_1BE4, &arg0->field_10) == 0)
+                if (!func_80056CB4(arg0, &D_800BCE18.field_1BE4, &arg0->field_10))
                 {
                     return;
                 }
@@ -1237,7 +1240,7 @@ void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x800
         return;
     }
 
-    func_80057090(arg0, &g_OrderingTable0[g_ActiveBuffer], 1, arg1, arg2, 0);
+    func_80057090(arg0, &g_OrderingTable0[g_ActiveBufferIdx], 1, arg1, arg2, 0);
 }
 
 s32 func_8003CD5C() // 0x8003CD5C
@@ -1245,13 +1248,14 @@ s32 func_8003CD5C() // 0x8003CD5C
     return D_800BCE18.field_1BAC.itemId_0;
 }
 
-void func_8003CD6C(s_PlayerCombat* playerCombatInfo) // 0x8003CD6C
+void func_8003CD6C(s_PlayerCombat* combat) // 0x8003CD6C
 {
 	#define INVENTORY_WEAPONS_ID_BASE InventoryItemId_KitchenKnife
+
     s32 itemId;
     s8  equippedWeaponId;
 
-    equippedWeaponId = playerCombatInfo->equippedWeapon_F;
+    equippedWeaponId = combat->equippedWeapon_F;
     itemId           = NO_VALUE;
     if (equippedWeaponId != NO_VALUE)
     {
@@ -1297,32 +1301,32 @@ s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
             ptr->textureName_8 = "PIPE";
             break;
 
-        case InventoryItemId_CS_Phone:
+        case InventoryItemId_CutscenePhone:
             fileIdx      = FILE_ITEM_PHONE_TIM;
             ptr->textureName_8 = "PHONE";
             break;
 
-        case InventoryItemId_CS_Flauros:
+        case InventoryItemId_CutsceneFlauros:
             fileIdx      = FILE_ITEM_FLAUROS_TIM;
             ptr->textureName_8 = "FLAUROS";
             break;
 
-        case InventoryItemId_CS_Aglaophotis:
+        case InventoryItemId_CutsceneAglaophotis:
             fileIdx      = FILE_ITEM_AGLA_TIM;
             ptr->textureName_8 = "AGLA";
             break;
 
-        case InventoryItemId_CS_PlasticBottle:
+        case InventoryItemId_CutscenePlasticBottle:
             fileIdx      = FILE_ITEM_BOTL_TIM;
             ptr->textureName_8 = "BOTL";
             break;
 
-        case InventoryItemId_CS_Baby:
+        case InventoryItemId_CutsceneBaby:
             fileIdx      = FILE_ITEM_BABY_TIM;
             ptr->textureName_8 = "BABY";
             break;
 
-        case InventoryItemId_CS_BloodPack:
+        case InventoryItemId_CutsceneBloodPack:
             fileIdx      = FILE_ITEM_BLOOD_TIM;
             ptr->textureName_8 = "BLOOD";
             break;
@@ -1407,27 +1411,27 @@ s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
             fileIdx = FILE_ITEM_SHOTGUN_PLM;
             break;
 
-        case InventoryItemId_CS_Phone:
+        case InventoryItemId_CutscenePhone:
             fileIdx = FILE_ITEM_PHONE_PLM;
             break;
 
-        case InventoryItemId_CS_Flauros:
+        case InventoryItemId_CutsceneFlauros:
             fileIdx = FILE_ITEM_FLAUROS_PLM;
             break;
 
-        case InventoryItemId_CS_Aglaophotis:
+        case InventoryItemId_CutsceneAglaophotis:
             fileIdx = FILE_ITEM_AGLA_PLM;
             break;
 
-        case InventoryItemId_CS_PlasticBottle:
+        case InventoryItemId_CutscenePlasticBottle:
             fileIdx = FILE_ITEM_BOTL_PLM;
             break;
 
-        case InventoryItemId_CS_Baby:
+        case InventoryItemId_CutsceneBaby:
             fileIdx = FILE_ITEM_BABY_PLM;
             break;
 
-        case InventoryItemId_CS_BloodPack:
+        case InventoryItemId_CutsceneBloodPack:
             fileIdx = FILE_ITEM_BLOOD_PLM;
             break;
 
@@ -1479,7 +1483,7 @@ void func_8003D058() // 0x8003D058
 
     if (ptr0->itemId_0 != NO_VALUE)
     {
-        if (ptr0->itemId_0 == InventoryItemId_CS_Phone)
+        if (ptr0->itemId_0 == InventoryItemId_CutscenePhone)
         {
             coord = &g_SysWork.playerBoneCoords_890[HarryBone_LeftHand];
         } 
@@ -1488,7 +1492,7 @@ void func_8003D058() // 0x8003D058
             coord = &g_SysWork.playerBoneCoords_890[HarryBone_RightHand];
         }
 
-        if (Fs_QueueIsEntryLoaded(ptr0->field_4) != 0) 
+        if (Fs_QueueIsEntryLoaded(ptr0->field_4)) 
         {
             lmHeader = ptr0->field_14;
 
@@ -1501,7 +1505,7 @@ void func_8003D058() // 0x8003D058
             }
 
             func_80049B6C(coord, &mat1, &mat0);
-            func_80057090(&ptr0->field_18, &g_OrderingTable0[g_ActiveBuffer], 1, &mat0, &mat1, 0);
+            func_80057090(&ptr0->field_18, &g_OrderingTable0[g_ActiveBufferIdx], 1, &mat0, &mat1, 0);
         }
     }
 }
@@ -1520,8 +1524,8 @@ void func_8003D160() // 0x8003D160
     ptr2                              = &ptr->field_164C;
     D_800BCE18.field_0[0].field_18[1] = ptr2;
 
-    Fs_QueueStartRead(g_Chara_FileInfo[1].modelFileIdx, addr);
-    queueIdx = Fs_QueueStartReadTim(g_Chara_FileInfo[1].textureFileIdx, FS_BUFFER_1, &img);
+    Fs_QueueStartRead(CHARA_FILE_INFOS[1].modelFileIdx, addr);
+    queueIdx = Fs_QueueStartReadTim(CHARA_FILE_INFOS[1].textureFileIdx, FS_BUFFER_1, &img);
 
     D_800BCE18.field_164C.field_0   = 1;
     ptr2->field_1                   = 0;
@@ -1581,7 +1585,7 @@ void func_8003D354(s32* arg0, s32 arg1) // 0x8003D354
     s16 idx;
     s32 fileSize;
 
-    idx      = g_Chara_FileInfo[arg1].modelFileIdx;
+    idx      = CHARA_FILE_INFOS[arg1].modelFileIdx;
     fileSize = Fs_GetFileSize(idx);
 
     Fs_GetFileSectorAlignedSize(idx);
@@ -1691,7 +1695,7 @@ void func_8003D550(s32 arg0, s32 arg1) // 0x8003D550
     s_800BCE18_0_CC* ptr;
 
     ptr = D_800BCE18.field_0[0].field_18[arg0];
-    func_80056464(ptr->lmHeader_8, g_Chara_FileInfo[arg0].textureFileIdx, &ptr->texture_C, arg1);
+    func_80056464(ptr->lmHeader_8, CHARA_FILE_INFOS[arg0].textureFileIdx, &ptr->texture_C, arg1);
     func_80056954(ptr->lmHeader_8);
 }
 
@@ -1722,7 +1726,7 @@ void func_8003D5B4(s8 flags) // 0x8003D5B4
         fileIdx = ptr->field_0;
         if (fileIdx != 0)
         {
-            temp = (s32)ptr->lmHeader_8 + Fs_GetFileSize(g_Chara_FileInfo[fileIdx].modelFileIdx);
+            temp = (s32)ptr->lmHeader_8 + Fs_GetFileSize(CHARA_FILE_INFOS[fileIdx].modelFileIdx);
             if (D_800BCE18.field_0[0].field_14 < temp)
             {
                 D_800BCE18.field_0[0].field_14 = temp;
@@ -1803,11 +1807,11 @@ s32 func_8003D7D4(u32 arg0, s32 arg1, s_LmHeader* lmHeader, s_FsImageDesc* tex) 
 
     D_800BCE18.field_0[0].field_18[arg0] = ptr;
 
-    queueIdx = Fs_QueueStartRead(g_Chara_FileInfo[arg0].modelFileIdx, lmHeader);
+    queueIdx = Fs_QueueStartRead(CHARA_FILE_INFOS[arg0].modelFileIdx, lmHeader);
 
-    if (g_Chara_FileInfo[arg0].textureFileIdx != NO_VALUE) 
+    if (CHARA_FILE_INFOS[arg0].textureFileIdx != NO_VALUE) 
     {
-        queueIdx = Fs_QueueStartReadTim(g_Chara_FileInfo[arg0].textureFileIdx, FS_BUFFER_1, tex);
+        queueIdx = Fs_QueueStartReadTim(CHARA_FILE_INFOS[arg0].textureFileIdx, FS_BUFFER_1, tex);
     }
 
     ptr->field_0    = arg0;
@@ -1851,7 +1855,7 @@ void func_8003D9C8(s_800BCE18_0_CC* arg0) // 0x8003D9C8
         arg0->field_1 = 1;
 
         LmHeader_FixOffsets(arg0->lmHeader_8);
-        func_80056464(arg0->lmHeader_8, g_Chara_FileInfo[arg0->field_0].textureFileIdx, &arg0->texture_C, g_Chara_FileInfo[arg0->field_0].field_6_10 % 4);
+        func_80056464(arg0->lmHeader_8, CHARA_FILE_INFOS[arg0->field_0].textureFileIdx, &arg0->texture_C, CHARA_FILE_INFOS[arg0->field_0].field_6_10 % 4);
 
         skel = &arg0->field_14;
 
@@ -1894,8 +1898,8 @@ void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4)
                       D_800C4168.screenBrightness_8);
     }
 
-    func_80045534(&D_800BCE18.field_0[0].field_18[arg0]->field_14, &g_OrderingTable0[g_ActiveBuffer], arg2,
-                  coord, g_Chara_FileInfo[arg0].field_6 * 16, ret, g_Chara_FileInfo[arg0].field_8);
+    func_80045534(&D_800BCE18.field_0[0].field_18[arg0]->field_14, &g_OrderingTable0[g_ActiveBufferIdx], arg2,
+                  coord, CHARA_FILE_INFOS[arg0].field_6 * 16, ret, CHARA_FILE_INFOS[arg0].field_8);
 
     if (arg3 != 0)
     {
@@ -1960,6 +1964,7 @@ void func_8003DD80(s32 idx, s32 arg1) // 0x8003DD80
 void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
 {
     s32 temp_s0;
+
     static s32 D_800A9ECC = 0xFE16FD13;
     static s32 D_800A9ED0 = 0x0000FE13;
     static s32 D_800A9ED4 = 0x0000FE14;
@@ -2020,6 +2025,7 @@ void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
 void func_8003DF84(s_Skeleton* skel, s32 arg1) // 0x8003DF84
 {
     s32 temp_v1;
+
     static s32 D_800A9EF0 = 0x0000FE14;
     static s32 D_800A9EF4 = 0x00FE1514;
     static s32 D_800A9EF8 = 0x0000FE12;
@@ -2063,6 +2069,7 @@ void func_8003DF84(s_Skeleton* skel, s32 arg1) // 0x8003DF84
 void func_8003E08C(s_Skeleton* skel, s32 arg1) // 0x8003E08C
 {
     s32 temp_v1;
+
     static s32 D_800A9F00 = 0x0000FE02;
     static s32 D_800A9F04 = 0x0000FE03;
     static s32 D_800A9F08 = 0x0000FE00;
@@ -2106,6 +2113,7 @@ void func_8003E08C(s_Skeleton* skel, s32 arg1) // 0x8003E08C
 void func_8003E194(s_Skeleton* skel, s32 arg1) // 0x8003E194
 {
     s32 temp_s0;
+
     static s32 D_800A9F10 = 0xFE03FD00;
     static s32 D_800A9F14 = 0x0000FE00;
     static s32 D_800A9F18 = 0x00FE0201;
@@ -2136,6 +2144,7 @@ void func_8003E194(s_Skeleton* skel, s32 arg1) // 0x8003E194
 void func_8003E238(s_Skeleton* skel, s32 arg1) // 0x8003E238
 {
     s32 var_s0;
+
     static s32 D_800A9F20 = 0x06050403;
     static s32 D_800A9F24 = 0x000000FE; // @unused
     static s32 D_800A9F28 = 0x0000FE03;
@@ -2198,6 +2207,7 @@ void func_8003E238(s_Skeleton* skel, s32 arg1) // 0x8003E238
 void func_8003E388(s_Skeleton* skel, s32 arg1) // 0x8003E388
 {
     s32 temp_a1;
+
     static s32 D_800A9F48 = 0x0000FE05;
     static s32 D_800A9F4C = 0x0000FE06;
 
@@ -2222,6 +2232,7 @@ void func_8003E388(s_Skeleton* skel, s32 arg1) // 0x8003E388
 void func_8003E414(s_Skeleton* skel, s32 arg1) // 0x8003E414
 {
     s32 temp_a1;
+
     static s32 D_800A9F50 = 0xFE19FD11;
     static s32 D_800A9F54 = 0xFE22FD1A;
 
@@ -2246,6 +2257,7 @@ void func_8003E414(s_Skeleton* skel, s32 arg1) // 0x8003E414
 void func_8003E4A0(s_Skeleton* skel, s32 arg1) // 0x8003E4A0
 {
     s32 temp_s0;
+
     static s32 D_800A9F58 = 0x05040302;
     static s32 D_800A9F5C = 0x00FE0706; // @unused
     static s32 D_800A9F60 = 0x00FE0502;
@@ -2277,6 +2289,7 @@ void func_8003E4A0(s_Skeleton* skel, s32 arg1) // 0x8003E4A0
 void func_8003E544(s_Skeleton* skel, s32 arg1) // 0x8003E544
 {
     s32 temp_s0;
+
     static s32 D_800A9F6C = 0x05040302;
     static s32 D_800A9F70 = 0x00FE0706; // @unused
     static s32 D_800A9F74 = 0x00FE0502;
@@ -2316,7 +2329,7 @@ void func_8003E5E8(s32 arg0) // 0x8003E5E8
     LINE_G2*  line;
 
     packet = GsOUT_PACKET_P;
-    ot     = &g_OrderingTable0[g_ActiveBuffer].org[1];
+    ot     = &g_OrderingTable0[g_ActiveBufferIdx].org[1];
 
     for (i = -10; i < 11; i++)
     {
@@ -2359,8 +2372,9 @@ static s_800A9F80 D_800A9FA4 = { 5, 5  }; // @unused
 
 void GameFs_FlameGfxLoad() // 0x8003E710
 {
-    static s_FsImageDesc D_800A9FA8 = { .tPage = {0, 12}, .u = 32, .v = 0, .clutX = 800, .clutY = 64 };
-    Fs_QueueStartReadTim(FILE_TIM_FLAME_TIM, FS_BUFFER_1, &D_800A9FA8);
+    static s_FsImageDesc IMG_FLAME = { .tPage = { 0, 12 }, .u = 32, .v = 0, .clutX = 800, .clutY = 64 };
+
+    Fs_QueueStartReadTim(FILE_TIM_FLAME_TIM, FS_BUFFER_1, &IMG_FLAME);
 }
 
 void func_8003E740() // 0x8003E740
@@ -2379,9 +2393,10 @@ void func_8003E740() // 0x8003E740
     s32       var_s5;
     POLY_FT4* poly;
     s32       temp_s2 = 0;
+
     static u32 D_800A9FB0 = 0;
 
-    if (g_DeltaTime0 != 0)
+    if (g_DeltaTime0 != FP_TIME(0.0))
     {
         D_800A9FB0 += 8;
         for (i = 0; i < 8; i++)
@@ -2484,7 +2499,7 @@ void func_8003E740() // 0x8003E740
         poly->v2 = 0x3F;
         poly->v3 = 0x3F;
 
-        AddPrim(&g_OrderingTable0[g_ActiveBuffer].org[var_s5], poly);
+        AddPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[var_s5], poly);
         GsOUT_PACKET_P = (PACKET*)poly + sizeof(POLY_FT4);
     }
 }
@@ -3129,7 +3144,8 @@ void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructU
 
 s32 func_8003FEC0(s_sub_StructUnk3* arg0) // 0x8003FEC0
 {
-    static s32 y_ary[5] = { 0x1C00, 0x6000, 0x9800, 0xC800, 0xF000 };
+    static s32 Y_ARRAY[5] = { 0x1C00, 0x6000, 0x9800, 0xC800, 0xF000 };
+
     if (D_800C4168.fogEnabled_1)
     {
         return arg0->field_10;
@@ -3137,7 +3153,7 @@ s32 func_8003FEC0(s_sub_StructUnk3* arg0) // 0x8003FEC0
 
     if (D_800C4168.field_0 == 1)
     {
-        return vwOresenHokan(y_ary, ARRAY_SIZE(y_ary), arg0->field_4, 0, FP_FLOAT_TO(2.0f, Q12_SHIFT));
+        return vwOresenHokan(Y_ARRAY, ARRAY_SIZE(Y_ARRAY), arg0->field_4, 0, FP_FLOAT_TO(2.0f, Q12_SHIFT));
     }
 
     return FP_FLOAT_TO(20.0f, Q12_SHIFT);

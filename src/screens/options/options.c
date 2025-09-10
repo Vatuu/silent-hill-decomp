@@ -4,8 +4,8 @@
 #include <memory.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/gfx/screen_draw.h"
+#include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math.h"
 #include "screens/options/options.h"
@@ -730,7 +730,7 @@ void Options_MainOptionsMenu_VolumeBarDraw(bool isSfx, u8 vol) // 0x801E3FB8
     GsOT*    ot;
     POLY_F4* poly;
 
-    ot       = &g_OrderingTable2[g_ActiveBuffer];
+    ot       = &g_OrderingTable2[g_ActiveBufferIdx];
     localVol = vol;
 
     // Draw bar notches.
@@ -816,16 +816,16 @@ void Options_ExtraOptionsMenu_EntryStringsDraw(void) // 0x801E416C
     Math_Sin(g_Options_SelectionHighlightTimer << 7);
 
     // Draw heading string.
-    Gfx_StringSetColor(ColorId_White);
+    Gfx_StringSetColor(StringColorId_White);
     Gfx_StringSetPosition(strPos.vx, strPos.vy);
-    Gfx_StringsSet2dLayerIdx(8);
+    Gfx_Strings2dLayerIdxSet(8);
     Gfx_StringDraw(EXTRA_OPTIONS_STR, 99);
 
     // Draw entry strings.
     for (i = 0; i < g_ExtraOptionsMenu_EntryCount; i++)
     {
         Gfx_StringSetPosition(LINE_BASE_X, LINE_BASE_Y + (i * LINE_OFFSET_Y));
-        Gfx_StringsSet2dLayerIdx(8);
+        Gfx_Strings2dLayerIdxSet(8);
         Gfx_StringDraw(ENTRY_STRS[i], 99);
     }
 }
@@ -867,16 +867,16 @@ void Options_MainOptionsMenu_EntryStringsDraw(void) // 0x801E42EC
     Math_Sin(g_Options_SelectionHighlightTimer << 7);
 
     // Draw heading string.
-    Gfx_StringSetColor(ColorId_White);
+    Gfx_StringSetColor(StringColorId_White);
     Gfx_StringSetPosition(strPos.vx, strPos.vy);
-    Gfx_StringsSet2dLayerIdx(8);
+    Gfx_Strings2dLayerIdxSet(8);
     Gfx_StringDraw(OPTIONS_STR, 99);
 
     // Draw entry strings.
     for (i = 0; i < MainOptionsMenuEntry_Count; i++)
     {
         Gfx_StringSetPosition(LINE_BASE_X, LINE_BASE_Y + (i * LINE_OFFSET_Y));
-        Gfx_StringsSet2dLayerIdx(8);
+        Gfx_Strings2dLayerIdxSet(8);
         Gfx_StringDraw(ENTRY_STRS[i], 99);
     }
 
@@ -1054,7 +1054,7 @@ void Options_MainOptionsMenu_SelectionHighlightDraw(void) // 0x801E472C
 
 void Options_Menu_VignetteDraw(void) // 0x801E49F0
 {
-    GsOT*    ot = &g_OrderingTable0[g_ActiveBuffer];
+    GsOT*    ot = &g_OrderingTable0[g_ActiveBufferIdx];
     s32      y0;
     s32      y1;
     s32      xy2;
@@ -1170,7 +1170,7 @@ void Options_ExtraOptionsMenu_ConfigDraw(void) // 0x801E4B2C
     s32 i;
     s32 j;
 
-    Gfx_StringSetColor(ColorId_White);
+    Gfx_StringSetColor(StringColorId_White);
 
     // Draw left/right arrows for subset of options.
     if (g_ExtraOptionsMenu_SelectedEntry < (u32)ExtraOptionsMenuEntry_Count) // TODO: Cast suggests `g_ExtraOptionsMenu_SelectedEntry` type might be unsigned.
@@ -1306,7 +1306,7 @@ void Options_MainOptionsMenu_ConfigDraw(void) // 0x801E4FFC
     s32 strIdx;
     s32 i;
 
-    Gfx_StringSetColor(ColorId_White);
+    Gfx_StringSetColor(StringColorId_White);
 
     // Draw left/right arrows for subset of options.
     if (g_MainOptionsMenu_SelectedEntry >= 4 && g_MainOptionsMenu_SelectedEntry < 9)
@@ -1377,7 +1377,7 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
     posX = g_GameWorkConst->config_0.optScreenPosX_1C;
     if (posX != g_ScreenPosMenu_PositionX || g_GameWorkConst->config_0.optScreenPosY_1D != g_ScreenPosMenu_PositionY)
     {
-        Screen_XYPosSet(posX, g_GameWorkConst->config_0.optScreenPosY_1D);
+        Screen_XyPositionSet(posX, g_GameWorkConst->config_0.optScreenPosY_1D);
     }
 
     g_ScreenPosMenu_PositionX = g_GameWorkConst->config_0.optScreenPosX_1C;
@@ -1508,7 +1508,7 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
             setWH(tile, 2, 0xF0);
         }
 
-        addPrim(g_OrderingTable0[g_ActiveBuffer].org, (TILE*)packet);
+        addPrim(g_OrderingTable0[g_ActiveBufferIdx].org, (TILE*)packet);
         packet += sizeof(TILE);
     }
 
@@ -1540,7 +1540,7 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
             setWH(tile, 2, 0xF0);
         }
 
-        addPrim(g_OrderingTable0[g_ActiveBuffer].org, (TILE*)packet);
+        addPrim(g_OrderingTable0[g_ActiveBufferIdx].org, (TILE*)packet);
         packet += sizeof(TILE);
     }
 
@@ -1615,7 +1615,7 @@ void Options_ScreenPosMenu_ArrowsDraw(void) // 0x801E5A08
 
 void Options_ScreenPosMenu_ConfigDraw(void) // 0x801E5CBC
 {
-    GsOT*    ot = &g_OrderingTable2[g_ActiveBuffer];
+    GsOT*    ot = &g_OrderingTable2[g_ActiveBufferIdx];
     s32      i;
     LINE_F2* line;
     POLY_F4* poly;
@@ -1766,7 +1766,7 @@ void Options_BrightnessMenu_ConfigDraw(void) // 0x801E6238
 {
     const char* LEVEL_STR = "LEVEL_________"; // 0x801E2C64
 
-    Gfx_StringSetColor(ColorId_White);
+    Gfx_StringSetColor(StringColorId_White);
     Gfx_StringSetPosition(SCREEN_POSITION_X(25.0f), SCREEN_POSITION_Y(79.5f));
     Gfx_StringDraw(LEVEL_STR, 20);
     Gfx_StringDrawInt(1, g_GameWork.config_0.optBrightness_22);
@@ -1831,7 +1831,7 @@ void Options_Selection_HighlightDraw(s_Line2d* line, bool hasShadow, bool invert
     POLY_G4*  poly;
     GsOT*     ot;
 
-    ot        = &g_OrderingTable2[g_ActiveBuffer];
+    ot        = &g_OrderingTable2[g_ActiveBufferIdx];
     linePrim  = (LINE_G2*)GsOUT_PACKET_P;
     localLine = line;
 
@@ -1885,7 +1885,7 @@ void Options_Selection_ArrowDraw(s_Triangle2d* arrow, bool isFlashing, bool rese
     POLY_G3* arrowPoly;
     GsOT*    ot;
     
-    ot = &g_OrderingTable2[g_ActiveBuffer];
+    ot = &g_OrderingTable2[g_ActiveBufferIdx];
 
     // @unused `resetColor` doesn't serve any meaningful purpose.
     if (resetColor)
@@ -1970,7 +1970,7 @@ void Options_Selection_BulletPointDraw(s_Quad2d* quad, bool isCenter, bool isIna
 {
     #define QUAD_COUNT 2
 
-    GsOT*    ot = &g_OrderingTable2[g_ActiveBuffer];
+    GsOT*    ot = &g_OrderingTable2[g_ActiveBufferIdx];
     s32      i;
     POLY_G3* poly;
 
@@ -2456,9 +2456,9 @@ void Options_ControllerMenu_EntriesDraw(bool isOnActionsPane, s32 presetsEntryId
     POLY_G4* poly;
     GsOT*    ot;
 
-    ot     = &g_OtTags0[g_ActiveBuffer][15];
-    poly   = &g_ControllerMenu_SelectionHighlightQuads[g_ActiveBuffer];
-    drMode = &g_ControllerMenu_SelectionHighlightDrawModes[g_ActiveBuffer];
+    ot     = &g_OtTags0[g_ActiveBufferIdx][15];
+    poly   = &g_ControllerMenu_SelectionHighlightQuads[g_ActiveBufferIdx];
+    drMode = &g_ControllerMenu_SelectionHighlightDrawModes[g_ActiveBufferIdx];
 
     // Draw entry strings.
     for (i = 0; i < ControllerMenuState_Count; i++)
@@ -2535,7 +2535,7 @@ void Options_ControllerMenu_ButtonIconsDraw(s32 baseX, s32 baseY, u16 config) //
 
     image = &g_ControllerButtonAtlasImg;
 
-    ot     = &g_OtTags1[g_ActiveBuffer][16];
+    ot     = &g_OtTags1[g_ActiveBufferIdx][16];
     packet = GsOUT_PACKET_P;
 
     // Draw button sprites.

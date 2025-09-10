@@ -12,7 +12,7 @@ void Ai_Stalker_Init(s_SubCharacter* chara)
     chara->health_B0 = sharedData_800E3A20_0_s00;
 
 #ifdef MAP6_S03
-    // MAP6_S03: Change stalker health to 1.5x when not on easy difficulty.
+    // Change stalker health to 1.5x when not on easy difficulty.
     if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
     {
         chara->health_B0 = FP_MULTIPLY_FLOAT_PRECISE(sharedData_800E3A20_0_s00, 1.5f, Q12_SHIFT);
@@ -23,11 +23,10 @@ void Ai_Stalker_Init(s_SubCharacter* chara)
     chara->field_34       = 0;
     chara->rotation_24.vz = 0;
     chara->rotation_24.vx = 0;
-
+    //Character_AnimSet(chara, ANIM_STATUS(30, true), 447); // TODO: Doesn't match?
     chara->model_0.anim_4.status_0      = ANIM_STATUS(30, true);
-    chara->model_0.anim_4.time_4         = FP_TIME(477.0f);
+    chara->model_0.anim_4.time_4        = FP_TIME(477.0f);
     chara->model_0.anim_4.keyframeIdx_8 = 477;
-
     chara->headingAngle_3C = chara->rotation_24.vy;
 
     switch (chara->model_0.stateStep_3)
@@ -66,28 +65,31 @@ void Ai_Stalker_Init(s_SubCharacter* chara)
             break;
 
         case 9:
-            chara->model_0.state_2               = 12;
+            chara->model_0.state_2              = 12;
+            //Character_AnimSet(chara, ANIM_STATUS(27, true), 427); // TODO: Doesn't match?
             chara->model_0.anim_4.status_0      = ANIM_STATUS(27, true);
-            chara->model_0.anim_4.time_4         = FP_TIME(427.0f);
+            chara->model_0.anim_4.time_4        = FP_TIME(427.0f);
             chara->model_0.anim_4.keyframeIdx_8 = 427;
             chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 0;
             chara->field_E0_8 = 3;
             break;
 
         case 10:
-            chara->model_0.state_2               = 11;
+            chara->model_0.state_2              = 11;
+            //Character_AnimSet(chara, ANIM_STATUS(28, true), 442); // TODO: Doesn't match?
             chara->model_0.anim_4.status_0      = ANIM_STATUS(28, true);
-            chara->model_0.anim_4.time_4         = FP_TIME(443.0f);
+            chara->model_0.anim_4.time_4        = FP_TIME(443.0f);
             chara->model_0.anim_4.keyframeIdx_8 = 443;
-            chara->field_E0_8                    = 3;
+            chara->field_E0_8                   = 3;
             break;
 
         case 17:
-            chara->model_0.state_2               = 13;
+            chara->model_0.state_2              = 13;
+            //Character_AnimSet(chara, ANIM_STATUS(14, true), 176); // TODO: Doesn't match?
             chara->model_0.anim_4.status_0      = ANIM_STATUS(14, true);
-            chara->model_0.anim_4.time_4         = FP_TIME(176.0f);
+            chara->model_0.anim_4.time_4        = FP_TIME(176.0f);
             chara->model_0.anim_4.keyframeIdx_8 = 176;
-            chara->field_E0_8                    = 0;
+            chara->field_E0_8                   = 0;
             break;
     }
 
@@ -96,7 +98,7 @@ void Ai_Stalker_Init(s_SubCharacter* chara)
     chara->properties_E4.larvalStalker.properties_E8[6].val16[1] = NO_VALUE;
     chara->properties_E4.larvalStalker.properties_E8[2].val32    = chara->position_18.vx;
     chara->properties_E4.larvalStalker.properties_E8[3].val32    = chara->position_18.vz;
-    chara->properties_E4.larvalStalker.properties_E8[10].val32  = chara->health_B0;
+    chara->properties_E4.larvalStalker.properties_E8[10].val32   = chara->health_B0;
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, STALKER_ANIM_INFOS);
 

@@ -30,18 +30,6 @@ struct _Model;
 
 #define EVENT_FLAG5_FIRST_TIME_SAVE_GAME (1 << 26)
 
-#define MAP_MSG_CODE_MARKER         '~' /** Message code start. */
-#define MAP_MSG_CODE_COLOR          'C' /** Set color. */
-#define MAP_MSG_CODE_DISPLAY_ALL    'D' /** Display message instantly without roll. */
-#define MAP_MSG_CODE_END            'E' /** End message. */
-#define MAP_MSG_CODE_HIGH_RES       'H' /** High-resolution glyph drawing. */
-#define MAP_MSG_CODE_JUMP           'J' /** Jump timer. */
-#define MAP_MSG_CODE_LINE_POSITION  'L' /** Set next line position. */
-#define MAP_MSG_CODE_MIDDLE         'M' /** Align center. */
-#define MAP_MSG_CODE_NEWLINE        'N' /** Newline. */
-#define MAP_MSG_CODE_SELECT         'S' /** Display dialog prompt with selectable entries. */
-#define MAP_MSG_CODE_TAB            'T' /** Inset line. */
-
 #define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400  /** Hack. Long string length is used to display a whole message instantly. */
 #define GLYPH_TABLE_ASCII_OFFSET       '\'' /** Subtracted from ASCII bytes to get index to some string-related table. */
 
@@ -170,7 +158,7 @@ typedef enum _MapMsgIdx
     MapMsgIdx_DoorJammer        = 11,
     MapMsgIdx_DoorLocked        = 12,
     MapMsgIdx_DoorUnlocked      = 13,
-    MapMsgIdx_NowMaking         = 14  // Unused?
+    MapMsgIdx_NowMaking         = 14  // @unused?
 } e_MapMsgIdx;
 
 typedef enum _MapMsgCode
@@ -355,7 +343,7 @@ typedef enum _ControllerFlags
     ControllerFlag_LStickLeft   = 1 << 27
 } e_ControllerFlags;
 
-/** @brief Flags with an unknown purpose used frequently for `s_SubCharacter::flags_3E`. */
+/** @brief Character flags. Used by `s_SubCharacter::flags_3E`. */
 typedef enum _CharaFlags
 {
     CharaFlag_None = 0,
@@ -369,18 +357,24 @@ typedef enum _CharaFlags
     CharaFlag_Unk9 = 1 << 8
 } s_CharaFlags;
 
-/** @brief Color IDs used by strings displayed in screen space. */
-typedef enum _ColorId
+/** @brief String color IDs for strings displayed in screen space.
+ * Used as indices into `STRING_COLORS`.
+ *
+ * TODO: Move to `text_draw.h`.
+ */
+typedef enum _StringColorId
 {
-    ColorId_Gold           = 0,
-    ColorId_DarkGrey       = 1,
-    ColorId_Green          = 2,
-    ColorId_Nuclear        = 3,
-    ColorId_Red            = 4,
-    ColorId_GreenDuplicate = 5, // Gives same color as `ColorId_Green`. Unused?
-    ColorId_LightGrey      = 6,
-    ColorId_White          = 7
-} e_ColorId;
+    StringColorId_Gold           = 0,
+    StringColorId_DarkGrey       = 1,
+    StringColorId_Green          = 2,
+    StringColorId_Nuclear        = 3,
+    StringColorId_Red            = 4,
+    StringColorId_GreenDuplicate = 5, // Gives same color as `StringColorId_Green`. Unused?
+    StringColorId_LightGrey      = 6,
+    StringColorId_White          = 7,
+
+    StringColorId_Count          = 8
+} e_StringColorId;
 
 /** @brief Character animation flags. */
 typedef enum _AnimFlags
@@ -541,13 +535,12 @@ typedef enum _InventoryItemId
     InventoryItemId_Shotgun              = 162,
     InventoryItemId_HyperBlaster         = 163,
 	
-	/** @brief Item IDs only used during cutscenes. */
-    InventoryItemId_CS_Phone             = 164,
-    InventoryItemId_CS_Flauros           = 165,
-    InventoryItemId_CS_Aglaophotis       = 166,
-    InventoryItemId_CS_PlasticBottle     = 167,
-    InventoryItemId_CS_Baby              = 168,
-    InventoryItemId_CS_BloodPack         = 169,
+    InventoryItemId_CutscenePhone         = 164,
+    InventoryItemId_CutsceneFlauros       = 165,
+    InventoryItemId_CutsceneAglaophotis   = 166,
+    InventoryItemId_CutscenePlasticBottle = 167,
+    InventoryItemId_CutsceneBaby          = 168,
+    InventoryItemId_CutsceneBloodPack     = 169,
 
     InventoryItemId_HandgunBullets       = 192,
     InventoryItemId_RifleShells          = 193,
@@ -665,7 +658,7 @@ typedef enum _PlayerFlags
     PlayerFlag_Moving         = 1 << 15
 } e_PlayerFlags;
 
-/** @brief Character IDs. The `g_Chara_FileInfo` array associates each character ID with animimation, model, and texture files. */
+/** @brief Character IDs. The `CHARA_FILE_INFOS` array associates each character ID with animimation, model, and texture files. */
 typedef enum _CharacterId
 {
     Chara_None             = 0,
@@ -681,7 +674,7 @@ typedef enum _CharacterId
     Chara_HangedScratcher  = 10,
     Chara_Creaper          = 11,
     Chara_Romper           = 12,
-    Chara_UnusedChicken    = 13,
+    Chara_Chicken          = 13, /** @unused */
     Chara_Splithead        = 14,
     Chara_Floatstinger     = 15,
     Chara_PuppetNurse      = 16,
@@ -746,7 +739,7 @@ typedef union
         s8 rightY;
         s8 leftX;
         s8 leftY;
-    } sticks_0;
+    } sticks_0; // Range is `[-128, 127]`?
 } s_AnalogSticks;
 
 typedef struct _AnalogController
@@ -995,17 +988,17 @@ STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 typedef struct _AnimInfo
 {
     void (*updateFunc_0)(struct _Model*, struct _AnmHeader*, GsCOORDINATE2*, struct _AnimInfo*);
-    u8  field_4;                /** Packed anim status. See `s_ModelAnimData::status_0`. Unknown purpose for this one. */
-    s8  hasVariableTimeDelta_5; // Or `hasVariableDuration_5`?
-    u8  status_6;               /** Packed anim status. See `s_ModelAnim::status_0`. */
-    u8  field_7;                // Maybe `isLooped_7`? Could also be padding.
+    u8  status_4;                 /** Packed anim status. Init base? See `s_ModelAnimData::status_0`. */
+    s8  hasVariableDuration_5;    /** `bool` | Use `duration_8.variableFunc`: `true`, Use `duration_8.constant`: `false`. */
+    u8  status_6;                 /** Packed anim status. Link target? Sometimes `NO_VALUE`, unknown why. See `s_ModelAnim::status_0`. */
+    u8  __pad_7;
     union
     {
-        q19_12 constTimeDelta;             // `constantDuration`
-        q19_12 (*variableTimeDeltaFunc)(); // `variableDurationFunc`
-    } timeDelta_8;                         // `duration_8` Not sure how the time scaling works. Something like `FP_TIME(sec * (TICKS_PER_SECOND / 2))`?
-    s16 startKeyframeIdx_C;
-    s16 endKeyframeIdx_E;
+        q19_12 constant;          /** Constant duration. */
+        q19_12 (*variableFunc)(); /** Variable duration via a function. Allows animations to be sped up or slowed down. */
+    } duration_8;                 /** At 30FPS. */
+    s16 startKeyframeIdx_C;       /** Start keyframe index. Sometimes `NO_VALUE`, unknown why. */
+    s16 endKeyframeIdx_E;         /** End keyframe index. */
 } s_AnimInfo;
 STATIC_ASSERT_SIZEOF(s_AnimInfo, 16);
 
@@ -1014,9 +1007,9 @@ typedef struct _ModelAnim
     u8          status_0;         /** Is active: bit 0, Anim index: bits 1-7. Possible original name: `anim_status` */
     u8          maybeSomeState_1; // State says if `time_4` is anim time/anim status or a func ptr? That field could be a union.
     u16         flags_2;          /** `e_AnimFlags` */
-    q19_12      time_4;           /** Time along absolute timeline. */ 
-    s16         keyframeIdx_8;    /** Active keyframe along absolute timeline. */
-    q3_12       alpha_A;          /** Alpha along active anim. */ 
+    q19_12      time_4;           /** Time on timeline. */ 
+    s16         keyframeIdx_8;    /** Active keyframe. */
+    q3_12       alpha_A;          /** Progress alpha. */ 
     s_AnimInfo* animInfo_C;       // } Arrays of anim infos?
     s_AnimInfo* animInfo_10;      // }
 } s_ModelAnim;
@@ -1024,12 +1017,12 @@ STATIC_ASSERT_SIZEOF(s_ModelAnim, 20);
 
 typedef struct _Model
 {
-    s8          charaId_0;      /** `e_CharacterId` */
-    u8          paletteIdx_1;   /** Changes the texture palette index for this model. */
-    u8          state_2;        /** Current state for this model/character. 0 usually means it still has to be initialized. */
-    u8          stateStep_3;    // Step number or temp data for the current `state_2`? In `s_MainCharacterExtra` always 1, set to 0 for 1 tick when anim state appears to change.
-                                // Used differently in player's `s_SubCharacter`. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
-                                // Sometimes holds actual anim index?
+    s8          charaId_0;    /** `e_CharacterId` */
+    u8          paletteIdx_1; /** Changes the texture palette index for this model. */
+    u8          state_2;      /** Current state for this model/character. 0 usually means it still has to be initialized. */
+    u8          stateStep_3;  // Step number or temp data for the current `state_2`? In `s_MainCharacterExtra` always 1, set to 0 for 1 tick when anim state appears to change.
+                              // Used differently in player's `s_SubCharacter`. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
+                              // Sometimes holds actual anim index?
     s_ModelAnim anim_4;
 } s_Model;
 STATIC_ASSERT_SIZEOF(s_Model, 24);
@@ -1044,7 +1037,7 @@ typedef union
 // TODO: Unsure if this struct is puppet doctor specific or shared with all characterss. Pointer gets set at puppetDoc+0x124.
 typedef struct
 {
-    s32         health_0;
+    q19_12      health_0;
     s8          unk_4[32];
     s_AnimInfo* animInfo_24;
     s8          unk_28[12];
@@ -1064,7 +1057,7 @@ typedef struct _SubCharaPropertiesPlayer
     q19_12 exhaustionTimer_FC;
     s32    field_100;
     s32    field_104;    // Distance?
-    q19_12 runTimer_108; // `FP_TIME` format timer?.
+    q19_12 runTimer_108;
     u8     field_10C;    // Player SFX pitch?
     u8     field_10D;
     s8     unk_10E[6];
@@ -1074,7 +1067,7 @@ typedef struct _SubCharaPropertiesPlayer
     s32    flags_11C; /** `e_PlayerFlags`. */
     s16    field_120; // Angle which the player turns when doing a quick turn. In order words, some sort of holder for angle Y.
     s16    field_122; // Some sort of X angle for the player. Specially used when aiming an enemy.
-    s16    headingAngle_124;
+    q7_8   headingAngle_124;
     q3_12  playerMoveDistance_126; // Used to indicate how much the player should move foward. Seems to be squared.
 } s_SubCharaPropertiesPlayer;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPlayer, 68);
@@ -1127,7 +1120,7 @@ typedef struct _SubCharacter
     SVECTOR rotationSpeed_2C;  /** Range [-0x700, 0x700]. */
     q19_12  field_34;          // Character Y Position?
     s32     moveSpeed_38;
-    s16     headingAngle_3C;
+    q7_8    headingAngle_3C;
     s16     flags_3E;
     s8      field_40;          // In player: Index of the NPC attacking the player.
                                // In NPCs: Unknown.
@@ -1403,7 +1396,7 @@ extern s_Savegame* const       g_SavegamePtr;   // 0x80024D48
 extern s_ControllerData* const g_Controller0;   // 0x80024D4C
 extern s_ControllerData* const g_Controller1;   // 0x80024D50
 
-extern s32  g_ActiveBuffer; // 0x800B9FB8
+extern s32  g_ActiveBufferIdx; // 0x800B9FB8
 extern GsOT g_OrderingTable0[2]; // 0x800A8F74
 extern GsOT g_OrderingTable1[2]; // 0x800A8F9C
 extern GsOT g_OrderingTable2[2]; // 0x800A8FC4
@@ -1555,7 +1548,7 @@ static inline void Savegame_EventFlagSet(u32 flagId)
     (g_SavegamePtr->eventFlags_168[(flagIdx) / 32] |= 1 << ((flagIdx) % 32))
 
 /** @brief Checks if the given flag ID is set inside the array of 16-bit flag values. */
-static inline s32 Flags16b_IsSet(u16* array, s32 flagId)
+static inline s32 Flags16b_IsSet(const u16* array, s32 flagId)
 {
     // @bug: `>> 5` divides `flagId` by 32 to get array index, but array is of 16-bit values.
     // Maybe copy-paste from `u32` version of func.
@@ -1572,7 +1565,7 @@ static inline void Character_AnimSet(s_SubCharacter* chara, s32 animStatus, s32 
 {
     // TODO: Problem with header includes prevents commented macro use.
     chara->model_0.anim_4.status_0      = animStatus;
-    chara->model_0.anim_4.time_4        = keyframeIdx << 12;//FP_TIME(keyframeIdx);
+    chara->model_0.anim_4.time_4        = keyframeIdx << 12;//Q19_12(keyframeIdx);
     chara->model_0.anim_4.keyframeIdx_8 = keyframeIdx;
 }
 

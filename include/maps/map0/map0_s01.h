@@ -6,7 +6,7 @@
 #include "game.h"
 #include "types.h"
 
-/** @brief Event flags specific to this map. */
+/** @brief Event flags specific to map 0, stage 1. */
 typedef enum _EventFlags
 {
     EventFlag_45 = 45,
@@ -21,7 +21,7 @@ typedef struct
     VECTOR3 position_0;
     s32     field_C;
     s16     field_10;
-    s16     pad_12;
+    s16     __pad_12;
 } s_EventPosition;
 
 typedef struct

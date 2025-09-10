@@ -261,12 +261,10 @@ void Ai_LittleIncubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCO
 
     if (chara->model_0.state_2 == 0)
     {
-        chara->model_0.anim_4.alpha_A       = FP_ALPHA(0.0f);
-        chara->model_0.state_2              = 1;
-        chara->model_0.stateStep_3          = 0;
-        chara->model_0.anim_4.status_0      = ANIM_STATUS(1, true);
-        chara->model_0.anim_4.time_4        = 0;
-        chara->model_0.anim_4.keyframeIdx_8 = 0;
+        chara->model_0.anim_4.alpha_A = FP_ALPHA(0.0f);
+        chara->model_0.state_2        = 1;
+        chara->model_0.stateStep_3    = 0;
+        Character_AnimSet(chara, ANIM_STATUS(1, true), 0);
 
         D_800EDA00 = 0;
     }
@@ -620,10 +618,7 @@ bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
         chara->model_0.stateStep_3 = 0;
     }
 
-    chara->model_0.anim_4.status_0      = ANIM_STATUS(3, false);
-    chara->model_0.anim_4.time_4         = FP_TIME(338.0f);
-    chara->model_0.anim_4.keyframeIdx_8 = 338;
-
+    Character_AnimSet(chara, ANIM_STATUS(3, false), 338);
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, INCUBUS_ANIM_INFOS);
 
     chara->damageReceived_C0 = FP_HEALTH(0.0f);
@@ -705,7 +700,7 @@ void Ai_Incubus_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) /
 {
     if ((chara->model_0.state_2 != 0 || Ai_Incubus_Init(chara, coords)) && chara->model_0.state_2 != 1)
     {
-        if (g_DeltaTime0 != 0)
+        if (g_DeltaTime0 != FP_TIME(0.0))
         {
             func_800DDBBC(chara);
             func_800DEC74(chara, coords);
@@ -796,10 +791,7 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
         chara->model_0.stateStep_3 = 0;
     }
 
-    chara->model_0.anim_4.status_0      = ANIM_STATUS(2, false);
-    chara->model_0.anim_4.keyframeIdx_8 = 115;
-    chara->model_0.anim_4.time_4         = FP_TIME(115.0f);
-
+    Character_AnimSet(chara, ANIM_STATUS(2, false), 115);
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, UNKKOWN_23_ANIM_INFOS);
 
     chara->damageReceived_C0 = FP_HEALTH(0.0f);
@@ -891,7 +883,7 @@ void Ai_Unknown23_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords)
 
     if (chara->model_0.state_2 != 1)
     {
-        if (g_DeltaTime0 != 0)
+        if (g_DeltaTime0 != FP_TIME(0.0))
         {
             func_800DFCE4(chara);
             func_800E05DC(chara, coords);

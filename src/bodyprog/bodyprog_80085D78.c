@@ -699,7 +699,6 @@ void func_80086C58(s_SubCharacter* chara, s32 arg1) // 0x80086C58
 
 void func_80086D04(s_SubCharacter* chara) // 0x80086D04
 {
-
     switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
@@ -1362,7 +1361,7 @@ void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6,
 
     setSemiTrans(poly, 0);
 
-    addPrim(g_OrderingTable0[g_ActiveBuffer].org, poly);
+    addPrim(g_OrderingTable0[g_ActiveBufferIdx].org, poly);
     poly++;
 
     GsOUT_PACKET_P = (PACKET*)poly;
@@ -1445,7 +1444,7 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, s32 posX, s32 posZ, s16 posY, u32 stateSt
         }
     }
 
-    for(i = 0; i < NPC_COUNT_MAX; i++)
+    for (i = 0; i < NPC_COUNT_MAX; i++)
     {
         // Skip NPC slot if occupied.
         if (g_SysWork.npcs_1A0[i].model_0.charaId_0 != Chara_None)
@@ -2405,7 +2404,7 @@ s_DmsInterval* func_8008CA60(volatile s32 unused, s32 idx, s_DmsHeader* header) 
     return &header->intervalPtr_8[idx];
 }
 
-void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, s32 time, s_DmsHeader* header) // 0x8008CA74
+void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, q19_12 time, s_DmsHeader* header) // 0x8008CA74
 {
     s32 charaIdx;
 
@@ -2445,7 +2444,7 @@ s32 Dms_CharacterFindIdxByName(char* name, s_DmsHeader* header) // 0x8008CB10
     return NO_VALUE;
 }
 
-void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, s32 time, s_DmsHeader* header) // 0x8008CB90
+void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q19_12 time, s_DmsHeader* header) // 0x8008CB90
 {
     s_DmsEntry*             charaEntry;
     s32                     keyframePrev;
@@ -2489,14 +2488,14 @@ s16 func_8008CDBC(s16 angle) // 0x8008CDBC
     return (96 * Math_Cos(angle / 2)) / Math_Sin(angle / 2);
 }
 
-s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, s32 time, s_DmsHeader* header) // 0x8008CE1C
+s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, q19_12 time, s_DmsHeader* header) // 0x8008CE1C
 {
-    s_DmsEntry*         camEntry;
     s32                 keyframePrev;
     s32                 keyframeNext;
     s32                 alpha;
     s_DmsKeyframeCamera curFrame;
     s32                 camProjValue;
+    s_DmsEntry*         camEntry;
 
     camEntry = &header->camera_1C;
 
@@ -2522,23 +2521,23 @@ s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2,
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CF54); // 0x8008CF54
 
-s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, s_DmsKeyframeCamera* frame0, s_DmsKeyframeCamera* frame1, s32 alpha) // 0x8008CFEC
+s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, const s_DmsKeyframeCamera* frame0, const s_DmsKeyframeCamera* frame1, s32 alpha) // 0x8008CFEC
 {
-    result->posTarget_0.vx = frame0->posTarget_0.vx + FP_MULTIPLY(frame1->posTarget_0.vx - frame0->posTarget_0.vx, (s64)alpha, Q12_SHIFT);
-    result->posTarget_0.vy = frame0->posTarget_0.vy + FP_MULTIPLY(frame1->posTarget_0.vy - frame0->posTarget_0.vy, (s64)alpha, Q12_SHIFT);
-    result->posTarget_0.vz = frame0->posTarget_0.vz + FP_MULTIPLY(frame1->posTarget_0.vz - frame0->posTarget_0.vz, (s64)alpha, Q12_SHIFT);
+    result->posTarget_0.vx = frame0->posTarget_0.vx + FP_MULTIPLY_PRECISE(frame1->posTarget_0.vx - frame0->posTarget_0.vx, alpha, Q12_SHIFT);
+    result->posTarget_0.vy = frame0->posTarget_0.vy + FP_MULTIPLY_PRECISE(frame1->posTarget_0.vy - frame0->posTarget_0.vy, alpha, Q12_SHIFT);
+    result->posTarget_0.vz = frame0->posTarget_0.vz + FP_MULTIPLY_PRECISE(frame1->posTarget_0.vz - frame0->posTarget_0.vz, alpha, Q12_SHIFT);
 
-    result->lookAtTarget_6.vx = frame0->lookAtTarget_6.vx + FP_MULTIPLY(frame1->lookAtTarget_6.vx - frame0->lookAtTarget_6.vx, (s64)alpha, Q12_SHIFT);
-    result->lookAtTarget_6.vy = frame0->lookAtTarget_6.vy + FP_MULTIPLY(frame1->lookAtTarget_6.vy - frame0->lookAtTarget_6.vy, (s64)alpha, Q12_SHIFT);
-    result->lookAtTarget_6.vz = frame0->lookAtTarget_6.vz + FP_MULTIPLY(frame1->lookAtTarget_6.vz - frame0->lookAtTarget_6.vz, (s64)alpha, Q12_SHIFT);
+    result->lookAtTarget_6.vx = frame0->lookAtTarget_6.vx + FP_MULTIPLY_PRECISE(frame1->lookAtTarget_6.vx - frame0->lookAtTarget_6.vx, alpha, Q12_SHIFT);
+    result->lookAtTarget_6.vy = frame0->lookAtTarget_6.vy + FP_MULTIPLY_PRECISE(frame1->lookAtTarget_6.vy - frame0->lookAtTarget_6.vy, alpha, Q12_SHIFT);
+    result->lookAtTarget_6.vz = frame0->lookAtTarget_6.vz + FP_MULTIPLY_PRECISE(frame1->lookAtTarget_6.vz - frame0->lookAtTarget_6.vz, alpha, Q12_SHIFT);
 
     result->field_C[0] = Math_LerpFixed12(frame0->field_C[0], frame1->field_C[0], alpha);
-    result->field_C[1] = frame0->field_C[1] + FP_MULTIPLY(frame1->field_C[1] - frame0->field_C[1], (s64)alpha, Q12_SHIFT);
+    result->field_C[1] = frame0->field_C[1] + FP_MULTIPLY_PRECISE(frame1->field_C[1] - frame0->field_C[1], alpha, Q12_SHIFT);
 
     return result->field_C[1];
 }
 
-void func_8008D1D0(s32* keyframePrev, s32* keyframeNext, s32* alpha, s32 time, s_DmsEntry* camEntry, s_DmsHeader* header) // 0x8008D1D0
+void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, s32* alpha, q19_12 time, s_DmsEntry* camEntry, s_DmsHeader* header) // 0x8008D1D0
 {
     s32 prevVal;
     s32 nextVal;
@@ -2546,12 +2545,12 @@ void func_8008D1D0(s32* keyframePrev, s32* keyframeNext, s32* alpha, s32 time, s
     prevVal = 0;
     nextVal = 0;
     
-    switch (func_8008D2C4(time, header))
+    switch (Dms_IntervalStatusGet(time, header))
     {
         case 0:
             prevVal = FP_FROM(time, Q12_SHIFT);
             nextVal = prevVal + 1;
-            *alpha = time & 0xFFF;
+            *alpha = QX_12_FRACT(time);
             break;
 
         case 1:
@@ -2563,34 +2562,31 @@ void func_8008D1D0(s32* keyframePrev, s32* keyframeNext, s32* alpha, s32 time, s
         case 2:
             prevVal = FP_FROM(time, Q12_SHIFT) - 1;
             nextVal = prevVal + 1;
-            *alpha = (time & 0xFFF) + 0x1000;
-            break;
-
-        default:
+            *alpha = QX_12_FRACT(time) + FP_TIME(1.0f);
             break;
     }
 
-    *keyframePrev = func_8008D330(prevVal, camEntry);
-    *keyframeNext = func_8008D330(nextVal, camEntry);
+    *prevKeyframe = func_8008D330(prevVal, camEntry);
+    *nextKeyframe = func_8008D330(nextVal, camEntry);
 }
 
-// Dms_IntervalGetStatus?
-u32 func_8008D2C4(s32 time, s_DmsHeader* header)
+u32 Dms_IntervalStatusGet(s32 time, s_DmsHeader* header)
 {
     s_DmsInterval* interval;
 
+    // Keyframe index.
     time = FP_FROM(time, Q12_SHIFT);
 
     for (interval = header->intervalPtr_8;
          interval < &header->intervalPtr_8[header->intervalCount_2];
          interval++)
     {
-        if (time != ((interval->start + interval->duration) - 1))
+        if (time != ((interval->startKeyframeIdx_0 + interval->frameCount_2) - 1))
         {
             continue;
         }
 
-        if (interval->duration > 1)
+        if (interval->frameCount_2 > 1)
         {
             return 2;
         }
@@ -2603,11 +2599,11 @@ u32 func_8008D2C4(s32 time, s_DmsHeader* header)
 
 s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry) // 0x8008D330
 {
+    s32       keyframeIdx0;
+    s32       keyframeIdx1;
     SVECTOR3* vec;
-    s32       t0;
-    s32       retval;
 
-    t0  = arg0;
+    keyframeIdx0 = arg0;
     vec = camEntry->svectorPtr_8;
 
     for (; vec < &camEntry->svectorPtr_8[camEntry->svectorCount_2]; vec++)
@@ -2620,30 +2616,30 @@ s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry) // 0x8008D330
 
         if (arg0 <= vec->vy)
         {
-            t0 = vec->vz;
+            keyframeIdx0 = vec->vz;
             break;
         }
 
-        t0 -= vec->vy - vec->vx;
+        keyframeIdx0 -= vec->vy - vec->vx;
     }
 
-    if (t0 >= 0)
+    if (keyframeIdx0 >= 0)
     {
-        if ((camEntry->keyframeCount_0 - 1) >= t0)
+        if ((camEntry->keyframeCount_0 - 1) >= keyframeIdx0)
         {
-            retval = t0;
+            keyframeIdx1 = keyframeIdx0;
         }
         else
         {
-            retval = camEntry->keyframeCount_0 - 1;
+            keyframeIdx1 = camEntry->keyframeCount_0 - 1;
         }
     }
     else
     {
-        retval = 0;
+        keyframeIdx1 = 0;
     }
 
-    return retval;
+    return keyframeIdx1;
 }
 
 s32 Math_LerpFixed12(s16 from, s16 to, s32 alpha) // 0x8008D3D4
@@ -2729,12 +2725,13 @@ void func_8008D5A0(VECTOR3* arg0, s16 arg1) // 0x8008D5A0
     packet         = GsOUT_PACKET_P;
     tile           = GsOUT_PACKET_P + 24;
     GsOUT_PACKET_P = GsOUT_PACKET_P + 40;
-    ot             = &g_OrderingTable0[g_ActiveBuffer].org[(arg0->vz + 2) >> 3];
+    ot             = &g_OrderingTable0[g_ActiveBufferIdx].org[(arg0->vz + 2) >> 3];
 
     cond = false;
     if (arg0->vx >= (-g_GameWork.gsScreenWidth_588 >> 1) && (g_GameWork.gsScreenWidth_588 >> 1) >= arg0->vx)
     {
-        if (arg0->vy >= (-g_GameWork.gsScreenHeight_58A >> 1) && (g_GameWork.gsScreenHeight_58A >> 1) >= arg0->vy && arg0->vz >= 0)
+        if (arg0->vy >= (-g_GameWork.gsScreenHeight_58A >> 1) && (g_GameWork.gsScreenHeight_58A >> 1) >= arg0->vy &&
+            arg0->vz >= 0)
         {
             cond = arg1 > 0x354;
         }
@@ -2754,7 +2751,7 @@ void func_8008D5A0(VECTOR3* arg0, s16 arg1) // 0x8008D5A0
 
         sp10.x = arg0->vx + (g_GameWork.gsScreenWidth_588 / 2);
         sp10.y = arg0->vy + (g_GameWork.gsScreenHeight_58A / 2);
-        if (g_ActiveBuffer == 1)
+        if (g_ActiveBufferIdx == 1)
         {
             sp10.y += 32;
         }
@@ -2772,8 +2769,8 @@ void func_8008D5A0(VECTOR3* arg0, s16 arg1) // 0x8008D5A0
     sp10.h = 8;
     sp10.w = 8;
 
-    SetDrawMove(packet, &sp10, (g_ActiveBuffer * 8) + 784, 112);
-    AddPrim(g_OrderingTable0[g_ActiveBuffer].org + 5, packet);
+    SetDrawMove(packet, &sp10, (g_ActiveBufferIdx * 8) + 784, 112);
+    AddPrim(g_OrderingTable0[g_ActiveBufferIdx].org + 5, packet);
 }
 
 void func_8008D78C()
@@ -2821,7 +2818,7 @@ s32 func_8008D850() // 0x8008D850
     s_8008D850 unk; 
 
     rectX = 784;
-    if (g_ActiveBuffer == 0)
+    if (g_ActiveBufferIdx == 0)
     {
         rectX = 792;
     }
@@ -2926,9 +2923,9 @@ void func_8008E5B4(void) // 0x8008E5B4
     SetDrawOffset(&packet->offset_10, (u16*)&D_800AFDA4);
     SetDrawEnv(&packet->env_6C, &drawEnv);
 
-    if (g_DeltaTime0 != 0)
+    if (g_DeltaTime0 != FP_TIME(0.0f))
     {
-        D_800AFDAC += 1;
+        D_800AFDAC++;
     }
 
     setRGBC0(&packet->poly_1C[1], 0x80, 0x80, 0x80, 0);
@@ -3049,7 +3046,7 @@ void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2) // 0x8008E794
         poly->x3    = sp20.vx + 24;
         poly->y3    = ((u32)sp20.vx >> 16) + 48;
 
-        AddPrim(g_OrderingTable0[g_ActiveBuffer].org + 641, poly);
+        AddPrim(g_OrderingTable0[g_ActiveBufferIdx].org + 641, poly);
         GsOUT_PACKET_P = poly + 1;
     }
 }

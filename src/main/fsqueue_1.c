@@ -66,7 +66,7 @@ s32 Fs_QueueStartRead(s32 fileIdx, void* dest)
     return Fs_QueueEnqueue(fileIdx, FS_OP_READ, FS_POST_LOAD_NONE, false, dest, 0, NULL);
 }
 
-s32 Fs_QueueStartReadTim(s32 fileIdx, void* dest, s_FsImageDesc* image)
+s32 Fs_QueueStartReadTim(s32 fileIdx, void* dest, const s_FsImageDesc* image)
 {
     s_FsQueueExtra extra;
 
@@ -90,7 +90,7 @@ s32 Fs_QueueStartReadAnm(s32 idx, s32 charaId, void* dest, GsCOORDINATE2* coords
     s32            fileIdx;
     s_FsQueueExtra extra;
 
-    fileIdx             = g_Chara_FileInfo[charaId].animFileIdx;
+    fileIdx             = CHARA_FILE_INFOS[charaId].animFileIdx;
     extra.anm.charaId_4 = charaId;
     extra.anm.field_0   = idx;
     extra.anm.coords_8  = coords;

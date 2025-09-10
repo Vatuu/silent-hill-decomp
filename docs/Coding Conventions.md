@@ -213,7 +213,7 @@ typedef struct _MyStruct
     s32      frameCounter_1C;
     s_Entity entities_20[6];
     s32      field_320;
-    u8       pad_324;
+    u8       __pad_324;
     s8       unk_325[3];
     u32      field_328_0 : 3;
     u32      field_328_3 : 5;

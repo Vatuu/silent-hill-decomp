@@ -71,7 +71,7 @@ void Game_TimerUpdate() // 0x8004C8DC
 
 void GameState_ItemScreens_Update() // 0x8004C9B0
 {
-    Gfx_StringSetColor(ColorId_White);
+    Gfx_StringSetColor(StringColorId_White);
     func_800363D0();
 
     // Update timer ff current screen is inventory.
@@ -408,7 +408,7 @@ void Gfx_Results_Save() // 0x8004D1A0
         {   2,  45,  46,  45 }
     };
 
-    GsOT* ot = &g_OrderingTable2[g_ActiveBuffer];
+    GsOT* ot = &g_OrderingTable2[g_ActiveBufferIdx];
 
     char* saveDialogStrs[] =
     {
@@ -1193,16 +1193,16 @@ void Gfx_Inventory_CmdOptionsDraw() // 0x8004E864
         "Look"
     };
 
-    ot = &g_OrderingTable2[g_ActiveBuffer];
+    ot = &g_OrderingTable2[g_ActiveBufferIdx];
 
     if (g_Inventory_SelectionId >= InventorySelectionId_ItemCmd &&
         g_Inventory_SelectionId <= InventorySelectionId_EquippedItemCmd)
     {
-        Gfx_StringSetColor(ColorId_White);
+        Gfx_StringSetColor(StringColorId_White);
     }
     else
     {
-        Gfx_StringSetColor(ColorId_DarkGrey);
+        Gfx_StringSetColor(StringColorId_DarkGrey);
     }
 
     if (g_Inventory_SelectionId != InventorySelectionId_EquippedItem &&
@@ -1340,7 +1340,7 @@ void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId) // 0x8004EC7C
     s32      i;
     s8       timeStep;
 
-    GsOT* ot = &g_OrderingTable2[g_ActiveBuffer];
+    GsOT* ot = &g_OrderingTable2[g_ActiveBufferIdx];
 
     // TODO: Why the large values for some positions?
     s_Triangle2d arrowTris[] =
@@ -1632,7 +1632,7 @@ void Gfx_Inventory_UnavailableMapText(s32 strIdx) // 0x0x8004F57C
     };
 
     Gfx_StringSetPosition(30, 232);
-    Gfx_StringSetColor(ColorId_White);
+    Gfx_StringSetColor(StringColorId_White);
     Gfx_StringDraw(strs[strIdx], 99);
 }
 

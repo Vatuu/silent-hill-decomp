@@ -5,7 +5,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/memcard.h"
 
-u8 D_800BCD10[8] = {0x00, 0x00, 0x00, 0x00, 0x80, 0x18, 0x13, 0x00}; // @unused 
+u8 D_800BCD10[8] = { 0x00, 0x00, 0x00, 0x00, 0x80, 0x18, 0x13, 0x00 }; // @unused 
 s32 D_800BCD18[2] = {};
 s32 D_800BCD20[2] = {};
 s16 g_SavegameCount = 0;

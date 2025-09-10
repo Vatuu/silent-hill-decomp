@@ -423,8 +423,8 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0
 
     var_t0 = (u32*)PSX_SCRATCH;
 
-    poly_g3 = &D_800BFBF0[g_ActiveBuffer][sizeof(DR_TPAGE) * 2];
-    poly_f4 = &D_800BFBF0[g_ActiveBuffer][(sizeof(DR_TPAGE) * 2) + ((sizeof(POLY_G4) * 16) * 3) + (sizeof(POLY_G3) * 16)];
+    poly_g3 = &D_800BFBF0[g_ActiveBufferIdx][sizeof(DR_TPAGE) * 2];
+    poly_f4 = &D_800BFBF0[g_ActiveBufferIdx][(sizeof(DR_TPAGE) * 2) + ((sizeof(POLY_G4) * 16) * 3) + (sizeof(POLY_G3) * 16)];
 
     for (j = 0; j < 16; j++, poly_g3++, poly_f4++)
     {
@@ -442,7 +442,7 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0
     }
 
     var_t1  = (u32*)PSX_SCRATCH;
-    poly_g4 = &D_800BFBF0[g_ActiveBuffer][(sizeof(DR_TPAGE) * 2) + (sizeof(POLY_G3) * 16)];
+    poly_g4 = &D_800BFBF0[g_ActiveBufferIdx][(sizeof(DR_TPAGE) * 2) + (sizeof(POLY_G3) * 16)];
 
     for (i = 0; i < 3; i++)
     {
@@ -459,8 +459,8 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0
         }
     }
 
-    AddPrim(arg0->org, &D_800BFBF0[g_ActiveBuffer][8]);
-    AddPrim(&arg0->org[1], &D_800BFBF0[g_ActiveBuffer]);
+    AddPrim(arg0->org, &D_800BFBF0[g_ActiveBufferIdx][8]);
+    AddPrim(&arg0->org[1], &D_800BFBF0[g_ActiveBufferIdx]);
 }
 
 u32 Fs_QueueEntryLoadStatusGet(s32 queueIdx) // 80041ADC
@@ -565,7 +565,7 @@ void func_80041D10(s_800C117C* arg0, s32 size) // 0x80041D10
 {
     s_800C117C* ptr;
 
-    for(ptr = &arg0[0]; ptr < &arg0[size]; ptr++)
+    for (ptr = &arg0[0]; ptr < &arg0[size]; ptr++)
     {
         ptr->queueIdx_4 = NO_VALUE;
     }
@@ -1093,11 +1093,10 @@ s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, 
 
 s32 func_80042E2C(s32 xPos, s32 zPos, s32 xFileChunkCoord, s32 zFileChunkCoord) // 0x80042E2C
 {
-#define FILE_CHUNK_SIZE 0x2800
+    #define FILE_CHUNK_SIZE FP_METER_GEO(40.0f)
 
-#define OUTSIDE_DIST(val, lo, hi)                               \
-    ((val) < (lo) ? (lo) - (val) : (hi) <= (val) ? (val) - (hi) \
-                                                 : 0)
+    #define OUTSIDE_DIST(val, lo, hi) \
+        (((val) < (lo)) ? ((lo) - (val)) : (((hi) <= (val)) ? ((val) - (hi)) : 0))
 
     s32 xFileChunkBound;
     s32 zFileChunkBound;
@@ -1363,7 +1362,7 @@ s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s32 fileChunkCoordX, s32 fileCh
     return arg0->queueEntryIdx_4;
 }
 
-s32 func_80043740() // 0x80043740
+bool func_80043740() // 0x80043740
 {
     s32         i;
     s_800C117C* ptr;
@@ -1374,13 +1373,15 @@ s32 func_80043740() // 0x80043740
             break;
 
         case 1:
-            return 0;
+            return false;
 
         case 2:
-            return 0;
+            return false;
     }
 
-    for (ptr = D_800C1020.ipdTable_15C, i = 0; i < D_800C1020.ipdTableSize_158; i++, ptr++)
+    for (ptr = D_800C1020.ipdTable_15C, i = 0;
+         i < D_800C1020.ipdTableSize_158;
+         i++, ptr++)
     {
         switch (IpdHeader_LoadStateGet(ptr))
         {
@@ -1391,18 +1392,18 @@ s32 func_80043740() // 0x80043740
 
         if (ptr->field_C <= 0)
         {
-            return 0;
+            return false;
         }
 
         if (ptr->field_10 <= 0)
         {
-            do
-            {
-            } while (0); // @hack
-            return 0;
+            do {} while (0); // @hack
+
+            return false;
         }
     }
-    return 1;
+
+    return true;
 }
 
 bool func_80043830(void) // 0x80043830
@@ -1443,11 +1444,11 @@ bool func_8004393C(s32 posX, s32 posZ) // 0x8004393C
     
     if (D_800C1020.field_588 != 0)
     {
-        return func_80042E2C(FP_METER_TO_GEO(D_800C1020.field_578), FP_METER_TO_GEO(D_800C1020.field_57C), fileChunkCoordX, fileChunkCoordZ) < 0x481;
+        return func_80042E2C(FP_METER_TO_GEO(D_800C1020.field_578), FP_METER_TO_GEO(D_800C1020.field_57C), fileChunkCoordX, fileChunkCoordZ) <= FP_METER_GEO(4.5f);
     }
-    
+
     if (fileChunkCoordX == D_800C1020.field_580 &&
-       fileChunkCoordZ == D_800C1020.field_584)
+        fileChunkCoordZ == D_800C1020.field_584)
     {
         return true;
     }
@@ -1522,7 +1523,7 @@ void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_LmHeader** lmHeaders, s32 lm
     ipdHeader->isLoaded_1 = true;
 
     IpdHeader_FixHeaderOffsets(ipdHeader);
-    IpdColData_FixOffsets(&ipdHeader->collisionData_54);
+    IpdCollData_FixOffsets(&ipdHeader->collisionData_54);
     LmHeader_FixOffsets(ipdHeader->lmHeader_4);
     func_8008E4EC(ipdHeader->lmHeader_4);
     func_80043C7C(ipdHeader, arg3, arg4, arg5);
@@ -1559,19 +1560,19 @@ s32 func_80043D00(s_IpdHeader* ipdHeader) // 0x80043D00
     return func_80056348(LmFilter_NameEndsWithH, ipdHeader->lmHeader_4);
 }
 
-bool LmFilter_NameDoesNotEndWithH(s_Material* material) // 0x80043D44
+bool LmFilter_NameDoesNotEndWithH(s_Material* mat) // 0x80043D44
 {
-    return !LmFilter_NameEndsWithH(material);
+    return !LmFilter_NameEndsWithH(mat);
 }
 
 /* Not sure what is the significance of textures that end with H.
  * I've looked at all of them and can't find any pattern.
  */
-bool LmFilter_NameEndsWithH(s_Material* material) // 0x80043D64
+bool LmFilter_NameEndsWithH(s_Material* mat) // 0x80043D64
 {
     char* charCode;
 
-    for (charCode = &material->materialName_0.str[7]; charCode >= &material->materialName_0.str[0]; charCode--)
+    for (charCode = &mat->materialName_0.str[7]; charCode >= &mat->materialName_0.str[0]; charCode--)
     {
         if (*charCode == '\0')
         {
@@ -1683,7 +1684,7 @@ void func_80044044(s_IpdHeader* ipd, s32 x, s32 z) // 0x80044044
     ipd->collisionData_54.posZ_4 += (z - gridZ) * 0x2800;
 }
 
-void func_80044090(s_IpdHeader* arg0, s32 arg1, s32 arg2, GsOT* arg3, void* arg4) // 0x80044090
+void func_80044090(s_IpdHeader* ipdHeader, s32 arg1, s32 arg2, GsOT* ot, void* arg4) // 0x80044090
 {
     s_800BCE18_2BEC_0_0 sp18;
     GsCOORDINATE2       sp28;
@@ -1695,17 +1696,17 @@ void func_80044090(s_IpdHeader* arg0, s32 arg1, s32 arg2, GsOT* arg3, void* arg4
     s32                 temp_s5;
     s32                 var_a0;
     s32                 var_v1;
+    s32                 i;
     s_IpdModelBuffer*   temp_s2;
     s_IpdModelBuffer_C* var_s0;
-    s32                 var_s4;
     u8*                 temp_fp;
     SVECTOR*            var_s1;
 
     spB8 = FP_METER_TO_GEO(arg1);
     spBC = FP_METER_TO_GEO(arg2);
 
-    temp_s5 = arg0->levelGridX_2 * FP_METER_GEO(40.0f);
-    temp_s3 = arg0->levelGridY_3 * FP_METER_GEO(40.0f);
+    temp_s5 = ipdHeader->levelGridX_2 * FP_METER_GEO(40.0f);
+    temp_s3 = ipdHeader->levelGridY_3 * FP_METER_GEO(40.0f);
 
     var_v1 = FLOOR_TO_STEP(spB8 - temp_s5, FP_METER_GEO(8.0f));
     var_a0 = FLOOR_TO_STEP(spBC - temp_s3, FP_METER_GEO(8.0f));
@@ -1720,13 +1721,13 @@ void func_80044090(s_IpdHeader* arg0, s32 arg1, s32 arg2, GsOT* arg3, void* arg4
     sp18.field_0 = 0;
     sp28.super   = NULL;
 
-    temp_fp = &arg0->textureCount_1C + (var_a0 * 10) + (var_v1 * 2);
+    temp_fp = &ipdHeader->textureCount_1C + (var_a0 * 10) + (var_v1 * 2);
 
-    for (var_s4 = temp_fp[0]; var_s4 < temp_fp[1] + temp_fp[0]; var_s4++)
+    for (i = temp_fp[0]; i < temp_fp[1] + temp_fp[0]; i++)
     {
-        temp_s2 = &arg0->modelBuffers_18[arg0->modelOrderList_50[var_s4]];
+        temp_s2 = &ipdHeader->modelBuffers_18[ipdHeader->modelOrderList_50[i]];
 
-        if (func_80044420(temp_s2, (spB8 - temp_s5), (spBC - temp_s3), temp_s5, temp_s3))
+        if (func_80044420(temp_s2, spB8 - temp_s5, spBC - temp_s3, temp_s5, temp_s3))
         {
             for (var_s0 = temp_s2->field_C; var_s0 < &temp_s2->field_C[temp_s2->field_0]; var_s0++)
             {
@@ -1738,7 +1739,7 @@ void func_80044090(s_IpdHeader* arg0, s32 arg1, s32 arg2, GsOT* arg3, void* arg4
                     sp28.workm.t[2] += temp_s3;
 
                     func_80049B6C(&sp28, &sp98, &sp78);
-                    func_80057090(&sp18, arg3, arg4, &sp78, &sp98, 0);
+                    func_80057090(&sp18, ot, arg4, &sp78, &sp98, 0);
                 }
             }
 
@@ -1747,11 +1748,11 @@ void func_80044090(s_IpdHeader* arg0, s32 arg1, s32 arg2, GsOT* arg3, void* arg4
                 switch ((s8)var_s1->pad)
                 {
                     case 0:
-                        func_8005B62C(1, (var_s1->vx + temp_s5) * 0x10, var_s1->vy * 0x10, (var_s1->vz + temp_s3) * 0x10, arg3, arg4);
+                        func_8005B62C(1, (var_s1->vx + temp_s5) * 16, var_s1->vy * 16, (var_s1->vz + temp_s3) * 16, ot, arg4);
                         break;
 
                     case 1:
-                        func_8005B62C(2, (var_s1->vx + temp_s5) * 0x10, var_s1->vy * 0x10, (var_s1->vz + temp_s3) * 0x10, arg3, arg4);
+                        func_8005B62C(2, (var_s1->vx + temp_s5) * 16, var_s1->vy * 16, (var_s1->vz + temp_s3) * 16, ot, arg4);
                         break;
                 }
             }
@@ -1759,15 +1760,16 @@ void func_80044090(s_IpdHeader* arg0, s32 arg1, s32 arg2, GsOT* arg3, void* arg4
     }
 }
 
-bool func_80044420(s_IpdModelBuffer* arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4) // 0x80044420
+bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, s32 x, s32 z) // 0x80044420
 {
     GsCOORDINATE2 coord;
     MATRIX        mat;
     SVECTOR*      ptr;
 
-    for (ptr = arg0->field_14; ptr < &arg0->field_14[arg0->field_2]; ptr++)
+    for (ptr = modelBuf->field_14; ptr < &modelBuf->field_14[modelBuf->field_2]; ptr++)
     {
-        if (ptr->vx < arg1 && arg1 < ptr->vy && ptr->vz < arg2)
+        if (ptr->vx < arg1 && arg1 < ptr->vy &&
+            ptr->vz < arg2)
         {
             if (arg2 < ptr->pad)
             {
@@ -1775,12 +1777,12 @@ bool func_80044420(s_IpdModelBuffer* arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg
                 coord.super = NULL;
                 coord.workm = GsIDMATRIX;
 
-                coord.workm.t[0] = arg3;
+                coord.workm.t[0] = x;
                 coord.workm.t[1] = 0;
-                coord.workm.t[2] = arg4;
+                coord.workm.t[2] = z;
 
                 func_80049AF8(&coord, &mat);
-                return Vw_AabbVisibleInFrustumCheck(&mat, arg0->field_4, -0x800, arg0->field_8, arg0->field_6, 0x400, arg0->field_A, 0x1900, g_GameWork.gsScreenHeight_58A);
+                return Vw_AabbVisibleInFrustumCheck(&mat, modelBuf->field_4, -0x800, modelBuf->field_8, modelBuf->field_6, 0x400, modelBuf->field_A, 0x1900, g_GameWork.gsScreenHeight_58A);
             }
         }
     }
@@ -1835,7 +1837,7 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyf
 {
     s32            boneCount;
     bool           isPlayer;
-    u32            activeBoneIndexes;
+    u32            activeBoneIdxs;
     s32            boneIdx;
     s32            scaleLog2;
     s32            boneTranslationDataIdx;
@@ -1850,39 +1852,39 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyf
     void*          frame0RotData;
     void*          frame1Data;
     void*          frame1RotData;
-    GsCOORDINATE2* coord;
+    GsCOORDINATE2* boneCoord;
     s_AnmBindPose* bindPose;
 
     boneCount     = anmHeader->boneCount_6;
-    frame0Data    = (u8*)anmHeader + anmHeader->dataOffset_0 + (anmHeader->frameDataSize_4 * keyframe0);
+    frame0Data    = ((u8*)anmHeader + anmHeader->dataOffset_0) + (anmHeader->keyframeDataSize_4 * keyframe0);
     frame0RotData = frame0Data + (anmHeader->translationBoneCount_3 * 3);
-    frame1Data    = (u8*)anmHeader + anmHeader->dataOffset_0 + (anmHeader->frameDataSize_4 * keyframe1);
+    frame1Data    = ((u8*)anmHeader + anmHeader->dataOffset_0) + (anmHeader->keyframeDataSize_4 * keyframe1);
     frame1RotData = frame1Data + (anmHeader->translationBoneCount_3 * 3);
 
     // For player, use inverted mask of `extra_128.disabledAnimBones_18` to facilitate masking of upper and lower body.
-    isPlayer = (boneCoords == &g_SysWork.playerBoneCoords_890[HarryBone_Root]);
+    isPlayer = boneCoords == &g_SysWork.playerBoneCoords_890[HarryBone_Root];
     if (isPlayer)
     {
-        activeBoneIndexes = ~g_SysWork.player_4C.extra_128.disabledAnimBones_18;
+        activeBoneIdxs = ~g_SysWork.player_4C.extra_128.disabledAnimBones_18;
     }
     else
     {
-        activeBoneIndexes = anmHeader->activeBones_8;
+        activeBoneIdxs = anmHeader->activeBones_8;
     }
 
-    // Skip root bone (index 0), start processing from bone 1
+    // Skip root bone (index 0) and start processing from bone 1.
     boneCoords = &boneCoords[1];
     bindPose   = &anmHeader->bindPoses_14[1];
 
-    for (boneIdx = 1, coord = boneCoords;
+    for (boneIdx = 1, boneCoord = boneCoords;
          boneIdx < boneCount;
-         boneIdx++, bindPose++, coord++)
+         boneIdx++, bindPose++, boneCoord++)
     {
         // Process bones marked as active.
-        if (activeBoneIndexes & (1 << boneIdx))
+        if (activeBoneIdxs & (1 << boneIdx))
         {
-            coord->flg = 0;
-            scaleLog2  = anmHeader->scaleLog2_12;
+            boneCoord->flg = false;
+            scaleLog2      = anmHeader->scaleLog2_12;
 
             boneTranslationDataIdx = bindPose->translationDataIdx_2;
             if (boneTranslationDataIdx >= 0)
@@ -1895,8 +1897,8 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyf
                 for (i = 0; i < 3; i++)
                 {
                     // Linear interpolation with scaling: `frame0 + (frame1 - frame0) * alpha`.
-                    coord->coord.t[i] = (*frame0TranslationData << scaleLog2) +
-                                        (((*frame1TranslationData - *frame0TranslationData) * alpha) >> (Q12_SHIFT - scaleLog2));
+                    boneCoord->coord.t[i] = (*frame0TranslationData << scaleLog2) +
+                                            (((*frame1TranslationData - *frame0TranslationData) * alpha) >> (Q12_SHIFT - scaleLog2));
 
                     frame0TranslationData++;
                     frame1TranslationData++;
@@ -1904,7 +1906,7 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyf
 
                 if (boneTranslationDataIdx == 0)
                 {
-                    coord->coord.t[1] -= anmHeader->rootYOffset_13; // TODO: Not sure of purpose of this yet.
+                    boneCoord->coord.t[1] -= anmHeader->rootYOffset_13; // TODO: Not sure of purpose of this yet.
                 }
             }
 
@@ -1920,8 +1922,8 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyf
                 {
                     for (j = 0; j < 3; j++)
                     {
-                        coord->coord.m[i][j] = (*frame0RotationData << 5) +
-                                               (((*frame1RotationData - *frame0RotationData) * alpha) >> 7);
+                        boneCoord->coord.m[i][j] = (*frame0RotationData << 5) +
+                                                   (((*frame1RotationData - *frame0RotationData) * alpha) >> 7);
 
                         frame0RotationData++;
                         frame1RotationData++;
@@ -1974,12 +1976,12 @@ void func_80044950(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2*
 
 q19_12 Anim_DurationGet(s_Model* model, s_AnimInfo* anim) // 0x800449AC
 {
-    if (!anim->hasVariableTimeDelta_5)
+    if (!anim->hasVariableDuration_5)
     {
-        return anim->timeDelta_8.constTimeDelta;
+        return anim->duration_8.constant;
     }
 
-    return anim->timeDelta_8.variableTimeDeltaFunc();
+    return anim->duration_8.variableFunc();
 }
 
 /** @brief Computes the time step of the target animation. */
@@ -1993,7 +1995,7 @@ static inline q19_12 Anim_TimeStepGet(s_Model* model, s_AnimInfo* animInfo)
         return FP_MULTIPLY_PRECISE(duration, g_DeltaTime0, Q12_SHIFT);
     }
 
-    return FP_TIME(0.0f);
+    return Q19_12(0.0f);
 }
 
 void Anim_Update0(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coords, s_AnimInfo* animInfo) // 0x800449F0
@@ -2014,12 +2016,12 @@ void Anim_Update0(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coords,
     // Compute new time and keyframe index.
     newTime        = model->anim_4.time_4;
     newKeyframeIdx = FP_FROM(newTime, Q12_SHIFT);
-    if (timeStep != FP_TIME(0.0f))
+    if (timeStep != Q19_12(0.0f))
     {
         newTime += timeStep;
 
         // Clamp new time to valid keyframe range.
-        endTime = FP_TIME(animInfo->endKeyframeIdx_E);
+        endTime = Q19_12(animInfo->endKeyframeIdx_E);
         if (newTime >= endTime)
         {
             newTime          = endTime;
@@ -2027,7 +2029,7 @@ void Anim_Update0(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coords,
         }
         else
         {
-            startTime = FP_TIME(animInfo->startKeyframeIdx_C);
+            startTime = Q19_12(animInfo->startKeyframeIdx_C);
             if (newTime <= startTime)
             {
                 newTime          = startTime;
@@ -2063,9 +2065,9 @@ void Anim_Update1(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     s32 endKeyframeIdx;
     s32 nextStartKeyframeIdx;
     s32 keyframeCount;
-    s32 startKeyframeTime;
-    s32 nextStartKeyframeTime;
-    s32 keyframeCountTime;
+    s32 startTime;
+    s32 nextStartTime;
+    s32 duration;
     s32 timeStep;
     s32 newTime;
     s32 newKeyframeIdx0;
@@ -2077,22 +2079,22 @@ void Anim_Update1(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     nextStartKeyframeIdx = endKeyframeIdx + 1;
     keyframeCount        = nextStartKeyframeIdx - startKeyframeIdx;
 
-    startKeyframeTime     = FP_TIME(startKeyframeIdx);
-    nextStartKeyframeTime = FP_TIME(nextStartKeyframeIdx);
-    keyframeCountTime     = FP_TIME(keyframeCount);
+    startTime     = Q19_12(startKeyframeIdx);
+    nextStartTime = Q19_12(nextStartKeyframeIdx);
+    duration      = Q19_12(keyframeCount);
 
     // Get time step.
     timeStep = Anim_TimeStepGet(model, animInfo);
 
-    // Wrap new time to valid keyframe range?
+    // Wrap new time to valid keyframe range.
     newTime = model->anim_4.time_4 + timeStep;
-    while (newTime < startKeyframeTime)
+    while (newTime < startTime)
     {
-        newTime += keyframeCountTime;
+        newTime += duration;
     }
-    while (newTime >= nextStartKeyframeTime)
+    while (newTime >= nextStartTime)
     {
-        newTime -= keyframeCountTime;
+        newTime -= duration;
     }
 
     // Compute new keyframe 1. Wrap to start to facilitate loop.
@@ -2142,11 +2144,11 @@ void Anim_Update2(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     alpha += timeStep;
     if (alpha >= FP_ALPHA(0.5f))
     {
-        model->anim_4.time_4 = FP_TIME(endKeyframeIdx);
+        model->anim_4.time_4 = Q19_12(endKeyframeIdx);
     }
     else
     {
-        model->anim_4.time_4 = FP_TIME(startKeyframeIdx);
+        model->anim_4.time_4 = Q19_12(startKeyframeIdx);
     }
 
     // Update frame data.
@@ -2177,14 +2179,14 @@ void Anim_Update2(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
 
 void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044DF0
 {
-    s32 startKeyframeIdx;
-    s32 endKeyframeIdx;
-    s32 timeDelta;
-    s32 timeStep;
-    s32 alpha;
-    s32 sinVal;
-    s32 newTime;
-    s32 sinAlpha;
+    s32    startKeyframeIdx;
+    s32    endKeyframeIdx;
+    s32    timeDelta;
+    s32    timeStep;
+    s32    alpha;
+    q19_12 sinVal;
+    s32    newTime;
+    s32    newAlpha;
 
     startKeyframeIdx = animInfo->startKeyframeIdx_C;
     endKeyframeIdx   = animInfo->endKeyframeIdx_E;
@@ -2197,29 +2199,29 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     }
     else
     {
-        timeStep = FP_TIME(0.0f);
+        timeStep = Q19_12(0.0f);
     }
 
     // Update alpha.
-    sinAlpha              = model->anim_4.alpha_A;
-    alpha                 = sinAlpha + timeStep;
+    newAlpha              = model->anim_4.alpha_A;
+    alpha                 = newAlpha + timeStep;
     model->anim_4.alpha_A = alpha;
 
-    // Sine-based easing?
+    // Compute ease-out alpha.
     sinVal   = Math_Sin((alpha / 2) - FP_ALPHA(0.25f));
-    sinAlpha = (sinVal / 2) + FP_ALPHA(0.5f);
+    newAlpha = (sinVal / 2) + FP_ALPHA(0.5f);
 
     // Update time to start or end keyframe, whichever is closest.
-    if (sinAlpha >= FP_ALPHA(0.5f))
+    if (newAlpha >= FP_ALPHA(0.5f))
     {
-        newTime = FP_TIME(startKeyframeIdx);
+        newTime = Q19_12(startKeyframeIdx);
     }
     else
     {
-        newTime = FP_TIME(endKeyframeIdx);
+        newTime = Q19_12(endKeyframeIdx);
     }
 
-    alpha = sinAlpha;
+    alpha = newAlpha;
 
     // Update time.
     model->anim_4.time_4 = newTime;
@@ -2288,7 +2290,7 @@ void func_80045014(s_Skeleton* skel) // 0x80045014
 
 void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHeader) // 0x8004506C
 {
-    u8  sp10[4];                                           // Size unsure, this could be larger.
+    u8  sp10[4]; // Size unsure, this could be larger.
     s32 switchVar;
 
     switchVar = LmHeader_ModelCountGet(lmHeader);
@@ -2408,20 +2410,18 @@ void func_800452EC(s_Skeleton* skel) // 0x800452EC
     }
 }
 
-// Anim func. Traverses skeleton bones for something.
 void func_80045360(s_Skeleton* skel, s8* arg1) // 0x80045360
 {
-    s32 boneIndex;
+    s32 boneIdx;
     s32 status;
 
-    for (status = func_80044F6C(arg1, 1), boneIndex = 0; status != -2; boneIndex++)
+    for (status = func_80044F6C(arg1, true), boneIdx = 0; status != -2; boneIdx++)
     {
-        skel->bones_8[boneIndex].field_10 = status;
-        status = func_80044F6C(arg1, 0);
+        skel->bones_8[boneIdx].field_10 = status;
+        status = func_80044F6C(arg1, false);
     }
 }
 
-// `cond` may actually be another `s_Skeleton` pointer.
 void func_800453E8(s_Skeleton* skel, bool cond) // 0x800453E8
 {
     s_Bone* bone;
@@ -2466,8 +2466,7 @@ void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
     }
 }
 
-// Maybe larger anim func.
-void func_80045534(s_Skeleton* arg0, GsOT* arg1, void* arg2, GsCOORDINATE2* arg3, s16 arg4, u16 arg5, s_FsImageDesc* arg6) // 0x80045534
+void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord, s16 arg4, u16 arg5, s_FsImageDesc* image) // 0x80045534
 {
     MATRIX           sp20;
     MATRIX           sp40;
@@ -2491,7 +2490,7 @@ void func_80045534(s_Skeleton* arg0, GsOT* arg1, void* arg2, GsCOORDINATE2* arg3
     s32              var_v0_2;
     s32              var_v0_4;
     s32              var_v0_5;
-    s_FsImageDesc*   var_s1;
+    s_FsImageDesc*   image0;
     s_func_800452EC* var_s0_2;
 
     var_s5 = 0x7FFF;
@@ -2501,26 +2500,26 @@ void func_80045534(s_Skeleton* arg0, GsOT* arg1, void* arg2, GsCOORDINATE2* arg3
     var_fp = -0x7FFF;
     var_s3 = -0x7FFF;
 
-    if (arg0->field_2 == 0)
+    if (skel->field_2 == 0)
     {
         return;
     }
 
-    var_s0 = -1;
+    var_s0 = NO_VALUE;
 
-    if (arg6 != NULL)
+    if (image != NULL)
     {
-        for (var_s1 = arg6; var_s1->clutY != -1; var_s1++)
+        for (image0 = image; image0->clutY != NO_VALUE; image0++)
         {
-            if (var_s0 != var_s1->clutY)
+            if (var_s0 != image0->clutY)
             {
-                var_s0 = var_s1->clutY;
-                func_80049AF8(&arg3[var_s0], &sp20);
+                var_s0 = image0->clutY;
+                func_80049AF8(&coord[var_s0], &sp20);
                 SetRotMatrix(&sp20);
                 SetTransMatrix(&sp20);
             }
 
-            gte_ldv0(var_s1);
+            gte_ldv0(image0);
             gte_rtps();
             gte_stsxy(&sp60);
             temp_a1 = gte_stSZ3();
@@ -2557,11 +2556,11 @@ void func_80045534(s_Skeleton* arg0, GsOT* arg1, void* arg2, GsCOORDINATE2* arg3
         }
     }
 
-    for (var_s0_2 = arg0->field_4; var_s0_2 != NULL; var_s0_2 = var_s0_2->field_14)
+    for (var_s0_2 = skel->field_4; var_s0_2 != NULL; var_s0_2 = var_s0_2->field_14)
     {
         if (var_s0_2->field_0.field_0 >= 0)
         {
-            func_80049B6C(&arg3[(u8)var_s0_2->field_10], &sp40, &sp20);
+            func_80049B6C(&coord[(u8)var_s0_2->field_10], &sp40, &sp20);
 
             if (var_s0_2->field_0.field_0 & 1)
             {
@@ -2572,7 +2571,7 @@ void func_80045534(s_Skeleton* arg0, GsOT* arg1, void* arg2, GsCOORDINATE2* arg3
                 *(s32*)&sp20.m[0][0] = 0;
             }
 
-            func_80057090(&var_s0_2->field_0, arg1, arg2, &sp20, &sp40, arg5);
+            func_80057090(&var_s0_2->field_0, ot, arg2, &sp20, &sp40, arg5);
 
             if (D_800C4168.fogEnabled_1)
             {
@@ -2620,12 +2619,12 @@ void func_80045534(s_Skeleton* arg0, GsOT* arg1, void* arg2, GsCOORDINATE2* arg3
     if (D_800C4168.fogEnabled_1)
     {
         temp_s1_2 = g_SysWork.playerBoneCoords_890[1].coord.t[1];
-        temp_s1_2 = CLAMP(temp_s1_2, -0x200, 0);
+        temp_s1_2 = CLAMP(temp_s1_2, FP_METER_GEO(-2.0f), FP_METER_GEO(0.0f));
 
-        temp_s1_2 += g_SysWork.player_4C.chara_0.position_18.vy >> 4;
-        temp_s1_3  = Math_MulFixed(g_SysWork.player_4C.chara_0.position_18.vx >> 4, GsWSMATRIX.m[2][0], Q12_SHIFT);
+        temp_s1_2 += FP_METER_TO_GEO(g_SysWork.player_4C.chara_0.position_18.vy);
+        temp_s1_3  = Math_MulFixed(FP_METER_TO_GEO(g_SysWork.player_4C.chara_0.position_18.vx), GsWSMATRIX.m[2][0], Q12_SHIFT);
         temp_s0    = Math_MulFixed(temp_s1_2, GsWSMATRIX.m[2][1], Q12_SHIFT);
-        temp_s1_4  = temp_s1_3 + temp_s0 + Math_MulFixed(g_SysWork.player_4C.chara_0.position_18.vz >> 4, GsWSMATRIX.m[2][2], Q12_SHIFT) + GsWSMATRIX.t[2];
+        temp_s1_4  = ((temp_s1_3 + temp_s0) + Math_MulFixed(FP_METER_TO_GEO(g_SysWork.player_4C.chara_0.position_18.vz), GsWSMATRIX.m[2][2], Q12_SHIFT)) + GsWSMATRIX.t[2];
 
         var_s3_2 = (var_s4 + var_s3) >> 1;
         temp_v1  = var_s3_2 - ((var_s3 - var_s4) >> 1);
@@ -2645,7 +2644,7 @@ void func_80045534(s_Skeleton* arg0, GsOT* arg1, void* arg2, GsCOORDINATE2* arg3
                     var_v0_2 += 0x3FF;
                 }
 
-                var_s3_2 += Math_MulFixed(temp_a0 - var_s3_2, var_v0_2 >> 0xA, Q12_SHIFT);
+                var_s3_2 += Math_MulFixed(temp_a0 - var_s3_2, var_v0_2 >> 10, Q12_SHIFT);
             }
             else if (temp_s1_4 < temp_a0)
             {
@@ -2659,7 +2658,7 @@ void func_80045534(s_Skeleton* arg0, GsOT* arg1, void* arg2, GsCOORDINATE2* arg3
 
         var_s3_2 = MAX(var_s3_2, 4);
 
-        var_s2 = (var_s4 * 0x10) - arg4;
+        var_s2 = (var_s4 * 16) - arg4;
         var_s2 = MAX(var_s2, 0);
 
         var_s0   = ReadGeomScreen();
@@ -2674,6 +2673,6 @@ void func_80045534(s_Skeleton* arg0, GsOT* arg1, void* arg2, GsCOORDINATE2* arg3
             var_v0_5 = (var_v0_4 / 4) + 2;
         }
 
-        func_80056D8C((var_s5 - var_v0_5), (var_s6 - var_v0_5), (var_s7 + var_v0_5), (var_fp + var_v0_5), var_s3_2 * 0x10, var_s2, arg1, arg2);
+        func_80056D8C(var_s5 - var_v0_5, var_s6 - var_v0_5, var_s7 + var_v0_5, var_fp + var_v0_5, var_s3_2 * 16, var_s2, ot, arg2);
     }
 }

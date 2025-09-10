@@ -3,10 +3,10 @@
 #include <libetc.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/memcard.h"
 #include "bodyprog/math.h"
-#include "bodyprog/gfx/text_draw.h"
 
 #define SAVE_FLASH_TIMER_MAX 40
 #define SLOT_COLUMN_OFFSET   150
@@ -170,7 +170,7 @@ void Gfx_SaveScreenBaseDraw() // 0x801E2EBC
         "SLOT2"
     };
 
-    Gfx_StringSetColor(ColorId_White);
+    Gfx_StringSetColor(StringColorId_White);
     
     for (i = 0; i < MEMORY_CARD_SLOT_COUNT; i++)
     {
@@ -201,7 +201,7 @@ void Gfx_SaveSlotFileStringDraw(s32 saveIdx, s32 slotIdx, s32 fileId, s32 entryT
 
     if (saveIdx == g_SlotElementSelectedIdx[slotIdx] && entryType >= SavegameEntryType_OutOfBlocks)
     {
-        Gfx_StringSetColor(ColorId_White);
+        Gfx_StringSetColor(StringColorId_White);
 
         // Draw "FILE" string.
         Gfx_StringSetPosition((slotIdx * OFFSET_X) + FILE_STR_MARGIN_X, POS_Y);
@@ -217,11 +217,11 @@ bool Gfx_SavegameEntryStringColorSet(s_SavegameMetadata* saveEntry) // 0x801E307
 {
     if (saveEntry != NULL && saveEntry->isNextFearMode_B)
     {
-        Gfx_StringSetColor(ColorId_Gold);
+        Gfx_StringSetColor(StringColorId_Gold);
         return true;
     }
 
-    Gfx_StringSetColor(ColorId_White);
+    Gfx_StringSetColor(StringColorId_White);
     return false;
 }
 
@@ -261,11 +261,11 @@ void Gfx_SavegameEntryLocationNameDraw(s_SavegameEntry* saveEntry, s32 saveIdx, 
         {
             if (g_IsNextFearMode != 0)
             {
-                colorId = ColorId_Gold;
+                colorId = StringColorId_Gold;
             }
             else
             {
-                colorId = ColorId_White;
+                colorId = StringColorId_White;
             }
             Gfx_StringSetColor(colorId);
         }
@@ -424,7 +424,7 @@ void Gfx_SaveScreenDraw(s_SavegameEntry* saveEntry, s32 saveIdx, s32 slotIdx) //
     }
 
     D_801E7514[slotIdx] = 1;
-    Gfx_StringSetColor(ColorId_White);
+    Gfx_StringSetColor(StringColorId_White);
 
     // Draw memory card message string.
     switch (entryType)
@@ -642,7 +642,7 @@ void Gfx_WriteOptionSaveDraw(s32 arg0, s32 optionIdx) // 0x801E3C44
 
     g_DisplaySaveDataInfo = 0;
     time                  = (u8)g_SysWork.timer_1C & 0x3F;
-    ot                    = &g_OrderingTable2[g_ActiveBuffer];
+    ot                    = &g_OrderingTable2[g_ActiveBufferIdx];
 
     switch (D_801E750C)
     {
@@ -698,7 +698,7 @@ void Gfx_SavedFlashDraw() // 0x801E3E78
     u32      rowIdx;
     POLY_F4* poly;
 
-    ot      = &g_OrderingTable2[g_ActiveBuffer];
+    ot      = &g_OrderingTable2[g_ActiveBufferIdx];
     slotIdx = ~g_LastSaveIdx[0] == 0;
     rowIdx = g_LastSaveIdx[slotIdx] - g_HiddenElementsByDisplacement[slotIdx];
 
@@ -797,7 +797,7 @@ void Gfx_SaveSlotBorderDraw() // 0x801E4010
         }
     };
 
-    ot = &g_OrderingTable2[g_ActiveBuffer];
+    ot = &g_OrderingTable2[g_ActiveBufferIdx];
 
     // Draw green border around slot.
     for (i = 0; i < BORDER_PIXEL_WIDTH; i++)
@@ -856,7 +856,7 @@ void Gfx_SaveSlotMemCardMsgBoxShineDraw(s32 slotIdx) // 0x801E43C8
 
     temp       = ((u8)g_SysWork.timer_1C) & 0x3F;
     colorTimer = temp;
-    ot         = &g_OrderingTable2[g_ActiveBuffer];
+    ot         = &g_OrderingTable2[g_ActiveBufferIdx];
 
     if (g_SelectedSaveSlotIdx == slotIdx)
     {
@@ -957,7 +957,7 @@ void Gfx_SaveSlotBoxDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 se
         0, 0, 0, 0, 0
     };
 
-    ot = &g_OrderingTable2[g_ActiveBuffer];
+    ot = &g_OrderingTable2[g_ActiveBufferIdx];
 
     if (g_DisplaySaveDataInfo == 1 && slotIdx == g_SelectedSaveSlotIdx)
     {
@@ -1141,7 +1141,7 @@ void Gfx_SaveEntryBorderDraw(s_SavegameEntry* saveEntry, s_SavegameEntry* nextSa
     LINE_F2* borderLine;
     TILE*    cornerTile;
 
-    ot     = &g_OrderingTable2[g_ActiveBuffer];
+    ot     = &g_OrderingTable2[g_ActiveBufferIdx];
     rowIdx = saveIdx - g_HiddenElementsByDisplacement[slotIdx];
 
     // Draw border around savegame entry.
@@ -1276,7 +1276,7 @@ void Gfx_SaveSlotMemCardMsgBoxSubDraw(s_LineBorder* borderLines, s_QuadBorder* b
     s_Line2d* glowLine;
     s32       i;
 
-    ot = &g_OrderingTable2[g_ActiveBuffer];
+    ot = &g_OrderingTable2[g_ActiveBufferIdx];
 
     // Draw border around message.
     for (i = 0; i < 4; i++)
@@ -1371,7 +1371,7 @@ void Gfx_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
         }
     };
 
-    ot = &g_OrderingTable2[g_ActiveBuffer];
+    ot = &g_OrderingTable2[g_ActiveBufferIdx];
 
     for (i = 0; i < 2; i++)
     {
@@ -1464,13 +1464,13 @@ void Gfx_SaveDataInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
     s_SavegameMetadata* ptr;
     POLY_G4*            poly;
 
-    ot = &g_OrderingTable2[g_ActiveBuffer];
+    ot = &g_OrderingTable2[g_ActiveBufferIdx];
 
     g_ActiveSavegameEntry = GetActiveSavegameEntry(slotIdx);
 
     if (g_ActiveSavegameEntry[selectedSaveIdx].type_4 == SavegameEntryType_NewFile)
     {
-        Gfx_StringSetColor(ColorId_White);
+        Gfx_StringSetColor(StringColorId_White);
         Gfx_StringSetPosition(66, 178);
         Gfx_StringDraw("You_need_1_free_block\n__to_create_a_new_file.", 0x32);
     }
@@ -1493,7 +1493,7 @@ void Gfx_SaveDataInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
         mins = (timeInSec / 60) % 60;
         sec  = timeInSec % 60;
 
-        Gfx_StringSetColor(ColorId_White);
+        Gfx_StringSetColor(StringColorId_White);
         Gfx_StringSetPosition(40, 178);
         Gfx_StringDraw("Data", 5);
 

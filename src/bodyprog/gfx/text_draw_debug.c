@@ -53,7 +53,7 @@ void Gfx_DebugStringDraw(char* str) // 0x80031F40
     SPRT_8*   glyphSprt;
     DR_TPAGE* tPage;
 
-    ot     = (GsOT*)&g_OtTags0[g_ActiveBuffer][6];
+    ot     = (GsOT*)&g_OtTags0[g_ActiveBufferIdx][6];
     strCpy = str;
     packet = GsOUT_PACKET_P;
     posX   = g_Gfx_DebugStringPosition1.vx;

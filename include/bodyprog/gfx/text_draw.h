@@ -25,7 +25,7 @@ extern DVECTOR g_Gfx_DebugStringPosition1; // 0x800B5C24
 /** Sets the position of the next string to be drawn by `Gfx_StringDraw`. */
 void Gfx_StringSetPosition(s32 x, s32 y);
 
-void Gfx_StringsSet2dLayerIdx(s32 idx);
+void Gfx_Strings2dLayerIdxSet(s32 idx);
 
 void Gfx_StringsReset2dLayerIdx();
 
@@ -49,11 +49,13 @@ void func_8004B658();
 
 void Gfx_MapMsg_DefaultStringInfoSet();
 
+/** @unused */
 void func_8004B6D4(s16 arg0, s16 arg1);
 
+/** @unused */
 void func_8004B74C(s16 arg0);
 
-/** Draws string. */
+/** @unused Draws string. */
 void func_8004B76C(char* str, s32 useFixedWidth);
 
 /** Draws an integer string in screen space. */

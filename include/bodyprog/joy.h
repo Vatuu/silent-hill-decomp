@@ -1,6 +1,8 @@
 #ifndef _JOY_H
 #define _JOY_H
 
+#include "bodyprog/math.h"
+
 /** @brief This header is used to declare any variable, struct, or
  * function part of `BODYPROG.BIN` identified to be related
  * to general controller handling.
@@ -12,6 +14,8 @@
  * For example, the controller logic for the inventory screen is handled apart from the
  * one for the in-game state.
  */
+
+#define STICK_THRESHOLD FP_STICK(0.5f)
 
 // ==========
 // FUNCTIONS

@@ -12,9 +12,9 @@
  * the engine (like player logic, save game or item screens).
  */
 
-// ========
-// DEFINES
-// ========
+// ==========
+// CONSTANTS
+// ==========
 
 #define OPT_SOUND_VOLUME_MIN   0
 #define OPT_SOUND_VOLUME_MAX   128
@@ -52,7 +52,8 @@ typedef enum _Sfx
     Sfx_Stumble0    = 1314,
 
     Sfx_Unk1317     = 1317,
-
+    Sfx_Unk1318     = 1318,
+    Sfx_Unk1319     = 1319,
     Sfx_HeavyBreath = 1320,
     Sfx_Unk1321     = 1321,
     Sfx_Unk1322     = 1322,
@@ -784,19 +785,18 @@ STATIC_ASSERT_SIZEOF(s_AnmBindPose, 6);
 
 typedef struct _AnmHeader
 {
-    u16 dataOffset_0;
-    u8  rotationBoneCount_2;
-    u8  translationBoneCount_3;
-    u16 frameDataSize_4; // Size per keyframe, `(rotationBoneCount_2 * 9) + (translationBoneCount_3 * 3)`?
-    u8  boneCount_6;
-    u8  unk_7;
-    u32 activeBones_8; // Holds bit field of bones to update.
-    u32 offset_C;      // In ANM files this points to another duplicate `s_AnmHeader` at end of the file, or might just be size of the main ANM data.
-    u16 frameCount_10;
-    u8  scaleLog2_12;
-    u8  rootYOffset_13;
-
-    s_AnmBindPose bindPoses_14[0]; // Array size = `boneCount_6`
+    u16           dataOffset_0;
+    u8            rotationBoneCount_2;
+    u8            translationBoneCount_3;
+    u16           keyframeDataSize_4; // Size per keyframe, `(rotationBoneCount_2 * 9) + (translationBoneCount_3 * 3)`?
+    u8            boneCount_6;
+    u8            unk_7;
+    u32           activeBones_8; // Holds bit field of bones to update.
+    u32           offset_C;      // In ANM files this points to another duplicate `s_AnmHeader` at end of the file, or might just be size of the main ANM data.
+    u16           keyframeCount_10;
+    u8            scaleLog2_12;
+    u8            rootYOffset_13;
+    s_AnmBindPose bindPoses_14[0]; // Array size = `boneCount_6`.
 } s_AnmHeader;
 STATIC_ASSERT_SIZEOF(s_AnmHeader, 20);
 
@@ -885,11 +885,11 @@ typedef struct
 typedef struct
 {
     s_80043338_0* destBuffer_0;
-    s32   queueEntryIdx_4;
-    s16   fileChunkCoordX_8;
-    s16   fileChunkCoordZ_A;
-    s32   field_C;  // } Something to do with distance from file chunk edge.
-    s32   field_10; // }
+    s32           queueEntryIdx_4;
+    s16           fileChunkCoordX_8;
+    s16           fileChunkCoordZ_A;
+    s32           field_C;  // } Something to do with distance from file chunk edge.
+    s32           field_10; // }
 } s_80043338;
 
 typedef struct
@@ -920,19 +920,19 @@ STATIC_ASSERT_SIZEOF(s_800AA894, 12);
 
 typedef struct
 {
-    u16 field_0;
-    u8  unk_2[4];
-    s8  field_6;
-    s8  unk_7;
-    u8  field_8;
-    u8  field_9;
-    u8  unk_A[4];
-    u8  field_E;
-    u8  field_F;
-    u8  field_10;
-    u8  field_11;
-    u16 unk_12; // guessed
-    u32* unk_14; // some pointer, all entries have the same value D_800AD4C4
+    u16  field_0;
+    u8   unk_2[4];
+    s8   field_6;
+    s8   unk_7;
+    u8   field_8;
+    u8   field_9;
+    u8   unk_A[4];
+    u8   field_E;
+    u8   field_F;
+    u8   field_10;
+    u8   field_11;
+    u16  unk_12;  // Guessed.
+    u32* unk_14; // Some pointer. All entries have the same value `D_800AD4C4`.
 } s_800AD4C8;
 STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
 
@@ -1039,7 +1039,7 @@ STATIC_ASSERT_SIZEOF(s_800BCE18_2BEC, 16);
 
 typedef struct
 {
-    s32           itemId_0; /** `e_InventoryItemId` or `e_CutsceneItemId` or `NO_VALUE` */
+    s32           itemId_0; /** `e_InventoryItemId` or `e_CutsceneItemId` */
     s32           field_4;
     char*         textureName_8;
     s_FsImageDesc imageDesc_C;
@@ -1321,8 +1321,8 @@ STATIC_ASSERT_SIZEOF(s_DmsEntry, 16);
 
 typedef struct
 {
-    s16 start;
-    s16 duration;
+    s16 startKeyframeIdx_0;
+    s16 frameCount_2; /** Keyframe count or frame duration at 30FPS? */
 } s_DmsInterval;
 STATIC_ASSERT_SIZEOF(s_DmsInterval, 4);
 
@@ -1346,7 +1346,7 @@ typedef struct
     s16  field_0;  /** Prim vertex X. */
     s16  field_2;  /** Prim vertex Y. */
     s16  field_4;  /** Width? */
-    s8   field_6;  /** Height?  */
+    s8   field_6;  /** Height? */
     s8   field_7;  /** Blend flag. */
     s32  field_8;  /** Rgb24 color + code. */
     s16* field_C;  /** Points to 0x801E5C24, data size 400. */
@@ -1725,7 +1725,7 @@ extern s_FsImageDesc D_800A9094;
 extern s_FsImageDesc g_Font24AtlasImg; // 0x800A909C
 
 /** Array containg file IDs used for each `e_CharacterId`, used in `Fs_QueueStartReadAnm`. */
-extern s_CharaFileInfo g_Chara_FileInfo[45]; // 0x800A90FC
+extern s_CharaFileInfo CHARA_FILE_INFOS[45]; // 0x800A90FC
 
 extern s_sub_StructUnk3 D_800A93CC[];
 
@@ -1748,9 +1748,6 @@ extern s32 D_800A9A28;
 /** Related to character animation allocation handling. */
 extern s8 D_800A98FC[Chara_Count];
 
-/** Related to main menu fog randomization. */
-extern s32 D_800A9EAC;
-
 extern s32 D_800A9EB0;
 
 extern s_FsImageDesc D_800A9EB4;
@@ -1758,8 +1755,6 @@ extern s_FsImageDesc D_800A9EB4;
 extern s_FsImageDesc D_800A9EBC;
 
 extern s_FsImageDesc D_800A9EC4;
-
-extern s_FsImageDesc D_800A9FA8;
 
 /** `Demo_FrameCount` */
 extern s32 g_Demo_FrameCount;
@@ -1936,7 +1931,7 @@ extern u32 D_800A9FB0;
 
 extern s32 D_800A9FB4[];
 
-extern u8 D_800AA5E0[];
+extern u8 REVERB_DEPTHS[];
 
 extern u8 D_800AA604[][16];
 
@@ -2408,8 +2403,7 @@ void Gfx_BackgroundSpriteDraw_2(s_FsImageDesc* image);
  *
  * Used only in the loading screen.
  */
-s32 Gfx_2dBackgroundMotionBlur(s32 arg0);
-
+bool Gfx_2dBackgroundMotionBlur(s32 arg0);
 
 /** @unused Possibly a leftover from when the save menu was part of `BODYPROG.BIN`.
  * Draws some string in display space.
@@ -2443,9 +2437,9 @@ void func_8003C878(s32 arg0);
 
 void func_8003C8F8(s_800BCE18_2BEC_0* arg0, char* newStr);
 
-void func_8003C92C(s_800BCE18_2BEC_0* arg0, VECTOR3* pos, SVECTOR3* rot);
+void func_8003C92C(s_800BCE18_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* rot);
 
-void func_8003CD6C(s_PlayerCombat* playerCombatInfo);
+void func_8003CD6C(s_PlayerCombat* combat);
 
 /** Returns `bool`? */
 s32 func_8003CDA0(s32 invSlotIdx);
@@ -2598,12 +2592,11 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ);
 
 s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX, s32 posZ);
 
-/** @brief Gets the load state of a LM file.
+/** @brief Gets the load state of an LM file.
  *
  * @param
  * @return LM file load state `(e_StaticModelLoadState`).
  */
-
 u32 LmHeader_LoadStateGet(s_func_80041CB4* arg0);
 
 /** @brief Gets the load state of an IPD file.
@@ -2647,7 +2640,7 @@ s_800C117C* func_800435E4(s_800C117C* arg0, s32 arg1);
 /** Maybe facilitates file chunk streaming as the player moves around the map. */
 s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
 
-s32 func_80043740();
+bool func_80043740();
 
 bool func_80043830(void);
 
@@ -2670,9 +2663,9 @@ void func_80043C7C(s_IpdHeader* ipdHeader, s_800C1450_0* arg1, s_800C1450_0* arg
 s32 func_80043D00(s_IpdHeader* ipdHeader);
 
 /** Returns inverse result of `LmFilter_NameEndsWithH`. */
-bool LmFilter_NameDoesNotEndWithH(s_Material* material);
+bool LmFilter_NameDoesNotEndWithH(s_Material* mat);
 
-bool LmFilter_NameEndsWithH(s_Material* material);
+bool LmFilter_NameEndsWithH(s_Material* mat);
 
 void IpdHeader_FixHeaderOffsets(s_IpdHeader* ipdHeader);
 
@@ -2688,9 +2681,9 @@ void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHeader, s_IpdModelInfo
 /** Sets IPD collision data grid coords? */
 void func_80044044(s_IpdHeader* ipd, s32 x, s32 z);
 
-void func_80044090(s_IpdHeader* arg0, s32 arg1, s32 arg2, GsOT* arg3, void* arg4);
+void func_80044090(s_IpdHeader* ipdHeader, s32 arg1, s32 arg2, GsOT* ot, void* arg4);
 
-bool func_80044420(s_IpdModelBuffer* arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4);
+bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, s32 x, s32 z);
 
 /** Loads anim file? */
 void Anim_BoneInit(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords);
@@ -2749,15 +2742,18 @@ void func_80045258(s_Skeleton** skels, s_Bone* bones, s32 boneIdx, s_LmHeader* l
 /** Anim func. */
 void func_800452EC(s_Skeleton* skel);
 
+/** Anim func. Traverses skeleton bones for something. */
 void func_80045360(s_Skeleton* skel, s8* arg1);
 
-/** Anim func. Traverses skeleton bones to set flags/mask. */
+/** Anim func. Traverses skeleton bones to set flags/mask.
+ * `cond` may actually be another `s_Skeleton` pointer.
+ */
 void func_800453E8(s_Skeleton* skel, bool cond);
 
 /** Does something with skeleton bones. `arg0` is a struct pointer. */
 void func_80045468(s_Skeleton* skel, s32* arg1, bool cond);
 
-void func_80045534(s_Skeleton* arg0, GsOT* arg1, void* arg2, GsCOORDINATE2* arg3, s16 arg4, u16 arg5, s_FsImageDesc* arg6);
+void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord, s16 arg4, u16 arg5, s_FsImageDesc* image);
 
 /** Passes a command to the sound driver. Plays SFX among other things. */
 void Sd_EngineCmd(u32 cmd);
@@ -2811,7 +2807,7 @@ void func_80046B78();
 
 u8 func_80046BB4(u8 arg0);
 
-void func_80046C54(u8 arg0, u8 arg1);
+void func_80046C54(u8 arg0, u8 vol);
 
 /** Sound command func. Unknown category. */
 void func_80046D3C(u16 cmd);
@@ -2972,7 +2968,7 @@ void ModelHeader_FixOffsets(s_ModelHeader* modelHeader, s_LmHeader* lmHeader);
 void func_80056244(s_LmHeader* lmHeader, bool flag);
 
 /** Gets texture count? */
-s32 func_80056348(bool (*arg0)(s_Material* material), s_LmHeader* lmHeader);
+s32 func_80056348(bool (*arg0)(s_Material* mat), s_LmHeader* lmHeader);
 
 /** TODO: Unknown `arg3` type. */
 void func_80059D50(s32 arg0, s_800BCE18_2BEC_0* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4);
@@ -3016,19 +3012,19 @@ void func_80056504(s_LmHeader* lmHeader, char* newStr, s_FsImageDesc* image, s32
 
 bool func_80056558(s_LmHeader* lmHeader, char* fileName, s_FsImageDesc* image, s32 arg3);
 
-void func_8005660C(s_Material* material, s_FsImageDesc* image, s32 arg2);
+void func_8005660C(s_Material* mat, s_FsImageDesc* image, s32 arg2);
 
 void func_800566B4(s_LmHeader* lmHeader, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4);
 
 /** Unknown `arg3` / `arg4` types. */
-void func_80056774(s_LmHeader* lmHeader, s_800C1450_0* arg1, bool (*func)(s_Material* material), void* arg3, s32 arg4);
+void func_80056774(s_LmHeader* lmHeader, s_800C1450_0* arg1, bool (*func)(s_Material* mat), void* arg3, s32 arg4);
 
 /** Checks if LM textures are loaded? */
 bool LmHeader_IsTextureLoaded(s_LmHeader* lmHeader);
 
 void func_80056954(s_LmHeader* lmHeader);
 
-void func_80056A88(s_ModelHeader* modelHeader, s32 arg1, s_Material* material, s32 flags);
+void func_80056A88(s_ModelHeader* modelHeader, s32 arg1, s_Material* mat, s32 flags);
 
 void func_80056BF8(s_LmHeader* lmHeader);
 
@@ -3059,7 +3055,7 @@ void func_80057658(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scrat
 
 void func_80057A3C(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
 
-s_Material_8* func_8005B1FC(s_Material* material, s_800C1450_0* arg1, void* fs_buffer_9, void* arg3, s32 arg4);
+s_Material_8* func_8005B1FC(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, void* arg3, s32 arg4);
 
 void func_8005B55C(GsCOORDINATE2* arg0);
 
@@ -3090,6 +3086,7 @@ s32 func_8005F680(s_func_800699F8* arg0);
 /** Spatial SFX func? */
 void func_8005DE0C(s32 sfx, VECTOR3*, s32, s32, s32); // Types assumed.
 
+/** Something related to events of the map and loading of textures? */
 void func_8005E0DC(s32 mapIdx); // Types assumed.
 
 void func_8005E70C();
@@ -3107,27 +3104,26 @@ void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* header);
 /** @unused? `volatile` needed for match. */
 s_DmsInterval* func_8008CA60(volatile s32 unused, s32 idx, s_DmsHeader* header);
 
-void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, s32 time, s_DmsHeader* header);
+void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, q19_12 time, s_DmsHeader* header);
 
 void Dms_CharacterGetStartPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, s32 time, s_DmsHeader* header);
 
 s32 Dms_CharacterFindIdxByName(char* name, s_DmsHeader* header);
 
-void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, s32 time, s_DmsHeader* header);
+void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q19_12 time, s_DmsHeader* header);
 
 void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 alpha);
 
 /** @unused? Returns `96 * cotangent(angle / 2)`. Possibly camera/FOV related. */
 s16 func_8008CDBC(s16 angle);
 
-s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, s32 time, s_DmsHeader* header);
+s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, q19_12 time, s_DmsHeader* header);
 
-s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, s_DmsKeyframeCamera* frame0, s_DmsKeyframeCamera* frame1, s32 alpha);
+s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, const s_DmsKeyframeCamera* frame0, const s_DmsKeyframeCamera* frame1, s32 alpha);
 
-/** DMS func. */
-void func_8008D1D0(s32* keyframePrev, s32* keyframeNext, s32* alpha, s32 time, s_DmsEntry* camEntry, s_DmsHeader* header);
+void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, s32* alpha, q19_12 time, s_DmsEntry* camEntry, s_DmsHeader* header);
 
-u32 func_8008D2C4(s32 time, s_DmsHeader* header);
+u32 Dms_IntervalStatusGet(s32 time, s_DmsHeader* header);
 
 s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry);
 
@@ -3414,7 +3410,7 @@ void func_80066E40();
 
 void func_80066E7C();
 
-s32 func_80068CC0(s32 arg0);
+bool func_80068CC0(s32 arg0);
 
 void func_800697EC();
 
@@ -3426,7 +3422,7 @@ void func_8006982C(u16 arg0);
 
 void func_80069844(s32 arg0);
 
-void IpdColData_FixOffsets(s_IpdCollisionData* collData);
+void IpdCollData_FixOffsets(s_IpdCollisionData* collData);
 
 void func_80069994(s_IpdCollisionData* collData);
 
@@ -3936,7 +3932,12 @@ void func_8007E860();
 /** Loads player animations for a given map. Maybe for cutscenes? */
 void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 
+void func_80070B84(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3);
+
 void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 arg2, s32 animStatus);
+
+// Variable anim duration func for player. It's nearly completely matched https://decomp.me/scratch/PBvwU.
+s32 func_800706E4();
 
 /** Special player SFX handler for heavy breath and damage. */
 bool func_80071620(u8 animStatus, s_SubCharacter*, s32, s32 sfx);

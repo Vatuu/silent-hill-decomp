@@ -7,12 +7,12 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/credits.h"
 #include "bodyprog/demo.h"
+#include "bodyprog/gfx/screen_draw.h"
+#include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math.h"
 #include "bodyprog/memcard.h"
 #include "bodyprog/player_logic.h"
-#include "bodyprog/gfx/screen_draw.h"
-#include "bodyprog/gfx/text_draw.h"
 #include "main/fsqueue.h"
 #include "main/mem.h"
 #include "main/rng.h"
@@ -32,9 +32,9 @@ s8 g_MapMsg_SelectCancelIdx = 0;
 u32 D_800BCD7C = 0x00491021;
 u8 g_SysState_GameOver_TipIdx = 0;
 // 3 bytes of padding.
-s32 g_someTimer0 = 0;
-u32 D_800BCD88 = 0; // @unused padding ?
-u32 D_800BCD8C = 0; // @unused padding ?
+s32 g_SomeTimer0 = 0;
+u32 D_800BCD88 = 0; // @unused Padding?
+u32 D_800BCD8C = 0; // @unused Padding?
 
 void func_800348C0() // 0x800348C0
 {
@@ -282,7 +282,7 @@ void func_80034EC8() // 0x80034EC8
 
     bzero(g_SysWork.npcs_1A0, NPC_COUNT_MAX * sizeof(s_SubCharacter));
 
-    for(i = 0; i < 4; i++)
+    for (i = 0; i < 4; i++)
     {
         g_SysWork.field_2284[i] = 0;
     }
@@ -390,15 +390,13 @@ void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
     #define BASE_FILE_IDX FILE_VIN_MAP0_S00_BIN
 
     Fs_QueueStartRead(BASE_FILE_IDX + mapIdx, g_OvlDynamic);
-    func_8005E0DC(mapIdx); // Something related to events of the map and load of textures?
+    func_8005E0DC(mapIdx);
     GameFs_PlayerMapAnimLoad(mapIdx);
 
-    /** If the player spawn in the map with a weapon equipped (either because of being on a demo
-	* or because the player saved the game with a weapon equipped) this and the next function
-	* are on charge of making it appear and allocate it's data.
-	* @note This code has some special functionallity in case the player spawn without any equipped
-	* weapon.
-	*/
+    // If the player spawns in the map with a weapon equipped (either because it's a demo
+	// or because the player saved the game with a weapon equipped), this and the next function
+	// make it appear and allocate its data.
+	// @note This code has some special functionallity if player spawna without an equipped weapon.
     if (g_SysWork.processFlags_2298 & (SysWorkProcessFlag_NewGame | SysWorkProcessFlag_LoadSave
                                        | SysWorkProcessFlag_Continue | SysWorkProcessFlag_BootDemo))
     {
@@ -491,7 +489,7 @@ void func_80035338(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOOR
     ptr->animFileSize2_10 = 0;
     ptr->charaId0_0       = charaId;
     ptr->animFile0_4      = animFileCpy;
-    ptr->animFileSize1_C  = Fs_GetFileSectorAlignedSize(g_Chara_FileInfo[charaId].animFileIdx);
+    ptr->animFileSize1_C  = Fs_GetFileSectorAlignedSize(CHARA_FILE_INFOS[charaId].animFileIdx);
 
     i = func_800352F8(charaId);
 
@@ -545,7 +543,7 @@ void func_80035560(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOOR
 
     ptr->charaId1_1       = charaId;
     ptr->animFile1_8      = animFile;
-    ptr->animFileSize2_10 = Fs_GetFileSectorAlignedSize(g_Chara_FileInfo[charaId].animFileIdx);
+    ptr->animFileSize2_10 = Fs_GetFileSectorAlignedSize(CHARA_FILE_INFOS[charaId].animFileIdx);
     ptr->npcCoords_14     = coordCpy;
 
     Anim_BoneInit(animFile, coordCpy);
@@ -806,7 +804,7 @@ void Gfx_LoadingScreen_PlayerRun() // 0x80035BE0
         model->anim_4.time_4                               = FP_TIME(26.0f);
         g_SysWork.player_4C.chara_0.position_18.vy         = FP_METER(0.2f);
 
-        D_800A998C.field_4 = model->anim_4.status_0;
+        D_800A998C.status_4 = model->anim_4.status_0;
 
         func_80035B04(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, boneCoords);
         g_SysWork.sysState_8++;
@@ -1263,7 +1261,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                 D_800BCD74 = 0;
             }
 
-            Gfx_StringSetColor(ColorId_White);
+            Gfx_StringSetColor(StringColorId_White);
             Gfx_StringSetPosition(40, 160);
 
             g_MapMsg_DisplayLength += g_MapMsg_DisplayInc;
@@ -1444,7 +1442,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                     }
                     else
                     {
-                        Gfx_StringSetColor(ColorId_White);
+                        Gfx_StringSetColor(StringColorId_White);
                     }
 
                     Gfx_StringSetPosition(32, (STRING_LINE_OFFSET * i) + 98);
@@ -1469,7 +1467,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                     }
                     else
                     {
-                        Gfx_StringSetColor(ColorId_White);
+                        Gfx_StringSetColor(StringColorId_White);
                     }
 
                     Gfx_StringSetPosition(32, (STRING_LINE_OFFSET * i) + 96);
@@ -2112,11 +2110,11 @@ void GameState_InGame_Update() // 0x80038BD4
 
     if (g_DeltaTime0 != FP_TIME(0.0f))
     {
-        g_someTimer0 = g_DeltaTime0;
+        g_SomeTimer0 = g_DeltaTime0;
     }
     else
     {
-        g_someTimer0 = g_DeltaTime1;
+        g_SomeTimer0 = g_DeltaTime1;
     }
 
     if (g_SysWork.sysState_8 == SysState_Gameplay)
@@ -2740,12 +2738,12 @@ void SysState_ReadMessage_Update(s32 arg0) // 0x80039FB8
 
         if (i == 6)
         {
-            g_DeltaTime0 = g_someTimer0;
+            g_DeltaTime0 = g_SomeTimer0;
         }
     }
     else
     {
-        g_DeltaTime0 = g_someTimer0;
+        g_DeltaTime0 = g_SomeTimer0;
     }
 
     if (g_SysWork.field_18 == 0)
@@ -2869,20 +2867,20 @@ void SysState_EventCallFunc_Update() // 0x8003A3C8
         Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
     }
 
-    g_DeltaTime0 = g_someTimer0;
+    g_DeltaTime0 = g_SomeTimer0;
     g_MapOverlayHeader.mapEventFuncs_20[g_MapEventIdx]();
 }
 
 void SysState_EventSetFlag_Update() // 0x8003A460
 {
-    g_DeltaTime0 = g_someTimer0;
+    g_DeltaTime0 = g_SomeTimer0;
     Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
     g_SysWork.sysState_8 = SysState_Gameplay;
 }
 
 void SysState_EventPlaySound_Update() // 0x8003A4B4
 {
-    g_DeltaTime0 = g_someTimer0;
+    g_DeltaTime0 = g_SomeTimer0;
 
     Sd_EngineCmd(((u16)g_MapEventIdx + 0x500) & 0xFFFF);
 

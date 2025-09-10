@@ -37,17 +37,17 @@ void Screen_Init(s32 screenWidth, s32 isInterlaced) // 0x80032428
     D_800C6E26 = FRAMEBUFFER_HEIGHT_PROGRESSIVE;
 
     GsInit3D();
-    Screen_XYPosSet(g_GameWorkConst->config_0.optScreenPosX_1C, g_GameWorkConst->config_0.optScreenPosY_1D);
+    Screen_XyPositionSet(g_GameWorkConst->config_0.optScreenPosX_1C, g_GameWorkConst->config_0.optScreenPosY_1D);
     GsSwapDispBuff();
     GsSwapDispBuff();
 }
 
-void Screen_XYPosSet(s32 x, s32 y) // 0x800324F4
+void Screen_XyPositionSet(s32 x, s32 y) // 0x800324F4
 {
-    Screen_DispEnvXYSet(&GsDISPENV, x, y);
+    Screen_DisplayEnvXySet(&GsDISPENV, x, y);
 }
 
-void Screen_DispEnvXYSet(DISPENV* display, s32 x, s32 y) // 0x80032524
+void Screen_DisplayEnvXySet(DISPENV* display, s32 x, s32 y) // 0x80032524
 {
     x = CLAMP(x, -11, 11);
     y = CLAMP(y, -8, 8);
@@ -84,8 +84,8 @@ void Gfx_FadeUpdate() // 0x8003260C
     TILE*    tile;
     DR_MODE* drMode;
 
-    drMode                   = &D_800A8E5C[g_ActiveBuffer];
-    tile                     = &D_800A8E74[g_ActiveBuffer];
+    drMode                   = &D_800A8E5C[g_ActiveBufferIdx];
+    tile                     = &D_800A8E74[g_ActiveBufferIdx];
     g_PrevScreenFadeProgress = g_ScreenFadeProgress;
 
     switch (g_Gfx_ScreenFade)
@@ -176,7 +176,7 @@ void Gfx_FadeUpdate() // 0x8003260C
             return;
     }
 
-    ot = &g_OtTags0[g_ActiveBuffer][5];
+    ot = &g_OtTags0[g_ActiveBufferIdx][5];
     AddPrim(ot, tile);
     AddPrim(ot, drMode);
 }
@@ -218,8 +218,8 @@ void Gfx_CutsceneCameraStateUpdate() // 0x80032904
     POLY_G4* poly;
     DR_MODE* drMode;
 
-    drMode = &D_800A8E98[g_ActiveBuffer];
-    poly   = &D_800A8EB0[g_ActiveBuffer];
+    drMode = &D_800A8E98[g_ActiveBufferIdx];
+    poly   = &D_800A8EB0[g_ActiveBufferIdx];
 
     vcSetEvCamRate(D_800A8F40);
 
@@ -277,7 +277,7 @@ void Gfx_CutsceneCameraStateUpdate() // 0x80032904
             return;
     }
 
-    ot = &g_OtTags0[g_ActiveBuffer][4];
+    ot = &g_OtTags0[g_ActiveBufferIdx][4];
     AddPrim(ot, poly);
     AddPrim(ot, &poly[2]);
     AddPrim(ot, drMode);

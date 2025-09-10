@@ -35,6 +35,17 @@
 #define DVECTOR(x, y) \
     { SCREEN_POSITION_X(x), SCREEN_POSITION_Y(y) }
 
+/** @brief Packs an RGB + code color.
+ *
+ * @param r Red component.
+ * @param g Green component.
+ * @param b Blue component.
+ * @param code Code component.
+ * @return Packed RGB + code color.
+ */
+#define PACKED_COLOR(r, g, b, code) \
+    ((r) | ((g) << 8) | ((b) << 16) | ((code) << 24))
+
 /** @brief Multiplies an integer in fixed-point Q format by a float converted to fixed-point Q format,
  * then converts the result back from the fixed-point Q format using a 64-bit intermediate via
  * `Math_MulFixed` for higher precision.
@@ -167,7 +178,7 @@ s32 Math_MulFixed(s32 a, s32 b, s32 shift);
  * @param angle Fixed-point degrees in Q3.12, integer range `[0, 4096]`.
  * @return Sine in Q19.12, integer range `[0, 4096]`.
  */
-s32 Math_Sin(s32 angle);
+q19_12 Math_Sin(s32 angle);
 
 // NOTE: Matched on decomp.me.
 /** @brief Computes the cosine in Q19.12 of degrees in Q3.12, integer range `[0, 4096]`.
@@ -177,7 +188,7 @@ s32 Math_Sin(s32 angle);
  * @param angle Fixed-point degrees in Q3.12, integer range `[0, 4096]`.
  * @return Cosine in Q19.12, integer range `[0, 4096]`.
  */
-s32 Math_Cos(s32 angle);
+q19_12 Math_Cos(s32 angle);
 
 MATRIX* shRotMatrixZ(s32, MATRIX*);
 

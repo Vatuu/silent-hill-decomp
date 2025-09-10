@@ -5,8 +5,8 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
-#include "bodyprog/joy.h"
 #include "bodyprog/gfx/screen_draw.h"
+#include "bodyprog/joy.h"
 #include "bodyprog/math.h"
 
 void SysWork_Clear() // 0x800340E0

@@ -5,11 +5,11 @@
 #include <libpress.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/joy.h"
-#include "bodyprog/math.h"
-#include "bodyprog/libsd.h"
 #include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/gfx/text_draw.h"
+#include "bodyprog/joy.h"
+#include "bodyprog/libsd.h"
+#include "bodyprog/math.h"
 #include "main/fileinfo.h"
 #include "screens/stream/stream.h"
 

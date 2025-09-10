@@ -102,10 +102,8 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsC
     }
     else
     {
-        chara->model_0.anim_4.status_0      = ANIM_STATUS(3, true);
-        chara->model_0.anim_4.time_4         = FP_TIME(16.0f);
-        chara->model_0.anim_4.keyframeIdx_8 = 16;
-        chara->field_E0_8                    = 3;
+        Character_AnimSet(chara, ANIM_STATUS(3, true), 16);
+        chara->field_E0_8 = 3;
     }
 
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);
