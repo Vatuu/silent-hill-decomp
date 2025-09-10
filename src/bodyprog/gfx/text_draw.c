@@ -16,11 +16,12 @@
 #define MAP_MSG_CODE_SELECT        'S' /** Display dialog prompt with selectable entries. */
 #define MAP_MSG_CODE_TAB           'T' /** Inset line. */
 
-#define FONT_12_X_16_GLYPH_COUNT    84
-#define FONT_12_X_16_GLYPH_SIZE_X   12
-#define FONT_12_X_16_GLYPH_SIZE_Y   16
-#define FONT_12_X_16_SPACE_SIZE     6
-#define FONT_12_X_16_LINE_COUNT_MAX 9
+#define FONT_12_X_16_GLYPH_COUNT        84
+#define FONT_12_X_16_GLYPH_SIZE_X       12
+#define FONT_12_X_16_GLYPH_SIZE_Y       16
+#define FONT_12_X_16_SPACE_SIZE         6
+#define FONT_12_X_16_LINE_COUNT_MAX     9
+#define FONT_12_X_16_ATLAS_COLUMN_COUNT (FONT_12_X_16_GLYPH_COUNT / 4)
 
 const s32 __PAD = 0;
 
@@ -93,15 +94,14 @@ void Gfx_StringSetColor(s16 colorId) // 0x8004A8DC
 
 bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
 {
-    #define WIDE_SPACE_SIZE    10
-    #define ATLAS_BASE_Y       240
-    #define ATLAS_COLUMN_COUNT 21
+    #define WIDE_SPACE_SIZE 10
+    #define ATLAS_BASE_Y    240
 
     // TODO: This only works for one case. There may originally have been some other generic macro.
-    #define setSprtUvClut(glyphSprt, idx, clut)                                                                                        \
-    *((u32*)&(glyphSprt)->u0) = (((idx) % ATLAS_COLUMN_COUNT) * FONT_12_X_16_GLYPH_SIZE_X) + /* `u0`:   Column in atlas. */            \
-                                (ATLAS_BASE_Y << 8)                                        + /* `v0`:   Row 0 in atlas with offset. */ \
-                                ((clut) << 16)                                               /* `clut`: Packed magic value. */
+    #define setSprtUvClut(glyphSprt, idx, clut)                                                                                                     \
+    *((u32*)&(glyphSprt)->u0) = (((idx) % FONT_12_X_16_ATLAS_COLUMN_COUNT) * FONT_12_X_16_GLYPH_SIZE_X) + /* `u0`:   Column in atlas. */            \
+                                (ATLAS_BASE_Y << 8)                                                     + /* `v0`:   Row 0 in atlas with offset. */ \
+                                ((clut) << 16)                                                            /* `clut`: Packed magic value. */
 
     s32       posX;
     s32       posY;
@@ -194,12 +194,12 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
 
                 posX += glyphWidth;
 
-                u0 = (glyphIdx % ATLAS_COLUMN_COUNT) * FONT_12_X_16_GLYPH_SIZE_X;
+                u0 = (glyphIdx % FONT_12_X_16_ATLAS_COLUMN_COUNT) * FONT_12_X_16_GLYPH_SIZE_X;
 
-                *((u32*)&glyphPoly->u0) = u0 + (0xF000 + (0x7FD3 << 16));                                         // `u0`, `v0`, `clut`.
-                *((u32*)&glyphPoly->u1) = u0 + (((((glyphIdx / ATLAS_COLUMN_COUNT) & 0xF) | 16) << 16) | 0xFF00); // `u1`, `v1`, `page`.
-                *((u16*)&glyphPoly->u2) = u0 - 0xFF4;                                                             // `u2`, `v2`.
-                *((u16*)&glyphPoly->u3) = u0 - 0xF4;                                                              // `u3`, `v3`.
+                *((u32*)&glyphPoly->u0) = u0 + (0xF000 + (0x7FD3 << 16));                                                      // `u0`, `v0`, `clut`.
+                *((u32*)&glyphPoly->u1) = u0 + (((((glyphIdx / FONT_12_X_16_ATLAS_COLUMN_COUNT) & 0xF) | 16) << 16) | 0xFF00); // `u1`, `v1`, `page`.
+                *((u16*)&glyphPoly->u2) = u0 - 0xFF4;                                                                          // `u2`, `v2`.
+                *((u16*)&glyphPoly->u3) = u0 - 0xF4;                                                                           // `u3`, `v3`.
 
                 addPrim(ot, glyphPoly);
                 GsOUT_PACKET_P = (u8*)glyphPoly + sizeof(POLY_FT4);
@@ -219,12 +219,12 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
                 *((u32*)(&glyphSprt->x0)) = posXCpy + (posY << 16);
 
                 setSprtUvClut(glyphSprt, glyphIdx, 0x7FD3); // TODO: Demagic CLUT arg.
-                //*((u32*)&glyphSprt->u0) = ((glyphIdx % ATLAS_COLUMN_COUNT) * FONT_12_X_16_GLYPH_SIZE_X) + 0xF000 + (0x7FD3 << 16); // `u0`, `v0`, `clut`.
+                //*((u32*)&glyphSprt->u0) = ((glyphIdx % FONT_12_X_16_ATLAS_COLUMN_COUNT) * FONT_12_X_16_GLYPH_SIZE_X) + 0xF000 + (0x7FD3 << 16); // `u0`, `v0`, `clut`.
 
                 packet += sizeof(SPRT);
 
                 tPage = (DR_TPAGE*)packet;
-                setDrawTPage(tPage, 0, 1, ((glyphIdx / ATLAS_COLUMN_COUNT) & 0xF) | 16);
+                setDrawTPage(tPage, 0, 1, ((glyphIdx / FONT_12_X_16_ATLAS_COLUMN_COUNT) & 0xF) | 16);
                 addPrim(ot, tPage);
 
                 packet += sizeof(DR_TPAGE);
@@ -368,9 +368,8 @@ void Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004ACF4
 
 s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
 {
-    #define LINE_SPACE_SIZE    32
-    #define ATLAS_COLUMN_COUNT 21
-    #define CHARCODE_OFFSET    '\''
+    #define LINE_SPACE_SIZE 32
+    #define CHARCODE_OFFSET '\''
 
     s32       glyphPosX;
     s32       glyphPosY;
@@ -621,10 +620,10 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
 
                 glyphPosX += charWidth;
 
-                temp_a0 = (idx % ATLAS_COLUMN_COUNT) * FONT_12_X_16_GLYPH_SIZE_X;
+                temp_a0 = (idx % FONT_12_X_16_ATLAS_COLUMN_COUNT) * FONT_12_X_16_GLYPH_SIZE_X;
 
-                *((u32*)&glyphPoly->u0) = temp_a0 + 0xF000 + (0x7FD3 << 16);                                        // `u0`, `v0`, `clut`.
-                *((u32*)&glyphPoly->u1) = temp_a0 + (((((idx / ATLAS_COLUMN_COUNT) & 0xF) | 0x10) << 16) | 0xFF00); // `u1`, `v1`, `page`.
+                *((u32*)&glyphPoly->u0) = temp_a0 + 0xF000 + (0x7FD3 << 16);                                                     // `u0`, `v0`, `clut`.
+                *((u32*)&glyphPoly->u1) = temp_a0 + (((((idx / FONT_12_X_16_ATLAS_COLUMN_COUNT) & 0xF) | 0x10) << 16) | 0xFF00); // `u1`, `v1`, `page`.
                 *((u16*)&glyphPoly->u2) = temp_a0 - 0xFF4;
                 *((u16*)&glyphPoly->u3) = temp_a0 - 244;
 
@@ -644,12 +643,12 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
                 addPrimFast(ot, glyphSprt, 4);
                 *((u32*)&glyphSprt->r0)   = color;
                 *((u32*)(&glyphSprt->x0)) = temp_a0_2 + ((glyphPosY) << 16);
-                *((u32*)&glyphSprt->u0)   = (s32)(((idx % ATLAS_COLUMN_COUNT) * FONT_12_X_16_GLYPH_SIZE_X) + 0xF000 + (0x7FD3 << 16)); // `u0`, `v0`, `clut`.
+                *((u32*)&glyphSprt->u0)   = (s32)(((idx % FONT_12_X_16_ATLAS_COLUMN_COUNT) * FONT_12_X_16_GLYPH_SIZE_X) + 0xF000 + (0x7FD3 << 16)); // `u0`, `v0`, `clut`.
 
                 packet += sizeof(SPRT);
 
                 tPage = (DR_TPAGE*)packet;
-                setDrawTPage(tPage, 0, 1, ((idx / ATLAS_COLUMN_COUNT) & 0xF) | 0x10);
+                setDrawTPage(tPage, 0, 1, ((idx / FONT_12_X_16_ATLAS_COLUMN_COUNT) & 0xF) | 0x10);
                 addPrim(ot, tPage);
 
                 packet += sizeof(DR_TPAGE);
