@@ -89,7 +89,7 @@ s32 Demo_PlayFileBufferSetup() // 0x8008F0BC
     mapOverlaySize = Fs_GetFileSize(FILE_VIN_MAP0_S00_BIN + DEMO_WORK()->savegame_100.mapOverlayId_A4);
 
     // Get play file size, rounded up to next 0x800-byte boundary.
-    playFileSize = (Fs_GetFileSize(g_Demo_PlayFileIdx) + 0x7FF) & ~0x7FF;
+    playFileSize = ALIGN(Fs_GetFileSize(g_Demo_PlayFileIdx), 0x800);
 
     // Try placing play file buffer just before `DEMO_WORK` in memory.
     g_Demo_PlayFileBufferPtr = (void*)((s32)DEMO_WORK() - playFileSize);

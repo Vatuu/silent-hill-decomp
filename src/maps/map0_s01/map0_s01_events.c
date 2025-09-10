@@ -332,7 +332,7 @@ void Event_CafeCutscene()
             func_8008616C(0, false, 0, FP_TIME(0.0f), false);
             Sd_EngineCmd(23);
 
-            g_SavegamePtr->eventFlags_168[1] |= 1 << 17;
+            Savegame_EventFlagSet(EventFlag_49);
             g_Timer0 = NO_VALUE;
             break;
     }
@@ -503,12 +503,12 @@ void Event_AirScreamerIntroCutscene() // 0x800DBAA0
             sharedFunc_800D20E4_0_s00();
             func_8003A16C();
 
-            Savegame_EventFlagSetAlt(EventFlag_50);
+            Savegame_EventFlagSet(EventFlag_50);
 
             Sd_EngineCmd(1321);
             Sd_EngineCmd(1322);
 
-            Savegame_EventFlagSetAlt(EventFlag_52);
+            Savegame_EventFlagSet(EventFlag_52);
 
             // Warp player.
             g_SysWork.player_4C.chara_0.position_18.vx = FP_METER(1.3f);
@@ -571,8 +571,8 @@ void Event_AirScreamerIntroCutscene() // 0x800DBAA0
         case 10:
             g_Timer0 = MAX(g_Timer0, FP_TIME(53.0f));
             D_800E23A1 = 0x80;
-            Savegame_EventFlagSetAlt(EventFlag_45);
-            
+            Savegame_EventFlagSet(EventFlag_45);
+
             func_80085E6C(FP_TIME(1.5f), false);
             break;
 
@@ -594,7 +594,7 @@ void Event_AirScreamerIntroCutscene() // 0x800DBAA0
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 89, false);
 
             D_800E23A1 = 0xE0;
-            Savegame_EventFlagSetAlt(EventFlag_46);
+            Savegame_EventFlagSet(EventFlag_46);
             g_Timer0 = FP_TIME(76.0f);
 
             SysWork_StateStepIncrement();
@@ -651,7 +651,7 @@ void Event_AirScreamerIntroCutscene() // 0x800DBAA0
             break;
 
         case 21:
-            Savegame_EventFlagSetAlt(EventFlag_47);
+            Savegame_EventFlagSet(EventFlag_47);
             func_800D39F4(g_SysWork.npcs_1A0);
             func_8008616C(0, false, 2, FP_TIME(0.0f), false);
 
@@ -786,7 +786,7 @@ void Event_MapItemTake() // 0x800DC3C8
             // Set flags.
             g_SysWork.field_2290             |= 1 << 0;
             g_SysWork.field_228C             |= 1 << 0;
-            g_SavegamePtr->eventFlags_168[1] |= 1 << 6;
+            Savegame_EventFlagSet(EventFlag_38);
 
             SysWork_StateStepIncrement();
 
@@ -842,8 +842,8 @@ void Event_AirScreamerDeath() // 0x800DC8C8
             func_8004690C(Sfx_Unk1321);
             func_8004690C(Sfx_Unk1322);
 
-            g_SavegamePtr->eventFlags_168[1] &= ~(1 << 20);
-            g_SoundCmdIdx                        = 0;
+            Savegame_EventFlagClear(EventFlag_52);
+            g_SoundCmdIdx = 0;
             SysWork_StateStepIncrement();
 
         case 1:
@@ -854,7 +854,7 @@ void Event_AirScreamerDeath() // 0x800DC8C8
             sharedFunc_800D2244_0_s00(0);
             SysWork_StateSetNext(SysState_Gameplay);
 
-            g_SavegamePtr->eventFlags_168[1] |= 1 << 19;
+            Savegame_EventFlagSet(EventFlag_51);
             break;
     }
 }
@@ -895,13 +895,13 @@ void func_800DC9C8() // 0x800DC9C8
     EventPositionInit(&g_EventThing530.eventPosition_1C, 2.309815f, -0.599854f, 273.949951f, 0x6880000, 0);
     func_8003C8F8(&g_EventThing530.field_0, "RADIO_HI");
 
-    if ((g_SavegamePtr->eventFlags_168[1] & ((1 << 8) | (1 << 15))) == (1 << 8))
+    if (Savegame_EventFlagGet(EventFlag_40) && !Savegame_EventFlagGet(EventFlag_47))
     {
         g_SysWork.flags_22A4 |= (1 << 5) | (1 << 9);
 
         Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcCoords_FC0, NO_VALUE, NULL, NULL);
 
-        if (g_SavegamePtr->eventFlags_168[1] & (1 << 6))
+        if (Savegame_EventFlagGet(EventFlag_38))
         {
             func_80088D0C();
             Chara_Spawn(Chara_AirScreamer, 0, FP_METER(1048566.0f), FP_METER(280.0f), FP_METER(0.0f), 12);
@@ -913,7 +913,7 @@ void func_800DC9C8() // 0x800DC9C8
         }
     }
 
-    if ((g_SavegamePtr->eventFlags_168[4] & ((1 << 6) | (1 << 31))) == (1 << 31))
+    if (Savegame_EventFlagGet(EventFlag_159) && !Savegame_EventFlagGet(EventFlag_134))
     {
         func_8003ED74(6, 3);
     }

@@ -119,7 +119,7 @@ void func_800CE8B8(void) // 0x800CE8B8
             break;
 
         case 18:
-            func_8003640C(!(g_SavegamePtr->eventFlags_190[1] & (1 << 27)) ? 29 : 7);
+            func_8003640C(!Savegame_EventFlagGet(EventFlag_379) ? 29 : 7);
             break;
 
         case 17:

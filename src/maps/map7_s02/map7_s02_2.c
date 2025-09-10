@@ -206,12 +206,12 @@ void func_800D9864() // 0x800D9864
     {
         var = 15;
     }
-    else if (g_SavegamePtr->eventFlags_1A4[0] & (1 << 1))
+    else if (Savegame_EventFlagGet(EventFlag_481))
     {
-        if (!(g_SavegamePtr->eventFlags_1A4[2] & (1 << 30)))
+        if (!Savegame_EventFlagGet(EventFlag_574))
         {
-            g_SavegamePtr->eventFlags_1A4[2] |= 1 << 30;
-            var                               = 1;
+            Savegame_EventFlagSet(EventFlag_574);
+            var = 1;
         }
         else
         {

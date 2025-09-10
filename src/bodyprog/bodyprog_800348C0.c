@@ -692,7 +692,7 @@ s32 func_8003599C() // 0x8003599C
         case 0:
             if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP2_S00)
             {
-                if ((g_SavegamePtr->eventFlags_168[4] & (1 << 5)) || (g_SavegamePtr->eventFlags_168[5] & (1 << 21)))
+                if (Savegame_EventFlagGet(EventFlag_133) || Savegame_EventFlagGet(EventFlag_181))
                 {
                     g_MapOverlayHeader.field_15 = 11;
                 }
@@ -2622,7 +2622,7 @@ void SysState_Fmv_Update() // 0x80039A58
     DrawSync(0);
 
     // Set savegame flag based on `D_800BCDD8->eventFlagNum_2` flag ID.
-    Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
+    Savegame_EventFlagSetAlt(g_MapEventParam->eventFlagId_2);
 
     // Return to game.
     Game_StateSetNext(GameState_InGame);
@@ -2681,7 +2681,7 @@ void SysState_LoadArea_Update() // 0x80039C40
         }
     }
 
-    Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
+    Savegame_EventFlagSetAlt(g_MapEventParam->eventFlagId_2);
 
     if (g_MapEventParam->field_8_24)
     {
@@ -2760,7 +2760,7 @@ void SysState_ReadMessage_Update(s32 arg0) // 0x80039FB8
             break;
         
         case MapMsgState_SelectEntry0:
-            Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
+            Savegame_EventFlagSetAlt(g_MapEventParam->eventFlagId_2);
 
             func = &g_MapOverlayHeader.unfreezePlayerControl_CC;
 
@@ -2814,17 +2814,16 @@ void SysState_SaveMenu_Update() // 0x8003A230
         case 0:
             SysWork_SavegameUpdatePlayer();
 
-            if ((g_SavegamePtr->eventFlags_168[5] & EVENT_FLAG5_FIRST_TIME_SAVE_GAME) || g_SavegamePtr->locationId_A8 == 24 || g_MapEventIdx == 0)
+            if (Savegame_EventFlagGet(EventFlag_SeenSaveScreen) || g_SavegamePtr->locationId_A8 == SaveLocationId_NextFear || g_MapEventIdx == 0)
             {
                 GameFs_SaveLoadBinLoad();
 
                 g_Gfx_ScreenFade = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
                 SysWork_StateStepIncrement();
             }
-
             else if (Gfx_MapMsg_Draw(MapMsgIdx_SaveGame) == MapMsgState_SelectEntry0)
             {
-                g_SavegamePtr->eventFlags_168[5] |= EVENT_FLAG5_FIRST_TIME_SAVE_GAME;
+                Savegame_EventFlagSet(EventFlag_SeenSaveScreen);
 
                 GameFs_SaveLoadBinLoad();
 
@@ -2864,7 +2863,7 @@ void SysState_EventCallFunc_Update() // 0x8003A3C8
 {
     if (g_MapEventParam->flags_8_13 != 0)
     {
-        Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
+        Savegame_EventFlagSetAlt(g_MapEventParam->eventFlagId_2);
     }
 
     g_DeltaTime0 = g_SomeTimer0;
@@ -2874,7 +2873,7 @@ void SysState_EventCallFunc_Update() // 0x8003A3C8
 void SysState_EventSetFlag_Update() // 0x8003A460
 {
     g_DeltaTime0 = g_SomeTimer0;
-    Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
+    Savegame_EventFlagSetAlt(g_MapEventParam->eventFlagId_2);
     g_SysWork.sysState_8 = SysState_Gameplay;
 }
 
@@ -2884,7 +2883,7 @@ void SysState_EventPlaySound_Update() // 0x8003A4B4
 
     Sd_EngineCmd(((u16)g_MapEventIdx + 0x500) & 0xFFFF);
 
-    Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
+    Savegame_EventFlagSetAlt(g_MapEventParam->eventFlagId_2);
     g_SysWork.sysState_8 = SysState_Gameplay;
 }
 
@@ -3067,7 +3066,7 @@ void GameState_MapEvent_Update() // 0x8003AA4C
 
     D_800A9A0C = Gfx_IsScreenFadeComplete() && Fs_QueueDoThingWhenEmpty();
 
-    Savegame_EventFlagSet(g_MapEventParam->eventFlagId_2);
+    Savegame_EventFlagSetAlt(g_MapEventParam->eventFlagId_2);
 
     g_MapOverlayHeader.mapEventFuncs_20[g_MapEventIdx]();
 

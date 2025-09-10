@@ -82,7 +82,7 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsC
         chara->position_18.vy = FP_METER(0.0f);
     }
 
-    if (!(g_SavegamePtr->eventFlags_168[3] & (1 << 9)))
+    if (!Savegame_EventFlagGet(EventFlag_105))
     {
         chara->model_0.anim_4.flags_2 &= ~AnimFlag_Visible;
         chara->field_E0_8              = 0;
@@ -91,7 +91,7 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsC
 
     chara->model_0.anim_4.flags_2 |= AnimFlag_Visible;
 
-    if (!(g_SavegamePtr->eventFlags_168[3] & (1 << 10)))
+    if (!Savegame_EventFlagGet(EventFlag_106))
     {
         if (chara->model_0.anim_4.status_0 == ANIM_STATUS(2, true))
         {

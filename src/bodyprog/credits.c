@@ -71,9 +71,9 @@ void func_8008F94C() // 0x8008F94C
     D_800C48B0 = g_SavegamePtr->clearGameCount_24A;
     D_800C48B1 = g_SavegamePtr->clearGameEndings_24B;
     D_800C48B2 = g_SavegamePtr->field_27A;
-    D_800C48B6 = (g_SavegamePtr->eventFlags_168[1] >> 29) & (1 << 0);
+    D_800C48B6 = Savegame_EventFlagGetAlt(EventFlag_61);
     D_800C48B4 = 0;
-    D_800C48B7 = (g_SavegamePtr->eventFlags_168[5] >> 23) & (1 << 0);
+    D_800C48B7 = Savegame_EventFlagGetAlt(EventFlag_183);
     D_800C48B8 = func_8009146C(1);
     D_800C48BA = func_8009146C(0);
 
@@ -380,26 +380,26 @@ void func_800904F4() // 0x800904F4
 
     if (D_800C48B6 != 0)
     {
-        g_SavegamePtr->eventFlags_168[1] |= 1 << 29;
+        Savegame_EventFlagSet(EventFlag_61);
     }
 
     if (D_800C48B7 != 0)
     {
-        g_SavegamePtr->eventFlags_168[5] |= 1 << 23;
+        Savegame_EventFlagSet(EventFlag_183);
     }
 
-    g_SavegamePtr->eventFlags_168[1] |= 1 << 30;
+    Savegame_EventFlagSet(EventFlag_62);
 
     extraOptions = g_GameWork.config_0.optExtraOptionsEnabled_27;
 
     if ((extraOptions & 0x3) && (extraOptions & 0xC))
     {
-        g_SavegamePtr->eventFlags_168[1] |= 1 << 25;
+        Savegame_EventFlagSet(EventFlag_57);
     }
 
     if (g_GameWork.config_0.optExtraOptionsEnabled_27 & (1 << 0))
     {
-        g_SavegamePtr->eventFlags_168[1] |= 1 << 26;
+        Savegame_EventFlagSet(EventFlag_58);
     }
 
     if (D_800C48B5 >= 80)
@@ -995,7 +995,7 @@ void func_800917C0(void* arg0, s32 arg1, s_FsImageDesc* img) // 0x800917C0
 
     if (arg1 != 0)
     {
-        arg0 -= (Fs_GetFileSize(FILE_TIM_FONT24_TIM) + 0x7FF) & ~0x7FF;
+        arg0 -= ALIGN(Fs_GetFileSize(FILE_TIM_FONT24_TIM), 0x800);
     }
 
     Fs_QueueStartReadTim(FILE_TIM_FONT24_TIM, arg0, img);

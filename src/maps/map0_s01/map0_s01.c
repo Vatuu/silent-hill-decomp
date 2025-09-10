@@ -910,9 +910,9 @@ void func_800DA7AC() // 0x800DA7AC
 {
     s32 var;
 
-    if (!(g_SavegamePtr->eventFlags_168[1] & (1 << 16)))
+    if (!Savegame_EventFlagGet(EventFlag_48))
     {
-        if (!(g_SavegamePtr->eventFlags_168[1] & (1 << 17)))
+        if (!Savegame_EventFlagGet(EventFlag_49))
         {
             var = 9;
         }
@@ -935,12 +935,12 @@ void func_800DA7FC() // 0x800DA7FC
     s32 var1;
 
     var1 = 0x553;
-    if (!(g_SavegamePtr->eventFlags_168[4] & (1 << 18)))
+    if (!Savegame_EventFlagGet(EventFlag_146))
     {
-        if (!(g_SavegamePtr->eventFlags_168[1] & ((1 << 16) | (1 << 17))))
+        if (!(Savegame_EventFlagGet(EventFlag_48) || Savegame_EventFlagGet(EventFlag_49)))
         {
             var1 = 0xF0000;
-            if ((g_SavegamePtr->eventFlags_168[1] & (1 << 7)) && g_GameWork.soundCmd_5B2 == 9)
+            if (Savegame_EventFlagGet(EventFlag_39) && g_GameWork.soundCmd_5B2 == 9)
             {
                 var0 = 2;
             }
@@ -949,9 +949,9 @@ void func_800DA7FC() // 0x800DA7FC
                 var0 = 0x201;
             }
         }
-        else if (g_SavegamePtr->eventFlags_168[1] & (1 << 15))
+        else if (Savegame_EventFlagGet(EventFlag_47))
         {
-            if (!(g_SavegamePtr->eventFlags_168[1] & (1 << 16)))
+            if (!Savegame_EventFlagGet(EventFlag_48))
             {
                 var1 = 0xF0000;
                 var0 = 0x100;

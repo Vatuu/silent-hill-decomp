@@ -1897,8 +1897,8 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                 if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP0_S00)
                 {
                     g_MapOverlayHeader.func_DC();
-                    g_SavegamePtr->eventFlags_168[0] |= 1 << 25;
-                    
+                    Savegame_EventFlagSet(EventFlag_25);
+
                     func_8007E9C4();
                     
                     extra->model_0.state_2++;

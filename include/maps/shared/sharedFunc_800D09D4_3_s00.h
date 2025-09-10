@@ -3,10 +3,8 @@ void sharedFunc_800D09D4_3_s00()
     s32         flags;
     s32         var;
     s32         mapRoomIdx;
-    s_Savegame* save;
 
-    save       = g_SavegamePtr;
-    mapRoomIdx = save->mapRoomIdx_A5;
+    mapRoomIdx = g_SavegamePtr->mapRoomIdx_A5;
     var        = 0x266;
 
     switch (g_GameWork.soundCmd_5B2)
@@ -18,8 +16,8 @@ void sharedFunc_800D09D4_3_s00()
             switch (mapRoomIdx)
             {
                 case 1:
-                    if (!(save->eventFlags_180[0] & (1 << 5)))
-                     {
+                    if (!Savegame_EventFlagGet(EventFlag_197))
+                    {
                         // Test player Z position against specific value.
                         if (g_SysWork.player_4C.chara_0.position_18.vz > FP_METER(143.2f))
                         {
@@ -34,7 +32,7 @@ void sharedFunc_800D09D4_3_s00()
 
                 case 17:
                 case 20:
-                    if (g_SavegamePtr->eventFlags_180[0] & (1 << 19))
+                    if (Savegame_EventFlagGet(EventFlag_211))
                     {
                         flags |= 0x40;
                     }
@@ -48,12 +46,12 @@ void sharedFunc_800D09D4_3_s00()
             break;
 
         case 34:
-            if (!(save->mapMarkingFlags_1E0[14] & (1 << 19)))
+            if (!(g_SavegamePtr->mapMarkingFlags_1E0[14] & (1 << 19)))
             {
                 var   = 0xF0000;
                 flags = 0x201;
             }
-            else if (save->eventFlags_180[0] & (1 << 5))
+            else if (Savegame_EventFlagGet(EventFlag_197))
             {
                 var   = 0x333;
                 flags = 0x201;
@@ -66,7 +64,7 @@ void sharedFunc_800D09D4_3_s00()
             break;
 
         case 25:
-            if ((save->eventFlags_18C & 0x80) == 0)
+            if (!Savegame_EventFlagGet(EventFlag_295))
             {
                 var   = 0xF0000;
                 flags = 0x1FE;

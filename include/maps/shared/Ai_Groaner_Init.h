@@ -64,7 +64,7 @@ void Ai_Groaner_Init(s_SubCharacter* chara)
 #ifdef MAP2_S00
     if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Hard)
     {
-        if (!(g_SavegamePtr->eventFlags_168[4] & (1 << 6)))
+        if (!Savegame_EventFlagGet(EventFlag_134))
         {
             chara->properties_E4.larvalStalker.properties_E8[11].val16[0] = FP_MULTIPLY_FLOAT_PRECISE(chara->properties_E4.larvalStalker.properties_E8[11].val16[0], 0.8f, Q12_SHIFT);
         }

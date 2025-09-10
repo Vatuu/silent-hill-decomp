@@ -1,6 +1,7 @@
 #ifndef _GAME_H
 #define _GAME_H
 
+#include "event_flags.h"
 #include "gpu.h"
 #include "types.h"
 
@@ -27,8 +28,6 @@ struct _Model;
 #define HANDGUN_AMMO_PICKUP_ITEM_COUNT 15
 #define SHOTGUN_AMMO_PICKUP_ITEM_COUNT 6
 #define RIFLE_AMMO_PICKUP_ITEM_COUNT   6
-
-#define EVENT_FLAG5_FIRST_TIME_SAVE_GAME (1 << 26)
 
 #define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400  /** Hack. Long string length is used to display a whole message instantly. */
 #define GLYPH_TABLE_ASCII_OFFSET       '\'' /** Subtracted from ASCII bytes to get index to some string-related table. */
@@ -238,7 +237,9 @@ typedef enum _MapOverlayId
     MapOverlayId_MAP7_S00 = 39,
     MapOverlayId_MAP7_S01 = 40,
     MapOverlayId_MAP7_S02 = 41,
-    MapOverlayId_MAP7_S03 = 42
+    MapOverlayId_MAP7_S03 = 42,
+    MapOverlayId_MAPT_S00 = 43, // } Empty test maps, only remains are some code references and `HB_MTS00.ANM`/`HB_MTX00.ANM` anim files.
+    MapOverlayId_MAPX_S00 = 44  // }
 } e_MapOverlayId;
 
 /** @brief Save location IDs. */
@@ -818,13 +819,7 @@ typedef struct _Savegame
     u32             flags_AC;                 /** Flashlight state? On: 3, Off: 1*/
     s32             field_B0[45];
     s32             hasMapsFlags_164;         // See Sparagas' `HasMapsFlags` struct for details of every bit.
-    u32             eventFlags_168[6];        //----------------------------------------
-    s32             eventFlags_180[2];        //
-    s32             eventFlags_188;           //
-    s32             eventFlags_18C;           // Only tested a few, but it seems all are related to events and pick-up flags, grouped by location and not item types.
-    s32             eventFlags_190[4];        //
-    s32             eventFlags_1A0;           //
-    s32             eventFlags_1A4[12];       //----------------------------------------
+    u32             eventFlags_168[27];       // Can be accessed through `Savegame_EventFlagGet` / `Savegame_EventFlagSet`, only tested a few, but seems all are related to events and pick-up flags, grouped by location and not item types.
     s32             mapMarkingFlags_1D4[2];   //----------------------------------------
     s32             mapMarkingFlags_1DC;      // These 3 are one `u32 mapMarkingFlags[25];` (or maybe `u8 mapMarkingFlags[100];`?) See Sparagas' `MapMarkingsFlags` struct for details of every bit.
     s32             mapMarkingFlags_1E0[22];  //----------------------------------------
@@ -1527,8 +1522,28 @@ static inline void Game_StateSetPrevious()
     g_GameWork.gameStateStep_598[0] = 0;
 }
 
+/** @brief Gets the given flag ID value from the savegame event flags array. */
+#define Savegame_EventFlagGet(flagIdx) \
+    (g_SavegamePtr->eventFlags_168[(flagIdx) >> 5] & (1 << ((flagIdx) & 0x1F)))
+
+/** @brief Gets the given flag ID value from the savegame event flags array.
+ * Alternate version that shifts the flags array value by the flag index for some reason. */
+#define Savegame_EventFlagGetAlt(flagIdx) \
+    ((g_SavegamePtr->eventFlags_168[(flagIdx) >> 5] >> ((flagIdx) & 0x1F)) & (1 << 0))
+
+/** @brief Clears the given flag ID inside the savegame event flags array. */
+#define Savegame_EventFlagClear(flagIdx) \
+    (g_SavegamePtr->eventFlags_168[(flagIdx) >> 5] &= ~(1 << ((flagIdx) & 0x1F)))
+
 /** @brief Sets the given flag ID inside the savegame event flags array. */
-static inline void Savegame_EventFlagSet(u32 flagId)
+#define Savegame_EventFlagSet(flagIdx) \
+    (g_SavegamePtr->eventFlags_168[(flagIdx) >> 5] |= 1 << ((flagIdx) & 0x1F))
+
+/** @brief Sets the given flag ID inside the savegame event flags array.
+ *
+ * @note Some map event code only seems to work with this inline version.
+ */
+static inline void Savegame_EventFlagSetAlt(u32 flagId)
 {
     s16 flagIdx;
     s16 flagBit;
@@ -1538,14 +1553,6 @@ static inline void Savegame_EventFlagSet(u32 flagId)
 
     g_SavegamePtr->eventFlags_168[flagIdx] |= 1 << flagBit;
 }
-
-/** @brief Sets the given flag ID inside the savegame event flags array.
- *
- * @note This macro version seems to work better for `func_800DBAA0` than the `Savegame_EventFlagSet` inline above.
- * Maybe other code depends on how the inline worked though.
- */
-#define Savegame_EventFlagSetAlt(flagIdx) \
-    (g_SavegamePtr->eventFlags_168[(flagIdx) / 32] |= 1 << ((flagIdx) % 32))
 
 /** @brief Checks if the given flag ID is set inside the array of 16-bit flag values. */
 static inline s32 Flags16b_IsSet(const u16* array, s32 flagId)

@@ -152,7 +152,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool arg3) // 0x80
 
 void func_8008605C(s32 arg0, s32 arg1, s32 arg2, bool arg3) // 0x8008605C
 {
-    if (!(g_SavegamePtr->eventFlags_168[arg0 >> 5] & (u32)(1 << (arg0 & 0x1F))))
+    if (!Savegame_EventFlagGet(arg0))
     {
         func_80085DC0(arg3, arg2);
     }
@@ -1030,7 +1030,7 @@ void Event_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx
             }
 
             // Flag pickup item as collected.
-            g_SavegamePtr->eventFlags_168[globalPickupId >> 5] |= 1 << (globalPickupId & 0x1F);
+            Savegame_EventFlagSet(globalPickupId);
             break;
 
         case 3: // "Yes" selected.
@@ -1043,7 +1043,7 @@ void Event_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx
             // Flag pickup item as uncollected. Selecting 'No' sets `field_10` to `NO_VALUE`.
             if (g_SysWork.sysStateStep_C[1] == NO_VALUE)
             {
-                g_SavegamePtr->eventFlags_168[globalPickupId >> 5] &= ~(1 << (globalPickupId & 0x1F));
+                Savegame_EventFlagClear(globalPickupId);
             }
 
             g_MapOverlayHeader.unfreezePlayerControl_CC(0);
@@ -1179,7 +1179,7 @@ void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
                     break;
             }
 
-            g_SavegamePtr->eventFlags_168[eventFlagIdx >> 5] |= 1 << (eventFlagIdx & 0x1F);
+            Savegame_EventFlagSet(eventFlagIdx);
 
             g_SysWork.timer_2C          = FP_TIME(0.0f);
             g_SysWork.sysStateStep_C[2] = 0;

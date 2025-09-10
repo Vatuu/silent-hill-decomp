@@ -963,7 +963,7 @@ void Inventory_Logic() // 0x8004D518
                                         break;
 
                                     case InventoryItemId_AntiqueShopKey:
-                                        if (g_SavegamePtr->eventFlags_168[5] & (1 << 11))
+                                        if (Savegame_EventFlagGet(EventFlag_171))
                                         {
                                             g_SavegamePtr->mapMarkingFlags_1DC |= 1 << 16;
                                         }
@@ -1150,7 +1150,7 @@ void Inventory_ItemUse(s32 inventoryItemIdx) // 0x8004E6D4
             g_GameWork.gameStateStep_598[2]      = 0;
 
             Game_TurnFlashlightOn();
-            g_SavegamePtr->eventFlags_1A0 |= 1 << 0;
+            Savegame_EventFlagSet(EventFlag_448);
         }
     }
     else
