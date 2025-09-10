@@ -148,7 +148,7 @@ typedef struct _FsAnmDesc
 {
     u32 field_0; // Unknown index.
     u32 charaId_4;
-    u32 coords_8; /** `GsCOORDINATE2` pointer. */
+    u32 coords_8; /** TODO: `GsCOORDINATE2` pointer. */
 } s_FsAnmDesc;
 STATIC_ASSERT_SIZEOF(s_FsAnmDesc, 12);
 
@@ -395,7 +395,7 @@ bool Fs_QueueResetTick(s_FsQueueEntry* entry);
  * @param entry PCDRV read operation entry to process.
  * @return `true` if succeeded, `false` otherwise.
  */
-bool Fs_QueueTickReadPcDvr(s_FsQueueEntry* entry);
+bool Fs_QueueTickReadPcDrv(s_FsQueueEntry* entry);
 
 /** @brief Ticks post-loading once.
  *

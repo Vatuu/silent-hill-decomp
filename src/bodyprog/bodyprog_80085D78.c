@@ -2550,7 +2550,7 @@ void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, s32* alpha, q19_12 time
         case 0:
             prevVal = FP_FROM(time, Q12_SHIFT);
             nextVal = prevVal + 1;
-            *alpha = QX_12_NORM(time);
+            *alpha = QX_12_FRACT(time);
             break;
 
         case 1:
@@ -2562,7 +2562,7 @@ void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, s32* alpha, q19_12 time
         case 2:
             prevVal = FP_FROM(time, Q12_SHIFT) - 1;
             nextVal = prevVal + 1;
-            *alpha = QX_12_NORM(time) + FP_TIME(1.0f);
+            *alpha = QX_12_FRACT(time) + FP_TIME(1.0f);
             break;
     }
 

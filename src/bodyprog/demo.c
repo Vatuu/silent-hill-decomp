@@ -265,7 +265,8 @@ bool Demo_Update() // 0x8008F5D8
     s32         var1;
     u32         demoStep;
     s_GameWork* gameWork;
-    static s32  prevScreenFade = 0;
+
+    static s32 prevScreenFade = 0;
 
     var0           = prevScreenFade;
     var1           = D_800C489C;

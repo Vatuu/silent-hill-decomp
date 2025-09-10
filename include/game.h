@@ -739,7 +739,7 @@ typedef union
         s8 rightY;
         s8 leftX;
         s8 leftY;
-    } sticks_0;
+    } sticks_0; // Range is `[-128, 127]`?
 } s_AnalogSticks;
 
 typedef struct _AnalogController

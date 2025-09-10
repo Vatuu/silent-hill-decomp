@@ -855,7 +855,7 @@ s16 D_800AF210 = 0;
 s16 D_800AF212 = 0;
 u8 g_Player_IsInWalkToRunTransition = 0;
 u8 g_Player_DisableControl = 0;
-u8 D_800AF216 = 0;
+u8 D_800AF216 = 0; // Left Y analog stick value.
 s8 g_Player_RockDrill_DirectionAttack = 0;
 u32 D_800AF218 = 0;
 s32 D_800AF21C = NO_VALUE;
@@ -957,8 +957,8 @@ s_800AFC78 D_800AFC78 =
 
 void Inventory_DirectionalInputSet() // 0x8004F5DC
 {
-    if (g_Controller0->sticks_20.sticks_0.leftY < -64 || g_Controller0->sticks_20.sticks_0.leftY >= 64 ||
-        g_Controller0->sticks_20.sticks_0.leftX < -64 || g_Controller0->sticks_20.sticks_0.leftX >= 64)
+    if (g_Controller0->sticks_20.sticks_0.leftY < FP_STICK(-0.5f) || g_Controller0->sticks_20.sticks_0.leftY >= FP_STICK(0.5f) ||
+        g_Controller0->sticks_20.sticks_0.leftX < FP_STICK(-0.5f) || g_Controller0->sticks_20.sticks_0.leftX >= FP_STICK(0.5f))
     {
         // Up.
         g_Inventory_IsUpClicked = g_Controller0->btnsClicked_10 & ControllerFlag_LStickUp2;
