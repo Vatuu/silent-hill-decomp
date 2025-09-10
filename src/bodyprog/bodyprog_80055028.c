@@ -3440,21 +3440,21 @@ void func_8006D01C(VECTOR3* arg0, VECTOR3* arg1, s16 arg2, s_func_8006CC44* arg3
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006D2B4); // 0x8006D2B4
 
-void func_8006D600(VECTOR3* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8006D600
+void func_8006D600(VECTOR3* pos, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8006D600
 {
     s32 temp_a2;
     s16 temp_s0;
     s16 temp_s3;
     s16 temp;
     s32 temp_s0_2;
-    s32 temp_s1;
-    s32 temp_s2;
-    s32 temp_s5;
-    s32 temp_s6;
+    s32 deltaX;
+    s32 deltaZ;
+    s32 z;
+    s32 x;
     s32 temp_v0;
     s32 var_s0;
     s32 var_v0_2;
-    s32 var_v1;
+    s32 angle;
 
     // TODO: Angles here.
 
@@ -3467,48 +3467,48 @@ void func_8006D600(VECTOR3* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8
         arg4 = 0x100;
     }
 
-    temp_s6 = FP_MULTIPLY(arg4, Math_Cos(temp_s0), Q12_SHIFT);
-    var_s0  = temp;
-    temp_s5 = FP_MULTIPLY(arg4, Math_Sin(temp_s0), Q12_SHIFT);
-    temp_s1 = arg0->vx - temp_s6;
-    temp_s2 = arg0->vz - temp_s5;
-    var_v1  = QX_12_FRACT(ratan2(temp_s2, temp_s1));
+    x      = FP_MULTIPLY(arg4, Math_Cos(temp_s0), Q12_SHIFT);
+    var_s0 = temp;
+    z      = FP_MULTIPLY(arg4, Math_Sin(temp_s0), Q12_SHIFT);
+    deltaX = pos->vx - x;
+    deltaZ = pos->vz - z;
+    angle  = QX_12_FRACT(ratan2(deltaZ, deltaX));
 
-    if (var_v1 < temp_s3)
+    if (angle < temp_s3)
     {
-        var_v1 += 0x1000;
+        angle += FP_ANGLE(360.0f);
     }
 
     if (var_s0 < temp_s3)
     {
-        var_s0 += 0x1000;
+        var_s0 += FP_ANGLE(360.0f);
     }
 
-    temp_a2 = temp_s3 + 0x1000;
-    if (var_s0 < var_v1)
+    temp_a2 = temp_s3 + FP_ANGLE(360.0f);
+    if (var_s0 < angle)
     {
-        if (((var_s0 + temp_a2) >> 1) < var_v1)
+        if (((var_s0 + temp_a2) >> 1) < angle)
         {
             var_s0 = temp_a2;
         }
 
         temp_s0_2 = Math_Sin(var_s0);
         temp_v0   = Math_Cos(var_s0);
-        var_v0_2  = FP_MULTIPLY(temp_s1, temp_v0, Q12_SHIFT) + FP_MULTIPLY(temp_s2, temp_s0_2, Q12_SHIFT);
+        var_v0_2  = FP_MULTIPLY(deltaX, temp_v0, Q12_SHIFT) + FP_MULTIPLY(deltaZ, temp_s0_2, Q12_SHIFT);
 
         if (var_v0_2 < 0)
         {
             var_v0_2 = 0;
         }
 
-        arg0->vx = temp_s6 + FP_MULTIPLY(var_v0_2, temp_v0, Q12_SHIFT);
-        arg0->vz = temp_s5 + FP_MULTIPLY(var_v0_2, temp_s0_2, Q12_SHIFT);
+        pos->vx = x + FP_MULTIPLY(var_v0_2, temp_v0, Q12_SHIFT);
+        pos->vz = z + FP_MULTIPLY(var_v0_2, temp_s0_2, Q12_SHIFT);
     }
 }
 
 void func_8006D774(s_func_8006CC44* arg0, VECTOR3* arg1, VECTOR3* arg2) // 0x8006D774
 {
-    SVECTOR sp10; // Types assumed. `SVECTOR3` might also work but there are 8 bytes between sp10 and sp18 and `SVECTOR3` is only 6 bytes.
+    SVECTOR sp10; // Types assumed. `SVECTOR3` might also work but there are 8 bytes between `sp10` and `sp18` and `SVECTOR3` is only 6 bytes.
     SVECTOR sp18;
 
     sp10.vx = FP_METER_TO_GEO(arg1->vx);

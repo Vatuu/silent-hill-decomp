@@ -666,6 +666,7 @@ Demo_GameRandSeedRestore                    = 0x8008F370; // type:func
 Demo_Start                                  = 0x8008F398; // type:func
 Demo_Stop                                   = 0x8008F3F0; // type:func
 Gfx_ScreenFadeIn_IsInProgress               = 0x8008F434; // type:func
+Demo_StateGet                               = 0x8008F470; // type:func
 Demo_ExitDemo                               = 0x8008F4E4; // type:func
 Demo_DemoRandSeedBackup                     = 0x8008F528; // type:func
 Demo_DemoRandSeedRestore                    = 0x8008F560; // type:func

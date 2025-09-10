@@ -82,7 +82,8 @@ void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 arg2,
     }
 
     temp_a1 = QX_12_FRACT(ratan2((g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].position_18.vx + g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].field_D8.field_0) - g_SysWork.playerCombatInfo_38.field_0.vx, 
-                                 (g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].position_18.vz + g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].field_D8.field_2) - g_SysWork.playerCombatInfo_38.field_0.vz) + 0x1000);
+                                 (g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].position_18.vz + g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].field_D8.field_2) - g_SysWork.playerCombatInfo_38.field_0.vz) +
+                          FP_ANGLE(360.0f));
     chara->rotation_24.pad = temp_a1;
     Math_ShortestAngleGet(chara->rotation_24.vy, temp_a1, &shortestAngle);
 
@@ -2475,7 +2476,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             if (enemyAttackedIdx == g_SysWork.enemyTargetIdx_2353)
             {
                 chara->rotation_24.pad = QX_12_FRACT(ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_0) - g_SysWork.player_4C.chara_0.position_18.vx,
-                                                           (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_2) - g_SysWork.player_4C.chara_0.position_18.vz) + 0x1000);
+                                                           (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_2) - g_SysWork.player_4C.chara_0.position_18.vz) +
+                                                     FP_ANGLE(360.0f));
             }
             else
             {
@@ -3307,7 +3309,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 if (enemyAttackedIdx == g_SysWork.enemyTargetIdx_2353 && enemyAttackedIdx != NO_VALUE)
                 {
                     chara->rotation_24.pad = QX_12_FRACT(ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_0) - g_SysWork.player_4C.chara_0.position_18.vx,
-                                                               (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_2) - g_SysWork.player_4C.chara_0.position_18.vz) + 0x1000);
+                                                               (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.field_2) - g_SysWork.player_4C.chara_0.position_18.vz) +
+                                                         FP_ANGLE(360.0f));
                 }
                 else
                 {

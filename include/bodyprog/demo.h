@@ -6,6 +6,18 @@
  * to the demo game system.
  */
 
+// ======
+// ENUMS
+// ======
+
+/** @brief Demo states. */
+typedef enum _DemoState
+{
+    DemoState_Exit = -1,
+    DemoState_None = 0,
+    DemoState_Step = 1
+} e_DemoState;
+
 // ========
 // STRUCTS
 // ========
@@ -41,18 +53,6 @@ typedef struct _DemoFileInfo
     s32 (*canPlayDemo_4)(); /** Optional funcptr, returns whether this demo is eligible to be played (unused in retail demos). */
 } s_DemoFileInfo;
 STATIC_ASSERT_SIZEOF(s_DemoFileInfo, 8);
-
-#define DEMO_FILE_COUNT_MAX 5
-extern s_DemoFileInfo g_Demo_FileIds[DEMO_FILE_COUNT_MAX]; // 0x800AFDC4
-/* TODO: data migration
-s_DemoFileInfo g_Demo_FileIds[DEMO_FILE_COUNT_MAX] = {
-    { FILE_MISC_DEMO0009_DAT, FILE_MISC_PLAY0009_DAT, NULL },
-    { FILE_MISC_DEMO000A_DAT, FILE_MISC_PLAY000A_DAT, NULL },
-    { FILE_MISC_DEMO0003_DAT, FILE_MISC_PLAY0003_DAT, NULL },
-    { FILE_MISC_DEMO000B_DAT, FILE_MISC_PLAY000B_DAT, NULL },
-    { FILE_MISC_DEMO0005_DAT, FILE_MISC_PLAY0005_DAT, NULL },
-};
-*/
 
 // ========
 // GLOBALS
@@ -118,13 +118,18 @@ void Demo_Stop();
 
 bool func_8008F434(s32 arg0);
 
-s32 func_8008F470(s32 caseArg);
+/** @brief Gets the active demo state.
+ *
+ * @param gameState Active game state (`e_GameState`).
+ * @return Active demo state `(e_DemoState`).
+ */
+s32 Demo_StateGet(s32 gameState);
 
 void Demo_ExitDemo();
 
 void func_8008F518();
 
-s32 func_8008F520();
+bool func_8008F520();
 
 /** Generates the backup random demo seed and stores it in `Demo_RandSeedBackup`. */
 void Demo_DemoRandSeedBackup();
@@ -141,6 +146,6 @@ bool Demo_PresentIntervalUpdate();
 
 bool Demo_GameRandSeedSet();
 
-s32 func_8008F914(s32 posX, s32 posZ);
+bool func_8008F914(s32 posX, s32 posZ);
 
 #endif

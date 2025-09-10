@@ -23,7 +23,7 @@ bool Fs_QueueDoThingWhenEmpty()
 {
     bool result;
 
-    D_800C489C = 1;
+    D_800C489C = true;
 
     result = false;
 

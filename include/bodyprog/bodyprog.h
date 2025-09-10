@@ -1120,8 +1120,8 @@ typedef struct
     s_800C1450         field_430;
     s32                field_578;
     s32                field_57C;
-    s32                field_580;
-    s32                field_584;
+    s32                field_580; // File chunk coord X.
+    s32                field_584; // File chunk coord Z.
     s32                field_588;
 } s_800C1020;
 STATIC_ASSERT_SIZEOF(s_800C1020, 1420);
@@ -2360,8 +2360,8 @@ extern s16 D_800C4702;
 
 extern s_800C4818 D_800C4818;
 
-/** Unknown bodyprog var. Set in `Fs_QueueDoThingWhenEmpty`. */
-extern s32 D_800C489C;
+/** Something for demo handling. Set in `Fs_QueueDoThingWhenEmpty`. */
+extern bool D_800C489C;
 
 extern s32 D_800C48F0;
 
@@ -3343,13 +3343,6 @@ void func_8008E4EC(s_LmHeader* lmHeader);
 
 void func_8008D78C();
 
-s32 func_8008F470(s32 caseArg);
-
-/** Returns 0. */
-s32 func_8008F520();
-
-s32 func_8008F914();
-
 void func_80091380();
 
 // TODO: Arrange these in address order for better insight into the original interface. -- Sezz
@@ -3486,7 +3479,7 @@ s32 func_8006CC44(s32 x, s32 z, s_func_8006CC44* arg2);
 
 void func_8006D01C(VECTOR3* arg0, VECTOR3* arg1, s16 arg2, s_func_8006CC44* arg3);
 
-void func_8006D600(VECTOR3* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void func_8006D600(VECTOR3* pos, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 void func_8006D774(s_func_8006CC44* arg0, VECTOR3* arg1, VECTOR3* arg2);
 

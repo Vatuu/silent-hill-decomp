@@ -13,7 +13,9 @@ s_DemoFrameData* g_Demo_PlayFileBufferPtr = (s_DemoFrameData*)0x800F5E00;
 
 bool Demo_SequenceAdvance(s32 incrementAmt) // 0x8008EF20
 {
-    static s_DemoFileInfo g_Demo_FileIds[DEMO_FILE_COUNT_MAX] = 
+    #define DEMO_FILE_COUNT_MAX 5
+
+    static s_DemoFileInfo DEMO_FILE_INFOS[DEMO_FILE_COUNT_MAX] = 
     {
         { FILE_MISC_DEMO0009_DAT, FILE_MISC_PLAY0009_DAT, 0 },
         { FILE_MISC_DEMO000A_DAT, FILE_MISC_PLAY000A_DAT, 0 },
@@ -26,21 +28,20 @@ bool Demo_SequenceAdvance(s32 incrementAmt) // 0x8008EF20
 
     while (true)
     {
-        // Cycle demo ID between 0 - `DEMO_FILE_COUNT_MAX` (5)
+        // Cycle demo ID.
         while (g_Demo_DemoId < 0)
         {
             g_Demo_DemoId += DEMO_FILE_COUNT_MAX;
         }
-
         while ((u32)g_Demo_DemoId >= DEMO_FILE_COUNT_MAX)
         {
             g_Demo_DemoId -= DEMO_FILE_COUNT_MAX;
         }
 
         // Call optional funcptr associated with this demo.
-        // If funcptr is set, returns whether demo is eligible to play, possibly based on game progress or other conditions.
+        // If funcptr is set, return whether demo is eligible to play, possibly based on game progress or other conditions.
         // In retail demos this pointer is always `NULL`.
-        if (g_Demo_FileIds[g_Demo_DemoId].canPlayDemo_4 == NULL || g_Demo_FileIds[g_Demo_DemoId].canPlayDemo_4() == 1)
+        if (DEMO_FILE_INFOS[g_Demo_DemoId].canPlayDemo_4 == NULL || DEMO_FILE_INFOS[g_Demo_DemoId].canPlayDemo_4() == 1)
         {
             break;
         }
@@ -57,8 +58,8 @@ bool Demo_SequenceAdvance(s32 incrementAmt) // 0x8008EF20
         }
     }
 
-    g_Demo_DemoFileIdx = g_Demo_FileIds[g_Demo_DemoId].demoFileId_0;
-    g_Demo_PlayFileIdx = g_Demo_FileIds[g_Demo_DemoId].playFileId_2;
+    g_Demo_DemoFileIdx = DEMO_FILE_INFOS[g_Demo_DemoId].demoFileId_0;
+    g_Demo_PlayFileIdx = DEMO_FILE_INFOS[g_Demo_DemoId].playFileId_2;
     return true;
 }
 
@@ -115,7 +116,7 @@ void Demo_GameGlobalsUpdate() // 0x8008F1A0
     // Replace user config with config from demo file.
     g_GameWork.config_0 = DEMO_WORK()->config_0;
 
-    // Restore users system settings over demo values.
+    // Restore user system settings over demo values.
     g_GameWork.config_0.optScreenPosX_1C       = g_Demo_UserConfigBackup.optScreenPosX_1C;
     g_GameWork.config_0.optScreenPosY_1D       = g_Demo_UserConfigBackup.optScreenPosY_1D;
     g_GameWork.config_0.optSoundType_1E        = g_Demo_UserConfigBackup.optSoundType_1E;
@@ -170,7 +171,9 @@ void Demo_Stop() // 0x8008f3f0
 
 bool Gfx_ScreenFadeIn_IsInProgress(s32 arg0)
 {
-    s32 screenFadeStatus = arg0 & ~(1 << 0);
+    s32 screenFadeStatus;
+
+    screenFadeStatus = arg0 & ~(1 << 0);
 
     switch (screenFadeStatus)
     {
@@ -188,34 +191,31 @@ bool Gfx_ScreenFadeIn_IsInProgress(s32 arg0)
     return true;
 }
 
-s32 func_8008F470(s32 caseArg)
+s32 Demo_StateGet(s32 gameState)
 {
-    switch (caseArg)
+    switch (gameState)
     {
-        case 11:
+        case GameState_InGame:
             if (g_SysWork.sysState_8 == SysState_GameOver)
             {
-                return NO_VALUE;
+                return DemoState_Exit;
             }
             else if (g_GameWork.gameStatePrev_590 == GameState_Unk10)
             {
-                return NO_VALUE;
+                return DemoState_Exit;
             }
 
-        case 12:
-        case 13:
-        case 14:
-        case 15:
-            return 1;
+        case GameState_MapEvent:
+        case GameState_ExitMovie:
+        case GameState_InventoryScreen:
+        case GameState_MapScreen:
+            return DemoState_Step;
 
-        case 18:
-            return 1;
-
-        default:
-            break;
+        case GameState_OptionScreen:
+            return DemoState_Step;
     }
 
-    return 0;
+    return DemoState_None;
 }
 
 void Demo_ExitDemo() // 0x8008F4E4
@@ -228,9 +228,9 @@ void Demo_ExitDemo() // 0x8008F4E4
 
 void func_8008F518() {}
 
-s32 func_8008F520()
+bool func_8008F520()
 {
-    return 0;
+    return false;
 }
 
 void Demo_DemoRandSeedBackup() // 0x8008F528
@@ -261,17 +261,17 @@ void Demo_DemoRandSeedAdvance() // 0x8008F598
 
 bool Demo_Update() // 0x8008F5D8
 {
-    s32         var0;
-    s32         var1;
+    s32         prevScreenFadeCpy;
+    bool        cond;
     u32         demoStep;
     s_GameWork* gameWork;
 
-    static s32 prevScreenFade = 0;
+    static s32 prevScreenFade = SCREEN_FADE_STATUS(ScreenFadeState_Reset, false);
 
-    var0           = prevScreenFade;
-    var1           = D_800C489C;
-    D_800C489C     = 0;
-    prevScreenFade = g_Gfx_ScreenFade;
+    prevScreenFadeCpy = prevScreenFade;
+    cond              = D_800C489C;
+    D_800C489C        = false;
+    prevScreenFade    = g_Gfx_ScreenFade;
 
     if (!(g_SysWork.flags_22A4 & (1 << 1)))
     {
@@ -295,20 +295,23 @@ bool Demo_Update() // 0x8008F5D8
         return false;
     }
 
-    if (!Gfx_ScreenFadeIn_IsInProgress(var0) || !Gfx_ScreenFadeIn_IsInProgress(g_Gfx_ScreenFade) || var1 != 0)
+    if (!Gfx_ScreenFadeIn_IsInProgress(prevScreenFadeCpy) || !Gfx_ScreenFadeIn_IsInProgress(g_Gfx_ScreenFade) || cond)
     {
         g_Demo_CurFrameData = NULL;
         return true;
     }
 
     gameWork = &g_GameWork;
-    switch (func_8008F470(gameWork->gameState_594))
+
+    // Handle demo state.
+    switch (Demo_StateGet(gameWork->gameState_594))
     {
-        case 1:
+        case DemoState_Step:
             g_Demo_CurFrameData = &g_Demo_PlayFileBufferPtr[g_Demo_DemoStep];
+
             if (g_Demo_CurFrameData->gameStateExpected_8 != gameWork->gameState_594)
             {
-                Gfx_DebugStringPosition(8, 0x50);
+                Gfx_DebugStringPosition(8, 80);
                 Gfx_DebugStringDraw("STEP ERROR:[H:");
                 Gfx_DebugStringDraw(Math_IntegerToString(2, g_Demo_CurFrameData->gameStateExpected_8));
                 Gfx_DebugStringDraw("]/[M:");
@@ -322,12 +325,12 @@ bool Demo_Update() // 0x8008F5D8
             func_8008F518();
             return true;
 
-        case -1:
+        case DemoState_Exit:
             func_8008F518();
             Demo_ExitDemo();
             return false;
 
-        case 0:
+        case DemoState_None:
             break;
     }
 
@@ -398,12 +401,12 @@ bool Demo_GameRandSeedSet() // 0x8008F8A8
     }
 }
 
-s32 func_8008F914(s32 posX, s32 posZ)
+bool func_8008F914(s32 posX, s32 posZ)
 {
     if (g_SysWork.flags_22A4 & (1 << 1))
     {
         return func_8004393C(posX, posZ);
     }
 
-    return 1;
+    return true;
 }
