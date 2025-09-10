@@ -3874,9 +3874,201 @@ void func_8006F338(s_func_8006F338* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006F3C4); // 0x8006F3C4
+s32 func_8006F3C4(s_func_8006F338* arg0, s_func_8006F8FC* arg1) // 0x8006F3C4
+{
+    s32 temp_s1;
+    s32 var_v1;
+    s32 temp_a3;
+    s32 temp_s2;
+    s32 temp_s3;
+    s32 temp_t0;
+    s32 var_s1;
+    s32 var_v0;
+    s32 var_v0_2;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006F620); // 0x8006F620
+    temp_a3 = FP_TO(arg1->field_0_1, Q12_SHIFT);
+    temp_t0 = FP_TO(arg1->field_0_1 + arg1->field_0_21, Q12_SHIFT);
+    temp_s3 = FP_TO(arg1->field_0_11, Q12_SHIFT);
+    temp_s2 = FP_TO(arg1->field_0_11 + arg1->field_0_25, Q12_SHIFT);
+
+    if ((temp_a3 >= arg0->field_1C || arg0->field_18 >= temp_t0) &&
+        (temp_s3 >= arg0->field_24 || arg0->field_20 >= temp_s2))
+    {
+        return 0;
+    }
+
+    if (arg0->field_0 >= temp_a3 && temp_t0 >= arg0->field_0 && arg0->field_4 >= temp_s3 && temp_s2 >= arg0->field_4)
+    {
+        arg0->field_28 = 0;
+        arg0->field_2C = (-FP_TO(arg1->field_0_29, Q12_SHIFT) >> 1) - 0x1800;
+    }
+    else
+    {
+        if (arg0->field_10 >= 0)
+        {
+            if (arg0->field_14 >= 0)
+            {
+                var_s1   = temp_a3;
+                var_v0_2 = temp_s3;
+            }
+            else
+            {
+                var_s1   = temp_a3;
+                var_v0_2 = temp_s2;
+            }
+        }
+        else
+        {
+            if (arg0->field_14 >= 0)
+            {
+                var_s1   = temp_t0;
+                var_v0_2 = temp_s3;
+            }
+            else
+            {
+                var_s1   = temp_t0;
+                var_v0_2 = temp_s2;
+            }
+        }
+
+        temp_s1 = func_80048E3C(FP_TO(arg0->field_10, Q12_SHIFT) >> 0x10, FP_TO(arg0->field_14, Q12_SHIFT) >> 0x10, FP_TO(var_v0_2 - arg0->field_4, Q12_SHIFT) >> 0x10,
+                                FP_TO(temp_a3 - arg0->field_0, Q12_SHIFT) >> 0x10, FP_TO(temp_t0 - arg0->field_0, Q12_SHIFT) >> 0x10);
+        var_v0  = func_80048E3C(FP_TO(arg0->field_14, Q12_SHIFT) >> 0x10, FP_TO(arg0->field_10, Q12_SHIFT) >> 0x10, FP_TO(var_s1 - arg0->field_0, Q12_SHIFT) >> 0x10,
+                                FP_TO(temp_s3 - arg0->field_4, Q12_SHIFT) >> 0x10, FP_TO(temp_s2 - arg0->field_4, Q12_SHIFT) >> 0x10);
+
+        if (var_v0 >= temp_s1)
+        {
+            var_v1 = temp_s1;
+        }
+        else
+        {
+            var_v1 = var_v0;
+        }
+
+        if (var_v1 < arg0->field_28)
+        {
+            arg0->field_28 = var_v1;
+            arg0->field_2C = (-FP_TO(arg1->field_0_29, Q12_SHIFT) >> 1) - 0x1800;
+        }
+    }
+
+    return arg0->field_28 == 0;
+}
+
+s32 func_8006F620(VECTOR3* arg0, s_func_8006AB50* arg1, s32 arg2, s32 arg3) // 0x8006F620
+{
+    s32              sp18;
+    s32              sp1C;
+    s32              sp20;
+    s32              sp24;
+    s32              sp28;
+    s32              sp2C;
+    s32              sp30;
+    s32              sp34;
+    s32              temp_a0;
+    s32              temp_s0;
+    s32              temp_s0_2;
+    s32              temp_s0_3;
+    s32              temp_v0;
+    s32              temp_v0_3;
+    s32              var_s2;
+    s32              var_s3;
+    s32              var_s4;
+    s32              var_s5;
+    s32              var_s6;
+    s32              var_v1;
+    s_func_8006F8FC* temp_s2;
+
+    var_s6 = -0x10000;
+
+    sp30   = 0;
+    sp34   = 0;
+    var_s5 = arg0->vx;
+    var_s4 = arg0->vz;
+    sp28   = arg1->position_0.vy + arg3;
+    sp2C   = sp28 + arg0->vy;
+
+    for (var_s3 = 0; var_s3 < D_800C4478.field_2; var_s3++)
+    {
+        temp_s2 = D_800C4478.field_4[var_s3];
+        temp_s0 = (-FP_TO(temp_s2->field_0_29, Q12_SHIFT) >> 1) - 0x1800;
+
+        if ((sp2C - temp_s0) >= 0)
+        {
+            continue;
+        }
+
+        func_8006F8FC(&sp18, &sp1C, arg1->position_0.vx + var_s5, arg1->position_0.vz + var_s4, temp_s2);
+
+        if ((MAX(ABS(sp18), ABS(sp1C)) >= arg2))
+        {
+            continue;
+        }
+
+        temp_v0 = Vc_VectorMagnitudeCalc(sp18, 0, sp1C);
+
+        if (temp_v0 >= arg2)
+        {
+            continue;
+        }
+
+        if (temp_v0 > 0)
+        {
+            func_8006F8FC(&sp20, &sp24, arg1->position_0.vx, arg1->position_0.vz, temp_s2);
+
+            var_s2 = 0x199;
+
+            temp_s0_2 = Vc_VectorMagnitudeCalc(sp20, 0, sp24);
+
+            if (arg2 - temp_s0_2 < 0x19A)
+            {
+                var_s2 = arg2 - temp_s0_2;
+            }
+
+            if (temp_v0 - temp_s0_2 < var_s2)
+            {
+                temp_v0_3 = ratan2(sp18, sp1C);
+                temp_s0_3 = var_s2 - (temp_v0 - temp_s0_2);
+
+                sp30 = Math_MulFixed(temp_s0_3, Math_Sin(temp_v0_3), Q12_SHIFT);
+                sp34 = Math_MulFixed(temp_s0_3, Math_Cos(temp_v0_3), Q12_SHIFT);
+            }
+        }
+        else
+        {
+            if (temp_s0 < var_s6)
+            {
+                var_s6 = temp_s0;
+            }
+            var_s5 = arg0->vx;
+            var_s4 = arg0->vz;
+            break;
+        }
+
+        var_s5 += sp30;
+        var_s4 += sp34;
+    }
+
+    arg0->vx = var_s5;
+    arg0->vz = var_s4;
+
+    if (var_s6 != -0x10000)
+    {
+        var_v1  = 0x199;
+        temp_a0 = var_s6 - sp28;
+
+        if (temp_a0 < 0x199)
+        {
+            var_v1 = temp_a0;
+        }
+
+        if (arg0->vy < var_v1)
+        {
+            arg0->vy = var_v1;
+        }
+    }
+    return var_s6;
+}
 
 void func_8006F8FC(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s_func_8006F8FC* arg4) // 0x8006F8FC
 {
