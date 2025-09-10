@@ -7,7 +7,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/gfx/text_draw.h"
-#include "bodyprog/math.h"
+#include "bodyprog/math/math.h"
 #include "bodyprog/memcard.h"
 #include "main/fsqueue.h"
 #include "main/rng.h"

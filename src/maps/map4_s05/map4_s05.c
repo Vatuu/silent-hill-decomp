@@ -1,5 +1,5 @@
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/math.h"
+#include "bodyprog/math/math.h"
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map4/map4_s05.h"

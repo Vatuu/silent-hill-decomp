@@ -1,5 +1,5 @@
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/math.h"
+#include "bodyprog/math/math.h"
 
 s_FsImageDesc D_800A8D98 = { { 16, 0 }, 0, 0, 8, 0 };
 s_FsImageDesc D_800A8DA0 = { { 44, 0 }, 0, 0, 0, 0 };

@@ -5,9 +5,9 @@
 #include "bodyprog/math/constants.h"
 #include "bodyprog/math/arithmetic.h"
 
-// =================================
-// Fixed-Point Utils and Arithmetic
-// =================================
+// =====================
+// ARITHMETIC AND UTILS
+// =====================
 
 /** @brief Converts an integer to a fixed-point Q format.
  *
@@ -98,9 +98,9 @@
 #define FP_MULTIPLY_FLOAT_PRECISE(aInt, bFlt, shift) \
     FP_MULTIPLY((s64)(aInt), (s64)FP_FLOAT_TO(bFlt, shift), (shift))
 
-// ====================================
-// Raw Fixed-Point Q Format Conversion
-// ====================================
+// ==================================
+// RAW Q FORMAT CONVERSION AND UTILS
+// ==================================
 
 /** @brief Converts a floating-point value to fixed-point Q19.12.
  *
@@ -182,9 +182,9 @@
 #define QX_12_FRACT(x) \
     ((x) & 0xFFF)
 
-// =========================================
-// Abstract Fixed-Point Q Format Conversion
-// =========================================
+// =======================================
+// ABSTRACT Q FORMAT CONVERSION AND UTILS
+// =======================================
 
 /** @brief Converts a floating-point alpha in the range `[0.0f, 1.0f]` to fixed-point Q3.12, integer range `[0, 4096]`.
  *

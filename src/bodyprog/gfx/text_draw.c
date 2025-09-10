@@ -2,7 +2,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/gfx/text_draw.h"
-#include "bodyprog/math.h"
+#include "bodyprog/math/math.h"
 
 #define MAP_MSG_CODE_MARKER        '~' /** Message code start. */
 #define MAP_MSG_CODE_COLOR         'C' /** Set color. */

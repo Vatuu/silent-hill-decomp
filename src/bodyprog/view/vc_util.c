@@ -2,7 +2,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/vw_system.h"
-#include "bodyprog/math.h"
+#include "bodyprog/math/math.h"
 
 extern s32 g_VBlanks;
 

@@ -7,7 +7,7 @@
 #include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/joy.h"
-#include "bodyprog/math.h"
+#include "bodyprog/math/math.h"
 #include "bodyprog/memcard.h"
 
 GsOT_TAG g_OtTags0[2][16] = {};

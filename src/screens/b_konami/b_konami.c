@@ -7,7 +7,7 @@
 #include "bodyprog/demo.h"
 #include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/joy.h"
-#include "bodyprog/math.h"
+#include "bodyprog/math/math.h"
 #include "bodyprog/memcard.h"
 #include "main/fsqueue.h"
 #include "screens/b_konami/b_konami.h"
