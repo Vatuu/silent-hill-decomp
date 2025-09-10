@@ -269,7 +269,7 @@ s32 Fs_QueueStartRead(s32 fileIdx, void* dest);
  * @param image Where to upload the TIM in VRAM.
  * @return Index of the new queue entry.
  */
-s32 Fs_QueueStartReadTim(s32 fileIdx, void* dest, s_FsImageDesc* image);
+s32 Fs_QueueStartReadTim(s32 fileIdx, void* dest, const s_FsImageDesc* image);
 
 /** @brief Add a new ANM read operation to the queue.
  * Adds a read operation with `postLoad = FS_POST_LOAD_ANM`.

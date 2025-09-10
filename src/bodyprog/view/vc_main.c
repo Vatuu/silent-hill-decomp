@@ -1667,9 +1667,9 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
             use_dist = FP_METER(0.4f);
         }
 
-        ofs_y = g_Chara_FileInfo[sc_p->model_0.charaId_0].field_C_2 * 16;
+        ofs_y = CHARA_FILE_INFOS[sc_p->model_0.charaId_0].field_C_2 * 16;
 
-        switch (g_Chara_FileInfo[sc_p->model_0.charaId_0].field_C_0)
+        switch (CHARA_FILE_INFOS[sc_p->model_0.charaId_0].field_C_0)
         {
             default:
             case 0:

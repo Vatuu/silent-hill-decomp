@@ -1726,7 +1726,7 @@ extern s_FsImageDesc D_800A9094;
 extern s_FsImageDesc g_Font24AtlasImg; // 0x800A909C
 
 /** Array containg file IDs used for each `e_CharacterId`, used in `Fs_QueueStartReadAnm`. */
-extern s_CharaFileInfo g_Chara_FileInfo[45]; // 0x800A90FC
+extern s_CharaFileInfo CHARA_FILE_INFOS[45]; // 0x800A90FC
 
 extern s_sub_StructUnk3 D_800A93CC[];
 
@@ -2682,9 +2682,9 @@ void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHeader, s_IpdModelInfo
 /** Sets IPD collision data grid coords? */
 void func_80044044(s_IpdHeader* ipd, s32 x, s32 z);
 
-void func_80044090(s_IpdHeader* arg0, s32 arg1, s32 arg2, GsOT* arg3, void* arg4);
+void func_80044090(s_IpdHeader* ipdHeader, s32 arg1, s32 arg2, GsOT* ot, void* arg4);
 
-bool func_80044420(s_IpdModelBuffer* arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4);
+bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, s32 x, s32 z);
 
 /** Loads anim file? */
 void Anim_BoneInit(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords);
@@ -2754,7 +2754,7 @@ void func_800453E8(s_Skeleton* skel, bool cond);
 /** Does something with skeleton bones. `arg0` is a struct pointer. */
 void func_80045468(s_Skeleton* skel, s32* arg1, bool cond);
 
-void func_80045534(s_Skeleton* arg0, GsOT* arg1, void* arg2, GsCOORDINATE2* arg3, s16 arg4, u16 arg5, s_FsImageDesc* arg6);
+void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord, s16 arg4, u16 arg5, s_FsImageDesc* image);
 
 /** Passes a command to the sound driver. Plays SFX among other things. */
 void Sd_EngineCmd(u32 cmd);

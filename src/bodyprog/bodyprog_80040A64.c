@@ -1684,7 +1684,7 @@ void func_80044044(s_IpdHeader* ipd, s32 x, s32 z) // 0x80044044
     ipd->collisionData_54.posZ_4 += (z - gridZ) * 0x2800;
 }
 
-void func_80044090(s_IpdHeader* arg0, s32 arg1, s32 arg2, GsOT* arg3, void* arg4) // 0x80044090
+void func_80044090(s_IpdHeader* ipdHeader, s32 arg1, s32 arg2, GsOT* ot, void* arg4) // 0x80044090
 {
     s_800BCE18_2BEC_0_0 sp18;
     GsCOORDINATE2       sp28;
@@ -1696,17 +1696,17 @@ void func_80044090(s_IpdHeader* arg0, s32 arg1, s32 arg2, GsOT* arg3, void* arg4
     s32                 temp_s5;
     s32                 var_a0;
     s32                 var_v1;
+    s32                 i;
     s_IpdModelBuffer*   temp_s2;
     s_IpdModelBuffer_C* var_s0;
-    s32                 var_s4;
     u8*                 temp_fp;
     SVECTOR*            var_s1;
 
     spB8 = FP_METER_TO_GEO(arg1);
     spBC = FP_METER_TO_GEO(arg2);
 
-    temp_s5 = arg0->levelGridX_2 * FP_METER_GEO(40.0f);
-    temp_s3 = arg0->levelGridY_3 * FP_METER_GEO(40.0f);
+    temp_s5 = ipdHeader->levelGridX_2 * FP_METER_GEO(40.0f);
+    temp_s3 = ipdHeader->levelGridY_3 * FP_METER_GEO(40.0f);
 
     var_v1 = FLOOR_TO_STEP(spB8 - temp_s5, FP_METER_GEO(8.0f));
     var_a0 = FLOOR_TO_STEP(spBC - temp_s3, FP_METER_GEO(8.0f));
@@ -1721,13 +1721,13 @@ void func_80044090(s_IpdHeader* arg0, s32 arg1, s32 arg2, GsOT* arg3, void* arg4
     sp18.field_0 = 0;
     sp28.super   = NULL;
 
-    temp_fp = &arg0->textureCount_1C + (var_a0 * 10) + (var_v1 * 2);
+    temp_fp = &ipdHeader->textureCount_1C + (var_a0 * 10) + (var_v1 * 2);
 
-    for (var_s4 = temp_fp[0]; var_s4 < temp_fp[1] + temp_fp[0]; var_s4++)
+    for (i = temp_fp[0]; i < temp_fp[1] + temp_fp[0]; i++)
     {
-        temp_s2 = &arg0->modelBuffers_18[arg0->modelOrderList_50[var_s4]];
+        temp_s2 = &ipdHeader->modelBuffers_18[ipdHeader->modelOrderList_50[i]];
 
-        if (func_80044420(temp_s2, (spB8 - temp_s5), (spBC - temp_s3), temp_s5, temp_s3))
+        if (func_80044420(temp_s2, spB8 - temp_s5, spBC - temp_s3, temp_s5, temp_s3))
         {
             for (var_s0 = temp_s2->field_C; var_s0 < &temp_s2->field_C[temp_s2->field_0]; var_s0++)
             {
@@ -1739,7 +1739,7 @@ void func_80044090(s_IpdHeader* arg0, s32 arg1, s32 arg2, GsOT* arg3, void* arg4
                     sp28.workm.t[2] += temp_s3;
 
                     func_80049B6C(&sp28, &sp98, &sp78);
-                    func_80057090(&sp18, arg3, arg4, &sp78, &sp98, 0);
+                    func_80057090(&sp18, ot, arg4, &sp78, &sp98, 0);
                 }
             }
 
@@ -1748,11 +1748,11 @@ void func_80044090(s_IpdHeader* arg0, s32 arg1, s32 arg2, GsOT* arg3, void* arg4
                 switch ((s8)var_s1->pad)
                 {
                     case 0:
-                        func_8005B62C(1, (var_s1->vx + temp_s5) * 0x10, var_s1->vy * 0x10, (var_s1->vz + temp_s3) * 0x10, arg3, arg4);
+                        func_8005B62C(1, (var_s1->vx + temp_s5) * 16, var_s1->vy * 16, (var_s1->vz + temp_s3) * 16, ot, arg4);
                         break;
 
                     case 1:
-                        func_8005B62C(2, (var_s1->vx + temp_s5) * 0x10, var_s1->vy * 0x10, (var_s1->vz + temp_s3) * 0x10, arg3, arg4);
+                        func_8005B62C(2, (var_s1->vx + temp_s5) * 16, var_s1->vy * 16, (var_s1->vz + temp_s3) * 16, ot, arg4);
                         break;
                 }
             }
@@ -1760,15 +1760,16 @@ void func_80044090(s_IpdHeader* arg0, s32 arg1, s32 arg2, GsOT* arg3, void* arg4
     }
 }
 
-bool func_80044420(s_IpdModelBuffer* arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4) // 0x80044420
+bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, s32 x, s32 z) // 0x80044420
 {
     GsCOORDINATE2 coord;
     MATRIX        mat;
     SVECTOR*      ptr;
 
-    for (ptr = arg0->field_14; ptr < &arg0->field_14[arg0->field_2]; ptr++)
+    for (ptr = modelBuf->field_14; ptr < &modelBuf->field_14[modelBuf->field_2]; ptr++)
     {
-        if (ptr->vx < arg1 && arg1 < ptr->vy && ptr->vz < arg2)
+        if (ptr->vx < arg1 && arg1 < ptr->vy &&
+            ptr->vz < arg2)
         {
             if (arg2 < ptr->pad)
             {
@@ -1776,12 +1777,12 @@ bool func_80044420(s_IpdModelBuffer* arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg
                 coord.super = NULL;
                 coord.workm = GsIDMATRIX;
 
-                coord.workm.t[0] = arg3;
+                coord.workm.t[0] = x;
                 coord.workm.t[1] = 0;
-                coord.workm.t[2] = arg4;
+                coord.workm.t[2] = z;
 
                 func_80049AF8(&coord, &mat);
-                return Vw_AabbVisibleInFrustumCheck(&mat, arg0->field_4, -0x800, arg0->field_8, arg0->field_6, 0x400, arg0->field_A, 0x1900, g_GameWork.gsScreenHeight_58A);
+                return Vw_AabbVisibleInFrustumCheck(&mat, modelBuf->field_4, -0x800, modelBuf->field_8, modelBuf->field_6, 0x400, modelBuf->field_A, 0x1900, g_GameWork.gsScreenHeight_58A);
             }
         }
     }
@@ -2289,7 +2290,7 @@ void func_80045014(s_Skeleton* skel) // 0x80045014
 
 void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHeader) // 0x8004506C
 {
-    u8  sp10[4];                                           // Size unsure, this could be larger.
+    u8  sp10[4]; // Size unsure, this could be larger.
     s32 switchVar;
 
     switchVar = LmHeader_ModelCountGet(lmHeader);
@@ -2465,8 +2466,7 @@ void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
     }
 }
 
-// Maybe larger anim func.
-void func_80045534(s_Skeleton* arg0, GsOT* arg1, void* arg2, GsCOORDINATE2* arg3, s16 arg4, u16 arg5, s_FsImageDesc* arg6) // 0x80045534
+void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord, s16 arg4, u16 arg5, s_FsImageDesc* image) // 0x80045534
 {
     MATRIX           sp20;
     MATRIX           sp40;
@@ -2490,7 +2490,7 @@ void func_80045534(s_Skeleton* arg0, GsOT* arg1, void* arg2, GsCOORDINATE2* arg3
     s32              var_v0_2;
     s32              var_v0_4;
     s32              var_v0_5;
-    s_FsImageDesc*   var_s1;
+    s_FsImageDesc*   image0;
     s_func_800452EC* var_s0_2;
 
     var_s5 = 0x7FFF;
@@ -2500,26 +2500,26 @@ void func_80045534(s_Skeleton* arg0, GsOT* arg1, void* arg2, GsCOORDINATE2* arg3
     var_fp = -0x7FFF;
     var_s3 = -0x7FFF;
 
-    if (arg0->field_2 == 0)
+    if (skel->field_2 == 0)
     {
         return;
     }
 
-    var_s0 = -1;
+    var_s0 = NO_VALUE;
 
-    if (arg6 != NULL)
+    if (image != NULL)
     {
-        for (var_s1 = arg6; var_s1->clutY != -1; var_s1++)
+        for (image0 = image; image0->clutY != NO_VALUE; image0++)
         {
-            if (var_s0 != var_s1->clutY)
+            if (var_s0 != image0->clutY)
             {
-                var_s0 = var_s1->clutY;
-                func_80049AF8(&arg3[var_s0], &sp20);
+                var_s0 = image0->clutY;
+                func_80049AF8(&coord[var_s0], &sp20);
                 SetRotMatrix(&sp20);
                 SetTransMatrix(&sp20);
             }
 
-            gte_ldv0(var_s1);
+            gte_ldv0(image0);
             gte_rtps();
             gte_stsxy(&sp60);
             temp_a1 = gte_stSZ3();
@@ -2556,11 +2556,11 @@ void func_80045534(s_Skeleton* arg0, GsOT* arg1, void* arg2, GsCOORDINATE2* arg3
         }
     }
 
-    for (var_s0_2 = arg0->field_4; var_s0_2 != NULL; var_s0_2 = var_s0_2->field_14)
+    for (var_s0_2 = skel->field_4; var_s0_2 != NULL; var_s0_2 = var_s0_2->field_14)
     {
         if (var_s0_2->field_0.field_0 >= 0)
         {
-            func_80049B6C(&arg3[(u8)var_s0_2->field_10], &sp40, &sp20);
+            func_80049B6C(&coord[(u8)var_s0_2->field_10], &sp40, &sp20);
 
             if (var_s0_2->field_0.field_0 & 1)
             {
@@ -2571,7 +2571,7 @@ void func_80045534(s_Skeleton* arg0, GsOT* arg1, void* arg2, GsCOORDINATE2* arg3
                 *(s32*)&sp20.m[0][0] = 0;
             }
 
-            func_80057090(&var_s0_2->field_0, arg1, arg2, &sp20, &sp40, arg5);
+            func_80057090(&var_s0_2->field_0, ot, arg2, &sp20, &sp40, arg5);
 
             if (D_800C4168.fogEnabled_1)
             {
@@ -2619,12 +2619,12 @@ void func_80045534(s_Skeleton* arg0, GsOT* arg1, void* arg2, GsCOORDINATE2* arg3
     if (D_800C4168.fogEnabled_1)
     {
         temp_s1_2 = g_SysWork.playerBoneCoords_890[1].coord.t[1];
-        temp_s1_2 = CLAMP(temp_s1_2, -0x200, 0);
+        temp_s1_2 = CLAMP(temp_s1_2, FP_METER_GEO(-2.0f), FP_METER_GEO(0.0f));
 
-        temp_s1_2 += g_SysWork.player_4C.chara_0.position_18.vy >> 4;
-        temp_s1_3  = Math_MulFixed(g_SysWork.player_4C.chara_0.position_18.vx >> 4, GsWSMATRIX.m[2][0], Q12_SHIFT);
+        temp_s1_2 += FP_METER_TO_GEO(g_SysWork.player_4C.chara_0.position_18.vy);
+        temp_s1_3  = Math_MulFixed(FP_METER_TO_GEO(g_SysWork.player_4C.chara_0.position_18.vx), GsWSMATRIX.m[2][0], Q12_SHIFT);
         temp_s0    = Math_MulFixed(temp_s1_2, GsWSMATRIX.m[2][1], Q12_SHIFT);
-        temp_s1_4  = temp_s1_3 + temp_s0 + Math_MulFixed(g_SysWork.player_4C.chara_0.position_18.vz >> 4, GsWSMATRIX.m[2][2], Q12_SHIFT) + GsWSMATRIX.t[2];
+        temp_s1_4  = ((temp_s1_3 + temp_s0) + Math_MulFixed(FP_METER_TO_GEO(g_SysWork.player_4C.chara_0.position_18.vz), GsWSMATRIX.m[2][2], Q12_SHIFT)) + GsWSMATRIX.t[2];
 
         var_s3_2 = (var_s4 + var_s3) >> 1;
         temp_v1  = var_s3_2 - ((var_s3 - var_s4) >> 1);
@@ -2644,7 +2644,7 @@ void func_80045534(s_Skeleton* arg0, GsOT* arg1, void* arg2, GsCOORDINATE2* arg3
                     var_v0_2 += 0x3FF;
                 }
 
-                var_s3_2 += Math_MulFixed(temp_a0 - var_s3_2, var_v0_2 >> 0xA, Q12_SHIFT);
+                var_s3_2 += Math_MulFixed(temp_a0 - var_s3_2, var_v0_2 >> 10, Q12_SHIFT);
             }
             else if (temp_s1_4 < temp_a0)
             {
@@ -2658,7 +2658,7 @@ void func_80045534(s_Skeleton* arg0, GsOT* arg1, void* arg2, GsCOORDINATE2* arg3
 
         var_s3_2 = MAX(var_s3_2, 4);
 
-        var_s2 = (var_s4 * 0x10) - arg4;
+        var_s2 = (var_s4 * 16) - arg4;
         var_s2 = MAX(var_s2, 0);
 
         var_s0   = ReadGeomScreen();
@@ -2673,6 +2673,6 @@ void func_80045534(s_Skeleton* arg0, GsOT* arg1, void* arg2, GsCOORDINATE2* arg3
             var_v0_5 = (var_v0_4 / 4) + 2;
         }
 
-        func_80056D8C((var_s5 - var_v0_5), (var_s6 - var_v0_5), (var_s7 + var_v0_5), (var_fp + var_v0_5), var_s3_2 * 0x10, var_s2, arg1, arg2);
+        func_80056D8C(var_s5 - var_v0_5, var_s6 - var_v0_5, var_s7 + var_v0_5, var_fp + var_v0_5, var_s3_2 * 16, var_s2, ot, arg2);
     }
 }

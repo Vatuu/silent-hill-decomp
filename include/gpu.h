@@ -319,10 +319,10 @@ void SetPriority(PACKET*, s32, s32);
 #endif
 
 #define gte_gte_ldvxy0() __asm__ volatile( \
-    "mtc2  $zero, $0;");
+    "mtc2  $zero, $0;")
 
 #define gte_gte_ldvz0() __asm__ volatile( \
-    "mtc2  $zero, $1;");
+    "mtc2  $zero, $1;")
 
 #define gte_stSZ3()                                   \
     ({                                                \

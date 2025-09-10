@@ -489,7 +489,7 @@ void func_80035338(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOOR
     ptr->animFileSize2_10 = 0;
     ptr->charaId0_0       = charaId;
     ptr->animFile0_4      = animFileCpy;
-    ptr->animFileSize1_C  = Fs_GetFileSectorAlignedSize(g_Chara_FileInfo[charaId].animFileIdx);
+    ptr->animFileSize1_C  = Fs_GetFileSectorAlignedSize(CHARA_FILE_INFOS[charaId].animFileIdx);
 
     i = func_800352F8(charaId);
 
@@ -543,7 +543,7 @@ void func_80035560(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOOR
 
     ptr->charaId1_1       = charaId;
     ptr->animFile1_8      = animFile;
-    ptr->animFileSize2_10 = Fs_GetFileSectorAlignedSize(g_Chara_FileInfo[charaId].animFileIdx);
+    ptr->animFileSize2_10 = Fs_GetFileSectorAlignedSize(CHARA_FILE_INFOS[charaId].animFileIdx);
     ptr->npcCoords_14     = coordCpy;
 
     Anim_BoneInit(animFile, coordCpy);

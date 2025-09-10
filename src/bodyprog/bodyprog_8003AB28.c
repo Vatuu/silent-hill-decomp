@@ -1524,8 +1524,8 @@ void func_8003D160() // 0x8003D160
     ptr2                              = &ptr->field_164C;
     D_800BCE18.field_0[0].field_18[1] = ptr2;
 
-    Fs_QueueStartRead(g_Chara_FileInfo[1].modelFileIdx, addr);
-    queueIdx = Fs_QueueStartReadTim(g_Chara_FileInfo[1].textureFileIdx, FS_BUFFER_1, &img);
+    Fs_QueueStartRead(CHARA_FILE_INFOS[1].modelFileIdx, addr);
+    queueIdx = Fs_QueueStartReadTim(CHARA_FILE_INFOS[1].textureFileIdx, FS_BUFFER_1, &img);
 
     D_800BCE18.field_164C.field_0   = 1;
     ptr2->field_1                   = 0;
@@ -1585,7 +1585,7 @@ void func_8003D354(s32* arg0, s32 arg1) // 0x8003D354
     s16 idx;
     s32 fileSize;
 
-    idx      = g_Chara_FileInfo[arg1].modelFileIdx;
+    idx      = CHARA_FILE_INFOS[arg1].modelFileIdx;
     fileSize = Fs_GetFileSize(idx);
 
     Fs_GetFileSectorAlignedSize(idx);
@@ -1695,7 +1695,7 @@ void func_8003D550(s32 arg0, s32 arg1) // 0x8003D550
     s_800BCE18_0_CC* ptr;
 
     ptr = D_800BCE18.field_0[0].field_18[arg0];
-    func_80056464(ptr->lmHeader_8, g_Chara_FileInfo[arg0].textureFileIdx, &ptr->texture_C, arg1);
+    func_80056464(ptr->lmHeader_8, CHARA_FILE_INFOS[arg0].textureFileIdx, &ptr->texture_C, arg1);
     func_80056954(ptr->lmHeader_8);
 }
 
@@ -1726,7 +1726,7 @@ void func_8003D5B4(s8 flags) // 0x8003D5B4
         fileIdx = ptr->field_0;
         if (fileIdx != 0)
         {
-            temp = (s32)ptr->lmHeader_8 + Fs_GetFileSize(g_Chara_FileInfo[fileIdx].modelFileIdx);
+            temp = (s32)ptr->lmHeader_8 + Fs_GetFileSize(CHARA_FILE_INFOS[fileIdx].modelFileIdx);
             if (D_800BCE18.field_0[0].field_14 < temp)
             {
                 D_800BCE18.field_0[0].field_14 = temp;
@@ -1807,11 +1807,11 @@ s32 func_8003D7D4(u32 arg0, s32 arg1, s_LmHeader* lmHeader, s_FsImageDesc* tex) 
 
     D_800BCE18.field_0[0].field_18[arg0] = ptr;
 
-    queueIdx = Fs_QueueStartRead(g_Chara_FileInfo[arg0].modelFileIdx, lmHeader);
+    queueIdx = Fs_QueueStartRead(CHARA_FILE_INFOS[arg0].modelFileIdx, lmHeader);
 
-    if (g_Chara_FileInfo[arg0].textureFileIdx != NO_VALUE) 
+    if (CHARA_FILE_INFOS[arg0].textureFileIdx != NO_VALUE) 
     {
-        queueIdx = Fs_QueueStartReadTim(g_Chara_FileInfo[arg0].textureFileIdx, FS_BUFFER_1, tex);
+        queueIdx = Fs_QueueStartReadTim(CHARA_FILE_INFOS[arg0].textureFileIdx, FS_BUFFER_1, tex);
     }
 
     ptr->field_0    = arg0;
@@ -1855,7 +1855,7 @@ void func_8003D9C8(s_800BCE18_0_CC* arg0) // 0x8003D9C8
         arg0->field_1 = 1;
 
         LmHeader_FixOffsets(arg0->lmHeader_8);
-        func_80056464(arg0->lmHeader_8, g_Chara_FileInfo[arg0->field_0].textureFileIdx, &arg0->texture_C, g_Chara_FileInfo[arg0->field_0].field_6_10 % 4);
+        func_80056464(arg0->lmHeader_8, CHARA_FILE_INFOS[arg0->field_0].textureFileIdx, &arg0->texture_C, CHARA_FILE_INFOS[arg0->field_0].field_6_10 % 4);
 
         skel = &arg0->field_14;
 
@@ -1899,7 +1899,7 @@ void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4)
     }
 
     func_80045534(&D_800BCE18.field_0[0].field_18[arg0]->field_14, &g_OrderingTable0[g_ActiveBufferIdx], arg2,
-                  coord, g_Chara_FileInfo[arg0].field_6 * 16, ret, g_Chara_FileInfo[arg0].field_8);
+                  coord, CHARA_FILE_INFOS[arg0].field_6 * 16, ret, CHARA_FILE_INFOS[arg0].field_8);
 
     if (arg3 != 0)
     {
