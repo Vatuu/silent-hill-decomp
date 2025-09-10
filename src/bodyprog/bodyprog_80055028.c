@@ -1999,7 +1999,7 @@ s32 func_8005D86C(s32 arg0) // 0x8005D86C
     s32 temp_a3;
     s32 temp;
 
-    temp    = FP_ALPHA_NORM(arg0);
+    temp    = QX_12_FRACT(arg0);
     temp_a1 = FP_FROM(arg0, Q12_SHIFT);
 
     if (temp_a1 >= 12)
@@ -3458,9 +3458,9 @@ void func_8006D600(VECTOR3* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8
 
     // TODO: Angles here.
 
-    temp_s0 = FP_ALPHA_NORM(arg1);
-    temp_s3 = FP_ALPHA_NORM(arg2);
-    temp    = FP_ALPHA_NORM(arg3);
+    temp_s0 = QX_12_FRACT(arg1);
+    temp_s3 = QX_12_FRACT(arg2);
+    temp    = QX_12_FRACT(arg3);
 
     if (arg4 > 0x100)
     {
@@ -3472,7 +3472,7 @@ void func_8006D600(VECTOR3* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8
     temp_s5 = FP_MULTIPLY(arg4, Math_Sin(temp_s0), Q12_SHIFT);
     temp_s1 = arg0->vx - temp_s6;
     temp_s2 = arg0->vz - temp_s5;
-    var_v1  = FP_ALPHA_NORM(ratan2(temp_s2, temp_s1));
+    var_v1  = QX_12_FRACT(ratan2(temp_s2, temp_s1));
 
     if (var_v1 < temp_s3)
     {

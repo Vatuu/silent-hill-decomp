@@ -2041,7 +2041,7 @@ void Anim_Update0(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coords,
     }
 
     // Update skeleton.
-    alpha = FP_ALPHA_NORM(newTime);
+    alpha = QX_12_FRACT(newTime);
     if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
         Anim_BoneUpdate(anmHeader, coords, newKeyframeIdx, newKeyframeIdx + 1, alpha);
@@ -2106,7 +2106,7 @@ void Anim_Update1(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     }
 
     // Update skeleton.
-    alpha = FP_ALPHA_NORM(newTime);
+    alpha = QX_12_FRACT(newTime);
     if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
         Anim_BoneUpdate(anmHeader, coord, newKeyframeIdx0, newKeyframeIdx1, alpha);

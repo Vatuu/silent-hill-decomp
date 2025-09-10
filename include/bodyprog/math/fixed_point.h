@@ -194,14 +194,6 @@
 #define FP_ALPHA(alpha) \
     (s16)Q3_12(alpha)
 
-/** @brief Normalizes a fixed-point alpha in Q3.12 to the integer range `[0, 4095]`.
- *
- * @param alpha Fixed-point alpha.
- * @return Normalized fixed-point alpha in Q3.12, integer range `[0, 4095]`.
- */
-#define FP_ALPHA_NORM(alpha) \
-    QX_12_FRACT(alpha)
-
 /** @brief Converts a normalized floating-point sound volume in the range `[0.0f, 1.0f]` to fixed-point Q0.8, integer range `[0, 255]`.
  *
  * @param vol Sound volume (`float`).
