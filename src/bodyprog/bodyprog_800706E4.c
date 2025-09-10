@@ -7,6 +7,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math.h"
 #include "bodyprog/item_screens.h"
+#include "bodyprog/joy.h"
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
 
@@ -4562,7 +4563,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             // Walking.
             else
             {
-                if (g_Controller0->sticks_20.sticks_0.leftY <= FP_STICK(-0.5f))
+                if (g_Controller0->sticks_20.sticks_0.leftY <= -STICK_THRESHOLD)
                 {
                     D_800AF216 = ABS(g_Controller0->sticks_20.sticks_0.leftY);
                     func_80070B84(chara, FP_METER(0.75f), FP_METER(1.4f), 2);
@@ -4711,7 +4712,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
         case PlayerLowerBodyState_RunForward:
             chara->properties_E4.player.exhaustionTimer_FC += g_DeltaTime0;
 
-            if (g_Controller0->sticks_20.sticks_0.leftY <= FP_STICK(-0.5f))
+            if (g_Controller0->sticks_20.sticks_0.leftY <= -STICK_THRESHOLD)
             {
                 D_800AF216 = ABS(g_Controller0->sticks_20.sticks_0.leftY);
 
@@ -4975,7 +4976,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 }
             }
             // Walking backward.
-            else if (g_Controller0->sticks_20.sticks_0.leftY >= FP_STICK(0.5f))
+            else if (g_Controller0->sticks_20.sticks_0.leftY >= STICK_THRESHOLD)
             {
                 D_800AF216 = ABS(g_Controller0->sticks_20.sticks_0.leftY);
                 func_80070B84(chara, FP_METER(0.75f), FP_METER(1.15f), 2);
@@ -8158,13 +8159,13 @@ void Player_Controller() // 0x8007F32C
     g_Player_IsSteppingLeftTap  = (g_Player_IsSteppingLeftTap * 2) & 0x3F;
     g_Player_IsSteppingRightTap = (g_Player_IsSteppingRightTap * 2) & 0x3F;
 
-    if (g_Controller0->sticks_20.sticks_0.leftY < FP_STICK(-0.5f) || g_Controller0->sticks_20.sticks_0.leftY >= FP_STICK(0.5f) ||
-        g_Controller0->sticks_20.sticks_0.leftX < FP_STICK(-0.5f) || g_Controller0->sticks_20.sticks_0.leftX >= FP_STICK(0.5f))
+    if (g_Controller0->sticks_20.sticks_0.leftY < -STICK_THRESHOLD || g_Controller0->sticks_20.sticks_0.leftY >= STICK_THRESHOLD ||
+        g_Controller0->sticks_20.sticks_0.leftX < -STICK_THRESHOLD || g_Controller0->sticks_20.sticks_0.leftX >= STICK_THRESHOLD)
     {
-        g_Player_IsTurningLeft         = g_Controller0->sticks_20.sticks_0.leftX < FP_STICK(-0.5f) ? ABS(g_Controller0->sticks_20.sticks_0.leftX + FP_STICK(0.5f)) : 0;
-        g_Player_IsTurningRight        = g_Controller0->sticks_20.sticks_0.leftX >= FP_STICK(0.5f) ? (g_Controller0->sticks_20.sticks_0.leftX - (FP_STICK(0.5f) - 1)) : 0;
-        g_Player_IsMovingForward      |= g_Controller0->sticks_20.sticks_0.leftY < FP_STICK(-0.5f);
-        g_Player_IsMovingBackward      = (g_Controller0->sticks_20.sticks_0.leftY < FP_STICK(0.5f)) ^ 1;
+        g_Player_IsTurningLeft         = g_Controller0->sticks_20.sticks_0.leftX < -STICK_THRESHOLD ? ABS(g_Controller0->sticks_20.sticks_0.leftX + STICK_THRESHOLD) : 0;
+        g_Player_IsTurningRight        = g_Controller0->sticks_20.sticks_0.leftX >= STICK_THRESHOLD ? (g_Controller0->sticks_20.sticks_0.leftX - (STICK_THRESHOLD - 1)) : 0;
+        g_Player_IsMovingForward      |= g_Controller0->sticks_20.sticks_0.leftY < -STICK_THRESHOLD;
+        g_Player_IsMovingBackward      = (g_Controller0->sticks_20.sticks_0.leftY < STICK_THRESHOLD) ^ 1;
         g_Player_MovementInputDetected = g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.stepLeft_10 |
                                                                           (ControllerFlag_LStickUp2 | ControllerFlag_LStickRight2 | ControllerFlag_LStickDown2 | ControllerFlag_LStickLeft2) |
                                                                           g_GameWorkPtr->config_0.controllerConfig_0.stepRight_12 | g_GameWorkPtr->config_0.controllerConfig_0.aim_8);

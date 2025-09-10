@@ -4,6 +4,7 @@
 #include "bodyprog/credits.h"
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/item_screens.h"
+#include "bodyprog/joy.h"
 #include "bodyprog/math.h"
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
@@ -957,8 +958,8 @@ s_800AFC78 D_800AFC78 =
 
 void Inventory_DirectionalInputSet() // 0x8004F5DC
 {
-    if (g_Controller0->sticks_20.sticks_0.leftY < FP_STICK(-0.5f) || g_Controller0->sticks_20.sticks_0.leftY >= FP_STICK(0.5f) ||
-        g_Controller0->sticks_20.sticks_0.leftX < FP_STICK(-0.5f) || g_Controller0->sticks_20.sticks_0.leftX >= FP_STICK(0.5f))
+    if (g_Controller0->sticks_20.sticks_0.leftY < -STICK_THRESHOLD || g_Controller0->sticks_20.sticks_0.leftY >= STICK_THRESHOLD ||
+        g_Controller0->sticks_20.sticks_0.leftX < -STICK_THRESHOLD || g_Controller0->sticks_20.sticks_0.leftX >= STICK_THRESHOLD)
     {
         // Up.
         g_Inventory_IsUpClicked = g_Controller0->btnsClicked_10 & ControllerFlag_LStickUp2;

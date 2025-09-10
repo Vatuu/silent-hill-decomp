@@ -3,6 +3,7 @@
 #include <libpad.h>
 
 #include "bodyprog/joy.h"
+#include "bodyprog/math.h"
 
 void Joy_Init() // 0x8003441C
 {
@@ -154,15 +155,15 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, s32 arg1) // 0x80034
             val                    = xorShiftedRawAnalog >> 24;
             xorShiftedRawAnalog  <<= 8;
 
-            if (val < FP_STICK(-0.5f))
+            if (val < -STICK_THRESHOLD)
             {
-                normalizedAnalogData |= (val + FP_STICK(0.5f)) & 0xFF;
+                normalizedAnalogData |= (val + STICK_THRESHOLD) & 0xFF;
                 negativeDirBitIdx     = 23 - (axisIdx & (1 << 0));
                 btnsHeld             |= 1 << (negativeDirBitIdx - (axisIdx * 2));
             }
-            else if (val >= FP_STICK(0.5f))
+            else if (val >= STICK_THRESHOLD)
             {
-                normalizedAnalogData |= (val - (FP_STICK(0.5f) - 1)) & 0xFF;
+                normalizedAnalogData |= (val - (STICK_THRESHOLD - 1)) & 0xFF;
                 positiveDirBitIdx     = (axisIdx & 0x1) + 21;
                 btnsHeld             |= 1 << (positiveDirBitIdx - ((axisIdx >> 1) * 4));
             }

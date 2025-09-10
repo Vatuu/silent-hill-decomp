@@ -12,9 +12,9 @@
  * the engine (like player logic, save game or item screens).
  */
 
-// ========
-// DEFINES
-// ========
+// ==========
+// CONSTANTS
+// ==========
 
 #define OPT_SOUND_VOLUME_MIN   0
 #define OPT_SOUND_VOLUME_MAX   128
