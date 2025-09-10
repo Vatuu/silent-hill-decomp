@@ -4,17 +4,17 @@
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/math.h"
 
-#define MAP_MSG_CODE_MARKER         '~' /** Message code start. */
-#define MAP_MSG_CODE_COLOR          'C' /** Set color. */
-#define MAP_MSG_CODE_DISPLAY_ALL    'D' /** Display message instantly without roll. */
-#define MAP_MSG_CODE_END            'E' /** End message. */
-#define MAP_MSG_CODE_HIGH_RES       'H' /** High-resolution glyph drawing. */
-#define MAP_MSG_CODE_JUMP           'J' /** Jump timer. */
-#define MAP_MSG_CODE_LINE_POSITION  'L' /** Set next line position. */
-#define MAP_MSG_CODE_MIDDLE         'M' /** Align center. */
-#define MAP_MSG_CODE_NEWLINE        'N' /** Newline. */
-#define MAP_MSG_CODE_SELECT         'S' /** Display dialog prompt with selectable entries. */
-#define MAP_MSG_CODE_TAB            'T' /** Inset line. */
+#define MAP_MSG_CODE_MARKER        '~' /** Message code start. */
+#define MAP_MSG_CODE_COLOR         'C' /** Set color. */
+#define MAP_MSG_CODE_DISPLAY_ALL   'D' /** Display message instantly without roll. */
+#define MAP_MSG_CODE_END           'E' /** End message. */
+#define MAP_MSG_CODE_HIGH_RES      'H' /** High-resolution glyph drawing. */
+#define MAP_MSG_CODE_JUMP          'J' /** Jump timer. */
+#define MAP_MSG_CODE_LINE_POSITION 'L' /** Set next line position. */
+#define MAP_MSG_CODE_MIDDLE        'M' /** Align center. */
+#define MAP_MSG_CODE_NEWLINE       'N' /** Newline. */
+#define MAP_MSG_CODE_SELECT        'S' /** Display dialog prompt with selectable entries. */
+#define MAP_MSG_CODE_TAB           'T' /** Inset line. */
 
 const s32 __PAD = 0;
 

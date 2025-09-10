@@ -785,19 +785,18 @@ STATIC_ASSERT_SIZEOF(s_AnmBindPose, 6);
 
 typedef struct _AnmHeader
 {
-    u16 dataOffset_0;
-    u8  rotationBoneCount_2;
-    u8  translationBoneCount_3;
-    u16 frameDataSize_4; // Size per keyframe, `(rotationBoneCount_2 * 9) + (translationBoneCount_3 * 3)`?
-    u8  boneCount_6;
-    u8  unk_7;
-    u32 activeBones_8; // Holds bit field of bones to update.
-    u32 offset_C;      // In ANM files this points to another duplicate `s_AnmHeader` at end of the file, or might just be size of the main ANM data.
-    u16 frameCount_10;
-    u8  scaleLog2_12;
-    u8  rootYOffset_13;
-
-    s_AnmBindPose bindPoses_14[0]; // Array size = `boneCount_6`
+    u16           dataOffset_0;
+    u8            rotationBoneCount_2;
+    u8            translationBoneCount_3;
+    u16           keyframeDataSize_4; // Size per keyframe, `(rotationBoneCount_2 * 9) + (translationBoneCount_3 * 3)`?
+    u8            boneCount_6;
+    u8            unk_7;
+    u32           activeBones_8; // Holds bit field of bones to update.
+    u32           offset_C;      // In ANM files this points to another duplicate `s_AnmHeader` at end of the file, or might just be size of the main ANM data.
+    u16           keyframeCount_10;
+    u8            scaleLog2_12;
+    u8            rootYOffset_13;
+    s_AnmBindPose bindPoses_14[0]; // Array size = `boneCount_6`.
 } s_AnmHeader;
 STATIC_ASSERT_SIZEOF(s_AnmHeader, 20);
 
@@ -1323,7 +1322,7 @@ STATIC_ASSERT_SIZEOF(s_DmsEntry, 16);
 typedef struct
 {
     s16 startKeyframeIdx_0;
-    s16 frameCount_2; /** At 30FPS. */
+    s16 frameCount_2; /** Keyframe count or frame duration at 30FPS? */
 } s_DmsInterval;
 STATIC_ASSERT_SIZEOF(s_DmsInterval, 4);
 

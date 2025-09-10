@@ -1856,9 +1856,9 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyf
     s_AnmBindPose* bindPose;
 
     boneCount     = anmHeader->boneCount_6;
-    frame0Data    = ((u8*)anmHeader + anmHeader->dataOffset_0) + (anmHeader->frameDataSize_4 * keyframe0);
+    frame0Data    = ((u8*)anmHeader + anmHeader->dataOffset_0) + (anmHeader->keyframeDataSize_4 * keyframe0);
     frame0RotData = frame0Data + (anmHeader->translationBoneCount_3 * 3);
-    frame1Data    = ((u8*)anmHeader + anmHeader->dataOffset_0) + (anmHeader->frameDataSize_4 * keyframe1);
+    frame1Data    = ((u8*)anmHeader + anmHeader->dataOffset_0) + (anmHeader->keyframeDataSize_4 * keyframe1);
     frame1RotData = frame1Data + (anmHeader->translationBoneCount_3 * 3);
 
     // For player, use inverted mask of `extra_128.disabledAnimBones_18` to facilitate masking of upper and lower body.
@@ -2086,7 +2086,7 @@ void Anim_Update1(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     // Get time step.
     timeStep = Anim_TimeStepGet(model, animInfo);
 
-    // Wrap new time to valid keyframe range?
+    // Wrap new time to valid keyframe range.
     newTime = model->anim_4.time_4 + timeStep;
     while (newTime < startTime)
     {
