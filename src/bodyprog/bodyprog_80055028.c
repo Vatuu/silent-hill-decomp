@@ -2372,17 +2372,15 @@ void func_80066D90() // 0x80066D90
     for (var_s1 = 0; var_s1 < 0x3F; var_s1++)
     {
         var1 = PSX_SCRATCH;
-        setlen(var1, 1);
-        var1->code[0] = 0xE1000240;
+        setDrawTPage(var1, 0, 1, getTPageN(0, 2, 0, 0));
         DrawPrim(var1);
 
         var2 = PSX_SCRATCH;
         setlen(var2, 3);
 
-        // @hack Maybe not `TILE`?
-        *(s32*)&var2->r0 = 0x62080808;
-        *(s32*)&var2->x0 = 0xFF20FF60;
-        *(s32*)&var2->w  = 0x01C00140;
+        setRGBC0(var2, 8, 8, 8, PRIM_RECT | RECT_BLEND); // `setTile(); setSemiTrans();`
+        setXY0Fast(var2, -160, -224);
+        setWHFast(var2, 320, 448);
         DrawPrim(var2);
 
         Fs_QueueUpdate();

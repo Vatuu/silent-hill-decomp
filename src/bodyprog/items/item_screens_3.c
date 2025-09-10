@@ -1743,7 +1743,7 @@ void Gfx_Inventory_HealthStatusDraw()
     GsOUT_PACKET_P = (PACKET*)poly_g4 + sizeof(POLY_G4);
 
     tPage = (DR_TPAGE*)GsOUT_PACKET_P;
-    setDrawTPage(tPage, 0, 1, 64);
+    setDrawTPage(tPage, 0, 1, getTPageN(0, 2, 0, 0));
     addPrim(&ot->org[2036], tPage);
     GsOUT_PACKET_P = (PACKET*)tPage + sizeof(DR_TPAGE);
 

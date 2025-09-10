@@ -86,10 +86,10 @@ typedef struct
 
 /** @brief Same as `getTPage`, but `xn` and `yn` are indices instead of VRAM coordinates. */
 #define getTPageN(tp, abr, xn, yn) \
-    ((((tp) & 0x3) << 7)|(((abr) & 0x3) << 5)|((xn) & 0xF)|(((yn) & 0x1) << 4))
+    ((((tp) & 0x3) << 7) | (((abr) & 0x3) << 5) | ((xn) & 0xF) | (((yn) & 0x1) << 4))
 
 /** @brief Same as `setRECT`, but uses 2x 32-bit stores instead of 4x 16-bit stores. */
-#define setRECTFast(r, x, y, w, h) \
+#define setRECTFast(r, x, y, w, h)        \
     ((u32*)(r))[0] = ((x) | ((y) << 16)), \
     ((u32*)(r))[1] = ((w) | ((h) << 16))
 

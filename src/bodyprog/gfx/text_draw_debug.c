@@ -97,7 +97,7 @@ void Gfx_DebugStringDraw(char* str) // 0x80031F40
     *((u32*)&g_Gfx_DebugStringPosition1) = (posX & 0xFFFF) + (posY << 16);
     tPage                                = (DR_TPAGE*)packet;
 
-    setDrawTPage(tPage, 0, 1, 20);
+    setDrawTPage(tPage, 0, 1, getTPageN(0, 0, 4, 1));
     addPrim(ot, tPage);
 
     packet        += sizeof(DR_TPAGE);
