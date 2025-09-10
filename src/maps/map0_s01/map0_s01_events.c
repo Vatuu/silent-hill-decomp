@@ -688,13 +688,13 @@ void Event_AirScreamerIntroCutscene() // 0x800DBAA0
 
 void Event_PocketRadioItemTake() // 0x800DC34C
 {
-    Event_ItemTake(InventoryItemId_PocketRadio, DEFAULT_PICKUP_ITEM_COUNT, 37, 64);
+    Event_ItemTake(InventoryItemId_PocketRadio, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_PickupPocketRadio, 64);
     g_SavegamePtr->flags_AC |= 1 << 0;
 }
 
 void Event_FlashlightItemTake() // 0x800DC394
 {
-    Event_ItemTake(InventoryItemId_Flashlight, DEFAULT_PICKUP_ITEM_COUNT, 36, 61);
+    Event_ItemTake(InventoryItemId_Flashlight, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_PickupFlashlight, 61);
     Game_TurnFlashlightOff();
 }
 
@@ -803,7 +803,7 @@ void Event_MapItemTake() // 0x800DC3C8
 
 void Event_KitchenKnifeItemTake() // 0x800DC830
 {
-    Event_ItemTake(InventoryItemId_KitchenKnife, DEFAULT_PICKUP_ITEM_COUNT, 35, 60);
+    Event_ItemTake(InventoryItemId_KitchenKnife, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_PickupKitchenKnife, 60);
 }
 
 /** Presumably a pickup function. Maybe debug or something unused and commented out. */
@@ -811,26 +811,26 @@ void Event_EmptyFunction() {}
 
 void Event_HealthItemTake() // 0x800DC864
 {
-    s32 globalPickupId;
+    s32 eventFlagIdx;
     u32 pickupType;
 
-    pickupType     = CommonPickupItemId_FirstAidKit;
-    globalPickupId = 0;
+    pickupType   = CommonPickupItemId_FirstAidKit;
+    eventFlagIdx = 0;
 
     switch (g_MapEventParam->field_5)
     {
         case 13:
-            pickupType     = CommonPickupItemId_HealthDrink;
-            globalPickupId = 596;
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M0S01_HealthDrink0;
             break;
 
         case 14:
-            pickupType     = CommonPickupItemId_HealthDrink;
-            globalPickupId = 597;
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M0S01_HealthDrink1;
             break;
     }
 
-    Event_CommonItemTake(pickupType, globalPickupId);
+    Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
 void Event_AirScreamerDeath() // 0x800DC8C8

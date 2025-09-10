@@ -2891,7 +2891,6 @@ void SysState_GameOver_Update() // 0x8003A52C
 {
     #define TIP_COUNT 15
 
-
     u16  seenTipIdxs[1];
     s32  tipIdx;
     s32  randTipVal;

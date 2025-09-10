@@ -3218,9 +3218,9 @@ void func_80087360(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsg
 
 void func_80087540(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1);
 
-void Event_ItemTake(s32 itemId, s32 itemCount, s32 globalPickupId, s32 mapMsgIdx);
+void Event_ItemTake(s32 itemId, s32 itemCount, s32 eventFlagIdx, s32 mapMsgIdx);
 
-void Event_CommonItemTake(u32 pickupType, s32 globalPickupId);
+void Event_CommonItemTake(u32 pickupType, s32 eventFlagIdx);
 
 void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx);
 

@@ -137,49 +137,49 @@ void Gfx_LoadingScreen_StageString(void) {}
 void Event_HealthOrAmmoItemTake(void) // 0x800CEBC8
 {
     u32 pickupType;
-    s32 globalPickupId;
+    s32 eventFlagIdx;
 
-    pickupType     = CommonPickupItemId_FirstAidKit;
-    globalPickupId = 0;
+    pickupType   = CommonPickupItemId_FirstAidKit;
+    eventFlagIdx = 0;
     switch (g_MapEventParam->field_5)
     {
         case 29:
-            pickupType     = CommonPickupItemId_FirstAidKit;
-            globalPickupId = 598;
+            pickupType   = CommonPickupItemId_FirstAidKit;
+            eventFlagIdx = EventFlag_M0S02_FirstAidKit;
             break;
 
         case 30:
-            pickupType     = CommonPickupItemId_HealthDrink;
-            globalPickupId = 599;
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M0S02_HealthDrink0;
             break;
             
         case 31:
-            pickupType     = CommonPickupItemId_HealthDrink;
-            globalPickupId = 600;
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M0S02_HealthDrink1;
             break;
 
         case 32:
-            pickupType     = CommonPickupItemId_HealthDrink;
-            globalPickupId = 601;
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M0S02_HealthDrink2;
             break;
 
         case 33:
-            pickupType     = CommonPickupItemId_HandgunBullets;
-            globalPickupId = 602;
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M0S02_HandgunBullets;
             break;
 
         case 34:
-            pickupType     = CommonPickupItemId_HealthDrink;
-            globalPickupId = 603;
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M0S02_HealthDrink3;
             break;
 
         case 35:
-            pickupType     = CommonPickupItemId_HealthDrink;
-            globalPickupId = 604;
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M0S02_HealthDrink4;
             break;
     }
 
-    Event_CommonItemTake(pickupType, globalPickupId);
+    Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 #else
 INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", Event_HealthOrAmmoItemTake);
@@ -189,7 +189,7 @@ void Event_EmptyFunction(void) {}
 
 void Event_GasolineTankItemTake(void) // 0x800CEC84
 {
-    Event_ItemTake(InventoryItemId_GasolineTank, DEFAULT_PICKUP_ITEM_COUNT, 60, 19);
+    Event_ItemTake(InventoryItemId_GasolineTank, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_PickupGasolineTask, 19);
 }
 
 INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CECB0);
