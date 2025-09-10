@@ -3964,7 +3964,72 @@ s16 func_8006F99C(s_SubCharacter* chara, s32 arg1, s16 arg2) // 0x8006F99C
     return FP_ALPHA(1.0f);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006FAFC); // 0x8006FAFC
+s16 func_8006FAFC(s_SubCharacter* arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s32 arg5) // 0x8006FAFC
+{
+    s16 temp_v1;
+    s16 var_s2;
+    s32 temp_s0;
+    s32 temp_s1;
+    s32 temp_v0;
+    s32 temp_v0_2;
+    s32 temp_v1_2;
+    s32 i;
+    s32 var_s4;
+    s32 var_s7;
+    s16 subroutine_arg4;
+
+    var_s4 = 0;
+
+    if (arg5 != 0)
+    {
+        var_s4 = 0x7FFFFFFF;
+    }
+
+    temp_v1         = arg4 / 3;
+    subroutine_arg4 = -0x1000;
+    var_s7          = 7;
+
+    if (arg4 == 0x1000)
+    {
+        var_s7 = 0xC;
+    }
+
+    for (i = 0; i < var_s7; i++)
+    {
+        if (arg4 == 0x1000)
+        {
+            var_s2 = (((i * 0x1E) + (Rng_Rand16() % 30)) << 0xC) / 360;
+        }
+        else
+        {
+            var_s2 = (arg0->rotation_24.vy + ((i - 3) * temp_v1) + ((Rng_Rand16() % temp_v1) >> 1)) - (temp_v1 >> 2);
+        }
+
+        temp_s1 = arg0->position_18.vx + FP_MULTIPLY(arg1, Math_Sin(var_s2), Q12_SHIFT);
+        temp_s0 = arg0->position_18.vz + FP_MULTIPLY(arg1, Math_Cos(var_s2), Q12_SHIFT);
+
+        if (func_80070030(arg0, temp_s1, arg0->position_18.vy, temp_s0) == 0)
+        {
+            temp_v0   = (arg2 - temp_s1) >> 6;
+            temp_v0_2 = (arg3 - temp_s0) >> 6;
+            temp_v1_2 = (temp_v0 * temp_v0) + (temp_v0_2 * temp_v0_2);
+
+            if ((arg5 == 0 && var_s4 < temp_v1_2) ||
+                (arg5 != 0 && temp_v1_2 < var_s4))
+            {
+                var_s4          = temp_v1_2;
+                subroutine_arg4 = var_s2;
+            }
+        }
+    }
+
+    if (subroutine_arg4 != -0x1000)
+    {
+        return func_8005BF38(subroutine_arg4);
+    }
+
+    return 0x1000;
+}
 
 bool func_8006FD90(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3) // 0x8006FD90
 {
@@ -4195,4 +4260,26 @@ void func_80070400(s_SubCharacter* chara, s_func_80070400_1* arg1, s_func_800704
     chara->field_D6         = FP_FROM((arg1->field_A * invAlpha) + (arg2->field_A * alpha), Q12_SHIFT);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800705E4); // 0x800705E4
+void func_800705E4(GsCOORDINATE2* coord, s32 index, s32 scaleX, s32 scaleY, s32 scaleZ) // 0x800705E4
+{
+    s16 scales[3];
+    s32 row;
+    s32 col;
+
+    scales[0] = scaleX;
+    scales[1] = scaleY;
+    scales[2] = scaleZ;
+
+    for (col = 0; col < 3; col++)
+    {
+        if (scales[col] != FP_METER(1.0f))
+        {
+            for (row = 0; row < 3; row++)
+            {
+                coord[index].coord.m[row][col] = FP_MULTIPLY((s64)scales[col], coord[index].coord.m[row][col], 0xC);
+            }
+        }
+    }
+
+    coord->flg = 0;
+}

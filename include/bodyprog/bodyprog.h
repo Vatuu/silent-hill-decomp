@@ -3510,6 +3510,8 @@ void func_8006F8FC(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s_func_8006F8FC* ar
 
 s16 func_8006F99C(s_SubCharacter* chara, s32 arg1, s16 arg2);
 
+s16 func_8006FAFC(s_SubCharacter* arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s32 arg5);
+
 bool func_8006FD90(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3);
 
 bool func_80070030(s_SubCharacter* chara, s32 x, s32 y, s32 z);
