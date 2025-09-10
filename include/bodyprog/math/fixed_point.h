@@ -215,7 +215,7 @@
  * @param analog Analog stick value (`float`).
  * @return Analog stick value in Q0.7, integer range `[-128, 127]`.
  */
-#define FP_STICK(analog)                                                                \
+#define FP_STICK(analog)                                                                                        \
     (s8)(((analog) >= 0) ? CLAMP(FP_FLOAT_TO(analog, Q8_SHIFT) / 2, 0, (FP_FLOAT_TO(1.0f, Q8_SHIFT) / 2) - 1) : \
                           -CLAMP(FP_FLOAT_TO(ABS(analog), Q8_SHIFT) / 2, 0, FP_FLOAT_TO(1.0f, Q8_SHIFT) / 2))
 
