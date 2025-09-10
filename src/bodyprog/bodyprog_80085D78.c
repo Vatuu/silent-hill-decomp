@@ -2923,9 +2923,9 @@ void func_8008E5B4(void) // 0x8008E5B4
     SetDrawOffset(&packet->offset_10, (u16*)&D_800AFDA4);
     SetDrawEnv(&packet->env_6C, &drawEnv);
 
-    if (g_DeltaTime0 != 0)
+    if (g_DeltaTime0 != FP_TIME(0.0f))
     {
-        D_800AFDAC += 1;
+        D_800AFDAC++;
     }
 
     setRGBC0(&packet->poly_1C[1], 0x80, 0x80, 0x80, 0);

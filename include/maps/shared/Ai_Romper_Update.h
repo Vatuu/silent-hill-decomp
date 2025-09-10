@@ -4,7 +4,7 @@ void Ai_Romper_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords)
     {
         Ai_Romper_Init(chara);
     }
-    else if (g_DeltaTime0 != 0)
+    else if (g_DeltaTime0 != FP_TIME(0.0))
     {
         sharedFunc_800E6420_2_s02(chara);
         sharedFunc_800E66E8_2_s02(chara);

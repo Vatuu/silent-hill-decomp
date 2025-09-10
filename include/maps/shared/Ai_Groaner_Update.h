@@ -9,7 +9,7 @@ void Ai_Groaner_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords)
 
     var = chara->model_0.state_2;
 
-    if (g_DeltaTime0 != 0)
+    if (g_DeltaTime0 != FP_TIME(0.0))
     {
         sharedFunc_800E33DC_2_s00(chara);
         sharedFunc_800E384C_2_s00(chara);
@@ -18,7 +18,7 @@ void Ai_Groaner_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords)
 
     sharedFunc_800E5EC4_2_s00(chara, arg1, coords);
 
-    if (g_DeltaTime0 != 0)
+    if (g_DeltaTime0 != FP_TIME(0.0))
     {
         sharedFunc_800E6338_2_s00(chara); // Control func with state machine?
         sharedFunc_800E71E8_2_s00(chara);

@@ -116,7 +116,7 @@ void Ai_Floatstinger_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coor
         Ai_Floatstinger_Init(chara);
     }
 
-    if (g_DeltaTime0 != 0)
+    if (g_DeltaTime0 != FP_TIME(0.0))
     {
         func_800D1968(chara);
         func_800D1B98(chara);

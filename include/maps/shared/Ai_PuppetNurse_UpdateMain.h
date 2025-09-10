@@ -1,6 +1,6 @@
 void Ai_PuppetNurse_UpdateMain(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords)
 {
-    if (g_DeltaTime0 != 0)
+    if (g_DeltaTime0 != FP_TIME(0.0))
     {
         sharedFunc_800CDF24_3_s03(chara);
         Ai_PuppetNurse_Control(chara);

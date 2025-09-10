@@ -2365,11 +2365,11 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80066184); // 0x
 
 void func_80066D90() // 0x80066D90
 {
-    s32       var_s1;
+    s32       i;
     DR_TPAGE* var1; // Guessed type.
     TILE*     var2; // Guessed type.
 
-    for (var_s1 = 0; var_s1 < 0x3F; var_s1++)
+    for (i = 0; i < 63; i++)
     {
         var1 = PSX_SCRATCH;
         setDrawTPage(var1, 0, 1, getTPageN(0, 2, 0, 0));

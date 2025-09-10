@@ -2396,7 +2396,7 @@ void func_8003E740() // 0x8003E740
 
     static u32 D_800A9FB0 = 0;
 
-    if (g_DeltaTime0 != 0)
+    if (g_DeltaTime0 != FP_TIME(0.0))
     {
         D_800A9FB0 += 8;
         for (i = 0; i < 8; i++)

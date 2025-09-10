@@ -131,7 +131,7 @@ typedef struct
     *(u32*)(&(prim)->r2) = ((((r) + ((g) << 8)) + ((b) << 16)) + ((code) << 24))
 
 /** @brief Combines `addPrim` and `setlen`. */
-#define addPrimFast(ot, p ,_len) \
+#define addPrimFast(ot, p, _len) \
     (((p)->tag = getaddr(ot) | ((_len) << 24)), setaddr(ot, p))
 
 extern _GsFCALL GsFCALL4;
@@ -240,15 +240,15 @@ void SetPriority(PACKET*, s32, s32);
     : "$12", "$13")
 
 #define gte_LoadVector0_1_2_XYZ(xy, z) __asm__ volatile( \
-    /* Load vector 0 */ \
+    /* Load vector 0. */ \
     "lhu   $12, 0(%1);" /* CPU $12   = Z0 (unsigned 16-bit from `z[0]`) */ \
     "lwc2  $0, 0(%0);"  /* COP2 VXY0 = X0,Y0 (packed 2x16-bit from `xy[0]`) */ \
     "mtc2  $12, $1;"    /* COP2 VZ0  = Z0 (low 16 bits used) */ \
-    /* Load vector 1 */ \
+    /* Load vector 1. */ \
     "lhu   $12, 2(%1);" /* CPU $12   = Z1 */ \
     "lwc2  $2, 4(%0);"  /* COP2 VXY1 = X1,Y1 */ \
     "mtc2  $12, $3;"    /* COP2 VZ1  = Z1 */ \
-    /* Load vector 2 */ \
+    /* Load vector 2. */ \
     "lhu   $12, 4(%1);" /* CPU $12   = Z2 */ \
     "lwc2  $4, 8(%0);"  /* COP2 VXY2 = X2,Y2 */ \
     "mtc2  $12, $5;"    /* COP2 VZ2  = Z2 */ \
@@ -257,15 +257,15 @@ void SetPriority(PACKET*, s32, s32);
     : "$12", "memory")
 
 #define gte_FetchScreen0_1_2_XYZ(xy, z) __asm__ volatile( \
-    /* Vertex 0 */ \
+    /* Vertex 0. */ \
     "mfc2  $12, $17;"   /* CPU $12 = SZ1 (depth for vertex 0) */ \
     "swc2  $12, 0(%0);" /* COP2 SXY0 (reg 12) -> xy[0] (packed X0, Y0) */ \
     "sh    $12, 0(%1);" /* CPU $12 (SZ1) -> `z[0]` */ \
-    /* Vertex 1 */ \
+    /* Vertex 1. */ \
     "mfc2  $12, $18;"   /* CPU $12 = SZ2 */ \
     "swc2  $13, 4(%0);" /* COP2 SXY1 (reg 13) -> `xy[1]` */ \
     "sh    $12, 2(%1);" /* CPU $12 (SZ2) -> `z[1]` */ \
-    /* Vertex 2 */ \
+    /* Vertex 2. */ \
     "mfc2  $12, $19;"   /* CPU $12 = SZ3 */ \
     "swc2  $14, 8(%0);" /* COP2 SXY2 (reg 14) -> `xy[2]` */ \
     "sh    $12, 4(%1);" /* CPU $12 (SZ3) -> `z[2]` */ \
@@ -273,10 +273,11 @@ void SetPriority(PACKET*, s32, s32);
     : "r"(xy), "r"(z) \
     : "$12", "memory")
 
-// Less efficient version of `gte_SetRotMatrix` from PsyQ?
-// PsyQ `gte_SetRotMatrix` loads 32-bit words from the `MATRIX` straight into GTE,
-// while this macro reads 16-bit words and combines them into a 32-bit word before loading.
-// Not sure of reason why, wonder if it's from some older PsyQ SDK.
+/** @brief Less efficient version of `gte_SetRotMatrix` from PsyQ?
+* PsyQ `gte_SetRotMatrix` loads 32-bit words from the `MATRIX` straight into GTE,
+* while this macro reads 16-bit words and combines them into a 32-bit word before loading.
+* Not sure of reason why, wonder if it's from some older PsyQ SDK.
+*/
 #define gte_SetRotMatrix_custom(mat) __asm__ volatile( \
     "lhu $12, 16(%0);"                                 \
     "nop;"                                             \
@@ -305,7 +306,7 @@ void SetPriority(PACKET*, s32, s32);
     : "r"(mat)                                         \
     : "$12", "$13", "memory")
 
-/** @brief Loads `x`/`y`/`z` into GTE Vector 0 / `VZY0/VZ0`. */
+/** @brief Loads `x`/`y`/`z` into GTE Vector 0 / `VZY0`/`VZ0`. */
 #define gte_LoadVector0_XYZ(x, y, z) __asm__ volatile( \
     "sll %0, %0, 16;"                                  \
     "srl %0, %0, 16;"                                  \
@@ -318,12 +319,15 @@ void SetPriority(PACKET*, s32, s32);
 
 #endif
 
+/** @brief Sets the GTE's `vxy0` register to 0. */
 #define gte_gte_ldvxy0() __asm__ volatile( \
     "mtc2  $zero, $0;")
 
+/** @brief Sets the GTE's `vz0` register to 0. */
 #define gte_gte_ldvz0() __asm__ volatile( \
     "mtc2  $zero, $1;")
 
+/** @brief Retrieves the value from the GTE's `SZ3` register. */
 #define gte_stSZ3()                                   \
     ({                                                \
         u32 __r;                                      \
