@@ -6,7 +6,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/libsd.h"
-#include "bodyprog/math.h"
+#include "bodyprog/math/math.h"
 #include "main/fsqueue.h"
 
 const s32 rodataPad_80025BF4 = 0;

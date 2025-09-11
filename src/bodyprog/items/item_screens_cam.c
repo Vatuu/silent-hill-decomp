@@ -4,7 +4,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/item_screens.h"
-#include "bodyprog/math.h"
+#include "bodyprog/math/math.h"
 
 void func_8004BB10() // 0x8004BB10
 {

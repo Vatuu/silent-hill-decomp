@@ -3,7 +3,7 @@
 #include <libpad.h>
 
 #include "bodyprog/joy.h"
-#include "bodyprog/math.h"
+#include "bodyprog/math/math.h"
 
 void Joy_Init() // 0x8003441C
 {

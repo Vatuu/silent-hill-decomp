@@ -1,7 +1,7 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/math.h"
+#include "bodyprog/math/math.h"
 #include "main/fsqueue.h"
 
 void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image) // 0x800314EC

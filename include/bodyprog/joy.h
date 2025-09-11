@@ -1,7 +1,7 @@
 #ifndef _JOY_H
 #define _JOY_H
 
-#include "bodyprog/math.h"
+#include "bodyprog/math/math.h"
 
 /** @brief This header is used to declare any variable, struct, or
  * function part of `BODYPROG.BIN` identified to be related

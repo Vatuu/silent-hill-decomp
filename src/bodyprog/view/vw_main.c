@@ -1,7 +1,7 @@
 #include "game.h"
 
 #include "bodyprog/vw_system.h"
-#include "bodyprog/math.h"
+#include "bodyprog/math/math.h"
 
 void vwInitViewInfo() // 0x80048A38
 {

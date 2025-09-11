@@ -4,7 +4,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/gfx/screen_draw.h"
-#include "bodyprog/math.h"
+#include "bodyprog/math/math.h"
 #include "main/fsqueue.h"
 
 const s32 rodataPad_80024CA0 = 0;

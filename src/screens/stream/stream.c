@@ -9,7 +9,7 @@
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/joy.h"
 #include "bodyprog/libsd.h"
-#include "bodyprog/math.h"
+#include "bodyprog/math/math.h"
 #include "main/fileinfo.h"
 #include "screens/stream/stream.h"
 

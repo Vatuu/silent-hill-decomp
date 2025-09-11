@@ -6,7 +6,7 @@
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/memcard.h"
-#include "bodyprog/math.h"
+#include "bodyprog/math/math.h"
 
 #define SAVE_FLASH_TIMER_MAX 40
 #define SLOT_COLUMN_OFFSET   150

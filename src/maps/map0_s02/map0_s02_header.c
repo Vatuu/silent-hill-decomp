@@ -1,6 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "maps/map0/map0_s02.h"
-#include "bodyprog/math.h"
+#include "bodyprog/math/math.h"
 #include "maps/shared.h"
 
 #define func_800CECB0 (0x800CECB0)

@@ -10,7 +10,7 @@
 #include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/item_screens.h"
-#include "bodyprog/math.h"
+#include "bodyprog/math/math.h"
 #include "bodyprog/memcard.h"
 #include "bodyprog/player_logic.h"
 #include "main/fsqueue.h"

@@ -1,6 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "maps/map0/map0_s01.h"
-#include "bodyprog/math.h"
+#include "bodyprog/math/math.h"
 #include "maps/shared.h"
 
 #define func_800DCCF4 ((void(*)())0x800DCCF4)

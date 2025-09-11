@@ -3,7 +3,7 @@
 #include "gtemac.h"
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/vw_system.h"
-#include "bodyprog/math.h"
+#include "bodyprog/math/math.h"
 
 // Reference view transform?
 extern MATRIX D_800C3868;

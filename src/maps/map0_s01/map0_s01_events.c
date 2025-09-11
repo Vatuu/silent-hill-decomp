@@ -1,6 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/gfx/screen_draw.h"
-#include "bodyprog/math.h"
+#include "bodyprog/math/math.h"
 #include "main/rng.h"
 #include "maps/map0/map0_s01.h"
 #include "maps/shared.h"

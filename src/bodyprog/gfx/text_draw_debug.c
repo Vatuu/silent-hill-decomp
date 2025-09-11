@@ -4,7 +4,7 @@
 
 #include "bodyprog/bodyprog.h" // Only needed because of `D_800B5C58`.
 #include "bodyprog/gfx/text_draw.h"
-#include "bodyprog/math.h"
+#include "bodyprog/math/math.h"
 
 DVECTOR g_Gfx_DebugStringPosition0 = {};
 DVECTOR g_Gfx_DebugStringPosition1 = {};

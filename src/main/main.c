@@ -8,7 +8,7 @@
 #include <libspu.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/math.h"
+#include "bodyprog/math/math.h"
 #include "main/fsqueue.h"
 
 // @hack Explicit rodata here because these need to be referenced externally to end up in .rodata,

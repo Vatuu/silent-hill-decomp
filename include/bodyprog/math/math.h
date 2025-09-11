@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_MATH_H
-#define _BODYPROG_MATH_H
+#ifndef _BODYPROG_MATH_MATH_H
+#define _BODYPROG_MATH_MATH_H
 
 #include <limits.h>
 #include "bodyprog/math/constants.h"

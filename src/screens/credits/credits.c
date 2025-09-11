@@ -5,7 +5,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/credits.h"
 #include "bodyprog/gfx/screen_draw.h"
-#include "bodyprog/math.h"
+#include "bodyprog/math/math.h"
 #include "main/rng.h"
 #include "screens/credits/credits.h"
 
