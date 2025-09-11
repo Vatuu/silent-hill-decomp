@@ -485,12 +485,12 @@ typedef struct
     s32 field_C;
     s32 field_10;
     s32 field_14;
-    s32 field_18;
-    s32 field_1C;
-    s32 field_20;
-    s32 field_24;
-    s32 field_28;
-    s32 field_2C;
+    s32 field_18; // X } Bounds?
+    s32 field_1C; // X }
+    s32 field_20; // Z }
+    s32 field_24; // Z }
+    s32 field_28; // } Q19.12, maybe XZ position.
+    s32 field_2C; // }
 } s_func_8006F338;
 
 typedef struct
@@ -1247,18 +1247,18 @@ typedef struct
 typedef struct
 {
     s32 field_0_0  : 1;
-    s32 field_0_1  : 10;
-    s32 field_0_11 : 10;
-    u32 field_0_21 : 4;
-    u32 field_0_25 : 4;
+    s32 field_0_1  : 10; // X
+    s32 field_0_11 : 10; // Z
+    u32 field_0_21 : 4;  // X
+    u32 field_0_25 : 4;  // Z
     u32 field_0_29 : 3;
 } s_func_8006F8FC;
 
 typedef struct
 {
-    u16 field_0;
-    u8  field_2;
-    u8  unk_3;
+    u16              field_0;
+    u8               field_2;
+    u8               unk_3;
     s_func_8006F8FC* field_4[20]; // Guessed size.
 } s_800C4478;
 
@@ -3506,15 +3506,17 @@ void func_8006F250(s_func_8006F250* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4
 
 void func_8006F338(s_func_8006F338* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
-s32 func_8006F3C4(s_func_8006F338* arg0, s_func_8006F8FC* arg1);
+bool func_8006F3C4(s_func_8006F338* arg0, s_func_8006F8FC* arg1);
 
-s32 func_8006F620(VECTOR3* arg0, s_func_8006AB50* arg1, s32 arg2, s32 arg3);
+/** Translates something. */
+s32 func_8006F620(VECTOR3* pos, s_func_8006AB50* arg1, s32 arg2, s32 arg3);
 
-void func_8006F8FC(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s_func_8006F8FC* arg4);
+void func_8006F8FC(s32* outX, s32* outZ, s32 posX, s32 posZ, const s_func_8006F8FC* arg4);
 
 s16 func_8006F99C(s_SubCharacter* chara, s32 arg1, s16 arg2);
 
-s16 func_8006FAFC(s_SubCharacter* arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s32 arg5);
+/** Creates random angle of some kind. */
+q7_8 func_8006FAFC(s_SubCharacter* chara, s32 dist, s32 arg2, s32 arg3, s16 arg4, s32 arg5);
 
 bool func_8006FD90(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3);
 
@@ -3536,7 +3538,7 @@ bool func_80070208(s_SubCharacter* chara, s32 arg1);
 
 s32 func_8007029C(s_SubCharacter* chara, s32 arg1, s16 angle);
 
-void func_800705E4(GsCOORDINATE2*, s32, s32, s32, s32);
+void func_800705E4(GsCOORDINATE2* coord, s32 idx, s32 scaleX, s32 scaleY, s32 scaleZ);
 
 void func_8007D6E0();
 
