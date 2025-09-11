@@ -1,5 +1,5 @@
-#ifndef _MAP7_S02_H
-#define _MAP7_S02_H
+#ifndef _MAPS_MAP7_S02_H
+#define _MAPS_MAP7_S02_H
 
 void Ai_GhostDoctor_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
 

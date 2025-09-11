@@ -1,5 +1,5 @@
-#ifndef _MEMCARD_H
-#define _MEMCARD_H
+#ifndef _BODYPROG_MEMCARD_H
+#define _BODYPROG_MEMCARD_H
 
 #include "screens/saveload/saveload.h"
 

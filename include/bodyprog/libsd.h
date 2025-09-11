@@ -1,5 +1,5 @@
-#ifndef _LIBSD_H
-#define _LIBSD_H
+#ifndef _BODYPROG_LIBSD_H
+#define _BODYPROG_LIBSD_H
 
 #include <libsnd.h>
 

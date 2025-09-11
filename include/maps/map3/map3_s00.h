@@ -1,5 +1,5 @@
-#ifndef _MAP3_S00_H
-#define _MAP3_S00_H
+#ifndef _MAPS_MAP3_S00_H
+#define _MAPS_MAP3_S00_H
 
 #include "common.h"
 

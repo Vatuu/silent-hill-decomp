@@ -1,5 +1,5 @@
-#ifndef _MAP5_S01_H
-#define _MAP5_S01_H
+#ifndef _MAPS_MAP5_S01_H
+#define _MAPS_MAP5_S01_H
 
 void func_800DEF80();
 

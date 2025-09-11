@@ -1,5 +1,5 @@
-#ifndef _MAP0_S02_H
-#define _MAP0_S02_H
+#ifndef _MAPS_MAP0_S02_H
+#define _MAPS_MAP0_S02_H
 
 #include "types.h"
 

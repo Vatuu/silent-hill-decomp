@@ -1,5 +1,5 @@
-#ifndef _STREAM_H
-#define _STREAM_H
+#ifndef _SCREENS_STREAM_H
+#define _SCREENS_STREAM_H
 
 #include "common.h"
 

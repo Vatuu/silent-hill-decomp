@@ -1,5 +1,5 @@
-#ifndef _MAP6_S04_H
-#define _MAP6_S04_H
+#ifndef _MAPS_MAP6_S04_H
+#define _MAPS_MAP6_S04_H
 
 extern s_AnimInfo FLAUROS_ANIM_INFOS[];
 extern s_AnimInfo PARASITE_ANIM_INFOS[];

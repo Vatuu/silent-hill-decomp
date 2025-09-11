@@ -1,5 +1,5 @@
-#ifndef _MAP1_S01_H
-#define _MAP1_S01_H
+#ifndef _MAPS_MAP1_S01_H
+#define _MAPS_MAP1_S01_H
 
 extern s_AnimInfo CAT_ANIM_INFOS[];
 

@@ -1,5 +1,5 @@
-#ifndef _MAP4_S05_H
-#define _MAP4_S05_H
+#ifndef _MAPS_MAP4_S05_H
+#define _MAPS_MAP4_S05_H
 
 extern s32 D_800D7858;
 

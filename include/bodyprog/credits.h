@@ -1,5 +1,5 @@
-#ifndef _CREDITS_H
-#define _CREDITS_H
+#ifndef _BODYPROG_CREDITS_H
+#define _BODYPROG_CREDITS_H
 
 /** @brief This header is used to declare any variable, struct, or
  * function part of `BODYPROG.BIN` identified to be related

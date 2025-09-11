@@ -1,5 +1,5 @@
-#ifndef _SCREEN_DRAW_H
-#define _SCREEN_DRAW_H
+#ifndef _BODYPROG_GFX_SCREEN_DRAW_H
+#define _BODYPROG_GFX_SCREEN_DRAW_H
 
 /** @brief This header is used to declare any variable, struct, or
  * function part of `BODYPROG.BIN` identified to be related

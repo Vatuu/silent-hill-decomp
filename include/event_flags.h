@@ -1,5 +1,6 @@
 /** @brief Game event flag IDs stored in savegame.
- * Can be accessed through `Savegame_EventFlagGet` / `Savegame_EventFlagSet` */
+ * Accessed via `Savegame_EventFlagGet`/`Savegame_EventFlagSet`
+ */
 typedef enum _EventFlag
 {
     EventFlag_0 = 0, // M0S01 FirstAidKit? Also used in M0S02, might just be a default.

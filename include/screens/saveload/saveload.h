@@ -1,5 +1,5 @@
-#ifndef _SAVELOAD_H
-#define _SAVELOAD_H
+#ifndef _SCREENS_SAVELOAD_H
+#define _SCREENS_SAVELOAD_H
 
 #include "common.h"
 

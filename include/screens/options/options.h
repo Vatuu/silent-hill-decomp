@@ -1,5 +1,5 @@
-#ifndef _OPTIONS_H
-#define _OPTIONS_H
+#ifndef _SCREENS_OPTIONS_H
+#define _SCREENS_OPTIONS_H
 
 #include "common.h"
 

@@ -1,5 +1,5 @@
-#ifndef _JOY_H
-#define _JOY_H
+#ifndef _BODYPROG_JOY_H
+#define _BODYPROG_JOY_H
 
 #include "bodyprog/math/math.h"
 

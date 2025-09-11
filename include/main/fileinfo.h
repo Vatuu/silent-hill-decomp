@@ -1,5 +1,5 @@
-#ifndef _FILETABLE_H
-#define _FILETABLE_H
+#ifndef _MAIN_FILETABLE_H
+#define _MAIN_FILETABLE_H
 
 #include "common.h"
 

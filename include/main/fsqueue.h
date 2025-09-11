@@ -1,5 +1,5 @@
-#ifndef _FSQUEUE_H
-#define _FSQUEUE_H
+#ifndef _MAIN_FSQUEUE_H
+#define _MAIN_FSQUEUE_H
 
 #include "gpu.h"
 #include "main/fileinfo.h"

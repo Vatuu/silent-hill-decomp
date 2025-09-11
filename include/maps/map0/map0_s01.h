@@ -1,5 +1,5 @@
-#ifndef _MAP0_S01_H
-#define _MAP0_S01_H
+#ifndef _MAPS_MAP0_S01_H
+#define _MAPS_MAP0_S01_H
 
 #include "bodyprog/bodyprog.h"
 #include "maps/shared.h"

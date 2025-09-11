@@ -1,5 +1,5 @@
-#ifndef _MAP4_S03_H
-#define _MAP4_S03_H
+#ifndef _MAPS_MAP4_S03_H
+#define _MAPS_MAP4_S03_H
 
 extern s_AnimInfo TWINFEELER_ANIM_INFOS[];
 

@@ -1,5 +1,5 @@
-#ifndef _MAP1_S03_H
-#define _MAP1_S03_H
+#ifndef _MAPS_MAP1_S03_H
+#define _MAPS_MAP1_S03_H
 
 extern s_AnimInfo LOCKER_DEAD_BODY_ANIM_INFOS[8];
 

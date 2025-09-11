@@ -1,5 +1,5 @@
-#ifndef _MAP7_S03_H
-#define _MAP7_S03_H
+#ifndef _MAPS_MAP7_S03_H
+#define _MAPS_MAP7_S03_H
 
 extern s32 D_800EDA00;
 extern s16 D_800F23D0;

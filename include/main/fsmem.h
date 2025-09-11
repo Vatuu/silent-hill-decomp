@@ -1,5 +1,5 @@
-#ifndef _FSMEM_H
-#define _FSMEM_H
+#ifndef _MAIN_FSMEM_H
+#define _MAIN_FSMEM_H
 
 #include "common.h"
 

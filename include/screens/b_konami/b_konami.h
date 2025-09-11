@@ -1,5 +1,5 @@
-#ifndef _B_KONAMI_H
-#define _B_KONAMI_H
+#ifndef _SCREENS_B_KONAMI_H
+#define _SCREENS_B_KONAMI_H
 
 #include "common.h"
 
