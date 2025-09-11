@@ -21,23 +21,23 @@
 #define SD_MAGIC_KDT  0x2054444B
 #define SD_MAGIC_KDT1 0x3154444B
 
-extern s32 sd_reverb_mode;
-extern s16 sd_keyoff_mode;
-extern s32 sd_interrupt_start_flag;
-extern s32 sd_tick_mode;
-extern u8  sd_vb_malloc_rec[];
-extern s32 sd_reserved_voice;
-extern s32 sd_mono_st_flag;
-extern s32 sd_int_flag;
-extern s32 sd_int_flag2;
-extern s32 sd_timer_sync;
-extern s32 smf_start_flag;
-extern u32 body_partly_size;
-extern s16 sd_seq_loop_mode;
-extern s32 sd_timer_event;
-extern s32 smf_file_no;
-extern u32 spu_ch_tbl[24];
-extern u16 PitchTbl[12][128];
+extern s32  sd_reverb_mode;
+extern s16  sd_keyoff_mode;
+extern bool sd_interrupt_start_flag;
+extern s32  sd_tick_mode;
+extern u8   sd_vb_malloc_rec[];
+extern s32  sd_reserved_voice;
+extern bool sd_mono_st_flag;
+extern bool sd_int_flag;
+extern bool sd_int_flag2;
+extern s32  sd_timer_sync;
+extern bool smf_start_flag;
+extern u32  body_partly_size;
+extern s16  sd_seq_loop_mode;
+extern s32  sd_timer_event;
+extern s32  smf_file_no;
+extern u32  spu_ch_tbl[24];
+extern u16  PitchTbl[12][128];
 
 enum SMF_STAT
 {
@@ -427,7 +427,7 @@ void sound_off();
 
 void    adsr_set(s32 vo, PORT* p);
 void    rr_off(s32 vo);
-s16     voice_check(s32 chan, s32 note, s32 flag);
+s16     voice_check(s32 chan, s32 note, bool flag);
 void    key_on(u8 chan, u8 c1, u8 c2);
 void    key_off(u8 chan, u8 c1, u8 c2);
 void    key_press(u8 chan, u8 c1, u8 c2); // Nullsub.
@@ -442,7 +442,7 @@ void control_code_set(s32 seq_access_num);
 
 // smf_main.c
 
-s32  smf_timer();
+bool smf_timer();
 void smf_timer_set();
 void smf_timer_end();
 void smf_timer_stop();

@@ -4,17 +4,17 @@
 
 #include "bodyprog/libsd.h"
 
-s32 sd_interrupt_start_flag = 0;
-s16 sd_keyoff_mode = 0;
+bool sd_interrupt_start_flag = false;
+s16  sd_keyoff_mode          = 0;
 // 2 bytes of padding.
-s32 sd_mono_st_flag = 0;
-s32 sd_reverb_mode = 0;
-u32 body_partly_size = 0;
+bool sd_mono_st_flag         = false;
+s32  sd_reverb_mode          = 0;
+u32  body_partly_size        = 0;
 
 #include "smf_tables.h"
 
 s32 sd_reserved_voice = 24;
-u32 spu_reverb_sw = 0;
+u32 spu_reverb_sw     = 0;
 
 u32 spu_ch_tbl[24] =
 {
@@ -44,31 +44,31 @@ u32 spu_ch_tbl[24] =
     1 << 23
 };
 
-s32 sd_int_flag = 0;
-s32 sd_int_flag2 = 0;
-s32 smf_start_flag = 0;
-s32 sd_timer_sync = 0;
-u32 timer_count[5] = { 0x1999, 0x2000, 0x4000, 0xFFFF, 0x1A80 };
-s32 sd_timer_flag = 0;
-s32 time_flag = 0xC0;
-s32 smf_file_no = 0;
-u32 print_start = 0;
-char eof_char[3] = { 0xFF, 0x2F, 0x00 };
+bool sd_int_flag    = false;
+bool sd_int_flag2   = false;
+bool smf_start_flag = false;
+s32  sd_timer_sync  = 0;
+u32  timer_count[5] = { 0x1999, 0x2000, 0x4000, 0xFFFF, 0x1A80 };
+bool sd_timer_flag  = false;
+s32  time_flag      = 0xC0;
+s32  smf_file_no    = 0;
+u32  print_start    = 0;
+char eof_char[3]    = { 0xFF, 0x2F, 0x00 };
 // 1 byte padding.
-s32 chantype[18] = { 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 1, 1, 2, 0, 0, 0 };
+s32  chantype[18]   = { 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 1, 1, 2, 0, 0, 0 };
 
-extern s32 sd_timer_flag; // Only used in this file.
+extern bool sd_timer_flag; // TODO: Only used in this file.
 
-s32 smf_timer() // 0x800A6D18
+bool smf_timer() // 0x800A6D18
 {
-    if (sd_interrupt_start_flag == 0 || sd_int_flag != 0)
+    if (!sd_interrupt_start_flag || sd_int_flag)
     {
-        return 1;
+        return true;
     }
 
-    if (sd_int_flag2 == 0)
+    if (!sd_int_flag2)
     {
-        sd_int_flag2 = 1;
+        sd_int_flag2 = true;
         midi_smf_main();
 
         if (sd_timer_sync >= 11)
@@ -78,18 +78,18 @@ s32 smf_timer() // 0x800A6D18
             sd_timer_sync = 0;
         }
 
-        sd_int_flag2 = 0;
+        sd_int_flag2 = false;
         sd_timer_sync++;
     }
 
-    return 0;
+    return false;
 }
 
 void smf_timer_set() // 0x800A6DC0
 {
-    if (sd_timer_flag == 0)
+    if (!sd_timer_flag)
     {
-        sd_timer_flag = 1;
+        sd_timer_flag = true;
 
         EnterCriticalSection();
         sd_timer_event = OpenEvent(RCntCNT2, EvSpINT, EvMdINTR, smf_timer);
@@ -98,14 +98,14 @@ void smf_timer_set() // 0x800A6DC0
         StartRCnt(RCntCNT2);
         ExitCriticalSection();
 
-        sd_int_flag   = 0;
-        sd_timer_flag = 0;
+        sd_int_flag   = false;
+        sd_timer_flag = false;
     }
 }
 
 void smf_timer_end() // 0x800A6E58
 {
-    sd_timer_flag = 1;
+    sd_timer_flag = true;
 
     EnterCriticalSection();
     StopRCnt(RCntCNT2);
@@ -113,30 +113,32 @@ void smf_timer_end() // 0x800A6E58
     CloseEvent(sd_timer_event);
     ExitCriticalSection();
 
-    sd_timer_flag = 0;
-    sd_int_flag   = 0;
+    sd_timer_flag = false;
+    sd_int_flag   = false;
 }
 
 void smf_timer_stop() // 0x800A6EC8
 {
-    sd_timer_flag = 1;
+    sd_timer_flag = true;
 
     EnterCriticalSection();
     StopRCnt(RCntCNT2);
     ExitCriticalSection();
 
-    sd_timer_flag = 0;
-    sd_int_flag   = 0;
+    sd_timer_flag = false;
+    sd_int_flag   = false;
 }
 
 void smf_vsync() // 0x800A6F14
 {
-    if (sd_int_flag2 != 0)
+    if (sd_int_flag2)
+    {
         return;
+    }
 
-    sd_int_flag2 = 1;
+    sd_int_flag2 = true;
 
-    if (smf_start_flag != 0)
+    if (smf_start_flag)
     {
         midi_smf_main();
         midi_smf_main();
@@ -152,5 +154,5 @@ void smf_vsync() // 0x800A6F14
 
     midi_vsync();
     SdAutoKeyOffCheck();
-    sd_int_flag2 = 0;
+    sd_int_flag2 = false;
 }
