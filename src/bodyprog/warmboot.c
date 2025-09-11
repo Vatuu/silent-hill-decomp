@@ -79,7 +79,7 @@ void Game_WarmBoot() // 0x80034264
     e_GameState prevState;
 
     DrawSync(0);
-    Screen_ClearRectInterlaced(0, 32, 512, 448, 0, 0, 0);
+    Screen_RectInterlacedClear(0, 32, 512, 448, 0, 0, 0);
     func_800892A4(4);
     func_80089128();
     Sd_EngineCmd(19);

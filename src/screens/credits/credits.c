@@ -191,11 +191,11 @@ bool func_801E3124() // 0x801E3124
             switch (g_Gfx_ScreenFade)
             {
                 case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, true):
-                    Screen_ClearRectInterlaced(0, 32, 512, 448, FP_COLOR(1.0f), FP_COLOR(1.0f), FP_COLOR(1.0f));
+                    Screen_RectInterlacedClear(0, 32, 512, 448, FP_COLOR(1.0f), FP_COLOR(1.0f), FP_COLOR(1.0f));
                     break;
 
                 case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, false):
-                    Screen_ClearRectInterlaced(0, 32, 512, 448, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
+                    Screen_RectInterlacedClear(0, 32, 512, 448, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
                     break;
             }
 
@@ -242,7 +242,7 @@ s32 func_801E3304() // 0x801E3304
         }
         else
         {
-            Screen_ClearRectInterlaced(0, 32, 320, 448, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
+            Screen_RectInterlacedClear(0, 32, 320, 448, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
             LoadImage(&D_801E557C[0], IMAGE_BUFFER_0);
             LoadImage(&D_801E557C[1], IMAGE_BUFFER_1);
             DrawSync(0);

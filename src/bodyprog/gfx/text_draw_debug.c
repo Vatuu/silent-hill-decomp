@@ -8,7 +8,7 @@
 
 DVECTOR g_Gfx_DebugStringPosition0 = {};
 DVECTOR g_Gfx_DebugStringPosition1 = {};
-s32 g_PrevScreenFadeProgress = 0;
+q19_12 g_PrevScreenFadeProgress = FP_ALPHA(0.0f);
 u32 D_800B5C2C = 0xD892383C;
 s32 g_ScreenFadeTimestep = 0;
 s32 g_VBlanks = 0;
@@ -104,19 +104,21 @@ void Gfx_DebugStringDraw(char* str) // 0x80031F40
     GsOUT_PACKET_P = packet;
 }
 
-char* Math_IntegerToString(s32 widthMin, s32 value) // 0x80032154
+char* Math_IntegerToString(s32 widthMin, s32 val) // 0x80032154
 {
-    s32   isNegative;
-    char* str = PSX_SCRATCH_ADDR(0x1E);
+    bool  isNegative;
+    char* str;
 
-    if (value < 0)
+    str = PSX_SCRATCH_ADDR(0x1E);
+
+    if (val < 0)
     {
-        isNegative = 1;
-        value      = -value;
+        isNegative = true;
+        val        = -val;
     }
     else
     {
-        isNegative = 0;
+        isNegative = false;
     }
 
     *str = 0;
@@ -125,10 +127,10 @@ char* Math_IntegerToString(s32 widthMin, s32 value) // 0x80032154
     {
         str--;
         widthMin--;
-        *str = '0' + (value % 10);
-        value /= 10;
+        *str = '0' + (val % 10);
+        val /= 10;
     }
-    while (value > 0);
+    while (val > 0);
 
     if (isNegative)
     {

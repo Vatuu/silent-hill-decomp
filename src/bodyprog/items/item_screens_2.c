@@ -107,7 +107,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
                 Inventory_AddSpecialItem(InventoryItemId_HyperBlaster, 1);
             }
 
-            Screen_ClearRectInterlaced(0, 0x20, 0x140, 0x1C0, 0u, 0u, 0u);
+            Screen_RectInterlacedClear(0, 0x20, 0x140, 0x1C0, 0u, 0u, 0u);
             Screen_Init(0x140, 1);
 
             g_IntervalVBlanks    = 1;
@@ -263,7 +263,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
 
         // Results screen triggers here.
         case 21:
-            Screen_ClearRectInterlaced(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
+            Screen_RectInterlacedClear(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
             Screen_Init(0x140, 1);
 
             g_IntervalVBlanks                  = 1;

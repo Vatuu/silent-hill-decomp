@@ -1691,7 +1691,7 @@ extern DR_MODE D_800A8E5C[];
 
 extern TILE D_800A8E74[];
 
-extern s32 g_ScreenFadeProgress;
+extern q19_12 g_ScreenFadeProgress;
 
 extern DR_MODE D_800A8E98[];
 
@@ -2022,7 +2022,7 @@ extern const char* g_ItemNames[];
 
 extern const char* g_ItemDescriptions[];
 
-extern s32 g_PrevScreenFadeProgress;
+extern q19_12 g_PrevScreenFadeProgress;
 
 extern s32 g_ScreenFadeTimestep;
 

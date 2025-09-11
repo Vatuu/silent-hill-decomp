@@ -124,7 +124,7 @@ void MainLoop() // 0x80032EE0
     func_8002E7BC();
     func_8002E85C();
     Joy_Init();
-    VSyncCallback(&Gfx_VSyncCallback);
+    VSyncCallback(&Screen_VSyncCallback);
     InitGeom();
     func_8004BB10(); // Initializes something for graphics.
     func_800890B8();
@@ -179,7 +179,7 @@ void MainLoop() // 0x80032EE0
             continue;
         }
 
-        Gfx_FadeUpdate();
+        Screen_FadeUpdate();
         func_8002EB88();
         func_800485D8();
 

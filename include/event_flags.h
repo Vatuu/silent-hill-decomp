@@ -1,5 +1,5 @@
-/** @brief Game event flag IDs stored in savegame.
- * Accessed via `Savegame_EventFlagGet`/`Savegame_EventFlagSet`
+/** @brief Flag indices for game event flags stored in savegame.
+ * Accessed via `Savegame_EventFlagGet`/`Savegame_EventFlagSet`.
  */
 typedef enum _EventFlag
 {

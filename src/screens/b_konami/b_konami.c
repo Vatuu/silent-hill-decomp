@@ -92,7 +92,7 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
         }
 
         Gfx_KonamiScreenDraw();
-        Gfx_FadeUpdate();
+        Screen_FadeUpdate();
         Fs_QueueUpdate();
         func_8002EB88();
         func_80033548();
@@ -316,7 +316,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
         }
         
         Gfx_KcetScreenDraw();
-        Gfx_FadeUpdate();
+        Screen_FadeUpdate();
         Fs_QueueUpdate();
         func_8002EB88();
         func_80033548();
