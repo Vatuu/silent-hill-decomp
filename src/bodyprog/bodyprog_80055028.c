@@ -1831,7 +1831,101 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005BF58); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005C1CC); // 0x8005C1CC
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005C478); // 0x8005C478
+u32 func_8005C478(s16* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) // 0x8005C478
+{
+    s32 sp10;
+    s16 sp18;
+    s16 sp20;
+    s16 temp_s3_3;
+    s32 temp_s1_3;
+    s32 temp_s2_3;
+    s32 var_a0;
+    s32 var_s1;
+    s32 var_v0_4;
+    s32 var_v1;
+    s32 temp;
+
+    sp18      = func_8005BF38(ratan2(arg1 - arg3, arg2 - arg4));
+    sp20      = func_8005BF38(ratan2(arg1 - arg5, arg2 - arg6));
+    temp_s3_3 = func_8005BF38(ratan2(arg5 - arg3, arg6 - arg4));
+    temp_s1_3 = Math_Vector2MagCalc(arg1 - arg3, arg2 - arg4);
+    temp_s2_3 = Math_Vector2MagCalc(arg1 - arg5, arg2 - arg6);
+
+    if (temp_s1_3 * Math_Sin(sp18 - temp_s3_3) < 0)
+    {
+        sp10 = -FP_MULTIPLY(temp_s1_3, Math_Sin(sp18 - temp_s3_3), 0xC);
+    }
+    else
+    {
+        sp10 = FP_MULTIPLY(temp_s1_3, Math_Sin(sp18 - temp_s3_3), 0xC);
+    }
+
+    if (temp_s2_3 < temp_s1_3)
+    {
+        var_a0 = temp_s1_3;
+    }
+    else
+    {
+        var_a0 = temp_s2_3;
+    }
+
+    if (!(temp_s2_3 < temp_s1_3))
+    {
+        var_v1 = temp_s1_3;
+    }
+    else
+    {
+        var_v1 = temp_s2_3;
+    }
+
+    var_a0 = SQUARE(var_a0 >> 6);
+    var_v1 = SQUARE(var_v1 >> 6);
+
+    if (var_a0 < var_v1 + (SQUARE((arg5 - arg3) >> 6) + SQUARE((arg6 - arg4) >> 6)))
+    {
+        if (arg0 != NULL)
+        {
+            if (temp_s1_3 * Math_Cos(sp18 - temp_s3_3) < 0)
+            {
+                var_s1 = -FP_MULTIPLY(temp_s1_3, Math_Cos(sp18 - temp_s3_3), 0xC);
+            }
+            else
+            {
+                var_s1 = FP_MULTIPLY(temp_s1_3, Math_Cos(sp18 - temp_s3_3), 0xC);
+            }
+
+            if ((temp_s2_3 * Math_Cos(sp20 - temp_s3_3)) < 0)
+            {
+                var_v0_4 = -FP_MULTIPLY(temp_s2_3, Math_Cos(sp20 - temp_s3_3), 0xC);
+            }
+            else
+            {
+                var_v0_4 = FP_MULTIPLY(temp_s2_3, Math_Cos(sp20 - temp_s3_3), 0xC);
+            }
+
+            temp  = var_s1 + var_v0_4;
+            *arg0 = ((var_s1 << 0xC) / temp);
+        }
+
+        return ABS(sp10);
+    }
+
+    if (temp_s1_3 < temp_s2_3)
+    {
+        if (arg0 != NULL)
+        {
+            *arg0 = 0;
+        }
+        return ABS(temp_s1_3);
+    }
+
+    if (arg0 != NULL)
+    {
+        *arg0 = 0x1000;
+    }
+
+    return ABS(temp_s2_3);
+}
 
 s16 func_8005C7B0(s32 arg0) // 0x8005C7B0
 {

@@ -3065,6 +3065,8 @@ s_Material_8* func_8005B1FC(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9
 
 void func_8005B55C(GsCOORDINATE2* arg0);
 
+u32 func_8005C478(s16* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
+
 s32 func_8005C7D0(s_SubCharacter* chara);
 
 void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara);
