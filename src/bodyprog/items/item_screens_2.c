@@ -963,7 +963,7 @@ void Inventory_Logic() // 0x8004D518
                                         break;
 
                                     case InventoryItemId_AntiqueShopKey:
-                                        if (Savegame_EventFlagGet(EventFlag_171))
+                                        if (Savegame_EventFlagGet(EventFlag_M2S00_PickupMap))
                                         {
                                             g_SavegamePtr->mapMarkingFlags_1DC |= 1 << 16;
                                         }

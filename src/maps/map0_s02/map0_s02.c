@@ -189,7 +189,7 @@ void Event_EmptyFunction(void) {}
 
 void Event_GasolineTankItemTake(void) // 0x800CEC84
 {
-    Event_ItemTake(InventoryItemId_GasolineTank, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_PickupGasolineTask, 19);
+    Event_ItemTake(InventoryItemId_GasolineTank, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M0S02_PickupGasolineTask, 19);
 }
 
 INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CECB0);

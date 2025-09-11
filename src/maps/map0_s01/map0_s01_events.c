@@ -688,13 +688,13 @@ void Event_AirScreamerIntroCutscene() // 0x800DBAA0
 
 void Event_PocketRadioItemTake() // 0x800DC34C
 {
-    Event_ItemTake(InventoryItemId_PocketRadio, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_PickupPocketRadio, 64);
+    Event_ItemTake(InventoryItemId_PocketRadio, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M0S01_PickupPocketRadio, 64);
     g_SavegamePtr->flags_AC |= 1 << 0;
 }
 
 void Event_FlashlightItemTake() // 0x800DC394
 {
-    Event_ItemTake(InventoryItemId_Flashlight, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_PickupFlashlight, 61);
+    Event_ItemTake(InventoryItemId_Flashlight, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M0S01_PickupFlashlight, 61);
     Game_TurnFlashlightOff();
 }
 
@@ -803,7 +803,7 @@ void Event_MapItemTake() // 0x800DC3C8
 
 void Event_KitchenKnifeItemTake() // 0x800DC830
 {
-    Event_ItemTake(InventoryItemId_KitchenKnife, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_PickupKitchenKnife, 60);
+    Event_ItemTake(InventoryItemId_KitchenKnife, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M0S01_PickupKitchenKnife, 60);
 }
 
 /** Presumably a pickup function. Maybe debug or something unused and commented out. */
@@ -899,7 +899,7 @@ void func_800DC9C8() // 0x800DC9C8
     {
         g_SysWork.flags_22A4 |= (1 << 5) | (1 << 9);
 
-        Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcCoords_FC0, NO_VALUE, NULL, NULL);
+        Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcCoords_FC0[0], NO_VALUE, NULL, NULL);
 
         if (Savegame_EventFlagGet(EventFlag_38))
         {
