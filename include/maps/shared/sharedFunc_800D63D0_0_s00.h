@@ -34,7 +34,7 @@ void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 moveSpeed)
     {
         chara->flags_3E &= ~CharaFlag_Unk2;
 
-        if (g_SysWork.enemyTargetIdx_2353 != func_8005C7D0(chara, curMoveSpeed))
+        if (g_SysWork.enemyTargetIdx_2353 != func_8005C7D0(chara))
         {
             chara->health_B0  = NO_VALUE;
             chara->field_E0_8 = 0;

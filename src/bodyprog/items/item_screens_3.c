@@ -406,7 +406,7 @@ u16 D_800AE5C8[2] = {0x01E0, 0x0170}; // Passed to `SetDrawOffset`.
 
 // https://decomp.me/scratch/HNL4n something to do with animations?
 // `var_s7 = *(((animStatus + 1) * 2) + &D_800AE5CC) - *((animStatus * 2) + &D_800AE5CC);`
-u16 D_800AE5CC[18] = 
+s16 D_800AE5CC[18] = 
 {
     0x0000, 0x0001, 0x0004, 0x0007,
     0x0009, 0x000B, 0x000D, 0x000F,
@@ -417,7 +417,7 @@ u16 D_800AE5CC[18] =
 
 // https://decomp.me/scratch/HNL4n Referenced under `if (g_GameWork.config_0.optExtraBloodColor_24 != 0xE)`
 // Similar access pattern to the table above.
-u16 D_800AE5F0[136] =
+s16 D_800AE5F0[136] =
 {
     0x0001, 0x0000, 0x0001, 0x0000,
     0x0360, 0x00C0, 0x03E0, 0xFD90,

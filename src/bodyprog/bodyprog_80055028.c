@@ -1838,7 +1838,7 @@ s16 func_8005C7B0(s32 arg0) // 0x8005C7B0
     return D_800AE520[arg0 >> 5];
 }
 
-s32 func_8005C7D0(s_SubCharacter* chara, s32 moveSpeed) // 0x8005C7D0
+s32 func_8005C7D0(s_SubCharacter* chara) // 0x8005C7D0
 {
     s32             i = 0;
     s_SubCharacter* npc;
@@ -2305,7 +2305,61 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80060044); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800611C0); // 0x800611C0
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800622B8); // 0x800622B8
+void func_800622B8(s32 arg0, s_SubCharacter* arg1, s32 animStatus, s32 arg3) // 0x800622B8
+{
+    s_func_800699F8 sp10;
+    s32             temp_s0;
+    s32             temp_s2;
+    s32             temp_s3;
+    s32             temp_v0;
+    s32             var_s7;
+
+    if (g_GameWork.config_0.optExtraBloodColor_24 == 0xE)
+    {
+        return;
+    }
+
+    arg3   = func_8005F55C(arg3);
+    var_s7 = D_800AE5CC[animStatus + 1] - D_800AE5CC[animStatus];
+
+    while (var_s7 > 0)
+    {
+        temp_v0 = func_8005E7E0(3);
+        if (temp_v0 == -1)
+        {
+            break;
+        }
+
+        temp_s0 = (D_800AE5CC[animStatus] + var_s7) - 1;
+
+        temp_s3 = Rng_Rand16() % D_800AE5F0[temp_s0 * 4] + D_800AE5F0[temp_s0 * 4 + 1];
+        temp_s2 = Rng_Rand16() % D_800AE5F0[temp_s0 * 4 + 2] + D_800AE5F0[temp_s0 * 4 + 3];
+
+        g_MapOverlayHeader.unkTable1_4C[temp_v0].vx_0 =
+            arg1->position_18.vx + FP_MULTIPLY(temp_s3, Math_Sin(arg1->rotation_24.vy), 12) - FP_MULTIPLY(temp_s2, Math_Cos(arg1->rotation_24.vy), 12);
+
+        g_MapOverlayHeader.unkTable1_4C[temp_v0].vy_8 = arg1->position_18.vy;
+
+        g_MapOverlayHeader.unkTable1_4C[temp_v0].vz_4 =
+            arg1->position_18.vz + FP_MULTIPLY(temp_s3, Math_Cos(arg1->rotation_24.vy), 12) + FP_MULTIPLY(temp_s2, Math_Sin(arg1->rotation_24.vy), 12);
+
+        func_800699F8(&sp10, g_MapOverlayHeader.unkTable1_4C[temp_v0].vx_0, g_MapOverlayHeader.unkTable1_4C[temp_v0].vz_4);
+
+        if (ABS_DIFF(sp10.groundHeight_0, arg1->position_18.vy) > 0x266)
+        {
+            g_MapOverlayHeader.unkTable1_4C[(temp_v0)].field_A = 0;
+        }
+        else
+        {
+            g_MapOverlayHeader.unkTable1_4C[temp_v0].field_E  = D_800AE700[animStatus] + (Rng_Rand16() % (D_800AE700[animStatus] >> 2));
+            g_MapOverlayHeader.unkTable1_4C[temp_v0].field_D  = arg3;
+            g_MapOverlayHeader.unkTable1_4C[temp_v0].field_B  = (Rng_Rand16() & 3) + 4;
+            g_MapOverlayHeader.unkTable1_4C[temp_v0].field_C  = func_8005C7D0(arg1);
+            g_MapOverlayHeader.unkTable1_4C[temp_v0].field_10 = Rng_Rand16() & 0x1FFF;
+        }
+        var_s7 -= 1;
+    }
+}
 
 void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3) // 0x800625F4
 {

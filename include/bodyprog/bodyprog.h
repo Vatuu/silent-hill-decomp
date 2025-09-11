@@ -1955,6 +1955,12 @@ extern s16 D_800AE520[];
 
 extern s16 D_800AE564[];
 
+extern s16 D_800AE5CC[];
+
+extern s16 D_800AE5F0[];
+
+extern u8 D_800AE700[];
+
 extern u8 D_800AE740[];
 
 /** Angle? */
@@ -3059,7 +3065,7 @@ s_Material_8* func_8005B1FC(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9
 
 void func_8005B55C(GsCOORDINATE2* arg0);
 
-s32 func_8005C7D0(s_SubCharacter* chara, s32 moveSpeed);
+s32 func_8005C7D0(s_SubCharacter* chara);
 
 void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara);
 
@@ -3393,7 +3399,7 @@ void func_8006342C(s32 invItemId, s16, s16, GsCOORDINATE2*);
 
 s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 x, s16 z);
 
-void func_800622B8(s32, s_SubCharacter*, s32 animStatus, s32);
+void func_800622B8(s32 arg0, s_SubCharacter* arg1, s32 animStatus, s32 arg3);
 
 void func_80064F04(VECTOR3* arg0, s8 arg1, s16 arg2);
 
