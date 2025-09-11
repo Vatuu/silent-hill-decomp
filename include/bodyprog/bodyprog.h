@@ -1246,10 +1246,20 @@ typedef struct
 
 typedef struct
 {
+    s32 field_0_0  : 1;
+    s32 field_0_1  : 10;
+    s32 field_0_11 : 10;
+    u32 field_0_21 : 4;
+    u32 field_0_25 : 4;
+    u32 field_0_29 : 3;
+} s_func_8006F8FC;
+
+typedef struct
+{
     u16 field_0;
     u8  field_2;
     u8  unk_3;
-    s32 field_4[20]; // Guessed size.
+    s_func_8006F8FC* field_4[20]; // Guessed size.
 } s_800C4478;
 
 typedef struct
@@ -1641,16 +1651,6 @@ typedef struct
     s16 field_18;
     s16  unk_1A;
 } s_800AE204;
-
-typedef struct
-{
-    s32 field_0_0  : 1;
-    s32 field_0_1  : 10;
-    s32 field_0_11 : 10;
-    u32 field_0_21 : 4;
-    u32 field_0_25 : 4;
-    u32 field_0_29 : 3;
-} s_func_8006F8FC;
 
 typedef struct
 {
@@ -3506,9 +3506,15 @@ void func_8006F250(s_func_8006F250* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4
 
 void func_8006F338(s_func_8006F338* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
+s32 func_8006F3C4(s_func_8006F338* arg0, s_func_8006F8FC* arg1);
+
+s32 func_8006F620(VECTOR3* arg0, s_func_8006AB50* arg1, s32 arg2, s32 arg3);
+
 void func_8006F8FC(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s_func_8006F8FC* arg4);
 
 s16 func_8006F99C(s_SubCharacter* chara, s32 arg1, s16 arg2);
+
+s16 func_8006FAFC(s_SubCharacter* arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s32 arg5);
 
 bool func_8006FD90(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3);
 

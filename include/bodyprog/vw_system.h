@@ -376,6 +376,7 @@ void           vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, s32 ref_x, s32 ref
 void           vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, const MATRIX* cammat);
 void           vwSetViewInfo();
 void           Vw_ClampAngleRange(s16* angleMin, s16* angleMax, s16 angleConstraintMin, s16 angleConstraintMax);
+s16            func_80048E3C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 
 // vw_calc.c
 
