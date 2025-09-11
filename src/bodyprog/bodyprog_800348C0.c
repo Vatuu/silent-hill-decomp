@@ -2145,7 +2145,7 @@ void GameState_InGame_Update() // 0x80038BD4
         g_MapOverlayHeader.func_40();
     }
 
-    Gfx_CutsceneCameraStateUpdate();
+    Screen_CutsceneCameraStateUpdate();
     func_80035DB4(0);
     Demo_DemoRandSeedRestore();
     Demo_DemoRandSeedRestore();

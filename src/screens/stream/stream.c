@@ -134,9 +134,9 @@ void open_main(s32 file_idx, s16 num_frames) // 0x801E2AA4
         num_frames = g_FileTable[file_idx].blockCount_0_19 - 7;
     }
 
-    Screen_ClearRectInterlaced(0, 16, 480, 480, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
+    Screen_RectInterlacedClear(0, 16, 480, 480, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
     movie_main(NULL, num_frames, g_FileTable[file_idx].startSector_0_0);
-    Screen_ClearRectInterlaced(0, 16, 480, 480, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
+    Screen_RectInterlacedClear(0, 16, 480, 480, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
     VSync(0);
     GsSwapDispBuff();
 }
