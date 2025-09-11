@@ -107,11 +107,11 @@ s32 SdSpuMalloc(s32 size)
         return -1;
     }
 
-    for (i = 0; i < 0x10; i++)
+    for (i = 0; i < 16; i++)
     {
         if (sd_spu_alloc[i].size_4 == 0)
         {
-            if (addr + size < 0x80000 - sd_reverb_area_size[sd_reverb_mode])
+            if ((addr + size) < (0x80000 - sd_reverb_area_size[sd_reverb_mode]))
             {
                 sd_spu_alloc[i].addr_0 = addr;
                 sd_spu_alloc[i].size_4 = size;
@@ -119,7 +119,7 @@ s32 SdSpuMalloc(s32 size)
                 return addr;
             }
 
-            return -1U;
+            return -1u;
         }
 
         if (sd_spu_alloc[i + 1].size_4 != 0)
@@ -131,7 +131,7 @@ s32 SdSpuMalloc(s32 size)
             {
                 bytesToNextAlloc = sd_spu_alloc[i].size_4; // Not sure why it replaces the var here...
 
-                for (; i < 0x10; i++)
+                for (; i < 16; i++)
                 {
                     if (sd_spu_alloc[i].size_4 != 0)
                     {
@@ -148,7 +148,7 @@ s32 SdSpuMalloc(s32 size)
                     return addr;
                 }
 
-                return -1U;
+                return -1u;
             }
         }
 
@@ -314,7 +314,7 @@ void SdWorkInit() // 0x8009F400
 
     for (i = 0; i < SD_VAB_SLOTS; i++)
     {
-        vab_h[i].vab_id_0      = -1;
+        vab_h[i].vab_id_0      = NO_VALUE;
         vab_h[i].mvoll_19      = 0x7F;
         vab_h[i].mvolr_1A      = 0x7F;
         vab_h[i].mpan_1B       = 0x40;
@@ -324,7 +324,7 @@ void SdWorkInit() // 0x8009F400
 
     for (i = 0; i < 2; i++)
     {
-        smf_song[i].sd_seq_vab_id_508 = -1;
+        smf_song[i].sd_seq_vab_id_508 = NO_VALUE;
         smf_song[i].sd_seq_stat_50A   = SEQ_NON;
         smf_song[i].sd_seq_mvolr_50E  = 0x7F;
         smf_song[i].sd_seq_mvoll_50C  = 0x7F;
@@ -351,7 +351,7 @@ void SdStart() // 0x8009F4D0
         }
     }
 
-    sd_interrupt_start_flag = 1;
+    sd_interrupt_start_flag = true;
 }
 
 void SdStart2() // 0x8009F510
@@ -366,7 +366,7 @@ void SdSetTickMode(s32 tick_mode) // 0x8009F530
 
 void SdSeqCalledTbyT() // 0x8009F53C
 {
-    if (sd_interrupt_start_flag != 0)
+    if (sd_interrupt_start_flag)
     {
         smf_vsync();
     }
@@ -374,12 +374,12 @@ void SdSeqCalledTbyT() // 0x8009F53C
 
 void SdSetStereo() // 0x8009F568
 {
-    sd_mono_st_flag = 0;
+    sd_mono_st_flag = false;
 }
 
 void SdSetMono() // 0x8009F574
 {
-    sd_mono_st_flag = 1;
+    sd_mono_st_flag = true;
 }
 
 char SdSetReservedVoice(char voices) // 0x8009F584
@@ -873,7 +873,7 @@ s16 SdSeqOpen(s32* addr, s16 vab_id) // 0x800A00A4
 {
     s32 i;
 
-    sd_int_flag = 1;
+    sd_int_flag = true;
 
     if (*addr != SD_MAGIC_SEQp && *addr != SD_MAGIC_MThd && *addr != SD_MAGIC_KDT && *addr != SD_MAGIC_KDT1)
     {
@@ -888,18 +888,18 @@ s16 SdSeqOpen(s32* addr, s16 vab_id) // 0x800A00A4
             smf_song[i].sd_seq_start_addr_514 = addr;
             smf_song[i].sd_seq_vab_id_508     = vab_id;
 
-            sd_int_flag = 0;
+            sd_int_flag = false;
             return i;
         }
     }
 
-    sd_int_flag = 0;
+    sd_int_flag = false;
     return -1;
 }
 
 s16 SdSeqOpenWithAccNum(s32* addr, s16 vab_id, s16 acc_num) // 0x800A0154
 {
-    sd_int_flag = 1;
+    sd_int_flag = true;
 
     if (*addr != SD_MAGIC_SEQp && *addr != SD_MAGIC_MThd && *addr != SD_MAGIC_KDT && *addr != SD_MAGIC_KDT1)
     {
@@ -912,11 +912,11 @@ s16 SdSeqOpenWithAccNum(s32* addr, s16 vab_id, s16 acc_num) // 0x800A0154
         smf_song[acc_num].sd_seq_start_addr_514 = addr;
         smf_song[acc_num].sd_seq_vab_id_508     = vab_id;
 
-        sd_int_flag = 0;
+        sd_int_flag = false;
         return acc_num;
     }
 
-    sd_int_flag = 0;
+    sd_int_flag = false;
     return -1;
 }
 
@@ -927,11 +927,11 @@ void SdSeqPlay(s16 seq_access_num, u8 play_mode, s16 l_count) // 0x800A0210
         return;
     }
 
-    sd_int_flag = 1;
+    sd_int_flag = true;
 
     if (smf_song[seq_access_num].sd_seq_vab_id_508 == -1)
     {
-        sd_int_flag = 0;
+        sd_int_flag = false;
         return;
     }
 
@@ -948,24 +948,24 @@ void SdSeqPlay(s16 seq_access_num, u8 play_mode, s16 l_count) // 0x800A0210
     }
     else
     {
-        smf_start_flag = 1;
+        smf_start_flag = true;
 
         smf_song[seq_access_num].sd_seq_stat_50A = SEQ_PLAY;
     }
 
-    sd_int_flag = 0;
+    sd_int_flag = false;
 }
 
 void SdSeqStop(s16 seq_access_num) // 0x800A02D8
 {
-    if (seq_access_num == -1)
+    if (seq_access_num == NO_VALUE)
     {
         return;
     }
 
-    if (smf_song[seq_access_num].sd_seq_vab_id_508 != -1)
+    if (smf_song[seq_access_num].sd_seq_vab_id_508 != NO_VALUE)
     {
-        sd_int_flag = 1;
+        sd_int_flag = true;
 
         midi_smf_stop(seq_access_num);
         sound_seq_off(seq_access_num);
@@ -973,28 +973,28 @@ void SdSeqStop(s16 seq_access_num) // 0x800A02D8
         smf_song[seq_access_num].sd_seq_mvoll_50C = 127;
         smf_song[seq_access_num].sd_seq_stat_50A  = SEQ_STOP;
 
-        sd_int_flag = 0;
+        sd_int_flag = false;
     }
 }
 
 void SdSeqClose(s16 seq_access_num) // 0x800A037C
 {
-    if (seq_access_num == -1)
+    if (seq_access_num == NO_VALUE)
     {
         return;
     }
 
-    if (smf_song[seq_access_num].sd_seq_vab_id_508 != -1)
+    if (smf_song[seq_access_num].sd_seq_vab_id_508 != NO_VALUE)
     {
-        sd_int_flag = 1;
+        sd_int_flag = true;
 
         tone_adsr_back(smf_song[seq_access_num].sd_seq_vab_id_508);
-        smf_song[seq_access_num].sd_seq_vab_id_508 = -1;
+        smf_song[seq_access_num].sd_seq_vab_id_508 = NO_VALUE;
         smf_song[seq_access_num].sd_seq_stat_50A   = SEQ_NON;
         smf_song[seq_access_num].sd_seq_mvolr_50E  = 127;
         smf_song[seq_access_num].sd_seq_mvoll_50C  = 127;
 
-        sd_int_flag = 0;
+        sd_int_flag = false;
     }
 }
 
@@ -1003,12 +1003,12 @@ void SdSeqPause(s16 seq_access_num) // 0x800A0418
     SpuVoiceAttr s_attr;
     s32          vc;
 
-    if (seq_access_num == -1)
+    if (seq_access_num == NO_VALUE)
     {
         return;
     }
 
-    sd_int_flag = 1;
+    sd_int_flag = true;
 
     for (vc = 0; vc < sd_reserved_voice; vc++)
     {
@@ -1024,7 +1024,7 @@ void SdSeqPause(s16 seq_access_num) // 0x800A0418
 
     smf_song[seq_access_num].sd_seq_stat_50A = SEQ_PAUSE;
 
-    sd_int_flag = 0;
+    sd_int_flag = false;
 }
 
 void SdSeqReplay(s16 seq_access_num) // 0x800A0534
@@ -1034,12 +1034,12 @@ void SdSeqReplay(s16 seq_access_num) // 0x800A0534
     s32           vc;
     u32           temp_v1;
 
-    if (seq_access_num == -1)
+    if (seq_access_num == NO_VALUE)
     {
         return;
     }
 
-    sd_int_flag = 1;
+    sd_int_flag = true;
 
     for (vc = 0; vc < sd_reserved_voice; vc++)
     {
@@ -1067,7 +1067,7 @@ void SdSeqReplay(s16 seq_access_num) // 0x800A0534
     smf_song[seq_access_num].sd_seq_stat_50A = SEQ_PLAY;
     control_code_set(seq_access_num);
 
-    sd_int_flag = 0;
+    sd_int_flag = false;
 }
 
 void SdSeqSetVol(s16 seq_access_num, s16 voll, s16 volr) // 0x800A06F0
@@ -1228,7 +1228,7 @@ s32 SdVoKeyOn(s32 vab_pro, s32 pitch, u16 voll, u16 volr) // 0x800A0AA0
 
     sd_vh = vab_h[vabid].vh_addr_4;
 
-    sd_int_flag = 1;
+    sd_int_flag = true;
 
     c = 0;
     for (pc = 0; pc < prog; pc++)
@@ -1284,7 +1284,7 @@ s32 SdVoKeyOn(s32 vab_pro, s32 pitch, u16 voll, u16 volr) // 0x800A0AA0
         }
     }
 
-    sd_int_flag = 0;
+    sd_int_flag = false;
     return vc;
 }
 
@@ -1293,7 +1293,7 @@ void SdVoKeyOff(s32 vab_pro, s32 pitch) // 0x800A0CFC
     s32 i;
     u32 voices = 0;
 
-    sd_int_flag = 1;
+    sd_int_flag = true;
 
     for (i = 0; i < sd_reserved_voice; i++)
     {
@@ -1322,7 +1322,7 @@ void SdVoKeyOff(s32 vab_pro, s32 pitch) // 0x800A0CFC
 
     SpuSetKey(SPU_OFF, voices);
 
-    sd_int_flag = 0;
+    sd_int_flag = false;
 }
 
 void SdVoKeyOffWithRROff(s32 vab_pro, s32 pitch) // 0x800A0E40
@@ -1330,7 +1330,7 @@ void SdVoKeyOffWithRROff(s32 vab_pro, s32 pitch) // 0x800A0E40
     s32 i;
     u32 voices = 0;
 
-    sd_int_flag = 1;
+    sd_int_flag = true;
 
     for (i = 0; i < sd_reserved_voice; i++)
     {
@@ -1359,7 +1359,7 @@ void SdVoKeyOffWithRROff(s32 vab_pro, s32 pitch) // 0x800A0E40
 
     SpuSetKey(SPU_OFF, voices);
 
-    sd_int_flag = 0;
+    sd_int_flag = false;
 }
 
 s16 SdUtKeyOnV(s16 voice, s16 vabid, s16 prog, s16 tone, s16 note, s16 fine, s16 voll, s16 volr) // 0x800A0F80
@@ -1388,7 +1388,7 @@ s16 SdUtKeyOnV(s16 voice, s16 vabid, s16 prog, s16 tone, s16 note, s16 fine, s16
         return -1;
     }
 
-    sd_int_flag = 1;
+    sd_int_flag = true;
 
     vo = voice;
     if ((sd_reserved_voice - 1) < vo)
@@ -1494,7 +1494,7 @@ s16 SdUtKeyOnV(s16 voice, s16 vabid, s16 prog, s16 tone, s16 note, s16 fine, s16
             r_vol                = ((r_vol * master_vol_byte) >> 7);
             smf_port[vo].r_vol_E = (r_vol * volr) >> 7;
 
-            if (sd_mono_st_flag != 0)
+            if (sd_mono_st_flag)
             {
                 l_vol                = (smf_port[vo].l_vol_C + smf_port[vo].r_vol_E) >> 1;
                 smf_port[vo].r_vol_E = l_vol;
@@ -1511,22 +1511,22 @@ s16 SdUtKeyOnV(s16 voice, s16 vabid, s16 prog, s16 tone, s16 note, s16 fine, s16
             }
             while (SpuGetKeyStatus(spu_ch_tbl[vo] == 1) == 0);
 
-            if (sd_vag_atr->mode & 4)
+            if (sd_vag_atr->mode & (1 << 2))
             {
-                SpuSetReverbVoice(1, spu_ch_tbl[vo]);
+                SpuSetReverbVoice(true, spu_ch_tbl[vo]);
             }
             else
             {
-                SpuSetReverbVoice(0, spu_ch_tbl[vo]);
+                SpuSetReverbVoice(false, spu_ch_tbl[vo]);
             }
         }
         else
         {
-            vo = -1;
+            vo = NO_VALUE;
         }
     }
 
-    sd_int_flag = 0;
+    sd_int_flag = false;
     return vo;
 }
 
@@ -1537,19 +1537,19 @@ s16 SdUtKeyOn(s16 vabid, s16 prog, s16 tone, s16 note, s16 fine, s16 voll, s16 v
 
     vc = 0;
 
-    sd_int_flag = 1;
+    sd_int_flag = true;
 
     while (SpuGetKeyStatus(spu_ch_tbl[vc]) != SPU_OFF)
     {
         if (++vc > (sd_reserved_voice - 1))
         {
-            vc = -1;
+            vc = NO_VALUE;
             break;
         }
     }
 
     voice = vc << 0x10;
-    if (vc == -1)
+    if (vc == NO_VALUE)
     {
         vc = 0;
 
@@ -1557,7 +1557,7 @@ s16 SdUtKeyOn(s16 vabid, s16 prog, s16 tone, s16 note, s16 fine, s16 voll, s16 v
         {
             if (++vc > (sd_reserved_voice - 1))
             {
-                vc = -1;
+                vc = NO_VALUE;
                 break;
             }
         }
@@ -1565,12 +1565,12 @@ s16 SdUtKeyOn(s16 vabid, s16 prog, s16 tone, s16 note, s16 fine, s16 voll, s16 v
         voice = vc << 16;
     }
 
-    if (vc != -1)
+    if (vc != NO_VALUE)
     {
         vc = SdUtKeyOnV((voice >> 16), vabid, prog, tone, note, fine, voll, volr);
     }
 
-    sd_int_flag = 0;
+    sd_int_flag = false;
     return vc;
 }
 
@@ -1579,9 +1579,9 @@ s16 SdVbKeyOn(s16 vabid, s32 voice, s16 center, s16 shift, s16 note, s16 voll, s
     SpuVoiceAttr s_attr;
     s32          stat;
 
-    sd_int_flag = 1;
+    sd_int_flag = true;
 
-    if (vabid != -1 && voice < 24)
+    if (vabid != NO_VALUE && voice < 24)
     {
         rr_off(voice);
 
@@ -1636,7 +1636,7 @@ s16 SdVbKeyOn(s16 vabid, s32 voice, s16 center, s16 shift, s16 note, s16 voll, s
         while (SpuGetKeyStatus(spu_ch_tbl[voice] == 1) == SPU_OFF);
     }
 
-    sd_int_flag = 0;
+    sd_int_flag = false;
     return voice;
 }
 
@@ -1645,7 +1645,7 @@ s32 SdUtKeyOffV(s16 vo) // 0x800A18F4
     s32 stat;
     u32 port;
 
-    sd_int_flag = 1;
+    sd_int_flag = true;
     if (smf_port[vo].stat_16 != 0 && smf_port[vo].midi_ch_3 == 32)
     {
         port = spu_ch_tbl[vo];
@@ -1665,11 +1665,11 @@ s32 SdUtKeyOffV(s16 vo) // 0x800A18F4
     }
     else
     {
-        sd_int_flag = 0;
+        sd_int_flag = false;
         return -1;
     }
  
-    sd_int_flag = 0;
+    sd_int_flag = false;
     return 0;
 }
 
@@ -1678,7 +1678,7 @@ s32 SdUtKeyOffVWithRROff(s16 vo) // 0x800A1A18
     s32 stat;
     u32 port;
 
-    sd_int_flag = 1;
+    sd_int_flag = true;
     if (smf_port[vo].stat_16 != 0 && smf_port[vo].midi_ch_3 == 32)
     {
         port = spu_ch_tbl[vo];
@@ -1698,11 +1698,11 @@ s32 SdUtKeyOffVWithRROff(s16 vo) // 0x800A1A18
     }
     else
     {
-        sd_int_flag = 0;
+        sd_int_flag = false;
         return -1;
     }
  
-    sd_int_flag = 0;
+    sd_int_flag = false;
     return 0;
 }
 

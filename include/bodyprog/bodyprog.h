@@ -2131,7 +2131,7 @@ extern s32 D_800C15B8;
 /** Absolute SFX index. */
 extern s16 D_800C15BC;
 
-extern s16 D_800C15BE;
+extern s16 g_Sound_ActiveSfxIdx;
 
 extern u16 D_800C15C0;
 
@@ -2170,8 +2170,8 @@ extern u16 D_800C165A;
 
 extern u16 D_800C1666;
 
-/** `bool` | is stereo enabled? */
-extern u8 D_800C166A;
+/** `bool` */
+extern u8 g_Sound_IsStereoEnabled;
 
 extern s8 D_800C166C;
 
@@ -2195,13 +2195,13 @@ extern s_800C1678 D_800C1678;
 
 extern s16 D_800C1680;
 
-extern u8 g_Sd_VolumeBgm; // 0x800C1685
+extern u8 g_Sound_VolumeBgm; // 0x800C1685
 
-extern u8 g_Sd_VolumeXa; // 0x800C1686
+extern u8 g_Sound_VolumeXa; // 0x800C1686
 
-extern u8 g_Sd_VolumeSe; // 0x800C1684
+extern u8 g_Sound_VolumeSe; // 0x800C1684
 
-extern u8 g_Sd_ReverbDepth; // 0x800C1687;
+extern u8 g_Sound_ReverbDepth; // 0x800C1687;
 
 extern u8 D_800C1673;
 
@@ -2772,7 +2772,7 @@ u16 func_80045BC8();
 /** Sound func. */
 void func_80045BD8(u16 cmd);
 
-void func_80045D28(u8 caseArg);
+void func_80045D28(u8 isStereo);
 
 void sd_init();
 

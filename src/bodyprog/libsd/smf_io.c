@@ -294,12 +294,12 @@ void volume_calc(PORT* p, MIDI* mp) // 0x800A3F14
     sd_seq_play_no = smf_song[p->midi_ch_3 >> 4].sd_seq_vab_id_508;
     pan            = 0x40;
 
-    if ((u8)sd_mono_st_flag == 0)
+    if (!((u8)sd_mono_st_flag))
     {
         pan = ((u8)vab_h[sd_seq_play_no].mpan_1B + p->ppan_12 + p->tpan_13 + mp->pan_1) - 0xC0; // `mpan_1B` `s8` to `u8`.
         if (mp->key_pan_22 != 0)
         {
-            s32 temp = (((s32)(p->note_6 * mp->key_pan_22) >> 6) + 0x40);
+            s32 temp = ((s32)(p->note_6 * mp->key_pan_22) >> 6) + 0x40;
             pan      = (pan + (temp - mp->key_pan_22)) - 0x40;
         }
     }
@@ -380,7 +380,7 @@ void master_vol_set() // 0x800A4260
 {
     s32 i;
 
-    sd_int_flag = 1;
+    sd_int_flag = true;
 
     for (i = 0; i < sd_reserved_voice; i++)
     {
@@ -388,7 +388,7 @@ void master_vol_set() // 0x800A4260
         smf_vol_set(smf_port[i].midi_ch_3, i, smf_port[i].l_vol_C, smf_port[i].r_vol_E);
     }
 
-    sd_int_flag = 0;
+    sd_int_flag = false;
 }
 
 void seq_master_vol_set(s32 access_num) // 0x800A4314
@@ -424,7 +424,7 @@ s32 pitch_bend_calc(PORT* p, u32 pit) // 0x800A441C
     u16 bendMultiplier = 2; // @hack Needed to get regalloc order correct, not included in PS2 `AUDIO.IRX` syms.
     s16 pitch;
 
-    if (pit < 0x40U)
+    if (pit < 0x40u)
     {
         if (!p->bend_min_1D)
         {
@@ -450,6 +450,7 @@ s32 pitch_bend_calc(PORT* p, u32 pit) // 0x800A441C
             pitch = (short)(p->bend_max_1C * bendMultiplier) * (pit - 0x3F);
         }
     }
+
     return pitch;
 }
 
@@ -565,6 +566,7 @@ void replay_reverb_set(s16 acc) // 0x800A4748
             SpuSetReverbModeParam(&reverb);
             SpuSetReverb(1);
         }
+
         smf_song[acc].seq_rev_set_flag_532 += 2;
     }
 }
@@ -631,7 +633,7 @@ void sound_seq_off(s32 access_num) // 0x800A4A34
     smf_song[access_num].seq_rev_set_flag_532 = 0;
     smf_song[access_num].seq_reverb_depth_536 = 0;
 
-    for (vo = 0; vo < 0x20; vo++)
+    for (vo = 0; vo < 32; vo++)
     {
         SMF* track = &smf_song[access_num].tracks_0[vo];
 
@@ -700,9 +702,9 @@ void sound_seq_off(s32 access_num) // 0x800A4A34
         while (stat != SPU_OFF_ENV_ON && stat != SPU_OFF);
     }
 
-    for (vo = 0; vo < 0x10; vo++)
+    for (vo = 0; vo < 16; vo++)
     {
-        m = &smf_midi[(access_num * 0x10) + vo];
+        m = &smf_midi[(access_num * 16) + vo];
 
         m->mvol_3         = 127;
         m->before_note_13 = 60;
@@ -822,7 +824,7 @@ void rr_off(s32 vo) // 0x800A4F08
     SpuSetVoiceAttr(&s_attr);
 }
 
-s16 voice_check(s32 chan, s32 note, s32 flag) // 0x800A4F64
+s16 voice_check(s32 chan, s32 note, bool flag) // 0x800A4F64
 {
     s32 stat;
     s16 vo;
@@ -850,9 +852,9 @@ s16 voice_check(s32 chan, s32 note, s32 flag) // 0x800A4F64
     }
     while (vo < sd_reserved_voice);
 
-    if (flag != 0)
+    if (flag)
     {
-        return -1;
+        return NO_VALUE;
     }
 
     vo = 0;
@@ -882,7 +884,7 @@ s16 voice_check(s32 chan, s32 note, s32 flag) // 0x800A4F64
     {
     }
 
-    return -1;
+    return NO_VALUE;
 }
 
 void key_on(u8 chan, u8 c1, u8 c2) // 0x800A5158
@@ -926,7 +928,7 @@ void key_on(u8 chan, u8 c1, u8 c2) // 0x800A5158
     {
         if (sp3C->vab_prog[i].tones != 0)
         {
-            sp28 += 1;
+            sp28++;
         }
     }
     sp40 = &sp38->vab_prog[sp30];
@@ -939,7 +941,7 @@ void key_on(u8 chan, u8 c1, u8 c2) // 0x800A5158
 
         if (sd_vag_atr->vag != 0 && c1 >= sd_vag_atr->min && sd_vag_atr->max >= c1)
         {
-            vo = -1;
+            vo = NO_VALUE;
             if (m->mode_12 != 0)
             {
                 vo = 0;
@@ -954,12 +956,12 @@ void key_on(u8 chan, u8 c1, u8 c2) // 0x800A5158
 
                     if (vo >= sd_reserved_voice)
                     {
-                        vo = -1;
+                        vo = NO_VALUE;
                         break;
                     }
                 }
 
-                if (vo != -1)
+                if (vo != NO_VALUE)
                 {
                     if (smf_port[vo].stat_16 == 0)
                     {
@@ -978,7 +980,7 @@ void key_on(u8 chan, u8 c1, u8 c2) // 0x800A5158
                 }
                 else
                 {
-                    vo = voice_check(chan, c1, 1);
+                    vo = voice_check(chan, c1, true);
                 }
 
                 if (m->porta_28 != 0)
@@ -1040,10 +1042,10 @@ void key_on(u8 chan, u8 c1, u8 c2) // 0x800A5158
                 }
             }
 
-            if (vo == -1)
+            if (vo == NO_VALUE)
             {
-                vo = voice_check(chan, c1, 0);
-                if (vo == -1)
+                vo = voice_check(chan, c1, false);
+                if (vo == NO_VALUE)
                 {
                     continue;
                 }
@@ -1190,18 +1192,18 @@ void key_on(u8 chan, u8 c1, u8 c2) // 0x800A5158
 
             if (m->rev_depth_24 == 0)
             {
-                if (sd_vag_atr->mode & 4)
+                if (sd_vag_atr->mode & (1 << 2))
                 {
                     while (!(SpuGetReverbVoice() & spu_ch_tbl[vo]))
                     {
-                        SpuSetReverbVoice(1, spu_ch_tbl[vo]);
+                        SpuSetReverbVoice(true, spu_ch_tbl[vo]);
                     }
                 }
                 else
                 {
                     while (SpuGetReverbVoice() & spu_ch_tbl[vo])
                     {
-                        SpuSetReverbVoice(0, spu_ch_tbl[vo]);
+                        SpuSetReverbVoice(false, spu_ch_tbl[vo]);
                     }
                 }
             }
@@ -1209,14 +1211,14 @@ void key_on(u8 chan, u8 c1, u8 c2) // 0x800A5158
             {
                 while (!(SpuGetReverbVoice() & spu_ch_tbl[vo]))
                 {
-                    SpuSetReverbVoice(1, spu_ch_tbl[vo]);
+                    SpuSetReverbVoice(true, spu_ch_tbl[vo]);
                 }
             }
             else
             {
                 while (SpuGetReverbVoice() & spu_ch_tbl[vo])
                 {
-                    SpuSetReverbVoice(0, spu_ch_tbl[vo]);
+                    SpuSetReverbVoice(false, spu_ch_tbl[vo]);
                 }
             }
         }
