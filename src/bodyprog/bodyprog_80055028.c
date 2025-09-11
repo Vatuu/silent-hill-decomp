@@ -1831,14 +1831,108 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005BF58); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005C1CC); // 0x8005C1CC
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005C478); // 0x8005C478
+u32 func_8005C478(s16* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) // 0x8005C478
+{
+    s32 sp10;
+    s16 sp18;
+    s16 sp20;
+    s16 temp_s3_3;
+    s32 temp_s1_3;
+    s32 temp_s2_3;
+    s32 var_a0;
+    s32 var_s1;
+    s32 var_v0_4;
+    s32 var_v1;
+    s32 temp;
+
+    sp18      = func_8005BF38(ratan2(arg1 - arg3, arg2 - arg4));
+    sp20      = func_8005BF38(ratan2(arg1 - arg5, arg2 - arg6));
+    temp_s3_3 = func_8005BF38(ratan2(arg5 - arg3, arg6 - arg4));
+    temp_s1_3 = Math_Vector2MagCalc(arg1 - arg3, arg2 - arg4);
+    temp_s2_3 = Math_Vector2MagCalc(arg1 - arg5, arg2 - arg6);
+
+    if (temp_s1_3 * Math_Sin(sp18 - temp_s3_3) < 0)
+    {
+        sp10 = -FP_MULTIPLY(temp_s1_3, Math_Sin(sp18 - temp_s3_3), 0xC);
+    }
+    else
+    {
+        sp10 = FP_MULTIPLY(temp_s1_3, Math_Sin(sp18 - temp_s3_3), 0xC);
+    }
+
+    if (temp_s2_3 < temp_s1_3)
+    {
+        var_a0 = temp_s1_3;
+    }
+    else
+    {
+        var_a0 = temp_s2_3;
+    }
+
+    if (!(temp_s2_3 < temp_s1_3))
+    {
+        var_v1 = temp_s1_3;
+    }
+    else
+    {
+        var_v1 = temp_s2_3;
+    }
+
+    var_a0 = SQUARE(var_a0 >> 6);
+    var_v1 = SQUARE(var_v1 >> 6);
+
+    if (var_a0 < var_v1 + (SQUARE((arg5 - arg3) >> 6) + SQUARE((arg6 - arg4) >> 6)))
+    {
+        if (arg0 != NULL)
+        {
+            if (temp_s1_3 * Math_Cos(sp18 - temp_s3_3) < 0)
+            {
+                var_s1 = -FP_MULTIPLY(temp_s1_3, Math_Cos(sp18 - temp_s3_3), 0xC);
+            }
+            else
+            {
+                var_s1 = FP_MULTIPLY(temp_s1_3, Math_Cos(sp18 - temp_s3_3), 0xC);
+            }
+
+            if ((temp_s2_3 * Math_Cos(sp20 - temp_s3_3)) < 0)
+            {
+                var_v0_4 = -FP_MULTIPLY(temp_s2_3, Math_Cos(sp20 - temp_s3_3), 0xC);
+            }
+            else
+            {
+                var_v0_4 = FP_MULTIPLY(temp_s2_3, Math_Cos(sp20 - temp_s3_3), 0xC);
+            }
+
+            temp  = var_s1 + var_v0_4;
+            *arg0 = ((var_s1 << 0xC) / temp);
+        }
+
+        return ABS(sp10);
+    }
+
+    if (temp_s1_3 < temp_s2_3)
+    {
+        if (arg0 != NULL)
+        {
+            *arg0 = 0;
+        }
+        return ABS(temp_s1_3);
+    }
+
+    if (arg0 != NULL)
+    {
+        *arg0 = 0x1000;
+    }
+
+    return ABS(temp_s2_3);
+}
 
 s16 func_8005C7B0(s32 arg0) // 0x8005C7B0
 {
     return D_800AE520[arg0 >> 5];
 }
 
-s32 func_8005C7D0(s_SubCharacter* chara, s32 moveSpeed) // 0x8005C7D0
+s32 func_8005C7D0(s_SubCharacter* chara) // 0x8005C7D0
 {
     s32             i = 0;
     s_SubCharacter* npc;
@@ -2305,7 +2399,61 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80060044); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800611C0); // 0x800611C0
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800622B8); // 0x800622B8
+void func_800622B8(s32 arg0, s_SubCharacter* arg1, s32 animStatus, s32 arg3) // 0x800622B8
+{
+    s_func_800699F8 sp10;
+    s32             temp_s0;
+    s32             temp_s2;
+    s32             temp_s3;
+    s32             temp_v0;
+    s32             var_s7;
+
+    if (g_GameWork.config_0.optExtraBloodColor_24 == 0xE)
+    {
+        return;
+    }
+
+    arg3   = func_8005F55C(arg3);
+    var_s7 = D_800AE5CC[animStatus + 1] - D_800AE5CC[animStatus];
+
+    while (var_s7 > 0)
+    {
+        temp_v0 = func_8005E7E0(3);
+        if (temp_v0 == -1)
+        {
+            break;
+        }
+
+        temp_s0 = (D_800AE5CC[animStatus] + var_s7) - 1;
+
+        temp_s3 = Rng_Rand16() % D_800AE5F0[temp_s0 * 4] + D_800AE5F0[temp_s0 * 4 + 1];
+        temp_s2 = Rng_Rand16() % D_800AE5F0[temp_s0 * 4 + 2] + D_800AE5F0[temp_s0 * 4 + 3];
+
+        g_MapOverlayHeader.unkTable1_4C[temp_v0].vx_0 =
+            arg1->position_18.vx + FP_MULTIPLY(temp_s3, Math_Sin(arg1->rotation_24.vy), 12) - FP_MULTIPLY(temp_s2, Math_Cos(arg1->rotation_24.vy), 12);
+
+        g_MapOverlayHeader.unkTable1_4C[temp_v0].vy_8 = arg1->position_18.vy;
+
+        g_MapOverlayHeader.unkTable1_4C[temp_v0].vz_4 =
+            arg1->position_18.vz + FP_MULTIPLY(temp_s3, Math_Cos(arg1->rotation_24.vy), 12) + FP_MULTIPLY(temp_s2, Math_Sin(arg1->rotation_24.vy), 12);
+
+        func_800699F8(&sp10, g_MapOverlayHeader.unkTable1_4C[temp_v0].vx_0, g_MapOverlayHeader.unkTable1_4C[temp_v0].vz_4);
+
+        if (ABS_DIFF(sp10.groundHeight_0, arg1->position_18.vy) > 0x266)
+        {
+            g_MapOverlayHeader.unkTable1_4C[(temp_v0)].field_A = 0;
+        }
+        else
+        {
+            g_MapOverlayHeader.unkTable1_4C[temp_v0].field_E  = D_800AE700[animStatus] + (Rng_Rand16() % (D_800AE700[animStatus] >> 2));
+            g_MapOverlayHeader.unkTable1_4C[temp_v0].field_D  = arg3;
+            g_MapOverlayHeader.unkTable1_4C[temp_v0].field_B  = (Rng_Rand16() & 3) + 4;
+            g_MapOverlayHeader.unkTable1_4C[temp_v0].field_C  = func_8005C7D0(arg1);
+            g_MapOverlayHeader.unkTable1_4C[temp_v0].field_10 = Rng_Rand16() & 0x1FFF;
+        }
+        var_s7 -= 1;
+    }
+}
 
 void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3) // 0x800625F4
 {
