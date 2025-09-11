@@ -1579,7 +1579,7 @@ static inline void Savegame_EventFlagSetAlt(u32 flagIdx)
  */
 static inline s32 Flags16b_IsSet(const u16* flags, s32 flagIdx)
 {
-    // @bug: `>> 5` divides `flagId` by 32 to get array index, but array contains 16-bit values. Maybe copy-paste from `u32` version of func.
+    // @bug `>> 5` divides `flagId` by 32 to get array index, but array contains 16-bit values. Maybe copy-paste from `u32` version of func.
     return (flags[flagIdx >> 5] >> (flagIdx & 0x1F)) & (1 << 0);
 }
 

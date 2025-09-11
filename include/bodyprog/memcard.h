@@ -11,9 +11,9 @@
 #define CARD_DEVICE_COUNT      8
 #define CARD_DEVICE_FILE_COUNT 15
 
-// ========
+// ======
 // ENUMS
-// ========
+// ======
 
 typedef enum _CardState
 {

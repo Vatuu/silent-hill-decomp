@@ -39,39 +39,39 @@ extern s32  smf_file_no;
 extern u32  spu_ch_tbl[24];
 extern u16  PitchTbl[12][128];
 
-enum SMF_STAT
+typedef enum _SMF_STAT
 {
     SEQ_NON   = 0,
     SEQ_PLAY  = 1,
     SEQ_STOP  = 2,
     SEQ_END   = 3,
     SEQ_PAUSE = 4
-};
+} SMF_STAT;
 
-enum SMF_MIDI_STAT
+typedef enum _SMF_MIDI_STAT
 {
     SD_MIDI_BEND = 1,
     SD_MIDI_PAN  = 2,
     SD_MIDI_VOL  = 3,
     SD_MIDI_MOD  = 4,
     SD_MIDI_EXP  = 5
-};
+} SMF_MIDI_STAT;
 
-enum SMF_FILE_MODE
+typedef enum _SMF_FILE_MODE
 {
     SEQ_MODE = 0,
     SMF_MODE = 1,
     KDT_MODE = 2
-};
+} SMF_FILE_MODE;
 
-typedef struct SD_Vab_H
+typedef struct _SD_VAB_H
 {
     VabHdr  vab_h;
     ProgAtr vab_prog[128];
     VagAtr  vag_atr[256]; // 16 per program.
 } SD_VAB_H;
 
-typedef struct Vab_h
+typedef struct _VAB_H
 {
     s16       vab_id_0;
     SD_VAB_H* vh_addr_4;
@@ -86,7 +86,7 @@ typedef struct Vab_h
 } VAB_H;
 STATIC_ASSERT_SIZEOF(VAB_H, 28);
 
-typedef struct
+typedef struct _Seqhdr
 {
     u8  form_0[4];
     u32 size_4;
@@ -96,7 +96,7 @@ typedef struct
 } Seqhdr;
 STATIC_ASSERT_SIZEOF(Seqhdr, 80);
 
-typedef struct SMF_data
+typedef struct _SMF
 {
     u32 mf_data_loc_0;
     u32 mf_loop_point_4;
@@ -121,7 +121,7 @@ typedef struct SMF_data
 STATIC_ASSERT_SIZEOF(SMF, 40);
 
 /** @brief Standard MIDI File */
-typedef struct Smf_Song
+typedef struct _SMF_SONG
 {
     SMF   tracks_0[32];
     u8*   mf_data_ptr2_500;
@@ -152,10 +152,10 @@ typedef struct Smf_Song
 } SMF_SONG;
 STATIC_ASSERT_SIZEOF(SMF_SONG, 1340);
 
-/** @brief `SMF_midi` fields are mainly changed by `control_change`, which takes in a MIDI control change ID and adjusts the appropriate field.
+/** @brief `MIDI` fields are mainly changed by `control_change`, which takes in a MIDI control change ID and adjusts the appropriate field.
  * Seems that func accepts some change IDs that are undefined in MIDI specs though...
  */
-typedef struct SMF_midi
+typedef struct _MIDI
 {
     u8  prog_no_0;
     u8  pan_1;
@@ -224,7 +224,7 @@ typedef struct SMF_midi
 } MIDI;
 STATIC_ASSERT_SIZEOF(MIDI, 92);
 
-typedef struct SMF_port
+typedef struct _PORT
 {
     u8  vc_0; // `soundcd.irx` has `vab_id_0` here, and `vc_1` after, but the reads/writes to +0x1 in soundcd are to +0x0 in SH, so this is likely `vc`.
     u8  field_1;
@@ -289,7 +289,7 @@ typedef struct SMF_port
 } PORT;
 STATIC_ASSERT_SIZEOF(PORT, 84);
 
-typedef struct SD_Spu_Alloc
+typedef struct _SD_SPU_ALLOC
 {
     u32 addr_0;
     s32 size_4;
