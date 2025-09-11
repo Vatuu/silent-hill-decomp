@@ -2,7 +2,7 @@
  * Can be accessed through `Savegame_EventFlagGet` / `Savegame_EventFlagSet` */
 typedef enum _EventFlag
 {
-    EventFlag_0 = 0, // M0S01 FirstAidKid? Also used in M0S02, might just be a default.
+    EventFlag_0 = 0, // M0S01 FirstAidKit? Also used in M0S02, might just be a default.
 
     EventFlag_25 = 25,
 
@@ -34,7 +34,7 @@ typedef enum _EventFlag
     EventFlag_57 = 57,
     EventFlag_58 = 58,
 
-    EventFlag_M0S02_PickupGasolineTask = 60,
+    EventFlag_M0S02_PickupGasolineTank = 60,
     EventFlag_61                       = 61,
     EventFlag_62                       = 62,
 
@@ -62,7 +62,7 @@ typedef enum _EventFlag
 
     EventFlag_197 = 197,
 
-    EventFlag_M3S00_FirstAidKit = 199, // Odd, possibly some default that goes unused, shared with M3S01 and M3S06.
+    EventFlag_M3S00_FirstAidKit = 199, // Odd numbering not with other common items, possibly some default that goes unused, shared with M3S01 and M3S06.
 
     EventFlag_M3S00_PickupMap = 207,   // Shared with M3S01, M3S06
     EventFlag_M3S01_PickupMap = 208,   // M3S01 also uses flag above.
@@ -196,14 +196,14 @@ typedef enum _EventFlag
     /** `MAP3_S01` common item pickups. */
     EventFlag_M3S01_HealthDrink = 681,
 
-    /** `MAP3_S02` common item pickups. */
+    /** `MAP3_S03` common item pickups. */
     EventFlag_M3S03_FirstAidKit0   = 682,
     EventFlag_M3S03_HealthDrink    = 683,
     EventFlag_M3S03_HandgunBullets = 684,
     EventFlag_M3S03_FirstAidKit1   = 685,
     EventFlag_M3S03_ShotgunShells  = 686,
 
-    /** `MAP3_S03` common item pickups. */
+    /** `MAP3_S04` common item pickups. */
     EventFlag_M3S04_HealthDrink0   = 687,
     EventFlag_M3S04_HealthDrink1   = 688,
     EventFlag_M3S04_HealthDrink2   = 689,
