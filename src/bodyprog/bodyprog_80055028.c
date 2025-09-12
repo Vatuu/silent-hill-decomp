@@ -2880,7 +2880,7 @@ void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2)
 void func_8006AD44(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x8006AD44
 {
     s32  temp_s4;
-    s32* var_s0;
+    s_IpdCollisionData_20* var_s0;
     s32  temp_s5;
     s32  var_s1;
     s32  var_s2;
@@ -2984,13 +2984,13 @@ bool func_8006B004(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x800
     return true;
 }
 
-void func_8006B1C8(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s_func_8006B1C8* arg2) // 0x8006B1C8
+void func_8006B1C8(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s_IpdCollisionData_20* arg2) // 0x8006B1C8
 {
     s32 var;
     s32 i;
     u8  idx;
 
-    for (i = arg2->field_0; i < arg2->field_4; i++)
+    for (i = arg2[0].field_0; i < arg2[1].field_0; i++)
     {
         idx = collData->ptr_28[i];
 
@@ -3033,7 +3033,7 @@ void func_8006B1C8(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s_func_8
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006B318); // 0x8006B318
 
-void func_8006B6E8(s_func_8006CC44* arg0, s_func_8006B1C8* arg1) // 0x8006B6E8
+void func_8006B6E8(s_func_8006CC44* arg0, s_IpdCollisionData_20* arg1)     // 0x8006B6E8
 {
     s32                 idx;
     s32                 temp_s1;
@@ -3889,7 +3889,54 @@ bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VEC
     return true;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006DEB0); // 0x8006DEB0
+s32 func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1) // 0x8006DEB0
+{
+    s32                  sp10;
+    s32                  temp_lo;
+    s_IpdCollisionData*  temp_s1;
+    s32*                 var_s0_2;
+    s_IpdCollisionData** temp_s5;
+    s_IpdCollisionData** var_s3;
+    s_func_8006DCE0_8C*  var_s0;
+
+    temp_s5 = func_800425D8(&sp10);
+
+    for (var_s3 = temp_s5; var_s3 < &temp_s5[sp10]; var_s3++)
+    {
+        temp_s1 = *var_s3;
+        if (temp_s1->field_8_8 || temp_s1->field_8_16 || temp_s1->field_8_24)
+        {
+            func_8006E0AC(arg1, temp_s1);
+            func_80069994(temp_s1);
+
+            for (var_s0 = &arg1->field_8C; var_s0 < &arg1->field_8C[arg1->field_88]; var_s0++)
+            {
+                temp_lo = var_s0->field_2 * arg1->field_7C;
+                func_8006E53C(arg1, &temp_s1->ptr_20[temp_lo + var_s0->field_0], temp_s1);
+            }
+        }
+    }
+
+    for (var_s0_2 = arg1->field_64; var_s0_2 < &arg1->field_64[arg1->field_68]; var_s0_2++)
+    {
+        func_8006EE0C(&arg1->field_6C, arg1->field_0, *var_s0_2);
+        func_8006EEB8(arg1, *var_s0_2);
+    }
+
+    if (arg1->field_8 != 0x7FFF)
+    {
+        arg0->field_4  = arg1->field_C * 16;
+        arg0->field_8  = arg1->field_10 * 16;
+        arg0->field_C  = arg1->field_14 * 16;
+        arg0->field_10 = arg1->field_20;
+        arg0->field_14 = arg1->field_8 * 16;
+        arg0->field_18 = arg1->field_1C * 16;
+        arg0->field_1C = ratan2(arg1->field_24, arg1->field_26);
+        arg0->field_1  = arg1->field_28;
+        return 1;
+    }
+    return 0;
+}
 
 void func_8006E0AC(s_func_8006DCE0* arg0, s_IpdCollisionData* arg1) // 0x8006E0AC
 {
@@ -3942,7 +3989,89 @@ void func_8006E490(s_func_8006E490* arg0, u32 arg1, s32 arg2, s32 arg3) // 0x800
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006E53C); // 0x8006E53C
+void func_8006E53C(s_func_8006DCE0* arg0, s_IpdCollisionData_20* arg1, s_IpdCollisionData* arg2) // 0x8006E53C
+{
+    s32                    var_s1;
+    s32                    temp_v0;
+    s32                    temp_v0_2;
+    bool                   var_a3;
+    bool                   var_t0;
+    bool                   var_t1;
+    s_IpdCollisionData_18* temp_a1_2;
+    u8                     temp_a0;
+    s32                    temp_a0_3;
+    s32                    temp_a2;
+    s32                    temp_v1;
+    s_IpdCollisionData_14* temp_a1;
+
+    for (var_s1 = arg1[0].field_0; var_s1 < arg1[1].field_0; var_s1++)
+    {
+        temp_v1 = arg2->ptr_28[var_s1];
+        temp_a0 = arg2->field_30;
+        if (temp_a0 >= arg2->field_34[temp_v1])
+        {
+            arg2->field_34[temp_v1] = temp_a0 + 1;
+
+            if (temp_v1 < arg2->field_8_16)
+            {
+                temp_a1 = &arg2->ptr_14[temp_v1];
+
+                temp_v0 = (u16)arg0->field_4 >> (temp_a1->field_0_14 * 4 | temp_a1->field_2_14);
+
+                if (temp_v0 & 1)
+                {
+                    temp_a0_3 = temp_a1->field_8;
+                    temp_a2   = temp_a1->field_9;
+
+                    var_a3 = (temp_a0_3 != 0xFF) && (temp_a2 != 0xFF);
+
+                    if (arg0->field_0 == 1)
+                    {
+                        if (var_a3)
+                        {
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        var_t0 = false;
+                        var_t1 = false;
+
+                        if (temp_a0_3 == 0xFF || arg2->ptr_10[temp_a0_3].field_6_0 == 0 ||
+                            arg2->ptr_10[temp_a0_3].field_6_0 == 0xC)
+                        {
+                            var_t0 = true;
+                        }
+
+                        if (temp_a2 == 0xFF || arg2->ptr_10[temp_a2].field_6_0 == 0 ||
+                            arg2->ptr_10[temp_a2].field_6_0 == 0xC)
+                        {
+                            var_t1 = true;
+                        }
+
+                        if (var_t0 && var_t1)
+                        {
+                            continue;
+                        }
+                    }
+
+                    func_8006E78C(arg0, temp_a1, arg2->ptr_C, arg2->ptr_10, var_a3);
+                }
+            }
+            else
+            {
+                temp_a1_2 = &arg2->ptr_18[temp_v1 - arg2->field_8_16];
+
+                temp_v0_2 = (u16)arg0->field_4 >> temp_a1_2->field_0_8;
+
+                if ((temp_v0_2 & 1) && (arg0->field_0 == 1 || (temp_a1_2->field_0_0 && temp_a1_2->field_0_0 != 0xC)) && temp_a1_2->field_8 >= arg0->field_6)
+                {
+                    func_8006EB8C(arg0, temp_a1_2);
+                }
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006E78C); // 0x8006E78C
 

@@ -867,7 +867,7 @@ bool ConvertHexToS8(s32* out, char hex0, char hex1) // 0x8004255C
     return true;
 }
 
-s32* func_800425D8(s32* arg0) // 0x800425D8
+s_IpdCollisionData** func_800425D8(s32* arg0) // 0x800425D8
 {
     s_800C117C*         ptr;
     s_IpdCollisionData* collData;
