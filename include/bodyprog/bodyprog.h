@@ -2051,7 +2051,7 @@ extern u16 D_800BCCB2;
  * 10-15 - Fades to white and keeps the screen white.
  * 16    - Fades to black.
  */
-extern s32 g_Gfx_ScreenFade;
+extern s32 g_Screen_FadeStatus;
 
 extern s16 g_SavegameCount;
 
@@ -2233,6 +2233,7 @@ extern s8 D_800C3962;
 
 extern u8 D_800C3963;
 
+/** Game difficulty. */
 extern s32 D_800C3994;
 
 extern u8 D_800C37D0;

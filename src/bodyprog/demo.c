@@ -271,7 +271,7 @@ bool Demo_Update() // 0x8008F5D8
     prevScreenFadeCpy = prevScreenFade;
     cond              = D_800C489C;
     D_800C489C        = false;
-    prevScreenFade    = g_Gfx_ScreenFade;
+    prevScreenFade    = g_Screen_FadeStatus;
 
     if (!(g_SysWork.flags_22A4 & (1 << 1)))
     {
@@ -295,7 +295,7 @@ bool Demo_Update() // 0x8008F5D8
         return false;
     }
 
-    if (!Gfx_ScreenFadeIn_IsInProgress(prevScreenFadeCpy) || !Gfx_ScreenFadeIn_IsInProgress(g_Gfx_ScreenFade) || cond)
+    if (!Gfx_ScreenFadeIn_IsInProgress(prevScreenFadeCpy) || !Gfx_ScreenFadeIn_IsInProgress(g_Screen_FadeStatus) || cond)
     {
         g_Demo_CurFrameData = NULL;
         return true;

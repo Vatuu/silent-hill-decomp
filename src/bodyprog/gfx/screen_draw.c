@@ -64,7 +64,7 @@ void Screen_DisplayEnvXySet(DISPENV* displayEnv, s32 x, s32 y) // 0x80032524
 
 void Screen_FadeDrawModeSet(DR_MODE* drMode) // 0x800325A4
 {
-    if (IS_SCREEN_FADE_WHITE(g_Gfx_ScreenFade)) 
+    if (IS_SCREEN_FADE_WHITE(g_Screen_FadeStatus)) 
     {
         SetDrawMode(drMode, 0, 1, 32, NULL);
     }
@@ -91,12 +91,12 @@ void Screen_FadeUpdate() // 0x8003260C
     tile                     = &D_800A8E74[g_ActiveBufferIdx];
     g_PrevScreenFadeProgress = g_ScreenFadeProgress;
 
-    switch (g_Gfx_ScreenFade)
+    switch (g_Screen_FadeStatus)
     {
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false):
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, true):
             g_ScreenFadeProgress = FP_ALPHA(0.0f);
-            g_Gfx_ScreenFade++;
+            g_Screen_FadeStatus++;
 
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false):
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, true):
@@ -116,7 +116,7 @@ void Screen_FadeUpdate() // 0x8003260C
             if (g_ScreenFadeProgress >= (FP_TIME(1.0f) - 1))
             {
                 g_ScreenFadeProgress = FP_TIME(1.0f) - 1;
-                g_Gfx_ScreenFade++;
+                g_Screen_FadeStatus++;
             }
 
             tile->r0 = Q19_12_TO_Q23_8(g_ScreenFadeProgress);
@@ -131,7 +131,7 @@ void Screen_FadeUpdate() // 0x8003260C
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false):
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, true):
             g_ScreenFadeProgress = FP_ALPHA(1.0f) - 1;
-            g_Gfx_ScreenFade++;
+            g_Screen_FadeStatus++;
 
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, false):
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, true):
@@ -159,7 +159,7 @@ void Screen_FadeUpdate() // 0x8003260C
             if (g_ScreenFadeProgress <= FP_ALPHA(0.0f))
             {
                 g_ScreenFadeProgress = FP_ALPHA(0.0f);
-                g_Gfx_ScreenFade     = SCREEN_FADE_STATUS(ScreenFadeState_Reset, false);
+                g_Screen_FadeStatus  = SCREEN_FADE_STATUS(ScreenFadeState_Reset, false);
                 return;
             }
 
@@ -171,7 +171,7 @@ void Screen_FadeUpdate() // 0x8003260C
         case SCREEN_FADE_STATUS(ScreenFadeState_Reset, false):
             g_ScreenFadeTimestep = FP_TIME(0.0f);
             g_ScreenFadeProgress = FP_ALPHA(0.0f);
-            g_Gfx_ScreenFade     = SCREEN_FADE_STATUS(ScreenFadeState_None, false);
+            g_Screen_FadeStatus  = SCREEN_FADE_STATUS(ScreenFadeState_None, false);
             return;
 
         case SCREEN_FADE_STATUS(ScreenFadeState_None, false):

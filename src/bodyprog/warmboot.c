@@ -132,7 +132,7 @@ void Game_WarmBoot() // 0x80034264
 
     SysWork_StateSetNext(SysState_Gameplay);
 
-    g_Gfx_ScreenFade = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
+    g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
 
     g_GameWork.gameStateStep_598[0] = prevState;
     g_GameWork.gameStatePrev_590    = prevState;
