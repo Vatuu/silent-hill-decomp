@@ -786,11 +786,11 @@ void Options_ExtraOptionsMenu_EntryStringsDraw(void) // 0x801E416C
 
     s32 i;
 
-    DVECTOR strPos = { 86, 20 };
+    const DVECTOR STR_POS = { 86, 20 };
 
-    char* EXTRA_OPTIONS_STR = "EXTRA_OPTION_\x01\x01\x01\x01\x01S";
+    const char* EXTRA_OPTIONS_STR = "EXTRA_OPTION_\x01\x01\x01\x01\x01S";
 
-    char* ENTRY_STRS[] =
+    const char* ENTRY_STRS[] =
     {
         "Weapon_Control",
         "Blood_Color",
@@ -817,7 +817,7 @@ void Options_ExtraOptionsMenu_EntryStringsDraw(void) // 0x801E416C
 
     // Draw heading string.
     Gfx_StringSetColor(StringColorId_White);
-    Gfx_StringSetPosition(strPos.vx, strPos.vy);
+    Gfx_StringSetPosition(STR_POS.vx, STR_POS.vy);
     Gfx_Strings2dLayerIdxSet(8);
     Gfx_StringDraw(EXTRA_OPTIONS_STR, 99);
 
@@ -841,9 +841,9 @@ void Options_MainOptionsMenu_EntryStringsDraw(void) // 0x801E42EC
 
     DVECTOR strPos = { 121, 20 };
 
-    char* OPTIONS_STR = "OPTION_\x01\x01\x01\x01\x01S";
+    const char* OPTIONS_STR = "OPTION_\x01\x01\x01\x01\x01S";
 
-    char* ENTRY_STRS[] =
+    const char* ENTRY_STRS[] =
     {
         "Exit",
         "Brightness_Level",
@@ -899,19 +899,19 @@ void Options_ExtraOptionsMenu_SelectionHighlightDraw(void) // 0x801E4450
     s_Quad2d bulletQuads[2];
     DVECTOR* quadVerts;
 
-    u8 SELECTION_HIGHLIGHT_WIDTHS[] = // 0x801E2830
+    const u8 SELECTION_HIGHLIGHT_WIDTHS[] =
     {
         157, 126, 135, 135, 157, 130, 112, 134
     };
 
     // 12x12 quad.
-    DVECTOR FRONT_BULLET_QUAD[] = // 0x801E2838
+    const DVECTOR FRONT_BULLET_QUAD[] =
     {
         { -120, -47 }, { -120, -35 }, { -108, -47 }, { -108, -35 }
     };
 
     // 14x14 quad.
-    DVECTOR BACK_BULLET_QUAD[] = // 0x801E2848
+    const DVECTOR BACK_BULLET_QUAD[] =
     {
         { -121, -48 }, { -121, -34 }, { -107, -48 }, { -107, -34 }
     };
@@ -979,13 +979,13 @@ void Options_MainOptionsMenu_SelectionHighlightDraw(void) // 0x801E472C
     s_Quad2d bulletQuads[2];
     DVECTOR* quadVerts;
 
-    u8 SELECTION_HIGHLIGHT_WIDTHS[] = // 0x801E2858
+    const u8 SELECTION_HIGHLIGHT_WIDTHS[] =
     {
         59, 169, 174, 156, 104, 112, 75, 129, 112
     };
 
     // 12x12 quad.
-    DVECTOR BULLET_QUAD_VERTS_FRONT[] = // 0x801E2864
+    const DVECTOR BULLET_QUAD_VERTS_FRONT[] =
     {
         { -120, -55 },
         { -120, -43 },
@@ -994,7 +994,7 @@ void Options_MainOptionsMenu_SelectionHighlightDraw(void) // 0x801E472C
     };
 
     // 14x14 quad.
-    DVECTOR BULLET_QUAD_VERTS_BACK[] = // 801E2874
+    const DVECTOR BULLET_QUAD_VERTS_BACK[] =
     {
         { -121, -56 },
         { -121, -42 },
@@ -1615,12 +1615,12 @@ void Options_ScreenPosMenu_ArrowsDraw(void) // 0x801E5A08
 
 void Options_ScreenPosMenu_ConfigDraw(void) // 0x801E5CBC
 {
-    GsOT*    ot = &g_OrderingTable2[g_ActiveBufferIdx];
     s32      i;
     LINE_F2* line;
     POLY_F4* poly;
+    GsOT*    ot = &g_OrderingTable2[g_ActiveBufferIdx];
 
-    DVECTOR LINE_BASES[] =
+    const DVECTOR LINE_BASES[] =
     {
         { -60, 40 },
         { -60, 70 },
@@ -1628,7 +1628,7 @@ void Options_ScreenPosMenu_ConfigDraw(void) // 0x801E5CBC
         { 60, 40 }
     };
 
-    char* AXIS_OFFSET_STRS[] =
+    const char* AXIS_OFFSET_STRS[] =
     {
         "X:_",
         "Y:_"
@@ -1639,7 +1639,7 @@ void Options_ScreenPosMenu_ConfigDraw(void) // 0x801E5CBC
         line = (LINE_F2*)GsOUT_PACKET_P;
 
         setLineF2(line);
-        setCodeWord(line, 0x40, (i < 2) ? 0xF0F0F0 : 0x808080);
+        setCodeWord(line, 0x40, (i < 2) ? PACKED_COLOR(240, 240, 240, 0) : PACKED_COLOR(128, 128, 128, 0));
 
         setXY0Fast(line, (u16)(LINE_BASES[i].vx             - g_GameWorkConst->config_0.optScreenPosX_1C), LINE_BASES[i].vy             - g_GameWorkConst->config_0.optScreenPosY_1D);
         setXY1Fast(line, (u16)(LINE_BASES[(i + 1) & 0x3].vx - g_GameWorkConst->config_0.optScreenPosX_1C), LINE_BASES[(i + 1) & 0x3].vy - g_GameWorkConst->config_0.optScreenPosY_1D);
@@ -2353,24 +2353,24 @@ DR_MODE g_ControllerMenu_SelectionHighlightDrawModes[2] =
 POLY_G4 g_ControllerMenu_SelectionHighlightQuads[2] =
 {
     {
-        .tag = 0x08000000,
-        .r0   = 0xFF,
-        .g0   = 0xFF,
-        .b0   = 0xFF,
+        .tag  = 0x08000000,
+        .r0   = 255,
+        .g0   = 255,
+        .b0   = 255,
         .code = 0x3A,
-        .r3   = 0xFF,
-        .g3   = 0xFF,
-        .b3   = 0xFF
+        .r3   = 255,
+        .g3   = 255,
+        .b3   = 255
     },
     {
         .tag  = 0x08000000,
         .code = 0x3A,
-        .r1   = 0xFF,
-        .g1   = 0xFF,
-        .b1   = 0xFF,
-        .r2   = 0xFF,
-        .g2   = 0xFF,
-        .b2   = 0xFF
+        .r1   = 255,
+        .g1   = 255,
+        .b1   = 255,
+        .r2   = 255,
+        .g2   = 255,
+        .b2   = 255
     },
 };
 
@@ -2477,8 +2477,8 @@ void Options_ControllerMenu_EntriesDraw(bool isOnActionsPane, s32 presetsEntryId
                -76,  highlightY1 - 76);
     }
 
-    strYPos = STR_BASE_Y;
-    highlightY0      = -300;
+    strYPos     = STR_BASE_Y;
+    highlightY0 = -300;
 
     // Draw controller config.
     for (i = 0, contConfig = (u16*)&g_GameWorkPtr->config_0.controllerConfig_0; i < (u32)InputAction_Count; i++, contConfig++)
@@ -2524,8 +2524,8 @@ void Options_ControllerMenu_ButtonIconsDraw(s32 baseX, s32 baseY, u16 config) //
     s32            posX;
     u16            clutX;
     u32            clutY;
-    int            temp;
-    int            v0;
+    s32            temp;
+    s32            v0;
     GsOT*          ot;
     SPRT*          prim;
     DR_TPAGE*      tpage;
@@ -2550,7 +2550,7 @@ void Options_ControllerMenu_ButtonIconsDraw(s32 baseX, s32 baseY, u16 config) //
 
         prim = (SPRT*)packet;
         addPrimFast(ot, prim, 4);
-        setCodeWord(prim, PRIM_RECT | RECT_TEXTURE, 0x808080);
+        setCodeWord(prim, PRIM_RECT | RECT_TEXTURE, PACKED_COLOR(128, 128, 128, 0));
         setWH(prim, ICON_SIZE_X, ICON_SIZE_Y);
 
         clutY = image->clutY;
