@@ -9,37 +9,38 @@
 
 const s32 rodataPad_80025EAC = 0;
 
+/** Something to do with inventory items. */
 static const s8 D_80025EB0[] =
 {
-    0x00, 0x01, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x4a, 0x16, 0x17, 0x18, 0x19, 0x20, 0x1f, 0x21,
-    0x23, 0x26, 0x27, 0x28, 0x31, 0x32, 0x3f, 0x40,
-    0x41, 0x42, 0x43, 0x14, 0x15, 0x1e, 0x00, 0x33,
-    0x49, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x1a, 0x1b, 0x1c, 0x1d, 0x22, 0x24, 0x25, 0x2f,
-    0x2e, 0x30, 0x2d, 0x29, 0x2a, 0x2b, 0x2c, 0x00,
-    0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x3a, 0x3b,
-    0x3c, 0x3d, 0x3e, 0x44, 0x45, 0x46, 0x47, 0x48,
-    0x0a, 0x0b, 0x0f, 0x00, 0x0c, 0x0e, 0x10, 0x0d,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x03, 0x07, 0x05, 0x09, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x04, 0x08, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x11, 0x12, 0x13, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff,
-    0x00, 0x00, 0x00, 0x00
+    0,  1,  2,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,
+    74, 22, 23, 24, 25, 32, 31, 33,
+    35, 38, 39, 40, 49, 50, 63, 64,
+    65, 66, 67, 20, 21, 30, 0,  51,
+    73, 0,  0,  0,  0,  0,  0,  0,
+    26, 27, 28, 29, 34, 36, 37, 47,
+    46, 48, 45, 41, 42, 43, 44, 0,
+    52, 53, 54, 55, 56, 57, 58, 59,
+    60, 61, 62, 68, 69, 70, 71, 72,
+    10, 11, 15, 0,  12, 14, 16, 13,
+    0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,
+    3,  7,  5,  9,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,
+    4,  8,  6,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,
+    17, 18, 19, 0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  255,
+    0,  0,  0,  0
 };
 
 void Game_TimerUpdate() // 0x8004C8DC
@@ -380,7 +381,7 @@ void Gfx_Results_Save() // 0x8004D1A0
     s8       rgColor;
     LINE_F2* line;
 
-    s_ResultStringOffset strOffsets[] = 
+    const s_ResultStringOffset STR_OFFSETS[] = 
     {
         {   0,   0,   0,  64 },
         {   0,   0, 100,   0 },
@@ -410,7 +411,7 @@ void Gfx_Results_Save() // 0x8004D1A0
 
     GsOT* ot = &g_OrderingTable2[g_ActiveBufferIdx];
 
-    char* saveDialogStrs[] =
+    const char* SAVE_DIALOG_STRS[] =
     {
         "\x07Is_it_OK_to_save?",
         "\x07Yes_____________No"
@@ -439,14 +440,14 @@ void Gfx_Results_Save() // 0x8004D1A0
         if (i < 12) 
         {
             setXY2(line,
-                   strOffsets[i].x0_0 + 0xFF98, strOffsets[i].y0_1 + 0xFFB8,
-                   strOffsets[i].x1_2 + 0xFF98, strOffsets[i].y1_3 + 0xFFB8);
+                   STR_OFFSETS[i].x0_0 + 0xFF98, STR_OFFSETS[i].y0_1 + 0xFFB8,
+                   STR_OFFSETS[i].x1_2 + 0xFF98, STR_OFFSETS[i].y1_3 + 0xFFB8);
         }
         else 
         {
             setXY2(line,
-                   (strOffsets[i].x0_0 + 0xFFB4) + (g_Inventory_SelectionId * 102), strOffsets[i].y0_1 + 6,
-                   (strOffsets[i].x1_2 + 0xFFB4) + (g_Inventory_SelectionId * 102), strOffsets[i].y1_3 + 6);
+                   (STR_OFFSETS[i].x0_0 + 0xFFB4) + (g_Inventory_SelectionId * 102), STR_OFFSETS[i].y0_1 + 6,
+                   (STR_OFFSETS[i].x1_2 + 0xFFB4) + (g_Inventory_SelectionId * 102), STR_OFFSETS[i].y1_3 + 6);
         }
 
         addPrim(&ot->org[7], line);
@@ -1181,7 +1182,7 @@ void Gfx_Inventory_CmdOptionsDraw() // 0x8004E864
     s32      x0;
     s32      y0;
 
-    char* strs[] = // 0x80026214
+    const char* STRS[] =
     {
         "Use",
         "Equip",
@@ -1221,57 +1222,57 @@ void Gfx_Inventory_CmdOptionsDraw() // 0x8004E864
             if (!g_SysWork.field_2388.field_16 || g_SavegamePtr->items_0[idx].id_0 != InventoryItemId_Flashlight)
             {
                 Gfx_StringSetPosition(222, -42);
-                Gfx_StringDraw(strs[5], 10);
+                Gfx_StringDraw(STRS[5], 10);
                 Gfx_StringSetPosition(222, -26);
-                Gfx_StringDraw(strs[6], 10);
+                Gfx_StringDraw(STRS[6], 10);
             }
             break;
 
         case InventoryCmdId_UseHealth:
         case InventoryCmdId_Use:
             Gfx_StringSetPosition(222, -34);
-            Gfx_StringDraw(strs[0], 10);
+            Gfx_StringDraw(STRS[0], 10);
             break;
 
         case InventoryCmdId_Equip:
             Gfx_StringSetPosition(222, -34);
-            Gfx_StringDraw(strs[1], 10);
+            Gfx_StringDraw(STRS[1], 10);
             break;
 
         case InventoryCmdId_Unequip:
             Gfx_StringSetPosition(222, -34);
-            Gfx_StringDraw(strs[2], 10);
+            Gfx_StringDraw(STRS[2], 10);
             break;
 
         case InventoryCmdId_Reload:
             Gfx_StringSetPosition(222, -34);
-            Gfx_StringDraw(strs[3], 10);
+            Gfx_StringDraw(STRS[3], 10);
             break;
 
         case InventoryCmdId_UseLook:
             Gfx_StringSetPosition(222, -42);
-            Gfx_StringDraw(strs[0], 10);
+            Gfx_StringDraw(STRS[0], 10);
             Gfx_StringSetPosition(222, -26);
-            Gfx_StringDraw(strs[7], 10);
+            Gfx_StringDraw(STRS[7], 10);
             break;
 
         case InventoryCmdId_EquipReload:
             Gfx_StringSetPosition(222, -42);
-            Gfx_StringDraw(strs[1], 10);
+            Gfx_StringDraw(STRS[1], 10);
             Gfx_StringSetPosition(222, -26);
-            Gfx_StringDraw(strs[3], 10);
+            Gfx_StringDraw(STRS[3], 10);
             break;
 
         case InventoryCmdId_UnequipReload:
             Gfx_StringSetPosition(222, -42);
-            Gfx_StringDraw(strs[2], 10);
+            Gfx_StringDraw(STRS[2], 10);
             Gfx_StringSetPosition(222, -26);
-            Gfx_StringDraw(strs[3], 10);
+            Gfx_StringDraw(STRS[3], 10);
             break;
 
         case InventoryCmdId_Look:
             Gfx_StringSetPosition(222, -34);
-            Gfx_StringDraw(strs[7], 10);
+            Gfx_StringDraw(STRS[7], 10);
             break;
 
         case 10:
@@ -1341,14 +1342,14 @@ void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId) // 0x8004EC7C
     POLY_G3* arrowPoly;
     GsOT*    ot = &g_OrderingTable2[g_ActiveBufferIdx];
 
-    s_Triangle2d ARROW_TRIS[] =
+    const s_Triangle2d ARROW_TRIS[] =
     {
-        { { 0xFFC4, 0x000C }, { 0xFFCC, 0x0004 }, { 0xFFCC, 0x0014 } },
-        { { 0xFFCC, 0x000C }, { 0xFFD4, 0x0004 }, { 0xFFD4, 0x0014 } },
-        { { 0x0034, 0x000C }, { 0x002C, 0x0004 }, { 0x002C, 0x0014 } },
-        { { 0x003C, 0x000C }, { 0x0034, 0x0004 }, { 0x0034, 0x0014 } },
-        { { 0x0060, 0xFF53 }, { 0x0066, 0xFF60 }, { 0x005A, 0xFF60 } }, // @unused
-        { { 0x0060, 0xFFA4 }, { 0x005B, 0xFF98 }, { 0x0065, 0xFF98 } }  // @unused
+        { { -60,  12  }, { -52,   4   }, { -52,   20  } },
+        { { -52,  12  }, { -44,   4   }, { -44,   20  } },
+        { {  52,  12  }, {  44,   4   }, {  44,   20  } },
+        { {  60,  12  }, {  52,   4   }, {  52,   20  } },
+        { {  96, -173 }, {  102, -160 }, {  90,  -160 } }, // @unused
+        { {  96, -92  }, {  91,  -104 }, {  101, -104 } }  // @unused
     };
 
     // Only draw arrows when item is selected.
@@ -1459,7 +1460,7 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
     
     for (i = 0; i < (INVENTORY_ITEM_COUNT_MAX - 1); i++)
     {
-        savePtr->items_0[i].field_3 = D_80025EB0[savePtr->items_0[i].id_0 - 32];
+        savePtr->items_0[i].field_3 = D_80025EB0[savePtr->items_0[i].id_0 - InventoryItemId_HealthDrink];
     }
 
     for (i = 0; i < (INVENTORY_ITEM_COUNT_MAX - 1); i++)
