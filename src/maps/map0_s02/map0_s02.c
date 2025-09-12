@@ -192,9 +192,15 @@ void Event_GasolineTankItemTake(void) // 0x800CEC84
     Event_ItemTake(InventoryItemId_GasolineTank, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M0S02_PickupGasolineTank, 19);
 }
 
-INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CECB0);
+void Event_KatanaItemTake(void) // 0x800CECB0
+{
+    Event_ItemTake(InventoryItemId_Katana, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M0S02_PickupKatana, 20);
+}
 
-INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CECDC);
+void Event_ChannelingStoneItemTake(void) // 0x800CECDC
+{
+    Event_ItemTake(InventoryItemId_ChannelingStone, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M0S02_PickupChannelingStone, 21);
+}
 
 INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CED08);
 

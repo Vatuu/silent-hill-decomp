@@ -42,4 +42,10 @@ void Event_EmptyFunction();
 /** @brief Handles the gasoline tank pickup event. */
 void Event_GasolineTankItemTake(void);
 
+/** @brief Handles the katana pickup event. */
+void Event_KatanaItemTake(void);
+
+/** @brief Handles the channeling stone pickup event. */
+void Event_ChannelingStoneItemTake(void);
+
 #endif

@@ -77,6 +77,8 @@ Gfx_LoadingScreen_StageString = 0x800CEBC0; // type:func
 Event_HealthOrAmmoItemTake    = 0x800CEBC8; // type:func
 Event_EmptyFunction           = 0x800CEC7C; // type:func
 Event_GasolineTankItemTake    = 0x800CEC84; // type:func
+Event_KatanaItemTake          = 0x800CECB0; // type:func
+Event_ChannelingStoneItemTake = 0x800CECDC; // type:func
 
 
 

@@ -32,6 +32,8 @@ typedef enum _EventFlag
     EventFlag_51 = 51,
     EventFlag_52 = 52,
 
+    EventFlag_M0S02_PickupKatana = 56,
+
     EventFlag_57 = 57,
     EventFlag_58 = 58,
 
@@ -48,6 +50,8 @@ typedef enum _EventFlag
 
     EventFlag_133 = 133,
     EventFlag_134 = 134,
+
+    EventFlag_M0S02_PickupChannelingStone = 144,
 
     EventFlag_146 = 146,
 
