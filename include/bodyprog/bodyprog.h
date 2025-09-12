@@ -3066,7 +3066,7 @@ s_Material_8* func_8005B1FC(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9
 
 void func_8005B55C(GsCOORDINATE2* arg0);
 
-u32 func_8005C478(s16* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
+u32 func_8005C478(s16* arg0, s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2);
 
 s32 func_8005C7D0(s_SubCharacter* chara);
 
@@ -3402,7 +3402,7 @@ void func_8006342C(s32 invItemId, s16, s16, GsCOORDINATE2*);
 
 s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 x, s16 z);
 
-void func_800622B8(s32 arg0, s_SubCharacter* arg1, s32 animStatus, s32 arg3);
+void func_800622B8(s32 arg0, s_SubCharacter* chara, s32 animStatus, s32 arg3);
 
 void func_80064F04(VECTOR3* arg0, s8 arg1, s16 arg2);
 
