@@ -54,8 +54,8 @@ void GameState_Options_Update(void) // 0x801E2D44
             g_GameWork.background2dColor_G_58D = 0;
             g_GameWork.background2dColor_B_58E = 0;
 
-            g_Gfx_ScreenFade  = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, false);
-            g_IntervalVBlanks = 1;
+            g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, false);
+            g_IntervalVBlanks   = 1;
 
             if (g_GameWork.gameStatePrev_590 == GameState_InGame)
             {
@@ -116,7 +116,7 @@ void GameState_Options_Update(void) // 0x801E2D44
             break;
 
         case OptionsMenuState_EnterScreenPos:
-            if (Gfx_IsScreenFadeComplete())
+            if (SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete)
             {
                 g_GameWork.gameStateStep_598[0] = OptionsMenuState_ScreenPos;
                 g_SysWork.timer_20              = 0;
@@ -130,7 +130,7 @@ void GameState_Options_Update(void) // 0x801E2D44
             break;
 
         case OptionsMenuState_EnterBrightness:
-            if (Gfx_IsScreenFadeComplete())
+            if (SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete)
             {
                 Fs_QueueWaitForEmpty();
 
@@ -148,7 +148,7 @@ void GameState_Options_Update(void) // 0x801E2D44
 
         case OptionsMenuState_EnterController:
             // Switch to controller binding menu.
-            if (Gfx_IsScreenFadeComplete())
+            if (SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete)
             {
                 g_GameWork.gameStateStep_598[0] = OptionsMenuState_Controller;
                 g_GameWork.gameStateStep_598[0] = OptionsMenuState_Controller;
@@ -163,7 +163,7 @@ void GameState_Options_Update(void) // 0x801E2D44
             break;
 
         case OptionsMenuState_Leave:
-            g_Gfx_ScreenFade                = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
+            g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
             g_GameWork.gameStateStep_598[0] = OptionsMenuState_LeaveMainOptions;
             g_SysWork.timer_20              = 0;
             g_GameWork.gameStateStep_598[1] = 0;
@@ -171,7 +171,7 @@ void GameState_Options_Update(void) // 0x801E2D44
             break;
 
         case OptionsMenuState_LeaveMainOptions:
-            if (Gfx_IsScreenFadeComplete())
+            if (SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete)
             {
                 // TODO: Likely `Game_StateSetPrevious` inline, but `gameState_594`/`gameStatePrev_590` loads inside are switched?
 
@@ -194,11 +194,11 @@ void GameState_Options_Update(void) // 0x801E2D44
             break;
 
         case OptionsMenuState_EnterExtraOptions:
-            if (Gfx_IsScreenFadeComplete())
+            if (SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete)
             {
                 g_GameWork.gameStateStep_598[0]   = OptionsMenuState_ExtraOptions;
                 g_SysWork.timer_20                = 0;
-                g_Gfx_ScreenFade                  = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, false);
+                g_Screen_FadeStatus               = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, false);
                 g_GameWork.gameStateStep_598[1]   = 0;
                 g_GameWork.gameStateStep_598[2]   = 0;
                 g_Options_SelectionHighlightTimer = 0;
@@ -206,13 +206,13 @@ void GameState_Options_Update(void) // 0x801E2D44
             break;
 
         case OptionsMenuState_LeaveExtraOptions:
-            if (Gfx_IsScreenFadeComplete())
+            if (SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete)
             {
                 g_GameWork.gameStateStep_598[0] = OptionsMenuState_EnterMainOptions;
                 g_SysWork.timer_20              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
-                g_Gfx_ScreenFade                = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, false);
+                g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, false);
             }
             break;
     }
@@ -431,7 +431,7 @@ void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
             Sd_PlaySfx(Sfx_Confirm, 0, 64);
         }
 
-        g_Gfx_ScreenFade                = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
+        g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
         g_GameWork.gameStateStep_598[0] = OptionsMenuState_LeaveExtraOptions;
         g_SysWork.timer_20              = 0;
         g_GameWork.gameStateStep_598[1] = 0;
@@ -531,7 +531,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
                 Sd_PlaySfx(Sfx_Confirm, 0, 64);
                 Fs_QueueStartReadTim(FILE_TIM_OPTION2_TIM, IMAGE_BUFFER_3, &g_ControllerButtonAtlasImg);
 
-                g_Gfx_ScreenFade                = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
+                g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
                 g_GameWork.gameStateStep_598[0] = OptionsMenuState_EnterController;
                 g_SysWork.timer_20              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
@@ -545,7 +545,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
             {
                 Sd_PlaySfx(Sfx_Confirm, 0, 64);
 
-                g_Gfx_ScreenFade                = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
+                g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
                 g_GameWork.gameStateStep_598[0] = OptionsMenuState_EnterScreenPos;
                 g_SysWork.timer_20              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
@@ -566,7 +566,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
                     Fs_QueueStartReadTim(FILE_TIM_OP_BRT_E_TIM, IMAGE_BUFFER_3, &g_BrightnessScreenImg1);
                 }
 
-                g_Gfx_ScreenFade                = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
+                g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
                 g_GameWork.gameStateStep_598[0] = OptionsMenuState_EnterBrightness;
                 g_SysWork.timer_20              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
@@ -680,7 +680,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
 
         Sd_PlaySfx(Sfx_Confirm, 0, 64);
 
-        g_Gfx_ScreenFade                = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
+        g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
         g_GameWork.gameStateStep_598[0] = OptionsMenuState_EnterExtraOptions;
         g_SysWork.timer_20              = 0;
         g_GameWork.gameStateStep_598[1] = 0;
@@ -1386,7 +1386,7 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
     switch (g_GameWork.gameStateStep_598[1])
     {
         case ScreenPosMenuState_0:
-            g_Gfx_ScreenFade                = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
+            g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
             g_ScreenPosMenu_BackgroundFade  = 255;
             g_GameWork.gameStateStep_598[1] = ScreenPosMenuState_1;
             g_GameWork.gameStateStep_598[2] = 0;
@@ -1439,7 +1439,7 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
             {
                 Sd_PlaySfx(Sfx_Cancel, 0, 64);
 
-                g_Gfx_ScreenFade                = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
+                g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
                 g_GameWork.gameStateStep_598[2] = 0;
                 g_GameWork.gameStateStep_598[1]++;
             }
@@ -1447,9 +1447,9 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
 
         case ScreenPosMenuState_Leave:
             // Switch to previous menu.
-            if (Gfx_IsScreenFadeComplete())
+            if (SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete)
             {
-                g_Gfx_ScreenFade                   = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
+                g_Screen_FadeStatus                = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
                 g_GameWork.gameStateStep_598[0]    = OptionsMenuState_LeaveScreenPos;
                 g_SysWork.timer_20                 = 0;
                 g_GameWork.gameStateStep_598[1]    = 0;
@@ -1686,7 +1686,7 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
 
         case BrightnessMenuState_1:
             // Set fade.
-            g_Gfx_ScreenFade                = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
+            g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
             g_GameWork.gameStateStep_598[1] = BrightnessMenuState_2;
             g_GameWork.gameStateStep_598[2] = 0;
             break;
@@ -1723,7 +1723,7 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
                     Sd_PlaySfx(Sfx_Cancel, 0, FP_VOLUME(0.25f));
                 }
 
-                g_Gfx_ScreenFade                = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
+                g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
                 g_GameWork.gameStateStep_598[1]++;
                 g_GameWork.gameStateStep_598[2] = 0;
             }
@@ -1731,18 +1731,17 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
 
         case BrightnessMenuState_Leave:
             // Switch to previous menu.
-            if (g_Gfx_ScreenFade & (1 << 2) &&
-                !(g_Gfx_ScreenFade & (1 << 1)) &&
-                g_Gfx_ScreenFade & (1 << 0))
+            // TODO: Odd check for `SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete`.
+            if (g_Screen_FadeStatus & (1 << 2) && !(g_Screen_FadeStatus & (1 << 1)) && g_Screen_FadeStatus & (1 << 0))
             {
-                g_Gfx_ScreenFade                   = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
+                g_Screen_FadeStatus                = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
                 g_GameWork.gameStateStep_598[0]    = OptionsMenuState_LeaveBrightness;
                 g_SysWork.timer_20                 = 0;
                 g_GameWork.gameStateStep_598[1]    = 0;
                 g_GameWork.gameStateStep_598[2]    = 0;
-                g_GameWork.background2dColor_R_58C = FP_COLOR(0.0f);
-                g_GameWork.background2dColor_G_58D = FP_COLOR(0.0f);
-                g_GameWork.background2dColor_B_58E = FP_COLOR(0.0f);
+                g_GameWork.background2dColor_R_58C = 0;
+                g_GameWork.background2dColor_G_58D = 0;
+                g_GameWork.background2dColor_B_58E = 0;
             }
             break;
     }
@@ -1776,13 +1775,13 @@ void Options_BrightnessMenu_ArrowsDraw(void) // 0x801E628C
 {
     const s_Triangle2d FRONT_ARROWS[] =
     {
-        { { 8, 84 }, {  16, 76 }, { 16, 92 } },
+        { { 8, 84  }, { 16, 76 }, { 16, 92 } },
         { { 64, 84 }, { 56, 76 }, { 56, 92 } }
     };
 
     const s_Triangle2d BORDER_ARROWS[] =
     {
-        { { 7, 84 }, { 17, 74 }, { 17, 94 } },
+        { { 7, 84  }, { 17, 74 }, { 17, 94 } },
         { { 65, 84 }, { 55, 74 }, { 55, 94 } }
     };
 
@@ -2065,7 +2064,7 @@ void Options_Controller_Control(void) // 0x801E69BC
     switch (g_GameWork.gameStateStep_598[1])
     {
         case ControllerMenuState_Exit:
-            g_Gfx_ScreenFade                         = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, false);
+            g_Screen_FadeStatus                       = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, false);
             g_ControllerMenu_SelectedEntries.preset_0 = ControllerMenuState_Exit;
 
             // Leave menu.
@@ -2074,7 +2073,7 @@ void Options_Controller_Control(void) // 0x801E69BC
             {
                 Sd_EngineCmd(Sfx_Cancel);
 
-                g_Gfx_ScreenFade                = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false);
+                g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false);
                 g_GameWork.gameStateStep_598[1] = ControllerMenuState_Leave;
                 g_GameWork.gameStateStep_598[2] = 0;
                 break;
@@ -2181,9 +2180,9 @@ void Options_Controller_Control(void) // 0x801E69BC
 
         case ControllerMenuState_Leave:
             // Switch to previous menu.
-            if (Gfx_IsScreenFadeComplete())
+            if (SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete)
             {
-                g_Gfx_ScreenFade                = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
+                g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
                 g_GameWork.gameStateStep_598[0] = OptionsMenuState_LeaveController;
                 g_SysWork.timer_20              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;

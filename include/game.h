@@ -106,7 +106,7 @@ struct _Model;
     (((~0u << (fromInclusive)) & ~(~0u << ((toInclusive) + 1))))
 
 /** @brief Packs a screen fade status containing a fade state and white flag.
- * See `g_Gfx_ScreenFade` for bit layout.
+ * See `g_Screen_FadeStatus` for bit layout.
  *
  * @param state Screen fade state.
  * @param isWhite White status (`bool`).
@@ -115,8 +115,16 @@ struct _Model;
 #define SCREEN_FADE_STATUS(state, isWhite) \
     ((state) | ((isWhite) ? (1 << 3) : 0))
 
+/** @brief Retrieves the screen fade state from a packed screen fade status.
+ *
+ * @param fadeStatus Packed screen fade status containing a fade state and white flag.
+ * @return Screen fade state.
+ */
+#define SCREEN_FADE_STATE_GET(fadeStatus) \
+    ((fadeStatus) & 0x7)
+
 /** @brief Checks if a screen fade is white.
- * See `g_Gfx_ScreenFade` for bit layout.
+ * See `g_Screen_FadeStatus` for bit layout.
  *
  * @param fadeStatus Packed screen fade status containing a fade state and white flag.
  * @return `true` if white, `false` if black.
@@ -124,7 +132,7 @@ struct _Model;
 #define IS_SCREEN_FADE_WHITE(fadeStatus) \
     ((fadeStatus) & (1 << 3))
 
-/** @brief Screen fade states used by `g_Gfx_ScreenFade`. The flow is not linear. */
+/** @brief Screen fade states used by `g_Screen_FadeStatus`. The flow is not linear. */
 typedef enum _ScreenFadeState
 {
     ScreenFadeState_Reset           = 0,
@@ -1406,10 +1414,6 @@ extern s32 g_IntervalVBlanks; // 0x800A8FF0
 extern s32 g_PrevVBlanks;     // 0x800A9770
 extern s32 g_VBlanks;         // 0x800B5C34
 extern s32 g_UncappedVBlanks; // 0x800B5C38
-
-/** @brief Checks if a screen fade is complete. See `g_Gfx_ScreenFade` for bit layout. */
-#define Gfx_IsScreenFadeComplete() \
-    ((g_Gfx_ScreenFade & ((1 << 0) | (1 << 1) | (1 << 2))) == ScreenFadeState_FadeOutComplete)
 
 /** @brief Sets `sysState` in `g_SysWork` for the next tick. */
 static inline void SysWork_StateSetNext(e_SysState sysState)

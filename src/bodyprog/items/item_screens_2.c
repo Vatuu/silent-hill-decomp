@@ -111,7 +111,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             Screen_Init(0x140, 1);
 
             g_IntervalVBlanks    = 1;
-            g_Gfx_ScreenFade     = 6;
+            g_Screen_FadeStatus  = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
             g_ScreenFadeTimestep = FP_TIME(3.0f);
 
             func_80037188();
@@ -167,7 +167,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
         case 16:
             if (g_SysWork.inventoryItemSelectedIdx_2351 == g_Inventory_SelectedItemIdx &&
                 g_GameWork.gameState_594 == GameState_InventoryScreen &&
-                g_Gfx_ScreenFade == 1)
+                g_Screen_FadeStatus == SCREEN_FADE_STATUS(ScreenFadeState_None, false))
             {
                 s32 prevGameState;
                 prevGameState = g_GameWork.gameStateStep_598[2];
@@ -209,7 +209,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
                 s32 prevGameState;
 
                 prevGameState                   = g_GameWork.gameStateStep_598[2];
-                g_Gfx_ScreenFade                = 2;
+                g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
                 g_GameWork.gameStateStep_598[1] = 20;
                 g_GameWork.gameStateStep_598[2] = 0;
 
@@ -220,7 +220,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             break;
 
         case 18:
-            if ((g_Gfx_ScreenFade & 0x7) == 5)
+            if (SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete)
             {
                 Screen_Refresh(320, 0);
                 Fs_QueueWaitForEmpty();
@@ -235,7 +235,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             break;
 
         case 19:
-            if ((g_Gfx_ScreenFade & 0x7) == 5)
+            if (SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete)
             {
                 func_8004C040();
                 Game_StateSetNext(GameState_MapScreen);
@@ -245,7 +245,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
 
         // Exiting inventory screen.
         case 20:
-            if ((g_Gfx_ScreenFade & 0x7) == 5)
+            if (SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete)
             {
                 Screen_Refresh(320, 0);
                 Inventory_ExitAnimFixes();
@@ -267,7 +267,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             Screen_Init(0x140, 1);
 
             g_IntervalVBlanks                  = 1;
-            g_Gfx_ScreenFade                   = 6;
+            g_Screen_FadeStatus                = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
             g_ScreenFadeTimestep               = FP_TIME(3.0f);
             g_GameWork.background2dColor_R_58C = 0;
             g_GameWork.background2dColor_G_58D = 0;
@@ -310,8 +310,8 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
                 s32 prevGameState;
-                g_Gfx_ScreenFade = 2;
-                prevGameState    = g_GameWork.gameStateStep_598[2];
+                g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
+                prevGameState       = g_GameWork.gameStateStep_598[2];
 
                 Sd_PlaySfx(Sfx_Confirm, 0, 64);
 
@@ -332,7 +332,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             break;
 
         case 24:
-            if (Gfx_IsScreenFadeComplete())
+            if (SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete)
             {
                 Screen_Refresh(320, 0);
                 GameFs_SaveLoadBinLoad();
@@ -343,7 +343,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             break;
 
         case 25:
-            if (Gfx_IsScreenFadeComplete())
+            if (SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete)
             {
                 if (Fs_QueueDoThingWhenEmpty())
                 {
@@ -616,7 +616,7 @@ void Inventory_Logic() // 0x8004D518
                 step = g_GameWork.gameStateStep_598[2];
                 Sd_PlaySfx(Sfx_Cancel, 0, 64);
 
-                g_Gfx_ScreenFade                = 2;
+                g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
                 g_GameWork.gameStateStep_598[1] = 20;
                 g_GameWork.gameStateStep_598[2] = 0;
                 func_8007EBBC();
@@ -654,7 +654,7 @@ void Inventory_Logic() // 0x8004D518
                 step = g_GameWork.gameStateStep_598[2];
                 Sd_PlaySfx(Sfx_Cancel, 0, 64);
 
-                g_Gfx_ScreenFade                = 2;
+                g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
                 g_GameWork.gameStateStep_598[1] = 20;
                 g_GameWork.gameStateStep_598[2] = 0;
                 func_8007EBBC();
@@ -689,7 +689,7 @@ void Inventory_Logic() // 0x8004D518
                 step = g_GameWork.gameStateStep_598[2];
                 Sd_PlaySfx(Sfx_Cancel, 0, 64);
 
-                g_Gfx_ScreenFade                = 2;
+                g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
                 g_GameWork.gameStateStep_598[1] = 20;
                 g_GameWork.gameStateStep_598[2] = 0;
                 func_8007EBBC();
@@ -724,7 +724,7 @@ void Inventory_Logic() // 0x8004D518
             {
                 Sd_PlaySfx(Sfx_Confirm, -64, 64);
 
-                g_Gfx_ScreenFade                = 2;
+                g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
                 g_GameWork.gameStateStep_598[1] = 18;
                 g_GameWork.gameStateStep_598[2] = 0;
 
@@ -735,7 +735,7 @@ void Inventory_Logic() // 0x8004D518
                 step = g_GameWork.gameStateStep_598[2];
                 Sd_PlaySfx(Sfx_Cancel, 0, 64);
 
-                g_Gfx_ScreenFade                = 2;
+                g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
                 g_GameWork.gameStateStep_598[1] = 20;
                 g_GameWork.gameStateStep_598[2] = 0;
                 func_8007EBBC();
@@ -781,7 +781,7 @@ void Inventory_Logic() // 0x8004D518
                     }
                     Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9]);
 
-                    g_Gfx_ScreenFade                = 2;
+                    g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
                     g_GameWork.gameStateStep_598[1] = 19;
                     g_GameWork.gameStateStep_598[2] = 0;
                 }
@@ -795,7 +795,7 @@ void Inventory_Logic() // 0x8004D518
                 step = g_GameWork.gameStateStep_598[2];
                 Sd_PlaySfx(Sfx_Cancel, 0, 64);
 
-                g_Gfx_ScreenFade                = 2;
+                g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
                 g_GameWork.gameStateStep_598[1] = 20;
                 g_GameWork.gameStateStep_598[2] = 0;
                 func_8007EBBC();
@@ -1335,22 +1335,20 @@ void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId) // 0x8004EC7C
 {
     #define ARROW_COUNT 4
 
-    POLY_G3* arrowPoly;
     s32      baseColor;
     s32      i;
     s8       timeStep;
+    POLY_G3* arrowPoly;
+    GsOT*    ot = &g_OrderingTable2[g_ActiveBufferIdx];
 
-    GsOT* ot = &g_OrderingTable2[g_ActiveBufferIdx];
-
-    // TODO: Why the large values for some positions?
-    s_Triangle2d arrowTris[] =
+    s_Triangle2d ARROW_TRIS[] =
     {
         { { 0xFFC4, 0x000C }, { 0xFFCC, 0x0004 }, { 0xFFCC, 0x0014 } },
         { { 0xFFCC, 0x000C }, { 0xFFD4, 0x0004 }, { 0xFFD4, 0x0014 } },
         { { 0x0034, 0x000C }, { 0x002C, 0x0004 }, { 0x002C, 0x0014 } },
         { { 0x003C, 0x000C }, { 0x0034, 0x0004 }, { 0x0034, 0x0014 } },
-        { { 0x0060, 0xFF53 }, { 0x0066, 0xFF60 }, { 0x005A, 0xFF60 } }, // Unused.
-        { { 0x0060, 0xFFA4 }, { 0x005B, 0xFF98 }, { 0x0065, 0xFF98 } }  // Unused.
+        { { 0x0060, 0xFF53 }, { 0x0066, 0xFF60 }, { 0x005A, 0xFF60 } }, // @unused
+        { { 0x0060, 0xFFA4 }, { 0x005B, 0xFF98 }, { 0x0065, 0xFF98 } }  // @unused
     };
 
     // Only draw arrows when item is selected.
@@ -1368,15 +1366,15 @@ void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId) // 0x8004EC7C
         setPolyG3(arrowPoly);
         setSemiTrans(arrowPoly, 1);
 
-        baseColor = 0xFF - (timeStep * 8);
+        baseColor = 255 - (timeStep * 8);
         setRGB0(arrowPoly, baseColor, baseColor, baseColor);
         setRGB1(arrowPoly, timeStep * 8, timeStep * 8, timeStep * 8);
         setRGB2(arrowPoly, timeStep * 8, timeStep * 8, timeStep * 8);
 
         setXY3(arrowPoly,
-               arrowTris[i].vertex0_0.vx, arrowTris[i].vertex0_0.vy,
-               arrowTris[i].vertex1_4.vx, arrowTris[i].vertex1_4.vy,
-               arrowTris[i].vertex2_8.vx, arrowTris[i].vertex2_8.vy);
+               ARROW_TRIS[i].vertex0_0.vx, ARROW_TRIS[i].vertex0_0.vy,
+               ARROW_TRIS[i].vertex1_4.vx, ARROW_TRIS[i].vertex1_4.vy,
+               ARROW_TRIS[i].vertex2_8.vx, ARROW_TRIS[i].vertex2_8.vy);
 
         addPrim(&ot->org[7], arrowPoly);
         GsOUT_PACKET_P = (PACKET*)arrowPoly + sizeof(POLY_G3);
@@ -1401,7 +1399,7 @@ bool func_8004EE94(u8 arg0, u8 arg1) // 0x8004EE94
                     g_SavegamePtr->items_0[i].count_1--;
                     if (!(g_SavegamePtr->items_0[i].count_1 & 0xFF))
                     {
-                        g_SavegamePtr->items_0[i].id_0        = 0xFF;
+                        g_SavegamePtr->items_0[i].id_0       = 0xFF;
                         g_SavegamePtr->inventorySlotCount_AB = func_8004F190(g_SavegamePtr);
                     }
                 }

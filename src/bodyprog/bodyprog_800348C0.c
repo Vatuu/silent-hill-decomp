@@ -251,7 +251,7 @@ void GameFs_MapStartup() // 0x80034964
                 if (func_80039F90() & (1 << 1))
                 {
                     g_GameWork.gameStateStep_598[0] = 1;
-                    g_Gfx_ScreenFade                = SCREEN_FADE_STATUS(ScreenFadeState_ResetTimeStep, IS_SCREEN_FADE_WHITE(g_Gfx_ScreenFade));
+                    g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_ResetTimeStep, IS_SCREEN_FADE_WHITE(g_Screen_FadeStatus));
                 }
             }
             break;
@@ -265,7 +265,7 @@ void Gfx_LoadingScreenDraw() // 0x80034E58
 {
     if (g_SysWork.loadingScreenIdx_2281 != LoadingScreenId_None && g_GameWork.gameStateStep_598[0] < 10)
     {
-        g_Gfx_ScreenFade     = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, false);
+        g_Screen_FadeStatus  = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, false);
         g_ScreenFadeTimestep = FP_TIME(0.8f);
         g_MapOverlayHeader.loadingScreenFuncs_18[g_SysWork.loadingScreenIdx_2281]();
     }
@@ -2087,7 +2087,7 @@ void GameState_InGame_Update() // 0x80038BD4
     switch (g_GameWork.gameStateStep_598[0])
     {
         case 0:
-            g_Gfx_ScreenFade                = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
+            g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
             g_ScreenFadeTimestep            = FP_TIME(3.0f);
             g_GameWork.gameStateStep_598[0] = 1;
 
@@ -2138,7 +2138,7 @@ void GameState_InGame_Update() // 0x80038BD4
     }
     Demo_DemoRandSeedRestore();
 
-    D_800A9A0C = Gfx_IsScreenFadeComplete() && Fs_QueueDoThingWhenEmpty() != 0;
+    D_800A9A0C = SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete && Fs_QueueDoThingWhenEmpty();
 
     if (!(g_SysWork.field_22A0 & (1 << 0)) && g_MapOverlayHeader.func_40 != NULL)
     {
@@ -2291,7 +2291,7 @@ void SysState_Gameplay_Update() // 0x80038BD4
     {
         g_SysWork.flags_22A4 |= 1 << 7;
     }
-    else if (g_Gfx_ScreenFade == SCREEN_FADE_STATUS(ScreenFadeState_None, false))
+    else if (g_Screen_FadeStatus == SCREEN_FADE_STATUS(ScreenFadeState_None, false))
     {
         g_SysWork.flags_22A4 &= ~(1 << 7);
     }
@@ -2346,7 +2346,7 @@ void SysState_OptionsMenu_Update() // 0x80039344
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            g_Gfx_ScreenFade            = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
+            g_Screen_FadeStatus         = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
             g_ScreenFadeTimestep        = FP_TIME(0.0f);
             g_SysWork.sysStateStep_C[0] = 1;
 
@@ -2482,8 +2482,8 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
         DrawSync(0);
-        g_IntervalVBlanks = 1;
-        g_Gfx_ScreenFade  = SCREEN_FADE_STATUS(ScreenFadeState_Reset, false);
+        g_IntervalVBlanks   = 1;
+        g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_Reset, false);
 
         func_8003943C();
 
@@ -2538,7 +2538,7 @@ void SysState_MapScreen_Update() // 0x800396D4
 
             Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9]);
 
-            g_Gfx_ScreenFade    = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
+            g_Screen_FadeStatus  = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
             g_ScreenFadeTimestep = FP_TIME(0.0f);
             g_SysWork.sysStateStep_C[0]++;
         }
@@ -2584,7 +2584,7 @@ void SysState_Fmv_Update() // 0x80039A58
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            g_Gfx_ScreenFade            = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false);
+            g_Screen_FadeStatus         = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false);
             D_800A9A0C                  = 0;
             g_SysWork.sysStateStep_C[0] = 1;
 
@@ -2818,7 +2818,7 @@ void SysState_SaveMenu_Update() // 0x8003A230
             {
                 GameFs_SaveLoadBinLoad();
 
-                g_Gfx_ScreenFade = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
+                g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
                 SysWork_StateStepIncrement();
             }
             else if (Gfx_MapMsg_Draw(MapMsgIdx_SaveGame) == MapMsgState_SelectEntry0)
@@ -2827,7 +2827,7 @@ void SysState_SaveMenu_Update() // 0x8003A230
 
                 GameFs_SaveLoadBinLoad();
 
-                g_Gfx_ScreenFade   = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
+                g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
                 SysWork_StateStepIncrement();
             }
             break;
@@ -2835,7 +2835,7 @@ void SysState_SaveMenu_Update() // 0x8003A230
         case 1:
             if (D_800A9A0C != 0)
             {
-                g_Gfx_ScreenFade = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
+                g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
 
                 func_8003943C();
 
@@ -3059,11 +3059,11 @@ void GameState_MapEvent_Update() // 0x8003AA4C
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
         g_IntervalVBlanks               = 1;
-        g_Gfx_ScreenFade                = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
+        g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
         g_GameWork.gameStateStep_598[0] = 1;
     }
 
-    D_800A9A0C = Gfx_IsScreenFadeComplete() && Fs_QueueDoThingWhenEmpty();
+    D_800A9A0C = SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete && Fs_QueueDoThingWhenEmpty();
 
     Savegame_EventFlagSetAlt(g_MapEventParam->eventFlagId_2);
 
