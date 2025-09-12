@@ -2,9 +2,10 @@
 #define _BODYPROG_MATH_MATH_H
 
 #include <limits.h>
+
+#include "bodyprog/math/arithmetic.h"
 #include "bodyprog/math/constants.h"
 #include "bodyprog/math/fixed_point.h"
-#include "bodyprog/math/arithmetic.h"
 
 /** @brief Constructs a `VECTOR3` in a fixed-point Q19.12 format.
  *
@@ -103,7 +104,7 @@
  * @param angle Unsigned fixed-point degrees in Q19.12, range `[0, 4096]`.
  * @return Fixed-point degrees wrapped to the range `[-2048, 2047]` (`s16`).
  */
-static inline s16 Math_AngleNormalize(q19_12 angle)
+static inline q3_12 Math_AngleNormalize(q19_12 angle)
 {
     return FP_ANGLE_NORM_S(angle);
 }

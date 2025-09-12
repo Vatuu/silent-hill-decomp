@@ -204,13 +204,13 @@ typedef struct _VC_ROAD_DATA
     VC_AREA_SIZE_TYPE area_size_type_11 : 2;
     VC_ROAD_TYPE      rd_type_11        : 3; /** Path type. */
     u32               mv_y_type_11      : 3; /** `VC_CAM_MV_TYPE` */
-    s32               lim_rd_max_hy_12  : 8; /** Q? | In SH2 `max_hy/min_hy` are part of `VC_LIMIT_AREA`, in SH1 these are separate for some reason. */
-    s32               lim_rd_min_hy_13  : 8; /** Q? */
-    s32               ofs_watch_hy_14   : 8; /** Q? */
+    q27_4             lim_rd_max_hy_12  : 8; /** In SH2 `max_hy/min_hy` are part of `VC_LIMIT_AREA`, in SH1 these are separate for some reason. */
+    q27_4             lim_rd_min_hy_13  : 8;
+    q27_4             ofs_watch_hy_14   : 8;
     u32               field_15          : 4;
     s16               cam_mv_type_14    : 4; /** `VC_CAM_MV_TYPE` */
-    s8                fix_ang_x_16;          /** Q0.8 | NOTE: Part of union in SH2 `VC_ROAD_DATA`. */
-    s8                fix_ang_y_17;          /** Q0.8 */
+    q0_8              fix_ang_x_16;          /** NOTE: Part of union in SH2 `VC_ROAD_DATA`. */
+    q0_8              fix_ang_y_17;
 } VC_ROAD_DATA;
 STATIC_ASSERT_SIZEOF(VC_ROAD_DATA, 24);
 
@@ -220,7 +220,7 @@ typedef struct _VC_THROUGH_DOOR_CAM_PARAM
     u8      active_f_0;                /** `bool` | Active flag. */
     s8      unk_1[3];
     s32     timer_4;
-    s16     rail_ang_y_8;              /** Rail Y angle. */
+    q3_12   rail_ang_y_8;              /** Rail Y angle. */
     s8      unk_A[2];
     VECTOR3 rail_sta_pos_C;            /** Rail start position. */
     s32     rail_sta_to_chara_dist_18; /** Distance from rail start position to locked-on character position. */

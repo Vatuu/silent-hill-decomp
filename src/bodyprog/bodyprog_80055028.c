@@ -1788,11 +1788,11 @@ s_Material_8* func_8005B4BC(char* str, s_800C1450_0* arg1) // 0x8005B4BC
     return NULL;
 }
 
-void func_8005B55C(GsCOORDINATE2* arg0) // 0x8005B55C
+void func_8005B55C(GsCOORDINATE2* coord) // 0x8005B55C
 {
     s_800AE204* var_s1;
 
-    D_800C42B8 = arg0;
+    D_800C42B8 = coord;
 
     for (var_s1 = &D_800AE204[0]; var_s1 < &D_800AE204[26]; var_s1++)
     {

@@ -1,7 +1,7 @@
     {
         .lim_sw_0 = { Q7_8(-15.0f), Q7_8(12.5f), Q7_8(6.78125f), Q7_8(8.1875f) },
         .lim_rd_8 = { Q7_8(-15.0f), Q7_8(12.5f), Q7_8(7.0f), Q7_8(8.0f) },
-        .flags_10 = 144,
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = 2,
         .rd_type_11 = 0,
         .mv_y_type_11 = 0,
@@ -16,7 +16,7 @@
     {
         .lim_sw_0 = { Q7_8(11.25f), Q7_8(12.125f), Q7_8(6.875f), Q7_8(7.625f) },
         .lim_rd_8 = { Q7_8(10.625f), Q7_8(11.5f), Q7_8(7.328125f), Q7_8(7.328125f) },
-        .flags_10 = 48,
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_USE_NO_ENEMY_F,
         .area_size_type_11 = 2,
         .rd_type_11 = 1,
         .mv_y_type_11 = 3,
@@ -31,7 +31,7 @@
     {
         .lim_sw_0 = { Q7_8(-10.0f), Q7_8(7.5f), Q7_8(-0.71875f), Q7_8(0.71875f) },
         .lim_rd_8 = { Q7_8(-15.0f), Q7_8(7.5f), Q7_8(-0.5f), Q7_8(0.5f) },
-        .flags_10 = 144,
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = 2,
         .rd_type_11 = 0,
         .mv_y_type_11 = 0,
@@ -46,7 +46,7 @@
     {
         .lim_sw_0 = { Q7_8(-15.0f), Q7_8(-10.0f), Q7_8(-0.71875f), Q7_8(0.71875f) },
         .lim_rd_8 = { Q7_8(-15.0f), Q7_8(-10.90625f), Q7_8(-0.5f), Q7_8(0.5f) },
-        .flags_10 = 144,
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = 2,
         .rd_type_11 = 0,
         .mv_y_type_11 = 0,
@@ -91,7 +91,7 @@
     {
         .lim_sw_0 = { Q7_8(-15.0f), Q7_8(11.3125f), Q7_8(-5.71875f), Q7_8(-4.28125f) },
         .lim_rd_8 = { Q7_8(-15.0f), Q7_8(12.5f), Q7_8(-5.5f), Q7_8(-4.5f) },
-        .flags_10 = 144,
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = 2,
         .rd_type_11 = 0,
         .mv_y_type_11 = 0,
@@ -151,7 +151,7 @@
     {
         .lim_sw_0 = { Q7_8(-15.0f), Q7_8(7.5f), Q7_8(-13.21875f), Q7_8(-11.78125f) },
         .lim_rd_8 = { Q7_8(-15.25f), Q7_8(7.5f), Q7_8(-13.0f), Q7_8(-12.0f) },
-        .flags_10 = 144,
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = 2,
         .rd_type_11 = 0,
         .mv_y_type_11 = 0,
@@ -166,7 +166,7 @@
     {
         .lim_sw_0 = { Q7_8(-15.6875f), Q7_8(-14.3125f), Q7_8(-12.59375f), Q7_8(8.9375f) },
         .lim_rd_8 = { Q7_8(-15.5f), Q7_8(-14.5f), Q7_8(-12.4375f), Q7_8(8.65625f) },
-        .flags_10 = 144,
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = 2,
         .rd_type_11 = 0,
         .mv_y_type_11 = 0,
@@ -181,7 +181,7 @@
     {
         .lim_sw_0 = { Q7_8(-15.29296875f), Q7_8(-14.3125f), Q7_8(-13.4375f), Q7_8(-12.59375f) },
         .lim_rd_8 = { Q7_8(-15.25f), Q7_8(-14.5f), Q7_8(-13.625f), Q7_8(8.65625f) },
-        .flags_10 = 144,
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = 2,
         .rd_type_11 = 0,
         .mv_y_type_11 = 0,
@@ -256,7 +256,7 @@
     {
         .lim_sw_0 = { Q7_8(-11.51171875f), Q7_8(-11.23828125f), Q7_8(-5.0f), Q7_8(7.5f) },
         .lim_rd_8 = { Q7_8(-11.51171875f), Q7_8(-11.23828125f), Q7_8(-5.0f), Q7_8(7.5f) },
-        .flags_10 = 144,
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = 2,
         .rd_type_11 = 0,
         .mv_y_type_11 = 0,
@@ -271,7 +271,7 @@
     {
         .lim_sw_0 = { Q7_8(-11.51171875f), Q7_8(-11.23828125f), Q7_8(-12.5f), Q7_8(-8.0f) },
         .lim_rd_8 = { Q7_8(-11.51171875f), Q7_8(-11.23828125f), Q7_8(-12.5f), Q7_8(-8.0f) },
-        .flags_10 = 144,
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = 2,
         .rd_type_11 = 0,
         .mv_y_type_11 = 0,
@@ -286,7 +286,7 @@
     {
         .lim_sw_0 = { Q7_8(-11.51171875f), Q7_8(-11.17578125f), Q7_8(-9.375f), Q7_8(-8.75f) },
         .lim_rd_8 = { Q7_8(-11.51171875f), Q7_8(-11.23828125f), Q7_8(-12.5f), Q7_8(-8.0f) },
-        .flags_10 = 144,
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = 2,
         .rd_type_11 = 1,
         .mv_y_type_11 = 0,
@@ -331,7 +331,7 @@
     {
         .lim_sw_0 = { Q7_8(-8.1875f), Q7_8(-6.8125f), Q7_8(-12.5f), Q7_8(7.5f) },
         .lim_rd_8 = { Q7_8(-8.0f), Q7_8(-7.0f), Q7_8(-12.5f), Q7_8(7.5f) },
-        .flags_10 = 144,
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = 2,
         .rd_type_11 = 0,
         .mv_y_type_11 = 0,
@@ -346,7 +346,7 @@
     {
         .lim_sw_0 = { Q7_8(-4.01171875f), Q7_8(-3.73828125f), Q7_8(3.125f), Q7_8(7.5f) },
         .lim_rd_8 = { Q7_8(-4.01171875f), Q7_8(-3.73828125f), Q7_8(3.125f), Q7_8(7.5f) },
-        .flags_10 = 144,
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = 2,
         .rd_type_11 = 0,
         .mv_y_type_11 = 0,
@@ -361,7 +361,7 @@
     {
         .lim_sw_0 = { Q7_8(-4.01171875f), Q7_8(-3.73828125f), Q7_8(-1.875f), Q7_8(0.0f) },
         .lim_rd_8 = { Q7_8(-4.01171875f), Q7_8(-3.73828125f), Q7_8(-1.875f), Q7_8(0.0f) },
-        .flags_10 = 144,
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = 2,
         .rd_type_11 = 0,
         .mv_y_type_11 = 0,
@@ -376,7 +376,7 @@
     {
         .lim_sw_0 = { Q7_8(-4.01171875f), Q7_8(-3.73828125f), Q7_8(-12.5f), Q7_8(-5.0f) },
         .lim_rd_8 = { Q7_8(-4.01171875f), Q7_8(-3.73828125f), Q7_8(-12.5f), Q7_8(-5.0f) },
-        .flags_10 = 144,
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = 2,
         .rd_type_11 = 0,
         .mv_y_type_11 = 0,
@@ -391,7 +391,7 @@
     {
         .lim_sw_0 = { Q7_8(-0.71875f), Q7_8(1.21875f), Q7_8(-1.125f), Q7_8(13.1875f) },
         .lim_rd_8 = { Q7_8(-0.5f), Q7_8(1.0f), Q7_8(-1.125f), Q7_8(13.1875f) },
-        .flags_10 = 144,
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = 2,
         .rd_type_11 = 0,
         .mv_y_type_11 = 0,
@@ -406,7 +406,7 @@
     {
         .lim_sw_0 = { Q7_8(-0.71875f), Q7_8(0.1640625f), Q7_8(12.5f), Q7_8(13.5f) },
         .lim_rd_8 = { Q7_8(-0.5f), Q7_8(0.1640625f), Q7_8(0.1640625f), Q7_8(13.5f) },
-        .flags_10 = 144,
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = 2,
         .rd_type_11 = 0,
         .mv_y_type_11 = 0,
@@ -421,7 +421,7 @@
     {
         .lim_sw_0 = { Q7_8(0.34375f), Q7_8(1.21875f), Q7_8(12.5f), Q7_8(13.5f) },
         .lim_rd_8 = { Q7_8(0.34375f), Q7_8(1.0f), Q7_8(-14.4375f), Q7_8(13.5f) },
-        .flags_10 = 144,
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = 2,
         .rd_type_11 = 0,
         .mv_y_type_11 = 0,
@@ -436,7 +436,7 @@
     {
         .lim_sw_0 = { Q7_8(3.48828125f), Q7_8(3.76171875f), Q7_8(-2.0f), Q7_8(7.5f) },
         .lim_rd_8 = { Q7_8(3.48828125f), Q7_8(3.76171875f), Q7_8(-1.875f), Q7_8(7.5f) },
-        .flags_10 = 144,
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = 2,
         .rd_type_11 = 0,
         .mv_y_type_11 = 0,
@@ -451,7 +451,7 @@
     {
         .lim_sw_0 = { Q7_8(6.8125f), Q7_8(8.1875f), Q7_8(-1.71875f), Q7_8(7.5f) },
         .lim_rd_8 = { Q7_8(7.0f), Q7_8(8.0f), Q7_8(-1.71875f), Q7_8(7.5f) },
-        .flags_10 = 144,
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = 2,
         .rd_type_11 = 0,
         .mv_y_type_11 = 0,
@@ -541,7 +541,7 @@
     {
         .lim_sw_0 = { Q7_8(-17.5f), Q7_8(-15.3125f), Q7_8(-11.875f), Q7_8(-10.625f) },
         .lim_rd_8 = { Q7_8(-17.5f), Q7_8(-15.3125f), Q7_8(-11.51171875f), Q7_8(-10.96875f) },
-        .flags_10 = 144,
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = 2,
         .rd_type_11 = 0,
         .mv_y_type_11 = 0,
@@ -556,7 +556,7 @@
     {
         .lim_sw_0 = { Q7_8(6.8125f), Q7_8(8.1875f), Q7_8(-8.25f), Q7_8(-3.34375f) },
         .lim_rd_8 = { Q7_8(7.0f), Q7_8(8.0f), Q7_8(-8.0625f), Q7_8(-3.34375f) },
-        .flags_10 = 144,
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = 2,
         .rd_type_11 = 0,
         .mv_y_type_11 = 0,
@@ -601,7 +601,7 @@
     {
         .lim_sw_0 = { Q7_8(-0.71875f), Q7_8(1.21875f), Q7_8(-7.0f), Q7_8(-3.125f) },
         .lim_rd_8 = { Q7_8(-0.5f), Q7_8(1.0f), Q7_8(-7.0f), Q7_8(-3.125f) },
-        .flags_10 = 144,
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = 2,
         .rd_type_11 = 0,
         .mv_y_type_11 = 0,
@@ -661,7 +661,7 @@
     {
         .lim_sw_0 = { Q7_8(-16.875f), Q7_8(-14.5f), Q7_8(3.28125f), Q7_8(4.21875f) },
         .lim_rd_8 = { Q7_8(-16.46875f), Q7_8(-14.5f), Q7_8(3.5f), Q7_8(4.0f) },
-        .flags_10 = 144,
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = 2,
         .rd_type_11 = 0,
         .mv_y_type_11 = 0,

@@ -2089,7 +2089,7 @@ void vcMakeIdealCamPosUseVC_ROAD_DATA(VECTOR3* ideal_pos, VC_WORK* w_p, enum _VC
 
     road_data = w_p->cur_near_road_2B8.road_p_0;
 
-    ideal_pos->vy = CLAMP(ideal_pos->vy, FP_TO(road_data->lim_rd_min_hy_13, Q8_SHIFT), FP_TO(road_data->lim_rd_max_hy_12, Q8_SHIFT));
+    ideal_pos->vy = CLAMP(ideal_pos->vy, Q27_4_TO_Q19_12(road_data->lim_rd_min_hy_13), Q27_4_TO_Q19_12(road_data->lim_rd_max_hy_12));
 
     temp_x = w_p->chara_pos_114.vx;
     temp_z = w_p->chara_pos_114.vz;
@@ -2244,28 +2244,28 @@ void vcAdjTgtMvVecYByCurNearRoad(VECTOR3* tgt_mv_vec, VC_WORK* w_p) // 0x800843F
             break;
 
         case VC_MV_SETTLE:
-            min_tgt_y = Math_MulFixed(FP_TO(cur_rd_p->lim_rd_max_hy_12, Q8_SHIFT),
+            min_tgt_y = Math_MulFixed(Q27_4_TO_Q19_12(cur_rd_p->lim_rd_max_hy_12),
                                       FP_METER(1.0f) - near_ratio,
                                       Q12_SHIFT) +
-                        Math_MulFixed(FP_TO(cur_rd_p->lim_rd_min_hy_13, Q8_SHIFT),
+                        Math_MulFixed(Q27_4_TO_Q19_12(cur_rd_p->lim_rd_min_hy_13),
                                       near_ratio,
                                       Q12_SHIFT);
             max_tgt_y = min_tgt_y;
             break;
 
         case VC_MV_FIX_ANG:
-            min_tgt_y = Math_MulFixed(FP_TO(cur_rd_p->lim_rd_min_hy_13, Q8_SHIFT),
+            min_tgt_y = Math_MulFixed(Q27_4_TO_Q19_12(cur_rd_p->lim_rd_min_hy_13),
                                       FP_METER(1.0f) - near_ratio,
                                       Q12_SHIFT) +
-                        Math_MulFixed(FP_TO(cur_rd_p->lim_rd_max_hy_12, Q8_SHIFT),
+                        Math_MulFixed(Q27_4_TO_Q19_12(cur_rd_p->lim_rd_max_hy_12),
                                       near_ratio,
                                       Q12_SHIFT);
             max_tgt_y = min_tgt_y;
             break;
 
         case VC_MV_SELF_VIEW:
-            min_tgt_y = FP_TO(cur_rd_p->lim_rd_min_hy_13, Q8_SHIFT);
-            max_tgt_y = FP_TO(cur_rd_p->lim_rd_max_hy_12, Q8_SHIFT);
+            min_tgt_y = Q27_4_TO_Q19_12(cur_rd_p->lim_rd_min_hy_13);
+            max_tgt_y = Q27_4_TO_Q19_12(cur_rd_p->lim_rd_max_hy_12);
             break;
     }
 

@@ -102,29 +102,13 @@
 // RAW Q FORMAT CONVERSION AND UTILS
 // ==================================
 
-/** @brief Converts a floating-point value to fixed-point Q19.12.
+/** @brief Converts a floating-point value to fixed-point Q0.8.
  *
  * @param x Value to convert (`float`).
- * @return `x` converted to fixed-point Q19.12 (`s32`).
+ * @return `x` converted to fixed-point Q0.8 ('u8`).
  */
-#define Q19_12(x) \
-    (s32)FP_FLOAT_TO(x, Q12_SHIFT)
-
-/** @brief Converts a floating-point value to fixed-point Q23.8.
- *
- * @param x Value to convert (`float`).
- * @return `x` converted to fixed-point Q23.8 (`s32`).
- */
-#define Q23_8(x) \
-    (s32)FP_FLOAT_TO(x, Q8_SHIFT)
-
-/** @brief Converts a floating-point value to fixed-point Q3.12.
- *
- * @param x Value to convert (`float`).
- * @return `x` converted to fixed-point Q3.12 (`s16`).
- */
-#define Q3_12(x) \
-    (s16)FP_FLOAT_TO(x, Q12_SHIFT)
+#define Q0_8(x) \
+    (u8)FP_FLOAT_TO(x, Q8_SHIFT)
 
 /** @brief Converts a floating-point value to fixed-point Q7.8.
  *
@@ -134,21 +118,37 @@
 #define Q7_8(x) \
     (s16)FP_FLOAT_TO(x, Q8_SHIFT)
 
-/** @brief Converts a floating-point value to fixed-point Q0.8.
+/** @brief Converts a floating-point value to fixed-point Q3.12.
  *
  * @param x Value to convert (`float`).
- * @return `x` converted to fixed-point Q0.8 ('u8`).
+ * @return `x` converted to fixed-point Q3.12 (`s16`).
  */
-#define Q0_8(x) \
-    (u8)FP_FLOAT_TO(x, Q8_SHIFT)
+#define Q3_12(x) \
+    (s16)FP_FLOAT_TO(x, Q12_SHIFT)
 
-/** @brief Converts a fixed-point value from Q23.8 to Q19.12.
+/** @brief Converts a floating-point value to fixed-point Q27.4.
  *
- * @param x Fixed-point value in Q23.8 to convert.
+ * @param x Value to convert (`float`).
+ * @return `x` converted to fixed-point Q27.4 (`s32`).
+ */
+#define Q27_4(x) \
+    (s32)FP_FLOAT_TO(x, Q4_SHIFT)
+
+/** @brief Converts a floating-point value to fixed-point Q23.8.
+ *
+ * @param x Value to convert (`float`).
+ * @return `x` converted to fixed-point Q23.8 (`s32`).
+ */
+#define Q23_8(x) \
+    (s32)FP_FLOAT_TO(x, Q8_SHIFT)
+
+/** @brief Converts a floating-point value to fixed-point Q19.12.
+ *
+ * @param x Value to convert (`float`).
  * @return `x` converted to fixed-point Q19.12 (`s32`).
  */
-#define Q23_8_TO_Q19_12(x) \
-    (s32)((x) << 4)
+#define Q19_12(x) \
+    (s32)FP_FLOAT_TO(x, Q12_SHIFT)
 
 /** @brief Converts a fixed-point value from Q0.8 to Q3.12.
  *
@@ -158,13 +158,21 @@
 #define Q0_8_TO_Q3_12(x) \
     (s16)((x) << 4)
 
-/** @brief Converts a fixed-point value from Q19.12 to Q23.8.
+/** @brief Converts a fixed-point value from Q27.4 to Q19.12.
  *
- * @param x Fixed-point value in Q19.12 to convert.
- * @return `x` converted to fixed-point Q23.8 (`s32`).
+ * @param x Fixed-point value in Q27.4 to convert.
+ * @return `x` converted to fixed-point Q19.12 (`s32`).
  */
-#define Q19_12_TO_Q23_8(x) \
-    (s32)((x) >> 4)
+#define Q27_4_TO_Q19_12(x) \
+    (s32)((x) << 8)
+
+/** @brief Converts a fixed-point value from Q23.8 to Q19.12.
+ *
+ * @param x Fixed-point value in Q23.8 to convert.
+ * @return `x` converted to fixed-point Q19.12 (`s32`).
+ */
+#define Q23_8_TO_Q19_12(x) \
+    (s32)((x) << 4)
 
 /** @brief Converts a fixed-point value from Q3.12 to Q0.8.
  *
@@ -173,6 +181,14 @@
  */
 #define Q3_12_TO_Q0_8(x) \
     (u8)((x) >> 4)
+
+/** @brief Converts a fixed-point value from Q19.12 to Q23.8.
+ *
+ * @param x Fixed-point value in Q19.12 to convert.
+ * @return `x` converted to fixed-point Q23.8 (`s32`).
+ */
+#define Q19_12_TO_Q23_8(x) \
+    (s32)((x) >> 4)
 
 /** @brief Extracts the fractional part of a value in fixed-point QX.12.
  *

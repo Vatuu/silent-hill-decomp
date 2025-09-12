@@ -1635,21 +1635,21 @@ typedef struct
 } s_GteScratchData2;
 
 typedef struct
-{
-    s16 field_0;
-    s16 field_2;
-    s16 field_4;
-    s16 unk_6;
-    s16 unk_8;
-    s16 unk_A;
-    s16 field_C;
-    s16 field_E;
-    s16 field_10;
-    s16 unk_12;
-    s16 field_14;
-    s16 field_16;
-    s16 field_18;
-    s16  unk_1A;
+{  
+    s16   field_0;
+    s16   field_2; // Move dist?
+    q3_12 field_4; // Angle.
+    s16   unk_6;
+    s16   unk_8;
+    s16   unk_A;
+    s16   field_C;
+    s16   field_E;
+    s16   field_10;
+    s16   unk_12;
+    s16   field_14;
+    s16   field_16;
+    s16   field_18;
+    s16   unk_1A;
 } s_800AE204;
 
 typedef struct
@@ -3064,7 +3064,7 @@ void func_80057A3C(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scrat
 
 s_Material_8* func_8005B1FC(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, void* arg3, s32 arg4);
 
-void func_8005B55C(GsCOORDINATE2* arg0);
+void func_8005B55C(GsCOORDINATE2* coord);
 
 u32 func_8005C478(s16* arg0, s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2);
 
