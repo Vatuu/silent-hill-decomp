@@ -145,7 +145,7 @@ extern s_func_800700F8_2 sharedData_800E2330_0_s01;
 
 extern u8 sharedData_800DF158_1_s02;
 
-extern s32 sharedData_800CAB70_0_s00; // Type assumed.
+extern VECTOR sharedData_800CAB70_0_s00;
 
 extern s32 sharedData_800E0CA8_0_s00;
 extern s32 sharedData_800E0CAC_0_s00;
@@ -158,6 +158,10 @@ extern s32 sharedData_800E32D0_0_s00;
 
 /** `e_EquippedWeaponId` */
 extern s8 sharedData_800DD59C_0_s00;
+
+extern s32 sharedData_800DF1F4_0_s00;
+extern s16 sharedData_800DF1F8_0_s00;
+extern s16 sharedData_800DF1FA_0_s00;
 
 extern s16 sharedData_800E0C6E_0_s00;
 
@@ -344,6 +348,8 @@ void sharedFunc_800D8928_0_s00(s_SubCharacter* chara);
 s32 sharedFunc_800D893C_0_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D8950_0_s00(s_SubCharacter* chara);
+
+bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In, s32 angleIn, s32 arg4);
 
 void sharedFunc_800D9064_0_s00(s_SubCharacter* chara);
 
