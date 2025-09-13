@@ -278,137 +278,6 @@ def sort_sym_by_address(input_text):
     sorted_lines = [addr_dict[addr] for addr in sorted(addr_dict.keys())]
     return "\n".join(sorted_lines)
 
-def fetch_jtbl_size(mapName, jtbl_name):
-    target_dir = os.path.join("asm", "maps", mapName, "data")
-    target_dlabel = f"dlabel {jtbl_name}"
-    target_size = f".size {jtbl_name}"
-
-    # Search through each .rodata.s file in maps data folder
-    for root, _, files in os.walk(target_dir):
-        for filename in files:
-            if filename.endswith(".rodata.s"):
-                filepath = os.path.join(root, filename)
-                with open(filepath, "r", encoding="utf-8") as f:
-                    lines = f.readlines()
-
-                counting = False
-                count = 0
-
-                for line in lines:
-                    if target_dlabel in line: # If we've found the jtbl start counting from next line
-                        counting = True
-                        continue
-                    if counting:
-                        if target_size in line: # Reached end of jtbl, return line count * 4
-                            return count * 4
-                        if "0x00000000" not in line: # Don't count lines with 0x00..
-                            count += 1
-    return None # jtbl not found
-
-def fetch_jtbl_file_offset(jtbl_name):
-    try:
-        hex_part = jtbl_name.split('_')[1]
-        value = int(hex_part, 16)
-        offset = value - MapVramAddress # maps begin at 0x800C9578
-        return offset
-    except (IndexError, ValueError):
-        return None
-
-def insert_jtbl_to_config(mapName, jtblName, tuName):
-    # Kinda ugly func to parse config yaml, since we can't rely on python yaml packages to keep the layout of our config files :/
-    #
-    # This func parses each subsegment in config yaml, then inserts a rodata segment for the jtbl
-    # If jtbl offset + jtbl size doesn't equal the next segment, a new "rodata" segment is then added
-
-    jtbl_offset = fetch_jtbl_file_offset(jtblName)
-    if jtbl_offset is None:
-        print(f"insert_jtbl_to_config: error fetching offset of {mapName} {jtblName}")
-        return False
-
-    jtbl_size = fetch_jtbl_size(mapName, jtblName)
-    if jtbl_offset is None or jtbl_size is None:
-        print(f"insert_jtbl_to_config: error fetching size of {mapName} {jtblName}")
-        return False
-
-    config_path = os.path.join("configs", "maps", f"{mapName}.yaml")
-
-    with open(config_path, "r", encoding="utf-8") as f:
-        lines = f.readlines()
-
-    output_lines = []
-    in_subsegments = False
-    subsegment_lines = []
-    subsegment_start_idx = 0
-
-    # First pass: extract subsegments block
-    for i, line in enumerate(lines):
-        stripped = line.strip()
-        if stripped.startswith("subsegments:"):
-            in_subsegments = True
-            subsegment_start_idx = i
-            output_lines.append(line)  # include the subsegments: line
-            continue
-
-        if in_subsegments:
-            if not stripped.startswith("- ["):
-                in_subsegments = False
-                continue
-            subsegment_lines.append((i, line))
-
-    # Parse entries as (offset, line_index, line_text)
-    parsed_segments = []
-    for idx, line in subsegment_lines:
-        try:
-            start = line.index("[") + 1
-            end = line.index("]")
-            items = line[start:end].split(",")
-            offset = int(items[0].strip(), 16)
-            parsed_segments.append((offset, idx, line))
-        except Exception:
-            pass  # leave invalid lines alone
-
-    # Insert jtbl and optional rodata filler entry
-    jtbl_entry = f"      - [0x{jtbl_offset:X}, .rodata, {tuName}]\n"
-    jtbl_end = jtbl_offset + jtbl_size
-    offsets = [entry[0] for entry in parsed_segments]
-    inserted = False
-    filler_needed = True
-
-    for i in range(len(parsed_segments)):
-        cur_offset, _, _ = parsed_segments[i]
-        if cur_offset > jtbl_offset:
-            parsed_segments.insert(i, (jtbl_offset, -1, jtbl_entry))
-            inserted = True
-
-            if jtbl_end != cur_offset:
-                filler_line = f"      - [0x{jtbl_end:X}, rodata]\n"
-                parsed_segments.insert(i + 1, (jtbl_end, -1, filler_line))
-            else:
-                filler_needed = False
-            break
-
-    if not inserted:
-        parsed_segments.append((jtbl_offset, -1, jtbl_entry))
-        if filler_needed:
-            filler_line = f"      - [0x{jtbl_end:X}, rodata]\n"
-            parsed_segments.append((jtbl_end, -1, filler_line))
-
-    # Sort and reconstruct the subsegment block
-    parsed_segments.sort(key=lambda x: x[0])
-    new_subsegment_lines = [entry[2] for entry in parsed_segments]
-
-    # Reassemble full file
-    result_lines = (
-        lines[:subsegment_start_idx + 1]
-        + new_subsegment_lines
-        + lines[subsegment_start_idx + 1 + len(subsegment_lines):]
-    )
-
-    with open(config_path, "w", encoding="utf-8") as f:
-        f.writelines(result_lines)
-
-    return True
-
 def read_file(path):
     try:
         with open(path, 'r') as file:
@@ -575,9 +444,6 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
 
     # search-replace changes to make inside .c file, if --replace is specified
     replacements = {}
-
-    # jtbls to add to config file (jtbl_sym_name -> func_name, tu_file)
-    jtbl_list = {}
     
     if matched_files:
         print(f"Matches for distance <= {maxdistance}:")
@@ -657,15 +523,6 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
                         includeLines += "\n" + include_replace
                         replacements[include_search] = include_replace
 
-                        # If second map file2_text contains jtbls, add to our jtbl list
-                        if os.path.exists("include/" + sharedFilePath):
-                            pattern = r'jtbl_[0-9a-fA-F]{4,8}'
-                            for match in re.findall(pattern, file2_text):
-                                jtbl_name = f"{match}"
-                                print(f"{jtbl_name}")
-                                if jtbl_name not in jtbl_list:
-                                    jtbl_list[jtbl_name] = (funcname_file2, tu_file2)
-
         if sharedFuncSymbols:
             print(f"\nsym.{map2}.txt adds:")
             for addr_int in sorted(sharedFuncSymbols.keys()):
@@ -712,13 +569,7 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
                             print(f"Updated {c_file} with new includes.")
                             any_replaced = True
 
-                    if any_replaced and jtbl_list:
-                        print(f"\nAdding jtbls to configs/maps/{map2}.yaml...")
-                        for jtbl, (func_name, tu_file) in jtbl_list.items():
-                            print(f"  {jtbl} = {tu_file}/{func_name}")
-                            insert_jtbl_to_config(map2, jtbl, tu_file)
-
-                    elif not any_replaced:
+                    if not any_replaced:
                         print(f"\nNo matching INCLUDE_ASM lines found in any .c files in {dir_path}. Nothing replaced.")
 
                 except FileNotFoundError:
@@ -902,7 +753,6 @@ def print_usage():
     print("  --searchChara [CHAR_ID]     Search and list any maps that contain CHAR_ID")
     print()
     print("Misc:")
-    print("  --jtbl [JTBL_NAME] [MAP]    Add rodata for jtbl to map1.yaml")
     print("  --sortsyms [MAP_NAME]       Sort map symbols ('all' to sort all map symbol files)")
     print("  --compareFuncs [FUNC1_ASM_PATH] [FUNC2_ASM_PATH]    Compare two functions, print Levenshtein distance, write clean files for comparing")
     print("  --similar [MAX_DIFF] [FUNC_ASM_PATH]   Search for funcs similar to FUNC_ASM_PATH, with max difference of MAX_DIFF")
@@ -927,7 +777,6 @@ def main():
     parser.add_argument("--list", action="store_true", help="List character spawns from map headers")
     parser.add_argument("--searchChara", type=int, help="Search all maps for character ID")
 
-    parser.add_argument("--jtbl", type=str)
     parser.add_argument("--sortsyms", type=str)
     parser.add_argument("--compareFuncs", action="store_true")
     parser.add_argument("--similar", type=int)
@@ -938,17 +787,7 @@ def main():
         print_usage()
         return
 
-    if args.jtbl is not None:
-        if args.map1 is None:
-            print_usage()
-            return
-        
-        if insert_jtbl_to_config(args.map1, args.jtbl, args.map1):
-            print(f"Inserted rodata for {args.jtbl} into configs/maps/{args.map1}.yaml as {args.map1} TU (may need changing)")
-
-        return
-
-    elif args.sortsyms is not None:
+    if args.sortsyms is not None:
         map_files = [args.sortsyms]
         if args.sortsyms == "all":
             map_files = MapFileNames
