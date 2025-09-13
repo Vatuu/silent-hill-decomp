@@ -3123,7 +3123,7 @@ void func_8006B9C8(s_func_8006CC44* arg0) // 0x8006B9C8
             if (!arg0->field_44 &&
                 (-field_28 < arg0->field_EE || -field_28 < arg0->field_F2) &&
                 (-field_28 < arg0->field_EC || -field_28 < arg0->field_F0) &&
-                (arg0->field_EC < (field_28 + arg0->field_D6) || arg0->field_F0 < (field_28 + arg0->field_D6)))
+                (arg0->field_EC < (field_28 + arg0->vec_D2.vz) || arg0->field_F0 < (field_28 + arg0->vec_D2.vz)))
             {
                 func_8006BE40(arg0);
             }
@@ -3149,7 +3149,7 @@ s32 func_8006BC34(s_func_8006CC44* arg0)
     }
     else
     {
-        temp_a2 = arg0->field_D6;
+        temp_a2 = arg0->vec_D2.vz;
         if (temp_a2 < temp_v1)
         {
             var_v0 = arg0->field_E6;
@@ -3206,7 +3206,7 @@ void func_8006BE40(s_func_8006CC44* arg0) // 0x8006BE40
     {
         if (arg0->field_EC >= 0)
         {
-            if (arg0->field_D6 >= arg0->field_EC)
+            if (arg0->vec_D2.vz >= arg0->field_EC)
             {
                 var_a2 = arg0->field_EC;
                 var_v1 = 2;
@@ -3225,7 +3225,7 @@ void func_8006BE40(s_func_8006CC44* arg0) // 0x8006BE40
     {
         if (arg0->field_102 == 0)
         {
-            if ((arg0->field_EC > 0) && (arg0->field_EC < arg0->field_D6))
+            if ((arg0->field_EC > 0) && (arg0->field_EC < arg0->vec_D2.vz))
             {
                 var_a1 = 0;
                 var_a2 = arg0->field_EC;
@@ -3243,7 +3243,7 @@ void func_8006BE40(s_func_8006CC44* arg0) // 0x8006BE40
         {
             var_v1 = 0;
         }
-        else if (arg0->field_D6 < var_a2)
+        else if (arg0->vec_D2.vz < var_a2)
         {
             var_v1 = 1;
         }
@@ -3336,9 +3336,9 @@ bool func_8006C3D4(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s32 idx)
     }
 
     arg0->field_D1         = temp_a1->field_0_5;
-    arg0->field_D2         = temp_a1->field_2;
-    arg0->field_D4         = temp_a1->field_4;
-    arg0->field_D6         = temp_a1->field_6;
+    arg0->vec_D2.vx        = temp_a1->vec_2.vx;
+    arg0->vec_D2.vy        = temp_a1->vec_2.vy;
+    arg0->vec_D2.vz        = temp_a1->vec_2.vz;
     arg0->field_D8.field_0 = temp_a1->field_8;
     return true;
 }
@@ -3349,14 +3349,14 @@ void func_8006C794(s_func_8006CC44* arg0, s32 arg1, s32 arg2) // 0x8006C794
 {
     s32 var;
 
-    if (arg0->field_4.field_2C >= (arg0->field_D4 + (arg2 - arg0->field_D8.field_0)))
+    if (arg0->field_4.field_2C >= (arg0->vec_D2.vy + (arg2 - arg0->field_D8.field_0)))
     {
         var = arg0->field_D0 + 52;
         func_8006BCC4(&arg0->field_44,
                       arg0->field_CC + var,
                       arg1,
-                      arg0->field_98 - arg0->field_D2,
-                      arg0->field_9A - arg0->field_D6,
+                      arg0->field_98 - arg0->vec_D2.vx,
+                      arg0->field_9A - arg0->vec_D2.vz,
                       arg0->field_4.field_28 + arg0->field_D8.field_0 - arg2);
     }
 }
@@ -4126,12 +4126,16 @@ void func_8006E78C(s_func_8006DCE0* arg0, s_IpdCollisionData_14* arg1, SVECTOR3*
                 if (gte_stMAC0() >= 0)
                 {
                     if (arg1->field_8 != 0xFF)
+                    {
                         return;
+                    }
                 }
                 else
                 {
                     if (arg1->field_9 != 0xFF)
+                    {
                         return;
+                    }
                 }
             }
 
@@ -4191,7 +4195,7 @@ void func_8006EB8C(s_func_8006DCE0* arg0, s_IpdCollisionData_18* arg1) // 0x8006
     s32     temp_v1;
 
     temp_a1 = arg1->field_8;
-    if (arg0->field_5E <= arg1->field_4)
+    if (arg0->field_5E <= arg1->vec_2.vy)
     {
         return;
     }
@@ -4199,7 +4203,7 @@ void func_8006EB8C(s_func_8006DCE0* arg0, s_IpdCollisionData_18* arg1) // 0x8006
     temp_v1 = arg0->field_58 + (arg0->field_5A << 16);
     gte_ldR11R12(temp_v1);
     gte_ldR13R21(temp_v1);
-    gte_ldvxy0(((arg1->field_2 - arg0->field_74) & 0xFFFF) + ((arg1->field_6 - arg0->field_76) << 16));
+    gte_ldvxy0(((arg1->vec_2.vx - arg0->field_74) & 0xFFFF) + ((arg1->vec_2.vz - arg0->field_76) << 16));
     gte_gte_ldvz0();
     gte_rtv0();
     gte_stMAC12(&sp10);
@@ -4216,15 +4220,15 @@ void func_8006EB8C(s_func_8006DCE0* arg0, s_IpdCollisionData_18* arg1) // 0x8006
             gte_gpf12();
             gte_stsv(&sp18);
 
-            if ((sp18.vy + arg0->field_2C.vy + arg0->field_4E) >= arg1->field_4)
+            if ((sp18.vy + arg0->field_2C.vy + arg0->field_4E) >= arg1->vec_2.vy)
             {
                 arg0->field_8  = temp_a1_3;
                 arg0->field_C  = sp18.vx + arg0->field_74 + arg0->field_6C;
                 arg0->field_10 = sp18.vy + arg0->field_2C.vy;
                 arg0->field_14 = sp18.vz + arg0->field_76 + arg0->field_70;
-                arg0->field_1C = arg1->field_4;
-                arg0->field_24 = (sp18.vx + arg0->field_74) - arg1->field_2;
-                arg0->field_26 = (sp18.vz + arg0->field_76) - arg1->field_6;
+                arg0->field_1C = arg1->vec_2.vy;
+                arg0->field_24 = (sp18.vx + arg0->field_74) - arg1->vec_2.vx;
+                arg0->field_26 = (sp18.vz + arg0->field_76) - arg1->vec_2.vz;
                 arg0->field_20 = 0;
                 arg0->field_28 = arg1->field_0_0;
             }
