@@ -4,6 +4,10 @@
 #include "maps/shared.h"
 #include "maps/map7/map7_s03.h"
 
+INCLUDE_RODATA("asm/maps/map7_s03/nonmatchings/map7_s03", D_800C9578);
+
+INCLUDE_RODATA("asm/maps/map7_s03/nonmatchings/map7_s03", g_MapOverlayHeader);
+
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800CD170);
 
 #include "maps/shared/sharedFunc_800CBBBC_0_s00.h" // 0x800CD608
@@ -109,6 +113,8 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedSymbol_800D8A68_0_s
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800CD280_2_s01); // 0x800D23DC
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800CD2C8_2_s01); // 0x800D2424
+
+INCLUDE_RODATA("asm/maps/map7_s03/nonmatchings/map7_s03", D_800CAB90);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedSymbol_800CD4A0_2_s01); // 0x800D25FC
 
@@ -512,6 +518,10 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DC544);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DC650);
 
+INCLUDE_RODATA("asm/maps/map7_s03/nonmatchings/map7_s03", D_800CAE30);
+
+INCLUDE_RODATA("asm/maps/map7_s03/nonmatchings/map7_s03", D_800CAE3C);
+
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DC6DC);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DCD94);
@@ -648,6 +658,8 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DDDD8);
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DDEEC);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DDF14);
+
+INCLUDE_RODATA("asm/maps/map7_s03/nonmatchings/map7_s03", D_800CAEAC);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DDF3C);
 
@@ -930,6 +942,96 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E1788);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E17B8);
 
+const char* g_MapMessages[] =
+{
+    #include "maps/shared/mapMsg_common.h"
+    "~J1(4.9)\tI_was_shocked_to_realize ~N\n\t\t\tthe_talisman_of_Metraton ~N\n\t\t\twas_being_used. ",
+    "~J1(4.0)\tIn_spite_of_the_lost_soul ~N\n\t\t\treturning_at_last, ",
+    "~J1(4.3)\tJust_a_little_longer_and_all ~N\n\t\t\twould_have_been_for_naught. ",
+    "~J1(7.0)\tIt's_all_because_of_that_man. ~N\n\t\t\tWe_must_be_thankful_to_him. ",
+    "~J1(3.2)\tEven_though_Alessa ~N\n\t\t\thas_been_stopped, ",
+    "~J1(8.5)\this_little_girl_still_has_to_go. ~N\n\t\t\tWhat_a_pity... ~E ",
+    "~J0(1.2)\tFreeze! ~E ",
+    "~J0(2.6)\tWhat_in_the_devil's_name...! ~E ",
+    "~J0(1.1)\t~E ",
+    "~J1(1.1)\tDahlia! ",
+    "~J1(5.6)\tWell,_well,_well. ~N\n\t\t\tTo_think_you'd_make_it_this_far. ",
+    "~J1(2.5)\tWhere's_Cheryl!? ~N\n\t\t\tWhat_have_you_done_to_her!? ",
+    "~J1(2.0)\tWhat_are_you_talking_about? ",
+    "~J1(4.8)\tYou've_seen_her_many_times. ~N\n\t\t\tRestored_to_her_former_self. ",
+    "~J1(2.4)\tI'm_in_no_mood_for_jokes. ~E ",
+    "~J0(3.4)\tDon't_you_see? ~N\n\t\t\tShe's_right_there. ~E ",
+    "~J1(1.8)\tThat's_absurd. ",
+    "~J1(4.5)\tYou_are_the_only_one ~N\n\t\t\twho_thinks_so. ",
+    "~J1(1.4)\tWhy? ",
+    "~J1(2.2)\tWhy_are_you_doing_this? ~E ",
+    "~J1(3.8)\tIt's_been_a_long_seven_years... ",
+    "~J1(4.4)\tFor_the_seven_years ~N\n\t\t\tsince_that_terrible_day, ",
+    "~J1(3.2)\tAlessa_has_been_kept_alive, ",
+    "~J1(3.9)\tsuffering_a_fate_worse ~N\n\t\t\tthan_death. ",
+    "~J1(6.5)\tAlessa_has_been_trapped ~N\n\t\t\tin_an_endless_nightmare ~N\n\t\t\tfrom_which_she_never_wakens. ",
+    "~J1(4.0)\tHe_has_been_nurtured ~N\n\t\t\tby_that_nightmare. ",
+    "~J1(3.6)\tWaiting_for ~N\n\t\t\tthe_day_to_be_born. ",
+    "~J1(3.6)\tThat_day_has_finally_come. ",
+    "~J1(2.9)\tThe_time_is_neigh. ~E ",
+    "~J1(5.1)\tEveryone_will_be_released, ~N\n\t\t\tfrom_pain_and_suffering. ",
+    "~J1(3.1)\tOur_salvation_is_at_hand. ",
+    "~J1(2.8)\tThis_is_the_day_of_reckoning. ",
+    "~J1(4.7)\tWhen_all_our_sorrows ~N\n\t\t\twill_be_washed_away. ",
+    "~J1(4.8)\tWhen_we_return_to ~N\n\t\t\tthe_true_paradise!  ~E ",
+    "~J0(6.2)\tMy_daughter_will_be ~N\n\t\t\tthe_mother_of_God! ~E ",
+    "~J0(4.0)\t~E ",
+    "~J1(1.7)\tQuit_screwing_around! ",
+    "~J1(2.4)\tReturn_things_to_how ~N\n\t\t\tthey_were_before! ",
+    "~J1(1.0)\tKaufmann! ",
+    "~J1(1.9)\tDid_I_ask_for_this! ",
+    "~J1(1.9)\tNobody_uses_me! ",
+    "~J1(3.0)\tYou_won't_get_away ~N\n\t\t\twith_this! ~E ",
+    "~J1(4.7)\tYour_role_is_over. ~N\n\t\t\tWe_don't_need_you_anymore. ",
+    "~J1(3.6)\tWhat_do_you_think_you_can ~N\n\t\t\taccomplish_by_coming_here? ",
+    "~J1(3.5)\tMy,_aren't_we_getting_cocky? ",
+    "~J1(3.2)\tBet_you_can't_see_this ~N\n\t\t\tand_keep_your_cool.  ~E ",
+    "~J0(3.5)\tAglaophotis! ~N\n\t\t\tI_thought_I_got_rid_of_that! ",
+    "~J0(3.2)\tAll_I_had_to_do_was_plant_it ~N\n\t\t\tsomewhere_for_you_to_find, ",
+    "~J0(3.9)\tYou_all,_well, ~N\n\t\t\tit_kept_you_busy. ",
+    "~J0(1.7)\tYou're_easy! ",
+    "~J0(2.4)\tAnd_there's_more ~N\n\t\t\twhere_this_came_from! ~E ",
+    "~J0(1.7)\tStop_it!!  ~E ",
+    "~J0(2.2)\t~E ",
+    "~J0(1.4)\t",
+    "~J2(1.2)\tWhat_the!? ~E ",
+    "~J0(10.4)\t~E ",
+    "~J0(3.0)\tWhat_on_earth? ~N\n\t\t\tThat's_not_supposed_to... ~E ",
+    "~J0(1.8)\t~E ",
+    "~J0(3.5)\t~E ",
+    "~J0(3.4)\tIt's_awakening! ~N\n\t\t\tIt's_awake! ",
+    "~J0(3.0)\tNow_no_one_can_interfere! ~E ",
+    "~J0(1.2)\tCheryl!! ",
+    "~J0(3.5)\tGive_up! ~N\n\t\t\tThat_person_no_longer_exists. ~E ",
+    "~J0(2.0)\tThis_is_a_God! ",
+    "~J2(4.9)\tDescended_among_us_to_reach_out ~N\n\t\t\tand_save_us! ~E ",
+    "~J0(13.2)\t_ ~E ",
+    "~J0(2.4)\t_ ~E ",
+    "~J0(1.3)\t_",
+    "~J0(1.1)\t_ ~E ",
+    "~J0(1.6)\tThank_you_daddy. ",
+    "~J0(1.4)\tGoodbye. ~E ",
+    "~J0(3.0)\tCheryl...? ~E ",
+    "~J0(2.3)\tCan't_be? ",
+    "~J0(2.2)\tYou_can't_leave_like_this... ",
+    "~J0(3.2)\tThis_can't_be_happening! ~N\n\t\t\tCheryl!? ~E ",
+    "~J0(1.4)\t...Cheryl!! ~E ",
+    "~J0(1.1)\t~E ",
+    "~J0(3.9)\t~E ",
+    "~J0(1.3)\tWait... ~E ",
+    "~J0(4.8)\t~E ",
+    "~J0(1.0)\t~E ",
+    "~J0(1.0)\t~E ",
+    "~J0(4.5)\t~E ",
+    "~J0(1.4)\tHarry. ",
+    "~J0(1.0)\tGo. ~E ",
+};
+
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E1854);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E1FE0);
@@ -972,15 +1074,25 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E4714);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E514C);
 
+INCLUDE_RODATA("asm/maps/map7_s03/nonmatchings/map7_s03", D_800CC348);
+
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E62CC);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E70F0);
 
+INCLUDE_RODATA("asm/maps/map7_s03/nonmatchings/map7_s03", D_800CC5C8);
+
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E7380);
+
+INCLUDE_RODATA("asm/maps/map7_s03/nonmatchings/map7_s03", D_800CC63C);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E787C);
 
+INCLUDE_RODATA("asm/maps/map7_s03/nonmatchings/map7_s03", D_800CCD20);
+
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E86BC);
+
+INCLUDE_RODATA("asm/maps/map7_s03/nonmatchings/map7_s03", D_800CCE80);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E8D20);
 
@@ -1011,3 +1123,5 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E98EC);
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E9AC8);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E9C28);
+
+INCLUDE_RODATA("asm/maps/map7_s03/nonmatchings/map7_s03", D_800CD168);

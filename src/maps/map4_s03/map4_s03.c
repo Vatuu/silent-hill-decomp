@@ -2,8 +2,11 @@
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
 #include "maps/shared.h"
-
 #include "maps/map4/map4_s03.h"
+
+INCLUDE_RODATA("asm/maps/map4_s03/nonmatchings/map4_s03", D_800C9578);
+
+INCLUDE_RODATA("asm/maps/map4_s03/nonmatchings/map4_s03", g_MapOverlayHeader);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800CB0A4);
 
@@ -190,6 +193,8 @@ void Ai_Twinfeeler_TextureLoad() // 0x800D3038
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3068);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3114);
+
+INCLUDE_RODATA("asm/maps/map4_s03/nonmatchings/map4_s03", D_800CA788);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D326C);
 
@@ -489,7 +494,45 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D667C);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D6704);
 
+INCLUDE_RODATA("asm/maps/map4_s03/nonmatchings/map4_s03", D_800CA814);
+
+// Assumed type.
+const s32 D_800CA824[] =
+{
+    -25,
+    -25,
+    -30,
+    -30,
+    -40,
+    -40,
+    -66,
+    -66,
+    -30,
+    -30,
+    -20,
+    -20,
+    -23,
+    -23,
+    -28,
+    -28,
+};
+
+const char* g_MapMessages[] =
+{
+    #include "maps/shared/mapMsg_common.h"
+    "\tDaddy...where_are_you...? ",
+    "~J0(1.0)\tCheryl! ~E  ",
+    "\tThere_is_a_ ~C2 Hunting_rifle ~C7 . ~N\n\tTake_it? ~S4 ",
+    "\tNothing_unusual. ~E ",
+    "\tA_picture_is_projected ~N\n\ton_the_screen. ",
+    "\tCheryl... ~N\n\twhere_could_she_be? ~E ",
+};
+
+INCLUDE_RODATA("asm/maps/map4_s03/nonmatchings/map4_s03", D_800CABE8);
+
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D6774);
+
+INCLUDE_RODATA("asm/maps/map4_s03/nonmatchings/map4_s03", D_800CAC60);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D6F24);
 
@@ -512,6 +555,8 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D7718);
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D7808);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D78D4);
+
+INCLUDE_RODATA("asm/maps/map4_s03/nonmatchings/map4_s03", D_800CACA8);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D78F4);
 
@@ -552,3 +597,9 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D9BB0);
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800DA3E0);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800DA718);
+
+INCLUDE_RODATA("asm/maps/map4_s03/nonmatchings/map4_s03", D_800CB080);
+
+INCLUDE_RODATA("asm/maps/map4_s03/nonmatchings/map4_s03", D_800CB08C);
+
+INCLUDE_RODATA("asm/maps/map4_s03/nonmatchings/map4_s03", D_800CB098);

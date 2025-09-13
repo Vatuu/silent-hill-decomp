@@ -3,6 +3,10 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 
+INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", D_800C9578);
+
+INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", g_MapOverlayHeader);
+
 INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800CB214);
 
 #include "maps/shared/sharedFunc_800CBBBC_0_s00.h" // 0x800CB7E0
@@ -141,9 +145,48 @@ INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D1500);
 
 INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D1524);
 
+const char* g_MapMessages[] =
+{
+    #include "maps/shared/mapMsg_common.h"
+    "\tThe_elevator_doesn't ~N\n\tappear_to_be_working. ~E ",
+    "\tA_glass_vial_lies_shattered. ",
+    "\tIt's_not_just_broken. ~N\n\tIt_looks_smashed_on_purpose. ~E ",
+    "\tThe_remaining_liquid_is_emptied ~N\n\tinto_the_ ~C2 Plastic_bottle ~C7 . ",
+    "\tNow_what_have_we_here? ~E ",
+    "\tA_glass_vial_lies_shattered. ~E ",
+    "\tThere_is_a_ ~C2 Plastic_bottle ~C7 . ~N\n\tTake_it? ~S4 ",
+    "~H\tThere_is_a_ ~C5 Hospital_map ~C7 . ~N\n\tTake_it? ~S4 ",
+    "~H\tThere_is_a ~N\n\t~C5 Hospital_basement_map ~C7 . ~N\n\tTake_it? ~S4 ",
+    "\tThere_is_a_ ~C2 Basement_key ~C7 . ~N\n\tTake_it? ~S4 ",
+    "~C3\tThe_in-house_generator ~N\n\t\tpowers_elevators,_ICUs ~N\n\t\tand_operating_rooms_only. ",
+    "\tDo_you_want_to_press_the_switch? ~S4 ",
+    "\tThe_generator_is_on. ~E ",
+    "\tUsed_the_ ~C2 Basement_key ~C7 _. ~E ",
+    "\tI_should_search_the_hospital. ~E ",
+    "\tThese_are_phones_and_phonebooks. ~N\n\tNo_need_to_examine_this. ~E ",
+    "\tThere's_a_vending_machine. ~N\n\tIt_doesn't_work. ~E ",
+    "\tThe_shelves_are_all_messed_up. ~N\n\tWho_did_this? ~E ",
+    "\tBooks_are_scattered ~N\n\taround_the_desk. ~N\n\tNothing_else_special_here. ~E ",
+    "\tThe_phone's_out. ~N\n\tCan't_get_a_dial_tone. ~E ",
+    "\tThere's_a_white_board. ~N\n\tNothing_special_written_here. ~E ",
+    "\tThere_is_a_newspaper. ",
+    "\tThis_article's_been ~N\n\tclipped_out... ~E ",
+    "\tThe_refrigerator_is_empty. ~E ",
+    "\tNothing_unusual. ~E ",
+    "\tNothing_helpful. ~E ",
+};
+
+INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", D_800CB088);
+
+INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", D_800CB094);
+
+INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", D_800CB0A0);
+
 INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D15F0);
 
 INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D23AC);
+
+INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", D_800CB124);
 
 INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D25A8);
 
@@ -155,12 +198,18 @@ INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D2774);
 
 INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D279C);
 
+INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", D_800CB148);
+
 INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D27C8);
 
 INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D29A4);
 
 INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D2A88);
 
+INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", D_800CB170);
+
 INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D2AF4);
 
 INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D2E54);
+
+INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", D_800CB20C);

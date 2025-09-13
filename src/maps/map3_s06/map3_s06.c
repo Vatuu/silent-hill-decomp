@@ -3,6 +3,10 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 
+INCLUDE_RODATA("asm/maps/map3_s06/nonmatchings/map3_s06", D_800C9578);
+
+INCLUDE_RODATA("asm/maps/map3_s06/nonmatchings/map3_s06", g_MapOverlayHeader);
+
 INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800CB2E0);
 
 #include "maps/shared/sharedFunc_800CBBBC_0_s00.h" // 0x800CB8AC
@@ -101,6 +105,8 @@ INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", sharedFunc_800CD280_2_s01
 
 INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", sharedFunc_800CD2C8_2_s01); // 0x800CF1B4
 
+INCLUDE_RODATA("asm/maps/map3_s06/nonmatchings/map3_s06", D_800CA840);
+
 INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", sharedSymbol_800CD4A0_2_s01); // 0x800CF38C
 
 #include "maps/shared/Ai_Dahlia_Init.h" // 0x800CFC9C
@@ -159,6 +165,45 @@ INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800D0B10);
 
 #include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800D0B7C
 
+const char* g_MapMessages[] =
+{
+    #include "maps/shared/mapMsg_common.h"
+    "~J0(1.5)\tWas_I_dreaming? ~E ",
+    "~J0(2.6)\tYou_were_too_late. ~E ",
+    "~J0(1.2)\tIt's_you... ~E ",
+    "~J0(3.4)\tYes.__Dahlia_Gillespie. ~E ",
+    "~J1(3.0)\tTell_me_everything_you_know. ~N\n\t\t\tWhat's_going_on? ",
+    "~J1(1.5)\tDarkness. ",
+    "~J1(3.9)\tThe_town_is_being_devoured ~N\n\t\t\tby_darkness. ",
+    "~J1(5.8)\tStrength_must_overcome ~N\n\t\t\tpetty_desire. ~N\n\t\t\tChildish_sleep_talk. ",
+    "~J1(3.4)\tI_knew_this_day_would_come. ",
+    "~J1(4.0)\tWhat_are_you_talking_about? ~N\n\t\t\tI_don't_understand_a_word_of_this. ~E ",
+    "~J0(3.8)\tBelieve_the_evidence ~N\n\t\t\tof_your_eyes. ",
+    "~J0(5.3)\tThe_other_church_in_this_town. ~N\n\t\t\tThat_is_your_destination. ",
+    "~J0(6.5)\tThis_is_beyond_my_abilities. ~N\n\t\t\tOnly_you_can_stop_it_now. ~E ",
+    "~J0(5.0)\tHave_you_not_seen ~N\n\t\t\tthe_crest_marked ~N\n\t\t\ton_the_ground_all_over_town? ",
+    "~J0(3.2)\tSo_that's_what_I_saw ~N\n\t\t\tin_the_schoolyard. ",
+    "~J0(1.2)\tWhat_does_it_mean? ",
+    "~J0(3.1)\tIt_is_the_mark_of_Samael... ",
+    "~J0(2.8)\tDon't_let_it_be_completed. ~E ",
+    "~J0(1.8)\tHey!__Wait! ~E ",
+    "\tThe_elevator_doesn't ~N\n\tappear_to_be_working. ~E ",
+    "~H\tThere_is_a_ ~C5 Hospital_map ~C7 . ~N\n\tTake_it? ~S4 ",
+    "\tThere_is_an_ ~C2 Antique_shop_key ~C7 . ~N\n\tTake_it? ~S4 ",
+    "\tThese_are_phones_and_phonebooks. ~N\n\tNo_need_to_examine_this. ~E ",
+    "\tThese_are_phones_and_phonebooks. ",
+    "\tI'll_copy_the_location_of ~N\n\tthe_antique_shop_to_the_map. ~E ",
+    "\tThere's_a_vending_machine. ~N\n\tIt_doesn't_work. ~E ",
+    "\tThere_is_a_newspaper. ",
+    "\tThis_article's_been ~N\n\tclipped_out... ~E ",
+    "\tNothing_unusual. ~E ",
+    "\tThere's_a_white_board. ~N\n\tNothing_special_written_here. ~E ",
+    "\tNothing_helpful. ~E ",
+    "\tThe_phone's_out. ~N\n\tCan't_get_a_dial_tone. ~E ",
+};
+
+INCLUDE_RODATA("asm/maps/map3_s06/nonmatchings/map3_s06", D_800CB21C);
+
 INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800D0C14);
 
 INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800D17B0);
@@ -168,3 +213,5 @@ INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800D17D8);
 INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800D1804);
 
 INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800D197C);
+
+INCLUDE_RODATA("asm/maps/map3_s06/nonmatchings/map3_s06", D_800CB2D4);

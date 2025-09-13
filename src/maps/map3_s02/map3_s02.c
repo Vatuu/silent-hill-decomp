@@ -3,6 +3,10 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 
+INCLUDE_RODATA("asm/maps/map3_s02/nonmatchings/map3_s02", D_800C9578);
+
+INCLUDE_RODATA("asm/maps/map3_s02/nonmatchings/map3_s02", g_MapOverlayHeader);
+
 INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", func_800CAB58);
 
 #include "maps/shared/sharedFunc_800D08B8_0_s00.h" // 0x800CACC0
@@ -170,6 +174,8 @@ INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", func_800CFE78);
 
 INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", func_800CFEAC);
 
+INCLUDE_RODATA("asm/maps/map3_s02/nonmatchings/map3_s02", D_800CA70C);
+
 INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", func_800CFEEC);
 
 void func_800D017C(void) {}
@@ -179,6 +185,15 @@ INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", func_800D0184);
 INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", func_800D0218);
 
 void func_800D02AC(void) {}
+
+const char* g_MapMessages[] =
+{
+    #include "maps/shared/mapMsg_common.h"
+    "\tNothing_happens_when_the ~N\n\televator_button_is_pressed. ~E ",
+    "\tIt's_locked! ~E ",
+};
+
+INCLUDE_RODATA("asm/maps/map3_s02/nonmatchings/map3_s02", D_800CAAF8);
 
 INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", func_800D02B4);
 
@@ -193,3 +208,5 @@ INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", func_800D0F8C);
 INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", func_800D0F9C);
 
 INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", func_800D1354);
+
+INCLUDE_RODATA("asm/maps/map3_s02/nonmatchings/map3_s02", D_800CAB4C);

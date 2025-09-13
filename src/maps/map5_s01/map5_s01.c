@@ -4,6 +4,10 @@
 #include "maps/shared.h"
 #include "maps/map5/map5_s01.h"
 
+INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", D_800C9578);
+
+INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", g_MapOverlayHeader);
+
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800CCA90);
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800CCB44);
@@ -163,6 +167,28 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800D3508_0_s01
 #include "maps/shared/sharedFunc_800D3814_0_s01.h" // 0x800D390C
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800D3928_0_s01); // 0x800D3A20
+
+INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", D_800CA7F0);
+
+INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", D_800CA7F4);
+
+INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", D_800CA800);
+
+INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", D_800CA818);
+
+INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", D_800CA830);
+
+INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", D_800CA848);
+
+INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", sharedData_800CAA98_0_s01);
+
+INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", D_800CAC60);
+
+INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", g_SfxVolumes);
+
+INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", D_800CB5E4);
+
+INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", D_800CB5F0);
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedSymbol_800D3B0C_0_s01); // 0x800D3AEC
 
@@ -552,6 +578,16 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800EB87C);
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800EB910);
 
+const char* g_MapMessages[] =
+{
+    #include "maps/shared/mapMsg_common.h"
+    "~H\tThere_is_a_ ~C5 Resort_area_map ~C7 . ~N\n\tTake_it? ~S4 ",
+    "\tNothing_unusual. ~E ",
+    "\tUsed_the_ ~C2 Kaufmann_key ~C7 . ~E ",
+    "~J0(1.0)\tWhat? ~E ",
+    "~J0(2.5)\tThat_light!? ~E ",
+};
+
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800EB9A4);
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800EBA40);
@@ -564,8 +600,14 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800EC2D8);
 
 #include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800EC394
 
+INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", D_800CC938);
+
+INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", D_800CC940);
+
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800EC42C);
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800ECB58);
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800ECC8C);
+
+INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", D_800CCA84);

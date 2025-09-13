@@ -3,6 +3,10 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 
+INCLUDE_RODATA("asm/maps/map4_s02/nonmatchings/map4_s02", D_800C9578);
+
+INCLUDE_RODATA("asm/maps/map4_s02/nonmatchings/map4_s02", g_MapOverlayHeader);
+
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800CC808);
 
 #include "maps/shared/sharedFunc_800CBBBC_0_s00.h" // 0x800CCBFC
@@ -146,6 +150,28 @@ INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", sharedFunc_800D3508_0_s01
 #include "maps/shared/sharedFunc_800D3814_0_s01.h" // 0x800D21D4
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", sharedFunc_800D3928_0_s01); // 0x800D22E8
+
+INCLUDE_RODATA("asm/maps/map4_s02/nonmatchings/map4_s02", D_800CA77C);
+
+INCLUDE_RODATA("asm/maps/map4_s02/nonmatchings/map4_s02", D_800CA780);
+
+INCLUDE_RODATA("asm/maps/map4_s02/nonmatchings/map4_s02", D_800CA78C);
+
+INCLUDE_RODATA("asm/maps/map4_s02/nonmatchings/map4_s02", D_800CA7A4);
+
+INCLUDE_RODATA("asm/maps/map4_s02/nonmatchings/map4_s02", D_800CA7BC);
+
+INCLUDE_RODATA("asm/maps/map4_s02/nonmatchings/map4_s02", D_800CA7D4);
+
+INCLUDE_RODATA("asm/maps/map4_s02/nonmatchings/map4_s02", sharedData_800CAA98_0_s01);
+
+INCLUDE_RODATA("asm/maps/map4_s02/nonmatchings/map4_s02", D_800CABEC);
+
+INCLUDE_RODATA("asm/maps/map4_s02/nonmatchings/map4_s02", g_SfxVolumes);
+
+INCLUDE_RODATA("asm/maps/map4_s02/nonmatchings/map4_s02", D_800CB570);
+
+INCLUDE_RODATA("asm/maps/map4_s02/nonmatchings/map4_s02", D_800CB57C);
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", sharedSymbol_800D3B0C_0_s01); // 0x800D23B4
 
@@ -523,6 +549,15 @@ INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800EA2A4);
 
 void func_800EA338(void) {}
 
+const char* g_MapMessages[] =
+{
+    #include "maps/shared/mapMsg_common.h"
+    "~C3\tgreen_lion ~E ",
+    "~C3\tAlchemilla_Hospital ~E ",
+};
+
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800EA340);
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800EA3F0);
+
+INCLUDE_RODATA("asm/maps/map4_s02/nonmatchings/map4_s02", D_800CC800);

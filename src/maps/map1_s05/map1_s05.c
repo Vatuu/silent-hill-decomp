@@ -3,6 +3,10 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 
+INCLUDE_RODATA("asm/maps/map1_s05/nonmatchings/map1_s05", D_800C9578);
+
+INCLUDE_RODATA("asm/maps/map1_s05/nonmatchings/map1_s05", g_MapOverlayHeader);
+
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CAAD0);
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CABF8);
@@ -149,6 +153,11 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D494C);
 
 void func_800D49A4(void) {}
 
+const char* g_MapMessages[] =
+{
+    #include "maps/shared/mapMsg_common.h"
+};
+
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D49AC);
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D4D1C);
@@ -156,3 +165,5 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D4D1C);
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D525C);
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D5400);
+
+INCLUDE_RODATA("asm/maps/map1_s05/nonmatchings/map1_s05", D_800CAAC4);

@@ -3,6 +3,10 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 
+INCLUDE_RODATA("asm/maps/map6_s02/nonmatchings/map6_s02", D_800C9578);
+
+INCLUDE_RODATA("asm/maps/map6_s02/nonmatchings/map6_s02", g_MapOverlayHeader);
+
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CABA0);
 
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CAC54);
@@ -133,9 +137,28 @@ INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CF01C);
 
 void func_800CF0B0(void) {}
 
+const char* g_MapMessages[] =
+{
+    #include "maps/shared/mapMsg_common.h"
+    "~J0(1.0)\t...! ~E ",
+    "~J0(1.0)\tWait! ~E ",
+    "~J0(1.7)\tDamn! ~N\n\t\t\tI_was_too_late? ~E ",
+    "~J0(1.5)\tSorry... ",
+    "~J0(0.6)\tAh... ",
+    "~J0(1.5)\t_ ",
+    "~J0(3.6)\tLet_me_ask_you,_have_you_seen ~N\n\t\t\ta_little_girl_around_here? ~E ",
+    "~J0(2.8)\tShort,_black_hair... ~E ",
+    "~J0(1.0)\tWhat? ~E ",
+    "~J0(2.5)\tThat_light!? ~E ",
+};
+
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CF0B8);
 
 #include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800CFB9C
+
+INCLUDE_RODATA("asm/maps/map6_s02/nonmatchings/map6_s02", D_800CAA98);
+
+INCLUDE_RODATA("asm/maps/map6_s02/nonmatchings/map6_s02", D_800CAAA0);
 
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CFC34);
 
@@ -160,3 +183,7 @@ INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800D2170);
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800D2364);
 
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800D32D0);
+
+INCLUDE_RODATA("asm/maps/map6_s02/nonmatchings/map6_s02", D_800CAB90);
+
+INCLUDE_RODATA("asm/maps/map6_s02/nonmatchings/map6_s02", D_800CAB98);

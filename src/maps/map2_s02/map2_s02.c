@@ -3,6 +3,10 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 
+INCLUDE_RODATA("asm/maps/map2_s02/nonmatchings/map2_s02", D_800C9578);
+
+INCLUDE_RODATA("asm/maps/map2_s02/nonmatchings/map2_s02", g_MapOverlayHeader);
+
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800CC8A4);
 
 #include "maps/shared/sharedFunc_800CBBBC_0_s00.h" // 0x800CCD90
@@ -142,6 +146,28 @@ INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800D3508_0_s01
 #include "maps/shared/sharedFunc_800D3814_0_s01.h" // 0x800D1DD8
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800D3928_0_s01); // 0x800D1EEC
+
+INCLUDE_RODATA("asm/maps/map2_s02/nonmatchings/map2_s02", D_800CA7F0);
+
+INCLUDE_RODATA("asm/maps/map2_s02/nonmatchings/map2_s02", D_800CA7F4);
+
+INCLUDE_RODATA("asm/maps/map2_s02/nonmatchings/map2_s02", D_800CA800);
+
+INCLUDE_RODATA("asm/maps/map2_s02/nonmatchings/map2_s02", D_800CA818);
+
+INCLUDE_RODATA("asm/maps/map2_s02/nonmatchings/map2_s02", D_800CA830);
+
+INCLUDE_RODATA("asm/maps/map2_s02/nonmatchings/map2_s02", D_800CA848);
+
+INCLUDE_RODATA("asm/maps/map2_s02/nonmatchings/map2_s02", sharedData_800CAA98_0_s01);
+
+INCLUDE_RODATA("asm/maps/map2_s02/nonmatchings/map2_s02", D_800CAC60);
+
+INCLUDE_RODATA("asm/maps/map2_s02/nonmatchings/map2_s02", g_SfxVolumes);
+
+INCLUDE_RODATA("asm/maps/map2_s02/nonmatchings/map2_s02", D_800CB5E4);
+
+INCLUDE_RODATA("asm/maps/map2_s02/nonmatchings/map2_s02", D_800CB5F0);
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedSymbol_800D3B0C_0_s01); // 0x800D1FB8
 
@@ -518,6 +544,14 @@ INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E9C2C);
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E9CC0);
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E9D54);
+
+const char* g_MapMessages[] =
+{
+    #include "maps/shared/mapMsg_common.h"
+    "\tUsed_the_ ~C2 Antique_shop_key ~C7 . ~E ",
+    "~C3\tAlchemilla_Hospital ~E ",
+    "~C3\tgreen_lion ~E ",
+};
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E9E10);
 

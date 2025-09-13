@@ -3,6 +3,10 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 
+INCLUDE_RODATA("asm/maps/map6_s05/nonmatchings/map6_s05", D_800C9578);
+
+INCLUDE_RODATA("asm/maps/map6_s05/nonmatchings/map6_s05", g_MapOverlayHeader);
+
 INCLUDE_ASM("asm/maps/map6_s05/nonmatchings/map6_s05", func_800CA8E8);
 
 #include "maps/shared/sharedFunc_800D08B8_0_s00.h" // 0x800CAA50
@@ -84,3 +88,5 @@ INCLUDE_ASM("asm/maps/map6_s05/nonmatchings/map6_s05", func_800CC930);
 INCLUDE_ASM("asm/maps/map6_s05/nonmatchings/map6_s05", func_800CC970);
 
 void func_800CCBFC(void) {}
+
+INCLUDE_RODATA("asm/maps/map6_s05/nonmatchings/map6_s05", D_800CA62C);

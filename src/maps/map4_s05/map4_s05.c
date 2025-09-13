@@ -4,6 +4,10 @@
 #include "maps/shared.h"
 #include "maps/map4/map4_s05.h"
 
+INCLUDE_RODATA("asm/maps/map4_s05/nonmatchings/map4_s05", D_800C9578);
+
+INCLUDE_RODATA("asm/maps/map4_s05/nonmatchings/map4_s05", g_MapOverlayHeader);
+
 INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800CACA4);
 
 INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800CADB0);
@@ -261,12 +265,29 @@ INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D6110);
 
 void func_800D61A4() {}
 
+const char* g_MapMessages[] =
+{
+    #include "maps/shared/mapMsg_common.h"
+    "~J0(1.0)\tWhat? ~E ",
+    "~J0(2.5)\tThat_light!? ~E ",
+    "\tThe_stairs_are_wrecked! ~E ",
+    "~C3\tAlchemilla_Hospital ~E ",
+};
+
+INCLUDE_RODATA("asm/maps/map4_s05/nonmatchings/map4_s05", D_800CABE4);
+
 INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D61AC);
 
 INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D6800);
+
+INCLUDE_RODATA("asm/maps/map4_s05/nonmatchings/map4_s05", D_800CAC40);
+
+INCLUDE_RODATA("asm/maps/map4_s05/nonmatchings/map4_s05", D_800CAC48);
 
 INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D6BC0);
 
 INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D723C);
 
 INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D7360);
+
+INCLUDE_RODATA("asm/maps/map4_s05/nonmatchings/map4_s05", D_800CAC98);

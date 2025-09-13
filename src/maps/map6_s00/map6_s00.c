@@ -3,6 +3,10 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 
+INCLUDE_RODATA("asm/maps/map6_s00/nonmatchings/map6_s00", D_800C9578);
+
+INCLUDE_RODATA("asm/maps/map6_s00/nonmatchings/map6_s00", g_MapOverlayHeader);
+
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800CCB30);
 
 #include "maps/shared/sharedFunc_800CBBBC_0_s00.h" // 0x800CCFCC
@@ -146,6 +150,28 @@ INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", sharedFunc_800D3508_0_s01
 #include "maps/shared/sharedFunc_800D3814_0_s01.h" // 0x800D2FAC
 
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", sharedFunc_800D3928_0_s01); // 0x800D30C0
+
+INCLUDE_RODATA("asm/maps/map6_s00/nonmatchings/map6_s00", D_800CA854);
+
+INCLUDE_RODATA("asm/maps/map6_s00/nonmatchings/map6_s00", D_800CA858);
+
+INCLUDE_RODATA("asm/maps/map6_s00/nonmatchings/map6_s00", D_800CA864);
+
+INCLUDE_RODATA("asm/maps/map6_s00/nonmatchings/map6_s00", D_800CA87C);
+
+INCLUDE_RODATA("asm/maps/map6_s00/nonmatchings/map6_s00", D_800CA894);
+
+INCLUDE_RODATA("asm/maps/map6_s00/nonmatchings/map6_s00", D_800CA8AC);
+
+INCLUDE_RODATA("asm/maps/map6_s00/nonmatchings/map6_s00", sharedData_800CAA98_0_s01);
+
+INCLUDE_RODATA("asm/maps/map6_s00/nonmatchings/map6_s00", D_800CACC4);
+
+INCLUDE_RODATA("asm/maps/map6_s00/nonmatchings/map6_s00", g_SfxVolumes);
+
+INCLUDE_RODATA("asm/maps/map6_s00/nonmatchings/map6_s00", D_800CB648);
+
+INCLUDE_RODATA("asm/maps/map6_s00/nonmatchings/map6_s00", D_800CB654);
 
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", sharedSymbol_800D3B0C_0_s01); // 0x800D318C
 
@@ -521,6 +547,23 @@ void func_800EAFF0(void) {}
 
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800EB090);
 
+const char* g_MapMessages[] =
+{
+    #include "maps/shared/mapMsg_common.h"
+    "~J0(1.5)\tWhat's_this! ~E ",
+    "~J0(0.1)\t~E ",
+    "~J0(0.1)\t~E ",
+    "~J0(0.1)\t~E ",
+    "~J1(4.0)\tNot_again...!? ~N\n\t\t\tNo,_this_time_it_feels_different. ",
+    "~J1(4.5)\tRather_than_shifting ~N\n\t\t\tfrom_reality_to_a_nightmare, ",
+    "~J1(4.5)\tthis_is_more_like_reality ~N\n\t\t\tbecoming_a_nightmare. ",
+    "~J1(6.0)\tI_don't_like_this_feeling. ~N\n\t\t\tLike_something_bad ~N\n\t\t\twill_happen... ",
+    "~J1(4.0)\tNo_doubt,_something_terrible ~N\n\t\t\tis_going_on... ~E ",
+    "\tThe_cover_has_been_removed... ",
+    "\tCould_Cybil_have_gotten ~N\n\tto_the_Amusement_Park_from_here? ~E ",
+    "~C3\tLAKE_SIDE_AMUSEMENT_PARK ~E ",
+};
+
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800EB11C);
 
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800EBCE8);
@@ -528,3 +571,5 @@ INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800EBCE8);
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800EBEE0);
 
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800EC4B4);
+
+INCLUDE_RODATA("asm/maps/map6_s00/nonmatchings/map6_s00", D_800CCB28);
