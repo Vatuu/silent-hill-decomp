@@ -12,10 +12,6 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
     s16 tmpAngle;
     s32 tmpDistance;
 
-    s16 tmpVal;
-    s16* tmpPtr;
-    VECTOR3* tmpVec;
-
     // Angle threshold check: 360 / 64 = 5.625 degrees
     #define ANGLE_THRESHOLD (FP_ANGLE(360.0) >> 6)
 
