@@ -149,7 +149,7 @@ Event_MapItemTake              = 0x800DC3C8; // type:func
 Event_KitchenKnifeItemTake     = 0x800DC830; // type:func
 Event_EmptyFunction            = 0x800DC85C;
 Event_HealthItemTake           = 0x800DC864; // type:func
-Event_AirScreamerDie           = 0x800DC8C8; // type:func
+Event_AirScreamerDeath         = 0x800DC8C8; // type:func
 
 
 
