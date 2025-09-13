@@ -125,16 +125,16 @@ sharedFunc_800D929C_0_s00      = 0x800DA51C; // type:func
 sharedFunc_800D92AC_0_s00      = 0x800DA52C; // type:func
 Gfx_LoadingScreen_StageString  = 0x800DA8A4;
 sharedFunc_800DA8E8_0_s01      = 0x800DA8E8; // type:func
-Event_CafeCutscene             = 0x800DA980;
-Event_ToBeContinued            = 0x800DB790;
-Event_AirScreamerIntroCutscene = 0x800DBAA0; // type:func
-Event_PocketRadioItemTake      = 0x800DC34C; // type:func
-Event_FlashlightItemTake       = 0x800DC394; // type:func
-Event_MapItemTake              = 0x800DC3C8; // type:func
-Event_KitchenKnifeItemTake     = 0x800DC830; // type:func
-Event_EmptyFunction            = 0x800DC85C;
-Event_HealthItemTake           = 0x800DC864; // type:func
-Event_AirScreamerDeath         = 0x800DC8C8; // type:func
+MapEvent_CafeCutscene             = 0x800DA980;
+MapEvent_ToBeContinued            = 0x800DB790;
+MapEvent_AirScreamerIntroCutscene = 0x800DBAA0; // type:func
+MapEvent_PocketRadioItemTake      = 0x800DC34C; // type:func
+MapEvent_FlashlightItemTake       = 0x800DC394; // type:func
+MapEvent_MapItemTake              = 0x800DC3C8; // type:func
+MapEvent_KitchenKnifeItemTake     = 0x800DC830; // type:func
+MapEvent_EmptyFunction            = 0x800DC85C;
+MapEvent_CommonItemTake           = 0x800DC864; // type:func
+MapEvent_AirScreamerDeath         = 0x800DC8C8; // type:func
 
 
 

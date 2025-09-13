@@ -40,16 +40,16 @@ void (*g_MapEventFuncs[])() =
 {
     NULL,
     NULL,
-    Event_HealthItemTake,
-    Event_CafeCutscene,
-    Event_ToBeContinued, // @unused Demo event.
-    Event_AirScreamerIntroCutscene,
-    Event_KitchenKnifeItemTake,
-    Event_FlashlightItemTake,
-    Event_MapItemTake,
-    Event_PocketRadioItemTake,
-    Event_EmptyFunction,
-    Event_AirScreamerDeath
+    MapEvent_CommonItemTake,
+    MapEvent_CafeCutscene,
+    MapEvent_ToBeContinued, // @unused Demo event.
+    MapEvent_AirScreamerIntroCutscene,
+    MapEvent_KitchenKnifeItemTake,
+    MapEvent_FlashlightItemTake,
+    MapEvent_MapItemTake,
+    MapEvent_PocketRadioItemTake,
+    MapEvent_EmptyFunction,
+    MapEvent_AirScreamerDeath
 };
 
 const u32 D_800C9578 = 0x00000000; // rodata 0

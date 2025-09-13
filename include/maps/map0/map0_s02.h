@@ -35,17 +35,17 @@ void func_800CE8B8(void);
 void Gfx_LoadingScreen_StageString();
 
 /** @brief Handles a first aid kit, health drink, or handgun bullets pickup event. */
-void Event_HealthOrAmmoItemTake(void);
+void MapEvent_CommonItemTake(void);
 
-void Event_EmptyFunction();
+void MapEvent_EmptyFunction();
 
 /** @brief Handles the gasoline tank pickup event. */
-void Event_GasolineTankItemTake(void);
+void MapEvent_GasolineTankItemTake(void);
 
 /** @brief Handles the katana pickup event. */
-void Event_KatanaItemTake(void);
+void MapEvent_KatanaItemTake(void);
 
 /** @brief Handles the channeling stone pickup event. */
-void Event_ChannelingStoneItemTake(void);
+void MapEvent_ChannelingStoneItemTake(void);
 
 #endif

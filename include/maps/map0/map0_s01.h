@@ -106,29 +106,29 @@ void func_800DA7FC();
 void Gfx_LoadingScreen_StageString();
 
 /** @brief Handles the Air Screamer cutscene in the cafe. */
-void Event_AirScreamerIntroCutscene();
+void MapEvent_AirScreamerIntroCutscene();
 
 /** @brief Handles the pocket radio item pickup event. */
-void Event_PocketRadioItemTake();
+void MapEvent_PocketRadioItemTake();
 
 /** @brief Handles the flashlight item pickup event. */
-void Event_FlashlightItemTake();
+void MapEvent_FlashlightItemTake();
 
 /** @brief Handles the Silent Hill town map pickup event in the cafe.
  *
  * Also responsible for air screamer scene setup. */
-void Event_MapItemTake();
+void MapEvent_MapItemTake();
 
 /** @brief Handles the kitchen knife pickup event. */
-void Event_KitchenKnifeItemTake();
+void MapEvent_KitchenKnifeItemTake();
 
-void Event_EmptyFunction();
+void MapEvent_EmptyFunction();
 
 /** @brief Handles a first aid kit or health drink pickup event. */
-void Event_HealthItemTake();
+void MapEvent_CommonItemTake();
 
 /** @brief Handles the Air Screamer death event. */
-void Event_AirScreamerDeath();
+void MapEvent_AirScreamerDeath();
 
 void func_800DC9C8();
 
@@ -143,8 +143,8 @@ void Player_FallBackward(void);
 s32 func_800D20FC();
 
 /** @brief @unused Handles the demo end screen event after the Air Screamer breaks through the cafe window. Seen in demo builds. */
-void Event_ToBeContinued(void);
+void MapEvent_ToBeContinued(void);
 
-void Event_CafeCutscene();
+void MapEvent_CafeCutscene();
 
 #endif
