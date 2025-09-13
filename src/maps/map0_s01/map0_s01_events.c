@@ -32,7 +32,7 @@ void Event_CafeCutscene()
             sharedFunc_800D20E4_0_s00();
             
             g_SysWork.field_30 = 20;
-            g_Gfx_ScreenFade = 4;
+            g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_ResetTimeStep, false);
             g_SysWork.flags_22A4 |= 1 << 3;
             g_SavegamePtr->flags_AC &= ~(1 << 0);
             g_SysWork.flags_22A4 |= (1 << 5) | (1 << 9);

@@ -2,9 +2,10 @@
 #define _BODYPROG_MATH_MATH_H
 
 #include <limits.h>
+
+#include "bodyprog/math/arithmetic.h"
 #include "bodyprog/math/constants.h"
 #include "bodyprog/math/fixed_point.h"
-#include "bodyprog/math/arithmetic.h"
 
 /** @brief Constructs a `VECTOR3` in a fixed-point Q19.12 format.
  *
@@ -97,13 +98,13 @@
 #define Math_DeltaTimeDistScale(dist) \
     ((g_DeltaTime0 * (dist)) / TIME_STEP_30_FPS)
 
-/** @brief Normalizes unsigned fixed-point degrees in Q3.12, range `[0, 4096]` to the signed range `[-2048, 2047]`.
+/** @brief Normalizes unsigned fixed-point degrees in Q19.12, range `[0, 4096]` to the signed range `[-2048, 2047]`.
  * Thin wrapper for `FP_ANGLE_NORM_S`.
  *
- * @param angle Unsigned fixed-point degrees in Q3.12, range `[0, 4096]`.
+ * @param angle Unsigned fixed-point degrees in Q19.12, range `[0, 4096]`.
  * @return Fixed-point degrees wrapped to the range `[-2048, 2047]` (`s16`).
  */
-static inline s16 Math_AngleNormalize(s32 angle)
+static inline q3_12 Math_AngleNormalize(q19_12 angle)
 {
     return FP_ANGLE_NORM_S(angle);
 }
@@ -170,25 +171,25 @@ void func_80096E78(SVECTOR* rot, MATRIX* mat); // Another custom `vwRotMatrix[..
  */
 s32 Math_MulFixed(s32 a, s32 b, s32 shift);
 
-// NOTE: Matched on decomp.me.
-/** @brief Computes the sine in Q19.12 of degrees in Q3.12, integer range `[0, 4096]`.
+/** @brief Computes the sine in Q19.12 of degrees in Q19.12, integer range `[0, 4096]`.
  *
+ * TODO: Matched on decomp.me.
  * Possible original name: `shRsin`
  *
- * @param angle Fixed-point degrees in Q3.12, integer range `[0, 4096]`.
+ * @param angle Fixed-point degrees in Q19.12, integer range `[0, 4096]`.
  * @return Sine in Q19.12, integer range `[0, 4096]`.
  */
-q19_12 Math_Sin(s32 angle);
+q19_12 Math_Sin(q19_12 angle);
 
-// NOTE: Matched on decomp.me.
-/** @brief Computes the cosine in Q19.12 of degrees in Q3.12, integer range `[0, 4096]`.
+/** @brief Computes the cosine in Q19.12 of degrees in Q19.12, integer range `[0, 4096]`.
  *
+ * TODO: Matched on decomp.me.
  * Possible original name: `shRcos`
  *
- * @param angle Fixed-point degrees in Q3.12, integer range `[0, 4096]`.
+ * @param angle Fixed-point degrees in Q19.12, integer range `[0, 4096]`.
  * @return Cosine in Q19.12, integer range `[0, 4096]`.
  */
-q19_12 Math_Cos(s32 angle);
+q19_12 Math_Cos(q19_12 angle);
 
 MATRIX* shRotMatrixZ(s32, MATRIX*);
 

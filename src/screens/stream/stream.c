@@ -19,7 +19,7 @@ void GameState_StartMovieIntro_Update() // 0x801E2654
     {
         case 0:
             VSync(8);
-            g_Gfx_ScreenFade = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
+            g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
             GameFs_TitleGfxLoad();
             g_GameWork.gameStateStep_598[0]++;
             break;
@@ -27,13 +27,13 @@ void GameState_StartMovieIntro_Update() // 0x801E2654
         case 1:
             if (g_Controller0->btnsHeld_C != 0 || g_SysWork.timer_1C > 300)
             {
-                g_Gfx_ScreenFade                = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false);
+                g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false);
                 g_GameWork.gameStateStep_598[0] = 2;
             }
             break;
 
         case 2:
-            if (Gfx_IsScreenFadeComplete())
+            if (SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete)
             {
                 Fs_QueueWaitForEmpty();
                 Game_StateSetNext(GameState_MovieIntro);
@@ -134,9 +134,9 @@ void open_main(s32 file_idx, s16 num_frames) // 0x801E2AA4
         num_frames = g_FileTable[file_idx].blockCount_0_19 - 7;
     }
 
-    Screen_ClearRectInterlaced(0, 16, 480, 480, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
+    Screen_RectInterlacedClear(0, 16, 480, 480, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
     movie_main(NULL, num_frames, g_FileTable[file_idx].startSector_0_0);
-    Screen_ClearRectInterlaced(0, 16, 480, 480, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
+    Screen_RectInterlacedClear(0, 16, 480, 480, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
     VSync(0);
     GsSwapDispBuff();
 }

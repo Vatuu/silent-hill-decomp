@@ -9,7 +9,7 @@
 
 const s32 rodataPad_80024CA0 = 0;
 
-void Screen_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b) // 0x80032358
+void Screen_RectInterlacedClear(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b) // 0x80032358
 {
     setRECT((RECT*)PSX_SCRATCH, x, y, w, h);
     VSync(0);
@@ -20,7 +20,7 @@ void Screen_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b) //
 void Screen_Refresh(s32 screenWidth, s32 isInterlaced) // 0x800323C8
 {
     DrawSync(0);
-    Screen_ClearRectInterlaced(0, 32, 320, 448, 0, 0, 0);
+    Screen_RectInterlacedClear(0, 32, 320, 448, 0, 0, 0);
     Screen_Init(screenWidth, isInterlaced);
 }
 
@@ -47,36 +47,39 @@ void Screen_XyPositionSet(s32 x, s32 y) // 0x800324F4
     Screen_DisplayEnvXySet(&GsDISPENV, x, y);
 }
 
-void Screen_DisplayEnvXySet(DISPENV* display, s32 x, s32 y) // 0x80032524
+void Screen_DisplayEnvXySet(DISPENV* displayEnv, s32 x, s32 y) // 0x80032524
 {
-    x = CLAMP(x, -11, 11);
-    y = CLAMP(y, -8, 8);
+    #define RANGE_X 11
+    #define RANGE_Y 8
+
+    x = CLAMP(x, -RANGE_X, RANGE_X);
+    y = CLAMP(y, -RANGE_Y, RANGE_Y);
 
     g_GameWorkConst->config_0.optScreenPosX_1C = x;
     g_GameWorkConst->config_0.optScreenPosY_1D = y;
 
-    display->screen.x = g_GameWorkConst->config_0.optScreenPosX_1C;
-    display->screen.y = g_GameWorkConst->config_0.optScreenPosY_1D + 8;
+    displayEnv->screen.x = g_GameWorkConst->config_0.optScreenPosX_1C;
+    displayEnv->screen.y = g_GameWorkConst->config_0.optScreenPosY_1D + RANGE_Y;
 }
 
-void func_800325A4(DR_MODE* arg0) // 0x800325A4
+void Screen_FadeDrawModeSet(DR_MODE* drMode) // 0x800325A4
 {
-    if (IS_SCREEN_FADE_WHITE(g_Gfx_ScreenFade)) 
+    if (IS_SCREEN_FADE_WHITE(g_Screen_FadeStatus)) 
     {
-        SetDrawMode(arg0, 0, 1, 32, NULL);
+        SetDrawMode(drMode, 0, 1, 32, NULL);
     }
     else 
     {
-        SetDrawMode(arg0, 0, 1, 64, NULL);
+        SetDrawMode(drMode, 0, 1, 64, NULL);
     }
 }
 
-s32 Gfx_FadeInProgress() // 0x800325F8
+q19_12 Screen_FadeInProgressGet() // 0x800325F8
 {
-    return FP_FLOAT_TO(1.0f, Q12_SHIFT) - g_PrevScreenFadeProgress;
+    return FP_ALPHA(1.0f) - g_PrevScreenFadeProgress;
 }
 
-void Gfx_FadeUpdate() // 0x8003260C
+void Screen_FadeUpdate() // 0x8003260C
 {
     s32      queueLength;
     s32      timeStep;
@@ -88,16 +91,16 @@ void Gfx_FadeUpdate() // 0x8003260C
     tile                     = &D_800A8E74[g_ActiveBufferIdx];
     g_PrevScreenFadeProgress = g_ScreenFadeProgress;
 
-    switch (g_Gfx_ScreenFade)
+    switch (g_Screen_FadeStatus)
     {
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false):
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, true):
-            g_ScreenFadeProgress = 0;
-            g_Gfx_ScreenFade++;
+            g_ScreenFadeProgress = FP_ALPHA(0.0f);
+            g_Screen_FadeStatus++;
 
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false):
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, true):
-            func_800325A4(drMode);
+            Screen_FadeDrawModeSet(drMode);
             queueLength = Fs_QueueGetLength();
 
             if (g_ScreenFadeTimestep > FP_TIME(0.0f))
@@ -110,16 +113,15 @@ void Gfx_FadeUpdate() // 0x8003260C
             }
 
             g_ScreenFadeProgress += FP_MULTIPLY_PRECISE(timeStep, g_DeltaTime1, Q12_SHIFT);
-
             if (g_ScreenFadeProgress >= (FP_TIME(1.0f) - 1))
             {
                 g_ScreenFadeProgress = FP_TIME(1.0f) - 1;
-                g_Gfx_ScreenFade++;
+                g_Screen_FadeStatus++;
             }
 
-            tile->r0 = FP_FROM(g_ScreenFadeProgress, Q4_SHIFT);
-            tile->g0 = FP_FROM(g_ScreenFadeProgress, Q4_SHIFT);
-            tile->b0 = FP_FROM(g_ScreenFadeProgress, Q4_SHIFT);
+            tile->r0 = Q19_12_TO_Q23_8(g_ScreenFadeProgress);
+            tile->g0 = Q19_12_TO_Q23_8(g_ScreenFadeProgress);
+            tile->b0 = Q19_12_TO_Q23_8(g_ScreenFadeProgress);
             break;
 
         case SCREEN_FADE_STATUS(ScreenFadeState_ResetTimeStep, false):
@@ -128,20 +130,20 @@ void Gfx_FadeUpdate() // 0x8003260C
 
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false):
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, true):
-            g_ScreenFadeProgress = 0xFFF;
-            g_Gfx_ScreenFade++;
+            g_ScreenFadeProgress = FP_ALPHA(1.0f) - 1;
+            g_Screen_FadeStatus++;
 
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, false):
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, true):
-            func_800325A4(drMode);
-            tile->r0 = FP_FROM(g_ScreenFadeProgress, Q4_SHIFT);
-            tile->g0 = FP_FROM(g_ScreenFadeProgress, Q4_SHIFT);
-            tile->b0 = FP_FROM(g_ScreenFadeProgress, Q4_SHIFT);
+            Screen_FadeDrawModeSet(drMode);
+            tile->r0 = Q19_12_TO_Q23_8(g_ScreenFadeProgress);
+            tile->g0 = Q19_12_TO_Q23_8(g_ScreenFadeProgress);
+            tile->b0 = Q19_12_TO_Q23_8(g_ScreenFadeProgress);
             break;
 
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, false):
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, true):
-            func_800325A4(drMode);
+            Screen_FadeDrawModeSet(drMode);
 
             if (g_ScreenFadeTimestep > FP_TIME(0.0f))
             {
@@ -154,22 +156,22 @@ void Gfx_FadeUpdate() // 0x8003260C
 
             g_ScreenFadeProgress -= FP_MULTIPLY_PRECISE(timeStep, g_DeltaTime1, Q12_SHIFT);
 
-            if (g_ScreenFadeProgress <= 0)
+            if (g_ScreenFadeProgress <= FP_ALPHA(0.0f))
             {
-                g_ScreenFadeProgress = 0;
-                g_Gfx_ScreenFade     = SCREEN_FADE_STATUS(ScreenFadeState_Reset, false);
+                g_ScreenFadeProgress = FP_ALPHA(0.0f);
+                g_Screen_FadeStatus  = SCREEN_FADE_STATUS(ScreenFadeState_Reset, false);
                 return;
             }
 
-            tile->r0 = FP_FROM(g_ScreenFadeProgress, Q4_SHIFT);
-            tile->g0 = FP_FROM(g_ScreenFadeProgress, Q4_SHIFT);
-            tile->b0 = FP_FROM(g_ScreenFadeProgress, Q4_SHIFT);
+            tile->r0 = Q19_12_TO_Q23_8(g_ScreenFadeProgress);
+            tile->g0 = Q19_12_TO_Q23_8(g_ScreenFadeProgress);
+            tile->b0 = Q19_12_TO_Q23_8(g_ScreenFadeProgress);
             break;
 
         case SCREEN_FADE_STATUS(ScreenFadeState_Reset, false):
             g_ScreenFadeTimestep = FP_TIME(0.0f);
-            g_ScreenFadeProgress = 0;
-            g_Gfx_ScreenFade     = SCREEN_FADE_STATUS(ScreenFadeState_None, false);
+            g_ScreenFadeProgress = FP_ALPHA(0.0f);
+            g_Screen_FadeStatus  = SCREEN_FADE_STATUS(ScreenFadeState_None, false);
             return;
 
         case SCREEN_FADE_STATUS(ScreenFadeState_None, false):
@@ -181,9 +183,9 @@ void Gfx_FadeUpdate() // 0x8003260C
     AddPrim(ot, drMode);
 }
 
-void Gfx_CutsceneCameraStateUpdate() // 0x80032904
+void Screen_CutsceneCameraStateUpdate() // 0x80032904
 {
-    void Gfx_BlackBorderDraw(POLY_G4* poly, s32 color)
+    void Screen_BlackBorderDraw(POLY_G4* poly, s32 color)
     {
         s32 i;
         s32 color0;
@@ -242,7 +244,7 @@ void Gfx_CutsceneCameraStateUpdate() // 0x80032904
                 g_SysWork.field_30++;
             }
 
-            Gfx_BlackBorderDraw(poly, D_800A8F40);
+            Screen_BlackBorderDraw(poly, D_800A8F40);
             break;
 
         case 20:
@@ -251,7 +253,7 @@ void Gfx_CutsceneCameraStateUpdate() // 0x80032904
             g_SysWork.field_30++;
 
         case 21:
-            Gfx_BlackBorderDraw(poly, D_800A8F40);
+            Screen_BlackBorderDraw(poly, D_800A8F40);
             break;
 
         case 23:
@@ -264,7 +266,7 @@ void Gfx_CutsceneCameraStateUpdate() // 0x80032904
                 return;
             }
 
-            Gfx_BlackBorderDraw(poly, D_800A8F40);
+            Screen_BlackBorderDraw(poly, D_800A8F40);
             break;
 
         case 0:
@@ -288,7 +290,7 @@ void Gfx_CutsceneCameraStateUpdate() // 0x80032904
     }
 }
 
-void Gfx_VSyncCallback() // 0x80032B80
+void Screen_VSyncCallback() // 0x80032B80
 {
     g_Demo_FrameCount++;
     g_UnknownFrameCounter++;

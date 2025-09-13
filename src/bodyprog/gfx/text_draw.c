@@ -720,7 +720,7 @@ void func_8004B74C(s16 arg0) // 0x8004B74C
     D_800C391E = arg0;
 }
 
-void func_8004B76C(char* str, s32 useFixedWidth) // 0x8004B76C
+void func_8004B76C(char* str, bool useFixedWidth) // 0x8004B76C
 {
     #define GLYPH_SIZE_X       11
     #define GLYPH_SIZE_Y       12

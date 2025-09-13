@@ -115,8 +115,8 @@ typedef struct
     *(u32*)(&(p)->u0) = (((((cy) << 6) | (((cx) >> 4) & 0x3F)) << 16) | ((v) << 8) | (u))
 
 /** @brief Combines `setcode` and `setRGB0`. */
-#define setCodeWord(p, c, rgb24) \
-    *(u32*)(((u8*)(p)) + 4) = (((c) << 24) | ((rgb24) & 0xFFFFFF))
+#define setCodeWord(p, code, rgb24) \
+    *(u32*)(((u8*)(p)) + 4) = (((code) << 24) | ((rgb24) & 0xFFFFFF))
 
 /** @brief Combines `setRGB0` and `setcode` */
 #define setRGBC0(prim, r, g, b, code) \

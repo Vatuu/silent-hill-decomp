@@ -76,11 +76,11 @@ void GameState_MainMenu_Update() // 0x8003AB28
             g_GameWork.background2dColor_G_58D = 0;
             g_GameWork.background2dColor_B_58E = 0;
 
-            Screen_ClearRectInterlaced(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
+            Screen_RectInterlacedClear(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
             Screen_Init(SCREEN_WIDTH, 1);
 
-            g_IntervalVBlanks   = 1;
-            g_Gfx_ScreenFade    = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
+            g_IntervalVBlanks    = 1;
+            g_Screen_FadeStatus  = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
             g_ScreenFadeTimestep = FP_TIME(2.0f);
             g_MainMenuState++;
 
@@ -168,7 +168,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                     Fs_QueueReset();
                 }
 
-                g_Gfx_ScreenFade = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
+                g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
                 g_MainMenuState++;
 
                 if (g_MainMenu_SelectedEntry < (u32)MainMenuEntry_Start) // TODO: Odd cast.
@@ -202,8 +202,8 @@ void GameState_MainMenu_Update() // 0x8003AB28
                         break;
 
                     case MainMenuEntry_Start:
-                        g_Gfx_ScreenFade = SCREEN_FADE_STATUS(ScreenFadeState_Reset, false);
-                        g_MainMenuState  = MenuState_DifficultySelector;
+                        g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_Reset, false);
+                        g_MainMenuState     = MenuState_DifficultySelector;
                         break;
 
                     case MainMenuEntry_Option:
@@ -287,8 +287,8 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 GameFs_StreamBinLoad();
                 Sd_EngineCmd(Sfx_StartGame);
 
-                g_Gfx_ScreenFade = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
-                g_MainMenuState  = 4;
+                g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
+                g_MainMenuState     = 4;
             }
             // Cancel.
             else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
@@ -300,7 +300,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
         case MenuState_LoadGame:
         case MenuState_NewGameStart:
-            if (Gfx_IsScreenFadeComplete())
+            if (SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete)
             {
                 Screen_Refresh(SCREEN_WIDTH, 0);
                 Fs_QueueWaitForEmpty();
@@ -3144,7 +3144,14 @@ void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructU
 
 s32 func_8003FEC0(s_sub_StructUnk3* arg0) // 0x8003FEC0
 {
-    static s32 Y_ARRAY[5] = { 0x1C00, 0x6000, 0x9800, 0xC800, 0xF000 };
+    static q19_12 Y_ARRAY[5] =
+    {
+        FP_METER(1.75f),
+        FP_METER(6.0f),
+        FP_METER(9.5f),
+        FP_METER(12.5f),
+        FP_METER(15.0f)
+    };
 
     if (D_800C4168.fogEnabled_1)
     {

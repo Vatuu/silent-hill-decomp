@@ -223,11 +223,11 @@ void func_8008616C(s32 arg0, bool arg1, s32 fadeType, s32 fadeTimestep, bool arg
             {
                 if (fadeType == FADE_BLACK)
                 {
-                    g_Gfx_ScreenFade = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false);
+                    g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false);
                 }
                 else if (fadeType == FADE_WHITE)
                 {
-                    g_Gfx_ScreenFade = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, true);
+                    g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, true);
                 }
                 else
                 {
@@ -241,11 +241,11 @@ void func_8008616C(s32 arg0, bool arg1, s32 fadeType, s32 fadeTimestep, bool arg
             }
             else if (fadeType == FADE_BLACK)
             {
-                g_Gfx_ScreenFade = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, false);
+                g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, false);
             }
             else if (fadeType == FADE_WHITE)
             {
-                g_Gfx_ScreenFade = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, true);
+                g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, true);
             }
             else
             {
@@ -262,9 +262,9 @@ void func_8008616C(s32 arg0, bool arg1, s32 fadeType, s32 fadeTimestep, bool arg
         case 1:
             if (fadeType < FADE_UNKNOWN)
             {
-                if (arg1 != 0 || g_Gfx_ScreenFade != caseVar)
+                if (arg1 != 0 || g_Screen_FadeStatus != caseVar)
                 {
-                    if (arg1 == caseVar && Gfx_IsScreenFadeComplete())
+                    if (arg1 == caseVar && SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete)
                     {
                         func_80085D78(arg4);
                     }
@@ -2841,13 +2841,39 @@ s32 func_8008D8C0(s16 x0, s32 x1, s32 x2) // 0x8008D8C0
     s32 temp1;
     s32 res;
 
-    static s32 y_ary0[2] = { 0, 0x1000 };
-    static s32 y_ary1[7] = { 0x4000, 0x14CC, 0x0E66, 0x0B33, 0x0800, 0x0599, 0x0333 };
-    static s32 y_ary2[7] = { 0x0266, 0x0333, 0x0400, 0x04CC, 0x0599, 0x0800, 0x14CC };
+    // TODO: What Q format are the array values?
 
-    temp0 = vwOresenHokan(&y_ary0, ARRAY_SIZE(y_ary0), x0, 0, FP_FLOAT_TO(16.0f, Q8_SHIFT));
-    temp1 = vwOresenHokan(&y_ary1, ARRAY_SIZE(y_ary1), x1, FP_FLOAT_TO(0.8f, Q8_SHIFT), FP_FLOAT_TO(13.0f, Q8_SHIFT));
-    res   = FP_MULTIPLY(vwOresenHokan(&y_ary2, ARRAY_SIZE(y_ary2), x2, FP_FLOAT_TO(3.335f, Q8_SHIFT), FP_FLOAT_TO(7.425f, Q8_SHIFT)), // Yucky floats, maybe these aren't distances?
+    static s32 Y_ARRAY_0[2] =
+    {
+        0,
+        0x1000
+    };
+
+    static s32 Y_ARRAY_1[7] =
+    {
+        0x4000,
+        0x14CC,
+        0x0E66,
+        0x0B33,
+        0x0800,
+        0x0599,
+        0x0333
+    };
+
+    static s32 Y_ARRAY_2[7] =
+    {
+        0x0266,
+        0x0333,
+        0x0400,
+        0x04CC,
+        0x0599,
+        0x0800,
+        0x14CC
+    };
+
+    temp0 = vwOresenHokan(&Y_ARRAY_0, ARRAY_SIZE(Y_ARRAY_0), x0, 0, FP_FLOAT_TO(16.0f, Q8_SHIFT));
+    temp1 = vwOresenHokan(&Y_ARRAY_1, ARRAY_SIZE(Y_ARRAY_1), x1, FP_FLOAT_TO(0.8f, Q8_SHIFT), FP_FLOAT_TO(13.0f, Q8_SHIFT));
+    res   = FP_MULTIPLY(vwOresenHokan(&Y_ARRAY_2, ARRAY_SIZE(Y_ARRAY_2), x2, FP_FLOAT_TO(3.335f, Q8_SHIFT), FP_FLOAT_TO(7.425f, Q8_SHIFT)), // Yucky floats, maybe these aren't distances?
                         FP_MULTIPLY(temp0, temp1, Q12_SHIFT),
                         Q12_SHIFT);
 

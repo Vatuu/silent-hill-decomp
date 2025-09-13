@@ -20,9 +20,10 @@ struct _MapOverlayHeader;
  * GRND:  Ground
  * H:     Height
  * LIM:   Limit
- * MV:    Movement
+ * MV:    Move
  * OFS:   Offset
  * PRIO:  Priority
+ * PRM:   Parameter/parameters
  * R:     Radius
  * RD:    Road
  * SCR:   Screen
@@ -150,7 +151,8 @@ typedef enum _THROUGH_DOOR_SET_CMD_TYPE
 STATIC_ASSERT_SIZEOF(THROUGH_DOOR_SET_CMD_TYPE, 4);
 
 /** @brief 2D camera-specific axis-aligned bounding box (AABB), with values in Q7.8 format.
- * 
+ * TODO: Maybe actually Q11.4?
+ *
  * Constrains the camera position to a limited area on the XZ plane.
  */
 typedef struct _VC_LIMIT_AREA
@@ -172,7 +174,9 @@ typedef struct _VC_CAMERA_INTINFO
 } VC_CAMERA_INTINFO;
 STATIC_ASSERT_SIZEOF(VC_CAMERA_INTINFO, 8);
 
-/** @brief Camera look-at rotation parameters. */
+/** @brief Camera look-at move parameters.
+ * TODO: These don't seem to be angles like the names would suggest, but distances don't fit either.
+ */
 typedef struct _VC_WATCH_MV_PARAM
 {
     s32 ang_accel_x;   /** Angular acceleration on X axis. */
@@ -182,13 +186,13 @@ typedef struct _VC_WATCH_MV_PARAM
 } VC_WATCH_MV_PARAM;
 STATIC_ASSERT_SIZEOF(VC_WATCH_MV_PARAM, 12);
 
-/** @brief Camera translation parameters. */
+/** @brief Camera move parameters. */
 typedef struct _VC_CAM_MV_PARAM
 {
-    s32 accel_xz;   /** Speed acceleration on XZ plane. */
-    s32 accel_y;    /** Speed acceleration on Y axis. */
-    s32 max_spd_xz; /** Max speed on XZ plane. */
-    s32 max_spd_y;  /** Max speed on Y axis. */
+    q19_12 accel_xz;   /** Speed acceleration on XZ plane. */
+    q19_12 accel_y;    /** Speed acceleration on Y axis. */
+    q19_12 max_spd_xz; /** Max speed on XZ plane. */
+    q19_12 max_spd_y;  /** Max speed on Y axis. */
 } VC_CAM_MV_PARAM;
 STATIC_ASSERT_SIZEOF(VC_CAM_MV_PARAM, 16);
 
@@ -204,13 +208,13 @@ typedef struct _VC_ROAD_DATA
     VC_AREA_SIZE_TYPE area_size_type_11 : 2;
     VC_ROAD_TYPE      rd_type_11        : 3; /** Path type. */
     u32               mv_y_type_11      : 3; /** `VC_CAM_MV_TYPE` */
-    s32               lim_rd_max_hy_12  : 8; /** Q? | In SH2 `max_hy/min_hy` are part of `VC_LIMIT_AREA`, in SH1 these are separate for some reason. */
-    s32               lim_rd_min_hy_13  : 8; /** Q? */
-    s32               ofs_watch_hy_14   : 8; /** Q? */
+    q27_4             lim_rd_max_hy_12  : 8; /** In SH2 `max_hy/min_hy` are part of `VC_LIMIT_AREA`, in SH1 these are separate for some reason. */
+    q27_4             lim_rd_min_hy_13  : 8;
+    q27_4             ofs_watch_hy_14   : 8;
     u32               field_15          : 4;
     s16               cam_mv_type_14    : 4; /** `VC_CAM_MV_TYPE` */
-    s8                fix_ang_x_16;          /** Q0.8 | NOTE: Part of union in SH2 `VC_ROAD_DATA`. */
-    s8                fix_ang_y_17;          /** Q0.8 */
+    q0_8              fix_ang_x_16;          /** NOTE: Part of union in SH2 `VC_ROAD_DATA`. */
+    q0_8              fix_ang_y_17;
 } VC_ROAD_DATA;
 STATIC_ASSERT_SIZEOF(VC_ROAD_DATA, 24);
 
@@ -220,7 +224,7 @@ typedef struct _VC_THROUGH_DOOR_CAM_PARAM
     u8      active_f_0;                /** `bool` | Active flag. */
     s8      unk_1[3];
     s32     timer_4;
-    s16     rail_ang_y_8;              /** Rail Y angle. */
+    q3_12   rail_ang_y_8;              /** Rail Y angle. */
     s8      unk_A[2];
     VECTOR3 rail_sta_pos_C;            /** Rail start position. */
     s32     rail_sta_to_chara_dist_18; /** Distance from rail start position to locked-on character position. */
@@ -277,9 +281,9 @@ typedef struct _VC_WORK
     MATRIX                    field_DC;
     u8                        field_FC;                       /** `bool` */
     u8                        field_FD;
-    s16                       cam_chara2ideal_ang_y_FE;  
+    q3_12                     cam_chara2ideal_ang_y_FE;  
     VECTOR3                   cam_tgt_velo_100;               /** Target velocity. */
-    s16                       cam_tgt_mv_ang_y_10C;           /** Target Y angles. */
+    q3_12                     cam_tgt_mv_ang_y_10C;           /** Target Y angles. */
     s8                        unk_10E[2];
     s32                       cam_tgt_spd_110;                               /** Target speed. */
     VECTOR3                   chara_pos_114;                                 /** Locked-on character position. */
@@ -289,10 +293,10 @@ typedef struct _VC_WORK
     s32                       chara_grnd_y_12C;                              /** Locked-on character height from the ground? */
     VECTOR3                   chara_head_pos_130;                            /** Q19.12 | Locked-on character head position. */
     s32                       chara_mv_spd_13C;                              /** Locked-on character movement speed. */
-    s16                       chara_mv_ang_y_140;                            /** Locked-on character heading angle. */
-    s16                       chara_ang_spd_y_142;                           /** Locked-on character heading angle angular speed. */
-    s16                       chara_eye_ang_y_144;                           /** Locked-on character look heading angle? */
-    s16                       chara_eye_ang_wy_146;                          /** Locked-on character unknown Y angle */
+    q3_12                     chara_mv_ang_y_140;                            /** Locked-on character heading angle. */
+    q3_12                     chara_ang_spd_y_142;                           /** Locked-on character heading angle angular speed. */
+    q3_12                     chara_eye_ang_y_144;                           /** Locked-on character look heading angle? */
+    q3_12                     chara_eye_ang_wy_146;                          /** Locked-on character unknown Y angle */
     s32                       chara_watch_xz_r_148;                          /** Locked-on character radius on the XZ plane. */
     VC_NEAR_ROAD_DATA         near_road_ary_14C[CAMERA_PATH_COLL_COUNT_MAX]; /** Nearby camera path collisions. */
     s32                       near_road_suu_2B4;                             /** Count of valid `near_road_ary_14C` entries. */
@@ -345,7 +349,7 @@ extern VC_NEAR_ROAD_DATA vcNullNearRoad;
 extern VC_WATCH_MV_PARAM deflt_watch_mv_prm;
 extern VC_WATCH_MV_PARAM self_view_watch_mv_prm;
 extern VC_CAM_MV_PARAM   cam_mv_prm_user;
-extern s32               excl_r_ary[9];
+extern q19_12            excl_r_ary[9];
 extern VC_WORK           vcWork;
 extern VECTOR3           vcRefPosSt;
 extern VW_VIEW_WORK      vwViewPointInfo;

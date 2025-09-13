@@ -10,7 +10,7 @@
 // FUNCTIONS
 // ==========
 
-void Screen_ClearRectInterlaced(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
+void Screen_RectInterlacedClear(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
 
 void Screen_Refresh(s32 screenWidth, s32 isInterlaced);
 
@@ -18,18 +18,16 @@ void Screen_Init(s32 screenWidth, s32 isInterlaced);
 
 void Screen_XyPositionSet(s32 x, s32 y);
 
-void Screen_DisplayEnvXySet(DISPENV* display, s32 x, s32 y);
+void Screen_DisplayEnvXySet(DISPENV* displayEnv, s32 x, s32 y);
 
-void func_800325A4(DR_MODE* arg0);
+void Screen_FadeDrawModeSet(DR_MODE* drMode);
 
-s32 Gfx_FadeInProgress();
+q19_12 Screen_FadeInProgressGet();
 
-void Gfx_FadeUpdate(); // Return type assumed.
+void Screen_FadeUpdate();
 
-void Gfx_CutsceneCameraStateUpdate();
+void Screen_CutsceneCameraStateUpdate();
 
-void Gfx_BlackBorderDraw(POLY_G4* arg0, s32 arg1);
-
-void Gfx_VSyncCallback();
+void Screen_VSyncCallback();
 
 #endif

@@ -24,7 +24,7 @@ s_GameWork g_GameWork = {};
 s32 D_800BCD00 = 0; // @unused Might be padding.
 s32 D_800BCD04 = 0; // @unused Might be padding.
 s32 D_800BCD08 = 0; // @unused Might be padding.
-s32 g_Gfx_ScreenFade = 0;
+s32 g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_Reset, false);
 
 void GameState_Boot_Update() // 0x80032D1C
 {
@@ -68,12 +68,12 @@ void GameState_Boot_Update() // 0x80032D1C
             Fs_QueueStartReadTim(FILE_1ST_FONT16_TIM, FS_BUFFER_1, &g_Font16AtlasImg);
             Fs_QueueStartReadTim(FILE_1ST_KONAMI_TIM, FS_BUFFER_1, &g_KonamiLogoImg);
 
-            g_Gfx_ScreenFade = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
+            g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
             g_GameWork.gameStateStep_598[0]++;
             break;
 
         case 3:
-            if (Gfx_IsScreenFadeComplete())
+            if (SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete)
             {
                 Fs_QueueWaitForEmpty();
 
@@ -124,7 +124,7 @@ void MainLoop() // 0x80032EE0
     func_8002E7BC();
     func_8002E85C();
     Joy_Init();
-    VSyncCallback(&Gfx_VSyncCallback);
+    VSyncCallback(&Screen_VSyncCallback);
     InitGeom();
     func_8004BB10(); // Initializes something for graphics.
     func_800890B8();
@@ -179,7 +179,7 @@ void MainLoop() // 0x80032EE0
             continue;
         }
 
-        Gfx_FadeUpdate();
+        Screen_FadeUpdate();
         func_8002EB88();
         func_800485D8();
 
@@ -233,7 +233,7 @@ void MainLoop() // 0x80032EE0
             }
             else
             {
-                if (g_Gfx_ScreenFade != SCREEN_FADE_STATUS(ScreenFadeState_None, false))
+                if (g_Screen_FadeStatus != SCREEN_FADE_STATUS(ScreenFadeState_None, false))
                 {
                     VSync(0);
                 }

@@ -1788,11 +1788,11 @@ s_Material_8* func_8005B4BC(char* str, s_800C1450_0* arg1) // 0x8005B4BC
     return NULL;
 }
 
-void func_8005B55C(GsCOORDINATE2* arg0) // 0x8005B55C
+void func_8005B55C(GsCOORDINATE2* coord) // 0x8005B55C
 {
     s_800AE204* var_s1;
 
-    D_800C42B8 = arg0;
+    D_800C42B8 = coord;
 
     for (var_s1 = &D_800AE204[0]; var_s1 < &D_800AE204[26]; var_s1++)
     {
@@ -1831,100 +1831,101 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005BF58); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005C1CC); // 0x8005C1CC
 
-u32 func_8005C478(s16* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) // 0x8005C478
+u32 func_8005C478(s16* arg0, s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2) // 0x8005C478
 {
-    s32 sp10;
-    s16 sp18;
-    s16 sp20;
-    s16 temp_s3_3;
-    s32 temp_s1_3;
-    s32 temp_s2_3;
-    s32 var_a0;
-    s32 var_s1;
-    s32 var_v0_4;
-    s32 var_v1;
-    s32 temp;
+    s32   sp10;
+    q3_12 angle0;
+    q3_12 angle1;
+    q3_12 angle2;
+    s32   mag0;
+    s32   mag1;
+    s32   var0;
+    s32   var_s1;
+    s32   var_v0_4;
+    s32   var1;
+    s32   temp;
 
-    sp18      = func_8005BF38(ratan2(arg1 - arg3, arg2 - arg4));
-    sp20      = func_8005BF38(ratan2(arg1 - arg5, arg2 - arg6));
-    temp_s3_3 = func_8005BF38(ratan2(arg5 - arg3, arg6 - arg4));
-    temp_s1_3 = Math_Vector2MagCalc(arg1 - arg3, arg2 - arg4);
-    temp_s2_3 = Math_Vector2MagCalc(arg1 - arg5, arg2 - arg6);
+    angle0 = func_8005BF38(ratan2(x0 - x1, y0 - y1));
+    angle1 = func_8005BF38(ratan2(x0 - x2, y0 - y2));
+    angle2 = func_8005BF38(ratan2(x2 - x1, y2 - y1));
+    mag0   = Math_Vector2MagCalc(x0 - x1, y0 - y1);
+    mag1   = Math_Vector2MagCalc(x0 - x2, y0 - y2);
 
-    if (temp_s1_3 * Math_Sin(sp18 - temp_s3_3) < 0)
+    if ((mag0 * Math_Sin(angle0 - angle2)) < 0)
     {
-        sp10 = -FP_MULTIPLY(temp_s1_3, Math_Sin(sp18 - temp_s3_3), 0xC);
+        sp10 = -FP_MULTIPLY(mag0, Math_Sin(angle0 - angle2), Q12_SHIFT);
     }
     else
     {
-        sp10 = FP_MULTIPLY(temp_s1_3, Math_Sin(sp18 - temp_s3_3), 0xC);
+        sp10 = FP_MULTIPLY(mag0, Math_Sin(angle0 - angle2), Q12_SHIFT);
     }
 
-    if (temp_s2_3 < temp_s1_3)
+    if (mag1 < mag0)
     {
-        var_a0 = temp_s1_3;
+        var0 = mag0;
     }
     else
     {
-        var_a0 = temp_s2_3;
+        var0 = mag1;
     }
 
-    if (!(temp_s2_3 < temp_s1_3))
+    if (!(mag1 < mag0))
     {
-        var_v1 = temp_s1_3;
+        var1 = mag0;
     }
     else
     {
-        var_v1 = temp_s2_3;
+        var1 = mag1;
     }
 
-    var_a0 = SQUARE(var_a0 >> 6);
-    var_v1 = SQUARE(var_v1 >> 6);
+    var0 = SQUARE(var0 >> 6);
+    var1 = SQUARE(var1 >> 6);
 
-    if (var_a0 < var_v1 + (SQUARE((arg5 - arg3) >> 6) + SQUARE((arg6 - arg4) >> 6)))
+    if (var0 < (var1 + (SQUARE((x2 - x1) >> 6) + SQUARE((y2 - y1) >> 6))))
     {
         if (arg0 != NULL)
         {
-            if (temp_s1_3 * Math_Cos(sp18 - temp_s3_3) < 0)
+            if (mag0 * Math_Cos(angle0 - angle2) < 0)
             {
-                var_s1 = -FP_MULTIPLY(temp_s1_3, Math_Cos(sp18 - temp_s3_3), 0xC);
+                var_s1 = -FP_MULTIPLY(mag0, Math_Cos(angle0 - angle2), Q12_SHIFT);
             }
             else
             {
-                var_s1 = FP_MULTIPLY(temp_s1_3, Math_Cos(sp18 - temp_s3_3), 0xC);
+                var_s1 = FP_MULTIPLY(mag0, Math_Cos(angle0 - angle2), Q12_SHIFT);
             }
 
-            if ((temp_s2_3 * Math_Cos(sp20 - temp_s3_3)) < 0)
+            if ((mag1 * Math_Cos(angle1 - angle2)) < 0)
             {
-                var_v0_4 = -FP_MULTIPLY(temp_s2_3, Math_Cos(sp20 - temp_s3_3), 0xC);
+                var_v0_4 = -FP_MULTIPLY(mag1, Math_Cos(angle1 - angle2), Q12_SHIFT);
             }
             else
             {
-                var_v0_4 = FP_MULTIPLY(temp_s2_3, Math_Cos(sp20 - temp_s3_3), 0xC);
+                var_v0_4 = FP_MULTIPLY(mag1, Math_Cos(angle1 - angle2), Q12_SHIFT);
             }
 
             temp  = var_s1 + var_v0_4;
-            *arg0 = ((var_s1 << 0xC) / temp);
+            *arg0 = ((var_s1 << Q12_SHIFT) / temp);
         }
 
         return ABS(sp10);
     }
 
-    if (temp_s1_3 < temp_s2_3)
+    if (mag0 < mag1)
     {
         if (arg0 != NULL)
         {
             *arg0 = 0;
         }
-        return ABS(temp_s1_3);
+
+        return ABS(mag0);
     }
 
     if (arg0 != NULL)
     {
-        *arg0 = 0x1000;
+        *arg0 = Q19_12(1.0f);
     }
 
-    return ABS(temp_s2_3);
+    return ABS(mag1);
 }
 
 s16 func_8005C7B0(s32 arg0) // 0x8005C7B0
@@ -1934,9 +1935,11 @@ s16 func_8005C7B0(s32 arg0) // 0x8005C7B0
 
 s32 func_8005C7D0(s_SubCharacter* chara) // 0x8005C7D0
 {
-    s32             i = 0;
+    s32             i;
     s_SubCharacter* npc;
     s_SubCharacter* player;
+
+    i = 0;
 
     if (chara == &g_SysWork.player_4C.chara_0)
     {
@@ -1958,38 +1961,38 @@ s32 func_8005C7D0(s_SubCharacter* chara) // 0x8005C7D0
 
 void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara) // 0x8005C814
 {
-    s16 temp_v0;
-    s16 temp_s0;
-    s16 temp_s1;
-    s16 temp_s2;
-    s16 temp_s3;
-    s16 temp_s4;
+    q3_12 sinRotY;
+    q3_12 cosRotY;
+    s16   temp_s0;
+    s16   temp_s2;
+    s16   temp_s3;
+    s16   temp_s4;
 
     temp_s0 = arg0->field_0;
     temp_s3 = arg0->field_2;
     temp_s2 = arg0->field_4;
     temp_s4 = arg0->field_6;
 
-    temp_s1 = Math_Cos(chara->rotation_24.vy);
-    temp_v0 = Math_Sin(chara->rotation_24.vy);
+    cosRotY = Math_Cos(chara->rotation_24.vy);
+    sinRotY = Math_Sin(chara->rotation_24.vy);
 
-    chara->field_D8.field_0 = FP_FROM((temp_s0 * temp_s1) + (temp_s3 * temp_v0), Q12_SHIFT);
-    chara->field_D8.field_2 = FP_FROM((-temp_s0 * temp_v0) + (temp_s3 * temp_s1), Q12_SHIFT);
-    chara->field_D8.field_4 = FP_FROM((temp_s2 * temp_s1) + (temp_s4 * temp_v0), Q12_SHIFT);
-    chara->field_D8.field_6 = FP_FROM((-temp_s2 * temp_v0) + (temp_s4 * temp_s1), Q12_SHIFT);
+    chara->field_D8.field_0 = FP_FROM((temp_s0 * cosRotY) + (temp_s3 * sinRotY), Q12_SHIFT);
+    chara->field_D8.field_2 = FP_FROM((-temp_s0 * sinRotY) + (temp_s3 * cosRotY), Q12_SHIFT);
+    chara->field_D8.field_4 = FP_FROM((temp_s2 * cosRotY) + (temp_s4 * sinRotY), Q12_SHIFT);
+    chara->field_D8.field_6 = FP_FROM((-temp_s2 * sinRotY) + (temp_s4 * cosRotY), Q12_SHIFT);
 }
 
 s32 func_8005C944(s_SubCharacter* chara, s_800C4590* arg1) // 0x8005C944
 {
     s_800C4590 sp10;
     VECTOR3    sp30;
-    s16        headingAngle;
+    q3_12      headingAngle;
     s32        temp_s0;
     s32        temp_s0_2;
     s32        temp_s2;
     s32        temp_s3;
     s32        temp_v0;
-    s32        temp;
+    q19_12     sinHeadingAngle;
     s32        ret;
 
     headingAngle = chara->headingAngle_3C;
@@ -1997,9 +2000,9 @@ s32 func_8005C944(s_SubCharacter* chara, s_800C4590* arg1) // 0x8005C944
     temp_s2 = OVERFLOW_GUARD(temp_s0);
     temp_s3 = temp_s2 >> 1;
 
-    temp      = Math_Sin(headingAngle);
-    temp_s0_2 = temp_s0 >> temp_s3;
-    temp_v0   = temp >> temp_s3;
+    sinHeadingAngle = Math_Sin(headingAngle);
+    temp_s0_2       = temp_s0 >> temp_s3;
+    temp_v0         = sinHeadingAngle >> temp_s3;
 
     sp30.vx = (s32)FP_MULTIPLY_PRECISE(temp_s0_2, temp_v0, Q12_SHIFT) << temp_s2;
     sp30.vz = (s32)FP_MULTIPLY_PRECISE(temp_s0_2, Math_Cos(headingAngle) >> temp_s3, Q12_SHIFT) << temp_s2;
@@ -2029,14 +2032,14 @@ s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 x, s16 z) // 0x80
 {
     s_800C4590 sp10;
     VECTOR3    sp30;
-    s32        headingAngle;
+    q19_12     headingAngle;
     s32        temp_s0;
     s32        temp_s0_2;
     s32        temp_s2;
     s32        temp_s3;
     s32        temp_v0_2;
     s32        temp_v0_4;
-    s32        temp_v0_5;
+    q19_12     sinHeadingAngle;
     s32        ret;
 
     headingAngle = chara->headingAngle_3C;
@@ -2044,17 +2047,17 @@ s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 x, s16 z) // 0x80
     temp_s2 = OVERFLOW_GUARD(temp_s0);
     temp_s3 = temp_s2 >> 1;
 
-    temp_v0_5 = Math_Sin(headingAngle);
+    sinHeadingAngle = Math_Sin(headingAngle);
     temp_s0_2 = temp_s0 >> temp_s3;
-    temp_v0_2 = temp_v0_5 >> temp_s3;
+    temp_v0_2 = sinHeadingAngle >> temp_s3;
     sp30.vx   = (s32)FP_MULTIPLY_PRECISE(temp_s0_2, temp_v0_2, Q12_SHIFT) << temp_s2;
 
     temp_v0_4 = Math_Cos(headingAngle) >> temp_s3;
     sp30.vz   = (s32)FP_MULTIPLY_PRECISE(temp_s0_2, temp_v0_4, Q12_SHIFT) << temp_s2;
 
-    temp_v0_5 = chara->field_34;
+    sinHeadingAngle = chara->field_34;
     sp30.vx += x;
-    sp30.vy = FP_MULTIPLY_PRECISE(g_DeltaTime0, temp_v0_5, Q12_SHIFT);
+    sp30.vy = FP_MULTIPLY_PRECISE(g_DeltaTime0, sinHeadingAngle, Q12_SHIFT);
     sp30.vz += z;
 
     ret = func_80069B24(&sp10, &sp30, chara);
@@ -2130,7 +2133,7 @@ s32 func_8005D86C(s32 arg0) // 0x8005D86C
             var_v1 <<= -temp_a1;
         }
 
-        var_a0 = FP_MULTIPLY_PRECISE(var_a0, 0x1000 - temp_a2, Q12_SHIFT) + FP_MULTIPLY_PRECISE(var_v1, temp_a2, Q12_SHIFT);
+        var_a0 = FP_MULTIPLY_PRECISE(var_a0, Q19_12(1.0f) - temp_a2, Q12_SHIFT) + FP_MULTIPLY_PRECISE(var_v1, temp_a2, Q12_SHIFT);
     }
 
     return var_a0;
@@ -2405,53 +2408,54 @@ void func_800622B8(s32 arg0, s_SubCharacter* arg1, s32 animStatus, s32 arg3) // 
     s32             temp_s0;
     s32             temp_s2;
     s32             temp_s3;
-    s32             temp_v0;
-    s32             var_s7;
+    s32             idx;
+    s32             i;
 
-    if (g_GameWork.config_0.optExtraBloodColor_24 == 0xE)
+    if (g_GameWork.config_0.optExtraBloodColor_24 == 14)
     {
         return;
     }
 
-    arg3   = func_8005F55C(arg3);
-    var_s7 = D_800AE5CC[animStatus + 1] - D_800AE5CC[animStatus];
+    arg3 = func_8005F55C(arg3);
 
-    while (var_s7 > 0)
+    i = D_800AE5CC[animStatus + 1] - D_800AE5CC[animStatus];
+    while (i > 0)
     {
-        temp_v0 = func_8005E7E0(3);
-        if (temp_v0 == -1)
+        idx = func_8005E7E0(3);
+        if (idx == NO_VALUE)
         {
             break;
         }
 
-        temp_s0 = (D_800AE5CC[animStatus] + var_s7) - 1;
+        temp_s0 = (D_800AE5CC[animStatus] + i) - 1;
 
-        temp_s3 = Rng_Rand16() % D_800AE5F0[temp_s0 * 4] + D_800AE5F0[temp_s0 * 4 + 1];
-        temp_s2 = Rng_Rand16() % D_800AE5F0[temp_s0 * 4 + 2] + D_800AE5F0[temp_s0 * 4 + 3];
+        temp_s3 = Rng_Rand16() % D_800AE5F0[temp_s0 * 4]       + D_800AE5F0[(temp_s0 * 4) + 1];
+        temp_s2 = Rng_Rand16() % D_800AE5F0[(temp_s0 * 4) + 2] + D_800AE5F0[(temp_s0 * 4) + 3];
 
-        g_MapOverlayHeader.unkTable1_4C[temp_v0].vx_0 =
-            arg1->position_18.vx + FP_MULTIPLY(temp_s3, Math_Sin(arg1->rotation_24.vy), 12) - FP_MULTIPLY(temp_s2, Math_Cos(arg1->rotation_24.vy), 12);
+        g_MapOverlayHeader.unkTable1_4C[idx].vx_0 = arg1->position_18.vx +
+                                                        FP_MULTIPLY(temp_s3, Math_Sin(arg1->rotation_24.vy), Q12_SHIFT) -
+                                                        FP_MULTIPLY(temp_s2, Math_Cos(arg1->rotation_24.vy), Q12_SHIFT);
+        g_MapOverlayHeader.unkTable1_4C[idx].vy_8 = arg1->position_18.vy;
+        g_MapOverlayHeader.unkTable1_4C[idx].vz_4 = arg1->position_18.vz +
+                                                        FP_MULTIPLY(temp_s3, Math_Cos(arg1->rotation_24.vy), Q12_SHIFT) +
+                                                        FP_MULTIPLY(temp_s2, Math_Sin(arg1->rotation_24.vy), Q12_SHIFT);
 
-        g_MapOverlayHeader.unkTable1_4C[temp_v0].vy_8 = arg1->position_18.vy;
+        func_800699F8(&sp10, g_MapOverlayHeader.unkTable1_4C[idx].vx_0, g_MapOverlayHeader.unkTable1_4C[idx].vz_4);
 
-        g_MapOverlayHeader.unkTable1_4C[temp_v0].vz_4 =
-            arg1->position_18.vz + FP_MULTIPLY(temp_s3, Math_Cos(arg1->rotation_24.vy), 12) + FP_MULTIPLY(temp_s2, Math_Sin(arg1->rotation_24.vy), 12);
-
-        func_800699F8(&sp10, g_MapOverlayHeader.unkTable1_4C[temp_v0].vx_0, g_MapOverlayHeader.unkTable1_4C[temp_v0].vz_4);
-
-        if (ABS_DIFF(sp10.groundHeight_0, arg1->position_18.vy) > 0x266)
+        if (ABS_DIFF(sp10.groundHeight_0, arg1->position_18.vy) > FP_METER(0.15f))
         {
-            g_MapOverlayHeader.unkTable1_4C[(temp_v0)].field_A = 0;
+            g_MapOverlayHeader.unkTable1_4C[(idx)].field_A = 0;
         }
         else
         {
-            g_MapOverlayHeader.unkTable1_4C[temp_v0].field_E  = D_800AE700[animStatus] + (Rng_Rand16() % (D_800AE700[animStatus] >> 2));
-            g_MapOverlayHeader.unkTable1_4C[temp_v0].field_D  = arg3;
-            g_MapOverlayHeader.unkTable1_4C[temp_v0].field_B  = (Rng_Rand16() & 3) + 4;
-            g_MapOverlayHeader.unkTable1_4C[temp_v0].field_C  = func_8005C7D0(arg1);
-            g_MapOverlayHeader.unkTable1_4C[temp_v0].field_10 = Rng_Rand16() & 0x1FFF;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_E  = D_800AE700[animStatus] + (Rng_Rand16() % (D_800AE700[animStatus] >> 2));
+            g_MapOverlayHeader.unkTable1_4C[idx].field_D  = arg3;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_B  = (Rng_Rand16() & 3) + 4;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_C  = func_8005C7D0(arg1);
+            g_MapOverlayHeader.unkTable1_4C[idx].field_10 = Rng_Rand16() & 0x1FFF;
         }
-        var_s7 -= 1;
+
+        i--;
     }
 }
 
@@ -2879,11 +2883,11 @@ void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2)
 
 void func_8006AD44(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x8006AD44
 {
-    s32  temp_s4;
+    s32                    temp_s4;
     s_IpdCollisionData_20* var_s0;
-    s32  temp_s5;
-    s32  var_s1;
-    s32  var_s2;
+    s32                    temp_s5;
+    s32                    var_s1;
+    s32                    var_s2;
 
     if ((collData->field_8_8 == 0 && collData->field_8_16 == 0 && collData->field_8_24 == 0) ||
         !func_8006AEAC(arg0, collData))
@@ -3889,7 +3893,7 @@ bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VEC
     return true;
 }
 
-s32 func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1) // 0x8006DEB0
+bool func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1) // 0x8006DEB0
 {
     s32                  sp10;
     s32                  temp_lo;
@@ -3933,9 +3937,10 @@ s32 func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1) // 0x8006DEB0
         arg0->field_18 = arg1->field_1C * 16;
         arg0->field_1C = ratan2(arg1->field_24, arg1->field_26);
         arg0->field_1  = arg1->field_28;
-        return 1;
+        return true;
     }
-    return 0;
+
+    return false;
 }
 
 void func_8006E0AC(s_func_8006DCE0* arg0, s_IpdCollisionData* arg1) // 0x8006E0AC
@@ -3989,82 +3994,84 @@ void func_8006E490(s_func_8006E490* arg0, u32 arg1, s32 arg2, s32 arg3) // 0x800
     }
 }
 
-void func_8006E53C(s_func_8006DCE0* arg0, s_IpdCollisionData_20* arg1, s_IpdCollisionData* arg2) // 0x8006E53C
+void func_8006E53C(s_func_8006DCE0* arg0, s_IpdCollisionData_20* arg1, s_IpdCollisionData* ipdColl) // 0x8006E53C
 {
-    s32                    var_s1;
+    s32                    i;
     s32                    temp_v0;
     s32                    temp_v0_2;
-    bool                   var_a3;
-    bool                   var_t0;
-    bool                   var_t1;
+    bool                   cond0;
+    bool                   cond1;
+    bool                   cond2;
     s_IpdCollisionData_18* temp_a1_2;
     u8                     temp_a0;
     s32                    temp_a0_3;
     s32                    temp_a2;
-    s32                    temp_v1;
+    s32                    idx;
     s_IpdCollisionData_14* temp_a1;
 
-    for (var_s1 = arg1[0].field_0; var_s1 < arg1[1].field_0; var_s1++)
+    for (i = arg1[0].field_0; i < arg1[1].field_0; i++)
     {
-        temp_v1 = arg2->ptr_28[var_s1];
-        temp_a0 = arg2->field_30;
-        if (temp_a0 >= arg2->field_34[temp_v1])
-        {
-            arg2->field_34[temp_v1] = temp_a0 + 1;
+        idx = ipdColl->ptr_28[i];
+        temp_a0 = ipdColl->field_30;
 
-            if (temp_v1 < arg2->field_8_16)
+        if (temp_a0 >= ipdColl->field_34[idx])
+        {
+            ipdColl->field_34[idx] = temp_a0 + 1;
+
+            if (idx < ipdColl->field_8_16)
             {
-                temp_a1 = &arg2->ptr_14[temp_v1];
+                temp_a1 = &ipdColl->ptr_14[idx];
 
                 temp_v0 = (u16)arg0->field_4 >> (temp_a1->field_0_14 * 4 | temp_a1->field_2_14);
 
-                if (temp_v0 & 1)
+                if (temp_v0 & (1 << 0))
                 {
                     temp_a0_3 = temp_a1->field_8;
                     temp_a2   = temp_a1->field_9;
 
-                    var_a3 = (temp_a0_3 != 0xFF) && (temp_a2 != 0xFF);
+                    cond0 = temp_a0_3 != 0xFF && temp_a2 != 0xFF;
 
                     if (arg0->field_0 == 1)
                     {
-                        if (var_a3)
+                        if (cond0)
                         {
                             continue;
                         }
                     }
                     else
                     {
-                        var_t0 = false;
-                        var_t1 = false;
+                        cond1 = false;
+                        cond2 = false;
 
-                        if (temp_a0_3 == 0xFF || arg2->ptr_10[temp_a0_3].field_6_0 == 0 ||
-                            arg2->ptr_10[temp_a0_3].field_6_0 == 0xC)
+                        if (temp_a0_3 == 0xFF || ipdColl->ptr_10[temp_a0_3].field_6_0 == 0 ||
+                            ipdColl->ptr_10[temp_a0_3].field_6_0 == 12)
                         {
-                            var_t0 = true;
+                            cond1 = true;
                         }
 
-                        if (temp_a2 == 0xFF || arg2->ptr_10[temp_a2].field_6_0 == 0 ||
-                            arg2->ptr_10[temp_a2].field_6_0 == 0xC)
+                        if (temp_a2 == 0xFF || ipdColl->ptr_10[temp_a2].field_6_0 == 0 ||
+                            ipdColl->ptr_10[temp_a2].field_6_0 == 12)
                         {
-                            var_t1 = true;
+                            cond2 = true;
                         }
 
-                        if (var_t0 && var_t1)
+                        if (cond1 && cond2)
                         {
                             continue;
                         }
                     }
 
-                    func_8006E78C(arg0, temp_a1, arg2->ptr_C, arg2->ptr_10, var_a3);
+                    func_8006E78C(arg0, temp_a1, ipdColl->ptr_C, ipdColl->ptr_10, cond0);
                 }
             }
             else
             {
-                temp_a1_2 = &arg2->ptr_18[temp_v1 - arg2->field_8_16];
-
+                temp_a1_2 = &ipdColl->ptr_18[idx - ipdColl->field_8_16];
                 temp_v0_2 = (u16)arg0->field_4 >> temp_a1_2->field_0_8;
 
-                if ((temp_v0_2 & 1) && (arg0->field_0 == 1 || (temp_a1_2->field_0_0 && temp_a1_2->field_0_0 != 0xC)) && temp_a1_2->field_8 >= arg0->field_6)
+                if ((temp_v0_2 & (1 << 0)) &&
+                    (arg0->field_0 == 1 || (temp_a1_2->field_0_0 && temp_a1_2->field_0_0 != 12)) &&
+                    temp_a1_2->field_8 >= arg0->field_6)
                 {
                     func_8006EB8C(arg0, temp_a1_2);
                 }

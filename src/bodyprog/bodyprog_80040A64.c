@@ -1663,7 +1663,7 @@ void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHeader, s_IpdModelInfo
              unkData < &modelBuffer->field_C[modelBuffer->field_0];
              unkData++)
         {
-            // unkData originally stores model idx, replace that with pointer to the models `modelHeader_C`
+            // `unkData` originally stores model idx, replace that with pointer to the model's `modelHeader_C`.
             s32 modelIdx           = (s32)unkData->modelHeader_0;
             unkData->modelHeader_0 = ipdModels[modelIdx].modelHeader_C;
         }

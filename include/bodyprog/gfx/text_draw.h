@@ -56,7 +56,7 @@ void func_8004B6D4(s16 arg0, s16 arg1);
 void func_8004B74C(s16 arg0);
 
 /** @unused Draws string. */
-void func_8004B76C(char* str, s32 useFixedWidth);
+void func_8004B76C(char* str, bool useFixedWidth);
 
 /** Draws an integer string in screen space. */
 void Gfx_StringDrawInt(s32 widthMin, s32 val);
@@ -68,7 +68,7 @@ void Gfx_DebugStringPosition(s16 x, s16 y);
 /** Draws debug strings using 8x8 glyphs from `FONT8.TIM`. Valid `char` range: `[42, 95]` (`*` to `_`). */
 void Gfx_DebugStringDraw(char* str);
 
-char* Math_IntegerToString(s32 widthMin, s32 value);
+char* Math_IntegerToString(s32 widthMin, s32 val);
 
 void func_800321EC(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 

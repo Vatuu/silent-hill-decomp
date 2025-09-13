@@ -55,28 +55,28 @@ u32 D_800A8DA8[] =
 };
 
 u8 g_BackgroundColor = 0x80;
-u8 D_800A8E59        = 0x00;
-u8 D_800A8E5A        = 0x03;
-u8 D_800A8E5B        = 0x00;
+u8 D_800A8E59        = 0x0;
+u8 D_800A8E5A        = 0x3;
+u8 D_800A8E5B        = 0x0;
 
 DR_MODE D_800A8E5C[] =
 {
-    { 0x03000000, { 0xE1000240, 0x00000000 } },
-    { 0x03000000, { 0xE1000240, 0x00000000 } },
+    { 0x3000000, { 0xE1000240, 0x0 } },
+    { 0x3000000, { 0xE1000240, 0x0 } },
 };
 
 TILE D_800A8E74[] =
 {
-    { 0x03000000, 0xFF, 0x00, 0x00, 0x62, 0xFEC0, 0xFF10, 0x0280, 0x01E0 },
-    { 0x03000000, 0xFF, 0x00, 0x00, 0x62, 0xFEC0, 0xFF10, 0x0280, 0x01E0 },
+    { 0x3000000, 255, 0, 0, 0x62, -320, -240, 640, 480 },
+    { 0x3000000, 255, 0, 0, 0x62, -320, -240, 640, 480 },
 };
 
-s32 g_ScreenFadeProgress = 0;
+q19_12 g_ScreenFadeProgress = FP_ALPHA(0.0f);
 
 DR_MODE D_800A8E98[] =
 {
-    { 0x03000000, { 0xE1000240, 0x00000000 } },
-    { 0x03000000, { 0xE1000240, 0x00000000 } },
+    { 0x3000000, { 0xE1000240, 0x0 } },
+    { 0x3000000, { 0xE1000240, 0x0 } },
 };
 
 // TODO: Make a macro?
@@ -139,9 +139,9 @@ VC_ROAD_DATA vcNullRoadArray[] =
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11        = VC_RD_TYPE_ROAD,
         .mv_y_type_11      = VC_MV_SELF_VIEW,
-        .lim_rd_max_hy_12  = 96,
-        .lim_rd_min_hy_13  = -96,
-        .ofs_watch_hy_14   = 8,
+        .lim_rd_max_hy_12  = Q27_4(6.0f),
+        .lim_rd_min_hy_13  = Q27_4(-6.0f),
+        .ofs_watch_hy_14   = Q27_4(0.5f),
         .field_15          = 1,
         .cam_mv_type_14    = VC_MV_CHASE,
         .fix_ang_x_16      = FP_ANGLE_PACKED(0.0f),
@@ -154,9 +154,9 @@ VC_ROAD_DATA vcNullRoadArray[] =
         .area_size_type_11 = VC_AREA_TINY,
         .rd_type_11        = VC_RD_TYPE_ROAD,
         .mv_y_type_11      = VC_MV_CHASE,
-        .lim_rd_max_hy_12  = 0,
-        .lim_rd_min_hy_13  = 0,
-        .ofs_watch_hy_14   = 0,
+        .lim_rd_max_hy_12  = Q27_4(0.0f),
+        .lim_rd_min_hy_13  = Q27_4(0.0f),
+        .ofs_watch_hy_14   = Q27_4(0.0f),
         .field_15          = 0,
         .cam_mv_type_14    = VC_MV_CHASE,
         .fix_ang_x_16      = FP_ANGLE_PACKED(0.0f),

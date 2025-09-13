@@ -111,12 +111,12 @@ void func_80045BD8(u16 cmd) // 0x80045BD8
 {
     switch (cmd)
     {
-        case 1:
-            func_80045D28(0);
+        case 1: // Mono.
+            func_80045D28(false);
             break;
 
-        case 2:
-            func_80045D28(1);
+        case 2: // Stereo.
+            func_80045D28(true);
             break;
 
         case 16:
@@ -175,13 +175,13 @@ void func_80045BD8(u16 cmd) // 0x80045BD8
     }
 }
 
-void func_80045D28(u8 caseArg) // 0x80045D28
+void func_80045D28(u8 isStereo) // 0x80045D28
 {
     CdlATV vol;
 
-    switch (caseArg)
+    switch (isStereo)
     {
-        case 0:
+        case false:
             SdSetMono();
 
             // SPU (L).
@@ -195,10 +195,10 @@ void func_80045D28(u8 caseArg) // 0x80045D28
             CdMix(&vol);
 
             D_800C167C = 0x7F;
-            D_800C166A = false;
+            g_Sound_IsStereoEnabled = false;
             return;
 
-        case 1:
+        case true:
             SdSetStereo();
 
             // SPU (L).
@@ -211,7 +211,7 @@ void func_80045D28(u8 caseArg) // 0x80045D28
             CdMix(&vol);
 
             D_800C167C = 0x7F;
-            D_800C166A = true;
+            g_Sound_IsStereoEnabled = true;
             return;
     }
 }
@@ -220,7 +220,7 @@ void sd_init() // 0x80045DD4
 {
     SdInit();
     SdSetTickMode(1);
-    func_80045D28(1);
+    func_80045D28(true);
     SdSetReservedVoice(24);
     SdStart();
     SdSetTableSize(&D_800C16C8, 16, 3);
@@ -240,7 +240,7 @@ void sd_work_init() // 0x80045E44
     SdUtReverbOn();
     SpuSetTransferMode(0);
 
-    g_Sd_ReverbDepth = 20;
+    g_Sound_ReverbDepth = 20;
 
     SdUtSetReverbDepth(20, 20);
     Sd_SetReverbEnable(0);
@@ -336,7 +336,7 @@ u8 Sd_PlaySfx(u16 sfx, s8 balance, u8 vol) // 0x80046048
     WriteVolume(&D_800C1698.volumeLeft_C, &D_800C1698.volumeRight_E, convertedVol);
 
     // Apply stereo balance.
-    if (D_800C166A == true)
+    if (g_Sound_IsStereoEnabled == true)
     {
         if (balance < 0)
         {
@@ -412,8 +412,8 @@ void func_800463C0(u16 sfx, s8 balance, u8 vol, s8 pitch) // 0x800463C0
         return;
     }
 
-    D_800C15BE = sfx - Sfx_Base;
-    D_800C16A4 = D_800C167C + g_Sfx_Table0[D_800C15BE].field_5;
+    g_Sound_ActiveSfxIdx = sfx - Sfx_Base;
+    D_800C16A4 = D_800C167C + g_Sfx_Table0[g_Sound_ActiveSfxIdx].field_5;
 
     if (sfx == Sfx_Unk1321)
     {
@@ -446,7 +446,7 @@ void func_800463C0(u16 sfx, s8 balance, u8 vol, s8 pitch) // 0x800463C0
     }
 
     D_800C1698.field_A = 0;
-    D_800C1698.field_8 = g_Sfx_Table0[D_800C15BE].field_4;
+    D_800C1698.field_8 = g_Sfx_Table0[g_Sound_ActiveSfxIdx].field_4;
     D_800C15C0         = D_800C1628[temp] + (pitch * 2);
     convertedVol       = vol;
     convertedVol       = D_800C1698.volumeLeft_C - ((D_800C1698.volumeLeft_C * (convertedVol)) / 255);
@@ -454,7 +454,7 @@ void func_800463C0(u16 sfx, s8 balance, u8 vol, s8 pitch) // 0x800463C0
     WriteVolume(&D_800C1698.volumeLeft_C, &D_800C1698.volumeRight_E, convertedVol);
 
     // Apply stereo balance.
-    if (D_800C166A == true)
+    if (g_Sound_IsStereoEnabled == true)
     {
         if (balance < 0)
         {
@@ -523,7 +523,7 @@ void func_80046620(u16 sfx, s8 balance, u8 vol, s8 pitch) // 0x80046620
     WriteVolume(&D_800C1698.volumeLeft_C, &D_800C1698.volumeRight_E, D_800C1698.volumeLeft_C);
 
     // Apply stereo balance.
-    if (D_800C166A == true)
+    if (g_Sound_IsStereoEnabled == true)
     {
         if (balance < 0)
         {
@@ -2246,17 +2246,17 @@ void Sd_SetVolume(u8 arg0, s16 arg1, u8 arg2) // 0x80047798
 
 void Sd_SetVolBgm(s16 volLeft, s16 volRight) // 0x80047808
 {
-    SdSeqSetVol(0, (volLeft * g_Sd_VolumeBgm) >> 7, (volRight * g_Sd_VolumeBgm) >> 7);
+    SdSeqSetVol(0, (volLeft * g_Sound_VolumeBgm) >> 7, (volRight * g_Sound_VolumeBgm) >> 7);
 }
 
 void Sd_SetVolXa(s16 volLeft, s16 volRight) // 0x80047860
 {
-    SdSetSerialVol(0, (volLeft * g_Sd_VolumeXa) >> 7, (volRight * g_Sd_VolumeXa) >> 7);
+    SdSetSerialVol(0, (volLeft * g_Sound_VolumeXa) >> 7, (volRight * g_Sound_VolumeXa) >> 7);
 }
 
 s16 Sd_GetVolSe(s16 arg0) // 0x800478B8
 {
-    return (arg0 * g_Sd_VolumeSe) >> 7;
+    return (arg0 * g_Sound_VolumeSe) >> 7;
 }
 
 void func_800478DC(u8 cmd) // 0x800478DC
@@ -2320,7 +2320,7 @@ void Sd_SetReverbDepth(u8 depth) // 0x80047AD0
 {
     s32 left;
 
-    g_Sd_ReverbDepth = depth;
+    g_Sound_ReverbDepth = depth;
 
     left = depth;
     SdUtSetReverbDepth(left, left);
@@ -2370,7 +2370,7 @@ void func_80047B80() // 0x80047B80
             if (var_a1 >= 170 && var_a1 <= 204)
             {
                 depth = REVERB_DEPTHS[var_a1 - 170];
-                if (depth != g_Sd_ReverbDepth)
+                if (depth != g_Sound_ReverbDepth)
                 {
                     Sd_SetReverbDepth(depth);
                 }

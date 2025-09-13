@@ -106,7 +106,7 @@ struct _Model;
     (((~0u << (fromInclusive)) & ~(~0u << ((toInclusive) + 1))))
 
 /** @brief Packs a screen fade status containing a fade state and white flag.
- * See `g_Gfx_ScreenFade` for bit layout.
+ * See `g_Screen_FadeStatus` for bit layout.
  *
  * @param state Screen fade state.
  * @param isWhite White status (`bool`).
@@ -115,8 +115,16 @@ struct _Model;
 #define SCREEN_FADE_STATUS(state, isWhite) \
     ((state) | ((isWhite) ? (1 << 3) : 0))
 
+/** @brief Retrieves the screen fade state from a packed screen fade status.
+ *
+ * @param fadeStatus Packed screen fade status containing a fade state and white flag.
+ * @return Screen fade state.
+ */
+#define SCREEN_FADE_STATE_GET(fadeStatus) \
+    ((fadeStatus) & 0x7)
+
 /** @brief Checks if a screen fade is white.
- * See `g_Gfx_ScreenFade` for bit layout.
+ * See `g_Screen_FadeStatus` for bit layout.
  *
  * @param fadeStatus Packed screen fade status containing a fade state and white flag.
  * @return `true` if white, `false` if black.
@@ -124,7 +132,7 @@ struct _Model;
 #define IS_SCREEN_FADE_WHITE(fadeStatus) \
     ((fadeStatus) & (1 << 3))
 
-/** @brief Screen fade states used by `g_Gfx_ScreenFade`. The flow is not linear. */
+/** @brief Screen fade states used by `g_Screen_FadeStatus`. The flow is not linear. */
 typedef enum _ScreenFadeState
 {
     ScreenFadeState_Reset           = 0,
@@ -1098,12 +1106,13 @@ typedef struct _SubCharPropertiesLarvalStalker
 } s_SubCharaPropertiesLarvalStalker;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesLarvalStalker, 68);
 
+/** For translation? */
 typedef struct
 {
-    s16 field_0;
-    s16 field_2;
-    s16 field_4;
-    s16 field_6;
+    s16 field_0; // X?
+    s16 field_2; // Z?
+    s16 field_4; // X?
+    s16 field_6; // Z?
 } s_SubCharacter_D8;
 STATIC_ASSERT_SIZEOF(s_SubCharacter_D8, 8);
 
@@ -1407,10 +1416,6 @@ extern s32 g_PrevVBlanks;     // 0x800A9770
 extern s32 g_VBlanks;         // 0x800B5C34
 extern s32 g_UncappedVBlanks; // 0x800B5C38
 
-/** @brief Checks if a screen fade is complete. See `g_Gfx_ScreenFade` for bit layout. */
-#define Gfx_IsScreenFadeComplete() \
-    ((g_Gfx_ScreenFade & ((1 << 0) | (1 << 1) | (1 << 2))) == ScreenFadeState_FadeOutComplete)
-
 /** @brief Sets `sysState` in `g_SysWork` for the next tick. */
 static inline void SysWork_StateSetNext(e_SysState sysState)
 {
@@ -1522,44 +1527,65 @@ static inline void Game_StateSetPrevious()
     g_GameWork.gameStateStep_598[0] = 0;
 }
 
-/** @brief Gets the given flag ID value from the savegame event flags array. */
+/** @brief Gets an event flag state from the savegame event flags array.
+ *
+ * @param flagIdx Event flag index.
+ * @return Event flag state (`bool`).
+ */
 #define Savegame_EventFlagGet(flagIdx) \
     (g_SavegamePtr->eventFlags_168[(flagIdx) >> 5] & (1 << ((flagIdx) & 0x1F)))
 
-/** @brief Gets the given flag ID value from the savegame event flags array.
- * Alternate version that shifts the flags array value by the flag index for some reason. */
+/** @brief Gets an event flag state from the savegame event flags array.
+ *
+ * @note This alternate version shifts the flags array value by the flag index for some reason
+ * and is required for some matches.
+ *
+ * @param flagIdx Event flag index.
+ * @return Event flag state (`bool`).
+ */
 #define Savegame_EventFlagGetAlt(flagIdx) \
     ((g_SavegamePtr->eventFlags_168[(flagIdx) >> 5] >> ((flagIdx) & 0x1F)) & (1 << 0))
 
-/** @brief Clears the given flag ID inside the savegame event flags array. */
+/** @brief Clears an event flag state in the savegame event flags array.
+ *
+ * @param flagIdx Event flag index.
+ */
 #define Savegame_EventFlagClear(flagIdx) \
     (g_SavegamePtr->eventFlags_168[(flagIdx) >> 5] &= ~(1 << ((flagIdx) & 0x1F)))
 
-/** @brief Sets the given flag ID inside the savegame event flags array. */
+/** @brief Sets an event flag state in the savegame event flags array.
+ *
+ * @param flagIdx Event flag index.
+ */
 #define Savegame_EventFlagSet(flagIdx) \
     (g_SavegamePtr->eventFlags_168[(flagIdx) >> 5] |= 1 << ((flagIdx) & 0x1F))
 
-/** @brief Sets the given flag ID inside the savegame event flags array.
+/** @brief Sets an event flag state in the savegame event flags array.
  *
  * @note Some map event code only seems to work with this inline version.
+ *
+ * @param flagIdx Event flag index.
  */
-static inline void Savegame_EventFlagSetAlt(u32 flagId)
+static inline void Savegame_EventFlagSetAlt(u32 flagIdx)
 {
-    s16 flagIdx;
-    s16 flagBit;
+    s16 localIdx;
+    s16 localBit;
 
-    flagIdx = flagId / 32;
-    flagBit = flagId % 32;
+    localIdx = flagIdx / 32;
+    localBit = flagIdx % 32;
 
-    g_SavegamePtr->eventFlags_168[flagIdx] |= 1 << flagBit;
+    g_SavegamePtr->eventFlags_168[localIdx] |= 1 << localBit;
 }
 
-/** @brief Checks if the given flag ID is set inside the array of 16-bit flag values. */
-static inline s32 Flags16b_IsSet(const u16* array, s32 flagId)
+/** @brief Checks a flag state is `true` in the array of 16-bit flags.
+ *
+ * @param flags Flag array.
+ * @param flagIdx Flag index.
+ */
+static inline s32 Flags16b_IsSet(const u16* flags, s32 flagIdx)
 {
-    // @bug: `>> 5` divides `flagId` by 32 to get array index, but array is of 16-bit values.
-    // Maybe copy-paste from `u32` version of func.
-    return (array[flagId >> 5] >> (flagId & 0x1F)) & (1 << 0);
+    // @bug `>> 5` divides `flagId` by 32 to get array index, but array contains 16-bit values. Maybe copy-paste from `u32` version of func.
+    return (flags[flagIdx >> 5] >> (flagIdx & 0x1F)) & (1 << 0);
 }
 
 /** @brief Sets the animation of a character.
@@ -1570,7 +1596,7 @@ static inline s32 Flags16b_IsSet(const u16* array, s32 flagId)
  */
 static inline void Character_AnimSet(s_SubCharacter* chara, s32 animStatus, s32 keyframeIdx)
 {
-    // TODO: Problem with header includes prevents commented macro use.
+    // TODO: Problem with header includes prevents `Q19_12` macro use.
     chara->model_0.anim_4.status_0      = animStatus;
     chara->model_0.anim_4.time_4        = keyframeIdx << 12;//Q19_12(keyframeIdx);
     chara->model_0.anim_4.keyframeIdx_8 = keyframeIdx;

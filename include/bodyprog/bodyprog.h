@@ -737,7 +737,7 @@ typedef struct _IpdCollisionData
     s_IpdCollisionData_20* ptr_20;
     u16                    field_24; // `field_24/``field_26` defined in ipd2obj but haven't seen used yet, might be size of `ptr_28`/`ptr_2C`.
     u16                    field_26;
-    u8*                    ptr_28;
+    u8*                    ptr_28; // Accessed as array of indices into `field_34` by `func_8006E53C`.
     void*                  ptr_2C;
     u8                     field_30;
     u8                     unk_31[3];
@@ -1661,21 +1661,21 @@ typedef struct
 } s_GteScratchData2;
 
 typedef struct
-{
-    s16 field_0;
-    s16 field_2;
-    s16 field_4;
-    s16 unk_6;
-    s16 unk_8;
-    s16 unk_A;
-    s16 field_C;
-    s16 field_E;
-    s16 field_10;
-    s16 unk_12;
-    s16 field_14;
-    s16 field_16;
-    s16 field_18;
-    s16  unk_1A;
+{  
+    s16   field_0;
+    s16   field_2; // Move dist?
+    q3_12 field_4; // Angle.
+    s16   unk_6;
+    s16   unk_8;
+    s16   unk_A;
+    s16   field_C;
+    s16   field_E;
+    s16   field_10;
+    s16   unk_12;
+    s16   field_14;
+    s16   field_16;
+    s16   field_18;
+    s16   unk_1A;
 } s_800AE204;
 
 typedef struct
@@ -1717,7 +1717,7 @@ extern DR_MODE D_800A8E5C[];
 
 extern TILE D_800A8E74[];
 
-extern s32 g_ScreenFadeProgress;
+extern q19_12 g_ScreenFadeProgress;
 
 extern DR_MODE D_800A8E98[];
 
@@ -2048,7 +2048,7 @@ extern const char* g_ItemNames[];
 
 extern const char* g_ItemDescriptions[];
 
-extern s32 g_PrevScreenFadeProgress;
+extern q19_12 g_PrevScreenFadeProgress;
 
 extern s32 g_ScreenFadeTimestep;
 
@@ -2077,7 +2077,7 @@ extern u16 D_800BCCB2;
  * 10-15 - Fades to white and keeps the screen white.
  * 16    - Fades to black.
  */
-extern s32 g_Gfx_ScreenFade;
+extern s32 g_Screen_FadeStatus;
 
 extern s16 g_SavegameCount;
 
@@ -2157,7 +2157,7 @@ extern s32 D_800C15B8;
 /** Absolute SFX index. */
 extern s16 D_800C15BC;
 
-extern s16 D_800C15BE;
+extern s16 g_Sound_ActiveSfxIdx;
 
 extern u16 D_800C15C0;
 
@@ -2196,8 +2196,8 @@ extern u16 D_800C165A;
 
 extern u16 D_800C1666;
 
-/** `bool` | is stereo enabled? */
-extern u8 D_800C166A;
+/** `bool` */
+extern u8 g_Sound_IsStereoEnabled;
 
 extern s8 D_800C166C;
 
@@ -2221,13 +2221,13 @@ extern s_800C1678 D_800C1678;
 
 extern s16 D_800C1680;
 
-extern u8 g_Sd_VolumeBgm; // 0x800C1685
+extern u8 g_Sound_VolumeBgm; // 0x800C1685
 
-extern u8 g_Sd_VolumeXa; // 0x800C1686
+extern u8 g_Sound_VolumeXa; // 0x800C1686
 
-extern u8 g_Sd_VolumeSe; // 0x800C1684
+extern u8 g_Sound_VolumeSe; // 0x800C1684
 
-extern u8 g_Sd_ReverbDepth; // 0x800C1687;
+extern u8 g_Sound_ReverbDepth; // 0x800C1687;
 
 extern u8 D_800C1673;
 
@@ -2259,6 +2259,7 @@ extern s8 D_800C3962;
 
 extern u8 D_800C3963;
 
+/** Game difficulty. */
 extern s32 D_800C3994;
 
 extern u8 D_800C37D0;
@@ -2798,7 +2799,7 @@ u16 func_80045BC8();
 /** Sound func. */
 void func_80045BD8(u16 cmd);
 
-void func_80045D28(u8 caseArg);
+void func_80045D28(u8 isStereo);
 
 void sd_init();
 
@@ -3089,9 +3090,9 @@ void func_80057A3C(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scrat
 
 s_Material_8* func_8005B1FC(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, void* arg3, s32 arg4);
 
-void func_8005B55C(GsCOORDINATE2* arg0);
+void func_8005B55C(GsCOORDINATE2* coord);
 
-u32 func_8005C478(s16* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
+u32 func_8005C478(s16* arg0, s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2);
 
 s32 func_8005C7D0(s_SubCharacter* chara);
 
@@ -3427,7 +3428,7 @@ void func_8006342C(s32 invItemId, s16, s16, GsCOORDINATE2*);
 
 s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 x, s16 z);
 
-void func_800622B8(s32 arg0, s_SubCharacter* arg1, s32 animStatus, s32 arg3);
+void func_800622B8(s32 arg0, s_SubCharacter* chara, s32 animStatus, s32 arg3);
 
 void func_80064F04(VECTOR3* arg0, s8 arg1, s16 arg2);
 
@@ -3532,9 +3533,9 @@ bool func_8006DC18(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2);
 
 bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
 
-s32 func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1);
+bool func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1);
 
-void func_8006E0AC(s_func_8006DCE0* arg0, s_IpdCollisionData* arg1);
+void func_8006E0AC(s_func_8006DCE0* arg0, s_IpdCollisionData* ipdColl);
 
 void func_8006E490(s_func_8006E490* arg0, u32 arg1, s32 arg2, s32 arg3);
 
