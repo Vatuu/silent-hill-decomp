@@ -578,7 +578,15 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800EB87C);
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800EB910);
 
-INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", D_800CC584);
+const char* g_MapMessages[] =
+{
+    #include "maps/shared/mapMsg_common.h"
+    "~H\tThere_is_a_ ~C5 Resort_area_map ~C7 . ~N\n\tTake_it? ~S4 ",
+    "\tNothing_unusual. ~E ",
+    "\tUsed_the_ ~C2 Kaufmann_key ~C7 . ~E ",
+    "~J0(1.0)\tWhat? ~E ",
+    "~J0(2.5)\tThat_light!? ~E ",
+};
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800EB9A4);
 

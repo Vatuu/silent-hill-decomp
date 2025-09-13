@@ -549,7 +549,12 @@ INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800EA2A4);
 
 void func_800EA338(void) {}
 
-INCLUDE_RODATA("asm/maps/map4_s02/nonmatchings/map4_s02", D_800CC50C);
+const char* g_MapMessages[] =
+{
+    #include "maps/shared/mapMsg_common.h"
+    "~C3\tgreen_lion ~E ",
+    "~C3\tAlchemilla_Hospital ~E ",
+};
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800EA340);
 

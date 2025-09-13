@@ -265,7 +265,14 @@ INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D6110);
 
 void func_800D61A4() {}
 
-INCLUDE_RODATA("asm/maps/map4_s05/nonmatchings/map4_s05", D_800CA8CC);
+const char* g_MapMessages[] =
+{
+    #include "maps/shared/mapMsg_common.h"
+    "~J0(1.0)\tWhat? ~E ",
+    "~J0(2.5)\tThat_light!? ~E ",
+    "\tThe_stairs_are_wrecked! ~E ",
+    "~C3\tAlchemilla_Hospital ~E ",
+};
 
 INCLUDE_RODATA("asm/maps/map4_s05/nonmatchings/map4_s05", D_800CABE4);
 

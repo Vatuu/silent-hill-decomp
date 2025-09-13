@@ -205,7 +205,12 @@ void func_800D81A4(void) {}
 
 INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D81AC);
 
-INCLUDE_RODATA("asm/maps/map6_s03/nonmatchings/map6_s03", D_800CAEC0);
+const char* g_MapMessages[] =
+{
+    #include "maps/shared/mapMsg_common.h"
+    "~H\tThere_is_a_ ~C5 Sewer_map ~N\n\t(connecting_to_amusement_park) ~C7 . ~N\n\tTake_it? ~S4 ",
+    "\tGotta'_go_find_Cybil! ~N\n\tNo_time_to_go_back. ~E ",
+};
 
 INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D822C);
 

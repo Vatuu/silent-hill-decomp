@@ -60,5 +60,7 @@ segments:
       - [0x1D68, c, map3_s06]
 
       # .data section
-      - [0x8648, data, map3_s06]
+      - [0x8648, data]
+      - [0x8E44, .data, map3_s06]
+      - [0x8F00, data]
   - [0xCB00]

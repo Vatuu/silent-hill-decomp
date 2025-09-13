@@ -263,7 +263,43 @@ INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DA7F4);
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DA8B0);
 
-INCLUDE_RODATA("asm/maps/map1_s03/nonmatchings/map1_s03", D_800CB010);
+const char* g_MapMessages[] =
+{
+    #include "maps/shared/mapMsg_common.h"
+    "\tWhat's_this? ~E ",
+    "\t[The_Monster_Lurks] ~N\n\tis_the_book's_title. ~E ",
+    "~C3\tChapter_3: ~N\n\t\t__[Manifestation_of_Delusions] ",
+    "~C3\t...Poltergeists_are_among_these. ~N\n\t\tNegative_emotions,_like_fear, ",
+    "~C3\tworry_or_stress_manifest ~N\n\t\tinto_external_energy_with ~N\n\t\tphysical_effects. ",
+    "~C3\tNightmares_have,_in_some_cases, ~N\n\t\tbeen_shown_to_trigger_them. ",
+    "~C3\tHowever,_such_phenomena_do_not ~N\n\t\tappear_to_happen_to_just_anyone. ",
+    "~C3\tAlthough_it's_not_clear_why, ~N\n\t\tadolescents,_especially_girls, ~N\n\t\tare_prone_to_such_occurrences. ~E ",
+    "~C3\tHearing_this,_the_hunter ~N\n\t\tarmed_with_bow_and_arrow_said, ~N\n\t\t[I_will_kill_the_lizard.] ",
+    "~C3\tBut_upon_meeting_his_opponent, ~N\n\t\the_held_back,_taunting, ~N\n\t\t[Who's_afraid_of_a_reptile?] ",
+    "~C3\tAt_this,_the_furious_lizard ~N\n\t\thissed,_[I'll_swallow_you_up ~N\n\t\tin_a_single_bite!] ",
+    "~C3\tThen_the_huge_creature ~N\n\t\tattacked,_jaws_opened_wide. ",
+    "~C3\tThis_was_what_the_man_wanted. ~N\n\t\tCalmly_drawing_his_bow,_he_shot ~N\n\t\tinto_the_lizard's_gaping_mouth. ",
+    "~C3\tEffortlessly,_the_arrow_flew, ~N\n\t\tpiercing_the_defenseless_maw, ",
+    "~C3\tand_the_lizard_fell_down_dead. ~E ",
+    "\tThis_is_from_an_old_fairy_tale. ~N\n\tI_remember_reading_it_as_a_kid. ~E ",
+    "\tThere's_a_drainage_valve. ~N\n\tNothing_unusual. ~E ",
+    "\tThere's_a_hanging_key. ~N\n\tIt's_just_out_of_reach. ~E ",
+    "\tThe_key_went_down_the_drain. ~E ",
+    "\tThe_ball_is_stuffed ~N\n\tinside_the_pipe. ~E ",
+    "\tNothing_special. ~E ",
+    "\tUsed_the_ ~C2 Rubber_ball ~C7 . ~E ",
+    "\tUsed_the_ ~C2 Library_reserve_key ~C7 . ~E ",
+    "\tUsed_the_ ~C2 Classroom_key ~C7 . ~E ",
+    "\tNo_useful_books. ~E ",
+    "\tThere_is_a_drainage_valve. ~N\n\tDo_you_want_to_open_it? ~S4 ",
+    "\tIt_drains_into_the_wrong_hole. ~N\n\tMaybe_I_could_plug ~N\n\tthat_up_somehow. ~E ",
+    "\tNothing_useful_in_the_locker. ~E ",
+    "\tNothing_inside. ~E ",
+    "\tThere_is_a_ ~C2 Library_reserve_key ~C7 . ~N\n\tTake_it? ~S4 ",
+    "\tA_body_is_slumped_over. ~E ",
+    "~J0(1.0)\tWhat? ~E ",
+    "~J0(2.5)\tThat_light!? ~E ",
+};
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DA950);
 

@@ -60,5 +60,7 @@ segments:
       - [0x332C, c, map2_s02]
 
       # .data section
-      - [0x21524, data, map2_s02]
+      - [0x21524, data]
+      - [0x2411C, .data, map2_s02]
+      - [0x24164, data]
   - [0x27700]

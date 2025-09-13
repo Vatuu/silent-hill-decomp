@@ -496,7 +496,37 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D6704);
 
 INCLUDE_RODATA("asm/maps/map4_s03/nonmatchings/map4_s03", D_800CA814);
 
-INCLUDE_RODATA("asm/maps/map4_s03/nonmatchings/map4_s03", D_800CA824);
+// Assumed type.
+const s32 D_800CA824[] =
+{
+    -25,
+    -25,
+    -30,
+    -30,
+    -40,
+    -40,
+    -66,
+    -66,
+    -30,
+    -30,
+    -20,
+    -20,
+    -23,
+    -23,
+    -28,
+    -28,
+};
+
+const char* g_MapMessages[] =
+{
+    #include "maps/shared/mapMsg_common.h"
+    "\tDaddy...where_are_you...? ",
+    "~J0(1.0)\tCheryl! ~E  ",
+    "\tThere_is_a_ ~C2 Hunting_rifle ~C7 . ~N\n\tTake_it? ~S4 ",
+    "\tNothing_unusual. ~E ",
+    "\tA_picture_is_projected ~N\n\ton_the_screen. ",
+    "\tCheryl... ~N\n\twhere_could_she_be? ~E ",
+};
 
 INCLUDE_RODATA("asm/maps/map4_s03/nonmatchings/map4_s03", D_800CABE8);
 

@@ -545,7 +545,13 @@ INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E9CC0);
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E9D54);
 
-INCLUDE_RODATA("asm/maps/map2_s02/nonmatchings/map2_s02", D_800CC584);
+const char* g_MapMessages[] =
+{
+    #include "maps/shared/mapMsg_common.h"
+    "\tUsed_the_ ~C2 Antique_shop_key ~C7 . ~E ",
+    "~C3\tAlchemilla_Hospital ~E ",
+    "~C3\tgreen_lion ~E ",
+};
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E9E10);
 
