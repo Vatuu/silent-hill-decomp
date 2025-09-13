@@ -2883,11 +2883,11 @@ void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2)
 
 void func_8006AD44(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x8006AD44
 {
-    s32  temp_s4;
+    s32                    temp_s4;
     s_IpdCollisionData_20* var_s0;
-    s32  temp_s5;
-    s32  var_s1;
-    s32  var_s2;
+    s32                    temp_s5;
+    s32                    var_s1;
+    s32                    var_s2;
 
     if ((collData->field_8_8 == 0 && collData->field_8_16 == 0 && collData->field_8_24 == 0) ||
         !func_8006AEAC(arg0, collData))
@@ -3893,7 +3893,7 @@ bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VEC
     return true;
 }
 
-s32 func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1) // 0x8006DEB0
+bool func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1) // 0x8006DEB0
 {
     s32                  sp10;
     s32                  temp_lo;
@@ -3937,9 +3937,10 @@ s32 func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1) // 0x8006DEB0
         arg0->field_18 = arg1->field_1C * 16;
         arg0->field_1C = ratan2(arg1->field_24, arg1->field_26);
         arg0->field_1  = arg1->field_28;
-        return 1;
+        return true;
     }
-    return 0;
+
+    return false;
 }
 
 void func_8006E0AC(s_func_8006DCE0* arg0, s_IpdCollisionData* arg1) // 0x8006E0AC
@@ -3993,82 +3994,84 @@ void func_8006E490(s_func_8006E490* arg0, u32 arg1, s32 arg2, s32 arg3) // 0x800
     }
 }
 
-void func_8006E53C(s_func_8006DCE0* arg0, s_IpdCollisionData_20* arg1, s_IpdCollisionData* arg2) // 0x8006E53C
+void func_8006E53C(s_func_8006DCE0* arg0, s_IpdCollisionData_20* arg1, s_IpdCollisionData* ipdColl) // 0x8006E53C
 {
-    s32                    var_s1;
+    s32                    i;
     s32                    temp_v0;
     s32                    temp_v0_2;
-    bool                   var_a3;
-    bool                   var_t0;
-    bool                   var_t1;
+    bool                   cond0;
+    bool                   cond1;
+    bool                   cond2;
     s_IpdCollisionData_18* temp_a1_2;
     u8                     temp_a0;
     s32                    temp_a0_3;
     s32                    temp_a2;
-    s32                    temp_v1;
+    s32                    idx;
     s_IpdCollisionData_14* temp_a1;
 
-    for (var_s1 = arg1[0].field_0; var_s1 < arg1[1].field_0; var_s1++)
+    for (i = arg1[0].field_0; i < arg1[1].field_0; i++)
     {
-        temp_v1 = arg2->ptr_28[var_s1];
-        temp_a0 = arg2->field_30;
-        if (temp_a0 >= arg2->field_34[temp_v1])
-        {
-            arg2->field_34[temp_v1] = temp_a0 + 1;
+        idx = ipdColl->ptr_28[i];
+        temp_a0 = ipdColl->field_30;
 
-            if (temp_v1 < arg2->field_8_16)
+        if (temp_a0 >= ipdColl->field_34[idx])
+        {
+            ipdColl->field_34[idx] = temp_a0 + 1;
+
+            if (idx < ipdColl->field_8_16)
             {
-                temp_a1 = &arg2->ptr_14[temp_v1];
+                temp_a1 = &ipdColl->ptr_14[idx];
 
                 temp_v0 = (u16)arg0->field_4 >> (temp_a1->field_0_14 * 4 | temp_a1->field_2_14);
 
-                if (temp_v0 & 1)
+                if (temp_v0 & (1 << 0))
                 {
                     temp_a0_3 = temp_a1->field_8;
                     temp_a2   = temp_a1->field_9;
 
-                    var_a3 = (temp_a0_3 != 0xFF) && (temp_a2 != 0xFF);
+                    cond0 = temp_a0_3 != 0xFF && temp_a2 != 0xFF;
 
                     if (arg0->field_0 == 1)
                     {
-                        if (var_a3)
+                        if (cond0)
                         {
                             continue;
                         }
                     }
                     else
                     {
-                        var_t0 = false;
-                        var_t1 = false;
+                        cond1 = false;
+                        cond2 = false;
 
-                        if (temp_a0_3 == 0xFF || arg2->ptr_10[temp_a0_3].field_6_0 == 0 ||
-                            arg2->ptr_10[temp_a0_3].field_6_0 == 0xC)
+                        if (temp_a0_3 == 0xFF || ipdColl->ptr_10[temp_a0_3].field_6_0 == 0 ||
+                            ipdColl->ptr_10[temp_a0_3].field_6_0 == 12)
                         {
-                            var_t0 = true;
+                            cond1 = true;
                         }
 
-                        if (temp_a2 == 0xFF || arg2->ptr_10[temp_a2].field_6_0 == 0 ||
-                            arg2->ptr_10[temp_a2].field_6_0 == 0xC)
+                        if (temp_a2 == 0xFF || ipdColl->ptr_10[temp_a2].field_6_0 == 0 ||
+                            ipdColl->ptr_10[temp_a2].field_6_0 == 12)
                         {
-                            var_t1 = true;
+                            cond2 = true;
                         }
 
-                        if (var_t0 && var_t1)
+                        if (cond1 && cond2)
                         {
                             continue;
                         }
                     }
 
-                    func_8006E78C(arg0, temp_a1, arg2->ptr_C, arg2->ptr_10, var_a3);
+                    func_8006E78C(arg0, temp_a1, ipdColl->ptr_C, ipdColl->ptr_10, cond0);
                 }
             }
             else
             {
-                temp_a1_2 = &arg2->ptr_18[temp_v1 - arg2->field_8_16];
-
+                temp_a1_2 = &ipdColl->ptr_18[idx - ipdColl->field_8_16];
                 temp_v0_2 = (u16)arg0->field_4 >> temp_a1_2->field_0_8;
 
-                if ((temp_v0_2 & 1) && (arg0->field_0 == 1 || (temp_a1_2->field_0_0 && temp_a1_2->field_0_0 != 0xC)) && temp_a1_2->field_8 >= arg0->field_6)
+                if ((temp_v0_2 & (1 << 0)) &&
+                    (arg0->field_0 == 1 || (temp_a1_2->field_0_0 && temp_a1_2->field_0_0 != 12)) &&
+                    temp_a1_2->field_8 >= arg0->field_6)
                 {
                     func_8006EB8C(arg0, temp_a1_2);
                 }

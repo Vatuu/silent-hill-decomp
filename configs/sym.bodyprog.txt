@@ -2370,7 +2370,7 @@ vcWork                                      = 0x800B9CD0; // type:VC_WORK size:0
 g_ActiveBufferIdx                           = 0x800B9FB8;
 g_SysWork                                   = 0x800B9FC0; // type:SysWork size:0x2768 - should use s_SysWork here, but splat only supports custom structs with capital letter at beginning.
 g_GameWork                                  = 0x800BC728; // type:GameWork size:0x5D8
-g_Screen_FadeStatus                            = 0x800BCD0C;
+g_Screen_FadeStatus                         = 0x800BCD0C;
 
 //------------------------------------------------------------------------
 //--- PA: 0x0981B0   VA: 0x800BCD10   subsegment: .data, memcard/memcard_2

@@ -740,7 +740,7 @@ typedef struct _IpdCollisionData
     s_IpdCollisionData_20* ptr_20;
     u16                    field_24; // `field_24/``field_26` defined in ipd2obj but haven't seen used yet, might be size of `ptr_28`/`ptr_2C`.
     u16                    field_26;
-    u8*                    ptr_28;
+    u8*                    ptr_28; // Accessed as array of indices into `field_34` by `func_8006E53C`.
     void*                  ptr_2C;
     u8                     field_30;
     u8                     unk_31[3];
@@ -3536,9 +3536,9 @@ bool func_8006DC18(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2);
 
 bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
 
-s32 func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1);
+bool func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1);
 
-void func_8006E0AC(s_func_8006DCE0* arg0, s_IpdCollisionData* arg1);
+void func_8006E0AC(s_func_8006DCE0* arg0, s_IpdCollisionData* ipdColl);
 
 void func_8006E490(s_func_8006E490* arg0, u32 arg1, s32 arg2, s32 arg3);
 
