@@ -159,8 +159,6 @@ INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D1474);
 
 INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D1508);
 
-INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D159C);
-
 const char* g_MapMessages[] =
 {
     #include "maps/shared/mapMsg_common.h"
@@ -218,6 +216,33 @@ const char* g_MapMessages[] =
     "\tDo_you_want_to_push ~N\n\tthe_shelf? ~S4 ",
     "\tAn_old_motorcycle. ~E ",
 };
+
+void func_800D159C(void) // 0x800D159C
+{
+    u32 pickupType;
+    s32 eventFlagIdx;
+
+    pickupType   = CommonPickupItemId_FirstAidKit;
+    eventFlagIdx = 0;
+
+    switch (g_MapEventParam->field_5)
+    {
+        case 37:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M5S03_HealthDrink0;
+            break;
+        case 38:
+            pickupType   = CommonPickupItemId_ShotgunShells;
+            eventFlagIdx = EventFlag_M5S03_ShotgunShells;
+            break;
+        case 39:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M5S03_HealthDrink1;
+            break;
+    }
+
+    Event_CommonItemTake(pickupType, eventFlagIdx);
+}
 
 INCLUDE_RODATA("asm/maps/map5_s03/nonmatchings/map5_s03", D_800CB7A4);
 

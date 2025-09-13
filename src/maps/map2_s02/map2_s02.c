@@ -553,7 +553,40 @@ const char* g_MapMessages[] =
     "~C3\tgreen_lion ~E ",
 };
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E9E10);
+void func_800E9E10(void) // 0x800E9E10
+{
+    u32 pickupType;
+    s32 eventFlagIdx;
+
+    pickupType   = CommonPickupItemId_FirstAidKit;
+    eventFlagIdx = 0;
+
+    switch (g_MapEventParam->field_5)
+    {
+        case 41:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M2S02_HealthDrink0;
+            break;
+        case 42:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M2S02_HealthDrink1;
+            break;
+        case 43:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M2S02_HandgunBullets0;
+            break;
+        case 44:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M2S02_HandgunBullets1;
+            break;
+        case 45:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M2S02_HealthDrink2;
+            break;
+    }
+
+    Event_CommonItemTake(pickupType, eventFlagIdx);
+}
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E9EAC);
 

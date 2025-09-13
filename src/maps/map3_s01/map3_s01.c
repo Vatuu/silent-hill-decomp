@@ -139,12 +139,6 @@ INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D1394);
 
 INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D1428);
 
-INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D14BC);
-
-INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D1500);
-
-INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D1524);
-
 const char* g_MapMessages[] =
 {
     #include "maps/shared/mapMsg_common.h"
@@ -175,6 +169,32 @@ const char* g_MapMessages[] =
     "\tNothing_unusual. ~E ",
     "\tNothing_helpful. ~E ",
 };
+
+void func_800D14BC(void) // 0x800D14BC
+{
+    u32 pickupType;
+    s32 eventFlagIdx;
+
+    pickupType   = CommonPickupItemId_FirstAidKit;
+    eventFlagIdx = 0;
+
+    switch (g_MapEventParam->field_5)
+    {
+        case 101:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M3S01_HealthDrink;
+            break;
+    }
+
+    Event_CommonItemTake(pickupType, eventFlagIdx);
+}
+
+void func_800D1500(void) // 0x800D1500
+{
+    Event_CommonItemTake(CommonPickupItemId_FirstAidKit, EventFlag_M3S00_FirstAidKit);
+}
+
+INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D1524);
 
 INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", D_800CB088);
 

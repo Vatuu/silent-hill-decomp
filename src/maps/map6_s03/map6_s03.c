@@ -203,14 +203,39 @@ INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D7F98);
 
 void func_800D81A4(void) {}
 
-INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D81AC);
-
 const char* g_MapMessages[] =
 {
     #include "maps/shared/mapMsg_common.h"
     "~H\tThere_is_a_ ~C5 Sewer_map ~N\n\t(connecting_to_amusement_park) ~C7 . ~N\n\tTake_it? ~S4 ",
     "\tGotta'_go_find_Cybil! ~N\n\tNo_time_to_go_back. ~E ",
 };
+
+void func_800D81AC(void) // 0x800D81AC
+{
+    u32 pickupType;
+    s32 eventFlagIdx;
+
+    pickupType   = CommonPickupItemId_FirstAidKit;
+    eventFlagIdx = 0;
+
+    switch (g_MapEventParam->field_5)
+    {
+        case 10:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M6S03_HealthDrink0;
+            break;
+        case 11:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M6S03_HandgunBullets;
+            break;
+        case 12:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M6S03_HealthDrink1;
+            break;
+    }
+
+    Event_CommonItemTake(pickupType, eventFlagIdx);
+}
 
 INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D822C);
 

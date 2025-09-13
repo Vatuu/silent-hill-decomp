@@ -149,10 +149,6 @@ INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", func_800D118C);
 
 INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", func_800D1220);
 
-INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", func_800D12B4);
-
-#include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800D1340
-
 const char* g_MapMessages[] =
 {
     #include "maps/shared/mapMsg_common.h"
@@ -233,6 +229,35 @@ const char* g_MapMessages[] =
     "~J0(1.0)\tWhat? ~E ",
     "~J0(2.5)\tThat_light!? ~E ",
 };
+
+void func_800D12B4(void) // 0x800D12B4
+{
+    u32 pickupType;
+    s32 eventFlagIdx;
+
+    pickupType   = CommonPickupItemId_FirstAidKit;
+    eventFlagIdx = 0;
+
+    switch (g_MapEventParam->field_5)
+    {
+        case 13:
+            pickupType   = CommonPickupItemId_RifleShells;
+            eventFlagIdx = EventFlag_M6S01_RifleShells;
+            break;
+        case 14:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M6S01_HandgunBullets;
+            break;
+        case 15:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M6S01_HealthDrink;
+            break;
+    }
+
+    Event_CommonItemTake(pickupType, eventFlagIdx);
+}
+
+#include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800D1340
 
 INCLUDE_RODATA("asm/maps/map6_s01/nonmatchings/map6_s01", D_800CB988);
 

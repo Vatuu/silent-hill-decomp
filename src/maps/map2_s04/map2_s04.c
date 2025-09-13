@@ -110,7 +110,48 @@ const char* g_MapMessages[] =
     "\tThere_is_a_ ~C2 Shotgun ~C7 . ~N\n\tTake_it? ~S4 ",
 };
 
-INCLUDE_ASM("asm/maps/map2_s04/nonmatchings/map2_s04", func_800CCF9C);
+void func_800CCF9C(void) // 0x800CCF9C
+{
+    u32 pickupType;
+    s32 eventFlagIdx;
+
+    pickupType   = CommonPickupItemId_FirstAidKit;
+    eventFlagIdx = 0;
+
+    switch (g_MapEventParam->field_5)
+    {
+        case 24:
+            pickupType   = CommonPickupItemId_ShotgunShells;
+            eventFlagIdx = EventFlag_M2S04_ShotgunShells0;
+            break;
+        case 25:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M2S04_HandgunBullets0;
+            break;
+        case 26:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M2S04_HandgunBullets1;
+            break;
+        case 27:
+            pickupType   = CommonPickupItemId_ShotgunShells;
+            eventFlagIdx = EventFlag_M2S04_ShotgunShells1;
+            break;
+        case 28:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M2S04_HandgunBullets2;
+            break;
+        case 29:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M2S04_HandgunBullets3;
+            break;
+        case 30:
+            pickupType   = CommonPickupItemId_RifleShells;
+            eventFlagIdx = EventFlag_M2S04_RifleShells;
+            break;
+    }
+
+    Event_CommonItemTake(pickupType, eventFlagIdx);
+}
 
 INCLUDE_ASM("asm/maps/map2_s04/nonmatchings/map2_s04", func_800CD050);
 

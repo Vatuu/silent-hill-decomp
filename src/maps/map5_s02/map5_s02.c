@@ -179,8 +179,6 @@ INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D4990);
 
 INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D4A24);
 
-INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D4AB8);
-
 const char* g_MapMessages[] =
 {
     #include "maps/shared/mapMsg_common.h"
@@ -221,6 +219,37 @@ const char* g_MapMessages[] =
     "\tI've_got_a_ ~C2 Receipt ~C7 . ~E ",
     "\tI've_got_a_ ~C2 Kaufmann_key ~C7 . ~E ",
 };
+
+void func_800D4AB8(void) // 0x800D4AB8
+{
+    u32 pickupType;
+    s32 eventFlagIdx;
+
+    pickupType   = CommonPickupItemId_FirstAidKit;
+    eventFlagIdx = 0;
+
+    switch (g_MapEventParam->field_5)
+    {
+        case 15:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M5S02_HealthDrink0;
+            break;
+        case 16:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M5S02_HealthDrink1;
+            break;
+        case 17:
+            pickupType   = CommonPickupItemId_RifleShells;
+            eventFlagIdx = EventFlag_M5S02_RifleShells;
+            break;
+        case 18:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M5S02_HealthDrink2;
+            break;
+    }
+
+    Event_CommonItemTake(pickupType, eventFlagIdx);
+}
 
 INCLUDE_RODATA("asm/maps/map5_s02/nonmatchings/map5_s02", D_800CB464);
 

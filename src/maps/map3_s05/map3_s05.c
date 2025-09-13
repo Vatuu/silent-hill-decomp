@@ -210,10 +210,6 @@ INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D57E8);
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D58A0);
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D5934);
-
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D59D4);
-
 const char* g_MapMessages[] =
 {
     #include "maps/shared/mapMsg_common.h"
@@ -243,6 +239,39 @@ const char* g_MapMessages[] =
     "\tNothing_special_in_the_box. ~N\n\tNothing_to_worry_about. ~E ",
     "\tNothing_inside. ~E ",
 };
+
+void func_800D5934(void) // 0x800D5934
+{
+    u32 pickupType;
+    s32 eventFlagIdx;
+
+    pickupType   = CommonPickupItemId_FirstAidKit;
+    eventFlagIdx = 0;
+
+    switch (g_MapEventParam->field_5)
+    {
+        case 96:
+            pickupType   = CommonPickupItemId_Ampoule;
+            eventFlagIdx = EventFlag_M3S05_Ampoule;
+            break;
+        case 97:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M3S05_HealthDrink;
+            break;
+        case 98:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M3S05_HandgunBullets;
+            break;
+        case 99:
+            pickupType   = CommonPickupItemId_ShotgunShells;
+            eventFlagIdx = EventFlag_M3S05_ShotgunShells;
+            break;
+    }
+
+    Event_CommonItemTake(pickupType, eventFlagIdx);
+}
+
+INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D59D4);
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D5A98);
 

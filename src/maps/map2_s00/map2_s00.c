@@ -563,8 +563,148 @@ const char* g_MapMessages[] =
     "\tThis_must_be_that_water_works ~N\n\tLisa_was_talking_about. ~E ",
 };
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E7B74);
+void func_800E7B74(void) // 0x800E7B74
+{
+    u32 pickupType;
+    s32 eventFlagIdx;
 
+    pickupType   = CommonPickupItemId_FirstAidKit;
+    eventFlagIdx = 0;
+
+    switch (g_MapEventParam->field_5)
+    {
+        case 139:
+            pickupType   = CommonPickupItemId_FirstAidKit;
+            eventFlagIdx = EventFlag_M2S00_FirstAidKit0;
+            break;
+        case 140:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M2S00_HandgunBullets0;
+            break;
+        case 141:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M2S00_HandgunBullets1;
+            break;
+        case 142:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M2S00_HealthDrink0;
+            break;
+        case 143:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M2S00_HandgunBullets2;
+            break;
+        case 144:
+            pickupType   = CommonPickupItemId_ShotgunShells;
+            eventFlagIdx = EventFlag_M2S00_ShotgunShells0;
+            break;
+        case 145:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M2S00_HealthDrink1;
+            break;
+        case 146:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M2S00_HandgunBullets3;
+            break;
+        case 147:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M2S00_HandgunBullets4;
+            break;
+        case 148:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M2S00_HandgunBullets5;
+            break;
+        case 149:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M2S00_HandgunBullets6;
+            break;
+        case 150:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M2S00_HandgunBullets7;
+            break;
+        case 151:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M2S00_HandgunBullets8;
+            break;
+        case 152:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M2S00_HealthDrink2;
+            break;
+        case 153:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M2S00_HealthDrink3;
+            break;
+        case 154:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M2S00_HealthDrink4;
+            break;
+        case 155:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M2S00_HandgunBullets9;
+            break;
+        case 156:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M2S00_HealthDrink5;
+            break;
+        case 157:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M2S00_HandgunBullets10;
+            break;
+        case 158:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M2S00_HealthDrink6;
+            break;
+        case 159:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M2S00_HealthDrink7;
+            break;
+        case 160:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M2S00_HealthDrink8;
+            break;
+        case 161:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M2S00_HealthDrink9;
+            break;
+        case 162:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M2S00_HealthDrink10;
+            break;
+        case 163:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M2S00_HealthDrink11;
+            break;
+        case 164:
+            pickupType   = CommonPickupItemId_ShotgunShells;
+            eventFlagIdx = EventFlag_M2S00_ShotgunShells1;
+            break;
+        case 165:
+            pickupType   = CommonPickupItemId_FirstAidKit;
+            eventFlagIdx = EventFlag_M2S00_FirstAidKit1;
+            break;
+        case 166:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M2S00_HandgunBullets11;
+            break;
+        case 167:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M2S00_HandgunBullets12;
+            break;
+        case 168:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M2S00_HandgunBullets13;
+            break;
+        case 169:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M2S00_HandgunBullets14;
+            break;
+        case 170:
+            pickupType   = CommonPickupItemId_FirstAidKit;
+            eventFlagIdx = EventFlag_M2S00_FirstAidKit2;
+            break;
+    }
+
+    Event_CommonItemTake(pickupType, eventFlagIdx);
+}
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E7D54);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E7E60);

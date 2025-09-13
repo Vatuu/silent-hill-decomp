@@ -475,7 +475,52 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800DB2B0);
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800DB344);
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800DB3D8);
+void func_800DB3D8(void) // 0x800DB3D8
+{
+    u32 pickupType;
+    s32 eventFlagIdx;
+
+    pickupType   = CommonPickupItemId_FirstAidKit;
+    eventFlagIdx = 0;
+
+    switch (g_MapEventParam->field_5)
+    {
+        case 212:
+            pickupType   = CommonPickupItemId_RifleShells;
+            eventFlagIdx = EventFlag_M7S01_RifleShells;
+            break;
+        case 213:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M7S01_HandgunBullets0;
+            break;
+        case 214:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M7S01_HealthDrink0;
+            break;
+        case 215:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M7S01_HandgunBullets1;
+            break;
+        case 216:
+            pickupType   = CommonPickupItemId_ShotgunShells;
+            eventFlagIdx = EventFlag_M7S01_ShotgunShells;
+            break;
+        case 217:
+            pickupType   = CommonPickupItemId_FirstAidKit;
+            eventFlagIdx = EventFlag_M7S01_FirstAidKit;
+            break;
+        case 218:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M7S01_HandgunBullets2;
+            break;
+        case 219:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M7S01_HealthDrink1;
+            break;
+    }
+
+    Event_CommonItemTake(pickupType, eventFlagIdx);
+}
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800DB498);
 

@@ -159,7 +159,10 @@ INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800D0A50);
 
 void func_800D0AE4(void) {}
 
-INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800D0AEC);
+void func_800D0AEC(void) // 0x800D0AEC
+{
+    Event_CommonItemTake(CommonPickupItemId_FirstAidKit, EventFlag_M3S00_FirstAidKit);
+}
 
 INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800D0B10);
 

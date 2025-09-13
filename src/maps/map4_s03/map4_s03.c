@@ -490,10 +490,6 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D6554);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D65E8);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D667C);
-
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D6704);
-
 INCLUDE_RODATA("asm/maps/map4_s03/nonmatchings/map4_s03", D_800CA814);
 
 // Assumed type.
@@ -527,6 +523,35 @@ const char* g_MapMessages[] =
     "\tA_picture_is_projected ~N\n\ton_the_screen. ",
     "\tCheryl... ~N\n\twhere_could_she_be? ~E ",
 };
+
+void func_800D667C(void) // 0x800D667C
+{
+    u32 pickupType;
+    s32 eventFlagIdx;
+
+    pickupType   = CommonPickupItemId_FirstAidKit;
+    eventFlagIdx = 0;
+
+    switch (g_MapEventParam->field_5)
+    {
+        case 27:
+            pickupType   = CommonPickupItemId_FirstAidKit;
+            eventFlagIdx = EventFlag_M4S03_FirstAidKit;
+            break;
+        case 28:
+            pickupType   = CommonPickupItemId_RifleShells;
+            eventFlagIdx = EventFlag_M4S03_RifleShells0;
+            break;
+        case 29:
+            pickupType   = CommonPickupItemId_RifleShells;
+            eventFlagIdx = EventFlag_M4S03_RifleShells1;
+            break;
+    }
+
+    Event_CommonItemTake(pickupType, eventFlagIdx);
+}
+
+INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D6704);
 
 INCLUDE_RODATA("asm/maps/map4_s03/nonmatchings/map4_s03", D_800CABE8);
 

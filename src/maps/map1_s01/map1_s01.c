@@ -266,7 +266,40 @@ const char* g_MapMessages[] =
     "\tThere's_some_blood ~N\n\ton_some_of_the_keys..... ~E ",
 };
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D7214);
+void func_800D7214(void) // 0x800D7214
+{
+    u32 pickupType;
+    s32 eventFlagIdx;
+
+    pickupType   = CommonPickupItemId_FirstAidKit;
+    eventFlagIdx = 0;
+
+    switch (g_MapEventParam->field_5)
+    {
+        case 96:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M1S01_HandgunBullets0;
+            break;
+        case 97:
+            pickupType   = CommonPickupItemId_FirstAidKit;
+            eventFlagIdx = EventFlag_M1S01_FirstAidKit;
+            break;
+        case 98:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M1S01_HealthDrink;
+            break;
+        case 99:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M1S01_HandgunBullets1;
+            break;
+        case 100:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M1S01_HandgunBullets2;
+            break;
+    }
+
+    Event_CommonItemTake(pickupType, eventFlagIdx);
+}
 
 INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D72B0);
 

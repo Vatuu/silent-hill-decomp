@@ -135,8 +135,6 @@ INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", func_800CEB9C);
 
 INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", func_800CEC30);
 
-INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", func_800CED44);
-
 const char* g_MapMessages[] =
 {
     #include "maps/shared/mapMsg_common.h"
@@ -170,6 +168,25 @@ const char* g_MapMessages[] =
     "\tThere's_a_picture_on_the_wall. ~N\n\tNothing_special. ~E ",
     "\tThere's_a_candle_stand. ~N\n\tNothing_special. ~E ",
 };
+
+void func_800CED44(void) // 0x800CED44
+{
+    u32 pickupType;
+    s32 eventFlagIdx;
+
+    pickupType   = CommonPickupItemId_FirstAidKit;
+    eventFlagIdx = 0;
+
+    switch (g_MapEventParam->field_5)
+    {
+        case 25:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M2S01_HealthDrink;
+            break;
+    }
+
+    Event_CommonItemTake(pickupType, eventFlagIdx);
+}
 
 INCLUDE_RODATA("asm/maps/map2_s01/nonmatchings/map2_s01", D_800CAF50);
 

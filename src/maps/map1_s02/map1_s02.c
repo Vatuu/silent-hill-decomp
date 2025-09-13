@@ -233,7 +233,64 @@ const char* g_MapMessages[] =
     "\tA_headless_doll_is_stuck ~N\n\tto_the_wall. ~E ",
 };
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DA200);
+void func_800DA200(void) // 0x800DA200
+{
+    u32 pickupType;
+    s32 eventFlagIdx;
+
+    pickupType   = CommonPickupItemId_FirstAidKit;
+    eventFlagIdx = 0;
+
+    switch (g_MapEventParam->field_5)
+    {
+        case 107:
+            pickupType   = CommonPickupItemId_Ampoule;
+            eventFlagIdx = EventFlag_M1S02_Ampoule0;
+            break;
+        case 108:
+            pickupType   = CommonPickupItemId_ShotgunShells;
+            eventFlagIdx = EventFlag_M1S02_ShotgunShells0;
+            break;
+        case 109:
+            pickupType   = CommonPickupItemId_ShotgunShells;
+            eventFlagIdx = EventFlag_M1S02_ShotgunShells1;
+            break;
+        case 110:
+            pickupType   = CommonPickupItemId_FirstAidKit;
+            eventFlagIdx = EventFlag_M1S02_FirstAidKit0;
+            break;
+        case 111:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M1S02_HandgunBullets0;
+            break;
+        case 112:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M1S02_HandgunBullets1;
+            break;
+        case 113:
+            pickupType   = CommonPickupItemId_HandgunBullets;
+            eventFlagIdx = EventFlag_M1S02_HandgunBullets2;
+            break;
+        case 114:
+            pickupType   = CommonPickupItemId_Ampoule;
+            eventFlagIdx = EventFlag_M1S02_Ampoule1;
+            break;
+        case 115:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M1S02_HealthDrink0;
+            break;
+        case 116:
+            pickupType   = CommonPickupItemId_FirstAidKit;
+            eventFlagIdx = EventFlag_M1S02_FirstAidKit1;
+            break;
+        case 117:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M1S02_HealthDrink1;
+            break;
+    }
+
+    Event_CommonItemTake(pickupType, eventFlagIdx);
+}
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DA2E4);
 

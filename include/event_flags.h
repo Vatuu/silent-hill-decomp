@@ -215,13 +215,16 @@ typedef enum _EventFlag
     EventFlag_M3S04_HealthDrink3   = 690,
     EventFlag_M3S04_HandgunBullets = 691,
 
-    /** `MAP3_S05` and `MAP4_S03` common item pickups. */
+    /** `MAP3_S05` common item pickups. */
     EventFlag_M3S05_Ampoule        = 692,
     EventFlag_M3S05_HealthDrink    = 693,
     EventFlag_M3S05_HandgunBullets = 694,
     EventFlag_M3S05_ShotgunShells  = 695,
 
-    // TODO: 696/697/698, might be used in other MAP3/MAP4 code.
+    /** `MAP4_S03` common item pickups. */
+    EventFlag_M4S03_FirstAidKit  = 696,
+    EventFlag_M4S03_RifleShells0 = 697,
+    EventFlag_M4S03_RifleShells1 = 698,
 
     /** `MAP5_S00` common item pickups. */
     EventFlag_M5S00_ShotgunShells   = 699,
