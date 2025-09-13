@@ -144,8 +144,6 @@ const char* g_MapMessages[] =
     "\tThere_is_a_ ~C2 Channeling_stone ~C7 . ~N\n\tTake_it? ~S4 ",
 };
 
-// TODO: .rodata migration.
-#ifdef NON_MATCHING
 void Event_HealthOrAmmoItemTake(void) // 0x800CEBC8
 {
     u32 pickupType;
@@ -193,9 +191,6 @@ void Event_HealthOrAmmoItemTake(void) // 0x800CEBC8
 
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
-#else
-INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", Event_HealthOrAmmoItemTake);
-#endif
 
 void Event_EmptyFunction(void) {}
 

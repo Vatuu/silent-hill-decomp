@@ -10,16 +10,14 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CB6B0);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CBC94);
 
-// TODO: .rodata migration.
-#ifdef NON_MATCHING
 void func_800CBFB0(void) // 0x800CBFB0
 {
     VECTOR3 vecs[4] =
     {
-        VECTOR3(-258.0f, -1.34f, 244.1f),
-        VECTOR3(-254.5f,  0.0f,  220.0f),
+        VECTOR3(-258.0f, -1.4f, 244.1f),
+        VECTOR3(-254.5f,  0.0f,  220.5f),
         VECTOR3(-249.4f,  0.0f,  219.5f),
-        VECTOR3(-250.0f,  0.0f,  217.7f)
+        VECTOR3(-250.5f,  0.0f,  217.7f)
     };
 
     GsInitCoordinate2(NULL, &g_SysWork.coord_22F8);
@@ -29,9 +27,6 @@ void func_800CBFB0(void) // 0x800CBFB0
     D_800E39AC = 60;
     func_800D0394(2, vecs);
 }
-#else
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CBFB0);
-#endif
 
 #include "maps/shared/Particle_Update.h" // 0x800CC04C
 
@@ -40,8 +35,6 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CC6E8);
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CC8FC);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CD1F4);
-
-INCLUDE_RODATA("asm/maps/map0_s00/nonmatchings/map0_s00", D_800CA79C);
 
 INCLUDE_RODATA("asm/maps/map0_s00/nonmatchings/map0_s00", D_800CA7CC);
 
