@@ -20,15 +20,18 @@ typedef struct
     s_EventPosition   eventPosition_1C;
 } s_EventThing;
 
+// TODO: Move to bodyprog, other maps also read from this.
+// Might just be an array of `char*`, array is in `.data` while strings inside are in `.rodata`?
 typedef struct
 {
-    s8    unk_0[8]; // String?
-    char* field_8;
-    char* field_C;
-    char* field_10;
-    char* field_14;
-    char* field_18;
-    char* field_1C;
+    char* field_0;               // `NULL`
+    char* field_4;               // "PAD_NEAR"
+    char* firstAidKitName_8;     // "AIDKIT_N"
+    char* healthDrinkName_C;     // "DRINK_NE"
+    char* ampouleName_10;        // "AMPULE_N"
+    char* handgunBulletsName_14; // "BULLET_N"
+    char* shotgunShellsName_18;  // "SHELL_NE"
+    char* rifleShellsName_1C;    // "SHOT_NEA"
 } s_800A99E4;
 
 typedef struct

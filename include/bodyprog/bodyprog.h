@@ -300,13 +300,6 @@ typedef struct
 
 typedef struct
 {
-    s16 field_0;
-    u8  unk_2[2];
-    s16 field_4;
-} s_func_8006B1C8;
-
-typedef struct
-{
     s8  field_0;
     s8  unk_1;
     s16 field_2;
@@ -416,41 +409,58 @@ typedef struct
 
 typedef struct
 {
-    s32      field_0;
-    s16      field_4;
-    s16      field_6;
-    s16      field_8;
-    s8       unk_A[2];
-    s8       unk_C[20];
-    s32      field_20;
-    s8       unk_24[8];
-    VECTOR3  field_2C; // Q23.8
-    s8       unk_38[4];
-    s32      field_3C;
-    s32      field_40;
-    s32      field_44;
-    s8       unk_48[4];
-    s16      field_4C;
-    s16      field_4E;
-    SVECTOR3 field_50; // Q23.8
-    u16      field_56;
-    s16      field_58;
-    s16      field_5A;
-    s16      field_5C;
-    s16      field_5E;
-    s16      field_60;
-    s8       unk_62[2];
-    s32      field_64;
-    s32      field_68;
-    s32      field_6C;
-    s32      field_70;
-    s16      field_74;
-    s16      field_76;
-    s16      field_78;
-    s16      field_7A;
-    s32      field_7C;
-    s32      field_80;
-    u16      field_84;
+    s16 field_0;
+    s16 field_2;
+} s_func_8006DCE0_8C;
+
+typedef struct
+{
+    s32                field_0;
+    s16                field_4;
+    s16                field_6;
+    s16                field_8;
+    s8                 unk_A[2];
+    s32                field_C;
+    s32                field_10;
+    s32                field_14;
+    s8                 unk_18[4];
+    s16                field_1C;
+    s8                 unk_1E[2];
+    s32                field_20;
+    s16                field_24;
+    s16                field_26;
+    u8                 field_28;
+    s8                 unk_29[3];
+    VECTOR3            field_2C; // Q23.8
+    s8                 unk_38[4];
+    s32                field_3C;
+    s32                field_40;
+    s32                field_44;
+    s8                 unk_48[4];
+    s16                field_4C;
+    s16                field_4E;
+    SVECTOR3           field_50; // Q23.8
+    u16                field_56;
+    s16                field_58;
+    s16                field_5A;
+    s16                field_5C;
+    s16                field_5E;
+    s16                field_60;
+    s8                 unk_62[2];
+    s32*               field_64;
+    s32                field_68;
+    s32                field_6C;
+    s32                field_70;
+    s16                field_74;
+    s16                field_76;
+    s16                field_78;
+    s16                field_7A;
+    s32                field_7C;
+    s32                field_80;
+    u16                field_84;
+    u8                 unk_86[2];
+    s32                field_88;
+    s_func_8006DCE0_8C field_8C[1]; // Unknown size.
 } s_func_8006DCE0;
 
 typedef struct
@@ -679,6 +689,25 @@ typedef struct _IpdCollisionData_10
 } s_IpdCollisionData_10;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData_10, 12);
 
+typedef struct
+{
+    u16 field_0_0  : 14;
+    u16 field_0_14 : 2;
+    u16 field_2_0  : 14;
+    u16 field_2_14 : 2;
+    s8  unk_4[4];
+    u8  field_8;
+    u8  field_9;
+} s_IpdCollisionData_14;
+STATIC_ASSERT_SIZEOF(s_IpdCollisionData_14, 10);
+
+typedef struct
+{
+    s16 field_0;
+    s8  unk_2[2];
+} s_IpdCollisionData_20;
+STATIC_ASSERT_SIZEOF(s_IpdCollisionData_20, 4);
+
 typedef struct _IpdCollisionData_18
 {
     u16 field_0_0  : 5;
@@ -689,7 +718,7 @@ typedef struct _IpdCollisionData_18
     u16 field_2;
     u16 field_4;
     u16 field_6;
-    u16 field_8;
+    s16 field_8;
 } s_IpdCollisionData_18;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData_18, 10);
 
@@ -703,12 +732,12 @@ typedef struct _IpdCollisionData
     u32                    field_8_24 : 8;
     void*                  ptr_C;
     s_IpdCollisionData_10* ptr_10;
-    void*                  ptr_14;
+    s_IpdCollisionData_14* ptr_14;
     s_IpdCollisionData_18* ptr_18;
     s16                    field_1C;
     u8                     field_1E;
     u8                     field_1F;
-    s32*                   ptr_20;   // Might point to `s_func_8006B1C8`?
+    s_IpdCollisionData_20* ptr_20;
     u16                    field_24; // `field_24/``field_26` defined in ipd2obj but haven't seen used yet, might be size of `ptr_28`/`ptr_2C`.
     u16                    field_26;
     u8*                    ptr_28;
@@ -2593,7 +2622,7 @@ void Map_MakeIpdGrid(s_800C1020* arg0, char* mapTag, s32 fileIdxStart);
  */
 bool ConvertHexToS8(s32* out, char hex0, char hex1);
 
-s32* func_800425D8(s32* arg0);
+s_IpdCollisionData** func_800425D8(s32* arg0);
 
 s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ);
 
@@ -3455,10 +3484,10 @@ void func_8006AD44(s_func_8006CC44* arg0, s_IpdCollisionData* collData);
 
 bool func_8006B004(s_func_8006CC44* arg0, s_IpdCollisionData* collData);
 
-void func_8006B1C8(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s_func_8006B1C8* arg2);
+void func_8006B1C8(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s_IpdCollisionData_20* arg2);
 
 /** `arg1` is unused, but `func_8006B1C8` passes second arg to this. */
-void func_8006B6E8(s_func_8006CC44* arg0, s_func_8006B1C8* arg1);
+void func_8006B6E8(s_func_8006CC44* arg0, s_IpdCollisionData_20* arg1);
 
 void func_8006B9C8(s_func_8006CC44* arg0);
 
@@ -3506,6 +3535,8 @@ bool func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_SubC
 bool func_8006DC18(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2);
 
 bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
+
+s32 func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1);
 
 void func_8006E0AC(s_func_8006DCE0* arg0, s_IpdCollisionData* arg1);
 

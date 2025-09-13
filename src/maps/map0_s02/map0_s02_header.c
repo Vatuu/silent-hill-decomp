@@ -38,8 +38,8 @@ void (*g_MapEventFuncs[])() =
     Event_HealthOrAmmoItemTake,
     Event_EmptyFunction,
     Event_GasolineTankItemTake,
-    func_800CECB0,
-    func_800CECDC
+    Event_KatanaItemTake,
+    Event_ChannelingStoneItemTake
 };
 
 const u32 D_800C9578 = 0x00000000; // rodata 0

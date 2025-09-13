@@ -883,16 +883,16 @@ void func_800DC9C8() // 0x800DC9C8
     func_8003C8F8(&D_800E2450[0], "OUT1_HID");
     func_8003C8F8(&D_800E2450[1], "OUT_BLD_");
 
-    EventPositionInit(&g_EventThing4A0.eventPosition_1C, 5.089844f, -1.009766f, 274.119873f, 0x16C0000, 0);
+    EventPositionInit(&g_EventThing4A0.eventPosition_1C, 5.09f, -1.01f, 274.12f, 0x16C0000, 0);
     func_8003C8F8(&g_EventThing4A0.field_0, "KNIFE_HI");
 
-    EventPositionInit(&g_EventThing4D0.eventPosition_1C, 5.179932f, -1.0f, 267.279785f, 0x4EEFFDE, 0);
+    EventPositionInit(&g_EventThing4D0.eventPosition_1C, 5.18f, -1.0f, 267.28f, 0x4EEFFDE, 0);
     func_8003C8F8(&g_EventThing4D0.field_0, "FLASH_HI");
 
-    EventPositionInit(&g_EventThing500.eventPosition_1C, 5.23999f, -1.0f, 267.209961f, 0x2880000, 0);
+    EventPositionInit(&g_EventThing500.eventPosition_1C, 5.24f, -1.0f, 267.21f, 0x2880000, 0);
     func_8003C8F8(&g_EventThing500.field_0, "MAP_HIDE");
 
-    EventPositionInit(&g_EventThing530.eventPosition_1C, 2.309815f, -0.599854f, 273.949951f, 0x6880000, 0);
+    EventPositionInit(&g_EventThing530.eventPosition_1C, 2.31f, -0.6f, 273.95f, 0x6880000, 0);
     func_8003C8F8(&g_EventThing530.field_0, "RADIO_HI");
 
     if (Savegame_EventFlagGet(EventFlag_40) && !Savegame_EventFlagGet(EventFlag_47))
@@ -921,13 +921,13 @@ void func_800DC9C8() // 0x800DC9C8
     g_Timer0 = 0;
     D_800E2560 = 0;
 
-    // There are 6 NPCs max. Maybe related?
-    func_8003C8F8(&D_800E2570[0], D_800A99E4.field_8);
-    func_8003C8F8(&D_800E2570[1], D_800A99E4.field_C);
-    func_8003C8F8(&D_800E2570[2], D_800A99E4.field_10);
-    func_8003C8F8(&D_800E2570[3], D_800A99E4.field_14);
-    func_8003C8F8(&D_800E2570[4], D_800A99E4.field_18);
-    func_8003C8F8(&D_800E2570[5], D_800A99E4.field_1C);
+    // Maybe preloading assets that might be used in map?
+    func_8003C8F8(&D_800E2570[0], D_800A99E4.firstAidKitName_8);
+    func_8003C8F8(&D_800E2570[1], D_800A99E4.healthDrinkName_C);
+    func_8003C8F8(&D_800E2570[2], D_800A99E4.ampouleName_10);
+    func_8003C8F8(&D_800E2570[3], D_800A99E4.handgunBulletsName_14);
+    func_8003C8F8(&D_800E2570[4], D_800A99E4.shotgunShellsName_18);
+    func_8003C8F8(&D_800E2570[5], D_800A99E4.rifleShellsName_1C);
 }
 
 
