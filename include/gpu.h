@@ -317,11 +317,15 @@ void SetPriority(PACKET*, s32, s32);
     :                                                  \
     : "r"(x), "r"(y), "r"(z))
 
-#endif
-
 /** @brief Sets the GTE's `vxy0` register to 0. */
-#define gte_gte_ldvxy0() __asm__ volatile( \
+#define gte_ldvxy0_Zero() __asm__ volatile( \
     "mtc2  $zero, $0;")
+
+#define gte_ldvxy0(val) __asm__ volatile( \
+    "mtc2  %0, $0;"                       \
+    :                                     \
+    : "r"(val)                            \
+    : "memory")
 
 /** @brief Sets the GTE's `vz0` register to 0. */
 #define gte_gte_ldvz0() __asm__ volatile( \
@@ -334,3 +338,60 @@ void SetPriority(PACKET*, s32, s32);
         __asm__ volatile("mfc2 %0, $19" : "=r"(__r)); \
         __r;                                          \
     })
+
+#define gte_stMAC0()                                       \
+    ({                                                     \
+        s32 __r;                                           \
+        __asm__ volatile("mfc2 %0, $24; nop" : "=r"(__r)); \
+        __r;                                               \
+    })
+
+#define gte_stMAC1()                                        \
+    ({                                                      \
+        u32 __r;                                            \
+        __asm__ volatile("mfc2 %0, $25; nop;" : "=r"(__r)); \
+        __r;                                                \
+    })
+
+#define gte_stMAC2()                                        \
+    ({                                                      \
+        u32 __r;                                            \
+        __asm__ volatile("mfc2 %0, $26; nop;" : "=r"(__r)); \
+        __r;                                                \
+    })
+
+#define gte_stMAC12(r0) __asm__ volatile( \
+    "mfc2	$12, $25;"                    \
+    "nop;"                                \
+    "sh	$12, 0( %0 );"                    \
+    "mfc2	$13, $26;"                    \
+    "nop;"                                \
+    "sh	$13, 2( %0 );"                    \
+    :                                     \
+    : "r"(r0)                             \
+    : "$12", "$13", "memory")
+
+#define gte_ldsv3_(x, y, z) __asm__ volatile( \
+    "mtc2  %0, $9;"                           \
+    "mtc2  %1, $10;"                          \
+    "mtc2  %2, $11;"                          \
+    :                                         \
+    : "r"(x), "r"(y), "r"(z)                  \
+    : "memory")
+
+#define gte_ldR13R21(val) __asm__ volatile( \
+    "or    $12, %0, $0;"                    \
+    "negu  $12, $12;"                       \
+    "ctc2  $12, $1;"                        \
+    :                                       \
+    : "r"(val)                              \
+    : "$12", "memory")
+
+#define gte_ldR11R12(r0) __asm__ volatile( \
+    "ctc2 %0, $0;"                         \
+    "ctc2 %0, $2;"                         \
+    :                                      \
+    : "r"(r0)                              \
+    : "memory")
+
+#endif

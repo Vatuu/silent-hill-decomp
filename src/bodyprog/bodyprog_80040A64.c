@@ -2577,7 +2577,7 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord,
             {
                 gte_SetRotMatrix(&sp20);
                 gte_SetTransMatrix(&sp20);
-                gte_gte_ldvxy0();
+                gte_ldvxy0_Zero();
                 gte_gte_ldvz0();
                 gte_rtps();
                 gte_stsxy(&sp60);

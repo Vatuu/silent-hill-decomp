@@ -4073,9 +4073,164 @@ void func_8006E53C(s_func_8006DCE0* arg0, s_IpdCollisionData_20* arg1, s_IpdColl
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006E78C); // 0x8006E78C
+void func_8006E78C(s_func_8006DCE0* arg0, s_IpdCollisionData_14* arg1, SVECTOR3* arg2, s_IpdCollisionData_10* arg3, s32 arg4) // 0x8006E78C
+{
+    SVECTOR sp0;
+    SVECTOR sp8;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006EB8C); // 0x8006EB8C
+    SVECTOR3  sp10;
+    s32       var_a3;
+    s32       var_a1;
+    s32       var_a2;
+    s32       var_t1;
+    s32       var_t7;
+    SVECTOR3* temp_t1;
+    SVECTOR3* temp_t2;
+    s32       temp_v1;
+    s32       var_v1;
+
+    var_t7  = 0;
+    temp_t1 = &arg2[arg1->field_7];
+    temp_t2 = &arg2[arg1->field_6];
+    if (arg0->field_5E >= temp_t1->vy || arg0->field_5E >= temp_t2->vy)
+    {
+        if (arg1->field_8 != 0xFF)
+        {
+            var_t7 = arg3[arg1->field_8].field_6_0;
+        }
+        if (arg1->field_9 != 0xFF)
+        {
+            var_t7 = arg3[arg1->field_9].field_6_0;
+        }
+
+        temp_v1 = arg0->field_58 + (arg0->field_5A << 16);
+        gte_ldR11R12(temp_v1);
+        gte_ldR13R21(temp_v1);
+        gte_ldvxy0(((temp_t1->vx - arg0->field_74) & 0xFFFF) + ((temp_t1->vz - arg0->field_76) << 16));
+        gte_gte_ldvz0();
+        gte_rtv0();
+        gte_stMAC12(&sp0);
+
+        gte_ldvxy0(((temp_t2->vx - arg0->field_74) & 0xFFFF) + ((temp_t2->vz - arg0->field_76) << 16));
+        gte_gte_ldvz0();
+        gte_rtv0();
+        gte_stMAC12(&sp8);
+
+        if ((sp0.vy & 0x8000) != (sp8.vy & 0x8000))
+        {
+            if (arg0->field_0 == 1)
+            {
+                gte_ldsxy3(0, *(s32*)&sp0.vx, *(s32*)&sp8.vx);
+                gte_nclip();
+
+                if (gte_stMAC0() >= 0)
+                {
+                    if (arg1->field_8 != 0xFF)
+                        return;
+                }
+                else
+                {
+                    if (arg1->field_9 != 0xFF)
+                        return;
+                }
+            }
+
+            if (sp0.vy != sp8.vy)
+            {
+                var_v1 = ((sp0.vy << 0xC) / (sp0.vy - sp8.vy));
+                var_a3 = (((sp8.vx - sp0.vx) * var_v1) >> 0xC) + sp0.vx;
+                if (var_a3 >= 0 && arg0->field_5C >= var_a3)
+                {
+                    gte_lddp(var_v1);
+                    gte_ldsv3_(temp_t2->vx - temp_t1->vx, temp_t2->vy - temp_t1->vy, temp_t2->vz - temp_t1->vz);
+                    gte_gpf12();
+                    gte_stsv(&sp10);
+
+                    sp10.vx += temp_t1->vx;
+                    sp10.vy += temp_t1->vy;
+                    sp10.vz += temp_t1->vz;
+
+                    var_a2 = arg0->field_2C.vy + arg0->field_4E;
+                    if (arg0->field_50.vy != 0)
+                    {
+                        var_a2 += (arg0->field_50.vy * var_a3) / arg0->field_5C;
+                    }
+
+                    if (var_a2 >= sp10.vy && var_a3 < arg0->field_8)
+                    {
+                        var_a1 = arg1->field_2_0;
+                        var_t1 = -arg1->field_0_0;
+                        if (arg0->field_0 != 1 && arg4 != 0 && (sp8.vy - sp0.vy) > 0)
+                        {
+                            var_a1 = -var_a1;
+                            var_t1 = arg1->field_0_0;
+                        }
+                        arg0->field_8  = var_a3;
+                        arg0->field_C  = (sp10.vx + arg0->field_6C);
+                        arg0->field_10 = (var_a2 - arg0->field_4E);
+                        arg0->field_14 = (sp10.vz + arg0->field_70);
+                        arg0->field_1C = sp10.vy;
+                        arg0->field_24 = var_a1;
+                        arg0->field_26 = var_t1;
+                        arg0->field_20 = 0;
+                        arg0->field_28 = var_t7;
+                    }
+                }
+            }
+        }
+    }
+}
+
+void func_8006EB8C(s_func_8006DCE0* arg0, s_IpdCollisionData_18* arg1) // 0x8006EB8C
+{
+    SVECTOR sp10;
+    SVECTOR sp18;
+    s16     temp_a1_3;
+    s32     temp_v0;
+    s16     temp_a1;
+    s32     temp_v1;
+
+    temp_a1 = arg1->field_8;
+    if (arg0->field_5E <= arg1->field_4)
+    {
+        return;
+    }
+
+    temp_v1 = arg0->field_58 + (arg0->field_5A << 16);
+    gte_ldR11R12(temp_v1);
+    gte_ldR13R21(temp_v1);
+    gte_ldvxy0(((arg1->field_2 - arg0->field_74) & 0xFFFF) + ((arg1->field_6 - arg0->field_76) << 16));
+    gte_gte_ldvz0();
+    gte_rtv0();
+    gte_stMAC12(&sp10);
+
+    if (-temp_a1 < sp10.vx && sp10.vx < (arg0->field_5C + temp_a1) && -temp_a1 < sp10.vy && sp10.vy < temp_a1)
+    {
+        temp_v0   = SquareRoot0((temp_a1 * temp_a1) - (sp10.vy * sp10.vy));
+        temp_a1_3 = sp10.vx - temp_v0;
+
+        if (temp_a1_3 >= -temp_v0 && arg0->field_5C >= temp_a1_3 && temp_a1_3 < arg0->field_8)
+        {
+            gte_lddp(((temp_a1_3 << 12) / arg0->field_5C));
+            gte_ldsv3_(arg0->field_50.vx, arg0->field_50.vy, arg0->field_50.vz);
+            gte_gpf12();
+            gte_stsv(&sp18);
+
+            if ((sp18.vy + arg0->field_2C.vy + arg0->field_4E) >= arg1->field_4)
+            {
+                arg0->field_8  = temp_a1_3;
+                arg0->field_C  = sp18.vx + arg0->field_74 + arg0->field_6C;
+                arg0->field_10 = sp18.vy + arg0->field_2C.vy;
+                arg0->field_14 = sp18.vz + arg0->field_76 + arg0->field_70;
+                arg0->field_1C = arg1->field_4;
+                arg0->field_24 = (sp18.vx + arg0->field_74) - arg1->field_2;
+                arg0->field_26 = (sp18.vz + arg0->field_76) - arg1->field_6;
+                arg0->field_20 = 0;
+                arg0->field_28 = arg1->field_0_0;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006EE0C); // 0x8006EE0C
 

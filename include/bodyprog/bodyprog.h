@@ -429,8 +429,7 @@ typedef struct
     s32                field_20;
     s16                field_24;
     s16                field_26;
-    u8                 field_28;
-    s8                 unk_29[3];
+    s32                field_28;
     VECTOR3            field_2C; // Q23.8
     s8                 unk_38[4];
     s32                field_3C;
@@ -441,7 +440,7 @@ typedef struct
     s16                field_4E;
     SVECTOR3           field_50; // Q23.8
     u16                field_56;
-    s16                field_58;
+    u16                field_58;
     s16                field_5A;
     s16                field_5C;
     s16                field_5E;
@@ -691,11 +690,13 @@ STATIC_ASSERT_SIZEOF(s_IpdCollisionData_10, 12);
 
 typedef struct
 {
-    u16 field_0_0  : 14;
+    s16 field_0_0  : 14;
     u16 field_0_14 : 2;
-    u16 field_2_0  : 14;
+    s16 field_2_0  : 14;
     u16 field_2_14 : 2;
-    s8  unk_4[4];
+    s8  unk_4[2];
+    u8  field_6;
+    u8  field_7;
     u8  field_8;
     u8  field_9;
 } s_IpdCollisionData_14;
@@ -715,9 +716,9 @@ typedef struct _IpdCollisionData_18
     u16 field_0_8  : 4;
     u16 field_0_12 : 3;
     u16 field_0_15 : 1;
-    u16 field_2;
-    u16 field_4;
-    u16 field_6;
+    s16 field_2;
+    s16 field_4;
+    s16 field_6;
     s16 field_8;
 } s_IpdCollisionData_18;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData_18, 10);
@@ -730,7 +731,7 @@ typedef struct _IpdCollisionData
     u32                    field_8_8  : 8;
     u32                    field_8_16 : 8;
     u32                    field_8_24 : 8;
-    void*                  ptr_C;
+    SVECTOR3*              ptr_C;
     s_IpdCollisionData_10* ptr_10;
     s_IpdCollisionData_14* ptr_14;
     s_IpdCollisionData_18* ptr_18;
@@ -3540,6 +3541,12 @@ s32 func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1);
 void func_8006E0AC(s_func_8006DCE0* arg0, s_IpdCollisionData* arg1);
 
 void func_8006E490(s_func_8006E490* arg0, u32 arg1, s32 arg2, s32 arg3);
+
+void func_8006E53C(s_func_8006DCE0* arg0, s_IpdCollisionData_20* arg1, s_IpdCollisionData* arg2);
+
+void func_8006E78C(s_func_8006DCE0* arg0, s_IpdCollisionData_14* arg1, SVECTOR3* arg2, s_IpdCollisionData_10* arg3, s32 arg4);
+
+void func_8006EB8C(s_func_8006DCE0* arg0, s_IpdCollisionData_18* arg1);
 
 void func_8006F250(s_func_8006F250* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
