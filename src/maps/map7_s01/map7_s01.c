@@ -212,7 +212,7 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedSymbol_800D0ADC_3_s
 
 #include "maps/shared/sharedFunc_800D8964_0_s00.h" // 0x800D5D90
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D5E7C);
+#include "maps/shared/sharedFunc_800D8A00_0_s00.h" // 0x800D5E7C
 
 #include "maps/shared/sharedFunc_800D9064_0_s00.h" // 0x800D64E0
 

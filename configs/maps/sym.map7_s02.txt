@@ -25,7 +25,7 @@
 //------------------------------------------------------
 //--- PA: 0x00170C   VA: 0x800CAC84   subsegment: rodata
 //------------------------------------------------------
-sharedData_800CAB70_0_s00      = 0x800CACD8; // type:s32
+sharedData_800CAB70_0_s00      = 0x800CACD8; // type:VECTOR
 
 //---------------------------------------------------------------------
 //--- PA: 0x001E14   VA: 0x800CB38C   subsegment: .rodata, map7_s02_msg
@@ -124,6 +124,7 @@ sharedFunc_800D8928_0_s00      = 0x800D8CF0; // type:func
 sharedFunc_800D893C_0_s00      = 0x800D8D04; // type:func
 sharedFunc_800D8950_0_s00      = 0x800D8D18; // type:func
 sharedFunc_800D8964_0_s00      = 0x800D8D2C; // type:func
+sharedFunc_800D8A00_0_s00      = 0x800D8E38; // type:func
 sharedFunc_800D9064_0_s00      = 0x800D949C; // type:func
 sharedFunc_800D9078_0_s00      = 0x800D94B0; // type:func
 sharedFunc_800D908C_0_s00      = 0x800D94C4; // type:func
@@ -148,6 +149,9 @@ STALKER_ANIM_INFOS             = 0x800E5B3C; // type:s32 unknown type
 BLOODY_LISA_ANIM_INFOS         = 0x800E7948; // type:AnimInfo
 BLOODSUCKER_ANIM_INFOS         = 0x800E7988; // type:AnimInfo
 KAUFMANN_ANIM_INFOS            = 0x800E7FC8; // type:AnimInfo
+sharedData_800DF1F4_0_s00      = 0x800E82E8; // type:s32
+sharedData_800DF1F8_0_s00      = 0x800E82EC; // type:s16
+sharedData_800DF1FA_0_s00      = 0x800E82EE; // type:s16
 
 //-------------------------------------------------------------------
 //--- PA: 0x01F92C   VA: 0x800E8EA4   subsegment: .data, map7_s02_msg

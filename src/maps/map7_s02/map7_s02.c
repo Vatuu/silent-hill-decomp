@@ -252,7 +252,7 @@ void func_800D8C00(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8C00
 
 #include "maps/shared/sharedFunc_800D8964_0_s00.h" // 0x800D8D2C
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800D8E38);
+#include "maps/shared/sharedFunc_800D8A00_0_s00.h" // 0x800D8E38
 
 #include "maps/shared/sharedFunc_800D9064_0_s00.h" // 0x800D949C
 

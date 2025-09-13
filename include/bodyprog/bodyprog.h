@@ -3130,7 +3130,7 @@ s32 func_8005E7E0(s32 arg0);
 
 void func_8005E89C();
 
-void func_8005F6B0(s_SubCharacter*, s32*, s32, s32);
+void func_8005F6B0(s_SubCharacter*, VECTOR*, s32, s32);
 
 void DmsHeader_FixOffsets(s_DmsHeader* header);
 

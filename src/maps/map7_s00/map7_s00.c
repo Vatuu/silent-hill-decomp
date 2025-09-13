@@ -100,7 +100,7 @@ INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", sharedSymbol_800D0ADC_3_s
 
 #include "maps/shared/sharedFunc_800D8964_0_s00.h" // 0x800CF5F0
 
-INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", func_800CF68C);
+#include "maps/shared/sharedFunc_800D8A00_0_s00.h" // 0x800CF68C
 
 #include "maps/shared/sharedFunc_800D9064_0_s00.h" // 0x800CFCF0
 
