@@ -2157,7 +2157,7 @@ void vcMakeIdealCamPosUseVC_ROAD_DATA(VECTOR3* ideal_pos, VC_WORK* w_p, enum _VC
     {
         if (blend_min_dist < horizontal_distance_fp)
         {
-            final_cam_dist = default_cam_dist + ((FP_METER_GEO(6.4f) - default_cam_dist) * (horizontal_distance_fp - blend_min_dist)) / (blend_max_dist - blend_min_dist);
+            final_cam_dist = default_cam_dist + (((FP_METER_GEO(6.4f) - default_cam_dist) * (horizontal_distance_fp - blend_min_dist)) / (blend_max_dist - blend_min_dist));
         }
         else
         {
