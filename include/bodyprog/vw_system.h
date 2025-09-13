@@ -20,9 +20,10 @@ struct _MapOverlayHeader;
  * GRND:  Ground
  * H:     Height
  * LIM:   Limit
- * MV:    Movement
+ * MV:    Move
  * OFS:   Offset
  * PRIO:  Priority
+ * PRM:   Parameter/parameters
  * R:     Radius
  * RD:    Road
  * SCR:   Screen
@@ -150,7 +151,8 @@ typedef enum _THROUGH_DOOR_SET_CMD_TYPE
 STATIC_ASSERT_SIZEOF(THROUGH_DOOR_SET_CMD_TYPE, 4);
 
 /** @brief 2D camera-specific axis-aligned bounding box (AABB), with values in Q7.8 format.
- * 
+ * TODO: Maybe actually Q11.4?
+ *
  * Constrains the camera position to a limited area on the XZ plane.
  */
 typedef struct _VC_LIMIT_AREA
@@ -172,7 +174,9 @@ typedef struct _VC_CAMERA_INTINFO
 } VC_CAMERA_INTINFO;
 STATIC_ASSERT_SIZEOF(VC_CAMERA_INTINFO, 8);
 
-/** @brief Camera look-at rotation parameters. */
+/** @brief Camera look-at move parameters.
+ * TODO: These don't seem to be angles like the names would suggest, but distances don't fit either.
+ */
 typedef struct _VC_WATCH_MV_PARAM
 {
     s32 ang_accel_x;   /** Angular acceleration on X axis. */
@@ -182,13 +186,13 @@ typedef struct _VC_WATCH_MV_PARAM
 } VC_WATCH_MV_PARAM;
 STATIC_ASSERT_SIZEOF(VC_WATCH_MV_PARAM, 12);
 
-/** @brief Camera translation parameters. */
+/** @brief Camera move parameters. */
 typedef struct _VC_CAM_MV_PARAM
 {
-    s32 accel_xz;   /** Speed acceleration on XZ plane. */
-    s32 accel_y;    /** Speed acceleration on Y axis. */
-    s32 max_spd_xz; /** Max speed on XZ plane. */
-    s32 max_spd_y;  /** Max speed on Y axis. */
+    q19_12 accel_xz;   /** Speed acceleration on XZ plane. */
+    q19_12 accel_y;    /** Speed acceleration on Y axis. */
+    q19_12 max_spd_xz; /** Max speed on XZ plane. */
+    q19_12 max_spd_y;  /** Max speed on Y axis. */
 } VC_CAM_MV_PARAM;
 STATIC_ASSERT_SIZEOF(VC_CAM_MV_PARAM, 16);
 
@@ -345,7 +349,7 @@ extern VC_NEAR_ROAD_DATA vcNullNearRoad;
 extern VC_WATCH_MV_PARAM deflt_watch_mv_prm;
 extern VC_WATCH_MV_PARAM self_view_watch_mv_prm;
 extern VC_CAM_MV_PARAM   cam_mv_prm_user;
-extern s32               excl_r_ary[9];
+extern q19_12            excl_r_ary[9];
 extern VC_WORK           vcWork;
 extern VECTOR3           vcRefPosSt;
 extern VW_VIEW_WORK      vwViewPointInfo;

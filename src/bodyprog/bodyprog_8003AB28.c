@@ -3144,7 +3144,14 @@ void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructU
 
 s32 func_8003FEC0(s_sub_StructUnk3* arg0) // 0x8003FEC0
 {
-    static s32 Y_ARRAY[5] = { 0x1C00, 0x6000, 0x9800, 0xC800, 0xF000 };
+    static q19_12 Y_ARRAY[5] =
+    {
+        FP_METER(1.75f),
+        FP_METER(6.0f),
+        FP_METER(9.5f),
+        FP_METER(12.5f),
+        FP_METER(15.0f)
+    };
 
     if (D_800C4168.fogEnabled_1)
     {

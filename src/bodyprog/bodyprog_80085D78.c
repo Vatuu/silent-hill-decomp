@@ -2841,13 +2841,39 @@ s32 func_8008D8C0(s16 x0, s32 x1, s32 x2) // 0x8008D8C0
     s32 temp1;
     s32 res;
 
-    static s32 y_ary0[2] = { 0, 0x1000 };
-    static s32 y_ary1[7] = { 0x4000, 0x14CC, 0x0E66, 0x0B33, 0x0800, 0x0599, 0x0333 };
-    static s32 y_ary2[7] = { 0x0266, 0x0333, 0x0400, 0x04CC, 0x0599, 0x0800, 0x14CC };
+    // TODO: What Q format are the array values?
 
-    temp0 = vwOresenHokan(&y_ary0, ARRAY_SIZE(y_ary0), x0, 0, FP_FLOAT_TO(16.0f, Q8_SHIFT));
-    temp1 = vwOresenHokan(&y_ary1, ARRAY_SIZE(y_ary1), x1, FP_FLOAT_TO(0.8f, Q8_SHIFT), FP_FLOAT_TO(13.0f, Q8_SHIFT));
-    res   = FP_MULTIPLY(vwOresenHokan(&y_ary2, ARRAY_SIZE(y_ary2), x2, FP_FLOAT_TO(3.335f, Q8_SHIFT), FP_FLOAT_TO(7.425f, Q8_SHIFT)), // Yucky floats, maybe these aren't distances?
+    static s32 Y_ARRAY_0[2] =
+    {
+        0,
+        0x1000
+    };
+
+    static s32 Y_ARRAY_1[7] =
+    {
+        0x4000,
+        0x14CC,
+        0x0E66,
+        0x0B33,
+        0x0800,
+        0x0599,
+        0x0333
+    };
+
+    static s32 Y_ARRAY_2[7] =
+    {
+        0x0266,
+        0x0333,
+        0x0400,
+        0x04CC,
+        0x0599,
+        0x0800,
+        0x14CC
+    };
+
+    temp0 = vwOresenHokan(&Y_ARRAY_0, ARRAY_SIZE(Y_ARRAY_0), x0, 0, FP_FLOAT_TO(16.0f, Q8_SHIFT));
+    temp1 = vwOresenHokan(&Y_ARRAY_1, ARRAY_SIZE(Y_ARRAY_1), x1, FP_FLOAT_TO(0.8f, Q8_SHIFT), FP_FLOAT_TO(13.0f, Q8_SHIFT));
+    res   = FP_MULTIPLY(vwOresenHokan(&Y_ARRAY_2, ARRAY_SIZE(Y_ARRAY_2), x2, FP_FLOAT_TO(3.335f, Q8_SHIFT), FP_FLOAT_TO(7.425f, Q8_SHIFT)), // Yucky floats, maybe these aren't distances?
                         FP_MULTIPLY(temp0, temp1, Q12_SHIFT),
                         Q12_SHIFT);
 

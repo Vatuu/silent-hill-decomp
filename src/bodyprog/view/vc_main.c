@@ -18,14 +18,50 @@ VC_NEAR_ROAD_DATA vcNullNearRoad =
     .chara2road_sum_dist_8 = 0,
     .chara2road_vec_x_C = 0,
     .chara2road_vec_z_10 = 0,
-    .rd_14 = { 0xE200, 0x1E00, 0xE200, 0x1E00 },
-    .sw_1C = { 0xE200, 0x1E00, 0xE200, 0x1E00 },
+    .rd_14 = { Q7_8(226.0f), Q7_8(30.0f), Q7_8(226.0f), Q7_8(30.0f) },
+    .sw_1C = { Q7_8(226.0f), Q7_8(30.0f), Q7_8(226.0f), Q7_8(30.0f) },
 };
 
-VC_WATCH_MV_PARAM deflt_watch_mv_prm = { 0x1333, 0x2333, 0x0385, 0x0B33 };
-VC_WATCH_MV_PARAM self_view_watch_mv_prm = { 0x1AE1, 0x3147, 0x070A, 0x1666 };
-VC_CAM_MV_PARAM cam_mv_prm_user = { 0xA000, 0x3000, 0x6000, 0x2000 };
-s32 excl_r_ary[9] = { 0x4000, 0x4000, 0x3B33, 0x3333, 0x2B33, 0x24CC, 0x1E66, 0x1800, 0x14CC };
+/** @brief Default look-at move parameters. */
+VC_WATCH_MV_PARAM deflt_watch_mv_prm =
+{
+    0x1333,
+    0x2333,
+    0x0385,
+    0x0B33
+};
+
+/** @brief First-person look-at move parameters. */
+VC_WATCH_MV_PARAM self_view_watch_mv_prm =
+{
+    0x1AE1,
+    0x3147,
+    0x070A,
+    0x1666
+};
+
+/** @brief Camera move parameters for user. */
+VC_CAM_MV_PARAM cam_mv_prm_user =
+{
+    FP_METER(10.0f),
+    FP_METER(3.0f),
+    FP_METER(6.0f),
+    FP_METER(2.0f)
+};
+
+/** @brief Exclusion radius array. */
+q19_12 excl_r_ary[9] =
+{
+    FP_METER(4.0f),
+    FP_METER(4.0f),
+    FP_METER(3.7f),
+    FP_METER(3.2f),
+    FP_METER(2.7f),
+    FP_METER(2.3f),
+    FP_METER(1.9f),
+    FP_METER(1.5f),
+    FP_METER(1.3f)
+};
 
 void vcInitVCSystem(VC_ROAD_DATA* vc_road_ary_list) // 0x80080940
 {
@@ -933,6 +969,7 @@ void vcSetNearRoadAryByCharaPos(VC_WORK* w_p, VC_ROAD_DATA* road_ary_list, s32 h
 
         if (!flag)
         {
+            // TO Q19.12?
             rd_min_hx = FP_TO(road_data_ptr->lim_rd_8.min_hx, Q8_SHIFT);
             rd_max_hx = FP_TO(road_data_ptr->lim_rd_8.max_hx, Q8_SHIFT);
             rd_min_hz = FP_TO(road_data_ptr->lim_rd_8.min_hz, Q8_SHIFT);
@@ -2397,7 +2434,7 @@ s32 vcFlipFromCamExclusionArea(s16* flip_ang_y_p, s32* old_cam_excl_area_r_p, VE
             break;
     }
 
-    desired_radius = FP_FROM(base_radius * vwOresenHokan(excl_r_ary, 9, abs_relative_angle_y, 0, FP_ANGLE(180.0f)), Q12_SHIFT);
+    desired_radius = FP_FROM(base_radius * vwOresenHokan(excl_r_ary, ARRAY_SIZE(excl_r_ary), abs_relative_angle_y, 0, FP_ANGLE(180.0f)), Q12_SHIFT);
 
     if (*old_cam_excl_area_r_p != NO_VALUE)
     {
@@ -2618,8 +2655,8 @@ void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_W
             new_base_ang_x = -new_base_ang_x;
         }
 
-        memcpy(sp18, D_8002AAE0, 5 * sizeof(s32));
-        new_base_ang_x = vwOresenHokan(sp18, 5, new_base_ang_x, 0, FP_METER(0.25f));
+        memcpy(sp18, D_8002AAE0, ARRAY_SIZE(sp18) * sizeof(s32));
+        new_base_ang_x = vwOresenHokan(sp18, ARRAY_SIZE(sp18), new_base_ang_x, 0, FP_METER(0.25f));
         new_base_ang_x = CLAMP(new_base_ang_x, FP_ANGLE(0.0f), FP_ANGLE(90.0f));
 
         if (angle < FP_ANGLE(0.0f))
