@@ -3,28 +3,28 @@ void sharedFunc_800D8244_1_s02(s_SubCharacter* chara)
     switch (chara->model_0.state_2)
     {
         case 1:
-            func_800D82F0(chara);
+            sharedFunc_800D82F0_1_s02(chara);
             break;
 
         case 2:
-            func_800D8684(chara);
+            sharedFunc_800D8684_1_s02(chara);
             break;
 
         case 3:
-            func_800D8F30(chara);
+            sharedFunc_800D8F30_1_s02(chara);
             break;
     
         case 4:
-            func_800D9528(chara);
+            sharedFunc_800D9528_1_s02(chara);
             break;
 
         case 5:
-            func_800D9774(chara);
+            sharedFunc_800D9774_1_s02(chara);
             break;
 
         default:
             break;
     }
 
-    chara->properties_E4.player.field_E4 &= ~(1 << 8);
+    chara->properties_E4.larvalStalker.properties_E8[0].val16[0] &= ~(1 << 8);
 }

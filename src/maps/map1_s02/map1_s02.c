@@ -156,22 +156,17 @@ INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", sharedFunc_800D7BE8_0_s00
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", sharedFunc_800D7EE8_1_s02); // 0x800D7EE8
 
-// TODO: .rodata migration and share.
-#ifdef NON_MATCHING
 #include "maps/shared/sharedFunc_800D8244_1_s02.h" // 0x800D8244
-#else
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", sharedFunc_800D8244_1_s02); // 0x800D8244
-#endif
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800D82F0);
+INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", sharedFunc_800D82F0_1_s02);
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800D8684);
+INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", sharedFunc_800D8684_1_s02);
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800D8F30);
+INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", sharedFunc_800D8F30_1_s02);
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800D9528);
+INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", sharedFunc_800D9528_1_s02);
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800D9774);
+#include "maps/shared/sharedFunc_800D9774_1_s02.h" // 0x800D9774
 
 #include "maps/shared/sharedFunc_800D983C_1_s02.h" // 0x800D983C
 
