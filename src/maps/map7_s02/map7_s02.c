@@ -262,9 +262,7 @@ void func_800D8C00(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8C00
 
 #include "maps/shared/sharedFunc_800D9188_0_s00.h" // 0x800D95C0
 
-// TODO: Requires rodata for jump table
-// #include "maps/shared/Anim_StartKeyframeIdxGet.h" // 0x800D9654
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", Anim_StartKeyframeIdxGet); // 0x800D9654
+#include "maps/shared/Anim_StartKeyframeIdxGet.h" // 0x800D9654
 
 #include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800D96F4
 

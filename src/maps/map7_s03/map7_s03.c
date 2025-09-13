@@ -239,9 +239,7 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedSymbol_800CF470_3_s
 
 #include "maps/shared/sharedFunc_800D8950_0_s00.h" // 0x800D50E4
 
-// TODO: Requires rodata for jump table
-// #include "maps/shared/sharedFunc_800D8964_0_s00.h" // 0x800D50F8
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800D8964_0_s00); // 0x800D50F8
+#include "maps/shared/sharedFunc_800D8964_0_s00.h" // 0x800D50F8
 
 #include "maps/shared/sharedFunc_800D8A00_0_s00.h" // 0x800D5234
 
@@ -253,9 +251,7 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800D8964_0_s00
 
 #include "maps/shared/sharedFunc_800D9188_0_s00.h" // 0x800D59BC
 
-// TODO: Requires rodata for jump table
-// #include "maps/shared/Anim_StartKeyframeIdxGet.h" // 0x800D5AA8
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", Anim_StartKeyframeIdxGet); // 0x800D5AA8
+#include "maps/shared/Anim_StartKeyframeIdxGet.h" // 0x800D5AA8
 
 #include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800D5B68
 

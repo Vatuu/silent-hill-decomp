@@ -313,9 +313,7 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", sharedSymbol_800CD4A0_2_s
 
 #include "maps/shared/sharedFunc_800D908C_0_s00.h" // 0x800DDDF0
 
-// TODO: Requires rodata for jump table
-// #include "maps/shared/sharedFunc_800D9188_0_s00.h" // 0x800DDEEC
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", sharedFunc_800D9188_0_s00); // 0x800DDEEC
+#include "maps/shared/sharedFunc_800D9188_0_s00.h" // 0x800DDEEC
 
 #include "maps/shared/Anim_StartKeyframeIdxGet.h" // 0x800DDFEC
 
