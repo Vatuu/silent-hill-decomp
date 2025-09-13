@@ -1,6 +1,6 @@
     {
-        .lim_sw_0 = { Q7_8(-15.0f), Q7_8(12.5f), Q7_8(6.78125f), Q7_8(8.1875f) },
-        .lim_rd_8 = { Q7_8(-15.0f), Q7_8(12.5f), Q7_8(7.0f), Q7_8(8.0f) },
+        .lim_sw_0 = { Q11_4(-240.0f), Q11_4(200.0f), Q11_4(108.5f), Q11_4(131.0f) },
+        .lim_rd_8 = { Q11_4(-240.0f), Q11_4(200.0f), Q11_4(112.0f), Q11_4(128.0f) },
         .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_ROAD,
@@ -14,8 +14,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(11.25f), Q7_8(12.125f), Q7_8(6.875f), Q7_8(7.625f) },
-        .lim_rd_8 = { Q7_8(10.625f), Q7_8(11.5f), Q7_8(7.328125f), Q7_8(7.328125f) },
+        .lim_sw_0 = { Q11_4(180.0f), Q11_4(194.0f), Q11_4(110.0f), Q11_4(122.0f) },
+        .lim_rd_8 = { Q11_4(170.0f), Q11_4(184.0f), Q11_4(117.25f), Q11_4(117.25f) },
         .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_USE_NO_ENEMY_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_EFFECT,
@@ -29,8 +29,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(114.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(-10.0f), Q7_8(7.5f), Q7_8(-0.71875f), Q7_8(0.71875f) },
-        .lim_rd_8 = { Q7_8(-15.0f), Q7_8(7.5f), Q7_8(-0.5f), Q7_8(0.5f) },
+        .lim_sw_0 = { Q11_4(-160.0f), Q11_4(120.0f), Q11_4(-11.5f), Q11_4(11.5f) },
+        .lim_rd_8 = { Q11_4(-240.0f), Q11_4(120.0f), Q11_4(-8.0f), Q11_4(8.0f) },
         .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_ROAD,
@@ -44,8 +44,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(-15.0f), Q7_8(-10.0f), Q7_8(-0.71875f), Q7_8(0.71875f) },
-        .lim_rd_8 = { Q7_8(-15.0f), Q7_8(-10.90625f), Q7_8(-0.5f), Q7_8(0.5f) },
+        .lim_sw_0 = { Q11_4(-240.0f), Q11_4(-160.0f), Q11_4(-11.5f), Q11_4(11.5f) },
+        .lim_rd_8 = { Q11_4(-240.0f), Q11_4(-174.5f), Q11_4(-8.0f), Q11_4(8.0f) },
         .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_ROAD,
@@ -59,8 +59,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(-9.75f), Q7_8(-9.25f), Q7_8(-0.375f), Q7_8(0.5f) },
-        .lim_rd_8 = { Q7_8(-9.82421875f), Q7_8(-9.82421875f), Q7_8(0.16015625f), Q7_8(0.16015625f) },
+        .lim_sw_0 = { Q11_4(-156.0f), Q11_4(-148.0f), Q11_4(-6.0f), Q11_4(8.0f) },
+        .lim_rd_8 = { Q11_4(-157.1875f), Q11_4(-157.1875f), Q11_4(2.5625f), Q11_4(2.5625f) },
         .flags_10 = VC_RD_WARP_IN_OUT_FS | VC_RD_LIM_UP_FAR_VIEW_F,
         .area_size_type_11 = VC_AREA_SMALL,
         .rd_type_11 = VC_RD_TYPE_EFFECT,
@@ -74,8 +74,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(-9.875f), Q7_8(-9.5625f), Q7_8(0.03125f), Q7_8(0.25f) },
-        .lim_rd_8 = { Q7_8(-9.640625f), Q7_8(-9.4375f), Q7_8(0.015625f), Q7_8(0.2421875f) },
+        .lim_sw_0 = { Q11_4(-158.0f), Q11_4(-153.0f), Q11_4(0.5f), Q11_4(4.0f) },
+        .lim_rd_8 = { Q11_4(-154.25f), Q11_4(-151.0f), Q11_4(0.25f), Q11_4(3.875f) },
         .flags_10 = VC_RD_WARP_IN_OUT_FS,
         .area_size_type_11 = VC_AREA_SMALL,
         .rd_type_11 = VC_RD_TYPE_EVENT,
@@ -89,8 +89,8 @@
         .fix_ang_y_17 = -59
     },
     {
-        .lim_sw_0 = { Q7_8(-15.0f), Q7_8(11.3125f), Q7_8(-5.71875f), Q7_8(-4.28125f) },
-        .lim_rd_8 = { Q7_8(-15.0f), Q7_8(12.5f), Q7_8(-5.5f), Q7_8(-4.5f) },
+        .lim_sw_0 = { Q11_4(-240.0f), Q11_4(181.0f), Q11_4(-91.5f), Q11_4(-68.5f) },
+        .lim_rd_8 = { Q11_4(-240.0f), Q11_4(200.0f), Q11_4(-88.0f), Q11_4(-72.0f) },
         .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_ROAD,
@@ -104,8 +104,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(11.3125f), Q7_8(12.5f), Q7_8(-5.71875f), Q7_8(-4.28125f) },
-        .lim_rd_8 = { Q7_8(-15.0f), Q7_8(12.4375f), Q7_8(-5.5f), Q7_8(-4.5f) },
+        .lim_sw_0 = { Q11_4(181.0f), Q11_4(200.0f), Q11_4(-91.5f), Q11_4(-68.5f) },
+        .lim_rd_8 = { Q11_4(-240.0f), Q11_4(199.0f), Q11_4(-88.0f), Q11_4(-72.0f) },
         .flags_10 = VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_ROAD,
@@ -119,8 +119,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(9.0625f), Q7_8(9.484375f), Q7_8(-4.12890625f), Q7_8(-4.0f) },
-        .lim_rd_8 = { Q7_8(8.921875f), Q7_8(9.328125f), Q7_8(-4.171875f), Q7_8(-4.171875f) },
+        .lim_sw_0 = { Q11_4(145.0f), Q11_4(151.75f), Q11_4(-66.0625f), Q11_4(-64.0f) },
+        .lim_rd_8 = { Q11_4(142.75f), Q11_4(149.25f), Q11_4(-66.75f), Q11_4(-66.75f) },
         .flags_10 = VC_RD_WARP_IN_OUT_FS,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_EVENT,
@@ -134,8 +134,8 @@
         .fix_ang_y_17 = 22
     },
     {
-        .lim_sw_0 = { Q7_8(9.0f), Q7_8(9.484375f), Q7_8(-6.0f), Q7_8(-5.8671875f) },
-        .lim_rd_8 = { Q7_8(9.31640625f), Q7_8(9.6796875f), Q7_8(-5.984375f), Q7_8(-5.984375f) },
+        .lim_sw_0 = { Q11_4(144.0f), Q11_4(151.75f), Q11_4(-96.0f), Q11_4(-93.875f) },
+        .lim_rd_8 = { Q11_4(149.0625f), Q11_4(154.875f), Q11_4(-95.75f), Q11_4(-95.75f) },
         .flags_10 = VC_RD_WARP_IN_OUT_FS,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_EVENT,
@@ -149,8 +149,8 @@
         .fix_ang_y_17 = -50
     },
     {
-        .lim_sw_0 = { Q7_8(-15.0f), Q7_8(7.5f), Q7_8(-13.21875f), Q7_8(-11.78125f) },
-        .lim_rd_8 = { Q7_8(-15.25f), Q7_8(7.5f), Q7_8(-13.0f), Q7_8(-12.0f) },
+        .lim_sw_0 = { Q11_4(-240.0f), Q11_4(120.0f), Q11_4(-211.5f), Q11_4(-188.5f) },
+        .lim_rd_8 = { Q11_4(-244.0f), Q11_4(120.0f), Q11_4(-208.0f), Q11_4(-192.0f) },
         .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_ROAD,
@@ -164,8 +164,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(-15.6875f), Q7_8(-14.3125f), Q7_8(-12.59375f), Q7_8(8.9375f) },
-        .lim_rd_8 = { Q7_8(-15.5f), Q7_8(-14.5f), Q7_8(-12.4375f), Q7_8(8.65625f) },
+        .lim_sw_0 = { Q11_4(-251.0f), Q11_4(-229.0f), Q11_4(-201.5f), Q11_4(143.0f) },
+        .lim_rd_8 = { Q11_4(-248.0f), Q11_4(-232.0f), Q11_4(-199.0f), Q11_4(138.5f) },
         .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_ROAD,
@@ -179,8 +179,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(-15.29296875f), Q7_8(-14.3125f), Q7_8(-13.4375f), Q7_8(-12.59375f) },
-        .lim_rd_8 = { Q7_8(-15.25f), Q7_8(-14.5f), Q7_8(-13.625f), Q7_8(8.65625f) },
+        .lim_sw_0 = { Q11_4(-244.6875f), Q11_4(-229.0f), Q11_4(-215.0f), Q11_4(-201.5f) },
+        .lim_rd_8 = { Q11_4(-244.0f), Q11_4(-232.0f), Q11_4(-218.0f), Q11_4(138.5f) },
         .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_ROAD,
@@ -194,8 +194,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(-15.6875f), Q7_8(-14.3125f), Q7_8(-14.375f), Q7_8(-13.0f) },
-        .lim_rd_8 = { Q7_8(-15.5f), Q7_8(-14.5f), Q7_8(-13.625f), Q7_8(-13.1875f) },
+        .lim_sw_0 = { Q11_4(-251.0f), Q11_4(-229.0f), Q11_4(-230.0f), Q11_4(-208.0f) },
+        .lim_rd_8 = { Q11_4(-248.0f), Q11_4(-232.0f), Q11_4(-218.0f), Q11_4(-211.0f) },
         .flags_10 = VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_ROAD,
@@ -209,8 +209,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(-15.5859375f), Q7_8(-15.3125f), Q7_8(8.9375f), Q7_8(9.375f) },
-        .lim_rd_8 = { Q7_8(-15.34375f), Q7_8(-15.34375f), Q7_8(8.85546875f), Q7_8(8.85546875f) },
+        .lim_sw_0 = { Q11_4(-249.375f), Q11_4(-245.0f), Q11_4(143.0f), Q11_4(150.0f) },
+        .lim_rd_8 = { Q11_4(-245.5f), Q11_4(-245.5f), Q11_4(141.6875f), Q11_4(141.6875f) },
         .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_ROAD,
@@ -224,8 +224,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(-15.0f), Q7_8(-14.25f), Q7_8(8.625f), Q7_8(9.125f) },
-        .lim_rd_8 = { Q7_8(-15.375f), Q7_8(-14.5f), Q7_8(8.125f), Q7_8(8.9375f) },
+        .lim_sw_0 = { Q11_4(-240.0f), Q11_4(-228.0f), Q11_4(138.0f), Q11_4(146.0f) },
+        .lim_rd_8 = { Q11_4(-246.0f), Q11_4(-232.0f), Q11_4(130.0f), Q11_4(143.0f) },
         .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_EFFECT,
@@ -239,8 +239,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(-14.60546875f), Q7_8(-14.25f), Q7_8(9.0f), Q7_8(9.375f) },
-        .lim_rd_8 = { Q7_8(-14.546875f), Q7_8(-14.3125f), Q7_8(8.125f), Q7_8(9.28125f) },
+        .lim_sw_0 = { Q11_4(-233.6875f), Q11_4(-228.0f), Q11_4(144.0f), Q11_4(150.0f) },
+        .lim_rd_8 = { Q11_4(-232.75f), Q11_4(-229.0f), Q11_4(130.0f), Q11_4(148.5f) },
         .flags_10 = VC_RD_NOFLAG,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_EVENT,
@@ -254,8 +254,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(-11.51171875f), Q7_8(-11.23828125f), Q7_8(-5.0f), Q7_8(7.5f) },
-        .lim_rd_8 = { Q7_8(-11.51171875f), Q7_8(-11.23828125f), Q7_8(-5.0f), Q7_8(7.5f) },
+        .lim_sw_0 = { Q11_4(-184.1875f), Q11_4(-179.8125f), Q11_4(-80.0f), Q11_4(120.0f) },
+        .lim_rd_8 = { Q11_4(-184.1875f), Q11_4(-179.8125f), Q11_4(-80.0f), Q11_4(120.0f) },
         .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_ROAD,
@@ -269,8 +269,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(-11.51171875f), Q7_8(-11.23828125f), Q7_8(-12.5f), Q7_8(-8.0f) },
-        .lim_rd_8 = { Q7_8(-11.51171875f), Q7_8(-11.23828125f), Q7_8(-12.5f), Q7_8(-8.0f) },
+        .lim_sw_0 = { Q11_4(-184.1875f), Q11_4(-179.8125f), Q11_4(-200.0f), Q11_4(-128.0f) },
+        .lim_rd_8 = { Q11_4(-184.1875f), Q11_4(-179.8125f), Q11_4(-200.0f), Q11_4(-128.0f) },
         .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_ROAD,
@@ -284,8 +284,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(-11.51171875f), Q7_8(-11.17578125f), Q7_8(-9.375f), Q7_8(-8.75f) },
-        .lim_rd_8 = { Q7_8(-11.51171875f), Q7_8(-11.23828125f), Q7_8(-12.5f), Q7_8(-8.0f) },
+        .lim_sw_0 = { Q11_4(-184.1875f), Q11_4(-178.8125f), Q11_4(-150.0f), Q11_4(-140.0f) },
+        .lim_rd_8 = { Q11_4(-184.1875f), Q11_4(-179.8125f), Q11_4(-200.0f), Q11_4(-128.0f) },
         .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_EFFECT,
@@ -299,8 +299,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(-11.5625f), Q7_8(-11.0f), Q7_8(-9.16015625f), Q7_8(-8.9921875f) },
-        .lim_rd_8 = { Q7_8(-10.8671875f), Q7_8(-10.8671875f), Q7_8(-9.125f), Q7_8(-9.125f) },
+        .lim_sw_0 = { Q11_4(-185.0f), Q11_4(-176.0f), Q11_4(-146.5625f), Q11_4(-143.875f) },
+        .lim_rd_8 = { Q11_4(-173.875f), Q11_4(-173.875f), Q11_4(-146.0f), Q11_4(-146.0f) },
         .flags_10 = VC_RD_WARP_IN_OUT_FS,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_EVENT,
@@ -314,8 +314,8 @@
         .fix_ang_y_17 = -64
     },
     {
-        .lim_sw_0 = { Q7_8(-11.0f), Q7_8(-10.625f), Q7_8(-9.203125f), Q7_8(-8.9921875f) },
-        .lim_rd_8 = { Q7_8(-11.16796875f), Q7_8(-11.16796875f), Q7_8(-9.109375f), Q7_8(-9.109375f) },
+        .lim_sw_0 = { Q11_4(-176.0f), Q11_4(-170.0f), Q11_4(-147.25f), Q11_4(-143.875f) },
+        .lim_rd_8 = { Q11_4(-178.6875f), Q11_4(-178.6875f), Q11_4(-145.75f), Q11_4(-145.75f) },
         .flags_10 = VC_RD_WARP_IN_OUT_FS,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_EVENT,
@@ -329,8 +329,8 @@
         .fix_ang_y_17 = 64,
     },
     {
-        .lim_sw_0 = { Q7_8(-8.1875f), Q7_8(-6.8125f), Q7_8(-12.5f), Q7_8(7.5f) },
-        .lim_rd_8 = { Q7_8(-8.0f), Q7_8(-7.0f), Q7_8(-12.5f), Q7_8(7.5f) },
+        .lim_sw_0 = { Q11_4(-131.0f), Q11_4(-109.0f), Q11_4(-200.0f), Q11_4(120.0f) },
+        .lim_rd_8 = { Q11_4(-128.0f), Q11_4(-112.0f), Q11_4(-200.0f), Q11_4(120.0f) },
         .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_ROAD,
@@ -344,8 +344,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(-4.01171875f), Q7_8(-3.73828125f), Q7_8(3.125f), Q7_8(7.5f) },
-        .lim_rd_8 = { Q7_8(-4.01171875f), Q7_8(-3.73828125f), Q7_8(3.125f), Q7_8(7.5f) },
+        .lim_sw_0 = { Q11_4(-64.1875f), Q11_4(-59.8125f), Q11_4(50.0f), Q11_4(120.0f) },
+        .lim_rd_8 = { Q11_4(-64.1875f), Q11_4(-59.8125f), Q11_4(50.0f), Q11_4(120.0f) },
         .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_ROAD,
@@ -359,8 +359,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(-4.01171875f), Q7_8(-3.73828125f), Q7_8(-1.875f), Q7_8(0.0f) },
-        .lim_rd_8 = { Q7_8(-4.01171875f), Q7_8(-3.73828125f), Q7_8(-1.875f), Q7_8(0.0f) },
+        .lim_sw_0 = { Q11_4(-64.1875f), Q11_4(-59.8125f), Q11_4(-30.0f), Q11_4(0.0f) },
+        .lim_rd_8 = { Q11_4(-64.1875f), Q11_4(-59.8125f), Q11_4(-30.0f), Q11_4(0.0f) },
         .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_ROAD,
@@ -374,8 +374,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(-4.01171875f), Q7_8(-3.73828125f), Q7_8(-12.5f), Q7_8(-5.0f) },
-        .lim_rd_8 = { Q7_8(-4.01171875f), Q7_8(-3.73828125f), Q7_8(-12.5f), Q7_8(-5.0f) },
+        .lim_sw_0 = { Q11_4(-64.1875f), Q11_4(-59.8125f), Q11_4(-200.0f), Q11_4(-80.0f) },
+        .lim_rd_8 = { Q11_4(-64.1875f), Q11_4(-59.8125f), Q11_4(-200.0f), Q11_4(-80.0f) },
         .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_ROAD,
@@ -389,23 +389,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(-0.71875f), Q7_8(1.21875f), Q7_8(-1.125f), Q7_8(13.1875f) },
-        .lim_rd_8 = { Q7_8(-0.5f), Q7_8(1.0f), Q7_8(-1.125f), Q7_8(13.1875f) },
-        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
-        .area_size_type_11 = VC_AREA_WIDE,
-        .rd_type_11 = VC_RD_TYPE_ROAD,
-        .mv_y_type_11 = VC_MV_CHASE,
-        .lim_rd_max_hy_12 = Q27_4(-2.5f),
-        .lim_rd_min_hy_13 = Q27_4(-6.0f),
-        .ofs_watch_hy_14 = Q27_4(0.5f),
-        .field_15 = 0,
-        .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
-    },
-    {
-        .lim_sw_0 = { Q7_8(-0.71875f), Q7_8(0.1640625f), Q7_8(12.5f), Q7_8(13.5f) },
-        .lim_rd_8 = { Q7_8(-0.5f), Q7_8(0.1640625f), Q7_8(0.1640625f), Q7_8(13.5f) },
+        .lim_sw_0 = { Q11_4(-11.5f), Q11_4(19.5f), Q11_4(-18.0f), Q11_4(211.0f) },
+        .lim_rd_8 = { Q11_4(-8.0f), Q11_4(16.0f), Q11_4(-18.0f), Q11_4(211.0f) },
         .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_ROAD,
@@ -419,8 +404,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(0.34375f), Q7_8(1.21875f), Q7_8(12.5f), Q7_8(13.5f) },
-        .lim_rd_8 = { Q7_8(0.34375f), Q7_8(1.0f), Q7_8(-14.4375f), Q7_8(13.5f) },
+        .lim_sw_0 = { Q11_4(-11.5f), Q11_4(2.625f), Q11_4(200.0f), Q11_4(216.0f) },
+        .lim_rd_8 = { Q11_4(-8.0f), Q11_4(2.625f), Q11_4(2.625f), Q11_4(216.0f) },
         .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_ROAD,
@@ -434,173 +419,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(3.48828125f), Q7_8(3.76171875f), Q7_8(-2.0f), Q7_8(7.5f) },
-        .lim_rd_8 = { Q7_8(3.48828125f), Q7_8(3.76171875f), Q7_8(-1.875f), Q7_8(7.5f) },
-        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
-        .area_size_type_11 = VC_AREA_WIDE,
-        .rd_type_11 = VC_RD_TYPE_ROAD,
-        .mv_y_type_11 = VC_MV_CHASE,
-        .lim_rd_max_hy_12 = Q27_4(6.0f),
-        .lim_rd_min_hy_13 = Q27_4(-6.0f),
-        .ofs_watch_hy_14 = Q27_4(0.5f),
-        .field_15 = 0,
-        .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
-    },
-    {
-        .lim_sw_0 = { Q7_8(6.8125f), Q7_8(8.1875f), Q7_8(-1.71875f), Q7_8(7.5f) },
-        .lim_rd_8 = { Q7_8(7.0f), Q7_8(8.0f), Q7_8(-1.71875f), Q7_8(7.5f) },
-        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
-        .area_size_type_11 = VC_AREA_WIDE,
-        .rd_type_11 = VC_RD_TYPE_ROAD,
-        .mv_y_type_11 = VC_MV_CHASE,
-        .lim_rd_max_hy_12 = Q27_4(6.0f),
-        .lim_rd_min_hy_13 = Q27_4(-6.0f),
-        .ofs_watch_hy_14 = Q27_4(0.5f),
-        .field_15 = 0,
-        .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
-    },
-    {
-        .lim_sw_0 = { Q7_8(-14.53125f), Q7_8(-13.65625f), Q7_8(-12.5f), Q7_8(7.5f) },
-        .lim_rd_8 = { Q7_8(-14.15625f), Q7_8(-13.90625f), Q7_8(-12.5f), Q7_8(7.5f) },
-        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F,
-        .area_size_type_11 = VC_AREA_WIDE,
-        .rd_type_11 = VC_RD_TYPE_ROAD,
-        .mv_y_type_11 = VC_MV_CHASE,
-        .lim_rd_max_hy_12 = Q27_4(6.0f),
-        .lim_rd_min_hy_13 = Q27_4(-6.0f),
-        .ofs_watch_hy_14 = Q27_4(0.5f),
-        .field_15 = 0,
-        .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
-    },
-    {
-        .lim_sw_0 = { Q7_8(-8.84375f), Q7_8(-7.96875f), Q7_8(-12.5f), Q7_8(7.5f) },
-        .lim_rd_8 = { Q7_8(-8.59375f), Q7_8(-8.34375f), Q7_8(-12.5f), Q7_8(7.5f) },
-        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F,
-        .area_size_type_11 = VC_AREA_WIDE,
-        .rd_type_11 = VC_RD_TYPE_ROAD,
-        .mv_y_type_11 = VC_MV_CHASE,
-        .lim_rd_max_hy_12 = Q27_4(6.0f),
-        .lim_rd_min_hy_13 = Q27_4(-6.0f),
-        .ofs_watch_hy_14 = Q27_4(0.5f),
-        .field_15 = 0,
-        .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
-    },
-    {
-        .lim_sw_0 = { Q7_8(-7.03125f), Q7_8(-6.15625f), Q7_8(-12.5f), Q7_8(7.5f) },
-        .lim_rd_8 = { Q7_8(-6.65625f), Q7_8(-6.40625f), Q7_8(-12.5f), Q7_8(7.5f) },
-        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F,
-        .area_size_type_11 = VC_AREA_WIDE,
-        .rd_type_11 = VC_RD_TYPE_ROAD,
-        .mv_y_type_11 = VC_MV_CHASE,
-        .lim_rd_max_hy_12 = Q27_4(6.0f),
-        .lim_rd_min_hy_13 = Q27_4(-6.0f),
-        .ofs_watch_hy_14 = Q27_4(0.5f),
-        .field_15 = 0,
-        .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
-    },
-    {
-        .lim_sw_0 = { Q7_8(6.15625f), Q7_8(7.03125f), Q7_8(-1.71875f), Q7_8(7.5f) },
-        .lim_rd_8 = { Q7_8(6.40625f), Q7_8(6.65625f), Q7_8(-1.71875f), Q7_8(7.5f) },
-        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F,
-        .area_size_type_11 = VC_AREA_WIDE,
-        .rd_type_11 = VC_RD_TYPE_ROAD,
-        .mv_y_type_11 = VC_MV_CHASE,
-        .lim_rd_max_hy_12 = Q27_4(6.0f),
-        .lim_rd_min_hy_13 = Q27_4(-6.0f),
-        .ofs_watch_hy_14 = Q27_4(0.5f),
-        .field_15 = 0,
-        .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
-    },
-    {
-        .lim_sw_0 = { Q7_8(-16.46875f), Q7_8(-15.46875f), Q7_8(-15.0f), Q7_8(3.75f) },
-        .lim_rd_8 = { Q7_8(-16.03125f), Q7_8(-15.8125f), Q7_8(-13.53125f), Q7_8(4.0f) },
-        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F,
-        .area_size_type_11 = VC_AREA_WIDE,
-        .rd_type_11 = VC_RD_TYPE_ROAD,
-        .mv_y_type_11 = VC_MV_CHASE,
-        .lim_rd_max_hy_12 = Q27_4(6.0f),
-        .lim_rd_min_hy_13 = Q27_4(-6.0f),
-        .ofs_watch_hy_14 = Q27_4(0.5f),
-        .field_15 = 0,
-        .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
-    },
-    {
-        .lim_sw_0 = { Q7_8(-17.5f), Q7_8(-15.3125f), Q7_8(-11.875f), Q7_8(-10.625f) },
-        .lim_rd_8 = { Q7_8(-17.5f), Q7_8(-15.3125f), Q7_8(-11.51171875f), Q7_8(-10.96875f) },
-        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
-        .area_size_type_11 = VC_AREA_WIDE,
-        .rd_type_11 = VC_RD_TYPE_ROAD,
-        .mv_y_type_11 = VC_MV_CHASE,
-        .lim_rd_max_hy_12 = Q27_4(6.0f),
-        .lim_rd_min_hy_13 = Q27_4(-6.0f),
-        .ofs_watch_hy_14 = Q27_4(0.5f),
-        .field_15 = 0,
-        .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
-    },
-    {
-        .lim_sw_0 = { Q7_8(6.8125f), Q7_8(8.1875f), Q7_8(-8.25f), Q7_8(-3.34375f) },
-        .lim_rd_8 = { Q7_8(7.0f), Q7_8(8.0f), Q7_8(-8.0625f), Q7_8(-3.34375f) },
-        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
-        .area_size_type_11 = VC_AREA_WIDE,
-        .rd_type_11 = VC_RD_TYPE_ROAD,
-        .mv_y_type_11 = VC_MV_CHASE,
-        .lim_rd_max_hy_12 = Q27_4(6.0f),
-        .lim_rd_min_hy_13 = Q27_4(-6.0f),
-        .ofs_watch_hy_14 = Q27_4(0.5f),
-        .field_15 = 0,
-        .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
-    },
-    {
-        .lim_sw_0 = { Q7_8(6.15625f), Q7_8(7.03125f), Q7_8(-5.0f), Q7_8(-3.34375f) },
-        .lim_rd_8 = { Q7_8(6.40625f), Q7_8(6.65625f), Q7_8(-5.0f), Q7_8(-3.34375f) },
-        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F,
-        .area_size_type_11 = VC_AREA_WIDE,
-        .rd_type_11 = VC_RD_TYPE_ROAD,
-        .mv_y_type_11 = VC_MV_CHASE,
-        .lim_rd_max_hy_12 = Q27_4(6.0f),
-        .lim_rd_min_hy_13 = Q27_4(-6.0f),
-        .ofs_watch_hy_14 = Q27_4(0.5f),
-        .field_15 = 0,
-        .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
-    },
-    {
-        .lim_sw_0 = { Q7_8(1.875f), Q7_8(6.4375f), Q7_8(7.96875f), Q7_8(8.96875f) },
-        .lim_rd_8 = { Q7_8(1.5625f), Q7_8(6.4375f), Q7_8(8.3125f), Q7_8(8.5625f) },
-        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F,
-        .area_size_type_11 = VC_AREA_WIDE,
-        .rd_type_11 = VC_RD_TYPE_ROAD,
-        .mv_y_type_11 = VC_MV_CHASE,
-        .lim_rd_max_hy_12 = Q27_4(6.0f),
-        .lim_rd_min_hy_13 = Q27_4(-6.0f),
-        .ofs_watch_hy_14 = Q27_4(0.5f),
-        .field_15 = 0,
-        .cam_mv_type_14 = VC_MV_CHASE,
-        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
-        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
-    },
-    {
-        .lim_sw_0 = { Q7_8(-0.71875f), Q7_8(1.21875f), Q7_8(-7.0f), Q7_8(-3.125f) },
-        .lim_rd_8 = { Q7_8(-0.5f), Q7_8(1.0f), Q7_8(-7.0f), Q7_8(-3.125f) },
+        .lim_sw_0 = { Q11_4(5.5f), Q11_4(19.5f), Q11_4(200.0f), Q11_4(216.0f) },
+        .lim_rd_8 = { Q11_4(5.5f), Q11_4(16.0f), Q11_4(-231.0f), Q11_4(216.0f) },
         .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_ROAD,
@@ -614,8 +434,188 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(-14.125f), Q7_8(-11.0625f), Q7_8(-13.75f), Q7_8(-13.1875f) },
-        .lim_rd_8 = { Q7_8(-13.8125f), Q7_8(-11.0625f), Q7_8(-13.625f), Q7_8(-13.3125f) },
+        .lim_sw_0 = { Q11_4(55.8125f), Q11_4(60.1875f), Q11_4(-32.0f), Q11_4(120.0f) },
+        .lim_rd_8 = { Q11_4(55.8125f), Q11_4(60.1875f), Q11_4(-30.0f), Q11_4(120.0f) },
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
+        .area_size_type_11 = VC_AREA_WIDE,
+        .rd_type_11 = VC_RD_TYPE_ROAD,
+        .mv_y_type_11 = VC_MV_CHASE,
+        .lim_rd_max_hy_12 = Q27_4(6.0f),
+        .lim_rd_min_hy_13 = Q27_4(-6.0f),
+        .ofs_watch_hy_14 = Q27_4(0.5f),
+        .field_15 = 0,
+        .cam_mv_type_14 = VC_MV_CHASE,
+        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
+        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+    },
+    {
+        .lim_sw_0 = { Q11_4(109.0f), Q11_4(131.0f), Q11_4(-27.5f), Q11_4(120.0f) },
+        .lim_rd_8 = { Q11_4(112.0f), Q11_4(128.0f), Q11_4(-27.5f), Q11_4(120.0f) },
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
+        .area_size_type_11 = VC_AREA_WIDE,
+        .rd_type_11 = VC_RD_TYPE_ROAD,
+        .mv_y_type_11 = VC_MV_CHASE,
+        .lim_rd_max_hy_12 = Q27_4(6.0f),
+        .lim_rd_min_hy_13 = Q27_4(-6.0f),
+        .ofs_watch_hy_14 = Q27_4(0.5f),
+        .field_15 = 0,
+        .cam_mv_type_14 = VC_MV_CHASE,
+        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
+        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+    },
+    {
+        .lim_sw_0 = { Q11_4(-232.5f), Q11_4(-218.5f), Q11_4(-200.0f), Q11_4(120.0f) },
+        .lim_rd_8 = { Q11_4(-226.5f), Q11_4(-222.5f), Q11_4(-200.0f), Q11_4(120.0f) },
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F,
+        .area_size_type_11 = VC_AREA_WIDE,
+        .rd_type_11 = VC_RD_TYPE_ROAD,
+        .mv_y_type_11 = VC_MV_CHASE,
+        .lim_rd_max_hy_12 = Q27_4(6.0f),
+        .lim_rd_min_hy_13 = Q27_4(-6.0f),
+        .ofs_watch_hy_14 = Q27_4(0.5f),
+        .field_15 = 0,
+        .cam_mv_type_14 = VC_MV_CHASE,
+        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
+        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+    },
+    {
+        .lim_sw_0 = { Q11_4(-141.5f), Q11_4(-127.5f), Q11_4(-200.0f), Q11_4(120.0f) },
+        .lim_rd_8 = { Q11_4(-137.5f), Q11_4(-133.5f), Q11_4(-200.0f), Q11_4(120.0f) },
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F,
+        .area_size_type_11 = VC_AREA_WIDE,
+        .rd_type_11 = VC_RD_TYPE_ROAD,
+        .mv_y_type_11 = VC_MV_CHASE,
+        .lim_rd_max_hy_12 = Q27_4(6.0f),
+        .lim_rd_min_hy_13 = Q27_4(-6.0f),
+        .ofs_watch_hy_14 = Q27_4(0.5f),
+        .field_15 = 0,
+        .cam_mv_type_14 = VC_MV_CHASE,
+        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
+        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+    },
+    {
+        .lim_sw_0 = { Q11_4(-112.5f), Q11_4(-98.5f), Q11_4(-200.0f), Q11_4(120.0f) },
+        .lim_rd_8 = { Q11_4(-106.5f), Q11_4(-102.5f), Q11_4(-200.0f), Q11_4(120.0f) },
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F,
+        .area_size_type_11 = VC_AREA_WIDE,
+        .rd_type_11 = VC_RD_TYPE_ROAD,
+        .mv_y_type_11 = VC_MV_CHASE,
+        .lim_rd_max_hy_12 = Q27_4(6.0f),
+        .lim_rd_min_hy_13 = Q27_4(-6.0f),
+        .ofs_watch_hy_14 = Q27_4(0.5f),
+        .field_15 = 0,
+        .cam_mv_type_14 = VC_MV_CHASE,
+        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
+        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+    },
+    {
+        .lim_sw_0 = { Q11_4(98.5f), Q11_4(112.5f), Q11_4(-27.5f), Q11_4(120.0f) },
+        .lim_rd_8 = { Q11_4(102.5f), Q11_4(106.5f), Q11_4(-27.5f), Q11_4(120.0f) },
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F,
+        .area_size_type_11 = VC_AREA_WIDE,
+        .rd_type_11 = VC_RD_TYPE_ROAD,
+        .mv_y_type_11 = VC_MV_CHASE,
+        .lim_rd_max_hy_12 = Q27_4(6.0f),
+        .lim_rd_min_hy_13 = Q27_4(-6.0f),
+        .ofs_watch_hy_14 = Q27_4(0.5f),
+        .field_15 = 0,
+        .cam_mv_type_14 = VC_MV_CHASE,
+        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
+        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+    },
+    {
+        .lim_sw_0 = { Q11_4(-263.5f), Q11_4(-247.5f), Q11_4(-240.0f), Q11_4(60.0f) },
+        .lim_rd_8 = { Q11_4(-256.5f), Q11_4(-253.0f), Q11_4(-216.5f), Q11_4(64.0f) },
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F,
+        .area_size_type_11 = VC_AREA_WIDE,
+        .rd_type_11 = VC_RD_TYPE_ROAD,
+        .mv_y_type_11 = VC_MV_CHASE,
+        .lim_rd_max_hy_12 = Q27_4(6.0f),
+        .lim_rd_min_hy_13 = Q27_4(-6.0f),
+        .ofs_watch_hy_14 = Q27_4(0.5f),
+        .field_15 = 0,
+        .cam_mv_type_14 = VC_MV_CHASE,
+        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
+        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+    },
+    {
+        .lim_sw_0 = { Q11_4(-280.0f), Q11_4(-245.0f), Q11_4(-190.0f), Q11_4(-170.0f) },
+        .lim_rd_8 = { Q11_4(-280.0f), Q11_4(-245.0f), Q11_4(-184.1875f), Q11_4(-175.5f) },
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
+        .area_size_type_11 = VC_AREA_WIDE,
+        .rd_type_11 = VC_RD_TYPE_ROAD,
+        .mv_y_type_11 = VC_MV_CHASE,
+        .lim_rd_max_hy_12 = Q27_4(6.0f),
+        .lim_rd_min_hy_13 = Q27_4(-6.0f),
+        .ofs_watch_hy_14 = Q27_4(0.5f),
+        .field_15 = 0,
+        .cam_mv_type_14 = VC_MV_CHASE,
+        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
+        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+    },
+    {
+        .lim_sw_0 = { Q11_4(109.0f), Q11_4(131.0f), Q11_4(-132.0f), Q11_4(-53.5f) },
+        .lim_rd_8 = { Q11_4(112.0f), Q11_4(128.0f), Q11_4(-129.0f), Q11_4(-53.5f) },
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
+        .area_size_type_11 = VC_AREA_WIDE,
+        .rd_type_11 = VC_RD_TYPE_ROAD,
+        .mv_y_type_11 = VC_MV_CHASE,
+        .lim_rd_max_hy_12 = Q27_4(6.0f),
+        .lim_rd_min_hy_13 = Q27_4(-6.0f),
+        .ofs_watch_hy_14 = Q27_4(0.5f),
+        .field_15 = 0,
+        .cam_mv_type_14 = VC_MV_CHASE,
+        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
+        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+    },
+    {
+        .lim_sw_0 = { Q11_4(98.5f), Q11_4(112.5f), Q11_4(-80.0f), Q11_4(-53.5f) },
+        .lim_rd_8 = { Q11_4(102.5f), Q11_4(106.5f), Q11_4(-80.0f), Q11_4(-53.5f) },
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F,
+        .area_size_type_11 = VC_AREA_WIDE,
+        .rd_type_11 = VC_RD_TYPE_ROAD,
+        .mv_y_type_11 = VC_MV_CHASE,
+        .lim_rd_max_hy_12 = Q27_4(6.0f),
+        .lim_rd_min_hy_13 = Q27_4(-6.0f),
+        .ofs_watch_hy_14 = Q27_4(0.5f),
+        .field_15 = 0,
+        .cam_mv_type_14 = VC_MV_CHASE,
+        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
+        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+    },
+    {
+        .lim_sw_0 = { Q11_4(30.0f), Q11_4(103.0f), Q11_4(127.5f), Q11_4(143.5f) },
+        .lim_rd_8 = { Q11_4(25.0f), Q11_4(103.0f), Q11_4(133.0f), Q11_4(137.0f) },
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F,
+        .area_size_type_11 = VC_AREA_WIDE,
+        .rd_type_11 = VC_RD_TYPE_ROAD,
+        .mv_y_type_11 = VC_MV_CHASE,
+        .lim_rd_max_hy_12 = Q27_4(6.0f),
+        .lim_rd_min_hy_13 = Q27_4(-6.0f),
+        .ofs_watch_hy_14 = Q27_4(0.5f),
+        .field_15 = 0,
+        .cam_mv_type_14 = VC_MV_CHASE,
+        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
+        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+    },
+    {
+        .lim_sw_0 = { Q11_4(-11.5f), Q11_4(19.5f), Q11_4(-112.0f), Q11_4(-50.0f) },
+        .lim_rd_8 = { Q11_4(-8.0f), Q11_4(16.0f), Q11_4(-112.0f), Q11_4(-50.0f) },
+        .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
+        .area_size_type_11 = VC_AREA_WIDE,
+        .rd_type_11 = VC_RD_TYPE_ROAD,
+        .mv_y_type_11 = VC_MV_CHASE,
+        .lim_rd_max_hy_12 = Q27_4(-2.5f),
+        .lim_rd_min_hy_13 = Q27_4(-6.0f),
+        .ofs_watch_hy_14 = Q27_4(0.5f),
+        .field_15 = 0,
+        .cam_mv_type_14 = VC_MV_CHASE,
+        .fix_ang_x_16 = FP_ANGLE_PACKED(0.0f),
+        .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
+    },
+    {
+        .lim_sw_0 = { Q11_4(-226.0f), Q11_4(-177.0f), Q11_4(-220.0f), Q11_4(-211.0f) },
+        .lim_rd_8 = { Q11_4(-221.0f), Q11_4(-177.0f), Q11_4(-218.0f), Q11_4(-213.0f) },
         .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_EFFECT,
@@ -629,8 +629,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(-14.0f), Q7_8(-11.25f), Q7_8(8.1875f), Q7_8(8.75f) },
-        .lim_rd_8 = { Q7_8(-13.6875f), Q7_8(-11.078125f), Q7_8(8.34375f), Q7_8(8.59375f) },
+        .lim_sw_0 = { Q11_4(-224.0f), Q11_4(-180.0f), Q11_4(131.0f), Q11_4(140.0f) },
+        .lim_rd_8 = { Q11_4(-219.0f), Q11_4(-177.25f), Q11_4(133.5f), Q11_4(137.5f) },
         .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_EFFECT,
@@ -644,8 +644,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(-16.46875f), Q7_8(-15.84375f), Q7_8(4.3125f), Q7_8(6.8125f) },
-        .lim_rd_8 = { Q7_8(-16.01171875f), Q7_8(-15.8125f), Q7_8(4.625f), Q7_8(6.4375f) },
+        .lim_sw_0 = { Q11_4(-263.5f), Q11_4(-253.5f), Q11_4(69.0f), Q11_4(109.0f) },
+        .lim_rd_8 = { Q11_4(-256.1875f), Q11_4(-253.0f), Q11_4(74.0f), Q11_4(103.0f) },
         .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_ROAD,
@@ -659,8 +659,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(-16.875f), Q7_8(-14.5f), Q7_8(3.28125f), Q7_8(4.21875f) },
-        .lim_rd_8 = { Q7_8(-16.46875f), Q7_8(-14.5f), Q7_8(3.5f), Q7_8(4.0f) },
+        .lim_sw_0 = { Q11_4(-270.0f), Q11_4(-232.0f), Q11_4(52.5f), Q11_4(67.5f) },
+        .lim_rd_8 = { Q11_4(-263.5f), Q11_4(-232.0f), Q11_4(56.0f), Q11_4(64.0f) },
         .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_ROAD,
@@ -674,8 +674,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(1.34375f), Q7_8(1.875f), Q7_8(8.75f), Q7_8(9.625f) },
-        .lim_rd_8 = { Q7_8(1.53125f), Q7_8(1.53125f), Q7_8(8.82421875f), Q7_8(9.625f) },
+        .lim_sw_0 = { Q11_4(21.5f), Q11_4(30.0f), Q11_4(140.0f), Q11_4(154.0f) },
+        .lim_rd_8 = { Q11_4(24.5f), Q11_4(24.5f), Q11_4(141.1875f), Q11_4(154.0f) },
         .flags_10 = VC_RD_NOFLAG,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_ROAD,
@@ -689,8 +689,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(5.5625f), Q7_8(6.5f), Q7_8(-6.375f), Q7_8(-5.96875f) },
-        .lim_rd_8 = { Q7_8(5.5625f), Q7_8(6.9375f), Q7_8(-6.375f), Q7_8(-6.03125f) },
+        .lim_sw_0 = { Q11_4(89.0f), Q11_4(104.0f), Q11_4(-102.0f), Q11_4(-95.5f) },
+        .lim_rd_8 = { Q11_4(89.0f), Q11_4(111.0f), Q11_4(-102.0f), Q11_4(-96.5f) },
         .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_ROAD,
@@ -704,8 +704,8 @@
         .fix_ang_y_17 = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0 = { Q7_8(5.0f), Q7_8(7.125f), Q7_8(-5.96875f), Q7_8(-5.671875f) },
-        .lim_rd_8 = { Q7_8(5.09375f), Q7_8(6.9375f), Q7_8(-5.875f), Q7_8(-5.54296875f) },
+        .lim_sw_0 = { Q11_4(80.0f), Q11_4(114.0f), Q11_4(-95.5f), Q11_4(-90.75f) },
+        .lim_rd_8 = { Q11_4(81.5f), Q11_4(111.0f), Q11_4(-94.0f), Q11_4(-88.6875f) },
         .flags_10 = VC_RD_LIM_UP_FAR_VIEW_F,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11 = VC_RD_TYPE_EFFECT,

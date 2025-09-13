@@ -110,6 +110,14 @@
 #define Q0_8(x) \
     (u8)FP_FLOAT_TO(x, Q8_SHIFT)
 
+/** @brief Converts a floating-point value to fixed-point Q11.4.
+ *
+ * @param x Value to convert (`float`).
+ * @return `x` converted to fixed-point Q11.4 (`s16`).
+ */
+#define Q11_4(x) \
+    (s16)FP_FLOAT_TO(x, Q4_SHIFT)
+
 /** @brief Converts a floating-point value to fixed-point Q7.8.
  *
  * @param x Value to convert (`float`).
