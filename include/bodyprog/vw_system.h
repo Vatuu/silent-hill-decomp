@@ -281,9 +281,9 @@ typedef struct _VC_WORK
     MATRIX                    field_DC;
     u8                        field_FC;                       /** `bool` */
     u8                        field_FD;
-    s16                       cam_chara2ideal_ang_y_FE;  
+    q3_12                     cam_chara2ideal_ang_y_FE;  
     VECTOR3                   cam_tgt_velo_100;               /** Target velocity. */
-    s16                       cam_tgt_mv_ang_y_10C;           /** Target Y angles. */
+    q3_12                     cam_tgt_mv_ang_y_10C;           /** Target Y angles. */
     s8                        unk_10E[2];
     s32                       cam_tgt_spd_110;                               /** Target speed. */
     VECTOR3                   chara_pos_114;                                 /** Locked-on character position. */
@@ -293,10 +293,10 @@ typedef struct _VC_WORK
     s32                       chara_grnd_y_12C;                              /** Locked-on character height from the ground? */
     VECTOR3                   chara_head_pos_130;                            /** Q19.12 | Locked-on character head position. */
     s32                       chara_mv_spd_13C;                              /** Locked-on character movement speed. */
-    s16                       chara_mv_ang_y_140;                            /** Locked-on character heading angle. */
-    s16                       chara_ang_spd_y_142;                           /** Locked-on character heading angle angular speed. */
-    s16                       chara_eye_ang_y_144;                           /** Locked-on character look heading angle? */
-    s16                       chara_eye_ang_wy_146;                          /** Locked-on character unknown Y angle */
+    q3_12                     chara_mv_ang_y_140;                            /** Locked-on character heading angle. */
+    q3_12                     chara_ang_spd_y_142;                           /** Locked-on character heading angle angular speed. */
+    q3_12                     chara_eye_ang_y_144;                           /** Locked-on character look heading angle? */
+    q3_12                     chara_eye_ang_wy_146;                          /** Locked-on character unknown Y angle */
     s32                       chara_watch_xz_r_148;                          /** Locked-on character radius on the XZ plane. */
     VC_NEAR_ROAD_DATA         near_road_ary_14C[CAMERA_PATH_COLL_COUNT_MAX]; /** Nearby camera path collisions. */
     s32                       near_road_suu_2B4;                             /** Count of valid `near_road_ary_14C` entries. */
