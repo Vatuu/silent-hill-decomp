@@ -584,7 +584,6 @@ INCLUDE_RODATA("asm/maps/map0_s01/nonmatchings/map0_s01", D_800CB7E4);
 
 INCLUDE_RODATA("asm/maps/map0_s01/nonmatchings/map0_s01", D_800CB7F0);
 
-#ifdef NON_MATCHING // TODO .rodata
 void func_800D3CC4(s_SubCharacter* chara)
 {
     u32  keyframeIdx;
@@ -599,6 +598,9 @@ void func_800D3CC4(s_SubCharacter* chara)
             cond = true;
             chara->model_0.anim_4.status_0 = ANIM_STATUS(23, true);
             chara->model_0.stateStep_3 = 1;
+        
+        case 1:
+            chara->properties_E4.player.flags_11C |= 1 << 16;
             break;
 
         case 2:
@@ -606,11 +608,8 @@ void func_800D3CC4(s_SubCharacter* chara)
             chara->model_0.anim_4.status_0 = ANIM_STATUS(24, true);
             chara->model_0.stateStep_3 = 3;
 
-        case 1:
         case 3:
             chara->properties_E4.player.flags_11C |= 1 << 16;
-
-        default:
             break;
 
         case 4:
@@ -645,11 +644,7 @@ void func_800D3CC4(s_SubCharacter* chara)
         chara->model_0.anim_4.time_4 = FP_TIME(keyframeIdx);
     }
 }
-#else
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D3CC4);
-#endif
 
-#ifdef NON_MATCHING // TODO .rodata
 void func_800D3DFC(s_SubCharacter* chara)
 {
     s32 angle; // Maybe not angle.
@@ -686,9 +681,6 @@ void func_800D3DFC(s_SubCharacter* chara)
         }
     }
 }
-#else
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D3DFC);
-#endif
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D3EB8);
 
