@@ -407,57 +407,80 @@ typedef struct
 
 typedef struct
 {
+    s8  unk_0[22];
+    s32 field_18;
+    s32 field_1C;
+    s32 field_20;
+    s8  unk_24[164];
+    s16 field_C8;
+    s16 field_CA;
+    s16 field_CC;
+    s8  unk_CE[6];
+    s16 field_D4;
+    s16 field_D6;
+    s16 field_D8;
+    s16 field_DA;
+    s16 field_DC;
+    s16 field_DE;
+} s_func_8006DCE0_64; // Unknown size;
+
+typedef struct
+{
+    s32 field_0;
+    s32 field_4;
+    s16 field_8;
+    s16 field_A;
+    s16 field_C;
+    s16 field_E;
+} s_func_8006DCE0_6C; // Unknown size;
+
+typedef struct
+{
     s16 field_0;
     s16 field_2;
 } s_func_8006DCE0_8C;
 
 typedef struct
 {
-    s32                field_0;
-    s16                field_4;
-    s16                field_6;
-    s16                field_8;
-    s8                 unk_A[2];
-    s32                field_C;
-    s32                field_10;
-    s32                field_14;
-    s8                 unk_18[4];
-    s16                field_1C;
-    s8                 unk_1E[2];
-    s32                field_20;
-    s16                field_24;
-    s16                field_26;
-    s32                field_28;
-    VECTOR3            field_2C; // Q23.8
-    s8                 unk_38[4];
-    s32                field_3C;
-    s32                field_40;
-    s32                field_44;
-    s8                 unk_48[4];
-    s16                field_4C;
-    s16                field_4E;
-    SVECTOR3           field_50; // Q23.8
-    u16                field_56;
-    u16                field_58;
-    s16                field_5A;
-    s16                field_5C;
-    s16                field_5E;
-    s16                field_60;
-    s8                 unk_62[2];
-    s32*               field_64;
-    s32                field_68;
-    s32                field_6C;
-    s32                field_70;
-    s16                field_74;
-    s16                field_76;
-    s16                field_78;
-    s16                field_7A;
-    s32                field_7C;
-    s32                field_80;
-    u16                field_84;
-    u8                 unk_86[2];
-    s32                field_88;
-    s_func_8006DCE0_8C field_8C[1]; // Unknown size.
+    s32                  field_0;
+    s16                  field_4;
+    s16                  field_6;
+    s16                  field_8;
+    s8                   unk_A[2];
+    s32                  field_C;
+    s32                  field_10;
+    s32                  field_14;
+    s8                   unk_18[4];
+    s16                  field_1C;
+    s8                   unk_1E[2];
+    s32                  field_20;
+    s16                  field_24;
+    s16                  field_26;
+    s32                  field_28;
+    VECTOR3              field_2C; // Q23.8
+    s8                   unk_38[4];
+    s32                  field_3C;
+    s32                  field_40;
+    s32                  field_44;
+    s8                   unk_48[4];
+    s16                  field_4C;
+    s16                  field_4E;
+    SVECTOR              field_50; // Q23.8
+    u16                  field_58;
+    s16                  field_5A;
+    s16                  field_5C;
+    s16                  field_5E;
+    s16                  field_60;
+    s8                   unk_62[2];
+    s_func_8006DCE0_64** field_64;
+    s32                  field_68;
+    s_func_8006DCE0_6C   field_6C;
+    s32                  field_7C;
+    s32                  field_80;
+    u16                  field_84;
+    u8                   unk_86[2];
+    s32                  field_88;
+    s_func_8006DCE0_8C   field_8C[1]; // Unknown size.
 } s_func_8006DCE0;
 
 typedef struct
@@ -508,10 +531,14 @@ typedef struct
 
 typedef struct
 {
-    s8                 unk_0[16];
+    s8                 unk_0[8];
+    DVECTOR            field_8;
+    s16                field_C;
+    s16                field_E;
     s32                field_10;
     s32                field_14;
-    s8                 unk_18[4];
+    s16                field_18;
+    s8                 unk_1A[2];
     s32                field_1C;
     s_func_8006E490_20 field_20[2];
 } s_func_8006E490;
@@ -3537,6 +3564,8 @@ bool func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1);
 
 void func_8006E0AC(s_func_8006DCE0* arg0, s_IpdCollisionData* ipdColl);
 
+void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2);
+
 void func_8006E490(s_func_8006E490* arg0, u32 arg1, s32 arg2, s32 arg3);
 
 void func_8006E53C(s_func_8006DCE0* arg0, s_IpdCollisionData_20* arg1, s_IpdCollisionData* arg2);
@@ -3544,6 +3573,8 @@ void func_8006E53C(s_func_8006DCE0* arg0, s_IpdCollisionData_20* arg1, s_IpdColl
 void func_8006E78C(s_func_8006DCE0* arg0, s_IpdCollisionData_14* arg1, SVECTOR3* arg2, s_IpdCollisionData_10* arg3, s32 arg4);
 
 void func_8006EB8C(s_func_8006DCE0* arg0, s_IpdCollisionData_18* arg1);
+
+void func_8006EE0C(s_func_8006DCE0_6C* arg0, s32 arg1, s_func_8006DCE0_64* arg2);
 
 void func_8006F250(s_func_8006F250* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
