@@ -258,18 +258,22 @@ void func_800D151C(void) // 0x800D151C
             pickupType   = CommonPickupItemId_FirstAidKit;
             eventFlagIdx = EventFlag_M3S03_FirstAidKit0;
             break;
+
         case 127:
             pickupType   = CommonPickupItemId_HealthDrink;
             eventFlagIdx = EventFlag_M3S03_HealthDrink;
             break;
+
         case 128:
             pickupType   = CommonPickupItemId_HandgunBullets;
             eventFlagIdx = EventFlag_M3S03_HandgunBullets;
             break;
+
         case 129:
             pickupType   = CommonPickupItemId_FirstAidKit;
             eventFlagIdx = EventFlag_M3S03_FirstAidKit1;
             break;
+
         case 130:
             pickupType   = CommonPickupItemId_ShotgunShells;
             eventFlagIdx = EventFlag_M3S03_ShotgunShells;

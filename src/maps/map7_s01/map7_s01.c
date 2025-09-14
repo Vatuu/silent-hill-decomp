@@ -357,30 +357,37 @@ void func_800D83EC(void) // 0x800D83EC
             pickupType   = CommonPickupItemId_RifleShells;
             eventFlagIdx = EventFlag_M7S01_RifleShells;
             break;
+
         case 171:
             pickupType   = CommonPickupItemId_HandgunBullets;
             eventFlagIdx = EventFlag_M7S01_HandgunBullets0;
             break;
+
         case 172:
             pickupType   = CommonPickupItemId_HealthDrink;
             eventFlagIdx = EventFlag_M7S01_HealthDrink0;
             break;
+
         case 173:
             pickupType   = CommonPickupItemId_HandgunBullets;
             eventFlagIdx = EventFlag_M7S01_HandgunBullets1;
             break;
+
         case 174:
             pickupType   = CommonPickupItemId_ShotgunShells;
             eventFlagIdx = EventFlag_M7S01_ShotgunShells;
             break;
+
         case 175:
             pickupType   = CommonPickupItemId_FirstAidKit;
             eventFlagIdx = EventFlag_M7S01_FirstAidKit;
             break;
+
         case 176:
             pickupType   = CommonPickupItemId_HandgunBullets;
             eventFlagIdx = EventFlag_M7S01_HandgunBullets2;
             break;
+
         case 177:
             pickupType   = CommonPickupItemId_HealthDrink;
             eventFlagIdx = EventFlag_M7S01_HealthDrink1;

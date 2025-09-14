@@ -282,18 +282,22 @@ void func_800D2470(void) // 0x800D2470
             pickupType   = CommonPickupItemId_HealthDrink;
             eventFlagIdx = EventFlag_M3S04_HealthDrink0;
             break;
+
         case 53:
             pickupType   = CommonPickupItemId_HealthDrink;
             eventFlagIdx = EventFlag_M3S04_HealthDrink1;
             break;
+
         case 54:
             pickupType   = CommonPickupItemId_HealthDrink;
             eventFlagIdx = EventFlag_M3S04_HealthDrink2;
             break;
+
         case 55:
             pickupType   = CommonPickupItemId_HealthDrink;
             eventFlagIdx = EventFlag_M3S04_HealthDrink3;
             break;
+
         case 56:
             pickupType   = CommonPickupItemId_HandgunBullets;
             eventFlagIdx = EventFlag_M3S04_HandgunBullets;

@@ -124,26 +124,32 @@ void func_800CCF9C(void) // 0x800CCF9C
             pickupType   = CommonPickupItemId_ShotgunShells;
             eventFlagIdx = EventFlag_M2S04_ShotgunShells0;
             break;
+
         case 25:
             pickupType   = CommonPickupItemId_HandgunBullets;
             eventFlagIdx = EventFlag_M2S04_HandgunBullets0;
             break;
+
         case 26:
             pickupType   = CommonPickupItemId_HandgunBullets;
             eventFlagIdx = EventFlag_M2S04_HandgunBullets1;
             break;
+
         case 27:
             pickupType   = CommonPickupItemId_ShotgunShells;
             eventFlagIdx = EventFlag_M2S04_ShotgunShells1;
             break;
+
         case 28:
             pickupType   = CommonPickupItemId_HandgunBullets;
             eventFlagIdx = EventFlag_M2S04_HandgunBullets2;
             break;
+
         case 29:
             pickupType   = CommonPickupItemId_HandgunBullets;
             eventFlagIdx = EventFlag_M2S04_HandgunBullets3;
             break;
+
         case 30:
             pickupType   = CommonPickupItemId_RifleShells;
             eventFlagIdx = EventFlag_M2S04_RifleShells;

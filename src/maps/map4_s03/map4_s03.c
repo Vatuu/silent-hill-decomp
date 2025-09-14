@@ -538,10 +538,12 @@ void func_800D667C(void) // 0x800D667C
             pickupType   = CommonPickupItemId_FirstAidKit;
             eventFlagIdx = EventFlag_M4S03_FirstAidKit;
             break;
+
         case 28:
             pickupType   = CommonPickupItemId_RifleShells;
             eventFlagIdx = EventFlag_M4S03_RifleShells0;
             break;
+
         case 29:
             pickupType   = CommonPickupItemId_RifleShells;
             eventFlagIdx = EventFlag_M4S03_RifleShells1;

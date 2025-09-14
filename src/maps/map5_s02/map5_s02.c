@@ -234,14 +234,17 @@ void func_800D4AB8(void) // 0x800D4AB8
             pickupType   = CommonPickupItemId_HealthDrink;
             eventFlagIdx = EventFlag_M5S02_HealthDrink0;
             break;
+
         case 16:
             pickupType   = CommonPickupItemId_HealthDrink;
             eventFlagIdx = EventFlag_M5S02_HealthDrink1;
             break;
+
         case 17:
             pickupType   = CommonPickupItemId_RifleShells;
             eventFlagIdx = EventFlag_M5S02_RifleShells;
             break;
+
         case 18:
             pickupType   = CommonPickupItemId_HealthDrink;
             eventFlagIdx = EventFlag_M5S02_HealthDrink2;
