@@ -59,12 +59,19 @@
     { Anim_Update0, ANIM_STATUS(11, true),  false, ANIM_STATUS(11, true), { Q19_12(10) }, 295, 295 }
 };*/
 
+typedef enum _BloodyLisaAnim
+{
+    BloodyLisaAnim_Still = 0,
+    BloodyLisaAnim_Walk  = 1
+} s_BloodyLisaAnim;
+
+/** @brief Bloody Lisa character anim infos. */
 /*s_AnimInfo BLOODY_LISA_ANIM_INFOS[] =
 {
-    { Anim_Update2, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q19_12(0)  }, NO_VALUE, 0   },
-    { Anim_Update1, ANIM_STATUS(0, true),  false, NO_VALUE,              { Q19_12(30) }, NO_VALUE, 1   },
-    { Anim_Update2, ANIM_STATUS(1, false), false, ANIM_STATUS(1, true),  { Q19_12(10) }, NO_VALUE, 0   },
-    { Anim_Update0, ANIM_STATUS(1, true),  false, ANIM_STATUS(1, true),  { Q19_12(10) }, 0,        100 }
+    { Anim_Update2, ANIM_STATUS(BloodyLisaAnim_Still, false), false, ANIM_STATUS(BloodyLisaAnim_Still, false), { Q19_12(0)  }, NO_VALUE, 0   },
+    { Anim_Update1, ANIM_STATUS(BloodyLisaAnim_Still, true),  false, NO_VALUE,                                 { Q19_12(30) }, NO_VALUE, 1   },
+    { Anim_Update2, ANIM_STATUS(BloodyLisaAnim_Walk,  false), false, ANIM_STATUS(BloodyLisaAnim_Walk,  true),  { Q19_12(10) }, NO_VALUE, 0   },
+    { Anim_Update0, ANIM_STATUS(BloodyLisaAnim_Walk,  true),  false, ANIM_STATUS(BloodyLisaAnim_Walk,  true),  { Q19_12(10) }, 0,        100 }
 };*/
 
 typedef enum _CatAnim
@@ -76,7 +83,7 @@ typedef enum _CatAnim
     CatAnim_TransitionJumpToRun   = 4
 } s_CatAnim;
 
-/** Cat character anim infos.
+/** @brief Cat character anim infos.
  * @unused Frames [1, 6].
  */
 /*s_AnimInfo CAT_ANIM_INFOS[] =
