@@ -1,7 +1,7 @@
 s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
 {
 #if defined(MAP6_S01)
-    extern s_AnimInfo D_800D35A0[];
+    extern s_AnimInfo CYBIL_ANIM_INFOS[];
     extern s_AnimInfo D_800D39A0[];
 #elif defined(MAP6_S04)
     extern s_AnimInfo D_800EA718[];
@@ -27,7 +27,7 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
         // `animInfo` left as NULL.
 #elif defined(MAP6_S01)
         case Chara_Cybil:
-            animInfo = &D_800D35A0[chara->model_0.anim_4.status_0];
+            animInfo = &CYBIL_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
         default:

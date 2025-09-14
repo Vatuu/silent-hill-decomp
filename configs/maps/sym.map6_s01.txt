@@ -104,3 +104,4 @@ sharedData_800E2378_0_s01   = 0x800D5338; // type:s32
 sharedData_800E237C_0_s01   = 0x800D533C; // type:s32
 sharedData_800D16E0_2_s01   = 0x800D5340; // type:s32
 sharedData_800D16E4_2_s01   = 0x800D5344; // type:s8
+CYBIL_ANIM_INFOS                  = 0x800D35A0;

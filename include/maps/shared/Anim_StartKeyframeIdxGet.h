@@ -2,7 +2,7 @@ s16 Anim_StartKeyframeIdxGet(s_SubCharacter* chara)
 {
     // TODO: Not sure if any of these match `KAUFMANN_ANIM_INFOS` in other maps.
 #if defined(MAP6_S01)
-    extern s_AnimInfo D_800D35A0[];
+    extern s_AnimInfo CYBIL_ANIM_INFOS[];
     extern s_AnimInfo D_800D39A0[];
 #elif defined(MAP6_S04)
     extern s_AnimInfo D_800EA718[];
@@ -22,13 +22,14 @@ s16 Anim_StartKeyframeIdxGet(s_SubCharacter* chara)
 #endif
 
     s_AnimInfo* animInfo = NULL;
+
     switch (chara->model_0.charaId_0)
     {
 #if defined(MAP3_S02) || defined(MAP5_S02) || defined(MAP5_S03) || defined(MAP6_S02)
-        // `animInfo` left as NULL.
+        // `animInfo` left as `NULL`.
 #elif defined(MAP6_S01)
         case Chara_Cybil:
-            animInfo = &D_800D35A0[chara->model_0.anim_4.status_0];
+            animInfo = &CYBIL_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
         default:
