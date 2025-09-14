@@ -191,7 +191,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
             temp_s0_5 = D_800DE251;
             if (D_800DE251 == 1 && sharedFunc_800D8964_0_s00(&g_SysWork.npcs_1A0[0]) == temp_s0_5)
             {
-                func_80085EB8(0, &g_SysWork.npcs_1A0[0], 0xB, false);
+                func_80085EB8(0, &g_SysWork.npcs_1A0[0], 11, false);
                 D_800DE251++;
             }
             break;
@@ -352,7 +352,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
             SysWork_StateStepIncrement();
 
         case 48:
-            func_80088F94(g_SysWork.npcs_1A0,0 ,0);
+            func_80088F94(g_SysWork.npcs_1A0, 0, 0);
             Sd_EngineCmd(19);
             Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcCoords_FC0[0], NO_VALUE, 0, 0);
             func_80086470(3, InventoryItemId_Handgun, HANDGUN_AMMO_PICKUP_ITEM_COUNT, false);

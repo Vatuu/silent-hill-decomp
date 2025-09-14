@@ -1557,8 +1557,8 @@ typedef struct _MapOverlayHeader
     s32               (*func_128)(s_SubCharacter*); // Assumed return type.
     s32               (*func_12C)(s_SubCharacter*); // Assumed return type.
     void              (*func_130)(); // func(?).
-    s32               (*func_134)(s_SubCharacter*);           // Assumed return type.
-    s32               (*func_138)(s_SubCharacter*);           // Assumed return type.
+    s32               (*func_134)(s_SubCharacter*); // Assumed return type.
+    s32               (*func_138)(s_SubCharacter*); // Keyframe getter. Return value depends on the anim update function being used.
     s32               (*func_13C)(s32, s32, void*, s16, s32); // 0x800C96B8
     void              (*func_140)(); // func(?).
     void              (*func_144)(); // func(?).

@@ -6,19 +6,19 @@ s16 Anim_StartKeyframeIdxGet(s_SubCharacter* chara)
     extern s_AnimInfo D_800D39A0[];
 #elif defined(MAP6_S04)
     extern s_AnimInfo MONSTER_CYBIL_ANIM_INFOS[];
-    extern s_AnimInfo D_800EAB38[];
+    extern s_AnimInfo DAHLIA_ANIM_INFOS[];
 #elif defined(MAP7_S01)
-    extern s_AnimInfo D_800DFC78[];
+    extern s_AnimInfo GHOST_CHILD_ALESSA_ANIM_INFOS[];
     extern s_AnimInfo LISA_ANIM_INFOS[];
 #elif defined(MAP7_S02)
     extern s_AnimInfo LISA_ANIM_INFOS[];
-    extern s_AnimInfo D_800E7B68[];
-    extern s_AnimInfo D_800E7EA8[];
+    extern s_AnimInfo DAHLIA_ANIM_INFOS[];
+    extern s_AnimInfo GHOST_CHILD_ALESSA_ANIM_INFOS[];
 #elif defined(MAP7_S03)
-    extern s_AnimInfo D_800EA1E0[];
-    extern s_AnimInfo D_800EA5E0[];
-    extern s_AnimInfo D_800EAA80[];
-    extern s_AnimInfo INCUBATOR_ANIM_INFOS[]; // Incubator.
+    extern s_AnimInfo CYBIL_ANIM_INFOS[];
+    extern s_AnimInfo DAHLIA_ANIM_INFOS[];
+    extern s_AnimInfo BLOODY_INCUBATOR_ANIM_INFOS[];
+    extern s_AnimInfo INCUBATOR_ANIM_INFOS[];
 #endif
 
     s_AnimInfo* animInfo = NULL;
@@ -42,7 +42,7 @@ s16 Anim_StartKeyframeIdxGet(s_SubCharacter* chara)
             break;
 
         case Chara_Dahlia:
-            animInfo = &D_800EAB38[chara->model_0.anim_4.status_0];
+            animInfo = &DAHLIA_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
         case Chara_Alessa:
@@ -51,7 +51,7 @@ s16 Anim_StartKeyframeIdxGet(s_SubCharacter* chara)
 
 #elif defined(MAP7_S01)
         case Chara_GhostChildAlessa:
-            animInfo = &D_800DFC78[chara->model_0.anim_4.status_0];
+            animInfo = &GHOST_CHILD_ALESSA_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
         case Chara_Lisa:
@@ -64,11 +64,11 @@ s16 Anim_StartKeyframeIdxGet(s_SubCharacter* chara)
 
 #elif defined(MAP7_S02)
         case Chara_Dahlia:
-            animInfo = &D_800E7B68[chara->model_0.anim_4.status_0];
+            animInfo = &DAHLIA_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
         case Chara_GhostChildAlessa:
-            animInfo = &D_800E7EA8[chara->model_0.anim_4.status_0];
+            animInfo = &GHOST_CHILD_ALESSA_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
         case Chara_Kaufmann:
@@ -86,12 +86,12 @@ s16 Anim_StartKeyframeIdxGet(s_SubCharacter* chara)
 #elif defined(MAP7_S03)
         case Chara_Cybil:
         case Chara_EndingCybil:
-            animInfo = &D_800EA1E0[chara->model_0.anim_4.status_0];
+            animInfo = &CYBIL_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
         case Chara_Dahlia:
         case Chara_EndingDahlia:
-            animInfo = &D_800EA5E0[chara->model_0.anim_4.status_0];
+            animInfo = &DAHLIA_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
         case Chara_Alessa:
@@ -112,7 +112,7 @@ s16 Anim_StartKeyframeIdxGet(s_SubCharacter* chara)
             break;
 
         case Chara_BloodyIncubator:
-            animInfo = &D_800EAA80[chara->model_0.anim_4.status_0];
+            animInfo = &BLOODY_INCUBATOR_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
 #else

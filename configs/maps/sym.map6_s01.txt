@@ -78,6 +78,7 @@ sharedFunc_800DA8E8_0_s01   = 0x800D1340; // type:func
 //--- PA: 0x009EF4   VA: 0x800D346C   subsegment: data
 //----------------------------------------------------
 sharedData_800DD59C_0_s00   = 0x800D359C; // type:u8
+CYBIL_ANIM_INFOS            = 0x800D35A0;
 sharedData_800DF1F4_0_s00   = 0x800D3CE0; // type:s32
 sharedData_800DF1F8_0_s00   = 0x800D3CE4; // type:s16
 sharedData_800DF1FA_0_s00   = 0x800D3CE6; // type:s16
@@ -104,4 +105,3 @@ sharedData_800E2378_0_s01   = 0x800D5338; // type:s32
 sharedData_800E237C_0_s01   = 0x800D533C; // type:s32
 sharedData_800D16E0_2_s01   = 0x800D5340; // type:s32
 sharedData_800D16E4_2_s01   = 0x800D5344; // type:s8
-CYBIL_ANIM_INFOS                  = 0x800D35A0;
