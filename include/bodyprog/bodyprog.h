@@ -1460,12 +1460,12 @@ typedef struct
 } s_UnkStruct3_Mo; // Probable size: 8 bytes.
 
 /** Guessed based on in-debugger observation during gameplay.
- * Everything is inited to 0xFFFF and some data is written when I get hit by monsters.
- * Might be more generic 'particles / decals' struct
+ * Everything is inited to 0xFFFF and some data is written when the player is hit by monsters.
+ * Might be more generic particles/decals struct.
  */
 typedef struct _BloodSplat
 {
-    s16 unk_0; // At this point, maybe its an array of u16?
+    s16 unk_0; // Maybe an array of `u16`s?
 } s_BloodSplat;
 
 /** TODO: `g_MapOverlayHeader` is part of the map overlay BIN files. Maybe should be moved to `maps/shared.h`. 

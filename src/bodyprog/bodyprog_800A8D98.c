@@ -781,7 +781,6 @@ s_AnimInfo D_800A998C =
     .status_4               = 0,
     .hasVariableDuration_5 = false,
     .status_6              = ANIM_STATUS(0, false),
-    .__pad_7               = 0,
     .duration_8            = { Q19_12(8) },
     .startKeyframeIdx_C    = 26,
     .endKeyframeIdx_E      = 44
