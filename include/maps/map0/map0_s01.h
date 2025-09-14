@@ -132,6 +132,7 @@ void MapEvent_AirScreamerDeath();
 
 void func_800DC9C8();
 
+// Called by `func_800DCCF4` only.
 void func_800DD2EC(s32 arg0);
 
 s32 func_800D1E5C();

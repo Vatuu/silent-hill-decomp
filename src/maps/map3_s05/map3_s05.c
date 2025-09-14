@@ -254,14 +254,17 @@ void func_800D5934(void) // 0x800D5934
             pickupType   = CommonPickupItemId_Ampoule;
             eventFlagIdx = EventFlag_M3S05_Ampoule;
             break;
+
         case 97:
             pickupType   = CommonPickupItemId_HealthDrink;
             eventFlagIdx = EventFlag_M3S05_HealthDrink;
             break;
+
         case 98:
             pickupType   = CommonPickupItemId_HandgunBullets;
             eventFlagIdx = EventFlag_M3S05_HandgunBullets;
             break;
+
         case 99:
             pickupType   = CommonPickupItemId_ShotgunShells;
             eventFlagIdx = EventFlag_M3S05_ShotgunShells;

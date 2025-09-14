@@ -1,33 +1,34 @@
 s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
 {
 #if defined(MAP6_S01)
-    extern s_AnimInfo D_800D35A0[];
+    extern s_AnimInfo CYBIL_ANIM_INFOS[];
     extern s_AnimInfo D_800D39A0[];
 #elif defined(MAP6_S04)
-    extern s_AnimInfo D_800EA718[];
-    extern s_AnimInfo D_800EAB38[];
+    extern s_AnimInfo MONSTER_CYBIL_ANIM_INFOS[];
+    extern s_AnimInfo DAHLIA_ANIM_INFOS[];
 #elif defined(MAP7_S01)
-    extern s_AnimInfo D_800DFC78[];
-    extern s_AnimInfo D_800DFD98[];
+    extern s_AnimInfo GHOST_CHILD_ALESSA_ANIM_INFOS[];
+    extern s_AnimInfo LISA_ANIM_INFOS[];
 #elif defined(MAP7_S02)
-    extern s_AnimInfo D_800E7B68[];
-    extern s_AnimInfo D_800E7EA8[];
-    extern s_AnimInfo D_800E82A8[];
+    extern s_AnimInfo DAHLIA_ANIM_INFOS[];
+    extern s_AnimInfo GHOST_CHILD_ALESSA_ANIM_INFOS[];
+    extern s_AnimInfo GHOST_DOCTOR_ANIM_INFOS[];
 #elif defined(MAP7_S03)
-    extern s_AnimInfo D_800EA1E0[];
-    extern s_AnimInfo D_800EA5E0[];
-    extern s_AnimInfo D_800EAA80[];
-    extern s_AnimInfo D_800EAC00[];
+    extern s_AnimInfo CYBIL_ANIM_INFOS[];
+    extern s_AnimInfo DAHLIA_ANIM_INFOS[];
+    extern s_AnimInfo BLOODY_INCUBATOR_ANIM_INFOS[];
+    extern s_AnimInfo INCUBATOR_ANIM_INFOS[];
 #endif
 
     s_AnimInfo* animInfo = NULL;
+
     switch (chara->model_0.charaId_0)
     {
 #if defined(MAP3_S02) || defined(MAP6_S02)
         // `animInfo` left as NULL.
 #elif defined(MAP6_S01)
         case Chara_Cybil:
-            animInfo = &D_800D35A0[chara->model_0.anim_4.status_0];
+            animInfo = &CYBIL_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
         default:
@@ -36,11 +37,11 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
 
 #elif defined(MAP6_S04)
         case Chara_MonsterCybil:
-            animInfo = &D_800EA718[chara->model_0.anim_4.status_0];
+            animInfo = &MONSTER_CYBIL_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
         case Chara_Dahlia:
-            animInfo = &D_800EAB38[chara->model_0.anim_4.status_0];
+            animInfo = &DAHLIA_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
         case Chara_Alessa:
@@ -49,11 +50,11 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
 
 #elif defined(MAP7_S01)
         case Chara_GhostChildAlessa:
-            animInfo = &D_800DFC78[chara->model_0.anim_4.status_0];
+            animInfo = &GHOST_CHILD_ALESSA_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
         case Chara_Lisa:
-            animInfo = &D_800DFD98[chara->model_0.anim_4.status_0];
+            animInfo = &LISA_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
         case Chara_BloodyLisa:
@@ -62,11 +63,11 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
 
 #elif defined(MAP7_S02)
         case Chara_Dahlia:
-            animInfo = &D_800E7B68[chara->model_0.anim_4.status_0];
+            animInfo = &DAHLIA_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
         case Chara_GhostChildAlessa:
-            animInfo = &D_800E7EA8[chara->model_0.anim_4.status_0];
+            animInfo = &GHOST_CHILD_ALESSA_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
         case Chara_Kaufmann:
@@ -74,18 +75,18 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
             break;
 
         case Chara_GhostDoctor:
-            animInfo = &D_800E82A8[chara->model_0.anim_4.status_0];
+            animInfo = &GHOST_DOCTOR_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
 #elif defined(MAP7_S03)
         case Chara_Cybil:
         case Chara_EndingCybil:
-            animInfo = &D_800EA1E0[chara->model_0.anim_4.status_0];
+            animInfo = &CYBIL_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
         case Chara_Dahlia:
         case Chara_EndingDahlia:
-            animInfo = &D_800EA5E0[chara->model_0.anim_4.status_0];
+            animInfo = &DAHLIA_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
         case Chara_Alessa:
@@ -102,11 +103,11 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
             break;
 
         case Chara_Incubator:
-            animInfo = &D_800EAC00[chara->model_0.anim_4.status_0];
+            animInfo = &INCUBATOR_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
         case Chara_BloodyIncubator:
-            animInfo = &D_800EAA80[chara->model_0.anim_4.status_0];
+            animInfo = &BLOODY_INCUBATOR_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
 #else
@@ -118,7 +119,7 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
 
     if (animInfo->updateFunc_0 == Anim_Update0)
     {
-        if (Anim_DurationGet(chara, animInfo) > FP_TIME(0.0f))
+        if (Anim_DurationGet(chara, animInfo) > Q19_12(0.0f))
         {
             return chara->model_0.anim_4.keyframeIdx_8 == animInfo->endKeyframeIdx_E;
         }

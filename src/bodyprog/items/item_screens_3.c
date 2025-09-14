@@ -15,92 +15,92 @@ const s32 rodataPad_800262F8 = 0;
 
 static u8 g_Items_GunsMaxLoadAmmo[36] =
 {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x0F, 0x06, 0x06, 0xFF
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    15, 6, 6, NO_VALUE
 };
 
 u32 D_800AD4C4 = 0;
 s_800AD4C8 D_800AD4C8[70] =
 {
-    { 1638,  { 0x99, 0x01, 0x82, 0x00 }, 0,    8,    0,    8,  { 0x33, 0x03, 0x00, 0x00 }, 3,  3,  1,    255, 2,  &D_800AD4C4 },
-    { 4096,  { 0x67, 0xFE, 0x46, 0x00 }, 102,  6,    0,    8,  { 0xCC, 0x04, 0x00, 0x10 }, 7,  4,  2,    255, 3,  &D_800AD4C4 },
-    { 4096,  { 0x99, 0x09, 0xC8, 0x00 }, 0,    8,    0,    8,  { 0xCC, 0x04, 0x00, 0x10 }, 4,  6,  1,    255, 1,  &D_800AD4C4 },
-    { 3276,  { 0xCC, 0x04, 0x0F, 0x00 }, 0,    0,    0,    0,  { 0x00, 0x00, 0x00, 0x08 }, 13, 7,  2,    255, 2,  &D_800AD4C4 },
-    { 4915,  { 0x33, 0x03, 0x18, 0x01 }, 102,  6,    0,    8,  { 0xCC, 0x04, 0x00, 0x10 }, 7,  4,  2,    255, 3,  &D_800AD4C4 },
-    { 4096,  { 0x99, 0x01, 0xFA, 0x00 }, 0,    8,    0,    8,  { 0x66, 0x06, 0x00, 0x04 }, 6,  5,  1,    255, 2,  &D_800AD4C4 },
-    { 4915,  { 0x99, 0x01, 0xE8, 0x03 }, 102,  6,    102,  6,  { 0x66, 0x06, 0x00, 0x00 }, 0,  6,  1,    255, 2,  &D_800AD4C4 },
-    { 1638,  { 0x66, 0x06, 0xF0, 0x00 }, -52,  4,    102,  6,  { 0x00, 0x08, 0x00, 0x00 }, 6,  3,  1,    255, 2,  &D_800AD4C4 },
-    { 2048,  { 0x00, 0x00, 0x64, 0x00 }, 51,   3,    204,  4,  { 0x66, 0x06, 0x00, 0x04 }, 13, 7,  2,    255, 2,  &D_800AD4C4 },
-    { 409,   { 0x00, 0x00, 0x64, 0x00 }, 51,   3,    204,  4,  { 0x66, 0x06, 0x00, 0x00 }, 8,  5,  2,    255, 3,  &D_800AD4C4 },
-    { 2048,  { 0x33, 0x03, 0x78, 0x00 }, -52,  4,    204,  4,  { 0x33, 0x03, 0x00, 0x00 }, 0,  4,  1,    255, 2,  &D_800AD4C4 },
-    { 4096,  { 0x67, 0xFE, 0x5A, 0x00 }, 102,  6,    51,   3,  { 0xCC, 0x04, 0x00, 0x10 }, 12, 6,  2,    255, 4,  &D_800AD4C4 },
-    { 4096,  { 0x00, 0x08, 0x14, 0x00 }, 102,  6,    102,  6,  { 0x66, 0x06, 0x00, 0x10 }, 4,  6,  1,    255, 1,  &D_800AD4C4 },
-    { 3276,  { 0xCC, 0x04, 0x0F, 0x00 }, 0,    0,    0,    0,  { 0x00, 0x00, 0x00, 0x08 }, 13, 7,  2,    255, 3,  &D_800AD4C4 },
-    { 4915,  { 0x33, 0x03, 0x68, 0x01 }, 102,  6,    51,   3,  { 0xCC, 0x04, 0x00, 0x14 }, 12, 6,  2,    255, 4,  &D_800AD4C4 },
-    { 4096,  { 0x99, 0x01, 0xFA, 0x00 }, 0,    8,    0,    8,  { 0x66, 0x06, 0x00, 0x04 }, 6,  9,  1,    255, 2,  &D_800AD4C4 },
-    { 4915,  { 0x99, 0x01, 0xE8, 0x03 }, 102,  6,    102,  6,  { 0x66, 0x06, 0x00, 0x00 }, 7,  6,  1,    255, 2,  &D_800AD4C4 },
-    { 1638,  { 0x66, 0x06, 0x0E, 0x01 }, 102,  6,    102,  6,  { 0x00, 0x08, 0x00, 0x00 }, 6,  4,  1,    255, 2,  &D_800AD4C4 },
-    { 0,     { 0x00, 0x00, 0x00, 0x00 }, 0,    0,    0,    0,  { 0x00, 0x00, 0x00, 0x00 }, 0,  0,  0,    255, 0,  &D_800AD4C4 },
-    { 0,     { 0x00, 0x00, 0x00, 0x00 }, 0,    0,    0,    0,  { 0x00, 0x00, 0x00, 0x00 }, 0,  0,  0,    255, 0,  &D_800AD4C4 },
-    { 1638,  { 0x99, 0x01, 0x82, 0x00 }, 102,  6,    102,  6,  { 0x33, 0x03, 0x00, 0x00 }, 1,  4,  1,    255, 2,  &D_800AD4C4 },
-    { 4096,  { 0x67, 0xFE, 0x32, 0x00 }, 102,  6,    0,    8,  { 0xCC, 0x04, 0x00, 0x10 }, 5,  3,  2,    255, 3,  &D_800AD4C4 },
-    { 4096,  { 0x00, 0x08, 0x10, 0x00 }, 102,  6,    102,  6,  { 0x66, 0x06, 0x00, 0x0C }, 4,  6,  1,    255, 1,  &D_800AD4C4 },
-    { 3276,  { 0xCC, 0x04, 0x0C, 0x00 }, 0,    0,    0,    0,  { 0x00, 0x00, 0x00, 0x04 }, 4,  6,  2,    255, 2,  &D_800AD4C4 },
-    { 4915,  { 0x33, 0x03, 0xC8, 0x00 }, 102,  6,    0,    8,  { 0xCC, 0x04, 0x00, 0x10 }, 4,  4,  2,    255, 3,  &D_800AD4C4 },
-    { 4096,  { 0x99, 0x01, 0xFA, 0x00 }, 0,    8,    0,    8,  { 0x66, 0x06, 0x00, 0x04 }, 4,  5,  1,    255, 2,  &D_800AD4C4 },
-    { 4915,  { 0x99, 0x01, 0xE8, 0x03 }, 102,  6,    102,  6,  { 0x66, 0x06, 0x00, 0x00 }, 2,  5,  1,    255, 2,  &D_800AD4C4 },
-    { 1638,  { 0x66, 0x06, 0xA0, 0x00 }, -52,  4,    102,  6,  { 0x00, 0x08, 0x00, 0x00 }, 2,  4,  1,    255, 2,  &D_800AD4C4 },
-    { 2048,  { 0xCC, 0x04, 0x01, 0x00 }, 0,    0,    0,    0,  { 0x00, 0x00, 0x00, 0x00 }, 0,  5,  6,    255, 0,  &D_800AD4C4 },
-    { 2048,  { 0xCC, 0x04, 0x01, 0x00 }, 0,    0,    0,    0,  { 0x00, 0x00, 0x00, 0x00 }, 0,  5,  6,    255, 0,  &D_800AD4C4 },
-    { 2048,  { 0xCC, 0x04, 0x01, 0x00 }, 0,    0,    0,    0,  { 0x00, 0x00, 0x00, 0x00 }, 0,  5,  6,    255, 0,  &D_800AD4C4 },
-    { 0,     { 0x00, 0x00, 0x00, 0x00 }, 0,    0,    0,    0,  { 0x00, 0x00, 0x00, 0x00 }, 0,  0,  0,    0,   0,  &D_800AD4C4 },
-    { 49152, { 0x00, 0x00, 0x64, 0x00 }, 0,    0,    0,    1,  { 0x44, 0x00, 0x00, 0x00 }, 0,  5,  3,    0,   3,  &D_800AD4C4 },
-    { 61440, { 0x00, 0x00, 0x5E, 0x01 }, 0,    0,    0,    1,  { 0x22, 0x00, 0x00, 0x08 }, 0,  5,  3,    0,   3,  &D_800AD4C4 },
-    { 49152, { 0x00, 0x00, 0x32, 0x00 }, 0,    0,    0,    12, { 0xAA, 0x5C, 0x00, 0x04 }, 0,  5,  3,    0,   2,  &D_800AD4C4 },
-    { 61440, { 0x00, 0x00, 0x32, 0x00 }, 0,    0,    0,    1,  { 0x00, 0x00, 0x00, 0x00 }, 0,  3,  3,    0,   2,  &D_800AD4C4 },
-    { 49152, { 0x00, 0x00, 0x28, 0x00 }, 51,   3,    0,    4,  { 0x93, 0x49, 0x00, 0x00 }, 2,  5,  3,    0,   2,  &D_800AD4C4 },
-    { 0,     { 0x00, 0x00, 0x00, 0x00 }, 0,    0,    0,    1,  { 0x00, 0x00, 0x00, 0x00 }, 0,  0,  0,    0,   0,  &D_800AD4C4 },
-    { 0,     { 0x00, 0x00, 0x00, 0x00 }, 0,    0,    0,    1,  { 0x00, 0x00, 0x00, 0x00 }, 0,  0,  0,    0,   0,  &D_800AD4C4 },
-    { 0,     { 0x00, 0x00, 0x00, 0x00 }, 0,    0,    1,    1,  { 0x00, 0x00, 0x00, 0x00 }, 0,  0,  0,    0,   0,  &D_800AD4C4 },
-    { 1228,  { 0x00, 0x00, 0x16, 0x00 }, 0,    0,    0,    0,  { 0x00, 0x00, 0x00, 0x00 }, 2,  7,  2,    5,   4,  &D_800AD4C4 },
-    { 1228,  { 0x00, 0x00, 0x12, 0x00 }, 0,    0,    0,    0,  { 0x00, 0x00, 0x00, 0x00 }, 2,  7,  2,    5,   4,  &D_800AD4C4 },
-    { 1228,  { 0x00, 0x00, 0x0A, 0x00 }, 51,   3,    204,  4,  { 0x33, 0x03, 0x00, 0x00 }, 10, 8,  2,    2,   3,  &D_800AD4C4 },
-    { 1638,  { 0x99, 0x01, 0x0A, 0x00 }, -52,  4,    204,  4,  { 0x00, 0x00, 0x00, 0x04 }, 8,  2,  2,    2,   2,  &D_800AD4C4 },
-    { 1638,  { 0x99, 0x01, 0x10, 0x00 }, 0,    0,    0,    0,  { 0x00, 0x00, 0x00, 0x00 }, 0,  99, 6,    5,   3,  &D_800AD4C4 },
-    { 5324,  { 0x66, 0x06, 0x10, 0x00 }, 102,  6,    51,   3,  { 0x00, 0x00, 0x00, 0x00 }, 8,  7,  2,    2,   4,  &D_800AD4C4 },
-    { 0,     { 0x00, 0x00, 0x00, 0x00 }, 0,    0,    0,    0,  { 0x00, 0x00, 0x00, 0x00 }, 0,  99, 2,    0,   0,  &D_800AD4C4 },
-    { 0,     { 0x00, 0x00, 0x00, 0x00 }, 0,    0,    0,    0,  { 0x00, 0x00, 0x00, 0x00 }, 0,  99, 4,    0,   0,  &D_800AD4C4 },
-    { 3686,  { 0x33, 0x0B, 0x0F, 0x00 }, 51,   3,    51,   3,  { 0x00, 0x00, 0x00, 0x00 }, 12, 3,  1,    2,   2,  &D_800AD4C4 },
-    { 2457,  { 0xCC, 0x04, 0x00, 0x00 }, 102,  6,    102,  6,  { 0x00, 0x00, 0x00, 0x00 }, 11, 5,  5,    5,   0,  &D_800AD4C4 },
-    { 0,     { 0x00, 0x00, 0x0C, 0x00 }, 0,    0,    0,    0,  { 0x00, 0x00, 0x00, 0x00 }, 0,  99, 4,    0,   2,  &D_800AD4C4 },
-    { 1638,  { 0x00, 0x00, 0x00, 0x00 }, -52,  4,    204,  4,  { 0x00, 0x00, 0x00, 0x00 }, 0,  12, 5,    0,   0,  &D_800AD4C4 },
-    { 2048,  { 0x00, 0x00, 0x05, 0x00 }, 0,    0,    0,    0,  { 0x00, 0x00, 0x00, 0x00 }, 0,  99, 4,    0,   2,  &D_800AD4C4 },
-    { 1638,  { 0x33, 0x03, 0x06, 0x00 }, -103, 1,    153,  1,  { 0x00, 0x00, 0x00, 0x00 }, 5,  2,  4,    5,   2,  &D_800AD4C4 },
-    { 3686,  { 0x66, 0x06, 0x00, 0x00 }, 102,  6,    153,  9,  { 0x00, 0x00, 0x00, 0x00 }, 3,  2,  5,    1,   0,  &D_800AD4C4 },
-    { 0,     { 0x00, 0x00, 0x0A, 0x00 }, 0,    0,    0,    0,  { 0x00, 0x00, 0x00, 0x00 }, 0,  99, 4,    2,   0,  &D_800AD4C4 },
-    { 0,     { 0x00, 0x00, 0x00, 0x00 }, 51,   3,    51,   3,  { 0x33, 0x03, 0x00, 0x00 }, 0,  99, 5,    5,   0,  &D_800AD4C4 },
-    { 0,     { 0x00, 0x00, 0x19, 0x00 }, 51,   3,    51,   3,  { 0x33, 0x03, 0x00, 0x04 }, 17, 5,  1,    2,   2,  &D_800AD4C4 },
-    { 0,     { 0x00, 0x00, 0x21, 0x00 }, 51,   3,    51,   3,  { 0x33, 0x03, 0x00, 0x04 }, 17, 5,  1,    2,   2,  &D_800AD4C4 },
-    { 819,   { 0x00, 0x00, 0x12, 0x00 }, 51,   3,    51,   3,  { 0x00, 0x00, 0x00, 0x00 }, 0,  99, 2,    2,   4,  &D_800AD4C4 },
-    { 0,     { 0x00, 0x00, 0x00, 0x00 }, 0,    0,    0,    0,  { 0x00, 0x00, 0x00, 0x00 }, 0,  99, 6,    4,   0,  &D_800AD4C4 },
-    { 1638,  { 0x66, 0x06, 0x0A, 0x00 }, -103, 9,    153,  9,  { 0x99, 0x09, 0x00, 0x1C }, 0,  99, 2,    5,   0,  &D_800AD4C4 },
-    { 0,     { 0x00, 0x00, 0x00, 0x00 }, 0,    0,    0,    0,  { 0x00, 0x00, 0x00, 0x00 }, 0,  99, 6,    4,   0,  &D_800AD4C4 },
-    { 61440, { 0x00, 0x00, 0x3C, 0x00 }, 0,    0,    0,    1,  { 0x27, 0x00, 0x00, 0x04 }, 1,  2,  3,    4,   3,  &D_800AD4C4 },
-    { 1638,  { 0x00, 0x00, 0x0F, 0x00 }, 0,    0,    0,    0,  { 0x00, 0x00, 0x00, 0x04 }, 11, 3,  2,    2,   0,  &D_800AD4C4 },
-    { 2048,  { 0x00, 0x00, 0x19, 0x00 }, 0,    0,    0,    0,  { 0x00, 0x00, 0x00, 0x04 }, 11, 3,  2,    1,   0,  &D_800AD4C4 },
-    { 1638,  { 0x00, 0x00, 0x01, 0x00 }, 102,  6,    102,  6,  { 0x66, 0x06, 0x00, 0x00 }, 0,  99, 5,    5,   0,  &D_800AD4C4 },
-    { 0,     { 0x00, 0x00, 0x00, 0x00 }, 0,    0,    0,    0,  { 0x00, 0x00, 0x00, 0x00 }, 0,  99, 6,    4,   0,  &D_800AD4C4 },
-    { 0,     { 0x00, 0x00, 0x00, 0x00 }, 0,    0,    0,    0,  { 0x00, 0x00, 0x00, 0x00 }, 0,  99, 6,    1,   0,  &D_800AD4C4 },
-    { 409,   { 0x00, 0x00, 0x06, 0x00 }, -103, 1,    153,  1,  { 0x00, 0x00, 0x00, 0x00 }, 0,  99, 6,    2,   2,  &D_800AD4C4 }
+    { 1638,  { 0x99, 0x01, 0x82, 0x00 }, 0,    8, 0,   8, { 0x33, 0x03, 0x00, 0x00 }, 3,  3,  1, NO_VALUE, 2, &D_800AD4C4 },
+    { 4096,  { 0x67, 0xFE, 0x46, 0x00 }, 102,  6, 0,   8, { 0xCC, 0x04, 0x00, 0x10 }, 7,  4,  2, NO_VALUE, 3, &D_800AD4C4 },
+    { 4096,  { 0x99, 0x09, 0xC8, 0x00 }, 0,    8, 0,   8, { 0xCC, 0x04, 0x00, 0x10 }, 4,  6,  1, NO_VALUE, 1, &D_800AD4C4 },
+    { 3276,  { 0xCC, 0x04, 0x0F, 0x00 }, 0,    0, 0,   0, { 0x00, 0x00, 0x00, 0x08 }, 13, 7,  2, NO_VALUE, 2, &D_800AD4C4 },
+    { 4915,  { 0x33, 0x03, 0x18, 0x01 }, 102,  6, 0,   8, { 0xCC, 0x04, 0x00, 0x10 }, 7,  4,  2, NO_VALUE, 3, &D_800AD4C4 },
+    { 4096,  { 0x99, 0x01, 0xFA, 0x00 }, 0,    8, 0,   8, { 0x66, 0x06, 0x00, 0x04 }, 6,  5,  1, NO_VALUE, 2, &D_800AD4C4 },
+    { 4915,  { 0x99, 0x01, 0xE8, 0x03 }, 102,  6, 102, 6, { 0x66, 0x06, 0x00, 0x00 }, 0,  6,  1, NO_VALUE, 2, &D_800AD4C4 },
+    { 1638,  { 0x66, 0x06, 0xF0, 0x00 }, -52,  4, 102, 6, { 0x00, 0x08, 0x00, 0x00 }, 6,  3,  1, NO_VALUE, 2, &D_800AD4C4 },
+    { 2048,  { 0x00, 0x00, 0x64, 0x00 }, 51,   3, 204, 4, { 0x66, 0x06, 0x00, 0x04 }, 13, 7,  2, NO_VALUE, 2, &D_800AD4C4 },
+    { 409,   { 0x00, 0x00, 0x64, 0x00 }, 51,   3, 204, 4, { 0x66, 0x06, 0x00, 0x00 }, 8,  5,  2, NO_VALUE, 3, &D_800AD4C4 },
+    { 2048,  { 0x33, 0x03, 0x78, 0x00 }, -52,  4, 204, 4, { 0x33, 0x03, 0x00, 0x00 }, 0,  4,  1, NO_VALUE, 2, &D_800AD4C4 },
+    { 4096,  { 0x67, 0xFE, 0x5A, 0x00 }, 102,  6, 51,  3, { 0xCC, 0x04, 0x00, 0x10 }, 12, 6,  2, NO_VALUE, 4, &D_800AD4C4 },
+    { 4096,  { 0x00, 0x08, 0x14, 0x00 }, 102,  6, 102, 6, { 0x66, 0x06, 0x00, 0x10 }, 4,  6,  1, NO_VALUE, 1, &D_800AD4C4 },
+    { 3276,  { 0xCC, 0x04, 0x0F, 0x00 }, 0,    0, 0,   0, { 0x00, 0x00, 0x00, 0x08 }, 13, 7,  2, NO_VALUE, 3, &D_800AD4C4 },
+    { 4915,  { 0x33, 0x03, 0x68, 0x01 }, 102,  6, 51,  3, { 0xCC, 0x04, 0x00, 0x14 }, 12, 6,  2, NO_VALUE, 4, &D_800AD4C4 },
+    { 4096,  { 0x99, 0x01, 0xFA, 0x00 }, 0,    8, 0,   8, { 0x66, 0x06, 0x00, 0x04 }, 6,  9,  1, NO_VALUE, 2, &D_800AD4C4 },
+    { 4915,  { 0x99, 0x01, 0xE8, 0x03 }, 102,  6, 102, 6, { 0x66, 0x06, 0x00, 0x00 }, 7,  6,  1, NO_VALUE, 2, &D_800AD4C4 },
+    { 1638,  { 0x66, 0x06, 0x0E, 0x01 }, 102,  6, 102, 6, { 0x00, 0x08, 0x00, 0x00 }, 6,  4,  1, NO_VALUE, 2, &D_800AD4C4 },
+    { 0,     { 0x00, 0x00, 0x00, 0x00 }, 0,    0, 0,   0, { 0x00, 0x00, 0x00, 0x00 }, 0,  0,  0, NO_VALUE, 0, &D_800AD4C4 },
+    { 0,     { 0x00, 0x00, 0x00, 0x00 }, 0,    0, 0,   0, { 0x00, 0x00, 0x00, 0x00 }, 0,  0,  0, NO_VALUE, 0, &D_800AD4C4 },
+    { 1638,  { 0x99, 0x01, 0x82, 0x00 }, 102,  6, 102, 6, { 0x33, 0x03, 0x00, 0x00 }, 1,  4,  1, NO_VALUE, 2, &D_800AD4C4 },
+    { 4096,  { 0x67, 0xFE, 0x32, 0x00 }, 102,  6, 0,   8, { 0xCC, 0x04, 0x00, 0x10 }, 5,  3,  2, NO_VALUE, 3, &D_800AD4C4 },
+    { 4096,  { 0x00, 0x08, 0x10, 0x00 }, 102,  6, 102, 6, { 0x66, 0x06, 0x00, 0x0C }, 4,  6,  1, NO_VALUE, 1, &D_800AD4C4 },
+    { 3276,  { 0xCC, 0x04, 0x0C, 0x00 }, 0,    0, 0,   0, { 0x00, 0x00, 0x00, 0x04 }, 4,  6,  2, NO_VALUE, 2, &D_800AD4C4 },
+    { 4915,  { 0x33, 0x03, 0xC8, 0x00 }, 102,  6, 0,   8, { 0xCC, 0x04, 0x00, 0x10 }, 4,  4,  2, NO_VALUE, 3, &D_800AD4C4 },
+    { 4096,  { 0x99, 0x01, 0xFA, 0x00 }, 0,    8, 0,   8, { 0x66, 0x06, 0x00, 0x04 }, 4,  5,  1, NO_VALUE, 2, &D_800AD4C4 },
+    { 4915,  { 0x99, 0x01, 0xE8, 0x03 }, 102,  6, 102, 6, { 0x66, 0x06, 0x00, 0x00 }, 2,  5,  1, NO_VALUE, 2, &D_800AD4C4 },
+    { 1638,  { 0x66, 0x06, 0xA0, 0x00 }, -52,  4, 102, 6, { 0x00, 0x08, 0x00, 0x00 }, 2,  4,  1, NO_VALUE, 2, &D_800AD4C4 },
+    { 2048,  { 0xCC, 0x04, 0x01, 0x00 }, 0,    0, 0,   0, { 0x00, 0x00, 0x00, 0x00 }, 0,  5,  6, NO_VALUE, 0, &D_800AD4C4 },
+    { 2048,  { 0xCC, 0x04, 0x01, 0x00 }, 0,    0, 0,   0, { 0x00, 0x00, 0x00, 0x00 }, 0,  5,  6, NO_VALUE, 0, &D_800AD4C4 },
+    { 2048,  { 0xCC, 0x04, 0x01, 0x00 }, 0,    0, 0,   0, { 0x00, 0x00, 0x00, 0x00 }, 0,  5,  6, NO_VALUE, 0, &D_800AD4C4 },
+    { 0,     { 0x00, 0x00, 0x00, 0x00 }, 0,    0, 0,   0, { 0x00, 0x00, 0x00, 0x00 }, 0,  0,  0, 0,        0, &D_800AD4C4 },
+    { 49152, { 0x00, 0x00, 0x64, 0x00 }, 0,    0, 0,   1, { 0x44, 0x00, 0x00, 0x00 }, 0,  5,  3, 0,        3, &D_800AD4C4 },
+    { 61440, { 0x00, 0x00, 0x5E, 0x01 }, 0,    0, 0,   1, { 0x22, 0x00, 0x00, 0x08 }, 0,  5,  3, 0,        3, &D_800AD4C4 },
+    { 49152, { 0x00, 0x00, 0x32, 0x00 }, 0,    0, 0,   12,{ 0xAA, 0x5C, 0x00, 0x04 }, 0,  5,  3, 0,        2, &D_800AD4C4 },
+    { 61440, { 0x00, 0x00, 0x32, 0x00 }, 0,    0, 0,   1, { 0x00, 0x00, 0x00, 0x00 }, 0,  3,  3, 0,        2, &D_800AD4C4 },
+    { 49152, { 0x00, 0x00, 0x28, 0x00 }, 51,   3, 0,   4, { 0x93, 0x49, 0x00, 0x00 }, 2,  5,  3, 0,        2, &D_800AD4C4 },
+    { 0,     { 0x00, 0x00, 0x00, 0x00 }, 0,    0, 0,   1, { 0x00, 0x00, 0x00, 0x00 }, 0,  0,  0, 0,        0, &D_800AD4C4 },
+    { 0,     { 0x00, 0x00, 0x00, 0x00 }, 0,    0, 0,   1, { 0x00, 0x00, 0x00, 0x00 }, 0,  0,  0, 0,        0, &D_800AD4C4 },
+    { 0,     { 0x00, 0x00, 0x00, 0x00 }, 0,    0, 1,   1, { 0x00, 0x00, 0x00, 0x00 }, 0,  0,  0, 0,        0, &D_800AD4C4 },
+    { 1228,  { 0x00, 0x00, 0x16, 0x00 }, 0,    0, 0,   0, { 0x00, 0x00, 0x00, 0x00 }, 2,  7,  2, 5,        4, &D_800AD4C4 },
+    { 1228,  { 0x00, 0x00, 0x12, 0x00 }, 0,    0, 0,   0, { 0x00, 0x00, 0x00, 0x00 }, 2,  7,  2, 5,        4, &D_800AD4C4 },
+    { 1228,  { 0x00, 0x00, 0x0A, 0x00 }, 51,   3, 204, 4, { 0x33, 0x03, 0x00, 0x00 }, 10, 8,  2, 2,        3, &D_800AD4C4 },
+    { 1638,  { 0x99, 0x01, 0x0A, 0x00 }, -52,  4, 204, 4, { 0x00, 0x00, 0x00, 0x04 }, 8,  2,  2, 2,        2, &D_800AD4C4 },
+    { 1638,  { 0x99, 0x01, 0x10, 0x00 }, 0,    0, 0,   0, { 0x00, 0x00, 0x00, 0x00 }, 0,  99, 6, 5,        3, &D_800AD4C4 },
+    { 5324,  { 0x66, 0x06, 0x10, 0x00 }, 102,  6, 51,  3, { 0x00, 0x00, 0x00, 0x00 }, 8,  7,  2, 2,        4, &D_800AD4C4 },
+    { 0,     { 0x00, 0x00, 0x00, 0x00 }, 0,    0, 0,   0, { 0x00, 0x00, 0x00, 0x00 }, 0,  99, 2, 0,        0, &D_800AD4C4 },
+    { 0,     { 0x00, 0x00, 0x00, 0x00 }, 0,    0, 0,   0, { 0x00, 0x00, 0x00, 0x00 }, 0,  99, 4, 0,        0, &D_800AD4C4 },
+    { 3686,  { 0x33, 0x0B, 0x0F, 0x00 }, 51,   3, 51,  3, { 0x00, 0x00, 0x00, 0x00 }, 12, 3,  1, 2,        2, &D_800AD4C4 },
+    { 2457,  { 0xCC, 0x04, 0x00, 0x00 }, 102,  6, 102, 6, { 0x00, 0x00, 0x00, 0x00 }, 11, 5,  5, 5,        0, &D_800AD4C4 },
+    { 0,     { 0x00, 0x00, 0x0C, 0x00 }, 0,    0, 0,   0, { 0x00, 0x00, 0x00, 0x00 }, 0,  99, 4, 0,        2, &D_800AD4C4 },
+    { 1638,  { 0x00, 0x00, 0x00, 0x00 }, -52,  4, 204, 4, { 0x00, 0x00, 0x00, 0x00 }, 0,  12, 5, 0,        0, &D_800AD4C4 },
+    { 2048,  { 0x00, 0x00, 0x05, 0x00 }, 0,    0, 0,   0, { 0x00, 0x00, 0x00, 0x00 }, 0,  99, 4, 0,        2, &D_800AD4C4 },
+    { 1638,  { 0x33, 0x03, 0x06, 0x00 }, -103, 1, 153, 1, { 0x00, 0x00, 0x00, 0x00 }, 5,  2,  4, 5,        2, &D_800AD4C4 },
+    { 3686,  { 0x66, 0x06, 0x00, 0x00 }, 102,  6, 153, 9, { 0x00, 0x00, 0x00, 0x00 }, 3,  2,  5, 1,        0, &D_800AD4C4 },
+    { 0,     { 0x00, 0x00, 0x0A, 0x00 }, 0,    0, 0,   0, { 0x00, 0x00, 0x00, 0x00 }, 0,  99, 4, 2,        0, &D_800AD4C4 },
+    { 0,     { 0x00, 0x00, 0x00, 0x00 }, 51,   3, 51,  3, { 0x33, 0x03, 0x00, 0x00 }, 0,  99, 5, 5,        0, &D_800AD4C4 },
+    { 0,     { 0x00, 0x00, 0x19, 0x00 }, 51,   3, 51,  3, { 0x33, 0x03, 0x00, 0x04 }, 17, 5,  1, 2,        2, &D_800AD4C4 },
+    { 0,     { 0x00, 0x00, 0x21, 0x00 }, 51,   3, 51,  3, { 0x33, 0x03, 0x00, 0x04 }, 17, 5,  1, 2,        2, &D_800AD4C4 },
+    { 819,   { 0x00, 0x00, 0x12, 0x00 }, 51,   3, 51,  3, { 0x00, 0x00, 0x00, 0x00 }, 0,  99, 2, 2,        4, &D_800AD4C4 },
+    { 0,     { 0x00, 0x00, 0x00, 0x00 }, 0,    0, 0,   0, { 0x00, 0x00, 0x00, 0x00 }, 0,  99, 6, 4,        0, &D_800AD4C4 },
+    { 1638,  { 0x66, 0x06, 0x0A, 0x00 }, -103, 9, 153, 9, { 0x99, 0x09, 0x00, 0x1C }, 0,  99, 2, 5,        0, &D_800AD4C4 },
+    { 0,     { 0x00, 0x00, 0x00, 0x00 }, 0,    0, 0,   0, { 0x00, 0x00, 0x00, 0x00 }, 0,  99, 6, 4,        0, &D_800AD4C4 },
+    { 61440, { 0x00, 0x00, 0x3C, 0x00 }, 0,    0, 0,   1, { 0x27, 0x00, 0x00, 0x04 }, 1,  2,  3, 4,        3, &D_800AD4C4 },
+    { 1638,  { 0x00, 0x00, 0x0F, 0x00 }, 0,    0, 0,   0, { 0x00, 0x00, 0x00, 0x04 }, 11, 3,  2, 2,        0, &D_800AD4C4 },
+    { 2048,  { 0x00, 0x00, 0x19, 0x00 }, 0,    0, 0,   0, { 0x00, 0x00, 0x00, 0x04 }, 11, 3,  2, 1,        0, &D_800AD4C4 },
+    { 1638,  { 0x00, 0x00, 0x01, 0x00 }, 102,  6, 102, 6, { 0x66, 0x06, 0x00, 0x00 }, 0,  99, 5, 5,        0, &D_800AD4C4 },
+    { 0,     { 0x00, 0x00, 0x00, 0x00 }, 0,    0, 0,   0, { 0x00, 0x00, 0x00, 0x00 }, 0,  99, 6, 4,        0, &D_800AD4C4 },
+    { 0,     { 0x00, 0x00, 0x00, 0x00 }, 0,    0, 0,   0, { 0x00, 0x00, 0x00, 0x00 }, 0,  99, 6, 1,        0, &D_800AD4C4 },
+    { 409,   { 0x00, 0x00, 0x06, 0x00 }, -103, 1, 153, 1, { 0x00, 0x00, 0x00, 0x00 }, 0,  99, 6, 2,        2, &D_800AD4C4 }
 };
 
 s32 g_Inventory_CmdSelectedIdx = 0;
 u32 g_Inventory_SelectionId = 0;
 
-const char* g_ItemNames[] =
+const char* INVENTORY_ITEM_NAMES[] =
 {
     "Health_drink(s)",
     "First_aid_kit(s)",
@@ -866,62 +866,62 @@ s32 D_800AF224 = NO_VALUE;
 
 s_AnimInfo HARRY_BASE_ANIM_INFOS[57] =
 {
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_Unk0,                    false), false, ANIM_STATUS(PlayerAnim_Unk0,                    true), 0, { Q19_12(10)     }, NO_VALUE, 0   },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_Unk0,                    true),  false, NO_VALUE,                                              0, { Q19_12(30)     }, NO_VALUE, 1   },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_Unk1,                    false), false, ANIM_STATUS(PlayerAnim_Unk1,                    true), 0, { Q19_12(10)     }, NO_VALUE, 0   },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_Unk1,                    true),  false, NO_VALUE,                                              0, { Q19_12(0)      }, 0,        0   },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_WalkForward,             false), false, ANIM_STATUS(PlayerAnim_WalkForward,             true), 0, { Q19_12(50)     }, NO_VALUE, 1   },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_WalkForward,             true),  true,  NO_VALUE,                                              0, { func_800706E4  }, 1,        23  },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunForward,              false), false, ANIM_STATUS(PlayerAnim_RunForward,              true), 0, { Q19_12(20)     }, NO_VALUE, 26  },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_RunForward,              true),  true,  NO_VALUE,                                              0, { func_800706E4  }, 26,       45  },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_WalkBackward,            false), false, ANIM_STATUS(PlayerAnim_WalkBackward,            true), 0, { Q19_12(20)     }, NO_VALUE, 46  },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_WalkBackward,            true),  true,  NO_VALUE,                                              0, { func_800706E4  }, 46,       69  },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_SidestepLeft,            false), false, ANIM_STATUS(PlayerAnim_SidestepLeft,            true), 0, { Q19_12(50)     }, NO_VALUE, 70  },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_SidestepLeft,            true),  false, NO_VALUE,                                              0, { Q19_12(30)     }, 70,       94  },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_SidestepRight,           false), false, ANIM_STATUS(PlayerAnim_SidestepRight,           true), 0, { Q19_12(50)     }, NO_VALUE, 95  },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_SidestepRight,           true),  false, NO_VALUE,                                              0, { Q19_12(30)     }, 95,       119 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunLeft,                 false), false, ANIM_STATUS(PlayerAnim_RunLeft,                 true), 0, { Q19_12(20)     }, NO_VALUE, 121 },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_RunLeft,                 true),  false, NO_VALUE,                                              0, { Q19_12(20)     }, 121,      133 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunRight,                false), false, ANIM_STATUS(PlayerAnim_RunRight,                true), 0, { Q19_12(20)     }, NO_VALUE, 136 },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_RunRight,                true),  false, NO_VALUE,                                              0, { Q19_12(20)     }, 136,      148 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunForwardWallStopRight, false), false, ANIM_STATUS(PlayerAnim_RunForwardWallStopRight, true), 0, { Q19_12(50)     }, NO_VALUE, 150 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunForwardWallStopRight, true),  false, ANIM_STATUS(PlayerAnim_RunForwardWallStopRight, true), 0, { Q19_12(15)     }, 150,      159 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunForwardWallStopLeft,  false), false, ANIM_STATUS(PlayerAnim_RunForwardWallStopLeft,  true), 0, { Q19_12(50)     }, NO_VALUE, 160 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunForwardWallStopLeft,  true),  false, ANIM_STATUS(PlayerAnim_RunForwardWallStopLeft,  true), 0, { Q19_12(15)     }, 160,      169 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunForwardStumble,       false), false, ANIM_STATUS(PlayerAnim_RunForwardStumble,       true), 0, { Q19_12(50)     }, NO_VALUE, 170 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunForwardStumble,       true),  false, ANIM_STATUS(PlayerAnim_RunForwardStumble,       true), 0, { Q19_12(15)     }, 170,      179 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_TurnLeft,                false), false, ANIM_STATUS(PlayerAnim_TurnLeft,                true), 0, { Q19_12(50)     }, NO_VALUE, 180 },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_TurnLeft,                true),  false, NO_VALUE,                                              0, { Q19_12(15)     }, 180,      192 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_TurnRight,               false), false, ANIM_STATUS(PlayerAnim_TurnRight,               true), 0, { Q19_12(50)     }, NO_VALUE, 193 },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_TurnRight,               true),  false, NO_VALUE,                                              0, { Q19_12(15)     }, 193,      205 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_QuickTurnRight,          false), false, ANIM_STATUS(PlayerAnim_QuickTurnRight,          true), 0, { Q19_12(50)     }, NO_VALUE, 206 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_QuickTurnRight,          true),  false, ANIM_STATUS(PlayerAnim_QuickTurnRight,          true), 0, { Q19_12(28)     }, 206,      217 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_QuickTurnLeft,           false), false, ANIM_STATUS(PlayerAnim_QuickTurnLeft,           true), 0, { Q19_12(50)     }, NO_VALUE, 219 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_QuickTurnLeft,           true),  false, ANIM_STATUS(PlayerAnim_QuickTurnLeft,           true), 0, { Q19_12(28)     }, 219,      230 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_JumpBackward,            false), false, ANIM_STATUS(PlayerAnim_JumpBackward,            true), 0, { Q19_12(10)     }, NO_VALUE, 240 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_JumpBackward,            true),  false, ANIM_STATUS(PlayerAnim_JumpBackward,            true), 0, { Q19_12(10)     }, 240,      247 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_LookAround,              false), false, ANIM_STATUS(PlayerAnim_LookAround,              true), 0, { Q19_12(50)     }, NO_VALUE, 248 },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_LookAround,              true),  false, NO_VALUE,                                              0, { Q19_12(7)      }, 248,      320 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunLeftWallStop,         false), false, ANIM_STATUS(PlayerAnim_RunLeftWallStop,         true), 0, { Q19_12(50)     }, NO_VALUE, 321 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunLeftWallStop,         true),  false, ANIM_STATUS(PlayerAnim_RunLeftWallStop,         true), 0, { Q19_12(20)     }, 321,      336 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunLeftStumble,          false), false, ANIM_STATUS(PlayerAnim_RunLeftStumble,          true), 0, { Q19_12(50)     }, NO_VALUE, 337 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunLeftStumble,          true),  false, ANIM_STATUS(PlayerAnim_RunLeftStumble,          true), 0, { Q19_12(15)     }, 337,      349 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunRightWallStop,        false), false, ANIM_STATUS(PlayerAnim_RunRightWallStop,        true), 0, { Q19_12(50)     }, NO_VALUE, 350 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunRightWallStop,        true),  false, ANIM_STATUS(PlayerAnim_RunRightWallStop,        true), 0, { Q19_12(20)     }, 350,      365 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunRightStumble,         false), false, ANIM_STATUS(PlayerAnim_RunRightStumble,         true), 0, { Q19_12(50)     }, NO_VALUE, 366 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunRightStumble,         true),  false, ANIM_STATUS(PlayerAnim_RunRightStumble,         true), 0, { Q19_12(15)     }, 366,      378 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_FallForward,             false), false, ANIM_STATUS(PlayerAnim_FallForward,             true), 0, { Q19_12(30)     }, NO_VALUE, 387 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_FallForward,             true),  false, ANIM_STATUS(PlayerAnim_FallForward,             true), 0, { Q19_12(20)     }, 387,      417 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_FallBackward,            false), false, ANIM_STATUS(PlayerAnim_FallBackward,            true), 0, { Q19_12(30)     }, NO_VALUE, 418 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_FallBackward,            true),  false, ANIM_STATUS(PlayerAnim_FallBackward,            true), 0, { Q19_12(20)     }, 418,      456 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_Kick,                    false), false, ANIM_STATUS(PlayerAnim_Kick,                    true), 0, { Q19_12(5)      }, NO_VALUE, 457 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_Kick,                    true),  false, ANIM_STATUS(PlayerAnim_Kick,                    true), 0, { Q19_12(20)     }, 457,      484 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_Stomp,                   false), false, ANIM_STATUS(PlayerAnim_Stomp,                   true), 0, { Q19_12(5)      }, NO_VALUE, 485 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_Stomp,                   true),  false, ANIM_STATUS(PlayerAnim_Stomp,                   true), 0, { Q19_12(20)     }, 485,      502 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_Idle,                    false), false, ANIM_STATUS(PlayerAnim_Idle,                    true), 0, { Q19_12(5)      }, NO_VALUE, 503 },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_Idle,                    true),  false, NO_VALUE,                                              0, { Q19_12(10)     }, 503,      542 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_IdleExhausted,           false), false, ANIM_STATUS(PlayerAnim_IdleExhausted,           true), 0, { Q19_12(5)      }, NO_VALUE, 543 },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_IdleExhausted,           true),  true,  NO_VALUE,                                              0, { func_800706E4  }, 543,      567 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_Unk0,                    false), false, ANIM_STATUS(PlayerAnim_Unk0,                    true), { Q19_12(10)     }, NO_VALUE, 0   },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_Unk0,                    true),  false, NO_VALUE,                                              { Q19_12(30)     }, NO_VALUE, 1   },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_Unk1,                    false), false, ANIM_STATUS(PlayerAnim_Unk1,                    true), { Q19_12(10)     }, NO_VALUE, 0   },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_Unk1,                    true),  false, NO_VALUE,                                              { Q19_12(0)      }, 0,        0   },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_WalkForward,             false), false, ANIM_STATUS(PlayerAnim_WalkForward,             true), { Q19_12(50)     }, NO_VALUE, 1   },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_WalkForward,             true),  true,  NO_VALUE,                                              { func_800706E4  }, 1,        23  },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunForward,              false), false, ANIM_STATUS(PlayerAnim_RunForward,              true), { Q19_12(20)     }, NO_VALUE, 26  },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_RunForward,              true),  true,  NO_VALUE,                                              { func_800706E4  }, 26,       45  },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_WalkBackward,            false), false, ANIM_STATUS(PlayerAnim_WalkBackward,            true), { Q19_12(20)     }, NO_VALUE, 46  },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_WalkBackward,            true),  true,  NO_VALUE,                                              { func_800706E4  }, 46,       69  },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_SidestepLeft,            false), false, ANIM_STATUS(PlayerAnim_SidestepLeft,            true), { Q19_12(50)     }, NO_VALUE, 70  },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_SidestepLeft,            true),  false, NO_VALUE,                                              { Q19_12(30)     }, 70,       94  },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_SidestepRight,           false), false, ANIM_STATUS(PlayerAnim_SidestepRight,           true), { Q19_12(50)     }, NO_VALUE, 95  },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_SidestepRight,           true),  false, NO_VALUE,                                              { Q19_12(30)     }, 95,       119 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunLeft,                 false), false, ANIM_STATUS(PlayerAnim_RunLeft,                 true), { Q19_12(20)     }, NO_VALUE, 121 },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_RunLeft,                 true),  false, NO_VALUE,                                              { Q19_12(20)     }, 121,      133 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunRight,                false), false, ANIM_STATUS(PlayerAnim_RunRight,                true), { Q19_12(20)     }, NO_VALUE, 136 },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_RunRight,                true),  false, NO_VALUE,                                              { Q19_12(20)     }, 136,      148 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunForwardWallStopRight, false), false, ANIM_STATUS(PlayerAnim_RunForwardWallStopRight, true), { Q19_12(50)     }, NO_VALUE, 150 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunForwardWallStopRight, true),  false, ANIM_STATUS(PlayerAnim_RunForwardWallStopRight, true), { Q19_12(15)     }, 150,      159 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunForwardWallStopLeft,  false), false, ANIM_STATUS(PlayerAnim_RunForwardWallStopLeft,  true), { Q19_12(50)     }, NO_VALUE, 160 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunForwardWallStopLeft,  true),  false, ANIM_STATUS(PlayerAnim_RunForwardWallStopLeft,  true), { Q19_12(15)     }, 160,      169 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunForwardStumble,       false), false, ANIM_STATUS(PlayerAnim_RunForwardStumble,       true), { Q19_12(50)     }, NO_VALUE, 170 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunForwardStumble,       true),  false, ANIM_STATUS(PlayerAnim_RunForwardStumble,       true), { Q19_12(15)     }, 170,      179 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_TurnLeft,                false), false, ANIM_STATUS(PlayerAnim_TurnLeft,                true), { Q19_12(50)     }, NO_VALUE, 180 },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_TurnLeft,                true),  false, NO_VALUE,                                              { Q19_12(15)     }, 180,      192 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_TurnRight,               false), false, ANIM_STATUS(PlayerAnim_TurnRight,               true), { Q19_12(50)     }, NO_VALUE, 193 },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_TurnRight,               true),  false, NO_VALUE,                                              { Q19_12(15)     }, 193,      205 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_QuickTurnRight,          false), false, ANIM_STATUS(PlayerAnim_QuickTurnRight,          true), { Q19_12(50)     }, NO_VALUE, 206 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_QuickTurnRight,          true),  false, ANIM_STATUS(PlayerAnim_QuickTurnRight,          true), { Q19_12(28)     }, 206,      217 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_QuickTurnLeft,           false), false, ANIM_STATUS(PlayerAnim_QuickTurnLeft,           true), { Q19_12(50)     }, NO_VALUE, 219 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_QuickTurnLeft,           true),  false, ANIM_STATUS(PlayerAnim_QuickTurnLeft,           true), { Q19_12(28)     }, 219,      230 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_JumpBackward,            false), false, ANIM_STATUS(PlayerAnim_JumpBackward,            true), { Q19_12(10)     }, NO_VALUE, 240 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_JumpBackward,            true),  false, ANIM_STATUS(PlayerAnim_JumpBackward,            true), { Q19_12(10)     }, 240,      247 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_LookAround,              false), false, ANIM_STATUS(PlayerAnim_LookAround,              true), { Q19_12(50)     }, NO_VALUE, 248 },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_LookAround,              true),  false, NO_VALUE,                                              { Q19_12(7)      }, 248,      320 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunLeftWallStop,         false), false, ANIM_STATUS(PlayerAnim_RunLeftWallStop,         true), { Q19_12(50)     }, NO_VALUE, 321 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunLeftWallStop,         true),  false, ANIM_STATUS(PlayerAnim_RunLeftWallStop,         true), { Q19_12(20)     }, 321,      336 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunLeftStumble,          false), false, ANIM_STATUS(PlayerAnim_RunLeftStumble,          true), { Q19_12(50)     }, NO_VALUE, 337 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunLeftStumble,          true),  false, ANIM_STATUS(PlayerAnim_RunLeftStumble,          true), { Q19_12(15)     }, 337,      349 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunRightWallStop,        false), false, ANIM_STATUS(PlayerAnim_RunRightWallStop,        true), { Q19_12(50)     }, NO_VALUE, 350 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunRightWallStop,        true),  false, ANIM_STATUS(PlayerAnim_RunRightWallStop,        true), { Q19_12(20)     }, 350,      365 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunRightStumble,         false), false, ANIM_STATUS(PlayerAnim_RunRightStumble,         true), { Q19_12(50)     }, NO_VALUE, 366 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunRightStumble,         true),  false, ANIM_STATUS(PlayerAnim_RunRightStumble,         true), { Q19_12(15)     }, 366,      378 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_FallForward,             false), false, ANIM_STATUS(PlayerAnim_FallForward,             true), { Q19_12(30)     }, NO_VALUE, 387 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_FallForward,             true),  false, ANIM_STATUS(PlayerAnim_FallForward,             true), { Q19_12(20)     }, 387,      417 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_FallBackward,            false), false, ANIM_STATUS(PlayerAnim_FallBackward,            true), { Q19_12(30)     }, NO_VALUE, 418 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_FallBackward,            true),  false, ANIM_STATUS(PlayerAnim_FallBackward,            true), { Q19_12(20)     }, 418,      456 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_Kick,                    false), false, ANIM_STATUS(PlayerAnim_Kick,                    true), { Q19_12(5)      }, NO_VALUE, 457 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_Kick,                    true),  false, ANIM_STATUS(PlayerAnim_Kick,                    true), { Q19_12(20)     }, 457,      484 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_Stomp,                   false), false, ANIM_STATUS(PlayerAnim_Stomp,                   true), { Q19_12(5)      }, NO_VALUE, 485 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_Stomp,                   true),  false, ANIM_STATUS(PlayerAnim_Stomp,                   true), { Q19_12(20)     }, 485,      502 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_Idle,                    false), false, ANIM_STATUS(PlayerAnim_Idle,                    true), { Q19_12(5)      }, NO_VALUE, 503 },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_Idle,                    true),  false, NO_VALUE,                                              { Q19_12(10)     }, 503,      542 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_IdleExhausted,           false), false, ANIM_STATUS(PlayerAnim_IdleExhausted,           true), { Q19_12(5)      }, NO_VALUE, 543 },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_IdleExhausted,           true),  true,  NO_VALUE,                                              { func_800706E4  }, 543,      567 },
     {}
 };
 u8 __padding1[14] = {};
@@ -2028,7 +2028,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
         case 0:
             g_Inventory_ItemNameTimer++;
             Gfx_StringSetPosition(68, 200);
-            if (Gfx_StringDraw(g_ItemNames[g_SavegamePtr->items_0[idx].id_0 - 32], g_Inventory_ItemNameTimer) == true)
+            if (Gfx_StringDraw(INVENTORY_ITEM_NAMES[g_SavegamePtr->items_0[idx].id_0 - 32], g_Inventory_ItemNameTimer) == true)
             {
                 g_Inventory_ItemNameTimer   = 100;
                 g_SysWork.timer_2C          = 0;
@@ -2040,7 +2040,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
         case 1:
             g_Inventory_DescriptionRollTimer += 2;
             Gfx_StringSetPosition(68, 200);
-            Gfx_StringDraw(g_ItemNames[g_SavegamePtr->items_0[idx].id_0 - 32], 100);
+            Gfx_StringDraw(INVENTORY_ITEM_NAMES[g_SavegamePtr->items_0[idx].id_0 - 32], 100);
 
             if (idx == g_Inventory_SelectedItemIdx)
             {
@@ -2062,7 +2062,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
         case 3:
         case 4:
             Gfx_StringSetPosition(68, 200);
-            Gfx_StringDraw(g_ItemNames[g_SavegamePtr->items_0[idx].id_0 - 32], 100);
+            Gfx_StringDraw(INVENTORY_ITEM_NAMES[g_SavegamePtr->items_0[idx].id_0 - 32], 100);
             Gfx_StringSetPosition(30, 232);
 
             switch (g_SysWork.sysStateStep_C[1])
@@ -2132,16 +2132,18 @@ void Gfx_Results_ItemsDisplay() // 0x800521A8
 
 void Gfx_Results_ItemsPosition() // 0x8005227C
 {
+    #define DISPLAY_ITEM_COUNT 6
+
     s32 i;
 
-    SVECTOR vecs[] = // 0x80027FB0
+    const SVECTOR OFFSETS[DISPLAY_ITEM_COUNT] =
     {
-        { 0x0000, 0xFCC0, 0x1400, 0x0000 },
-        { 0xFCF8, 0xFE80, 0x1400, 0x0000 },
-        { 0x0308, 0xFE80, 0x1400, 0x0000 },
-        { 0xFCF8, 0x0200, 0x1400, 0x0000 },
-        { 0x0308, 0x0200, 0x1400, 0x0000 },
-        { 0x0000, 0x03C0, 0x1400, 0x0000 },
+        { FP_METER_GEO(0.0f),      FP_METER_GEO(-3.25f), FP_METER_GEO(20.0f), FP_METER_GEO(0.0f) },
+        { FP_METER_GEO(-3.03125f), FP_METER_GEO(-1.5f),  FP_METER_GEO(20.0f), FP_METER_GEO(0.0f) },
+        { FP_METER_GEO(3.03125f),  FP_METER_GEO(-1.5f),  FP_METER_GEO(20.0f), FP_METER_GEO(0.0f) },
+        { FP_METER_GEO(-3.03125f), FP_METER_GEO(2.0f),   FP_METER_GEO(20.0f), FP_METER_GEO(0.0f) },
+        { FP_METER_GEO(3.03125f),  FP_METER_GEO(2.0f),   FP_METER_GEO(20.0f), FP_METER_GEO(0.0f) },
+        { FP_METER_GEO(0.0f),      FP_METER_GEO(3.75f),  FP_METER_GEO(20.0f), FP_METER_GEO(0.0f) }
     };
 
     if (g_SavegamePtr->clearGameCount_24A == 0)
@@ -2149,19 +2151,19 @@ void Gfx_Results_ItemsPosition() // 0x8005227C
         g_SavegamePtr->clearGameCount_24A = 1;
     }
 
-    for (i = 0; i < 6; i++)
+    for (i = 0; i < DISPLAY_ITEM_COUNT; i++)
     {
         if ((D_800C3E40 >> i) & (1 << 0))
         {
-            g_Items_Items3dData1[i].coord.t[0]      = vecs[i].vx;
-            g_Items_Items3dData1[i].coord.t[1]      = vecs[i].vy;
-            g_Items_Items3dData1[i].coord.t[2]      = vecs[i].vz;
-            g_Items_Items3dData0[i].rotation_10.vx  = 0x200;
-            g_Items_Items3dData0[i].rotation_10.vz  = 0x200;
-            g_Items_Items3dData0[i].scale_0.vz      = FP_FLOAT_TO(1.0f, Q12_SHIFT);
-            g_Items_Items3dData0[i].scale_0.vy      = FP_FLOAT_TO(1.0f, Q12_SHIFT);
-            g_Items_Items3dData0[i].scale_0.vx      = FP_FLOAT_TO(1.0f, Q12_SHIFT);
-            g_Items_Items3dData0[i].rotation_10.vy += 8;
+            g_Items_Items3dData1[i].coord.t[0]      = OFFSETS[i].vx;
+            g_Items_Items3dData1[i].coord.t[1]      = OFFSETS[i].vy;
+            g_Items_Items3dData1[i].coord.t[2]      = OFFSETS[i].vz;
+            g_Items_Items3dData0[i].rotation_10.vx  = FP_ANGLE(45.0f);
+            g_Items_Items3dData0[i].rotation_10.vz  = FP_ANGLE(45.0f);
+            g_Items_Items3dData0[i].scale_0.vz      = Q19_12(1.0f);
+            g_Items_Items3dData0[i].scale_0.vy      = Q19_12(1.0f);
+            g_Items_Items3dData0[i].scale_0.vx      = Q19_12(1.0f);
+            g_Items_Items3dData0[i].rotation_10.vy += FP_ANGLE(0.75f);
         }
     }
 }

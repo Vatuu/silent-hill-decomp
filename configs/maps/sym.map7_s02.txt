@@ -118,9 +118,13 @@ sharedFunc_800DA8E8_0_s01      = 0x800DA1B0; // type:func
 //----------------------------------------------------
 sharedData_800DD59C_0_s00      = 0x800E5B38; // type:u8
 STALKER_ANIM_INFOS             = 0x800E5B3C; // type:s32 unknown type
+LISA_ANIM_INFOS                = 0x800E7708;
 BLOODY_LISA_ANIM_INFOS         = 0x800E7948; // type:AnimInfo
 BLOODSUCKER_ANIM_INFOS         = 0x800E7988; // type:AnimInfo
+DAHLIA_ANIM_INFOS              = 0x800E7B68;
+GHOST_CHILD_ALESSA_ANIM_INFOS  = 0x800E7EA8;
 KAUFMANN_ANIM_INFOS            = 0x800E7FC8; // type:AnimInfo
+GHOST_DOCTOR_ANIM_INFOS        = 0x800E82A8;
 sharedData_800DF1F4_0_s00      = 0x800E82E8; // type:s32
 sharedData_800DF1F8_0_s00      = 0x800E82EC; // type:s16
 sharedData_800DF1FA_0_s00      = 0x800E82EE; // type:s16

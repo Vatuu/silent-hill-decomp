@@ -991,10 +991,10 @@ STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 typedef struct _AnimInfo
 {
     void (*updateFunc_0)(struct _Model*, struct _AnmHeader*, GsCOORDINATE2*, struct _AnimInfo*);
-    u8  status_4;                 /** Packed anim status. Init base? See `s_ModelAnimData::status_0`. */
-    s8  hasVariableDuration_5;    /** `bool` | Use `duration_8.variableFunc`: `true`, Use `duration_8.constant`: `false`. */
-    u8  status_6;                 /** Packed anim status. Link target? Sometimes `NO_VALUE`, unknown why. See `s_ModelAnim::status_0`. */
-    u8  __pad_7;
+    u8 status_4;                 /** Packed anim status. Init base? See `s_ModelAnimData::status_0`. */
+    s8 hasVariableDuration_5;    /** `bool` | Use `duration_8.variableFunc`: `true`, Use `duration_8.constant`: `false`. */
+    u8 status_6;                 /** Packed anim status. Link target? Sometimes `NO_VALUE`, unknown why. See `s_ModelAnim::status_0`. */
+    // 1 byte padding.
     union
     {
         q19_12 constant;          /** Constant duration at 30 FPS. */

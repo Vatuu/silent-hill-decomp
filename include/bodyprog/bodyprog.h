@@ -1487,12 +1487,12 @@ typedef struct
 } s_UnkStruct3_Mo; // Probable size: 8 bytes.
 
 /** Guessed based on in-debugger observation during gameplay.
- * Everything is inited to 0xFFFF and some data is written when I get hit by monsters.
- * Might be more generic 'particles / decals' struct
+ * Everything is inited to 0xFFFF and some data is written when the player is hit by monsters.
+ * Might be more generic particles/decals struct.
  */
 typedef struct _BloodSplat
 {
-    s16 unk_0; // At this point, maybe its an array of u16?
+    s16 unk_0; // Maybe an array of `u16`s?
 } s_BloodSplat;
 
 /** TODO: `g_MapOverlayHeader` is part of the map overlay BIN files. Maybe should be moved to `maps/shared.h`. 
@@ -1584,8 +1584,8 @@ typedef struct _MapOverlayHeader
     s32               (*func_128)(s_SubCharacter*); // Assumed return type.
     s32               (*func_12C)(s_SubCharacter*); // Assumed return type.
     void              (*func_130)(); // func(?).
-    s32               (*func_134)(s_SubCharacter*);           // Assumed return type.
-    s32               (*func_138)(s_SubCharacter*);           // Assumed return type.
+    s32               (*func_134)(s_SubCharacter*); // Assumed return type.
+    s32               (*func_138)(s_SubCharacter*); // Keyframe getter. Return value depends on the anim update function being used.
     s32               (*func_13C)(s32, s32, void*, s16, s32); // 0x800C96B8
     void              (*func_140)(); // func(?).
     void              (*func_144)(); // func(?).
@@ -2071,7 +2071,7 @@ extern GsDOBJ2 D_800C3E08;
 
 extern u8 g_Items_GunsMaxLoadAmmo[36]; // Max loaded ammo that a weapon can hold. 0x800AD4A0
 
-extern const char* g_ItemNames[];
+extern const char* INVENTORY_ITEM_NAMES[];
 
 extern const char* g_ItemDescriptions[];
 

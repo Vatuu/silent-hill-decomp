@@ -315,38 +315,47 @@ void func_800DA950(void) // 0x800DA950
             pickupType   = CommonPickupItemId_ShotgunShells;
             eventFlagIdx = EventFlag_M1S03_ShotgunShells0;
             break;
+
         case 85:
             pickupType   = CommonPickupItemId_HandgunBullets;
             eventFlagIdx = EventFlag_M1S03_HandgunBullets0;
             break;
+
         case 86:
             pickupType   = CommonPickupItemId_HealthDrink;
             eventFlagIdx = EventFlag_M1S03_HealthDrink0;
             break;
+
         case 87:
             pickupType   = CommonPickupItemId_HandgunBullets;
             eventFlagIdx = EventFlag_M1S03_HandgunBullets1;
             break;
+
         case 88:
             pickupType   = CommonPickupItemId_HandgunBullets;
             eventFlagIdx = EventFlag_M1S03_HandgunBullets2;
             break;
+
         case 89:
             pickupType   = CommonPickupItemId_ShotgunShells;
             eventFlagIdx = EventFlag_M1S03_ShotgunShells1;
             break;
+
         case 90:
             pickupType   = CommonPickupItemId_HandgunBullets;
             eventFlagIdx = EventFlag_M1S03_HandgunBullets3;
             break;
+
         case 91:
             pickupType   = CommonPickupItemId_HealthDrink;
             eventFlagIdx = EventFlag_M1S03_HealthDrink1;
             break;
+
         case 92:
             pickupType   = CommonPickupItemId_HealthDrink;
             eventFlagIdx = EventFlag_M1S03_HealthDrink2;
             break;
+
         case 93:
             pickupType   = CommonPickupItemId_FirstAidKit;
             eventFlagIdx = EventFlag_M1S03_FirstAidKit;

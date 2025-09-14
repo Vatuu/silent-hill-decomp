@@ -567,18 +567,22 @@ void func_800E9E10(void) // 0x800E9E10
             pickupType   = CommonPickupItemId_HealthDrink;
             eventFlagIdx = EventFlag_M2S02_HealthDrink0;
             break;
+
         case 42:
             pickupType   = CommonPickupItemId_HealthDrink;
             eventFlagIdx = EventFlag_M2S02_HealthDrink1;
             break;
+
         case 43:
             pickupType   = CommonPickupItemId_HandgunBullets;
             eventFlagIdx = EventFlag_M2S02_HandgunBullets0;
             break;
+
         case 44:
             pickupType   = CommonPickupItemId_HandgunBullets;
             eventFlagIdx = EventFlag_M2S02_HandgunBullets1;
             break;
+
         case 45:
             pickupType   = CommonPickupItemId_HealthDrink;
             eventFlagIdx = EventFlag_M2S02_HealthDrink2;

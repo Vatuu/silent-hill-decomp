@@ -231,10 +231,12 @@ void func_800D159C(void) // 0x800D159C
             pickupType   = CommonPickupItemId_HealthDrink;
             eventFlagIdx = EventFlag_M5S03_HealthDrink0;
             break;
+
         case 38:
             pickupType   = CommonPickupItemId_ShotgunShells;
             eventFlagIdx = EventFlag_M5S03_ShotgunShells;
             break;
+
         case 39:
             pickupType   = CommonPickupItemId_HealthDrink;
             eventFlagIdx = EventFlag_M5S03_HealthDrink1;

@@ -602,18 +602,22 @@ void func_800EB9A4(void) // 0x800EB9A4
             pickupType   = CommonPickupItemId_RifleShells;
             eventFlagIdx = EventFlag_M5S01_RifleShells0;
             break;
+
         case 41:
             pickupType   = CommonPickupItemId_HandgunBullets;
             eventFlagIdx = EventFlag_M5S01_HandgunBullets;
             break;
+
         case 42:
             pickupType   = CommonPickupItemId_FirstAidKit;
             eventFlagIdx = EventFlag_M5S01_FirstAidKit;
             break;
+
         case 43:
             pickupType   = CommonPickupItemId_HealthDrink;
             eventFlagIdx = EventFlag_M5S01_HealthDrink;
             break;
+
         case 44:
             pickupType   = CommonPickupItemId_RifleShells;
             eventFlagIdx = EventFlag_M5S01_RifleShells1;

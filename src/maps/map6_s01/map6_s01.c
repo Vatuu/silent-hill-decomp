@@ -244,10 +244,12 @@ void func_800D12B4(void) // 0x800D12B4
             pickupType   = CommonPickupItemId_RifleShells;
             eventFlagIdx = EventFlag_M6S01_RifleShells;
             break;
+
         case 14:
             pickupType   = CommonPickupItemId_HandgunBullets;
             eventFlagIdx = EventFlag_M6S01_HandgunBullets;
             break;
+
         case 15:
             pickupType   = CommonPickupItemId_HealthDrink;
             eventFlagIdx = EventFlag_M6S01_HealthDrink;

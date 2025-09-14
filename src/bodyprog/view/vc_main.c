@@ -7,7 +7,7 @@
 #include "bodyprog/player_logic.h"
 #include "bodyprog/vw_system.h"
 
-#define MIN_IN_ROAD_DIST FP_METER(1.0f) // vcGetMinInRoadDist() in SH2, hardcoded to FP_METER(1.0f) in SH1.
+#define MIN_IN_ROAD_DIST FP_METER(1.0f) // `vcGetMinInRoadDist` in SH2, hardcoded to `FP_METER(1.0f)` in SH1.
 
 VC_NEAR_ROAD_DATA vcNullNearRoad =
 {
@@ -18,8 +18,8 @@ VC_NEAR_ROAD_DATA vcNullNearRoad =
     .chara2road_sum_dist_8 = 0,
     .chara2road_vec_x_C = 0,
     .chara2road_vec_z_10 = 0,
-    .rd_14 = { Q7_8(226.0f), Q7_8(30.0f), Q7_8(226.0f), Q7_8(30.0f) },
-    .sw_1C = { Q7_8(226.0f), Q7_8(30.0f), Q7_8(226.0f), Q7_8(30.0f) },
+    .rd_14 = { Q11_4(3616.0f), Q11_4(480.0f), Q11_4(3616.0f), Q11_4(480.0f) },
+    .sw_1C = { Q11_4(3616.0f), Q11_4(480.0f), Q11_4(3616.0f), Q11_4(480.0f) },
 };
 
 /** @brief Default look-at move parameters. */
@@ -460,7 +460,7 @@ bool func_8008150C(s32 posX, s32 posZ)
     switch (Map_TypeGet())
     {
         case 0:
-            if ((posX - FP_METER(201.8f)) > (u32)(u32)(FP_METER(28.2f) + 1))
+            if ((posX - FP_METER(201.8f)) > (u32)(FP_METER(28.2f) + 1))
             {
                 return false;
             }
@@ -520,7 +520,7 @@ bool vcRetThroughDoorCamEndF(VC_WORK* w_p) // 0x800815F0
     if (rail2chara_dist > FP_METER(0.5f))
     {
         abs_ofs_ang_y = Math_AngleNormalize(w_p->chara_eye_ang_y_144 - ratan2(w_p->chara_pos_114.vx - w_p->through_door_10.rail_sta_pos_C.vx,
-                                                                          w_p->chara_pos_114.vz - w_p->through_door_10.rail_sta_pos_C.vz));
+                                                                              w_p->chara_pos_114.vz - w_p->through_door_10.rail_sta_pos_C.vz));
         if (abs_ofs_ang_y < FP_ANGLE(0.0f))
         {
             abs_ofs_ang_y = -abs_ofs_ang_y;
