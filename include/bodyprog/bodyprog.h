@@ -1760,7 +1760,6 @@ extern s_FsImageDesc g_MapImg;            // 0x800A901C
 extern s_FsImageDesc g_MapMarkerAtlasImg; // 0x800A9024
 extern s_FsImageDesc g_ItemInspectionImg; // 0x800A902C
 extern s_FsImageDesc D_800A9034;
-extern s_FsImageDesc D_800A905C;
 extern s_FsImageDesc g_ControllerButtonAtlasImg;   // 0x800A903C
 extern s_FsImageDesc g_BrightnessScreenImg0;       // 0x800A9044
 extern s_FsImageDesc g_BrightnessScreenImg1;       // 0x800A904C
@@ -1772,7 +1771,10 @@ extern s_FsImageDesc g_FirstAidKitItemTextureImg;  // 0x800A906C
 /** Some intentory item texture (`ITEM/TIM07.TIM`). */
 extern s_FsImageDesc D_800A9074;
 
-/** `TEST/WARMTEST.TIM` texture loaded by `Ai_Twinfeeler_TextureLoad. Unused? */
+extern s_FsImageDesc D_800A9084;
+
+extern s_FsImageDesc D_800A908C;
+
 extern s_FsImageDesc D_800A9094;
 
 extern s_FsImageDesc g_Font24AtlasImg; // 0x800A909C
@@ -2348,6 +2350,8 @@ extern VECTOR3* D_800C42CC;
 extern u16 D_800C42D0;
 
 extern u16 D_800C42D2;
+
+extern u16 D_800C42D8;
 
 extern s16 D_800C4408;
 
@@ -3149,7 +3153,7 @@ s32 func_8005F680(s_func_800699F8* arg0);
 void func_8005DE0C(s32 sfx, VECTOR3*, s32, s32, s32); // Types assumed.
 
 /** Something related to events of the map and loading of textures? */
-void func_8005E0DC(s32 mapIdx); // Types assumed.
+void func_8005E0DC(s32 mapIdx);
 
 void func_8005E70C();
 

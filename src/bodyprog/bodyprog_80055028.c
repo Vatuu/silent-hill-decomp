@@ -2298,7 +2298,120 @@ void func_8005DD44(s32 sfx, VECTOR3* pos, s32 vol, s8 pitch) // 0x8005DD44
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005DE0C); // 0x8005DE0C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005E0DC); // 0x8005E0DC
+void func_8005E0DC(s32 mapIdx) // 0x8005E0DC
+{
+    // TODO: Improve names of some of these & move to header.
+    #define EFFECT_GLASS    (1 << 1)
+    #define EFFECT_DR_WAVE  (1 << 2)
+    #define EFFECT_WATER    (1 << 3)
+    #define EFFECT_FIRE     (1 << 4)
+    #define EFFECT_EF       (1 << 5)
+    #define EFFECT_BLOOD    (1 << 6)
+    #define EFFECT_WARMTEST (1 << 7)
+
+    s32 i;
+    s32 effectTexMask;
+
+    D_800A908C.v     = 0;
+    D_800A908C.clutY = 0;
+    D_800A9094.v     = 128;
+
+    effectTexMask = 0;
+
+    switch (mapIdx)
+    {
+        case NO_VALUE:
+            Fs_QueueStartReadTim(FILE_TIM_BLD_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_BLD_TIM), 0x800), &D_800A9084);
+            D_800C42D8 = 0;
+            break;
+        case MapOverlayId_MAP0_S01:
+            if (!Savegame_EventFlagGet(EventFlag_47))
+            {
+                effectTexMask = EFFECT_GLASS;
+            }
+            break;
+        case MapOverlayId_MAP1_S02:
+        case MapOverlayId_MAP1_S03:
+            effectTexMask = EFFECT_WATER;
+            break;
+        case MapOverlayId_MAP1_S05:
+            effectTexMask = EFFECT_FIRE | EFFECT_EF;
+            break;
+        case MapOverlayId_MAP3_S05:
+            if (!Savegame_EventFlagGet(EventFlag_284))
+            {
+                effectTexMask = EFFECT_FIRE;
+            }
+            break;
+        case MapOverlayId_MAP4_S01:
+            if (!Savegame_EventFlagGet(EventFlag_306))
+            {
+                effectTexMask = EFFECT_FIRE;
+            }
+            break;
+        case MapOverlayId_MAP4_S05:
+            effectTexMask = EFFECT_BLOOD;
+            break;
+        case MapOverlayId_MAP5_S00:
+        case MapOverlayId_MAP6_S03:
+        case MapOverlayId_MAPX_S00: // @unused
+            effectTexMask = EFFECT_DR_WAVE;
+            break;
+    }
+
+    if (effectTexMask != 0)
+    {
+        D_800C42D8 = 0;
+
+        for (i = 0; i < 16; i++)
+        {
+            if ((effectTexMask >> i) & 1)
+            {
+                D_800C42D8 |= (1 << i);
+
+                // TODO: Not sure if this is actually checking something gte related, but the macro/pointless branch is needed for match.
+                if (gte_IsDisabled())
+                {
+                    continue;
+                }
+
+                switch (1 << i)
+                {
+                    case EFFECT_GLASS:
+                        Fs_QueueStartReadTim(FILE_TIM_GLASS_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_GLASS_TIM), 0x800), &D_800A908C);
+                        break;
+
+                    case EFFECT_DR_WAVE:
+                        Fs_QueueStartReadTim(FILE_TIM_DR_WAVE_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_DR_WAVE_TIM), 0x800), &D_800A908C);
+                        break;
+
+                    case EFFECT_WATER:
+                        Fs_QueueStartReadTim(FILE_TIM_WATER_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_WATER_TIM), 0x800), &D_800A908C);
+                        break;
+
+                    case EFFECT_FIRE:
+                        D_800A9094.v = 120;
+                        Fs_QueueStartReadTim(FILE_TIM_FIRE_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_FIRE_TIM), 0x800), &D_800A9094);
+                        break;
+
+                    case EFFECT_EF:
+                        D_800A908C.v     = 64;
+                        D_800A908C.clutY = 4;
+                        Fs_QueueStartReadTim(FILE_TIM_EF_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_EF_TIM), 0x800), &D_800A908C);
+                        break;
+
+                    case EFFECT_BLOOD:
+                        Fs_QueueStartReadTim(FILE_TIM_BLOOD_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_BLOOD_TIM), 0x800), &D_800A908C);
+                        break;
+
+                    case EFFECT_WARMTEST:
+                        Fs_QueueStartReadTim(FILE_TEST_WARMTEST_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TEST_WARMTEST_TIM), 0x800), &D_800A9094);
+                        break;
+                }
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005E414); // 0x8005E414
 
