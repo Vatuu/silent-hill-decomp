@@ -3972,12 +3972,13 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E
     s32     temp_t1;
     s32     var_a2;
     s32     var_a3;
-    u32     var_s1;
+    u32     flags;
 
-    var_s1         = 0;
+    flags         = 0;
     arg0->field_1C = 0;
 
-    if (arg0->field_8.vx < 0 && arg0->field_C < 0 && arg0->field_8.vy < 0 && arg0->field_E < 0)
+    if (arg0->field_8.vx < 0 && arg0->field_C < 0 &&
+        arg0->field_8.vy < 0 && arg0->field_E < 0)
     {
         return;
     }
@@ -3995,12 +3996,12 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E
     sp18.vz  = 0;
     sp18.pad = 0;
 
-    sp18.vx = FP_TO(arg0->field_10, Q12_SHIFT);
-    sp18.vy = FP_TO(arg0->field_14, Q12_SHIFT);
+    sp18.vx = Q19_12(arg0->field_10);
+    sp18.vy = Q19_12(arg0->field_14);
 
     if (arg1.vx < 0)
     {
-        var_s1            |= 1;
+        flags             |= 1 << 0;
         subroutine_arg4.vx = -subroutine_arg4.vx;
 
         arg1.vx = -arg1.vx;
@@ -4010,7 +4011,7 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E
 
     if (arg2.vx < 0)
     {
-        var_s1            |= 2;
+        flags             |= 1 << 1;
         subroutine_arg4.vy = -subroutine_arg4.vy;
         arg2.vx            = -arg2.vx;
         sp18.pad           = -sp18.vy;
@@ -4019,7 +4020,7 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E
 
     if (arg1.vx < arg2.vx)
     {
-        var_s1 |= 4;
+        flags |= 1 << 2;
 
         temp_a0_3          = subroutine_arg4.vx;
         subroutine_arg4.vx = subroutine_arg4.vy;
@@ -4039,14 +4040,14 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E
 
     if (subroutine_arg4.vx + arg1.vx < FP_MULTIPLY(arg0->field_18, sp18.vx, Q12_SHIFT))
     {
-        sp18.vx = FP_TO(subroutine_arg4.vx + arg1.vx, Q12_SHIFT) / arg0->field_18;
+        sp18.vx = Q19_12(subroutine_arg4.vx + arg1.vx) / arg0->field_18;
     }
 
-    sp28.vx = FP_TO(subroutine_arg4.vx, Q12_SHIFT) / arg0->field_18;
-    sp28.vy = FP_TO(subroutine_arg4.vy, Q12_SHIFT) / arg0->field_18;
-    sp28.vz = 0x1000;
+    sp28.vx = Q19_12(subroutine_arg4.vx) / arg0->field_18;
+    sp28.vy = Q19_12(subroutine_arg4.vy) / arg0->field_18;
+    sp28.vz = Q19_12(1.0f);
 
-    sp28.pad  = FP_TO(arg2.vx, Q12_SHIFT) / arg1.vx;
+    sp28.pad  = Q19_12(arg2.vx) / arg1.vx;
     temp_lo_4 = FP_MULTIPLY(sp28.pad, QX_12_FRACT(sp28.vx), Q12_SHIFT);
 
     if (FP_FROM(sp18.vx, Q12_SHIFT) < FP_FROM(sp28.vx, Q12_SHIFT))
@@ -4056,12 +4057,12 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E
 
     do
     {
-        func_8006E490(arg0, var_s1, sp28.vx, sp28.vy);
+        func_8006E490(arg0, flags, sp28.vx, sp28.vy);
 
         temp_t0 = sp28.vy;
         temp_t1 = sp28.vx;
         var_a3  = temp_t0 + sp28.pad;
-        var_a2  = temp_t1 + 0x1000;
+        var_a2  = temp_t1 + Q19_12(1.0f);
 
         sp28.vy = var_a3;
         sp28.vx = var_a2;
@@ -4070,14 +4071,15 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E
         {
             if (QX_12_FRACT(var_a3) < temp_lo_4)
             {
-                func_8006E490(arg0, var_s1, var_a2, temp_t0);
+                func_8006E490(arg0, flags, var_a2, temp_t0);
             }
             else
             {
-                func_8006E490(arg0, var_s1, temp_t1, var_a3);
+                func_8006E490(arg0, flags, temp_t1, var_a3);
             }
         }
-    } while (arg0->field_1C < 0x14 && FP_FROM(sp28.vx, Q12_SHIFT) <= FP_FROM(sp18.vx, Q12_SHIFT));
+    }
+    while (arg0->field_1C < 20 && FP_FROM(sp28.vx, Q12_SHIFT) <= FP_FROM(sp18.vx, Q12_SHIFT));
 }
 
 void func_8006E490(s_func_8006E490* arg0, u32 arg1, s32 arg2, s32 arg3) // 0x8006E490
@@ -4365,6 +4367,8 @@ void func_8006EE0C(s_func_8006DCE0_6C* arg0, s32 arg1, s_func_8006DCE0_64* arg2)
     s32 var_a1;
     s32 var_a3;
     s32 var_v0;
+
+    // TODO: `>> 4`s here are probably Q format conversion.
 
     if (arg1 == 1)
     {
