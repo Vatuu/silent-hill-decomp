@@ -132,3 +132,4 @@ sharedData_800E0CBA_0_s00   = 0x800E2C26; // type:s8
 sharedData_800E39D8_0_s00   = 0x800E2C28; // type:s32
 sharedData_800D6BB8_3_s04   = 0x800E2C34; // type:s32
 sharedData_800E2C38_7_s01   = 0x800E2C38; // type:s32
+LISA_ANIM_INFOS = 0x800DFD98;

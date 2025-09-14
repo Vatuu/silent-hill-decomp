@@ -139,3 +139,4 @@ g_Ai_MonsterCybil_ExtraModel = 0x800ED540; // type:Model
 sharedData_800D16E4_2_s01    = 0x800ED57C; // type:s8
 sharedData_800D3150_3_s02    = 0x800ED580; // type:s32
 sharedData_800D16E0_2_s01    = 0x800ED584; // type:s32
+MONSTER_CYBIL_ANIM_INFOS = 0x800EA718;

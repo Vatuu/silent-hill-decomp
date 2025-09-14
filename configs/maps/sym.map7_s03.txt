@@ -158,3 +158,5 @@ sharedData_800D16E4_2_s01   = 0x800F2408; // type:s8
 sharedData_800D3150_3_s02   = 0x800F240C; // type:s32
 sharedData_800D5CF4_3_s00   = 0x800F2410; // type:s32
 sharedData_800E2C38_7_s01   = 0x800F2414; // type:s32
+INCUBATOR_ANIM_INFOS = 0x800EAC00;
+D_800EAA80 = 0x800EAA80;
