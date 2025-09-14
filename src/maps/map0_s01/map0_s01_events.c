@@ -621,7 +621,7 @@ void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
             SysWork_StateStepIncrement();
 
         case 9:
-            var_a1     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(15.0f), Q12_SHIFT);
+            var_a1 = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(15.0f), Q12_SHIFT);
             g_Timer0 = MIN(var_a1, FP_TIME(52.0f));
             if (g_Timer0 >= FP_TIME(52.0f))
             {
@@ -642,7 +642,7 @@ void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
             SysWork_StateStepIncrement();
 
         case 12:
-            var_a1     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(15.0f), Q12_SHIFT);
+            var_a1 = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(15.0f), Q12_SHIFT);
             g_Timer0 = MIN(var_a1, FP_TIME(75.0f));
 
             if (g_Timer0 >= FP_TIME(75.0f))
@@ -675,7 +675,7 @@ void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
             SysWork_StateStepIncrement();
 
         case 16:
-            var_a1     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(18.0f), Q12_SHIFT);
+            var_a1 = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(18.0f), Q12_SHIFT);
             g_Timer0 = MIN(var_a1, FP_TIME(146.0f));
             if (g_Timer0 >= FP_TIME(146.0f))
             {
@@ -690,7 +690,7 @@ void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
             SysWork_StateStepIncrement();
 
         case 18:
-            var_a1     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(18.0f), Q12_SHIFT);
+            var_a1 = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(18.0f), Q12_SHIFT);
             g_Timer0 = MIN(var_a1, FP_TIME(147.0f));
             if (g_Timer0 >= FP_TIME(147.0f))
             {
@@ -908,7 +908,7 @@ void MapEvent_AirScreamerDeath() // 0x800DC8C8
             SysWork_StateStepIncrement();
 
         case 1:
-            func_800869E4(68, &g_SoundCmdIdx, &D_800DE128); // This_is_not_a_dream!
+            func_800869E4(68, &g_SoundCmdIdx, &D_800DE128); // "This is not a dream!"
             break;
 
         default:
@@ -993,7 +993,7 @@ void func_800DC9C8() // 0x800DC9C8
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01_events", func_800DCCF4); // Set in map `header.func_40`.
 
-void func_800DD2EC(s32 arg0) // 0x800DD2EC // called by func_800DCCF4 only
+void func_800DD2EC(s32 arg0) // 0x800DD2EC
 {
     static const SVECTOR3 DEFAULT_ROT = {};
 
