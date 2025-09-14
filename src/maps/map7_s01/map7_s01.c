@@ -244,7 +244,7 @@ void func_800D71BC(void) {}
 
 #include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800D71C4
 
-const char* g_MapMessages[] =
+const char* MAP_MESSAGES[] =
 {
     #include "maps/shared/mapMsg_common.h"
     "~J0(5.5)\t",

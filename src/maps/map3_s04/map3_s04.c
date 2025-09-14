@@ -219,7 +219,7 @@ void func_800D2128(void) {}
 
 INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800D2130);
 
-const char* g_MapMessages[] =
+const char* MAP_MESSAGES[] =
 {
     #include "maps/shared/mapMsg_common.h"
     "~J1(3.6)\tFinally. ~N\n\t\t\tSomeone_else_who's_OK. ",

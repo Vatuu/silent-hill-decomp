@@ -349,7 +349,7 @@ void Gfx_LoadingScreen_StageString() // 0x800D95D4
     Gfx_DebugStringDraw("STAGE 0-0");
 }
 
-const char* g_MapMessages[] =
+const char* MAP_MESSAGES[] =
 {
     #include "maps/shared/mapMsg_common.h"
     "~J0(2.5)\tCheryl.__Where_could_you_be? ~E ",

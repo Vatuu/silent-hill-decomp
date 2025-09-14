@@ -310,7 +310,7 @@ void func_800DA1A8() {}
 
 #include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800DA1B0
 
-const char* g_MapMessages[] =
+const char* MAP_MESSAGES[] =
 {
     #include "maps/shared/mapMsg_common.h"
     "\t\tSame_thing... ~E ",

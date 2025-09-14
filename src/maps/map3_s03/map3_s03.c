@@ -191,7 +191,7 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D1284);
 
 void func_800D1514(void) {}
 
-const char* g_MapMessages[] =
+const char* MAP_MESSAGES[] =
 {
     #include "maps/shared/mapMsg_common.h"
     "\tThere_is_a_ ~C2 Plate_of_[Hatter] ~C7 . ~N\n\tTake_it? ~S4 ",

@@ -159,7 +159,7 @@ INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D1474);
 
 INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D1508);
 
-const char* g_MapMessages[] =
+const char* MAP_MESSAGES[] =
 {
     #include "maps/shared/mapMsg_common.h"
     "\tI've_got_a_ ~C2 Motorcycle_key ~C7 . ~E ",

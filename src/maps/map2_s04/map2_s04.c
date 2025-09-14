@@ -93,7 +93,7 @@ INCLUDE_ASM("asm/maps/map2_s04/nonmatchings/map2_s04", func_800CCE74);
 
 INCLUDE_ASM("asm/maps/map2_s04/nonmatchings/map2_s04", func_800CCF08);
 
-const char* g_MapMessages[] =
+const char* MAP_MESSAGES[] =
 {
     #include "maps/shared/mapMsg_common.h"
     "\tThere's_a_memo_on_the_desk. ",

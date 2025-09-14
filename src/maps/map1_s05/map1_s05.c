@@ -153,7 +153,7 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D494C);
 
 void func_800D49A4(void) {}
 
-const char* g_MapMessages[] =
+const char* MAP_MESSAGES[] =
 {
     #include "maps/shared/mapMsg_common.h"
 };

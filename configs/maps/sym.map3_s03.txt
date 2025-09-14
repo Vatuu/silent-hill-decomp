@@ -88,7 +88,7 @@ BLOODSUCKER_ANIM_INFOS      = 0x800D5ABC; // type:AnimInfo
 //---------------------------------------------------------------
 //--- PA: 0x00CE6C   VA: 0x800D63E4   subsegment: .data, map3_s03
 //---------------------------------------------------------------
-g_MapMessages               = 0x800D63E4; // type:u32 size:0xFC
+MAP_MESSAGES                = 0x800D63E4; // type:u32 size:0xFC
 
 //----------------------------------------------------
 //--- PA: 0x00CF68   VA: 0x800D64E0   subsegment: data

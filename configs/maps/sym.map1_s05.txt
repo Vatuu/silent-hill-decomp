@@ -71,7 +71,7 @@ sharedData_800DCC14_1_s00 = 0x800D5C04; // type:u8
 //---------------------------------------------------------------
 //--- PA: 0x00C734   VA: 0x800D5CAC   subsegment: .data, map1_s05
 //---------------------------------------------------------------
-g_MapMessages             = 0x800D5CAC; // type:u32 size:0x3C
+MAP_MESSAGES              = 0x800D5CAC; // type:u32 size:0x3C
 
 //----------------------------------------------------
 //--- PA: 0x00C770   VA: 0x800D5CE8   subsegment: data

@@ -549,7 +549,7 @@ INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800EA2A4);
 
 void func_800EA338(void) {}
 
-const char* g_MapMessages[] =
+const char* MAP_MESSAGES[] =
 {
     #include "maps/shared/mapMsg_common.h"
     "~C3\tgreen_lion ~E ",

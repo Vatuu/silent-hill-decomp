@@ -95,7 +95,7 @@ sharedData_800D91A0_5_s00 = 0x800DB1C0; // type:s32 unknown type
 //---------------------------------------------------------------
 //--- PA: 0x012868   VA: 0x800DBDE0   subsegment: .data, map6_s03
 //---------------------------------------------------------------
-g_MapMessages             = 0x800DBDE0; // type:u32 size:0x44
+MAP_MESSAGES              = 0x800DBDE0; // type:u32 size:0x44
 
 //----------------------------------------------------
 //--- PA: 0x0128AC   VA: 0x800DBE24   subsegment: data

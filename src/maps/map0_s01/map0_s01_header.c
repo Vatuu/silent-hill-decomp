@@ -1,7 +1,9 @@
 #include "bodyprog/bodyprog.h"
-#include "maps/map0/map0_s01.h"
 #include "bodyprog/math/math.h"
+#include "maps/map0/map0_s01.h"
 #include "maps/shared.h"
+
+#define BLOOD_SPLAT_COUNT_MAX 150
 
 #define func_800DCCF4 ((void(*)())0x800DCCF4)
 #define func_800CD1F8 ((void(*)())0x800CD1F8)
@@ -16,9 +18,9 @@
 #define func_800D0850 ((void(*)())0x800D0850)
 
 extern u8 D_800DDFB8[];
-extern s_AnimInfo g_AnimInfos[];
+extern s_AnimInfo HARRY_M0S01_ANIM_INFOS[];
 extern s_func_800625F4 D_800DE270[300];
-extern s_BloodSplat g_Effect_BloodSplats[150];
+extern s_BloodSplat g_Effect_BloodSplats[BLOOD_SPLAT_COUNT_MAX];
 extern s32 D_800DFB10[];
 extern s_UnkStruct3_Mo g_MapHeaders_38[21];
 extern u8 g_LoadableInventoryItems[34];
@@ -53,6 +55,7 @@ void (*g_MapEventFuncs[])() =
 };
 
 const u32 D_800C9578 = 0x00000000; // rodata 0
+
 const s_MapOverlayHeader g_MapOverlayHeader = 
 {
     .type_0 = &g_MapTypes[0],
@@ -71,8 +74,8 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .unk_24 = D_800DDFB8,
     .field_28 = &g_SysWork.npcCoords_FC0[0],
     .loadableItems_2C = g_LoadableInventoryItems,
-    .mapMessages_30 = g_MapMessages,
-    .animInfos_34 = g_AnimInfos,
+    .mapMessages_30 = MAP_MESSAGES,
+    .animInfos_34 = HARRY_M0S01_ANIM_INFOS,
     .field_38 = g_MapHeaders_38,
     .func_3C = func_800DC9C8,
     .func_40 = func_800DCCF4,

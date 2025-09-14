@@ -92,7 +92,7 @@ CREAPER_ANIM_INFOS        = 0x800D9CBC; // type:s32 unknown type
 //---------------------------------------------------------------
 //--- PA: 0x011294   VA: 0x800DA80C   subsegment: .data, map5_s00
 //---------------------------------------------------------------
-g_MapMessages             = 0x800DA80C; // type:u32 size:0x54
+MAP_MESSAGES              = 0x800DA80C; // type:u32 size:0x54
 
 //----------------------------------------------------
 //--- PA: 0x0112E8   VA: 0x800DA860   subsegment: data

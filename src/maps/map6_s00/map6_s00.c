@@ -547,7 +547,7 @@ void func_800EAFF0(void) {}
 
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800EB090);
 
-const char* g_MapMessages[] =
+const char* MAP_MESSAGES[] =
 {
     #include "maps/shared/mapMsg_common.h"
     "~J0(1.5)\tWhat's_this! ~E ",

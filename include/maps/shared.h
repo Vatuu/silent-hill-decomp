@@ -264,7 +264,7 @@ extern s_ParticleVectors g_ParticleVectors0;
 
 extern s_ParticleVectors g_ParticleVectors1;
 
-extern const char* g_MapMessages[]; // 0x800DF6B8
+extern const char* MAP_MESSAGES[]; // 0x800DF6B8
 
 bool sharedFunc_800CBBBC_0_s00();
 

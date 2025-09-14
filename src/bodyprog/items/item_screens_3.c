@@ -922,7 +922,7 @@ s_AnimInfo HARRY_BASE_ANIM_INFOS[57] =
     { Anim_Update1, ANIM_STATUS(PlayerAnim_Idle,                    true),  false, NO_VALUE,                                              0, { Q19_12(10)     }, 503,      542 },
     { Anim_Update2, ANIM_STATUS(PlayerAnim_IdleExhausted,           false), false, ANIM_STATUS(PlayerAnim_IdleExhausted,           true), 0, { Q19_12(5)      }, NO_VALUE, 543 },
     { Anim_Update1, ANIM_STATUS(PlayerAnim_IdleExhausted,           true),  true,  NO_VALUE,                                              0, { func_800706E4  }, 543,      567 },
-    {} // End of list.
+    {}
 };
 u8 __padding1[14] = {};
 s16 D_800AF5C6 = 0;

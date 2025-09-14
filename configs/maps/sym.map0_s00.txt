@@ -100,7 +100,7 @@ Gfx_LoadingScreen_StageString = 0x800D95D4; // type:func
 //-------------------------------------------------------------------------
 //--- PA: 0x013D44   VA: 0x800DD2BC   subsegment: .data, map0_s00_anim_info
 //-------------------------------------------------------------------------
-g_AnimInfos                   = 0x800DD2BC;
+HARRY_M0S00_ANIM_INFOS        = 0x800DD2BC;
 g_MapHeaders_38               = 0x800DD4EC; // type:UnkStruct3_Mo size:0x90
 g_LoadableInventoryItems      = 0x800DD57C; // type:u8 size:0x08
 
@@ -131,7 +131,7 @@ g_MapEventFuncs               = 0x800DF674;
 //---------------------------------------------------------------
 //--- PA: 0x016140   VA: 0x800DF6B8   subsegment: .data, map0_s00
 //---------------------------------------------------------------
-g_MapMessages                 = 0x800DF6B8; // type:u32 size:0x9C
+MAP_MESSAGES                  = 0x800DF6B8; // type:u32 size:0x9C
 
 //----------------------------------------------------
 //--- PA: 0x0161DC   VA: 0x800DF754   subsegment: data

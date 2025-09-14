@@ -179,7 +179,7 @@ INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D4990);
 
 INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800D4A24);
 
-const char* g_MapMessages[] =
+const char* MAP_MESSAGES[] =
 {
     #include "maps/shared/mapMsg_common.h"
     "~J0(8.7)\t~E ",

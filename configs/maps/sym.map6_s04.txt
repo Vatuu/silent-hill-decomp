@@ -116,7 +116,7 @@ PARASITE_ANIM_INFOS          = 0x800EAEC0; // type:AnimInfo
 //---------------------------------------------------------------
 //--- PA: 0x0222A4   VA: 0x800EB81C   subsegment: .data, map6_s04
 //---------------------------------------------------------------
-g_MapMessages                = 0x800EB81C; // type:u32 size:0x130
+MAP_MESSAGES                 = 0x800EB81C; // type:u32 size:0x130
 
 //----------------------------------------------------
 //--- PA: 0x0223D4   VA: 0x800EB94C   subsegment: data

@@ -513,7 +513,7 @@ const s32 D_800CA824[] =
     -28,
 };
 
-const char* g_MapMessages[] =
+const char* MAP_MESSAGES[] =
 {
     #include "maps/shared/mapMsg_common.h"
     "\tDaddy...where_are_you...? ",

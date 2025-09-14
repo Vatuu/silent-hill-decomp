@@ -545,7 +545,7 @@ INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E9CC0);
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E9D54);
 
-const char* g_MapMessages[] =
+const char* MAP_MESSAGES[] =
 {
     #include "maps/shared/mapMsg_common.h"
     "\tUsed_the_ ~C2 Antique_shop_key ~C7 . ~E ",

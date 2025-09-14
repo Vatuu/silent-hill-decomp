@@ -228,7 +228,7 @@ INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D70EC);
 
 INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D7180);
 
-const char* g_MapMessages[] =
+const char* MAP_MESSAGES[] =
 {
     #include "maps/shared/mapMsg_common.h"
     "\tStatue_of_an_old_man's_hand.",

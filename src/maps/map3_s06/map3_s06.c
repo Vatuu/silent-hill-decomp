@@ -168,7 +168,7 @@ INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800D0B10);
 
 #include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800D0B7C
 
-const char* g_MapMessages[] =
+const char* MAP_MESSAGES[] =
 {
     #include "maps/shared/mapMsg_common.h"
     "~J0(1.5)\tWas_I_dreaming? ~E ",

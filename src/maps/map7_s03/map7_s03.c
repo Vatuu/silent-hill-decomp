@@ -938,7 +938,7 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E1788);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E17B8);
 
-const char* g_MapMessages[] =
+const char* MAP_MESSAGES[] =
 {
     #include "maps/shared/mapMsg_common.h"
     "~J1(4.9)\tI_was_shocked_to_realize ~N\n\t\t\tthe_talisman_of_Metraton ~N\n\t\t\twas_being_used. ",

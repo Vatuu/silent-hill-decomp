@@ -174,7 +174,7 @@ void func_800D0CAC() // 0x800D0CAC
 
 INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800D0CD0);
 
-const char* g_MapMessages[] =
+const char* MAP_MESSAGES[] =
 {
     #include "maps/shared/mapMsg_common.h"
     "~J0(1.0)\tHold_it... ~E ",

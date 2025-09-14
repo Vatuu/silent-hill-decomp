@@ -1,7 +1,9 @@
 #include "bodyprog/bodyprog.h"
-#include "maps/map0/map0_s02.h"
 #include "bodyprog/math/math.h"
+#include "maps/map0/map0_s02.h"
 #include "maps/shared.h"
+
+#define BLOOD_SPLAT_COUNT_MAX 50
 
 #define func_800CECB0 (0x800CECB0)
 #define func_800CECDC (0x800CECDC)
@@ -15,8 +17,8 @@
 
 extern u8 D_800CFD90[];
 extern s_func_800625F4 D_800D03DC[100];
-extern s_BloodSplat g_Effect_BloodSplats[50];
-extern s_AnimInfo g_AnimInfos[];
+extern s_BloodSplat g_Effect_BloodSplats[BLOOD_SPLAT_COUNT_MAX];
+extern s_AnimInfo HARRY_M0S02_ANIM_INFOS[];
 
 void (*g_LoadScreenFuncs[])() =
 {
@@ -43,6 +45,7 @@ void (*g_MapEventFuncs[])() =
 };
 
 const u32 D_800C9578 = 0x00000000; // rodata 0
+
 const s_MapOverlayHeader g_MapOverlayHeader = 
 {
     .type_0 = &g_MapTypes[9],
@@ -61,8 +64,8 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .unk_24 = D_800CFD90,
     .field_28 = &g_SysWork.npcCoords_FC0[0],
     .loadableItems_2C = (u8*)0x800CFABC,
-    .mapMessages_30 = g_MapMessages,
-    .animInfos_34 = g_AnimInfos,
+    .mapMessages_30 = MAP_MESSAGES,
+    .animInfos_34 = HARRY_M0S02_ANIM_INFOS,
     .field_38 = (s_UnkStruct3_Mo*)0x800CFA7C,
     .func_3C = func_800CED08,
     .func_40 = func_800CEFD4,

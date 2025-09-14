@@ -127,7 +127,7 @@ UNKKOWN_23_ANIM_INFOS       = 0x800ECE50; // type:AnimInfo
 //---------------------------------------------------------------
 //--- PA: 0x023A74   VA: 0x800ECFEC   subsegment: .data, map7_s03
 //---------------------------------------------------------------
-g_MapMessages               = 0x800ECFEC; // type:u32 size:0x190
+MAP_MESSAGES                = 0x800ECFEC; // type:u32 size:0x190
 
 //----------------------------------------------------
 //--- PA: 0x023C04   VA: 0x800ED17C   subsegment: data

@@ -74,7 +74,7 @@ FLOATSTINGER_ANIM_INFOS   = 0x800D7864; // type:AnimInfo
 //---------------------------------------------------------------
 //--- PA: 0x00E6C8   VA: 0x800D7C40   subsegment: .data, map4_s05
 //---------------------------------------------------------------
-g_MapMessages             = 0x800D7C40; // type:u32 size:0x4C
+MAP_MESSAGES              = 0x800D7C40; // type:u32 size:0x4C
 
 //----------------------------------------------------
 //--- PA: 0x00E714   VA: 0x800D7C8C   subsegment: data

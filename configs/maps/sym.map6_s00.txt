@@ -137,7 +137,7 @@ sharedData_800EC954_2_s02   = 0x800EF24C; // type:s32 unknown type
 //---------------------------------------------------------------
 //--- PA: 0x026934   VA: 0x800EFEAC   subsegment: .data, map6_s00
 //---------------------------------------------------------------
-g_MapMessages               = 0x800EFEAC; // type:u32 size:0x6C
+MAP_MESSAGES                = 0x800EFEAC; // type:u32 size:0x6C
 
 //----------------------------------------------------
 //--- PA: 0x0269A0   VA: 0x800EFF18   subsegment: data

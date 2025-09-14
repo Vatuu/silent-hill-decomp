@@ -1,43 +1,43 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 
-s_AnimInfo g_AnimInfos[] =
+s_AnimInfo HARRY_M0S00_ANIM_INFOS[] =
 {
-    { Anim_Update2, ANIM_STATUS(38, false), 0, ANIM_STATUS(38, true), 0, { FP_TIME(10.0f) }, NO_VALUE, 676  },
-    { Anim_Update0, ANIM_STATUS(38, true),  0, ANIM_STATUS(38, true), 0, { FP_TIME(10.0f) }, 676,      677  },
-    { Anim_Update2, ANIM_STATUS(39, false), 0, ANIM_STATUS(39, true), 0, { FP_TIME(10.0f) }, NO_VALUE, 678  },
-    { Anim_Update0, ANIM_STATUS(39, true),  0, ANIM_STATUS(39, true), 0, { FP_TIME(10.0f) }, 678,      713  },
-    { Anim_Update2, ANIM_STATUS(40, false), 0, ANIM_STATUS(40, true), 0, { FP_TIME(10.0f) }, NO_VALUE, 718  },
-    { Anim_Update0, ANIM_STATUS(40, true),  0, ANIM_STATUS(40, true), 0, { FP_TIME(15.0f) }, 718,      732  },
-    { Anim_Update2, ANIM_STATUS(41, false), 0, ANIM_STATUS(41, true), 0, { FP_TIME(10.0f) }, NO_VALUE, 737  },
-    { Anim_Update0, ANIM_STATUS(41, true),  0, ANIM_STATUS(41, true), 0, { FP_TIME(15.0f) }, 737,      751  },
-    { Anim_Update2, ANIM_STATUS(42, false), 0, ANIM_STATUS(42, true), 0, { FP_TIME(10.0f) }, NO_VALUE, 758  },
-    { Anim_Update0, ANIM_STATUS(42, true),  0, ANIM_STATUS(42, true), 0, { FP_TIME(15.0f) }, 758,      770  },
-    { Anim_Update2, ANIM_STATUS(43, false), 0, ANIM_STATUS(43, true), 0, { FP_TIME(10.0f) }, NO_VALUE, 777  },
-    { Anim_Update0, ANIM_STATUS(43, true),  0, ANIM_STATUS(43, true), 0, { FP_TIME(15.0f) }, 777,      789  },
-    { Anim_Update2, ANIM_STATUS(44, false), 0, ANIM_STATUS(44, true), 0, { FP_TIME(8.0f)  }, NO_VALUE, 790  },
-    { Anim_Update1, ANIM_STATUS(44, true),  0, NO_VALUE,              0, { FP_TIME(18.0f) }, 790,      807  },
-    { Anim_Update2, ANIM_STATUS(45, false), 0, ANIM_STATUS(45, true), 0, { FP_TIME(8.0f)  }, NO_VALUE, 808  },
-    { Anim_Update1, ANIM_STATUS(45, true),  0, NO_VALUE,              0, { FP_TIME(18.0f) }, 808,      825  },
-    { Anim_Update2, ANIM_STATUS(46, false), 0, ANIM_STATUS(46, true), 0, { FP_TIME(8.0f)  }, NO_VALUE, 826  },
-    { Anim_Update0, ANIM_STATUS(46, true),  0, ANIM_STATUS(46, true), 0, { FP_TIME(18.0f) }, 826,      843  },
-    { Anim_Update2, ANIM_STATUS(47, false), 0, ANIM_STATUS(47, true), 0, { FP_TIME(8.0f)  }, NO_VALUE, 844  },
-    { Anim_Update0, ANIM_STATUS(47, true),  0, ANIM_STATUS(47, true), 0, { FP_TIME(18.0f) }, 844,      861  },
-    { Anim_Update2, ANIM_STATUS(48, false), 0, ANIM_STATUS(48, true), 0, { FP_TIME(10.0f) }, NO_VALUE, 862  },
-    { Anim_Update0, ANIM_STATUS(48, true),  0, ANIM_STATUS(48, true), 0, { FP_TIME(15.0f) }, 862,      882  },
-    { Anim_Update2, ANIM_STATUS(49, false), 0, ANIM_STATUS(49, true), 0, { FP_TIME(10.0f) }, NO_VALUE, 883  },
-    { Anim_Update0, ANIM_STATUS(49, true),  0, ANIM_STATUS(49, true), 0, { FP_TIME(15.0f) }, 883,      903  },
-    { Anim_Update2, ANIM_STATUS(50, false), 0, ANIM_STATUS(50, true), 0, { FP_TIME(10.0f) }, NO_VALUE, 904  },
-    { Anim_Update0, ANIM_STATUS(50, true),  0, ANIM_STATUS(50, true), 0, { FP_TIME(15.0f) }, 904,      914  },
-    { Anim_Update2, ANIM_STATUS(51, false), 0, ANIM_STATUS(51, true), 0, { FP_TIME(10.0f) }, NO_VALUE, 915  },
-    { Anim_Update0, ANIM_STATUS(51, true),  0, ANIM_STATUS(51, true), 0, { FP_TIME(15.0f) }, 915,      925  },
-    { Anim_Update2, ANIM_STATUS(52, false), 0, ANIM_STATUS(52, true), 0, { FP_TIME(2.0f)  }, NO_VALUE, 926  },
-    { Anim_Update0, ANIM_STATUS(52, true),  0, ANIM_STATUS(52, true), 0, { FP_TIME(4.0f)  }, 926,      972  },
-    { Anim_Update2, ANIM_STATUS(53, false), 0, ANIM_STATUS(53, true), 0, { FP_TIME(10.0f) }, NO_VALUE, 973  },
-    { Anim_Update0, ANIM_STATUS(53, true),  0, ANIM_STATUS(53, true), 0, { FP_TIME(15.0f) }, 973,      993  },
-    { Anim_Update2, ANIM_STATUS(54, false), 0, ANIM_STATUS(54, true), 0, { FP_TIME(10.0f) }, NO_VALUE, 994  },
-    { Anim_Update0, ANIM_STATUS(54, true),  0, ANIM_STATUS(54, true), 0, { FP_TIME(25.0f) }, 994,      1026 },
-    {} // End of list.
+    { Anim_Update2, ANIM_STATUS(38, false), 0, ANIM_STATUS(38, true), 0, { Q19_12(10) }, NO_VALUE, 676  },
+    { Anim_Update0, ANIM_STATUS(38, true),  0, ANIM_STATUS(38, true), 0, { Q19_12(10) }, 676,      677  },
+    { Anim_Update2, ANIM_STATUS(39, false), 0, ANIM_STATUS(39, true), 0, { Q19_12(10) }, NO_VALUE, 678  },
+    { Anim_Update0, ANIM_STATUS(39, true),  0, ANIM_STATUS(39, true), 0, { Q19_12(10) }, 678,      713  },
+    { Anim_Update2, ANIM_STATUS(40, false), 0, ANIM_STATUS(40, true), 0, { Q19_12(10) }, NO_VALUE, 718  },
+    { Anim_Update0, ANIM_STATUS(40, true),  0, ANIM_STATUS(40, true), 0, { Q19_12(15) }, 718,      732  },
+    { Anim_Update2, ANIM_STATUS(41, false), 0, ANIM_STATUS(41, true), 0, { Q19_12(10) }, NO_VALUE, 737  },
+    { Anim_Update0, ANIM_STATUS(41, true),  0, ANIM_STATUS(41, true), 0, { Q19_12(15) }, 737,      751  },
+    { Anim_Update2, ANIM_STATUS(42, false), 0, ANIM_STATUS(42, true), 0, { Q19_12(10) }, NO_VALUE, 758  },
+    { Anim_Update0, ANIM_STATUS(42, true),  0, ANIM_STATUS(42, true), 0, { Q19_12(15) }, 758,      770  },
+    { Anim_Update2, ANIM_STATUS(43, false), 0, ANIM_STATUS(43, true), 0, { Q19_12(10) }, NO_VALUE, 777  },
+    { Anim_Update0, ANIM_STATUS(43, true),  0, ANIM_STATUS(43, true), 0, { Q19_12(15) }, 777,      789  },
+    { Anim_Update2, ANIM_STATUS(44, false), 0, ANIM_STATUS(44, true), 0, { Q19_12(8)  }, NO_VALUE, 790  },
+    { Anim_Update1, ANIM_STATUS(44, true),  0, NO_VALUE,              0, { Q19_12(18) }, 790,      807  },
+    { Anim_Update2, ANIM_STATUS(45, false), 0, ANIM_STATUS(45, true), 0, { Q19_12(8)  }, NO_VALUE, 808  },
+    { Anim_Update1, ANIM_STATUS(45, true),  0, NO_VALUE,              0, { Q19_12(18) }, 808,      825  },
+    { Anim_Update2, ANIM_STATUS(46, false), 0, ANIM_STATUS(46, true), 0, { Q19_12(8)  }, NO_VALUE, 826  },
+    { Anim_Update0, ANIM_STATUS(46, true),  0, ANIM_STATUS(46, true), 0, { Q19_12(18) }, 826,      843  },
+    { Anim_Update2, ANIM_STATUS(47, false), 0, ANIM_STATUS(47, true), 0, { Q19_12(8)  }, NO_VALUE, 844  },
+    { Anim_Update0, ANIM_STATUS(47, true),  0, ANIM_STATUS(47, true), 0, { Q19_12(18) }, 844,      861  },
+    { Anim_Update2, ANIM_STATUS(48, false), 0, ANIM_STATUS(48, true), 0, { Q19_12(10) }, NO_VALUE, 862  },
+    { Anim_Update0, ANIM_STATUS(48, true),  0, ANIM_STATUS(48, true), 0, { Q19_12(15) }, 862,      882  },
+    { Anim_Update2, ANIM_STATUS(49, false), 0, ANIM_STATUS(49, true), 0, { Q19_12(10) }, NO_VALUE, 883  },
+    { Anim_Update0, ANIM_STATUS(49, true),  0, ANIM_STATUS(49, true), 0, { Q19_12(15) }, 883,      903  },
+    { Anim_Update2, ANIM_STATUS(50, false), 0, ANIM_STATUS(50, true), 0, { Q19_12(10) }, NO_VALUE, 904  },
+    { Anim_Update0, ANIM_STATUS(50, true),  0, ANIM_STATUS(50, true), 0, { Q19_12(15) }, 904,      914  },
+    { Anim_Update2, ANIM_STATUS(51, false), 0, ANIM_STATUS(51, true), 0, { Q19_12(10) }, NO_VALUE, 915  },
+    { Anim_Update0, ANIM_STATUS(51, true),  0, ANIM_STATUS(51, true), 0, { Q19_12(15) }, 915,      925  },
+    { Anim_Update2, ANIM_STATUS(52, false), 0, ANIM_STATUS(52, true), 0, { Q19_12(2)  }, NO_VALUE, 926  },
+    { Anim_Update0, ANIM_STATUS(52, true),  0, ANIM_STATUS(52, true), 0, { Q19_12(4)  }, 926,      972  },
+    { Anim_Update2, ANIM_STATUS(53, false), 0, ANIM_STATUS(53, true), 0, { Q19_12(10) }, NO_VALUE, 973  },
+    { Anim_Update0, ANIM_STATUS(53, true),  0, ANIM_STATUS(53, true), 0, { Q19_12(15) }, 973,      993  },
+    { Anim_Update2, ANIM_STATUS(54, false), 0, ANIM_STATUS(54, true), 0, { Q19_12(10) }, NO_VALUE, 994  },
+    { Anim_Update0, ANIM_STATUS(54, true),  0, ANIM_STATUS(54, true), 0, { Q19_12(25) }, 994,      1026 },
+    {}
 };
 
 // Not sure if the `time_4 field` (3rd) is actually time.
@@ -63,7 +63,7 @@ s_UnkStruct3_Mo g_MapHeaderTable_38[18] =
     { 0x6968, 0x15E, 0x39E, 0x3CC },
     { 0x6B6A, 0x164, 0x3CD, 0x3E1 },
     { 0x6D6C, 0x165, 0x3E2, 0x402 },
-    {}, // End of list.
+    {},
 };
 
 u8 g_LoadableInventoryItems[8] =

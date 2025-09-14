@@ -5,7 +5,7 @@
 #include "maps/shared.h"
 #include "maps/map0/map0_s01.h"
 
-const char* g_MapMessages[] =
+const char* MAP_MESSAGES[] =
 {
     #include "maps/shared/mapMsg_common.h"
     "~J0(2.0)\tWas_I_dreaming?  ~E ",
