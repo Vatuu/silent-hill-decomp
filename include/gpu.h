@@ -84,6 +84,12 @@ typedef struct
     u8 p;
 } s_PrimColor;
 
+typedef struct
+{
+    s16 vx;
+    s16 vz;
+} DVECTOR_XZ;
+
 /** @brief Same as `getTPage`, but `xn` and `yn` are indices instead of VRAM coordinates. */
 #define getTPageN(tp, abr, xn, yn) \
     ((((tp) & 0x3) << 7) | (((abr) & 0x3) << 5) | ((xn) & 0xF) | (((yn) & 0x1) << 4))
