@@ -113,21 +113,13 @@
 #define QX_4(x) \
     FP_FLOAT_TO(x, Q4_SHIFT)
 
-/** @brief Converts a floating-point value to fixed-point Q7.8.
+/** @brief Converts a floating-point value to fixed-point Q*.8.
  *
  * @param x Value to convert (`float`).
- * @return `x` converted to fixed-point Q7.8 (`s16`).
+ * @return `x` converted to fixed-point Q*.8.
  */
-#define Q7_8(x) \
-    (s16)FP_FLOAT_TO(x, Q8_SHIFT)
-
-/** @brief Converts a floating-point value to fixed-point Q23.8.
- *
- * @param x Value to convert (`float`).
- * @return `x` converted to fixed-point Q23.8 (`s32`).
- */
-#define Q23_8(x) \
-    (s32)FP_FLOAT_TO(x, Q8_SHIFT)
+#define QX_8(x) \
+    FP_FLOAT_TO(x, Q8_SHIFT)
 
 /** @brief Converts a floating-point value to fixed-point Q*.12.
  *
@@ -166,7 +158,7 @@
  * @param x Fixed-point value in Q23.8 to convert.
  * @return `x` converted to fixed-point Q19.12 (`s32`).
  */
-#define Q23_8_TO_QX_12(x) \
+#define QX_8_TO_QX_12(x) \
     (s32)((x) << 4)
 
 /** @brief Converts a fixed-point value from Q3.12 to Q0.8.
@@ -182,7 +174,7 @@
  * @param x Fixed-point value in Q19.12 to convert.
  * @return `x` converted to fixed-point Q23.8 (`s32`).
  */
-#define QX_12_TO_Q23_8(x) \
+#define QX_12_TO_QX_8(x) \
     (s32)((x) >> 4)
 
 /** @brief Extracts the fractional part of a value in fixed-point QX.12.
@@ -313,7 +305,7 @@
  * @return Fixed-point geometry space meters in Q23.8 (`s32`).
  */
 #define FP_METER_GEO(met) \
-    Q23_8(met)
+    QX_8(met)
 
 /** @brief Converts fixed-point world space meters in Q19.12 to geometry space Q23.8.
  *
@@ -321,7 +313,7 @@
  * @return Fixed-point geometry space meters in Q23.8 (`s32`).
  */
 #define FP_METER_TO_GEO(met) \
-    QX_12_TO_Q23_8(met)
+    QX_12_TO_QX_8(met)
 
 /** @brief Converts fixed-point geometry space meters in Q23.8 to world space Q19.12.
  *
@@ -329,7 +321,7 @@
  * @return Fixed-point world space meters in Q19.12 (`s32`).
  */
 #define FP_METER_FROM_GEO(met) \
-    Q23_8_TO_QX_12(met)
+    QX_8_TO_QX_12(met)
 
 /** @brief Converts floating-point seconds to fixed-point Q19.12.
  *

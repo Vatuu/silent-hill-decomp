@@ -133,8 +133,8 @@ s32 D_800A8F40 = 0;
 VC_ROAD_DATA vcNullRoadArray[] =
 {
     {
-        .lim_sw_0          = { Q7_8(-30.0f), Q7_8(30.0f), Q7_8(-30.0f), Q7_8(30.0f) },
-        .lim_rd_8          = { Q7_8(-30.0f), Q7_8(30.0f), Q7_8(-30.0f), Q7_8(30.0f) },
+        .lim_sw_0          = { QX_8(-30.0f), QX_8(30.0f), QX_8(-30.0f), QX_8(30.0f) },
+        .lim_rd_8          = { QX_8(-30.0f), QX_8(30.0f), QX_8(-30.0f), QX_8(30.0f) },
         .flags_10          = VC_RD_NOFLAG,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11        = VC_RD_TYPE_ROAD,
@@ -148,8 +148,8 @@ VC_ROAD_DATA vcNullRoadArray[] =
         .fix_ang_y_17      = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0          = { Q7_8(0.0f), Q7_8(0.0f), Q7_8(0.0f), Q7_8(0.0f) },
-        .lim_rd_8          = { Q7_8(0.0f), Q7_8(0.0f), Q7_8(0.0f), Q7_8(0.0f) },
+        .lim_sw_0          = { QX_8(0.0f), QX_8(0.0f), QX_8(0.0f), QX_8(0.0f) },
+        .lim_rd_8          = { QX_8(0.0f), QX_8(0.0f), QX_8(0.0f), QX_8(0.0f) },
         .flags_10          = VC_RD_END_DATA_F,
         .area_size_type_11 = VC_AREA_TINY,
         .rd_type_11        = VC_RD_TYPE_ROAD,
