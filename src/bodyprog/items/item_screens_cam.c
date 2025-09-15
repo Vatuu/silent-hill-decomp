@@ -96,7 +96,7 @@ void Gfx_Items_ItemRotate(SVECTOR* arg0, GsCOORDINATE2* arg1) // 0x8004BCDC
     arg1->flg = false;
 }
 
-void func_8004BD74(s32 arg0, GsDOBJ2* arg1, s32 arg2)  // 0x8004BD74
+void func_8004BD74(s32 displayItemIdx, GsDOBJ2* arg1, s32 arg2)  // 0x8004BD74
 {
     MATRIX sp10;
     MATRIX sp30;
@@ -112,17 +112,17 @@ void func_8004BD74(s32 arg0, GsDOBJ2* arg1, s32 arg2)  // 0x8004BD74
     {
         for (j = 0; j < 3; j++)
         {
-            sp10.m[i][j] = FP_TO(sp10.m[i][j], Q12_SHIFT) / g_Items_Items3dData0[arg0].scale_0.vx;
+            sp10.m[i][j] = FP_TO(sp10.m[i][j], Q12_SHIFT) / g_Items_Transforms[displayItemIdx].scale.vx;
         }
     }
 
-    if (arg2 != 3 && arg0 < 7)
+    if (arg2 != 3 && displayItemIdx < 7)
     {
         for (i = 0; i < 3; i++)
         {
             for (j = 0; j < 3; j++)
             {
-                sp10.m[i][j] -= FP_MULTIPLY(sp10.m[i][j], Math_Sin((g_Items_Items3dData1[arg0].coord.t[2] + 0x400) >> 2), Q12_SHIFT);
+                sp10.m[i][j] -= FP_MULTIPLY(sp10.m[i][j], Math_Sin((g_Items_Coords[displayItemIdx].coord.t[2] + 0x400) >> 2), Q12_SHIFT);
             }
         }
     }

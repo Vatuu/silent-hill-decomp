@@ -274,13 +274,15 @@ const char* g_ItemDescriptions[] =
     "Fuel_for_chainsaws_and\n\t\t\t\t\trock_drills."
 };
 
+// TODO: `Items_` subsystem globals and funcs could be part of `Inventory_` instead, not sure yet.
+
 s32 D_800AE178 = 0;
 s32 g_Inventory_SelectedItemIdx = 0;
-s32 D_800AE180 = 0;
+s32 g_Items_DisplayedCount = 0;
 u8 g_Inventory_EquippedItem = 0;
 u8 D_800AE185 = 0;
 u8 D_800AE186 = 0;
-u8 D_800AE187 = 0;
+u8 D_800AE187 = InventoryItemId_Unequipped; // `e_InventoryItemId`
 u32 D_800AE188 = 0;
 s16 D_800AE18C = 0; // Only ever set to 0, nothing reads it.
 s16 D_800AE18E = 0; // Only ever set to 0, nothing reads it.
@@ -293,9 +295,11 @@ s32 g_Inventory_ItemNameTimer = 0;
 s32 g_Inventory_DescriptionRollTimer = 0;
 s32 g_Inventory_ScrollTransitionTimer = 0;
 s16 D_800AE1A8 = 0;
+
 // 2 bytes padding.
-s32 g_PickupItemAnimState = 0;
-s32 D_800AE1B0 = 0;
+
+s32    g_Items_PickupAnimState = 0;
+q19_12 g_Items_PickupScale     = Q19_12(0.0f);
 
 u32 D_800AE1B4[3] = { 0x00000000, 0x000000CC, 0xFFFFFEC9 }; // `VECTOR3`?
 
@@ -1047,29 +1051,32 @@ void Gfx_ItemScreens_RenderInit(u32* selectedItemId) // 0x8004F764
         // Player items.
         for (i = 0, ptr = &g_Items_ItemsModelData[0]; i < 7; i++, ptr++)
         {
-            if (D_800C3E18[i] != NO_VALUE)
+            if (D_800C3E18[i] == NO_VALUE)
             {
-                if (g_SavegamePtr->items_0[D_800C3E18[i]].id_0 != 0xFF)
-                {
-                    g_Items_Items3dData0[i].rotation_10.vx = g_InventoryItemRotations[g_SavegamePtr->items_0[D_800C3E18[i]].id_0 - 32].vx;
-                    g_Items_Items3dData0[i].rotation_10.vz = g_InventoryItemRotations[g_SavegamePtr->items_0[D_800C3E18[i]].id_0 - 32].vy;
-
-                    Gfx_Items_ItemRotate(&g_Items_Items3dData1[i].param->rotate, &g_Items_Items3dData1[i]);
-                    func_800548D8(i);
-                    GsSetFlatLight(0, &g_Items_ItemsLightingData[i][0]);
-                    GsSetFlatLight(1, &g_Items_ItemsLightingData[i][1]);
-                    func_8004BD74(i, ptr, 0);
-                }
+                continue;
             }
+                if (g_SavegamePtr->items_0[D_800C3E18[i]].id_0 == 0xFF)
+                {
+                    continue;
+                }
+
+            g_Items_Transforms[i].rotate.vx = g_InventoryItemRotations[g_SavegamePtr->items_0[D_800C3E18[i]].id_0 - 32].vx;
+            g_Items_Transforms[i].rotate.vz = g_InventoryItemRotations[g_SavegamePtr->items_0[D_800C3E18[i]].id_0 - 32].vy;
+
+            Gfx_Items_ItemRotate(&g_Items_Coords[i].param->rotate, &g_Items_Coords[i]);
+            func_800548D8(i);
+            GsSetFlatLight(0, &g_Items_Lights[i][0]);
+            GsSetFlatLight(1, &g_Items_Lights[i][1]);
+            func_8004BD74(i, ptr, 0);
         }
 
         // Equipped item.
         if (g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 != 0xFF && g_Inventory_EquippedItemIdx != NO_VALUE)
         {
-            g_Items_Items3dData0[7].rotation_10.vx = g_InventoryItemRotations[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vx;
-            g_Items_Items3dData0[7].rotation_10.vz = g_InventoryItemRotations[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vy;
+            g_Items_Transforms[7].rotate.vx = g_InventoryItemRotations[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vx;
+            g_Items_Transforms[7].rotate.vz = g_InventoryItemRotations[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vy;
 
-            Gfx_Items_ItemRotate(&g_Items_Items3dData1[7].param->rotate, &g_Items_Items3dData1[7]);
+            Gfx_Items_ItemRotate(&g_Items_Coords[7].param->rotate, &g_Items_Coords[7]);
             func_800548D8(7);
             GsSetFlatLight(0, &D_800C3A88[0]);
             GsSetFlatLight(1, &D_800C3A88[1]);
@@ -2122,10 +2129,10 @@ void Gfx_Results_ItemsDisplay() // 0x800521A8
     {
         if ((D_800C3E40 >> i) & (1 << 0))
         {
-            Gfx_Items_ItemRotate(&g_Items_Items3dData1[i].param->rotate, &g_Items_Items3dData1[i]);
+            Gfx_Items_ItemRotate(&g_Items_Coords[i].param->rotate, &g_Items_Coords[i]);
             func_800548D8(i);
-            GsSetFlatLight(0, &g_Items_ItemsLightingData[i][0]);
-            GsSetFlatLight(1, &g_Items_ItemsLightingData[i][1]);
+            GsSetFlatLight(0, &g_Items_Lights[i][0]);
+            GsSetFlatLight(1, &g_Items_Lights[i][1]);
             func_8004BD74(i, ptr, 3);
         }
     }
@@ -2156,15 +2163,15 @@ void Gfx_Results_ItemsPosition() // 0x8005227C
     {
         if ((D_800C3E40 >> i) & (1 << 0))
         {
-            g_Items_Items3dData1[i].coord.t[0]      = OFFSETS[i].vx;
-            g_Items_Items3dData1[i].coord.t[1]      = OFFSETS[i].vy;
-            g_Items_Items3dData1[i].coord.t[2]      = OFFSETS[i].vz;
-            g_Items_Items3dData0[i].rotation_10.vx  = FP_ANGLE(45.0f);
-            g_Items_Items3dData0[i].rotation_10.vz  = FP_ANGLE(45.0f);
-            g_Items_Items3dData0[i].scale_0.vz      = Q19_12(1.0f);
-            g_Items_Items3dData0[i].scale_0.vy      = Q19_12(1.0f);
-            g_Items_Items3dData0[i].scale_0.vx      = Q19_12(1.0f);
-            g_Items_Items3dData0[i].rotation_10.vy += FP_ANGLE(0.75f);
+            g_Items_Coords[i].coord.t[0]     = OFFSETS[i].vx;
+            g_Items_Coords[i].coord.t[1]     = OFFSETS[i].vy;
+            g_Items_Coords[i].coord.t[2]     = OFFSETS[i].vz;
+            g_Items_Transforms[i].rotate.vx  = FP_ANGLE(45.0f);
+            g_Items_Transforms[i].rotate.vz  = FP_ANGLE(45.0f);
+            g_Items_Transforms[i].scale.vz   = Q19_12(1.0f);
+            g_Items_Transforms[i].scale.vy   = Q19_12(1.0f);
+            g_Items_Transforms[i].scale.vx   = Q19_12(1.0f);
+            g_Items_Transforms[i].rotate.vy += FP_ANGLE(0.75f);
         }
     }
 }
@@ -2755,7 +2762,6 @@ void func_800540A4(s8 arg0) // 0x800540A4
     Fs_QueueStartReadTim(FILE_ITEM_HEROPIC2_TIM, FS_BUFFER_1, &g_HealthPortraitImg);
 }
 
-// Item rendering related.
 void Gfx_Items_Render() // 0x80054200
 {
     s32  temp_s5;
@@ -2769,22 +2775,20 @@ void Gfx_Items_Render() // 0x80054200
 
     Gfx_ItemScreens_CameraSet(&D_800C3B48, &D_800C3AE8, &D_800C3B38, 0);
 
-    /** This loops define the position, rotation and scale of the item that
-    * the player has initially equipped in the inventory.
-    */
-    for (i = 0; i < 10; i++)
+    // Define position, rotation, and scale of inventory item initially equipped by player.
+    for (i = 0; i < DISPLAYED_ITEM_COUNT_MAX; i++)
     {
         D_800C3E18[i] = NO_VALUE;
 
-        g_Items_Items3dData0[i].scale_0.vz     = FP_METER(1.0f);
-        g_Items_Items3dData0[i].scale_0.vy     = FP_METER(1.0f);
-        g_Items_Items3dData0[i].scale_0.vx     = FP_METER(1.0f);
-        g_Items_Items3dData0[i].rotation_10.vz = 0;
-        g_Items_Items3dData0[i].rotation_10.vy = 0;
-        g_Items_Items3dData0[i].rotation_10.vx = 0;
-        g_Items_Items3dData0[i].field_18.vz    = 0;
-        g_Items_Items3dData0[i].field_18.vy    = 0;
-        g_Items_Items3dData0[i].field_18.vx    = 0;
+        g_Items_Transforms[i].scale.vz  = Q19_12(1.0f);
+        g_Items_Transforms[i].scale.vy  = Q19_12(1.0f);
+        g_Items_Transforms[i].scale.vx  = Q19_12(1.0f);
+        g_Items_Transforms[i].rotate.vz = FP_ANGLE(0.0f);
+        g_Items_Transforms[i].rotate.vy = FP_ANGLE(0.0f);
+        g_Items_Transforms[i].rotate.vx = FP_ANGLE(0.0f);
+        g_Items_Transforms[i].trans.vz  = 0;
+        g_Items_Transforms[i].trans.vy  = 0;
+        g_Items_Transforms[i].trans.vx  = 0;
     }
 
     GameFs_TmdDataAlloc(FS_BUFFER_8);
@@ -2826,7 +2830,8 @@ void Gfx_Items_Render() // 0x80054200
             }
         }
 
-        if (g_Inventory_EquippedItemIdx != NO_VALUE) // If player has something equipped
+        // Player has something equipped.
+        if (g_Inventory_EquippedItemIdx != NO_VALUE)
         {
             for (saveItemsIdx = 0; saveItemsIdx < INVENTORY_ITEM_COUNT_MAX; saveItemsIdx++)
             {
@@ -2840,13 +2845,14 @@ void Gfx_Items_Render() // 0x80054200
             }
         }
 
-        g_Items_Items3dData1[7].coord.t[0] = 0;
-        g_Items_Items3dData1[7].coord.t[1] = FP_METER(-0.15625f);
-        g_Items_Items3dData1[7].coord.t[2] = 0;
+        g_Items_Coords[7].coord.t[0] = FP_METER_GEO(0.0f);
+        g_Items_Coords[7].coord.t[1] = FP_METER_GEO(-2.5);
+        g_Items_Coords[7].coord.t[2] = FP_METER_GEO(0.0f);
     }
     else
     {
-        u8 itemIds[] = // 0x8002848C .rodata
+        // TODO: Make `const`?
+        u8 ITEM_IDS[] =
         {
             InventoryItemId_GasolineTank,
             InventoryItemId_Chainsaw,
@@ -2867,7 +2873,7 @@ void Gfx_Items_Render() // 0x80054200
 
             for (saveItemsIdx = 0; saveItemsIdx < INVENTORY_ITEM_COUNT_MAX; saveItemsIdx++)
             {
-                if (itemIds[inventoryItemsIdx] == g_Item_MapLoadableItems[saveItemsIdx])
+                if (ITEM_IDS[inventoryItemsIdx] == g_Item_MapLoadableItems[saveItemsIdx])
                 {
                     Gfx_Items_Display(FS_BUFFER_8, inventoryItemsIdx, saveItemsIdx);
                     func_8005487C(inventoryItemsIdx);
@@ -2883,8 +2889,8 @@ void Gfx_Items_RenderInit() // 0x80054558
 {
     s32 i;
 
-    D_800AE180                                 = 0;
-    D_800AE187                                 = 0;
+    g_Items_DisplayedCount                     = 0;
+    D_800AE187                                 = InventoryItemId_Unequipped;
     g_Inventory_HealthStatusScanlineTimer      = 32;
     g_Inventory_HealthStatusColorGradientTimer = 0;
     D_800AE198                                 = 0;
@@ -2954,29 +2960,29 @@ void func_800546A8(u8 weaponId) // 0x800546A8
     }
 }
 
-void Gfx_Items_Display(s_TmdFile* tmd, s32 arg1, s32 arg2) 
+void Gfx_Items_Display(s_TmdFile* tmd, s32 displayItemIdx, s32 loadableItemIdx) 
 {
-    u8                 var_v0;
+    u8                 itemId;
     GsDOBJ2*           ptr;
     struct TMD_STRUCT* models;
 
     models = tmd->models_c;
 
-    GsLinkObject4((u32)&models[arg2], &g_Items_ItemsModelData[arg1], 0);
+    GsLinkObject4((u32)&models[loadableItemIdx], &g_Items_ItemsModelData[displayItemIdx], 0);
 
-    ptr         = &g_Items_ItemsModelData[arg1];
-    ptr->coord2 = &g_Items_Items3dData1[arg1];
+    ptr         = &g_Items_ItemsModelData[displayItemIdx];
+    ptr->coord2 = &g_Items_Coords[displayItemIdx];
 
-    if (D_800AE187 != 0)
+    if (D_800AE187 != InventoryItemId_Unequipped)
     {
-        var_v0 = D_800AE187;
+        itemId = D_800AE187;
     }
     else
     {
-        var_v0 = g_MapOverlayHeader.loadableItems_2C[arg2];
+        itemId = g_MapOverlayHeader.loadableItems_2C[loadableItemIdx];
     }
 
-    switch (var_v0) 
+    switch (itemId) 
     {
         case InventoryItemId_HealthDrink: 
         case InventoryItemId_FirstAidKit: 
@@ -3002,24 +3008,25 @@ void Gfx_Items_Display(s_TmdFile* tmd, s32 arg1, s32 arg2)
             break;
     }
 
-    if (D_800AE180 < 10)
+    if (g_Items_DisplayedCount < DISPLAYED_ITEM_COUNT_MAX)
     {
-        D_800AE180++;
+        g_Items_DisplayedCount++;
     }
 }
 
 void func_8005487C(s32 arg0) // 0x8005487C
 {
-    GsInitCoordinate2(NULL, &g_Items_Items3dData1[arg0]); // Initializes the coordinate system base.  base->coord is set to an identity matrix (GsIDMATRIX). super->sub is set to base.
-    g_Items_Items3dData1[arg0].param = (GsCOORD2PARAM*) &g_Items_Items3dData0[arg0];
+    // Initializes coordinate system base. `base->coord` is set to identity matrix (`GsIDMATRIX`), `super->sub` is set to base.
+    GsInitCoordinate2(NULL, &g_Items_Coords[arg0]);
+
+    g_Items_Coords[arg0].param = (GsCOORD2PARAM*) &g_Items_Transforms[arg0];
 }
 
-/** Something related to items lighting. */
-void func_800548D8(s32 Idx) // 0x800548D8
+void func_800548D8(s32 idx) // 0x800548D8
 {
-    g_Items_ItemsLightingData[Idx][0].vx = g_Items_Items3dData1[Idx].coord.t[0];
-    g_Items_ItemsLightingData[Idx][0].vy = g_Items_Items3dData1[Idx].coord.t[1];
-    g_Items_ItemsLightingData[Idx][0].vz = g_Items_Items3dData1[Idx].coord.t[2] + 20000;
+    g_Items_Lights[idx][0].vx = g_Items_Coords[idx].coord.t[0];
+    g_Items_Lights[idx][0].vy = g_Items_Coords[idx].coord.t[1];
+    g_Items_Lights[idx][0].vz = g_Items_Coords[idx].coord.t[2] + 20000;
 }
 
 void Gfx_Items_SetAmbientLighting() // 0x80054928
@@ -3028,15 +3035,15 @@ void Gfx_Items_SetAmbientLighting() // 0x80054928
 
     for (i = 0; i < 10; i++)
     {
-        g_Items_ItemsLightingData[i][0].r  = NO_VALUE;
-        g_Items_ItemsLightingData[i][0].g  = NO_VALUE;
-        g_Items_ItemsLightingData[i][0].b  = NO_VALUE;
-        g_Items_ItemsLightingData[i][1].vx = FP_TO(1, Q12_SHIFT);
-        g_Items_ItemsLightingData[i][1].vy = 0;
-        g_Items_ItemsLightingData[i][1].vz = 0;
-        g_Items_ItemsLightingData[i][1].r  = NO_VALUE;
-        g_Items_ItemsLightingData[i][1].g  = NO_VALUE;
-        g_Items_ItemsLightingData[i][1].b  = NO_VALUE;
+        g_Items_Lights[i][0].r  = NO_VALUE;
+        g_Items_Lights[i][0].g  = NO_VALUE;
+        g_Items_Lights[i][0].b  = NO_VALUE;
+        g_Items_Lights[i][1].vx = Q19_12(1.0f);
+        g_Items_Lights[i][1].vy = Q19_12(0.0f);
+        g_Items_Lights[i][1].vz = Q19_12(0.0f);
+        g_Items_Lights[i][1].r  = NO_VALUE;
+        g_Items_Lights[i][1].g  = NO_VALUE;
+        g_Items_Lights[i][1].b  = NO_VALUE;
     }
 
     GsSetAmbient(1024, 1024, 1024);
@@ -3048,15 +3055,15 @@ void func_800549A0() // 0x800549A0
 {
     #define IDX 9
 
-    g_Items_ItemsLightingData[IDX][0].r  = NO_VALUE;
-    g_Items_ItemsLightingData[IDX][1].vx = FP_FLOAT_TO(1.0f, Q12_SHIFT);
-    g_Items_ItemsLightingData[IDX][0].g  = NO_VALUE;
-    g_Items_ItemsLightingData[IDX][0].b  = NO_VALUE;
-    g_Items_ItemsLightingData[IDX][1].r  = NO_VALUE;
-    g_Items_ItemsLightingData[IDX][1].g  = NO_VALUE;
-    g_Items_ItemsLightingData[IDX][1].b  = NO_VALUE;
-    g_Items_ItemsLightingData[IDX][1].vy = 0;
-    g_Items_ItemsLightingData[IDX][1].vz = 0;
+    g_Items_Lights[IDX][0].r  = NO_VALUE;
+    g_Items_Lights[IDX][1].vx = Q19_12(1.0f);
+    g_Items_Lights[IDX][0].g  = NO_VALUE;
+    g_Items_Lights[IDX][0].b  = NO_VALUE;
+    g_Items_Lights[IDX][1].r  = NO_VALUE;
+    g_Items_Lights[IDX][1].g  = NO_VALUE;
+    g_Items_Lights[IDX][1].b  = NO_VALUE;
+    g_Items_Lights[IDX][1].vy = Q19_12(0.0f);
+    g_Items_Lights[IDX][1].vz = Q19_12(0.0f);
 
     GsSetAmbient(2048, 2048, 2048);
     GsSetLightMode(1);
@@ -3064,18 +3071,18 @@ void func_800549A0() // 0x800549A0
 
 void func_80054A04(u8 itemId) // 0x80054A04
 {
-    D_800AE187            = itemId;
-    D_800AE180            = 0;
-    g_PickupItemAnimState = 0;
-    D_800AE1B0            = 0;
+    D_800AE187              = itemId;
+    g_Items_DisplayedCount  = 0;
+    g_Items_PickupAnimState = 0;
+    g_Items_PickupScale     = Q19_12(0.0f);
 
-    D_800C3E18[9]                          = NO_VALUE;
-    g_Items_Items3dData0[9].rotation_10.vz = 0;
-    g_Items_Items3dData0[9].rotation_10.vy = 0;
-    g_Items_Items3dData0[9].rotation_10.vx = 0;
-    g_Items_Items3dData0[9].field_18.vz    = 0;
-    g_Items_Items3dData0[9].field_18.vy    = 0;
-    g_Items_Items3dData0[9].field_18.vx    = 0;
+    D_800C3E18[9]                   = NO_VALUE;
+    g_Items_Transforms[9].rotate.vz = FP_ANGLE(0.0f);
+    g_Items_Transforms[9].rotate.vy = FP_ANGLE(0.0f);
+    g_Items_Transforms[9].rotate.vx = FP_ANGLE(0.0f);
+    g_Items_Transforms[9].trans.vz  = 0;
+    g_Items_Transforms[9].trans.vy  = 0;
+    g_Items_Transforms[9].trans.vx  = 0;
 
     GameFs_TmdDataAlloc(FS_BUFFER_5);
 
@@ -3084,9 +3091,9 @@ void func_80054A04(u8 itemId) // 0x80054A04
     Gfx_Items_Display(FS_BUFFER_5, 9, 0);
     func_8005487C(9);
 
-    g_Items_Items3dData0[9].scale_0.vz = FP_FLOAT_TO(1.0f, Q12_SHIFT);
-    g_Items_Items3dData0[9].scale_0.vy = FP_FLOAT_TO(1.0f, Q12_SHIFT);
-    g_Items_Items3dData0[9].scale_0.vx = FP_FLOAT_TO(1.0f, Q12_SHIFT);
+    g_Items_Transforms[9].scale.vz = Q19_12(1.0f);
+    g_Items_Transforms[9].scale.vy = Q19_12(1.0f);
+    g_Items_Transforms[9].scale.vx = Q19_12(1.0f);
 
     func_800549A0();
     Gfx_ItemScreens_CameraSet(&D_800C3B48, &D_800C3AE8, &D_800C3B38, 0);
@@ -3094,58 +3101,61 @@ void func_80054A04(u8 itemId) // 0x80054A04
 
 bool Gfx_PickupItemAnimate(u8 itemId) // 0x80054AD8
 {
-    s32            temp_a1;
-    s16            x;
-    s16            y;
+    q19_12         scale;
+    s16            rotX;
+    s16            rotZ;
     GsDOBJ2*       obj;
-    s_Items3dData* ptr;
+    GsCOORD2PARAM* transform;
 
-    g_Items_Items3dData1[9].coord.t[1] = 0x40;
-    g_Items_Items3dData1[9].coord.t[0] = 0;
-    g_Items_Items3dData1[9].coord.t[2] = -0x20B0;
+    g_Items_Coords[9].coord.t[1] = FP_METER_GEO(0.25f);
+    g_Items_Coords[9].coord.t[0] = FP_METER_GEO(0.0f);
+    g_Items_Coords[9].coord.t[2] = FP_METER_GEO(-32.6875);
 
-    switch (g_PickupItemAnimState) 
+    switch (g_Items_PickupAnimState) 
     {
-        case 0:
-            if (D_800AE1B0 >= 0x800) 
+        case 0: // Expand without rotation?
+            if (g_Items_PickupScale >= Q19_12(0.5f)) 
             {
-                g_PickupItemAnimState = 1;
+                g_Items_PickupAnimState = 1;
             }
 
-            ptr     = &g_Items_Items3dData0[0];
-            temp_a1 = D_800AE1B0 << 12;
+            transform = &g_Items_Transforms[0];
+            scale     = g_Items_PickupScale << 12;
 
-            x = g_InventoryItemRotations[itemId - 32].vx;
-            y = g_InventoryItemRotations[itemId - 32].vy;
+            rotX = g_InventoryItemRotations[itemId - 32].vx;
+            rotZ = g_InventoryItemRotations[itemId - 32].vy;
 
-            ptr[9].scale_0.vz     = temp_a1 >> 11;
-            ptr[9].scale_0.vy     = temp_a1 >> 11;
-            ptr[9].scale_0.vx     = temp_a1 >> 11;
+            // Double scale via `<< 12` then `>> 11`.
+            transform[9].scale.vz = scale >> 11;
+            transform[9].scale.vy = scale >> 11;
+            transform[9].scale.vx = scale >> 11;
 
-            ptr[9].rotation_10.vx = x;
-            ptr[9].rotation_10.vy = 0;
-            ptr[9].rotation_10.vz = y;
+            transform[9].rotate.vx = rotX;
+            transform[9].rotate.vy = FP_ANGLE(0.0f);
+            transform[9].rotate.vz = rotZ;
             break;
 
-        case 1:
-            g_Items_Items3dData0[9].scale_0.vz = FP_FLOAT_TO(1.0f, Q12_SHIFT);
-            g_Items_Items3dData0[9].scale_0.vy = FP_FLOAT_TO(1.0f, Q12_SHIFT);
-            g_Items_Items3dData0[9].scale_0.vx = FP_FLOAT_TO(1.0f, Q12_SHIFT);
-            g_PickupItemAnimState = 2;
+        case 1: // Snap to full scale?
+            g_Items_Transforms[9].scale.vz = Q19_12(1.0f);
+            g_Items_Transforms[9].scale.vy = Q19_12(1.0f);
+            g_Items_Transforms[9].scale.vx = Q19_12(1.0f);
+            g_Items_PickupAnimState = 2;
             break;
     }
 
-    D_800AE1B0 += (g_DeltaTime1 * 2);
-    D_800AE1B0  = CLAMP(D_800AE1B0, 0, 0x800);
+    // Scale.
+    g_Items_PickupScale += g_DeltaTime1 * 2;
+    g_Items_PickupScale  = CLAMP(g_Items_PickupScale, Q19_12(0.0f), Q19_12(0.5f));
 
     PushMatrix();
     func_8004BBF4(&D_800C3B48, &D_800C3AE8, &D_800C3B38);
 
     obj = &D_800C3E08;
 
-    Gfx_Items_ItemRotate(&g_Items_Items3dData1[9].param->rotate, &g_Items_Items3dData1[9]);
+    Gfx_Items_ItemRotate(&g_Items_Coords[9].param->rotate, &g_Items_Coords[9]);
 
-    g_Items_Items3dData0[9].rotation_10.vy += g_DeltaTime1 >> 1;
+    // Rotate 180 degrees per second.
+    g_Items_Transforms[9].rotate.vy += g_DeltaTime1 >> 1;
 
     func_800548D8(9);
     GsSetFlatLight(0, &D_800C3AC8[0]);
@@ -3153,7 +3163,7 @@ bool Gfx_PickupItemAnimate(u8 itemId) // 0x80054AD8
     func_8004BD74(9, obj, 2);
     PopMatrix();
 
-    return g_PickupItemAnimState > 0;
+    return g_Items_PickupAnimState > 0;
 }
 
 void Inventory_AddSpecialItem(u8 itemId, s32 itemCount) // 0x80054CAC

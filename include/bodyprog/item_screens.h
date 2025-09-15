@@ -7,6 +7,12 @@
  * screen system.
  */
 
+// ==========
+// CONSTANTS
+// ==========
+
+#define DISPLAYED_ITEM_COUNT_MAX 10
+
 // ======
 // ENUMS
 // ======
@@ -64,14 +70,6 @@ typedef struct
     DVECTOR field_4;
 } s_Inventory_SelectionOutlineVector;
 
-// Could be `GsCOORD2PARAM`.
-typedef struct
-{
-    VECTOR  scale_0;
-    SVECTOR rotation_10;
-    VECTOR  field_18; // Position? Doesn't seems to be used.
-} s_Items3dData;
-
 // ========
 // GLOBALS
 // ========
@@ -104,7 +102,7 @@ extern s32 g_Inventory_SelectedItemIdx; // 0x800AE17C
  * If the user opens any item screen (i.e. inventory or results), the counter restarts.
  * Serves no purpose beyond this.
  */
-extern s32 D_800AE180; // 0x800AE180
+extern s32 g_Items_DisplayedCount; // 0x800AE180
 
 /** `e_InventoryItemId` */
 extern u8 g_Inventory_EquippedItem; // 0x800AE184
@@ -178,7 +176,7 @@ extern s32 g_Gfx_Inventory_SelectionBordersDraw; // 0x800C3998
  */
 extern s32 g_Inventory_PrevSelectionId; // 0x800C399C
 
-extern GsF_LIGHT g_Items_ItemsLightingData[8][2]; // 0x800C39A8
+extern GsF_LIGHT g_Items_Lights[8][2]; // 0x800C39A8
 
 extern GsCOORDINATE2 D_800C3AE8; // 0x800C3AE8
 
@@ -192,7 +190,7 @@ extern VbRVIEW D_800C3B48; // 0x800C3B48
 /** Holds the coords for displaying selection box around items and options. */
 extern DVECTOR D_800C3B68[4][4]; // 0x800C3BE8 - Type assumed.
 
-extern s_Items3dData g_Items_Items3dData0[10]; // 0x800C3BE8
+extern GsCOORD2PARAM g_Items_Transforms[DISPLAYED_ITEM_COUNT_MAX]; // 0x800C3BE8
 
 extern u8 g_Item_MapLoadableItems[48]; // 0x800C3BB8
 
@@ -201,7 +199,7 @@ extern u8 g_Item_MapLoadableItems[48]; // 0x800C3BB8
  */
 extern s32 D_800C3E18[7]; // 0x800C3E18
 
-extern GsCOORDINATE2 g_Items_Items3dData1[10]; // 0x800C3E48
+extern GsCOORDINATE2 g_Items_Coords[DISPLAYED_ITEM_COUNT_MAX]; // 0x800C3E48
 
 /** This value is based on the index of the equipped item.
  * If the player has nothing equipped, set to `NO_VALUE`.
@@ -226,7 +224,7 @@ void GameFs_TmdDataAlloc(s32* buf); // 0x8004BCBC
  */
 void Gfx_Items_ItemRotate(SVECTOR* arg0, GsCOORDINATE2* arg1); // 0x8004BCDC
 
-void func_8004BD74(s32 arg0, GsDOBJ2* arg1, s32 arg2); // 0x8004BD74
+void func_8004BD74(s32 displayItemIdx, GsDOBJ2* arg1, s32 arg2); // 0x8004BD74
 
 void func_8004BFE8(); // 0x8004BFE8
 
@@ -335,6 +333,7 @@ void func_800539A4(s32 arg0, s32 arg1);
  */
 void func_800540A4(s8 arg0);
 
+/** Related to rendering items. */
 void Gfx_Items_Render(); // 0x80054200
 
 /** Rough name. Part of this function resets values related to visual elements of the inventory. */
@@ -351,9 +350,11 @@ void Gfx_Items_RenderInit(); // 0x80054558
  */
 void Inventory_ExitAnimFixes(); // 0x80054634
 
-void Gfx_Items_Display(s_TmdFile* tmd, s32 arg1, s32 arg2); // 0x80054720
+/** Very rough param names. */
+void Gfx_Items_Display(s_TmdFile* tmd, s32 displayItemIdx, s32 loadableItemIdx); // 0x80054720
 
-void func_800548D8(s32 Idx); // 0x800548D8
+/** Something related to items lighting. */
+void func_800548D8(s32 idx); // 0x800548D8
 
 void Gfx_Items_SetAmbientLighting(); // 0x80054928
 

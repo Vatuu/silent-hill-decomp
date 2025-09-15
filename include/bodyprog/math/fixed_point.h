@@ -9,6 +9,9 @@
 // ARITHMETIC AND UTILS
 // =====================
 
+// TODO: `FP_HEALTH` and `FP_ALPHA` are niche and can probably be removed in favour of `Q19_12`, and some others could be merged into one.
+// There are too many specialised FP macros already. -- Sezz
+
 /** @brief Converts an integer to a fixed-point Q format.
  *
  * @param x `int` to convert.

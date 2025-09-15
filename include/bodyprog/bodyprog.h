@@ -2018,15 +2018,16 @@ extern u8 D_800AE185;
 
 extern u8 D_800AE186;
 
+/** `e_InventoryItemId` | related to displaying items. */
 extern u8 D_800AE187;
 
 extern s16 D_800AE1A8;
 
 extern s_800AE204 D_800AE204[26];
 
-extern s32 g_PickupItemAnimState;
+extern s32 g_Items_PickupAnimState;
 
-extern s32 D_800AE1B0;
+extern q19_12 g_Items_PickupScale;
 
 extern s16 D_800AE520[];
 
