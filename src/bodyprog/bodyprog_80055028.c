@@ -385,7 +385,7 @@ void func_80055E90(CVECTOR* color, u8 fadeAmount) // 0x80055E90
     s32 alpha;
     u8  prev_cd;
 
-    alpha = FP_ALPHA(1.0f) - (fadeAmount * 32);
+    alpha = QX_12(1.0f) - (fadeAmount * 32);
 
     // Works similar to `gte_DpqColor` macro, but `gte_lddp`/`gte_ldrgb` are in wrong order?
 
@@ -1354,7 +1354,7 @@ void func_8005A21C(s_800BCE18_2BEC_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX*
 
 void func_8005A42C(s_GteScratchData* scratchData, s32 arg1) // 0x8005A42C
 {
-    s32 alpha = FP_ALPHA(1.0f) - FP_MULTIPLY(arg1, D_800C4168.field_20, Q12_SHIFT);
+    s32 alpha = QX_12(1.0f) - FP_MULTIPLY(arg1, D_800C4168.field_20, Q12_SHIFT);
 
     gte_lddp(alpha);
     gte_ldrgb(&D_800C4168.worldTintColor_28);
@@ -5183,7 +5183,7 @@ s16 func_8006F99C(s_SubCharacter* chara, s32 arg1, s16 arg2) // 0x8006F99C
         return func_8005BF38(var_s2 + arg2);
     }
 
-    return FP_ALPHA(1.0f);
+    return QX_12(1.0f);
 }
 
 q7_8 func_8006FAFC(s_SubCharacter* chara, s32 dist, s32 arg2, s32 arg3, s16 arg4, s32 arg5) // 0x8006FAFC
@@ -5468,7 +5468,7 @@ void func_80070400(s_SubCharacter* chara, s_func_80070400_1* arg1, s_func_800704
     }
 
     // Compute inverse alpha.
-    invAlpha = FP_ALPHA(1.0f) - alpha;
+    invAlpha = QX_12(1.0f) - alpha;
 
     chara->field_C8         = FP_FROM((arg1->field_0 * invAlpha) + (arg2->field_0 * alpha), Q12_SHIFT);
     chara->field_CA         = FP_FROM((arg1->field_2 * invAlpha) + (arg2->field_2 * alpha), Q12_SHIFT);

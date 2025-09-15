@@ -786,12 +786,12 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
     
     g_SavegamePtr->healthSaturation_238 -= g_DeltaTime0;
     
-    g_SavegamePtr->healthSaturation_238 = CLAMP(g_SavegamePtr->healthSaturation_238, FP_HEALTH(0.0f), FP_HEALTH(300.0f));
+    g_SavegamePtr->healthSaturation_238 = CLAMP(g_SavegamePtr->healthSaturation_238, QX_12(0.0f), QX_12(300.0f));
     
-    if (g_SavegamePtr->healthSaturation_238 != FP_HEALTH(0.0f))
+    if (g_SavegamePtr->healthSaturation_238 != QX_12(0.0f))
     {
         g_SysWork.player_4C.chara_0.health_B0 += g_DeltaTime0;
-        g_SysWork.player_4C.chara_0.health_B0  = CLAMP(g_SysWork.player_4C.chara_0.health_B0, FP_HEALTH(0.0f), FP_HEALTH(100.0f));
+        g_SysWork.player_4C.chara_0.health_B0  = CLAMP(g_SysWork.player_4C.chara_0.health_B0, QX_12(0.0f), QX_12(100.0f));
     }
     
     if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP2_S00)
@@ -1119,7 +1119,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                     chara->field_C8 = CLAMP(chara->field_C8, -0x1999, -0x666);
                     chara->field_CE = CLAMP(chara->field_CE, -0x1199, -0x333);
                     
-                    if (chara->health_B0 <= FP_HEALTH(0.0f) && chara->properties_E4.player.afkTimer_E8 <= FP_TIME(0.0f))
+                    if (chara->health_B0 <= QX_12(0.0f) && chara->properties_E4.player.afkTimer_E8 <= FP_TIME(0.0f))
                     {
                         g_MapOverlayHeader.func_DC();
                         //SysWork_StateSetNext(SysState_GameOver); // TODO: Doesn't match.
@@ -1131,7 +1131,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                         g_SysWork.timer_2C          = 0;
                         g_SysWork.sysStateStep_C[2] = 0;
 
-                        chara->health_B0                                                         = FP_HEALTH(100.0f);
+                        chara->health_B0                                                         = QX_12(100.0f);
                         g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_TIME(0.0f);
                         return;
                     }
@@ -1231,7 +1231,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                         g_SysWork.timer_2C          = 0;
                         g_SysWork.sysStateStep_C[2] = 0;
 
-                        chara->health_B0                                                         = FP_HEALTH(100.0f);
+                        chara->health_B0                                                         = QX_12(100.0f);
                         g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_TIME(0.0f);
                         return;
                     }
@@ -1430,7 +1430,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             g_Player_HeadingAngle = headingAngle1;
             func_8007FB94(chara, extra, animStatus);
                     
-            if (chara->health_B0 > FP_HEALTH(0.0f) && (g_Player_MovementInputDetected | g_Player_ActionRunPressed))
+            if (chara->health_B0 > QX_12(0.0f) && (g_Player_MovementInputDetected | g_Player_ActionRunPressed))
             {
                 g_Player_GrabFree_InputCount += g_DeltaTime0;
             }
@@ -1571,7 +1571,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             {
                 case PlayerState_GetUpFront:
                 case PlayerState_GetUpBack:
-                    chara->damageReceived_C0                = FP_HEALTH(0.0f);
+                    chara->damageReceived_C0                = QX_12(0.0f);
                     chara->properties_E4.player.afkTimer_E8 = FP_TIME(0.0f);
 					
                     if (chara->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
@@ -1851,7 +1851,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                 func_8007E9C4();
                 
                 extra->model_0.state_2++;
-                chara->health_B0 = FP_HEALTH(100.0f);
+                chara->health_B0 = QX_12(100.0f);
                 chara->model_0.state_2++;
                 g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_TIME(0.0f);
                 return;
@@ -1903,7 +1903,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                     func_8007E9C4();
                     
                     extra->model_0.state_2++;
-                    chara->health_B0 = FP_HEALTH(100.0f);
+                    chara->health_B0 = QX_12(100.0f);
                     chara->model_0.state_2++;
                     g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_TIME(0.0f);
                     return;
@@ -1923,7 +1923,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                 func_8007E9C4();
                 
                 extra->model_0.state_2++;
-                chara->health_B0 = FP_HEALTH(100.0f);
+                chara->health_B0 = QX_12(100.0f);
                 chara->model_0.state_2++;
                 g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_TIME(0.0f);
                 return;
@@ -1955,7 +1955,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                 func_8007E9C4();
                 
                 extra->model_0.state_2++;
-                chara->health_B0 = FP_HEALTH(100.0f);
+                chara->health_B0 = QX_12(100.0f);
                 chara->model_0.state_2++;
                 return;
             }
@@ -2830,7 +2830,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             }
 
 			// Set idle animation.
-            if (chara->properties_E4.player.exhaustionTimer_FC < FP_TIME(10.0f) && chara->health_B0 >= FP_HEALTH(30.0f))
+            if (chara->properties_E4.player.exhaustionTimer_FC < FP_TIME(10.0f) && chara->health_B0 >= QX_12(30.0f))
             {
                 if (extra->model_0.stateStep_3 == 0)
                 {
@@ -2879,7 +2879,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
                 if (chara->properties_E4.player.afkTimer_E8 >= 300)
                 {
-                    if (chara->health_B0 >= FP_HEALTH(60.0f))
+                    if (chara->health_B0 >= QX_12(60.0f))
                     {
                         chara->properties_E4.player.afkTimer_E8             = 0;
                         g_SysWork.player_4C.extra_128.state_1C              = PlayerState_Idle;
@@ -4268,7 +4268,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                     }
                 }
 	           // Checks if player has >=30% or <10% health to determine level of exertion.
-                else if (chara->properties_E4.player.exhaustionTimer_FC < FP_TIME(10.0f) && chara->health_B0 >= FP_HEALTH(30.0f))
+                else if (chara->properties_E4.player.exhaustionTimer_FC < FP_TIME(10.0f) && chara->health_B0 >= QX_12(30.0f))
                 {
                     if (chara->model_0.stateStep_3 == 0)
                     {
@@ -6161,7 +6161,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
     if (chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_IdleExhausted, true))
     {
         if (chara->properties_E4.player.exhaustionTimer_FC < FP_TIME(10.0f) &&
-            chara->health_B0 >= FP_HEALTH(30.0f))
+            chara->health_B0 >= QX_12(30.0f))
         {
             chara->model_0.stateStep_3 = 0;
             chara->model_0.state_2     = 0;
@@ -6590,7 +6590,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
 
     if (g_Player_DisableControl || g_Player_DisableDamage)
     {
-        chara->damageReceived_C0 = FP_HEALTH(0.0f);
+        chara->damageReceived_C0 = QX_12(0.0f);
         return;
     }
 
@@ -6622,14 +6622,14 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
         case PlayerState_OnFloorFront:
         case PlayerState_OnFloorBehind:
             // related to enemy grabbing.
-            if (chara->damageReceived_C0 != FP_HEALTH(0.0f) && !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_DamageReceived))
+            if (chara->damageReceived_C0 != QX_12(0.0f) && !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_DamageReceived))
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_DamageReceived;
                 func_8005DC1C(sfx, &chara->position_18, FP_VOLUME(0.125f), 0);
                 chara->properties_E4.player.field_10C = 0x40;
             }
 
-            if (chara->damageReceived_C0 == FP_HEALTH(0.0f))
+            if (chara->damageReceived_C0 == QX_12(0.0f))
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_DamageReceived;
             }
@@ -6674,7 +6674,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             if (chara->attackReceived_41 >= 68 &&
                 chara->attackReceived_41 <  70)
             {
-                chara->damageReceived_C0 = FP_HEALTH(0.0f);
+                chara->damageReceived_C0 = QX_12(0.0f);
             }
             break;
 
@@ -6773,7 +6773,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
 
                 case 20:
                 case 22:
-                    chara->damageReceived_C0                        = FP_HEALTH(10.0f);
+                    chara->damageReceived_C0                        = QX_12(10.0f);
                     g_SysWork.player_4C.extra_128.state_1C          = PlayerState_DamageHead;
                     chara->model_0.stateStep_3                      = 0;
                     chara->model_0.state_2                          = 0;
@@ -7000,14 +7000,14 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
 
     if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_Death)
     {
-        chara->damageReceived_C0 = FP_HEALTH(0.0f);
+        chara->damageReceived_C0 = QX_12(0.0f);
         chara->field_BC          = 0;
         chara->field_B8          = 0;
         chara->field_B4          = 0;
         return;
     }
 
-    if (chara->damageReceived_C0 != FP_HEALTH(0.0f))
+    if (chara->damageReceived_C0 != QX_12(0.0f))
     {
         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
         if (!(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_DamageReceived))
@@ -7037,23 +7037,23 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             chara->health_B0 -= chara->damageReceived_C0;
         }
 
-        if (chara->health_B0 < FP_HEALTH(0.0f))
+        if (chara->health_B0 < QX_12(0.0f))
         {
             chara->health_B0 = NO_VALUE;
             D_800C4561       = 1;
         }
 
         func_800893D0(chara->damageReceived_C0);
-        chara->damageReceived_C0 = FP_HEALTH(0.0f);
+        chara->damageReceived_C0 = QX_12(0.0f);
     }
 
-    if (chara->health_B0 <= FP_HEALTH(0.0f) && g_SysWork.player_4C.extra_128.state_1C != PlayerState_Death &&
+    if (chara->health_B0 <= QX_12(0.0f) && g_SysWork.player_4C.extra_128.state_1C != PlayerState_Death &&
         g_SysWork.player_4C.extra_128.state_1C != PlayerState_Unk36 && g_SysWork.player_4C.extra_128.state_1C != PlayerState_EnemyGrabPinnedFront &&
         g_SysWork.player_4C.extra_128.state_1C != PlayerState_EnemyGrabPinnedBack && g_SysWork.player_4C.extra_128.state_1C != PlayerState_OnFloorFront &&
         g_SysWork.player_4C.extra_128.state_1C != PlayerState_OnFloorBehind && !g_Player_IsInWalkToRunTransition)
     {
         chara->field_40                     = NO_VALUE;
-        g_SavegamePtr->healthSaturation_238 = FP_HEALTH(0.0f);
+        g_SavegamePtr->healthSaturation_238 = QX_12(0.0f);
 
         for (i = 0; i < 4; i++)
         {
@@ -7690,10 +7690,10 @@ void Game_SavegameResetPlayer() // 0x8007E530
         g_SavegamePtr->items_0[i].count_1 = 0;
     }
 
-    g_SavegamePtr->playerHealth_240      = FP_HEALTH(100.0f);
+    g_SavegamePtr->playerHealth_240      = QX_12(100.0f);
     g_SavegamePtr->field_A0              = 0;
     g_SavegamePtr->equippedWeapon_AA     = InventoryItemId_Unequipped;
-    g_SavegamePtr->healthSaturation_238  = FP_HEALTH(0.0f);
+    g_SavegamePtr->healthSaturation_238  = QX_12(0.0f);
     g_SavegamePtr->gameplayTimer_250     = 0;
     g_SavegamePtr->runDistance_254       = 0;
     g_SavegamePtr->walkDistance_258      = 0;
@@ -7788,7 +7788,7 @@ void func_8007E5AC() // 0x8007E5AC
     g_GameWork.mapAnimIdx_5B1 = NO_VALUE;
 
     g_SavegamePtr->inventorySlotCount_AB  = CLAMP(g_SavegamePtr->inventorySlotCount_AB, INVENTORY_ITEM_COUNT_MAX / 5, INVENTORY_ITEM_COUNT_MAX);
-    g_SysWork.player_4C.chara_0.health_B0 = CLAMP(g_SysWork.player_4C.chara_0.health_B0, 1, FP_HEALTH(100.0f));
+    g_SysWork.player_4C.chara_0.health_B0 = CLAMP(g_SysWork.player_4C.chara_0.health_B0, 1, QX_12(100.0f));
 }
 
 void func_8007E860() // 0x8007E860
@@ -7848,7 +7848,7 @@ void func_8007E9C4() // 0x8007E9C4
     chara->properties_E4.player.flags_11C                      = 0;
     chara->properties_E4.player.playerMoveDistance_126         = 0;
 
-    chara->damageReceived_C0 = FP_HEALTH(0.0f);
+    chara->damageReceived_C0 = QX_12(0.0f);
     chara->field_BC          = 0;
     chara->field_B8          = 0;
     chara->field_B4          = 0;
@@ -8136,7 +8136,7 @@ bool func_8007F26C() // 0x8007F26C
 
 bool func_8007F2AC() // 0x8007F2AC
 {
-    if (g_SysWork.player_4C.chara_0.health_B0 <= FP_HEALTH(0.0f) ||
+    if (g_SysWork.player_4C.chara_0.health_B0 <= QX_12(0.0f) ||
         g_SysWork.playerCombatInfo_38.isAiming_13 ||
         g_SysWork.player_4C.extra_128.state_1C == PlayerState_KickEnemy ||
         g_SysWork.player_4C.extra_128.state_1C == PlayerState_StompEnemy ||
@@ -8341,7 +8341,7 @@ bool func_8007F95C() // 0x8007F95C
                 pos1.vz = ptr1->position_18.vz + ptr1->field_D8.field_2;
 
                 if (!Math_Distance2dCheck(&pos0, &pos1, radius) && ABS(pos1.vy - pos0.vy) < FP_METER(0.3f) &&
-                    ptr1->health_B0 > FP_HEALTH(0.0f) && (ptr1->flags_3E & (1 << 1)))
+                    ptr1->health_B0 > QX_12(0.0f) && (ptr1->flags_3E & (1 << 1)))
                 {
                     Math_ShortestAngleGet(g_SysWork.player_4C.chara_0.rotation_24.vy,
                                        FP_ANGLE_NORM_U(ratan2(pos1.vx - pos0.vx, pos1.vz - pos0.vz) + FP_ANGLE(360.0f)),

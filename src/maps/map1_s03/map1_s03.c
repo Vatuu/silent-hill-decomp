@@ -196,7 +196,7 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsC
 
     if (chara->model_0.state_2 == 0)
     {
-        chara->model_0.anim_4.alpha_A = FP_ALPHA(0.0f);
+        chara->model_0.anim_4.alpha_A = QX_12(0.0f);
         Character_AnimSet(chara, ANIM_STATUS(2, true), 0);
         chara->model_0.state_2++;
         chara->position_18.vy = FP_METER(0.0f);

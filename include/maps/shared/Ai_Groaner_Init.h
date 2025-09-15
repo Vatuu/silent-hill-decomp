@@ -1,7 +1,7 @@
 void Ai_Groaner_Init(s_SubCharacter* chara)
 {
-    #define GROANER_HEALTH_BASE      FP_HEALTH(210.0f)
-    #define GROANER_HEALTH_BONUS_MAX FP_HEALTH(70.0f)
+    #define GROANER_HEALTH_BASE      QX_12(210.0f)
+    #define GROANER_HEALTH_BONUS_MAX QX_12(70.0f)
 
     s32 i;
 
@@ -12,7 +12,7 @@ void Ai_Groaner_Init(s_SubCharacter* chara)
 
     chara->properties_E4.larvalStalker.properties_E8[0].val16[0] = 0;
 
-    chara->model_0.anim_4.alpha_A = FP_ALPHA(0.0f);
+    chara->model_0.anim_4.alpha_A = QX_12(0.0f);
 
     chara->health_B0 = GROANER_HEALTH_BASE + (Rng_Rand16() % GROANER_HEALTH_BONUS_MAX);
 
@@ -44,7 +44,7 @@ void Ai_Groaner_Init(s_SubCharacter* chara)
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, sharedData_800EEB14_2_s00);
 
-    chara->damageReceived_C0 = FP_HEALTH(0.0f);
+    chara->damageReceived_C0 = QX_12(0.0f);
     chara->field_BC          = 0;
     chara->field_B8          = 0;
     chara->field_B4          = 0;

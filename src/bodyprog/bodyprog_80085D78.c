@@ -786,7 +786,7 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
         for (i = 0; i < NPC_COUNT_MAX; i++)
         {
             if ((u32)((u8)g_SysWork.npcs_1A0[i].model_0.charaId_0 - 1) >= 24 ||
-                g_SysWork.npcs_1A0[i].health_B0 <= FP_HEALTH(0.0f))
+                g_SysWork.npcs_1A0[i].health_B0 <= QX_12(0.0f))
             {
                 continue;
             }
@@ -993,7 +993,7 @@ void Event_ItemTake(s32 itemId, s32 itemCount, s32 eventFlagIdx, s32 mapMsgIdx) 
         {
             if (!(g_SysWork.npcs_1A0[i].model_0.charaId_0 >= Chara_Harry &&
                   g_SysWork.npcs_1A0[i].model_0.charaId_0 <= Chara_MonsterCybil) ||
-                g_SysWork.npcs_1A0[i].health_B0 <= FP_HEALTH(0.0f))
+                g_SysWork.npcs_1A0[i].health_B0 <= QX_12(0.0f))
             {
                 continue;
             }

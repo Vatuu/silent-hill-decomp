@@ -10,15 +10,15 @@ void Ai_LarvalStalker_Init(s_SubCharacter* arg0)
 
     arg0->properties_E4.larvalStalker.properties_E8[0].val16[0] = 0;
 
-    arg0->model_0.anim_4.alpha_A = FP_ALPHA(0.0f);
+    arg0->model_0.anim_4.alpha_A = QX_12(0.0f);
     arg0->model_0.stateStep_3    = 0;
 
     ModelAnim_AnimInfoSet(&arg0->model_0.anim_4, LARVAL_STALKER_ANIM_INFOS);
 
-    arg0->health_B0         = FP_HEALTH(300.0f);
+    arg0->health_B0         = QX_12(300.0f);
     arg0->field_34          = 0;
     arg0->moveSpeed_38      = 0;
-    arg0->damageReceived_C0 = FP_HEALTH(0.0f);
+    arg0->damageReceived_C0 = QX_12(0.0f);
     arg0->field_BC          = 0;
     arg0->field_B8          = 0;
     arg0->field_B4          = 0;

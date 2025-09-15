@@ -835,7 +835,7 @@ typedef struct _Savegame
     s16             pickedUpItemCount_23C;
     s8              field_23E;
     u8              field_23F;
-    q19_12          playerHealth_240;         /** Default: FP_HEALTH(100.0f) */
+    q19_12          playerHealth_240;         /** Default: QX_12(100.0f) */
     q19_12          playerPositionX_244;
     q3_12           playerRotationY_248;      /** Range [0, 0.999755859375], positive Z: 0, clockwise rotation. It can be multiplied by 360 to get degrees. */
     u8              clearGameCount_24A;       /** Range [0, 99] */
@@ -1012,7 +1012,7 @@ typedef struct _ModelAnim
     u16         flags_2;          /** `e_AnimFlags` */
     q19_12      time_4;           /** Time on timeline. */ 
     s16         keyframeIdx_8;    /** Active keyframe. */
-    q3_12       alpha_A;          /** Progress alpha. */ 
+    q3_12       alpha_A;          /** Frame progress alpha. */ 
     s_AnimInfo* animInfo_C;       // } Arrays of anim infos?
     s_AnimInfo* animInfo_10;      // }
 } s_ModelAnim;

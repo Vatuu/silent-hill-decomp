@@ -9,7 +9,7 @@
 // ARITHMETIC AND UTILS
 // =====================
 
-// TODO: `FP_HEALTH` and `FP_ALPHA` are niche and can probably be removed in favour of `QX_12`, and some others could be merged into one.
+// TODO: `QX_12` and `QX_12` are niche and can probably be removed in favour of `QX_12`, and some others could be merged into one.
 // There are too many specialised FP macros already. -- Sezz
 
 /** @brief Converts an integer to a fixed-point Q format.
@@ -205,14 +205,6 @@
 // ABSTRACT Q FORMAT CONVERSION AND UTILS
 // =======================================
 
-/** @brief Converts a floating-point alpha in the range `[0.0f, 1.0f]` to fixed-point Q3.12, integer range `[0, 4096]`.
- *
- * @param alpha Alpha (`float`).
- * @return Fixed-point alpha in Q3.12, integer range `[0, 4096]` (`s16`).
- */
-#define FP_ALPHA(alpha) \
-    (s16)QX_12(alpha)
-
 /** @brief Converts a normalized floating-point sound volume in the range `[0.0f, 1.0f]` to fixed-point Q0.8, integer range `[0, 255]`.
  *
  * @param vol Sound volume (`float`).
@@ -356,15 +348,5 @@
  */
 #define FP_TIME(sec) \
     QX_12(sec)
-
-/** @brief Converts floating-point health to fixed-point Q19.12.
- *
- * @note 1 health == 4096 units.
- *
- * @param health Health (`float`).
- * @return Fixed-point health in Q19.12 (`s32`).
- */
-#define FP_HEALTH(health) \
-    QX_12(health)
 
 #endif

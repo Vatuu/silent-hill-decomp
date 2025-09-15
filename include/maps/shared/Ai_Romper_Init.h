@@ -1,14 +1,14 @@
 void Ai_Romper_Init(s_SubCharacter* chara)
 {
-    #define ROMPER_HEALTH_BASE      FP_HEALTH(450.0f)
-    #define ROMPER_HEALTH_BONUS_MAX FP_HEALTH(112.5f)
+    #define ROMPER_HEALTH_BASE      QX_12(450.0f)
+    #define ROMPER_HEALTH_BONUS_MAX QX_12(112.5f)
 
     s32 i;
     s32 temp_a0;
     s32 var_v0;
 
     chara->properties_E4.larvalStalker.properties_E8[0].val32 = 0;
-    chara->model_0.anim_4.alpha_A                             = FP_ALPHA(0.0f);
+    chara->model_0.anim_4.alpha_A                             = QX_12(0.0f);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
@@ -58,7 +58,7 @@ void Ai_Romper_Init(s_SubCharacter* chara)
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, sharedData_800EC954_2_s02);
 
-    chara->damageReceived_C0 = FP_HEALTH(0.0f);
+    chara->damageReceived_C0 = QX_12(0.0f);
     chara->field_BC          = 0;
     chara->field_B8          = 0;
     chara->field_B4          = 0;

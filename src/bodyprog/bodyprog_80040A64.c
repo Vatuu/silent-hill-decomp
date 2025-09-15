@@ -2050,7 +2050,7 @@ void Anim_Update0(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coords,
     // Update frame data.
     model->anim_4.time_4        = newTime;
     model->anim_4.keyframeIdx_8 = newKeyframeIdx;
-    model->anim_4.alpha_A       = FP_ALPHA(0.0f);
+    model->anim_4.alpha_A       = QX_12(0.0f);
 
     // Update anim status if anim started or ended.
     if (setNewAnimStatus)
@@ -2115,7 +2115,7 @@ void Anim_Update1(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     // Update frame data.
     model->anim_4.time_4        = newTime;
     model->anim_4.keyframeIdx_8 = newKeyframeIdx0;
-    model->anim_4.alpha_A       = FP_ALPHA(0.0f);
+    model->anim_4.alpha_A       = QX_12(0.0f);
 }
 
 void Anim_Update2(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044CA4
@@ -2142,7 +2142,7 @@ void Anim_Update2(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     // Update time to start or end keyframe, whichever is closest.
     alpha  = model->anim_4.alpha_A;
     alpha += timeStep;
-    if (alpha >= FP_ALPHA(0.5f))
+    if (alpha >= QX_12(0.5f))
     {
         model->anim_4.time_4 = QX_12(endKeyframeIdx);
     }
@@ -2152,12 +2152,12 @@ void Anim_Update2(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     }
 
     // Update frame data.
-    if (alpha >= FP_ALPHA(1.0f))
+    if (alpha >= QX_12(1.0f))
     {
         startKeyframeIdx            = endKeyframeIdx;
         model->anim_4.keyframeIdx_8 = endKeyframeIdx;
         
-        alpha            = FP_ALPHA(0.0f);
+        alpha            = QX_12(0.0f);
         setNewAnimStatus = true;
     }
 
@@ -2208,11 +2208,11 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     model->anim_4.alpha_A = alpha;
 
     // Compute ease-out alpha.
-    sinVal   = Math_Sin((alpha / 2) - FP_ALPHA(0.25f));
-    newAlpha = (sinVal / 2) + FP_ALPHA(0.5f);
+    sinVal   = Math_Sin((alpha / 2) - QX_12(0.25f));
+    newAlpha = (sinVal / 2) + QX_12(0.5f);
 
     // Update time to start or end keyframe, whichever is closest.
-    if (newAlpha >= FP_ALPHA(0.5f))
+    if (newAlpha >= QX_12(0.5f))
     {
         newTime = QX_12(startKeyframeIdx);
     }

@@ -102,7 +102,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
             g_MainMenu_VisibleEntryFlags = (1 << MainMenuEntry_Start) | (1 << MainMenuEntry_Option);
 
-            if (g_GameWork.autosave_90.playerHealth_240 > FP_HEALTH(0.0f))
+            if (g_GameWork.autosave_90.playerHealth_240 > QX_12(0.0f))
             {
                 g_MainMenu_VisibleEntryFlags = (1 << MainMenuEntry_Continue) | (1 << MainMenuEntry_Start) | (1 << MainMenuEntry_Option);
             }
@@ -183,7 +183,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 switch (g_MainMenu_SelectedEntry)
                 {
                     case MainMenuEntry_Continue:
-                        if (g_GameWork.autosave_90.playerHealth_240 > FP_HEALTH(0.0f))
+                        if (g_GameWork.autosave_90.playerHealth_240 > QX_12(0.0f))
                         {
                             g_GameWork.savegame_30C = g_GameWork.autosave_90;
                         }
@@ -305,7 +305,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 Screen_Refresh(SCREEN_WIDTH, 0);
                 Fs_QueueWaitForEmpty();
 
-                if (g_GameWork.autosave_90.playerHealth_240 > FP_HEALTH(0.0f))
+                if (g_GameWork.autosave_90.playerHealth_240 > QX_12(0.0f))
                 {
                     NEXT_GAME_STATES[1] = 10;
                 }
@@ -2935,7 +2935,7 @@ s32 func_8003F6F0(s32 arg0, s32 arg1, s32 arg2) // 0x8003F6F0
 
 s32 Math_WeightedAverageGet(s32 a, s32 b, s32 weight) // 0x8003F7E4
 {
-    return Math_MulFixed(a, FP_ALPHA(1.0f) - weight, Q12_SHIFT) + Math_MulFixed(b, weight, Q12_SHIFT);
+    return Math_MulFixed(a, QX_12(1.0f) - weight, Q12_SHIFT) + Math_MulFixed(b, weight, Q12_SHIFT);
 }
 
 void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s32 weight) // 0x8003F838
@@ -2946,11 +2946,11 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s
     u32 temp;
 
     weight0 = weight * 2;
-    weight0 = CLAMP(weight0, FP_ALPHA(0.0f), FP_ALPHA(1.0f));
-    weight1 = (weight - FP_ALPHA(0.5f)) * 2;
-    weight1 = CLAMP(weight1, FP_ALPHA(0.0f), FP_ALPHA(1.0f));
+    weight0 = CLAMP(weight0, QX_12(0.0f), QX_12(1.0f));
+    weight1 = (weight - QX_12(0.5f)) * 2;
+    weight1 = CLAMP(weight1, QX_12(0.0f), QX_12(1.0f));
 
-    if (weight < FP_ALPHA(0.5f))
+    if (weight < QX_12(0.5f))
     {
         arg0->field_0.field_0.s_field_0.field_0 = arg1->field_0.field_0.s_field_0.field_0;
     }
@@ -2961,7 +2961,7 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s
 
     func_8003FCB0(&arg0->field_0, &arg1->field_0, &arg2->field_0, weight);
 
-    if (arg1->field_2C == FP_ALPHA(0.0f))
+    if (arg1->field_2C == QX_12(0.0f))
     {
         arg0->field_2C = Math_WeightedAverageGet(0, arg2->field_2C, weight1);
     }
@@ -3009,7 +3009,7 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s
     }
     else if (arg2->field_0.field_E == 0)
     {
-        if (weight1 >= FP_ALPHA(1.0f))
+        if (weight1 >= QX_12(1.0f))
         {
             arg0->field_0.field_E = arg2->field_0.field_E;
         }
@@ -3032,44 +3032,44 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s
 
     if (arg1->field_0.field_0.s_field_0.field_2 == 1 && arg2->field_0.field_0.s_field_0.field_2 == 2)
     {
-        if (weight < FP_ALPHA(5.0f / 6.0f))
+        if (weight < QX_12(5.0f / 6.0f))
         {
-            weight2                                 = FP_MULTIPLY(weight, FP_ALPHA(1.2f), Q12_SHIFT);
-            weight2                                 = CLAMP(weight2, FP_ALPHA(0.0f), FP_ALPHA(1.0f));
+            weight2                                 = FP_MULTIPLY(weight, QX_12(1.2f), Q12_SHIFT);
+            weight2                                 = CLAMP(weight2, QX_12(0.0f), QX_12(1.0f));
             arg0->field_0.field_0.s_field_0.field_2 = arg1->field_0.field_0.s_field_0.field_2;
             arg0->field_0.field_4                   = Math_WeightedAverageGet(arg1->field_0.field_4, 0, weight2);
         }
         else
         {
-            weight2                                 = (weight - FP_ALPHA(5.0f / 6.0f)) * 6;
-            weight2                                 = CLAMP(weight2, FP_ALPHA(0.0f), FP_ALPHA(1.0f));
+            weight2                                 = (weight - QX_12(5.0f / 6.0f)) * 6;
+            weight2                                 = CLAMP(weight2, QX_12(0.0f), QX_12(1.0f));
             arg0->field_0.field_0.s_field_0.field_2 = arg2->field_0.field_0.s_field_0.field_2;
             weight0                                 = arg2->field_0.field_4;
-            arg0->field_0.field_4                   = Math_WeightedAverageGet(FP_ALPHA(0.0f), weight0, weight2);
+            arg0->field_0.field_4                   = Math_WeightedAverageGet(QX_12(0.0f), weight0, weight2);
         }
     }
     else if (arg1->field_0.field_0.s_field_0.field_2 == 2 && arg2->field_0.field_0.s_field_0.field_2 == 1)
     {
-        if (weight < FP_ALPHA(1.0f / 6.0f))
+        if (weight < QX_12(1.0f / 6.0f))
         {
             weight2                                 = weight * 6;
-            weight2                                 = CLAMP(weight2, FP_ALPHA(0.0f), FP_ALPHA(1.0f));
+            weight2                                 = CLAMP(weight2, QX_12(0.0f), QX_12(1.0f));
             arg0->field_0.field_0.s_field_0.field_2 = arg1->field_0.field_0.s_field_0.field_2;
-            arg0->field_0.field_4                   = Math_WeightedAverageGet(arg1->field_0.field_4, FP_ALPHA(0.0f), weight2);
+            arg0->field_0.field_4                   = Math_WeightedAverageGet(arg1->field_0.field_4, QX_12(0.0f), weight2);
         }
         else
         {
-            weight2                                 = FP_MULTIPLY(weight - FP_ALPHA(1.0f / 6.0f), FP_ALPHA(1.2f), Q12_SHIFT);
-            weight2                                 = CLAMP(weight2, FP_ALPHA(0.0f), FP_ALPHA(1.0f));
+            weight2                                 = FP_MULTIPLY(weight - QX_12(1.0f / 6.0f), QX_12(1.2f), Q12_SHIFT);
+            weight2                                 = CLAMP(weight2, QX_12(0.0f), QX_12(1.0f));
             arg0->field_0.field_0.s_field_0.field_2 = arg2->field_0.field_0.s_field_0.field_2;
-            arg0->field_0.field_4                   = Math_WeightedAverageGet(FP_ALPHA(0.0f), arg2->field_0.field_4, weight2);
+            arg0->field_0.field_4                   = Math_WeightedAverageGet(QX_12(0.0f), arg2->field_0.field_4, weight2);
         }
     }
     else
     {
         if (arg1->field_0.field_0.s_field_0.field_2 != 0 && arg2->field_0.field_0.s_field_0.field_2 == 0)
         {
-            if (weight >= FP_ALPHA(1.0f))
+            if (weight >= QX_12(1.0f))
             {
                 arg0->field_0.field_0.s_field_0.field_2 = arg2->field_0.field_0.s_field_0.field_2;
             }
@@ -3100,7 +3100,7 @@ void func_8003FCB0(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructU
 {
     s32 p0;
     
-    p0 = FP_ALPHA(1.0f) - arg3;
+    p0 = QX_12(1.0f) - arg3;
     LoadAverageCol(&arg1->field_21.r, &arg2->field_21.r, p0, arg3, &arg0->field_21.r);
     LoadAverageCol(&arg1->field_25.r, &arg2->field_25.r, p0, arg3, &arg0->field_25.r);
 }
@@ -3120,14 +3120,14 @@ void func_8003FD38(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s
     arg0->field_0.field_10 = Math_WeightedAverageGet(arg1->field_0.field_10, arg2->field_0.field_10, weight1);
     arg0->field_0.field_6  = Math_WeightedAverageGet(arg1->field_0.field_6, arg2->field_0.field_6, weight0);
 
-    LoadAverageCol(&arg1->field_0.fogColor_14.r, &arg2->field_0.fogColor_14.r, FP_ALPHA(1.0f) - alphaTo, alphaTo, &arg0->field_0.fogColor_14.r);
+    LoadAverageCol(&arg1->field_0.fogColor_14.r, &arg2->field_0.fogColor_14.r, QX_12(1.0f) - alphaTo, alphaTo, &arg0->field_0.fogColor_14.r);
 }
 
 void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructUnk3* arg2, s32 alphaTo) // 0x8003FE04
 {
     s32 alphaFrom;
 
-    alphaFrom = FP_ALPHA(1.0f) - alphaTo;
+    alphaFrom = QX_12(1.0f) - alphaTo;
     LoadAverageCol(&arg1->field_19.r, &arg2->field_19.r, alphaFrom, alphaTo, &arg0->field_19.r);
     LoadAverageCol(&arg1->field_1D.r, &arg2->field_1D.r, alphaFrom, alphaTo, &arg0->field_1D.r);
 

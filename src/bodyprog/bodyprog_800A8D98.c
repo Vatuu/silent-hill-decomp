@@ -71,7 +71,7 @@ TILE D_800A8E74[] =
     { 0x3000000, 255, 0, 0, 0x62, -320, -240, 640, 480 },
 };
 
-q19_12 g_ScreenFadeProgress = FP_ALPHA(0.0f);
+q19_12 g_ScreenFadeProgress = QX_12(0.0f);
 
 DR_MODE D_800A8E98[] =
 {
