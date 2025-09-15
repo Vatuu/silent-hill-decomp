@@ -542,14 +542,14 @@ const VECTOR3 D_800CCA58 =
     0x00108199,
 };
 
-#define EventPositionInit(eventPos, x, y, z, arg4, arg5) \
-    EventPositionSet(eventPos, FP_METER(x), FP_METER(y), FP_METER(z), arg4, arg5)
+#define EventPositionInit(eventPos, x, y, z, arg4, arg5, arg6) \
+    EventPositionSet(eventPos, FP_METER(x), FP_METER(y), FP_METER(z), FP_ANGLE(arg4), FP_ANGLE(arg5), FP_ANGLE(arg6))
 
-static inline void EventPositionSet(s_EventPosition* eventPos, s32 x, s32 y, s32 z, s32 arg4, s16 arg5)
+static inline void EventPositionSet(s_EventPosition* eventPos, s32 x, s32 y, s32 z, u16 arg4, u16 arg5, u16 arg6)
 {
     Math_Vector3Set(&eventPos->position_0, x, y, z);
-    *(s32*)&eventPos->rotation_C.vx = arg4;
-    eventPos->rotation_C.vz         = arg5;
+    *(u32*)&eventPos->rotation_C.vx = ((u32)arg5 << 16) | (u32)arg4;
+    eventPos->rotation_C.vz = arg6;
 }
 
 void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
@@ -931,16 +931,16 @@ void func_800DC9C8() // 0x800DC9C8
     func_8003C8F8(&D_800E2450[0], "OUT1_HID");
     func_8003C8F8(&D_800E2450[1], "OUT_BLD_");
 
-    EventPositionInit(&g_EventThing_KitchenKnife.eventPosition_1C, 5.09f, -1.01f, 274.12f, 0x16C0000, 0);
+    EventPositionInit(&g_EventThing_KitchenKnife.eventPosition_1C, 5.09f, -1.01f, 274.12f, 0, 32.0f, 0); 
     func_8003C8F8(&g_EventThing_KitchenKnife.field_0, "KNIFE_HI");
 
-    EventPositionInit(&g_EventThing_Flashlight.eventPosition_1C, 5.18f, -1.0f, 267.28f, 0x4EEFFDE, 0);
+    EventPositionInit(&g_EventThing_Flashlight.eventPosition_1C, 5.18f, -1.0f, 267.28f, -3.0f, 111.0f, 0);
     func_8003C8F8(&g_EventThing_Flashlight.field_0, "FLASH_HI");
 
-    EventPositionInit(&g_EventThing_Map.eventPosition_1C, 5.24f, -1.0f, 267.21f, 0x2880000, 0);
+    EventPositionInit(&g_EventThing_Map.eventPosition_1C, 5.24f, -1.0f, 267.21f, 0, 57.0f, 0);
     func_8003C8F8(&g_EventThing_Map.field_0, "MAP_HIDE");
 
-    EventPositionInit(&g_EventThing_PocketRadio.eventPosition_1C, 2.31f, -0.6f, 273.95f, 0x6880000, 0);
+    EventPositionInit(&g_EventThing_PocketRadio.eventPosition_1C, 2.31f, -0.6f, 273.95f, 0, 147.0f, 0);
     func_8003C8F8(&g_EventThing_PocketRadio.field_0, "RADIO_HI");
 
     if (Savegame_EventFlagGet(EventFlag_40) && !Savegame_EventFlagGet(EventFlag_47))
