@@ -114,6 +114,20 @@ mips-linux-gnu-as -EL -Iinclude -Iinclude/psyq -I build -O2 -march=r3000 -mtune=
 
 # Run decomp-permuter if the --run flag is set
 if [ "$RUN" = true ]; then
+
+    # Start a background cleaner that removes old permuter tmp files (older than 2 minutes)
+    (
+        while true; do
+            find /tmp -maxdepth 1 -type f -name "permuter*" -mmin +2 -delete 2>/dev/null
+            sleep 10
+        done
+    ) &
+
+    CLEANER_PID=$!
+
+    # Ensure the cleaner is stopped when the script exits
+    trap "kill $CLEANER_PID 2>/dev/null" EXIT
+
     echo "Running decomp-permuter"
     python3 tools/decomp-permuter/permuter.py -j$THREADS --algorithm levenshtein permuter/$FUNCTION_NAME/
 fi
