@@ -867,10 +867,10 @@ s32 D_800AF224 = NO_VALUE;
 
 s_AnimInfo HARRY_BASE_ANIM_INFOS[57] =
 {
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_Unk0,                    false), false, ANIM_STATUS(PlayerAnim_Unk0,                    true), { Q19_12(10)     }, NO_VALUE, 0   },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_Unk0,                    true),  false, NO_VALUE,                                              { Q19_12(30)     }, NO_VALUE, 1   },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_Unk1,                    false), false, ANIM_STATUS(PlayerAnim_Unk1,                    true), { Q19_12(10)     }, NO_VALUE, 0   },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_Unk1,                    true),  false, NO_VALUE,                                              { Q19_12(0)      }, 0,        0   },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_Still,                   false), false, ANIM_STATUS(PlayerAnim_Still,                   true), { Q19_12(10)     }, NO_VALUE, 0   },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_Still,                   true),  false, NO_VALUE,                                              { Q19_12(30)     }, NO_VALUE, 1   },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_TransitionToStill,       false), false, ANIM_STATUS(PlayerAnim_TransitionToStill,       true), { Q19_12(10)     }, NO_VALUE, 0   },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_TransitionToStill,       true),  false, NO_VALUE,                                              { Q19_12(0)      }, 0,        0   },
     { Anim_Update2, ANIM_STATUS(PlayerAnim_WalkForward,             false), false, ANIM_STATUS(PlayerAnim_WalkForward,             true), { Q19_12(50)     }, NO_VALUE, 1   },
     { Anim_Update1, ANIM_STATUS(PlayerAnim_WalkForward,             true),  true,  NO_VALUE,                                              { func_800706E4  }, 1,        23  },
     { Anim_Update2, ANIM_STATUS(PlayerAnim_RunForward,              false), false, ANIM_STATUS(PlayerAnim_RunForward,              true), { Q19_12(20)     }, NO_VALUE, 26  },

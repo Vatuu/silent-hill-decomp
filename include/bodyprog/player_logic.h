@@ -288,8 +288,8 @@ typedef enum _PlayerLowerBodyState
 /** @brief Player animation indices. */
 typedef enum _PlayerAnim
 {
-    PlayerAnim_Unk0                    = 0,
-    PlayerAnim_Unk1                    = 1, // Start walk forward?
+    PlayerAnim_Still                   = 0,
+    PlayerAnim_TransitionToStill       = 1,
     PlayerAnim_WalkForward             = 2,
     PlayerAnim_RunForward              = 3,
     PlayerAnim_WalkBackward            = 4,
