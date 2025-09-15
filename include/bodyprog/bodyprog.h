@@ -31,7 +31,7 @@
 typedef enum _EffectTextureFlags
 {
     EffectTextureFlag_None         = 0,
-    EffectTextureFlag_Glass        = 1 << 1, /** Broken glass in cafe Air Screamer cutscene */
+    EffectTextureFlag_Glass        = 1 << 1, /** Broken glass in cafe Air Screamer cutscene. */
     EffectTextureFlag_WaterRefract = 1 << 2, /** Water waves and light reflection in sewer. */
     EffectTextureFlag_Water        = 1 << 3,
     EffectTextureFlag_Fire         = 1 << 4,
@@ -3165,7 +3165,7 @@ s32 func_8005F680(s_func_800699F8* arg0);
 void func_8005DE0C(s32 sfx, VECTOR3*, s32, s32, s32); // Types assumed.
 
 /** Something related to events of the map and loading of textures? */
-void func_8005E0DC(s32 mapIdx);
+void Map_EffectTexturesLoad(s32 mapIdx);
 
 void func_8005E70C();
 

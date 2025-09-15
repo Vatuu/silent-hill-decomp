@@ -526,6 +526,7 @@ LmHeader_IsTextureLoaded                    = 0x80056888; // type:func
 LmHeader_ModelCountGet                      = 0x80056C80; // type:func
 StringCopy                                  = 0x80056D64; // type:func
 func_800571D0                               = 0x800571D0; // type:func size:0x58 - Fix for truncated function.
+Map_EffectTexturesLoad                      = 0x8005E0DC; // type:func
 GameState_MapScreen_Update                  = 0x80066EB0; // type:func
 IpdCollData_FixOffsets                      = 0x8006993C; // type:func
 

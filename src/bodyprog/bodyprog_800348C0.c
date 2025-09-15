@@ -390,7 +390,7 @@ void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
     #define BASE_FILE_IDX FILE_VIN_MAP0_S00_BIN
 
     Fs_QueueStartRead(BASE_FILE_IDX + mapIdx, g_OvlDynamic);
-    func_8005E0DC(mapIdx);
+    Map_EffectTexturesLoad(mapIdx);
     GameFs_PlayerMapAnimLoad(mapIdx);
 
     // If the player spawns in the map with a weapon equipped (either because it's a demo

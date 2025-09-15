@@ -58,7 +58,7 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
                 
                 func_8003D160();
                 GameFs_BgItemLoad();
-                func_8005E0DC(NO_VALUE);
+                Map_EffectTexturesLoad(NO_VALUE);
 
                 // Start loading `ANIM/HB_BASE.ANM` (base Harry animations).
                 Fs_QueueStartRead(FILE_ANIM_HB_BASE_ANM, FS_BUFFER_0);

@@ -2298,7 +2298,7 @@ void func_8005DD44(s32 sfx, VECTOR3* pos, s32 vol, s8 pitch) // 0x8005DD44
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005DE0C); // 0x8005DE0C
 
-void func_8005E0DC(s32 mapIdx) // 0x8005E0DC
+void Map_EffectTexturesLoad(s32 mapIdx) // 0x8005E0DC
 {
     s32 i;
     s32 effectTexFlags;
