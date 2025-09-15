@@ -34,7 +34,7 @@ s8 Sound_StereoBalanceGet(const VECTOR3* soundPos) // 0x80040A64
 
     // Compute normal from camera and sound source positions.
     vwGetViewPosition(&camPos);
-    vec0.vx = (soundPos->vx - camPos.vx) >> 6; // TODO: Use `Q19_12_TO_Q27_4` here?
+    vec0.vx = (soundPos->vx - camPos.vx) >> 6; // TODO: Use `QX_12_TO_Q27_4` here?
     vec0.vy = (soundPos->vy - camPos.vy) >> 6;
     vec0.vz = (soundPos->vz - camPos.vz) >> 6;
     VectorNormal(&vec0, &vec1);
@@ -1995,7 +1995,7 @@ static inline q19_12 Anim_TimeStepGet(s_Model* model, s_AnimInfo* animInfo)
         return FP_MULTIPLY_PRECISE(duration, g_DeltaTime0, Q12_SHIFT);
     }
 
-    return Q19_12(0.0f);
+    return QX_12(0.0f);
 }
 
 void Anim_Update0(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coords, s_AnimInfo* animInfo) // 0x800449F0
@@ -2016,12 +2016,12 @@ void Anim_Update0(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coords,
     // Compute new time and keyframe index.
     newTime        = model->anim_4.time_4;
     newKeyframeIdx = FP_FROM(newTime, Q12_SHIFT);
-    if (timeStep != Q19_12(0.0f))
+    if (timeStep != QX_12(0.0f))
     {
         newTime += timeStep;
 
         // Clamp new time to valid keyframe range.
-        endTime = Q19_12(animInfo->endKeyframeIdx_E);
+        endTime = QX_12(animInfo->endKeyframeIdx_E);
         if (newTime >= endTime)
         {
             newTime          = endTime;
@@ -2029,7 +2029,7 @@ void Anim_Update0(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coords,
         }
         else
         {
-            startTime = Q19_12(animInfo->startKeyframeIdx_C);
+            startTime = QX_12(animInfo->startKeyframeIdx_C);
             if (newTime <= startTime)
             {
                 newTime          = startTime;
@@ -2079,9 +2079,9 @@ void Anim_Update1(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     nextStartKeyframeIdx = endKeyframeIdx + 1;
     keyframeCount        = nextStartKeyframeIdx - startKeyframeIdx;
 
-    startTime     = Q19_12(startKeyframeIdx);
-    nextStartTime = Q19_12(nextStartKeyframeIdx);
-    duration      = Q19_12(keyframeCount);
+    startTime     = QX_12(startKeyframeIdx);
+    nextStartTime = QX_12(nextStartKeyframeIdx);
+    duration      = QX_12(keyframeCount);
 
     // Get time step.
     timeStep = Anim_TimeStepGet(model, animInfo);
@@ -2144,11 +2144,11 @@ void Anim_Update2(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     alpha += timeStep;
     if (alpha >= FP_ALPHA(0.5f))
     {
-        model->anim_4.time_4 = Q19_12(endKeyframeIdx);
+        model->anim_4.time_4 = QX_12(endKeyframeIdx);
     }
     else
     {
-        model->anim_4.time_4 = Q19_12(startKeyframeIdx);
+        model->anim_4.time_4 = QX_12(startKeyframeIdx);
     }
 
     // Update frame data.
@@ -2199,7 +2199,7 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     }
     else
     {
-        timeStep = Q19_12(0.0f);
+        timeStep = QX_12(0.0f);
     }
 
     // Update alpha.
@@ -2214,11 +2214,11 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     // Update time to start or end keyframe, whichever is closest.
     if (newAlpha >= FP_ALPHA(0.5f))
     {
-        newTime = Q19_12(startKeyframeIdx);
+        newTime = QX_12(startKeyframeIdx);
     }
     else
     {
-        newTime = Q19_12(endKeyframeIdx);
+        newTime = QX_12(endKeyframeIdx);
     }
 
     alpha = newAlpha;

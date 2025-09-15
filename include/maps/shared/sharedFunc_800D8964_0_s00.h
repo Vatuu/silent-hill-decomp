@@ -119,7 +119,7 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
 
     if (animInfo->updateFunc_0 == Anim_Update0)
     {
-        if (Anim_DurationGet(chara, animInfo) > Q19_12(0.0f))
+        if (Anim_DurationGet(chara, animInfo) > QX_12(0.0f))
         {
             return chara->model_0.anim_4.keyframeIdx_8 == animInfo->endKeyframeIdx_E;
         }

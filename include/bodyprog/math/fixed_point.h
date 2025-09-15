@@ -9,7 +9,7 @@
 // ARITHMETIC AND UTILS
 // =====================
 
-// TODO: `FP_HEALTH` and `FP_ALPHA` are niche and can probably be removed in favour of `Q19_12`, and some others could be merged into one.
+// TODO: `FP_HEALTH` and `FP_ALPHA` are niche and can probably be removed in favour of `QX_12`, and some others could be merged into one.
 // There are too many specialised FP macros already. -- Sezz
 
 /** @brief Converts an integer to a fixed-point Q format.
@@ -105,6 +105,14 @@
 // RAW Q FORMAT CONVERSION AND UTILS
 // ==================================
 
+/** @brief Converts a floating-point value to fixed-point Q*.12.
+ *
+ * @param x Value to convert (`float`).
+ * @return `x` converted to fixed-point Q*.12.
+ */
+#define QX_12(x) \
+    FP_FLOAT_TO(x, Q12_SHIFT)
+
 /** @brief Converts a floating-point value to fixed-point Q0.8.
  *
  * @param x Value to convert (`float`).
@@ -129,14 +137,6 @@
 #define Q7_8(x) \
     (s16)FP_FLOAT_TO(x, Q8_SHIFT)
 
-/** @brief Converts a floating-point value to fixed-point Q3.12.
- *
- * @param x Value to convert (`float`).
- * @return `x` converted to fixed-point Q3.12 (`s16`).
- */
-#define Q3_12(x) \
-    (s16)FP_FLOAT_TO(x, Q12_SHIFT)
-
 /** @brief Converts a floating-point value to fixed-point Q27.4.
  *
  * @param x Value to convert (`float`).
@@ -153,20 +153,12 @@
 #define Q23_8(x) \
     (s32)FP_FLOAT_TO(x, Q8_SHIFT)
 
-/** @brief Converts a floating-point value to fixed-point Q19.12.
- *
- * @param x Value to convert (`float`).
- * @return `x` converted to fixed-point Q19.12 (`s32`).
- */
-#define Q19_12(x) \
-    (s32)FP_FLOAT_TO(x, Q12_SHIFT)
-
 /** @brief Converts a fixed-point value from Q0.8 to Q3.12.
  *
  * @param x Fixed-point value in Q0.8 to convert.
  * @return `x` converted to fixed-point Q3.12 (`s16`).
  */
-#define Q0_8_TO_Q3_12(x) \
+#define Q0_8_TO_QX_12(x) \
     (s16)((x) << 4)
 
 /** @brief Converts a fixed-point value from Q27.4 to Q19.12.
@@ -174,7 +166,7 @@
  * @param x Fixed-point value in Q27.4 to convert.
  * @return `x` converted to fixed-point Q19.12 (`s32`).
  */
-#define Q27_4_TO_Q19_12(x) \
+#define Q27_4_TO_QX_12(x) \
     (s32)((x) << 8)
 
 /** @brief Converts a fixed-point value from Q23.8 to Q19.12.
@@ -182,7 +174,7 @@
  * @param x Fixed-point value in Q23.8 to convert.
  * @return `x` converted to fixed-point Q19.12 (`s32`).
  */
-#define Q23_8_TO_Q19_12(x) \
+#define Q23_8_TO_QX_12(x) \
     (s32)((x) << 4)
 
 /** @brief Converts a fixed-point value from Q3.12 to Q0.8.
@@ -190,7 +182,7 @@
  * @param x Fixed-point value in Q3.12 to convert.
  * @return `x` converted to fixed-point Q0.8 (`u8`).
  */
-#define Q3_12_TO_Q0_8(x) \
+#define QX_12_TO_Q0_8(x) \
     (u8)((x) >> 4)
 
 /** @brief Converts a fixed-point value from Q19.12 to Q23.8.
@@ -198,7 +190,7 @@
  * @param x Fixed-point value in Q19.12 to convert.
  * @return `x` converted to fixed-point Q23.8 (`s32`).
  */
-#define Q19_12_TO_Q23_8(x) \
+#define QX_12_TO_Q23_8(x) \
     (s32)((x) >> 4)
 
 /** @brief Extracts the fractional part of a value in fixed-point QX.12.
@@ -219,7 +211,7 @@
  * @return Fixed-point alpha in Q3.12, integer range `[0, 4096]` (`s16`).
  */
 #define FP_ALPHA(alpha) \
-    (s16)Q3_12(alpha)
+    (s16)QX_12(alpha)
 
 /** @brief Converts a normalized floating-point sound volume in the range `[0.0f, 1.0f]` to fixed-point Q0.8, integer range `[0, 255]`.
  *
@@ -258,7 +250,7 @@
  * @return Unsigned fixed-point degrees in Q3.12, integer range `[0, 4096]` (`s16`).
  */
 #define FP_ANGLE(deg) \
-    (s16)((deg) * ((float)Q3_12(1.0f) / 360.0f))
+    (s16)((deg) * ((float)QX_12(1.0f) / 360.0f))
 
 /** @brief Converts floating-point degrees to unsigned fixed-point in Q0.8, integer range `[0, 255]`.
  *
@@ -279,7 +271,7 @@
  * @return Unsigned fixed-point degrees in Q0.8, integer range `[0, 255]` (`s16`).
  */
 #define FP_ANGLE_TO_PACKED(deg) \
-    Q3_12_TO_Q0_8(deg);
+    QX_12_TO_Q0_8(deg);
 
 /** @brief Converts unsigned fixed-point degrees in Q0.8, integer range `[0, 255]` to
  * unsigned fixed-point Q3.12, integer range `[0, 4096]`.
@@ -288,7 +280,7 @@
  * @return Unsigned fixed-point degrees in Q3.12, integer range `[0, 4096]` (`s16`).
  */
 #define FP_ANGLE_FROM_PACKED(deg) \
-    Q0_8_TO_Q3_12(deg)
+    Q0_8_TO_QX_12(deg)
 
 /** @brief Normalizes unsigned fixed-point degrees in Q3.12 to the signed integer range `[-2048, 2047]`.
  *
@@ -327,7 +319,7 @@
  * @return Fixed-point world space meters in Q19.12 (`s32`).
  */
 #define FP_METER(met) \
-    Q19_12(met)
+    QX_12(met)
 
 /** @brief Converts floating-point meters to fixed-point geometry space Q23.8.
  *
@@ -345,7 +337,7 @@
  * @return Fixed-point geometry space meters in Q23.8 (`s32`).
  */
 #define FP_METER_TO_GEO(met) \
-    Q19_12_TO_Q23_8(met)
+    QX_12_TO_Q23_8(met)
 
 /** @brief Converts fixed-point geometry space meters in Q23.8 to world space Q19.12.
  *
@@ -353,7 +345,7 @@
  * @return Fixed-point world space meters in Q19.12 (`s32`).
  */
 #define FP_METER_FROM_GEO(met) \
-    Q23_8_TO_Q19_12(met)
+    Q23_8_TO_QX_12(met)
 
 /** @brief Converts floating-point seconds to fixed-point Q19.12.
  *
@@ -363,7 +355,7 @@
  * @return Fixed-point seconds in Q19.12 (`s32`).
  */
 #define FP_TIME(sec) \
-    Q19_12(sec)
+    QX_12(sec)
 
 /** @brief Converts floating-point health to fixed-point Q19.12.
  *
@@ -373,6 +365,6 @@
  * @return Fixed-point health in Q19.12 (`s32`).
  */
 #define FP_HEALTH(health) \
-    Q19_12(health)
+    QX_12(health)
 
 #endif

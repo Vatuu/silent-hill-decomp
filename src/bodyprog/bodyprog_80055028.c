@@ -1922,7 +1922,7 @@ u32 func_8005C478(s16* arg0, s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2) // 
 
     if (arg0 != NULL)
     {
-        *arg0 = Q19_12(1.0f);
+        *arg0 = QX_12(1.0f);
     }
 
     return ABS(mag1);
@@ -2133,7 +2133,7 @@ s32 func_8005D86C(s32 arg0) // 0x8005D86C
             var_v1 <<= -temp_a1;
         }
 
-        var_a0 = FP_MULTIPLY_PRECISE(var_a0, Q19_12(1.0f) - temp_a2, Q12_SHIFT) + FP_MULTIPLY_PRECISE(var_v1, temp_a2, Q12_SHIFT);
+        var_a0 = FP_MULTIPLY_PRECISE(var_a0, QX_12(1.0f) - temp_a2, Q12_SHIFT) + FP_MULTIPLY_PRECISE(var_v1, temp_a2, Q12_SHIFT);
     }
 
     return var_a0;
@@ -4321,8 +4321,8 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E
     sp18.vz  = 0;
     sp18.pad = 0;
 
-    sp18.vx = Q19_12(arg0->field_10);
-    sp18.vy = Q19_12(arg0->field_14);
+    sp18.vx = QX_12(arg0->field_10);
+    sp18.vy = QX_12(arg0->field_14);
 
     if (arg1.vx < 0)
     {
@@ -4365,14 +4365,14 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E
 
     if (subroutine_arg4.vx + arg1.vx < FP_MULTIPLY(arg0->field_18, sp18.vx, Q12_SHIFT))
     {
-        sp18.vx = Q19_12(subroutine_arg4.vx + arg1.vx) / arg0->field_18;
+        sp18.vx = QX_12(subroutine_arg4.vx + arg1.vx) / arg0->field_18;
     }
 
-    sp28.vx = Q19_12(subroutine_arg4.vx) / arg0->field_18;
-    sp28.vy = Q19_12(subroutine_arg4.vy) / arg0->field_18;
-    sp28.vz = Q19_12(1.0f);
+    sp28.vx = QX_12(subroutine_arg4.vx) / arg0->field_18;
+    sp28.vy = QX_12(subroutine_arg4.vy) / arg0->field_18;
+    sp28.vz = QX_12(1.0f);
 
-    sp28.pad  = Q19_12(arg2.vx) / arg1.vx;
+    sp28.pad  = QX_12(arg2.vx) / arg1.vx;
     temp_lo_4 = FP_MULTIPLY(sp28.pad, QX_12_FRACT(sp28.vx), Q12_SHIFT);
 
     if (FP_FROM(sp18.vx, Q12_SHIFT) < FP_FROM(sp28.vx, Q12_SHIFT))
@@ -4387,7 +4387,7 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E
         temp_t0 = sp28.vy;
         temp_t1 = sp28.vx;
         var_a3  = temp_t0 + sp28.pad;
-        var_a2  = temp_t1 + Q19_12(1.0f);
+        var_a2  = temp_t1 + QX_12(1.0f);
 
         sp28.vy = var_a3;
         sp28.vx = var_a2;

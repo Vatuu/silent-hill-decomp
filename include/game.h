@@ -1383,7 +1383,7 @@ typedef struct _SysWork
     u8              unk_254C[508];
     s16             field_2748[9];  // `func_80035ED0` loops over this.
     u8              unk_275A[2];
-    s32             field_275C; // Q19_12?
+    s32             field_275C; // QX_12?
     s32             field_2760;
     s32             field_2764;
 } s_SysWork;
@@ -1596,9 +1596,9 @@ static inline s32 Flags16b_IsSet(const u16* flags, s32 flagIdx)
  */
 static inline void Character_AnimSet(s_SubCharacter* chara, s32 animStatus, s32 keyframeIdx)
 {
-    // TODO: Problem with header includes prevents `Q19_12` macro use.
+    // TODO: Problem with header includes prevents `QX_12` macro use.
     chara->model_0.anim_4.status_0      = animStatus;
-    chara->model_0.anim_4.time_4        = keyframeIdx << 12;//Q19_12(keyframeIdx);
+    chara->model_0.anim_4.time_4        = keyframeIdx << 12;//QX_12(keyframeIdx);
     chara->model_0.anim_4.keyframeIdx_8 = keyframeIdx;
 }
 

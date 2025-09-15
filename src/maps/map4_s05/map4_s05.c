@@ -206,16 +206,16 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
-        D_800D785C = Q19_12(2.4f);
+        D_800D785C = QX_12(2.4f);
         chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 0;
     }
     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        D_800D785C = Q19_12(4.0f);
+        D_800D785C = QX_12(4.0f);
     }
     else
     {
-        D_800D785C = Q19_12(3.2f);
+        D_800D785C = QX_12(3.2f);
     }
 }
 
