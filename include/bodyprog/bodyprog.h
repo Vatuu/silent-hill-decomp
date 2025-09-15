@@ -346,6 +346,24 @@ typedef union
 
 typedef struct
 {
+    s8      field_0;
+    s8      unk_1;
+    DVECTOR field_2;
+} s_func_8006CC44_44_0;
+
+typedef struct
+{
+    s_func_8006CC44_44_0 field_0;
+    s16                  field_6;
+    s_func_8006CC44_44_0 field_8;
+    s16                  field_E;
+    s8                   unk_10[32];
+    s_func_8006CC44_44_0 field_30;
+    s16                  field_36;
+} s_func_8006CC44_44;
+
+typedef struct
+{
     u8                 field_0_0  : 8;
     s8                 field_0_8  : 1;
     s8                 field_0_9  : 1;
@@ -359,15 +377,7 @@ typedef struct
     s16                field_3C;
     s16                field_3E;
     s8                 unk_40[4];
-    s8                 field_44;
-    s8                 unk_45[5];
-    s16                field_4A;
-    s8                 field_4C;
-    s8                 unk_4D[3];
-    s8                 unk_50[36];
-    s8                 field_74;
-    s8                 unk_75[5];
-    s16                field_7A;
+    s_func_8006CC44_44 field_44;
     s32                field_7C;
     s32                field_80; // X
     s32                field_84; // Z
@@ -465,7 +475,7 @@ typedef struct
     s8                   unk_18[4];
     s16                  field_1C;
     s8                   unk_1E[2];
-    s32                  field_20;
+    s_func_8006DCE0_64*  field_20;
     s16                  field_24;
     s16                  field_26;
     s32                  field_28;
@@ -3543,6 +3553,8 @@ void func_8006C0C8(s_func_8006CC44*, s16, s16, s32);
 
 bool func_8006C1B8(u32 arg0, s16 arg1, s_func_8006CC44* arg2);
 
+s32 func_8006C248(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
+
 bool func_8006C3D4(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s32 idx);
 
 void func_8006C794(s_func_8006CC44* arg0, s32 arg1, s32 arg2);
@@ -3556,6 +3568,8 @@ s16 func_8006CB90(s_func_8006CC44* arg0);
 s32 func_8006CC44(s32 x, s32 z, s_func_8006CC44* arg2);
 
 void func_8006D01C(VECTOR3* arg0, VECTOR3* arg1, s16 arg2, s_func_8006CC44* arg3);
+
+void func_8006D2B4(VECTOR3* arg0, s_func_8006CC44_44* arg1);
 
 void func_8006D600(VECTOR3* pos, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
@@ -3591,6 +3605,8 @@ void func_8006E78C(s_func_8006DCE0* arg0, s_IpdCollisionData_14* arg1, SVECTOR3*
 void func_8006EB8C(s_func_8006DCE0* arg0, s_IpdCollisionData_18* arg1);
 
 void func_8006EE0C(s_func_8006DCE0_6C* arg0, s32 arg1, s_func_8006DCE0_64* arg2);
+
+void func_8006EEB8(s_func_8006DCE0* arg0, s_func_8006DCE0_64* arg1);
 
 void func_8006F250(s_func_8006F250* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 

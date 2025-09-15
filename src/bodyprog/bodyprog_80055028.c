@@ -2951,11 +2951,11 @@ void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* vec, s_func_8006AB50* arg2, s
 
     arg0->field_7C = 0x1E00;
     arg0->field_34 = 0;
-    arg0->field_44 = 0;
-    arg0->field_4A = 0;
-    arg0->field_4C = 0;
-    arg0->field_7A = 0;
-    arg0->field_74 = 0;
+    arg0->field_44.field_0.field_0  = 0;
+    arg0->field_44.field_6          = 0;
+    arg0->field_44.field_8.field_0  = 0;
+    arg0->field_44.field_36         = 0;
+    arg0->field_44.field_30.field_0 = 0;
     arg0->field_8C = 0;
     arg0->field_88 = 0;
     arg0->field_90 = 1;
@@ -3241,7 +3241,7 @@ void func_8006B9C8(s_func_8006CC44* arg0) // 0x8006B9C8
 
         if (arg0->field_0_8)
         {
-            if (!arg0->field_44 &&
+            if (!arg0->field_44.field_0.field_0 &&
                 (-field_28 < arg0->field_EE || -field_28 < arg0->field_F2) &&
                 (-field_28 < arg0->field_EC || -field_28 < arg0->field_F0) &&
                 (arg0->field_EC < (field_28 + arg0->vec_D2.vz) || arg0->field_F0 < (field_28 + arg0->vec_D2.vz)))
@@ -3441,7 +3441,57 @@ bool func_8006C1B8(u32 arg0, s16 arg1, s_func_8006CC44* arg2) // 0x8006C1B8
     return var < arg2->field_3A;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006C248); // 0x8006C248
+s32 func_8006C248(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) // 0x8006C248
+{
+    DVECTOR sp10;
+    s16     temp_v0;
+    s16     var_v1;
+    s16     temp_lo;
+
+    gte_ldR11R12(arg0);
+    gte_ldR13R21(arg0);
+    gte_ldvxy0((arg2 & 0xFFFF) + (arg3 << 16));
+    gte_gte_ldvz0();
+    gte_rtv0();
+    gte_stMAC12(&sp10.vx);
+
+    if (sp10.vx < 0)
+    {
+        var_v1 = SquareRoot0(SQUARE(sp10.vx) + SQUARE(sp10.vy));
+    }
+    else if (arg1 < sp10.vx)
+    {
+        temp_v0 = sp10.vx - arg1;
+        var_v1  = SquareRoot0(SQUARE(temp_v0) + SQUARE(sp10.vy));
+    }
+    else
+    {
+        var_v1 = ABS(sp10.vy);
+    }
+
+    if (arg1 == 0)
+    {
+        temp_lo = -1;
+        if (var_v1 >= arg4)
+        {
+            return temp_lo;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    if (var_v1 >= arg4)
+    {
+        return -1;
+    }
+
+    temp_lo = FP_TO(sp10.vx - SquareRoot0(SQUARE(arg4) - SQUARE(sp10.vy)), Q12_SHIFT) / arg1;
+    temp_lo = CLAMP(temp_lo, 0, 0x1000);
+
+    return temp_lo;
+}
 
 bool func_8006C3D4(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s32 idx) // 0x8006C3D4
 {
@@ -3636,12 +3686,12 @@ void func_8006D01C(VECTOR3* arg0, VECTOR3* arg1, s16 arg2, s_func_8006CC44* arg3
     sp10.vx = FP_MULTIPLY(arg1->vx, arg2, Q12_SHIFT);
     sp10.vz = FP_MULTIPLY(arg1->vz, arg2, Q12_SHIFT);
 
-    if (arg3->field_44  || arg3->field_74)
+    if (arg3->field_44.field_0.field_0 || arg3->field_44.field_30.field_0)
     {
         arg0->vx = 0;
         arg0->vz = 0;
         *arg1    = sp10;
-        func_8006D2B4(arg1, &arg3->field_44, arg2);
+        func_8006D2B4(arg1, &arg3->field_44);
         return;
     }
 
@@ -3707,7 +3757,165 @@ void func_8006D01C(VECTOR3* arg0, VECTOR3* arg1, s16 arg2, s_func_8006CC44* arg3
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006D2B4); // 0x8006D2B4
+void func_8006D2B4(VECTOR3* arg0, s_func_8006CC44_44* arg1) // 0x8006D2B4
+{
+    s16  sp18;
+    s16  sp1A;
+    s16  sp1C;
+    s16  sp1E;
+    s16  temp_v0;
+    s32  temp_v0_4;
+    bool cond;
+    bool var_s1;
+    s16  var_s1_2;
+    s32  var_v1;
+    s16  var_v1_2;
+    s16  var_a0;
+    s16  diff_a0;
+    s16  diff_v1;
+
+    if (arg1->field_30.field_0 != 0)
+    {
+        var_s1 = false;
+        if (arg1->field_0.field_0 != 0)
+        {
+            sp18 = arg1->field_0.field_2.vx;
+            sp1A = arg1->field_0.field_2.vy;
+            if (arg1->field_8.field_0 != 0)
+            {
+                Vw_ClampAngleRange(&sp18, &sp1A, arg1->field_8.field_2.vx, arg1->field_8.field_2.vy);
+            }
+        }
+        else if (arg1->field_8.field_0 != 0)
+        {
+            sp18 = arg1->field_8.field_2.vx;
+            sp1A = arg1->field_8.field_2.vy;
+        }
+        else
+        {
+            var_s1 = true;
+        }
+
+        if (var_s1)
+        {
+            cond = true;
+        }
+        else
+        {
+            temp_v0  = ratan2(arg0->vz, arg0->vx);
+            var_s1_2 = 0x400;
+            diff_a0  = ((sp1A - (temp_v0 - var_s1_2)) << 20) >> 20;
+            diff_v1  = ((sp18 - (temp_v0 + var_s1_2)) << 20) >> 20;
+            if (diff_a0 < 0 && diff_v1 >= 1)
+            {
+                cond = false;
+            }
+            else
+            {
+                cond = true;
+            }
+        }
+
+        if (cond)
+        {
+            if (arg1->field_0.field_0 == 0)
+            {
+                arg1->field_0 = arg1->field_30;
+                arg1->field_6 = arg1->field_36;
+            }
+            else
+            {
+                arg1->field_0.field_0 += arg1->field_30.field_0;
+
+                Vw_ClampAngleRange(&arg1->field_0.field_2.vx, &arg1->field_0.field_2.vy, arg1->field_30.field_2.vx, arg1->field_30.field_2.vy);
+
+                var_a0 = arg1->field_6;
+
+                if (arg1->field_6 < arg1->field_36)
+                {
+                    var_a0 = arg1->field_36;
+                }
+
+                arg1->field_6 = var_a0;
+            }
+        }
+
+        if (arg1->field_8.field_0 != 0)
+        {
+            if (arg1->field_0.field_0 == 0)
+            {
+                arg1->field_0 = arg1->field_8;
+                arg1->field_6 = 0;
+            }
+            else
+            {
+                arg1->field_0.field_0 += arg1->field_8.field_0;
+                Vw_ClampAngleRange(&arg1->field_0.field_2.vx, &arg1->field_0.field_2.vy, arg1->field_8.field_2.vx, arg1->field_8.field_2.vy);
+            }
+        }
+    }
+
+    if (arg1->field_0.field_0 != 0)
+    {
+        if (arg1->field_0.field_2.vx == arg1->field_0.field_2.vy)
+        {
+            arg0->vx = 0;
+            arg0->vz = 0;
+            return;
+        }
+
+        var_s1_2 = (arg1->field_0.field_2.vx + arg1->field_0.field_2.vy) >> 1;
+
+        if (arg1->field_0.field_2.vy < arg1->field_0.field_2.vx)
+        {
+            var_s1_2 = (var_s1_2 + 0x800) & 0xFFF;
+        }
+
+        if (arg1->field_8.field_0 == 0)
+        {
+            sp1C = arg1->field_0.field_2.vx;
+            sp1E = arg1->field_0.field_2.vy;
+        }
+        else
+        {
+            sp1C = arg1->field_0.field_2.vx;
+            sp1E = arg1->field_0.field_2.vy;
+
+            Vw_ClampAngleRange(&sp1C, &sp1E, arg1->field_8.field_2.vx, arg1->field_8.field_2.vy);
+
+            sp1C = sp1C & 0xFFF;
+            sp1E = sp1E & 0xFFF;
+
+            if (sp1C == sp1E)
+            {
+                sp1C = arg1->field_0.field_2.vx;
+                sp1E = arg1->field_0.field_2.vy;
+            }
+
+            if (sp1C != sp1E)
+            {
+                var_v1    = ((sp1C - var_s1_2) << 20) >> 20;
+                temp_v0_4 = ((sp1E - var_s1_2) << 20) >> 20;
+
+                if (var_v1 >= 0 || temp_v0_4 <= 0)
+                {
+                    if (ABS(var_v1) < ABS(temp_v0_4))
+                    {
+                        var_s1_2 = sp1C;
+                    }
+                    else
+                    {
+                        var_s1_2 = sp1E;
+                    }
+                }
+            }
+        }
+
+        var_v1_2 = MIN(arg1->field_6 + 2, 16) * 16;
+
+        func_8006D600(arg0, var_s1_2, sp1C, sp1E, var_v1_2);
+    }
+}
 
 void func_8006D600(VECTOR3* pos, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8006D600
 {
@@ -3786,11 +3994,11 @@ void func_8006D774(s_func_8006CC44* arg0, VECTOR3* arg1, VECTOR3* arg2) // 0x800
     sp18.vy = FP_METER_TO_GEO(arg2->vz);
 
     arg0->field_34 = 0;
-    arg0->field_44 = 0;
-    arg0->field_4A = 0;
-    arg0->field_4C = 0;
-    arg0->field_7A = 0;
-    arg0->field_74 = 0;
+    arg0->field_44.field_0.field_0  = 0;
+    arg0->field_44.field_6          = 0;
+    arg0->field_44.field_8.field_0  = 0;
+    arg0->field_44.field_36         = 0;
+    arg0->field_44.field_30.field_0 = 0;
 
     func_8006D7EC(&arg0->field_4, &sp10, &sp18);
 }
@@ -4508,7 +4716,119 @@ void func_8006EE0C(s_func_8006DCE0_6C* arg0, s32 arg1, s_func_8006DCE0_64* arg2)
     arg0->field_8 = (arg2->field_1C + arg2->field_C8) >> 4;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006EEB8); // 0x8006EEB8
+void func_8006EEB8(s_func_8006DCE0* arg0, s_func_8006DCE0_64* arg1) // 0x8006EEB8
+{
+    VECTOR3 sp18;
+    s32     temp_t0;
+    s16     temp_v0;
+    s16     temp_v0_2;
+    s32     var_a0;
+    s32     var_a1;
+    s32     var_a2;
+    s32     var_a3;
+    s32     var_v1;
+
+    if (arg0->field_2C.vx <= arg0->field_3C)
+    {
+        var_a2 = arg0->field_2C.vx;
+        var_a3 = arg0->field_3C;
+    }
+    else
+    {
+        var_a2 = arg0->field_3C;
+        var_a3 = arg0->field_2C.vx;
+    }
+
+    if (arg0->field_2C.vz <= arg0->field_44)
+    {
+        var_a1 = arg0->field_2C.vz;
+        var_a0 = arg0->field_44;
+    }
+    else
+    {
+        var_a1 = arg0->field_44;
+        var_a0 = arg0->field_2C.vz;
+    }
+
+    temp_t0 = arg0->field_6C.field_C;
+
+    if (arg0->field_6C.field_0 + temp_t0 < var_a2 || var_a3 < arg0->field_6C.field_0 - temp_t0)
+    {
+        return;
+    }
+
+    if ((arg0->field_6C.field_4 + temp_t0) < var_a1 || var_a0 < (arg0->field_6C.field_4 - temp_t0) ||
+        ((arg0->field_2C.vy + arg0->field_4E) < arg0->field_6C.field_8 && (arg0->field_40 + arg0->field_4E) < arg0->field_6C.field_8) ||
+        ((arg0->field_2C.vy + arg0->field_4C) > arg0->field_6C.field_A && arg0->field_6C.field_A < (arg0->field_40 + arg0->field_4C)))
+    {
+        return;
+    }
+
+    temp_v0 = func_8006C248(*(s32*)&arg0->field_58, arg0->field_5C, (arg0->field_6C.field_0 - arg0->field_2C.vx), (arg0->field_6C.field_4 - arg0->field_2C.vz), temp_t0);
+    if (temp_v0 == -1)
+    {
+        return;
+    }
+
+    temp_v0_2 = FP_MULTIPLY(arg0->field_5C, temp_v0, Q12_SHIFT);
+
+    if (temp_v0_2 >= arg0->field_8)
+    {
+        return;
+    }
+
+    sp18.vy = arg0->field_2C.vy + (FP_MULTIPLY(arg0->field_50.vy, temp_v0, Q12_SHIFT));
+
+    if (((sp18.vy + arg0->field_4E) < arg0->field_6C.field_8) || (arg0->field_6C.field_A < (sp18.vy + arg0->field_4C)))
+    {
+        if (arg0->field_50.vy == 0)
+        {
+            return;
+        }
+
+        if ((sp18.vy + arg0->field_4E) < arg0->field_6C.field_8)
+        {
+            var_v1 = FP_TO(arg0->field_6C.field_8 - (arg0->field_2C.vy + arg0->field_4E), Q12_SHIFT) / arg0->field_50.vy;
+            if (var_v1 > 0x1000)
+            {
+                return;
+            }
+            sp18.vy = arg0->field_6C.field_8 - arg0->field_4E;
+        }
+        else
+        {
+            var_v1 = FP_TO(arg0->field_6C.field_A - (arg0->field_2C.vy + arg0->field_4C), Q12_SHIFT) / arg0->field_50.vy;
+            if (var_v1 > 0x1000)
+            {
+                return;
+            }
+            sp18.vy = arg0->field_6C.field_A - arg0->field_4C;
+        }
+
+        sp18.vx = arg0->field_2C.vx + FP_MULTIPLY(arg0->field_50.vx, var_v1, Q12_SHIFT);
+        sp18.vz = arg0->field_2C.vz + FP_MULTIPLY(arg0->field_50.vz, var_v1, Q12_SHIFT);
+
+        if (SQUARE(arg0->field_6C.field_0 - sp18.vx) + SQUARE(arg0->field_6C.field_4 - sp18.vz) >= SQUARE(arg0->field_6C.field_C))
+        {
+            return;
+        }
+    }
+    else
+    {
+        sp18.vx = arg0->field_2C.vx + FP_MULTIPLY(arg0->field_50.vx, temp_v0, Q12_SHIFT);
+        sp18.vz = arg0->field_2C.vz + FP_MULTIPLY(arg0->field_50.vz, temp_v0, Q12_SHIFT);
+    }
+
+    arg0->field_8  = temp_v0_2;
+    arg0->field_C  = sp18.vx;
+    arg0->field_10 = sp18.vy;
+    arg0->field_14 = sp18.vz;
+    arg0->field_1C = arg0->field_6C.field_8;
+    arg0->field_24 = sp18.vx - arg0->field_6C.field_0;
+    arg0->field_26 = sp18.vz - arg0->field_6C.field_4;
+    arg0->field_20 = arg1;
+    arg0->field_28 = 0;
+}
 
 void func_8006F250(s_func_8006F250* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8006F250
 {
