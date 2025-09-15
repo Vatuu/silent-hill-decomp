@@ -137,13 +137,13 @@
 #define QX_4_TO_QX_12(x) \
     ((x) << 8)
 
-/** @brief Converts a fixed-point value from Q23.8 to Q19.12.
+/** @brief Converts a fixed-point value from Q*.8 to Q*.12.
  *
- * @param x Fixed-point value in Q23.8 to convert.
- * @return `x` converted to fixed-point Q19.12 (`s32`).
+ * @param x Fixed-point value in *.8 to convert.
+ * @return `x` converted to fixed-point Q*.12.
  */
 #define QX_8_TO_QX_12(x) \
-    (s32)((x) << 4)
+    ((x) << 4)
 
 /** @brief Converts a fixed-point value from Q0.8 to Q3.12.
  *
