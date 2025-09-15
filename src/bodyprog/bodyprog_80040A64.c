@@ -34,7 +34,7 @@ s8 Sound_StereoBalanceGet(const VECTOR3* soundPos) // 0x80040A64
 
     // Compute normal from camera and sound source positions.
     vwGetViewPosition(&camPos);
-    vec0.vx = (soundPos->vx - camPos.vx) >> 6; // TODO: Use `QX_12_TO_Q27_4` here?
+    vec0.vx = (soundPos->vx - camPos.vx) >> 6; // TODO: Use `QX_12_TO_QX_4` here?
     vec0.vy = (soundPos->vy - camPos.vy) >> 6;
     vec0.vz = (soundPos->vz - camPos.vz) >> 6;
     VectorNormal(&vec0, &vec1);

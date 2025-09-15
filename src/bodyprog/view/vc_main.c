@@ -18,8 +18,8 @@ VC_NEAR_ROAD_DATA vcNullNearRoad =
     .chara2road_sum_dist_8 = 0,
     .chara2road_vec_x_C = 0,
     .chara2road_vec_z_10 = 0,
-    .rd_14 = { Q11_4(3616.0f), Q11_4(480.0f), Q11_4(3616.0f), Q11_4(480.0f) },
-    .sw_1C = { Q11_4(3616.0f), Q11_4(480.0f), Q11_4(3616.0f), Q11_4(480.0f) },
+    .rd_14 = { QX_4(3616.0f), QX_4(480.0f), QX_4(3616.0f), QX_4(480.0f) },
+    .sw_1C = { QX_4(3616.0f), QX_4(480.0f), QX_4(3616.0f), QX_4(480.0f) },
 };
 
 /** @brief Default look-at move parameters. */
@@ -2126,7 +2126,7 @@ void vcMakeIdealCamPosUseVC_ROAD_DATA(VECTOR3* ideal_pos, VC_WORK* w_p, enum _VC
 
     road_data = w_p->cur_near_road_2B8.road_p_0;
 
-    ideal_pos->vy = CLAMP(ideal_pos->vy, Q27_4_TO_QX_12(road_data->lim_rd_min_hy_13), Q27_4_TO_QX_12(road_data->lim_rd_max_hy_12));
+    ideal_pos->vy = CLAMP(ideal_pos->vy, QX_4_TO_QX_12(road_data->lim_rd_min_hy_13), QX_4_TO_QX_12(road_data->lim_rd_max_hy_12));
 
     temp_x = w_p->chara_pos_114.vx;
     temp_z = w_p->chara_pos_114.vz;
@@ -2281,28 +2281,28 @@ void vcAdjTgtMvVecYByCurNearRoad(VECTOR3* tgt_mv_vec, VC_WORK* w_p) // 0x800843F
             break;
 
         case VC_MV_SETTLE:
-            min_tgt_y = Math_MulFixed(Q27_4_TO_QX_12(cur_rd_p->lim_rd_max_hy_12),
+            min_tgt_y = Math_MulFixed(QX_4_TO_QX_12(cur_rd_p->lim_rd_max_hy_12),
                                       FP_METER(1.0f) - near_ratio,
                                       Q12_SHIFT) +
-                        Math_MulFixed(Q27_4_TO_QX_12(cur_rd_p->lim_rd_min_hy_13),
+                        Math_MulFixed(QX_4_TO_QX_12(cur_rd_p->lim_rd_min_hy_13),
                                       near_ratio,
                                       Q12_SHIFT);
             max_tgt_y = min_tgt_y;
             break;
 
         case VC_MV_FIX_ANG:
-            min_tgt_y = Math_MulFixed(Q27_4_TO_QX_12(cur_rd_p->lim_rd_min_hy_13),
+            min_tgt_y = Math_MulFixed(QX_4_TO_QX_12(cur_rd_p->lim_rd_min_hy_13),
                                       FP_METER(1.0f) - near_ratio,
                                       Q12_SHIFT) +
-                        Math_MulFixed(Q27_4_TO_QX_12(cur_rd_p->lim_rd_max_hy_12),
+                        Math_MulFixed(QX_4_TO_QX_12(cur_rd_p->lim_rd_max_hy_12),
                                       near_ratio,
                                       Q12_SHIFT);
             max_tgt_y = min_tgt_y;
             break;
 
         case VC_MV_SELF_VIEW:
-            min_tgt_y = Q27_4_TO_QX_12(cur_rd_p->lim_rd_min_hy_13);
-            max_tgt_y = Q27_4_TO_QX_12(cur_rd_p->lim_rd_max_hy_12);
+            min_tgt_y = QX_4_TO_QX_12(cur_rd_p->lim_rd_min_hy_13);
+            max_tgt_y = QX_4_TO_QX_12(cur_rd_p->lim_rd_max_hy_12);
             break;
     }
 
