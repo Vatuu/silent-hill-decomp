@@ -59,26 +59,45 @@
     { Anim_Update0, ANIM_STATUS(11, true),  false, ANIM_STATUS(11, true), { Q19_12(10) }, 295, 295 }
 };*/
 
+typedef enum _BloodyLisaAnim
+{
+    BloodyLisaAnim_Still = 0,
+    BloodyLisaAnim_Walk  = 1
+} s_BloodyLisaAnim;
+
+/** @brief Bloody Lisa character anim infos. */
 /*s_AnimInfo BLOODY_LISA_ANIM_INFOS[] =
 {
-    { Anim_Update2, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q19_12(0)  }, NO_VALUE, 0   },
-    { Anim_Update1, ANIM_STATUS(0, true),  false, NO_VALUE,              { Q19_12(30) }, NO_VALUE, 1   },
-    { Anim_Update2, ANIM_STATUS(1, false), false, ANIM_STATUS(1, true),  { Q19_12(10) }, NO_VALUE, 0   },
-    { Anim_Update0, ANIM_STATUS(1, true),  false, ANIM_STATUS(1, true),  { Q19_12(10) }, 0,        100 }
+    { Anim_Update2, ANIM_STATUS(BloodyLisaAnim_Still, false), false, ANIM_STATUS(BloodyLisaAnim_Still, false), { Q19_12(0)  }, NO_VALUE, 0   },
+    { Anim_Update1, ANIM_STATUS(BloodyLisaAnim_Still, true),  false, NO_VALUE,                                 { Q19_12(30) }, NO_VALUE, 1   },
+    { Anim_Update2, ANIM_STATUS(BloodyLisaAnim_Walk,  false), false, ANIM_STATUS(BloodyLisaAnim_Walk,  true),  { Q19_12(10) }, NO_VALUE, 0   },
+    { Anim_Update0, ANIM_STATUS(BloodyLisaAnim_Walk,  true),  false, ANIM_STATUS(BloodyLisaAnim_Walk,  true),  { Q19_12(10) }, 0,        100 }
 };*/
 
+typedef enum _CatAnim
+{
+    CatAnim_Still                 = 0,
+    CatAnim_Jump                  = 1,
+    CatAnim_Run                   = 2,
+    CatAnim_TransitionStillToJump = 3,
+    CatAnim_TransitionJumpToRun   = 4
+} s_CatAnim;
+
+/** @brief Cat character anim infos.
+ * @unused Frames [1, 6].
+ */
 /*s_AnimInfo CAT_ANIM_INFOS[] =
 {
-    { Anim_Update2, NO_VALUE,              false, ANIM_STATUS(0, false), { Q19_12(0)     }, NO_VALUE, 0  },
-    { NULL,         ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q19_12(0)     }, 0,        0  },
-    { Anim_Update2, ANIM_STATUS(1, false), false, ANIM_STATUS(1, true),  { Q19_12(64)    }, NO_VALUE, 7  },
-    { Anim_Update0, ANIM_STATUS(1, true),  false, ANIM_STATUS(4, false), { Q19_12(15.8f) }, 7,        22 },
-    { Anim_Update2, ANIM_STATUS(2, false), false, ANIM_STATUS(2, true),  { Q19_12(64)    }, NO_VALUE, 23 },
-    { Anim_Update1, ANIM_STATUS(2, true),  false, NO_VALUE,              { Q19_12(35)    }, 23,       43 },
-    { Anim_Update2, ANIM_STATUS(3, false), false, ANIM_STATUS(3, true),  { Q19_12(0)     }, NO_VALUE, 7  },
-    { Anim_Update1, ANIM_STATUS(3, true),  false, NO_VALUE,              { Q19_12(0)     }, 7,        8  },
-    { Anim_Update2, ANIM_STATUS(4, false), false, ANIM_STATUS(4, true),  { Q19_12(0)     }, NO_VALUE, 22 },
-    { Anim_Update1, ANIM_STATUS(4, true),  false, NO_VALUE,              { Q19_12(0)     }, 22,       23 }
+    { Anim_Update2, NO_VALUE,                                          false, ANIM_STATUS(CatAnim_Still,                 false), { Q19_12(0)     }, NO_VALUE, 0  },
+    { NULL,         ANIM_STATUS(CatAnim_Still,                 false), false, ANIM_STATUS(CatAnim_Still,                 false), { Q19_12(0)     }, 0,        0  },
+    { Anim_Update2, ANIM_STATUS(CatAnim_Jump,                  false), false, ANIM_STATUS(CatAnim_Jump,                  true),  { Q19_12(64)    }, NO_VALUE, 7  },
+    { Anim_Update0, ANIM_STATUS(CatAnim_Jump,                  true),  false, ANIM_STATUS(CatAnim_TransitionJumpToRun,   false), { Q19_12(15.8f) }, 7,        22 },
+    { Anim_Update2, ANIM_STATUS(CatAnim_Run,                   false), false, ANIM_STATUS(CatAnim_Run,                   true),  { Q19_12(64)    }, NO_VALUE, 23 },
+    { Anim_Update1, ANIM_STATUS(CatAnim_Run,                   true),  false, NO_VALUE,                                          { Q19_12(35)    }, 23,       43 },
+    { Anim_Update2, ANIM_STATUS(CatAnim_TransitionStillToJump, false), false, ANIM_STATUS(CatAnim_TransitionStillToJump, true),  { Q19_12(0)     }, NO_VALUE, 7  },
+    { Anim_Update1, ANIM_STATUS(CatAnim_TransitionStillToJump, true),  false, NO_VALUE,                                          { Q19_12(0)     }, 7,        8  },
+    { Anim_Update2, ANIM_STATUS(CatAnim_TransitionJumpToRun,   false), false, ANIM_STATUS(CatAnim_TransitionJumpToRun,   true),  { Q19_12(0)     }, NO_VALUE, 22 },
+    { Anim_Update1, ANIM_STATUS(CatAnim_TransitionJumpToRun,   true),  false, NO_VALUE,                                          { Q19_12(0)     }, 22,       23 }
 };*/
 
 /*s_AnimInfo CYBIL_ANIM_INFOS[] =
