@@ -129,13 +129,13 @@
 #define QX_12(x) \
     FP_FLOAT_TO(x, Q12_SHIFT)
 
-/** @brief Converts a fixed-point value from Q0.8 to Q3.12.
+/** @brief Converts a fixed-point value from Q19.12 to Q23.8.
  *
- * @param x Fixed-point value in Q0.8 to convert.
- * @return `x` converted to fixed-point Q3.12 (`s16`).
+ * @param x Fixed-point value in Q19.12 to convert.
+ * @return `x` converted to fixed-point Q23.8 (`s32`).
  */
-#define Q0_8_TO_QX_12(x) \
-    (s16)((x) << 4)
+#define QX_12_TO_QX_8(x) \
+    ((x) >> 4)
 
 /** @brief Converts a fixed-point value from Q27.4 to Q19.12.
  *
@@ -153,21 +153,13 @@
 #define QX_8_TO_QX_12(x) \
     (s32)((x) << 4)
 
-/** @brief Converts a fixed-point value from Q3.12 to Q0.8.
+/** @brief Converts a fixed-point value from Q0.8 to Q3.12.
  *
- * @param x Fixed-point value in Q3.12 to convert.
- * @return `x` converted to fixed-point Q0.8 (`u8`).
+ * @param x Fixed-point value in Q0.8 to convert.
+ * @return `x` converted to fixed-point Q3.12 (`s16`).
  */
-#define QX_12_TO_QX_8(x) \
-    (u8)((x) >> 4)
-
-/** @brief Converts a fixed-point value from Q19.12 to Q23.8.
- *
- * @param x Fixed-point value in Q19.12 to convert.
- * @return `x` converted to fixed-point Q23.8 (`s32`).
- */
-#define QX_12_TO_QX_8(x) \
-    (s32)((x) >> 4)
+#define Q0_8_TO_QX_12(x) \
+    (s16)((x) << 4)
 
 /** @brief Extracts the fractional part of a value in fixed-point QX.12.
  *
