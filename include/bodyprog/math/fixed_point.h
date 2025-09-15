@@ -129,14 +129,6 @@
 #define QX_12(x) \
     FP_FLOAT_TO(x, Q12_SHIFT)
 
-/** @brief Converts a floating-point value to fixed-point Q0.8.
- *
- * @param x Value to convert (`float`).
- * @return `x` converted to fixed-point Q0.8 ('u8`).
- */
-#define Q0_8(x) \
-    (u8)FP_FLOAT_TO(x, Q8_SHIFT)
-
 /** @brief Converts a fixed-point value from Q0.8 to Q3.12.
  *
  * @param x Fixed-point value in Q0.8 to convert.
@@ -166,7 +158,7 @@
  * @param x Fixed-point value in Q3.12 to convert.
  * @return `x` converted to fixed-point Q0.8 (`u8`).
  */
-#define QX_12_TO_Q0_8(x) \
+#define QX_12_TO_QX_8(x) \
     (u8)((x) >> 4)
 
 /** @brief Converts a fixed-point value from Q19.12 to Q23.8.
@@ -247,7 +239,7 @@
  * @return Unsigned fixed-point degrees in Q0.8, integer range `[0, 255]` (`s16`).
  */
 #define FP_ANGLE_TO_PACKED(deg) \
-    QX_12_TO_Q0_8(deg);
+    QX_12_TO_QX_8(deg);
 
 /** @brief Converts unsigned fixed-point degrees in Q0.8, integer range `[0, 255]` to
  * unsigned fixed-point Q3.12, integer range `[0, 4096]`.
