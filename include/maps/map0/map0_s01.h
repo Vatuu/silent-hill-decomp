@@ -84,10 +84,10 @@ extern s_800BCE18_2BEC_0 D_800E23F0[3];
 extern s_800BCE18_2BEC_0 D_800E2450[2];
 
 extern s_EventPosition g_DefaultEventPosition; // 0x800E2490
-extern s_EventThing g_EventThing4A0; // 0x800E24A0
-extern s_EventThing g_EventThing4D0; // 0x800E24D0
-extern s_EventThing g_EventThing500; // 0x800E2500
-extern s_EventThing g_EventThing530; // 0x800E2530
+extern s_EventThing g_EventThing_KitchenKnife; // 0x800E24A0
+extern s_EventThing g_EventThing_Flashlight; // 0x800E24D0
+extern s_EventThing g_EventThing_Map; // 0x800E2500
+extern s_EventThing g_EventThing_PocketRadio; // 0x800E2530
 
 extern s16 D_800E2560;
 

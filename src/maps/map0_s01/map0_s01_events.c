@@ -845,7 +845,7 @@ void MapEvent_MapItemTake() // 0x800DC3C8
             // Set flags.
             g_SysWork.field_2290             |= 1 << 0;
             g_SysWork.field_228C             |= 1 << 0;
-            Savegame_EventFlagSet(EventFlag_38);
+            Savegame_EventFlagSet(EventFlag_M0S01_PickupMap);
 
             SysWork_StateStepIncrement();
 
@@ -931,17 +931,17 @@ void func_800DC9C8() // 0x800DC9C8
     func_8003C8F8(&D_800E2450[0], "OUT1_HID");
     func_8003C8F8(&D_800E2450[1], "OUT_BLD_");
 
-    EventPositionInit(&g_EventThing4A0.eventPosition_1C, 5.09f, -1.01f, 274.12f, 0x16C0000, 0);
-    func_8003C8F8(&g_EventThing4A0.field_0, "KNIFE_HI");
+    EventPositionInit(&g_EventThing_KitchenKnife.eventPosition_1C, 5.09f, -1.01f, 274.12f, 0x16C0000, 0);
+    func_8003C8F8(&g_EventThing_KitchenKnife.field_0, "KNIFE_HI");
 
-    EventPositionInit(&g_EventThing4D0.eventPosition_1C, 5.18f, -1.0f, 267.28f, 0x4EEFFDE, 0);
-    func_8003C8F8(&g_EventThing4D0.field_0, "FLASH_HI");
+    EventPositionInit(&g_EventThing_Flashlight.eventPosition_1C, 5.18f, -1.0f, 267.28f, 0x4EEFFDE, 0);
+    func_8003C8F8(&g_EventThing_Flashlight.field_0, "FLASH_HI");
 
-    EventPositionInit(&g_EventThing500.eventPosition_1C, 5.24f, -1.0f, 267.21f, 0x2880000, 0);
-    func_8003C8F8(&g_EventThing500.field_0, "MAP_HIDE");
+    EventPositionInit(&g_EventThing_Map.eventPosition_1C, 5.24f, -1.0f, 267.21f, 0x2880000, 0);
+    func_8003C8F8(&g_EventThing_Map.field_0, "MAP_HIDE");
 
-    EventPositionInit(&g_EventThing530.eventPosition_1C, 2.31f, -0.6f, 273.95f, 0x6880000, 0);
-    func_8003C8F8(&g_EventThing530.field_0, "RADIO_HI");
+    EventPositionInit(&g_EventThing_PocketRadio.eventPosition_1C, 2.31f, -0.6f, 273.95f, 0x6880000, 0);
+    func_8003C8F8(&g_EventThing_PocketRadio.field_0, "RADIO_HI");
 
     if (Savegame_EventFlagGet(EventFlag_40) && !Savegame_EventFlagGet(EventFlag_47))
     {
@@ -949,7 +949,7 @@ void func_800DC9C8() // 0x800DC9C8
 
         Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcCoords_FC0[0], NO_VALUE, NULL, NULL);
 
-        if (Savegame_EventFlagGet(EventFlag_38))
+        if (Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
         {
             func_80088D0C();
             Chara_Spawn(Chara_AirScreamer, 0, FP_METER(1048566.0f), FP_METER(280.0f), FP_METER(0.0f), 12);
@@ -978,7 +978,7 @@ void func_800DC9C8() // 0x800DC9C8
     func_8003C8F8(&D_800E2570[5], D_800A99E4.rifleShellsName_1C);
 }
 
-void func_800DCCF4(void)
+void func_800DCCF4(void) // 0x800DCCF4
 {
     s32  var_5;
     s32  var_6;
@@ -988,27 +988,27 @@ void func_800DCCF4(void)
     s32  var_a2;
     s32* ptr;
 
-    if (!Savegame_EventFlagGet(EventFlag_38))
+    if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
     {
-        func_8003C92C(&g_EventThing500.field_0, &g_EventThing500.eventPosition_1C.position_0, &g_EventThing500.eventPosition_1C.rotation_C);
+        func_8003C92C(&g_EventThing_Map.field_0, &g_EventThing_Map.eventPosition_1C.position_0, &g_EventThing_Map.eventPosition_1C.rotation_C);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupFlashlight))
     {
-        func_8003C92C(&g_EventThing4D0.field_0, &g_EventThing4D0.eventPosition_1C.position_0, &g_EventThing4D0.eventPosition_1C.rotation_C);
+        func_8003C92C(&g_EventThing_Flashlight.field_0, &g_EventThing_Flashlight.eventPosition_1C.position_0, &g_EventThing_Flashlight.eventPosition_1C.rotation_C);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupPocketRadio))
     {
-        func_8003C92C(&g_EventThing530.field_0, &g_EventThing530.eventPosition_1C.position_0, &g_EventThing530.eventPosition_1C.rotation_C);
+        func_8003C92C(&g_EventThing_PocketRadio.field_0, &g_EventThing_PocketRadio.eventPosition_1C.position_0, &g_EventThing_PocketRadio.eventPosition_1C.rotation_C);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupKitchenKnife))
     {
-        func_8003C92C(&g_EventThing4A0.field_0, &g_EventThing4A0.eventPosition_1C.position_0, &g_EventThing4A0.eventPosition_1C.rotation_C);
+        func_8003C92C(&g_EventThing_KitchenKnife.field_0, &g_EventThing_KitchenKnife.eventPosition_1C.position_0, &g_EventThing_KitchenKnife.eventPosition_1C.rotation_C);
     }
 
-    if (Savegame_EventFlagGet(EventFlag_M0S01_PickupKitchenKnife) && Savegame_EventFlagGet(EventFlag_38))
+    if (Savegame_EventFlagGet(EventFlag_M0S01_PickupKitchenKnife) && Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
     {
         Savegame_EventFlagSet(EventFlag_43);
     }
@@ -1030,7 +1030,7 @@ void func_800DCCF4(void)
         func_800DD2EC(0);
     }
 
-    if (Savegame_EventFlagGet(EventFlag_38) && !Savegame_EventFlagGet(EventFlag_42))
+    if (Savegame_EventFlagGet(EventFlag_M0S01_PickupMap) && !Savegame_EventFlagGet(EventFlag_42))
     {
         if (Savegame_EventFlagGet(EventFlag_41))
         {
@@ -1141,12 +1141,12 @@ void func_800DD2EC(s32 arg0) // 0x800DD2EC
 
     if (arg0 == 0)
     {
-        for (i = 0; i <= 0; i++)
+        for (i = 0; i < 1; i++)
         {
             func_8003C92C(&D_800E23D0[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
         }
 
-        for (i = 0; i <= 0; i++)
+        for (i = 0; i < 1; i++)
         {
             func_8003C92C(&D_800E23B0[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
         }
@@ -1164,7 +1164,7 @@ void func_800DD2EC(s32 arg0) // 0x800DD2EC
         return;
     }
 
-    for (i = 0; i <= 0; i++)
+    for (i = 0; i < 1; i++)
     {
         func_8003C92C(&D_800E23D0[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
     }
