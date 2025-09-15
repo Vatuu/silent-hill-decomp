@@ -708,9 +708,9 @@ void Player_AnimUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, s_Anm
 
     // Disable upper body bones before playing anim.
     g_SysWork.player_4C.extra_128.disabledAnimBones_18 = HARRY_UPPER_BODY_BONE_MASK;
-    chara->model_0.anim_4.status_0                     = ANIM_STATUS(PlayerAnim_Unk0, false);
+    chara->model_0.anim_4.status_0                     = ANIM_STATUS(PlayerAnim_Still, false);
 
-    animInfo = &HARRY_BASE_ANIM_INFOS[ANIM_STATUS(PlayerAnim_Unk0, false)];
+    animInfo = &HARRY_BASE_ANIM_INFOS[ANIM_STATUS(PlayerAnim_Still, false)];
     animInfo->updateFunc_0(&chara->model_0, anmHeader, coord, animInfo);
 
     // Re-enable upper body bones, disable lower body bones.
@@ -719,7 +719,7 @@ void Player_AnimUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, s_Anm
     animInfo = &HARRY_BASE_ANIM_INFOS[extra->model_0.anim_4.status_0];
     animInfo->updateFunc_0(&extra->model_0, anmHeader, coord, animInfo);
 
-    if (chara->model_0.anim_4.status_0 == HARRY_BASE_ANIM_INFOS[ANIM_STATUS(PlayerAnim_Unk0, false)].status_6)
+    if (chara->model_0.anim_4.status_0 == HARRY_BASE_ANIM_INFOS[ANIM_STATUS(PlayerAnim_Still, false)].status_6)
     {
         g_Player_IsInWalkToRunTransition = false;
     }
@@ -753,7 +753,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
     s_Model*      model;
     s32           temp;
 
-    animStatus = ANIM_STATUS(PlayerAnim_Unk0, false);
+    animStatus = ANIM_STATUS(PlayerAnim_Still, false);
     
     Game_TimerUpdate();
     
@@ -4706,7 +4706,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
             if (g_SysWork.player_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_RunForward)
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Unk0, false);
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Still, false);
                 chara->model_0.stateStep_3++;
                 g_Player_IsInWalkToRunTransition = true;
             }
@@ -4913,7 +4913,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
             if (g_SysWork.player_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_WalkForward)
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Unk0, false);
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Still, false);
                 chara->model_0.stateStep_3++;
                 g_Player_IsInWalkToRunTransition = true;
             }
