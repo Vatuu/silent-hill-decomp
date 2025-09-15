@@ -8,8 +8,16 @@
 
 #define PSX_SCRATCH_ADDR(offset) ((void*)(((u8*)PSX_SCRATCH) + (offset)))
 
+/** @brief Computes the size of an array.
+ *
+ * @param arr Array.
+ * @return Element count.
+ */
+#define ARRAY_SIZE(arr) \
+    (s32)(sizeof(arr) / sizeof((arr)[0]))
+
 #define ALIGN(x, a) \
-    (((u32)(x) + ((a)-1)) & ~((a)-1))
+    (((u32)(x) + ((a) - 1)) & ~((a) - 1))
 
 #define SECTION(x) \
     __attribute__((section(x)))

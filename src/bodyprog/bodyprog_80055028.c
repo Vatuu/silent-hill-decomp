@@ -2300,115 +2300,119 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005DE0C); // 0x
 
 void func_8005E0DC(s32 mapIdx) // 0x8005E0DC
 {
-    // TODO: Improve names of some of these & move to header.
-    #define EFFECT_GLASS    (1 << 1)
-    #define EFFECT_DR_WAVE  (1 << 2)
-    #define EFFECT_WATER    (1 << 3)
-    #define EFFECT_FIRE     (1 << 4)
-    #define EFFECT_EF       (1 << 5)
-    #define EFFECT_BLOOD    (1 << 6)
-    #define EFFECT_WARMTEST (1 << 7)
-
     s32 i;
-    s32 effectTexMask;
+    s32 effectTexFlags;
 
     D_800A908C.v     = 0;
     D_800A908C.clutY = 0;
     D_800A9094.v     = 128;
 
-    effectTexMask = 0;
-
+    // Get effect texture flags.
+    effectTexFlags = EffectTextureFlag_None;
     switch (mapIdx)
     {
         case NO_VALUE:
             Fs_QueueStartReadTim(FILE_TIM_BLD_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_BLD_TIM), 0x800), &D_800A9084);
-            D_800C42D8 = 0;
+            g_LoadedEffectTextureFlags = EffectTextureFlag_None;
             break;
+
         case MapOverlayId_MAP0_S01:
             if (!Savegame_EventFlagGet(EventFlag_47))
             {
-                effectTexMask = EFFECT_GLASS;
+                effectTexFlags = EffectTextureFlag_Glass;
             }
             break;
+
         case MapOverlayId_MAP1_S02:
         case MapOverlayId_MAP1_S03:
-            effectTexMask = EFFECT_WATER;
+            effectTexFlags = EffectTextureFlag_Water;
             break;
+
         case MapOverlayId_MAP1_S05:
-            effectTexMask = EFFECT_FIRE | EFFECT_EF;
+            effectTexFlags = EffectTextureFlag_Fire | EffectTextureFlag_Ef;
             break;
+
         case MapOverlayId_MAP3_S05:
             if (!Savegame_EventFlagGet(EventFlag_284))
             {
-                effectTexMask = EFFECT_FIRE;
+                effectTexFlags = EffectTextureFlag_Fire;
             }
             break;
+
         case MapOverlayId_MAP4_S01:
             if (!Savegame_EventFlagGet(EventFlag_306))
             {
-                effectTexMask = EFFECT_FIRE;
+                effectTexFlags = EffectTextureFlag_Fire;
             }
             break;
+
         case MapOverlayId_MAP4_S05:
-            effectTexMask = EFFECT_BLOOD;
+            effectTexFlags = EffectTextureFlag_Blood;
             break;
+
         case MapOverlayId_MAP5_S00:
         case MapOverlayId_MAP6_S03:
         case MapOverlayId_MAPX_S00: // @unused
-            effectTexMask = EFFECT_DR_WAVE;
+            effectTexFlags = EffectTextureFlag_WaterRefract;
             break;
     }
 
-    if (effectTexMask != 0)
+    if (effectTexFlags == EffectTextureFlag_None)
     {
-        D_800C42D8 = 0;
+        return;
+    }
 
-        for (i = 0; i < 16; i++)
+    // Run through effect texture flags.
+    g_LoadedEffectTextureFlags = EffectTextureFlag_None;
+    for (i = 0; i < 16; i++)
+    {
+        if (!((effectTexFlags >> i) & (1 << 0)))
         {
-            if ((effectTexMask >> i) & 1)
-            {
-                D_800C42D8 |= (1 << i);
+            continue;
+        }
 
-                // TODO: Not sure if this is actually checking something gte related, but the macro/pointless branch is needed for match.
-                if (gte_IsDisabled())
-                {
-                    continue;
-                }
+        // Set global flag.
+        g_LoadedEffectTextureFlags |= 1 << i;
 
-                switch (1 << i)
-                {
-                    case EFFECT_GLASS:
-                        Fs_QueueStartReadTim(FILE_TIM_GLASS_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_GLASS_TIM), 0x800), &D_800A908C);
-                        break;
+        // TODO: Not sure if this is actually checking something gte related, but the macro/pointless branch is needed for match.
+        if (gte_IsDisabled())
+        {
+            continue;
+        }
 
-                    case EFFECT_DR_WAVE:
-                        Fs_QueueStartReadTim(FILE_TIM_DR_WAVE_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_DR_WAVE_TIM), 0x800), &D_800A908C);
-                        break;
+        // Load effect textures.
+        switch (1 << i)
+        {
+            case EffectTextureFlag_Glass:
+                Fs_QueueStartReadTim(FILE_TIM_GLASS_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_GLASS_TIM), 0x800), &D_800A908C);
+                break;
 
-                    case EFFECT_WATER:
-                        Fs_QueueStartReadTim(FILE_TIM_WATER_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_WATER_TIM), 0x800), &D_800A908C);
-                        break;
+            case EffectTextureFlag_WaterRefract:
+                Fs_QueueStartReadTim(FILE_TIM_DR_WAVE_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_DR_WAVE_TIM), 0x800), &D_800A908C);
+                break;
 
-                    case EFFECT_FIRE:
-                        D_800A9094.v = 120;
-                        Fs_QueueStartReadTim(FILE_TIM_FIRE_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_FIRE_TIM), 0x800), &D_800A9094);
-                        break;
+            case EffectTextureFlag_Water:
+                Fs_QueueStartReadTim(FILE_TIM_WATER_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_WATER_TIM), 0x800), &D_800A908C);
+                break;
 
-                    case EFFECT_EF:
-                        D_800A908C.v     = 64;
-                        D_800A908C.clutY = 4;
-                        Fs_QueueStartReadTim(FILE_TIM_EF_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_EF_TIM), 0x800), &D_800A908C);
-                        break;
+            case EffectTextureFlag_Fire:
+                D_800A9094.v = 120;
+                Fs_QueueStartReadTim(FILE_TIM_FIRE_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_FIRE_TIM), 0x800), &D_800A9094);
+                break;
 
-                    case EFFECT_BLOOD:
-                        Fs_QueueStartReadTim(FILE_TIM_BLOOD_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_BLOOD_TIM), 0x800), &D_800A908C);
-                        break;
+            case EffectTextureFlag_Ef:
+                D_800A908C.v     = 64;
+                D_800A908C.clutY = 4;
+                Fs_QueueStartReadTim(FILE_TIM_EF_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_EF_TIM), 0x800), &D_800A908C);
+                break;
 
-                    case EFFECT_WARMTEST:
-                        Fs_QueueStartReadTim(FILE_TEST_WARMTEST_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TEST_WARMTEST_TIM), 0x800), &D_800A9094);
-                        break;
-                }
-            }
+            case EffectTextureFlag_Blood:
+                Fs_QueueStartReadTim(FILE_TIM_BLOOD_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_BLOOD_TIM), 0x800), &D_800A908C);
+                break;
+
+            case EffectTextureFlag_WarmTest: // @unused See `e_EffectTextureFlags`.
+                Fs_QueueStartReadTim(FILE_TEST_WARMTEST_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TEST_WARMTEST_TIM), 0x800), &D_800A9094);
+                break;
         }
     }
 }

@@ -2443,6 +2443,7 @@ g_Items_ItemsModelData                      = 0x800C3D78;
 g_Inventory_EquippedItemIdx                 = 0x800C3E34;
 g_Items_Items3dData1                        = 0x800C3E48;
 D_800C4168                                  = 0x800C4168; // type:u8 size:0xCD - size likely incomplete
+g_LoadedEffectTextureFlags                  = 0x800C42D8;
 g_TargetEnemyPosition                       = 0x800C4540;
 g_Player_MovementInputDetected              = 0x800C4558;
 g_Player_ActionRunPressed                   = 0x800C455C;

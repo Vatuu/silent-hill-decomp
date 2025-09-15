@@ -204,8 +204,8 @@ s_FsImageDesc g_FirstAidKitItemTextureImg  = { { 0,   15  }, 0,    0,   176, 0  
 s_FsImageDesc D_800A9074                   = { { 0,   13  }, 32,   0,   240, 0   };
 s_FsImageDesc D_800A907C                   = { { 0,   5   }, 0,    128, 240, 8   };
 s_FsImageDesc D_800A9084                   = { { 0,   11  }, 0,    0,   304, 0   };
-s_FsImageDesc D_800A908C                   = { { 0,   13  }, 0,    0,   224, 0   };
-s_FsImageDesc D_800A9094                   = { { 0,   13  }, 0,    128, 224, 8   };
+s_FsImageDesc D_800A908C                   = { { 0,   13  }, 0,    0,   224, 0   }; // } Effect textures.
+s_FsImageDesc D_800A9094                   = { { 0,   13  }, 0,    128, 224, 8   }; // }
 s_FsImageDesc g_Font24AtlasImg             = { { 0,   31  }, 0,    0,   960, 496 };
 /* Not sure if these are really `s_FsImageDesc`. Seems plausible but not sure about negative values here. */
 s_FsImageDesc D_800A90A4                   = { { 0,   0   }, 35,   0,   35,  3   };

@@ -28,11 +28,23 @@
 // ENUMS
 // ======
 
+typedef enum _EffectTextureFlags
+{
+    EffectTextureFlag_None         = 0,
+    EffectTextureFlag_Glass        = 1 << 1, /** Broken glass in cafe Air Screamer cutscene */
+    EffectTextureFlag_WaterRefract = 1 << 2, /** Water waves and light reflection in sewer. */
+    EffectTextureFlag_Water        = 1 << 3,
+    EffectTextureFlag_Fire         = 1 << 4,
+    EffectTextureFlag_Ef           = 1 << 5, // TODO: Rename. Looks like stringy flesh?
+    EffectTextureFlag_Blood        = 1 << 6,
+    EffectTextureFlag_WarmTest     = 1 << 7  /** @unused Test lens flare? */
+} e_EffectTextureFlags;
+
 typedef enum _SpeedZoneType
 {
     SpeedZoneType_Slow   = 0,
     SpeedZoneType_Normal = 1,
-    SpeedZoneType_Fast   = 2,
+    SpeedZoneType_Fast   = 2
 } e_SpeedZoneType;
 
 typedef enum _Sfx
@@ -2351,7 +2363,7 @@ extern u16 D_800C42D0;
 
 extern u16 D_800C42D2;
 
-extern u16 D_800C42D8;
+extern u16 g_LoadedEffectTextureFlags;
 
 extern s16 D_800C4408;
 
