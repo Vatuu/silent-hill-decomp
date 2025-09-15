@@ -848,9 +848,9 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D7AB0_0_s01
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D7B14);
 
-void func_800D7E88(s_Model* model) // 0x800D7E88
+q19_12 func_800D7E88(s_Model* model) // 0x800D7E88
 {
-    Anim_DurationGet(model, func_80044918(&model->anim_4));
+    return Anim_DurationGet(model, func_80044918(&model->anim_4));
 }
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D7EBC_0_s01); // 0x800D7EBC

@@ -23,6 +23,10 @@ typedef enum _EventFlag
     EventFlag_39                       = 39,
     EventFlag_40                       = 40,
 
+    EventFlag_41 = 41,
+    EventFlag_42 = 42,
+    EventFlag_43 = 43,
+
     EventFlag_45 = 45,
     EventFlag_46 = 46,
     EventFlag_47 = 47,
