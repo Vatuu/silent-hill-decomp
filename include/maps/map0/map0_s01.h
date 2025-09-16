@@ -6,33 +6,7 @@
 #include "game.h"
 #include "types.h"
 
-typedef struct
-{
-    VECTOR3 position_0;
-    s32     field_C;
-    s16     field_10;
-    s16     __pad_12;
-} s_EventPosition;
-
-typedef struct
-{
-    s_800BCE18_2BEC_0 field_0;
-    s_EventPosition   eventPosition_1C;
-} s_EventThing;
-
 // TODO: Move to bodyprog, other maps also read from this.
-// Might just be an array of `char*`, array is in `.data` while strings inside are in `.rodata`?
-typedef struct
-{
-    char* field_0;               // `NULL`
-    char* field_4;               // "PAD_NEAR"
-    char* firstAidKitName_8;     // "AIDKIT_N"
-    char* healthDrinkName_C;     // "DRINK_NE"
-    char* ampouleName_10;        // "AMPULE_N"
-    char* handgunBulletsName_14; // "BULLET_N"
-    char* shotgunShellsName_18;  // "SHELL_NE"
-    char* rifleShellsName_1C;    // "SHOT_NEA"
-} s_800A99E4;
 
 typedef struct
 {
@@ -52,28 +26,42 @@ extern CVECTOR D_800E2150;
 
 extern s_2Vectors D_800E2160;
 
-/** Relative file offset for map texture? */
-extern s8 D_800A99B5;
-
-extern s_800A99E4 D_800A99E4;
-
 extern s8 D_800CBAD4;
 
 extern u16 D_800DE124;
 
 extern u16 D_800DE128;
 
-extern s32 g_Timer0;
+extern s_EventPosition D_800DE12C;
 
-extern u8 g_SoundCmdIdx;
+extern s_EventPosition D_800DE140;
+
+extern VECTOR3 D_800DE154;
+
+extern s32 g_Timer0; // 0x800E239C
+
+extern u8 g_SoundCmdIdx; // 0x800E23A0
 
 extern u8 D_800E23A1;
 
-extern VECTOR3 g_CutsceneCameraPositionTarget;
+extern VECTOR3 g_CutsceneCameraPositionTarget; // 0x800E2380
 
-extern VECTOR3 g_CutsceneCameraLookAtTarget;
+extern VECTOR3 g_CutsceneCameraLookAtTarget; // 0x800E2390
+
+extern s_800BCE18_2BEC_0 D_800E23B0[1];
+extern s_800BCE18_2BEC_0 D_800E23D0[1];
+extern s_800BCE18_2BEC_0 D_800E23F0[3];
+extern s_800BCE18_2BEC_0 D_800E2450[2];
+
+extern s_EventPosition g_DefaultEventPosition; // 0x800E2490
+extern s_EventThing g_EventThing_KitchenKnife; // 0x800E24A0
+extern s_EventThing g_EventThing_Flashlight; // 0x800E24D0
+extern s_EventThing g_EventThing_Map; // 0x800E2500
+extern s_EventThing g_EventThing_PocketRadio; // 0x800E2530
 
 extern s16 D_800E2560;
+
+extern s_800BCE18_2BEC_0 D_800E258C;
 
 /** Size might be 6. Possibly related to NPCs. */
 extern s_800BCE18_2BEC_0 D_800E2570[];
@@ -95,7 +83,7 @@ void func_800D3CC4(s_SubCharacter* chara);
 
 void func_800D3DFC(s_SubCharacter* chara);
 
-void func_800D7E88(s_Model* model);
+q19_12 func_800D7E88(s_Model* model);
 
 void func_800DA778(s32 arg0);
 
@@ -131,6 +119,8 @@ void MapEvent_CommonItemTake();
 void MapEvent_AirScreamerDeath();
 
 void func_800DC9C8();
+
+void func_800DCCF4(void);
 
 // Called by `func_800DCCF4` only.
 void func_800DD2EC(s32 arg0);

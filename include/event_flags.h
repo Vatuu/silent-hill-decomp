@@ -19,9 +19,13 @@ typedef enum _EventFlag
     EventFlag_M0S01_PickupKitchenKnife = 35,
     EventFlag_M0S01_PickupFlashlight   = 36,
     EventFlag_M0S01_PickupPocketRadio  = 37,
-    EventFlag_38                       = 38,
+    EventFlag_M0S01_PickupMap          = 38,
     EventFlag_39                       = 39,
     EventFlag_40                       = 40,
+
+    EventFlag_41 = 41,
+    EventFlag_42 = 42,
+    EventFlag_43 = 43,
 
     EventFlag_45 = 45,
     EventFlag_46 = 46,
@@ -50,6 +54,8 @@ typedef enum _EventFlag
 
     EventFlag_133 = 133,
     EventFlag_134 = 134,
+
+    EventFlag_143 = 143,
 
     EventFlag_M0S02_PickupChannelingStone = 144,
 

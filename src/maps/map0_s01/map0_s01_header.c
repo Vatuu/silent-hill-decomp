@@ -5,7 +5,6 @@
 
 #define BLOOD_SPLAT_COUNT_MAX 150
 
-#define func_800DCCF4 ((void(*)())0x800DCCF4)
 #define func_800CD1F8 ((void(*)())0x800CD1F8)
 #define func_800D0C3C ((void(*)())0x800D0C3C)
 #define func_800D20E4 ((void(*)())0x800D20E4)

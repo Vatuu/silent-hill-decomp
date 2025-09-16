@@ -295,28 +295,19 @@ typedef struct
 
 typedef struct
 {
-    s32     field_0;
-    s32     field_4;
-    s32     field_8; // 2D distance.
-    SVECTOR field_C;
-    s16     directionX_14;
-    s16     directionZ_16;
-    q23_8   positionX_18;
-    q23_8   positionZ_1C;
-    s32     field_20;
-    s32     field_24;
-    s16     field_28; // } `SVECTOR3`, packed rotation?
-    s16     field_2A; // }
-    s16     field_2C; // }
+    s32        field_0;
+    s32        field_4;
+    s32        field_8; // 2D distance.
+    SVECTOR    field_C;
+    DVECTOR_XZ direction_14;
+    q23_8      positionX_18;
+    q23_8      positionZ_1C;
+    s32        field_20;
+    s32        field_24;
+    s16        field_28; // } `SVECTOR3`, packed rotation?
+    s16        field_2A; // }
+    s16        field_2C; // }
 } s_func_8006ABC0;
-
-typedef struct
-{
-    s8  field_0;
-    s8  unk_1;
-    s16 field_2;
-    s16 field_4;
-} s_func_8006BDDC;
 
 typedef struct
 {
@@ -357,7 +348,7 @@ typedef struct
     s16                  field_6;
     s_func_8006CC44_44_0 field_8;
     s16                  field_E;
-    s8                   unk_10[32];
+    s8*                  field_10[8];
     s_func_8006CC44_44_0 field_30;
     s16                  field_36;
 } s_func_8006CC44_44;
@@ -376,7 +367,7 @@ typedef struct
     s16                field_3A;
     s16                field_3C;
     s16                field_3E;
-    s8                 unk_40[4];
+    s8*                field_40;
     s_func_8006CC44_44 field_44;
     s32                field_7C;
     s32                field_80; // X
@@ -385,22 +376,43 @@ typedef struct
     s32                field_8C; // Z
     s32                field_90; // `bool`?
     s32                field_94;
-    s16                field_98;
-    s16                field_9A;
-    s16                field_9C;
-    s16                field_9E;
-    u8                 field_A0;
-    u8                 field_A1;
-    u8                 field_A2;
-    u8                 field_A3;
-    s_func_8006CA18*   field_A4;
-    s_func_8006CC44_A8 field_A8[4];
+    union
+    {
+        DVECTOR_XZ vec_0;
+        s32        field_0;
+    } field_98;
+    union
+    {
+        DVECTOR_XZ vec_0;
+        s32        field_0;
+    } field_9C;
+    union
+    {
+        struct
+        {
+            u8                 field_0;
+            u8                 field_1;
+            u8                 field_2;
+            u8                 field_3;
+            s_func_8006CA18*   field_4;
+            s_func_8006CC44_A8 field_8[4];
+        } s_0;
+        struct
+        {
+            s16 field_0;
+            s16 field_2;
+            s16 field_4;
+            u8  field_6;
+            u8* field_8;
+            s8  unk_C[28];
+        } s_1;
+    } field_A0;
     u8                 field_C8;
     u8                 unk_C9[1];
     s16                field_CA;
     s32                field_CC; // TODO: This is a `s_IpdCollisionData` pointer.
     u8                 field_D0;
-    s8                 field_D1;
+    u8                 field_D1;
     SVECTOR3           vec_D2;
     u_func_8006CC44_D8 field_D8;
     u8                 field_DA;
@@ -409,10 +421,11 @@ typedef struct
     u8                 field_DD;
     s16                field_DE;
     s16                field_E0;
-    u8                 unk_E2[2];
+    s16                field_E2;
     s16                field_E4;
     s16                field_E6;
-    u8                 unk_E8[4];
+    s16                field_E8;
+    u8                 unk_EA[2];
     s16                field_EC;
     s16                field_EE;
     s16                field_F0;
@@ -426,6 +439,18 @@ typedef struct
     s16                field_102;
     // TODO: May be incomplete. Maybe not, added the final padding based on `func_800699F8`
 } s_func_8006CC44;
+
+typedef struct
+{
+    s32 field_0;
+    s32 field_4;
+    s32 field_8;
+    s16 field_C;
+    s16 field_E;
+    s16 field_10;
+    s8  field_12;
+    u8  field_13;
+} s_func_8006CF18;
 
 typedef struct
 {
@@ -1644,6 +1669,20 @@ typedef struct
     u8 selectedEntryIdx_1;
 } s_MapMsgSelect;
 
+// TODO: Might just be an array of `char*`, array is in `.data` while strings inside are in `.rodata`?
+typedef struct
+{
+    char* field_0;               // `NULL`
+    char* padNearName_4;         // "PAD_NEAR"
+    char* firstAidKitName_8;     // "AIDKIT_N"
+    char* healthDrinkName_C;     // "DRINK_NE"
+    char* ampouleName_10;        // "AMPULE_N"
+    char* handgunBulletsName_14; // "BULLET_N"
+    char* shotgunShellsName_18;  // "SHELL_NE"
+    char* rifleShellsName_1C;    // "SHOT_NEA"
+} s_800A99E4;
+STATIC_ASSERT_SIZEOF(s_800A99E4, 32);
+
 typedef struct
 {
     u8 field_0;
@@ -1868,6 +1907,11 @@ extern s32 D_800A999C;
 extern s32 D_800A99A0;
 
 extern u8 D_800A99A4[8];
+
+/** Relative file offset for map texture? */
+extern s8 D_800A99B5;
+
+extern s_800A99E4 D_800A99E4;
 
 extern s32 g_MapMsg_CurrentIdx;
 
@@ -3542,21 +3586,27 @@ void func_8006B6E8(s_func_8006CC44* arg0, s_IpdCollisionData_20* arg1);
 
 void func_8006B9C8(s_func_8006CC44* arg0);
 
+void func_8006BB50(s_func_8006CC44* arg0, s32 arg1);
+
 s32 func_8006BC34(s_func_8006CC44* arg0);
 
-void func_8006BCC4(s8*, s32, s32, s16, s16, s16);
+void func_8006BCC4(s_func_8006CC44_44* arg0, s8* arg1, u32 arg2, s16 arg3, s16 arg4, s16 arg5);
 
-void func_8006BDDC(s_func_8006BDDC* arg0, s16 arg1, s16 arg2);
+void func_8006BDDC(s_func_8006CC44_44_0* arg0, s16 arg1, s16 arg2);
 
 void func_8006BE40(s_func_8006CC44* arg0);
 
-void func_8006C0C8(s_func_8006CC44*, s16, s16, s32);
+void func_8006BF88(s_func_8006CC44* arg0, s16* arg1);
+
+void func_8006C0C8(s_func_8006CC44*, s16, s16);
 
 bool func_8006C1B8(u32 arg0, s16 arg1, s_func_8006CC44* arg2);
 
-s32 func_8006C248(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
+s16 func_8006C248(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 
 bool func_8006C3D4(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s32 idx);
+
+void func_8006C45C(s_func_8006CC44* arg0);
 
 void func_8006C794(s_func_8006CC44* arg0, s32 arg1, s32 arg2);
 
@@ -3567,6 +3617,10 @@ void func_8006CA18(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s_func_8
 s16 func_8006CB90(s_func_8006CC44* arg0);
 
 s32 func_8006CC44(s32 x, s32 z, s_func_8006CC44* arg2);
+
+void func_8006CC9C(s_func_8006CC44* arg0);
+
+void func_8006CF18(s_func_8006CC44* arg0, s_func_8006CF18* arg1, s32 arg2);
 
 void func_8006D01C(VECTOR3* arg0, VECTOR3* arg1, s16 arg2, s_func_8006CC44* arg3);
 

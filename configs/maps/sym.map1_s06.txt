@@ -111,3 +111,9 @@ sharedData_800E39D8_0_s00 = 0x800DAEF4; // type:s32
 sharedData_800D8610_1_s05 = 0x800DAEFC; // type:s32
 sharedData_800D8614_1_s05 = 0x800DAF00; // type:s16
 sharedData_800D8616_1_s05 = 0x800DAF02; // type:s16
+
+D_800DAF84 = 0x800DAF84; // size:0x30
+D_800DAFB4 = 0x800DAFB4; // size:0x30
+D_800DAFF4 = 0x800DAFF4; // size:0x30
+D_800DB024 = 0x800DB024; // size:0x30
+D_800DB064 = 0x800DB064; // size:0x30

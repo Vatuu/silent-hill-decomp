@@ -1063,4 +1063,27 @@ static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo
     anim->animInfo_10 = NULL;
 }
 
+typedef struct
+{
+    VECTOR3  position_0;
+    SVECTOR3 rotation_C;
+    s16      __pad_12;
+} s_EventPosition;
+
+typedef struct
+{
+    s_800BCE18_2BEC_0 field_0;
+    s_EventPosition   eventPosition_1C;
+} s_EventThing;
+
+#define EventPositionInit(eventPos, x, y, z, arg4, arg5, arg6) \
+    EventPositionSet(eventPos, FP_METER(x), FP_METER(y), FP_METER(z), FP_ANGLE(arg4), FP_ANGLE(arg5), FP_ANGLE(arg6))
+
+static inline void EventPositionSet(s_EventPosition* eventPos, s32 x, s32 y, s32 z, u16 arg4, u16 arg5, u16 arg6)
+{
+    Math_Vector3Set(&eventPos->position_0, x, y, z);
+    *(u32*)&eventPos->rotation_C.vx = ((u32)arg5 << 16) | (u32)arg4;
+    eventPos->rotation_C.vz         = arg6;
+}
+
 #endif

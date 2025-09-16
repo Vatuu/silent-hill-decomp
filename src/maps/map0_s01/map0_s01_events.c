@@ -542,18 +542,6 @@ const VECTOR3 D_800CCA58 =
     0x00108199,
 };
 
-const char D_800CCA64[] = "BIRD";
-
-#define EventPositionInit(eventPos, x, y, z, arg4, arg5) \
-    EventPositionSet(eventPos, FP_METER(x), FP_METER(y), FP_METER(z), arg4, arg5)
-
-static inline void EventPositionSet(s_EventPosition* eventPos, s32 x, s32 y, s32 z, s32 arg4, s16 arg5)
-{
-    Math_Vector3Set(&eventPos->position_0, x, y, z);
-    eventPos->field_C  = arg4;
-    eventPos->field_10 = arg5;
-}
-
 void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
 {
     s32 var_a1;
@@ -736,7 +724,7 @@ void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
 
         if (g_SysWork.sysStateStep_C[0] >= 20)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, D_800CCA64, g_Timer0, FS_BUFFER_11);
+            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "BIRD", g_Timer0, FS_BUFFER_11);
             g_SysWork.npcs_1A0[0].position_18.vx += FP_MULTIPLY(Math_Sin(g_SysWork.npcs_1A0[0].rotation_24.vy), FP_METER(0.2f), Q12_SHIFT);
             g_SysWork.npcs_1A0[0].position_18.vz += FP_MULTIPLY(Math_Cos(g_SysWork.npcs_1A0[0].rotation_24.vy), FP_METER(0.2f), Q12_SHIFT);
         }
@@ -832,7 +820,7 @@ void MapEvent_MapItemTake() // 0x800DC3C8
             // Set cutscene character.
             Chara_Spawn(Chara_AirScreamer, 0, FP_METER(0.0f), FP_METER(0.0f), FP_METER(0.0f), 12);
             DmsHeader_FixOffsets(FS_BUFFER_11);
-            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, D_800CCA64, 0, FS_BUFFER_11);
+            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "BIRD", 0, FS_BUFFER_11);
 
             // Set camera.
             vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, 0, FS_BUFFER_11));
@@ -847,7 +835,7 @@ void MapEvent_MapItemTake() // 0x800DC3C8
             // Set flags.
             g_SysWork.field_2290             |= 1 << 0;
             g_SysWork.field_228C             |= 1 << 0;
-            Savegame_EventFlagSet(EventFlag_38);
+            Savegame_EventFlagSet(EventFlag_M0S01_PickupMap);
 
             SysWork_StateStepIncrement();
 
@@ -920,17 +908,6 @@ void MapEvent_AirScreamerDeath() // 0x800DC8C8
     }
 }
 
-extern s_800BCE18_2BEC_0 D_800E23B0[1];
-extern s_800BCE18_2BEC_0 D_800E23D0[1];
-extern s_800BCE18_2BEC_0 D_800E23F0[3];
-extern s_800BCE18_2BEC_0 D_800E2450[2];
-
-extern s_EventPosition g_DefaultEventPosition;
-extern s_EventThing g_EventThing4A0;
-extern s_EventThing g_EventThing4D0;
-extern s_EventThing g_EventThing500;
-extern s_EventThing g_EventThing530;
-
 void func_800DC9C8() // 0x800DC9C8
 {
     D_800E23A1 = 224;
@@ -944,17 +921,17 @@ void func_800DC9C8() // 0x800DC9C8
     func_8003C8F8(&D_800E2450[0], "OUT1_HID");
     func_8003C8F8(&D_800E2450[1], "OUT_BLD_");
 
-    EventPositionInit(&g_EventThing4A0.eventPosition_1C, 5.09f, -1.01f, 274.12f, 0x16C0000, 0);
-    func_8003C8F8(&g_EventThing4A0.field_0, "KNIFE_HI");
+    EventPositionInit(&g_EventThing_KitchenKnife.eventPosition_1C, 5.09f, -1.01f, 274.12f, 0, 32.0f, 0); 
+    func_8003C8F8(&g_EventThing_KitchenKnife.field_0, "KNIFE_HI");
 
-    EventPositionInit(&g_EventThing4D0.eventPosition_1C, 5.18f, -1.0f, 267.28f, 0x4EEFFDE, 0);
-    func_8003C8F8(&g_EventThing4D0.field_0, "FLASH_HI");
+    EventPositionInit(&g_EventThing_Flashlight.eventPosition_1C, 5.18f, -1.0f, 267.28f, -3.0f, 111.0f, 0);
+    func_8003C8F8(&g_EventThing_Flashlight.field_0, "FLASH_HI");
 
-    EventPositionInit(&g_EventThing500.eventPosition_1C, 5.24f, -1.0f, 267.21f, 0x2880000, 0);
-    func_8003C8F8(&g_EventThing500.field_0, "MAP_HIDE");
+    EventPositionInit(&g_EventThing_Map.eventPosition_1C, 5.24f, -1.0f, 267.21f, 0, 57.0f, 0);
+    func_8003C8F8(&g_EventThing_Map.field_0, "MAP_HIDE");
 
-    EventPositionInit(&g_EventThing530.eventPosition_1C, 2.31f, -0.6f, 273.95f, 0x6880000, 0);
-    func_8003C8F8(&g_EventThing530.field_0, "RADIO_HI");
+    EventPositionInit(&g_EventThing_PocketRadio.eventPosition_1C, 2.31f, -0.6f, 273.95f, 0, 147.0f, 0);
+    func_8003C8F8(&g_EventThing_PocketRadio.field_0, "RADIO_HI");
 
     if (Savegame_EventFlagGet(EventFlag_40) && !Savegame_EventFlagGet(EventFlag_47))
     {
@@ -962,7 +939,7 @@ void func_800DC9C8() // 0x800DC9C8
 
         Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcCoords_FC0[0], NO_VALUE, NULL, NULL);
 
-        if (Savegame_EventFlagGet(EventFlag_38))
+        if (Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
         {
             func_80088D0C();
             Chara_Spawn(Chara_AirScreamer, 0, FP_METER(1048566.0f), FP_METER(280.0f), FP_METER(0.0f), 12);
@@ -991,7 +968,160 @@ void func_800DC9C8() // 0x800DC9C8
     func_8003C8F8(&D_800E2570[5], D_800A99E4.rifleShellsName_1C);
 }
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01_events", func_800DCCF4); // Set in map `header.func_40`.
+void func_800DCCF4(void) // 0x800DCCF4
+{
+    s32  var_5;
+    s32  var_6;
+    s32  var_7;
+    s32  var_8;
+    s32  temp_a1;
+    s32  var_a2;
+    s32* ptr;
+
+    if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
+    {
+        func_8003C92C(&g_EventThing_Map.field_0, &g_EventThing_Map.eventPosition_1C.position_0, &g_EventThing_Map.eventPosition_1C.rotation_C);
+    }
+
+    if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupFlashlight))
+    {
+        func_8003C92C(&g_EventThing_Flashlight.field_0, &g_EventThing_Flashlight.eventPosition_1C.position_0, &g_EventThing_Flashlight.eventPosition_1C.rotation_C);
+    }
+
+    if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupPocketRadio))
+    {
+        func_8003C92C(&g_EventThing_PocketRadio.field_0, &g_EventThing_PocketRadio.eventPosition_1C.position_0, &g_EventThing_PocketRadio.eventPosition_1C.rotation_C);
+    }
+
+    if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupKitchenKnife))
+    {
+        func_8003C92C(&g_EventThing_KitchenKnife.field_0, &g_EventThing_KitchenKnife.eventPosition_1C.position_0, &g_EventThing_KitchenKnife.eventPosition_1C.rotation_C);
+    }
+
+    if (Savegame_EventFlagGet(EventFlag_M0S01_PickupKitchenKnife) && Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
+    {
+        Savegame_EventFlagSet(EventFlag_43);
+    }
+    else
+    {
+        Savegame_EventFlagClear(EventFlag_43);
+    }
+
+    if (Savegame_EventFlagGet(EventFlag_47))
+    {
+        func_800DD2EC(2);
+    }
+    else if (Savegame_EventFlagGet(EventFlag_45) && !Savegame_EventFlagGet(EventFlag_46))
+    {
+        func_800DD2EC(1);
+    }
+    else
+    {
+        func_800DD2EC(0);
+    }
+
+    if (Savegame_EventFlagGet(EventFlag_M0S01_PickupMap) && !Savegame_EventFlagGet(EventFlag_42))
+    {
+        if (Savegame_EventFlagGet(EventFlag_41))
+        {
+            temp_a1 = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, func_800D7E88(&g_SysWork.npcs_1A0[0].model_0), Q12_SHIFT);
+
+            ptr = &g_Timer0;
+            if (temp_a1 < FP_TIME(25.0f))
+            {
+                var_a2 = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, func_800D7E88(&g_SysWork.npcs_1A0[0].model_0), Q12_SHIFT);
+            }
+            else
+            {
+                var_a2 = FP_TIME(25.0f);
+            }
+            *ptr = var_a2;
+
+            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "BIRD",
+                                   g_Timer0, (s_DmsHeader*)FS_BUFFER_11);
+
+            if (g_Timer0 >= FP_TIME(25.0f) ||
+                ABS(g_SysWork.player_4C.chara_0.position_18.vx - FP_METER(4.586f)) > FP_METER(0.7f) ||
+                ABS(g_SysWork.player_4C.chara_0.position_18.vz - FP_METER(267.2852f)) > FP_METER(0.7f))
+            {
+                Savegame_EventFlagSet(EventFlag_42);
+                vcReturnPreAutoCamWork(1);
+
+                g_SysWork.npcs_1A0[0].position_18.vy = FP_METER(-10.0f);
+                g_SysWork.npcs_1A0[0].position_18.vz = FP_METER(280.0f);
+            }
+        }
+        else if (g_SysWork.player_4C.chara_0.position_18.vx != FP_METER(4.586f) ||
+                 g_SysWork.player_4C.chara_0.position_18.vz != FP_METER(267.2852f) ||
+                 g_SysWork.player_4C.chara_0.rotation_24.vy != FP_ANGLE(90.0f) ||
+                 D_800E2560 > FP_TIME(7.5f))
+        {
+            Savegame_EventFlagSet(EventFlag_41);
+            func_800D3AC0(&g_SysWork.npcs_1A0[0]);
+        }
+        else
+        {
+            D_800E2560 += g_DeltaTime0;
+        }
+    }
+
+    if (Savegame_EventFlagGet(EventFlag_47))
+    {
+        if (g_SysWork.npcs_1A0[0].model_0.charaId_0 == Chara_AirScreamer && g_SysWork.npcs_1A0[0].health_B0 == NO_VALUE)
+        {
+            Savegame_EventFlagSet(EventFlag_48);
+            Savegame_EventFlagClear(EventFlag_49);
+            Savegame_EventFlagClear(EventFlag_50);
+        }
+    }
+
+    if (Savegame_EventFlagGet(EventFlag_52))
+    {
+        if (g_SysWork.field_22A0 & (1 << 6))
+        {
+            Sd_EngineCmd(Sfx_Unk1321);
+            Sd_EngineCmd(Sfx_Unk1322);
+        }
+
+        func_8005DE0C(Sfx_Unk1321, &D_800DE154, D_800E23A1, 0x10000, 0);
+        func_8005DE0C(Sfx_Unk1322, &D_800DE154, D_800E23A1, 0x10000, 0);
+
+        Savegame_EventFlagSet(EventFlag_52);
+    }
+
+    var_5 = g_SysWork.player_4C.chara_0.position_18.vx / FP_METER(40.0f);
+
+    if ((g_SysWork.player_4C.chara_0.position_18.vx > FP_METER(0.0f) && (var_5 == 0)) ||
+        (g_SysWork.player_4C.chara_0.position_18.vx <= FP_METER(0.0f) && (var_5 - 1) == 1))
+    {
+        var_6 = g_SysWork.player_4C.chara_0.position_18.vz / FP_METER(40.0f);
+
+        if ((g_SysWork.player_4C.chara_0.position_18.vz > FP_METER(0.0f) && (var_6 + 1) == 7) ||
+            (g_SysWork.player_4C.chara_0.position_18.vz <= FP_METER(0.0f) && (var_6 - 1) == 7))
+        {
+            if (!Savegame_EventFlagGet(EventFlag_M0S01_HealthDrink0))
+            {
+                func_8003C92C(&D_800E258C, &D_800DE12C.position_0, &D_800DE12C.rotation_C);
+            }
+        }
+    }
+
+    var_7 = g_SysWork.player_4C.chara_0.position_18.vx / FP_METER(40.0f);
+
+    if ((g_SysWork.player_4C.chara_0.position_18.vx > FP_METER(0.0f) && var_7 == 0) ||
+        (g_SysWork.player_4C.chara_0.position_18.vx <= FP_METER(0.0f) && (var_7 - 1) == 1))
+    {
+        var_8 = g_SysWork.player_4C.chara_0.position_18.vz / FP_METER(40.0f);
+        if ((g_SysWork.player_4C.chara_0.position_18.vz > FP_METER(0.0f) && (var_8 + 1) == 7) ||
+            (g_SysWork.player_4C.chara_0.position_18.vz <= FP_METER(0.0f) && (var_8 - 1) == 7))
+        {
+            if (!Savegame_EventFlagGet(EventFlag_M0S01_HealthDrink1))
+            {
+                func_8003C92C(&D_800E258C, &D_800DE140.position_0, &D_800DE140.rotation_C);
+            }
+        }
+    }
+}
 
 void func_800DD2EC(s32 arg0) // 0x800DD2EC
 {
@@ -1001,14 +1131,14 @@ void func_800DD2EC(s32 arg0) // 0x800DD2EC
 
     if (arg0 == 0)
     {
-        for (i = 0; i <= 0; i++)
+        for (i = 0; i < 1; i++)
         {
-            func_8003C92C(&D_800E23D0[i], &g_DefaultEventPosition, &DEFAULT_ROT);
+            func_8003C92C(&D_800E23D0[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
         }
 
-        for (i = 0; i <= 0; i++)
+        for (i = 0; i < 1; i++)
         {
-            func_8003C92C(&D_800E23B0[i], &g_DefaultEventPosition, &DEFAULT_ROT);
+            func_8003C92C(&D_800E23B0[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
         }
 
         return;
@@ -1018,19 +1148,19 @@ void func_800DD2EC(s32 arg0) // 0x800DD2EC
     {
         for (i = 0; i < 2; i++)
         {
-            func_8003C92C(&D_800E2450[i], &g_DefaultEventPosition, &DEFAULT_ROT);
+            func_8003C92C(&D_800E2450[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
         }
 
         return;
     }
 
-    for (i = 0; i <= 0; i++)
+    for (i = 0; i < 1; i++)
     {
-        func_8003C92C(&D_800E23D0[i], &g_DefaultEventPosition, &DEFAULT_ROT);
+        func_8003C92C(&D_800E23D0[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
     }
 
     for (i = 0; i < 3; i++)
     {
-        func_8003C92C(&D_800E23F0[i], &g_DefaultEventPosition, &DEFAULT_ROT);
+        func_8003C92C(&D_800E23F0[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
     }
 }
