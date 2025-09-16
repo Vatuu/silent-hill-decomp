@@ -1676,6 +1676,20 @@ typedef struct
     u8 selectedEntryIdx_1;
 } s_MapMsgSelect;
 
+// TODO: Might just be an array of `char*`, array is in `.data` while strings inside are in `.rodata`?
+typedef struct
+{
+    char* field_0;               // `NULL`
+    char* padNearName_4;         // "PAD_NEAR"
+    char* firstAidKitName_8;     // "AIDKIT_N"
+    char* healthDrinkName_C;     // "DRINK_NE"
+    char* ampouleName_10;        // "AMPULE_N"
+    char* handgunBulletsName_14; // "BULLET_N"
+    char* shotgunShellsName_18;  // "SHELL_NE"
+    char* rifleShellsName_1C;    // "SHOT_NEA"
+} s_800A99E4;
+STATIC_ASSERT_SIZEOF(s_800A99E4, 32);
+
 typedef struct
 {
     u8 field_0;
@@ -1900,6 +1914,11 @@ extern s32 D_800A999C;
 extern s32 D_800A99A0;
 
 extern u8 D_800A99A4[8];
+
+/** Relative file offset for map texture? */
+extern s8 D_800A99B5;
+
+extern s_800A99E4 D_800A99E4;
 
 extern s32 g_MapMsg_CurrentIdx;
 

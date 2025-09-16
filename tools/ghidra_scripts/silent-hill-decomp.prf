@@ -1,4 +1,5 @@
 common.h
+event_flags.h
 game.h
 gpu.h
 types.h
@@ -6,12 +7,14 @@ bodyprog\bodyprog.h
 bodyprog\credits.h
 bodyprog\demo.h
 bodyprog\item_screens.h
+bodyprog\joy.h
 bodyprog\libsd.h
-bodyprog\math.h
 bodyprog\memcard.h
 bodyprog\player_logic.h
-bodyprog\text_draw.h
 bodyprog\vw_system.h
+bodyprog\math\math.h
+bodyprog\gfx\screen_draw.h
+bodyprog\gfx\text_draw.h
 maps\shared.h
 
 

@@ -6,32 +6,7 @@
 #include "game.h"
 #include "types.h"
 
-typedef struct
-{
-    VECTOR3  position_0;
-    SVECTOR3 rotation_C;
-    s16      __pad_12;
-} s_EventPosition;
-
-typedef struct
-{
-    s_800BCE18_2BEC_0 field_0;
-    s_EventPosition   eventPosition_1C;
-} s_EventThing;
-
 // TODO: Move to bodyprog, other maps also read from this.
-// Might just be an array of `char*`, array is in `.data` while strings inside are in `.rodata`?
-typedef struct
-{
-    char* field_0;               // `NULL`
-    char* field_4;               // "PAD_NEAR"
-    char* firstAidKitName_8;     // "AIDKIT_N"
-    char* healthDrinkName_C;     // "DRINK_NE"
-    char* ampouleName_10;        // "AMPULE_N"
-    char* handgunBulletsName_14; // "BULLET_N"
-    char* shotgunShellsName_18;  // "SHELL_NE"
-    char* rifleShellsName_1C;    // "SHOT_NEA"
-} s_800A99E4;
 
 typedef struct
 {
@@ -50,11 +25,6 @@ extern CVECTOR D_800E214C;
 extern CVECTOR D_800E2150;
 
 extern s_2Vectors D_800E2160;
-
-/** Relative file offset for map texture? */
-extern s8 D_800A99B5;
-
-extern s_800A99E4 D_800A99E4;
 
 extern s8 D_800CBAD4;
 

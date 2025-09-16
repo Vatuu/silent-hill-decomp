@@ -1982,6 +1982,7 @@ g_MapMsg_CurrentIdx                         = 0x800A99AC; // type:s32
 g_MapMsg_SelectFlashTimer                   = 0x800A99B0; // type:s16
 g_FullscreenMapTimFileIdxs                  = 0x800A99B4;
 g_MapMarkingTimFileIdxs                     = 0x800A99CC;
+D_800A99E4                                  = 0x800A99E4; // size:0x20
 g_MapEventIdx                               = 0x800A9A14; // type:u32
 
 //------------------------------------------------------------------------

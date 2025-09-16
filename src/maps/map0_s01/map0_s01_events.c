@@ -542,16 +542,6 @@ const VECTOR3 D_800CCA58 =
     0x00108199,
 };
 
-#define EventPositionInit(eventPos, x, y, z, arg4, arg5, arg6) \
-    EventPositionSet(eventPos, FP_METER(x), FP_METER(y), FP_METER(z), FP_ANGLE(arg4), FP_ANGLE(arg5), FP_ANGLE(arg6))
-
-static inline void EventPositionSet(s_EventPosition* eventPos, s32 x, s32 y, s32 z, u16 arg4, u16 arg5, u16 arg6)
-{
-    Math_Vector3Set(&eventPos->position_0, x, y, z);
-    *(u32*)&eventPos->rotation_C.vx = ((u32)arg5 << 16) | (u32)arg4;
-    eventPos->rotation_C.vz = arg6;
-}
-
 void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
 {
     s32 var_a1;
