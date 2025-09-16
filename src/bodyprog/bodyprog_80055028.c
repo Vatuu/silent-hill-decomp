@@ -3900,15 +3900,15 @@ void func_8006BE40(s_func_8006CC44* arg0) // 0x8006BE40
     }
 }
 
-void func_8006BF88(s_func_8006CC44* arg0, s16* arg1) // 0x8006BF88
+void func_8006BF88(s_func_8006CC44* arg0, SVECTOR3* arg1) // 0x8006BF88
 {
     s16 temp_v0;
     s32 temp2;
     s32 temp3;
 
-    temp_v0 = func_8006C248(*(s32*)&arg0->field_4.direction_14, arg0->field_4.field_8, arg1[0] - arg0->field_98.vec_0.vx,
-                            arg1[2] - arg0->field_98.vec_0.vz, arg0->field_4.field_28);
-    if (temp_v0 != -1 && func_8006C1B8(2, temp_v0, arg0) && arg0->field_4.field_2C > arg1[1])
+    temp_v0 = func_8006C248(*(s32*)&arg0->field_4.direction_14, arg0->field_4.field_8, arg1->vx - arg0->field_98.vec_0.vx,
+                            arg1->vz - arg0->field_98.vec_0.vz, arg0->field_4.field_28);
+    if (temp_v0 != -1 && func_8006C1B8(2, temp_v0, arg0) && arg0->field_4.field_2C > arg1->vy)
     {
         arg0->field_38 = temp_v0;
         arg0->field_34 = 2;
@@ -3916,9 +3916,9 @@ void func_8006BF88(s_func_8006CC44* arg0, s16* arg1) // 0x8006BF88
         arg0->field_3A = (arg0->field_4.field_8 * temp_v0) >> 8;
         arg0->field_40 = (u8*)arg0->field_CC.field_0 + (arg0->field_CC.field_4 + 52);
 
-        arg0->field_3C = temp2 - arg1[0];
+        arg0->field_3C = temp2 - arg1->vx;
         temp3          = arg0->field_98.vec_0.vz + FP_MULTIPLY(arg0->field_4.field_C.vz, temp_v0, Q12_SHIFT);
-        arg0->field_3E = temp3 - arg1[2];
+        arg0->field_3E = temp3 - arg1->vz;
     }
 }
 

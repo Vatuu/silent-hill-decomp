@@ -3631,7 +3631,7 @@ void func_8006BDDC(s_func_8006CC44_44_0* arg0, s16 arg1, s16 arg2);
 
 void func_8006BE40(s_func_8006CC44* arg0);
 
-void func_8006BF88(s_func_8006CC44* arg0, s16* arg1);
+void func_8006BF88(s_func_8006CC44* arg0, SVECTOR3* arg1);
 
 void func_8006C0C8(s_func_8006CC44*, s16, s16);
 
