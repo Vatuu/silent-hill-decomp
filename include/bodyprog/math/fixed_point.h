@@ -144,14 +144,6 @@
 #define Q8_TO_Q12(x) \
     ((x) << 4)
 
-/** @brief Converts a fixed-point value from Q0.8 to Q3.12.
- *
- * @param x Fixed-point value in Q0.8 to convert.
- * @return `x` converted to fixed-point Q3.12 (`s16`).
- */
-#define Q0_8_TO_Q12(x) \
-    (s16)((x) << 4)
-
 /** @brief Converts a fixed-point value from Q*.12 to Q*.8.
  *
  * @param x Fixed-point value in Q19.12 to convert.
@@ -239,7 +231,7 @@
  * @return Unsigned fixed-point degrees in Q3.12, integer range `[0, 4096]` (`s16`).
  */
 #define FP_ANGLE_FROM_PACKED(deg) \
-    Q0_8_TO_Q12(deg)
+    (s16)Q8_TO_Q12(deg)
 
 /** @brief Normalizes unsigned fixed-point degrees in Q3.12 to the signed integer range `[-2048, 2047]`.
  *
