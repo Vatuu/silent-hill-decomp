@@ -333,38 +333,6 @@ typedef struct
 
 typedef struct
 {
-    u16 field_0;
-    u16 field_2;
-    u16 field_4;
-    u16 field_6;
-} s_func_8006B8F8_20;
-
-typedef struct
-{
-    s8                 unk_0[6];
-    u16                field_6;
-    u16                field_8;
-    u16                field_A;
-    u8                 field_C;
-    u8                 field_D;
-    u8                 field_E;
-    u8                 field_F;
-    s8                 unk_10[2];
-    u16                field_12;
-    u16                field_14;
-    u16                field_16;
-    u16                field_18;
-    u16                field_1A;
-    u16                field_1C;
-    s8                 unk_1E[2];
-    s_func_8006B8F8_20 field_20;
-    u8                 unk_28[12];
-    u16                field_34;
-    u16                field_36;
-} s_func_8006B8F8;
-
-typedef struct
-{
     u8  unk_0[2];
     s16 field_2;
     u8  unk_4[2];
@@ -378,16 +346,6 @@ typedef struct
     s16 field_2;
     s32 field_4;
 } s_func_8006CC44_A8;
-
-typedef union
-{
-    s16 field_0;
-    struct
-    {
-        u8 field_0;
-        u8 field_1;
-    } s_field_0;
-} u_func_8006CC44_D8;
 
 typedef struct
 {
@@ -406,90 +364,6 @@ typedef struct
     s_func_8006CC44_44_0 field_30;
     s16                  field_36;
 } s_func_8006CC44_44;
-
-typedef struct
-{
-    DVECTOR_XZ field_0;
-    DVECTOR_XZ field_4;
-    u32        field_8;
-    s32        field_C;
-    s16        field_10;
-    u8         unk_12[2];
-    DVECTOR_XZ field_14;
-} s_func_8006CC44_EC;
-
-typedef struct
-{
-    u8                 field_0_0  : 8;
-    s8                 field_0_8  : 1;
-    s8                 field_0_9  : 1;
-    s8                 field_0_10 : 1;
-    s8                 field_0_11 : 5;
-    u16                field_2    : 16;
-    s_func_8006ABC0    field_4;
-    s32                field_34;
-    s16                field_38;
-    s16                field_3A;
-    s16                field_3C;
-    s16                field_3E;
-    s8*                field_40;
-    s_func_8006CC44_44 field_44;
-    s32                field_7C;
-    s32                field_80; // X
-    s32                field_84; // Z
-    s32                field_88; // X
-    s32                field_8C; // Z
-    s32                field_90; // `bool`?
-    s32                field_94;
-    union
-    {
-        DVECTOR_XZ vec_0;
-        s32        field_0;
-    } field_98;
-    union
-    {
-        DVECTOR_XZ vec_0;
-        s32        field_0;
-    } field_9C;
-    union
-    {
-        struct
-        {
-            u8                 field_0;
-            u8                 field_1;
-            u8                 field_2;
-            u8                 field_3;
-            s_func_8006CA18*   field_4;
-            s_func_8006CC44_A8 field_8[4];
-        } s_0;
-        struct
-        {
-            s16 field_0;
-            s16 field_2;
-            s16 field_4;
-            u8  field_6;
-            u8* field_8;
-            s8  unk_C[28];
-        } s_1;
-    } field_A0;
-    u8                 field_C8;
-    u8                 unk_C9[1];
-    s16                field_CA;
-    s32                field_CC; // TODO: This is a `s_IpdCollisionData` pointer.
-    u8                 field_D0;
-    u8                 field_D1;
-    SVECTOR3           vec_D2;
-    u_func_8006CC44_D8 field_D8;
-    u8                 field_DA;
-    u8                 field_DB;
-    u8                 field_DC;
-    u8                 field_DD;
-    SVECTOR3           field_DE;
-    SVECTOR3           field_E4;
-    u8                 unk_EA[2];
-    s_func_8006CC44_EC field_EC;
-    // TODO: May be incomplete. Maybe not, added the final padding based on `func_800699F8`
-} s_func_8006CC44;
 
 typedef struct
 {
@@ -943,13 +817,113 @@ typedef struct _AnmHeader
     u8            boneCount_6;
     u8            unk_7;
     u32           activeBones_8; // Holds bit field of bones to update.
-    u32           offset_C;      // In ANM files this points to another duplicate `s_AnmHeader` at end of the file, or might just be size of the main ANM data.
+    u32           fileSize_C;
     u16           keyframeCount_10;
     u8            scaleLog2_12;
     u8            rootYOffset_13;
     s_AnmBindPose bindPoses_14[0]; // Array size = `boneCount_6`.
 } s_AnmHeader;
 STATIC_ASSERT_SIZEOF(s_AnmHeader, 20);
+
+typedef union
+{
+    s16 field_0;
+    struct
+    {
+        u8 field_0;
+        u8 field_1;
+    } s_field_0;
+} s_func_8006CC44_CC_C;
+
+typedef struct
+{
+    DVECTOR_XZ field_0;
+    DVECTOR_XZ field_4;
+    u32        field_8;
+    s32        field_C;
+    s16        field_10;
+    u8         unk_12[2];
+    DVECTOR_XZ field_14;
+} s_func_8006CC44_CC_20;
+
+typedef struct
+{
+    s_IpdCollisionData*   field_0;
+    u8                    field_4;
+    u8                    field_5;
+    SVECTOR3              field_6;
+    s_func_8006CC44_CC_C  field_C;
+    u8                    field_E;
+    u8                    field_F;
+    u8                    field_10;
+    u8                    field_11;
+    SVECTOR3              field_12;
+    SVECTOR3              field_18;
+    s8                    unk_1E[2];
+    s_func_8006CC44_CC_20 field_20;
+} s_func_8006CC44_CC;
+STATIC_ASSERT_SIZEOF(s_func_8006CC44_CC, 56);
+
+typedef struct
+{
+    u8                 field_0_0  : 8;
+    s8                 field_0_8  : 1;
+    s8                 field_0_9  : 1;
+    s8                 field_0_10 : 1;
+    s8                 field_0_11 : 5;
+    u16                field_2    : 16;
+    s_func_8006ABC0    field_4;
+    s32                field_34;
+    s16                field_38;
+    s16                field_3A;
+    s16                field_3C;
+    s16                field_3E;
+    s8*                field_40;
+    s_func_8006CC44_44 field_44;
+    s32                field_7C;
+    s32                field_80; // X
+    s32                field_84; // Z
+    s32                field_88; // X
+    s32                field_8C; // Z
+    s32                field_90; // `bool`?
+    s32                field_94;
+    union
+    {
+        DVECTOR_XZ vec_0;
+        s32        field_0;
+    } field_98;
+    union
+    {
+        DVECTOR_XZ vec_0;
+        s32        field_0;
+    } field_9C;
+    union
+    {
+        struct
+        {
+            u8                 field_0;
+            u8                 field_1;
+            u8                 field_2;
+            u8                 field_3;
+            s_func_8006CA18*   field_4;
+            s_func_8006CC44_A8 field_8[4];
+        } s_0;
+        struct
+        {
+            s16 field_0;
+            s16 field_2;
+            s16 field_4;
+            u8  field_6;
+            u8* field_8;
+            s8  unk_C[28];
+        } s_1;
+    } field_A0;
+    u8                 field_C8;
+    u8                 unk_C9[1];
+    s16                field_CA;
+    s_func_8006CC44_CC field_CC;
+    // TODO: May be incomplete. Maybe not, added the final padding based on `func_800699F8`
+} s_func_8006CC44;
 
 // LM data? Likely `D_800C1158`'s struct.
 typedef struct
@@ -3641,9 +3615,9 @@ s32 func_8006B318(s_func_8006CC44* arg0, s_IpdCollisionData* arg1, s32 arg2);
 /** `arg1` is unused, but `func_8006B1C8` passes second arg to this. */
 void func_8006B6E8(s_func_8006CC44* arg0, s_IpdCollisionData_20* arg1);
 
-s32 func_8006B7E0(s_func_8006CC44_A8* arg0, s_func_8006CC44_EC* arg1);
+s32 func_8006B7E0(s_func_8006CC44_A8* arg0, s_func_8006CC44_CC_20* arg1);
 
-void func_8006B8F8(s_func_8006B8F8* arg0);
+void func_8006B8F8(s_func_8006CC44_CC* arg0);
 
 void func_8006B9C8(s_func_8006CC44* arg0);
 
