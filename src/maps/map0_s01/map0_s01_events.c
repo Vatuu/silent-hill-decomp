@@ -970,10 +970,8 @@ void func_800DC9C8() // 0x800DC9C8
 
 void func_800DCCF4(void) // 0x800DCCF4
 {
-    s32  var_5;
-    s32  var_6;
-    s32  var_7;
-    s32  var_8;
+    s32  stepX;
+    s32  stepZ;
     s32  temp_a1;
     s32  var_a2;
     s32* ptr;
@@ -1024,12 +1022,12 @@ void func_800DCCF4(void) // 0x800DCCF4
     {
         if (Savegame_EventFlagGet(EventFlag_41))
         {
-            temp_a1 = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, func_800D7E88(&g_SysWork.npcs_1A0[0].model_0), Q12_SHIFT);
+            temp_a1 = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Model_AnimDurationGet(&g_SysWork.npcs_1A0[0].model_0), Q12_SHIFT);
 
             ptr = &g_Timer0;
             if (temp_a1 < FP_TIME(25.0f))
             {
-                var_a2 = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, func_800D7E88(&g_SysWork.npcs_1A0[0].model_0), Q12_SHIFT);
+                var_a2 = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Model_AnimDurationGet(&g_SysWork.npcs_1A0[0].model_0), Q12_SHIFT);
             }
             else
             {
@@ -1089,15 +1087,13 @@ void func_800DCCF4(void) // 0x800DCCF4
         Savegame_EventFlagSet(EventFlag_52);
     }
 
-    var_5 = g_SysWork.player_4C.chara_0.position_18.vx / FP_METER(40.0f);
-
-    if ((g_SysWork.player_4C.chara_0.position_18.vx > FP_METER(0.0f) && (var_5 == 0)) ||
-        (g_SysWork.player_4C.chara_0.position_18.vx <= FP_METER(0.0f) && (var_5 - 1) == 1))
+    stepX = g_SysWork.player_4C.chara_0.position_18.vx / FP_METER(40.0f);
+    if ((g_SysWork.player_4C.chara_0.position_18.vx > FP_METER(0.0f) && (stepX == 0)) ||
+        (g_SysWork.player_4C.chara_0.position_18.vx <= FP_METER(0.0f) && (stepX - 1) == 1))
     {
-        var_6 = g_SysWork.player_4C.chara_0.position_18.vz / FP_METER(40.0f);
-
-        if ((g_SysWork.player_4C.chara_0.position_18.vz > FP_METER(0.0f) && (var_6 + 1) == 7) ||
-            (g_SysWork.player_4C.chara_0.position_18.vz <= FP_METER(0.0f) && (var_6 - 1) == 7))
+        stepZ = g_SysWork.player_4C.chara_0.position_18.vz / FP_METER(40.0f);
+        if ((g_SysWork.player_4C.chara_0.position_18.vz > FP_METER(0.0f) && (stepZ + 1) == 7) ||
+            (g_SysWork.player_4C.chara_0.position_18.vz <= FP_METER(0.0f) && (stepZ - 1) == 7))
         {
             if (!Savegame_EventFlagGet(EventFlag_M0S01_HealthDrink0))
             {
@@ -1106,14 +1102,13 @@ void func_800DCCF4(void) // 0x800DCCF4
         }
     }
 
-    var_7 = g_SysWork.player_4C.chara_0.position_18.vx / FP_METER(40.0f);
-
-    if ((g_SysWork.player_4C.chara_0.position_18.vx > FP_METER(0.0f) && var_7 == 0) ||
-        (g_SysWork.player_4C.chara_0.position_18.vx <= FP_METER(0.0f) && (var_7 - 1) == 1))
+    stepX = g_SysWork.player_4C.chara_0.position_18.vx / FP_METER(40.0f);
+    if ((g_SysWork.player_4C.chara_0.position_18.vx > FP_METER(0.0f) && stepX == 0) ||
+        (g_SysWork.player_4C.chara_0.position_18.vx <= FP_METER(0.0f) && (stepX - 1) == 1))
     {
-        var_8 = g_SysWork.player_4C.chara_0.position_18.vz / FP_METER(40.0f);
-        if ((g_SysWork.player_4C.chara_0.position_18.vz > FP_METER(0.0f) && (var_8 + 1) == 7) ||
-            (g_SysWork.player_4C.chara_0.position_18.vz <= FP_METER(0.0f) && (var_8 - 1) == 7))
+        stepZ = g_SysWork.player_4C.chara_0.position_18.vz / FP_METER(40.0f);
+        if ((g_SysWork.player_4C.chara_0.position_18.vz > FP_METER(0.0f) && (stepZ + 1) == 7) ||
+            (g_SysWork.player_4C.chara_0.position_18.vz <= FP_METER(0.0f) && (stepZ - 1) == 7))
         {
             if (!Savegame_EventFlagGet(EventFlag_M0S01_HealthDrink1))
             {

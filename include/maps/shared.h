@@ -1076,14 +1076,13 @@ typedef struct
     s_EventPosition   eventPosition_1C;
 } s_EventThing;
 
-#define EventPositionInit(eventPos, x, y, z, arg4, arg5, arg6) \
-    EventPositionSet(eventPos, FP_METER(x), FP_METER(y), FP_METER(z), FP_ANGLE(arg4), FP_ANGLE(arg5), FP_ANGLE(arg6))
-
-static inline void EventPositionSet(s_EventPosition* eventPos, s32 x, s32 y, s32 z, u16 arg4, u16 arg5, u16 arg6)
+#define EventPositionInit(eventPos, posX, posY, posZ, rotX, rotY, rotZ) \
+    EventPositionSet(eventPos, FP_METER(posX), FP_METER(posY), FP_METER(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))
+static inline void EventPositionSet(s_EventPosition* eventPos, q19_12 posX, q19_12 posY, q19_12 posZ, q8_8 rotX, q8_8 rotY, q8_8 rotZ)
 {
-    Math_Vector3Set(&eventPos->position_0, x, y, z);
-    *(u32*)&eventPos->rotation_C.vx = ((u32)arg5 << 16) | (u32)arg4;
-    eventPos->rotation_C.vz         = arg6;
+    Math_Vector3Set(&eventPos->position_0, posX, posY, posZ);
+    *(u32*)&eventPos->rotation_C.vx = ((u32)rotY << 16) | (u32)rotX;
+    eventPos->rotation_C.vz         = rotZ;
 }
 
 #endif

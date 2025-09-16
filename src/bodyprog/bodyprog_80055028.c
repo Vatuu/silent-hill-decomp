@@ -3729,7 +3729,7 @@ void func_8006CC9C(s_func_8006CC44* arg0) // 0x8006CC9C
     else if (arg0->field_0_8 && arg0->field_44.field_0.field_0 == 0 && func_8006C1B8(1, temp_v0, arg0))
     {
         temp2 = (arg0->field_4.positionZ_1C - arg0->field_9C.field_0);
-        temp5 = FP_MULTIPLY(temp_v0, arg0->field_4.field_C.vz, 12);
+        temp5 = FP_MULTIPLY(temp_v0, arg0->field_4.field_C.vz, Q12_SHIFT);
 
         arg0->field_40 = arg0->field_A0.s_1.field_8;
         arg0->field_38 = temp_v0;
@@ -3737,9 +3737,9 @@ void func_8006CC9C(s_func_8006CC44* arg0) // 0x8006CC9C
         arg0->field_34 = 1;
 
         temp  = (arg0->field_4.positionX_18 - arg0->field_98.field_0);
-        temp4 = FP_MULTIPLY(temp_v0, arg0->field_4.field_C.vx, 12);
+        temp4 = FP_MULTIPLY(temp_v0, arg0->field_4.field_C.vx, Q12_SHIFT);
 
-        arg0->field_3A = (arg0->field_4.field_8 * temp_v0) >> 8;
+        arg0->field_3A = (arg0->field_4.field_8 * temp_v0) >> 8; // TODO: Conversion to Q4?
         arg0->field_3C = temp + temp4;
         arg0->field_3E = temp2 + temp5;
     }
@@ -3755,7 +3755,7 @@ void func_8006CF18(s_func_8006CC44* arg0, s_func_8006CF18* arg1, s32 arg2) // 0x
         var_a1 = (var_s2->field_10 >> 4) + arg0->field_4.field_28;
         if (var_s2->field_12 < (u32)arg0->field_4.field_0)
         {
-            var_a1 -= 0xF;
+            var_a1 -= 15;
         }
 
         arg0->field_98.field_0     = var_s2->field_0 >> 4;
@@ -4130,8 +4130,8 @@ void func_8006D7EC(s_func_8006ABC0* arg0, SVECTOR* arg1, SVECTOR* arg2) // 0x800
     }
     else
     {
-        arg0->direction_14.vx = 0x1000;
-        arg0->direction_14.vz = 0;
+        arg0->direction_14.vx = FP_METER(1.0f);
+        arg0->direction_14.vz = FP_METER(0.0f);
     }
 
     arg0->positionX_18 = arg0->positionX_18 + arg1->vx;

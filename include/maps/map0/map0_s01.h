@@ -83,7 +83,7 @@ void func_800D3CC4(s_SubCharacter* chara);
 
 void func_800D3DFC(s_SubCharacter* chara);
 
-q19_12 func_800D7E88(s_Model* model);
+q19_12 Model_AnimDurationGet(s_Model* model);
 
 void func_800DA778(s32 arg0);
 

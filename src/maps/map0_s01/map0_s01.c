@@ -848,7 +848,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D7AB0_0_s01
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D7B14);
 
-q19_12 func_800D7E88(s_Model* model) // 0x800D7E88
+q19_12 Model_AnimDurationGet(s_Model* model) // 0x800D7E88
 {
     return Anim_DurationGet(model, func_80044918(&model->anim_4));
 }
