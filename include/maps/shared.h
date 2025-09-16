@@ -1078,6 +1078,7 @@ typedef struct
 
 #define EventPositionInit(eventPos, posX, posY, posZ, rotX, rotY, rotZ) \
     EventPositionSet(eventPos, FP_METER(posX), FP_METER(posY), FP_METER(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))
+
 static inline void EventPositionSet(s_EventPosition* eventPos, q19_12 posX, q19_12 posY, q19_12 posZ, q8_8 rotX, q8_8 rotY, q8_8 rotZ)
 {
     Math_Vector3Set(&eventPos->position_0, posX, posY, posZ);

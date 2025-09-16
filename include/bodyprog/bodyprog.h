@@ -339,7 +339,7 @@ typedef struct
 {
     s8      field_0;
     s8      unk_1;
-    DVECTOR field_2;
+    DVECTOR field_2; // Rotation?
 } s_func_8006CC44_44_0;
 
 typedef struct
@@ -3590,6 +3590,7 @@ void func_8006BB50(s_func_8006CC44* arg0, s32 arg1);
 
 s32 func_8006BC34(s_func_8006CC44* arg0);
 
+/** `arg3` and `arg4` might be XY or XZ position components. */
 void func_8006BCC4(s_func_8006CC44_44* arg0, s8* arg1, u32 arg2, s16 arg3, s16 arg4, s16 arg5);
 
 void func_8006BDDC(s_func_8006CC44_44_0* arg0, s16 arg1, s16 arg2);
