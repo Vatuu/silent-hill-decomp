@@ -77,7 +77,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             break;
         
         case 3:
-            dist = FP_VECTOR3_XZ_DIST_SQR(arg2[0], chara->position_18);
+            dist = FP_2D_DISTANCE_SQR(arg2[0], chara->position_18);
             dist = SquareRoot0(dist);
 
             if (FP_METER(0.00925f) >= ABS(dist))
@@ -98,7 +98,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
         case 4:
             // Awkward interleaving.
             tmpAngle = ratan2(arg2[sharedData_800DF1F8_0_s00].vx - chara->position_18.vx, arg2[sharedData_800DF1F8_0_s00].vz - chara->position_18.vz);
-            dist = FP_VECTOR3_XZ_DIST_SQR(arg2[sharedData_800DF1F8_0_s00], chara->position_18);
+            dist = FP_2D_DISTANCE_SQR(arg2[sharedData_800DF1F8_0_s00], chara->position_18);
             sharedData_800DF1FA_0_s00 = ABS_ANGLE(tmpAngle);
             sharedData_800DF1F4_0_s00 = SquareRoot0(dist);
 
@@ -145,14 +145,14 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             chara->rotation_24.vy = ABS_ANGLE(chara->rotation_24.vy);
             tmpIdx = sharedData_800DF1F8_0_s00;
 
-            dist = SquareRoot0(FP_VECTOR3_XZ_DIST_SQR(arg2[tmpIdx], chara->position_18));
+            dist = SquareRoot0(FP_2D_DISTANCE_SQR(arg2[tmpIdx], chara->position_18));
 
             // TODO: Should be `arg1 * FP_METER(0.15f)`, but compiler splits out one distance for some reason.
             if (dist < (((arg1 - 1) * FP_METER(0.15f)) + FP_METER(0.15f)) >> 4 ||
                 (sharedData_800DF1F4_0_s00 < dist && sharedData_800DF1F8_0_s00 != arg4 - 1))
             {
                 sharedData_800DF1F8_0_s00++;
-                dist = SquareRoot0(FP_VECTOR3_XZ_DIST_SQR(arg2[sharedData_800DF1F8_0_s00], chara->position_18));
+                dist = SquareRoot0(FP_2D_DISTANCE_SQR(arg2[sharedData_800DF1F8_0_s00], chara->position_18));
 
                 if (sharedData_800DF1F8_0_s00 == arg4)
                 {
