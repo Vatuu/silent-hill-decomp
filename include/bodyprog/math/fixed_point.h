@@ -101,6 +101,10 @@
 #define FP_MULTIPLY_FLOAT_PRECISE(aInt, bFlt, shift) \
     FP_MULTIPLY((s64)(aInt), (s64)FP_FLOAT_TO(bFlt, shift), (shift))
 
+#define FP_VECTOR3_XZ_DIST_SQR(vec0, vec1)                               \
+    (((((vec1).vx - (vec0).vx) >> Q4_SHIFT) * (((vec1).vx - (vec0).vx) >> Q4_SHIFT)) + \
+     ((((vec1).vz - (vec0).vz) >> Q4_SHIFT) * (((vec1).vz - (vec0).vz) >> Q4_SHIFT)))
+
 // ==================================
 // RAW Q FORMAT CONVERSION AND UTILS
 // ==================================
@@ -289,6 +293,16 @@
  */
 #define FP_ANGLE_FROM_PACKED(deg) \
     Q0_8_TO_Q3_12(deg)
+
+/** @brief Normalizes signed fixed-point degrees in Q3.12 to the unsigned range `[0, 4095]`.
+ *
+ * @note Has the same effect as `FP_ANGLE_NORM_U`. Could they somehow be combined?
+ *
+ * @param deg Signed fixed-point degrees in Q3.12, integer range `[-2048, 2047]`.
+ * @return Unsigned fixed-point degrees in Q3.12, wrapped to the integer range `[0, 4095]` (`s16`).
+ */
+#define ABS_ANGLE(deg) \
+    QX_12_FRACT((deg) + FP_ANGLE(360.0f))
 
 /** @brief Normalizes unsigned fixed-point degrees in Q3.12 to the signed integer range `[-2048, 2047]`.
  *

@@ -3605,7 +3605,7 @@ s16 func_8006C248(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) // 0x8006C24
     }
 
     temp_lo = FP_TO(sp10.vx - SquareRoot0(SQUARE(arg4) - SQUARE(sp10.vy)), Q12_SHIFT) / arg1;
-    temp_lo = CLAMP(temp_lo, 0, 0x1000);
+    temp_lo = CLAMP(temp_lo, Q19_12(0.0f), Q19_12(1.0f));
 
     return temp_lo;
 }
@@ -3674,7 +3674,7 @@ void func_8006C45C(s_func_8006CC44* arg0) // 0x8006C45C
 
     var_v0    = arg0->field_98.vec_0.vx - arg0->vec_D2.vx;
     temp_v0_2 = arg0->field_98.vec_0.vz - arg0->vec_D2.vz;
-    temp_v0_3 = SquareRoot0((var_v0 * var_v0) + (temp_v0_2 * temp_v0_2));
+    temp_v0_3 = SquareRoot0(SQUARE(var_v0) + SQUARE(temp_v0_2));
 
     if (temp_v0_3 < arg0->field_D8.field_0 && arg0->field_D1 != 1 &&
         (arg0->field_C8 == 0xFF || arg0->vec_D2.vy < arg0->field_CA))
@@ -3694,7 +3694,7 @@ void func_8006C45C(s_func_8006CC44* arg0) // 0x8006C45C
         return;
     }
 
-    if (temp_v0_3 < temp_v0 + 8 && arg0->field_0_9)
+    if (temp_v0_3 < (temp_v0 + 8) && arg0->field_0_9)
     {
         func_8006C794(arg0, 1, temp_v0_3);
     }
