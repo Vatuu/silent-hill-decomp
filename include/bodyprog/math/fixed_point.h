@@ -146,7 +146,7 @@
 
 /** @brief Converts a fixed-point value from Q*.12 to Q*.8.
  *
- * @param x Fixed-point value in Q19.12 to convert.
+ * @param x Fixed-point value in Q*.12 to convert.
  * @return `x` converted to fixed-point Q*.8.
  */
 #define Q12_TO_Q8(x) \
