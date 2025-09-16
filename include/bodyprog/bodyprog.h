@@ -1724,7 +1724,7 @@ typedef struct
 typedef struct
 {
     char* field_0;               // `NULL`
-    char* padNearName_4;         // "PAD_NEAR"
+    char* savePadName_4;         // "PAD_NEAR"
     char* firstAidKitName_8;     // "AIDKIT_N"
     char* healthDrinkName_C;     // "DRINK_NE"
     char* ampouleName_10;        // "AMPULE_N"

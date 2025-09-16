@@ -6,8 +6,6 @@
 #include "game.h"
 #include "types.h"
 
-// TODO: Move to bodyprog, other maps also read from this.
-
 typedef struct
 {
     VECTOR3 vector_0;
