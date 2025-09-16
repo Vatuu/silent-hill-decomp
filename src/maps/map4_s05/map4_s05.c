@@ -139,13 +139,13 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
 
     chara->properties_E4.larvalStalker.properties_E8[0].val16[0] = 0;
 
-    chara->model_0.anim_4.alpha_A = QX_12(0.0f);
+    chara->model_0.anim_4.alpha_A = Q12(0.0f);
 
     // Set health.
-    chara->health_B0 = QX_12(4000.0f);
+    chara->health_B0 = Q12(4000.0f);
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
-        chara->health_B0 = QX_12(6000.0f);
+        chara->health_B0 = Q12(6000.0f);
     }
     else
     {
@@ -184,7 +184,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, FLOATSTINGER_ANIM_INFOS);
 
-    chara->damageReceived_C0 = QX_12(0.0f);
+    chara->damageReceived_C0 = Q12(0.0f);
     chara->field_BC          = 0;
     chara->field_B8          = 0;
     chara->field_B4          = 0;
@@ -206,16 +206,16 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
-        D_800D785C = QX_12(2.4f);
+        D_800D785C = Q12(2.4f);
         chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 0;
     }
     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        D_800D785C = QX_12(4.0f);
+        D_800D785C = Q12(4.0f);
     }
     else
     {
-        D_800D785C = QX_12(3.2f);
+        D_800D785C = Q12(3.2f);
     }
 }
 

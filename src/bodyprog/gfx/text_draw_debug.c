@@ -8,7 +8,7 @@
 
 DVECTOR g_Gfx_DebugStringPosition0 = {};
 DVECTOR g_Gfx_DebugStringPosition1 = {};
-q19_12 g_PrevScreenFadeProgress = QX_12(0.0f);
+q19_12 g_PrevScreenFadeProgress = Q12(0.0f);
 u32 D_800B5C2C = 0xD892383C;
 s32 g_ScreenFadeTimestep = 0;
 s32 g_VBlanks = 0;

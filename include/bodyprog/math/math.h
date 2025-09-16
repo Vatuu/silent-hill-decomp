@@ -15,7 +15,7 @@
  * @return `VECTOR3` in a fixed-point Q19.12 format.
  */
 #define VECTOR3(x, y, z) \
-    { QX_12(x), QX_12(y), QX_12(z) }
+    { Q12(x), Q12(y), Q12(z) }
 
 /** @brief Constructs an `SVECTOR` containing Euler angles in a fixed-point Q3.12 format.
  *

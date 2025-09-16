@@ -192,7 +192,7 @@ void Ai_MonsterCybil_Init(s_SubCharacter* chara, s_Model* extraModel) // 0x800D8
 
     extraModel->anim_4.flags_2 |= AnimFlag_Visible | AnimFlag_Unlocked;
 
-    chara->health_B0 = QX_12(4000.0f);
+    chara->health_B0 = Q12(4000.0f);
 
     g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[7].val16[0] = 10;
     g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[5].val16[1] = 0;
@@ -327,7 +327,7 @@ void Ai_Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINA
 
     if (chara->model_0.state_2 == 0)
     {
-        chara->model_0.anim_4.alpha_A = QX_12(0.0f);
+        chara->model_0.anim_4.alpha_A = Q12(0.0f);
         chara->model_0.state_2        = 1;
         chara->model_0.stateStep_3    = 0;
         Character_AnimSet(chara, ANIM_STATUS(1, true), 0);
@@ -366,7 +366,7 @@ void Ai_Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDIN
 
     if (chara->model_0.state_2 == 0)
     {
-        chara->model_0.anim_4.alpha_A = QX_12(0.0f);
+        chara->model_0.anim_4.alpha_A = Q12(0.0f);
         chara->model_0.state_2        = 1;
         chara->model_0.stateStep_3    = 0;
         Character_AnimSet(chara, ANIM_STATUS(1, true), 0);

@@ -1995,7 +1995,7 @@ static inline q19_12 Anim_TimeStepGet(s_Model* model, s_AnimInfo* animInfo)
         return FP_MULTIPLY_PRECISE(duration, g_DeltaTime0, Q12_SHIFT);
     }
 
-    return QX_12(0.0f);
+    return Q12(0.0f);
 }
 
 void Anim_Update0(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coords, s_AnimInfo* animInfo) // 0x800449F0
@@ -2016,12 +2016,12 @@ void Anim_Update0(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coords,
     // Compute new time and keyframe index.
     newTime        = model->anim_4.time_4;
     newKeyframeIdx = FP_FROM(newTime, Q12_SHIFT);
-    if (timeStep != QX_12(0.0f))
+    if (timeStep != Q12(0.0f))
     {
         newTime += timeStep;
 
         // Clamp new time to valid keyframe range.
-        endTime = QX_12(animInfo->endKeyframeIdx_E);
+        endTime = Q12(animInfo->endKeyframeIdx_E);
         if (newTime >= endTime)
         {
             newTime          = endTime;
@@ -2029,7 +2029,7 @@ void Anim_Update0(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coords,
         }
         else
         {
-            startTime = QX_12(animInfo->startKeyframeIdx_C);
+            startTime = Q12(animInfo->startKeyframeIdx_C);
             if (newTime <= startTime)
             {
                 newTime          = startTime;
@@ -2041,7 +2041,7 @@ void Anim_Update0(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coords,
     }
 
     // Update skeleton.
-    alpha = QX_12_FRACT(newTime);
+    alpha = Q12_FRACT(newTime);
     if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
         Anim_BoneUpdate(anmHeader, coords, newKeyframeIdx, newKeyframeIdx + 1, alpha);
@@ -2050,7 +2050,7 @@ void Anim_Update0(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coords,
     // Update frame data.
     model->anim_4.time_4        = newTime;
     model->anim_4.keyframeIdx_8 = newKeyframeIdx;
-    model->anim_4.alpha_A       = QX_12(0.0f);
+    model->anim_4.alpha_A       = Q12(0.0f);
 
     // Update anim status if anim started or ended.
     if (setNewAnimStatus)
@@ -2079,9 +2079,9 @@ void Anim_Update1(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     nextStartKeyframeIdx = endKeyframeIdx + 1;
     keyframeCount        = nextStartKeyframeIdx - startKeyframeIdx;
 
-    startTime     = QX_12(startKeyframeIdx);
-    nextStartTime = QX_12(nextStartKeyframeIdx);
-    duration      = QX_12(keyframeCount);
+    startTime     = Q12(startKeyframeIdx);
+    nextStartTime = Q12(nextStartKeyframeIdx);
+    duration      = Q12(keyframeCount);
 
     // Get time step.
     timeStep = Anim_TimeStepGet(model, animInfo);
@@ -2106,7 +2106,7 @@ void Anim_Update1(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     }
 
     // Update skeleton.
-    alpha = QX_12_FRACT(newTime);
+    alpha = Q12_FRACT(newTime);
     if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
         Anim_BoneUpdate(anmHeader, coord, newKeyframeIdx0, newKeyframeIdx1, alpha);
@@ -2115,7 +2115,7 @@ void Anim_Update1(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     // Update frame data.
     model->anim_4.time_4        = newTime;
     model->anim_4.keyframeIdx_8 = newKeyframeIdx0;
-    model->anim_4.alpha_A       = QX_12(0.0f);
+    model->anim_4.alpha_A       = Q12(0.0f);
 }
 
 void Anim_Update2(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044CA4
@@ -2142,22 +2142,22 @@ void Anim_Update2(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     // Update time to start or end keyframe, whichever is closest.
     alpha  = model->anim_4.alpha_A;
     alpha += timeStep;
-    if (alpha >= QX_12(0.5f))
+    if (alpha >= Q12(0.5f))
     {
-        model->anim_4.time_4 = QX_12(endKeyframeIdx);
+        model->anim_4.time_4 = Q12(endKeyframeIdx);
     }
     else
     {
-        model->anim_4.time_4 = QX_12(startKeyframeIdx);
+        model->anim_4.time_4 = Q12(startKeyframeIdx);
     }
 
     // Update frame data.
-    if (alpha >= QX_12(1.0f))
+    if (alpha >= Q12(1.0f))
     {
         startKeyframeIdx            = endKeyframeIdx;
         model->anim_4.keyframeIdx_8 = endKeyframeIdx;
         
-        alpha            = QX_12(0.0f);
+        alpha            = Q12(0.0f);
         setNewAnimStatus = true;
     }
 
@@ -2199,7 +2199,7 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     }
     else
     {
-        timeStep = QX_12(0.0f);
+        timeStep = Q12(0.0f);
     }
 
     // Update alpha.
@@ -2208,17 +2208,17 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     model->anim_4.alpha_A = alpha;
 
     // Compute ease-out alpha.
-    sinVal   = Math_Sin((alpha / 2) - QX_12(0.25f));
-    newAlpha = (sinVal / 2) + QX_12(0.5f);
+    sinVal   = Math_Sin((alpha / 2) - Q12(0.25f));
+    newAlpha = (sinVal / 2) + Q12(0.5f);
 
     // Update time to start or end keyframe, whichever is closest.
-    if (newAlpha >= QX_12(0.5f))
+    if (newAlpha >= Q12(0.5f))
     {
-        newTime = QX_12(startKeyframeIdx);
+        newTime = Q12(startKeyframeIdx);
     }
     else
     {
-        newTime = QX_12(endKeyframeIdx);
+        newTime = Q12(endKeyframeIdx);
     }
 
     alpha = newAlpha;

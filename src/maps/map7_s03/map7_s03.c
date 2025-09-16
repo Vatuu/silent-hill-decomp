@@ -263,7 +263,7 @@ void Ai_LittleIncubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCO
 
     if (chara->model_0.state_2 == 0)
     {
-        chara->model_0.anim_4.alpha_A = QX_12(0.0f);
+        chara->model_0.anim_4.alpha_A = Q12(0.0f);
         chara->model_0.state_2        = 1;
         chara->model_0.stateStep_3    = 0;
         Character_AnimSet(chara, ANIM_STATUS(1, true), 0);
@@ -579,16 +579,16 @@ bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
     u8              curStateStep;
     s_SubCharacter* localChara; // TODO: Not sure why this is needed here, could be an inline in this func.
 
-    chara->model_0.anim_4.alpha_A = QX_12(0.0f);
+    chara->model_0.anim_4.alpha_A = Q12(0.0f);
     localChara                    = chara;
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        chara->health_B0 = QX_12(30000.0f);
+        chara->health_B0 = Q12(30000.0f);
     }
     else
     {
-        chara->health_B0 = QX_12(40000.0f);
+        chara->health_B0 = Q12(40000.0f);
     }
 
     chara->moveSpeed_38     = 0;
@@ -627,7 +627,7 @@ bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
     Character_AnimSet(chara, ANIM_STATUS(3, false), 338);
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, INCUBUS_ANIM_INFOS);
 
-    chara->damageReceived_C0 = QX_12(0.0f);
+    chara->damageReceived_C0 = Q12(0.0f);
     chara->field_BC          = 0;
     chara->field_B8          = 0;
     chara->field_B4          = 0;
@@ -767,15 +767,15 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
 
     localChara = chara;
 
-    chara->model_0.anim_4.alpha_A = QX_12(0.0f);
+    chara->model_0.anim_4.alpha_A = Q12(0.0f);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        chara->health_B0 = QX_12(17995.605f); // TODO: Some percentage taken from 30000?
+        chara->health_B0 = Q12(17995.605f); // TODO: Some percentage taken from 30000?
     }
     else
     {
-        chara->health_B0 = QX_12(30000.0f);
+        chara->health_B0 = Q12(30000.0f);
     }
 
     chara->moveSpeed_38     = 0;
@@ -802,7 +802,7 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
     Character_AnimSet(chara, ANIM_STATUS(2, false), 115);
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, UNKKOWN_23_ANIM_INFOS);
 
-    chara->damageReceived_C0 = QX_12(0.0f);
+    chara->damageReceived_C0 = Q12(0.0f);
     chara->field_BC          = 0;
     chara->field_B8          = 0;
     chara->field_B4          = 0;

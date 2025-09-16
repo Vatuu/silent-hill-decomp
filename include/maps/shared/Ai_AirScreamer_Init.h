@@ -1,6 +1,6 @@
 bool Ai_AirScreamer_Init(s_SubCharacter* chara)
 {
-    #define AIR_SCREAMER_BASE_HEALTH QX_12(380.0f)
+    #define AIR_SCREAMER_BASE_HEALTH Q12(380.0f)
     #define AIR_SCREAMER_RAND_MAX    100
     #define NIGHT_FLUTTER_RAND_MAX   300
 

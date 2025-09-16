@@ -9,10 +9,9 @@
 // ARITHMETIC AND UTILS
 // =====================
 
-// TODO: `QX_12` and `QX_12` are niche and can probably be removed in favour of `QX_12`, and some others could be merged into one.
-// There are too many specialised FP macros already. -- Sezz
-
 /** @brief Converts an integer to a fixed-point Q format.
+ *
+ * @note Deprecated.
  *
  * @param x `int` to convert.
  * @param shift Fixed-point shift.
@@ -28,7 +27,7 @@
  * @return `x` converted to fixed-point (`s32`).
  */
 #define FP_FLOAT_TO(x, shift) \
-    (s32)((x) * FP_TO(1, shift))
+    (s32)((x) * (1 << (shift)))
 
 /** @brief Converts an integer from a fixed-point Q format.
  *
@@ -47,7 +46,7 @@
  * @return `x` rounded and converted from fixed-point.
  */
 #define FP_ROUND_SCALED(x, scale, shift) \
-    (((x) + ((FP_TO(1, shift) * (scale)) - 1)) / (FP_TO(1, shift) * (scale)))
+    (((x) + ((FP_FLOAT_TO(1.0f, shift) * (scale)) - 1)) / (FP_FLOAT_TO(1.0f, shift) * (scale)))
 
 /** @brief Converts an integer from a fixed-point Q format rounded toward 0.
  *
@@ -110,7 +109,7 @@
  * @param x Value to convert (`float`).
  * @return `x` converted to fixed-point Q*.4.
  */
-#define QX_4(x) \
+#define Q4(x) \
     FP_FLOAT_TO(x, Q4_SHIFT)
 
 /** @brief Converts a floating-point value to fixed-point Q*.8.
@@ -118,7 +117,7 @@
  * @param x Value to convert (`float`).
  * @return `x` converted to fixed-point Q*.8.
  */
-#define QX_8(x) \
+#define Q8(x) \
     FP_FLOAT_TO(x, Q8_SHIFT)
 
 /** @brief Converts a floating-point value to fixed-point Q*.12.
@@ -126,7 +125,7 @@
  * @param x Value to convert (`float`).
  * @return `x` converted to fixed-point Q*.12.
  */
-#define QX_12(x) \
+#define Q12(x) \
     FP_FLOAT_TO(x, Q12_SHIFT)
 
 /** @brief Converts a fixed-point value from Q*.4 to Q*.12.
@@ -134,7 +133,7 @@
  * @param x Fixed-point value in Q*.4 to convert.
  * @return `x` converted to fixed-point Q*.12.
  */
-#define QX_4_TO_QX_12(x) \
+#define Q4_TO_Q12(x) \
     ((x) << 8)
 
 /** @brief Converts a fixed-point value from Q*.8 to Q*.12.
@@ -142,7 +141,7 @@
  * @param x Fixed-point value in *.8 to convert.
  * @return `x` converted to fixed-point Q*.12.
  */
-#define QX_8_TO_QX_12(x) \
+#define Q8_TO_Q12(x) \
     ((x) << 4)
 
 /** @brief Converts a fixed-point value from Q0.8 to Q3.12.
@@ -150,7 +149,7 @@
  * @param x Fixed-point value in Q0.8 to convert.
  * @return `x` converted to fixed-point Q3.12 (`s16`).
  */
-#define Q0_8_TO_QX_12(x) \
+#define Q0_8_TO_Q12(x) \
     (s16)((x) << 4)
 
 /** @brief Converts a fixed-point value from Q*.12 to Q*.8.
@@ -158,15 +157,15 @@
  * @param x Fixed-point value in Q19.12 to convert.
  * @return `x` converted to fixed-point Q*.8.
  */
-#define QX_12_TO_QX_8(x) \
+#define Q12_TO_Q8(x) \
     ((x) >> 4)
 
-/** @brief Extracts the fractional part of a value in fixed-point QX.12.
+/** @brief Extracts the fractional part of a value in fixed-point Q*.12.
  *
- * @param x Fixed-point value in QX.12.
- * @return Fractional part of `x` in QX.12.
+ * @param x Fixed-point value in Q*.12.
+ * @return Fractional part of `x` in Q*.12.
  */
-#define QX_12_FRACT(x) \
+#define Q12_FRACT(x) \
     ((x) & 0xFFF)
 
 // =======================================
@@ -210,7 +209,7 @@
  * @return Unsigned fixed-point degrees in Q3.12, integer range `[0, 4096]` (`s16`).
  */
 #define FP_ANGLE(deg) \
-    (s16)((deg) * ((float)QX_12(1.0f) / 360.0f))
+    (s16)((deg) * ((float)Q12(1.0f) / 360.0f))
 
 /** @brief Converts floating-point degrees to unsigned fixed-point in Q0.8, integer range `[0, 255]`.
  *
@@ -231,7 +230,7 @@
  * @return Unsigned fixed-point degrees in Q0.8, integer range `[0, 255]` (`s16`).
  */
 #define FP_ANGLE_TO_PACKED(deg) \
-    QX_12_TO_QX_8(deg);
+    Q12_TO_Q8(deg);
 
 /** @brief Converts unsigned fixed-point degrees in Q0.8, integer range `[0, 255]` to
  * unsigned fixed-point Q3.12, integer range `[0, 4096]`.
@@ -240,7 +239,7 @@
  * @return Unsigned fixed-point degrees in Q3.12, integer range `[0, 4096]` (`s16`).
  */
 #define FP_ANGLE_FROM_PACKED(deg) \
-    Q0_8_TO_QX_12(deg)
+    Q0_8_TO_Q12(deg)
 
 /** @brief Normalizes unsigned fixed-point degrees in Q3.12 to the signed integer range `[-2048, 2047]`.
  *
@@ -279,7 +278,7 @@
  * @return Fixed-point world space meters in Q19.12 (`s32`).
  */
 #define FP_METER(met) \
-    QX_12(met)
+    Q12(met)
 
 /** @brief Converts floating-point meters to fixed-point geometry space Q23.8.
  *
@@ -289,7 +288,7 @@
  * @return Fixed-point geometry space meters in Q23.8 (`s32`).
  */
 #define FP_METER_GEO(met) \
-    QX_8(met)
+    Q8(met)
 
 /** @brief Converts fixed-point world space meters in Q19.12 to geometry space Q23.8.
  *
@@ -297,7 +296,7 @@
  * @return Fixed-point geometry space meters in Q23.8 (`s32`).
  */
 #define FP_METER_TO_GEO(met) \
-    QX_12_TO_QX_8(met)
+    Q12_TO_Q8(met)
 
 /** @brief Converts fixed-point geometry space meters in Q23.8 to world space Q19.12.
  *
@@ -305,7 +304,7 @@
  * @return Fixed-point world space meters in Q19.12 (`s32`).
  */
 #define FP_METER_FROM_GEO(met) \
-    QX_8_TO_QX_12(met)
+    Q8_TO_Q12(met)
 
 /** @brief Converts floating-point seconds to fixed-point Q19.12.
  *
@@ -315,6 +314,6 @@
  * @return Fixed-point seconds in Q19.12 (`s32`).
  */
 #define FP_TIME(sec) \
-    QX_12(sec)
+    Q12(sec)
 
 #endif

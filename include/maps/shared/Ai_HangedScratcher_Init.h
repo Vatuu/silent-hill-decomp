@@ -12,11 +12,11 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
         chara->properties_E4.larvalStalker.properties_E8[i].val32 = 0;
     }
 
-    chara->health_B0 = QX_12(350.0f);
+    chara->health_B0 = Q12(350.0f);
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
         // TODO: Weird health value, and not sure why `s64` is needed to match - maybe some `s64` multiply was optimized out?
-        healthHard       = QX_12(472.44873f);
+        healthHard       = Q12(472.44873f);
         chara->health_B0 = healthHard;
     }
 
@@ -27,7 +27,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, sharedData_800D91A0_5_s00);
 
-    chara->damageReceived_C0 = QX_12(0.0f);
+    chara->damageReceived_C0 = Q12(0.0f);
     chara->field_BC          = 0;
     chara->field_B8          = 0;
     chara->field_B4          = 0;

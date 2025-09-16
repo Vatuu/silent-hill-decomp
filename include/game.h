@@ -835,7 +835,7 @@ typedef struct _Savegame
     s16             pickedUpItemCount_23C;
     s8              field_23E;
     u8              field_23F;
-    q19_12          playerHealth_240;         /** Default: QX_12(100.0f) */
+    q19_12          playerHealth_240;         /** Default: Q12(100.0f) */
     q19_12          playerPositionX_244;
     q3_12           playerRotationY_248;      /** Range [0, 0.999755859375], positive Z: 0, clockwise rotation. It can be multiplied by 360 to get degrees. */
     u8              clearGameCount_24A;       /** Range [0, 99] */
@@ -1598,7 +1598,7 @@ static inline void Character_AnimSet(s_SubCharacter* chara, s32 animStatus, s32 
 {
     // TODO: Problem with header includes prevents `QX_12` macro use.
     chara->model_0.anim_4.status_0      = animStatus;
-    chara->model_0.anim_4.time_4        = keyframeIdx << 12;//QX_12(keyframeIdx);
+    chara->model_0.anim_4.time_4        = keyframeIdx << 12;//Q12(keyframeIdx);
     chara->model_0.anim_4.keyframeIdx_8 = keyframeIdx;
 }
 
