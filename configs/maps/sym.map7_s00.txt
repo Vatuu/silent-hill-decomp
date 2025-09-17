@@ -72,6 +72,7 @@ sharedFunc_800DA8E8_0_s01   = 0x800D0ACC; // type:func
 //----------------------------------------------------
 //--- PA: 0x00959C   VA: 0x800D2B14   subsegment: data
 //----------------------------------------------------
+HARRY_M7S00_ANIM_INFOS      = 0x800D2B14;
 sharedData_800DD59C_0_s00   = 0x800D2C9C; // type:u8
 KAUFMANN_ANIM_INFOS         = 0x800D2CA8; // type:AnimInfo
 sharedData_800DF1F4_0_s00   = 0x800D2EE8; // type:s32

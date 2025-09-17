@@ -88,6 +88,7 @@ sharedFunc_800D7758_1_s00 = 0x800D9E1C; // type:func
 //----------------------------------------------------
 //--- PA: 0x0157E0   VA: 0x800DED58   subsegment: data
 //----------------------------------------------------
+HARRY_M1S02_ANIM_INFOS    = 0x800DED58;
 sharedData_800DD78B_0_s01 = 0x800DF14F; // type:u8
 sharedData_800DD78C_0_s01 = 0x800DF150; // type:s32
 sharedData_800DD58C_0_s00 = 0x800DF154; // type:s32
@@ -132,4 +133,3 @@ sharedData_800E3A24_0_s00 = 0x800E57C0; // type:s32
 sharedData_800E3A28_0_s00 = 0x800E57C4; // type:s32
 sharedData_800E3A2C_0_s00 = 0x800E57C8; // type:s32
 sharedData_800E57CC_1_s02 = 0x800E57CC; // type:s8
-HARRY_M1S02_ANIM_INFOS = 0x800DED58;

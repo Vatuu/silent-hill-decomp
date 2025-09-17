@@ -251,7 +251,7 @@
  * @return Unsigned fixed-point degrees in Q3.12, wrapped to the integer range `[0, 4095]` (`s16`).
  */
 #define ABS_ANGLE(deg) \
-    QX_12_FRACT((deg) + FP_ANGLE(360.0f))
+    Q12_FRACT((deg) + FP_ANGLE(360.0f))
 
 /** @brief Normalizes unsigned fixed-point degrees in Q3.12 to the signed integer range `[-2048, 2047]`.
  *

@@ -3774,8 +3774,8 @@ void func_8006BCC4(s_func_8006CC44_44* arg0, s8* arg1, u32 arg2, s16 arg3, s16 a
     q7_8 angle0;
     q7_8 angle1;
 
-    angle0 = QX_12_FRACT(ratan2(arg4, arg3) - FP_ANGLE(89.0f));
-    angle1 = QX_12_FRACT(angle0 + FP_ANGLE(178.0f));
+    angle0 = Q12_FRACT(ratan2(arg4, arg3) - FP_ANGLE(89.0f));
+    angle1 = Q12_FRACT(angle0 + FP_ANGLE(178.0f));
 
     switch (arg2)
     {
