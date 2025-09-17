@@ -3091,7 +3091,7 @@ void func_80056244(s_LmHeader* lmHeader, bool flag);
 s32 func_80056348(bool (*arg0)(s_Material* mat), s_LmHeader* lmHeader);
 
 /** TODO: Unknown `arg3` type. */
-void func_80059D50(s32 arg0, s_800BCE18_2BEC_0* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4);
+void func_80059D50(s32 arg0, s_800BCE18_2BEC_0_0* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4);
 
 /** TODO: Unknown `arg2` type. */
 void func_8005A21C(s_800BCE18_2BEC_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat);

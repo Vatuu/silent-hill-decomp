@@ -1265,7 +1265,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80057B7C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005801C); // 0x8005801C
 
-void func_80059D50(s32 arg0, s_800BCE18_2BEC_0* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4) // 0x80059D50
+void func_80059D50(s32 arg0, s_800BCE18_2BEC_0_0* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4) // 0x80059D50
 {
     s_GteScratchData* scratchData;
     s_MeshHeader*     meshHeader;
@@ -1273,7 +1273,7 @@ void func_80059D50(s32 arg0, s_800BCE18_2BEC_0* arg1, MATRIX* mat, void* arg3, G
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    modelHeader = arg1->field_0.modelHdr_8;
+    modelHeader = arg1->modelHdr_8;
 
     for (meshHeader = &modelHeader->meshHeaders_C[0]; meshHeader < &modelHeader->meshHeaders_C[modelHeader->meshCount_8]; meshHeader++)
     {
@@ -2286,7 +2286,7 @@ void func_8005DD44(s32 sfx, VECTOR3* pos, s32 vol, s8 pitch) // 0x8005DD44
         volCpy = FP_VOLUME(1.0f);
     }
 
-    func_80046620(sfx & 0xFFFF, balance, ~volCpy & 0xFF, pitch);
+    func_80046620(sfx, balance, ~volCpy, pitch);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005DE0C); // 0x8005DE0C
@@ -4435,13 +4435,12 @@ void func_8006CF18(s_func_8006CC44* arg0, s_func_8006CF18* arg1, s32 arg2) // 0x
             var_a1 -= 0xF;
         }
 
-        arg0->field_98.field_0     = var_s2->field_0 >> 4;
-        arg0->field_9C.field_0     = var_s2->field_8 >> 4;
-        arg0->field_A0.s_1.field_0 = (var_s2->field_E + var_s2->field_4) >> 4;
+        arg0->field_98.field_0 = var_s2->position_0.vx >> 4;
+        arg0->field_9C.field_0 = var_s2->position_0.vz >> 4;
 
-        arg0->field_A0.s_1.field_2 = (var_s2->field_C + var_s2->field_4) >> 4;
+        arg0->field_A0.s_1.field_0 = (var_s2->field_E + var_s2->position_0.vy) >> 4;
+        arg0->field_A0.s_1.field_2 = (var_s2->field_C + var_s2->position_0.vy) >> 4;
         arg0->field_A0.s_1.field_4 = var_a1;
-
         arg0->field_A0.s_1.field_6 = var_s2->field_12;
         arg0->field_A0.s_1.field_8 = &var_s2->field_13;
 

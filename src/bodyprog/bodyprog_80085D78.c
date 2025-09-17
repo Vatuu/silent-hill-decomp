@@ -426,7 +426,7 @@ void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, bool arg3) // 0x800
 
             if (switchVar == 3 || switchVar == 6)
             {
-                Inventory_AddSpecialItem(itemId, itemCount & 0xFF);
+                Inventory_AddSpecialItem(itemId, itemCount);
             }
             break;
 

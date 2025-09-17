@@ -51,7 +51,7 @@ void GameState_LoadScreen_Update() // 0x800348E8
         D_800BCDD4++;
 
         // Doesn't trigger audio.
-        if ((D_800BCDD4 & 0xFF) >= 21)
+        if (D_800BCDD4 >= 21)
         {
             g_SysWork.flags_22A4 &= ~(1 << 10);
 
@@ -1618,7 +1618,7 @@ void func_80036E48(u16* arg0, s16* arg1) // 0x80036E48
 
                 if (var_t3 > 0)
                 {
-                    if (var_a2 != 0 && ((sp10[var_a2 >> 2] >> temp_a0) & 0xF) == 0xB && (var_t4 & 0xFF))
+                    if (var_a2 != 0 && ((sp10[var_a2 >> 2] >> temp_a0) & 0xF) == 0xB && var_t4)
                     {
                         var_a3 |= 0xB << temp_a0;
                     }

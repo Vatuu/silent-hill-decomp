@@ -40,7 +40,7 @@ After analysis has completed most functions should be identified and viewable in
 
 ### Parsing structs/function definitions from C headers
 
-Ghidra includes the ability to parse C headers into datatypes that are usable in the disassembly. However, it is unable to match functions with the function definitions from the header by itself, requiring a script is to make use of them.
+Ghidra includes the ability to parse C headers into datatypes that are usable in the disassembly. However, it is unable to match functions with the function definitions from the header by itself, requiring a script to make use of them.
 
 - Copy the [silent-hill-decomp.prf](/tools/ghidra_scripts/silent-hill-decomp.prf) file from the repo to Ghidra's `parserprofiles` folder.
 

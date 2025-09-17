@@ -3166,7 +3166,7 @@ bool Gfx_PickupItemAnimate(u8 itemId) // 0x80054AD8
     return g_Items_PickupAnimState > 0;
 }
 
-void Inventory_AddSpecialItem(u8 itemId, s32 itemCount) // 0x80054CAC
+void Inventory_AddSpecialItem(u8 itemId, u8 itemCount) // 0x80054CAC
 {
     switch (itemId)
     {

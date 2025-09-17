@@ -294,7 +294,7 @@ void Gfx_Inventory_CmdOptionsDraw(); // 0x8004E864
 
 void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId); // 0x8004EC7C
 
-bool func_8004EE94(u8 arg0, u8 arg1);
+bool func_8004EE94(u8 itemId, u8 arg1);
 
 s32 func_8004F190(s_Savegame* save);
 
@@ -358,6 +358,6 @@ void func_800548D8(s32 idx); // 0x800548D8
 
 void Gfx_Items_SetAmbientLighting(); // 0x80054928
 
-void Inventory_AddSpecialItem(u8 itemId, s32 itemCount); // 0x80054CAC
+void Inventory_AddSpecialItem(u8 itemId, u8 itemCount); // 0x80054CAC
 
 #endif
