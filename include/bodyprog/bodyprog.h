@@ -24,6 +24,13 @@
 #define IPD_HEADER_MAGIC       20  // 0x14 / 20
 #define LM_HEADER_MAGIC        '0' // 0x30 / 48 / '0'
 
+// ==============
+// HELPER MACROS
+// ==============
+
+/** @brief compare 8-character strings using u32 type. Return 0 when equal similarly to strcmp */
+#define cmp_filename(a, b) (((a).u32[0] != (b).u32[0]) || ((a).u32[1] != (b).u32[1]))
+
 // ======
 // ENUMS
 // ======

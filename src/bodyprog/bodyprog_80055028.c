@@ -859,7 +859,7 @@ bool func_80056CB4(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BE
     {
         for (i = 0, modelHeader = &lmHeader->modelHeaders_C[i]; i < modelHeaderCount; i++, modelHeader++)
         {
-            if (modelHeader->modelName_0.u32[0] == sp10.u32[0] && modelHeader->modelName_0.u32[1] == sp10.u32[1])
+            if (!cmp_filename(modelHeader->modelName_0, sp10))
             {
                 result        = true;
                 arg0->field_0.modelIdx_C = i;
@@ -1632,9 +1632,6 @@ void func_8005B1A0(s_Material_8* material_8, char* texName, u8 tPage0, u8 tPage1
     material_8->queueIdx_10 = NO_VALUE;
 }
 
-#define cmp_str(a, b)\
-    ((a->materialName_0.u32[0] != b->textureName_8.u32[0]) || (a->materialName_0.u32[1] != b->textureName_8.u32[1]))
-
 s_Material_8* func_8005B1FC(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, void* arg3, s32 arg4)
 {
     s8            fileName[12];
@@ -1653,7 +1650,7 @@ s_Material_8* func_8005B1FC(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9
     for (i = 0; i < arg1->count_0; i++)
     {
         tex = arg1->entries_4[i];
-        if (!cmp_str(mat, tex))
+        if (!cmp_filename(mat->materialName_0, tex->textureName_8))
         {
             mat->field_8 = tex;
             tex->field_14++;
