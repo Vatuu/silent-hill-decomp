@@ -24,6 +24,13 @@
 #define IPD_HEADER_MAGIC       20  // 0x14 / 20
 #define LM_HEADER_MAGIC        '0' // 0x30 / 48 / '0'
 
+// ==============
+// HELPER MACROS
+// ==============
+
+/** @brief compare 8-character strings using u32 type. Return 0 when equal similarly to strcmp */
+#define cmp_filename(a, b) (((a).u32[0] != (b).u32[0]) || ((a).u32[1] != (b).u32[1]))
+
 // ======
 // ENUMS
 // ======
@@ -937,8 +944,8 @@ typedef struct
 {
     s32            field_0;
     GsCOORDINATE2* field_4;
-    s_ModelHeader* field_8;
-    s32            field_C;
+    s_ModelHeader* modelHdr_8;
+    s32            modelIdx_C;
 } s_800BCE18_2BEC_0_0;
 
 // Probably Skeleton too.
@@ -1137,9 +1144,12 @@ STATIC_ASSERT_SIZEOF(s_800BCE18_0, 1376);
 
 typedef struct
 {
-    char string_0[8];
+    u_Filename modelName_0;
     s8   field_8;
-    s8   field_9;
+/* Set to 2 when found in D_800C1020.field_138.lmHeader_0.
+ * Set to 3-6 if found in D_800C1020.ipdTable_15C[i] (i + 3).
+ */
+    s8   lmIndex_9;
 } s_800BCE18_2BEC_0_10;
 
 typedef struct
@@ -3188,7 +3198,7 @@ s32 LmHeader_ModelCountGet(s_LmHeader* lmHeader);
 
 void func_80056C8C(s_Bone* bone, s_LmHeader* lmHeader, s32 modelHeaderIdx);
 
-bool func_80056CB4(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BEC_0_10* arg2);
+bool Lm_ModelFind(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BEC_0_10* arg2);
 
 void StringCopy(char* prevStr, char* newStr);
 

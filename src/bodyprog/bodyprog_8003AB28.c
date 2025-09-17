@@ -1088,10 +1088,10 @@ void func_8003C878(s32 arg0) // 0x8003C878
 
 void func_8003C8F8(s_800BCE18_2BEC_0* arg0, char* newStr) // 0x8003C8F8
 {
-    arg0->field_10.field_9 = 0;
+    arg0->field_10.lmIndex_9 = 0;
     arg0->field_0.field_0  = 0;
 
-    StringCopy(arg0->field_10.string_0, newStr);
+    StringCopy(arg0->field_10.modelName_0.str, newStr);
 
     arg0->field_10.field_8 = 0;
 }
@@ -1110,14 +1110,14 @@ void func_8003C92C(s_800BCE18_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* 
 
     if (D_800BCE18.field_2BE8 < 29)
     {
-        if (arg0->field_10.field_9 == 0)
+        if (arg0->field_10.lmIndex_9 == 0)
         {
             func_8003BED0();
             ret = func_8004287C(arg0, &arg0->field_10, g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz);
 
             if (ret == 0)
             {
-                if (!func_80056CB4(arg0, &D_800BCE18.field_1BE4, &arg0->field_10))
+                if (!Lm_ModelFind(arg0, &D_800BCE18.field_1BE4, &arg0->field_10))
                 {
                     return;
                 }
@@ -1127,7 +1127,7 @@ void func_8003C92C(s_800BCE18_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* 
                 }
             }
 
-            arg0->field_10.field_9 = ret;
+            arg0->field_10.lmIndex_9 = ret;
         } 
 
         coord0 = FP_METER_TO_GEO(pos->vx);
@@ -1216,27 +1216,26 @@ void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x800
     s_800BCE18_2BEC_0_10* temp_s1;
     s_ModelHeader*        temp_s2;
 
-    temp_a0 = arg0->field_10.field_9;
+    temp_a0 = arg0->field_10.lmIndex_9;
     if (!temp_a0)
     {
         return;
     }
 
-    temp_s2 = arg0->field_0.field_8;
+    temp_s2 = arg0->field_0.modelHdr_8;
     temp_s1 = &arg0->field_10;
 
     if (temp_a0 >= 3 && temp_a0 < 7)
     {
         if (!IpdHeader_IsLoaded(temp_a0 - 3))
         {
-            arg0->field_10.field_9 = 0;
+            arg0->field_10.lmIndex_9 = 0;
         }
     }
 
-    // TODO: Add some kind of 8-byte string compare inline/macro?
-    if (*(u64*)&temp_s1->string_0[0] != *(u64*)&temp_s2->modelName_0.str[0])
+    if (cmp_filename(temp_s1->modelName_0, temp_s2->modelName_0))
     {
-        arg0->field_10.field_9 = 0;
+        arg0->field_10.lmIndex_9 = 0;
         return;
     }
 

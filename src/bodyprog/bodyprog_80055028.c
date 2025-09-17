@@ -841,7 +841,7 @@ void func_80056C8C(s_Bone* bone, s_LmHeader* lmHeader, s32 modelHeaderIdx)
     }
 }
 
-bool func_80056CB4(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BEC_0_10* arg2) // 0x80056CB4
+bool Lm_ModelFind(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BEC_0_10* arg2) // 0x80056CB4
 {
     u_Filename     sp10;
     s32            modelHeaderCount;
@@ -851,7 +851,7 @@ bool func_80056CB4(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BE
 
     result = false;
 
-    StringCopy(sp10.str, arg2->string_0);
+    StringCopy(sp10.str, arg2->modelName_0.str);
 
     modelHeaderCount = lmHeader->modelCount_8;
 
@@ -859,11 +859,11 @@ bool func_80056CB4(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BE
     {
         for (i = 0, modelHeader = &lmHeader->modelHeaders_C[i]; i < modelHeaderCount; i++, modelHeader++)
         {
-            if (modelHeader->modelName_0.u32[0] == sp10.u32[0] && modelHeader->modelName_0.u32[1] == sp10.u32[1])
+            if (!cmp_filename(modelHeader->modelName_0, sp10))
             {
-                result        = true;
-                arg0->field_0.field_C = i;
-                arg0->field_0.field_8 = modelHeader;
+                result                   = true;
+                arg0->field_0.modelIdx_C = i;
+                arg0->field_0.modelHdr_8 = modelHeader;
                 // TODO: `field_8` above used to be `s_800BCE18_2BEC_0_10*`, but this func showed it was `s_ModelHeader*`
                 // Unsure if all `s_800BCE18_2BEC_0_10` refs should be changed though since struct is different size.
             }
@@ -888,7 +888,7 @@ void func_80057090(s_800BCE18_2BEC_0_0* arg0, GsOT* arg1, void* arg2, MATRIX* ma
     GsOT_TAG*      temp_s1;
     s32            temp_a0;
 
-    modelHeader = arg0->field_8;
+    modelHeader = arg0->modelHdr_8;
 
     if (arg0->field_0 < 0)
     {
@@ -981,7 +981,7 @@ void func_80057344(s_800BCE18_2BEC_0* arg0, GsOT_TAG* arg1, void* arg2, MATRIX* 
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    modelHeader  = arg0->field_0.field_8;
+    modelHeader  = arg0->field_0.modelHdr_8;
     vertexOffset = modelHeader->vertexOffset_9;
     normalOffset = modelHeader->normalOffset_A;
 
@@ -1275,7 +1275,7 @@ void func_80059D50(s32 arg0, s_800BCE18_2BEC_0* arg1, MATRIX* mat, void* arg3, G
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    modelHeader = arg1->field_0.field_8;
+    modelHeader = arg1->field_0.modelHdr_8;
 
     for (meshHeader = &modelHeader->meshHeaders_C[0]; meshHeader < &modelHeader->meshHeaders_C[modelHeader->meshCount_8]; meshHeader++)
     {
@@ -1335,7 +1335,7 @@ void func_8005A21C(s_800BCE18_2BEC_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX*
             break;
     }
 
-    modelHeader  = arg0->field_0.field_8;
+    modelHeader  = arg0->field_0.modelHdr_8;
     vertexOffset = modelHeader->vertexOffset_9;
     normalOffset = modelHeader->normalOffset_A;
 
@@ -1632,9 +1632,6 @@ void func_8005B1A0(s_Material_8* material_8, char* texName, u8 tPage0, u8 tPage1
     material_8->queueIdx_10 = NO_VALUE;
 }
 
-#define cmp_str(a, b)\
-    ((a->materialName_0.u32[0] != b->textureName_8.u32[0]) || (a->materialName_0.u32[1] != b->textureName_8.u32[1]))
-
 s_Material_8* func_8005B1FC(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, void* arg3, s32 arg4)
 {
     s8            fileName[12];
@@ -1653,7 +1650,7 @@ s_Material_8* func_8005B1FC(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9
     for (i = 0; i < arg1->count_0; i++)
     {
         tex = arg1->entries_4[i];
-        if (!cmp_str(mat, tex))
+        if (!cmp_filename(mat->materialName_0, tex->textureName_8))
         {
             mat->field_8 = tex;
             tex->field_14++;
