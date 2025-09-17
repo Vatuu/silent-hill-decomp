@@ -1139,7 +1139,7 @@ typedef struct
 {
     char string_0[8];
     s8   field_8;
-    s8   field_9;
+    s8   loaded_9;
 } s_800BCE18_2BEC_0_10;
 
 typedef struct
