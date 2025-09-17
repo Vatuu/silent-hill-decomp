@@ -25,7 +25,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
     chara->headingAngle_3C = chara->rotation_24.vy;
     chara->rotation_24.vx  = 0;
 
-    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, sharedData_800D91A0_5_s00);
+    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, HANGED_SCRATCHER_ANIM_INFOS);
 
     chara->damageReceived_C0 = Q12(0.0f);
     chara->field_BC          = 0;

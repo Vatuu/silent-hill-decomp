@@ -19,7 +19,7 @@ void Ai_Splithead_Init(s_SubCharacter* chara)
     chara->model_0.anim_4.time_4         = FP_TIME(162.0f);
     chara->model_0.anim_4.keyframeIdx_8 = 162;
 
-    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, sharedData_800D5888_1_s05);
+    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, SPLITHEAD_ANIM_INFOS);
 
     sharedData_800D8614_1_s05 = 0;
     sharedData_800D8616_1_s05 = 0;

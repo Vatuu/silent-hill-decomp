@@ -132,8 +132,8 @@ sharedData_800DF158_1_s02   = 0x800ED658; // type:u8
 sharedData_800DD59C_0_s00   = 0x800ED660; // type:u8
 sharedData_800DD870_0_s01   = 0x800ED764; // type:VECTOR3 size:0xC
 sharedData_800DD880_0_s01   = 0x800ED774; // type:VECTOR3 size:0xC
-sharedData_800EEB14_2_s00   = 0x800ED784; // type:s32 unknown type
-sharedData_800EC954_2_s02   = 0x800EF24C; // type:s32 unknown type
+GROANER_ANIM_INFOS          = 0x800ED784; // type:s32 unknown type
+ROPMER_ANIM_INFOS           = 0x800EF24C; // type:s32 unknown type
 
 //---------------------------------------------------------------
 //--- PA: 0x026934   VA: 0x800EFEAC   subsegment: .data, map6_s00

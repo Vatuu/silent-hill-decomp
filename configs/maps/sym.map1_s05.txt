@@ -66,7 +66,7 @@ sharedFunc_800D7758_1_s00 = 0x800D48AC; // type:func
 //----------------------------------------------------
 HARRY_M1S05_ANIM_INFOS    = 0x800D5684;
 sharedData_800DD59C_0_s00 = 0x800D5878; // type:u8
-sharedData_800D5888_1_s05 = 0x800D5888; // type:s32 unknown type
+SPLITHEAD_ANIM_INFOS      = 0x800D5888; // type:s32 unknown type
 sharedData_800DCC14_1_s00 = 0x800D5C04; // type:u8
 
 //---------------------------------------------------------------
