@@ -37,13 +37,13 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 
         if (extra->model_0.stateStep_3 == 0)
         {
-            extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Idle, false);
+            extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_Idle, false);
             extra->model_0.stateStep_3++;
         }
 
         if (playerChara->model_0.stateStep_3 == 0)
         {
-            playerChara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Idle, false);
+            playerChara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_Idle, false);
             playerChara->model_0.stateStep_3++;
         }
 

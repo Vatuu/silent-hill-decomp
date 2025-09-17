@@ -81,9 +81,9 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
                     modelPtr1      = &g_SysWork.player_4C.chara_0.model_0;
                     extraModelPtr1 = &g_SysWork.player_4C.extra_128.model_0;
 
-                    modelPtr1->anim_4.status_0                        = ANIM_STATUS(PlayerAnim_TransitionToStill, true);
+                    modelPtr1->anim_4.status_0                        = ANIM_STATUS(HarryAnim_TransitionToStill, true);
                     modelPtr1->anim_4.keyframeIdx_8                   = 0;
-                    extraModelPtr1->anim_4.status_0                   = ANIM_STATUS(PlayerAnim_TransitionToStill, true);
+                    extraModelPtr1->anim_4.status_0                   = ANIM_STATUS(HarryAnim_TransitionToStill, true);
                     extraModelPtr1->anim_4.keyframeIdx_8              = 0;
 
                     g_SysWork.player_4C.chara_0.model_0.state_2       = 0;
