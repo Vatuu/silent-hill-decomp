@@ -13,12 +13,12 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
     sharedData_800D32A0_0_s02 = 0;
     sharedData_800E39D8_0_s00 = 0;
 
-    playerChara->properties_E4.player.field_10C = (playerChara->properties_E4.player.field_10C >> 1);
+    playerChara->properties_E4.player.field_10C >>= 1;
     g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = 0;
 
     func_8004C564(0, -1);
 
-    playerChara->properties_E4.player.afkTimer_E8      = FP_TIME(0.0f);
+    playerChara->properties_E4.player.afkTimer_E8        = FP_TIME(0.0f);
     playerChara->properties_E4.player.exhaustionTimer_FC = FP_TIME(0.0f);
 
     if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_Unk52)
@@ -37,13 +37,13 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 
         if (extra->model_0.stateStep_3 == 0)
         {
-            extra->model_0.anim_4.status_0 = ANIM_STATUS(26, false);
+            extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Idle, false);
             extra->model_0.stateStep_3++;
         }
 
         if (playerChara->model_0.stateStep_3 == 0)
         {
-            playerChara->model_0.anim_4.status_0 = ANIM_STATUS(26, false);
+            playerChara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Idle, false);
             playerChara->model_0.stateStep_3++;
         }
 
@@ -56,22 +56,22 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
         {
             case 3:
                 g_SysWork.player_4C.extra_128.state_1C         = PlayerState_Unk56;
-				playerChara->model_0.stateStep_3               = 0;
-				playerChara->model_0.state_2                   = 0;
-				extra->model_0.stateStep_3                     = 0;
-				extra->model_0.state_2                         = 0;
-				g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
-				g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
+                playerChara->model_0.stateStep_3               = 0;
+                playerChara->model_0.state_2                   = 0;
+                extra->model_0.stateStep_3                     = 0;
+                extra->model_0.state_2                         = 0;
+                g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
+                g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                 break;
 
             case 4:
                 g_SysWork.player_4C.extra_128.state_1C          = PlayerState_Unk57;
-				playerChara->model_0.stateStep_3                = 0;
-				playerChara->model_0.state_2                    = 0;
-				extra->model_0.stateStep_3                      = 0;
-				extra->model_0.state_2                          = 0;
-				g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
-				g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
+                playerChara->model_0.stateStep_3                = 0;
+                playerChara->model_0.state_2                    = 0;
+                extra->model_0.stateStep_3                      = 0;
+                extra->model_0.state_2                          = 0;
+                g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
+                g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                 break;
         }
 
