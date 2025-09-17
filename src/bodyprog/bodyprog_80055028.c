@@ -2878,10 +2878,10 @@ s32 func_80069FFC(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara) // 0x8
 
     switch (chara->model_0.charaId_0)
     {
-        case 1:
-        case 4:
-        case 5:
-        case 12:
+        case Chara_Harry:
+        case Chara_Groaner:
+        case Chara_Wormhead:
+        case Chara_Romper:
             var_s1 = 1;
             break;
 
@@ -2910,7 +2910,7 @@ s_SubCharacter** func_8006A1A4(s32* arg0, s_SubCharacter* chara, s32 arg2) // 0x
     s_SubCharacter* otherChara;
 
     if (chara != NULL &&
-        (chara->model_0.charaId_0 == 0 || chara->field_E1_0 == 0 || (chara->field_E1_0 == 1 && arg2 == 1)))
+        (chara->model_0.charaId_0 == Chara_None || chara->field_E1_0 == 0 || (chara->field_E1_0 == 1 && arg2 == 1)))
     {
         *arg0 = 0;
         return &D_800C4458;
@@ -2921,7 +2921,7 @@ s_SubCharacter** func_8006A1A4(s32* arg0, s_SubCharacter* chara, s32 arg2) // 0x
 
     for (otherChara = &g_SysWork.npcs_1A0[0]; otherChara < &g_SysWork.npcs_1A0[NPC_COUNT_MAX]; otherChara++)
     {
-        if (otherChara->model_0.charaId_0 != 0)
+        if (otherChara->model_0.charaId_0 != Chara_None)
         {
             if (otherChara->field_E1_0 != 0 &&
                 (otherChara->field_E1_0 != 1 || arg2 != 1) &&
@@ -2937,7 +2937,7 @@ s_SubCharacter** func_8006A1A4(s32* arg0, s_SubCharacter* chara, s32 arg2) // 0x
     }
 
     otherChara = &g_SysWork.player_4C.chara_0;
-    if (otherChara->model_0.charaId_0 != 0)
+    if (otherChara->model_0.charaId_0 != Chara_None)
     {
         if (otherChara->field_E1_0 != 0 &&
             (otherChara->field_E1_0 != 1 || arg2 != 1) &&
@@ -3188,7 +3188,7 @@ void func_8006A940(VECTOR3* arg0, s_func_8006AB50* arg1, s_SubCharacter** arg2, 
         var_v0 = MAX(var_a0, 0);
         var_a0 = var_v0;
 
-        if (temp_s0->model_0.charaId_0 == 0xA)
+        if (temp_s0->model_0.charaId_0 == Chara_HangedScratcher)
         {
             var_a0 = MIN(var_a0, 0x999);
         }

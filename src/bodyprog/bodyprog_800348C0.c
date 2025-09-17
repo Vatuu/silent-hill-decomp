@@ -2729,8 +2729,8 @@ void SysState_ReadMessage_Update(s32 arg0) // 0x80039FB8
     {
         for (i = 0; i < NPC_COUNT_MAX; i++) 
         {
-            charaId = (u8)g_SysWork.npcs_1A0[i].model_0.charaId_0 - 1;
-            if (charaId < Chara_MonsterCybil && g_SysWork.npcs_1A0[i].health_B0 > FP_FLOAT_TO(0.0f, Q12_SHIFT))
+            if (g_SysWork.npcs_1A0[i].model_0.charaId_0 >= Chara_Harry && g_SysWork.npcs_1A0[i].model_0.charaId_0 <= Chara_MonsterCybil &&
+                g_SysWork.npcs_1A0[i].health_B0 > Q12(0.0f))
             {
                 break;
             }

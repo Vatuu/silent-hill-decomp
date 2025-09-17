@@ -8320,7 +8320,11 @@ bool func_8007F95C() // 0x8007F95C
         {
             if (ptr0->model_0.charaId_0 != Chara_None)
             {
-                if (ptr0->model_0.charaId_0 != Chara_AirScreamer && ptr0->model_0.charaId_0 != Chara_NightFlutter)
+                if (ptr0->model_0.charaId_0 == Chara_AirScreamer || ptr0->model_0.charaId_0 == Chara_NightFlutter)
+                {
+                    radius = FP_METER(1.2f);
+                }
+                else
                 {
                     if (ptr0->model_0.charaId_0 == Chara_Creaper)
                     {
@@ -8330,10 +8334,6 @@ bool func_8007F95C() // 0x8007F95C
                     {
                         radius = FP_METER(0.85f);
                     }
-                }
-                else
-                {
-                    radius = FP_METER(1.2f);
                 }
 
                 pos1.vx = ptr1->position_18.vx + ptr1->field_D8.field_0;
