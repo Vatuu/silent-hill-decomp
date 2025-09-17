@@ -937,8 +937,8 @@ typedef struct
 {
     s32            field_0;
     GsCOORDINATE2* field_4;
-    s_ModelHeader* field_8;
-    s32            field_C;
+    s_ModelHeader* modelHdr_8;
+    s32            modelIdx_C;
 } s_800BCE18_2BEC_0_0;
 
 // Probably Skeleton too.
@@ -1137,7 +1137,7 @@ STATIC_ASSERT_SIZEOF(s_800BCE18_0, 1376);
 
 typedef struct
 {
-    char string_0[8];
+    u_Filename objName_0;
     s8   field_8;
     s8   loaded_9;
 } s_800BCE18_2BEC_0_10;

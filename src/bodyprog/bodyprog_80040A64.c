@@ -1731,8 +1731,8 @@ void func_80044090(s_IpdHeader* ipdHeader, s32 arg1, s32 arg2, GsOT* ot, void* a
         {
             for (var_s0 = temp_s2->field_C; var_s0 < &temp_s2->field_C[temp_s2->field_0]; var_s0++)
             {
-                sp18.field_8 = var_s0->modelHeader_0;
-                if (sp18.field_8 != NULL)
+                sp18.modelHdr_8 = var_s0->modelHeader_0;
+                if (sp18.modelHdr_8 != NULL)
                 {
                     sp28.workm       = var_s0->field_4;
                     sp28.workm.t[0] += temp_s5;
@@ -2392,7 +2392,7 @@ void func_800452EC(s_Skeleton* skel) // 0x800452EC
 
     while (var_a1)
     {
-        temp_v0 = var_a1->field_0.field_8;
+        temp_v0 = var_a1->field_0.modelHdr_8;
         temp_v1 = temp_v0->modelName_0.str[1] - '0';
         temp_a0 = temp_v0->modelName_0.str[0] - '0';
 
