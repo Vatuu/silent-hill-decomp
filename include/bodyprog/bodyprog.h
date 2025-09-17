@@ -290,17 +290,17 @@ typedef struct
 {
     s8  field_0;
     s8  unk_1[23];
-    s32 field_18;
-    s32 field_1C;
-    s32 field_20;
+    s32 field_18; // X } Position or offset?
+    s32 field_1C; //   }
+    s32 field_20; // Z }
     s8  unk_24[164];
     s16 field_C8;
     s16 field_CA;
     s8  unk_CC[8];
     s16 field_D4;
     s8  unk_D6[6];
-    s16 field_DC;
-    s16 field_DE;
+    s16 field_DC; // X } Rotation?
+    s16 field_DE; // Z }
     s8  field_E0;
     s8  field_E1_0 : 4;
     u8  field_E1_4 : 4;
@@ -849,7 +849,7 @@ typedef struct
 typedef struct
 {
     s_IpdCollisionData*   field_0;
-    u8                    field_4;
+    u8                    field_4; // Index.
     u8                    field_5;
     SVECTOR3              field_6;
     s_func_8006CC44_CC_C  field_C;
@@ -3596,7 +3596,7 @@ s32 func_8006A42C(s32 arg0, VECTOR3* arg1, s32 arg2);
 
 s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* arg1, s_func_8006AB50* arg2, s32 arg3, s_IpdCollisionData** arg4, s32 arg5, s_func_8006CF18* arg6, s32 arg7, s_func_8006A940** arg8, s32 arg9);
 
-void func_8006A940(VECTOR3* arg0, s_func_8006AB50* arg1, s_func_8006A940** arg2, s32 arg3);
+void func_8006A940(VECTOR3* pos, s_func_8006AB50* arg1, s_func_8006A940** arg2, s32 count);
 
 void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* vec, s_func_8006AB50* arg2, s32 arg3);
 
@@ -3604,18 +3604,18 @@ void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2)
 
 void func_8006AD44(s_func_8006CC44* arg0, s_IpdCollisionData* collData);
 
-s32 func_8006AEAC(s_func_8006CC44* arg0, s_IpdCollisionData* arg1);
+bool func_8006AEAC(s_func_8006CC44* arg0, s_IpdCollisionData* collData);
 
 bool func_8006B004(s_func_8006CC44* arg0, s_IpdCollisionData* collData);
 
 void func_8006B1C8(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s_IpdCollisionData_20* arg2);
 
-s32 func_8006B318(s_func_8006CC44* arg0, s_IpdCollisionData* arg1, s32 arg2);
+bool func_8006B318(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s32 idx);
 
 /** `arg1` is unused, but `func_8006B1C8` passes second arg to this. */
 void func_8006B6E8(s_func_8006CC44* arg0, s_IpdCollisionData_20* arg1);
 
-s32 func_8006B7E0(s_func_8006CC44_A8* arg0, s_func_8006CC44_CC_20* arg1);
+bool func_8006B7E0(s_func_8006CC44_A8* arg0, s_func_8006CC44_CC_20* arg1);
 
 void func_8006B8F8(s_func_8006CC44_CC* arg0);
 
