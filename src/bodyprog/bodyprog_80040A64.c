@@ -535,7 +535,7 @@ void func_80041C24(s_LmHeader* lmHeader, s32 arg1, s32 arg2) // 0x80041C24
     D_800C1020.field_150 = arg1;
     D_800C1020.field_154 = arg2;
     D_800C1020.ipdTableSize_158 = 0;
-    D_800C1020.field_588 = 1;
+    D_800C1020.hasGlobalPlm = 1;
 
     func_80041D10(D_800C1020.ipdTable_15C, 4);
     func_80041D48();
@@ -712,7 +712,7 @@ s_Material_8* func_80042178(char* arg0) // 0x80042178
 
 void func_800421D8(char* mapTag, s32 plmIdx, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x800421D8
 {
-    D_800C1020.field_588 = arg3;
+    D_800C1020.hasGlobalPlm = arg3;
     D_800C1020.field_134 = arg5;
 
     if (plmIdx != NO_VALUE)
@@ -983,7 +983,7 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
             continue;
         }
 
-        if (D_800C1020.field_588 == 0)
+        if (D_800C1020.hasGlobalPlm == 0)
         {
             if (ptr1->field_8 == xIdx && ptr1->field_A == zIdx)
             {
@@ -1138,24 +1138,24 @@ s32 func_80042EBC(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0
     arg0->field_580 = temp_v0;
     arg0->field_584 = var_v1;
 
-    func_800431E4(arg0, arg1, arg2, arg3, arg4, arg0->field_588);
+    func_800431E4(arg0, arg1, arg2, arg3, arg4, arg0->hasGlobalPlm);
     func_800433B8(arg0);
 
     for (i = NO_VALUE; i < 2; i++)
     {
         for (j = NO_VALUE; j < 2; j++)
         {
-            if (arg0->field_588 != 0 || (j == 0 && i == 0))
+            if (arg0->hasGlobalPlm != 0 || (j == 0 && i == 0))
             {
                 temp_s3 = sp2C + i;
                 temp_s1 = sp28 + j;
 
                 temp_v0_2 = func_80043554(temp_s1, temp_s3);
                 if (temp_v0_2 != NO_VALUE &&
-                    func_80042DE8(arg1, arg2, temp_s1, temp_s3, arg0->field_588) <= 0 &&
+                    func_80042DE8(arg1, arg2, temp_s1, temp_s3, arg0->hasGlobalPlm) <= 0 &&
                     !func_80043578(&arg0->ipdTable_15C[0], temp_s1, temp_s3))
                 {
-                    temp_v0_3 = func_800435E4(&arg0->ipdTable_15C[0], arg0->field_588);
+                    temp_v0_3 = func_800435E4(&arg0->ipdTable_15C[0], arg0->hasGlobalPlm);
 
                     if (Fs_QueueEntryLoadStatusGet(temp_v0_3->queueEntryIdx_4) >= 2)
                     {
@@ -1166,7 +1166,7 @@ s32 func_80042EBC(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0
                         }
                     }
 
-                    temp_v0_4 = func_800436D8(temp_v0_3, temp_v0_2, temp_s1, temp_s3, arg1, arg2, arg3, arg4, arg0->field_588);
+                    temp_v0_4 = func_800436D8(temp_v0_3, temp_v0_2, temp_s1, temp_s3, arg1, arg2, arg3, arg4, arg0->hasGlobalPlm);
                     if (temp_v0_4 != NO_VALUE)
                     {
                         sp30 = temp_v0_4;
@@ -1442,7 +1442,7 @@ bool func_8004393C(s32 posX, s32 posZ) // 0x8004393C
     fileChunkCoordX = FLOOR_TO_STEP(FP_METER_TO_GEO(posX), FP_METER_GEO(40.0f));
     fileChunkCoordZ = FLOOR_TO_STEP(FP_METER_TO_GEO(posZ), FP_METER_GEO(40.0f));
     
-    if (D_800C1020.field_588 != 0)
+    if (D_800C1020.hasGlobalPlm != 0)
     {
         return func_80042E2C(FP_METER_TO_GEO(D_800C1020.field_578), FP_METER_TO_GEO(D_800C1020.field_57C), fileChunkCoordX, fileChunkCoordZ) <= FP_METER_GEO(4.5f);
     }
@@ -1491,7 +1491,7 @@ bool func_80043B34(s_800C117C* arg0, s_800C1020* arg1)
         return true;
     }
 
-    return arg1->field_588 != 0;
+    return arg1->hasGlobalPlm != 0;
 }
 
 bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHeader) // 0x80043B70

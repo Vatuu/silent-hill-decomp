@@ -1207,7 +1207,10 @@ typedef struct
     s32                field_57C;
     s32                field_580; // File chunk coord X.
     s32                field_584; // File chunk coord Z.
-    s32                field_588;
+    /* Might mean something else, it depends on the flags_6 in MapType
+     * but the only maps that have the required flag set are maps with global plm
+     */
+    s32                hasGlobalPlm;
 } s_800C1020;
 STATIC_ASSERT_SIZEOF(s_800C1020, 1420);
 
