@@ -851,7 +851,7 @@ bool Lm_ModelFind(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BEC
 
     result = false;
 
-    StringCopy(sp10.str, arg2->objName_0.str);
+    StringCopy(sp10.str, arg2->modelName_0.str);
 
     modelHeaderCount = lmHeader->modelCount_8;
 

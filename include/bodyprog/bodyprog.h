@@ -1144,7 +1144,7 @@ STATIC_ASSERT_SIZEOF(s_800BCE18_0, 1376);
 
 typedef struct
 {
-    u_Filename objName_0;
+    u_Filename modelName_0;
     s8   field_8;
 /* Set to 2 when found in D_800C1020.field_138.lmHeader_0.
  * Set to 3-6 if found in D_800C1020.ipdTable_15C[i] (i + 3).
