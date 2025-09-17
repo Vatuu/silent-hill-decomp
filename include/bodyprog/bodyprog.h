@@ -1146,7 +1146,10 @@ typedef struct
 {
     u_Filename objName_0;
     s8   field_8;
-    s8   loaded_9;
+/* Set to 2 when found in D_800C1020.field_138.lmHeader_0.
+ * Set to 3-6 if found in D_800C1020.ipdTable_15C[i] (i + 3).
+ */
+    s8   lmIndex_9;
 } s_800BCE18_2BEC_0_10;
 
 typedef struct
