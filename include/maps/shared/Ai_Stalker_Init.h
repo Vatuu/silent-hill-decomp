@@ -102,7 +102,7 @@ void Ai_Stalker_Init(s_SubCharacter* chara)
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, STALKER_ANIM_INFOS);
 
-    chara->damageReceived_C0 = FP_HEALTH(0.0f);
+    chara->damageReceived_C0 = Q12(0.0f);
     chara->field_BC          = 0;
     chara->field_B8          = 0;
     chara->field_B4          = 0;

@@ -385,7 +385,7 @@ void func_80055E90(CVECTOR* color, u8 fadeAmount) // 0x80055E90
     s32 alpha;
     u8  prev_cd;
 
-    alpha = FP_ALPHA(1.0f) - (fadeAmount * 32);
+    alpha = Q12(1.0f) - (fadeAmount * 32);
 
     // Works similar to `gte_DpqColor` macro, but `gte_lddp`/`gte_ldrgb` are in wrong order?
 
@@ -1354,7 +1354,7 @@ void func_8005A21C(s_800BCE18_2BEC_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX*
 
 void func_8005A42C(s_GteScratchData* scratchData, s32 arg1) // 0x8005A42C
 {
-    s32 alpha = FP_ALPHA(1.0f) - FP_MULTIPLY(arg1, D_800C4168.field_20, Q12_SHIFT);
+    s32 alpha = Q12(1.0f) - FP_MULTIPLY(arg1, D_800C4168.field_20, Q12_SHIFT);
 
     gte_lddp(alpha);
     gte_ldrgb(&D_800C4168.worldTintColor_28);
@@ -1922,7 +1922,7 @@ u32 func_8005C478(s16* arg0, s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2) // 
 
     if (arg0 != NULL)
     {
-        *arg0 = Q19_12(1.0f);
+        *arg0 = Q12(1.0f);
     }
 
     return ABS(mag1);
@@ -2096,7 +2096,7 @@ s32 func_8005D86C(s32 arg0) // 0x8005D86C
     s32 temp_a3;
     s32 temp;
 
-    temp    = QX_12_FRACT(arg0);
+    temp    = Q12_FRACT(arg0);
     temp_a1 = FP_FROM(arg0, Q12_SHIFT);
 
     if (temp_a1 >= 12)
@@ -2133,7 +2133,7 @@ s32 func_8005D86C(s32 arg0) // 0x8005D86C
             var_v1 <<= -temp_a1;
         }
 
-        var_a0 = FP_MULTIPLY_PRECISE(var_a0, Q19_12(1.0f) - temp_a2, Q12_SHIFT) + FP_MULTIPLY_PRECISE(var_v1, temp_a2, Q12_SHIFT);
+        var_a0 = FP_MULTIPLY_PRECISE(var_a0, Q12(1.0f) - temp_a2, Q12_SHIFT) + FP_MULTIPLY_PRECISE(var_v1, temp_a2, Q12_SHIFT);
     }
 
     return var_a0;
@@ -4674,9 +4674,9 @@ void func_8006D600(VECTOR3* pos, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x80
 
     // TODO: Angles here.
 
-    temp_s0 = QX_12_FRACT(arg1);
-    temp_s3 = QX_12_FRACT(arg2);
-    temp    = QX_12_FRACT(arg3);
+    temp_s0 = Q12_FRACT(arg1);
+    temp_s3 = Q12_FRACT(arg2);
+    temp    = Q12_FRACT(arg3);
 
     if (arg4 > 0x100)
     {
@@ -4688,7 +4688,7 @@ void func_8006D600(VECTOR3* pos, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x80
     z      = FP_MULTIPLY(arg4, Math_Sin(temp_s0), Q12_SHIFT);
     deltaX = pos->vx - x;
     deltaZ = pos->vz - z;
-    angle  = QX_12_FRACT(ratan2(deltaZ, deltaX));
+    angle  = Q12_FRACT(ratan2(deltaZ, deltaX));
 
     if (angle < temp_s3)
     {
@@ -5060,8 +5060,8 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E
     sp18.vz  = 0;
     sp18.pad = 0;
 
-    sp18.vx = Q19_12(arg0->field_10);
-    sp18.vy = Q19_12(arg0->field_14);
+    sp18.vx = Q12(arg0->field_10);
+    sp18.vy = Q12(arg0->field_14);
 
     if (arg1.vx < 0)
     {
@@ -5104,15 +5104,15 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E
 
     if (subroutine_arg4.vx + arg1.vx < FP_MULTIPLY(arg0->field_18, sp18.vx, Q12_SHIFT))
     {
-        sp18.vx = Q19_12(subroutine_arg4.vx + arg1.vx) / arg0->field_18;
+        sp18.vx = Q12(subroutine_arg4.vx + arg1.vx) / arg0->field_18;
     }
 
-    sp28.vx = Q19_12(subroutine_arg4.vx) / arg0->field_18;
-    sp28.vy = Q19_12(subroutine_arg4.vy) / arg0->field_18;
-    sp28.vz = Q19_12(1.0f);
+    sp28.vx = Q12(subroutine_arg4.vx) / arg0->field_18;
+    sp28.vy = Q12(subroutine_arg4.vy) / arg0->field_18;
+    sp28.vz = Q12(1.0f);
 
-    sp28.pad  = Q19_12(arg2.vx) / arg1.vx;
-    temp_lo_4 = FP_MULTIPLY(sp28.pad, QX_12_FRACT(sp28.vx), Q12_SHIFT);
+    sp28.pad  = Q12(arg2.vx) / arg1.vx;
+    temp_lo_4 = FP_MULTIPLY(sp28.pad, Q12_FRACT(sp28.vx), Q12_SHIFT);
 
     if (FP_FROM(sp18.vx, Q12_SHIFT) < FP_FROM(sp28.vx, Q12_SHIFT))
     {
@@ -5126,14 +5126,14 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E
         temp_t0 = sp28.vy;
         temp_t1 = sp28.vx;
         var_a3  = temp_t0 + sp28.pad;
-        var_a2  = temp_t1 + Q19_12(1.0f);
+        var_a2  = temp_t1 + Q12(1.0f);
 
         sp28.vy = var_a3;
         sp28.vx = var_a2;
 
         if (FP_FROM(temp_t0, Q12_SHIFT) < FP_FROM(var_a3, Q12_SHIFT))
         {
-            if (QX_12_FRACT(var_a3) < temp_lo_4)
+            if (Q12_FRACT(var_a3) < temp_lo_4)
             {
                 func_8006E490(arg0, flags, var_a2, temp_t0);
             }
@@ -5922,7 +5922,7 @@ s16 func_8006F99C(s_SubCharacter* chara, s32 arg1, s16 arg2) // 0x8006F99C
         return func_8005BF38(var_s2 + arg2);
     }
 
-    return FP_ALPHA(1.0f);
+    return Q12(1.0f);
 }
 
 q7_8 func_8006FAFC(s_SubCharacter* chara, s32 dist, s32 arg2, s32 arg3, s16 arg4, s32 arg5) // 0x8006FAFC
@@ -6199,7 +6199,7 @@ void func_80070400(s_SubCharacter* chara, s_func_80070400_1* arg1, s_func_800704
     // Compute alpha.
     if (chara->model_0.anim_4.status_0 & (1 << 0))
     {
-        alpha = QX_12_FRACT(chara->model_0.anim_4.time_4);
+        alpha = Q12_FRACT(chara->model_0.anim_4.time_4);
     }
     else
     {
@@ -6207,7 +6207,7 @@ void func_80070400(s_SubCharacter* chara, s_func_80070400_1* arg1, s_func_800704
     }
 
     // Compute inverse alpha.
-    invAlpha = FP_ALPHA(1.0f) - alpha;
+    invAlpha = Q12(1.0f) - alpha;
 
     chara->field_C8         = FP_FROM((arg1->field_0 * invAlpha) + (arg2->field_0 * alpha), Q12_SHIFT);
     chara->field_CA         = FP_FROM((arg1->field_2 * invAlpha) + (arg2->field_2 * alpha), Q12_SHIFT);

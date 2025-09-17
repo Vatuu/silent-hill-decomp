@@ -35,9 +35,9 @@ void Gfx_ItemScreens_CameraSet(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* ve
     vec->vy = 0;
     vec->vz = 0;
 
-    D_800C3928.scale.vz  = FP_ALPHA(1.0f);
-    D_800C3928.scale.vy  = FP_ALPHA(1.0f);
-    D_800C3928.scale.vx  = FP_ALPHA(1.0f);
+    D_800C3928.scale.vz  = Q12(1.0f);
+    D_800C3928.scale.vy  = Q12(1.0f);
+    D_800C3928.scale.vx  = Q12(1.0f);
     D_800C3928.rotate.vz = 0;
     D_800C3928.rotate.vy = 0;
     D_800C3928.rotate.vx = 0;

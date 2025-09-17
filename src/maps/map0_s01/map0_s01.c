@@ -38,10 +38,10 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3) // 0x800CE000
             sharedData_800DD591_0_s00 = 1;
 
             // TODO: Meters?
-            D_800E2160.vector_0.vx = Q19_12(-0.30f);
-            D_800E2160.vector_0.vz = Q19_12(275.0f);
-            D_800E2160.vector_C.vx = Q19_12(-0.30f);
-            D_800E2160.vector_C.vz = Q19_12(265.0f);
+            D_800E2160.vector_0.vx = Q12(-0.30f);
+            D_800E2160.vector_0.vz = Q12(275.0f);
+            D_800E2160.vector_C.vx = Q12(-0.30f);
+            D_800E2160.vector_C.vz = Q12(265.0f);
 
             sharedData_800DD796_0_s01 = 1;
 

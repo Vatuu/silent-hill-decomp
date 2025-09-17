@@ -71,7 +71,7 @@ TILE D_800A8E74[] =
     { 0x3000000, 255, 0, 0, 0x62, -320, -240, 640, 480 },
 };
 
-q19_12 g_ScreenFadeProgress = FP_ALPHA(0.0f);
+q19_12 g_ScreenFadeProgress = Q12(0.0f);
 
 DR_MODE D_800A8E98[] =
 {
@@ -133,30 +133,30 @@ s32 D_800A8F40 = 0;
 VC_ROAD_DATA vcNullRoadArray[] =
 {
     {
-        .lim_sw_0          = { Q7_8(-30.0f), Q7_8(30.0f), Q7_8(-30.0f), Q7_8(30.0f) },
-        .lim_rd_8          = { Q7_8(-30.0f), Q7_8(30.0f), Q7_8(-30.0f), Q7_8(30.0f) },
+        .lim_sw_0          = { Q8(-30.0f), Q8(30.0f), Q8(-30.0f), Q8(30.0f) },
+        .lim_rd_8          = { Q8(-30.0f), Q8(30.0f), Q8(-30.0f), Q8(30.0f) },
         .flags_10          = VC_RD_NOFLAG,
         .area_size_type_11 = VC_AREA_WIDE,
         .rd_type_11        = VC_RD_TYPE_ROAD,
         .mv_y_type_11      = VC_MV_SELF_VIEW,
-        .lim_rd_max_hy_12  = Q27_4(6.0f),
-        .lim_rd_min_hy_13  = Q27_4(-6.0f),
-        .ofs_watch_hy_14   = Q27_4(0.5f),
+        .lim_rd_max_hy_12  = Q4(6.0f),
+        .lim_rd_min_hy_13  = Q4(-6.0f),
+        .ofs_watch_hy_14   = Q4(0.5f),
         .field_15          = 1,
         .cam_mv_type_14    = VC_MV_CHASE,
         .fix_ang_x_16      = FP_ANGLE_PACKED(0.0f),
         .fix_ang_y_17      = FP_ANGLE_PACKED(0.0f)
     },
     {
-        .lim_sw_0          = { Q7_8(0.0f), Q7_8(0.0f), Q7_8(0.0f), Q7_8(0.0f) },
-        .lim_rd_8          = { Q7_8(0.0f), Q7_8(0.0f), Q7_8(0.0f), Q7_8(0.0f) },
+        .lim_sw_0          = { Q8(0.0f), Q8(0.0f), Q8(0.0f), Q8(0.0f) },
+        .lim_rd_8          = { Q8(0.0f), Q8(0.0f), Q8(0.0f), Q8(0.0f) },
         .flags_10          = VC_RD_END_DATA_F,
         .area_size_type_11 = VC_AREA_TINY,
         .rd_type_11        = VC_RD_TYPE_ROAD,
         .mv_y_type_11      = VC_MV_CHASE,
-        .lim_rd_max_hy_12  = Q27_4(0.0f),
-        .lim_rd_min_hy_13  = Q27_4(0.0f),
-        .ofs_watch_hy_14   = Q27_4(0.0f),
+        .lim_rd_max_hy_12  = Q4(0.0f),
+        .lim_rd_min_hy_13  = Q4(0.0f),
+        .ofs_watch_hy_14   = Q4(0.0f),
         .field_15          = 0,
         .cam_mv_type_14    = VC_MV_CHASE,
         .fix_ang_x_16      = FP_ANGLE_PACKED(0.0f),
@@ -781,7 +781,7 @@ s_AnimInfo D_800A998C =
     .status_4               = 0,
     .hasVariableDuration_5 = false,
     .status_6              = ANIM_STATUS(0, false),
-    .duration_8            = { Q19_12(8) },
+    .duration_8            = { Q12(8) },
     .startKeyframeIdx_C    = 26,
     .endKeyframeIdx_E      = 44
 };

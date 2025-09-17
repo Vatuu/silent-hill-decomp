@@ -21,10 +21,10 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
         extra->model_0.anim_4.status_0       = ANIM_STATUS(26, true);
         extra->model_0.anim_4.keyframeIdx_8  = 503;
 
-        player->model_0.anim_4.time_4         = FP_TO(503, Q12_SHIFT);
-        player->model_0.anim_4.alpha_A = FP_ALPHA(1.0f);
-        extra->model_0.anim_4.time_4          = FP_TO(503, Q12_SHIFT);
-        extra->model_0.anim_4.alpha_A  = FP_ALPHA(1.0f);
+        player->model_0.anim_4.time_4  = Q12(503);
+        player->model_0.anim_4.alpha_A = Q12(1.0f);
+        extra->model_0.anim_4.time_4   = Q12(503);
+        extra->model_0.anim_4.alpha_A  = Q12(1.0f);
     }
     else
     {
@@ -64,8 +64,8 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
 
     player->field_D6 = 942;
 
-    g_SysWork.player_4C.chara_0.field_C8                        = FP_FLOAT_TO(-1.6f, Q12_SHIFT);
-    g_SysWork.player_4C.chara_0.field_CE                        = FP_FLOAT_TO(-1.1f, Q12_SHIFT);
+    g_SysWork.player_4C.chara_0.field_C8                        = Q12(-1.6f);
+    g_SysWork.player_4C.chara_0.field_CE                        = Q12(-1.1f);
     g_SysWork.player_4C.chara_0.field_CA                        = 0;
     g_SysWork.player_4C.chara_0.field_D8.field_6                = 0;
     g_SysWork.player_4C.chara_0.field_D8.field_4                = 0;

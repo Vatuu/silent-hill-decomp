@@ -244,13 +244,13 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
     charaPosX = chara->position_18.vx;
     charaPosZ = chara->position_18.vz;
 
-    chara->health_B0 = FP_HEALTH(3000.0f);
+    chara->health_B0 = Q12(3000.0f);
 
     chara2->properties_E4.larvalStalker.properties_E8[13].val32 = -1;
 
     chara->field_D4 = FP_FLOAT_TO(0.3f, Q12_SHIFT);
 
-    chara->model_0.anim_4.alpha_A = FP_ALPHA(0.0f);
+    chara->model_0.anim_4.alpha_A = Q12(0.0f);
 
     chara->moveSpeed_38    = 0;
     chara->headingAngle_3C = chara->rotation_24.vy;
@@ -289,7 +289,7 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
     Character_AnimSet(chara, ANIM_STATUS(8, false), 258);
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, TWINFEELER_ANIM_INFOS);
 
-    chara->damageReceived_C0 = FP_HEALTH(0.0f);
+    chara->damageReceived_C0 = Q12(0.0f);
     chara->field_BC          = 0;
     chara->field_B8          = 0;
     chara->field_B4          = 0;

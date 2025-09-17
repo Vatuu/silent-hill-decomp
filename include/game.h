@@ -835,7 +835,7 @@ typedef struct _Savegame
     s16             pickedUpItemCount_23C;
     s8              field_23E;
     u8              field_23F;
-    q19_12          playerHealth_240;         /** Default: FP_HEALTH(100.0f) */
+    q19_12          playerHealth_240;         /** Default: Q12(100.0f) */
     q19_12          playerPositionX_244;
     q3_12           playerRotationY_248;      /** Range [0, 0.999755859375], positive Z: 0, clockwise rotation. It can be multiplied by 360 to get degrees. */
     u8              clearGameCount_24A;       /** Range [0, 99] */
@@ -1012,7 +1012,7 @@ typedef struct _ModelAnim
     u16         flags_2;          /** `e_AnimFlags` */
     q19_12      time_4;           /** Time on timeline. */ 
     s16         keyframeIdx_8;    /** Active keyframe. */
-    q3_12       alpha_A;          /** Progress alpha. */ 
+    q3_12       alpha_A;          /** Frame progress alpha. */ 
     s_AnimInfo* animInfo_C;       // } Arrays of anim infos?
     s_AnimInfo* animInfo_10;      // }
 } s_ModelAnim;
@@ -1383,7 +1383,7 @@ typedef struct _SysWork
     u8              unk_254C[508];
     s16             field_2748[9];  // `func_80035ED0` loops over this.
     u8              unk_275A[2];
-    s32             field_275C; // Q19_12?
+    s32             field_275C; // QX_12?
     s32             field_2760;
     s32             field_2764;
 } s_SysWork;
@@ -1596,9 +1596,9 @@ static inline s32 Flags16b_IsSet(const u16* flags, s32 flagIdx)
  */
 static inline void Character_AnimSet(s_SubCharacter* chara, s32 animStatus, s32 keyframeIdx)
 {
-    // TODO: Problem with header includes prevents `Q19_12` macro use.
+    // TODO: Problem with header includes prevents `QX_12` macro use.
     chara->model_0.anim_4.status_0      = animStatus;
-    chara->model_0.anim_4.time_4        = keyframeIdx << 12;//Q19_12(keyframeIdx);
+    chara->model_0.anim_4.time_4        = keyframeIdx << 12;//Q12(keyframeIdx);
     chara->model_0.anim_4.keyframeIdx_8 = keyframeIdx;
 }
 

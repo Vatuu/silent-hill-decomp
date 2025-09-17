@@ -299,7 +299,7 @@ s16 D_800AE1A8 = 0;
 // 2 bytes padding.
 
 s32    g_Items_PickupAnimState = 0;
-q19_12 g_Items_PickupScale     = Q19_12(0.0f);
+q19_12 g_Items_PickupScale     = Q12(0.0f);
 
 u32 D_800AE1B4[3] = { 0x00000000, 0x000000CC, 0xFFFFFEC9 }; // `VECTOR3`?
 
@@ -871,61 +871,61 @@ s32 D_800AF224 = NO_VALUE;
 
 s_AnimInfo HARRY_BASE_ANIM_INFOS[57] =
 {
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_Still,                   false), false, ANIM_STATUS(PlayerAnim_Still,                   true), { Q19_12(10)    }, NO_VALUE, 0   },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_Still,                   true),  false, NO_VALUE,                                              { Q19_12(30)    }, NO_VALUE, 1   },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_TransitionToStill,       false), false, ANIM_STATUS(PlayerAnim_TransitionToStill,       true), { Q19_12(10)    }, NO_VALUE, 0   },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_TransitionToStill,       true),  false, NO_VALUE,                                              { Q19_12(0)     }, 0,        0   },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_WalkForward,             false), false, ANIM_STATUS(PlayerAnim_WalkForward,             true), { Q19_12(50)    }, NO_VALUE, 1   },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_Still,                   false), false, ANIM_STATUS(PlayerAnim_Still,                   true), { Q12(10)    }, NO_VALUE, 0   },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_Still,                   true),  false, NO_VALUE,                                              { Q12(30)    }, NO_VALUE, 1   },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_TransitionToStill,       false), false, ANIM_STATUS(PlayerAnim_TransitionToStill,       true), { Q12(10)    }, NO_VALUE, 0   },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_TransitionToStill,       true),  false, NO_VALUE,                                              { Q12(0)     }, 0,        0   },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_WalkForward,             false), false, ANIM_STATUS(PlayerAnim_WalkForward,             true), { Q12(50)    }, NO_VALUE, 1   },
     { Anim_Update1, ANIM_STATUS(PlayerAnim_WalkForward,             true),  true,  NO_VALUE,                                              { func_800706E4 }, 1,        23  },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunForward,              false), false, ANIM_STATUS(PlayerAnim_RunForward,              true), { Q19_12(20)    }, NO_VALUE, 26  },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunForward,              false), false, ANIM_STATUS(PlayerAnim_RunForward,              true), { Q12(20)    }, NO_VALUE, 26  },
     { Anim_Update1, ANIM_STATUS(PlayerAnim_RunForward,              true),  true,  NO_VALUE,                                              { func_800706E4 }, 26,       45  },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_WalkBackward,            false), false, ANIM_STATUS(PlayerAnim_WalkBackward,            true), { Q19_12(20)    }, NO_VALUE, 46  },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_WalkBackward,            false), false, ANIM_STATUS(PlayerAnim_WalkBackward,            true), { Q12(20)    }, NO_VALUE, 46  },
     { Anim_Update1, ANIM_STATUS(PlayerAnim_WalkBackward,            true),  true,  NO_VALUE,                                              { func_800706E4 }, 46,       69  },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_SidestepLeft,            false), false, ANIM_STATUS(PlayerAnim_SidestepLeft,            true), { Q19_12(50)    }, NO_VALUE, 70  },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_SidestepLeft,            true),  false, NO_VALUE,                                              { Q19_12(30)    }, 70,       94  },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_SidestepRight,           false), false, ANIM_STATUS(PlayerAnim_SidestepRight,           true), { Q19_12(50)    }, NO_VALUE, 95  },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_SidestepRight,           true),  false, NO_VALUE,                                              { Q19_12(30)    }, 95,       119 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunLeft,                 false), false, ANIM_STATUS(PlayerAnim_RunLeft,                 true), { Q19_12(20)    }, NO_VALUE, 121 },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_RunLeft,                 true),  false, NO_VALUE,                                              { Q19_12(20)    }, 121,      133 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunRight,                false), false, ANIM_STATUS(PlayerAnim_RunRight,                true), { Q19_12(20)    }, NO_VALUE, 136 },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_RunRight,                true),  false, NO_VALUE,                                              { Q19_12(20)    }, 136,      148 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunForwardWallStopRight, false), false, ANIM_STATUS(PlayerAnim_RunForwardWallStopRight, true), { Q19_12(50)    }, NO_VALUE, 150 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunForwardWallStopRight, true),  false, ANIM_STATUS(PlayerAnim_RunForwardWallStopRight, true), { Q19_12(15)    }, 150,      159 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunForwardWallStopLeft,  false), false, ANIM_STATUS(PlayerAnim_RunForwardWallStopLeft,  true), { Q19_12(50)    }, NO_VALUE, 160 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunForwardWallStopLeft,  true),  false, ANIM_STATUS(PlayerAnim_RunForwardWallStopLeft,  true), { Q19_12(15)    }, 160,      169 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunForwardStumble,       false), false, ANIM_STATUS(PlayerAnim_RunForwardStumble,       true), { Q19_12(50)    }, NO_VALUE, 170 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunForwardStumble,       true),  false, ANIM_STATUS(PlayerAnim_RunForwardStumble,       true), { Q19_12(15)    }, 170,      179 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_TurnLeft,                false), false, ANIM_STATUS(PlayerAnim_TurnLeft,                true), { Q19_12(50)    }, NO_VALUE, 180 },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_TurnLeft,                true),  false, NO_VALUE,                                              { Q19_12(15)    }, 180,      192 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_TurnRight,               false), false, ANIM_STATUS(PlayerAnim_TurnRight,               true), { Q19_12(50)    }, NO_VALUE, 193 },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_TurnRight,               true),  false, NO_VALUE,                                              { Q19_12(15)    }, 193,      205 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_QuickTurnRight,          false), false, ANIM_STATUS(PlayerAnim_QuickTurnRight,          true), { Q19_12(50)    }, NO_VALUE, 206 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_QuickTurnRight,          true),  false, ANIM_STATUS(PlayerAnim_QuickTurnRight,          true), { Q19_12(28)    }, 206,      217 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_QuickTurnLeft,           false), false, ANIM_STATUS(PlayerAnim_QuickTurnLeft,           true), { Q19_12(50)    }, NO_VALUE, 219 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_QuickTurnLeft,           true),  false, ANIM_STATUS(PlayerAnim_QuickTurnLeft,           true), { Q19_12(28)    }, 219,      230 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_JumpBackward,            false), false, ANIM_STATUS(PlayerAnim_JumpBackward,            true), { Q19_12(10)    }, NO_VALUE, 240 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_JumpBackward,            true),  false, ANIM_STATUS(PlayerAnim_JumpBackward,            true), { Q19_12(10)    }, 240,      247 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_LookAround,              false), false, ANIM_STATUS(PlayerAnim_LookAround,              true), { Q19_12(50)    }, NO_VALUE, 248 },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_LookAround,              true),  false, NO_VALUE,                                              { Q19_12(7)     }, 248,      320 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunLeftWallStop,         false), false, ANIM_STATUS(PlayerAnim_RunLeftWallStop,         true), { Q19_12(50)    }, NO_VALUE, 321 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunLeftWallStop,         true),  false, ANIM_STATUS(PlayerAnim_RunLeftWallStop,         true), { Q19_12(20)    }, 321,      336 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunLeftStumble,          false), false, ANIM_STATUS(PlayerAnim_RunLeftStumble,          true), { Q19_12(50)    }, NO_VALUE, 337 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunLeftStumble,          true),  false, ANIM_STATUS(PlayerAnim_RunLeftStumble,          true), { Q19_12(15)    }, 337,      349 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunRightWallStop,        false), false, ANIM_STATUS(PlayerAnim_RunRightWallStop,        true), { Q19_12(50)    }, NO_VALUE, 350 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunRightWallStop,        true),  false, ANIM_STATUS(PlayerAnim_RunRightWallStop,        true), { Q19_12(20)    }, 350,      365 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunRightStumble,         false), false, ANIM_STATUS(PlayerAnim_RunRightStumble,         true), { Q19_12(50)    }, NO_VALUE, 366 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunRightStumble,         true),  false, ANIM_STATUS(PlayerAnim_RunRightStumble,         true), { Q19_12(15)    }, 366,      378 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_FallForward,             false), false, ANIM_STATUS(PlayerAnim_FallForward,             true), { Q19_12(30)    }, NO_VALUE, 387 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_FallForward,             true),  false, ANIM_STATUS(PlayerAnim_FallForward,             true), { Q19_12(20)    }, 387,      417 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_FallBackward,            false), false, ANIM_STATUS(PlayerAnim_FallBackward,            true), { Q19_12(30)    }, NO_VALUE, 418 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_FallBackward,            true),  false, ANIM_STATUS(PlayerAnim_FallBackward,            true), { Q19_12(20)    }, 418,      456 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_Kick,                    false), false, ANIM_STATUS(PlayerAnim_Kick,                    true), { Q19_12(5)     }, NO_VALUE, 457 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_Kick,                    true),  false, ANIM_STATUS(PlayerAnim_Kick,                    true), { Q19_12(20)    }, 457,      484 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_Stomp,                   false), false, ANIM_STATUS(PlayerAnim_Stomp,                   true), { Q19_12(5)     }, NO_VALUE, 485 },
-    { Anim_Update0, ANIM_STATUS(PlayerAnim_Stomp,                   true),  false, ANIM_STATUS(PlayerAnim_Stomp,                   true), { Q19_12(20)    }, 485,      502 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_Idle,                    false), false, ANIM_STATUS(PlayerAnim_Idle,                    true), { Q19_12(5)     }, NO_VALUE, 503 },
-    { Anim_Update1, ANIM_STATUS(PlayerAnim_Idle,                    true),  false, NO_VALUE,                                              { Q19_12(10)    }, 503,      542 },
-    { Anim_Update2, ANIM_STATUS(PlayerAnim_IdleExhausted,           false), false, ANIM_STATUS(PlayerAnim_IdleExhausted,           true), { Q19_12(5)     }, NO_VALUE, 543 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_SidestepLeft,            false), false, ANIM_STATUS(PlayerAnim_SidestepLeft,            true), { Q12(50)    }, NO_VALUE, 70  },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_SidestepLeft,            true),  false, NO_VALUE,                                              { Q12(30)    }, 70,       94  },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_SidestepRight,           false), false, ANIM_STATUS(PlayerAnim_SidestepRight,           true), { Q12(50)    }, NO_VALUE, 95  },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_SidestepRight,           true),  false, NO_VALUE,                                              { Q12(30)    }, 95,       119 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunLeft,                 false), false, ANIM_STATUS(PlayerAnim_RunLeft,                 true), { Q12(20)    }, NO_VALUE, 121 },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_RunLeft,                 true),  false, NO_VALUE,                                              { Q12(20)    }, 121,      133 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunRight,                false), false, ANIM_STATUS(PlayerAnim_RunRight,                true), { Q12(20)    }, NO_VALUE, 136 },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_RunRight,                true),  false, NO_VALUE,                                              { Q12(20)    }, 136,      148 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunForwardWallStopRight, false), false, ANIM_STATUS(PlayerAnim_RunForwardWallStopRight, true), { Q12(50)    }, NO_VALUE, 150 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunForwardWallStopRight, true),  false, ANIM_STATUS(PlayerAnim_RunForwardWallStopRight, true), { Q12(15)    }, 150,      159 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunForwardWallStopLeft,  false), false, ANIM_STATUS(PlayerAnim_RunForwardWallStopLeft,  true), { Q12(50)    }, NO_VALUE, 160 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunForwardWallStopLeft,  true),  false, ANIM_STATUS(PlayerAnim_RunForwardWallStopLeft,  true), { Q12(15)    }, 160,      169 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunForwardStumble,       false), false, ANIM_STATUS(PlayerAnim_RunForwardStumble,       true), { Q12(50)    }, NO_VALUE, 170 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunForwardStumble,       true),  false, ANIM_STATUS(PlayerAnim_RunForwardStumble,       true), { Q12(15)    }, 170,      179 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_TurnLeft,                false), false, ANIM_STATUS(PlayerAnim_TurnLeft,                true), { Q12(50)    }, NO_VALUE, 180 },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_TurnLeft,                true),  false, NO_VALUE,                                              { Q12(15)    }, 180,      192 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_TurnRight,               false), false, ANIM_STATUS(PlayerAnim_TurnRight,               true), { Q12(50)    }, NO_VALUE, 193 },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_TurnRight,               true),  false, NO_VALUE,                                              { Q12(15)    }, 193,      205 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_QuickTurnRight,          false), false, ANIM_STATUS(PlayerAnim_QuickTurnRight,          true), { Q12(50)    }, NO_VALUE, 206 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_QuickTurnRight,          true),  false, ANIM_STATUS(PlayerAnim_QuickTurnRight,          true), { Q12(28)    }, 206,      217 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_QuickTurnLeft,           false), false, ANIM_STATUS(PlayerAnim_QuickTurnLeft,           true), { Q12(50)    }, NO_VALUE, 219 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_QuickTurnLeft,           true),  false, ANIM_STATUS(PlayerAnim_QuickTurnLeft,           true), { Q12(28)    }, 219,      230 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_JumpBackward,            false), false, ANIM_STATUS(PlayerAnim_JumpBackward,            true), { Q12(10)    }, NO_VALUE, 240 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_JumpBackward,            true),  false, ANIM_STATUS(PlayerAnim_JumpBackward,            true), { Q12(10)    }, 240,      247 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_LookAround,              false), false, ANIM_STATUS(PlayerAnim_LookAround,              true), { Q12(50)    }, NO_VALUE, 248 },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_LookAround,              true),  false, NO_VALUE,                                              { Q12(7)     }, 248,      320 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunLeftWallStop,         false), false, ANIM_STATUS(PlayerAnim_RunLeftWallStop,         true), { Q12(50)    }, NO_VALUE, 321 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunLeftWallStop,         true),  false, ANIM_STATUS(PlayerAnim_RunLeftWallStop,         true), { Q12(20)    }, 321,      336 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunLeftStumble,          false), false, ANIM_STATUS(PlayerAnim_RunLeftStumble,          true), { Q12(50)    }, NO_VALUE, 337 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunLeftStumble,          true),  false, ANIM_STATUS(PlayerAnim_RunLeftStumble,          true), { Q12(15)    }, 337,      349 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunRightWallStop,        false), false, ANIM_STATUS(PlayerAnim_RunRightWallStop,        true), { Q12(50)    }, NO_VALUE, 350 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunRightWallStop,        true),  false, ANIM_STATUS(PlayerAnim_RunRightWallStop,        true), { Q12(20)    }, 350,      365 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_RunRightStumble,         false), false, ANIM_STATUS(PlayerAnim_RunRightStumble,         true), { Q12(50)    }, NO_VALUE, 366 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_RunRightStumble,         true),  false, ANIM_STATUS(PlayerAnim_RunRightStumble,         true), { Q12(15)    }, 366,      378 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_FallForward,             false), false, ANIM_STATUS(PlayerAnim_FallForward,             true), { Q12(30)    }, NO_VALUE, 387 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_FallForward,             true),  false, ANIM_STATUS(PlayerAnim_FallForward,             true), { Q12(20)    }, 387,      417 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_FallBackward,            false), false, ANIM_STATUS(PlayerAnim_FallBackward,            true), { Q12(30)    }, NO_VALUE, 418 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_FallBackward,            true),  false, ANIM_STATUS(PlayerAnim_FallBackward,            true), { Q12(20)    }, 418,      456 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_Kick,                    false), false, ANIM_STATUS(PlayerAnim_Kick,                    true), { Q12(5)     }, NO_VALUE, 457 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_Kick,                    true),  false, ANIM_STATUS(PlayerAnim_Kick,                    true), { Q12(20)    }, 457,      484 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_Stomp,                   false), false, ANIM_STATUS(PlayerAnim_Stomp,                   true), { Q12(5)     }, NO_VALUE, 485 },
+    { Anim_Update0, ANIM_STATUS(PlayerAnim_Stomp,                   true),  false, ANIM_STATUS(PlayerAnim_Stomp,                   true), { Q12(20)    }, 485,      502 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_Idle,                    false), false, ANIM_STATUS(PlayerAnim_Idle,                    true), { Q12(5)     }, NO_VALUE, 503 },
+    { Anim_Update1, ANIM_STATUS(PlayerAnim_Idle,                    true),  false, NO_VALUE,                                              { Q12(10)    }, 503,      542 },
+    { Anim_Update2, ANIM_STATUS(PlayerAnim_IdleExhausted,           false), false, ANIM_STATUS(PlayerAnim_IdleExhausted,           true), { Q12(5)     }, NO_VALUE, 543 },
     { Anim_Update1, ANIM_STATUS(PlayerAnim_IdleExhausted,           true),  true,  NO_VALUE,                                              { func_800706E4 }, 543,      567 },
     {}
 };
@@ -1620,11 +1620,11 @@ void Gfx_Inventory_HealthStatusDraw()
     ot     = &g_OrderingTable0[g_ActiveBufferIdx];
     health = g_SysWork.player_4C.chara_0.health_B0;
 
-    if (health < FP_HEALTH(10.0f))
+    if (health < Q12(10.0f))
     {
         healthStage = 3;
     } 
-    else if (health < FP_HEALTH(50.0f))
+    else if (health < Q12(50.0f))
     {
         healthStage = 2;
     }
@@ -1642,7 +1642,7 @@ void Gfx_Inventory_HealthStatusDraw()
         {
             if (i == 2)
             {
-                if (g_SysWork.player_4C.chara_0.health_B0 != FP_HEALTH(100.0f) &&
+                if (g_SysWork.player_4C.chara_0.health_B0 != Q12(100.0f) &&
                     ((Rng_Rand16() % ((g_SysWork.player_4C.chara_0.health_B0 >> 13) + 2) == 0) || D_800AE198 != 0))
                 {
                     D_800AE198++;
@@ -1827,11 +1827,11 @@ void Gfx_Inventory_HealthStatusDraw()
         }
     }
 
-    if (g_SysWork.player_4C.chara_0.health_B0 < FP_HEALTH(10.0f))
+    if (g_SysWork.player_4C.chara_0.health_B0 < Q12(10.0f))
     {
         healthStage = 3;
     }
-    else if (g_SysWork.player_4C.chara_0.health_B0 < FP_HEALTH(50.0f))
+    else if (g_SysWork.player_4C.chara_0.health_B0 < Q12(50.0f))
     {
         healthStage = 2;
     }
@@ -2168,9 +2168,9 @@ void Gfx_Results_ItemsPosition() // 0x8005227C
             g_Items_Coords[i].coord.t[2]     = OFFSETS[i].vz;
             g_Items_Transforms[i].rotate.vx  = FP_ANGLE(45.0f);
             g_Items_Transforms[i].rotate.vz  = FP_ANGLE(45.0f);
-            g_Items_Transforms[i].scale.vz   = Q19_12(1.0f);
-            g_Items_Transforms[i].scale.vy   = Q19_12(1.0f);
-            g_Items_Transforms[i].scale.vx   = Q19_12(1.0f);
+            g_Items_Transforms[i].scale.vz   = Q12(1.0f);
+            g_Items_Transforms[i].scale.vy   = Q12(1.0f);
+            g_Items_Transforms[i].scale.vx   = Q12(1.0f);
             g_Items_Transforms[i].rotate.vy += FP_ANGLE(0.75f);
         }
     }
@@ -2780,9 +2780,9 @@ void Gfx_Items_Render() // 0x80054200
     {
         D_800C3E18[i] = NO_VALUE;
 
-        g_Items_Transforms[i].scale.vz  = Q19_12(1.0f);
-        g_Items_Transforms[i].scale.vy  = Q19_12(1.0f);
-        g_Items_Transforms[i].scale.vx  = Q19_12(1.0f);
+        g_Items_Transforms[i].scale.vz  = Q12(1.0f);
+        g_Items_Transforms[i].scale.vy  = Q12(1.0f);
+        g_Items_Transforms[i].scale.vx  = Q12(1.0f);
         g_Items_Transforms[i].rotate.vz = FP_ANGLE(0.0f);
         g_Items_Transforms[i].rotate.vy = FP_ANGLE(0.0f);
         g_Items_Transforms[i].rotate.vx = FP_ANGLE(0.0f);
@@ -3038,9 +3038,9 @@ void Gfx_Items_SetAmbientLighting() // 0x80054928
         g_Items_Lights[i][0].r  = NO_VALUE;
         g_Items_Lights[i][0].g  = NO_VALUE;
         g_Items_Lights[i][0].b  = NO_VALUE;
-        g_Items_Lights[i][1].vx = Q19_12(1.0f);
-        g_Items_Lights[i][1].vy = Q19_12(0.0f);
-        g_Items_Lights[i][1].vz = Q19_12(0.0f);
+        g_Items_Lights[i][1].vx = Q12(1.0f);
+        g_Items_Lights[i][1].vy = Q12(0.0f);
+        g_Items_Lights[i][1].vz = Q12(0.0f);
         g_Items_Lights[i][1].r  = NO_VALUE;
         g_Items_Lights[i][1].g  = NO_VALUE;
         g_Items_Lights[i][1].b  = NO_VALUE;
@@ -3056,14 +3056,14 @@ void func_800549A0() // 0x800549A0
     #define IDX 9
 
     g_Items_Lights[IDX][0].r  = NO_VALUE;
-    g_Items_Lights[IDX][1].vx = Q19_12(1.0f);
+    g_Items_Lights[IDX][1].vx = Q12(1.0f);
     g_Items_Lights[IDX][0].g  = NO_VALUE;
     g_Items_Lights[IDX][0].b  = NO_VALUE;
     g_Items_Lights[IDX][1].r  = NO_VALUE;
     g_Items_Lights[IDX][1].g  = NO_VALUE;
     g_Items_Lights[IDX][1].b  = NO_VALUE;
-    g_Items_Lights[IDX][1].vy = Q19_12(0.0f);
-    g_Items_Lights[IDX][1].vz = Q19_12(0.0f);
+    g_Items_Lights[IDX][1].vy = Q12(0.0f);
+    g_Items_Lights[IDX][1].vz = Q12(0.0f);
 
     GsSetAmbient(2048, 2048, 2048);
     GsSetLightMode(1);
@@ -3074,7 +3074,7 @@ void func_80054A04(u8 itemId) // 0x80054A04
     D_800AE187              = itemId;
     g_Items_DisplayedCount  = 0;
     g_Items_PickupAnimState = 0;
-    g_Items_PickupScale     = Q19_12(0.0f);
+    g_Items_PickupScale     = Q12(0.0f);
 
     D_800C3E18[9]                   = NO_VALUE;
     g_Items_Transforms[9].rotate.vz = FP_ANGLE(0.0f);
@@ -3091,9 +3091,9 @@ void func_80054A04(u8 itemId) // 0x80054A04
     Gfx_Items_Display(FS_BUFFER_5, 9, 0);
     func_8005487C(9);
 
-    g_Items_Transforms[9].scale.vz = Q19_12(1.0f);
-    g_Items_Transforms[9].scale.vy = Q19_12(1.0f);
-    g_Items_Transforms[9].scale.vx = Q19_12(1.0f);
+    g_Items_Transforms[9].scale.vz = Q12(1.0f);
+    g_Items_Transforms[9].scale.vy = Q12(1.0f);
+    g_Items_Transforms[9].scale.vx = Q12(1.0f);
 
     func_800549A0();
     Gfx_ItemScreens_CameraSet(&D_800C3B48, &D_800C3AE8, &D_800C3B38, 0);
@@ -3114,7 +3114,7 @@ bool Gfx_PickupItemAnimate(u8 itemId) // 0x80054AD8
     switch (g_Items_PickupAnimState) 
     {
         case 0: // Expand without rotation?
-            if (g_Items_PickupScale >= Q19_12(0.5f)) 
+            if (g_Items_PickupScale >= Q12(0.5f)) 
             {
                 g_Items_PickupAnimState = 1;
             }
@@ -3136,16 +3136,16 @@ bool Gfx_PickupItemAnimate(u8 itemId) // 0x80054AD8
             break;
 
         case 1: // Snap to full scale?
-            g_Items_Transforms[9].scale.vz = Q19_12(1.0f);
-            g_Items_Transforms[9].scale.vy = Q19_12(1.0f);
-            g_Items_Transforms[9].scale.vx = Q19_12(1.0f);
+            g_Items_Transforms[9].scale.vz = Q12(1.0f);
+            g_Items_Transforms[9].scale.vy = Q12(1.0f);
+            g_Items_Transforms[9].scale.vx = Q12(1.0f);
             g_Items_PickupAnimState = 2;
             break;
     }
 
     // Scale.
     g_Items_PickupScale += g_DeltaTime1 * 2;
-    g_Items_PickupScale  = CLAMP(g_Items_PickupScale, Q19_12(0.0f), Q19_12(0.5f));
+    g_Items_PickupScale  = CLAMP(g_Items_PickupScale, Q12(0.0f), Q12(0.5f));
 
     PushMatrix();
     func_8004BBF4(&D_800C3B48, &D_800C3AE8, &D_800C3B38);
