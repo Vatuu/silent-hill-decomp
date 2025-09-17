@@ -103,8 +103,8 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
     extraModelPtr2 = &g_SysWork.player_4C.extra_128.model_0;
 
     // Set anim alpha.
-    modelPtr3->anim_4.alpha_A      = FP_ALPHA(1.0f);
-    extraModelPtr2->anim_4.alpha_A = FP_ALPHA(1.0f);
+    modelPtr3->anim_4.alpha_A      = Q12(1.0f);
+    extraModelPtr2->anim_4.alpha_A = Q12(1.0f);
 
     // Disable upper body bones.
     g_SysWork.player_4C.extra_128.disabledAnimBones_18 = HARRY_UPPER_BODY_BONE_MASK;
@@ -113,12 +113,12 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
     modelPtr3->anim_4.time_4      = FP_TIME(modelPtr3->anim_4.keyframeIdx_8);
     extraModelPtr2->anim_4.time_4 = FP_TIME(extraModelPtr2->anim_4.keyframeIdx_8);
 
-    Anim_BoneUpdate((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords_890, modelPtr3->anim_4.keyframeIdx_8, modelPtr3->anim_4.keyframeIdx_8, FP_ALPHA(1.0f));
+    Anim_BoneUpdate((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords_890, modelPtr3->anim_4.keyframeIdx_8, modelPtr3->anim_4.keyframeIdx_8, Q12(1.0f));
 
     // Re-enable upper body bones, disable lower body bones.
     g_SysWork.player_4C.extra_128.disabledAnimBones_18 = HARRY_LOWER_BODY_BONE_MASK;
 
-    Anim_BoneUpdate((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords_890, extraModelPtr2->anim_4.keyframeIdx_8, extraModelPtr2->anim_4.keyframeIdx_8, FP_ALPHA(1.0f));
+    Anim_BoneUpdate((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords_890, extraModelPtr2->anim_4.keyframeIdx_8, extraModelPtr2->anim_4.keyframeIdx_8, Q12(1.0f));
     func_8004C040();
 }
 

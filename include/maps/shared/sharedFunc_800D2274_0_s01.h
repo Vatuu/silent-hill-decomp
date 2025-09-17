@@ -10,7 +10,7 @@ bool sharedFunc_800D2274_0_s01(s_SubCharacter* chara)
         if (flags & ((1 << 3) | (1 << 6)))
         {
             flags &= ~(( 1 << 3) | (1 << 6));
-            if (chara->health_B0 <= FP_HEALTH(0.0f))
+            if (chara->health_B0 <= Q12(0.0f))
             {
                 flags |= 1 << 6;
             }

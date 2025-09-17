@@ -30,7 +30,7 @@ void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 moveSpeed)
         chara->moveSpeed_38 = newMoveSpeed;
     }
 
-    if (chara->health_B0 == FP_HEALTH(0.0f))
+    if (chara->health_B0 == Q12(0.0f))
     {
         chara->flags_3E &= ~CharaFlag_Unk2;
 

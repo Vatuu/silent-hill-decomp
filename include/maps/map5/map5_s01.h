@@ -11,4 +11,7 @@ void func_800DF548();
 
 void func_800DF568();
 
+/** @brief Map pickup event. */
+void func_800EBF48(void);
+
 #endif

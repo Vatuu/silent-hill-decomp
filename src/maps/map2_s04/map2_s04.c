@@ -2,6 +2,7 @@
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
 #include "maps/shared.h"
+#include "maps/map2/map2_s04.h"
 
 INCLUDE_RODATA("asm/maps/map2_s04/nonmatchings/map2_s04", D_800C9578);
 
@@ -163,7 +164,10 @@ INCLUDE_ASM("asm/maps/map2_s04/nonmatchings/map2_s04", func_800CD050);
 
 INCLUDE_ASM("asm/maps/map2_s04/nonmatchings/map2_s04", func_800CD088);
 
-INCLUDE_ASM("asm/maps/map2_s04/nonmatchings/map2_s04", func_800CD0D0);
+void func_800CD0D0(void) // 0x800CD0D0
+{
+    Event_MapTake(2, EventFlag_M2S00_PickupMap, 23);
+}
 
 INCLUDE_ASM("asm/maps/map2_s04/nonmatchings/map2_s04", func_800CD0F8);
 
