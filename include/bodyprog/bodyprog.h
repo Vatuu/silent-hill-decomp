@@ -29,7 +29,10 @@
 // ==============
 
 /** @brief compare 8-character strings using u32 type. Return 0 when equal similarly to strcmp */
-#define cmp_filename(a, b) (((a).u32[0] != (b).u32[0]) || ((a).u32[1] != (b).u32[1]))
+#define cmp_filename(a,b) \
+    ( ((u_Filename*)(a))->u32[0] != ((u_Filename*)(b))->u32[0] || \
+      ((u_Filename*)(a))->u32[1] != ((u_Filename*)(b))->u32[1] )
+
 
 // ======
 // ENUMS

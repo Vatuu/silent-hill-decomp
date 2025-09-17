@@ -1640,8 +1640,7 @@ s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmH
 
     for (i = 0; i < lmHeader->modelCount_8; i++, modelHeader++)
     {
-        if (modelName->u32[0] == modelHeader->modelName_0.u32[0] &&
-            modelName->u32[1] == modelHeader->modelName_0.u32[1])
+        if (!cmp_filename(modelName, &modelHeader->modelName_0))
         {
             return modelHeader;
         }
