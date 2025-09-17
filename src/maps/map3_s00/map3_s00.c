@@ -172,7 +172,10 @@ void func_800D0CAC() // 0x800D0CAC
     Event_CommonItemTake(CommonPickupItemId_FirstAidKit, EventFlag_M3S00_FirstAidKit);
 }
 
-INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", func_800D0CD0);
+void func_800D0CD0(void) // 0x800D0CD0
+{
+    Event_MapTake(17, EventFlag_M3S00_PickupMap, 48);
+}
 
 const char* MAP_MESSAGES[] =
 {

@@ -629,7 +629,10 @@ void func_800EB9A4(void) // 0x800EB9A4
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800EBA40);
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800EBF48);
+void func_800EBF48(void) // 0x800EBF48
+{
+    Event_MapTake(4, EventFlag_M5S01_PickupMap, 15);
+}
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800EBF70);
 

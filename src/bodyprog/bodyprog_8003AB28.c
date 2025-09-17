@@ -1214,7 +1214,7 @@ void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x800
 {
     s8                    temp_a0;
     s_800BCE18_2BEC_0_10* temp_s1;
-    s_800BCE18_2BEC_0_10* temp_s2;
+    s_ModelHeader*        temp_s2;
 
     temp_a0 = arg0->field_10.field_9;
     if (!temp_a0)
@@ -1233,14 +1233,14 @@ void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x800
         }
     }
 
-    // TODO: Some kind of 8-byte string compare inline/macro?
-    if (*(u32*)&temp_s1->string_0[0] != *(u32*)&temp_s2->string_0[0] || *(u32*)&temp_s1->string_0[4] != *(u32*)&temp_s2->string_0[4])
+    // TODO: Add some kind of 8-byte string compare inline/macro?
+    if (*(u64*)&temp_s1->string_0[0] != *(u64*)&temp_s2->modelName_0.str[0])
     {
         arg0->field_10.field_9 = 0;
         return;
     }
 
-    func_80057090(arg0, &g_OrderingTable0[g_ActiveBufferIdx], 1, arg1, arg2, 0);
+    func_80057090(&arg0->field_0, &g_OrderingTable0[g_ActiveBufferIdx], 1, arg1, arg2, 0);
 }
 
 s32 func_8003CD5C() // 0x8003CD5C

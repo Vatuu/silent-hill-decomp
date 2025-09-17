@@ -225,7 +225,7 @@ void func_800D63D8(void) // 0x800D63D8
     D_800DAF78 = 0;
 
     EventPositionInit(&D_800DAFF4.eventPosition_1C, 61.8531f, -0.805f, 140.61f, 0, 92.9f, 0);
-    func_8003C8F8(&D_800DAFF4.field_0, D_800A99E4.padNearName_4); // String is from bodyprog .rodata?
+    func_8003C8F8(&D_800DAFF4.field_0, D_800A99E4.savePadName_4);
 
     EventPositionInit(&D_800DB024.eventPosition_1C, 133.294f, -0.8614f, 19.04f, 0, 162.6f, 0);
     func_8003C8F8(&D_800DB024.field_0, "PICT00_H");

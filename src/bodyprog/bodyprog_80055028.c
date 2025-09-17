@@ -2937,9 +2937,230 @@ s32 func_8006A42C(s32 arg0, VECTOR3* arg1, s32 arg2) // 0x8006A42C
     return func_8006A4A8(arg0, &sp28, arg2, 0, func_800425D8(&sp38), sp38, 0, 0, 0, 0);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006A4A8); // 0x8006A4A8
+s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* arg1, s_func_8006AB50* arg2, s32 arg3, s_IpdCollisionData** arg4, s32 arg5, s_func_8006CF18* arg6, s32 arg7, s_func_8006A940** arg8, s32 arg9) // 0x8006A4A8
+{
+    s_func_8006CC44      sp18;
+    VECTOR3              sp120;
+    VECTOR3              sp130;
+    VECTOR3              sp140;
+    s32                  var_a0;
+    s32                  var_a1;
+    s_func_8006A940**    var_s1;
+    s32                  var_s4;
+    s32                  var_v0;
+    s32                  var_a2;
+    s_IpdCollisionData** var_s0;
+    s_func_8006A940*     temp_s0;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006A940); // 0x8006A940
+    var_s4 = 0;
+
+    if (arg2->field_12 == 5)
+    {
+        func_8006A178(arg0, arg1->vx, arg1->vy, arg1->vz, arg2->position_0.vy);
+        return 0;
+    }
+
+    func_8006A940(arg1, arg2, arg8, arg9);
+
+    sp140 = *arg1;
+
+    arg0->field_18 = func_8006F620(&sp140, arg2, arg2->rotation_C.vz, arg2->rotation_C.vy);
+
+    func_8006AB50(&sp18, &sp140, arg2, arg3);
+
+    sp130 = sp140;
+
+    arg0->field_0.vz = 0;
+    arg0->field_0.vx = 0;
+    arg0->field_0.vy = sp140.vy;
+
+    while (1)
+    {
+        if (sp18.field_0_0 != 0)
+        {
+            sp18.field_0_8  = (sp18.field_4.field_8 != 0);
+            sp18.field_0_9  = 0;
+            sp18.field_0_10 = 0;
+        }
+        else
+        {
+            sp18.field_0_8  = (sp18.field_4.field_8 != 0);
+            sp18.field_0_9  = 1;
+            sp18.field_0_10 = 1;
+        }
+
+        for (var_s0 = arg4; var_s0 < &arg4[arg5]; var_s0++)
+        {
+            func_8006AD44(&sp18, *var_s0);
+        }
+
+        if (sp18.field_44.field_0.field_0 && sp18.field_44.field_0.field_2.vx == sp18.field_44.field_0.field_2.vy)
+        {
+            var_s4 |= 1;
+        }
+
+        func_8006CF18(&sp18, arg6, arg7);
+
+        for (var_s1 = arg8; var_s1 < &arg8[arg9]; var_s1++)
+        {
+            temp_s0 = *var_s1;
+            var_a0  = (temp_s0->field_D4 >> 4) + sp18.field_4.field_28;
+
+            if (temp_s0->field_E1_0 < (u32)sp18.field_4.field_0)
+            {
+                var_a0 -= 0xF;
+            }
+
+            sp18.field_98.field_0 = (temp_s0->field_18 + temp_s0->field_DC) >> 4;
+            sp18.field_9C.field_0 = (temp_s0->field_20 + temp_s0->field_DE) >> 4;
+
+            sp18.field_A0.s_1.field_0 = (temp_s0->field_C8 + temp_s0->field_1C) >> 4;
+            sp18.field_A0.s_1.field_2 = (temp_s0->field_CA + temp_s0->field_1C) >> 4;
+            sp18.field_A0.s_1.field_4 = var_a0;
+            sp18.field_A0.s_1.field_6 = temp_s0->field_E1_0;
+            sp18.field_A0.s_1.field_8 = &temp_s0->field_E0;
+
+            if (sp18.field_0_0 == 0)
+            {
+                temp_s0->field_E0 = 0;
+            }
+
+            func_8006CC9C(&sp18);
+            func_8006CF18(&sp18, temp_s0->field_E4, temp_s0->field_E1_4);
+        }
+
+        func_8006D01C(&sp120, &sp130, func_8006CB90(&sp18), &sp18);
+
+        arg0->field_0.vx += sp120.vx;
+        arg0->field_0.vz += sp120.vz;
+
+        if (sp18.field_0_0)
+        {
+            break;
+        }
+
+        if (sp18.field_44.field_0.field_0 || sp18.field_44.field_30.field_0)
+        {
+            var_a2 = 8;
+            if (sp18.field_44.field_8.field_0 < 9)
+            {
+                var_a2 = sp18.field_44.field_8.field_0;
+            }
+
+            for (var_a1 = 0; var_a1 < var_a2; var_a1++)
+            {
+                *sp18.field_44.field_10[var_a1] += 1;
+            }
+        }
+        else if (sp18.field_34)
+        {
+            *sp18.field_40 += 1;
+        }
+        else
+        {
+            break;
+        }
+
+        sp18.field_0_0 = 1;
+        func_8006D774(&sp18, &sp120, &sp130);
+    }
+
+    if (sp18.field_90 == 1)
+    {
+        var_v0         = 0x8000;
+        arg0->field_14 = 0;
+    }
+    else
+    {
+        arg0->field_14 = sp18.field_94;
+        var_v0         = func_8006CC44(sp18.field_4.positionX_18 + (sp120.vx >> 4),
+                                       sp18.field_4.positionZ_1C + (sp120.vz >> 4), &sp18) *
+                 16;
+    }
+
+    arg0->field_C  = var_v0;
+    arg0->field_10 = sp18.field_88;
+    arg0->field_12 = sp18.field_8C;
+
+    if (var_s4 != 0)
+    {
+        return -1;
+    }
+
+    return sp18.field_0_0 != 0;
+}
+
+void func_8006A940(VECTOR3* arg0, s_func_8006AB50* arg1, s_func_8006A940** arg2, s32 arg3) // 0x8006A940
+{
+    s32              sp10;
+    s32              temp_s1;
+    s32              temp_s2;
+    s32              var_a0;
+    s32              var_s3;
+    s32              var_s4;
+    s32              var_v0;
+    s_func_8006A940* temp_s0;
+    s32              temp2;
+    s32              temp3;
+    s32              temp4;
+    s32              temp5;
+    s32              temp6;
+
+    var_s4 = 0x1000;
+    sp10   = ratan2(arg0->vx, arg0->vz);
+
+    for (var_s3 = 0; var_s3 < arg3; var_s3++)
+    {
+        temp_s0 = arg2[var_s3];
+
+        if (!temp_s0->field_E1_0 || temp_s0->field_E1_0 == 1 || temp_s0->field_E1_0 >= arg1->field_12)
+        {
+            continue;
+        }
+
+        temp3 = temp_s0->field_C8 + temp_s0->field_1C;
+        temp4 = temp_s0->field_CA + temp_s0->field_1C;
+
+        temp6 = arg1->rotation_C.vy + arg1->position_0.vy;
+        temp5 = arg1->rotation_C.vx + arg1->position_0.vy;
+
+        if (temp3 > temp5 || temp4 < temp6)
+        {
+            continue;
+        }
+
+        temp_s2 = (temp_s0->field_18 + temp_s0->field_DC) - arg1->position_0.vx;
+        temp_s1 = (temp_s0->field_20 + temp_s0->field_DE) - arg1->position_0.vz;
+
+        temp2 = Vc_VectorMagnitudeCalc(temp_s2, 0, temp_s1);
+
+        if ((temp_s0->field_D4 + arg1->rotation_C.vz + 0x199) < temp2)
+        {
+            continue;
+        }
+
+        var_a0 = FP_MULTIPLY(Math_Cos(ratan2(temp_s2, temp_s1) - sp10), 0x1800, 0xC);
+
+        var_v0 = MAX(var_a0, 0);
+        var_a0 = var_v0;
+
+        if (temp_s0->field_0 == 0xA)
+        {
+            var_a0 = MIN(var_a0, 0x999);
+        }
+        else
+        {
+            var_a0 = MIN(var_a0, 0x666);
+        }
+
+        var_s4 -= var_a0;
+    }
+
+    var_s4 = MAX(var_s4, 0x666);
+
+    arg0->vx = FP_MULTIPLY(var_s4, arg0->vx, 0xC);
+    arg0->vz = FP_MULTIPLY(var_s4, arg0->vz, 0xC);
+}
 
 void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* vec, s_func_8006AB50* arg2, s32 arg3) // 0x8006AB50
 {
@@ -3045,7 +3266,40 @@ void func_8006AD44(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x800
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006AEAC); // 0x8006AEAC
+s32 func_8006AEAC(s_func_8006CC44* arg0, s_IpdCollisionData* arg1) // 0x8006AEAC
+{
+    s_func_8006CC44_A8* ptr;
+
+    if (!func_8006B004(arg0, arg1))
+    {
+        return 0;
+    }
+
+    arg0->field_98.vec_0.vx = arg0->field_4.positionX_18 - arg1->posX_0;
+    arg0->field_98.vec_0.vz = arg0->field_4.positionZ_1C - arg1->posZ_4;
+    arg0->field_9C.vec_0.vx = arg0->field_4.field_20 - arg1->posX_0;
+    arg0->field_9C.vec_0.vz = arg0->field_4.field_24 - arg1->posZ_4;
+
+    if (arg0->field_98.vec_0.vx / arg1->field_1C < 0 || arg0->field_98.vec_0.vx / arg1->field_1C >= arg1->field_1E ||
+        (arg0->field_98.vec_0.vz / arg1->field_1C < 0) || arg0->field_98.vec_0.vz / arg1->field_1C >= arg1->field_1F)
+    {
+        arg0->field_A0.s_0.field_4 = NULL;
+        return 1;
+    }
+
+    arg0->field_A0.s_0.field_4 = (s_func_8006CA18*)&arg1->ptr_20[(arg0->field_98.vec_0.vz / arg1->field_1C * arg1->field_1E) +
+                                                                 arg0->field_98.vec_0.vx / arg1->field_1C];
+    arg0->field_C8             = 0xFF;
+
+    for (ptr = arg0->field_A0.s_0.field_8; ptr < &arg0->field_C8; ptr++)
+    {
+        ptr->field_0 = 0;
+        ptr->field_1 = 0xFF;
+        ptr->field_4 = 0x7FFFFFFF;
+    }
+
+    return 1;
+}
 
 bool func_8006B004(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x8006B004
 {
@@ -3131,14 +3385,14 @@ void func_8006B1C8(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s_IpdCol
 
                     if (arg0->field_0_8 || arg0->field_0_9)
                     {
-                        if (arg0->field_D8.s_field_0.field_1 == 0xFF)
+                        if (arg0->field_CC.field_C.s_field_0.field_1 == 0xFF)
                         {
                             func_8006B9C8(arg0);
                         }
 
-                        if (arg0->field_D8.s_field_0.field_0 == 0xFF)
+                        if (arg0->field_CC.field_C.s_field_0.field_0 == 0xFF)
                         {
-                            func_8006B8F8(&arg0->field_CC); // TODO: `unk_CC` is struct? 56 bytes?
+                            func_8006B8F8(&arg0->field_CC);
                             func_8006B9C8(arg0);
                         }
                     }
@@ -3152,9 +3406,109 @@ void func_8006B1C8(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s_IpdCol
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006B318); // 0x8006B318
+s32 func_8006B318(s_func_8006CC44* arg0, s_IpdCollisionData* arg1, s32 arg2) // 0x8006B318
+{
+    s32                    temp_a0_5;
+    s32                    temp_s0;
+    s_IpdCollisionData_10* temp_a0;
+    s_IpdCollisionData_14* temp_a3;
+    s32                    temp_v0;
 
-void func_8006B6E8(s_func_8006CC44* arg0, s_IpdCollisionData_20* arg1)     // 0x8006B6E8
+    temp_a3 = &arg1->ptr_14[arg2];
+
+    if (!((arg0->field_2 >> (temp_a3->field_0_14 * 4 | temp_a3->field_2_14)) & 1))
+    {
+        return 0;
+    }
+
+    arg0->field_CC.field_0 = arg1;
+    arg0->field_CC.field_4 = arg2;
+
+    arg0->field_CC.field_6.vx = temp_a3->field_0_0;
+    arg0->field_CC.field_6.vy = temp_a3->field_2_0;
+    arg0->field_CC.field_6.vz = temp_a3->field_4;
+
+    arg0->field_CC.field_12 = arg1->ptr_C[temp_a3->field_7];
+    arg0->field_CC.field_18 = arg1->ptr_C[temp_a3->field_6];
+
+    arg0->field_CC.field_C.s_field_0.field_0 = temp_a3->field_8;
+
+    if ((arg0->field_CC.field_C.s_field_0.field_0) != 0xFF)
+    {
+        temp_a0                 = &arg1->ptr_10[arg0->field_CC.field_C.s_field_0.field_0];
+        arg0->field_CC.field_E  = temp_a0->field_6_8;
+        arg0->field_CC.field_10 = temp_a0->field_6_5;
+
+        if (arg0->field_4.field_4 && (temp_a0->field_6_5 == 1 || temp_a0->field_6_0 == 12))
+        {
+            arg0->field_CC.field_12.vy -= 0x1000;
+            arg0->field_CC.field_18.vy -= 0x1000;
+        }
+    }
+
+    arg0->field_CC.field_C.s_field_0.field_1 = temp_a3->field_9;
+
+    if ((arg0->field_CC.field_C.s_field_0.field_1) != 0xFF)
+    {
+        temp_a0                 = &arg1->ptr_10[arg0->field_CC.field_C.s_field_0.field_1];
+        arg0->field_CC.field_F  = temp_a0->field_6_8;
+        arg0->field_CC.field_11 = temp_a0->field_6_5;
+
+        if (arg0->field_4.field_4 && (temp_a0->field_6_5 == 1 || temp_a0->field_6_0 == 0xC))
+        {
+            arg0->field_CC.field_12.vy = -0x1000;
+            arg0->field_CC.field_18.vy = -0x1000;
+        }
+    }
+
+    temp_v0 = (temp_a3->field_0_0 & 0xFFFF) + (temp_a3->field_2_0 << 16);
+    gte_ldR11R12(temp_v0);
+    gte_ldR13R21(temp_v0);
+    temp_v0 = (u16)arg0->field_4.field_C.vx + (arg0->field_4.field_C.vz << 16);
+    gte_ldvxy0(temp_v0);
+    gte_gte_ldvz0();
+    gte_rtv0();
+    gte_stMAC12(&arg0->field_CC.field_20.field_14);
+    temp_v0 = ((arg0->field_98.vec_0.vx - arg0->field_CC.field_12.vx) & 0xFFFF) + ((arg0->field_98.vec_0.vz - arg0->field_CC.field_12.vz) << 16);
+    gte_ldvxy0(temp_v0);
+    gte_gte_ldvz0();
+    gte_rtv0();
+    gte_stMAC12(&arg0->field_CC.field_20.field_0);
+
+    temp_s0                            = arg0->field_CC.field_20.field_0.vx;
+    temp_a0_5                          = arg0->field_CC.field_20.field_0.vz;
+    arg0->field_CC.field_20.field_4.vx = arg0->field_CC.field_20.field_14.vx + temp_s0;
+    arg0->field_CC.field_20.field_4.vz = arg0->field_CC.field_20.field_14.vz + temp_a0_5;
+
+    if (temp_s0 < 0)
+    {
+        arg0->field_CC.field_20.field_8  = 2;
+        arg0->field_CC.field_20.field_C  = SquareRoot0((temp_s0 * temp_s0) + (temp_a0_5 * temp_a0_5));
+        arg0->field_CC.field_20.field_10 = -temp_s0;
+    }
+    else if (arg0->field_CC.field_6.vz < temp_s0)
+    {
+        arg0->field_CC.field_20.field_8  = 2;
+        arg0->field_CC.field_20.field_C  = SquareRoot0(((temp_s0 - arg0->field_CC.field_6.vz) * (temp_s0 - arg0->field_CC.field_6.vz)) + (temp_a0_5 * temp_a0_5));
+        arg0->field_CC.field_20.field_10 = temp_s0 - arg0->field_CC.field_6.vz;
+    }
+    else
+    {
+        if (temp_a0_5 < 0)
+        {
+            arg0->field_CC.field_20.field_C = -temp_a0_5;
+        }
+        else
+        {
+            arg0->field_CC.field_20.field_C = temp_a0_5;
+        }
+        arg0->field_CC.field_20.field_8 = 1;
+    }
+
+    return 1;
+}
+
+void func_8006B6E8(s_func_8006CC44* arg0, s_IpdCollisionData_20* arg1) // 0x8006B6E8
 {
     s32                 idx;
     s32                 temp_s1;
@@ -3163,10 +3517,10 @@ void func_8006B6E8(s_func_8006CC44* arg0, s_IpdCollisionData_20* arg1)     // 0x
     s32                 temp_s4;
     s_func_8006CC44_A8* temp_s0;
 
-    temp_s1 = arg0->field_D8.s_field_0.field_0;
-    temp_s2 = arg0->field_D8.s_field_0.field_1;
-    temp_s3 = arg0->field_DC;
-    temp_s4 = arg0->field_DD;
+    temp_s1 = arg0->field_CC.field_C.s_field_0.field_0;
+    temp_s2 = arg0->field_CC.field_C.s_field_0.field_1;
+    temp_s3 = arg0->field_CC.field_10;
+    temp_s4 = arg0->field_CC.field_11;
 
     if (temp_s1 == 0xFF)
     {
@@ -3175,24 +3529,24 @@ void func_8006B6E8(s_func_8006CC44* arg0, s_IpdCollisionData_20* arg1)     // 0x
             return;
         }
 
-        idx = arg0->field_DB;
+        idx = arg0->field_CC.field_F;
     }
     else
     {
-        idx = arg0->field_DA;
+        idx = arg0->field_CC.field_E;
     }
 
     temp_s0 = &arg0->field_A0.s_0.field_8[idx];
-    if (!func_8006B7E0(temp_s0, &arg0->field_EC))
+    if (!func_8006B7E0(temp_s0, &arg0->field_CC.field_20))
     {
         return;
     }
 
-    temp_s0->field_0 = arg0->field_F4;
-    temp_s0->field_4 = arg0->field_F8;
-    temp_s0->field_2 = arg0->field_FC;
+    temp_s0->field_0 = arg0->field_CC.field_20.field_8;
+    temp_s0->field_4 = arg0->field_CC.field_20.field_C;
+    temp_s0->field_2 = arg0->field_CC.field_20.field_10;
 
-    if (arg0->field_EE >= 0)
+    if (arg0->field_CC.field_20.field_0.vz >= 0)
     {
         if (temp_s3 == 1)
         {
@@ -3216,25 +3570,116 @@ void func_8006B6E8(s_func_8006CC44* arg0, s_IpdCollisionData_20* arg1)     // 0x
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006B7E0); // 0x8006B7E0
+s32 func_8006B7E0(s_func_8006CC44_A8* arg0, s_func_8006CC44_CC_20* arg1) // 0x8006B7E0
+{
+    if (arg0->field_0 == 0)
+    {
+        return 1;
+    }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006B8F8); // 0x8006B8F8
+    switch (arg1->field_8)
+    {
+        case 0:
+            return 0;
+
+        case 1:
+            switch (arg0->field_0)
+            {
+                case 1:
+                    if (arg1->field_C < arg0->field_4)
+                    {
+                        return 1;
+                    }
+                    break;
+                case 2:
+                    if (arg1->field_C < (arg0->field_4 + 6))
+                    {
+                        return 1;
+                    }
+                    break;
+            }
+            break;
+
+        case 2:
+            switch (arg0->field_0)
+            {
+                case 1:
+                    if (arg1->field_C < arg0->field_4 - 6)
+                    {
+                        return 1;
+                    }
+                    break;
+
+                case 2:
+                    if (arg1->field_C < (arg0->field_4 - 6))
+                    {
+                        return 1;
+                    }
+                    if (arg1->field_C < (arg0->field_4 + 6) && arg1->field_10 < arg0->field_2)
+                    {
+                        return 1;
+                    }
+                    break;
+            }
+    }
+
+    return 0;
+}
+
+void func_8006B8F8(s_func_8006CC44_CC* arg0) // 0x8006B8F8
+{
+    s_func_8006CC44_CC_20* ptr;
+    s32                    temp_a1;
+    s32                    temp_a2;
+    s32                    temp_a3;
+
+    temp_a3                    = (u16)arg0->field_12.vx;
+    temp_a1                    = (u16)arg0->field_18.vx;
+    temp_a2                    = (u16)arg0->field_18.vz;
+    arg0->field_18.vx          = temp_a3;
+    temp_a3                    = (u16)arg0->field_12.vy;
+    arg0->field_12.vy          = arg0->field_18.vy;
+    arg0->field_12.vx          = temp_a1;
+    arg0->field_6.vx           = -arg0->field_6.vx;
+    arg0->field_18.vy          = temp_a3;
+    arg0->field_6.vy           = -arg0->field_6.vy;
+    temp_a3                    = (u16)arg0->field_12.vz;
+    arg0->field_18.vz          = temp_a3;
+    temp_a3                    = arg0->field_C.s_field_0.field_0;
+    arg0->field_20.field_14.vx = -arg0->field_20.field_14.vx;
+
+    arg0->field_12.vz               = temp_a2;
+    arg0->field_C.s_field_0.field_0 = arg0->field_C.s_field_0.field_1;
+
+    ptr = &arg0->field_20;
+
+    arg0->field_C.s_field_0.field_1 = temp_a3;
+    temp_a3        = arg0->field_E;
+    arg0->field_20.field_14.vz      = -arg0->field_20.field_14.vz;
+    arg0->field_E  = arg0->field_F;
+    arg0->field_F  = temp_a3;
+
+    ptr->field_0.vz = -ptr->field_0.vz;
+    ptr->field_0.vx = (arg0->field_6.vz - ptr->field_0.vx);
+    ptr->field_4.vz = -ptr->field_4.vz;
+    ptr->field_4.vx = (arg0->field_6.vz - ptr->field_4.vx);
+}
 
 void func_8006B9C8(s_func_8006CC44* arg0) // 0x8006B9C8
 {
     s32 field_28;
 
-    if (arg0->field_D8.s_field_0.field_1 == 0xFF && arg0->field_EE < 0 &&
-        (arg0->field_4.field_2C >= arg0->field_E0 || arg0->field_4.field_2C >= arg0->field_E6))
+    if (arg0->field_CC.field_C.s_field_0.field_1 == 0xFF && arg0->field_CC.field_20.field_0.vz < 0 &&
+        (arg0->field_4.field_2C >= arg0->field_CC.field_12.vy || arg0->field_4.field_2C >= arg0->field_CC.field_18.vy))
     {
-        if (arg0->field_0_9 && arg0->field_F8 < arg0->field_4.field_28)
+        if (arg0->field_0_9 && arg0->field_CC.field_20.field_C < arg0->field_4.field_28)
         {
             func_8006BB50(arg0, 0);
             return;
         }
 
         field_28 = arg0->field_4.field_28;
-        if (arg0->field_0_9 && arg0->field_F8 < (field_28 + 8))
+        if (arg0->field_0_9 && arg0->field_CC.field_20.field_C < (field_28 + 8))
         {
             func_8006BB50(arg0, 1);
         }
@@ -3242,9 +3687,9 @@ void func_8006B9C8(s_func_8006CC44* arg0) // 0x8006B9C8
         if (arg0->field_0_8)
         {
             if (!arg0->field_44.field_0.field_0 &&
-                (-field_28 < arg0->field_EE || -field_28 < arg0->field_F2) &&
-                (-field_28 < arg0->field_EC || -field_28 < arg0->field_F0) &&
-                (arg0->field_EC < (field_28 + arg0->vec_D2.vz) || arg0->field_F0 < (field_28 + arg0->vec_D2.vz)))
+                (-field_28 < arg0->field_CC.field_20.field_0.vz || -field_28 < arg0->field_CC.field_20.field_4.vz) &&
+                (-field_28 < arg0->field_CC.field_20.field_0.vx || -field_28 < arg0->field_CC.field_20.field_4.vx) &&
+                (arg0->field_CC.field_20.field_0.vx < (field_28 + arg0->field_CC.field_6.vz) || arg0->field_CC.field_20.field_4.vx < (field_28 + arg0->field_CC.field_6.vz)))
             {
                 func_8006BE40(arg0);
             }
@@ -3256,7 +3701,6 @@ void func_8006BB50(s_func_8006CC44* arg0, s32 arg1) // 0x8006BB50
 {
     s32 var_a3;
     s32 var_v0_2;
-    s32 temp;
     s16 temp2;
 
     if (func_8006BC34(arg0) < 0)
@@ -3264,25 +3708,24 @@ void func_8006BB50(s_func_8006CC44* arg0, s32 arg1) // 0x8006BB50
         return;
     }
 
-    if (arg0->field_EC < 0)
+    if (arg0->field_CC.field_20.field_0.vx < 0)
     {
-        var_a3   = arg0->field_98.vec_0.vx - arg0->field_DE;
-        var_v0_2 = arg0->field_98.vec_0.vz - arg0->field_E2;
+        var_a3   = arg0->field_98.vec_0.vx - arg0->field_CC.field_12.vx;
+        var_v0_2 = arg0->field_98.vec_0.vz - arg0->field_CC.field_12.vz;
     }
-    else if (arg0->vec_D2.vz < arg0->field_EC)
+    else if (arg0->field_CC.field_6.vz < arg0->field_CC.field_20.field_0.vx)
     {
-        var_a3   = arg0->field_98.vec_0.vx - arg0->field_E4;
-        var_v0_2 = arg0->field_98.vec_0.vz - arg0->field_E8;
+        var_a3   = arg0->field_98.vec_0.vx - arg0->field_CC.field_18.vx;
+        var_v0_2 = arg0->field_98.vec_0.vz - arg0->field_CC.field_18.vz;
     }
     else
     {
-        var_a3   = arg0->vec_D2.vy;
-        var_v0_2 = -arg0->vec_D2.vx;
+        var_a3   = arg0->field_CC.field_6.vy;
+        var_v0_2 = -arg0->field_CC.field_6.vx;
     }
 
-    temp  = 0x34;
-    temp2 = arg0->field_4.field_28 - arg0->field_F8;
-    func_8006BCC4(&arg0->field_44, arg0->field_CC + (arg0->field_D0 + temp), arg1, var_a3, var_v0_2, temp2);
+    temp2 = arg0->field_4.field_28 - arg0->field_CC.field_20.field_C;
+    func_8006BCC4(&arg0->field_44, (u8*)arg0->field_CC.field_0 + (arg0->field_CC.field_4 + 52), arg1, var_a3, var_v0_2, temp2);
 }
 
 s32 func_8006BC34(s_func_8006CC44* arg0)
@@ -3294,23 +3737,23 @@ s32 func_8006BC34(s_func_8006CC44* arg0)
     u16 temp_a1;
     u16 var_v0;
 
-    temp_v1 = arg0->field_EC;
+    temp_v1 = arg0->field_CC.field_20.field_0.vx;
     if (temp_v1 < 0)
     {
-        var_v0 = arg0->field_E0;
+        var_v0 = arg0->field_CC.field_12.vy;
     }
     else
     {
-        temp_a2 = arg0->vec_D2.vz;
+        temp_a2 = arg0->field_CC.field_6.vz;
         if (temp_a2 < temp_v1)
         {
-            var_v0 = arg0->field_E6;
+            var_v0 = arg0->field_CC.field_18.vy;
         }
         else
         {
-            temp_a3 = arg0->field_E0;
-            temp_v0 = arg0->field_E6;
-            temp_a1 = arg0->field_E0;
+            temp_a3 = arg0->field_CC.field_12.vy;
+            temp_v0 = arg0->field_CC.field_18.vy;
+            temp_a1 = arg0->field_CC.field_12.vy;
 
             if (temp_a3 == temp_v0)
             {
@@ -3390,13 +3833,13 @@ void func_8006BE40(s_func_8006CC44* arg0) // 0x8006BE40
     temp_a3 = -arg0->field_4.field_28;
     var_a2  = 0;
 
-    if (arg0->field_EE >= temp_a3)
+    if (arg0->field_CC.field_20.field_0.vz >= temp_a3)
     {
-        if (arg0->field_EC >= 0)
+        if (arg0->field_CC.field_20.field_0.vx >= 0)
         {
-            if (arg0->vec_D2.vz >= arg0->field_EC)
+            if (arg0->field_CC.field_6.vz >= arg0->field_CC.field_20.field_0.vx)
             {
-                var_a2 = arg0->field_EC;
+                var_a2 = arg0->field_CC.field_20.field_0.vx;
                 var_v1 = 2;
             }
             else
@@ -3411,27 +3854,27 @@ void func_8006BE40(s_func_8006CC44* arg0) // 0x8006BE40
     }
     else
     {
-        if (arg0->field_102 == 0)
+        if (arg0->field_CC.field_20.field_14.vz == 0)
         {
-            if ((arg0->field_EC > 0) && (arg0->field_EC < arg0->vec_D2.vz))
+            if ((arg0->field_CC.field_20.field_0.vx > 0) && (arg0->field_CC.field_20.field_0.vx < arg0->field_CC.field_6.vz))
             {
                 var_a1 = 0;
-                var_a2 = arg0->field_EC;
+                var_a2 = arg0->field_CC.field_20.field_0.vx;
             }
         }
         else
         {
-            var_a1 = FP_TO(temp_a3 - arg0->field_EE, Q12_SHIFT) / arg0->field_102;
-            temp   = arg0->field_100 * var_a1;
+            var_a1 = FP_TO(temp_a3 - arg0->field_CC.field_20.field_0.vz, Q12_SHIFT) / arg0->field_CC.field_20.field_14.vz;
+            temp   = arg0->field_CC.field_20.field_14.vx * var_a1;
             temp   = FP_FROM(temp, Q12_SHIFT);
-            var_a2 = temp + arg0->field_EC;
+            var_a2 = temp + arg0->field_CC.field_20.field_0.vx;
         }
 
         if (var_a2 < 0)
         {
             var_v1 = 0;
         }
-        else if (arg0->vec_D2.vz < var_a2)
+        else if (arg0->field_CC.field_6.vz < var_a2)
         {
             var_v1 = 1;
         }
@@ -3444,11 +3887,11 @@ void func_8006BE40(s_func_8006CC44* arg0) // 0x8006BE40
     switch (var_v1)
     {
         case 0:
-            func_8006BF88(arg0, &arg0->field_DE);
+            func_8006BF88(arg0, &arg0->field_CC.field_12);
             break;
 
         case 1:
-            func_8006BF88(arg0, &arg0->field_E4);
+            func_8006BF88(arg0, &arg0->field_CC.field_18);
             break;
 
         case 2:
@@ -3457,53 +3900,48 @@ void func_8006BE40(s_func_8006CC44* arg0) // 0x8006BE40
     }
 }
 
-void func_8006BF88(s_func_8006CC44* arg0, s16* arg1) // 0x8006BF88
+void func_8006BF88(s_func_8006CC44* arg0, SVECTOR3* arg1) // 0x8006BF88
 {
     s16 temp_v0;
-    s32 temp;
     s32 temp2;
     s32 temp3;
 
-    temp_v0 = func_8006C248(*(s32*)&arg0->field_4.direction_14, arg0->field_4.field_8, arg1[0] - arg0->field_98.vec_0.vx, arg1[2] - arg0->field_98.vec_0.vz, arg0->field_4.field_28);
-    if (temp_v0 != -1 && func_8006C1B8(2, temp_v0, arg0) && arg0->field_4.field_2C > arg1[1])
+    temp_v0 = func_8006C248(*(s32*)&arg0->field_4.direction_14, arg0->field_4.field_8, arg1->vx - arg0->field_98.vec_0.vx,
+                            arg1->vz - arg0->field_98.vec_0.vz, arg0->field_4.field_28);
+    if (temp_v0 != -1 && func_8006C1B8(2, temp_v0, arg0) && arg0->field_4.field_2C > arg1->vy)
     {
-        temp           = 0x34;
         arg0->field_38 = temp_v0;
         arg0->field_34 = 2;
         temp2          = arg0->field_98.vec_0.vx + FP_MULTIPLY(arg0->field_4.field_C.vx, temp_v0, Q12_SHIFT);
         arg0->field_3A = (arg0->field_4.field_8 * temp_v0) >> 8;
-        arg0->field_40 = arg0->field_CC + (arg0->field_D0 + temp);
+        arg0->field_40 = (u8*)arg0->field_CC.field_0 + (arg0->field_CC.field_4 + 52);
 
-        arg0->field_3C = temp2 - arg1[0];
+        arg0->field_3C = temp2 - arg1->vx;
         temp3          = arg0->field_98.vec_0.vz + FP_MULTIPLY(arg0->field_4.field_C.vz, temp_v0, Q12_SHIFT);
-        arg0->field_3E = temp3 - arg1[2];
+        arg0->field_3E = temp3 - arg1->vz;
     }
 }
 
 void func_8006C0C8(s_func_8006CC44* arg0, s16 arg1, s16 arg2) // 0x8006C0C8
 {
-    s8* ptr;
     s32 temp;
-    s32 temp2;
 
-    if (!func_8006C1B8(1, arg1, arg0) || arg0->field_102 < 0)
+    if (!func_8006C1B8(1, arg1, arg0) || arg0->field_CC.field_20.field_14.vz < 0)
     {
         return;
     }
 
-    temp = ((arg0->field_E6 - arg0->field_E0) * arg2) / arg0->vec_D2.vz;
+    temp = ((arg0->field_CC.field_18.vy - arg0->field_CC.field_12.vy) * arg2) / arg0->field_CC.field_6.vz;
 
-    if (temp + arg0->field_E0 < arg0->field_4.field_2C)
+    if (temp + arg0->field_CC.field_12.vy < arg0->field_4.field_2C)
     {
-        temp2          = 0x34;
-        ptr            = arg0->field_CC + (arg0->field_D0 + temp2);
-        arg0->field_40 = ptr;
+        arg0->field_40 = (u8*)arg0->field_CC.field_0 + (arg0->field_CC.field_4 + 52);
         arg0->field_34 = 1;
         arg0->field_38 = arg1;
         arg0->field_3A = (arg0->field_4.field_8 * arg1) >> 8;
         ;
-        arg0->field_3C = arg0->vec_D2.vy;
-        arg0->field_3E = -arg0->vec_D2.vx;
+        arg0->field_3C = arg0->field_CC.field_6.vy;
+        arg0->field_3E = -arg0->field_CC.field_6.vx;
     }
 }
 
@@ -3609,8 +4047,8 @@ bool func_8006C3D4(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s32 idx)
 {
     s_IpdCollisionData_18* temp_a1;
 
-    arg0->field_CC = collData;
-    arg0->field_D0 = idx;
+    arg0->field_CC.field_0 = collData;
+    arg0->field_CC.field_4 = idx;
     temp_a1        = &collData->ptr_18[idx - collData->field_8_16];
 
     if (!((arg0->field_2 >> temp_a1->field_0_8) & (1 << 0)))
@@ -3618,11 +4056,11 @@ bool func_8006C3D4(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s32 idx)
         return false;
     }
 
-    arg0->field_D1         = temp_a1->field_0_5;
-    arg0->vec_D2.vx        = temp_a1->vec_2.vx;
-    arg0->vec_D2.vy        = temp_a1->vec_2.vy;
-    arg0->vec_D2.vz        = temp_a1->vec_2.vz;
-    arg0->field_D8.field_0 = temp_a1->field_8;
+    arg0->field_CC.field_5         = temp_a1->field_0_5;
+    arg0->field_CC.field_6.vx      = temp_a1->vec_2.vx;
+    arg0->field_CC.field_6.vy      = temp_a1->vec_2.vy;
+    arg0->field_CC.field_6.vz      = temp_a1->vec_2.vz;
+    arg0->field_CC.field_C.field_0 = temp_a1->field_8;
     return true;
 }
 
@@ -3637,43 +4075,42 @@ void func_8006C45C(s_func_8006CC44* arg0) // 0x8006C45C
     s32 var_v0;
     s32 temp;
     s32 temp2;
-    s32 temp3;
 
-    temp_v0 = arg0->field_4.field_28 + arg0->field_D8.field_0;
+    temp_v0 = arg0->field_4.field_28 + arg0->field_CC.field_C.field_0;
     temp_a2 = temp_v0 + 8;
-    temp_v1 = arg0->vec_D2.vx - temp_a2;
+    temp_v1 = arg0->field_CC.field_6.vx - temp_a2;
 
     if (arg0->field_98.vec_0.vx < temp_v1 && arg0->field_9C.vec_0.vx < temp_v1)
     {
         return;
     }
 
-    if (arg0->vec_D2.vx + temp_a2 < arg0->field_98.vec_0.vx && arg0->vec_D2.vx + temp_a2 < arg0->field_9C.vec_0.vx)
+    if (arg0->field_CC.field_6.vx + temp_a2 < arg0->field_98.vec_0.vx && arg0->field_CC.field_6.vx + temp_a2 < arg0->field_9C.vec_0.vx)
     {
         return;
     }
 
-    if (arg0->field_98.vec_0.vz < arg0->vec_D2.vz - temp_a2 && arg0->field_9C.vec_0.vz < arg0->vec_D2.vz - temp_a2)
+    if (arg0->field_98.vec_0.vz < arg0->field_CC.field_6.vz - temp_a2 && arg0->field_9C.vec_0.vz < arg0->field_CC.field_6.vz - temp_a2)
     {
         return;
     }
 
-    if (arg0->vec_D2.vz + temp_a2 < arg0->field_98.vec_0.vz && arg0->vec_D2.vz + temp_a2 < arg0->field_9C.vec_0.vz)
+    if (arg0->field_CC.field_6.vz + temp_a2 < arg0->field_98.vec_0.vz && arg0->field_CC.field_6.vz + temp_a2 < arg0->field_9C.vec_0.vz)
     {
         return;
     }
 
-    var_v0    = arg0->field_98.vec_0.vx - arg0->vec_D2.vx;
-    temp_v0_2 = arg0->field_98.vec_0.vz - arg0->vec_D2.vz;
+    var_v0    = arg0->field_98.vec_0.vx - arg0->field_CC.field_6.vx;
+    temp_v0_2 = arg0->field_98.vec_0.vz - arg0->field_CC.field_6.vz;
     temp_v0_3 = SquareRoot0((var_v0 * var_v0) + (temp_v0_2 * temp_v0_2));
 
-    if (temp_v0_3 < arg0->field_D8.field_0 && arg0->field_D1 != 1 && (arg0->field_C8 == 0xFF || arg0->vec_D2.vy < arg0->field_CA))
+    if (temp_v0_3 < arg0->field_CC.field_C.field_0 && arg0->field_CC.field_5 != 1 && (arg0->field_C8 == 0xFF || arg0->field_CC.field_6.vy < arg0->field_CA))
     {
-        arg0->field_C8 = arg0->field_D0;
-        arg0->field_CA = arg0->vec_D2.vy;
+        arg0->field_C8 = arg0->field_CC.field_4;
+        arg0->field_CA = arg0->field_CC.field_6.vy;
     }
 
-    if (!arg0->field_0_8 && !arg0->field_0_9 || temp_v0_3 < arg0->field_D8.field_0)
+    if (!arg0->field_0_8 && !arg0->field_0_9 || temp_v0_3 < arg0->field_CC.field_C.field_0)
     {
         return;
     }
@@ -3694,7 +4131,7 @@ void func_8006C45C(s_func_8006CC44* arg0) // 0x8006C45C
         return;
     }
 
-    var_s2 = func_8006C248(*(s32*)&arg0->field_4.direction_14, arg0->field_4.field_8, (arg0->vec_D2.vx - arg0->field_98.vec_0.vx), (arg0->vec_D2.vz - arg0->field_98.vec_0.vz), temp_v0);
+    var_s2 = func_8006C248(*(s32*)&arg0->field_4.direction_14, arg0->field_4.field_8, (arg0->field_CC.field_6.vx - arg0->field_98.vec_0.vx), (arg0->field_CC.field_6.vz - arg0->field_98.vec_0.vz), temp_v0);
 
     if (var_s2 == -1)
     {
@@ -3706,33 +4143,29 @@ void func_8006C45C(s_func_8006CC44* arg0) // 0x8006C45C
         var_s2 = 0;
     }
 
-    if (func_8006C1B8(1, var_s2, arg0) && arg0->field_4.field_2C >= arg0->vec_D2.vy)
+    if (func_8006C1B8(1, var_s2, arg0) && arg0->field_4.field_2C >= arg0->field_CC.field_6.vy)
     {
-        temp3          = 0x34;
         arg0->field_38 = var_s2;
         arg0->field_34 = 1;
         temp           = arg0->field_98.vec_0.vx + FP_MULTIPLY(arg0->field_4.field_C.vx, var_s2, Q12_SHIFT);
         arg0->field_3A = (arg0->field_4.field_8 * var_s2) >> 8;
-        arg0->field_40 = arg0->field_CC + (arg0->field_D0 + temp3);
-        arg0->field_3C = temp - arg0->vec_D2.vx;
+        arg0->field_40 = (u8*)arg0->field_CC.field_0 + (arg0->field_CC.field_4 + 52);
+        arg0->field_3C = temp - arg0->field_CC.field_6.vx;
         temp2          = arg0->field_98.vec_0.vz + FP_MULTIPLY(arg0->field_4.field_C.vz, var_s2, Q12_SHIFT);
-        arg0->field_3E = temp2 - arg0->vec_D2.vz;
+        arg0->field_3E = temp2 - arg0->field_CC.field_6.vz;
     }
 }
 
 void func_8006C794(s_func_8006CC44* arg0, s32 arg1, s32 arg2) // 0x8006C794
 {
-    s32 var;
-
-    if (arg0->field_4.field_2C >= (arg0->vec_D2.vy + (arg2 - arg0->field_D8.field_0)))
+    if (arg0->field_4.field_2C >= (arg0->field_CC.field_6.vy + (arg2 - arg0->field_CC.field_C.field_0)))
     {
-        var = arg0->field_D0 + 52;
         func_8006BCC4(&arg0->field_44,
-                      arg0->field_CC + var,
+                      (u8*)arg0->field_CC.field_0 + (arg0->field_CC.field_4 + 52),
                       arg1,
-                      arg0->field_98.vec_0.vx - arg0->vec_D2.vx,
-                      arg0->field_98.vec_0.vz - arg0->vec_D2.vz,
-                      arg0->field_4.field_28 + arg0->field_D8.field_0 - arg2);
+                      arg0->field_98.vec_0.vx - arg0->field_CC.field_6.vx,
+                      arg0->field_98.vec_0.vz - arg0->field_CC.field_6.vz,
+                      arg0->field_4.field_28 + arg0->field_CC.field_C.field_0 - arg2);
     }
 }
 
