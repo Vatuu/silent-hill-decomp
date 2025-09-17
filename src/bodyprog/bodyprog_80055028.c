@@ -2905,7 +2905,54 @@ void func_8006A178(s_800C4590* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 
     arg0->field_C  = arg4;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006A1A4); // 0x8006A1A4
+s_SubCharacter** func_8006A1A4(s32* arg0, s_SubCharacter* chara, s32 arg2) // 0x8006A1A4
+{
+    s_SubCharacter* otherChara;
+
+    if (chara != NULL &&
+        (chara->model_0.charaId_0 == 0 || chara->u_E1.s_0.field_E1_0 == 0 || (chara->u_E1.s_0.field_E1_0 == 1 && arg2 == 1)))
+    {
+        *arg0 = 0;
+        return &D_800C4458;
+    }
+
+    *arg0      = 0;
+    D_800C4474 = &D_800C4458;
+
+    for (otherChara = &g_SysWork.npcs_1A0[0]; otherChara < &g_SysWork.npcs_1A0[NPC_COUNT_MAX]; otherChara++)
+    {
+        if (otherChara->model_0.charaId_0 != 0)
+        {
+            if (otherChara->u_E1.s_0.field_E1_0 != 0 &&
+                (otherChara->u_E1.s_0.field_E1_0 != 1 || arg2 != 1) &&
+                otherChara != chara &&
+                (arg2 != 1 || chara == NULL || chara->u_E1.s_0.field_E1_0 != 4 || otherChara->u_E1.s_0.field_E1_0 >= chara->u_E1.s_0.field_E1_0))
+            {
+                *arg0      += 1;
+                *D_800C4474 = otherChara;
+                D_800C4474++;
+                otherChara->field_E0 = 0;
+            }
+        }
+    }
+
+    otherChara = &g_SysWork.player_4C.chara_0;
+    if (otherChara->model_0.charaId_0 != 0)
+    {
+        if (otherChara->u_E1.s_0.field_E1_0 != 0 &&
+            (otherChara->u_E1.s_0.field_E1_0 != 1 || arg2 != 1) &&
+            otherChara != chara &&
+            (arg2 != 1 || chara == NULL || chara->u_E1.s_0.field_E1_0 != 4 || otherChara->u_E1.s_0.field_E1_0 >= chara->u_E1.s_0.field_E1_0))
+        {
+            *arg0      += 1;
+            *D_800C4474 = otherChara;
+            D_800C4474++;
+            otherChara->field_E0 = 0;
+        }
+    }
+
+    return &D_800C4458;
+}
 
 s32 func_8006A3B4(s32 arg0, VECTOR* arg1, s32 arg2) // 0x8006A3B4
 {
@@ -4805,10 +4852,10 @@ bool func_8006D90C(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2) // 0x8
 
 bool func_8006DA08(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2, s_SubCharacter* chara) // 0x8006DA08
 {
-    s32 sp28;
-    s32 temp_v0;
-    s32 scratchPrev;
-    s32 scratchAddr;
+    s32              sp28;
+    s_SubCharacter** temp_v0;
+    s32              scratchPrev;
+    s32              scratchAddr;
 
     temp_v0 = func_8006A1A4(&sp28, chara, 0);
 
@@ -4850,10 +4897,10 @@ static inline void func_8006DB3C_Inline(s_func_800700F8_2* arg0, VECTOR3* arg1, 
 
 bool func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_SubCharacter* chara) // 0x8006DB3C
 {
-    s32 sp28;
-    s32 temp_s0;
-    s32 temp_v0;
-    s32 scratchAddr;
+    s32              sp28;
+    s32              temp_s0;
+    s_SubCharacter** temp_v0;
+    s32              scratchAddr;
 
     temp_v0       = func_8006A1A4(&sp28, chara, 1);
     arg0->field_0 = false;
@@ -4898,7 +4945,7 @@ bool func_8006DC18(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2) // 0x8
     return arg0->field_0;
 }
 
-bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s32 arg7, s32 arg8)
+bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s_SubCharacter** arg7, s32 arg8)
 {
     if (pos1->vx == 0 && pos1->vz == 0)
     {
@@ -4959,7 +5006,7 @@ bool func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1) // 0x8006DEB0
     s32                  sp10;
     s32                  temp_lo;
     s_IpdCollisionData*  temp_s1;
-    s_func_8006DCE0_64** var_s0_2;
+    s_SubCharacter**     var_s0_2;
     s_IpdCollisionData** temp_s5;
     s_IpdCollisionData** var_s3;
     s_func_8006DCE0_8C*  var_s0;
@@ -5423,7 +5470,7 @@ void func_8006EB8C(s_func_8006DCE0* arg0, s_IpdCollisionData_18* arg1) // 0x8006
     }
 }
 
-void func_8006EE0C(s_func_8006DCE0_6C* arg0, s32 arg1, s_func_8006DCE0_64* arg2) // 0x8006EE0C
+void func_8006EE0C(s_func_8006DCE0_6C* arg0, s32 arg1, s_SubCharacter* arg2) // 0x8006EE0C
 {
     s32 var_a1;
     s32 var_a3;
@@ -5434,25 +5481,25 @@ void func_8006EE0C(s_func_8006DCE0_6C* arg0, s32 arg1, s_func_8006DCE0_64* arg2)
     if (arg1 == 1)
     {
         arg0->field_C = arg2->field_D4 >> 4;
-        var_a3        = arg2->field_DC;
-        var_a1        = arg2->field_DE;
-        var_v0        = arg2->field_1C + arg2->field_CA;
+        var_a3        = arg2->field_D8.field_4;
+        var_a1        = arg2->field_D8.field_6;
+        var_v0        = arg2->position_18.vy + arg2->field_CA;
     }
     else
     {
         arg0->field_C = arg2->field_D6 >> 4;
-        var_a3        = arg2->field_D8;
-        var_a1        = arg2->field_DA;
-        var_v0        = arg2->field_1C + arg2->field_CC;
+        var_a3        = arg2->field_D8.field_0;
+        var_a1        = arg2->field_D8.field_2;
+        var_v0        = arg2->position_18.vy + arg2->field_CC;
     }
 
     arg0->field_A = var_v0 >> 4;
-    arg0->field_0 = (arg2->field_18 + var_a3) >> 4;
-    arg0->field_4 = (arg2->field_20 + var_a1) >> 4;
-    arg0->field_8 = (arg2->field_1C + arg2->field_C8) >> 4;
+    arg0->field_0 = (arg2->position_18.vx + var_a3) >> 4;
+    arg0->field_4 = (arg2->position_18.vz + var_a1) >> 4;
+    arg0->field_8 = (arg2->position_18.vy + arg2->field_C8) >> 4;
 }
 
-void func_8006EEB8(s_func_8006DCE0* arg0, s_func_8006DCE0_64* arg1) // 0x8006EEB8
+void func_8006EEB8(s_func_8006DCE0* arg0, s_SubCharacter* arg1) // 0x8006EEB8
 {
     VECTOR3 sp18;
     s32     temp_t0;
