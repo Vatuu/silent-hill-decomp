@@ -2743,7 +2743,35 @@ void func_80069844(s32 arg0) // 0x80069844
     D_800C4478.field_0 = (D_800C4478.field_0 & ~arg0) | (1 << 0);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80069860); // 0x80069860
+void func_80069860(s32 arg0, s32 arg1, s_func_8006F8FC* arg2) // 0x80069860
+{
+    s_func_8006F8FC* ptr;
+    q19_12           minX;
+    q19_12           maxX;
+    q19_12           minZ;
+    q19_12           maxZ;
+
+    D_800C4478.field_2 = 0;
+
+    for (ptr = arg2; !(ptr->field_0_0 & 1); ptr++)
+    {
+        minX = FP_TO(ptr->field_0_1, Q12_SHIFT);
+        maxX = FP_TO(ptr->field_0_1 + ptr->field_0_21, Q12_SHIFT);
+        minZ = FP_TO(ptr->field_0_11, Q12_SHIFT);
+        maxZ = FP_TO(ptr->field_0_11 + ptr->field_0_25, Q12_SHIFT);
+
+        minX -= 0x10000;
+        maxX += 0x10000;
+        minZ -= 0x10000;
+        maxZ += 0x10000;
+
+        if (arg0 >= minX && maxX >= arg0 && arg1 >= minZ && maxZ >= arg1)
+        {
+            D_800C4478.field_4[D_800C4478.field_2] = ptr;
+            D_800C4478.field_2++;
+        }
+    }
+}
 
 void IpdCollData_FixOffsets(s_IpdCollisionData* collData) // 0x8006993C
 {
@@ -2842,9 +2870,166 @@ INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80055028", D_80028B2C);
 
 INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80055028", D_80028B34);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80069BA8); // 0x80069BA8
+s32 func_80069BA8(s_800C4590* arg0, VECTOR3* arg2, s_SubCharacter* arg3, s32 arg4) // 0x80069BA8
+{
+    s_func_800699F8 sp10;
+    s32             sp20;
+    s32             temp_s7;
+    s32             var_s2;
+    s32             i;
+    s32             var_s4;
+    s8              temp_v0;
+    s32             var_s6;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80069DF0); // 0x80069DF0
+    if (arg4 == -1)
+    {
+        arg4 = 1;
+        if (arg3 == &g_SysWork.player_4C && arg3->health_B0 > 0)
+        {
+            func_80069DF0(arg0, &arg3->position_18, arg3->position_18.vy, arg3->rotation_24.vy);
+        }
+    }
+
+    temp_v0 = arg3->model_0.charaId_0 - 1;
+    switch (temp_v0)
+    {
+        case 0:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+        case 10:
+        case 11:
+        case 15:
+        case 17:
+
+            temp_s7 = arg3->position_18.vy - 0x800;
+
+            switch (arg0->field_14)
+            {
+                case 12:
+                    var_s2 = 2;
+                    break;
+
+                default:
+                    var_s2 = arg0->field_C < temp_s7;
+                    break;
+            }
+
+            var_s4 = 0;
+
+            if (var_s2 == 0)
+            {
+                break;
+            }
+
+            for (i = 0, var_s6 = 12; i < 9; i++)
+            {
+                func_800699F8(&sp10, arg3->position_18.vx + FP_MULTIPLY(Math_Sin(i * 0x1D3), 0x333, Q12_SHIFT),
+                              arg3->position_18.vz + FP_MULTIPLY(Math_Cos(i * 0x1D3), 0x333, Q12_SHIFT));
+
+                switch (var_s2)
+                {
+                    case 1:
+                        if (sp10.groundHeight_0 < temp_s7)
+                        {
+                            var_s4 += 1;
+                        }
+                        break;
+
+                    case 2:
+                        if (sp10.field_8 != 12)
+                        {
+                            var_s6 = sp10.field_8;
+                            sp20   = sp10.groundHeight_0;
+                        }
+                        break;
+                }
+            }
+
+            switch (var_s2)
+            {
+                case 1:
+                    if (var_s4 < 3)
+                    {
+                        arg0->field_C = arg3->position_18.vy;
+                    }
+                    break;
+
+                case 2:
+                    if (var_s6 != 12)
+                    {
+                        arg0->field_C  = sp20;
+                        arg0->field_14 = 12;
+                    }
+                    break;
+            }
+            break;
+    }
+
+    return arg4;
+}
+
+static const u8 unk_rdata[] = { 0x00, 0x42, 0x05, 0x80, 0x00, 0x00, 0x00, 0x00 };
+
+void func_80069DF0(s_800C4590* arg0, VECTOR3* arg1, s32 arg2, s32 arg3) // 0x80069DF0
+{
+    s32             sp10[16];
+    s_func_800699F8 sp50;
+    s32             temp_s0_2;
+    s32             var_a0;
+    s32             var_a1;
+    s32             var_s0;
+    s32             i;
+    s32             var_s3;
+    s32             var_s4;
+    s32             var_s5;
+
+    var_s4 = -0x1E000;
+    var_s3 = 0x1E000;
+    var_s5 = 0;
+
+    for (i = 0; i < 16; i++)
+    {
+        func_800699F8(&sp50, arg1->vx + Math_Sin((arg3 & 0xF) + i * 0x100), arg1->vz + Math_Cos((arg3 & 0xF) + i * 0x100));
+        sp10[i] = sp50.groundHeight_0;
+
+        if (var_s4 < sp50.groundHeight_0)
+        {
+            var_s4 = sp50.groundHeight_0;
+            var_s5 = i;
+        }
+
+        if (sp50.groundHeight_0 < var_s3)
+        {
+            var_s3 = sp50.groundHeight_0;
+        }
+    }
+
+    var_a1 = (var_s4 + var_s3) >> 1;
+
+    if (var_a1 < arg2 - 0x199)
+    {
+        var_a1 = arg2 - 0x199;
+    }
+
+    for (i = var_s5 + 1, var_a0 = var_s5; i < (var_s5 + 16) && var_a1 < sp10[i & 0xF]; i++)
+    {
+        var_a0 = i;
+    }
+
+    for (i = var_s5 - 1, var_s0 = var_s5; i < (var_s5 - 16) && var_a1 < sp10[i & 0xF]; i--)
+    {
+        var_s0 = i;
+    }
+
+    temp_s0_2 = ((var_s0 + var_a0) << 8) >> 1;
+
+    arg0->field_0.vx = FP_MULTIPLY_PRECISE(Math_Sin(temp_s0_2), 0x100, Q12_SHIFT);
+    arg0->field_0.vz = FP_MULTIPLY_PRECISE(Math_Cos(temp_s0_2), 0x100, Q12_SHIFT);
+}
 
 s32 func_80069FFC(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara) // 0x80069FFC
 {
