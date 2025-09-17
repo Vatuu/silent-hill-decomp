@@ -1233,7 +1233,7 @@ void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x800
         }
     }
 
-    if (cmp_filename(temp_s1->modelName_0, temp_s2->modelName_0))
+    if (cmp_filename(&temp_s1->modelName_0, &temp_s2->modelName_0))
     {
         arg0->field_10.lmIndex_9 = 0;
         return;

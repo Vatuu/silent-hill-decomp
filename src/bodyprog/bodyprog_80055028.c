@@ -613,14 +613,12 @@ void func_80056504(s_LmHeader* lmHeader, char* newStr, s_FsImageDesc* image, s32
 bool func_80056558(s_LmHeader* lmHeader, char* fileName, s_FsImageDesc* image, s32 arg3) // 0x80056558
 {
     s_Material* mat;
-    u32*        matName;
 
     for (mat = &lmHeader->materials_4[0];
          mat < &lmHeader->materials_4[lmHeader->materialCount_3];
          mat++)
     {
-        matName = mat->materialName_0.u32;
-        if (matName[0] == *(u32*)&fileName[0] && matName[1] == *(u32*)&fileName[4])
+        if (!cmp_filename(&mat->materialName_0, fileName))
         {
             mat->field_C = 1;
             func_8005660C(mat, image, arg3);
@@ -859,7 +857,7 @@ bool Lm_ModelFind(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BEC
     {
         for (i = 0, modelHeader = &lmHeader->modelHeaders_C[i]; i < modelHeaderCount; i++, modelHeader++)
         {
-            if (!cmp_filename(modelHeader->modelName_0, sp10))
+            if (!cmp_filename(&modelHeader->modelName_0, &sp10))
             {
                 result                   = true;
                 arg0->field_0.modelIdx_C = i;
@@ -1650,7 +1648,7 @@ s_Material_8* func_8005B1FC(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9
     for (i = 0; i < arg1->count_0; i++)
     {
         tex = arg1->entries_4[i];
-        if (!cmp_filename(mat->materialName_0, tex->textureName_8))
+        if (!cmp_filename(&mat->materialName_0, &tex->textureName_8))
         {
             mat->field_8 = tex;
             tex->field_14++;
@@ -1774,9 +1772,7 @@ s_Material_8* func_8005B4BC(char* str, s_800C1450_0* arg1) // 0x8005B4BC
     {
         material_8 = arg1->entries_4[i];
 
-        // Fast string comparison.
-        if (material_8->queueIdx_10 != NO_VALUE &&
-            *(u32*)&prevStr[0] == material_8->textureName_8.u32[0] && *(u32*)&prevStr[4] == material_8->textureName_8.u32[1])
+        if (material_8->queueIdx_10 != NO_VALUE && !cmp_filename(prevStr, &material_8->textureName_8))
         {
             return material_8;
         }
