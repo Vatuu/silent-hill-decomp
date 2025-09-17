@@ -1117,7 +1117,7 @@ void func_8003C92C(s_800BCE18_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* 
 
             if (ret == 0)
             {
-                if (!func_80056CB4(arg0, &D_800BCE18.field_1BE4, &arg0->field_10))
+                if (!Lm_ModelFind(arg0, &D_800BCE18.field_1BE4, &arg0->field_10))
                 {
                     return;
                 }

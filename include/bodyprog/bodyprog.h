@@ -3195,7 +3195,7 @@ s32 LmHeader_ModelCountGet(s_LmHeader* lmHeader);
 
 void func_80056C8C(s_Bone* bone, s_LmHeader* lmHeader, s32 modelHeaderIdx);
 
-bool func_80056CB4(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BEC_0_10* arg2);
+bool Lm_ModelFind(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BEC_0_10* arg2);
 
 void StringCopy(char* prevStr, char* newStr);
 

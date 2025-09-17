@@ -962,7 +962,7 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
 
     if (Fs_QueueEntryLoadStatusGet(ptr0->queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
         ptr0->lmHeader_0->isLoaded_2 &&
-        func_80056CB4(arg0, D_800C1020.field_138.lmHeader_0, arg1))
+        Lm_ModelFind(arg0, D_800C1020.field_138.lmHeader_0, arg1))
     {
         return 2;
     }
@@ -1022,7 +1022,7 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
     for (k = 0; k < idx; k++)
     {
         ptr1 = sp10[k];
-        if (func_80056CB4(arg0, ptr1->ipdHeader_0->lmHeader_4, arg1))
+        if (Lm_ModelFind(arg0, ptr1->ipdHeader_0->lmHeader_4, arg1))
         {
             return (ptr1 - D_800C1020.ipdTable_15C) + 3;
         }

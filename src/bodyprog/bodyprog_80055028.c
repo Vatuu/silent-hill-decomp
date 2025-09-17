@@ -841,7 +841,7 @@ void func_80056C8C(s_Bone* bone, s_LmHeader* lmHeader, s32 modelHeaderIdx)
     }
 }
 
-bool func_80056CB4(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BEC_0_10* arg2) // 0x80056CB4
+bool Lm_ModelFind(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BEC_0_10* arg2) // 0x80056CB4
 {
     u_Filename     sp10;
     s32            modelHeaderCount;
@@ -861,7 +861,7 @@ bool func_80056CB4(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BE
         {
             if (!cmp_filename(modelHeader->modelName_0, sp10))
             {
-                result        = true;
+                result                   = true;
                 arg0->field_0.modelIdx_C = i;
                 arg0->field_0.modelHdr_8 = modelHeader;
                 // TODO: `field_8` above used to be `s_800BCE18_2BEC_0_10*`, but this func showed it was `s_ModelHeader*`
