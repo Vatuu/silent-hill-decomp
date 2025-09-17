@@ -1685,7 +1685,7 @@ typedef struct
     u32  field_10; // Maybe `bool`, not enough context.
     s32  field_14;
     s32  field_18;
-    s16  field_1C;
+    q7_8 field_1C; // Angle.
 } s_func_800700F8_2;
 
 typedef struct
