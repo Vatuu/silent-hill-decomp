@@ -27,13 +27,11 @@ void Ai_Romper_Init(s_SubCharacter* chara)
             temp_a0 = var_v0;
             if (temp_a0 < 0)
             {
-                var_v0 = temp_a0 + (2048 - 1);
+                var_v0 = temp_a0 + (Q12(0.5f) - 1);
             }
 
-            // Shifts are equivalent to `var_v0_2 % 2048`.
-            chara->health_B0 = FP_MULTIPLY_PRECISE(((temp_a0 - ((var_v0 >> 11) << 11)) + FP_FLOAT_TO(1.5f, Q12_SHIFT)),
-                                                   ROMPER_HEALTH_BASE,
-                                                   Q12_SHIFT);
+            // Shifts are equivalent to `var_v0_2 % Q12(0.5f)`.
+            chara->health_B0 = FP_MULTIPLY_PRECISE(((temp_a0 - ((var_v0 >> 11) << 11)) + Q12(1.5f)), ROMPER_HEALTH_BASE, Q12_SHIFT);
         }
     }
 
@@ -46,10 +44,8 @@ void Ai_Romper_Init(s_SubCharacter* chara)
         chara->properties_E4.larvalStalker.properties_E8[i].val32 = 0;
     }
 
-    chara->model_0.state_2               = 2;
-    chara->model_0.anim_4.status_0      = ANIM_STATUS(15, true);
-    chara->model_0.anim_4.time_4         = FP_TIME(147.0f);
-    chara->model_0.anim_4.keyframeIdx_8 = 147;
+    chara->model_0.state_2  = 2;
+    Character_AnimSet(chara, ANIM_STATUS(RomperAnim_Unk15, true), 147);
 
     chara->properties_E4.larvalStalker.properties_E8[2].val16[0] = 6;
     chara->properties_E4.larvalStalker.properties_E8[2].val16[1] = chara->rotation_24.vy;

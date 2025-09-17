@@ -52,7 +52,7 @@ void Ai_Groaner_Init(s_SubCharacter* chara)
     if (chara->model_0.stateStep_3 == 3)
     {
         chara->model_0.state_2 = 1;
-        Character_AnimSet(chara, ANIM_STATUS(17, true), 371);
+        Character_AnimSet(chara, ANIM_STATUS(GroanerAnim_Unk17, true), 371);
         chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 5;
     }
 

@@ -1405,7 +1405,7 @@ typedef enum _BloodyLisaAnim
 {
     BloodyLisaAnim_Still = 0,
     BloodyLisaAnim_Walk  = 1
-} s_BloodyLisaAnim;
+} e_BloodyLisaAnim;
 
 /** @brief Bloody Lisa character anim infos. */
 /*s_AnimInfo BLOODY_LISA_ANIM_INFOS[] =
@@ -1424,7 +1424,7 @@ typedef enum _CatAnim
     CatAnim_Run                   = 2,
     CatAnim_TransitionStillToJump = 3,
     CatAnim_TransitionJumpToRun   = 4
-} s_CatAnim;
+} e_CatAnim;
 
 /** @brief Cat character anim infos.
  * @unused Frames [1, 6].
@@ -1589,7 +1589,7 @@ typedef enum _FloatstingerAnim
     FloatstingerAnim_Unk10 = 10,
     FloatstingerAnim_Unk11 = 11,
     FloatstingerAnim_Unk12 = 12
-} s_FloatstingerAnim;
+} e_FloatstingerAnim;
 
 /*s_AnimInfo FLOATSTINGER_ANIM_INFOS[] =
 {
@@ -1651,6 +1651,13 @@ typedef enum _FloatstingerAnim
     { Anim_Update1, ANIM_STATUS(1, true), false, NO_VALUE, { Q12(15) }, 0, 15 }
 };*/
 
+typedef enum _GroanerAnim
+{
+    GroanerAnim_Still = 0,
+
+    GroanerAnim_Unk17 = 17,
+} e_GroanerAnim;
+
 /*s_AnimInfo GROANER_ANIM_INFOS[] =
 {
     { Anim_Update2, NO_VALUE, false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },
@@ -1702,6 +1709,17 @@ typedef enum _FloatstingerAnim
     { Anim_Update2, ANIM_STATUS(23, false), false, ANIM_STATUS(23, true), { Q12(16) }, NO_VALUE, 244 },
     { Anim_Update0, ANIM_STATUS(23, true), false, ANIM_STATUS(14, false), { Q12(12) }, 244, 264 }
 };*/
+
+typedef enum _HangedScratcher
+{
+    HangedScratcherAnim_Still = 0,
+    HangedScratcherAnim_Unk1 = 1,
+    HangedScratcherAnim_Unk2 = 2,
+    HangedScratcherAnim_Unk3 = 3,
+
+    HangedScratcherAnim_Unk14 = 14,
+    HangedScratcherAnim_Unk15 = 15,
+} e_HangedScratcher;
 
 /*s_AnimInfo HANGED_SCRATCHER_ANIM_INFOS[] =
 {
@@ -1831,6 +1849,13 @@ typedef enum _FloatstingerAnim
     { Anim_Update2, ANIM_STATUS(2, false), false, ANIM_STATUS(2, true),  { Q12(5)  }, NO_VALUE, 24 }
 };*/
 
+typedef enum _RomperAnim
+{
+    RomperAnim_Still = 0,
+
+    RomperAnim_Unk15 = 15,
+} e_RomperAnim;
+
 /*s_AnimInfo ROPMER_ANIM_INFOS[] =
 {
     { Anim_Update2, NO_VALUE, false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },
@@ -1848,8 +1873,39 @@ typedef enum _FloatstingerAnim
     { Anim_Update2, ANIM_STATUS(6, false), false, ANIM_STATUS(6, true), { Q12(20) }, NO_VALUE, 34 },
     { Anim_Update0, ANIM_STATUS(6, true), false, ANIM_STATUS(16, false), { Q12(5) }, 34, 38 },
     { Anim_Update2, ANIM_STATUS(7, false), false, ANIM_STATUS(7, true), { Q12(10) }, NO_VALUE, 39 },
-    { Anim_Update0, ANIM_STATUS(7, true), false, ANIM_STATUS(13, false), { Q12(8) }, 39, 49 }
+    { Anim_Update0, ANIM_STATUS(7, true), false, ANIM_STATUS(13, false), { Q12(8) }, 39, 49 },
+    { Anim_Update2, ANIM_STATUS(8, false), false, ANIM_STATUS(8, true), { Q12(10) }, NO_VALUE, 50 },
+    { Anim_Update0, ANIM_STATUS(8, true), false, ANIM_STATUS(13, false), { Q12(8) }, 50, 60 },
+    { Anim_Update2, ANIM_STATUS(9, false), false, ANIM_STATUS(9, true), { Q12(10) }, NO_VALUE, 61 },
+    { Anim_Update0, ANIM_STATUS(9, true), false, ANIM_STATUS(21, false), { Q12(10) }, 61, 87 },
+    { Anim_Update2, ANIM_STATUS(10, false), false, ANIM_STATUS(10, true), { Q12(20) }, NO_VALUE, 88 },
+    { Anim_Update1, ANIM_STATUS(10, true), false, NO_VALUE, { Q12(5) }, 88, 92 },
+    { Anim_Update2, ANIM_STATUS(11, false), false, ANIM_STATUS(11, true), { Q12(4) }, NO_VALUE, 93 },
+    { Anim_Update0, ANIM_STATUS(11, true), false, ANIM_STATUS(10, false), { Q12(6.5f) }, 93, 99 },
+    { Anim_Update2, ANIM_STATUS(12, false), false, ANIM_STATUS(12, true), { Q12(10) }, NO_VALUE, 100 },
+    { Anim_Update1, ANIM_STATUS(12, true), false, NO_VALUE, { Q12(6) }, 100, 108 },
+    { Anim_Update2, ANIM_STATUS(13, false), false, ANIM_STATUS(13, true), { Q12(20) }, NO_VALUE, 109 },
+    { Anim_Update1, ANIM_STATUS(13, true), false, NO_VALUE, { Q12(0) }, 109, 130 },
+    { Anim_Update2, ANIM_STATUS(14, false), false, ANIM_STATUS(14, true), { Q12(6) }, NO_VALUE, 131 },
+    { Anim_Update1, ANIM_STATUS(14, true), false, NO_VALUE, { Q12(0) }, 131, 146 },
+    { Anim_Update2, ANIM_STATUS(15, false), false, ANIM_STATUS(15, true), { Q12(16) }, NO_VALUE, 147 },
+    { Anim_Update1, ANIM_STATUS(15, true), false, NO_VALUE, { Q12(4) }, 147, 162 },
+    { Anim_Update2, ANIM_STATUS(16, false), false, ANIM_STATUS(16, true), { Q12(16) }, NO_VALUE, 38 },
+    { Anim_Update1, ANIM_STATUS(16, true), false, NO_VALUE, { Q12(0) }, 38, 39 },
+    { Anim_Update2, ANIM_STATUS(17, false), false, ANIM_STATUS(17, true), { Q12(0) }, NO_VALUE, 120 },
+    { Anim_Update0, ANIM_STATUS(17, true), false, ANIM_STATUS(7, false), { Q12(0) }, 120, 127 },
+    { Anim_Update2, ANIM_STATUS(18, false), false, ANIM_STATUS(18, true), { Q12(0) }, NO_VALUE, 110 },
+    { Anim_Update0, ANIM_STATUS(18, true), false, ANIM_STATUS(8, false), { Q12(0) }, 110, 116 },
+    { Anim_Update2, ANIM_STATUS(19, false), false, ANIM_STATUS(19, true), { Q12(12) }, NO_VALUE, 109 },
+    { Anim_Update0, ANIM_STATUS(19, true), false, ANIM_STATUS(13, false), { Q12(0) }, 109, 130 }
 };*/
+
+typedef enum _SplitheadAnim
+{
+    SplitheadAnim_Still = 0,
+
+    SplitheadAnim_Unk10 = 10,
+} e_SplitheadAnim;
 
 /*s_AnimInfo SPLITHEAD_ANIM_INFOS[] =
 {
@@ -1885,6 +1941,17 @@ typedef enum _FloatstingerAnim
     { Anim_Update1, ANIM_STATUS(14, true), false, NO_VALUE, { Q12(2) }, 34, 36 }
 };*/
 
+typedef enum _StalkerAnim
+{
+    StalkerAnim_Still = 0,
+
+    StalkerAnim_Unk14 = 14,
+    StalkerAnim_Unk27 = 27,
+    StalkerAnim_Unk28 = 28,
+
+    StalkerAnim_Unk30 = 30,
+} e_StalkerAnim;
+
 /*s_AnimInfo STALKER_ANIM_INFOS[] =
 {
     { Anim_Update2, NO_VALUE, false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },
@@ -1901,7 +1968,88 @@ typedef enum _FloatstingerAnim
     { Anim_Update0, ANIM_STATUS(5, true), false, ANIM_STATUS(17, false), { Q12(6) }, 25, 33 },
     { Anim_Update2, ANIM_STATUS(6, false), false, ANIM_STATUS(6, true), { Q12(0) }, NO_VALUE, 34 },
     { NULL, ANIM_STATUS(6, true), false, ANIM_STATUS(0, false), { Q12(0) }, 34, 49 },
-    { Anim_Update2, ANIM_STATUS(7, false), false, ANIM_STATUS(7, true), { Q12(16) }, NO_VALUE, 0 } // TODO: Unsure if this last one is correct.
+    { Anim_Update2, ANIM_STATUS(7, false), false, ANIM_STATUS(7, true), { Q12(16) }, NO_VALUE, 50 },
+    { Anim_Update0, ANIM_STATUS(7, true), false, ANIM_STATUS(30, false), { Q12(0) }, 50, 69 },
+    { Anim_Update2, ANIM_STATUS(8, false), false, ANIM_STATUS(8, true), { Q12(32) }, NO_VALUE, 70 },
+    { Anim_Update1, ANIM_STATUS(8, true), false, NO_VALUE, { Q12(13) }, 70, 82 },
+    { Anim_Update2, ANIM_STATUS(9, false), false, ANIM_STATUS(9, true), { Q12(32) }, NO_VALUE, 83 },
+    { Anim_Update1, ANIM_STATUS(9, true), false, NO_VALUE, { Q12(13) }, 83, 95 },
+    { Anim_Update2, ANIM_STATUS(10, false), false, ANIM_STATUS(10, true), { Q12(16) }, NO_VALUE, 96 },
+    { Anim_Update0, ANIM_STATUS(10, true), false, ANIM_STATUS(18, false), { Q12(8) }, 96, 106 },
+    { Anim_Update2, ANIM_STATUS(11, false), false, ANIM_STATUS(11, true), { Q12(4) }, NO_VALUE, 107 },
+    { Anim_Update0, ANIM_STATUS(11, true), false, ANIM_STATUS(27, false), { Q12(8) }, 107, 128 },
+    { Anim_Update2, ANIM_STATUS(12, false), false, ANIM_STATUS(12, true), { Q12(4) }, NO_VALUE, 129 },
+    { Anim_Update0, ANIM_STATUS(12, true), false, ANIM_STATUS(27, false), { Q12(8) }, 129, 157 },
+    { Anim_Update2, ANIM_STATUS(13, false), false, ANIM_STATUS(13, true), { Q12(4) }, NO_VALUE, 158 },
+    { Anim_Update0, ANIM_STATUS(13, true), false, ANIM_STATUS(27, false), { Q12(10) }, 158, 175 },
+    { Anim_Update2, ANIM_STATUS(14, false), false, ANIM_STATUS(14, true), { Q12(10) }, NO_VALUE, 176 },
+    { Anim_Update0, ANIM_STATUS(14, true), false, ANIM_STATUS(46, false), { Q12(10) }, 176, 263 },
+    { Anim_Update2, ANIM_STATUS(15, false), false, ANIM_STATUS(15, true), { Q12(5) }, NO_VALUE, 264 },
+    { Anim_Update0, ANIM_STATUS(15, true), false, ANIM_STATUS(47, false), { Q12(10) }, 264, 294 },
+    { Anim_Update2, ANIM_STATUS(16, false), false, ANIM_STATUS(16, true), { Q12(0) }, NO_VALUE, 295 },
+    { NULL, ANIM_STATUS(16, true), false, ANIM_STATUS(0, false), { Q12(0) }, 295, 322 },
+    { Anim_Update2, ANIM_STATUS(17, false), false, ANIM_STATUS(17, true), { Q12(16) }, NO_VALUE, 323 },
+    { Anim_Update1, ANIM_STATUS(17, true), false, NO_VALUE, { Q12(4) }, 323, 332 },
+    { Anim_Update2, ANIM_STATUS(18, false), false, ANIM_STATUS(18, true), { Q12(16) }, NO_VALUE, 333 },
+    { Anim_Update1, ANIM_STATUS(18, true), false, NO_VALUE, { Q12(4) }, 333, 338 },
+    { Anim_Update2, ANIM_STATUS(19, false), false, ANIM_STATUS(19, true), { Q12(8) }, NO_VALUE, 339 },
+    { Anim_Update0, ANIM_STATUS(19, true), false, ANIM_STATUS(32, false), { Q12(1.5) }, 339, 344 },
+    { Anim_Update2, ANIM_STATUS(20, false), false, ANIM_STATUS(20, true), { Q12(8) }, NO_VALUE, 346 },
+    { Anim_Update0, ANIM_STATUS(20, true), false, ANIM_STATUS(33, false), { Q12(1.5) }, 346, 351 },
+    { Anim_Update2, ANIM_STATUS(21, false), false, ANIM_STATUS(21, true), { Q12(8) }, NO_VALUE, 353 },
+    { Anim_Update0, ANIM_STATUS(21, true), false, ANIM_STATUS(31, false), { Q12(1.5) }, 353, 360 },
+    { Anim_Update2, ANIM_STATUS(22, false), false, ANIM_STATUS(22, true), { Q12(16) }, NO_VALUE, 362 },
+    { Anim_Update0, ANIM_STATUS(22, true), false, ANIM_STATUS(27, false), { Q12(12) }, 362, 377 },
+    { Anim_Update2, ANIM_STATUS(23, false), false, ANIM_STATUS(23, true), { Q12(16) }, NO_VALUE, 378 },
+    { Anim_Update0, ANIM_STATUS(23, true), false, ANIM_STATUS(27, false), { Q12(12) }, 378, 393 },
+    { Anim_Update2, ANIM_STATUS(24, false), false, ANIM_STATUS(24, true), { Q12(16) }, NO_VALUE, 395 },
+    { Anim_Update0, ANIM_STATUS(24, true), false, ANIM_STATUS(26, false), { Q12(15) }, 395, 406 },
+    { Anim_Update2, ANIM_STATUS(25, false), false, ANIM_STATUS(25, true), { Q12(4) }, NO_VALUE, 408 },
+    { Anim_Update0, ANIM_STATUS(25, true), false, ANIM_STATUS(17, false), { Q12(10) }, 408, 417 },
+    { Anim_Update2, ANIM_STATUS(26, false), false, ANIM_STATUS(26, true), { Q12(16) }, NO_VALUE, 418 },
+    { Anim_Update1, ANIM_STATUS(26, true), false, NO_VALUE, { Q12(8) }, 418, 426 },
+    { Anim_Update2, ANIM_STATUS(27, false), false, ANIM_STATUS(27, true), { Q12(16) }, NO_VALUE, 427 },
+    { Anim_Update1, ANIM_STATUS(27, true), false, NO_VALUE, { Q12(4) }, 427, 442 },
+    { Anim_Update2, ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(20) }, NO_VALUE, 443 },
+    { Anim_Update1, ANIM_STATUS(28, true), false, NO_VALUE, { Q12(20) }, 443, 460 },
+    { Anim_Update2, ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(0) }, NO_VALUE, 461 },
+    { Anim_Update0, ANIM_STATUS(29, true), false, ANIM_STATUS(0, false), { Q12(0) }, 461, 476 },
+    { Anim_Update2, ANIM_STATUS(30, false), false, ANIM_STATUS(30, true), { Q12(4) }, NO_VALUE, 477 },
+    { Anim_Update1, ANIM_STATUS(30, true), false, NO_VALUE, { Q12(0) }, 477, 506 },
+    { Anim_Update2, ANIM_STATUS(31, false), false, ANIM_STATUS(31, true), { Q12(16) }, NO_VALUE, 360 },
+    { Anim_Update1, ANIM_STATUS(31, true), false, NO_VALUE, { Q12(0) }, 360, 361 },
+    { Anim_Update2, ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(16) }, NO_VALUE, 344 },
+    { Anim_Update1, ANIM_STATUS(32, true), false, NO_VALUE, { Q12(0) }, 344, 345 },
+    { Anim_Update2, ANIM_STATUS(33, false), false, ANIM_STATUS(33, true), { Q12(16) }, NO_VALUE, 351 },
+    { Anim_Update1, ANIM_STATUS(33, true), false, NO_VALUE, { Q12(0) }, 351, 352 },
+    { Anim_Update2, ANIM_STATUS(34, false), false, ANIM_STATUS(34, true), { Q12(48) }, NO_VALUE, 461 },
+    { Anim_Update0, ANIM_STATUS(34, true), false, ANIM_STATUS(9, false), { Q12(48) }, 461, 476 },
+    { Anim_Update2, ANIM_STATUS(35, false), false, ANIM_STATUS(35, true), { Q12(48) }, NO_VALUE, 461 },
+    { Anim_Update0, ANIM_STATUS(35, true), false, ANIM_STATUS(8, false), { Q12(48) }, 461, 476 },
+    { Anim_Update2, ANIM_STATUS(36, false), false, ANIM_STATUS(36, true), { Q12(32) }, NO_VALUE, 102 },
+    { Anim_Update0, ANIM_STATUS(36, true), false, ANIM_STATUS(18, false), { Q12(6) }, 102, 106 },
+    { Anim_Update2, ANIM_STATUS(37, false), false, ANIM_STATUS(37, true), { Q12(0) }, NO_VALUE, 477 },
+    { Anim_Update0, ANIM_STATUS(37, true), false, ANIM_STATUS(7, false), { Q12(0) }, 477, 506 },
+    { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(12) }, NO_VALUE, 353 },
+    { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(26, false), { Q12(12) }, 353, 361 },
+    { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(12) }, NO_VALUE, 339 },
+    { Anim_Update0, ANIM_STATUS(39, true), false, ANIM_STATUS(17, false), { Q12(12) }, 339, 345 },
+    { Anim_Update2, ANIM_STATUS(40, false), false, ANIM_STATUS(40, true), { Q12(12) }, NO_VALUE, 346 },
+    { Anim_Update0, ANIM_STATUS(40, true), false, ANIM_STATUS(18, false), { Q12(12) }, 346, 352 },
+    { Anim_Update2, ANIM_STATUS(41, false), false, ANIM_STATUS(41, true), { Q12(16) }, NO_VALUE, 378 },
+    { Anim_Update0, ANIM_STATUS(41, true), false, ANIM_STATUS(25, false), { Q12(6) }, 378, 383 },
+    { Anim_Update2, ANIM_STATUS(42, false), false, ANIM_STATUS(42, true), { Q12(4) }, NO_VALUE, 0 },
+    { Anim_Update0, ANIM_STATUS(42, true), false, ANIM_STATUS(26, false), { Q12(8) }, 0, 3 },
+    { Anim_Update2, ANIM_STATUS(43, false), false, ANIM_STATUS(43, true), { Q12(4) }, NO_VALUE, 9 },
+    { Anim_Update0, ANIM_STATUS(43, true), false, ANIM_STATUS(26, false), { Q12(4) }, 9, 19 },
+    { Anim_Update2, ANIM_STATUS(44, false), false, ANIM_STATUS(44, true), { Q12(4) }, NO_VALUE, 4 },
+    { Anim_Update0, ANIM_STATUS(44, true), false, ANIM_STATUS(26, false), { Q12(4) }, 4, 8 },
+    { Anim_Update2, ANIM_STATUS(45, false), false, ANIM_STATUS(45, true), { Q12(8) }, NO_VALUE, 158 },
+    { Anim_Update0, ANIM_STATUS(45, true), false, ANIM_STATUS(18, false), { Q12(1048564) }, 158, 175 }, // TODO: Unsure. Check data, the FFFF could be something else.
+    { Anim_Update2, ANIM_STATUS(46, false), false, ANIM_STATUS(46, true), { Q12(0) }, NO_VALUE, 263 },
+    { Anim_Update1, ANIM_STATUS(46, true), false, ANIM_STATUS(15, false), { Q12(0) }, 263, 264 },
+    { Anim_Update2, ANIM_STATUS(47, false), false, ANIM_STATUS(47, true), { Q12(0) }, NO_VALUE, 294 },
+    { Anim_Update1, ANIM_STATUS(47, true), false, ANIM_STATUS(15, false), { Q12(0) }, 294, 295 }
 };*/
 
 // Unknown.
