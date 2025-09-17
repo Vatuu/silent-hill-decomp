@@ -867,14 +867,14 @@ bool ConvertHexToS8(s32* out, char hex0, char hex1) // 0x8004255C
     return true;
 }
 
-s_IpdCollisionData** func_800425D8(s32* arg0) // 0x800425D8
+s_IpdCollisionData** func_800425D8(s32* collDataIdx) // 0x800425D8
 {
     s_800C117C*         ptr;
     s_IpdCollisionData* collData;
     s_IpdHeader*        ipd;
 
-    ptr = D_800C1020.ipdTable_15C;
-    *arg0  = 0;
+    ptr          = D_800C1020.ipdTable_15C;
+    *collDataIdx = 0;
 
     while (ptr < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableSize_158])
     {
@@ -886,7 +886,7 @@ s_IpdCollisionData** func_800425D8(s32* arg0) // 0x800425D8
                 collData = IpdHeader_CollisionDataGet(ipd);
                 if (collData != NULL)
                 {
-                    D_800C1010[(*arg0)++] = collData;
+                    D_800C1010[(*collDataIdx)++] = collData;
                 }
             }
         }

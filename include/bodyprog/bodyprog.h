@@ -28,8 +28,14 @@
 // HELPER MACROS
 // ==============
 
-/** @brief compare 8-character strings using u32 type. Return 0 when equal similarly to strcmp */
-#define cmp_filename(a, b) (((a).u32[0] != (b).u32[0]) || ((a).u32[1] != (b).u32[1]))
+/** @brief Compares 8-character strings using `u32`. Similar to `strcmp`.
+ *
+ * @param a First string.
+ * @param b Second string.
+ * @return `true` if the strings aren't equal, `false` otherwise.
+ */
+#define COMPARE_STRINGS(a, b) \
+    (((a).u32[0] != (b).u32[0]) || ((a).u32[1] != (b).u32[1]))
 
 // ======
 // ENUMS
@@ -398,8 +404,8 @@ typedef struct
     s16                  field_5E;
     s16                  field_60;
     s8                   unk_62[2];
-    s_SubCharacter**     field_64;
-    s32                  field_68;
+    s_SubCharacter**     field_64; // `Array of characters.
+    s32                  field_68; // Index into `field_64`.
     s_func_8006DCE0_6C   field_6C;
     s32                  field_7C;
     s32                  field_80;
@@ -1092,11 +1098,8 @@ STATIC_ASSERT_SIZEOF(s_800BCE18_0, 1376);
 typedef struct
 {
     u_Filename modelName_0;
-    s8   field_8;
-/* Set to 2 when found in D_800C1020.field_138.lmHeader_0.
- * Set to 3-6 if found in D_800C1020.ipdTable_15C[i] (i + 3).
- */
-    s8   lmIndex_9;
+    s8         field_8;
+    s8         lmIdx_9; /** Set to 2 when found in `D_800C1020.field_138.lmHeader_0` and 3-6 if found in `D_800C1020.ipdTable_15C[i] (i + 3)`. */
 } s_800BCE18_2BEC_0_10;
 
 typedef struct
@@ -2703,7 +2706,7 @@ void Map_MakeIpdGrid(s_800C1020* arg0, char* mapTag, s32 fileIdxStart);
  */
 bool ConvertHexToS8(s32* out, char hex0, char hex1);
 
-s_IpdCollisionData** func_800425D8(s32* arg0);
+s_IpdCollisionData** func_800425D8(s32* collDataIdx);
 
 s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ);
 
@@ -3555,7 +3558,8 @@ s32 func_8006A3B4(s32 arg0, VECTOR* arg1, s32 arg2);
 
 s32 func_8006A42C(s32 arg0, VECTOR3* arg1, s32 arg2);
 
-s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* arg1, s_func_8006AB50* arg2, s32 arg3, s_IpdCollisionData** arg4, s32 arg5, s_func_8006CF18* arg6, s32 arg7, s_SubCharacter** arg8, s32 arg9);
+s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* pos, s_func_8006AB50* arg2, s32 arg3, s_IpdCollisionData** collDataPtrs, s32 arg5, s_func_8006CF18* arg6, s32 arg7,
+                  s_SubCharacter** charas, s32 charaIdx);
 
 void func_8006A940(VECTOR3* pos, s_func_8006AB50* arg1, s_SubCharacter** arg2, s32 count);
 
@@ -3640,7 +3644,7 @@ bool func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_SubC
 
 bool func_8006DC18(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2);
 
-bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s_SubCharacter** arg7, s32 arg8);
+bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s_SubCharacter** charas, s32 arg8);
 
 bool func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1);
 
