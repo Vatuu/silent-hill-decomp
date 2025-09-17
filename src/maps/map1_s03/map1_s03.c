@@ -205,7 +205,7 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsC
     if (!Savegame_EventFlagGet(EventFlag_105))
     {
         chara->model_0.anim_4.flags_2 &= ~AnimFlag_Visible;
-        chara->field_E0_8              = 0;
+        chara->field_E1_0              = 0;
         return;
     }
 
@@ -218,12 +218,12 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsC
             chara->model_0.anim_4.status_0 = ANIM_STATUS(1, true);
         }
 
-        chara->field_E0_8 = 0;
+        chara->field_E1_0 = 0;
     }
     else
     {
         Character_AnimSet(chara, ANIM_STATUS(3, true), 16);
-        chara->field_E0_8 = 3;
+        chara->field_E1_0 = 3;
     }
 
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);

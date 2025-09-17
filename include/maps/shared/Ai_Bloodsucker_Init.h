@@ -58,7 +58,7 @@ void Ai_Bloodsucker_Init(s_SubCharacter* chara)
         chara->properties_E4.larvalStalker.properties_E8[i].val32 = 0;
     }
 
-    chara->field_E0_8      = 4;
+    chara->field_E1_0      = 4;
     chara->headingAngle_3C = chara->rotation_24.vy;
 
     Ai_Bloodsucker_AnimUpdateFromStep(chara);

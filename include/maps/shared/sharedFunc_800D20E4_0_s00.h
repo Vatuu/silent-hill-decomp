@@ -51,7 +51,7 @@ void sharedFunc_800D20E4_0_s00()
     chara->field_D6                                             = 0;
     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk4 | PlayerFlag_Unk5;
     chara->flags_3E                                            |= CharaFlag_Unk4;
-    chara->field_E0_8                                           = 4;
+    chara->field_E1_0                                           = 4;
 
     if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun)
     {

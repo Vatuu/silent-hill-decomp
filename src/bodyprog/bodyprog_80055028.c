@@ -841,7 +841,7 @@ void func_80056C8C(s_Bone* bone, s_LmHeader* lmHeader, s32 modelHeaderIdx)
     }
 }
 
-bool func_80056CB4(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BEC_0_10* arg2) // 0x80056CB4
+bool Lm_ModelFind(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BEC_0_10* arg2) // 0x80056CB4
 {
     u_Filename     sp10;
     s32            modelHeaderCount;
@@ -851,7 +851,7 @@ bool func_80056CB4(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BE
 
     result = false;
 
-    StringCopy(sp10.str, arg2->string_0);
+    StringCopy(sp10.str, arg2->modelName_0.str);
 
     modelHeaderCount = lmHeader->modelCount_8;
 
@@ -859,11 +859,11 @@ bool func_80056CB4(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BE
     {
         for (i = 0, modelHeader = &lmHeader->modelHeaders_C[i]; i < modelHeaderCount; i++, modelHeader++)
         {
-            if (modelHeader->modelName_0.u32[0] == sp10.u32[0] && modelHeader->modelName_0.u32[1] == sp10.u32[1])
+            if (!cmp_filename(modelHeader->modelName_0, sp10))
             {
-                result        = true;
-                arg0->field_0.field_C = i;
-                arg0->field_0.field_8 = modelHeader;
+                result                   = true;
+                arg0->field_0.modelIdx_C = i;
+                arg0->field_0.modelHdr_8 = modelHeader;
                 // TODO: `field_8` above used to be `s_800BCE18_2BEC_0_10*`, but this func showed it was `s_ModelHeader*`
                 // Unsure if all `s_800BCE18_2BEC_0_10` refs should be changed though since struct is different size.
             }
@@ -888,7 +888,7 @@ void func_80057090(s_800BCE18_2BEC_0_0* arg0, GsOT* arg1, void* arg2, MATRIX* ma
     GsOT_TAG*      temp_s1;
     s32            temp_a0;
 
-    modelHeader = arg0->field_8;
+    modelHeader = arg0->modelHdr_8;
 
     if (arg0->field_0 < 0)
     {
@@ -981,7 +981,7 @@ void func_80057344(s_800BCE18_2BEC_0* arg0, GsOT_TAG* arg1, void* arg2, MATRIX* 
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    modelHeader  = arg0->field_0.field_8;
+    modelHeader  = arg0->field_0.modelHdr_8;
     vertexOffset = modelHeader->vertexOffset_9;
     normalOffset = modelHeader->normalOffset_A;
 
@@ -1275,7 +1275,7 @@ void func_80059D50(s32 arg0, s_800BCE18_2BEC_0* arg1, MATRIX* mat, void* arg3, G
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    modelHeader = arg1->field_0.field_8;
+    modelHeader = arg1->field_0.modelHdr_8;
 
     for (meshHeader = &modelHeader->meshHeaders_C[0]; meshHeader < &modelHeader->meshHeaders_C[modelHeader->meshCount_8]; meshHeader++)
     {
@@ -1335,7 +1335,7 @@ void func_8005A21C(s_800BCE18_2BEC_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX*
             break;
     }
 
-    modelHeader  = arg0->field_0.field_8;
+    modelHeader  = arg0->field_0.modelHdr_8;
     vertexOffset = modelHeader->vertexOffset_9;
     normalOffset = modelHeader->normalOffset_A;
 
@@ -1632,9 +1632,6 @@ void func_8005B1A0(s_Material_8* material_8, char* texName, u8 tPage0, u8 tPage1
     material_8->queueIdx_10 = NO_VALUE;
 }
 
-#define cmp_str(a, b)\
-    ((a->materialName_0.u32[0] != b->textureName_8.u32[0]) || (a->materialName_0.u32[1] != b->textureName_8.u32[1]))
-
 s_Material_8* func_8005B1FC(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, void* arg3, s32 arg4)
 {
     s8            fileName[12];
@@ -1653,7 +1650,7 @@ s_Material_8* func_8005B1FC(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9
     for (i = 0; i < arg1->count_0; i++)
     {
         tex = arg1->entries_4[i];
-        if (!cmp_str(mat, tex))
+        if (!cmp_filename(mat->materialName_0, tex->textureName_8))
         {
             mat->field_8 = tex;
             tex->field_14++;
@@ -2875,7 +2872,7 @@ s32 func_80069FFC(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara) // 0x8
     sp28.rotation_C.vx = chara->field_CA;
     sp28.rotation_C.vz = chara->field_D4;
 
-    sp28.field_12 = chara->field_E0_8;
+    sp28.field_12 = chara->field_E1_0;
 
     sp40 = *arg1;
 
@@ -2908,7 +2905,54 @@ void func_8006A178(s_800C4590* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 
     arg0->field_C  = arg4;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006A1A4); // 0x8006A1A4
+s_SubCharacter** func_8006A1A4(s32* arg0, s_SubCharacter* chara, s32 arg2) // 0x8006A1A4
+{
+    s_SubCharacter* otherChara;
+
+    if (chara != NULL &&
+        (chara->model_0.charaId_0 == 0 || chara->field_E1_0 == 0 || (chara->field_E1_0 == 1 && arg2 == 1)))
+    {
+        *arg0 = 0;
+        return &D_800C4458;
+    }
+
+    *arg0      = 0;
+    D_800C4474 = &D_800C4458;
+
+    for (otherChara = &g_SysWork.npcs_1A0[0]; otherChara < &g_SysWork.npcs_1A0[NPC_COUNT_MAX]; otherChara++)
+    {
+        if (otherChara->model_0.charaId_0 != 0)
+        {
+            if (otherChara->field_E1_0 != 0 &&
+                (otherChara->field_E1_0 != 1 || arg2 != 1) &&
+                otherChara != chara &&
+                (arg2 != 1 || chara == NULL || chara->field_E1_0 != 4 || otherChara->field_E1_0 >= chara->field_E1_0))
+            {
+                *arg0      += 1;
+                *D_800C4474 = otherChara;
+                D_800C4474++;
+                otherChara->field_E0 = 0;
+            }
+        }
+    }
+
+    otherChara = &g_SysWork.player_4C.chara_0;
+    if (otherChara->model_0.charaId_0 != 0)
+    {
+        if (otherChara->field_E1_0 != 0 &&
+            (otherChara->field_E1_0 != 1 || arg2 != 1) &&
+            otherChara != chara &&
+            (arg2 != 1 || chara == NULL || chara->field_E1_0 != 4 || otherChara->field_E1_0 >= chara->field_E1_0))
+        {
+            *arg0      += 1;
+            *D_800C4474 = otherChara;
+            D_800C4474++;
+            otherChara->field_E0 = 0;
+        }
+    }
+
+    return &D_800C4458;
+}
 
 s32 func_8006A3B4(s32 arg0, VECTOR* arg1, s32 arg2) // 0x8006A3B4
 {
@@ -2937,7 +2981,7 @@ s32 func_8006A42C(s32 arg0, VECTOR3* arg1, s32 arg2) // 0x8006A42C
     return func_8006A4A8(arg0, &sp28, arg2, 0, func_800425D8(&sp38), sp38, 0, 0, 0, 0);
 }
 
-s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* arg1, s_func_8006AB50* arg2, s32 arg3, s_IpdCollisionData** arg4, s32 arg5, s_func_8006CF18* arg6, s32 arg7, s_func_8006A940** arg8, s32 arg9) // 0x8006A4A8
+s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* arg1, s_func_8006AB50* arg2, s32 arg3, s_IpdCollisionData** arg4, s32 arg5, s_func_8006CF18* arg6, s32 arg7, s_SubCharacter** arg8, s32 arg9) // 0x8006A4A8
 {
     s_func_8006CC44      sp18;
     VECTOR3              sp120;
@@ -2945,12 +2989,12 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* arg1, s_func_8006AB50* arg2, s32 ar
     VECTOR3              sp140;
     s32                  var_a0;
     s32                  var_a1;
-    s_func_8006A940**    var_s1;
+    s_SubCharacter**     var_s1;
     s32                  var_s4;
     s32                  var_v0;
     s32                  var_a2;
     s_IpdCollisionData** var_s0;
-    s_func_8006A940*     temp_s0;
+    s_SubCharacter*      temp_s0;
 
     var_s4 = 0;
 
@@ -3011,11 +3055,11 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* arg1, s_func_8006AB50* arg2, s32 ar
                 var_a0 -= 0xF;
             }
 
-            sp18.field_98.field_0 = (temp_s0->field_18 + temp_s0->field_DC) >> 4;
-            sp18.field_9C.field_0 = (temp_s0->field_20 + temp_s0->field_DE) >> 4;
+            sp18.field_98.field_0 = (temp_s0->position_18.vx + temp_s0->field_D8.field_4) >> 4;
+            sp18.field_9C.field_0 = (temp_s0->position_18.vz + temp_s0->field_D8.field_6) >> 4;
 
-            sp18.field_A0.s_1.field_0 = (temp_s0->field_C8 + temp_s0->field_1C) >> 4;
-            sp18.field_A0.s_1.field_2 = (temp_s0->field_CA + temp_s0->field_1C) >> 4;
+            sp18.field_A0.s_1.field_0 = (temp_s0->field_C8 + temp_s0->position_18.vy) >> 4;
+            sp18.field_A0.s_1.field_2 = (temp_s0->field_CA + temp_s0->position_18.vy) >> 4;
             sp18.field_A0.s_1.field_4 = var_a0;
             sp18.field_A0.s_1.field_6 = temp_s0->field_E1_0;
             sp18.field_A0.s_1.field_8 = &temp_s0->field_E0;
@@ -3026,7 +3070,7 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* arg1, s_func_8006AB50* arg2, s32 ar
             }
 
             func_8006CC9C(&sp18);
-            func_8006CF18(&sp18, temp_s0->field_E4, temp_s0->field_E1_4);
+            func_8006CF18(&sp18, temp_s0->properties_E4.npc.unk_E4, temp_s0->field_E1_4);
         }
 
         func_8006D01C(&sp120, &sp130, func_8006CB90(&sp18), &sp18);
@@ -3090,7 +3134,7 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* arg1, s_func_8006AB50* arg2, s32 ar
     return sp18.field_0_0 != 0;
 }
 
-void func_8006A940(VECTOR3* pos, s_func_8006AB50* arg1, s_func_8006A940** arg2, s32 count) // 0x8006A940
+void func_8006A940(VECTOR3* pos, s_func_8006AB50* arg1, s_SubCharacter** arg2, s32 count) // 0x8006A940
 {
     s32              angle;
     s32              temp_s1;
@@ -3099,7 +3143,7 @@ void func_8006A940(VECTOR3* pos, s_func_8006AB50* arg1, s_func_8006A940** arg2, 
     s32              i;
     s32              var_s4;
     s32              var_v0;
-    s_func_8006A940* temp_s0;
+    s_SubCharacter*  temp_s0;
     s32              temp2;
     s32              temp3;
     s32              temp4;
@@ -3117,8 +3161,8 @@ void func_8006A940(VECTOR3* pos, s_func_8006AB50* arg1, s_func_8006A940** arg2, 
             continue;
         }
 
-        temp3 = temp_s0->field_C8 + temp_s0->field_1C;
-        temp4 = temp_s0->field_CA + temp_s0->field_1C;
+        temp3 = temp_s0->field_C8 + temp_s0->position_18.vy;
+        temp4 = temp_s0->field_CA + temp_s0->position_18.vy;
 
         // TODO: Rotation + position? Seems wrong.
         temp6 = arg1->rotation_C.vy + arg1->position_0.vy;
@@ -3128,8 +3172,8 @@ void func_8006A940(VECTOR3* pos, s_func_8006AB50* arg1, s_func_8006A940** arg2, 
             continue;
         }
 
-        temp_s2 = (temp_s0->field_18 + temp_s0->field_DC) - arg1->position_0.vx;
-        temp_s1 = (temp_s0->field_20 + temp_s0->field_DE) - arg1->position_0.vz;
+        temp_s2 = (temp_s0->position_18.vx + temp_s0->field_D8.field_4) - arg1->position_0.vx;
+        temp_s1 = (temp_s0->position_18.vz + temp_s0->field_D8.field_6) - arg1->position_0.vz;
 
         temp2 = Vc_VectorMagnitudeCalc(temp_s2, 0, temp_s1);
         if (((temp_s0->field_D4 + arg1->rotation_C.vz) + FP_ANGLE(36.0f)) < temp2)
@@ -3142,7 +3186,7 @@ void func_8006A940(VECTOR3* pos, s_func_8006AB50* arg1, s_func_8006A940** arg2, 
         var_v0 = MAX(var_a0, 0);
         var_a0 = var_v0;
 
-        if (temp_s0->field_0 == 10)
+        if (temp_s0->model_0.charaId_0 == Chara_HangedScratcher)
         {
             var_a0 = MIN(var_a0, Q12(0.6f));
         }
@@ -4818,10 +4862,10 @@ bool func_8006D90C(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2) // 0x8
 
 bool func_8006DA08(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2, s_SubCharacter* chara) // 0x8006DA08
 {
-    s32 sp28;
-    s32 temp_v0;
-    s32 scratchPrev;
-    s32 scratchAddr;
+    s32              sp28;
+    s_SubCharacter** temp_v0;
+    s32              scratchPrev;
+    s32              scratchAddr;
 
     temp_v0 = func_8006A1A4(&sp28, chara, 0);
 
@@ -4863,10 +4907,10 @@ static inline void func_8006DB3C_Inline(s_func_800700F8_2* arg0, VECTOR3* arg1, 
 
 bool func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_SubCharacter* chara) // 0x8006DB3C
 {
-    s32 sp28;
-    s32 temp_s0;
-    s32 temp_v0;
-    s32 scratchAddr;
+    s32              sp28;
+    s32              temp_s0;
+    s_SubCharacter** temp_v0;
+    s32              scratchAddr;
 
     temp_v0       = func_8006A1A4(&sp28, chara, 1);
     arg0->field_0 = false;
@@ -4911,7 +4955,7 @@ bool func_8006DC18(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2) // 0x8
     return arg0->field_0;
 }
 
-bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s32 arg7, s32 arg8)
+bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s_SubCharacter** arg7, s32 arg8)
 {
     if (pos1->vx == 0 && pos1->vz == 0)
     {
@@ -4972,7 +5016,7 @@ bool func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1) // 0x8006DEB0
     s32                  sp10;
     s32                  temp_lo;
     s_IpdCollisionData*  temp_s1;
-    s_func_8006DCE0_64** var_s0_2;
+    s_SubCharacter**     var_s0_2;
     s_IpdCollisionData** temp_s5;
     s_IpdCollisionData** var_s3;
     s_func_8006DCE0_8C*  var_s0;
@@ -5436,7 +5480,7 @@ void func_8006EB8C(s_func_8006DCE0* arg0, s_IpdCollisionData_18* arg1) // 0x8006
     }
 }
 
-void func_8006EE0C(s_func_8006DCE0_6C* arg0, s32 arg1, s_func_8006DCE0_64* arg2) // 0x8006EE0C
+void func_8006EE0C(s_func_8006DCE0_6C* arg0, s32 arg1, s_SubCharacter* arg2) // 0x8006EE0C
 {
     s32 var_a1;
     s32 var_a3;
@@ -5447,25 +5491,25 @@ void func_8006EE0C(s_func_8006DCE0_6C* arg0, s32 arg1, s_func_8006DCE0_64* arg2)
     if (arg1 == 1)
     {
         arg0->field_C = arg2->field_D4 >> 4;
-        var_a3        = arg2->field_DC;
-        var_a1        = arg2->field_DE;
-        var_v0        = arg2->field_1C + arg2->field_CA;
+        var_a3        = arg2->field_D8.field_4;
+        var_a1        = arg2->field_D8.field_6;
+        var_v0        = arg2->position_18.vy + arg2->field_CA;
     }
     else
     {
         arg0->field_C = arg2->field_D6 >> 4;
-        var_a3        = arg2->field_D8;
-        var_a1        = arg2->field_DA;
-        var_v0        = arg2->field_1C + arg2->field_CC;
+        var_a3        = arg2->field_D8.field_0;
+        var_a1        = arg2->field_D8.field_2;
+        var_v0        = arg2->position_18.vy + arg2->field_CC;
     }
 
     arg0->field_A = var_v0 >> 4;
-    arg0->field_0 = (arg2->field_18 + var_a3) >> 4;
-    arg0->field_4 = (arg2->field_20 + var_a1) >> 4;
-    arg0->field_8 = (arg2->field_1C + arg2->field_C8) >> 4;
+    arg0->field_0 = (arg2->position_18.vx + var_a3) >> 4;
+    arg0->field_4 = (arg2->position_18.vz + var_a1) >> 4;
+    arg0->field_8 = (arg2->position_18.vy + arg2->field_C8) >> 4;
 }
 
-void func_8006EEB8(s_func_8006DCE0* arg0, s_func_8006DCE0_64* arg1) // 0x8006EEB8
+void func_8006EEB8(s_func_8006DCE0* arg0, s_SubCharacter* arg1) // 0x8006EEB8
 {
     VECTOR3 sp18;
     s32     temp_t0;

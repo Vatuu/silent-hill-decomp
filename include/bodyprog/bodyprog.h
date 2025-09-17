@@ -24,6 +24,13 @@
 #define IPD_HEADER_MAGIC       20  // 0x14 / 20
 #define LM_HEADER_MAGIC        '0' // 0x30 / 48 / '0'
 
+// ==============
+// HELPER MACROS
+// ==============
+
+/** @brief compare 8-character strings using u32 type. Return 0 when equal similarly to strcmp */
+#define cmp_filename(a, b) (((a).u32[0] != (b).u32[0]) || ((a).u32[1] != (b).u32[1]))
+
 // ======
 // ENUMS
 // ======
@@ -288,28 +295,6 @@ STATIC_ASSERT_SIZEOF(s_func_800699F8, 12);
 
 typedef struct
 {
-    s8  field_0;
-    s8  unk_1[23];
-    s32 field_18; // X } Position or offset?
-    s32 field_1C; //   }
-    s32 field_20; // Z }
-    s8  unk_24[164];
-    s16 field_C8;
-    s16 field_CA;
-    s8  unk_CC[8];
-    s16 field_D4;
-    s8  unk_D6[6];
-    s16 field_DC; // X } Rotation?
-    s16 field_DE; // Z }
-    s8  field_E0;
-    s8  field_E1_0 : 4;
-    u8  field_E1_4 : 4;
-    s8  unk_E2[2];
-    s32 field_E4;
-} s_func_8006A940;
-
-typedef struct
-{
     VECTOR3  position_0;
     SVECTOR3 rotation_C;
     s8       field_12;
@@ -369,37 +354,6 @@ typedef struct
 {
     s32 field_0;
     s32 field_4;
-    s32 field_8;
-    s16 field_C;
-    s16 field_E;
-    s16 field_10;
-    s8  field_12;
-    u8  field_13;
-} s_func_8006CF18;
-
-typedef struct
-{
-    s8  unk_0[22];
-    s32 field_18;
-    s32 field_1C;
-    s32 field_20;
-    s8  unk_24[164];
-    s16 field_C8;
-    s16 field_CA;
-    s16 field_CC;
-    s8  unk_CE[6];
-    s16 field_D4;
-    s16 field_D6;
-    s16 field_D8;
-    s16 field_DA;
-    s16 field_DC;
-    s16 field_DE;
-} s_func_8006DCE0_64; // Unknown size;
-
-typedef struct
-{
-    s32 field_0;
-    s32 field_4;
     s16 field_8;
     s16 field_A;
     s16 field_C;
@@ -425,7 +379,7 @@ typedef struct
     s8                   unk_18[4];
     s16                  field_1C;
     s8                   unk_1E[2];
-    s_func_8006DCE0_64*  field_20;
+    s_SubCharacter*      field_20;
     s16                  field_24;
     s16                  field_26;
     s32                  field_28;
@@ -444,7 +398,7 @@ typedef struct
     s16                  field_5E;
     s16                  field_60;
     s8                   unk_62[2];
-    s_func_8006DCE0_64** field_64;
+    s_SubCharacter**     field_64;
     s32                  field_68;
     s_func_8006DCE0_6C   field_6C;
     s32                  field_7C;
@@ -937,8 +891,8 @@ typedef struct
 {
     s32            field_0;
     GsCOORDINATE2* field_4;
-    s_ModelHeader* field_8;
-    s32            field_C;
+    s_ModelHeader* modelHdr_8;
+    s32            modelIdx_C;
 } s_800BCE18_2BEC_0_0;
 
 // Probably Skeleton too.
@@ -1137,9 +1091,12 @@ STATIC_ASSERT_SIZEOF(s_800BCE18_0, 1376);
 
 typedef struct
 {
-    char string_0[8];
+    u_Filename modelName_0;
     s8   field_8;
-    s8   field_9;
+/* Set to 2 when found in D_800C1020.field_138.lmHeader_0.
+ * Set to 3-6 if found in D_800C1020.ipdTable_15C[i] (i + 3).
+ */
+    s8   lmIndex_9;
 } s_800BCE18_2BEC_0_10;
 
 typedef struct
@@ -2449,6 +2406,10 @@ extern s16 D_800C4408;
 
 extern s8 D_800C4414;
 
+extern s_SubCharacter* D_800C4458;
+
+extern s_SubCharacter** D_800C4474;
+
 // emoose: Also works: `extern u16 D_800C4478[];`, `arg0->field_4 = D_800C4478[0];`.
 // Didn't see any array accesses in Ghidra though, struct might be more likely.
 extern s_800C4478 D_800C4478;
@@ -3188,7 +3149,7 @@ s32 LmHeader_ModelCountGet(s_LmHeader* lmHeader);
 
 void func_80056C8C(s_Bone* bone, s_LmHeader* lmHeader, s32 modelHeaderIdx);
 
-bool func_80056CB4(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BEC_0_10* arg2);
+bool Lm_ModelFind(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BEC_0_10* arg2);
 
 void StringCopy(char* prevStr, char* newStr);
 
@@ -3588,15 +3549,15 @@ s32 func_80069FFC(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara);
 
 void func_8006A178(s_800C4590* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
-s32 func_8006A1A4(s32* arg0, s_SubCharacter* chara, s32 arg2);
+s_SubCharacter** func_8006A1A4(s32* arg0, s_SubCharacter* chara, s32 arg2);
 
 s32 func_8006A3B4(s32 arg0, VECTOR* arg1, s32 arg2);
 
 s32 func_8006A42C(s32 arg0, VECTOR3* arg1, s32 arg2);
 
-s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* arg1, s_func_8006AB50* arg2, s32 arg3, s_IpdCollisionData** arg4, s32 arg5, s_func_8006CF18* arg6, s32 arg7, s_func_8006A940** arg8, s32 arg9);
+s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* arg1, s_func_8006AB50* arg2, s32 arg3, s_IpdCollisionData** arg4, s32 arg5, s_func_8006CF18* arg6, s32 arg7, s_SubCharacter** arg8, s32 arg9);
 
-void func_8006A940(VECTOR3* pos, s_func_8006AB50* arg1, s_func_8006A940** arg2, s32 count);
+void func_8006A940(VECTOR3* pos, s_func_8006AB50* arg1, s_SubCharacter** arg2, s32 count);
 
 void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* vec, s_func_8006AB50* arg2, s32 arg3);
 
@@ -3679,7 +3640,7 @@ bool func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_SubC
 
 bool func_8006DC18(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2);
 
-bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
+bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s_SubCharacter** arg7, s32 arg8);
 
 bool func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1);
 
@@ -3695,9 +3656,9 @@ void func_8006E78C(s_func_8006DCE0* arg0, s_IpdCollisionData_14* arg1, SVECTOR3*
 
 void func_8006EB8C(s_func_8006DCE0* arg0, s_IpdCollisionData_18* arg1);
 
-void func_8006EE0C(s_func_8006DCE0_6C* arg0, s32 arg1, s_func_8006DCE0_64* arg2);
+void func_8006EE0C(s_func_8006DCE0_6C* arg0, s32 arg1, s_SubCharacter* arg2);
 
-void func_8006EEB8(s_func_8006DCE0* arg0, s_func_8006DCE0_64* arg1);
+void func_8006EEB8(s_func_8006DCE0* arg0, s_SubCharacter* arg1);
 
 void func_8006F250(s_func_8006F250* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 

@@ -77,7 +77,7 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
                                                                     PlayerFlag_Moving);
 
     player->flags_3E &= ~CharaFlag_Unk4;
-    player->field_E0_8 = 3;
+    player->field_E1_0 = 3;
 
     Player_AnimFlagsSet(AnimFlag_Unlocked);
 

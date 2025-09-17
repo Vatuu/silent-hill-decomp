@@ -22,7 +22,7 @@ void Ai_LarvalStalker_Init(s_SubCharacter* arg0)
     arg0->field_BC          = 0;
     arg0->field_B8          = 0;
     arg0->field_B4          = 0;
-    arg0->field_E0_8        = 0;
+    arg0->field_E1_0        = 0;
     arg0->headingAngle_3C   = arg0->rotation_24.vy;
 
     for (i = 0; i < 16; i++)

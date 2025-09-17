@@ -27,7 +27,7 @@ void Ai_Groaner_Init(s_SubCharacter* chara)
     }
 
     chara->moveSpeed_38    = 0;
-    chara->field_E0_8      = 3;
+    chara->field_E1_0      = 3;
     chara->headingAngle_3C = chara->rotation_24.vy;
 
     chara->properties_E4.larvalStalker.properties_E8[11].val16[0] = Rng_TestProbabilityBits(9) + 0xF00;

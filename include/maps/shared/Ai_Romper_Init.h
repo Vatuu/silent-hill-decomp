@@ -38,7 +38,7 @@ void Ai_Romper_Init(s_SubCharacter* chara)
     }
 
     chara->moveSpeed_38    = 0;
-    chara->field_E0_8      = 3;
+    chara->field_E1_0      = 3;
     chara->headingAngle_3C = chara->rotation_24.vy;
 
     for (i = 0; i < 16; i++)
