@@ -12,7 +12,7 @@ void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
     chara2 = chara; // TODO: Not sure why this is needed, possibly an inline here somewhere?
 
     chara->moveSpeed_38                = 0;
-    chara->u_E1.s_0.field_E1_0         = 3;
+    chara->field_E1_0                  = 3;
     chara->headingAngle_3C             = chara->rotation_24.vy;
     chara->properties_E4.npc.field_E8  = chara->position_18;
     chara->field_D4                    = FP_FLOAT_TO(0.3f, Q12_SHIFT);

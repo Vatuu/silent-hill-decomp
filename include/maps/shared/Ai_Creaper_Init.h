@@ -71,7 +71,7 @@ void Ai_Creaper_Init(s_SubCharacter* chara)
     chara->moveSpeed_38                                          = 0;
     chara->headingAngle_3C                                       = chara->rotation_24.vy;
 
-    chara->u_E1.s_0.field_E1_0 = 2;
+    chara->field_E1_0 = 2;
 
     for (i = 0; i < 16; i++)
     {

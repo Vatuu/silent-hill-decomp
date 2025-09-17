@@ -5,7 +5,7 @@ void sharedFunc_800D9774_1_s02(s_SubCharacter* chara)
     if (chara->health_B0 == Q12(0.0f) && func_8005C7D0(chara) != g_SysWork.enemyTargetIdx_2353)
     {
         chara->health_B0   = NO_VALUE;
-        chara->u_E1.s_1.field_E1_0 &= (1 << 5) | (1 << 6) | (1 << 7);
+        chara->field_E1_0  = 0;
     }
 
     if (chara->moveSpeed_38 == 0 && !(chara->properties_E4.player.afkTimer_E8 & 0xC))

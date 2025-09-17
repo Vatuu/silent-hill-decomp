@@ -2872,7 +2872,7 @@ s32 func_80069FFC(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara) // 0x8
     sp28.rotation_C.vx = chara->field_CA;
     sp28.rotation_C.vz = chara->field_D4;
 
-    sp28.field_12 = chara->u_E1.s_0.field_E1_0;
+    sp28.field_12 = chara->field_E1_0;
 
     sp40 = *arg1;
 
@@ -2910,7 +2910,7 @@ s_SubCharacter** func_8006A1A4(s32* arg0, s_SubCharacter* chara, s32 arg2) // 0x
     s_SubCharacter* otherChara;
 
     if (chara != NULL &&
-        (chara->model_0.charaId_0 == 0 || chara->u_E1.s_0.field_E1_0 == 0 || (chara->u_E1.s_0.field_E1_0 == 1 && arg2 == 1)))
+        (chara->model_0.charaId_0 == 0 || chara->field_E1_0 == 0 || (chara->field_E1_0 == 1 && arg2 == 1)))
     {
         *arg0 = 0;
         return &D_800C4458;
@@ -2923,10 +2923,10 @@ s_SubCharacter** func_8006A1A4(s32* arg0, s_SubCharacter* chara, s32 arg2) // 0x
     {
         if (otherChara->model_0.charaId_0 != 0)
         {
-            if (otherChara->u_E1.s_0.field_E1_0 != 0 &&
-                (otherChara->u_E1.s_0.field_E1_0 != 1 || arg2 != 1) &&
+            if (otherChara->field_E1_0 != 0 &&
+                (otherChara->field_E1_0 != 1 || arg2 != 1) &&
                 otherChara != chara &&
-                (arg2 != 1 || chara == NULL || chara->u_E1.s_0.field_E1_0 != 4 || otherChara->u_E1.s_0.field_E1_0 >= chara->u_E1.s_0.field_E1_0))
+                (arg2 != 1 || chara == NULL || chara->field_E1_0 != 4 || otherChara->field_E1_0 >= chara->field_E1_0))
             {
                 *arg0      += 1;
                 *D_800C4474 = otherChara;
@@ -2939,10 +2939,10 @@ s_SubCharacter** func_8006A1A4(s32* arg0, s_SubCharacter* chara, s32 arg2) // 0x
     otherChara = &g_SysWork.player_4C.chara_0;
     if (otherChara->model_0.charaId_0 != 0)
     {
-        if (otherChara->u_E1.s_0.field_E1_0 != 0 &&
-            (otherChara->u_E1.s_0.field_E1_0 != 1 || arg2 != 1) &&
+        if (otherChara->field_E1_0 != 0 &&
+            (otherChara->field_E1_0 != 1 || arg2 != 1) &&
             otherChara != chara &&
-            (arg2 != 1 || chara == NULL || chara->u_E1.s_0.field_E1_0 != 4 || otherChara->u_E1.s_0.field_E1_0 >= chara->u_E1.s_0.field_E1_0))
+            (arg2 != 1 || chara == NULL || chara->field_E1_0 != 4 || otherChara->field_E1_0 >= chara->field_E1_0))
         {
             *arg0      += 1;
             *D_800C4474 = otherChara;
@@ -3050,7 +3050,7 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* arg1, s_func_8006AB50* arg2, s32 ar
             temp_s0 = *var_s1;
             var_a0  = (temp_s0->field_D4 >> 4) + sp18.field_4.field_28;
 
-            if (temp_s0->u_E1.s_0.field_E1_0 < (u32)sp18.field_4.field_0)
+            if (temp_s0->field_E1_0 < (u32)sp18.field_4.field_0)
             {
                 var_a0 -= 0xF;
             }
@@ -3061,7 +3061,7 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* arg1, s_func_8006AB50* arg2, s32 ar
             sp18.field_A0.s_1.field_0 = (temp_s0->field_C8 + temp_s0->position_18.vy) >> 4;
             sp18.field_A0.s_1.field_2 = (temp_s0->field_CA + temp_s0->position_18.vy) >> 4;
             sp18.field_A0.s_1.field_4 = var_a0;
-            sp18.field_A0.s_1.field_6 = temp_s0->u_E1.s_0.field_E1_0;
+            sp18.field_A0.s_1.field_6 = temp_s0->field_E1_0;
             sp18.field_A0.s_1.field_8 = &temp_s0->field_E0;
 
             if (sp18.field_0_0 == 0)
@@ -3070,7 +3070,7 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* arg1, s_func_8006AB50* arg2, s32 ar
             }
 
             func_8006CC9C(&sp18);
-            func_8006CF18(&sp18, temp_s0->properties_E4.npc.unk_E4, temp_s0->u_E1.s_0.field_E1_4);
+            func_8006CF18(&sp18, temp_s0->properties_E4.npc.unk_E4, temp_s0->field_E1_4);
         }
 
         func_8006D01C(&sp120, &sp130, func_8006CB90(&sp18), &sp18);
@@ -3157,7 +3157,7 @@ void func_8006A940(VECTOR3* arg0, s_func_8006AB50* arg1, s_SubCharacter** arg2, 
     {
         temp_s0 = arg2[var_s3];
 
-        if (!temp_s0->u_E1.s_0.field_E1_0 || temp_s0->u_E1.s_0.field_E1_0 == 1 || temp_s0->u_E1.s_0.field_E1_0 >= arg1->field_12)
+        if (!temp_s0->field_E1_0 || temp_s0->field_E1_0 == 1 || temp_s0->field_E1_0 >= arg1->field_12)
         {
             continue;
         }

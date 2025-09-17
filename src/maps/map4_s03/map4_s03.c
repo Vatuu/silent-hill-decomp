@@ -254,7 +254,7 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
 
     chara->moveSpeed_38    = 0;
     chara->headingAngle_3C = chara->rotation_24.vy;
-    chara->u_E1.s_0.field_E1_0 = 4;
+    chara->field_E1_0      = 4;
 
     chara2->properties_E4.larvalStalker.properties_E8[1].val32     = 0;
     chara2->properties_E4.larvalStalker.properties_E8[2].val32     = 0;

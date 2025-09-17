@@ -1183,21 +1183,8 @@ typedef struct _SubCharacter
 
     u8 field_E0; // Related to collision. If the player collides with the only enemy in memory and the enemy is knocked down, this is set to 1.
 
-    // Some map funcs (e.g. `sharedFunc_800D9774_1_s02`) only match when `field_E1_0` is unsigned, but bodyprog funcs only match when it's signed..
-    // Possible these are also part of player/npc properties union?
-    union
-    {
-        struct
-        {
-            s8 field_E1_0 : 4; // Flags?
-            u8 field_E1_4 : 4;
-        } s_0;
-        struct
-        {
-            u8 field_E1_0 : 4; // Flags?
-            u8 field_E1_4 : 4;
-        } s_1;
-    } u_E1;
+    s8 field_E1_0 : 4; // Flags?
+    u8 field_E1_4 : 4;
 
     union
     {

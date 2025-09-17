@@ -154,7 +154,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
 
     chara->moveSpeed_38 = 0;
     chara->field_34     = 0;
-    chara->u_E1.s_0.field_E1_0 = 4;
+    chara->field_E1_0   = 4;
 
     for (i = 0; i < 16; i++)
     {

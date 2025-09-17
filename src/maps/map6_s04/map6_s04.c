@@ -180,7 +180,7 @@ void Ai_MonsterCybil_Init(s_SubCharacter* chara, s_Model* extraModel) // 0x800D8
     chara->model_0.stateStep_3 = 0;
     extraModel->stateStep_3    = 0;
 
-    chara->u_E1.s_0.field_E1_0 = 3;
+    chara->field_E1_0 = 3;
 
     g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[12].val16[1] = FP_ANGLE(90.0f);
 

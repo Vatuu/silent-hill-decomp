@@ -20,5 +20,5 @@ void sharedFunc_800D923C_0_s00(s_SubCharacter* chara)
 
     chara->model_0.state_2++;
 
-    chara->u_E1.s_0.field_E1_0 = 3;
+    chara->field_E1_0 = 3;
 }
