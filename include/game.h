@@ -1047,6 +1047,18 @@ typedef struct
 } s_800D5710;
 STATIC_ASSERT_SIZEOF(s_800D5710, 0x34);
 
+typedef struct
+{
+    s32 field_0;
+    s32 field_4;
+    s32 field_8;
+    s16 field_C;
+    s16 field_E;
+    s16 field_10;
+    s8  field_12;
+    u8  field_13;
+} s_func_8006CF18;
+
 // TODO: Re-offset `s_SubCharaPropertiesPlayer` / `s_SubCharaPropertiesNpc`.
 // Probably easier to do that after it's merged with rest of code.
 typedef struct _SubCharaPropertiesPlayer
@@ -1078,24 +1090,24 @@ STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPlayer, 68);
 // TODO: This may be a puppet doctor/nurse specific struct, need to compare with other NPCs.
 typedef struct _SubCharaPropertiesNpc
 {
-    s32         unk_E4;
-    VECTOR3     field_E8;
-    s32         field_F4;
-    s32         field_F8;
-    s32         field_FC;
-    s32         field_100;
-    s32         field_104;
-    s32         field_108;
-    s32         field_10C;
-    s8          unk_110[4];
-    s32         field_114;
-    s8          field_118;
-    s8          modelVariation_119;
-    s16         field_11A;
-    s32         field_11C;
-    s16         field_120;
-    s16         field_122;
-    s_800D5710* field_124;
+    s_func_8006CF18* unk_E4; // TODO: Not sure if this is meant to be in player or NPC properties, has to be at 0x0.
+    VECTOR3          field_E8;
+    s32              field_F4;
+    s32              field_F8;
+    s32              field_FC;
+    s32              field_100;
+    s32              field_104;
+    s32              field_108;
+    s32              field_10C;
+    s8               unk_110[4];
+    s32              field_114;
+    s8               field_118;
+    s8               modelVariation_119;
+    s16              field_11A;
+    s32              field_11C;
+    s16              field_120;
+    s16              field_122;
+    s_800D5710*      field_124;
 } s_SubCharaPropertiesNpc;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesNpc, 68);
 
@@ -1169,9 +1181,23 @@ typedef struct _SubCharacter
     s16               field_D6;
     s_SubCharacter_D8 field_D8;
 
-    s32 field_E0   : 8; // Related to collision. If the player collides with the only enemy in memory and the enemy is knocked down, this is set to 1.
-    s32 field_E0_8 : 4; // Flags?
-    s32 unk_E0_12  : 20;
+    u8 field_E0; // Related to collision. If the player collides with the only enemy in memory and the enemy is knocked down, this is set to 1.
+
+    // Some map funcs (e.g. `sharedFunc_800D9774_1_s02`) only match when `field_E1_0` is unsigned, but bodyprog funcs only match when it's signed..
+    // Possible these are also part of player/npc properties union?
+    union
+    {
+        struct
+        {
+            s8 field_E1_0 : 4; // Flags?
+            u8 field_E1_4 : 4;
+        } s_0;
+        struct
+        {
+            u8 field_E1_0 : 4; // Flags?
+            u8 field_E1_4 : 4;
+        } s_1;
+    } u_E1;
 
     union
     {

@@ -40,13 +40,13 @@ void Ai_Stalker_Init(s_SubCharacter* chara)
 
         case 8:
             chara->model_0.state_2 = 4;
-            chara->field_E0_8      = 3;
+            chara->u_E1.s_0.field_E1_0 = 3;
             break;
 
         case 7:
             chara->model_0.state_2                                        = 4;
             chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 11;
-            chara->field_E0_8                                             = 3;
+            chara->u_E1.s_0.field_E1_0                                    = 3;
             break;
 
         case 6:
@@ -54,13 +54,13 @@ void Ai_Stalker_Init(s_SubCharacter* chara)
             chara->flags_3E                                              |= CharaFlag_Unk3;
             chara->properties_E4.larvalStalker.properties_E8[4].val32     = FP_FLOAT_TO(1.0f, Q12_SHIFT);
             chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= (1 << 0) | (1 << 1);
-            chara->field_E0_8                                             = 3;
+            chara->u_E1.s_0.field_E1_0                                    = 3;
             chara->flags_3E                                              &= ~CharaFlag_Unk5;
             break;
 
         case 5:
             chara->model_0.state_2 = 1;
-            chara->field_E0_8      = 0;
+            chara->u_E1.s_0.field_E1_0 = 0;
             chara->flags_3E       |= CharaFlag_Unk5;
             break;
 
@@ -71,7 +71,7 @@ void Ai_Stalker_Init(s_SubCharacter* chara)
             chara->model_0.anim_4.time_4        = FP_TIME(427.0f);
             chara->model_0.anim_4.keyframeIdx_8 = 427;
             chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 0;
-            chara->field_E0_8 = 3;
+            chara->u_E1.s_0.field_E1_0                                    = 3;
             break;
 
         case 10:
@@ -80,7 +80,7 @@ void Ai_Stalker_Init(s_SubCharacter* chara)
             chara->model_0.anim_4.status_0      = ANIM_STATUS(28, true);
             chara->model_0.anim_4.time_4        = FP_TIME(443.0f);
             chara->model_0.anim_4.keyframeIdx_8 = 443;
-            chara->field_E0_8                   = 3;
+            chara->u_E1.s_0.field_E1_0          = 3;
             break;
 
         case 17:
@@ -89,7 +89,7 @@ void Ai_Stalker_Init(s_SubCharacter* chara)
             chara->model_0.anim_4.status_0      = ANIM_STATUS(14, true);
             chara->model_0.anim_4.time_4        = FP_TIME(176.0f);
             chara->model_0.anim_4.keyframeIdx_8 = 176;
-            chara->field_E0_8                   = 0;
+            chara->u_E1.s_0.field_E1_0          = 0;
             break;
     }
 

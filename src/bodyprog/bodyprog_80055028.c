@@ -2872,7 +2872,7 @@ s32 func_80069FFC(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara) // 0x8
     sp28.rotation_C.vx = chara->field_CA;
     sp28.rotation_C.vz = chara->field_D4;
 
-    sp28.field_12 = chara->field_E0_8;
+    sp28.field_12 = chara->u_E1.s_0.field_E1_0;
 
     sp40 = *arg1;
 
@@ -2934,7 +2934,7 @@ s32 func_8006A42C(s32 arg0, VECTOR3* arg1, s32 arg2) // 0x8006A42C
     return func_8006A4A8(arg0, &sp28, arg2, 0, func_800425D8(&sp38), sp38, 0, 0, 0, 0);
 }
 
-s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* arg1, s_func_8006AB50* arg2, s32 arg3, s_IpdCollisionData** arg4, s32 arg5, s_func_8006CF18* arg6, s32 arg7, s_func_8006A940** arg8, s32 arg9) // 0x8006A4A8
+s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* arg1, s_func_8006AB50* arg2, s32 arg3, s_IpdCollisionData** arg4, s32 arg5, s_func_8006CF18* arg6, s32 arg7, s_SubCharacter** arg8, s32 arg9) // 0x8006A4A8
 {
     s_func_8006CC44      sp18;
     VECTOR3              sp120;
@@ -2942,12 +2942,12 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* arg1, s_func_8006AB50* arg2, s32 ar
     VECTOR3              sp140;
     s32                  var_a0;
     s32                  var_a1;
-    s_func_8006A940**    var_s1;
+    s_SubCharacter**     var_s1;
     s32                  var_s4;
     s32                  var_v0;
     s32                  var_a2;
     s_IpdCollisionData** var_s0;
-    s_func_8006A940*     temp_s0;
+    s_SubCharacter*      temp_s0;
 
     var_s4 = 0;
 
@@ -3003,18 +3003,18 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* arg1, s_func_8006AB50* arg2, s32 ar
             temp_s0 = *var_s1;
             var_a0  = (temp_s0->field_D4 >> 4) + sp18.field_4.field_28;
 
-            if (temp_s0->field_E1_0 < (u32)sp18.field_4.field_0)
+            if (temp_s0->u_E1.s_0.field_E1_0 < (u32)sp18.field_4.field_0)
             {
                 var_a0 -= 0xF;
             }
 
-            sp18.field_98.field_0 = (temp_s0->field_18 + temp_s0->field_DC) >> 4;
-            sp18.field_9C.field_0 = (temp_s0->field_20 + temp_s0->field_DE) >> 4;
+            sp18.field_98.field_0 = (temp_s0->position_18.vx + temp_s0->field_D8.field_4) >> 4;
+            sp18.field_9C.field_0 = (temp_s0->position_18.vz + temp_s0->field_D8.field_6) >> 4;
 
-            sp18.field_A0.s_1.field_0 = (temp_s0->field_C8 + temp_s0->field_1C) >> 4;
-            sp18.field_A0.s_1.field_2 = (temp_s0->field_CA + temp_s0->field_1C) >> 4;
+            sp18.field_A0.s_1.field_0 = (temp_s0->field_C8 + temp_s0->position_18.vy) >> 4;
+            sp18.field_A0.s_1.field_2 = (temp_s0->field_CA + temp_s0->position_18.vy) >> 4;
             sp18.field_A0.s_1.field_4 = var_a0;
-            sp18.field_A0.s_1.field_6 = temp_s0->field_E1_0;
+            sp18.field_A0.s_1.field_6 = temp_s0->u_E1.s_0.field_E1_0;
             sp18.field_A0.s_1.field_8 = &temp_s0->field_E0;
 
             if (sp18.field_0_0 == 0)
@@ -3023,7 +3023,7 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* arg1, s_func_8006AB50* arg2, s32 ar
             }
 
             func_8006CC9C(&sp18);
-            func_8006CF18(&sp18, temp_s0->field_E4, temp_s0->field_E1_4);
+            func_8006CF18(&sp18, temp_s0->properties_E4.npc.unk_E4, temp_s0->u_E1.s_0.field_E1_4);
         }
 
         func_8006D01C(&sp120, &sp130, func_8006CB90(&sp18), &sp18);
@@ -3087,7 +3087,7 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* arg1, s_func_8006AB50* arg2, s32 ar
     return sp18.field_0_0 != 0;
 }
 
-void func_8006A940(VECTOR3* arg0, s_func_8006AB50* arg1, s_func_8006A940** arg2, s32 arg3) // 0x8006A940
+void func_8006A940(VECTOR3* arg0, s_func_8006AB50* arg1, s_SubCharacter** arg2, s32 arg3) // 0x8006A940
 {
     s32              sp10;
     s32              temp_s1;
@@ -3096,7 +3096,7 @@ void func_8006A940(VECTOR3* arg0, s_func_8006AB50* arg1, s_func_8006A940** arg2,
     s32              var_s3;
     s32              var_s4;
     s32              var_v0;
-    s_func_8006A940* temp_s0;
+    s_SubCharacter*  temp_s0;
     s32              temp2;
     s32              temp3;
     s32              temp4;
@@ -3110,13 +3110,13 @@ void func_8006A940(VECTOR3* arg0, s_func_8006AB50* arg1, s_func_8006A940** arg2,
     {
         temp_s0 = arg2[var_s3];
 
-        if (!temp_s0->field_E1_0 || temp_s0->field_E1_0 == 1 || temp_s0->field_E1_0 >= arg1->field_12)
+        if (!temp_s0->u_E1.s_0.field_E1_0 || temp_s0->u_E1.s_0.field_E1_0 == 1 || temp_s0->u_E1.s_0.field_E1_0 >= arg1->field_12)
         {
             continue;
         }
 
-        temp3 = temp_s0->field_C8 + temp_s0->field_1C;
-        temp4 = temp_s0->field_CA + temp_s0->field_1C;
+        temp3 = temp_s0->field_C8 + temp_s0->position_18.vy;
+        temp4 = temp_s0->field_CA + temp_s0->position_18.vy;
 
         temp6 = arg1->rotation_C.vy + arg1->position_0.vy;
         temp5 = arg1->rotation_C.vx + arg1->position_0.vy;
@@ -3126,8 +3126,8 @@ void func_8006A940(VECTOR3* arg0, s_func_8006AB50* arg1, s_func_8006A940** arg2,
             continue;
         }
 
-        temp_s2 = (temp_s0->field_18 + temp_s0->field_DC) - arg1->position_0.vx;
-        temp_s1 = (temp_s0->field_20 + temp_s0->field_DE) - arg1->position_0.vz;
+        temp_s2 = (temp_s0->position_18.vx + temp_s0->field_D8.field_4) - arg1->position_0.vx;
+        temp_s1 = (temp_s0->position_18.vz + temp_s0->field_D8.field_6) - arg1->position_0.vz;
 
         temp2 = Vc_VectorMagnitudeCalc(temp_s2, 0, temp_s1);
 
@@ -3141,7 +3141,7 @@ void func_8006A940(VECTOR3* arg0, s_func_8006AB50* arg1, s_func_8006A940** arg2,
         var_v0 = MAX(var_a0, 0);
         var_a0 = var_v0;
 
-        if (temp_s0->field_0 == 0xA)
+        if (temp_s0->model_0.charaId_0 == 0xA)
         {
             var_a0 = MIN(var_a0, 0x999);
         }

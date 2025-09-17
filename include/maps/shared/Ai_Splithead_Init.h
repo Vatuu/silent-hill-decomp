@@ -7,7 +7,7 @@ void Ai_Splithead_Init(s_SubCharacter* chara)
     chara->model_0.anim_4.alpha_A                                = Q12(0.0f);
     chara->moveSpeed_38                                          = 0;
     chara->headingAngle_3C                                       = chara->rotation_24.vy;
-    chara->field_E0_8                                            = 4;
+    chara->u_E1.s_0.field_E1_0                                   = 4;
 
     for (i = 0; i < 16; i++)
     {

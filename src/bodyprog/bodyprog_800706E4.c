@@ -7724,7 +7724,7 @@ void func_8007E5AC() // 0x8007E5AC
     extraModel->anim_4.flags_2 |= AnimFlag_Unlocked | AnimFlag_Visible;
     model->anim_4.flags_2      |= AnimFlag_Unlocked | AnimFlag_Visible;
 
-    g_SysWork.player_4C.chara_0.field_E0_8 = 3;
+    g_SysWork.player_4C.chara_0.u_E1.s_0.field_E1_0 = 3;
     g_Inventory_EquippedItem               = g_SavegamePtr->equippedWeapon_AA;
 
     temp_t0 = g_SavegamePtr->equippedWeapon_AA >> 5;
