@@ -33,9 +33,6 @@ bool Ai_AirScreamer_Init(s_SubCharacter* chara)
         case GameDifficulty_Hard:
             chara->health_B0 += func_80080514() * AIR_SCREAMER_RAND_MAX_HEALTH_BONUS_HARD;
             break;
-
-        default:
-            break;
     }
 
     sharedFunc_800D2BF4_0_s01(chara);

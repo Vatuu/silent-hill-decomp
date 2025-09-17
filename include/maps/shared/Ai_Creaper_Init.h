@@ -70,8 +70,7 @@ void Ai_Creaper_Init(s_SubCharacter* chara)
     chara->model_0.anim_4.alpha_A                                = FP_ALPHA(0.0f);
     chara->moveSpeed_38                                          = 0;
     chara->headingAngle_3C                                       = chara->rotation_24.vy;
-
-    chara->field_E0_8 = 2;
+    chara->field_E0_8                                            = 2;
 
     for (i = 0; i < 16; i++)
     {

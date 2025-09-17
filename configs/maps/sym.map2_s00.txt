@@ -161,3 +161,4 @@ sharedData_800E5768_1_s02   = 0x800F512C; // type:u8 size:0x60
 sharedData_800E39D8_0_s00   = 0x800F518C; // type:s32
 sharedData_800E21D0_0_s01   = 0x800F519C; // type:s32
 sharedData_800E2330_0_s01   = 0x800F52FC; // type:s32 - unknown type
+HARRY_M2S00_ANIM_INFOS = 0x800EE6AC;

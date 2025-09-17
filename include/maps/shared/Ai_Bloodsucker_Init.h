@@ -23,9 +23,6 @@ static inline void Ai_Bloodsucker_AnimUpdateFromStep(s_SubCharacter* chara)
         case 20:
             chara->model_0.state_2 = 2;
             break;
-
-        default:
-            return;
     }
 
     save = g_SavegamePtr; // TODO: Odd pointer copy, might be some inline flag check func?

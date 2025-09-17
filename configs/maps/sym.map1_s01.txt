@@ -102,3 +102,4 @@ sharedData_800E3A20_0_s00 = 0x800DEF24; // type:s32
 sharedData_800E3A24_0_s00 = 0x800DEF28; // type:s32
 sharedData_800E3A28_0_s00 = 0x800DEF2C; // type:s32
 sharedData_800E3A2C_0_s00 = 0x800DEF30; // type:s32
+HARRY_M1S01_ANIM_INFOS = 0x800DA0F0;
