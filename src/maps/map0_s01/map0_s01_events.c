@@ -1101,7 +1101,7 @@ void func_800DCCF4(void) // 0x800DCCF4
         {
             if (!Savegame_EventFlagGet(EventFlag_M0S01_HealthDrink0))
             {
-                func_8003C92C(&D_800E258C, &D_800DE12C.position_0, &D_800DE12C.rotation_C);
+                func_8003C92C(&D_800E2570[1], &D_800DE12C.position_0, &D_800DE12C.rotation_C);
             }
         }
     }
@@ -1117,7 +1117,7 @@ void func_800DCCF4(void) // 0x800DCCF4
         {
             if (!Savegame_EventFlagGet(EventFlag_M0S01_HealthDrink1))
             {
-                func_8003C92C(&D_800E258C, &D_800DE140.position_0, &D_800DE140.rotation_C);
+                func_8003C92C(&D_800E2570[1], &D_800DE140.position_0, &D_800DE140.rotation_C);
             }
         }
     }
