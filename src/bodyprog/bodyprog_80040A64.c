@@ -1093,24 +1093,23 @@ s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, 
     return dist;
 }
 
-s32 func_80042E2C(s32 xPos, s32 zPos, s32 xFileChunkCoord, s32 zFileChunkCoord) // 0x80042E2C
+s32 func_80042E2C(s32 posX, s32 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ) // 0x80042E2C
 {
-    #define FILE_CHUNK_SIZE FP_METER_GEO(40.0f)
+    #define IPD_CHUNK_SIZE FP_METER_GEO(40.0f)
 
-    #define OUTSIDE_DIST(val, lo, hi) \
-        (((val) < (lo)) ? ((lo) - (val)) : (((hi) <= (val)) ? ((val) - (hi)) : 0))
+    #define OUTSIDE_DIST(val, min, max) \
+        (((val) < (min)) ? ((min) - (val)) : (((max) <= (val)) ? ((val) - (max)) : 0))
 
-    s32 xFileChunkBound;
-    s32 zFileChunkBound;
+    s32 chunkBoundX;
+    s32 chunkBoundZ;
     s32 x;
     s32 z;
 
-    xFileChunkBound = xFileChunkCoord * FILE_CHUNK_SIZE;
-    zFileChunkBound = zFileChunkCoord * FILE_CHUNK_SIZE;
+    chunkBoundX = ipdChunkCoordX * IPD_CHUNK_SIZE;
+    chunkBoundZ = ipdChunkCoordZ * IPD_CHUNK_SIZE;
 
-    x = OUTSIDE_DIST(xPos, xFileChunkBound, xFileChunkBound + FILE_CHUNK_SIZE);
-    z = OUTSIDE_DIST(zPos, zFileChunkBound, zFileChunkBound + FILE_CHUNK_SIZE);
-
+    x = OUTSIDE_DIST(posX, chunkBoundX, chunkBoundX + IPD_CHUNK_SIZE);
+    z = OUTSIDE_DIST(posZ, chunkBoundZ, chunkBoundZ + IPD_CHUNK_SIZE);
     return Vc_VectorMagnitudeCalc(x, 0, z);
 }
 

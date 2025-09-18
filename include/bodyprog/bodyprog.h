@@ -2717,9 +2717,9 @@ bool IpdHeader_IsLoaded(s32 ipdIdx);
 void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1);
 
 /** Gets distance to the edge of a file chunk? */
-s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, bool hasGlobalPlm);
+s32 func_80042DE8(s32 posX, s32 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ, bool hasGlobalPlm);
 
-s32 func_80042E2C(s32 xPos, s32 zPos, s32 xFileChunkCoord, s32 zFileChunkCoord);
+s32 func_80042E2C(s32 posX, s32 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ);
 
 s32 func_80042EBC(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
@@ -3156,6 +3156,7 @@ void func_80057658(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
 
 void func_80057A3C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
 
+/** `arg4` unused. */
 s_Texture* Texture_Get(s_Material* mat, s_800C1450_0* arg1, void* fsBuf9, s32 fileIdx, s32 arg4);
 
 void func_8005B55C(GsCOORDINATE2* coord);

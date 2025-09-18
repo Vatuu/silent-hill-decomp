@@ -1676,7 +1676,7 @@ s_Texture* Texture_Get(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, s32
         // Failed to find file, log filename to screen.
         debugStr[12] = 0;
         Gfx_DebugStringPosition(100, 80);
-        strncpy(&debugStr, &fileName, 0xC);
+        strncpy(&debugStr, &fileName, 12);
 #ifdef DEBUG
         // Code seen in 98-12-16 build.
         Gfx_DebugStringDraw(debugStr);
