@@ -885,13 +885,12 @@ typedef struct
     // TODO: May be incomplete. Maybe not, added the final padding based on `Collision_Get`
 } s_func_8006CC44;
 
-// LM data? Likely `D_800C1158`'s struct.
-typedef struct
+typedef struct _s_GlobalLm
 {
     s_LmHeader* lmHdr_0;
     s32         fileIdx_4;
-    s32         queueIdx_8; // Passed to `Fs_QueueEntryLoadStatusGet`, thus the name.
-} s_func_80041CB4;
+    s32         queueIdx_8;
+} s_GlobalLm;
 
 typedef struct
 {
@@ -1080,7 +1079,7 @@ typedef struct
 {
     u_Filename modelName_0;
     s8         field_8;
-    s8         lmIdx_9; /** Set to 2 when found in `D_800C1020.field_138.lmHdr_0` and 3-6 if found in `D_800C1020.ipdActive_15C[i] (i + 3)`. */
+    s8         lmIdx_9; /** Set to 2 when found in `g_Map.globalLm_138.lmHdr_0` and 3-6 if found in `g_Map.ipdActive_15C[i] (i + 3)`. */
 } s_800BCE18_2BEC_0_10;
 
 typedef struct
@@ -1168,11 +1167,11 @@ typedef struct
 } s_800C1450;
 STATIC_ASSERT_SIZEOF(s_800C1450, 328);
 
-typedef struct
+typedef struct _s_Map
 {
     s_IpdCollisionData field_0;
     s32                texFileIdx_134;
-    s_func_80041CB4    field_138;
+    s_GlobalLm         globalLm_138;
     char               mapTag_144[4];
     s32                mapTagSize_148;
     s32                ipdFileIdx_14C;
@@ -1189,8 +1188,8 @@ typedef struct
     s32                field_580; // File chunk coord X.
     s32                field_584; // File chunk coord Z.
     bool               hasGlobalPlm; // Might mean something else, depends on `flags_6` in MapType. Only maps that have required flag set are maps with global PLM.
-} s_800C1020;
-STATIC_ASSERT_SIZEOF(s_800C1020, 1420);
+} s_Map;
+STATIC_ASSERT_SIZEOF(s_Map, 1420);
 
 typedef struct
 {
@@ -2208,7 +2207,7 @@ extern s_800BCE18 D_800BCE18;
 
 extern s_IpdCollisionData* D_800C1010[];
 
-extern s_800C1020 D_800C1020;
+extern s_Map g_Map;
 
 extern s8* D_800C15B0;
 
@@ -2643,7 +2642,7 @@ u32 Fs_QueueEntryLoadStatusGet(s32 queueIdx);
 /** Used for loading maps */
 void func_80041C24(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize);
 
-void func_80041CB4(s_func_80041CB4* arg0, s_LmHeader* lmHdr);
+void func_80041CB4(s_GlobalLm* arg0, s_LmHeader* lmHdr);
 
 void func_80041CEC(s_LmHeader* lmHdr);
 
@@ -2669,7 +2668,7 @@ s_Texture* func_80042178(char* arg0);
 
 void func_800421D8(char* mapTag, s32 plmIdx, s32 activeIpdCount, bool hasGlobalPlm, s32 ipdFileIdx, s32 texFileIdx);
 
-void Ipd_ActiveChunksClear(s_800C1020* arg0, s32 arg1);
+void Ipd_ActiveChunksClear(s_Map* arg0, s32 arg1);
 
 /** @brief Locates all IPD files for a given map type.
  *
@@ -2677,7 +2676,7 @@ void Ipd_ActiveChunksClear(s_800C1020* arg0, s32 arg1);
  * Map type THR.
  * `file 1100` is `THR0205.IPD`, `ipdGridCenter_42C[2][5] = 1100`.
  */
-void Map_MakeIpdGrid(s_800C1020* arg0, char* mapTag, s32 fileIdxStart);
+void Map_MakeIpdGrid(s_Map* arg0, char* mapTag, s32 fileIdxStart);
 
 /** @brief Converts two hex `char`s to an integer hex value.
  *
@@ -2698,7 +2697,7 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
  * @param
  * @return LM file load state `(e_StaticModelLoadState`).
  */
-u32 LmHeader_LoadStateGet(s_func_80041CB4* arg0);
+u32 LmHeader_LoadStateGet(s_GlobalLm* arg0);
 
 /** @brief Gets the load state of an IPD file.
  *
@@ -2721,20 +2720,20 @@ s32 func_80042DE8(s32 posX, s32 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ, bo
 
 s32 func_80042E2C(s32 posX, s32 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ);
 
-s32 func_80042EBC(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+s32 func_80042EBC(s_Map* arg0, s32 x1, s32 z1, s32 x2, s32 z2);
 
-void func_800431E4(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, bool hasGlobalPlm);
+void func_800431E4(s_Map* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, bool hasGlobalPlm);
 
 void func_80043338(s_IpdChunk* chunk, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool hasGlobalPlm);
 
-void func_800433B8(s_800C1020* arg0);
+void func_800433B8(s_Map* arg0);
 
-void func_800433B8(s_800C1020* arg0);
+void func_800433B8(s_Map* arg0);
 
 /** Args are X and Z? */
-s32 func_80043554(s32 gridX, s32 gridZ);
+s32 Map_IpdIndexGet(s32 gridX, s32 gridZ);
 
-bool func_80043578(s_IpdChunk* chunks, s32 arg1, s32 arg2);
+bool Map_IpdPresent(s_IpdChunk* chunks, s32 arg1, s32 arg2);
 
 s_IpdChunk* func_800435E4(s_IpdChunk* chunks, bool hasGlobalPlm);
 
@@ -2749,7 +2748,7 @@ bool func_8004393C(s32 posX, s32 posZ);
 
 void func_80043A24(GsOT* ot, s32 arg1);
 
-bool func_80043B34(s_IpdChunk* chunk, s_800C1020* arg1);
+bool func_80043B34(s_IpdChunk* chunk, s_Map* arg1);
 
 /** Checks if PLM texture is loaded? */
 bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHdr);
