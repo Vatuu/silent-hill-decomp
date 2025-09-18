@@ -906,7 +906,7 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
     s_IpdHeader* ipd;
     s_800C117C*  ptr;
 
-    // Convert position to collision space.
+    // Convert position to geometry space.
     collX = FP_METER_TO_GEO(posX);
     collZ = FP_METER_TO_GEO(posZ);
 
@@ -956,7 +956,7 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
 
     ptr0 = &D_800C1020.field_138;
 
-    // Convert position to collision space.
+    // Convert position to geometry space.
     collX = FP_METER_TO_GEO(posX);
     collZ = FP_METER_TO_GEO(posZ);
 
@@ -1640,7 +1640,7 @@ s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmH
 
     for (i = 0; i < lmHeader->modelCount_8; i++, modelHeader++)
     {
-        if (!cmp_filename(modelName, &modelHeader->modelName_0))
+        if (!COMPARE_FILENAMES(modelName, &modelHeader->modelName_0))
         {
             return modelHeader;
         }

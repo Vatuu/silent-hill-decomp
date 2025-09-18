@@ -618,7 +618,7 @@ bool func_80056558(s_LmHeader* lmHeader, char* fileName, s_FsImageDesc* image, s
          mat < &lmHeader->materials_4[lmHeader->materialCount_3];
          mat++)
     {
-        if (!cmp_filename(&mat->materialName_0, fileName))
+        if (!COMPARE_FILENAMES(&mat->materialName_0, fileName))
         {
             mat->field_C = 1;
             func_8005660C(mat, image, arg3);
@@ -857,7 +857,7 @@ bool Lm_ModelFind(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BEC
     {
         for (i = 0, modelHeader = &lmHeader->modelHeaders_C[i]; i < modelHeaderCount; i++, modelHeader++)
         {
-            if (!COMPARE_STRINGS(&modelHeader->modelName_0, &sp10))
+            if (!COMPARE_FILENAMES(&modelHeader->modelName_0, &sp10))
             {
                 result                   = true;
                 arg0->field_0.modelIdx_C = i;
@@ -1648,7 +1648,7 @@ s_Material_8* func_8005B1FC(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9
     for (i = 0; i < arg1->count_0; i++)
     {
         tex = arg1->entries_4[i];
-        if (!cmp_filename(mat->materialName_0, tex->textureName_8))
+        if (!COMPARE_FILENAMES(&mat->materialName_0, &tex->textureName_8))
         {
             mat->field_8 = tex;
             tex->field_14++;
@@ -1772,7 +1772,7 @@ s_Material_8* func_8005B4BC(char* str, s_800C1450_0* arg1) // 0x8005B4BC
     {
         material_8 = arg1->entries_4[i];
 
-        if (material_8->queueIdx_10 != NO_VALUE && !cmp_filename(prevStr, &material_8->textureName_8))
+        if (material_8->queueIdx_10 != NO_VALUE && !COMPARE_FILENAMES(prevStr, &material_8->textureName_8))
         {
             return material_8;
         }
@@ -2765,7 +2765,8 @@ void func_80069860(s32 arg0, s32 arg1, s_func_8006F8FC* arg2) // 0x80069860
         minZ -= 0x10000;
         maxZ += 0x10000;
 
-        if (arg0 >= minX && maxX >= arg0 && arg1 >= minZ && maxZ >= arg1)
+        if (arg0 >= minX && maxX >= arg0 &&
+            arg1 >= minZ && maxZ >= arg1)
         {
             D_800C4478.field_4[D_800C4478.field_2] = ptr;
             D_800C4478.field_2++;
@@ -2870,11 +2871,11 @@ INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80055028", D_80028B2C);
 
 INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80055028", D_80028B34);
 
-s32 func_80069BA8(s_800C4590* arg0, VECTOR3* arg2, s_SubCharacter* arg3, s32 arg4) // 0x80069BA8
+s32 func_80069BA8(s_800C4590* arg0, VECTOR3* arg2, s_SubCharacter* chara, s32 arg4) // 0x80069BA8
 {
     s_func_800699F8 sp10;
     s32             sp20;
-    s32             temp_s7;
+    s32             posY;
     s32             var_s2;
     s32             i;
     s32             var_s4;
@@ -2884,13 +2885,13 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* arg2, s_SubCharacter* arg3, s32 arg
     if (arg4 == -1)
     {
         arg4 = 1;
-        if (arg3 == &g_SysWork.player_4C && arg3->health_B0 > 0)
+        if (chara == &g_SysWork.player_4C && chara->health_B0 > Q12(0.0f))
         {
-            func_80069DF0(arg0, &arg3->position_18, arg3->position_18.vy, arg3->rotation_24.vy);
+            func_80069DF0(arg0, &chara->position_18, chara->position_18.vy, chara->rotation_24.vy);
         }
     }
 
-    temp_v0 = arg3->model_0.charaId_0 - 1;
+    temp_v0 = chara->model_0.charaId_0 - 1;
     switch (temp_v0)
     {
         case 0:
@@ -2904,9 +2905,7 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* arg2, s_SubCharacter* arg3, s32 arg
         case 11:
         case 15:
         case 17:
-
-            temp_s7 = arg3->position_18.vy - 0x800;
-
+            posY = chara->position_18.vy - FP_METER(0.5f);
             switch (arg0->field_14)
             {
                 case 12:
@@ -2914,7 +2913,7 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* arg2, s_SubCharacter* arg3, s32 arg
                     break;
 
                 default:
-                    var_s2 = arg0->field_C < temp_s7;
+                    var_s2 = arg0->field_C < posY;
                     break;
             }
 
@@ -2927,15 +2926,16 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* arg2, s_SubCharacter* arg3, s32 arg
 
             for (i = 0, var_s6 = 12; i < 9; i++)
             {
-                func_800699F8(&sp10, arg3->position_18.vx + FP_MULTIPLY(Math_Sin(i * 0x1D3), 0x333, Q12_SHIFT),
-                              arg3->position_18.vz + FP_MULTIPLY(Math_Cos(i * 0x1D3), 0x333, Q12_SHIFT));
+                // TODO: Maybe `FP_ANGLE(370.0f / 9.0f)`?
+                func_800699F8(&sp10, chara->position_18.vx + FP_MULTIPLY(Math_Sin(i * FP_ANGLE(41.1f)), FP_METER(0.2f), Q12_SHIFT),
+                              chara->position_18.vz + FP_MULTIPLY(Math_Cos(i * FP_ANGLE(41.1f)), FP_METER(0.2f), Q12_SHIFT));
 
                 switch (var_s2)
                 {
                     case 1:
-                        if (sp10.groundHeight_0 < temp_s7)
+                        if (sp10.groundHeight_0 < posY)
                         {
-                            var_s4 += 1;
+                            var_s4++;
                         }
                         break;
 
@@ -2954,7 +2954,7 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* arg2, s_SubCharacter* arg3, s32 arg
                 case 1:
                     if (var_s4 < 3)
                     {
-                        arg0->field_C = arg3->position_18.vy;
+                        arg0->field_C = chara->position_18.vy;
                     }
                     break;
 
@@ -2972,63 +2972,64 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* arg2, s_SubCharacter* arg3, s32 arg
     return arg4;
 }
 
-static const u8 unk_rdata[] = { 0x00, 0x42, 0x05, 0x80, 0x00, 0x00, 0x00, 0x00 };
+static const u8 unk_rdata[] = { 0, 66, 5, 128, 0, 0, 0, 0 };
 
 void func_80069DF0(s_800C4590* arg0, VECTOR3* arg1, s32 arg2, s32 arg3) // 0x80069DF0
 {
-    s32             sp10[16];
-    s_func_800699F8 sp50;
-    s32             temp_s0_2;
+    #define GROUND_HEIGHT_COUNT_MAX 16
+
+    s32             groundHeights[16];
+    s_func_800699F8 coll;
+    s32             angle;
     s32             var_a0;
-    s32             var_a1;
+    s32             groundHeight;
     s32             var_s0;
     s32             i;
-    s32             var_s3;
-    s32             var_s4;
+    s32             groundHeightMax;
+    s32             groundHeightMin;
     s32             var_s5;
 
-    var_s4 = -0x1E000;
-    var_s3 = 0x1E000;
+    groundHeightMin = FP_METER(-30.0f);
+    groundHeightMax = FP_METER(30.0f);
     var_s5 = 0;
 
-    for (i = 0; i < 16; i++)
+    for (i = 0; i < GROUND_HEIGHT_COUNT_MAX; i++)
     {
-        func_800699F8(&sp50, arg1->vx + Math_Sin((arg3 & 0xF) + i * 0x100), arg1->vz + Math_Cos((arg3 & 0xF) + i * 0x100));
-        sp10[i] = sp50.groundHeight_0;
+        func_800699F8(&coll, arg1->vx + Math_Sin((arg3 & 0xF) + (i * FP_ANGLE(22.5f))), arg1->vz + Math_Cos((arg3 & 0xF) + (i * FP_ANGLE(22.5f))));
+        groundHeights[i] = coll.groundHeight_0;
 
-        if (var_s4 < sp50.groundHeight_0)
+        if (groundHeightMin < coll.groundHeight_0)
         {
-            var_s4 = sp50.groundHeight_0;
+            groundHeightMin = coll.groundHeight_0;
             var_s5 = i;
         }
 
-        if (sp50.groundHeight_0 < var_s3)
+        if (coll.groundHeight_0 < groundHeightMax)
         {
-            var_s3 = sp50.groundHeight_0;
+            groundHeightMax = coll.groundHeight_0;
         }
     }
 
-    var_a1 = (var_s4 + var_s3) >> 1;
+    groundHeight = (groundHeightMin + groundHeightMax) >> 1;
 
-    if (var_a1 < arg2 - 0x199)
+    if (groundHeight < (arg2 - FP_METER(0.1f)))
     {
-        var_a1 = arg2 - 0x199;
+        groundHeight = arg2 - FP_METER(0.1f);
     }
 
-    for (i = var_s5 + 1, var_a0 = var_s5; i < (var_s5 + 16) && var_a1 < sp10[i & 0xF]; i++)
+    for (i = var_s5 + 1, var_a0 = var_s5; i < (var_s5 + 16) && groundHeight < groundHeights[i & 0xF]; i++)
     {
         var_a0 = i;
     }
 
-    for (i = var_s5 - 1, var_s0 = var_s5; i < (var_s5 - 16) && var_a1 < sp10[i & 0xF]; i--)
+    for (i = var_s5 - 1, var_s0 = var_s5; i < (var_s5 - 16) && groundHeight < groundHeights[i & 0xF]; i--)
     {
         var_s0 = i;
     }
 
-    temp_s0_2 = ((var_s0 + var_a0) << 8) >> 1;
-
-    arg0->field_0.vx = FP_MULTIPLY_PRECISE(Math_Sin(temp_s0_2), 0x100, Q12_SHIFT);
-    arg0->field_0.vz = FP_MULTIPLY_PRECISE(Math_Cos(temp_s0_2), 0x100, Q12_SHIFT);
+    angle = ((var_s0 + var_a0) << 8) >> 1;
+    arg0->field_0.vx = FP_MULTIPLY_PRECISE(Math_Sin(angle), Q12(0.0625f), Q12_SHIFT);
+    arg0->field_0.vz = FP_MULTIPLY_PRECISE(Math_Cos(angle), Q12(0.0625f), Q12_SHIFT);
 }
 
 s32 func_80069FFC(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara) // 0x80069FFC

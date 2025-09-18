@@ -34,7 +34,7 @@
  * @param b Second string.
  * @return `true` if the strings aren't equal, `false` otherwise.
  */
-#define COMPARE_STRINGS(a, b) \
+#define COMPARE_FILENAMES(a, b) \
     (((u_Filename*)(a))->u32[0] != ((u_Filename*)(b))->u32[0] || \
      ((u_Filename*)(a))->u32[1] != ((u_Filename*)(b))->u32[1])
 
@@ -3552,7 +3552,7 @@ void func_800699F8(s_func_800699F8* coll, s32 posX, s32 posZ);
 
 s32 func_80069B24(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara);
 
-s32 func_80069BA8(s_800C4590* arg0, VECTOR3* arg2, s_SubCharacter* arg3, s32 arg4);
+s32 func_80069BA8(s_800C4590* arg0, VECTOR3* arg2, s_SubCharacter* chara, s32 arg4);
 
 void func_80069DF0(s_800C4590* arg0, VECTOR3* arg1, s32 arg2, s32 arg3);
 

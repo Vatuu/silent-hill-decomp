@@ -1400,6 +1400,7 @@ bool func_8004EE94(u8 itemId, u8 arg1) // 0x8004EE94
         {
             case 0:
                 break;
+
             case 1:
                 g_SavegamePtr->items_0[i].count_1--;
                 if (g_SavegamePtr->items_0[i].count_1 == 0)
