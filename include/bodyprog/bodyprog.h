@@ -583,12 +583,12 @@ typedef struct _Material_8
     u_Filename    textureName_8;
     u32           queueIdx_10;
     s8            refCount_14;
-} s_Material_8;
+} s_Texture;
 
 typedef struct _Material
 {
-    u_Filename    materialName_0;
-    s_Material_8* field_8;
+    u_Filename    name_0;
+    s_Texture*    tex_8;
     u8            field_C;
     u8            unk_D[1];
     u8            field_E;
@@ -1173,8 +1173,8 @@ STATIC_ASSERT_SIZEOF(s_IpdColumn, 32);
 
 typedef struct
 {
-    s32           count_0;
-    s_Material_8* entries_4[10];
+    s32        count_0;
+    s_Texture* entries_4[10];
 } s_800C1450_0;
 
 // Related to textures.
@@ -1182,8 +1182,8 @@ typedef struct
 {
     s_800C1450_0 field_0;
     s_800C1450_0 field_2C;
-    s_Material_8 field_58[8];
-    s_Material_8 field_118[2];
+    s_Texture    field_58[8];
+    s_Texture    field_118[2];
 } s_800C1450;
 STATIC_ASSERT_SIZEOF(s_800C1450, 328);
 
@@ -2687,7 +2687,7 @@ void func_800420C0();
 
 void func_800420FC();
 
-s_Material_8* func_80042178(char* arg0);
+s_Texture* func_80042178(char* arg0);
 
 void func_800421D8(char* mapTag, s32 plmIdx, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
@@ -3114,13 +3114,13 @@ void func_8005A900(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scrat
 u8 func_8005AA08(s_MeshHeader* meshHeader, s32 arg1, s_GteScratchData2* scratchData);
 
 /** Related to enviroment textures. */
-void func_8005B1A0(s_Material_8* material_8, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY);
+void func_8005B1A0(s_Texture* tex_8, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY);
 
-void Mat_RefCountReset(s_Material_8* material_8);
+void Mat_RefCountReset(s_Texture* tex_8);
 
-void func_8005B378(s_Material_8* material_8, char* arg1);
+void func_8005B378(s_Texture* tex_8, char* arg1);
 
-void func_8005B3A4(s_Material_8* material_8);
+void func_8005B3A4(s_Texture* tex_8);
 
 void func_8005B3BC(char* filename, s_Material* material);
 
@@ -3178,7 +3178,7 @@ void func_80057658(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scrat
 
 void func_80057A3C(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
 
-s_Material_8* func_8005B1FC(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, void* arg3, s32 arg4);
+s_Texture* func_8005B1FC(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, void* arg3, s32 arg4);
 
 void func_8005B55C(GsCOORDINATE2* coord);
 
@@ -3499,9 +3499,9 @@ void GameFs_MapItemsModelLoad(u32 mapId);
 void func_8005B46C(s_800C1450_0* arg0);
 
 /** Crucial for map loading. */
-void func_8005B474(s_800C1450_0* arg0, s_Material_8* material_8, s32 idx);
+void func_8005B474(s_800C1450_0* arg0, s_Texture* tex_8, s32 idx);
 
-s_Material_8* func_8005B4BC(char* str, s_800C1450_0* arg1);
+s_Texture* func_8005B4BC(char* str, s_800C1450_0* arg1);
 
 /** Sets the debug string position. */
 void func_8005BF0C(s16 unused, s16 x, s16 y);

@@ -644,28 +644,28 @@ void func_80041FF0() // 0x80041FF0
 
 void func_8004201C() // 0x8004201C
 {
-    s_Material_8* material_8;
+    s_Texture* tex_8;
 
-    material_8 = &D_800C1020.field_430.field_58[0];
-    while (material_8 < (&D_800C1020.field_430.field_58[8]))
+    tex_8 = &D_800C1020.field_430.field_58[0];
+    while (tex_8 < (&D_800C1020.field_430.field_58[8]))
     {
-        if (material_8->refCount_14 == 0)
+        if (tex_8->refCount_14 == 0)
         {
-            func_8005B3A4(material_8);
+            func_8005B3A4(tex_8);
         }
 
-        material_8++;
+        tex_8++;
     }
 
-    material_8 = &D_800C1020.field_430.field_118[0];
-    while (material_8 < (&D_800C1020.field_430.field_118[2]))
+    tex_8 = &D_800C1020.field_430.field_118[0];
+    while (tex_8 < (&D_800C1020.field_430.field_118[2]))
     {
-        if (material_8->refCount_14 == 0)
+        if (tex_8->refCount_14 == 0)
         {
-            func_8005B3A4(material_8);
+            func_8005B3A4(tex_8);
         }
 
-        material_8++;
+        tex_8++;
     }
 }
 
@@ -691,20 +691,20 @@ void func_800420FC() // 0x800420FC
     func_80041CB4(&D_800C1020.field_138, D_800C1020.field_138.lmHeader_0);
 }
 
-s_Material_8* func_80042178(char* arg0) // 0x80042178
+s_Texture* func_80042178(char* arg0) // 0x80042178
 {
-    s_Material_8* material_8;
+    s_Texture* tex_8;
 
-    material_8 = func_8005B4BC(arg0, &D_800C1020.field_430.field_0);
-    if (material_8 != NULL)
+    tex_8 = func_8005B4BC(arg0, &D_800C1020.field_430.field_0);
+    if (tex_8 != NULL)
     {
-        return material_8;
+        return tex_8;
     }
 
-    material_8 = func_8005B4BC(arg0, &D_800C1020.field_430.field_2C);
-    if (material_8 != NULL)
+    tex_8 = func_8005B4BC(arg0, &D_800C1020.field_430.field_2C);
+    if (tex_8 != NULL)
     {
-        return material_8;
+        return tex_8;
     }
 
     return NULL;
@@ -1572,7 +1572,7 @@ bool LmFilter_NameEndsWithH(s_Material* mat) // 0x80043D64
 {
     char* charCode;
 
-    for (charCode = &mat->materialName_0.str[7]; charCode >= &mat->materialName_0.str[0]; charCode--)
+    for (charCode = &mat->name_0.str[7]; charCode >= &mat->name_0.str[0]; charCode--)
     {
         if (*charCode == '\0')
         {
