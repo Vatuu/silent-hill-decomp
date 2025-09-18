@@ -2896,20 +2896,19 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara, s32 arg
         }
     }
 
-    temp_v0 = chara->model_0.charaId_0 - 1; // TODO: Why `- 1`??
-    switch (temp_v0)
+    switch (chara->model_0.charaId_0)
     {
-        case 0:
-        case 3:
-        case 4:
-        case 5:
-        case 6:
-        case 7:
-        case 8:
-        case 10:
-        case 11:
-        case 15:
-        case 17:
+        case Chara_Harry:
+        case Chara_Groaner:
+        case Chara_Wormhead:
+        case Chara_LarvalStalker:
+        case Chara_Stalker:
+        case Chara_GreyChild:
+        case Chara_Mumbler:
+        case Chara_Creaper:
+        case Chara_Romper:
+        case Chara_PuppetNurse:
+        case Chara_PuppetDoctor:
             wallBound = chara->position_18.vy - WALL_HEIGHT;
 
             switch (arg0->field_14)
