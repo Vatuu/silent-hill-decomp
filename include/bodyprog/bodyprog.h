@@ -39,7 +39,6 @@
     (((u_Filename*)(a))->u32[0] != ((u_Filename*)(b))->u32[0] || \
      ((u_Filename*)(a))->u32[1] != ((u_Filename*)(b))->u32[1])
 
-
 // ======
 // ENUMS
 // ======
