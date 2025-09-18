@@ -1615,7 +1615,7 @@ u8 func_8005AA08(s_MeshHeader* meshHeader, s32 arg1, s_GteScratchData2* scratchD
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005AC50); // 0x8005AC50
 
-void Tex_Init(s_Texture* tex_8, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY) // 0x8005B1A0
+void Tex_Init1(s_Texture* tex_8, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY) // 0x8005B1A0
 {
     tex_8->imageDesc_0.tPage[0] = tPage0;
     tex_8->imageDesc_0.tPage[1] = tPage1;

@@ -585,7 +585,7 @@ void func_80041D48() // 0x80041D48
             y = 21;
         }
 
-        Tex_Init(&D_800C1020.field_430.field_58[i], 0, 0, y, 0, 0, x, j);
+        Tex_Init1(&D_800C1020.field_430.field_58[i], 0, 0, y, 0, 0, x, j);
     }
 
     func_8005B46C(&D_800C1020.field_430.field_0);
@@ -593,7 +593,7 @@ void func_80041D48() // 0x80041D48
 
     for (i = 0, y = 26, j = 0; i < 2; i++, x += 16)
     {
-        Tex_Init(&D_800C1020.field_430.field_118[i], 0, 0, y, (i & 0x1) * 32, 0, x, j);
+        Tex_Init1(&D_800C1020.field_430.field_118[i], 0, 0, y, (i & 0x1) * 32, 0, x, j);
         if (i & 0x1)
         {
             y++;

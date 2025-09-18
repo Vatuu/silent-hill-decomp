@@ -3113,8 +3113,7 @@ void func_8005A900(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scrat
 
 u8 func_8005AA08(s_MeshHeader* meshHeader, s32 arg1, s_GteScratchData2* scratchData);
 
-/** Related to enviroment textures. */
-void Tex_Init(s_Texture* tex_8, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY);
+void Tex_Init1(s_Texture* tex_8, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY);
 
 void Tex_RefCountReset(s_Texture* tex_8);
 
