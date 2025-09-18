@@ -2691,7 +2691,7 @@ s_Texture* func_80042178(char* arg0);
 
 void func_800421D8(char* mapTag, s32 plmIdx, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
-void func_80042300(s_800C1020* arg0, s32 arg1);
+void Ipd_ActiveChunksClear(s_800C1020* arg0, s32 arg1);
 
 /** @brief Locates all IPD files for a given map type.
  *

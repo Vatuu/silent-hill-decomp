@@ -898,7 +898,7 @@ void func_8003C1AC(s_800BCE18_0_CC* arg0) // 0x8003C1AC
 
 void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ) // 0x8003C220
 {
-    s32        var_a2;
+    s32        activeIpdCount;
     u8         temp_v1;
     s_MapType* ptr;
 
@@ -907,19 +907,19 @@ void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ
 
     if (temp_v1 & (1 << 0))
     {
-        var_a2 = 1;
+        activeIpdCount = 1;
     } 
     else if (temp_v1 & (1 << 1))
     {
-        var_a2 = 2;
+        activeIpdCount = 2;
     }
     else
     {
-        var_a2 = 4;
+        activeIpdCount = 4;
     }
 
     ptr = mapHeader->type_0;
-    func_800421D8(ptr->tag_2, ptr->plmFileIdx_0, var_a2, ((ptr->flags_6 >> 2) ^ 1) & (1 << 0), 0, 0);
+    func_800421D8(ptr->tag_2, ptr->plmFileIdx_0, activeIpdCount, ((ptr->flags_6 >> 2) ^ 1) & (1 << 0), 0, 0);
 
     if (mapHeader->type_0 == &g_MapTypes[0])
     {

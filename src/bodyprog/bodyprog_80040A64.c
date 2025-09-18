@@ -639,7 +639,7 @@ void Map_PlaceIpdAtGridPos(s16 ipdFileIdx, s32 x, s32 z) // 0x80041ED0
 
 void func_80041FF0() // 0x80041FF0
 {
-    func_80042300(&D_800C1020, D_800C1020.ipdTableSize_158);
+    Ipd_ActiveChunksClear(&D_800C1020, D_800C1020.ipdTableSize_158);
 }
 
 void func_8004201C() // 0x8004201C
@@ -672,7 +672,7 @@ void func_8004201C() // 0x8004201C
 void func_800420C0() // 0x800420C0
 {
     func_800420FC();
-    func_80042300(&D_800C1020, D_800C1020.ipdTableSize_158);
+    Ipd_ActiveChunksClear(&D_800C1020, D_800C1020.ipdTableSize_158);
     func_80041D48();
 }
 
@@ -710,7 +710,7 @@ s_Texture* func_80042178(char* arg0) // 0x80042178
     return NULL;
 }
 
-void func_800421D8(char* mapTag, s32 plmIdx, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x800421D8
+void func_800421D8(char* mapTag, s32 plmIdx, s32 activeIpdCount, s32 arg3, s32 arg4, s32 arg5) // 0x800421D8
 {
     D_800C1020.hasGlobalPlm = arg3;
     D_800C1020.field_134 = arg5;
@@ -730,11 +730,11 @@ void func_800421D8(char* mapTag, s32 plmIdx, s32 arg2, s32 arg3, s32 arg4, s32 a
         }
     }
 
-    if (D_800C1020.ipdTableSize_158 != arg2 || strcmp(mapTag, D_800C1020.mapTag_144) != 0)
+    if (D_800C1020.ipdTableSize_158 != activeIpdCount || strcmp(mapTag, D_800C1020.mapTag_144) != 0)
     {
-        func_80042300(&D_800C1020, arg2);
+        Ipd_ActiveChunksClear(&D_800C1020, activeIpdCount);
 
-        D_800C1020.ipdTableSize_158 = arg2;
+        D_800C1020.ipdTableSize_158 = activeIpdCount;
         D_800C1020.field_14C = arg4;
         strcpy(D_800C1020.mapTag_144, mapTag);
 
@@ -743,7 +743,7 @@ void func_800421D8(char* mapTag, s32 plmIdx, s32 arg2, s32 arg3, s32 arg4, s32 a
     }
 }
 
-void func_80042300(s_800C1020* arg0, s32 arg1) // 0x80042300
+void Ipd_ActiveChunksClear(s_800C1020* arg0, s32 arg1) // 0x80042300
 {
     s32          step;
     s32          i;
@@ -1183,7 +1183,7 @@ void func_800431E4(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32
 {
     s_800C117C* ptr;
 
-    for (ptr = arg0->ipdTable_15C; ptr < arg0->ipdGrid_1CC; ptr++)
+    for (ptr = arg0->ipdTable_15C; ptr < &arg0->ipdTable_15C[4]; ptr++)
     {
         if (ptr->queueIdx_4 == NO_VALUE)
         {
