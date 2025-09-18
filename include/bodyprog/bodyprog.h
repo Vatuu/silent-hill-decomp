@@ -957,25 +957,6 @@ typedef struct
 
 typedef struct
 {
-    u8  unk_0;
-    u8  field_1;
-    u8  unk_2[2];
-    s32 field_4;
-} s_80043338_0;
-
-// Maybe level stream data?
-typedef struct
-{
-    s_80043338_0* destBuffer_0;
-    s32           queueEntryIdx_4;
-    s16           fileChunkCoordX_8;
-    s16           fileChunkCoordZ_A;
-    s32           field_C;  // } Something to do with distance from file chunk edge.
-    s32           field_10; // }
-} s_80043338;
-
-typedef struct
-{
     s8             charaId0_0; /** `e_CharacterId`. */
     s8             charaId1_1; /** `e_CharacterId`. */
     s8             unk_2[2];
@@ -1155,10 +1136,10 @@ typedef struct
 {
     s_IpdHeader* ipdHeader_0;
     s32          queueIdx_4;
-    s16          field_8; // X cell coord?
-    s16          field_A; // Z cell coord?
-    s32          field_C;
-    s32          field_10;
+    s16          coordX_8;
+    s16          coordZ_A;
+    s32          distance0_C;
+    s32          distance1_10;
     u8           field_14;
     s8           unk_15[3];
     s32          field_18;
@@ -2747,7 +2728,7 @@ s32 func_80042EBC(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 void func_800431E4(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
-void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
+void func_80043338(s_800C117C* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
 
 void func_800433B8(s_800C1020* arg0);
 
@@ -2761,7 +2742,7 @@ bool func_80043578(s_800C117C* arg0, s32 arg1, s32 arg2);
 s_800C117C* func_800435E4(s_800C117C* arg0, s32 arg1);
 
 /** Maybe facilitates file chunk streaming as the player moves around the map. */
-s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
+s32 func_800436D8(s_800C117C* arg0, s32 fileIdx, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
 
 bool func_80043740();
 
