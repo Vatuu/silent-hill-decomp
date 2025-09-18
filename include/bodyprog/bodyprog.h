@@ -885,7 +885,7 @@ typedef struct
     // TODO: May be incomplete. Maybe not, added the final padding based on `Collision_Get`
 } s_func_8006CC44;
 
-typedef struct _s_GlobalLm
+typedef struct _GlobalLm
 {
     s_LmHeader* lmHdr_0;
     s32         fileIdx_4;
@@ -1167,7 +1167,7 @@ typedef struct
 } s_800C1450;
 STATIC_ASSERT_SIZEOF(s_800C1450, 328);
 
-typedef struct _s_Map
+typedef struct _Map
 {
     s_IpdCollisionData field_0;
     s32                texFileIdx_134;
@@ -2642,7 +2642,8 @@ u32 Fs_QueueEntryLoadStatusGet(s32 queueIdx);
 /** Used for loading maps */
 void func_80041C24(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize);
 
-void func_80041CB4(s_GlobalLm* arg0, s_LmHeader* lmHdr);
+/** This function is related to map loading. */
+void func_80041CB4(s_GlobalLm* globalLm, s_LmHeader* lmHdr);
 
 void func_80041CEC(s_LmHeader* lmHdr);
 
@@ -2668,7 +2669,7 @@ s_Texture* func_80042178(char* arg0);
 
 void func_800421D8(char* mapTag, s32 plmIdx, s32 activeIpdCount, bool hasGlobalPlm, s32 ipdFileIdx, s32 texFileIdx);
 
-void Ipd_ActiveChunksClear(s_Map* arg0, s32 arg1);
+void Ipd_ActiveChunksClear(s_Map* map, s32 arg1);
 
 /** @brief Locates all IPD files for a given map type.
  *
@@ -2676,7 +2677,7 @@ void Ipd_ActiveChunksClear(s_Map* arg0, s32 arg1);
  * Map type THR.
  * `file 1100` is `THR0205.IPD`, `ipdGridCenter_42C[2][5] = 1100`.
  */
-void Map_MakeIpdGrid(s_Map* arg0, char* mapTag, s32 fileIdxStart);
+void Map_MakeIpdGrid(s_Map* map, char* mapTag, s32 fileIdxStart);
 
 /** @brief Converts two hex `char`s to an integer hex value.
  *
@@ -2697,7 +2698,7 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
  * @param
  * @return LM file load state `(e_StaticModelLoadState`).
  */
-u32 LmHeader_LoadStateGet(s_GlobalLm* arg0);
+u32 LmHeader_LoadStateGet(s_GlobalLm* globalLm);
 
 /** @brief Gets the load state of an IPD file.
  *
@@ -2713,42 +2714,42 @@ u32 IpdHeader_LoadStateGet(s_IpdChunk* chunk);
  */
 bool IpdHeader_IsLoaded(s32 ipdIdx);
 
-void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1);
+void func_80042C3C(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
 
 /** Gets distance to the edge of a file chunk? */
-s32 func_80042DE8(s32 posX, s32 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ, bool hasGlobalPlm);
+q19_12 func_80042DE8(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ, bool hasGlobalPlm);
 
-s32 func_80042E2C(s32 posX, s32 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ);
+s32 func_80042E2C(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ);
 
-s32 func_80042EBC(s_Map* arg0, s32 x1, s32 z1, s32 x2, s32 z2);
+s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
 
-void func_800431E4(s_Map* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, bool hasGlobalPlm);
+void func_800431E4(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm);
 
-void func_80043338(s_IpdChunk* chunk, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool hasGlobalPlm);
+void func_80043338(s_IpdChunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm);
 
-void func_800433B8(s_Map* arg0);
+void func_800433B8(s_Map* map);
 
-void func_800433B8(s_Map* arg0);
+void func_800433B8(s_Map* map);
 
 /** Args are X and Z? */
-s32 Map_IpdIndexGet(s32 gridX, s32 gridZ);
+s32 Map_IpdIdxGet(s32 gridX, s32 gridZ);
 
-bool Map_IpdPresent(s_IpdChunk* chunks, s32 arg1, s32 arg2);
+bool Map_IsIpdPresent(s_IpdChunk* chunks, s32 chunkCoordX, s32 chunkCoordZ);
 
 s_IpdChunk* func_800435E4(s_IpdChunk* chunks, bool hasGlobalPlm);
 
 /** Maybe facilitates file chunk streaming as the player moves around the map. */
-s32 func_800436D8(s_IpdChunk* chunk, s32 fileIdx, s32 chunkCoordX, s32 chunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool hasGlobalPlm);
+s32 func_800436D8(s_IpdChunk* chunk, s32 fileIdx, s32 chunkCoordX, s32 chunkCoordZ, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm);
 
 bool func_80043740();
 
 bool func_80043830(void);
 
-bool func_8004393C(s32 posX, s32 posZ);
+bool func_8004393C(q19_12 posX, q19_12 posZ);
 
 void func_80043A24(GsOT* ot, s32 arg1);
 
-bool func_80043B34(s_IpdChunk* chunk, s_Map* arg1);
+bool func_80043B34(s_IpdChunk* chunk, s_Map* map);
 
 /** Checks if PLM texture is loaded? */
 bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHdr);
@@ -2779,18 +2780,18 @@ s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmH
 void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHdr, s_IpdModelInfo* ipdModels);
 
 /** Sets IPD collision data grid coords? */
-void func_80044044(s_IpdHeader* ipd, s32 x, s32 z);
+void func_80044044(s_IpdHeader* ipd, s32 gridX, s32 gridZ);
 
 void func_80044090(s_IpdHeader* ipdHdr, s32 arg1, s32 arg2, GsOT* ot, void* arg4);
 
-bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, s32 x, s32 z);
+bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, q23_8 x, q23_8 z);
 
 /** Loads anim file? */
 void Anim_BoneInit(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords);
 
 s_AnimInfo* func_80044918(s_ModelAnim* anim);
 
-void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyframe0, s32 keyframe1, s32 alpha);
+void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyframe0, s32 keyframe1, q19_12 alpha);
 
 void func_80044950(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
 
@@ -2831,7 +2832,7 @@ void func_80045014(s_Skeleton* skel);
 void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHdr);
 
 /** Anim func. */
-void func_80045108(s_Skeleton* arg0, s_LmHeader* lmHdr, u8* arg2, s32 arg3);
+void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, u8* arg2, s32 arg3);
 
 /** Anim func. */
 void func_800451B0(s_Skeleton* skel, s_LmHeader* lmHdr, s32* arg2);

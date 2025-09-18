@@ -502,12 +502,12 @@ u32 IpdHeader_LoadStateGet(s_IpdChunk* chunk) // 0x80041B1C
     return StaticModelLoadState_Corrupted;
 }
 
-u32 LmHeader_LoadStateGet(s_GlobalLm* arg0) // 0x80041BA0
+u32 LmHeader_LoadStateGet(s_GlobalLm* globalLm) // 0x80041BA0
 {
     s32 queueState;
     s32 queueStateCpy;
 
-    queueState    = Fs_QueueEntryLoadStatusGet(arg0->queueIdx_8);
+    queueState    = Fs_QueueEntryLoadStatusGet(globalLm->queueIdx_8);
     queueStateCpy = queueState;
 
     if (queueStateCpy == FsQueueEntryLoadStatus_Unloaded)
@@ -519,7 +519,7 @@ u32 LmHeader_LoadStateGet(s_GlobalLm* arg0) // 0x80041BA0
     {
         return StaticModelLoadState_Invalid;
     }
-    else if (arg0->lmHdr_0->isLoaded_2 && LmHeader_IsTextureLoaded(arg0->lmHdr_0))
+    else if (globalLm->lmHdr_0->isLoaded_2 && LmHeader_IsTextureLoaded(globalLm->lmHdr_0))
     {
         return StaticModelLoadState_Loaded;
     }
@@ -542,14 +542,13 @@ void func_80041C24(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize) // 0x
     func_80041E98();
 }
 
-// This function is related to map loading.
-void func_80041CB4(s_GlobalLm* arg0, s_LmHeader* lmHdr) // 0x80041CB4
+void func_80041CB4(s_GlobalLm* globalLm, s_LmHeader* lmHdr) // 0x80041CB4
 {
-    arg0->lmHdr_0 = lmHdr;
+    globalLm->lmHdr_0 = lmHdr;
     func_80041CEC(lmHdr);
 
-    arg0->queueIdx_8 = 0;
-    arg0->fileIdx_4  = NO_VALUE;
+    globalLm->queueIdx_8 = 0;
+    globalLm->fileIdx_4  = NO_VALUE;
 }
 
 void func_80041CEC(s_LmHeader* lmHdr) // 0x80041CEC
@@ -679,12 +678,12 @@ void func_800420C0() // 0x800420C0
 
 void func_800420FC() // 0x800420FC
 {
-    s_GlobalLm* ptr;
+    s_GlobalLm* globalLm;
 
-    ptr = &g_Map.globalLm_138;
+    globalLm = &g_Map.globalLm_138;
 
-    if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
-        ptr->lmHdr_0->isLoaded_2)
+    if (Fs_QueueEntryLoadStatusGet(globalLm->queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
+        globalLm->lmHdr_0->isLoaded_2)
     {
         Lm_MaterialRefCountDec(g_Map.globalLm_138.lmHdr_0);
     }
@@ -694,18 +693,18 @@ void func_800420FC() // 0x800420FC
 
 s_Texture* func_80042178(char* arg0) // 0x80042178
 {
-    s_Texture* texture_8;
+    s_Texture* tex;
 
-    texture_8 = func_8005B4BC(arg0, &g_Map.field_430.field_0);
-    if (texture_8 != NULL)
+    tex = func_8005B4BC(arg0, &g_Map.field_430.field_0);
+    if (tex != NULL)
     {
-        return texture_8;
+        return tex;
     }
 
-    texture_8 = func_8005B4BC(arg0, &g_Map.field_430.field_2C);
-    if (texture_8 != NULL)
+    tex = func_8005B4BC(arg0, &g_Map.field_430.field_2C);
+    if (tex != NULL)
     {
-        return texture_8;
+        return tex;
     }
 
     return NULL;
@@ -872,7 +871,7 @@ s_IpdCollisionData** func_800425D8(s32* collDataIdx) // 0x800425D8
 {
     s_IpdChunk*         ptr;
     s_IpdCollisionData* collData;
-    s_IpdHeader*        ipd;
+    s_IpdHeader*        ipdHdr;
 
     ptr          = g_Map.ipdActive_15C;
     *collDataIdx = 0;
@@ -881,10 +880,10 @@ s_IpdCollisionData** func_800425D8(s32* collDataIdx) // 0x800425D8
     {
         if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            ipd = ptr->ipdHdr_0;
-            if (ipd->isLoaded_1)
+            ipdHdr = ptr->ipdHdr_0;
+            if (ipdHdr->isLoaded_1)
             {
-                collData = IpdHeader_CollisionDataGet(ipd);
+                collData = IpdHeader_CollisionDataGet(ipdHdr);
                 if (collData != NULL)
                 {
                     D_800C1010[(*collDataIdx)++] = collData;
@@ -942,38 +941,39 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
 
 s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX, s32 posZ) // 0x8004287C
 {
-    s_IpdChunk*      chunks[4];
-    s32              sp20[4];
-    s32              collX;
-    s32              zIdx;
-    s32              xIdx;
-    s32              collZ;
-    s32              temp_t0;
-    s32              i;
-    s32              j;
-    s32              k;
-    s32              idx;
-    s_IpdChunk*      curChunk;
-    s_GlobalLm* ptr0;
+    s_IpdChunk* chunks[4];
+    s32         sp20[4];
+    s32         collX;
+    s32         chunkCoordZ;
+    s32         chunkCoordX;
+    s32         collZ;
+    s32         temp_t0;
+    s32         i;
+    s32         j;
+    s32         k;
+    s32         idx;
+    s_IpdChunk* curChunk;
+    s_GlobalLm* globalLm;
 
-    ptr0 = &g_Map.globalLm_138;
+    globalLm = &g_Map.globalLm_138;
 
     // Convert position to geometry space.
     collX = FP_METER_TO_GEO(posX);
     collZ = FP_METER_TO_GEO(posZ);
 
-    if (Fs_QueueEntryLoadStatusGet(ptr0->queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
-        ptr0->lmHdr_0->isLoaded_2 &&
+    if (Fs_QueueEntryLoadStatusGet(globalLm->queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
+        globalLm->lmHdr_0->isLoaded_2 &&
         Lm_ModelFind(arg0, g_Map.globalLm_138.lmHdr_0, arg1))
     {
         return 2;
     }
 
-    // Indices to cells in IPD collision data?
-    xIdx = FLOOR_TO_STEP(collX, FP_METER_GEO(40.0f));
-    zIdx = FLOOR_TO_STEP(collZ, FP_METER_GEO(40.0f));
+    chunkCoordX = FLOOR_TO_STEP(collX, FP_METER_GEO(40.0f));
+    chunkCoordZ = FLOOR_TO_STEP(collZ, FP_METER_GEO(40.0f));
 
-    for (curChunk = g_Map.ipdActive_15C, idx = 0; curChunk < &g_Map.ipdActive_15C[g_Map.ipdActiveSize_158]; curChunk++)
+    for (curChunk = g_Map.ipdActive_15C, idx = 0;
+         curChunk < &g_Map.ipdActive_15C[g_Map.ipdActiveSize_158];
+         curChunk++)
     {
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) < FsQueueEntryLoadStatus_Loaded)
         {
@@ -987,7 +987,7 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
 
         if (!g_Map.hasGlobalPlm)
         {
-            if (curChunk->coordX_8 == xIdx && curChunk->coordZ_A == zIdx)
+            if (curChunk->coordX_8 == chunkCoordX && curChunk->coordZ_A == chunkCoordZ)
             {
                 chunks[idx] = curChunk;
                 idx++;
@@ -996,8 +996,8 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
         }
         else
         {
-            if (curChunk->coordX_8 >= (xIdx - 1) && (xIdx + 1) >= curChunk->coordX_8 &&
-                curChunk->coordZ_A >= (zIdx - 1) && (zIdx + 1) >= curChunk->coordZ_A)
+            if (curChunk->coordX_8 >= (chunkCoordX - 1) && (chunkCoordX + 1) >= curChunk->coordX_8 &&
+                curChunk->coordZ_A >= (chunkCoordZ - 1) && (chunkCoordZ + 1) >= curChunk->coordZ_A)
             {
                 temp_t0 = func_80042E2C(collX, collZ, curChunk->coordX_8, curChunk->coordZ_A);
                 for (i = 0; i < idx; i++)
@@ -1038,20 +1038,20 @@ bool IpdHeader_IsLoaded(s32 ipdIdx) // 0x80042C04
     return IpdHeader_LoadStateGet(&g_Map.ipdActive_15C[ipdIdx]) >= StaticModelLoadState_Loaded;
 }
 
-void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1) // 0x80042C3C
+void func_80042C3C(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1) // 0x80042C3C
 {
     s32         temp_s0;
     s_IpdChunk* curChunk;
 
-    g_Map.field_578 = x1;
-    g_Map.field_57C = z1;
+    g_Map.field_578 = posX1;
+    g_Map.field_57C = posZ1;
 
     if (g_Map.globalLm_138.queueIdx_8 == NO_VALUE) 
     {
         g_Map.globalLm_138.queueIdx_8 = Fs_QueueStartRead(g_Map.globalLm_138.fileIdx_4, g_Map.globalLm_138.lmHdr_0);
     }
 
-    func_80042EBC(&g_Map, x0, z0, x1, z1);
+    func_80042EBC(&g_Map, posX0, posZ0, posX1, posZ1);
 
     if (Fs_QueueEntryLoadStatusGet(g_Map.globalLm_138.queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
         !g_Map.globalLm_138.lmHdr_0->isLoaded_2) 
@@ -1076,9 +1076,9 @@ void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1) // 0x80042C3C
     }
 }
 
-s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, bool hasGlobalPlm) // 0x80042DE8
+q19_12 func_80042DE8(q19_12 posX, q19_12 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, bool hasGlobalPlm) // 0x80042DE8
 {
-    s32 dist;
+    q19_12 dist;
 
     dist = func_80042E2C(FP_METER_TO_GEO(posX), FP_METER_TO_GEO(posZ), fileChunkCoordX, fileChunkCoordZ);
     if (hasGlobalPlm)
@@ -1093,7 +1093,7 @@ s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, 
     return dist;
 }
 
-s32 func_80042E2C(s32 posX, s32 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ) // 0x80042E2C
+s32 func_80042E2C(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ) // 0x80042E2C
 {
     #define IPD_CHUNK_SIZE FP_METER_GEO(40.0f)
 
@@ -1113,50 +1113,50 @@ s32 func_80042E2C(s32 posX, s32 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ) //
     return Vc_VectorMagnitudeCalc(x, 0, z);
 }
 
-s32 func_80042EBC(s_Map* arg0, s32 x1, s32 z1, s32 x2, s32 z2) // 0x80042EBC
+s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1) // 0x80042EBC
 {
-    s32           xChunk;
-    s32           zChunk;
-    s32           ret;
-    s32           xIdx;
-    s32           zIdx;
-    s32           temp_v0;
-    s32           chunkIdx;
-    s32           queueIdx;
-    s32           x;
-    s32           z;
-    s32           var_v1;
-    s_IpdChunk*   chunk;
-    s_IpdHeader*  ipdHdr;
+    s32          chunkCoordX0;
+    s32          chunkCoordZ0;
+    s32          queueIdx;
+    s32          xIdx;
+    s32          zIdx;
+    s32          chunkCoordX1;
+    s32          chunkIdx;
+    s32          curQueueIdx;
+    s32          x;
+    s32          z;
+    s32          chunkCoordZ1;
+    s_IpdChunk*  chunk;
+    s_IpdHeader* ipdHdr;
 
-    ret = NO_VALUE;
-    xChunk = FLOOR_TO_STEP(FP_METER_TO_GEO(x1), FP_METER_GEO(40.0f));
-    zChunk = FLOOR_TO_STEP(FP_METER_TO_GEO(z1), FP_METER_GEO(40.0f));
+    queueIdx = NO_VALUE;
 
-    temp_v0 = FLOOR_TO_STEP(FP_METER_TO_GEO(x2), FP_METER_GEO(40.0f));
-    var_v1  = FLOOR_TO_STEP(FP_METER_TO_GEO(z2), FP_METER_GEO(40.0f));
+    chunkCoordX0 = FLOOR_TO_STEP(FP_METER_TO_GEO(posX0), FP_METER_GEO(40.0f));
+    chunkCoordZ0 = FLOOR_TO_STEP(FP_METER_TO_GEO(posZ0), FP_METER_GEO(40.0f));
+    chunkCoordX1 = FLOOR_TO_STEP(FP_METER_TO_GEO(posX1), FP_METER_GEO(40.0f));
+    chunkCoordZ1 = FLOOR_TO_STEP(FP_METER_TO_GEO(posZ1), FP_METER_GEO(40.0f));
 
-    arg0->field_580 = temp_v0;
-    arg0->field_584 = var_v1;
+    map->field_580 = chunkCoordX1;
+    map->field_584 = chunkCoordZ1;
 
-    func_800431E4(arg0, x1, z1, x2, z2, arg0->hasGlobalPlm);
-    func_800433B8(arg0);
+    func_800431E4(map, posX0, posZ0, posX1, posZ1, map->hasGlobalPlm);
+    func_800433B8(map);
 
     for (z = -1; z <= 1; z++)
     {
         for (x = -1; x <= 1; x++)
         {
-            if (arg0->hasGlobalPlm || (x == 0 && z == 0))
+            if (map->hasGlobalPlm || (x == 0 && z == 0))
             {
-                zIdx = zChunk + z;
-                xIdx = xChunk + x;
+                zIdx = chunkCoordZ0 + z;
+                xIdx = chunkCoordX0 + x;
 
-                chunkIdx = Map_IpdIndexGet(xIdx, zIdx);
+                chunkIdx = Map_IpdIdxGet(xIdx, zIdx);
                 if (chunkIdx != NO_VALUE &&
-                    func_80042DE8(x1, z1, xIdx, zIdx, arg0->hasGlobalPlm) <= FP_METER(0.0f) &&
-                    !Map_IpdPresent(&arg0->ipdActive_15C[0], xIdx, zIdx))
+                    func_80042DE8(posX0, posZ0, xIdx, zIdx, map->hasGlobalPlm) <= FP_METER(0.0f) &&
+                    !Map_IsIpdPresent(&map->ipdActive_15C[0], xIdx, zIdx))
                 {
-                    chunk = func_800435E4(&arg0->ipdActive_15C[0], arg0->hasGlobalPlm);
+                    chunk = func_800435E4(&map->ipdActive_15C[0], map->hasGlobalPlm);
 
                     if (Fs_QueueEntryLoadStatusGet(chunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
                     {
@@ -1167,24 +1167,24 @@ s32 func_80042EBC(s_Map* arg0, s32 x1, s32 z1, s32 x2, s32 z2) // 0x80042EBC
                         }
                     }
 
-                    queueIdx = func_800436D8(chunk, chunkIdx, xIdx, zIdx, x1, z1, x2, z2, arg0->hasGlobalPlm);
-                    if (queueIdx != NO_VALUE)
+                    curQueueIdx = func_800436D8(chunk, chunkIdx, xIdx, zIdx, posX0, posZ0, posX1, posZ1, map->hasGlobalPlm);
+                    if (curQueueIdx != NO_VALUE)
                     {
-                        ret = queueIdx;
+                        queueIdx = curQueueIdx;
                     }
                 }
             }
         }
     }
 
-    return ret;
+    return queueIdx;
 }
 
-void func_800431E4(s_Map* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, bool hasGlobalPlm) // 0x800431E4
+void func_800431E4(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm) // 0x800431E4
 {
     s_IpdChunk* curChunk;
 
-    for (curChunk = arg0->ipdActive_15C; curChunk < &arg0->ipdActive_15C[4]; curChunk++)
+    for (curChunk = map->ipdActive_15C; curChunk < &map->ipdActive_15C[4]; curChunk++)
     {
         if (curChunk->queueIdx_4 == NO_VALUE)
         {
@@ -1193,7 +1193,7 @@ void func_800431E4(s_Map* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, bool has
         }
         else 
         {
-            func_80043338(curChunk, arg1, arg2, arg3, arg4, hasGlobalPlm);
+            func_80043338(curChunk, posX0, posZ0, posX1, posZ1, hasGlobalPlm);
         }
 
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) < FsQueueEntryLoadStatus_Loaded || !curChunk->ipdHdr_0->isLoaded_1)
@@ -1216,17 +1216,17 @@ void func_800431E4(s_Map* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, bool has
     }
 }
 
-void func_80043338(s_IpdChunk* chunk, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool hasGlobalPlm) // 0x80043338
+void func_80043338(s_IpdChunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm) // 0x80043338
 {
     chunk->distance0_C  = func_80042DE8(posX0, posZ0, chunk->coordX_8, chunk->coordZ_A, hasGlobalPlm);
     chunk->distance1_10 = func_80042DE8(posX1, posZ1, chunk->coordX_8, chunk->coordZ_A, hasGlobalPlm);
 }
 
-void func_800433B8(s_Map* arg0) // 0x800433B8
+void func_800433B8(s_Map* map) // 0x800433B8
 {
     s_IpdChunk* curChunk;
 
-    for (curChunk = &arg0->ipdActive_15C[0]; curChunk < &arg0->ipdActive_15C[arg0->ipdActiveSize_158]; curChunk++)
+    for (curChunk = &map->ipdActive_15C[0]; curChunk < &map->ipdActive_15C[map->ipdActiveSize_158]; curChunk++)
     {
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
@@ -1238,34 +1238,34 @@ void func_800433B8(s_Map* arg0) // 0x800433B8
         }
     }
 
-    for (curChunk = &arg0->ipdActive_15C[0]; curChunk < &arg0->ipdActive_15C[arg0->ipdActiveSize_158]; curChunk++)
+    for (curChunk = &map->ipdActive_15C[0]; curChunk < &map->ipdActive_15C[map->ipdActiveSize_158]; curChunk++)
     {
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
             if (curChunk->ipdHdr_0->isLoaded_1 &&
                 (curChunk->distance0_C <= 0 || curChunk->distance1_10 <= 0))
             {
-                func_80043C7C(curChunk->ipdHdr_0, &arg0->field_430.field_0, &arg0->field_430.field_2C, arg0->texFileIdx_134);
+                func_80043C7C(curChunk->ipdHdr_0, &map->field_430.field_0, &map->field_430.field_2C, map->texFileIdx_134);
                 func_80056954(curChunk->ipdHdr_0->lmHdr_4);
             }
         }
     }
 }
 
-s32 Map_IpdIndexGet(s32 gridX, s32 gridZ) // 0x80043554
+s32 Map_IpdIdxGet(s32 gridX, s32 gridZ) // 0x80043554
 {
     // @hack
     return ((s16*)&g_Map.ipdGridCenter_42C[gridZ])[gridX];
 }
 
-bool Map_IpdPresent(s_IpdChunk* chunks, s32 arg1, s32 arg2) // 0x80043578
+bool Map_IsIpdPresent(s_IpdChunk* chunks, s32 chunkCoordX, s32 chunkCoordZ) // 0x80043578
 {
     s32 i;
 
     for (i = 0; i < g_Map.ipdActiveSize_158; i++)
     {
         if (chunks[i].queueIdx_4 != NO_VALUE &&
-            arg1 == chunks[i].coordX_8 && arg2 == chunks[i].coordZ_A)
+            chunkCoordX == chunks[i].coordX_8 && chunkCoordZ == chunks[i].coordZ_A)
         {
             return true;
         }
@@ -1345,7 +1345,7 @@ s_IpdChunk* func_800435E4(s_IpdChunk* chunks, bool hasGlobalPlm)
     return activeChunk;
 }
 
-s32 func_800436D8(s_IpdChunk* chunk, s32 fileIdx, s32 chunkCoordX, s32 chunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool hasGlobalPlm) // 0x800436D8
+s32 func_800436D8(s_IpdChunk* chunk, s32 fileIdx, s32 chunkCoordX, s32 chunkCoordZ, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm) // 0x800436D8
 {
     // Return `NO_VALUE` if no file specified.
     if (fileIdx == NO_VALUE)
@@ -1439,7 +1439,7 @@ bool func_80043830(void) // 0x80043830
     return false;
 }
 
-bool func_8004393C(s32 posX, s32 posZ) // 0x8004393C
+bool func_8004393C(q19_12 posX, q19_12 posZ) // 0x8004393C
 {
     s32 fileChunkCoordX;
     s32 fileChunkCoordZ;
@@ -1489,15 +1489,15 @@ void func_80043A24(GsOT* ot, s32 arg1) // 0x80043A24
     }
 }
 
-bool func_80043B34(s_IpdChunk* chunk, s_Map* arg1)
+bool func_80043B34(s_IpdChunk* chunk, s_Map* map)
 {
-    if (arg1->field_580 == chunk->coordX_8 &&
-        arg1->field_584 == chunk->coordZ_A)
+    if (map->field_580 == chunk->coordX_8 &&
+        map->field_584 == chunk->coordZ_A)
     {
         return true;
     }
 
-    return arg1->hasGlobalPlm != false;
+    return map->hasGlobalPlm != false;
 }
 
 bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHdr) // 0x80043B70
@@ -1675,18 +1675,18 @@ void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHdr, s_IpdModelInfo* i
     }
 }
 
-void func_80044044(s_IpdHeader* ipd, s32 x, s32 z) // 0x80044044
+void func_80044044(s_IpdHeader* ipd, s32 gridX, s32 gridZ) // 0x80044044
 {
-    s32 gridX;
-    s32 gridZ;
+    s32 prevGridX;
+    s32 prevGridZ;
 
-    gridX = ipd->levelGridX_2;
-    gridZ = ipd->levelGridY_3;
+    prevGridX = ipd->levelGridX_2;
+    prevGridZ = ipd->levelGridY_3;
 
-    ipd->levelGridX_2             = x;
-    ipd->levelGridY_3             = z;
-    ipd->collisionData_54.posX_0 += (x - gridX) * 0x2800;
-    ipd->collisionData_54.posZ_4 += (z - gridZ) * 0x2800;
+    ipd->levelGridX_2             = gridX;
+    ipd->levelGridY_3             = gridZ;
+    ipd->collisionData_54.posX_0 += (gridX - prevGridX) * FP_METER_GEO(40.0f);
+    ipd->collisionData_54.posZ_4 += (gridZ - prevGridZ) * FP_METER_GEO(40.0f);
 }
 
 void func_80044090(s_IpdHeader* ipdHdr, s32 arg1, s32 arg2, GsOT* ot, void* arg4) // 0x80044090
@@ -1765,7 +1765,7 @@ void func_80044090(s_IpdHeader* ipdHdr, s32 arg1, s32 arg2, GsOT* ot, void* arg4
     }
 }
 
-bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, s32 x, s32 z) // 0x80044420
+bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, q23_8 x, q23_8 z) // 0x80044420
 {
     GsCOORDINATE2 coord;
     MATRIX        mat;
@@ -1838,7 +1838,7 @@ void Anim_BoneInit(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords) // 0x80044
     }
 }
 
-void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyframe0, s32 keyframe1, s32 alpha) // 0x800446D8
+void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyframe0, s32 keyframe1, q19_12 alpha) // 0x800446D8
 {
     s32            boneCount;
     bool           isPlayer;
