@@ -67,7 +67,7 @@
 #define FP_MULTIPLY(a, b, shift) \
     (((a) * (b)) >> (shift))
 
-/** @brief Multiplies two integers in a fixed-point Q format using 64-bit intermediates for higher precision.
+/** @brief Multiplies two integers in a fixed-point Q format, using 64-bit intermediates for higher precision.
  *
  * @param a First fixed-point factor.
  * @param b Second fixed-point factor.
@@ -96,7 +96,7 @@
  * @return Precise product of `a` and `b` converted from fixed-point.
  */
 #define FP_MULTIPLY_FLOAT_PRECISE(aInt, bFlt, shift) \
-    FP_MULTIPLY((s64)(aInt), (s64)FP_FLOAT_TO(bFlt, shift), (shift))
+    FP_MULTIPLY((s64)(aInt), (s64)FP_FLOAT_TO(bFlt, shift), shift)
 
 /** @brief Computes the square 2D distance between two positions in Q19.12,
  * using low-precision Q21.8 intermediates to avoid overflow.

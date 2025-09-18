@@ -2872,12 +2872,15 @@ INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80055028", D_80028B34);
 
 s32 func_80069BA8(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara, s32 arg4) // 0x80069BA8
 {
-    s_func_800699F8 sp10;
+    #define STEP_COUNT 9
+    #define ANGLE_STEP FP_ANGLE(370.0f / STEP_COUNT)
+
+    s_func_800699F8 coll;
     s32             sp20;
     s32             posY;
     s32             var_s2;
     s32             i;
-    s32             var_s4;
+    s32             validPosCount;
     s8              temp_v0;
     s32             var_s6;
 
@@ -2890,7 +2893,7 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara, s32 arg
         }
     }
 
-    temp_v0 = chara->model_0.charaId_0 - 1;
+    temp_v0 = chara->model_0.charaId_0 - 1; // TODO: Why `- 1`??
     switch (temp_v0)
     {
         case 0:
@@ -2905,6 +2908,7 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara, s32 arg
         case 15:
         case 17:
             posY = chara->position_18.vy - FP_METER(0.5f);
+
             switch (arg0->field_14)
             {
                 case 12:
@@ -2916,33 +2920,34 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara, s32 arg
                     break;
             }
 
-            var_s4 = 0;
+            validPosCount = 0;
 
             if (var_s2 == 0)
             {
                 break;
             }
 
-            for (i = 0, var_s6 = 12; i < 9; i++)
+            // Run through steps of something. Maybe 9 points around character?
+            for (i = 0, var_s6 = 12; i < STEP_COUNT; i++)
             {
-                // TODO: Maybe `FP_ANGLE(370.0f / 9.0f)`?
-                func_800699F8(&sp10, chara->position_18.vx + FP_MULTIPLY(Math_Sin(i * FP_ANGLE(41.1f)), FP_METER(0.2f), Q12_SHIFT),
-                              chara->position_18.vz + FP_MULTIPLY(Math_Cos(i * FP_ANGLE(41.1f)), FP_METER(0.2f), Q12_SHIFT));
+                func_800699F8(&coll,
+                              chara->position_18.vx + FP_MULTIPLY(Math_Sin(i * ANGLE_STEP), FP_METER(0.2f), Q12_SHIFT),
+                              chara->position_18.vz + FP_MULTIPLY(Math_Cos(i * ANGLE_STEP), FP_METER(0.2f), Q12_SHIFT));
 
                 switch (var_s2)
                 {
                     case 1:
-                        if (sp10.groundHeight_0 < posY)
+                        if (coll.groundHeight_0 < posY)
                         {
-                            var_s4++;
+                            validPosCount++;
                         }
                         break;
 
                     case 2:
-                        if (sp10.field_8 != 12)
+                        if (coll.field_8 != 12)
                         {
-                            var_s6 = sp10.field_8;
-                            sp20   = sp10.groundHeight_0;
+                            var_s6 = coll.field_8;
+                            sp20   = coll.groundHeight_0;
                         }
                         break;
                 }
@@ -2951,7 +2956,7 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara, s32 arg
             switch (var_s2)
             {
                 case 1:
-                    if (var_s4 < 3)
+                    if (validPosCount < 3)
                     {
                         arg0->field_C = chara->position_18.vy;
                     }
@@ -2976,25 +2981,29 @@ static const u8 unk_rdata[] = { 0, 66, 5, 128, 0, 0, 0, 0 };
 void func_80069DF0(s_800C4590* arg0, VECTOR3* pos, s32 arg2, s32 arg3) // 0x80069DF0
 {
     #define GROUND_HEIGHT_COUNT_MAX 16
+    #define ANGLE_STEP              FP_ANGLE(360.0f / GROUND_HEIGHT_COUNT_MAX)
 
     s32             groundHeights[GROUND_HEIGHT_COUNT_MAX];
     s_func_800699F8 coll;
-    s32             angle;
+    q19_12          angle;
     s32             var_a0;
-    s32             groundHeight;
+    q19_12          groundHeight;
     s32             var_s0;
     s32             i;
-    s32             groundHeightMax;
-    s32             groundHeightMin;
+    q19_12          groundHeightMax;
+    q19_12          groundHeightMin;
     s32             var_s5;
 
     groundHeightMin = FP_METER(-30.0f);
     groundHeightMax = FP_METER(30.0f);
     var_s5 = 0;
 
+    // Collect ground heights around position?
     for (i = 0; i < ARRAY_SIZE(groundHeights); i++)
     {
-        func_800699F8(&coll, pos->vx + Math_Sin((arg3 & 0xF) + (i * FP_ANGLE(22.5f))), pos->vz + Math_Cos((arg3 & 0xF) + (i * FP_ANGLE(22.5f))));
+        func_800699F8(&coll,
+                      pos->vx + Math_Sin((arg3 & 0xF) + (i * ANGLE_STEP)),
+                      pos->vz + Math_Cos((arg3 & 0xF) + (i * ANGLE_STEP)));
         groundHeights[i] = coll.groundHeight_0;
 
         if (groundHeightMin < coll.groundHeight_0)
