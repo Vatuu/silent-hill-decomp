@@ -46,7 +46,7 @@ void (*g_LoadScreenFuncs[])() =
     NULL,
     Gfx_LoadingScreen_PlayerRun,
     Gfx_LoadingScreen_BackgroundTexture,
-    Gfx_LoadingScreen_StageString
+    Gfx_LoadingScreen_MapString
 };
 
 s_AreaLoadParams g_MapAreaLoadParams[] = 

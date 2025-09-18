@@ -130,4 +130,4 @@ void func_800CE8B8(void) // 0x800CE8B8
 
 INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CE934);
 
-void Gfx_LoadingScreen_StageString(void) {}
+void Gfx_LoadingScreen_MapString(void) {}

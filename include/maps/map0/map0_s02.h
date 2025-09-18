@@ -32,7 +32,7 @@ void func_800CE884(s32 arg0);
 void func_800CE8B8(void);
 
 // TODO: Make shared function?
-void Gfx_LoadingScreen_StageString();
+void Gfx_LoadingScreen_MapString();
 
 /** @brief Handles a first aid kit, health drink, or handgun bullets pickup event. */
 void MapEvent_CommonItemTake(void);
