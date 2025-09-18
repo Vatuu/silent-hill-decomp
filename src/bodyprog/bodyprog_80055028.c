@@ -683,7 +683,7 @@ void func_80056774(s_LmHeader* lmHeader, s_800C1450_0* arg1, bool (*func)(s_Mate
     {
         if (mats->field_C == 0 && mats->tex_8 == NULL && (func == NULL || func(mats)))
         {
-            mats->tex_8 = func_8005B1FC(mats, arg1, FS_BUFFER_9, arg3, arg4);
+            mats->tex_8 = Tex_Get(mats, arg1, FS_BUFFER_9, arg3, arg4);
             if (mats->tex_8 != NULL)
             {
                 func_8005660C(mats, &mats->tex_8->imageDesc_0, arg4);
@@ -1615,7 +1615,7 @@ u8 func_8005AA08(s_MeshHeader* meshHeader, s32 arg1, s_GteScratchData2* scratchD
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005AC50); // 0x8005AC50
 
-void func_8005B1A0(s_Texture* tex_8, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY) // 0x8005B1A0
+void Tex_Init(s_Texture* tex_8, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY) // 0x8005B1A0
 {
     tex_8->imageDesc_0.tPage[0] = tPage0;
     tex_8->imageDesc_0.tPage[1] = tPage1;
@@ -1630,7 +1630,7 @@ void func_8005B1A0(s_Texture* tex_8, char* texName, u8 tPage0, u8 tPage1, s32 u,
     tex_8->queueIdx_10 = NO_VALUE;
 }
 
-s_Texture* func_8005B1FC(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, void* arg3, s32 arg4)
+s_Texture* Tex_Get(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, void* arg3, s32 arg4)
 {
     s8            fileName[12];
     s8            debugStr[12];
@@ -1689,7 +1689,7 @@ s_Texture* func_8005B1FC(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, v
     return found;
 }
 
-void Mat_RefCountReset(s_Texture* tex_8) // 0x8005B370
+void Tex_RefCountReset(s_Texture* tex_8) // 0x8005B370
 {
     tex_8->refCount_14 = 0;
 }
@@ -1701,7 +1701,7 @@ void func_8005B378(s_Texture* tex_8, char* arg1) // 0x8005B378
     StringCopy(tex_8->textureName_8.str, arg1);
 }
 
-void func_8005B3A4(s_Texture* tex_8) // 0x8005B3A4
+void Tex_Init0(s_Texture* tex_8) // 0x8005B3A4
 {
     tex_8->textureName_8.u32[1] = 0;
     tex_8->textureName_8.u32[0] = 0;

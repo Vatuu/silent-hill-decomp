@@ -3114,13 +3114,13 @@ void func_8005A900(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scrat
 u8 func_8005AA08(s_MeshHeader* meshHeader, s32 arg1, s_GteScratchData2* scratchData);
 
 /** Related to enviroment textures. */
-void func_8005B1A0(s_Texture* tex_8, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY);
+void Tex_Init(s_Texture* tex_8, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY);
 
-void Mat_RefCountReset(s_Texture* tex_8);
+void Tex_RefCountReset(s_Texture* tex_8);
 
 void func_8005B378(s_Texture* tex_8, char* arg1);
 
-void func_8005B3A4(s_Texture* tex_8);
+void Tex_Init0(s_Texture* tex_8);
 
 void func_8005B3BC(char* filename, s_Material* material);
 
@@ -3178,7 +3178,7 @@ void func_80057658(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scrat
 
 void func_80057A3C(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
 
-s_Texture* func_8005B1FC(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, void* arg3, s32 arg4);
+s_Texture* Tex_Get(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, void* arg3, s32 arg4);
 
 void func_8005B55C(GsCOORDINATE2* coord);
 
