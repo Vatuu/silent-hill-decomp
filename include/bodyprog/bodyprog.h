@@ -1078,7 +1078,7 @@ typedef struct
     u_Filename modelName_0;
     s8   field_8;
 /* Set to 2 when found in D_800C1020.field_138.lmHeader_0.
- * Set to 3-6 if found in D_800C1020.ipdTable_15C[i] (i + 3).
+ * Set to 3-6 if found in D_800C1020.ipdActive_15C[i] (i + 3).
  */
     s8   lmIndex_9;
 } s_800BCE18_2BEC_0_10;
@@ -1178,8 +1178,8 @@ typedef struct
     s32                field_14C;
     s_IpdHeader*       field_150;
     s32                field_154;
-    s32                ipdTableSize_158;
-    s_IpdChunk         ipdTable_15C[4]; // Temp name. Uses either 2 or 4 fields depending map type.
+    s32                ipdActiveSize_158;
+    s_IpdChunk         ipdActive_15C[4];
     s_IpdColumn        ipdGrid_1CC[18];
     s8                 unk_40C[32];     // Could be one extra row in table above.
     s_IpdColumn*       ipdGridCenter_42C;
