@@ -59,7 +59,7 @@ extern s_EventThing g_EventThing_PocketRadio; // 0x800E2530
 
 extern s16 D_800E2560;
 
-extern s_800BCE18_2BEC_0 D_800E2570[];
+extern s_800BCE18_2BEC_0 g_ModelsCommon[];
 
 extern u16 g_SoundCmds[];
 
