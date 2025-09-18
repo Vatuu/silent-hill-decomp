@@ -613,14 +613,12 @@ void func_80056504(s_LmHeader* lmHeader, char* newStr, s_FsImageDesc* image, s32
 bool func_80056558(s_LmHeader* lmHeader, char* fileName, s_FsImageDesc* image, s32 arg3) // 0x80056558
 {
     s_Material* mat;
-    u32*        matName;
 
     for (mat = &lmHeader->materials_4[0];
          mat < &lmHeader->materials_4[lmHeader->materialCount_3];
          mat++)
     {
-        matName = mat->materialName_0.u32;
-        if (matName[0] == *(u32*)&fileName[0] && matName[1] == *(u32*)&fileName[4])
+        if (!cmp_filename(&mat->materialName_0, fileName))
         {
             mat->field_C = 1;
             func_8005660C(mat, image, arg3);
@@ -859,7 +857,7 @@ bool Lm_ModelFind(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BEC
     {
         for (i = 0, modelHeader = &lmHeader->modelHeaders_C[i]; i < modelHeaderCount; i++, modelHeader++)
         {
-            if (!COMPARE_STRINGS(modelHeader->modelName_0, sp10))
+            if (!COMPARE_STRINGS(&modelHeader->modelName_0, &sp10))
             {
                 result                   = true;
                 arg0->field_0.modelIdx_C = i;
@@ -1267,7 +1265,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80057B7C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005801C); // 0x8005801C
 
-void func_80059D50(s32 arg0, s_800BCE18_2BEC_0* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4) // 0x80059D50
+void func_80059D50(s32 arg0, s_800BCE18_2BEC_0_0* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4) // 0x80059D50
 {
     s_GteScratchData* scratchData;
     s_MeshHeader*     meshHeader;
@@ -1275,7 +1273,7 @@ void func_80059D50(s32 arg0, s_800BCE18_2BEC_0* arg1, MATRIX* mat, void* arg3, G
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    modelHeader = arg1->field_0.modelHdr_8;
+    modelHeader = arg1->modelHdr_8;
 
     for (meshHeader = &modelHeader->meshHeaders_C[0]; meshHeader < &modelHeader->meshHeaders_C[modelHeader->meshCount_8]; meshHeader++)
     {
@@ -1650,7 +1648,7 @@ s_Material_8* func_8005B1FC(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9
     for (i = 0; i < arg1->count_0; i++)
     {
         tex = arg1->entries_4[i];
-        if (!COMPARE_STRINGS(mat->materialName_0, tex->textureName_8))
+        if (!cmp_filename(mat->materialName_0, tex->textureName_8))
         {
             mat->field_8 = tex;
             tex->field_14++;
@@ -1774,9 +1772,7 @@ s_Material_8* func_8005B4BC(char* str, s_800C1450_0* arg1) // 0x8005B4BC
     {
         material_8 = arg1->entries_4[i];
 
-        // Fast string comparison.
-        if (material_8->queueIdx_10 != NO_VALUE &&
-            *(u32*)&prevStr[0] == material_8->textureName_8.u32[0] && *(u32*)&prevStr[4] == material_8->textureName_8.u32[1])
+        if (material_8->queueIdx_10 != NO_VALUE && !cmp_filename(prevStr, &material_8->textureName_8))
         {
             return material_8;
         }
@@ -2290,7 +2286,7 @@ void func_8005DD44(s32 sfx, VECTOR3* pos, s32 vol, s8 pitch) // 0x8005DD44
         volCpy = FP_VOLUME(1.0f);
     }
 
-    func_80046620(sfx & 0xFFFF, balance, ~volCpy & 0xFF, pitch);
+    func_80046620(sfx, balance, ~volCpy, pitch);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005DE0C); // 0x8005DE0C
@@ -2747,7 +2743,35 @@ void func_80069844(s32 arg0) // 0x80069844
     D_800C4478.field_0 = (D_800C4478.field_0 & ~arg0) | (1 << 0);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80069860); // 0x80069860
+void func_80069860(s32 arg0, s32 arg1, s_func_8006F8FC* arg2) // 0x80069860
+{
+    s_func_8006F8FC* ptr;
+    q19_12           minX;
+    q19_12           maxX;
+    q19_12           minZ;
+    q19_12           maxZ;
+
+    D_800C4478.field_2 = 0;
+
+    for (ptr = arg2; !(ptr->field_0_0 & 1); ptr++)
+    {
+        minX = FP_TO(ptr->field_0_1, Q12_SHIFT);
+        maxX = FP_TO(ptr->field_0_1 + ptr->field_0_21, Q12_SHIFT);
+        minZ = FP_TO(ptr->field_0_11, Q12_SHIFT);
+        maxZ = FP_TO(ptr->field_0_11 + ptr->field_0_25, Q12_SHIFT);
+
+        minX -= 0x10000;
+        maxX += 0x10000;
+        minZ -= 0x10000;
+        maxZ += 0x10000;
+
+        if (arg0 >= minX && maxX >= arg0 && arg1 >= minZ && maxZ >= arg1)
+        {
+            D_800C4478.field_4[D_800C4478.field_2] = ptr;
+            D_800C4478.field_2++;
+        }
+    }
+}
 
 void IpdCollData_FixOffsets(s_IpdCollisionData* collData) // 0x8006993C
 {
@@ -2846,9 +2870,166 @@ INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80055028", D_80028B2C);
 
 INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80055028", D_80028B34);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80069BA8); // 0x80069BA8
+s32 func_80069BA8(s_800C4590* arg0, VECTOR3* arg2, s_SubCharacter* arg3, s32 arg4) // 0x80069BA8
+{
+    s_func_800699F8 sp10;
+    s32             sp20;
+    s32             temp_s7;
+    s32             var_s2;
+    s32             i;
+    s32             var_s4;
+    s8              temp_v0;
+    s32             var_s6;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80069DF0); // 0x80069DF0
+    if (arg4 == -1)
+    {
+        arg4 = 1;
+        if (arg3 == &g_SysWork.player_4C && arg3->health_B0 > 0)
+        {
+            func_80069DF0(arg0, &arg3->position_18, arg3->position_18.vy, arg3->rotation_24.vy);
+        }
+    }
+
+    temp_v0 = arg3->model_0.charaId_0 - 1;
+    switch (temp_v0)
+    {
+        case 0:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+        case 10:
+        case 11:
+        case 15:
+        case 17:
+
+            temp_s7 = arg3->position_18.vy - 0x800;
+
+            switch (arg0->field_14)
+            {
+                case 12:
+                    var_s2 = 2;
+                    break;
+
+                default:
+                    var_s2 = arg0->field_C < temp_s7;
+                    break;
+            }
+
+            var_s4 = 0;
+
+            if (var_s2 == 0)
+            {
+                break;
+            }
+
+            for (i = 0, var_s6 = 12; i < 9; i++)
+            {
+                func_800699F8(&sp10, arg3->position_18.vx + FP_MULTIPLY(Math_Sin(i * 0x1D3), 0x333, Q12_SHIFT),
+                              arg3->position_18.vz + FP_MULTIPLY(Math_Cos(i * 0x1D3), 0x333, Q12_SHIFT));
+
+                switch (var_s2)
+                {
+                    case 1:
+                        if (sp10.groundHeight_0 < temp_s7)
+                        {
+                            var_s4 += 1;
+                        }
+                        break;
+
+                    case 2:
+                        if (sp10.field_8 != 12)
+                        {
+                            var_s6 = sp10.field_8;
+                            sp20   = sp10.groundHeight_0;
+                        }
+                        break;
+                }
+            }
+
+            switch (var_s2)
+            {
+                case 1:
+                    if (var_s4 < 3)
+                    {
+                        arg0->field_C = arg3->position_18.vy;
+                    }
+                    break;
+
+                case 2:
+                    if (var_s6 != 12)
+                    {
+                        arg0->field_C  = sp20;
+                        arg0->field_14 = 12;
+                    }
+                    break;
+            }
+            break;
+    }
+
+    return arg4;
+}
+
+static const u8 unk_rdata[] = { 0x00, 0x42, 0x05, 0x80, 0x00, 0x00, 0x00, 0x00 };
+
+void func_80069DF0(s_800C4590* arg0, VECTOR3* arg1, s32 arg2, s32 arg3) // 0x80069DF0
+{
+    s32             sp10[16];
+    s_func_800699F8 sp50;
+    s32             temp_s0_2;
+    s32             var_a0;
+    s32             var_a1;
+    s32             var_s0;
+    s32             i;
+    s32             var_s3;
+    s32             var_s4;
+    s32             var_s5;
+
+    var_s4 = -0x1E000;
+    var_s3 = 0x1E000;
+    var_s5 = 0;
+
+    for (i = 0; i < 16; i++)
+    {
+        func_800699F8(&sp50, arg1->vx + Math_Sin((arg3 & 0xF) + i * 0x100), arg1->vz + Math_Cos((arg3 & 0xF) + i * 0x100));
+        sp10[i] = sp50.groundHeight_0;
+
+        if (var_s4 < sp50.groundHeight_0)
+        {
+            var_s4 = sp50.groundHeight_0;
+            var_s5 = i;
+        }
+
+        if (sp50.groundHeight_0 < var_s3)
+        {
+            var_s3 = sp50.groundHeight_0;
+        }
+    }
+
+    var_a1 = (var_s4 + var_s3) >> 1;
+
+    if (var_a1 < arg2 - 0x199)
+    {
+        var_a1 = arg2 - 0x199;
+    }
+
+    for (i = var_s5 + 1, var_a0 = var_s5; i < (var_s5 + 16) && var_a1 < sp10[i & 0xF]; i++)
+    {
+        var_a0 = i;
+    }
+
+    for (i = var_s5 - 1, var_s0 = var_s5; i < (var_s5 - 16) && var_a1 < sp10[i & 0xF]; i--)
+    {
+        var_s0 = i;
+    }
+
+    temp_s0_2 = ((var_s0 + var_a0) << 8) >> 1;
+
+    arg0->field_0.vx = FP_MULTIPLY_PRECISE(Math_Sin(temp_s0_2), 0x100, Q12_SHIFT);
+    arg0->field_0.vz = FP_MULTIPLY_PRECISE(Math_Cos(temp_s0_2), 0x100, Q12_SHIFT);
+}
 
 s32 func_80069FFC(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara) // 0x80069FFC
 {
@@ -2878,10 +3059,10 @@ s32 func_80069FFC(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara) // 0x8
 
     switch (chara->model_0.charaId_0)
     {
-        case 1:
-        case 4:
-        case 5:
-        case 12:
+        case Chara_Harry:
+        case Chara_Groaner:
+        case Chara_Wormhead:
+        case Chara_Romper:
             var_s1 = 1;
             break;
 
@@ -2910,7 +3091,7 @@ s_SubCharacter** func_8006A1A4(s32* arg0, s_SubCharacter* chara, s32 arg2) // 0x
     s_SubCharacter* otherChara;
 
     if (chara != NULL &&
-        (chara->model_0.charaId_0 == 0 || chara->field_E1_0 == 0 || (chara->field_E1_0 == 1 && arg2 == 1)))
+        (chara->model_0.charaId_0 == Chara_None || chara->field_E1_0 == 0 || (chara->field_E1_0 == 1 && arg2 == 1)))
     {
         *arg0 = 0;
         return &D_800C4458;
@@ -2921,7 +3102,7 @@ s_SubCharacter** func_8006A1A4(s32* arg0, s_SubCharacter* chara, s32 arg2) // 0x
 
     for (otherChara = &g_SysWork.npcs_1A0[0]; otherChara < &g_SysWork.npcs_1A0[NPC_COUNT_MAX]; otherChara++)
     {
-        if (otherChara->model_0.charaId_0 != 0)
+        if (otherChara->model_0.charaId_0 != Chara_None)
         {
             if (otherChara->field_E1_0 != 0 &&
                 (otherChara->field_E1_0 != 1 || arg2 != 1) &&
@@ -2937,7 +3118,7 @@ s_SubCharacter** func_8006A1A4(s32* arg0, s_SubCharacter* chara, s32 arg2) // 0x
     }
 
     otherChara = &g_SysWork.player_4C.chara_0;
-    if (otherChara->model_0.charaId_0 != 0)
+    if (otherChara->model_0.charaId_0 != Chara_None)
     {
         if (otherChara->field_E1_0 != 0 &&
             (otherChara->field_E1_0 != 1 || arg2 != 1) &&
@@ -4451,13 +4632,12 @@ void func_8006CF18(s_func_8006CC44* arg0, s_func_8006CF18* arg1, s32 arg2) // 0x
             var_a1 -= 15;
         }
 
-        arg0->field_98.field_0     = var_s2->field_0 >> 4;
-        arg0->field_9C.field_0     = var_s2->field_8 >> 4;
-        arg0->field_A0.s_1.field_0 = (var_s2->field_E + var_s2->field_4) >> 4;
+        arg0->field_98.field_0 = var_s2->position_0.vx >> 4;
+        arg0->field_9C.field_0 = var_s2->position_0.vz >> 4;
 
-        arg0->field_A0.s_1.field_2 = (var_s2->field_C + var_s2->field_4) >> 4;
+        arg0->field_A0.s_1.field_0 = (var_s2->field_E + var_s2->position_0.vy) >> 4;
+        arg0->field_A0.s_1.field_2 = (var_s2->field_C + var_s2->position_0.vy) >> 4;
         arg0->field_A0.s_1.field_4 = var_a1;
-
         arg0->field_A0.s_1.field_6 = var_s2->field_12;
         arg0->field_A0.s_1.field_8 = &var_s2->field_13;
 

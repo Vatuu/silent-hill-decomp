@@ -1385,29 +1385,32 @@ void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId) // 0x8004EC7C
     Gfx_Primitive2dTextureSet(0, 0, 7, 1);
 }
 
-bool func_8004EE94(u8 arg0, u8 arg1) // 0x8004EE94
+bool func_8004EE94(u8 itemId, u8 arg1) // 0x8004EE94
 {
     s32 i;
 
     for (i = 0; i < g_SavegamePtr->inventorySlotCount_AB; i++)
     {
-        if (arg0 == g_SavegamePtr->items_0[i].id_0)
+        if (itemId != g_SavegamePtr->items_0[i].id_0)
         {
-            if (arg1 != 0)
-            {
-                if (arg1 == 1)
-                {
-                    g_SavegamePtr->items_0[i].count_1--;
-                    if (!(g_SavegamePtr->items_0[i].count_1 & 0xFF))
-                    {
-                        g_SavegamePtr->items_0[i].id_0       = 0xFF;
-                        g_SavegamePtr->inventorySlotCount_AB = func_8004F190(g_SavegamePtr);
-                    }
-                }
-            }
-
-            return true;
+            continue;
         }
+
+        switch (arg1)
+        {
+            case 0:
+                break;
+            case 1:
+                g_SavegamePtr->items_0[i].count_1--;
+                if (g_SavegamePtr->items_0[i].count_1 == 0)
+                {
+                    g_SavegamePtr->items_0[i].id_0       = 0xFF;
+                    g_SavegamePtr->inventorySlotCount_AB = func_8004F190(g_SavegamePtr);
+                }
+                break;
+        }
+
+        return true;
     }
 
     return false;

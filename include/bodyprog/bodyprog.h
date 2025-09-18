@@ -35,7 +35,9 @@
  * @return `true` if the strings aren't equal, `false` otherwise.
  */
 #define COMPARE_STRINGS(a, b) \
-    (((a).u32[0] != (b).u32[0]) || ((a).u32[1] != (b).u32[1]))
+    (((u_Filename*)(a))->u32[0] != ((u_Filename*)(b))->u32[0] || \
+     ((u_Filename*)(a))->u32[1] != ((u_Filename*)(b))->u32[1])
+
 
 // ======
 // ENUMS
@@ -3091,7 +3093,7 @@ void func_80056244(s_LmHeader* lmHeader, bool flag);
 s32 func_80056348(bool (*arg0)(s_Material* mat), s_LmHeader* lmHeader);
 
 /** TODO: Unknown `arg3` type. */
-void func_80059D50(s32 arg0, s_800BCE18_2BEC_0* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4);
+void func_80059D50(s32 arg0, s_800BCE18_2BEC_0_0* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4);
 
 /** TODO: Unknown `arg2` type. */
 void func_8005A21C(s_800BCE18_2BEC_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
@@ -3537,6 +3539,8 @@ void func_8006982C(u16 arg0);
 
 void func_80069844(s32 arg0);
 
+void func_80069860(s32 arg0, s32 arg1, s_func_8006F8FC* arg2);
+
 void IpdCollData_FixOffsets(s_IpdCollisionData* collData);
 
 void func_80069994(s_IpdCollisionData* collData);
@@ -3547,6 +3551,10 @@ void func_800699E4(s_IpdCollisionData* collData);
 void func_800699F8(s_func_800699F8* coll, s32 posX, s32 posZ);
 
 s32 func_80069B24(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara);
+
+s32 func_80069BA8(s_800C4590* arg0, VECTOR3* arg2, s_SubCharacter* arg3, s32 arg4);
+
+void func_80069DF0(s_800C4590* arg0, VECTOR3* arg1, s32 arg2, s32 arg3);
 
 s32 func_80069FFC(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara);
 

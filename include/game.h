@@ -1049,9 +1049,7 @@ STATIC_ASSERT_SIZEOF(s_800D5710, 0x34);
 
 typedef struct
 {
-    s32 field_0;
-    s32 field_4;
-    s32 field_8;
+    VECTOR3 position_0;
     s16 field_C;
     s16 field_E;
     s16 field_10;
