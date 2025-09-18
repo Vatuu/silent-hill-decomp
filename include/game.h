@@ -1050,11 +1050,11 @@ STATIC_ASSERT_SIZEOF(s_800D5710, 0x34);
 typedef struct
 {
     VECTOR3 position_0;
-    s16 field_C;
-    s16 field_E;
-    s16 field_10;
-    s8  field_12;
-    u8  field_13;
+    s16     field_C;
+    s16     field_E;
+    s16     field_10;
+    s8      field_12;
+    u8      field_13;
 } s_func_8006CF18;
 
 // TODO: Re-offset `s_SubCharaPropertiesPlayer` / `s_SubCharaPropertiesNpc`.
