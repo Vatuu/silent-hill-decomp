@@ -1744,7 +1744,7 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
     watch_tgt_pos->vz = w_p->chara_pos_114.vz + FP_MULTIPLY(use_dist, Math_Cos(w_p->chara_eye_ang_y_144), Q12_SHIFT);
 }
 
-void vcSetWatchTgtXzPos(VECTOR3* watch_pos, VECTOR3* center_pos, VECTOR3* cam_pos, s32 tgt_chara2watch_cir_dist, s32 tgt_watch_cir_r, s16 watch_cir_ang_y) // 0x800834A8
+void vcSetWatchTgtXzPos(VECTOR3* watch_pos, VECTOR3* center_pos, VECTOR3* cam_pos, q19_12 tgt_chara2watch_cir_dist, q19_12 tgt_watch_cir_r, q3_12 watch_cir_ang_y) // 0x800834A8
 {
     s16 cam2chr_ang;
     s32 chr2watch_x;
