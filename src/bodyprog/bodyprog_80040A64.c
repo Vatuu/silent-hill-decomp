@@ -1151,10 +1151,10 @@ s32 func_80042EBC(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0
                 temp_s3 = sp2C + i;
                 temp_s1 = sp28 + j;
 
-                temp_v0_2 = func_80043554(temp_s1, temp_s3);
+                temp_v0_2 = Map_IpdIndexGet(temp_s1, temp_s3);
                 if (temp_v0_2 != NO_VALUE &&
                     func_80042DE8(arg1, arg2, temp_s1, temp_s3, arg0->hasGlobalPlm) <= FP_METER(0.0f) &&
-                    !func_80043578(&arg0->ipdActive_15C[0], temp_s1, temp_s3))
+                    !Map_IpdPresent(&arg0->ipdActive_15C[0], temp_s1, temp_s3))
                 {
                     chunk = func_800435E4(&arg0->ipdActive_15C[0], arg0->hasGlobalPlm);
 
@@ -1252,13 +1252,13 @@ void func_800433B8(s_800C1020* arg0) // 0x800433B8
     }
 }
 
-s32 func_80043554(s32 gridX, s32 gridZ) // 0x80043554
+s32 Map_IpdIndexGet(s32 gridX, s32 gridZ) // 0x80043554
 {
     // @hack
     return ((s16*)&D_800C1020.ipdGridCenter_42C[gridZ])[gridX];
 }
 
-bool func_80043578(s_IpdChunk* chunks, s32 arg1, s32 arg2) // 0x80043578
+bool Map_IpdPresent(s_IpdChunk* chunks, s32 arg1, s32 arg2) // 0x80043578
 {
     s32 i;
 

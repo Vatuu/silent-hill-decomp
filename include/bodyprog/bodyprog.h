@@ -2731,9 +2731,9 @@ void func_800433B8(s_800C1020* arg0);
 void func_800433B8(s_800C1020* arg0);
 
 /** Args are X and Z? */
-s32 func_80043554(s32 gridX, s32 gridZ);
+s32 Map_IpdIndexGet(s32 gridX, s32 gridZ);
 
-bool func_80043578(s_IpdChunk* chunks, s32 arg1, s32 arg2);
+bool Map_IpdPresent(s_IpdChunk* chunks, s32 arg1, s32 arg2);
 
 s_IpdChunk* func_800435E4(s_IpdChunk* chunks, bool hasGlobalPlm);
 
