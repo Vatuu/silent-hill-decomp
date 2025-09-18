@@ -527,10 +527,10 @@ u32 LmHeader_LoadStateGet(s_func_80041CB4* arg0) // 0x80041BA0
     return StaticModelLoadState_Corrupted;
 }
 
-void func_80041C24(s_LmHeader* lmHeader, s32 arg1, s32 arg2) // 0x80041C24
+void func_80041C24(s_LmHeader* lmHdr, s32 arg1, s32 arg2) // 0x80041C24
 {
     bzero(&D_800C1020, sizeof(s_800C1020));
-    func_80041CB4(&D_800C1020.field_138, lmHeader);
+    func_80041CB4(&D_800C1020.field_138, lmHdr);
 
     D_800C1020.field_150 = arg1;
     D_800C1020.field_154 = arg2;
@@ -543,22 +543,22 @@ void func_80041C24(s_LmHeader* lmHeader, s32 arg1, s32 arg2) // 0x80041C24
 }
 
 // This function is related to map loading.
-void func_80041CB4(s_func_80041CB4* arg0, s_LmHeader* lmHeader) // 0x80041CB4
+void func_80041CB4(s_func_80041CB4* arg0, s_LmHeader* lmHdr) // 0x80041CB4
 {
-    arg0->lmHdr_0 = lmHeader;
-    func_80041CEC(lmHeader);
+    arg0->lmHdr_0 = lmHdr;
+    func_80041CEC(lmHdr);
 
     arg0->queueIdx_8 = 0;
     arg0->fileIdx_4  = NO_VALUE;
 }
 
-void func_80041CEC(s_LmHeader* lmHeader) // 0x80041CEC
+void func_80041CEC(s_LmHeader* lmHdr) // 0x80041CEC
 {
-    lmHeader->magic_0         = LM_HEADER_MAGIC;
-    lmHeader->version_1       = 6;
-    lmHeader->isLoaded_2      = 1;
-    lmHeader->materialCount_3 = 0;
-    lmHeader->modelCount_8    = 0;
+    lmHdr->magic_0         = LM_HEADER_MAGIC;
+    lmHdr->version_1       = LM_VERSION;
+    lmHdr->isLoaded_2      = true;
+    lmHdr->materialCount_3 = 0;
+    lmHdr->modelCount_8    = 0;
 }
 
 void func_80041D10(s_800C117C* arg0, s32 size) // 0x80041D10
@@ -1632,14 +1632,14 @@ void IpdHeader_ModelLinkObjectLists(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s3
     }
 }
 
-s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmHeader) // 0x80043F2C
+s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmHdr) // 0x80043F2C
 {
     s32            i;
     s_ModelHeader* modelHeader;
 
-    modelHeader = lmHeader->modelHdrs_C;
+    modelHeader = lmHdr->modelHdrs_C;
 
-    for (i = 0; i < lmHeader->modelCount_8; i++, modelHeader++)
+    for (i = 0; i < lmHdr->modelCount_8; i++, modelHeader++)
     {
         if (!COMPARE_FILENAMES(modelName, &modelHeader->modelName_0))
         {
@@ -2288,12 +2288,12 @@ void func_80045014(s_Skeleton* skel) // 0x80045014
     }
 }
 
-void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHeader) // 0x8004506C
+void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHdr) // 0x8004506C
 {
     u8  sp10[4]; // Size unsure, this could be larger.
     s32 switchVar;
 
-    switchVar = LmHeader_ModelCountGet(lmHeader);
+    switchVar = LmHeader_ModelCountGet(lmHdr);
     sp10[0]   = 0;
 
     switch (switchVar)
@@ -2309,16 +2309,16 @@ void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHeader) // 0x8004506C
 
         default:
             sp10[1] = 253;
-            sp10[2] = LmHeader_ModelCountGet(lmHeader) - 1;
+            sp10[2] = LmHeader_ModelCountGet(lmHdr) - 1;
             sp10[3] = 254;
             break;
     }
 
-    func_80045108(skel, lmHeader, sp10, 0);
+    func_80045108(skel, lmHdr, sp10, 0);
 }
 
 // Anim func.
-void func_80045108(s_Skeleton* skel, s_LmHeader* lmHeader, u8* arg2, s32 arg3) // 0x80045108
+void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, u8* arg2, s32 arg3) // 0x80045108
 {
     s_Skeleton*  skel0; // Guessed the type. They both access `field_14` so maybe it's also `s_Skeleton`.
     s_Skeleton** skel1;
@@ -2331,7 +2331,7 @@ void func_80045108(s_Skeleton* skel, s_LmHeader* lmHeader, u8* arg2, s32 arg3) /
     }
 
     boneIdx = skel->boneIdx_1;
-    func_800451B0(skel, lmHeader, arg2);
+    func_800451B0(skel, lmHdr, arg2);
 
     skel1 = &skel->field_4;
     while (*skel1 != 0)
@@ -2340,11 +2340,11 @@ void func_80045108(s_Skeleton* skel, s_LmHeader* lmHeader, u8* arg2, s32 arg3) /
         skel1 = &skel0->skeleton_14;
     }
 
-    func_80045258(skel1, &skel->bones_8[boneIdx], skel->boneIdx_1 - boneIdx, lmHeader); // Very wierd third argument.
+    func_80045258(skel1, &skel->bones_8[boneIdx], skel->boneIdx_1 - boneIdx, lmHdr); // Very wierd third argument.
     func_800453E8(skel, false);
 }
 
-void func_800451B0(s_Skeleton* skel, s_LmHeader* lmHeader, s32* arg2) // 0x800451B0
+void func_800451B0(s_Skeleton* skel, s_LmHeader* lmHdr, s32* arg2) // 0x800451B0
 {
     s32 var;
     
@@ -2352,19 +2352,19 @@ void func_800451B0(s_Skeleton* skel, s_LmHeader* lmHeader, s32* arg2) // 0x80045
 
     while (var != -2)
     {
-        func_80056C8C(&skel->bones_8[skel->boneIdx_1], lmHeader, var);
+        func_80056C8C(&skel->bones_8[skel->boneIdx_1], lmHdr, var);
 
         skel->boneIdx_1++;
         var = func_80044F6C(arg2, false);
     }
 }
 
-void func_80045258(s_Skeleton** skels, s_Bone* bones, s32 boneIdx, s_LmHeader* lmHeader) // 0x80045258
+void func_80045258(s_Skeleton** skels, s_Bone* bones, s32 boneIdx, s_LmHeader* lmHdr) // 0x80045258
 {
     s_Bone* bone;
     u8*     objOrd;
 
-    for (objOrd = lmHeader->modelOrder_10; objOrd < &lmHeader->modelOrder_10[lmHeader->modelCount_8]; objOrd++)
+    for (objOrd = lmHdr->modelOrder_10; objOrd < &lmHdr->modelOrder_10[lmHdr->modelCount_8]; objOrd++)
     {
         for (bone = bones; bone < &bones[boneIdx]; bone++)
         {

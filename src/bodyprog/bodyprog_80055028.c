@@ -478,56 +478,56 @@ u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* mat) // 0x80055F08
     return ret;
 }
 
-void LmHeader_FixOffsets(s_LmHeader* lmHeader) // 0x800560FC
+void LmHeader_FixOffsets(s_LmHeader* lmHdr) // 0x800560FC
 {
     s32 i;
 
-    if (lmHeader->isLoaded_2 == true)
+    if (lmHdr->isLoaded_2 == true)
     {
         return;
     }
-    lmHeader->isLoaded_2 = true;
+    lmHdr->isLoaded_2 = true;
 
     // Add memory address of header to pointer fields.
-    lmHeader->materials_4    = (u8*)lmHeader->materials_4    + (u32)lmHeader;
-    lmHeader->modelHdrs_C = (u8*)lmHeader->modelHdrs_C + (u32)lmHeader;
-    lmHeader->modelOrder_10  = (u8*)lmHeader->modelOrder_10  + (u32)lmHeader;
+    lmHdr->materials_4    = (u8*)lmHdr->materials_4    + (u32)lmHdr;
+    lmHdr->modelHdrs_C = (u8*)lmHdr->modelHdrs_C + (u32)lmHdr;
+    lmHdr->modelOrder_10  = (u8*)lmHdr->modelOrder_10  + (u32)lmHdr;
 
-    for (i = 0; i < lmHeader->modelCount_8; i++)
+    for (i = 0; i < lmHdr->modelCount_8; i++)
     {
-        if (lmHeader->magic_0 == LM_HEADER_MAGIC)
+        if (lmHdr->magic_0 == LM_HEADER_MAGIC)
         {
-            ModelHeader_FixOffsets(&lmHeader->modelHdrs_C[i], lmHeader);
+            ModelHeader_FixOffsets(&lmHdr->modelHdrs_C[i], lmHdr);
         }
     }
 }
 
-void ModelHeader_FixOffsets(s_ModelHeader* modelHdr, s_LmHeader* lmHeader) // 0x800561A4
+void ModelHeader_FixOffsets(s_ModelHeader* modelHdr, s_LmHeader* lmHdr) // 0x800561A4
 {
     s_MeshHeader* meshHdr;
 
-    modelHdr->meshHdrs_C = (u8*)modelHdr->meshHdrs_C + (u32)lmHeader;
+    modelHdr->meshHdrs_C = (u8*)modelHdr->meshHdrs_C + (u32)lmHdr;
 
     for (meshHdr = &modelHdr->meshHdrs_C[0]; meshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; meshHdr++)
     {
-        meshHdr->primitives_4 = (u8*)meshHdr->primitives_4 + (u32)lmHeader;
-        meshHdr->verticesXy_8 = (u8*)meshHdr->verticesXy_8 + (u32)lmHeader;
-        meshHdr->verticesZ_C  = (u8*)meshHdr->verticesZ_C  + (u32)lmHeader;
-        meshHdr->normals_10   = (u8*)meshHdr->normals_10   + (u32)lmHeader;
-        meshHdr->unkPtr_14    = (u8*)meshHdr->unkPtr_14    + (u32)lmHeader;
+        meshHdr->primitives_4 = (u8*)meshHdr->primitives_4 + (u32)lmHdr;
+        meshHdr->verticesXy_8 = (u8*)meshHdr->verticesXy_8 + (u32)lmHdr;
+        meshHdr->verticesZ_C  = (u8*)meshHdr->verticesZ_C  + (u32)lmHdr;
+        meshHdr->normals_10   = (u8*)meshHdr->normals_10   + (u32)lmHdr;
+        meshHdr->unkPtr_14    = (u8*)meshHdr->unkPtr_14    + (u32)lmHdr;
     }
 }
 
-void func_80056244(s_LmHeader* lmHeader, bool flag) // 0x80056244
+void func_80056244(s_LmHeader* lmHdr, bool flag) // 0x80056244
 {
     s_ModelHeader* modelHdr_tmp1;
     s_ModelHeader* modelHdr_tmp2;
     s_MeshHeader*  meshHdr;
     s_Primitive*   prim;
 
-    modelHdr_tmp1 = lmHeader->modelHdrs_C;
+    modelHdr_tmp1 = lmHdr->modelHdrs_C;
 
-    for (modelHdr_tmp2 = &modelHdr_tmp1[0]; modelHdr_tmp2 < &modelHdr_tmp1[lmHeader->modelCount_8]; modelHdr_tmp2++)
+    for (modelHdr_tmp2 = &modelHdr_tmp1[0]; modelHdr_tmp2 < &modelHdr_tmp1[lmHdr->modelCount_8]; modelHdr_tmp2++)
     {
         for (meshHdr = &modelHdr_tmp2->meshHdrs_C[0]; meshHdr < &modelHdr_tmp2->meshHdrs_C[modelHdr_tmp2->meshCount_8]; meshHdr++)
         {
@@ -539,13 +539,13 @@ void func_80056244(s_LmHeader* lmHeader, bool flag) // 0x80056244
     }
 }
 
-s32 func_80056348(bool (*arg0)(s_Material* mat), s_LmHeader* lmHeader) // 0x80056348
+s32 func_80056348(bool (*arg0)(s_Material* mat), s_LmHeader* lmHdr) // 0x80056348
 {
     s32         count;
     s_Material* mat;
 
     count = 0;
-    for (mat = lmHeader->materials_4; mat < (lmHeader->materials_4 + lmHeader->materialCount_3); mat++)
+    for (mat = lmHdr->materials_4; mat < (lmHdr->materials_4 + lmHdr->materialCount_3); mat++)
     {
         if (arg0(mat))
         {
@@ -556,7 +556,7 @@ s32 func_80056348(bool (*arg0)(s_Material* mat), s_LmHeader* lmHeader) // 0x8005
     return count;
 }
 
-void func_800563E8(s_LmHeader* lmHeader, s32 arg1, s32 arg2, s32 arg3) // 0x800563E8
+void func_800563E8(s_LmHeader* lmHdr, s32 arg1, s32 arg2, s32 arg3) // 0x800563E8
 {
     s32         i;
     s_Material* mat;
@@ -566,8 +566,8 @@ void func_800563E8(s_LmHeader* lmHeader, s32 arg1, s32 arg2, s32 arg3) // 0x8005
         arg2 += 15;
     }
 
-    for (i = 0, mat = &lmHeader->materials_4[0];
-         i < lmHeader->materialCount_3;
+    for (i = 0, mat = &lmHdr->materials_4[0];
+         i < lmHdr->materialCount_3;
          i++, mat++)
     {
         // TODO: Bitfield stuff? Doesn't seem to match other uses of `field_E`/`field_10` we've seen though.
@@ -579,7 +579,7 @@ void func_800563E8(s_LmHeader* lmHeader, s32 arg1, s32 arg2, s32 arg3) // 0x8005
     }
 }
 
-void func_80056464(s_LmHeader* lmHeader, s32 fileIdx, s_FsImageDesc* image, s32 arg3) // 0x80056464
+void func_80056464(s_LmHeader* lmHdr, s32 fileIdx, s_FsImageDesc* image, s32 arg3) // 0x80056464
 {
     char  sp10[8];
     char  sp18[16];
@@ -599,23 +599,23 @@ void func_80056464(s_LmHeader* lmHeader, s32 fileIdx, s_FsImageDesc* image, s32 
         *sp10Ptr++ = *sp18Ptr++;
     }
 
-    func_80056558(lmHeader, sp10, image, arg3);
+    func_80056558(lmHdr, sp10, image, arg3);
 }
 
-void func_80056504(s_LmHeader* lmHeader, char* newStr, s_FsImageDesc* image, s32 arg3) // 0x80056504
+void func_80056504(s_LmHeader* lmHdr, char* newStr, s_FsImageDesc* image, s32 arg3) // 0x80056504
 {
     char sp10[8];
 
     StringCopy(sp10, newStr);
-    func_80056558(lmHeader, sp10, image, arg3);
+    func_80056558(lmHdr, sp10, image, arg3);
 }
 
-bool func_80056558(s_LmHeader* lmHeader, char* fileName, s_FsImageDesc* image, s32 arg3) // 0x80056558
+bool func_80056558(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* image, s32 arg3) // 0x80056558
 {
     s_Material* mat;
 
-    for (mat = &lmHeader->materials_4[0];
-         mat < &lmHeader->materials_4[lmHeader->materialCount_3];
+    for (mat = &lmHdr->materials_4[0];
+         mat < &lmHdr->materials_4[lmHdr->materialCount_3];
          mat++)
     {
         if (!COMPARE_FILENAMES(&mat->name_0, fileName))
@@ -656,7 +656,7 @@ void func_8005660C(s_Material* mat, s_FsImageDesc* image, s32 arg2) // 0x8005660
     mat->field_10 = (image->clutY << 6) | ((image->clutX >> 4) & 0x3F);
 }
 
-void func_800566B4(s_LmHeader* lmHeader, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4) // 0x800566B4
+void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4) // 0x800566B4
 {
     char           filename[16];
     s32            i;
@@ -665,9 +665,9 @@ void func_800566B4(s_LmHeader* lmHeader, s_FsImageDesc* image, s8 unused, s32 st
 
     // Loop could be using `&image[i]`/`&arg0->field_4[i]` instead? Wasn't able to make that match though.
     localImage = image;
-    mat        = lmHeader->materials_4;
+    mat        = lmHdr->materials_4;
 
-    for (i = 0; i < lmHeader->materialCount_3; i++, mat++, localImage++)
+    for (i = 0; i < lmHdr->materialCount_3; i++, mat++, localImage++)
     {
         Material_TimFileNameGet(filename, mat);
         Fs_QueueStartReadTim(Fs_FindNextFile(filename, 0, startIdx), FS_BUFFER_9, localImage);
@@ -675,11 +675,11 @@ void func_800566B4(s_LmHeader* lmHeader, s_FsImageDesc* image, s8 unused, s32 st
     }
 }
 
-void func_80056774(s_LmHeader* lmHeader, s_800C1450_0* arg1, bool (*func)(s_Material* mat), void* arg3, s32 arg4) // 0x80056774
+void func_80056774(s_LmHeader* lmHdr, s_800C1450_0* arg1, bool (*func)(s_Material* mat), void* arg3, s32 arg4) // 0x80056774
 {
     s_Material* curMat;
 
-    for (curMat = &lmHeader->materials_4[0]; curMat < &lmHeader->materials_4[lmHeader->materialCount_3]; curMat++)
+    for (curMat = &lmHdr->materials_4[0]; curMat < &lmHdr->materials_4[lmHdr->materialCount_3]; curMat++)
     {
         if (curMat->field_C == 0 && curMat->texture_8 == NULL && (func == NULL || func(curMat)))
         {
@@ -692,16 +692,16 @@ void func_80056774(s_LmHeader* lmHeader, s_800C1450_0* arg1, bool (*func)(s_Mate
     }
 }
 
-bool LmHeader_IsTextureLoaded(s_LmHeader* lmHeader) // 0x80056888
+bool LmHeader_IsTextureLoaded(s_LmHeader* lmHdr) // 0x80056888
 {
     s_Material* curMat;
 
-    if (!lmHeader->isLoaded_2)
+    if (!lmHdr->isLoaded_2)
     {
         return false;
     }
 
-    for (curMat = &lmHeader->materials_4[0]; curMat < &lmHeader->materials_4[lmHeader->materialCount_3]; curMat++)
+    for (curMat = &lmHdr->materials_4[0]; curMat < &lmHdr->materials_4[lmHdr->materialCount_3]; curMat++)
     {
         if (curMat->field_C != 0)
         {
@@ -722,14 +722,14 @@ bool LmHeader_IsTextureLoaded(s_LmHeader* lmHeader) // 0x80056888
     return true;
 }
 
-void func_80056954(s_LmHeader* lmHeader) // 0x80056954
+void func_80056954(s_LmHeader* lmHdr) // 0x80056954
 {
     s32         i;
     s32         j;
     s32         flags;
     s_Material* curMat;
 
-    for (i = 0, curMat = lmHeader->materials_4; i < lmHeader->materialCount_3; i++, curMat++)
+    for (i = 0, curMat = lmHdr->materials_4; i < lmHdr->materialCount_3; i++, curMat++)
     {
         flags = (curMat->field_E != curMat->field_F) ? (1 << 0) : 0;
 
@@ -745,11 +745,11 @@ void func_80056954(s_LmHeader* lmHeader) // 0x80056954
 
         if (flags)
         {
-            for (j = 0; j < lmHeader->modelCount_8; j++)
+            for (j = 0; j < lmHdr->modelCount_8; j++)
             {
-                if (lmHeader->magic_0 == LM_HEADER_MAGIC)
+                if (lmHdr->magic_0 == LM_HEADER_MAGIC)
                 {
-                    func_80056A88(&lmHeader->modelHdrs_C[j], i, curMat, flags);
+                    func_80056A88(&lmHdr->modelHdrs_C[j], i, curMat, flags);
                 }
             }
 
@@ -801,12 +801,12 @@ void func_80056A88(s_ModelHeader* modelHdr, s32 arg1, s_Material* mat, s32 flags
     }
 }
 
-void Lm_MaterialRefCountDec(s_LmHeader* lmHeader) // 0x80056BF8
+void Lm_MaterialRefCountDec(s_LmHeader* lmHdr) // 0x80056BF8
 {
     s_Material* mat;
     s_Texture*  tex;
 
-    for (mat = &lmHeader->materials_4[0]; mat < &lmHeader->materials_4[lmHeader->materialCount_3]; mat++)
+    for (mat = &lmHdr->materials_4[0]; mat < &lmHdr->materials_4[lmHdr->materialCount_3]; mat++)
     {
         tex = mat->texture_8;
         if (tex != NULL)
@@ -822,24 +822,24 @@ void Lm_MaterialRefCountDec(s_LmHeader* lmHeader) // 0x80056BF8
     }
 }
 
-s32 LmHeader_ModelCountGet(s_LmHeader* lmHeader) // 0x80056C80
+s32 LmHeader_ModelCountGet(s_LmHeader* lmHdr) // 0x80056C80
 {
-    return lmHeader->modelCount_8;
+    return lmHdr->modelCount_8;
 }
 
-void func_80056C8C(s_Bone* bone, s_LmHeader* lmHeader, s32 modelHdrIdx)
+void func_80056C8C(s_Bone* bone, s_LmHeader* lmHdr, s32 modelHdrIdx)
 {
-    s_ModelHeader* modelHdr = lmHeader->modelHdrs_C;
+    s_ModelHeader* modelHdr = lmHdr->modelHdrs_C;
 
     bone->modelHdrIdx_C = modelHdrIdx;
 
-    if (lmHeader->magic_0 == LM_HEADER_MAGIC)
+    if (lmHdr->magic_0 == LM_HEADER_MAGIC)
     {
         bone->modelHdr_8 = &modelHdr[modelHdrIdx];
     }
 }
 
-bool Lm_ModelFind(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BEC_0_10* arg2) // 0x80056CB4
+bool Lm_ModelFind(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHdr, s_800BCE18_2BEC_0_10* arg2) // 0x80056CB4
 {
     u_Filename     sp10;
     s32            modelHdrCount;
@@ -851,11 +851,11 @@ bool Lm_ModelFind(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BEC
 
     StringCopy(sp10.str, arg2->modelName_0.str);
 
-    modelHdrCount = lmHeader->modelCount_8;
+    modelHdrCount = lmHdr->modelCount_8;
 
-    if (lmHeader->magic_0 == LM_HEADER_MAGIC)
+    if (lmHdr->magic_0 == LM_HEADER_MAGIC)
     {
-        for (i = 0, modelHdr = &lmHeader->modelHdrs_C[i]; i < modelHdrCount; i++, modelHdr++)
+        for (i = 0, modelHdr = &lmHdr->modelHdrs_C[i]; i < modelHdrCount; i++, modelHdr++)
         {
             if (!COMPARE_FILENAMES(&modelHdr->modelName_0, &sp10))
             {

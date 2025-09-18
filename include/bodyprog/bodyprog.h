@@ -21,8 +21,9 @@
 #define OPT_VIBRATION_DISABLED 0
 #define OPT_VIBRATION_ENABLED  128
 
-#define IPD_HEADER_MAGIC       20  // 0x14 / 20
-#define LM_HEADER_MAGIC        '0' // 0x30 / 48 / '0'
+#define IPD_HEADER_MAGIC 20  // 0x14 / 20
+#define LM_HEADER_MAGIC  '0' // 0x30 / 48 / '0'
+#define LM_VERSION       6
 
 // ==============
 // HELPER MACROS
@@ -34,7 +35,7 @@
  * @param b Second string.
  * @return `true` if the strings aren't equal, `false` otherwise.
  */
-#define COMPARE_FILENAMES(a, b) \
+#define COMPARE_FILENAMES(a, b)                                  \
     (((u_Filename*)(a))->u32[0] != ((u_Filename*)(b))->u32[0] || \
      ((u_Filename*)(a))->u32[1] != ((u_Filename*)(b))->u32[1])
 
