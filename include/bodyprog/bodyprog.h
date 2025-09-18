@@ -577,7 +577,7 @@ typedef struct _ModelHeader
     u8            field_B_1 : 3;
     u8            field_B_4 : 2;
     u8            unk_B_6   : 2;
-    s_MeshHeader* meshHeaders_C;
+    s_MeshHeader* meshHdrs_C;
 } s_ModelHeader;
 STATIC_ASSERT_SIZEOF(s_ModelHeader, 16);
 
@@ -621,7 +621,7 @@ typedef struct _LmHeader
     s_Material*    materials_4;
     u8             modelCount_8;
     u8             unk_9[3];
-    s_ModelHeader* modelHeaders_C;
+    s_ModelHeader* modelHdrs_C;
     u8*            modelOrder_10;
 
     // File header ends, extra data below.
@@ -706,7 +706,7 @@ typedef struct _IpdCollisionData
 
 typedef struct _IpdModelBuffer_C
 {
-    s_ModelHeader* modelHeader_0;
+    s_ModelHeader* modelHdr_0;
     MATRIX         field_4;
 } s_IpdModelBuffer_C;
 STATIC_ASSERT_SIZEOF(s_IpdModelBuffer_C, 36);
@@ -732,7 +732,7 @@ typedef struct _IpdModelInfo
     u8             isGlobalPlm_0; // `false` if loaded from inside `IPD`, `true` if loaded from `*_GLB.PLM`.
     u8             unk_1[3];
     u_Filename     modelName_4;
-    s_ModelHeader* modelHeader_C;
+    s_ModelHeader* modelHdr_C;
 } s_IpdModelInfo;
 STATIC_ASSERT_SIZEOF(s_IpdModelInfo, 16);
 
@@ -742,7 +742,7 @@ typedef struct _IpdHeader
     u8                 isLoaded_1; /** `bool` */
     s8                 levelGridX_2;
     s8                 levelGridY_3;
-    s_LmHeader*        lmHeader_4;
+    s_LmHeader*        lmHdr_4;
     u8                 modelCount_8;
     u8                 modelBufferCount_9;
     u8                 modelOrderCount_A;
@@ -889,7 +889,7 @@ typedef struct
 // LM data? Likely `D_800C1158`'s struct.
 typedef struct
 {
-    s_LmHeader* lmHeader_0;
+    s_LmHeader* lmHdr_0;
     s32         fileIdx_4;
     s32         queueIdx_8; // Passed to `Fs_QueueEntryLoadStatusGet`, thus the name.
 } s_func_80041CB4;
@@ -916,8 +916,8 @@ typedef struct
 {
     s32            flags_0;
     s8             unk_4[4];
-    s_ModelHeader* modelHeader_8;
-    s32            modelHeaderIdx_C;
+    s_ModelHeader* modelHdr_8;
+    s32            modelHdrIdx_C;
     s8             field_10;
     s8             unk_11[3];
     s32            field_14;
@@ -1066,7 +1066,7 @@ typedef struct
     u8            field_1;
     u8            unk_2[2];
     s32           field_4;
-    s_LmHeader*   lmHeader_8;
+    s_LmHeader*   lmHdr_8;
     s_FsImageDesc texture_C;
     s_Skeleton    field_14; // Could be different struct?
 } s_800BCE18_0_CC; // Unknown size.
@@ -1100,7 +1100,7 @@ typedef struct
 {
     u_Filename modelName_0;
     s8         field_8;
-    s8         lmIdx_9; /** Set to 2 when found in `D_800C1020.field_138.lmHeader_0` and 3-6 if found in `D_800C1020.ipdTable_15C[i] (i + 3)`. */
+    s8         lmIdx_9; /** Set to 2 when found in `D_800C1020.field_138.lmHdr_0` and 3-6 if found in `D_800C1020.ipdTable_15C[i] (i + 3)`. */
 } s_800BCE18_2BEC_0_10;
 
 typedef struct
@@ -2585,7 +2585,7 @@ s32 func_8003D21C(s_MapOverlayHeader* arg0);
 
 void func_8003D5B4(s8 arg0);
 
-void func_8003D6E0(s32 arg0, s32 arg1, s_LmHeader* lmHeader, s_FsImageDesc* tex);
+void func_8003D6E0(s32 arg0, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 /** Param types assumed. */
 void func_8003DD80(s32 idx, s32 arg1); // Called by some chara init funcs.
@@ -2661,11 +2661,11 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4);
 u32 Fs_QueueEntryLoadStatusGet(s32 queueIdx);
 
 /** Used for loading maps */
-void func_80041C24(s_LmHeader* lmHeader, s32 arg1, s32 arg2);
+void func_80041C24(s_LmHeader* lmHdr, s32 arg1, s32 arg2);
 
-void func_80041CB4(s_func_80041CB4* arg0, s_LmHeader* lmHeader);
+void func_80041CB4(s_func_80041CB4* arg0, s_LmHeader* lmHdr);
 
-void func_80041CEC(s_LmHeader* lmHeader);
+void func_80041CEC(s_LmHeader* lmHdr);
 
 /** @brief Clears `queueIdx_4` in array of `s_800C117C` */
 void func_80041D10(s_800C117C* arg0, s32 size);
@@ -2776,7 +2776,7 @@ bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHeader);
 
 s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHeader);
 
-void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_LmHeader** lmHeaders, s32 lmHeaderCount, s_800C1450_0* arg3, s_800C1450_0* arg4, s32 arg5);
+void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_LmHeader** lmHdrs, s32 lmHdrCount, s_800C1450_0* arg3, s_800C1450_0* arg4, s32 arg5);
 
 void func_80043C7C(s_IpdHeader* ipdHeader, s_800C1450_0* arg1, s_800C1450_0* arg2, s32 arg3);
 
@@ -2791,10 +2791,10 @@ bool LmFilter_NameEndsWithH(s_Material* mat);
 void IpdHeader_FixHeaderOffsets(s_IpdHeader* ipdHeader);
 
 /** @brief Assigns `s_ModelHeader` pointers to models in `s_IpdHeader` by searching the given `s_LmHeader` array. */
-void IpdHeader_ModelLinkObjectLists(s_IpdHeader* ipdHeader, s_LmHeader** lmHeaders, s32 lmHeaderCount);
+void IpdHeader_ModelLinkObjectLists(s_IpdHeader* ipdHeader, s_LmHeader** lmHdrs, s32 lmHdrCount);
 
 /** @brief Searches `s_LmHeader` for objects with the given `objName`. */
-s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmHeader);
+s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmHdr);
 
 /** @brief Assigns `s_ModelHeader` pointers to each `s_IpdModelBuffer` in `s_IpdHeader`. */
 void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHeader, s_IpdModelInfo* ipdModels);
@@ -2849,16 +2849,16 @@ void func_80044FE0(s_Skeleton* skel, s_Bone* bones, u8 boneCount);
 void func_80045014(s_Skeleton* skel);
 
 /** Anim func. Used in tandem with skeleton bone traversal. */
-void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHeader);
+void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHdr);
 
 /** Anim func. */
-void func_80045108(s_Skeleton* arg0, s_LmHeader* lmHeader, u8* arg2, s32 arg3);
+void func_80045108(s_Skeleton* arg0, s_LmHeader* lmHdr, u8* arg2, s32 arg3);
 
 /** Anim func. */
-void func_800451B0(s_Skeleton* skel, s_LmHeader* lmHeader, s32* arg2);
+void func_800451B0(s_Skeleton* skel, s_LmHeader* lmHdr, s32* arg2);
 
 /** Anim func. Param names are rough. */
-void func_80045258(s_Skeleton** skels, s_Bone* bones, s32 boneIdx, s_LmHeader* lmHeader);
+void func_80045258(s_Skeleton** skels, s_Bone* bones, s32 boneIdx, s_LmHeader* lmHdr);
 
 /** Anim func. */
 void func_800452EC(s_Skeleton* skel);
@@ -3082,14 +3082,14 @@ void func_80055ECC(CVECTOR* color, SVECTOR3* arg1, SVECTOR3* arg2, MATRIX* mat);
 
 u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* mat);
 
-void LmHeader_FixOffsets(s_LmHeader* lmHeader);
+void LmHeader_FixOffsets(s_LmHeader* lmHdr);
 
-void ModelHeader_FixOffsets(s_ModelHeader* modelHeader, s_LmHeader* lmHeader);
+void ModelHeader_FixOffsets(s_ModelHeader* modelHdr, s_LmHeader* lmHdr);
 
-void func_80056244(s_LmHeader* lmHeader, bool flag);
+void func_80056244(s_LmHeader* lmHdr, bool flag);
 
 /** Gets texture count? */
-s32 func_80056348(bool (*arg0)(s_Material* mat), s_LmHeader* lmHeader);
+s32 func_80056348(bool (*arg0)(s_Material* mat), s_LmHeader* lmHdr);
 
 /** TODO: Unknown `arg3` type. */
 void func_80059D50(s32 arg0, s_800BCE18_2BEC_0_0* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4);
@@ -3100,16 +3100,16 @@ void func_8005A21C(s_800BCE18_2BEC_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX*
 /** @brief Computes a fog-shaded version of `D_800C4190` color using `arg1` as the distance factor?
  *  Stores the result at 0x3D8 into `arg0`.
  */
-void func_8005A42C(s_GteScratchData* scratchData, s32 arg1);
+void func_8005A42C(s_GteScratchData* scratchData, q19_12 alpha);
 
-void func_8005A478(s_GteScratchData* scratchData, s32 alpha);
+void func_8005A478(s_GteScratchData* scratchData, q19_12 alpha);
 
 /** `scratchData` is unused? */
 void func_8005A838(s_GteScratchData* scratchData, s32 scale);
 
-void func_8005A900(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scratchData, MATRIX* mat);
+void func_8005A900(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, MATRIX* mat);
 
-u8 func_8005AA08(s_MeshHeader* meshHeader, s32 arg1, s_GteScratchData2* scratchData);
+u8 func_8005AA08(s_MeshHeader* meshHdr, s32 arg1, s_GteScratchData2* scratchData);
 
 void Texture_Init1(s_Texture* tex, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY);
 
@@ -3125,35 +3125,35 @@ void Material_TimFileNameGet(char* filename, s_Material* mat);
 void func_8005B424(VECTOR3* vec0, VECTOR3* vec1);
 
 /** @unused No references. */
-void func_800563E8(s_LmHeader* lmHeader, s32 arg1, s32 arg2, s32 arg3);
+void func_800563E8(s_LmHeader* lmHdr, s32 arg1, s32 arg2, s32 arg3);
 
-void func_80056464(s_LmHeader* lmHeader, s32 fileIdx, s_FsImageDesc* image, s32 arg3);
+void func_80056464(s_LmHeader* lmHdr, s32 fileIdx, s_FsImageDesc* image, s32 arg3);
 
-void func_80056504(s_LmHeader* lmHeader, char* newStr, s_FsImageDesc* image, s32 arg3);
+void func_80056504(s_LmHeader* lmHdr, char* newStr, s_FsImageDesc* image, s32 arg3);
 
-bool func_80056558(s_LmHeader* lmHeader, char* fileName, s_FsImageDesc* image, s32 arg3);
+bool func_80056558(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* image, s32 arg3);
 
 void func_8005660C(s_Material* mat, s_FsImageDesc* image, s32 arg2);
 
-void func_800566B4(s_LmHeader* lmHeader, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4);
+void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4);
 
 /** Unknown `arg3` / `arg4` types. */
-void func_80056774(s_LmHeader* lmHeader, s_800C1450_0* arg1, bool (*func)(s_Material* mat), void* arg3, s32 arg4);
+void func_80056774(s_LmHeader* lmHdr, s_800C1450_0* arg1, bool (*func)(s_Material* mat), void* arg3, s32 arg4);
 
 /** Checks if LM textures are loaded? */
-bool LmHeader_IsTextureLoaded(s_LmHeader* lmHeader);
+bool LmHeader_IsTextureLoaded(s_LmHeader* lmHdr);
 
-void func_80056954(s_LmHeader* lmHeader);
+void func_80056954(s_LmHeader* lmHdr);
 
-void func_80056A88(s_ModelHeader* modelHeader, s32 arg1, s_Material* mat, s32 flags);
+void func_80056A88(s_ModelHeader* modelHdr, s32 arg1, s_Material* mat, s32 flags);
 
-void Lm_MaterialRefCountDec(s_LmHeader* lmHeader);
+void Lm_MaterialRefCountDec(s_LmHeader* lmHdr);
 
-s32 LmHeader_ModelCountGet(s_LmHeader* lmHeader);
+s32 LmHeader_ModelCountGet(s_LmHeader* lmHdr);
 
-void func_80056C8C(s_Bone* bone, s_LmHeader* lmHeader, s32 modelHeaderIdx);
+void func_80056C8C(s_Bone* bone, s_LmHeader* lmHdr, s32 modelHdrIdx);
 
-bool Lm_ModelFind(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BEC_0_10* arg2);
+bool Lm_ModelFind(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHdr, s_800BCE18_2BEC_0_10* arg2);
 
 void StringCopy(char* prevStr, char* newStr);
 
@@ -3168,13 +3168,13 @@ void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3);
 /** TODO: Unknown `arg2` type. */
 void func_80057344(s_800BCE18_2BEC_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
 
-void func_800574D4(s_MeshHeader* meshHeader, s_GteScratchData* scratchData);
+void func_800574D4(s_MeshHeader* meshHdr, s_GteScratchData* scratchData);
 
-void func_8005759C(s_MeshHeader* meshHeader, s_GteScratchData* scratchData, s32 vertexOffset, s32 normalOffset);
+void func_8005759C(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 vertexOffset, s32 normalOffset);
 
-void func_80057658(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scratchData, SVECTOR3* arg3, SVECTOR* arg4);
+void func_80057658(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, SVECTOR3* arg3, SVECTOR* arg4);
 
-void func_80057A3C(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
+void func_80057A3C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
 
 s_Texture* Texture_Get(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, void* arg3, s32 arg4);
 
@@ -3220,33 +3220,33 @@ void func_8005E89C();
 
 void func_8005F6B0(s_SubCharacter*, VECTOR*, s32, s32);
 
-void DmsHeader_FixOffsets(s_DmsHeader* header);
+void DmsHeader_FixOffsets(s_DmsHeader* dmsHdr);
 
-void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* header);
+void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* dmsHdr);
 
 /** @unused? `volatile` needed for match. */
-s_DmsInterval* func_8008CA60(volatile s32 unused, s32 idx, s_DmsHeader* header);
+s_DmsInterval* func_8008CA60(volatile s32 unused, s32 idx, s_DmsHeader* dmsHdr);
 
-void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, q19_12 time, s_DmsHeader* header);
+void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, q19_12 time, s_DmsHeader* dmsHdr);
 
-void Dms_CharacterGetStartPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, s32 time, s_DmsHeader* header);
+void Dms_CharacterGetStartPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, s32 time, s_DmsHeader* dmsHdr);
 
-s32 Dms_CharacterFindIdxByName(char* name, s_DmsHeader* header);
+s32 Dms_CharacterFindIdxByName(char* name, s_DmsHeader* dmsHdr);
 
-void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q19_12 time, s_DmsHeader* header);
+void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q19_12 time, s_DmsHeader* dmsHdr);
 
 void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 alpha);
 
 /** @unused? Returns `96 * cotangent(angle / 2)`. Possibly camera/FOV related. */
 s16 func_8008CDBC(s16 angle);
 
-s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, q19_12 time, s_DmsHeader* header);
+s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, q19_12 time, s_DmsHeader* dmsHdr);
 
 s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, const s_DmsKeyframeCamera* frame0, const s_DmsKeyframeCamera* frame1, s32 alpha);
 
-void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, s32* alpha, q19_12 time, s_DmsEntry* camEntry, s_DmsHeader* header);
+void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, s32* alpha, q19_12 time, s_DmsEntry* camEntry, s_DmsHeader* dmsHdr);
 
-u32 Dms_IntervalStatusGet(s32 time, s_DmsHeader* header);
+u32 Dms_IntervalStatusGet(s32 time, s_DmsHeader* dmsHdr);
 
 s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry);
 
@@ -3364,7 +3364,7 @@ Could `arg5` be a struct pointer?
 `func_8003D6E0` uses this function and in the last argument
 it input `arg5` and `arg5` is an undetermined function pointer
 */
-bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 arg3, s_LmHeader* lmHeader, s_FsImageDesc* tex);
+bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 arg3, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 bool func_80088D0C();
 
@@ -3462,7 +3462,7 @@ void func_8008B664(VECTOR3* pos, u32 caseVar);
 
 s32 func_8008D850();
 
-void func_8008E4EC(s_LmHeader* lmHeader);
+void func_8008E4EC(s_LmHeader* lmHdr);
 
 void func_8008D78C();
 
@@ -4028,7 +4028,7 @@ void func_8003D354(s32* arg0, s32 arg1);
 /** Texture UV setup for NPCs. */
 void func_8003D3BC(s_FsImageDesc* img, s32 arg1, s32 arg2);
 
-s32 func_8003D7D4(u32 arg0, s32 arg1, s_LmHeader* lmHeader, s_FsImageDesc* tex);
+s32 func_8003D7D4(u32 arg0, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 /** Something related to animations. */
 void func_8003D938();
@@ -4121,6 +4121,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord);
 /** Player func. */
 void func_8007E9C4();
 
+/** Sound func. */
 void func_8007F14C(u8 arg0);
 
 void func_8007FB94(s_SubCharacter*, s_MainCharacterExtra*, s32);

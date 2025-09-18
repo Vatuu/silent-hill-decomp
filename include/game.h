@@ -1007,7 +1007,7 @@ STATIC_ASSERT_SIZEOF(s_AnimInfo, 16);
 
 typedef struct _ModelAnim
 {
-    u8          status_0;         /** Is active: bit 0, Anim index: bits 1-7. Possible original name: `anim_status` */
+    u8          status_0;         /** Is active: bit 0, Anim index: bits 1-7. Possible original name: `anim_status`. */
     u8          maybeSomeState_1; // State says if `time_4` is anim time/anim status or a func ptr? That field could be a union.
     u16         flags_2;          /** `e_AnimFlags` */
     q19_12      time_4;           /** Time on timeline. */ 

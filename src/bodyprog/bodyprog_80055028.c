@@ -490,48 +490,48 @@ void LmHeader_FixOffsets(s_LmHeader* lmHeader) // 0x800560FC
 
     // Add memory address of header to pointer fields.
     lmHeader->materials_4    = (u8*)lmHeader->materials_4    + (u32)lmHeader;
-    lmHeader->modelHeaders_C = (u8*)lmHeader->modelHeaders_C + (u32)lmHeader;
+    lmHeader->modelHdrs_C = (u8*)lmHeader->modelHdrs_C + (u32)lmHeader;
     lmHeader->modelOrder_10  = (u8*)lmHeader->modelOrder_10  + (u32)lmHeader;
 
     for (i = 0; i < lmHeader->modelCount_8; i++)
     {
         if (lmHeader->magic_0 == LM_HEADER_MAGIC)
         {
-            ModelHeader_FixOffsets(&lmHeader->modelHeaders_C[i], lmHeader);
+            ModelHeader_FixOffsets(&lmHeader->modelHdrs_C[i], lmHeader);
         }
     }
 }
 
-void ModelHeader_FixOffsets(s_ModelHeader* modelHeader, s_LmHeader* lmHeader) // 0x800561A4
+void ModelHeader_FixOffsets(s_ModelHeader* modelHdr, s_LmHeader* lmHeader) // 0x800561A4
 {
-    s_MeshHeader* meshHeader;
+    s_MeshHeader* meshHdr;
 
-    modelHeader->meshHeaders_C = (u8*)modelHeader->meshHeaders_C + (u32)lmHeader;
+    modelHdr->meshHdrs_C = (u8*)modelHdr->meshHdrs_C + (u32)lmHeader;
 
-    for (meshHeader = &modelHeader->meshHeaders_C[0]; meshHeader < &modelHeader->meshHeaders_C[modelHeader->meshCount_8]; meshHeader++)
+    for (meshHdr = &modelHdr->meshHdrs_C[0]; meshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; meshHdr++)
     {
-        meshHeader->primitives_4 = (u8*)meshHeader->primitives_4 + (u32)lmHeader;
-        meshHeader->verticesXy_8 = (u8*)meshHeader->verticesXy_8 + (u32)lmHeader;
-        meshHeader->verticesZ_C  = (u8*)meshHeader->verticesZ_C  + (u32)lmHeader;
-        meshHeader->normals_10   = (u8*)meshHeader->normals_10   + (u32)lmHeader;
-        meshHeader->unkPtr_14    = (u8*)meshHeader->unkPtr_14    + (u32)lmHeader;
+        meshHdr->primitives_4 = (u8*)meshHdr->primitives_4 + (u32)lmHeader;
+        meshHdr->verticesXy_8 = (u8*)meshHdr->verticesXy_8 + (u32)lmHeader;
+        meshHdr->verticesZ_C  = (u8*)meshHdr->verticesZ_C  + (u32)lmHeader;
+        meshHdr->normals_10   = (u8*)meshHdr->normals_10   + (u32)lmHeader;
+        meshHdr->unkPtr_14    = (u8*)meshHdr->unkPtr_14    + (u32)lmHeader;
     }
 }
 
 void func_80056244(s_LmHeader* lmHeader, bool flag) // 0x80056244
 {
-    s_ModelHeader* modelHeader_tmp1;
-    s_ModelHeader* modelHeader_tmp2;
-    s_MeshHeader*  meshHeader;
+    s_ModelHeader* modelHdr_tmp1;
+    s_ModelHeader* modelHdr_tmp2;
+    s_MeshHeader*  meshHdr;
     s_Primitive*   prim;
 
-    modelHeader_tmp1 = lmHeader->modelHeaders_C;
+    modelHdr_tmp1 = lmHeader->modelHdrs_C;
 
-    for (modelHeader_tmp2 = &modelHeader_tmp1[0]; modelHeader_tmp2 < &modelHeader_tmp1[lmHeader->modelCount_8]; modelHeader_tmp2++)
+    for (modelHdr_tmp2 = &modelHdr_tmp1[0]; modelHdr_tmp2 < &modelHdr_tmp1[lmHeader->modelCount_8]; modelHdr_tmp2++)
     {
-        for (meshHeader = &modelHeader_tmp2->meshHeaders_C[0]; meshHeader < &modelHeader_tmp2->meshHeaders_C[modelHeader_tmp2->meshCount_8]; meshHeader++)
+        for (meshHdr = &modelHdr_tmp2->meshHdrs_C[0]; meshHdr < &modelHdr_tmp2->meshHdrs_C[modelHdr_tmp2->meshCount_8]; meshHdr++)
         {
-            for (prim = &meshHeader->primitives_4[0]; prim < &meshHeader->primitives_4[meshHeader->primitiveCount_0]; prim++)
+            for (prim = &meshHdr->primitives_4[0]; prim < &meshHdr->primitives_4[meshHdr->primitiveCount_0]; prim++)
             {
                 prim->field_6_15 = flag;
             }
@@ -677,16 +677,16 @@ void func_800566B4(s_LmHeader* lmHeader, s_FsImageDesc* image, s8 unused, s32 st
 
 void func_80056774(s_LmHeader* lmHeader, s_800C1450_0* arg1, bool (*func)(s_Material* mat), void* arg3, s32 arg4) // 0x80056774
 {
-    s_Material* mats;
+    s_Material* curMat;
 
-    for (mats = &lmHeader->materials_4[0]; mats < &lmHeader->materials_4[lmHeader->materialCount_3]; mats++)
+    for (curMat = &lmHeader->materials_4[0]; curMat < &lmHeader->materials_4[lmHeader->materialCount_3]; curMat++)
     {
-        if (mats->field_C == 0 && mats->texture_8 == NULL && (func == NULL || func(mats)))
+        if (curMat->field_C == 0 && curMat->texture_8 == NULL && (func == NULL || func(curMat)))
         {
-            mats->texture_8 = Texture_Get(mats, arg1, FS_BUFFER_9, arg3, arg4);
-            if (mats->texture_8 != NULL)
+            curMat->texture_8 = Texture_Get(curMat, arg1, FS_BUFFER_9, arg3, arg4);
+            if (curMat->texture_8 != NULL)
             {
-                func_8005660C(mats, &mats->texture_8->imageDesc_0, arg4);
+                func_8005660C(curMat, &curMat->texture_8->imageDesc_0, arg4);
             }
         }
     }
@@ -694,26 +694,26 @@ void func_80056774(s_LmHeader* lmHeader, s_800C1450_0* arg1, bool (*func)(s_Mate
 
 bool LmHeader_IsTextureLoaded(s_LmHeader* lmHeader) // 0x80056888
 {
-    s_Material* mat;
+    s_Material* curMat;
 
     if (!lmHeader->isLoaded_2)
     {
         return false;
     }
 
-    for (mat = &lmHeader->materials_4[0]; mat < &lmHeader->materials_4[lmHeader->materialCount_3]; mat++)
+    for (curMat = &lmHeader->materials_4[0]; curMat < &lmHeader->materials_4[lmHeader->materialCount_3]; curMat++)
     {
-        if (mat->field_C != 0)
+        if (curMat->field_C != 0)
         {
             continue;
         }
 
-        if (mat->texture_8 == NULL)
+        if (curMat->texture_8 == NULL)
         {
             return false;
         }
 
-        if (!Fs_QueueIsEntryLoaded(mat->texture_8->queueIdx_10))
+        if (!Fs_QueueIsEntryLoaded(curMat->texture_8->queueIdx_10))
         {
             return false;
         }
@@ -727,18 +727,18 @@ void func_80056954(s_LmHeader* lmHeader) // 0x80056954
     s32         i;
     s32         j;
     s32         flags;
-    s_Material* mat;
+    s_Material* curMat;
 
-    for (i = 0, mat = lmHeader->materials_4; i < lmHeader->materialCount_3; i++, mat++)
+    for (i = 0, curMat = lmHeader->materials_4; i < lmHeader->materialCount_3; i++, curMat++)
     {
-        flags = (mat->field_E != mat->field_F) ? (1 << 0) : 0;
+        flags = (curMat->field_E != curMat->field_F) ? (1 << 0) : 0;
 
-        if (mat->field_10 != mat->field_12)
+        if (curMat->field_10 != curMat->field_12)
         {
             flags |= 1 << 1;
         }
 
-        if (mat->field_14.u16 != mat->field_16.u16)
+        if (curMat->field_14.u16 != curMat->field_16.u16)
         {
             flags |= 1 << 2;
         }
@@ -749,28 +749,28 @@ void func_80056954(s_LmHeader* lmHeader) // 0x80056954
             {
                 if (lmHeader->magic_0 == LM_HEADER_MAGIC)
                 {
-                    func_80056A88(&lmHeader->modelHeaders_C[j], i, mat, flags);
+                    func_80056A88(&lmHeader->modelHdrs_C[j], i, curMat, flags);
                 }
             }
 
-            mat->field_F        = mat->field_E;
-            mat->field_12       = mat->field_10;
-            mat->field_16.u8[0] = mat->field_14.u8[0];
-            mat->field_16.u8[1] = mat->field_14.u8[1];
+            curMat->field_F        = curMat->field_E;
+            curMat->field_12       = curMat->field_10;
+            curMat->field_16.u8[0] = curMat->field_14.u8[0];
+            curMat->field_16.u8[1] = curMat->field_14.u8[1];
         }
     }
 }
 
-void func_80056A88(s_ModelHeader* modelHeader, s32 arg1, s_Material* mat, s32 flags) // 0x80056A88
+void func_80056A88(s_ModelHeader* modelHdr, s32 arg1, s_Material* mat, s32 flags) // 0x80056A88
 {
     u16           field_14;
     u16           field_16;
-    s_MeshHeader* meshHeader;
+    s_MeshHeader* meshHdr;
     s_Primitive*  prim;
 
-    for (meshHeader = modelHeader->meshHeaders_C; meshHeader < &modelHeader->meshHeaders_C[modelHeader->meshCount_8]; meshHeader++)
+    for (meshHdr = modelHdr->meshHdrs_C; meshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; meshHdr++)
     {
-        for (prim = meshHeader->primitives_4; prim < &meshHeader->primitives_4[meshHeader->primitiveCount_0]; prim++)
+        for (prim = meshHdr->primitives_4; prim < &meshHdr->primitives_4[meshHdr->primitiveCount_0]; prim++)
         {
             if (prim->field_6_8 == NO_VALUE)
             {
@@ -827,41 +827,41 @@ s32 LmHeader_ModelCountGet(s_LmHeader* lmHeader) // 0x80056C80
     return lmHeader->modelCount_8;
 }
 
-void func_80056C8C(s_Bone* bone, s_LmHeader* lmHeader, s32 modelHeaderIdx)
+void func_80056C8C(s_Bone* bone, s_LmHeader* lmHeader, s32 modelHdrIdx)
 {
-    s_ModelHeader* modelHeader = lmHeader->modelHeaders_C;
+    s_ModelHeader* modelHdr = lmHeader->modelHdrs_C;
 
-    bone->modelHeaderIdx_C = modelHeaderIdx;
+    bone->modelHdrIdx_C = modelHdrIdx;
 
     if (lmHeader->magic_0 == LM_HEADER_MAGIC)
     {
-        bone->modelHeader_8 = &modelHeader[modelHeaderIdx];
+        bone->modelHdr_8 = &modelHdr[modelHdrIdx];
     }
 }
 
 bool Lm_ModelFind(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BEC_0_10* arg2) // 0x80056CB4
 {
     u_Filename     sp10;
-    s32            modelHeaderCount;
+    s32            modelHdrCount;
     bool           result;
     s32            i;
-    s_ModelHeader* modelHeader;
+    s_ModelHeader* modelHdr;
 
     result = false;
 
     StringCopy(sp10.str, arg2->modelName_0.str);
 
-    modelHeaderCount = lmHeader->modelCount_8;
+    modelHdrCount = lmHeader->modelCount_8;
 
     if (lmHeader->magic_0 == LM_HEADER_MAGIC)
     {
-        for (i = 0, modelHeader = &lmHeader->modelHeaders_C[i]; i < modelHeaderCount; i++, modelHeader++)
+        for (i = 0, modelHdr = &lmHeader->modelHdrs_C[i]; i < modelHdrCount; i++, modelHdr++)
         {
-            if (!COMPARE_FILENAMES(&modelHeader->modelName_0, &sp10))
+            if (!COMPARE_FILENAMES(&modelHdr->modelName_0, &sp10))
             {
                 result                   = true;
                 arg0->field_0.modelIdx_C = i;
-                arg0->field_0.modelHdr_8 = modelHeader;
+                arg0->field_0.modelHdr_8 = modelHdr;
                 // TODO: `field_8` above used to be `s_800BCE18_2BEC_0_10*`, but this func showed it was `s_ModelHeader*`
                 // Unsure if all `s_800BCE18_2BEC_0_10` refs should be changed though since struct is different size.
             }
@@ -882,19 +882,19 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80056D8C); // 0x
 
 void func_80057090(s_800BCE18_2BEC_0_0* arg0, GsOT* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5) // 0x80057090
 {
-    s_ModelHeader* modelHeader;
+    s_ModelHeader* modelHdr;
     GsOT_TAG*      temp_s1;
     s32            temp_a0;
 
-    modelHeader = arg0->modelHdr_8;
+    modelHdr = arg0->modelHdr_8;
 
     if (arg0->field_0 < 0)
     {
         return;
     }
 
-    temp_s1 = &arg1->org[func_800571D0(modelHeader->field_B_1)];
-    temp_a0 = modelHeader->field_B_4;
+    temp_s1 = &arg1->org[func_800571D0(modelHdr->field_B_1)];
+    temp_a0 = modelHdr->field_B_4;
     if ((temp_a0 & 0xFF) != 0 && temp_a0 >= 0 && temp_a0 < 4) // @hack: `& 0xFF` needed for match.
     {
         func_80059D50(temp_a0, arg0, mat0, arg2, temp_s1);
@@ -906,7 +906,7 @@ void func_80057090(s_800BCE18_2BEC_0_0* arg0, GsOT* arg1, void* arg2, MATRIX* ma
             func_80057228(mat1, D_800C4168.field_54, &D_800C4168.field_58, &D_800C4168.field_60);
         }
 
-        if (modelHeader->field_B_0)
+        if (modelHdr->field_B_0)
         {
             D_800C42B4 = arg5;
             func_8005A21C(arg0, temp_s1, arg2, mat0);
@@ -973,28 +973,28 @@ void func_80057344(s_800BCE18_2BEC_0* arg0, GsOT_TAG* arg1, void* arg2, MATRIX* 
 {
     u32               normalOffset;
     u32               vertexOffset;
-    s_MeshHeader*     meshHeader;
-    s_ModelHeader*    modelHeader;
+    s_MeshHeader*     meshHdr;
+    s_ModelHeader*    modelHdr;
     s_GteScratchData* scratchData;
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    modelHeader  = arg0->field_0.modelHdr_8;
-    vertexOffset = modelHeader->vertexOffset_9;
-    normalOffset = modelHeader->normalOffset_A;
+    modelHdr  = arg0->field_0.modelHdr_8;
+    vertexOffset = modelHdr->vertexOffset_9;
+    normalOffset = modelHdr->normalOffset_A;
 
     gte_lddqa(D_800C4168.field_4C);
     gte_lddqb_0();
 
-    for (meshHeader = modelHeader->meshHeaders_C; meshHeader < &modelHeader->meshHeaders_C[modelHeader->meshCount_8]; meshHeader++)
+    for (meshHdr = modelHdr->meshHdrs_C; meshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; meshHdr++)
     {
         if (vertexOffset != 0 || normalOffset != 0)
         {
-            func_8005759C(meshHeader, scratchData, vertexOffset, normalOffset);
+            func_8005759C(meshHdr, scratchData, vertexOffset, normalOffset);
         }
         else
         {
-            func_800574D4(meshHeader, scratchData);
+            func_800574D4(meshHdr, scratchData);
         }
 
         switch (D_800C4168.field_0)
@@ -1003,20 +1003,20 @@ void func_80057344(s_800BCE18_2BEC_0* arg0, GsOT_TAG* arg1, void* arg2, MATRIX* 
                 break;
 
             case 1:
-                func_80057658(meshHeader, normalOffset, scratchData, &D_800C4168.field_74, &D_800C4168.field_7C);
+                func_80057658(meshHdr, normalOffset, scratchData, &D_800C4168.field_74, &D_800C4168.field_7C);
                 break;
 
             case 2:
-                func_80057A3C(meshHeader, normalOffset, scratchData, &D_800C4168.field_74);
+                func_80057A3C(meshHdr, normalOffset, scratchData, &D_800C4168.field_74);
                 break;
         }
 
-        func_80057B7C(meshHeader, vertexOffset, scratchData, mat);
-        func_8005801C(meshHeader, scratchData, arg1, arg2);
+        func_80057B7C(meshHdr, vertexOffset, scratchData, mat);
+        func_8005801C(meshHdr, scratchData, arg1, arg2);
     }
 }
 
-void func_800574D4(s_MeshHeader* meshHeader, s_GteScratchData* scratchData) // 0x800574D4
+void func_800574D4(s_MeshHeader* meshHdr, s_GteScratchData* scratchData) // 0x800574D4
 {
     DVECTOR* vertexXy;
     s16*     vertexZ;
@@ -1027,10 +1027,10 @@ void func_800574D4(s_MeshHeader* meshHeader, s_GteScratchData* scratchData) // 0
 
     screenXy = &scratchData->screenXy_0[0];
     var_a2   = &scratchData->field_18C[0]; // `screenZ`? There's already an earlier struct field though.
-    vertexXy = &meshHeader->verticesXy_8[0];
-    vertexZ  = &meshHeader->verticesZ_C[0];
+    vertexXy = &meshHdr->verticesXy_8[0];
+    vertexZ  = &meshHdr->verticesZ_C[0];
 
-    while (var_a2 < &scratchData->field_18C[meshHeader->vertexCount_1])
+    while (var_a2 < &scratchData->field_18C[meshHdr->vertexCount_1])
     {
         *(u32*)screenXy++ = *(u32*)vertexXy++;
 
@@ -1039,15 +1039,15 @@ void func_800574D4(s_MeshHeader* meshHeader, s_GteScratchData* scratchData) // 0
         var_a2 += 2;
     }
 
-    while (screenXy < &scratchData->screenXy_0[meshHeader->vertexCount_1])
+    while (screenXy < &scratchData->screenXy_0[meshHdr->vertexCount_1])
     {
         *(u32*)screenXy++ = *(u32*)vertexXy++;
     }
 
-    unkPtr     = &meshHeader->unkPtr_14[0];
+    unkPtr     = &meshHdr->unkPtr_14[0];
     unkPtrDest = &scratchData->field_2B8[0];
 
-    while (unkPtrDest < &scratchData->field_2B8[meshHeader->unkCount_3])
+    while (unkPtrDest < &scratchData->field_2B8[meshHdr->unkCount_3])
     {
         *(u32*)unkPtrDest = *(u32*)unkPtr;
         unkPtr += 4;
@@ -1055,7 +1055,7 @@ void func_800574D4(s_MeshHeader* meshHeader, s_GteScratchData* scratchData) // 0
     }
 }
 
-void func_8005759C(s_MeshHeader* meshHeader, s_GteScratchData* scratchData, s32 vertexOffset, s32 normalOffset) // 0x8005759C
+void func_8005759C(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 vertexOffset, s32 normalOffset) // 0x8005759C
 {
     s16* vertexZPtr;
     s16* field_18CPtr;
@@ -1067,23 +1067,23 @@ void func_8005759C(s_MeshHeader* meshHeader, s_GteScratchData* scratchData, s32 
     // Should be loop? Tried but no luck.
     screenXyPtr  = &scratchData->screenXy_0[vertexOffset];
     field_18CPtr = &scratchData->field_18C[vertexOffset];
-    vertexXyPtr  = meshHeader->verticesXy_8;
-    vertexZPtr   = meshHeader->verticesZ_C;
-    while (vertexXyPtr < &meshHeader->verticesXy_8[meshHeader->vertexCount_1])
+    vertexXyPtr  = meshHdr->verticesXy_8;
+    vertexZPtr   = meshHdr->verticesZ_C;
+    while (vertexXyPtr < &meshHdr->verticesXy_8[meshHdr->vertexCount_1])
     {
         *screenXyPtr++  = *vertexXyPtr++;
         *field_18CPtr++ = *vertexZPtr++;
     }
 
-    field_14Ptr  = meshHeader->unkPtr_14;
+    field_14Ptr  = meshHdr->unkPtr_14;
     field_2B8Ptr = &scratchData->field_2B8[normalOffset];
-    while (field_14Ptr < &meshHeader->unkPtr_14[meshHeader->unkCount_3])
+    while (field_14Ptr < &meshHdr->unkPtr_14[meshHdr->unkCount_3])
     {
         *field_2B8Ptr++ = *field_14Ptr++;
     }
 }
 
-void func_80057658(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scratchData, SVECTOR3* arg3, SVECTOR* arg4) // 0x80057658
+void func_80057658(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, SVECTOR3* arg3, SVECTOR* arg4) // 0x80057658
 {
     s32       geomOffsetX;
     s32       geomOffsetY;
@@ -1120,7 +1120,7 @@ void func_80057658(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scrat
     var_t0 = &scratchData->field_2B8[offset];
     mat    = &scratchData->field_380;
 
-    for (normal = meshHeader->normals_10; normal < &meshHeader->normals_10[meshHeader->normalCount_2]; normal++)
+    for (normal = meshHdr->normals_10; normal < &meshHdr->normals_10[meshHdr->normalCount_2]; normal++)
     {
         temp_t8   = &scratchData->field_380.m[2][0];
         screenPos = &scratchData->screenPos_3A4;
@@ -1217,7 +1217,7 @@ void func_80057658(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scrat
     SetGeomScreen(geomScreen);
 }
 
-void func_80057A3C(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec) // 0x80057A3C
+void func_80057A3C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec) // 0x80057A3C
 {
     s32       var_v1;
     s32       temp_t2;
@@ -1233,7 +1233,7 @@ void func_80057A3C(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scrat
     var_a3  = &scratchData->field_2B8[offset];
     temp_t2 = D_800C4168.field_20;
 
-    for (normal = meshHeader->normals_10; normal < &meshHeader->normals_10[meshHeader->normalCount_2]; normal++)
+    for (normal = meshHdr->normals_10; normal < &meshHdr->normals_10[meshHdr->normalCount_2]; normal++)
     {
         *(u32*)&scratchData->field_3A0 = *(u32*)normal;
 
@@ -1268,18 +1268,18 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005801C); // 0x
 void func_80059D50(s32 arg0, s_800BCE18_2BEC_0_0* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4) // 0x80059D50
 {
     s_GteScratchData* scratchData;
-    s_MeshHeader*     meshHeader;
-    s_ModelHeader*    modelHeader;
+    s_MeshHeader*     curMeshHdr;
+    s_ModelHeader*    modelHdr;
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    modelHeader = arg1->modelHdr_8;
+    modelHdr = arg1->modelHdr_8;
 
-    for (meshHeader = &modelHeader->meshHeaders_C[0]; meshHeader < &modelHeader->meshHeaders_C[modelHeader->meshCount_8]; meshHeader++)
+    for (curMeshHdr = &modelHdr->meshHdrs_C[0]; curMeshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; curMeshHdr++)
     {
-        func_800574D4(meshHeader, scratchData);
-        func_80057B7C(meshHeader, 0, scratchData, mat);
-        func_80059E34(arg0, meshHeader, scratchData, arg3, arg4);
+        func_800574D4(curMeshHdr, scratchData);
+        func_80057B7C(curMeshHdr, 0, scratchData, mat);
+        func_80059E34(arg0, curMeshHdr, scratchData, arg3, arg4);
     }
 }
 
@@ -1290,8 +1290,8 @@ void func_8005A21C(s_800BCE18_2BEC_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX*
     s16               var_v1;
     u32               normalOffset;
     u32               vertexOffset;
-    s_ModelHeader*    modelHeader;
-    s_MeshHeader*     meshHeader;
+    s_ModelHeader*    modelHdr;
+    s_MeshHeader*     meshHdr;
     s_GteScratchData* scratchData;
 
     scratchData = PSX_SCRATCH_ADDR(0);
@@ -1333,34 +1333,34 @@ void func_8005A21C(s_800BCE18_2BEC_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX*
             break;
     }
 
-    modelHeader  = arg0->field_0.modelHdr_8;
-    vertexOffset = modelHeader->vertexOffset_9;
-    normalOffset = modelHeader->normalOffset_A;
+    modelHdr  = arg0->field_0.modelHdr_8;
+    vertexOffset = modelHdr->vertexOffset_9;
+    normalOffset = modelHdr->normalOffset_A;
 
-    for (meshHeader = modelHeader->meshHeaders_C; meshHeader < &modelHeader->meshHeaders_C[modelHeader->meshCount_8]; meshHeader++)
+    for (meshHdr = modelHdr->meshHdrs_C; meshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; meshHdr++)
     {
-        func_8005A900(meshHeader, vertexOffset, scratchData, mat);
+        func_8005A900(meshHdr, vertexOffset, scratchData, mat);
 
         if (D_800C4168.field_0 != 0)
         {
-            func_8005AA08(meshHeader, normalOffset, scratchData);
+            func_8005AA08(meshHdr, normalOffset, scratchData);
         }
 
-        func_8005AC50(meshHeader, scratchData, otTag, arg2);
+        func_8005AC50(meshHdr, scratchData, otTag, arg2);
     }
 }
 
-void func_8005A42C(s_GteScratchData* scratchData, s32 arg1) // 0x8005A42C
+void func_8005A42C(s_GteScratchData* scratchData, q19_12 alpha) // 0x8005A42C
 {
-    s32 alpha = Q12(1.0f) - FP_MULTIPLY(arg1, D_800C4168.field_20, Q12_SHIFT);
+    q19_12 invAlpha = Q12(1.0f) - FP_MULTIPLY(alpha, D_800C4168.field_20, Q12_SHIFT);
 
-    gte_lddp(alpha);
+    gte_lddp(invAlpha);
     gte_ldrgb(&D_800C4168.worldTintColor_28);
     gte_dpcs();
     gte_strgb(&scratchData->field_3D8);
 }
 
-void func_8005A478(s_GteScratchData* scratchData, s32 alpha) // 0x8005A478
+void func_8005A478(s_GteScratchData* scratchData, q19_12 alpha) // 0x8005A478
 {
     s32 geomOffsetX;
     s32 geomOffsetY;
@@ -1441,7 +1441,7 @@ void func_8005A478(s_GteScratchData* scratchData, s32 alpha) // 0x8005A478
         var_s0 = D_800C4168.field_3;
     }
 
-    var_s0 = FP_FROM(var_s0 * alpha, Q12_SHIFT);
+    var_s0 = FP_MULTIPLY(var_s0, alpha, Q12_SHIFT);
 
     if (var_s0 < 0)
     {
@@ -1505,14 +1505,14 @@ void func_8005A838(s_GteScratchData* scratchData, s32 scale) // 0x8005A838
                  FP_MULTIPLY(D_800C4168.field_26, scale, Q12_SHIFT));
 }
 
-void func_8005A900(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scratchData, MATRIX* mat) // 0x8005A900
+void func_8005A900(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, MATRIX* mat) // 0x8005A900
 {
     DVECTOR* inXy;  // Model-space XY input
     u16*     inZ;   // Model-space Z input
     DVECTOR* outXy; // Projected XY output buffer
     u16*     outZ;  // Projected Z output buffer
 
-    if (meshHeader->vertexCount_1 == 0)
+    if (meshHdr->vertexCount_1 == 0)
     {
         return;
     }
@@ -1523,10 +1523,10 @@ void func_8005A900(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scrat
     outXy = &scratchData->screenXy_0[offset];
     outZ  = &scratchData->screenZ_168[offset];
 
-    inXy = meshHeader->verticesXy_8;
-    inZ  = meshHeader->verticesZ_C;
+    inXy = meshHdr->verticesXy_8;
+    inZ  = meshHdr->verticesZ_C;
 
-    while (outXy < &scratchData->screenXy_0[meshHeader->vertexCount_1 + offset])
+    while (outXy < &scratchData->screenXy_0[meshHdr->vertexCount_1 + offset])
     {
         // Nearly same as `gte_RotTransPers3`, processes 3 vertices per iteration.
         gte_LoadVector0_1_2_XYZ(inXy, inZ);
@@ -1540,7 +1540,7 @@ void func_8005A900(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scrat
     }
 }
 
-u8 func_8005AA08(s_MeshHeader* meshHeader, s32 arg1, s_GteScratchData2* scratchData) // 0x8005AA08
+u8 func_8005AA08(s_MeshHeader* meshHdr, s32 arg1, s_GteScratchData2* scratchData) // 0x8005AA08
 {
 	// Same as `gte_strgb3`, but takes `VECTOR3` pointer to store results.
 	// Not sure why this was needed, the func that uses it also ends up calling the normal `gte_strgb3` too.
@@ -1556,7 +1556,7 @@ u8 func_8005AA08(s_MeshHeader* meshHeader, s32 arg1, s_GteScratchData2* scratchD
     s_Normal* var_a3;
     VECTOR3*  var_t0;
 
-    if (meshHeader->normalCount_2 == 0)
+    if (meshHdr->normalCount_2 == 0)
     {
         return;
     }
@@ -1564,7 +1564,7 @@ u8 func_8005AA08(s_MeshHeader* meshHeader, s32 arg1, s_GteScratchData2* scratchD
     sp0.cd = 0;
     gte_ldrgb(&sp0);
 
-    var_a3 = meshHeader->normals_10;
+    var_a3 = meshHdr->normals_10;
     *(u32*)&scratchData->u.normal.field_3DC = *(u32*)&var_a3[0];
     scratchData->u.normal.field_3E0[0].vx = scratchData->u.normal.field_3DC.nx << 5;
     scratchData->u.normal.field_3E0[0].vy = scratchData->u.normal.field_3DC.ny << 5;
@@ -1586,7 +1586,7 @@ u8 func_8005AA08(s_MeshHeader* meshHeader, s32 arg1, s_GteScratchData2* scratchD
     gte_ldv3c(scratchData->u.normal.field_3E0);
     gte_nct();
 
-    while(var_a3 < &meshHeader->normals_10[meshHeader->normalCount_2])
+    while(var_a3 < &meshHdr->normals_10[meshHdr->normalCount_2])
     {
         *(u32*)&scratchData->u.normal.field_3DC = *(u32*)&var_a3[0];
         scratchData->u.normal.field_3E0[0].vx = scratchData->u.normal.field_3DC.nx << 5;
