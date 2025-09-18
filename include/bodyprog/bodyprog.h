@@ -3537,6 +3537,8 @@ void func_8006982C(u16 arg0);
 
 void func_80069844(s32 arg0);
 
+void func_80069860(s32 arg0, s32 arg1, s_func_8006F8FC* arg2);
+
 void IpdCollData_FixOffsets(s_IpdCollisionData* collData);
 
 void func_80069994(s_IpdCollisionData* collData);
@@ -3547,6 +3549,10 @@ void func_800699E4(s_IpdCollisionData* collData);
 void func_800699F8(s_func_800699F8* coll, s32 posX, s32 posZ);
 
 s32 func_80069B24(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara);
+
+s32 func_80069BA8(s_800C4590* arg0, VECTOR3* arg2, s_SubCharacter* arg3, s32 arg4);
+
+void func_80069DF0(s_800C4590* arg0, VECTOR3* arg1, s32 arg2, s32 arg3);
 
 s32 func_80069FFC(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara);
 
