@@ -629,7 +629,7 @@ void Map_PlaceIpdAtGridPos(s16 ipdFileIdx, s32 x, s32 z) // 0x80041ED0
             ipd = ptr->ipdHeader_0;
             if (ipd->isLoaded_1)
             {
-                func_80056BF8(ipd->lmHeader_4);
+                Lm_MaterialRefCountDec(ipd->lmHeader_4);
             }
         }
 
@@ -649,7 +649,7 @@ void func_8004201C() // 0x8004201C
     material_8 = &D_800C1020.field_430.field_58[0];
     while (material_8 < (&D_800C1020.field_430.field_58[8]))
     {
-        if (material_8->field_14 == 0)
+        if (material_8->refCount_14 == 0)
         {
             func_8005B3A4(material_8);
         }
@@ -660,7 +660,7 @@ void func_8004201C() // 0x8004201C
     material_8 = &D_800C1020.field_430.field_118[0];
     while (material_8 < (&D_800C1020.field_430.field_118[2]))
     {
-        if (material_8->field_14 == 0)
+        if (material_8->refCount_14 == 0)
         {
             func_8005B3A4(material_8);
         }
@@ -685,7 +685,7 @@ void func_800420FC() // 0x800420FC
     if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
         ptr->lmHeader_0->isLoaded_2)
     {
-        func_80056BF8(D_800C1020.field_138.lmHeader_0);
+        Lm_MaterialRefCountDec(D_800C1020.field_138.lmHeader_0);
     }
 
     func_80041CB4(&D_800C1020.field_138, D_800C1020.field_138.lmHeader_0);
@@ -722,7 +722,7 @@ void func_800421D8(char* mapTag, s32 plmIdx, s32 arg2, s32 arg3, s32 arg4, s32 a
             if (Fs_QueueEntryLoadStatusGet(D_800C1020.field_138.queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
                 D_800C1020.field_138.lmHeader_0->isLoaded_2)
             {
-                func_80056BF8(D_800C1020.field_138.lmHeader_0);
+                Lm_MaterialRefCountDec(D_800C1020.field_138.lmHeader_0);
             }
 
             D_800C1020.field_138.fileIdx_4 = plmIdx;
@@ -763,7 +763,7 @@ void func_80042300(s_800C1020* arg0, s32 arg1) // 0x80042300
             ipd1 = temp_s0->ipdHeader_0;
             if (ipd1->isLoaded_1)
             {
-                func_80056BF8(ipd1->lmHeader_4);
+                Lm_MaterialRefCountDec(ipd1->lmHeader_4);
             }
         }
 
@@ -1162,7 +1162,7 @@ s32 func_80042EBC(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0
                         temp_v1 = temp_v0_3->destBuffer_0;
                         if (temp_v1->field_1 != 0)
                         {
-                            func_80056BF8(temp_v1->field_4);
+                            Lm_MaterialRefCountDec(temp_v1->field_4);
                         }
                     }
 
@@ -1231,7 +1231,7 @@ void func_800433B8(s_800C1020* arg0) // 0x800433B8
         {
             if (ptr->ipdHeader_0->isLoaded_1 && ptr->field_C > 0 && ptr->field_10 > 0)
             {
-                func_80056BF8(ptr->ipdHeader_0->lmHeader_4);
+                Lm_MaterialRefCountDec(ptr->ipdHeader_0->lmHeader_4);
             }
         }
     }

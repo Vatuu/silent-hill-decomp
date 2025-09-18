@@ -801,7 +801,7 @@ void func_80056A88(s_ModelHeader* modelHeader, s32 arg1, s_Material* mat, s32 fl
     }
 }
 
-void func_80056BF8(s_LmHeader* lmHeader) // 0x80056BF8
+void Lm_MaterialRefCountDec(s_LmHeader* lmHeader) // 0x80056BF8
 {
     s_Material*   mat;
     s_Material_8* material_8;
@@ -811,10 +811,10 @@ void func_80056BF8(s_LmHeader* lmHeader) // 0x80056BF8
         material_8 = mat->field_8;
         if (material_8 != NULL)
         {
-            material_8->field_14--;
-            if (material_8->field_14 < 0)
+            material_8->refCount_14--;
+            if (material_8->refCount_14 < 0)
             {
-                material_8->field_14 = 0;
+                material_8->refCount_14 = 0;
             }
 
             mat->field_8 = NULL;
@@ -1626,7 +1626,7 @@ void func_8005B1A0(s_Material_8* material_8, char* texName, u8 tPage0, u8 tPage1
 
     StringCopy(material_8->textureName_8.str, texName);
 
-    material_8->field_14 = 0;
+    material_8->refCount_14 = 0;
     material_8->queueIdx_10 = NO_VALUE;
 }
 
@@ -1651,12 +1651,12 @@ s_Material_8* func_8005B1FC(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9
         if (!cmp_filename(&mat->materialName_0, &tex->textureName_8))
         {
             mat->field_8 = tex;
-            tex->field_14++;
+            tex->refCount_14++;
             return tex;
         }
 
         queueIdx = tex->queueIdx_10;
-        if (((s32) queueIdx < lowestQueueIdx) && (tex->field_14 == 0))
+        if (((s32) queueIdx < lowestQueueIdx) && (tex->refCount_14 == 0))
         {
             lowestQueueIdx = queueIdx;
             found = tex;
@@ -1683,20 +1683,20 @@ s_Material_8* func_8005B1FC(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9
     }
 
     found->queueIdx_10 = Fs_QueueStartReadTim(fileId, fsBuffer9, &found->imageDesc_0);
-    found->field_14++;
+    found->refCount_14++;
     found->textureName_8 = mat->materialName_0;
 
     return found;
 }
 
-void func_8005B370(s_Material_8* material_8) // 0x8005B370
+void Mat_RefCountReset(s_Material_8* material_8) // 0x8005B370
 {
-    material_8->field_14 = 0;
+    material_8->refCount_14 = 0;
 }
 
 void func_8005B378(s_Material_8* material_8, char* arg1) // 0x8005B378
 {
-    material_8->field_14 = 1;
+    material_8->refCount_14 = 1;
     material_8->queueIdx_10 = 0;
     StringCopy(material_8->textureName_8.str, arg1);
 }
@@ -1706,7 +1706,7 @@ void func_8005B3A4(s_Material_8* material_8) // 0x8005B3A4
     material_8->textureName_8.u32[1] = 0;
     material_8->textureName_8.u32[0] = 0;
 
-    material_8->field_14 = 0;
+    material_8->refCount_14 = 0;
     material_8->queueIdx_10 = NO_VALUE;
 }
 

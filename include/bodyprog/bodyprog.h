@@ -582,7 +582,7 @@ typedef struct _Material_8
     s_FsImageDesc imageDesc_0;
     u_Filename    textureName_8;
     u32           queueIdx_10;
-    s8            field_14;
+    s8            refCount_14;
 } s_Material_8;
 
 typedef struct _Material
@@ -3116,7 +3116,7 @@ u8 func_8005AA08(s_MeshHeader* meshHeader, s32 arg1, s_GteScratchData2* scratchD
 /** Related to enviroment textures. */
 void func_8005B1A0(s_Material_8* material_8, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY);
 
-void func_8005B370(s_Material_8* material_8);
+void Mat_RefCountReset(s_Material_8* material_8);
 
 void func_8005B378(s_Material_8* material_8, char* arg1);
 
@@ -3149,7 +3149,7 @@ void func_80056954(s_LmHeader* lmHeader);
 
 void func_80056A88(s_ModelHeader* modelHeader, s32 arg1, s_Material* mat, s32 flags);
 
-void func_80056BF8(s_LmHeader* lmHeader);
+void Lm_MaterialRefCountDec(s_LmHeader* lmHeader);
 
 s32 LmHeader_ModelCountGet(s_LmHeader* lmHeader);
 
