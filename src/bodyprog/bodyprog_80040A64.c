@@ -710,10 +710,10 @@ s_Texture* func_80042178(char* arg0) // 0x80042178
     return NULL;
 }
 
-void func_800421D8(char* mapTag, s32 plmIdx, s32 activeIpdCount, s32 arg3, s32 arg4, s32 arg5) // 0x800421D8
+void func_800421D8(char* mapTag, s32 plmIdx, s32 activeIpdCount, s32 globalPlm, s32 ipdFileIdx, s32 texFileIdx) // 0x800421D8
 {
-    D_800C1020.hasGlobalPlm = arg3;
-    D_800C1020.field_134 = arg5;
+    D_800C1020.hasGlobalPlm = globalPlm;
+    D_800C1020.texFileIdx_134 = texFileIdx;
 
     if (plmIdx != NO_VALUE)
     {
@@ -735,11 +735,11 @@ void func_800421D8(char* mapTag, s32 plmIdx, s32 activeIpdCount, s32 arg3, s32 a
         Ipd_ActiveChunksClear(&D_800C1020, activeIpdCount);
 
         D_800C1020.ipdActiveSize_158 = activeIpdCount;
-        D_800C1020.field_14C = arg4;
+        D_800C1020.ipdFileIdx_14C = ipdFileIdx;
         strcpy(D_800C1020.mapTag_144, mapTag);
 
         D_800C1020.mapTagSize_148 = strlen(mapTag);
-        Map_MakeIpdGrid(&D_800C1020, mapTag, arg4);
+        Map_MakeIpdGrid(&D_800C1020, mapTag, ipdFileIdx);
     }
 }
 
@@ -1058,7 +1058,7 @@ void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1) // 0x80042C3C
         D_800C1020.field_430.field_0.count_0 = 4;
 
         LmHeader_FixOffsets(D_800C1020.field_138.lmHeader_0);
-        func_80056774(D_800C1020.field_138.lmHeader_0, &D_800C1020.field_430.field_0, NULL, D_800C1020.field_134, 1);
+        func_80056774(D_800C1020.field_138.lmHeader_0, &D_800C1020.field_430.field_0, NULL, D_800C1020.texFileIdx_134, 1);
         func_80056954(D_800C1020.field_138.lmHeader_0);
 
         D_800C1020.field_430.field_0.count_0 = temp_s0;
@@ -1068,7 +1068,7 @@ void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1) // 0x80042C3C
     {
         if (Fs_QueueEntryLoadStatusGet(var_s0->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            IpdHeader_FixOffsets(var_s0->ipdHeader_0, &D_800C1020.field_138, 1, &D_800C1020.field_430.field_0, &D_800C1020.field_430.field_2C, D_800C1020.field_134);
+            IpdHeader_FixOffsets(var_s0->ipdHeader_0, &D_800C1020.field_138, 1, &D_800C1020.field_430.field_0, &D_800C1020.field_430.field_2C, D_800C1020.texFileIdx_134);
             func_80044044(var_s0->ipdHeader_0, var_s0->coordX_8, var_s0->coordZ_A);
         }
     }
@@ -1242,7 +1242,7 @@ void func_800433B8(s_800C1020* arg0) // 0x800433B8
         {
             if (ptr->ipdHeader_0->isLoaded_1 && (ptr->distance0_C <= 0 || ptr->distance1_10 <= 0))
             {
-                func_80043C7C(ptr->ipdHeader_0, &arg0->field_430.field_0, &arg0->field_430.field_2C, arg0->field_134);
+                func_80043C7C(ptr->ipdHeader_0, &arg0->field_430.field_0, &arg0->field_430.field_2C, arg0->texFileIdx_134);
                 func_80056954(ptr->ipdHeader_0->lmHeader_4);
             }
         }
@@ -1534,7 +1534,7 @@ void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_LmHeader** lmHeaders, s32 lm
     IpdHeader_ModelBufferLinkObjectLists(ipdHeader, ipdHeader->modelInfo_14);
 }
 
-void func_80043C7C(s_IpdHeader* ipdHeader, s_800C1450_0* arg1, s_800C1450_0* arg2, s32 arg3) // 0x80043C7C
+void func_80043C7C(s_IpdHeader* ipdHeader, s_800C1450_0* arg1, s_800C1450_0* arg2, s32 fileIdx) // 0x80043C7C
 {
     if (!ipdHeader->isLoaded_1)
     {
@@ -1543,12 +1543,12 @@ void func_80043C7C(s_IpdHeader* ipdHeader, s_800C1450_0* arg1, s_800C1450_0* arg
 
     if (arg1 != NULL)
     {
-        func_80056774(ipdHeader->lmHeader_4, arg1, &LmFilter_NameDoesNotEndWithH, arg3, 1);
+        func_80056774(ipdHeader->lmHeader_4, arg1, &LmFilter_NameDoesNotEndWithH, fileIdx, 1);
     }
 
     if (arg2 != NULL)
     {
-        func_80056774(ipdHeader->lmHeader_4, arg2, &LmFilter_NameEndsWithH, arg3, 1);
+        func_80056774(ipdHeader->lmHeader_4, arg2, &LmFilter_NameEndsWithH, fileIdx, 1);
     }
 }
 

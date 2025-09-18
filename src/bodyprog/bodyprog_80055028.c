@@ -675,7 +675,7 @@ void func_800566B4(s_LmHeader* lmHeader, s_FsImageDesc* image, s8 unused, s32 st
     }
 }
 
-void func_80056774(s_LmHeader* lmHeader, s_800C1450_0* arg1, bool (*func)(s_Material* mat), void* arg3, s32 arg4) // 0x80056774
+void func_80056774(s_LmHeader* lmHeader, s_800C1450_0* arg1, bool (*func)(s_Material* mat), s32 fileIdx, s32 arg4) // 0x80056774
 {
     s_Material* mats;
 
@@ -683,7 +683,7 @@ void func_80056774(s_LmHeader* lmHeader, s_800C1450_0* arg1, bool (*func)(s_Mate
     {
         if (mats->field_C == 0 && mats->tex_8 == NULL && (func == NULL || func(mats)))
         {
-            mats->tex_8 = Tex_Get(mats, arg1, FS_BUFFER_9, arg3, arg4);
+            mats->tex_8 = Tex_Get(mats, arg1, FS_BUFFER_9, fileIdx, arg4);
             if (mats->tex_8 != NULL)
             {
                 func_8005660C(mats, &mats->tex_8->imageDesc_0, arg4);
@@ -1630,7 +1630,7 @@ void Tex_Init1(s_Texture* tex_8, char* texName, u8 tPage0, u8 tPage1, s32 u, s32
     tex_8->queueIdx_10 = NO_VALUE;
 }
 
-s_Texture* Tex_Get(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, void* arg3, s32 arg4)
+s_Texture* Tex_Get(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, s32 fileIdx, s32 arg4)
 {
     s8            fileName[12];
     s8            debugStr[12];
@@ -1669,7 +1669,7 @@ s_Texture* Tex_Get(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, void* a
     }
 
     Mat_TimFileNameGet(&fileName, mat);
-    fileId = Fs_FindNextFile(&fileName, 0, (s32) arg3);
+    fileId = Fs_FindNextFile(&fileName, 0, fileIdx);
     if (fileId == NO_VALUE)
     {
         // Failed to find file, log filename to screen.

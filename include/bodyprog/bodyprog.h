@@ -1171,11 +1171,11 @@ STATIC_ASSERT_SIZEOF(s_800C1450, 328);
 typedef struct
 {
     s_IpdCollisionData field_0;
-    s32                field_134;
+    s32                texFileIdx_134;
     s_func_80041CB4    field_138;
     char               mapTag_144[4];
     s32                mapTagSize_148;
-    s32                field_14C;
+    s32                ipdFileIdx_14C;
     s_IpdHeader*       ipdBuf_150;
     s32                ipdBufSize_154;
     s32                ipdActiveSize_158;
@@ -2670,7 +2670,7 @@ void func_800420FC();
 
 s_Texture* func_80042178(char* arg0);
 
-void func_800421D8(char* mapTag, s32 plmIdx, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+void func_800421D8(char* mapTag, s32 plmIdx, s32 activeIpdCount, s32 globalPlm, s32 ipdFileIdx, s32 texFileIdx);
 
 void Ipd_ActiveChunksClear(s_800C1020* arg0, s32 arg1);
 
@@ -2761,7 +2761,7 @@ s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHeader);
 
 void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_LmHeader** lmHeaders, s32 lmHeaderCount, s_800C1450_0* arg3, s_800C1450_0* arg4, s32 arg5);
 
-void func_80043C7C(s_IpdHeader* ipdHeader, s_800C1450_0* arg1, s_800C1450_0* arg2, s32 arg3);
+void func_80043C7C(s_IpdHeader* ipdHeader, s_800C1450_0* arg1, s_800C1450_0* arg2, s32 fileIdx);
 
 /** Checks if IPD is loaded before returning texture count? */
 s32 func_80043D00(s_IpdHeader* ipdHeader);
@@ -3119,8 +3119,8 @@ void func_8005660C(s_Material* mat, s_FsImageDesc* image, s32 arg2);
 
 void func_800566B4(s_LmHeader* lmHeader, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4);
 
-/** Unknown `arg3` / `arg4` types. */
-void func_80056774(s_LmHeader* lmHeader, s_800C1450_0* arg1, bool (*func)(s_Material* mat), void* arg3, s32 arg4);
+/** Unknown `arg4` type. */
+void func_80056774(s_LmHeader* lmHeader, s_800C1450_0* arg1, bool (*func)(s_Material* mat), s32 fileIdx, s32 arg4);
 
 /** Checks if LM textures are loaded? */
 bool LmHeader_IsTextureLoaded(s_LmHeader* lmHeader);
@@ -3158,7 +3158,7 @@ void func_80057658(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scrat
 
 void func_80057A3C(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
 
-s_Texture* Tex_Get(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, void* arg3, s32 arg4);
+s_Texture* Tex_Get(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, s32 fileIdx, s32 arg4);
 
 void func_8005B55C(GsCOORDINATE2* coord);
 
