@@ -128,7 +128,7 @@ Anim_StartKeyframeIdxGet          = 0x800DA49C; // type:func
 sharedFunc_800D923C_0_s00         = 0x800DA4BC; // type:func
 sharedFunc_800D929C_0_s00         = 0x800DA51C; // type:func
 sharedFunc_800D92AC_0_s00         = 0x800DA52C; // type:func
-Gfx_LoadingScreen_MapString     = 0x800DA8A4;
+Gfx_LoadingScreen_MapString       = 0x800DA8A4;
 sharedFunc_800DA8E8_0_s01         = 0x800DA8E8; // type:func
 
 //------------------------------------------------------------------
