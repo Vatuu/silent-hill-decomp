@@ -2720,7 +2720,7 @@ s32 func_80042DE8(s32 posX, s32 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ, bo
 
 s32 func_80042E2C(s32 posX, s32 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ);
 
-s32 func_80042EBC(s_Map* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+s32 func_80042EBC(s_Map* arg0, s32 x1, s32 z1, s32 x2, s32 z2);
 
 void func_800431E4(s_Map* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, bool hasGlobalPlm);
 

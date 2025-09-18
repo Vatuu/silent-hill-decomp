@@ -1113,48 +1113,48 @@ s32 func_80042E2C(s32 posX, s32 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ) //
     return Vc_VectorMagnitudeCalc(x, 0, z);
 }
 
-s32 func_80042EBC(s_Map* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x80042EBC
+s32 func_80042EBC(s_Map* arg0, s32 x1, s32 z1, s32 x2, s32 z2) // 0x80042EBC
 {
-    s32           sp28;
-    s32           sp2C;
-    s32           sp30;
-    s32           temp_s1;
-    s32           temp_s3;
+    s32           xChunk;
+    s32           zChunk;
+    s32           ret;
+    s32           xIdx;
+    s32           zIdx;
     s32           temp_v0;
-    s32           temp_v0_2;
-    s32           temp_v0_4;
-    s32           j;
-    s32           i;
+    s32           chunkIdx;
+    s32           queueIdx;
+    s32           x;
+    s32           z;
     s32           var_v1;
     s_IpdChunk*   chunk;
     s_IpdHeader*  ipdHdr;
 
-    sp30 = NO_VALUE;
-    sp28 = FLOOR_TO_STEP(FP_METER_TO_GEO(arg1), FP_METER_GEO(40.0f));
-    sp2C = FLOOR_TO_STEP(FP_METER_TO_GEO(arg2), FP_METER_GEO(40.0f));
+    ret = NO_VALUE;
+    xChunk = FLOOR_TO_STEP(FP_METER_TO_GEO(x1), FP_METER_GEO(40.0f));
+    zChunk = FLOOR_TO_STEP(FP_METER_TO_GEO(z1), FP_METER_GEO(40.0f));
 
-    temp_v0 = FLOOR_TO_STEP(FP_METER_TO_GEO(arg3), FP_METER_GEO(40.0f));
-    var_v1  = FLOOR_TO_STEP(FP_METER_TO_GEO(arg4), FP_METER_GEO(40.0f));
+    temp_v0 = FLOOR_TO_STEP(FP_METER_TO_GEO(x2), FP_METER_GEO(40.0f));
+    var_v1  = FLOOR_TO_STEP(FP_METER_TO_GEO(z2), FP_METER_GEO(40.0f));
 
     arg0->field_580 = temp_v0;
     arg0->field_584 = var_v1;
 
-    func_800431E4(arg0, arg1, arg2, arg3, arg4, arg0->hasGlobalPlm);
+    func_800431E4(arg0, x1, z1, x2, z2, arg0->hasGlobalPlm);
     func_800433B8(arg0);
 
-    for (i = NO_VALUE; i < 2; i++)
+    for (z = -1; z <= 1; z++)
     {
-        for (j = NO_VALUE; j < 2; j++)
+        for (x = -1; x <= 1; x++)
         {
-            if (arg0->hasGlobalPlm || (j == 0 && i == 0))
+            if (arg0->hasGlobalPlm || (x == 0 && z == 0))
             {
-                temp_s3 = sp2C + i;
-                temp_s1 = sp28 + j;
+                zIdx = zChunk + z;
+                xIdx = xChunk + x;
 
-                temp_v0_2 = Map_IpdIndexGet(temp_s1, temp_s3);
-                if (temp_v0_2 != NO_VALUE &&
-                    func_80042DE8(arg1, arg2, temp_s1, temp_s3, arg0->hasGlobalPlm) <= FP_METER(0.0f) &&
-                    !Map_IpdPresent(&arg0->ipdActive_15C[0], temp_s1, temp_s3))
+                chunkIdx = Map_IpdIndexGet(xIdx, zIdx);
+                if (chunkIdx != NO_VALUE &&
+                    func_80042DE8(x1, z1, xIdx, zIdx, arg0->hasGlobalPlm) <= FP_METER(0.0f) &&
+                    !Map_IpdPresent(&arg0->ipdActive_15C[0], xIdx, zIdx))
                 {
                     chunk = func_800435E4(&arg0->ipdActive_15C[0], arg0->hasGlobalPlm);
 
@@ -1167,17 +1167,17 @@ s32 func_80042EBC(s_Map* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8004
                         }
                     }
 
-                    temp_v0_4 = func_800436D8(chunk, temp_v0_2, temp_s1, temp_s3, arg1, arg2, arg3, arg4, arg0->hasGlobalPlm);
-                    if (temp_v0_4 != NO_VALUE)
+                    queueIdx = func_800436D8(chunk, chunkIdx, xIdx, zIdx, x1, z1, x2, z2, arg0->hasGlobalPlm);
+                    if (queueIdx != NO_VALUE)
                     {
-                        sp30 = temp_v0_4;
+                        ret = queueIdx;
                     }
                 }
             }
         }
     }
 
-    return sp30;
+    return ret;
 }
 
 void func_800431E4(s_Map* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, bool hasGlobalPlm) // 0x800431E4
