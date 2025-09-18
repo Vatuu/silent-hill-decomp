@@ -81,7 +81,7 @@ void Ai_Cheryl_Init(s_SubCharacter* chara); // 0x800D8888
 
 s32 func_800D929C();
 
-void Gfx_LoadingScreen_MapString();
+void Gfx_LoadingScreen_StageString();
 
 void func_800DBE00();
 

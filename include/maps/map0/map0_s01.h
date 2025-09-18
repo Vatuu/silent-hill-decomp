@@ -86,7 +86,7 @@ void func_800DA7AC();
 
 void func_800DA7FC();
 
-void Gfx_LoadingScreen_MapString();
+void Gfx_LoadingScreen_StageString();
 
 /** @brief Handles the Air Screamer cutscene in the cafe. */
 void MapEvent_AirScreamerIntroCutscene();

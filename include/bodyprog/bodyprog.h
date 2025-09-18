@@ -193,7 +193,7 @@ typedef enum _LoadingScreenId
     LoadingScreenId_None              = 0,
     LoadingScreenId_PlayerRun         = 1,
     LoadingScreenId_BackgroundTexture = 2,
-    LoadingScreenId_MapString       = 3
+    LoadingScreenId_StageString       = 3
 } e_LoadingScreenId;
 
 typedef enum _StaticModelLoadState

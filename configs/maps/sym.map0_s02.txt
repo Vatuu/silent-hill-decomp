@@ -61,7 +61,7 @@ sharedFunc_800D2EB4_0_s00        = 0x800CE788; // type:func
 sharedFunc_800D2EF4_0_s00        = 0x800CE7C8; // type:func
 sharedFunc_800D929C_0_s00        = 0x800CE7DC; // type:func
 Map_RoomIdxGet                   = 0x800CE7EC; // type:func
-Gfx_LoadingScreen_MapString      = 0x800CEBC0; // type:func
+Gfx_LoadingScreen_StageString    = 0x800CEBC0; // type:func
 
 //------------------------------------------------------------------
 //--- PA: 0x005650   VA: 0x800CEBC8   subsegment: c, map0_s02_events

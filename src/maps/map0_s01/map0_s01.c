@@ -987,7 +987,7 @@ void func_800DA7FC() // 0x800DA7FC
     func_80035F4C(var0, var1, NULL);
 }
 
-void Gfx_LoadingScreen_MapString() // 0x800DA8A4
+void Gfx_LoadingScreen_StageString() // 0x800DA8A4
 {
     g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, false);
 
