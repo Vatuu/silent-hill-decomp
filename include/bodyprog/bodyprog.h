@@ -957,25 +957,6 @@ typedef struct
 
 typedef struct
 {
-    u8  unk_0;
-    u8  field_1;
-    u8  unk_2[2];
-    s32 field_4;
-} s_80043338_0;
-
-// Maybe level stream data?
-typedef struct
-{
-    s_80043338_0* destBuffer_0;
-    s32           queueEntryIdx_4;
-    s16           fileChunkCoordX_8;
-    s16           fileChunkCoordZ_A;
-    s32           field_C;  // } Something to do with distance from file chunk edge.
-    s32           field_10; // }
-} s_80043338;
-
-typedef struct
-{
     s8             charaId0_0; /** `e_CharacterId`. */
     s8             charaId1_1; /** `e_CharacterId`. */
     s8             unk_2[2];
@@ -1097,7 +1078,7 @@ typedef struct
     u_Filename modelName_0;
     s8   field_8;
 /* Set to 2 when found in D_800C1020.field_138.lmHeader_0.
- * Set to 3-6 if found in D_800C1020.ipdTable_15C[i] (i + 3).
+ * Set to 3-6 if found in D_800C1020.ipdActive_15C[i] (i + 3).
  */
     s8   lmIndex_9;
 } s_800BCE18_2BEC_0_10;
@@ -1155,15 +1136,15 @@ typedef struct
 {
     s_IpdHeader* ipdHeader_0;
     s32          queueIdx_4;
-    s16          field_8; // X cell coord?
-    s16          field_A; // Z cell coord?
-    s32          field_C;
-    s32          field_10;
+    s16          coordX_8;
+    s16          coordZ_A;
+    s32          distance0_C;
+    s32          distance1_10;
     u8           field_14;
     s8           unk_15[3];
     s32          field_18;
-} s_800C117C;
-STATIC_ASSERT_SIZEOF(s_800C117C, 28);
+} s_IpdChunk;
+STATIC_ASSERT_SIZEOF(s_IpdChunk, 28);
 
 typedef struct _IpdRow
 {
@@ -1190,15 +1171,15 @@ STATIC_ASSERT_SIZEOF(s_800C1450, 328);
 typedef struct
 {
     s_IpdCollisionData field_0;
-    s32                field_134;
+    s32                texFileIdx_134;
     s_func_80041CB4    field_138;
     char               mapTag_144[4];
     s32                mapTagSize_148;
-    s32                field_14C;
-    s_IpdHeader*       field_150;
-    s32                field_154;
-    s32                ipdTableSize_158;
-    s_800C117C         ipdTable_15C[4]; // Temp name. Uses either 2 or 4 fields depending map type.
+    s32                ipdFileIdx_14C;
+    s_IpdHeader*       ipdBuf_150;
+    s32                ipdBufSize_154;
+    s32                ipdActiveSize_158;
+    s_IpdChunk         ipdActive_15C[4];
     s_IpdColumn        ipdGrid_1CC[18];
     s8                 unk_40C[32];     // Could be one extra row in table above.
     s_IpdColumn*       ipdGridCenter_42C;
@@ -2663,14 +2644,14 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4);
 u32 Fs_QueueEntryLoadStatusGet(s32 queueIdx);
 
 /** Used for loading maps */
-void func_80041C24(s_LmHeader* lmHeader, s32 arg1, s32 arg2);
+void func_80041C24(s_LmHeader* lmHeader, s_IpdHeader* ipdBuf, s32 ipdBufSize);
 
 void func_80041CB4(s_func_80041CB4* arg0, s_LmHeader* lmHeader);
 
 void func_80041CEC(s_LmHeader* lmHeader);
 
-/** @brief Clears `queueIdx_4` in array of `s_800C117C` */
-void func_80041D10(s_800C117C* arg0, s32 size);
+/** @brief Clears `queueIdx_4` in array of `s_IpdChunk` */
+void Ipd_ActiveChunksQueueIdxClear(s_IpdChunk* arg0, s32 size);
 
 /** Crucial for map loading. */
 void func_80041D48();
@@ -2689,9 +2670,9 @@ void func_800420FC();
 
 s_Texture* func_80042178(char* arg0);
 
-void func_800421D8(char* mapTag, s32 plmIdx, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+void func_800421D8(char* mapTag, s32 plmIdx, s32 activeIpdCount, s32 globalPlm, s32 ipdFileIdx, s32 texFileIdx);
 
-void func_80042300(s_800C1020* arg0, s32 arg1);
+void Ipd_ActiveChunksClear(s_800C1020* arg0, s32 arg1);
 
 /** @brief Locates all IPD files for a given map type.
  *
@@ -2727,7 +2708,7 @@ u32 LmHeader_LoadStateGet(s_func_80041CB4* arg0);
  * @param
  * @return IPD file load state `(e_StaticModelLoadState`).
  */
-u32 IpdHeader_LoadStateGet(s_800C117C* arg0);
+u32 IpdHeader_LoadStateGet(s_IpdChunk* arg0);
 
 /** @brief Checks if an IPD file is loaded.
  *
@@ -2747,7 +2728,7 @@ s32 func_80042EBC(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 void func_800431E4(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
-void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
+void func_80043338(s_IpdChunk* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
 
 void func_800433B8(s_800C1020* arg0);
 
@@ -2756,12 +2737,12 @@ void func_800433B8(s_800C1020* arg0);
 /** Args are X and Z? */
 s32 func_80043554(s32 gridX, s32 gridZ);
 
-bool func_80043578(s_800C117C* arg0, s32 arg1, s32 arg2);
+bool func_80043578(s_IpdChunk* arg0, s32 arg1, s32 arg2);
 
-s_800C117C* func_800435E4(s_800C117C* arg0, s32 arg1);
+s_IpdChunk* func_800435E4(s_IpdChunk* arg0, s32 arg1);
 
 /** Maybe facilitates file chunk streaming as the player moves around the map. */
-s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
+s32 func_800436D8(s_IpdChunk* arg0, s32 fileIdx, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
 
 bool func_80043740();
 
@@ -2771,7 +2752,7 @@ bool func_8004393C(s32 posX, s32 posZ);
 
 void func_80043A24(GsOT* ot, s32 arg1);
 
-bool func_80043B34(s_800C117C* arg0, s_800C1020* arg1);
+bool func_80043B34(s_IpdChunk* arg0, s_800C1020* arg1);
 
 /** Checks if PLM texture is loaded? */
 bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHeader);
@@ -2780,7 +2761,7 @@ s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHeader);
 
 void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_LmHeader** lmHeaders, s32 lmHeaderCount, s_800C1450_0* arg3, s_800C1450_0* arg4, s32 arg5);
 
-void func_80043C7C(s_IpdHeader* ipdHeader, s_800C1450_0* arg1, s_800C1450_0* arg2, s32 arg3);
+void func_80043C7C(s_IpdHeader* ipdHeader, s_800C1450_0* arg1, s_800C1450_0* arg2, s32 fileIdx);
 
 /** Checks if IPD is loaded before returning texture count? */
 s32 func_80043D00(s_IpdHeader* ipdHeader);
@@ -3138,8 +3119,8 @@ void func_8005660C(s_Material* mat, s_FsImageDesc* image, s32 arg2);
 
 void func_800566B4(s_LmHeader* lmHeader, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4);
 
-/** Unknown `arg3` / `arg4` types. */
-void func_80056774(s_LmHeader* lmHeader, s_800C1450_0* arg1, bool (*func)(s_Material* mat), void* arg3, s32 arg4);
+/** Unknown `arg4` type. */
+void func_80056774(s_LmHeader* lmHeader, s_800C1450_0* arg1, bool (*func)(s_Material* mat), s32 fileIdx, s32 arg4);
 
 /** Checks if LM textures are loaded? */
 bool LmHeader_IsTextureLoaded(s_LmHeader* lmHeader);
@@ -3177,7 +3158,7 @@ void func_80057658(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scrat
 
 void func_80057A3C(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
 
-s_Texture* Tex_Get(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, void* arg3, s32 arg4);
+s_Texture* Tex_Get(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, s32 fileIdx, s32 arg4);
 
 void func_8005B55C(GsCOORDINATE2* coord);
 

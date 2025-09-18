@@ -477,7 +477,7 @@ u32 Fs_QueueEntryLoadStatusGet(s32 queueIdx) // 80041ADC
     return FsQueueEntryLoadStatus_Loaded;
 }
 
-u32 IpdHeader_LoadStateGet(s_800C117C* arg0) // 0x80041B1C
+u32 IpdHeader_LoadStateGet(s_IpdChunk* arg0) // 0x80041B1C
 {
     s32 queueState;
     s32 queueStateCpy;
@@ -527,17 +527,17 @@ u32 LmHeader_LoadStateGet(s_func_80041CB4* arg0) // 0x80041BA0
     return StaticModelLoadState_Corrupted;
 }
 
-void func_80041C24(s_LmHeader* lmHeader, s32 arg1, s32 arg2) // 0x80041C24
+void func_80041C24(s_LmHeader* lmHeader, s_IpdHeader* ipdBuf, s32 ipdBufSize) // 0x80041C24
 {
     bzero(&D_800C1020, sizeof(s_800C1020));
     func_80041CB4(&D_800C1020.field_138, lmHeader);
 
-    D_800C1020.field_150 = arg1;
-    D_800C1020.field_154 = arg2;
-    D_800C1020.ipdTableSize_158 = 0;
+    D_800C1020.ipdBuf_150 = ipdBuf;
+    D_800C1020.ipdBufSize_154 = ipdBufSize;
+    D_800C1020.ipdActiveSize_158 = 0;
     D_800C1020.hasGlobalPlm = 1;
 
-    func_80041D10(D_800C1020.ipdTable_15C, 4);
+    Ipd_ActiveChunksQueueIdxClear(D_800C1020.ipdActive_15C, 4);
     func_80041D48();
     func_80041E98();
 }
@@ -561,9 +561,9 @@ void func_80041CEC(s_LmHeader* lmHeader) // 0x80041CEC
     lmHeader->modelCount_8    = 0;
 }
 
-void func_80041D10(s_800C117C* arg0, s32 size) // 0x80041D10
+void Ipd_ActiveChunksQueueIdxClear(s_IpdChunk* arg0, s32 size) // 0x80041D10
 {
-    s_800C117C* ptr;
+    s_IpdChunk* ptr;
 
     for (ptr = &arg0[0]; ptr < &arg0[size]; ptr++)
     {
@@ -612,14 +612,14 @@ void func_80041E98() // 0x80041E98
 
 void Map_PlaceIpdAtGridPos(s16 ipdFileIdx, s32 x, s32 z) // 0x80041ED0
 {
-    s_800C117C*  ptr;
+    s_IpdChunk*  ptr;
     s_IpdHeader* ipd;
 
     ((s16*)&D_800C1020.ipdGridCenter_42C[z])[x] = ipdFileIdx;
 
-    for (ptr = D_800C1020.ipdTable_15C; ptr < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableSize_158]; ptr++)
+    for (ptr = D_800C1020.ipdActive_15C; ptr < &D_800C1020.ipdActive_15C[D_800C1020.ipdActiveSize_158]; ptr++)
     {
-        if (ptr->field_8 != x || ptr->field_A != z)
+        if (ptr->coordX_8 != x || ptr->coordZ_A != z)
         {
             continue;
         }
@@ -639,7 +639,7 @@ void Map_PlaceIpdAtGridPos(s16 ipdFileIdx, s32 x, s32 z) // 0x80041ED0
 
 void func_80041FF0() // 0x80041FF0
 {
-    func_80042300(&D_800C1020, D_800C1020.ipdTableSize_158);
+    Ipd_ActiveChunksClear(&D_800C1020, D_800C1020.ipdActiveSize_158);
 }
 
 void func_8004201C() // 0x8004201C
@@ -672,7 +672,7 @@ void func_8004201C() // 0x8004201C
 void func_800420C0() // 0x800420C0
 {
     func_800420FC();
-    func_80042300(&D_800C1020, D_800C1020.ipdTableSize_158);
+    Ipd_ActiveChunksClear(&D_800C1020, D_800C1020.ipdActiveSize_158);
     func_80041D48();
 }
 
@@ -710,10 +710,10 @@ s_Texture* func_80042178(char* arg0) // 0x80042178
     return NULL;
 }
 
-void func_800421D8(char* mapTag, s32 plmIdx, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x800421D8
+void func_800421D8(char* mapTag, s32 plmIdx, s32 activeIpdCount, s32 globalPlm, s32 ipdFileIdx, s32 texFileIdx) // 0x800421D8
 {
-    D_800C1020.hasGlobalPlm = arg3;
-    D_800C1020.field_134 = arg5;
+    D_800C1020.hasGlobalPlm = globalPlm;
+    D_800C1020.texFileIdx_134 = texFileIdx;
 
     if (plmIdx != NO_VALUE)
     {
@@ -730,33 +730,33 @@ void func_800421D8(char* mapTag, s32 plmIdx, s32 arg2, s32 arg3, s32 arg4, s32 a
         }
     }
 
-    if (D_800C1020.ipdTableSize_158 != arg2 || strcmp(mapTag, D_800C1020.mapTag_144) != 0)
+    if (D_800C1020.ipdActiveSize_158 != activeIpdCount || strcmp(mapTag, D_800C1020.mapTag_144) != 0)
     {
-        func_80042300(&D_800C1020, arg2);
+        Ipd_ActiveChunksClear(&D_800C1020, activeIpdCount);
 
-        D_800C1020.ipdTableSize_158 = arg2;
-        D_800C1020.field_14C = arg4;
+        D_800C1020.ipdActiveSize_158 = activeIpdCount;
+        D_800C1020.ipdFileIdx_14C = ipdFileIdx;
         strcpy(D_800C1020.mapTag_144, mapTag);
 
         D_800C1020.mapTagSize_148 = strlen(mapTag);
-        Map_MakeIpdGrid(&D_800C1020, mapTag, arg4);
+        Map_MakeIpdGrid(&D_800C1020, mapTag, ipdFileIdx);
     }
 }
 
-void func_80042300(s_800C1020* arg0, s32 arg1) // 0x80042300
+void Ipd_ActiveChunksClear(s_800C1020* arg0, s32 arg1) // 0x80042300
 {
     s32          step;
     s32          i;
-    s_800C117C*  temp_s0;
+    s_IpdChunk*  temp_s0;
     s_IpdHeader* ipd0;
     s_IpdHeader* ipd1;
 
-    ipd0  = arg0->field_150;
-    step = (arg0->field_154 / arg1) & ~0x3;
+    ipd0  = arg0->ipdBuf_150;
+    step = (arg0->ipdBufSize_154 / arg1) & ~0x3;
 
     for (i = 0; i < 4; i++, *(u8**)&ipd0 += step)
     {
-        temp_s0 = &arg0->ipdTable_15C[i];
+        temp_s0 = &arg0->ipdActive_15C[i];
 
         if (Fs_QueueEntryLoadStatusGet(temp_s0->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
@@ -767,9 +767,9 @@ void func_80042300(s_800C1020* arg0, s32 arg1) // 0x80042300
             }
         }
 
-        temp_s0->queueIdx_4 = NO_VALUE;
-        temp_s0->field_10   = 0x7FFFFFFF;
-        temp_s0->field_18   = 0;
+        temp_s0->queueIdx_4   = NO_VALUE;
+        temp_s0->distance1_10 = INT_MAX;
+        temp_s0->field_18     = 0;
 
         if (i < arg1)
         {
@@ -869,14 +869,14 @@ bool ConvertHexToS8(s32* out, char hex0, char hex1) // 0x8004255C
 
 s_IpdCollisionData** func_800425D8(s32* arg0) // 0x800425D8
 {
-    s_800C117C*         ptr;
+    s_IpdChunk*         ptr;
     s_IpdCollisionData* collData;
     s_IpdHeader*        ipd;
 
-    ptr = D_800C1020.ipdTable_15C;
+    ptr = D_800C1020.ipdActive_15C;
     *arg0  = 0;
 
-    while (ptr < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableSize_158])
+    while (ptr < &D_800C1020.ipdActive_15C[D_800C1020.ipdActiveSize_158])
     {
         if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
@@ -904,7 +904,7 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
     s32          xIdx;
     s32          zIdx;
     s_IpdHeader* ipd;
-    s_800C117C*  ptr;
+    s_IpdChunk*  ptr;
 
     // Convert position to collision space.
     collX = FP_METER_TO_GEO(posX);
@@ -914,7 +914,7 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
     xIdx = FLOOR_TO_STEP(collX, FP_METER_GEO(40.0f));
     zIdx = FLOOR_TO_STEP(collZ, FP_METER_GEO(40.0f));
 
-    for (ptr = D_800C1020.ipdTable_15C; ptr < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableSize_158]; ptr++)
+    for (ptr = D_800C1020.ipdActive_15C; ptr < &D_800C1020.ipdActive_15C[D_800C1020.ipdActiveSize_158]; ptr++)
     {
         if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) < FsQueueEntryLoadStatus_Loaded)
         {
@@ -922,7 +922,7 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
         }
 
         ipd = ptr->ipdHeader_0;
-        if (ipd->isLoaded_1 && ptr->field_8 == xIdx && ptr->field_A == zIdx)
+        if (ipd->isLoaded_1 && ptr->coordX_8 == xIdx && ptr->coordZ_A == zIdx)
         {
             return &ipd->collisionData_54;
         }
@@ -940,7 +940,7 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
 
 s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX, s32 posZ) // 0x8004287C
 {
-    s_800C117C*      sp10[4];
+    s_IpdChunk*      sp10[4];
     s32              sp20[4];
     s32              collX;
     s32              zIdx;
@@ -951,7 +951,7 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
     s32              j;
     s32              k;
     s32              idx;
-    s_800C117C*      ptr1;
+    s_IpdChunk*      ptr1;
     s_func_80041CB4* ptr0;
 
     ptr0 = &D_800C1020.field_138;
@@ -971,7 +971,7 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
     xIdx = FLOOR_TO_STEP(collX, FP_METER_GEO(40.0f));
     zIdx = FLOOR_TO_STEP(collZ, FP_METER_GEO(40.0f));
 
-    for (ptr1 = D_800C1020.ipdTable_15C, idx = 0; ptr1 < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableSize_158]; ptr1++)
+    for (ptr1 = D_800C1020.ipdActive_15C, idx = 0; ptr1 < &D_800C1020.ipdActive_15C[D_800C1020.ipdActiveSize_158]; ptr1++)
     {
         if (Fs_QueueEntryLoadStatusGet(ptr1->queueIdx_4) < FsQueueEntryLoadStatus_Loaded)
         {
@@ -985,7 +985,7 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
 
         if (D_800C1020.hasGlobalPlm == 0)
         {
-            if (ptr1->field_8 == xIdx && ptr1->field_A == zIdx)
+            if (ptr1->coordX_8 == xIdx && ptr1->coordZ_A == zIdx)
             {
                 sp10[idx] = ptr1;
                 idx++;
@@ -994,10 +994,10 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
         }
         else
         {
-            if (ptr1->field_8 >= (xIdx - 1) && (xIdx + 1) >= ptr1->field_8 &&
-                ptr1->field_A >= (zIdx - 1) && (zIdx + 1) >= ptr1->field_A)
+            if (ptr1->coordX_8 >= (xIdx - 1) && (xIdx + 1) >= ptr1->coordX_8 &&
+                ptr1->coordZ_A >= (zIdx - 1) && (zIdx + 1) >= ptr1->coordZ_A)
             {
-                temp_t0 = func_80042E2C(collX, collZ, ptr1->field_8, ptr1->field_A);
+                temp_t0 = func_80042E2C(collX, collZ, ptr1->coordX_8, ptr1->coordZ_A);
                 for (i = 0; i < idx; i++)
                 {
                     if (temp_t0 < sp20[i])
@@ -1024,7 +1024,7 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
         ptr1 = sp10[k];
         if (Lm_ModelFind(arg0, ptr1->ipdHeader_0->lmHeader_4, arg1))
         {
-            return (ptr1 - D_800C1020.ipdTable_15C) + 3;
+            return (ptr1 - D_800C1020.ipdActive_15C) + 3;
         }
     }
 
@@ -1033,13 +1033,13 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
 
 bool IpdHeader_IsLoaded(s32 ipdIdx) // 0x80042C04
 {
-    return IpdHeader_LoadStateGet(&D_800C1020.ipdTable_15C[ipdIdx]) >= StaticModelLoadState_Loaded;
+    return IpdHeader_LoadStateGet(&D_800C1020.ipdActive_15C[ipdIdx]) >= StaticModelLoadState_Loaded;
 }
 
 void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1) // 0x80042C3C
 {
     s32         temp_s0;
-    s_800C117C* var_s0;
+    s_IpdChunk* var_s0;
 
     D_800C1020.field_578 = x1;
     D_800C1020.field_57C = z1;
@@ -1058,18 +1058,18 @@ void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1) // 0x80042C3C
         D_800C1020.field_430.field_0.count_0 = 4;
 
         LmHeader_FixOffsets(D_800C1020.field_138.lmHeader_0);
-        func_80056774(D_800C1020.field_138.lmHeader_0, &D_800C1020.field_430.field_0, NULL, D_800C1020.field_134, 1);
+        func_80056774(D_800C1020.field_138.lmHeader_0, &D_800C1020.field_430.field_0, NULL, D_800C1020.texFileIdx_134, 1);
         func_80056954(D_800C1020.field_138.lmHeader_0);
 
         D_800C1020.field_430.field_0.count_0 = temp_s0;
     }
 
-    for (var_s0 = D_800C1020.ipdTable_15C; var_s0 < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableSize_158]; var_s0++) 
+    for (var_s0 = D_800C1020.ipdActive_15C; var_s0 < &D_800C1020.ipdActive_15C[D_800C1020.ipdActiveSize_158]; var_s0++) 
     {
         if (Fs_QueueEntryLoadStatusGet(var_s0->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            IpdHeader_FixOffsets(var_s0->ipdHeader_0, &D_800C1020.field_138, 1, &D_800C1020.field_430.field_0, &D_800C1020.field_430.field_2C, D_800C1020.field_134);
-            func_80044044(var_s0->ipdHeader_0, var_s0->field_8, var_s0->field_A);
+            IpdHeader_FixOffsets(var_s0->ipdHeader_0, &D_800C1020.field_138, 1, &D_800C1020.field_430.field_0, &D_800C1020.field_430.field_2C, D_800C1020.texFileIdx_134);
+            func_80044044(var_s0->ipdHeader_0, var_s0->coordX_8, var_s0->coordZ_A);
         }
     }
 }
@@ -1125,8 +1125,8 @@ s32 func_80042EBC(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0
     s32           j;
     s32           i;
     s32           var_v1;
-    s_80043338*   temp_v0_3;
-    s_80043338_0* temp_v1;
+    s_IpdChunk*   ipdChunk;
+    s_IpdHeader*  ipdHeader;
 
     sp30 = NO_VALUE;
     sp28 = FLOOR_TO_STEP(FP_METER_TO_GEO(arg1), FP_METER_GEO(40.0f));
@@ -1153,20 +1153,20 @@ s32 func_80042EBC(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0
                 temp_v0_2 = func_80043554(temp_s1, temp_s3);
                 if (temp_v0_2 != NO_VALUE &&
                     func_80042DE8(arg1, arg2, temp_s1, temp_s3, arg0->hasGlobalPlm) <= 0 &&
-                    !func_80043578(&arg0->ipdTable_15C[0], temp_s1, temp_s3))
+                    !func_80043578(&arg0->ipdActive_15C[0], temp_s1, temp_s3))
                 {
-                    temp_v0_3 = func_800435E4(&arg0->ipdTable_15C[0], arg0->hasGlobalPlm);
+                    ipdChunk = func_800435E4(&arg0->ipdActive_15C[0], arg0->hasGlobalPlm);
 
-                    if (Fs_QueueEntryLoadStatusGet(temp_v0_3->queueEntryIdx_4) >= 2)
+                    if (Fs_QueueEntryLoadStatusGet(ipdChunk->queueIdx_4) >= 2)
                     {
-                        temp_v1 = temp_v0_3->destBuffer_0;
-                        if (temp_v1->field_1 != 0)
+                        ipdHeader = ipdChunk->ipdHeader_0;
+                        if (ipdHeader->isLoaded_1 != 0)
                         {
-                            Lm_MaterialRefCountDec(temp_v1->field_4);
+                            Lm_MaterialRefCountDec(ipdHeader->lmHeader_4);
                         }
                     }
 
-                    temp_v0_4 = func_800436D8(temp_v0_3, temp_v0_2, temp_s1, temp_s3, arg1, arg2, arg3, arg4, arg0->hasGlobalPlm);
+                    temp_v0_4 = func_800436D8(ipdChunk, temp_v0_2, temp_s1, temp_s3, arg1, arg2, arg3, arg4, arg0->hasGlobalPlm);
                     if (temp_v0_4 != NO_VALUE)
                     {
                         sp30 = temp_v0_4;
@@ -1181,14 +1181,14 @@ s32 func_80042EBC(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0
 
 void func_800431E4(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x800431E4
 {
-    s_800C117C* ptr;
+    s_IpdChunk* ptr;
 
-    for (ptr = arg0->ipdTable_15C; ptr < arg0->ipdGrid_1CC; ptr++)
+    for (ptr = arg0->ipdActive_15C; ptr < &arg0->ipdActive_15C[4]; ptr++)
     {
         if (ptr->queueIdx_4 == NO_VALUE)
         {
-            ptr->field_C  = 0x7FFFFFFF;
-            ptr->field_10 = 0x7FFFFFFF;
+            ptr->distance0_C  = INT_MAX;
+            ptr->distance1_10 = INT_MAX;
         }
         else 
         {
@@ -1204,7 +1204,7 @@ void func_800431E4(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32
             ptr->field_14 = func_80043D00(ptr->ipdHeader_0);
         }
 
-        if (ptr->field_C > 0 && ptr->field_10 > 0)
+        if (ptr->distance0_C > 0 && ptr->distance1_10 > 0)
         {
             ptr->field_18++;
         }
@@ -1215,34 +1215,34 @@ void func_800431E4(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32
     }
 }
 
-void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip) // 0x80043338
+void func_80043338(s_IpdChunk* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip) // 0x80043338
 {
-    arg0->field_C  = func_80042DE8(posX0, posZ0, arg0->fileChunkCoordX_8, arg0->fileChunkCoordZ_A, clip);
-    arg0->field_10 = func_80042DE8(posX1, posZ1, arg0->fileChunkCoordX_8, arg0->fileChunkCoordZ_A, clip);
+    arg0->distance0_C  = func_80042DE8(posX0, posZ0, arg0->coordX_8, arg0->coordZ_A, clip);
+    arg0->distance1_10 = func_80042DE8(posX1, posZ1, arg0->coordX_8, arg0->coordZ_A, clip);
 }
 
 void func_800433B8(s_800C1020* arg0) // 0x800433B8
 {
-    s_800C117C* ptr;
+    s_IpdChunk* ptr;
 
-    for (ptr = &arg0->ipdTable_15C[0]; ptr < &arg0->ipdTable_15C[arg0->ipdTableSize_158]; ptr++)
+    for (ptr = &arg0->ipdActive_15C[0]; ptr < &arg0->ipdActive_15C[arg0->ipdActiveSize_158]; ptr++)
     {
         if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            if (ptr->ipdHeader_0->isLoaded_1 && ptr->field_C > 0 && ptr->field_10 > 0)
+            if (ptr->ipdHeader_0->isLoaded_1 && ptr->distance0_C > 0 && ptr->distance1_10 > 0)
             {
                 Lm_MaterialRefCountDec(ptr->ipdHeader_0->lmHeader_4);
             }
         }
     }
 
-    for (ptr = &arg0->ipdTable_15C[0]; ptr < &arg0->ipdTable_15C[arg0->ipdTableSize_158]; ptr++)
+    for (ptr = &arg0->ipdActive_15C[0]; ptr < &arg0->ipdActive_15C[arg0->ipdActiveSize_158]; ptr++)
     {
         if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            if (ptr->ipdHeader_0->isLoaded_1 && (ptr->field_C <= 0 || ptr->field_10 <= 0))
+            if (ptr->ipdHeader_0->isLoaded_1 && (ptr->distance0_C <= 0 || ptr->distance1_10 <= 0))
             {
-                func_80043C7C(ptr->ipdHeader_0, &arg0->field_430.field_0, &arg0->field_430.field_2C, arg0->field_134);
+                func_80043C7C(ptr->ipdHeader_0, &arg0->field_430.field_0, &arg0->field_430.field_2C, arg0->texFileIdx_134);
                 func_80056954(ptr->ipdHeader_0->lmHeader_4);
             }
         }
@@ -1255,14 +1255,14 @@ s32 func_80043554(s32 gridX, s32 gridZ) // 0x80043554
     return ((s16*)&D_800C1020.ipdGridCenter_42C[gridZ])[gridX];
 }
 
-bool func_80043578(s_800C117C* arg0, s32 arg1, s32 arg2) // 0x80043578
+bool func_80043578(s_IpdChunk* arg0, s32 arg1, s32 arg2) // 0x80043578
 {
     s32 i;
 
-    for (i = 0; i < D_800C1020.ipdTableSize_158; i++)
+    for (i = 0; i < D_800C1020.ipdActiveSize_158; i++)
     {
         if (arg0[i].queueIdx_4 != NO_VALUE &&
-            arg1 == arg0[i].field_8 && arg2 == arg0[i].field_A)
+            arg1 == arg0[i].coordX_8 && arg2 == arg0[i].coordZ_A)
         {
             return true;
         }
@@ -1271,22 +1271,22 @@ bool func_80043578(s_800C117C* arg0, s32 arg1, s32 arg2) // 0x80043578
     return false;
 }
 
-s_800C117C* func_800435E4(s_800C117C* arg0, s32 arg1)
+s_IpdChunk* func_800435E4(s_IpdChunk* arg0, s32 arg1)
 {
     s32         var_t0;
     s32         var_t2;
     s32         var_v1;
     u32         var_t3;
     s32         var_a2;
-    s_800C117C* ptr;
-    s_800C117C* ret;
+    s_IpdChunk* ptr;
+    s_IpdChunk* ret;
 
     ret    = NULL;
     var_t3 = 0;
     var_t0 = 0;
     var_t2 = 0;
 
-    for (ptr = arg0; ptr < &arg0[D_800C1020.ipdTableSize_158]; ptr++)
+    for (ptr = arg0; ptr < &arg0[D_800C1020.ipdActiveSize_158]; ptr++)
     {
         if (arg1 == 0) 
         {
@@ -1312,7 +1312,7 @@ s_800C117C* func_800435E4(s_800C117C* arg0, s32 arg1)
                 
                 if (var_t0 == 0) 
                 {
-                    var_v1 = 0x7FFFFFFF;
+                    var_v1 = INT_MAX;
                 }
                 else
                 {
@@ -1322,7 +1322,7 @@ s_800C117C* func_800435E4(s_800C117C* arg0, s32 arg1)
             else
             {
                 var_a2 = ptr->field_14;
-                var_v1 = ptr->field_C;
+                var_v1 = ptr->distance0_C;
                 
                 if (var_v1 == 0)
                 {
@@ -1342,7 +1342,7 @@ s_800C117C* func_800435E4(s_800C117C* arg0, s32 arg1)
     return ret;
 }
 
-s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip) // 0x800436D8
+s32 func_800436D8(s_IpdChunk* arg0, s32 fileIdx, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip) // 0x800436D8
 {
     // Return `NO_VALUE` if no file specified.
     if (fileIdx == NO_VALUE)
@@ -1351,21 +1351,21 @@ s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s32 fileChunkCoordX, s32 fileCh
     }
 
     // Store file chunk coords and read file.
-    arg0->fileChunkCoordX_8 = fileChunkCoordX;
-    arg0->fileChunkCoordZ_A = fileChunkCoordZ;
-    arg0->queueEntryIdx_4   = Fs_QueueStartRead(fileIdx, arg0->destBuffer_0);
+    arg0->coordX_8 = fileChunkCoordX;
+    arg0->coordZ_A = fileChunkCoordZ;
+    arg0->queueIdx_4        = Fs_QueueStartRead(fileIdx, arg0->ipdHeader_0);
 
     // Compute and store distance to file chunk edge in `arg0`.
     func_80043338(arg0, posX0, posZ0, posX1, posZ1, clip);
 
     // Return queue entry index.
-    return arg0->queueEntryIdx_4;
+    return arg0->queueIdx_4;
 }
 
 bool func_80043740() // 0x80043740
 {
     s32         i;
-    s_800C117C* ptr;
+    s_IpdChunk* ptr;
 
     switch (LmHeader_LoadStateGet(&D_800C1020.field_138))
     {
@@ -1379,8 +1379,8 @@ bool func_80043740() // 0x80043740
             return false;
     }
 
-    for (ptr = D_800C1020.ipdTable_15C, i = 0;
-         i < D_800C1020.ipdTableSize_158;
+    for (ptr = D_800C1020.ipdActive_15C, i = 0;
+         i < D_800C1020.ipdActiveSize_158;
          i++, ptr++)
     {
         switch (IpdHeader_LoadStateGet(ptr))
@@ -1390,12 +1390,12 @@ bool func_80043740() // 0x80043740
                 continue;
         }
 
-        if (ptr->field_C <= 0)
+        if (ptr->distance0_C <= 0)
         {
             return false;
         }
 
-        if (ptr->field_10 <= 0)
+        if (ptr->distance1_10 <= 0)
         {
             do {} while (0); // @hack
 
@@ -1409,13 +1409,13 @@ bool func_80043740() // 0x80043740
 bool func_80043830(void) // 0x80043830
 {
     s32         loadState;
-    s_800C117C* ptr;
+    s_IpdChunk* ptr;
 
-    for (ptr = &D_800C1020.ipdTable_15C[0]; ptr < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableSize_158]; ptr++)
+    for (ptr = &D_800C1020.ipdActive_15C[0]; ptr < &D_800C1020.ipdActive_15C[D_800C1020.ipdActiveSize_158]; ptr++)
     {
         loadState = IpdHeader_LoadStateGet(ptr);
         if (loadState == StaticModelLoadState_Invalid || loadState == StaticModelLoadState_Loaded ||
-            (ptr->field_C > 0 && ptr->field_10 > 0))
+            (ptr->distance0_C > 0 && ptr->distance1_10 > 0))
         {
             continue;
         }
@@ -1425,7 +1425,9 @@ bool func_80043830(void) // 0x80043830
             continue;
         }
 
-        if (func_80042E2C(FP_METER_TO_GEO(D_800C1020.field_578), FP_METER_TO_GEO(D_800C1020.field_57C), ptr->field_8, ptr->field_A) <= FP_METER_GEO(4.5f))
+        if (func_80042E2C(FP_METER_TO_GEO(D_800C1020.field_578), 
+                          FP_METER_TO_GEO(D_800C1020.field_57C),
+                          ptr->coordX_8, ptr->coordZ_A) <= FP_METER_GEO(4.5f))
         {
             return true;
         }
@@ -1459,7 +1461,7 @@ bool func_8004393C(s32 posX, s32 posZ) // 0x8004393C
 void func_80043A24(GsOT* ot, s32 arg1) // 0x80043A24
 {
     s32         queueState;
-    s_800C117C* ptr;
+    s_IpdChunk* ptr;
 
     queueState = Fs_QueueEntryLoadStatusGet(D_800C1020.field_138.queueIdx_8);
 
@@ -1474,8 +1476,8 @@ void func_80043A24(GsOT* ot, s32 arg1) // 0x80043A24
         return;
     }
 
-    ptr = &D_800C1020.ipdTable_15C[0];
-    for (; ptr < &D_800C1020.ipdTable_15C[D_800C1020.ipdTableSize_158]; ptr++)
+    ptr = &D_800C1020.ipdActive_15C[0];
+    for (; ptr < &D_800C1020.ipdActive_15C[D_800C1020.ipdActiveSize_158]; ptr++)
     {
         if (IpdHeader_LoadStateGet(ptr) >= 3 && func_80043B34(ptr, &D_800C1020))
         {
@@ -1484,9 +1486,9 @@ void func_80043A24(GsOT* ot, s32 arg1) // 0x80043A24
     }
 }
 
-bool func_80043B34(s_800C117C* arg0, s_800C1020* arg1)
+bool func_80043B34(s_IpdChunk* arg0, s_800C1020* arg1)
 {
-    if (arg1->field_580 == arg0->field_8 && arg1->field_584 == arg0->field_A)
+    if (arg1->field_580 == arg0->coordX_8 && arg1->field_584 == arg0->coordZ_A)
     {
         return true;
     }
@@ -1532,7 +1534,7 @@ void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_LmHeader** lmHeaders, s32 lm
     IpdHeader_ModelBufferLinkObjectLists(ipdHeader, ipdHeader->modelInfo_14);
 }
 
-void func_80043C7C(s_IpdHeader* ipdHeader, s_800C1450_0* arg1, s_800C1450_0* arg2, s32 arg3) // 0x80043C7C
+void func_80043C7C(s_IpdHeader* ipdHeader, s_800C1450_0* arg1, s_800C1450_0* arg2, s32 fileIdx) // 0x80043C7C
 {
     if (!ipdHeader->isLoaded_1)
     {
@@ -1541,12 +1543,12 @@ void func_80043C7C(s_IpdHeader* ipdHeader, s_800C1450_0* arg1, s_800C1450_0* arg
 
     if (arg1 != NULL)
     {
-        func_80056774(ipdHeader->lmHeader_4, arg1, &LmFilter_NameDoesNotEndWithH, arg3, 1);
+        func_80056774(ipdHeader->lmHeader_4, arg1, &LmFilter_NameDoesNotEndWithH, fileIdx, 1);
     }
 
     if (arg2 != NULL)
     {
-        func_80056774(ipdHeader->lmHeader_4, arg2, &LmFilter_NameEndsWithH, arg3, 1);
+        func_80056774(ipdHeader->lmHeader_4, arg2, &LmFilter_NameEndsWithH, fileIdx, 1);
     }
 }
 
