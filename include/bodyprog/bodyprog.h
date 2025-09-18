@@ -1176,8 +1176,8 @@ typedef struct
     char               mapTag_144[4];
     s32                mapTagSize_148;
     s32                field_14C;
-    s_IpdHeader*       field_150;
-    s32                field_154;
+    s_IpdHeader*       ipdBuf_150;
+    s32                ipdBufSize_154;
     s32                ipdActiveSize_158;
     s_IpdChunk         ipdActive_15C[4];
     s_IpdColumn        ipdGrid_1CC[18];
@@ -2644,7 +2644,7 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4);
 u32 Fs_QueueEntryLoadStatusGet(s32 queueIdx);
 
 /** Used for loading maps */
-void func_80041C24(s_LmHeader* lmHeader, s32 arg1, s32 arg2);
+void func_80041C24(s_LmHeader* lmHeader, s_IpdHeader* ipdBuf, s32 ipdBufSize);
 
 void func_80041CB4(s_func_80041CB4* arg0, s_LmHeader* lmHeader);
 

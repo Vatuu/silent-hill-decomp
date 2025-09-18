@@ -527,13 +527,13 @@ u32 LmHeader_LoadStateGet(s_func_80041CB4* arg0) // 0x80041BA0
     return StaticModelLoadState_Corrupted;
 }
 
-void func_80041C24(s_LmHeader* lmHeader, s32 arg1, s32 arg2) // 0x80041C24
+void func_80041C24(s_LmHeader* lmHeader, s_IpdHeader* ipdBuf, s32 ipdBufSize) // 0x80041C24
 {
     bzero(&D_800C1020, sizeof(s_800C1020));
     func_80041CB4(&D_800C1020.field_138, lmHeader);
 
-    D_800C1020.field_150 = arg1;
-    D_800C1020.field_154 = arg2;
+    D_800C1020.ipdBuf_150 = ipdBuf;
+    D_800C1020.ipdBufSize_154 = ipdBufSize;
     D_800C1020.ipdActiveSize_158 = 0;
     D_800C1020.hasGlobalPlm = 1;
 
@@ -751,8 +751,8 @@ void Ipd_ActiveChunksClear(s_800C1020* arg0, s32 arg1) // 0x80042300
     s_IpdHeader* ipd0;
     s_IpdHeader* ipd1;
 
-    ipd0  = arg0->field_150;
-    step = (arg0->field_154 / arg1) & ~0x3;
+    ipd0  = arg0->ipdBuf_150;
+    step = (arg0->ipdBufSize_154 / arg1) & ~0x3;
 
     for (i = 0; i < 4; i++, *(u8**)&ipd0 += step)
     {
