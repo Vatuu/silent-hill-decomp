@@ -544,7 +544,7 @@ const VECTOR3 D_800CCA58 =
 
 void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
 {
-    s32 var_a1;
+    q19_12 time;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -584,8 +584,8 @@ void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
             SysWork_StateStepIncrement();
 
         case 4:
-            var_a1     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(15.0f), Q12_SHIFT);
-            g_Timer0 = MIN(var_a1, FP_TIME(37.0f));
+            time     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(15.0f), Q12_SHIFT);
+            g_Timer0 = MIN(time, FP_TIME(37.0f));
             if (g_Timer0 >= FP_TIME(37.0f))
             {
                 SysWork_StateStepIncrement();
@@ -609,8 +609,8 @@ void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
             SysWork_StateStepIncrement();
 
         case 9:
-            var_a1 = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(15.0f), Q12_SHIFT);
-            g_Timer0 = MIN(var_a1, FP_TIME(52.0f));
+            time = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(15.0f), Q12_SHIFT);
+            g_Timer0 = MIN(time, FP_TIME(52.0f));
             if (g_Timer0 >= FP_TIME(52.0f))
             {
                 SysWork_StateStepIncrement();
@@ -630,8 +630,8 @@ void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
             SysWork_StateStepIncrement();
 
         case 12:
-            var_a1 = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(15.0f), Q12_SHIFT);
-            g_Timer0 = MIN(var_a1, FP_TIME(75.0f));
+            time = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(15.0f), Q12_SHIFT);
+            g_Timer0 = MIN(time, FP_TIME(75.0f));
 
             if (g_Timer0 >= FP_TIME(75.0f))
             {
@@ -649,8 +649,8 @@ void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
             SysWork_StateStepIncrement();
 
         case 14:
-            var_a1   = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(18.0f), Q12_SHIFT);
-            g_Timer0 = MIN(var_a1, FP_TIME(115.0f));
+            time   = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(18.0f), Q12_SHIFT);
+            g_Timer0 = MIN(time, FP_TIME(115.0f));
             if (g_Timer0 >= FP_TIME(115.0f))
             {
                 SysWork_StateStepIncrement();
@@ -663,8 +663,8 @@ void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
             SysWork_StateStepIncrement();
 
         case 16:
-            var_a1 = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(18.0f), Q12_SHIFT);
-            g_Timer0 = MIN(var_a1, FP_TIME(146.0f));
+            time = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(18.0f), Q12_SHIFT);
+            g_Timer0 = MIN(time, FP_TIME(146.0f));
             if (g_Timer0 >= FP_TIME(146.0f))
             {
                 SysWork_StateStepIncrement();
@@ -678,8 +678,8 @@ void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
             SysWork_StateStepIncrement();
 
         case 18:
-            var_a1 = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(18.0f), Q12_SHIFT);
-            g_Timer0 = MIN(var_a1, FP_TIME(147.0f));
+            time = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(18.0f), Q12_SHIFT);
+            g_Timer0 = MIN(time, FP_TIME(147.0f));
             if (g_Timer0 >= FP_TIME(147.0f))
             {
                 SysWork_StateStepIncrement();
@@ -691,8 +691,8 @@ void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
             SysWork_StateStepIncrement();
 
         case 20:
-            var_a1     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(18.0f), Q12_SHIFT);
-            g_Timer0 = MIN(var_a1, FP_TIME(154.0f));
+            time     = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_TIME(18.0f), Q12_SHIFT);
+            g_Timer0 = MIN(time, FP_TIME(154.0f));
             if (g_Timer0 >= FP_TIME(154.0f))
             {
                 SysWork_StateStepIncrement();
@@ -706,7 +706,7 @@ void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
 
             g_Timer0 = NO_VALUE;
 
-            vcReturnPreAutoCamWork(1);
+            vcReturnPreAutoCamWork(true);
 
         default:
             sharedFunc_800D2244_0_s00(0);
@@ -1088,7 +1088,7 @@ void func_800DCCF4(void) // 0x800DCCF4
     }
 
     stepX = g_SysWork.player_4C.chara_0.position_18.vx / FP_METER(40.0f);
-    if ((g_SysWork.player_4C.chara_0.position_18.vx > FP_METER(0.0f) && (stepX == 0)) ||
+    if ((g_SysWork.player_4C.chara_0.position_18.vx > FP_METER(0.0f) && stepX == 0) ||
         (g_SysWork.player_4C.chara_0.position_18.vx <= FP_METER(0.0f) && (stepX - 1) == 1))
     {
         stepZ = g_SysWork.player_4C.chara_0.position_18.vz / FP_METER(40.0f);

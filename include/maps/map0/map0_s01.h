@@ -36,7 +36,7 @@ extern s_EventPosition D_800DE140;
 
 extern VECTOR3 D_800DE154;
 
-extern s32 g_Timer0; // 0x800E239C
+extern q19_12 g_Timer0; // 0x800E239C
 
 extern u8 g_SoundCmdIdx; // 0x800E23A0
 
