@@ -4428,7 +4428,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                             }
                         }
 
-                        if (aimState == 0 && g_SysWork.playerCombatInfo_38.isAiming_13 == false)
+                        if (aimState == 0 && !g_SysWork.playerCombatInfo_38.isAiming_13)
                         {
                             if ((g_GameWork.config_0.optExtraWalkRunCtrl_2B && !g_Player_IsRunning) ||
                                 (!g_GameWork.config_0.optExtraWalkRunCtrl_2B && g_Player_IsRunning))
@@ -8249,17 +8249,17 @@ void Player_Controller() // 0x8007F32C
     {
         switch (Inventory_HyperBlasterFunctionalTest())
         {
-            case 0: // If player has the weapon, but it's not unlocked.
+            case 0: // Player has weapon (not unlocked).
                 g_Player_IsAiming = false;
                 break;
 
-            case 1: // This is the code for the Konami gun controller.
+            case 1: // Konami gun controller.
                 g_Player_IsAiming    = g_Controller1->btnsHeld_C & ControllerFlag_Cross;
                 g_Player_IsShooting  = g_Controller1->btnsHeld_C & ControllerFlag_Square;
                 g_Player_IsAttacking = g_Player_IsShooting;
                 break;
 
-            case 2: // If player has the weapon and is unlocked.
+            case 2: // Player has weapon (unlocked).
                 break;
         }
     }

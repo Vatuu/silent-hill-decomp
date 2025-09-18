@@ -581,25 +581,24 @@ typedef struct _ModelHeader
 } s_ModelHeader;
 STATIC_ASSERT_SIZEOF(s_ModelHeader, 16);
 
-// Individual texture data.
-typedef struct _Material_8
+typedef struct _Texture
 {
     s_FsImageDesc imageDesc_0;
-    u_Filename    textureName_8;
+    u_Filename    name_8;
     u32           queueIdx_10;
     s8            refCount_14;
 } s_Texture;
 
 typedef struct _Material
 {
-    u_Filename    name_0;
-    s_Texture*    tex_8;
-    u8            field_C;
-    u8            unk_D[1];
-    u8            field_E;
-    u8            field_F;
-    u16           field_10;
-    u16           field_12;
+    u_Filename name_0;
+    s_Texture* texture_8;
+    u8         field_C;
+    u8         unk_D[1];
+    u8         field_E;
+    u8         field_F;
+    u16        field_10;
+    u16        field_12;
     union
     {
         u8  u8[2];
@@ -1184,8 +1183,8 @@ typedef struct
 {
     s_800C1450_0 field_0;
     s_800C1450_0 field_2C;
-    s_Texture    field_58[8];
-    s_Texture    field_118[2];
+    s_Texture    textures_58[8];
+    s_Texture    textures_118[2];
 } s_800C1450;
 STATIC_ASSERT_SIZEOF(s_800C1450, 328);
 
@@ -1209,10 +1208,7 @@ typedef struct
     s32                field_57C;
     s32                field_580; // File chunk coord X.
     s32                field_584; // File chunk coord Z.
-    /* Might mean something else, it depends on the flags_6 in MapType
-     * but the only maps that have the required flag set are maps with global plm
-     */
-    s32                hasGlobalPlm;
+    bool               hasGlobalPlm; // Might mean something else, depends on `flags_6` in MapType. Only maps that have required flag set are maps with global PLM.
 } s_800C1020;
 STATIC_ASSERT_SIZEOF(s_800C1020, 1420);
 
@@ -2691,7 +2687,7 @@ void func_800420FC();
 
 s_Texture* func_80042178(char* arg0);
 
-void func_800421D8(char* mapTag, s32 plmIdx, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+void func_800421D8(char* mapTag, s32 plmIdx, s32 arg2, bool hasGlobalPlm, s32 arg4, s32 arg5);
 
 void func_80042300(s_800C1020* arg0, s32 arg1);
 
@@ -2741,15 +2737,15 @@ bool IpdHeader_IsLoaded(s32 ipdIdx);
 void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1);
 
 /** Gets distance to the edge of a file chunk? */
-s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, bool clip);
+s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, bool hasGlobalPlm);
 
 s32 func_80042E2C(s32 xPos, s32 zPos, s32 xFileChunkCoord, s32 zFileChunkCoord);
 
 s32 func_80042EBC(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
-void func_800431E4(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+void func_800431E4(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, bool hasGlobalPlm);
 
-void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
+void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool hasGlobalPlm);
 
 void func_800433B8(s_800C1020* arg0);
 
@@ -2760,10 +2756,10 @@ s32 func_80043554(s32 gridX, s32 gridZ);
 
 bool func_80043578(s_800C117C* arg0, s32 arg1, s32 arg2);
 
-s_800C117C* func_800435E4(s_800C117C* arg0, s32 arg1);
+s_800C117C* func_800435E4(s_800C117C* arg0, bool hasGlobalPlm);
 
 /** Maybe facilitates file chunk streaming as the player moves around the map. */
-s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
+s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool hasGlobalPlm);
 
 bool func_80043740();
 
@@ -3115,15 +3111,16 @@ void func_8005A900(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scrat
 
 u8 func_8005AA08(s_MeshHeader* meshHeader, s32 arg1, s_GteScratchData2* scratchData);
 
-void Tex_Init1(s_Texture* tex_8, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY);
+void Texture_Init1(s_Texture* tex, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY);
 
-void Tex_RefCountReset(s_Texture* tex_8);
+void Texture_RefCountReset(s_Texture* tex);
 
-void func_8005B378(s_Texture* tex_8, char* arg1);
+/** @unused */
+void func_8005B378(s_Texture* tex, char* arg1);
 
-void Tex_Init0(s_Texture* tex_8);
+void Texture_Init0(s_Texture* tex);
 
-void Mat_TimFileNameGet(char* filename, s_Material* material);
+void Material_TimFileNameGet(char* filename, s_Material* mat);
 
 void func_8005B424(VECTOR3* vec0, VECTOR3* vec1);
 
@@ -3179,7 +3176,7 @@ void func_80057658(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scrat
 
 void func_80057A3C(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
 
-s_Texture* Tex_Get(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, void* arg3, s32 arg4);
+s_Texture* Texture_Get(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, void* arg3, s32 arg4);
 
 void func_8005B55C(GsCOORDINATE2* coord);
 
@@ -3500,7 +3497,7 @@ void GameFs_MapItemsModelLoad(u32 mapId);
 void func_8005B46C(s_800C1450_0* arg0);
 
 /** Crucial for map loading. */
-void func_8005B474(s_800C1450_0* arg0, s_Texture* tex_8, s32 idx);
+void func_8005B474(s_800C1450_0* arg0, s_Texture* texs, s32 idx);
 
 s_Texture* func_8005B4BC(char* str, s_800C1450_0* arg1);
 

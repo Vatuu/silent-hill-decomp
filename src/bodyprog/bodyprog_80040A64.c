@@ -535,7 +535,7 @@ void func_80041C24(s_LmHeader* lmHeader, s32 arg1, s32 arg2) // 0x80041C24
     D_800C1020.field_150 = arg1;
     D_800C1020.field_154 = arg2;
     D_800C1020.ipdTableSize_158 = 0;
-    D_800C1020.hasGlobalPlm = 1;
+    D_800C1020.hasGlobalPlm = true;
 
     func_80041D10(D_800C1020.ipdTable_15C, 4);
     func_80041D48();
@@ -585,15 +585,15 @@ void func_80041D48() // 0x80041D48
             y = 21;
         }
 
-        Tex_Init1(&D_800C1020.field_430.field_58[i], 0, 0, y, 0, 0, x, j);
+        Texture_Init1(&D_800C1020.field_430.textures_58[i], 0, 0, y, 0, 0, x, j);
     }
 
     func_8005B46C(&D_800C1020.field_430.field_0);
-    func_8005B474(&D_800C1020.field_430.field_0, D_800C1020.field_430.field_58, 8);
+    func_8005B474(&D_800C1020.field_430.field_0, D_800C1020.field_430.textures_58, 8);
 
     for (i = 0, y = 26, j = 0; i < 2; i++, x += 16)
     {
-        Tex_Init1(&D_800C1020.field_430.field_118[i], 0, 0, y, (i & 0x1) * 32, 0, x, j);
+        Texture_Init1(&D_800C1020.field_430.textures_118[i], 0, 0, y, (i & 0x1) * 32, 0, x, j);
         if (i & 0x1)
         {
             y++;
@@ -601,7 +601,7 @@ void func_80041D48() // 0x80041D48
     }
 
     func_8005B46C(&D_800C1020.field_430.field_2C);
-    func_8005B474(&D_800C1020.field_430.field_2C, D_800C1020.field_430.field_118, 2);
+    func_8005B474(&D_800C1020.field_430.field_2C, D_800C1020.field_430.textures_118, 2);
 }
 
 void func_80041E98() // 0x80041E98
@@ -644,28 +644,29 @@ void func_80041FF0() // 0x80041FF0
 
 void func_8004201C() // 0x8004201C
 {
-    s_Texture* tex_8;
+    s_Texture* curTex;
 
-    tex_8 = &D_800C1020.field_430.field_58[0];
-    while (tex_8 < (&D_800C1020.field_430.field_58[8]))
+    // TODO: Will these match as for loops?
+    curTex = &D_800C1020.field_430.textures_58[0];
+    while (curTex < (&D_800C1020.field_430.textures_58[8]))
     {
-        if (tex_8->refCount_14 == 0)
+        if (curTex->refCount_14 == 0)
         {
-            Tex_Init0(tex_8);
+            Texture_Init0(curTex);
         }
 
-        tex_8++;
+        curTex++;
     }
 
-    tex_8 = &D_800C1020.field_430.field_118[0];
-    while (tex_8 < (&D_800C1020.field_430.field_118[2]))
+    curTex = &D_800C1020.field_430.textures_118[0];
+    while (curTex < (&D_800C1020.field_430.textures_118[2]))
     {
-        if (tex_8->refCount_14 == 0)
+        if (curTex->refCount_14 == 0)
         {
-            Tex_Init0(tex_8);
+            Texture_Init0(curTex);
         }
 
-        tex_8++;
+        curTex++;
     }
 }
 
@@ -693,26 +694,26 @@ void func_800420FC() // 0x800420FC
 
 s_Texture* func_80042178(char* arg0) // 0x80042178
 {
-    s_Texture* tex_8;
+    s_Texture* texture_8;
 
-    tex_8 = func_8005B4BC(arg0, &D_800C1020.field_430.field_0);
-    if (tex_8 != NULL)
+    texture_8 = func_8005B4BC(arg0, &D_800C1020.field_430.field_0);
+    if (texture_8 != NULL)
     {
-        return tex_8;
+        return texture_8;
     }
 
-    tex_8 = func_8005B4BC(arg0, &D_800C1020.field_430.field_2C);
-    if (tex_8 != NULL)
+    texture_8 = func_8005B4BC(arg0, &D_800C1020.field_430.field_2C);
+    if (texture_8 != NULL)
     {
-        return tex_8;
+        return texture_8;
     }
 
     return NULL;
 }
 
-void func_800421D8(char* mapTag, s32 plmIdx, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x800421D8
+void func_800421D8(char* mapTag, s32 plmIdx, s32 arg2, bool hasGlobalPlm, s32 arg4, s32 arg5) // 0x800421D8
 {
-    D_800C1020.hasGlobalPlm = arg3;
+    D_800C1020.hasGlobalPlm = hasGlobalPlm;
     D_800C1020.field_134 = arg5;
 
     if (plmIdx != NO_VALUE)
@@ -983,7 +984,7 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
             continue;
         }
 
-        if (D_800C1020.hasGlobalPlm == 0)
+        if (!D_800C1020.hasGlobalPlm)
         {
             if (ptr1->field_8 == xIdx && ptr1->field_A == zIdx)
             {
@@ -1074,12 +1075,12 @@ void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1) // 0x80042C3C
     }
 }
 
-s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, bool clip) // 0x80042DE8
+s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, bool hasGlobalPlm) // 0x80042DE8
 {
     s32 dist;
 
     dist = func_80042E2C(FP_METER_TO_GEO(posX), FP_METER_TO_GEO(posZ), fileChunkCoordX, fileChunkCoordZ);
-    if (clip)
+    if (hasGlobalPlm)
     {
         dist -= FP_METER(1.0f);
         if (dist < FP_METER(0.0f))
@@ -1145,7 +1146,7 @@ s32 func_80042EBC(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0
     {
         for (j = NO_VALUE; j < 2; j++)
         {
-            if (arg0->hasGlobalPlm != 0 || (j == 0 && i == 0))
+            if (arg0->hasGlobalPlm || (j == 0 && i == 0))
             {
                 temp_s3 = sp2C + i;
                 temp_s1 = sp28 + j;
@@ -1179,7 +1180,7 @@ s32 func_80042EBC(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0
     return sp30;
 }
 
-void func_800431E4(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x800431E4
+void func_800431E4(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, bool hasGlobalPlm) // 0x800431E4
 {
     s_800C117C* ptr;
 
@@ -1192,7 +1193,7 @@ void func_800431E4(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32
         }
         else 
         {
-            func_80043338(ptr, arg1, arg2, arg3, arg4, arg5);
+            func_80043338(ptr, arg1, arg2, arg3, arg4, hasGlobalPlm);
         }
 
         if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) < FsQueueEntryLoadStatus_Loaded || !ptr->ipdHeader_0->isLoaded_1)
@@ -1215,10 +1216,10 @@ void func_800431E4(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32
     }
 }
 
-void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip) // 0x80043338
+void func_80043338(s_80043338* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool hasGlobalPlm) // 0x80043338
 {
-    arg0->field_C  = func_80042DE8(posX0, posZ0, arg0->fileChunkCoordX_8, arg0->fileChunkCoordZ_A, clip);
-    arg0->field_10 = func_80042DE8(posX1, posZ1, arg0->fileChunkCoordX_8, arg0->fileChunkCoordZ_A, clip);
+    arg0->field_C  = func_80042DE8(posX0, posZ0, arg0->fileChunkCoordX_8, arg0->fileChunkCoordZ_A, hasGlobalPlm);
+    arg0->field_10 = func_80042DE8(posX1, posZ1, arg0->fileChunkCoordX_8, arg0->fileChunkCoordZ_A, hasGlobalPlm);
 }
 
 void func_800433B8(s_800C1020* arg0) // 0x800433B8
@@ -1271,7 +1272,7 @@ bool func_80043578(s_800C117C* arg0, s32 arg1, s32 arg2) // 0x80043578
     return false;
 }
 
-s_800C117C* func_800435E4(s_800C117C* arg0, s32 arg1)
+s_800C117C* func_800435E4(s_800C117C* arg0, bool hasGlobalPlm)
 {
     s32         var_t0;
     s32         var_t2;
@@ -1288,7 +1289,7 @@ s_800C117C* func_800435E4(s_800C117C* arg0, s32 arg1)
 
     for (ptr = arg0; ptr < &arg0[D_800C1020.ipdTableSize_158]; ptr++)
     {
-        if (arg1 == 0) 
+        if (!hasGlobalPlm) 
         {
             if (ptr->queueIdx_4 == NO_VALUE)
             {
@@ -1342,7 +1343,7 @@ s_800C117C* func_800435E4(s_800C117C* arg0, s32 arg1)
     return ret;
 }
 
-s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip) // 0x800436D8
+s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool hasGlobalPlm) // 0x800436D8
 {
     // Return `NO_VALUE` if no file specified.
     if (fileIdx == NO_VALUE)
@@ -1356,7 +1357,7 @@ s32 func_800436D8(s_80043338* arg0, s32 fileIdx, s32 fileChunkCoordX, s32 fileCh
     arg0->queueEntryIdx_4   = Fs_QueueStartRead(fileIdx, arg0->destBuffer_0);
 
     // Compute and store distance to file chunk edge in `arg0`.
-    func_80043338(arg0, posX0, posZ0, posX1, posZ1, clip);
+    func_80043338(arg0, posX0, posZ0, posX1, posZ1, hasGlobalPlm);
 
     // Return queue entry index.
     return arg0->queueEntryIdx_4;
@@ -1442,7 +1443,7 @@ bool func_8004393C(s32 posX, s32 posZ) // 0x8004393C
     fileChunkCoordX = FLOOR_TO_STEP(FP_METER_TO_GEO(posX), FP_METER_GEO(40.0f));
     fileChunkCoordZ = FLOOR_TO_STEP(FP_METER_TO_GEO(posZ), FP_METER_GEO(40.0f));
     
-    if (D_800C1020.hasGlobalPlm != 0)
+    if (D_800C1020.hasGlobalPlm)
     {
         return func_80042E2C(FP_METER_TO_GEO(D_800C1020.field_578), FP_METER_TO_GEO(D_800C1020.field_57C), fileChunkCoordX, fileChunkCoordZ) <= FP_METER_GEO(4.5f);
     }
@@ -1491,7 +1492,7 @@ bool func_80043B34(s_800C117C* arg0, s_800C1020* arg1)
         return true;
     }
 
-    return arg1->hasGlobalPlm != 0;
+    return arg1->hasGlobalPlm != false;
 }
 
 bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHeader) // 0x80043B70
