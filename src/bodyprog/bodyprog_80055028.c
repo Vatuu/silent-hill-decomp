@@ -675,7 +675,7 @@ void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* image, s8 unused, s32 start
     }
 }
 
-void func_80056774(s_LmHeader* lmHdr, s_800C1450_0* arg1, bool (*func)(s_Material* mat), void* arg3, s32 arg4) // 0x80056774
+void func_80056774(s_LmHeader* lmHdr, s_800C1450_0* arg1, bool (*func)(s_Material* mat), s32 fileIdx, s32 arg4) // 0x80056774
 {
     s_Material* curMat;
 
@@ -683,7 +683,7 @@ void func_80056774(s_LmHeader* lmHdr, s_800C1450_0* arg1, bool (*func)(s_Materia
     {
         if (curMat->field_C == 0 && curMat->texture_8 == NULL && (func == NULL || func(curMat)))
         {
-            curMat->texture_8 = Texture_Get(curMat, arg1, FS_BUFFER_9, arg3, arg4);
+            curMat->texture_8 = Texture_Get(curMat, arg1, FS_BUFFER_9, fileIdx, arg4);
             if (curMat->texture_8 != NULL)
             {
                 func_8005660C(curMat, &curMat->texture_8->imageDesc_0, arg4);
@@ -1630,7 +1630,7 @@ void Texture_Init1(s_Texture* tex, char* texName, u8 tPage0, u8 tPage1, s32 u, s
     tex->queueIdx_10 = NO_VALUE;
 }
 
-s_Texture* Texture_Get(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, void* arg3, s32 arg4)
+s_Texture* Texture_Get(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, s32 fileIdx, s32 arg4)
 {
     s8         fileName[12];
     s8         debugStr[12];
@@ -1638,7 +1638,7 @@ s_Texture* Texture_Get(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, voi
     s32        i;
     s32        lowestQueueIdx;
     u32        queueIdx;
-    s_Texture* tex;
+    s_Texture* curTex;
     s_Texture* foundTex;
     
     lowestQueueIdx = INT_MAX;
@@ -1647,19 +1647,20 @@ s_Texture* Texture_Get(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, voi
 
     for (i = 0; i < arg1->count_0; i++)
     {
-        tex = arg1->entries_4[i];
-        if (!COMPARE_FILENAMES(&mat->name_0, &tex->name_8))
+        curTex = arg1->entries_4[i];
+
+        if (!COMPARE_FILENAMES(&mat->name_0, &curTex->name_8))
         {
-            mat->texture_8 = tex;
-            tex->refCount_14++;
-            return tex;
+            mat->texture_8 = curTex;
+            curTex->refCount_14++;
+            return curTex;
         }
 
-        queueIdx = tex->queueIdx_10;
-        if ((s32)queueIdx < lowestQueueIdx && tex->refCount_14 == 0)
+        queueIdx = curTex->queueIdx_10;
+        if ((s32)queueIdx < lowestQueueIdx && curTex->refCount_14 == 0)
         {
             lowestQueueIdx = queueIdx;
-            foundTex = tex;
+            foundTex = curTex;
         }
     }
 
@@ -1669,7 +1670,7 @@ s_Texture* Texture_Get(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, voi
     }
 
     Material_TimFileNameGet(&fileName, mat);
-    fileId = Fs_FindNextFile(&fileName, 0, (s32)arg3);
+    fileId = Fs_FindNextFile(&fileName, 0, fileIdx);
     if (fileId == NO_VALUE)
     {
         // Failed to find file, log filename to screen.
