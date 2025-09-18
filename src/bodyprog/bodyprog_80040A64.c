@@ -744,7 +744,7 @@ void func_800421D8(char* mapTag, s32 plmIdx, s32 activeIpdCount, bool hasGlobalP
     }
 }
 
-void Ipd_ActiveChunksClear(s_Map* arg0, s32 arg1) // 0x80042300
+void Ipd_ActiveChunksClear(s_Map* map, s32 arg1) // 0x80042300
 {
     s32          step;
     s32          i;
@@ -752,12 +752,12 @@ void Ipd_ActiveChunksClear(s_Map* arg0, s32 arg1) // 0x80042300
     s_IpdHeader* ipd0;
     s_IpdHeader* ipd1;
 
-    ipd0  = arg0->ipdBuffer_150;
-    step = (arg0->ipdBufSize_154 / arg1) & ~0x3;
+    ipd0  = map->ipdBuffer_150;
+    step = (map->ipdBufSize_154 / arg1) & ~0x3;
 
     for (i = 0; i < 4; i++, *(u8**)&ipd0 += step)
     {
-        curChunk = &arg0->ipdActive_15C[i];
+        curChunk = &map->ipdActive_15C[i];
 
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
@@ -783,22 +783,22 @@ void Ipd_ActiveChunksClear(s_Map* arg0, s32 arg1) // 0x80042300
     }
 }
 
-void Map_MakeIpdGrid(s_Map* arg0, char* mapTag, s32 fileIdxStart) // 0x800423F4
+void Map_MakeIpdGrid(s_Map* map, char* mapTag, s32 fileIdxStart) // 0x800423F4
 {
-    s8              sp10[256];
+    char            sp10[256];
     s32             x;
     s32             z;
     s32             i;
-    s8*             filenameSuffix;
+    char*           filenameSuffix;
     s_IpdColumn*    col;
 
-    arg0->ipdGridCenter_42C = (s_IpdColumn*)(&arg0->ipdGrid_1CC[8].idx[8]);
+    map->ipdGridCenter_42C = (s_IpdColumn*)(&map->ipdGrid_1CC[8].idx[8]);
 
     for (z = -8; z < 11; z++)
     {
         for (x = -8; x < 8; x++)
         {
-            ((s16*)&arg0->ipdGridCenter_42C[z])[x] = NO_VALUE;
+            ((s16*)&map->ipdGridCenter_42C[z])[x] = NO_VALUE;
         }
     }
 
@@ -809,13 +809,13 @@ void Map_MakeIpdGrid(s_Map* arg0, char* mapTag, s32 fileIdxStart) // 0x800423F4
         {
             Fs_GetFileName(sp10, i);
 
-            if (strncmp(sp10, arg0->mapTag_144, arg0->mapTagSize_148) == 0)
+            if (strncmp(sp10, map->mapTag_144, map->mapTagSize_148) == 0)
             {
-                filenameSuffix = &sp10[arg0->mapTagSize_148];
+                filenameSuffix = &sp10[map->mapTagSize_148];
                 if (ConvertHexToS8(&x, filenameSuffix[0], filenameSuffix[1]) &&
                     ConvertHexToS8(&z, filenameSuffix[2], filenameSuffix[3]))
                 {
-                    col         = &arg0->ipdGridCenter_42C[z];
+                    col         = &map->ipdGridCenter_42C[z];
                     col->idx[x] = i;
                 }
             }
@@ -1070,7 +1070,7 @@ void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1) // 0x80042C3C
     {
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            IpdHeader_FixOffsets(curChunk->ipdHdr_0, &g_Map.globalLm_138, 1, &g_Map.field_430.field_0, &g_Map.field_430.field_2C, g_Map.texFileIdx_134);
+            IpdHeader_FixOffsets(curChunk->ipdHdr_0, &g_Map.globalLm_138.lmHdr_0, 1, &g_Map.field_430.field_0, &g_Map.field_430.field_2C, g_Map.texFileIdx_134);
             func_80044044(curChunk->ipdHdr_0, curChunk->coordX_8, curChunk->coordZ_A);
         }
     }
