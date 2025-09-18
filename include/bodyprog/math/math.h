@@ -48,13 +48,12 @@
     ((r) | ((g) << 8) | ((b) << 16) | ((code) << 24))
 
 /** @brief Multiplies an integer in fixed-point Q format by a float converted to fixed-point Q format,
- * then converts the result back from the fixed-point Q format using a 64-bit intermediate via
- * `Math_MulFixed` for higher precision.
+ * using a 64-bit intermediate via `Math_MulFixed` for higher precision.
  *
  * @param a First fixed-point factor.
  * @param b Second floating-point factor.
  * @param shift Fixed-point shift.
- * @return Product of `a` and `b` converted from fixed-point.
+ * @return Fixed-point product of `a` and `b`.
  */
 #define Math_MultiplyFloatPrecise(a, b, shift) \
     Math_MulFixed(a, FP_FLOAT_TO(b, shift), shift)

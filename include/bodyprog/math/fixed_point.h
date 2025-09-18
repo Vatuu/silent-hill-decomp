@@ -98,15 +98,16 @@
 #define FP_MULTIPLY_FLOAT_PRECISE(aInt, bFlt, shift) \
     FP_MULTIPLY((s64)(aInt), (s64)FP_FLOAT_TO(bFlt, shift), (shift))
 
-/** @brief Computes the square 2D distance between two positions, using a low-precision intermediate to avoid overflow.
+/** @brief Computes the square 2D distance between two positions in Q19.12,
+ * using low-precision Q21.8 intermediates to avoid overflow.
  *
- * @param from First position (Q19.12).
- * @param to Second position (Q19.12).
+ * @param from First position.
+ * @param to Second position.
  * @param return 2D distance between two positions.
  */
-#define FP_2D_DISTANCE_SQR(from, to)                                               \
-    (((((to).vx - (from).vx) >> Q4_SHIFT) * (((to).vx - (from).vx) >> Q4_SHIFT)) + \
-     ((((to).vz - (from).vz) >> Q4_SHIFT) * (((to).vz - (from).vz) >> Q4_SHIFT)))
+#define FP_2D_DISTANCE_SQR(from, to)                                     \
+    ((Q12_TO_Q8((to).vx - (from).vx) * Q12_TO_Q8((to).vx - (from).vx)) + \
+     (Q12_TO_Q8((to).vz - (from).vz) * Q12_TO_Q8((to).vz - (from).vz)))
 
 // ==================================
 // RAW Q FORMAT CONVERSION AND UTILS
