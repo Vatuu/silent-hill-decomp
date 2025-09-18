@@ -3170,7 +3170,7 @@ void func_80057344(s_800BCE18_2BEC_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX*
 
 void func_800574D4(s_MeshHeader* meshHdr, s_GteScratchData* scratchData);
 
-void func_8005759C(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 vertexOffset, s32 normalOffset);
+void func_8005759C(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 vertOffset, s32 normalOffset);
 
 void func_80057658(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, SVECTOR3* arg3, SVECTOR* arg4);
 

@@ -162,19 +162,19 @@ static inline void Math_Vector3Set(VECTOR3* vec, s32 x, s32 y, s32 z)
 void func_80096C94(SVECTOR* rot, MATRIX* mat); // Custom `vwRotMatrix[...]`?
 void func_80096E78(SVECTOR* rot, MATRIX* mat); // Another custom `vwRotMatrix[...]`?
 
-/** @brief Multiplies two integers in fixed-point Q format and converts the result from the fixed-point Q format.
+/** @brief Multiplies two integers in a fixed-point Q format.
  *
  * @param a First fixed-point factor.
  * @param b Second fixed-point factor.
  * @param shift Fixed-point shift.
- * @return Product of `a` and `b` converted from fixed-point.
+ * @return Fixed-point product of `a` and `b`.
  */
 s32 Math_MulFixed(s32 a, s32 b, s32 shift);
 
 /** @brief Computes the sine in Q19.12 of degrees in Q19.12, integer range `[0, 4096]`.
  *
  * TODO: Matched on decomp.me.
- * Possible original name: `shRsin`
+ * Possible original name: `shRsin`.
  *
  * @param angle Fixed-point degrees in Q19.12, integer range `[0, 4096]`.
  * @return Sine in Q19.12, integer range `[0, 4096]`.
@@ -184,7 +184,7 @@ q19_12 Math_Sin(q19_12 angle);
 /** @brief Computes the cosine in Q19.12 of degrees in Q19.12, integer range `[0, 4096]`.
  *
  * TODO: Matched on decomp.me.
- * Possible original name: `shRcos`
+ * Possible original name: `shRcos`.
  *
  * @param angle Fixed-point degrees in Q19.12, integer range `[0, 4096]`.
  * @return Cosine in Q19.12, integer range `[0, 4096]`.

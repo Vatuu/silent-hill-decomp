@@ -57,40 +57,38 @@
 #define FP_ROUND_TO_ZERO(x, shift) \
     ((s32)(FP_FROM(x, shift) + ((u32)(x) >> 31)) >> 1)
 
-/** @brief Multiplies two integers in a fixed-point Q format and converts the result from the fixed-point Q format.
+/** @brief Multiplies two integers in a fixed-point Q format.
  *
  * @param a First fixed-point factor.
  * @param b Second fixed-point factor.
  * @param shift Fixed-point shift.
- * @return Product of `a` and `b` converted from fixed-point.
+ * @return Fixed-point product of `a` and `b`.
  */
 #define FP_MULTIPLY(a, b, shift) \
     (((a) * (b)) >> (shift))
 
-/** @brief Multiplies two integers in a fixed-point Q format and converts the result from the fixed-point Q format,
- * using 64-bit intermediates for higher precision.
+/** @brief Multiplies two integers in a fixed-point Q format using 64-bit intermediates for higher precision.
  *
  * @param a First fixed-point factor.
  * @param b Second fixed-point factor.
  * @param shift Fixed-point shift.
- * @return Precise product of `a` and `b` converted from fixed-point.
+ * @return Precise fixed-point product of `a` and `b`.
  */
 #define FP_MULTIPLY_PRECISE(a, b, shift) \
     (((s64)(a) * (s64)(b)) >> (shift))
 
-/** @brief Multiplies an integer in a fixed-point Q format by a float converted to a fixed-point Q format,
- * then converts the result back from the fixed-point Q format.
+/** @brief Multiplies an integer in a fixed-point Q format by a float converted to a fixed-point Q format.
  *
  * @param a First fixed-point factor.
  * @param b Second floating-point factor.
  * @param shift Fixed-point shift.
- * @return Product of `a` and `b` converted from fixed-point.
+ * @return Fixed-point product of `a` and `b`.
  */
 #define FP_MULTIPLY_FLOAT(aInt, bFlt, shift) \
     FP_MULTIPLY(aInt, FP_FLOAT_TO(bFlt, shift), shift)
 
 /** @brief Multiplies an integer in a fixed-point Q format by a float converted to fixed-point Q format,
- * then converts the result back from the fixed-point Q format using a 64-bit intermediates for higher precision.
+ * using a 64-bit intermediates for higher precision.
  *
  * @param a First fixed-point factor.
  * @param b Second floating-point factor.

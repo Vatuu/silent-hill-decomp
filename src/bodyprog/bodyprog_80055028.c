@@ -765,12 +765,12 @@ void func_80056A88(s_ModelHeader* modelHdr, s32 arg1, s_Material* mat, s32 flags
 {
     u16           field_14;
     u16           field_16;
-    s_MeshHeader* meshHdr;
+    s_MeshHeader* curMeshHdr;
     s_Primitive*  prim;
 
-    for (meshHdr = modelHdr->meshHdrs_C; meshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; meshHdr++)
+    for (curMeshHdr = modelHdr->meshHdrs_C; curMeshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; curMeshHdr++)
     {
-        for (prim = meshHdr->primitives_4; prim < &meshHdr->primitives_4[meshHdr->primitiveCount_0]; prim++)
+        for (prim = curMeshHdr->primitives_4; prim < &curMeshHdr->primitives_4[curMeshHdr->primitiveCount_0]; prim++)
         {
             if (prim->field_6_8 == NO_VALUE)
             {
@@ -972,29 +972,29 @@ void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3) // 0x80
 void func_80057344(s_800BCE18_2BEC_0* arg0, GsOT_TAG* arg1, void* arg2, MATRIX* mat) // 0x80057344
 {
     u32               normalOffset;
-    u32               vertexOffset;
-    s_MeshHeader*     meshHdr;
+    u32               vertOffset;
+    s_MeshHeader*     curMeshHdr;
     s_ModelHeader*    modelHdr;
     s_GteScratchData* scratchData;
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    modelHdr  = arg0->field_0.modelHdr_8;
-    vertexOffset = modelHdr->vertexOffset_9;
+    modelHdr     = arg0->field_0.modelHdr_8;
+    vertOffset   = modelHdr->vertexOffset_9;
     normalOffset = modelHdr->normalOffset_A;
 
     gte_lddqa(D_800C4168.field_4C);
     gte_lddqb_0();
 
-    for (meshHdr = modelHdr->meshHdrs_C; meshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; meshHdr++)
+    for (curMeshHdr = modelHdr->meshHdrs_C; curMeshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; curMeshHdr++)
     {
-        if (vertexOffset != 0 || normalOffset != 0)
+        if (vertOffset != 0 || normalOffset != 0)
         {
-            func_8005759C(meshHdr, scratchData, vertexOffset, normalOffset);
+            func_8005759C(curMeshHdr, scratchData, vertOffset, normalOffset);
         }
         else
         {
-            func_800574D4(meshHdr, scratchData);
+            func_800574D4(curMeshHdr, scratchData);
         }
 
         switch (D_800C4168.field_0)
@@ -1003,16 +1003,16 @@ void func_80057344(s_800BCE18_2BEC_0* arg0, GsOT_TAG* arg1, void* arg2, MATRIX* 
                 break;
 
             case 1:
-                func_80057658(meshHdr, normalOffset, scratchData, &D_800C4168.field_74, &D_800C4168.field_7C);
+                func_80057658(curMeshHdr, normalOffset, scratchData, &D_800C4168.field_74, &D_800C4168.field_7C);
                 break;
 
             case 2:
-                func_80057A3C(meshHdr, normalOffset, scratchData, &D_800C4168.field_74);
+                func_80057A3C(curMeshHdr, normalOffset, scratchData, &D_800C4168.field_74);
                 break;
         }
 
-        func_80057B7C(meshHdr, vertexOffset, scratchData, mat);
-        func_8005801C(meshHdr, scratchData, arg1, arg2);
+        func_80057B7C(curMeshHdr, vertOffset, scratchData, mat);
+        func_8005801C(curMeshHdr, scratchData, arg1, arg2);
     }
 }
 
@@ -1055,7 +1055,7 @@ void func_800574D4(s_MeshHeader* meshHdr, s_GteScratchData* scratchData) // 0x80
     }
 }
 
-void func_8005759C(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 vertexOffset, s32 normalOffset) // 0x8005759C
+void func_8005759C(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 vertOffset, s32 normalOffset) // 0x8005759C
 {
     s16* vertexZPtr;
     s16* field_18CPtr;
@@ -1065,8 +1065,8 @@ void func_8005759C(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 ver
     u8*  field_14Ptr;
 
     // Should be loop? Tried but no luck.
-    screenXyPtr  = &scratchData->screenXy_0[vertexOffset];
-    field_18CPtr = &scratchData->field_18C[vertexOffset];
+    screenXyPtr  = &scratchData->screenXy_0[vertOffset];
+    field_18CPtr = &scratchData->field_18C[vertOffset];
     vertexXyPtr  = meshHdr->verticesXy_8;
     vertexZPtr   = meshHdr->verticesZ_C;
     while (vertexXyPtr < &meshHdr->verticesXy_8[meshHdr->vertexCount_1])
@@ -1289,9 +1289,9 @@ void func_8005A21C(s_800BCE18_2BEC_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX*
 {
     s16               var_v1;
     u32               normalOffset;
-    u32               vertexOffset;
+    u32               vertOffset;
     s_ModelHeader*    modelHdr;
-    s_MeshHeader*     meshHdr;
+    s_MeshHeader*     curMeshHdr;
     s_GteScratchData* scratchData;
 
     scratchData = PSX_SCRATCH_ADDR(0);
@@ -1333,20 +1333,20 @@ void func_8005A21C(s_800BCE18_2BEC_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX*
             break;
     }
 
-    modelHdr  = arg0->field_0.modelHdr_8;
-    vertexOffset = modelHdr->vertexOffset_9;
+    modelHdr     = arg0->field_0.modelHdr_8;
+    vertOffset   = modelHdr->vertexOffset_9;
     normalOffset = modelHdr->normalOffset_A;
 
-    for (meshHdr = modelHdr->meshHdrs_C; meshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; meshHdr++)
+    for (curMeshHdr = modelHdr->meshHdrs_C; curMeshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; curMeshHdr++)
     {
-        func_8005A900(meshHdr, vertexOffset, scratchData, mat);
+        func_8005A900(curMeshHdr, vertOffset, scratchData, mat);
 
         if (D_800C4168.field_0 != 0)
         {
-            func_8005AA08(meshHdr, normalOffset, scratchData);
+            func_8005AA08(curMeshHdr, normalOffset, scratchData);
         }
 
-        func_8005AC50(meshHdr, scratchData, otTag, arg2);
+        func_8005AC50(curMeshHdr, scratchData, otTag, arg2);
     }
 }
 
