@@ -293,10 +293,10 @@ STATIC_ASSERT_SIZEOF(s_func_800625F4, 20);
 typedef struct _Collision
 {
     q19_12 groundHeight_0;
-    s16    field_4; // } Angles??
-    s16    field_6; // }
-    s8     field_8; // Count of something? 12 is significant.
-    u8     unk_9[3];
+    s16    field_4;  // } Angles??
+    s16    field_6;  // }
+    s8     field_8;  // Count of something? 12 is significant.
+    u8     unk_9[3]; // Padding?
 } s_Collision;
 STATIC_ASSERT_SIZEOF(s_Collision, 12);
 
@@ -1137,8 +1137,8 @@ typedef struct
     s32          queueIdx_4;
     s16          coordX_8;
     s16          coordZ_A;
-    s32          distance0_C;
-    s32          distance1_10;
+    q19_12       distance0_C;
+    q19_12       distance1_10;
     u8           field_14;
     s8           unk_15[3];
     s32          field_18;
@@ -2731,7 +2731,6 @@ void func_800433B8(s_Map* map);
 
 void func_800433B8(s_Map* map);
 
-/** Args are X and Z? */
 s32 Map_IpdIdxGet(s32 gridX, s32 gridZ);
 
 bool Map_IsIpdPresent(s_IpdChunk* chunks, s32 chunkCoordX, s32 chunkCoordZ);

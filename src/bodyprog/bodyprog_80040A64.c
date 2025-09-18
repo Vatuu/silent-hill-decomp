@@ -1117,15 +1117,15 @@ s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 p
 {
     s32          chunkCoordX0;
     s32          chunkCoordZ0;
-    s32          queueIdx;
-    s32          xIdx;
-    s32          zIdx;
+    s32          chunkCoordZ1;
     s32          chunkCoordX1;
+    s32          queueIdx;
+    s32          gridX;
+    s32          gridZ;
     s32          chunkIdx;
     s32          curQueueIdx;
     s32          x;
     s32          z;
-    s32          chunkCoordZ1;
     s_IpdChunk*  chunk;
     s_IpdHeader* ipdHdr;
 
@@ -1148,13 +1148,13 @@ s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 p
         {
             if (map->hasGlobalPlm || (x == 0 && z == 0))
             {
-                zIdx = chunkCoordZ0 + z;
-                xIdx = chunkCoordX0 + x;
+                gridZ = chunkCoordZ0 + z;
+                gridX = chunkCoordX0 + x;
 
-                chunkIdx = Map_IpdIdxGet(xIdx, zIdx);
+                chunkIdx = Map_IpdIdxGet(gridX, gridZ);
                 if (chunkIdx != NO_VALUE &&
-                    func_80042DE8(posX0, posZ0, xIdx, zIdx, map->hasGlobalPlm) <= FP_METER(0.0f) &&
-                    !Map_IsIpdPresent(&map->ipdActive_15C[0], xIdx, zIdx))
+                    func_80042DE8(posX0, posZ0, gridX, gridZ, map->hasGlobalPlm) <= FP_METER(0.0f) &&
+                    !Map_IsIpdPresent(&map->ipdActive_15C[0], gridX, gridZ))
                 {
                     chunk = func_800435E4(&map->ipdActive_15C[0], map->hasGlobalPlm);
 
@@ -1167,7 +1167,7 @@ s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 p
                         }
                     }
 
-                    curQueueIdx = func_800436D8(chunk, chunkIdx, xIdx, zIdx, posX0, posZ0, posX1, posZ1, map->hasGlobalPlm);
+                    curQueueIdx = func_800436D8(chunk, chunkIdx, gridX, gridZ, posX0, posZ0, posX1, posZ1, map->hasGlobalPlm);
                     if (curQueueIdx != NO_VALUE)
                     {
                         queueIdx = curQueueIdx;
@@ -1205,7 +1205,7 @@ void func_800431E4(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 
             curChunk->field_14 = func_80043D00(curChunk->ipdHdr_0);
         }
 
-        if (curChunk->distance0_C > 0 && curChunk->distance1_10 > 0)
+        if (curChunk->distance0_C > FP_METER(0.0f) && curChunk->distance1_10 > FP_METER(0.0f))
         {
             curChunk->field_18++;
         }
@@ -1231,7 +1231,7 @@ void func_800433B8(s_Map* map) // 0x800433B8
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
             if (curChunk->ipdHdr_0->isLoaded_1 &&
-                curChunk->distance0_C > 0 && curChunk->distance1_10 > 0)
+                curChunk->distance0_C > FP_METER(0.0f) && curChunk->distance1_10 > FP_METER(0.0f))
             {
                 Lm_MaterialRefCountDec(curChunk->ipdHdr_0->lmHdr_4);
             }
@@ -1243,7 +1243,7 @@ void func_800433B8(s_Map* map) // 0x800433B8
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
             if (curChunk->ipdHdr_0->isLoaded_1 &&
-                (curChunk->distance0_C <= 0 || curChunk->distance1_10 <= 0))
+                (curChunk->distance0_C <= FP_METER(0.0f) || curChunk->distance1_10 <= FP_METER(0.0f)))
             {
                 func_80043C7C(curChunk->ipdHdr_0, &map->field_430.field_0, &map->field_430.field_2C, map->texFileIdx_134);
                 func_80056954(curChunk->ipdHdr_0->lmHdr_4);
@@ -1277,8 +1277,8 @@ bool Map_IsIpdPresent(s_IpdChunk* chunks, s32 chunkCoordX, s32 chunkCoordZ) // 0
 s_IpdChunk* func_800435E4(s_IpdChunk* chunks, bool hasGlobalPlm)
 {
     s32         var_t0;
-    s32         var_t2;
-    s32         var_v1;
+    q19_12      shortestDist;
+    q19_12      dist;
     u32         var_t3;
     s32         var_a2;
     s_IpdChunk* curChunk;
@@ -1287,7 +1287,7 @@ s_IpdChunk* func_800435E4(s_IpdChunk* chunks, bool hasGlobalPlm)
     activeChunk = NULL;
     var_t3 = 0;
     var_t0 = 0;
-    var_t2 = 0;
+    shortestDist = FP_METER(0.0f);
 
     for (curChunk = chunks; curChunk < &chunks[g_Map.ipdActiveSize_158]; curChunk++)
     {
@@ -1315,7 +1315,7 @@ s_IpdChunk* func_800435E4(s_IpdChunk* chunks, bool hasGlobalPlm)
                 
                 if (var_t0 == 0) 
                 {
-                    var_v1 = INT_MAX;
+                    dist = INT_MAX;
                 }
                 else
                 {
@@ -1325,17 +1325,18 @@ s_IpdChunk* func_800435E4(s_IpdChunk* chunks, bool hasGlobalPlm)
             else
             {
                 var_a2 = curChunk->field_14;
-                var_v1 = curChunk->distance0_C;
-                
-                if (var_v1 == 0)
+
+                dist = curChunk->distance0_C;
+                if (dist == FP_METER(0.0f))
                 {
                     continue;
                 }
             }
 
-            if (var_t0 < var_a2 || (var_a2 == var_t0 && var_t2 < var_v1))
+            // Track closest chunk.
+            if (var_t0 < var_a2 || (var_a2 == var_t0 && shortestDist < dist))
             {
-                var_t2 = var_v1;
+                shortestDist = dist;
                 activeChunk = curChunk;
                 var_t0 = var_a2;
             }
@@ -1393,12 +1394,12 @@ bool func_80043740() // 0x80043740
                 continue;
         }
 
-        if (curChunk->distance0_C <= 0)
+        if (curChunk->distance0_C <= FP_METER(0.0f))
         {
             return false;
         }
 
-        if (curChunk->distance1_10 <= 0)
+        if (curChunk->distance1_10 <= FP_METER(0.0f))
         {
             do {} while (false); // @hack
 
@@ -1418,7 +1419,7 @@ bool func_80043830(void) // 0x80043830
     {
         loadState = IpdHeader_LoadStateGet(curChunk);
         if (loadState == StaticModelLoadState_Invalid || loadState == StaticModelLoadState_Loaded ||
-            (curChunk->distance0_C > 0 && curChunk->distance1_10 > 0))
+            (curChunk->distance0_C > FP_METER(0.0f) && curChunk->distance1_10 > FP_METER(0.0f)))
         {
             continue;
         }
