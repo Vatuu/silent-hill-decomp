@@ -502,7 +502,7 @@ u32 IpdHeader_LoadStateGet(s_IpdChunk* chunk) // 0x80041B1C
     return StaticModelLoadState_Corrupted;
 }
 
-u32 LmHeader_LoadStateGet(s_func_80041CB4* arg0) // 0x80041BA0
+u32 LmHeader_LoadStateGet(s_GlobalLm* arg0) // 0x80041BA0
 {
     s32 queueState;
     s32 queueStateCpy;
@@ -530,7 +530,7 @@ u32 LmHeader_LoadStateGet(s_func_80041CB4* arg0) // 0x80041BA0
 void func_80041C24(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize) // 0x80041C24
 {
     bzero(&D_800C1020, sizeof(s_800C1020));
-    func_80041CB4(&D_800C1020.field_138, lmHdr);
+    func_80041CB4(&D_800C1020.globalLm_138, lmHdr);
 
     D_800C1020.ipdBuffer_150 = ipdBuf;
     D_800C1020.ipdBufSize_154 = ipdBufSize;
@@ -543,7 +543,7 @@ void func_80041C24(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize) // 0x
 }
 
 // This function is related to map loading.
-void func_80041CB4(s_func_80041CB4* arg0, s_LmHeader* lmHdr) // 0x80041CB4
+void func_80041CB4(s_GlobalLm* arg0, s_LmHeader* lmHdr) // 0x80041CB4
 {
     arg0->lmHdr_0 = lmHdr;
     func_80041CEC(lmHdr);
@@ -679,17 +679,17 @@ void func_800420C0() // 0x800420C0
 
 void func_800420FC() // 0x800420FC
 {
-    s_func_80041CB4* ptr;
+    s_GlobalLm* ptr;
 
-    ptr = &D_800C1020.field_138;
+    ptr = &D_800C1020.globalLm_138;
 
     if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
         ptr->lmHdr_0->isLoaded_2)
     {
-        Lm_MaterialRefCountDec(D_800C1020.field_138.lmHdr_0);
+        Lm_MaterialRefCountDec(D_800C1020.globalLm_138.lmHdr_0);
     }
 
-    func_80041CB4(&D_800C1020.field_138, D_800C1020.field_138.lmHdr_0);
+    func_80041CB4(&D_800C1020.globalLm_138, D_800C1020.globalLm_138.lmHdr_0);
 }
 
 s_Texture* func_80042178(char* arg0) // 0x80042178
@@ -718,16 +718,16 @@ void func_800421D8(char* mapTag, s32 plmIdx, s32 activeIpdCount, bool hasGlobalP
 
     if (plmIdx != NO_VALUE)
     {
-        if (plmIdx != D_800C1020.field_138.fileIdx_4)
+        if (plmIdx != D_800C1020.globalLm_138.fileIdx_4)
         {
-            if (Fs_QueueEntryLoadStatusGet(D_800C1020.field_138.queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
-                D_800C1020.field_138.lmHdr_0->isLoaded_2)
+            if (Fs_QueueEntryLoadStatusGet(D_800C1020.globalLm_138.queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
+                D_800C1020.globalLm_138.lmHdr_0->isLoaded_2)
             {
-                Lm_MaterialRefCountDec(D_800C1020.field_138.lmHdr_0);
+                Lm_MaterialRefCountDec(D_800C1020.globalLm_138.lmHdr_0);
             }
 
-            D_800C1020.field_138.fileIdx_4 = plmIdx;
-            D_800C1020.field_138.queueIdx_8 = NO_VALUE;
+            D_800C1020.globalLm_138.fileIdx_4 = plmIdx;
+            D_800C1020.globalLm_138.queueIdx_8 = NO_VALUE;
         }
     }
 
@@ -954,9 +954,9 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
     s32              k;
     s32              idx;
     s_IpdChunk*      curChunk;
-    s_func_80041CB4* ptr0;
+    s_GlobalLm* ptr0;
 
-    ptr0 = &D_800C1020.field_138;
+    ptr0 = &D_800C1020.globalLm_138;
 
     // Convert position to geometry space.
     collX = FP_METER_TO_GEO(posX);
@@ -964,7 +964,7 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
 
     if (Fs_QueueEntryLoadStatusGet(ptr0->queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
         ptr0->lmHdr_0->isLoaded_2 &&
-        Lm_ModelFind(arg0, D_800C1020.field_138.lmHdr_0, arg1))
+        Lm_ModelFind(arg0, D_800C1020.globalLm_138.lmHdr_0, arg1))
     {
         return 2;
     }
@@ -1046,22 +1046,22 @@ void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1) // 0x80042C3C
     D_800C1020.field_578 = x1;
     D_800C1020.field_57C = z1;
 
-    if (D_800C1020.field_138.queueIdx_8 == NO_VALUE) 
+    if (D_800C1020.globalLm_138.queueIdx_8 == NO_VALUE) 
     {
-        D_800C1020.field_138.queueIdx_8 = Fs_QueueStartRead(D_800C1020.field_138.fileIdx_4, D_800C1020.field_138.lmHdr_0);
+        D_800C1020.globalLm_138.queueIdx_8 = Fs_QueueStartRead(D_800C1020.globalLm_138.fileIdx_4, D_800C1020.globalLm_138.lmHdr_0);
     }
 
     func_80042EBC(&D_800C1020, x0, z0, x1, z1);
 
-    if (Fs_QueueEntryLoadStatusGet(D_800C1020.field_138.queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
-        !D_800C1020.field_138.lmHdr_0->isLoaded_2) 
+    if (Fs_QueueEntryLoadStatusGet(D_800C1020.globalLm_138.queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
+        !D_800C1020.globalLm_138.lmHdr_0->isLoaded_2) 
     {
         temp_s0                              = D_800C1020.field_430.field_0.count_0;
         D_800C1020.field_430.field_0.count_0 = 4;
 
-        LmHeader_FixOffsets(D_800C1020.field_138.lmHdr_0);
-        func_80056774(D_800C1020.field_138.lmHdr_0, &D_800C1020.field_430.field_0, NULL, D_800C1020.texFileIdx_134, 1);
-        func_80056954(D_800C1020.field_138.lmHdr_0);
+        LmHeader_FixOffsets(D_800C1020.globalLm_138.lmHdr_0);
+        func_80056774(D_800C1020.globalLm_138.lmHdr_0, &D_800C1020.field_430.field_0, NULL, D_800C1020.texFileIdx_134, 1);
+        func_80056954(D_800C1020.globalLm_138.lmHdr_0);
 
         D_800C1020.field_430.field_0.count_0 = temp_s0;
     }
@@ -1070,7 +1070,7 @@ void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1) // 0x80042C3C
     {
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            IpdHeader_FixOffsets(curChunk->ipdHdr_0, &D_800C1020.field_138, 1, &D_800C1020.field_430.field_0, &D_800C1020.field_430.field_2C, D_800C1020.texFileIdx_134);
+            IpdHeader_FixOffsets(curChunk->ipdHdr_0, &D_800C1020.globalLm_138, 1, &D_800C1020.field_430.field_0, &D_800C1020.field_430.field_2C, D_800C1020.texFileIdx_134);
             func_80044044(curChunk->ipdHdr_0, curChunk->coordX_8, curChunk->coordZ_A);
         }
     }
@@ -1370,7 +1370,7 @@ bool func_80043740() // 0x80043740
     s32         i;
     s_IpdChunk* curChunk;
 
-    switch (LmHeader_LoadStateGet(&D_800C1020.field_138))
+    switch (LmHeader_LoadStateGet(&D_800C1020.globalLm_138))
     {
         case 0:
             break;
@@ -1466,7 +1466,7 @@ void func_80043A24(GsOT* ot, s32 arg1) // 0x80043A24
     s32         queueState;
     s_IpdChunk* curChunk;
 
-    queueState = Fs_QueueEntryLoadStatusGet(D_800C1020.field_138.queueIdx_8);
+    queueState = Fs_QueueEntryLoadStatusGet(D_800C1020.globalLm_138.queueIdx_8);
 
     if (queueState == FsQueueEntryLoadStatus_Unloaded)
     {
@@ -1474,7 +1474,7 @@ void func_80043A24(GsOT* ot, s32 arg1) // 0x80043A24
     }
 
     if (!(queueState == FsQueueEntryLoadStatus_Invalid ||
-          (queueState == FsQueueEntryLoadStatus_Loaded && D_800C1020.field_138.lmHdr_0->isLoaded_2)))
+          (queueState == FsQueueEntryLoadStatus_Loaded && D_800C1020.globalLm_138.lmHdr_0->isLoaded_2)))
     {
         return;
     }

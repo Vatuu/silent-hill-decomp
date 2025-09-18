@@ -885,13 +885,12 @@ typedef struct
     // TODO: May be incomplete. Maybe not, added the final padding based on `Collision_Get`
 } s_func_8006CC44;
 
-// LM data? Likely `D_800C1158`'s struct.
-typedef struct
+typedef struct _s_GlobalLm
 {
     s_LmHeader* lmHdr_0;
     s32         fileIdx_4;
-    s32         queueIdx_8; // Passed to `Fs_QueueEntryLoadStatusGet`, thus the name.
-} s_func_80041CB4;
+    s32         queueIdx_8;
+} s_GlobalLm;
 
 typedef struct
 {
@@ -1080,7 +1079,7 @@ typedef struct
 {
     u_Filename modelName_0;
     s8         field_8;
-    s8         lmIdx_9; /** Set to 2 when found in `D_800C1020.field_138.lmHdr_0` and 3-6 if found in `D_800C1020.ipdActive_15C[i] (i + 3)`. */
+    s8         lmIdx_9; /** Set to 2 when found in `D_800C1020.globalLm_138.lmHdr_0` and 3-6 if found in `D_800C1020.ipdActive_15C[i] (i + 3)`. */
 } s_800BCE18_2BEC_0_10;
 
 typedef struct
@@ -1172,7 +1171,7 @@ typedef struct
 {
     s_IpdCollisionData field_0;
     s32                texFileIdx_134;
-    s_func_80041CB4    field_138;
+    s_GlobalLm         globalLm_138;
     char               mapTag_144[4];
     s32                mapTagSize_148;
     s32                ipdFileIdx_14C;
@@ -2643,7 +2642,7 @@ u32 Fs_QueueEntryLoadStatusGet(s32 queueIdx);
 /** Used for loading maps */
 void func_80041C24(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize);
 
-void func_80041CB4(s_func_80041CB4* arg0, s_LmHeader* lmHdr);
+void func_80041CB4(s_GlobalLm* arg0, s_LmHeader* lmHdr);
 
 void func_80041CEC(s_LmHeader* lmHdr);
 
@@ -2698,7 +2697,7 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
  * @param
  * @return LM file load state `(e_StaticModelLoadState`).
  */
-u32 LmHeader_LoadStateGet(s_func_80041CB4* arg0);
+u32 LmHeader_LoadStateGet(s_GlobalLm* arg0);
 
 /** @brief Gets the load state of an IPD file.
  *
