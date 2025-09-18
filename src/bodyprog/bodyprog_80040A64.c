@@ -1310,7 +1310,7 @@ s_IpdChunk* func_800435E4(s_IpdChunk* chunks, bool hasGlobalPlm)
         }
         else
         {
-            if (curChunk->queueIdx_4 == -1) 
+            if (curChunk->queueIdx_4 == NO_VALUE) 
             {
                 var_a2 = 0;
                 
