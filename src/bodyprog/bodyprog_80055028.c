@@ -2490,7 +2490,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005E89C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005F55C); // 0x8005F55C
 
-s32 func_8005F680(s_func_800699F8* arg0) // 0x8005F680
+s32 func_8005F680(s_Collision* arg0) // 0x8005F680
 {
     s32 var_a0;
     s8 temp_v1;
@@ -2513,12 +2513,12 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800611C0); // 0x
 
 void func_800622B8(s32 arg0, s_SubCharacter* arg1, s32 animStatus, s32 arg3) // 0x800622B8
 {
-    s_func_800699F8 sp10;
-    s32             temp_s0;
-    s32             temp_s2;
-    s32             temp_s3;
-    s32             idx;
-    s32             i;
+    s_Collision coll;
+    s32         temp_s0;
+    s32         temp_s2;
+    s32         temp_s3;
+    s32         idx;
+    s32         i;
 
     if (g_GameWork.config_0.optExtraBloodColor_24 == 14)
     {
@@ -2549,9 +2549,9 @@ void func_800622B8(s32 arg0, s_SubCharacter* arg1, s32 animStatus, s32 arg3) // 
                                                         FP_MULTIPLY(temp_s3, Math_Cos(arg1->rotation_24.vy), Q12_SHIFT) +
                                                         FP_MULTIPLY(temp_s2, Math_Sin(arg1->rotation_24.vy), Q12_SHIFT);
 
-        func_800699F8(&sp10, g_MapOverlayHeader.unkTable1_4C[idx].vx_0, g_MapOverlayHeader.unkTable1_4C[idx].vz_4);
+        Collision_Get(&coll, g_MapOverlayHeader.unkTable1_4C[idx].vx_0, g_MapOverlayHeader.unkTable1_4C[idx].vz_4);
 
-        if (ABS_DIFF(sp10.groundHeight_0, arg1->position_18.vy) > FP_METER(0.15f))
+        if (ABS_DIFF(coll.groundHeight_0, arg1->position_18.vy) > FP_METER(0.15f))
         {
             g_MapOverlayHeader.unkTable1_4C[(idx)].field_A = 0;
         }
@@ -2806,7 +2806,7 @@ void func_800699E4(s_IpdCollisionData* collData) // 0x800699E4
     collData->field_30++;
 }
 
-void func_800699F8(s_func_800699F8* coll, s32 posX, s32 posZ) // 0x800699F8
+void Collision_Get(s_Collision* coll, s32 posX, s32 posZ) // 0x800699F8
 {
     s_func_8006AB50     sp10;
     VECTOR3             sp28;
@@ -2872,15 +2872,17 @@ INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80055028", D_80028B34);
 
 s32 func_80069BA8(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara, s32 arg4) // 0x80069BA8
 {
-    #define STEP_COUNT 9
-    #define ANGLE_STEP FP_ANGLE(370.0f / STEP_COUNT)
+    #define POINT_COUNT          9
+    #define ANGLE_STEP           FP_ANGLE(370.0f / POINT_COUNT) // @bug? Maybe `360.0f` was intended.
+    #define WALL_COUNT_THRESHOLD 3                              // Unknown purpose.
+    #define WALL_HEIGHT          FP_METER(0.5f)
 
-    s_func_800699F8 coll;
+    s_Collision coll;
     s32             sp20;
-    s32             posY;
+    s32             wallBound;
     s32             var_s2;
     s32             i;
-    s32             validPosCount;
+    s32             wallCount;
     s8              temp_v0;
     s32             var_s6;
 
@@ -2907,7 +2909,7 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara, s32 arg
         case 11:
         case 15:
         case 17:
-            posY = chara->position_18.vy - FP_METER(0.5f);
+            wallBound = chara->position_18.vy - WALL_HEIGHT;
 
             switch (arg0->field_14)
             {
@@ -2916,30 +2918,29 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara, s32 arg
                     break;
 
                 default:
-                    var_s2 = arg0->field_C < posY;
+                    var_s2 = arg0->field_C < wallBound;
                     break;
             }
 
-            validPosCount = 0;
+            wallCount = 0;
 
             if (var_s2 == 0)
             {
                 break;
             }
 
-            // Run through steps of something. Maybe 9 points around character?
-            for (i = 0, var_s6 = 12; i < STEP_COUNT; i++)
+            for (i = 0, var_s6 = 12; i < POINT_COUNT; i++)
             {
-                func_800699F8(&coll,
+                Collision_Get(&coll,
                               chara->position_18.vx + FP_MULTIPLY(Math_Sin(i * ANGLE_STEP), FP_METER(0.2f), Q12_SHIFT),
                               chara->position_18.vz + FP_MULTIPLY(Math_Cos(i * ANGLE_STEP), FP_METER(0.2f), Q12_SHIFT));
 
                 switch (var_s2)
                 {
                     case 1:
-                        if (coll.groundHeight_0 < posY)
+                        if (coll.groundHeight_0 < wallBound)
                         {
-                            validPosCount++;
+                            wallCount++;
                         }
                         break;
 
@@ -2956,7 +2957,7 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara, s32 arg
             switch (var_s2)
             {
                 case 1:
-                    if (validPosCount < 3)
+                    if (wallCount < WALL_COUNT_THRESHOLD)
                     {
                         arg0->field_C = chara->position_18.vy;
                     }
@@ -2980,28 +2981,28 @@ static const u8 unk_rdata[] = { 0, 66, 5, 128, 0, 0, 0, 0 };
 
 void func_80069DF0(s_800C4590* arg0, VECTOR3* pos, s32 arg2, s32 arg3) // 0x80069DF0
 {
-    #define GROUND_HEIGHT_COUNT_MAX 16
-    #define ANGLE_STEP              FP_ANGLE(360.0f / GROUND_HEIGHT_COUNT_MAX)
+    #define POINT_COUNT 16
+    #define ANGLE_STEP  FP_ANGLE(360.0f / POINT_COUNT)
 
-    s32             groundHeights[GROUND_HEIGHT_COUNT_MAX];
-    s_func_800699F8 coll;
-    q19_12          angle;
-    s32             var_a0;
-    q19_12          groundHeight;
-    s32             var_s0;
-    s32             i;
-    q19_12          groundHeightMax;
-    q19_12          groundHeightMin;
-    s32             var_s5;
+    s32         groundHeights[POINT_COUNT];
+    s_Collision coll;
+    q19_12      angle;
+    s32         var_a0;
+    q19_12      groundHeight;
+    s32         var_s0;
+    s32         i;
+    q19_12      groundHeightMax;
+    q19_12      groundHeightMin;
+    s32         var_s5;
 
     groundHeightMin = FP_METER(-30.0f);
     groundHeightMax = FP_METER(30.0f);
     var_s5 = 0;
 
     // Collect ground heights around position?
-    for (i = 0; i < ARRAY_SIZE(groundHeights); i++)
+    for (i = 0; i < POINT_COUNT; i++)
     {
-        func_800699F8(&coll,
+        Collision_Get(&coll,
                       pos->vx + Math_Sin((arg3 & 0xF) + (i * ANGLE_STEP)),
                       pos->vz + Math_Cos((arg3 & 0xF) + (i * ANGLE_STEP)));
         groundHeights[i] = coll.groundHeight_0;
@@ -3018,22 +3019,21 @@ void func_80069DF0(s_800C4590* arg0, VECTOR3* pos, s32 arg2, s32 arg3) // 0x8006
         }
     }
 
-    groundHeight = (groundHeightMin + groundHeightMax) >> 1;
-
+    groundHeight = (groundHeightMin + groundHeightMax) >> 1; // `/ 2`.
     if (groundHeight < (arg2 - FP_METER(0.1f)))
     {
         groundHeight = arg2 - FP_METER(0.1f);
     }
 
     for (i = var_s5 + 1, var_a0 = var_s5;
-         i < (var_s5 + 16) && groundHeight < groundHeights[i & 0xF];
+         i < (var_s5 + POINT_COUNT) && groundHeight < groundHeights[i & 0xF];
          i++)
     {
         var_a0 = i;
     }
 
     for (i = var_s5 - 1, var_s0 = var_s5;
-         i < (var_s5 - 16) && groundHeight < groundHeights[i & 0xF];
+         i < (var_s5 - POINT_COUNT) && groundHeight < groundHeights[i & 0xF];
          i--)
     {
         var_s0 = i;

@@ -311,24 +311,24 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D0C3C);
 
 void func_800D16C4(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord) // 0x800D16C4
 {
-    s_func_800699F8 sp10;
-    VECTOR3         sp20;
-    s32             headingAngle;
-    s16             temp_v0;
-    s32             temp_s0;
-    s32             moveAmt;
-    s32             temp_s2;
-    s16             temp_s3;
-    s32             scaleRestoreShift;
-    u32             scaleReduceShift;
-    s32             temp_v0_2;
-    s32             temp_v0_3;
-    s32             playerState;
-    s32             moveSpeed;
-    s32             var_a0;
-    bool            cond;
-    s16             var_s0;
-    s16             var_v1;
+    s_Collision coll;
+    VECTOR3     sp20;
+    s32         headingAngle;
+    s16         temp_v0;
+    s32         temp_s0;
+    s32         moveAmt;
+    s32         temp_s2;
+    s16         temp_s3;
+    s32         scaleRestoreShift;
+    u32         scaleReduceShift;
+    s32         temp_v0_2;
+    s32         temp_v0_3;
+    s32         playerState;
+    s32         moveSpeed;
+    s32         var_a0;
+    bool        cond;
+    s16         var_s0;
+    s16         var_v1;
 
     playerState = g_SysWork.player_4C.extra_128.state_1C;
     cond        = playerState < PlayerState_Unk58;
@@ -340,12 +340,12 @@ void func_800D16C4(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
     if (cond)
     {
-        func_800699F8(&sp10, chara->position_18.vx, chara->position_18.vz);
+        Collision_Get(&coll, chara->position_18.vx, chara->position_18.vz);
         temp_s2 = FP_MULTIPLY(chara->moveSpeed_38, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
         temp_s0 = FP_MULTIPLY(chara->moveSpeed_38, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
 
-        temp_s3 = Math_Cos(ABS(sp10.field_4) >> 3);
-        temp_v0 = Math_Cos(ABS(sp10.field_6) >> 3);
+        temp_s3 = Math_Cos(ABS(coll.field_4) >> 3); // `/ 8`.
+        temp_v0 = Math_Cos(ABS(coll.field_6) >> 3); // `/ 8`.
 
         var_s0 = FP_MULTIPLY((FP_MULTIPLY(temp_s2, temp_s3, Q12_SHIFT)), temp_s3, Q12_SHIFT);
         var_v1 = FP_MULTIPLY((FP_MULTIPLY(temp_s0, temp_v0, Q12_SHIFT)), temp_v0, Q12_SHIFT);

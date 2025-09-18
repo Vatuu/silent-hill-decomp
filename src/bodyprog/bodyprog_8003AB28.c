@@ -1876,7 +1876,7 @@ void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4)
         return;
     }
 
-    arg3 = CLAMP(arg3, FP_FLOAT_TO(0.0f, Q12_SHIFT), FP_FLOAT_TO(1.0f, Q12_SHIFT));
+    arg3 = CLAMP(arg3, Q12(0.0f), Q12(1.0f));
 
     if (arg0 == 1)
     {
@@ -1891,9 +1891,9 @@ void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4)
 
         func_80055330(D_800C4168.field_0, D_800C4168.field_20,
                       D_800C4168.field_3,
-                      FP_MULTIPLY_PRECISE(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, D_800C4168.worldTintColor_28.r, Q12_SHIFT) << 5,
-                      FP_MULTIPLY_PRECISE(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, D_800C4168.worldTintColor_28.g, Q12_SHIFT) << 5,
-                      FP_MULTIPLY_PRECISE(FP_FLOAT_TO(1.0f, Q12_SHIFT) - arg3, D_800C4168.worldTintColor_28.b, Q12_SHIFT) << 5,
+                      FP_MULTIPLY_PRECISE(Q12(1.0f) - arg3, D_800C4168.worldTintColor_28.r, Q12_SHIFT) << 5,
+                      FP_MULTIPLY_PRECISE(Q12(1.0f) - arg3, D_800C4168.worldTintColor_28.g, Q12_SHIFT) << 5,
+                      FP_MULTIPLY_PRECISE(Q12(1.0f) - arg3, D_800C4168.worldTintColor_28.b, Q12_SHIFT) << 5,
                       D_800C4168.screenBrightness_8);
     }
 

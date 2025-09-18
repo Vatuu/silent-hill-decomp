@@ -290,16 +290,15 @@ typedef struct
 } s_func_800625F4;
 STATIC_ASSERT_SIZEOF(s_func_800625F4, 20);
 
-/** Returned by `func_800699F8`. Probably contains 2D point collision. */
-typedef struct _s_func_800699F8
+typedef struct _Collision
 {
     q19_12 groundHeight_0;
-    s16    field_4;
-    s16    field_6;
-    s8     field_8;
+    s16    field_4; // } Angles??
+    s16    field_6; // }
+    s8     field_8; // Count of something? 12 is significant.
     u8     unk_9[3];
-} s_func_800699F8;
-STATIC_ASSERT_SIZEOF(s_func_800699F8, 12);
+} s_Collision;
+STATIC_ASSERT_SIZEOF(s_Collision, 12);
 
 typedef struct
 {
@@ -883,7 +882,7 @@ typedef struct
     u8                 unk_C9[1];
     s16                field_CA;
     s_func_8006CC44_CC field_CC;
-    // TODO: May be incomplete. Maybe not, added the final padding based on `func_800699F8`
+    // TODO: May be incomplete. Maybe not, added the final padding based on `Collision_Get`
 } s_func_8006CC44;
 
 // LM data? Likely `D_800C1158`'s struct.
@@ -1025,7 +1024,7 @@ STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
 typedef struct
 {
     VECTOR3         position_0;
-    s_func_800699F8 field_C; // Collision data?
+    s_Collision field_C; // Collision data?
     s32             field_18;
 } s_800AFC78;
 
@@ -1154,7 +1153,7 @@ STATIC_ASSERT_SIZEOF(s_800BCE18, 11260);
 // IPD data?
 typedef struct
 {
-    s_IpdHeader* ipdHeader_0;
+    s_IpdHeader* ipdHdr_0;
     s32          queueIdx_4;
     s16          field_8; // X cell coord?
     s16          field_A; // Z cell coord?
@@ -1695,7 +1694,7 @@ typedef struct
     s32     field_C; // Y height?
     s16     field_10;
     s16     field_12;
-    s8      field_14;
+    s8      field_14; // Count of something? 12 is significant.
     s8      unk_15[3];
     s32     field_18;
 } s_800C4590;
@@ -2469,7 +2468,7 @@ extern s8 D_800C4560;
 
 extern u8 D_800C4561;
 
-extern s_func_800699F8 D_800C4620;
+extern s_Collision D_800C4620;
 
 extern VECTOR3 D_800C4640[][8]; // Or struct?
 
@@ -2772,37 +2771,37 @@ void func_80043A24(GsOT* ot, s32 arg1);
 bool func_80043B34(s_800C117C* arg0, s_800C1020* arg1);
 
 /** Checks if PLM texture is loaded? */
-bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHeader);
+bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHdr);
 
-s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHeader);
+s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHdr);
 
-void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_LmHeader** lmHdrs, s32 lmHdrCount, s_800C1450_0* arg3, s_800C1450_0* arg4, s32 arg5);
+void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_800C1450_0* arg3, s_800C1450_0* arg4, s32 arg5);
 
-void func_80043C7C(s_IpdHeader* ipdHeader, s_800C1450_0* arg1, s_800C1450_0* arg2, s32 arg3);
+void func_80043C7C(s_IpdHeader* ipdHdr, s_800C1450_0* arg1, s_800C1450_0* arg2, s32 arg3);
 
 /** Checks if IPD is loaded before returning texture count? */
-s32 func_80043D00(s_IpdHeader* ipdHeader);
+s32 func_80043D00(s_IpdHeader* ipdHdr);
 
 /** Returns inverse result of `LmFilter_NameEndsWithH`. */
 bool LmFilter_NameDoesNotEndWithH(s_Material* mat);
 
 bool LmFilter_NameEndsWithH(s_Material* mat);
 
-void IpdHeader_FixHeaderOffsets(s_IpdHeader* ipdHeader);
+void IpdHeader_FixHeaderOffsets(s_IpdHeader* ipdHdr);
 
 /** @brief Assigns `s_ModelHeader` pointers to models in `s_IpdHeader` by searching the given `s_LmHeader` array. */
-void IpdHeader_ModelLinkObjectLists(s_IpdHeader* ipdHeader, s_LmHeader** lmHdrs, s32 lmHdrCount);
+void IpdHeader_ModelLinkObjectLists(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount);
 
 /** @brief Searches `s_LmHeader` for objects with the given `objName`. */
 s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmHdr);
 
 /** @brief Assigns `s_ModelHeader` pointers to each `s_IpdModelBuffer` in `s_IpdHeader`. */
-void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHeader, s_IpdModelInfo* ipdModels);
+void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHdr, s_IpdModelInfo* ipdModels);
 
 /** Sets IPD collision data grid coords? */
 void func_80044044(s_IpdHeader* ipd, s32 x, s32 z);
 
-void func_80044090(s_IpdHeader* ipdHeader, s32 arg1, s32 arg2, GsOT* ot, void* arg4);
+void func_80044090(s_IpdHeader* ipdHdr, s32 arg1, s32 arg2, GsOT* ot, void* arg4);
 
 bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, s32 x, s32 z);
 
@@ -3204,7 +3203,7 @@ void func_8005DC3C(s32 sfx, const VECTOR3* pos, s32 vol, s32 soundType, s32 pitc
 /** Spatial SFX func? */
 void func_8005DD44(s32 sfx, VECTOR3* pos, s32 vol, s8 pitch); // Types assumed.
 
-s32 func_8005F680(s_func_800699F8* arg0);
+s32 func_8005F680(s_Collision* arg0);
 
 /** Spatial SFX func? */
 void func_8005DE0C(s32 sfx, VECTOR3*, s32, s32, s32); // Types assumed.
@@ -3546,8 +3545,7 @@ void func_80069994(s_IpdCollisionData* collData);
 
 void func_800699E4(s_IpdCollisionData* collData);
 
-/** Getter for 2D point collision? */
-void func_800699F8(s_func_800699F8* coll, s32 posX, s32 posZ);
+void Collision_Get(s_Collision* coll, s32 posX, s32 posZ);
 
 s32 func_80069B24(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara);
 

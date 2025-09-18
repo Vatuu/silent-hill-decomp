@@ -1652,7 +1652,7 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
 
 void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYPE cur_rd_area_size) // 0x800832B4
 {
-    s_func_800699F8 sp10;
+    s_Collision     coll;
     s32             dist;
     s32             ofs_y;
     s32             lim_y;
@@ -1714,15 +1714,15 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
                 break;
 
             case 1:
-                func_800699F8(&sp10, sc_p->position_18.vx, sc_p->position_18.vz);
+                Collision_Get(&coll, sc_p->position_18.vx, sc_p->position_18.vz);
 
-                if (sp10.field_8 == 0)
+                if (coll.field_8 == 0)
                 {
                     watch_y = sc_p->position_18.vy + ofs_y;
                 }
                 else
                 {
-                    watch_y = sp10.groundHeight_0 + ofs_y;
+                    watch_y = coll.groundHeight_0 + ofs_y;
                 }
                 break;
 
@@ -1733,7 +1733,7 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
 
         lim_y = (w_p->nearest_enemy_xz_dist_2E0 >> 1) - FP_METER(0.5f);
 
-        if (w_p->chara_pos_114.vy + lim_y < watch_y)
+        if ((w_p->chara_pos_114.vy + lim_y) < watch_y)
         {
             watch_y = w_p->chara_pos_114.vy + lim_y;
         }

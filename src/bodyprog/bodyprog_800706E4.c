@@ -6390,33 +6390,32 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
 void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord) // 0x8007C0D8
 {
-    s_func_800699F8 sp10;
-    VECTOR3         sp20;
-    VECTOR3         sp30;
-    VECTOR3         sp40;
-    s16             temp_v0;
-    s16             someAngle;
-    s16             temp_s0;
-    s32             temp_s0_2;
-    s32             temp_s2;
-    s32             temp_s2_2;
-    s32             temp_s3;
-    s32             temp_s3_2;
-    s32             temp_v0_3;
-    s16             temp_v1;
-    s32             posY;
-    u32             temp;
+    s_Collision coll;
+    VECTOR3     sp20;
+    VECTOR3     sp30;
+    VECTOR3     sp40;
+    s16         temp_v0;
+    s16         someAngle;
+    s16         temp_s0;
+    s32         temp_s0_2;
+    s32         temp_s2;
+    s32         temp_s2_2;
+    s32         temp_s3;
+    s32         temp_s3_2;
+    s32         temp_v0_3;
+    s16         temp_v1;
+    s32         posY;
+    u32         temp;
 
     D_800C45F8 = chara->position_18;
 
-    func_800699F8(&sp10, chara->position_18.vx, chara->position_18.vz);
+    Collision_Get(&coll, chara->position_18.vx, chara->position_18.vz);
 
     temp_s3 = FP_MULTIPLY(chara->moveSpeed_38, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
     temp_s2 = FP_MULTIPLY(chara->moveSpeed_38, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
 
-    temp_s0 = Math_Cos(ABS(sp10.field_4) >> 3);
-
-    temp_v0 = Math_Cos(ABS(sp10.field_6) >> 3);
+    temp_s0 = Math_Cos(ABS(coll.field_4) >> 3);
+    temp_v0 = Math_Cos(ABS(coll.field_6) >> 3);
 
     temp_v1 = FP_MULTIPLY(FP_MULTIPLY(temp_s3, temp_s0, Q12_SHIFT), temp_s0, Q12_SHIFT);
     someAngle = FP_MULTIPLY(FP_MULTIPLY(temp_s2, temp_v0, Q12_SHIFT), temp_v0, Q12_SHIFT);
@@ -8622,7 +8621,7 @@ bool func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800806AC
         return result;
     }
 
-    func_800699F8(&D_800C4620, arg1, arg3);
+    Collision_Get(&D_800C4620, arg1, arg3);
 
     result = arg2 < D_800C4620.groundHeight_0;
     if (result)
@@ -8649,7 +8648,7 @@ void func_8008076C(s32 posX, s32 posZ) // 0x8008076C
     s32              caseVar;
     s32              x;
     s32              z;
-    s_func_800699F8* coll;
+    s_Collision* coll;
 
     coll = &D_800AFC78.field_C;
 
@@ -8660,7 +8659,7 @@ void func_8008076C(s32 posX, s32 posZ) // 0x8008076C
         return;
     }
 
-    func_800699F8(coll, posX, posZ);
+    Collision_Get(coll, posX, posZ);
     D_800AFC78.position_0.vx = posX;
     D_800AFC78.position_0.vz = posZ;
 

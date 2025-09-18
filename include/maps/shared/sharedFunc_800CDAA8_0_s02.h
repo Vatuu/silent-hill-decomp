@@ -2,7 +2,7 @@
 
 void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord)
 {
-    s_func_800699F8 sp10;
+    s_Collision sp10;
     s32             sfx;
     s8              pitch;
     s8              sp25;
@@ -91,7 +91,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
         headingAngle                                                      = FP_ANGLE(0.0f);
     }
 
-    func_800699F8(&sp10, playerChara->position_18.vx, playerChara->position_18.vz);
+    Collision_Get(&sp10, playerChara->position_18.vx, playerChara->position_18.vz);
     func_8007FDE0(sp10.field_8, &sfx, &pitch, &sp25);
 
     if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_Unk52)

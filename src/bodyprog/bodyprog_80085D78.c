@@ -1394,7 +1394,7 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, s32 posX, s32 posZ, s16 posY, u32 stateSt
     #define SET_FLAG(ptr, idx) \
         ((((u32*)ptr)[(idx) >> 5] |= (1 << 0) << ((idx) & 0x1F)))
 
-    s_func_800699F8 sp10;
+    s_Collision     coll;
     s32             i;
     s32             var_a0;
     s32             arg1_1;
@@ -1464,9 +1464,9 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, s32 posX, s32 posZ, s16 posY, u32 stateSt
         g_SysWork.npcs_1A0[i].model_0.stateStep_3 = stateStep;
         g_SysWork.npcs_1A0[i].position_18.vx      = posX;
 
-        func_800699F8(&sp10, posX, posZ);
+        Collision_Get(&coll, posX, posZ);
 
-        g_SysWork.npcs_1A0[i].position_18.vy = sp10.groundHeight_0;
+        g_SysWork.npcs_1A0[i].position_18.vy = coll.groundHeight_0;
         g_SysWork.npcs_1A0[i].position_18.vz = posZ;
         g_SysWork.npcs_1A0[i].rotation_24.vy = posY;
 

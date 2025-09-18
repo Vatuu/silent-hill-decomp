@@ -1,6 +1,6 @@
 void sharedFunc_800CEFD0_1_s02(s32 arg0, s_sharedFunc_800CEFD0_1_s02* arg1, u16* arg2, s32* deltaTime)
 {
-    s_func_800699F8              sp10;
+    s_Collision              coll;
     s32                          z;
     s32                          x;
     s32                          var_t0;
@@ -63,13 +63,13 @@ void sharedFunc_800CEFD0_1_s02(s32 arg0, s_sharedFunc_800CEFD0_1_s02* arg1, u16*
         if (var_s0->field_0.vy >= 0)
         {
             PushMatrix();
-            func_800699F8(&sp10, var_s0->field_0.vx + sharedData_800E323C_0_s00.vx, var_s0->field_0.vz + sharedData_800E323C_0_s00.vz);
+            Collision_Get(&coll, var_s0->field_0.vx + sharedData_800E323C_0_s00.vx, var_s0->field_0.vz + sharedData_800E323C_0_s00.vz);
             PopMatrix();
 
-            var_s0->field_0.vy = sp10.groundHeight_0;
-            var_s0->field_18   = sp10.field_8;
+            var_s0->field_0.vy = coll.groundHeight_0;
+            var_s0->field_18   = coll.field_8;
 
-            if (sp10.field_8 == 11)
+            if (coll.field_8 == 11)
             {
                 var_s0->field_1F   = 3;
                 var_s0->field_C.vx = var_s0->field_0.vx;

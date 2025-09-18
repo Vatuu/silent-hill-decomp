@@ -1,11 +1,11 @@
 
 void sharedFunc_800D5B3C_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
 {
-    s_func_800699F8 sp18;
-    s32             sfx;
-    s8              pitch;
-    s8              sp2D; // Type asssumed.
-    s32             tempVal;
+    s_Collision coll;
+    s32         sfx;
+    s8          pitch;
+    s8          sp2D; // Type asssumed.
+    s32         tempVal;
 
     tempVal = chara->properties_E4.larvalStalker.properties_E8[0].val32;
     if (tempVal != 0 && chara->properties_E4.larvalStalker.properties_E8[0].val32 == 6)
@@ -24,8 +24,8 @@ void sharedFunc_800D5B3C_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
         }
     }
 
-    func_800699F8(&sp18, chara->position_18.vx, chara->position_18.vz);
-    func_8007FDE0(sp18.field_8, &sfx, &pitch, &sp2D);
+    Collision_Get(&coll, chara->position_18.vx, chara->position_18.vz);
+    func_8007FDE0(coll.field_8, &sfx, &pitch, &sp2D);
 
     if (chara->properties_E4.larvalStalker.properties_E8[0].val32 == 6)
     {

@@ -494,7 +494,7 @@ u32 IpdHeader_LoadStateGet(s_800C117C* arg0) // 0x80041B1C
     {
         return StaticModelLoadState_Invalid;
     }
-    else if (arg0->ipdHeader_0->isLoaded_1 && IpdHeader_IsTextureLoaded(arg0->ipdHeader_0))
+    else if (arg0->ipdHdr_0->isLoaded_1 && IpdHeader_IsTextureLoaded(arg0->ipdHdr_0))
     {
         return StaticModelLoadState_Loaded;
     }
@@ -519,7 +519,7 @@ u32 LmHeader_LoadStateGet(s_func_80041CB4* arg0) // 0x80041BA0
     {
         return StaticModelLoadState_Invalid;
     }
-    else if (arg0->lmHeader_0->isLoaded_2 && LmHeader_IsTextureLoaded(arg0->lmHeader_0))
+    else if (arg0->lmHdr_0->isLoaded_2 && LmHeader_IsTextureLoaded(arg0->lmHdr_0))
     {
         return StaticModelLoadState_Loaded;
     }
@@ -545,7 +545,7 @@ void func_80041C24(s_LmHeader* lmHeader, s32 arg1, s32 arg2) // 0x80041C24
 // This function is related to map loading.
 void func_80041CB4(s_func_80041CB4* arg0, s_LmHeader* lmHeader) // 0x80041CB4
 {
-    arg0->lmHeader_0 = lmHeader;
+    arg0->lmHdr_0 = lmHeader;
     func_80041CEC(lmHeader);
 
     arg0->queueIdx_8 = 0;
@@ -626,10 +626,10 @@ void Map_PlaceIpdAtGridPos(s16 ipdFileIdx, s32 x, s32 z) // 0x80041ED0
 
         if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            ipd = ptr->ipdHeader_0;
+            ipd = ptr->ipdHdr_0;
             if (ipd->isLoaded_1)
             {
-                Lm_MaterialRefCountDec(ipd->lmHeader_4);
+                Lm_MaterialRefCountDec(ipd->lmHdr_4);
             }
         }
 
@@ -684,12 +684,12 @@ void func_800420FC() // 0x800420FC
     ptr = &D_800C1020.field_138;
 
     if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
-        ptr->lmHeader_0->isLoaded_2)
+        ptr->lmHdr_0->isLoaded_2)
     {
-        Lm_MaterialRefCountDec(D_800C1020.field_138.lmHeader_0);
+        Lm_MaterialRefCountDec(D_800C1020.field_138.lmHdr_0);
     }
 
-    func_80041CB4(&D_800C1020.field_138, D_800C1020.field_138.lmHeader_0);
+    func_80041CB4(&D_800C1020.field_138, D_800C1020.field_138.lmHdr_0);
 }
 
 s_Texture* func_80042178(char* arg0) // 0x80042178
@@ -721,9 +721,9 @@ void func_800421D8(char* mapTag, s32 plmIdx, s32 arg2, bool hasGlobalPlm, s32 ar
         if (plmIdx != D_800C1020.field_138.fileIdx_4)
         {
             if (Fs_QueueEntryLoadStatusGet(D_800C1020.field_138.queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
-                D_800C1020.field_138.lmHeader_0->isLoaded_2)
+                D_800C1020.field_138.lmHdr_0->isLoaded_2)
             {
-                Lm_MaterialRefCountDec(D_800C1020.field_138.lmHeader_0);
+                Lm_MaterialRefCountDec(D_800C1020.field_138.lmHdr_0);
             }
 
             D_800C1020.field_138.fileIdx_4 = plmIdx;
@@ -761,10 +761,10 @@ void func_80042300(s_800C1020* arg0, s32 arg1) // 0x80042300
 
         if (Fs_QueueEntryLoadStatusGet(temp_s0->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            ipd1 = temp_s0->ipdHeader_0;
+            ipd1 = temp_s0->ipdHdr_0;
             if (ipd1->isLoaded_1)
             {
-                Lm_MaterialRefCountDec(ipd1->lmHeader_4);
+                Lm_MaterialRefCountDec(ipd1->lmHdr_4);
             }
         }
 
@@ -774,11 +774,11 @@ void func_80042300(s_800C1020* arg0, s32 arg1) // 0x80042300
 
         if (i < arg1)
         {
-            temp_s0->ipdHeader_0 = ipd0;
+            temp_s0->ipdHdr_0 = ipd0;
         }
         else
         {
-            temp_s0->ipdHeader_0 = NULL;
+            temp_s0->ipdHdr_0 = NULL;
         }
     }
 }
@@ -881,7 +881,7 @@ s_IpdCollisionData** func_800425D8(s32* collDataIdx) // 0x800425D8
     {
         if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            ipd = ptr->ipdHeader_0;
+            ipd = ptr->ipdHdr_0;
             if (ipd->isLoaded_1)
             {
                 collData = IpdHeader_CollisionDataGet(ipd);
@@ -922,7 +922,7 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
             continue;
         }
 
-        ipd = ptr->ipdHeader_0;
+        ipd = ptr->ipdHdr_0;
         if (ipd->isLoaded_1 && ptr->field_8 == xIdx && ptr->field_A == zIdx)
         {
             return &ipd->collisionData_54;
@@ -962,8 +962,8 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
     collZ = FP_METER_TO_GEO(posZ);
 
     if (Fs_QueueEntryLoadStatusGet(ptr0->queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
-        ptr0->lmHeader_0->isLoaded_2 &&
-        Lm_ModelFind(arg0, D_800C1020.field_138.lmHeader_0, arg1))
+        ptr0->lmHdr_0->isLoaded_2 &&
+        Lm_ModelFind(arg0, D_800C1020.field_138.lmHdr_0, arg1))
     {
         return 2;
     }
@@ -979,7 +979,7 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
             continue;
         }
 
-        if (!ptr1->ipdHeader_0->isLoaded_1)
+        if (!ptr1->ipdHdr_0->isLoaded_1)
         {
             continue;
         }
@@ -1023,7 +1023,7 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
     for (k = 0; k < idx; k++)
     {
         ptr1 = sp10[k];
-        if (Lm_ModelFind(arg0, ptr1->ipdHeader_0->lmHeader_4, arg1))
+        if (Lm_ModelFind(arg0, ptr1->ipdHdr_0->lmHdr_4, arg1))
         {
             return (ptr1 - D_800C1020.ipdTable_15C) + 3;
         }
@@ -1047,20 +1047,20 @@ void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1) // 0x80042C3C
 
     if (D_800C1020.field_138.queueIdx_8 == NO_VALUE) 
     {
-        D_800C1020.field_138.queueIdx_8 = Fs_QueueStartRead(D_800C1020.field_138.fileIdx_4, D_800C1020.field_138.lmHeader_0);
+        D_800C1020.field_138.queueIdx_8 = Fs_QueueStartRead(D_800C1020.field_138.fileIdx_4, D_800C1020.field_138.lmHdr_0);
     }
 
     func_80042EBC(&D_800C1020, x0, z0, x1, z1);
 
     if (Fs_QueueEntryLoadStatusGet(D_800C1020.field_138.queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
-        !D_800C1020.field_138.lmHeader_0->isLoaded_2) 
+        !D_800C1020.field_138.lmHdr_0->isLoaded_2) 
     {
         temp_s0                              = D_800C1020.field_430.field_0.count_0;
         D_800C1020.field_430.field_0.count_0 = 4;
 
-        LmHeader_FixOffsets(D_800C1020.field_138.lmHeader_0);
-        func_80056774(D_800C1020.field_138.lmHeader_0, &D_800C1020.field_430.field_0, NULL, D_800C1020.field_134, 1);
-        func_80056954(D_800C1020.field_138.lmHeader_0);
+        LmHeader_FixOffsets(D_800C1020.field_138.lmHdr_0);
+        func_80056774(D_800C1020.field_138.lmHdr_0, &D_800C1020.field_430.field_0, NULL, D_800C1020.field_134, 1);
+        func_80056954(D_800C1020.field_138.lmHdr_0);
 
         D_800C1020.field_430.field_0.count_0 = temp_s0;
     }
@@ -1069,8 +1069,8 @@ void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1) // 0x80042C3C
     {
         if (Fs_QueueEntryLoadStatusGet(var_s0->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            IpdHeader_FixOffsets(var_s0->ipdHeader_0, &D_800C1020.field_138, 1, &D_800C1020.field_430.field_0, &D_800C1020.field_430.field_2C, D_800C1020.field_134);
-            func_80044044(var_s0->ipdHeader_0, var_s0->field_8, var_s0->field_A);
+            IpdHeader_FixOffsets(var_s0->ipdHdr_0, &D_800C1020.field_138, 1, &D_800C1020.field_430.field_0, &D_800C1020.field_430.field_2C, D_800C1020.field_134);
+            func_80044044(var_s0->ipdHdr_0, var_s0->field_8, var_s0->field_A);
         }
     }
 }
@@ -1196,13 +1196,13 @@ void func_800431E4(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, boo
             func_80043338(ptr, arg1, arg2, arg3, arg4, hasGlobalPlm);
         }
 
-        if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) < FsQueueEntryLoadStatus_Loaded || !ptr->ipdHeader_0->isLoaded_1)
+        if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) < FsQueueEntryLoadStatus_Loaded || !ptr->ipdHdr_0->isLoaded_1)
         {
             ptr->field_14 = 0;
         }
         else
         {
-            ptr->field_14 = func_80043D00(ptr->ipdHeader_0);
+            ptr->field_14 = func_80043D00(ptr->ipdHdr_0);
         }
 
         if (ptr->field_C > 0 && ptr->field_10 > 0)
@@ -1230,9 +1230,9 @@ void func_800433B8(s_800C1020* arg0) // 0x800433B8
     {
         if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            if (ptr->ipdHeader_0->isLoaded_1 && ptr->field_C > 0 && ptr->field_10 > 0)
+            if (ptr->ipdHdr_0->isLoaded_1 && ptr->field_C > 0 && ptr->field_10 > 0)
             {
-                Lm_MaterialRefCountDec(ptr->ipdHeader_0->lmHeader_4);
+                Lm_MaterialRefCountDec(ptr->ipdHdr_0->lmHdr_4);
             }
         }
     }
@@ -1241,10 +1241,10 @@ void func_800433B8(s_800C1020* arg0) // 0x800433B8
     {
         if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            if (ptr->ipdHeader_0->isLoaded_1 && (ptr->field_C <= 0 || ptr->field_10 <= 0))
+            if (ptr->ipdHdr_0->isLoaded_1 && (ptr->field_C <= 0 || ptr->field_10 <= 0))
             {
-                func_80043C7C(ptr->ipdHeader_0, &arg0->field_430.field_0, &arg0->field_430.field_2C, arg0->field_134);
-                func_80056954(ptr->ipdHeader_0->lmHeader_4);
+                func_80043C7C(ptr->ipdHdr_0, &arg0->field_430.field_0, &arg0->field_430.field_2C, arg0->field_134);
+                func_80056954(ptr->ipdHdr_0->lmHdr_4);
             }
         }
     }
@@ -1470,7 +1470,7 @@ void func_80043A24(GsOT* ot, s32 arg1) // 0x80043A24
     }
 
     if (!(queueState == FsQueueEntryLoadStatus_Invalid ||
-          (queueState == FsQueueEntryLoadStatus_Loaded && D_800C1020.field_138.lmHeader_0->isLoaded_2)))
+          (queueState == FsQueueEntryLoadStatus_Loaded && D_800C1020.field_138.lmHdr_0->isLoaded_2)))
     {
         return;
     }
@@ -1480,7 +1480,7 @@ void func_80043A24(GsOT* ot, s32 arg1) // 0x80043A24
     {
         if (IpdHeader_LoadStateGet(ptr) >= 3 && func_80043B34(ptr, &D_800C1020))
         {
-            func_80044090(ptr->ipdHeader_0, D_800C1020.field_578, D_800C1020.field_57C, ot, arg1);
+            func_80044090(ptr->ipdHdr_0, D_800C1020.field_578, D_800C1020.field_57C, ot, arg1);
         }
     }
 }
@@ -1495,70 +1495,70 @@ bool func_80043B34(s_800C117C* arg0, s_800C1020* arg1)
     return arg1->hasGlobalPlm != false;
 }
 
-bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHeader) // 0x80043B70
+bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHdr) // 0x80043B70
 {
-    if (!ipdHeader->isLoaded_1)
+    if (!ipdHdr->isLoaded_1)
     {
         return false;
     }
 
-    return LmHeader_IsTextureLoaded(ipdHeader->lmHeader_4);
+    return LmHeader_IsTextureLoaded(ipdHdr->lmHdr_4);
 }
 
-s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHeader) // 0x80043BA4
+s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHdr) // 0x80043BA4
 {
-    if (ipdHeader->isLoaded_1)
+    if (ipdHdr->isLoaded_1)
     {
-        return &ipdHeader->collisionData_54;
+        return &ipdHdr->collisionData_54;
     }
 
     return NULL;
 }
 
-void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_LmHeader** lmHeaders, s32 lmHeaderCount, s_800C1450_0* arg3, s_800C1450_0* arg4, s32 arg5) // 0x80043BC4
+void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_800C1450_0* arg3, s_800C1450_0* arg4, s32 arg5) // 0x80043BC4
 {
-    if (ipdHeader->isLoaded_1)
+    if (ipdHdr->isLoaded_1)
     {
         return;
     }
-    ipdHeader->isLoaded_1 = true;
+    ipdHdr->isLoaded_1 = true;
 
-    IpdHeader_FixHeaderOffsets(ipdHeader);
-    IpdCollData_FixOffsets(&ipdHeader->collisionData_54);
-    LmHeader_FixOffsets(ipdHeader->lmHeader_4);
-    func_8008E4EC(ipdHeader->lmHeader_4);
-    func_80043C7C(ipdHeader, arg3, arg4, arg5);
-    func_80056954(ipdHeader->lmHeader_4);
-    IpdHeader_ModelLinkObjectLists(ipdHeader, lmHeaders, lmHeaderCount);
-    IpdHeader_ModelBufferLinkObjectLists(ipdHeader, ipdHeader->modelInfo_14);
+    IpdHeader_FixHeaderOffsets(ipdHdr);
+    IpdCollData_FixOffsets(&ipdHdr->collisionData_54);
+    LmHeader_FixOffsets(ipdHdr->lmHdr_4);
+    func_8008E4EC(ipdHdr->lmHdr_4);
+    func_80043C7C(ipdHdr, arg3, arg4, arg5);
+    func_80056954(ipdHdr->lmHdr_4);
+    IpdHeader_ModelLinkObjectLists(ipdHdr, lmHdrs, lmHdrCount);
+    IpdHeader_ModelBufferLinkObjectLists(ipdHdr, ipdHdr->modelInfo_14);
 }
 
-void func_80043C7C(s_IpdHeader* ipdHeader, s_800C1450_0* arg1, s_800C1450_0* arg2, s32 arg3) // 0x80043C7C
+void func_80043C7C(s_IpdHeader* ipdHdr, s_800C1450_0* arg1, s_800C1450_0* arg2, s32 arg3) // 0x80043C7C
 {
-    if (!ipdHeader->isLoaded_1)
+    if (!ipdHdr->isLoaded_1)
     {
         return;
     }
 
     if (arg1 != NULL)
     {
-        func_80056774(ipdHeader->lmHeader_4, arg1, &LmFilter_NameDoesNotEndWithH, arg3, 1);
+        func_80056774(ipdHdr->lmHdr_4, arg1, &LmFilter_NameDoesNotEndWithH, arg3, 1);
     }
 
     if (arg2 != NULL)
     {
-        func_80056774(ipdHeader->lmHeader_4, arg2, &LmFilter_NameEndsWithH, arg3, 1);
+        func_80056774(ipdHdr->lmHdr_4, arg2, &LmFilter_NameEndsWithH, arg3, 1);
     }
 }
 
-s32 func_80043D00(s_IpdHeader* ipdHeader) // 0x80043D00
+s32 func_80043D00(s_IpdHeader* ipdHdr) // 0x80043D00
 {
-    if (!ipdHeader->isLoaded_1)
+    if (!ipdHdr->isLoaded_1)
     {
         return 0;
     }
 
-    return func_80056348(LmFilter_NameEndsWithH, ipdHeader->lmHeader_4);
+    return func_80056348(LmFilter_NameEndsWithH, ipdHdr->lmHdr_4);
 }
 
 bool LmFilter_NameDoesNotEndWithH(s_Material* mat) // 0x80043D44
@@ -1586,44 +1586,44 @@ bool LmFilter_NameEndsWithH(s_Material* mat) // 0x80043D64
     return false;
 }
 
-void IpdHeader_FixHeaderOffsets(s_IpdHeader* ipdHeader) // 0x80043DA4
+void IpdHeader_FixHeaderOffsets(s_IpdHeader* ipdHdr) // 0x80043DA4
 {
     s_IpdModelBuffer* modelBuf;
 
-    ipdHeader->lmHeader_4       = (u8*)ipdHeader->lmHeader_4 + (u32)ipdHeader;
-    ipdHeader->modelInfo_14      = (u8*)ipdHeader->modelInfo_14 + (u32)ipdHeader;
-    ipdHeader->modelBuffers_18   = (u8*)ipdHeader->modelBuffers_18 + (u32)ipdHeader;
-    ipdHeader->modelOrderList_50 = (u8*)ipdHeader->modelOrderList_50 + (u32)ipdHeader;
+    ipdHdr->lmHdr_4       = (u8*)ipdHdr->lmHdr_4 + (u32)ipdHdr;
+    ipdHdr->modelInfo_14      = (u8*)ipdHdr->modelInfo_14 + (u32)ipdHdr;
+    ipdHdr->modelBuffers_18   = (u8*)ipdHdr->modelBuffers_18 + (u32)ipdHdr;
+    ipdHdr->modelOrderList_50 = (u8*)ipdHdr->modelOrderList_50 + (u32)ipdHdr;
 
-    for (modelBuf = &ipdHeader->modelBuffers_18[0];
-         modelBuf < &ipdHeader->modelBuffers_18[ipdHeader->modelBufferCount_9];
+    for (modelBuf = &ipdHdr->modelBuffers_18[0];
+         modelBuf < &ipdHdr->modelBuffers_18[ipdHdr->modelBufferCount_9];
          modelBuf++)
     {
-        modelBuf->field_C  = (u8*)modelBuf->field_C + (u32)ipdHeader;
-        modelBuf->field_10 = (u8*)modelBuf->field_10 + (u32)ipdHeader;
-        modelBuf->field_14 = (u8*)modelBuf->field_14 + (u32)ipdHeader;
+        modelBuf->field_C  = (u8*)modelBuf->field_C + (u32)ipdHdr;
+        modelBuf->field_10 = (u8*)modelBuf->field_10 + (u32)ipdHdr;
+        modelBuf->field_14 = (u8*)modelBuf->field_14 + (u32)ipdHdr;
     }
 }
 
-void IpdHeader_ModelLinkObjectLists(s_IpdHeader* ipdHeader, s_LmHeader** lmHeaders, s32 lmHeaderCount) // 0x80043E50
+void IpdHeader_ModelLinkObjectLists(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount) // 0x80043E50
 {
     s32             i;
     s32             j;
     s_IpdModelInfo* modelInfo;
 
-    for (i = 0; i < ipdHeader->modelCount_8; i++)
+    for (i = 0; i < ipdHdr->modelCount_8; i++)
     {
-        modelInfo = &ipdHeader->modelInfo_14[i];
+        modelInfo = &ipdHdr->modelInfo_14[i];
         if (!modelInfo->isGlobalPlm_0)
         {
-            modelInfo->modelHeader_C = LmHeader_ModelHeaderSearch(&modelInfo->modelName_4, ipdHeader->lmHeader_4);
+            modelInfo->modelHdr_C = LmHeader_ModelHeaderSearch(&modelInfo->modelName_4, ipdHdr->lmHdr_4);
         }
         else
         {
-            for (j = 0; j < lmHeaderCount; j++)
+            for (j = 0; j < lmHdrCount; j++)
             {
-                modelInfo->modelHeader_C = LmHeader_ModelHeaderSearch(&modelInfo->modelName_4, lmHeaders[j]);
-                if (modelInfo->modelHeader_C != NULL)
+                modelInfo->modelHdr_C = LmHeader_ModelHeaderSearch(&modelInfo->modelName_4, lmHdrs[j]);
+                if (modelInfo->modelHdr_C != NULL)
                 {
                     break;
                 }
@@ -1637,7 +1637,7 @@ s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmH
     s32            i;
     s_ModelHeader* modelHeader;
 
-    modelHeader = lmHeader->modelHeaders_C;
+    modelHeader = lmHeader->modelHdrs_C;
 
     for (i = 0; i < lmHeader->modelCount_8; i++, modelHeader++)
     {
@@ -1650,22 +1650,22 @@ s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmH
     return NULL;
 }
 
-void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHeader, s_IpdModelInfo* ipdModels) // 0x80043F88
+void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHdr, s_IpdModelInfo* ipdModels) // 0x80043F88
 {
     s_IpdModelBuffer*   modelBuffer;
     s_IpdModelBuffer_C* unkData;
 
-    for (modelBuffer = ipdHeader->modelBuffers_18;
-         modelBuffer < &ipdHeader->modelBuffers_18[ipdHeader->modelBufferCount_9];
+    for (modelBuffer = ipdHdr->modelBuffers_18;
+         modelBuffer < &ipdHdr->modelBuffers_18[ipdHdr->modelBufferCount_9];
          modelBuffer++)
     {
         for (unkData = &modelBuffer->field_C[0];
              unkData < &modelBuffer->field_C[modelBuffer->field_0];
              unkData++)
         {
-            // `unkData` originally stores model idx, replace that with pointer to the model's `modelHeader_C`.
-            s32 modelIdx           = (s32)unkData->modelHeader_0;
-            unkData->modelHeader_0 = ipdModels[modelIdx].modelHeader_C;
+            // `unkData` originally stores model idx, replace that with pointer to the model's `modelHdr_C`.
+            s32 modelIdx           = (s32)unkData->modelHdr_0;
+            unkData->modelHdr_0 = ipdModels[modelIdx].modelHdr_C;
         }
     }
 }
@@ -1684,7 +1684,7 @@ void func_80044044(s_IpdHeader* ipd, s32 x, s32 z) // 0x80044044
     ipd->collisionData_54.posZ_4 += (z - gridZ) * 0x2800;
 }
 
-void func_80044090(s_IpdHeader* ipdHeader, s32 arg1, s32 arg2, GsOT* ot, void* arg4) // 0x80044090
+void func_80044090(s_IpdHeader* ipdHdr, s32 arg1, s32 arg2, GsOT* ot, void* arg4) // 0x80044090
 {
     s_800BCE18_2BEC_0_0 sp18;
     GsCOORDINATE2       sp28;
@@ -1705,8 +1705,8 @@ void func_80044090(s_IpdHeader* ipdHeader, s32 arg1, s32 arg2, GsOT* ot, void* a
     spB8 = FP_METER_TO_GEO(arg1);
     spBC = FP_METER_TO_GEO(arg2);
 
-    temp_s5 = ipdHeader->levelGridX_2 * FP_METER_GEO(40.0f);
-    temp_s3 = ipdHeader->levelGridY_3 * FP_METER_GEO(40.0f);
+    temp_s5 = ipdHdr->levelGridX_2 * FP_METER_GEO(40.0f);
+    temp_s3 = ipdHdr->levelGridY_3 * FP_METER_GEO(40.0f);
 
     var_v1 = FLOOR_TO_STEP(spB8 - temp_s5, FP_METER_GEO(8.0f));
     var_a0 = FLOOR_TO_STEP(spBC - temp_s3, FP_METER_GEO(8.0f));
@@ -1721,17 +1721,17 @@ void func_80044090(s_IpdHeader* ipdHeader, s32 arg1, s32 arg2, GsOT* ot, void* a
     sp18.field_0 = 0;
     sp28.super   = NULL;
 
-    temp_fp = &ipdHeader->textureCount_1C + (var_a0 * 10) + (var_v1 * 2);
+    temp_fp = &ipdHdr->textureCount_1C + (var_a0 * 10) + (var_v1 * 2);
 
     for (i = temp_fp[0]; i < temp_fp[1] + temp_fp[0]; i++)
     {
-        temp_s2 = &ipdHeader->modelBuffers_18[ipdHeader->modelOrderList_50[i]];
+        temp_s2 = &ipdHdr->modelBuffers_18[ipdHdr->modelOrderList_50[i]];
 
         if (func_80044420(temp_s2, spB8 - temp_s5, spBC - temp_s3, temp_s5, temp_s3))
         {
             for (var_s0 = temp_s2->field_C; var_s0 < &temp_s2->field_C[temp_s2->field_0]; var_s0++)
             {
-                sp18.modelHdr_8 = var_s0->modelHeader_0;
+                sp18.modelHdr_8 = var_s0->modelHdr_0;
                 if (sp18.modelHdr_8 != NULL)
                 {
                     sp28.workm       = var_s0->field_4;
@@ -2368,7 +2368,7 @@ void func_80045258(s_Skeleton** skels, s_Bone* bones, s32 boneIdx, s_LmHeader* l
     {
         for (bone = bones; bone < &bones[boneIdx]; bone++)
         {
-            if (bone->modelHeaderIdx_C == *objOrd)
+            if (bone->modelHdrIdx_C == *objOrd)
             {
                 *skels = (s_Skeleton*)bone;
                 skels  = (s_Skeleton**)&bone->field_14;
