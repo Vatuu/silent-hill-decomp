@@ -669,7 +669,7 @@ void func_800566B4(s_LmHeader* lmHeader, s_FsImageDesc* image, s8 unused, s32 st
 
     for (i = 0; i < lmHeader->materialCount_3; i++, mat++, localImage++)
     {
-        func_8005B3BC(filename, mat);
+        Mat_TimFileNameGet(filename, mat);
         Fs_QueueStartReadTim(Fs_FindNextFile(filename, 0, startIdx), FS_BUFFER_9, localImage);
         func_8005660C(mat, localImage, arg4);
     }
@@ -1668,7 +1668,7 @@ s_Texture* Tex_Get(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, void* a
         return NULL;
     }
 
-    func_8005B3BC(&fileName, mat);
+    Mat_TimFileNameGet(&fileName, mat);
     fileId = Fs_FindNextFile(&fileName, 0, (s32) arg3);
     if (fileId == NO_VALUE)
     {
@@ -1694,7 +1694,7 @@ void Tex_RefCountReset(s_Texture* tex_8) // 0x8005B370
     tex_8->refCount_14 = 0;
 }
 
-void func_8005B378(s_Texture* tex_8, char* arg1) // 0x8005B378
+void func_8005B378(s_Texture* tex_8, char* arg1) // @unused 0x8005B378
 {
     tex_8->refCount_14 = 1;
     tex_8->queueIdx_10 = 0;
@@ -1710,7 +1710,7 @@ void Tex_Init0(s_Texture* tex_8) // 0x8005B3A4
     tex_8->queueIdx_10 = NO_VALUE;
 }
 
-void func_8005B3BC(char* filename, s_Material* material_tmp) // 0x8005B3BC
+void Mat_TimFileNameGet(char* filename, s_Material* material_tmp) // 0x8005B3BC
 {
     char sp10[12];
 

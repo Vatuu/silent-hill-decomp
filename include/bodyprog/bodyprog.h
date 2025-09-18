@@ -3122,7 +3122,7 @@ void func_8005B378(s_Texture* tex_8, char* arg1);
 
 void Tex_Init0(s_Texture* tex_8);
 
-void func_8005B3BC(char* filename, s_Material* material);
+void Mat_TimFileNameGet(char* filename, s_Material* material);
 
 void func_8005B424(VECTOR3* vec0, VECTOR3* vec1);
 
