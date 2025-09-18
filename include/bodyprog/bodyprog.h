@@ -1143,8 +1143,8 @@ typedef struct
     u8           field_14;
     s8           unk_15[3];
     s32          field_18;
-} s_800C117C;
-STATIC_ASSERT_SIZEOF(s_800C117C, 28);
+} s_IpdChunk;
+STATIC_ASSERT_SIZEOF(s_IpdChunk, 28);
 
 typedef struct _IpdRow
 {
@@ -1179,7 +1179,7 @@ typedef struct
     s_IpdHeader*       field_150;
     s32                field_154;
     s32                ipdTableSize_158;
-    s_800C117C         ipdTable_15C[4]; // Temp name. Uses either 2 or 4 fields depending map type.
+    s_IpdChunk         ipdTable_15C[4]; // Temp name. Uses either 2 or 4 fields depending map type.
     s_IpdColumn        ipdGrid_1CC[18];
     s8                 unk_40C[32];     // Could be one extra row in table above.
     s_IpdColumn*       ipdGridCenter_42C;
@@ -2650,8 +2650,8 @@ void func_80041CB4(s_func_80041CB4* arg0, s_LmHeader* lmHeader);
 
 void func_80041CEC(s_LmHeader* lmHeader);
 
-/** @brief Clears `queueIdx_4` in array of `s_800C117C` */
-void func_80041D10(s_800C117C* arg0, s32 size);
+/** @brief Clears `queueIdx_4` in array of `s_IpdChunk` */
+void func_80041D10(s_IpdChunk* arg0, s32 size);
 
 /** Crucial for map loading. */
 void func_80041D48();
@@ -2708,7 +2708,7 @@ u32 LmHeader_LoadStateGet(s_func_80041CB4* arg0);
  * @param
  * @return IPD file load state `(e_StaticModelLoadState`).
  */
-u32 IpdHeader_LoadStateGet(s_800C117C* arg0);
+u32 IpdHeader_LoadStateGet(s_IpdChunk* arg0);
 
 /** @brief Checks if an IPD file is loaded.
  *
@@ -2728,7 +2728,7 @@ s32 func_80042EBC(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 void func_800431E4(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
-void func_80043338(s_800C117C* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
+void func_80043338(s_IpdChunk* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
 
 void func_800433B8(s_800C1020* arg0);
 
@@ -2737,12 +2737,12 @@ void func_800433B8(s_800C1020* arg0);
 /** Args are X and Z? */
 s32 func_80043554(s32 gridX, s32 gridZ);
 
-bool func_80043578(s_800C117C* arg0, s32 arg1, s32 arg2);
+bool func_80043578(s_IpdChunk* arg0, s32 arg1, s32 arg2);
 
-s_800C117C* func_800435E4(s_800C117C* arg0, s32 arg1);
+s_IpdChunk* func_800435E4(s_IpdChunk* arg0, s32 arg1);
 
 /** Maybe facilitates file chunk streaming as the player moves around the map. */
-s32 func_800436D8(s_800C117C* arg0, s32 fileIdx, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
+s32 func_800436D8(s_IpdChunk* arg0, s32 fileIdx, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
 
 bool func_80043740();
 
@@ -2752,7 +2752,7 @@ bool func_8004393C(s32 posX, s32 posZ);
 
 void func_80043A24(GsOT* ot, s32 arg1);
 
-bool func_80043B34(s_800C117C* arg0, s_800C1020* arg1);
+bool func_80043B34(s_IpdChunk* arg0, s_800C1020* arg1);
 
 /** Checks if PLM texture is loaded? */
 bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHeader);
