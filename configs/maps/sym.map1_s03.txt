@@ -91,6 +91,7 @@ sharedFunc_800DA8E8_0_s01   = 0x800DCD44; // type:func
 //----------------------------------------------------
 //--- PA: 0x015A00   VA: 0x800DEF78   subsegment: data
 //----------------------------------------------------
+HARRY_M1S03_ANIM_INFOS      = 0x800DEF78;
 sharedData_800DD78B_0_s01   = 0x800DF397; // type:u8
 sharedData_800DD78C_0_s01   = 0x800DF398; // type:s32
 sharedData_800DD58C_0_s00   = 0x800DF39C; // type:s32

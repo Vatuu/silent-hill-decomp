@@ -477,12 +477,12 @@ u32 Fs_QueueEntryLoadStatusGet(s32 queueIdx) // 80041ADC
     return FsQueueEntryLoadStatus_Loaded;
 }
 
-u32 IpdHeader_LoadStateGet(s_IpdChunk* arg0) // 0x80041B1C
+u32 IpdHeader_LoadStateGet(s_IpdChunk* chunk) // 0x80041B1C
 {
     s32 queueState;
     s32 queueStateCpy;
 
-    queueState    = Fs_QueueEntryLoadStatusGet(arg0->queueIdx_4);
+    queueState    = Fs_QueueEntryLoadStatusGet(chunk->queueIdx_4);
     queueStateCpy = queueState;
 
     if (queueStateCpy == FsQueueEntryLoadStatus_Unloaded)
@@ -490,11 +490,11 @@ u32 IpdHeader_LoadStateGet(s_IpdChunk* arg0) // 0x80041B1C
         return StaticModelLoadState_Unloaded;
     }
     else if (queueStateCpy == FsQueueEntryLoadStatus_Invalid ||
-             queueState    != FsQueueEntryLoadStatus_Loaded)
+             queueState != FsQueueEntryLoadStatus_Loaded)
     {
         return StaticModelLoadState_Invalid;
     }
-    else if (arg0->ipdHeader_0->isLoaded_1 && IpdHeader_IsTextureLoaded(arg0->ipdHeader_0))
+    else if (chunk->ipdHdr_0->isLoaded_1 && IpdHeader_IsTextureLoaded(chunk->ipdHdr_0))
     {
         return StaticModelLoadState_Loaded;
     }
@@ -519,7 +519,7 @@ u32 LmHeader_LoadStateGet(s_func_80041CB4* arg0) // 0x80041BA0
     {
         return StaticModelLoadState_Invalid;
     }
-    else if (arg0->lmHeader_0->isLoaded_2 && LmHeader_IsTextureLoaded(arg0->lmHeader_0))
+    else if (arg0->lmHdr_0->isLoaded_2 && LmHeader_IsTextureLoaded(arg0->lmHdr_0))
     {
         return StaticModelLoadState_Loaded;
     }
@@ -527,15 +527,15 @@ u32 LmHeader_LoadStateGet(s_func_80041CB4* arg0) // 0x80041BA0
     return StaticModelLoadState_Corrupted;
 }
 
-void func_80041C24(s_LmHeader* lmHeader, s_IpdHeader* ipdBuf, s32 ipdBufSize) // 0x80041C24
+void func_80041C24(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize) // 0x80041C24
 {
     bzero(&D_800C1020, sizeof(s_800C1020));
-    func_80041CB4(&D_800C1020.field_138, lmHeader);
+    func_80041CB4(&D_800C1020.field_138, lmHdr);
 
-    D_800C1020.ipdBuf_150 = ipdBuf;
+    D_800C1020.ipdBuffer_150 = ipdBuf;
     D_800C1020.ipdBufSize_154 = ipdBufSize;
     D_800C1020.ipdActiveSize_158 = 0;
-    D_800C1020.hasGlobalPlm = 1;
+    D_800C1020.hasGlobalPlm = true;
 
     Ipd_ActiveChunksQueueIdxClear(D_800C1020.ipdActive_15C, 4);
     func_80041D48();
@@ -543,31 +543,31 @@ void func_80041C24(s_LmHeader* lmHeader, s_IpdHeader* ipdBuf, s32 ipdBufSize) //
 }
 
 // This function is related to map loading.
-void func_80041CB4(s_func_80041CB4* arg0, s_LmHeader* lmHeader) // 0x80041CB4
+void func_80041CB4(s_func_80041CB4* arg0, s_LmHeader* lmHdr) // 0x80041CB4
 {
-    arg0->lmHeader_0 = lmHeader;
-    func_80041CEC(lmHeader);
+    arg0->lmHdr_0 = lmHdr;
+    func_80041CEC(lmHdr);
 
     arg0->queueIdx_8 = 0;
     arg0->fileIdx_4  = NO_VALUE;
 }
 
-void func_80041CEC(s_LmHeader* lmHeader) // 0x80041CEC
+void func_80041CEC(s_LmHeader* lmHdr) // 0x80041CEC
 {
-    lmHeader->magic_0         = LM_HEADER_MAGIC;
-    lmHeader->version_1       = 6;
-    lmHeader->isLoaded_2      = 1;
-    lmHeader->materialCount_3 = 0;
-    lmHeader->modelCount_8    = 0;
+    lmHdr->magic_0         = LM_HEADER_MAGIC;
+    lmHdr->version_1       = LM_VERSION;
+    lmHdr->isLoaded_2      = true;
+    lmHdr->materialCount_3 = 0;
+    lmHdr->modelCount_8    = 0;
 }
 
-void Ipd_ActiveChunksQueueIdxClear(s_IpdChunk* arg0, s32 size) // 0x80041D10
+void Ipd_ActiveChunksQueueIdxClear(s_IpdChunk* chunks, s32 chunkCount) // 0x80041D10
 {
-    s_IpdChunk* ptr;
+    s_IpdChunk* curChunk;
 
-    for (ptr = &arg0[0]; ptr < &arg0[size]; ptr++)
+    for (curChunk = &chunks[0]; curChunk < &chunks[chunkCount]; curChunk++)
     {
-        ptr->queueIdx_4 = NO_VALUE;
+        curChunk->queueIdx_4 = NO_VALUE;
     }
 }
 
@@ -585,15 +585,15 @@ void func_80041D48() // 0x80041D48
             y = 21;
         }
 
-        Tex_Init1(&D_800C1020.field_430.field_58[i], 0, 0, y, 0, 0, x, j);
+        Texture_Init1(&D_800C1020.field_430.textures_58[i], 0, 0, y, 0, 0, x, j);
     }
 
     func_8005B46C(&D_800C1020.field_430.field_0);
-    func_8005B474(&D_800C1020.field_430.field_0, D_800C1020.field_430.field_58, 8);
+    func_8005B474(&D_800C1020.field_430.field_0, D_800C1020.field_430.textures_58, 8);
 
     for (i = 0, y = 26, j = 0; i < 2; i++, x += 16)
     {
-        Tex_Init1(&D_800C1020.field_430.field_118[i], 0, 0, y, (i & 0x1) * 32, 0, x, j);
+        Texture_Init1(&D_800C1020.field_430.textures_118[i], 0, 0, y, (i & 0x1) * 32, 0, x, j);
         if (i & 0x1)
         {
             y++;
@@ -601,7 +601,7 @@ void func_80041D48() // 0x80041D48
     }
 
     func_8005B46C(&D_800C1020.field_430.field_2C);
-    func_8005B474(&D_800C1020.field_430.field_2C, D_800C1020.field_430.field_118, 2);
+    func_8005B474(&D_800C1020.field_430.field_2C, D_800C1020.field_430.textures_118, 2);
 }
 
 void func_80041E98() // 0x80041E98
@@ -610,30 +610,30 @@ void func_80041E98() // 0x80041E98
     D_800C1020.field_0.field_1C = 512;
 }
 
-void Map_PlaceIpdAtGridPos(s16 ipdFileIdx, s32 x, s32 z) // 0x80041ED0
+void Map_PlaceIpdAtGridPos(s16 ipdFileIdx, s32 chunkCoordX, s32 chunkCoordZ) // 0x80041ED0
 {
-    s_IpdChunk*  ptr;
-    s_IpdHeader* ipd;
+    s_IpdChunk*  curChunk;
+    s_IpdHeader* ipdHdr;
 
-    ((s16*)&D_800C1020.ipdGridCenter_42C[z])[x] = ipdFileIdx;
+    ((s16*)&D_800C1020.ipdGridCenter_42C[chunkCoordZ])[chunkCoordX] = ipdFileIdx;
 
-    for (ptr = D_800C1020.ipdActive_15C; ptr < &D_800C1020.ipdActive_15C[D_800C1020.ipdActiveSize_158]; ptr++)
+    for (curChunk = D_800C1020.ipdActive_15C; curChunk < &D_800C1020.ipdActive_15C[D_800C1020.ipdActiveSize_158]; curChunk++)
     {
-        if (ptr->coordX_8 != x || ptr->coordZ_A != z)
+        if (curChunk->coordX_8 != chunkCoordX || curChunk->coordZ_A != chunkCoordZ)
         {
             continue;
         }
 
-        if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
+        if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            ipd = ptr->ipdHeader_0;
-            if (ipd->isLoaded_1)
+            ipdHdr = curChunk->ipdHdr_0;
+            if (ipdHdr->isLoaded_1)
             {
-                Lm_MaterialRefCountDec(ipd->lmHeader_4);
+                Lm_MaterialRefCountDec(ipdHdr->lmHdr_4);
             }
         }
 
-        ptr->queueIdx_4 = NO_VALUE;
+        curChunk->queueIdx_4 = NO_VALUE;
     }
 }
 
@@ -644,28 +644,29 @@ void func_80041FF0() // 0x80041FF0
 
 void func_8004201C() // 0x8004201C
 {
-    s_Texture* tex_8;
+    s_Texture* curTex;
 
-    tex_8 = &D_800C1020.field_430.field_58[0];
-    while (tex_8 < (&D_800C1020.field_430.field_58[8]))
+    // TODO: Will these match as for loops?
+    curTex = &D_800C1020.field_430.textures_58[0];
+    while (curTex < (&D_800C1020.field_430.textures_58[8]))
     {
-        if (tex_8->refCount_14 == 0)
+        if (curTex->refCount_14 == 0)
         {
-            Tex_Init0(tex_8);
+            Texture_Init0(curTex);
         }
 
-        tex_8++;
+        curTex++;
     }
 
-    tex_8 = &D_800C1020.field_430.field_118[0];
-    while (tex_8 < (&D_800C1020.field_430.field_118[2]))
+    curTex = &D_800C1020.field_430.textures_118[0];
+    while (curTex < (&D_800C1020.field_430.textures_118[2]))
     {
-        if (tex_8->refCount_14 == 0)
+        if (curTex->refCount_14 == 0)
         {
-            Tex_Init0(tex_8);
+            Texture_Init0(curTex);
         }
 
-        tex_8++;
+        curTex++;
     }
 }
 
@@ -683,36 +684,36 @@ void func_800420FC() // 0x800420FC
     ptr = &D_800C1020.field_138;
 
     if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
-        ptr->lmHeader_0->isLoaded_2)
+        ptr->lmHdr_0->isLoaded_2)
     {
-        Lm_MaterialRefCountDec(D_800C1020.field_138.lmHeader_0);
+        Lm_MaterialRefCountDec(D_800C1020.field_138.lmHdr_0);
     }
 
-    func_80041CB4(&D_800C1020.field_138, D_800C1020.field_138.lmHeader_0);
+    func_80041CB4(&D_800C1020.field_138, D_800C1020.field_138.lmHdr_0);
 }
 
 s_Texture* func_80042178(char* arg0) // 0x80042178
 {
-    s_Texture* tex_8;
+    s_Texture* texture_8;
 
-    tex_8 = func_8005B4BC(arg0, &D_800C1020.field_430.field_0);
-    if (tex_8 != NULL)
+    texture_8 = func_8005B4BC(arg0, &D_800C1020.field_430.field_0);
+    if (texture_8 != NULL)
     {
-        return tex_8;
+        return texture_8;
     }
 
-    tex_8 = func_8005B4BC(arg0, &D_800C1020.field_430.field_2C);
-    if (tex_8 != NULL)
+    texture_8 = func_8005B4BC(arg0, &D_800C1020.field_430.field_2C);
+    if (texture_8 != NULL)
     {
-        return tex_8;
+        return texture_8;
     }
 
     return NULL;
 }
 
-void func_800421D8(char* mapTag, s32 plmIdx, s32 activeIpdCount, s32 globalPlm, s32 ipdFileIdx, s32 texFileIdx) // 0x800421D8
+void func_800421D8(char* mapTag, s32 plmIdx, s32 activeIpdCount, bool hasGlobalPlm, s32 ipdFileIdx, s32 texFileIdx) // 0x800421D8
 {
-    D_800C1020.hasGlobalPlm = globalPlm;
+    D_800C1020.hasGlobalPlm = hasGlobalPlm;
     D_800C1020.texFileIdx_134 = texFileIdx;
 
     if (plmIdx != NO_VALUE)
@@ -720,9 +721,9 @@ void func_800421D8(char* mapTag, s32 plmIdx, s32 activeIpdCount, s32 globalPlm, 
         if (plmIdx != D_800C1020.field_138.fileIdx_4)
         {
             if (Fs_QueueEntryLoadStatusGet(D_800C1020.field_138.queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
-                D_800C1020.field_138.lmHeader_0->isLoaded_2)
+                D_800C1020.field_138.lmHdr_0->isLoaded_2)
             {
-                Lm_MaterialRefCountDec(D_800C1020.field_138.lmHeader_0);
+                Lm_MaterialRefCountDec(D_800C1020.field_138.lmHdr_0);
             }
 
             D_800C1020.field_138.fileIdx_4 = plmIdx;
@@ -747,37 +748,37 @@ void Ipd_ActiveChunksClear(s_800C1020* arg0, s32 arg1) // 0x80042300
 {
     s32          step;
     s32          i;
-    s_IpdChunk*  temp_s0;
+    s_IpdChunk*  curChunk;
     s_IpdHeader* ipd0;
     s_IpdHeader* ipd1;
 
-    ipd0  = arg0->ipdBuf_150;
+    ipd0  = arg0->ipdBuffer_150;
     step = (arg0->ipdBufSize_154 / arg1) & ~0x3;
 
     for (i = 0; i < 4; i++, *(u8**)&ipd0 += step)
     {
-        temp_s0 = &arg0->ipdActive_15C[i];
+        curChunk = &arg0->ipdActive_15C[i];
 
-        if (Fs_QueueEntryLoadStatusGet(temp_s0->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
+        if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            ipd1 = temp_s0->ipdHeader_0;
+            ipd1 = curChunk->ipdHdr_0;
             if (ipd1->isLoaded_1)
             {
-                Lm_MaterialRefCountDec(ipd1->lmHeader_4);
+                Lm_MaterialRefCountDec(ipd1->lmHdr_4);
             }
         }
 
-        temp_s0->queueIdx_4   = NO_VALUE;
-        temp_s0->distance1_10 = INT_MAX;
-        temp_s0->field_18     = 0;
+        curChunk->queueIdx_4   = NO_VALUE;
+        curChunk->distance1_10 = INT_MAX;
+        curChunk->field_18     = 0;
 
         if (i < arg1)
         {
-            temp_s0->ipdHeader_0 = ipd0;
+            curChunk->ipdHdr_0 = ipd0;
         }
         else
         {
-            temp_s0->ipdHeader_0 = NULL;
+            curChunk->ipdHdr_0 = NULL;
         }
     }
 }
@@ -867,26 +868,26 @@ bool ConvertHexToS8(s32* out, char hex0, char hex1) // 0x8004255C
     return true;
 }
 
-s_IpdCollisionData** func_800425D8(s32* arg0) // 0x800425D8
+s_IpdCollisionData** func_800425D8(s32* collDataIdx) // 0x800425D8
 {
     s_IpdChunk*         ptr;
     s_IpdCollisionData* collData;
     s_IpdHeader*        ipd;
 
-    ptr = D_800C1020.ipdActive_15C;
-    *arg0  = 0;
+    ptr          = D_800C1020.ipdActive_15C;
+    *collDataIdx = 0;
 
     while (ptr < &D_800C1020.ipdActive_15C[D_800C1020.ipdActiveSize_158])
     {
         if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            ipd = ptr->ipdHeader_0;
+            ipd = ptr->ipdHdr_0;
             if (ipd->isLoaded_1)
             {
                 collData = IpdHeader_CollisionDataGet(ipd);
                 if (collData != NULL)
                 {
-                    D_800C1010[(*arg0)++] = collData;
+                    D_800C1010[(*collDataIdx)++] = collData;
                 }
             }
         }
@@ -901,34 +902,35 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
 {
     s32          collX;
     s32          collZ;
-    s32          xIdx;
-    s32          zIdx;
-    s_IpdHeader* ipd;
-    s_IpdChunk*  ptr;
+    s32          chunkCoordX;
+    s32          chunkCoordZ;
+    s_IpdHeader* ipdHdr;
+    s_IpdChunk*  curChunk;
 
-    // Convert position to collision space.
+    // Convert position to geometry space.
     collX = FP_METER_TO_GEO(posX);
     collZ = FP_METER_TO_GEO(posZ);
 
-    // Indices to cells in IPD collision data?
-    xIdx = FLOOR_TO_STEP(collX, FP_METER_GEO(40.0f));
-    zIdx = FLOOR_TO_STEP(collZ, FP_METER_GEO(40.0f));
+    // Compute chunk coords.
+    chunkCoordX = FLOOR_TO_STEP(collX, FP_METER_GEO(40.0f));
+    chunkCoordZ = FLOOR_TO_STEP(collZ, FP_METER_GEO(40.0f));
 
-    for (ptr = D_800C1020.ipdActive_15C; ptr < &D_800C1020.ipdActive_15C[D_800C1020.ipdActiveSize_158]; ptr++)
+    for (curChunk = D_800C1020.ipdActive_15C; curChunk < &D_800C1020.ipdActive_15C[D_800C1020.ipdActiveSize_158]; curChunk++)
     {
-        if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) < FsQueueEntryLoadStatus_Loaded)
+        if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) < FsQueueEntryLoadStatus_Loaded)
         {
             continue;
         }
 
-        ipd = ptr->ipdHeader_0;
-        if (ipd->isLoaded_1 && ptr->coordX_8 == xIdx && ptr->coordZ_A == zIdx)
+        ipdHdr = curChunk->ipdHdr_0;
+        if (ipdHdr->isLoaded_1 &&
+            curChunk->coordX_8 == chunkCoordX && curChunk->coordZ_A == chunkCoordZ)
         {
-            return &ipd->collisionData_54;
+            return &ipdHdr->collisionData_54;
         }
     }
 
-    if (((s16*)(&D_800C1020.ipdGridCenter_42C[zIdx]))[xIdx] != NO_VALUE)
+    if (((s16*)(&D_800C1020.ipdGridCenter_42C[chunkCoordZ]))[chunkCoordX] != NO_VALUE)
     {
         return NULL;
     }
@@ -940,7 +942,7 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
 
 s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX, s32 posZ) // 0x8004287C
 {
-    s_IpdChunk*      sp10[4];
+    s_IpdChunk*      chunks[4];
     s32              sp20[4];
     s32              collX;
     s32              zIdx;
@@ -951,18 +953,18 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
     s32              j;
     s32              k;
     s32              idx;
-    s_IpdChunk*      ptr1;
+    s_IpdChunk*      curChunk;
     s_func_80041CB4* ptr0;
 
     ptr0 = &D_800C1020.field_138;
 
-    // Convert position to collision space.
+    // Convert position to geometry space.
     collX = FP_METER_TO_GEO(posX);
     collZ = FP_METER_TO_GEO(posZ);
 
     if (Fs_QueueEntryLoadStatusGet(ptr0->queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
-        ptr0->lmHeader_0->isLoaded_2 &&
-        Lm_ModelFind(arg0, D_800C1020.field_138.lmHeader_0, arg1))
+        ptr0->lmHdr_0->isLoaded_2 &&
+        Lm_ModelFind(arg0, D_800C1020.field_138.lmHdr_0, arg1))
     {
         return 2;
     }
@@ -971,33 +973,33 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
     xIdx = FLOOR_TO_STEP(collX, FP_METER_GEO(40.0f));
     zIdx = FLOOR_TO_STEP(collZ, FP_METER_GEO(40.0f));
 
-    for (ptr1 = D_800C1020.ipdActive_15C, idx = 0; ptr1 < &D_800C1020.ipdActive_15C[D_800C1020.ipdActiveSize_158]; ptr1++)
+    for (curChunk = D_800C1020.ipdActive_15C, idx = 0; curChunk < &D_800C1020.ipdActive_15C[D_800C1020.ipdActiveSize_158]; curChunk++)
     {
-        if (Fs_QueueEntryLoadStatusGet(ptr1->queueIdx_4) < FsQueueEntryLoadStatus_Loaded)
+        if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) < FsQueueEntryLoadStatus_Loaded)
         {
             continue;
         }
 
-        if (!ptr1->ipdHeader_0->isLoaded_1)
+        if (!curChunk->ipdHdr_0->isLoaded_1)
         {
             continue;
         }
 
-        if (D_800C1020.hasGlobalPlm == 0)
+        if (!D_800C1020.hasGlobalPlm)
         {
-            if (ptr1->coordX_8 == xIdx && ptr1->coordZ_A == zIdx)
+            if (curChunk->coordX_8 == xIdx && curChunk->coordZ_A == zIdx)
             {
-                sp10[idx] = ptr1;
+                chunks[idx] = curChunk;
                 idx++;
                 break;
             }
         }
         else
         {
-            if (ptr1->coordX_8 >= (xIdx - 1) && (xIdx + 1) >= ptr1->coordX_8 &&
-                ptr1->coordZ_A >= (zIdx - 1) && (zIdx + 1) >= ptr1->coordZ_A)
+            if (curChunk->coordX_8 >= (xIdx - 1) && (xIdx + 1) >= curChunk->coordX_8 &&
+                curChunk->coordZ_A >= (zIdx - 1) && (zIdx + 1) >= curChunk->coordZ_A)
             {
-                temp_t0 = func_80042E2C(collX, collZ, ptr1->coordX_8, ptr1->coordZ_A);
+                temp_t0 = func_80042E2C(collX, collZ, curChunk->coordX_8, curChunk->coordZ_A);
                 for (i = 0; i < idx; i++)
                 {
                     if (temp_t0 < sp20[i])
@@ -1009,22 +1011,22 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
                 for (j = idx; j >= (i + 1); j--)
                 {
                     sp20[j] = sp20[j - 1];
-                    sp10[j] = sp10[j - 1];
+                    chunks[j] = chunks[j - 1];
                 }
 
                 idx++;
                 sp20[j] = temp_t0;
-                sp10[j] = ptr1;
+                chunks[j] = curChunk;
             }
         }
     }
 
     for (k = 0; k < idx; k++)
     {
-        ptr1 = sp10[k];
-        if (Lm_ModelFind(arg0, ptr1->ipdHeader_0->lmHeader_4, arg1))
+        curChunk = chunks[k];
+        if (Lm_ModelFind(arg0, curChunk->ipdHdr_0->lmHdr_4, arg1))
         {
-            return (ptr1 - D_800C1020.ipdActive_15C) + 3;
+            return (curChunk - D_800C1020.ipdActive_15C) + 3;
         }
     }
 
@@ -1039,47 +1041,47 @@ bool IpdHeader_IsLoaded(s32 ipdIdx) // 0x80042C04
 void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1) // 0x80042C3C
 {
     s32         temp_s0;
-    s_IpdChunk* var_s0;
+    s_IpdChunk* curChunk;
 
     D_800C1020.field_578 = x1;
     D_800C1020.field_57C = z1;
 
     if (D_800C1020.field_138.queueIdx_8 == NO_VALUE) 
     {
-        D_800C1020.field_138.queueIdx_8 = Fs_QueueStartRead(D_800C1020.field_138.fileIdx_4, D_800C1020.field_138.lmHeader_0);
+        D_800C1020.field_138.queueIdx_8 = Fs_QueueStartRead(D_800C1020.field_138.fileIdx_4, D_800C1020.field_138.lmHdr_0);
     }
 
     func_80042EBC(&D_800C1020, x0, z0, x1, z1);
 
     if (Fs_QueueEntryLoadStatusGet(D_800C1020.field_138.queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
-        !D_800C1020.field_138.lmHeader_0->isLoaded_2) 
+        !D_800C1020.field_138.lmHdr_0->isLoaded_2) 
     {
         temp_s0                              = D_800C1020.field_430.field_0.count_0;
         D_800C1020.field_430.field_0.count_0 = 4;
 
-        LmHeader_FixOffsets(D_800C1020.field_138.lmHeader_0);
-        func_80056774(D_800C1020.field_138.lmHeader_0, &D_800C1020.field_430.field_0, NULL, D_800C1020.texFileIdx_134, 1);
-        func_80056954(D_800C1020.field_138.lmHeader_0);
+        LmHeader_FixOffsets(D_800C1020.field_138.lmHdr_0);
+        func_80056774(D_800C1020.field_138.lmHdr_0, &D_800C1020.field_430.field_0, NULL, D_800C1020.texFileIdx_134, 1);
+        func_80056954(D_800C1020.field_138.lmHdr_0);
 
         D_800C1020.field_430.field_0.count_0 = temp_s0;
     }
 
-    for (var_s0 = D_800C1020.ipdActive_15C; var_s0 < &D_800C1020.ipdActive_15C[D_800C1020.ipdActiveSize_158]; var_s0++) 
+    for (curChunk = D_800C1020.ipdActive_15C; curChunk < &D_800C1020.ipdActive_15C[D_800C1020.ipdActiveSize_158]; curChunk++) 
     {
-        if (Fs_QueueEntryLoadStatusGet(var_s0->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
+        if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            IpdHeader_FixOffsets(var_s0->ipdHeader_0, &D_800C1020.field_138, 1, &D_800C1020.field_430.field_0, &D_800C1020.field_430.field_2C, D_800C1020.texFileIdx_134);
-            func_80044044(var_s0->ipdHeader_0, var_s0->coordX_8, var_s0->coordZ_A);
+            IpdHeader_FixOffsets(curChunk->ipdHdr_0, &D_800C1020.field_138, 1, &D_800C1020.field_430.field_0, &D_800C1020.field_430.field_2C, D_800C1020.texFileIdx_134);
+            func_80044044(curChunk->ipdHdr_0, curChunk->coordX_8, curChunk->coordZ_A);
         }
     }
 }
 
-s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, bool clip) // 0x80042DE8
+s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, bool hasGlobalPlm) // 0x80042DE8
 {
     s32 dist;
 
     dist = func_80042E2C(FP_METER_TO_GEO(posX), FP_METER_TO_GEO(posZ), fileChunkCoordX, fileChunkCoordZ);
-    if (clip)
+    if (hasGlobalPlm)
     {
         dist -= FP_METER(1.0f);
         if (dist < FP_METER(0.0f))
@@ -1091,24 +1093,23 @@ s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, 
     return dist;
 }
 
-s32 func_80042E2C(s32 xPos, s32 zPos, s32 xFileChunkCoord, s32 zFileChunkCoord) // 0x80042E2C
+s32 func_80042E2C(s32 posX, s32 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ) // 0x80042E2C
 {
-    #define FILE_CHUNK_SIZE FP_METER_GEO(40.0f)
+    #define IPD_CHUNK_SIZE FP_METER_GEO(40.0f)
 
-    #define OUTSIDE_DIST(val, lo, hi) \
-        (((val) < (lo)) ? ((lo) - (val)) : (((hi) <= (val)) ? ((val) - (hi)) : 0))
+    #define OUTSIDE_DIST(val, min, max) \
+        (((val) < (min)) ? ((min) - (val)) : (((max) <= (val)) ? ((val) - (max)) : 0))
 
-    s32 xFileChunkBound;
-    s32 zFileChunkBound;
+    s32 chunkBoundX;
+    s32 chunkBoundZ;
     s32 x;
     s32 z;
 
-    xFileChunkBound = xFileChunkCoord * FILE_CHUNK_SIZE;
-    zFileChunkBound = zFileChunkCoord * FILE_CHUNK_SIZE;
+    chunkBoundX = ipdChunkCoordX * IPD_CHUNK_SIZE;
+    chunkBoundZ = ipdChunkCoordZ * IPD_CHUNK_SIZE;
 
-    x = OUTSIDE_DIST(xPos, xFileChunkBound, xFileChunkBound + FILE_CHUNK_SIZE);
-    z = OUTSIDE_DIST(zPos, zFileChunkBound, zFileChunkBound + FILE_CHUNK_SIZE);
-
+    x = OUTSIDE_DIST(posX, chunkBoundX, chunkBoundX + IPD_CHUNK_SIZE);
+    z = OUTSIDE_DIST(posZ, chunkBoundZ, chunkBoundZ + IPD_CHUNK_SIZE);
     return Vc_VectorMagnitudeCalc(x, 0, z);
 }
 
@@ -1125,8 +1126,8 @@ s32 func_80042EBC(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0
     s32           j;
     s32           i;
     s32           var_v1;
-    s_IpdChunk*   ipdChunk;
-    s_IpdHeader*  ipdHeader;
+    s_IpdChunk*   chunk;
+    s_IpdHeader*  ipdHdr;
 
     sp30 = NO_VALUE;
     sp28 = FLOOR_TO_STEP(FP_METER_TO_GEO(arg1), FP_METER_GEO(40.0f));
@@ -1145,28 +1146,28 @@ s32 func_80042EBC(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0
     {
         for (j = NO_VALUE; j < 2; j++)
         {
-            if (arg0->hasGlobalPlm != 0 || (j == 0 && i == 0))
+            if (arg0->hasGlobalPlm || (j == 0 && i == 0))
             {
                 temp_s3 = sp2C + i;
                 temp_s1 = sp28 + j;
 
                 temp_v0_2 = func_80043554(temp_s1, temp_s3);
                 if (temp_v0_2 != NO_VALUE &&
-                    func_80042DE8(arg1, arg2, temp_s1, temp_s3, arg0->hasGlobalPlm) <= 0 &&
+                    func_80042DE8(arg1, arg2, temp_s1, temp_s3, arg0->hasGlobalPlm) <= FP_METER(0.0f) &&
                     !func_80043578(&arg0->ipdActive_15C[0], temp_s1, temp_s3))
                 {
-                    ipdChunk = func_800435E4(&arg0->ipdActive_15C[0], arg0->hasGlobalPlm);
+                    chunk = func_800435E4(&arg0->ipdActive_15C[0], arg0->hasGlobalPlm);
 
-                    if (Fs_QueueEntryLoadStatusGet(ipdChunk->queueIdx_4) >= 2)
+                    if (Fs_QueueEntryLoadStatusGet(chunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
                     {
-                        ipdHeader = ipdChunk->ipdHeader_0;
-                        if (ipdHeader->isLoaded_1 != 0)
+                        ipdHdr = chunk->ipdHdr_0;
+                        if (ipdHdr->isLoaded_1)
                         {
-                            Lm_MaterialRefCountDec(ipdHeader->lmHeader_4);
+                            Lm_MaterialRefCountDec(ipdHdr->lmHdr_4);
                         }
                     }
 
-                    temp_v0_4 = func_800436D8(ipdChunk, temp_v0_2, temp_s1, temp_s3, arg1, arg2, arg3, arg4, arg0->hasGlobalPlm);
+                    temp_v0_4 = func_800436D8(chunk, temp_v0_2, temp_s1, temp_s3, arg1, arg2, arg3, arg4, arg0->hasGlobalPlm);
                     if (temp_v0_4 != NO_VALUE)
                     {
                         sp30 = temp_v0_4;
@@ -1179,71 +1180,73 @@ s32 func_80042EBC(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0
     return sp30;
 }
 
-void func_800431E4(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x800431E4
+void func_800431E4(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, bool hasGlobalPlm) // 0x800431E4
 {
-    s_IpdChunk* ptr;
+    s_IpdChunk* curChunk;
 
-    for (ptr = arg0->ipdActive_15C; ptr < &arg0->ipdActive_15C[4]; ptr++)
+    for (curChunk = arg0->ipdActive_15C; curChunk < &arg0->ipdActive_15C[4]; curChunk++)
     {
-        if (ptr->queueIdx_4 == NO_VALUE)
+        if (curChunk->queueIdx_4 == NO_VALUE)
         {
-            ptr->distance0_C  = INT_MAX;
-            ptr->distance1_10 = INT_MAX;
+            curChunk->distance0_C  = INT_MAX;
+            curChunk->distance1_10 = INT_MAX;
         }
         else 
         {
-            func_80043338(ptr, arg1, arg2, arg3, arg4, arg5);
+            func_80043338(curChunk, arg1, arg2, arg3, arg4, hasGlobalPlm);
         }
 
-        if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) < FsQueueEntryLoadStatus_Loaded || !ptr->ipdHeader_0->isLoaded_1)
+        if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) < FsQueueEntryLoadStatus_Loaded || !curChunk->ipdHdr_0->isLoaded_1)
         {
-            ptr->field_14 = 0;
+            curChunk->field_14 = 0;
         }
         else
         {
-            ptr->field_14 = func_80043D00(ptr->ipdHeader_0);
+            curChunk->field_14 = func_80043D00(curChunk->ipdHdr_0);
         }
 
-        if (ptr->distance0_C > 0 && ptr->distance1_10 > 0)
+        if (curChunk->distance0_C > 0 && curChunk->distance1_10 > 0)
         {
-            ptr->field_18++;
+            curChunk->field_18++;
         }
         else
         {
-            ptr->field_18 = 0;
+            curChunk->field_18 = 0;
         }
     }
 }
 
-void func_80043338(s_IpdChunk* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip) // 0x80043338
+void func_80043338(s_IpdChunk* chunk, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool hasGlobalPlm) // 0x80043338
 {
-    arg0->distance0_C  = func_80042DE8(posX0, posZ0, arg0->coordX_8, arg0->coordZ_A, clip);
-    arg0->distance1_10 = func_80042DE8(posX1, posZ1, arg0->coordX_8, arg0->coordZ_A, clip);
+    chunk->distance0_C  = func_80042DE8(posX0, posZ0, chunk->coordX_8, chunk->coordZ_A, hasGlobalPlm);
+    chunk->distance1_10 = func_80042DE8(posX1, posZ1, chunk->coordX_8, chunk->coordZ_A, hasGlobalPlm);
 }
 
 void func_800433B8(s_800C1020* arg0) // 0x800433B8
 {
-    s_IpdChunk* ptr;
+    s_IpdChunk* curChunk;
 
-    for (ptr = &arg0->ipdActive_15C[0]; ptr < &arg0->ipdActive_15C[arg0->ipdActiveSize_158]; ptr++)
+    for (curChunk = &arg0->ipdActive_15C[0]; curChunk < &arg0->ipdActive_15C[arg0->ipdActiveSize_158]; curChunk++)
     {
-        if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
+        if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            if (ptr->ipdHeader_0->isLoaded_1 && ptr->distance0_C > 0 && ptr->distance1_10 > 0)
+            if (curChunk->ipdHdr_0->isLoaded_1 &&
+                curChunk->distance0_C > 0 && curChunk->distance1_10 > 0)
             {
-                Lm_MaterialRefCountDec(ptr->ipdHeader_0->lmHeader_4);
+                Lm_MaterialRefCountDec(curChunk->ipdHdr_0->lmHdr_4);
             }
         }
     }
 
-    for (ptr = &arg0->ipdActive_15C[0]; ptr < &arg0->ipdActive_15C[arg0->ipdActiveSize_158]; ptr++)
+    for (curChunk = &arg0->ipdActive_15C[0]; curChunk < &arg0->ipdActive_15C[arg0->ipdActiveSize_158]; curChunk++)
     {
-        if (Fs_QueueEntryLoadStatusGet(ptr->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
+        if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            if (ptr->ipdHeader_0->isLoaded_1 && (ptr->distance0_C <= 0 || ptr->distance1_10 <= 0))
+            if (curChunk->ipdHdr_0->isLoaded_1 &&
+                (curChunk->distance0_C <= 0 || curChunk->distance1_10 <= 0))
             {
-                func_80043C7C(ptr->ipdHeader_0, &arg0->field_430.field_0, &arg0->field_430.field_2C, arg0->texFileIdx_134);
-                func_80056954(ptr->ipdHeader_0->lmHeader_4);
+                func_80043C7C(curChunk->ipdHdr_0, &arg0->field_430.field_0, &arg0->field_430.field_2C, arg0->texFileIdx_134);
+                func_80056954(curChunk->ipdHdr_0->lmHdr_4);
             }
         }
     }
@@ -1255,14 +1258,14 @@ s32 func_80043554(s32 gridX, s32 gridZ) // 0x80043554
     return ((s16*)&D_800C1020.ipdGridCenter_42C[gridZ])[gridX];
 }
 
-bool func_80043578(s_IpdChunk* arg0, s32 arg1, s32 arg2) // 0x80043578
+bool func_80043578(s_IpdChunk* chunks, s32 arg1, s32 arg2) // 0x80043578
 {
     s32 i;
 
     for (i = 0; i < D_800C1020.ipdActiveSize_158; i++)
     {
-        if (arg0[i].queueIdx_4 != NO_VALUE &&
-            arg1 == arg0[i].coordX_8 && arg2 == arg0[i].coordZ_A)
+        if (chunks[i].queueIdx_4 != NO_VALUE &&
+            arg1 == chunks[i].coordX_8 && arg2 == chunks[i].coordZ_A)
         {
             return true;
         }
@@ -1271,42 +1274,42 @@ bool func_80043578(s_IpdChunk* arg0, s32 arg1, s32 arg2) // 0x80043578
     return false;
 }
 
-s_IpdChunk* func_800435E4(s_IpdChunk* arg0, s32 arg1)
+s_IpdChunk* func_800435E4(s_IpdChunk* chunks, bool hasGlobalPlm)
 {
     s32         var_t0;
     s32         var_t2;
     s32         var_v1;
     u32         var_t3;
     s32         var_a2;
-    s_IpdChunk* ptr;
-    s_IpdChunk* ret;
+    s_IpdChunk* curChunk;
+    s_IpdChunk* activeChunk;
 
-    ret    = NULL;
+    activeChunk = NULL;
     var_t3 = 0;
     var_t0 = 0;
     var_t2 = 0;
 
-    for (ptr = arg0; ptr < &arg0[D_800C1020.ipdActiveSize_158]; ptr++)
+    for (curChunk = chunks; curChunk < &chunks[D_800C1020.ipdActiveSize_158]; curChunk++)
     {
-        if (arg1 == 0) 
+        if (!hasGlobalPlm) 
         {
-            if (ptr->queueIdx_4 == NO_VALUE)
+            if (curChunk->queueIdx_4 == NO_VALUE)
             {
-                ret = ptr;
+                activeChunk = curChunk;
                 break;
             }
             else
             {
-                if (var_t3 < ptr->field_18)
+                if (var_t3 < curChunk->field_18)
                 {
-                    var_t3 = ptr->field_18;
-                    ret = ptr;
+                    var_t3 = curChunk->field_18;
+                    activeChunk = curChunk;
                 }
             }
         }
         else
         {
-            if (ptr->queueIdx_4 == -1) 
+            if (curChunk->queueIdx_4 == NO_VALUE) 
             {
                 var_a2 = 0;
                 
@@ -1321,8 +1324,8 @@ s_IpdChunk* func_800435E4(s_IpdChunk* arg0, s32 arg1)
             }
             else
             {
-                var_a2 = ptr->field_14;
-                var_v1 = ptr->distance0_C;
+                var_a2 = curChunk->field_14;
+                var_v1 = curChunk->distance0_C;
                 
                 if (var_v1 == 0)
                 {
@@ -1333,16 +1336,16 @@ s_IpdChunk* func_800435E4(s_IpdChunk* arg0, s32 arg1)
             if (var_t0 < var_a2 || (var_a2 == var_t0 && var_t2 < var_v1))
             {
                 var_t2 = var_v1;
-                ret    = ptr;
+                activeChunk = curChunk;
                 var_t0 = var_a2;
             }
         }
     }
 
-    return ret;
+    return activeChunk;
 }
 
-s32 func_800436D8(s_IpdChunk* arg0, s32 fileIdx, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip) // 0x800436D8
+s32 func_800436D8(s_IpdChunk* chunk, s32 fileIdx, s32 chunkCoordX, s32 chunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool hasGlobalPlm) // 0x800436D8
 {
     // Return `NO_VALUE` if no file specified.
     if (fileIdx == NO_VALUE)
@@ -1350,22 +1353,22 @@ s32 func_800436D8(s_IpdChunk* arg0, s32 fileIdx, s32 fileChunkCoordX, s32 fileCh
         return fileIdx;
     }
 
-    // Store file chunk coords and read file.
-    arg0->coordX_8 = fileChunkCoordX;
-    arg0->coordZ_A = fileChunkCoordZ;
-    arg0->queueIdx_4        = Fs_QueueStartRead(fileIdx, arg0->ipdHeader_0);
+    // Store chunk coords and read file.
+    chunk->coordX_8 = chunkCoordX;
+    chunk->coordZ_A = chunkCoordZ;
+    chunk->queueIdx_4 = Fs_QueueStartRead(fileIdx, chunk->ipdHdr_0);
 
-    // Compute and store distance to file chunk edge in `arg0`.
-    func_80043338(arg0, posX0, posZ0, posX1, posZ1, clip);
+    // Compute and store distance to chunk edge in `chunk`.
+    func_80043338(chunk, posX0, posZ0, posX1, posZ1, hasGlobalPlm);
 
     // Return queue entry index.
-    return arg0->queueIdx_4;
+    return chunk->queueIdx_4;
 }
 
 bool func_80043740() // 0x80043740
 {
     s32         i;
-    s_IpdChunk* ptr;
+    s_IpdChunk* curChunk;
 
     switch (LmHeader_LoadStateGet(&D_800C1020.field_138))
     {
@@ -1379,25 +1382,25 @@ bool func_80043740() // 0x80043740
             return false;
     }
 
-    for (ptr = D_800C1020.ipdActive_15C, i = 0;
+    for (curChunk = D_800C1020.ipdActive_15C, i = 0;
          i < D_800C1020.ipdActiveSize_158;
-         i++, ptr++)
+         i++, curChunk++)
     {
-        switch (IpdHeader_LoadStateGet(ptr))
+        switch (IpdHeader_LoadStateGet(curChunk))
         {
             case 0:
             case 3:
                 continue;
         }
 
-        if (ptr->distance0_C <= 0)
+        if (curChunk->distance0_C <= 0)
         {
             return false;
         }
 
-        if (ptr->distance1_10 <= 0)
+        if (curChunk->distance1_10 <= 0)
         {
-            do {} while (0); // @hack
+            do {} while (false); // @hack
 
             return false;
         }
@@ -1409,25 +1412,25 @@ bool func_80043740() // 0x80043740
 bool func_80043830(void) // 0x80043830
 {
     s32         loadState;
-    s_IpdChunk* ptr;
+    s_IpdChunk* curChunk;
 
-    for (ptr = &D_800C1020.ipdActive_15C[0]; ptr < &D_800C1020.ipdActive_15C[D_800C1020.ipdActiveSize_158]; ptr++)
+    for (curChunk = &D_800C1020.ipdActive_15C[0]; curChunk < &D_800C1020.ipdActive_15C[D_800C1020.ipdActiveSize_158]; curChunk++)
     {
-        loadState = IpdHeader_LoadStateGet(ptr);
+        loadState = IpdHeader_LoadStateGet(curChunk);
         if (loadState == StaticModelLoadState_Invalid || loadState == StaticModelLoadState_Loaded ||
-            (ptr->distance0_C > 0 && ptr->distance1_10 > 0))
+            (curChunk->distance0_C > 0 && curChunk->distance1_10 > 0))
         {
             continue;
         }
 
-        if (!func_80043B34(ptr, &D_800C1020))
+        if (!func_80043B34(curChunk, &D_800C1020))
         {
             continue;
         }
 
         if (func_80042E2C(FP_METER_TO_GEO(D_800C1020.field_578), 
                           FP_METER_TO_GEO(D_800C1020.field_57C),
-                          ptr->coordX_8, ptr->coordZ_A) <= FP_METER_GEO(4.5f))
+                          curChunk->coordX_8, curChunk->coordZ_A) <= FP_METER_GEO(4.5f))
         {
             return true;
         }
@@ -1444,7 +1447,7 @@ bool func_8004393C(s32 posX, s32 posZ) // 0x8004393C
     fileChunkCoordX = FLOOR_TO_STEP(FP_METER_TO_GEO(posX), FP_METER_GEO(40.0f));
     fileChunkCoordZ = FLOOR_TO_STEP(FP_METER_TO_GEO(posZ), FP_METER_GEO(40.0f));
     
-    if (D_800C1020.hasGlobalPlm != 0)
+    if (D_800C1020.hasGlobalPlm)
     {
         return func_80042E2C(FP_METER_TO_GEO(D_800C1020.field_578), FP_METER_TO_GEO(D_800C1020.field_57C), fileChunkCoordX, fileChunkCoordZ) <= FP_METER_GEO(4.5f);
     }
@@ -1461,7 +1464,7 @@ bool func_8004393C(s32 posX, s32 posZ) // 0x8004393C
 void func_80043A24(GsOT* ot, s32 arg1) // 0x80043A24
 {
     s32         queueState;
-    s_IpdChunk* ptr;
+    s_IpdChunk* curChunk;
 
     queueState = Fs_QueueEntryLoadStatusGet(D_800C1020.field_138.queueIdx_8);
 
@@ -1471,95 +1474,96 @@ void func_80043A24(GsOT* ot, s32 arg1) // 0x80043A24
     }
 
     if (!(queueState == FsQueueEntryLoadStatus_Invalid ||
-          (queueState == FsQueueEntryLoadStatus_Loaded && D_800C1020.field_138.lmHeader_0->isLoaded_2)))
+          (queueState == FsQueueEntryLoadStatus_Loaded && D_800C1020.field_138.lmHdr_0->isLoaded_2)))
     {
         return;
     }
 
-    ptr = &D_800C1020.ipdActive_15C[0];
-    for (; ptr < &D_800C1020.ipdActive_15C[D_800C1020.ipdActiveSize_158]; ptr++)
+    curChunk = &D_800C1020.ipdActive_15C[0];
+    for (; curChunk < &D_800C1020.ipdActive_15C[D_800C1020.ipdActiveSize_158]; curChunk++)
     {
-        if (IpdHeader_LoadStateGet(ptr) >= 3 && func_80043B34(ptr, &D_800C1020))
+        if (IpdHeader_LoadStateGet(curChunk) >= StaticModelLoadState_Loaded && func_80043B34(curChunk, &D_800C1020))
         {
-            func_80044090(ptr->ipdHeader_0, D_800C1020.field_578, D_800C1020.field_57C, ot, arg1);
+            func_80044090(curChunk->ipdHdr_0, D_800C1020.field_578, D_800C1020.field_57C, ot, arg1);
         }
     }
 }
 
-bool func_80043B34(s_IpdChunk* arg0, s_800C1020* arg1)
+bool func_80043B34(s_IpdChunk* chunk, s_800C1020* arg1)
 {
-    if (arg1->field_580 == arg0->coordX_8 && arg1->field_584 == arg0->coordZ_A)
+    if (arg1->field_580 == chunk->coordX_8 &&
+        arg1->field_584 == chunk->coordZ_A)
     {
         return true;
     }
 
-    return arg1->hasGlobalPlm != 0;
+    return arg1->hasGlobalPlm != false;
 }
 
-bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHeader) // 0x80043B70
+bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHdr) // 0x80043B70
 {
-    if (!ipdHeader->isLoaded_1)
+    if (!ipdHdr->isLoaded_1)
     {
         return false;
     }
 
-    return LmHeader_IsTextureLoaded(ipdHeader->lmHeader_4);
+    return LmHeader_IsTextureLoaded(ipdHdr->lmHdr_4);
 }
 
-s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHeader) // 0x80043BA4
+s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHdr) // 0x80043BA4
 {
-    if (ipdHeader->isLoaded_1)
+    if (ipdHdr->isLoaded_1)
     {
-        return &ipdHeader->collisionData_54;
+        return &ipdHdr->collisionData_54;
     }
 
     return NULL;
 }
 
-void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_LmHeader** lmHeaders, s32 lmHeaderCount, s_800C1450_0* arg3, s_800C1450_0* arg4, s32 arg5) // 0x80043BC4
+void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_800C1450_0* arg3, s_800C1450_0* arg4, s32 arg5) // 0x80043BC4
 {
-    if (ipdHeader->isLoaded_1)
+    if (ipdHdr->isLoaded_1)
     {
         return;
     }
-    ipdHeader->isLoaded_1 = true;
+    ipdHdr->isLoaded_1 = true;
 
-    IpdHeader_FixHeaderOffsets(ipdHeader);
-    IpdCollData_FixOffsets(&ipdHeader->collisionData_54);
-    LmHeader_FixOffsets(ipdHeader->lmHeader_4);
-    func_8008E4EC(ipdHeader->lmHeader_4);
-    func_80043C7C(ipdHeader, arg3, arg4, arg5);
-    func_80056954(ipdHeader->lmHeader_4);
-    IpdHeader_ModelLinkObjectLists(ipdHeader, lmHeaders, lmHeaderCount);
-    IpdHeader_ModelBufferLinkObjectLists(ipdHeader, ipdHeader->modelInfo_14);
+    IpdHeader_FixHeaderOffsets(ipdHdr);
+    IpdCollData_FixOffsets(&ipdHdr->collisionData_54);
+    LmHeader_FixOffsets(ipdHdr->lmHdr_4);
+    func_8008E4EC(ipdHdr->lmHdr_4);
+    func_80043C7C(ipdHdr, arg3, arg4, arg5);
+    func_80056954(ipdHdr->lmHdr_4);
+    IpdHeader_ModelLinkObjectLists(ipdHdr, lmHdrs, lmHdrCount);
+    IpdHeader_ModelBufferLinkObjectLists(ipdHdr, ipdHdr->modelInfo_14);
 }
 
-void func_80043C7C(s_IpdHeader* ipdHeader, s_800C1450_0* arg1, s_800C1450_0* arg2, s32 fileIdx) // 0x80043C7C
+void func_80043C7C(s_IpdHeader* ipdHdr, s_800C1450_0* arg1, s_800C1450_0* arg2, s32 fileIdx) // 0x80043C7C
 {
-    if (!ipdHeader->isLoaded_1)
+    if (!ipdHdr->isLoaded_1)
     {
         return;
     }
 
     if (arg1 != NULL)
     {
-        func_80056774(ipdHeader->lmHeader_4, arg1, &LmFilter_NameDoesNotEndWithH, fileIdx, 1);
+        func_80056774(ipdHdr->lmHdr_4, arg1, &LmFilter_NameDoesNotEndWithH, fileIdx, 1);
     }
 
     if (arg2 != NULL)
     {
-        func_80056774(ipdHeader->lmHeader_4, arg2, &LmFilter_NameEndsWithH, fileIdx, 1);
+        func_80056774(ipdHdr->lmHdr_4, arg2, &LmFilter_NameEndsWithH, fileIdx, 1);
     }
 }
 
-s32 func_80043D00(s_IpdHeader* ipdHeader) // 0x80043D00
+s32 func_80043D00(s_IpdHeader* ipdHdr) // 0x80043D00
 {
-    if (!ipdHeader->isLoaded_1)
+    if (!ipdHdr->isLoaded_1)
     {
         return 0;
     }
 
-    return func_80056348(LmFilter_NameEndsWithH, ipdHeader->lmHeader_4);
+    return func_80056348(LmFilter_NameEndsWithH, ipdHdr->lmHdr_4);
 }
 
 bool LmFilter_NameDoesNotEndWithH(s_Material* mat) // 0x80043D44
@@ -1587,44 +1591,44 @@ bool LmFilter_NameEndsWithH(s_Material* mat) // 0x80043D64
     return false;
 }
 
-void IpdHeader_FixHeaderOffsets(s_IpdHeader* ipdHeader) // 0x80043DA4
+void IpdHeader_FixHeaderOffsets(s_IpdHeader* ipdHdr) // 0x80043DA4
 {
     s_IpdModelBuffer* modelBuf;
 
-    ipdHeader->lmHeader_4       = (u8*)ipdHeader->lmHeader_4 + (u32)ipdHeader;
-    ipdHeader->modelInfo_14      = (u8*)ipdHeader->modelInfo_14 + (u32)ipdHeader;
-    ipdHeader->modelBuffers_18   = (u8*)ipdHeader->modelBuffers_18 + (u32)ipdHeader;
-    ipdHeader->modelOrderList_50 = (u8*)ipdHeader->modelOrderList_50 + (u32)ipdHeader;
+    ipdHdr->lmHdr_4       = (u8*)ipdHdr->lmHdr_4 + (u32)ipdHdr;
+    ipdHdr->modelInfo_14      = (u8*)ipdHdr->modelInfo_14 + (u32)ipdHdr;
+    ipdHdr->modelBuffers_18   = (u8*)ipdHdr->modelBuffers_18 + (u32)ipdHdr;
+    ipdHdr->modelOrderList_50 = (u8*)ipdHdr->modelOrderList_50 + (u32)ipdHdr;
 
-    for (modelBuf = &ipdHeader->modelBuffers_18[0];
-         modelBuf < &ipdHeader->modelBuffers_18[ipdHeader->modelBufferCount_9];
+    for (modelBuf = &ipdHdr->modelBuffers_18[0];
+         modelBuf < &ipdHdr->modelBuffers_18[ipdHdr->modelBufferCount_9];
          modelBuf++)
     {
-        modelBuf->field_C  = (u8*)modelBuf->field_C + (u32)ipdHeader;
-        modelBuf->field_10 = (u8*)modelBuf->field_10 + (u32)ipdHeader;
-        modelBuf->field_14 = (u8*)modelBuf->field_14 + (u32)ipdHeader;
+        modelBuf->field_C  = (u8*)modelBuf->field_C + (u32)ipdHdr;
+        modelBuf->field_10 = (u8*)modelBuf->field_10 + (u32)ipdHdr;
+        modelBuf->field_14 = (u8*)modelBuf->field_14 + (u32)ipdHdr;
     }
 }
 
-void IpdHeader_ModelLinkObjectLists(s_IpdHeader* ipdHeader, s_LmHeader** lmHeaders, s32 lmHeaderCount) // 0x80043E50
+void IpdHeader_ModelLinkObjectLists(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount) // 0x80043E50
 {
     s32             i;
     s32             j;
     s_IpdModelInfo* modelInfo;
 
-    for (i = 0; i < ipdHeader->modelCount_8; i++)
+    for (i = 0; i < ipdHdr->modelCount_8; i++)
     {
-        modelInfo = &ipdHeader->modelInfo_14[i];
+        modelInfo = &ipdHdr->modelInfo_14[i];
         if (!modelInfo->isGlobalPlm_0)
         {
-            modelInfo->modelHeader_C = LmHeader_ModelHeaderSearch(&modelInfo->modelName_4, ipdHeader->lmHeader_4);
+            modelInfo->modelHdr_C = LmHeader_ModelHeaderSearch(&modelInfo->modelName_4, ipdHdr->lmHdr_4);
         }
         else
         {
-            for (j = 0; j < lmHeaderCount; j++)
+            for (j = 0; j < lmHdrCount; j++)
             {
-                modelInfo->modelHeader_C = LmHeader_ModelHeaderSearch(&modelInfo->modelName_4, lmHeaders[j]);
-                if (modelInfo->modelHeader_C != NULL)
+                modelInfo->modelHdr_C = LmHeader_ModelHeaderSearch(&modelInfo->modelName_4, lmHdrs[j]);
+                if (modelInfo->modelHdr_C != NULL)
                 {
                     break;
                 }
@@ -1633,16 +1637,16 @@ void IpdHeader_ModelLinkObjectLists(s_IpdHeader* ipdHeader, s_LmHeader** lmHeade
     }
 }
 
-s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmHeader) // 0x80043F2C
+s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmHdr) // 0x80043F2C
 {
     s32            i;
     s_ModelHeader* modelHeader;
 
-    modelHeader = lmHeader->modelHeaders_C;
+    modelHeader = lmHdr->modelHdrs_C;
 
-    for (i = 0; i < lmHeader->modelCount_8; i++, modelHeader++)
+    for (i = 0; i < lmHdr->modelCount_8; i++, modelHeader++)
     {
-        if (!cmp_filename(modelName, &modelHeader->modelName_0))
+        if (!COMPARE_FILENAMES(modelName, &modelHeader->modelName_0))
         {
             return modelHeader;
         }
@@ -1651,22 +1655,22 @@ s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmH
     return NULL;
 }
 
-void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHeader, s_IpdModelInfo* ipdModels) // 0x80043F88
+void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHdr, s_IpdModelInfo* ipdModels) // 0x80043F88
 {
     s_IpdModelBuffer*   modelBuffer;
     s_IpdModelBuffer_C* unkData;
 
-    for (modelBuffer = ipdHeader->modelBuffers_18;
-         modelBuffer < &ipdHeader->modelBuffers_18[ipdHeader->modelBufferCount_9];
+    for (modelBuffer = ipdHdr->modelBuffers_18;
+         modelBuffer < &ipdHdr->modelBuffers_18[ipdHdr->modelBufferCount_9];
          modelBuffer++)
     {
         for (unkData = &modelBuffer->field_C[0];
              unkData < &modelBuffer->field_C[modelBuffer->field_0];
              unkData++)
         {
-            // `unkData` originally stores model idx, replace that with pointer to the model's `modelHeader_C`.
-            s32 modelIdx           = (s32)unkData->modelHeader_0;
-            unkData->modelHeader_0 = ipdModels[modelIdx].modelHeader_C;
+            // `unkData` originally stores model idx, replace that with pointer to the model's `modelHdr_C`.
+            s32 modelIdx           = (s32)unkData->modelHdr_0;
+            unkData->modelHdr_0 = ipdModels[modelIdx].modelHdr_C;
         }
     }
 }
@@ -1685,7 +1689,7 @@ void func_80044044(s_IpdHeader* ipd, s32 x, s32 z) // 0x80044044
     ipd->collisionData_54.posZ_4 += (z - gridZ) * 0x2800;
 }
 
-void func_80044090(s_IpdHeader* ipdHeader, s32 arg1, s32 arg2, GsOT* ot, void* arg4) // 0x80044090
+void func_80044090(s_IpdHeader* ipdHdr, s32 arg1, s32 arg2, GsOT* ot, void* arg4) // 0x80044090
 {
     s_800BCE18_2BEC_0_0 sp18;
     GsCOORDINATE2       sp28;
@@ -1706,8 +1710,8 @@ void func_80044090(s_IpdHeader* ipdHeader, s32 arg1, s32 arg2, GsOT* ot, void* a
     spB8 = FP_METER_TO_GEO(arg1);
     spBC = FP_METER_TO_GEO(arg2);
 
-    temp_s5 = ipdHeader->levelGridX_2 * FP_METER_GEO(40.0f);
-    temp_s3 = ipdHeader->levelGridY_3 * FP_METER_GEO(40.0f);
+    temp_s5 = ipdHdr->levelGridX_2 * FP_METER_GEO(40.0f);
+    temp_s3 = ipdHdr->levelGridY_3 * FP_METER_GEO(40.0f);
 
     var_v1 = FLOOR_TO_STEP(spB8 - temp_s5, FP_METER_GEO(8.0f));
     var_a0 = FLOOR_TO_STEP(spBC - temp_s3, FP_METER_GEO(8.0f));
@@ -1722,17 +1726,17 @@ void func_80044090(s_IpdHeader* ipdHeader, s32 arg1, s32 arg2, GsOT* ot, void* a
     sp18.field_0 = 0;
     sp28.super   = NULL;
 
-    temp_fp = &ipdHeader->textureCount_1C + (var_a0 * 10) + (var_v1 * 2);
+    temp_fp = &ipdHdr->textureCount_1C + (var_a0 * 10) + (var_v1 * 2);
 
     for (i = temp_fp[0]; i < temp_fp[1] + temp_fp[0]; i++)
     {
-        temp_s2 = &ipdHeader->modelBuffers_18[ipdHeader->modelOrderList_50[i]];
+        temp_s2 = &ipdHdr->modelBuffers_18[ipdHdr->modelOrderList_50[i]];
 
         if (func_80044420(temp_s2, spB8 - temp_s5, spBC - temp_s3, temp_s5, temp_s3))
         {
             for (var_s0 = temp_s2->field_C; var_s0 < &temp_s2->field_C[temp_s2->field_0]; var_s0++)
             {
-                sp18.modelHdr_8 = var_s0->modelHeader_0;
+                sp18.modelHdr_8 = var_s0->modelHdr_0;
                 if (sp18.modelHdr_8 != NULL)
                 {
                     sp28.workm       = var_s0->field_4;
@@ -2289,12 +2293,12 @@ void func_80045014(s_Skeleton* skel) // 0x80045014
     }
 }
 
-void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHeader) // 0x8004506C
+void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHdr) // 0x8004506C
 {
     u8  sp10[4]; // Size unsure, this could be larger.
     s32 switchVar;
 
-    switchVar = LmHeader_ModelCountGet(lmHeader);
+    switchVar = LmHeader_ModelCountGet(lmHdr);
     sp10[0]   = 0;
 
     switch (switchVar)
@@ -2310,16 +2314,16 @@ void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHeader) // 0x8004506C
 
         default:
             sp10[1] = 253;
-            sp10[2] = LmHeader_ModelCountGet(lmHeader) - 1;
+            sp10[2] = LmHeader_ModelCountGet(lmHdr) - 1;
             sp10[3] = 254;
             break;
     }
 
-    func_80045108(skel, lmHeader, sp10, 0);
+    func_80045108(skel, lmHdr, sp10, 0);
 }
 
 // Anim func.
-void func_80045108(s_Skeleton* skel, s_LmHeader* lmHeader, u8* arg2, s32 arg3) // 0x80045108
+void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, u8* arg2, s32 arg3) // 0x80045108
 {
     s_Skeleton*  skel0; // Guessed the type. They both access `field_14` so maybe it's also `s_Skeleton`.
     s_Skeleton** skel1;
@@ -2332,7 +2336,7 @@ void func_80045108(s_Skeleton* skel, s_LmHeader* lmHeader, u8* arg2, s32 arg3) /
     }
 
     boneIdx = skel->boneIdx_1;
-    func_800451B0(skel, lmHeader, arg2);
+    func_800451B0(skel, lmHdr, arg2);
 
     skel1 = &skel->field_4;
     while (*skel1 != 0)
@@ -2341,11 +2345,11 @@ void func_80045108(s_Skeleton* skel, s_LmHeader* lmHeader, u8* arg2, s32 arg3) /
         skel1 = &skel0->skeleton_14;
     }
 
-    func_80045258(skel1, &skel->bones_8[boneIdx], skel->boneIdx_1 - boneIdx, lmHeader); // Very wierd third argument.
+    func_80045258(skel1, &skel->bones_8[boneIdx], skel->boneIdx_1 - boneIdx, lmHdr); // Very wierd third argument.
     func_800453E8(skel, false);
 }
 
-void func_800451B0(s_Skeleton* skel, s_LmHeader* lmHeader, s32* arg2) // 0x800451B0
+void func_800451B0(s_Skeleton* skel, s_LmHeader* lmHdr, s32* arg2) // 0x800451B0
 {
     s32 var;
     
@@ -2353,23 +2357,23 @@ void func_800451B0(s_Skeleton* skel, s_LmHeader* lmHeader, s32* arg2) // 0x80045
 
     while (var != -2)
     {
-        func_80056C8C(&skel->bones_8[skel->boneIdx_1], lmHeader, var);
+        func_80056C8C(&skel->bones_8[skel->boneIdx_1], lmHdr, var);
 
         skel->boneIdx_1++;
         var = func_80044F6C(arg2, false);
     }
 }
 
-void func_80045258(s_Skeleton** skels, s_Bone* bones, s32 boneIdx, s_LmHeader* lmHeader) // 0x80045258
+void func_80045258(s_Skeleton** skels, s_Bone* bones, s32 boneIdx, s_LmHeader* lmHdr) // 0x80045258
 {
     s_Bone* bone;
     u8*     objOrd;
 
-    for (objOrd = lmHeader->modelOrder_10; objOrd < &lmHeader->modelOrder_10[lmHeader->modelCount_8]; objOrd++)
+    for (objOrd = lmHdr->modelOrder_10; objOrd < &lmHdr->modelOrder_10[lmHdr->modelCount_8]; objOrd++)
     {
         for (bone = bones; bone < &bones[boneIdx]; bone++)
         {
-            if (bone->modelHeaderIdx_C == *objOrd)
+            if (bone->modelHdrIdx_C == *objOrd)
             {
                 *skels = (s_Skeleton*)bone;
                 skels  = (s_Skeleton**)&bone->field_14;

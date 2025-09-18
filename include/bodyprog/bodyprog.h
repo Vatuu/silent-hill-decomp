@@ -21,18 +21,23 @@
 #define OPT_VIBRATION_DISABLED 0
 #define OPT_VIBRATION_ENABLED  128
 
-#define IPD_HEADER_MAGIC       20  // 0x14 / 20
-#define LM_HEADER_MAGIC        '0' // 0x30 / 48 / '0'
+#define IPD_HEADER_MAGIC 20  // 0x14 / 20
+#define LM_HEADER_MAGIC  '0' // 0x30 / 48 / '0'
+#define LM_VERSION       6
 
 // ==============
 // HELPER MACROS
 // ==============
 
-/** @brief compare 8-character strings using u32 type. Return 0 when equal similarly to strcmp */
-#define cmp_filename(a,b) \
-    ( ((u_Filename*)(a))->u32[0] != ((u_Filename*)(b))->u32[0] || \
-      ((u_Filename*)(a))->u32[1] != ((u_Filename*)(b))->u32[1] )
-
+/** @brief Compares 8-character strings using `u32`. Similar to `strcmp`.
+ *
+ * @param a First string.
+ * @param b Second string.
+ * @return `true` if the strings aren't equal, `false` otherwise.
+ */
+#define COMPARE_FILENAMES(a, b)                                  \
+    (((u_Filename*)(a))->u32[0] != ((u_Filename*)(b))->u32[0] || \
+     ((u_Filename*)(a))->u32[1] != ((u_Filename*)(b))->u32[1])
 
 // ======
 // ENUMS
@@ -285,16 +290,15 @@ typedef struct
 } s_func_800625F4;
 STATIC_ASSERT_SIZEOF(s_func_800625F4, 20);
 
-/** Returned by `func_800699F8`. Probably contains 2D point collision. */
-typedef struct _s_func_800699F8
+typedef struct _Collision
 {
     q19_12 groundHeight_0;
-    s16    field_4;
-    s16    field_6;
-    s8     field_8;
+    s16    field_4; // } Angles??
+    s16    field_6; // }
+    s8     field_8; // Count of something? 12 is significant.
     u8     unk_9[3];
-} s_func_800699F8;
-STATIC_ASSERT_SIZEOF(s_func_800699F8, 12);
+} s_Collision;
+STATIC_ASSERT_SIZEOF(s_Collision, 12);
 
 typedef struct
 {
@@ -306,9 +310,9 @@ typedef struct
 typedef struct
 {
     s32        field_0;
-    s32        field_4;
+    s32        field_4; // `bool`?
     s32        field_8; // 2D distance.
-    SVECTOR    field_C;
+    SVECTOR    field_C; // 2D position?
     DVECTOR_XZ direction_14;
     q23_8      positionX_18;
     q23_8      positionZ_1C;
@@ -339,7 +343,7 @@ typedef struct
 {
     s8      field_0;
     s8      unk_1;
-    DVECTOR field_2;
+    DVECTOR field_2; // Rotation?
 } s_func_8006CC44_44_0;
 
 typedef struct
@@ -401,8 +405,8 @@ typedef struct
     s16                  field_5E;
     s16                  field_60;
     s8                   unk_62[2];
-    s_SubCharacter**     field_64;
-    s32                  field_68;
+    s_SubCharacter**     field_64; // `Array of characters.
+    s32                  field_68; // Index into `field_64`.
     s_func_8006DCE0_6C   field_6C;
     s32                  field_7C;
     s32                  field_80;
@@ -572,29 +576,28 @@ typedef struct _ModelHeader
     u8            field_B_1 : 3;
     u8            field_B_4 : 2;
     u8            unk_B_6   : 2;
-    s_MeshHeader* meshHeaders_C;
+    s_MeshHeader* meshHdrs_C;
 } s_ModelHeader;
 STATIC_ASSERT_SIZEOF(s_ModelHeader, 16);
 
-// Individual texture data.
-typedef struct _Material_8
+typedef struct _Texture
 {
     s_FsImageDesc imageDesc_0;
-    u_Filename    textureName_8;
+    u_Filename    name_8;
     u32           queueIdx_10;
     s8            refCount_14;
 } s_Texture;
 
 typedef struct _Material
 {
-    u_Filename    name_0;
-    s_Texture*    tex_8;
-    u8            field_C;
-    u8            unk_D[1];
-    u8            field_E;
-    u8            field_F;
-    u16           field_10;
-    u16           field_12;
+    u_Filename name_0;
+    s_Texture* texture_8;
+    u8         field_C;
+    u8         unk_D[1];
+    u8         field_E;
+    u8         field_F;
+    u16        field_10;
+    u16        field_12;
     union
     {
         u8  u8[2];
@@ -617,7 +620,7 @@ typedef struct _LmHeader
     s_Material*    materials_4;
     u8             modelCount_8;
     u8             unk_9[3];
-    s_ModelHeader* modelHeaders_C;
+    s_ModelHeader* modelHdrs_C;
     u8*            modelOrder_10;
 
     // File header ends, extra data below.
@@ -702,7 +705,7 @@ typedef struct _IpdCollisionData
 
 typedef struct _IpdModelBuffer_C
 {
-    s_ModelHeader* modelHeader_0;
+    s_ModelHeader* modelHdr_0;
     MATRIX         field_4;
 } s_IpdModelBuffer_C;
 STATIC_ASSERT_SIZEOF(s_IpdModelBuffer_C, 36);
@@ -728,7 +731,7 @@ typedef struct _IpdModelInfo
     u8             isGlobalPlm_0; // `false` if loaded from inside `IPD`, `true` if loaded from `*_GLB.PLM`.
     u8             unk_1[3];
     u_Filename     modelName_4;
-    s_ModelHeader* modelHeader_C;
+    s_ModelHeader* modelHdr_C;
 } s_IpdModelInfo;
 STATIC_ASSERT_SIZEOF(s_IpdModelInfo, 16);
 
@@ -738,7 +741,7 @@ typedef struct _IpdHeader
     u8                 isLoaded_1; /** `bool` */
     s8                 levelGridX_2;
     s8                 levelGridY_3;
-    s_LmHeader*        lmHeader_4;
+    s_LmHeader*        lmHdr_4;
     u8                 modelCount_8;
     u8                 modelBufferCount_9;
     u8                 modelOrderCount_A;
@@ -806,7 +809,7 @@ typedef struct
 typedef struct
 {
     s_IpdCollisionData*   field_0;
-    u8                    field_4;
+    u8                    field_4; // Index.
     u8                    field_5;
     SVECTOR3              field_6;
     s_func_8006CC44_CC_C  field_C;
@@ -833,8 +836,8 @@ typedef struct
     s32                field_34;
     s16                field_38;
     s16                field_3A;
-    s16                field_3C;
-    s16                field_3E;
+    s16                field_3C; // X?
+    s16                field_3E; // Z?
     s8*                field_40;
     s_func_8006CC44_44 field_44;
     s32                field_7C;
@@ -879,13 +882,13 @@ typedef struct
     u8                 unk_C9[1];
     s16                field_CA;
     s_func_8006CC44_CC field_CC;
-    // TODO: May be incomplete. Maybe not, added the final padding based on `func_800699F8`
+    // TODO: May be incomplete. Maybe not, added the final padding based on `Collision_Get`
 } s_func_8006CC44;
 
 // LM data? Likely `D_800C1158`'s struct.
 typedef struct
 {
-    s_LmHeader* lmHeader_0;
+    s_LmHeader* lmHdr_0;
     s32         fileIdx_4;
     s32         queueIdx_8; // Passed to `Fs_QueueEntryLoadStatusGet`, thus the name.
 } s_func_80041CB4;
@@ -912,8 +915,8 @@ typedef struct
 {
     s32            flags_0;
     s8             unk_4[4];
-    s_ModelHeader* modelHeader_8;
-    s32            modelHeaderIdx_C;
+    s_ModelHeader* modelHdr_8;
+    s32            modelHdrIdx_C;
     s8             field_10;
     s8             unk_11[3];
     s32            field_14;
@@ -1002,7 +1005,7 @@ STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
 typedef struct
 {
     VECTOR3         position_0;
-    s_func_800699F8 field_C; // Collision data?
+    s_Collision field_C; // Collision data?
     s32             field_18;
 } s_800AFC78;
 
@@ -1043,7 +1046,7 @@ typedef struct
     u8            field_1;
     u8            unk_2[2];
     s32           field_4;
-    s_LmHeader*   lmHeader_8;
+    s_LmHeader*   lmHdr_8;
     s_FsImageDesc texture_C;
     s_Skeleton    field_14; // Could be different struct?
 } s_800BCE18_0_CC; // Unknown size.
@@ -1076,11 +1079,8 @@ STATIC_ASSERT_SIZEOF(s_800BCE18_0, 1376);
 typedef struct
 {
     u_Filename modelName_0;
-    s8   field_8;
-/* Set to 2 when found in D_800C1020.field_138.lmHeader_0.
- * Set to 3-6 if found in D_800C1020.ipdActive_15C[i] (i + 3).
- */
-    s8   lmIndex_9;
+    s8         field_8;
+    s8         lmIdx_9; /** Set to 2 when found in `D_800C1020.field_138.lmHdr_0` and 3-6 if found in `D_800C1020.ipdActive_15C[i] (i + 3)`. */
 } s_800BCE18_2BEC_0_10;
 
 typedef struct
@@ -1134,7 +1134,7 @@ STATIC_ASSERT_SIZEOF(s_800BCE18, 11260);
 // IPD data?
 typedef struct
 {
-    s_IpdHeader* ipdHeader_0;
+    s_IpdHeader* ipdHdr_0;
     s32          queueIdx_4;
     s16          coordX_8;
     s16          coordZ_A;
@@ -1163,8 +1163,8 @@ typedef struct
 {
     s_800C1450_0 field_0;
     s_800C1450_0 field_2C;
-    s_Texture    field_58[8];
-    s_Texture    field_118[2];
+    s_Texture    textures_58[8];
+    s_Texture    textures_118[2];
 } s_800C1450;
 STATIC_ASSERT_SIZEOF(s_800C1450, 328);
 
@@ -1176,7 +1176,7 @@ typedef struct
     char               mapTag_144[4];
     s32                mapTagSize_148;
     s32                ipdFileIdx_14C;
-    s_IpdHeader*       ipdBuf_150;
+    s_IpdHeader*       ipdBuffer_150;
     s32                ipdBufSize_154;
     s32                ipdActiveSize_158;
     s_IpdChunk         ipdActive_15C[4];
@@ -1188,10 +1188,7 @@ typedef struct
     s32                field_57C;
     s32                field_580; // File chunk coord X.
     s32                field_584; // File chunk coord Z.
-    /* Might mean something else, it depends on the flags_6 in MapType
-     * but the only maps that have the required flag set are maps with global plm
-     */
-    s32                hasGlobalPlm;
+    bool               hasGlobalPlm; // Might mean something else, depends on `flags_6` in MapType. Only maps that have required flag set are maps with global PLM.
 } s_800C1020;
 STATIC_ASSERT_SIZEOF(s_800C1020, 1420);
 
@@ -1669,7 +1666,7 @@ typedef struct
     u32  field_10; // Maybe `bool`, not enough context.
     s32  field_14;
     s32  field_18;
-    s16  field_1C;
+    q7_8 field_1C; // Angle.
 } s_func_800700F8_2;
 
 typedef struct
@@ -1678,7 +1675,7 @@ typedef struct
     s32     field_C; // Y height?
     s16     field_10;
     s16     field_12;
-    s8      field_14;
+    s8      field_14; // Count of something? 12 is significant.
     s8      unk_15[3];
     s32     field_18;
 } s_800C4590;
@@ -2452,7 +2449,7 @@ extern s8 D_800C4560;
 
 extern u8 D_800C4561;
 
-extern s_func_800699F8 D_800C4620;
+extern s_Collision D_800C4620;
 
 extern VECTOR3 D_800C4640[][8]; // Or struct?
 
@@ -2568,7 +2565,7 @@ s32 func_8003D21C(s_MapOverlayHeader* arg0);
 
 void func_8003D5B4(s8 arg0);
 
-void func_8003D6E0(s32 arg0, s32 arg1, s_LmHeader* lmHeader, s_FsImageDesc* tex);
+void func_8003D6E0(s32 arg0, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 /** Param types assumed. */
 void func_8003DD80(s32 idx, s32 arg1); // Called by some chara init funcs.
@@ -2644,21 +2641,21 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4);
 u32 Fs_QueueEntryLoadStatusGet(s32 queueIdx);
 
 /** Used for loading maps */
-void func_80041C24(s_LmHeader* lmHeader, s_IpdHeader* ipdBuf, s32 ipdBufSize);
+void func_80041C24(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize);
 
-void func_80041CB4(s_func_80041CB4* arg0, s_LmHeader* lmHeader);
+void func_80041CB4(s_func_80041CB4* arg0, s_LmHeader* lmHdr);
 
-void func_80041CEC(s_LmHeader* lmHeader);
+void func_80041CEC(s_LmHeader* lmHdr);
 
 /** @brief Clears `queueIdx_4` in array of `s_IpdChunk` */
-void Ipd_ActiveChunksQueueIdxClear(s_IpdChunk* arg0, s32 size);
+void Ipd_ActiveChunksQueueIdxClear(s_IpdChunk* chunks, s32 chunkCount);
 
 /** Crucial for map loading. */
 void func_80041D48();
 
 void func_80041E98();
 
-void Map_PlaceIpdAtGridPos(s16 ipdFileIdx, s32 x, s32 z);
+void Map_PlaceIpdAtGridPos(s16 ipdFileIdx, s32 chunkCoordX, s32 chunkCoordZ);
 
 void func_80041FF0();
 
@@ -2670,7 +2667,7 @@ void func_800420FC();
 
 s_Texture* func_80042178(char* arg0);
 
-void func_800421D8(char* mapTag, s32 plmIdx, s32 activeIpdCount, s32 globalPlm, s32 ipdFileIdx, s32 texFileIdx);
+void func_800421D8(char* mapTag, s32 plmIdx, s32 activeIpdCount, bool hasGlobalPlm, s32 ipdFileIdx, s32 texFileIdx);
 
 void Ipd_ActiveChunksClear(s_800C1020* arg0, s32 arg1);
 
@@ -2690,7 +2687,7 @@ void Map_MakeIpdGrid(s_800C1020* arg0, char* mapTag, s32 fileIdxStart);
  */
 bool ConvertHexToS8(s32* out, char hex0, char hex1);
 
-s_IpdCollisionData** func_800425D8(s32* arg0);
+s_IpdCollisionData** func_800425D8(s32* collDataIdx);
 
 s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ);
 
@@ -2708,7 +2705,7 @@ u32 LmHeader_LoadStateGet(s_func_80041CB4* arg0);
  * @param
  * @return IPD file load state `(e_StaticModelLoadState`).
  */
-u32 IpdHeader_LoadStateGet(s_IpdChunk* arg0);
+u32 IpdHeader_LoadStateGet(s_IpdChunk* chunk);
 
 /** @brief Checks if an IPD file is loaded.
  *
@@ -2720,15 +2717,15 @@ bool IpdHeader_IsLoaded(s32 ipdIdx);
 void func_80042C3C(s32 x0, s32 z0, s32 x1, s32 z1);
 
 /** Gets distance to the edge of a file chunk? */
-s32 func_80042DE8(s32 posX, s32 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, bool clip);
+s32 func_80042DE8(s32 posX, s32 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ, bool hasGlobalPlm);
 
-s32 func_80042E2C(s32 xPos, s32 zPos, s32 xFileChunkCoord, s32 zFileChunkCoord);
+s32 func_80042E2C(s32 posX, s32 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ);
 
 s32 func_80042EBC(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
-void func_800431E4(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+void func_800431E4(s_800C1020* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, bool hasGlobalPlm);
 
-void func_80043338(s_IpdChunk* arg0, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
+void func_80043338(s_IpdChunk* chunk, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool hasGlobalPlm);
 
 void func_800433B8(s_800C1020* arg0);
 
@@ -2737,12 +2734,12 @@ void func_800433B8(s_800C1020* arg0);
 /** Args are X and Z? */
 s32 func_80043554(s32 gridX, s32 gridZ);
 
-bool func_80043578(s_IpdChunk* arg0, s32 arg1, s32 arg2);
+bool func_80043578(s_IpdChunk* chunks, s32 arg1, s32 arg2);
 
-s_IpdChunk* func_800435E4(s_IpdChunk* arg0, s32 arg1);
+s_IpdChunk* func_800435E4(s_IpdChunk* chunks, bool hasGlobalPlm);
 
 /** Maybe facilitates file chunk streaming as the player moves around the map. */
-s32 func_800436D8(s_IpdChunk* arg0, s32 fileIdx, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool clip);
+s32 func_800436D8(s_IpdChunk* chunk, s32 fileIdx, s32 chunkCoordX, s32 chunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool hasGlobalPlm);
 
 bool func_80043740();
 
@@ -2752,40 +2749,40 @@ bool func_8004393C(s32 posX, s32 posZ);
 
 void func_80043A24(GsOT* ot, s32 arg1);
 
-bool func_80043B34(s_IpdChunk* arg0, s_800C1020* arg1);
+bool func_80043B34(s_IpdChunk* chunk, s_800C1020* arg1);
 
 /** Checks if PLM texture is loaded? */
-bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHeader);
+bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHdr);
 
-s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHeader);
+s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHdr);
 
-void IpdHeader_FixOffsets(s_IpdHeader* ipdHeader, s_LmHeader** lmHeaders, s32 lmHeaderCount, s_800C1450_0* arg3, s_800C1450_0* arg4, s32 arg5);
+void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_800C1450_0* arg3, s_800C1450_0* arg4, s32 arg5);
 
-void func_80043C7C(s_IpdHeader* ipdHeader, s_800C1450_0* arg1, s_800C1450_0* arg2, s32 fileIdx);
+void func_80043C7C(s_IpdHeader* ipdHdr, s_800C1450_0* arg1, s_800C1450_0* arg2, s32 fileIdx);
 
 /** Checks if IPD is loaded before returning texture count? */
-s32 func_80043D00(s_IpdHeader* ipdHeader);
+s32 func_80043D00(s_IpdHeader* ipdHdr);
 
 /** Returns inverse result of `LmFilter_NameEndsWithH`. */
 bool LmFilter_NameDoesNotEndWithH(s_Material* mat);
 
 bool LmFilter_NameEndsWithH(s_Material* mat);
 
-void IpdHeader_FixHeaderOffsets(s_IpdHeader* ipdHeader);
+void IpdHeader_FixHeaderOffsets(s_IpdHeader* ipdHdr);
 
 /** @brief Assigns `s_ModelHeader` pointers to models in `s_IpdHeader` by searching the given `s_LmHeader` array. */
-void IpdHeader_ModelLinkObjectLists(s_IpdHeader* ipdHeader, s_LmHeader** lmHeaders, s32 lmHeaderCount);
+void IpdHeader_ModelLinkObjectLists(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount);
 
 /** @brief Searches `s_LmHeader` for objects with the given `objName`. */
-s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmHeader);
+s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmHdr);
 
 /** @brief Assigns `s_ModelHeader` pointers to each `s_IpdModelBuffer` in `s_IpdHeader`. */
-void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHeader, s_IpdModelInfo* ipdModels);
+void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHdr, s_IpdModelInfo* ipdModels);
 
 /** Sets IPD collision data grid coords? */
 void func_80044044(s_IpdHeader* ipd, s32 x, s32 z);
 
-void func_80044090(s_IpdHeader* ipdHeader, s32 arg1, s32 arg2, GsOT* ot, void* arg4);
+void func_80044090(s_IpdHeader* ipdHdr, s32 arg1, s32 arg2, GsOT* ot, void* arg4);
 
 bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, s32 x, s32 z);
 
@@ -2832,16 +2829,16 @@ void func_80044FE0(s_Skeleton* skel, s_Bone* bones, u8 boneCount);
 void func_80045014(s_Skeleton* skel);
 
 /** Anim func. Used in tandem with skeleton bone traversal. */
-void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHeader);
+void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHdr);
 
 /** Anim func. */
-void func_80045108(s_Skeleton* arg0, s_LmHeader* lmHeader, u8* arg2, s32 arg3);
+void func_80045108(s_Skeleton* arg0, s_LmHeader* lmHdr, u8* arg2, s32 arg3);
 
 /** Anim func. */
-void func_800451B0(s_Skeleton* skel, s_LmHeader* lmHeader, s32* arg2);
+void func_800451B0(s_Skeleton* skel, s_LmHeader* lmHdr, s32* arg2);
 
 /** Anim func. Param names are rough. */
-void func_80045258(s_Skeleton** skels, s_Bone* bones, s32 boneIdx, s_LmHeader* lmHeader);
+void func_80045258(s_Skeleton** skels, s_Bone* bones, s32 boneIdx, s_LmHeader* lmHdr);
 
 /** Anim func. */
 void func_800452EC(s_Skeleton* skel);
@@ -3065,14 +3062,14 @@ void func_80055ECC(CVECTOR* color, SVECTOR3* arg1, SVECTOR3* arg2, MATRIX* mat);
 
 u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* mat);
 
-void LmHeader_FixOffsets(s_LmHeader* lmHeader);
+void LmHeader_FixOffsets(s_LmHeader* lmHdr);
 
-void ModelHeader_FixOffsets(s_ModelHeader* modelHeader, s_LmHeader* lmHeader);
+void ModelHeader_FixOffsets(s_ModelHeader* modelHdr, s_LmHeader* lmHdr);
 
-void func_80056244(s_LmHeader* lmHeader, bool flag);
+void func_80056244(s_LmHeader* lmHdr, bool flag);
 
 /** Gets texture count? */
-s32 func_80056348(bool (*arg0)(s_Material* mat), s_LmHeader* lmHeader);
+s32 func_80056348(bool (*arg0)(s_Material* mat), s_LmHeader* lmHdr);
 
 /** TODO: Unknown `arg3` type. */
 void func_80059D50(s32 arg0, s_800BCE18_2BEC_0_0* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4);
@@ -3083,59 +3080,60 @@ void func_8005A21C(s_800BCE18_2BEC_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX*
 /** @brief Computes a fog-shaded version of `D_800C4190` color using `arg1` as the distance factor?
  *  Stores the result at 0x3D8 into `arg0`.
  */
-void func_8005A42C(s_GteScratchData* scratchData, s32 arg1);
+void func_8005A42C(s_GteScratchData* scratchData, q19_12 alpha);
 
-void func_8005A478(s_GteScratchData* scratchData, s32 alpha);
+void func_8005A478(s_GteScratchData* scratchData, q19_12 alpha);
 
 /** `scratchData` is unused? */
 void func_8005A838(s_GteScratchData* scratchData, s32 scale);
 
-void func_8005A900(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scratchData, MATRIX* mat);
+void func_8005A900(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, MATRIX* mat);
 
-u8 func_8005AA08(s_MeshHeader* meshHeader, s32 arg1, s_GteScratchData2* scratchData);
+u8 func_8005AA08(s_MeshHeader* meshHdr, s32 arg1, s_GteScratchData2* scratchData);
 
-void Tex_Init1(s_Texture* tex_8, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY);
+void Texture_Init1(s_Texture* tex, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY);
 
-void Tex_RefCountReset(s_Texture* tex_8);
+void Texture_RefCountReset(s_Texture* tex);
 
-void func_8005B378(s_Texture* tex_8, char* arg1);
+/** @unused */
+void func_8005B378(s_Texture* tex, char* arg1);
 
-void Tex_Init0(s_Texture* tex_8);
+void Texture_Init0(s_Texture* tex);
 
-void Mat_TimFileNameGet(char* filename, s_Material* material);
+void Material_TimFileNameGet(char* filename, s_Material* mat);
 
 void func_8005B424(VECTOR3* vec0, VECTOR3* vec1);
 
 /** @unused No references. */
-void func_800563E8(s_LmHeader* lmHeader, s32 arg1, s32 arg2, s32 arg3);
+void func_800563E8(s_LmHeader* lmHdr, s32 arg1, s32 arg2, s32 arg3);
 
-void func_80056464(s_LmHeader* lmHeader, s32 fileIdx, s_FsImageDesc* image, s32 arg3);
+void func_80056464(s_LmHeader* lmHdr, s32 fileIdx, s_FsImageDesc* image, s32 arg3);
 
-void func_80056504(s_LmHeader* lmHeader, char* newStr, s_FsImageDesc* image, s32 arg3);
+void func_80056504(s_LmHeader* lmHdr, char* newStr, s_FsImageDesc* image, s32 arg3);
 
-bool func_80056558(s_LmHeader* lmHeader, char* fileName, s_FsImageDesc* image, s32 arg3);
+bool func_80056558(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* image, s32 arg3);
 
 void func_8005660C(s_Material* mat, s_FsImageDesc* image, s32 arg2);
 
-void func_800566B4(s_LmHeader* lmHeader, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4);
+void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4);
 
 /** Unknown `arg4` type. */
-void func_80056774(s_LmHeader* lmHeader, s_800C1450_0* arg1, bool (*func)(s_Material* mat), s32 fileIdx, s32 arg4);
+void func_80056774(s_LmHeader* lmHdr, s_800C1450_0* arg1, bool (*func)(s_Material* mat), s32 fileIdx, s32 arg4);
 
 /** Checks if LM textures are loaded? */
-bool LmHeader_IsTextureLoaded(s_LmHeader* lmHeader);
+bool LmHeader_IsTextureLoaded(s_LmHeader* lmHdr);
 
-void func_80056954(s_LmHeader* lmHeader);
+void func_80056954(s_LmHeader* lmHdr);
 
-void func_80056A88(s_ModelHeader* modelHeader, s32 arg1, s_Material* mat, s32 flags);
+void func_80056A88(s_ModelHeader* modelHdr, s32 arg1, s_Material* mat, s32 flags);
 
-void Lm_MaterialRefCountDec(s_LmHeader* lmHeader);
+void Lm_MaterialRefCountDec(s_LmHeader* lmHdr);
 
-s32 LmHeader_ModelCountGet(s_LmHeader* lmHeader);
+s32 LmHeader_ModelCountGet(s_LmHeader* lmHdr);
 
-void func_80056C8C(s_Bone* bone, s_LmHeader* lmHeader, s32 modelHeaderIdx);
+void func_80056C8C(s_Bone* bone, s_LmHeader* lmHdr, s32 modelHdrIdx);
 
-bool Lm_ModelFind(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHeader, s_800BCE18_2BEC_0_10* arg2);
+bool Lm_ModelFind(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHdr, s_800BCE18_2BEC_0_10* arg2);
 
 void StringCopy(char* prevStr, char* newStr);
 
@@ -3150,15 +3148,16 @@ void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3);
 /** TODO: Unknown `arg2` type. */
 void func_80057344(s_800BCE18_2BEC_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
 
-void func_800574D4(s_MeshHeader* meshHeader, s_GteScratchData* scratchData);
+void func_800574D4(s_MeshHeader* meshHdr, s_GteScratchData* scratchData);
 
-void func_8005759C(s_MeshHeader* meshHeader, s_GteScratchData* scratchData, s32 vertexOffset, s32 normalOffset);
+void func_8005759C(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 vertOffset, s32 normalOffset);
 
-void func_80057658(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scratchData, SVECTOR3* arg3, SVECTOR* arg4);
+void func_80057658(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, SVECTOR3* arg3, SVECTOR* arg4);
 
-void func_80057A3C(s_MeshHeader* meshHeader, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
+void func_80057A3C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
 
-s_Texture* Tex_Get(s_Material* mat, s_800C1450_0* arg1, void* fsBuffer9, s32 fileIdx, s32 arg4);
+/** `arg4` unused. */
+s_Texture* Texture_Get(s_Material* mat, s_800C1450_0* arg1, void* fsBuf9, s32 fileIdx, s32 arg4);
 
 void func_8005B55C(GsCOORDINATE2* coord);
 
@@ -3186,7 +3185,7 @@ void func_8005DC3C(s32 sfx, const VECTOR3* pos, s32 vol, s32 soundType, s32 pitc
 /** Spatial SFX func? */
 void func_8005DD44(s32 sfx, VECTOR3* pos, s32 vol, s8 pitch); // Types assumed.
 
-s32 func_8005F680(s_func_800699F8* arg0);
+s32 func_8005F680(s_Collision* arg0);
 
 /** Spatial SFX func? */
 void func_8005DE0C(s32 sfx, VECTOR3*, s32, s32, s32); // Types assumed.
@@ -3202,33 +3201,33 @@ void func_8005E89C();
 
 void func_8005F6B0(s_SubCharacter*, VECTOR*, s32, s32);
 
-void DmsHeader_FixOffsets(s_DmsHeader* header);
+void DmsHeader_FixOffsets(s_DmsHeader* dmsHdr);
 
-void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* header);
+void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* dmsHdr);
 
 /** @unused? `volatile` needed for match. */
-s_DmsInterval* func_8008CA60(volatile s32 unused, s32 idx, s_DmsHeader* header);
+s_DmsInterval* func_8008CA60(volatile s32 unused, s32 idx, s_DmsHeader* dmsHdr);
 
-void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, q19_12 time, s_DmsHeader* header);
+void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, q19_12 time, s_DmsHeader* dmsHdr);
 
-void Dms_CharacterGetStartPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, s32 time, s_DmsHeader* header);
+void Dms_CharacterGetStartPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, s32 time, s_DmsHeader* dmsHdr);
 
-s32 Dms_CharacterFindIdxByName(char* name, s_DmsHeader* header);
+s32 Dms_CharacterFindIdxByName(char* name, s_DmsHeader* dmsHdr);
 
-void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q19_12 time, s_DmsHeader* header);
+void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q19_12 time, s_DmsHeader* dmsHdr);
 
 void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 alpha);
 
 /** @unused? Returns `96 * cotangent(angle / 2)`. Possibly camera/FOV related. */
 s16 func_8008CDBC(s16 angle);
 
-s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, q19_12 time, s_DmsHeader* header);
+s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, q19_12 time, s_DmsHeader* dmsHdr);
 
 s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, const s_DmsKeyframeCamera* frame0, const s_DmsKeyframeCamera* frame1, s32 alpha);
 
-void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, s32* alpha, q19_12 time, s_DmsEntry* camEntry, s_DmsHeader* header);
+void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, s32* alpha, q19_12 time, s_DmsEntry* camEntry, s_DmsHeader* dmsHdr);
 
-u32 Dms_IntervalStatusGet(s32 time, s_DmsHeader* header);
+u32 Dms_IntervalStatusGet(s32 time, s_DmsHeader* dmsHdr);
 
 s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry);
 
@@ -3346,7 +3345,7 @@ Could `arg5` be a struct pointer?
 `func_8003D6E0` uses this function and in the last argument
 it input `arg5` and `arg5` is an undetermined function pointer
 */
-bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 arg3, s_LmHeader* lmHeader, s_FsImageDesc* tex);
+bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 arg3, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 bool func_80088D0C();
 
@@ -3444,7 +3443,7 @@ void func_8008B664(VECTOR3* pos, u32 caseVar);
 
 s32 func_8008D850();
 
-void func_8008E4EC(s_LmHeader* lmHeader);
+void func_8008E4EC(s_LmHeader* lmHdr);
 
 void func_8008D78C();
 
@@ -3479,7 +3478,7 @@ void GameFs_MapItemsModelLoad(u32 mapId);
 void func_8005B46C(s_800C1450_0* arg0);
 
 /** Crucial for map loading. */
-void func_8005B474(s_800C1450_0* arg0, s_Texture* tex_8, s32 idx);
+void func_8005B474(s_800C1450_0* arg0, s_Texture* texs, s32 idx);
 
 s_Texture* func_8005B4BC(char* str, s_800C1450_0* arg1);
 
@@ -3528,16 +3527,15 @@ void func_80069994(s_IpdCollisionData* collData);
 
 void func_800699E4(s_IpdCollisionData* collData);
 
-/** Getter for 2D point collision? */
-void func_800699F8(s_func_800699F8* coll, s32 posX, s32 posZ);
+void Collision_Get(s_Collision* coll, s32 posX, s32 posZ);
 
-s32 func_80069B24(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara);
+s32 func_80069B24(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara);
 
-s32 func_80069BA8(s_800C4590* arg0, VECTOR3* arg2, s_SubCharacter* arg3, s32 arg4);
+s32 func_80069BA8(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara, s32 arg4);
 
-void func_80069DF0(s_800C4590* arg0, VECTOR3* arg1, s32 arg2, s32 arg3);
+void func_80069DF0(s_800C4590* arg0, VECTOR3* pos, s32 arg2, s32 arg3);
 
-s32 func_80069FFC(s_800C4590* arg0, VECTOR3* arg1, s_SubCharacter* chara);
+s32 func_80069FFC(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara);
 
 void func_8006A178(s_800C4590* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
@@ -3547,9 +3545,10 @@ s32 func_8006A3B4(s32 arg0, VECTOR* arg1, s32 arg2);
 
 s32 func_8006A42C(s32 arg0, VECTOR3* arg1, s32 arg2);
 
-s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* arg1, s_func_8006AB50* arg2, s32 arg3, s_IpdCollisionData** arg4, s32 arg5, s_func_8006CF18* arg6, s32 arg7, s_SubCharacter** arg8, s32 arg9);
+s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* pos, s_func_8006AB50* arg2, s32 arg3, s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7,
+                  s_SubCharacter** charas, s32 charaIdx);
 
-void func_8006A940(VECTOR3* arg0, s_func_8006AB50* arg1, s_SubCharacter** arg2, s32 arg3);
+void func_8006A940(VECTOR3* pos, s_func_8006AB50* arg1, s_SubCharacter** arg2, s32 count);
 
 void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* vec, s_func_8006AB50* arg2, s32 arg3);
 
@@ -3557,18 +3556,18 @@ void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2)
 
 void func_8006AD44(s_func_8006CC44* arg0, s_IpdCollisionData* collData);
 
-s32 func_8006AEAC(s_func_8006CC44* arg0, s_IpdCollisionData* arg1);
+bool func_8006AEAC(s_func_8006CC44* arg0, s_IpdCollisionData* collData);
 
 bool func_8006B004(s_func_8006CC44* arg0, s_IpdCollisionData* collData);
 
 void func_8006B1C8(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s_IpdCollisionData_20* arg2);
 
-s32 func_8006B318(s_func_8006CC44* arg0, s_IpdCollisionData* arg1, s32 arg2);
+bool func_8006B318(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s32 idx);
 
 /** `arg1` is unused, but `func_8006B1C8` passes second arg to this. */
 void func_8006B6E8(s_func_8006CC44* arg0, s_IpdCollisionData_20* arg1);
 
-s32 func_8006B7E0(s_func_8006CC44_A8* arg0, s_func_8006CC44_CC_20* arg1);
+bool func_8006B7E0(s_func_8006CC44_A8* arg0, s_func_8006CC44_CC_20* arg1);
 
 void func_8006B8F8(s_func_8006CC44_CC* arg0);
 
@@ -3578,6 +3577,7 @@ void func_8006BB50(s_func_8006CC44* arg0, s32 arg1);
 
 s32 func_8006BC34(s_func_8006CC44* arg0);
 
+/** `arg3` and `arg4` might be XY or XZ position components. */
 void func_8006BCC4(s_func_8006CC44_44* arg0, s8* arg1, u32 arg2, s16 arg3, s16 arg4, s16 arg5);
 
 void func_8006BDDC(s_func_8006CC44_44_0* arg0, s16 arg1, s16 arg2);
@@ -3608,7 +3608,7 @@ s32 func_8006CC44(s32 x, s32 z, s_func_8006CC44* arg2);
 
 void func_8006CC9C(s_func_8006CC44* arg0);
 
-void func_8006CF18(s_func_8006CC44* arg0, s_func_8006CF18* arg1, s32 arg2);
+void func_8006CF18(s_func_8006CC44* arg0, s_func_8006CF18* arg1, s32 idx);
 
 void func_8006D01C(VECTOR3* arg0, VECTOR3* arg1, s16 arg2, s_func_8006CC44* arg3);
 
@@ -3631,7 +3631,7 @@ bool func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_SubC
 
 bool func_8006DC18(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2);
 
-bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s_SubCharacter** arg7, s32 arg8);
+bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s_SubCharacter** charas, s32 arg8);
 
 bool func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1);
 
@@ -4008,7 +4008,7 @@ void func_8003D354(s32* arg0, s32 arg1);
 /** Texture UV setup for NPCs. */
 void func_8003D3BC(s_FsImageDesc* img, s32 arg1, s32 arg2);
 
-s32 func_8003D7D4(u32 arg0, s32 arg1, s_LmHeader* lmHeader, s_FsImageDesc* tex);
+s32 func_8003D7D4(u32 arg0, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 /** Something related to animations. */
 void func_8003D938();
@@ -4101,6 +4101,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord);
 /** Player func. */
 void func_8007E9C4();
 
+/** Sound func. */
 void func_8007F14C(u8 arg0);
 
 void func_8007FB94(s_SubCharacter*, s_MainCharacterExtra*, s32);

@@ -285,51 +285,51 @@ typedef enum _PlayerLowerBodyState
     PlayerLowerBodyState_Reload             = 35
 } e_PlayerLowerBodyState;
 
-/** @brief Player animation indices. */
-typedef enum _PlayerAnim
+/** @brief Harry character animation indices. */
+typedef enum _HarryAnim
 {
-    PlayerAnim_Still                   = 0,
-    PlayerAnim_TransitionToStill       = 1,
-    PlayerAnim_WalkForward             = 2,
-    PlayerAnim_RunForward              = 3,
-    PlayerAnim_WalkBackward            = 4,
-    PlayerAnim_SidestepLeft            = 5,
-    PlayerAnim_SidestepRight           = 6,
-    PlayerAnim_RunLeft                 = 7,
-    PlayerAnim_RunRight                = 8,
-    PlayerAnim_RunForwardWallStopRight = 9,
-    PlayerAnim_RunForwardWallStopLeft  = 10,
-    PlayerAnim_RunForwardStumble       = 11,
-    PlayerAnim_TurnLeft                = 12,
-    PlayerAnim_TurnRight               = 13,
-    PlayerAnim_QuickTurnRight          = 14,
-    PlayerAnim_QuickTurnLeft           = 15,
-    PlayerAnim_JumpBackward            = 16,
-    PlayerAnim_LookAround              = 17,
-    PlayerAnim_RunLeftWallStop         = 18,
-    PlayerAnim_RunLeftStumble          = 19,
-    PlayerAnim_RunRightWallStop        = 20,
-    PlayerAnim_RunRightStumble         = 21,
-    PlayerAnim_FallForward             = 22,
-    PlayerAnim_FallBackward            = 23,
-    PlayerAnim_Kick                    = 24,
-    PlayerAnim_Stomp                   = 25,
-    PlayerAnim_Idle                    = 26,
-    PlayerAnim_IdleExhausted           = 27,
-    PlayerAnim_HandgunAim              = 28,
-    PlayerAnim_Unk29                   = 29, // } Handgun.
-    PlayerAnim_Unk30                   = 30, // }
-    PlayerAnim_HandgunRecoil           = 31,
-    PlayerAnim_Unk32                   = 32,
-    PlayerAnim_Unk33                   = 33,
-    PlayerAnim_Unk34                   = 34,
-    PlayerAnim_Unk35                   = 35,
-    PlayerAnim_Unk36                   = 36,
-    PlayerAnim_Unk37                   = 37,
+    HarryAnim_Still                   = 0,
+    HarryAnim_TransitionToStill       = 1,
+    HarryAnim_WalkForward             = 2,
+    HarryAnim_RunForward              = 3,
+    HarryAnim_WalkBackward            = 4,
+    HarryAnim_SidestepLeft            = 5,
+    HarryAnim_SidestepRight           = 6,
+    HarryAnim_RunLeft                 = 7,
+    HarryAnim_RunRight                = 8,
+    HarryAnim_RunForwardWallStopRight = 9,
+    HarryAnim_RunForwardWallStopLeft  = 10,
+    HarryAnim_RunForwardStumble       = 11,
+    HarryAnim_TurnLeft                = 12,
+    HarryAnim_TurnRight               = 13,
+    HarryAnim_QuickTurnRight          = 14,
+    HarryAnim_QuickTurnLeft           = 15,
+    HarryAnim_JumpBackward            = 16,
+    HarryAnim_LookAround              = 17,
+    HarryAnim_RunLeftWallStop         = 18,
+    HarryAnim_RunLeftStumble          = 19,
+    HarryAnim_RunRightWallStop        = 20,
+    HarryAnim_RunRightStumble         = 21,
+    HarryAnim_FallForward             = 22,
+    HarryAnim_FallBackward            = 23,
+    HarryAnim_Kick                    = 24,
+    HarryAnim_Stomp                   = 25,
+    HarryAnim_Idle                    = 26,
+    HarryAnim_IdleExhausted           = 27,
+    HarryAnim_HandgunAim              = 28,
+    HarryAnim_Unk29                   = 29, // } Handgun.
+    HarryAnim_Unk30                   = 30, // }
+    HarryAnim_HandgunRecoil           = 31,
+    HarryAnim_Unk32                   = 32,
+    HarryAnim_Unk33                   = 33,
+    HarryAnim_Unk34                   = 34,
+    HarryAnim_Unk35                   = 35,
+    HarryAnim_Unk36                   = 36,
+    HarryAnim_Unk37                   = 37,
 
     // NOTE: Anims 28 and above are per-map. Will need separate enums or could do `#ifdef` magic here if it works.
 
-    PlayerAnim_Death                   = 40,
+    HarryAnim_Death                   = 40,
 
     // 56 - duplicate stomp?
 
@@ -337,27 +337,27 @@ typedef enum _PlayerAnim
 
     // TODO: Anims ahead not entirely clear. Need to confirm before naming definitively. Some grab/release anims might be split in two, hence the gaps.
 
-    PlayerAnim_Unk115                  = 115, // Enemy grab torso front?
+    HarryAnim_Unk115                  = 115, // Enemy grab torso front?
 
-    PlayerAnim_Unk117                  = 117, // Enemy grab torso back?
-    PlayerAnim_Unk118                  = 118, // Enemy grab legs back?
+    HarryAnim_Unk117                  = 117, // Enemy grab torso back?
+    HarryAnim_Unk118                  = 118, // Enemy grab legs back?
 
-    PlayerAnim_Unk120                  = 120, // Enemy release upper front?
-    PlayerAnim_Unk121                  = 121, // Damage head?
-    PlayerAnim_Unk122                  = 122, // Enemy release upper front?
-    PlayerAnim_Unk123                  = 123, // Enemy release lower back?
+    HarryAnim_Unk120                  = 120, // Enemy release upper front?
+    HarryAnim_Unk121                  = 121, // Damage head?
+    HarryAnim_Unk122                  = 122, // Enemy release upper front?
+    HarryAnim_Unk123                  = 123, // Enemy release lower back?
 
-    PlayerAnim_Unk125                  = 125, // Enemy grab neck front and back?
+    HarryAnim_Unk125                  = 125, // Enemy grab neck front and back?
 
-    PlayerAnim_Unk127                  = 127, // Enemy grab pinned front?
-    PlayerAnim_Unk128                  = 128, // Enemy grab pinned back?
-    PlayerAnim_Unk129                  = 129, // Enemy release pinned front?
-    PlayerAnim_Unk130                  = 130, // Enemy release pinned back?
-    PlayerAnim_Unk131                  = 131, // Damage thrown front? Also used to recover from pinned grab.
-    PlayerAnim_Unk132                  = 132, // Damage thrown back? Also used to recover from pinned grab.
-    PlayerAnim_Unk133                  = 133, // Get up front?
-    PlayerAnim_Unk134                  = 134  // Get up back?
-} s_PlayerAnim;
+    HarryAnim_Unk127                  = 127, // Enemy grab pinned front?
+    HarryAnim_Unk128                  = 128, // Enemy grab pinned back?
+    HarryAnim_Unk129                  = 129, // Enemy release pinned front?
+    HarryAnim_Unk130                  = 130, // Enemy release pinned back?
+    HarryAnim_Unk131                  = 131, // Damage thrown front? Also used to recover from pinned grab.
+    HarryAnim_Unk132                  = 132, // Damage thrown back? Also used to recover from pinned grab.
+    HarryAnim_Unk133                  = 133, // Get up front?
+    HarryAnim_Unk134                  = 134  // Get up back?
+} s_HarryAnim;
 
 // ========
 // STRUCTS

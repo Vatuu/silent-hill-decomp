@@ -25,7 +25,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
     chara->headingAngle_3C = chara->rotation_24.vy;
     chara->rotation_24.vx  = 0;
 
-    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, sharedData_800D91A0_5_s00);
+    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, HANGED_SCRATCHER_ANIM_INFOS);
 
     chara->damageReceived_C0 = Q12(0.0f);
     chara->field_BC          = 0;
@@ -49,8 +49,8 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
                 chara->model_0.state_2 = 1;
             }
 
-            Character_AnimSet(chara, ANIM_STATUS(14, true), 222);
-            chara->position_18.vy = FP_FLOAT_TO(-3.6f, Q12_SHIFT);
+            Character_AnimSet(chara, ANIM_STATUS(HangedScratcherAnim_Unk14, true), 222);
+            chara->position_18.vy = FP_METER(-3.6f);
             chara->rotation_24.vz = FP_ANGLE(180.0f);
 
         default:
@@ -59,17 +59,17 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
         case 7:
         case 14:
             chara->model_0.state_2 = 5;
-            Character_AnimSet(chara, ANIM_STATUS(15, true), 232);
+            Character_AnimSet(chara, ANIM_STATUS(HangedScratcherAnim_Unk15, true), 232);
             chara->position_18.vy = 0;
             chara->rotation_24.vz = 0;
             break;
 
         case 17:
-            chara->properties_E4.larvalStalker.properties_E8[0].val16[1] = FP_FLOAT_TO(1.2f, Q12_SHIFT);
+            chara->properties_E4.larvalStalker.properties_E8[0].val16[1] = Q12(1.2f);
 
         case 6:
             chara->model_0.state_2 = 6;
-            Character_AnimSet(chara, ANIM_STATUS(15, true), 232);
+            Character_AnimSet(chara, ANIM_STATUS(HangedScratcherAnim_Unk15, true), 232);
             chara->position_18.vy = FP_METER(0.0f);
             chara->rotation_24.vz = FP_ANGLE(0.0f);
             break;
@@ -84,15 +84,15 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
             switch (chara->model_0.stateStep_3)
             {
                 case 18:
-                    Character_AnimSet(chara, ANIM_STATUS(1, true), 0);
+                    Character_AnimSet(chara, ANIM_STATUS(HangedScratcherAnim_Unk1, true), 0);
                     break;
 
                 case 19:
-                    Character_AnimSet(chara, ANIM_STATUS(2, true), 51);
+                    Character_AnimSet(chara, ANIM_STATUS(HangedScratcherAnim_Unk2, true), 51);
                     break;
 
                 case 20:
-                    Character_AnimSet(chara, ANIM_STATUS(3, true), 87);
+                    Character_AnimSet(chara, ANIM_STATUS(HangedScratcherAnim_Unk3, true), 87);
                     break;
             }
             break;
@@ -103,18 +103,18 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        var_s0 = FP_FLOAT_TO(2.7f, Q12_SHIFT);
-        var_s2 = FP_FLOAT_TO(2.4f, Q12_SHIFT);
+        var_s0 = Q12(2.7f);
+        var_s2 = Q12(2.4f);
     }
     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
     {
-        var_s0 = FP_FLOAT_TO(3.0f, Q12_SHIFT);
-        var_s2 = FP_FLOAT_TO(2.8f, Q12_SHIFT);
+        var_s0 = Q12(3.0f);
+        var_s2 = Q12(2.8f);
     }
     else
     {
-        var_s0 = FP_FLOAT_TO(3.8f, Q12_SHIFT);
-        var_s2 = FP_FLOAT_TO(3.6f, Q12_SHIFT);
+        var_s0 = Q12(3.8f);
+        var_s2 = Q12(3.6f);
     }
 
     // TODO: Use `Rng_GenerateInt`.

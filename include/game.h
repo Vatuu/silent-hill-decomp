@@ -835,7 +835,7 @@ typedef struct _Savegame
     s16             pickedUpItemCount_23C;
     s8              field_23E;
     u8              field_23F;
-    q19_12          playerHealth_240;         /** Default: Q12(100.0f) */
+    q19_12          playerHealth_240;         /** Default: `Q12(100.0f)` */
     q19_12          playerPositionX_244;
     q3_12           playerRotationY_248;      /** Range [0, 0.999755859375], positive Z: 0, clockwise rotation. It can be multiplied by 360 to get degrees. */
     u8              clearGameCount_24A;       /** Range [0, 99] */
@@ -1007,7 +1007,7 @@ STATIC_ASSERT_SIZEOF(s_AnimInfo, 16);
 
 typedef struct _ModelAnim
 {
-    u8          status_0;         /** Is active: bit 0, Anim index: bits 1-7. Possible original name: `anim_status` */
+    u8          status_0;         /** Is active: bit 0, Anim index: bits 1-7. Possible original name: `anim_status`. */
     u8          maybeSomeState_1; // State says if `time_4` is anim time/anim status or a func ptr? That field could be a union.
     u16         flags_2;          /** `e_AnimFlags` */
     q19_12      time_4;           /** Time on timeline. */ 
@@ -1050,11 +1050,11 @@ STATIC_ASSERT_SIZEOF(s_800D5710, 0x34);
 typedef struct
 {
     VECTOR3 position_0;
-    s16 field_C;
-    s16 field_E;
-    s16 field_10;
-    s8  field_12;
-    u8  field_13;
+    s16     field_C;
+    s16     field_E;
+    s16     field_10;
+    s8      field_12;
+    u8      field_13;
 } s_func_8006CF18;
 
 // TODO: Re-offset `s_SubCharaPropertiesPlayer` / `s_SubCharaPropertiesNpc`.

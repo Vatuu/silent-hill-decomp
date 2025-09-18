@@ -24,6 +24,7 @@ typedef signed short       q3_12;  // Q3.12 fixed-point.
 typedef signed int         q27_4;  // Q27.4 fixed-point.
 typedef signed int         q23_8;  // Q23.8 fixed-point.
 typedef signed int         q19_12; // Q19.12 fixed-point.
+typedef unsigned short     q8_8;   // Q8.8 fixed-point.
 typedef unsigned int       q20_12; // Q20.12 fixed-point.
 
 #ifndef __cplusplus
@@ -43,9 +44,16 @@ typedef struct
 /** @brief Smaller `SVECTOR` with padding removed. Used for fixed-point rotations. */
 typedef struct
 {
-    short vx;
-    short vy;
-    short vz;
+    s16 vx;
+    s16 vy;
+    s16 vz;
 } SVECTOR3;
+
+/** @brief `DVECTOR` variant with a `vz` component instead of `vy`. */
+typedef struct
+{
+    s16 vx;
+    s16 vz;
+} DVECTOR_XZ;
 
 #endif

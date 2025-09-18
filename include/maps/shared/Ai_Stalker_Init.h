@@ -23,8 +23,8 @@ void Ai_Stalker_Init(s_SubCharacter* chara)
     chara->field_34       = 0;
     chara->rotation_24.vz = 0;
     chara->rotation_24.vx = 0;
-    //Character_AnimSet(chara, ANIM_STATUS(30, true), 447); // TODO: Doesn't match?
-    chara->model_0.anim_4.status_0      = ANIM_STATUS(30, true);
+    //Character_AnimSet(chara, ANIM_STATUS(StalkerAnim_Unk30, true), 447); // TODO: Doesn't match?
+    chara->model_0.anim_4.status_0      = ANIM_STATUS(StalkerAnim_Unk30, true);
     chara->model_0.anim_4.time_4        = FP_TIME(477.0f);
     chara->model_0.anim_4.keyframeIdx_8 = 477;
     chara->headingAngle_3C = chara->rotation_24.vy;
@@ -35,7 +35,7 @@ void Ai_Stalker_Init(s_SubCharacter* chara)
             chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 2;
 
         case 3:
-            chara->properties_E4.larvalStalker.properties_E8[4].val32     = FP_FLOAT_TO(2.5f, Q12_SHIFT);
+            chara->properties_E4.larvalStalker.properties_E8[4].val32     = Q12(2.5f);
             chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 0;
 
         case 8:
@@ -52,7 +52,7 @@ void Ai_Stalker_Init(s_SubCharacter* chara)
         case 6:
             chara->model_0.state_2                                        = 2;
             chara->flags_3E                                              |= CharaFlag_Unk3;
-            chara->properties_E4.larvalStalker.properties_E8[4].val32     = FP_FLOAT_TO(1.0f, Q12_SHIFT);
+            chara->properties_E4.larvalStalker.properties_E8[4].val32     = Q12(1.0f);
             chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= (1 << 0) | (1 << 1);
             chara->field_E1_0                                             = 3;
             chara->flags_3E                                              &= ~CharaFlag_Unk5;
@@ -66,8 +66,8 @@ void Ai_Stalker_Init(s_SubCharacter* chara)
 
         case 9:
             chara->model_0.state_2              = 12;
-            //Character_AnimSet(chara, ANIM_STATUS(27, true), 427); // TODO: Doesn't match?
-            chara->model_0.anim_4.status_0      = ANIM_STATUS(27, true);
+            //Character_AnimSet(chara, ANIM_STATUS(StalkerAnim_Unk27, true), 427); // TODO: Doesn't match?
+            chara->model_0.anim_4.status_0      = ANIM_STATUS(StalkerAnim_Unk27, true);
             chara->model_0.anim_4.time_4        = FP_TIME(427.0f);
             chara->model_0.anim_4.keyframeIdx_8 = 427;
             chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 0;
@@ -76,8 +76,8 @@ void Ai_Stalker_Init(s_SubCharacter* chara)
 
         case 10:
             chara->model_0.state_2              = 11;
-            //Character_AnimSet(chara, ANIM_STATUS(28, true), 442); // TODO: Doesn't match?
-            chara->model_0.anim_4.status_0      = ANIM_STATUS(28, true);
+            //Character_AnimSet(chara, ANIM_STATUS(StalkerAnim_Unk28, true), 442); // TODO: Doesn't match?
+            chara->model_0.anim_4.status_0      = ANIM_STATUS(StalkerAnim_Unk28, true);
             chara->model_0.anim_4.time_4        = FP_TIME(443.0f);
             chara->model_0.anim_4.keyframeIdx_8 = 443;
             chara->field_E1_0                   = 3;
@@ -85,8 +85,8 @@ void Ai_Stalker_Init(s_SubCharacter* chara)
 
         case 17:
             chara->model_0.state_2              = 13;
-            //Character_AnimSet(chara, ANIM_STATUS(14, true), 176); // TODO: Doesn't match?
-            chara->model_0.anim_4.status_0      = ANIM_STATUS(14, true);
+            //Character_AnimSet(chara, ANIM_STATUS(StalkerAnim_Unk14, true), 176); // TODO: Doesn't match?
+            chara->model_0.anim_4.status_0      = ANIM_STATUS(StalkerAnim_Unk14, true);
             chara->model_0.anim_4.time_4        = FP_TIME(176.0f);
             chara->model_0.anim_4.keyframeIdx_8 = 176;
             chara->field_E1_0                   = 0;

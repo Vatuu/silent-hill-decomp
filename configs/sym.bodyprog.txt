@@ -523,12 +523,16 @@ Gfx_FogParamsSet                            = 0x800553C4; // type:func
 LmHeader_FixOffsets                         = 0x800560FC; // type:func
 ModelHeader_FixOffsets                      = 0x800561A4; // type:func
 LmHeader_IsTextureLoaded                    = 0x80056888; // type:func
+Lm_MaterialRefCountDec                      = 0x80056BF8; // type:func
 LmHeader_ModelCountGet                      = 0x80056C80; // type:func
+Lm_ModelFind                                = 0x80056CB4; // type:func
 StringCopy                                  = 0x80056D64; // type:func
 func_800571D0                               = 0x800571D0; // type:func size:0x58 - Fix for truncated function.
+Texture_RefCountReset                       = 0x8005B370; // type:func
 Map_EffectTexturesLoad                      = 0x8005E0DC; // type:func
 GameState_MapScreen_Update                  = 0x80066EB0; // type:func
 IpdCollData_FixOffsets                      = 0x8006993C; // type:func
+Collision_Get                               = 0x800699F8; // type:func
 
 //--------------------------------------------------------------------
 //--- PA: 0x04BB84   VA: 0x800706E4   subsegment: c, bodyprog_800706E4
@@ -2440,7 +2444,7 @@ g_Inventory_IsRightHeld                     = 0x800C398C; // type:s32
 g_Inventory_IsScrolling                     = 0x800C3990;
 g_Gfx_Inventory_SelectionBordersDraw        = 0x800C3998;
 g_Inventory_PrevSelectionId                 = 0x800C399C;
-g_Items_Lights                   = 0x800C39A8;
+g_Items_Lights                              = 0x800C39A8;
 g_Item_MapLoadableItems                     = 0x800C3BB8;
 g_Items_Transforms                          = 0x800C3BE8;
 g_Items_ItemsModelData                      = 0x800C3D78;
@@ -2687,6 +2691,3 @@ smf_song                                    = 0x800C8B00;
 g_MapOverlayHeader                          = 0x800C957C; // type:MapOverlayHeader size:0x84C - size incomplete
 D_800FE5F8                                  = 0x800FE5F8; // ignore:True - Fixes fake missmatch in `Demo_Update`.
 hack_D_800FE5FC_fix                         = 0x800FE5FC; // ignore:true - Part of temp memory block at 800FDE00, has to be unsymbolized for C to match.
-Lm_ModelFind = 0x80056CB4; // type:func
-Tex_RefCountReset = 0x8005B370; // type:func
-Lm_MaterialRefCountDec = 0x80056BF8; // type:func

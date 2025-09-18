@@ -23,8 +23,8 @@
 #define FS_BUFFER_12 (void*)0x801201B4 // Used for weapon anim.     } Sub-buffers within the 4096-byte buffers?
 #define FS_BUFFER_4  (void*)0x80124384 // Used for player map anim. }
 #define FS_BUFFER_11 (void*)0x80169600
-#define FS_BUFFER_13 (s_LmHeader*)0x8016B600 // Used by map
-#define FS_BUFFER_14 (s_IpdHeader*)0x80175600 // Used by map
+#define FS_BUFFER_13 (s_LmHeader*)0x8016B600 // Used by map.
+#define FS_BUFFER_14 (s_IpdHeader*)0x80175600 // Used by map.
 #define FS_BUFFER_3  (void*)0x801B2600
 #define FS_BUFFER_8  (void*)0x801B5E80 // Used for loading inventory item models.
 #define FS_BUFFER_7  (void*)0x801C2600 // Used in `b_konami.c`.

@@ -67,7 +67,7 @@ void func_800401CC() // 0x800401CC
     func_80080D68();
 }
 
-void vcMoveAndSetCamera(s32 in_connect_f, s32 change_debug_mode, s32 for_f, s32 back_f, s32 right_f, s32 left_f, s32 up_f, s32 down_f) // 0x800401EC
+void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, bool back_f, bool right_f, bool left_f, bool up_f, bool down_f) // 0x800401EC
 {
     VECTOR3         first_cam_pos;
     VECTOR3         hr_head_pos;
@@ -75,9 +75,9 @@ void vcMoveAndSetCamera(s32 in_connect_f, s32 change_debug_mode, s32 for_f, s32 
     s32             hero_top_y;
     s32             grnd_y;
     s_SubCharacter* hr_p;
-    s_func_800699F8 sp50; // Collision-related?
+    s_Collision     coll;
 
-    if (change_debug_mode != 0)
+    if (change_debug_mode)
     {
         D_800BCE18.vcCameraInternalInfo_1BDC.mode++;
     }
@@ -96,7 +96,7 @@ void vcMoveAndSetCamera(s32 in_connect_f, s32 change_debug_mode, s32 for_f, s32 
         case 0:
             hr_p = &g_SysWork.player_4C.chara_0;
 
-            if (in_connect_f != 0)
+            if (in_connect_f)
             {
                 grnd_y = FP_METER(-2.0f);
 
@@ -106,8 +106,8 @@ void vcMoveAndSetCamera(s32 in_connect_f, s32 change_debug_mode, s32 for_f, s32 
             }
             else
             {
-                func_800699F8(&sp50, hr_p->position_18.vx, hr_p->position_18.vz);
-                grnd_y = sp50.groundHeight_0;
+                Collision_Get(&coll, hr_p->position_18.vx, hr_p->position_18.vz);
+                grnd_y = coll.groundHeight_0;
 
                 vcMakeHeroHeadPos(&hr_head_pos);
             }
@@ -180,34 +180,34 @@ void vcAddOfsToPos(VECTOR3* out_pos, const VECTOR3* in_pos, s16 ofs_xz_r, s16 an
     out_pos->vy = in_pos->vy + ofs_y;
 }
 
-void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p, s32 for_f, s32 back_f, s32 right_f, s32 left_f, s32 up_f, s32 down_f) // 0x800405C4
+void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p, bool for_f, bool back_f, bool right_f, bool left_f, bool up_f, bool down_f) // 0x800405C4
 {
-    if (for_f != 0)
+    if (for_f)
     {
         sys_p->cameraRadiusXz_2380 -= FP_METER(0.1f);
     }
 
-    if (back_f != 0)
+    if (back_f)
     {
         sys_p->cameraRadiusXz_2380 += FP_METER(0.1f);
     }
 
-    if (right_f != 0)
+    if (right_f)
     {
         sys_p->cameraAngleY_237A = sys_p->cameraAngleY_237A - (g_VBlanks * 11);
     }
 
-    if (left_f != 0)
+    if (left_f)
     {
         sys_p->cameraAngleY_237A = sys_p->cameraAngleY_237A + (g_VBlanks * 11);
     }
 
-    if (up_f != 0)
+    if (up_f)
     {
         sys_p->cameraY_2384 -= FP_METER(0.1f);
     }
 
-    if (down_f != 0)
+    if (down_f)
     {
         sys_p->cameraY_2384 += FP_METER(0.1f);
     }

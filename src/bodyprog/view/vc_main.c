@@ -1484,12 +1484,12 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
 
     switch (anim_status)
     {
-        case ANIM_STATUS(PlayerAnim_RunForward, false):
-        case ANIM_STATUS(PlayerAnim_RunForward, true):
+        case ANIM_STATUS(HarryAnim_RunForward, false):
+        case ANIM_STATUS(HarryAnim_RunForward, true):
             break;
 
-        case ANIM_STATUS(PlayerAnim_LookAround, false):
-        case ANIM_STATUS(PlayerAnim_LookAround, true):
+        case ANIM_STATUS(HarryAnim_LookAround, false):
+        case ANIM_STATUS(HarryAnim_LookAround, true):
             if (w_p->nearest_enemy_2DC != NULL)
             {
                 cam_ang.vz = FP_ANGLE(0.0f);
@@ -1503,18 +1503,18 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
 
     switch (anim_status)
     {
-        case ANIM_STATUS(PlayerAnim_FallForward, false):
-        case ANIM_STATUS(PlayerAnim_FallForward, true):
-        case ANIM_STATUS(PlayerAnim_FallBackward, false):
-        case ANIM_STATUS(PlayerAnim_FallBackward, true):
+        case ANIM_STATUS(HarryAnim_FallForward, false):
+        case ANIM_STATUS(HarryAnim_FallForward, true):
+        case ANIM_STATUS(HarryAnim_FallBackward, false):
+        case ANIM_STATUS(HarryAnim_FallBackward, true):
             break;
 
         default:
             cam_ang.vy = g_SysWork.player_4C.chara_0.rotation_24.vy;
             break;
 
-        case ANIM_STATUS(PlayerAnim_LookAround, false):
-        case ANIM_STATUS(PlayerAnim_LookAround, true):
+        case ANIM_STATUS(HarryAnim_LookAround, false):
+        case ANIM_STATUS(HarryAnim_LookAround, true):
             if (w_p->nearest_enemy_2DC != NULL)
             {
                 cam_ang.vy = g_SysWork.player_4C.chara_0.rotation_24.vy;
@@ -1525,8 +1525,8 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
             }
             break;
 
-        case ANIM_STATUS(PlayerAnim_Idle, false):
-        case ANIM_STATUS(PlayerAnim_Idle, true):
+        case ANIM_STATUS(HarryAnim_Idle, false):
+        case ANIM_STATUS(HarryAnim_Idle, true):
             abs_angle_delta_y = angle_delta_y;
             if (angle_delta_y < FP_ANGLE(0.0f))
             {
@@ -1549,14 +1549,14 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
             cam_ang.vy = g_SysWork.player_4C.chara_0.rotation_24.vy + corrected_angle_y;
             break;
 
-        case ANIM_STATUS(PlayerAnim_WalkForward, false):
-        case ANIM_STATUS(PlayerAnim_WalkForward, true):
-        case ANIM_STATUS(PlayerAnim_RunForward, false):
-        case ANIM_STATUS(PlayerAnim_RunForward, true):
-        case ANIM_STATUS(PlayerAnim_TurnLeft, false):
-        case ANIM_STATUS(PlayerAnim_TurnLeft, true):
-        case ANIM_STATUS(PlayerAnim_TurnRight, false):
-        case ANIM_STATUS(PlayerAnim_TurnRight, true):
+        case ANIM_STATUS(HarryAnim_WalkForward, false):
+        case ANIM_STATUS(HarryAnim_WalkForward, true):
+        case ANIM_STATUS(HarryAnim_RunForward, false):
+        case ANIM_STATUS(HarryAnim_RunForward, true):
+        case ANIM_STATUS(HarryAnim_TurnLeft, false):
+        case ANIM_STATUS(HarryAnim_TurnLeft, true):
+        case ANIM_STATUS(HarryAnim_TurnRight, false):
+        case ANIM_STATUS(HarryAnim_TurnRight, true):
             angle_delta_y = angle_delta_y >> 3;
             if (angle_delta_y >= FP_ANGLE(-10.0f))
             {
@@ -1577,20 +1577,20 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
 
     switch (anim_status)
     {
-        case ANIM_STATUS(PlayerAnim_WalkForward, false):
+        case ANIM_STATUS(HarryAnim_WalkForward, false):
             break;
 
-        case ANIM_STATUS(PlayerAnim_IdleExhausted, false):
-        case ANIM_STATUS(PlayerAnim_IdleExhausted, true):
+        case ANIM_STATUS(HarryAnim_IdleExhausted, false):
+        case ANIM_STATUS(HarryAnim_IdleExhausted, true):
             cam_ang.vx = cam_ang.vx >> 1;
 
-        case ANIM_STATUS(PlayerAnim_Idle, false):
-        case ANIM_STATUS(PlayerAnim_Idle, true):
+        case ANIM_STATUS(HarryAnim_Idle, false):
+        case ANIM_STATUS(HarryAnim_Idle, true):
             cam_ang.vx -= FP_ANGLE(8.0f);
             break;
 
-        case ANIM_STATUS(PlayerAnim_LookAround, false):
-        case ANIM_STATUS(PlayerAnim_LookAround, true):
+        case ANIM_STATUS(HarryAnim_LookAround, false):
+        case ANIM_STATUS(HarryAnim_LookAround, true):
             if (w_p->nearest_enemy_2DC != NULL)
             {
                 cam_ang.vx = FP_ANGLE(-7.0f);
@@ -1601,10 +1601,10 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
             }
             break;
 
-        case ANIM_STATUS(PlayerAnim_TurnLeft, false):
-        case ANIM_STATUS(PlayerAnim_TurnLeft, true):
-        case ANIM_STATUS(PlayerAnim_TurnRight, false):
-        case ANIM_STATUS(PlayerAnim_TurnRight, true):
+        case ANIM_STATUS(HarryAnim_TurnLeft, false):
+        case ANIM_STATUS(HarryAnim_TurnLeft, true):
+        case ANIM_STATUS(HarryAnim_TurnRight, false):
+        case ANIM_STATUS(HarryAnim_TurnRight, true):
             temp_dir = (g_SysWork.player_4C.chara_0.rotation_24.vy >> 7) & 0xF;
             if (temp_dir == 0 || temp_dir == 5)
             {
@@ -1621,18 +1621,18 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
             cam_ang.vx = FP_MULTIPLY(vertical_angle, FP_ANGLE(252.0f), Q12_SHIFT);
             break;
 
-        case ANIM_STATUS(PlayerAnim_WalkForward, false):
-        case ANIM_STATUS(PlayerAnim_WalkForward, true):
-        case ANIM_STATUS(PlayerAnim_RunForward, false):
-        case ANIM_STATUS(PlayerAnim_RunForward, true):
-        case ANIM_STATUS(PlayerAnim_TurnLeft, false):
-        case ANIM_STATUS(PlayerAnim_TurnLeft, true):
-        case ANIM_STATUS(PlayerAnim_TurnRight, false):
-        case ANIM_STATUS(PlayerAnim_TurnRight, true):
-        case ANIM_STATUS(PlayerAnim_LookAround, false):
-        case ANIM_STATUS(PlayerAnim_LookAround, true):
-        case ANIM_STATUS(PlayerAnim_Idle, false):
-        case ANIM_STATUS(PlayerAnim_Idle, true):
+        case ANIM_STATUS(HarryAnim_WalkForward, false):
+        case ANIM_STATUS(HarryAnim_WalkForward, true):
+        case ANIM_STATUS(HarryAnim_RunForward, false):
+        case ANIM_STATUS(HarryAnim_RunForward, true):
+        case ANIM_STATUS(HarryAnim_TurnLeft, false):
+        case ANIM_STATUS(HarryAnim_TurnLeft, true):
+        case ANIM_STATUS(HarryAnim_TurnRight, false):
+        case ANIM_STATUS(HarryAnim_TurnRight, true):
+        case ANIM_STATUS(HarryAnim_LookAround, false):
+        case ANIM_STATUS(HarryAnim_LookAround, true):
+        case ANIM_STATUS(HarryAnim_Idle, false):
+        case ANIM_STATUS(HarryAnim_Idle, true):
             cam_ang.vx = cam_ang.vx + (vertical_angle >> 1);
             break;
     }
@@ -1652,7 +1652,7 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
 
 void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYPE cur_rd_area_size) // 0x800832B4
 {
-    s_func_800699F8 sp10;
+    s_Collision     coll;
     s32             dist;
     s32             ofs_y;
     s32             lim_y;
@@ -1714,15 +1714,15 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
                 break;
 
             case 1:
-                func_800699F8(&sp10, sc_p->position_18.vx, sc_p->position_18.vz);
+                Collision_Get(&coll, sc_p->position_18.vx, sc_p->position_18.vz);
 
-                if (sp10.field_8 == 0)
+                if (coll.field_8 == 0)
                 {
                     watch_y = sc_p->position_18.vy + ofs_y;
                 }
                 else
                 {
-                    watch_y = sp10.groundHeight_0 + ofs_y;
+                    watch_y = coll.groundHeight_0 + ofs_y;
                 }
                 break;
 
@@ -1733,7 +1733,7 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
 
         lim_y = (w_p->nearest_enemy_xz_dist_2E0 >> 1) - FP_METER(0.5f);
 
-        if (w_p->chara_pos_114.vy + lim_y < watch_y)
+        if ((w_p->chara_pos_114.vy + lim_y) < watch_y)
         {
             watch_y = w_p->chara_pos_114.vy + lim_y;
         }
@@ -1744,7 +1744,7 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
     watch_tgt_pos->vz = w_p->chara_pos_114.vz + FP_MULTIPLY(use_dist, Math_Cos(w_p->chara_eye_ang_y_144), Q12_SHIFT);
 }
 
-void vcSetWatchTgtXzPos(VECTOR3* watch_pos, VECTOR3* center_pos, VECTOR3* cam_pos, s32 tgt_chara2watch_cir_dist, s32 tgt_watch_cir_r, s16 watch_cir_ang_y) // 0x800834A8
+void vcSetWatchTgtXzPos(VECTOR3* watch_pos, VECTOR3* center_pos, VECTOR3* cam_pos, q19_12 tgt_chara2watch_cir_dist, q19_12 tgt_watch_cir_r, q3_12 watch_cir_ang_y) // 0x800834A8
 {
     s16 cam2chr_ang;
     s32 chr2watch_x;

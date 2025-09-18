@@ -111,7 +111,7 @@ void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 arg2,
         }
     }
 
-    if (animStatus == ANIM_STATUS(PlayerAnim_Kick, true) && IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0))
+    if (animStatus == ANIM_STATUS(HarryAnim_Kick, true) && IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0))
     {
         g_SysWork.player_4C.chara_0.field_D8.field_0 = FP_MULTIPLY(D_800AF014[chara->model_0.anim_4.keyframeIdx_8 - 457], Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
         g_SysWork.player_4C.chara_0.field_D8.field_2 = -FP_MULTIPLY(D_800AF014[chara->model_0.anim_4.keyframeIdx_8 - 457], Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
@@ -119,7 +119,7 @@ void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 arg2,
         g_SysWork.player_4C.chara_0.field_D8.field_6 = 0;
     }
 
-    if (animStatus == ANIM_STATUS(PlayerAnim_Stomp, true) && IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0)) 
+    if (animStatus == ANIM_STATUS(HarryAnim_Stomp, true) && IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0)) 
     {
         g_SysWork.player_4C.chara_0.field_D8.field_0 = FP_MULTIPLY(D_800AF04C[chara->model_0.anim_4.keyframeIdx_8 - 485], Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
         g_SysWork.player_4C.chara_0.field_D8.field_2 = -FP_MULTIPLY(D_800AF04C[chara->model_0.anim_4.keyframeIdx_8 - 485], Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
@@ -246,10 +246,10 @@ bool func_800713E8(s32 animStatus, s_SubCharacter* chara, s32 keyframe0, s32 key
             {
                 switch (animStatus)
                 {
-                    case ANIM_STATUS(PlayerAnim_SidestepRight, true):
-                    case ANIM_STATUS(PlayerAnim_SidestepLeft, true):
-                    case ANIM_STATUS(PlayerAnim_TurnLeft, true):
-                    case ANIM_STATUS(PlayerAnim_TurnRight, true):
+                    case ANIM_STATUS(HarryAnim_SidestepRight, true):
+                    case ANIM_STATUS(HarryAnim_SidestepLeft, true):
+                    case ANIM_STATUS(HarryAnim_TurnLeft, true):
+                    case ANIM_STATUS(HarryAnim_TurnRight, true):
                         func_8005DD44(sfx, &chara->position_18, FP_VOLUME(0.095f), pitch);
                         chara->properties_E4.player.field_10C = pitch;
                         break;
@@ -283,10 +283,10 @@ bool func_800713E8(s32 animStatus, s_SubCharacter* chara, s32 keyframe0, s32 key
             {
                 switch (animStatus) 
                 {
-                    case ANIM_STATUS(PlayerAnim_SidestepRight, true):
-                    case ANIM_STATUS(PlayerAnim_SidestepLeft, true):
-                    case ANIM_STATUS(PlayerAnim_TurnLeft, true):
-                    case ANIM_STATUS(PlayerAnim_TurnRight, true):
+                    case ANIM_STATUS(HarryAnim_SidestepRight, true):
+                    case ANIM_STATUS(HarryAnim_SidestepLeft, true):
+                    case ANIM_STATUS(HarryAnim_TurnLeft, true):
+                    case ANIM_STATUS(HarryAnim_TurnRight, true):
                         func_8005DD44(sfx, &chara->position_18, FP_VOLUME(0.095f), pitch);
                         chara->properties_E4.player.field_10C = pitch;
                         break;
@@ -708,9 +708,9 @@ void Player_AnimUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, s_Anm
 
     // Disable upper body bones before playing anim.
     g_SysWork.player_4C.extra_128.disabledAnimBones_18 = HARRY_UPPER_BODY_BONE_MASK;
-    chara->model_0.anim_4.status_0                     = ANIM_STATUS(PlayerAnim_Still, false);
+    chara->model_0.anim_4.status_0                     = ANIM_STATUS(HarryAnim_Still, false);
 
-    animInfo = &HARRY_BASE_ANIM_INFOS[ANIM_STATUS(PlayerAnim_Still, false)];
+    animInfo = &HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)];
     animInfo->updateFunc_0(&chara->model_0, anmHeader, coord, animInfo);
 
     // Re-enable upper body bones, disable lower body bones.
@@ -719,7 +719,7 @@ void Player_AnimUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, s_Anm
     animInfo = &HARRY_BASE_ANIM_INFOS[extra->model_0.anim_4.status_0];
     animInfo->updateFunc_0(&extra->model_0, anmHeader, coord, animInfo);
 
-    if (chara->model_0.anim_4.status_0 == HARRY_BASE_ANIM_INFOS[ANIM_STATUS(PlayerAnim_Still, false)].status_6)
+    if (chara->model_0.anim_4.status_0 == HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].status_6)
     {
         g_Player_IsInWalkToRunTransition = false;
     }
@@ -753,7 +753,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
     s_Model*      model;
     s32           temp;
 
-    animStatus = ANIM_STATUS(PlayerAnim_Still, false);
+    animStatus = ANIM_STATUS(HarryAnim_Still, false);
     
     Game_TimerUpdate();
     
@@ -813,13 +813,13 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
 
             if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_LookAround, false);
+                extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_LookAround, false);
                 extra->model_0.stateStep_3++;
             }
             
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_LookAround, false);
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_LookAround, false);
                 chara->model_0.stateStep_3++;
             }
             
@@ -893,12 +893,12 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             switch (g_SysWork.player_4C.extra_128.state_1C)
             {
                 case PlayerState_DamageThrownFront:
-                    animStatus  = ANIM_STATUS(PlayerAnim_Unk131, true);
+                    animStatus  = ANIM_STATUS(HarryAnim_Unk131, true);
                     thrownState = PlayerState_OnFloorFront;
                     break;
                     
                 case PlayerState_DamageThrownBack:
-                    animStatus  = ANIM_STATUS(PlayerAnim_Unk132, false);
+                    animStatus  = ANIM_STATUS(HarryAnim_Unk132, false);
                     thrownState = PlayerState_OnFloorBehind;
                     break;
             }
@@ -939,14 +939,14 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             switch (g_SysWork.player_4C.extra_128.state_1C)
             {
                 case PlayerState_EnemyGrabPinnedFrontStart:
-                    animStatus        = ANIM_STATUS(PlayerAnim_Unk127, true);
+                    animStatus        = ANIM_STATUS(HarryAnim_Unk127, true);
                     romperAttackState = PlayerState_EnemyGrabPinnedFront;
                     npcIdx            = g_SysWork.field_2354[0];
                     Math_ShortestAngleGet(chara->rotation_24.vy, FP_ANGLE_NORM_U(g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(180.0f)), &headingAngle0);
                     break;
                     
                 case PlayerState_EnemyGrabPinnedBackStart:
-                    animStatus        = ANIM_STATUS(PlayerAnim_Unk128, true);
+                    animStatus        = ANIM_STATUS(HarryAnim_Unk128, true);
                     romperAttackState = PlayerState_EnemyGrabPinnedBack;
                     npcIdx            = g_SysWork.field_2354[1];
                     Math_ShortestAngleGet(chara->rotation_24.vy, FP_ANGLE_NORM_U(g_SysWork.npcs_1A0[npcIdx].rotation_24.vy + FP_ANGLE(360.0f)), &headingAngle0);
@@ -1101,12 +1101,12 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                     switch (g_SysWork.player_4C.extra_128.state_1C)
                     {
                         case PlayerState_OnFloorFront:
-                            animStatus            = ANIM_STATUS(PlayerAnim_Unk132, true);
+                            animStatus            = ANIM_STATUS(HarryAnim_Unk132, true);
                             enemyGrabReleaseState = PlayerState_GetUpFront;
                             break;
                         
                         case PlayerState_OnFloorBehind:
-                            animStatus            = ANIM_STATUS(PlayerAnim_Unk133, false);
+                            animStatus            = ANIM_STATUS(HarryAnim_Unk133, false);
                             enemyGrabReleaseState = PlayerState_GetUpBack;
                             break;
                     }
@@ -1157,7 +1157,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                                 playeGrabFree_RequiredInputCount = 1600;
                             }
                             
-                            animStatus          = ANIM_STATUS(PlayerAnim_Unk128, false);
+                            animStatus          = ANIM_STATUS(HarryAnim_Unk128, false);
                             enemyGrabReleaseState = PlayerState_EnemyReleasePinnedFront;
                             break;
                         
@@ -1175,7 +1175,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                                 playeGrabFree_RequiredInputCount = 2400;
                             }
                             
-                            animStatus          = ANIM_STATUS(PlayerAnim_Unk129, false);
+                            animStatus          = ANIM_STATUS(HarryAnim_Unk129, false);
                             enemyGrabReleaseState = PlayerState_EnemyReleasePinnedBack;
                             break;
                     }
@@ -1253,7 +1253,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                         playeGrabFree_RequiredInputCount = 1600;
                     }
                     
-                    animStatus            = ANIM_STATUS(PlayerAnim_Unk115, false);
+                    animStatus            = ANIM_STATUS(HarryAnim_Unk115, false);
                     enemyGrabReleaseState = PlayerState_EnemyReleaseUpperFront;
                     break;
                 
@@ -1276,7 +1276,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                         playeGrabFree_RequiredInputCount = 2000;
                     }
                     
-                    animStatus            = ANIM_STATUS(PlayerAnim_Unk117, false);
+                    animStatus            = ANIM_STATUS(HarryAnim_Unk117, false);
                     enemyGrabReleaseState = PlayerState_EnemyReleaseUpperBack;
                     break;
                 
@@ -1296,7 +1296,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                         playeGrabFree_RequiredInputCount = 1400;
                     }
                     
-                    animStatus            = ANIM_STATUS(PlayerAnim_Unk117, true);
+                    animStatus            = ANIM_STATUS(HarryAnim_Unk117, true);
                     enemyGrabReleaseState = PlayerState_EnemyReleaseLowerFront;
                     break;
                 
@@ -1316,7 +1316,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                         playeGrabFree_RequiredInputCount = 1600;
                     }
                     
-                    animStatus            = ANIM_STATUS(PlayerAnim_Unk118, false);
+                    animStatus            = ANIM_STATUS(HarryAnim_Unk118, false);
                     enemyGrabReleaseState = PlayerState_EnemyReleaseLowerBack;
                     break;
                 
@@ -1336,7 +1336,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                         playeGrabFree_RequiredInputCount = 7200;
                     }
                     
-                    animStatus            = ANIM_STATUS(PlayerAnim_Unk125, true);
+                    animStatus            = ANIM_STATUS(HarryAnim_Unk125, true);
                     enemyGrabReleaseState = PlayerState_EnemyReleaseUpperFront;
                     break;
                 
@@ -1356,7 +1356,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                         playeGrabFree_RequiredInputCount = 7200;
                     }
                     
-                    animStatus            = ANIM_STATUS(PlayerAnim_Unk125, true);
+                    animStatus            = ANIM_STATUS(HarryAnim_Unk125, true);
                     enemyGrabReleaseState = PlayerState_EnemyReleaseUpperBack;
                     break;
             }
@@ -1507,55 +1507,55 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             switch (g_SysWork.player_4C.extra_128.state_1C)
             {
                 case PlayerState_GetUpFront:
-                    animStatus = ANIM_STATUS(PlayerAnim_Unk133, true);
+                    animStatus = ANIM_STATUS(HarryAnim_Unk133, true);
                     break;
                     
                 case PlayerState_GetUpBack:
-                    animStatus = ANIM_STATUS(PlayerAnim_Unk134, false);
+                    animStatus = ANIM_STATUS(HarryAnim_Unk134, false);
                     break;
                     
                 case PlayerState_EnemyReleasePinnedFront:
-                    animStatus = ANIM_STATUS(PlayerAnim_Unk129, true);
+                    animStatus = ANIM_STATUS(HarryAnim_Unk129, true);
                     break;
                     
                 case PlayerState_EnemyReleasePinnedBack:
-                    animStatus = ANIM_STATUS(PlayerAnim_Unk130, false);
+                    animStatus = ANIM_STATUS(HarryAnim_Unk130, false);
                     break;
                     
                 case PlayerState_EnemyReleaseUpperFront:
-                    animStatus = ANIM_STATUS(PlayerAnim_Unk120, false);
+                    animStatus = ANIM_STATUS(HarryAnim_Unk120, false);
                     break;
                     
                 case PlayerState_EnemyReleaseUpperBack:
-                    animStatus = ANIM_STATUS(PlayerAnim_Unk122, false);
+                    animStatus = ANIM_STATUS(HarryAnim_Unk122, false);
                     break;
                     
                 case PlayerState_Unk17:
-                    animStatus = ANIM_STATUS(PlayerAnim_Unk120, true);
+                    animStatus = ANIM_STATUS(HarryAnim_Unk120, true);
                     break;
                     
                 case PlayerState_Unk18:
-                    animStatus = ANIM_STATUS(PlayerAnim_Unk121, true);
+                    animStatus = ANIM_STATUS(HarryAnim_Unk121, true);
                     break;
                     
                 case PlayerState_EnemyReleaseLowerFront:
-                    animStatus = ANIM_STATUS(PlayerAnim_Unk122, true);
+                    animStatus = ANIM_STATUS(HarryAnim_Unk122, true);
                     break;
                     
                 case PlayerState_EnemyReleaseLowerBack:
-                    animStatus = ANIM_STATUS(PlayerAnim_Unk123, false);
+                    animStatus = ANIM_STATUS(HarryAnim_Unk123, false);
                     break;
                     
                 case PlayerState_DamageHead:
-                    animStatus = ANIM_STATUS(PlayerAnim_Unk121, false);
+                    animStatus = ANIM_STATUS(HarryAnim_Unk121, false);
                     break;
                     
                 case PlayerState_FallForward: 
-                    animStatus = ANIM_STATUS(PlayerAnim_FallForward, false);
+                    animStatus = ANIM_STATUS(HarryAnim_FallForward, false);
                     break;
                     
                 case PlayerState_FallBackward: 
-                    animStatus = ANIM_STATUS(PlayerAnim_FallBackward, false);
+                    animStatus = ANIM_STATUS(HarryAnim_FallBackward, false);
                     break;
             }
 
@@ -2486,7 +2486,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
             if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Unk30, false);
+                extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_Unk30, false);
                 extra->model_0.stateStep_3++;
             }
         }
@@ -2676,19 +2676,19 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun)
         {
             // Attack anim.
-            if (extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk29, true) ||
-                extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk30, true) ||
-                extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunRecoil, true) ||
-                extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk29, true) ||
-                extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk30, true) ||
-                extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunRecoil, true) ||
-                extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk29, true) ||
-                extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk30, true) ||
-                extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunRecoil, true))
+            if (extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk29, true) ||
+                extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk30, true) ||
+                extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_HandgunRecoil, true) ||
+                extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk29, true) ||
+                extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk30, true) ||
+                extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_HandgunRecoil, true) ||
+                extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk29, true) ||
+                extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk30, true) ||
+                extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
             {
                 if (extra->model_0.anim_4.keyframeIdx_8 == D_800C44F0[D_800AF220].field_6)
                 {
-                    extra->model_0.anim_4.status_0      = ANIM_STATUS(PlayerAnim_HandgunAim, true);
+                    extra->model_0.anim_4.status_0      = ANIM_STATUS(HarryAnim_HandgunAim, true);
                     extra->model_0.anim_4.keyframeIdx_8 = D_800C44F0[0].field_6;
                     extra->model_0.anim_4.time_4         = FP_TO(extra->model_0.anim_4.keyframeIdx_8, Q12_SHIFT);
 
@@ -2724,8 +2724,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             }
         }
         // Attack anim.
-        else if ((extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk30, true) ||
-                  extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk36, true)) &&
+        else if ((extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk30, true) ||
+                  extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk36, true)) &&
                  extra->model_0.anim_4.keyframeIdx_8 == D_800C44F0[D_800AF220].field_6)
         {
             if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk0)
@@ -2769,7 +2769,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             {
                 if (extra->model_0.anim_4.keyframeIdx_8 >= keyframeIdx1 &&
                     extra->model_0.anim_4.keyframeIdx_8 < keyframeIdx0 &&
-                    extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunRecoil, true) &&
+                    extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_HandgunRecoil, true) &&
                     (g_Player_IsAttacking || g_Player_IsShooting))
                 {
                     g_Player_IsMultiTapAttack = true;
@@ -2779,7 +2779,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
         if (g_Player_IsMultiTapAttack)
         {
-            if (extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunRecoil, true) &&
+            if (extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_HandgunRecoil, true) &&
                 extra->model_0.anim_4.keyframeIdx_8 >= keyframeIdx0)
             {
                 extra->model_0.stateStep_3 = 0;
@@ -2822,8 +2822,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
     switch (g_SysWork.player_4C.extra_128.upperBodyState_20)
     {
         case PlayerUpperBodyState_None:
-            if ((extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_WalkForward, true) ||
-                 extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_RunForward, true)) &&
+            if ((extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_WalkForward, true) ||
+                 extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_RunForward, true)) &&
                 extra->model_0.stateStep_3 != 0)
             {
                 extra->model_0.stateStep_3 = 0;
@@ -2834,7 +2834,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             {
                 if (extra->model_0.stateStep_3 == 0)
                 {
-                    extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Idle, false);
+                    extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_Idle, false);
                     extra->model_0.stateStep_3++;
                 }
 
@@ -2845,11 +2845,11 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 chara->properties_E4.player.afkTimer_E8 = FP_TIME(0.0f);
 				
                 // If not normal idle anim, set it and update `upperBodyState_20`.
-                if (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Idle, true))
+                if (extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_Idle, true))
                 {
                     if (extra->model_0.stateStep_3 == 0)
                     {
-                        extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Idle, false);
+                        extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_Idle, false);
                         extra->model_0.stateStep_3++;
                     }
 
@@ -2860,7 +2860,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                     extra->model_0.stateStep_3 = 0;
                     if (extra->model_0.stateStep_3 == 0)
                     {
-                        extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_IdleExhausted, false);
+                        extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_IdleExhausted, false);
                         extra->model_0.stateStep_3++;
                     }
                 }
@@ -2899,11 +2899,11 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         case PlayerUpperBodyState_WalkForward:
             if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_WalkForward, false);
+                extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_WalkForward, false);
                 extra->model_0.stateStep_3++;
             }
 
-            if (extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_WalkForward, true))
+            if (extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_WalkForward, true))
             {
                 extra->model_0.anim_4.time_4 = chara->model_0.anim_4.time_4;
             }
@@ -2915,11 +2915,11 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         case PlayerUpperBodyState_RunForward:
             if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_RunForward, false);
+                extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_RunForward, false);
                 extra->model_0.stateStep_3++;
             }
 
-            if (extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_RunForward, true))
+            if (extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_RunForward, true))
             {
                 extra->model_0.anim_4.time_4 = chara->model_0.anim_4.time_4;
             }
@@ -2933,13 +2933,13 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             {
                 if (extra->model_0.stateStep_3 == 0)
                 {
-                    extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_RunForwardWallStopRight, false);
+                    extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_RunForwardWallStopRight, false);
                     extra->model_0.stateStep_3++;
                 }
             }
             else if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_RunForwardWallStopLeft, false);
+                extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_RunForwardWallStopLeft, false);
                 extra->model_0.stateStep_3++;
             }
 
@@ -2951,7 +2951,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         case PlayerUpperBodyState_SidestepRight:
             if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_SidestepRight, false);
+                extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_SidestepRight, false);
                 extra->model_0.stateStep_3++;
             }
 
@@ -2962,7 +2962,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         case PlayerUpperBodyState_SidestepLeft:
             if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_SidestepLeft, false);
+                extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_SidestepLeft, false);
                 extra->model_0.stateStep_3++;
             }
 
@@ -2973,14 +2973,14 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         case PlayerUpperBodyState_RunRight:
             if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_RunRight, false);
+                extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_RunRight, false);
                 extra->model_0.stateStep_3++;
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_RunRight, 17, 0);
             chara->rotation_24.pad = chara->rotation_24.vy;
 
-            if (extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_RunRight, true))
+            if (extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_RunRight, true))
             {
                 extra->model_0.anim_4.time_4 = chara->model_0.anim_4.time_4;
             }
@@ -2989,14 +2989,14 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         case PlayerUpperBodyState_RunLeft:
             if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_RunLeft, false);
+                extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_RunLeft, false);
                 extra->model_0.stateStep_3++;
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_RunLeft, 15, 0);
             chara->rotation_24.pad = chara->rotation_24.vy;
 
-            if (extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_RunLeft, true))
+            if (extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_RunLeft, true))
             {
                 extra->model_0.anim_4.time_4 = chara->model_0.anim_4.time_4;
             }
@@ -3005,7 +3005,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         case PlayerUpperBodyState_WalkBackward:
             if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_WalkBackward, false);
+                extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_WalkBackward, false);
                 extra->model_0.stateStep_3++;
             }
 
@@ -3016,13 +3016,13 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         case PlayerUpperBodyState_QuickTurnRight:
             if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_QuickTurnRight, false);
+                extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_QuickTurnRight, false);
                 extra->model_0.stateStep_3++;
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_QuickTurnRight, 29, 0);
 
-            if (extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_QuickTurnRight, true))
+            if (extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_QuickTurnRight, true))
             {
                 extra->model_0.anim_4.time_4 = chara->model_0.anim_4.time_4;
             }
@@ -3033,13 +3033,13 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         case PlayerUpperBodyState_QuickTurnLeft:
             if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_QuickTurnLeft, false);
+                extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_QuickTurnLeft, false);
                 extra->model_0.stateStep_3++;
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_QuickTurnLeft, 31, 0);
 
-            if (extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_QuickTurnLeft, true))
+            if (extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_QuickTurnLeft, true))
             {
                 extra->model_0.anim_4.time_4 = chara->model_0.anim_4.time_4;
             }
@@ -3050,7 +3050,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         case PlayerUpperBodyState_TurnRight:
             if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_TurnRight, false);
+                extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_TurnRight, false);
                 extra->model_0.stateStep_3++;
             }
 
@@ -3061,7 +3061,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         case PlayerUpperBodyState_TurnLeft:
             if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_TurnLeft, false);
+                extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_TurnLeft, false);
                 extra->model_0.stateStep_3++;
             }
 
@@ -3072,11 +3072,11 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         case PlayerUpperBodyState_RunJumpBackward:
             if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_JumpBackward, false);
+                extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_JumpBackward, false);
                 extra->model_0.stateStep_3++;
             }
 
-            if (extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_JumpBackward, true))
+            if (extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_JumpBackward, true))
             {
                 extra->model_0.anim_4.time_4 = chara->model_0.anim_4.time_4;
             }
@@ -3088,11 +3088,11 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         case PlayerUpperBodyState_LowerBodyStumble:
             if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_RunForwardStumble, false);
+                extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_RunForwardStumble, false);
                 extra->model_0.stateStep_3++;
             }
 
-            if (extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_RunForwardStumble, true))
+            if (extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_RunForwardStumble, true))
             {
                 extra->model_0.anim_4.time_4 = chara->model_0.anim_4.time_4;
             }
@@ -3104,7 +3104,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         case PlayerUpperBodyState_RunLeftWallStop:
             if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_RunLeftWallStop, false);
+                extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_RunLeftWallStop, false);
                 extra->model_0.stateStep_3++;
             }
 
@@ -3115,7 +3115,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         case PlayerUpperBodyState_RunRightWallStop:
             if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_RunRightWallStop, false);
+                extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_RunRightWallStop, false);
                 extra->model_0.stateStep_3++;
             }
 
@@ -3126,11 +3126,11 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         case PlayerUpperBodyState_RunLeftStumble:
             if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_RunLeftStumble, false);
+                extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_RunLeftStumble, false);
                 extra->model_0.stateStep_3++;
             }
 
-            if (extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_RunLeftStumble, true))
+            if (extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_RunLeftStumble, true))
             {
                 extra->model_0.anim_4.time_4 = chara->model_0.anim_4.time_4;
             }
@@ -3142,11 +3142,11 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         case PlayerUpperBodyState_SidestepRightStumble:
             if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_RunRightStumble, false);
+                extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_RunRightStumble, false);
                 extra->model_0.stateStep_3++;
             }
 
-            if (extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_RunRightStumble, true))
+            if (extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_RunRightStumble, true))
             {
                 extra->model_0.anim_4.time_4 = chara->model_0.anim_4.time_4;
             }
@@ -3169,13 +3169,13 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
                     if (extra->model_0.stateStep_3 == 0)
                     {
-                        extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Unk34, false);
+                        extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_Unk34, false);
                         extra->model_0.stateStep_3++;
                     }
                 }
                 else
                 {
-                    extra->model_0.anim_4.status_0      = ANIM_STATUS(PlayerAnim_HandgunAim, true);
+                    extra->model_0.anim_4.status_0      = ANIM_STATUS(HarryAnim_HandgunAim, true);
                     extra->model_0.anim_4.keyframeIdx_8 = D_800AF5C6;
                     extra->model_0.anim_4.time_4         = D_800AF5C6 << 12;
                 }
@@ -3187,8 +3187,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun)
             {
 				// Aim.
-                if (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_HandgunAim, true) &&
-                    extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk34, true))
+                if (extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_HandgunAim, true) &&
+                    extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_Unk34, true))
                 {
                     if (g_Player_IsAttacking || g_Player_IsShooting)
                     {
@@ -3200,7 +3200,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
                         if (extra->model_0.stateStep_3 == 0)
                         {
-                            extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Unk34, false);
+                            extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_Unk34, false);
                             extra->model_0.stateStep_3++;
                         }
                     }
@@ -3225,9 +3225,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 playerTurn = (g_Player_IsTurningLeft != false) * 2;
             }
 
-            if ((extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk29, true) || extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[1].field_6) &&
-                (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk30, true) || extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[2].field_6) &&
-                (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk32, true) || extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[4].field_6))
+            if ((extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_Unk29, true) || extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[1].field_6) &&
+                (extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_Unk30, true) || extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[2].field_6) &&
+                (extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_Unk32, true) || extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[4].field_6))
             {
                 playerTurn = 0;
                 chara->properties_E4.player.field_100++;
@@ -3340,21 +3340,21 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 {
                     if (extra->model_0.stateStep_3 == 0)
                     {
-                        extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Unk33, false);
+                        extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_Unk33, false);
                         extra->model_0.stateStep_3++;
                     }
                 }
                 else if (extra->model_0.stateStep_3 == 0)
                 {
-                    extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_HandgunAim, false);
+                    extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_HandgunAim, false);
                     extra->model_0.stateStep_3++;
                 }
 
                 if (((g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_Chainsaw &&
-                      extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunAim, true) &&
+                      extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_HandgunAim, true) &&
                       extra->model_0.anim_4.keyframeIdx_8 >= (D_800C44F0[0].field_4 + 5)) ||
                      (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill &&
-                      extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunAim, true) &&
+                      extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_HandgunAim, true) &&
                       extra->model_0.anim_4.keyframeIdx_8 >= (D_800C44F0[0].field_4 + 9))) &&
                     !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & 4))
                 {
@@ -3370,7 +3370,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             {
                 if (extra->model_0.stateStep_3 == 0)
                 {
-                    extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Unk29, false);
+                    extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_Unk29, false);
                     extra->model_0.stateStep_3++;
                 }
             }
@@ -3378,7 +3378,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             {
                 if (extra->model_0.stateStep_3 == 0)
                 {
-                    extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_HandgunAim, false);
+                    extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_HandgunAim, false);
                     extra->model_0.stateStep_3++;
                 }
             }
@@ -3471,13 +3471,13 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             {
                 if (extra->model_0.stateStep_3 == 0)
                 {
-                    extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Unk32, false);
+                    extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_Unk32, false);
                     extra->model_0.stateStep_3++;
                 }
             }
             else if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Unk29, false);
+                extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_Unk29, false);
                 extra->model_0.stateStep_3++;
             }
 
@@ -3500,8 +3500,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
                 switch (extra->model_0.anim_4.status_0)
                 {
-                    case ANIM_STATUS(PlayerAnim_Unk29, true):
-                    case ANIM_STATUS(PlayerAnim_Unk32, true):
+                    case ANIM_STATUS(HarryAnim_Unk29, true):
+                    case ANIM_STATUS(HarryAnim_Unk32, true):
                         if (extra->model_0.anim_4.keyframeIdx_8 == D_800C44F0[D_800AF220].field_6)
                         {
                             chara->rotation_24.vy = temp_s1_2;
@@ -3686,7 +3686,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         case PlayerUpperBodyState_Reload:
             if (extra->model_0.stateStep_3 == 0)
             {
-                extra->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_HandgunRecoil, false);
+                extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_HandgunRecoil, false);
                 extra->model_0.stateStep_3++;
             }
 
@@ -3706,7 +3706,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 g_SysWork.enemyTargetIdx_2353                               = NO_VALUE;
                 g_SysWork.player_4C.extra_128.state_1C                      = PlayerState_None;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
-                extra->model_0.anim_4.status_0                             = ANIM_STATUS(PlayerAnim_HandgunAim, true);
+                extra->model_0.anim_4.status_0                             = ANIM_STATUS(HarryAnim_HandgunAim, true);
                 extra->model_0.anim_4.keyframeIdx_8                        = 588;
                 extra->model_0.anim_4.time_4                                = 0x24C000;
 
@@ -3941,18 +3941,18 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
                     if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_Chainsaw ||
                         g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill)
                     {
-                        if ((extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_HandgunAim, true) ||
+                        if ((extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_HandgunAim, true) ||
                              extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[0].field_6) &&
-                            (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk29, true) ||
+                            (extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_Unk29, true) ||
                              extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[1].field_6) &&
-                            (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk34, true) ||
+                            (extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_Unk34, true) ||
                              extra->model_0.anim_4.keyframeIdx_8 < D_800C44F0[6].field_4 ||
                              D_800C44F0[6].field_6 < extra->model_0.anim_4.keyframeIdx_8) &&
-                            (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk30, true) ||
+                            (extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_Unk30, true) ||
                              extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[2].field_6) &&
-                            (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_HandgunRecoil, true) ||
+                            (extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_HandgunRecoil, true) ||
                              extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[3].field_6) &&
-                            (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk33, true) ||
+                            (extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_Unk33, true) ||
                              extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[5].field_6))
                         {
                             break;
@@ -3960,13 +3960,13 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
                     }
                     else
                     {
-                        if ((extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_HandgunAim, true) ||
+                        if ((extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_HandgunAim, true) ||
                              extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[0].field_6) &&
-                            (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk29, true) ||
+                            (extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_Unk29, true) ||
                              extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[1].field_6) &&
-                            (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk30, true) ||
+                            (extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_Unk30, true) ||
                              extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[2].field_6) &&
-                            (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_HandgunRecoil, true) ||
+                            (extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_HandgunRecoil, true) ||
                              extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[3].field_6))
                         {
                             break;
@@ -3975,19 +3975,19 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
                 }
                 else
                 {
-                    if ((extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_HandgunAim, true) ||
+                    if ((extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_HandgunAim, true) ||
                          extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[0].field_6) &&
-                        (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk29, true) ||
+                        (extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_Unk29, true) ||
                          extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[1].field_6) &&
-                        (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk30, true) ||
+                        (extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_Unk30, true) ||
                          extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[2].field_6) &&
-                        (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_HandgunRecoil, true) ||
+                        (extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_HandgunRecoil, true) ||
                          extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[3].field_6) &&
-                        (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk32, true) ||
+                        (extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_Unk32, true) ||
                          extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[4].field_6) &&
-                        (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk36, true) ||
+                        (extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_Unk36, true) ||
                          extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[8].field_6) &&
-                        (extra->model_0.anim_4.status_0 != ANIM_STATUS(PlayerAnim_Unk34, true) ||
+                        (extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_Unk34, true) ||
                          extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[6].field_4))
                     {
                         break;
@@ -4230,7 +4230,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
     {
         case PlayerLowerBodyState_None:
         case PlayerLowerBodyState_Aim:
-            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_WalkForward, true))
+            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_WalkForward, true))
             {
                 chara->model_0.stateStep_3 = 0;
             }
@@ -4272,13 +4272,13 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 {
                     if (chara->model_0.stateStep_3 == 0)
                     {
-                        chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Idle, false);
+                        chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_Idle, false);
                         chara->model_0.stateStep_3++;
                     }
                 }
                 else if (chara->model_0.stateStep_3 == 0)
                 {
-                    chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_IdleExhausted, false);
+                    chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_IdleExhausted, false);
                     chara->model_0.stateStep_3++;
                 }
             }
@@ -4301,13 +4301,13 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                     {
                         if (chara->model_0.stateStep_3 == 0)
                         {
-                            chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Unk33, false);
+                            chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_Unk33, false);
                             chara->model_0.stateStep_3++;
                         }
                     }
                     else if (chara->model_0.stateStep_3 == 0)
                     {
-                        chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_HandgunAim, false);
+                        chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_HandgunAim, false);
                         chara->model_0.stateStep_3++;
                     }
                 }
@@ -4315,7 +4315,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 {
                     if (chara->model_0.stateStep_3 == 0)
                     {
-                        chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Unk34, false);
+                        chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_Unk34, false);
                         chara->model_0.stateStep_3++;
                     }
                 }
@@ -4323,7 +4323,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 {
                     if (chara->model_0.stateStep_3 == 0)
                     {
-                        chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Unk32, false);
+                        chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_Unk32, false);
                         chara->model_0.stateStep_3++;
                     }
                 }
@@ -4331,7 +4331,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 {
                     if (chara->model_0.stateStep_3 == 0)
                     {
-                        chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Unk29, false);
+                        chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_Unk29, false);
                         chara->model_0.stateStep_3++;
                     }
                 }
@@ -4339,7 +4339,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 {
                     if (chara->model_0.stateStep_3 == 0)
                     {
-                        chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_HandgunAim, false);
+                        chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_HandgunAim, false);
                         chara->model_0.stateStep_3++;
                     }
                 }
@@ -4353,7 +4353,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 if (IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0) &&
                     IS_ANIM_STATUS_ACTIVE(extra->model_0.anim_4.status_0))
                 {
-                    if (chara->model_0.anim_4.status_0 >= ANIM_STATUS(PlayerAnim_Unk29, false) ||
+                    if (chara->model_0.anim_4.status_0 >= ANIM_STATUS(HarryAnim_Unk29, false) ||
                         chara->model_0.anim_4.keyframeIdx_8 == D_800C44F0[0].field_6 || 
                         chara->model_0.anim_4.keyframeIdx_8 == D_800C44F0[5].field_6)
                     {
@@ -4377,7 +4377,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                     IS_ANIM_STATUS_ACTIVE(extra->model_0.anim_4.status_0))
                 {
                     if ((aimState == 0 && g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 == FP_METER(0.0f))||
-                        chara->model_0.anim_4.status_0 >= ANIM_STATUS(PlayerAnim_Unk29, false) ||
+                        chara->model_0.anim_4.status_0 >= ANIM_STATUS(HarryAnim_Unk29, false) ||
 						chara->model_0.anim_4.keyframeIdx_8 == D_800C44F0[0].field_6)
                     {
                         if (g_Player_IsMovingForward)
@@ -4428,7 +4428,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                             }
                         }
 
-                        if (aimState == 0 && g_SysWork.playerCombatInfo_38.isAiming_13 == false)
+                        if (aimState == 0 && !g_SysWork.playerCombatInfo_38.isAiming_13)
                         {
                             if ((g_GameWork.config_0.optExtraWalkRunCtrl_2B && !g_Player_IsRunning) ||
                                 (!g_GameWork.config_0.optExtraWalkRunCtrl_2B && g_Player_IsRunning))
@@ -4512,25 +4512,25 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 				
 				// Turn if idle.
                 if (g_Player_IsTurningLeft && chara->model_0.stateStep_3 == 1 &&
-                    (chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Idle, true) ||
-                     chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_IdleExhausted, true)))
+                    (chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Idle, true) ||
+                     chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_IdleExhausted, true)))
                 {
                     chara->model_0.stateStep_3      = 2;
-                    chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_TurnLeft, false);
+                    chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_TurnLeft, false);
                 }
                 else if (g_Player_IsTurningRight && chara->model_0.stateStep_3 == 1 && 
-                         (chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Idle, true) ||
-                          chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_IdleExhausted, true)))
+                         (chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Idle, true) ||
+                          chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_IdleExhausted, true)))
                 {
                     chara->model_0.stateStep_3      = 2;
-                    chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_TurnRight, false);
+                    chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_TurnRight, false);
                 }
 
                 if (!g_Player_IsTurningLeft && !g_Player_IsTurningRight && chara->model_0.stateStep_3 == 2 &&
-                    (chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_TurnRight, true) ||
-                     chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_TurnLeft, true)))
+                    (chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_TurnRight, true) ||
+                     chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_TurnLeft, true)))
                 {
-                    chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Idle, false);
+                    chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_Idle, false);
                     chara->model_0.stateStep_3      = 0;
                 }
             }
@@ -4608,7 +4608,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_WalkForward, false);
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_WalkForward, false);
                 chara->model_0.stateStep_3++;
             }
 
@@ -4668,11 +4668,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 					// Aparently, code intended to change player's state if the player stop walking while either aiming or attacking.
                     if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun && aimState != 0)
                     {
-                        if (((extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk29, true) ||
-                              extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk30, true)) && 
+                        if (((extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk29, true) ||
+                              extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk30, true)) && 
                             (g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_Chainsaw &&
                              g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill)) || 
-                            extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunRecoil, true))
+                            extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk10;
                             chara->model_0.stateStep_3                                  = 0;
@@ -4706,7 +4706,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
             if (g_SysWork.player_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_RunForward)
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Still, false);
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_Still, false);
                 chara->model_0.stateStep_3++;
                 g_Player_IsInWalkToRunTransition = true;
             }
@@ -4779,7 +4779,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_RunForward, false);
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_RunForward, false);
                 chara->model_0.stateStep_3++;
             }
 
@@ -4791,7 +4791,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
             // Running.
             if (g_SysWork.player_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_AimStartTargetLock &&
-                chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_RunForward, true))
+                chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_RunForward, true))
             {
 				// TODO: What does `func_8007D6F0` do?
                 switch (temp_s3)
@@ -4913,7 +4913,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
             if (g_SysWork.player_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_WalkForward)
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_Still, false);
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_Still, false);
                 chara->model_0.stateStep_3++;
                 g_Player_IsInWalkToRunTransition = true;
             }
@@ -4934,21 +4934,21 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             {
                 if (chara->model_0.stateStep_3 == 0)
                 {
-                    chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_RunForwardWallStopRight, false);
+                    chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_RunForwardWallStopRight, false);
                     chara->model_0.stateStep_3++;
                 }
             }
             else if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_RunForwardWallStopLeft, false);
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_RunForwardWallStopLeft, false);
                 chara->model_0.stateStep_3++;
             }
 
             if (g_SysWork.player_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_AimStartTargetLock)
             {
-                if (chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_RunForwardWallStopLeft, true) &&
+                if (chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_RunForwardWallStopLeft, true) &&
                     chara->model_0.anim_4.keyframeIdx_8 >= 168 ||
-                    chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_RunForwardWallStopRight, true) &&
+                    chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_RunForwardWallStopRight, true) &&
                     chara->model_0.anim_4.keyframeIdx_8 >= 158)
                 {
                     g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
@@ -5019,7 +5019,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_WalkBackward, false);
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_WalkBackward, false);
                 chara->model_0.stateStep_3++;
             }
 
@@ -5073,11 +5073,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 {
                     if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun && aimState != 0)
                     {
-                        if (((extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk29, true) ||
-                              extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk30, true)) &&
+                        if (((extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk29, true) ||
+                              extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk30, true)) &&
                              (g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_Chainsaw &&
                               g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill)) || 
-                            extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunRecoil, true))
+                            extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk10;
                             chara->model_0.stateStep_3                                  = 0;
@@ -5139,11 +5139,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_SidestepRight, false);
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_SidestepRight, false);
                 chara->model_0.stateStep_3++;
             }
 
-            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_SidestepRight, true) &&
+            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_SidestepRight, true) &&
                 chara->model_0.anim_4.keyframeIdx_8 >= 117)
             {
 				// Stopped sidestepping while attacking.
@@ -5153,11 +5153,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                     if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun && aimState != 0)
                     {
 						// Some melee weapons allow attack while sidestepping.
-                        if (((extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk29, true) ||
-                              extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk30, true)) &&
+                        if (((extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk29, true) ||
+                              extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk30, true)) &&
                              (g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_Chainsaw &&
                               g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill)) || 
-                              extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunRecoil, true))
+                              extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk10;
                             chara->model_0.stateStep_3                                  = 0;
@@ -5220,11 +5220,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_SidestepLeft, false);
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_SidestepLeft, false);
                 chara->model_0.stateStep_3++;
             }
 
-            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_SidestepLeft, true) &&
+            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_SidestepLeft, true) &&
                 chara->model_0.anim_4.keyframeIdx_8 >= 92)
             {
 				// Stopped stepping while attacking.
@@ -5233,11 +5233,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 {
                     if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun && aimState != 0)
                     {
-                        if (((extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk29, true) ||
-                              extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk30, true)) &&
+                        if (((extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk29, true) ||
+                              extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk30, true)) &&
                              (g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_Chainsaw &&
                               g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill)) || 
-                             extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunRecoil, true))
+                             extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk10;
                             chara->model_0.stateStep_3                                  = 0;
@@ -5291,7 +5291,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_RunRight, false);
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_RunRight, false);
                 chara->model_0.stateStep_3++;
             }
 
@@ -5313,7 +5313,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                         }
                         else
                         {
-                            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_RunRight, true) &&
+                            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_RunRight, true) &&
                                 chara->model_0.anim_4.keyframeIdx_8 >= 147)
                             {
                                 g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
@@ -5328,7 +5328,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                         }
                         else
                         {
-                            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_RunRight, true) &&
+                            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_RunRight, true) &&
                                 chara->model_0.anim_4.keyframeIdx_8 >= 147)
                             {
                                 g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
@@ -5345,7 +5345,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                                 g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunRightWallStop;
                             }
                         }
-                        else if (chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_RunRight, true) &&
+                        else if (chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_RunRight, true) &&
                                  chara->model_0.anim_4.keyframeIdx_8 >= 147 &&
                                  (!g_Player_IsRunning || !g_Player_IsSteppingRightHold))
                         {
@@ -5382,7 +5382,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_RunLeft, false);
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_RunLeft, false);
                 chara->model_0.stateStep_3++;
             }
 
@@ -5403,7 +5403,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                         }
                         else
                         {
-                            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_RunLeft, true) &&
+                            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_RunLeft, true) &&
                                 chara->model_0.anim_4.keyframeIdx_8 >= 132)
                             {
                                 g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
@@ -5418,7 +5418,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                         }
                         else
                         {
-                            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_RunLeft, true) &&
+                            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_RunLeft, true) &&
                                 chara->model_0.anim_4.keyframeIdx_8 >= 132)
                             {
                                 g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
@@ -5435,7 +5435,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                                 g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunLeftWallStop;
                             }
                         }
-                        else if (chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_RunLeft, true) && chara->model_0.anim_4.keyframeIdx_8 >= 132 &&
+                        else if (chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_RunLeft, true) && chara->model_0.anim_4.keyframeIdx_8 >= 132 &&
                                  (!g_Player_IsRunning || !g_Player_IsSteppingLeftHold))
                         {
                             g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
@@ -5471,7 +5471,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_QuickTurnRight, false);
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_QuickTurnRight, false);
                 chara->model_0.stateStep_3++;
             }
 
@@ -5480,7 +5480,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 chara->model_0.state_2++;
             }
 
-            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_QuickTurnRight, true) && chara->model_0.anim_4.keyframeIdx_8 >= 206)
+            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_QuickTurnRight, true) && chara->model_0.anim_4.keyframeIdx_8 >= 206)
             {
                 D_800C454C = g_DeltaTime0 * 24;
             }
@@ -5595,7 +5595,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_QuickTurnLeft, false);
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_QuickTurnLeft, false);
                 chara->model_0.stateStep_3++;
             }
 
@@ -5604,7 +5604,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 chara->model_0.state_2++;
             }
 
-            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_QuickTurnLeft, true) && chara->model_0.anim_4.keyframeIdx_8 >= 219)
+            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_QuickTurnLeft, true) && chara->model_0.anim_4.keyframeIdx_8 >= 219)
             {
                 D_800C454C = -(g_DeltaTime0 * 24);
             }
@@ -5701,13 +5701,13 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
         case PlayerLowerBodyState_JumpBackward:
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_JumpBackward, false);
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_JumpBackward, false);
                 chara->model_0.stateStep_3++;
             }
             
             // Jump backward.
-            if ((chara->model_0.anim_4.status_0 >= ANIM_STATUS(PlayerAnim_JumpBackward, false) &&
-                 chara->model_0.anim_4.status_0 <= ANIM_STATUS(PlayerAnim_JumpBackward, true)) &&
+            if ((chara->model_0.anim_4.status_0 >= ANIM_STATUS(HarryAnim_JumpBackward, false) &&
+                 chara->model_0.anim_4.status_0 <= ANIM_STATUS(HarryAnim_JumpBackward, true)) &&
                 chara->model_0.anim_4.keyframeIdx_8 < 245)
             {
                 if (chara->model_0.state_2 == 0)
@@ -5733,7 +5733,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 D_800C4550 = g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126;
             }
 
-            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_JumpBackward, true) && chara->model_0.anim_4.keyframeIdx_8 == 246)
+            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_JumpBackward, true) && chara->model_0.anim_4.keyframeIdx_8 == 246)
             {
                 if (chara->position_18.vy < chara->properties_E4.player.positionY_EC)
                 {
@@ -5782,11 +5782,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_RunForwardStumble, false);
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_RunForwardStumble, false);
                 chara->model_0.stateStep_3++;
             }
 
-            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_RunForwardStumble, true) && chara->model_0.anim_4.keyframeIdx_8 == 179)
+            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_RunForwardStumble, true) && chara->model_0.anim_4.keyframeIdx_8 == 179)
             {
                 g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                 Player_MovementStateReset(chara, PlayerLowerBodyState_Stumble);
@@ -5818,11 +5818,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_RunLeftStumble, false);
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_RunLeftStumble, false);
                 chara->model_0.stateStep_3++;
             }
 
-            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_RunLeftStumble, true) && chara->model_0.anim_4.keyframeIdx_8 == 349)
+            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_RunLeftStumble, true) && chara->model_0.anim_4.keyframeIdx_8 == 349)
             {
                 g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                 Player_MovementStateReset(chara, 15);
@@ -5856,11 +5856,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_RunRightStumble, false);
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_RunRightStumble, false);
                 chara->model_0.stateStep_3++;
             }
 
-            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_RunRightStumble, true) && chara->model_0.anim_4.keyframeIdx_8 == 378)
+            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_RunRightStumble, true) && chara->model_0.anim_4.keyframeIdx_8 == 378)
             {
                 g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                 Player_MovementStateReset(chara, 16);
@@ -5953,7 +5953,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                     }
                     else if (chara->model_0.stateStep_3 == 0)
                     {
-                        chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_HandgunAim, false);
+                        chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_HandgunAim, false);
                         chara->model_0.stateStep_3++;
                     }
 
@@ -5994,14 +5994,14 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 }
                 else
                 {
-                    if (extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk30, true))
+                    if (extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk30, true))
                     {
                         chara->model_0.anim_4.status_0      = extra->model_0.anim_4.status_0;
                         chara->model_0.anim_4.keyframeIdx_8 = extra->model_0.anim_4.keyframeIdx_8;
                         chara->model_0.anim_4.time_4         = extra->model_0.anim_4.time_4;
                         chara->model_0.stateStep_3++;
                     }
-                    else if (g_Player_IsAttacking || extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_Unk29, true))
+                    else if (g_Player_IsAttacking || extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk29, true))
                     {
                         if (chara->model_0.stateStep_3 == 0)
                         {
@@ -6009,7 +6009,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                             chara->model_0.stateStep_3++;
                         }
                     }
-                    else if (g_Player_IsShooting || extra->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunRecoil, true))
+                    else if (g_Player_IsShooting || extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                     {
                         if (chara->model_0.stateStep_3 == 0)
                         {
@@ -6032,7 +6032,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                  (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) != EquippedWeaponId_Katana))
             {
                 if (IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0) && IS_ANIM_STATUS_ACTIVE(extra->model_0.anim_4.status_0) &&
-                    (chara->model_0.anim_4.status_0 >= ANIM_STATUS(PlayerAnim_Unk29, false) || chara->model_0.anim_4.keyframeIdx_8 == D_800C44F0[0].field_6))
+                    (chara->model_0.anim_4.status_0 >= ANIM_STATUS(HarryAnim_Unk29, false) || chara->model_0.anim_4.keyframeIdx_8 == D_800C44F0[0].field_6))
                 {
                     if (!g_Player_IsMovingForward)
                     {
@@ -6075,12 +6075,12 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
         case PlayerLowerBodyState_Reload:
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(PlayerAnim_HandgunRecoil, false);
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_HandgunRecoil, false);
                 chara->model_0.stateStep_3++;
             }
 
             if (IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0) && IS_ANIM_STATUS_ACTIVE(extra->model_0.anim_4.status_0) &&
-                (chara->model_0.anim_4.status_0 >= ANIM_STATUS(PlayerAnim_Unk29, false) || chara->model_0.anim_4.keyframeIdx_8 == D_800C44F0[0].field_6))
+                (chara->model_0.anim_4.status_0 >= ANIM_STATUS(HarryAnim_Unk29, false) || chara->model_0.anim_4.keyframeIdx_8 == D_800C44F0[0].field_6))
             {
                 if (g_Player_IsMovingForward)
                 {
@@ -6135,7 +6135,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         case PlayerLowerBodyState_RunForward:
         case PlayerLowerBodyState_RunRight:
         case PlayerLowerBodyState_RunLeft:
-            if (IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0) && chara->model_0.anim_4.status_0 >= ANIM_STATUS(PlayerAnim_RunForward, true))
+            if (IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0) && chara->model_0.anim_4.status_0 >= ANIM_STATUS(HarryAnim_RunForward, true))
             {
                 chara->properties_E4.player.exhaustionTimer_FC += g_DeltaTime0;
             }
@@ -6158,7 +6158,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
     chara->properties_E4.player.exhaustionTimer_FC = CLAMP(chara->properties_E4.player.exhaustionTimer_FC, FP_TIME(0.0f), FP_TIME(35.0f));
 
     // Check if player has >=30% or <10% of health to determine exertion level.
-    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_IdleExhausted, true))
+    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_IdleExhausted, true))
     {
         if (chara->properties_E4.player.exhaustionTimer_FC < FP_TIME(10.0f) &&
             chara->health_B0 >= Q12(30.0f))
@@ -6178,18 +6178,18 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             // Turn right.
             if (g_SysWork.player_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_TurnRight)
             {
-                func_800713E8(ANIM_STATUS(PlayerAnim_TurnRight, true), chara, 204, 200, sfx, pitch0);
+                func_800713E8(ANIM_STATUS(HarryAnim_TurnRight, true), chara, 204, 200, sfx, pitch0);
             }
             // Turn left.
             else if (g_SysWork.player_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_TurnLeft)
             {
-                func_800713E8(ANIM_STATUS(PlayerAnim_TurnLeft, true), chara, 187, 191, sfx, pitch0);
+                func_800713E8(ANIM_STATUS(HarryAnim_TurnLeft, true), chara, 187, 191, sfx, pitch0);
             }
 
             if ((g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Moving) &&
-                ((chara->model_0.anim_4.status_0 >= ANIM_STATUS(PlayerAnim_Idle, true) &&
-                  chara->model_0.anim_4.status_0 <= ANIM_STATUS(PlayerAnim_IdleExhausted, false)) ||
-                 chara->model_0.anim_4.status_0 == ANIM_STATUS(PlayerAnim_HandgunAim, true)))
+                ((chara->model_0.anim_4.status_0 >= ANIM_STATUS(HarryAnim_Idle, true) &&
+                  chara->model_0.anim_4.status_0 <= ANIM_STATUS(HarryAnim_IdleExhausted, false)) ||
+                 chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_HandgunAim, true)))
             {
                 func_8005DD44(sfx, &chara->position_18, FP_VOLUME(0.095f), pitch0);
 
@@ -6212,18 +6212,18 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 			
         case PlayerLowerBodyState_WalkBackward:
         case PlayerLowerBodyState_AimWalkBackward:
-            func_800713E8(ANIM_STATUS(PlayerAnim_WalkBackward, true), chara, 52, 63, sfx, pitch0);
+            func_800713E8(ANIM_STATUS(HarryAnim_WalkBackward, true), chara, 52, 63, sfx, pitch0);
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_AimWalkForward:
         case PlayerLowerBodyState_WalkForward:
-            func_800713E8(ANIM_STATUS(PlayerAnim_WalkForward, true), chara, 18, 6, sfx, pitch0);
+            func_800713E8(ANIM_STATUS(HarryAnim_WalkForward, true), chara, 18, 6, sfx, pitch0);
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunForward:
-            if (func_800713E8(ANIM_STATUS(PlayerAnim_RunForward, true), chara, 31, 41, sfx, pitch1))
+            if (func_800713E8(ANIM_STATUS(HarryAnim_RunForward, true), chara, 31, 41, sfx, pitch1))
             {
                 chara->properties_E4.player.runTimer_F8++;
             }
@@ -6232,17 +6232,17 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             break;
 
         case PlayerLowerBodyState_SidestepRight:
-            func_800713E8(ANIM_STATUS(PlayerAnim_SidestepRight, true), chara, 118, 108, sfx, pitch0);
+            func_800713E8(ANIM_STATUS(HarryAnim_SidestepRight, true), chara, 118, 108, sfx, pitch0);
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_SidestepLeft:
-            func_800713E8(ANIM_STATUS(PlayerAnim_SidestepLeft, true), chara, 93, 83, sfx, pitch0);
+            func_800713E8(ANIM_STATUS(HarryAnim_SidestepLeft, true), chara, 93, 83, sfx, pitch0);
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunRight:
-            if (func_800713E8(ANIM_STATUS(PlayerAnim_RunRight, true), chara, 145, 139, sfx, pitch1))
+            if (func_800713E8(ANIM_STATUS(HarryAnim_RunRight, true), chara, 145, 139, sfx, pitch1))
             {
                 chara->properties_E4.player.runTimer_F8++;
             }
@@ -6251,7 +6251,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             break;
 
         case PlayerLowerBodyState_RunLeft:
-            if (func_800713E8(ANIM_STATUS(PlayerAnim_RunLeft, true), chara, 131, 125, sfx, pitch1))
+            if (func_800713E8(ANIM_STATUS(HarryAnim_RunLeft, true), chara, 131, 125, sfx, pitch1))
             {
                 chara->properties_E4.player.runTimer_F8++;
             }
@@ -6264,22 +6264,22 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             {
                 if (chara->model_0.anim_4.keyframeIdx_8 < 152)
                 {
-                    func_800713E8(ANIM_STATUS(PlayerAnim_RunForwardWallStopRight, true), chara, 151, 154, sfx, pitch1);
+                    func_800713E8(ANIM_STATUS(HarryAnim_RunForwardWallStopRight, true), chara, 151, 154, sfx, pitch1);
                 }
                 else
                 {
-                    func_800713E8(ANIM_STATUS(PlayerAnim_RunForwardWallStopRight, true), chara, 156, 154, sfx, pitch1);
+                    func_800713E8(ANIM_STATUS(HarryAnim_RunForwardWallStopRight, true), chara, 156, 154, sfx, pitch1);
                 }
             }
             else
             {
                 if (chara->model_0.anim_4.keyframeIdx_8 < 162)
                 {
-                    func_800713E8(ANIM_STATUS(PlayerAnim_RunForwardWallStopLeft, true), chara, 164, 161, sfx, pitch1);
+                    func_800713E8(ANIM_STATUS(HarryAnim_RunForwardWallStopLeft, true), chara, 164, 161, sfx, pitch1);
                 }
                 else
                 {
-                    func_800713E8(ANIM_STATUS(PlayerAnim_RunForwardWallStopLeft, true), chara, 164, 166, sfx, pitch1);
+                    func_800713E8(ANIM_STATUS(HarryAnim_RunForwardWallStopLeft, true), chara, 164, 166, sfx, pitch1);
                 }
             }
 
@@ -6289,11 +6289,11 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         case PlayerLowerBodyState_RunLeftWallStop:
             if (chara->model_0.anim_4.keyframeIdx_8 < 323)
             {
-                func_800713E8(ANIM_STATUS(PlayerAnim_RunLeftWallStop, true), chara, 322, 324, sfx, pitch1);
+                func_800713E8(ANIM_STATUS(HarryAnim_RunLeftWallStop, true), chara, 322, 324, sfx, pitch1);
             }
             else
             {
-                func_800713E8(ANIM_STATUS(PlayerAnim_RunLeftWallStop, true), chara, 327, 324, sfx, pitch1);
+                func_800713E8(ANIM_STATUS(HarryAnim_RunLeftWallStop, true), chara, 327, 324, sfx, pitch1);
             }
 
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
@@ -6302,11 +6302,11 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         case PlayerLowerBodyState_RunRightWallStop:
             if (chara->model_0.anim_4.keyframeIdx_8 < 352)
             {
-                func_800713E8(ANIM_STATUS(PlayerAnim_RunRightWallStop, true), chara, 353, 351, sfx, pitch1);
+                func_800713E8(ANIM_STATUS(HarryAnim_RunRightWallStop, true), chara, 353, 351, sfx, pitch1);
             }
             else
             {
-                func_800713E8(ANIM_STATUS(PlayerAnim_RunRightWallStop, true), chara, 353, 356, sfx, pitch1);
+                func_800713E8(ANIM_STATUS(HarryAnim_RunRightWallStop, true), chara, 353, 356, sfx, pitch1);
             }
 
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
@@ -6315,11 +6315,11 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         case PlayerLowerBodyState_Stumble:
             if (chara->model_0.anim_4.keyframeIdx_8 < 172)
             {
-                func_800713E8(ANIM_STATUS(PlayerAnim_RunForwardStumble, true), chara, 171, 174, sfx, pitch1);
+                func_800713E8(ANIM_STATUS(HarryAnim_RunForwardStumble, true), chara, 171, 174, sfx, pitch1);
             }
             else
             {
-                func_800713E8(ANIM_STATUS(PlayerAnim_RunForwardStumble, true), chara, 176, 174, sfx, pitch1);
+                func_800713E8(ANIM_STATUS(HarryAnim_RunForwardStumble, true), chara, 176, 174, sfx, pitch1);
             }
 
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
@@ -6328,15 +6328,15 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         case PlayerLowerBodyState_RunLeftStumble:
             if (chara->model_0.anim_4.keyframeIdx_8 < 338)
             {
-                func_800713E8(ANIM_STATUS(PlayerAnim_RunLeftStumble, true), chara, 337, 341, sfx, pitch0);
+                func_800713E8(ANIM_STATUS(HarryAnim_RunLeftStumble, true), chara, 337, 341, sfx, pitch0);
             }
             else if (chara->model_0.anim_4.keyframeIdx_8 < 344)
             {
-                func_800713E8(ANIM_STATUS(PlayerAnim_RunLeftStumble, true), chara, 343, 341, sfx, pitch0);
+                func_800713E8(ANIM_STATUS(HarryAnim_RunLeftStumble, true), chara, 343, 341, sfx, pitch0);
             }
             else
             {
-                func_800713E8(ANIM_STATUS(PlayerAnim_RunLeftStumble, true), chara, 356, 346, sfx, pitch1);
+                func_800713E8(ANIM_STATUS(HarryAnim_RunLeftStumble, true), chara, 356, 346, sfx, pitch1);
             }
 
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
@@ -6345,15 +6345,15 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         case PlayerLowerBodyState_RunRightStumble:
             if (chara->model_0.anim_4.keyframeIdx_8 < 367)
             {
-                func_800713E8(ANIM_STATUS(PlayerAnim_RunRightStumble, true), chara, 366, 370, sfx, pitch0);
+                func_800713E8(ANIM_STATUS(HarryAnim_RunRightStumble, true), chara, 366, 370, sfx, pitch0);
             }
             else if (chara->model_0.anim_4.keyframeIdx_8 < 373)
             {
-                func_800713E8(ANIM_STATUS(PlayerAnim_RunRightStumble, true), chara, 372, 370, sfx, pitch0);
+                func_800713E8(ANIM_STATUS(HarryAnim_RunRightStumble, true), chara, 372, 370, sfx, pitch0);
             }
             else
             {
-                func_800713E8(ANIM_STATUS(PlayerAnim_RunRightStumble, true), chara, 385, 375, sfx, pitch1);
+                func_800713E8(ANIM_STATUS(HarryAnim_RunRightStumble, true), chara, 385, 375, sfx, pitch1);
             }
 
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
@@ -6361,13 +6361,13 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
         case PlayerLowerBodyState_QuickTurnLeft:
         case PlayerLowerBodyState_AimQuickTurnLeft:
-            func_800713E8(ANIM_STATUS(PlayerAnim_QuickTurnLeft, true), chara, 222, 224, sfx, pitch0);
+            func_800713E8(ANIM_STATUS(HarryAnim_QuickTurnLeft, true), chara, 222, 224, sfx, pitch0);
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_QuickTurnRight:
         case PlayerLowerBodyState_AimQuickTurnRight:
-            func_800713E8(ANIM_STATUS(PlayerAnim_QuickTurnRight, true), chara, 209, 211, sfx, pitch0);
+            func_800713E8(ANIM_STATUS(HarryAnim_QuickTurnRight, true), chara, 209, 211, sfx, pitch0);
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 
@@ -6380,7 +6380,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
             if (chara->position_18.vy == D_800C4590.field_C)
             {
-                func_800713E8(ANIM_STATUS(PlayerAnim_JumpBackward, true), chara, 243, 245, sfx, pitch1);
+                func_800713E8(ANIM_STATUS(HarryAnim_JumpBackward, true), chara, 243, 245, sfx, pitch1);
             }
 
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
@@ -6390,33 +6390,32 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
 void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord) // 0x8007C0D8
 {
-    s_func_800699F8 sp10;
-    VECTOR3         sp20;
-    VECTOR3         sp30;
-    VECTOR3         sp40;
-    s16             temp_v0;
-    s16             someAngle;
-    s16             temp_s0;
-    s32             temp_s0_2;
-    s32             temp_s2;
-    s32             temp_s2_2;
-    s32             temp_s3;
-    s32             temp_s3_2;
-    s32             temp_v0_3;
-    s16             temp_v1;
-    s32             posY;
-    u32             temp;
+    s_Collision coll;
+    VECTOR3     sp20;
+    VECTOR3     sp30;
+    VECTOR3     sp40;
+    s16         temp_v0;
+    s16         someAngle;
+    s16         temp_s0;
+    s32         temp_s0_2;
+    s32         temp_s2;
+    s32         temp_s2_2;
+    s32         temp_s3;
+    s32         temp_s3_2;
+    s32         temp_v0_3;
+    s16         temp_v1;
+    s32         posY;
+    u32         temp;
 
     D_800C45F8 = chara->position_18;
 
-    func_800699F8(&sp10, chara->position_18.vx, chara->position_18.vz);
+    Collision_Get(&coll, chara->position_18.vx, chara->position_18.vz);
 
     temp_s3 = FP_MULTIPLY(chara->moveSpeed_38, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
     temp_s2 = FP_MULTIPLY(chara->moveSpeed_38, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
 
-    temp_s0 = Math_Cos(ABS(sp10.field_4) >> 3);
-
-    temp_v0 = Math_Cos(ABS(sp10.field_6) >> 3);
+    temp_s0 = Math_Cos(ABS(coll.field_4) >> 3);
+    temp_v0 = Math_Cos(ABS(coll.field_6) >> 3);
 
     temp_v1 = FP_MULTIPLY(FP_MULTIPLY(temp_s3, temp_s0, Q12_SHIFT), temp_s0, Q12_SHIFT);
     someAngle = FP_MULTIPLY(FP_MULTIPLY(temp_s2, temp_v0, Q12_SHIFT), temp_v0, Q12_SHIFT);
@@ -7581,7 +7580,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
 
         if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_HyperBlaster &&
             g_SysWork.playerCombatInfo_38.isAiming_13 &&
-            model->anim_4.status_0 >= ANIM_STATUS(PlayerAnim_HandgunAim, true) && model->anim_4.keyframeIdx_8 >= 574)
+            model->anim_4.status_0 >= ANIM_STATUS(HarryAnim_HandgunAim, true) && model->anim_4.keyframeIdx_8 >= 574)
         {
             if (g_SysWork.player_4C.extra_128.state_1C < PlayerState_Idle)
             {
@@ -8249,17 +8248,17 @@ void Player_Controller() // 0x8007F32C
     {
         switch (Inventory_HyperBlasterFunctionalTest())
         {
-            case 0: // If player has the weapon, but it's not unlocked.
+            case 0: // Player has weapon (not unlocked).
                 g_Player_IsAiming = false;
                 break;
 
-            case 1: // This is the code for the Konami gun controller.
+            case 1: // Konami gun controller.
                 g_Player_IsAiming    = g_Controller1->btnsHeld_C & ControllerFlag_Cross;
                 g_Player_IsShooting  = g_Controller1->btnsHeld_C & ControllerFlag_Square;
                 g_Player_IsAttacking = g_Player_IsShooting;
                 break;
 
-            case 2: // If player has the weapon and is unlocked.
+            case 2: // Player has weapon (unlocked).
                 break;
         }
     }
@@ -8622,7 +8621,7 @@ bool func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800806AC
         return result;
     }
 
-    func_800699F8(&D_800C4620, arg1, arg3);
+    Collision_Get(&D_800C4620, arg1, arg3);
 
     result = arg2 < D_800C4620.groundHeight_0;
     if (result)
@@ -8649,7 +8648,7 @@ void func_8008076C(s32 posX, s32 posZ) // 0x8008076C
     s32              caseVar;
     s32              x;
     s32              z;
-    s_func_800699F8* coll;
+    s_Collision* coll;
 
     coll = &D_800AFC78.field_C;
 
@@ -8660,7 +8659,7 @@ void func_8008076C(s32 posX, s32 posZ) // 0x8008076C
         return;
     }
 
-    func_800699F8(coll, posX, posZ);
+    Collision_Get(coll, posX, posZ);
     D_800AFC78.position_0.vx = posX;
     D_800AFC78.position_0.vz = posZ;
 

@@ -1365,11 +1365,11 @@ void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6,
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088370); // 0x80088370
 
-bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 arg3, s_LmHeader* lmHeader, s_FsImageDesc* tex) // 0x80088C7C
+bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 arg3, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x80088C7C
 {
     func_80035338(arg0 + 1, charaId, NULL, coord);
     func_8003D5B4(arg3);
-    func_8003D6E0(charaId, arg0, lmHeader, tex);
+    func_8003D6E0(charaId, arg0, lmHdr, tex);
     return true;
 }
 
@@ -1394,7 +1394,7 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, s32 posX, s32 posZ, s16 posY, u32 stateSt
     #define SET_FLAG(ptr, idx) \
         ((((u32*)ptr)[(idx) >> 5] |= (1 << 0) << ((idx) & 0x1F)))
 
-    s_func_800699F8 sp10;
+    s_Collision     coll;
     s32             i;
     s32             var_a0;
     s32             arg1_1;
@@ -1464,9 +1464,9 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, s32 posX, s32 posZ, s16 posY, u32 stateSt
         g_SysWork.npcs_1A0[i].model_0.stateStep_3 = stateStep;
         g_SysWork.npcs_1A0[i].position_18.vx      = posX;
 
-        func_800699F8(&sp10, posX, posZ);
+        Collision_Get(&coll, posX, posZ);
 
-        g_SysWork.npcs_1A0[i].position_18.vy = sp10.groundHeight_0;
+        g_SysWork.npcs_1A0[i].position_18.vy = coll.groundHeight_0;
         g_SysWork.npcs_1A0[i].position_18.vz = posZ;
         g_SysWork.npcs_1A0[i].rotation_24.vy = posY;
 
@@ -2364,47 +2364,47 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B714); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008BF84); // 0x8008BF84
 
-void DmsHeader_FixOffsets(s_DmsHeader* header) // 0x8008C9A0
+void DmsHeader_FixOffsets(s_DmsHeader* dmsHdr) // 0x8008C9A0
 {
-    s_DmsEntry* chara;
+    s_DmsEntry* entry;
 
-    if (header->isLoaded_0)
+    if (dmsHdr->isLoaded_0)
     {
         return;
     }
 
-    header->isLoaded_0 = true;
+    dmsHdr->isLoaded_0 = true;
 
-    // Add memory addr of DMS header to offsets in header.
-    header->intervalPtr_8 = (u8*)header->intervalPtr_8 + (u32)header;
-    header->characters_18 = (u8*)header->characters_18 + (u32)header;
+    // Add memory address of DMS header to offsets in `dmsHdr`.
+    dmsHdr->intervalPtr_8 = (u8*)dmsHdr->intervalPtr_8 + (u32)dmsHdr;
+    dmsHdr->characters_18 = (u8*)dmsHdr->characters_18 + (u32)dmsHdr;
 
-    DmsEntry_FixOffsets(&header->camera_1C, header);
+    DmsEntry_FixOffsets(&dmsHdr->camera_1C, dmsHdr);
 
-    for (chara = header->characters_18;
-         chara < &header->characters_18[header->characterCount_1];
-         chara++)
+    for (entry = dmsHdr->characters_18;
+         entry < &dmsHdr->characters_18[dmsHdr->characterCount_1];
+         entry++)
     {
-        DmsEntry_FixOffsets(chara, header);
+        DmsEntry_FixOffsets(entry, dmsHdr);
     }
 }
 
-void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* header) // 0x8008CA44
+void DmsEntry_FixOffsets(s_DmsEntry* entry, s_DmsHeader* dmsHdr) // 0x8008CA44
 {
-    entry->keyframes_C.character = (u32)entry->keyframes_C.character + (u32)header;
-    entry->svectorPtr_8          = (u32)entry->svectorPtr_8 + (u32)header;
+    entry->keyframes_C.character = (u32)entry->keyframes_C.character + (u32)dmsHdr;
+    entry->svectorPtr_8          = (u32)entry->svectorPtr_8 + (u32)dmsHdr;
 }
 
-s_DmsInterval* func_8008CA60(volatile s32 unused, s32 idx, s_DmsHeader* header) // 0x8008CA60
+s_DmsInterval* func_8008CA60(volatile s32 unused, s32 idx, s_DmsHeader* dmsHdr) // 0x8008CA60
 {
-    return &header->intervalPtr_8[idx];
+    return &dmsHdr->intervalPtr_8[idx];
 }
 
-void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, q19_12 time, s_DmsHeader* header) // 0x8008CA74
+void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, q19_12 time, s_DmsHeader* dmsHdr) // 0x8008CA74
 {
     s32 charaIdx;
 
-    charaIdx = Dms_CharacterFindIdxByName(charaName, header);
+    charaIdx = Dms_CharacterFindIdxByName(charaName, dmsHdr);
     if (charaIdx == NO_VALUE)
     {
         // Character not found in DMS.
@@ -2421,17 +2421,17 @@ void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, 
     }
     else
     {
-        Dms_CharacterGetPosRotByIdx(pos, rot, charaIdx, time, header);
+        Dms_CharacterGetPosRotByIdx(pos, rot, charaIdx, time, dmsHdr);
     }
 }
 
-s32 Dms_CharacterFindIdxByName(char* name, s_DmsHeader* header) // 0x8008CB10
+s32 Dms_CharacterFindIdxByName(char* name, s_DmsHeader* dmsHdr) // 0x8008CB10
 {
     s32 i;
 
-    for (i = 0; i < header->characterCount_1; i++)
+    for (i = 0; i < dmsHdr->characterCount_1; i++)
     {
-        if (!strncmp(name, header->characters_18[i].name_4, 4))
+        if (!strncmp(name, dmsHdr->characters_18[i].name_4, 4))
         {
             return i;
         }
@@ -2440,7 +2440,7 @@ s32 Dms_CharacterFindIdxByName(char* name, s_DmsHeader* header) // 0x8008CB10
     return NO_VALUE;
 }
 
-void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q19_12 time, s_DmsHeader* header) // 0x8008CB90
+void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q19_12 time, s_DmsHeader* dmsHdr) // 0x8008CB90
 {
     s_DmsEntry*             charaEntry;
     s32                     keyframePrev;
@@ -2449,16 +2449,16 @@ void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q19_
     s_DmsKeyframeCharacter* keyframes;
     s_DmsKeyframeCharacter  curFrame;
 
-    charaEntry = &header->characters_18[charaIdx];
-    func_8008D1D0(&keyframePrev, &keyframeNext, &alpha, time, charaEntry, header);
+    charaEntry = &dmsHdr->characters_18[charaIdx];
+    func_8008D1D0(&keyframePrev, &keyframeNext, &alpha, time, charaEntry, dmsHdr);
 
     keyframes = charaEntry->keyframes_C.character;
     Dms_CharacterKeyframeInterpolate(&curFrame, &keyframes[keyframePrev], &keyframes[keyframeNext], alpha);
 
     // Set position.
-    pos->vx = FP_METER_FROM_GEO(curFrame.position_0.vx + header->origin_C.vx);
-    pos->vy = FP_METER_FROM_GEO(curFrame.position_0.vy + header->origin_C.vy);
-    pos->vz = FP_METER_FROM_GEO(curFrame.position_0.vz + header->origin_C.vz);
+    pos->vx = FP_METER_FROM_GEO(curFrame.position_0.vx + dmsHdr->origin_C.vx);
+    pos->vy = FP_METER_FROM_GEO(curFrame.position_0.vy + dmsHdr->origin_C.vy);
+    pos->vz = FP_METER_FROM_GEO(curFrame.position_0.vz + dmsHdr->origin_C.vz);
 
     // Set rotation.
     rot->vx = curFrame.rotation_6.vx;
@@ -2484,7 +2484,7 @@ s16 func_8008CDBC(s16 angle) // 0x8008CDBC
     return (96 * Math_Cos(angle / 2)) / Math_Sin(angle / 2);
 }
 
-s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, q19_12 time, s_DmsHeader* header) // 0x8008CE1C
+s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, q19_12 time, s_DmsHeader* dmsHdr) // 0x8008CE1C
 {
     s32                 keyframePrev;
     s32                 keyframeNext;
@@ -2493,18 +2493,18 @@ s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2,
     s32                 camProjValue;
     s_DmsEntry*         camEntry;
 
-    camEntry = &header->camera_1C;
+    camEntry = &dmsHdr->camera_1C;
 
-    func_8008D1D0(&keyframePrev, &keyframeNext, &alpha, time, camEntry, header);
+    func_8008D1D0(&keyframePrev, &keyframeNext, &alpha, time, camEntry, dmsHdr);
     camProjValue = Dms_CameraKeyframeInterpolate(&curFrame, &camEntry->keyframes_C.camera[keyframePrev], &camEntry->keyframes_C.camera[keyframeNext], alpha);
 
-    posTarget->vx = FP_METER_FROM_GEO(curFrame.posTarget_0.vx + header->origin_C.vx);
-    posTarget->vy = FP_METER_FROM_GEO(curFrame.posTarget_0.vy + header->origin_C.vy);
-    posTarget->vz = FP_METER_FROM_GEO(curFrame.posTarget_0.vz + header->origin_C.vz);
+    posTarget->vx = FP_METER_FROM_GEO(curFrame.posTarget_0.vx + dmsHdr->origin_C.vx);
+    posTarget->vy = FP_METER_FROM_GEO(curFrame.posTarget_0.vy + dmsHdr->origin_C.vy);
+    posTarget->vz = FP_METER_FROM_GEO(curFrame.posTarget_0.vz + dmsHdr->origin_C.vz);
 
-    lookAtTarget->vx = FP_METER_FROM_GEO(curFrame.lookAtTarget_6.vx + header->origin_C.vx);
-    lookAtTarget->vy = FP_METER_FROM_GEO(curFrame.lookAtTarget_6.vy + header->origin_C.vy);
-    lookAtTarget->vz = FP_METER_FROM_GEO(curFrame.lookAtTarget_6.vz + header->origin_C.vz);
+    lookAtTarget->vx = FP_METER_FROM_GEO(curFrame.lookAtTarget_6.vx + dmsHdr->origin_C.vx);
+    lookAtTarget->vy = FP_METER_FROM_GEO(curFrame.lookAtTarget_6.vy + dmsHdr->origin_C.vy);
+    lookAtTarget->vz = FP_METER_FROM_GEO(curFrame.lookAtTarget_6.vz + dmsHdr->origin_C.vz);
 
     if (arg2 != NULL)
     {
@@ -2533,7 +2533,7 @@ s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, const s_DmsKeyfra
     return result->field_C[1];
 }
 
-void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, s32* alpha, q19_12 time, s_DmsEntry* camEntry, s_DmsHeader* header) // 0x8008D1D0
+void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, s32* alpha, q19_12 time, s_DmsEntry* camEntry, s_DmsHeader* dmsHdr) // 0x8008D1D0
 {
     s32 prevVal;
     s32 nextVal;
@@ -2541,7 +2541,7 @@ void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, s32* alpha, q19_12 time
     prevVal = 0;
     nextVal = 0;
     
-    switch (Dms_IntervalStatusGet(time, header))
+    switch (Dms_IntervalStatusGet(time, dmsHdr))
     {
         case 0:
             prevVal = FP_FROM(time, Q12_SHIFT);
@@ -2566,15 +2566,15 @@ void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, s32* alpha, q19_12 time
     *nextKeyframe = func_8008D330(nextVal, camEntry);
 }
 
-u32 Dms_IntervalStatusGet(s32 time, s_DmsHeader* header)
+u32 Dms_IntervalStatusGet(s32 time, s_DmsHeader* dmsHdr)
 {
     s_DmsInterval* interval;
 
     // Keyframe index.
     time = FP_FROM(time, Q12_SHIFT);
 
-    for (interval = header->intervalPtr_8;
-         interval < &header->intervalPtr_8[header->intervalCount_2];
+    for (interval = dmsHdr->intervalPtr_8;
+         interval < &dmsHdr->intervalPtr_8[dmsHdr->intervalCount_2];
          interval++)
     {
         if (time != ((interval->startKeyframeIdx_0 + interval->frameCount_2) - 1))
@@ -2890,9 +2890,9 @@ s_FsImageDesc img0 = { .tPage = { 0, 13 } }; // 0x800AFD9C
 // Large function.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D990); // 0x8008D990
 
-void func_8008E4EC(s_LmHeader* lmHeader) // 0x8008E4EC
+void func_8008E4EC(s_LmHeader* lmHdr) // 0x8008E4EC
 {
-    func_80056504(lmHeader, D_8002B2CC.str, &img0, 1);
+    func_80056504(lmHdr, D_8002B2CC.str, &img0, 1);
 }
 
 s_WaterZone* Map_WaterZoneGet(s32 posX, s32 posZ, s_WaterZone* waterZone)

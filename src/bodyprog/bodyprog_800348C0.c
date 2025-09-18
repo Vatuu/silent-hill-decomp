@@ -811,7 +811,7 @@ void Gfx_LoadingScreen_PlayerRun() // 0x80035BE0
     }
 
     Anim_Update1(model, (s_Skeleton*)FS_BUFFER_0, boneCoords, &D_800A998C);
-    vcMoveAndSetCamera(1, 0, 0, 0, 0, 0, 0, 0);
+    vcMoveAndSetCamera(true, false, false, false, false, false, false, false);
     func_8003F170();
     func_8003DA9C(1, boneCoords, 1, g_SysWork.player_4C.chara_0.timer_C6, 0);
 }
@@ -1760,15 +1760,15 @@ void Chara_PositionUpdateFromParams(s_AreaLoadParams* params) // 0x800371E8
 
 void func_80037334() // 0x80037334
 {
-    s_func_800699F8 sp10;
+    s_Collision coll;
 
     if (g_MapOverlayHeader.func_40 != 0)
     {
         g_MapOverlayHeader.func_40();
     }
 
-    func_800699F8(&sp10, g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz);
-    g_SysWork.player_4C.chara_0.position_18.vy = sp10.groundHeight_0;
+    Collision_Get(&coll, g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz);
+    g_SysWork.player_4C.chara_0.position_18.vy = coll.groundHeight_0;
 }
 
 void func_80037388() // 0x80037388
@@ -2153,7 +2153,7 @@ void GameState_InGame_Update() // 0x80038BD4
     if (!(g_SysWork.field_22A0 & (1 << 0)))
     {
         func_80040014();
-        vcMoveAndSetCamera(0, 0, 0, 0, 0, 0, 0, 0);
+        vcMoveAndSetCamera(false, false, false, false, false, false, false, false);
         if (g_MapOverlayHeader.func_44 != NULL)
         {
             g_MapOverlayHeader.func_44();

@@ -14,12 +14,9 @@ void Ai_Splithead_Init(s_SubCharacter* chara)
         chara->properties_E4.larvalStalker.properties_E8[i].val32 = 0;
     }
 
-    chara->model_0.state_2               = 8;
-    chara->model_0.anim_4.status_0      = ANIM_STATUS(10, true);
-    chara->model_0.anim_4.time_4         = FP_TIME(162.0f);
-    chara->model_0.anim_4.keyframeIdx_8 = 162;
-
-    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, sharedData_800D5888_1_s05);
+    chara->model_0.state_2 = 8;
+    Character_AnimSet(chara, ANIM_STATUS(SplitheadAnim_Unk10, true), 162);
+    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, SPLITHEAD_ANIM_INFOS);
 
     sharedData_800D8614_1_s05 = 0;
     sharedData_800D8616_1_s05 = 0;

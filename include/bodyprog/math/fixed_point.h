@@ -57,40 +57,38 @@
 #define FP_ROUND_TO_ZERO(x, shift) \
     ((s32)(FP_FROM(x, shift) + ((u32)(x) >> 31)) >> 1)
 
-/** @brief Multiplies two integers in a fixed-point Q format and converts the result from the fixed-point Q format.
+/** @brief Multiplies two integers in a fixed-point Q format.
  *
  * @param a First fixed-point factor.
  * @param b Second fixed-point factor.
  * @param shift Fixed-point shift.
- * @return Product of `a` and `b` converted from fixed-point.
+ * @return Fixed-point product of `a` and `b`.
  */
 #define FP_MULTIPLY(a, b, shift) \
     (((a) * (b)) >> (shift))
 
-/** @brief Multiplies two integers in a fixed-point Q format and converts the result from the fixed-point Q format,
- * using 64-bit intermediates for higher precision.
+/** @brief Multiplies two integers in a fixed-point Q format, using 64-bit intermediates for higher precision.
  *
  * @param a First fixed-point factor.
  * @param b Second fixed-point factor.
  * @param shift Fixed-point shift.
- * @return Precise product of `a` and `b` converted from fixed-point.
+ * @return Precise fixed-point product of `a` and `b`.
  */
 #define FP_MULTIPLY_PRECISE(a, b, shift) \
     (((s64)(a) * (s64)(b)) >> (shift))
 
-/** @brief Multiplies an integer in a fixed-point Q format by a float converted to a fixed-point Q format,
- * then converts the result back from the fixed-point Q format.
+/** @brief Multiplies an integer in a fixed-point Q format by a float converted to a fixed-point Q format.
  *
  * @param a First fixed-point factor.
  * @param b Second floating-point factor.
  * @param shift Fixed-point shift.
- * @return Product of `a` and `b` converted from fixed-point.
+ * @return Fixed-point product of `a` and `b`.
  */
 #define FP_MULTIPLY_FLOAT(aInt, bFlt, shift) \
     FP_MULTIPLY(aInt, FP_FLOAT_TO(bFlt, shift), shift)
 
 /** @brief Multiplies an integer in a fixed-point Q format by a float converted to fixed-point Q format,
- * then converts the result back from the fixed-point Q format using a 64-bit intermediates for higher precision.
+ * using a 64-bit intermediates for higher precision.
  *
  * @param a First fixed-point factor.
  * @param b Second floating-point factor.
@@ -98,7 +96,18 @@
  * @return Precise product of `a` and `b` converted from fixed-point.
  */
 #define FP_MULTIPLY_FLOAT_PRECISE(aInt, bFlt, shift) \
-    FP_MULTIPLY((s64)(aInt), (s64)FP_FLOAT_TO(bFlt, shift), (shift))
+    FP_MULTIPLY((s64)(aInt), (s64)FP_FLOAT_TO(bFlt, shift), shift)
+
+/** @brief Computes the square 2D distance between two positions in Q19.12,
+ * using low-precision Q21.8 intermediates to avoid overflow.
+ *
+ * @param from First position.
+ * @param to Second position.
+ * @param return 2D distance between two positions.
+ */
+#define FP_2D_DISTANCE_SQR(from, to)                                     \
+    ((Q12_TO_Q8((to).vx - (from).vx) * Q12_TO_Q8((to).vx - (from).vx)) + \
+     (Q12_TO_Q8((to).vz - (from).vz) * Q12_TO_Q8((to).vz - (from).vz)))
 
 // ==================================
 // RAW Q FORMAT CONVERSION AND UTILS
@@ -232,6 +241,16 @@
  */
 #define FP_ANGLE_FROM_PACKED(deg) \
     (s16)Q8_TO_Q12(deg)
+
+/** @brief Normalizes signed fixed-point degrees in Q3.12 to the unsigned range `[0, 4095]`.
+ *
+ * @note Has the same effect as `FP_ANGLE_NORM_U`. Could they somehow be combined?
+ *
+ * @param deg Signed fixed-point degrees in Q3.12, integer range `[-2048, 2047]`.
+ * @return Unsigned fixed-point degrees in Q3.12, wrapped to the integer range `[0, 4095]` (`s16`).
+ */
+#define ABS_ANGLE(deg) \
+    Q12_FRACT((deg) + FP_ANGLE(360.0f))
 
 /** @brief Normalizes unsigned fixed-point degrees in Q3.12 to the signed integer range `[-2048, 2047]`.
  *

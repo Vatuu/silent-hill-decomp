@@ -36,7 +36,7 @@ extern s_EventPosition D_800DE140;
 
 extern VECTOR3 D_800DE154;
 
-extern s32 g_Timer0; // 0x800E239C
+extern q19_12 g_Timer0; // 0x800E239C
 
 extern u8 g_SoundCmdIdx; // 0x800E23A0
 
@@ -78,7 +78,7 @@ void func_800D3CC4(s_SubCharacter* chara);
 
 void func_800D3DFC(s_SubCharacter* chara);
 
-q19_12 func_800D7E88(s_Model* model);
+q19_12 Model_AnimDurationGet(s_Model* model);
 
 void func_800DA778(s32 arg0);
 
