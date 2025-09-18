@@ -1176,7 +1176,7 @@ typedef struct
     char               mapTag_144[4];
     s32                mapTagSize_148;
     s32                ipdFileIdx_14C;
-    s_IpdHeader*       ipdBuf_150;
+    s_IpdHeader*       ipdBuffer_150;
     s32                ipdBufSize_154;
     s32                ipdActiveSize_158;
     s_IpdChunk         ipdActive_15C[4];
@@ -2648,14 +2648,14 @@ void func_80041CB4(s_func_80041CB4* arg0, s_LmHeader* lmHdr);
 void func_80041CEC(s_LmHeader* lmHdr);
 
 /** @brief Clears `queueIdx_4` in array of `s_IpdChunk` */
-void Ipd_ActiveChunksQueueIdxClear(s_IpdChunk* arg0, s32 size);
+void Ipd_ActiveChunksQueueIdxClear(s_IpdChunk* chunks, s32 chunkCount);
 
 /** Crucial for map loading. */
 void func_80041D48();
 
 void func_80041E98();
 
-void Map_PlaceIpdAtGridPos(s16 ipdFileIdx, s32 x, s32 z);
+void Map_PlaceIpdAtGridPos(s16 ipdFileIdx, s32 chunkCoordX, s32 chunkCoordZ);
 
 void func_80041FF0();
 
@@ -2705,7 +2705,7 @@ u32 LmHeader_LoadStateGet(s_func_80041CB4* arg0);
  * @param
  * @return IPD file load state `(e_StaticModelLoadState`).
  */
-u32 IpdHeader_LoadStateGet(s_IpdChunk* arg0);
+u32 IpdHeader_LoadStateGet(s_IpdChunk* chunk);
 
 /** @brief Checks if an IPD file is loaded.
  *
@@ -2734,12 +2734,12 @@ void func_800433B8(s_800C1020* arg0);
 /** Args are X and Z? */
 s32 func_80043554(s32 gridX, s32 gridZ);
 
-bool func_80043578(s_IpdChunk* arg0, s32 arg1, s32 arg2);
+bool func_80043578(s_IpdChunk* chunks, s32 arg1, s32 arg2);
 
-s_IpdChunk* func_800435E4(s_IpdChunk* chunk, bool hasGlobalPlm);
+s_IpdChunk* func_800435E4(s_IpdChunk* chunks, bool hasGlobalPlm);
 
 /** Maybe facilitates file chunk streaming as the player moves around the map. */
-s32 func_800436D8(s_IpdChunk* chunk, s32 fileIdx, s32 fileChunkCoordX, s32 fileChunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool hasGlobalPlm);
+s32 func_800436D8(s_IpdChunk* chunk, s32 fileIdx, s32 chunkCoordX, s32 chunkCoordZ, s32 posX0, s32 posZ0, s32 posX1, s32 posZ1, bool hasGlobalPlm);
 
 bool func_80043740();
 
@@ -2749,7 +2749,7 @@ bool func_8004393C(s32 posX, s32 posZ);
 
 void func_80043A24(GsOT* ot, s32 arg1);
 
-bool func_80043B34(s_IpdChunk* arg0, s_800C1020* arg1);
+bool func_80043B34(s_IpdChunk* chunk, s_800C1020* arg1);
 
 /** Checks if PLM texture is loaded? */
 bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHdr);
