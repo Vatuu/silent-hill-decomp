@@ -838,8 +838,8 @@ typedef struct
     s32                field_34;
     s16                field_38;
     s16                field_3A;
-    s16                field_3C;
-    s16                field_3E;
+    s16                field_3C; // X?
+    s16                field_3E; // Z?
     s8*                field_40;
     s_func_8006CC44_44 field_44;
     s32                field_7C;

@@ -4720,20 +4720,20 @@ void func_8006D01C(VECTOR3* arg0, VECTOR3* arg1, s16 arg2, s_func_8006CC44* arg3
     arg1->vx = FP_MULTIPLY(temp_v0, temp_s1, Q12_SHIFT);
     arg1->vz = FP_MULTIPLY(temp_v0, -temp_s0, Q12_SHIFT);
 
-    if (temp_s0 > 0x555)
+    if (temp_s0 > FP_METER(1.0f / 3.0f))
     {
         arg0->vx += 0x10;
     }
-    else if (temp_s0 < -0x555)
+    else if (temp_s0 < FP_METER(-1.0f / 3.0f))
     {
         arg0->vx -= 0x10;
     }
 
-    if (temp_s1 > 0x555)
+    if (temp_s1 > FP_METER(1.0f / 3.0f))
     {
         arg0->vz += 0x10;
     }
-    else if (temp_s1 < -0x555)
+    else if (temp_s1 < FP_METER(-1.0f / 3.0f))
     {
         arg0->vz -= 0x10;
     }
