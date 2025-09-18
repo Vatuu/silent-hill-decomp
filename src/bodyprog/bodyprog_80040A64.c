@@ -537,7 +537,7 @@ void func_80041C24(s_LmHeader* lmHeader, s32 arg1, s32 arg2) // 0x80041C24
     D_800C1020.ipdTableSize_158 = 0;
     D_800C1020.hasGlobalPlm = 1;
 
-    func_80041D10(D_800C1020.ipdTable_15C, 4);
+    Ipd_ActiveChunksQueueIdxClear(D_800C1020.ipdTable_15C, 4);
     func_80041D48();
     func_80041E98();
 }
@@ -561,7 +561,7 @@ void func_80041CEC(s_LmHeader* lmHeader) // 0x80041CEC
     lmHeader->modelCount_8    = 0;
 }
 
-void func_80041D10(s_IpdChunk* arg0, s32 size) // 0x80041D10
+void Ipd_ActiveChunksQueueIdxClear(s_IpdChunk* arg0, s32 size) // 0x80041D10
 {
     s_IpdChunk* ptr;
 

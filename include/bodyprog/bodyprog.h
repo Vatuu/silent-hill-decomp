@@ -2651,7 +2651,7 @@ void func_80041CB4(s_func_80041CB4* arg0, s_LmHeader* lmHeader);
 void func_80041CEC(s_LmHeader* lmHeader);
 
 /** @brief Clears `queueIdx_4` in array of `s_IpdChunk` */
-void func_80041D10(s_IpdChunk* arg0, s32 size);
+void Ipd_ActiveChunksQueueIdxClear(s_IpdChunk* arg0, s32 size);
 
 /** Crucial for map loading. */
 void func_80041D48();
