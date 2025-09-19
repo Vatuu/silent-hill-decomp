@@ -853,7 +853,7 @@ void func_8003C0C0() // 0x8003C0C0
     s_800BCE18_1BAC* ptr = &D_800BCE18.field_1BAC;
 
     ptr->itemId_0 = NO_VALUE;
-    ptr->field_14 = (s_LmHeader*)(Fs_GetFileSize(FILE_CHARA_HERO_ILM) + 0x800FE600); // `field_14` defined as a pointer?
+    ptr->field_14 = (s_LmHeader*)ILM_BUFFER0;
     ptr->field_18 = 0;
     ptr->field_1C = 0;
     ptr->field_20 = 0;
@@ -864,7 +864,7 @@ void func_8003C110() // 0x8003C110
     s32              i;
     s_800BCE18_0_CC* var_s0;
 
-    for (i = 0; i < 45; i++)
+    for (i = 0; i < Chara_Count; i++)
     {
         if (i != 1)
         {
@@ -872,16 +872,17 @@ void func_8003C110() // 0x8003C110
         }
     } 
 
-    D_800BCE18.field_0[0].field_14 = Fs_GetFileSize(FILE_CHARA_HERO_ILM) + 0x800FEE00;
+    D_800BCE18.field_0[0].field_14 = (s_LmHeader*)ILM_BUFFER1;
 
-    // TODO: This part could be rewritten in a less confusing way.
-    var_s0 = &D_800BCE18.field_0[0].field_CC;
-
-    while ((u32)var_s0 < (u32)&D_800BCE18.field_164C)
-    {
-        func_8003C1AC((u32)var_s0);
-        var_s0 = (int)var_s0 + sizeof(s_800BCE18_0); // TODO: Fake match.
-    } 
+    /* Slightly less, but still hacky loop. Equivalent of:
+     *  for (i = 0; i < 4; i++)
+     *      func_8003C1AC(&D_800BCE18.field_0[i].field_CC);
+     */
+    for (var_s0 = &D_800BCE18.field_0[0].field_CC;
+            var_s0 < &D_800BCE18.field_0[4].field_CC;
+            (int)var_s0 += sizeof(D_800BCE18.field_0[0])) {
+        func_8003C1AC(var_s0);
+    }
 }
 
 void func_8003C1AC(s_800BCE18_0_CC* arg0) // 0x8003C1AC
@@ -892,7 +893,7 @@ void func_8003C1AC(s_800BCE18_0_CC* arg0) // 0x8003C1AC
     arg0->field_0 = 0;
     arg0->field_1 = 0;
     arg0->field_4 = 0;
-    arg0->lmHdr_8 = (s_LmHeader*)((void*)0x800FEE00 + Fs_GetFileSize(FILE_CHARA_HERO_ILM));
+    arg0->lmHdr_8 = (s_LmHeader*)ILM_BUFFER1;
     arg0->texture_C = sp10;
 }
 
@@ -1718,7 +1719,7 @@ void func_8003D5B4(s8 flags) // 0x8003D5B4
 
     i = 0; 
 
-    D_800BCE18.field_0[0].field_14 = Fs_GetFileSize(FILE_CHARA_HERO_ILM) + 0x800FEE00;
+    D_800BCE18.field_0[0].field_14 = ILM_BUFFER;
 
     for (; i < 4; i++)
     {
