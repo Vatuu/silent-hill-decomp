@@ -2760,7 +2760,7 @@ void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCou
 void func_80043C7C(s_IpdHeader* ipdHdr, s_ActiveTextures* arg1, s_ActiveTextures* arg2, s32 fileIdx);
 
 /** Checks if IPD is loaded before returning texture count? */
-s32 Ipd_MaterialCount(s_IpdHeader* ipdHdr);
+s32 Ipd_HalfResMaterialCount(s_IpdHeader* ipdHdr);
 
 /** Returns inverse result of `LmFilter_HalfResolution`. */
 bool LmFilter_FullResolution(s_Material* mat);

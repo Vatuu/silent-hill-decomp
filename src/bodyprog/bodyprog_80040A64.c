@@ -1202,7 +1202,7 @@ void Ipd_ActiveChunksSample(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1
         }
         else
         {
-            curChunk->matCount_14 = Ipd_MaterialCount(curChunk->ipdHdr_0);
+            curChunk->matCount_14 = Ipd_HalfResMaterialCount(curChunk->ipdHdr_0);
         }
 
         if (curChunk->distance0_C > FP_METER(0.0f) && curChunk->distance1_10 > FP_METER(0.0f))
@@ -1552,7 +1552,7 @@ void func_80043C7C(s_IpdHeader* ipdHdr, s_ActiveTextures* arg1, s_ActiveTextures
     }
 }
 
-s32 Ipd_MaterialCount(s_IpdHeader* ipdHdr) // 0x80043D00
+s32 Ipd_HalfResMaterialCount(s_IpdHeader* ipdHdr) // 0x80043D00
 {
     if (!ipdHdr->isLoaded_1)
     {
