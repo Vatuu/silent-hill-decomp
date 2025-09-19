@@ -1520,7 +1520,7 @@ s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHdr) // 0x80043BA
     return NULL;
 }
 
-void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_800C1450_0* arg3, s_800C1450_0* arg4, s32 arg5) // 0x80043BC4
+void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_ActiveTextures* arg3, s_ActiveTextures* arg4, s32 arg5) // 0x80043BC4
 {
     if (ipdHdr->isLoaded_1)
     {
@@ -1538,7 +1538,7 @@ void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCou
     IpdHeader_ModelBufferLinkObjectLists(ipdHdr, ipdHdr->modelInfo_14);
 }
 
-void func_80043C7C(s_IpdHeader* ipdHdr, s_800C1450_0* arg1, s_800C1450_0* arg2, s32 fileIdx) // 0x80043C7C
+void func_80043C7C(s_IpdHeader* ipdHdr, s_ActiveTextures* arg1, s_ActiveTextures* arg2, s32 fileIdx) // 0x80043C7C
 {
     if (!ipdHdr->isLoaded_1)
     {

@@ -1151,17 +1151,18 @@ typedef struct _IpdRow
 } s_IpdColumn;
 STATIC_ASSERT_SIZEOF(s_IpdColumn, 32);
 
-typedef struct
+// Texture_Get will place the reqested texture into an object of this type.
+typedef struct _ActiveTextures
 {
     s32        count_0;
     s_Texture* entries_4[10];
-} s_800C1450_0;
+} s_ActiveTextures;
 
 // Related to textures.
 typedef struct
 {
-    s_800C1450_0 field_0;
-    s_800C1450_0 field_2C;
+    s_ActiveTextures field_0;
+    s_ActiveTextures field_2C;
     s_Texture    textures_58[8];
     s_Texture    textures_118[2];
 } s_800C1450;
@@ -2756,9 +2757,9 @@ bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHdr);
 
 s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHdr);
 
-void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_800C1450_0* arg3, s_800C1450_0* arg4, s32 arg5);
+void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_ActiveTextures* arg3, s_ActiveTextures* arg4, s32 arg5);
 
-void func_80043C7C(s_IpdHeader* ipdHdr, s_800C1450_0* arg1, s_800C1450_0* arg2, s32 fileIdx);
+void func_80043C7C(s_IpdHeader* ipdHdr, s_ActiveTextures* arg1, s_ActiveTextures* arg2, s32 fileIdx);
 
 /** Checks if IPD is loaded before returning texture count? */
 s32 Ipd_MaterialCount(s_IpdHeader* ipdHdr);
@@ -3117,7 +3118,7 @@ void Material_FsImageApply(s_Material* mat, s_FsImageDesc* image, s32 arg2);
 void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4);
 
 /** Unknown `arg4` type. */
-void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_800C1450_0* arg1, bool (*filter)(s_Material* mat), s32 fileIdx, s32 arg4);
+void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* actTex, bool (*filter)(s_Material* mat), s32 fileIdx, s32 arg4);
 
 /** Checks if LM textures are loaded? */
 bool LmHeader_IsTextureLoaded(s_LmHeader* lmHdr);
@@ -3156,7 +3157,7 @@ void func_80057658(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
 void func_80057A3C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
 
 /** `arg4` unused. */
-s_Texture* Texture_Get(s_Material* mat, s_800C1450_0* arg1, void* fsBuf9, s32 fileIdx, s32 arg4);
+s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* actTex, void* fsBuf9, s32 fileIdx, s32 arg4);
 
 void func_8005B55C(GsCOORDINATE2* coord);
 
@@ -3474,12 +3475,12 @@ void GameFs_Tim00TIMLoad();
 
 void GameFs_MapItemsModelLoad(u32 mapId);
 
-void func_8005B46C(s_800C1450_0* arg0);
+void func_8005B46C(s_ActiveTextures* actTex);
 
 /** Crucial for map loading. */
-void func_8005B474(s_800C1450_0* arg0, s_Texture* texs, s32 idx);
+void func_8005B474(s_ActiveTextures* actTex, s_Texture* texs, s32 idx);
 
-s_Texture* func_8005B4BC(char* str, s_800C1450_0* arg1);
+s_Texture* func_8005B4BC(char* str, s_ActiveTextures* actTex);
 
 /** Sets the debug string position. */
 void func_8005BF0C(s16 unused, s16 x, s16 y);
