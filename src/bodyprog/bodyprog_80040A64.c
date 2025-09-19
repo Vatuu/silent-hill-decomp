@@ -545,13 +545,13 @@ void func_80041C24(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize) // 0x
 void func_80041CB4(s_GlobalLm* globalLm, s_LmHeader* lmHdr) // 0x80041CB4
 {
     globalLm->lmHdr_0 = lmHdr;
-    func_80041CEC(lmHdr);
+    LmHeader_Init(lmHdr);
 
     globalLm->queueIdx_8 = 0;
     globalLm->fileIdx_4  = NO_VALUE;
 }
 
-void func_80041CEC(s_LmHeader* lmHdr) // 0x80041CEC
+void LmHeader_Init(s_LmHeader* lmHdr) // 0x80041CEC
 {
     lmHdr->magic_0         = LM_HEADER_MAGIC;
     lmHdr->version_1       = LM_VERSION;

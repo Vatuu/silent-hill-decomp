@@ -2655,7 +2655,7 @@ void func_80041C24(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize);
 /** This function is related to map loading. */
 void func_80041CB4(s_GlobalLm* globalLm, s_LmHeader* lmHdr);
 
-void func_80041CEC(s_LmHeader* lmHdr);
+void LmHeader_Init(s_LmHeader* lmHdr);
 
 /** @brief Clears `queueIdx_4` in array of `s_IpdChunk` */
 void Ipd_ActiveChunksQueueIdxClear(s_IpdChunk* chunks, s32 chunkCount);
