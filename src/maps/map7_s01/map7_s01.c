@@ -515,7 +515,70 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800DD368);
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800DDCD4);
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800DEDA4);
+void func_800348C0();                                  /* extern */
+extern s8 D_800A9945;
+
+void func_800DEDA4(void)
+{
+    s32 var_a1_2;
+    s32 var_a2;
+    s8 var_a1;
+
+    if (!(g_SavegamePtr->eventFlags_168[0xF] & 0x20))
+    {
+        if ((D_800A9945 != 0x23) || (func_80040B74(0x23) == false))
+        {
+            func_800348C0();
+            var_a1 = 0x23;
+            Chara_Load(0, var_a1, g_SysWork.npcCoords_FC0, -1, NULL, NULL);
+            func_80088D0C();
+        }
+    }
+    else if (D_800A9945 == 0x10)
+    {
+        if (func_80040B74(0x10) == false)
+        {
+            g_MapOverlayHeader.charaGroupIds_248[0] = 0x10;
+            func_800348C0();
+            var_a1 = 0x10;
+            Chara_Load(0, var_a1, g_SysWork.npcCoords_FC0, -1, NULL, NULL);
+            func_80088D0C();
+        }
+    }
+    else
+    {
+        g_MapOverlayHeader.charaGroupIds_248[0] = 0x10;
+        func_800348C0();
+        var_a1 = 0x10;
+        Chara_Load(0, var_a1, g_SysWork.npcCoords_FC0, -1, NULL, NULL);
+        func_80088D0C();
+    }
+
+    if (g_SavegamePtr->eventFlags_168[0x10] & 0x200)
+    {
+        if (g_SavegamePtr->gameDifficulty_260 != -1)
+        {
+            func_80088FF4(0x10, 2, 0x1B);
+        }
+        var_a1_2 = 3;
+        var_a2 = 0x1B;
+        func_80088FF4(0x10, var_a1_2, var_a2);
+    }
+    else if (g_SavegamePtr->eventFlags_168[0xF] & 0x20)
+    {
+        func_80088FF4(0x10, 0, 0x13);
+        var_a1_2 = 1;
+        var_a2 = 0x13;
+        func_80088FF4(0x10, var_a1_2, var_a2);
+    }
+
+    if ((g_SavegamePtr->eventFlags_168[0x10] & 0x2000) && (g_SavegamePtr->gameDifficulty_260 != -1))
+    {
+        func_80088FF4(0x10, 0xC, 0x13);
+        func_80088FF4(0x10, 0xD, 0x17);
+        func_80088FF4(0x10, 0xE, 0x1B);
+    }
+}
 
 INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", D_800CC984);
 
