@@ -43,6 +43,17 @@
 // ENUMS
 // ======
 
+typedef enum _MapTypeFlags
+{
+    MapTypeFlag_OneActiveChunk = 1 << 0,
+    MapTypeFlag_TwoActiveChunk = 1 << 1,
+    MapTypeFlag_Interior       = 1 << 2,
+    MapTypeFlag_Unk3           = 1 << 3, // @unused Unused map type `XXX` has this flag.
+
+    // Added for clarity as all exterior maps use this combination.
+    MapTypeFlag_FourActiveChunks = 0,
+} e_MapTypeFlags;
+
 typedef enum _EffectTextureFlags
 {
     EffectTextureFlag_None         = 0,
@@ -1159,10 +1170,10 @@ typedef struct _ActiveTextures
 
 typedef struct _IpdTextures
 {
-    s_ActiveTextures fullRes_0;
-    s_ActiveTextures halfRes_2C;
-    s_Texture        fullResTexs_58[8];
-    s_Texture        halfResTexs_118[2];
+    s_ActiveTextures fullPage_0;
+    s_ActiveTextures halfPage_2C;
+    s_Texture        fullPageTexs_58[8];
+    s_Texture        halfPageTexs_118[2];
 } s_IpdTextures;
 STATIC_ASSERT_SIZEOF(s_IpdTextures, 328);
 
@@ -1186,7 +1197,7 @@ typedef struct _Map
     s32                field_57C;
     s32                field_580; // File chunk coord X.
     s32                field_584; // File chunk coord Z.
-    bool               hasGlobalPlm; // Might mean something else, depends on `flags_6` in MapType. Only maps that have required flag set are maps with global PLM.
+    bool               isExterior;
 } s_Map;
 STATIC_ASSERT_SIZEOF(s_Map, 1420);
 
@@ -2666,7 +2677,7 @@ void func_800420FC();
 
 s_Texture* func_80042178(char* arg0);
 
-void func_800421D8(char* mapTag, s32 plmIdx, s32 activeIpdCount, bool hasGlobalPlm, s32 ipdFileIdx, s32 texFileIdx);
+void func_800421D8(char* mapTag, s32 plmIdx, s32 activeIpdCount, bool isExterior, s32 ipdFileIdx, s32 texFileIdx);
 
 void Ipd_ActiveChunksClear(s_Map* map, s32 arg1);
 
@@ -2715,17 +2726,17 @@ bool IpdHeader_IsLoaded(s32 ipdIdx);
 
 void func_80042C3C(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
 
-/** @brief when `hasGlobalPlm` is true treat the chunks as if they were 1m larger in both axis. Then call `Ipd_DistanceToEdge` */
-q19_12 Ipd_DistanceToEdgeWithPadding(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ, bool hasGlobalPlm);
+/** @brief when `isExterior` is true treat the chunks as if they were 1m larger in both axis. Then call `Ipd_DistanceToEdge` */
+q19_12 Ipd_DistanceToEdgeWithPadding(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ, bool isExterior);
 
 /** @brief returns `0` when inside the chunk, distance to closest edge otherwise. */
 s32 Ipd_DistanceToEdge(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ);
 
 s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
 
-void Ipd_ActiveChunksSample(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm);
+void Ipd_ActiveChunksSample(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
 
-void Ipd_DistanceToEdgeCalc(s_IpdChunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm);
+void Ipd_DistanceToEdgeCalc(s_IpdChunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
 
 void func_800433B8(s_Map* map);
 
@@ -2735,10 +2746,10 @@ s32 Map_IpdIdxGet(s32 gridX, s32 gridZ);
 
 bool Map_IsIpdPresent(s_IpdChunk* chunks, s32 chunkCoordX, s32 chunkCoordZ);
 
-s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool hasGlobalPlm);
+s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool isExterior);
 
 /** Maybe facilitates file chunk streaming as the player moves around the map. */
-s32 Ipd_LoadStart(s_IpdChunk* chunk, s32 fileIdx, s32 chunkCoordX, s32 chunkCoordZ, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm);
+s32 Ipd_LoadStart(s_IpdChunk* chunk, s32 fileIdx, s32 chunkCoordX, s32 chunkCoordZ, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
 
 bool func_80043740();
 

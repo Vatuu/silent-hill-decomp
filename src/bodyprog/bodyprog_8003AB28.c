@@ -899,17 +899,17 @@ void func_8003C1AC(s_800BCE18_0_CC* arg0) // 0x8003C1AC
 void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ) // 0x8003C220
 {
     s32        activeIpdCount;
-    u8         temp_v1;
+    u8         flags;
     s_MapType* ptr;
 
     D_800BCE18.field_0[0].type_0 = mapHeader->type_0;
-    temp_v1 = mapHeader->type_0->flags_6;
+    flags = mapHeader->type_0->flags_6;
 
-    if (temp_v1 & (1 << 0))
+    if (flags & MapTypeFlag_OneActiveChunk)
     {
         activeIpdCount = 1;
     } 
-    else if (temp_v1 & (1 << 1))
+    else if (flags & MapTypeFlag_TwoActiveChunk)
     {
         activeIpdCount = 2;
     }
@@ -919,7 +919,9 @@ void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ
     }
 
     ptr = mapHeader->type_0;
-    func_800421D8(ptr->tag_2, ptr->plmFileIdx_0, activeIpdCount, ((ptr->flags_6 >> 2) ^ 1) & (1 << 0), 0, 0);
+    // Strange way to read the 3rd interior flag bit
+    #define IS_EXTERIOR (((ptr->flags_6 >> 2) ^ 1) & 1)
+    func_800421D8(ptr->tag_2, ptr->plmFileIdx_0, activeIpdCount, IS_EXTERIOR, 0, 0);
 
     if (mapHeader->type_0 == &g_MapTypes[0])
     {
