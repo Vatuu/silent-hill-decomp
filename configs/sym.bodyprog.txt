@@ -2710,3 +2710,4 @@ g_MapOverlayHeader                          = 0x800C957C; // type:MapOverlayHead
 D_800FE5F8                                  = 0x800FE5F8; // ignore:True - Fixes fake missmatch in `Demo_Update`.
 hack_D_800FE5FC_fix                         = 0x800FE5FC; // ignore:true - Part of temp memory block at 800FDE00, has to be unsymbolized for C to match.
 Ipd_MaterialsLoad = 0x80043C7C; // type:func
+Model_MaterialFlagsApply = 0x80056A88; // type:func

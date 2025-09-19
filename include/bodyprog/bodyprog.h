@@ -3123,7 +3123,7 @@ bool LmHeader_IsTextureLoaded(s_LmHeader* lmHdr);
 
 void func_80056954(s_LmHeader* lmHdr);
 
-void func_80056A88(s_ModelHeader* modelHdr, s32 arg1, s_Material* mat, s32 flags);
+void Model_MaterialFlagsApply(s_ModelHeader* modelHdr, s32 arg1, s_Material* mat, s32 flags);
 
 void Lm_MaterialRefCountDec(s_LmHeader* lmHdr);
 
