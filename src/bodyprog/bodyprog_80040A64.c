@@ -538,7 +538,7 @@ void Map_Init(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize) // 0x80041
     g_Map.isExterior = true;
 
     Ipd_ActiveChunksQueueIdxClear(g_Map.ipdActive_15C, 4);
-    Ipd_TexturesInit();
+    Ipd_TexturesInit1();
     Map_IpdCollisionDataInit();
 }
 
@@ -570,7 +570,7 @@ void Ipd_ActiveChunksQueueIdxClear(s_IpdChunk* chunks, s32 chunkCount) // 0x8004
     }
 }
 
-void Ipd_TexturesInit() // 0x80041D48
+void Ipd_TexturesInit1() // 0x80041D48
 {
     s32 i;
     s16 j;
@@ -641,7 +641,7 @@ void Ipd_ActiveChunksClear0() // 0x80041FF0
     Ipd_ActiveChunksClear(&g_Map, g_Map.ipdActiveSize_158);
 }
 
-void func_8004201C() // 0x8004201C
+void Ipd_TexturesInit0() // 0x8004201C
 {
     s_Texture* curTex;
 
@@ -673,7 +673,7 @@ void func_800420C0() // 0x800420C0
 {
     Map_GlobalLmFree();
     Ipd_ActiveChunksClear(&g_Map, g_Map.ipdActiveSize_158);
-    Ipd_TexturesInit();
+    Ipd_TexturesInit1();
 }
 
 void Map_GlobalLmFree() // 0x800420FC

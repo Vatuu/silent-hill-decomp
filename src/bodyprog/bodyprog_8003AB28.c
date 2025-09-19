@@ -948,7 +948,7 @@ void func_8003C30C() // 0x8003C30C
         return;
     }
     Ipd_ActiveChunksClear0();
-    func_8004201C();
+    Ipd_TexturesInit0();
 }
 
 void func_8003C368() // 0x8003C368
