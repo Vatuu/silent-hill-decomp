@@ -3475,7 +3475,7 @@ void GameFs_Tim00TIMLoad();
 
 void GameFs_MapItemsModelLoad(u32 mapId);
 
-void func_8005B46C(s_ActiveTextures* actTex);
+void ActiveTextures_CountReset(s_ActiveTextures* actTex);
 
 /** Crucial for map loading. */
 void func_8005B474(s_ActiveTextures* actTex, s_Texture* texs, s32 idx);

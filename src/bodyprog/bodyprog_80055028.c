@@ -1743,7 +1743,7 @@ void func_8005B424(VECTOR3* vec0, VECTOR3* vec1) // 0x8005B424
     *((s_func_8005B424*)vec0) = *((s_func_8005B424*)vec1);
 }
 
-void func_8005B46C(s_ActiveTextures* actTex) // 0x8005B46C
+void ActiveTextures_CountReset(s_ActiveTextures* actTex) // 0x8005B46C
 {
     actTex->count_0 = 0;
 }

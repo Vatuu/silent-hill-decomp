@@ -587,7 +587,7 @@ void func_80041D48() // 0x80041D48
         Texture_Init1(&g_Map.field_430.textures_58[i], 0, 0, y, 0, 0, x, j);
     }
 
-    func_8005B46C(&g_Map.field_430.field_0);
+    ActiveTextures_CountReset(&g_Map.field_430.field_0);
     func_8005B474(&g_Map.field_430.field_0, g_Map.field_430.textures_58, 8);
 
     for (i = 0, y = 26, j = 0; i < 2; i++, x += 16)
@@ -599,7 +599,7 @@ void func_80041D48() // 0x80041D48
         }
     }
 
-    func_8005B46C(&g_Map.field_430.field_2C);
+    ActiveTextures_CountReset(&g_Map.field_430.field_2C);
     func_8005B474(&g_Map.field_430.field_2C, g_Map.field_430.textures_118, 2);
 }
 
