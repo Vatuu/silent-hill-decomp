@@ -2673,7 +2673,7 @@ void func_8004201C();
 
 void func_800420C0();
 
-void func_800420FC();
+void Map_GlobalLmFree();
 
 s_Texture* func_80042178(char* arg0);
 

@@ -671,12 +671,12 @@ void func_8004201C() // 0x8004201C
 
 void func_800420C0() // 0x800420C0
 {
-    func_800420FC();
+    Map_GlobalLmFree();
     Ipd_ActiveChunksClear(&g_Map, g_Map.ipdActiveSize_158);
     Ipd_TexturesInit();
 }
 
-void func_800420FC() // 0x800420FC
+void Map_GlobalLmFree() // 0x800420FC
 {
     s_GlobalLm* globalLm;
 
