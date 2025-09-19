@@ -621,7 +621,7 @@ bool func_80056558(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* image, s32 
         if (!COMPARE_FILENAMES(&mat->name_0, fileName))
         {
             mat->field_C = 1;
-            func_8005660C(mat, image, arg3);
+            Material_FsImageApply(mat, image, arg3);
             return true;
         }
     }
@@ -629,7 +629,7 @@ bool func_80056558(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* image, s32 
     return false;
 }
 
-void func_8005660C(s_Material* mat, s_FsImageDesc* image, s32 arg2) // 0x8005660C
+void Material_FsImageApply(s_Material* mat, s_FsImageDesc* image, s32 arg2) // 0x8005660C
 {
     s32 coeff;
 
@@ -671,7 +671,7 @@ void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* image, s8 unused, s32 start
     {
         Material_TimFileNameGet(filename, mat);
         Fs_QueueStartReadTim(Fs_FindNextFile(filename, 0, startIdx), FS_BUFFER_9, localImage);
-        func_8005660C(mat, localImage, arg4);
+        Material_FsImageApply(mat, localImage, arg4);
     }
 }
 
@@ -686,7 +686,7 @@ void func_80056774(s_LmHeader* lmHdr, s_800C1450_0* arg1, bool (*func)(s_Materia
             curMat->texture_8 = Texture_Get(curMat, arg1, FS_BUFFER_9, fileIdx, arg4);
             if (curMat->texture_8 != NULL)
             {
-                func_8005660C(curMat, &curMat->texture_8->imageDesc_0, arg4);
+                Material_FsImageApply(curMat, &curMat->texture_8->imageDesc_0, arg4);
             }
         }
     }
