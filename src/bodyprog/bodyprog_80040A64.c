@@ -538,7 +538,7 @@ void func_80041C24(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize) // 0x
     g_Map.hasGlobalPlm = true;
 
     Ipd_ActiveChunksQueueIdxClear(g_Map.ipdActive_15C, 4);
-    func_80041D48();
+    Ipd_TexturesInit();
     func_80041E98();
 }
 
@@ -570,7 +570,7 @@ void Ipd_ActiveChunksQueueIdxClear(s_IpdChunk* chunks, s32 chunkCount) // 0x8004
     }
 }
 
-void func_80041D48() // 0x80041D48
+void Ipd_TexturesInit() // 0x80041D48
 {
     s32 i;
     s16 j;
@@ -673,7 +673,7 @@ void func_800420C0() // 0x800420C0
 {
     func_800420FC();
     Ipd_ActiveChunksClear(&g_Map, g_Map.ipdActiveSize_158);
-    func_80041D48();
+    Ipd_TexturesInit();
 }
 
 void func_800420FC() // 0x800420FC

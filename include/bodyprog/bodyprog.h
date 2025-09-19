@@ -2650,7 +2650,7 @@ void func_80041CEC(s_LmHeader* lmHdr);
 void Ipd_ActiveChunksQueueIdxClear(s_IpdChunk* chunks, s32 chunkCount);
 
 /** Crucial for map loading. */
-void func_80041D48();
+void Ipd_TexturesInit();
 
 void func_80041E98();
 

@@ -2712,3 +2712,4 @@ hack_D_800FE5FC_fix                         = 0x800FE5FC; // ignore:true - Part 
 Ipd_MaterialsLoad = 0x80043C7C; // type:func
 Model_MaterialFlagsApply = 0x80056A88; // type:func
 Lm_MaterialFlagsApply = 0x80056954; // type:func
+Ipd_TexturesInit = 0x80041D48; // type:func
