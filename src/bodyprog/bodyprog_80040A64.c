@@ -767,9 +767,9 @@ void Ipd_ActiveChunksClear(s_Map* map, s32 arg1) // 0x80042300
             }
         }
 
-        curChunk->queueIdx_4   = NO_VALUE;
-        curChunk->distance1_10 = INT_MAX;
-        curChunk->field_18     = 0;
+        curChunk->queueIdx_4      = NO_VALUE;
+        curChunk->distance1_10    = INT_MAX;
+        curChunk->outsideCount_18 = 0;
 
         if (i < arg1)
         {
@@ -1207,11 +1207,11 @@ void Ipd_ActiveChunksSample(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1
 
         if (curChunk->distance0_C > FP_METER(0.0f) && curChunk->distance1_10 > FP_METER(0.0f))
         {
-            curChunk->field_18++;
+            curChunk->outsideCount_18++;
         }
         else
         {
-            curChunk->field_18 = 0;
+            curChunk->outsideCount_18 = 0;
         }
     }
 }
@@ -1279,13 +1279,13 @@ s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool hasGlobalPlm)
     s32         largestMats;
     q19_12      largestDist;
     q19_12      dist;
-    u32         var_t3;
+    u32         largestOutside;
     s32         matCount;
     s_IpdChunk* curChunk;
     s_IpdChunk* activeChunk;
 
     activeChunk = NULL;
-    var_t3 = 0;
+    largestOutside = 0;
     largestMats = 0;
     largestDist = FP_METER(0.0f);
 
@@ -1300,9 +1300,9 @@ s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool hasGlobalPlm)
             }
             else
             {
-                if (var_t3 < curChunk->field_18)
+                if (largestOutside < curChunk->outsideCount_18)
                 {
-                    var_t3 = curChunk->field_18;
+                    largestOutside = curChunk->outsideCount_18;
                     activeChunk = curChunk;
                 }
             }
@@ -1333,7 +1333,6 @@ s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool hasGlobalPlm)
                 }
             }
 
-            // Track closest chunk.
             if (largestMats < matCount || (matCount == largestMats && largestDist < dist))
             {
                 largestDist = dist;

@@ -1141,7 +1141,7 @@ typedef struct
     q19_12       distance1_10;
     u8           matCount_14;
     s8           unk_15[3];
-    s32          field_18;
+    s32          outsideCount_18;
 } s_IpdChunk;
 STATIC_ASSERT_SIZEOF(s_IpdChunk, 28);
 
