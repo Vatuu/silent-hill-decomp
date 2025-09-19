@@ -584,23 +584,23 @@ void func_80041D48() // 0x80041D48
             y = 21;
         }
 
-        Texture_Init1(&g_Map.ipdTextures_430.loresTexs_58[i], 0, 0, y, 0, 0, x, j);
+        Texture_Init1(&g_Map.ipdTextures_430.fullResTexs_58[i], 0, 0, y, 0, 0, x, j);
     }
 
-    ActiveTextures_CountReset(&g_Map.ipdTextures_430.lores_0);
-    ActiveTextures_PutTextures(&g_Map.ipdTextures_430.lores_0, g_Map.ipdTextures_430.loresTexs_58, 8);
+    ActiveTextures_CountReset(&g_Map.ipdTextures_430.fullRes_0);
+    ActiveTextures_PutTextures(&g_Map.ipdTextures_430.fullRes_0, g_Map.ipdTextures_430.fullResTexs_58, 8);
 
     for (i = 0, y = 26, j = 0; i < 2; i++, x += 16)
     {
-        Texture_Init1(&g_Map.ipdTextures_430.hiresTexs_118[i], 0, 0, y, (i & 0x1) * 32, 0, x, j);
+        Texture_Init1(&g_Map.ipdTextures_430.halfResTexs_118[i], 0, 0, y, (i & 0x1) * 32, 0, x, j);
         if (i & 0x1)
         {
             y++;
         }
     }
 
-    ActiveTextures_CountReset(&g_Map.ipdTextures_430.hires_2C);
-    ActiveTextures_PutTextures(&g_Map.ipdTextures_430.hires_2C, g_Map.ipdTextures_430.hiresTexs_118, 2);
+    ActiveTextures_CountReset(&g_Map.ipdTextures_430.halfRes_2C);
+    ActiveTextures_PutTextures(&g_Map.ipdTextures_430.halfRes_2C, g_Map.ipdTextures_430.halfResTexs_118, 2);
 }
 
 void func_80041E98() // 0x80041E98
@@ -646,8 +646,8 @@ void func_8004201C() // 0x8004201C
     s_Texture* curTex;
 
     // TODO: Will these match as for loops?
-    curTex = &g_Map.ipdTextures_430.loresTexs_58[0];
-    while (curTex < (&g_Map.ipdTextures_430.loresTexs_58[8]))
+    curTex = &g_Map.ipdTextures_430.fullResTexs_58[0];
+    while (curTex < (&g_Map.ipdTextures_430.fullResTexs_58[8]))
     {
         if (curTex->refCount_14 == 0)
         {
@@ -657,8 +657,8 @@ void func_8004201C() // 0x8004201C
         curTex++;
     }
 
-    curTex = &g_Map.ipdTextures_430.hiresTexs_118[0];
-    while (curTex < (&g_Map.ipdTextures_430.hiresTexs_118[2]))
+    curTex = &g_Map.ipdTextures_430.halfResTexs_118[0];
+    while (curTex < (&g_Map.ipdTextures_430.halfResTexs_118[2]))
     {
         if (curTex->refCount_14 == 0)
         {
@@ -695,13 +695,13 @@ s_Texture* func_80042178(char* arg0) // 0x80042178
 {
     s_Texture* tex;
 
-    tex = ActiveTextures_FindTexture(arg0, &g_Map.ipdTextures_430.lores_0);
+    tex = ActiveTextures_FindTexture(arg0, &g_Map.ipdTextures_430.fullRes_0);
     if (tex != NULL)
     {
         return tex;
     }
 
-    tex = ActiveTextures_FindTexture(arg0, &g_Map.ipdTextures_430.hires_2C);
+    tex = ActiveTextures_FindTexture(arg0, &g_Map.ipdTextures_430.halfRes_2C);
     if (tex != NULL)
     {
         return tex;
@@ -1056,21 +1056,21 @@ void func_80042C3C(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1) // 0x
     if (Fs_QueueEntryLoadStatusGet(g_Map.globalLm_138.queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
         !g_Map.globalLm_138.lmHdr_0->isLoaded_2) 
     {
-        temp_s0                               = g_Map.ipdTextures_430.lores_0.count_0;
-        g_Map.ipdTextures_430.lores_0.count_0 = 4;
+        temp_s0                               = g_Map.ipdTextures_430.fullRes_0.count_0;
+        g_Map.ipdTextures_430.fullRes_0.count_0 = 4;
 
         LmHeader_FixOffsets(g_Map.globalLm_138.lmHdr_0);
-        Lm_MaterialsLoadWithFilter(g_Map.globalLm_138.lmHdr_0, &g_Map.ipdTextures_430.lores_0, NULL, g_Map.texFileIdx_134, 1);
+        Lm_MaterialsLoadWithFilter(g_Map.globalLm_138.lmHdr_0, &g_Map.ipdTextures_430.fullRes_0, NULL, g_Map.texFileIdx_134, 1);
         func_80056954(g_Map.globalLm_138.lmHdr_0);
 
-        g_Map.ipdTextures_430.lores_0.count_0 = temp_s0;
+        g_Map.ipdTextures_430.fullRes_0.count_0 = temp_s0;
     }
 
     for (curChunk = g_Map.ipdActive_15C; curChunk < &g_Map.ipdActive_15C[g_Map.ipdActiveSize_158]; curChunk++) 
     {
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            IpdHeader_FixOffsets(curChunk->ipdHdr_0, &g_Map.globalLm_138.lmHdr_0, 1, &g_Map.ipdTextures_430.lores_0, &g_Map.ipdTextures_430.hires_2C, g_Map.texFileIdx_134);
+            IpdHeader_FixOffsets(curChunk->ipdHdr_0, &g_Map.globalLm_138.lmHdr_0, 1, &g_Map.ipdTextures_430.fullRes_0, &g_Map.ipdTextures_430.halfRes_2C, g_Map.texFileIdx_134);
             func_80044044(curChunk->ipdHdr_0, curChunk->coordX_8, curChunk->coordZ_A);
         }
     }
@@ -1245,7 +1245,7 @@ void func_800433B8(s_Map* map) // 0x800433B8
             if (curChunk->ipdHdr_0->isLoaded_1 &&
                 (curChunk->distance0_C <= FP_METER(0.0f) || curChunk->distance1_10 <= FP_METER(0.0f)))
             {
-                func_80043C7C(curChunk->ipdHdr_0, &map->ipdTextures_430.lores_0, &map->ipdTextures_430.hires_2C, map->texFileIdx_134);
+                func_80043C7C(curChunk->ipdHdr_0, &map->ipdTextures_430.fullRes_0, &map->ipdTextures_430.halfRes_2C, map->texFileIdx_134);
                 func_80056954(curChunk->ipdHdr_0->lmHdr_4);
             }
         }
@@ -1347,21 +1347,17 @@ s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool hasGlobalPlm)
 
 s32 Ipd_LoadStart(s_IpdChunk* chunk, s32 fileIdx, s32 chunkCoordX, s32 chunkCoordZ, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm) // 0x800436D8
 {
-    // Return `NO_VALUE` if no file specified.
     if (fileIdx == NO_VALUE)
     {
         return fileIdx;
     }
 
-    // Store chunk coords and read file.
     chunk->coordX_8 = chunkCoordX;
     chunk->coordZ_A = chunkCoordZ;
     chunk->queueIdx_4 = Fs_QueueStartRead(fileIdx, chunk->ipdHdr_0);
 
-    // Compute and store distance to chunk edge in `chunk`.
     Ipd_DistanceToEdgeCalc(chunk, posX0, posZ0, posX1, posZ1, hasGlobalPlm);
 
-    // Return queue entry index.
     return chunk->queueIdx_4;
 }
 
@@ -1547,12 +1543,12 @@ void func_80043C7C(s_IpdHeader* ipdHdr, s_ActiveTextures* arg1, s_ActiveTextures
 
     if (arg1 != NULL)
     {
-        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr_4, arg1, &LmFilter_NameDoesNotEndWithH, fileIdx, 1);
+        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr_4, arg1, &LmFilter_FullResolution, fileIdx, 1);
     }
 
     if (arg2 != NULL)
     {
-        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr_4, arg2, &LmFilter_NameEndsWithH, fileIdx, 1);
+        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr_4, arg2, &LmFilter_HalfResolution, fileIdx, 1);
     }
 }
 
@@ -1563,18 +1559,18 @@ s32 Ipd_MaterialCount(s_IpdHeader* ipdHdr) // 0x80043D00
         return 0;
     }
 
-    return Lm_MaterialCount(LmFilter_NameEndsWithH, ipdHdr->lmHdr_4);
+    return Lm_MaterialCount(LmFilter_HalfResolution, ipdHdr->lmHdr_4);
 }
 
-bool LmFilter_NameDoesNotEndWithH(s_Material* mat) // 0x80043D44
+bool LmFilter_FullResolution(s_Material* mat) // 0x80043D44
 {
-    return !LmFilter_NameEndsWithH(mat);
+    return !LmFilter_HalfResolution(mat);
 }
 
 /* Not sure what is the significance of textures that end with H.
  * I've looked at all of them and can't find any pattern.
  */
-bool LmFilter_NameEndsWithH(s_Material* mat) // 0x80043D64
+bool LmFilter_HalfResolution(s_Material* mat) // 0x80043D64
 {
     char* charCode;
 

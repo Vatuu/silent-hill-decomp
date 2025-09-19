@@ -1159,10 +1159,10 @@ typedef struct _ActiveTextures
 
 typedef struct _IpdTextures
 {
-    s_ActiveTextures lores_0;
-    s_ActiveTextures hires_2C;
-    s_Texture        loresTexs_58[8];
-    s_Texture        hiresTexs_118[2];
+    s_ActiveTextures fullRes_0;
+    s_ActiveTextures halfRes_2C;
+    s_Texture        fullResTexs_58[8];
+    s_Texture        halfResTexs_118[2];
 } s_IpdTextures;
 STATIC_ASSERT_SIZEOF(s_IpdTextures, 328);
 
@@ -2762,10 +2762,10 @@ void func_80043C7C(s_IpdHeader* ipdHdr, s_ActiveTextures* arg1, s_ActiveTextures
 /** Checks if IPD is loaded before returning texture count? */
 s32 Ipd_MaterialCount(s_IpdHeader* ipdHdr);
 
-/** Returns inverse result of `LmFilter_NameEndsWithH`. */
-bool LmFilter_NameDoesNotEndWithH(s_Material* mat);
+/** Returns inverse result of `LmFilter_HalfResolution`. */
+bool LmFilter_FullResolution(s_Material* mat);
 
-bool LmFilter_NameEndsWithH(s_Material* mat);
+bool LmFilter_HalfResolution(s_Material* mat);
 
 void IpdHeader_FixHeaderOffsets(s_IpdHeader* ipdHdr);
 
