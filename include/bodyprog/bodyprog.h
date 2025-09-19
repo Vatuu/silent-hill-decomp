@@ -3853,7 +3853,7 @@ s32 func_800382B0(s32 arg0);
  * @param pos1 Second position.
  * @return Distance between positions.
  */
-s32 Math_DistanceGet(const VECTOR3* pos0, const VECTOR3* pos1);
+q19_12 Math_DistanceGet(const VECTOR3* pos0, const VECTOR3* pos1);
 
 /** @brief Computes the 2D distance on the XZ plane between two positions.
  *
@@ -3861,7 +3861,7 @@ s32 Math_DistanceGet(const VECTOR3* pos0, const VECTOR3* pos1);
  * @param pos1 Second position.
  * @return 2D distance between positions.
  */
-s32 Math_Distance2dGet(const VECTOR3* pos0, const VECTOR3* pos1);
+q19_12 Math_Distance2dGet(const VECTOR3* pos0, const VECTOR3* pos1);
 
 /** @brief Forces a clicked controller input status for `ControllerFlag_Select`. */
 void Input_SelectClickSet();
@@ -4146,7 +4146,7 @@ void func_8007FD4C(s32 arg0);
 /** Returns data in last 3 pointer args. Outputs? */
 void func_8007FDE0(s8, s32* sfx, s8* pitch0, s8* pitch1);
 
-s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1);
+s32 func_80080478(const VECTOR3* pos0, const VECTOR3* pos1);
 
 /** Generates a random angle? */
 s32 func_80080514(void);

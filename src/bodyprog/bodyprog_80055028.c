@@ -3462,10 +3462,10 @@ void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2)
 void func_8006AD44(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x8006AD44
 {
     s32                    temp_s4;
-    s_IpdCollisionData_20* var_s0;
     s32                    temp_s5;
-    s32                    var_s1;
-    s32                    var_s2;
+    s32                    i;
+    s32                    j;
+    s_IpdCollisionData_20* curPtr;
 
     if ((collData->field_8_8 == 0 && collData->field_8_16 == 0 && collData->field_8_24 == 0) ||
         !func_8006AEAC(arg0, collData))
@@ -3481,13 +3481,13 @@ void func_8006AD44(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x800
     temp_s5 = arg0->field_A0.s_0.field_0;
     temp_s4 = (arg0->field_A0.s_0.field_0 + arg0->field_A0.s_0.field_2) - 1;
 
-    for (var_s2 = arg0->field_A0.s_0.field_1; var_s2 < (arg0->field_A0.s_0.field_1 + arg0->field_A0.s_0.field_3); var_s2++)
+    for (i = arg0->field_A0.s_0.field_1; i < (arg0->field_A0.s_0.field_1 + arg0->field_A0.s_0.field_3); i++)
     {
-        var_s0 = &collData->ptr_20[(var_s2 * collData->field_1E) + temp_s5];
+        curPtr = &collData->ptr_20[(i * collData->field_1E) + temp_s5];
 
-        for (var_s1 = temp_s5; var_s1 <= temp_s4; var_s1++, var_s0++)
+        for (j = temp_s5; j <= temp_s4; j++, curPtr++)
         {
-            func_8006B1C8(arg0, collData, var_s0);
+            func_8006B1C8(arg0, collData, curPtr);
         }
     }
 

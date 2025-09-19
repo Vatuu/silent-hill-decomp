@@ -8506,20 +8506,20 @@ void func_8007FD4C(s32 arg0) // 0x8007FD4C
 // Large function.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800706E4", func_8007FDE0); // 0x8007FDE0
 
-s32 Math_DistanceGet(const VECTOR3* pos0, const VECTOR3* pos1) // 0x800802CC
+q19_12 Math_DistanceGet(const VECTOR3* pos0, const VECTOR3* pos1) // 0x800802CC
 {
-    s32 deltaX = pos1->vx - pos0->vx;
-    s32 deltaY = pos1->vy - pos0->vy;
-    s32 deltaZ = pos1->vz - pos0->vz;
+    q19_12 deltaX = pos1->vx - pos0->vx;
+    q19_12 deltaY = pos1->vy - pos0->vy;
+    q19_12 deltaZ = pos1->vz - pos0->vz;
     return SquareRoot12(FP_MULTIPLY_PRECISE(deltaX, deltaX, Q12_SHIFT) +
                         FP_MULTIPLY_PRECISE(deltaY, deltaY, Q12_SHIFT) +
                         FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT));
 }
 
-s32 Math_Distance2dGet(const VECTOR3* pos0, const VECTOR3* pos1) // 0x8008037C
+q19_12 Math_Distance2dGet(const VECTOR3* pos0, const VECTOR3* pos1) // 0x8008037C
 {
-    s32 deltaX = pos1->vx - pos0->vx;
-    s32 deltaZ = pos1->vz - pos0->vz;
+    q19_12 deltaX = pos1->vx - pos0->vx;
+    q19_12 deltaZ = pos1->vz - pos0->vz;
     return SquareRoot12(FP_MULTIPLY_PRECISE(deltaX, deltaX, Q12_SHIFT) +
                         FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT));
 }
@@ -8531,7 +8531,7 @@ void Input_SelectClickSet() // 0x80080458
     g_Controller1->btnsClicked_10 |= ControllerFlag_Select;
 }
 
-s32 func_80080478(VECTOR3* pos0, VECTOR3* pos1) // 0x80080478
+s32 func_80080478(const VECTOR3* pos0, const VECTOR3* pos1) // 0x80080478
 {
     s32 x0;
     s32 x1;
@@ -8595,9 +8595,9 @@ void func_800805BC(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* rootCoord, s32 arg
         gte_rt();
         gte_stlvnl(&vec);
 
-        pos->vx = vec.vx * 16;
-        pos->vy = vec.vy * 16;
-        pos->vz = vec.vz * 16;
+        pos->vx = FP_METER_FROM_GEO(vec.vx);
+        pos->vy = FP_METER_FROM_GEO(vec.vy);
+        pos->vz = FP_METER_FROM_GEO(vec.vz);
 
         arg3--;
         rot++;
