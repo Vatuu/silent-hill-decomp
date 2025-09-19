@@ -1154,9 +1154,9 @@ s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 p
                 chunkIdx = Map_IpdIdxGet(gridX, gridZ);
                 if (chunkIdx != NO_VALUE &&
                     func_80042DE8(posX0, posZ0, gridX, gridZ, map->hasGlobalPlm) <= FP_METER(0.0f) &&
-                    !Map_IsIpdPresent(&map->ipdActive_15C[0], gridX, gridZ))
+                    !Map_IsIpdPresent(map->ipdActive_15C, gridX, gridZ))
                 {
-                    chunk = func_800435E4(&map->ipdActive_15C[0], map->hasGlobalPlm);
+                    chunk = Ipd_FreeChunkFind(map->ipdActive_15C, map->hasGlobalPlm);
 
                     if (Fs_QueueEntryLoadStatusGet(chunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
                     {
@@ -1274,7 +1274,7 @@ bool Map_IsIpdPresent(s_IpdChunk* chunks, s32 chunkCoordX, s32 chunkCoordZ) // 0
     return false;
 }
 
-s_IpdChunk* func_800435E4(s_IpdChunk* chunks, bool hasGlobalPlm)
+s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool hasGlobalPlm)
 {
     s32         largestMats;
     q19_12      largestDist;

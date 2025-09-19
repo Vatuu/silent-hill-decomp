@@ -2735,7 +2735,7 @@ s32 Map_IpdIdxGet(s32 gridX, s32 gridZ);
 
 bool Map_IsIpdPresent(s_IpdChunk* chunks, s32 chunkCoordX, s32 chunkCoordZ);
 
-s_IpdChunk* func_800435E4(s_IpdChunk* chunks, bool hasGlobalPlm);
+s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool hasGlobalPlm);
 
 /** Maybe facilitates file chunk streaming as the player moves around the map. */
 s32 Ipd_LoadStart(s_IpdChunk* chunk, s32 fileIdx, s32 chunkCoordX, s32 chunkCoordZ, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm);

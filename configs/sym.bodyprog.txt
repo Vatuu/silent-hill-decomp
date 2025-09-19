@@ -2700,3 +2700,4 @@ hack_D_800FE5FC_fix                         = 0x800FE5FC; // ignore:true - Part 
 Ipd_LoadStart = 0x800436D8; // type:func
 Lm_MaterialCount = 0x80056348; // type:func
 Ipd_MaterialCount = 0x80043D00; // type:func
+Ipd_FreeChunkFind = 0x800435E4; // type:func
