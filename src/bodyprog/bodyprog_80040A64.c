@@ -1060,7 +1060,7 @@ void func_80042C3C(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1) // 0x
         g_Map.field_430.field_0.count_0 = 4;
 
         LmHeader_FixOffsets(g_Map.globalLm_138.lmHdr_0);
-        func_80056774(g_Map.globalLm_138.lmHdr_0, &g_Map.field_430.field_0, NULL, g_Map.texFileIdx_134, 1);
+        Lm_MaterialsLoadWithFilter(g_Map.globalLm_138.lmHdr_0, &g_Map.field_430.field_0, NULL, g_Map.texFileIdx_134, 1);
         func_80056954(g_Map.globalLm_138.lmHdr_0);
 
         g_Map.field_430.field_0.count_0 = temp_s0;
@@ -1547,12 +1547,12 @@ void func_80043C7C(s_IpdHeader* ipdHdr, s_800C1450_0* arg1, s_800C1450_0* arg2, 
 
     if (arg1 != NULL)
     {
-        func_80056774(ipdHdr->lmHdr_4, arg1, &LmFilter_NameDoesNotEndWithH, fileIdx, 1);
+        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr_4, arg1, &LmFilter_NameDoesNotEndWithH, fileIdx, 1);
     }
 
     if (arg2 != NULL)
     {
-        func_80056774(ipdHdr->lmHdr_4, arg2, &LmFilter_NameEndsWithH, fileIdx, 1);
+        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr_4, arg2, &LmFilter_NameEndsWithH, fileIdx, 1);
     }
 }
 

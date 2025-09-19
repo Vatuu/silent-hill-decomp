@@ -675,13 +675,13 @@ void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* image, s8 unused, s32 start
     }
 }
 
-void func_80056774(s_LmHeader* lmHdr, s_800C1450_0* arg1, bool (*func)(s_Material* mat), s32 fileIdx, s32 arg4) // 0x80056774
+void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_800C1450_0* arg1, bool (*filter)(s_Material* mat), s32 fileIdx, s32 arg4) // 0x80056774
 {
     s_Material* curMat;
 
     for (curMat = &lmHdr->materials_4[0]; curMat < &lmHdr->materials_4[lmHdr->materialCount_3]; curMat++)
     {
-        if (curMat->field_C == 0 && curMat->texture_8 == NULL && (func == NULL || func(curMat)))
+        if (curMat->field_C == 0 && curMat->texture_8 == NULL && (filter == NULL || filter(curMat)))
         {
             curMat->texture_8 = Texture_Get(curMat, arg1, FS_BUFFER_9, fileIdx, arg4);
             if (curMat->texture_8 != NULL)
