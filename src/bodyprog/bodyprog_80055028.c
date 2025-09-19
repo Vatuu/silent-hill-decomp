@@ -722,7 +722,7 @@ bool LmHeader_IsTextureLoaded(s_LmHeader* lmHdr) // 0x80056888
     return true;
 }
 
-void func_80056954(s_LmHeader* lmHdr) // 0x80056954
+void Lm_MaterialFlagsApply(s_LmHeader* lmHdr) // 0x80056954
 {
     s32         i;
     s32         j;

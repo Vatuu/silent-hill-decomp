@@ -791,7 +791,7 @@ void func_8003BED0() // 0x8003BED0
     LmHeader_FixOffsets(&D_800BCE18.field_1BE4);
     func_80056504(&D_800BCE18.field_1BE4, "TIM00", &IMG_TIM, 1);
     func_80056504(&D_800BCE18.field_1BE4, "BG_ETC", &IMG_ETC, 1);
-    func_80056954(&D_800BCE18.field_1BE4);
+    Lm_MaterialFlagsApply(&D_800BCE18.field_1BE4);
 }
 
 // ========================================
@@ -1499,7 +1499,7 @@ void func_8003D058() // 0x8003D058
             {
                 LmHeader_FixOffsets(lmHdr);
                 func_80056504(lmHdr, ptr0->textureName_8, &ptr0->imageDesc_C, 1);
-                func_80056954(lmHdr);
+                Lm_MaterialFlagsApply(lmHdr);
                 func_80056C8C(&ptr0->field_18, ptr0->field_14, 0);
             }
 
@@ -1695,7 +1695,7 @@ void func_8003D550(s32 arg0, s32 arg1) // 0x8003D550
 
     ptr = D_800BCE18.field_0[0].field_18[arg0];
     func_80056464(ptr->lmHdr_8, CHARA_FILE_INFOS[arg0].textureFileIdx, &ptr->texture_C, arg1);
-    func_80056954(ptr->lmHdr_8);
+    Lm_MaterialFlagsApply(ptr->lmHdr_8);
 }
 
 void func_8003D5B4(s8 flags) // 0x8003D5B4
@@ -1858,7 +1858,7 @@ void func_8003D9C8(s_800BCE18_0_CC* arg0) // 0x8003D9C8
 
         skel = &arg0->field_14;
 
-        func_80056954(arg0->lmHdr_8);
+        Lm_MaterialFlagsApply(arg0->lmHdr_8);
         func_80044FE0(skel, &arg0->field_14.field_C, 56); // TODO: Can't fit `s_Bone` at `field_C`. Check `s_Skeleton` size.
         func_8004506C(skel, arg0->lmHdr_8);
         func_800452EC(skel);

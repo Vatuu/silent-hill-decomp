@@ -1061,7 +1061,7 @@ void func_80042C3C(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1) // 0x
 
         LmHeader_FixOffsets(g_Map.globalLm_138.lmHdr_0);
         Lm_MaterialsLoadWithFilter(g_Map.globalLm_138.lmHdr_0, &g_Map.ipdTextures_430.fullRes_0, NULL, g_Map.texFileIdx_134, 1);
-        func_80056954(g_Map.globalLm_138.lmHdr_0);
+        Lm_MaterialFlagsApply(g_Map.globalLm_138.lmHdr_0);
 
         g_Map.ipdTextures_430.fullRes_0.count_0 = temp_s0;
     }
@@ -1246,7 +1246,7 @@ void func_800433B8(s_Map* map) // 0x800433B8
                 (curChunk->distance0_C <= FP_METER(0.0f) || curChunk->distance1_10 <= FP_METER(0.0f)))
             {
                 Ipd_MaterialsLoad(curChunk->ipdHdr_0, &map->ipdTextures_430.fullRes_0, &map->ipdTextures_430.halfRes_2C, map->texFileIdx_134);
-                func_80056954(curChunk->ipdHdr_0->lmHdr_4);
+                Lm_MaterialFlagsApply(curChunk->ipdHdr_0->lmHdr_4);
             }
         }
     }
@@ -1529,7 +1529,7 @@ void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCou
     LmHeader_FixOffsets(ipdHdr->lmHdr_4);
     func_8008E4EC(ipdHdr->lmHdr_4);
     Ipd_MaterialsLoad(ipdHdr, arg3, arg4, arg5);
-    func_80056954(ipdHdr->lmHdr_4);
+    Lm_MaterialFlagsApply(ipdHdr->lmHdr_4);
     IpdHeader_ModelLinkObjectLists(ipdHdr, lmHdrs, lmHdrCount);
     IpdHeader_ModelBufferLinkObjectLists(ipdHdr, ipdHdr->modelInfo_14);
 }

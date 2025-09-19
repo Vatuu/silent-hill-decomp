@@ -3121,7 +3121,7 @@ void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* actTex, boo
 /** Checks if LM textures are loaded? */
 bool LmHeader_IsTextureLoaded(s_LmHeader* lmHdr);
 
-void func_80056954(s_LmHeader* lmHdr);
+void Lm_MaterialFlagsApply(s_LmHeader* lmHdr);
 
 void Model_MaterialFlagsApply(s_ModelHeader* modelHdr, s32 arg1, s_Material* mat, s32 flags);
 
