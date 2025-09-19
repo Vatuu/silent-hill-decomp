@@ -45,6 +45,7 @@ DEFAULT_CONTROLLER_CONFIGS                  = 0x8002511C;
 //--------------------------------------------------------------------------
 //--- PA: 0x00069C   VA: 0x800251FC   subsegment: .rodata, bodyprog_800348C0
 //--------------------------------------------------------------------------
+SfxPairs                                    = 0x800252BC; // type:AreaLoadSfx size:0x64
 
 //--------------------------------------------------------------------------
 //--- PA: 0x00091C   VA: 0x8002547C   subsegment: .rodata, bodyprog_8003AB28
@@ -354,6 +355,7 @@ Map_TypeGet                                 = 0x8003BD2C; // type:func
 GameFs_BgEtcGfxLoad                         = 0x8003BE6C; // type:func
 GameFs_BgItemLoad                           = 0x8003BE9C; // type:func
 Map_SpeedZoneGet                            = 0x8003BF60; // type:func
+Ipd_ActiveChunksClear1                      = 0x8003C2EC; // type:func
 GameFs_FlameGfxLoad                         = 0x8003E710; // type:func
 Game_TurnFlashlightOn                       = 0x8003ECBC; // type:func
 Game_TurnFlashlightOff                      = 0x8003ECE4; // type:func
@@ -379,8 +381,15 @@ Sound_StereoBalanceGet                      = 0x80040A64; // type:func
 Fs_QueueEntryLoadStatusGet                  = 0x80041ADC; // type:func
 IpdHeader_LoadStateGet                      = 0x80041B1C; // type:func
 LmHeader_LoadStateGet                       = 0x80041BA0; // type:func
-Ipd_TexturesInit1                            = 0x80041D48; // type:func
+Map_Init                                    = 0x80041C24; // type:func
+GlobalLm_Init                               = 0x80041CB4; // type:func
+LmHeader_Init                               = 0x80041CEC; // type:func
+Ipd_TexturesInit1                           = 0x80041D48; // type:func
+Map_IpdCollisionDataInit                    = 0x80041E98; // type:func
 Map_PlaceIpdAtGridPos                       = 0x80041ED0; // type:func
+Ipd_ActiveChunksClear0                      = 0x80041FF0; // type:func
+Ipd_TexturesInit0                           = 0x8004201C; // type:func
+Map_GlobalLmFree                            = 0x800420FC; // type:func
 Ipd_ActiveChunksClear                       = 0x80042300; // type:func
 Map_MakeIpdGrid                             = 0x800423F4; // type:func
 ConvertHexToS8                              = 0x8004255C; // type:func
@@ -548,6 +557,7 @@ Texture_Init1                               = 0x8005B1A0; // type:func
 Texture_Get                                 = 0x8005B1FC; // type:func
 Texture_RefCountReset                       = 0x8005B370; // type:func
 Texture_Init0                               = 0x8005B3A4; // type:func
+Material_TimFileNameGet                     = 0x8005B3BC; // type:func
 ActiveTextures_CountReset                   = 0x8005B46C; // type:func
 ActiveTextures_PutTextures                  = 0x8005B474; // type:func
 ActiveTextures_FindTexture                  = 0x8005B4BC; // type:func
@@ -2004,6 +2014,7 @@ g_SelectedSaveSlotIdx                       = 0x800A97D6;
 g_UnknownEngineCmdTable0                    = 0x800A9804;
 g_UnknownEngineCmdTable1                    = 0x800A9858; // type:u16
 g_UnknownEngineCmdTable2                    = 0x800A98AC;
+D_800A998C                                  = 0x800A998C; // type:AnimInfo size:0x10
 g_MapMsg_CurrentIdx                         = 0x800A99AC; // type:s32
 g_MapMsg_SelectFlashTimer                   = 0x800A99B0; // type:s16
 g_FullscreenMapTimFileIdxs                  = 0x800A99B4;
@@ -2027,6 +2038,12 @@ g_PrevSavegameCount                         = 0x800A9A88;
 //------------------------------------------------------------------------
 MAIN_MENU_ENTRY_STRINGS                     = 0x800A9A8C;
 DIFFICULTY_MENU_ENTRY_STRINGS               = 0x800A9AA0;
+FOG_COUNT.68                                = 0x800A9EB0;
+IMG.81                                      = 0x800A9EB4;
+IMG_TIM.86                                  = 0x800A9EBC;
+IMG_ETC.87                                  = 0x800A9EC4;
+IMG_FLAME.241                               = 0x800A9FA8;
+Y_ARRAY.295                                 = 0x800A9FB4;
 
 //---------------------------------------------------------------------------------
 //--- PA: 0x085468   VA: 0x800A9FC8   subsegment: .data, libsd/bodyprog_CD_80047D50
@@ -2090,6 +2107,11 @@ excl_r_ary                                  = 0x800AFCE0; // int[9]
 //------------------------------------------------------------------------
 //--- PA: 0x08B1A4   VA: 0x800AFD04   subsegment: .data, bodyprog_80085D78
 //------------------------------------------------------------------------
+Y_ARRAY_0.251                               = 0x800AFD3C;
+Y_ARRAY_1.252                               = 0x800AFD44;
+Y_ARRAY_2.253                               = 0x800AFD60;
+img0                                        = 0x800AFD9C;
+svec0.264                                   = 0x800AFDB0;
 
 //-----------------------------------------------------------
 //--- PA: 0x08B258   VA: 0x800AFDB8   subsegment: .data, demo
@@ -2097,7 +2119,9 @@ excl_r_ary                                  = 0x800AFCE0; // int[9]
 g_Demo_DemoId                               = 0x800AFDB8; // type:s32
 g_Demo_RandSeed                             = 0x800AFDBC; // type:u16
 g_Demo_PlayFileBufferPtr                    = 0x800AFDC0; // type:s32
-g_Demo_FileIds                              = 0x800AFDC4; // type:DemoFileInfo size:0x28
+DEMO_FILE_INFOS.30                          = 0x800AFDC4; // type:DemoFileInfo size:0x28
+g_Demo_Play                                 = 0x800AFDEC; // type:s32
+prevScreenFade.69                           = 0x800AFDF0; // type:s32
 
 //--------------------------------------------------------------
 //--- PA: 0x08B294   VA: 0x800AFDF4   subsegment: .data, credits
@@ -2427,10 +2451,11 @@ g_MapMsg_StateMachineIdx2                   = 0x800BCD64; // type:s32
 g_MapMsg_DisplayLength                      = 0x800BCD68; // type:s32
 g_MapMsg_MainIdx                            = 0x800BCD6C; // type:s32
 g_MapMsg_DisplayInc                         = 0x800BCD70; // type:s32
-g_MapMsg_Select                             = 0x800BCD78; // type:MapMsgSelect
+g_MapMsg_Select                             = 0x800BCD78; // type:MapMsgSelect size:2
 g_MapMsg_AudioLoadBlock                     = 0x800BCD7A; // type:u8
-g_MapMsg_SelectCancelIdx3                   = 0x800BCD7B; // type:s8
+g_MapMsg_SelectCancelIdx                    = 0x800BCD7B; // type:s8
 g_SysState_GameOver_TipIdx                  = 0x800BCD80; // type:u8
+g_SomeTimer0                                = 0x800BCD84; // type:s32
 
 //-----------------------------------------------------------------------
 //--- PA: 0x098230   VA: 0x800BCD90   subsegment: data, bodyprog_800BCD80
@@ -2474,18 +2499,21 @@ g_Inventory_EquippedItemIdx                 = 0x800C3E34;
 g_Items_Coords                              = 0x800C3E48;
 D_800C4168                                  = 0x800C4168; // type:u8 size:0xCD - size likely incomplete
 g_LoadedEffectTextureFlags                  = 0x800C42D8;
+D_800C44F0                                  = 0x800C44F0; // size:0x50
 g_TargetEnemyPosition                       = 0x800C4540;
 g_Player_MovementInputDetected              = 0x800C4558;
 g_Player_ActionRunPressed                   = 0x800C455C;
 g_Player_DisableDamage                      = 0x800C4562;
-g_Player_EquippedWeaponInfo                 = 0x800C4570;
+g_Player_EquippedWeaponInfo                 = 0x800C4570; // size:12
 g_Player_IsAiming                           = 0x800C457E;
 g_Player_IsSteppingLeftTap                  = 0x800C4580;
 g_Player_IsSteppingRightTap                 = 0x800C4582;
 g_Player_IsTurningLeft                      = 0x800C4584;
 g_Player_IsTurningRight                     = 0x800C4586;
+D_800C4590                                  = 0x800C4590; // size:0x1c
 g_Player_IsSteppingLeftHold                 = 0x800C45AC;
 g_Player_IsSteppingRightHold                = 0x800C45AE;
+D_800C45B0                                  = 0x800C45B0; // type:VECTOR3 size:0xC
 g_Player_IsHoldAttack                       = 0x800C45BC;
 g_Player_IsAttacking                        = 0x800C45BE;
 g_Player_IsShooting                         = 0x800C45C0;
@@ -2713,11 +2741,3 @@ smf_song                                    = 0x800C8B00;
 g_MapOverlayHeader                          = 0x800C957C; // type:MapOverlayHeader size:0x84C - size incomplete
 D_800FE5F8                                  = 0x800FE5F8; // ignore:True - Fixes fake missmatch in `Demo_Update`.
 hack_D_800FE5FC_fix                         = 0x800FE5FC; // ignore:true - Part of temp memory block at 800FDE00, has to be unsymbolized for C to match.
-LmHeader_Init = 0x80041CEC; // type:func
-GlobalLm_Init = 0x80041CB4; // type:func
-Map_GlobalLmFree = 0x800420FC; // type:func
-Map_IpdCollisionDataInit = 0x80041E98; // type:func
-Map_Init = 0x80041C24; // type:func
-Ipd_ActiveChunksClear0 = 0x80041FF0; // type:func
-Ipd_TexturesInit0 = 0x8004201C; // type:func
-Ipd_ActiveChunksClear1 = 0x8003C2EC; // type:func
