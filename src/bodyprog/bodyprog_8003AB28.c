@@ -938,11 +938,11 @@ void func_8003C2EC() // 0x8003C2EC
 
 void func_8003C30C() // 0x8003C30C
 {
-    u8 temp_v1;
+    u8 flags;
 
-    temp_v1 = D_800BCE18.field_0[0].type_0->flags_6;
+    flags = D_800BCE18.field_0[0].type_0->flags_6;
     
-    if ((temp_v1 & 4) && (temp_v1 & 3)) 
+    if ((flags & MapTypeFlag_Interior) && (flags & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunk))) 
     {
         func_800420C0();
         return;
