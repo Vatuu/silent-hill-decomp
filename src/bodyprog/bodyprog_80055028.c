@@ -518,28 +518,28 @@ void ModelHeader_FixOffsets(s_ModelHeader* modelHdr, s_LmHeader* lmHdr) // 0x800
     }
 }
 
-void func_80056244(s_LmHeader* lmHdr, bool flag) // 0x80056244
+void func_80056244(s_LmHeader* lmHdr, bool unkFlag) // 0x80056244
 {
-    s_ModelHeader* modelHdr_tmp1;
-    s_ModelHeader* modelHdr_tmp2;
-    s_MeshHeader*  meshHdr;
+    s_ModelHeader* modelHdrs;
+    s_ModelHeader* curModelHdr;
+    s_MeshHeader*  curMeshHdr;
     s_Primitive*   prim;
 
-    modelHdr_tmp1 = lmHdr->modelHdrs_C;
+    modelHdrs = lmHdr->modelHdrs_C;
 
-    for (modelHdr_tmp2 = &modelHdr_tmp1[0]; modelHdr_tmp2 < &modelHdr_tmp1[lmHdr->modelCount_8]; modelHdr_tmp2++)
+    for (curModelHdr = &modelHdrs[0]; curModelHdr < &modelHdrs[lmHdr->modelCount_8]; curModelHdr++)
     {
-        for (meshHdr = &modelHdr_tmp2->meshHdrs_C[0]; meshHdr < &modelHdr_tmp2->meshHdrs_C[modelHdr_tmp2->meshCount_8]; meshHdr++)
+        for (curMeshHdr = &curModelHdr->meshHdrs_C[0]; curMeshHdr < &curModelHdr->meshHdrs_C[curModelHdr->meshCount_8]; curMeshHdr++)
         {
-            for (prim = &meshHdr->primitives_4[0]; prim < &meshHdr->primitives_4[meshHdr->primitiveCount_0]; prim++)
+            for (prim = &curMeshHdr->primitives_4[0]; prim < &curMeshHdr->primitives_4[curMeshHdr->primitiveCount_0]; prim++)
             {
-                prim->field_6_15 = flag;
+                prim->field_6_15 = unkFlag;
             }
         }
     }
 }
 
-s32 Lm_MaterialCount(bool (*filter)(s_Material* mat), s_LmHeader* lmHdr) // 0x80056348
+s32 Lm_MaterialCount(bool (*filterFunc)(s_Material* mat), s_LmHeader* lmHdr) // 0x80056348
 {
     s32         count;
     s_Material* mat;
@@ -547,7 +547,7 @@ s32 Lm_MaterialCount(bool (*filter)(s_Material* mat), s_LmHeader* lmHdr) // 0x80
     count = 0;
     for (mat = lmHdr->materials_4; mat < (lmHdr->materials_4 + lmHdr->materialCount_3); mat++)
     {
-        if (filter(mat))
+        if (filterFunc(mat))
         {
             count++;
         }
@@ -675,15 +675,16 @@ void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* image, s8 unused, s32 start
     }
 }
 
-void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* actTex, bool (*filter)(s_Material* mat), s32 fileIdx, s32 arg4) // 0x80056774
+void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* activeTexs, bool (*filterFunc)(s_Material* mat), s32 fileIdx, s32 arg4) // 0x80056774
 {
     s_Material* curMat;
 
     for (curMat = &lmHdr->materials_4[0]; curMat < &lmHdr->materials_4[lmHdr->materialCount_3]; curMat++)
     {
-        if (curMat->field_C == 0 && curMat->texture_8 == NULL && (filter == NULL || filter(curMat)))
+        if (curMat->field_C == 0 && curMat->texture_8 == NULL &&
+            (filterFunc == NULL || filterFunc(curMat)))
         {
-            curMat->texture_8 = Texture_Get(curMat, actTex, FS_BUFFER_9, fileIdx, arg4);
+            curMat->texture_8 = Texture_Get(curMat, activeTexs, FS_BUFFER_9, fileIdx, arg4);
             if (curMat->texture_8 != NULL)
             {
                 Material_FsImageApply(curMat, &curMat->texture_8->imageDesc_0, arg4);
@@ -1630,24 +1631,24 @@ void Texture_Init1(s_Texture* tex, char* texName, u8 tPage0, u8 tPage1, s32 u, s
     tex->queueIdx_10 = NO_VALUE;
 }
 
-s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* actTex, void* fsBuffer9, s32 fileIdx, s32 arg4)
+s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* activeTexs, void* fsBuffer9, s32 fileIdx, s32 arg4)
 {
-    s8         fileName[12];
+    s8         filename[12];
     s8         debugStr[12];
     s32        fileId;
     s32        i;
-    s32        lowestQueueIdx;
+    s32        smallestQueueIdx;
     u32        queueIdx;
     s_Texture* curTex;
     s_Texture* foundTex;
     
-    lowestQueueIdx = INT_MAX;
+    smallestQueueIdx = INT_MAX;
     mat->texture_8 = NULL;
-    foundTex       = NULL;
+    foundTex = NULL;
 
-    for (i = 0; i < actTex->count_0; i++)
+    for (i = 0; i < activeTexs->count_0; i++)
     {
-        curTex = actTex->entries_4[i];
+        curTex = activeTexs->textures_4[i];
 
         if (!COMPARE_FILENAMES(&mat->name_0, &curTex->name_8))
         {
@@ -1657,10 +1658,10 @@ s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* actTex, void* fsBuffer
         }
 
         queueIdx = curTex->queueIdx_10;
-        if ((s32)queueIdx < lowestQueueIdx && curTex->refCount_14 == 0)
+        if ((s32)queueIdx < smallestQueueIdx && curTex->refCount_14 == 0)
         {
-            lowestQueueIdx = queueIdx;
-            foundTex = curTex;
+            smallestQueueIdx = queueIdx;
+            foundTex       = curTex;
         }
     }
 
@@ -1669,14 +1670,14 @@ s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* actTex, void* fsBuffer
         return NULL;
     }
 
-    Material_TimFileNameGet(&fileName, mat);
-    fileId = Fs_FindNextFile(&fileName, 0, fileIdx);
+    Material_TimFileNameGet(&filename, mat);
+    fileId = Fs_FindNextFile(&filename, 0, fileIdx);
     if (fileId == NO_VALUE)
     {
         // Failed to find file, log filename to screen.
         debugStr[12] = 0;
         Gfx_DebugStringPosition(100, 80);
-        strncpy(&debugStr, &fileName, 12);
+        strncpy(&debugStr, &filename, 12);
 #ifdef DEBUG
         // Code seen in 98-12-16 build.
         Gfx_DebugStringDraw(debugStr);
@@ -1743,38 +1744,38 @@ void func_8005B424(VECTOR3* vec0, VECTOR3* vec1) // 0x8005B424
     *((s_func_8005B424*)vec0) = *((s_func_8005B424*)vec1);
 }
 
-void ActiveTextures_CountReset(s_ActiveTextures* actTex) // 0x8005B46C
+void ActiveTextures_CountReset(s_ActiveTextures* activeTexs) // 0x8005B46C
 {
-    actTex->count_0 = 0;
+    activeTexs->count_0 = 0;
 }
 
-void ActiveTextures_PutTextures(s_ActiveTextures* actTex, s_Texture* texs, s32 idx) // 0x8005B474
+void ActiveTextures_PutTextures(s_ActiveTextures* activeTexs, s_Texture* texs, s32 texIdx) // 0x8005B474
 {
     s_Texture*  curTex;
-    s_Texture** entryPtr;
+    s_Texture** texEntries;
 
-    entryPtr = actTex->entries_4;
-    for (curTex = &texs[0]; curTex < &texs[idx];)
+    texEntries = activeTexs->textures_4;
+    for (curTex = &texs[0]; curTex < &texs[texIdx];)
     {
-        *entryPtr++ = curTex++;
-        actTex->count_0++;
+        *texEntries++ = curTex++;
+        activeTexs->count_0++;
     }
 }
 
-s_Texture* ActiveTextures_FindTexture(char* str, s_ActiveTextures* actTex) // 0x8005B4BC
+s_Texture* ActiveTextures_FindTexture(char* texName, s_ActiveTextures* activeTexs) // 0x8005B4BC
 {
-    char       prevStr[8];
+    char       prevTexName[8];
     s32        i;
-    s_Texture* tex;
+    s_Texture* curTex;
 
-    StringCopy(prevStr, str);
+    StringCopy(prevTexName, texName);
 
-    for (i = 0; i < actTex->count_0; i++)
+    for (i = 0; i < activeTexs->count_0; i++)
     {
-        tex = actTex->entries_4[i];
-        if (tex->queueIdx_10 != NO_VALUE && !COMPARE_FILENAMES(prevStr, &tex->name_8))
+        curTex = activeTexs->textures_4[i];
+        if (curTex->queueIdx_10 != NO_VALUE && !COMPARE_FILENAMES(prevTexName, &curTex->name_8))
         {
-            return tex;
+            return curTex;
         }
     }
 

@@ -718,7 +718,7 @@ void func_8003BCF4() // 0x8003BCF4
 
 s32 Map_TypeGet() // 0x8003BD2C
 {
-    return D_800BCE18.field_0[0].type_0 - g_MapTypes;
+    return D_800BCE18.field_0[0].type_0 - MAP_TYPES;
 }
 
 void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
@@ -802,10 +802,10 @@ extern s_800C4168 const D_800C4168;
 
 s32 Map_SpeedZoneGet(s32 x, s32 z) // 0x8003BF60
 {
-    s32          ret;
-    s_SpeedZone* ptr;
+    s32          zoneIdx;
+    s_SpeedZone* curZone;
 
-    ret = 0;
+    zoneIdx = 0;
 
     if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP0_S00)
     {
@@ -814,22 +814,21 @@ s32 Map_SpeedZoneGet(s32 x, s32 z) // 0x8003BF60
 
     if (D_800BCE18.field_0[0].type_0->speedZones_C != NULL)
     {
-        ptr = D_800BCE18.field_0[0].type_0->speedZones_C;
-
-        while (ptr->speedIdx_0 != NO_VALUE)
+        curZone = D_800BCE18.field_0[0].type_0->speedZones_C;
+        while (curZone->idx_0 != NO_VALUE)
         {
-            if (x >= (ptr->minX_2 << 8) && (ptr->maxX_4 << 8) >= x &&
-                z >= (ptr->minZ_6 << 8) && (ptr->maxZ_8 << 8) >= z &&
-                ret < ptr->speedIdx_0)
+            if (x >= (curZone->minX_2 << 8) && (curZone->maxX_4 << 8) >= x &&
+                z >= (curZone->minZ_6 << 8) && (curZone->maxZ_8 << 8) >= z &&
+                zoneIdx < curZone->idx_0)
             {
-                ret = ptr->speedIdx_0;
+                zoneIdx = curZone->idx_0;
             }
 
-            ptr++;
+            curZone++;
         }
     }
 
-    return ret;
+    return zoneIdx;
 }
 
 void func_8003C048() // 0x8003C048
@@ -900,16 +899,16 @@ void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ
 {
     s32        activeIpdCount;
     u8         flags;
-    s_MapType* ptr;
+    s_MapType* mapType;
 
     D_800BCE18.field_0[0].type_0 = mapHeader->type_0;
-    flags = mapHeader->type_0->flags_6;
 
+    flags = mapHeader->type_0->flags_6;
     if (flags & MapTypeFlag_OneActiveChunk)
     {
         activeIpdCount = 1;
     } 
-    else if (flags & MapTypeFlag_TwoActiveChunk)
+    else if (flags & MapTypeFlag_TwoActiveChunks)
     {
         activeIpdCount = 2;
     }
@@ -918,12 +917,11 @@ void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ
         activeIpdCount = 4;
     }
 
-    ptr = mapHeader->type_0;
-    // Strange way to read the 3rd interior flag bit
-    #define IS_EXTERIOR (((ptr->flags_6 >> 2) ^ 1) & 1)
-    func_800421D8(ptr->tag_2, ptr->plmFileIdx_0, activeIpdCount, IS_EXTERIOR, 0, 0);
+    // TODO: Strange way to read interior flag bit 2.
+    mapType = mapHeader->type_0;
+    func_800421D8(mapType->tag_2, mapType->plmFileIdx_0, activeIpdCount, ((mapType->flags_6 >> 2) ^ 1) & (1 << 0), 0, 0);
 
-    if (mapHeader->type_0 == &g_MapTypes[0])
+    if (mapHeader->type_0 == &MAP_TYPES[0])
     {
         Map_PlaceIpdAtGridPos(FILE_BG_THR05FD_IPD, -1, 8);
     }
@@ -941,12 +939,12 @@ void func_8003C30C() // 0x8003C30C
     u8 flags;
 
     flags = D_800BCE18.field_0[0].type_0->flags_6;
-    
-    if ((flags & MapTypeFlag_Interior) && (flags & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunk))) 
+    if ((flags & MapTypeFlag_Interior) && (flags & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks))) 
     {
         func_800420C0();
         return;
     }
+
     Ipd_ActiveChunksClear0();
     Ipd_TexturesInit0();
 }
@@ -994,7 +992,7 @@ void func_8003C3AC() // 0x8003C3AC
     pos0.vx += FP_MULTIPLY_PRECISE(moveAmt, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
     pos0.vz += FP_MULTIPLY_PRECISE(moveAmt, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
 
-    if (D_800BCE18.field_0[0].type_0 == &g_MapTypes[0] &&
+    if (D_800BCE18.field_0[0].type_0 == &MAP_TYPES[0] &&
         chara->position_18.vx >= FP_METER(-40.0f) && chara->position_18.vx <= FP_METER(40.0f) &&
         chara->position_18.vz >= FP_METER(200.0f) && chara->position_18.vz <= FP_METER(240.0f))
     {

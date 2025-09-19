@@ -2700,7 +2700,7 @@ void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones
         {
             func_8008E5B4();
 
-            if (waterZone->enabled_0 == true)
+            if (waterZone->isEnabled_0 == true)
             {
                 var = FP_TO(waterZone->illumination_2, Q8_SHIFT);
                 func_8008E794(pos, D_800C4818.field_20, var);
@@ -2904,7 +2904,7 @@ s_WaterZone* Map_WaterZoneGet(s32 posX, s32 posZ, s_WaterZone* waterZone)
         return NULL;
     }
 
-    for (zonePtr = waterZone; zonePtr->enabled_0; zonePtr++)
+    for (zonePtr = waterZone; zonePtr->isEnabled_0; zonePtr++)
     {
         if (posX >= zonePtr->minX_4 && posX < zonePtr->maxX_6 &&
             posZ >= zonePtr->minZ_8 && posZ < zonePtr->maxZ_A)
