@@ -530,7 +530,7 @@ u32 LmHeader_LoadStateGet(s_GlobalLm* globalLm) // 0x80041BA0
 void func_80041C24(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize) // 0x80041C24
 {
     bzero(&g_Map, sizeof(s_Map));
-    func_80041CB4(&g_Map.globalLm_138, lmHdr);
+    GlobalLm_Init(&g_Map.globalLm_138, lmHdr);
 
     g_Map.ipdBuffer_150 = ipdBuf;
     g_Map.ipdBufSize_154 = ipdBufSize;
@@ -542,7 +542,7 @@ void func_80041C24(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize) // 0x
     func_80041E98();
 }
 
-void func_80041CB4(s_GlobalLm* globalLm, s_LmHeader* lmHdr) // 0x80041CB4
+void GlobalLm_Init(s_GlobalLm* globalLm, s_LmHeader* lmHdr) // 0x80041CB4
 {
     globalLm->lmHdr_0 = lmHdr;
     LmHeader_Init(lmHdr);
@@ -688,7 +688,7 @@ void func_800420FC() // 0x800420FC
         Lm_MaterialRefCountDec(g_Map.globalLm_138.lmHdr_0);
     }
 
-    func_80041CB4(&g_Map.globalLm_138, g_Map.globalLm_138.lmHdr_0);
+    GlobalLm_Init(&g_Map.globalLm_138, g_Map.globalLm_138.lmHdr_0);
 }
 
 s_Texture* func_80042178(char* arg0) // 0x80042178
