@@ -539,7 +539,7 @@ void func_80041C24(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize) // 0x
 
     Ipd_ActiveChunksQueueIdxClear(g_Map.ipdActive_15C, 4);
     Ipd_TexturesInit();
-    func_80041E98();
+    Map_IpdCollisionDataInit();
 }
 
 void GlobalLm_Init(s_GlobalLm* globalLm, s_LmHeader* lmHdr) // 0x80041CB4
@@ -603,7 +603,7 @@ void Ipd_TexturesInit() // 0x80041D48
     ActiveTextures_PutTextures(&g_Map.ipdTextures_430.halfPage_2C, g_Map.ipdTextures_430.halfPageTexs_118, 2);
 }
 
-void func_80041E98() // 0x80041E98
+void Map_IpdCollisionDataInit() // 0x80041E98
 {
     bzero(&g_Map.field_0, sizeof(s_IpdCollisionData));
     g_Map.field_0.field_1C = 512;

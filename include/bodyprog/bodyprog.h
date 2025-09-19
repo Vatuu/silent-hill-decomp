@@ -2663,7 +2663,7 @@ void Ipd_ActiveChunksQueueIdxClear(s_IpdChunk* chunks, s32 chunkCount);
 /** Crucial for map loading. */
 void Ipd_TexturesInit();
 
-void func_80041E98();
+void Map_IpdCollisionDataInit();
 
 void Map_PlaceIpdAtGridPos(s16 ipdFileIdx, s32 chunkCoordX, s32 chunkCoordZ);
 
