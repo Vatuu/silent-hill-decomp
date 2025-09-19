@@ -1389,15 +1389,8 @@ bool func_80043740() // 0x80043740
                 continue;
         }
 
-        if (curChunk->distance0_C <= FP_METER(0.0f))
+        if (curChunk->distance0_C <= FP_METER(0.0f) || curChunk->distance1_10 <= FP_METER(0.0f))
         {
-            return false;
-        }
-
-        if (curChunk->distance1_10 <= FP_METER(0.0f))
-        {
-            do {} while (false); // @hack Required for match.
-
             return false;
         }
     }

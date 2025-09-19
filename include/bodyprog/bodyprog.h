@@ -4179,6 +4179,8 @@ s32 func_80080A10();
 
 u8 func_8008A2E0(s32 arg0);
 
+void func_800348C0();
+
 void GameState_Boot_Update();
 void GameState_StartMovieIntro_Update();
 void GameState_DeathLoadScreen_Update();
