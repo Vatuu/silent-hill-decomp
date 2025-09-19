@@ -1,9 +1,8 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
+#include "maps/map7/map7_s01.h"
 #include "maps/shared.h"
-
-extern s8 D_800A9945;
 
 INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", D_800C9578);
 
@@ -69,7 +68,7 @@ void func_800D1620(void) {}
 
 void func_800D1628(void) {}
 
-s32 func_800D1630()
+s32 func_800D1630() // 0x800D1630
 {
     return 0;
 }
@@ -517,7 +516,7 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800DD368);
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800DDCD4);
 
-void func_800DEDA4(void)
+void func_800DEDA4(void) // 0x800DEDA4
 {
     if (!Savegame_EventFlagGet(EventFlag_485))
     {
