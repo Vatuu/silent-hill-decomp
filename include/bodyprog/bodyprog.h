@@ -3348,7 +3348,7 @@ Could `arg5` be a struct pointer?
 `func_8003D6E0` uses this function and in the last argument
 it input `arg5` and `arg5` is an undetermined function pointer
 */
-bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 arg3, s_LmHeader* lmHdr, s_FsImageDesc* tex);
+bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 flags, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 bool func_80088D0C();
 
@@ -3984,6 +3984,7 @@ void func_8003C110();
 
 void func_8003C1AC(s_800BCE18_0_CC* arg0);
 
+/** @unused */
 void Ipd_ActiveChunksClear1();
 
 void func_8003C30C();

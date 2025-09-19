@@ -929,7 +929,7 @@ void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ
     func_80042C3C(playerPosX, playerPosZ, playerPosX, playerPosZ);
 }
 
-void Ipd_ActiveChunksClear1() // @unused 0x8003C2EC
+void Ipd_ActiveChunksClear1() // 0x8003C2EC
 {
     Ipd_ActiveChunksClear0();
 }
@@ -973,8 +973,8 @@ void func_8003C3AC() // 0x8003C3AC
     s32             var_a0;
     s32             var_a1;
     s32             var_s1;
-    u8              flags1;
     u8              flags0;
+    u8              flags1;
     s_SubCharacter* chara = &g_SysWork.player_4C.chara_0;
 
     if ((u8)D_800BCE18.field_0[0].field_4 != 0)
@@ -1006,7 +1006,7 @@ void func_8003C3AC() // 0x8003C3AC
         vwGetViewAngle(&pos2);
 
         flags1 = D_800BCE18.field_0[0].type_0->flags_6;
-        if (!(flags1 & 0x4) || !(flags1 & 0x3))
+        if (!(flags1 & MapTypeFlag_Interior) || !(flags1 & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks)))
         {
             var_s1 = FP_MULTIPLY(Math_Cos(pos2.vx), FP_METER(9.0f), Q12_SHIFT);
         }
@@ -1039,7 +1039,7 @@ void func_8003C3AC() // 0x8003C3AC
     }
 
     flags0 = D_800BCE18.field_0[0].type_0->flags_6;
-    if ((flags0 & MapTypeFlag_Interior) && (flags0 & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunk)))
+    if ((flags0 & MapTypeFlag_Interior) && (flags0 & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks)))
     {
         var_a1 = chara->position_18.vx / FP_METER(2.5f);
         if (chara->position_18.vx < FP_METER(0.0f))
