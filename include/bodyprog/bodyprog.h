@@ -51,7 +51,7 @@ typedef enum _MapTypeFlags
     MapTypeFlag_Unk3           = 1 << 3, // @unused Unused map type `XXX` has this flag.
 
     // Added for clarity as all exterior maps use this combination.
-    MapTypeFlag_FourActiveChunks = 0,
+    MapTypeFlag_FourActiveChunk = 0,
 } e_MapTypeFlags;
 
 typedef enum _EffectTextureFlags
