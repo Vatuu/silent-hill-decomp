@@ -2720,3 +2720,4 @@ Map_IpdCollisionDataInit = 0x80041E98; // type:func
 Map_Init = 0x80041C24; // type:func
 Ipd_ActiveChunksClear0 = 0x80041FF0; // type:func
 Ipd_TexturesInit0 = 0x8004201C; // type:func
+Ipd_ActiveChunksClear1 = 0x8003C2EC; // type:func

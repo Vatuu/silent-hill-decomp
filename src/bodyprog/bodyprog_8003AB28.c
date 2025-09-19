@@ -931,7 +931,7 @@ void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ
     func_80042C3C(playerPosX, playerPosZ, playerPosX, playerPosZ);
 }
 
-void func_8003C2EC() // 0x8003C2EC
+void Ipd_ActiveChunksClear1() // 0x8003C2EC
 {
     Ipd_ActiveChunksClear0();
 }

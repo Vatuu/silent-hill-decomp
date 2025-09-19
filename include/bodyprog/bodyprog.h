@@ -3991,7 +3991,7 @@ void func_8003C110();
 
 void func_8003C1AC(s_800BCE18_0_CC* arg0);
 
-void func_8003C2EC();
+void Ipd_ActiveChunksClear1();
 
 void func_8003C30C();
 
