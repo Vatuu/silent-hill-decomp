@@ -636,7 +636,7 @@ void Map_PlaceIpdAtGridPos(s16 ipdFileIdx, s32 chunkCoordX, s32 chunkCoordZ) // 
     }
 }
 
-void func_80041FF0() // 0x80041FF0
+void Ipd_ActiveChunksClear0() // 0x80041FF0
 {
     Ipd_ActiveChunksClear(&g_Map, g_Map.ipdActiveSize_158);
 }

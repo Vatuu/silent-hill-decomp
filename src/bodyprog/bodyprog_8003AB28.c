@@ -933,7 +933,7 @@ void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ
 
 void func_8003C2EC() // 0x8003C2EC
 {
-    func_80041FF0();
+    Ipd_ActiveChunksClear0();
 }
 
 void func_8003C30C() // 0x8003C30C
@@ -947,7 +947,7 @@ void func_8003C30C() // 0x8003C30C
         func_800420C0();
         return;
     }
-    func_80041FF0();
+    Ipd_ActiveChunksClear0();
     func_8004201C();
 }
 

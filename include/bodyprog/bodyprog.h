@@ -2667,7 +2667,7 @@ void Map_IpdCollisionDataInit();
 
 void Map_PlaceIpdAtGridPos(s16 ipdFileIdx, s32 chunkCoordX, s32 chunkCoordZ);
 
-void func_80041FF0();
+void Ipd_ActiveChunksClear0();
 
 void func_8004201C();
 
