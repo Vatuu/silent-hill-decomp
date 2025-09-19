@@ -6723,11 +6723,11 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             enemyRotY = g_SysWork.npcs_1A0[chara->field_40].rotation_24.vy;
             if (chara->attackReceived_41 >= 64 && chara->attackReceived_41 < 66)
             {
-                enemyRotY -= FP_FLOAT_TO(4.0f, Q8_SHIFT);
+                enemyRotY -= FP_ANGLE(90.0f);
             }
             else if (chara->attackReceived_41 == 69)
             {
-                enemyRotY = FP_FLOAT_TO(4.0f, Q8_SHIFT);
+                enemyRotY = FP_ANGLE(90.0f);
             }
             else if (chara->attackReceived_41 == 68)
             {
