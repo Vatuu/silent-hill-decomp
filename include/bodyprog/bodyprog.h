@@ -1063,12 +1063,12 @@ typedef struct
 
 typedef struct _MapType
 {
-    s16          plmFileIdx_0;
-    char         tag_2[4];
-    u8           flags_6;
+    s16                plmFileIdx_0;
+    char               tag_2[4];
+    u8                 flags_6;
     // 1 byte of padding.
-    s_WaterZone* waterZones_8;
-    s_SpeedZone* speedZones_C;
+    const s_WaterZone* waterZones_8;
+    const s_SpeedZone* speedZones_C;
 } s_MapType;
 
 typedef struct
