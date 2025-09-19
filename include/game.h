@@ -29,16 +29,16 @@ struct _Model;
 #define SHOTGUN_AMMO_PICKUP_ITEM_COUNT 6
 #define RIFLE_AMMO_PICKUP_ITEM_COUNT   6
 
-#define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400  /** Hack. Long string length is used to display a whole message instantly. */
+#define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400  /** @hack Long string length is used to display a whole message instantly without a rollout. */
 #define GLYPH_TABLE_ASCII_OFFSET       '\'' /** Subtracted from ASCII bytes to get index to some string-related table. */
 
 /** @brief Converts a floating-point X screen position in percent to a fixed-point X screen coodinate. */
 #define SCREEN_POSITION_X(percent) \
-    (s32)((SCREEN_WIDTH) * ((percent) / 100.0f))
+    (s32)(SCREEN_WIDTH * ((percent) / 100.0f))
 
 /** @brief Converts a floating-point Y screen position in percent to a fixed-point Y screen coodinate. */
 #define SCREEN_POSITION_Y(percent) \
-    (s32)((SCREEN_HEIGHT) * ((percent) / 100.0f))
+    (s32)(SCREEN_HEIGHT * ((percent) / 100.0f))
 
 // TODO: Not correct. Should use unions instead.
 /** @brief Accessors for low and high parts of each character property, returns a pointer which can be read or written to. */

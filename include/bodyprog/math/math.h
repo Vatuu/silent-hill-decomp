@@ -91,11 +91,15 @@
 
 /** @brief Scales a distance according to a time step at 30 FPS.
  *
+ * TODO: Not only used for distance scaling. Rename to `Math_DeltaTimeScale`.
+ * There are instances where this macro could be used, but a delta time arg would be required.
+ * Could genericise it with a new param for that purpose?
+ *
  * @param dist Distance in fixed-point world meters.
  * @return Scaled distance.
  */
 #define Math_DeltaTimeDistScale(dist) \
-    ((g_DeltaTime0 * (dist)) / TIME_STEP_30_FPS)
+    (((dist) * g_DeltaTime0) / TIME_STEP_30_FPS)
 
 /** @brief Normalizes unsigned fixed-point degrees in Q19.12, range `[0, 4096]` to the signed range `[-2048, 2047]`.
  * Thin wrapper for `FP_ANGLE_NORM_S`.

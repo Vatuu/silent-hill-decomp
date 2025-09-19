@@ -7169,7 +7169,7 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                         temp_a1_3 = chara->properties_E4.player.field_F4 - D_800AF212;
                         if (D_800AF212 < chara->properties_E4.player.field_F4)
                         {
-                            var_a0 = chara->properties_E4.player.field_100 * (((var_a2 + chara->properties_E4.player.field_100) * g_DeltaTime0) / TIME_STEP_30_FPS);
+                            var_a0 = chara->properties_E4.player.field_100 * Math_DeltaTimeDistScale(var_a2 + chara->properties_E4.player.field_100);
                             if (var_a0 < temp_a1_3)
                             {
                                 D_800AF212 = chara->properties_E4.larvalStalker.properties_E8[3].val16[0] - var_a0;
@@ -7177,7 +7177,7 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                         }
                         else
                         {
-                            var_a0 = -(chara->properties_E4.player.field_100 * (((var_a2 + chara->properties_E4.player.field_100) * g_DeltaTime0) / TIME_STEP_30_FPS));
+                            var_a0 = -(chara->properties_E4.player.field_100 * Math_DeltaTimeDistScale(var_a2 + chara->properties_E4.player.field_100));
                             if (temp_a1_3 < var_a0)
                             {
                                 D_800AF212 = chara->properties_E4.larvalStalker.properties_E8[3].val16[0] - var_a0;
@@ -7196,7 +7196,7 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                             temp_v0   = chara->properties_E4.player.field_100 + 1;
                             temp_a1_3 = temp_v0 - var_v1;
                             var_a0    = 4;
-                            var_a0    = temp_a1_3 * (((var_a2 + ((temp_a1_3 * 2) + var_a0)) * g_DeltaTime0) / TIME_STEP_30_FPS);
+                            var_a0    = temp_a1_3 * Math_DeltaTimeDistScale(var_a2 + ((temp_a1_3 * 2) + var_a0));
 
                             if (D_800AF212 > 0)
                             {

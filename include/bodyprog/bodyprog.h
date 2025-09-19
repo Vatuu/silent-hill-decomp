@@ -21,19 +21,19 @@
 #define OPT_VIBRATION_DISABLED 0
 #define OPT_VIBRATION_ENABLED  128
 
-#define IPD_HEADER_MAGIC 20  // 0x14 / 20
-#define LM_HEADER_MAGIC  '0' // 0x30 / 48 / '0'
+#define IPD_HEADER_MAGIC 20
+#define LM_HEADER_MAGIC  '0'
 #define LM_VERSION       6
 
 // ==============
 // HELPER MACROS
 // ==============
 
-/** @brief Compares 8-character strings using `u32`. Similar to `strcmp`.
+/** @brief Compares 8-character filenames using `u32`. Similar to `strcmp`.
  *
- * @param a First string.
- * @param b Second string.
- * @return `true` if the strings aren't equal, `false` otherwise.
+ * @param a First filename.
+ * @param b Second filename.
+ * @return `true` if the filenames aren't equal, `false` otherwise.
  */
 #define COMPARE_FILENAMES(a, b)                                  \
     (((u_Filename*)(a))->u32[0] != ((u_Filename*)(b))->u32[0] || \
@@ -45,7 +45,7 @@
 
 typedef enum _MapTypeFlags
 {
-    MapTypeFlag_FourActiveChunks = 0,      /** Exterior maps use this combination. */
+    MapTypeFlag_FourActiveChunks = 0,      /** Used by exterior maps. */
     MapTypeFlag_OneActiveChunk   = 1 << 0,
     MapTypeFlag_TwoActiveChunks  = 1 << 1,
     MapTypeFlag_Interior         = 1 << 2,
@@ -55,8 +55,8 @@ typedef enum _MapTypeFlags
 typedef enum _EffectTextureFlags
 {
     EffectTextureFlag_None         = 0,
-    EffectTextureFlag_Glass        = 1 << 1, /** Broken glass in cafe Air Screamer cutscene. */
-    EffectTextureFlag_WaterRefract = 1 << 2, /** Water waves and light reflection in sewer. */
+    EffectTextureFlag_Glass        = 1 << 1, /** Broken glass in the cafe Air Screamer cutscene. */
+    EffectTextureFlag_WaterRefract = 1 << 2, /** Water waves and light reflection in the sewer. */
     EffectTextureFlag_Water        = 1 << 3,
     EffectTextureFlag_Fire         = 1 << 4,
     EffectTextureFlag_Ef           = 1 << 5, // TODO: Rename. Looks like stringy flesh?
@@ -3343,11 +3343,10 @@ void func_800880F0(s32 arg0);
 
 void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, u32 arg9, s16 argA, s32 argB);
 
-/**
-Could `arg5` be a struct pointer?
-`func_8003D6E0` uses this function and in the last argument
-it input `arg5` and `arg5` is an undetermined function pointer
-*/
+/** `arg0` and `arg5` could be pointers.
+ * `func_8003D6E0` uses this function and in the last argument
+ * it input `arg5` and `arg5` is an undetermined function pointer
+ */
 bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 flags, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 bool func_80088D0C();

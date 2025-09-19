@@ -23,6 +23,7 @@ void sharedFunc_800CEFD0_1_s02(s32 arg0, s_sharedFunc_800CEFD0_1_s02* arg1, u16*
         var_s0->field_C.vz = var_s0->field_0.vz;
         var_s0->field_C.vy = var_s0->field_0.vy - var_s0->field_1A;
 
+        // TODO: Similar to `Math_DeltaTimeDistScale`.
         var_s0->field_0.vx += ((sharedData_800DFB64_0_s00 + var_t0) * *deltaTime) / TIME_STEP_30_FPS;
         var_s0->field_1A   += *(s32*)&sharedData_800E5768_1_s02; // TODO: Should be sharedData_800E5768_1_s02.corners_0[0].vx
         var_s0->field_0.vy += ((var_s0->field_1A << 2) * *deltaTime) / TIME_STEP_30_FPS;

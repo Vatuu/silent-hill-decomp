@@ -5,7 +5,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
     #define ANGLE_THRESHOLD (FP_ANGLE(360.0) >> 6) // 360 / 64 = 5.625 degrees.
 
     q7_8     shortestAngle;
-    s32      angleIncr;
+    s32      angleStep;
     s32      tmpIdx;
     s32      rotY;
     s16      tmpAngle;
@@ -124,7 +124,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             Math_ShortestAngleGet(rotY, sharedData_800DF1FA_0_s00, &shortestAngle);
 
             // Turn toward.
-            angleIncr = (g_DeltaTime0 << (shortestAngle < FP_ANGLE(45.0f) ? 5 : 8)) / TIME_STEP_30_FPS;
+            angleStep = Math_DeltaTimeDistScale((shortestAngle < FP_ANGLE(45.0f)) ? FP_ANGLE(2.9f) : FP_ANGLE(22.5f));
 
             if (ABS(shortestAngle) < ANGLE_THRESHOLD)
             {
@@ -134,11 +134,11 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             {
                 if (shortestAngle < 0)
                 {
-                    chara->rotation_24.vy -= angleIncr;
+                    chara->rotation_24.vy -= angleStep;
                 }
                 else
                 {
-                    chara->rotation_24.vy += angleIncr;
+                    chara->rotation_24.vy += angleStep;
                 }
             }
 
