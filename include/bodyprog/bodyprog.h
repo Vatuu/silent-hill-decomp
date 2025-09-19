@@ -2650,7 +2650,7 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4);
 u32 Fs_QueueEntryLoadStatusGet(s32 queueIdx);
 
 /** Used for loading maps */
-void func_80041C24(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize);
+void Map_Init(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize);
 
 /** This function is related to map loading. */
 void GlobalLm_Init(s_GlobalLm* globalLm, s_LmHeader* lmHdr);

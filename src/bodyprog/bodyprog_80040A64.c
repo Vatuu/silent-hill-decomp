@@ -527,7 +527,7 @@ u32 LmHeader_LoadStateGet(s_GlobalLm* globalLm) // 0x80041BA0
     return StaticModelLoadState_Corrupted;
 }
 
-void func_80041C24(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize) // 0x80041C24
+void Map_Init(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize) // 0x80041C24
 {
     bzero(&g_Map, sizeof(s_Map));
     GlobalLm_Init(&g_Map.globalLm_138, lmHdr);

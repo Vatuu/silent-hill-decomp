@@ -2717,3 +2717,4 @@ LmHeader_Init = 0x80041CEC; // type:func
 GlobalLm_Init = 0x80041CB4; // type:func
 Map_GlobalLmFree = 0x800420FC; // type:func
 Map_IpdCollisionDataInit = 0x80041E98; // type:func
+Map_Init = 0x80041C24; // type:func

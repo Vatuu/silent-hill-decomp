@@ -838,7 +838,7 @@ void func_8003C048() // 0x8003C048
 
     D_800BCE18.field_0[0].field_4 = 0;
 
-    func_80041C24(FS_BUFFER_13, FS_BUFFER_14, 0x2C000);
+    Map_Init(FS_BUFFER_13, FS_BUFFER_14, 0x2C000);
     func_800697EC();
 
     g_SysWork.field_2378 = FP_FLOAT_TO(1.0f, Q12_SHIFT);
