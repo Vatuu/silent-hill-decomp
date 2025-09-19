@@ -1245,7 +1245,7 @@ void func_800433B8(s_Map* map) // 0x800433B8
             if (curChunk->ipdHdr_0->isLoaded_1 &&
                 (curChunk->distance0_C <= FP_METER(0.0f) || curChunk->distance1_10 <= FP_METER(0.0f)))
             {
-                func_80043C7C(curChunk->ipdHdr_0, &map->ipdTextures_430.fullRes_0, &map->ipdTextures_430.halfRes_2C, map->texFileIdx_134);
+                Ipd_MaterialsLoad(curChunk->ipdHdr_0, &map->ipdTextures_430.fullRes_0, &map->ipdTextures_430.halfRes_2C, map->texFileIdx_134);
                 func_80056954(curChunk->ipdHdr_0->lmHdr_4);
             }
         }
@@ -1528,13 +1528,13 @@ void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCou
     IpdCollData_FixOffsets(&ipdHdr->collisionData_54);
     LmHeader_FixOffsets(ipdHdr->lmHdr_4);
     func_8008E4EC(ipdHdr->lmHdr_4);
-    func_80043C7C(ipdHdr, arg3, arg4, arg5);
+    Ipd_MaterialsLoad(ipdHdr, arg3, arg4, arg5);
     func_80056954(ipdHdr->lmHdr_4);
     IpdHeader_ModelLinkObjectLists(ipdHdr, lmHdrs, lmHdrCount);
     IpdHeader_ModelBufferLinkObjectLists(ipdHdr, ipdHdr->modelInfo_14);
 }
 
-void func_80043C7C(s_IpdHeader* ipdHdr, s_ActiveTextures* arg1, s_ActiveTextures* arg2, s32 fileIdx) // 0x80043C7C
+void Ipd_MaterialsLoad(s_IpdHeader* ipdHdr, s_ActiveTextures* arg1, s_ActiveTextures* arg2, s32 fileIdx) // 0x80043C7C
 {
     if (!ipdHdr->isLoaded_1)
     {
