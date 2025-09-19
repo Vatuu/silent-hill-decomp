@@ -999,7 +999,7 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
             if (curChunk->coordX_8 >= (chunkCoordX - 1) && (chunkCoordX + 1) >= curChunk->coordX_8 &&
                 curChunk->coordZ_A >= (chunkCoordZ - 1) && (chunkCoordZ + 1) >= curChunk->coordZ_A)
             {
-                temp_t0 = func_80042E2C(collX, collZ, curChunk->coordX_8, curChunk->coordZ_A);
+                temp_t0 = Ipd_DistanceToEdge(collX, collZ, curChunk->coordX_8, curChunk->coordZ_A);
                 for (i = 0; i < idx; i++)
                 {
                     if (temp_t0 < sp20[i])
@@ -1076,11 +1076,11 @@ void func_80042C3C(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1) // 0x
     }
 }
 
-q19_12 func_80042DE8(q19_12 posX, q19_12 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, bool hasGlobalPlm) // 0x80042DE8
+q19_12 Ipd_DistanceToEdgeWithPadding(q19_12 posX, q19_12 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, bool hasGlobalPlm) // 0x80042DE8
 {
     q19_12 dist;
 
-    dist = func_80042E2C(FP_METER_TO_GEO(posX), FP_METER_TO_GEO(posZ), fileChunkCoordX, fileChunkCoordZ);
+    dist = Ipd_DistanceToEdge(FP_METER_TO_GEO(posX), FP_METER_TO_GEO(posZ), fileChunkCoordX, fileChunkCoordZ);
     if (hasGlobalPlm)
     {
         dist -= FP_METER(1.0f);
@@ -1093,7 +1093,7 @@ q19_12 func_80042DE8(q19_12 posX, q19_12 posZ, s32 fileChunkCoordX, s32 fileChun
     return dist;
 }
 
-s32 func_80042E2C(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ) // 0x80042E2C
+s32 Ipd_DistanceToEdge(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ) // 0x80042E2C
 {
     #define IPD_CHUNK_SIZE FP_METER_GEO(40.0f)
 
@@ -1153,7 +1153,7 @@ s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 p
 
                 chunkIdx = Map_IpdIdxGet(gridX, gridZ);
                 if (chunkIdx != NO_VALUE &&
-                    func_80042DE8(posX0, posZ0, gridX, gridZ, map->hasGlobalPlm) <= FP_METER(0.0f) &&
+                    Ipd_DistanceToEdgeWithPadding(posX0, posZ0, gridX, gridZ, map->hasGlobalPlm) <= FP_METER(0.0f) &&
                     !Map_IsIpdPresent(map->ipdActive_15C, gridX, gridZ))
                 {
                     chunk = Ipd_FreeChunkFind(map->ipdActive_15C, map->hasGlobalPlm);
@@ -1218,8 +1218,8 @@ void func_800431E4(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 
 
 void func_80043338(s_IpdChunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm) // 0x80043338
 {
-    chunk->distance0_C  = func_80042DE8(posX0, posZ0, chunk->coordX_8, chunk->coordZ_A, hasGlobalPlm);
-    chunk->distance1_10 = func_80042DE8(posX1, posZ1, chunk->coordX_8, chunk->coordZ_A, hasGlobalPlm);
+    chunk->distance0_C  = Ipd_DistanceToEdgeWithPadding(posX0, posZ0, chunk->coordX_8, chunk->coordZ_A, hasGlobalPlm);
+    chunk->distance1_10 = Ipd_DistanceToEdgeWithPadding(posX1, posZ1, chunk->coordX_8, chunk->coordZ_A, hasGlobalPlm);
 }
 
 void func_800433B8(s_Map* map) // 0x800433B8
@@ -1429,7 +1429,7 @@ bool func_80043830(void) // 0x80043830
             continue;
         }
 
-        if (func_80042E2C(FP_METER_TO_GEO(g_Map.field_578), 
+        if (Ipd_DistanceToEdge(FP_METER_TO_GEO(g_Map.field_578), 
                           FP_METER_TO_GEO(g_Map.field_57C),
                           curChunk->coordX_8, curChunk->coordZ_A) <= FP_METER_GEO(4.5f))
         {
@@ -1450,7 +1450,7 @@ bool func_8004393C(q19_12 posX, q19_12 posZ) // 0x8004393C
     
     if (g_Map.hasGlobalPlm)
     {
-        return func_80042E2C(FP_METER_TO_GEO(g_Map.field_578), FP_METER_TO_GEO(g_Map.field_57C), fileChunkCoordX, fileChunkCoordZ) <= FP_METER_GEO(4.5f);
+        return Ipd_DistanceToEdge(FP_METER_TO_GEO(g_Map.field_578), FP_METER_TO_GEO(g_Map.field_57C), fileChunkCoordX, fileChunkCoordZ) <= FP_METER_GEO(4.5f);
     }
 
     if (fileChunkCoordX == g_Map.field_580 &&

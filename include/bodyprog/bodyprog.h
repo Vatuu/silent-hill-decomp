@@ -2716,10 +2716,11 @@ bool IpdHeader_IsLoaded(s32 ipdIdx);
 
 void func_80042C3C(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
 
-/** Gets distance to the edge of a file chunk? */
-q19_12 func_80042DE8(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ, bool hasGlobalPlm);
+/** @brief when `hasGlobalPlm` is true treat the chunks as if they were 1m larger in both axis. Then call `Ipd_DistanceToEdge` */
+q19_12 Ipd_DistanceToEdgeWithPadding(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ, bool hasGlobalPlm);
 
-s32 func_80042E2C(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ);
+/** @brief returns `0` when inside the chunk, distance to closest edge otherwise. */
+s32 Ipd_DistanceToEdge(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ);
 
 s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
 
