@@ -588,7 +588,7 @@ void func_80041D48() // 0x80041D48
     }
 
     ActiveTextures_CountReset(&g_Map.field_430.field_0);
-    func_8005B474(&g_Map.field_430.field_0, g_Map.field_430.textures_58, 8);
+    ActiveTextures_PutTextures(&g_Map.field_430.field_0, g_Map.field_430.textures_58, 8);
 
     for (i = 0, y = 26, j = 0; i < 2; i++, x += 16)
     {
@@ -600,7 +600,7 @@ void func_80041D48() // 0x80041D48
     }
 
     ActiveTextures_CountReset(&g_Map.field_430.field_2C);
-    func_8005B474(&g_Map.field_430.field_2C, g_Map.field_430.textures_118, 2);
+    ActiveTextures_PutTextures(&g_Map.field_430.field_2C, g_Map.field_430.textures_118, 2);
 }
 
 void func_80041E98() // 0x80041E98
@@ -695,13 +695,13 @@ s_Texture* func_80042178(char* arg0) // 0x80042178
 {
     s_Texture* tex;
 
-    tex = func_8005B4BC(arg0, &g_Map.field_430.field_0);
+    tex = ActiveTextures_FindTexture(arg0, &g_Map.field_430.field_0);
     if (tex != NULL)
     {
         return tex;
     }
 
-    tex = func_8005B4BC(arg0, &g_Map.field_430.field_2C);
+    tex = ActiveTextures_FindTexture(arg0, &g_Map.field_430.field_2C);
     if (tex != NULL)
     {
         return tex;

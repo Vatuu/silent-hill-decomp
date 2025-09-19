@@ -2707,3 +2707,5 @@ hack_D_800FE5FC_fix                         = 0x800FE5FC; // ignore:true - Part 
 Material_FsImageApply = 0x8005660C; // type:func
 Lm_MaterialsLoadWithFilter = 0x80056774; // type:func
 ActiveTextures_CountReset = 0x8005B46C; // type:func
+ActiveTextures_PutTextures = 0x8005B474; // type:func
+ActiveTextures_FindTexture = 0x8005B4BC; // type:func

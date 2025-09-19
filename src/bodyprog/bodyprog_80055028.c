@@ -1748,7 +1748,7 @@ void ActiveTextures_CountReset(s_ActiveTextures* actTex) // 0x8005B46C
     actTex->count_0 = 0;
 }
 
-void func_8005B474(s_ActiveTextures* actTex, s_Texture* texs, s32 idx) // 0x8005B474
+void ActiveTextures_PutTextures(s_ActiveTextures* actTex, s_Texture* texs, s32 idx) // 0x8005B474
 {
     s_Texture*  curTex;
     s_Texture** entryPtr;
@@ -1761,7 +1761,7 @@ void func_8005B474(s_ActiveTextures* actTex, s_Texture* texs, s32 idx) // 0x8005
     }
 }
 
-s_Texture* func_8005B4BC(char* str, s_ActiveTextures* actTex) // 0x8005B4BC
+s_Texture* ActiveTextures_FindTexture(char* str, s_ActiveTextures* actTex) // 0x8005B4BC
 {
     char       prevStr[8];
     s32        i;

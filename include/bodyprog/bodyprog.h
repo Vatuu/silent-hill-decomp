@@ -3478,9 +3478,9 @@ void GameFs_MapItemsModelLoad(u32 mapId);
 void ActiveTextures_CountReset(s_ActiveTextures* actTex);
 
 /** Crucial for map loading. */
-void func_8005B474(s_ActiveTextures* actTex, s_Texture* texs, s32 idx);
+void ActiveTextures_PutTextures(s_ActiveTextures* actTex, s_Texture* texs, s32 idx);
 
-s_Texture* func_8005B4BC(char* str, s_ActiveTextures* actTex);
+s_Texture* ActiveTextures_FindTexture(char* str, s_ActiveTextures* actTex);
 
 /** Sets the debug string position. */
 void func_8005BF0C(s16 unused, s16 x, s16 y);
