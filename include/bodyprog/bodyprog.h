@@ -43,6 +43,17 @@
 // ENUMS
 // ======
 
+typedef enum _MapTypeFlags
+{
+    MapTypeFlag_OneActiveChunk = 1 << 0,
+    MapTypeFlag_TwoActiveChunk = 1 << 1,
+    MapTypeFlag_Interior       = 1 << 2,
+    MapTypeFlag_Unk3           = 1 << 3, // @unused Unused map type `XXX` has this flag.
+
+    // Added for clarity as all exterior maps use this combination.
+    MapTypeFlag_FourActiveChunk = 0,
+} e_MapTypeFlags;
+
 typedef enum _EffectTextureFlags
 {
     EffectTextureFlag_None         = 0,
@@ -1052,12 +1063,12 @@ typedef struct
 
 typedef struct _MapType
 {
-    s16          plmFileIdx_0;
-    char         tag_2[4];
-    u8           flags_6;
+    s16                plmFileIdx_0;
+    char               tag_2[4];
+    u8                 flags_6;
     // 1 byte of padding.
-    s_WaterZone* waterZones_8;
-    s_SpeedZone* speedZones_C;
+    const s_WaterZone* waterZones_8;
+    const s_SpeedZone* speedZones_C;
 } s_MapType;
 
 typedef struct
@@ -1159,10 +1170,10 @@ typedef struct _ActiveTextures
 
 typedef struct _IpdTextures
 {
-    s_ActiveTextures lores_0;
-    s_ActiveTextures hires_2C;
-    s_Texture        loresTexs_58[8];
-    s_Texture        hiresTexs_118[2];
+    s_ActiveTextures fullPage_0;
+    s_ActiveTextures halfPage_2C;
+    s_Texture        fullPageTexs_58[8];
+    s_Texture        halfPageTexs_118[2];
 } s_IpdTextures;
 STATIC_ASSERT_SIZEOF(s_IpdTextures, 328);
 
@@ -1186,7 +1197,7 @@ typedef struct _Map
     s32                field_57C;
     s32                field_580; // File chunk coord X.
     s32                field_584; // File chunk coord Z.
-    bool               hasGlobalPlm; // Might mean something else, depends on `flags_6` in MapType. Only maps that have required flag set are maps with global PLM.
+    bool               isExterior;
 } s_Map;
 STATIC_ASSERT_SIZEOF(s_Map, 1420);
 
@@ -2639,34 +2650,34 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4);
 u32 Fs_QueueEntryLoadStatusGet(s32 queueIdx);
 
 /** Used for loading maps */
-void func_80041C24(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize);
+void Map_Init(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize);
 
 /** This function is related to map loading. */
-void func_80041CB4(s_GlobalLm* globalLm, s_LmHeader* lmHdr);
+void GlobalLm_Init(s_GlobalLm* globalLm, s_LmHeader* lmHdr);
 
-void func_80041CEC(s_LmHeader* lmHdr);
+void LmHeader_Init(s_LmHeader* lmHdr);
 
 /** @brief Clears `queueIdx_4` in array of `s_IpdChunk` */
 void Ipd_ActiveChunksQueueIdxClear(s_IpdChunk* chunks, s32 chunkCount);
 
 /** Crucial for map loading. */
-void func_80041D48();
+void Ipd_TexturesInit1();
 
-void func_80041E98();
+void Map_IpdCollisionDataInit();
 
 void Map_PlaceIpdAtGridPos(s16 ipdFileIdx, s32 chunkCoordX, s32 chunkCoordZ);
 
-void func_80041FF0();
+void Ipd_ActiveChunksClear0();
 
-void func_8004201C();
+void Ipd_TexturesInit0();
 
 void func_800420C0();
 
-void func_800420FC();
+void Map_GlobalLmFree();
 
 s_Texture* func_80042178(char* arg0);
 
-void func_800421D8(char* mapTag, s32 plmIdx, s32 activeIpdCount, bool hasGlobalPlm, s32 ipdFileIdx, s32 texFileIdx);
+void func_800421D8(char* mapTag, s32 plmIdx, s32 activeIpdCount, bool isExterior, s32 ipdFileIdx, s32 texFileIdx);
 
 void Ipd_ActiveChunksClear(s_Map* map, s32 arg1);
 
@@ -2715,17 +2726,17 @@ bool IpdHeader_IsLoaded(s32 ipdIdx);
 
 void func_80042C3C(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
 
-/** @brief when `hasGlobalPlm` is true treat the chunks as if they were 1m larger in both axis. Then call `Ipd_DistanceToEdge` */
-q19_12 Ipd_DistanceToEdgeWithPadding(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ, bool hasGlobalPlm);
+/** @brief when `isExterior` is true treat the chunks as if they were 1m larger in both axis. Then call `Ipd_DistanceToEdge` */
+q19_12 Ipd_DistanceToEdgeWithPadding(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ, bool isExterior);
 
 /** @brief returns `0` when inside the chunk, distance to closest edge otherwise. */
 s32 Ipd_DistanceToEdge(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ);
 
 s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
 
-void Ipd_ActiveChunksSample(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm);
+void Ipd_ActiveChunksSample(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
 
-void Ipd_DistanceToEdgeCalc(s_IpdChunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm);
+void Ipd_DistanceToEdgeCalc(s_IpdChunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
 
 void func_800433B8(s_Map* map);
 
@@ -2735,10 +2746,10 @@ s32 Map_IpdIdxGet(s32 gridX, s32 gridZ);
 
 bool Map_IsIpdPresent(s_IpdChunk* chunks, s32 chunkCoordX, s32 chunkCoordZ);
 
-s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool hasGlobalPlm);
+s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool isExterior);
 
 /** Maybe facilitates file chunk streaming as the player moves around the map. */
-s32 Ipd_LoadStart(s_IpdChunk* chunk, s32 fileIdx, s32 chunkCoordX, s32 chunkCoordZ, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm);
+s32 Ipd_LoadStart(s_IpdChunk* chunk, s32 fileIdx, s32 chunkCoordX, s32 chunkCoordZ, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
 
 bool func_80043740();
 
@@ -2757,15 +2768,15 @@ s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHdr);
 
 void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_ActiveTextures* arg3, s_ActiveTextures* arg4, s32 arg5);
 
-void func_80043C7C(s_IpdHeader* ipdHdr, s_ActiveTextures* arg1, s_ActiveTextures* arg2, s32 fileIdx);
+void Ipd_MaterialsLoad(s_IpdHeader* ipdHdr, s_ActiveTextures* arg1, s_ActiveTextures* arg2, s32 fileIdx);
 
 /** Checks if IPD is loaded before returning texture count? */
-s32 Ipd_MaterialCount(s_IpdHeader* ipdHdr);
+s32 Ipd_HalfResMaterialCount(s_IpdHeader* ipdHdr);
 
-/** Returns inverse result of `LmFilter_NameEndsWithH`. */
-bool LmFilter_NameDoesNotEndWithH(s_Material* mat);
+/** Returns inverse result of `LmFilter_HalfResolution`. */
+bool LmFilter_FullResolution(s_Material* mat);
 
-bool LmFilter_NameEndsWithH(s_Material* mat);
+bool LmFilter_HalfResolution(s_Material* mat);
 
 void IpdHeader_FixHeaderOffsets(s_IpdHeader* ipdHdr);
 
@@ -3121,9 +3132,9 @@ void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* actTex, boo
 /** Checks if LM textures are loaded? */
 bool LmHeader_IsTextureLoaded(s_LmHeader* lmHdr);
 
-void func_80056954(s_LmHeader* lmHdr);
+void Lm_MaterialFlagsApply(s_LmHeader* lmHdr);
 
-void func_80056A88(s_ModelHeader* modelHdr, s32 arg1, s_Material* mat, s32 flags);
+void Model_MaterialFlagsApply(s_ModelHeader* modelHdr, s32 arg1, s_Material* mat, s32 flags);
 
 void Lm_MaterialRefCountDec(s_LmHeader* lmHdr);
 
@@ -3980,7 +3991,7 @@ void func_8003C110();
 
 void func_8003C1AC(s_800BCE18_0_CC* arg0);
 
-void func_8003C2EC();
+void Ipd_ActiveChunksClear1();
 
 void func_8003C30C();
 

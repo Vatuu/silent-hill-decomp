@@ -791,7 +791,7 @@ void func_8003BED0() // 0x8003BED0
     LmHeader_FixOffsets(&D_800BCE18.field_1BE4);
     func_80056504(&D_800BCE18.field_1BE4, "TIM00", &IMG_TIM, 1);
     func_80056504(&D_800BCE18.field_1BE4, "BG_ETC", &IMG_ETC, 1);
-    func_80056954(&D_800BCE18.field_1BE4);
+    Lm_MaterialFlagsApply(&D_800BCE18.field_1BE4);
 }
 
 // ========================================
@@ -838,7 +838,7 @@ void func_8003C048() // 0x8003C048
 
     D_800BCE18.field_0[0].field_4 = 0;
 
-    func_80041C24(FS_BUFFER_13, FS_BUFFER_14, 0x2C000);
+    Map_Init(FS_BUFFER_13, FS_BUFFER_14, 0x2C000);
     func_800697EC();
 
     g_SysWork.field_2378 = FP_FLOAT_TO(1.0f, Q12_SHIFT);
@@ -899,17 +899,17 @@ void func_8003C1AC(s_800BCE18_0_CC* arg0) // 0x8003C1AC
 void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ) // 0x8003C220
 {
     s32        activeIpdCount;
-    u8         temp_v1;
+    u8         flags;
     s_MapType* ptr;
 
     D_800BCE18.field_0[0].type_0 = mapHeader->type_0;
-    temp_v1 = mapHeader->type_0->flags_6;
+    flags = mapHeader->type_0->flags_6;
 
-    if (temp_v1 & (1 << 0))
+    if (flags & MapTypeFlag_OneActiveChunk)
     {
         activeIpdCount = 1;
     } 
-    else if (temp_v1 & (1 << 1))
+    else if (flags & MapTypeFlag_TwoActiveChunk)
     {
         activeIpdCount = 2;
     }
@@ -919,7 +919,9 @@ void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ
     }
 
     ptr = mapHeader->type_0;
-    func_800421D8(ptr->tag_2, ptr->plmFileIdx_0, activeIpdCount, ((ptr->flags_6 >> 2) ^ 1) & (1 << 0), 0, 0);
+    // Strange way to read the 3rd interior flag bit
+    #define IS_EXTERIOR (((ptr->flags_6 >> 2) ^ 1) & 1)
+    func_800421D8(ptr->tag_2, ptr->plmFileIdx_0, activeIpdCount, IS_EXTERIOR, 0, 0);
 
     if (mapHeader->type_0 == &g_MapTypes[0])
     {
@@ -929,24 +931,24 @@ void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ
     func_80042C3C(playerPosX, playerPosZ, playerPosX, playerPosZ);
 }
 
-void func_8003C2EC() // 0x8003C2EC
+void Ipd_ActiveChunksClear1() // 0x8003C2EC
 {
-    func_80041FF0();
+    Ipd_ActiveChunksClear0();
 }
 
 void func_8003C30C() // 0x8003C30C
 {
-    u8 temp_v1;
+    u8 flags;
 
-    temp_v1 = D_800BCE18.field_0[0].type_0->flags_6;
+    flags = D_800BCE18.field_0[0].type_0->flags_6;
     
-    if ((temp_v1 & 4) && (temp_v1 & 3)) 
+    if ((flags & MapTypeFlag_Interior) && (flags & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunk))) 
     {
         func_800420C0();
         return;
     }
-    func_80041FF0();
-    func_8004201C();
+    Ipd_ActiveChunksClear0();
+    Ipd_TexturesInit0();
 }
 
 void func_8003C368() // 0x8003C368
@@ -1499,7 +1501,7 @@ void func_8003D058() // 0x8003D058
             {
                 LmHeader_FixOffsets(lmHdr);
                 func_80056504(lmHdr, ptr0->textureName_8, &ptr0->imageDesc_C, 1);
-                func_80056954(lmHdr);
+                Lm_MaterialFlagsApply(lmHdr);
                 func_80056C8C(&ptr0->field_18, ptr0->field_14, 0);
             }
 
@@ -1695,7 +1697,7 @@ void func_8003D550(s32 arg0, s32 arg1) // 0x8003D550
 
     ptr = D_800BCE18.field_0[0].field_18[arg0];
     func_80056464(ptr->lmHdr_8, CHARA_FILE_INFOS[arg0].textureFileIdx, &ptr->texture_C, arg1);
-    func_80056954(ptr->lmHdr_8);
+    Lm_MaterialFlagsApply(ptr->lmHdr_8);
 }
 
 void func_8003D5B4(s8 flags) // 0x8003D5B4
@@ -1858,7 +1860,7 @@ void func_8003D9C8(s_800BCE18_0_CC* arg0) // 0x8003D9C8
 
         skel = &arg0->field_14;
 
-        func_80056954(arg0->lmHdr_8);
+        Lm_MaterialFlagsApply(arg0->lmHdr_8);
         func_80044FE0(skel, &arg0->field_14.field_C, 56); // TODO: Can't fit `s_Bone` at `field_C`. Check `s_Skeleton` size.
         func_8004506C(skel, arg0->lmHdr_8);
         func_800452EC(skel);

@@ -722,7 +722,7 @@ bool LmHeader_IsTextureLoaded(s_LmHeader* lmHdr) // 0x80056888
     return true;
 }
 
-void func_80056954(s_LmHeader* lmHdr) // 0x80056954
+void Lm_MaterialFlagsApply(s_LmHeader* lmHdr) // 0x80056954
 {
     s32         i;
     s32         j;
@@ -749,7 +749,7 @@ void func_80056954(s_LmHeader* lmHdr) // 0x80056954
             {
                 if (lmHdr->magic_0 == LM_HEADER_MAGIC)
                 {
-                    func_80056A88(&lmHdr->modelHdrs_C[j], i, curMat, flags);
+                    Model_MaterialFlagsApply(&lmHdr->modelHdrs_C[j], i, curMat, flags);
                 }
             }
 
@@ -761,7 +761,7 @@ void func_80056954(s_LmHeader* lmHdr) // 0x80056954
     }
 }
 
-void func_80056A88(s_ModelHeader* modelHdr, s32 arg1, s_Material* mat, s32 flags) // 0x80056A88
+void Model_MaterialFlagsApply(s_ModelHeader* modelHdr, s32 arg1, s_Material* mat, s32 flags) // 0x80056A88
 {
     u16           field_14;
     u16           field_16;
