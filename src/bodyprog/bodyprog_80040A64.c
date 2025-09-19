@@ -584,23 +584,23 @@ void func_80041D48() // 0x80041D48
             y = 21;
         }
 
-        Texture_Init1(&g_Map.field_430.textures_58[i], 0, 0, y, 0, 0, x, j);
+        Texture_Init1(&g_Map.ipdTextures_430.loresTexs_58[i], 0, 0, y, 0, 0, x, j);
     }
 
-    ActiveTextures_CountReset(&g_Map.field_430.field_0);
-    ActiveTextures_PutTextures(&g_Map.field_430.field_0, g_Map.field_430.textures_58, 8);
+    ActiveTextures_CountReset(&g_Map.ipdTextures_430.lores_0);
+    ActiveTextures_PutTextures(&g_Map.ipdTextures_430.lores_0, g_Map.ipdTextures_430.loresTexs_58, 8);
 
     for (i = 0, y = 26, j = 0; i < 2; i++, x += 16)
     {
-        Texture_Init1(&g_Map.field_430.textures_118[i], 0, 0, y, (i & 0x1) * 32, 0, x, j);
+        Texture_Init1(&g_Map.ipdTextures_430.hiresTexs_118[i], 0, 0, y, (i & 0x1) * 32, 0, x, j);
         if (i & 0x1)
         {
             y++;
         }
     }
 
-    ActiveTextures_CountReset(&g_Map.field_430.field_2C);
-    ActiveTextures_PutTextures(&g_Map.field_430.field_2C, g_Map.field_430.textures_118, 2);
+    ActiveTextures_CountReset(&g_Map.ipdTextures_430.hires_2C);
+    ActiveTextures_PutTextures(&g_Map.ipdTextures_430.hires_2C, g_Map.ipdTextures_430.hiresTexs_118, 2);
 }
 
 void func_80041E98() // 0x80041E98
@@ -646,8 +646,8 @@ void func_8004201C() // 0x8004201C
     s_Texture* curTex;
 
     // TODO: Will these match as for loops?
-    curTex = &g_Map.field_430.textures_58[0];
-    while (curTex < (&g_Map.field_430.textures_58[8]))
+    curTex = &g_Map.ipdTextures_430.loresTexs_58[0];
+    while (curTex < (&g_Map.ipdTextures_430.loresTexs_58[8]))
     {
         if (curTex->refCount_14 == 0)
         {
@@ -657,8 +657,8 @@ void func_8004201C() // 0x8004201C
         curTex++;
     }
 
-    curTex = &g_Map.field_430.textures_118[0];
-    while (curTex < (&g_Map.field_430.textures_118[2]))
+    curTex = &g_Map.ipdTextures_430.hiresTexs_118[0];
+    while (curTex < (&g_Map.ipdTextures_430.hiresTexs_118[2]))
     {
         if (curTex->refCount_14 == 0)
         {
@@ -695,13 +695,13 @@ s_Texture* func_80042178(char* arg0) // 0x80042178
 {
     s_Texture* tex;
 
-    tex = ActiveTextures_FindTexture(arg0, &g_Map.field_430.field_0);
+    tex = ActiveTextures_FindTexture(arg0, &g_Map.ipdTextures_430.lores_0);
     if (tex != NULL)
     {
         return tex;
     }
 
-    tex = ActiveTextures_FindTexture(arg0, &g_Map.field_430.field_2C);
+    tex = ActiveTextures_FindTexture(arg0, &g_Map.ipdTextures_430.hires_2C);
     if (tex != NULL)
     {
         return tex;
@@ -1056,21 +1056,21 @@ void func_80042C3C(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1) // 0x
     if (Fs_QueueEntryLoadStatusGet(g_Map.globalLm_138.queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
         !g_Map.globalLm_138.lmHdr_0->isLoaded_2) 
     {
-        temp_s0                              = g_Map.field_430.field_0.count_0;
-        g_Map.field_430.field_0.count_0 = 4;
+        temp_s0                               = g_Map.ipdTextures_430.lores_0.count_0;
+        g_Map.ipdTextures_430.lores_0.count_0 = 4;
 
         LmHeader_FixOffsets(g_Map.globalLm_138.lmHdr_0);
-        Lm_MaterialsLoadWithFilter(g_Map.globalLm_138.lmHdr_0, &g_Map.field_430.field_0, NULL, g_Map.texFileIdx_134, 1);
+        Lm_MaterialsLoadWithFilter(g_Map.globalLm_138.lmHdr_0, &g_Map.ipdTextures_430.lores_0, NULL, g_Map.texFileIdx_134, 1);
         func_80056954(g_Map.globalLm_138.lmHdr_0);
 
-        g_Map.field_430.field_0.count_0 = temp_s0;
+        g_Map.ipdTextures_430.lores_0.count_0 = temp_s0;
     }
 
     for (curChunk = g_Map.ipdActive_15C; curChunk < &g_Map.ipdActive_15C[g_Map.ipdActiveSize_158]; curChunk++) 
     {
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            IpdHeader_FixOffsets(curChunk->ipdHdr_0, &g_Map.globalLm_138.lmHdr_0, 1, &g_Map.field_430.field_0, &g_Map.field_430.field_2C, g_Map.texFileIdx_134);
+            IpdHeader_FixOffsets(curChunk->ipdHdr_0, &g_Map.globalLm_138.lmHdr_0, 1, &g_Map.ipdTextures_430.lores_0, &g_Map.ipdTextures_430.hires_2C, g_Map.texFileIdx_134);
             func_80044044(curChunk->ipdHdr_0, curChunk->coordX_8, curChunk->coordZ_A);
         }
     }
@@ -1245,7 +1245,7 @@ void func_800433B8(s_Map* map) // 0x800433B8
             if (curChunk->ipdHdr_0->isLoaded_1 &&
                 (curChunk->distance0_C <= FP_METER(0.0f) || curChunk->distance1_10 <= FP_METER(0.0f)))
             {
-                func_80043C7C(curChunk->ipdHdr_0, &map->field_430.field_0, &map->field_430.field_2C, map->texFileIdx_134);
+                func_80043C7C(curChunk->ipdHdr_0, &map->ipdTextures_430.lores_0, &map->ipdTextures_430.hires_2C, map->texFileIdx_134);
                 func_80056954(curChunk->ipdHdr_0->lmHdr_4);
             }
         }

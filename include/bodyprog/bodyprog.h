@@ -1151,22 +1151,20 @@ typedef struct _IpdRow
 } s_IpdColumn;
 STATIC_ASSERT_SIZEOF(s_IpdColumn, 32);
 
-// Texture_Get will place the reqested texture into an object of this type.
 typedef struct _ActiveTextures
 {
     s32        count_0;
     s_Texture* entries_4[10];
 } s_ActiveTextures;
 
-// Related to textures.
-typedef struct
+typedef struct _IpdTextures
 {
-    s_ActiveTextures field_0;
-    s_ActiveTextures field_2C;
-    s_Texture    textures_58[8];
-    s_Texture    textures_118[2];
-} s_800C1450;
-STATIC_ASSERT_SIZEOF(s_800C1450, 328);
+    s_ActiveTextures lores_0;
+    s_ActiveTextures hires_2C;
+    s_Texture        loresTexs_58[8];
+    s_Texture        hiresTexs_118[2];
+} s_IpdTextures;
+STATIC_ASSERT_SIZEOF(s_IpdTextures, 328);
 
 typedef struct _Map
 {
@@ -1183,7 +1181,7 @@ typedef struct _Map
     s_IpdColumn        ipdGrid_1CC[18];
     s8                 unk_40C[32];     // Could be one extra row in table above.
     s_IpdColumn*       ipdGridCenter_42C;
-    s_800C1450         field_430;
+    s_IpdTextures      ipdTextures_430;
     s32                field_578;
     s32                field_57C;
     s32                field_580; // File chunk coord X.
