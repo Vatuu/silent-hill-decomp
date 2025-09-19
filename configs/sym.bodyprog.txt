@@ -2703,3 +2703,4 @@ Ipd_MaterialCount = 0x80043D00; // type:func
 Ipd_FreeChunkFind = 0x800435E4; // type:func
 Ipd_DistanceToEdge = 0x80042E2C; // type:func
 Ipd_DistanceToEdgeWithPadding = 0x80042DE8; // type:func
+Ipd_DistanceToEdgeCalc = 0x80043338; // type:func

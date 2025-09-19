@@ -1139,7 +1139,7 @@ s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 p
     map->field_580 = chunkCoordX1;
     map->field_584 = chunkCoordZ1;
 
-    func_800431E4(map, posX0, posZ0, posX1, posZ1, map->hasGlobalPlm);
+    Ipd_ActiveChunksSample(map, posX0, posZ0, posX1, posZ1, map->hasGlobalPlm);
     func_800433B8(map);
 
     for (z = -1; z <= 1; z++)
@@ -1180,7 +1180,7 @@ s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 p
     return queueIdx;
 }
 
-void func_800431E4(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm) // 0x800431E4
+void Ipd_ActiveChunksSample(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm) // 0x800431E4
 {
     s_IpdChunk* curChunk;
 
@@ -1193,7 +1193,7 @@ void func_800431E4(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 
         }
         else 
         {
-            func_80043338(curChunk, posX0, posZ0, posX1, posZ1, hasGlobalPlm);
+            Ipd_DistanceToEdgeCalc(curChunk, posX0, posZ0, posX1, posZ1, hasGlobalPlm);
         }
 
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) < FsQueueEntryLoadStatus_Loaded || !curChunk->ipdHdr_0->isLoaded_1)
@@ -1216,7 +1216,7 @@ void func_800431E4(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 
     }
 }
 
-void func_80043338(s_IpdChunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm) // 0x80043338
+void Ipd_DistanceToEdgeCalc(s_IpdChunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm) // 0x80043338
 {
     chunk->distance0_C  = Ipd_DistanceToEdgeWithPadding(posX0, posZ0, chunk->coordX_8, chunk->coordZ_A, hasGlobalPlm);
     chunk->distance1_10 = Ipd_DistanceToEdgeWithPadding(posX1, posZ1, chunk->coordX_8, chunk->coordZ_A, hasGlobalPlm);
@@ -1360,7 +1360,7 @@ s32 Ipd_LoadStart(s_IpdChunk* chunk, s32 fileIdx, s32 chunkCoordX, s32 chunkCoor
     chunk->queueIdx_4 = Fs_QueueStartRead(fileIdx, chunk->ipdHdr_0);
 
     // Compute and store distance to chunk edge in `chunk`.
-    func_80043338(chunk, posX0, posZ0, posX1, posZ1, hasGlobalPlm);
+    Ipd_DistanceToEdgeCalc(chunk, posX0, posZ0, posX1, posZ1, hasGlobalPlm);
 
     // Return queue entry index.
     return chunk->queueIdx_4;
