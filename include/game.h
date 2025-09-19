@@ -1161,7 +1161,7 @@ typedef struct _SubCharacter
     VECTOR3 field_A4;
     q19_12  health_B0;
     s32     field_B4;          // X? } In player: Adds/subtracts if hurt by enemy. Related to heading angle?
-    s32     field_B8;          // Y? }
+    s32     field_B8;          // Y? } Angle.
     s32     field_BC;          // Z? }
     q19_12  damageReceived_C0;
     u16     deathTimer_C4;     // Part of `shBattleInfo` struct in SH2, may use something similar here.

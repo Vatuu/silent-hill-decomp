@@ -25,8 +25,8 @@ const static s_WaterZone WATER_LIGHT_ZONES_1[] =
 
 const static s_SpeedZone SPEED_ZONES_THR[] =
 {
-    { 2, -5120,  4480, -3840, 3200 },
-    { 2, -640,   640,   3200, 3840 },
+    { SpeedZoneType_Fast,   -5120,  4480, -3840, 3200 },
+    { SpeedZoneType_Fast,   -640,   640,   3200, 3840 },
     { SpeedZoneType_Normal, -4480, -1280,  3200, 6400 },
     { NO_VALUE, 0, 0, 0, 0         }
 };
@@ -62,7 +62,7 @@ const static s_SpeedZone SPEED_ZONES_RSU[] =
 
 const static s_SpeedZone SPEED_ZONES_AP[] =
 {
-    { SpeedZoneType_Fast, -1280, 640, -1920, 640  },
+    { SpeedZoneType_Fast,   -1280, 640, -1920, 640  },
     { SpeedZoneType_Normal,  0,    640,  1280, 1920 },
     { NO_VALUE, 0, 0, 0, 0       }
 };

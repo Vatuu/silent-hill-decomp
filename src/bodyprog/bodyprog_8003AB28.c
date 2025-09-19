@@ -800,12 +800,12 @@ void func_8003BED0() // 0x8003BED0
 
 extern s_800C4168 const D_800C4168;
 
-s32 Map_SpeedZoneGet(s32 x, s32 z) // 0x8003BF60
+s32 Map_SpeedZoneTypeGet(s32 x, s32 z) // 0x8003BF60
 {
-    s32          zoneIdx;
+    s32          zoneType;
     s_SpeedZone* curZone;
 
-    zoneIdx = 0;
+    zoneType = 0;
 
     if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP0_S00)
     {
@@ -815,20 +815,20 @@ s32 Map_SpeedZoneGet(s32 x, s32 z) // 0x8003BF60
     if (D_800BCE18.field_0[0].type_0->speedZones_C != NULL)
     {
         curZone = D_800BCE18.field_0[0].type_0->speedZones_C;
-        while (curZone->idx_0 != NO_VALUE)
+        while (curZone->type_0 != NO_VALUE)
         {
             if (x >= (curZone->minX_2 << 8) && (curZone->maxX_4 << 8) >= x &&
                 z >= (curZone->minZ_6 << 8) && (curZone->maxZ_8 << 8) >= z &&
-                zoneIdx < curZone->idx_0)
+                zoneType < curZone->type_0)
             {
-                zoneIdx = curZone->idx_0;
+                zoneType = curZone->type_0;
             }
 
             curZone++;
         }
     }
 
-    return zoneIdx;
+    return zoneType;
 }
 
 void func_8003C048() // 0x8003C048

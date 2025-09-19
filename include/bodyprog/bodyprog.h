@@ -971,7 +971,7 @@ typedef struct
     s8             charaId0_0; /** `e_CharacterId`. */
     s8             charaId1_1; /** `e_CharacterId`. */
     s8             unk_2[2];
-    s32            animFile0_4;//s_AnmHeader*    animFile0_4; // TODO: Needs to be a pointer.
+    s32            animFile0_4; // s_AnmHeader*    animFile0_4; // TODO: Needs to be a pointer.
     s_AnmHeader*   animFile1_8;
     s32            animFileSize1_C;
     s32            animFileSize2_10;
@@ -1005,16 +1005,16 @@ typedef struct
     u8   field_F;
     u8   field_10;
     u8   field_11;
-    u16  unk_12;  // Guessed.
+    u16  unk_12; // Guessed.
     u32* unk_14; // Some pointer. All entries have the same value `D_800AD4C4`.
 } s_800AD4C8;
 STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
 
 typedef struct
 {
-    VECTOR3         position_0;
-    s_Collision field_C; // Collision data?
-    s32             field_18;
+    VECTOR3     position_0;
+    s_Collision field_C;
+    s32         field_18;
 } s_800AFC78;
 
 typedef struct
@@ -1028,9 +1028,9 @@ STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
 
 typedef struct _SpeedZone
 {
-    s8  idx_0;
+    s8  type_0; /** `e_SpeedZoneType` */
     // 1 byte padding.
-    s16 minX_2; // } Q11.4? Q7.8 fits more cleanly, but `Map_SpeedZoneGet` uses `<< 8` for comparison with Q19.12 input position.
+    s16 minX_2; // } Q11.4? Q7.8 fits more cleanly, but `Map_SpeedZoneTypeGet` uses `<< 8` for comparison with Q19.12 input position.
     s16 maxX_4; // }
     s16 minZ_6; // }
     s16 maxZ_8; // }
@@ -3969,7 +3969,7 @@ void GameFs_BgItemLoad();
 
 void func_8003BED0();
 
-s32 Map_SpeedZoneGet(s32 x, s32 z);
+s32 Map_SpeedZoneTypeGet(s32 x, s32 z);
 
 /** Used in map loading. Something related to screen.
  * Removing it causes the game to get stuck at the loading screen.

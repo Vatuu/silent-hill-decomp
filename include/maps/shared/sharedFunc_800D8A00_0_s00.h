@@ -124,7 +124,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             Math_ShortestAngleGet(rotY, sharedData_800DF1FA_0_s00, &shortestAngle);
 
             // Turn toward.
-            angleIncr = (g_DeltaTime0 << (shortestAngle < FP_ANGLE(45.0f) ? 5 : 8)) / 136;
+            angleIncr = (g_DeltaTime0 << (shortestAngle < FP_ANGLE(45.0f) ? 5 : 8)) / TIME_STEP_30_FPS;
 
             if (ABS(shortestAngle) < ANGLE_THRESHOLD)
             {
