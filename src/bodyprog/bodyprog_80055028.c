@@ -539,7 +539,7 @@ void func_80056244(s_LmHeader* lmHdr, bool flag) // 0x80056244
     }
 }
 
-s32 func_80056348(bool (*arg0)(s_Material* mat), s_LmHeader* lmHdr) // 0x80056348
+s32 Lm_MaterialCount(bool (*filter)(s_Material* mat), s_LmHeader* lmHdr) // 0x80056348
 {
     s32         count;
     s_Material* mat;
@@ -547,7 +547,7 @@ s32 func_80056348(bool (*arg0)(s_Material* mat), s_LmHeader* lmHdr) // 0x8005634
     count = 0;
     for (mat = lmHdr->materials_4; mat < (lmHdr->materials_4 + lmHdr->materialCount_3); mat++)
     {
-        if (arg0(mat))
+        if (filter(mat))
         {
             count++;
         }

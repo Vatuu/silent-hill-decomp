@@ -1139,7 +1139,7 @@ typedef struct
     s16          coordZ_A;
     q19_12       distance0_C;
     q19_12       distance1_10;
-    u8           field_14;
+    u8           matCount_14;
     s8           unk_15[3];
     s32          field_18;
 } s_IpdChunk;
@@ -2760,7 +2760,7 @@ void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCou
 void func_80043C7C(s_IpdHeader* ipdHdr, s_800C1450_0* arg1, s_800C1450_0* arg2, s32 fileIdx);
 
 /** Checks if IPD is loaded before returning texture count? */
-s32 func_80043D00(s_IpdHeader* ipdHdr);
+s32 Ipd_MaterialCount(s_IpdHeader* ipdHdr);
 
 /** Returns inverse result of `LmFilter_NameEndsWithH`. */
 bool LmFilter_NameDoesNotEndWithH(s_Material* mat);
@@ -3067,8 +3067,7 @@ void ModelHeader_FixOffsets(s_ModelHeader* modelHdr, s_LmHeader* lmHdr);
 
 void func_80056244(s_LmHeader* lmHdr, bool flag);
 
-/** Gets texture count? */
-s32 func_80056348(bool (*arg0)(s_Material* mat), s_LmHeader* lmHdr);
+s32 Lm_MaterialCount(bool (*filter)(s_Material* mat), s_LmHeader* lmHdr);
 
 /** TODO: Unknown `arg3` type. */
 void func_80059D50(s32 arg0, s_800BCE18_2BEC_0_0* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4);
