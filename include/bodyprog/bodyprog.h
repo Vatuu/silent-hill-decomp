@@ -1139,9 +1139,9 @@ typedef struct
     s16          coordZ_A;
     q19_12       distance0_C;
     q19_12       distance1_10;
-    u8           field_14;
+    u8           matCount_14;
     s8           unk_15[3];
-    s32          field_18;
+    s32          outsideCount_18;
 } s_IpdChunk;
 STATIC_ASSERT_SIZEOF(s_IpdChunk, 28);
 
@@ -1151,21 +1151,20 @@ typedef struct _IpdRow
 } s_IpdColumn;
 STATIC_ASSERT_SIZEOF(s_IpdColumn, 32);
 
-typedef struct
+typedef struct _ActiveTextures
 {
     s32        count_0;
     s_Texture* entries_4[10];
-} s_800C1450_0;
+} s_ActiveTextures;
 
-// Related to textures.
-typedef struct
+typedef struct _IpdTextures
 {
-    s_800C1450_0 field_0;
-    s_800C1450_0 field_2C;
-    s_Texture    textures_58[8];
-    s_Texture    textures_118[2];
-} s_800C1450;
-STATIC_ASSERT_SIZEOF(s_800C1450, 328);
+    s_ActiveTextures lores_0;
+    s_ActiveTextures hires_2C;
+    s_Texture        loresTexs_58[8];
+    s_Texture        hiresTexs_118[2];
+} s_IpdTextures;
+STATIC_ASSERT_SIZEOF(s_IpdTextures, 328);
 
 typedef struct _Map
 {
@@ -1182,7 +1181,7 @@ typedef struct _Map
     s_IpdColumn        ipdGrid_1CC[18];
     s8                 unk_40C[32];     // Could be one extra row in table above.
     s_IpdColumn*       ipdGridCenter_42C;
-    s_800C1450         field_430;
+    s_IpdTextures      ipdTextures_430;
     s32                field_578;
     s32                field_57C;
     s32                field_580; // File chunk coord X.
@@ -2716,16 +2715,17 @@ bool IpdHeader_IsLoaded(s32 ipdIdx);
 
 void func_80042C3C(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
 
-/** Gets distance to the edge of a file chunk? */
-q19_12 func_80042DE8(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ, bool hasGlobalPlm);
+/** @brief when `hasGlobalPlm` is true treat the chunks as if they were 1m larger in both axis. Then call `Ipd_DistanceToEdge` */
+q19_12 Ipd_DistanceToEdgeWithPadding(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ, bool hasGlobalPlm);
 
-s32 func_80042E2C(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ);
+/** @brief returns `0` when inside the chunk, distance to closest edge otherwise. */
+s32 Ipd_DistanceToEdge(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ);
 
 s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
 
-void func_800431E4(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm);
+void Ipd_ActiveChunksSample(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm);
 
-void func_80043338(s_IpdChunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm);
+void Ipd_DistanceToEdgeCalc(s_IpdChunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm);
 
 void func_800433B8(s_Map* map);
 
@@ -2735,10 +2735,10 @@ s32 Map_IpdIdxGet(s32 gridX, s32 gridZ);
 
 bool Map_IsIpdPresent(s_IpdChunk* chunks, s32 chunkCoordX, s32 chunkCoordZ);
 
-s_IpdChunk* func_800435E4(s_IpdChunk* chunks, bool hasGlobalPlm);
+s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool hasGlobalPlm);
 
 /** Maybe facilitates file chunk streaming as the player moves around the map. */
-s32 func_800436D8(s_IpdChunk* chunk, s32 fileIdx, s32 chunkCoordX, s32 chunkCoordZ, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm);
+s32 Ipd_LoadStart(s_IpdChunk* chunk, s32 fileIdx, s32 chunkCoordX, s32 chunkCoordZ, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm);
 
 bool func_80043740();
 
@@ -2755,12 +2755,12 @@ bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHdr);
 
 s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHdr);
 
-void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_800C1450_0* arg3, s_800C1450_0* arg4, s32 arg5);
+void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_ActiveTextures* arg3, s_ActiveTextures* arg4, s32 arg5);
 
-void func_80043C7C(s_IpdHeader* ipdHdr, s_800C1450_0* arg1, s_800C1450_0* arg2, s32 fileIdx);
+void func_80043C7C(s_IpdHeader* ipdHdr, s_ActiveTextures* arg1, s_ActiveTextures* arg2, s32 fileIdx);
 
 /** Checks if IPD is loaded before returning texture count? */
-s32 func_80043D00(s_IpdHeader* ipdHdr);
+s32 Ipd_MaterialCount(s_IpdHeader* ipdHdr);
 
 /** Returns inverse result of `LmFilter_NameEndsWithH`. */
 bool LmFilter_NameDoesNotEndWithH(s_Material* mat);
@@ -3067,8 +3067,7 @@ void ModelHeader_FixOffsets(s_ModelHeader* modelHdr, s_LmHeader* lmHdr);
 
 void func_80056244(s_LmHeader* lmHdr, bool flag);
 
-/** Gets texture count? */
-s32 func_80056348(bool (*arg0)(s_Material* mat), s_LmHeader* lmHdr);
+s32 Lm_MaterialCount(bool (*filter)(s_Material* mat), s_LmHeader* lmHdr);
 
 /** TODO: Unknown `arg3` type. */
 void func_80059D50(s32 arg0, s_800BCE18_2BEC_0_0* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4);
@@ -3112,12 +3111,12 @@ void func_80056504(s_LmHeader* lmHdr, char* newStr, s_FsImageDesc* image, s32 ar
 
 bool func_80056558(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* image, s32 arg3);
 
-void func_8005660C(s_Material* mat, s_FsImageDesc* image, s32 arg2);
+void Material_FsImageApply(s_Material* mat, s_FsImageDesc* image, s32 arg2);
 
 void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4);
 
 /** Unknown `arg4` type. */
-void func_80056774(s_LmHeader* lmHdr, s_800C1450_0* arg1, bool (*func)(s_Material* mat), s32 fileIdx, s32 arg4);
+void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* actTex, bool (*filter)(s_Material* mat), s32 fileIdx, s32 arg4);
 
 /** Checks if LM textures are loaded? */
 bool LmHeader_IsTextureLoaded(s_LmHeader* lmHdr);
@@ -3156,7 +3155,7 @@ void func_80057658(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
 void func_80057A3C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
 
 /** `arg4` unused. */
-s_Texture* Texture_Get(s_Material* mat, s_800C1450_0* arg1, void* fsBuf9, s32 fileIdx, s32 arg4);
+s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* actTex, void* fsBuf9, s32 fileIdx, s32 arg4);
 
 void func_8005B55C(GsCOORDINATE2* coord);
 
@@ -3474,12 +3473,12 @@ void GameFs_Tim00TIMLoad();
 
 void GameFs_MapItemsModelLoad(u32 mapId);
 
-void func_8005B46C(s_800C1450_0* arg0);
+void ActiveTextures_CountReset(s_ActiveTextures* actTex);
 
 /** Crucial for map loading. */
-void func_8005B474(s_800C1450_0* arg0, s_Texture* texs, s32 idx);
+void ActiveTextures_PutTextures(s_ActiveTextures* actTex, s_Texture* texs, s32 idx);
 
-s_Texture* func_8005B4BC(char* str, s_800C1450_0* arg1);
+s_Texture* ActiveTextures_FindTexture(char* str, s_ActiveTextures* actTex);
 
 /** Sets the debug string position. */
 void func_8005BF0C(s16 unused, s16 x, s16 y);

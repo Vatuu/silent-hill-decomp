@@ -584,23 +584,23 @@ void func_80041D48() // 0x80041D48
             y = 21;
         }
 
-        Texture_Init1(&g_Map.field_430.textures_58[i], 0, 0, y, 0, 0, x, j);
+        Texture_Init1(&g_Map.ipdTextures_430.loresTexs_58[i], 0, 0, y, 0, 0, x, j);
     }
 
-    func_8005B46C(&g_Map.field_430.field_0);
-    func_8005B474(&g_Map.field_430.field_0, g_Map.field_430.textures_58, 8);
+    ActiveTextures_CountReset(&g_Map.ipdTextures_430.lores_0);
+    ActiveTextures_PutTextures(&g_Map.ipdTextures_430.lores_0, g_Map.ipdTextures_430.loresTexs_58, 8);
 
     for (i = 0, y = 26, j = 0; i < 2; i++, x += 16)
     {
-        Texture_Init1(&g_Map.field_430.textures_118[i], 0, 0, y, (i & 0x1) * 32, 0, x, j);
+        Texture_Init1(&g_Map.ipdTextures_430.hiresTexs_118[i], 0, 0, y, (i & 0x1) * 32, 0, x, j);
         if (i & 0x1)
         {
             y++;
         }
     }
 
-    func_8005B46C(&g_Map.field_430.field_2C);
-    func_8005B474(&g_Map.field_430.field_2C, g_Map.field_430.textures_118, 2);
+    ActiveTextures_CountReset(&g_Map.ipdTextures_430.hires_2C);
+    ActiveTextures_PutTextures(&g_Map.ipdTextures_430.hires_2C, g_Map.ipdTextures_430.hiresTexs_118, 2);
 }
 
 void func_80041E98() // 0x80041E98
@@ -646,8 +646,8 @@ void func_8004201C() // 0x8004201C
     s_Texture* curTex;
 
     // TODO: Will these match as for loops?
-    curTex = &g_Map.field_430.textures_58[0];
-    while (curTex < (&g_Map.field_430.textures_58[8]))
+    curTex = &g_Map.ipdTextures_430.loresTexs_58[0];
+    while (curTex < (&g_Map.ipdTextures_430.loresTexs_58[8]))
     {
         if (curTex->refCount_14 == 0)
         {
@@ -657,8 +657,8 @@ void func_8004201C() // 0x8004201C
         curTex++;
     }
 
-    curTex = &g_Map.field_430.textures_118[0];
-    while (curTex < (&g_Map.field_430.textures_118[2]))
+    curTex = &g_Map.ipdTextures_430.hiresTexs_118[0];
+    while (curTex < (&g_Map.ipdTextures_430.hiresTexs_118[2]))
     {
         if (curTex->refCount_14 == 0)
         {
@@ -695,13 +695,13 @@ s_Texture* func_80042178(char* arg0) // 0x80042178
 {
     s_Texture* tex;
 
-    tex = func_8005B4BC(arg0, &g_Map.field_430.field_0);
+    tex = ActiveTextures_FindTexture(arg0, &g_Map.ipdTextures_430.lores_0);
     if (tex != NULL)
     {
         return tex;
     }
 
-    tex = func_8005B4BC(arg0, &g_Map.field_430.field_2C);
+    tex = ActiveTextures_FindTexture(arg0, &g_Map.ipdTextures_430.hires_2C);
     if (tex != NULL)
     {
         return tex;
@@ -767,9 +767,9 @@ void Ipd_ActiveChunksClear(s_Map* map, s32 arg1) // 0x80042300
             }
         }
 
-        curChunk->queueIdx_4   = NO_VALUE;
-        curChunk->distance1_10 = INT_MAX;
-        curChunk->field_18     = 0;
+        curChunk->queueIdx_4      = NO_VALUE;
+        curChunk->distance1_10    = INT_MAX;
+        curChunk->outsideCount_18 = 0;
 
         if (i < arg1)
         {
@@ -999,7 +999,7 @@ s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX,
             if (curChunk->coordX_8 >= (chunkCoordX - 1) && (chunkCoordX + 1) >= curChunk->coordX_8 &&
                 curChunk->coordZ_A >= (chunkCoordZ - 1) && (chunkCoordZ + 1) >= curChunk->coordZ_A)
             {
-                temp_t0 = func_80042E2C(collX, collZ, curChunk->coordX_8, curChunk->coordZ_A);
+                temp_t0 = Ipd_DistanceToEdge(collX, collZ, curChunk->coordX_8, curChunk->coordZ_A);
                 for (i = 0; i < idx; i++)
                 {
                     if (temp_t0 < sp20[i])
@@ -1056,31 +1056,31 @@ void func_80042C3C(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1) // 0x
     if (Fs_QueueEntryLoadStatusGet(g_Map.globalLm_138.queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
         !g_Map.globalLm_138.lmHdr_0->isLoaded_2) 
     {
-        temp_s0                              = g_Map.field_430.field_0.count_0;
-        g_Map.field_430.field_0.count_0 = 4;
+        temp_s0                               = g_Map.ipdTextures_430.lores_0.count_0;
+        g_Map.ipdTextures_430.lores_0.count_0 = 4;
 
         LmHeader_FixOffsets(g_Map.globalLm_138.lmHdr_0);
-        func_80056774(g_Map.globalLm_138.lmHdr_0, &g_Map.field_430.field_0, NULL, g_Map.texFileIdx_134, 1);
+        Lm_MaterialsLoadWithFilter(g_Map.globalLm_138.lmHdr_0, &g_Map.ipdTextures_430.lores_0, NULL, g_Map.texFileIdx_134, 1);
         func_80056954(g_Map.globalLm_138.lmHdr_0);
 
-        g_Map.field_430.field_0.count_0 = temp_s0;
+        g_Map.ipdTextures_430.lores_0.count_0 = temp_s0;
     }
 
     for (curChunk = g_Map.ipdActive_15C; curChunk < &g_Map.ipdActive_15C[g_Map.ipdActiveSize_158]; curChunk++) 
     {
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            IpdHeader_FixOffsets(curChunk->ipdHdr_0, &g_Map.globalLm_138.lmHdr_0, 1, &g_Map.field_430.field_0, &g_Map.field_430.field_2C, g_Map.texFileIdx_134);
+            IpdHeader_FixOffsets(curChunk->ipdHdr_0, &g_Map.globalLm_138.lmHdr_0, 1, &g_Map.ipdTextures_430.lores_0, &g_Map.ipdTextures_430.hires_2C, g_Map.texFileIdx_134);
             func_80044044(curChunk->ipdHdr_0, curChunk->coordX_8, curChunk->coordZ_A);
         }
     }
 }
 
-q19_12 func_80042DE8(q19_12 posX, q19_12 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, bool hasGlobalPlm) // 0x80042DE8
+q19_12 Ipd_DistanceToEdgeWithPadding(q19_12 posX, q19_12 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, bool hasGlobalPlm) // 0x80042DE8
 {
     q19_12 dist;
 
-    dist = func_80042E2C(FP_METER_TO_GEO(posX), FP_METER_TO_GEO(posZ), fileChunkCoordX, fileChunkCoordZ);
+    dist = Ipd_DistanceToEdge(FP_METER_TO_GEO(posX), FP_METER_TO_GEO(posZ), fileChunkCoordX, fileChunkCoordZ);
     if (hasGlobalPlm)
     {
         dist -= FP_METER(1.0f);
@@ -1093,7 +1093,7 @@ q19_12 func_80042DE8(q19_12 posX, q19_12 posZ, s32 fileChunkCoordX, s32 fileChun
     return dist;
 }
 
-s32 func_80042E2C(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ) // 0x80042E2C
+s32 Ipd_DistanceToEdge(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ) // 0x80042E2C
 {
     #define IPD_CHUNK_SIZE FP_METER_GEO(40.0f)
 
@@ -1139,7 +1139,7 @@ s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 p
     map->field_580 = chunkCoordX1;
     map->field_584 = chunkCoordZ1;
 
-    func_800431E4(map, posX0, posZ0, posX1, posZ1, map->hasGlobalPlm);
+    Ipd_ActiveChunksSample(map, posX0, posZ0, posX1, posZ1, map->hasGlobalPlm);
     func_800433B8(map);
 
     for (z = -1; z <= 1; z++)
@@ -1153,10 +1153,10 @@ s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 p
 
                 chunkIdx = Map_IpdIdxGet(gridX, gridZ);
                 if (chunkIdx != NO_VALUE &&
-                    func_80042DE8(posX0, posZ0, gridX, gridZ, map->hasGlobalPlm) <= FP_METER(0.0f) &&
-                    !Map_IsIpdPresent(&map->ipdActive_15C[0], gridX, gridZ))
+                    Ipd_DistanceToEdgeWithPadding(posX0, posZ0, gridX, gridZ, map->hasGlobalPlm) <= FP_METER(0.0f) &&
+                    !Map_IsIpdPresent(map->ipdActive_15C, gridX, gridZ))
                 {
-                    chunk = func_800435E4(&map->ipdActive_15C[0], map->hasGlobalPlm);
+                    chunk = Ipd_FreeChunkFind(map->ipdActive_15C, map->hasGlobalPlm);
 
                     if (Fs_QueueEntryLoadStatusGet(chunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
                     {
@@ -1167,7 +1167,7 @@ s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 p
                         }
                     }
 
-                    curQueueIdx = func_800436D8(chunk, chunkIdx, gridX, gridZ, posX0, posZ0, posX1, posZ1, map->hasGlobalPlm);
+                    curQueueIdx = Ipd_LoadStart(chunk, chunkIdx, gridX, gridZ, posX0, posZ0, posX1, posZ1, map->hasGlobalPlm);
                     if (curQueueIdx != NO_VALUE)
                     {
                         queueIdx = curQueueIdx;
@@ -1180,7 +1180,7 @@ s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 p
     return queueIdx;
 }
 
-void func_800431E4(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm) // 0x800431E4
+void Ipd_ActiveChunksSample(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm) // 0x800431E4
 {
     s_IpdChunk* curChunk;
 
@@ -1193,33 +1193,33 @@ void func_800431E4(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 
         }
         else 
         {
-            func_80043338(curChunk, posX0, posZ0, posX1, posZ1, hasGlobalPlm);
+            Ipd_DistanceToEdgeCalc(curChunk, posX0, posZ0, posX1, posZ1, hasGlobalPlm);
         }
 
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) < FsQueueEntryLoadStatus_Loaded || !curChunk->ipdHdr_0->isLoaded_1)
         {
-            curChunk->field_14 = 0;
+            curChunk->matCount_14 = 0;
         }
         else
         {
-            curChunk->field_14 = func_80043D00(curChunk->ipdHdr_0);
+            curChunk->matCount_14 = Ipd_MaterialCount(curChunk->ipdHdr_0);
         }
 
         if (curChunk->distance0_C > FP_METER(0.0f) && curChunk->distance1_10 > FP_METER(0.0f))
         {
-            curChunk->field_18++;
+            curChunk->outsideCount_18++;
         }
         else
         {
-            curChunk->field_18 = 0;
+            curChunk->outsideCount_18 = 0;
         }
     }
 }
 
-void func_80043338(s_IpdChunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm) // 0x80043338
+void Ipd_DistanceToEdgeCalc(s_IpdChunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm) // 0x80043338
 {
-    chunk->distance0_C  = func_80042DE8(posX0, posZ0, chunk->coordX_8, chunk->coordZ_A, hasGlobalPlm);
-    chunk->distance1_10 = func_80042DE8(posX1, posZ1, chunk->coordX_8, chunk->coordZ_A, hasGlobalPlm);
+    chunk->distance0_C  = Ipd_DistanceToEdgeWithPadding(posX0, posZ0, chunk->coordX_8, chunk->coordZ_A, hasGlobalPlm);
+    chunk->distance1_10 = Ipd_DistanceToEdgeWithPadding(posX1, posZ1, chunk->coordX_8, chunk->coordZ_A, hasGlobalPlm);
 }
 
 void func_800433B8(s_Map* map) // 0x800433B8
@@ -1245,7 +1245,7 @@ void func_800433B8(s_Map* map) // 0x800433B8
             if (curChunk->ipdHdr_0->isLoaded_1 &&
                 (curChunk->distance0_C <= FP_METER(0.0f) || curChunk->distance1_10 <= FP_METER(0.0f)))
             {
-                func_80043C7C(curChunk->ipdHdr_0, &map->field_430.field_0, &map->field_430.field_2C, map->texFileIdx_134);
+                func_80043C7C(curChunk->ipdHdr_0, &map->ipdTextures_430.lores_0, &map->ipdTextures_430.hires_2C, map->texFileIdx_134);
                 func_80056954(curChunk->ipdHdr_0->lmHdr_4);
             }
         }
@@ -1274,20 +1274,20 @@ bool Map_IsIpdPresent(s_IpdChunk* chunks, s32 chunkCoordX, s32 chunkCoordZ) // 0
     return false;
 }
 
-s_IpdChunk* func_800435E4(s_IpdChunk* chunks, bool hasGlobalPlm)
+s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool hasGlobalPlm)
 {
-    s32         var_t0;
-    q19_12      shortestDist;
+    s32         largestMats;
+    q19_12      largestDist;
     q19_12      dist;
-    u32         var_t3;
-    s32         var_a2;
+    u32         largestOutside;
+    s32         matCount;
     s_IpdChunk* curChunk;
     s_IpdChunk* activeChunk;
 
     activeChunk = NULL;
-    var_t3 = 0;
-    var_t0 = 0;
-    shortestDist = FP_METER(0.0f);
+    largestOutside = 0;
+    largestMats = 0;
+    largestDist = FP_METER(0.0f);
 
     for (curChunk = chunks; curChunk < &chunks[g_Map.ipdActiveSize_158]; curChunk++)
     {
@@ -1300,9 +1300,9 @@ s_IpdChunk* func_800435E4(s_IpdChunk* chunks, bool hasGlobalPlm)
             }
             else
             {
-                if (var_t3 < curChunk->field_18)
+                if (largestOutside < curChunk->outsideCount_18)
                 {
-                    var_t3 = curChunk->field_18;
+                    largestOutside = curChunk->outsideCount_18;
                     activeChunk = curChunk;
                 }
             }
@@ -1311,9 +1311,9 @@ s_IpdChunk* func_800435E4(s_IpdChunk* chunks, bool hasGlobalPlm)
         {
             if (curChunk->queueIdx_4 == NO_VALUE) 
             {
-                var_a2 = 0;
+                matCount = 0;
                 
-                if (var_t0 == 0) 
+                if (largestMats == 0) 
                 {
                     dist = INT_MAX;
                 }
@@ -1324,7 +1324,7 @@ s_IpdChunk* func_800435E4(s_IpdChunk* chunks, bool hasGlobalPlm)
             }
             else
             {
-                var_a2 = curChunk->field_14;
+                matCount = curChunk->matCount_14;
 
                 dist = curChunk->distance0_C;
                 if (dist == FP_METER(0.0f))
@@ -1333,12 +1333,11 @@ s_IpdChunk* func_800435E4(s_IpdChunk* chunks, bool hasGlobalPlm)
                 }
             }
 
-            // Track closest chunk.
-            if (var_t0 < var_a2 || (var_a2 == var_t0 && shortestDist < dist))
+            if (largestMats < matCount || (matCount == largestMats && largestDist < dist))
             {
-                shortestDist = dist;
+                largestDist = dist;
                 activeChunk = curChunk;
-                var_t0 = var_a2;
+                largestMats = matCount;
             }
         }
     }
@@ -1346,7 +1345,7 @@ s_IpdChunk* func_800435E4(s_IpdChunk* chunks, bool hasGlobalPlm)
     return activeChunk;
 }
 
-s32 func_800436D8(s_IpdChunk* chunk, s32 fileIdx, s32 chunkCoordX, s32 chunkCoordZ, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm) // 0x800436D8
+s32 Ipd_LoadStart(s_IpdChunk* chunk, s32 fileIdx, s32 chunkCoordX, s32 chunkCoordZ, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool hasGlobalPlm) // 0x800436D8
 {
     // Return `NO_VALUE` if no file specified.
     if (fileIdx == NO_VALUE)
@@ -1360,7 +1359,7 @@ s32 func_800436D8(s_IpdChunk* chunk, s32 fileIdx, s32 chunkCoordX, s32 chunkCoor
     chunk->queueIdx_4 = Fs_QueueStartRead(fileIdx, chunk->ipdHdr_0);
 
     // Compute and store distance to chunk edge in `chunk`.
-    func_80043338(chunk, posX0, posZ0, posX1, posZ1, hasGlobalPlm);
+    Ipd_DistanceToEdgeCalc(chunk, posX0, posZ0, posX1, posZ1, hasGlobalPlm);
 
     // Return queue entry index.
     return chunk->queueIdx_4;
@@ -1429,7 +1428,7 @@ bool func_80043830(void) // 0x80043830
             continue;
         }
 
-        if (func_80042E2C(FP_METER_TO_GEO(g_Map.field_578), 
+        if (Ipd_DistanceToEdge(FP_METER_TO_GEO(g_Map.field_578), 
                           FP_METER_TO_GEO(g_Map.field_57C),
                           curChunk->coordX_8, curChunk->coordZ_A) <= FP_METER_GEO(4.5f))
         {
@@ -1450,7 +1449,7 @@ bool func_8004393C(q19_12 posX, q19_12 posZ) // 0x8004393C
     
     if (g_Map.hasGlobalPlm)
     {
-        return func_80042E2C(FP_METER_TO_GEO(g_Map.field_578), FP_METER_TO_GEO(g_Map.field_57C), fileChunkCoordX, fileChunkCoordZ) <= FP_METER_GEO(4.5f);
+        return Ipd_DistanceToEdge(FP_METER_TO_GEO(g_Map.field_578), FP_METER_TO_GEO(g_Map.field_57C), fileChunkCoordX, fileChunkCoordZ) <= FP_METER_GEO(4.5f);
     }
 
     if (fileChunkCoordX == g_Map.field_580 &&
@@ -1521,7 +1520,7 @@ s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHdr) // 0x80043BA
     return NULL;
 }
 
-void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_800C1450_0* arg3, s_800C1450_0* arg4, s32 arg5) // 0x80043BC4
+void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_ActiveTextures* arg3, s_ActiveTextures* arg4, s32 arg5) // 0x80043BC4
 {
     if (ipdHdr->isLoaded_1)
     {
@@ -1539,7 +1538,7 @@ void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCou
     IpdHeader_ModelBufferLinkObjectLists(ipdHdr, ipdHdr->modelInfo_14);
 }
 
-void func_80043C7C(s_IpdHeader* ipdHdr, s_800C1450_0* arg1, s_800C1450_0* arg2, s32 fileIdx) // 0x80043C7C
+void func_80043C7C(s_IpdHeader* ipdHdr, s_ActiveTextures* arg1, s_ActiveTextures* arg2, s32 fileIdx) // 0x80043C7C
 {
     if (!ipdHdr->isLoaded_1)
     {
@@ -1548,23 +1547,23 @@ void func_80043C7C(s_IpdHeader* ipdHdr, s_800C1450_0* arg1, s_800C1450_0* arg2, 
 
     if (arg1 != NULL)
     {
-        func_80056774(ipdHdr->lmHdr_4, arg1, &LmFilter_NameDoesNotEndWithH, fileIdx, 1);
+        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr_4, arg1, &LmFilter_NameDoesNotEndWithH, fileIdx, 1);
     }
 
     if (arg2 != NULL)
     {
-        func_80056774(ipdHdr->lmHdr_4, arg2, &LmFilter_NameEndsWithH, fileIdx, 1);
+        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr_4, arg2, &LmFilter_NameEndsWithH, fileIdx, 1);
     }
 }
 
-s32 func_80043D00(s_IpdHeader* ipdHdr) // 0x80043D00
+s32 Ipd_MaterialCount(s_IpdHeader* ipdHdr) // 0x80043D00
 {
     if (!ipdHdr->isLoaded_1)
     {
         return 0;
     }
 
-    return func_80056348(LmFilter_NameEndsWithH, ipdHdr->lmHdr_4);
+    return Lm_MaterialCount(LmFilter_NameEndsWithH, ipdHdr->lmHdr_4);
 }
 
 bool LmFilter_NameDoesNotEndWithH(s_Material* mat) // 0x80043D44
