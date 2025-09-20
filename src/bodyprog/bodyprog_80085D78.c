@@ -12,6 +12,7 @@
 u8 D_800AFD04 = 0;
 u8 D_800AFD05 = 0;
 // 2 bytes of padding.
+
 bool (*D_800AFD08[])(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* ptr, u32* arg3) = 
 {
     func_80089A30,
@@ -20,12 +21,13 @@ bool (*D_800AFD08[])(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* pt
     func_8008973C,
     func_80089D0C
 };
-s16 D_800AFD1C[] = // used by func_8008A3E0
+
+s16 D_800AFD1C[] = // Used by `func_8008A3E0`.
 {
-    0x1000, 0x1000, 0x0800, 0x0555,
-    0x0400, 0x0333, 0x02AA, 0x0249,
-    0x0200, 0x01C7, 0x0199, 0x0174,
-    0x0155, 0x013B, 0x0124, 0x0111,
+    0x1000, 0x1000, 0x800, 0x555,
+    0x400,  0x333,  0x2AA, 0x249,
+    0x200,  0x1C7,  0x199, 0x174,
+    0x155,  0x13B,  0x124, 0x111
 };
 
 void func_80085D78(bool arg0) // 0x80085D78
@@ -358,9 +360,6 @@ void func_800862F8(s32 arg0, s32 fileIdx, bool arg2) // 0x800862F8
             LoadImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(0);
             break;
-
-        default:
-            break;
     }
 }
 
@@ -428,9 +427,6 @@ void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, bool arg3) // 0x800
             {
                 Inventory_AddSpecialItem(itemId, itemCount);
             }
-            break;
-
-        default:
             break;
     }
 }
@@ -501,9 +497,6 @@ void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
             LoadImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(0);
             Screen_Init(SCREEN_WIDTH, 0);
-            break;
-
-        default:
             break;
     }
 }
@@ -960,13 +953,13 @@ void func_80087540(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsg
             break;
 
         case 5:
-            g_BackgroundColor = 0x30;
+            g_BackgroundColor = 48;
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             MapMsg_DisplayAndHandleSelection(false, mapMsgIdx1, 0, 0, 0, true);
             break;
 
         case 6:
-            g_BackgroundColor = 0x30;
+            g_BackgroundColor = 48;
 
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             func_8008616C(2, true, 0, fadeTimestep1, true);
@@ -1170,9 +1163,6 @@ void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
                 case 2:
                     g_SavegamePtr->hasMapsFlags_164 |= 1 << 3;
                     break;
-
-                default:
-                    break;
             }
 
             Savegame_EventFlagSet(eventFlagIdx);
@@ -1258,9 +1248,6 @@ void func_80087EDC(s32 arg0) // 0x80087EDC
         
         case 3:
             SysWork_StateStepIncrement(); // Resets `field_10` to 0.
-            break;
-
-        default:
             break;
     }
 }
@@ -1440,9 +1427,10 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, s32 posX, s32 posZ, s16 posY, u32 stateSt
         }
     }
 
+    // Run through NPC slots.
     for (i = 0; i < NPC_COUNT_MAX; i++)
     {
-        // Skip NPC slot if occupied.
+        // Skip occupied slot.
         if (g_SysWork.npcs_1A0[i].model_0.charaId_0 != Chara_None)
         {
             continue;
@@ -1453,7 +1441,7 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, s32 posX, s32 posZ, s16 posY, u32 stateSt
         g_SysWork.npcs_1A0[i].model_0.charaId_0 = charaId;
         g_SysWork.npcs_1A0[i].field_40 = arg1_1;
 
-        if (charaId <= Chara_MonsterCybil && arg1 < 0x40)
+        if (charaId <= Chara_MonsterCybil && arg1 < 64)
         {
             SET_FLAG(&g_SysWork.field_228C, arg1_1);
         }
