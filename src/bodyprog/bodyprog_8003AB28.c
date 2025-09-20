@@ -757,7 +757,7 @@ void func_8003BE28() // 0x8003BE28
 
 s_Bone* func_8003BE50(s32 idx) // 0x8003BE50
 {
-    return D_800BCE18.field_0.charaSkeletons_18[idx]->skeleton_14.boneArr_C;
+    return D_800BCE18.field_0.charaModelsTable_18[idx]->skeleton_14.boneArr_C;
 }
 
 // ========================================
@@ -861,19 +861,19 @@ void func_8003C0C0() // 0x8003C0C0
 
 void func_8003C110() // 0x8003C110
 {
-    s32              i;
+    s32           i;
     s_CharaModel* v0;
 
     for (i = 0; i < Chara_Count; i++)
     {
-        if (i != 1)
+        if (i != Chara_Harry)
         {
-            D_800BCE18.field_0.charaSkeletons_18[i] = NULL;
+            D_800BCE18.field_0.charaModelsTable_18[i] = NULL;
         }
     } 
 
     D_800BCE18.field_0.dataPtr_14 = (s_LmHeader*)ILM_BUFFER1;
-    for (v0 = &D_800BCE18.field_0.skeletons_CC[0]; v0 < &D_800BCE18.field_0.skeletons_CC[4]; v0++)
+    for (v0 = &D_800BCE18.field_0.charaModels_CC[0]; v0 < &D_800BCE18.field_0.charaModels_CC[4]; v0++)
     {
         CharaModel_Free(v0);
     }
@@ -1518,7 +1518,7 @@ void func_8003D160() // 0x8003D160
 
     ptr       = &D_800BCE18;
     harrySkel = &ptr->harrySkel_164C;
-    D_800BCE18.field_0.charaSkeletons_18[Chara_Harry] = harrySkel;
+    D_800BCE18.field_0.charaModelsTable_18[Chara_Harry] = harrySkel;
 
     Fs_QueueStartRead(CHARA_FILE_INFOS[1].modelFileIdx, addr);
     queueIdx = Fs_QueueStartReadTim(CHARA_FILE_INFOS[1].textureFileIdx, FS_BUFFER_1, &img);
@@ -1547,7 +1547,7 @@ s32 func_8003D21C(s_MapOverlayHeader* arg0) // 0x8003D21C
          i < 4; i++)
     {
         ids = arg0->charaGroupIds_248[i];
-        ptr = &D_800BCE18.field_0.skeletons_CC[i];
+        ptr = &D_800BCE18.field_0.charaModels_CC[i];
 
         if (ids != 0) 
         {
@@ -1558,7 +1558,7 @@ s32 func_8003D21C(s_MapOverlayHeader* arg0) // 0x8003D21C
                     var_s3 = 1;
                     for (j = i; j < 4; j++)
                     {
-                        D_800BCE18.field_0.skeletons_CC[j].charaId_0 = 0;
+                        D_800BCE18.field_0.charaModels_CC[j].charaId_0 = 0;
                     }
                 }
             } 
@@ -1643,7 +1643,7 @@ void func_8003D3BC(s_FsImageDesc* img, s32 arg1, s32 arg2) // 0x8003D3BC
 
 s32 func_8003D444(s32 idx) // 0x8003D444
 {
-    return D_800BCE18.field_0.charaSkeletons_18[idx] != 0;
+    return D_800BCE18.field_0.charaModelsTable_18[idx] != 0;
 }
 
 void func_8003D460() {}
@@ -1657,7 +1657,7 @@ void func_8003D468(s32 charaId, bool flag) // 0x8003D468
     s32              y;
     s_CharaModel* charaSkel;
 
-    charaSkel = D_800BCE18.field_0.charaSkeletons_18[charaId];
+    charaSkel = D_800BCE18.field_0.charaModelsTable_18[charaId];
     func_80056244(charaSkel->lmHdr_8, flag);
 
     rect.x = charaSkel->texture_C.clutX;
@@ -1690,7 +1690,7 @@ void func_8003D550(s32 charaId, s32 arg1) // 0x8003D550
 {
     s_CharaModel* charaSkel;
 
-    charaSkel = D_800BCE18.field_0.charaSkeletons_18[charaId];
+    charaSkel = D_800BCE18.field_0.charaModelsTable_18[charaId];
     Lm_MaterialFileIdxApply(charaSkel->lmHdr_8, CHARA_FILE_INFOS[charaId].textureFileIdx, &charaSkel->texture_C, arg1);
     Lm_MaterialFlagsApply(charaSkel->lmHdr_8);
 }
@@ -1704,7 +1704,7 @@ void func_8003D5B4(s8 flags) // 0x8003D5B4
 
     for (i = 0; i < 4; i++)
     {
-        ptr = &D_800BCE18.field_0.skeletons_CC[i];
+        ptr = &D_800BCE18.field_0.charaModels_CC[i];
         if ((flags >> i) & (1 << 0))
         {
             func_8003D6A4(ptr);
@@ -1717,7 +1717,7 @@ void func_8003D5B4(s8 flags) // 0x8003D5B4
 
     for (; i < 4; i++)
     {
-        ptr = &D_800BCE18.field_0.skeletons_CC[i];
+        ptr = &D_800BCE18.field_0.charaModels_CC[i];
 
         fileIdx = ptr->charaId_0;
         if (fileIdx != 0)
@@ -1735,7 +1735,7 @@ void func_8003D6A4(s_CharaModel* arg0) // 0x8003D6A4
 {
     if (arg0->charaId_0 != 0)
     {
-        D_800BCE18.field_0.charaSkeletons_18[arg0->charaId_0] = NULL;
+        D_800BCE18.field_0.charaModelsTable_18[arg0->charaId_0] = NULL;
         CharaModel_Free(arg0);
     }
 }
@@ -1749,9 +1749,9 @@ void func_8003D6E0(s32 arg0, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex) //
     {
         plmHdrPtr = lmHdr;
     } 
-    else if (D_800BCE18.field_0.skeletons_CC[arg1].charaId_0 != 0) 
+    else if (D_800BCE18.field_0.charaModels_CC[arg1].charaId_0 != 0) 
     {
-        plmHdrPtr = D_800BCE18.field_0.skeletons_CC[arg1].lmHdr_8;
+        plmHdrPtr = D_800BCE18.field_0.charaModels_CC[arg1].lmHdr_8;
     } 
     else 
     {
@@ -1778,13 +1778,13 @@ s32 func_8003D7D4(u32 arg0, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 
     s_CharaModel* ptr;
     s_FsImageDesc*   img;
 
-    ptr = &D_800BCE18.field_0.skeletons_CC[arg1];
+    ptr = &D_800BCE18.field_0.charaModels_CC[arg1];
     idx = ptr->charaId_0;
     img = &ptr->texture_C;
 
     if (arg0 == 0) 
     {
-        D_800BCE18.field_0.charaSkeletons_18[idx] = NULL;
+        D_800BCE18.field_0.charaModelsTable_18[idx] = NULL;
         return 0;
     }
 
@@ -1798,10 +1798,10 @@ s32 func_8003D7D4(u32 arg0, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 
             }
         }
 
-        D_800BCE18.field_0.charaSkeletons_18[idx] = NULL;
+        D_800BCE18.field_0.charaModelsTable_18[idx] = NULL;
     }
 
-    D_800BCE18.field_0.charaSkeletons_18[arg0] = ptr;
+    D_800BCE18.field_0.charaModelsTable_18[arg0] = ptr;
 
     queueIdx = Fs_QueueStartRead(CHARA_FILE_INFOS[arg0].modelFileIdx, lmHdr);
 
@@ -1833,7 +1833,7 @@ void func_8003D95C() // 0x8003D95C
     {
         if (i != 1) 
         {
-            temp_a0 = D_800BCE18.field_0.charaSkeletons_18[i];
+            temp_a0 = D_800BCE18.field_0.charaModelsTable_18[i];
             if (temp_a0 != 0) 
             {
                 func_8003D9C8(temp_a0);
@@ -1894,7 +1894,7 @@ void func_8003DA9C(s32 charaId, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 ar
                       D_800C4168.screenBrightness_8);
     }
 
-    func_80045534(&D_800BCE18.field_0.charaSkeletons_18[charaId]->skeleton_14, &g_OrderingTable0[g_ActiveBufferIdx], arg2,
+    func_80045534(&D_800BCE18.field_0.charaModelsTable_18[charaId]->skeleton_14, &g_OrderingTable0[g_ActiveBufferIdx], arg2,
                   coord, CHARA_FILE_INFOS[charaId].field_6 * 16, ret, CHARA_FILE_INFOS[charaId].field_8);
 
     if (arg3 != 0)
@@ -1912,7 +1912,7 @@ void func_8003DD80(s32 idx, s32 arg1) // 0x8003DD80
 {
     s_CharaModel* temp_a2;
 
-    temp_a2 = D_800BCE18.field_0.charaSkeletons_18[idx];
+    temp_a2 = D_800BCE18.field_0.charaModelsTable_18[idx];
 
     switch (idx)
     {
@@ -3182,7 +3182,7 @@ void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
 
 void func_80040004(s_800BCE18* arg0) // 0x80040004
 {
-    D_800BCE18.heldItem_1BAC.bone_18.next_14 = &arg0->field_0.skeletons_CC[2].skeleton_14.boneArr_C[0x10];
+    D_800BCE18.heldItem_1BAC.bone_18.next_14 = &arg0->field_0.charaModels_CC[2].skeleton_14.boneArr_C[0x10];
 }
 
 void func_80040014() // 0x80040014

@@ -52,9 +52,9 @@ bool func_80040B74(s32 arg0) // 0x80040B74
 {
     s32 i;
 
-    for (i = 0; i < ARRAY_SIZE(D_800BCE18.field_0.skeletons_CC); i++)
+    for (i = 0; i < ARRAY_SIZE(D_800BCE18.field_0.charaModels_CC); i++)
     {
-        if (D_800BCE18.field_0.skeletons_CC[i].charaId_0 == arg0)
+        if (D_800BCE18.field_0.charaModels_CC[i].charaId_0 == arg0)
         {
             return true;
         }

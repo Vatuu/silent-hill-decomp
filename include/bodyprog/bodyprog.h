@@ -1069,13 +1069,13 @@ typedef struct _MapType
 
 typedef struct
 {
-    s_MapType*        type_0;
-    s8                field_4;
-    u8                unk_5[3];
-    VECTOR3           field_8;               // Position.
-    s32               dataPtr_14;              // Used frequently as `s_LmHeader*`, but code adds file lengths to it. Could just be `u8*` pointing to current file data?
-    s_CharaModel*  charaSkeletons_18[Chara_Count];
-    s_CharaModel   skeletons_CC[4];
+    s_MapType*     type_0;
+    s8             field_4;
+    u8             unk_5[3];
+    VECTOR3        field_8;               // Position.
+    s32            dataPtr_14;              // Used frequently as `s_LmHeader*`, but code adds file lengths to it. Could just be `u8*` pointing to current file data?
+    s_CharaModel*  charaModelsTable_18[Chara_Count];
+    s_CharaModel   charaModels_CC[4];
 } s_800BCE18_0;
 STATIC_ASSERT_SIZEOF(s_800BCE18_0, (0x560 * 4 + 0xcc));
 
