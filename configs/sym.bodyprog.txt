@@ -2743,3 +2743,4 @@ D_800FE5F8                                  = 0x800FE5F8; // ignore:True - Fixes
 hack_D_800FE5FC_fix                         = 0x800FE5FC; // ignore:true - Part of temp memory block at 800FDE00, has to be unsymbolized for C to match.
 Bone_ModelAssign = 0x80056C8C; // type:func
 Bone_GetModelIndex = 0x80044F6C; // type:func
+Skeleton_BoneModelAssign = 0x800451B0; // type:func

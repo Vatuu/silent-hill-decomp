@@ -2240,26 +2240,30 @@ void func_80044F14(GsCOORDINATE2* coord, s16 z, s16 x, s16 y) // 0x80044F14
     MulMatrix(&coord->coord, (MATRIX*)0x1F800008);
 }
 
+/* These two are probably part of a bigger struct.
+ * boneModelIndex is not refferenced directly anywhere else.
+ * It must be reset somewhere at some point.
+ */
 #define boneIndicesArray D_800C15B0
-#define boneHierarhyRet  D_800C15B4
-s8 Bone_GetModelIndex(s8* ptr, bool arg1) // 0x80044F6C
+#define boneModelIndex  D_800C15B4
+s8 Bone_GetModelIndex(s8* ptr, bool reset) // 0x80044F6C
 {
-    if (arg1)
+    if (reset)
     {
         boneIndicesArray = ptr;
     }
 
     if (boneIndicesArray[0] != -3) // if Lm has 1 model or less
     {
-        boneHierarhyRet = boneIndicesArray[0]; // -2 for 0 models, 0 for 1 model.
+        boneModelIndex = boneIndicesArray[0]; // -2 for 0 models, 0 for 1 model.
         boneIndicesArray++;
     }
-    else if (++boneHierarhyRet >= (boneIndicesArray[1] - 1))
+    else if (++boneModelIndex >= (boneIndicesArray[1] - 1)) // increment boneModelIndex, break loop when equal to number of models
     {
         boneIndicesArray++;
     }
 
-    return boneHierarhyRet;
+    return boneModelIndex;
 }
 
 void func_80044FE0(s_Skeleton* skel, s_Bone* bones, u8 boneCount) // 0x80044FE0
@@ -2286,7 +2290,7 @@ void func_80045014(s_Skeleton* skel) // 0x80045014
 
 void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHdr) // 0x8004506C
 {
-    s8  sp10[4]; // Size unsure, this could be larger.
+    u8  sp10[4]; // Size unsure, this could be larger.
     s32 switchVar;
 
     switchVar = LmHeader_ModelCountGet(lmHdr);
@@ -2310,15 +2314,15 @@ void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHdr) // 0x8004506C
             break;
     }
 
-    func_80045108(skel, lmHdr, sp10, 0);
+    func_80045108(skel, lmHdr, (s8*)sp10, 0);
 }
 
 // Anim func.
 void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2, s32 arg3) // 0x80045108
 {
-    s_Bone*  bone0; // Guessed the type. They both access `field_14` so maybe it's also `s_Skeleton`.
-    s_Bone** bone1;
-    s32          boneIdx;
+    s_Bone*  bone0;
+    s_Bone** boneOrd;
+    s32      boneIdx;
 
     if (arg3 == 0)
     {
@@ -2327,20 +2331,20 @@ void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2, s32 arg3) // 0
     }
 
     boneIdx = skel->boneIdx_1;
-    func_800451B0(skel, lmHdr, arg2);
+    Skeleton_BoneModelAssign(skel, lmHdr, arg2);
 
-    bone1 = &skel->bones_4;
-    while (*bone1 != 0)
+    boneOrd = &skel->bones_4;
+    while (*boneOrd != 0)
     {
-        bone0 = *bone1;
-        bone1 = &bone0->next_14;
+        bone0 = *boneOrd;
+        boneOrd = &bone0->next_14;
     }
 
-    func_80045258(bone1, &skel->bones_8[boneIdx], skel->boneIdx_1 - boneIdx, lmHdr); // Very wierd third argument.
+    func_80045258(boneOrd, &skel->bones_8[boneIdx], skel->boneIdx_1 - boneIdx, lmHdr); // Skeleton_BoneModelAssign increments boneIdx_1
     func_800453E8(skel, false);
 }
 
-void func_800451B0(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2) // 0x800451B0
+void Skeleton_BoneModelAssign(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2) // 0x800451B0
 {
     s32 modelIdx;
     
@@ -2355,7 +2359,7 @@ void func_800451B0(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2) // 0x800451B0
     }
 }
 
-void func_80045258(s_Bone** skels, s_Bone* bones, s32 boneIdx, s_LmHeader* lmHdr) // 0x80045258
+void func_80045258(s_Bone** boneOrd, s_Bone* bones, s32 boneIdx, s_LmHeader* lmHdr) // 0x80045258
 {
     s_Bone* bone;
     u8*     objOrd;
@@ -2366,13 +2370,13 @@ void func_80045258(s_Bone** skels, s_Bone* bones, s32 boneIdx, s_LmHeader* lmHdr
         {
             if (bone->field_x0.modelIdx_C == *objOrd)
             {
-                *skels = bone;
-                skels  = &bone->next_14;
+                *boneOrd = bone;
+                boneOrd  = &bone->next_14;
             }
         }
     }
 
-    *skels = NULL;
+    *boneOrd = NULL;
 }
 
 // Anim func.
