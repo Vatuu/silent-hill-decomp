@@ -850,13 +850,13 @@ void func_8003C048() // 0x8003C048
 
 void func_8003C0C0() // 0x8003C0C0
 {
-    s_800BCE18_1BAC* ptr = &D_800BCE18.field_1BAC;
+    s_800BCE18_1BAC* ptr = &D_800BCE18.heldItem_1BAC;
 
     ptr->itemId_0 = NO_VALUE;
-    ptr->field_14 = (s_LmHeader*)(Fs_GetFileSize(FILE_CHARA_HERO_ILM) + 0x800FE600); // `field_14` defined as a pointer?
-    ptr->field_18 = 0;
-    ptr->field_1C = 0;
-    ptr->field_20 = 0;
+    ptr->lmHdr_14 = (s_LmHeader*)ILM_BUFFER0;
+    ptr->bone_18.flags_0 = 0;
+    ptr->bone_18.field_4 = 0;
+    ptr->bone_18.modelHdr_8 = 0;
 }
 
 void func_8003C110() // 0x8003C110
@@ -864,7 +864,7 @@ void func_8003C110() // 0x8003C110
     s32              i;
     s_800BCE18_0_CC* var_s0;
 
-    for (i = 0; i < 45; i++)
+    for (i = 0; i < Chara_Count; i++)
     {
         if (i != 1)
         {
@@ -872,16 +872,17 @@ void func_8003C110() // 0x8003C110
         }
     } 
 
-    D_800BCE18.field_0[0].field_14 = Fs_GetFileSize(FILE_CHARA_HERO_ILM) + 0x800FEE00;
+    D_800BCE18.field_0[0].field_14 = (s_LmHeader*)ILM_BUFFER1;
 
-    // TODO: This part could be rewritten in a less confusing way.
-    var_s0 = &D_800BCE18.field_0[0].field_CC;
-
-    while ((u32)var_s0 < (u32)&D_800BCE18.field_164C)
-    {
-        func_8003C1AC((u32)var_s0);
-        var_s0 = (int)var_s0 + sizeof(s_800BCE18_0); // TODO: Fake match.
-    } 
+    /* Slightly less, but still hacky loop. Equivalent of:
+     *  for (i = 0; i < 4; i++)
+     *      func_8003C1AC(&D_800BCE18.field_0[i].field_CC);
+     */
+    for (var_s0 = &D_800BCE18.field_0[0].field_CC;
+            var_s0 < &D_800BCE18.field_0[4].field_CC;
+            (int)var_s0 += sizeof(D_800BCE18.field_0[0])) {
+        func_8003C1AC(var_s0);
+    }
 }
 
 void func_8003C1AC(s_800BCE18_0_CC* arg0) // 0x8003C1AC
@@ -892,7 +893,7 @@ void func_8003C1AC(s_800BCE18_0_CC* arg0) // 0x8003C1AC
     arg0->field_0 = 0;
     arg0->field_1 = 0;
     arg0->field_4 = 0;
-    arg0->lmHdr_8 = (s_LmHeader*)((void*)0x800FEE00 + Fs_GetFileSize(FILE_CHARA_HERO_ILM));
+    arg0->lmHdr_8 = (s_LmHeader*)ILM_BUFFER1;
     arg0->texture_C = sp10;
 }
 
@@ -1246,7 +1247,7 @@ void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x800
 
 s32 func_8003CD5C() // 0x8003CD5C
 {
-    return D_800BCE18.field_1BAC.itemId_0;
+    return D_800BCE18.heldItem_1BAC.itemId_0;
 }
 
 void func_8003CD6C(s_PlayerCombat* combat) // 0x8003CD6C
@@ -1271,7 +1272,7 @@ s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
     s32              fileIdx;
     s_800BCE18_1BAC* ptr;
 
-    ptr = &D_800BCE18.field_1BAC;
+    ptr = &D_800BCE18.heldItem_1BAC;
 
     if (ptr->itemId_0 == itemIdx)
     {
@@ -1374,7 +1375,7 @@ s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
 
     if (fileIdx != NO_VALUE)
     {
-        ptr->field_4 = Fs_QueueStartReadTim(fileIdx, FS_BUFFER_10, &ptr->imageDesc_C);
+        ptr->queueId_4 = Fs_QueueStartReadTim(fileIdx, FS_BUFFER_10, &ptr->imageDesc_C);
     }
 
     switch (itemIdx)
@@ -1455,8 +1456,8 @@ s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
 
     if (fileIdx != NO_VALUE)
     {
-        ptr->field_4 = Fs_QueueStartRead(fileIdx, ptr->field_14);
-        return ptr->field_4;
+        ptr->queueId_4 = Fs_QueueStartRead(fileIdx, ptr->lmHdr_14);
+        return ptr->queueId_4;
     }
 
     return 0;
@@ -1464,12 +1465,12 @@ s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
 
 void func_8003D01C() // 0x8003D01C
 {
-    D_800BCE18.field_1BAC.field_18 &= ~(1 << 31);
+    D_800BCE18.heldItem_1BAC.bone_18.flags_0 &= ~(1 << 31);
 }
 
 void func_8003D03C() // 0x8003D03C
 {
-    D_800BCE18.field_1BAC.field_18 |= 1 << 31;
+    D_800BCE18.heldItem_1BAC.bone_18.flags_0 |= 1 << 31;
 }
 
 void func_8003D058() // 0x8003D058
@@ -1480,7 +1481,7 @@ void func_8003D058() // 0x8003D058
     s_800BCE18_1BAC* ptr0;
     s_LmHeader*      lmHdr;
 
-    ptr0 = &D_800BCE18.field_1BAC;
+    ptr0 = &D_800BCE18.heldItem_1BAC;
 
     if (ptr0->itemId_0 != NO_VALUE)
     {
@@ -1493,20 +1494,20 @@ void func_8003D058() // 0x8003D058
             coord = &g_SysWork.playerBoneCoords_890[HarryBone_RightHand];
         }
 
-        if (Fs_QueueIsEntryLoaded(ptr0->field_4)) 
+        if (Fs_QueueIsEntryLoaded(ptr0->queueId_4)) 
         {
-            lmHdr = ptr0->field_14;
+            lmHdr = ptr0->lmHdr_14;
 
             if (!lmHdr->isLoaded_2)
             {
                 LmHeader_FixOffsets(lmHdr);
                 func_80056504(lmHdr, ptr0->textureName_8, &ptr0->imageDesc_C, 1);
                 Lm_MaterialFlagsApply(lmHdr);
-                func_80056C8C(&ptr0->field_18, ptr0->field_14, 0);
+                func_80056C8C(&ptr0->bone_18, ptr0->lmHdr_14, 0);
             }
 
             func_80049B6C(coord, &mat1, &mat0);
-            func_80057090(&ptr0->field_18, &g_OrderingTable0[g_ActiveBufferIdx], 1, &mat0, &mat1, 0);
+            func_80057090(&ptr0->bone_18, &g_OrderingTable0[g_ActiveBufferIdx], 1, &mat0, &mat1, 0);
         }
     }
 }
@@ -1718,7 +1719,7 @@ void func_8003D5B4(s8 flags) // 0x8003D5B4
 
     i = 0; 
 
-    D_800BCE18.field_0[0].field_14 = Fs_GetFileSize(FILE_CHARA_HERO_ILM) + 0x800FEE00;
+    D_800BCE18.field_0[0].field_14 = ILM_BUFFER1;
 
     for (; i < 4; i++)
     {
@@ -3187,12 +3188,12 @@ void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
 
 void func_80040004(s_800BCE18* arg0) // 0x80040004
 {
-    D_800BCE18.field_1BD8 = &arg0->field_0[2].field_26C;
+    D_800BCE18.heldItem_1BAC.bone_18.field_14 = &arg0->field_0[2].field_26C;
 }
 
 void func_80040014() // 0x80040014
 {
-    func_80069860(g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz, D_800BCE18.field_1BD8);
+    func_80069860(g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz, D_800BCE18.heldItem_1BAC.bone_18.field_14);
 };
 
 INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_8003AB28", D_80025BE4);

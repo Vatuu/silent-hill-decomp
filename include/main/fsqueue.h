@@ -46,6 +46,10 @@
 
 #define FONT24_BUFFER (u_long*)0x801F5600 // Loaded by `GameFs_StfRollBinLoad`.
 
+/** @brief pointer to a buffer after Harry's ILM.*/
+#define ILM_BUFFER0 ((void*)0x800FE600 + Fs_GetFileSize(FILE_CHARA_HERO_ILM))
+#define ILM_BUFFER1 ((void*)0x800FEE00 + Fs_GetFileSize(FILE_CHARA_HERO_ILM))
+
 /** @brief `FsQueue::state`s when processing a read operation (`Fs_QueueUpdateRead`).
  *
  * When `Fs_QueueUpdate` is called and the current op is a read, it will perform the corresponding action below.
