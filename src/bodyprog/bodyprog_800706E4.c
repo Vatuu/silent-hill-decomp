@@ -4177,13 +4177,13 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
         (((val) < FP_METER(3.5f)) ? (((g_DeltaTime0) * FP_METER(0.75f)) / TIME_STEP_30_FPS) : \
                                     (((g_DeltaTime0) + (((g_DeltaTime0) < 0) ? 3 : 0)) >> 2))
 
-    q19_12                 speed;
+    q19_12                 speedX;
+    q19_12                 speedZ;
     s32                    travelDistStep;
     s32                    speedZoneType; // `e_SpeedZoneType`
     e_PlayerLowerBodyState temp_s3;       // runningState?
     s32                    var_a3;
     s32                    aimState;
-    s32                    temp;
 
     if (g_SysWork.player_4C.extra_128.lowerBodyState_24 < PlayerLowerBodyState_Aim)
     {
@@ -4197,9 +4197,9 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
     // Compute move distance step.
     temp_s3        = func_8007D6F0(chara, &D_800C45C8);
     speedZoneType  = Map_SpeedZoneTypeGet(chara->position_18.vx, chara->position_18.vz);
-    speed         = SQUARE(chara->position_18.vx - D_800C45F8.vx);
-    temp           = SQUARE(chara->position_18.vz - D_800C45F8.vz);
-    travelDistStep = SquareRoot0(speed + temp);
+    speedX         = SQUARE(chara->position_18.vx - D_800C45F8.vx);
+    speedZ         = SQUARE(chara->position_18.vz - D_800C45F8.vz);
+    travelDistStep = SquareRoot0(speedX + speedZ);
 
     switch (g_SysWork.player_4C.extra_128.lowerBodyState_24)
     {
@@ -4719,7 +4719,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             {
                 D_800AF216 = ABS(g_Controller0->sticks_20.sticks_0.leftY);
 
-                speed = GET_MOVE_SPEED(speedZoneType);
+                speedX = GET_MOVE_SPEED(speedZoneType);
 
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < FP_METER(3.5f)) 
                 {
@@ -4727,19 +4727,19 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 } 
                 else 
                 {
-                    temp   = g_DeltaTime0;
-                    temp  += (temp < 0) ? 3 : 0;
-                    var_a3 = temp >> 2;
+                    speedZ   = g_DeltaTime0;
+                    speedZ  += (speedZ < 0) ? 3 : 0;
+                    var_a3 = speedZ >> 2;
                 }
 
-                func_80070CF0(chara, Q12(2.0f), speed, var_a3, TIME_STEP_SCALE(g_DeltaTime0, FP_METER(0.4f)));
+                func_80070CF0(chara, Q12(2.0f), speedX, var_a3, TIME_STEP_SCALE(g_DeltaTime0, FP_METER(0.4f)));
             }
             // Stopped running.
             else
             {
                 if (D_800AF216 != 0)
                 {
-                    speed = GET_MOVE_SPEED(speedZoneType);
+                    speedX = GET_MOVE_SPEED(speedZoneType);
 
                     if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < FP_METER(3.5f)) 
                     {
@@ -4747,12 +4747,12 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                     } 
                     else 
                     {
-                        temp   = g_DeltaTime0;
-                        temp  += (temp < 0) ? 3 : 0;
-                        var_a3 = temp >> 2;
+                        speedZ   = g_DeltaTime0;
+                        speedZ  += (speedZ < 0) ? 3 : 0;
+                        var_a3 = speedZ >> 2;
                     }
 
-                    func_80070CF0(chara, Q12(2.0f), speed, var_a3, TIME_STEP_SCALE(g_DeltaTime0, FP_METER(0.4f)));
+                    func_80070CF0(chara, Q12(2.0f), speedX, var_a3, TIME_STEP_SCALE(g_DeltaTime0, FP_METER(0.4f)));
                 }
                 else if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 > GET_MOVE_SPEED(speedZoneType))
                 {

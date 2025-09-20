@@ -898,7 +898,7 @@ void func_80057090(s_800BCE18_2BEC_0_0* arg0, GsOT* arg1, void* arg2, MATRIX* ma
 
     temp_s1 = &arg1->org[func_800571D0(modelHdr->field_B_1)];
     temp_a0 = modelHdr->field_B_4;
-    if ((temp_a0 & 0xFF) != 0 && temp_a0 >= 0 && temp_a0 < 4) // @hack: `& 0xFF` needed for match.
+    if ((temp_a0 & 0xFF) && temp_a0 >= 0 && temp_a0 < 4) // @hack: `& 0xFF` needed for match.
     {
         func_80059D50(temp_a0, arg0, mat0, arg2, temp_s1);
     }
@@ -925,8 +925,8 @@ s32 func_800571D0(u32 arg0) // 0x800571D0
 {
     switch (arg0)
     {
-        case 0:
         default:
+        case 0:
             return 2;
 
         case 1:
