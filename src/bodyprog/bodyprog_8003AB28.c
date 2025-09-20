@@ -862,7 +862,7 @@ void func_8003C0C0() // 0x8003C0C0
 void func_8003C110() // 0x8003C110
 {
     s32              i;
-    s_SkeletonStuff* v0;
+    s_CharaModel* v0;
 
     for (i = 0; i < Chara_Count; i++)
     {
@@ -875,11 +875,11 @@ void func_8003C110() // 0x8003C110
     D_800BCE18.field_0.dataPtr_14 = (s_LmHeader*)ILM_BUFFER1;
     for (v0 = &D_800BCE18.field_0.skeletons_CC[0]; v0 < &D_800BCE18.field_0.skeletons_CC[4]; v0++)
     {
-        func_8003C1AC(v0);
+        CharaModel_Free(v0);
     }
 }
 
-void func_8003C1AC(s_SkeletonStuff* arg0) // 0x8003C1AC
+void CharaModel_Free(s_CharaModel* arg0) // 0x8003C1AC
 {
     s_FsImageDesc sp10 = { 0 };
 
@@ -1511,7 +1511,7 @@ void func_8003D160() // 0x8003D160
     s_FsImageDesc    img;
     s32              queueIdx;
     s_800BCE18*      ptr;
-    s_SkeletonStuff* harrySkel;
+    s_CharaModel* harrySkel;
     s_LmHeader*      addr = (void*)0x800FE600;
 
     func_8003D3BC(&img, 1, 0);
@@ -1538,7 +1538,7 @@ s32 func_8003D21C(s_MapOverlayHeader* arg0) // 0x8003D21C
     s32              i;
     s32              ret;
     s32              ids;
-    s_SkeletonStuff* ptr;
+    s_CharaModel* ptr;
 
     for (ret                            = 0,
          i                              = 0,
@@ -1655,7 +1655,7 @@ void func_8003D468(s32 charaId, bool flag) // 0x8003D468
     s32              x;
     s32              i;
     s32              y;
-    s_SkeletonStuff* charaSkel;
+    s_CharaModel* charaSkel;
 
     charaSkel = D_800BCE18.field_0.charaSkeletons_18[charaId];
     func_80056244(charaSkel->lmHdr_8, flag);
@@ -1688,7 +1688,7 @@ void func_8003D468(s32 charaId, bool flag) // 0x8003D468
 
 void func_8003D550(s32 charaId, s32 arg1) // 0x8003D550
 {
-    s_SkeletonStuff* charaSkel;
+    s_CharaModel* charaSkel;
 
     charaSkel = D_800BCE18.field_0.charaSkeletons_18[charaId];
     Lm_MaterialFileIdxApply(charaSkel->lmHdr_8, CHARA_FILE_INFOS[charaId].textureFileIdx, &charaSkel->texture_C, arg1);
@@ -1700,7 +1700,7 @@ void func_8003D5B4(s8 flags) // 0x8003D5B4
     u8               fileIdx;
     s32              i;
     u32              temp;
-    s_SkeletonStuff* ptr;
+    s_CharaModel* ptr;
 
     for (i = 0; i < 4; i++)
     {
@@ -1731,12 +1731,12 @@ void func_8003D5B4(s8 flags) // 0x8003D5B4
     }
 }
 
-void func_8003D6A4(s_SkeletonStuff* arg0) // 0x8003D6A4
+void func_8003D6A4(s_CharaModel* arg0) // 0x8003D6A4
 {
     if (arg0->charaId_0 != 0)
     {
         D_800BCE18.field_0.charaSkeletons_18[arg0->charaId_0] = NULL;
-        func_8003C1AC(arg0);
+        CharaModel_Free(arg0);
     }
 }
 
@@ -1775,7 +1775,7 @@ s32 func_8003D7D4(u32 arg0, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 
 {
     s32              queueIdx;
     s32              idx;
-    s_SkeletonStuff* ptr;
+    s_CharaModel* ptr;
     s_FsImageDesc*   img;
 
     ptr = &D_800BCE18.field_0.skeletons_CC[arg1];
@@ -1826,7 +1826,7 @@ void func_8003D938() // 0x8003D938
 
 void func_8003D95C() // 0x8003D95C
 {
-    s_SkeletonStuff* temp_a0;
+    s_CharaModel* temp_a0;
     s32 i;
 
     for (i = 0; i < 45; i++)
@@ -1842,7 +1842,7 @@ void func_8003D95C() // 0x8003D95C
     }
 }
 
-void func_8003D9C8(s_SkeletonStuff* arg0) // 0x8003D9C8
+void func_8003D9C8(s_CharaModel* arg0) // 0x8003D9C8
 {
     s_Skeleton* skel;
 
@@ -1910,7 +1910,7 @@ s32 func_8003DD74(s32 arg0, s32 arg1) // 0x8003DD74
 
 void func_8003DD80(s32 idx, s32 arg1) // 0x8003DD80
 {
-    s_SkeletonStuff* temp_a2;
+    s_CharaModel* temp_a2;
 
     temp_a2 = D_800BCE18.field_0.charaSkeletons_18[idx];
 

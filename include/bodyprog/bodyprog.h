@@ -939,10 +939,10 @@ STATIC_ASSERT_SIZEOF(s_Bone, 24);
 // PROBABLY skeleton data.
 typedef struct
 {
-    u8               boneCount_0;
-    u8               boneIdx_1; // Current bone index? Used in traversal.
-    u8               field_2;
-    s8               field_3;
+    u8      boneCount_0;
+    u8      boneIdx_1;
+    u8      field_2;
+    s8      field_3;
     s_Bone* bones_4;
     s_Bone* bones_8;
     s_Bone  boneArr_C[56];
@@ -1054,8 +1054,8 @@ typedef struct
     s_LmHeader*   lmHdr_8;
     s_FsImageDesc texture_C;
     s_Skeleton    skeleton_14; // Could be different struct?
-} s_SkeletonStuff; // Unknown size.
-STATIC_ASSERT_SIZEOF(s_SkeletonStuff, 0x560);
+} s_CharaModel; // Unknown size.
+STATIC_ASSERT_SIZEOF(s_CharaModel, 0x560);
 
 typedef struct _MapType
 {
@@ -1074,8 +1074,8 @@ typedef struct
     u8                unk_5[3];
     VECTOR3           field_8;               // Position.
     s32               dataPtr_14;              // Used frequently as `s_LmHeader*`, but code adds file lengths to it. Could just be `u8*` pointing to current file data?
-    s_SkeletonStuff*  charaSkeletons_18[Chara_Count];
-    s_SkeletonStuff   skeletons_CC[4];
+    s_CharaModel*  charaSkeletons_18[Chara_Count];
+    s_CharaModel   skeletons_CC[4];
 } s_800BCE18_0;
 STATIC_ASSERT_SIZEOF(s_800BCE18_0, (0x560 * 4 + 0xcc));
 
@@ -1119,7 +1119,7 @@ typedef struct
 typedef struct
 {
     s_800BCE18_0      field_0;
-    s_SkeletonStuff   harrySkel_164C;
+    s_CharaModel   harrySkel_164C;
     s_heldItem        heldItem_1BAC;
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; // Debug camera info.
     s_LmHeader        field_1BE4;
@@ -2523,7 +2523,7 @@ void SysState_Fmv_Update();
 
 s32 Map_TypeGet();
 
-void func_8003C1AC(s_SkeletonStuff* arg0);
+void CharaModel_Free(s_CharaModel* arg0);
 
 void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ);
 
@@ -2552,7 +2552,7 @@ void func_8003D550(s32 arg0, s32 arg1);
 /** Called by some chara init funcs, similar to `func_8003DD80`? */
 void func_8003D468(s32 arg0, bool flag);
 
-void func_8003D6A4(s_SkeletonStuff* arg0);
+void func_8003D6A4(s_CharaModel* arg0);
 
 /** Return type assumed. */
 void func_8003D160();
@@ -3976,7 +3976,7 @@ void func_8003C0C0();
 /** Allocates player model? */
 void func_8003C110();
 
-void func_8003C1AC(s_SkeletonStuff* arg0);
+void CharaModel_Free(s_CharaModel* arg0);
 
 void Ipd_ActiveChunksClear1();
 
@@ -4011,7 +4011,7 @@ void func_8003D938();
 
 void func_8003D95C();
 
-void func_8003D9C8(s_SkeletonStuff* arg0);
+void func_8003D9C8(s_CharaModel* arg0);
 
 void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4);
 
