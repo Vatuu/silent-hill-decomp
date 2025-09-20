@@ -2749,3 +2749,4 @@ Lm_MaterialFileIdxApply = 0x80056464; // type:func
 Skeleton_Init = 0x80044FE0; // type:func
 CharaModel_Free = 0x8003C1AC; // type:func
 WorldGfx_StoreIpdSamplePoint = 0x8003C368; // type:func
+WorldGfx_ResetIpdSamplePoint = 0x8003C3A0; // type:func

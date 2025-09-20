@@ -3979,7 +3979,7 @@ void func_8003C30C();
 
 void WorldGfx_StoreIpdSamplePoint();
 
-void func_8003C3A0();
+void WorldGfx_ResetIpdSamplePoint();
 
 /** Handles player movement. */
 void func_8003C3AC();
