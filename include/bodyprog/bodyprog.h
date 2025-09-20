@@ -917,15 +917,6 @@ typedef struct
     s32            modelIdx_C;
 } s_WorldGfx_2BEC_0_0;
 
-// Probably Skeleton too.
-typedef struct
-{
-    s_WorldGfx_2BEC_0_0     field_0;
-    s8                      field_10;
-    s8                      unk_11[3];
-    struct s_func_800452EC* field_14;
-} s_func_800452EC;
-
 // Maybe a collection of matrices.
 typedef struct _Bone
 {
