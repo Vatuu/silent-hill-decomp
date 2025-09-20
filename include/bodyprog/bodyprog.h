@@ -1107,9 +1107,9 @@ typedef struct
 typedef struct
 {
     s_MapType*     type_0;
-    s8             field_4;
+    s8             useStoredPoint_4;
     u8             unk_5[3];
-    VECTOR3        field_8;               // Position.
+    VECTOR3        ipdSamplePoint_8; // @brief used by ipd logic to sample which chunks to load/deload.
     s32            dataPtr_14;              // Used frequently as `s_LmHeader*`, but code adds file lengths to it. Could just be `u8*` pointing to current file data?
     s_CharaModel*  charaModelsTable_18[Chara_Count];
     s_CharaModel   charaModels_CC[4];
@@ -1121,7 +1121,7 @@ typedef struct
     s32               field_2BE8;
     s_800BCE18_2BEC   field_2BEC[29]; // Size based on the check in func_8003C92C
 } s_800BCE18;
-STATIC_ASSERT_SIZEOF(s_800BCE18, 11260 + (16*28));
+STATIC_ASSERT_SIZEOF(s_800BCE18, 11708);
 
 // IPD data?
 typedef struct

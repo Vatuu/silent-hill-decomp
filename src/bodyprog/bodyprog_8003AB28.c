@@ -836,7 +836,7 @@ void func_8003C048() // 0x8003C048
 {
     func_80055028();
 
-    D_800BCE18.field_4 = 0;
+    D_800BCE18.useStoredPoint_4 = 0;
 
     Map_Init(FS_BUFFER_13, FS_BUFFER_14, 0x2C000);
     func_800697EC();
@@ -948,13 +948,13 @@ void func_8003C30C() // 0x8003C30C
 
 void func_8003C368() // 0x8003C368
 {
-    D_800BCE18.field_4 = 1;
-    D_800BCE18.field_8 = g_SysWork.player_4C.chara_0.position_18;
+    D_800BCE18.useStoredPoint_4 = 1;
+    D_800BCE18.ipdSamplePoint_8 = g_SysWork.player_4C.chara_0.position_18;
 }
 
 void func_8003C3A0() // 0x8003C3A0
 {
-    D_800BCE18.field_4 = 0;
+    D_800BCE18.useStoredPoint_4 = 0;
 }
 
 void func_8003C3AC() // 0x8003C3AC
@@ -974,9 +974,9 @@ void func_8003C3AC() // 0x8003C3AC
     u8              flags0;
     s_SubCharacter* chara = &g_SysWork.player_4C.chara_0;
 
-    if ((u8)D_800BCE18.field_4 != 0)
+    if ((u8)D_800BCE18.useStoredPoint_4 != 0)
     {
-        pos0 = D_800BCE18.field_8;
+        pos0 = D_800BCE18.ipdSamplePoint_8;
     }
     else
     {
