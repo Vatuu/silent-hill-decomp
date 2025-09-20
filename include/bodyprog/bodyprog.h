@@ -915,12 +915,12 @@ typedef struct
     GsCOORDINATE2* field_4;
     s_ModelHeader* modelHdr_8;
     s32            modelIdx_C;
-} s_WorldGfx_2BEC_0_0;
+} s_ModelInfo;
 
 // Maybe a collection of matrices.
 typedef struct _Bone
 {
-    s_WorldGfx_2BEC_0_0 field_x0;
+    s_ModelInfo    modelInfo_0;
     s8             field_10;
     s8             unk_11[3];
     struct _Bone*  next_14;
@@ -1067,7 +1067,7 @@ typedef struct
 
 typedef struct
 {
-    s_WorldGfx_2BEC_0_0  field_0;
+    s_ModelInfo  modelInfo_0;
     s_WorldGfx_2BEC_0_10 field_10;
 } s_WorldGfx_2BEC_0;
 STATIC_ASSERT_SIZEOF(s_WorldGfx_2BEC_0, 28);
@@ -3054,10 +3054,10 @@ void func_80056244(s_LmHeader* lmHdr, bool flag);
 s32 Lm_MaterialCount(bool (*filter)(s_Material* mat), s_LmHeader* lmHdr);
 
 /** TODO: Unknown `arg3` type. */
-void func_80059D50(s32 arg0, s_WorldGfx_2BEC_0_0* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4);
+void func_80059D50(s32 arg0, s_ModelInfo* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4);
 
 /** TODO: Unknown `arg2` type. */
-void func_8005A21C(s_WorldGfx_2BEC_0_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
+void func_8005A21C(s_ModelInfo* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
 
 /** @brief Computes a fog-shaded version of `D_800C4190` color using `arg1` as the distance factor?
  *  Stores the result at 0x3D8 into `arg0`.
@@ -3121,14 +3121,14 @@ void StringCopy(char* prevStr, char* newStr);
 
 void func_80056D8C(s16, s16, s16, s16, s32, s32, GsOT*, void*);
 
-void func_80057090(s_WorldGfx_2BEC_0_0* arg0, GsOT* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5);
+void func_80057090(s_ModelInfo* arg0, GsOT* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5);
 
 s32 func_800571D0(u32 arg0);
 
 void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3);
 
 /** TODO: Unknown `arg2` type. */
-void func_80057344(s_WorldGfx_2BEC_0_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
+void func_80057344(s_ModelInfo* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
 
 void func_800574D4(s_MeshHeader* meshHdr, s_GteScratchData* scratchData);
 

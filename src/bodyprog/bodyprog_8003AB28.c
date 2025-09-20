@@ -854,9 +854,9 @@ void func_8003C0C0() // 0x8003C0C0
 
     ptr->itemId_0 = NO_VALUE;
     ptr->lmHdr_14 = (s_LmHeader*)ILM_BUFFER0;
-    ptr->bone_18.field_x0.field_0 = 0;
-    ptr->bone_18.field_x0.field_4 = 0;
-    ptr->bone_18.field_x0.modelHdr_8 = 0;
+    ptr->bone_18.modelInfo_0.field_0 = 0;
+    ptr->bone_18.modelInfo_0.field_4 = 0;
+    ptr->bone_18.modelInfo_0.modelHdr_8 = 0;
 }
 
 void func_8003C110() // 0x8003C110
@@ -1086,7 +1086,7 @@ void func_8003C878(s32 arg0) // 0x8003C878
 void func_8003C8F8(s_WorldGfx_2BEC_0* arg0, char* newStr) // 0x8003C8F8
 {
     arg0->field_10.lmIdx_9 = 0;
-    arg0->field_0.field_0  = 0;
+    arg0->modelInfo_0.field_0  = 0;
 
     StringCopy(arg0->field_10.modelName_0.str, newStr);
 
@@ -1219,7 +1219,7 @@ void func_8003CC7C(s_WorldGfx_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x800
         return;
     }
 
-    temp_s2 = arg0->field_0.modelHdr_8;
+    temp_s2 = arg0->modelInfo_0.modelHdr_8;
     temp_s1 = &arg0->field_10;
 
     if (temp_a0 >= 3 && temp_a0 < 7)
@@ -1236,7 +1236,7 @@ void func_8003CC7C(s_WorldGfx_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x800
         return;
     }
 
-    func_80057090(&arg0->field_0, &g_OrderingTable0[g_ActiveBufferIdx], 1, arg1, arg2, 0);
+    func_80057090(&arg0->modelInfo_0, &g_OrderingTable0[g_ActiveBufferIdx], 1, arg1, arg2, 0);
 }
 
 s32 func_8003CD5C() // 0x8003CD5C
@@ -1459,12 +1459,12 @@ s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
 
 void func_8003D01C() // 0x8003D01C
 {
-    g_WorldGfx.heldItem_1BAC.bone_18.field_x0.field_0 &= ~(1 << 31);
+    g_WorldGfx.heldItem_1BAC.bone_18.modelInfo_0.field_0 &= ~(1 << 31);
 }
 
 void func_8003D03C() // 0x8003D03C
 {
-    g_WorldGfx.heldItem_1BAC.bone_18.field_x0.field_0 |= 1 << 31;
+    g_WorldGfx.heldItem_1BAC.bone_18.modelInfo_0.field_0 |= 1 << 31;
 }
 
 void func_8003D058() // 0x8003D058
@@ -1501,7 +1501,7 @@ void func_8003D058() // 0x8003D058
             }
 
             func_80049B6C(coord, &mat1, &mat0);
-            func_80057090(&ptr0->bone_18.field_x0, &g_OrderingTable0[g_ActiveBufferIdx], 1, &mat0, &mat1, 0);
+            func_80057090(&ptr0->bone_18.modelInfo_0, &g_OrderingTable0[g_ActiveBufferIdx], 1, &mat0, &mat1, 0);
         }
     }
 }
