@@ -840,7 +840,7 @@ void Bone_ModelAssign(s_Bone* bone, s_LmHeader* lmHdr, s32 modelHdrIdx)
     }
 }
 
-bool Lm_ModelFind(s_WorldGfx_2BEC_0* arg0, s_LmHeader* lmHdr, s_WorldGfx_2BEC_0_10* arg2) // 0x80056CB4
+bool Lm_ModelFind(s_WorldObject_0* arg0, s_LmHeader* lmHdr, s_WorldObject_0_10* arg2) // 0x80056CB4
 {
     u_Filename     sp10;
     s32            modelHdrCount;

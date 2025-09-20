@@ -1083,7 +1083,7 @@ void func_8003C878(s32 arg0) // 0x8003C878
     func_800550D0();
 }
 
-void func_8003C8F8(s_WorldGfx_2BEC_0* arg0, char* newStr) // 0x8003C8F8
+void func_8003C8F8(s_WorldObject_0* arg0, char* newStr) // 0x8003C8F8
 {
     arg0->field_10.lmIdx_9 = 0;
     arg0->modelInfo_0.field_0  = 0;
@@ -1093,7 +1093,7 @@ void func_8003C8F8(s_WorldGfx_2BEC_0* arg0, char* newStr) // 0x8003C8F8
     arg0->field_10.field_8 = 0;
 }
 
-void func_8003C92C(s_WorldGfx_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* rot) // 0x8003C92C
+void func_8003C92C(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECTOR3* rot) // 0x8003C92C
 {
     s32              vy;
     s32              vx;
@@ -1103,9 +1103,9 @@ void func_8003C92C(s_WorldGfx_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* 
     s32              coord2; // Q23.8
     s32              i;
     s32              ret;
-    s_WorldGfx_2BEC* ptr;
+    s_WorldObject* ptr;
 
-    if (g_WorldGfx.field_2BE8 < 29)
+    if (g_WorldGfx.objectsCount_2BE8 < 29)
     {
         if (arg0->field_10.lmIdx_9 == 0)
         {
@@ -1134,9 +1134,9 @@ void func_8003C92C(s_WorldGfx_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* 
         vz     = rot->vz >> 2;
         vy     = rot->vy;
 
-        for (i = 0; i < g_WorldGfx.field_2BE8; i++)
+        for (i = 0; i < g_WorldGfx.objectsCount_2BE8; i++)
         {
-            ptr = &g_WorldGfx.field_2BEC[i];
+            ptr = &g_WorldGfx.objects_2BEC[i];
     
             if (arg0 == ptr->field_0 &&
                 coord0 == ptr->gsCoordinate0_4 &&
@@ -1150,7 +1150,7 @@ void func_8003C92C(s_WorldGfx_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* 
             }
         }
 
-        ptr = &g_WorldGfx.field_2BEC[g_WorldGfx.field_2BE8];
+        ptr = &g_WorldGfx.objects_2BEC[g_WorldGfx.objectsCount_2BE8];
 
         ptr->vx_C = vx;
         ptr->vy_C = vy;
@@ -1163,28 +1163,28 @@ void func_8003C92C(s_WorldGfx_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* 
         ptr->gsCoordinate0_4 = coord0;
         ptr->gsCoordinate1_4 = coord1;
         ptr->gsCoordinate2_8 = coord2;
-        g_WorldGfx.field_2BE8++;
+        g_WorldGfx.objectsCount_2BE8++;
     }
 }
 
 void func_8003CB3C(s_WorldGfx* arg0) // 0x8003CB3C
 {
-    arg0->field_2BE8 = 0;
+    arg0->objectsCount_2BE8 = 0;
 }
 
 void func_8003CB44(s_WorldGfx* arg0) // 0x8003CB44
 {
-    s_WorldGfx_2BEC* ptr;
+    s_WorldObject* ptr;
 
-    for (ptr = &arg0->field_2BEC[0]; ptr < &arg0->field_2BEC[arg0->field_2BE8]; ptr++)
+    for (ptr = &arg0->objects_2BEC[0]; ptr < &arg0->objects_2BEC[arg0->objectsCount_2BE8]; ptr++)
     {
         func_8003CBA4(ptr);
     }
 
-    arg0->field_2BE8 = 0;
+    arg0->objectsCount_2BE8 = 0;
 }
 
-void func_8003CBA4(s_WorldGfx_2BEC* arg0) // 0x8003CBA4
+void func_8003CBA4(s_WorldObject* arg0) // 0x8003CBA4
 {
     GsCOORDINATE2 coord;
     SVECTOR       vec;
@@ -1207,10 +1207,10 @@ void func_8003CBA4(s_WorldGfx_2BEC* arg0) // 0x8003CBA4
     func_8003CC7C(arg0->field_0, &mats[0], &mats[1]);
 }
 
-void func_8003CC7C(s_WorldGfx_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x8003CC7C
+void func_8003CC7C(s_WorldObject_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x8003CC7C
 {
     s8                    lmIdx;
-    s_WorldGfx_2BEC_0_10* temp_s1;
+    s_WorldObject_0_10* temp_s1;
     s_ModelHeader*        temp_s2;
 
     lmIdx = arg0->field_10.lmIdx_9;

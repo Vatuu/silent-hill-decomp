@@ -939,7 +939,7 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
     }
 }
 
-s32 func_8004287C(s_WorldGfx_2BEC_0* arg0, s_WorldGfx_2BEC_0_10* arg1, s32 posX, s32 posZ) // 0x8004287C
+s32 func_8004287C(s_WorldObject_0* arg0, s_WorldObject_0_10* arg1, s32 posX, s32 posZ) // 0x8004287C
 {
     s_IpdChunk* chunks[4];
     s32         sp20[4];
