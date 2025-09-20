@@ -1499,11 +1499,11 @@ void func_80088F94(s_SubCharacter* chara, s32 unused1, s32 unsued2) // 0x80088F9
     chara->model_0.charaId_0 = Chara_None;
 }
 
-void func_80088FF4(s32 groupIdx, s32 spawnIdx, s32 spawnFlags) // 0x80088FF4
+void func_80088FF4(e_CharacterId charaId, s32 spawnIdx, s32 spawnFlags) // 0x80088FF4
 {
     s_SpawnInfo* spawn;
 
-    spawn          = &g_MapOverlayHeader.charaSpawns_24C[D_800A98FC[groupIdx] - 1][spawnIdx];
+    spawn          = &g_MapOverlayHeader.charaSpawns_24C[D_800A98FC[charaId] - 1][spawnIdx];
     spawn->flags_6 = spawnFlags;
 }
 

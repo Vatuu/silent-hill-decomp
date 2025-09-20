@@ -1,4 +1,4 @@
-void Ai_Stalker_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords)
+void Ai_Stalker_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords)
 {
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
     {
@@ -37,7 +37,7 @@ void Ai_Stalker_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords)
             sharedFunc_800D67FC_0_s00(chara);
         }
 
-        sharedFunc_800D6970_0_s00(chara, arg1, coords);
+        sharedFunc_800D6970_0_s00(chara, anmHeader, coords);
         sharedFunc_800D70C4_0_s00(chara);
         
         if (g_DeltaTime0 != FP_TIME(0.0))

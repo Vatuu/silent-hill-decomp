@@ -1,9 +1,9 @@
-void Ai_PuppetDoctor_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords)
+void Ai_PuppetDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords)
 {
     if (chara->model_0.state_2 == 0)
     {
         Ai_PuppetNurse_Init(chara, 1);
     }
 
-    Ai_PuppetNurse_UpdateMain(chara, arg1, coords);
+    Ai_PuppetNurse_UpdateMain(chara, anmHeader, coords);
 }

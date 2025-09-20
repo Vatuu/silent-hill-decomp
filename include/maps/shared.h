@@ -2202,7 +2202,7 @@ typedef struct
 typedef struct
 {
     s32            flags_0;
-    s32            field_4;
+    s_AnmHeader*   anmHeader_4;
     GsCOORDINATE2* coords_8;
     MATRIX*        mat_C; // `MATRIX` array? Needs to be `s32` to match, weird.
 } s_sharedData_800E21D0_0_s01;
@@ -2400,7 +2400,7 @@ void sharedFunc_800D7E04_0_s00(s_SubCharacter* chara, s32 caseArg);
 
 void sharedFunc_800D88AC_0_s00(s_SubCharacter* playerChara);
 
-void Ai_Stalker_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
+void Ai_Stalker_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
 
 void Ai_Stalker_Init(s_SubCharacter* chara); // Matches across all maps except `map6_s03`.
 
@@ -2408,7 +2408,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter*);
 
 void sharedFunc_800D3B44_0_s00(s_SubCharacter*);
 
-void sharedFunc_800D6970_0_s00(s_SubCharacter*, s32, GsCOORDINATE2*);
+void sharedFunc_800D6970_0_s00(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 
 void sharedFunc_800D70C4_0_s00(s_SubCharacter*);
 
@@ -2465,13 +2465,13 @@ void sharedFunc_800DA8E8_0_s01(s32* timer, s32 inc, s32 timeMin, s32 timeMax, bo
 void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord);
 
 // MAP1_S00 LarvalStalker funcs
-void Ai_LarvalStalker_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
+void Ai_LarvalStalker_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
 
 void sharedFunc_800CF168_1_s00(s_SubCharacter*);
 
 void sharedFunc_800D140C_1_s00(s_SubCharacter*, GsCOORDINATE2*);
 
-void sharedFunc_800D1524_1_s00(s_SubCharacter*, s32, GsCOORDINATE2*);
+void sharedFunc_800D1524_1_s00(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 
 void Ai_LarvalStalker_Init(s_SubCharacter* chara);
 
@@ -2489,15 +2489,15 @@ void sharedFunc_800D09D4_3_s00();
 // MAP3_S03 puppet nurse/doctor funcs
 void sharedFunc_800CDA88_3_s03(s_SubCharacter*);
 
-void Ai_PuppetNurse_UpdateMain(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
+void Ai_PuppetNurse_UpdateMain(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
 
 void func_800CDB5C(s_SubCharacter*, s32);
 
 void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor);
 
-void Ai_PuppetNurse_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
+void Ai_PuppetNurse_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
 
-void Ai_PuppetDoctor_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
+void Ai_PuppetDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
 
 void sharedFunc_800CDF24_3_s03(s_SubCharacter*);
 
@@ -2529,13 +2529,13 @@ void sharedFunc_800D02E4_3_s03(s_SubCharacter*, GsCOORDINATE2*);
 
 void sharedFunc_800D03E4_3_s03(s_SubCharacter*);
 
-void sharedFunc_800D06AC_3_s03(s_SubCharacter*, s32, GsCOORDINATE2*);
+void sharedFunc_800D06AC_3_s03(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 
 void sharedFunc_800D0828_3_s03(s_SubCharacter*, GsCOORDINATE2*);
 
 void sharedFunc_800D0968_3_s03(s_SubCharacter* chara, GsCOORDINATE2* coords);
 
-void Ai_Creaper_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
+void Ai_Creaper_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
 
 void Ai_Creaper_Init(s_SubCharacter* chara); // `map5_s00` version has extra code at end of func.
 
@@ -2555,11 +2555,11 @@ void sharedFunc_800D9774_1_s02(s_SubCharacter*);
 
 void sharedFunc_800D983C_1_s02(s_SubCharacter*);
 
-void sharedFunc_800D9960_1_s02(s_SubCharacter*, s32, GsCOORDINATE2*);
+void sharedFunc_800D9960_1_s02(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 
 void sharedFunc_800D99D0_1_s02(s_SubCharacter*);
 
-void Ai_HangedScratcher_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
+void Ai_HangedScratcher_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
 
 void Ai_HangedScratcher_Init(s_SubCharacter* chara);
 
@@ -2569,7 +2569,7 @@ void sharedFunc_800D029C_5_s00(s_SubCharacter*);
 
 void sharedFunc_800D26D8_5_s00(s_SubCharacter*);
 
-void sharedFunc_800D2844_5_s00(s_SubCharacter*, s32, GsCOORDINATE2*);
+void sharedFunc_800D2844_5_s00(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 
 void sharedFunc_800D2C18_5_s00(s_SubCharacter*);
 
@@ -2581,7 +2581,7 @@ s32 sharedFunc_800D3630_0_s01(s_SubCharacter* chara, s32* arg1);
 
 s32 sharedFunc_800D3758_0_s01(s_SubCharacter* chara, s32* outDistance, s32* outAngle, s32 arg3, s32 arg4);
 
-void Ai_Romper_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
+void Ai_Romper_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
 
 void Ai_Romper_Init(s_SubCharacter* chara);
 
@@ -2593,11 +2593,11 @@ void sharedFunc_800E66E8_2_s02(s_SubCharacter*);
 
 void sharedFunc_800E8730_2_s02(s_SubCharacter*);
 
-void sharedFunc_800E8A40_2_s02(s_SubCharacter*, s32, GsCOORDINATE2*);
+void sharedFunc_800E8A40_2_s02(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 
 void sharedFunc_800E8DFC_2_s02(s_SubCharacter*);
 
-void Ai_Groaner_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
+void Ai_Groaner_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
 
 void Ai_Groaner_Init(s_SubCharacter* chara); // `map2_s00` has extra block at end of func compared to other maps.
 
@@ -2607,13 +2607,13 @@ void sharedFunc_800E384C_2_s00(s_SubCharacter*); // `map2_s00` has different ver
 
 void sharedFunc_800E5AA4_2_s00(s_SubCharacter*);
 
-void sharedFunc_800E5EC4_2_s00(s_SubCharacter*, s32, GsCOORDINATE2*);
+void sharedFunc_800E5EC4_2_s00(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 
 void sharedFunc_800E6338_2_s00(s_SubCharacter*);
 
 void sharedFunc_800E71E8_2_s00(s_SubCharacter*);
 
-void Ai_Splithead_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
+void Ai_Splithead_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
 
 void Ai_Splithead_Init(s_SubCharacter* chara);
 
@@ -2625,7 +2625,7 @@ void sharedFunc_800D0054_1_s05(s_SubCharacter*);
 
 void sharedFunc_800D267C_1_s05(s_SubCharacter*);
 
-void sharedFunc_800D274C_1_s05(s_SubCharacter*, s32);
+void sharedFunc_800D274C_1_s05(s_SubCharacter*, s_AnmHeader*);
 
 void sharedFunc_800D2D74_1_s05(s_SubCharacter*);
 
@@ -2637,9 +2637,9 @@ void sharedFunc_800D4070_1_s05(s_SubCharacter*);
 
 extern GsCOORDINATE2* sharedData_800D8610_1_s05;
 
-void Ai_Cybil_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
+void Ai_Cybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
 
-void sharedFunc_800D8888_0_s01(s_SubCharacter*, s32, GsCOORDINATE2*);
+void sharedFunc_800D8888_0_s01(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 
 void sharedFunc_800D88D0_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coord);
 
@@ -2647,9 +2647,9 @@ void sharedSymbol_800D8A68_0_s01(s_SubCharacter*, GsCOORDINATE2*);
 
 void Ai_Cybil_Init(s_SubCharacter* chara);
 
-void Ai_AirScreamer_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
+void Ai_AirScreamer_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
 
-bool sharedFunc_800D21E4_0_s01(s32, GsCOORDINATE2* coords);
+bool sharedFunc_800D21E4_0_s01(s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
 
 void sharedFunc_800D2200_0_s01(s_SubCharacter* chara);
 
@@ -2728,14 +2728,14 @@ bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyfra
 void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1);
 
 // `Ai_Lisa` related
-void Ai_Lisa_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
-void sharedFunc_800D08FC_3_s04(s_SubCharacter*, s32, GsCOORDINATE2*);
+void Ai_Lisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
+void sharedFunc_800D08FC_3_s04(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 void sharedFunc_800D0944_3_s04(s_SubCharacter* chara, GsCOORDINATE2* coord);
 void sharedSymbol_800D0ADC_3_s04(s_SubCharacter*, GsCOORDINATE2*); // `Ai_Lisa_Control`
 void Ai_Lisa_Init(s_SubCharacter* chara);
 
 // `Ai_BloodyLisa` related
-void Ai_BloodyLisa_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
+void Ai_BloodyLisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
 void sharedFunc_800D595C_7_s01(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coord);
 void sharedFunc_800D59A4_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void sharedFunc_800D5B3C_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords);
@@ -2743,41 +2743,41 @@ bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyfra
 void Ai_BloodyLisa_Init(s_SubCharacter* chara);
 
 // `Ai_Kaufmann` related
-void Ai_Kaufmann_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
+void Ai_Kaufmann_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
 void sharedSymbol_800CF470_3_s00(s_SubCharacter*, GsCOORDINATE2*);
 void sharedFunc_800CF2D8_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coord);
 void sharedFunc_800CF290_3_s00(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coord);
 void Ai_Kaufmann_Init(s_SubCharacter* chara);
 
 // `Ai_GhostChildAlessa` related
-void Ai_GhostChildAlessa_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
-void sharedFunc_800D4A2C_7_s01(s_SubCharacter*, s32, GsCOORDINATE2*);
+void Ai_GhostChildAlessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
+void sharedFunc_800D4A2C_7_s01(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 void sharedFunc_800D4A74_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coord);
 void sharedFunc_800D4C0C_7_s01(s_SubCharacter*, GsCOORDINATE2*);
 void Ai_GhostChildAlessa_Init(s_SubCharacter* chara);
 
 // `Ai_Alessa` related
-void Ai_Alessa_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
+void Ai_Alessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
 void sharedFunc_800CECFC_3_s02(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coord);
 void sharedFunc_800CED44_3_s02(s_SubCharacter* chara, GsCOORDINATE2* coord);
 void sharedFunc_800CEEDC_3_s02(s_SubCharacter*, GsCOORDINATE2*);
 void Ai_Alessa_Init(s_SubCharacter* chara);
 
 // `Ai_Dahlia` related
-void Ai_Dahlia_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
-void sharedFunc_800CD280_2_s01(s_SubCharacter*, s32, GsCOORDINATE2*);
+void Ai_Dahlia_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
+void sharedFunc_800CD280_2_s01(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 void sharedFunc_800CD2C8_2_s01(s_SubCharacter*, GsCOORDINATE2*);
 void sharedSymbol_800CD4A0_2_s01(s_SubCharacter*, GsCOORDINATE2*);
 void Ai_Dahlia_Init(s_SubCharacter* chara);
 
 // `Ai_Bloodsucker` related
-void Ai_Bloodsucker_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
+void Ai_Bloodsucker_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
 void Ai_Bloodsucker_Init(s_SubCharacter*);
 void sharedFunc_800D0E20_3_s03(s_SubCharacter*);
 void sharedSymbol_800D0E38_3_s03(s_SubCharacter*);
 void sharedFunc_800D0E80_3_s03(s_SubCharacter*);
 void sharedSymbol_800D0ECC_3_s03(s_SubCharacter*);
-void sharedFunc_800D0F28_3_s03(s_SubCharacter*, s32, GsCOORDINATE2*);
+void sharedFunc_800D0F28_3_s03(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 
 static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo)
 {

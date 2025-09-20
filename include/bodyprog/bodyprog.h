@@ -1832,7 +1832,7 @@ extern s32 D_800A9A24;
 /** Z. */
 extern s32 D_800A9A28;
 
-/** Related to character animation allocation handling. */
+/** Associates each character ID with the maps `charaGroupIds_248` index for that ID (+ 1?) */
 extern s8 D_800A98FC[Chara_Count];
 
 extern s32 D_800A9EB0;
@@ -3360,7 +3360,7 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, s32 posX, s32 posZ, s16 posY, u32 stateSt
 
 void func_80088F94(s_SubCharacter* chara, s32 unused1, s32 unused2);
 
-void func_80088FF4(s32 groupIdx, s32 spawnIdx, s32 spawnFlags);
+void func_80088FF4(e_CharacterId charaId, s32 spawnIdx, s32 spawnFlags);
 
 bool func_8008F434(s32 arg0);
 

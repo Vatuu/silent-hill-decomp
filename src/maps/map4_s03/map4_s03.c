@@ -383,7 +383,7 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D5DF4);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D5E30);
 
-void Ai_Twinfeeler_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords)
+void Ai_Twinfeeler_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords)
 {
     if (chara->model_0.state_2 == 0)
     {
@@ -400,7 +400,7 @@ void Ai_Twinfeeler_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords
             func_800D53B0(chara, coords);
             func_800D55C8(chara);
             func_800D5BC8(chara, coords);
-            func_800D5888(chara, arg1, coords);
+            func_800D5888(chara, anmHeader, coords);
             func_800D5B6C(chara, coords);
             func_800D54B4(chara, coords);
             func_800D5DF4(chara, coords);
@@ -415,7 +415,7 @@ void Ai_Twinfeeler_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords
         }
         else
         {
-            func_800D5888(chara, arg1, coords);
+            func_800D5888(chara, anmHeader, coords);
             func_800D5DF4(chara, coords);
         }
     }

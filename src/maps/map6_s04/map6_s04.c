@@ -152,7 +152,7 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800D8848);
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800D8898);
 
-void Ai_MonsterCybil_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords) // 0x800D8908
+void Ai_MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords) // 0x800D8908
 {
     s_Model* extraModelPtr = &g_Ai_MonsterCybil_ExtraModel;
 
@@ -166,7 +166,7 @@ void Ai_MonsterCybil_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coor
         func_800D8B14(chara, extraModelPtr);
         func_800D8D7C(chara, extraModelPtr, coords);
         func_800D9790(chara, extraModelPtr);
-        func_800D99E4(chara, extraModelPtr, arg1, coords);
+        func_800D99E4(chara, extraModelPtr, anmHeader, coords);
         func_800DB4CC(chara, extraModelPtr, coords);
         func_800D9AAC(chara, extraModelPtr);
     }
