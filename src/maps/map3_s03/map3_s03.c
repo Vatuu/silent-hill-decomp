@@ -241,7 +241,7 @@ const char* MAP_MESSAGES[] =
     "\tNothing_useful_in_the_boxes. ~E ",
     "\tThere's_a_bottle_filled ~N\n\twith_some_kind_of_drug. ~N\n\tBetter_leave_it. ~E ",
     "\tThere_are_some_empty_bottles. ~E ",
-    "\tNothing_special_in_the_box. ~N\n\tNothing_to_worry_about. ~E ",
+    "\tNothing_special_in_the_box. ~N\n\tNothing_to_worry_about. ~E "
 };
 
 void func_800D151C(void) // 0x800D151C

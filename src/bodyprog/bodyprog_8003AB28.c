@@ -718,7 +718,7 @@ void func_8003BCF4() // 0x8003BCF4
 
 s32 Map_TypeGet() // 0x8003BD2C
 {
-    return D_800BCE18.field_0[0].type_0 - g_MapTypes;
+    return D_800BCE18.field_0[0].type_0 - MAP_TYPES;
 }
 
 void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
@@ -800,12 +800,12 @@ void func_8003BED0() // 0x8003BED0
 
 extern s_800C4168 const D_800C4168;
 
-s32 Map_SpeedZoneGet(s32 x, s32 z) // 0x8003BF60
+s32 Map_SpeedZoneTypeGet(s32 x, s32 z) // 0x8003BF60
 {
-    s32          ret;
-    s_SpeedZone* ptr;
+    s32          zoneType;
+    s_SpeedZone* curZone;
 
-    ret = 0;
+    zoneType = 0;
 
     if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP0_S00)
     {
@@ -814,22 +814,21 @@ s32 Map_SpeedZoneGet(s32 x, s32 z) // 0x8003BF60
 
     if (D_800BCE18.field_0[0].type_0->speedZones_C != NULL)
     {
-        ptr = D_800BCE18.field_0[0].type_0->speedZones_C;
-
-        while (ptr->speedIdx_0 != NO_VALUE)
+        curZone = D_800BCE18.field_0[0].type_0->speedZones_C;
+        while (curZone->type_0 != NO_VALUE)
         {
-            if (x >= (ptr->minX_2 << 8) && (ptr->maxX_4 << 8) >= x &&
-                z >= (ptr->minZ_6 << 8) && (ptr->maxZ_8 << 8) >= z &&
-                ret < ptr->speedIdx_0)
+            if (x >= (curZone->minX_2 << 8) && (curZone->maxX_4 << 8) >= x &&
+                z >= (curZone->minZ_6 << 8) && (curZone->maxZ_8 << 8) >= z &&
+                zoneType < curZone->type_0)
             {
-                ret = ptr->speedIdx_0;
+                zoneType = curZone->type_0;
             }
 
-            ptr++;
+            curZone++;
         }
     }
 
-    return ret;
+    return zoneType;
 }
 
 void func_8003C048() // 0x8003C048
@@ -853,7 +852,7 @@ void func_8003C0C0() // 0x8003C0C0
     s_800BCE18_1BAC* ptr = &D_800BCE18.heldItem_1BAC;
 
     ptr->itemId_0 = NO_VALUE;
-    ptr->lmHdr_14 = (s_LmHeader*)ILM_BUFFER0;
+    ptr->lmHdr_14 = (s_LmHeader*)ILM_BUFFER_0;
     ptr->bone_18.flags_0 = 0;
     ptr->bone_18.field_4 = 0;
     ptr->bone_18.modelHdr_8 = 0;
@@ -862,7 +861,7 @@ void func_8003C0C0() // 0x8003C0C0
 void func_8003C110() // 0x8003C110
 {
     s32              i;
-    s_800BCE18_0_CC* var_s0;
+    s_800BCE18_0_CC* curPtr;
 
     for (i = 0; i < Chara_Count; i++)
     {
@@ -872,45 +871,47 @@ void func_8003C110() // 0x8003C110
         }
     } 
 
-    D_800BCE18.field_0[0].field_14 = (s_LmHeader*)ILM_BUFFER1;
+    D_800BCE18.field_0[0].field_14 = (s_LmHeader*)ILM_BUFFER_1;
 
-    /* Slightly less, but still hacky loop. Equivalent of:
-     *  for (i = 0; i < 4; i++)
-     *      func_8003C1AC(&D_800BCE18.field_0[i].field_CC);
-     */
-    for (var_s0 = &D_800BCE18.field_0[0].field_CC;
-            var_s0 < &D_800BCE18.field_0[4].field_CC;
-            (int)var_s0 += sizeof(D_800BCE18.field_0[0])) {
-        func_8003C1AC(var_s0);
+    // Slightly less hacky loop. Equivalent of:
+    // for (i = 0; i < 4; i++)
+    // {
+    //     func_8003C1AC(&D_800BCE18.field_0[i].field_CC);
+    // }
+    for (curPtr = &D_800BCE18.field_0[0].field_CC;
+         curPtr < &D_800BCE18.field_0[4].field_CC;
+         (int)curPtr += sizeof(D_800BCE18.field_0[0]))
+    {
+        func_8003C1AC(curPtr);
     }
 }
 
 void func_8003C1AC(s_800BCE18_0_CC* arg0) // 0x8003C1AC
 {
-    s_FsImageDesc sp10 = { 0 };
+    s_FsImageDesc image = { 0 };
 
-    //memset(&sp10, 0, 8);
+    //memset(&image, 0, 8);
     arg0->field_0 = 0;
     arg0->field_1 = 0;
     arg0->field_4 = 0;
-    arg0->lmHdr_8 = (s_LmHeader*)ILM_BUFFER1;
-    arg0->texture_C = sp10;
+    arg0->lmHdr_8 = (s_LmHeader*)ILM_BUFFER_1;
+    arg0->texture_C = image;
 }
 
 void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ) // 0x8003C220
 {
     s32        activeIpdCount;
     u8         flags;
-    s_MapType* ptr;
+    s_MapType* mapType;
 
     D_800BCE18.field_0[0].type_0 = mapHeader->type_0;
-    flags = mapHeader->type_0->flags_6;
 
+    flags = mapHeader->type_0->flags_6;
     if (flags & MapTypeFlag_OneActiveChunk)
     {
         activeIpdCount = 1;
     } 
-    else if (flags & MapTypeFlag_TwoActiveChunk)
+    else if (flags & MapTypeFlag_TwoActiveChunks)
     {
         activeIpdCount = 2;
     }
@@ -919,12 +920,11 @@ void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ
         activeIpdCount = 4;
     }
 
-    ptr = mapHeader->type_0;
-    // Strange way to read the 3rd interior flag bit
-    #define IS_EXTERIOR (((ptr->flags_6 >> 2) ^ 1) & 1)
-    func_800421D8(ptr->tag_2, ptr->plmFileIdx_0, activeIpdCount, IS_EXTERIOR, 0, 0);
+    // TODO: Strange way to read interior flag bit 2.
+    mapType = mapHeader->type_0;
+    func_800421D8(mapType->tag_2, mapType->plmFileIdx_0, activeIpdCount, ((mapType->flags_6 >> 2) ^ 1) & (1 << 0), 0, 0);
 
-    if (mapHeader->type_0 == &g_MapTypes[0])
+    if (mapHeader->type_0 == &MAP_TYPES[0])
     {
         Map_PlaceIpdAtGridPos(FILE_BG_THR05FD_IPD, -1, 8);
     }
@@ -932,7 +932,7 @@ void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ
     func_80042C3C(playerPosX, playerPosZ, playerPosX, playerPosZ);
 }
 
-void Ipd_ActiveChunksClear1() // @unused 0x8003C2EC
+void Ipd_ActiveChunksClear1() // 0x8003C2EC
 {
     Ipd_ActiveChunksClear0();
 }
@@ -942,12 +942,12 @@ void func_8003C30C() // 0x8003C30C
     u8 flags;
 
     flags = D_800BCE18.field_0[0].type_0->flags_6;
-    
-    if ((flags & MapTypeFlag_Interior) && (flags & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunk))) 
+    if ((flags & MapTypeFlag_Interior) && (flags & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks))) 
     {
         func_800420C0();
         return;
     }
+
     Ipd_ActiveChunksClear0();
     Ipd_TexturesInit0();
 }
@@ -976,8 +976,8 @@ void func_8003C3AC() // 0x8003C3AC
     s32             var_a0;
     s32             var_a1;
     s32             var_s1;
-    u8              flags1;
     u8              flags0;
+    u8              flags1;
     s_SubCharacter* chara = &g_SysWork.player_4C.chara_0;
 
     if ((u8)D_800BCE18.field_0[0].field_4 != 0)
@@ -995,7 +995,7 @@ void func_8003C3AC() // 0x8003C3AC
     pos0.vx += FP_MULTIPLY_PRECISE(moveAmt, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
     pos0.vz += FP_MULTIPLY_PRECISE(moveAmt, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
 
-    if (D_800BCE18.field_0[0].type_0 == &g_MapTypes[0] &&
+    if (D_800BCE18.field_0[0].type_0 == &MAP_TYPES[0] &&
         chara->position_18.vx >= FP_METER(-40.0f) && chara->position_18.vx <= FP_METER(40.0f) &&
         chara->position_18.vz >= FP_METER(200.0f) && chara->position_18.vz <= FP_METER(240.0f))
     {
@@ -1009,7 +1009,7 @@ void func_8003C3AC() // 0x8003C3AC
         vwGetViewAngle(&pos2);
 
         flags1 = D_800BCE18.field_0[0].type_0->flags_6;
-        if (!(flags1 & 0x4) || !(flags1 & 0x3))
+        if (!(flags1 & MapTypeFlag_Interior) || !(flags1 & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks)))
         {
             var_s1 = FP_MULTIPLY(Math_Cos(pos2.vx), FP_METER(9.0f), Q12_SHIFT);
         }
@@ -1042,7 +1042,7 @@ void func_8003C3AC() // 0x8003C3AC
     }
 
     flags0 = D_800BCE18.field_0[0].type_0->flags_6;
-    if ((flags0 & MapTypeFlag_Interior) && (flags0 & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunk)))
+    if ((flags0 & MapTypeFlag_Interior) && (flags0 & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks)))
     {
         var_a1 = chara->position_18.vx / FP_METER(2.5f);
         if (chara->position_18.vx < FP_METER(0.0f))
@@ -1375,7 +1375,7 @@ s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
 
     if (fileIdx != NO_VALUE)
     {
-        ptr->queueId_4 = Fs_QueueStartReadTim(fileIdx, FS_BUFFER_10, &ptr->imageDesc_C);
+        ptr->queueIdx_4 = Fs_QueueStartReadTim(fileIdx, FS_BUFFER_10, &ptr->imageDesc_C);
     }
 
     switch (itemIdx)
@@ -1456,8 +1456,8 @@ s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
 
     if (fileIdx != NO_VALUE)
     {
-        ptr->queueId_4 = Fs_QueueStartRead(fileIdx, ptr->lmHdr_14);
-        return ptr->queueId_4;
+        ptr->queueIdx_4 = Fs_QueueStartRead(fileIdx, ptr->lmHdr_14);
+        return ptr->queueIdx_4;
     }
 
     return 0;
@@ -1494,7 +1494,7 @@ void func_8003D058() // 0x8003D058
             coord = &g_SysWork.playerBoneCoords_890[HarryBone_RightHand];
         }
 
-        if (Fs_QueueIsEntryLoaded(ptr0->queueId_4)) 
+        if (Fs_QueueIsEntryLoaded(ptr0->queueIdx_4)) 
         {
             lmHdr = ptr0->lmHdr_14;
 
@@ -1692,12 +1692,12 @@ void func_8003D468(s32 arg0, bool flag) // 0x8003D468
     LoadImage(&rect, &data);
 }
 
-void func_8003D550(s32 arg0, s32 arg1) // 0x8003D550
+void func_8003D550(s32 charaId, s32 arg1) // 0x8003D550
 {
     s_800BCE18_0_CC* ptr;
 
-    ptr = D_800BCE18.field_0[0].field_18[arg0];
-    func_80056464(ptr->lmHdr_8, CHARA_FILE_INFOS[arg0].textureFileIdx, &ptr->texture_C, arg1);
+    ptr = D_800BCE18.field_0[0].field_18[charaId];
+    func_80056464(ptr->lmHdr_8, CHARA_FILE_INFOS[charaId].textureFileIdx, &ptr->texture_C, arg1);
     Lm_MaterialFlagsApply(ptr->lmHdr_8);
 }
 
@@ -1719,7 +1719,7 @@ void func_8003D5B4(s8 flags) // 0x8003D5B4
 
     i = 0; 
 
-    D_800BCE18.field_0[0].field_14 = ILM_BUFFER1;
+    D_800BCE18.field_0[0].field_14 = ILM_BUFFER_1;
 
     for (; i < 4; i++)
     {

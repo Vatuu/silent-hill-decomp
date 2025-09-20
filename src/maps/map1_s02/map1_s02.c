@@ -230,7 +230,7 @@ const char* MAP_MESSAGES[] =
     "\tThere_is_a_ ~C2 Classroom_key ~C7 . ~N\n\tTake_it? ~S4 ",
     "\tA_hanging_body... ~N\n\tWhy_would_somebody... ~E ",
     "\tA_doll_is_on_the_floor. ~E ",
-    "\tA_headless_doll_is_stuck ~N\n\tto_the_wall. ~E ",
+    "\tA_headless_doll_is_stuck ~N\n\tto_the_wall. ~E "
 };
 
 void func_800DA200(void) // 0x800DA200

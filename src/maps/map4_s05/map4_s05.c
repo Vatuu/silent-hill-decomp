@@ -111,7 +111,7 @@ void func_800D1690() {}
 
 #include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800D16E8
 
-void Ai_Floatstinger_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords) // 0x800D16FC
+void Ai_Floatstinger_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D16FC
 {
     D_800DB928 = coords;
 
@@ -127,7 +127,7 @@ void Ai_Floatstinger_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOO
         func_800D35F0(chara);
     }
 
-    func_800D37E8(chara, anmHeader);
+    func_800D37E8(chara, anmHdr);
     func_800D3AD4(chara);
 
     chara->properties_E4.larvalStalker.properties_E8[1].val16[0] = chara->rotation_24.vy;
@@ -271,7 +271,7 @@ const char* MAP_MESSAGES[] =
     "~J0(1.0)\tWhat? ~E ",
     "~J0(2.5)\tThat_light!? ~E ",
     "\tThe_stairs_are_wrecked! ~E ",
-    "~C3\tAlchemilla_Hospital ~E ",
+    "~C3\tAlchemilla_Hospital ~E "
 };
 
 INCLUDE_RODATA("asm/maps/map4_s05/nonmatchings/map4_s05", D_800CABE4);

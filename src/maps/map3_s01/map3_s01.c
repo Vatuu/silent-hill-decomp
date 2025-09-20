@@ -168,7 +168,7 @@ const char* MAP_MESSAGES[] =
     "\tThis_article's_been ~N\n\tclipped_out... ~E ",
     "\tThe_refrigerator_is_empty. ~E ",
     "\tNothing_unusual. ~E ",
-    "\tNothing_helpful. ~E ",
+    "\tNothing_helpful. ~E "
 };
 
 void func_800D14BC(void) // 0x800D14BC

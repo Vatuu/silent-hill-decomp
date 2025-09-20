@@ -1,4 +1,4 @@
-void Ai_Alessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords)
+void Ai_Alessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
     if (chara->model_0.state_2 == 0)
     {
@@ -7,5 +7,5 @@ void Ai_Alessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINAT
 
     sharedFunc_800CEEDC_3_s02(chara, coords);
     sharedFunc_800CED44_3_s02(chara, coords);
-    sharedFunc_800CECFC_3_s02(chara, anmHeader, coords);
+    sharedFunc_800CECFC_3_s02(chara, anmHdr, coords);
 }

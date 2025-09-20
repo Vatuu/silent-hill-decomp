@@ -1,4 +1,4 @@
-void Ai_Romper_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords)
+void Ai_Romper_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
     if (chara->model_0.state_2 == 0)
     {
@@ -12,6 +12,6 @@ void Ai_Romper_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINAT
         sharedFunc_800E8DFC_2_s02(chara);
     }
 
-    sharedFunc_800E8A40_2_s02(chara, anmHeader, coords);
+    sharedFunc_800E8A40_2_s02(chara, anmHdr, coords);
     sharedFunc_800E60FC_2_s02(chara);
 }

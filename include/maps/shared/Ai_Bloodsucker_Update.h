@@ -1,4 +1,4 @@
-void Ai_Bloodsucker_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords)
+void Ai_Bloodsucker_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
     u32 animStatusDiv2;
     s32 stateStepMul2;
@@ -27,7 +27,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOOR
             break;
     }
 
-    sharedFunc_800D0F28_3_s03(chara, anmHeader, coords);
+    sharedFunc_800D0F28_3_s03(chara, anmHdr, coords);
 
     if (g_SysWork.field_22A0 & (1 << 6))
     {

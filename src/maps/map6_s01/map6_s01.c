@@ -227,7 +227,7 @@ const char* MAP_MESSAGES[] =
     "\tThere's_a_ship's_wheel. ~N\n\tDon't_worry_about_that_now, ~N\n\tthough. ~E ",
     "\tThere's_a_body_stuck ~N\n\tto_the_bulkhead. ~E ",
     "~J0(1.0)\tWhat? ~E ",
-    "~J0(2.5)\tThat_light!? ~E ",
+    "~J0(2.5)\tThat_light!? ~E "
 };
 
 void func_800D12B4(void) // 0x800D12B4

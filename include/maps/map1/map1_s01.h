@@ -3,6 +3,6 @@
 
 extern s_AnimInfo CAT_ANIM_INFOS[];
 
-void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
+void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 #endif

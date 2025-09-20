@@ -248,7 +248,7 @@ const char* MAP_MESSAGES[] =
     "\tThere_is_a_clock. ~N\n\tNothing_special. ~E ",
     "\tNo_need_to_go_back. ~E ",
     "\tNone_of_this_stuff_is_of_any_use. ~E ",
-    "\tLooks_like_an_altar. ~N\n\tWonder_what_they_worship? ~E ",
+    "\tLooks_like_an_altar. ~N\n\tWonder_what_they_worship? ~E "
 };
 
 INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D1FF0);

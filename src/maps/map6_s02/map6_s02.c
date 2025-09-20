@@ -149,7 +149,7 @@ const char* MAP_MESSAGES[] =
     "~J0(3.6)\tLet_me_ask_you,_have_you_seen ~N\n\t\t\ta_little_girl_around_here? ~E ",
     "~J0(2.8)\tShort,_black_hair... ~E ",
     "~J0(1.0)\tWhat? ~E ",
-    "~J0(2.5)\tThat_light!? ~E ",
+    "~J0(2.5)\tThat_light!? ~E "
 };
 
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CF0B8);

@@ -585,7 +585,7 @@ const char* MAP_MESSAGES[] =
     "\tNothing_unusual. ~E ",
     "\tUsed_the_ ~C2 Kaufmann_key ~C7 . ~E ",
     "~J0(1.0)\tWhat? ~E ",
-    "~J0(2.5)\tThat_light!? ~E ",
+    "~J0(2.5)\tThat_light!? ~E "
 };
 
 void func_800EB9A4(void) // 0x800EB9A4

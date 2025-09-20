@@ -1,4 +1,4 @@
-void Ai_Lisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords)
+void Ai_Lisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
     if (chara->model_0.state_2 == 0)
     {
@@ -7,5 +7,5 @@ void Ai_Lisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2
 
     sharedSymbol_800D0ADC_3_s04(chara, coords);
     sharedFunc_800D0944_3_s04(chara, coords);
-    sharedFunc_800D08FC_3_s04(chara, anmHeader, coords);
+    sharedFunc_800D08FC_3_s04(chara, anmHdr, coords);
 }

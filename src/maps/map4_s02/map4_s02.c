@@ -553,7 +553,7 @@ const char* MAP_MESSAGES[] =
 {
     #include "maps/shared/mapMsg_common.h"
     "~C3\tgreen_lion ~E ",
-    "~C3\tAlchemilla_Hospital ~E ",
+    "~C3\tAlchemilla_Hospital ~E "
 };
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800EA340);

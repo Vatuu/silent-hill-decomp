@@ -21,19 +21,19 @@
 #define OPT_VIBRATION_DISABLED 0
 #define OPT_VIBRATION_ENABLED  128
 
-#define IPD_HEADER_MAGIC 20  // 0x14 / 20
-#define LM_HEADER_MAGIC  '0' // 0x30 / 48 / '0'
+#define IPD_HEADER_MAGIC 20
+#define LM_HEADER_MAGIC  '0'
 #define LM_VERSION       6
 
 // ==============
 // HELPER MACROS
 // ==============
 
-/** @brief Compares 8-character strings using `u32`. Similar to `strcmp`.
+/** @brief Compares 8-character filenames using `u32`. Similar to `strcmp`.
  *
- * @param a First string.
- * @param b Second string.
- * @return `true` if the strings aren't equal, `false` otherwise.
+ * @param a First filename.
+ * @param b Second filename.
+ * @return `true` if the filenames aren't equal, `false` otherwise.
  */
 #define COMPARE_FILENAMES(a, b)                                  \
     (((u_Filename*)(a))->u32[0] != ((u_Filename*)(b))->u32[0] || \
@@ -45,20 +45,18 @@
 
 typedef enum _MapTypeFlags
 {
-    MapTypeFlag_OneActiveChunk = 1 << 0,
-    MapTypeFlag_TwoActiveChunk = 1 << 1,
-    MapTypeFlag_Interior       = 1 << 2,
-    MapTypeFlag_Unk3           = 1 << 3, // @unused Unused map type `XXX` has this flag.
-
-    // Added for clarity as all exterior maps use this combination.
-    MapTypeFlag_FourActiveChunk = 0,
+    MapTypeFlag_FourActiveChunks = 0,      /** Used by exterior maps. */
+    MapTypeFlag_OneActiveChunk   = 1 << 0,
+    MapTypeFlag_TwoActiveChunks  = 1 << 1,
+    MapTypeFlag_Interior         = 1 << 2,
+    MapTypeFlag_Unk3             = 1 << 3  /** @unused Unused map type `XXX` has this flag. */
 } e_MapTypeFlags;
 
 typedef enum _EffectTextureFlags
 {
     EffectTextureFlag_None         = 0,
-    EffectTextureFlag_Glass        = 1 << 1, /** Broken glass in cafe Air Screamer cutscene. */
-    EffectTextureFlag_WaterRefract = 1 << 2, /** Water waves and light reflection in sewer. */
+    EffectTextureFlag_Glass        = 1 << 1, /** Broken glass in the cafe Air Screamer cutscene. */
+    EffectTextureFlag_WaterRefract = 1 << 2, /** Water waves and light reflection in the sewer. */
     EffectTextureFlag_Water        = 1 << 3,
     EffectTextureFlag_Fire         = 1 << 4,
     EffectTextureFlag_Ef           = 1 << 5, // TODO: Rename. Looks like stringy flesh?
@@ -973,7 +971,7 @@ typedef struct
     s8             charaId0_0; /** `e_CharacterId`. */
     s8             charaId1_1; /** `e_CharacterId`. */
     s8             unk_2[2];
-    s32            animFile0_4;//s_AnmHeader*    animFile0_4; // TODO: Needs to be a pointer.
+    s32            animFile0_4; // s_AnmHeader*    animFile0_4; // TODO: Needs to be a pointer.
     s_AnmHeader*   animFile1_8;
     s32            animFileSize1_C;
     s32            animFileSize2_10;
@@ -1007,16 +1005,16 @@ typedef struct
     u8   field_F;
     u8   field_10;
     u8   field_11;
-    u16  unk_12;  // Guessed.
+    u16  unk_12; // Guessed.
     u32* unk_14; // Some pointer. All entries have the same value `D_800AD4C4`.
 } s_800AD4C8;
 STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
 
 typedef struct
 {
-    VECTOR3         position_0;
-    s_Collision field_C; // Collision data?
-    s32             field_18;
+    VECTOR3     position_0;
+    s_Collision field_C;
+    s32         field_18;
 } s_800AFC78;
 
 typedef struct
@@ -1030,9 +1028,9 @@ STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
 
 typedef struct _SpeedZone
 {
-    s8 speedIdx_0;
-    // 1 byte of padding.
-    s16 minX_2; // } Q11.4? Q7.8 fits more cleanly, but `Map_SpeedZoneGet` uses `<< 8` for comparison with Q19.12 input position.
+    s8  type_0; /** `e_SpeedZoneType` */
+    // 1 byte padding.
+    s16 minX_2; // } Q11.4? Q7.8 fits more cleanly, but `Map_SpeedZoneTypeGet` uses `<< 8` for comparison with Q19.12 input position.
     s16 maxX_4; // }
     s16 minZ_6; // }
     s16 maxZ_8; // }
@@ -1040,8 +1038,8 @@ typedef struct _SpeedZone
 
 typedef struct _WaterZone
 {
-    u8  enabled_0;
-    // 1 byte of padding.
+    u8  isEnabled_0; /** `bool` */
+    // 1 byte padding.
     s16 illumination_2;
     s16 minX_4; // } Q11.4? Q7.8 fits more cleanly, but a call to `Map_WaterZoneGet` uses `>> 8` with Q19.12 arg position.
     s16 maxX_6; // }
@@ -1113,10 +1111,11 @@ typedef struct
 } s_800BCE18_2BEC;
 STATIC_ASSERT_SIZEOF(s_800BCE18_2BEC, 16);
 
+/** Held item? */
 typedef struct
 {
-    s32           itemId_0; /** `e_InventoryItemId` or `e_CutsceneItemId` */
-    s32           queueId_4;
+    s32           itemId_0; /** `e_InventoryItemId` */
+    s32           queueIdx_4;
     char*         textureName_8;
     s_FsImageDesc imageDesc_C;
     s_LmHeader*   lmHdr_14;
@@ -1130,7 +1129,7 @@ typedef struct
     s_800BCE18_0_CC   field_164C;
     u8                unk_1650[1328];
     s_800BCE18_1BAC   heldItem_1BAC;
-    VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; // Debug camera info.
+    VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; /** Debug camera info. */
     s_LmHeader        field_1BE4;
     s32               field_2BE8;
     s_800BCE18_2BEC   field_2BEC[1]; // Unknown size, valid count determined by `field_2BE8`?
@@ -1146,7 +1145,7 @@ typedef struct
     s16          coordZ_A;
     q19_12       distance0_C;
     q19_12       distance1_10;
-    u8           matCount_14;
+    u8           materialCount_14;
     s8           unk_15[3];
     s32          outsideCount_18;
 } s_IpdChunk;
@@ -1161,15 +1160,15 @@ STATIC_ASSERT_SIZEOF(s_IpdColumn, 32);
 typedef struct _ActiveTextures
 {
     s32        count_0;
-    s_Texture* entries_4[10];
+    s_Texture* textures_4[10];
 } s_ActiveTextures;
 
 typedef struct _IpdTextures
 {
     s_ActiveTextures fullPage_0;
     s_ActiveTextures halfPage_2C;
-    s_Texture        fullPageTexs_58[8];
-    s_Texture        halfPageTexs_118[2];
+    s_Texture        fullPageTextures_58[8];
+    s_Texture        halfPageTextures_118[2];
 } s_IpdTextures;
 STATIC_ASSERT_SIZEOF(s_IpdTextures, 328);
 
@@ -1754,7 +1753,7 @@ typedef struct
 
 extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: Part of main exe, move to `main/` headers?
 
-extern const s_MapType g_MapTypes[16];
+extern const s_MapType MAP_TYPES[16];
 
 extern char D_80028544[0x10];
 
@@ -1832,7 +1831,7 @@ extern s32 D_800A9A24;
 /** Z. */
 extern s32 D_800A9A28;
 
-/** Associates each character ID with the maps `charaGroupIds_248` index for that ID (+ 1?) */
+/** Associates each character ID with a map's `charaGroupIds_248` index for that ID (+ 1?). */
 extern s8 D_800A98FC[Chara_Count];
 
 extern s32 D_800A9EB0;
@@ -2556,7 +2555,7 @@ void func_8003D03C();
 
 s32 func_8003D444(s32 idx);
 
-void func_8003D550(s32 arg0, s32 arg1);
+void func_8003D550(s32 charaId, s32 arg1);
 
 /** Called by some chara init funcs, similar to `func_8003DD80`? */
 void func_8003D468(s32 arg0, bool flag);
@@ -2645,10 +2644,8 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4);
  */
 u32 Fs_QueueEntryLoadStatusGet(s32 queueIdx);
 
-/** Used for loading maps */
 void Map_Init(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize);
 
-/** This function is related to map loading. */
 void GlobalLm_Init(s_GlobalLm* globalLm, s_LmHeader* lmHdr);
 
 void LmHeader_Init(s_LmHeader* lmHdr);
@@ -2656,7 +2653,6 @@ void LmHeader_Init(s_LmHeader* lmHdr);
 /** @brief Clears `queueIdx_4` in array of `s_IpdChunk` */
 void Ipd_ActiveChunksQueueIdxClear(s_IpdChunk* chunks, s32 chunkCount);
 
-/** Crucial for map loading. */
 void Ipd_TexturesInit1();
 
 void Map_IpdCollisionDataInit();
@@ -2671,7 +2667,7 @@ void func_800420C0();
 
 void Map_GlobalLmFree();
 
-s_Texture* func_80042178(char* arg0);
+s_Texture* func_80042178(char* texName);
 
 void func_800421D8(char* mapTag, s32 plmIdx, s32 activeIpdCount, bool isExterior, s32 ipdFileIdx, s32 texFileIdx);
 
@@ -2722,11 +2718,11 @@ bool IpdHeader_IsLoaded(s32 ipdIdx);
 
 void func_80042C3C(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
 
-/** @brief when `isExterior` is true treat the chunks as if they were 1m larger in both axis. Then call `Ipd_DistanceToEdge` */
-q19_12 Ipd_DistanceToEdgeWithPadding(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ, bool isExterior);
+/** @brief When `isExterior` is `true`, chunks are treated as if they were 1 meter larger in both axes. Then calls `Ipd_DistanceToEdgeGet`. */
+q19_12 Ipd_DistanceToEdgeWithPaddingGet(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ, bool isExterior);
 
-/** @brief returns `0` when inside the chunk, distance to closest edge otherwise. */
-s32 Ipd_DistanceToEdge(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ);
+/** @brief Returns `FP_METER(0.0f)` if inside the chunk, distance to closest edge otherwise. */
+q19_12 Ipd_DistanceToEdgeGet(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ);
 
 s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
 
@@ -2744,7 +2740,6 @@ bool Map_IsIpdPresent(s_IpdChunk* chunks, s32 chunkCoordX, s32 chunkCoordZ);
 
 s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool isExterior);
 
-/** Maybe facilitates file chunk streaming as the player moves around the map. */
 s32 Ipd_LoadStart(s_IpdChunk* chunk, s32 fileIdx, s32 chunkCoordX, s32 chunkCoordZ, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
 
 bool func_80043740();
@@ -2767,12 +2762,12 @@ void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCou
 void Ipd_MaterialsLoad(s_IpdHeader* ipdHdr, s_ActiveTextures* arg1, s_ActiveTextures* arg2, s32 fileIdx);
 
 /** Checks if IPD is loaded before returning texture count? */
-s32 Ipd_HalfResMaterialCount(s_IpdHeader* ipdHdr);
+s32 Ipd_HalfResMaterialCountGet(s_IpdHeader* ipdHdr);
 
-/** Returns inverse result of `LmFilter_HalfResolution`. */
-bool LmFilter_FullResolution(s_Material* mat);
+/** Returns inverse result of `LmFilter_IsHalfResolution`. */
+bool LmFilter_IsFullResolution(s_Material* mat);
 
-bool LmFilter_HalfResolution(s_Material* mat);
+bool LmFilter_IsHalfResolution(s_Material* mat);
 
 void IpdHeader_FixHeaderOffsets(s_IpdHeader* ipdHdr);
 
@@ -2793,35 +2788,35 @@ void func_80044090(s_IpdHeader* ipdHdr, s32 arg1, s32 arg2, GsOT* ot, void* arg4
 bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, q23_8 x, q23_8 z);
 
 /** Loads anim file? */
-void Anim_BoneInit(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords);
+void Anim_BoneInit(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 s_AnimInfo* func_80044918(s_ModelAnim* anim);
 
-void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyframe0, s32 keyframe1, q19_12 alpha);
+void Anim_BoneUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyframe0, s32 keyframe1, q19_12 alpha);
 
-void func_80044950(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
+void func_80044950(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 q19_12 Anim_DurationGet(s_Model* model, s_AnimInfo* anim);
 
 /** Updates a character's animation, variant 0. First param might be `s_SubCharacter` instead.
  * Used for anim init?
  */
-void Anim_Update0(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coords, s_AnimInfo* animInfo);
+void Anim_Update0(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coords, s_AnimInfo* animInfo);
 
 /** Updates a character's animation, variant 1.
  * Used for looped anims?
  */
-void Anim_Update1(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
+void Anim_Update1(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
 
 /** Updates a character's animation, variant 2.
  * The generic update func?
  */
-void Anim_Update2(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
+void Anim_Update2(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
 
 /** Updates a character's animation, variant 3.
  * Same as `Anim_Update2` but sine-based?
  */
-void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
+void Anim_Update3(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
 
 /** Something related to player weapon position. Takes coords to arm bones. */
 void func_80044F14(GsCOORDINATE2* coord, s16 z, s16 x, s16 y);
@@ -3072,9 +3067,9 @@ void LmHeader_FixOffsets(s_LmHeader* lmHdr);
 
 void ModelHeader_FixOffsets(s_ModelHeader* modelHdr, s_LmHeader* lmHdr);
 
-void func_80056244(s_LmHeader* lmHdr, bool flag);
+void func_80056244(s_LmHeader* lmHdr, bool unkFlag);
 
-s32 Lm_MaterialCount(bool (*filter)(s_Material* mat), s_LmHeader* lmHdr);
+s32 Lm_MaterialCount(bool (*filterFunc)(s_Material* mat), s_LmHeader* lmHdr);
 
 /** TODO: Unknown `arg3` type. */
 void func_80059D50(s32 arg0, s_800BCE18_2BEC_0_0* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4);
@@ -3123,7 +3118,7 @@ void Material_FsImageApply(s_Material* mat, s_FsImageDesc* image, s32 arg2);
 void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4);
 
 /** Unknown `arg4` type. */
-void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* actTex, bool (*filter)(s_Material* mat), s32 fileIdx, s32 arg4);
+void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* activeTexs, bool (*filterFunc)(s_Material* mat), s32 fileIdx, s32 arg4);
 
 /** Checks if LM textures are loaded? */
 bool LmHeader_IsTextureLoaded(s_LmHeader* lmHdr);
@@ -3162,7 +3157,7 @@ void func_80057658(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
 void func_80057A3C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
 
 /** `arg4` unused. */
-s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* actTex, void* fsBuf9, s32 fileIdx, s32 arg4);
+s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* activeTexs, void* fsBuf9, s32 fileIdx, s32 arg4);
 
 void func_8005B55C(GsCOORDINATE2* coord);
 
@@ -3345,12 +3340,11 @@ void func_800880F0(s32 arg0);
 
 void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, u32 arg9, s16 argA, s32 argB);
 
-/**
-Could `arg5` be a struct pointer?
-`func_8003D6E0` uses this function and in the last argument
-it input `arg5` and `arg5` is an undetermined function pointer
-*/
-bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 arg3, s_LmHeader* lmHdr, s_FsImageDesc* tex);
+/** `arg0` and `arg5` could be pointers.
+ * `func_8003D6E0` uses this function and in the last argument
+ * it input `arg5` and `arg5` is an undetermined function pointer
+ */
+bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 flags, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 bool func_80088D0C();
 
@@ -3480,12 +3474,11 @@ void GameFs_Tim00TIMLoad();
 
 void GameFs_MapItemsModelLoad(u32 mapId);
 
-void ActiveTextures_CountReset(s_ActiveTextures* actTex);
+void ActiveTextures_CountReset(s_ActiveTextures* activeTexs);
 
-/** Crucial for map loading. */
-void ActiveTextures_PutTextures(s_ActiveTextures* actTex, s_Texture* texs, s32 idx);
+void ActiveTextures_PutTextures(s_ActiveTextures* activeTexs, s_Texture* texs, s32 texIdx);
 
-s_Texture* ActiveTextures_FindTexture(char* str, s_ActiveTextures* actTex);
+s_Texture* ActiveTextures_FindTexture(char* texName, s_ActiveTextures* activeTexs);
 
 /** Sets the debug string position. */
 void func_8005BF0C(s16 unused, s16 x, s16 y);
@@ -3972,7 +3965,7 @@ void GameFs_BgItemLoad();
 
 void func_8003BED0();
 
-s32 Map_SpeedZoneGet(s32 x, s32 z);
+s32 Map_SpeedZoneTypeGet(s32 x, s32 z);
 
 /** Used in map loading. Something related to screen.
  * Removing it causes the game to get stuck at the loading screen.
@@ -3987,6 +3980,7 @@ void func_8003C110();
 
 void func_8003C1AC(s_800BCE18_0_CC* arg0);
 
+/** @unused */
 void Ipd_ActiveChunksClear1();
 
 void func_8003C30C();

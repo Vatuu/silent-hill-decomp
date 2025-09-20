@@ -165,7 +165,7 @@ const char* MAP_MESSAGES[] =
 {
     #include "maps/shared/mapMsg_common.h"
     "\tNothing_happens_when_the ~N\n\televator_button_is_pressed. ~E ",
-    "\tIt's_locked! ~E ",
+    "\tIt's_locked! ~E "
 };
 
 INCLUDE_RODATA("asm/maps/map3_s02/nonmatchings/map3_s02", D_800CAAF8);

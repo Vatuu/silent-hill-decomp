@@ -50,5 +50,5 @@ StMode                = 0x800231E8;
 DsReadyCallback       = 0x801E34E0;
 DsDataCallback        = 0x801E3508;
 
-# HACK: Fix for splat/spimdisasm not recognizing `g_MapTypes` as referenced in certain maps, which only make use of later elements in the array.
-g_MapTypes    = 0x8002500C;
+# HACK: Fix for splat/spimdisasm not recognizing `MAP_TYPES` as referenced in certain maps, which only make use of later elements in the array.
+MAP_TYPES    = 0x8002500C;
