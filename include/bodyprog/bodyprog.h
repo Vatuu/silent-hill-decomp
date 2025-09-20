@@ -1069,18 +1069,6 @@ typedef struct _MapType
 
 typedef struct
 {
-    s_MapType*     type_0;
-    s8             field_4;
-    u8             unk_5[3];
-    VECTOR3        field_8;               // Position.
-    s32            dataPtr_14;              // Used frequently as `s_LmHeader*`, but code adds file lengths to it. Could just be `u8*` pointing to current file data?
-    s_CharaModel*  charaModelsTable_18[Chara_Count];
-    s_CharaModel   charaModels_CC[4];
-} s_800BCE18_0;
-STATIC_ASSERT_SIZEOF(s_800BCE18_0, (0x560 * 4 + 0xcc));
-
-typedef struct
-{
     u_Filename modelName_0;
     s8         field_8;
     s8         lmIdx_9; /** Set to 2 when found in `g_Map.globalLm_138.lmHdr_0` and 3-6 if found in `g_Map.ipdActive_15C[i] (i + 3)`. */
@@ -1118,7 +1106,14 @@ typedef struct
 
 typedef struct
 {
-    s_800BCE18_0      field_0;
+    s_MapType*     type_0;
+    s8             field_4;
+    u8             unk_5[3];
+    VECTOR3        field_8;               // Position.
+    s32            dataPtr_14;              // Used frequently as `s_LmHeader*`, but code adds file lengths to it. Could just be `u8*` pointing to current file data?
+    s_CharaModel*  charaModelsTable_18[Chara_Count];
+    s_CharaModel   charaModels_CC[4];
+
     s_CharaModel   harrySkel_164C;
     s_heldItem        heldItem_1BAC;
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; // Debug camera info.
