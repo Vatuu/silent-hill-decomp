@@ -51,7 +51,7 @@ extern s_WorldObject_0 D_800E23D0[1];
 extern s_WorldObject_0 D_800E23F0[3];
 extern s_WorldObject_0 D_800E2450[2];
 
-extern s_WorldObjectPos g_DefaultEventPosition; // 0x800E2490
+extern VECTOR3 g_CutscenePosition; // 0x800E2490
 extern s_WorldObjectWithPos g_EventThing_KitchenKnife; // 0x800E24A0
 extern s_WorldObjectWithPos g_EventThing_Flashlight; // 0x800E24D0
 extern s_WorldObjectWithPos g_EventThing_Map; // 0x800E2500
@@ -117,7 +117,6 @@ void func_800DC9C8();
 
 void func_800DCCF4(void);
 
-// Called by `func_800DCCF4` only.
 void CutsceneObjects_Add(s32 arg0);
 
 s32 func_800D1E5C();

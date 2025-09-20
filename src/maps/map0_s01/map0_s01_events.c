@@ -911,7 +911,7 @@ void MapEvent_AirScreamerDeath() // 0x800DC8C8
 void func_800DC9C8() // 0x800DC9C8
 {
     D_800E23A1 = 224;
-    Math_Vector3f(&g_DefaultEventPosition.position_0, 0.0f, 0.0f, 280.0f, Q12_SHIFT);
+    Math_Vector3f(&g_CutscenePosition, 0.0f, 0.0f, 280.0f, Q12_SHIFT);
 
     WorldObject_ModelNameSet(&D_800E23B0[0], "IN_BLD1_");
     WorldObject_ModelNameSet(&D_800E23D0[0], "IN1_HIDE");
@@ -1127,12 +1127,12 @@ void CutsceneObjects_Add(s32 arg0) // 0x800DD2EC
     {
         for (i = 0; i < 1; i++)
         {
-            g_WorldGfx_ObjectAdd(&D_800E23D0[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
+            g_WorldGfx_ObjectAdd(&D_800E23D0[i], &g_CutscenePosition, &DEFAULT_ROT);
         }
 
         for (i = 0; i < 1; i++)
         {
-            g_WorldGfx_ObjectAdd(&D_800E23B0[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
+            g_WorldGfx_ObjectAdd(&D_800E23B0[i], &g_CutscenePosition, &DEFAULT_ROT);
         }
 
         return;
@@ -1142,7 +1142,7 @@ void CutsceneObjects_Add(s32 arg0) // 0x800DD2EC
     {
         for (i = 0; i < 2; i++)
         {
-            g_WorldGfx_ObjectAdd(&D_800E2450[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
+            g_WorldGfx_ObjectAdd(&D_800E2450[i], &g_CutscenePosition, &DEFAULT_ROT);
         }
 
         return;
@@ -1150,11 +1150,11 @@ void CutsceneObjects_Add(s32 arg0) // 0x800DD2EC
 
     for (i = 0; i < 1; i++)
     {
-        g_WorldGfx_ObjectAdd(&D_800E23D0[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
+        g_WorldGfx_ObjectAdd(&D_800E23D0[i], &g_CutscenePosition, &DEFAULT_ROT);
     }
 
     for (i = 0; i < 3; i++)
     {
-        g_WorldGfx_ObjectAdd(&D_800E23F0[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
+        g_WorldGfx_ObjectAdd(&D_800E23F0[i], &g_CutscenePosition, &DEFAULT_ROT);
     }
 }
