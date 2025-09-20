@@ -2790,18 +2790,18 @@ typedef struct
     VECTOR3  position_0;
     SVECTOR3 rotation_C;
     s16      __pad_12;
-} s_EventPosition;
+} s_WorldObjectPos;
 
 typedef struct
 {
-    s_WorldObject_0 field_0;
-    s_EventPosition   eventPosition_1C;
-} s_EventThing;
+    s_WorldObject_0  object_0;
+    s_WorldObjectPos position_1C;
+} s_WorldObjectWithPos;
 
-#define EventPositionInit(eventPos, posX, posY, posZ, rotX, rotY, rotZ) \
-    EventPositionSet(eventPos, FP_METER(posX), FP_METER(posY), FP_METER(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))
+#define WorldObjectPositionInit(eventPos, posX, posY, posZ, rotX, rotY, rotZ) \
+    WorldObjectPositionSet(eventPos, FP_METER(posX), FP_METER(posY), FP_METER(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))
 
-static inline void EventPositionSet(s_EventPosition* eventPos, q19_12 posX, q19_12 posY, q19_12 posZ, q8_8 rotX, q8_8 rotY, q8_8 rotZ)
+static inline void WorldObjectPositionSet(s_WorldObjectPos* eventPos, q19_12 posX, q19_12 posY, q19_12 posZ, q8_8 rotX, q8_8 rotY, q8_8 rotZ)
 {
     Math_Vector3Set(&eventPos->position_0, posX, posY, posZ);
     *(u32*)&eventPos->rotation_C.vx = ((u32)rotY << 16) | (u32)rotX;

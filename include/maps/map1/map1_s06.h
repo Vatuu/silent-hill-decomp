@@ -5,15 +5,15 @@ extern s8 D_800D7761;
 
 extern s16 D_800DAF78;
 
-extern s_EventThing D_800DAF84;
+extern s_WorldObjectWithPos D_800DAF84;
 
-extern s_EventThing D_800DAFB4;
+extern s_WorldObjectWithPos D_800DAFB4;
 
-extern s_EventThing D_800DAFF4;
+extern s_WorldObjectWithPos D_800DAFF4;
 
-extern s_EventThing D_800DB024;
+extern s_WorldObjectWithPos D_800DB024;
 
-extern s_EventThing D_800DB064;
+extern s_WorldObjectWithPos D_800DB064;
 
 extern s8 D_800DAFE4;
 
