@@ -2817,7 +2817,7 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
 /** Something related to player weapon position. Takes coords to arm bones. */
 void func_80044F14(GsCOORDINATE2* coord, s16 z, s16 x, s16 y);
 
-s8 func_80044F6C(s8* ptr, bool arg1);
+s8 Bone_GetModelIndex(s8* ptr, bool arg1);
 
 /** Skeleton setup? Assigns bones pointer for the skeleton and resets fields. */
 void func_80044FE0(s_Skeleton* skel, s_Bone* bones, u8 boneCount);

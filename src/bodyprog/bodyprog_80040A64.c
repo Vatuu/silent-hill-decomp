@@ -2242,7 +2242,7 @@ void func_80044F14(GsCOORDINATE2* coord, s16 z, s16 x, s16 y) // 0x80044F14
 
 #define boneIndicesArray D_800C15B0
 #define boneHierarhyRet  D_800C15B4
-s8 func_80044F6C(s8* ptr, bool arg1) // 0x80044F6C
+s8 Bone_GetModelIndex(s8* ptr, bool arg1) // 0x80044F6C
 {
     if (arg1)
     {
@@ -2342,16 +2342,16 @@ void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2, s32 arg3) // 0
 
 void func_800451B0(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2) // 0x800451B0
 {
-    s32 var;
+    s32 modelIdx;
     
-    var = func_80044F6C(arg2, true);
+    modelIdx = Bone_GetModelIndex(arg2, true);
 
-    while (var != BoneHierarhy_End)
+    while (modelIdx != BoneHierarhy_End)
     {
-        Bone_ModelAssign(&skel->bones_8[skel->boneIdx_1], lmHdr, var);
+        Bone_ModelAssign(&skel->bones_8[skel->boneIdx_1], lmHdr, modelIdx);
 
         skel->boneIdx_1++;
-        var = func_80044F6C(arg2, false);
+        modelIdx = Bone_GetModelIndex(arg2, false);
     }
 }
 
@@ -2411,10 +2411,10 @@ void func_80045360(s_Skeleton* skel, s8* arg1) // 0x80045360
     s32 boneIdx;
     s32 status;
 
-    for (status = func_80044F6C(arg1, true), boneIdx = 0; status != -2; boneIdx++)
+    for (status = Bone_GetModelIndex(arg1, true), boneIdx = 0; status != -2; boneIdx++)
     {
         skel->bones_8[boneIdx].field_10 = status;
-        status = func_80044F6C(arg1, false);
+        status = Bone_GetModelIndex(arg1, false);
     }
 }
 
@@ -2444,7 +2444,7 @@ void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
     bone = skel->bones_8;
 
     // Get skeleton status?
-    status = func_80044F6C(arg1, true);
+    status = Bone_GetModelIndex(arg1, true);
 
     // Traverse bone hierarchy and set flags according to some condition.
     while (status != -2)
@@ -2458,7 +2458,7 @@ void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
             bone[status].field_x0.field_0 |= 1 << 31;
         }
         
-        status = func_80044F6C(arg1, false);
+        status = Bone_GetModelIndex(arg1, false);
     }
 }
 
