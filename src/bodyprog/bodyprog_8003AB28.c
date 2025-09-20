@@ -854,9 +854,9 @@ void func_8003C0C0() // 0x8003C0C0
 
     ptr->itemId_0 = NO_VALUE;
     ptr->lmHdr_14 = (s_LmHeader*)ILM_BUFFER0;
-    ptr->bone_18.flags_0 = 0;
-    ptr->bone_18.field_4 = 0;
-    ptr->bone_18.modelHdr_8 = 0;
+    ptr->bone_18.field_x0.field_0 = 0;
+    ptr->bone_18.field_x0.field_4 = 0;
+    ptr->bone_18.field_x0.modelHdr_8 = 0;
 }
 
 void func_8003C110() // 0x8003C110
@@ -892,7 +892,7 @@ void func_8003C1AC(s_800BCE18_0_CC* arg0) // 0x8003C1AC
     //memset(&sp10, 0, 8);
     arg0->field_0 = 0;
     arg0->field_1 = 0;
-    arg0->field_4 = 0;
+    arg0->queueIdx_4 = 0;
     arg0->lmHdr_8 = (s_LmHeader*)ILM_BUFFER1;
     arg0->texture_C = sp10;
 }
@@ -1375,7 +1375,7 @@ s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
 
     if (fileIdx != NO_VALUE)
     {
-        ptr->queueId_4 = Fs_QueueStartReadTim(fileIdx, FS_BUFFER_10, &ptr->imageDesc_C);
+        ptr->queueIdx_4 = Fs_QueueStartReadTim(fileIdx, FS_BUFFER_10, &ptr->imageDesc_C);
     }
 
     switch (itemIdx)
@@ -1456,8 +1456,8 @@ s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
 
     if (fileIdx != NO_VALUE)
     {
-        ptr->queueId_4 = Fs_QueueStartRead(fileIdx, ptr->lmHdr_14);
-        return ptr->queueId_4;
+        ptr->queueIdx_4 = Fs_QueueStartRead(fileIdx, ptr->lmHdr_14);
+        return ptr->queueIdx_4;
     }
 
     return 0;
@@ -1465,12 +1465,12 @@ s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
 
 void func_8003D01C() // 0x8003D01C
 {
-    D_800BCE18.heldItem_1BAC.bone_18.flags_0 &= ~(1 << 31);
+    D_800BCE18.heldItem_1BAC.bone_18.field_x0.field_0 &= ~(1 << 31);
 }
 
 void func_8003D03C() // 0x8003D03C
 {
-    D_800BCE18.heldItem_1BAC.bone_18.flags_0 |= 1 << 31;
+    D_800BCE18.heldItem_1BAC.bone_18.field_x0.field_0 |= 1 << 31;
 }
 
 void func_8003D058() // 0x8003D058
@@ -1494,7 +1494,7 @@ void func_8003D058() // 0x8003D058
             coord = &g_SysWork.playerBoneCoords_890[HarryBone_RightHand];
         }
 
-        if (Fs_QueueIsEntryLoaded(ptr0->queueId_4)) 
+        if (Fs_QueueIsEntryLoaded(ptr0->queueIdx_4)) 
         {
             lmHdr = ptr0->lmHdr_14;
 
@@ -1507,7 +1507,7 @@ void func_8003D058() // 0x8003D058
             }
 
             func_80049B6C(coord, &mat1, &mat0);
-            func_80057090(&ptr0->bone_18, &g_OrderingTable0[g_ActiveBufferIdx], 1, &mat0, &mat1, 0);
+            func_80057090(&ptr0->bone_18.field_x0, &g_OrderingTable0[g_ActiveBufferIdx], 1, &mat0, &mat1, 0);
         }
     }
 }
@@ -1531,7 +1531,7 @@ void func_8003D160() // 0x8003D160
 
     D_800BCE18.field_164C.field_0   = 1;
     ptr2->field_1                   = 0;
-    ptr2->field_4                   = queueIdx;
+    ptr2->queueIdx_4                   = queueIdx;
     ptr2->lmHdr_8                = addr;
     D_800BCE18.field_164C.texture_C = img;
 }
@@ -1818,8 +1818,8 @@ s32 func_8003D7D4(u32 arg0, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 
 
     ptr->field_0    = arg0;
     ptr->field_1    = 0;
-    ptr->field_4    = queueIdx;
-    ptr->lmHdr_8 = lmHdr;
+    ptr->queueIdx_4 = queueIdx;
+    ptr->lmHdr_8    = lmHdr;
     ptr->texture_C  = *tex;
 
     return queueIdx;
@@ -1852,7 +1852,7 @@ void func_8003D9C8(s_800BCE18_0_CC* arg0) // 0x8003D9C8
 {
     s_Skeleton* skel;
 
-    if (arg0->field_1 == 0 && arg0->field_0 != 0 && Fs_QueueIsEntryLoaded(arg0->field_4) != 0)
+    if (arg0->field_1 == 0 && arg0->field_0 != 0 && Fs_QueueIsEntryLoaded(arg0->queueIdx_4) != 0)
     {
         arg0->field_1 = 1;
 

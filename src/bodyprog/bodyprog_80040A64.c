@@ -2278,7 +2278,7 @@ void func_80045014(s_Skeleton* skel) // 0x80045014
     // Traverse bone hierarchy and clear flags.
     for (bone = &skel->bones_8[0]; bone < &skel->bones_8[skel->boneCount_0]; bone++)
     {
-        bone->flags_0 = 0;
+        bone->field_x0.field_0 = 0;
     }
 }
 
@@ -2362,7 +2362,7 @@ void func_80045258(s_Skeleton** skels, s_Bone* bones, s32 boneIdx, s_LmHeader* l
     {
         for (bone = bones; bone < &bones[boneIdx]; bone++)
         {
-            if (bone->modelHdrIdx_C == *objOrd)
+            if (bone->field_x0.modelIdx_C == *objOrd)
             {
                 *skels = (s_Skeleton*)bone;
                 skels  = (s_Skeleton**)&bone->field_14;
@@ -2425,11 +2425,11 @@ void func_800453E8(s_Skeleton* skel, bool cond) // 0x800453E8
     {
         if (cond)
         {
-            bone->flags_0 &= ~(1 << 31);
+            bone->field_x0.field_0 &= ~(1 << 31);
         }
         else
         {
-            bone->flags_0 |= 1 << 31;
+            bone->field_x0.field_0 |= 1 << 31;
         }
     }
 }
@@ -2449,11 +2449,11 @@ void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
     {
         if (cond)
         {
-            bone[status].flags_0 &= ~(1 << 31);
+            bone[status].field_x0.field_0 &= ~(1 << 31);
         }
         else
         {
-            bone[status].flags_0 |= 1 << 31;
+            bone[status].field_x0.field_0 |= 1 << 31;
         }
         
         status = func_80044F6C(arg1, false);
