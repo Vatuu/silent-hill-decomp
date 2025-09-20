@@ -52,9 +52,9 @@ bool func_80040B74(s32 arg0) // 0x80040B74
 {
     s32 i;
 
-    for (i = 0; i < ARRAY_SIZE(D_800BCE18.field_0); i++)
+    for (i = 0; i < ARRAY_SIZE(D_800BCE18.field_0.skeletons_CC); i++)
     {
-        if (D_800BCE18.field_0[i].field_CC.field_0 == arg0)
+        if (D_800BCE18.field_0.skeletons_CC[i].field_0 == arg0)
         {
             return true;
         }
@@ -2266,7 +2266,7 @@ void func_80044FE0(s_Skeleton* skel, s_Bone* bones, u8 boneCount) // 0x80044FE0
     skel->boneCount_0 = boneCount;
     skel->boneIdx_1 = 0;
     skel->field_2 = 1;
-    skel->field_4 = 0;
+    skel->bones_4 = 0;
 
     func_80045014(skel);
 }
@@ -2314,27 +2314,27 @@ void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHdr) // 0x8004506C
 // Anim func.
 void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, u8* arg2, s32 arg3) // 0x80045108
 {
-    s_Skeleton*  skel0; // Guessed the type. They both access `field_14` so maybe it's also `s_Skeleton`.
-    s_Skeleton** skel1;
+    s_Bone*  bone0; // Guessed the type. They both access `field_14` so maybe it's also `s_Skeleton`.
+    s_Bone** bone1;
     s32          boneIdx;
 
     if (arg3 == 0)
     {
         skel->boneIdx_1 = 0;
-        skel->field_4   = 0;
+        skel->bones_4   = 0;
     }
 
     boneIdx = skel->boneIdx_1;
     func_800451B0(skel, lmHdr, arg2);
 
-    skel1 = &skel->field_4;
-    while (*skel1 != 0)
+    bone1 = &skel->bones_4;
+    while (*bone1 != 0)
     {
-        skel0 = *skel1;
-        skel1 = &skel0->skeleton_14;
+        bone0 = *bone1;
+        bone1 = &bone0->next_14;
     }
 
-    func_80045258(skel1, &skel->bones_8[boneIdx], skel->boneIdx_1 - boneIdx, lmHdr); // Very wierd third argument.
+    func_80045258(bone1, &skel->bones_8[boneIdx], skel->boneIdx_1 - boneIdx, lmHdr); // Very wierd third argument.
     func_800453E8(skel, false);
 }
 
@@ -2353,7 +2353,7 @@ void func_800451B0(s_Skeleton* skel, s_LmHeader* lmHdr, s32* arg2) // 0x800451B0
     }
 }
 
-void func_80045258(s_Skeleton** skels, s_Bone* bones, s32 boneIdx, s_LmHeader* lmHdr) // 0x80045258
+void func_80045258(s_Bone** skels, s_Bone* bones, s32 boneIdx, s_LmHeader* lmHdr) // 0x80045258
 {
     s_Bone* bone;
     u8*     objOrd;
@@ -2364,8 +2364,8 @@ void func_80045258(s_Skeleton** skels, s_Bone* bones, s32 boneIdx, s_LmHeader* l
         {
             if (bone->field_x0.modelIdx_C == *objOrd)
             {
-                *skels = (s_Skeleton*)bone;
-                skels  = (s_Skeleton**)&bone->field_14;
+                *skels = bone;
+                skels  = &bone->next_14;
             }
         }
     }
@@ -2379,14 +2379,14 @@ void func_800452EC(s_Skeleton* skel) // 0x800452EC
     s32                temp_a0;
     s32                var_v0;
     u32                temp_v1;
-    s_func_800452EC*   var_a1;
+    s_Bone*            var_a1;
     s_ModelHeader*     temp_v0;
 
-    var_a1 = skel->field_4;
+    var_a1 = skel->bones_4;
 
     while (var_a1)
     {
-        temp_v0 = var_a1->field_0.modelHdr_8;
+        temp_v0 = var_a1->field_x0.modelHdr_8;
         temp_v1 = temp_v0->modelName_0.str[1] - '0';
         temp_a0 = temp_v0->modelName_0.str[0] - '0';
 
@@ -2400,7 +2400,7 @@ void func_800452EC(s_Skeleton* skel) // 0x800452EC
         }
 
         var_a1->field_10 = var_v0;
-        var_a1           = var_a1->field_14;
+        var_a1           = var_a1->next_14;
     }
 }
 
@@ -2485,7 +2485,7 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord,
     s32              var_v0_4;
     s32              var_v0_5;
     s_FsImageDesc*   image0;
-    s_func_800452EC* var_s0_2;
+    s_Bone*          var_s0_2;
 
     var_s5 = 0x7FFF;
     var_s6 = 0x7FFF;
@@ -2550,13 +2550,13 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord,
         }
     }
 
-    for (var_s0_2 = skel->field_4; var_s0_2 != NULL; var_s0_2 = var_s0_2->field_14)
+    for (var_s0_2 = skel->bones_4; var_s0_2 != NULL; var_s0_2 = var_s0_2->next_14)
     {
-        if (var_s0_2->field_0.field_0 >= 0)
+        if (var_s0_2->field_x0.field_0 >= 0)
         {
             func_80049B6C(&coord[(u8)var_s0_2->field_10], &sp40, &sp20);
 
-            if (var_s0_2->field_0.field_0 & 1)
+            if (var_s0_2->field_x0.field_0 & 1)
             {
                 sp20.m[2][2]         = 0;
                 *(s32*)&sp20.m[2][0] = 0;
@@ -2565,7 +2565,7 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord,
                 *(s32*)&sp20.m[0][0] = 0;
             }
 
-            func_80057090(&var_s0_2->field_0, ot, arg2, &sp20, &sp40, arg5);
+            func_80057090(&var_s0_2->field_x0, ot, arg2, &sp20, &sp40, arg5);
 
             if (D_800C4168.fogEnabled_1)
             {
