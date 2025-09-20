@@ -1113,7 +1113,7 @@ STATIC_ASSERT_SIZEOF(s_800BCE18_2BEC, 16);
 typedef struct
 {
     s32           itemId_0; /** `e_InventoryItemId` or `e_CutsceneItemId` */
-    s32           queueId_4;
+    s32           queueIdx_4;
     char*         textureName_8;
     s_FsImageDesc imageDesc_C;
     s_LmHeader*   lmHdr_14;

@@ -1375,7 +1375,7 @@ s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
 
     if (fileIdx != NO_VALUE)
     {
-        ptr->queueId_4 = Fs_QueueStartReadTim(fileIdx, FS_BUFFER_10, &ptr->imageDesc_C);
+        ptr->queueIdx_4 = Fs_QueueStartReadTim(fileIdx, FS_BUFFER_10, &ptr->imageDesc_C);
     }
 
     switch (itemIdx)
@@ -1456,8 +1456,8 @@ s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
 
     if (fileIdx != NO_VALUE)
     {
-        ptr->queueId_4 = Fs_QueueStartRead(fileIdx, ptr->lmHdr_14);
-        return ptr->queueId_4;
+        ptr->queueIdx_4 = Fs_QueueStartRead(fileIdx, ptr->lmHdr_14);
+        return ptr->queueIdx_4;
     }
 
     return 0;
@@ -1494,7 +1494,7 @@ void func_8003D058() // 0x8003D058
             coord = &g_SysWork.playerBoneCoords_890[HarryBone_RightHand];
         }
 
-        if (Fs_QueueIsEntryLoaded(ptr0->queueId_4)) 
+        if (Fs_QueueIsEntryLoaded(ptr0->queueIdx_4)) 
         {
             lmHdr = ptr0->lmHdr_14;
 
