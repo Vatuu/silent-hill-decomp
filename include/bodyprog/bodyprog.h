@@ -54,6 +54,12 @@ typedef enum _MapTypeFlags
     MapTypeFlag_FourActiveChunk = 0,
 } e_MapTypeFlags;
 
+typedef enum _BoneHierarhy
+{
+    BoneHierarhy_End = -2,
+    BoneHierarhy_MultiModel = -3,
+} e_BoneHierarhy;
+
 typedef enum _EffectTextureFlags
 {
     EffectTextureFlag_None         = 0,
@@ -2823,10 +2829,10 @@ void func_80045014(s_Skeleton* skel);
 void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHdr);
 
 /** Anim func. */
-void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, u8* arg2, s32 arg3);
+void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2, s32 arg3);
 
 /** Anim func. */
-void func_800451B0(s_Skeleton* skel, s_LmHeader* lmHdr, s32* arg2);
+void func_800451B0(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2);
 
 /** Anim func. Param names are rough. */
 void func_80045258(s_Bone** skels, s_Bone* bones, s32 boneIdx, s_LmHeader* lmHdr);

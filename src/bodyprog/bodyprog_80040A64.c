@@ -2240,24 +2240,26 @@ void func_80044F14(GsCOORDINATE2* coord, s16 z, s16 x, s16 y) // 0x80044F14
     MulMatrix(&coord->coord, (MATRIX*)0x1F800008);
 }
 
+#define boneIndicesArray D_800C15B0
+#define boneHierarhyRet  D_800C15B4
 s8 func_80044F6C(s8* ptr, bool arg1) // 0x80044F6C
 {
     if (arg1)
     {
-        D_800C15B0 = ptr;
+        boneIndicesArray = ptr;
     }
 
-    if (D_800C15B0[0] != -3)
+    if (boneIndicesArray[0] != -3) // if Lm has 1 model or less
     {
-        D_800C15B4 = D_800C15B0[0];
-        D_800C15B0++;
+        boneHierarhyRet = boneIndicesArray[0]; // -2 for 0 models, 0 for 1 model.
+        boneIndicesArray++;
     }
-    else if (++D_800C15B4 >= (D_800C15B0[1] - 1))
+    else if (++boneHierarhyRet >= (boneIndicesArray[1] - 1))
     {
-        D_800C15B0++;
+        boneIndicesArray++;
     }
 
-    return D_800C15B4;
+    return boneHierarhyRet;
 }
 
 void func_80044FE0(s_Skeleton* skel, s_Bone* bones, u8 boneCount) // 0x80044FE0
@@ -2284,7 +2286,7 @@ void func_80045014(s_Skeleton* skel) // 0x80045014
 
 void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHdr) // 0x8004506C
 {
-    u8  sp10[4]; // Size unsure, this could be larger.
+    s8  sp10[4]; // Size unsure, this could be larger.
     s32 switchVar;
 
     switchVar = LmHeader_ModelCountGet(lmHdr);
@@ -2293,18 +2295,18 @@ void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHdr) // 0x8004506C
     switch (switchVar)
     {
         case 0:
-            sp10[0] = 0xFE;
+            sp10[0] = BoneHierarhy_End;
             break;
 
         case 1:
             sp10[0] = 0;
-            sp10[1] = 254;
+            sp10[1] = BoneHierarhy_End;
             break;
 
         default:
-            sp10[1] = 253;
+            sp10[1] = BoneHierarhy_MultiModel;
             sp10[2] = LmHeader_ModelCountGet(lmHdr) - 1;
-            sp10[3] = 254;
+            sp10[3] = BoneHierarhy_End;
             break;
     }
 
@@ -2312,7 +2314,7 @@ void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHdr) // 0x8004506C
 }
 
 // Anim func.
-void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, u8* arg2, s32 arg3) // 0x80045108
+void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2, s32 arg3) // 0x80045108
 {
     s_Bone*  bone0; // Guessed the type. They both access `field_14` so maybe it's also `s_Skeleton`.
     s_Bone** bone1;
@@ -2338,13 +2340,13 @@ void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, u8* arg2, s32 arg3) // 0
     func_800453E8(skel, false);
 }
 
-void func_800451B0(s_Skeleton* skel, s_LmHeader* lmHdr, s32* arg2) // 0x800451B0
+void func_800451B0(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2) // 0x800451B0
 {
     s32 var;
     
     var = func_80044F6C(arg2, true);
 
-    while (var != -2)
+    while (var != BoneHierarhy_End)
     {
         func_80056C8C(&skel->bones_8[skel->boneIdx_1], lmHdr, var);
 
