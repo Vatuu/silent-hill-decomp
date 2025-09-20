@@ -1691,7 +1691,7 @@ void func_8003D550(s32 charaId, s32 arg1) // 0x8003D550
     s_SkeletonStuff* charaSkel;
 
     charaSkel = D_800BCE18.field_0.charaSkeletons_18[charaId];
-    func_80056464(charaSkel->lmHdr_8, CHARA_FILE_INFOS[charaId].textureFileIdx, &charaSkel->texture_C, arg1);
+    Lm_MaterialFileIdxApply(charaSkel->lmHdr_8, CHARA_FILE_INFOS[charaId].textureFileIdx, &charaSkel->texture_C, arg1);
     Lm_MaterialFlagsApply(charaSkel->lmHdr_8);
 }
 
@@ -1851,7 +1851,7 @@ void func_8003D9C8(s_SkeletonStuff* arg0) // 0x8003D9C8
         arg0->field_1 = 1;
 
         LmHeader_FixOffsets(arg0->lmHdr_8);
-        func_80056464(arg0->lmHdr_8, CHARA_FILE_INFOS[arg0->field_0].textureFileIdx, &arg0->texture_C, CHARA_FILE_INFOS[arg0->field_0].field_6_10 % 4);
+        Lm_MaterialFileIdxApply(arg0->lmHdr_8, CHARA_FILE_INFOS[arg0->field_0].textureFileIdx, &arg0->texture_C, CHARA_FILE_INFOS[arg0->field_0].field_6_10 % 4);
 
         skel = &arg0->skeleton_14;
 

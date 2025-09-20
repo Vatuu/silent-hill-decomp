@@ -2745,3 +2745,4 @@ Bone_ModelAssign = 0x80056C8C; // type:func
 Bone_GetModelIndex = 0x80044F6C; // type:func
 Skeleton_BoneModelAssign = 0x800451B0; // type:func
 Lm_MaterialFsImageApply = 0x80056558; // type:func
+Lm_MaterialFileIdxApply = 0x80056464; // type:func
