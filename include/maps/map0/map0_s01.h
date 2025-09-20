@@ -113,7 +113,7 @@ void MapEvent_CommonItemTake();
 /** @brief Handles the Air Screamer death event. */
 void MapEvent_AirScreamerDeath();
 
-void func_800DC9C8();
+void Map_WorldObjectsInit();
 
 void Map_WorldObjectsUpdate(void);
 

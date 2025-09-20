@@ -908,7 +908,7 @@ void MapEvent_AirScreamerDeath() // 0x800DC8C8
     }
 }
 
-void func_800DC9C8() // 0x800DC9C8
+void Map_WorldObjectsInit() // 0x800DC9C8
 {
     D_800E23A1 = 224;
     Math_Vector3f(&g_CutscenePosition, 0.0f, 0.0f, 280.0f, Q12_SHIFT);

@@ -212,7 +212,7 @@ void func_800D63B0(void) // 0x800D63B0
     Event_MapTake(6, EventFlag_M1S00_PickupMap, 27);
 }
 
-void Map_WorldObjectsUpdate(void) // 0x800D63D8
+void Map_WorldObjectsInit(void) // 0x800D63D8
 {
     Math_Vector3f(&D_800DAF84.position_1C.position_0, 20.4568f, -0.8345f, -17.97f, Q12_SHIFT);
     WorldObject_ModelNameSet(&D_800DAF84.object_0, "REDX_HID");

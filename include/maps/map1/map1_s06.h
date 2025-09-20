@@ -19,6 +19,6 @@ extern s8 D_800DAFE4;
 
 void func_800D63B0(void);
 
-void Map_WorldObjectsUpdate(void);
+void Map_WorldObjectsInit(void);
 
 #endif
