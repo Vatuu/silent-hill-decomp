@@ -20,18 +20,18 @@ void func_80055028() // 0x80055028
 
     // This struct might or might not be a GPU packet or some other graphics/GTE-related PsyQ thing.
     D_800C4168.field_0  = 0;
-    D_800C4168.field_20 = 0x1000;
+    D_800C4168.field_20 = Q12(1.0f);
 
-    D_800C4168.worldTintColor_28.r = FP_COLOR(0.5f);
-    D_800C4168.worldTintColor_28.g = FP_COLOR(0.5f);
-    D_800C4168.worldTintColor_28.b = FP_COLOR(0.5f);
+    D_800C4168.worldTintColor_28.r = 128;
+    D_800C4168.worldTintColor_28.g = 128;
+    D_800C4168.worldTintColor_28.b = 128;
 
     D_800C4168.fogEnabled_1 = false;
     D_800C4168.field_2 = 0;
 
-    D_800C4168.fogColor_1C.r = FP_COLOR(1.0f);
-    D_800C4168.fogColor_1C.g = FP_COLOR(1.0f);
-    D_800C4168.fogColor_1C.b = FP_COLOR(1.0f);
+    D_800C4168.fogColor_1C.r = 255;
+    D_800C4168.fogColor_1C.g = 255;
+    D_800C4168.fogColor_1C.b = 255;
 
     D_800C4168.field_4C = 0;
     D_800C4168.field_50 = 0;
@@ -81,9 +81,9 @@ void func_800550D0() // 0x800550D0
         setSemiTrans(poly, 1);
         setXY4(poly,
                -180, -120,
-               180, -120,
-               -180, 120,
-               180, 120);
+                180, -120,
+               -180,  120,
+                180,  120);
 
         AddPrim(ot->org, poly);
         SetDrawMode(mode, 0, 1, 0x20, NULL);
@@ -108,9 +108,9 @@ void func_800550D0() // 0x800550D0
     SetPolyG4(poly);
     setXY4(poly,
            -180, -120,
-           180, -120,
-           -180, 120,
-           180, 120);
+            180, -120,
+           -180,  120,
+            180,  120);
 
     AddPrim(&ot->org[2047], poly);
     packet = GsOUT_PACKET_P;
@@ -120,10 +120,10 @@ void func_800550D0() // 0x800550D0
     GsOUT_PACKET_P = packet + sizeof(DR_MODE);
     mode           = (DR_MODE*)GsOUT_PACKET_P;
 
-    SetDrawMode(mode, 0, 1, 0x20, NULL);
+    SetDrawMode(mode, 0, 1, 32, NULL);
     AddPrim(&ot->org[2047], mode);
 
-    GsOUT_PACKET_P = packet + 0x18;
+    GsOUT_PACKET_P = packet + 24;
 }
 
 void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) // 0x80055330
@@ -286,7 +286,7 @@ void func_80055A90(CVECTOR* arg0, CVECTOR* arg1, u8 arg2, s32 arg3) // 0x80055A9
         arg3 = 0xFF << 4;
     }
 
-    var_v1 = 0x1000 - (D_800C4168.fogRelated_18 + arg3);
+    var_v1 = Q12(1.0f) - (D_800C4168.fogRelated_18 + arg3);
     if (var_v1 < 0)
     {
         var_v1 = 0;
@@ -372,7 +372,7 @@ void func_80055C3C(CVECTOR* result, CVECTOR* color, void* arg2, void* arg3, s32 
     }
     else
     {
-        gte_lddp(4096 - (temp_a1 << 5));
+        gte_lddp(Q12(1.0f) - (temp_a1 << 5));
         gte_ldrgb(color);
         gte_dpcs();
         gte_strgb(result);
@@ -505,17 +505,17 @@ void LmHeader_FixOffsets(s_LmHeader* lmHdr) // 0x800560FC
 
 void ModelHeader_FixOffsets(s_ModelHeader* modelHdr, s_LmHeader* lmHdr) // 0x800561A4
 {
-    s_MeshHeader* meshHdr;
+    s_MeshHeader* curMeshHdr;
 
     modelHdr->meshHdrs_C = (u8*)modelHdr->meshHdrs_C + (u32)lmHdr;
 
-    for (meshHdr = &modelHdr->meshHdrs_C[0]; meshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; meshHdr++)
+    for (curMeshHdr = &modelHdr->meshHdrs_C[0]; curMeshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; curMeshHdr++)
     {
-        meshHdr->primitives_4 = (u8*)meshHdr->primitives_4 + (u32)lmHdr;
-        meshHdr->verticesXy_8 = (u8*)meshHdr->verticesXy_8 + (u32)lmHdr;
-        meshHdr->verticesZ_C  = (u8*)meshHdr->verticesZ_C  + (u32)lmHdr;
-        meshHdr->normals_10   = (u8*)meshHdr->normals_10   + (u32)lmHdr;
-        meshHdr->unkPtr_14    = (u8*)meshHdr->unkPtr_14    + (u32)lmHdr;
+        curMeshHdr->primitives_4 = (u8*)curMeshHdr->primitives_4 + (u32)lmHdr;
+        curMeshHdr->verticesXy_8 = (u8*)curMeshHdr->verticesXy_8 + (u32)lmHdr;
+        curMeshHdr->verticesZ_C  = (u8*)curMeshHdr->verticesZ_C  + (u32)lmHdr;
+        curMeshHdr->normals_10   = (u8*)curMeshHdr->normals_10   + (u32)lmHdr;
+        curMeshHdr->unkPtr_14    = (u8*)curMeshHdr->unkPtr_14    + (u32)lmHdr;
     }
 }
 
@@ -543,12 +543,12 @@ void func_80056244(s_LmHeader* lmHdr, bool unkFlag) // 0x80056244
 s32 Lm_MaterialCount(bool (*filterFunc)(s_Material* mat), s_LmHeader* lmHdr) // 0x80056348
 {
     s32         count;
-    s_Material* mat;
+    s_Material* curMat;
 
     count = 0;
-    for (mat = lmHdr->materials_4; mat < (lmHdr->materials_4 + lmHdr->materialCount_3); mat++)
+    for (curMat = lmHdr->materials_4; curMat < (lmHdr->materials_4 + lmHdr->materialCount_3); curMat++)
     {
-        if (filterFunc(mat))
+        if (filterFunc(curMat))
         {
             count++;
         }
@@ -560,23 +560,23 @@ s32 Lm_MaterialCount(bool (*filterFunc)(s_Material* mat), s_LmHeader* lmHdr) // 
 void func_800563E8(s_LmHeader* lmHdr, s32 arg1, s32 arg2, s32 arg3) // 0x800563E8
 {
     s32         i;
-    s_Material* mat;
+    s_Material* curMat;
 
     if (arg2 < 0)
     {
         arg2 += 15;
     }
 
-    for (i = 0, mat = &lmHdr->materials_4[0];
+    for (i = 0, curMat = &lmHdr->materials_4[0];
          i < lmHdr->materialCount_3;
-         i++, mat++)
+         i++, curMat++)
     {
         // TODO: Bitfield stuff? Doesn't seem to match other uses of `field_E`/`field_10` we've seen though.
-        u8  temp_a0 = mat->field_E;
-        u16 temp_v1 = mat->field_10;
+        u8  temp_a0 = curMat->field_E;
+        u16 temp_v1 = curMat->field_10;
 
-        mat->field_E  = ((temp_a0 + arg1) & 0x1F) | (temp_a0 & 0xE0);
-        mat->field_10 = ((temp_v1 + (arg2 >> 4)) & 0x3F) | ((temp_v1 + (arg3 << 6)) & 0x7FC0);
+        curMat->field_E  = ((temp_a0 + arg1) & 0x1F) | (temp_a0 & 0xE0);
+        curMat->field_10 = ((temp_v1 + (arg2 >> 4)) & 0x3F) | ((temp_v1 + (arg3 << 6)) & 0x7FC0);
     }
 }
 
@@ -613,16 +613,16 @@ void func_80056504(s_LmHeader* lmHdr, char* newStr, s_FsImageDesc* image, s32 ar
 
 bool func_80056558(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* image, s32 arg3) // 0x80056558
 {
-    s_Material* mat;
+    s_Material* curMat;
 
-    for (mat = &lmHdr->materials_4[0];
-         mat < &lmHdr->materials_4[lmHdr->materialCount_3];
-         mat++)
+    for (curMat = &lmHdr->materials_4[0];
+         curMat < &lmHdr->materials_4[lmHdr->materialCount_3];
+         curMat++)
     {
-        if (!COMPARE_FILENAMES(&mat->name_0, fileName))
+        if (!COMPARE_FILENAMES(&curMat->name_0, fileName))
         {
-            mat->field_C = 1;
-            Material_FsImageApply(mat, image, arg3);
+            curMat->field_C = 1;
+            Material_FsImageApply(curMat, image, arg3);
             return true;
         }
     }
@@ -768,35 +768,35 @@ void Model_MaterialFlagsApply(s_ModelHeader* modelHdr, s32 arg1, s_Material* mat
     u16           field_14;
     u16           field_16;
     s_MeshHeader* curMeshHdr;
-    s_Primitive*  prim;
+    s_Primitive*  curPrim;
 
     for (curMeshHdr = modelHdr->meshHdrs_C; curMeshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; curMeshHdr++)
     {
-        for (prim = curMeshHdr->primitives_4; prim < &curMeshHdr->primitives_4[curMeshHdr->primitiveCount_0]; prim++)
+        for (curPrim = curMeshHdr->primitives_4; curPrim < &curMeshHdr->primitives_4[curMeshHdr->primitiveCount_0]; curPrim++)
         {
-            if (prim->field_6_8 == NO_VALUE)
+            if (curPrim->field_6_8 == NO_VALUE)
             {
-                prim->field_6_0 = 32;
+                curPrim->field_6_0 = 32;
             }
 
-            if (prim->field_6_8 == arg1)
+            if (curPrim->field_6_8 == arg1)
             {
                 if (flags & (1 << 0))
                 {
-                    prim->field_6_0 = mat->field_E;
+                    curPrim->field_6_0 = mat->field_E;
                 }
                 if (flags & (1 << 1))
                 {
-                    prim->field_2 = mat->field_10 + (prim->field_2 - mat->field_12);
+                    curPrim->field_2 = mat->field_10 + (curPrim->field_2 - mat->field_12);
                 }
                 if (flags & (1 << 2))
                 {
                     field_16      = mat->field_16.u16;
                     field_14      = mat->field_14.u16;
-                    prim->field_0 = field_14 + (prim->field_0 - field_16);
-                    prim->field_4 = field_14 + (prim->field_4 - field_16);
-                    prim->field_8 = field_14 + (prim->field_8 - field_16);
-                    prim->field_A = field_14 + (prim->field_A - field_16);
+                    curPrim->field_0 = field_14 + (curPrim->field_0 - field_16);
+                    curPrim->field_4 = field_14 + (curPrim->field_4 - field_16);
+                    curPrim->field_8 = field_14 + (curPrim->field_8 - field_16);
+                    curPrim->field_A = field_14 + (curPrim->field_A - field_16);
                 }
             }
         }
@@ -805,12 +805,12 @@ void Model_MaterialFlagsApply(s_ModelHeader* modelHdr, s32 arg1, s_Material* mat
 
 void Lm_MaterialRefCountDec(s_LmHeader* lmHdr) // 0x80056BF8
 {
-    s_Material* mat;
+    s_Material* curMat;
     s_Texture*  tex;
 
-    for (mat = &lmHdr->materials_4[0]; mat < &lmHdr->materials_4[lmHdr->materialCount_3]; mat++)
+    for (curMat = &lmHdr->materials_4[0]; curMat < &lmHdr->materials_4[lmHdr->materialCount_3]; curMat++)
     {
-        tex = mat->texture_8;
+        tex = curMat->texture_8;
         if (tex != NULL)
         {
             tex->refCount_14--;
@@ -819,7 +819,7 @@ void Lm_MaterialRefCountDec(s_LmHeader* lmHdr) // 0x80056BF8
                 tex->refCount_14 = 0;
             }
 
-            mat->texture_8 = NULL;
+            curMat->texture_8 = NULL;
         }
     }
 }
@@ -831,8 +831,9 @@ s32 LmHeader_ModelCountGet(s_LmHeader* lmHdr) // 0x80056C80
 
 void func_80056C8C(s_Bone* bone, s_LmHeader* lmHdr, s32 modelHdrIdx)
 {
-    s_ModelHeader* modelHdr = lmHdr->modelHdrs_C;
+    s_ModelHeader* modelHdr;
 
+    modelHdr = lmHdr->modelHdrs_C;
     bone->modelHdrIdx_C = modelHdrIdx;
 
     if (lmHdr->magic_0 == LM_HEADER_MAGIC)
@@ -1101,7 +1102,7 @@ void func_80057658(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
     s32*      depthP;
     MATRIX*   mat;
     DVECTOR*  screenPos;
-    s_Normal* normal;
+    s_Normal* curNormal;
 
     scratchData->field_3AC = *arg4; // 3AC changed to `SVECTOR`.
 
@@ -1122,14 +1123,14 @@ void func_80057658(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
     var_t0 = &scratchData->field_2B8[offset];
     mat    = &scratchData->field_380;
 
-    for (normal = meshHdr->normals_10; normal < &meshHdr->normals_10[meshHdr->normalCount_2]; normal++)
+    for (curNormal = meshHdr->normals_10; curNormal < &meshHdr->normals_10[meshHdr->normalCount_2]; curNormal++)
     {
         temp_t8   = &scratchData->field_380.m[2][0];
         screenPos = &scratchData->screenPos_3A4;
         depthP    = &scratchData->depthP_3A8;
         temp_t2   = temp_v1;
 
-        *(u32*)&scratchData->field_3A0 = *(u32*)normal;
+        *(u32*)&scratchData->field_3A0 = *(u32*)curNormal;
 
         mat->m[1][0] = scratchData->field_3A0.nx << 5;
         mat->m[1][1] = scratchData->field_3A0.ny << 5;
