@@ -47,6 +47,16 @@
 #define PACKED_COLOR(r, g, b, code) \
     ((r) | ((g) << 8) | ((b) << 16) | ((code) << 24))
 
+/** @brief Checks if a flag in a bitfield is set to a required status.
+ *
+ * @param bitfield Bitfield to check.
+ * @param flag Flag to check in the bitfield.
+ * @param isSet Flag status to check for.
+ * @return `true` if the flag is set to the required status, `false` otherwise.
+ */
+#define CHECK_FLAG(bitfield, flag, isSet) \
+    (!((bitfield) & (flag)) == !(isSet))
+
 /** @brief Scales a Q19.12 fixed-point value by a delta time relative to a 30 FPS time step.
  *
  * @param deltaTime Time delta.

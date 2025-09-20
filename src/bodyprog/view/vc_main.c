@@ -266,7 +266,7 @@ void vcSetSubjChara(VECTOR3* chara_pos, s32 chara_bottom_y, s32 chara_top_y, s32
     vcWork.chara_pos_114        = *chara_pos;
     vcWork.chara_bottom_y_120   = chara_bottom_y;
     vcWork.chara_top_y_124      = chara_top_y;
-    vcWork.chara_center_y_128   = (chara_bottom_y + chara_top_y) >> 1;
+    vcWork.chara_center_y_128   = (chara_bottom_y + chara_top_y) >> 1; // `/ 2`.
     vcWork.chara_grnd_y_12C     = chara_grnd_y;
     vcWork.chara_head_pos_130   = *chara_head_pos;
     vcWork.chara_mv_spd_13C     = chara_mv_spd;
@@ -307,8 +307,7 @@ s32 vcExecCamera() // 0x80080FBC
     cur_rd_area_size = vcWork.cur_near_road_2B8.road_p_0->area_size_type_11;
     cur_cam_mv_type  = vcRetCurCamMvType(&vcWork);
 
-    // TODO: Checks for `VC_PRS_F_VIEW_F` flag in a weird way.
-    far_watch_rate     = vcRetFarWatchRate(((vcWork.flags_8 >> 9) & (1 << 0)) ^ (g_GameWorkConst->config_0.optExtraViewCtrl_28 != 0), cur_cam_mv_type, &vcWork);
+    far_watch_rate     = vcRetFarWatchRate(CHECK_FLAG(vcWork.flags_8, VC_PRS_F_VIEW_F, !g_GameWorkConst->config_0.optExtraViewCtrl_28), cur_cam_mv_type, &vcWork);
     self_view_eff_rate = vcRetSelfViewEffectRate(cur_cam_mv_type, far_watch_rate, &vcWork);
 
     if (!(vcWork.flags_8 & (VC_USER_CAM_F | VC_USER_WATCH_F)))
@@ -606,7 +605,7 @@ s32 vcRetFarWatchRate(s32 far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_type
 
     if (g_GameWorkConst->config_0.optExtraViewMode_29)
     {
-        // Awkward `VC_PRS_F_VIEW_F` flag check.
+        // Awkward `VC_PRS_F_VIEW_F` flag check. TODO: Use `CHECK_FLAG`.
         prsFViewFlag = vcWork.flags_8 >> 9;
         prsFViewFlag = prsFViewFlag & (1 << 0);
 

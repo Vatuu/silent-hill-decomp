@@ -920,9 +920,8 @@ void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ
         activeIpdCount = 4;
     }
 
-    // TODO: Strange way to read interior flag bit 2.
     mapType = mapHeader->type_0;
-    func_800421D8(mapType->tag_2, mapType->plmFileIdx_0, activeIpdCount, ((mapType->flags_6 >> 2) ^ 1) & (1 << 0), 0, 0);
+    func_800421D8(mapType->tag_2, mapType->plmFileIdx_0, activeIpdCount, CHECK_FLAG(mapType->flags_6, MapTypeFlag_Interior, false), 0, 0);
 
     if (mapHeader->type_0 == &MAP_TYPES[0])
     {
