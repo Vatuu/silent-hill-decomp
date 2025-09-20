@@ -230,3 +230,4 @@ g_EventThing_Map                  = 0x800E2500;
 g_EventThing_PocketRadio          = 0x800E2530;
 g_CommonWorldObjects                    = 0x800E2570; // size:0xA8
 CutsceneObjects_Add = 0x800DD2EC; // type:func
+Map_WorldObjectsUpdate = 0x800DCCF4; // type:func

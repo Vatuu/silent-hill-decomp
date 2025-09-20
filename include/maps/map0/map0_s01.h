@@ -115,7 +115,7 @@ void MapEvent_AirScreamerDeath();
 
 void func_800DC9C8();
 
-void func_800DCCF4(void);
+void Map_WorldObjectsUpdate(void);
 
 void CutsceneObjects_Add(s32 arg0);
 

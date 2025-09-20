@@ -967,7 +967,7 @@ void func_800DC9C8() // 0x800DC9C8
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-void func_800DCCF4(void) // 0x800DCCF4
+void Map_WorldObjectsUpdate(void) // 0x800DCCF4
 {
     s32  stepX;
     s32  stepZ;

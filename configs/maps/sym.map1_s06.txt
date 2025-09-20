@@ -117,3 +117,4 @@ D_800DAFB4                = 0x800DAFB4; // size:0x30
 D_800DAFF4                = 0x800DAFF4; // size:0x30
 D_800DB024                = 0x800DB024; // size:0x30
 D_800DB064                = 0x800DB064; // size:0x30
+Map_WorldObjectsUpdate = 0x800D63D8; // type:func
