@@ -1689,12 +1689,12 @@ void func_8003D468(s32 arg0, bool flag) // 0x8003D468
     LoadImage(&rect, &data);
 }
 
-void func_8003D550(s32 arg0, s32 arg1) // 0x8003D550
+void func_8003D550(s32 charaId, s32 arg1) // 0x8003D550
 {
     s_800BCE18_0_CC* ptr;
 
-    ptr = D_800BCE18.field_0[0].field_18[arg0];
-    func_80056464(ptr->lmHdr_8, CHARA_FILE_INFOS[arg0].textureFileIdx, &ptr->texture_C, arg1);
+    ptr = D_800BCE18.field_0[0].field_18[charaId];
+    func_80056464(ptr->lmHdr_8, CHARA_FILE_INFOS[charaId].textureFileIdx, &ptr->texture_C, arg1);
     Lm_MaterialFlagsApply(ptr->lmHdr_8);
 }
 

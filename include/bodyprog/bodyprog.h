@@ -2558,7 +2558,7 @@ void func_8003D03C();
 
 s32 func_8003D444(s32 idx);
 
-void func_8003D550(s32 arg0, s32 arg1);
+void func_8003D550(s32 charaId, s32 arg1);
 
 /** Called by some chara init funcs, similar to `func_8003DD80`? */
 void func_8003D468(s32 arg0, bool flag);
