@@ -47,6 +47,15 @@
 #define PACKED_COLOR(r, g, b, code) \
     ((r) | ((g) << 8) | ((b) << 16) | ((code) << 24))
 
+/** @brief Scales a Q19.12 fixed-point value by a delta time relative to a 30 FPS time step.
+ *
+ * @param deltaTime Time delta.
+ * @param x Q19.12 fixed-point value to scale.
+ * @return Scaled Q19.12 fixed-point value.
+ */
+#define TIME_STEP_SCALE(deltaTime, x) \
+    (((x) * (deltaTime)) / TIME_STEP_30_FPS)
+
 /** @brief Multiplies an integer in fixed-point Q format by a float converted to fixed-point Q format,
  * using a 64-bit intermediate via `Math_MulFixed` for higher precision.
  *
@@ -88,15 +97,6 @@
  */
 #define Math_Vector3f(vec, x, y, z, shift) \
     Math_Vector3Set(vec, FP_FLOAT_TO(x, shift), FP_FLOAT_TO(y, shift), FP_FLOAT_TO(z, shift))
-
-/** @brief Scales a Q19.12 fixed-point value by a delta time relative to a 30 FPS time step.
- *
- * @param deltaTime Time delta.
- * @param x Q19.12 fixed-point value.
- * @return Q19.12 fixed-point scaled value.
- */
-#define TIME_STEP_SCALE(deltaTime, x) \
-    (((x) * (deltaTime)) / TIME_STEP_30_FPS)
 
 /** @brief Normalizes Q19.12 fixed-point degrees, unsigned integer range `[0, 4096]` to the signed integer range `[-2048, 2047]`.
  * Thin wrapper for `FP_ANGLE_NORM_S`.

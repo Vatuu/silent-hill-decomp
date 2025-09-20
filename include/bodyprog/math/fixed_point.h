@@ -129,6 +129,14 @@
 #define Q8(x) \
     FP_FLOAT_TO(x, Q8_SHIFT)
 
+/** @brief Converts a floating-point value to clamped Q*.8 fixed-point.
+ *
+ * @param x Value to convert (`float`).
+ * @return `x` converted to clamped Q*.8 fixed-point.
+ */
+#define Q8_CLAMPED(x) \
+    CLAMP(FP_FLOAT_TO(x, Q8_SHIFT), 0, FP_FLOAT_TO(1.0f, Q8_SHIFT) - 1)
+
 /** @brief Converts a floating-point value to Q*.12 fixed-point.
  *
  * @param x Value to convert (`float`).
@@ -163,7 +171,7 @@
 
 /** @brief Extracts the fractional part of a value in Q*.12 fixed-point.
  *
- * @param x Q*.12 fixed-point value in.
+ * @param x Q*.12 fixed-point value.
  * @return Fractional part of `x` in Q*.12 fixed-point.
  */
 #define Q12_FRACT(x) \
@@ -181,10 +189,10 @@
 #define FP_VOLUME(vol) \
     (u8)CLAMP(FP_FLOAT_TO(vol, Q8_SHIFT), 0, FP_FLOAT_TO(1.0f, Q8_SHIFT) - 1)
 
-/** @brief Converts a normalized floating-point analog stick value in the range `[-1.0f, 1.0f]` to Q0.7 fixed-point, integer range `[-128, 127]`.
+/** @brief Converts a normalized floating-point analog stick value in the range `[-1.0f, 1.0f]` to Q0.7 fixed-point, clamped integer range `[-128, 127]`.
  *
  * @param analog Analog stick value (`float`).
- * @return Analog stick value in Q0.7 fixed-point, integer range `[-128, 127]`.
+ * @return Analog stick value in Q0.7 fixed-point, clamped integer range `[-128, 127]`.
  */
 #define FP_STICK(analog)                                                                                        \
     (s8)(((analog) >= 0) ? CLAMP(FP_FLOAT_TO(analog, Q8_SHIFT) / 2, 0, (FP_FLOAT_TO(1.0f, Q8_SHIFT) / 2) - 1) : \
@@ -195,10 +203,10 @@
  * TODO: Deprecated, don't use. Doesn't make sense to have `float` color components in this project.
  *
  * @param comp Color component (`float`).
- * @return Q0.8 fixed-point color component, integer range `[0, 255]` (`u8`).
+ * @return Q0.8 fixed-point color component, clamped integer range `[0, 255]` (`u8`).
  */
 #define FP_COLOR(comp) \
-    (u8)CLAMP(FP_FLOAT_TO(comp, Q8_SHIFT), 0, FP_FLOAT_TO(1.0f, Q8_SHIFT) - 1)
+    (u8)Q8_CLAMPED(comp)
 
 /** @brief Converts floating-point degrees to signed Q3.12 fixed-point, integer range `[0, 4096]`.
  *
@@ -219,10 +227,10 @@
  * @note 1 degree = 0.711111 units.
  *
  * @param deg Degrees (`float`).
- * @return Unsigned Q0.8 fixed-point degrees, integer range `[0, 255]` (`u8`).
+ * @return Unsigned Q0.8 fixed-point degrees, clamped integer range `[0, 255]` (`u8`).
  */
 #define FP_ANGLE_PACKED(deg) \
-    (u8)CLAMP(FP_FLOAT_TO((deg) / 360.0f, Q8_SHIFT), 0, FP_FLOAT_TO(1.0f, Q8_SHIFT) - 1)
+    (u8)Q8_CLAMPED((deg) / 360.0f)
 
 /** @brief Converts signed Q3.12 fixed-point degrees, integer range `[0, 4096]` to
  * unsigned Q0.8 fixed-point, integer range `[0, 255]`.
@@ -242,28 +250,28 @@
 #define FP_ANGLE_FROM_PACKED(deg) \
     (s16)Q8_TO_Q12(deg)
 
-/** @brief Normalizes signed Q3.12 fixed-point degrees to the unsigned range `[0, 4095]`.
+/** @brief Normalizes signed Q3.12 fixed-point degrees to the clamped unsigned integer range `[0, 4095]`.
  *
  * @note Has the same effect as `FP_ANGLE_NORM_U`. Could they somehow be combined?
  *
- * @param deg Signed Q3.12 fixed-point degrees, integer range `[-2048, 2047]`.
- * @return Unsigned Q3.12 fixed-point degrees, wrapped to the integer range `[0, 4095]` (`s16`).
+ * @param deg Signed Q3.12 fixed-point degrees, clamped integer range `[-2048, 2047]`.
+ * @return Unsigned Q3.12 fixed-point degrees, wrapped to the clamped integer range `[0, 4095]` (`s16`).
  */
 #define ABS_ANGLE(deg) \
     Q12_FRACT((deg) + FP_ANGLE(360.0f))
 
-/** @brief Normalizes unsigned Q3.12 fixed-point degrees to the signed integer range `[-2048, 2047]`.
+/** @brief Normalizes unsigned Q3.12 fixed-point degrees to the clamped signed integer range `[-2048, 2047]`.
  *
  * @param deg Unsigned Q3.12 fixed-point degrees, integer range `[0, 4095]`.
- * @return Signed Q3.12 fixed-point degrees wrapped to the integer range `[-2048, 2047]` (`s16`).
+ * @return Signed Q3.12 fixed-point degrees wrapped to the clamped integer range `[-2048, 2047]` (`s16`).
  */
 #define FP_ANGLE_NORM_S(deg) \
     (((deg) << 20) >> 20)
 
-/** @brief Normalizes signed Q3.12 fixed-point degrees to the unsigned range `[0, 4095]`.
+/** @brief Normalizes signed Q3.12 fixed-point degrees to the clamped unsigned range `[0, 4095]`.
  *
  * @param deg Signed Q3.12 fixed-point degrees, integer range `[-2048, 2047]`.
- * @return Unsigned Q3.12 fixed-point degrees, wrapped to the integer range `[0, 4095]` (`s16`).
+ * @return Unsigned Q3.12 fixed-point degrees, wrapped to the clamped integer range `[0, 4095]` (`s16`).
  */
 #define FP_ANGLE_NORM_U(deg) \
     ((deg) & (FP_ANGLE(360.0f) - 1))

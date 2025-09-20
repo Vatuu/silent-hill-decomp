@@ -2204,7 +2204,7 @@ typedef struct
     s32            flags_0;
     s_AnmHeader*   anmHdr_4;
     GsCOORDINATE2* coords_8;
-    MATRIX*        mat_C; // `MATRIX` array? Needs to be `s32` to match, weird.
+    MATRIX*        matrices_C;
 } s_sharedData_800E21D0_0_s01;
 
 extern s_SfxVolume g_SfxVolumes[46];
@@ -2579,7 +2579,7 @@ s32 sharedFunc_800D3508_0_s01(s_SubCharacter* chara, s32* arg1);
 
 s32 sharedFunc_800D3630_0_s01(s_SubCharacter* chara, s32* arg1);
 
-s32 sharedFunc_800D3758_0_s01(s_SubCharacter* chara, s32* outDistance, s32* outAngle, s32 arg3, s32 arg4);
+s32 sharedFunc_800D3758_0_s01(s_SubCharacter* chara, s32* outDist, s32* outAngle, s32 arg3, s32 arg4);
 
 void Ai_Romper_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
