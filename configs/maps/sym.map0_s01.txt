@@ -144,6 +144,8 @@ MapEvent_KitchenKnifeItemTake     = 0x800DC830; // type:func
 MapEvent_EmptyFunction            = 0x800DC85C;
 MapEvent_CommonItemTake           = 0x800DC864; // type:func
 MapEvent_AirScreamerDeath         = 0x800DC8C8; // type:func
+Map_WorldObjectsUpdate            = 0x800DCCF4; // type:func
+CutsceneObjects_Add               = 0x800DD2EC; // type:func
 
 
 
@@ -223,11 +225,9 @@ g_CutsceneCameraPositionTarget    = 0x800E2380; // type:VECTOR3
 g_CutsceneCameraLookAtTarget      = 0x800E2390; // type:VECTOR3
 g_Timer0                          = 0x800E239C; // type:s32
 g_SoundCmdIdx                     = 0x800E23A0; // type:u8
-g_CutscenePosition            = 0x800E2490;
+g_CutscenePosition                = 0x800E2490;
 g_EventThing_KitchenKnife         = 0x800E24A0;
 g_EventThing_Flashlight           = 0x800E24D0;
 g_EventThing_Map                  = 0x800E2500;
 g_EventThing_PocketRadio          = 0x800E2530;
-g_CommonWorldObjects                    = 0x800E2570; // size:0xA8
-CutsceneObjects_Add = 0x800DD2EC; // type:func
-Map_WorldObjectsUpdate = 0x800DCCF4; // type:func
+g_CommonWorldObjects              = 0x800E2570; // size:0xA8

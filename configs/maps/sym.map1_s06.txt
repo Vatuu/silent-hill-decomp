@@ -62,6 +62,7 @@ sharedFunc_800D3B30_1_s05 = 0x800D45E4; // type:func
 sharedFunc_800D4070_1_s05 = 0x800D4B24; // type:func
 sharedFunc_800D929C_0_s00 = 0x800D5350; // type:func
 sharedFunc_800D7758_1_s00 = 0x800D5360; // type:func
+Map_WorldObjectsUpdate    = 0x800D63D8; // type:func
 
 
 
@@ -117,4 +118,3 @@ D_800DAFB4                = 0x800DAFB4; // size:0x30
 D_800DAFF4                = 0x800DAFF4; // size:0x30
 D_800DB024                = 0x800DB024; // size:0x30
 D_800DB064                = 0x800DB064; // size:0x30
-Map_WorldObjectsUpdate = 0x800D63D8; // type:func
