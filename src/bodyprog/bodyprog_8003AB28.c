@@ -946,7 +946,7 @@ void func_8003C30C() // 0x8003C30C
     Ipd_TexturesInit0();
 }
 
-void func_8003C368() // 0x8003C368
+void WorldGfx_StoreIpdSamplePoint() // 0x8003C368
 {
     g_WorldGfx.useStoredPoint_4 = 1;
     g_WorldGfx.ipdSamplePoint_8 = g_SysWork.player_4C.chara_0.position_18;

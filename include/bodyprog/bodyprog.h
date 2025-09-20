@@ -3977,7 +3977,7 @@ void Ipd_ActiveChunksClear1();
 
 void func_8003C30C();
 
-void func_8003C368();
+void WorldGfx_StoreIpdSamplePoint();
 
 void func_8003C3A0();
 
