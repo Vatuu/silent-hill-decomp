@@ -832,11 +832,11 @@ void func_80056C8C(s_Bone* bone, s_LmHeader* lmHdr, s32 modelHdrIdx)
 {
     s_ModelHeader* modelHdr = lmHdr->modelHdrs_C;
 
-    bone->modelHdrIdx_C = modelHdrIdx;
+    bone->field_x0.modelIdx_C = modelHdrIdx;
 
     if (lmHdr->magic_0 == LM_HEADER_MAGIC)
     {
-        bone->modelHdr_8 = &modelHdr[modelHdrIdx];
+        bone->field_x0.modelHdr_8 = &modelHdr[modelHdrIdx];
     }
 }
 

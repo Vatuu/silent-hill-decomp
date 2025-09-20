@@ -923,10 +923,7 @@ typedef struct
 // Maybe a collection of matrices.
 typedef struct
 {
-    s32            flags_0;
-    GsCOORDINATE2* field_4;
-    s_ModelHeader* modelHdr_8;
-    s32            modelHdrIdx_C;
+    s_800BCE18_2BEC_0_0 field_x0;
     s8             field_10;
     s8             unk_11[3];
     s32            field_14;

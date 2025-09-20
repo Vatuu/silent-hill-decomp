@@ -854,9 +854,9 @@ void func_8003C0C0() // 0x8003C0C0
 
     ptr->itemId_0 = NO_VALUE;
     ptr->lmHdr_14 = (s_LmHeader*)ILM_BUFFER0;
-    ptr->bone_18.flags_0 = 0;
-    ptr->bone_18.field_4 = 0;
-    ptr->bone_18.modelHdr_8 = 0;
+    ptr->bone_18.field_x0.field_0 = 0;
+    ptr->bone_18.field_x0.field_4 = 0;
+    ptr->bone_18.field_x0.modelHdr_8 = 0;
 }
 
 void func_8003C110() // 0x8003C110
@@ -1465,12 +1465,12 @@ s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
 
 void func_8003D01C() // 0x8003D01C
 {
-    D_800BCE18.heldItem_1BAC.bone_18.flags_0 &= ~(1 << 31);
+    D_800BCE18.heldItem_1BAC.bone_18.field_x0.field_0 &= ~(1 << 31);
 }
 
 void func_8003D03C() // 0x8003D03C
 {
-    D_800BCE18.heldItem_1BAC.bone_18.flags_0 |= 1 << 31;
+    D_800BCE18.heldItem_1BAC.bone_18.field_x0.field_0 |= 1 << 31;
 }
 
 void func_8003D058() // 0x8003D058
@@ -1507,7 +1507,7 @@ void func_8003D058() // 0x8003D058
             }
 
             func_80049B6C(coord, &mat1, &mat0);
-            func_80057090(&ptr0->bone_18, &g_OrderingTable0[g_ActiveBufferIdx], 1, &mat0, &mat1, 0);
+            func_80057090(&ptr0->bone_18.field_x0, &g_OrderingTable0[g_ActiveBufferIdx], 1, &mat0, &mat1, 0);
         }
     }
 }
