@@ -832,11 +832,11 @@ void func_80056C8C(s_Bone* bone, s_LmHeader* lmHdr, s32 modelHdrIdx)
 {
     s_ModelHeader* modelHdr = lmHdr->modelHdrs_C;
 
-    bone->modelHdrIdx_C = modelHdrIdx;
+    bone->field_x0.modelIdx_C = modelHdrIdx;
 
     if (lmHdr->magic_0 == LM_HEADER_MAGIC)
     {
-        bone->modelHdr_8 = &modelHdr[modelHdrIdx];
+        bone->field_x0.modelHdr_8 = &modelHdr[modelHdrIdx];
     }
 }
 
@@ -970,7 +970,7 @@ void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3) // 0x80
     gte_stsv(&D_800C4168.field_7C);
 }
 
-void func_80057344(s_800BCE18_2BEC_0* arg0, GsOT_TAG* arg1, void* arg2, MATRIX* mat) // 0x80057344
+void func_80057344(s_800BCE18_2BEC_0_0* arg0, GsOT_TAG* arg1, void* arg2, MATRIX* mat) // 0x80057344
 {
     u32               normalOffset;
     u32               vertOffset;
@@ -980,7 +980,7 @@ void func_80057344(s_800BCE18_2BEC_0* arg0, GsOT_TAG* arg1, void* arg2, MATRIX* 
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    modelHdr     = arg0->field_0.modelHdr_8;
+    modelHdr     = arg0->modelHdr_8;
     vertOffset   = modelHdr->vertexOffset_9;
     normalOffset = modelHdr->normalOffset_A;
 
@@ -1286,7 +1286,7 @@ void func_80059D50(s32 arg0, s_800BCE18_2BEC_0_0* arg1, MATRIX* mat, void* arg3,
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80059E34); // 0x80059E34
 
-void func_8005A21C(s_800BCE18_2BEC_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat) // 0x8005A21C
+void func_8005A21C(s_800BCE18_2BEC_0_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat) // 0x8005A21C
 {
     s16               var_v1;
     u32               normalOffset;
@@ -1334,7 +1334,7 @@ void func_8005A21C(s_800BCE18_2BEC_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX*
             break;
     }
 
-    modelHdr     = arg0->field_0.modelHdr_8;
+    modelHdr     = arg0->modelHdr_8;
     vertOffset   = modelHdr->vertexOffset_9;
     normalOffset = modelHdr->normalOffset_A;
 
