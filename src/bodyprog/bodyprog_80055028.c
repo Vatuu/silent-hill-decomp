@@ -828,7 +828,7 @@ s32 LmHeader_ModelCountGet(s_LmHeader* lmHdr) // 0x80056C80
     return lmHdr->modelCount_8;
 }
 
-void func_80056C8C(s_Bone* bone, s_LmHeader* lmHdr, s32 modelHdrIdx)
+void Bone_ModelAssign(s_Bone* bone, s_LmHeader* lmHdr, s32 modelHdrIdx)
 {
     s_ModelHeader* modelHdr = lmHdr->modelHdrs_C;
 

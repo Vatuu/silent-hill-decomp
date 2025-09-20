@@ -2348,7 +2348,7 @@ void func_800451B0(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2) // 0x800451B0
 
     while (var != BoneHierarhy_End)
     {
-        func_80056C8C(&skel->bones_8[skel->boneIdx_1], lmHdr, var);
+        Bone_ModelAssign(&skel->bones_8[skel->boneIdx_1], lmHdr, var);
 
         skel->boneIdx_1++;
         var = func_80044F6C(arg2, false);

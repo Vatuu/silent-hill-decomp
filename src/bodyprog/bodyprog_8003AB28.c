@@ -1497,7 +1497,7 @@ void func_8003D058() // 0x8003D058
                 LmHeader_FixOffsets(lmHdr);
                 func_80056504(lmHdr, ptr0->textureName_8, &ptr0->imageDesc_C, 1);
                 Lm_MaterialFlagsApply(lmHdr);
-                func_80056C8C(&ptr0->bone_18, ptr0->lmHdr_14, 0);
+                Bone_ModelAssign(&ptr0->bone_18, ptr0->lmHdr_14, 0);
             }
 
             func_80049B6C(coord, &mat1, &mat0);

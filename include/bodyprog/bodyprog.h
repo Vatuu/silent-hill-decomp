@@ -3127,7 +3127,7 @@ void Lm_MaterialRefCountDec(s_LmHeader* lmHdr);
 
 s32 LmHeader_ModelCountGet(s_LmHeader* lmHdr);
 
-void func_80056C8C(s_Bone* bone, s_LmHeader* lmHdr, s32 modelHdrIdx);
+void Bone_ModelAssign(s_Bone* bone, s_LmHeader* lmHdr, s32 modelHdrIdx);
 
 bool Lm_ModelFind(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHdr, s_800BCE18_2BEC_0_10* arg2);
 
