@@ -15,12 +15,12 @@ extern s16 D_800DB8A8[];
 
 extern GsCOORDINATE2* D_800DB928;
 
-void Ai_Floatstinger_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
+void Ai_Floatstinger_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
 void Ai_Floatstinger_Init(s_SubCharacter* chara);
 void func_800D1968(s_SubCharacter*);
 void func_800D1B98(s_SubCharacter*);
 void func_800D35F0(s_SubCharacter*);
-void func_800D37E8(s_SubCharacter*, s32);
+void func_800D37E8(s_SubCharacter*, s_AnmHeader*);
 void func_800D3AD4(s_SubCharacter*);
 
 #endif

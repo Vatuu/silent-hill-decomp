@@ -1,9 +1,9 @@
 #ifndef _MAPS_MAP7_S02_H
 #define _MAPS_MAP7_S02_H
 
-void Ai_GhostDoctor_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords);
+void Ai_GhostDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
 
-void func_800D8B64(s_SubCharacter*, s32, GsCOORDINATE2*);
+void func_800D8B64(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 
 /** @brief Updates the transform of the `coord` matrix to the character's position, converting
  * from world space to geometry space.

@@ -61,7 +61,7 @@ void GameState_StartMovieIntro_Update();
 void GameState_MovieIntro_Update();
 void GameState_MovieOpening_Update();
 void GameState_ExitMovie_Update();
-void GameState_DebugMoviePlayer_Update(); /** Unused debug movie player. Movie to play decided by `LStickLeft`/`LStickRight`. */
+void GameState_DebugMoviePlayer_Update(); /** @unused debug movie player. Movie to play decided by `LStickLeft`/`LStickRight`. */
 void GameState_MovieIntroAlternate_Update();
 
 // MOVIESYS code

@@ -1,4 +1,4 @@
-void Ai_Splithead_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords)
+void Ai_Splithead_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords)
 {
     sharedData_800D8610_1_s05 = coords;
 
@@ -15,7 +15,7 @@ void Ai_Splithead_Update(s_SubCharacter* chara, s32 arg1, GsCOORDINATE2* coords)
         sharedFunc_800D3AFC_1_s05(chara);
     }
 
-    sharedFunc_800D274C_1_s05(chara, arg1);
+    sharedFunc_800D274C_1_s05(chara, anmHeader);
 
     if (g_DeltaTime0 != FP_TIME(0.0))
     {
