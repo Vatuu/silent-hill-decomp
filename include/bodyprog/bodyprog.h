@@ -3107,7 +3107,7 @@ void func_80056464(s_LmHeader* lmHdr, s32 fileIdx, s_FsImageDesc* image, s32 arg
 
 void func_80056504(s_LmHeader* lmHdr, char* newStr, s_FsImageDesc* image, s32 arg3);
 
-bool func_80056558(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* image, s32 arg3);
+bool Lm_MaterialFsImageApply(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* image, s32 arg3);
 
 void Material_FsImageApply(s_Material* mat, s_FsImageDesc* image, s32 arg2);
 

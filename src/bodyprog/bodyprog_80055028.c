@@ -600,7 +600,7 @@ void func_80056464(s_LmHeader* lmHdr, s32 fileIdx, s_FsImageDesc* image, s32 arg
         *sp10Ptr++ = *sp18Ptr++;
     }
 
-    func_80056558(lmHdr, sp10, image, arg3);
+    Lm_MaterialFsImageApply(lmHdr, sp10, image, arg3);
 }
 
 void func_80056504(s_LmHeader* lmHdr, char* newStr, s_FsImageDesc* image, s32 arg3) // 0x80056504
@@ -608,10 +608,10 @@ void func_80056504(s_LmHeader* lmHdr, char* newStr, s_FsImageDesc* image, s32 ar
     char sp10[8];
 
     StringCopy(sp10, newStr);
-    func_80056558(lmHdr, sp10, image, arg3);
+    Lm_MaterialFsImageApply(lmHdr, sp10, image, arg3);
 }
 
-bool func_80056558(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* image, s32 arg3) // 0x80056558
+bool Lm_MaterialFsImageApply(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* image, s32 arg3) // 0x80056558
 {
     s_Material* mat;
 
