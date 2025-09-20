@@ -1007,15 +1007,15 @@ void func_800DCCF4(void) // 0x800DCCF4
 
     if (Savegame_EventFlagGet(EventFlag_47))
     {
-        func_800DD2EC(2);
+        CutsceneObjects_Add(2);
     }
     else if (Savegame_EventFlagGet(EventFlag_45) && !Savegame_EventFlagGet(EventFlag_46))
     {
-        func_800DD2EC(1);
+        CutsceneObjects_Add(1);
     }
     else
     {
-        func_800DD2EC(0);
+        CutsceneObjects_Add(0);
     }
 
     if (Savegame_EventFlagGet(EventFlag_M0S01_PickupMap) && !Savegame_EventFlagGet(EventFlag_42))
@@ -1118,7 +1118,7 @@ void func_800DCCF4(void) // 0x800DCCF4
     }
 }
 
-void func_800DD2EC(s32 arg0) // 0x800DD2EC
+void CutsceneObjects_Add(s32 arg0) // 0x800DD2EC
 {
     static const SVECTOR3 DEFAULT_ROT = {};
 

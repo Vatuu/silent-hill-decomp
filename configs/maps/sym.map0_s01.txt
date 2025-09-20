@@ -229,3 +229,4 @@ g_EventThing_Flashlight           = 0x800E24D0;
 g_EventThing_Map                  = 0x800E2500;
 g_EventThing_PocketRadio          = 0x800E2530;
 g_ModelsCommon                    = 0x800E2570; // size:0xA8
+CutsceneObjects_Add = 0x800DD2EC; // type:func
