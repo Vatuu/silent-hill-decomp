@@ -2820,9 +2820,9 @@ void func_80044F14(GsCOORDINATE2* coord, s16 z, s16 x, s16 y);
 s8 Bone_GetModelIndex(s8* ptr, bool arg1);
 
 /** Skeleton setup? Assigns bones pointer for the skeleton and resets fields. */
-void func_80044FE0(s_Skeleton* skel, s_Bone* bones, u8 boneCount);
+void Skeleton_Init(s_Skeleton* skel, s_Bone* bones, u8 boneCount);
 
-/** Clears skeleton bone flags/mask. Called by `func_80044FE0`. */
+/** Clears skeleton bone flags/mask. Called by `Skeleton_Init`. */
 void func_80045014(s_Skeleton* skel);
 
 /** Anim func. Used in tandem with skeleton bone traversal. */

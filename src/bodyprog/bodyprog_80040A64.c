@@ -2266,7 +2266,7 @@ s8 Bone_GetModelIndex(s8* ptr, bool reset) // 0x80044F6C
     return boneModelIndex;
 }
 
-void func_80044FE0(s_Skeleton* skel, s_Bone* bones, u8 boneCount) // 0x80044FE0
+void Skeleton_Init(s_Skeleton* skel, s_Bone* bones, u8 boneCount) // 0x80044FE0
 {
     skel->bones_8 = bones;
     skel->boneCount_0 = boneCount;

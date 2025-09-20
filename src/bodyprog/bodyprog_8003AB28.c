@@ -1856,7 +1856,7 @@ void func_8003D9C8(s_SkeletonStuff* arg0) // 0x8003D9C8
         skel = &arg0->skeleton_14;
 
         Lm_MaterialFlagsApply(arg0->lmHdr_8);
-        func_80044FE0(skel, arg0->skeleton_14.boneArr_C, 56);
+        Skeleton_Init(skel, arg0->skeleton_14.boneArr_C, 56);
         func_8004506C(skel, arg0->lmHdr_8);
         func_800452EC(skel);
         func_800453E8(skel, true);
