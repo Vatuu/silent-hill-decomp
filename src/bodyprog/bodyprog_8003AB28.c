@@ -884,8 +884,8 @@ void func_8003C1AC(s_SkeletonStuff* arg0) // 0x8003C1AC
     s_FsImageDesc sp10 = { 0 };
 
     //memset(&sp10, 0, 8);
-    arg0->field_0 = 0;
-    arg0->field_1 = 0;
+    arg0->charaId_0 = 0;
+    arg0->loaded_1 = 0;
     arg0->queueIdx_4 = 0;
     arg0->lmHdr_8 = (s_LmHeader*)ILM_BUFFER1;
     arg0->texture_C = sp10;
@@ -1523,8 +1523,8 @@ void func_8003D160() // 0x8003D160
     Fs_QueueStartRead(CHARA_FILE_INFOS[1].modelFileIdx, addr);
     queueIdx = Fs_QueueStartReadTim(CHARA_FILE_INFOS[1].textureFileIdx, FS_BUFFER_1, &img);
 
-    D_800BCE18.harrySkel_164C.field_0   = 1;
-    harrySkel->field_1                   = 0;
+    D_800BCE18.harrySkel_164C.charaId_0   = 1;
+    harrySkel->loaded_1                   = 0;
     harrySkel->queueIdx_4                   = queueIdx;
     harrySkel->lmHdr_8                = addr;
     D_800BCE18.harrySkel_164C.texture_C = img;
@@ -1553,12 +1553,12 @@ s32 func_8003D21C(s_MapOverlayHeader* arg0) // 0x8003D21C
         {
             if (var_s3 == 0) 
             {
-                if (ids != ptr->field_0) 
+                if (ids != ptr->charaId_0) 
                 {
                     var_s3 = 1;
                     for (j = i; j < 4; j++)
                     {
-                        D_800BCE18.field_0.skeletons_CC[j].field_0 = 0;
+                        D_800BCE18.field_0.skeletons_CC[j].charaId_0 = 0;
                     }
                 }
             } 
@@ -1719,7 +1719,7 @@ void func_8003D5B4(s8 flags) // 0x8003D5B4
     {
         ptr = &D_800BCE18.field_0.skeletons_CC[i];
 
-        fileIdx = ptr->field_0;
+        fileIdx = ptr->charaId_0;
         if (fileIdx != 0)
         {
             temp = (s32)ptr->lmHdr_8 + Fs_GetFileSize(CHARA_FILE_INFOS[fileIdx].modelFileIdx);
@@ -1733,9 +1733,9 @@ void func_8003D5B4(s8 flags) // 0x8003D5B4
 
 void func_8003D6A4(s_SkeletonStuff* arg0) // 0x8003D6A4
 {
-    if (arg0->field_0 != 0)
+    if (arg0->charaId_0 != 0)
     {
-        D_800BCE18.field_0.charaSkeletons_18[arg0->field_0] = NULL;
+        D_800BCE18.field_0.charaSkeletons_18[arg0->charaId_0] = NULL;
         func_8003C1AC(arg0);
     }
 }
@@ -1749,7 +1749,7 @@ void func_8003D6E0(s32 arg0, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex) //
     {
         plmHdrPtr = lmHdr;
     } 
-    else if (D_800BCE18.field_0.skeletons_CC[arg1].field_0 != 0) 
+    else if (D_800BCE18.field_0.skeletons_CC[arg1].charaId_0 != 0) 
     {
         plmHdrPtr = D_800BCE18.field_0.skeletons_CC[arg1].lmHdr_8;
     } 
@@ -1779,7 +1779,7 @@ s32 func_8003D7D4(u32 arg0, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 
     s_FsImageDesc*   img;
 
     ptr = &D_800BCE18.field_0.skeletons_CC[arg1];
-    idx = ptr->field_0;
+    idx = ptr->charaId_0;
     img = &ptr->texture_C;
 
     if (arg0 == 0) 
@@ -1810,8 +1810,8 @@ s32 func_8003D7D4(u32 arg0, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 
         queueIdx = Fs_QueueStartReadTim(CHARA_FILE_INFOS[arg0].textureFileIdx, FS_BUFFER_1, tex);
     }
 
-    ptr->field_0    = arg0;
-    ptr->field_1    = 0;
+    ptr->charaId_0    = arg0;
+    ptr->loaded_1    = 0;
     ptr->queueIdx_4 = queueIdx;
     ptr->lmHdr_8    = lmHdr;
     ptr->texture_C  = *tex;
@@ -1846,12 +1846,12 @@ void func_8003D9C8(s_SkeletonStuff* arg0) // 0x8003D9C8
 {
     s_Skeleton* skel;
 
-    if (arg0->field_1 == 0 && arg0->field_0 != 0 && Fs_QueueIsEntryLoaded(arg0->queueIdx_4) != 0)
+    if (arg0->loaded_1 == 0 && arg0->charaId_0 != Chara_None && Fs_QueueIsEntryLoaded(arg0->queueIdx_4) != 0)
     {
-        arg0->field_1 = 1;
+        arg0->loaded_1 = 1;
 
         LmHeader_FixOffsets(arg0->lmHdr_8);
-        Lm_MaterialFileIdxApply(arg0->lmHdr_8, CHARA_FILE_INFOS[arg0->field_0].textureFileIdx, &arg0->texture_C, CHARA_FILE_INFOS[arg0->field_0].field_6_10 % 4);
+        Lm_MaterialFileIdxApply(arg0->lmHdr_8, CHARA_FILE_INFOS[arg0->charaId_0].textureFileIdx, &arg0->texture_C, CHARA_FILE_INFOS[arg0->charaId_0].field_6_10 % 4);
 
         skel = &arg0->skeleton_14;
 

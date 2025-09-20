@@ -1047,8 +1047,8 @@ typedef struct _WaterZone
 // Looks similar to `s_Skeleton`
 typedef struct
 {
-    u8            field_0;
-    u8            field_1;
+    u8            charaId_0;
+    u8            loaded_1;
     u8            unk_2[2];
     s32           queueIdx_4;
     s_LmHeader*   lmHdr_8;
