@@ -924,7 +924,7 @@ typedef struct
 typedef struct
 {
     s32            flags_0;
-    s8             unk_4[4];
+    GsCOORDINATE2* field_4;
     s_ModelHeader* modelHdr_8;
     s32            modelHdrIdx_C;
     s8             field_10;
@@ -1116,13 +1116,11 @@ STATIC_ASSERT_SIZEOF(s_800BCE18_2BEC, 16);
 typedef struct
 {
     s32           itemId_0; /** `e_InventoryItemId` or `e_CutsceneItemId` */
-    s32           field_4;
+    s32           queueId_4;
     char*         textureName_8;
     s_FsImageDesc imageDesc_C;
-    s_LmHeader*   field_14;
-    s32           field_18;
-    s32           field_1C;
-    s32           field_20; // This is a pointer.
+    s_LmHeader*   lmHdr_14;
+    s_Bone        bone_18;
 } s_800BCE18_1BAC;
 
 typedef struct
@@ -1131,9 +1129,7 @@ typedef struct
     u8                unk_1580[204];
     s_800BCE18_0_CC   field_164C;
     u8                unk_1650[1328];
-    s_800BCE18_1BAC   field_1BAC; // Current item equipped?
-    u8                unk_1BD0[8];
-    s32               field_1BD8;
+    s_800BCE18_1BAC   heldItem_1BAC;
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; // Debug camera info.
     s_LmHeader        field_1BE4;
     s32               field_2BE8;
