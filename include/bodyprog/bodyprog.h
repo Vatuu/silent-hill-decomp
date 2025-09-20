@@ -915,12 +915,12 @@ typedef struct
     GsCOORDINATE2* field_4;
     s_ModelHeader* modelHdr_8;
     s32            modelIdx_C;
-} s_800BCE18_2BEC_0_0;
+} s_WorldGfx_2BEC_0_0;
 
 // Probably Skeleton too.
 typedef struct
 {
-    s_800BCE18_2BEC_0_0     field_0;
+    s_WorldGfx_2BEC_0_0     field_0;
     s8                      field_10;
     s8                      unk_11[3];
     struct s_func_800452EC* field_14;
@@ -929,7 +929,7 @@ typedef struct
 // Maybe a collection of matrices.
 typedef struct _Bone
 {
-    s_800BCE18_2BEC_0_0 field_x0;
+    s_WorldGfx_2BEC_0_0 field_x0;
     s8             field_10;
     s8             unk_11[3];
     struct _Bone*  next_14;
@@ -1072,18 +1072,18 @@ typedef struct
     u_Filename modelName_0;
     s8         field_8;
     s8         lmIdx_9; /** Set to 2 when found in `g_Map.globalLm_138.lmHdr_0` and 3-6 if found in `g_Map.ipdActive_15C[i] (i + 3)`. */
-} s_800BCE18_2BEC_0_10;
+} s_WorldGfx_2BEC_0_10;
 
 typedef struct
 {
-    s_800BCE18_2BEC_0_0  field_0;
-    s_800BCE18_2BEC_0_10 field_10;
-} s_800BCE18_2BEC_0;
-STATIC_ASSERT_SIZEOF(s_800BCE18_2BEC_0, 28);
+    s_WorldGfx_2BEC_0_0  field_0;
+    s_WorldGfx_2BEC_0_10 field_10;
+} s_WorldGfx_2BEC_0;
+STATIC_ASSERT_SIZEOF(s_WorldGfx_2BEC_0, 28);
 
 typedef struct
 {
-    s_800BCE18_2BEC_0* field_0;
+    s_WorldGfx_2BEC_0* field_0;
     s32                gsCoordinate0_4 : 18; // Used as `GsCOORDINATE2::coord.t[0].`
     s32                gsCoordinate1_4 : 14; // Used as `GsCOORDINATE2::coord.t[1].`
     s32                gsCoordinate2_8 : 18; // Used as `GsCOORDINATE2::coord.t[2].`
@@ -1091,8 +1091,8 @@ typedef struct
     s32                vx_C            : 10;
     s32                vy_C            : 12;
     s32                vz_C            : 10;
-} s_800BCE18_2BEC;
-STATIC_ASSERT_SIZEOF(s_800BCE18_2BEC, 16);
+} s_WorldGfx_2BEC;
+STATIC_ASSERT_SIZEOF(s_WorldGfx_2BEC, 16);
 
 typedef struct
 {
@@ -1119,9 +1119,9 @@ typedef struct
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; // Debug camera info.
     s_LmHeader        field_1BE4;
     s32               field_2BE8;
-    s_800BCE18_2BEC   field_2BEC[29]; // Size based on the check in func_8003C92C
-} s_800BCE18;
-STATIC_ASSERT_SIZEOF(s_800BCE18, 11708);
+    s_WorldGfx_2BEC   field_2BEC[29]; // Size based on the check in func_8003C92C
+} s_WorldGfx;
+STATIC_ASSERT_SIZEOF(s_WorldGfx, 11708);
 
 // IPD data?
 typedef struct
@@ -2195,7 +2195,7 @@ extern s16 D_800BCDE8[];
 
 extern u16 D_800BCE14;
 
-extern s_800BCE18 D_800BCE18;
+extern s_WorldGfx g_WorldGfx;
 
 extern s_IpdCollisionData* D_800C1010[];
 
@@ -2527,9 +2527,9 @@ s32 func_8003C850();
 
 void func_8003C878(s32 arg0);
 
-void func_8003C8F8(s_800BCE18_2BEC_0* arg0, char* newStr);
+void func_8003C8F8(s_WorldGfx_2BEC_0* arg0, char* newStr);
 
-void func_8003C92C(s_800BCE18_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* rot);
+void func_8003C92C(s_WorldGfx_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* rot);
 
 void func_8003CD6C(s_PlayerCombat* combat);
 
@@ -2596,7 +2596,7 @@ s32 func_8003FEC0(s_sub_StructUnk3* arg0);
 
 void func_8003FF2C(s_StructUnk3* arg0);
 
-void func_80040004(s_800BCE18* arg0);
+void func_80040004(s_WorldGfx* arg0);
 
 void func_80040014();
 
@@ -2683,7 +2683,7 @@ s_IpdCollisionData** func_800425D8(s32* collDataIdx);
 
 s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ);
 
-s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX, s32 posZ);
+s32 func_8004287C(s_WorldGfx_2BEC_0* arg0, s_WorldGfx_2BEC_0_10* arg1, s32 posX, s32 posZ);
 
 /** @brief Gets the load state of an LM file.
  *
@@ -3063,10 +3063,10 @@ void func_80056244(s_LmHeader* lmHdr, bool flag);
 s32 Lm_MaterialCount(bool (*filter)(s_Material* mat), s_LmHeader* lmHdr);
 
 /** TODO: Unknown `arg3` type. */
-void func_80059D50(s32 arg0, s_800BCE18_2BEC_0_0* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4);
+void func_80059D50(s32 arg0, s_WorldGfx_2BEC_0_0* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4);
 
 /** TODO: Unknown `arg2` type. */
-void func_8005A21C(s_800BCE18_2BEC_0_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
+void func_8005A21C(s_WorldGfx_2BEC_0_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
 
 /** @brief Computes a fog-shaded version of `D_800C4190` color using `arg1` as the distance factor?
  *  Stores the result at 0x3D8 into `arg0`.
@@ -3124,20 +3124,20 @@ s32 LmHeader_ModelCountGet(s_LmHeader* lmHdr);
 
 void Bone_ModelAssign(s_Bone* bone, s_LmHeader* lmHdr, s32 modelHdrIdx);
 
-bool Lm_ModelFind(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHdr, s_800BCE18_2BEC_0_10* arg2);
+bool Lm_ModelFind(s_WorldGfx_2BEC_0* arg0, s_LmHeader* lmHdr, s_WorldGfx_2BEC_0_10* arg2);
 
 void StringCopy(char* prevStr, char* newStr);
 
 void func_80056D8C(s16, s16, s16, s16, s32, s32, GsOT*, void*);
 
-void func_80057090(s_800BCE18_2BEC_0_0* arg0, GsOT* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5);
+void func_80057090(s_WorldGfx_2BEC_0_0* arg0, GsOT* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5);
 
 s32 func_800571D0(u32 arg0);
 
 void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3);
 
 /** TODO: Unknown `arg2` type. */
-void func_80057344(s_800BCE18_2BEC_0_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
+void func_80057344(s_WorldGfx_2BEC_0_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
 
 void func_800574D4(s_MeshHeader* meshHdr, s_GteScratchData* scratchData);
 
@@ -3986,13 +3986,13 @@ void func_8003C3AC();
 
 void func_8003C878(s32);
 
-void func_8003CB3C(s_800BCE18* arg0);
+void func_8003CB3C(s_WorldGfx* arg0);
 
-void func_8003CB44(s_800BCE18* arg0);
+void func_8003CB44(s_WorldGfx* arg0);
 
-void func_8003CBA4(s_800BCE18_2BEC* arg0);
+void func_8003CBA4(s_WorldGfx_2BEC* arg0);
 
-void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2);
+void func_8003CC7C(s_WorldGfx_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2);
 
 void func_8003D354(s32* arg0, s32 arg1);
 

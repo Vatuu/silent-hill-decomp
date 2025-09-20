@@ -8,9 +8,9 @@ extern s32 g_VBlanks;
 
 void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, VECTOR3* chr_pos) // 0x8004004C
 {
-    D_800BCE18.vcCameraInternalInfo_1BDC.mv_smooth   = 0;
-    D_800BCE18.vcCameraInternalInfo_1BDC.ev_cam_rate = 0;
-    D_800BCE18.vcCameraInternalInfo_1BDC.mode        = 0;
+    g_WorldGfx.vcCameraInternalInfo_1BDC.mv_smooth   = 0;
+    g_WorldGfx.vcCameraInternalInfo_1BDC.ev_cam_rate = 0;
+    g_WorldGfx.vcCameraInternalInfo_1BDC.mode        = 0;
 
     vcSetCameraUseWarp(chr_pos, g_SysWork.cameraAngleY_237A);
     SetGeomScreen(g_GameWork.gsScreenHeight_58A);
@@ -42,24 +42,24 @@ void vcSetCameraUseWarp(const VECTOR3* chr_pos, s16 chr_ang_y) // 0x800400D4
 
 int vcRetCamMvSmoothF() // 0x80040190
 {
-    return D_800BCE18.vcCameraInternalInfo_1BDC.mv_smooth;
+    return g_WorldGfx.vcCameraInternalInfo_1BDC.mv_smooth;
 }
 
 void func_800401A0(s32 arg0) // 0x800401A0
 {
     if (arg0)
     {
-        D_800BCE18.vcCameraInternalInfo_1BDC.ev_cam_rate = FP_METER(1.0f);
+        g_WorldGfx.vcCameraInternalInfo_1BDC.ev_cam_rate = FP_METER(1.0f);
     }
     else
     {
-        D_800BCE18.vcCameraInternalInfo_1BDC.ev_cam_rate = FP_METER(0.0f);
+        g_WorldGfx.vcCameraInternalInfo_1BDC.ev_cam_rate = FP_METER(0.0f);
     }
 }
 
 void vcSetEvCamRate(s16 ev_cam_rate) // 0x800401C0
 {
-    D_800BCE18.vcCameraInternalInfo_1BDC.ev_cam_rate = ev_cam_rate;
+    g_WorldGfx.vcCameraInternalInfo_1BDC.ev_cam_rate = ev_cam_rate;
 }
 
 void func_800401CC() // 0x800401CC
@@ -79,13 +79,13 @@ void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, b
 
     if (change_debug_mode)
     {
-        D_800BCE18.vcCameraInternalInfo_1BDC.mode++;
+        g_WorldGfx.vcCameraInternalInfo_1BDC.mode++;
     }
 
-    switch (D_800BCE18.vcCameraInternalInfo_1BDC.mode)
+    switch (g_WorldGfx.vcCameraInternalInfo_1BDC.mode)
     {
         default:
-            D_800BCE18.vcCameraInternalInfo_1BDC.mode = 0;
+            g_WorldGfx.vcCameraInternalInfo_1BDC.mode = 0;
 
             first_cam_pos.vy = FP_METER(-2.2f);
             first_cam_pos.vx = g_SysWork.player_4C.chara_0.position_18.vx + FP_METER(7.0f);
@@ -115,9 +115,9 @@ void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, b
             hero_top_y = hr_p->position_18.vy - FP_METER(1.7f);
 
             // TODO: Not sure what this is doing, maybe some kind of `FP_MULTIPLY`.
-            hero_bottom_y = hr_p->position_18.vy + ((s32)-(D_800BCE18.vcCameraInternalInfo_1BDC.ev_cam_rate * FP_METER(0.5f)) >> Q12_SHIFT);
+            hero_bottom_y = hr_p->position_18.vy + ((s32)-(g_WorldGfx.vcCameraInternalInfo_1BDC.ev_cam_rate * FP_METER(0.5f)) >> Q12_SHIFT);
 
-            if (D_800BCE18.vcCameraInternalInfo_1BDC.ev_cam_rate > 0)
+            if (g_WorldGfx.vcCameraInternalInfo_1BDC.ev_cam_rate > 0)
             {
                 vcWorkSetFlags(VC_INHIBIT_FAR_WATCH_F, 0);
             }
@@ -130,7 +130,7 @@ void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, b
                            &hr_head_pos, hr_p->moveSpeed_38, hr_p->headingAngle_3C, hr_p->rotationSpeed_2C.vy, hr_p->rotation_24.vy,
                            FP_ANGLE(120.0f), FP_METER(11.0f));
 
-            D_800BCE18.vcCameraInternalInfo_1BDC.mv_smooth = vcExecCamera();
+            g_WorldGfx.vcCameraInternalInfo_1BDC.mv_smooth = vcExecCamera();
             break;
 
         case 1:

@@ -52,9 +52,9 @@ bool func_80040B74(s32 arg0) // 0x80040B74
 {
     s32 i;
 
-    for (i = 0; i < ARRAY_SIZE(D_800BCE18.charaModels_CC); i++)
+    for (i = 0; i < ARRAY_SIZE(g_WorldGfx.charaModels_CC); i++)
     {
-        if (D_800BCE18.charaModels_CC[i].charaId_0 == arg0)
+        if (g_WorldGfx.charaModels_CC[i].charaId_0 == arg0)
         {
             return true;
         }
@@ -939,7 +939,7 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
     }
 }
 
-s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX, s32 posZ) // 0x8004287C
+s32 func_8004287C(s_WorldGfx_2BEC_0* arg0, s_WorldGfx_2BEC_0_10* arg1, s32 posX, s32 posZ) // 0x8004287C
 {
     s_IpdChunk* chunks[4];
     s32         sp20[4];
@@ -1680,7 +1680,7 @@ void func_80044044(s_IpdHeader* ipd, s32 gridX, s32 gridZ) // 0x80044044
 
 void func_80044090(s_IpdHeader* ipdHdr, s32 arg1, s32 arg2, GsOT* ot, void* arg4) // 0x80044090
 {
-    s_800BCE18_2BEC_0_0 sp18;
+    s_WorldGfx_2BEC_0_0 sp18;
     GsCOORDINATE2       sp28;
     MATRIX              sp78;
     MATRIX              sp98;
