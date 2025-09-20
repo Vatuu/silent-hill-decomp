@@ -550,7 +550,7 @@ const char* MAP_MESSAGES[] =
     #include "maps/shared/mapMsg_common.h"
     "\tUsed_the_ ~C2 Antique_shop_key ~C7 . ~E ",
     "~C3\tAlchemilla_Hospital ~E ",
-    "~C3\tgreen_lion ~E ",
+    "~C3\tgreen_lion ~E "
 };
 
 void func_800E9E10(void) // 0x800E9E10

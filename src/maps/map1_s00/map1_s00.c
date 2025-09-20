@@ -197,7 +197,7 @@ const char* MAP_MESSAGES[] =
     "\tNothing_useful ~N\n\tin_the_desk_drawer. ~E ",
     "~H\tThere_is_a_ ~C5 School_map ~C7 . ~N\n\tTake_it? ~S4 ",
     "\tMoore,_Ranaldo,_Gordon... ~N\n\tThis_must_be_the_list_of_teachers. ~E ",
-    "\tNothing_inside. ~E ",
+    "\tNothing_inside. ~E "
 };
 
 void func_800D7A28(void) // 0x800D7A28

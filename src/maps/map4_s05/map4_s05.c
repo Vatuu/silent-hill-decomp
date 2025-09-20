@@ -271,7 +271,7 @@ const char* MAP_MESSAGES[] =
     "~J0(1.0)\tWhat? ~E ",
     "~J0(2.5)\tThat_light!? ~E ",
     "\tThe_stairs_are_wrecked! ~E ",
-    "~C3\tAlchemilla_Hospital ~E ",
+    "~C3\tAlchemilla_Hospital ~E "
 };
 
 INCLUDE_RODATA("asm/maps/map4_s05/nonmatchings/map4_s05", D_800CABE4);

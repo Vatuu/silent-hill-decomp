@@ -263,7 +263,7 @@ const char* MAP_MESSAGES[] =
     "\tNo_useful_books. ~E ",
     "\tNo_special_book_here. ~E ",
     "\tNo_need_to_read ~N\n\tany_of_these_books. ~E ",
-    "\tThere's_some_blood ~N\n\ton_some_of_the_keys..... ~E ",
+    "\tThere's_some_blood ~N\n\ton_some_of_the_keys..... ~E "
 };
 
 void func_800D7214(void) // 0x800D7214

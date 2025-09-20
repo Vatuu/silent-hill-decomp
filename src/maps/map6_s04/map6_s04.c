@@ -575,7 +575,7 @@ const char* MAP_MESSAGES[] =
     "~J0(1.8)\tBad_girl. ",
     "~J0(5.1)\tEverything_is_ready. ~N\n\t\t\tLet's_go_home_now. ~E ",
     "~J0(1.7)\tWhat's_going_on_here!? ~E ",
-    "~J0(1.2)\t~E ",
+    "~J0(1.2)\t~E "
 };
 
 INCLUDE_RODATA("asm/maps/map6_s04/nonmatchings/map6_s04", D_800CC424);

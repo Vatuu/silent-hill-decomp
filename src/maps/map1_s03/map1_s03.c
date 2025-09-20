@@ -298,7 +298,7 @@ const char* MAP_MESSAGES[] =
     "\tThere_is_a_ ~C2 Library_reserve_key ~C7 . ~N\n\tTake_it? ~S4 ",
     "\tA_body_is_slumped_over. ~E ",
     "~J0(1.0)\tWhat? ~E ",
-    "~J0(2.5)\tThat_light!? ~E ",
+    "~J0(2.5)\tThat_light!? ~E "
 };
 
 void func_800DA950(void) // 0x800DA950

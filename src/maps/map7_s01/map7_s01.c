@@ -329,7 +329,7 @@ const char* MAP_MESSAGES[] =
     "\tNothing_helpful. ~E ",
     "\tLooks_like_an_altar. ~N\n\tWonder_what_they_worship? ~E ",
     "\tA_body_is_laid_out_on_the_bed. ~N\n\tDon't_feel_like_checking_this_out. ~E ",
-    "\tThere's_a_botanical ~N\n\treference_book. ~N\n\tDon't_need_to_read_it_now. ~E ",
+    "\tThere's_a_botanical ~N\n\treference_book. ~N\n\tDon't_need_to_read_it_now. ~E "
 };
 
 INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", D_800CC424);

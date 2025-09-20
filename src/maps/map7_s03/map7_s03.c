@@ -1025,7 +1025,7 @@ const char* MAP_MESSAGES[] =
     "~J0(1.0)\t~E ",
     "~J0(4.5)\t~E ",
     "~J0(1.4)\tHarry. ",
-    "~J0(1.0)\tGo. ~E ",
+    "~J0(1.0)\tGo. ~E "
 };
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E1854);

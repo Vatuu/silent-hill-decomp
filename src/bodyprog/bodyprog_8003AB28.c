@@ -888,14 +888,14 @@ void func_8003C110() // 0x8003C110
 
 void func_8003C1AC(s_800BCE18_0_CC* arg0) // 0x8003C1AC
 {
-    s_FsImageDesc sp10 = { 0 };
+    s_FsImageDesc image = { 0 };
 
-    //memset(&sp10, 0, 8);
+    //memset(&image, 0, 8);
     arg0->field_0 = 0;
     arg0->field_1 = 0;
     arg0->field_4 = 0;
     arg0->lmHdr_8 = (s_LmHeader*)ILM_BUFFER_1;
-    arg0->texture_C = sp10;
+    arg0->texture_C = image;
 }
 
 void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ) // 0x8003C220

@@ -521,7 +521,7 @@ const char* MAP_MESSAGES[] =
     "\tThere_is_a_ ~C2 Hunting_rifle ~C7 . ~N\n\tTake_it? ~S4 ",
     "\tNothing_unusual. ~E ",
     "\tA_picture_is_projected ~N\n\ton_the_screen. ",
-    "\tCheryl... ~N\n\twhere_could_she_be? ~E ",
+    "\tCheryl... ~N\n\twhere_could_she_be? ~E "
 };
 
 void func_800D667C(void) // 0x800D667C

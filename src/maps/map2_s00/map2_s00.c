@@ -561,7 +561,7 @@ const char* MAP_MESSAGES[] =
     "\tThere_is_no_gasoline. ~N\n\tCan't_use_it. ~E ",
     "\tThere_is_a_ ~C2 Chainsaw ~C7 . ~N\n\tTake_it? ~S4 ",
     "\tUsed_the_gasoline. ~E ",
-    "\tThis_must_be_that_water_works ~N\n\tLisa_was_talking_about. ~E ",
+    "\tThis_must_be_that_water_works ~N\n\tLisa_was_talking_about. ~E "
 };
 
 void func_800E7B74(void) // 0x800E7B74

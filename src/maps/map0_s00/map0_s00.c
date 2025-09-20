@@ -375,7 +375,7 @@ const char* MAP_MESSAGES[] =
     "\tThe_street_is_blocked.",
     "\tCan't_get_out_of_town ~N\n\tthrough_here. ~E ",
     "\tMy_car... ~N\n\ttoo_banged_up_to_drive. ",
-    "\tWhere's_Cheryl? ~N\n\tHope_she's_safe. ~E ",
+    "\tWhere's_Cheryl? ~N\n\tHope_she's_safe. ~E "
 };
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D9610);

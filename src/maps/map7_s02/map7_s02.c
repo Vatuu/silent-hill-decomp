@@ -456,7 +456,7 @@ const char* MAP_MESSAGES[] =
     "\tNothing_special_in_the_box. ~N\n\tNothing_to_worry_about. ~E ",
     "\tNothing_inside. ~E ",
     "\tNothing_useful_in_the_boxes. ~E ",
-    "\tThere's_a_botanical ~N\n\treference_book. ~N\n\tDon't_need_to_read_it_now. ~E ",
+    "\tThere's_a_botanical ~N\n\treference_book. ~N\n\tDon't_need_to_read_it_now. ~E "
 };
 
 INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02", D_800CD42C);

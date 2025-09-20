@@ -166,7 +166,7 @@ const char* MAP_MESSAGES[] =
     "\tThere's_a_collection_box. ~N\n\tNothing_inside. ~E ",
     "\tThere's_a_newspaper. ~N\n\tNothing_special. ~E ",
     "\tThere's_a_picture_on_the_wall. ~N\n\tNothing_special. ~E ",
-    "\tThere's_a_candle_stand. ~N\n\tNothing_special. ~E ",
+    "\tThere's_a_candle_stand. ~N\n\tNothing_special. ~E "
 };
 
 void func_800CED44(void) // 0x800CED44

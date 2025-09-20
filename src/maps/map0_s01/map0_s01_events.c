@@ -68,7 +68,7 @@ const char* MAP_MESSAGES[] =
     "\tI_better_take_it_with_me. ~E ",
     "\tPinball_machine. ~N\n\tNothing_unusual. ~E ",
     "\tCan't_turn_on_the_TV. ~N\n\tNo_power? ~E ",
-    "\tI_have_more_important_stuff_to_do. ~E ",
+    "\tI_have_more_important_stuff_to_do. ~E "
 };
 
 void MapEvent_CafeCutscene() // 0x800DA980

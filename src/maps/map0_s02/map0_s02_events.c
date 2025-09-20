@@ -12,7 +12,7 @@ const char* MAP_MESSAGES[] =
     "\tThere's_a_TV_set. ~N\n\tIt_doesn't_turn_on. ~E ",
     "\tThere_is_a_ ~C2 Gasoline_tank ~C7 . ~N\n\tTake_it? ~S4 ",
     "\tThere_is_a_ ~C2 Katana ~C7 . ~N\n\tTake_it? ~S4 ",
-    "\tThere_is_a_ ~C2 Channeling_stone ~C7 . ~N\n\tTake_it? ~S4 ",
+    "\tThere_is_a_ ~C2 Channeling_stone ~C7 . ~N\n\tTake_it? ~S4 "
 };
 
 void MapEvent_CommonItemTake(void) // 0x800CEBC8

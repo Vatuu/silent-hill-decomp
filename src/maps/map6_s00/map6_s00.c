@@ -561,7 +561,7 @@ const char* MAP_MESSAGES[] =
     "~J1(4.0)\tNo_doubt,_something_terrible ~N\n\t\t\tis_going_on... ~E ",
     "\tThe_cover_has_been_removed... ",
     "\tCould_Cybil_have_gotten ~N\n\tto_the_Amusement_Park_from_here? ~E ",
-    "~C3\tLAKE_SIDE_AMUSEMENT_PARK ~E ",
+    "~C3\tLAKE_SIDE_AMUSEMENT_PARK ~E "
 };
 
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800EB11C);
