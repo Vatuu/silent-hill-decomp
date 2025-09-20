@@ -1083,7 +1083,7 @@ void func_8003C878(s32 arg0) // 0x8003C878
     func_800550D0();
 }
 
-void func_8003C8F8(s_WorldObject_0* arg0, char* newStr) // 0x8003C8F8
+void WorldObject_ModelNameSet(s_WorldObject_0* arg0, char* newStr) // 0x8003C8F8
 {
     arg0->field_10.lmIdx_9 = 0;
     arg0->modelInfo_0.field_0  = 0;

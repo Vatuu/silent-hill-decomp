@@ -2517,7 +2517,7 @@ s32 func_8003C850();
 
 void func_8003C878(s32 arg0);
 
-void func_8003C8F8(s_WorldObject_0* arg0, char* newStr);
+void WorldObject_ModelNameSet(s_WorldObject_0* arg0, char* newStr);
 
 void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECTOR3* rot);
 

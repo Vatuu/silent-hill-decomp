@@ -215,23 +215,23 @@ void func_800D63B0(void) // 0x800D63B0
 void func_800D63D8(void) // 0x800D63D8
 {
     Math_Vector3f(&D_800DAF84.eventPosition_1C.position_0, 20.4568f, -0.8345f, -17.97f, Q12_SHIFT);
-    func_8003C8F8(&D_800DAF84.field_0, "REDX_HID");
+    WorldObject_ModelNameSet(&D_800DAF84.field_0, "REDX_HID");
 
     EventPositionInit(&D_800DAFB4.eventPosition_1C, 20.9021f, -0.002f, -17.26f, 0.0f, -37.45f, 0.0f);
-    func_8003C8F8(&D_800DAFB4.field_0, "KEY_HIDE");
+    WorldObject_ModelNameSet(&D_800DAFB4.field_0, "KEY_HIDE");
 
     D_800D7761 = 0;
     D_800DAFE4 = 0;
     D_800DAF78 = 0;
 
     EventPositionInit(&D_800DAFF4.eventPosition_1C, 61.8531f, -0.805f, 140.61f, 0, 92.9f, 0.0f);
-    func_8003C8F8(&D_800DAFF4.field_0, D_800A99E4.savePadName_4);
+    WorldObject_ModelNameSet(&D_800DAFF4.field_0, D_800A99E4.savePadName_4);
 
     EventPositionInit(&D_800DB024.eventPosition_1C, 133.294f, -0.8614f, 19.04f, 0.0f, 162.6f, 0.0f);
-    func_8003C8F8(&D_800DB024.field_0, "PICT00_H");
+    WorldObject_ModelNameSet(&D_800DB024.field_0, "PICT00_H");
 
     EventPositionInit(&D_800DB064.eventPosition_1C, 96.9405f, -0.3365f, 21.092f, 0.0f, 66.8f, 0.0f);
-    func_8003C8F8(&D_800DB064.field_0, "MAP_HIDE");
+    WorldObject_ModelNameSet(&D_800DB064.field_0, "MAP_HIDE");
 
     if (!Savegame_EventFlagGet(EventFlag_143))
     {

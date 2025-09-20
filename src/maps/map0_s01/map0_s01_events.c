@@ -913,25 +913,25 @@ void func_800DC9C8() // 0x800DC9C8
     D_800E23A1 = 224;
     Math_Vector3f(&g_DefaultEventPosition.position_0, 0.0f, 0.0f, 280.0f, Q12_SHIFT);
 
-    func_8003C8F8(&D_800E23B0[0], "IN_BLD1_");
-    func_8003C8F8(&D_800E23D0[0], "IN1_HIDE");
-    func_8003C8F8(&D_800E23F0[0], "BRK_BLD1");
-    func_8003C8F8(&D_800E23F0[1], "BRK_GLS1");
-    func_8003C8F8(&D_800E23F0[2], "BRK_GLS2");
-    func_8003C8F8(&D_800E2450[0], "OUT1_HID");
-    func_8003C8F8(&D_800E2450[1], "OUT_BLD_");
+    WorldObject_ModelNameSet(&D_800E23B0[0], "IN_BLD1_");
+    WorldObject_ModelNameSet(&D_800E23D0[0], "IN1_HIDE");
+    WorldObject_ModelNameSet(&D_800E23F0[0], "BRK_BLD1");
+    WorldObject_ModelNameSet(&D_800E23F0[1], "BRK_GLS1");
+    WorldObject_ModelNameSet(&D_800E23F0[2], "BRK_GLS2");
+    WorldObject_ModelNameSet(&D_800E2450[0], "OUT1_HID");
+    WorldObject_ModelNameSet(&D_800E2450[1], "OUT_BLD_");
 
     EventPositionInit(&g_EventThing_KitchenKnife.eventPosition_1C, 5.09f, -1.01f, 274.12f, 0, 32.0f, 0); 
-    func_8003C8F8(&g_EventThing_KitchenKnife.field_0, "KNIFE_HI");
+    WorldObject_ModelNameSet(&g_EventThing_KitchenKnife.field_0, "KNIFE_HI");
 
     EventPositionInit(&g_EventThing_Flashlight.eventPosition_1C, 5.18f, -1.0f, 267.28f, -3.0f, 111.0f, 0);
-    func_8003C8F8(&g_EventThing_Flashlight.field_0, "FLASH_HI");
+    WorldObject_ModelNameSet(&g_EventThing_Flashlight.field_0, "FLASH_HI");
 
     EventPositionInit(&g_EventThing_Map.eventPosition_1C, 5.24f, -1.0f, 267.21f, 0, 57.0f, 0);
-    func_8003C8F8(&g_EventThing_Map.field_0, "MAP_HIDE");
+    WorldObject_ModelNameSet(&g_EventThing_Map.field_0, "MAP_HIDE");
 
     EventPositionInit(&g_EventThing_PocketRadio.eventPosition_1C, 2.31f, -0.6f, 273.95f, 0, 147.0f, 0);
-    func_8003C8F8(&g_EventThing_PocketRadio.field_0, "RADIO_HI");
+    WorldObject_ModelNameSet(&g_EventThing_PocketRadio.field_0, "RADIO_HI");
 
     if (Savegame_EventFlagGet(EventFlag_40) && !Savegame_EventFlagGet(EventFlag_47))
     {
@@ -960,12 +960,12 @@ void func_800DC9C8() // 0x800DC9C8
     D_800E2560 = 0;
 
     // Maybe preloading assets that might be used in map?
-    func_8003C8F8(&g_ModelsCommon[0], D_800A99E4.firstAidKitName_8);
-    func_8003C8F8(&g_ModelsCommon[1], D_800A99E4.healthDrinkName_C);
-    func_8003C8F8(&g_ModelsCommon[2], D_800A99E4.ampouleName_10);
-    func_8003C8F8(&g_ModelsCommon[3], D_800A99E4.handgunBulletsName_14);
-    func_8003C8F8(&g_ModelsCommon[4], D_800A99E4.shotgunShellsName_18);
-    func_8003C8F8(&g_ModelsCommon[5], D_800A99E4.rifleShellsName_1C);
+    WorldObject_ModelNameSet(&g_ModelsCommon[0], D_800A99E4.firstAidKitName_8);
+    WorldObject_ModelNameSet(&g_ModelsCommon[1], D_800A99E4.healthDrinkName_C);
+    WorldObject_ModelNameSet(&g_ModelsCommon[2], D_800A99E4.ampouleName_10);
+    WorldObject_ModelNameSet(&g_ModelsCommon[3], D_800A99E4.handgunBulletsName_14);
+    WorldObject_ModelNameSet(&g_ModelsCommon[4], D_800A99E4.shotgunShellsName_18);
+    WorldObject_ModelNameSet(&g_ModelsCommon[5], D_800A99E4.rifleShellsName_1C);
 }
 
 void func_800DCCF4(void) // 0x800DCCF4
