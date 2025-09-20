@@ -1111,10 +1111,11 @@ typedef struct
 } s_800BCE18_2BEC;
 STATIC_ASSERT_SIZEOF(s_800BCE18_2BEC, 16);
 
+/** Held item? */
 typedef struct
 {
-    s32           itemId_0; /** `e_InventoryItemId` or `e_CutsceneItemId` */
-    s32           queueId_4;
+    s32           itemId_0; /** `e_InventoryItemId` */
+    s32           queueIdx_4;
     char*         textureName_8;
     s_FsImageDesc imageDesc_C;
     s_LmHeader*   lmHdr_14;
@@ -1128,7 +1129,7 @@ typedef struct
     s_800BCE18_0_CC   field_164C;
     u8                unk_1650[1328];
     s_800BCE18_1BAC   heldItem_1BAC;
-    VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; // Debug camera info.
+    VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; /** Debug camera info. */
     s_LmHeader        field_1BE4;
     s32               field_2BE8;
     s_800BCE18_2BEC   field_2BEC[1]; // Unknown size, valid count determined by `field_2BE8`?

@@ -852,7 +852,7 @@ void func_8003C0C0() // 0x8003C0C0
     s_800BCE18_1BAC* ptr = &D_800BCE18.heldItem_1BAC;
 
     ptr->itemId_0 = NO_VALUE;
-    ptr->lmHdr_14 = (s_LmHeader*)ILM_BUFFER0;
+    ptr->lmHdr_14 = (s_LmHeader*)ILM_BUFFER_0;
     ptr->bone_18.flags_0 = 0;
     ptr->bone_18.field_4 = 0;
     ptr->bone_18.modelHdr_8 = 0;
@@ -861,7 +861,7 @@ void func_8003C0C0() // 0x8003C0C0
 void func_8003C110() // 0x8003C110
 {
     s32              i;
-    s_800BCE18_0_CC* var_s0;
+    s_800BCE18_0_CC* curPtr;
 
     for (i = 0; i < Chara_Count; i++)
     {
@@ -871,16 +871,18 @@ void func_8003C110() // 0x8003C110
         }
     } 
 
-    D_800BCE18.field_0[0].field_14 = (s_LmHeader*)ILM_BUFFER1;
+    D_800BCE18.field_0[0].field_14 = (s_LmHeader*)ILM_BUFFER_1;
 
-    /* Slightly less, but still hacky loop. Equivalent of:
-     *  for (i = 0; i < 4; i++)
-     *      func_8003C1AC(&D_800BCE18.field_0[i].field_CC);
-     */
-    for (var_s0 = &D_800BCE18.field_0[0].field_CC;
-            var_s0 < &D_800BCE18.field_0[4].field_CC;
-            (int)var_s0 += sizeof(D_800BCE18.field_0[0])) {
-        func_8003C1AC(var_s0);
+    // Slightly less hacky loop. Equivalent of:
+    // for (i = 0; i < 4; i++)
+    // {
+    //     func_8003C1AC(&D_800BCE18.field_0[i].field_CC);
+    // }
+    for (curPtr = &D_800BCE18.field_0[0].field_CC;
+         curPtr < &D_800BCE18.field_0[4].field_CC;
+         (int)curPtr += sizeof(D_800BCE18.field_0[0]))
+    {
+        func_8003C1AC(curPtr);
     }
 }
 
@@ -892,7 +894,7 @@ void func_8003C1AC(s_800BCE18_0_CC* arg0) // 0x8003C1AC
     arg0->field_0 = 0;
     arg0->field_1 = 0;
     arg0->field_4 = 0;
-    arg0->lmHdr_8 = (s_LmHeader*)ILM_BUFFER1;
+    arg0->lmHdr_8 = (s_LmHeader*)ILM_BUFFER_1;
     arg0->texture_C = sp10;
 }
 
@@ -1373,7 +1375,7 @@ s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
 
     if (fileIdx != NO_VALUE)
     {
-        ptr->queueId_4 = Fs_QueueStartReadTim(fileIdx, FS_BUFFER_10, &ptr->imageDesc_C);
+        ptr->queueIdx_4 = Fs_QueueStartReadTim(fileIdx, FS_BUFFER_10, &ptr->imageDesc_C);
     }
 
     switch (itemIdx)
@@ -1454,8 +1456,8 @@ s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
 
     if (fileIdx != NO_VALUE)
     {
-        ptr->queueId_4 = Fs_QueueStartRead(fileIdx, ptr->lmHdr_14);
-        return ptr->queueId_4;
+        ptr->queueIdx_4 = Fs_QueueStartRead(fileIdx, ptr->lmHdr_14);
+        return ptr->queueIdx_4;
     }
 
     return 0;
@@ -1492,7 +1494,7 @@ void func_8003D058() // 0x8003D058
             coord = &g_SysWork.playerBoneCoords_890[HarryBone_RightHand];
         }
 
-        if (Fs_QueueIsEntryLoaded(ptr0->queueId_4)) 
+        if (Fs_QueueIsEntryLoaded(ptr0->queueIdx_4)) 
         {
             lmHdr = ptr0->lmHdr_14;
 
@@ -1717,7 +1719,7 @@ void func_8003D5B4(s8 flags) // 0x8003D5B4
 
     i = 0; 
 
-    D_800BCE18.field_0[0].field_14 = ILM_BUFFER1;
+    D_800BCE18.field_0[0].field_14 = ILM_BUFFER_1;
 
     for (; i < 4; i++)
     {
