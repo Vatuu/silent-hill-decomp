@@ -1035,7 +1035,6 @@ typedef struct _WaterZone
     s16 maxZ_A; // }
 } s_WaterZone;
 
-// Looks similar to `s_Skeleton`
 typedef struct
 {
     u8            charaId_0;
@@ -1044,8 +1043,8 @@ typedef struct
     s32           queueIdx_4;
     s_LmHeader*   lmHdr_8;
     s_FsImageDesc texture_C;
-    s_Skeleton    skeleton_14; // Could be different struct?
-} s_CharaModel; // Unknown size.
+    s_Skeleton    skeleton_14;
+} s_CharaModel;
 STATIC_ASSERT_SIZEOF(s_CharaModel, 0x560);
 
 typedef struct _MapType
@@ -1108,7 +1107,7 @@ typedef struct
     s_CharaModel   harrySkel_164C;
     s_heldItem        heldItem_1BAC;
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; // Debug camera info.
-    s_LmHeader        field_1BE4;
+    s_LmHeader        commonLm_1BE4;
     s32               field_2BE8;
     s_WorldGfx_2BEC   field_2BEC[29]; // Size based on the check in func_8003C92C
 } s_WorldGfx;

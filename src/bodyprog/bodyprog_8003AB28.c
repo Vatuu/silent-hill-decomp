@@ -773,7 +773,7 @@ void GameFs_BgEtcGfxLoad() // 0x8003BE6C
 
 void GameFs_BgItemLoad() // 0x8003BE9C
 {
-    g_WorldGfx.field_1BE4.queueIdx_1000 = Fs_QueueStartRead(FILE_BG_BG_ITEM_PLM, &g_WorldGfx.field_1BE4);
+    g_WorldGfx.commonLm_1BE4.queueIdx_1000 = Fs_QueueStartRead(FILE_BG_BG_ITEM_PLM, &g_WorldGfx.commonLm_1BE4);
 }
 
 void func_8003BED0() // 0x8003BED0
@@ -781,17 +781,17 @@ void func_8003BED0() // 0x8003BED0
     static s_FsImageDesc IMG_TIM = { .tPage = { 0, 15 }, .clutX = 176 };
     static s_FsImageDesc IMG_ETC = { .tPage = { 0, 12 }, .v = 192, .clutX = 192 };
 
-    s_LmHeader* D_800BE9FC = &g_WorldGfx.field_1BE4;
+    s_LmHeader* D_800BE9FC = &g_WorldGfx.commonLm_1BE4;
 
     if (Fs_QueueIsEntryLoaded(D_800BE9FC->queueIdx_1000) == 0 || D_800BE9FC->isLoaded_2)
     {
         return;
     }
 
-    LmHeader_FixOffsets(&g_WorldGfx.field_1BE4);
-    func_80056504(&g_WorldGfx.field_1BE4, "TIM00", &IMG_TIM, 1);
-    func_80056504(&g_WorldGfx.field_1BE4, "BG_ETC", &IMG_ETC, 1);
-    Lm_MaterialFlagsApply(&g_WorldGfx.field_1BE4);
+    LmHeader_FixOffsets(&g_WorldGfx.commonLm_1BE4);
+    func_80056504(&g_WorldGfx.commonLm_1BE4, "TIM00", &IMG_TIM, 1);
+    func_80056504(&g_WorldGfx.commonLm_1BE4, "BG_ETC", &IMG_ETC, 1);
+    Lm_MaterialFlagsApply(&g_WorldGfx.commonLm_1BE4);
 }
 
 // ========================================
@@ -1114,7 +1114,7 @@ void func_8003C92C(s_WorldGfx_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* 
 
             if (ret == 0)
             {
-                if (!Lm_ModelFind(arg0, &g_WorldGfx.field_1BE4, &arg0->field_10))
+                if (!Lm_ModelFind(arg0, &g_WorldGfx.commonLm_1BE4, &arg0->field_10))
                 {
                     return;
                 }
@@ -1155,7 +1155,7 @@ void func_8003C92C(s_WorldGfx_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* 
         ptr->vx_C = vx;
         ptr->vy_C = vy;
 
-        // Required for match.
+        // @hack Required for match.
         if (ptr->gsCoordinate2_8) {}
 
         ptr->vz_C            = vz;
@@ -1209,12 +1209,12 @@ void func_8003CBA4(s_WorldGfx_2BEC* arg0) // 0x8003CBA4
 
 void func_8003CC7C(s_WorldGfx_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x8003CC7C
 {
-    s8                    temp_a0;
+    s8                    lmIdx;
     s_WorldGfx_2BEC_0_10* temp_s1;
     s_ModelHeader*        temp_s2;
 
-    temp_a0 = arg0->field_10.lmIdx_9;
-    if (!temp_a0)
+    lmIdx = arg0->field_10.lmIdx_9;
+    if (!lmIdx)
     {
         return;
     }
@@ -1222,9 +1222,9 @@ void func_8003CC7C(s_WorldGfx_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x800
     temp_s2 = arg0->modelInfo_0.modelHdr_8;
     temp_s1 = &arg0->field_10;
 
-    if (temp_a0 >= 3 && temp_a0 < 7)
+    if (lmIdx >= 3 && lmIdx < 7)
     {
-        if (!IpdHeader_IsLoaded(temp_a0 - 3))
+        if (!IpdHeader_IsLoaded(lmIdx - 3))
         {
             arg0->field_10.lmIdx_9 = 0;
         }
