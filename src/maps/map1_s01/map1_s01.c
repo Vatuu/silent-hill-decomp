@@ -144,7 +144,7 @@ INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", sharedFunc_800D7BE8_0_s00
 
 #include "maps/shared/sharedFunc_800D7E04_0_s00.h" // 0x800D6B8C
 
-void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords) // 0x800D6D40
+void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D6D40
 {
     s_AnimInfo* animInfo;
     s32         var_a0;
@@ -182,7 +182,7 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2*
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
     animInfo = &CAT_ANIM_INFOS[chara->model_0.anim_4.status_0];
-    animInfo->updateFunc_0(&chara->model_0, anmHeader, coords, animInfo);
+    animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
 
     var_a0 = 0;
     if (chara->model_0.anim_4.status_0 == ANIM_STATUS(1, true))

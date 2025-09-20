@@ -152,7 +152,7 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800D8848);
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800D8898);
 
-void Ai_MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords) // 0x800D8908
+void Ai_MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D8908
 {
     s_Model* extraModelPtr = &g_Ai_MonsterCybil_ExtraModel;
 
@@ -166,7 +166,7 @@ void Ai_MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOO
         func_800D8B14(chara, extraModelPtr);
         func_800D8D7C(chara, extraModelPtr, coords);
         func_800D9790(chara, extraModelPtr);
-        func_800D99E4(chara, extraModelPtr, anmHeader, coords);
+        func_800D99E4(chara, extraModelPtr, anmHdr, coords);
         func_800DB4CC(chara, extraModelPtr, coords);
         func_800D9AAC(chara, extraModelPtr);
     }
@@ -319,7 +319,7 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", sharedSymbol_800CD4A0_2_s
 
 #include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800DE064
 
-void Ai_Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords) // 0x800DE0C4
+void Ai_Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800DE0C4
 {
     s32         i;
     s32         var_s1;
@@ -352,7 +352,7 @@ void Ai_Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINA
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
     animInfo = &FLAUROS_ANIM_INFOS[chara->model_0.anim_4.status_0];
-    animInfo->updateFunc_0(&chara->model_0, anmHeader, coords, animInfo);
+    animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
 
     for (i = 6; i < 11; i++)
     {
@@ -360,7 +360,7 @@ void Ai_Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINA
     }
 }
 
-void Ai_Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords) // 0x800DE1CC
+void Ai_Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800DE1CC
 {
     s_AnimInfo* animInfo;
 
@@ -375,7 +375,7 @@ void Ai_Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDIN
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
     animInfo = &PARASITE_ANIM_INFOS[chara->model_0.anim_4.status_0];
-    animInfo->updateFunc_0(&chara->model_0, anmHeader, coords, animInfo);
+    animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
 }
 
 void func_800DE26C() {}

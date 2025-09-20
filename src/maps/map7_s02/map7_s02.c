@@ -188,7 +188,7 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", sharedSymbol_800CF470_3_s
 
 #include "maps/shared/Ai_Kaufmann_Init.h" // 0x800D8AA8
 
-void Ai_GhostDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords) // 0x800D8AF0
+void Ai_GhostDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D8AF0
 {
     if (chara->model_0.charaId_0 != Chara_GhostDoctor)
     {
@@ -197,7 +197,7 @@ void Ai_GhostDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOOR
 
     func_800D8C00(chara, coords);
     Character_CoordTransformUpdate(chara, coords);
-    func_800D8B64(chara, anmHeader, coords);
+    func_800D8B64(chara, anmHdr, coords);
 }
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800D8B64);

@@ -1830,7 +1830,7 @@ extern s32 D_800A9A24;
 /** Z. */
 extern s32 D_800A9A28;
 
-/** Associates each character ID with the maps `charaGroupIds_248` index for that ID (+ 1?) */
+/** Associates each character ID with a map's `charaGroupIds_248` index for that ID (+ 1?). */
 extern s8 D_800A98FC[Chara_Count];
 
 extern s32 D_800A9EB0;
@@ -2787,35 +2787,35 @@ void func_80044090(s_IpdHeader* ipdHdr, s32 arg1, s32 arg2, GsOT* ot, void* arg4
 bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, q23_8 x, q23_8 z);
 
 /** Loads anim file? */
-void Anim_BoneInit(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords);
+void Anim_BoneInit(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 s_AnimInfo* func_80044918(s_ModelAnim* anim);
 
-void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyframe0, s32 keyframe1, q19_12 alpha);
+void Anim_BoneUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyframe0, s32 keyframe1, q19_12 alpha);
 
-void func_80044950(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
+void func_80044950(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 q19_12 Anim_DurationGet(s_Model* model, s_AnimInfo* anim);
 
 /** Updates a character's animation, variant 0. First param might be `s_SubCharacter` instead.
  * Used for anim init?
  */
-void Anim_Update0(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coords, s_AnimInfo* animInfo);
+void Anim_Update0(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coords, s_AnimInfo* animInfo);
 
 /** Updates a character's animation, variant 1.
  * Used for looped anims?
  */
-void Anim_Update1(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
+void Anim_Update1(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
 
 /** Updates a character's animation, variant 2.
  * The generic update func?
  */
-void Anim_Update2(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
+void Anim_Update2(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
 
 /** Updates a character's animation, variant 3.
  * Same as `Anim_Update2` but sine-based?
  */
-void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
+void Anim_Update3(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
 
 /** Something related to player weapon position. Takes coords to arm bones. */
 void func_80044F14(GsCOORDINATE2* coord, s16 z, s16 x, s16 y);

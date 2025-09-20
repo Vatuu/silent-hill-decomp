@@ -190,7 +190,7 @@ INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", sharedFunc_800D9960_1_s02
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", sharedFunc_800D99D0_1_s02); // 0x800D9E48
 
-void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords) // 0x800DA284
+void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800DA284
 {
     s_AnimInfo* animInfo;
 
@@ -229,7 +229,7 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsC
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
     animInfo = &LOCKER_DEAD_BODY_ANIM_INFOS[chara->model_0.anim_4.status_0];
-    animInfo->updateFunc_0(&chara->model_0, anmHeader, coords, animInfo);
+    animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
 
     chara->field_C8         = -0x4CC;
     chara->field_D8.field_4 = 0xF5;

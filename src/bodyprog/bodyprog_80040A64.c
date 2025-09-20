@@ -1788,7 +1788,7 @@ bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, q23_8 x, q23_
 // ANIMATION
 // ========================================
 
-void Anim_BoneInit(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords) // 0x800445A4
+void Anim_BoneInit(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800445A4
 {
     s32            boneIdx;
     s32            i;
@@ -1798,18 +1798,18 @@ void Anim_BoneInit(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords) // 0x80044
 
     GsInitCoordinate2(NULL, boneCoords);
 
-    for (boneIdx = 1, bindPose = &anmHeader->bindPoses_14[1], coord = &boneCoords[1];
-         boneIdx < anmHeader->boneCount_6;
+    for (boneIdx = 1, bindPose = &anmHdr->bindPoses_14[1], coord = &boneCoords[1];
+         boneIdx < anmHdr->boneCount_6;
          boneIdx++, bindPose++, coord++)
     {
-        coord->super = &boneCoords[anmHeader->bindPoses_14[boneIdx].parentBone];
+        coord->super = &boneCoords[anmHdr->bindPoses_14[boneIdx].parentBone];
 
         // If no translation for this bone, copy over `translationInitial_3`.
         if (bindPose->translationDataIdx_2 < 0)
         {
             for (i = 0; i < 3; i++)
             {
-                coord->coord.t[i] = anmHeader->bindPoses_14[boneIdx].translationInitial_3[i] << anmHeader->scaleLog2_12;
+                coord->coord.t[i] = anmHdr->bindPoses_14[boneIdx].translationInitial_3[i] << anmHdr->scaleLog2_12;
             }
         }
 
@@ -1827,7 +1827,7 @@ void Anim_BoneInit(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords) // 0x80044
     }
 }
 
-void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyframe0, s32 keyframe1, q19_12 alpha) // 0x800446D8
+void Anim_BoneUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyframe0, s32 keyframe1, q19_12 alpha) // 0x800446D8
 {
     s32            boneCount;
     bool           isPlayer;
@@ -1849,11 +1849,11 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyf
     GsCOORDINATE2* boneCoord;
     s_AnmBindPose* bindPose;
 
-    boneCount     = anmHeader->boneCount_6;
-    frame0Data    = ((u8*)anmHeader + anmHeader->dataOffset_0) + (anmHeader->keyframeDataSize_4 * keyframe0);
-    frame0RotData = frame0Data + (anmHeader->translationBoneCount_3 * 3);
-    frame1Data    = ((u8*)anmHeader + anmHeader->dataOffset_0) + (anmHeader->keyframeDataSize_4 * keyframe1);
-    frame1RotData = frame1Data + (anmHeader->translationBoneCount_3 * 3);
+    boneCount     = anmHdr->boneCount_6;
+    frame0Data    = ((u8*)anmHdr + anmHdr->dataOffset_0) + (anmHdr->keyframeDataSize_4 * keyframe0);
+    frame0RotData = frame0Data + (anmHdr->translationBoneCount_3 * 3);
+    frame1Data    = ((u8*)anmHdr + anmHdr->dataOffset_0) + (anmHdr->keyframeDataSize_4 * keyframe1);
+    frame1RotData = frame1Data + (anmHdr->translationBoneCount_3 * 3);
 
     // For player, use inverted mask of `extra_128.disabledAnimBones_18` to facilitate masking of upper and lower body.
     isPlayer = boneCoords == &g_SysWork.playerBoneCoords_890[HarryBone_Root];
@@ -1863,12 +1863,12 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyf
     }
     else
     {
-        activeBoneIdxs = anmHeader->activeBones_8;
+        activeBoneIdxs = anmHdr->activeBones_8;
     }
 
     // Skip root bone (index 0) and start processing from bone 1.
     boneCoords = &boneCoords[1];
-    bindPose   = &anmHeader->bindPoses_14[1];
+    bindPose   = &anmHdr->bindPoses_14[1];
 
     for (boneIdx = 1, boneCoord = boneCoords;
          boneIdx < boneCount;
@@ -1878,7 +1878,7 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyf
         if (activeBoneIdxs & (1 << boneIdx))
         {
             boneCoord->flg = false;
-            scaleLog2      = anmHeader->scaleLog2_12;
+            scaleLog2      = anmHdr->scaleLog2_12;
 
             boneTranslationDataIdx = bindPose->translationDataIdx_2;
             if (boneTranslationDataIdx >= 0)
@@ -1900,7 +1900,7 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyf
 
                 if (boneTranslationDataIdx == 0)
                 {
-                    boneCoord->coord.t[1] -= anmHeader->rootYOffset_13; // TODO: Not sure of purpose of this yet.
+                    boneCoord->coord.t[1] -= anmHdr->rootYOffset_13; // TODO: Not sure of purpose of this yet.
                 }
             }
 
@@ -1960,12 +1960,12 @@ s_AnimInfo* func_80044918(s_ModelAnim* anim) // 0x80044918
     return &animInfo_C[animStatus0];
 }
 
-void func_80044950(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords) // 0x80044950
+void func_80044950(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x80044950
 {
     s_AnimInfo* animInfo;
 
     animInfo = func_80044918(&chara->model_0.anim_4);
-    animInfo->updateFunc_0(&chara->model_0, anmHeader, coords, animInfo);
+    animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
 }
 
 q19_12 Anim_DurationGet(s_Model* model, s_AnimInfo* anim) // 0x800449AC
@@ -1992,7 +1992,7 @@ static inline q19_12 Anim_TimeStepGet(s_Model* model, s_AnimInfo* animInfo)
     return Q12(0.0f);
 }
 
-void Anim_Update0(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coords, s_AnimInfo* animInfo) // 0x800449F0
+void Anim_Update0(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coords, s_AnimInfo* animInfo) // 0x800449F0
 {
     bool setNewAnimStatus;
     s32  timeStep;
@@ -2038,7 +2038,7 @@ void Anim_Update0(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coords,
     alpha = Q12_FRACT(newTime);
     if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
-        Anim_BoneUpdate(anmHeader, coords, newKeyframeIdx, newKeyframeIdx + 1, alpha);
+        Anim_BoneUpdate(anmHdr, coords, newKeyframeIdx, newKeyframeIdx + 1, alpha);
     }
 
     // Update frame data.
@@ -2053,7 +2053,7 @@ void Anim_Update0(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coords,
     }
 }
 
-void Anim_Update1(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044B38
+void Anim_Update1(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044B38
 {
     s32 startKeyframeIdx;
     s32 endKeyframeIdx;
@@ -2103,7 +2103,7 @@ void Anim_Update1(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     alpha = Q12_FRACT(newTime);
     if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
-        Anim_BoneUpdate(anmHeader, coord, newKeyframeIdx0, newKeyframeIdx1, alpha);
+        Anim_BoneUpdate(anmHdr, coord, newKeyframeIdx0, newKeyframeIdx1, alpha);
     }
 
     // Update frame data.
@@ -2112,7 +2112,7 @@ void Anim_Update1(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     model->anim_4.alpha_A       = Q12(0.0f);
 }
 
-void Anim_Update2(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044CA4
+void Anim_Update2(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044CA4
 {
     bool setNewAnimStatus;
     s32  startKeyframeIdx;
@@ -2158,7 +2158,7 @@ void Anim_Update2(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     // Update skeleton.
     if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
-        Anim_BoneUpdate(anmHeader, coord, startKeyframeIdx, endKeyframeIdx, alpha);
+        Anim_BoneUpdate(anmHdr, coord, startKeyframeIdx, endKeyframeIdx, alpha);
     }
 
     // Update alpha.
@@ -2171,7 +2171,7 @@ void Anim_Update2(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     }
 }
 
-void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044DF0
+void Anim_Update3(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044DF0
 {
     s32    startKeyframeIdx;
     s32    endKeyframeIdx;
@@ -2223,7 +2223,7 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     // Update skeleton.
     if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
-        Anim_BoneUpdate(anmHeader, coord, startKeyframeIdx, endKeyframeIdx, alpha);
+        Anim_BoneUpdate(anmHdr, coord, startKeyframeIdx, endKeyframeIdx, alpha);
     }
 
     // Update active keyframe.

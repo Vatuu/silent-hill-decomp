@@ -1,4 +1,4 @@
-void Ai_BloodyLisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords)
+void Ai_BloodyLisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
     if (chara->model_0.state_2 == 0)
     {
@@ -7,5 +7,5 @@ void Ai_BloodyLisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORD
 
     sharedFunc_800D5B3C_7_s01(chara, coords);
     sharedFunc_800D59A4_7_s01(chara, coords);
-    sharedFunc_800D595C_7_s01(chara, anmHeader, coords);
+    sharedFunc_800D595C_7_s01(chara, anmHdr, coords);
 }

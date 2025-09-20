@@ -3,6 +3,6 @@
 
 extern s_AnimInfo LOCKER_DEAD_BODY_ANIM_INFOS[8];
 
-void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
+void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 #endif

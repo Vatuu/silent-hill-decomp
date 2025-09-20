@@ -130,7 +130,7 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800CEEDC_3_s02
 
 #include "maps/shared/Ai_Alessa_Init.h" // 0x800D3660
 
-void Ai_BloodyIncubator_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords) // 0x800D3684
+void Ai_BloodyIncubator_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D3684
 {
     if (chara->model_0.charaId_0 != Chara_BloodyIncubator)
     {
@@ -139,7 +139,7 @@ void Ai_BloodyIncubator_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, Gs
 
     func_800D38D8(chara, coords);
     func_800D3740(chara, coords);
-    func_800D36F8(chara, anmHeader, coords);
+    func_800D36F8(chara, anmHdr, coords);
 }
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D36F8);
@@ -153,7 +153,7 @@ void Ai_BloodyIncubator_Init(s_SubCharacter* chara) // 0x800D3BA4
     sharedFunc_800D923C_0_s00(chara);
 }
 
-void Ai_Incubator_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords) // 0x800D3BC4
+void Ai_Incubator_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D3BC4
 {
     if (chara->model_0.charaId_0 != Chara_Incubator)
     {
@@ -162,7 +162,7 @@ void Ai_Incubator_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDI
 
     func_800D3E18(chara, coords);
     func_800D3C80(chara, coords);
-    func_800D3C38(chara, anmHeader, coords);
+    func_800D3C38(chara, anmHdr, coords);
 }
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D3C38);
@@ -255,7 +255,7 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedSymbol_800CF470_3_s
 
 #include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800D5B68
 
-void Ai_LittleIncubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords) // 0x800D5BC8
+void Ai_LittleIncubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D5BC8
 {
     s32         temp_s0;
     s32         var_a2;
@@ -286,7 +286,7 @@ void Ai_LittleIncubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCO
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);
 
     animInfo = &LITTLE_INCUBUS_ANIM_INFOS[chara->model_0.anim_4.status_0];
-    animInfo->updateFunc_0(&chara->model_0, anmHeader, coords, animInfo);
+    animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
 
     func_800705E4(coords, 1, temp_s0, temp_s0, temp_s0);
     func_800705E4(coords, 7, temp_s0, temp_s0, temp_s0);
@@ -704,7 +704,7 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DF044);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DF074);
 
-void Ai_Incubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords) // 0x800DF0D8
+void Ai_Incubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800DF0D8
 {
     if ((chara->model_0.state_2 != 0 || Ai_Incubus_Init(chara, coords)) && chara->model_0.state_2 != 1)
     {
@@ -714,7 +714,7 @@ void Ai_Incubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINA
             func_800DEC74(chara, coords);
             func_800DF044(chara, coords);
             func_800DEE44(chara);
-            func_800DEE90(chara, anmHeader, coords);
+            func_800DEE90(chara, anmHdr, coords);
             func_800DEFE8(chara, coords);
             func_800DED68(chara, coords);
             func_800DF074(chara);
@@ -722,7 +722,7 @@ void Ai_Incubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINA
         }
         else
         {
-            func_800DEE90(chara, anmHeader, coords);
+            func_800DEE90(chara, anmHdr, coords);
             func_800DB608();
             func_800DF074(chara);
         }
@@ -882,7 +882,7 @@ void func_800E0914(s_SubCharacter* chara) // 0x800E0914
     func_800DF944();
 }
 
-void Ai_Unknown23_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords) // 0x800E093C
+void Ai_Unknown23_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800E093C
 {
     if (chara->model_0.state_2 == 0)
     {
@@ -897,7 +897,7 @@ void Ai_Unknown23_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDI
             func_800E05DC(chara, coords);
             func_800E08E4(chara, coords);
             func_800E0728(chara);
-            func_800E0774(chara, anmHeader, coords);
+            func_800E0774(chara, anmHdr, coords);
             func_800E0888(chara, coords);
             func_800E0670(chara, coords);
             func_800E0914(chara);
@@ -907,7 +907,7 @@ void Ai_Unknown23_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDI
         {
             func_800DB608();
             func_800E0914(chara);
-            func_800E0774(chara, anmHeader, coords);
+            func_800E0774(chara, anmHdr, coords);
         }
     }
 }
