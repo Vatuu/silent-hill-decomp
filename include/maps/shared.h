@@ -2794,7 +2794,7 @@ typedef struct
 
 typedef struct
 {
-    s_800BCE18_2BEC_0 field_0;
+    s_WorldGfx_2BEC_0 field_0;
     s_EventPosition   eventPosition_1C;
 } s_EventThing;
 

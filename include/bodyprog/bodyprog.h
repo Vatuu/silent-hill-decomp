@@ -54,6 +54,12 @@ typedef enum _MapTypeFlags
     MapTypeFlag_FourActiveChunk = 0,
 } e_MapTypeFlags;
 
+typedef enum _BoneHierarhy
+{
+    BoneHierarhy_End = -2,
+    BoneHierarhy_MultiModel = -3,
+} e_BoneHierarhy;
+
 typedef enum _EffectTextureFlags
 {
     EffectTextureFlag_None         = 0,
@@ -909,12 +915,12 @@ typedef struct
     GsCOORDINATE2* field_4;
     s_ModelHeader* modelHdr_8;
     s32            modelIdx_C;
-} s_800BCE18_2BEC_0_0;
+} s_WorldGfx_2BEC_0_0;
 
 // Probably Skeleton too.
 typedef struct
 {
-    s_800BCE18_2BEC_0_0     field_0;
+    s_WorldGfx_2BEC_0_0     field_0;
     s8                      field_10;
     s8                      unk_11[3];
     struct s_func_800452EC* field_14;
@@ -923,7 +929,7 @@ typedef struct
 // Maybe a collection of matrices.
 typedef struct _Bone
 {
-    s_800BCE18_2BEC_0_0 field_x0;
+    s_WorldGfx_2BEC_0_0 field_x0;
     s8             field_10;
     s8             unk_11[3];
     struct _Bone*  next_14;
@@ -933,10 +939,10 @@ STATIC_ASSERT_SIZEOF(s_Bone, 24);
 // PROBABLY skeleton data.
 typedef struct
 {
-    u8               boneCount_0;
-    u8               boneIdx_1; // Current bone index? Used in traversal.
-    u8               field_2;
-    s8               field_3;
+    u8      boneCount_0;
+    u8      boneIdx_1;
+    u8      field_2;
+    s8      field_3;
     s_Bone* bones_4;
     s_Bone* bones_8;
     s_Bone  boneArr_C[56];
@@ -1041,15 +1047,15 @@ typedef struct _WaterZone
 // Looks similar to `s_Skeleton`
 typedef struct
 {
-    u8            field_0;
-    u8            field_1;
+    u8            charaId_0;
+    u8            loaded_1;
     u8            unk_2[2];
     s32           queueIdx_4;
     s_LmHeader*   lmHdr_8;
     s_FsImageDesc texture_C;
     s_Skeleton    skeleton_14; // Could be different struct?
-} s_SkeletonStuff; // Unknown size.
-STATIC_ASSERT_SIZEOF(s_SkeletonStuff, 0x560);
+} s_CharaModel; // Unknown size.
+STATIC_ASSERT_SIZEOF(s_CharaModel, 0x560);
 
 typedef struct _MapType
 {
@@ -1063,33 +1069,21 @@ typedef struct _MapType
 
 typedef struct
 {
-    s_MapType*        type_0;
-    s8                field_4;
-    u8                unk_5[3];
-    VECTOR3           field_8;               // Position.
-    s32               dataPtr_14;              // Used frequently as `s_LmHeader*`, but code adds file lengths to it. Could just be `u8*` pointing to current file data?
-    s_SkeletonStuff*  charaSkeletons_18[Chara_Count];
-    s_SkeletonStuff   skeletons_CC[4];
-} s_800BCE18_0;
-STATIC_ASSERT_SIZEOF(s_800BCE18_0, (0x560 * 4 + 0xcc));
-
-typedef struct
-{
     u_Filename modelName_0;
     s8         field_8;
     s8         lmIdx_9; /** Set to 2 when found in `g_Map.globalLm_138.lmHdr_0` and 3-6 if found in `g_Map.ipdActive_15C[i] (i + 3)`. */
-} s_800BCE18_2BEC_0_10;
+} s_WorldGfx_2BEC_0_10;
 
 typedef struct
 {
-    s_800BCE18_2BEC_0_0  field_0;
-    s_800BCE18_2BEC_0_10 field_10;
-} s_800BCE18_2BEC_0;
-STATIC_ASSERT_SIZEOF(s_800BCE18_2BEC_0, 28);
+    s_WorldGfx_2BEC_0_0  field_0;
+    s_WorldGfx_2BEC_0_10 field_10;
+} s_WorldGfx_2BEC_0;
+STATIC_ASSERT_SIZEOF(s_WorldGfx_2BEC_0, 28);
 
 typedef struct
 {
-    s_800BCE18_2BEC_0* field_0;
+    s_WorldGfx_2BEC_0* field_0;
     s32                gsCoordinate0_4 : 18; // Used as `GsCOORDINATE2::coord.t[0].`
     s32                gsCoordinate1_4 : 14; // Used as `GsCOORDINATE2::coord.t[1].`
     s32                gsCoordinate2_8 : 18; // Used as `GsCOORDINATE2::coord.t[2].`
@@ -1097,8 +1091,8 @@ typedef struct
     s32                vx_C            : 10;
     s32                vy_C            : 12;
     s32                vz_C            : 10;
-} s_800BCE18_2BEC;
-STATIC_ASSERT_SIZEOF(s_800BCE18_2BEC, 16);
+} s_WorldGfx_2BEC;
+STATIC_ASSERT_SIZEOF(s_WorldGfx_2BEC, 16);
 
 typedef struct
 {
@@ -1112,15 +1106,22 @@ typedef struct
 
 typedef struct
 {
-    s_800BCE18_0      field_0;
-    s_SkeletonStuff   harrySkel_164C;
+    s_MapType*     type_0;
+    s8             useStoredPoint_4;
+    u8             unk_5[3];
+    VECTOR3        ipdSamplePoint_8; // @brief used by ipd logic to sample which chunks to load/deload.
+    s32            dataPtr_14;              // Used frequently as `s_LmHeader*`, but code adds file lengths to it. Could just be `u8*` pointing to current file data?
+    s_CharaModel*  charaModelsTable_18[Chara_Count];
+    s_CharaModel   charaModels_CC[4];
+
+    s_CharaModel   harrySkel_164C;
     s_heldItem        heldItem_1BAC;
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; // Debug camera info.
     s_LmHeader        field_1BE4;
     s32               field_2BE8;
-    s_800BCE18_2BEC   field_2BEC[29]; // Size based on the check in func_8003C92C
-} s_800BCE18;
-STATIC_ASSERT_SIZEOF(s_800BCE18, 11260 + (16*28));
+    s_WorldGfx_2BEC   field_2BEC[29]; // Size based on the check in func_8003C92C
+} s_WorldGfx;
+STATIC_ASSERT_SIZEOF(s_WorldGfx, 11708);
 
 // IPD data?
 typedef struct
@@ -2194,7 +2195,7 @@ extern s16 D_800BCDE8[];
 
 extern u16 D_800BCE14;
 
-extern s_800BCE18 D_800BCE18;
+extern s_WorldGfx g_WorldGfx;
 
 extern s_IpdCollisionData* D_800C1010[];
 
@@ -2517,7 +2518,7 @@ void SysState_Fmv_Update();
 
 s32 Map_TypeGet();
 
-void func_8003C1AC(s_SkeletonStuff* arg0);
+void CharaModel_Free(s_CharaModel* arg0);
 
 void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ);
 
@@ -2526,9 +2527,9 @@ s32 func_8003C850();
 
 void func_8003C878(s32 arg0);
 
-void func_8003C8F8(s_800BCE18_2BEC_0* arg0, char* newStr);
+void func_8003C8F8(s_WorldGfx_2BEC_0* arg0, char* newStr);
 
-void func_8003C92C(s_800BCE18_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* rot);
+void func_8003C92C(s_WorldGfx_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* rot);
 
 void func_8003CD6C(s_PlayerCombat* combat);
 
@@ -2546,7 +2547,7 @@ void func_8003D550(s32 arg0, s32 arg1);
 /** Called by some chara init funcs, similar to `func_8003DD80`? */
 void func_8003D468(s32 arg0, bool flag);
 
-void func_8003D6A4(s_SkeletonStuff* arg0);
+void func_8003D6A4(s_CharaModel* arg0);
 
 /** Return type assumed. */
 void func_8003D160();
@@ -2595,7 +2596,7 @@ s32 func_8003FEC0(s_sub_StructUnk3* arg0);
 
 void func_8003FF2C(s_StructUnk3* arg0);
 
-void func_80040004(s_800BCE18* arg0);
+void func_80040004(s_WorldGfx* arg0);
 
 void func_80040014();
 
@@ -2682,7 +2683,7 @@ s_IpdCollisionData** func_800425D8(s32* collDataIdx);
 
 s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ);
 
-s32 func_8004287C(s_800BCE18_2BEC_0* arg0, s_800BCE18_2BEC_0_10* arg1, s32 posX, s32 posZ);
+s32 func_8004287C(s_WorldGfx_2BEC_0* arg0, s_WorldGfx_2BEC_0_10* arg1, s32 posX, s32 posZ);
 
 /** @brief Gets the load state of an LM file.
  *
@@ -2811,22 +2812,22 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
 /** Something related to player weapon position. Takes coords to arm bones. */
 void func_80044F14(GsCOORDINATE2* coord, s16 z, s16 x, s16 y);
 
-s8 func_80044F6C(s8* ptr, bool arg1);
+s8 Bone_GetModelIndex(s8* ptr, bool arg1);
 
 /** Skeleton setup? Assigns bones pointer for the skeleton and resets fields. */
-void func_80044FE0(s_Skeleton* skel, s_Bone* bones, u8 boneCount);
+void Skeleton_Init(s_Skeleton* skel, s_Bone* bones, u8 boneCount);
 
-/** Clears skeleton bone flags/mask. Called by `func_80044FE0`. */
+/** Clears skeleton bone flags/mask. Called by `Skeleton_Init`. */
 void func_80045014(s_Skeleton* skel);
 
 /** Anim func. Used in tandem with skeleton bone traversal. */
 void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHdr);
 
 /** Anim func. */
-void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, u8* arg2, s32 arg3);
+void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2, s32 arg3);
 
 /** Anim func. */
-void func_800451B0(s_Skeleton* skel, s_LmHeader* lmHdr, s32* arg2);
+void Skeleton_BoneModelAssign(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2);
 
 /** Anim func. Param names are rough. */
 void func_80045258(s_Bone** skels, s_Bone* bones, s32 boneIdx, s_LmHeader* lmHdr);
@@ -3062,10 +3063,10 @@ void func_80056244(s_LmHeader* lmHdr, bool flag);
 s32 Lm_MaterialCount(bool (*filter)(s_Material* mat), s_LmHeader* lmHdr);
 
 /** TODO: Unknown `arg3` type. */
-void func_80059D50(s32 arg0, s_800BCE18_2BEC_0_0* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4);
+void func_80059D50(s32 arg0, s_WorldGfx_2BEC_0_0* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4);
 
 /** TODO: Unknown `arg2` type. */
-void func_8005A21C(s_800BCE18_2BEC_0_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
+void func_8005A21C(s_WorldGfx_2BEC_0_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
 
 /** @brief Computes a fog-shaded version of `D_800C4190` color using `arg1` as the distance factor?
  *  Stores the result at 0x3D8 into `arg0`.
@@ -3097,11 +3098,11 @@ void func_8005B424(VECTOR3* vec0, VECTOR3* vec1);
 /** @unused No references. */
 void func_800563E8(s_LmHeader* lmHdr, s32 arg1, s32 arg2, s32 arg3);
 
-void func_80056464(s_LmHeader* lmHdr, s32 fileIdx, s_FsImageDesc* image, s32 arg3);
+void Lm_MaterialFileIdxApply(s_LmHeader* lmHdr, s32 fileIdx, s_FsImageDesc* image, s32 arg3);
 
 void func_80056504(s_LmHeader* lmHdr, char* newStr, s_FsImageDesc* image, s32 arg3);
 
-bool func_80056558(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* image, s32 arg3);
+bool Lm_MaterialFsImageApply(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* image, s32 arg3);
 
 void Material_FsImageApply(s_Material* mat, s_FsImageDesc* image, s32 arg2);
 
@@ -3121,22 +3122,22 @@ void Lm_MaterialRefCountDec(s_LmHeader* lmHdr);
 
 s32 LmHeader_ModelCountGet(s_LmHeader* lmHdr);
 
-void func_80056C8C(s_Bone* bone, s_LmHeader* lmHdr, s32 modelHdrIdx);
+void Bone_ModelAssign(s_Bone* bone, s_LmHeader* lmHdr, s32 modelHdrIdx);
 
-bool Lm_ModelFind(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHdr, s_800BCE18_2BEC_0_10* arg2);
+bool Lm_ModelFind(s_WorldGfx_2BEC_0* arg0, s_LmHeader* lmHdr, s_WorldGfx_2BEC_0_10* arg2);
 
 void StringCopy(char* prevStr, char* newStr);
 
 void func_80056D8C(s16, s16, s16, s16, s32, s32, GsOT*, void*);
 
-void func_80057090(s_800BCE18_2BEC_0_0* arg0, GsOT* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5);
+void func_80057090(s_WorldGfx_2BEC_0_0* arg0, GsOT* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5);
 
 s32 func_800571D0(u32 arg0);
 
 void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3);
 
 /** TODO: Unknown `arg2` type. */
-void func_80057344(s_800BCE18_2BEC_0_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
+void func_80057344(s_WorldGfx_2BEC_0_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
 
 void func_800574D4(s_MeshHeader* meshHdr, s_GteScratchData* scratchData);
 
@@ -3970,28 +3971,28 @@ void func_8003C0C0();
 /** Allocates player model? */
 void func_8003C110();
 
-void func_8003C1AC(s_SkeletonStuff* arg0);
+void CharaModel_Free(s_CharaModel* arg0);
 
 void Ipd_ActiveChunksClear1();
 
 void func_8003C30C();
 
-void func_8003C368();
+void WorldGfx_StoreIpdSamplePoint();
 
-void func_8003C3A0();
+void WorldGfx_ResetIpdSamplePoint();
 
 /** Handles player movement. */
 void func_8003C3AC();
 
 void func_8003C878(s32);
 
-void func_8003CB3C(s_800BCE18* arg0);
+void func_8003CB3C(s_WorldGfx* arg0);
 
-void func_8003CB44(s_800BCE18* arg0);
+void func_8003CB44(s_WorldGfx* arg0);
 
-void func_8003CBA4(s_800BCE18_2BEC* arg0);
+void func_8003CBA4(s_WorldGfx_2BEC* arg0);
 
-void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2);
+void func_8003CC7C(s_WorldGfx_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2);
 
 void func_8003D354(s32* arg0, s32 arg1);
 
@@ -4005,7 +4006,7 @@ void func_8003D938();
 
 void func_8003D95C();
 
-void func_8003D9C8(s_SkeletonStuff* arg0);
+void func_8003D9C8(s_CharaModel* arg0);
 
 void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4);
 

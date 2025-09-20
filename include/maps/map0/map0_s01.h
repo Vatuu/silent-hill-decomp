@@ -46,10 +46,10 @@ extern VECTOR3 g_CutsceneCameraPositionTarget; // 0x800E2380
 
 extern VECTOR3 g_CutsceneCameraLookAtTarget; // 0x800E2390
 
-extern s_800BCE18_2BEC_0 D_800E23B0[1];
-extern s_800BCE18_2BEC_0 D_800E23D0[1];
-extern s_800BCE18_2BEC_0 D_800E23F0[3];
-extern s_800BCE18_2BEC_0 D_800E2450[2];
+extern s_WorldGfx_2BEC_0 D_800E23B0[1];
+extern s_WorldGfx_2BEC_0 D_800E23D0[1];
+extern s_WorldGfx_2BEC_0 D_800E23F0[3];
+extern s_WorldGfx_2BEC_0 D_800E2450[2];
 
 extern s_EventPosition g_DefaultEventPosition; // 0x800E2490
 extern s_EventThing g_EventThing_KitchenKnife; // 0x800E24A0
@@ -59,7 +59,7 @@ extern s_EventThing g_EventThing_PocketRadio; // 0x800E2530
 
 extern s16 D_800E2560;
 
-extern s_800BCE18_2BEC_0 g_ModelsCommon[];
+extern s_WorldGfx_2BEC_0 g_ModelsCommon[];
 
 extern u16 g_SoundCmds[];
 
