@@ -1107,7 +1107,7 @@ typedef struct
     s_CharaModel   harrySkel_164C;
     s_heldItem        heldItem_1BAC;
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; // Debug camera info.
-    s_LmHeader        commonLm_1BE4;
+    s_LmHeader        itemLm_1BE4;
     s32               objectsCount_2BE8;
     s_WorldObject   objects_2BEC[29]; // Size based on the check in g_WorldGfx_ObjectAdd
 } s_WorldGfx;

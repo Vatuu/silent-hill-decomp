@@ -773,7 +773,7 @@ void GameFs_BgEtcGfxLoad() // 0x8003BE6C
 
 void GameFs_BgItemLoad() // 0x8003BE9C
 {
-    g_WorldGfx.commonLm_1BE4.queueIdx_1000 = Fs_QueueStartRead(FILE_BG_BG_ITEM_PLM, &g_WorldGfx.commonLm_1BE4);
+    g_WorldGfx.itemLm_1BE4.queueIdx_1000 = Fs_QueueStartRead(FILE_BG_BG_ITEM_PLM, &g_WorldGfx.itemLm_1BE4);
 }
 
 void func_8003BED0() // 0x8003BED0
@@ -781,17 +781,17 @@ void func_8003BED0() // 0x8003BED0
     static s_FsImageDesc IMG_TIM = { .tPage = { 0, 15 }, .clutX = 176 };
     static s_FsImageDesc IMG_ETC = { .tPage = { 0, 12 }, .v = 192, .clutX = 192 };
 
-    s_LmHeader* D_800BE9FC = &g_WorldGfx.commonLm_1BE4;
+    s_LmHeader* D_800BE9FC = &g_WorldGfx.itemLm_1BE4;
 
     if (Fs_QueueIsEntryLoaded(D_800BE9FC->queueIdx_1000) == 0 || D_800BE9FC->isLoaded_2)
     {
         return;
     }
 
-    LmHeader_FixOffsets(&g_WorldGfx.commonLm_1BE4);
-    func_80056504(&g_WorldGfx.commonLm_1BE4, "TIM00", &IMG_TIM, 1);
-    func_80056504(&g_WorldGfx.commonLm_1BE4, "BG_ETC", &IMG_ETC, 1);
-    Lm_MaterialFlagsApply(&g_WorldGfx.commonLm_1BE4);
+    LmHeader_FixOffsets(&g_WorldGfx.itemLm_1BE4);
+    func_80056504(&g_WorldGfx.itemLm_1BE4, "TIM00", &IMG_TIM, 1);
+    func_80056504(&g_WorldGfx.itemLm_1BE4, "BG_ETC", &IMG_ETC, 1);
+    Lm_MaterialFlagsApply(&g_WorldGfx.itemLm_1BE4);
 }
 
 // ========================================
@@ -1114,7 +1114,7 @@ void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECT
 
             if (ret == 0)
             {
-                if (!Lm_ModelFind(arg0, &g_WorldGfx.commonLm_1BE4, &arg0->field_10))
+                if (!Lm_ModelFind(arg0, &g_WorldGfx.itemLm_1BE4, &arg0->field_10))
                 {
                     return;
                 }
