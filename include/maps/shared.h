@@ -2796,7 +2796,7 @@ typedef struct
 {
     s_WorldObject_0  object_0;
     s_WorldObjectPos position_1C;
-} s_WorldObjectWithPos;
+} s_WorldObjectDesc;
 
 #define WorldObjectPositionInit(eventPos, posX, posY, posZ, rotX, rotY, rotZ) \
     WorldObjectPositionSet(eventPos, FP_METER(posX), FP_METER(posY), FP_METER(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))

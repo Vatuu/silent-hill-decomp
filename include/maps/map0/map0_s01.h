@@ -52,10 +52,10 @@ extern s_WorldObject_0 D_800E23F0[3];
 extern s_WorldObject_0 D_800E2450[2];
 
 extern VECTOR3 g_CutscenePosition; // 0x800E2490
-extern s_WorldObjectWithPos g_EventThing_KitchenKnife; // 0x800E24A0
-extern s_WorldObjectWithPos g_EventThing_Flashlight; // 0x800E24D0
-extern s_WorldObjectWithPos g_EventThing_Map; // 0x800E2500
-extern s_WorldObjectWithPos g_EventThing_PocketRadio; // 0x800E2530
+extern s_WorldObjectDesc g_EventThing_KitchenKnife; // 0x800E24A0
+extern s_WorldObjectDesc g_EventThing_Flashlight; // 0x800E24D0
+extern s_WorldObjectDesc g_EventThing_Map; // 0x800E2500
+extern s_WorldObjectDesc g_EventThing_PocketRadio; // 0x800E2530
 
 extern s16 D_800E2560;
 
