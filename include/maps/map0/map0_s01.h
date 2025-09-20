@@ -59,7 +59,7 @@ extern s_WorldObjectWithPos g_EventThing_PocketRadio; // 0x800E2530
 
 extern s16 D_800E2560;
 
-extern s_WorldObject_0 g_ModelsCommon[];
+extern s_WorldObject_0 g_CommonWorldObjects[];
 
 extern u16 g_SoundCmds[];
 

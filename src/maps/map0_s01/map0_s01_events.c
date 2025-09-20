@@ -959,13 +959,12 @@ void func_800DC9C8() // 0x800DC9C8
     g_Timer0 = 0;
     D_800E2560 = 0;
 
-    // Maybe preloading assets that might be used in map?
-    WorldObject_ModelNameSet(&g_ModelsCommon[0], D_800A99E4.firstAidKitName_8);
-    WorldObject_ModelNameSet(&g_ModelsCommon[1], D_800A99E4.healthDrinkName_C);
-    WorldObject_ModelNameSet(&g_ModelsCommon[2], D_800A99E4.ampouleName_10);
-    WorldObject_ModelNameSet(&g_ModelsCommon[3], D_800A99E4.handgunBulletsName_14);
-    WorldObject_ModelNameSet(&g_ModelsCommon[4], D_800A99E4.shotgunShellsName_18);
-    WorldObject_ModelNameSet(&g_ModelsCommon[5], D_800A99E4.rifleShellsName_1C);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4.handgunBulletsName_14);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4.shotgunShellsName_18);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
 void func_800DCCF4(void) // 0x800DCCF4
@@ -1097,7 +1096,7 @@ void func_800DCCF4(void) // 0x800DCCF4
         {
             if (!Savegame_EventFlagGet(EventFlag_M0S01_HealthDrink0))
             {
-                g_WorldGfx_ObjectAdd(&g_ModelsCommon[1], &D_800DE12C.position_0, &D_800DE12C.rotation_C);
+                g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &D_800DE12C.position_0, &D_800DE12C.rotation_C);
             }
         }
     }
@@ -1112,7 +1111,7 @@ void func_800DCCF4(void) // 0x800DCCF4
         {
             if (!Savegame_EventFlagGet(EventFlag_M0S01_HealthDrink1))
             {
-                g_WorldGfx_ObjectAdd(&g_ModelsCommon[1], &D_800DE140.position_0, &D_800DE140.rotation_C);
+                g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &D_800DE140.position_0, &D_800DE140.rotation_C);
             }
         }
     }
