@@ -89,23 +89,20 @@
 #define Math_Vector3f(vec, x, y, z, shift) \
     Math_Vector3Set(vec, FP_FLOAT_TO(x, shift), FP_FLOAT_TO(y, shift), FP_FLOAT_TO(z, shift))
 
-/** @brief Scales a distance according to a time step at 30 FPS.
+/** @brief Scales a Q19.12 fixed-point value by a delta time relative to a 30 FPS time step.
  *
- * TODO: Not only used for distance scaling. Rename to `Math_DeltaTimeScale`.
- * There are instances where this macro could be used, but a delta time arg would be required.
- * Could genericise it with a new param for that purpose?
- *
- * @param dist Distance in fixed-point world meters.
- * @return Scaled distance.
+ * @param deltaTime Time delta.
+ * @param x Fixed-point value (Q19.12).
+ * @return Scaled value in Q19.12.
  */
-#define Math_DeltaTimeDistScale(dist) \
-    (((dist) * g_DeltaTime0) / TIME_STEP_30_FPS)
+#define TIME_STEP_SCALE(deltaTime, x) \
+    (((x) * (deltaTime)) / TIME_STEP_30_FPS)
 
-/** @brief Normalizes unsigned fixed-point degrees in Q19.12, range `[0, 4096]` to the signed range `[-2048, 2047]`.
+/** @brief Normalizes Q19.12 fixed-point degrees, unsigned integer range `[0, 4096]` to the signed integer range `[-2048, 2047]`.
  * Thin wrapper for `FP_ANGLE_NORM_S`.
  *
- * @param angle Unsigned fixed-point degrees in Q19.12, range `[0, 4096]`.
- * @return Fixed-point degrees wrapped to the range `[-2048, 2047]` (`s16`).
+ * @param angle Unsigned fixed-point degrees, integer range `[0, 4096]`.
+ * @return Signed fixed-point degrees wrapped to the integer range `[-2048, 2047]` (`s16`).
  */
 static inline q3_12 Math_AngleNormalize(q19_12 angle)
 {
