@@ -3080,7 +3080,7 @@ s32 Lm_MaterialCount(bool (*filter)(s_Material* mat), s_LmHeader* lmHdr);
 void func_80059D50(s32 arg0, s_800BCE18_2BEC_0_0* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4);
 
 /** TODO: Unknown `arg2` type. */
-void func_8005A21C(s_800BCE18_2BEC_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
+void func_8005A21C(s_800BCE18_2BEC_0_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
 
 /** @brief Computes a fog-shaded version of `D_800C4190` color using `arg1` as the distance factor?
  *  Stores the result at 0x3D8 into `arg0`.
@@ -3151,7 +3151,7 @@ s32 func_800571D0(u32 arg0);
 void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3);
 
 /** TODO: Unknown `arg2` type. */
-void func_80057344(s_800BCE18_2BEC_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
+void func_80057344(s_800BCE18_2BEC_0_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
 
 void func_800574D4(s_MeshHeader* meshHdr, s_GteScratchData* scratchData);
 
