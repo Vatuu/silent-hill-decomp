@@ -892,7 +892,7 @@ void func_8003C1AC(s_800BCE18_0_CC* arg0) // 0x8003C1AC
     //memset(&sp10, 0, 8);
     arg0->field_0 = 0;
     arg0->field_1 = 0;
-    arg0->field_4 = 0;
+    arg0->queueIdx_4 = 0;
     arg0->lmHdr_8 = (s_LmHeader*)ILM_BUFFER1;
     arg0->texture_C = sp10;
 }
@@ -1531,7 +1531,7 @@ void func_8003D160() // 0x8003D160
 
     D_800BCE18.field_164C.field_0   = 1;
     ptr2->field_1                   = 0;
-    ptr2->field_4                   = queueIdx;
+    ptr2->queueIdx_4                   = queueIdx;
     ptr2->lmHdr_8                = addr;
     D_800BCE18.field_164C.texture_C = img;
 }
@@ -1818,8 +1818,8 @@ s32 func_8003D7D4(u32 arg0, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 
 
     ptr->field_0    = arg0;
     ptr->field_1    = 0;
-    ptr->field_4    = queueIdx;
-    ptr->lmHdr_8 = lmHdr;
+    ptr->queueIdx_4 = queueIdx;
+    ptr->lmHdr_8    = lmHdr;
     ptr->texture_C  = *tex;
 
     return queueIdx;
@@ -1852,7 +1852,7 @@ void func_8003D9C8(s_800BCE18_0_CC* arg0) // 0x8003D9C8
 {
     s_Skeleton* skel;
 
-    if (arg0->field_1 == 0 && arg0->field_0 != 0 && Fs_QueueIsEntryLoaded(arg0->field_4) != 0)
+    if (arg0->field_1 == 0 && arg0->field_0 != 0 && Fs_QueueIsEntryLoaded(arg0->queueIdx_4) != 0)
     {
         arg0->field_1 = 1;
 

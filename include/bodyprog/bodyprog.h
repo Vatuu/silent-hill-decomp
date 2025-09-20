@@ -1052,7 +1052,7 @@ typedef struct
     u8            field_0;
     u8            field_1;
     u8            unk_2[2];
-    s32           field_4;
+    s32           queueIdx_4;
     s_LmHeader*   lmHdr_8;
     s_FsImageDesc texture_C;
     s_Skeleton    field_14; // Could be different struct?
