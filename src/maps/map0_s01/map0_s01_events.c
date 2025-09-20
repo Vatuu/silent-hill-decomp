@@ -978,22 +978,22 @@ void func_800DCCF4(void) // 0x800DCCF4
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
     {
-        func_8003C92C(&g_EventThing_Map.field_0, &g_EventThing_Map.eventPosition_1C.position_0, &g_EventThing_Map.eventPosition_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_EventThing_Map.field_0, &g_EventThing_Map.eventPosition_1C.position_0, &g_EventThing_Map.eventPosition_1C.rotation_C);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupFlashlight))
     {
-        func_8003C92C(&g_EventThing_Flashlight.field_0, &g_EventThing_Flashlight.eventPosition_1C.position_0, &g_EventThing_Flashlight.eventPosition_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_EventThing_Flashlight.field_0, &g_EventThing_Flashlight.eventPosition_1C.position_0, &g_EventThing_Flashlight.eventPosition_1C.rotation_C);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupPocketRadio))
     {
-        func_8003C92C(&g_EventThing_PocketRadio.field_0, &g_EventThing_PocketRadio.eventPosition_1C.position_0, &g_EventThing_PocketRadio.eventPosition_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_EventThing_PocketRadio.field_0, &g_EventThing_PocketRadio.eventPosition_1C.position_0, &g_EventThing_PocketRadio.eventPosition_1C.rotation_C);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupKitchenKnife))
     {
-        func_8003C92C(&g_EventThing_KitchenKnife.field_0, &g_EventThing_KitchenKnife.eventPosition_1C.position_0, &g_EventThing_KitchenKnife.eventPosition_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_EventThing_KitchenKnife.field_0, &g_EventThing_KitchenKnife.eventPosition_1C.position_0, &g_EventThing_KitchenKnife.eventPosition_1C.rotation_C);
     }
 
     if (Savegame_EventFlagGet(EventFlag_M0S01_PickupKitchenKnife) && Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
@@ -1097,7 +1097,7 @@ void func_800DCCF4(void) // 0x800DCCF4
         {
             if (!Savegame_EventFlagGet(EventFlag_M0S01_HealthDrink0))
             {
-                func_8003C92C(&g_ModelsCommon[1], &D_800DE12C.position_0, &D_800DE12C.rotation_C);
+                g_WorldGfx_ObjectAdd(&g_ModelsCommon[1], &D_800DE12C.position_0, &D_800DE12C.rotation_C);
             }
         }
     }
@@ -1112,7 +1112,7 @@ void func_800DCCF4(void) // 0x800DCCF4
         {
             if (!Savegame_EventFlagGet(EventFlag_M0S01_HealthDrink1))
             {
-                func_8003C92C(&g_ModelsCommon[1], &D_800DE140.position_0, &D_800DE140.rotation_C);
+                g_WorldGfx_ObjectAdd(&g_ModelsCommon[1], &D_800DE140.position_0, &D_800DE140.rotation_C);
             }
         }
     }
@@ -1128,12 +1128,12 @@ void func_800DD2EC(s32 arg0) // 0x800DD2EC
     {
         for (i = 0; i < 1; i++)
         {
-            func_8003C92C(&D_800E23D0[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
+            g_WorldGfx_ObjectAdd(&D_800E23D0[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
         }
 
         for (i = 0; i < 1; i++)
         {
-            func_8003C92C(&D_800E23B0[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
+            g_WorldGfx_ObjectAdd(&D_800E23B0[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
         }
 
         return;
@@ -1143,7 +1143,7 @@ void func_800DD2EC(s32 arg0) // 0x800DD2EC
     {
         for (i = 0; i < 2; i++)
         {
-            func_8003C92C(&D_800E2450[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
+            g_WorldGfx_ObjectAdd(&D_800E2450[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
         }
 
         return;
@@ -1151,11 +1151,11 @@ void func_800DD2EC(s32 arg0) // 0x800DD2EC
 
     for (i = 0; i < 1; i++)
     {
-        func_8003C92C(&D_800E23D0[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
+        g_WorldGfx_ObjectAdd(&D_800E23D0[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
     }
 
     for (i = 0; i < 3; i++)
     {
-        func_8003C92C(&D_800E23F0[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
+        g_WorldGfx_ObjectAdd(&D_800E23F0[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
     }
 }

@@ -1093,7 +1093,7 @@ void func_8003C8F8(s_WorldObject_0* arg0, char* newStr) // 0x8003C8F8
     arg0->field_10.field_8 = 0;
 }
 
-void func_8003C92C(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECTOR3* rot) // 0x8003C92C
+void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECTOR3* rot) // 0x8003C92C
 {
     s32              vy;
     s32              vx;

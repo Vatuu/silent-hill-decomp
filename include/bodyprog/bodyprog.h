@@ -1109,7 +1109,7 @@ typedef struct
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; // Debug camera info.
     s_LmHeader        commonLm_1BE4;
     s32               objectsCount_2BE8;
-    s_WorldObject   objects_2BEC[29]; // Size based on the check in func_8003C92C
+    s_WorldObject   objects_2BEC[29]; // Size based on the check in g_WorldGfx_ObjectAdd
 } s_WorldGfx;
 STATIC_ASSERT_SIZEOF(s_WorldGfx, 11708);
 
@@ -2519,7 +2519,7 @@ void func_8003C878(s32 arg0);
 
 void func_8003C8F8(s_WorldObject_0* arg0, char* newStr);
 
-void func_8003C92C(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECTOR3* rot);
+void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECTOR3* rot);
 
 void func_8003CD6C(s_PlayerCombat* combat);
 
