@@ -1022,10 +1022,10 @@ typedef struct _SpeedZone
 {
     s8  type_0; /** `e_SpeedZoneType` */
     // 1 byte padding.
-    s16 minX_2; // } Q11.4? Q7.8 fits more cleanly, but `Map_SpeedZoneTypeGet` uses `<< 8` for comparison with Q19.12 input position.
-    s16 maxX_4; // }
-    s16 minZ_6; // }
-    s16 maxZ_8; // }
+    q11_4 minX_2;
+    q11_4 maxX_4;
+    q11_4 minZ_6;
+    q11_4 maxZ_8;
 } s_SpeedZone;
 
 typedef struct _WaterZone
