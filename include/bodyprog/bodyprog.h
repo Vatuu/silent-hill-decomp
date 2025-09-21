@@ -2738,12 +2738,12 @@ void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCou
 void Ipd_MaterialsLoad(s_IpdHeader* ipdHdr, s_ActiveTextures* arg1, s_ActiveTextures* arg2, s32 fileIdx);
 
 /** Checks if IPD is loaded before returning texture count? */
-s32 Ipd_HalfResMaterialCountGet(s_IpdHeader* ipdHdr);
+s32 Ipd_HalfPageMaterialCountGet(s_IpdHeader* ipdHdr);
 
-/** Returns inverse result of `LmFilter_IsHalfResolution`. */
-bool LmFilter_IsFullResolution(s_Material* mat);
+/** Returns inverse result of `LmFilter_IsHalfPage`. */
+bool LmFilter_IsFullPage(s_Material* mat);
 
-bool LmFilter_IsHalfResolution(s_Material* mat);
+bool LmFilter_IsHalfPage(s_Material* mat);
 
 void IpdHeader_FixHeaderOffsets(s_IpdHeader* ipdHdr);
 

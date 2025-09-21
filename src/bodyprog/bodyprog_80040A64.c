@@ -1202,7 +1202,7 @@ void Ipd_ActiveChunksSample(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1
         }
         else
         {
-            curChunk->materialCount_14 = Ipd_HalfResMaterialCountGet(curChunk->ipdHdr_0);
+            curChunk->materialCount_14 = Ipd_HalfPageMaterialCountGet(curChunk->ipdHdr_0);
         }
 
         if (curChunk->distance0_C > FP_METER(0.0f) && curChunk->distance1_10 > FP_METER(0.0f))
@@ -1536,34 +1536,34 @@ void Ipd_MaterialsLoad(s_IpdHeader* ipdHdr, s_ActiveTextures* arg1, s_ActiveText
 
     if (arg1 != NULL)
     {
-        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr_4, arg1, &LmFilter_IsFullResolution, fileIdx, 1);
+        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr_4, arg1, &LmFilter_IsFullPage, fileIdx, 1);
     }
 
     if (arg2 != NULL)
     {
-        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr_4, arg2, &LmFilter_IsHalfResolution, fileIdx, 1);
+        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr_4, arg2, &LmFilter_IsHalfPage, fileIdx, 1);
     }
 }
 
-s32 Ipd_HalfResMaterialCountGet(s_IpdHeader* ipdHdr) // 0x80043D00
+s32 Ipd_HalfPageMaterialCountGet(s_IpdHeader* ipdHdr) // 0x80043D00
 {
     if (!ipdHdr->isLoaded_1)
     {
         return 0;
     }
 
-    return Lm_MaterialCount(LmFilter_IsHalfResolution, ipdHdr->lmHdr_4);
+    return Lm_MaterialCount(LmFilter_IsHalfPage, ipdHdr->lmHdr_4);
 }
 
-bool LmFilter_IsFullResolution(s_Material* mat) // 0x80043D44
+bool LmFilter_IsFullPage(s_Material* mat) // 0x80043D44
 {
-    return !LmFilter_IsHalfResolution(mat);
+    return !LmFilter_IsHalfPage(mat);
 }
 
 /* Not sure what is the significance of textures that end with H.
  * I've looked at all of them and can't find any pattern.
  */
-bool LmFilter_IsHalfResolution(s_Material* mat) // 0x80043D64
+bool LmFilter_IsHalfPage(s_Material* mat) // 0x80043D64
 {
     char* charCode;
 
