@@ -718,7 +718,7 @@ void func_8003BCF4() // 0x8003BCF4
 
 s32 Map_TypeGet() // 0x8003BD2C
 {
-    return g_WorldGfx.mapType_0 - MAP_TYPES;
+    return g_WorldGfx.type_0 - MAP_TYPES;
 }
 
 void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
@@ -812,16 +812,16 @@ s32 Map_SpeedZoneTypeGet(s32 x, s32 z) // 0x8003BF60
         return SpeedZoneType_Normal;
     }
 
-    if (g_WorldGfx.mapType_0->speedZones_C != NULL)
+    if (g_WorldGfx.type_0->speedZones_C != NULL)
     {
-        curZone = g_WorldGfx.mapType_0->speedZones_C;
-        while (curZone->mapType_0 != NO_VALUE)
+        curZone = g_WorldGfx.type_0->speedZones_C;
+        while (curZone->type_0 != NO_VALUE)
         {
             if (x >= (curZone->minX_2 << 8) && (curZone->maxX_4 << 8) >= x &&
                 z >= (curZone->minZ_6 << 8) && (curZone->maxZ_8 << 8) >= z &&
-                zoneType < curZone->mapType_0)
+                zoneType < curZone->type_0)
             {
-                zoneType = curZone->mapType_0;
+                zoneType = curZone->type_0;
             }
 
             curZone++;
@@ -898,9 +898,9 @@ void func_8003C220(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerPosZ) /
     u8         flags;
     s_MapType* mapType;
 
-    g_WorldGfx.mapType_0 = mapHdr->mapType_0;
+    g_WorldGfx.type_0 = mapHdr->type_0;
 
-    flags = mapHdr->mapType_0->flags_6;
+    flags = mapHdr->type_0->flags_6;
     if (flags & MapTypeFlag_OneActiveChunk)
     {
         activeIpdCount = 1;
@@ -914,10 +914,10 @@ void func_8003C220(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerPosZ) /
         activeIpdCount = 4;
     }
 
-    mapType = mapHdr->mapType_0;
+    mapType = mapHdr->type_0;
     func_800421D8(mapType->tag_2, mapType->plmFileIdx_0, activeIpdCount, CHECK_FLAG(mapType->flags_6, MapTypeFlag_Interior, false), 0, 0);
 
-    if (mapHdr->mapType_0 == &MAP_TYPES[0])
+    if (mapHdr->type_0 == &MAP_TYPES[0])
     {
         Map_PlaceIpdAtGridPos(FILE_BG_THR05FD_IPD, -1, 8);
     }
@@ -934,7 +934,7 @@ void func_8003C30C() // 0x8003C30C
 {
     u8 flags;
 
-    flags = g_WorldGfx.mapType_0->flags_6;
+    flags = g_WorldGfx.type_0->flags_6;
     if ((flags & MapTypeFlag_Interior) && (flags & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks))) 
     {
         func_800420C0();
@@ -990,7 +990,7 @@ void func_8003C3AC() // 0x8003C3AC
     pos0.vx += FP_MULTIPLY_PRECISE(moveAmt, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
     pos0.vz += FP_MULTIPLY_PRECISE(moveAmt, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
 
-    if (g_WorldGfx.mapType_0 == &MAP_TYPES[0] &&
+    if (g_WorldGfx.type_0 == &MAP_TYPES[0] &&
         chara->position_18.vx >= FP_METER(-40.0f) && chara->position_18.vx <= FP_METER(40.0f) &&
         chara->position_18.vz >= FP_METER(200.0f) && chara->position_18.vz <= FP_METER(240.0f))
     {
@@ -1003,7 +1003,7 @@ void func_8003C3AC() // 0x8003C3AC
         vwGetViewPosition(&pos1);
         vwGetViewAngle(&pos2);
 
-        flags1 = g_WorldGfx.mapType_0->flags_6;
+        flags1 = g_WorldGfx.type_0->flags_6;
         if (!(flags1 & MapTypeFlag_Interior) || !(flags1 & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks)))
         {
             var_s1 = FP_MULTIPLY(Math_Cos(pos2.vx), FP_METER(9.0f), Q12_SHIFT);
@@ -1036,7 +1036,7 @@ void func_8003C3AC() // 0x8003C3AC
         pos1.vz += FP_FROM(FP_TO(Math_Cos(chara->rotation_24.vy), Q12_SHIFT), Q12_SHIFT);
     }
 
-    flags0 = g_WorldGfx.mapType_0->flags_6;
+    flags0 = g_WorldGfx.type_0->flags_6;
     if ((flags0 & MapTypeFlag_Interior) && (flags0 & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks)))
     {
         var_a1 = chara->position_18.vx / FP_METER(2.5f);
@@ -2528,7 +2528,7 @@ void func_8003EBF4(s_MapOverlayHeader* arg0) // 0x8003EBF4
     u8          temp_a1;
     s_800A9F80* ptr;
 
-    temp_a1 = arg0->mapType_0->flags_6;
+    temp_a1 = arg0->type_0->flags_6;
 
     var_v1 = 0;
 
@@ -2781,7 +2781,7 @@ void func_8003F170() // 0x8003F170
 
     func_800554C4(temp, ptr2->field_2C, sp60, g_SysWork.field_235C, &sp58, 
                   g_SysWork.field_2360.vx, g_SysWork.field_2360.vy, g_SysWork.field_2360.vz,
-                  g_WorldGfx.mapType_0->waterZones_8);
+                  g_WorldGfx.type_0->waterZones_8);
     func_80055814(ptr2->field_30);
 
     if (ptr->field_154.field_0.field_0.s_field_0.field_0 & (1 << 3))

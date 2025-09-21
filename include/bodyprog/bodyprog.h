@@ -1012,7 +1012,7 @@ STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
 
 typedef struct _SpeedZone
 {
-    s8  mapType_0; /** `e_SpeedZoneType` */
+    s8  type_0; /** `e_SpeedZoneType` */
     // 1 byte padding.
     s16 minX_2; // } Q11.4? Q7.8 fits more cleanly, but `Map_SpeedZoneTypeGet` uses `<< 8` for comparison with Q19.12 input position.
     s16 maxX_4; // }
@@ -1092,7 +1092,7 @@ typedef struct _HeldItem
 
 typedef struct _WorldGfx
 {
-    s_MapType*        mapType_0;
+    s_MapType*        type_0;
     u8                useStoredPoint_4; /** `bool` */
     u8                unk_5[3];
     VECTOR3           ipdSamplePoint_8; /** Used by IPD logic to sample which chunks to load or unload. */
@@ -1490,7 +1490,7 @@ typedef struct _BloodSplat
  */
 typedef struct _MapOverlayHeader
 {
-    s_MapType*        mapType_0;
+    s_MapType*        type_0;
     u8                (*getMapRoomIdxFunc_4)(s32 x, s32 y); // Called by `Savegame_MapRoomIdxSet`.
     s8                field_8;
     s8                unk_9[3];
