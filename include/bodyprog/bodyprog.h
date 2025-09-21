@@ -3525,12 +3525,12 @@ void func_8006A178(s_800C4590* arg0, q19_12 posX, q19_12 posY, q19_12 posZ, q19_
 
 s_SubCharacter** func_8006A1A4(s32* charaCount, s_SubCharacter* chara, bool arg2);
 
-s32 func_8006A3B4(s32 arg0, VECTOR* arg1, s32 arg2);
+s32 func_8006A3B4(s32 arg0, VECTOR* pos, s_func_8006AB50* arg2);
 
-s32 func_8006A42C(s32 arg0, VECTOR3* arg1, s32 arg2);
+s32 func_8006A42C(s32 arg0, VECTOR3* pos, s_func_8006AB50* arg2);
 
-s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* pos, s_func_8006AB50* arg2, s32 arg3, s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7,
-                  s_SubCharacter** charas, s32 charaCount);
+s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* pos, s_func_8006AB50* arg2, s32 arg3,
+                  s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7, s_SubCharacter** charas, s32 charaCount);
 
 void func_8006A940(VECTOR3* pos, s_func_8006AB50* arg1, s_SubCharacter** charas, s32 charaCount);
 

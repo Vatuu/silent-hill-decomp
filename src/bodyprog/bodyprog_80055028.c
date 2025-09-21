@@ -3083,7 +3083,7 @@ s32 func_80069FFC(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara) // 0x80
             break;
     }
 
-    return func_8006A4A8(arg0, &posCpy, &sp28, var_s1, func_800425D8(&collDataIdx), collDataIdx, 0, 0, func_8006A1A4(&charaCount, chara, true), charaCount);
+    return func_8006A4A8(arg0, &posCpy, &sp28, var_s1, func_800425D8(&collDataIdx), collDataIdx, NULL, 0, func_8006A1A4(&charaCount, chara, true), charaCount);
 }
 
 void func_8006A178(s_800C4590* arg0, q19_12 posX, q19_12 posY, q19_12 posZ, q19_12 heightY) // 0x8006A178
@@ -3148,14 +3148,14 @@ s_SubCharacter** func_8006A1A4(s32* charaCount, s_SubCharacter* chara, bool arg2
     return &D_800C4458;
 }
 
-s32 func_8006A3B4(s32 arg0, VECTOR* arg1, s32 arg2) // 0x8006A3B4
+s32 func_8006A3B4(s32 arg0, VECTOR* pos, s_func_8006AB50* arg2) // 0x8006A3B4
 {
-    s32 var0;
+    s32 stackPtr;
     s32 var1;
 
-    var0 = SetSp(0x1F8003D8);
-    var1 = func_8006A42C(arg0, arg1, arg2);
-    SetSp(var0);
+    stackPtr = SetSp(0x1F8003D8);
+    var1 = func_8006A42C(arg0, pos, arg2);
+    SetSp(stackPtr);
 
     if (var1 == NO_VALUE)
     {
@@ -3165,18 +3165,18 @@ s32 func_8006A3B4(s32 arg0, VECTOR* arg1, s32 arg2) // 0x8006A3B4
     return var1;
 }
 
-s32 func_8006A42C(s32 arg0, VECTOR3* arg1, s32 arg2) // 0x8006A42C
+s32 func_8006A42C(s32 arg0, VECTOR3* pos, s_func_8006AB50* arg2) // 0x8006A42C
 {
-    VECTOR3 sp28;
-    s32     sp38;
+    VECTOR3 posCpy;
+    s32     collDataIdx;
 
-    sp28 = *arg1;
+    posCpy = *pos;
 
-    return func_8006A4A8(arg0, &sp28, arg2, 0, func_800425D8(&sp38), sp38, 0, 0, 0, 0);
+    return func_8006A4A8(arg0, &posCpy, arg2, 0, func_800425D8(&collDataIdx), collDataIdx, NULL, 0, NULL, 0);
 }
 
-s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* pos, s_func_8006AB50* arg2, s32 arg3, s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7,
-                  s_SubCharacter** charas, s32 charaCount) // 0x8006A4A8
+s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* pos, s_func_8006AB50* arg2, s32 arg3,
+                  s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7, s_SubCharacter** charas, s32 charaCount) // 0x8006A4A8
 {
     s_func_8006CC44      sp18;
     VECTOR3              sp120; // Q19.12
@@ -3217,13 +3217,13 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* pos, s_func_8006AB50* arg2, s32 arg
     {
         if (sp18.field_0_0 != 0)
         {
-            sp18.field_0_8  = (sp18.field_4.field_8 != 0);
+            sp18.field_0_8  = sp18.field_4.field_8 != 0;
             sp18.field_0_9  = 0;
             sp18.field_0_10 = 0;
         }
         else
         {
-            sp18.field_0_8  = (sp18.field_4.field_8 != 0);
+            sp18.field_0_8  = sp18.field_4.field_8 != 0;
             sp18.field_0_9  = 1;
             sp18.field_0_10 = 1;
         }
