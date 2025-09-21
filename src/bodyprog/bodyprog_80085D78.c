@@ -2682,15 +2682,14 @@ void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones
 
     if (D_800C4818.field_1 == 0)
     {
-        // TODO: Conversion to Q27.4? Zone bounds fit Q7.8 better, not sure what's happening.
-        waterZone = Map_WaterZoneGet(pos->vx >> 8, pos->vz >> 8, waterZones);
+        waterZone = Map_WaterZoneGet(Q12_TO_Q4(pos->vx), Q12_TO_Q4(pos->vz), waterZones);
         if (waterZone != NULL)
         {
             func_8008E5B4();
 
             if (waterZone->isEnabled_0 == true)
             {
-                var = FP_TO(waterZone->illumination_2, Q8_SHIFT);
+                var = waterZone->illumination_2 << 8; // TODO: What's the format?
                 func_8008E794(pos, D_800C4818.field_20, var);
                 func_8008EA68(rot, pos, var);
             }
@@ -2864,13 +2863,13 @@ s32 func_8008D8C0(s16 x0, s32 x1, s32 x2) // 0x8008D8C0
     return (res > FP_FLOAT_TO(24.0f, Q8_SHIFT)) ? FP_FLOAT_TO(24.0f, Q8_SHIFT) : res;
 }
 
-// Used by func_8008D990
+// Used by `func_8008D990`.
 u16 D_800AFD7C[] =
 {
     0xF839, 0xF889, 0xFA39, 0xFAE4,
     0xFD56, 0xFDC8, 0xFF56, 0xFFEA,
-    0x0038, 0x018E, 0x01C7, 0x02AA,
-    0x04E3, 0x064F, 0x0688, 0x06E3
+    0x38,   0x18E,  0x1C7,  0x2AA,
+    0x4E3,  0x64F,  0x688,  0x6E3
 };
 
 s_FsImageDesc img0 = { .tPage = { 0, 13 } }; // 0x800AFD9C
@@ -2883,16 +2882,16 @@ void func_8008E4EC(s_LmHeader* lmHdr) // 0x8008E4EC
     func_80056504(lmHdr, D_8002B2CC.str, &img0, 1);
 }
 
-s_WaterZone* Map_WaterZoneGet(s32 posX, s32 posZ, s_WaterZone* waterZone)
+s_WaterZone* Map_WaterZoneGet(q27_4 posX, q27_4 posZ, s_WaterZone* waterZones)
 {
     s_WaterZone* zonePtr;
 
-    if (waterZone == NULL)
+    if (waterZones == NULL)
     {
         return NULL;
     }
 
-    for (zonePtr = waterZone; zonePtr->isEnabled_0; zonePtr++)
+    for (zonePtr = waterZones; zonePtr->isEnabled_0; zonePtr++)
     {
         if (posX >= zonePtr->minX_4 && posX < zonePtr->maxX_6 &&
             posZ >= zonePtr->minZ_8 && posZ < zonePtr->maxZ_A)

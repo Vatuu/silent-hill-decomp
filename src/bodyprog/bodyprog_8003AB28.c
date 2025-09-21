@@ -800,7 +800,7 @@ void func_8003BED0() // 0x8003BED0
 
 extern s_800C4168 const D_800C4168;
 
-s32 Map_SpeedZoneTypeGet(s32 x, s32 z) // 0x8003BF60
+s32 Map_SpeedZoneTypeGet(q19_12 posX, q19_12 posZ) // 0x8003BF60
 {
     s32                zoneType;
     const s_SpeedZone* curZone;
@@ -817,8 +817,8 @@ s32 Map_SpeedZoneTypeGet(s32 x, s32 z) // 0x8003BF60
         curZone = g_WorldGfx.type_0->speedZones_C;
         while (curZone->type_0 != NO_VALUE)
         {
-            if (x >= (curZone->minX_2 << 8) && (curZone->maxX_4 << 8) >= x &&
-                z >= (curZone->minZ_6 << 8) && (curZone->maxZ_8 << 8) >= z &&
+            if (posX >= Q4_TO_Q12(curZone->minX_2) && Q4_TO_Q12(curZone->maxX_4) >= posX &&
+                posZ >= Q4_TO_Q12(curZone->minZ_6) && Q4_TO_Q12(curZone->maxZ_8) >= posZ &&
                 zoneType < curZone->type_0)
             {
                 zoneType = curZone->type_0;

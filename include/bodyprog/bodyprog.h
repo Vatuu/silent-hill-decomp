@@ -1033,10 +1033,10 @@ typedef struct _WaterZone
     u8  isEnabled_0; /** `bool` */
     // 1 byte padding.
     s16 illumination_2;
-    s16 minX_4; // } Q11.4? Q7.8 fits more cleanly, but a call to `Map_WaterZoneGet` uses `>> 8` with Q19.12 arg position.
-    s16 maxX_6; // }
-    s16 minZ_8; // }
-    s16 maxZ_A; // }
+    q11_4 minX_4;
+    q11_4 maxX_6;
+    q11_4 minZ_8;
+    q11_4 maxZ_A;
 } s_WaterZone;
 
 typedef struct
@@ -1049,7 +1049,7 @@ typedef struct
     s_FsImageDesc texture_C;
     s_Skeleton    skeleton_14;
 } s_CharaModel;
-STATIC_ASSERT_SIZEOF(s_CharaModel, 0x560);
+STATIC_ASSERT_SIZEOF(s_CharaModel, 1376);
 
 typedef struct _MapType
 {
@@ -3237,8 +3237,14 @@ s32 func_8008D8C0(s16 x0, s32 x1, s32 x2);
 
 void func_8008D990(s32, s32, VECTOR3*, s32, s32);
 
-/** `posX` and `posX` appear to be in Q27.4. */
-s_WaterZone* Map_WaterZoneGet(s32 posX, s32 posZ, s_WaterZone* waterZone);
+/** @brief Gets the water zone at a given position.
+ *
+ * @param posX X position.
+ * @param posZ Z position.
+ * @param waterZones Water zones to query.
+ * @return Water zone at the given position.
+ */
+s_WaterZone* Map_WaterZoneGet(q27_4 posX, q27_4 posZ, s_WaterZone* waterZones);
 
 void func_8008E5B4(void);
 
@@ -3951,7 +3957,13 @@ void GameFs_BgItemLoad();
 
 void func_8003BED0();
 
-s32 Map_SpeedZoneTypeGet(s32 x, s32 z);
+/** @brief Gets the speed zone type at a given position.
+ *
+ * @param posX X position.
+ * @param posZ Z position.
+ * @return Speed zone type at the given position (`e_SpeedZoneType`).
+ */
+s32 Map_SpeedZoneTypeGet(q19_12 posX, q19_12 posZ);
 
 /** Used in map loading. Something related to screen.
  * Removing it causes the game to get stuck at the loading screen.
