@@ -52,11 +52,11 @@ typedef enum _MapTypeFlags
     MapTypeFlag_Unk3             = 1 << 3  /** @unused Unused map type `XXX` has this flag. */
 } e_MapTypeFlags;
 
-typedef enum _BoneHierarhy
+typedef enum _BoneHierarchy
 {
-    BoneHierarhy_End = -2,
-    BoneHierarhy_MultiModel = -3,
-} e_BoneHierarhy;
+    BoneHierarchy_MultiModel = -3,
+    BoneHierarchy_End        = -2
+} e_BoneHierarchy;
 
 typedef enum _EffectTextureFlags
 {
@@ -1012,7 +1012,7 @@ STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
 
 typedef struct _SpeedZone
 {
-    s8  type_0; /** `e_SpeedZoneType` */
+    s8  mapType_0; /** `e_SpeedZoneType` */
     // 1 byte padding.
     s16 minX_2; // } Q11.4? Q7.8 fits more cleanly, but `Map_SpeedZoneTypeGet` uses `<< 8` for comparison with Q19.12 input position.
     s16 maxX_4; // }
@@ -1092,18 +1092,18 @@ typedef struct _HeldItem
 
 typedef struct _WorldGfx
 {
-    s_MapType*        type_0;
-    s8                useStoredPoint_4;
+    s_MapType*        mapType_0;
+    s8                useStoredPoint_4; /** `bool` */
     u8                unk_5[3];
-    VECTOR3           ipdSamplePoint_8; /** Used by IPD logic to sample which chunks to load/deload. */
+    VECTOR3           ipdSamplePoint_8; /** Used by IPD logic to sample which chunks to load or unload. */
     s32               dataPtr_14;       // Used frequently as `s_LmHeader*`, but code adds file lengths to it. Could just be `u8*` pointing to current file data?
     s_CharaModel*     charaModelsTable_18[Chara_Count];
     s_CharaModel      charaModels_CC[4];
     s_CharaModel      harryModel_164C;
     s_HeldItem        heldItem_1BAC;
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; /** Debug camera info. */
-    s_LmHeader        itemLm_1BE4;
-    s32               objectsCount_2BE8;
+    s_LmHeader        itemLmHdr_1BE4;
+    s32               objectCount_2BE8;
     s_WorldObject     objects_2BEC[29]; // Size based on the check in `g_WorldGfx_ObjectAdd`.
 } s_WorldGfx;
 STATIC_ASSERT_SIZEOF(s_WorldGfx, 11708);
@@ -1490,7 +1490,7 @@ typedef struct _BloodSplat
  */
 typedef struct _MapOverlayHeader
 {
-    s_MapType*        type_0;
+    s_MapType*        mapType_0;
     u8                (*getMapRoomIdxFunc_4)(s32 x, s32 y); // Called by `Savegame_MapRoomIdxSet`.
     s8                field_8;
     s8                unk_9[3];
@@ -2516,6 +2516,9 @@ void WorldObject_ModelNameSet(s_WorldObject_0* arg0, char* newStr);
 
 void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECTOR3* rot);
 
+/** Returns held item ID. */
+s32 func_8003CD5C();
+
 void func_8003CD6C(s_PlayerCombat* combat);
 
 /** Returns `bool`? */
@@ -2525,7 +2528,7 @@ void func_8003D01C();
 
 void func_8003D03C();
 
-s32 func_8003D444(s32 idx);
+s32 func_8003D444(s32 charaId);
 
 void func_8003D550(s32 charaId, s32 arg1);
 
@@ -2541,7 +2544,7 @@ s32 func_8003D21C(s_MapOverlayHeader* arg0);
 
 void func_8003D5B4(s8 arg0);
 
-void func_8003D6E0(s32 arg0, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex);
+void func_8003D6E0(s32 charaId, s32 modeIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 s32 func_8003DD74(s32 charaId, s32 arg1);
 
@@ -2794,7 +2797,7 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_A
 /** Something related to player weapon position. Takes coords to arm bones. */
 void func_80044F14(GsCOORDINATE2* coord, s16 z, s16 x, s16 y);
 
-s8 Bone_GetModelIndex(s8* ptr, bool arg1);
+s8 Bone_ModelIdxGet(s8* ptr, bool arg1);
 
 /** Skeleton setup? Assigns bones pointer for the skeleton and resets fields. */
 void Skeleton_Init(s_Skeleton* skel, s_Bone* bones, u8 boneCount);
@@ -3314,11 +3317,11 @@ void func_800880F0(s32 arg0);
 
 void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, u32 arg9, s16 argA, s32 argB);
 
-/** `arg0` and `arg5` could be pointers.
+/** `arg5` could be a pointer.
  * `func_8003D6E0` uses this function and in the last argument
  * it input `arg5` and `arg5` is an undetermined function pointer
  */
-bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 flags, s_LmHeader* lmHdr, s_FsImageDesc* tex);
+bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coord, s8 flags, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 bool func_80088D0C();
 
@@ -3931,7 +3934,7 @@ void func_8003BE28();
 
 // ====================
 
-s_Bone* func_8003BE50(s32 idx);
+s_Bone* func_8003BE50(s32 modelIdx);
 
 void GameFs_BgEtcGfxLoad();
 
@@ -3952,36 +3955,36 @@ void func_8003C0C0();
 /** Allocates player model? */
 void func_8003C110();
 
-void CharaModel_Free(s_CharaModel* arg0);
+void CharaModel_Free(s_CharaModel* model);
 
 /** @unused */
 void Ipd_ActiveChunksClear1();
 
 void func_8003C30C();
 
-void WorldGfx_StoreIpdSamplePoint();
+void WorldGfx_IpdSamplePointStore();
 
-void WorldGfx_ResetIpdSamplePoint();
+void WorldGfx_IpdSamplePointReset();
 
 /** Handles player movement. */
 void func_8003C3AC();
 
 void func_8003C878(s32);
 
-void func_8003CB3C(s_WorldGfx* arg0);
+void func_8003CB3C(s_WorldGfx* worldGfx);
 
-void func_8003CB44(s_WorldGfx* arg0);
+void func_8003CB44(s_WorldGfx* worldGfx);
 
-void func_8003CBA4(s_WorldObject* arg0);
+void func_8003CBA4(s_WorldObject* worldGfx);
 
 void func_8003CC7C(s_WorldObject_0* arg0, MATRIX* arg1, MATRIX* arg2);
 
-void func_8003D354(s32* arg0, s32 arg1);
+void func_8003D354(s32* arg0, s32 charaId);
 
 /** Texture UV setup for NPCs. */
-void func_8003D3BC(s_FsImageDesc* image, s32 groupIds, s32 arg2);
+void func_8003D3BC(s_FsImageDesc* image, s32 groupIds, s32 modelIdx);
 
-s32 func_8003D7D4(u32 charaId, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex);
+s32 func_8003D7D4(u32 charaId, s32 modelIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 /** Something related to animations. */
 void func_8003D938();

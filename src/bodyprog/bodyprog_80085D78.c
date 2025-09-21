@@ -1352,11 +1352,11 @@ void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6,
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088370); // 0x80088370
 
-bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 flags, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x80088C7C
+bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coord, s8 flags, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x80088C7C
 {
-    func_80035338(arg0 + 1, charaId, NULL, coord);
+    func_80035338(modelIdx + 1, charaId, NULL, coord);
     func_8003D5B4(flags);
-    func_8003D6E0(charaId, arg0, lmHdr, tex);
+    func_8003D6E0(charaId, modelIdx, lmHdr, tex);
     return true;
 }
 
