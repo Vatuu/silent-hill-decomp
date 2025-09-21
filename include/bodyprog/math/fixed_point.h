@@ -161,6 +161,14 @@
 #define Q8_TO_Q12(x) \
     ((x) << 4)
 
+/** @brief Converts a fixed-point value from Q*.12 to Q*.4.
+ *
+ * @param x Q*.12 fixed-point value to convert.
+ * @return `x` converted to Q*.4 fixed-point.
+ */
+#define Q12_TO_Q4(x) \
+    ((x) >> 8)
+
 /** @brief Converts a fixed-point value from Q*.12 to Q*.8.
  *
  * @param x Q*.12 fixed-point value to convert.
