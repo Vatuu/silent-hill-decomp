@@ -388,6 +388,7 @@ typedef struct
     s16 field_2;
 } s_func_8006DCE0_8C;
 
+// Contains pointers to active characters among other things.
 typedef struct
 {
     s32                  field_0;
@@ -420,8 +421,8 @@ typedef struct
     s16                  field_5E;
     s16                  field_60;
     s8                   unk_62[2];
-    s_SubCharacter**     field_64; // `Array of characters.
-    s32                  field_68; // Index into `field_64`.
+    s_SubCharacter**     characters_64; // Active characters?
+    s32                  characterCount_68;
     s_func_8006DCE0_6C   field_6C;
     s32                  field_7C;
     s32                  field_80;
@@ -2368,6 +2369,7 @@ extern s8 D_800C4414;
 
 extern s_SubCharacter* D_800C4458;
 
+/** Array of active characters? */
 extern s_SubCharacter** D_800C4474;
 
 // emoose: Also works: `extern u16 D_800C4478[];`, `arg0->field_4 = D_800C4478[0];`.
@@ -3514,16 +3516,16 @@ s32 func_80069FFC(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara);
 
 void func_8006A178(s_800C4590* arg0, q19_12 posX, q19_12 posY, q19_12 posZ, q19_12 heightY);
 
-s_SubCharacter** func_8006A1A4(s32* arg0, s_SubCharacter* chara, bool arg2);
+s_SubCharacter** func_8006A1A4(s32* charaCount, s_SubCharacter* chara, bool arg2);
 
 s32 func_8006A3B4(s32 arg0, VECTOR* arg1, s32 arg2);
 
 s32 func_8006A42C(s32 arg0, VECTOR3* arg1, s32 arg2);
 
 s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* pos, s_func_8006AB50* arg2, s32 arg3, s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7,
-                  s_SubCharacter** charas, s32 charaIdx);
+                  s_SubCharacter** charas, s32 charaCount);
 
-void func_8006A940(VECTOR3* pos, s_func_8006AB50* arg1, s_SubCharacter** arg2, s32 count);
+void func_8006A940(VECTOR3* pos, s_func_8006AB50* arg1, s_SubCharacter** charas, s32 charaCount);
 
 void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* vec, s_func_8006AB50* arg2, s32 arg3);
 
@@ -3606,7 +3608,7 @@ bool func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* pos, VECTOR3* offset, s_Sub
 
 bool func_8006DC18(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2);
 
-bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos, VECTOR3* offset, s32 arg5, s32 arg6, s_SubCharacter** charas, s32 arg8);
+bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos, VECTOR3* offset, s32 arg5, s32 arg6, s_SubCharacter** charas, s32 charaCount);
 
 bool func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1);
 

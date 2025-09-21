@@ -1153,7 +1153,7 @@ typedef struct _SubCharacter
     s16     field_56; // }
     s32     field_58; // }
     VECTOR3 field_5C;
-    VECTOR3 field_68;
+    VECTOR3 characterCount_68;
     VECTOR3 field_74;
     VECTOR3 field_80;
     VECTOR3 field_8C;
@@ -1175,7 +1175,7 @@ typedef struct _SubCharacter
     s16               field_CE;
     s16               field_D0;
     s16               field_D2;
-    s16               field_D4;
+    s16               field_D4; // Z angle?
     s16               field_D6;
     s_SubCharacter_D8 field_D8;
 
