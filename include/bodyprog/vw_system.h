@@ -354,7 +354,7 @@ extern VECTOR3           vcRefPosSt;
 extern VW_VIEW_WORK      vwViewPointInfo;
 extern MATRIX            VbWvsMatrix;
 extern VC_WATCH_MV_PARAM vcWatchMvPrmSt;
-extern s32               vcSelfViewTimer;
+extern q19_12            vcSelfViewTimer;
 
 // vc_util.c
 
@@ -473,10 +473,10 @@ void vcAdjCamOfsAngByCharaInScreen(SVECTOR* cam_ang, SVECTOR* ofs_cam2chara_btm_
 void vcAdjCamOfsAngByOfsAngSpd(SVECTOR* ofs_ang, SVECTOR* ofs_ang_spd, SVECTOR* ofs_tgt_ang, VC_WATCH_MV_PARAM* prm_p);
 void vcMakeCamMatAndCamAngByBaseAngAndOfsAng(SVECTOR* cam_mat_ang, MATRIX* cam_mat, SVECTOR* base_cam_ang, SVECTOR* ofs_cam_ang, VECTOR3* cam_pos);
 void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type);
-s32  vcCamMatNoise(s32 noise_w, s32 ang_spd1, s32 ang_spd2, s32 vcSelfViewTimer);
+s32  vcCamMatNoise(s32 noise_w, s32 ang_spd1, s32 ang_spd2, q19_12 vcSelfViewTimer);
 s32  Vc_VectorMagnitudeCalc(s32 x, s32 y, s32 z); // Q19.12
-s32  vcGetXZSumDistFromLimArea(s32* out_vec_x_p, s32* out_vec_z_p, s32 chk_wld_x, s32 chk_wld_z,
-                               s32 lim_min_x, s32 lim_max_x, s32 lim_min_z, s32 lim_max_z, s32 can_ret_minus_dist_f);
+q19_12 vcGetXZSumDistFromLimArea(s32* out_vec_x_p, s32* out_vec_z_p, q19_12 chk_wld_x, q19_12 chk_wld_z,
+                               q19_12 lim_min_x, q19_12 lim_max_x, q19_12 lim_min_z, q19_12 lim_max_z, bool can_ret_minus_dist_f);
 
 static inline void Vc_CurNearRoadSet(VC_WORK* work, VC_NEAR_ROAD_DATA* road)
 {

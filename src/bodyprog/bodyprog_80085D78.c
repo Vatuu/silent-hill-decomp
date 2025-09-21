@@ -2457,9 +2457,9 @@ void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q19_
 void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 alpha) // 0x8008CC98
 {
     // Low-precision lerp between positions?
-    result->position_0.vx = frame0->position_0.vx + FP_MULTIPLY(frame1->position_0.vx - frame0->position_0.vx, (s64)alpha, Q12_SHIFT);
-    result->position_0.vy = frame0->position_0.vy + FP_MULTIPLY(frame1->position_0.vy - frame0->position_0.vy, (s64)alpha, Q12_SHIFT);
-    result->position_0.vz = frame0->position_0.vz + FP_MULTIPLY(frame1->position_0.vz - frame0->position_0.vz, (s64)alpha, Q12_SHIFT);
+    result->position_0.vx = frame0->position_0.vx + FP_MULTIPLY_PRECISE(frame1->position_0.vx - frame0->position_0.vx, alpha, Q12_SHIFT);
+    result->position_0.vy = frame0->position_0.vy + FP_MULTIPLY_PRECISE(frame1->position_0.vy - frame0->position_0.vy, alpha, Q12_SHIFT);
+    result->position_0.vz = frame0->position_0.vz + FP_MULTIPLY_PRECISE(frame1->position_0.vz - frame0->position_0.vz, alpha, Q12_SHIFT);
 
     // Higher-precision lerp between rotations?
     result->rotation_6.vx = Math_LerpFixed12(frame0->rotation_6.vx, frame1->rotation_6.vx, alpha);

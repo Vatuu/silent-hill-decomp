@@ -6273,12 +6273,12 @@ bool func_8006FD90(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3) // 0x800
 
     for (var1 = var0; arg1 > 0; arg1--)
     {
-        var0 = FP_MULTIPLY((s64)var0, var1, Q12_SHIFT);
+        var0 = FP_MULTIPLY_PRECISE(var0, var1, Q12_SHIFT);
     }
 
     dist = Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
                                g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz);
-    temp = arg2 + FP_MULTIPLY((s64)arg3, var0, Q12_SHIFT);
+    temp = arg2 + FP_MULTIPLY_PRECISE(arg3, var0, Q12_SHIFT);
     if (temp < dist)
     {
         return false;

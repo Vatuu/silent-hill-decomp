@@ -1111,13 +1111,13 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                             break;
                     }
                     
-                    chara->field_D6 += FP_MULTIPLY((s64)g_DeltaTime0, (s64)Q12(0.27f), Q12_SHIFT);
-                    chara->field_C8 += FP_MULTIPLY((s64)g_DeltaTime0, (s64)Q12(1.2f), Q12_SHIFT);
-                    chara->field_CE += FP_MULTIPLY((s64)g_DeltaTime0, (s64)Q12(0.9f), Q12_SHIFT);
+                    chara->field_D6 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.27f), Q12_SHIFT);
+                    chara->field_C8 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.2f), Q12_SHIFT);
+                    chara->field_CE += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.9f), Q12_SHIFT);
                     
-                    chara->field_D6 = CLAMP(chara->field_D6, 0x3AE, 0x800);
-                    chara->field_C8 = CLAMP(chara->field_C8, -0x1999, -0x666);
-                    chara->field_CE = CLAMP(chara->field_CE, -0x1199, -0x333);
+                    chara->field_D6 = CLAMP(chara->field_D6, Q12(0.23f), Q12(0.5f));
+                    chara->field_C8 = CLAMP(chara->field_C8, Q12(-1.6f), Q12(-0.4));
+                    chara->field_CE = CLAMP(chara->field_CE, Q12(-1.1f), Q12(-0.2f));
                     
                     if (chara->health_B0 <= Q12(0.0f) && chara->properties_E4.player.afkTimer_E8 <= FP_TIME(0.0f))
                     {
