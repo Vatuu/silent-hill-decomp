@@ -939,7 +939,7 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
     }
 }
 
-s32 func_8004287C(s_WorldGfx_2BEC_0* arg0, s_WorldGfx_2BEC_0_10* arg1, s32 posX, s32 posZ) // 0x8004287C
+s32 func_8004287C(s_WorldObject_0* arg0, s_WorldObject_0_10* arg1, s32 posX, s32 posZ) // 0x8004287C
 {
     s_IpdChunk* chunks[4];
     s32         sp20[4];
@@ -1680,7 +1680,7 @@ void func_80044044(s_IpdHeader* ipd, s32 gridX, s32 gridZ) // 0x80044044
 
 void func_80044090(s_IpdHeader* ipdHdr, s32 arg1, s32 arg2, GsOT* ot, void* arg4) // 0x80044090
 {
-    s_WorldGfx_2BEC_0_0 sp18;
+    s_ModelInfo sp18;
     GsCOORDINATE2       sp28;
     MATRIX              sp78;
     MATRIX              sp98;
@@ -2284,7 +2284,7 @@ void func_80045014(s_Skeleton* skel) // 0x80045014
     // Traverse bone hierarchy and clear flags.
     for (bone = &skel->bones_8[0]; bone < &skel->bones_8[skel->boneCount_0]; bone++)
     {
-        bone->field_x0.field_0 = 0;
+        bone->modelInfo_0.field_0 = 0;
     }
 }
 
@@ -2368,7 +2368,7 @@ void func_80045258(s_Bone** boneOrd, s_Bone* bones, s32 boneIdx, s_LmHeader* lmH
     {
         for (bone = bones; bone < &bones[boneIdx]; bone++)
         {
-            if (bone->field_x0.modelIdx_C == *objOrd)
+            if (bone->modelInfo_0.modelIdx_C == *objOrd)
             {
                 *boneOrd = bone;
                 boneOrd  = &bone->next_14;
@@ -2392,7 +2392,7 @@ void func_800452EC(s_Skeleton* skel) // 0x800452EC
 
     while (var_a1)
     {
-        temp_v0 = var_a1->field_x0.modelHdr_8;
+        temp_v0 = var_a1->modelInfo_0.modelHdr_8;
         temp_v1 = temp_v0->modelName_0.str[1] - '0';
         temp_a0 = temp_v0->modelName_0.str[0] - '0';
 
@@ -2431,11 +2431,11 @@ void func_800453E8(s_Skeleton* skel, bool cond) // 0x800453E8
     {
         if (cond)
         {
-            bone->field_x0.field_0 &= ~(1 << 31);
+            bone->modelInfo_0.field_0 &= ~(1 << 31);
         }
         else
         {
-            bone->field_x0.field_0 |= 1 << 31;
+            bone->modelInfo_0.field_0 |= 1 << 31;
         }
     }
 }
@@ -2455,11 +2455,11 @@ void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
     {
         if (cond)
         {
-            bone[status].field_x0.field_0 &= ~(1 << 31);
+            bone[status].modelInfo_0.field_0 &= ~(1 << 31);
         }
         else
         {
-            bone[status].field_x0.field_0 |= 1 << 31;
+            bone[status].modelInfo_0.field_0 |= 1 << 31;
         }
         
         status = Bone_GetModelIndex(arg1, false);
@@ -2558,11 +2558,11 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord,
 
     for (var_s0_2 = skel->bones_4; var_s0_2 != NULL; var_s0_2 = var_s0_2->next_14)
     {
-        if (var_s0_2->field_x0.field_0 >= 0)
+        if (var_s0_2->modelInfo_0.field_0 >= 0)
         {
             func_80049B6C(&coord[(u8)var_s0_2->field_10], &sp40, &sp20);
 
-            if (var_s0_2->field_x0.field_0 & 1)
+            if (var_s0_2->modelInfo_0.field_0 & 1)
             {
                 sp20.m[2][2]         = 0;
                 *(s32*)&sp20.m[2][0] = 0;
@@ -2571,7 +2571,7 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord,
                 *(s32*)&sp20.m[0][0] = 0;
             }
 
-            func_80057090(&var_s0_2->field_x0, ot, arg2, &sp20, &sp40, arg5);
+            func_80057090(&var_s0_2->modelInfo_0, ot, arg2, &sp20, &sp40, arg5);
 
             if (D_800C4168.fogEnabled_1)
             {

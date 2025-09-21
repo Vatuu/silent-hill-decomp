@@ -773,7 +773,7 @@ void GameFs_BgEtcGfxLoad() // 0x8003BE6C
 
 void GameFs_BgItemLoad() // 0x8003BE9C
 {
-    g_WorldGfx.field_1BE4.queueIdx_1000 = Fs_QueueStartRead(FILE_BG_BG_ITEM_PLM, &g_WorldGfx.field_1BE4);
+    g_WorldGfx.itemLm_1BE4.queueIdx_1000 = Fs_QueueStartRead(FILE_BG_BG_ITEM_PLM, &g_WorldGfx.itemLm_1BE4);
 }
 
 void func_8003BED0() // 0x8003BED0
@@ -781,17 +781,17 @@ void func_8003BED0() // 0x8003BED0
     static s_FsImageDesc IMG_TIM = { .tPage = { 0, 15 }, .clutX = 176 };
     static s_FsImageDesc IMG_ETC = { .tPage = { 0, 12 }, .v = 192, .clutX = 192 };
 
-    s_LmHeader* D_800BE9FC = &g_WorldGfx.field_1BE4;
+    s_LmHeader* D_800BE9FC = &g_WorldGfx.itemLm_1BE4;
 
     if (Fs_QueueIsEntryLoaded(D_800BE9FC->queueIdx_1000) == 0 || D_800BE9FC->isLoaded_2)
     {
         return;
     }
 
-    LmHeader_FixOffsets(&g_WorldGfx.field_1BE4);
-    func_80056504(&g_WorldGfx.field_1BE4, "TIM00", &IMG_TIM, 1);
-    func_80056504(&g_WorldGfx.field_1BE4, "BG_ETC", &IMG_ETC, 1);
-    Lm_MaterialFlagsApply(&g_WorldGfx.field_1BE4);
+    LmHeader_FixOffsets(&g_WorldGfx.itemLm_1BE4);
+    func_80056504(&g_WorldGfx.itemLm_1BE4, "TIM00", &IMG_TIM, 1);
+    func_80056504(&g_WorldGfx.itemLm_1BE4, "BG_ETC", &IMG_ETC, 1);
+    Lm_MaterialFlagsApply(&g_WorldGfx.itemLm_1BE4);
 }
 
 // ========================================
@@ -854,9 +854,9 @@ void func_8003C0C0() // 0x8003C0C0
 
     ptr->itemId_0 = NO_VALUE;
     ptr->lmHdr_14 = (s_LmHeader*)ILM_BUFFER0;
-    ptr->bone_18.field_x0.field_0 = 0;
-    ptr->bone_18.field_x0.field_4 = 0;
-    ptr->bone_18.field_x0.modelHdr_8 = 0;
+    ptr->bone_18.modelInfo_0.field_0 = 0;
+    ptr->bone_18.modelInfo_0.field_4 = 0;
+    ptr->bone_18.modelInfo_0.modelHdr_8 = 0;
 }
 
 void func_8003C110() // 0x8003C110
@@ -1083,17 +1083,17 @@ void func_8003C878(s32 arg0) // 0x8003C878
     func_800550D0();
 }
 
-void func_8003C8F8(s_WorldGfx_2BEC_0* arg0, char* newStr) // 0x8003C8F8
+void WorldObject_ModelNameSet(s_WorldObject_0* arg0, char* newStr) // 0x8003C8F8
 {
     arg0->field_10.lmIdx_9 = 0;
-    arg0->field_0.field_0  = 0;
+    arg0->modelInfo_0.field_0  = 0;
 
     StringCopy(arg0->field_10.modelName_0.str, newStr);
 
     arg0->field_10.field_8 = 0;
 }
 
-void func_8003C92C(s_WorldGfx_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* rot) // 0x8003C92C
+void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECTOR3* rot) // 0x8003C92C
 {
     s32              vy;
     s32              vx;
@@ -1103,9 +1103,9 @@ void func_8003C92C(s_WorldGfx_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* 
     s32              coord2; // Q23.8
     s32              i;
     s32              ret;
-    s_WorldGfx_2BEC* ptr;
+    s_WorldObject* ptr;
 
-    if (g_WorldGfx.field_2BE8 < 29)
+    if (g_WorldGfx.objectsCount_2BE8 < 29)
     {
         if (arg0->field_10.lmIdx_9 == 0)
         {
@@ -1114,7 +1114,7 @@ void func_8003C92C(s_WorldGfx_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* 
 
             if (ret == 0)
             {
-                if (!Lm_ModelFind(arg0, &g_WorldGfx.field_1BE4, &arg0->field_10))
+                if (!Lm_ModelFind(arg0, &g_WorldGfx.itemLm_1BE4, &arg0->field_10))
                 {
                     return;
                 }
@@ -1134,9 +1134,9 @@ void func_8003C92C(s_WorldGfx_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* 
         vz     = rot->vz >> 2;
         vy     = rot->vy;
 
-        for (i = 0; i < g_WorldGfx.field_2BE8; i++)
+        for (i = 0; i < g_WorldGfx.objectsCount_2BE8; i++)
         {
-            ptr = &g_WorldGfx.field_2BEC[i];
+            ptr = &g_WorldGfx.objects_2BEC[i];
     
             if (arg0 == ptr->field_0 &&
                 coord0 == ptr->gsCoordinate0_4 &&
@@ -1150,12 +1150,12 @@ void func_8003C92C(s_WorldGfx_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* 
             }
         }
 
-        ptr = &g_WorldGfx.field_2BEC[g_WorldGfx.field_2BE8];
+        ptr = &g_WorldGfx.objects_2BEC[g_WorldGfx.objectsCount_2BE8];
 
         ptr->vx_C = vx;
         ptr->vy_C = vy;
 
-        // Required for match.
+        // @hack Required for match.
         if (ptr->gsCoordinate2_8) {}
 
         ptr->vz_C            = vz;
@@ -1163,28 +1163,28 @@ void func_8003C92C(s_WorldGfx_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* 
         ptr->gsCoordinate0_4 = coord0;
         ptr->gsCoordinate1_4 = coord1;
         ptr->gsCoordinate2_8 = coord2;
-        g_WorldGfx.field_2BE8++;
+        g_WorldGfx.objectsCount_2BE8++;
     }
 }
 
 void func_8003CB3C(s_WorldGfx* arg0) // 0x8003CB3C
 {
-    arg0->field_2BE8 = 0;
+    arg0->objectsCount_2BE8 = 0;
 }
 
 void func_8003CB44(s_WorldGfx* arg0) // 0x8003CB44
 {
-    s_WorldGfx_2BEC* ptr;
+    s_WorldObject* ptr;
 
-    for (ptr = &arg0->field_2BEC[0]; ptr < &arg0->field_2BEC[arg0->field_2BE8]; ptr++)
+    for (ptr = &arg0->objects_2BEC[0]; ptr < &arg0->objects_2BEC[arg0->objectsCount_2BE8]; ptr++)
     {
         func_8003CBA4(ptr);
     }
 
-    arg0->field_2BE8 = 0;
+    arg0->objectsCount_2BE8 = 0;
 }
 
-void func_8003CBA4(s_WorldGfx_2BEC* arg0) // 0x8003CBA4
+void func_8003CBA4(s_WorldObject* arg0) // 0x8003CBA4
 {
     GsCOORDINATE2 coord;
     SVECTOR       vec;
@@ -1207,24 +1207,24 @@ void func_8003CBA4(s_WorldGfx_2BEC* arg0) // 0x8003CBA4
     func_8003CC7C(arg0->field_0, &mats[0], &mats[1]);
 }
 
-void func_8003CC7C(s_WorldGfx_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x8003CC7C
+void func_8003CC7C(s_WorldObject_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x8003CC7C
 {
-    s8                    temp_a0;
-    s_WorldGfx_2BEC_0_10* temp_s1;
+    s8                    lmIdx;
+    s_WorldObject_0_10* temp_s1;
     s_ModelHeader*        temp_s2;
 
-    temp_a0 = arg0->field_10.lmIdx_9;
-    if (!temp_a0)
+    lmIdx = arg0->field_10.lmIdx_9;
+    if (!lmIdx)
     {
         return;
     }
 
-    temp_s2 = arg0->field_0.modelHdr_8;
+    temp_s2 = arg0->modelInfo_0.modelHdr_8;
     temp_s1 = &arg0->field_10;
 
-    if (temp_a0 >= 3 && temp_a0 < 7)
+    if (lmIdx >= 3 && lmIdx < 7)
     {
-        if (!IpdHeader_IsLoaded(temp_a0 - 3))
+        if (!IpdHeader_IsLoaded(lmIdx - 3))
         {
             arg0->field_10.lmIdx_9 = 0;
         }
@@ -1236,7 +1236,7 @@ void func_8003CC7C(s_WorldGfx_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x800
         return;
     }
 
-    func_80057090(&arg0->field_0, &g_OrderingTable0[g_ActiveBufferIdx], 1, arg1, arg2, 0);
+    func_80057090(&arg0->modelInfo_0, &g_OrderingTable0[g_ActiveBufferIdx], 1, arg1, arg2, 0);
 }
 
 s32 func_8003CD5C() // 0x8003CD5C
@@ -1459,12 +1459,12 @@ s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
 
 void func_8003D01C() // 0x8003D01C
 {
-    g_WorldGfx.heldItem_1BAC.bone_18.field_x0.field_0 &= ~(1 << 31);
+    g_WorldGfx.heldItem_1BAC.bone_18.modelInfo_0.field_0 &= ~(1 << 31);
 }
 
 void func_8003D03C() // 0x8003D03C
 {
-    g_WorldGfx.heldItem_1BAC.bone_18.field_x0.field_0 |= 1 << 31;
+    g_WorldGfx.heldItem_1BAC.bone_18.modelInfo_0.field_0 |= 1 << 31;
 }
 
 void func_8003D058() // 0x8003D058
@@ -1501,7 +1501,7 @@ void func_8003D058() // 0x8003D058
             }
 
             func_80049B6C(coord, &mat1, &mat0);
-            func_80057090(&ptr0->bone_18.field_x0, &g_OrderingTable0[g_ActiveBufferIdx], 1, &mat0, &mat1, 0);
+            func_80057090(&ptr0->bone_18.modelInfo_0, &g_OrderingTable0[g_ActiveBufferIdx], 1, &mat0, &mat1, 0);
         }
     }
 }

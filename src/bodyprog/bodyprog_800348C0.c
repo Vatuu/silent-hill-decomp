@@ -181,7 +181,6 @@ void GameFs_MapStartup() // 0x80034964
         case 7:
             if (func_80039F90() & SysWorkProcessFlag_RoomTransition)
             {
-                // Maybe some sort of data handling. Calls another function related to texture handling.
                 func_8003C30C();
             }
 
