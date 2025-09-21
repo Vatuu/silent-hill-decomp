@@ -483,11 +483,11 @@ typedef struct
     DVECTOR            field_8;
     s16                field_C;
     s16                field_E;
-    s32                field_10;
-    s32                field_14;
+    s32                field_10; // } X
+    s32                field_14; // } Z?
     s16                field_18;
     s8                 unk_1A[2];
-    s32                field_1C;
+    s32                field_1C; // Index into `field_20`.
     s_func_8006E490_20 field_20[2];
 } s_func_8006E490;
 
@@ -3614,7 +3614,7 @@ void func_8006E0AC(s_func_8006DCE0* arg0, s_IpdCollisionData* ipdColl);
 
 void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2);
 
-void func_8006E490(s_func_8006E490* arg0, u32 arg1, s32 arg2, s32 arg3);
+void func_8006E490(s_func_8006E490* arg0, u32 flags, q19_12 posX, q19_12 posZ);
 
 void func_8006E53C(s_func_8006DCE0* arg0, s_IpdCollisionData_20* arg1, s_IpdCollisionData* arg2);
 
@@ -3658,7 +3658,7 @@ s32 func_80070360(s_SubCharacter* chara, s32 someDist, s16 arg2);
 
 void func_80070400(s_SubCharacter* chara, s_func_80070400_1* arg1, s_func_80070400_1* arg2);
 
-bool func_80070208(s_SubCharacter* chara, s32 arg1);
+bool func_80070208(s_SubCharacter* chara, q19_12 dist);
 
 s32 func_8007029C(s_SubCharacter* chara, q19_12 arg1, q3_12 angle);
 

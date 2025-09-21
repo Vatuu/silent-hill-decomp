@@ -5043,7 +5043,7 @@ bool func_8006D90C(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2) // 0x8
 
     arg0->field_0 = false;
 
-    if (func_8006DCE0((s32)PSX_SCRATCH, 0, 0, vec1, &vecDelta, 0, 0, 0, 0) != 0)
+    if (func_8006DCE0((s32)PSX_SCRATCH, 0, 0, vec1, &vecDelta, 0, 0, 0, 0))
     {
         scratchPrev   = SetSp((s32)PSX_SCRATCH_ADDR(984));
         scratchAddr   = (s32)PSX_SCRATCH;
@@ -5138,7 +5138,7 @@ bool func_8006DC18(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2) // 0x8
     s32 scratchAddr;
 
     arg0->field_0 = false;
-    if (func_8006DCE0((s32)PSX_SCRATCH, 1, 0x4C, vec1, vec2, 0, 0, 0, 0) != 0)
+    if (func_8006DCE0((s32)PSX_SCRATCH, 1, 0x4C, vec1, vec2, 0, 0, 0, 0))
     {
         scratchPrev   = SetSp((s32)PSX_SCRATCH_ADDR(0x3D8));
         scratchAddr   = (s32)PSX_SCRATCH;
@@ -5219,7 +5219,7 @@ bool func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1) // 0x8006DEB0
     s_SubCharacter**     curChara;
     s_IpdCollisionData** collDataPtrs;
     s_IpdCollisionData** curCollData;
-    s_func_8006DCE0_8C*  var_s0;
+    s_func_8006DCE0_8C*  curUnk;
 
     collDataPtrs = func_800425D8(&collDataIdx);
 
@@ -5232,10 +5232,10 @@ bool func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1) // 0x8006DEB0
             func_8006E0AC(arg1, collData);
             func_80069994(collData);
 
-            for (var_s0 = &arg1->field_8C; var_s0 < &arg1->field_8C[arg1->field_88]; var_s0++)
+            for (curUnk = &arg1->field_8C; curUnk < &arg1->field_8C[arg1->field_88]; curUnk++)
             {
-                temp_lo = var_s0->field_2 * arg1->field_7C;
-                func_8006E53C(arg1, &collData->ptr_20[temp_lo + var_s0->field_0], collData);
+                temp_lo = curUnk->field_2 * arg1->field_7C;
+                func_8006E53C(arg1, &collData->ptr_20[temp_lo + curUnk->field_0], collData);
             }
         }
     }
@@ -5264,7 +5264,7 @@ bool func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1) // 0x8006DEB0
 
 void func_8006E0AC(s_func_8006DCE0* arg0, s_IpdCollisionData* arg1) // 0x8006E0AC
 {
-    // arg0 type might be wrong.
+    // `arg0` type might be wrong.
     arg0->field_6C.field_0 = arg1->posX_0;
     arg0->field_6C.field_4 = arg1->posZ_4;
     arg0->field_6C.field_8 = arg0->field_2C.vx - arg0->field_6C.field_0;
@@ -5293,7 +5293,7 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E
     s32     var_a3;
     u32     flags;
 
-    flags         = 0;
+    flags = 0;
     arg0->field_1C = 0;
 
     if (arg0->field_8.vx < 0 && arg0->field_C < 0 &&
@@ -5401,33 +5401,39 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E
     while (arg0->field_1C < 20 && FP_FROM(sp28.vx, Q12_SHIFT) <= FP_FROM(sp18.vx, Q12_SHIFT));
 }
 
-void func_8006E490(s_func_8006E490* arg0, u32 arg1, s32 arg2, s32 arg3) // 0x8006E490
+void func_8006E490(s_func_8006E490* arg0, u32 flags, q19_12 posX, q19_12 posZ) // 0x8006E490
 {
-    s32 var_a2;
+    q19_12 tempPosX;
 
-    if (arg1 & (1 << 2))
+    // TODO: `func_8006E150` also uses these flags. What subsystem are they for?
+    // Flag 0: Invert X.
+    // Flag 1: Invert Z.
+    // Flag 2: Swap XZ.
+
+    if (flags & (1 << 2))
     {
-        var_a2 = arg2;
-        arg2   = arg3;
-        arg3   = var_a2;
+        tempPosX = posX;
+        posX     = posZ;
+        posZ     = tempPosX;
     }
 
-    if (arg1 & (1 << 1))
+    if (flags & (1 << 1))
     {
-        arg3 = -arg3;
+        posZ = -posZ;
     }
 
-    if (arg1 & (1 << 0))
+    if (flags & (1 << 0))
     {
-        arg2 = -arg2;
+        posX = -posX;
     }
 
-    arg2 = FP_FROM(arg2, Q12_SHIFT);
-    arg3 = FP_FROM(arg3, Q12_SHIFT);
-    if (arg2 >= 0 && arg2 < arg0->field_10 && arg3 >= 0 && arg3 < arg0->field_14)
+    posX = FP_FROM(posX, Q12_SHIFT);
+    posZ = FP_FROM(posZ, Q12_SHIFT);
+    if (posX >= 0 && posX < arg0->field_10 &&
+        posZ >= 0 && posZ < arg0->field_14)
     {
-        arg0->field_20[arg0->field_1C].field_0 = arg2;
-        arg0->field_20[arg0->field_1C].field_2 = arg3;
+        arg0->field_20[arg0->field_1C].field_0 = posX;
+        arg0->field_20[arg0->field_1C].field_2 = posZ;
         arg0->field_1C++;
     }
 }
@@ -6372,22 +6378,22 @@ bool func_80070184(s_SubCharacter* chara, s32 arg1, s16 rotY) // 0x80070184
     return func_80070084(chara, varX, varY, varZ);
 }
 
-bool func_80070208(s_SubCharacter* chara, s32 arg1) // 0x80070208
+bool func_80070208(s_SubCharacter* chara, q19_12 dist) // 0x80070208
 {
     s_func_800700F8_2 var;
-    VECTOR3           vec;
-    bool              result;
+    VECTOR3           offset; // Q19.12
+    bool              cond;
 
-    vec.vx = FP_MULTIPLY(arg1, Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
-    vec.vy = 0;
-    vec.vz = FP_MULTIPLY(arg1, Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
+    offset.vx = FP_MULTIPLY(dist, Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
+    offset.vy = FP_METER(0.0f);
+    offset.vz = FP_MULTIPLY(dist, Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
 
-    result = false;
-    if (func_8006DB3C(&var, &chara->position_18, &vec, chara) != 0)
+    cond = false;
+    if (func_8006DB3C(&var, &chara->position_18, &offset, chara))
     {
-        result = var.field_10 > 0;
+        cond = var.field_10 > 0;
     }
-    return result;
+    return cond;
 }
 
 s32 func_8007029C(s_SubCharacter* chara, q19_12 dist, q3_12 angle) // 0x8007029C
