@@ -975,7 +975,7 @@ void func_8003C3AC() // 0x8003C3AC
 
     chara = &g_SysWork.player_4C.chara_0;
 
-    if ((u8)g_WorldGfx.useStoredPoint_4 != 0)
+    if (g_WorldGfx.useStoredPoint_4)
     {
         pos0 = g_WorldGfx.ipdSamplePoint_8;
     }

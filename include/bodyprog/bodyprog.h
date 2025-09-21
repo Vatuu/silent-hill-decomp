@@ -1093,7 +1093,7 @@ typedef struct _HeldItem
 typedef struct _WorldGfx
 {
     s_MapType*        mapType_0;
-    s8                useStoredPoint_4; /** `bool` */
+    u8                useStoredPoint_4; /** `bool` */
     u8                unk_5[3];
     VECTOR3           ipdSamplePoint_8; /** Used by IPD logic to sample which chunks to load or unload. */
     s32               dataPtr_14;       // Used frequently as `s_LmHeader*`, but code adds file lengths to it. Could just be `u8*` pointing to current file data?
