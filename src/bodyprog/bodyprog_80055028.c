@@ -580,7 +580,7 @@ void func_800563E8(s_LmHeader* lmHdr, s32 arg1, s32 arg2, s32 arg3) // 0x800563E
     }
 }
 
-void func_80056464(s_LmHeader* lmHdr, s32 fileIdx, s_FsImageDesc* image, s32 arg3) // 0x80056464
+void Lm_MaterialFileIdxApply(s_LmHeader* lmHdr, s32 fileIdx, s_FsImageDesc* image, s32 arg3) // 0x80056464
 {
     char  sp10[8];
     char  sp18[16];
@@ -600,7 +600,7 @@ void func_80056464(s_LmHeader* lmHdr, s32 fileIdx, s_FsImageDesc* image, s32 arg
         *sp10Ptr++ = *sp18Ptr++;
     }
 
-    func_80056558(lmHdr, sp10, image, arg3);
+    Lm_MaterialFsImageApply(lmHdr, sp10, image, arg3);
 }
 
 void func_80056504(s_LmHeader* lmHdr, char* newStr, s_FsImageDesc* image, s32 arg3) // 0x80056504
@@ -608,10 +608,10 @@ void func_80056504(s_LmHeader* lmHdr, char* newStr, s_FsImageDesc* image, s32 ar
     char sp10[8];
 
     StringCopy(sp10, newStr);
-    func_80056558(lmHdr, sp10, image, arg3);
+    Lm_MaterialFsImageApply(lmHdr, sp10, image, arg3);
 }
 
-bool func_80056558(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* image, s32 arg3) // 0x80056558
+bool Lm_MaterialFsImageApply(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* image, s32 arg3) // 0x80056558
 {
     s_Material* curMat;
 
@@ -829,20 +829,20 @@ s32 LmHeader_ModelCountGet(s_LmHeader* lmHdr) // 0x80056C80
     return lmHdr->modelCount_8;
 }
 
-void func_80056C8C(s_Bone* bone, s_LmHeader* lmHdr, s32 modelHdrIdx)
+void Bone_ModelAssign(s_Bone* bone, s_LmHeader* lmHdr, s32 modelHdrIdx)
 {
     s_ModelHeader* modelHdr;
 
     modelHdr = lmHdr->modelHdrs_C;
-    bone->modelHdrIdx_C = modelHdrIdx;
+    bone->modelInfo_0.modelIdx_C = modelHdrIdx;
 
     if (lmHdr->magic_0 == LM_HEADER_MAGIC)
     {
-        bone->modelHdr_8 = &modelHdr[modelHdrIdx];
+        bone->modelInfo_0.modelHdr_8 = &modelHdr[modelHdrIdx];
     }
 }
 
-bool Lm_ModelFind(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHdr, s_800BCE18_2BEC_0_10* arg2) // 0x80056CB4
+bool Lm_ModelFind(s_WorldObject_0* arg0, s_LmHeader* lmHdr, s_WorldObject_0_10* arg2) // 0x80056CB4
 {
     u_Filename     sp10;
     s32            modelHdrCount;
@@ -862,11 +862,9 @@ bool Lm_ModelFind(s_800BCE18_2BEC_0* arg0, s_LmHeader* lmHdr, s_800BCE18_2BEC_0_
         {
             if (!COMPARE_FILENAMES(&modelHdr->modelName_0, &sp10))
             {
-                result                   = true;
-                arg0->field_0.modelIdx_C = i;
-                arg0->field_0.modelHdr_8 = modelHdr;
-                // TODO: `field_8` above used to be `s_800BCE18_2BEC_0_10*`, but this func showed it was `s_ModelHeader*`
-                // Unsure if all `s_800BCE18_2BEC_0_10` refs should be changed though since struct is different size.
+                result                       = true;
+                arg0->modelInfo_0.modelIdx_C = i;
+                arg0->modelInfo_0.modelHdr_8 = modelHdr;
             }
         }
     }
@@ -883,7 +881,7 @@ void StringCopy(char* prevStr, char* newStr) // 0x80056D64
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80056D8C); // 0x80056D8C
 
-void func_80057090(s_800BCE18_2BEC_0_0* arg0, GsOT* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5) // 0x80057090
+void func_80057090(s_ModelInfo* arg0, GsOT* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5) // 0x80057090
 {
     s_ModelHeader* modelHdr;
     GsOT_TAG*      temp_s1;
@@ -972,7 +970,7 @@ void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3) // 0x80
     gte_stsv(&D_800C4168.field_7C);
 }
 
-void func_80057344(s_800BCE18_2BEC_0* arg0, GsOT_TAG* arg1, void* arg2, MATRIX* mat) // 0x80057344
+void func_80057344(s_ModelInfo* arg0, GsOT_TAG* arg1, void* arg2, MATRIX* mat) // 0x80057344
 {
     u32               normalOffset;
     u32               vertOffset;
@@ -982,7 +980,7 @@ void func_80057344(s_800BCE18_2BEC_0* arg0, GsOT_TAG* arg1, void* arg2, MATRIX* 
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    modelHdr     = arg0->field_0.modelHdr_8;
+    modelHdr     = arg0->modelHdr_8;
     vertOffset   = modelHdr->vertexOffset_9;
     normalOffset = modelHdr->normalOffset_A;
 
@@ -1268,7 +1266,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80057B7C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005801C); // 0x8005801C
 
-void func_80059D50(s32 arg0, s_800BCE18_2BEC_0_0* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4) // 0x80059D50
+void func_80059D50(s32 arg0, s_ModelInfo* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4) // 0x80059D50
 {
     s_GteScratchData* scratchData;
     s_MeshHeader*     curMeshHdr;
@@ -1288,7 +1286,7 @@ void func_80059D50(s32 arg0, s_800BCE18_2BEC_0_0* arg1, MATRIX* mat, void* arg3,
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80059E34); // 0x80059E34
 
-void func_8005A21C(s_800BCE18_2BEC_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat) // 0x8005A21C
+void func_8005A21C(s_ModelInfo* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat) // 0x8005A21C
 {
     s16               var_v1;
     u32               normalOffset;
@@ -1336,7 +1334,7 @@ void func_8005A21C(s_800BCE18_2BEC_0* arg0, GsOT_TAG* otTag, void* arg2, MATRIX*
             break;
     }
 
-    modelHdr     = arg0->field_0.modelHdr_8;
+    modelHdr     = arg0->modelHdr_8;
     vertOffset   = modelHdr->vertexOffset_9;
     normalOffset = modelHdr->normalOffset_A;
 
@@ -2494,19 +2492,19 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005E89C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005F55C); // 0x8005F55C
 
-s32 func_8005F680(s_Collision* arg0) // 0x8005F680
+bool func_8005F680(s_Collision* coll) // 0x8005F680
 {
-    s32 var_a0;
-    s8 temp_v1;
+    bool cond;
+    s8   temp_v1;
 
-    temp_v1 = arg0->field_8;
+    temp_v1 = coll->field_8;
 
-    var_a0 = 0;
+    cond = false;
     if (temp_v1 == 0 || temp_v1 == 12 || temp_v1 == 7)
     {
-        var_a0 = 1;
+        cond = true;
     }
-    return var_a0;
+    return cond;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005F6B0); // 0x8005F6B0

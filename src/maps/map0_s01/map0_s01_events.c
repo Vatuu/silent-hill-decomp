@@ -908,30 +908,30 @@ void MapEvent_AirScreamerDeath() // 0x800DC8C8
     }
 }
 
-void func_800DC9C8() // 0x800DC9C8
+void Map_WorldObjectsInit() // 0x800DC9C8
 {
     D_800E23A1 = 224;
-    Math_Vector3f(&g_DefaultEventPosition.position_0, 0.0f, 0.0f, 280.0f, Q12_SHIFT);
+    Math_Vector3f(&g_CutscenePosition, 0.0f, 0.0f, 280.0f, Q12_SHIFT);
 
-    func_8003C8F8(&D_800E23B0[0], "IN_BLD1_");
-    func_8003C8F8(&D_800E23D0[0], "IN1_HIDE");
-    func_8003C8F8(&D_800E23F0[0], "BRK_BLD1");
-    func_8003C8F8(&D_800E23F0[1], "BRK_GLS1");
-    func_8003C8F8(&D_800E23F0[2], "BRK_GLS2");
-    func_8003C8F8(&D_800E2450[0], "OUT1_HID");
-    func_8003C8F8(&D_800E2450[1], "OUT_BLD_");
+    WorldObject_ModelNameSet(&D_800E23B0[0], "IN_BLD1_");
+    WorldObject_ModelNameSet(&D_800E23D0[0], "IN1_HIDE");
+    WorldObject_ModelNameSet(&D_800E23F0[0], "BRK_BLD1");
+    WorldObject_ModelNameSet(&D_800E23F0[1], "BRK_GLS1");
+    WorldObject_ModelNameSet(&D_800E23F0[2], "BRK_GLS2");
+    WorldObject_ModelNameSet(&D_800E2450[0], "OUT1_HID");
+    WorldObject_ModelNameSet(&D_800E2450[1], "OUT_BLD_");
 
-    EventPositionInit(&g_EventThing_KitchenKnife.eventPosition_1C, 5.09f, -1.01f, 274.12f, 0, 32.0f, 0); 
-    func_8003C8F8(&g_EventThing_KitchenKnife.field_0, "KNIFE_HI");
+    WorldObjectPositionInit(&g_EventThing_KitchenKnife.position_1C, 5.09f, -1.01f, 274.12f, 0, 32.0f, 0); 
+    WorldObject_ModelNameSet(&g_EventThing_KitchenKnife.object_0, "KNIFE_HI");
 
-    EventPositionInit(&g_EventThing_Flashlight.eventPosition_1C, 5.18f, -1.0f, 267.28f, -3.0f, 111.0f, 0);
-    func_8003C8F8(&g_EventThing_Flashlight.field_0, "FLASH_HI");
+    WorldObjectPositionInit(&g_EventThing_Flashlight.position_1C, 5.18f, -1.0f, 267.28f, -3.0f, 111.0f, 0);
+    WorldObject_ModelNameSet(&g_EventThing_Flashlight.object_0, "FLASH_HI");
 
-    EventPositionInit(&g_EventThing_Map.eventPosition_1C, 5.24f, -1.0f, 267.21f, 0, 57.0f, 0);
-    func_8003C8F8(&g_EventThing_Map.field_0, "MAP_HIDE");
+    WorldObjectPositionInit(&g_EventThing_Map.position_1C, 5.24f, -1.0f, 267.21f, 0, 57.0f, 0);
+    WorldObject_ModelNameSet(&g_EventThing_Map.object_0, "MAP_HIDE");
 
-    EventPositionInit(&g_EventThing_PocketRadio.eventPosition_1C, 2.31f, -0.6f, 273.95f, 0, 147.0f, 0);
-    func_8003C8F8(&g_EventThing_PocketRadio.field_0, "RADIO_HI");
+    WorldObjectPositionInit(&g_EventThing_PocketRadio.position_1C, 2.31f, -0.6f, 273.95f, 0, 147.0f, 0);
+    WorldObject_ModelNameSet(&g_EventThing_PocketRadio.object_0, "RADIO_HI");
 
     if (Savegame_EventFlagGet(EventFlag_40) && !Savegame_EventFlagGet(EventFlag_47))
     {
@@ -959,16 +959,15 @@ void func_800DC9C8() // 0x800DC9C8
     g_Timer0 = 0;
     D_800E2560 = 0;
 
-    // Maybe preloading assets that might be used in map?
-    func_8003C8F8(&g_ModelsCommon[0], D_800A99E4.firstAidKitName_8);
-    func_8003C8F8(&g_ModelsCommon[1], D_800A99E4.healthDrinkName_C);
-    func_8003C8F8(&g_ModelsCommon[2], D_800A99E4.ampouleName_10);
-    func_8003C8F8(&g_ModelsCommon[3], D_800A99E4.handgunBulletsName_14);
-    func_8003C8F8(&g_ModelsCommon[4], D_800A99E4.shotgunShellsName_18);
-    func_8003C8F8(&g_ModelsCommon[5], D_800A99E4.rifleShellsName_1C);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4.handgunBulletsName_14);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4.shotgunShellsName_18);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-void func_800DCCF4(void) // 0x800DCCF4
+void Map_WorldObjectsUpdate(void) // 0x800DCCF4
 {
     s32  stepX;
     s32  stepZ;
@@ -978,22 +977,22 @@ void func_800DCCF4(void) // 0x800DCCF4
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
     {
-        func_8003C92C(&g_EventThing_Map.field_0, &g_EventThing_Map.eventPosition_1C.position_0, &g_EventThing_Map.eventPosition_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_EventThing_Map.object_0, &g_EventThing_Map.position_1C.position_0, &g_EventThing_Map.position_1C.rotation_C);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupFlashlight))
     {
-        func_8003C92C(&g_EventThing_Flashlight.field_0, &g_EventThing_Flashlight.eventPosition_1C.position_0, &g_EventThing_Flashlight.eventPosition_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_EventThing_Flashlight.object_0, &g_EventThing_Flashlight.position_1C.position_0, &g_EventThing_Flashlight.position_1C.rotation_C);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupPocketRadio))
     {
-        func_8003C92C(&g_EventThing_PocketRadio.field_0, &g_EventThing_PocketRadio.eventPosition_1C.position_0, &g_EventThing_PocketRadio.eventPosition_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_EventThing_PocketRadio.object_0, &g_EventThing_PocketRadio.position_1C.position_0, &g_EventThing_PocketRadio.position_1C.rotation_C);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupKitchenKnife))
     {
-        func_8003C92C(&g_EventThing_KitchenKnife.field_0, &g_EventThing_KitchenKnife.eventPosition_1C.position_0, &g_EventThing_KitchenKnife.eventPosition_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_EventThing_KitchenKnife.object_0, &g_EventThing_KitchenKnife.position_1C.position_0, &g_EventThing_KitchenKnife.position_1C.rotation_C);
     }
 
     if (Savegame_EventFlagGet(EventFlag_M0S01_PickupKitchenKnife) && Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
@@ -1007,15 +1006,15 @@ void func_800DCCF4(void) // 0x800DCCF4
 
     if (Savegame_EventFlagGet(EventFlag_47))
     {
-        func_800DD2EC(2);
+        CutsceneObjects_Add(2);
     }
     else if (Savegame_EventFlagGet(EventFlag_45) && !Savegame_EventFlagGet(EventFlag_46))
     {
-        func_800DD2EC(1);
+        CutsceneObjects_Add(1);
     }
     else
     {
-        func_800DD2EC(0);
+        CutsceneObjects_Add(0);
     }
 
     if (Savegame_EventFlagGet(EventFlag_M0S01_PickupMap) && !Savegame_EventFlagGet(EventFlag_42))
@@ -1097,7 +1096,7 @@ void func_800DCCF4(void) // 0x800DCCF4
         {
             if (!Savegame_EventFlagGet(EventFlag_M0S01_HealthDrink0))
             {
-                func_8003C92C(&g_ModelsCommon[1], &D_800DE12C.position_0, &D_800DE12C.rotation_C);
+                g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &D_800DE12C.position_0, &D_800DE12C.rotation_C);
             }
         }
     }
@@ -1112,13 +1111,13 @@ void func_800DCCF4(void) // 0x800DCCF4
         {
             if (!Savegame_EventFlagGet(EventFlag_M0S01_HealthDrink1))
             {
-                func_8003C92C(&g_ModelsCommon[1], &D_800DE140.position_0, &D_800DE140.rotation_C);
+                g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &D_800DE140.position_0, &D_800DE140.rotation_C);
             }
         }
     }
 }
 
-void func_800DD2EC(s32 arg0) // 0x800DD2EC
+void CutsceneObjects_Add(s32 arg0) // 0x800DD2EC
 {
     static const SVECTOR3 DEFAULT_ROT = {};
 
@@ -1128,12 +1127,12 @@ void func_800DD2EC(s32 arg0) // 0x800DD2EC
     {
         for (i = 0; i < 1; i++)
         {
-            func_8003C92C(&D_800E23D0[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
+            g_WorldGfx_ObjectAdd(&D_800E23D0[i], &g_CutscenePosition, &DEFAULT_ROT);
         }
 
         for (i = 0; i < 1; i++)
         {
-            func_8003C92C(&D_800E23B0[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
+            g_WorldGfx_ObjectAdd(&D_800E23B0[i], &g_CutscenePosition, &DEFAULT_ROT);
         }
 
         return;
@@ -1143,7 +1142,7 @@ void func_800DD2EC(s32 arg0) // 0x800DD2EC
     {
         for (i = 0; i < 2; i++)
         {
-            func_8003C92C(&D_800E2450[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
+            g_WorldGfx_ObjectAdd(&D_800E2450[i], &g_CutscenePosition, &DEFAULT_ROT);
         }
 
         return;
@@ -1151,11 +1150,11 @@ void func_800DD2EC(s32 arg0) // 0x800DD2EC
 
     for (i = 0; i < 1; i++)
     {
-        func_8003C92C(&D_800E23D0[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
+        g_WorldGfx_ObjectAdd(&D_800E23D0[i], &g_CutscenePosition, &DEFAULT_ROT);
     }
 
     for (i = 0; i < 3; i++)
     {
-        func_8003C92C(&D_800E23F0[i], &g_DefaultEventPosition.position_0, &DEFAULT_ROT);
+        g_WorldGfx_ObjectAdd(&D_800E23F0[i], &g_CutscenePosition, &DEFAULT_ROT);
     }
 }

@@ -45,9 +45,9 @@ DISPENV g_MainDispEnv =
 
 DRAWENV g_MainDrawEnv =
 {
-    .clip = { 0, 0, 320, 224 },
-    .dtd  = 1,
-    .isbg = 1
+    .clip = { 0, 0, SCREEN_WIDTH, 224 },
+    .dtd  = true,
+    .isbg = true
 };
 
 int main()
@@ -67,7 +67,7 @@ int main()
 
     // Clear framebuffer area of VRAM.
     // NOTE: This and some other GPU macros here are custom to ensure a match.
-    setRECTFast((RECT*)PSX_SCRATCH, 0, 0, 640, 512);
+    setRECTFast((RECT*)PSX_SCRATCH, 0, 0, SCREEN_WIDTH * 2, 512);
     VSync(0);
     ClearImage2((RECT*)PSX_SCRATCH, 0, 0, 0);
     DrawSync(0);
@@ -93,7 +93,7 @@ int main()
     SetDispMask(1);
 
     // Fade in `1ST/2ZANKO_E.TIM` over 64 frames using `TILE` with subtractive blending.
-    fade = FP_COLOR(1.0f);;
+    fade = 255;
     prim = PSX_SCRATCH;
     while (true)
     {

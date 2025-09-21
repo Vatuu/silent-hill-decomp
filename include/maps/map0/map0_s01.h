@@ -30,9 +30,9 @@ extern u16 D_800DE124;
 
 extern u16 D_800DE128;
 
-extern s_EventPosition D_800DE12C;
+extern s_WorldObjectPos D_800DE12C;
 
-extern s_EventPosition D_800DE140;
+extern s_WorldObjectPos D_800DE140;
 
 extern VECTOR3 D_800DE154;
 
@@ -46,20 +46,20 @@ extern VECTOR3 g_CutsceneCameraPositionTarget; // 0x800E2380
 
 extern VECTOR3 g_CutsceneCameraLookAtTarget; // 0x800E2390
 
-extern s_800BCE18_2BEC_0 D_800E23B0[1];
-extern s_800BCE18_2BEC_0 D_800E23D0[1];
-extern s_800BCE18_2BEC_0 D_800E23F0[3];
-extern s_800BCE18_2BEC_0 D_800E2450[2];
+extern s_WorldObject_0 D_800E23B0[1];
+extern s_WorldObject_0 D_800E23D0[1];
+extern s_WorldObject_0 D_800E23F0[3];
+extern s_WorldObject_0 D_800E2450[2];
 
-extern s_EventPosition g_DefaultEventPosition; // 0x800E2490
-extern s_EventThing g_EventThing_KitchenKnife; // 0x800E24A0
-extern s_EventThing g_EventThing_Flashlight; // 0x800E24D0
-extern s_EventThing g_EventThing_Map; // 0x800E2500
-extern s_EventThing g_EventThing_PocketRadio; // 0x800E2530
+extern VECTOR3 g_CutscenePosition; // 0x800E2490
+extern s_WorldObjectDesc g_EventThing_KitchenKnife; // 0x800E24A0
+extern s_WorldObjectDesc g_EventThing_Flashlight; // 0x800E24D0
+extern s_WorldObjectDesc g_EventThing_Map; // 0x800E2500
+extern s_WorldObjectDesc g_EventThing_PocketRadio; // 0x800E2530
 
 extern s16 D_800E2560;
 
-extern s_800BCE18_2BEC_0 g_ModelsCommon[];
+extern s_WorldObject_0 g_CommonWorldObjects[];
 
 extern u16 g_SoundCmds[];
 
@@ -113,12 +113,11 @@ void MapEvent_CommonItemTake();
 /** @brief Handles the Air Screamer death event. */
 void MapEvent_AirScreamerDeath();
 
-void func_800DC9C8();
+void Map_WorldObjectsInit();
 
-void func_800DCCF4(void);
+void Map_WorldObjectsUpdate(void);
 
-// Called by `func_800DCCF4` only.
-void func_800DD2EC(s32 arg0);
+void CutsceneObjects_Add(s32 arg0);
 
 s32 func_800D1E5C();
 

@@ -718,7 +718,7 @@ void func_8003BCF4() // 0x8003BCF4
 
 s32 Map_TypeGet() // 0x8003BD2C
 {
-    return D_800BCE18.field_0[0].type_0 - MAP_TYPES;
+    return g_WorldGfx.type_0 - MAP_TYPES;
 }
 
 void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
@@ -755,9 +755,9 @@ void func_8003BE28() // 0x8003BE28
     func_80069820(D_800BCE14);
 }
 
-s32 func_8003BE50(s32 idx) // 0x8003BE50
+s_Bone* func_8003BE50(s32 idx) // 0x8003BE50
 {
-    return &D_800BCE18.field_0[0].field_18[idx]->field_14.field_C;
+    return g_WorldGfx.charaModelsTable_18[idx]->skeleton_14.boneArr_C;
 }
 
 // ========================================
@@ -773,7 +773,7 @@ void GameFs_BgEtcGfxLoad() // 0x8003BE6C
 
 void GameFs_BgItemLoad() // 0x8003BE9C
 {
-    D_800BCE18.field_1BE4.queueIdx_1000 = Fs_QueueStartRead(FILE_BG_BG_ITEM_PLM, &D_800BCE18.field_1BE4);
+    g_WorldGfx.itemLm_1BE4.queueIdx_1000 = Fs_QueueStartRead(FILE_BG_BG_ITEM_PLM, &g_WorldGfx.itemLm_1BE4);
 }
 
 void func_8003BED0() // 0x8003BED0
@@ -781,17 +781,17 @@ void func_8003BED0() // 0x8003BED0
     static s_FsImageDesc IMG_TIM = { .tPage = { 0, 15 }, .clutX = 176 };
     static s_FsImageDesc IMG_ETC = { .tPage = { 0, 12 }, .v = 192, .clutX = 192 };
 
-    s_LmHeader* D_800BE9FC = &D_800BCE18.field_1BE4;
+    s_LmHeader* D_800BE9FC = &g_WorldGfx.itemLm_1BE4;
 
     if (Fs_QueueIsEntryLoaded(D_800BE9FC->queueIdx_1000) == 0 || D_800BE9FC->isLoaded_2)
     {
         return;
     }
 
-    LmHeader_FixOffsets(&D_800BCE18.field_1BE4);
-    func_80056504(&D_800BCE18.field_1BE4, "TIM00", &IMG_TIM, 1);
-    func_80056504(&D_800BCE18.field_1BE4, "BG_ETC", &IMG_ETC, 1);
-    Lm_MaterialFlagsApply(&D_800BCE18.field_1BE4);
+    LmHeader_FixOffsets(&g_WorldGfx.itemLm_1BE4);
+    func_80056504(&g_WorldGfx.itemLm_1BE4, "TIM00", &IMG_TIM, 1);
+    func_80056504(&g_WorldGfx.itemLm_1BE4, "BG_ETC", &IMG_ETC, 1);
+    Lm_MaterialFlagsApply(&g_WorldGfx.itemLm_1BE4);
 }
 
 // ========================================
@@ -802,8 +802,8 @@ extern s_800C4168 const D_800C4168;
 
 s32 Map_SpeedZoneTypeGet(s32 x, s32 z) // 0x8003BF60
 {
-    s32          zoneType;
-    s_SpeedZone* curZone;
+    s32                zoneType;
+    const s_SpeedZone* curZone;
 
     zoneType = 0;
 
@@ -812,9 +812,9 @@ s32 Map_SpeedZoneTypeGet(s32 x, s32 z) // 0x8003BF60
         return SpeedZoneType_Normal;
     }
 
-    if (D_800BCE18.field_0[0].type_0->speedZones_C != NULL)
+    if (g_WorldGfx.type_0->speedZones_C != NULL)
     {
-        curZone = D_800BCE18.field_0[0].type_0->speedZones_C;
+        curZone = g_WorldGfx.type_0->speedZones_C;
         while (curZone->type_0 != NO_VALUE)
         {
             if (x >= (curZone->minX_2 << 8) && (curZone->maxX_4 << 8) >= x &&
@@ -835,7 +835,7 @@ void func_8003C048() // 0x8003C048
 {
     func_80055028();
 
-    D_800BCE18.field_0[0].field_4 = 0;
+    g_WorldGfx.useStoredPoint_4 = 0;
 
     Map_Init(FS_BUFFER_13, FS_BUFFER_14, 0x2C000);
     func_800697EC();
@@ -844,56 +844,48 @@ void func_8003C048() // 0x8003C048
 
     func_8003EBA0();
     func_8005B55C(vwGetViewCoord());
-    func_8003CB3C(&D_800BCE18);
+    func_8003CB3C(&g_WorldGfx);
 }
 
 void func_8003C0C0() // 0x8003C0C0
 {
-    s_800BCE18_1BAC* ptr = &D_800BCE18.heldItem_1BAC;
+    s_HeldItem* ptr = &g_WorldGfx.heldItem_1BAC;
 
     ptr->itemId_0 = NO_VALUE;
     ptr->lmHdr_14 = (s_LmHeader*)ILM_BUFFER_0;
-    ptr->bone_18.flags_0 = 0;
-    ptr->bone_18.field_4 = 0;
-    ptr->bone_18.modelHdr_8 = 0;
+    ptr->bone_18.modelInfo_0.field_0 = 0;
+    ptr->bone_18.modelInfo_0.field_4 = 0;
+    ptr->bone_18.modelInfo_0.modelHdr_8 = 0;
 }
 
 void func_8003C110() // 0x8003C110
 {
-    s32              i;
-    s_800BCE18_0_CC* curPtr;
+    s32           i;
+    s_CharaModel* curModel;
 
     for (i = 0; i < Chara_Count; i++)
     {
-        if (i != 1)
+        if (i != Chara_Harry)
         {
-            D_800BCE18.field_0->field_18[i] = NULL;
+            g_WorldGfx.charaModelsTable_18[i] = NULL;
         }
     } 
 
-    D_800BCE18.field_0[0].field_14 = (s_LmHeader*)ILM_BUFFER_1;
-
-    // Slightly less hacky loop. Equivalent of:
-    // for (i = 0; i < 4; i++)
-    // {
-    //     func_8003C1AC(&D_800BCE18.field_0[i].field_CC);
-    // }
-    for (curPtr = &D_800BCE18.field_0[0].field_CC;
-         curPtr < &D_800BCE18.field_0[4].field_CC;
-         (int)curPtr += sizeof(D_800BCE18.field_0[0]))
+    g_WorldGfx.dataPtr_14 = (s_LmHeader*)ILM_BUFFER_1;
+    for (curModel = &g_WorldGfx.charaModels_CC[0]; curModel < &g_WorldGfx.charaModels_CC[4]; curModel++)
     {
-        func_8003C1AC(curPtr);
+        CharaModel_Free(curModel);
     }
 }
 
-void func_8003C1AC(s_800BCE18_0_CC* arg0) // 0x8003C1AC
+void CharaModel_Free(s_CharaModel* arg0) // 0x8003C1AC
 {
     s_FsImageDesc image = { 0 };
 
     //memset(&image, 0, 8);
-    arg0->field_0 = 0;
-    arg0->field_1 = 0;
-    arg0->field_4 = 0;
+    arg0->charaId_0 = Chara_None;
+    arg0->loaded_1 = false;
+    arg0->queueIdx_4 = 0;
     arg0->lmHdr_8 = (s_LmHeader*)ILM_BUFFER_1;
     arg0->texture_C = image;
 }
@@ -904,7 +896,7 @@ void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ
     u8         flags;
     s_MapType* mapType;
 
-    D_800BCE18.field_0[0].type_0 = mapHeader->type_0;
+    g_WorldGfx.type_0 = mapHeader->type_0;
 
     flags = mapHeader->type_0->flags_6;
     if (flags & MapTypeFlag_OneActiveChunk)
@@ -940,7 +932,7 @@ void func_8003C30C() // 0x8003C30C
 {
     u8 flags;
 
-    flags = D_800BCE18.field_0[0].type_0->flags_6;
+    flags = g_WorldGfx.type_0->flags_6;
     if ((flags & MapTypeFlag_Interior) && (flags & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks))) 
     {
         func_800420C0();
@@ -951,15 +943,15 @@ void func_8003C30C() // 0x8003C30C
     Ipd_TexturesInit0();
 }
 
-void func_8003C368() // 0x8003C368
+void WorldGfx_StoreIpdSamplePoint() // 0x8003C368
 {
-    D_800BCE18.field_0[0].field_4 = 1;
-    D_800BCE18.field_0[0].field_8 = g_SysWork.player_4C.chara_0.position_18;
+    g_WorldGfx.useStoredPoint_4 = 1;
+    g_WorldGfx.ipdSamplePoint_8 = g_SysWork.player_4C.chara_0.position_18;
 }
 
-void func_8003C3A0() // 0x8003C3A0
+void WorldGfx_ResetIpdSamplePoint() // 0x8003C3A0
 {
-    D_800BCE18.field_0[0].field_4 = 0;
+    g_WorldGfx.useStoredPoint_4 = 0;
 }
 
 void func_8003C3AC() // 0x8003C3AC
@@ -979,9 +971,9 @@ void func_8003C3AC() // 0x8003C3AC
     u8              flags1;
     s_SubCharacter* chara = &g_SysWork.player_4C.chara_0;
 
-    if ((u8)D_800BCE18.field_0[0].field_4 != 0)
+    if ((u8)g_WorldGfx.useStoredPoint_4 != 0)
     {
-        pos0 = D_800BCE18.field_0[0].field_8;
+        pos0 = g_WorldGfx.ipdSamplePoint_8;
     }
     else
     {
@@ -994,7 +986,7 @@ void func_8003C3AC() // 0x8003C3AC
     pos0.vx += FP_MULTIPLY_PRECISE(moveAmt, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
     pos0.vz += FP_MULTIPLY_PRECISE(moveAmt, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
 
-    if (D_800BCE18.field_0[0].type_0 == &MAP_TYPES[0] &&
+    if (g_WorldGfx.type_0 == &MAP_TYPES[0] &&
         chara->position_18.vx >= FP_METER(-40.0f) && chara->position_18.vx <= FP_METER(40.0f) &&
         chara->position_18.vz >= FP_METER(200.0f) && chara->position_18.vz <= FP_METER(240.0f))
     {
@@ -1007,7 +999,7 @@ void func_8003C3AC() // 0x8003C3AC
         vwGetViewPosition(&pos1);
         vwGetViewAngle(&pos2);
 
-        flags1 = D_800BCE18.field_0[0].type_0->flags_6;
+        flags1 = g_WorldGfx.type_0->flags_6;
         if (!(flags1 & MapTypeFlag_Interior) || !(flags1 & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks)))
         {
             var_s1 = FP_MULTIPLY(Math_Cos(pos2.vx), FP_METER(9.0f), Q12_SHIFT);
@@ -1040,7 +1032,7 @@ void func_8003C3AC() // 0x8003C3AC
         pos1.vz += FP_FROM(FP_TO(Math_Cos(chara->rotation_24.vy), Q12_SHIFT), Q12_SHIFT);
     }
 
-    flags0 = D_800BCE18.field_0[0].type_0->flags_6;
+    flags0 = g_WorldGfx.type_0->flags_6;
     if ((flags0 & MapTypeFlag_Interior) && (flags0 & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks)))
     {
         var_a1 = chara->position_18.vx / FP_METER(2.5f);
@@ -1076,7 +1068,7 @@ s32 func_8003C850() // 0x8003C850
 
 void func_8003C878(s32 arg0) // 0x8003C878
 {
-    func_8003CB44(&D_800BCE18);
+    func_8003CB44(&g_WorldGfx);
 
     while (func_80043830())
     {
@@ -1088,17 +1080,17 @@ void func_8003C878(s32 arg0) // 0x8003C878
     func_800550D0();
 }
 
-void func_8003C8F8(s_800BCE18_2BEC_0* arg0, char* newStr) // 0x8003C8F8
+void WorldObject_ModelNameSet(s_WorldObject_0* arg0, char* newStr) // 0x8003C8F8
 {
     arg0->field_10.lmIdx_9 = 0;
-    arg0->field_0.field_0  = 0;
+    arg0->modelInfo_0.field_0  = 0;
 
     StringCopy(arg0->field_10.modelName_0.str, newStr);
 
     arg0->field_10.field_8 = 0;
 }
 
-void func_8003C92C(s_800BCE18_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* rot) // 0x8003C92C
+void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECTOR3* rot) // 0x8003C92C
 {
     s32              vy;
     s32              vx;
@@ -1108,9 +1100,9 @@ void func_8003C92C(s_800BCE18_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* 
     s32              coord2; // Q23.8
     s32              i;
     s32              ret;
-    s_800BCE18_2BEC* ptr;
+    s_WorldObject* ptr;
 
-    if (D_800BCE18.field_2BE8 < 29)
+    if (g_WorldGfx.objectsCount_2BE8 < 29)
     {
         if (arg0->field_10.lmIdx_9 == 0)
         {
@@ -1119,7 +1111,7 @@ void func_8003C92C(s_800BCE18_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* 
 
             if (ret == 0)
             {
-                if (!Lm_ModelFind(arg0, &D_800BCE18.field_1BE4, &arg0->field_10))
+                if (!Lm_ModelFind(arg0, &g_WorldGfx.itemLm_1BE4, &arg0->field_10))
                 {
                     return;
                 }
@@ -1139,9 +1131,9 @@ void func_8003C92C(s_800BCE18_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* 
         vz     = rot->vz >> 2;
         vy     = rot->vy;
 
-        for (i = 0; i < D_800BCE18.field_2BE8; i++)
+        for (i = 0; i < g_WorldGfx.objectsCount_2BE8; i++)
         {
-            ptr = &D_800BCE18.field_2BEC[i];
+            ptr = &g_WorldGfx.objects_2BEC[i];
     
             if (arg0 == ptr->field_0 &&
                 coord0 == ptr->gsCoordinate0_4 &&
@@ -1155,12 +1147,12 @@ void func_8003C92C(s_800BCE18_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* 
             }
         }
 
-        ptr = &D_800BCE18.field_2BEC[D_800BCE18.field_2BE8];
+        ptr = &g_WorldGfx.objects_2BEC[g_WorldGfx.objectsCount_2BE8];
 
         ptr->vx_C = vx;
         ptr->vy_C = vy;
 
-        // Required for match.
+        // @hack Required for match.
         if (ptr->gsCoordinate2_8) {}
 
         ptr->vz_C            = vz;
@@ -1168,28 +1160,28 @@ void func_8003C92C(s_800BCE18_2BEC_0* arg0, const VECTOR3* pos, const SVECTOR3* 
         ptr->gsCoordinate0_4 = coord0;
         ptr->gsCoordinate1_4 = coord1;
         ptr->gsCoordinate2_8 = coord2;
-        D_800BCE18.field_2BE8++;
+        g_WorldGfx.objectsCount_2BE8++;
     }
 }
 
-void func_8003CB3C(s_800BCE18* arg0) // 0x8003CB3C
+void func_8003CB3C(s_WorldGfx* arg0) // 0x8003CB3C
 {
-    arg0->field_2BE8 = 0;
+    arg0->objectsCount_2BE8 = 0;
 }
 
-void func_8003CB44(s_800BCE18* arg0) // 0x8003CB44
+void func_8003CB44(s_WorldGfx* arg0) // 0x8003CB44
 {
-    s_800BCE18_2BEC* ptr;
+    s_WorldObject* ptr;
 
-    for (ptr = &arg0->field_2BEC[0]; ptr < &arg0->field_2BEC[arg0->field_2BE8]; ptr++)
+    for (ptr = &arg0->objects_2BEC[0]; ptr < &arg0->objects_2BEC[arg0->objectsCount_2BE8]; ptr++)
     {
         func_8003CBA4(ptr);
     }
 
-    arg0->field_2BE8 = 0;
+    arg0->objectsCount_2BE8 = 0;
 }
 
-void func_8003CBA4(s_800BCE18_2BEC* arg0) // 0x8003CBA4
+void func_8003CBA4(s_WorldObject* arg0) // 0x8003CBA4
 {
     GsCOORDINATE2 coord;
     SVECTOR       vec;
@@ -1212,24 +1204,24 @@ void func_8003CBA4(s_800BCE18_2BEC* arg0) // 0x8003CBA4
     func_8003CC7C(arg0->field_0, &mats[0], &mats[1]);
 }
 
-void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x8003CC7C
+void func_8003CC7C(s_WorldObject_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x8003CC7C
 {
-    s8                    temp_a0;
-    s_800BCE18_2BEC_0_10* temp_s1;
+    s8                    lmIdx;
+    s_WorldObject_0_10* temp_s1;
     s_ModelHeader*        temp_s2;
 
-    temp_a0 = arg0->field_10.lmIdx_9;
-    if (!temp_a0)
+    lmIdx = arg0->field_10.lmIdx_9;
+    if (!lmIdx)
     {
         return;
     }
 
-    temp_s2 = arg0->field_0.modelHdr_8;
+    temp_s2 = arg0->modelInfo_0.modelHdr_8;
     temp_s1 = &arg0->field_10;
 
-    if (temp_a0 >= 3 && temp_a0 < 7)
+    if (lmIdx >= 3 && lmIdx < 7)
     {
-        if (!IpdHeader_IsLoaded(temp_a0 - 3))
+        if (!IpdHeader_IsLoaded(lmIdx - 3))
         {
             arg0->field_10.lmIdx_9 = 0;
         }
@@ -1241,12 +1233,12 @@ void func_8003CC7C(s_800BCE18_2BEC_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x800
         return;
     }
 
-    func_80057090(&arg0->field_0, &g_OrderingTable0[g_ActiveBufferIdx], 1, arg1, arg2, 0);
+    func_80057090(&arg0->modelInfo_0, &g_OrderingTable0[g_ActiveBufferIdx], 1, arg1, arg2, 0);
 }
 
 s32 func_8003CD5C() // 0x8003CD5C
 {
-    return D_800BCE18.heldItem_1BAC.itemId_0;
+    return g_WorldGfx.heldItem_1BAC.itemId_0;
 }
 
 void func_8003CD6C(s_PlayerCombat* combat) // 0x8003CD6C
@@ -1269,9 +1261,9 @@ void func_8003CD6C(s_PlayerCombat* combat) // 0x8003CD6C
 s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
 {
     s32              fileIdx;
-    s_800BCE18_1BAC* ptr;
+    s_HeldItem* ptr;
 
-    ptr = &D_800BCE18.heldItem_1BAC;
+    ptr = &g_WorldGfx.heldItem_1BAC;
 
     if (ptr->itemId_0 == itemIdx)
     {
@@ -1464,12 +1456,12 @@ s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
 
 void func_8003D01C() // 0x8003D01C
 {
-    D_800BCE18.heldItem_1BAC.bone_18.flags_0 &= ~(1 << 31);
+    g_WorldGfx.heldItem_1BAC.bone_18.modelInfo_0.field_0 &= ~(1 << 31);
 }
 
 void func_8003D03C() // 0x8003D03C
 {
-    D_800BCE18.heldItem_1BAC.bone_18.flags_0 |= 1 << 31;
+    g_WorldGfx.heldItem_1BAC.bone_18.modelInfo_0.field_0 |= 1 << 31;
 }
 
 void func_8003D058() // 0x8003D058
@@ -1477,10 +1469,10 @@ void func_8003D058() // 0x8003D058
     MATRIX           mat0;
     MATRIX           mat1;
     GsCOORDINATE2*   coord;
-    s_800BCE18_1BAC* ptr0;
+    s_HeldItem* ptr0;
     s_LmHeader*      lmHdr;
 
-    ptr0 = &D_800BCE18.heldItem_1BAC;
+    ptr0 = &g_WorldGfx.heldItem_1BAC;
 
     if (ptr0->itemId_0 != NO_VALUE)
     {
@@ -1502,11 +1494,11 @@ void func_8003D058() // 0x8003D058
                 LmHeader_FixOffsets(lmHdr);
                 func_80056504(lmHdr, ptr0->textureName_8, &ptr0->imageDesc_C, 1);
                 Lm_MaterialFlagsApply(lmHdr);
-                func_80056C8C(&ptr0->bone_18, ptr0->lmHdr_14, 0);
+                Bone_ModelAssign(&ptr0->bone_18, ptr0->lmHdr_14, 0);
             }
 
             func_80049B6C(coord, &mat1, &mat0);
-            func_80057090(&ptr0->bone_18, &g_OrderingTable0[g_ActiveBufferIdx], 1, &mat0, &mat1, 0);
+            func_80057090(&ptr0->bone_18.modelInfo_0, &g_OrderingTable0[g_ActiveBufferIdx], 1, &mat0, &mat1, 0);
         }
     }
 }
@@ -1515,24 +1507,24 @@ void func_8003D160() // 0x8003D160
 {
     s_FsImageDesc    img;
     s32              queueIdx;
-    s_800BCE18*      ptr;
-    s_800BCE18_0_CC* ptr2;
+    s_WorldGfx*      ptr;
+    s_CharaModel* harrySkel;
     s_LmHeader*      addr = (void*)0x800FE600;
 
     func_8003D3BC(&img, 1, 0);
 
-    ptr                               = &D_800BCE18;
-    ptr2                              = &ptr->field_164C;
-    D_800BCE18.field_0[0].field_18[1] = ptr2;
+    ptr       = &g_WorldGfx;
+    harrySkel = &ptr->harrySkel_164C;
+    g_WorldGfx.charaModelsTable_18[Chara_Harry] = harrySkel;
 
     Fs_QueueStartRead(CHARA_FILE_INFOS[1].modelFileIdx, addr);
     queueIdx = Fs_QueueStartReadTim(CHARA_FILE_INFOS[1].textureFileIdx, FS_BUFFER_1, &img);
 
-    D_800BCE18.field_164C.field_0   = 1;
-    ptr2->field_1                   = 0;
-    ptr2->field_4                   = queueIdx;
-    ptr2->lmHdr_8                = addr;
-    D_800BCE18.field_164C.texture_C = img;
+    g_WorldGfx.harrySkel_164C.charaId_0   = 1;
+    harrySkel->loaded_1                   = 0;
+    harrySkel->queueIdx_4                   = queueIdx;
+    harrySkel->lmHdr_8                = addr;
+    g_WorldGfx.harrySkel_164C.texture_C = img;
 }
 
 s32 func_8003D21C(s_MapOverlayHeader* arg0) // 0x8003D21C
@@ -1543,27 +1535,27 @@ s32 func_8003D21C(s_MapOverlayHeader* arg0) // 0x8003D21C
     s32              i;
     s32              ret;
     s32              ids;
-    s_800BCE18_0_CC* ptr;
+    s_CharaModel* ptr;
 
     for (ret                            = 0,
          i                              = 0,
-         D_800BCE18.field_0[0].field_14 = Fs_GetFileSize(FILE_CHARA_HERO_ILM) + 0x800FEE00,
+         g_WorldGfx.dataPtr_14 = Fs_GetFileSize(FILE_CHARA_HERO_ILM) + 0x800FEE00,
          var_s3                         = 0;
          i < 4; i++)
     {
         ids = arg0->charaGroupIds_248[i];
-        ptr = &D_800BCE18.field_0[i].field_CC;
+        ptr = &g_WorldGfx.charaModels_CC[i];
 
         if (ids != 0) 
         {
             if (var_s3 == 0) 
             {
-                if (ids != ptr->field_0) 
+                if (ids != ptr->charaId_0) 
                 {
                     var_s3 = 1;
                     for (j = i; j < 4; j++)
                     {
-                        D_800BCE18.field_0[j].field_CC.field_0 = 0;
+                        g_WorldGfx.charaModels_CC[j].charaId_0 = 0;
                     }
                 }
             } 
@@ -1571,10 +1563,10 @@ s32 func_8003D21C(s_MapOverlayHeader* arg0) // 0x8003D21C
             if (var_s3 != 0) 
             {
                 func_8003D3BC(&img, ids, i);
-                ret = func_8003D7D4(ids, i, (s_LmHeader*)D_800BCE18.field_0[0].field_14, &img);
+                ret = func_8003D7D4(ids, i, (s_LmHeader*)g_WorldGfx.dataPtr_14, &img);
             }
 
-            func_8003D354(&D_800BCE18.field_0[0].field_14, ids);
+            func_8003D354(&g_WorldGfx.dataPtr_14, ids);
         }
     }
 
@@ -1648,25 +1640,25 @@ void func_8003D3BC(s_FsImageDesc* img, s32 arg1, s32 arg2) // 0x8003D3BC
 
 s32 func_8003D444(s32 idx) // 0x8003D444
 {
-    return D_800BCE18.field_0[0].field_18[idx] != 0;
+    return g_WorldGfx.charaModelsTable_18[idx] != 0;
 }
 
 void func_8003D460() {}
 
-void func_8003D468(s32 arg0, bool flag) // 0x8003D468
+void func_8003D468(s32 charaId, bool flag) // 0x8003D468
 {
     s16              data[256];
     RECT             rect;
     s32              x;
     s32              i;
     s32              y;
-    s_800BCE18_0_CC* temp_s0;
+    s_CharaModel* charaSkel;
 
-    temp_s0 = D_800BCE18.field_0[0].field_18[arg0];
-    func_80056244(temp_s0->lmHdr_8, flag);
+    charaSkel = g_WorldGfx.charaModelsTable_18[charaId];
+    func_80056244(charaSkel->lmHdr_8, flag);
 
-    rect.x = temp_s0->texture_C.clutX;
-    rect.y = temp_s0->texture_C.clutY;
+    rect.x = charaSkel->texture_C.clutX;
+    rect.y = charaSkel->texture_C.clutY;
     rect.w = 16;
     rect.h = 16;
 
@@ -1693,11 +1685,11 @@ void func_8003D468(s32 arg0, bool flag) // 0x8003D468
 
 void func_8003D550(s32 charaId, s32 arg1) // 0x8003D550
 {
-    s_800BCE18_0_CC* ptr;
+    s_CharaModel* model;
 
-    ptr = D_800BCE18.field_0[0].field_18[charaId];
-    func_80056464(ptr->lmHdr_8, CHARA_FILE_INFOS[charaId].textureFileIdx, &ptr->texture_C, arg1);
-    Lm_MaterialFlagsApply(ptr->lmHdr_8);
+    model = g_WorldGfx.charaModelsTable_18[charaId];
+    Lm_MaterialFileIdxApply(model->lmHdr_8, CHARA_FILE_INFOS[charaId].textureFileIdx, &model->texture_C, arg1);
+    Lm_MaterialFlagsApply(model->lmHdr_8);
 }
 
 void func_8003D5B4(s8 flags) // 0x8003D5B4
@@ -1705,11 +1697,11 @@ void func_8003D5B4(s8 flags) // 0x8003D5B4
     u8               fileIdx;
     s32              i;
     u32              temp;
-    s_800BCE18_0_CC* ptr;
+    s_CharaModel* ptr;
 
     for (i = 0; i < 4; i++)
     {
-        ptr = &D_800BCE18.field_0[i].field_CC;
+        ptr = &g_WorldGfx.charaModels_CC[i];
         if ((flags >> i) & (1 << 0))
         {
             func_8003D6A4(ptr);
@@ -1718,30 +1710,30 @@ void func_8003D5B4(s8 flags) // 0x8003D5B4
 
     i = 0; 
 
-    D_800BCE18.field_0[0].field_14 = ILM_BUFFER_1;
+    g_WorldGfx.dataPtr_14 = ILM_BUFFER_1;
 
     for (; i < 4; i++)
     {
-        ptr = &D_800BCE18.field_0[i].field_CC;
+        ptr = &g_WorldGfx.charaModels_CC[i];
 
-        fileIdx = ptr->field_0;
+        fileIdx = ptr->charaId_0;
         if (fileIdx != 0)
         {
             temp = (s32)ptr->lmHdr_8 + Fs_GetFileSize(CHARA_FILE_INFOS[fileIdx].modelFileIdx);
-            if (D_800BCE18.field_0[0].field_14 < temp)
+            if (g_WorldGfx.dataPtr_14 < temp)
             {
-                D_800BCE18.field_0[0].field_14 = temp;
+                g_WorldGfx.dataPtr_14 = temp;
             }
         }
     }
 }
 
-void func_8003D6A4(s_800BCE18_0_CC* arg0) // 0x8003D6A4
+void func_8003D6A4(s_CharaModel* arg0) // 0x8003D6A4
 {
-    if (arg0->field_0 != 0)
+    if (arg0->charaId_0 != 0)
     {
-        D_800BCE18.field_0[0].field_18[arg0->field_0] = NULL;
-        func_8003C1AC(arg0);
+        g_WorldGfx.charaModelsTable_18[arg0->charaId_0] = NULL;
+        CharaModel_Free(arg0);
     }
 }
 
@@ -1754,14 +1746,14 @@ void func_8003D6E0(s32 arg0, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex) //
     {
         plmHdrPtr = lmHdr;
     } 
-    else if (D_800BCE18.field_0[arg1].field_CC.field_0 != 0) 
+    else if (g_WorldGfx.charaModels_CC[arg1].charaId_0 != 0) 
     {
-        plmHdrPtr = D_800BCE18.field_0[arg1].field_CC.lmHdr_8;
+        plmHdrPtr = g_WorldGfx.charaModels_CC[arg1].lmHdr_8;
     } 
     else 
     {
-        plmHdrPtr = (s_LmHeader*)D_800BCE18.field_0[0].field_14;
-        func_8003D354(&D_800BCE18.field_0[0].field_14, arg0); // Increments `field_14`?
+        plmHdrPtr = (s_LmHeader*)g_WorldGfx.dataPtr_14;
+        func_8003D354(&g_WorldGfx.dataPtr_14, arg0); // Increments `field_14`?
     }
 
     if (tex != NULL)
@@ -1780,16 +1772,16 @@ s32 func_8003D7D4(u32 arg0, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 
 {
     s32              queueIdx;
     s32              idx;
-    s_800BCE18_0_CC* ptr;
+    s_CharaModel* ptr;
     s_FsImageDesc*   img;
 
-    ptr = &D_800BCE18.field_0[arg1].field_CC;
-    idx = ptr->field_0;
+    ptr = &g_WorldGfx.charaModels_CC[arg1];
+    idx = ptr->charaId_0;
     img = &ptr->texture_C;
 
     if (arg0 == 0) 
     {
-        D_800BCE18.field_0[0].field_18[idx] = NULL;
+        g_WorldGfx.charaModelsTable_18[idx] = NULL;
         return 0;
     }
 
@@ -1803,10 +1795,10 @@ s32 func_8003D7D4(u32 arg0, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 
             }
         }
 
-        D_800BCE18.field_0[0].field_18[idx] = NULL;
+        g_WorldGfx.charaModelsTable_18[idx] = NULL;
     }
 
-    D_800BCE18.field_0[0].field_18[arg0] = ptr;
+    g_WorldGfx.charaModelsTable_18[arg0] = ptr;
 
     queueIdx = Fs_QueueStartRead(CHARA_FILE_INFOS[arg0].modelFileIdx, lmHdr);
 
@@ -1815,10 +1807,10 @@ s32 func_8003D7D4(u32 arg0, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 
         queueIdx = Fs_QueueStartReadTim(CHARA_FILE_INFOS[arg0].textureFileIdx, FS_BUFFER_1, tex);
     }
 
-    ptr->field_0    = arg0;
-    ptr->field_1    = 0;
-    ptr->field_4    = queueIdx;
-    ptr->lmHdr_8 = lmHdr;
+    ptr->charaId_0    = arg0;
+    ptr->loaded_1    = 0;
+    ptr->queueIdx_4 = queueIdx;
+    ptr->lmHdr_8    = lmHdr;
     ptr->texture_C  = *tex;
 
     return queueIdx;
@@ -1826,19 +1818,19 @@ s32 func_8003D7D4(u32 arg0, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 
 
 void func_8003D938() // 0x8003D938
 {
-    func_8003D9C8(&D_800BCE18.field_164C);
+    func_8003D9C8(&g_WorldGfx.harrySkel_164C);
 }
 
 void func_8003D95C() // 0x8003D95C
 {
-    s_800BCE18_0_CC* temp_a0;
+    s_CharaModel* temp_a0;
     s32 i;
 
     for (i = 0; i < 45; i++)
     {
         if (i != 1) 
         {
-            temp_a0 = D_800BCE18.field_0[0].field_18[i];
+            temp_a0 = g_WorldGfx.charaModelsTable_18[i];
             if (temp_a0 != 0) 
             {
                 func_8003D9C8(temp_a0);
@@ -1847,45 +1839,45 @@ void func_8003D95C() // 0x8003D95C
     }
 }
 
-void func_8003D9C8(s_800BCE18_0_CC* arg0) // 0x8003D9C8
+void func_8003D9C8(s_CharaModel* arg0) // 0x8003D9C8
 {
     s_Skeleton* skel;
 
-    if (arg0->field_1 == 0 && arg0->field_0 != 0 && Fs_QueueIsEntryLoaded(arg0->field_4) != 0)
+    if (arg0->loaded_1 == 0 && arg0->charaId_0 != Chara_None && Fs_QueueIsEntryLoaded(arg0->queueIdx_4) != 0)
     {
-        arg0->field_1 = 1;
+        arg0->loaded_1 = 1;
 
         LmHeader_FixOffsets(arg0->lmHdr_8);
-        func_80056464(arg0->lmHdr_8, CHARA_FILE_INFOS[arg0->field_0].textureFileIdx, &arg0->texture_C, CHARA_FILE_INFOS[arg0->field_0].field_6_10 % 4);
+        Lm_MaterialFileIdxApply(arg0->lmHdr_8, CHARA_FILE_INFOS[arg0->charaId_0].textureFileIdx, &arg0->texture_C, CHARA_FILE_INFOS[arg0->charaId_0].field_6_10 % 4);
 
-        skel = &arg0->field_14;
+        skel = &arg0->skeleton_14;
 
         Lm_MaterialFlagsApply(arg0->lmHdr_8);
-        func_80044FE0(skel, &arg0->field_14.field_C, 56); // TODO: Can't fit `s_Bone` at `field_C`. Check `s_Skeleton` size.
+        Skeleton_Init(skel, arg0->skeleton_14.boneArr_C, 56);
         func_8004506C(skel, arg0->lmHdr_8);
         func_800452EC(skel);
         func_800453E8(skel, true);
     }
 }
 
-void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4) // 0x8003DA9C
+void func_8003DA9C(s32 charaId, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4) // 0x8003DA9C
 {
     CVECTOR sp20 = { 0 };
     s16     ret;
 
-    if (arg0 == 0)
+    if (charaId == Chara_None)
     {
         return;
     }
 
     arg3 = CLAMP(arg3, Q12(0.0f), Q12(1.0f));
 
-    if (arg0 == 1)
+    if (charaId == Chara_Harry)
     {
         func_8003D058();
     }
 
-    ret = func_8003DD74(arg0, arg4);
+    ret = func_8003DD74(charaId, arg4);
 
     if (arg3 != 0)
     {
@@ -1899,8 +1891,8 @@ void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4)
                       D_800C4168.screenBrightness_8);
     }
 
-    func_80045534(&D_800BCE18.field_0[0].field_18[arg0]->field_14, &g_OrderingTable0[g_ActiveBufferIdx], arg2,
-                  coord, CHARA_FILE_INFOS[arg0].field_6 * 16, ret, CHARA_FILE_INFOS[arg0].field_8);
+    func_80045534(&g_WorldGfx.charaModelsTable_18[charaId]->skeleton_14, &g_OrderingTable0[g_ActiveBufferIdx], arg2,
+                  coord, CHARA_FILE_INFOS[charaId].field_6 * 16, ret, CHARA_FILE_INFOS[charaId].field_8);
 
     if (arg3 != 0)
     {
@@ -1915,49 +1907,49 @@ s32 func_8003DD74(s32 arg0, s32 arg1) // 0x8003DD74
 
 void func_8003DD80(s32 idx, s32 arg1) // 0x8003DD80
 {
-    s_800BCE18_0_CC* temp_a2;
+    s_CharaModel* temp_a2;
 
-    temp_a2 = D_800BCE18.field_0[0].field_18[idx];
+    temp_a2 = g_WorldGfx.charaModelsTable_18[idx];
 
     switch (idx)
     {
         case 1:
-            func_8003DE60(&temp_a2->field_14, arg1);
+            func_8003DE60(&temp_a2->skeleton_14, arg1);
             break;
 
         case 7:
-            func_8003E388(&temp_a2->field_14, arg1);
+            func_8003E388(&temp_a2->skeleton_14, arg1);
             break;
 
         case 26:
         case 27:
-            func_8003DF84(&temp_a2->field_14, arg1);
+            func_8003DF84(&temp_a2->skeleton_14, arg1);
             break;
 
         case 24:
-            func_8003E08C(&temp_a2->field_14, arg1);
+            func_8003E08C(&temp_a2->skeleton_14, arg1);
             break;
 
         case 30:
         case 31:
-            func_8003E194(&temp_a2->field_14, arg1);
+            func_8003E194(&temp_a2->skeleton_14, arg1);
             break;
 
         case 38:
         case 39:
-            func_8003E238(&temp_a2->field_14, arg1);
+            func_8003E238(&temp_a2->skeleton_14, arg1);
             break;
 
         case 14:
-            func_8003E414(&temp_a2->field_14, arg1);
+            func_8003E414(&temp_a2->skeleton_14, arg1);
             break;
 
         case 16:
-            func_8003E4A0(&temp_a2->field_14, arg1);
+            func_8003E4A0(&temp_a2->skeleton_14, arg1);
             break;
 
         case 18:
-            func_8003E544(&temp_a2->field_14, arg1);
+            func_8003E544(&temp_a2->skeleton_14, arg1);
             break;
     }
 }
@@ -2789,7 +2781,7 @@ void func_8003F170() // 0x8003F170
 
     func_800554C4(temp, ptr2->field_2C, sp60, g_SysWork.field_235C, &sp58, 
                   g_SysWork.field_2360.vx, g_SysWork.field_2360.vy, g_SysWork.field_2360.vz,
-                  D_800BCE18.field_0[0].type_0->waterZones_8);
+                  g_WorldGfx.type_0->waterZones_8);
     func_80055814(ptr2->field_30);
 
     if (ptr->field_154.field_0.field_0.s_field_0.field_0 & (1 << 3))
@@ -3185,14 +3177,14 @@ void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
     func_800553E0(arg0->field_0.field_18, arg0->field_0.field_19.r, arg0->field_0.field_19.g, arg0->field_0.field_19.b, arg0->field_0.field_1D.r, arg0->field_0.field_1D.g, arg0->field_0.field_1D.b);
 }
 
-void func_80040004(s_800BCE18* arg0) // 0x80040004
+void func_80040004(s_WorldGfx* arg0) // 0x80040004
 {
-    D_800BCE18.heldItem_1BAC.bone_18.field_14 = &arg0->field_0[2].field_26C;
+    g_WorldGfx.heldItem_1BAC.bone_18.next_14 = &arg0->charaModels_CC[2].skeleton_14.boneArr_C[0x10];
 }
 
 void func_80040014() // 0x80040014
 {
-    func_80069860(g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz, D_800BCE18.heldItem_1BAC.bone_18.field_14);
+    func_80069860(g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz, g_WorldGfx.heldItem_1BAC.bone_18.next_14);
 };
 
 INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_8003AB28", D_80025BE4);
