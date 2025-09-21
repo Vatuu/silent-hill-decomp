@@ -3461,7 +3461,7 @@ s_Texture* ActiveTextures_FindTexture(char* texName, s_ActiveTextures* activeTex
 void func_8005BF0C(s16 unused, s16 x, s16 y);
 
 /** Angle func. */
-s16 func_8005BF38(s16 angle);
+q3_12 func_8005BF38(q3_12 angle);
 
 s16 func_8005C7B0(s32 arg0);
 
@@ -3512,9 +3512,9 @@ void func_80069DF0(s_800C4590* arg0, VECTOR3* pos, s32 arg2, s32 arg3);
 
 s32 func_80069FFC(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara);
 
-void func_8006A178(s_800C4590* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void func_8006A178(s_800C4590* arg0, q19_12 posX, q19_12 posY, q19_12 posZ, q19_12 heightY);
 
-s_SubCharacter** func_8006A1A4(s32* arg0, s_SubCharacter* chara, s32 arg2);
+s_SubCharacter** func_8006A1A4(s32* arg0, s_SubCharacter* chara, bool arg2);
 
 s32 func_8006A3B4(s32 arg0, VECTOR* arg1, s32 arg2);
 
@@ -3579,7 +3579,7 @@ void func_8006CA18(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s_func_8
 
 s16 func_8006CB90(s_func_8006CC44* arg0);
 
-s32 func_8006CC44(s32 x, s32 z, s_func_8006CC44* arg2);
+s32 func_8006CC44(q23_8 x, q23_8 z, s_func_8006CC44* arg2);
 
 void func_8006CC9C(s_func_8006CC44* arg0);
 
@@ -3600,13 +3600,13 @@ bool func_8006D90C(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2);
 
 bool func_8006DA08(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2, s_SubCharacter* chara);
 
-void func_8006DAE4(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2, s32 arg3);
+void func_8006DAE4(s_func_800700F8_2* arg0, VECTOR3* pos, VECTOR3* offset, s32 arg3);
 
-bool func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_SubCharacter* chara);
+bool func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* pos, VECTOR3* offset, s_SubCharacter* chara);
 
 bool func_8006DC18(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2);
 
-bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s_SubCharacter** charas, s32 arg8);
+bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos, VECTOR3* offset, s32 arg5, s32 arg6, s_SubCharacter** charas, s32 arg8);
 
 bool func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1);
 
@@ -3637,16 +3637,16 @@ s32 func_8006F620(VECTOR3* pos, s_func_8006AB50* arg1, s32 arg2, s32 arg3);
 
 void func_8006F8FC(s32* outX, s32* outZ, s32 posX, s32 posZ, const s_func_8006F8FC* arg4);
 
-s16 func_8006F99C(s_SubCharacter* chara, s32 arg1, s16 arg2);
+q3_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle);
 
 /** Creates random angle of some kind. */
 q7_8 func_8006FAFC(s_SubCharacter* chara, s32 dist, s32 arg2, s32 arg3, s16 arg4, s32 arg5);
 
 bool func_8006FD90(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3);
 
-bool func_80070030(s_SubCharacter* chara, s32 x, s32 y, s32 z);
+bool func_80070030(s_SubCharacter* chara, q19_12 x, q19_12 y, q19_12 z);
 
-bool func_80070084(s_SubCharacter* chara, s32 x, s32 y, s32 z);
+bool func_80070084(s_SubCharacter* chara, q19_12 x, q19_12 y, q19_12 z);
 
 bool func_800700F8(s_SubCharacter* chara0, s_SubCharacter* chara1);
 
@@ -3660,7 +3660,7 @@ void func_80070400(s_SubCharacter* chara, s_func_80070400_1* arg1, s_func_800704
 
 bool func_80070208(s_SubCharacter* chara, s32 arg1);
 
-s32 func_8007029C(s_SubCharacter* chara, s32 arg1, s16 angle);
+s32 func_8007029C(s_SubCharacter* chara, q19_12 arg1, q3_12 angle);
 
 void func_800705E4(GsCOORDINATE2* coord, s32 idx, s32 scaleX, s32 scaleY, s32 scaleZ);
 

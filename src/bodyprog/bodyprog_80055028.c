@@ -1806,10 +1806,10 @@ void func_8005BF0C(s16 unused, s16 x, s16 y) // 0x8005BF0C
     Gfx_DebugStringPosition(x, y);
 }
 
-s16 func_8005BF38(s16 angle) // 0x8005BF38
+q3_12 func_8005BF38(q3_12 angle) // 0x8005BF38
 {
-    s16 outAngle;
-    s16 angleNorm;
+    q3_12 outAngle;
+    q3_12 angleNorm;
 
     angleNorm = FP_ANGLE_NORM_U(angle);
 
@@ -3059,7 +3059,7 @@ s32 func_80069FFC(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara) // 0x80
 
     if (func_800426E4(chara->position_18.vx, chara->position_18.vz) == NULL)
     {
-        func_8006A178(arg0, 0, 0, 0, 0x8000);
+        func_8006A178(arg0, FP_METER(0.0f), FP_METER(0.0f), FP_METER(0.0f), FP_METER(8.0f));
         return 1;
     }
 
@@ -3085,27 +3085,28 @@ s32 func_80069FFC(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara) // 0x80
             break;
     }
 
-    return func_8006A4A8(arg0, &posCpy, &sp28, var_s1, func_800425D8(&collDataIdx), collDataIdx, 0, 0, func_8006A1A4(&sp54, chara, 1), sp54);
+    return func_8006A4A8(arg0, &posCpy, &sp28, var_s1, func_800425D8(&collDataIdx), collDataIdx, 0, 0, func_8006A1A4(&sp54, chara, true), sp54);
 }
 
-void func_8006A178(s_800C4590* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8006A178
+void func_8006A178(s_800C4590* arg0, q19_12 posX, q19_12 posY, q19_12 posZ, q19_12 heightY) // 0x8006A178
 {
-    arg0->field_0.vx = arg1;
-    arg0->field_0.vy = arg2;
-    arg0->field_0.vz = arg3;
+    arg0->field_0.vx = posX;
+    arg0->field_0.vy = posY;
+    arg0->field_0.vz = posZ;
     arg0->field_12 = 0;
     arg0->field_10 = 0;
     arg0->field_14 = 0;
     arg0->field_18 = 0xFFFF0000;
-    arg0->field_C  = arg4;
+    arg0->field_C  = heightY;
 }
 
-s_SubCharacter** func_8006A1A4(s32* arg0, s_SubCharacter* chara, s32 arg2) // 0x8006A1A4
+s_SubCharacter** func_8006A1A4(s32* arg0, s_SubCharacter* chara, bool arg2) // 0x8006A1A4
 {
     s_SubCharacter* otherChara;
 
     if (chara != NULL &&
-        (chara->model_0.charaId_0 == Chara_None || chara->field_E1_0 == 0 || (chara->field_E1_0 == 1 && arg2 == 1)))
+        (chara->model_0.charaId_0 == Chara_None || chara->field_E1_0 == 0 ||
+        (chara->field_E1_0 == 1 && arg2 == true)))
     {
         *arg0 = 0;
         return &D_800C4458;
@@ -3119,9 +3120,9 @@ s_SubCharacter** func_8006A1A4(s32* arg0, s_SubCharacter* chara, s32 arg2) // 0x
         if (otherChara->model_0.charaId_0 != Chara_None)
         {
             if (otherChara->field_E1_0 != 0 &&
-                (otherChara->field_E1_0 != 1 || arg2 != 1) &&
+                (otherChara->field_E1_0 != 1 || arg2 != true) &&
                 otherChara != chara &&
-                (arg2 != 1 || chara == NULL || chara->field_E1_0 != 4 || otherChara->field_E1_0 >= chara->field_E1_0))
+                (arg2 != true || chara == NULL || chara->field_E1_0 != 4 || otherChara->field_E1_0 >= chara->field_E1_0))
             {
                 *arg0      += 1;
                 *D_800C4474 = otherChara;
@@ -3135,9 +3136,9 @@ s_SubCharacter** func_8006A1A4(s32* arg0, s_SubCharacter* chara, s32 arg2) // 0x
     if (otherChara->model_0.charaId_0 != Chara_None)
     {
         if (otherChara->field_E1_0 != 0 &&
-            (otherChara->field_E1_0 != 1 || arg2 != 1) &&
+            (otherChara->field_E1_0 != 1 || arg2 != true) &&
             otherChara != chara &&
-            (arg2 != 1 || chara == NULL || chara->field_E1_0 != 4 || otherChara->field_E1_0 >= chara->field_E1_0))
+            (arg2 != true || chara == NULL || chara->field_E1_0 != 4 || otherChara->field_E1_0 >= chara->field_E1_0))
         {
             *arg0      += 1;
             *D_800C4474 = otherChara;
@@ -3180,7 +3181,7 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* pos, s_func_8006AB50* arg2, s32 arg
                   s_SubCharacter** charas, s32 charaIdx) // 0x8006A4A8
 {
     s_func_8006CC44      sp18;
-    VECTOR3              sp120;
+    VECTOR3              sp120; // Q19.12
     VECTOR3              sp130;
     VECTOR3              sp140;
     s32                  var_a0;
@@ -3316,8 +3317,9 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* pos, s_func_8006AB50* arg2, s32 arg
     else
     {
         arg0->field_14 = sp18.field_94;
-        var_v0         = func_8006CC44(sp18.field_4.positionX_18 + (sp120.vx >> 4),
-                                       sp18.field_4.positionZ_1C + (sp120.vz >> 4), &sp18) *
+        var_v0         = func_8006CC44(sp18.field_4.positionX_18 + Q12_TO_Q8(sp120.vx),
+                                       sp18.field_4.positionZ_1C + Q12_TO_Q8(sp120.vz),
+                                       &sp18) *
                          16;
     }
 
@@ -4549,7 +4551,7 @@ s16 func_8006CB90(s_func_8006CC44* arg0) // 0x8006CB90
                                                                  SQUARE(temp_v0 - arg0->field_4.field_2C));
 }
 
-s32 func_8006CC44(s32 x, s32 z, s_func_8006CC44* arg2) // 0x8006CC44
+s32 func_8006CC44(q23_8 x, q23_8 z, s_func_8006CC44* arg2) // 0x8006CC44
 {
     if (arg2->field_94 != 12)
     {
@@ -4558,7 +4560,7 @@ s32 func_8006CC44(s32 x, s32 z, s_func_8006CC44* arg2) // 0x8006CC44
                arg2->field_7C;
     }
 
-    return FP_FLOAT_TO(0.5f, Q12_SHIFT);
+    return Q12(0.5f);
 }
 
 void func_8006CC9C(s_func_8006CC44* arg0) // 0x8006CC9C
@@ -5065,7 +5067,7 @@ bool func_8006DA08(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2, s_SubC
     s32              scratchAddr;
     s_SubCharacter** charas;
 
-    charas = func_8006A1A4(&sp28, chara, 0);
+    charas = func_8006A1A4(&sp28, chara, false);
 
     arg0->field_0 = false;
     if (func_8006DCE0((s32)PSX_SCRATCH, 0, 0, vec1, vec2, 0, 0, charas, sp28))
@@ -5085,35 +5087,35 @@ bool func_8006DA08(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2, s_SubC
     return arg0->field_0;
 }
 
-void func_8006DAE4(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2, s32 arg3) // 0x8006DAE4
+void func_8006DAE4(s_func_800700F8_2* arg0, VECTOR3* pos, VECTOR3* offset, s32 arg3) // 0x8006DAE4
 {
     arg0->field_0  = 0;
     arg0->field_1  = 0;
-    arg0->field_4  = vec1->vx + vec2->vx;
-    arg0->field_8  = vec1->vy + vec2->vy;
-    arg0->field_C  = vec1->vz + vec2->vz;
+    arg0->field_4  = pos->vx + offset->vx;
+    arg0->field_8  = pos->vy + offset->vy;
+    arg0->field_C  = pos->vz + offset->vz;
     arg0->field_10 = 0;
     arg0->field_14 = arg3 * 16;
     arg0->field_18 = 0x1E00;
     arg0->field_1C = 0;
 }
 
-static inline void func_8006DB3C_Inline(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, u16* p)
+static inline void func_8006DB3C_Inline(s_func_800700F8_2* arg0, VECTOR3* pos, VECTOR3* offset, u16* p)
 {
-    func_8006DAE4(arg0, arg1, arg2, (short)*p);
+    func_8006DAE4(arg0, pos, offset, (short)*p);
 }
 
-bool func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_SubCharacter* chara) // 0x8006DB3C
+bool func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* pos, VECTOR3* offset, s_SubCharacter* chara) // 0x8006DB3C
 {
     s32              sp28;
     s32              temp_s0;
     s_SubCharacter** temp_v0;
     s32              scratchAddr;
 
-    temp_v0       = func_8006A1A4(&sp28, chara, 1);
+    temp_v0       = func_8006A1A4(&sp28, chara, true);
     arg0->field_0 = false;
 
-    if (func_8006DCE0((s32)PSX_SCRATCH, 1, 0, arg1, arg2, 0, 0, temp_v0, sp28))
+    if (func_8006DCE0((s32)PSX_SCRATCH, 1, 0, pos, offset, 0, 0, temp_v0, sp28))
     {
         temp_s0       = SetSp((s32)PSX_SCRATCH_ADDR(984));
         scratchAddr   = (s32)PSX_SCRATCH;
@@ -5124,7 +5126,7 @@ bool func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* arg1, VECTOR3* arg2, s_SubC
 
     if (!arg0->field_0)
     {
-        func_8006DB3C_Inline(arg0, arg1, arg2, &((u8*)scratchAddr)[92]);
+        func_8006DB3C_Inline(arg0, pos, offset, &((u8*)scratchAddr)[92]);
     }
 
     return arg0->field_0;
@@ -5153,9 +5155,9 @@ bool func_8006DC18(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2) // 0x8
     return arg0->field_0;
 }
 
-bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VECTOR3* pos1, s32 arg5, s32 arg6, s_SubCharacter** charas, s32 arg8)
+bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos, VECTOR3* offset, s32 arg5, s32 arg6, s_SubCharacter** charas, s32 arg8)
 {
-    if (pos1->vx == 0 && pos1->vz == 0)
+    if (offset->vx == FP_METER(0.0f) && offset->vz == FP_METER(0.0f))
     {
         return false;
     }
@@ -5166,13 +5168,13 @@ bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos0, VEC
     arg0->field_8  = 0x7FFF;
     arg0->field_20 = 0;
 
-    arg0->field_2C.vx = FP_METER_TO_GEO(pos0->vx);
-    arg0->field_2C.vy = FP_METER_TO_GEO(pos0->vy);
-    arg0->field_2C.vz = FP_METER_TO_GEO(pos0->vz);
+    arg0->field_2C.vx = FP_METER_TO_GEO(pos->vx);
+    arg0->field_2C.vy = FP_METER_TO_GEO(pos->vy);
+    arg0->field_2C.vz = FP_METER_TO_GEO(pos->vz);
 
-    arg0->field_50.vx = FP_METER_TO_GEO(pos1->vx);
-    arg0->field_50.vy = FP_METER_TO_GEO(pos1->vy);
-    arg0->field_50.vz = FP_METER_TO_GEO(pos1->vz);
+    arg0->field_50.vx = FP_METER_TO_GEO(offset->vx);
+    arg0->field_50.vy = FP_METER_TO_GEO(offset->vy);
+    arg0->field_50.vz = FP_METER_TO_GEO(offset->vz);
 
     arg0->field_3C = arg0->field_2C.vx + arg0->field_50.vx;
 
@@ -6134,48 +6136,48 @@ void func_8006F8FC(s32* outX, s32* outZ, s32 posX, s32 posZ, const s_func_8006F8
     *outZ = posZ - maxZ;
 }
 
-s16 func_8006F99C(s_SubCharacter* chara, s32 arg1, s16 arg2) // 0x8006F99C
+q3_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle) // 0x8006F99C
 {
-    s16 var_s0;
-    s16 var_s2;
-    s32 i;
+    q3_12 curAngleOffset;
+    q3_12 angleOffset;
+    s32   i;
 
-    var_s2 = NO_VALUE;
+    angleOffset = NO_VALUE;
     for (i = 0; i < 15; i++)
     {
         if (i == 0)
         {
-            var_s0 = Rng_TestProbabilityBits(6) - 32;
+            curAngleOffset = Rng_TestProbabilityBits(6) - 32;
         }
         else if (i & 1)
         {
-            var_s0 = (256 << ((i + 1) >> 1)) + Rng_TestProbabilityBits(6);
+            curAngleOffset = (256 << ((i + 1) >> 1)) + Rng_TestProbabilityBits(6);
         }
         else
         {
-            var_s0 = -(256 << (i >> 1)) - Rng_TestProbabilityBits(6);
+            curAngleOffset = -(256 << (i >> 1)) - Rng_TestProbabilityBits(6);
         }
 
-        if (var_s2 != NO_VALUE)
+        if (angleOffset != NO_VALUE)
         {
-            if (ABS(var_s2) < ABS(var_s0))
+            if (ABS(angleOffset) < ABS(curAngleOffset))
             {
                 continue;
             }
         }
 
-        if (!func_8007029C(chara, arg1, var_s0 + arg2))
+        if (!func_8007029C(chara, dist, curAngleOffset + headingAngle))
         {
-            var_s2 = var_s0;
+            angleOffset = curAngleOffset;
         }
     }
 
-    if (var_s2 != NO_VALUE)
+    if (angleOffset != NO_VALUE)
     {
-        return func_8005BF38(var_s2 + arg2);
+        return func_8005BF38(angleOffset + headingAngle);
     }
 
-    return Q12(1.0f);
+    return FP_ANGLE(360.0f);
 }
 
 q7_8 func_8006FAFC(s_SubCharacter* chara, s32 dist, s32 arg2, s32 arg3, s16 arg4, s32 arg5) // 0x8006FAFC
@@ -6200,17 +6202,17 @@ q7_8 func_8006FAFC(s_SubCharacter* chara, s32 dist, s32 arg2, s32 arg3, s16 arg4
     }
 
     temp_v1         = arg4 / 3;
-    subroutine_arg4 = -0x1000;
+    subroutine_arg4 = Q12(-1.0f);
 
     var_s7 = 7;
-    if (arg4 == 0x1000)
+    if (arg4 == Q12(1.0f))
     {
         var_s7 = 12;
     }
 
     for (i = 0; i < var_s7; i++)
     {
-        if (arg4 == 0x1000)
+        if (arg4 == Q12(1.0f))
         {
             angle = (((i * 30) + (Rng_Rand16() % 30)) << 12) / 360;
         }
@@ -6249,8 +6251,8 @@ bool func_8006FD90(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3) // 0x800
 {
     VECTOR3 sp10;
     VECTOR3 sp20;
-    VECTOR3 sp30;
-    VECTOR3 sp40;
+    VECTOR3 sp30; // Q19.12
+    VECTOR3 sp40; // Q19.12
     s32     var1;
     s32     dist;
     s32     var0;
@@ -6298,18 +6300,17 @@ bool func_8006FD90(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3) // 0x800
     else
     {
         sp30.vy = chara->position_18.vy + chara->field_CE;
-        sp40.vy = (g_SysWork.player_4C.chara_0.position_18.vy + g_SysWork.player_4C.chara_0.field_CE) -
-                  (chara->position_18.vy - chara->field_CE);
+        sp40.vy = (g_SysWork.player_4C.chara_0.position_18.vy + g_SysWork.player_4C.chara_0.field_CE) - (chara->position_18.vy - chara->field_CE);
     }
 
-    // Maybe sp10 is not VECTOR3. Might need to rewrite this whole function if its `s_func_800700F8_2`?
+    // Maybe `sp10` is not `VECTOR3`. Might need to rewrite this whole function if its `s_func_800700F8_2`?
     return func_8006DA08(&sp10, &sp30, &sp40, chara) == 0 || sp20.vx != 0;
 }
 
-bool func_80070030(s_SubCharacter* chara, s32 x, s32 y, s32 z)
+bool func_80070030(s_SubCharacter* chara, q19_12 x, q19_12 y, q19_12 z)
 {
     s_func_800700F8_2 temp;
-    VECTOR3           deltaPos;
+    VECTOR3           deltaPos; // Q19.12
 
     deltaPos.vx = x - chara->position_18.vx;
     deltaPos.vy = y - chara->position_18.vy;
@@ -6318,10 +6319,10 @@ bool func_80070030(s_SubCharacter* chara, s32 x, s32 y, s32 z)
     func_8006DB3C(&temp, &chara->position_18, &deltaPos, chara);
 }
 
-bool func_80070084(s_SubCharacter* chara, s32 x, s32 y, s32 z) // 0x80070084
+bool func_80070084(s_SubCharacter* chara, q19_12 x, q19_12 y, q19_12 z) // 0x80070084
 {
     s_func_800700F8_2 var;
-    VECTOR3           deltaPos;
+    VECTOR3           deltaPos; // Q19.12
     bool              result;
 
     deltaPos.vx = x - chara->position_18.vx;
@@ -6389,16 +6390,16 @@ bool func_80070208(s_SubCharacter* chara, s32 arg1) // 0x80070208
     return result;
 }
 
-s32 func_8007029C(s_SubCharacter* chara, s32 arg1, s16 angle) // 0x8007029C
+s32 func_8007029C(s_SubCharacter* chara, q19_12 dist, q3_12 angle) // 0x8007029C
 {
     s8      vars[28];
-    VECTOR3 vec;
+    VECTOR3 offset; // Q19.12
 
-    vec.vx = FP_MULTIPLY(arg1, Math_Sin(angle), Q12_SHIFT);
-    vec.vy = 0;
-    vec.vz = FP_MULTIPLY(arg1, Math_Cos(angle), Q12_SHIFT);
+    offset.vx = FP_MULTIPLY(dist, Math_Sin(angle), Q12_SHIFT);
+    offset.vy = FP_METER(0.0f);
+    offset.vz = FP_MULTIPLY(dist, Math_Cos(angle), Q12_SHIFT);
 
-    return func_8006DB3C(&vars, &chara->position_18, &vec, chara);
+    return func_8006DB3C(&vars, &chara->position_18, &offset, chara);
 }
 
 bool func_80070320() // 0x80070320
