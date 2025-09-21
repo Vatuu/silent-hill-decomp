@@ -12,15 +12,15 @@ const u32 D_80024D58 = 0; // Nothing references it. Might be just padding.
 
 const static s_WaterZone WATER_LIGHT_ZONES_0[] =
 {
-    { true, 8, 0xF880, 0x500, 0xF880, 0x280 },
-    { true, 8, 0x0,    0x280, 0x0,    0x500 },
+    { true, 8, Q4(-120.0f), Q4(80.0f), Q4(-120.0f), Q4(40.0f) },
+    { true, 8, Q4(0.0f),    Q4(40.0f), Q4(0.0f),    Q4(80.0f) },
     {}
 };
 
 const static s_WaterZone WATER_LIGHT_ZONES_1[] =
 {
-    { true, 8, 0xF600, 0x280, 0xF600, 0xA00 },
-    { true, 8, 0xF600, 0xA00, 0xF600, 0x280 },
+    { true, 8, Q4(-160.0f), Q4(40.0f),  Q4(-160.0f), Q4(160.0f) },
+    { true, 8, Q4(-160.0f), Q4(160.0f), Q4(-160.0f), Q4(40.0f)  },
     {}
 };
 
