@@ -2320,27 +2320,28 @@ void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHdr) // 0x8004506C
 // Anim func.
 void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2, s32 arg3) // 0x80045108
 {
-    s_Bone*  bone0;
+    s_Bone*  curBone;
     s_Bone** boneOrd;
     s32      boneIdx;
 
     if (arg3 == 0)
     {
         skel->boneIdx_1 = 0;
-        skel->bones_4   = 0;
+        skel->bones_4   = NULL;
     }
 
     boneIdx = skel->boneIdx_1;
     Skeleton_BoneModelAssign(skel, lmHdr, arg2);
 
     boneOrd = &skel->bones_4;
-    while (*boneOrd != 0)
+    while (*boneOrd != NULL)
     {
-        bone0 = *boneOrd;
-        boneOrd = &bone0->next_14;
+        curBone = *boneOrd;
+        boneOrd = &curBone->next_14;
     }
 
-    func_80045258(boneOrd, &skel->bones_8[boneIdx], skel->boneIdx_1 - boneIdx, lmHdr); // Skeleton_BoneModelAssign increments boneIdx_1
+    // `Skeleton_BoneModelAssign` increments `boneIdx_1`.
+    func_80045258(boneOrd, &skel->bones_8[boneIdx], skel->boneIdx_1 - boneIdx, lmHdr);
     func_800453E8(skel, false);
 }
 
@@ -2349,7 +2350,6 @@ void Skeleton_BoneModelAssign(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2) // 
     s32 modelIdx;
     
     modelIdx = Bone_GetModelIndex(arg2, true);
-
     while (modelIdx != BoneHierarhy_End)
     {
         Bone_ModelAssign(&skel->bones_8[skel->boneIdx_1], lmHdr, modelIdx);
@@ -2362,13 +2362,13 @@ void Skeleton_BoneModelAssign(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2) // 
 void func_80045258(s_Bone** boneOrd, s_Bone* bones, s32 boneIdx, s_LmHeader* lmHdr) // 0x80045258
 {
     s_Bone* bone;
-    u8*     objOrd;
+    u8*     curObjOrd;
 
-    for (objOrd = lmHdr->modelOrder_10; objOrd < &lmHdr->modelOrder_10[lmHdr->modelCount_8]; objOrd++)
+    for (curObjOrd = lmHdr->modelOrder_10; curObjOrd < &lmHdr->modelOrder_10[lmHdr->modelCount_8]; curObjOrd++)
     {
         for (bone = bones; bone < &bones[boneIdx]; bone++)
         {
-            if (bone->modelInfo_0.modelIdx_C == *objOrd)
+            if (bone->modelInfo_0.modelIdx_C == *curObjOrd)
             {
                 *boneOrd = bone;
                 boneOrd  = &bone->next_14;
@@ -2382,19 +2382,18 @@ void func_80045258(s_Bone** boneOrd, s_Bone* bones, s32 boneIdx, s_LmHeader* lmH
 // Anim func.
 void func_800452EC(s_Skeleton* skel) // 0x800452EC
 {
-    s32                temp_a0;
-    s32                var_v0;
-    u32                temp_v1;
-    s_Bone*            var_a1;
-    s_ModelHeader*     temp_v0;
+    s32            temp_a0;
+    s32            var_v0;
+    u32            temp_v1;
+    s_Bone*        curBone;
+    s_ModelHeader* modelHdr;
 
-    var_a1 = skel->bones_4;
-
-    while (var_a1)
+    curBone = skel->bones_4;
+    while (curBone)
     {
-        temp_v0 = var_a1->modelInfo_0.modelHdr_8;
-        temp_v1 = temp_v0->modelName_0.str[1] - '0';
-        temp_a0 = temp_v0->modelName_0.str[0] - '0';
+        modelHdr = curBone->modelInfo_0.modelHdr_8;
+        temp_v1 = modelHdr->modelName_0.str[1] - '0';
+        temp_a0 = modelHdr->modelName_0.str[0] - '0';
 
         if (temp_v1 < 10 && temp_a0 >= 0 && temp_a0 < 10)
         {
@@ -2405,8 +2404,8 @@ void func_800452EC(s_Skeleton* skel) // 0x800452EC
             var_v0 = 0;
         }
 
-        var_a1->field_10 = var_v0;
-        var_a1           = var_a1->next_14;
+        curBone->field_10 = var_v0;
+        curBone           = curBone->next_14;
     }
 }
 
@@ -2466,32 +2465,32 @@ void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
     }
 }
 
-void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord, s16 arg4, u16 arg5, s_FsImageDesc* image) // 0x80045534
+void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord, s16 arg4, u16 arg5, s_FsImageDesc* images) // 0x80045534
 {
-    MATRIX           sp20;
-    MATRIX           sp40;
-    DVECTOR          sp60;
-    s32              temp_a1;
-    s16              var_fp;
-    s16              var_s3;
-    s16              var_s4;
-    s16              var_s5;
-    s16              var_s6;
-    s16              var_s7;
-    s32              temp_a0;
-    s32              temp_s0;
-    s32              temp_s1_2;
-    s32              temp_s1_3;
-    s32              temp_s1_4;
-    s32              temp_v1;
-    s32              var_s0;
-    s32              var_s2;
-    s32              var_s3_2;
-    s32              var_v0_2;
-    s32              var_v0_4;
-    s32              var_v0_5;
-    s_FsImageDesc*   image0;
-    s_Bone*          var_s0_2;
+    MATRIX         mat0;
+    MATRIX         mat1;
+    DVECTOR        sp60;
+    s32            temp_a1;
+    s16            var_fp;
+    s16            var_s3;
+    s16            var_s4;
+    s16            var_s5;
+    s16            var_s6;
+    s16            var_s7;
+    s32            temp_a0;
+    s32            temp_s0;
+    s32            temp_s1_2;
+    s32            temp_s1_3;
+    s32            temp_s1_4;
+    s32            temp_v1;
+    s32            var_s0;
+    s32            var_s2;
+    s32            var_s3_2;
+    s32            var_v0_2;
+    s32            var_v0_4;
+    s32            var_v0_5;
+    s_FsImageDesc* curImage;
+    s_Bone*        curBone;
 
     var_s5 = 0x7FFF;
     var_s6 = 0x7FFF;
@@ -2507,19 +2506,19 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord,
 
     var_s0 = NO_VALUE;
 
-    if (image != NULL)
+    if (images != NULL)
     {
-        for (image0 = image; image0->clutY != NO_VALUE; image0++)
+        for (curImage = images; curImage->clutY != NO_VALUE; curImage++)
         {
-            if (var_s0 != image0->clutY)
+            if (var_s0 != curImage->clutY)
             {
-                var_s0 = image0->clutY;
-                func_80049AF8(&coord[var_s0], &sp20);
-                SetRotMatrix(&sp20);
-                SetTransMatrix(&sp20);
+                var_s0 = curImage->clutY;
+                func_80049AF8(&coord[var_s0], &mat0);
+                SetRotMatrix(&mat0);
+                SetTransMatrix(&mat0);
             }
 
-            gte_ldv0(image0);
+            gte_ldv0(curImage);
             gte_rtps();
             gte_stsxy(&sp60);
             temp_a1 = gte_stSZ3();
@@ -2556,27 +2555,27 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord,
         }
     }
 
-    for (var_s0_2 = skel->bones_4; var_s0_2 != NULL; var_s0_2 = var_s0_2->next_14)
+    for (curBone = skel->bones_4; curBone != NULL; curBone = curBone->next_14)
     {
-        if (var_s0_2->modelInfo_0.field_0 >= 0)
+        if (curBone->modelInfo_0.field_0 >= 0)
         {
-            func_80049B6C(&coord[(u8)var_s0_2->field_10], &sp40, &sp20);
+            func_80049B6C(&coord[(u8)curBone->field_10], &mat1, &mat0);
 
-            if (var_s0_2->modelInfo_0.field_0 & 1)
+            if (curBone->modelInfo_0.field_0 & 1)
             {
-                sp20.m[2][2]         = 0;
-                *(s32*)&sp20.m[2][0] = 0;
-                *(s32*)&sp20.m[1][1] = 0;
-                *(s32*)&sp20.m[0][2] = 0;
-                *(s32*)&sp20.m[0][0] = 0;
+                mat0.m[2][2]         = 0;
+                *(s32*)&mat0.m[2][0] = 0;
+                *(s32*)&mat0.m[1][1] = 0;
+                *(s32*)&mat0.m[0][2] = 0;
+                *(s32*)&mat0.m[0][0] = 0;
             }
 
-            func_80057090(&var_s0_2->modelInfo_0, ot, arg2, &sp20, &sp40, arg5);
+            func_80057090(&curBone->modelInfo_0, ot, arg2, &mat0, &mat1, arg5);
 
             if (D_800C4168.fogEnabled_1)
             {
-                gte_SetRotMatrix(&sp20);
-                gte_SetTransMatrix(&sp20);
+                gte_SetRotMatrix(&mat0);
+                gte_SetTransMatrix(&mat0);
                 gte_ldvxy0_Zero();
                 gte_gte_ldvz0();
                 gte_rtps();

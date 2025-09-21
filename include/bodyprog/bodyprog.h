@@ -932,7 +932,7 @@ typedef struct
     s8      field_3;
     s_Bone* bones_4;
     s_Bone* bones_8;
-    s_Bone  boneArr_C[56];
+    s_Bone  bones_C[56];
 } s_Skeleton;
 STATIC_ASSERT_SIZEOF(s_Skeleton, 1356);
 
@@ -2503,9 +2503,9 @@ void SysState_Fmv_Update();
 
 s32 Map_TypeGet();
 
-void CharaModel_Free(s_CharaModel* arg0);
+void CharaModel_Free(s_CharaModel* model);
 
-void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ);
+void func_8003C220(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerPosZ);
 
 /** Unknown bodyprog func. Called by `Fs_QueueDoThingWhenEmpty`. */
 s32 func_8003C850();
@@ -2532,7 +2532,7 @@ void func_8003D550(s32 charaId, s32 arg1);
 /** Called by some chara init funcs, similar to `func_8003DD80`? */
 void func_8003D468(s32 arg0, bool flag);
 
-void func_8003D6A4(s_CharaModel* arg0);
+void func_8003D6A4(s_CharaModel* model);
 
 /** Return type assumed. */
 void func_8003D160();
@@ -2543,8 +2543,9 @@ void func_8003D5B4(s8 arg0);
 
 void func_8003D6E0(s32 arg0, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
-/** Param types assumed. */
-void func_8003DD80(s32 idx, s32 arg1); // Called by some chara init funcs.
+s32 func_8003DD74(s32 charaId, s32 arg1);
+
+void func_8003DD80(s32 modelIdx, s32 arg1); // Called by some chara init funcs.
 
 void func_8003E740();
 
@@ -2581,7 +2582,7 @@ s32 func_8003FEC0(s_sub_StructUnk3* arg0);
 
 void func_8003FF2C(s_StructUnk3* arg0);
 
-void func_80040004(s_WorldGfx* arg0);
+void func_80040004(s_WorldGfx* worldGfx);
 
 void func_80040014();
 
@@ -2811,7 +2812,7 @@ void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2, s32 arg3);
 void Skeleton_BoneModelAssign(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2);
 
 /** Anim func. Param names are rough. */
-void func_80045258(s_Bone** skels, s_Bone* bones, s32 boneIdx, s_LmHeader* lmHdr);
+void func_80045258(s_Bone** boneOrd, s_Bone* bones, s32 boneIdx, s_LmHeader* lmHdr);
 
 /** Anim func. */
 void func_800452EC(s_Skeleton* skel);
@@ -2827,7 +2828,7 @@ void func_800453E8(s_Skeleton* skel, bool cond);
 /** Does something with skeleton bones. `arg0` is a struct pointer. */
 void func_80045468(s_Skeleton* skel, s32* arg1, bool cond);
 
-void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord, s16 arg4, u16 arg5, s_FsImageDesc* image);
+void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord, s16 arg4, u16 arg5, s_FsImageDesc* images);
 
 /** Passes a command to the sound driver. Plays SFX among other things. */
 void Sd_EngineCmd(u32 cmd);
@@ -3978,7 +3979,7 @@ void func_8003CC7C(s_WorldObject_0* arg0, MATRIX* arg1, MATRIX* arg2);
 void func_8003D354(s32* arg0, s32 arg1);
 
 /** Texture UV setup for NPCs. */
-void func_8003D3BC(s_FsImageDesc* img, s32 arg1, s32 arg2);
+void func_8003D3BC(s_FsImageDesc* image, s32 groupIds, s32 arg2);
 
 s32 func_8003D7D4(u32 charaId, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
