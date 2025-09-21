@@ -805,7 +805,7 @@ s32 Map_SpeedZoneTypeGet(q19_12 posX, q19_12 posZ) // 0x8003BF60
     s32                zoneType;
     const s_SpeedZone* curZone;
 
-    zoneType = 0;
+    zoneType = SpeedZoneType_Slow;
 
     if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP0_S00)
     {

@@ -2884,19 +2884,19 @@ void func_8008E4EC(s_LmHeader* lmHdr) // 0x8008E4EC
 
 s_WaterZone* Map_WaterZoneGet(q27_4 posX, q27_4 posZ, s_WaterZone* waterZones)
 {
-    s_WaterZone* zonePtr;
+    s_WaterZone* curZone;
 
     if (waterZones == NULL)
     {
         return NULL;
     }
 
-    for (zonePtr = waterZones; zonePtr->isEnabled_0; zonePtr++)
+    for (curZone = waterZones; curZone->isEnabled_0; curZone++)
     {
-        if (posX >= zonePtr->minX_4 && posX < zonePtr->maxX_6 &&
-            posZ >= zonePtr->minZ_8 && posZ < zonePtr->maxZ_A)
+        if (posX >= curZone->minX_4 && posX < curZone->maxX_6 &&
+            posZ >= curZone->minZ_8 && posZ < curZone->maxZ_A)
         {
-            return zonePtr;
+            return curZone;
         }
     }
 
