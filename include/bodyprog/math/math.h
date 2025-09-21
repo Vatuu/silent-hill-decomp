@@ -51,7 +51,7 @@
  *
  * @param bitfield Bitfield to check.
  * @param flag Flag to check in the bitfield.
- * @param isSet Flag status to check for.
+ * @param isSet Required status to check for.
  * @return `true` if the flag is set to the required status, `false` otherwise.
  */
 #define CHECK_FLAG(bitfield, flag, isSet) \

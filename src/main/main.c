@@ -39,8 +39,8 @@ s32 g_MainFbIdx = 0;
 
 DISPENV g_MainDispEnv =
 {
-    .disp   = { 0, 0, 320, 240 },
-    .screen = { 0, 8, 256, 224 }
+    .disp   = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT  },
+    .screen = { 0, 8, 256,          224            }
 };
 
 DRAWENV g_MainDrawEnv =
@@ -72,7 +72,7 @@ int main()
     ClearImage2((RECT*)PSX_SCRATCH, 0, 0, 0);
     DrawSync(0);
 
-    // Display area = (0, 0, 320, 240)
+    // Display area = (0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
     PutDispEnv(&g_MainDispEnv);
 
     // Initialize SPU.
