@@ -2879,13 +2879,12 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara, s32 arg
     #define WALL_COUNT_THRESHOLD 3                              // Unknown purpose.
     #define WALL_HEIGHT          FP_METER(0.5f)
 
-    s_Collision coll;
-    s32             sp20;
-    s32             wallBound;
-    s32             var_s2;
+    s_Collision     coll;
+    e_CollisionType collType;
+    s32             groundHeight;
+    q19_12          wallHeightBound;
     s32             i;
     s32             wallCount;
-    s8              temp_v0;
     s32             var_s6;
 
     if (arg4 == -1)
@@ -2910,22 +2909,21 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara, s32 arg
         case Chara_Romper:
         case Chara_PuppetNurse:
         case Chara_PuppetDoctor:
-            wallBound = chara->position_18.vy - WALL_HEIGHT;
+            wallHeightBound = chara->position_18.vy - WALL_HEIGHT;
 
             switch (arg0->field_14)
             {
                 case 12:
-                    var_s2 = 2;
+                    collType = CollisionType_Unk2;
                     break;
 
                 default:
-                    var_s2 = arg0->field_C < wallBound;
+                    collType = (arg0->field_C < wallHeightBound) ? CollisionType_Wall : CollisionType_None;
                     break;
             }
 
             wallCount = 0;
-
-            if (var_s2 == 0)
+            if (collType == CollisionType_None)
             {
                 break;
             }
@@ -2936,26 +2934,26 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara, s32 arg
                               chara->position_18.vx + FP_MULTIPLY(Math_Sin(i * ANGLE_STEP), FP_METER(0.2f), Q12_SHIFT),
                               chara->position_18.vz + FP_MULTIPLY(Math_Cos(i * ANGLE_STEP), FP_METER(0.2f), Q12_SHIFT));
 
-                switch (var_s2)
+                switch (collType)
                 {
-                    case 1:
-                        if (coll.groundHeight_0 < wallBound)
+                    case CollisionType_Wall:
+                        if (coll.groundHeight_0 < wallHeightBound)
                         {
                             wallCount++;
                         }
                         break;
 
-                    case 2:
+                    case CollisionType_Unk2:
                         if (coll.field_8 != 12)
                         {
                             var_s6 = coll.field_8;
-                            sp20   = coll.groundHeight_0;
+                            groundHeight = coll.groundHeight_0;
                         }
                         break;
                 }
             }
 
-            switch (var_s2)
+            switch (collType)
             {
                 case 1:
                     if (wallCount < WALL_COUNT_THRESHOLD)
@@ -2967,7 +2965,7 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara, s32 arg
                 case 2:
                     if (var_s6 != 12)
                     {
-                        arg0->field_C  = sp20;
+                        arg0->field_C  = groundHeight;
                         arg0->field_14 = 12;
                     }
                     break;
@@ -3337,19 +3335,19 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* pos, s_func_8006AB50* arg2, s32 arg
 
 void func_8006A940(VECTOR3* pos, s_func_8006AB50* arg1, s_SubCharacter** charas, s32 charaCount) // 0x8006A940
 {
-    s32              angle;
-    s32              posZ;
-    s32              posX;
-    s32              var_a0;
-    s32              i;
-    s32              var_s4;
-    s32              var_v0;
-    s32              temp2;
-    s32              temp3;
-    s32              temp4;
-    s32              temp5;
-    s32              temp6;
-    s_SubCharacter*  curChara;
+    s32             angle;
+    s32             posZ;
+    s32             posX;
+    s32             var_a0;
+    s32             i;
+    s32             var_s4;
+    s32             var_v0;
+    s32             temp2;
+    s32             temp3;
+    s32             temp4;
+    s32             temp5;
+    s32             temp6;
+    s_SubCharacter* curChara;
 
     var_s4 = Q12(1.0f);
     angle  = ratan2(pos->vx, pos->vz);
@@ -3376,7 +3374,7 @@ void func_8006A940(VECTOR3* pos, s_func_8006AB50* arg1, s_SubCharacter** charas,
         posX = (curChara->position_18.vx + curChara->field_D8.field_4) - arg1->position_0.vx;
         posZ = (curChara->position_18.vz + curChara->field_D8.field_6) - arg1->position_0.vz;
 
-        temp2 = Vc_VectorMagnitudeCalc(posX, FP_METER(0.0f), posZ);
+        temp2 = Vc_VectorMagnitudeCalc(posX, Q12(0.0f), posZ);
         if (((curChara->field_D4 + arg1->rotation_C.vz) + FP_ANGLE(36.0f)) < temp2)
         {
             continue;
@@ -3469,7 +3467,7 @@ void func_8006AD44(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x800
     s32                    temp_s5;
     s32                    i;
     s32                    j;
-    s_IpdCollisionData_20* curPtr;
+    s_IpdCollisionData_20* curUnk;
 
     if ((collData->field_8_8 == 0 && collData->field_8_16 == 0 && collData->field_8_24 == 0) ||
         !func_8006AEAC(arg0, collData))
@@ -3487,11 +3485,11 @@ void func_8006AD44(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x800
 
     for (i = arg0->field_A0.s_0.field_1; i < (arg0->field_A0.s_0.field_1 + arg0->field_A0.s_0.field_3); i++)
     {
-        curPtr = &collData->ptr_20[(i * collData->field_1E) + temp_s5];
+        curUnk = &collData->ptr_20[(i * collData->field_1E) + temp_s5];
 
-        for (j = temp_s5; j <= temp_s4; j++, curPtr++)
+        for (j = temp_s5; j <= temp_s4; j++, curUnk++)
         {
-            func_8006B1C8(arg0, collData, curPtr);
+            func_8006B1C8(arg0, collData, curUnk);
         }
     }
 
@@ -3512,17 +3510,17 @@ void func_8006AD44(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x800
 
 bool func_8006AEAC(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x8006AEAC
 {
-    s_func_8006CC44_A8* ptr;
+    s_func_8006CC44_A8* curUnk;
 
     if (!func_8006B004(arg0, collData))
     {
         return false;
     }
 
-    arg0->field_98.vec_0.vx = arg0->field_4.positionX_18 - collData->posX_0;
-    arg0->field_98.vec_0.vz = arg0->field_4.positionZ_1C - collData->posZ_4;
-    arg0->field_9C.vec_0.vx = arg0->field_4.field_20 - collData->posX_0;
-    arg0->field_9C.vec_0.vz = arg0->field_4.field_24 - collData->posZ_4;
+    arg0->field_98.vec_0.vx = arg0->field_4.positionX_18 - collData->positionX_0;
+    arg0->field_98.vec_0.vz = arg0->field_4.positionZ_1C - collData->positionZ_4;
+    arg0->field_9C.vec_0.vx = arg0->field_4.field_20 - collData->positionX_0;
+    arg0->field_9C.vec_0.vz = arg0->field_4.field_24 - collData->positionZ_4;
 
     if ((arg0->field_98.vec_0.vx / collData->field_1C) < 0 || (arg0->field_98.vec_0.vx / collData->field_1C) >= collData->field_1E ||
         ((arg0->field_98.vec_0.vz / collData->field_1C) < 0) || (arg0->field_98.vec_0.vz / collData->field_1C) >= collData->field_1F)
@@ -3535,11 +3533,11 @@ bool func_8006AEAC(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x800
                                                                      (arg0->field_98.vec_0.vx / collData->field_1C)];
     arg0->field_C8             = 0xFF;
 
-    for (ptr = arg0->field_A0.s_0.field_8; ptr < &arg0->field_C8; ptr++)
+    for (curUnk = arg0->field_A0.s_0.field_8; curUnk < &arg0->field_C8; curUnk++)
     {
-        ptr->field_0 = 0;
-        ptr->field_1 = 0xFF;
-        ptr->field_4 = 0x7FFFFFFF;
+        curUnk->field_0 = 0;
+        curUnk->field_1 = 0xFF;
+        curUnk->field_4 = 0x7FFFFFFF;
     }
 
     return true;
@@ -3561,8 +3559,8 @@ bool func_8006B004(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x800
     temp_lo_2 = collData->field_1C * collData->field_1F;
     temp_t4   = temp_lo_2 - 1;
 
-    var_a3 = arg0->field_4.positionX_18 - collData->posX_0;
-    var_t0 = arg0->field_4.field_20 - collData->posX_0;
+    var_a3 = arg0->field_4.positionX_18 - collData->positionX_0;
+    var_t0 = arg0->field_4.field_20 - collData->positionX_0;
     if (var_t0 < var_a3)
     {
         var_t0 ^= var_a3;
@@ -3573,8 +3571,8 @@ bool func_8006B004(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x800
     var_a3 -= arg0->field_4.field_28;
     var_t0 += arg0->field_4.field_28;
 
-    var_a0 = arg0->field_4.positionZ_1C - collData->posZ_4;
-    var_a2 = arg0->field_4.field_24 - collData->posZ_4;
+    var_a0 = arg0->field_4.positionZ_1C - collData->positionZ_4;
+    var_a2 = arg0->field_4.field_24 - collData->positionZ_4;
     if (var_a2 < var_a0)
     {
         var_a2 ^= var_a0;
@@ -4443,8 +4441,8 @@ void func_8006C838(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x800
         {
             temp_a0        = &collData->ptr_18[arg0->field_C8 - collData->field_8_16];
             arg0->field_7C = arg0->field_CA;
-            arg0->field_80 = arg0->field_98.vec_0.vx + collData->posX_0;
-            arg0->field_84 = arg0->field_98.vec_0.vz + collData->posZ_4;
+            arg0->field_80 = arg0->field_98.vec_0.vx + collData->positionX_0;
+            arg0->field_84 = arg0->field_98.vec_0.vz + collData->positionZ_4;
             arg0->field_88 = 0;
             arg0->field_8C = 0;
             arg0->field_90 = temp_a0->field_0_5;
@@ -4473,8 +4471,8 @@ void func_8006C838(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x800
             if (var_a0 < arg0->field_7C)
             {
                 arg0->field_7C = var_a0;
-                arg0->field_80 = arg0->field_98.vec_0.vx + collData->posX_0;
-                arg0->field_84 = arg0->field_98.vec_0.vz + collData->posZ_4;
+                arg0->field_80 = arg0->field_98.vec_0.vx + collData->positionX_0;
+                arg0->field_84 = arg0->field_98.vec_0.vz + collData->positionZ_4;
                 arg0->field_88 = temp_a1->field_8;
                 arg0->field_8C = temp_a1->field_A;
                 arg0->field_90 = temp_a1->field_6_5;
@@ -4521,8 +4519,8 @@ void func_8006CA18(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s_func_8
             if (var_a2 < arg0->field_7C)
             {
                 arg0->field_7C = var_a2;
-                arg0->field_80 = arg0->field_98.vec_0.vx + collData->posX_0;
-                arg0->field_84 = arg0->field_98.vec_0.vz + collData->posZ_4;
+                arg0->field_80 = arg0->field_98.vec_0.vx + collData->positionX_0;
+                arg0->field_84 = arg0->field_98.vec_0.vz + collData->positionZ_4;
                 arg0->field_88 = ptr->field_8;
                 arg0->field_8C = ptr->field_A;
                 arg0->field_90 = ptr->field_6_5;
@@ -5266,8 +5264,8 @@ bool func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1) // 0x8006DEB0
 void func_8006E0AC(s_func_8006DCE0* arg0, s_IpdCollisionData* arg1) // 0x8006E0AC
 {
     // `arg0` type might be wrong.
-    arg0->field_6C.field_0 = arg1->posX_0;
-    arg0->field_6C.field_4 = arg1->posZ_4;
+    arg0->field_6C.field_0 = arg1->positionX_0;
+    arg0->field_6C.field_4 = arg1->positionZ_4;
     arg0->field_6C.field_8 = arg0->field_2C.vx - arg0->field_6C.field_0;
     arg0->field_6C.field_A = arg0->field_2C.vz - arg0->field_6C.field_4;
     arg0->field_6C.field_C = arg0->field_6C.field_8 + arg0->field_50.vx;

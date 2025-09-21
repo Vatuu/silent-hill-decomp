@@ -1672,10 +1672,10 @@ void func_80044044(s_IpdHeader* ipd, s32 gridX, s32 gridZ) // 0x80044044
     prevGridX = ipd->levelGridX_2;
     prevGridZ = ipd->levelGridY_3;
 
-    ipd->levelGridX_2             = gridX;
-    ipd->levelGridY_3             = gridZ;
-    ipd->collisionData_54.posX_0 += (gridX - prevGridX) * FP_METER_GEO(40.0f);
-    ipd->collisionData_54.posZ_4 += (gridZ - prevGridZ) * FP_METER_GEO(40.0f);
+    ipd->levelGridX_2                  = gridX;
+    ipd->levelGridY_3                  = gridZ;
+    ipd->collisionData_54.positionX_0 += (gridX - prevGridX) * FP_METER_GEO(40.0f);
+    ipd->collisionData_54.positionZ_4 += (gridZ - prevGridZ) * FP_METER_GEO(40.0f);
 }
 
 void func_80044090(s_IpdHeader* ipdHdr, s32 arg1, s32 arg2, GsOT* ot, void* arg4) // 0x80044090

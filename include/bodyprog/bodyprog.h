@@ -43,6 +43,13 @@
 // ENUMS
 // ======
 
+typedef enum _CollisionType
+{
+    CollisionType_None = 0,
+    CollisionType_Wall = 1,
+    CollisionType_Unk2 = 2
+} e_CollisionType;
+
 typedef enum _MapTypeFlags
 {
     MapTypeFlag_FourActiveChunks = 0,      /** Used by exterior maps. */
@@ -629,9 +636,9 @@ STATIC_ASSERT_SIZEOF(s_Material, 24);
 
 typedef struct _LmHeader
 {
-    u8             magic_0;
-    u8             version_1;
-    u8             isLoaded_2;
+    u8             magic_0;    /** See `LM_HEADER_MAGIC`. */
+    u8             version_1;  /** See `LM_VERSION`. */
+    u8             isLoaded_2; /** `bool` */
     u8             materialCount_3;
     s_Material*    materials_4;
     u8             modelCount_8;
@@ -684,20 +691,20 @@ STATIC_ASSERT_SIZEOF(s_IpdCollisionData_20, 4);
 
 typedef struct _IpdCollisionData_18
 {
-    u16 field_0_0  : 5;
-    u16 field_0_5  : 3;
-    u16 field_0_8  : 4;
-    u16 field_0_12 : 3;
-    u16 field_0_15 : 1;
+    u16      field_0_0  : 5;
+    u16      field_0_5  : 3;
+    u16      field_0_8  : 4;
+    u16      field_0_12 : 3;
+    u16      field_0_15 : 1;
     SVECTOR3 vec_2;
-    s16 field_8;
+    s16      field_8;
 } s_IpdCollisionData_18;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData_18, 10);
 
 typedef struct _IpdCollisionData
 {
-    s32                    posX_0;
-    s32                    posZ_4;
+    s32                    positionX_0;
+    s32                    positionZ_4;
     u32                    field_8_0  : 8;
     u32                    field_8_8  : 8;
     u32                    field_8_16 : 8;
@@ -1649,7 +1656,7 @@ typedef struct
 typedef struct
 {
     VECTOR3 field_0;
-    s32     field_C; // Y height?
+    s32     field_C; // Absolute ground height?
     s16     field_10;
     s16     field_12;
     s8      field_14; // Count of something? 12 is significant.
