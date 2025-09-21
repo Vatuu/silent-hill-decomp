@@ -308,7 +308,7 @@ void func_8002F2C4(s_800B55E8* arg0);
 
 void func_8002F61C(s_800B55E8* arg0);
 
-void func_8002FB64(s_MemCardInfo_BasicSaveInfo* arg0);
+void func_8002FB64(s_MemCardInfo_BasicSaveInfo* saveInfo);
 
 /** Copies user config into an `s_SaveUserConfigContainer` and calculates footer checksum. */
 void Savegame_UserConfigCopyWithChecksum(s_SaveUserConfigContainer* dest, s_SaveUserConfig* src);

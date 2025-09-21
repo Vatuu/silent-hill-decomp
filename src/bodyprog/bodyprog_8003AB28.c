@@ -1096,24 +1096,24 @@ void WorldObject_ModelNameSet(s_WorldObject_0* arg0, char* newStr) // 0x8003C8F8
 
 void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECTOR3* rot) // 0x8003C92C
 {
-    s32              vy;
-    s32              vx;
-    s32              vz;
-    s32              coord0; // Q23.8
-    s32              coord1; // Q23.8
-    s32              coord2; // Q23.8
-    s32              i;
-    s32              ret;
-    s_WorldObject* ptr;
+    s32            vy;
+    s32            vx;
+    s32            vz;
+    s32            coord0; // Q23.8
+    s32            coord1; // Q23.8
+    s32            coord2; // Q23.8
+    s32            i;
+    s32            lmIdx;
+    s_WorldObject* obj;
 
     if (g_WorldGfx.objectCount_2BE8 < 29)
     {
         if (arg0->field_10.lmIdx_9 == 0)
         {
             func_8003BED0();
-            ret = func_8004287C(arg0, &arg0->field_10, g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz);
+            lmIdx = func_8004287C(arg0, &arg0->field_10, g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz);
 
-            if (ret == 0)
+            if (lmIdx == 0)
             {
                 if (!Lm_ModelFind(arg0, &g_WorldGfx.itemLmHdr_1BE4, &arg0->field_10))
                 {
@@ -1121,11 +1121,11 @@ void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECT
                 }
                 else
                 {
-                    ret = 1;
+                    lmIdx = 1;
                 }
             }
 
-            arg0->field_10.lmIdx_9 = ret;
+            arg0->field_10.lmIdx_9 = lmIdx;
         } 
 
         coord0 = FP_METER_TO_GEO(pos->vx);
@@ -1137,33 +1137,33 @@ void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECT
 
         for (i = 0; i < g_WorldGfx.objectCount_2BE8; i++)
         {
-            ptr = &g_WorldGfx.objects_2BEC[i];
+            obj = &g_WorldGfx.objects_2BEC[i];
     
-            if (arg0 == ptr->field_0 &&
-                coord0 == ptr->gsCoordinate0_4 &&
-                coord2 == ptr->gsCoordinate2_8 &&
-                coord1 == ptr->gsCoordinate1_4 &&
-                vx == ptr->vx_C &&
-                vy == ptr->vy_C &&
-                vz == ptr->vz_C)
+            if (arg0 == obj->field_0 &&
+                coord0 == obj->gsCoordinate0_4 &&
+                coord2 == obj->gsCoordinate2_8 &&
+                coord1 == obj->gsCoordinate1_4 &&
+                vx == obj->vx_C &&
+                vy == obj->vy_C &&
+                vz == obj->vz_C)
             {
                 return;
             }
         }
 
-        ptr = &g_WorldGfx.objects_2BEC[g_WorldGfx.objectCount_2BE8];
+        obj = &g_WorldGfx.objects_2BEC[g_WorldGfx.objectCount_2BE8];
 
-        ptr->vx_C = vx;
-        ptr->vy_C = vy;
+        obj->vx_C = vx;
+        obj->vy_C = vy;
 
-        // @hack Required for match.
-        if (ptr->gsCoordinate2_8) {}
+        // TODO: Required for match.
+        if (obj->gsCoordinate2_8) {}
 
-        ptr->vz_C            = vz;
-        ptr->field_0         = arg0;
-        ptr->gsCoordinate0_4 = coord0;
-        ptr->gsCoordinate1_4 = coord1;
-        ptr->gsCoordinate2_8 = coord2;
+        obj->vz_C            = vz;
+        obj->field_0         = arg0;
+        obj->gsCoordinate0_4 = coord0;
+        obj->gsCoordinate1_4 = coord1;
+        obj->gsCoordinate2_8 = coord2;
         g_WorldGfx.objectCount_2BE8++;
     }
 }
@@ -1185,7 +1185,7 @@ void func_8003CB44(s_WorldGfx* worldGfx) // 0x8003CB44
     worldGfx->objectCount_2BE8 = 0;
 }
 
-void func_8003CBA4(s_WorldObject* arg0) // 0x8003CBA4
+void func_8003CBA4(s_WorldObject* obj) // 0x8003CBA4
 {
     GsCOORDINATE2 coord;
     SVECTOR       vec;
@@ -1194,18 +1194,18 @@ void func_8003CBA4(s_WorldObject* arg0) // 0x8003CBA4
     coord.flg   = false;
     coord.super = NULL;
 
-    coord.coord.t[0] = arg0->gsCoordinate0_4;
-    coord.coord.t[1] = arg0->gsCoordinate1_4;
-    coord.coord.t[2] = arg0->gsCoordinate2_8;
+    coord.coord.t[0] = obj->gsCoordinate0_4;
+    coord.coord.t[1] = obj->gsCoordinate1_4;
+    coord.coord.t[2] = obj->gsCoordinate2_8;
 
     // Unpack XYZ bitfield (TODO: Was this used anywhere else?)
-    vec.vx = arg0->vx_C << 2;
-    vec.vy = arg0->vy_C;
-    vec.vz = arg0->vz_C << 2;
+    vec.vx = obj->vx_C << 2;
+    vec.vy = obj->vy_C;
+    vec.vz = obj->vz_C << 2;
 
     func_80096C94(&vec, &coord.coord);
     func_80049B6C(&coord, &mats[1], &mats[0]);
-    func_8003CC7C(arg0->field_0, &mats[0], &mats[1]);
+    func_8003CC7C(obj->field_0, &mats[0], &mats[1]);
 }
 
 void func_8003CC7C(s_WorldObject_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x8003CC7C

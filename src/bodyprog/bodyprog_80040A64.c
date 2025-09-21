@@ -1680,7 +1680,7 @@ void func_80044044(s_IpdHeader* ipd, s32 gridX, s32 gridZ) // 0x80044044
 
 void func_80044090(s_IpdHeader* ipdHdr, s32 arg1, s32 arg2, GsOT* ot, void* arg4) // 0x80044090
 {
-    s_ModelInfo sp18;
+    s_ModelInfo         modelInfo;
     GsCOORDINATE2       sp28;
     MATRIX              sp78;
     MATRIX              sp98;
@@ -1691,7 +1691,7 @@ void func_80044090(s_IpdHeader* ipdHdr, s32 arg1, s32 arg2, GsOT* ot, void* arg4
     s32                 var_a0;
     s32                 var_v1;
     s32                 i;
-    s_IpdModelBuffer*   temp_s2;
+    s_IpdModelBuffer*   ipdModelBuf;
     s_IpdModelBuffer_C* var_s0;
     u8*                 temp_fp;
     SVECTOR*            var_s1;
@@ -1710,34 +1710,34 @@ void func_80044090(s_IpdHeader* ipdHdr, s32 arg1, s32 arg2, GsOT* ot, void* arg4
     var_v1 = MIN(var_v1, 4);
     var_a0 = MIN(var_a0, 4);
 
-    sp18.field_4 = &sp28;
-    sp28.flg     = 1;
-    sp18.field_0 = 0;
+    modelInfo.field_4 = &sp28;
+    sp28.flg     = true;
+    modelInfo.field_0 = 0;
     sp28.super   = NULL;
 
     temp_fp = &ipdHdr->textureCount_1C + (var_a0 * 10) + (var_v1 * 2);
 
     for (i = temp_fp[0]; i < temp_fp[1] + temp_fp[0]; i++)
     {
-        temp_s2 = &ipdHdr->modelBuffers_18[ipdHdr->modelOrderList_50[i]];
+        ipdModelBuf = &ipdHdr->modelBuffers_18[ipdHdr->modelOrderList_50[i]];
 
-        if (func_80044420(temp_s2, spB8 - temp_s5, spBC - temp_s3, temp_s5, temp_s3))
+        if (func_80044420(ipdModelBuf, spB8 - temp_s5, spBC - temp_s3, temp_s5, temp_s3))
         {
-            for (var_s0 = temp_s2->field_C; var_s0 < &temp_s2->field_C[temp_s2->field_0]; var_s0++)
+            for (var_s0 = ipdModelBuf->field_C; var_s0 < &ipdModelBuf->field_C[ipdModelBuf->field_0]; var_s0++)
             {
-                sp18.modelHdr_8 = var_s0->modelHdr_0;
-                if (sp18.modelHdr_8 != NULL)
+                modelInfo.modelHdr_8 = var_s0->modelHdr_0;
+                if (modelInfo.modelHdr_8 != NULL)
                 {
                     sp28.workm       = var_s0->field_4;
                     sp28.workm.t[0] += temp_s5;
                     sp28.workm.t[2] += temp_s3;
 
                     func_80049B6C(&sp28, &sp98, &sp78);
-                    func_80057090(&sp18, ot, arg4, &sp78, &sp98, 0);
+                    func_80057090(&modelInfo, ot, arg4, &sp78, &sp98, 0);
                 }
             }
 
-            for (var_s1 = temp_s2->field_10; var_s1 < &temp_s2->field_10[temp_s2->field_1]; var_s1++)
+            for (var_s1 = ipdModelBuf->field_10; var_s1 < &ipdModelBuf->field_10[ipdModelBuf->field_1]; var_s1++)
             {
                 switch ((s8)var_s1->pad)
                 {
@@ -1767,7 +1767,7 @@ bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, q23_8 x, q23_
         {
             if (arg2 < ptr->pad)
             {
-                coord.flg   = 1;
+                coord.flg   = true;
                 coord.super = NULL;
                 coord.workm = GsIDMATRIX;
 

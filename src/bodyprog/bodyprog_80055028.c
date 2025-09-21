@@ -881,24 +881,24 @@ void StringCopy(char* prevStr, char* newStr) // 0x80056D64
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80056D8C); // 0x80056D8C
 
-void func_80057090(s_ModelInfo* arg0, GsOT* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5) // 0x80057090
+void func_80057090(s_ModelInfo* modelInfo, GsOT* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5) // 0x80057090
 {
-    s_ModelHeader* modelHdr;
-    GsOT_TAG*      temp_s1;
     s32            temp_a0;
+    GsOT_TAG*      otTag;
+    s_ModelHeader* modelHdr;
 
-    modelHdr = arg0->modelHdr_8;
+    modelHdr = modelInfo->modelHdr_8;
 
-    if (arg0->field_0 < 0)
+    if (modelInfo->field_0 < 0)
     {
         return;
     }
 
-    temp_s1 = &arg1->org[func_800571D0(modelHdr->field_B_1)];
+    otTag = &arg1->org[func_800571D0(modelHdr->field_B_1)];
     temp_a0 = modelHdr->field_B_4;
-    if ((temp_a0 & 0xFF) && temp_a0 >= 0 && temp_a0 < 4) // @hack: `& 0xFF` needed for match.
+    if ((temp_a0 & 0xFF) && temp_a0 >= 0 && temp_a0 < 4) // TODO: `& 0xFF` needed for match.
     {
-        func_80059D50(temp_a0, arg0, mat0, arg2, temp_s1);
+        func_80059D50(temp_a0, modelInfo, mat0, arg2, otTag);
     }
     else
     {
@@ -910,11 +910,11 @@ void func_80057090(s_ModelInfo* arg0, GsOT* arg1, void* arg2, MATRIX* mat0, MATR
         if (modelHdr->field_B_0)
         {
             D_800C42B4 = arg5;
-            func_8005A21C(arg0, temp_s1, arg2, mat0);
+            func_8005A21C(modelInfo, otTag, arg2, mat0);
         }
         else
         {
-            func_80057344(arg0, temp_s1, arg2, mat0);
+            func_80057344(modelInfo, otTag, arg2, mat0);
         }
     }
 }
@@ -970,7 +970,7 @@ void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3) // 0x80
     gte_stsv(&D_800C4168.field_7C);
 }
 
-void func_80057344(s_ModelInfo* arg0, GsOT_TAG* arg1, void* arg2, MATRIX* mat) // 0x80057344
+void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, void* arg2, MATRIX* mat) // 0x80057344
 {
     u32               normalOffset;
     u32               vertOffset;
@@ -980,7 +980,7 @@ void func_80057344(s_ModelInfo* arg0, GsOT_TAG* arg1, void* arg2, MATRIX* mat) /
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    modelHdr     = arg0->modelHdr_8;
+    modelHdr     = modelInfo->modelHdr_8;
     vertOffset   = modelHdr->vertexOffset_9;
     normalOffset = modelHdr->normalOffset_A;
 
@@ -1013,7 +1013,7 @@ void func_80057344(s_ModelInfo* arg0, GsOT_TAG* arg1, void* arg2, MATRIX* mat) /
         }
 
         func_80057B7C(curMeshHdr, vertOffset, scratchData, mat);
-        func_8005801C(curMeshHdr, scratchData, arg1, arg2);
+        func_8005801C(curMeshHdr, scratchData, otTag, arg2);
     }
 }
 
@@ -1266,7 +1266,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80057B7C); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005801C); // 0x8005801C
 
-void func_80059D50(s32 arg0, s_ModelInfo* arg1, MATRIX* mat, void* arg3, GsOT_TAG* arg4) // 0x80059D50
+void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* mat, void* arg3, GsOT_TAG* arg4) // 0x80059D50
 {
     s_GteScratchData* scratchData;
     s_MeshHeader*     curMeshHdr;
@@ -1274,7 +1274,7 @@ void func_80059D50(s32 arg0, s_ModelInfo* arg1, MATRIX* mat, void* arg3, GsOT_TA
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    modelHdr = arg1->modelHdr_8;
+    modelHdr = modelInfo->modelHdr_8;
 
     for (curMeshHdr = &modelHdr->meshHdrs_C[0]; curMeshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; curMeshHdr++)
     {
@@ -1286,7 +1286,7 @@ void func_80059D50(s32 arg0, s_ModelInfo* arg1, MATRIX* mat, void* arg3, GsOT_TA
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80059E34); // 0x80059E34
 
-void func_8005A21C(s_ModelInfo* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat) // 0x8005A21C
+void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, void* arg2, MATRIX* mat) // 0x8005A21C
 {
     s16               var_v1;
     u32               normalOffset;
@@ -1301,7 +1301,7 @@ void func_8005A21C(s_ModelInfo* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat) 
     {
         if (mat->t[2] < (1 << D_800C4168.fogRelated_14))
         {
-            var_v1 = 4096 - (D_800C4168.field_CC[(s32)(mat->t[2] << 7) >> D_800C4168.fogRelated_14] << 4);
+            var_v1 = Q12(1.0f) - (D_800C4168.field_CC[(s32)(mat->t[2] << 7) >> D_800C4168.fogRelated_14] << 4);
         }
         else
         {
@@ -1334,7 +1334,7 @@ void func_8005A21C(s_ModelInfo* arg0, GsOT_TAG* otTag, void* arg2, MATRIX* mat) 
             break;
     }
 
-    modelHdr     = arg0->modelHdr_8;
+    modelHdr     = modelInfo->modelHdr_8;
     vertOffset   = modelHdr->vertexOffset_9;
     normalOffset = modelHdr->normalOffset_A;
 
