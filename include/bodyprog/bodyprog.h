@@ -1033,8 +1033,8 @@ typedef struct _WaterZone
 
 typedef struct
 {
-    u8            charaId_0; /** `e_CharacterId` */
-    u8            loaded_1;  /** `bool` */
+    u8            charaId_0;  /** `e_CharacterId` */
+    u8            isLoaded_1; /** `bool` */
     u8            unk_2[2];
     s32           queueIdx_4;
     s_LmHeader*   lmHdr_8;
@@ -1099,7 +1099,7 @@ typedef struct _WorldGfx
     s32               dataPtr_14;       // Used frequently as `s_LmHeader*`, but code adds file lengths to it. Could just be `u8*` pointing to current file data?
     s_CharaModel*     charaModelsTable_18[Chara_Count];
     s_CharaModel      charaModels_CC[4];
-    s_CharaModel      harrySkel_164C;
+    s_CharaModel      harryModel_164C;
     s_HeldItem        heldItem_1BAC;
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; /** Debug camera info. */
     s_LmHeader        itemLm_1BE4;
@@ -3980,14 +3980,14 @@ void func_8003D354(s32* arg0, s32 arg1);
 /** Texture UV setup for NPCs. */
 void func_8003D3BC(s_FsImageDesc* img, s32 arg1, s32 arg2);
 
-s32 func_8003D7D4(u32 arg0, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex);
+s32 func_8003D7D4(u32 charaId, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 /** Something related to animations. */
 void func_8003D938();
 
 void func_8003D95C();
 
-void func_8003D9C8(s_CharaModel* arg0);
+void func_8003D9C8(s_CharaModel* model);
 
 void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4);
 

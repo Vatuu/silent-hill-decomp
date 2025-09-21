@@ -883,11 +883,11 @@ void CharaModel_Free(s_CharaModel* arg0) // 0x8003C1AC
     s_FsImageDesc image = { 0 };
 
     //memset(&image, 0, 8);
-    arg0->charaId_0 = Chara_None;
-    arg0->loaded_1 = false;
+    arg0->charaId_0  = Chara_None;
+    arg0->isLoaded_1 = false;
     arg0->queueIdx_4 = 0;
-    arg0->lmHdr_8 = (s_LmHeader*)ILM_BUFFER_1;
-    arg0->texture_C = image;
+    arg0->lmHdr_8    = (s_LmHeader*)ILM_BUFFER_1;
+    arg0->texture_C  = image;
 }
 
 void func_8003C220(s_MapOverlayHeader* mapHeader, s32 playerPosX, s32 playerPosZ) // 0x8003C220
@@ -1505,26 +1505,26 @@ void func_8003D058() // 0x8003D058
 
 void func_8003D160() // 0x8003D160
 {
-    s_FsImageDesc    img;
-    s32              queueIdx;
-    s_WorldGfx*      ptr;
-    s_CharaModel* harrySkel;
-    s_LmHeader*      addr = (void*)0x800FE600;
+    s_FsImageDesc image;
+    s32           queueIdx;
+    s_WorldGfx*   worldGfx;
+    s_CharaModel* harryModel;
+    s_LmHeader*   lmHdr = (void*)0x800FE600;
 
-    func_8003D3BC(&img, 1, 0);
+    func_8003D3BC(&image, 1, 0);
 
-    ptr       = &g_WorldGfx;
-    harrySkel = &ptr->harrySkel_164C;
-    g_WorldGfx.charaModelsTable_18[Chara_Harry] = harrySkel;
+    worldGfx       = &g_WorldGfx;
+    harryModel = &worldGfx->harryModel_164C;
+    g_WorldGfx.charaModelsTable_18[Chara_Harry] = harryModel;
 
-    Fs_QueueStartRead(CHARA_FILE_INFOS[1].modelFileIdx, addr);
-    queueIdx = Fs_QueueStartReadTim(CHARA_FILE_INFOS[1].textureFileIdx, FS_BUFFER_1, &img);
+    Fs_QueueStartRead(CHARA_FILE_INFOS[1].modelFileIdx, lmHdr);
+    queueIdx = Fs_QueueStartReadTim(CHARA_FILE_INFOS[1].textureFileIdx, FS_BUFFER_1, &image);
 
-    g_WorldGfx.harrySkel_164C.charaId_0   = 1;
-    harrySkel->loaded_1                   = 0;
-    harrySkel->queueIdx_4                   = queueIdx;
-    harrySkel->lmHdr_8                = addr;
-    g_WorldGfx.harrySkel_164C.texture_C = img;
+    g_WorldGfx.harryModel_164C.charaId_0 = Chara_Harry;
+    harryModel->isLoaded_1               = false;
+    harryModel->queueIdx_4               = queueIdx;
+    harryModel->lmHdr_8                  = lmHdr;
+    g_WorldGfx.harryModel_164C.texture_C = image;
 }
 
 s32 func_8003D21C(s_MapOverlayHeader* arg0) // 0x8003D21C
@@ -1768,18 +1768,18 @@ void func_8003D6E0(s32 arg0, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex) //
     func_8003D7D4(arg0, arg1, plmHdrPtr, &img);
 }
 
-s32 func_8003D7D4(u32 arg0, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x8003D7D4
+s32 func_8003D7D4(u32 charaId, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x8003D7D4
 {
-    s32              queueIdx;
-    s32              idx;
-    s_CharaModel* ptr;
-    s_FsImageDesc*   img;
+    s32            queueIdx;
+    s32            idx;
+    s_CharaModel*  model;
+    s_FsImageDesc* image;
 
-    ptr = &g_WorldGfx.charaModels_CC[arg1];
-    idx = ptr->charaId_0;
-    img = &ptr->texture_C;
+    model = &g_WorldGfx.charaModels_CC[arg1];
+    idx   = model->charaId_0;
+    image = &model->texture_C;
 
-    if (arg0 == 0) 
+    if (charaId == Chara_None) 
     {
         g_WorldGfx.charaModelsTable_18[idx] = NULL;
         return 0;
@@ -1787,9 +1787,9 @@ s32 func_8003D7D4(u32 arg0, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 
 
     if (idx != 0) 
     {
-        if (arg0 == idx) 
+        if (charaId == idx) 
         {
-            if (lmHdr == ptr->lmHdr_8 && memcmp(tex, img, sizeof(s_FsImageDesc)) == 0)
+            if (lmHdr == model->lmHdr_8 && memcmp(tex, image, sizeof(s_FsImageDesc)) == 0)
             {
                 return 0;
             }
@@ -1798,63 +1798,63 @@ s32 func_8003D7D4(u32 arg0, s32 arg1, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 
         g_WorldGfx.charaModelsTable_18[idx] = NULL;
     }
 
-    g_WorldGfx.charaModelsTable_18[arg0] = ptr;
+    g_WorldGfx.charaModelsTable_18[charaId] = model;
 
-    queueIdx = Fs_QueueStartRead(CHARA_FILE_INFOS[arg0].modelFileIdx, lmHdr);
+    queueIdx = Fs_QueueStartRead(CHARA_FILE_INFOS[charaId].modelFileIdx, lmHdr);
 
-    if (CHARA_FILE_INFOS[arg0].textureFileIdx != NO_VALUE) 
+    if (CHARA_FILE_INFOS[charaId].textureFileIdx != NO_VALUE) 
     {
-        queueIdx = Fs_QueueStartReadTim(CHARA_FILE_INFOS[arg0].textureFileIdx, FS_BUFFER_1, tex);
+        queueIdx = Fs_QueueStartReadTim(CHARA_FILE_INFOS[charaId].textureFileIdx, FS_BUFFER_1, tex);
     }
 
-    ptr->charaId_0    = arg0;
-    ptr->loaded_1    = 0;
-    ptr->queueIdx_4 = queueIdx;
-    ptr->lmHdr_8    = lmHdr;
-    ptr->texture_C  = *tex;
+    model->charaId_0  = charaId;
+    model->isLoaded_1 = false;
+    model->queueIdx_4 = queueIdx;
+    model->lmHdr_8    = lmHdr;
+    model->texture_C  = *tex;
 
     return queueIdx;
 }
 
 void func_8003D938() // 0x8003D938
 {
-    func_8003D9C8(&g_WorldGfx.harrySkel_164C);
+    func_8003D9C8(&g_WorldGfx.harryModel_164C);
 }
 
 void func_8003D95C() // 0x8003D95C
 {
-    s_CharaModel* temp_a0;
-    s32 i;
+    s32           i;
+    s_CharaModel* model;
 
-    for (i = 0; i < 45; i++)
+    for (i = 0; i < Chara_Count; i++)
     {
-        if (i != 1) 
+        if (i != Chara_Harry) 
         {
-            temp_a0 = g_WorldGfx.charaModelsTable_18[i];
-            if (temp_a0 != 0) 
+            model = g_WorldGfx.charaModelsTable_18[i];
+            if (model != NULL) 
             {
-                func_8003D9C8(temp_a0);
+                func_8003D9C8(model);
             }
         }
     }
 }
 
-void func_8003D9C8(s_CharaModel* arg0) // 0x8003D9C8
+void func_8003D9C8(s_CharaModel* model) // 0x8003D9C8
 {
     s_Skeleton* skel;
 
-    if (arg0->loaded_1 == 0 && arg0->charaId_0 != Chara_None && Fs_QueueIsEntryLoaded(arg0->queueIdx_4) != 0)
+    if (!model->isLoaded_1 && model->charaId_0 != Chara_None && Fs_QueueIsEntryLoaded(model->queueIdx_4))
     {
-        arg0->loaded_1 = 1;
+        model->isLoaded_1 = true;
 
-        LmHeader_FixOffsets(arg0->lmHdr_8);
-        Lm_MaterialFileIdxApply(arg0->lmHdr_8, CHARA_FILE_INFOS[arg0->charaId_0].textureFileIdx, &arg0->texture_C, CHARA_FILE_INFOS[arg0->charaId_0].field_6_10 % 4);
+        LmHeader_FixOffsets(model->lmHdr_8);
+        Lm_MaterialFileIdxApply(model->lmHdr_8, CHARA_FILE_INFOS[model->charaId_0].textureFileIdx, &model->texture_C, CHARA_FILE_INFOS[model->charaId_0].field_6_10 % 4);
 
-        skel = &arg0->skeleton_14;
+        skel = &model->skeleton_14;
 
-        Lm_MaterialFlagsApply(arg0->lmHdr_8);
-        Skeleton_Init(skel, arg0->skeleton_14.boneArr_C, 56);
-        func_8004506C(skel, arg0->lmHdr_8);
+        Lm_MaterialFlagsApply(model->lmHdr_8);
+        Skeleton_Init(skel, model->skeleton_14.boneArr_C, 56);
+        func_8004506C(skel, model->lmHdr_8);
         func_800452EC(skel);
         func_800453E8(skel, true);
     }
