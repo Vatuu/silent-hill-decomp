@@ -3,12 +3,12 @@ A collection of all sorts of relevant information regarding the setup, dependenc
 
 ## SDK
 
-- Psy-Q Version: 4.3.0 based on https://github.com/lab313ru/psx_psyq_signatures
+- Psy-Q Version: 4.4.0, with some 4.3.0 / 4.3.1 libraries, based on SDK `printver` output: [versions.txt](/lib/versions.txt)
 - The **Official Playstation Magazine Demo 16 (U)/OPM16** uses an previous version of the SDK.
 
 ## Libraries
 
-- Sound library `libsd`: Supports custom Konami `KDT1` MIDI files. This library was used for some PlayStation 1 and 2 Konami games with tweaks among each game. Additionally, Silent Hill 2's SOUNDCD.IRX and SOUNDHD.IRX files appear to be from the same library.
+- Sound library `libsd`/`libsmf`: Supports custom Konami `KDT1` MIDI files. This library was used for some PlayStation 1 and 2 Konami games with tweaks among each game. Additionally, Silent Hill 2's SOUNDCD.IRX and SOUNDHD.IRX files appear to be from the same library.
 
 - Math library: Contains custom `sin`/`cos` lookup-table implementation along with several `RotMatrix` functions.
 
@@ -50,7 +50,7 @@ Several pre-release demos and versions were released during development. A table
 
 ### Unknown Releases
 
-- A `SCPS-45380` release for Hong Kong/Asia was also produced, but has only been pictured inside sealed packaging. Did this include a normal JP disc inside it, or was it a special release? Release date was apparently around 1999-04.
+- A release for Hong Kong/Asia was also produced and has been pictured using a unique `SCPS-45380` disc ID, but is currently listed as undumped. Does the data match one of the JP versions, or was it a special release? Apparently was published by Sony rather than Konami (no Konami `VX131-XX` ID on disc), release date was apparently around 1999-04.
 - Earliest known scene release is `Silent_Hill_USA_PAL_NTSC_Patch-PARADOX` from 1999-02-05, dated ~2 weeks after "Silent Hill Beta (U)", but 6 days prior to US v1.1 creation date. Could they have released a patch for a game only 2 weeks after it was produced, or was this for an even earlier release?
-- Earliest JP scene release is `Silent_Hill_JAP_Final-DVNpSX` from 1999-05-01, one month prior to JP Rev. 1 creation date. The group never used `Final` in any other releases, implying this was meant to replace an earlier non-final scene release, but at this point JP Rev. 0 was the only known JP release available. Was there an earlier release this was meant to replace?
+- Earliest JP scene release is `Silent_Hill_JAP_Final-DVNpSX` from 1999-05-01, one month prior to JP Rev. 1 creation date. The group never used `Final` in any other releases, implying this was meant to replace an earlier non-final scene release, but at this point JP Rev. 0 was the only known JP release that would have been available. Was there an earlier release this was meant to replace?
 - Scene history for 1998 is very incomplete (dat listing sites only show 8 releases for the whole year). There could be other releases about which information is missing.
