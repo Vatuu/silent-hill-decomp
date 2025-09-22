@@ -554,7 +554,38 @@ void func_800DA254(void)
     }
 }
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DA454);
+void func_800DA454(void) {
+    VECTOR3 vec0;
+    s16 temp_v0_3;
+    s32 temp_s0;
+    s32 temp_v0;
+    s32 temp_v0_2;
+    s32 temp_v0_4;
+    s32 temp_v0_5;
+    s32 temp_v1;
+    s32 var_a3;
+
+    temp_v0 = (Q12(-29.5f) - g_SysWork.player_4C.chara_0.position_18.vx) >> 6;
+    temp_v0_2 = (Q12(128.7f) - g_SysWork.player_4C.chara_0.position_18.vz) >> 6;
+    if ((SquareRoot0(SQUARE(temp_v0) + SQUARE(temp_v0_2)) << 6) >= Q12(16.0f)) {
+        D_800DFAB8 += g_DeltaTime0;
+        if (D_800DFAB8 > Q12(0.8f)) {
+            temp_v0_3 = ratan2(Q12(-29.5f) - g_SysWork.player_4C.chara_0.position_18.vx, Q12(128.7f) - g_SysWork.player_4C.chara_0.position_18.vz);
+            temp_v0_4 = Math_Sin(temp_v0_3);
+            vec0.vy = 0;
+            vec0.vx = g_SysWork.player_4C.chara_0.position_18.vx + (temp_v0_4 * 0x10);
+            vec0.vz = g_SysWork.player_4C.chara_0.position_18.vz + (Math_Cos((s32) temp_v0_3) * 0x10);
+            temp_s0 = (Rng_Rand16() & 0x1F) + 0x4B;
+            temp_v0_5 = Rng_Rand16();
+            var_a3 = temp_v0_5;
+            if (temp_v0_5 < 0) {
+                var_a3 = temp_v0_5 + 0x1F;
+            }
+            func_8005DD44(0x549, &vec0, temp_s0, (s8) ((temp_v0_5 - ((var_a3 >> 5) << 5)) - 0x10));
+            D_800DFAB8 = 0;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DA5A0);
 

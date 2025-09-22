@@ -41,6 +41,8 @@ extern VECTOR3 D_800E3A9C;
 
 extern SVECTOR3 D_800E3AAC;
 
+extern s32 D_800DFAB8;
+
 void func_800CBFB0(void);
 
 void func_800D0124();
