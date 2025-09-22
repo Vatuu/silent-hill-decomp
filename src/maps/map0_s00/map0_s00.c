@@ -382,9 +382,8 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D9610);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D9748);
 
-void func_800DA454();                                  /* extern */
-
-void func_800D9D98(void) {
+void func_800D9D98(void)
+{
     s_SysWork* syswork;
 
     func_800DA454();
