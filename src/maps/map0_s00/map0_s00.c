@@ -378,24 +378,26 @@ const char* MAP_MESSAGES[] =
     "\tWhere's_Cheryl? ~N\n\tHope_she's_safe. ~E "
 };
 
-extern s_AreaLoadParams g_MapAreaLoadParams[];
+void func_800D9610(void)
+{
+    VECTOR3 vec0;
+    VECTOR3 vec1;
 
-void func_800D9610(void) {
     // @hack alp0, alp1, ep and do {} while (0); are a permuter find.
     s_AreaLoadParams* alp0;
-    VECTOR3 vec0;
     s_AreaLoadParams* alp1;
-    VECTOR3 vec1;
     s_EventParam *ep;
+
     do {} while (0);
     ep = g_MapEventParam;
     alp0 = &g_MapAreaLoadParams;
     alp1 = alp0;
+
     vec1.vx = g_MapAreaLoadParams[ep->field_5].char_x_0;
     vec1.vy = Q12(-1.2f);
     vec1.vz = g_MapAreaLoadParams[ep->field_5].char_z_8;
-    
     vec0 = vec1;
+
     switch (g_SysWork.sysStateStep_C[0]) {
     case 0:
         sharedFunc_800D20E4_0_s00(alp1, ep);
@@ -408,8 +410,6 @@ void func_800D9610(void) {
     default:
         sharedFunc_800D2244_0_s00(0);
         SysWork_StateSetNext(SysState_Gameplay);
-
-        return;
     }
 }
 
