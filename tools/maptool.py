@@ -612,6 +612,31 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
                 print(f"\nError: File {file2_sym_path} not found.")
     else:
         print("\nNo matching files found.")
+
+def find_partial_shares():
+    # Search map .c files for funcs in include/maps/shared which are INCLUDE_ASM instead of #include
+    include_dir = "include/maps/shared"
+    src_dir = "src/maps"
+
+    # Get all filenames in include/shared without extension
+    include_files = [
+        os.path.splitext(f)[0]
+        for f in os.listdir(include_dir)
+        if os.path.isfile(os.path.join(include_dir, f))
+    ]
+
+    # Walk through all .c files under src/maps
+    for root, _, files in os.walk(src_dir):
+        for cfile in files:
+            if not cfile.endswith(".c"):
+                continue
+            cpath = os.path.join(root, cfile)
+            with open(cpath, "r", errors="ignore") as f:
+                lines = f.readlines()
+            for lineno, line in enumerate(lines, start=1):
+                for inc in include_files:
+                    if inc in line and "INCLUDE_ASM" in line:
+                        print(f"{cpath}:{lineno}: {line.strip()}")
         
 # Map header related code
         
@@ -756,6 +781,7 @@ def print_usage():
     print("  --sortsyms [MAP_NAME]       Sort map symbols ('all' to sort all map symbol files)")
     print("  --compareFuncs [FUNC1_ASM_PATH] [FUNC2_ASM_PATH]    Compare two functions, print Levenshtein distance, write clean files for comparing")
     print("  --similar [MAX_DIFF] [FUNC_ASM_PATH]   Search for funcs similar to FUNC_ASM_PATH, with max difference of MAX_DIFF")
+    print("  --partial                   Search map .c files for funcs in include/maps/shared which are INCLUDE_ASM instead of #include")
 
 def main():
     import argparse
@@ -780,11 +806,16 @@ def main():
     parser.add_argument("--sortsyms", type=str)
     parser.add_argument("--compareFuncs", action="store_true")
     parser.add_argument("--similar", type=int)
+    parser.add_argument("--partial", action="store_true")
     
     args = parser.parse_args()
     
     if args.help:
         print_usage()
+        return
+
+    if args.partial:
+        find_partial_shares()
         return
 
     if args.sortsyms is not None:

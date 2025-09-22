@@ -2261,6 +2261,15 @@ extern q19_12 sharedData_800E3A24_0_s00; // Health.
 extern q19_12 sharedData_800E3A28_0_s00;
 extern q19_12 sharedData_800E3A2C_0_s00;
 
+// Used by `Ai_Stalker`/`Ai_LarvalStalker`.
+extern u8  sharedData_800DD5A6_0_s00;
+extern s32 sharedData_800E39E4_0_s00;
+extern s32 sharedData_800E39E8_0_s00;
+extern s32 sharedData_800E39EC_0_s00[];
+extern u16 sharedData_800E3A0C_0_s00[];
+extern s32 sharedData_800E3A18_0_s00;
+extern s32 sharedData_800E3A1C_0_s00;
+
 extern s_AnimInfo LARVAL_STALKER_ANIM_INFOS[]; // Used by `Ai_LarvalStalker_Init`.
 
 extern s_AnimInfo STALKER_ANIM_INFOS[]; // Used by `Ai_Stalker_Init`.
@@ -2384,13 +2393,25 @@ void sharedFunc_800D2EB4_0_s00();
 
 void sharedFunc_800D2EF4_0_s00();
 
+void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara);
+
+void sharedFunc_800D4924_0_s00(s_SubCharacter* chara);
+
+void sharedFunc_800D492C_0_s00(s_SubCharacter* chara);
+
 void sharedFunc_800D5098_0_s00(s_SubCharacter* chara);
+
+void sharedFunc_800D54A8_0_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D5B48_0_s00(s_SubCharacter* chara);
 
+void sharedFunc_800D5C64_0_s00(s_SubCharacter* chara);
+
 void sharedFunc_800D5FCC_0_s00(s_SubCharacter* chara);
 
-void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 moveSpeed);
+void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara);
+
+void sharedFunc_800D654C_0_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D6554_0_s00(s_SubCharacter* chara);
 

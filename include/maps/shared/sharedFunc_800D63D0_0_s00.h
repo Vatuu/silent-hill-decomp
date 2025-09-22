@@ -1,4 +1,4 @@
-void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 moveSpeed)
+void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara)
 {
     u16* flags;
     s32  curMoveSpeed;
@@ -7,7 +7,6 @@ void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 moveSpeed)
 
     flags = &chara->properties_E4.player.afkTimer_E8;
 
-    curMoveSpeed = moveSpeed;
     if (!(*flags & (1 << 13)))
     {
         curMoveSpeed = chara->moveSpeed_38;
@@ -57,10 +56,23 @@ void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 moveSpeed)
 
         if (newAnimStatus != ANIM_STATUS(0, false))
         {
+#if !defined(MAP5_S02) && !defined(MAP7_S02)
             func_800622B8(3, chara, newAnimStatus, 3);
-
+#endif
             flags   = &chara->properties_E4.player.afkTimer_E8;
             *flags |= 1 << 9;
         }
     }
+
+#if defined(MAP5_S02) || defined(MAP7_S02)
+    if (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 9))
+    {
+        chara->timer_C6 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.25f, Q12_SHIFT);
+
+        if (chara->timer_C6 > FP_TIME(1.0f))
+        {
+            chara->model_0.charaId_0 = 0;
+        }
+    }
+#endif
 }
