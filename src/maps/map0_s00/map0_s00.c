@@ -666,36 +666,40 @@ void func_800DC8D8(void) // 0x800DC8D8
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DCA30);
 
-s32 func_800DCDA8();                                /* extern */
-s32 func_800DCF38(s32);                             /* extern */
-extern s32 D_800DFADC;
-
-void func_800DCC54(void) {
+void func_800DCC54(void)
+{
     s_Savegame* temp_s0;
     u32 temp_v1;
 
-    if (D_800DFADC == -1) {
+    if (D_800DFADC == NO_VALUE)
+    {
         func_8003EF10(6, 6, 5, (s32) &D_800DFADC, 0, 0x64000);
         D_800DFADC = 0;
         Sd_PlaySfx(0x54FU, 0, 0xE0U);
     }
     temp_s0 = g_SavegamePtr;
     temp_v1 = temp_s0->eventFlags_168[0];
-    if (temp_v1 & 0x4000) {
-        if (!(temp_v1 & 0x40000)) {
+    if (temp_v1 & 0x4000)
+    {
+        if (!(temp_v1 & 0x40000))
+        {
             sharedFunc_800D0B18_0_s00(6);
             temp_s0->eventFlags_168[0] |= 0x40000;
             Sd_PlaySfx(0x54FU, 0, 0xC0U);
             D_800DFADC = 0x3C000;
         }
         D_800DFADC = func_800DCF38(D_800DFADC);
-    } else {
+    } 
+    else
+    {
         D_800DFADC = func_800DCDA8();
     }
-    if (D_800DFADC > 0x4FFFF) {
+    if (D_800DFADC > 0x4FFFF)
+    {
         g_SavegamePtr->eventFlags_168[0] |= 0x8000;
     }
-    if (D_800DFADC > 0x63FFF) {
+    if (D_800DFADC > 0x63FFF)
+    {
         g_SavegamePtr->eventFlags_168[0] |= 0x10000;
     }
 }
