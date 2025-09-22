@@ -2021,7 +2021,7 @@ void func_80046E00() // 0x80046E00
             break;
 
         case 4:
-            // @hack Needed for match, weird code.
+            // TODO: Needed for match, weird code.
             temp_a1     = g_FileXaLoc;
             temp_v0     = &temp_a1[D_800AA894[D_800C15CA].field_0];
             D_800C15CC  = *temp_v0;
@@ -2126,7 +2126,7 @@ void func_80047308() // 0x80047308
             break;
 
         case 4:
-            // @hack Needed for match, weird code.
+            // TODO: Needed for match, weird code.
             temp_a1     = g_FileXaLoc;
             temp_v0     = &temp_a1[D_800AA894[D_800C15D0].field_0];
             D_800C15D4  = *temp_v0;

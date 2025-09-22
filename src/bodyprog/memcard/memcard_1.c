@@ -1487,7 +1487,7 @@ void Savegame_CardUpdate() // 0x80030A0C
     switch (g_CardWork.state_4)
     {
         case CardState_Idle:
-            // @hack Probably some optimized out code here.
+            // TODO: Probably some optimized out code here.
             g_CardWork.stateResult_C += 0;
             break;
 

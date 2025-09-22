@@ -421,7 +421,7 @@ void toremoro_set() // 0x800A439C
 
 s32 pitch_bend_calc(PORT* p, u32 pit) // 0x800A441C
 {
-    u16 bendMultiplier = 2; // @hack Needed to get regalloc order correct, not included in PS2 `AUDIO.IRX` syms.
+    u16 bendMultiplier = 2; // TODO: Needed to get regalloc order correct, not included in PS2 `AUDIO.IRX` syms.
     s16 pitch;
 
     if (pit < 0x40u)

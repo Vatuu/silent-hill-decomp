@@ -32,6 +32,6 @@ void sharedFunc_800CF2A4_0_s01(s32 arg0, s_Particle* part, u16* rand, s32* delta
         pos->vy = 0;
     }
 
-    // @hack Needed for match.
+    // TODO: Needed for match.
     if (pos->vy >= 0) {}
 }

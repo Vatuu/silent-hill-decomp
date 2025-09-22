@@ -34,7 +34,7 @@ void func_80070B84(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3) // 0x800
 
     arg1 = arg1 + ((arg2 - arg1) * (var_v0 - 0x40) / 64);
 
-    // @hack Wrapping in loop required for match.
+    // TODO: Wrap in loop required for match.
     do
     { 
         if (arg1 < g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126)
@@ -994,12 +994,12 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             
             model = &g_SysWork.npcs_1A0[npcIdx].model_0;
             
-            do { } while(false); // @hack Required for match.
+            do { } while(false); // TODO: Hack required for match.
             
             g_Player_HeadingAngle =
             temp                  = headingAngle0;
 
-            if ((*new_var) != NULL) // @hack Required for match.
+            if ((*new_var) != NULL) // TODO: Hack required for match.
             {
                 g_Player_HeadingAngle += FP_ANGLE(0.0f);
             }
@@ -7471,7 +7471,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
             }
             else
             {
-                // @hack Required for match.
+                // TODO: Hack required for match.
                 do { chara->rotation_24.pad = chara->rotation_24.vy; } while (0);
 
                 sp98.vx = chara->rotation_24.pad;
