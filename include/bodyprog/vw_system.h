@@ -22,6 +22,7 @@ struct _MapOverlayHeader;
  * LIM:   Limit
  * MV:    Move
  * OFS:   Offset
+ * P:     Pointer
  * PRIO:  Priority
  * PRM:   Parameter/parameters
  * R:     Radius
@@ -42,6 +43,7 @@ struct _MapOverlayHeader;
  *
  * Area:         A camera path's spatial constraint defining its area of influence.
  * Entou:        "Cylinder" in Japanese. Refers to a 2D radius on the XZ plane.
+ * Eye:          ?
  * Flipped:      ?
  * Limit area:   2D AABB parameters defining a camera path's spatial constraint.
  * Marge:        Merge.
@@ -168,7 +170,7 @@ typedef struct _VC_CAMERA_INTINFO
 {
     u32 mode;
     u8  mv_smooth;
-    s8  unk_5;
+    // 1 byte of padding.
     s16 ev_cam_rate;
 } VC_CAMERA_INTINFO;
 STATIC_ASSERT_SIZEOF(VC_CAMERA_INTINFO, 8);
@@ -221,10 +223,10 @@ STATIC_ASSERT_SIZEOF(VC_ROAD_DATA, 24);
 typedef struct _VC_THROUGH_DOOR_CAM_PARAM
 {
     u8      active_f_0;                /** `bool` | Active flag. */
-    s8      unk_1[3];
+    // 3 bytes of padding.
     s32     timer_4;
     q3_12   rail_ang_y_8;              /** Rail Y angle. */
-    s8      unk_A[2];
+    // 2 bytes of padding.
     VECTOR3 rail_sta_pos_C;            /** Rail start position. */
     s32     rail_sta_to_chara_dist_18; /** Distance from rail start position to locked-on character position. */
 } VC_THROUGH_DOOR_CAM_PARAM;
@@ -233,15 +235,15 @@ STATIC_ASSERT_SIZEOF(VC_THROUGH_DOOR_CAM_PARAM, 28);
 /** @brief Nearby camera path collision. */
 typedef struct _VC_NEAR_ROAD_DATA
 {
-    VC_ROAD_DATA* road_p_0;              /** Path. */
+    VC_ROAD_DATA* road_p_0;              /** Path associated with the collision. */
     u8            rd_dir_type_4;         /** `VC_ROAD_DIR_TYPE` */
-    u8            use_priority_5;
-    u8            unk_6[2];
-    s32           chara2road_sum_dist_8; /** Character to path distance squared? */
-    s32           chara2road_vec_x_C;    /** Character to path distance squared on X axis? */
-    s32           chara2road_vec_z_10;   /** Character to path distance squared on Z axis? */
+    u8            use_priority_5;        /** Usage priority in case of overlap. Lower values take precedence. */
+    // 2 bytes of padding.
+    s32           chara2road_sum_dist_8; /** Character to path distance. */
+    q19_12        chara2road_vec_x_C;    /** Character to path distance on X axis. */
+    q19_12        chara2road_vec_z_10;   /** Character to path distance on Z axis. */
     VC_LIMIT_AREA rd_14;                 /** Path constraint on XZ plane. */
-    VC_LIMIT_AREA sw_1C;                 /** Switch(?) path constraint on XZ plane. */
+    VC_LIMIT_AREA sw_1C;                 /** Switch(?) path constraint on XZ plane. TODO: Uncertain what sw means. */
 } VC_NEAR_ROAD_DATA;
 STATIC_ASSERT_SIZEOF(VC_NEAR_ROAD_DATA, 36);
 
@@ -251,7 +253,7 @@ typedef struct _VC_WORK
     VC_ROAD_DATA*             vc_road_ary_list_4;             /** Path array. */
     u32                       flags_8;                        /** `VC_FLAGS` */
     u8                        through_door_activate_init_f_C; /** `bool` */
-    s8                        unk_D[3];
+    // 3 bytes of padding.
     VC_THROUGH_DOOR_CAM_PARAM through_door_10;
     q3_12                     scr_half_ang_wy_2C;
     q3_12                     scr_half_ang_wx_2E;
@@ -261,7 +263,7 @@ typedef struct _VC_WORK
     VECTOR3                   cam_tgt_pos_44;                 /** Target camera position. */
     VECTOR3                   cam_pos_50;                     /** Q19.12 | Camera position. */
     s16                       cam_mv_ang_y_5C;                /** Angular velocity on the Y axis. */
-    s8                        unk_5E[2];
+    // 2 bytes of padding.
     VECTOR3                   cam_velo_60;                    /** Q19.12 | Camera velocity. */
     s32                       old_cam_excl_area_r_6C;         /** Previous exclusion area radius. */
     VC_WATCH_MV_PARAM         user_watch_mv_prm_70;
@@ -269,21 +271,21 @@ typedef struct _VC_WORK
     s32                       watch_tgt_max_y_88;             /** Max look-at Y offset. */
     s16                       watch_tgt_ang_z_8C;             /** Target look-at Z angle. */
     SVECTOR                   cam_mat_ang_8E;                 /** Matrix rotation. */
-    u8                        unk_96[2];
+    // 2 bytes of padding.
     MATRIX                    cam_mat_98;                     /** Matrix. */
     SVECTOR                   ofs_cam_ang_B8;                 /** Offset rotation. */
     SVECTOR                   ofs_cam_ang_spd_C0;             /** Offset rotational speed. */
     SVECTOR                   base_cam_ang_C8;                /** Base rotation. */
-    s8                        unk_D0[8];
+    s8                        unk_D0[8];                      // TODO: Possibly unused or debug data?
     u8                        field_D8;                       /** `bool` */
-    s8                        unk_D9[3];
+    // 3 bytes of padding.
     MATRIX                    field_DC;
     u8                        field_FC;                       /** `bool` */
     u8                        field_FD;
     q3_12                     cam_chara2ideal_ang_y_FE;  
     VECTOR3                   cam_tgt_velo_100;               /** Target velocity. */
     q3_12                     cam_tgt_mv_ang_y_10C;           /** Target Y angles. */
-    s8                        unk_10E[2];
+    // 2 bytes of padding.
     s32                       cam_tgt_spd_110;                               /** Target speed. */
     VECTOR3                   chara_pos_114;                                 /** Locked-on character position. */
     s32                       chara_bottom_y_120;                            /** Locked-on character bottom height. */

@@ -296,7 +296,7 @@ s32 g_Inventory_DescriptionRollTimer = 0;
 s32 g_Inventory_ScrollTransitionTimer = 0;
 s16 D_800AE1A8 = 0;
 
-// 2 bytes padding.
+// 2 bytes of padding.
 
 s32    g_Items_PickupAnimState = 0;
 q19_12 g_Items_PickupScale     = Q12(0.0f);

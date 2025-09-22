@@ -1024,7 +1024,7 @@ STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
 typedef struct _SpeedZone
 {
     s8  type_0; /** `e_SpeedZoneType` */
-    // 1 byte padding.
+    // 1 byte of padding.
     q11_4 minX_2;
     q11_4 maxX_4;
     q11_4 minZ_6;
@@ -1034,7 +1034,7 @@ typedef struct _SpeedZone
 typedef struct _WaterZone
 {
     u8  isEnabled_0; /** `bool` */
-    // 1 byte padding.
+    // 1 byte of padding.
     s16 illumination_2;
     q11_4 minX_4;
     q11_4 maxX_6;
@@ -1059,7 +1059,7 @@ typedef struct _MapType
     s16                plmFileIdx_0;
     char               tag_2[4];
     u8                 flags_6;
-    // 1 byte padding.
+    // 1 byte of padding.
     const s_WaterZone* waterZones_8;
     const s_SpeedZone* speedZones_C;
 } s_MapType;

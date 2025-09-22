@@ -9,17 +9,17 @@
 
 #define MIN_IN_ROAD_DIST FP_METER(1.0f) // `vcGetMinInRoadDist` in SH2, hardcoded to `FP_METER(1.0f)` in SH1.
 
+/** @brief Fallback camera path collision. */
 VC_NEAR_ROAD_DATA vcNullNearRoad =
 {
-    .road_p_0 = vcNullRoadArray,
-    .rd_dir_type_4 = {},
-    .use_priority_5 = {},
-    .unk_6 = {},
-    .chara2road_sum_dist_8 = 0,
-    .chara2road_vec_x_C = 0,
-    .chara2road_vec_z_10 = 0,
-    .rd_14 = { Q4(3616.0f), Q4(480.0f), Q4(3616.0f), Q4(480.0f) },
-    .sw_1C = { Q4(3616.0f), Q4(480.0f), Q4(3616.0f), Q4(480.0f) },
+    .road_p_0              = vcNullRoadArray,
+    .rd_dir_type_4         = VC_RD_DIR_Z,
+    .use_priority_5        = 0,
+    .chara2road_sum_dist_8 = Q12(0.0f),
+    .chara2road_vec_x_C    = Q12(0.0f),
+    .chara2road_vec_z_10   = Q12(0.0f),
+    .rd_14                 = { Q4(3616.0f), Q4(480.0f), Q4(3616.0f), Q4(480.0f) },
+    .sw_1C                 = { Q4(3616.0f), Q4(480.0f), Q4(3616.0f), Q4(480.0f) }
 };
 
 /** @brief Default look-at move parameters. */
@@ -27,8 +27,8 @@ VC_WATCH_MV_PARAM deflt_watch_mv_prm =
 {
     0x1333,
     0x2333,
-    0x0385,
-    0x0B33
+    0x385,
+    0xB33
 };
 
 /** @brief First-person look-at move parameters. */
@@ -49,7 +49,7 @@ VC_CAM_MV_PARAM cam_mv_prm_user =
     FP_METER(2.0f)
 };
 
-/** @brief Exclusion radius array. */
+/** @brief Exclusion radii. */
 q19_12 excl_r_ary[9] =
 {
     FP_METER(4.0f),
@@ -2877,7 +2877,7 @@ s32 Vc_VectorMagnitudeCalc(s32 x, s32 y, s32 z) // 0x80085B1C
 }
 
 q19_12 vcGetXZSumDistFromLimArea(s32* out_vec_x_p, s32* out_vec_z_p, q19_12 chk_wld_x, q19_12 chk_wld_z,
-                              q19_12 lim_min_x, q19_12 lim_max_x, q19_12 lim_min_z, q19_12 lim_max_z, bool can_ret_minus_dist_f) // 0x80085C80
+                                 q19_12 lim_min_x, q19_12 lim_max_x, q19_12 lim_min_z, q19_12 lim_max_z, bool can_ret_minus_dist_f) // 0x80085C80
 {
     q19_12 cntr_x;
     q19_12 cntr_z;

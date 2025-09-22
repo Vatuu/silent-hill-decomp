@@ -54,7 +54,7 @@ s32  time_flag      = 0xC0;
 s32  smf_file_no    = 0;
 u32  print_start    = 0;
 char eof_char[3]    = { 0xFF, 0x2F, 0x00 };
-// 1 byte padding.
+// 1 byte of padding.
 s32  chantype[18]   = { 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 1, 1, 2, 0, 0, 0 };
 
 extern bool sd_timer_flag; // TODO: Only used in this file.
