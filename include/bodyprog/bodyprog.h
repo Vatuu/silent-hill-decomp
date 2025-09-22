@@ -960,9 +960,9 @@ typedef struct
 
 typedef struct
 {
-    s8             charaId0_0; /** `e_CharacterId`. */
-    s8             charaId1_1; /** `e_CharacterId`. */
-    s8             unk_2[2];
+    s8             charaId0_0;  /** `e_CharacterId`. */
+    s8             charaId1_1;  /** `e_CharacterId`. */
+    // 2 bytes padding.
     s32            animFile0_4; // s_AnmHeader*    animFile0_4; // TODO: Needs to be a pointer.
     s_AnmHeader*   animFile1_8;
     s32            animFileSize1_C;
@@ -974,9 +974,9 @@ STATIC_ASSERT_SIZEOF(s_800A992C, 24);
 typedef struct
 {
     u8  field_0;
-    u8  unk_1;
-    u8  unk_2;
-    u8  unk_3;
+    u8  unk_1; // } Padding?
+    u8  unk_2; // }
+    u8  unk_3; // }
     u32 field_4    : 24;
     u8  field_4_24 : 8;
     u32 field_8    : 24;
@@ -1023,7 +1023,7 @@ STATIC_ASSERT_SIZEOF(s_800BCDA8, 4);
 
 typedef struct _SpeedZone
 {
-    s8  type_0; /** `e_SpeedZoneType` */
+    s8   type_0; /** `e_SpeedZoneType` */
     // 1 byte of padding.
     q11_4 minX_2;
     q11_4 maxX_4;
@@ -1046,7 +1046,7 @@ typedef struct
 {
     u8            charaId_0;  /** `e_CharacterId` */
     u8            isLoaded_1; /** `bool` */
-    u8            unk_2[2];
+    // 2 bytes of padding.
     s32           queueIdx_4;
     s_LmHeader*   lmHdr_8;
     s_FsImageDesc texture_C;

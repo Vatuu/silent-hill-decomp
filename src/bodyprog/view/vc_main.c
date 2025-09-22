@@ -112,7 +112,7 @@ s32 func_80080A3C() // 0x80080A3C
     return vcWork.field_2E4;
 }
 
-void vcSetFirstCamWork(VECTOR3* cam_pos, s16 chara_eye_ang_y, s32 use_through_door_cam_f) // 0x80080A4C
+void vcSetFirstCamWork(VECTOR3* cam_pos, s16 chara_eye_ang_y, bool use_through_door_cam_f) // 0x80080A4C
 {
     Math_SVectorZero(&vcWork.ofs_cam_ang_spd_C0);
 

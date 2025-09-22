@@ -6,10 +6,10 @@
 
 extern s32 g_VBlanks;
 
-void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, VECTOR3* chr_pos) // 0x8004004C
+void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, const VECTOR3* chr_pos) // 0x8004004C
 {
     g_WorldGfx.vcCameraInternalInfo_1BDC.mv_smooth   = 0;
-    g_WorldGfx.vcCameraInternalInfo_1BDC.ev_cam_rate = 0;
+    g_WorldGfx.vcCameraInternalInfo_1BDC.ev_cam_rate = FP_METER(0.0f);
     g_WorldGfx.vcCameraInternalInfo_1BDC.mode        = 0;
 
     vcSetCameraUseWarp(chr_pos, g_SysWork.cameraAngleY_237A);
@@ -23,7 +23,7 @@ void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, VECTOR3* chr_pos) /
     g_SysWork.cameraY_2384        = FP_METER(0.0f);
 }
 
-void vcSetCameraUseWarp(const VECTOR3* chr_pos, s16 chr_ang_y) // 0x800400D4
+void vcSetCameraUseWarp(const VECTOR3* chr_pos, q3_12 chr_ang_y) // 0x800400D4
 {
     VECTOR3 cam_pos;
     SVECTOR cam_ang;
@@ -40,12 +40,12 @@ void vcSetCameraUseWarp(const VECTOR3* chr_pos, s16 chr_ang_y) // 0x800400D4
     g_SysWork.flags_22A4 &= ~(1 << 6);
 }
 
-int vcRetCamMvSmoothF() // 0x80040190
+int vcRetCamMvSmoothF(void) // 0x80040190
 {
     return g_WorldGfx.vcCameraInternalInfo_1BDC.mv_smooth;
 }
 
-void func_800401A0(s32 arg0) // 0x800401A0
+void func_800401A0(bool arg0) // 0x800401A0
 {
     if (arg0)
     {
@@ -57,7 +57,7 @@ void func_800401A0(s32 arg0) // 0x800401A0
     }
 }
 
-void vcSetEvCamRate(s16 ev_cam_rate) // 0x800401C0
+void vcSetEvCamRate(q3_12 ev_cam_rate) // 0x800401C0
 {
     g_WorldGfx.vcCameraInternalInfo_1BDC.ev_cam_rate = ev_cam_rate;
 }
@@ -91,7 +91,7 @@ void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, b
             first_cam_pos.vx = g_SysWork.player_4C.chara_0.position_18.vx + FP_METER(7.0f);
             first_cam_pos.vz = g_SysWork.player_4C.chara_0.position_18.vz;
 
-            vcSetFirstCamWork(&first_cam_pos, g_SysWork.player_4C.chara_0.rotation_24.vy, 0);
+            vcSetFirstCamWork(&first_cam_pos, g_SysWork.player_4C.chara_0.rotation_24.vy, false);
 
         case 0:
             hr_p = &g_SysWork.player_4C.chara_0;
@@ -117,7 +117,7 @@ void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, b
             // TODO: Not sure what this is doing, maybe some kind of `FP_MULTIPLY`.
             hero_bottom_y = hr_p->position_18.vy + ((s32)-(g_WorldGfx.vcCameraInternalInfo_1BDC.ev_cam_rate * FP_METER(0.5f)) >> Q12_SHIFT);
 
-            if (g_WorldGfx.vcCameraInternalInfo_1BDC.ev_cam_rate > 0)
+            if (g_WorldGfx.vcCameraInternalInfo_1BDC.ev_cam_rate > FP_METER(0.0f))
             {
                 vcWorkSetFlags(VC_INHIBIT_FAR_WATCH_F, 0);
             }
@@ -173,7 +173,7 @@ void vcMakeHeroHeadPos(VECTOR3* head_pos) // 0x8004047C
     head_pos->vz = FP_METER_FROM_GEO(vec.vz + neck_lwm.t[2]);
 }
 
-void vcAddOfsToPos(VECTOR3* out_pos, const VECTOR3* in_pos, s16 ofs_xz_r, s16 ang_y, s32 ofs_y) // 0x80040518
+void vcAddOfsToPos(VECTOR3* out_pos, const VECTOR3* in_pos, q3_12 ofs_xz_r, q3_12 ang_y, q19_12 ofs_y) // 0x80040518
 {
     out_pos->vx = in_pos->vx + FP_MULTIPLY(ofs_xz_r, Math_Sin(ang_y), Q12_SHIFT);
     out_pos->vz = in_pos->vz + FP_MULTIPLY(ofs_xz_r, Math_Cos(ang_y), Q12_SHIFT);

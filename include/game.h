@@ -1356,7 +1356,7 @@ typedef struct _SysWork
     s32             processFlags_2298; /** `e_SysWorkProcessFlags` */
     s32             field_229C;
     s32             field_22A0; // Flags.
-    s32             flags_22A4;
+    s32             flags_22A4; // (1 << 6) passed as "use through door cam" flag in `vcSetFirstCamWork`.
     GsCOORDINATE2   coord_22A8; // For particles only?
     GsCOORDINATE2   coord_22F8; // Likely related to above.
     s8              field_2348   : 8;
