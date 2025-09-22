@@ -1,4 +1,4 @@
-void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 moveSpeed)
+void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara)
 {
     u16* flags;
     s32  curMoveSpeed;
@@ -7,7 +7,6 @@ void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 moveSpeed)
 
     flags = &chara->properties_E4.player.afkTimer_E8;
 
-    curMoveSpeed = moveSpeed;
     if (!(*flags & (1 << 13)))
     {
         curMoveSpeed = chara->moveSpeed_38;

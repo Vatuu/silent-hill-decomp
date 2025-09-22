@@ -65,10 +65,6 @@ s32 func_800D2E94();
 
 void func_800D2E9C();
 
-void func_800D4924();
-
-void func_800D654C();
-
 void Ai_Cheryl_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords); // 0x800D7FB8
 
 void func_800D802C(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*); // `Chara_Cheryl` related.
@@ -78,8 +74,6 @@ void func_800D8124(s_SubCharacter*, GsCOORDINATE2*); // `Chara_Cheryl` related.
 void func_800D8310(s_SubCharacter*, GsCOORDINATE2*); // `Chara_Cheryl` related.
 
 void Ai_Cheryl_Init(s_SubCharacter* chara); // 0x800D8888
-
-s32 func_800D929C();
 
 void Gfx_LoadingScreen_StageString();
 

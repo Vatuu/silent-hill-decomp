@@ -19,7 +19,11 @@ void sharedFunc_800D6554_0_s00(s_SubCharacter* chara)
     }
     else if ((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) == 2)
     {
+#ifdef MAP1_S01
+        var = func_8006FD90(chara, 0, 0xC000, 0);
+#else
         var = func_8006FD90(chara, 0, 0x10000, 0);
+#endif
     }
     else
     {
