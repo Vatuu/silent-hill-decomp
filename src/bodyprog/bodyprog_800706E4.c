@@ -8647,13 +8647,13 @@ bool func_8008074C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8008074C
 
 void func_8008076C(s32 posX, s32 posZ) // 0x8008076C
 {
-    s32              groundHeight;
-    s32              caseVar;
-    s32              x;
-    s32              z;
+    s32          groundHeight;
+    s32          caseVar;
+    s32          x;
+    s32          z;
     s_Collision* coll;
 
-    coll = &D_800AFC78.field_C;
+    coll = &D_800AFC78.collision_C;
 
     x = D_800AFC78.position_0.vx;
     z = D_800AFC78.position_0.vz;

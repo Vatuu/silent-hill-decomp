@@ -1002,12 +1002,15 @@ typedef struct
 } s_800AD4C8;
 STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
 
+/** @brief Collision point data.
+ * TODO: Not sure on the name, still don't know what `field_18` is for. -- Sezz
+ */
 typedef struct
 {
     VECTOR3     position_0;
-    s_Collision field_C;
+    s_Collision collision_C;
     s32         field_18;
-} s_800AFC78;
+} s_CollisionPoint;
 
 typedef struct
 {
@@ -2058,7 +2061,7 @@ extern s16 D_800AF624;
 /** Keyframe index. */
 extern s16 D_800AF626;
 
-extern s_800AFC78 D_800AFC78; // Maybe different struct.
+extern s_CollisionPoint D_800AFC78; // Maybe different struct.
 
 extern u8 D_800AFD04;
 
@@ -4159,7 +4162,7 @@ bool func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3); // arg3 type assumed
 /** Probably returns `bool`. */
 bool func_8008074C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
-/** Collision func? */
+/** Fills special collision global with collision data. */
 void func_8008076C(s32 posX, s32 posZ);
 
 /** Returns ground height? */
