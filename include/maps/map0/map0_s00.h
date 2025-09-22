@@ -35,6 +35,12 @@ extern s8 D_800E34EC;
 
 extern s8 D_800E39AC;
 
+extern s_WorldObject_0 D_800E3A5C[2];
+
+extern VECTOR3 D_800E3A9C;
+
+extern SVECTOR3 D_800E3AAC;
+
 void func_800CBFB0(void);
 
 void func_800D0124();
@@ -97,5 +103,7 @@ void func_800DC8D8(void);
 s32 func_800DCDA8();
 
 s32 func_800DCF38(s32);
+
+void Map_WorldObjectsInit(void);
 
 #endif

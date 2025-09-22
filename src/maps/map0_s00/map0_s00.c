@@ -444,11 +444,7 @@ void func_800DBE00() // 0x800DBE00
     g_SysWork.player_4C.chara_0.position_18.vy = 0;
 }
 
-extern s_WorldObject_0 D_800E3A5C[2];
-extern VECTOR3 D_800E3A9C;
-extern SVECTOR3 D_800E3AAC;
-
-void func_800DBE68(void)
+void Map_WorldObjectsInit(void) // 0x800DBE68
 {
     s32 rotXY;
     WorldObject_ModelNameSet(&D_800E3A5C[0], "WHEEL1_H");
