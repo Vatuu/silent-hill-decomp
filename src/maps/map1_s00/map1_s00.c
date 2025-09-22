@@ -138,9 +138,9 @@ INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", sharedFunc_800D5C64_0_s00
 
 #include "maps/shared/sharedFunc_800D63D0_0_s00.h" // 0x800D5B60
 
-void sharedFunc_800D654C_0_s00(s_SubCharacter* chara) {} // 0x800D5CDC
+#include "maps/shared/sharedFunc_800D654C_0_s00.h" // 0x800D5CDC
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", sharedFunc_800D6554_0_s00); // 0x800D5CE4
+#include "maps/shared/sharedFunc_800D6554_0_s00.h" // 0x800D5CE4
 
 #include "maps/shared/sharedFunc_800D670C_0_s00.h" // 0x800D5E9C
 
