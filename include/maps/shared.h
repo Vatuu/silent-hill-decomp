@@ -2388,6 +2388,8 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D5B48_0_s00(s_SubCharacter* chara);
 
+void sharedFunc_800D5FCC_0_s00(s_SubCharacter* chara);
+
 void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara, s32 moveSpeed);
 
 void sharedFunc_800D6554_0_s00(s_SubCharacter* chara);
