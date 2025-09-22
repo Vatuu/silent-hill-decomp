@@ -22,6 +22,8 @@ extern s8 D_800DD593;
 
 extern s8 D_800DD594;
 
+extern s32 D_800DFAD0;
+
 extern s8 D_800E34EC;
 
 extern s8 D_800E39AC;

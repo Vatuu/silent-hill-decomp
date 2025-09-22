@@ -450,10 +450,8 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DBF08);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DC1E8);
 
-// MAP0_S00
-extern s32 D_800DFAD0;
-
-void func_800DC33C(s32 eventFlags0) {
+void func_800DC33C(s32 eventFlags0)
+{
     VECTOR3 sp18;
     s16 temp_a0;
     s16 var_s1;
@@ -468,7 +466,8 @@ void func_800DC33C(s32 eventFlags0) {
     s_Savegame* temp_s0;
 
     temp_s0 = g_SavegamePtr;
-    if (!(temp_s0->eventFlags_168[0] & 0x20)) {
+    if (!(temp_s0->eventFlags_168[0] & 0x20))
+    {
         func_800865FC(1, 1, 0, 0x800, -0x3E000, 0x6C000);
         sharedFunc_800D88AC_0_s00(g_SysWork.npcs_1A0);
         temp_s0->eventFlags_168[0] |= 0x20;
@@ -479,17 +478,19 @@ void func_800DC33C(s32 eventFlags0) {
     temp_v0_2 = (g_SysWork.npcs_1A0[0].position_18.vz - sp18.vz) >> 6;
 
     if (((SquareRoot0((temp_v0 * temp_v0) + (temp_v0_2 * temp_v0_2)) << 6) <= 0x10800) &&
-        (g_SysWork.npcs_1A0[0].position_18.vx >= FP_METER(-58.0f))) {
+        (g_SysWork.npcs_1A0[0].position_18.vx >= FP_METER(-58.0f)))
+    {
 
-        if (!(g_SysWork.flags_22A4 & 0x80)) {
-            if (Vw_AabbVisibleInScreenCheck(
-                    g_SysWork.npcs_1A0[0].position_18.vx - 0x1000,
-                    g_SysWork.npcs_1A0[0].position_18.vx + 0x1000,
-                    g_SysWork.npcs_1A0[0].position_18.vy - 0x1800,
+        if (!(g_SysWork.flags_22A4 & 0x80))
+        {
+            if (!Vw_AabbVisibleInScreenCheck(
+                    g_SysWork.npcs_1A0[0].position_18.vx - Q12(1.0f),
+                    g_SysWork.npcs_1A0[0].position_18.vx + Q12(1.0f),
+                    g_SysWork.npcs_1A0[0].position_18.vy - Q12(1.5f),
                     g_SysWork.npcs_1A0[0].position_18.vy,
-                    g_SysWork.npcs_1A0[0].position_18.vz - 0x1000,
-                    g_SysWork.npcs_1A0[0].position_18.vz + 0x1000) == false) {
-
+                    g_SysWork.npcs_1A0[0].position_18.vz - Q12(1.0f),
+                    g_SysWork.npcs_1A0[0].position_18.vz + Q12(1.0f)))
+            {
 block7:
                 g_SysWork.npcs_1A0[0].position_18.vz = 1;
                 g_SysWork.npcs_1A0[0].position_18.vx = 1;
@@ -500,37 +501,44 @@ block7:
             }
         }
 
-        // block_9
         var_s1 = func_8005BF38(
             (ratan2(g_SysWork.npcs_1A0[0].position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx,
                    g_SysWork.npcs_1A0[0].position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz) - g_SysWork.player_4C.chara_0.headingAngle_3C));
 
-        temp_a0 = func_8005BF38((s16)(
+        temp_a0 = func_8005BF38((
             ratan2(FP_METER(-62.0f) - g_SysWork.player_4C.chara_0.position_18.vx,
-                   0x6A000 - g_SysWork.player_4C.chara_0.position_18.vz) -
+                   Q12(106.0f) - g_SysWork.player_4C.chara_0.position_18.vz) -
             g_SysWork.player_4C.chara_0.headingAngle_3C));
 
 
         if (ABS(var_s1) > ABS(temp_a0))
+        {
             var_s1 = temp_a0;
+        }
         var_a0 = var_s1 << 16;
 
-        temp_a0_2 = (g_SysWork.player_4C.chara_0.moveSpeed_38 *
-                     Math_Cos(var_a0 >> 0x10) * 0x10) >> 0x10;
+        temp_a0_2 = (g_SysWork.player_4C.chara_0.moveSpeed_38 * Math_Cos(var_a0 >> 0x10) * 0x10) >> 0x10;
 
-        if (temp_a0_2 > FP_METER(1.8)) {
-            D_800DFAD0 = temp_a0_2 + 0xE66;
-        } else if (D_800DFAD0 > FP_METER(1.8)) {
+        if (temp_a0_2 > FP_METER(1.8))
+        {
+            D_800DFAD0 = temp_a0_2 + Q12(0.9f);
+        } 
+        else if (D_800DFAD0 > FP_METER(1.8))
+        {
             var_a2 = FP_METER(1.8);
             temp_v1 = D_800DFAD0 - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.5f, 12);
-            if (temp_v1 >= FP_METER(1.8)) {
+            if (temp_v1 >= FP_METER(1.8))
+            {
                 var_a2 = temp_v1;
             }
             D_800DFAD0 = var_a2;
-        } else {
+        }
+        else
+        {
             var_v1_2 = D_800DFAD0 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.5f, 12);
 
-            if (var_v1_2 > FP_METER(1.8)) {
+            if (var_v1_2 > FP_METER(1.8))
+            {
                 var_v1_2 = FP_METER(1.8);
             }
             D_800DFAD0 = var_v1_2;
