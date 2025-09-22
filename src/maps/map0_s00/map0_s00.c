@@ -624,9 +624,8 @@ block_7:
     goto block7;
 }
 
-extern VECTOR3 D_800CB6A4;
-
-void func_800DC8D8(void) {
+void func_800DC8D8(void)
+{
     s32 temp_a0;
     s32 temp_v0;
     s32 temp_v0_2;
@@ -634,19 +633,24 @@ void func_800DC8D8(void) {
     temp_v0 = (g_SysWork.npcs_1A0[0].position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx) >> 6;
     temp_v0_2 = ((g_SysWork.npcs_1A0[0].position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz) - Q12(2.0f)) >> 6;
     temp_a0 = SquareRoot0(SQUARE(temp_v0) + SQUARE(temp_v0_2)) << 6;
-    if (!(g_SavegamePtr->eventFlags_168[0] & 0x400)) {
+    if (!(g_SavegamePtr->eventFlags_168[0] & 0x400))
+    {
         g_SysWork.npcs_1A0[0].position_18.vx = Q12(-61.0f);
         g_SysWork.npcs_1A0[0].position_18.vz = Q12(48.0f);
         g_SysWork.npcs_1A0[0].rotation_24.vy = Q12(0.25f);
-        if (temp_a0 < Q12(14.8f)) {
+        if (temp_a0 < Q12(14.8f))
+        {
             sharedFunc_800D88AC_0_s00(g_SysWork.npcs_1A0);
             g_SavegamePtr->eventFlags_168[0] |= 0x400;
             func_800865FC(1, 1, 0, 0x400, Q12(-57.0f), Q12(47.0f));
         }
-    } else {
+    }
+    else
+    {
         g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = Q12(1.8f);
         func_8008677C((s32) g_SysWork.npcs_1A0, 2, 1);
-        if (g_SysWork.npcs_1A0[0].position_18.vx > Q12(-58.0f)) {
+        if (g_SysWork.npcs_1A0[0].position_18.vx > Q12(-58.0f))
+        {
             g_SavegamePtr->eventFlags_168[0] |= 0x800;
             g_SysWork.npcs_1A0[0].model_0.charaId_0 = 0;
             func_8005DC1C(0x54A, &D_800CB6A4, 0x80, 0);
