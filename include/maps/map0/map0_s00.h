@@ -24,6 +24,8 @@ extern s8 D_800DD594;
 
 extern s32 D_800DFAD0;
 
+extern s32 D_800DFAD4;
+
 extern s8 D_800E34EC;
 
 extern s8 D_800E39AC;
@@ -80,5 +82,9 @@ void Ai_Cheryl_Init(s_SubCharacter* chara); // 0x800D8888
 void Gfx_LoadingScreen_StageString();
 
 void func_800DBE00();
+
+void func_800DC33C(void);
+
+void func_800DC694(void);
 
 #endif
