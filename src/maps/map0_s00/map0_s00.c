@@ -461,7 +461,52 @@ void func_800D9D98(void)
     }
 }
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DA028);
+void func_800DA028(void)
+{
+    s_SysWork* syswork;
+
+    func_800DA454();
+    syswork = &g_SysWork;
+
+    switch (g_SysWork.sysStateStep_C[0]) {
+    case 0:
+        sharedFunc_800D20E4_0_s00(syswork);
+        func_8008616C(0, true, 2, 0, false);
+        SysWork_StateStepIncrement();
+
+        /* fallthrough */
+    case 1:
+        func_80085E6C(0x3000, false);
+        return;
+    case 2:
+        func_80085DF0(syswork);
+        return;
+    case 3:
+        func_800865FC(0, 0, 0, -0x600, 0, 0);
+        SysWork_StateStepIncrement();
+
+        /* fallthrough */
+    case 4:
+        func_800866D4(0x35, 1, 0);
+        return;
+    case 5:
+        MapMsg_DisplayAndHandleSelection(false, 0x14, 0, 0, 0, false);
+        return;
+    case 6:
+        func_800865FC(1, 0, 0, 0x800, -0x6000, 0x87000);
+        func_800865FC(1, 0, 1, -0x400, -0x7000, 0x83000);
+        func_800865FC(1, 0, 2, -0x400, -0xB000, 0x80000);
+        func_800865FC(1, 0, 3, -0x400, -0x11800, 0x81800);
+        SysWork_StateStepIncrement();
+
+        /* fallthrough */
+    case 7:
+        func_800866D4(0x36, 4, 0);
+        return;
+    default:
+        SysWork_StateSetNext(SysState_Gameplay);
+    }
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DA254);
 
