@@ -605,7 +605,7 @@ s32 vcRetFarWatchRate(s32 far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_type
 
     if (g_GameWorkConst->config_0.optExtraViewMode_29)
     {
-        // Awkward `VC_PRS_F_VIEW_F` flag check. TODO: Use `CHECK_FLAG`.
+        // Awkward `VC_PRS_F_VIEW_F` flag check. TODO: Use `CHECK_FLAG`? It's possible this was originally typed manually.
         prsFViewFlag = vcWork.flags_8 >> 9;
         prsFViewFlag = prsFViewFlag & (1 << 0);
 
