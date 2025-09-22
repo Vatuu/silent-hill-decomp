@@ -2429,7 +2429,7 @@ void Ai_Stalker_Init(s_SubCharacter* chara); // Matches across all maps except `
 
 void sharedFunc_800D3308_0_s00(s_SubCharacter*);
 
-void sharedFunc_800D3B44_0_s00(s_SubCharacter*);
+void sharedFunc_800D3B44_0_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D6970_0_s00(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 

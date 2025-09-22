@@ -45,6 +45,6 @@ void Ai_Stalker_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2
             sharedFunc_800D7BE8_0_s00(chara);
         }
 
-        *(u16*)&chara->properties_E4.player.afkTimer_E8 &= 0xEFFF;
+        *(u16*)&chara->properties_E4.player.afkTimer_E8 &= FP_TIME(15.0f) - 1;
     }
 }

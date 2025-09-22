@@ -65,10 +65,6 @@ s32 func_800D2E94();
 
 void func_800D2E9C();
 
-void func_800D4924();
-
-void func_800D654C();
-
 void Ai_Cheryl_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords); // 0x800D7FB8
 
 void func_800D802C(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*); // `Chara_Cheryl` related.
