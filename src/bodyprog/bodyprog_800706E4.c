@@ -761,7 +761,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
     D_800C454C                              = 0;
     chara->properties_E4.player.field_10C >>= 1;
     
-    if (chara->flags_3E & (1 << 3))
+    if (chara->flags_3E & CharaFlag_Unk4)
     {
         chara->properties_E4.larvalStalker.properties_E8[10].val32 += g_DeltaTime0;
     }
@@ -769,7 +769,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
     if (chara->properties_E4.larvalStalker.properties_E8[10].val32 > D_800C45EC)
     {
         chara->properties_E4.larvalStalker.properties_E8[10].val32 = 0;
-        chara->flags_3E &= ~(1 << 3);
+        chara->flags_3E &= ~CharaFlag_Unk4;
     }
     
     if (g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 != FP_TIME(0.0f))
@@ -882,7 +882,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             }
             
             D_800C4550               = g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126;
-            chara->flags_3E         |= 1 << 3;
+            chara->flags_3E         |= CharaFlag_Unk4;
             chara->attackReceived_41 = NO_VALUE;
             break;
         
@@ -1465,7 +1465,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                 extra->model_0.state_2                          = 0;
                 g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                 g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
-                chara->flags_3E                                |= 1 << 3;
+                chara->flags_3E                                |= CharaFlag_Unk4;
             }
             break;
         
@@ -1565,7 +1565,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             }
             
             D_800C4550 = g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126;
-            chara->flags_3E |= 1 << 3;
+            chara->flags_3E |= CharaFlag_Unk4;
             
             switch (g_SysWork.player_4C.extra_128.state_1C)
             {
@@ -2076,7 +2076,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             }
             
             D_800C4550       = g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126;
-            chara->flags_3E |= 8;
+            chara->flags_3E |= CharaFlag_Unk4;
             break;
         
         case PlayerState_KickEnemy:
@@ -7856,7 +7856,7 @@ void func_8007E9C4() // 0x8007E9C4
     chara->field_B4          = 0;
 
     g_Player_IsHoldAttack         = false;
-    chara->flags_3E              &= ~(1 << 3);
+    chara->flags_3E              &= ~CharaFlag_Unk4;
     D_800C45F8                    = chara->position_18;
     g_SysWork.enemyTargetIdx_2353 = NO_VALUE;
     chara->field_40               = NO_VALUE;
@@ -8343,7 +8343,7 @@ bool func_8007F95C() // 0x8007F95C
                 pos1.vz = ptr1->position_18.vz + ptr1->field_D8.field_2;
 
                 if (!Math_Distance2dCheck(&pos0, &pos1, radius) && ABS(pos1.vy - pos0.vy) < FP_METER(0.3f) &&
-                    ptr1->health_B0 > Q12(0.0f) && (ptr1->flags_3E & (1 << 1)))
+                    ptr1->health_B0 > Q12(0.0f) && (ptr1->flags_3E & CharaFlag_Unk2))
                 {
                     Math_ShortestAngleGet(g_SysWork.player_4C.chara_0.rotation_24.vy,
                                        FP_ANGLE_NORM_U(ratan2(pos1.vx - pos0.vx, pos1.vz - pos0.vz) + FP_ANGLE(360.0f)),

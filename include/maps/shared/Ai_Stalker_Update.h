@@ -2,24 +2,24 @@ void Ai_Stalker_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2
 {
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
     {
-        sharedData_800E3A20_0_s00 = 0x15E000;
-        sharedData_800E3A24_0_s00 = 0x64000;
-        sharedData_800E3A28_0_s00 = 0x3000;
-        sharedData_800E3A2C_0_s00 = 0x32000;
+        sharedData_800E3A20_0_s00 = Q12(350.0f);
+        sharedData_800E3A24_0_s00 = Q12(100.0f);
+        sharedData_800E3A28_0_s00 = Q12(3.0f);
+        sharedData_800E3A2C_0_s00 = Q12(50.0f);
     }
     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        sharedData_800E3A20_0_s00 = 0x15E000;
-        sharedData_800E3A24_0_s00 = 0x64000;
-        sharedData_800E3A28_0_s00 = 0;
-        sharedData_800E3A2C_0_s00 = 0x23000;
+        sharedData_800E3A20_0_s00 = Q12(350.0f);
+        sharedData_800E3A24_0_s00 = Q12(100.0f);
+        sharedData_800E3A28_0_s00 = Q12(0.0f);
+        sharedData_800E3A2C_0_s00 = Q12(35.0f);
     }
     else
     {
-        sharedData_800E3A20_0_s00 = 0x258000;
-        sharedData_800E3A24_0_s00 = 0xB4000;
-        sharedData_800E3A28_0_s00 = 0x6000;
-        sharedData_800E3A2C_0_s00 = 0x64000;
+        sharedData_800E3A20_0_s00 = Q12(600.0f);
+        sharedData_800E3A24_0_s00 = Q12(180.0f);
+        sharedData_800E3A28_0_s00 = Q12(6.0f);
+        sharedData_800E3A2C_0_s00 = Q12(100.0f);
     }
     
 

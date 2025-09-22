@@ -79,15 +79,15 @@ struct _Model;
 #define IS_ANIM_STATUS_ACTIVE(animStatus) \
     ((animStatus) & (1 << 0))
 
-/** @brief Checks if a keyframe index is within the range `[low, high]`.
+/** @brief Checks if an animation time is within the keyframe range `[low, high]`.
  *
- * @param keyframe Keyframe index to check.
- * @param low Low range.
- * @param high High range.
- * @return `true` if the keyframe index is within range, `false` otherwise.
+ * @param animTime Animation time to check.
+ * @param low Low keyframe.
+ * @param high High keyframe.
+ * @return `true` if the animation time is within the keyframe range, `false` otherwise.
  */
-#define ANIM_KEYFRAME_RANGE_CHECK(keyframeIdx, low, high) \
-    ((keyframeIdx) >= (low) && (keyframeIdx) <= (high))
+#define ANIM_TIME_RANGE_CHECK(animTime, low, high) \
+    (FP_FROM(animTime, Q12_SHIFT) >= (low) && FP_FROM(animTime, Q12_SHIFT) <= (high))
 
 /** @brief Creates a bitmask with a contiguous range of bits set.
  * For use with `s_MainCharacterExtra::disabledAnimBones_18`.
@@ -364,7 +364,7 @@ typedef enum _CharaFlags
     CharaFlag_Unk7 = 1 << 6,
     CharaFlag_Unk8 = 1 << 7,
     CharaFlag_Unk9 = 1 << 8
-} s_CharaFlags;
+} e_CharaFlags;
 
 /** @brief String color IDs for strings displayed in screen space.
  * Used as indices into `STRING_COLORS`.
@@ -1132,10 +1132,10 @@ typedef struct _SubCharacter
     VECTOR3 position_18;       /** `Q19.12` */
     SVECTOR rotation_24;       // Maybe `SVECTOR3` instead of `SVECTOR` because 4th field is copy of `.xy` field.
     SVECTOR rotationSpeed_2C;  /** Range [-0x700, 0x700]. */
-    q19_12  field_34;          // Character Y Position?
-    s32     moveSpeed_38;
+    q19_12  field_34;          // Character Y position?
+    q19_12  moveSpeed_38;
     q7_8    headingAngle_3C;
-    s16     flags_3E;
+    s16     flags_3E;          /** `e_CharaFlags` */
     s8      field_40;          // In player: Index of the NPC attacking the player.
                                // In NPCs: Unknown.
     s8      attackReceived_41; // Indicates what attack has been performed to the character. For enemies is based on `e_EquippedWeaponId` enum.

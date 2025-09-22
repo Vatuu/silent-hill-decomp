@@ -2256,10 +2256,10 @@ extern s16 sharedData_800E3260_0_s00;
 extern s32 sharedData_800E39D8_0_s00;
 
 // Next 4 set by `Ai_Stalker_Update`.
-extern s32 sharedData_800E3A20_0_s00;
-extern s32 sharedData_800E3A24_0_s00;
-extern s32 sharedData_800E3A28_0_s00;
-extern s32 sharedData_800E3A2C_0_s00;
+extern q19_12 sharedData_800E3A20_0_s00; // Health.
+extern q19_12 sharedData_800E3A24_0_s00; // Health.
+extern q19_12 sharedData_800E3A28_0_s00;
+extern q19_12 sharedData_800E3A2C_0_s00;
 
 extern s_AnimInfo LARVAL_STALKER_ANIM_INFOS[]; // Used by `Ai_LarvalStalker_Init`.
 
