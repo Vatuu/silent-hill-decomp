@@ -657,22 +657,21 @@ void Material_FsImageApply(s_Material* mat, s_FsImageDesc* image, s32 arg2) // 0
     mat->field_10 = (image->clutY << 6) | ((image->clutX >> 4) & 0x3F);
 }
 
-void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4) // 0x800566B4
+void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* images, s8 unused, s32 startIdx, s32 arg4) // 0x800566B4
 {
     char           filename[16];
     s32            i;
-    s_Material*    mat;
-    s_FsImageDesc* localImage;
+    s_Material*    curMat;
+    s_FsImageDesc* curImage;
 
     // Loop could be using `&image[i]`/`&arg0->field_4[i]` instead? Wasn't able to make that match though.
-    localImage = image;
-    mat        = lmHdr->materials_4;
-
-    for (i = 0; i < lmHdr->materialCount_3; i++, mat++, localImage++)
+    for (i = 0, curImage = images, curMat = lmHdr->materials_4;
+         i < lmHdr->materialCount_3;
+         i++, curMat++, curImage++)
     {
-        Material_TimFileNameGet(filename, mat);
-        Fs_QueueStartReadTim(Fs_FindNextFile(filename, 0, startIdx), FS_BUFFER_9, localImage);
-        Material_FsImageApply(mat, localImage, arg4);
+        Material_TimFileNameGet(filename, curMat);
+        Fs_QueueStartReadTim(Fs_FindNextFile(filename, 0, startIdx), FS_BUFFER_9, curImage);
+        Material_FsImageApply(curMat, curImage, arg4);
     }
 }
 

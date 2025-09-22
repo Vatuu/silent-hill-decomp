@@ -3100,7 +3100,7 @@ bool Lm_MaterialFsImageApply(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* i
 
 void Material_FsImageApply(s_Material* mat, s_FsImageDesc* image, s32 arg2);
 
-void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* image, s8 unused, s32 startIdx, s32 arg4);
+void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* images, s8 unused, s32 startIdx, s32 arg4);
 
 /** Unknown `arg4` type. */
 void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* activeTexs, bool (*filterFunc)(s_Material* mat), s32 fileIdx, s32 arg4);
