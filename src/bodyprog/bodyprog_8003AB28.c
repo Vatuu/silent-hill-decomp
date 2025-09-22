@@ -1173,7 +1173,7 @@ void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECT
         obj->vx_C = vx;
         obj->vy_C = vy;
 
-        // TODO: Hack required for match.
+        // TODO: Required for match.
         if (obj->gsCoordinate2_8) {}
 
         obj->vz_C            = vz;

@@ -1254,7 +1254,7 @@ void func_800433B8(s_Map* map) // 0x800433B8
 
 s32 Map_IpdIdxGet(s32 gridX, s32 gridZ) // 0x80043554
 {
-    // TODO: Hacky cast.
+    // @hack
     return ((s16*)&g_Map.ipdGridCenter_42C[gridZ])[gridX];
 }
 

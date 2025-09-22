@@ -1122,7 +1122,7 @@ void Inventory_Logic() // 0x8004D518
                 Sd_PlaySfx(Sfx_Cancel, 0, 64);
             }
 
-            do {} while (0); // TODO: Hack required for match.
+            do {} while (0); // @hack Required for match.
             break;
 
         case InventorySelectionId_Examine:
