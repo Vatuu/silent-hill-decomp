@@ -589,7 +589,33 @@ void func_800DA454(void) {
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DA5A0);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DAA68);
+void func_800DAA68(void)
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+    case 0:
+        sharedFunc_800D20E4_0_s00();
+        func_800865FC(0, 0, 0, Q12(0.5f), 0, Q12(-1.0f));
+        SysWork_StateStepIncrement();
+
+        /* fallthrough */
+    case 1:
+        func_80085E6C(Q12(0.3f), false);
+        return;
+    case 2:
+        func_80085DF0();
+        return;
+    case 3:
+        MapMsg_DisplayAndHandleSelection(false, 0x18, 0, 0, 0, false);
+        return;
+    case 4:
+        func_800866D4(0x36, 1, 0);
+        return;
+    default:
+        sharedFunc_800D2244_0_s00(0);
+        SysWork_StateSetNext(SysState_Gameplay);
+    }
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DAB8C);
 
