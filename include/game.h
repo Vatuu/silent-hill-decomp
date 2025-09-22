@@ -29,7 +29,7 @@ struct _Model;
 #define SHOTGUN_AMMO_PICKUP_ITEM_COUNT 6
 #define RIFLE_AMMO_PICKUP_ITEM_COUNT   6
 
-#define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400  /** @hack Long string length is used to display a whole message instantly without a rollout. */
+#define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400  /** Long string length is used to display a whole message instantly without a rollout. */
 #define GLYPH_TABLE_ASCII_OFFSET       '\'' /** Subtracted from ASCII bytes to get index to some string-related table. */
 
 /** @brief Converts a floating-point X screen position in percent to a fixed-point X screen coodinate. */
