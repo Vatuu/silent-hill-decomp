@@ -552,7 +552,60 @@ block7:
     goto block7;
 }
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DC694);
+extern s32 D_800DFAD4;
+
+void func_800DC694(void) {
+    s32 temp_a0;
+    s32 temp_a0_2;
+    s32 temp_v0;
+    s32 temp_v0_2;
+    s32 temp_v1;
+    s32 var_a2;
+    s32 var_v1;
+
+    temp_v0 = (s32) (g_SysWork.npcs_1A0[0].position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx) >> 6;
+    temp_v0_2 = (s32) ((g_SysWork.npcs_1A0[0].position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz) - 0x2000) >> 6;
+    temp_a0 = SquareRoot0((temp_v0 * temp_v0) + (temp_v0_2 * temp_v0_2)) << 6;
+    if (!(g_SavegamePtr->eventFlags_168[0] & 0x80)) {
+        sharedFunc_800D88AC_0_s00(g_SysWork.npcs_1A0);
+        return;
+    }
+    if ((temp_a0 <= 0xE800) && (g_SysWork.npcs_1A0[0].position_18.vz > 0x30FFF)) {
+        if (!(g_SysWork.flags_22A4 & 0x80)) {
+            if (Vw_AabbVisibleInScreenCheck(g_SysWork.npcs_1A0[0].position_18.vx - 0x1000, g_SysWork.npcs_1A0[0].position_18.vx + 0x1000, g_SysWork.npcs_1A0[0].position_18.vy - 0x1800, g_SysWork.npcs_1A0[0].position_18.vy, g_SysWork.npcs_1A0[0].position_18.vz - 0x1000, g_SysWork.npcs_1A0[0].position_18.vz + 0x1000) == false) {
+block7:
+                g_SysWork.npcs_1A0[0].position_18.vz = 1;
+                g_SysWork.npcs_1A0[0].position_18.vx = 1;
+                sharedFunc_800D88C0_0_s00(g_SysWork.npcs_1A0, 0);
+                g_SavegamePtr->eventFlags_168[0] |= 0x200;
+                return;
+            }
+        }
+
+        temp_a0_2 = (s32) (g_SysWork.player_4C.chara_0.moveSpeed_38 * Math_Cos(g_SysWork.player_4C.chara_0.headingAngle_3C + 0x800)) >> 0xC;
+        if (temp_a0_2 >= 0x1CCD) {
+            D_800DFAD4 = temp_a0_2 + 0x999;
+        } else if (D_800DFAD4 >= 0x1CCD) {
+            var_a2 = 0x1CCC;
+            temp_v1 = D_800DFAD4 - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.5f, 12);
+            if (temp_v1 >= 0x1CCC) {
+                var_a2 = temp_v1;
+            }
+            D_800DFAD4 = var_a2;
+        } else {
+            var_v1 = D_800DFAD4 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.5f, 12);
+            if (var_v1 >= 0x1CCD) {
+                var_v1 = 0x1CCC;
+            }
+            D_800DFAD4 = var_v1;
+        }
+        g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = D_800DFAD4;
+        func_8008677C((s32) g_SysWork.npcs_1A0, 2, 1);
+        return;
+    }
+block_7:
+    goto block7;
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DC8D8);
 
