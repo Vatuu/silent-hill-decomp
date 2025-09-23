@@ -3293,7 +3293,7 @@ void func_800867B4(s32 caseParam, s32 idx);
 
 void func_800868DC(s32 idx);
 
-void func_800869E4(s32 mapMsgIdx, u8* arg1, u16* arg2);
+void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* soundTable);
 
 void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPosOffset,
                            s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCam);
