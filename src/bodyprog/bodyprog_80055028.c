@@ -224,9 +224,9 @@ void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coo
         ApplyMatrix(&mat, &tempSvec, &vec);
 
         ptr2     = &D_800C4168.field_60;
-        ptr2->vx = FP_METER_FROM_GEO(vec.vx + mat.t[0]);
-        ptr2->vy = FP_METER_FROM_GEO(vec.vy + mat.t[1]);
-        ptr2->vz = FP_METER_FROM_GEO(vec.vz + mat.t[2]);
+        ptr2->vx = Q8_TO_Q12(vec.vx + mat.t[0]);
+        ptr2->vy = Q8_TO_Q12(vec.vy + mat.t[1]);
+        ptr2->vz = Q8_TO_Q12(vec.vz + mat.t[2]);
     }
 
     vwVectorToAngle(&D_800C4168.field_6C, &D_800C4168.field_58);
@@ -241,7 +241,7 @@ s32 func_800557DC() // 0x800557DC
     MATRIX mat;
 
     func_80049C2C(&mat, D_800C4168.field_60.vx, D_800C4168.field_60.vy, D_800C4168.field_60.vz);
-    return FP_METER_FROM_GEO(mat.t[2]);
+    return Q8_TO_Q12(mat.t[2]);
 }
 
 void func_80055814(s32 arg0) // 0x80055814

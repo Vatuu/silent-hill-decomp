@@ -2444,9 +2444,9 @@ void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q19_
     Dms_CharacterKeyframeInterpolate(&curFrame, &keyframes[keyframePrev], &keyframes[keyframeNext], alpha);
 
     // Set position.
-    pos->vx = FP_METER_FROM_GEO(curFrame.position_0.vx + dmsHdr->origin_C.vx);
-    pos->vy = FP_METER_FROM_GEO(curFrame.position_0.vy + dmsHdr->origin_C.vy);
-    pos->vz = FP_METER_FROM_GEO(curFrame.position_0.vz + dmsHdr->origin_C.vz);
+    pos->vx = Q8_TO_Q12(curFrame.position_0.vx + dmsHdr->origin_C.vx);
+    pos->vy = Q8_TO_Q12(curFrame.position_0.vy + dmsHdr->origin_C.vy);
+    pos->vz = Q8_TO_Q12(curFrame.position_0.vz + dmsHdr->origin_C.vz);
 
     // Set rotation.
     rot->vx = curFrame.rotation_6.vx;
@@ -2486,13 +2486,13 @@ s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2,
     func_8008D1D0(&keyframePrev, &keyframeNext, &alpha, time, camEntry, dmsHdr);
     camProjValue = Dms_CameraKeyframeInterpolate(&curFrame, &camEntry->keyframes_C.camera[keyframePrev], &camEntry->keyframes_C.camera[keyframeNext], alpha);
 
-    posTarget->vx = FP_METER_FROM_GEO(curFrame.posTarget_0.vx + dmsHdr->origin_C.vx);
-    posTarget->vy = FP_METER_FROM_GEO(curFrame.posTarget_0.vy + dmsHdr->origin_C.vy);
-    posTarget->vz = FP_METER_FROM_GEO(curFrame.posTarget_0.vz + dmsHdr->origin_C.vz);
+    posTarget->vx = Q8_TO_Q12(curFrame.posTarget_0.vx + dmsHdr->origin_C.vx);
+    posTarget->vy = Q8_TO_Q12(curFrame.posTarget_0.vy + dmsHdr->origin_C.vy);
+    posTarget->vz = Q8_TO_Q12(curFrame.posTarget_0.vz + dmsHdr->origin_C.vz);
 
-    lookAtTarget->vx = FP_METER_FROM_GEO(curFrame.lookAtTarget_6.vx + dmsHdr->origin_C.vx);
-    lookAtTarget->vy = FP_METER_FROM_GEO(curFrame.lookAtTarget_6.vy + dmsHdr->origin_C.vy);
-    lookAtTarget->vz = FP_METER_FROM_GEO(curFrame.lookAtTarget_6.vz + dmsHdr->origin_C.vz);
+    lookAtTarget->vx = Q8_TO_Q12(curFrame.lookAtTarget_6.vx + dmsHdr->origin_C.vx);
+    lookAtTarget->vy = Q8_TO_Q12(curFrame.lookAtTarget_6.vy + dmsHdr->origin_C.vy);
+    lookAtTarget->vz = Q8_TO_Q12(curFrame.lookAtTarget_6.vz + dmsHdr->origin_C.vz);
 
     if (arg2 != NULL)
     {

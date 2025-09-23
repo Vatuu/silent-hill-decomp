@@ -97,9 +97,9 @@ void vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, const MATRIX* cammat) // 0
  */
 static inline void Math_MatrixToPosition(VECTOR3* pos, MATRIX* mat)
 {
-    pos->vx = FP_METER_FROM_GEO(mat->t[0]);
-    pos->vy = FP_METER_FROM_GEO(mat->t[1]);
-    pos->vz = FP_METER_FROM_GEO(mat->t[2]);
+    pos->vx = Q8_TO_Q12(mat->t[0]);
+    pos->vy = Q8_TO_Q12(mat->t[1]);
+    pos->vz = Q8_TO_Q12(mat->t[2]);
 }
 
 void vwSetViewInfo(void) // 0x80048D48

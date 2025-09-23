@@ -168,9 +168,9 @@ void vcMakeHeroHeadPos(VECTOR3* head_pos) // 0x8004047C
     fpos.vz = Q8(0.0f);
     ApplyMatrix(&neck_lwm, &fpos, &vec);
 
-    head_pos->vx = FP_METER_FROM_GEO(vec.vx + neck_lwm.t[0]);
-    head_pos->vy = FP_METER_FROM_GEO(vec.vy + neck_lwm.t[1]) - FP_METER(0.3f);
-    head_pos->vz = FP_METER_FROM_GEO(vec.vz + neck_lwm.t[2]);
+    head_pos->vx = Q8_TO_Q12(vec.vx + neck_lwm.t[0]);
+    head_pos->vy = Q8_TO_Q12(vec.vy + neck_lwm.t[1]) - FP_METER(0.3f);
+    head_pos->vz = Q8_TO_Q12(vec.vz + neck_lwm.t[2]);
 }
 
 void vcAddOfsToPos(VECTOR3* out_pos, const VECTOR3* in_pos, q3_12 ofs_xz_r, q3_12 ang_y, q19_12 ofs_y) // 0x80040518
@@ -348,12 +348,12 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
         // TODO: `Q8(5.0f)`? But `vwAngleToVector` expects `FP_METER`. Maybe an error by TS.
         vwAngleToVector(&vec1, &cam_ang, FP_METER(0.3125f));
 
-        ref_pos->vx = FP_METER_FROM_GEO(vec0.vx + vec1.vx);
-        ref_pos->vy = FP_METER_FROM_GEO(vec0.vy + vec1.vy);
-        ref_pos->vz = FP_METER_FROM_GEO(vec0.vz + vec1.vz);
+        ref_pos->vx = Q8_TO_Q12(vec0.vx + vec1.vx);
+        ref_pos->vy = Q8_TO_Q12(vec0.vy + vec1.vy);
+        ref_pos->vz = Q8_TO_Q12(vec0.vz + vec1.vz);
 
         sys_p->cameraAngleY_237A   = Math_AngleNormalize(cam_ang.vy + FP_ANGLE(180.0f));
-        sys_p->cameraY_2384        = FP_METER_FROM_GEO(-vec1.vy);
-        sys_p->cameraRadiusXz_2380 = FP_METER_FROM_GEO(SquareRoot0(SQUARE(vec1.vx) + SQUARE(vec1.vz)));
+        sys_p->cameraY_2384        = Q8_TO_Q12(-vec1.vy);
+        sys_p->cameraRadiusXz_2380 = Q8_TO_Q12(SquareRoot0(SQUARE(vec1.vx) + SQUARE(vec1.vz)));
     }
 }

@@ -307,12 +307,4 @@
 #define FP_METER(met) \
     Q12(met)
 
-/** @brief Converts Q23.8 fixed-point geometry space meters to Q19.12 fixed-point world space meters.
- *
- * @param met Q23.8 fixed-point geometry space meters.
- * @return Q19.12 fixed-point world space meters (`s32`).
- */
-#define FP_METER_FROM_GEO(met) \
-    Q8_TO_Q12(met)
-
 #endif

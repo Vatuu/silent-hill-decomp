@@ -8598,9 +8598,9 @@ void func_800805BC(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* rootCoord, s32 arg
         gte_rt();
         gte_stlvnl(&vec);
 
-        pos->vx = FP_METER_FROM_GEO(vec.vx);
-        pos->vy = FP_METER_FROM_GEO(vec.vy);
-        pos->vz = FP_METER_FROM_GEO(vec.vz);
+        pos->vx = Q8_TO_Q12(vec.vx);
+        pos->vy = Q8_TO_Q12(vec.vy);
+        pos->vz = Q8_TO_Q12(vec.vz);
 
         arg3--;
         rot++;
