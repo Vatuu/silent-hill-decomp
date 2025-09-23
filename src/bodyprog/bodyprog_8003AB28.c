@@ -312,7 +312,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
                 if (g_MainMenu_SelectedEntry == MainMenuEntry_Start)
                 {
-                    Chara_PositionUpdateFromParams(g_MapOverlayHeader.mapAreaLoadParams_1C);
+                    Chara_PositionUpdateFromParams(&g_MapOverlayHeader.mapPointsOfInterest_1C[0]);
                 }
 
                 func_8002E830();

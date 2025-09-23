@@ -1443,20 +1443,52 @@ typedef struct
     s32  field_54;
 } s_800AFE24; // Size: 85
 
-/** Part of map headers, pointer passed to `Chara_PositionUpdateFromParams`. */
-/** TODO: Rename to `PointOfInterest` to match SilentHillMapExaminer name? The array inside map header seems more for holding data for points on the map rather than just chara positioning. */
-/** This also makes use of union from 0x4 - 0x8 for different kinds of params, see https://github.com/Sparagas/Silent-Hill/blob/87549363834af24c65f6432908b2b036f9a300ad/010%20Editor%20-%20Binary%20Templates/sh1_overlays.bt#L126 */
-typedef struct _AreaLoadParams
+/** @brief Contains X/Z coordinates, and optional 4 bytes of any kind of data.
+ * Type of data usually depends on its usage, eg. character spawns will use `data.spawnInfo`, while `s_EventParam` includes a enum that specifies the kind of data it expects.
+ * Map headers include an array of these, which `s_EventParam` includes an index into. */
+typedef struct _MapPoint2d
 {
     q19_12 positionX_0;
-    u32    mapIdx_4_0          : 5; /** `e_Current2dMapIdx` */
-    u32    field_4_5           : 4;
-    u32    loadingScreenId_4_9 : 3; /** `e_LoadingScreenId`` */
-    u32    field_4_12          : 4;
-    u32    rotationY_4_16      : 8; /** Degrees in Q7.8, range [0, 256]. */
-    u32    field_4_24          : 8;
+    union
+    {
+        struct
+        {
+            u32 mapIdx_4_0          : 5; /** `e_Current2dMapIdx` */
+            u32 field_4_5           : 4;
+            u32 loadingScreenId_4_9 : 3; /** `e_LoadingScreenId`` */
+            u32 field_4_12          : 4;
+            u32 rotationY_4_16      : 8; /** Degrees in Q7.8, range [0, 256]. */
+            u32 field_4_24          : 8;
+        } areaLoad;
+        struct
+        {
+            s8 charaId_4;   /** `e_CharacterId` */
+            u8 rotationY_5; /** Degrees in Q7.8, range [0, 256]. */
+            s8 flags_6;     /** Copied to `stateStep_3` in `s_Model`, with `state_2 = 0`. */
+            s8 unk_7;
+        } spawnInfo;
+        struct
+        {
+            u32 unk_4_0  : 12;
+            u32 geo_4_12 : 12; // TODO: Figure out how this is decoded.
+            u32 unk_4_24 : 8;
+        } buttonPress;
+        struct
+        {
+            u32 unk_4_0      : 16;
+            u32 radiusX_4_16 : 8;
+            u32 radiusZ_4_24 : 8;
+        } touchAabb;
+        struct
+        {
+            u32 unk_4_0   : 16;
+            u32 geoA_4_16 : 8;
+            u32 geoB_4_24 : 8;
+        } touchObb;
+    } data;
     q19_12 positionZ_8;
-} s_AreaLoadParams;
+} s_MapPoint2d;
+STATIC_ASSERT_SIZEOF(s_MapPoint2d, 12);
 
 typedef struct
 {
@@ -1466,17 +1498,6 @@ typedef struct
     u8  field_4;
     s8  field_5;
 } s_Sfx;
-
-typedef struct _SpawnInfo
-{
-    q19_12 positionX_0;
-    s8     charaId_4;   /** `e_CharacterId` */
-    u8     rotationY_5; /** Degrees in Q7.8, range [0, 256]. */
-    s8     flags_6;     /** Copied to `stateStep_3` in `s_Model`, with `state_2 = 0`. */
-    s8     unk_7;
-    q19_12 positionZ_8;
-} s_SpawnInfo;
-STATIC_ASSERT_SIZEOF(s_SpawnInfo, 12);
 
 /** Contains loaded anim data? */
 typedef struct
@@ -1513,7 +1534,7 @@ typedef struct _MapOverlayHeader
     s8                field_16;
     s8                field_17;
     void              (**loadingScreenFuncs_18)();
-    s_AreaLoadParams* mapAreaLoadParams_1C;
+    s_MapPoint2d*     mapPointsOfInterest_1C;
     void              (**mapEventFuncs_20)(); /** Points to array of event functions. */
     u8*               unk_24;
     GsCOORDINATE2*    field_28;
@@ -1610,8 +1631,8 @@ typedef struct _MapOverlayHeader
     s32*              data_18C;
     s32*              data_190;
     void              (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
-    s8                charaGroupIds_248[4];                                              /** `e_CharacterId` values where if `s_SpawnInfo.charaId_4 == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
-    s_SpawnInfo       charaSpawns_24C[2][16];                                            /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `func_80037F24`. */
+    s8                charaGroupIds_248[4];                                              /** `e_CharacterId` values where if `s_MapPoint2d::data.spawnInfo.charaId_4 == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
+    s_MapPoint2d      charaSpawns_24C[2][16];                                            /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `func_80037F24`. */
     VC_ROAD_DATA      roadDataList_3CC[48];
     u32               unk_84C[512];
 } s_MapOverlayHeader;
@@ -2177,7 +2198,7 @@ extern s32 D_800BCD90[];
 
 extern s_800BCDA8 D_800BCDA8[2];
 
-extern s_AreaLoadParams D_800BCDB0;
+extern s_MapPoint2d D_800BCDB0;
 
 /** Related to special item interactions. */
 extern s32 D_800BCDC0[5];
@@ -2507,7 +2528,7 @@ void func_80032D1C();
 /** Bodyprog entrypoint. Called by `main`. */
 void MainLoop();
 
-void Chara_PositionUpdateFromParams(s_AreaLoadParams* params);
+void Chara_PositionUpdateFromParams(s_MapPoint2d* params);
 
 void func_8003943C();
 
@@ -3830,11 +3851,11 @@ void func_80037334();
 
 void func_80037388();
 
-bool func_800378D4(s_AreaLoadParams* areaLoadParams);
+bool func_800378D4(s_MapPoint2d* areaLoadParams);
 
-bool func_80037A4C(s_AreaLoadParams* areaLoadParams);
+bool func_80037A4C(s_MapPoint2d* areaLoadParams);
 
-bool func_80037C5C(s_AreaLoadParams* areaLoadParams);
+bool func_80037C5C(s_MapPoint2d* areaLoadParams);
 
 void func_80037DC4(s_SubCharacter* chara);
 

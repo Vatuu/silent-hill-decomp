@@ -891,7 +891,7 @@ typedef struct _EventParam
     u8  field_5; // Something related to pickup items.
     u8  unk_6[2];
     u32 triggerType_8_0        : 5;
-    u32 pointOfInterestIdx_8_5 : 8; /** Index into `g_MapOverlayHeader.mapAreaLoadParams_1C`. */
+    u32 pointOfInterestIdx_8_5 : 8; /** Index into `g_MapOverlayHeader.mapPointsOfInterest_1C`. */
     u32 flags_8_13             : 6;
     u32 field_8_19             : 5;
     u32 field_8_24             : 1;

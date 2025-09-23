@@ -1723,32 +1723,32 @@ void func_80037188() // 0x80037188
     }
 }
 
-void Chara_PositionUpdateFromParams(s_AreaLoadParams* params) // 0x800371E8
+void Chara_PositionUpdateFromParams(s_MapPoint2d* params) // 0x800371E8
 {
     s32 rotY;
-    
-    rotY = FP_ANGLE_FROM_PACKED(params->rotationY_4_16);
+
+    rotY = FP_ANGLE_FROM_PACKED(params->data.areaLoad.rotationY_4_16);
     Math_SVectorSet(&g_SysWork.player_4C.chara_0.rotation_24, FP_ANGLE(0.0f), rotY, FP_ANGLE(0.0f));
 
     g_SysWork.player_4C.chara_0.position_18.vy = Q12(0.0f);
     g_SysWork.player_4C.chara_0.position_18.vx = params->positionX_0;
     g_SysWork.player_4C.chara_0.position_18.vz = params->positionZ_8;
 
-    if (params->field_4_24 >= 2)
+    if (params->data.areaLoad.field_4_24 >= 2)
     {
         g_SysWork.player_4C.chara_0.position_18.vx += FP_MULTIPLY_FLOAT_PRECISE(Math_Sin(rotY), 0.4f, Q12_SHIFT);
         g_SysWork.player_4C.chara_0.position_18.vz += FP_MULTIPLY_FLOAT_PRECISE(Math_Cos(rotY), 0.4f, Q12_SHIFT);
     }
 
-    g_SysWork.loadingScreenIdx_2281 = params->loadingScreenId_4_9;
+    g_SysWork.loadingScreenIdx_2281 = params->data.areaLoad.loadingScreenId_4_9;
 
-    if (params->mapIdx_4_0 == 24)
+    if (params->data.areaLoad.mapIdx_4_0 == 24)
     {
         g_SavegamePtr->current2dMapIdx_A9 = Current2dMap_OtherPlaces;
     }
-    else if (params->mapIdx_4_0 != Current2dMap_OtherPlaces)
+    else if (params->data.areaLoad.mapIdx_4_0 != Current2dMap_OtherPlaces)
     {
-        g_SavegamePtr->current2dMapIdx_A9 = params->mapIdx_4_0;
+        g_SavegamePtr->current2dMapIdx_A9 = params->data.areaLoad.mapIdx_4_0;
     }
 
     g_SysWork.cameraAngleY_237A = rotY;
@@ -1786,7 +1786,7 @@ void func_80037388() // 0x80037388
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800348C0", func_800373CC); // 0x800373CC
 
-bool func_800378D4(s_AreaLoadParams* areaLoadParams) // 0x800378D4
+bool func_800378D4(s_MapPoint2d* mapPoint) // 0x800378D4
 {
     s16 rotY;
     s32 x;
@@ -1801,13 +1801,13 @@ bool func_800378D4(s_AreaLoadParams* areaLoadParams) // 0x800378D4
         D_800A9A20 = g_MainLoop_FrameCount;
     }
 
-    x = areaLoadParams->positionX_0 - D_800A9A24;
+    x = mapPoint->positionX_0 - D_800A9A24;
     if (ABS(x) > Q12(0.8f))
     {
         return false;
     }
 
-    z = areaLoadParams->positionZ_8 - D_800A9A28;
+    z = mapPoint->positionZ_8 - D_800A9A28;
     if (ABS(z) > Q12(0.8f))
     {
         return false;
@@ -1834,7 +1834,7 @@ bool func_800378D4(s_AreaLoadParams* areaLoadParams) // 0x800378D4
     }
 }
 
-bool func_80037A4C(s_AreaLoadParams* areaLoadParams) // 0x80037A4C
+bool func_80037A4C(s_MapPoint2d* mapPoint) // 0x80037A4C
 {
     s32  temp_a0_2;
     s32  temp_a2;
@@ -1851,12 +1851,12 @@ bool func_80037A4C(s_AreaLoadParams* areaLoadParams) // 0x80037A4C
     s32  scaledCosRotY;
 
     halfSinRotY   = Math_Sin(g_SysWork.player_4C.chara_0.rotation_24.vy) >> 1;
-    scaledCosRotY = -Math_Cos(FP_ANGLE_FROM_PACKED(areaLoadParams->rotationY_4_16)) * areaLoadParams->field_4_24;
+    scaledCosRotY = -Math_Cos(FP_ANGLE_FROM_PACKED(mapPoint->data.areaLoad.rotationY_4_16)) * mapPoint->data.areaLoad.field_4_24;
 
     clampedHalfCosPlayerRotY = halfSinRotY;
 
     temp_a0_2 = scaledCosRotY >> 4;
-    deltaX    = areaLoadParams->positionX_0 - g_SysWork.player_4C.chara_0.position_18.vx;
+    deltaX    = mapPoint->positionX_0 - g_SysWork.player_4C.chara_0.position_18.vx;
     temp_s2   = deltaX - temp_a0_2;
     temp_s4   = deltaX + temp_a0_2;
 
@@ -1876,12 +1876,12 @@ bool func_80037A4C(s_AreaLoadParams* areaLoadParams) // 0x80037A4C
         if (MIN(halfSinRotY, 0) <= MAX(temp_s2, temp_s4))
         {
             halfCosPlayerRotY   = Math_Cos(g_SysWork.player_4C.chara_0.rotation_24.vy) >> 1;
-            scaledSinPlayerRotY = Math_Sin(FP_ANGLE_FROM_PACKED(areaLoadParams->rotationY_4_16)) * areaLoadParams->field_4_24;
+            scaledSinPlayerRotY = Math_Sin(FP_ANGLE_FROM_PACKED(mapPoint->data.areaLoad.rotationY_4_16)) * mapPoint->data.areaLoad.field_4_24;
 
             clampedHalfCosPlayerRotY = halfCosPlayerRotY;
 
             temp_a0_2 = scaledSinPlayerRotY >> 4;
-            deltaZ    = areaLoadParams->positionZ_8 - g_SysWork.player_4C.chara_0.position_18.vz;
+            deltaZ    = mapPoint->positionZ_8 - g_SysWork.player_4C.chara_0.position_18.vz;
             temp_v1   = deltaZ - temp_a0_2;
             temp_a2   = deltaZ + temp_a0_2;
 
@@ -1912,7 +1912,7 @@ bool func_80037A4C(s_AreaLoadParams* areaLoadParams) // 0x80037A4C
     return false;
 }
 
-bool func_80037C5C(s_AreaLoadParams* areaLoadParams) // 0x80037C5C
+bool func_80037C5C(s_MapPoint2d* areaLoadParams) // 0x80037C5C
 {
     s32 sinAngle;
     s32 cosAngle;
@@ -1924,10 +1924,10 @@ bool func_80037C5C(s_AreaLoadParams* areaLoadParams) // 0x80037C5C
     s32 scale;
     u32 temp;
 
-    shift8Field_7 = areaLoadParams->field_4_24 << 8;
+    shift8Field_7 = areaLoadParams->data.areaLoad.field_4_24 << 8;
     deltaX        = g_SysWork.player_4C.chara_0.position_18.vx - areaLoadParams->positionX_0;
 
-    if (areaLoadParams->field_4_24 << 9 < ABS(deltaX))
+    if (areaLoadParams->data.areaLoad.field_4_24 << 9 < ABS(deltaX))
     {
         return false;
     }
@@ -1940,7 +1940,7 @@ bool func_80037C5C(s_AreaLoadParams* areaLoadParams) // 0x80037C5C
         return false;
     }
 
-    angle    = -(areaLoadParams->rotationY_4_16 << 20) >> 16;
+    angle    = -(areaLoadParams->data.areaLoad.rotationY_4_16 << 20) >> 16;
     sinAngle = Math_Sin(angle);
 
     temp = FP_FROM((-deltaX * sinAngle) + (deltaZ * Math_Cos(angle)), Q12_SHIFT);
@@ -2635,11 +2635,11 @@ void SysState_Fmv_Update() // 0x80039A58
 
 void SysState_LoadArea_Update() // 0x80039C40
 {
-    u32               var1;
-    s_AreaLoadParams* areaLoadParams;
+    u32           var1;
+    s_MapPoint2d* mapPoint;
 
     g_SysWork.field_229C            = 0;
-    g_SysWork.loadingScreenIdx_2281 = D_800BCDB0.loadingScreenId_4_9;
+    g_SysWork.loadingScreenIdx_2281 = D_800BCDB0.data.areaLoad.loadingScreenId_4_9;
     g_SysWork.field_2283            = g_MapEventParam->field_8_19;
     g_SysWork.field_2282            = g_MapEventParam->flags_8_13;
 
@@ -2651,13 +2651,13 @@ void SysState_LoadArea_Update() // 0x80039C40
         g_SysWork.flags_22A4 |= 1 << 10;
     }
 
-    D_800BCDB0 = g_MapOverlayHeader.mapAreaLoadParams_1C[g_MapEventParam->pointOfInterestIdx_8_5];
+    D_800BCDB0 = g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventParam->pointOfInterestIdx_8_5];
 
-    if (D_800BCDB0.field_4_24 == 1)
+    if (D_800BCDB0.data.areaLoad.field_4_24 == 1)
     {
-        areaLoadParams       = &g_MapOverlayHeader.mapAreaLoadParams_1C[g_MapEventParam->field_5];
-        var1                 = g_SysWork.player_4C.chara_0.position_18.vz - areaLoadParams->positionZ_8;
-        D_800BCDB0.positionX_0 += g_SysWork.player_4C.chara_0.position_18.vx - areaLoadParams->positionX_0;
+        mapPoint                = &g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventParam->field_5];
+        var1                    = g_SysWork.player_4C.chara_0.position_18.vz - mapPoint->positionZ_8;
+        D_800BCDB0.positionX_0 += g_SysWork.player_4C.chara_0.position_18.vx - mapPoint->positionX_0;
         D_800BCDB0.positionZ_8 += var1;
     }
 
@@ -2674,9 +2674,9 @@ void SysState_LoadArea_Update() // 0x80039C40
         g_SysWork.processFlags_2298 = SysWorkProcessFlag_RoomTransition;
         func_8003640C(g_MapEventParam->mapOverlayIdx_8_25);
 
-        if (g_MapOverlayHeader.mapAreaLoadParams_1C[g_MapEventParam->pointOfInterestIdx_8_5].field_4_5 != 0)
+        if (g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventParam->pointOfInterestIdx_8_5].data.areaLoad.field_4_5 != 0)
         {
-            g_SysWork.field_2349 = g_MapOverlayHeader.mapAreaLoadParams_1C[g_MapEventParam->pointOfInterestIdx_8_5].field_4_5 - 1;
+            g_SysWork.field_2349 = g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventParam->pointOfInterestIdx_8_5].data.areaLoad.field_4_5 - 1;
         }
     }
 

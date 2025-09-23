@@ -412,11 +412,11 @@ const char* MAP_MESSAGES[] =
 
 void func_800D9610(void) // 0x800D9610
 {
-    VECTOR3           posCpy;
-    VECTOR3           pos;
-    s_AreaLoadParams* areaLoadParams0;
-    s_AreaLoadParams* areaLoadParams1;
-    s_EventParam*     eventParam;
+    VECTOR3       posCpy;
+    VECTOR3       pos;
+    s_MapPoint2d* areaLoadParams0;
+    s_MapPoint2d* areaLoadParams1;
+    s_EventParam* eventParam;
 
     // @hack Permuter finds.
     do {} while (false);
