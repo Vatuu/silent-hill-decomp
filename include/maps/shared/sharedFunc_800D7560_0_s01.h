@@ -40,7 +40,7 @@ void sharedFunc_800D7560_0_s01(s_SubCharacter* chara)
         offsetZ         = FP_MULTIPLY_PRECISE(cosHeadingAngle, FP_METER(-0.17f), Q12_SHIFT);
     }
 
-    mat->t[0] = FP_METER_TO_GEO(chara->position_18.vx + offsetX);
-    mat->t[1] = FP_METER_TO_GEO(chara->position_18.vy);
-    mat->t[2] = FP_METER_TO_GEO(chara->position_18.vz + offsetZ);
+    mat->t[0] = Q12_TO_Q8(chara->position_18.vx + offsetX);
+    mat->t[1] = Q12_TO_Q8(chara->position_18.vy);
+    mat->t[2] = Q12_TO_Q8(chara->position_18.vz + offsetZ);
 }

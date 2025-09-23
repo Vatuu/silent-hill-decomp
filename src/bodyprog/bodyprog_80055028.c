@@ -217,9 +217,9 @@ void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coo
     {
         Vw_CoordHierarchyMatrixCompute(coord1, &mat);
 
-        tempSvec.vx = FP_METER_TO_GEO(x);
-        tempSvec.vy = FP_METER_TO_GEO(y);
-        tempSvec.vz = FP_METER_TO_GEO(z);
+        tempSvec.vx = Q12_TO_Q8(x);
+        tempSvec.vy = Q12_TO_Q8(y);
+        tempSvec.vz = Q12_TO_Q8(z);
 
         ApplyMatrix(&mat, &tempSvec, &vec);
 
@@ -3428,9 +3428,9 @@ void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2)
 {
     s16 angleXz;
 
-    result->field_C.vx = FP_METER_TO_GEO(vec->vx);
-    result->field_C.vy = FP_METER_TO_GEO(vec->vy);
-    result->field_C.vz = FP_METER_TO_GEO(vec->vz);
+    result->field_C.vx = Q12_TO_Q8(vec->vx);
+    result->field_C.vy = Q12_TO_Q8(vec->vy);
+    result->field_C.vz = Q12_TO_Q8(vec->vz);
 
     result->field_8 = SquareRoot0(SQUARE(result->field_C.vx) + SQUARE(result->field_C.vz));
 
@@ -3451,8 +3451,8 @@ void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2)
     }
 
     result->field_28     = FP_FROM(arg2->rotation_C.vz, Q4_SHIFT); // TODO: Packed angle?
-    result->positionX_18 = FP_METER_TO_GEO(arg2->position_0.vx);
-    result->positionZ_1C = FP_METER_TO_GEO(arg2->position_0.vz);
+    result->positionX_18 = Q12_TO_Q8(arg2->position_0.vx);
+    result->positionZ_1C = Q12_TO_Q8(arg2->position_0.vz);
     result->field_20     = result->positionX_18 + result->field_C.vx;
     result->field_24     = result->positionZ_1C + result->field_C.vz;
     result->field_2A     = FP_FROM(arg2->rotation_C.vy + arg2->position_0.vy, Q4_SHIFT); // TODO: Position + rotation? Seems wrong.
@@ -4979,10 +4979,10 @@ void func_8006D774(s_func_8006CC44* arg0, VECTOR3* arg1, VECTOR3* arg2) // 0x800
     SVECTOR sp10; // Types assumed. `SVECTOR3` might also work but there are 8 bytes between `sp10` and `sp18` and `SVECTOR3` is only 6 bytes.
     SVECTOR sp18;
 
-    sp10.vx = FP_METER_TO_GEO(arg1->vx);
-    sp10.vy = FP_METER_TO_GEO(arg1->vz);
-    sp18.vx = FP_METER_TO_GEO(arg2->vx);
-    sp18.vy = FP_METER_TO_GEO(arg2->vz);
+    sp10.vx = Q12_TO_Q8(arg1->vx);
+    sp10.vy = Q12_TO_Q8(arg1->vz);
+    sp18.vx = Q12_TO_Q8(arg2->vx);
+    sp18.vy = Q12_TO_Q8(arg2->vz);
 
     arg0->field_34 = 0;
     arg0->field_44.field_0.field_0  = 0;
@@ -5166,17 +5166,17 @@ bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos, VECT
     arg0->field_8  = 0x7FFF;
     arg0->field_20 = 0;
 
-    arg0->field_2C.vx = FP_METER_TO_GEO(pos->vx);
-    arg0->field_2C.vy = FP_METER_TO_GEO(pos->vy);
-    arg0->field_2C.vz = FP_METER_TO_GEO(pos->vz);
+    arg0->field_2C.vx = Q12_TO_Q8(pos->vx);
+    arg0->field_2C.vy = Q12_TO_Q8(pos->vy);
+    arg0->field_2C.vz = Q12_TO_Q8(pos->vz);
 
-    arg0->field_50.vx = FP_METER_TO_GEO(offset->vx);
-    arg0->field_50.vy = FP_METER_TO_GEO(offset->vy);
-    arg0->field_50.vz = FP_METER_TO_GEO(offset->vz);
+    arg0->field_50.vx = Q12_TO_Q8(offset->vx);
+    arg0->field_50.vy = Q12_TO_Q8(offset->vy);
+    arg0->field_50.vz = Q12_TO_Q8(offset->vz);
 
     arg0->field_3C = arg0->field_2C.vx + arg0->field_50.vx;
 
-    // `FP_METER_TO_GEO`?
+    // `Q12_TO_Q8`?
     arg0->field_4C = FP_FROM(arg5, Q4_SHIFT);
     arg0->field_4E = FP_FROM(arg6, Q4_SHIFT);
 

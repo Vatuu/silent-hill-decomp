@@ -217,9 +217,9 @@ void func_800410D8(VECTOR3* pos0, s32* arg1, s32* arg2, SVECTOR* rot, VECTOR3* p
 
     coord.super      = NULL;
     coord.workm      = GsIDMATRIX;
-    coord.workm.t[0] = FP_METER_TO_GEO(pos1->vx);
-    coord.workm.t[1] = FP_METER_TO_GEO(pos1->vy);
-    coord.workm.t[2] = FP_METER_TO_GEO(pos1->vz);
+    coord.workm.t[0] = Q12_TO_Q8(pos1->vx);
+    coord.workm.t[1] = Q12_TO_Q8(pos1->vy);
+    coord.workm.t[2] = Q12_TO_Q8(pos1->vz);
     coord.flg        = true;
 
     func_80049AF8(&coord, &mat);
@@ -907,8 +907,8 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
     s_IpdChunk*  curChunk;
 
     // Convert position to geometry space.
-    collX = FP_METER_TO_GEO(posX);
-    collZ = FP_METER_TO_GEO(posZ);
+    collX = Q12_TO_Q8(posX);
+    collZ = Q12_TO_Q8(posZ);
 
     // Compute chunk coords.
     chunkCoordX = FLOOR_TO_STEP(collX, Q8(40.0f));
@@ -958,8 +958,8 @@ s32 func_8004287C(s_WorldObject_0* arg0, s_WorldObject_0_10* arg1, s32 posX, s32
     globalLm = &g_Map.globalLm_138;
 
     // Convert position to geometry space.
-    collX = FP_METER_TO_GEO(posX);
-    collZ = FP_METER_TO_GEO(posZ);
+    collX = Q12_TO_Q8(posX);
+    collZ = Q12_TO_Q8(posZ);
 
     if (Fs_QueueEntryLoadStatusGet(globalLm->queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
         globalLm->lmHdr_0->isLoaded_2 &&
@@ -1080,7 +1080,7 @@ q19_12 Ipd_DistanceToEdgeWithPaddingGet(q19_12 posX, q19_12 posZ, s32 fileChunkC
 {
     q19_12 dist;
 
-    dist = Ipd_DistanceToEdgeGet(FP_METER_TO_GEO(posX), FP_METER_TO_GEO(posZ), fileChunkCoordX, fileChunkCoordZ);
+    dist = Ipd_DistanceToEdgeGet(Q12_TO_Q8(posX), Q12_TO_Q8(posZ), fileChunkCoordX, fileChunkCoordZ);
     if (isExterior)
     {
         dist -= FP_METER(1.0f);
@@ -1131,10 +1131,10 @@ s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 p
 
     queueIdx = NO_VALUE;
 
-    chunkCoordX0 = FLOOR_TO_STEP(FP_METER_TO_GEO(posX0), Q8(40.0f));
-    chunkCoordZ0 = FLOOR_TO_STEP(FP_METER_TO_GEO(posZ0), Q8(40.0f));
-    chunkCoordX1 = FLOOR_TO_STEP(FP_METER_TO_GEO(posX1), Q8(40.0f));
-    chunkCoordZ1 = FLOOR_TO_STEP(FP_METER_TO_GEO(posZ1), Q8(40.0f));
+    chunkCoordX0 = FLOOR_TO_STEP(Q12_TO_Q8(posX0), Q8(40.0f));
+    chunkCoordZ0 = FLOOR_TO_STEP(Q12_TO_Q8(posZ0), Q8(40.0f));
+    chunkCoordX1 = FLOOR_TO_STEP(Q12_TO_Q8(posX1), Q8(40.0f));
+    chunkCoordZ1 = FLOOR_TO_STEP(Q12_TO_Q8(posZ1), Q8(40.0f));
 
     map->field_580 = chunkCoordX1;
     map->field_584 = chunkCoordZ1;
@@ -1417,8 +1417,8 @@ bool func_80043830(void) // 0x80043830
             continue;
         }
 
-        if (Ipd_DistanceToEdgeGet(FP_METER_TO_GEO(g_Map.field_578), 
-                          FP_METER_TO_GEO(g_Map.field_57C),
+        if (Ipd_DistanceToEdgeGet(Q12_TO_Q8(g_Map.field_578), 
+                          Q12_TO_Q8(g_Map.field_57C),
                           curChunk->coordX_8, curChunk->coordZ_A) <= Q8(4.5f))
         {
             return true;
@@ -1433,12 +1433,12 @@ bool func_8004393C(q19_12 posX, q19_12 posZ) // 0x8004393C
     s32 fileChunkCoordX;
     s32 fileChunkCoordZ;
 
-    fileChunkCoordX = FLOOR_TO_STEP(FP_METER_TO_GEO(posX), Q8(40.0f));
-    fileChunkCoordZ = FLOOR_TO_STEP(FP_METER_TO_GEO(posZ), Q8(40.0f));
+    fileChunkCoordX = FLOOR_TO_STEP(Q12_TO_Q8(posX), Q8(40.0f));
+    fileChunkCoordZ = FLOOR_TO_STEP(Q12_TO_Q8(posZ), Q8(40.0f));
     
     if (g_Map.isExterior)
     {
-        return Ipd_DistanceToEdgeGet(FP_METER_TO_GEO(g_Map.field_578), FP_METER_TO_GEO(g_Map.field_57C), fileChunkCoordX, fileChunkCoordZ) <= Q8(4.5f);
+        return Ipd_DistanceToEdgeGet(Q12_TO_Q8(g_Map.field_578), Q12_TO_Q8(g_Map.field_57C), fileChunkCoordX, fileChunkCoordZ) <= Q8(4.5f);
     }
 
     if (fileChunkCoordX == g_Map.field_580 &&
@@ -1696,8 +1696,8 @@ void func_80044090(s_IpdHeader* ipdHdr, s32 arg1, s32 arg2, GsOT* ot, void* arg4
     u8*                 temp_fp;
     SVECTOR*            var_s1;
 
-    spB8 = FP_METER_TO_GEO(arg1);
-    spBC = FP_METER_TO_GEO(arg2);
+    spB8 = Q12_TO_Q8(arg1);
+    spBC = Q12_TO_Q8(arg2);
 
     temp_s5 = ipdHdr->levelGridX_2 * Q8(40.0f);
     temp_s3 = ipdHdr->levelGridY_3 * Q8(40.0f);
@@ -2623,10 +2623,10 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord,
         temp_s1_2 = g_SysWork.playerBoneCoords_890[1].coord.t[1];
         temp_s1_2 = CLAMP(temp_s1_2, Q8(-2.0f), Q8(0.0f));
 
-        temp_s1_2 += FP_METER_TO_GEO(g_SysWork.player_4C.chara_0.position_18.vy);
-        temp_s1_3  = Math_MulFixed(FP_METER_TO_GEO(g_SysWork.player_4C.chara_0.position_18.vx), GsWSMATRIX.m[2][0], Q12_SHIFT);
+        temp_s1_2 += Q12_TO_Q8(g_SysWork.player_4C.chara_0.position_18.vy);
+        temp_s1_3  = Math_MulFixed(Q12_TO_Q8(g_SysWork.player_4C.chara_0.position_18.vx), GsWSMATRIX.m[2][0], Q12_SHIFT);
         temp_s0    = Math_MulFixed(temp_s1_2, GsWSMATRIX.m[2][1], Q12_SHIFT);
-        temp_s1_4  = ((temp_s1_3 + temp_s0) + Math_MulFixed(FP_METER_TO_GEO(g_SysWork.player_4C.chara_0.position_18.vz), GsWSMATRIX.m[2][2], Q12_SHIFT)) + GsWSMATRIX.t[2];
+        temp_s1_4  = ((temp_s1_3 + temp_s0) + Math_MulFixed(Q12_TO_Q8(g_SysWork.player_4C.chara_0.position_18.vz), GsWSMATRIX.m[2][2], Q12_SHIFT)) + GsWSMATRIX.t[2];
 
         var_s3_2 = (var_s4 + var_s3) >> 1;
         temp_v1  = var_s3_2 - ((var_s3 - var_s4) >> 1);

@@ -67,8 +67,8 @@ bool func_800D012C(VECTOR3* pos) // 0x800D012C
             return true;
 
         case 2:
-            deltaX = FP_METER_TO_GEO(g_SysWork.player_4C.chara_0.position_18.vx - pos->vx);
-            deltaZ = FP_METER_TO_GEO(g_SysWork.player_4C.chara_0.position_18.vz - pos->vz);
+            deltaX = Q12_TO_Q8(g_SysWork.player_4C.chara_0.position_18.vx - pos->vx);
+            deltaZ = Q12_TO_Q8(g_SysWork.player_4C.chara_0.position_18.vz - pos->vz);
             return SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)) < Q8(1.0f);
     }
 

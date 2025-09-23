@@ -148,9 +148,9 @@ void func_80080B58(GsCOORDINATE2* arg0, SVECTOR* arg1, VECTOR3* arg2) // 0x80080
     func_80096C94(arg1, &mat);
     MulMatrix(&vcWork.field_DC, &mat);
 
-    vcWork.field_DC.t[0] = FP_METER_TO_GEO(arg2->vx);
-    vcWork.field_DC.t[1] = FP_METER_TO_GEO(arg2->vy);
-    vcWork.field_DC.t[2] = FP_METER_TO_GEO(arg2->vz);
+    vcWork.field_DC.t[0] = Q12_TO_Q8(arg2->vx);
+    vcWork.field_DC.t[1] = Q12_TO_Q8(arg2->vy);
+    vcWork.field_DC.t[2] = Q12_TO_Q8(arg2->vz);
 }
 
 void vcWorkSetFlags(VC_FLAGS enable, VC_FLAGS disable) // 0x80080BF8
@@ -395,9 +395,9 @@ s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVEC
     intrpt = FP_TO(g_DeltaTime0, Q12_SHIFT) / FP_FLOAT_TO(1.0f / TICKS_PER_SECOND, Q12_SHIFT);
     intrpt = CLAMP(intrpt, INTRPT_TIME_MIN, INTRPT_TIME_MAX);
 
-    mv_vec = Vc_VectorMagnitudeCalc(FP_METER_TO_GEO(now_pos->vx - old_pos->vx),
-                                    FP_METER_TO_GEO(now_pos->vy - old_pos->vy),
-                                    FP_METER_TO_GEO(now_pos->vz - old_pos->vz));
+    mv_vec = Vc_VectorMagnitudeCalc(Q12_TO_Q8(now_pos->vx - old_pos->vx),
+                                    Q12_TO_Q8(now_pos->vy - old_pos->vy),
+                                    Q12_TO_Q8(now_pos->vz - old_pos->vz));
 
     mv_vec = FP_METER(mv_vec) / intrpt;
     if (mv_vec > MOVE_DIST_MAX)
@@ -643,9 +643,9 @@ s32 vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, s32 far_watch_rate, 
 
     cam_max_rate = (cur_cam_mv_type == VC_MV_SELF_VIEW) ? Q8(16.0f) : Q8(5.6f);
 
-    xyz_dist = Vc_VectorMagnitudeCalc(FP_METER_TO_GEO(w_p->cam_pos_50.vx - w_p->chara_head_pos_130.vx),
-                                      FP_METER_TO_GEO(w_p->cam_pos_50.vy - w_p->chara_head_pos_130.vy),
-                                      FP_METER_TO_GEO(w_p->cam_pos_50.vz - w_p->chara_head_pos_130.vz));
+    xyz_dist = Vc_VectorMagnitudeCalc(Q12_TO_Q8(w_p->cam_pos_50.vx - w_p->chara_head_pos_130.vx),
+                                      Q12_TO_Q8(w_p->cam_pos_50.vy - w_p->chara_head_pos_130.vy),
+                                      Q12_TO_Q8(w_p->cam_pos_50.vz - w_p->chara_head_pos_130.vz));
 
     if (xyz_dist >= Q8(0.5f))
     {
@@ -2132,7 +2132,7 @@ void vcMakeIdealCamPosUseVC_ROAD_DATA(VECTOR3* ideal_pos, VC_WORK* w_p, enum _VC
 
     vcAdjustXzInLimAreaUsingMIN_IN_ROAD_DIST(&temp_x, &temp_z, &near_road_data->rd_14);
 
-    horizontal_distance_fp = FP_METER_TO_GEO(Vc_VectorMagnitudeCalc(temp_x - w_p->chara_pos_114.vx,
+    horizontal_distance_fp = Q12_TO_Q8(Vc_VectorMagnitudeCalc(temp_x - w_p->chara_pos_114.vx,
                                                                     delta_y_clamped,
                                                                     temp_z - w_p->chara_pos_114.vz));
 
@@ -2588,9 +2588,9 @@ void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_W
     s32 deltaY;
     s32 deltaX;
 
-    deltaX = FP_METER_TO_GEO(w_p->watch_tgt_pos_7C.vx - w_p->cam_pos_50.vx);
-    deltaY = FP_METER_TO_GEO(w_p->watch_tgt_pos_7C.vy - w_p->cam_pos_50.vy);
-    deltaZ = FP_METER_TO_GEO(w_p->watch_tgt_pos_7C.vz - w_p->cam_pos_50.vz);
+    deltaX = Q12_TO_Q8(w_p->watch_tgt_pos_7C.vx - w_p->cam_pos_50.vx);
+    deltaY = Q12_TO_Q8(w_p->watch_tgt_pos_7C.vy - w_p->cam_pos_50.vy);
+    deltaZ = Q12_TO_Q8(w_p->watch_tgt_pos_7C.vz - w_p->cam_pos_50.vz);
 
     if (w_p->flags_8 & VC_USER_WATCH_F)
     {
@@ -2692,9 +2692,9 @@ void vcMakeOfsCamTgtAng(SVECTOR* ofs_tgt_ang, MATRIX* base_matT, VC_WORK* w_p) /
 {
     SVECTOR vec;
 
-    vec.vx = FP_METER_TO_GEO(w_p->watch_tgt_pos_7C.vx - w_p->cam_pos_50.vx);
-    vec.vy = FP_METER_TO_GEO(w_p->watch_tgt_pos_7C.vy - w_p->cam_pos_50.vy);
-    vec.vz = FP_METER_TO_GEO(w_p->watch_tgt_pos_7C.vz - w_p->cam_pos_50.vz);
+    vec.vx = Q12_TO_Q8(w_p->watch_tgt_pos_7C.vx - w_p->cam_pos_50.vx);
+    vec.vy = Q12_TO_Q8(w_p->watch_tgt_pos_7C.vy - w_p->cam_pos_50.vy);
+    vec.vz = Q12_TO_Q8(w_p->watch_tgt_pos_7C.vz - w_p->cam_pos_50.vz);
 
     ApplyMatrixSV(base_matT, &vec, &vec);
     vwVectorToAngle(ofs_tgt_ang, &vec);
@@ -2707,15 +2707,15 @@ void vcMakeOfsCam2CharaBottomAndTopAngByBaseMatT(SVECTOR* ofs_cam2chara_btm_ang,
 {
     SVECTOR vec;
 
-    vec.vx = FP_METER_TO_GEO(chara_pos->vx  - cam_pos->vx);
-    vec.vy = FP_METER_TO_GEO(chara_bottom_y - cam_pos->vy);
-    vec.vz = FP_METER_TO_GEO(chara_pos->vz  - cam_pos->vz);
+    vec.vx = Q12_TO_Q8(chara_pos->vx  - cam_pos->vx);
+    vec.vy = Q12_TO_Q8(chara_bottom_y - cam_pos->vy);
+    vec.vz = Q12_TO_Q8(chara_pos->vz  - cam_pos->vz);
     ApplyMatrixSV(base_matT, &vec, &vec);
     vwVectorToAngle(ofs_cam2chara_btm_ang, &vec);
 
-    vec.vx = FP_METER_TO_GEO(chara_pos->vx - cam_pos->vx);
-    vec.vy = FP_METER_TO_GEO(chara_top_y   - cam_pos->vy);
-    vec.vz = FP_METER_TO_GEO(chara_pos->vz - cam_pos->vz);
+    vec.vx = Q12_TO_Q8(chara_pos->vx - cam_pos->vx);
+    vec.vy = Q12_TO_Q8(chara_top_y   - cam_pos->vy);
+    vec.vz = Q12_TO_Q8(chara_pos->vz - cam_pos->vz);
     ApplyMatrixSV(base_matT, &vec, &vec);
     vwVectorToAngle(ofs_cam2chara_top_ang, &vec);
 }
@@ -2797,9 +2797,9 @@ void vcMakeCamMatAndCamAngByBaseAngAndOfsAng(SVECTOR* cam_mat_ang, MATRIX* cam_m
     MATRIX base_mat;
     MATRIX ofs_mat;
 
-    cam_mat->t[0] = FP_METER_TO_GEO(cam_pos->vx);
-    cam_mat->t[1] = FP_METER_TO_GEO(cam_pos->vy);
-    cam_mat->t[2] = FP_METER_TO_GEO(cam_pos->vz);
+    cam_mat->t[0] = Q12_TO_Q8(cam_pos->vx);
+    cam_mat->t[1] = Q12_TO_Q8(cam_pos->vy);
+    cam_mat->t[2] = Q12_TO_Q8(cam_pos->vz);
 
     func_80096C94(base_cam_ang, &base_mat);
     func_80096C94(ofs_cam_ang, &ofs_mat);

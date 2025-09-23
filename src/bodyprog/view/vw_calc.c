@@ -412,9 +412,9 @@ void func_80049C2C(MATRIX* outMat, s32 x, s32 y, s32 z) // 0x80049C2C
     VECTOR in;  // Q23.8
     VECTOR out;
 
-    in.vx = FP_METER_TO_GEO(x);
-    in.vy = FP_METER_TO_GEO(y);
-    in.vz = FP_METER_TO_GEO(z);
+    in.vx = Q12_TO_Q8(x);
+    in.vy = Q12_TO_Q8(y);
+    in.vz = Q12_TO_Q8(z);
     ApplyMatrixLV(&GsWSMATRIX, &in, &out);
 
     // Copy matrix fields as 32-bit words. Maybe inlined `CopyMatrix` func?
@@ -456,9 +456,9 @@ bool Vw_AabbVisibleInScreenCheck(s32 xMin, s32 xMax, s32 yMin, s32 yMax, s32 zMi
 
     for (i = 0; i < BOX_VERT_COUNT; i++)
     {
-        vertOffset.vx = (i & (1 << 0)) ? FP_METER_TO_GEO(xMax - xMin) : Q8(0.0f);
-        vertOffset.vy = (i & (1 << 1)) ? FP_METER_TO_GEO(yMax - yMin) : Q8(0.0f);
-        vertOffset.vz = (i & (1 << 2)) ? FP_METER_TO_GEO(zMax - zMin) : Q8(0.0f);
+        vertOffset.vx = (i & (1 << 0)) ? Q12_TO_Q8(xMax - xMin) : Q8(0.0f);
+        vertOffset.vy = (i & (1 << 1)) ? Q12_TO_Q8(yMax - yMin) : Q8(0.0f);
+        vertOffset.vz = (i & (1 << 2)) ? Q12_TO_Q8(zMax - zMin) : Q8(0.0f);
 
         screenDepth = RotTransPers(&vertOffset, &screenPos, &depthDmy, &depthDmy) - 1;
 

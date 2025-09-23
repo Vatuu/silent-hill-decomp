@@ -232,9 +232,9 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
 
     vwGetViewPosition(&cam_pos);
 
-    vec0.vx = FP_METER_TO_GEO(cam_pos.vx);
-    vec0.vy = FP_METER_TO_GEO(cam_pos.vy);
-    vec0.vz = FP_METER_TO_GEO(cam_pos.vz);
+    vec0.vx = Q12_TO_Q8(cam_pos.vx);
+    vec0.vy = Q12_TO_Q8(cam_pos.vy);
+    vec0.vz = Q12_TO_Q8(cam_pos.vz);
 
     vwGetViewAngle(&cam_ang);
 

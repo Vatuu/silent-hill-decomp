@@ -41,9 +41,9 @@ void Vw_SetLookAtMatrix(const VECTOR3* pos, const VECTOR3* lookAt) // 0x80048AF4
     SVECTOR rot;
 
     // Compute direction vector components.
-    deltaX = FP_METER_TO_GEO(lookAt->vx - pos->vx);
-    deltaY = FP_METER_TO_GEO(lookAt->vy - pos->vy);
-    deltaZ = FP_METER_TO_GEO(lookAt->vz - pos->vz);
+    deltaX = Q12_TO_Q8(lookAt->vx - pos->vx);
+    deltaY = Q12_TO_Q8(lookAt->vy - pos->vy);
+    deltaZ = Q12_TO_Q8(lookAt->vz - pos->vz);
 
     // Compute camera rotation.
     rot.vz = FP_ANGLE(0.0f);
@@ -52,9 +52,9 @@ void Vw_SetLookAtMatrix(const VECTOR3* pos, const VECTOR3* lookAt) // 0x80048AF4
 
     // Compute view transform matrix and set global info.
     func_80096C94(&rot, &viewMat);
-    viewMat.t[0] = FP_METER_TO_GEO(pos->vx);
-    viewMat.t[1] = FP_METER_TO_GEO(pos->vy);
-    viewMat.t[2] = FP_METER_TO_GEO(pos->vz);
+    viewMat.t[0] = Q12_TO_Q8(pos->vx);
+    viewMat.t[1] = Q12_TO_Q8(pos->vy);
+    viewMat.t[2] = Q12_TO_Q8(pos->vz);
     vwSetViewInfoDirectMatrix(NULL, &viewMat);
 }
 

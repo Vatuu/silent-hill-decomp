@@ -6553,9 +6553,9 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
     }
 
     chara->properties_E4.player.positionY_EC = D_800C4590.field_C;
-    coord->coord.t[0]                        = FP_METER_TO_GEO(chara->position_18.vx);
-    coord->coord.t[1]                        = FP_METER_TO_GEO(chara->position_18.vy);
-    coord->coord.t[2]                        = FP_METER_TO_GEO(chara->position_18.vz);
+    coord->coord.t[0]                        = Q12_TO_Q8(chara->position_18.vx);
+    coord->coord.t[1]                        = Q12_TO_Q8(chara->position_18.vy);
+    coord->coord.t[2]                        = Q12_TO_Q8(chara->position_18.vz);
 }
 
 void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007C800
@@ -7572,13 +7572,13 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
             gte_rt();
             gte_stlvnl(&sp70);
 
-            temp_v0_5 = FP_METER_TO_GEO(g_SysWork.playerCombatInfo_38.field_0.vx) - sp70.vx;
-            temp_v0_6 = FP_METER_TO_GEO(g_SysWork.playerCombatInfo_38.field_0.vz) - sp70.vz;
+            temp_v0_5 = Q12_TO_Q8(g_SysWork.playerCombatInfo_38.field_0.vx) - sp70.vx;
+            temp_v0_6 = Q12_TO_Q8(g_SysWork.playerCombatInfo_38.field_0.vz) - sp70.vz;
             temp_s0   = SquareRoot0(SQUARE(temp_v0_5) + SQUARE(temp_v0_6));
 
-            sp98.vx = ratan2(sp70.vx - FP_METER_TO_GEO(g_SysWork.playerCombatInfo_38.field_0.vx),
-                             sp70.vz - FP_METER_TO_GEO(g_SysWork.playerCombatInfo_38.field_0.vz));
-            sp98.vy = ratan2(temp_s0, sp70.vy - FP_METER_TO_GEO(g_SysWork.playerCombatInfo_38.field_0.vy));
+            sp98.vx = ratan2(sp70.vx - Q12_TO_Q8(g_SysWork.playerCombatInfo_38.field_0.vx),
+                             sp70.vz - Q12_TO_Q8(g_SysWork.playerCombatInfo_38.field_0.vz));
+            sp98.vy = ratan2(temp_s0, sp70.vy - Q12_TO_Q8(g_SysWork.playerCombatInfo_38.field_0.vy));
         }
 
         if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_HyperBlaster &&

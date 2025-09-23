@@ -24,7 +24,7 @@ void sharedFunc_800CF2D8_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coord)
     chara->position_18.vy = 0;
     chara->position_18.vz += vec.vz;
 
-    coord->coord.t[0] = FP_METER_TO_GEO(chara->position_18.vx);
-    coord->coord.t[1] = FP_METER_TO_GEO(chara->position_18.vy);
-    coord->coord.t[2] = FP_METER_TO_GEO(chara->position_18.vz);
+    coord->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
+    coord->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
+    coord->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
 }

@@ -1145,9 +1145,9 @@ void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECT
             arg0->field_10.lmIdx_9 = lmIdx;
         } 
 
-        coord0 = FP_METER_TO_GEO(pos->vx);
-        coord1 = FP_METER_TO_GEO(pos->vy);
-        coord2 = FP_METER_TO_GEO(pos->vz);
+        coord0 = Q12_TO_Q8(pos->vx);
+        coord1 = Q12_TO_Q8(pos->vy);
+        coord2 = Q12_TO_Q8(pos->vz);
         vx     = rot->vx >> 2;
         vz     = rot->vz >> 2;
         vy     = rot->vy;
