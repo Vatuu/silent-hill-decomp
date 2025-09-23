@@ -14,6 +14,8 @@ extern s_800E32DC D_800E32DC;
 /** "STAGE 0-0" string */
 extern char D_800CAE7C[];
 
+extern VECTOR3 D_800CB6A4;
+
 extern s32 D_800E3A30;
 
 extern u8 D_800DD592;
@@ -86,5 +88,7 @@ void func_800DBE00();
 void func_800DC33C(void);
 
 void func_800DC694(void);
+
+void func_800DC8D8(void);
 
 #endif
