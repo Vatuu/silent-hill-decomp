@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 
-# Converts `g_SavegamePtr->eventFlags_168[X] & Y` expressions to `Savegame_EventFlagGet(Z)`
-# Also converts Q12 integers (0x7CCC, -0x1444, 0xFFFE0DDD, 4096) into float equivalents (may need to be rounded afterward)
+# Converts `g_SavegamePtr->eventFlags_168[X]` expressions to `Savegame_EventFlagGet(Z)` / `Savegame_EventFlagSet` / `Savegame_EventFlagClear`
+# Also converts Q format integers (0x7CCC, -0x1444, 0xFFFE0DDD, 4096) into float equivalents
+# Q12 is used by default, but can be specified by including it in the line (`4096 Q8` or `Q8(0x1337)` to convert to Q8)
+# May need to round the result afterward
 # (mostly GPT written)
 
 import re
+import readline
 
 # ---------- EventFlags converter ----------
 def _parse_mask(mask_str):
@@ -129,7 +132,8 @@ def process_fp_text(text):
         text = re.sub(r'\bQ\d+\b', '', text, count=1)
 
     def convert_value(match):
-        value_str = match.group(0)
+        prefix = match.group(1) or ""   # may be None if start-of-string
+        value_str = match.group(2)
 
         if value_str.startswith(("0x", "-0x", "+0x")):
             val = int(value_str, 16)
@@ -142,16 +146,17 @@ def process_fp_text(text):
         else:
             val = int(value_str, 10)
 
-        return f"Q{qval}({val / (1 << qval)}f)"
+        return f"{prefix}Q{qval}({val / (1 << qval)}f)"
 
-    pattern = re.compile(r'[-+]?0x[0-9A-Fa-f]+|[-+]?\d+')
+    # prefix can be: start-of-string, space, or a punctuation
+    pattern = re.compile(r'(^|[\s,(=:{\[])([-+]?0x[0-9A-Fa-f]+|[-+]?\d+)')
     return pattern.sub(convert_value, text)
 
 # ---------- Unified REPL ----------
 if __name__ == "__main__":
-    print("Enter expressions like '(g_SavegamePtr->eventFlags_168[2] & 8)' or '(g_SavegamePtr->eventFlags_168[2] & (1 << 3))'.")
+    print("Enter expressions like 'g_SavegamePtr->eventFlags_168[2] & 8' or 'g_SavegamePtr->eventFlags_168[2] |= (1 << 3))'.")
     print("Or enter a line containing decimal/hexadecimal Q12 numbers (0x7CCC, -0x1444, 4096, 0xFFFE0DDD) to convert to float")
-    print("(change to other Q** formats by including Q format in the text, `chara.field_48 = Q8(-0x1999)'")
+    print("(change to other Q** formats by including Q format in the text, 'chara.field_48 = Q8(-0x1999)'")
     print()
     print("Type 'exit' to quit.")
     while True:
