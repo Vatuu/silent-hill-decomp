@@ -1392,6 +1392,36 @@ s32 func_800DCF38(s32 arg0) // 0x800DCF38
     return FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(9.0f), Q12_SHIFT) + arg0;
 }
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DD0CC);
+void func_800DD0CC()
+{
+    s32 vec0[2];
+
+    if (D_800DFB40 == NO_VALUE)
+    {
+        func_8003EF10(6, 6, 5, (s32) &D_800DFB40, 0, 0x64000);
+        D_800DFB40 = 0;
+    }
+    D_800DFB44.unk0 += g_DeltaTime0;
+    vec0[0] = FP_MULTIPLY(D_800DFB44.unk0, D_800DFB48.unk0, 6);
+    if (vec0[0] >= 0x1000)
+    {
+        D_800DFB44.unk0 = 0U;
+        D_800DFB48.unk0 = (u8) ((Rng_Rand16() & 0x3F) + 0x20);
+        D_800DFB48.unk1 = (u8) ((Rng_Rand16() & 0x1F) + 0x20);
+        vec0[0] &= 0xFFF;
+    }
+    
+    vec0[0] = FP_MULTIPLY(D_800DFB48.unk1, Math_Sin(D_800DFB44.unk2), 12);
+    D_800DFB44.unk2 += g_DeltaTime0;
+    vec0[1] = FP_MULTIPLY(D_800DFB44.unk2, D_800DFB48.unk2, 6);
+    if (vec0[1] >= 0x1000)
+    {
+        D_800DFB44.unk2 = 0;
+        D_800DFB48.unk2 = (u8) ((Rng_Rand16() & 0x3F) + 0x20);
+        vec0[1] &= 0xFFF;
+    }
+
+    D_800DFB40 = MAX(0, FP_MULTIPLY((FP_MULTIPLY(vec0[0], Q12(4.5f), 6) + Q12(2.5f)), Math_Sin(vec0[1]), 12) + Q12(4.0f));
+}
 
 INCLUDE_RODATA("asm/maps/map0_s00/nonmatchings/map0_s00", D_800CB6A4);
