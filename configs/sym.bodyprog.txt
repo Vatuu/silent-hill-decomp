@@ -27,7 +27,7 @@ g_SavegamePtr                               = 0x80024D48; // type:u32
 g_Controller0                               = 0x80024D4C; // type:u32
 g_Controller1                               = 0x80024D50; // type:u32
 g_GameWorkPtr                               = 0x80024D54; // type:u32
-g_MapTypes                                  = 0x8002500C; // type:MapType size:0xF0
+MAP_TYPES                                   = 0x8002500C; // type:MapType size:0xF0
 
 //-----------------------------------------------------------------------------------
 //--- PA: 0x0005AC   VA: 0x8002510C   subsegment: .rodata, saveload/bodyprog_80032D1C
@@ -354,11 +354,11 @@ Gfx_MainMenu_FogUpdate                      = 0x8003BC8C; // type:func
 Map_TypeGet                                 = 0x8003BD2C; // type:func
 GameFs_BgEtcGfxLoad                         = 0x8003BE6C; // type:func
 GameFs_BgItemLoad                           = 0x8003BE9C; // type:func
-Map_SpeedZoneGet                            = 0x8003BF60; // type:func
+Map_SpeedZoneTypeGet                        = 0x8003BF60; // type:func
 CharaModel_Free                             = 0x8003C1AC; // type:func
 Ipd_ActiveChunksClear1                      = 0x8003C2EC; // type:func
-WorldGfx_StoreIpdSamplePoint                = 0x8003C368; // type:func
-WorldGfx_ResetIpdSamplePoint                = 0x8003C3A0; // type:func
+WorldGfx_IpdSamplePointStore                = 0x8003C368; // type:func
+WorldGfx_IpdSamplePointReset                = 0x8003C3A0; // type:func
 WorldObject_ModelNameSet                    = 0x8003C8F8; // type:func
 g_WorldGfx_ObjectAdd                        = 0x8003C92C; // type:func
 GameFs_FlameGfxLoad                         = 0x8003E710; // type:func
@@ -399,8 +399,8 @@ Ipd_ActiveChunksClear                       = 0x80042300; // type:func
 Map_MakeIpdGrid                             = 0x800423F4; // type:func
 ConvertHexToS8                              = 0x8004255C; // type:func
 IpdHeader_IsLoaded                          = 0x80042C04; // type:func
-Ipd_DistanceToEdgeWithPadding               = 0x80042DE8; // type:func
-Ipd_DistanceToEdge                          = 0x80042E2C; // type:func
+Ipd_DistanceToEdgeWithPaddingGet            = 0x80042DE8; // type:func
+Ipd_DistanceToEdgeGet                       = 0x80042E2C; // type:func
 Ipd_DistanceToEdgeCalc                      = 0x80043338; // type:func
 Map_IpdIdxGet                               = 0x80043554; // type:func
 Map_IsIpdPresent                            = 0x80043578; // type:func
@@ -410,9 +410,9 @@ IpdHeader_IsTextureLoaded                   = 0x80043B70; // type:func
 IpdHeader_CollisionDataGet                  = 0x80043BA4; // type:func
 IpdHeader_FixOffsets                        = 0x80043BC4; // type:func
 Ipd_MaterialsLoad                           = 0x80043C7C; // type:func
-Ipd_HalfResMaterialCount                    = 0x80043D00; // type:func
-LmFilter_FullResolution                     = 0x80043D44; // type:func
-LmFilter_HalfResolution                     = 0x80043D64; // type:func
+Ipd_HalfPageMaterialCountGet                = 0x80043D00; // type:func
+LmFilter_IsFullPage                         = 0x80043D44; // type:func
+LmFilter_IsHalfPage                         = 0x80043D64; // type:func
 IpdHeader_FixHeaderOffsets                  = 0x80043DA4; // type:func
 IpdHeader_ModelLinkObjectLists              = 0x80043E50; // type:func
 LmHeader_ModelHeaderSearch                  = 0x80043F2C; // type:func
@@ -424,7 +424,7 @@ Anim_Update0                                = 0x800449F0; // type:func
 Anim_Update1                                = 0x80044B38; // type:func
 Anim_Update2                                = 0x80044CA4; // type:func
 Anim_Update3                                = 0x80044DF0; // type:func
-Bone_GetModelIndex                          = 0x80044F6C; // type:func
+Bone_ModelIdxGet                            = 0x80044F6C; // type:func
 Skeleton_Init                               = 0x80044FE0; // type:func
 Skeleton_BoneModelAssign                    = 0x800451B0; // type:func
 
@@ -2104,7 +2104,7 @@ HARRY_BASE_ANIM_INFOS                       = 0x800AF228; // size:0x390
 g_Player_AttackAnimIdx                      = 0x800AFBE8;
 g_Player_MeleeAttackType                    = 0x800AFBEC;
 g_Player_IsMultiTapAttack                   = 0x800AFBF0;
-D_800AFC78                                  = 0x800AFC78; // type:u8 size:0x1C - s_800AFC78 struct, size likely incomplete
+D_800AFC78                                  = 0x800AFC78; // type:u8 size:0x1C - s_CollisionPoint struct, size likely incomplete
 
 //-------------------------------------------------------------------
 //--- PA: 0x08B134   VA: 0x800AFC94   subsegment: .data, view/vc_main

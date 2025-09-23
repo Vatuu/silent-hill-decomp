@@ -1,4 +1,4 @@
-void Ai_Kaufmann_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords)
+void Ai_Kaufmann_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
     if (chara->model_0.state_2 == 0)
     {
@@ -7,5 +7,5 @@ void Ai_Kaufmann_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDIN
 
     sharedSymbol_800CF470_3_s00(chara, coords);
     sharedFunc_800CF2D8_3_s00(chara, coords);
-    sharedFunc_800CF290_3_s00(chara, anmHeader, coords);
+    sharedFunc_800CF290_3_s00(chara, anmHdr, coords);
 }

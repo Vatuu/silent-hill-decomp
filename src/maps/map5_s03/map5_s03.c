@@ -214,7 +214,7 @@ const char* MAP_MESSAGES[] =
     "\tThere's_a_vending_machine. ~N\n\tIt_doesn't_work. ~E ",
     "\tNobody_inside. ~E ",
     "\tDo_you_want_to_push ~N\n\tthe_shelf? ~S4 ",
-    "\tAn_old_motorcycle. ~E ",
+    "\tAn_old_motorcycle. ~E "
 };
 
 void func_800D159C(void) // 0x800D159C

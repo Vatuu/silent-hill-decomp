@@ -108,7 +108,7 @@ const char* MAP_MESSAGES[] =
     "~H\tThere_is_a_ ~C5 Shopping_district_map ~C7 . ~N\n\tTake_it? ~S4 ",
     "\tNothing_helpful. ~E ",
     "\tThe_desk_is_messy. ~E ",
-    "\tThere_is_a_ ~C2 Shotgun ~C7 . ~N\n\tTake_it? ~S4 ",
+    "\tThere_is_a_ ~C2 Shotgun ~C7 . ~N\n\tTake_it? ~S4 "
 };
 
 void func_800CCF9C(void) // 0x800CCF9C

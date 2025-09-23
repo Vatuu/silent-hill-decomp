@@ -23,7 +23,7 @@ void sharedFunc_800CF2A4_0_s01(s32 arg0, s_Particle* part, u16* rand, s32* delta
         part->movement_18.vy += Rng_GenerateInt(*rand, -1, 3);
 
         // Apply movement to position over time.
-        part->position0_0.vy += ((((part->movement_18.vy >> 1) << 2) * *deltaTime) / 136);
+        part->position0_0.vy += TIME_STEP_SCALE(*deltaTime, (part->movement_18.vy >> 1) << 2);
     }
 
     // Clamp Y position at 0 and rest.
@@ -32,6 +32,6 @@ void sharedFunc_800CF2A4_0_s01(s32 arg0, s_Particle* part, u16* rand, s32* delta
         pos->vy = 0;
     }
 
-    // Needed for match.
+    // @hack Needed for match.
     if (pos->vy >= 0) {}
 }

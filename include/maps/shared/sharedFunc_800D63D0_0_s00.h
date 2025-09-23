@@ -6,7 +6,6 @@ void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara)
     s32  newAnimStatus;
 
     flags = &chara->properties_E4.player.afkTimer_E8;
-
     if (!(*flags & (1 << 13)))
     {
         curMoveSpeed = chara->moveSpeed_38;
@@ -68,10 +67,9 @@ void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara)
     if (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 9))
     {
         chara->timer_C6 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.25f, Q12_SHIFT);
-
         if (chara->timer_C6 > FP_TIME(1.0f))
         {
-            chara->model_0.charaId_0 = 0;
+            chara->model_0.charaId_0 = Chara_None;
         }
     }
 #endif

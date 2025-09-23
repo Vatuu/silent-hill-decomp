@@ -237,7 +237,7 @@ const char* MAP_MESSAGES[] =
     "\tThere's_a_bottle_filled ~N\n\twith_some_kind_of_drug. ~N\n\tBetter_leave_it. ~E ",
     "\tThere_are_some_empty_bottles. ~E ",
     "\tNothing_special_in_the_box. ~N\n\tNothing_to_worry_about. ~E ",
-    "\tNothing_inside. ~E ",
+    "\tNothing_inside. ~E "
 };
 
 void func_800D5934(void) // 0x800D5934

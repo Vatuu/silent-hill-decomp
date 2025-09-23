@@ -116,12 +116,12 @@ s32 frame_cnt = 0; // 0x801E3F44
 
 DISPENV disp =
 {
-    { 0, 256, 320, 240 }, // `disp`
-    { 0, 8,   256, 208 }, // `screen`
-    0,                    // `isinter`
-    1,                    // `isrgb24`
-    0,                    // `pad0`
-    0                     // `pad1`
+    { 0, 256, SCREEN_WIDTH, SCREEN_HEIGHT }, // `disp`
+    { 0, 8,   256,          208           }, // `screen`
+    false,                                   // `isinter`
+    true,                                    // `isrgb24`
+    0,                                       // `pad0`
+    0                                        // `pad1`
 }; // 0x801E3F48
 
 MOVIE_STR* m;

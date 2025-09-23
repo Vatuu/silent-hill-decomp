@@ -29,16 +29,16 @@ struct _Model;
 #define SHOTGUN_AMMO_PICKUP_ITEM_COUNT 6
 #define RIFLE_AMMO_PICKUP_ITEM_COUNT   6
 
-#define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400  /** Hack. Long string length is used to display a whole message instantly. */
+#define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400  /** Long string length is used to display a whole message instantly without a rollout. */
 #define GLYPH_TABLE_ASCII_OFFSET       '\'' /** Subtracted from ASCII bytes to get index to some string-related table. */
 
 /** @brief Converts a floating-point X screen position in percent to a fixed-point X screen coodinate. */
 #define SCREEN_POSITION_X(percent) \
-    (s32)((SCREEN_WIDTH) * ((percent) / 100.0f))
+    (s32)(SCREEN_WIDTH * ((percent) / 100.0f))
 
 /** @brief Converts a floating-point Y screen position in percent to a fixed-point Y screen coodinate. */
 #define SCREEN_POSITION_Y(percent) \
-    (s32)((SCREEN_HEIGHT) * ((percent) / 100.0f))
+    (s32)(SCREEN_HEIGHT * ((percent) / 100.0f))
 
 // TODO: Not correct. Should use unions instead.
 /** @brief Accessors for low and high parts of each character property, returns a pointer which can be read or written to. */
@@ -79,15 +79,15 @@ struct _Model;
 #define IS_ANIM_STATUS_ACTIVE(animStatus) \
     ((animStatus) & (1 << 0))
 
-/** @brief Checks if a keyframe index is within the range `[low, high]`.
+/** @brief Checks if an animation time is within the keyframe range `[low, high]`.
  *
- * @param keyframe Keyframe index to check.
- * @param low Low range.
- * @param high High range.
- * @return `true` if the keyframe index is within range, `false` otherwise.
+ * @param animTime Animation time to check.
+ * @param low Low keyframe.
+ * @param high High keyframe.
+ * @return `true` if the animation time is within the keyframe range, `false` otherwise.
  */
-#define ANIM_KEYFRAME_RANGE_CHECK(keyframeIdx, low, high) \
-    ((keyframeIdx) >= (low) && (keyframeIdx) <= (high))
+#define ANIM_TIME_RANGE_CHECK(animTime, low, high) \
+    (FP_FROM(animTime, Q12_SHIFT) >= (low) && FP_FROM(animTime, Q12_SHIFT) <= (high))
 
 /** @brief Creates a bitmask with a contiguous range of bits set.
  * For use with `s_MainCharacterExtra::disabledAnimBones_18`.
@@ -364,7 +364,7 @@ typedef enum _CharaFlags
     CharaFlag_Unk7 = 1 << 6,
     CharaFlag_Unk8 = 1 << 7,
     CharaFlag_Unk9 = 1 << 8
-} s_CharaFlags;
+} e_CharaFlags;
 
 /** @brief String color IDs for strings displayed in screen space.
  * Used as indices into `STRING_COLORS`.
@@ -994,7 +994,7 @@ typedef struct _AnimInfo
     u8 status_4;                 /** Packed anim status. Init base? See `s_ModelAnimData::status_0`. */
     s8 hasVariableDuration_5;    /** `bool` | Use `duration_8.variableFunc`: `true`, Use `duration_8.constant`: `false`. */
     u8 status_6;                 /** Packed anim status. Link target? Sometimes `NO_VALUE`, unknown why. See `s_ModelAnim::status_0`. */
-    // 1 byte padding.
+    // 1 byte of padding.
     union
     {
         q19_12 constant;          /** Constant duration at 30 FPS. */
@@ -1132,10 +1132,10 @@ typedef struct _SubCharacter
     VECTOR3 position_18;       /** `Q19.12` */
     SVECTOR rotation_24;       // Maybe `SVECTOR3` instead of `SVECTOR` because 4th field is copy of `.xy` field.
     SVECTOR rotationSpeed_2C;  /** Range [-0x700, 0x700]. */
-    q19_12  field_34;          // Character Y Position?
-    s32     moveSpeed_38;
+    q19_12  field_34;          // Character Y position?
+    q19_12  moveSpeed_38;
     q7_8    headingAngle_3C;
-    s16     flags_3E;
+    s16     flags_3E;          /** `e_CharaFlags` */
     s8      field_40;          // In player: Index of the NPC attacking the player.
                                // In NPCs: Unknown.
     s8      attackReceived_41; // Indicates what attack has been performed to the character. For enemies is based on `e_EquippedWeaponId` enum.
@@ -1153,7 +1153,7 @@ typedef struct _SubCharacter
     s16     field_56; // }
     s32     field_58; // }
     VECTOR3 field_5C;
-    VECTOR3 field_68;
+    VECTOR3 characterCount_68;
     VECTOR3 field_74;
     VECTOR3 field_80;
     VECTOR3 field_8C;
@@ -1161,7 +1161,7 @@ typedef struct _SubCharacter
     VECTOR3 field_A4;
     q19_12  health_B0;
     s32     field_B4;          // X? } In player: Adds/subtracts if hurt by enemy. Related to heading angle?
-    s32     field_B8;          // Y? }
+    s32     field_B8;          // Y? } Angle.
     s32     field_BC;          // Z? }
     q19_12  damageReceived_C0;
     u16     deathTimer_C4;     // Part of `shBattleInfo` struct in SH2, may use something similar here.
@@ -1175,7 +1175,7 @@ typedef struct _SubCharacter
     s16               field_CE;
     s16               field_D0;
     s16               field_D2;
-    s16               field_D4;
+    s16               field_D4; // Z angle?
     s16               field_D6;
     s_SubCharacter_D8 field_D8;
 
@@ -1346,7 +1346,7 @@ typedef struct _SysWork
     GsCOORDINATE2   npcCoords_FC0[NPC_BONE_COUNT_MAX]; // Dynamic coord buffer? 10 coords per NPC (given max of 6 NPCs).
     s8              field_2280;        // Maybe NPC AI data past this point.
     s8              loadingScreenIdx_2281;
-    s8              field_2282;
+    s8              field_2282; // Room process flags?
     s8              field_2283; // Index into `SfxPairs`.
     u16             field_2284[3];
     u16             field_228A;
@@ -1356,7 +1356,7 @@ typedef struct _SysWork
     s32             processFlags_2298; /** `e_SysWorkProcessFlags` */
     s32             field_229C;
     s32             field_22A0; // Flags.
-    s32             flags_22A4;
+    s32             flags_22A4; // (1 << 6) passed as "use through door cam" flag in `vcSetFirstCamWork`.
     GsCOORDINATE2   coord_22A8; // For particles only?
     GsCOORDINATE2   coord_22F8; // Likely related to above.
     s8              field_2348   : 8;

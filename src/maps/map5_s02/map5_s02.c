@@ -217,7 +217,7 @@ const char* MAP_MESSAGES[] =
     "\tThere_is_a_ ~C2 Safe_key ~C7 . ~N\n\tTake_it? ~S4 ",
     "\tIt's_locked. ~E ",
     "\tI've_got_a_ ~C2 Receipt ~C7 . ~E ",
-    "\tI've_got_a_ ~C2 Kaufmann_key ~C7 . ~E ",
+    "\tI've_got_a_ ~C2 Kaufmann_key ~C7 . ~E "
 };
 
 void func_800D4AB8(void) // 0x800D4AB8

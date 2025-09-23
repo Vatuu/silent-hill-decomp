@@ -232,7 +232,7 @@ const char* MAP_MESSAGES[] =
     "~J1(3.0)\tI'll_be_back_as_soon_as ~N\n\t\t\tI_find_my_daughter. ~E ",
     "~J0(1.5)\tHarry... ~E ",
     "\tNothing_unusual. ~E ",
-    "\tNothing_helpful. ~E ",
+    "\tNothing_helpful. ~E "
 };
 
 INCLUDE_RODATA("asm/maps/map4_s04/nonmatchings/map4_s04", D_800CBB78);

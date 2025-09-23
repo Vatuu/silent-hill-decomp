@@ -19,6 +19,6 @@ void func_800D5B6C(s_SubCharacter*, GsCOORDINATE2*);
 void func_800D5BC8(s_SubCharacter*, GsCOORDINATE2*);
 void func_800D5DF4(s_SubCharacter*, GsCOORDINATE2*);
 void func_800D5E30(s_SubCharacter*, GsCOORDINATE2*);
-void Ai_Twinfeeler_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords);
+void Ai_Twinfeeler_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 #endif

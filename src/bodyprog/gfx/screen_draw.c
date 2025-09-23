@@ -30,7 +30,7 @@ void Screen_Init(s32 screenWidth, s32 isInterlaced) // 0x80032428
     g_GameWork.gsScreenHeight_58A = !isInterlaced ? FRAMEBUFFER_HEIGHT_PROGRESSIVE : FRAMEBUFFER_HEIGHT_INTERLACED;
 
     DrawSync(0);
-    GsInitGraph2(g_GameWork.gsScreenWidth_588, g_GameWork.gsScreenHeight_58A, (isInterlaced | 0x4), 1, 0);
+    GsInitGraph2(g_GameWork.gsScreenWidth_588, g_GameWork.gsScreenHeight_58A, isInterlaced | 0x4, 1, 0);
     GsDefDispBuff2(0, 32, 0, isInterlaced ? 32 : 256);
 
     D_800C6E8E =

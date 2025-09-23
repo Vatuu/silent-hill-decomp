@@ -203,7 +203,7 @@ const char* MAP_MESSAGES[] =
     "\tNothing_unusual. ~E ",
     "\tThere's_a_white_board. ~N\n\tNothing_special_written_here. ~E ",
     "\tNothing_helpful. ~E ",
-    "\tThe_phone's_out. ~N\n\tCan't_get_a_dial_tone. ~E ",
+    "\tThe_phone's_out. ~N\n\tCan't_get_a_dial_tone. ~E "
 };
 
 INCLUDE_RODATA("asm/maps/map3_s06/nonmatchings/map3_s06", D_800CB21C);

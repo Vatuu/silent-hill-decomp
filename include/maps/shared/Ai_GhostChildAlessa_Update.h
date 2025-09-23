@@ -1,4 +1,4 @@
-void Ai_GhostChildAlessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords)
+void Ai_GhostChildAlessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
     if (chara->model_0.charaId_0 != Chara_GhostChildAlessa)
     {
@@ -7,5 +7,5 @@ void Ai_GhostChildAlessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, G
 
     sharedFunc_800D4C0C_7_s01(chara, coords);
     sharedFunc_800D4A74_7_s01(chara, coords);
-    sharedFunc_800D4A2C_7_s01(chara, anmHeader, coords);
+    sharedFunc_800D4A2C_7_s01(chara, anmHdr, coords);
 }

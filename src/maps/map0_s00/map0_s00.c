@@ -279,7 +279,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800D7BE8_0_s00
 #include "maps/shared/sharedFunc_800D7E04_0_s00.h" // 0x800D7E04
 
 // `arg2` = another `s_SubCharacter`?
-void Ai_Cheryl_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords) // 0x800D7FB8
+void Ai_Cheryl_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D7FB8
 {
     if (chara->model_0.charaId_0 != Chara_Cheryl)
     {
@@ -288,7 +288,7 @@ void Ai_Cheryl_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINAT
 
     func_800D8310(chara, coords);       // Control.
     func_800D8124(chara, coords);       // Translate + rotate.
-    func_800D802C(chara, anmHeader, coords); // Modulate speed and something else?
+    func_800D802C(chara, anmHdr, coords); // Modulate speed and something else?
 }
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D802C);
@@ -375,7 +375,7 @@ const char* MAP_MESSAGES[] =
     "\tThe_street_is_blocked.",
     "\tCan't_get_out_of_town ~N\n\tthrough_here. ~E ",
     "\tMy_car... ~N\n\ttoo_banged_up_to_drive. ",
-    "\tWhere's_Cheryl? ~N\n\tHope_she's_safe. ~E ",
+    "\tWhere's_Cheryl? ~N\n\tHope_she's_safe. ~E "
 };
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D9610);
@@ -450,66 +450,63 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DBF08);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DC1E8);
 
-void func_800DC33C(void)
+void func_800DC33C(void) // 0x800DC33C
 {
-    VECTOR3 sp18;
-    s16 temp_a0;
-    s16 var_s1;
-    s32 var_v1;
-    s32 temp_a0_2;
-    s32 temp_v0;
-    s32 temp_v0_2;
-    s32 temp_v1;
-    s32 var_a0;
-    s32 var_a2;
-    s32 var_v1_2;
-    s_Savegame* temp_s0;
+    VECTOR3     camPos;
+    s16         temp_a0;
+    s16         var_s1;
+    s32         var_v1;
+    q19_12      temp_a0_2;
+    s32         temp_v1;
+    s32         var_a0;
+    s32         var_a2;
+    s32         var_v1_2;
+    s_Savegame* save;
 
-    temp_s0 = g_SavegamePtr;
-    if (!(temp_s0->eventFlags_168[0] & 0x20))
+    save = g_SavegamePtr;
+
+    // TODO: Use `Savegame_EventFlagGet`.
+
+    if (!(save->eventFlags_168[0] & 0x20))
     {
         func_800865FC(1, 1, 0, 0x800, -0x3E000, 0x6C000);
         sharedFunc_800D88AC_0_s00(g_SysWork.npcs_1A0);
-        temp_s0->eventFlags_168[0] |= 0x20;
+        save->eventFlags_168[0] |= 0x20;
     }
 
-    vwGetViewPosition(&sp18);
-    temp_v0 = (g_SysWork.npcs_1A0[0].position_18.vx - sp18.vx) >> 6;
-    temp_v0_2 = (g_SysWork.npcs_1A0[0].position_18.vz - sp18.vz) >> 6;
-
-    if (((SquareRoot0((temp_v0 * temp_v0) + (temp_v0_2 * temp_v0_2)) << 6) <= 0x10800) &&
-        (g_SysWork.npcs_1A0[0].position_18.vx >= FP_METER(-58.0f)))
+    vwGetViewPosition(&camPos);
+    if (Math_Vector2MagCalc(g_SysWork.npcs_1A0[0].position_18.vx - camPos.vx,
+                            g_SysWork.npcs_1A0[0].position_18.vz - camPos.vz) <= Q12(16.5f) &&
+        g_SysWork.npcs_1A0[0].position_18.vx >= Q12(-58.0f))
     {
-
         if (!(g_SysWork.flags_22A4 & 0x80))
         {
-            if (!Vw_AabbVisibleInScreenCheck(
-                    g_SysWork.npcs_1A0[0].position_18.vx - Q12(1.0f),
-                    g_SysWork.npcs_1A0[0].position_18.vx + Q12(1.0f),
-                    g_SysWork.npcs_1A0[0].position_18.vy - Q12(1.5f),
-                    g_SysWork.npcs_1A0[0].position_18.vy,
-                    g_SysWork.npcs_1A0[0].position_18.vz - Q12(1.0f),
-                    g_SysWork.npcs_1A0[0].position_18.vz + Q12(1.0f)))
+            if (!Vw_AabbVisibleInScreenCheck(g_SysWork.npcs_1A0[0].position_18.vx - Q12(1.0f),
+                                             g_SysWork.npcs_1A0[0].position_18.vx + Q12(1.0f),
+                                             g_SysWork.npcs_1A0[0].position_18.vy - Q12(1.5f),
+                                             g_SysWork.npcs_1A0[0].position_18.vy,
+                                             g_SysWork.npcs_1A0[0].position_18.vz - Q12(1.0f),
+                                             g_SysWork.npcs_1A0[0].position_18.vz + Q12(1.0f)))
             {
 block7:
                 g_SysWork.npcs_1A0[0].position_18.vz = 1;
                 g_SysWork.npcs_1A0[0].position_18.vx = 1;
-                g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = 0;
+                g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
+
                 sharedFunc_800D88C0_0_s00(g_SysWork.npcs_1A0, 0);
+
                 g_SavegamePtr->eventFlags_168[0] |= 0x40;
                 return;
             }
         }
 
-        var_s1 = func_8005BF38(
-            (ratan2(g_SysWork.npcs_1A0[0].position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx,
-                   g_SysWork.npcs_1A0[0].position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz) - g_SysWork.player_4C.chara_0.headingAngle_3C));
+        var_s1 = func_8005BF38(ratan2(g_SysWork.npcs_1A0[0].position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx,
+                                      g_SysWork.npcs_1A0[0].position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz) -
+                               g_SysWork.player_4C.chara_0.headingAngle_3C);
 
-        temp_a0 = func_8005BF38((
-            ratan2(FP_METER(-62.0f) - g_SysWork.player_4C.chara_0.position_18.vx,
-                   Q12(106.0f) - g_SysWork.player_4C.chara_0.position_18.vz) -
-            g_SysWork.player_4C.chara_0.headingAngle_3C));
-
+        temp_a0 = func_8005BF38(ratan2(Q12(-62.0f) - g_SysWork.player_4C.chara_0.position_18.vx,
+                                       Q12(106.0f) - g_SysWork.player_4C.chara_0.position_18.vz) -
+                                g_SysWork.player_4C.chara_0.headingAngle_3C);
 
         if (ABS(var_s1) > ABS(temp_a0))
         {
@@ -517,17 +514,17 @@ block7:
         }
         var_a0 = var_s1 << 16;
 
-        temp_a0_2 = (g_SysWork.player_4C.chara_0.moveSpeed_38 * Math_Cos(var_a0 >> 0x10) * 0x10) >> 0x10;
-
-        if (temp_a0_2 > Q12(1.8))
+        // TODO: Why shift 16?
+        temp_a0_2 = (g_SysWork.player_4C.chara_0.moveSpeed_38 * Math_Cos(var_a0 >> 16) * 16) >> 16;
+        if (temp_a0_2 > Q12(1.8f))
         {
             D_800DFAD0 = temp_a0_2 + Q12(0.9f);
         } 
-        else if (D_800DFAD0 > Q12(1.8))
+        else if (D_800DFAD0 > Q12(1.8f))
         {
-            var_a2 = Q12(1.8);
-            temp_v1 = D_800DFAD0 - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.5f, 12);
-            if (temp_v1 >= Q12(1.8))
+            var_a2 = Q12(1.8f);
+            temp_v1 = D_800DFAD0 - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.5f, Q12_SHIFT);
+            if (temp_v1 >= Q12(1.8f))
             {
                 var_a2 = temp_v1;
             }
@@ -535,73 +532,73 @@ block7:
         }
         else
         {
-            var_v1_2 = D_800DFAD0 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.5f, 12);
-
-            if (var_v1_2 > Q12(1.8))
+            var_v1_2 = D_800DFAD0 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.5f, Q12_SHIFT);
+            if (var_v1_2 > Q12(1.8f))
             {
-                var_v1_2 = Q12(1.8);
+                var_v1_2 = Q12(1.8f);
             }
             D_800DFAD0 = var_v1_2;
         }
 
         g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = D_800DFAD0;
-        func_8008677C(g_SysWork.npcs_1A0, 2, 1);
+        func_8008677C(&g_SysWork.npcs_1A0[0], 2, 1);
         return;
     }
 
+    // TODO: Remove `goto`.
     goto block7;
 }
 
+void func_800DC694(void) // 0x800DC694
+{
+    q19_12 mag;
+    s32    temp_a0_2;
+    s32    temp_v1;
+    s32    var_a2;
+    s32    var_v1;
 
-void func_800DC694(void) {
-    s32 temp_a0;
-    s32 temp_a0_2;
-    s32 temp_v0;
-    s32 temp_v0_2;
-    s32 temp_v1;
-    s32 var_a2;
-    s32 var_v1;
+    mag = Math_Vector2MagCalc(g_SysWork.npcs_1A0[0].position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx,
+                              (g_SysWork.npcs_1A0[0].position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz) - Q12(2.0f));
 
-    temp_v0 = (g_SysWork.npcs_1A0[0].position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx) >> 6;
-    temp_v0_2 = ((g_SysWork.npcs_1A0[0].position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz) - Q12(2.0f)) >> 6;
-    temp_a0 = SquareRoot0((temp_v0 * temp_v0) + (temp_v0_2 * temp_v0_2)) << 6;
+    // TODO: Use `Savegame_EventFlagGet`.
     if (!(g_SavegamePtr->eventFlags_168[0] & 0x80))
     {
         sharedFunc_800D88AC_0_s00(g_SysWork.npcs_1A0);
         return;
     }
 
-    if ((temp_a0 <= Q12(14.5f)) && (g_SysWork.npcs_1A0[0].position_18.vz >= Q12(49.0f)))
+    if (mag <= Q12(14.5f) && g_SysWork.npcs_1A0[0].position_18.vz >= Q12(49.0f))
     {
         if (!(g_SysWork.flags_22A4 & 0x80))
         {
-            if (!Vw_AabbVisibleInScreenCheck(
-                g_SysWork.npcs_1A0[0].position_18.vx - Q12(1.0f),
-                g_SysWork.npcs_1A0[0].position_18.vx + Q12(1.0f),
-                g_SysWork.npcs_1A0[0].position_18.vy - Q12(1.5f),
-                g_SysWork.npcs_1A0[0].position_18.vy,
-                g_SysWork.npcs_1A0[0].position_18.vz - Q12(1.0f),
-                g_SysWork.npcs_1A0[0].position_18.vz + Q12(1.0f)))
+            if (!Vw_AabbVisibleInScreenCheck(g_SysWork.npcs_1A0[0].position_18.vx - Q12(1.0f),
+                                             g_SysWork.npcs_1A0[0].position_18.vx + Q12(1.0f),
+                                             g_SysWork.npcs_1A0[0].position_18.vy - Q12(1.5f),
+                                             g_SysWork.npcs_1A0[0].position_18.vy,
+                                             g_SysWork.npcs_1A0[0].position_18.vz - Q12(1.0f),
+                                             g_SysWork.npcs_1A0[0].position_18.vz + Q12(1.0f)))
             {
 block7:
                 g_SysWork.npcs_1A0[0].position_18.vz = 1;
                 g_SysWork.npcs_1A0[0].position_18.vx = 1;
+
                 sharedFunc_800D88C0_0_s00(g_SysWork.npcs_1A0, 0);
+
                 g_SavegamePtr->eventFlags_168[0] |= 0x200;
                 return;
             }
         }
 
-        temp_a0_2 = (s32) (g_SysWork.player_4C.chara_0.moveSpeed_38 * Math_Cos(g_SysWork.player_4C.chara_0.headingAngle_3C + Q12(0.5f))) >> 0xC;
-        if (temp_a0_2 > Q12(1.8))
+        temp_a0_2 = FP_MULTIPLY(g_SysWork.player_4C.chara_0.moveSpeed_38, Math_Cos(g_SysWork.player_4C.chara_0.headingAngle_3C + FP_ANGLE(180.0f)), Q12_SHIFT);
+        if (temp_a0_2 > Q12(1.8f))
         {
             D_800DFAD4 = temp_a0_2 + Q12(0.6f);
         }
-        else if (D_800DFAD4 > Q12(1.8))
+        else if (D_800DFAD4 > Q12(1.8f))
         {
-            var_a2 = Q12(1.8);
-            temp_v1 = D_800DFAD4 - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.5f, 12);
-            if (temp_v1 >= Q12(1.8))
+            var_a2 = Q12(1.8f);
+            temp_v1 = D_800DFAD4 - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.5f, Q12_SHIFT);
+            if (temp_v1 >= Q12(1.8f))
             {
                 var_a2 = temp_v1;
             }
@@ -609,51 +606,60 @@ block7:
         }
         else
         {
-            var_v1 = D_800DFAD4 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.5f, 12);
-            if (var_v1 > Q12(1.8))
+            var_v1 = D_800DFAD4 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.5f, Q12_SHIFT);
+            if (var_v1 > Q12(1.8f))
             {
-                var_v1 = Q12(1.8);
+                var_v1 = Q12(1.8f);
             }
             D_800DFAD4 = var_v1;
         }
+
         g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = D_800DFAD4;
-        func_8008677C((s32) g_SysWork.npcs_1A0, 2, 1);
+
+        func_8008677C(&g_SysWork.npcs_1A0[0], 2, 1);
         return;
     }
+
+// TODO: Remvoe `goto`.
 block_7:
     goto block7;
 }
 
-void func_800DC8D8(void)
+void func_800DC8D8(void) // 0x800DC8D8
 {
-    s32 temp_a0;
-    s32 temp_v0;
-    s32 temp_v0_2;
+    q19_12 mag;
 
-    temp_v0 = (g_SysWork.npcs_1A0[0].position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx) >> 6;
-    temp_v0_2 = ((g_SysWork.npcs_1A0[0].position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz) - Q12(2.0f)) >> 6;
-    temp_a0 = SquareRoot0(SQUARE(temp_v0) + SQUARE(temp_v0_2)) << 6;
+    mag = Math_Vector2MagCalc(g_SysWork.npcs_1A0[0].position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx,
+                              (g_SysWork.npcs_1A0[0].position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz) - Q12(2.0f));
+
+    // TODO: Use `Savegame_EventFlagGet`.
     if (!(g_SavegamePtr->eventFlags_168[0] & 0x400))
     {
         g_SysWork.npcs_1A0[0].position_18.vx = Q12(-61.0f);
         g_SysWork.npcs_1A0[0].position_18.vz = Q12(48.0f);
-        g_SysWork.npcs_1A0[0].rotation_24.vy = Q12(0.25f);
-        if (temp_a0 < Q12(14.8f))
+        g_SysWork.npcs_1A0[0].rotation_24.vy = FP_ANGLE(90.0f);
+
+        if (mag < Q12(14.8f))
         {
             sharedFunc_800D88AC_0_s00(g_SysWork.npcs_1A0);
+
             g_SavegamePtr->eventFlags_168[0] |= 0x400;
+
             func_800865FC(1, 1, 0, 0x400, Q12(-57.0f), Q12(47.0f));
         }
     }
     else
     {
         g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = Q12(1.8f);
-        func_8008677C((s32) g_SysWork.npcs_1A0, 2, 1);
+
+        func_8008677C(&g_SysWork.npcs_1A0[0], 2, 1);
+
         if (g_SysWork.npcs_1A0[0].position_18.vx > Q12(-58.0f))
         {
             g_SavegamePtr->eventFlags_168[0] |= 0x800;
-            g_SysWork.npcs_1A0[0].model_0.charaId_0 = 0;
-            func_8005DC1C(0x54A, &D_800CB6A4, 0x80, 0);
+            g_SysWork.npcs_1A0[0].model_0.charaId_0 = Chara_None;
+
+            func_8005DC1C(Sfx_Unk1354, &D_800CB6A4, 0x80, 0);
         }
     }
 }

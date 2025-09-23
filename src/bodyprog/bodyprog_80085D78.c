@@ -12,6 +12,7 @@
 u8 D_800AFD04 = 0;
 u8 D_800AFD05 = 0;
 // 2 bytes of padding.
+
 bool (*D_800AFD08[])(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* ptr, u32* arg3) = 
 {
     func_80089A30,
@@ -20,12 +21,13 @@ bool (*D_800AFD08[])(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* pt
     func_8008973C,
     func_80089D0C
 };
-s16 D_800AFD1C[] = // used by func_8008A3E0
+
+s16 D_800AFD1C[] = // Used by `func_8008A3E0`.
 {
-    0x1000, 0x1000, 0x0800, 0x0555,
-    0x0400, 0x0333, 0x02AA, 0x0249,
-    0x0200, 0x01C7, 0x0199, 0x0174,
-    0x0155, 0x013B, 0x0124, 0x0111,
+    0x1000, 0x1000, 0x800, 0x555,
+    0x400,  0x333,  0x2AA, 0x249,
+    0x200,  0x1C7,  0x199, 0x174,
+    0x155,  0x13B,  0x124, 0x111
 };
 
 void func_80085D78(bool arg0) // 0x80085D78
@@ -358,9 +360,6 @@ void func_800862F8(s32 arg0, s32 fileIdx, bool arg2) // 0x800862F8
             LoadImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(0);
             break;
-
-        default:
-            break;
     }
 }
 
@@ -429,9 +428,6 @@ void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, bool arg3) // 0x800
                 Inventory_AddSpecialItem(itemId, itemCount);
             }
             break;
-
-        default:
-            break;
     }
 }
 
@@ -471,9 +467,9 @@ void func_80086728(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80086728
     }
 }
 
-void func_8008677C(s32 arg0, s32 arg1, s32 arg2) // 0x8008677C
+void func_8008677C(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x8008677C
 {
-    g_MapOverlayHeader.func_13C(arg0, arg1, &D_800C46A0, D_800C4702, arg2);
+    g_MapOverlayHeader.func_13C(chara, arg1, &D_800C46A0, D_800C4702, arg2);
 }
 
 void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
@@ -501,9 +497,6 @@ void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
             LoadImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(0);
             Screen_Init(SCREEN_WIDTH, 0);
-            break;
-
-        default:
             break;
     }
 }
@@ -960,13 +953,13 @@ void func_80087540(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsg
             break;
 
         case 5:
-            g_BackgroundColor = 0x30;
+            g_BackgroundColor = 48;
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             MapMsg_DisplayAndHandleSelection(false, mapMsgIdx1, 0, 0, 0, true);
             break;
 
         case 6:
-            g_BackgroundColor = 0x30;
+            g_BackgroundColor = 48;
 
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             func_8008616C(2, true, 0, fadeTimestep1, true);
@@ -1170,9 +1163,6 @@ void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
                 case 2:
                     g_SavegamePtr->hasMapsFlags_164 |= 1 << 3;
                     break;
-
-                default:
-                    break;
             }
 
             Savegame_EventFlagSet(eventFlagIdx);
@@ -1258,9 +1248,6 @@ void func_80087EDC(s32 arg0) // 0x80087EDC
         
         case 3:
             SysWork_StateStepIncrement(); // Resets `field_10` to 0.
-            break;
-
-        default:
             break;
     }
 }
@@ -1365,11 +1352,11 @@ void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6,
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088370); // 0x80088370
 
-bool Chara_Load(s32 arg0, s8 charaId, GsCOORDINATE2* coord, s8 arg3, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x80088C7C
+bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coord, s8 flags, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x80088C7C
 {
-    func_80035338(arg0 + 1, charaId, NULL, coord);
-    func_8003D5B4(arg3);
-    func_8003D6E0(charaId, arg0, lmHdr, tex);
+    func_80035338(modelIdx + 1, charaId, NULL, coord);
+    func_8003D5B4(flags);
+    func_8003D6E0(charaId, modelIdx, lmHdr, tex);
     return true;
 }
 
@@ -1440,9 +1427,10 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, s32 posX, s32 posZ, s16 posY, u32 stateSt
         }
     }
 
+    // Run through NPC slots.
     for (i = 0; i < NPC_COUNT_MAX; i++)
     {
-        // Skip NPC slot if occupied.
+        // Skip occupied slot.
         if (g_SysWork.npcs_1A0[i].model_0.charaId_0 != Chara_None)
         {
             continue;
@@ -1453,7 +1441,7 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, s32 posX, s32 posZ, s16 posY, u32 stateSt
         g_SysWork.npcs_1A0[i].model_0.charaId_0 = charaId;
         g_SysWork.npcs_1A0[i].field_40 = arg1_1;
 
-        if (charaId <= Chara_MonsterCybil && arg1 < 0x40)
+        if (charaId <= Chara_MonsterCybil && arg1 < 64)
         {
             SET_FLAG(&g_SysWork.field_228C, arg1_1);
         }
@@ -2469,9 +2457,9 @@ void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q19_
 void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 alpha) // 0x8008CC98
 {
     // Low-precision lerp between positions?
-    result->position_0.vx = frame0->position_0.vx + FP_MULTIPLY(frame1->position_0.vx - frame0->position_0.vx, (s64)alpha, Q12_SHIFT);
-    result->position_0.vy = frame0->position_0.vy + FP_MULTIPLY(frame1->position_0.vy - frame0->position_0.vy, (s64)alpha, Q12_SHIFT);
-    result->position_0.vz = frame0->position_0.vz + FP_MULTIPLY(frame1->position_0.vz - frame0->position_0.vz, (s64)alpha, Q12_SHIFT);
+    result->position_0.vx = frame0->position_0.vx + FP_MULTIPLY_PRECISE(frame1->position_0.vx - frame0->position_0.vx, alpha, Q12_SHIFT);
+    result->position_0.vy = frame0->position_0.vy + FP_MULTIPLY_PRECISE(frame1->position_0.vy - frame0->position_0.vy, alpha, Q12_SHIFT);
+    result->position_0.vz = frame0->position_0.vz + FP_MULTIPLY_PRECISE(frame1->position_0.vz - frame0->position_0.vz, alpha, Q12_SHIFT);
 
     // Higher-precision lerp between rotations?
     result->rotation_6.vx = Math_LerpFixed12(frame0->rotation_6.vx, frame1->rotation_6.vx, alpha);
@@ -2694,15 +2682,14 @@ void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones
 
     if (D_800C4818.field_1 == 0)
     {
-        // TODO: Conversion to Q27.4? Zone bounds fit Q7.8 better, not sure what's happening.
-        waterZone = Map_WaterZoneGet(pos->vx >> 8, pos->vz >> 8, waterZones);
+        waterZone = Map_WaterZoneGet(Q12_TO_Q4(pos->vx), Q12_TO_Q4(pos->vz), waterZones);
         if (waterZone != NULL)
         {
             func_8008E5B4();
 
-            if (waterZone->enabled_0 == true)
+            if (waterZone->isEnabled_0 == true)
             {
-                var = FP_TO(waterZone->illumination_2, Q8_SHIFT);
+                var = waterZone->illumination_2 << 8; // TODO: What's the format?
                 func_8008E794(pos, D_800C4818.field_20, var);
                 func_8008EA68(rot, pos, var);
             }
@@ -2876,13 +2863,13 @@ s32 func_8008D8C0(s16 x0, s32 x1, s32 x2) // 0x8008D8C0
     return (res > FP_FLOAT_TO(24.0f, Q8_SHIFT)) ? FP_FLOAT_TO(24.0f, Q8_SHIFT) : res;
 }
 
-// Used by func_8008D990
+// Used by `func_8008D990`.
 u16 D_800AFD7C[] =
 {
     0xF839, 0xF889, 0xFA39, 0xFAE4,
     0xFD56, 0xFDC8, 0xFF56, 0xFFEA,
-    0x0038, 0x018E, 0x01C7, 0x02AA,
-    0x04E3, 0x064F, 0x0688, 0x06E3
+    0x38,   0x18E,  0x1C7,  0x2AA,
+    0x4E3,  0x64F,  0x688,  0x6E3
 };
 
 s_FsImageDesc img0 = { .tPage = { 0, 13 } }; // 0x800AFD9C
@@ -2895,21 +2882,21 @@ void func_8008E4EC(s_LmHeader* lmHdr) // 0x8008E4EC
     func_80056504(lmHdr, D_8002B2CC.str, &img0, 1);
 }
 
-s_WaterZone* Map_WaterZoneGet(s32 posX, s32 posZ, s_WaterZone* waterZone)
+s_WaterZone* Map_WaterZoneGet(q27_4 posX, q27_4 posZ, s_WaterZone* waterZones)
 {
-    s_WaterZone* zonePtr;
+    s_WaterZone* curZone;
 
-    if (waterZone == NULL)
+    if (waterZones == NULL)
     {
         return NULL;
     }
 
-    for (zonePtr = waterZone; zonePtr->enabled_0; zonePtr++)
+    for (curZone = waterZones; curZone->isEnabled_0; curZone++)
     {
-        if (posX >= zonePtr->minX_4 && posX < zonePtr->maxX_6 &&
-            posZ >= zonePtr->minZ_8 && posZ < zonePtr->maxZ_A)
+        if (posX >= curZone->minX_4 && posX < curZone->maxX_6 &&
+            posZ >= curZone->minZ_8 && posZ < curZone->maxZ_A)
         {
-            return zonePtr;
+            return curZone;
         }
     }
 

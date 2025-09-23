@@ -194,7 +194,7 @@ const char* MAP_MESSAGES[] =
     "~H\tThere_is_a_ ~C5 School_map ~C7 . ~N\n\tTake_it? ~S4 ",
     "~J1(3.5)\tWhere_am_I? ",
     "~J1(3.0)\tThis_is..._a_boiler_room!? ",
-    "~J1(3.5)\tWhat_is_going_on_here? ~E ",
+    "~J1(3.5)\tWhat_is_going_on_here? ~E "
 };
 
 INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D5614);

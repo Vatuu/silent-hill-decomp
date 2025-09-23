@@ -13,7 +13,7 @@
 
 // @hack Explicit rodata here because these need to be referenced externally to end up in .rodata,
 // otherwise they'll go into .sdata because they're small; can't wrap them in a struct either because
-// main() accesses them individually and not with a common base.
+// `main` accesses them individually and not with a common base.
 void* SECTION(".rodata") g_OvlDynamic = (void*)0x800C9578;
 void* SECTION(".rodata") g_OvlBodyprog = (void*)0x80024B60;
 
@@ -39,15 +39,15 @@ s32 g_MainFbIdx = 0;
 
 DISPENV g_MainDispEnv =
 {
-    .disp   = { 0, 0, 320, 240 },
-    .screen = { 0, 8, 256, 224 }
+    .disp   = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT  },
+    .screen = { 0, 8, 256,          224            }
 };
 
 DRAWENV g_MainDrawEnv =
 {
-    .clip = { 0, 0, 320, 224 },
-    .dtd  = 1,
-    .isbg = 1
+    .clip = { 0, 0, SCREEN_WIDTH, 224 },
+    .dtd  = true,
+    .isbg = true
 };
 
 int main()
@@ -67,12 +67,12 @@ int main()
 
     // Clear framebuffer area of VRAM.
     // NOTE: This and some other GPU macros here are custom to ensure a match.
-    setRECTFast((RECT*)PSX_SCRATCH, 0, 0, 640, 512);
+    setRECTFast((RECT*)PSX_SCRATCH, 0, 0, SCREEN_WIDTH * 2, 512);
     VSync(0);
     ClearImage2((RECT*)PSX_SCRATCH, 0, 0, 0);
     DrawSync(0);
 
-    // Display area = (0, 0, 320, 240)
+    // Display area = (0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
     PutDispEnv(&g_MainDispEnv);
 
     // Initialize SPU.
@@ -93,7 +93,7 @@ int main()
     SetDispMask(1);
 
     // Fade in `1ST/2ZANKO_E.TIM` over 64 frames using `TILE` with subtractive blending.
-    fade = FP_COLOR(1.0f);;
+    fade = 255;
     prim = PSX_SCRATCH;
     while (true)
     {

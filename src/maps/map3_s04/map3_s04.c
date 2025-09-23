@@ -261,7 +261,7 @@ const char* MAP_MESSAGES[] =
     "\tThe_refrigerator_is_empty. ~E ",
     "\tNothing_helpful. ~E ",
     "\tNothing_useful ~N\n\tin_the_desk_drawer. ~E ",
-    "\tA_sound_is_heard ~N\n\tfrom_beyond_the_door. ~E ",
+    "\tA_sound_is_heard ~N\n\tfrom_beyond_the_door. ~E "
 };
 
 INCLUDE_RODATA("asm/maps/map3_s04/nonmatchings/map3_s04", D_800CB1E0);

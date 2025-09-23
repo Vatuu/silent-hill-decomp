@@ -296,7 +296,7 @@ s32 g_Inventory_DescriptionRollTimer = 0;
 s32 g_Inventory_ScrollTransitionTimer = 0;
 s16 D_800AE1A8 = 0;
 
-// 2 bytes padding.
+// 2 bytes of padding.
 
 s32    g_Items_PickupAnimState = 0;
 q19_12 g_Items_PickupScale     = Q12(0.0f);
@@ -954,10 +954,11 @@ s_800AFBF4 D_800AFBF4[11] =
     { 1298, 0,    0,    64, 62, 63, 0,  52, 0 }
 };
 
-s_800AFC78 D_800AFC78 =
+// Special collision global.
+s_CollisionPoint D_800AFC78 =
 {
     .position_0 = {},
-    .field_C = {},
+    .collision_C = {},
     .field_18 = NO_VALUE
 };
 

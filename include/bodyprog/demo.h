@@ -22,7 +22,7 @@ typedef enum _DemoState
 // STRUCTS
 // ========
 
-/** @brief Initial demo game state data, stored inside `MISC/DEMOXXXX.DAT` files. */
+/** @brief Initial demo game state data, stored inside `MISC/DEMO****.DAT` files. */
 typedef struct _DemoWork
 {
     s_SaveUserConfig config_0;
@@ -34,7 +34,7 @@ typedef struct _DemoWork
 } s_DemoWork;
 STATIC_ASSERT_SIZEOF(s_DemoWork, 2048);
 
-/** @brief Per-frame demo data, stored inside `MISC/PLAYXXXX.DAT` files. */
+/** @brief Per-frame demo data, stored inside `MISC/PLAY****.DAT` files. */
 typedef struct _DemoFrameData
 {
     s_AnalogController analogController_0;
@@ -45,11 +45,11 @@ typedef struct _DemoFrameData
 } s_DemoFrameData;
 STATIC_ASSERT_SIZEOF(s_DemoFrameData, 16);
 
-/** @brief Associates a demo number/ID with `PLAYXXXX.DAT/DEMOXXXX.DAT` file IDs. */
+/** @brief Associates a demo number/ID with `PLAY****.DAT/DEMO****.DAT` file IDs. */
 typedef struct _DemoFileInfo
 {
-    s16 demoFileId_0;       /** `MISC/DEMOXXXX.DAT`, initial gamestate for the demo and user config override. */
-    s16 playFileId_2;       /** `MISC/PLAYXXXX.DAT`, data of button presses/randseed for each frame. */
+    s16 demoFileId_0;       /** `MISC/DEMO****.DAT`, initial gamestate for the demo and user config override. */
+    s16 playFileId_2;       /** `MISC/PLAY****.DAT`, data of button presses/randseed for each frame. */
     s32 (*canPlayDemo_4)(); /** Optional funcptr, returns whether this demo is eligible to be played (unused in retail demos). */
 } s_DemoFileInfo;
 STATIC_ASSERT_SIZEOF(s_DemoFileInfo, 8);

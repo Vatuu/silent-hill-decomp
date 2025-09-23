@@ -1006,18 +1006,18 @@ void func_8002F61C(s_800B55E8* arg0)
     }
 }
 
-void func_8002FB64(s_MemCardInfo_BasicSaveInfo* arg0) // 0x8002FB64
+void func_8002FB64(s_MemCardInfo_BasicSaveInfo* saveInfo) // 0x8002FB64
 {
     s32 i;
 
-    bzero(arg0, sizeof(s_MemCardInfo_BasicSaveInfo));
+    bzero(saveInfo, sizeof(s_MemCardInfo_BasicSaveInfo));
 
     for (i = 0; i < 11; i++)
     {
-        arg0->savegameMetadatas_4[i].field_0 = 0;
+        saveInfo->savegameMetadatas_4[i].field_0 = 0;
     }
 
-    Savegame_ChecksumUpdate(&arg0->field_FC, (s8*)arg0, sizeof(s_MemCardInfo_BasicSaveInfo));
+    Savegame_ChecksumUpdate(&saveInfo->field_FC, (s8*)saveInfo, sizeof(s_MemCardInfo_BasicSaveInfo));
 }
 
 void Savegame_UserConfigCopyWithChecksum(s_SaveUserConfigContainer* dest, s_SaveUserConfig* src) // 0x8002FBB4

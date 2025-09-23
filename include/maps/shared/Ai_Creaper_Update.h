@@ -1,4 +1,4 @@
-void Ai_Creaper_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords)
+void Ai_Creaper_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
     if (chara->model_0.state_2 == 0)
     {
@@ -12,6 +12,6 @@ void Ai_Creaper_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINA
         sharedFunc_800D983C_1_s02(chara);
     }
 
-    sharedFunc_800D9960_1_s02(chara, anmHeader, coords);
+    sharedFunc_800D9960_1_s02(chara, anmHdr, coords);
     sharedFunc_800D99D0_1_s02(chara);
 }

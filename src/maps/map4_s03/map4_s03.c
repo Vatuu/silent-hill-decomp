@@ -383,7 +383,7 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D5DF4);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D5E30);
 
-void Ai_Twinfeeler_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords)
+void Ai_Twinfeeler_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
     if (chara->model_0.state_2 == 0)
     {
@@ -400,7 +400,7 @@ void Ai_Twinfeeler_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORD
             func_800D53B0(chara, coords);
             func_800D55C8(chara);
             func_800D5BC8(chara, coords);
-            func_800D5888(chara, anmHeader, coords);
+            func_800D5888(chara, anmHdr, coords);
             func_800D5B6C(chara, coords);
             func_800D54B4(chara, coords);
             func_800D5DF4(chara, coords);
@@ -415,7 +415,7 @@ void Ai_Twinfeeler_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORD
         }
         else
         {
-            func_800D5888(chara, anmHeader, coords);
+            func_800D5888(chara, anmHdr, coords);
             func_800D5DF4(chara, coords);
         }
     }
@@ -521,7 +521,7 @@ const char* MAP_MESSAGES[] =
     "\tThere_is_a_ ~C2 Hunting_rifle ~C7 . ~N\n\tTake_it? ~S4 ",
     "\tNothing_unusual. ~E ",
     "\tA_picture_is_projected ~N\n\ton_the_screen. ",
-    "\tCheryl... ~N\n\twhere_could_she_be? ~E ",
+    "\tCheryl... ~N\n\twhere_could_she_be? ~E "
 };
 
 void func_800D667C(void) // 0x800D667C

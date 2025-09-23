@@ -62,13 +62,13 @@ u8 D_800A8E5B        = 0x0;
 DR_MODE D_800A8E5C[] =
 {
     { 0x3000000, { 0xE1000240, 0x0 } },
-    { 0x3000000, { 0xE1000240, 0x0 } },
+    { 0x3000000, { 0xE1000240, 0x0 } }
 };
 
 TILE D_800A8E74[] =
 {
     { 0x3000000, 255, 0, 0, 0x62, -320, -240, 640, 480 },
-    { 0x3000000, 255, 0, 0, 0x62, -320, -240, 640, 480 },
+    { 0x3000000, 255, 0, 0, 0x62, -320, -240, 640, 480 }
 };
 
 q19_12 g_ScreenFadeProgress = Q12(0.0f);
@@ -76,7 +76,7 @@ q19_12 g_ScreenFadeProgress = Q12(0.0f);
 DR_MODE D_800A8E98[] =
 {
     { 0x3000000, { 0xE1000240, 0x0 } },
-    { 0x3000000, { 0xE1000240, 0x0 } },
+    { 0x3000000, { 0xE1000240, 0x0 } }
 };
 
 // TODO: Make a macro?
@@ -91,7 +91,7 @@ POLY_G4 D_800A8EB0[] =
         0x0, 0x0, 0x0, 0x0,
         0xFF60, 0xFFA0,
         0x0, 0x0, 0x0, 0x0,
-        0xA0, 0xFFA0,
+        0xA0, 0xFFA0
     },
     {
         0x8000000,
@@ -102,7 +102,7 @@ POLY_G4 D_800A8EB0[] =
         0x0, 0x0, 0x0, 0x0,
         0xFF60, 0xFFA0,
         0x0, 0x0, 0x0, 0x0,
-        0xA0, 0xFFA0,
+        0xA0, 0xFFA0
     },
     {
         0x8000000,
@@ -113,7 +113,7 @@ POLY_G4 D_800A8EB0[] =
         0x0, 0x0, 0x0, 0x0,
         0xFF60, 0x60,
         0x0, 0x0, 0x0, 0x0,
-        0xA0, 0x60,
+        0xA0, 0x60
     },
     {
         0x8000000,
@@ -124,8 +124,8 @@ POLY_G4 D_800A8EB0[] =
         0x0, 0x0, 0x0, 0x0,
         0xFF60, 0x60,
         0x0, 0x0, 0x0, 0x0,
-        0xA0, 0x60,
-    },
+        0xA0, 0x60
+    }
 };
 
 s32 D_800A8F40 = 0;
@@ -167,19 +167,19 @@ VC_ROAD_DATA vcNullRoadArray[] =
 GsOT g_OrderingTable0[2] =
 {
     { 11, &g_OtTags1[0][1], 0, 0, 0 },
-    { 11, &g_OtTags1[1][1], 0, 0, 0 },
+    { 11, &g_OtTags1[1][1], 0, 0, 0 }
 };
 
 GsOT g_OrderingTable1[2] =
 {
     { 9, (GsOT_TAG*)0x801E2600, 0, 0, 0 },
-    { 9, (GsOT_TAG*)0x801E2E00, 0, 0, 0 },
+    { 9, (GsOT_TAG*)0x801E2E00, 0, 0, 0 }
 };
 
 GsOT g_OrderingTable2[2] =
 {
     { 4, &g_OtTags0[0][0], 0, 0, 0 },
-    { 4, &g_OtTags0[1][0], 0, 0, 0 },
+    { 4, &g_OtTags0[1][0], 0, 0, 0 }
 };
 
 q19_12 g_DeltaTime1      = 68;
@@ -311,7 +311,7 @@ s_sub_StructUnk3 D_800A93CC[] =
         .unk_2A   = 0
     },
     {
-        .field_0  = { .field_0 = 0x2ff00 },
+        .field_0  = { .field_0 = 0x2FF00 },
         .field_4  = 2457,
         .field_6  = 2457,
         .field_8  = 3686,
@@ -330,7 +330,7 @@ s_sub_StructUnk3 D_800A93CC[] =
         .unk_2A   = 0
     },
     {
-        .field_0  = { .field_0 = 0x1ff16},
+        .field_0  = { .field_0 = 0x1FF16 },
         .field_4  = 5324,
         .field_6  = 0,
         .field_8  = 3891,
@@ -349,7 +349,7 @@ s_sub_StructUnk3 D_800A93CC[] =
         .unk_2A   = 0
     },
     {
-        .field_0  = { .field_0 = 0x1ff16},
+        .field_0  = { .field_0 = 0x1FF16 },
         .field_4  = 2867,
         .field_6  = 0,
         .field_8  = 3686,
@@ -368,7 +368,7 @@ s_sub_StructUnk3 D_800A93CC[] =
         .unk_2A   = 0
     },
     {
-        .field_0  = { .field_0 = 0x1FF16},
+        .field_0  = { .field_0 = 0x1FF16 },
         .field_4  = 5324,
         .field_6  = 409,
         .field_8  = 3891,
@@ -387,7 +387,7 @@ s_sub_StructUnk3 D_800A93CC[] =
         .unk_2A   = 0
     },
     {
-        .field_0  = { .field_0 = 0xFF07},
+        .field_0  = { .field_0 = 0xFF07 },
         .field_4  = 0,
         .field_6  = 1802,
         .field_8  = 1638,
@@ -406,7 +406,7 @@ s_sub_StructUnk3 D_800A93CC[] =
         .unk_2A   = 0
     },
     {
-        .field_0  = { .field_0 = 0xFF07},
+        .field_0  = { .field_0 = 0xFF07 },
         .field_4  = 0,
         .field_6  = 1802,
         .field_8  = 1638,
@@ -590,12 +590,13 @@ u32 D_800A9560[] = // Unknown
 s32 g_Demo_FrameCount = 0;
 s32 g_UnknownFrameCounter = 0;
 s32 g_PrevVBlanks = 0;
+
 u16 D_800A9774[] =
 {
-   0x00A0,
-   0x00A2,
-   0x0000,
-   0x0000,
+   160,
+   162,
+   0,
+   0
 };
 
 void (*g_GameStateUpdateFuncs[])() =
@@ -639,61 +640,61 @@ s8 D_800A97E3 = 0;
 u32 D_800A97E4[8] = {};
 u16 g_UnknownEngineCmdTable0[] =
 {
-    0x0000,
-    0x0000,
-    0x0020,
-    0x0021,
-    0x0022,
-    0x0023,
-    0x0024,
-    0x0025,
-    0x0026,
-    0x0027,
-    0x0028,
-    0x0029,
-    0x002A,
-    0x002B,
-    0x002C,
-    0x002E,
-    0x002F,
-    0x0030,
-    0x0031,
-    0x0032,
-    0x0033,
-    0x0034,
-    0x0035,
-    0x0036,
-    0x0037,
-    0x0038,
-    0x0039,
-    0x003A,
-    0x003B,
-    0x003C,
-    0x003D,
-    0x003E,
-    0x0040,
-    0x0041,
-    0x0042,
-    0x0043,
-    0x0044,
-    0x0045,
-    0x002D,
-    0x0046,
-    0x0047,
-    0x003F,
+    0x0,
+    0x0,
+    0x20,
+    0x21,
+    0x22,
+    0x23,
+    0x24,
+    0x25,
+    0x26,
+    0x27,
+    0x28,
+    0x29,
+    0x2A,
+    0x2B,
+    0x2C,
+    0x2E,
+    0x2F,
+    0x30,
+    0x31,
+    0x32,
+    0x33,
+    0x34,
+    0x35,
+    0x36,
+    0x37,
+    0x38,
+    0x39,
+    0x3A,
+    0x3B,
+    0x3C,
+    0x3D,
+    0x3E,
+    0x40,
+    0x41,
+    0x42,
+    0x43,
+    0x44,
+    0x45,
+    0x2D,
+    0x46,
+    0x47,
+    0x3F
 };
 u16 g_UnknownEngineCmdTable1[] =
 {
-    0x0000,
-    0x0000,
-    0x0301,
-    0x0302,
-    0x0303,
-    0x0304,
-    0x0305,
-    0x0306,
-    0x0307,
-    0x0308,
+    0x0,
+    0x0,
+    0x301,
+    0x302,
+    0x303,
+    0x304,
+    0x305,
+    0x306,
+    0x307,
+    0x308
 };
 s_800C37D4 D_800A986C[] =
 {
@@ -701,52 +702,53 @@ s_800C37D4 D_800A986C[] =
     { 16, 3, 785, 0x3130312, 0x3150314 },
     { 22, 3, 791, 0x3190318, 0x31B031A },
     { 28, 3, 797, 0x31F031E, 0x3220321 },
-    { 35, 3, 804, 0x3260325, 0x327030E },
+    { 35, 3, 804, 0x3260325, 0x327030E }
 };
 u32 D_800A98A8 = 0x03200328;
 u16 g_UnknownEngineCmdTable2[] =
 {
-    0x0000,
-    0x00A2,
-    0x00AA,
-    0x00AB,
-    0x00CC,
-    0x00AC,
-    0x00AD,
-    0x00AE,
-    0x00AF,
-    0x00B0,
-    0x00B1,
-    0x00B2,
-    0x00B3,
-    0x00B3,
-    0x00B3,
-    0x00B4,
-    0x00B5,
-    0x00B6,
-    0x00B7,
-    0x00B8,
-    0x00B9,
-    0x00BA,
-    0x00BB,
-    0x00BC,
-    0x00BD,
-    0x00B8,
-    0x00BE,
-    0x00BF,
-    0x00C0,
-    0x00C1,
-    0x00C2,
-    0x00C3,
-    0x00C4,
-    0x00C5,
-    0x00C6,
-    0x00C7,
-    0x00C8,
-    0x00C9,
-    0x00CA,
-    0x00CB,
+    0x0,
+    0xA2,
+    0xAA,
+    0xAB,
+    0xCC,
+    0xAC,
+    0xAD,
+    0xAE,
+    0xAF,
+    0xB0,
+    0xB1,
+    0xB2,
+    0xB3,
+    0xB3,
+    0xB3,
+    0xB4,
+    0xB5,
+    0xB6,
+    0xB7,
+    0xB8,
+    0xB9,
+    0xBA,
+    0xBB,
+    0xBC,
+    0xBD,
+    0xB8,
+    0xBE,
+    0xBF,
+    0xC0,
+    0xC1,
+    0xC2,
+    0xC3,
+    0xC4,
+    0xC5,
+    0xC6,
+    0xC7,
+    0xC8,
+    0xC9,
+    0xCA,
+    0xCB
 };
+
 s8 D_800A98FC[Chara_Count] =
 {
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
@@ -766,7 +768,6 @@ s_800A992C D_800A992C[4] =
     {
         .charaId0_0       = Chara_Harry,
         .charaId1_1       = Chara_Harry,
-        .unk_2            = { 0, 0 },
         .animFile0_4      = FS_BUFFER_0,
         .animFile1_8      = (s_AnmHeader*)FS_BUFFER_0,
         .animFileSize1_C  = 0x2E630,
@@ -775,6 +776,7 @@ s_800A992C D_800A992C[4] =
 //extern u8 D_800A9944[]; <-- Aforementioned 72 empty bytes below.
     }, {}, {}, {}
 };
+
 s_AnimInfo D_800A998C =
 {
     .updateFunc_0           = Anim_Update1,
@@ -785,6 +787,7 @@ s_AnimInfo D_800A998C =
     .startKeyframeIdx_C    = 26,
     .endKeyframeIdx_E      = 44
 };
+
 u32 unknown_D_800A999C = 0x80025234;
 s32 D_800A99A0 = 0;
 u8 D_800A99A4[8] = { 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80 };

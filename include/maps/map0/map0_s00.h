@@ -24,7 +24,8 @@ extern s8 D_800DD593;
 
 extern s8 D_800DD594;
 
-extern s32 D_800DFAD0;
+/** Distance. */
+extern q19_12 D_800DFAD0;
 
 extern s32 D_800DFAD4;
 
@@ -71,7 +72,7 @@ s32 func_800D2E94();
 
 void func_800D2E9C();
 
-void Ai_Cheryl_Update(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords); // 0x800D7FB8
+void Ai_Cheryl_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords); // 0x800D7FB8
 
 void func_800D802C(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*); // `Chara_Cheryl` related.
 

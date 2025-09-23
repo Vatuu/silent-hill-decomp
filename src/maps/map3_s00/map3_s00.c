@@ -216,7 +216,7 @@ const char* MAP_MESSAGES[] =
     "~H\tThere_is_a_ ~C5 Hospital_map ~C7 . ~N\n\tTake_it? ~S4 ",
     "\tThese_are_phones_and_phonebooks. ~N\n\tNo_need_to_examine_this. ~E ",
     "\tNothing_unusual. ~E ",
-    "\tNothing_helpful. ~E ",
+    "\tNothing_helpful. ~E "
 };
 
 INCLUDE_RODATA("asm/maps/map3_s00/nonmatchings/map3_s00", D_800CB2E4);

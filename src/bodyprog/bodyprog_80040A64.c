@@ -48,13 +48,13 @@ s8 Sound_StereoBalanceGet(const VECTOR3* soundPos) // 0x80040A64
 
 void func_80040B6C() {}
 
-bool func_80040B74(s32 arg0) // 0x80040B74
+bool func_80040B74(s32 charaId) // 0x80040B74
 {
     s32 i;
 
     for (i = 0; i < ARRAY_SIZE(g_WorldGfx.charaModels_CC); i++)
     {
-        if (g_WorldGfx.charaModels_CC[i].charaId_0 == arg0)
+        if (g_WorldGfx.charaModels_CC[i].charaId_0 == charaId)
         {
             return true;
         }
@@ -584,15 +584,15 @@ void Ipd_TexturesInit1() // 0x80041D48
             y = 21;
         }
 
-        Texture_Init1(&g_Map.ipdTextures_430.fullPageTexs_58[i], 0, 0, y, 0, 0, x, j);
+        Texture_Init1(&g_Map.ipdTextures_430.fullPageTextures_58[i], 0, 0, y, 0, 0, x, j);
     }
 
     ActiveTextures_CountReset(&g_Map.ipdTextures_430.fullPage_0);
-    ActiveTextures_PutTextures(&g_Map.ipdTextures_430.fullPage_0, g_Map.ipdTextures_430.fullPageTexs_58, 8);
+    ActiveTextures_PutTextures(&g_Map.ipdTextures_430.fullPage_0, g_Map.ipdTextures_430.fullPageTextures_58, 8);
 
     for (i = 0, y = 26, j = 0; i < 2; i++, x += 16)
     {
-        Texture_Init1(&g_Map.ipdTextures_430.halfPageTexs_118[i], 0, 0, y, (i & 0x1) * 32, 0, x, j);
+        Texture_Init1(&g_Map.ipdTextures_430.halfPageTextures_118[i], 0, 0, y, (i & 0x1) * 32, 0, x, j);
         if (i & 0x1)
         {
             y++;
@@ -600,7 +600,7 @@ void Ipd_TexturesInit1() // 0x80041D48
     }
 
     ActiveTextures_CountReset(&g_Map.ipdTextures_430.halfPage_2C);
-    ActiveTextures_PutTextures(&g_Map.ipdTextures_430.halfPage_2C, g_Map.ipdTextures_430.halfPageTexs_118, 2);
+    ActiveTextures_PutTextures(&g_Map.ipdTextures_430.halfPage_2C, g_Map.ipdTextures_430.halfPageTextures_118, 2);
 }
 
 void Map_IpdCollisionDataInit() // 0x80041E98
@@ -646,8 +646,8 @@ void Ipd_TexturesInit0() // 0x8004201C
     s_Texture* curTex;
 
     // TODO: Will these match as for loops?
-    curTex = &g_Map.ipdTextures_430.fullPageTexs_58[0];
-    while (curTex < (&g_Map.ipdTextures_430.fullPageTexs_58[8]))
+    curTex = &g_Map.ipdTextures_430.fullPageTextures_58[0];
+    while (curTex < (&g_Map.ipdTextures_430.fullPageTextures_58[8]))
     {
         if (curTex->refCount_14 == 0)
         {
@@ -657,8 +657,8 @@ void Ipd_TexturesInit0() // 0x8004201C
         curTex++;
     }
 
-    curTex = &g_Map.ipdTextures_430.halfPageTexs_118[0];
-    while (curTex < (&g_Map.ipdTextures_430.halfPageTexs_118[2]))
+    curTex = &g_Map.ipdTextures_430.halfPageTextures_118[0];
+    while (curTex < (&g_Map.ipdTextures_430.halfPageTextures_118[2]))
     {
         if (curTex->refCount_14 == 0)
         {
@@ -691,17 +691,17 @@ void Map_GlobalLmFree() // 0x800420FC
     GlobalLm_Init(&g_Map.globalLm_138, g_Map.globalLm_138.lmHdr_0);
 }
 
-s_Texture* func_80042178(char* arg0) // 0x80042178
+s_Texture* func_80042178(char* texName) // 0x80042178
 {
     s_Texture* tex;
 
-    tex = ActiveTextures_FindTexture(arg0, &g_Map.ipdTextures_430.fullPage_0);
+    tex = ActiveTextures_FindTexture(texName, &g_Map.ipdTextures_430.fullPage_0);
     if (tex != NULL)
     {
         return tex;
     }
 
-    tex = ActiveTextures_FindTexture(arg0, &g_Map.ipdTextures_430.halfPage_2C);
+    tex = ActiveTextures_FindTexture(texName, &g_Map.ipdTextures_430.halfPage_2C);
     if (tex != NULL)
     {
         return tex;
@@ -999,7 +999,7 @@ s32 func_8004287C(s_WorldObject_0* arg0, s_WorldObject_0_10* arg1, s32 posX, s32
             if (curChunk->coordX_8 >= (chunkCoordX - 1) && (chunkCoordX + 1) >= curChunk->coordX_8 &&
                 curChunk->coordZ_A >= (chunkCoordZ - 1) && (chunkCoordZ + 1) >= curChunk->coordZ_A)
             {
-                temp_t0 = Ipd_DistanceToEdge(collX, collZ, curChunk->coordX_8, curChunk->coordZ_A);
+                temp_t0 = Ipd_DistanceToEdgeGet(collX, collZ, curChunk->coordX_8, curChunk->coordZ_A);
                 for (i = 0; i < idx; i++)
                 {
                     if (temp_t0 < sp20[i])
@@ -1040,7 +1040,7 @@ bool IpdHeader_IsLoaded(s32 ipdIdx) // 0x80042C04
 
 void func_80042C3C(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1) // 0x80042C3C
 {
-    s32         temp_s0;
+    s32         fullPageTexCount;
     s_IpdChunk* curChunk;
 
     g_Map.field_578 = posX1;
@@ -1056,14 +1056,14 @@ void func_80042C3C(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1) // 0x
     if (Fs_QueueEntryLoadStatusGet(g_Map.globalLm_138.queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
         !g_Map.globalLm_138.lmHdr_0->isLoaded_2) 
     {
-        temp_s0                               = g_Map.ipdTextures_430.fullPage_0.count_0;
+        fullPageTexCount = g_Map.ipdTextures_430.fullPage_0.count_0;
         g_Map.ipdTextures_430.fullPage_0.count_0 = 4;
 
         LmHeader_FixOffsets(g_Map.globalLm_138.lmHdr_0);
         Lm_MaterialsLoadWithFilter(g_Map.globalLm_138.lmHdr_0, &g_Map.ipdTextures_430.fullPage_0, NULL, g_Map.texFileIdx_134, 1);
         Lm_MaterialFlagsApply(g_Map.globalLm_138.lmHdr_0);
 
-        g_Map.ipdTextures_430.fullPage_0.count_0 = temp_s0;
+        g_Map.ipdTextures_430.fullPage_0.count_0 = fullPageTexCount;
     }
 
     for (curChunk = g_Map.ipdActive_15C; curChunk < &g_Map.ipdActive_15C[g_Map.ipdActiveSize_158]; curChunk++) 
@@ -1076,11 +1076,11 @@ void func_80042C3C(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1) // 0x
     }
 }
 
-q19_12 Ipd_DistanceToEdgeWithPadding(q19_12 posX, q19_12 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, bool isExterior) // 0x80042DE8
+q19_12 Ipd_DistanceToEdgeWithPaddingGet(q19_12 posX, q19_12 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, bool isExterior) // 0x80042DE8
 {
     q19_12 dist;
 
-    dist = Ipd_DistanceToEdge(FP_METER_TO_GEO(posX), FP_METER_TO_GEO(posZ), fileChunkCoordX, fileChunkCoordZ);
+    dist = Ipd_DistanceToEdgeGet(FP_METER_TO_GEO(posX), FP_METER_TO_GEO(posZ), fileChunkCoordX, fileChunkCoordZ);
     if (isExterior)
     {
         dist -= FP_METER(1.0f);
@@ -1093,7 +1093,7 @@ q19_12 Ipd_DistanceToEdgeWithPadding(q19_12 posX, q19_12 posZ, s32 fileChunkCoor
     return dist;
 }
 
-s32 Ipd_DistanceToEdge(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ) // 0x80042E2C
+q19_12 Ipd_DistanceToEdgeGet(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ) // 0x80042E2C
 {
     #define IPD_CHUNK_SIZE FP_METER_GEO(40.0f)
 
@@ -1153,7 +1153,7 @@ s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 p
 
                 chunkIdx = Map_IpdIdxGet(gridX, gridZ);
                 if (chunkIdx != NO_VALUE &&
-                    Ipd_DistanceToEdgeWithPadding(posX0, posZ0, gridX, gridZ, map->isExterior) <= FP_METER(0.0f) &&
+                    Ipd_DistanceToEdgeWithPaddingGet(posX0, posZ0, gridX, gridZ, map->isExterior) <= FP_METER(0.0f) &&
                     !Map_IsIpdPresent(map->ipdActive_15C, gridX, gridZ))
                 {
                     chunk = Ipd_FreeChunkFind(map->ipdActive_15C, map->isExterior);
@@ -1198,11 +1198,11 @@ void Ipd_ActiveChunksSample(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1
 
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) < FsQueueEntryLoadStatus_Loaded || !curChunk->ipdHdr_0->isLoaded_1)
         {
-            curChunk->matCount_14 = 0;
+            curChunk->materialCount_14 = 0;
         }
         else
         {
-            curChunk->matCount_14 = Ipd_HalfResMaterialCount(curChunk->ipdHdr_0);
+            curChunk->materialCount_14 = Ipd_HalfPageMaterialCountGet(curChunk->ipdHdr_0);
         }
 
         if (curChunk->distance0_C > FP_METER(0.0f) && curChunk->distance1_10 > FP_METER(0.0f))
@@ -1218,8 +1218,8 @@ void Ipd_ActiveChunksSample(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1
 
 void Ipd_DistanceToEdgeCalc(s_IpdChunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior) // 0x80043338
 {
-    chunk->distance0_C  = Ipd_DistanceToEdgeWithPadding(posX0, posZ0, chunk->coordX_8, chunk->coordZ_A, isExterior);
-    chunk->distance1_10 = Ipd_DistanceToEdgeWithPadding(posX1, posZ1, chunk->coordX_8, chunk->coordZ_A, isExterior);
+    chunk->distance0_C  = Ipd_DistanceToEdgeWithPaddingGet(posX0, posZ0, chunk->coordX_8, chunk->coordZ_A, isExterior);
+    chunk->distance1_10 = Ipd_DistanceToEdgeWithPaddingGet(posX1, posZ1, chunk->coordX_8, chunk->coordZ_A, isExterior);
 }
 
 void func_800433B8(s_Map* map) // 0x800433B8
@@ -1276,18 +1276,18 @@ bool Map_IsIpdPresent(s_IpdChunk* chunks, s32 chunkCoordX, s32 chunkCoordZ) // 0
 
 s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool isExterior)
 {
-    s32         largestMats;
-    q19_12      largestDist;
+    s32         largestMatCount;
+    q19_12      farthestDist;
     q19_12      dist;
-    u32         largestOutside;
+    u32         largestOutsideCount;
     s32         matCount;
     s_IpdChunk* curChunk;
     s_IpdChunk* activeChunk;
 
-    activeChunk = NULL;
-    largestOutside = 0;
-    largestMats = 0;
-    largestDist = FP_METER(0.0f);
+    activeChunk         = NULL;
+    largestOutsideCount = 0;
+    largestMatCount     = 0;
+    farthestDist        = FP_METER(0.0f);
 
     for (curChunk = chunks; curChunk < &chunks[g_Map.ipdActiveSize_158]; curChunk++)
     {
@@ -1300,10 +1300,10 @@ s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool isExterior)
             }
             else
             {
-                if (largestOutside < curChunk->outsideCount_18)
+                if (largestOutsideCount < curChunk->outsideCount_18)
                 {
-                    largestOutside = curChunk->outsideCount_18;
-                    activeChunk = curChunk;
+                    largestOutsideCount = curChunk->outsideCount_18;
+                    activeChunk         = curChunk;
                 }
             }
         }
@@ -1313,7 +1313,7 @@ s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool isExterior)
             {
                 matCount = 0;
                 
-                if (largestMats == 0) 
+                if (largestMatCount == 0) 
                 {
                     dist = INT_MAX;
                 }
@@ -1324,7 +1324,7 @@ s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool isExterior)
             }
             else
             {
-                matCount = curChunk->matCount_14;
+                matCount = curChunk->materialCount_14;
 
                 dist = curChunk->distance0_C;
                 if (dist == FP_METER(0.0f))
@@ -1333,11 +1333,11 @@ s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool isExterior)
                 }
             }
 
-            if (largestMats < matCount || (matCount == largestMats && largestDist < dist))
+            if (largestMatCount < matCount || (matCount == largestMatCount && farthestDist < dist))
             {
-                largestDist = dist;
-                activeChunk = curChunk;
-                largestMats = matCount;
+                farthestDist    = dist;
+                activeChunk     = curChunk;
+                largestMatCount = matCount;
             }
         }
     }
@@ -1352,8 +1352,8 @@ s32 Ipd_LoadStart(s_IpdChunk* chunk, s32 fileIdx, s32 chunkCoordX, s32 chunkCoor
         return fileIdx;
     }
 
-    chunk->coordX_8 = chunkCoordX;
-    chunk->coordZ_A = chunkCoordZ;
+    chunk->coordX_8   = chunkCoordX;
+    chunk->coordZ_A   = chunkCoordZ;
     chunk->queueIdx_4 = Fs_QueueStartRead(fileIdx, chunk->ipdHdr_0);
 
     Ipd_DistanceToEdgeCalc(chunk, posX0, posZ0, posX1, posZ1, isExterior);
@@ -1417,7 +1417,7 @@ bool func_80043830(void) // 0x80043830
             continue;
         }
 
-        if (Ipd_DistanceToEdge(FP_METER_TO_GEO(g_Map.field_578), 
+        if (Ipd_DistanceToEdgeGet(FP_METER_TO_GEO(g_Map.field_578), 
                           FP_METER_TO_GEO(g_Map.field_57C),
                           curChunk->coordX_8, curChunk->coordZ_A) <= FP_METER_GEO(4.5f))
         {
@@ -1438,7 +1438,7 @@ bool func_8004393C(q19_12 posX, q19_12 posZ) // 0x8004393C
     
     if (g_Map.isExterior)
     {
-        return Ipd_DistanceToEdge(FP_METER_TO_GEO(g_Map.field_578), FP_METER_TO_GEO(g_Map.field_57C), fileChunkCoordX, fileChunkCoordZ) <= FP_METER_GEO(4.5f);
+        return Ipd_DistanceToEdgeGet(FP_METER_TO_GEO(g_Map.field_578), FP_METER_TO_GEO(g_Map.field_57C), fileChunkCoordX, fileChunkCoordZ) <= FP_METER_GEO(4.5f);
     }
 
     if (fileChunkCoordX == g_Map.field_580 &&
@@ -1536,34 +1536,34 @@ void Ipd_MaterialsLoad(s_IpdHeader* ipdHdr, s_ActiveTextures* arg1, s_ActiveText
 
     if (arg1 != NULL)
     {
-        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr_4, arg1, &LmFilter_FullResolution, fileIdx, 1);
+        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr_4, arg1, &LmFilter_IsFullPage, fileIdx, 1);
     }
 
     if (arg2 != NULL)
     {
-        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr_4, arg2, &LmFilter_HalfResolution, fileIdx, 1);
+        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr_4, arg2, &LmFilter_IsHalfPage, fileIdx, 1);
     }
 }
 
-s32 Ipd_HalfResMaterialCount(s_IpdHeader* ipdHdr) // 0x80043D00
+s32 Ipd_HalfPageMaterialCountGet(s_IpdHeader* ipdHdr) // 0x80043D00
 {
     if (!ipdHdr->isLoaded_1)
     {
         return 0;
     }
 
-    return Lm_MaterialCount(LmFilter_HalfResolution, ipdHdr->lmHdr_4);
+    return Lm_MaterialCount(LmFilter_IsHalfPage, ipdHdr->lmHdr_4);
 }
 
-bool LmFilter_FullResolution(s_Material* mat) // 0x80043D44
+bool LmFilter_IsFullPage(s_Material* mat) // 0x80043D44
 {
-    return !LmFilter_HalfResolution(mat);
+    return !LmFilter_IsHalfPage(mat);
 }
 
 /* Not sure what is the significance of textures that end with H.
  * I've looked at all of them and can't find any pattern.
  */
-bool LmFilter_HalfResolution(s_Material* mat) // 0x80043D64
+bool LmFilter_IsHalfPage(s_Material* mat) // 0x80043D64
 {
     char* charCode;
 
@@ -1672,15 +1672,15 @@ void func_80044044(s_IpdHeader* ipd, s32 gridX, s32 gridZ) // 0x80044044
     prevGridX = ipd->levelGridX_2;
     prevGridZ = ipd->levelGridY_3;
 
-    ipd->levelGridX_2             = gridX;
-    ipd->levelGridY_3             = gridZ;
-    ipd->collisionData_54.posX_0 += (gridX - prevGridX) * FP_METER_GEO(40.0f);
-    ipd->collisionData_54.posZ_4 += (gridZ - prevGridZ) * FP_METER_GEO(40.0f);
+    ipd->levelGridX_2                  = gridX;
+    ipd->levelGridY_3                  = gridZ;
+    ipd->collisionData_54.positionX_0 += (gridX - prevGridX) * FP_METER_GEO(40.0f);
+    ipd->collisionData_54.positionZ_4 += (gridZ - prevGridZ) * FP_METER_GEO(40.0f);
 }
 
 void func_80044090(s_IpdHeader* ipdHdr, s32 arg1, s32 arg2, GsOT* ot, void* arg4) // 0x80044090
 {
-    s_ModelInfo sp18;
+    s_ModelInfo         modelInfo;
     GsCOORDINATE2       sp28;
     MATRIX              sp78;
     MATRIX              sp98;
@@ -1691,7 +1691,7 @@ void func_80044090(s_IpdHeader* ipdHdr, s32 arg1, s32 arg2, GsOT* ot, void* arg4
     s32                 var_a0;
     s32                 var_v1;
     s32                 i;
-    s_IpdModelBuffer*   temp_s2;
+    s_IpdModelBuffer*   ipdModelBuf;
     s_IpdModelBuffer_C* var_s0;
     u8*                 temp_fp;
     SVECTOR*            var_s1;
@@ -1710,34 +1710,34 @@ void func_80044090(s_IpdHeader* ipdHdr, s32 arg1, s32 arg2, GsOT* ot, void* arg4
     var_v1 = MIN(var_v1, 4);
     var_a0 = MIN(var_a0, 4);
 
-    sp18.field_4 = &sp28;
-    sp28.flg     = 1;
-    sp18.field_0 = 0;
+    modelInfo.field_4 = &sp28;
+    sp28.flg     = true;
+    modelInfo.field_0 = 0;
     sp28.super   = NULL;
 
     temp_fp = &ipdHdr->textureCount_1C + (var_a0 * 10) + (var_v1 * 2);
 
     for (i = temp_fp[0]; i < temp_fp[1] + temp_fp[0]; i++)
     {
-        temp_s2 = &ipdHdr->modelBuffers_18[ipdHdr->modelOrderList_50[i]];
+        ipdModelBuf = &ipdHdr->modelBuffers_18[ipdHdr->modelOrderList_50[i]];
 
-        if (func_80044420(temp_s2, spB8 - temp_s5, spBC - temp_s3, temp_s5, temp_s3))
+        if (func_80044420(ipdModelBuf, spB8 - temp_s5, spBC - temp_s3, temp_s5, temp_s3))
         {
-            for (var_s0 = temp_s2->field_C; var_s0 < &temp_s2->field_C[temp_s2->field_0]; var_s0++)
+            for (var_s0 = ipdModelBuf->field_C; var_s0 < &ipdModelBuf->field_C[ipdModelBuf->field_0]; var_s0++)
             {
-                sp18.modelHdr_8 = var_s0->modelHdr_0;
-                if (sp18.modelHdr_8 != NULL)
+                modelInfo.modelHdr_8 = var_s0->modelHdr_0;
+                if (modelInfo.modelHdr_8 != NULL)
                 {
                     sp28.workm       = var_s0->field_4;
                     sp28.workm.t[0] += temp_s5;
                     sp28.workm.t[2] += temp_s3;
 
                     func_80049B6C(&sp28, &sp98, &sp78);
-                    func_80057090(&sp18, ot, arg4, &sp78, &sp98, 0);
+                    func_80057090(&modelInfo, ot, arg4, &sp78, &sp98, 0);
                 }
             }
 
-            for (var_s1 = temp_s2->field_10; var_s1 < &temp_s2->field_10[temp_s2->field_1]; var_s1++)
+            for (var_s1 = ipdModelBuf->field_10; var_s1 < &ipdModelBuf->field_10[ipdModelBuf->field_1]; var_s1++)
             {
                 switch ((s8)var_s1->pad)
                 {
@@ -1767,7 +1767,7 @@ bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, q23_8 x, q23_
         {
             if (arg2 < ptr->pad)
             {
-                coord.flg   = 1;
+                coord.flg   = true;
                 coord.super = NULL;
                 coord.workm = GsIDMATRIX;
 
@@ -1788,7 +1788,7 @@ bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, q23_8 x, q23_
 // ANIMATION
 // ========================================
 
-void Anim_BoneInit(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords) // 0x800445A4
+void Anim_BoneInit(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800445A4
 {
     s32            boneIdx;
     s32            i;
@@ -1798,18 +1798,18 @@ void Anim_BoneInit(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords) // 0x80044
 
     GsInitCoordinate2(NULL, boneCoords);
 
-    for (boneIdx = 1, bindPose = &anmHeader->bindPoses_14[1], coord = &boneCoords[1];
-         boneIdx < anmHeader->boneCount_6;
+    for (boneIdx = 1, bindPose = &anmHdr->bindPoses_14[1], coord = &boneCoords[1];
+         boneIdx < anmHdr->boneCount_6;
          boneIdx++, bindPose++, coord++)
     {
-        coord->super = &boneCoords[anmHeader->bindPoses_14[boneIdx].parentBone];
+        coord->super = &boneCoords[anmHdr->bindPoses_14[boneIdx].parentBone];
 
         // If no translation for this bone, copy over `translationInitial_3`.
         if (bindPose->translationDataIdx_2 < 0)
         {
             for (i = 0; i < 3; i++)
             {
-                coord->coord.t[i] = anmHeader->bindPoses_14[boneIdx].translationInitial_3[i] << anmHeader->scaleLog2_12;
+                coord->coord.t[i] = anmHdr->bindPoses_14[boneIdx].translationInitial_3[i] << anmHdr->scaleLog2_12;
             }
         }
 
@@ -1827,7 +1827,7 @@ void Anim_BoneInit(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords) // 0x80044
     }
 }
 
-void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyframe0, s32 keyframe1, q19_12 alpha) // 0x800446D8
+void Anim_BoneUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyframe0, s32 keyframe1, q19_12 alpha) // 0x800446D8
 {
     s32            boneCount;
     bool           isPlayer;
@@ -1849,11 +1849,11 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyf
     GsCOORDINATE2* boneCoord;
     s_AnmBindPose* bindPose;
 
-    boneCount     = anmHeader->boneCount_6;
-    frame0Data    = ((u8*)anmHeader + anmHeader->dataOffset_0) + (anmHeader->keyframeDataSize_4 * keyframe0);
-    frame0RotData = frame0Data + (anmHeader->translationBoneCount_3 * 3);
-    frame1Data    = ((u8*)anmHeader + anmHeader->dataOffset_0) + (anmHeader->keyframeDataSize_4 * keyframe1);
-    frame1RotData = frame1Data + (anmHeader->translationBoneCount_3 * 3);
+    boneCount     = anmHdr->boneCount_6;
+    frame0Data    = ((u8*)anmHdr + anmHdr->dataOffset_0) + (anmHdr->keyframeDataSize_4 * keyframe0);
+    frame0RotData = frame0Data + (anmHdr->translationBoneCount_3 * 3);
+    frame1Data    = ((u8*)anmHdr + anmHdr->dataOffset_0) + (anmHdr->keyframeDataSize_4 * keyframe1);
+    frame1RotData = frame1Data + (anmHdr->translationBoneCount_3 * 3);
 
     // For player, use inverted mask of `extra_128.disabledAnimBones_18` to facilitate masking of upper and lower body.
     isPlayer = boneCoords == &g_SysWork.playerBoneCoords_890[HarryBone_Root];
@@ -1863,12 +1863,12 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyf
     }
     else
     {
-        activeBoneIdxs = anmHeader->activeBones_8;
+        activeBoneIdxs = anmHdr->activeBones_8;
     }
 
     // Skip root bone (index 0) and start processing from bone 1.
     boneCoords = &boneCoords[1];
-    bindPose   = &anmHeader->bindPoses_14[1];
+    bindPose   = &anmHdr->bindPoses_14[1];
 
     for (boneIdx = 1, boneCoord = boneCoords;
          boneIdx < boneCount;
@@ -1878,7 +1878,7 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyf
         if (activeBoneIdxs & (1 << boneIdx))
         {
             boneCoord->flg = false;
-            scaleLog2      = anmHeader->scaleLog2_12;
+            scaleLog2      = anmHdr->scaleLog2_12;
 
             boneTranslationDataIdx = bindPose->translationDataIdx_2;
             if (boneTranslationDataIdx >= 0)
@@ -1900,7 +1900,7 @@ void Anim_BoneUpdate(s_AnmHeader* anmHeader, GsCOORDINATE2* boneCoords, s32 keyf
 
                 if (boneTranslationDataIdx == 0)
                 {
-                    boneCoord->coord.t[1] -= anmHeader->rootYOffset_13; // TODO: Not sure of purpose of this yet.
+                    boneCoord->coord.t[1] -= anmHdr->rootYOffset_13; // TODO: Not sure of purpose of this yet.
                 }
             }
 
@@ -1960,12 +1960,12 @@ s_AnimInfo* func_80044918(s_ModelAnim* anim) // 0x80044918
     return &animInfo_C[animStatus0];
 }
 
-void func_80044950(s_SubCharacter* chara, s_AnmHeader* anmHeader, GsCOORDINATE2* coords) // 0x80044950
+void func_80044950(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x80044950
 {
     s_AnimInfo* animInfo;
 
     animInfo = func_80044918(&chara->model_0.anim_4);
-    animInfo->updateFunc_0(&chara->model_0, anmHeader, coords, animInfo);
+    animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
 }
 
 q19_12 Anim_DurationGet(s_Model* model, s_AnimInfo* anim) // 0x800449AC
@@ -1992,7 +1992,7 @@ static inline q19_12 Anim_TimeStepGet(s_Model* model, s_AnimInfo* animInfo)
     return Q12(0.0f);
 }
 
-void Anim_Update0(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coords, s_AnimInfo* animInfo) // 0x800449F0
+void Anim_Update0(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coords, s_AnimInfo* animInfo) // 0x800449F0
 {
     bool setNewAnimStatus;
     s32  timeStep;
@@ -2038,7 +2038,7 @@ void Anim_Update0(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coords,
     alpha = Q12_FRACT(newTime);
     if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
-        Anim_BoneUpdate(anmHeader, coords, newKeyframeIdx, newKeyframeIdx + 1, alpha);
+        Anim_BoneUpdate(anmHdr, coords, newKeyframeIdx, newKeyframeIdx + 1, alpha);
     }
 
     // Update frame data.
@@ -2053,7 +2053,7 @@ void Anim_Update0(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coords,
     }
 }
 
-void Anim_Update1(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044B38
+void Anim_Update1(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044B38
 {
     s32 startKeyframeIdx;
     s32 endKeyframeIdx;
@@ -2103,7 +2103,7 @@ void Anim_Update1(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     alpha = Q12_FRACT(newTime);
     if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
-        Anim_BoneUpdate(anmHeader, coord, newKeyframeIdx0, newKeyframeIdx1, alpha);
+        Anim_BoneUpdate(anmHdr, coord, newKeyframeIdx0, newKeyframeIdx1, alpha);
     }
 
     // Update frame data.
@@ -2112,7 +2112,7 @@ void Anim_Update1(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     model->anim_4.alpha_A       = Q12(0.0f);
 }
 
-void Anim_Update2(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044CA4
+void Anim_Update2(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044CA4
 {
     bool setNewAnimStatus;
     s32  startKeyframeIdx;
@@ -2158,7 +2158,7 @@ void Anim_Update2(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     // Update skeleton.
     if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
-        Anim_BoneUpdate(anmHeader, coord, startKeyframeIdx, endKeyframeIdx, alpha);
+        Anim_BoneUpdate(anmHdr, coord, startKeyframeIdx, endKeyframeIdx, alpha);
     }
 
     // Update alpha.
@@ -2171,7 +2171,7 @@ void Anim_Update2(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     }
 }
 
-void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044DF0
+void Anim_Update3(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_AnimInfo* animInfo) // 0x80044DF0
 {
     s32    startKeyframeIdx;
     s32    endKeyframeIdx;
@@ -2223,7 +2223,7 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHeader, GsCOORDINATE2* coord, 
     // Update skeleton.
     if ((model->anim_4.flags_2 & AnimFlag_Unlocked) || (model->anim_4.flags_2 & AnimFlag_Visible))
     {
-        Anim_BoneUpdate(anmHeader, coord, startKeyframeIdx, endKeyframeIdx, alpha);
+        Anim_BoneUpdate(anmHdr, coord, startKeyframeIdx, endKeyframeIdx, alpha);
     }
 
     // Update active keyframe.
@@ -2240,30 +2240,33 @@ void func_80044F14(GsCOORDINATE2* coord, s16 z, s16 x, s16 y) // 0x80044F14
     MulMatrix(&coord->coord, (MATRIX*)0x1F800008);
 }
 
-/* These two are probably part of a bigger struct.
- * boneModelIndex is not refferenced directly anywhere else.
- * It must be reset somewhere at some point.
- */
-#define boneIndicesArray D_800C15B0
-#define boneModelIndex  D_800C15B4
-s8 Bone_GetModelIndex(s8* ptr, bool reset) // 0x80044F6C
+s8 Bone_ModelIdxGet(s8* ptr, bool reset) // 0x80044F6C
 {
+    // These two are probably part of a bigger struct.
+    // `boneModelIdx` is not referenced directly anywhere else.
+    // It must be reset somewhere at some point.
+    #define boneIdxs     D_800C15B0
+    #define boneModelIdx D_800C15B4
+
     if (reset)
     {
-        boneIndicesArray = ptr;
+        boneIdxs = ptr;
     }
 
-    if (boneIndicesArray[0] != -3) // if Lm has 1 model or less
+    // LM has <=1 model.
+    if (boneIdxs[0] != -3)
     {
-        boneModelIndex = boneIndicesArray[0]; // -2 for 0 models, 0 for 1 model.
-        boneIndicesArray++;
+        // -2 for 0 models, 0 for 1 model.
+        boneModelIdx = boneIdxs[0];
+        boneIdxs++;
     }
-    else if (++boneModelIndex >= (boneIndicesArray[1] - 1)) // increment boneModelIndex, break loop when equal to number of models
+    // Increment `boneModelIdx` and break loop when equal to number of models.
+    else if (++boneModelIdx >= (boneIdxs[1] - 1))
     {
-        boneIndicesArray++;
+        boneIdxs++;
     }
 
-    return boneModelIndex;
+    return boneModelIdx;
 }
 
 void Skeleton_Init(s_Skeleton* skel, s_Bone* bones, u8 boneCount) // 0x80044FE0
@@ -2299,18 +2302,18 @@ void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHdr) // 0x8004506C
     switch (switchVar)
     {
         case 0:
-            sp10[0] = BoneHierarhy_End;
+            sp10[0] = BoneHierarchy_End;
             break;
 
         case 1:
             sp10[0] = 0;
-            sp10[1] = BoneHierarhy_End;
+            sp10[1] = BoneHierarchy_End;
             break;
 
         default:
-            sp10[1] = BoneHierarhy_MultiModel;
+            sp10[1] = BoneHierarchy_MultiModel;
             sp10[2] = LmHeader_ModelCountGet(lmHdr) - 1;
-            sp10[3] = BoneHierarhy_End;
+            sp10[3] = BoneHierarchy_End;
             break;
     }
 
@@ -2320,27 +2323,28 @@ void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHdr) // 0x8004506C
 // Anim func.
 void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2, s32 arg3) // 0x80045108
 {
-    s_Bone*  bone0;
+    s_Bone*  curBone;
     s_Bone** boneOrd;
     s32      boneIdx;
 
     if (arg3 == 0)
     {
         skel->boneIdx_1 = 0;
-        skel->bones_4   = 0;
+        skel->bones_4   = NULL;
     }
 
     boneIdx = skel->boneIdx_1;
     Skeleton_BoneModelAssign(skel, lmHdr, arg2);
 
     boneOrd = &skel->bones_4;
-    while (*boneOrd != 0)
+    while (*boneOrd != NULL)
     {
-        bone0 = *boneOrd;
-        boneOrd = &bone0->next_14;
+        curBone = *boneOrd;
+        boneOrd = &curBone->next_14;
     }
 
-    func_80045258(boneOrd, &skel->bones_8[boneIdx], skel->boneIdx_1 - boneIdx, lmHdr); // Skeleton_BoneModelAssign increments boneIdx_1
+    // `Skeleton_BoneModelAssign` increments `boneIdx_1`.
+    func_80045258(boneOrd, &skel->bones_8[boneIdx], skel->boneIdx_1 - boneIdx, lmHdr);
     func_800453E8(skel, false);
 }
 
@@ -2348,27 +2352,26 @@ void Skeleton_BoneModelAssign(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2) // 
 {
     s32 modelIdx;
     
-    modelIdx = Bone_GetModelIndex(arg2, true);
-
-    while (modelIdx != BoneHierarhy_End)
+    modelIdx = Bone_ModelIdxGet(arg2, true);
+    while (modelIdx != BoneHierarchy_End)
     {
         Bone_ModelAssign(&skel->bones_8[skel->boneIdx_1], lmHdr, modelIdx);
 
         skel->boneIdx_1++;
-        modelIdx = Bone_GetModelIndex(arg2, false);
+        modelIdx = Bone_ModelIdxGet(arg2, false);
     }
 }
 
 void func_80045258(s_Bone** boneOrd, s_Bone* bones, s32 boneIdx, s_LmHeader* lmHdr) // 0x80045258
 {
     s_Bone* bone;
-    u8*     objOrd;
+    u8*     curObjOrd;
 
-    for (objOrd = lmHdr->modelOrder_10; objOrd < &lmHdr->modelOrder_10[lmHdr->modelCount_8]; objOrd++)
+    for (curObjOrd = lmHdr->modelOrder_10; curObjOrd < &lmHdr->modelOrder_10[lmHdr->modelCount_8]; curObjOrd++)
     {
         for (bone = bones; bone < &bones[boneIdx]; bone++)
         {
-            if (bone->modelInfo_0.modelIdx_C == *objOrd)
+            if (bone->modelInfo_0.modelIdx_C == *curObjOrd)
             {
                 *boneOrd = bone;
                 boneOrd  = &bone->next_14;
@@ -2382,19 +2385,18 @@ void func_80045258(s_Bone** boneOrd, s_Bone* bones, s32 boneIdx, s_LmHeader* lmH
 // Anim func.
 void func_800452EC(s_Skeleton* skel) // 0x800452EC
 {
-    s32                temp_a0;
-    s32                var_v0;
-    u32                temp_v1;
-    s_Bone*            var_a1;
-    s_ModelHeader*     temp_v0;
+    s32            temp_a0;
+    s32            var_v0;
+    u32            temp_v1;
+    s_Bone*        curBone;
+    s_ModelHeader* modelHdr;
 
-    var_a1 = skel->bones_4;
-
-    while (var_a1)
+    curBone = skel->bones_4;
+    while (curBone)
     {
-        temp_v0 = var_a1->modelInfo_0.modelHdr_8;
-        temp_v1 = temp_v0->modelName_0.str[1] - '0';
-        temp_a0 = temp_v0->modelName_0.str[0] - '0';
+        modelHdr = curBone->modelInfo_0.modelHdr_8;
+        temp_v1 = modelHdr->modelName_0.str[1] - '0';
+        temp_a0 = modelHdr->modelName_0.str[0] - '0';
 
         if (temp_v1 < 10 && temp_a0 >= 0 && temp_a0 < 10)
         {
@@ -2405,20 +2407,20 @@ void func_800452EC(s_Skeleton* skel) // 0x800452EC
             var_v0 = 0;
         }
 
-        var_a1->field_10 = var_v0;
-        var_a1           = var_a1->next_14;
+        curBone->field_10 = var_v0;
+        curBone           = curBone->next_14;
     }
 }
 
 void func_80045360(s_Skeleton* skel, s8* arg1) // 0x80045360
 {
-    s32 boneIdx;
+    s32 i;
     s32 status;
 
-    for (status = Bone_GetModelIndex(arg1, true), boneIdx = 0; status != -2; boneIdx++)
+    for (status = Bone_ModelIdxGet(arg1, true), i = 0; status != -2; i++)
     {
-        skel->bones_8[boneIdx].field_10 = status;
-        status = Bone_GetModelIndex(arg1, false);
+        skel->bones_8[i].field_10 = status;
+        status = Bone_ModelIdxGet(arg1, false);
     }
 }
 
@@ -2448,7 +2450,7 @@ void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
     bone = skel->bones_8;
 
     // Get skeleton status?
-    status = Bone_GetModelIndex(arg1, true);
+    status = Bone_ModelIdxGet(arg1, true);
 
     // Traverse bone hierarchy and set flags according to some condition.
     while (status != -2)
@@ -2462,36 +2464,36 @@ void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
             bone[status].modelInfo_0.field_0 |= 1 << 31;
         }
         
-        status = Bone_GetModelIndex(arg1, false);
+        status = Bone_ModelIdxGet(arg1, false);
     }
 }
 
-void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord, s16 arg4, u16 arg5, s_FsImageDesc* image) // 0x80045534
+void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord, s16 arg4, u16 arg5, s_FsImageDesc* images) // 0x80045534
 {
-    MATRIX           sp20;
-    MATRIX           sp40;
-    DVECTOR          sp60;
-    s32              temp_a1;
-    s16              var_fp;
-    s16              var_s3;
-    s16              var_s4;
-    s16              var_s5;
-    s16              var_s6;
-    s16              var_s7;
-    s32              temp_a0;
-    s32              temp_s0;
-    s32              temp_s1_2;
-    s32              temp_s1_3;
-    s32              temp_s1_4;
-    s32              temp_v1;
-    s32              var_s0;
-    s32              var_s2;
-    s32              var_s3_2;
-    s32              var_v0_2;
-    s32              var_v0_4;
-    s32              var_v0_5;
-    s_FsImageDesc*   image0;
-    s_Bone*          var_s0_2;
+    MATRIX         mat0;
+    MATRIX         mat1;
+    DVECTOR        sp60;
+    s32            temp_a1;
+    s16            var_fp;
+    s16            var_s3;
+    s16            var_s4;
+    s16            var_s5;
+    s16            var_s6;
+    s16            var_s7;
+    s32            temp_a0;
+    s32            temp_s0;
+    s32            temp_s1_2;
+    s32            temp_s1_3;
+    s32            temp_s1_4;
+    s32            temp_v1;
+    s32            var_s0;
+    s32            var_s2;
+    s32            var_s3_2;
+    s32            var_v0_2;
+    s32            var_v0_4;
+    s32            var_v0_5;
+    s_FsImageDesc* curImage;
+    s_Bone*        curBone;
 
     var_s5 = 0x7FFF;
     var_s6 = 0x7FFF;
@@ -2507,19 +2509,19 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord,
 
     var_s0 = NO_VALUE;
 
-    if (image != NULL)
+    if (images != NULL)
     {
-        for (image0 = image; image0->clutY != NO_VALUE; image0++)
+        for (curImage = images; curImage->clutY != NO_VALUE; curImage++)
         {
-            if (var_s0 != image0->clutY)
+            if (var_s0 != curImage->clutY)
             {
-                var_s0 = image0->clutY;
-                func_80049AF8(&coord[var_s0], &sp20);
-                SetRotMatrix(&sp20);
-                SetTransMatrix(&sp20);
+                var_s0 = curImage->clutY;
+                func_80049AF8(&coord[var_s0], &mat0);
+                SetRotMatrix(&mat0);
+                SetTransMatrix(&mat0);
             }
 
-            gte_ldv0(image0);
+            gte_ldv0(curImage);
             gte_rtps();
             gte_stsxy(&sp60);
             temp_a1 = gte_stSZ3();
@@ -2556,27 +2558,27 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord,
         }
     }
 
-    for (var_s0_2 = skel->bones_4; var_s0_2 != NULL; var_s0_2 = var_s0_2->next_14)
+    for (curBone = skel->bones_4; curBone != NULL; curBone = curBone->next_14)
     {
-        if (var_s0_2->modelInfo_0.field_0 >= 0)
+        if (curBone->modelInfo_0.field_0 >= 0)
         {
-            func_80049B6C(&coord[(u8)var_s0_2->field_10], &sp40, &sp20);
+            func_80049B6C(&coord[(u8)curBone->field_10], &mat1, &mat0);
 
-            if (var_s0_2->modelInfo_0.field_0 & 1)
+            if (curBone->modelInfo_0.field_0 & 1)
             {
-                sp20.m[2][2]         = 0;
-                *(s32*)&sp20.m[2][0] = 0;
-                *(s32*)&sp20.m[1][1] = 0;
-                *(s32*)&sp20.m[0][2] = 0;
-                *(s32*)&sp20.m[0][0] = 0;
+                mat0.m[2][2]         = 0;
+                *(s32*)&mat0.m[2][0] = 0;
+                *(s32*)&mat0.m[1][1] = 0;
+                *(s32*)&mat0.m[0][2] = 0;
+                *(s32*)&mat0.m[0][0] = 0;
             }
 
-            func_80057090(&var_s0_2->modelInfo_0, ot, arg2, &sp20, &sp40, arg5);
+            func_80057090(&curBone->modelInfo_0, ot, arg2, &mat0, &mat1, arg5);
 
             if (D_800C4168.fogEnabled_1)
             {
-                gte_SetRotMatrix(&sp20);
-                gte_SetTransMatrix(&sp20);
+                gte_SetRotMatrix(&mat0);
+                gte_SetTransMatrix(&mat0);
                 gte_ldvxy0_Zero();
                 gte_gte_ldvz0();
                 gte_rtps();

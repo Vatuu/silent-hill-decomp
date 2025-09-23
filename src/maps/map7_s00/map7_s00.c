@@ -174,7 +174,7 @@ const char* MAP_MESSAGES[] =
     "~J0(4.3)\tI_have_a_feeling_if_I_take ~N\n\t\t\tthe_elevator_down_I'll_find_it. ~E ",
     "~J0(1.5)\t_ ~E ",
     "\tNothing_unusual. ~E ",
-    "\tNothing_helpful. ~E ",
+    "\tNothing_helpful. ~E "
 };
 
 INCLUDE_RODATA("asm/maps/map7_s00/nonmatchings/map7_s00", D_800CB500);

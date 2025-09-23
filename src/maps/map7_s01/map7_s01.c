@@ -1,8 +1,8 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
+#include "maps/map7/map7_s01.h"
 #include "maps/shared.h"
-extern s8 D_800A9945;
 
 INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", D_800C9578);
 
@@ -68,7 +68,7 @@ void func_800D1620(void) {}
 
 void func_800D1628(void) {}
 
-s32 func_800D1630()
+s32 func_800D1630() // 0x800D1630
 {
     return 0;
 }
@@ -329,7 +329,7 @@ const char* MAP_MESSAGES[] =
     "\tNothing_helpful. ~E ",
     "\tLooks_like_an_altar. ~N\n\tWonder_what_they_worship? ~E ",
     "\tA_body_is_laid_out_on_the_bed. ~N\n\tDon't_feel_like_checking_this_out. ~E ",
-    "\tThere's_a_botanical ~N\n\treference_book. ~N\n\tDon't_need_to_read_it_now. ~E ",
+    "\tThere's_a_botanical ~N\n\treference_book. ~N\n\tDon't_need_to_read_it_now. ~E "
 };
 
 INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", D_800CC424);
@@ -516,66 +516,57 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800DD368);
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800DDCD4);
 
-
-void func_800DEDA4(void)
+void func_800DEDA4(void) // 0x800DEDA4
 {
-    s32 var_a1_2;
-    s32 var_a2;
-    s8 charaId;
-
     if (!Savegame_EventFlagGet(EventFlag_485))
     {
-        if ((D_800A9945 != 0x23) || (func_80040B74(0x23) == false))
+        if (D_800A9945 != Chara_GhostChildAlessa || !func_80040B74(Chara_GhostChildAlessa))
         {
             func_800348C0();
-            charaId = Chara_GhostChildAlessa;
-            Chara_Load(0, charaId, g_SysWork.npcCoords_FC0, -1, NULL, NULL);
+            Chara_Load(0, Chara_GhostChildAlessa, g_SysWork.npcCoords_FC0, NO_VALUE, NULL, NULL);
             func_80088D0C();
         }
     }
-    else if (D_800A9945 == 0x10)
+    else if (D_800A9945 == Chara_PuppetNurse)
     {
-        if (func_80040B74(0x10) == false)
+        if (!func_80040B74(Chara_PuppetNurse))
         {
-            g_MapOverlayHeader.charaGroupIds_248[0] = 0x10;
+            g_MapOverlayHeader.charaGroupIds_248[0] = Chara_PuppetNurse;
+
             func_800348C0();
-            charaId = Chara_PuppetNurse;
-            Chara_Load(0, charaId, g_SysWork.npcCoords_FC0, -1, NULL, NULL);
+            Chara_Load(0, Chara_PuppetNurse, g_SysWork.npcCoords_FC0, NO_VALUE, NULL, NULL);
             func_80088D0C();
         }
     }
     else
     {
-        g_MapOverlayHeader.charaGroupIds_248[0] = 0x10;
+        g_MapOverlayHeader.charaGroupIds_248[0] = Chara_PuppetNurse;
+
         func_800348C0();
-        charaId = Chara_PuppetNurse;
-        Chara_Load(0, charaId, g_SysWork.npcCoords_FC0, -1, NULL, NULL);
+        Chara_Load(0, Chara_PuppetNurse, g_SysWork.npcCoords_FC0, NO_VALUE, NULL, NULL);
         func_80088D0C();
     }
 
     if (Savegame_EventFlagGet(EventFlag_521))
     {
-        if (g_SavegamePtr->gameDifficulty_260 != -1)
+        if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
         {
-            func_80088FF4(0x10, 2, 0x1B);
+            func_80088FF4(16, 2, 27);
         }
-        var_a1_2 = 3;
-        var_a2 = 0x1B;
-        func_80088FF4(0x10, var_a1_2, var_a2);
+
+        func_80088FF4(16, 3, 27);
     }
     else if (Savegame_EventFlagGet(EventFlag_485))
     {
-        func_80088FF4(0x10, 0, 0x13);
-        var_a1_2 = 1;
-        var_a2 = 0x13;
-        func_80088FF4(0x10, var_a1_2, var_a2);
+        func_80088FF4(16, 0, 19);
+        func_80088FF4(16, 1, 19);
     }
 
-    if (Savegame_EventFlagGet(EventFlag_525) && (g_SavegamePtr->gameDifficulty_260 != -1))
+    if (Savegame_EventFlagGet(EventFlag_525) && g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
     {
-        func_80088FF4(0x10, 0xC, 0x13);
-        func_80088FF4(0x10, 0xD, 0x17);
-        func_80088FF4(0x10, 0xE, 0x1B);
+        func_80088FF4(16, 12, 19);
+        func_80088FF4(16, 13, 23);
+        func_80088FF4(16, 14, 27);
     }
 }
 
