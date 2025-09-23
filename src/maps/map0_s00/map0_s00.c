@@ -962,7 +962,7 @@ void func_800DB26C(void)
         return;
     case 4:
         g_DeltaTime0 >>= 1;
-        g_SavegamePtr->eventFlags_168[0] |= 0x100;
+        Savegame_EventFlagSet(EventFlag_8);
         func_800866D4(0x36, 1, 0);
         return;
     case 5:
@@ -971,7 +971,7 @@ void func_800DB26C(void)
         return;
     default:
         func_8008616C(0, false, 2, 0, false);
-        g_SavegamePtr->eventFlags_168[0] |= 0x80;
+        Savegame_EventFlagSet(EventFlag_7);
         func_800865FC(1, 1, 0, Q12(0.5f), Q12(-62.0f), Q12(49.0f));
         sharedFunc_800D2244_0_s00(0);
         SysWork_StateSetNext(SysState_Gameplay);
