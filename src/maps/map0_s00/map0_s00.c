@@ -456,9 +456,7 @@ void func_800DC33C(void) // 0x800DC33C
     s16         temp_a0;
     s16         var_s1;
     s32         var_v1;
-    s32         temp_a0_2;
-    s32         deltaX;
-    s32         deltaZ;
+    q19_12      temp_a0_2;
     s32         temp_v1;
     s32         var_a0;
     s32         var_a2;
@@ -476,12 +474,9 @@ void func_800DC33C(void) // 0x800DC33C
         save->eventFlags_168[0] |= 0x20;
     }
 
-    // TODO: Demagic shifts by 6. This is probably to reduce precision for `SquareRoot0` and avoid overflow.
     vwGetViewPosition(&camPos);
-    deltaX = (g_SysWork.npcs_1A0[0].position_18.vx - camPos.vx) >> 6;
-    deltaZ = (g_SysWork.npcs_1A0[0].position_18.vz - camPos.vz) >> 6;
-
-    if ((SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)) << 6) <= Q12(16.5f) &&
+    if (Math_Vector2MagCalc(g_SysWork.npcs_1A0[0].position_18.vx - camPos.vx,
+                            g_SysWork.npcs_1A0[0].position_18.vz - camPos.vz) <= Q12(16.5f) &&
         g_SysWork.npcs_1A0[0].position_18.vx >= Q12(-58.0f))
     {
         if (!(g_SysWork.flags_22A4 & 0x80))
@@ -538,7 +533,6 @@ block7:
         else
         {
             var_v1_2 = D_800DFAD0 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.5f, Q12_SHIFT);
-
             if (var_v1_2 > Q12(1.8f))
             {
                 var_v1_2 = Q12(1.8f);
@@ -557,18 +551,14 @@ block7:
 
 void func_800DC694(void) // 0x800DC694
 {
-    s32 temp_a0;
-    s32 temp_a0_2;
-    s32 temp_v0;
-    s32 temp_v0_2;
-    s32 temp_v1;
-    s32 var_a2;
-    s32 var_v1;
+    q19_12 mag;
+    s32    temp_a0_2;
+    s32    temp_v1;
+    s32    var_a2;
+    s32    var_v1;
 
-    // TODO: Demagic shifts by 6.
-    temp_v0 = (g_SysWork.npcs_1A0[0].position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx) >> 6;
-    temp_v0_2 = ((g_SysWork.npcs_1A0[0].position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz) - Q12(2.0f)) >> 6;
-    temp_a0 = SquareRoot0(SQUARE(temp_v0) + SQUARE(temp_v0_2)) << 6;
+    mag = Math_Vector2MagCalc(g_SysWork.npcs_1A0[0].position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx,
+                              (g_SysWork.npcs_1A0[0].position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz) - Q12(2.0f));
 
     // TODO: Use `Savegame_EventFlagGet`.
     if (!(g_SavegamePtr->eventFlags_168[0] & 0x80))
@@ -577,7 +567,7 @@ void func_800DC694(void) // 0x800DC694
         return;
     }
 
-    if (temp_a0 <= Q12(14.5f) && g_SysWork.npcs_1A0[0].position_18.vz >= Q12(49.0f))
+    if (mag <= Q12(14.5f) && g_SysWork.npcs_1A0[0].position_18.vz >= Q12(49.0f))
     {
         if (!(g_SysWork.flags_22A4 & 0x80))
         {
@@ -637,14 +627,10 @@ block_7:
 
 void func_800DC8D8(void) // 0x800DC8D8
 {
-    s32 temp_a0;
-    s32 temp_v0;
-    s32 temp_v0_2;
+    q19_12 mag;
 
-    // TODO: Demagic shifts by 6.
-    temp_v0 = (g_SysWork.npcs_1A0[0].position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx) >> 6;
-    temp_v0_2 = ((g_SysWork.npcs_1A0[0].position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz) - Q12(2.0f)) >> 6;
-    temp_a0 = SquareRoot0(SQUARE(temp_v0) + SQUARE(temp_v0_2)) << 6;
+    mag = Math_Vector2MagCalc(g_SysWork.npcs_1A0[0].position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx,
+                              (g_SysWork.npcs_1A0[0].position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz) - Q12(2.0f));
 
     // TODO: Use `Savegame_EventFlagGet`.
     if (!(g_SavegamePtr->eventFlags_168[0] & 0x400))
@@ -653,7 +639,7 @@ void func_800DC8D8(void) // 0x800DC8D8
         g_SysWork.npcs_1A0[0].position_18.vz = Q12(48.0f);
         g_SysWork.npcs_1A0[0].rotation_24.vy = Q12(0.25f);
 
-        if (temp_a0 < Q12(14.8f))
+        if (mag < Q12(14.8f))
         {
             sharedFunc_800D88AC_0_s00(g_SysWork.npcs_1A0);
 
