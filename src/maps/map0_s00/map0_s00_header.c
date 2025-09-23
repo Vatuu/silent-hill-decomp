@@ -9,29 +9,19 @@
 #define func_800D94F8 (void(*)(s32))0x800D94F8 // Based on the signature of a func in map0_s01.
 #define func_800DBE68 (void(*)(void))0x800DBE68
 #define func_800DBF08 (void(*)(void))0x800DBF08
-#define func_800DC1E8 (void(*)(void))0x800DC1E8
 #define func_800D0E34 (void(*)(void))0x800D0E34
 #define func_800D1C38 (void(*)(void))0x800D1C38
 #define func_800D23EC (void(*)(void))0x800D23EC
 #define func_800D8A00 (void(*)(void))0x800D8A00
 #define func_800CB6B0 (void(*)(void))0x800CB6B0
 
-#define func_800D9610 (void(*)(void))0x800D9610 
 #define func_800D9748 (void(*)(void))0x800D9748
-#define func_800D9D98 (void(*)(void))0x800D9D98
-#define func_800DA028 (void(*)(void))0x800DA028
-#define func_800DA254 (void(*)(void))0x800DA254
 #define func_800DA5A0 (void(*)(void))0x800DA5A0
-#define func_800DAA68 (void(*)(void))0x800DAA68
-#define func_800DAB8C (void(*)(void))0x800DAB8C
-#define func_800DACB0 (void(*)(void))0x800DACB0
 #define func_800DADD4 (void(*)(void))0x800DADD4
 #define func_800DAEFC (void(*)(void))0x800DAEFC
 #define func_800DB26C (void(*)(void))0x800DB26C
 #define func_800DB514 (void(*)(void))0x800DB514
-#define func_800DB870 (void(*)(void))0x800DB870
 #define func_800DB94C (void(*)(void))0x800DB94C
-#define func_800DBE00 (void(*)(void))0x800DBE00
 
 extern u8 D_800DF754[];
 extern s_func_800625F4 D_800DFB7C[200];
@@ -98,10 +88,10 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .mapMessages_30 = MAP_MESSAGES,
     .animInfos_34 = HARRY_M0S00_ANIM_INFOS,
     .field_38 = g_MapHeaderTable_38,
-    .func_3C = func_800DBE68,
-    .func_40 = func_800DBF08,
+    .func_3C = Map_WorldObjectsInit,
+    .func_40 = Map_WorldObjectsUpdate,
     .func_44 = NULL,
-    .func_48 = func_800DC1E8,
+    .func_48 = Event_GreyChildrenSpawn,
     .unkTable1_4C = D_800DFB7C,
     .unkTable1Count_50 = ARRAY_SIZE(D_800DFB7C),
     .bloodSplats_54 = g_Effect_BloodSplats,
