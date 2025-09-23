@@ -521,7 +521,7 @@ void func_800DA028(void) // 0x800DA028
     }
 }
 
-void func_800DA254(void)
+void func_800DA254(void) // 0x800DA254
 {
     s_SysWork* syswork;
 
@@ -571,7 +571,7 @@ void func_800DA254(void)
     }
 }
 
-void func_800DA454(void)
+void func_800DA454(void) // 0x800DA454
 {
     VECTOR3 vec0;
     s16     angle;
@@ -855,7 +855,7 @@ void func_800DADD4(void)
 }
 */
 
-void func_800DAEFC(void)
+void func_800DAEFC(void) // 0x800DAEFC
 {
     s32 temp_s1;
     s32 var_a3;
@@ -864,59 +864,74 @@ void func_800DAEFC(void)
 
     switch (g_SysWork.sysStateStep_C[0])
     {
-    case 0:
-        sharedFunc_800D20E4_0_s00();
-        g_SysWork.npcs_1A0[0].position_18.vx = Q12(-62.0f);
-        g_SysWork.npcs_1A0[0].rotation_24.vy = Q12(0.5f);
-        g_SysWork.npcs_1A0[0].position_18.vz = g_SysWork.player_4C.chara_0.position_18.vz - Q12(19.0f);
-        func_8008616C(0, true, 2, 0, false);
-        SysWork_StateStepIncrement();
-        /* fallthrough */
-    case 1:
-        func_80085DF0();
-        return;
-    case 2:
-        func_800865FC(0, 0, 0, Q12(0.5f), 0, 0);
-        Camera_TranslationSet(&g_SysWork.player_4C.chara_0.position_18, Q12(0.24f), Q12(-4.06f), Q12(-5.0f), 0, 0, 0, 0, true);
-        Camera_RotationSet(&g_SysWork.player_4C.chara_0.position_18, Q12(-0.72f), Q12(-2.11f), Q12(-1.63f), 0, 0, 0, 0, true);
-        SysWork_StateStepIncrement();
+        case 0:
+            sharedFunc_800D20E4_0_s00();
 
-        /* fallthrough */
-    case 3:
-        func_800866D4(0x35, 1, 0);
-        return;
-    case 4:
-        func_800865FC(1, 0, 0, Q12(0.5f), -0x3E000, g_SysWork.player_4C.chara_0.position_18.vz - Q12(10.0f));
-        func_80085E6C(0x1000, false);
-        return;
-    case 5:
-        func_800866D4(0x36, 1, 0);
-        func_80085E6C(0x1000, false);
-        return;
-    case 6:
-        func_800866D4(0x36, 1, 0);
-        temp_s1 = FP_MULTIPLY(Math_Cos(g_SysWork.player_4C.chara_0.rotation_24.vy), Q12(0.6f), 12) - Q12(1.84f);
-        temp = FP_MULTIPLY(Math_Cos(g_SysWork.player_4C.chara_0.rotation_24.vy), Q12(2.0f), 12) + Q12(4.0f);
-        if (g_SysWork.player_4C.chara_0.position_18.vz + temp < Q12(130.0f)) 
-        {
-            temp2 = FP_MULTIPLY(Math_Cos(g_SysWork.player_4C.chara_0.rotation_24.vy), 0x2000, 12) + Q12(4.0f);
-            var_a3 = g_SysWork.player_4C.chara_0.position_18.vz + temp2;
-        } 
-        else 
-        {
-            var_a3 = Q12(130.0f);
-        }
-        Camera_TranslationSet(NULL, Q12(-62.0f), temp_s1, var_a3, 0, 0, 0, 0, D_800DFAC4);
-        Camera_RotationSet(NULL, g_SysWork.player_4C.chara_0.position_18.vx, -0xB33, g_SysWork.player_4C.chara_0.position_18.vz - 0x5000, 0, 0, 0, 0, D_800DFAC4);
-        D_800DFAC4 = false;
-        return;
-    default:
-        sharedFunc_800D2244_0_s00(0);
-        SysWork_StateSetNext(SysState_Gameplay);
+            g_SysWork.npcs_1A0[0].position_18.vx = Q12(-62.0f);
+            g_SysWork.npcs_1A0[0].rotation_24.vy = FP_ANGLE(180.0f);
+            g_SysWork.npcs_1A0[0].position_18.vz = g_SysWork.player_4C.chara_0.position_18.vz - Q12(19.0f);
 
-        func_8008616C(0, false, 2, 0, false);
-        g_SavegamePtr->eventFlags_168[0] |= 0x180;
-        func_800865FC(1, 1, 0, 0x800, -0x3E000, 0x31000);
+            func_8008616C(0, true, 2, 0, false);
+            SysWork_StateStepIncrement();
+
+        case 1:
+            func_80085DF0();
+            return;
+
+        case 2:
+            func_800865FC(false, 0, 0, FP_ANGLE(180.0f), Q12(0.0f), Q12(0.0f));
+            Camera_TranslationSet(&g_SysWork.player_4C.chara_0.position_18, Q12(0.24f), Q12(-4.06f), Q12(-5.0f), 0, 0, 0, 0, true);
+            Camera_RotationSet(&g_SysWork.player_4C.chara_0.position_18, Q12(-0.72f), Q12(-2.11f), Q12(-1.63f), 0, 0, 0, 0, true);
+            SysWork_StateStepIncrement();
+
+        case 3:
+            func_800866D4(53, 1, 0);
+            return;
+
+        case 4:
+            func_800865FC(true, 0, 0, FP_ANGLE(180.0f), Q12(-62.0f), g_SysWork.player_4C.chara_0.position_18.vz - Q12(10.0f));
+            func_80085E6C(0x1000, false);
+            return;
+
+        case 5:
+            func_800866D4(54, 1, 0);
+            func_80085E6C(Q12(1.0f), false);
+            return;
+
+        case 6:
+            func_800866D4(54, 1, 0);
+         
+            temp_s1 = FP_MULTIPLY(Math_Cos(g_SysWork.player_4C.chara_0.rotation_24.vy), Q12(0.6f), Q12_SHIFT) - Q12(1.84f);
+            temp = FP_MULTIPLY(Math_Cos(g_SysWork.player_4C.chara_0.rotation_24.vy), Q12(2.0f), Q12_SHIFT) + Q12(4.0f);
+
+            if ((g_SysWork.player_4C.chara_0.position_18.vz + temp) < Q12(130.0f))
+            {
+                temp2 = FP_MULTIPLY(Math_Cos(g_SysWork.player_4C.chara_0.rotation_24.vy), Q12(2.0f), Q12_SHIFT) + Q12(4.0f);
+                var_a3 = g_SysWork.player_4C.chara_0.position_18.vz + temp2;
+            } 
+            else 
+            {
+                var_a3 = Q12(130.0f);
+            }
+
+            Camera_TranslationSet(NULL, Q12(-62.0f), temp_s1, var_a3, 0, 0, 0, 0, D_800DFAC4);
+            Camera_RotationSet(NULL,
+                               g_SysWork.player_4C.chara_0.position_18.vx,
+                               Q12(-0.7f),
+                               g_SysWork.player_4C.chara_0.position_18.vz - Q12(5.0f),
+                               0, 0, 0,
+                               0, D_800DFAC4);
+
+            D_800DFAC4 = false;
+            return;
+
+        default:
+            sharedFunc_800D2244_0_s00(0);
+            SysWork_StateSetNext(SysState_Gameplay);
+            func_8008616C(0, false, 2, 0, false);
+
+            g_SavegamePtr->eventFlags_168[0] |= 0x180;
+            func_800865FC(true, 1, 0, FP_ANGLE(180.0f), Q12(-62.0f), Q12(49.0f));
     }
 }
 
@@ -1323,47 +1338,44 @@ void func_800DCC54(void) // 0x800DCC54
     }
 }
 
-s32 func_800DCDA8(void)
+s32 func_800DCDA8(void) // 0x800DCDA8
 {
-     s16 sp20;
-     s32 i;
-     s32 var_s2;
-     s16 var_s5;
-     s32 var_s4;
-     s32 temp_v1_3;
+    s16 sp20;
+    s32 i;
+    s32 var_s2;
+    s16 var_s5;
+    s32 var_s4;
+    s32 temp_v1_3;
 
-     var_s4 = 0;
-     var_s5 = 0;
-     var_s2 = 0;
+    var_s4 = 0;
+    var_s5 = 0;
+    var_s2 = 0;
 
-     for (i = 0; i < 5; i++)
-     {
-        temp_v1_3 = func_8005C478(
-            &sp20,
-            g_SysWork.player_4C.chara_0.position_18.vx,
-            g_SysWork.player_4C.chara_0.position_18.vz,
-            D_800DFAE0[i].vx,
-            D_800DFAE0[i].vy,
-            D_800DFAE0[i + 1].vx,
-            D_800DFAE0[i + 1].vy
-        );
+    for (i = 0; i < 5; i++)
+    {
+        temp_v1_3 = func_8005C478(&sp20,
+                                  g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz,
+                                  D_800DFAE0[i].vx, D_800DFAE0[i].vy,
+                                  D_800DFAE0[i + 1].vx, D_800DFAE0[i + 1].vy);
 
-        if (!i)
+        if (i == 0)
         {
             var_s4 = temp_v1_3;
             var_s5 = sp20;
             var_s2 = 0;
-        } else if (temp_v1_3 < var_s4) {
+        }
+        else if (temp_v1_3 < var_s4)
+        {
             var_s4 = temp_v1_3;
             var_s5 = sp20;
             var_s2 = i;
         }
     }
 
-    return FP_MULTIPLY_PRECISE(D_800DFAE0[var_s2 + 1].vz - D_800DFAE0[var_s2].vz, var_s5, 12) + D_800DFAE0[var_s2].vz;
+    return FP_MULTIPLY_PRECISE(D_800DFAE0[var_s2 + 1].vz - D_800DFAE0[var_s2].vz, var_s5, Q12_SHIFT) + D_800DFAE0[var_s2].vz;
 }
 
-s32 func_800DCF38(s32 arg0)
+s32 func_800DCF38(s32 arg0) // 0x800DCF38
 {
     s16 sp20;
     s32 temp_v0;
@@ -1371,6 +1383,7 @@ s32 func_800DCF38(s32 arg0)
     s32 var_v0;
 
     var_t0 = 0;
+
     if (g_SysWork.sysState_8 == SysState_EventCallFunc)
     {
         if (!(g_SavegamePtr->eventFlags_168[0] & 0x8000))
@@ -1384,18 +1397,19 @@ s32 func_800DCF38(s32 arg0)
         {
             if (g_SysWork.player_4C.chara_0.position_18.vx < Q12(-200.0f))
             {
-                func_8005C478(&sp20, g_SysWork.player_4C.chara_0.position_18.vx,
-                                     g_SysWork.player_4C.chara_0.position_18.vz,
-                                     D_800DFB28[0].vx, D_800DFB28[0].vy,
-                                     D_800DFB28[1].vx, D_800DFB28[1].vy);
-                var_v0 = FP_MULTIPLY_PRECISE((D_800DFB28[1].vz - D_800DFB28[0].vz), sp20, 12) + Q12(60.0f);
+                func_8005C478(&sp20,
+                              g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz,
+                              D_800DFB28[0].vx, D_800DFB28[0].vy, D_800DFB28[1].vx, D_800DFB28[1].vy);
+
+                var_v0 = FP_MULTIPLY_PRECISE(D_800DFB28[1].vz - D_800DFB28[0].vz, sp20, Q12_SHIFT) + Q12(60.0f);
                 var_t0 = D_800DFB28[0].vz + var_v0;
             }
+
             return MAX(var_t0, arg0);
         }
     }
 
-    return FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(9.0f), 12) + arg0;
+    return FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(9.0f), Q12_SHIFT) + arg0;
 }
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DD0CC);
