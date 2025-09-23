@@ -459,7 +459,7 @@ void func_800866D4(s32 arg0, s32 arg1, s32 arg2) // 0x800866D4
     }
 }
 
-void func_80086728(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80086728
+void func_80086728(s_SubCharacter* arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80086728
 {
     if (g_MapOverlayHeader.func_13C(arg0, arg1, &D_800C46A0, D_800C4702, arg2) == 1)
     {

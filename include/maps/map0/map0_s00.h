@@ -145,6 +145,8 @@ void Map_WorldObjectsUpdate(void);
 
 void Event_GreyChildrenSpawn(void);
 
+void func_800DD0CC();
+
 void func_800DCC54(void);
 
 void func_800DA454(void);

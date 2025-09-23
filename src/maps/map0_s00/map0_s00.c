@@ -660,7 +660,7 @@ void func_800DA5A0(void) // 0x800DA5A0
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            sharedFunc_800D88AC_0_s00(g_SysWork.npcs_1A0);
+            sharedFunc_800D88AC_0_s00(&g_SysWork.npcs_1A0[0]);
             func_800865FC(true, 1, 0, FP_ANGLE(-135.0f), Q12(-35.0f), Q12(120.0f));
 
             temp_s1_2 = g_SysWork.player_4C.chara_0.position_18.vx;
@@ -689,13 +689,13 @@ void func_800DA5A0(void) // 0x800DA5A0
         case 3:
             g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = Q12(1.8f);
 
-            func_80086728(&g_SysWork.npcs_1A0[0].model_0, 2, 1, 0);
+            func_80086728(&g_SysWork.npcs_1A0[0], 2, 1, 0);
             func_80085E6C(Q12(1.5f), false);
             break;
 
         case 4:
             g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = Q12(1.8f);
-            func_80086728(&g_SysWork.npcs_1A0[0].model_0, 2, 1, 0);
+            func_80086728(&g_SysWork.npcs_1A0[0], 2, 1, 0);
             break;
 
         case 5:
@@ -727,7 +727,7 @@ void func_800DA5A0(void) // 0x800DA5A0
 
         case 10:
             g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = 0x8CC;
-            func_80086728(&g_SysWork.npcs_1A0[0].model_0, 1, 1, 0);
+            func_80086728(&g_SysWork.npcs_1A0[0], 1, 1, 0);
             break;
 
         case 11:
@@ -742,7 +742,7 @@ void func_800DA5A0(void) // 0x800DA5A0
             sharedFunc_800D2244_0_s00(0);
             SysWork_StateSetNext(SysState_Gameplay);
 
-            sharedFunc_800D88C0_0_s00(g_SysWork.npcs_1A0, 0);
+            sharedFunc_800D88C0_0_s00(&g_SysWork.npcs_1A0[0], 0);
             break;
     }
 }
@@ -934,87 +934,80 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DB26C);
 
 void func_800DB514(void)
 {
-    s32 temp_v0;
-    s32 var_a1;
-
     switch (g_SysWork.sysStateStep_C[0])
     {
-    case 0:
-        sharedFunc_800D20E4_0_s00();
-        D_800DFB5C = 0;
-        D_800DFB60 = 0;
-        GameFs_FlameGfxLoad();
-        SysWork_StateStepIncrement();
-
-        /* fallthrough */
-    case 1:
-        func_8008616C(2, true, 2, 0, false);
-        break;
-    case 2:
-        func_80085DF0();
-        break;
-    case 3:
-        SysWork_StateStepIncrement();
-
-        /* fallthrough */
-    case 4:
-        MapMsg_DisplayAndHandleSelection(false, 0x19, false, false, 0, false);
-        break;
-    case 5:
-        func_8008605C(0x10, 6, 5, false);
-        break;
-    case 6:
-        if (D_800DFB60)
-        {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            D_800DFB5C = 0;
+            D_800DFB60 = 0;
+            GameFs_FlameGfxLoad();
             SysWork_StateStepIncrement();
-        }
-        break;
-        if (Fs_QueueDoThingWhenEmpty() != false)
-        {
-            D_800DFB60++;
-            Chara_Load(1, 8, g_SysWork.npcCoords_FC0, 0, NULL, NULL);
-        }
-    case 7:
-        sharedFunc_800D209C_0_s00();
-        SysWork_StateStepIncrement();
 
-        /* fallthrough */
-    case 8:
-        func_80085EB8(1U, &g_SysWork.player_4C.chara_0, 0, false);
-        break;
-    case 9:
-        func_8003EF10(0xA, 0xA, 5, (s32) &D_800DFB5C, 0, Q12(0.5f));
-        SysWork_StateStepIncrement();
-
-        /* fallthrough */
-    case 10:
-        D_800DFB5C +=g_DeltaTime0;
-        if (D_800DFB5C > Q12(0.5f))
-        {
+            /* fallthrough */
+        case 1:
+            func_8008616C(2, true, 2, 0, false);
+            break;
+        case 2:
+            func_80085DF0();
+            break;
+        case 3:
             SysWork_StateStepIncrement();
-        }
-        break;
-    case 11:
-        g_SavegamePtr->eventFlags_168[0] |= 0x20000;
-        MapMsg_DisplayAndHandleSelection(false, 0x1E, false, false, 0, false);
-        break;
-    default:
-        func_8008616C(0, false, 2, 0, false);
-        sharedFunc_800D2244_0_s00(1);
-        SysWork_StateSetNext(SysState_Gameplay);
 
-        func_80088D0C();
-        Chara_Spawn(Chara_GreyChild, 0, -0xFC000, 0xDF000, 0x800, 5U);
-        Chara_Spawn(Chara_GreyChild, 1, -0xFE000, 0xDD000, 0x600, 5U);
-        Chara_Spawn(Chara_GreyChild, 2, -0x103000, 0xE8000, 0, 5U);
-        break;
+            /* fallthrough */
+        case 4:
+            MapMsg_DisplayAndHandleSelection(false, 25, false, false, 0, false);
+            break;
+        case 5:
+            func_8008605C(16, 6, 5, false);
+            break;
+        case 6:
+            if (D_800DFB60)
+            {
+                SysWork_StateStepIncrement();
+            }
+            break;
+        case 7:
+            sharedFunc_800D209C_0_s00();
+            SysWork_StateStepIncrement();
+
+            /* fallthrough */
+        case 8:
+            func_80085EB8(1, &g_SysWork.player_4C.chara_0, 0, false);
+            break;
+        case 9:
+            func_8003EF10(10, 10, 5, &D_800DFB5C, 0, Q12(0.5f));
+            SysWork_StateStepIncrement();
+
+            /* fallthrough */
+        case 10:
+            D_800DFB5C += g_DeltaTime0;
+            if (D_800DFB5C > Q12(0.5f))
+            {
+                SysWork_StateStepIncrement();
+            }
+            break;
+        case 11:
+            Savegame_EventFlagSet(EventFlag_17);
+            MapMsg_DisplayAndHandleSelection(false, 30, false, false, 0, false);
+            break;
+        default:
+            func_8008616C(0, false, 2, 0, false);
+            sharedFunc_800D2244_0_s00(1);
+            SysWork_StateSetNext(SysState_Gameplay);
+
+            func_80088D0C();
+            Chara_Spawn(Chara_GreyChild, 0, Q12(-252.0f), Q12(223.0f), FP_ANGLE(180.0f), 5U);
+            Chara_Spawn(Chara_GreyChild, 1, Q12(-254.0f), Q12(221.0f), FP_ANGLE(135.0f), 5U);
+            Chara_Spawn(Chara_GreyChild, 2, Q12(-259.0f), Q12(232.0f), 0, 5U);
+            break;
     }
 
     if (D_800DFB60 == 0)
     {
-        if (Fs_QueueDoThingWhenEmpty() != false) {
+        if (Fs_QueueDoThingWhenEmpty() != false)
+        {
             D_800DFB60++;
-            Chara_Load(1, 8, g_SysWork.npcCoords_FC0, 0, NULL, NULL);
+            Chara_Load(1, Chara_GreyChild, g_SysWork.npcCoords_FC0, 0, NULL, NULL);
         }
     }
 }
@@ -1168,7 +1161,7 @@ void func_800DC33C(void) // 0x800DC33C
     if (!Savegame_EventFlagGet(EventFlag_5))
     {
         func_800865FC(true, 1, 0, FP_ANGLE(180.0f), Q12(-62.0f), Q12(108.0f));
-        sharedFunc_800D88AC_0_s00(g_SysWork.npcs_1A0);
+        sharedFunc_800D88AC_0_s00(&g_SysWork.npcs_1A0[0]);
 
         Savegame_EventFlagSet(EventFlag_5);
     }
@@ -1192,7 +1185,7 @@ block7:
                 g_SysWork.npcs_1A0[0].position_18.vx = 1;
                 g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
 
-                sharedFunc_800D88C0_0_s00(g_SysWork.npcs_1A0, 0);
+                sharedFunc_800D88C0_0_s00(&g_SysWork.npcs_1A0[0], 0);
 
                 Savegame_EventFlagSet(EventFlag_6);
                 return;
@@ -1261,7 +1254,7 @@ void func_800DC694(void) // 0x800DC694
 
     if (!Savegame_EventFlagGet(EventFlag_7))
     {
-        sharedFunc_800D88AC_0_s00(g_SysWork.npcs_1A0);
+        sharedFunc_800D88AC_0_s00(&g_SysWork.npcs_1A0[0]);
         return;
     }
 
@@ -1280,7 +1273,7 @@ block7:
                 g_SysWork.npcs_1A0[0].position_18.vz = 1;
                 g_SysWork.npcs_1A0[0].position_18.vx = 1;
 
-                sharedFunc_800D88C0_0_s00(g_SysWork.npcs_1A0, 0);
+                sharedFunc_800D88C0_0_s00(&g_SysWork.npcs_1A0[0], 0);
 
                 Savegame_EventFlagSet(EventFlag_9);
                 return;
@@ -1338,7 +1331,7 @@ void func_800DC8D8(void) // 0x800DC8D8
 
         if (mag < Q12(14.8f))
         {
-            sharedFunc_800D88AC_0_s00(g_SysWork.npcs_1A0);
+            sharedFunc_800D88AC_0_s00(&g_SysWork.npcs_1A0[0]);
 
             Savegame_EventFlagSet(EventFlag_10);
 
@@ -1483,30 +1476,34 @@ void func_800DD0CC()
 
     if (D_800DFB40 == NO_VALUE)
     {
-        func_8003EF10(6, 6, 5, (s32) &D_800DFB40, 0, 0x64000);
+        func_8003EF10(6, 6, 5, &D_800DFB40, 0, Q12(100.0f));
         D_800DFB40 = 0;
     }
+
     D_800DFB44.unk0 += g_DeltaTime0;
+
     vec0[0] = FP_MULTIPLY(D_800DFB44.unk0, D_800DFB48.unk0, 6);
-    if (vec0[0] >= 0x1000)
+    if (vec0[0] >= Q12(1.0f))
     {
-        D_800DFB44.unk0 = 0U;
-        D_800DFB48.unk0 = (u8) ((Rng_Rand16() & 0x3F) + 0x20);
-        D_800DFB48.unk1 = (u8) ((Rng_Rand16() & 0x1F) + 0x20);
-        vec0[0] &= 0xFFF;
+        D_800DFB44.unk0 = 0;
+        D_800DFB48.unk0 = Rng_GenerateInt((u32)Rng_Rand16(), 32, 95);
+        D_800DFB48.unk1 = Rng_GenerateInt((u32)Rng_Rand16(), 32, 63);
+        vec0[0]         = Q12_FRACT(vec0[0]);
     }
     
     vec0[0] = FP_MULTIPLY(D_800DFB48.unk1, Math_Sin(D_800DFB44.unk2), 12);
+
     D_800DFB44.unk2 += g_DeltaTime0;
+
     vec0[1] = FP_MULTIPLY(D_800DFB44.unk2, D_800DFB48.unk2, 6);
-    if (vec0[1] >= 0x1000)
+    if (vec0[1] >= Q12(1.0f))
     {
         D_800DFB44.unk2 = 0;
-        D_800DFB48.unk2 = (u8) ((Rng_Rand16() & 0x3F) + 0x20);
-        vec0[1] &= 0xFFF;
+        D_800DFB48.unk2 = Rng_GenerateInt((u32)Rng_Rand16(), 32, 95);
+        vec0[1]         = Q12_FRACT(vec0[1]);
     }
 
-    D_800DFB40 = MAX(0, FP_MULTIPLY((FP_MULTIPLY(vec0[0], Q12(4.5f), 6) + Q12(2.5f)), Math_Sin(vec0[1]), 12) + Q12(4.0f));
+    D_800DFB40 = MAX(0, FP_MULTIPLY((FP_MULTIPLY(vec0[0], Q12(4.5f), 6) + Q12(2.5f)), Math_Sin(vec0[1]), Q12_SHIFT) + Q12(4.0f));
 }
 
 INCLUDE_RODATA("asm/maps/map0_s00/nonmatchings/map0_s00", D_800CB6A4);

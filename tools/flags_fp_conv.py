@@ -45,9 +45,9 @@ def convert_flag_expression(expr):
             if mask & (1 << bit):
                 final_idx = array_idx * 32 + bit
                 if value & (1 << bit):
-                    conditions.append(f"Savegame_EventFlagGet({final_idx})")
+                    conditions.append(f"Savegame_EventFlagGet(EventFlag_{final_idx})")
                 else:
-                    conditions.append(f"!Savegame_EventFlagGet({final_idx})")
+                    conditions.append(f"!Savegame_EventFlagGet(EventFlag_{final_idx})")
         return " && ".join(conditions) if conditions else None
 
     # |= (shift)

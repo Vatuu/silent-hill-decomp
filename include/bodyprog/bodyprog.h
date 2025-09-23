@@ -2570,7 +2570,7 @@ void func_8003ED74(s32 arg0, s32 arg1);
 
 void func_8003EDA8();
 
-void func_8003EF10(s32 idx0, s32 idx1, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
+void func_8003EF10(s32 idx0, s32 idx1, s32 arg2, s8* arg3, s32 arg4, s32 arg5);
 
 s32 func_8003F4DC(GsCOORDINATE2** arg0, SVECTOR* rot, s32 arg2, s32 arg3, u32 arg4, s_SysWork* sysWork);
 
@@ -3287,7 +3287,7 @@ void func_800865FC(bool isPos, s32 idx0, s32 idx1, q3_12 angleY, q19_12 offsetOr
 
 void func_800866D4(s32 arg0, s32 arg1, s32 arg2);
 
-void func_80086728(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+void func_80086728(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3);
 
 void func_8008677C(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
@@ -4070,7 +4070,7 @@ void func_8003EE30(s32 arg0, s8* arg1, s32 arg2, s32 arg3);
 
 void func_8003EEDC(s32 arg0, s32 arg1);
 
-void func_8003EF74(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+void func_8003EF74(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s32 arg2, s8* arg3, s32 arg4, s32 arg5);
 
 void func_8003F08C(s_StructUnk3* arg0, s_sub_StructUnk3* arg1);
 
