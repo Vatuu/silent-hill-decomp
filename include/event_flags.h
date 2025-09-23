@@ -5,18 +5,21 @@ typedef enum _EventFlag
 {
     EventFlag_0 = 0, // M0S01 FirstAidKit? Also used in M0S02, might just be a default.
 
-    EventFlag_4 = 4,
-
-    EventFlag_6 = 6,
-
-    EventFlag_9 = 9,
-
+    EventFlag_4  = 4,
+    EventFlag_5  = 5,
+    EventFlag_6  = 6,
+    EventFlag_7  = 7,
+    EventFlag_8  = 8,
+    EventFlag_9  = 9,
+    EventFlag_10 = 10,
     EventFlag_11 = 11,
 
     EventFlag_13 = 13,
-
+    EventFlag_14 = 14,
+    EventFlag_15 = 15,
     EventFlag_16 = 16,
     EventFlag_17 = 17,
+    EventFlag_18 = 18,
 
     EventFlag_24 = 24,
     EventFlag_25 = 25,
@@ -84,6 +87,8 @@ typedef enum _EventFlag
     EventFlag_183 = 183,
 
     EventFlag_SeenSaveScreen = 186,
+
+    EventFlag_188 = 188,
 
     EventFlag_197 = 197,
 

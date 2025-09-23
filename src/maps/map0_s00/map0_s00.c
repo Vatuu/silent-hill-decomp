@@ -612,15 +612,8 @@ void func_800DA454(void) // 0x800DA454
 
 void func_800DA5A0(void) // 0x800DA5A0
 {
-    s32 temp_s0;
-    s32 temp_s1;
     s32 temp_s1_2;
     s32 temp_s2;
-    s32 temp_v1;
-    s32 var_a0;
-    s32 var_a1;
-    s32 temp;
-    s32 temp2;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -744,7 +737,7 @@ void func_800DA5A0(void) // 0x800DA5A0
         default:
             func_8008616C(0, false, 2, 0, false);
 
-            g_SavegamePtr->eventFlags_168[0] |= 0x10;
+            Savegame_EventFlagSet(EventFlag_4);
 
             sharedFunc_800D2244_0_s00(0);
             SysWork_StateSetNext(SysState_Gameplay);
@@ -930,7 +923,9 @@ void func_800DAEFC(void) // 0x800DAEFC
             SysWork_StateSetNext(SysState_Gameplay);
             func_8008616C(0, false, 2, 0, false);
 
-            g_SavegamePtr->eventFlags_168[0] |= 0x180;
+            Savegame_EventFlagSet(EventFlag_7);
+            Savegame_EventFlagSet(EventFlag_8);
+
             func_800865FC(true, 1, 0, FP_ANGLE(180.0f), Q12(-62.0f), Q12(49.0f));
     }
 }
@@ -991,7 +986,7 @@ void Map_WorldObjectsInit(void) // 0x800DBE68
     rotXY = 0xFAE4FE17; // @hack `vx` and `vy` combined into `s32`.
     D_800E3AAC.vz = 0;
 
-    g_SavegamePtr->eventFlags_168[5] &= 0xEFFFFFFF;
+    Savegame_EventFlagClear(EventFlag_188);
     *(s32*)&D_800E3AAC.vx = rotXY;
 }
 
@@ -1041,17 +1036,17 @@ void Map_WorldObjectsUpdate(void) // 0x800DBF08
         
             if (g_SysWork.field_22A0 & 0x40)
             {
-                g_SavegamePtr->eventFlags_168[5] &= 0xEFFFFFFF;
+                Savegame_EventFlagClear(EventFlag_188);
             }
-        
-            if (!(g_SavegamePtr->eventFlags_168[5] & 0x10000000))
+
+            if (!Savegame_EventFlagGet(EventFlag_188))
             {
                 func_8004690C(Sfx_Unk1361);
                 Sd_EngineCmd(Sfx_Unk1358);
-                g_SavegamePtr->eventFlags_168[5] |= 0x10000000;
+                Savegame_EventFlagSet(EventFlag_188);
             }
-        
-            if (!(g_SavegamePtr->eventFlags_168[0] & 0x01000000))
+
+            if (!Savegame_EventFlagGet(EventFlag_24))
             {
                 func_8005DE0C(Sfx_Unk1358, &D_800E3A9C, 0x40, 0x8000, 0);
             }
@@ -1063,7 +1058,7 @@ void Event_GreyChildrenSpawn(void) // 0x800DC1E8
 {
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
-    if ((g_SavegamePtr->eventFlags_168[0] & 0x20000) && g_SysWork.npcs_1A0[0].model_0.charaId_0 == Chara_None)
+    if (Savegame_EventFlagGet(EventFlag_17) && g_SysWork.npcs_1A0[0].model_0.charaId_0 == Chara_None)
     {
         if (PLAYER_IN_MAP_CHUNK(vx, 1, -7, -1, -7) && PLAYER_IN_MAP_CHUNK(vz, 1, 7, -1, 7))
         {
@@ -1079,24 +1074,18 @@ void func_800DC33C(void) // 0x800DC33C
     VECTOR3     camPos;
     s16         temp_a0;
     s16         var_s1;
-    s32         var_v1;
     q19_12      temp_a0_2;
     s32         temp_v1;
     s32         var_a0;
     s32         var_a2;
     s32         var_v1_2;
-    s_Savegame* save;
 
-    save = g_SavegamePtr;
-
-    // TODO: Use `Savegame_EventFlagGet`.
-
-    if (!(save->eventFlags_168[0] & 0x20))
+    if (!Savegame_EventFlagGet(EventFlag_5))
     {
         func_800865FC(true, 1, 0, FP_ANGLE(180.0f), Q12(-62.0f), Q12(108.0f));
         sharedFunc_800D88AC_0_s00(g_SysWork.npcs_1A0);
 
-        save->eventFlags_168[0] |= 0x20;
+        Savegame_EventFlagSet(EventFlag_5);
     }
 
     vwGetViewPosition(&camPos);
@@ -1120,7 +1109,7 @@ block7:
 
                 sharedFunc_800D88C0_0_s00(g_SysWork.npcs_1A0, 0);
 
-                g_SavegamePtr->eventFlags_168[0] |= 0x40;
+                Savegame_EventFlagSet(EventFlag_6);
                 return;
             }
         }
@@ -1185,8 +1174,7 @@ void func_800DC694(void) // 0x800DC694
     mag = Math_Vector2MagCalc(g_SysWork.npcs_1A0[0].position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx,
                               (g_SysWork.npcs_1A0[0].position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz) - Q12(2.0f));
 
-    // TODO: Use `Savegame_EventFlagGet`.
-    if (!(g_SavegamePtr->eventFlags_168[0] & 0x80))
+    if (!Savegame_EventFlagGet(EventFlag_7))
     {
         sharedFunc_800D88AC_0_s00(g_SysWork.npcs_1A0);
         return;
@@ -1209,7 +1197,7 @@ block7:
 
                 sharedFunc_800D88C0_0_s00(g_SysWork.npcs_1A0, 0);
 
-                g_SavegamePtr->eventFlags_168[0] |= 0x200;
+                Savegame_EventFlagSet(EventFlag_9);
                 return;
             }
         }
@@ -1257,8 +1245,7 @@ void func_800DC8D8(void) // 0x800DC8D8
     mag = Math_Vector2MagCalc(g_SysWork.npcs_1A0[0].position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx,
                               (g_SysWork.npcs_1A0[0].position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz) - Q12(2.0f));
 
-    // TODO: Use `Savegame_EventFlagGet`.
-    if (!(g_SavegamePtr->eventFlags_168[0] & 0x400))
+    if (!Savegame_EventFlagGet(EventFlag_10))
     {
         g_SysWork.npcs_1A0[0].position_18.vx = Q12(-61.0f);
         g_SysWork.npcs_1A0[0].position_18.vz = Q12(48.0f);
@@ -1268,7 +1255,7 @@ void func_800DC8D8(void) // 0x800DC8D8
         {
             sharedFunc_800D88AC_0_s00(g_SysWork.npcs_1A0);
 
-            g_SavegamePtr->eventFlags_168[0] |= 0x400;
+            Savegame_EventFlagSet(EventFlag_10);
 
             func_800865FC(true, 1, 0, FP_ANGLE(90.0f), Q12(-57.0f), Q12(47.0f));
         }
@@ -1281,7 +1268,7 @@ void func_800DC8D8(void) // 0x800DC8D8
 
         if (g_SysWork.npcs_1A0[0].position_18.vx > Q12(-58.0f))
         {
-            g_SavegamePtr->eventFlags_168[0] |= 0x800;
+            Savegame_EventFlagSet(EventFlag_11);
             g_SysWork.npcs_1A0[0].model_0.charaId_0 = Chara_None;
 
             func_8005DC1C(Sfx_Unk1354, &D_800CB6A4, 0x80, 0);
@@ -1293,9 +1280,6 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DCA30);
 
 void func_800DCC54(void) // 0x800DCC54
 {
-    s_Savegame* save;
-    u32         temp_v1;
-
     if (D_800DFADC == NO_VALUE)
     {
         func_8003EF10(6, 6, 5, (s32)&D_800DFADC, 0, 0x64000);
@@ -1304,16 +1288,13 @@ void func_800DCC54(void) // 0x800DCC54
         Sd_PlaySfx(0x54Fu, 0, 0xE0u);
     }
 
-    save = g_SavegamePtr;
-
-    temp_v1 = save->eventFlags_168[0];
-    if (temp_v1 & 0x4000)
+    if (Savegame_EventFlagGet(EventFlag_14))
     {
-        if (!(temp_v1 & 0x40000))
+        if (!Savegame_EventFlagGet(EventFlag_18))
         {
             sharedFunc_800D0B18_0_s00(6);
 
-            save->eventFlags_168[0] |= 0x40000;
+            Savegame_EventFlagSet(EventFlag_18);
 
             Sd_PlaySfx(0x54FU, 0, 0xC0u);
 
@@ -1329,12 +1310,12 @@ void func_800DCC54(void) // 0x800DCC54
 
     if (D_800DFADC > 0x4FFFF)
     {
-        g_SavegamePtr->eventFlags_168[0] |= 0x8000;
+        Savegame_EventFlagSet(EventFlag_15);
     }
 
     if (D_800DFADC > 0x63FFF)
     {
-        g_SavegamePtr->eventFlags_168[0] |= 0x10000;
+        Savegame_EventFlagSet(EventFlag_16);
     }
 }
 
@@ -1378,7 +1359,6 @@ s32 func_800DCDA8(void) // 0x800DCDA8
 s32 func_800DCF38(s32 arg0) // 0x800DCF38
 {
     s16 sp20;
-    s32 temp_v0;
     s32 var_t0;
     s32 var_v0;
 
@@ -1386,14 +1366,14 @@ s32 func_800DCF38(s32 arg0) // 0x800DCF38
 
     if (g_SysWork.sysState_8 == SysState_EventCallFunc)
     {
-        if (!(g_SavegamePtr->eventFlags_168[0] & 0x8000))
+        if (!Savegame_EventFlagGet(EventFlag_15))
         {
             return arg0;
         }
     }
     else
     {
-        if (!(g_SavegamePtr->eventFlags_168[0] & 0x8000))
+        if (!Savegame_EventFlagGet(EventFlag_15))
         {
             if (g_SysWork.player_4C.chara_0.position_18.vx < Q12(-200.0f))
             {
