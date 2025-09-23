@@ -804,16 +804,16 @@ void Map_WorldObjectsUpdate(void) // 0x800DBF08
     }
 }
 
-void func_800DC1E8(void)
+void Event_GreyChildrenSpawn(void)
 {
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
     if ((g_SavegamePtr->eventFlags_168[0] & 0x20000) && (g_SysWork.npcs_1A0[0].model_0.charaId_0 == 0))
     {
         if (PLAYER_IN_MAP_CHUNK(vx, 1, -7, -1, -7) && PLAYER_IN_MAP_CHUNK(vz, 1, 7, -1, 7)) {
-            Chara_Spawn(8, 0, Q12(-252.0f), Q12(223.0f), Q12(0.5f),   5);
-            Chara_Spawn(8, 1, Q12(-254.0f), Q12(221.0f), Q12(0.375f), 5);
-            Chara_Spawn(8, 2, Q12(-259.0f), Q12(232.0f), Q12(0.0f),   5);
+            Chara_Spawn(Chara_GreyChild, 0, Q12(-252.0f), Q12(223.0f), Q12(0.5f),   5);
+            Chara_Spawn(Chara_GreyChild, 1, Q12(-254.0f), Q12(221.0f), Q12(0.375f), 5);
+            Chara_Spawn(Chara_GreyChild, 2, Q12(-259.0f), Q12(232.0f), Q12(0.0f),   5);
         }
     }
 }

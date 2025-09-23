@@ -110,6 +110,9 @@ void Map_WorldObjectsInit(void);
 
 void Map_WorldObjectsUpdate(void);
 
+void Event_GreyChildrenSpawn(void);
+
+
 void func_800DA454();
 
 #endif

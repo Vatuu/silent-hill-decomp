@@ -9,7 +9,6 @@
 #define func_800D94F8 (void(*)(s32))0x800D94F8 // Based on the signature of a func in map0_s01.
 #define func_800DBE68 (void(*)(void))0x800DBE68
 #define func_800DBF08 (void(*)(void))0x800DBF08
-#define func_800DC1E8 (void(*)(void))0x800DC1E8
 #define func_800D0E34 (void(*)(void))0x800D0E34
 #define func_800D1C38 (void(*)(void))0x800D1C38
 #define func_800D23EC (void(*)(void))0x800D23EC
@@ -101,7 +100,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .func_3C = func_800DBE68,
     .func_40 = func_800DBF08,
     .func_44 = NULL,
-    .func_48 = func_800DC1E8,
+    .func_48 = Event_GreyChildrenSpawn,
     .unkTable1_4C = D_800DFB7C,
     .unkTable1Count_50 = ARRAY_SIZE(D_800DFB7C),
     .bloodSplats_54 = g_Effect_BloodSplats,
