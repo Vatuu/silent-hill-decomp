@@ -29,7 +29,7 @@ extern q19_12 D_800DFAD0;
 
 extern s32 D_800DFAD4;
 
-extern s32 D_800DFADC;
+extern q19_12 D_800DFADC;
 
 extern s8 D_800E34EC;
 

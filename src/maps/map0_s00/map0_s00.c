@@ -1071,14 +1071,14 @@ void Event_GreyChildrenSpawn(void) // 0x800DC1E8
 
 void func_800DC33C(void) // 0x800DC33C
 {
-    VECTOR3     camPos;
-    s16         temp_a0;
-    s16         var_s1;
-    q19_12      temp_a0_2;
-    s32         temp_v1;
-    s32         var_a0;
-    s32         var_a2;
-    s32         var_v1_2;
+    VECTOR3 camPos;
+    s16     temp_a0;
+    s16     var_s1;
+    q19_12  temp_a0_2;
+    s32     temp_v1;
+    s32     var_a0;
+    s32     var_a2;
+    s32     var_v1_2;
 
     if (!Savegame_EventFlagGet(EventFlag_5))
     {
@@ -1271,7 +1271,7 @@ void func_800DC8D8(void) // 0x800DC8D8
             Savegame_EventFlagSet(EventFlag_11);
             g_SysWork.npcs_1A0[0].model_0.charaId_0 = Chara_None;
 
-            func_8005DC1C(Sfx_Unk1354, &D_800CB6A4, 0x80, 0);
+            func_8005DC1C(Sfx_Unk1354, &D_800CB6A4, Q8_CLAMPED(0.5f), 0);
         }
     }
 }
@@ -1282,10 +1282,10 @@ void func_800DCC54(void) // 0x800DCC54
 {
     if (D_800DFADC == NO_VALUE)
     {
-        func_8003EF10(6, 6, 5, (s32)&D_800DFADC, 0, 0x64000);
-        D_800DFADC = 0;
+        func_8003EF10(6, 6, 5, &D_800DFADC, Q12(0.0f), Q12(100.0f));
+        D_800DFADC = Q12(0.0f);
 
-        Sd_PlaySfx(0x54Fu, 0, 0xE0u);
+        Sd_PlaySfx(Sfx_Unk1359, 0, Q8_CLAMPED(0.875f));
     }
 
     if (Savegame_EventFlagGet(EventFlag_14))
@@ -1296,9 +1296,9 @@ void func_800DCC54(void) // 0x800DCC54
 
             Savegame_EventFlagSet(EventFlag_18);
 
-            Sd_PlaySfx(0x54FU, 0, 0xC0u);
+            Sd_PlaySfx(Sfx_Unk1359, 0, Q8_CLAMPED(0.75f));
 
-            D_800DFADC = 0x3C000;
+            D_800DFADC = Q12(60.0f);
         }
 
         D_800DFADC = func_800DCF38(D_800DFADC);
@@ -1308,12 +1308,12 @@ void func_800DCC54(void) // 0x800DCC54
         D_800DFADC = func_800DCDA8();
     }
 
-    if (D_800DFADC > 0x4FFFF)
+    if (D_800DFADC >= Q12(80.0f))
     {
         Savegame_EventFlagSet(EventFlag_15);
     }
 
-    if (D_800DFADC > 0x63FFF)
+    if (D_800DFADC >= Q12(100.0f))
     {
         Savegame_EventFlagSet(EventFlag_16);
     }
