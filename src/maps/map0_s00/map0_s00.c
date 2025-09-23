@@ -690,7 +690,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DB26C);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DB514);
 
-void func_800DB870() // 0x800DB870
+void func_800DB870(void) // 0x800DB870
 {
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -715,7 +715,7 @@ void func_800DB870() // 0x800DB870
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DB94C);
 
-void func_800DBE00() // 0x800DBE00
+void func_800DBE00(void) // 0x800DBE00
 {
     func_8004690C(Sfx_Unk1359);
     func_8004690C(Sfx_Unk1361);
