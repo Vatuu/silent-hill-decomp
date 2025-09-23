@@ -339,7 +339,38 @@ void Ai_Cheryl_Init(s_SubCharacter* chara) // 0x800D8888
 
 #include "maps/shared/sharedFunc_800D92AC_0_s00.h" // 0x800D92AC
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D94F8);
+void func_800D94F8(void)
+{
+    s32 i;
+    s32 flags1;
+    s32 flags0;
+    u16 saveFlag;
+    u16* var_a2;
+    u32 saveByte;
+
+    // @hack not used directly but gets merged with the Savegame_EventFlagGet macros bellow.
+    saveByte = g_SavegamePtr->eventFlags_168[0];
+    flags1 = 0x199;
+    flags0 = 0x100;
+
+    if ((g_SysWork.player_4C.chara_0.health_B0 > 0) && (!(Savegame_EventFlagGet(23) && !Savegame_EventFlagGet(20))))
+    {
+        for (i=1; i < 7; i++)
+        {
+            saveFlag = D_800DF300[i];
+            if (Savegame_EventFlagGet((s16)saveFlag))
+            {
+                flags0 |= 1 << i;
+            }
+        }
+    }
+    else
+    {     
+        Savegame_EventFlagClear(EventFlag_20);
+        flags1 = 0x4CC;
+    }
+    func_80035F4C(flags0, flags1, &D_800DF2F8);
+}
 
 /** Debug function? */
 void Gfx_LoadingScreen_StageString() // 0x800D95D4

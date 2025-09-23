@@ -76,6 +76,10 @@ extern s32 D_800DFB5C;
 
 extern u8 D_800DFB60;
 
+extern u8 D_800DF2F8;
+
+extern s16 D_800DF300[];
+
 void func_800CBFB0(void);
 
 void func_800D0124();
