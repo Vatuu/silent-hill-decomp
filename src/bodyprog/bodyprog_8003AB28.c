@@ -3178,12 +3178,12 @@ s32 func_8003FEC0(s_sub_StructUnk3* arg0) // 0x8003FEC0
 
 void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
 {
-    s32 temp_a0;
-    s32 temp_v1;
-    s32 var_t0;
+    s32   temp_a0;
+    s32   temp_v1;
+    q23_8 var_t0;
 
-    temp_v1 = FP_MULTIPLY(arg0->field_2E, ((g_GameWork.config_0.optBrightness_22 * 8) + 4), Q12_SHIFT);
-    var_t0  = CLAMP(temp_v1, 0, 0xFF);
+    temp_v1 = FP_MULTIPLY(arg0->field_2E, (g_GameWork.config_0.optBrightness_22 * 8) + 4, Q12_SHIFT);
+    var_t0  = CLAMP(temp_v1, Q8_CLAMPED(0.0f), Q8_CLAMPED(1.0f));
 
     func_80055330(arg0->field_0.field_0.s_field_0.field_2, arg0->field_0.field_6, arg0->field_0.field_0.s_field_0.field_1, arg0->field_0.field_8, arg0->field_0.field_A, arg0->field_0.field_C, var_t0);
     Gfx_FogParamsSet(arg0->field_0.field_E != 0, arg0->field_0.fogColor_14.r, arg0->field_0.fogColor_14.g, arg0->field_0.fogColor_14.b);
