@@ -26,18 +26,18 @@ void sharedFunc_800D7560_0_s01(s_SubCharacter* chara)
     }
 
     headingAngle = rot->vy;
-    offsetZ      = FP_METER(0.0f);
+    offsetZ      = Q12(0.0f);
     if (sharedData_800E21D0_0_s01.flags_0 < 0)
     {
-        offsetX = FP_METER(0.0f);
+        offsetX = Q12(0.0f);
     }
     else
     {
         sinHeadingAngle = Math_Sin(headingAngle);
-        offsetX         = FP_MULTIPLY_PRECISE(sinHeadingAngle, FP_METER(-0.17f), Q12_SHIFT);
+        offsetX         = FP_MULTIPLY_PRECISE(sinHeadingAngle, Q12(-0.17f), Q12_SHIFT);
 
         cosHeadingAngle = Math_Cos(headingAngle);
-        offsetZ         = FP_MULTIPLY_PRECISE(cosHeadingAngle, FP_METER(-0.17f), Q12_SHIFT);
+        offsetZ         = FP_MULTIPLY_PRECISE(cosHeadingAngle, Q12(-0.17f), Q12_SHIFT);
     }
 
     mat->t[0] = Q12_TO_Q8(chara->position_18.vx + offsetX);

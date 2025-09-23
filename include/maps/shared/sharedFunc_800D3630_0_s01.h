@@ -15,7 +15,7 @@ s32 sharedFunc_800D3630_0_s01(s_SubCharacter* chara, s32* arg1)
     ret = sharedFunc_800D31D0_0_s01(chara, &g_SysWork.player_4C.chara_0.position_18, offset);
     if (ret != 0)
     {
-        offset = MAX(offset, FP_METER(1.5));
+        offset = MAX(offset, Q12(1.5));
         angle  = ratan2(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz);
 
         xOffset = FP_MULTIPLY_PRECISE(offset, Math_Sin(angle), 12);

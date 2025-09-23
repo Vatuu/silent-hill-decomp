@@ -199,7 +199,7 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
         chara->model_0.anim_4.alpha_A = Q12(0.0f);
         Character_AnimSet(chara, ANIM_STATUS(2, true), 0);
         chara->model_0.state_2++;
-        chara->position_18.vy = FP_METER(0.0f);
+        chara->position_18.vy = Q12(0.0f);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_105))

@@ -696,8 +696,8 @@ void func_800DEFE8(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800DEFE8
     yPos            = chara->position_18.vy;
     chara->field_CA = yPos;
     chara->field_CC = yPos;
-    chara->field_C8 = yPos - FP_METER(1.0f);
-    chara->field_CE = yPos - FP_METER(0.5f);
+    chara->field_C8 = yPos - Q12(1.0f);
+    chara->field_CE = yPos - Q12(0.5f);
 }
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DF044);
@@ -854,7 +854,7 @@ void func_800E0670(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800E0670
 
     dist = Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
                                g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz);
-    if (dist < FP_METER(2.5f) && func_800DFB04() == 0)
+    if (dist < Q12(2.5f) && func_800DFB04() == 0)
     {
         func_800DFA48(&g_SysWork.player_4C.chara_0.position_18, &chara->position_18);
     }

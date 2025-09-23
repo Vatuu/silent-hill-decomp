@@ -80,7 +80,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             dist = FP_2D_DISTANCE_SQR(arg2[0], chara->position_18);
             dist = SquareRoot0(dist);
 
-            if (FP_METER(0.00925f) >= ABS(dist))
+            if (Q12(0.00925f) >= ABS(dist))
             {
                 CHARA_STATE_E8 = 0;
                 CHARA_STATE_3 = 0;
@@ -147,8 +147,8 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
 
             dist = SquareRoot0(FP_2D_DISTANCE_SQR(arg2[tmpIdx], chara->position_18));
 
-            // TODO: Should be `arg1 * FP_METER(0.15f)`, but compiler splits out one distance for some reason.
-            if (dist < (((arg1 - 1) * FP_METER(0.15f)) + FP_METER(0.15f)) >> 4 ||
+            // TODO: Should be `arg1 * Q12(0.15f)`, but compiler splits out one distance for some reason.
+            if (dist < (((arg1 - 1) * Q12(0.15f)) + Q12(0.15f)) >> 4 ||
                 (sharedData_800DF1F4_0_s00 < dist && sharedData_800DF1F8_0_s00 != arg4 - 1))
             {
                 sharedData_800DF1F8_0_s00++;

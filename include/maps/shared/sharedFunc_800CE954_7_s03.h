@@ -15,7 +15,7 @@ void sharedFunc_800CE954_7_s03(s32 pass, s_Particle* part, s16* rand, s32* delta
         part->position0_0.vx += xDelta;
         part->position0_0.vz += zDelta - ((*deltaTime) * 2);
 
-        if ((ABS(part->position0_0.vx) + ABS(part->position0_0.vz)) > FP_METER(8.0))
+        if ((ABS(part->position0_0.vx) + ABS(part->position0_0.vz)) > Q12(8.0))
         {
             if (sharedData_800DF158_1_s02 != 0)
             {

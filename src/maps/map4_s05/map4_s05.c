@@ -170,9 +170,9 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
             chara->properties_E4.larvalStalker.properties_E8[7].val16[1] = -0x90; // Could be `FP_ANGLE(-12.7f)`?
             break;
         case 4:
-            chara->position_18.vx = FP_METER(-114.5f);
-            chara->position_18.vy = FP_METER(2.0f);
-            chara->position_18.vz = FP_METER(108.0f);
+            chara->position_18.vx = Q12(-114.5f);
+            chara->position_18.vy = Q12(2.0f);
+            chara->position_18.vz = Q12(108.0f);
 
             chara->model_0.state_2 = 2;
             Character_AnimSet(chara, ANIM_STATUS(FloatstingerAnim_Unk9, true), 191);

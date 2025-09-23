@@ -560,7 +560,7 @@ void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPo
     }
 
     // Set acceleration on XZ plane.
-    if (xzAccel == FP_METER(0.0f))
+    if (xzAccel == Q12(0.0f))
     {
         camTranslationParams.accel_xz = cam_mv_prm_user.accel_xz;
     }
@@ -570,7 +570,7 @@ void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPo
     }
 
     // Set acceleration on Y axis.
-    if (yAccel == FP_METER(0.0f))
+    if (yAccel == Q12(0.0f))
     {
         camTranslationParams.accel_y = cam_mv_prm_user.accel_y;
     }
@@ -580,7 +580,7 @@ void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPo
     }
 
     // Set max speed on XZ plane.
-    if (xzSpeedMax == FP_METER(0.0f))
+    if (xzSpeedMax == Q12(0.0f))
     {
         camTranslationParams.max_spd_xz = cam_mv_prm_user.max_spd_xz;
     }
@@ -590,7 +590,7 @@ void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPo
     }
 
     // Set max speed on Y axis.
-    if (ySpeedMax == FP_METER(0.0f))
+    if (ySpeedMax == Q12(0.0f))
     {
         camTranslationParams.max_spd_y = cam_mv_prm_user.max_spd_y;
     }

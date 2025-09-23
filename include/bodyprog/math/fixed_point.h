@@ -297,14 +297,4 @@
     (s32)(((((rad) < 0.0f) ? (PI + (PI - ABS(rad))) : (rad)) * ((float)FP_PI / PI)) * \
           (((rad) < 0.0f || (rad) >= PI) ? 1.0f : 2.0f))
 
-/** @brief Converts floating-point meters to Q19.12 fixed-point world space.
- *
- * @note 1 meter = 4096 units.
- *
- * @param met Meters (`float`).
- * @return Q19.12 fixed-point world space meters (`s32`).
- */
-#define FP_METER(met) \
-    Q12(met)
-
 #endif

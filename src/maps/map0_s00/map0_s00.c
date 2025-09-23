@@ -96,22 +96,22 @@ void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* arg2) // 0x800D0
             }
 
             partCpy->position0_0.vy = sharedData_800E323C_0_s00.vy;
-            partCpy->movement_18.vz = FP_METER(0.0f);
-            partCpy->movement_18.vx = FP_METER(0.0f);
-            partCpy->movement_18.vy = FP_METER(0.0245f);
+            partCpy->movement_18.vz = Q12(0.0f);
+            partCpy->movement_18.vx = Q12(0.0f);
+            partCpy->movement_18.vy = Q12(0.0245f);
 
             sharedFunc_800D01BC_0_s00(arg2, part, 5);
-            partCpy->position1_C.vz = FP_METER(0.0f);
-            partCpy->position1_C.vy = FP_METER(0.0f);
-            partCpy->position1_C.vx = FP_METER(0.0f);
+            partCpy->position1_C.vz = Q12(0.0f);
+            partCpy->position1_C.vy = Q12(0.0f);
+            partCpy->position1_C.vx = Q12(0.0f);
             break;
 
         case 1:
             partCpy->type_1F = ParticleType_Rain;
-            partCpy->position0_0.vy = sharedData_800E323C_0_s00.vy + FP_METER(Rng_GenerateInt(Rng_Rand16(), 0, 2));
+            partCpy->position0_0.vy = sharedData_800E323C_0_s00.vy + Q12(Rng_GenerateInt(Rng_Rand16(), 0, 2));
 
             partCpy->position1_C.vy = sharedData_800E323C_0_s00.vy;
-            partCpy->movement_18.vy = FP_METER(0.03675f);
+            partCpy->movement_18.vy = Q12(0.03675f);
             sharedFunc_800D01BC_0_s00(arg2, part, 6);
             partCpy->position1_C.vx = partCpy->position0_0.vx;
             partCpy->position1_C.vz = partCpy->position0_0.vz;
@@ -125,7 +125,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0394);
 
 bool func_800D0600() // 0x800D0600
 {
-    #define FIXED_DIST FP_METER(40.0f)
+    #define FIXED_DIST Q12(40.0f)
     
     s32 distX;
     s32 distZ;
@@ -133,11 +133,11 @@ bool func_800D0600() // 0x800D0600
     // Check against first position.
     distX = ABS(g_SysWork.player_4C.chara_0.position_18.vx - D_800E32DC.position0_0.vx);
     distZ = g_SysWork.player_4C.chara_0.position_18.vz - D_800E32DC.position0_0.vz;
-    if (distZ >= FP_METER(0.0f) && (distX + distZ) < FIXED_DIST)
+    if (distZ >= Q12(0.0f) && (distX + distZ) < FIXED_DIST)
     {
         goto ret1;
     }
-    else if (distZ < FP_METER(0.0f) && (distX + (D_800E32DC.position0_0.vz - g_SysWork.player_4C.chara_0.position_18.vz)) < FIXED_DIST)
+    else if (distZ < Q12(0.0f) && (distX + (D_800E32DC.position0_0.vz - g_SysWork.player_4C.chara_0.position_18.vz)) < FIXED_DIST)
     {
         goto ret1;
     }
@@ -145,11 +145,11 @@ bool func_800D0600() // 0x800D0600
     // Check against against second position.
     distX = ABS(g_SysWork.player_4C.chara_0.position_18.vx - D_800E32DC.position1_C.vx);
     distZ = g_SysWork.player_4C.chara_0.position_18.vz - D_800E32DC.position1_C.vz;
-    if (distZ >= FP_METER(0.0f) && (distX + distZ) < FIXED_DIST)
+    if (distZ >= Q12(0.0f) && (distX + distZ) < FIXED_DIST)
     {
         goto ret1;
     }
-    else if (distZ < FP_METER(0.0f) && (distX + (D_800E32DC.position1_C.vz - g_SysWork.player_4C.chara_0.position_18.vz)) < FIXED_DIST)
+    else if (distZ < Q12(0.0f) && (distX + (D_800E32DC.position1_C.vz - g_SysWork.player_4C.chara_0.position_18.vz)) < FIXED_DIST)
     {
         goto ret1;
     }

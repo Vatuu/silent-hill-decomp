@@ -409,7 +409,7 @@ void func_800D16C4(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
         if (playerState < PlayerState_Unk87 || (playerState >= PlayerState_Unk89 && playerState != PlayerState_Unk106))
         {
-            chara->position_18.vy = FP_METER(0.0f);
+            chara->position_18.vy = Q12(0.0f);
         }
 
         chara->field_34 = 0;
@@ -473,7 +473,7 @@ void Player_FallBackward(void) // 0x800D2094
 
     player = &g_SysWork.player_4C;
 
-    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = FP_METER(2.3f);
+    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(2.3f);
     g_SysWork.player_4C.chara_0.properties_E4.player.headingAngle_124       = FP_ANGLE(180.0f);
     g_Player_HeadingAngle                                                   = FP_ANGLE(180.0f);
 

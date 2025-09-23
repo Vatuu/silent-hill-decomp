@@ -782,7 +782,7 @@ void Gfx_LoadingScreen_PlayerRun() // 0x80035BE0
         vcInitCamera(&g_MapOverlayHeader, &g_SysWork.player_4C.chara_0.position_18);
         func_80040004(&g_MapOverlayHeader);
 
-        camLookAt.vy = FP_METER(-0.6f);
+        camLookAt.vy = Q12(-0.6f);
         camLookAt.vx = g_SysWork.player_4C.chara_0.position_18.vx;
         camLookAt.vz = g_SysWork.player_4C.chara_0.position_18.vz;
 
@@ -790,7 +790,7 @@ void Gfx_LoadingScreen_PlayerRun() // 0x80035BE0
 
         camLookAt.vx -= Math_Sin(g_SysWork.player_4C.chara_0.rotation_24.vy - FP_ANGLE(22.5f)) * 2;
         temp          = Math_Cos(g_SysWork.player_4C.chara_0.rotation_24.vy - FP_ANGLE(22.5f));
-        camLookAt.vy  = FP_METER(-1.0f);
+        camLookAt.vy  = Q12(-1.0f);
         camLookAt.vz -= temp * 2;
 
         vcUserCamTarget(&camLookAt, NULL, true);
@@ -801,7 +801,7 @@ void Gfx_LoadingScreen_PlayerRun() // 0x80035BE0
         g_SysWork.player_4C.extra_128.disabledAnimBones_18 = 0;
         model->anim_4.flags_2                             |= AnimFlag_Unlocked | AnimFlag_Visible;
         model->anim_4.time_4                               = Q12(26.0f);
-        g_SysWork.player_4C.chara_0.position_18.vy         = FP_METER(0.2f);
+        g_SysWork.player_4C.chara_0.position_18.vy         = Q12(0.2f);
 
         D_800A998C.status_4 = model->anim_4.status_0;
 
@@ -1730,7 +1730,7 @@ void Chara_PositionUpdateFromParams(s_AreaLoadParams* params) // 0x800371E8
     rotY = FP_ANGLE_FROM_PACKED(params->rotationY_4_16);
     Math_SVectorSet(&g_SysWork.player_4C.chara_0.rotation_24, FP_ANGLE(0.0f), rotY, FP_ANGLE(0.0f));
 
-    g_SysWork.player_4C.chara_0.position_18.vy = FP_METER(0.0f);
+    g_SysWork.player_4C.chara_0.position_18.vy = Q12(0.0f);
     g_SysWork.player_4C.chara_0.position_18.vx = params->char_x_0;
     g_SysWork.player_4C.chara_0.position_18.vz = params->char_z_8;
 
@@ -1802,18 +1802,18 @@ bool func_800378D4(s_AreaLoadParams* areaLoadParams) // 0x800378D4
     }
 
     x = areaLoadParams->char_x_0 - D_800A9A24;
-    if (ABS(x) > FP_METER(0.8f))
+    if (ABS(x) > Q12(0.8f))
     {
         return false;
     }
 
     z = areaLoadParams->char_z_8 - D_800A9A28;
-    if (ABS(z) > FP_METER(0.8f))
+    if (ABS(z) > Q12(0.8f))
     {
         return false;
     }
 
-    if ((SQUARE(x) + SQUARE(z)) > SQUARE(FP_METER(0.8f)))
+    if ((SQUARE(x) + SQUARE(z)) > SQUARE(Q12(0.8f)))
     {
         return false;
     }

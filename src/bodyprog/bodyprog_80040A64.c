@@ -1083,10 +1083,10 @@ q19_12 Ipd_DistanceToEdgeWithPaddingGet(q19_12 posX, q19_12 posZ, s32 fileChunkC
     dist = Ipd_DistanceToEdgeGet(Q12_TO_Q8(posX), Q12_TO_Q8(posZ), fileChunkCoordX, fileChunkCoordZ);
     if (isExterior)
     {
-        dist -= FP_METER(1.0f);
-        if (dist < FP_METER(0.0f))
+        dist -= Q12(1.0f);
+        if (dist < Q12(0.0f))
         {
-            dist = FP_METER(0.0f);
+            dist = Q12(0.0f);
         }
     }
 
@@ -1153,7 +1153,7 @@ s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 p
 
                 chunkIdx = Map_IpdIdxGet(gridX, gridZ);
                 if (chunkIdx != NO_VALUE &&
-                    Ipd_DistanceToEdgeWithPaddingGet(posX0, posZ0, gridX, gridZ, map->isExterior) <= FP_METER(0.0f) &&
+                    Ipd_DistanceToEdgeWithPaddingGet(posX0, posZ0, gridX, gridZ, map->isExterior) <= Q12(0.0f) &&
                     !Map_IsIpdPresent(map->ipdActive_15C, gridX, gridZ))
                 {
                     chunk = Ipd_FreeChunkFind(map->ipdActive_15C, map->isExterior);
@@ -1205,7 +1205,7 @@ void Ipd_ActiveChunksSample(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1
             curChunk->materialCount_14 = Ipd_HalfPageMaterialCountGet(curChunk->ipdHdr_0);
         }
 
-        if (curChunk->distance0_C > FP_METER(0.0f) && curChunk->distance1_10 > FP_METER(0.0f))
+        if (curChunk->distance0_C > Q12(0.0f) && curChunk->distance1_10 > Q12(0.0f))
         {
             curChunk->outsideCount_18++;
         }
@@ -1231,7 +1231,7 @@ void func_800433B8(s_Map* map) // 0x800433B8
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
             if (curChunk->ipdHdr_0->isLoaded_1 &&
-                curChunk->distance0_C > FP_METER(0.0f) && curChunk->distance1_10 > FP_METER(0.0f))
+                curChunk->distance0_C > Q12(0.0f) && curChunk->distance1_10 > Q12(0.0f))
             {
                 Lm_MaterialRefCountDec(curChunk->ipdHdr_0->lmHdr_4);
             }
@@ -1243,7 +1243,7 @@ void func_800433B8(s_Map* map) // 0x800433B8
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
             if (curChunk->ipdHdr_0->isLoaded_1 &&
-                (curChunk->distance0_C <= FP_METER(0.0f) || curChunk->distance1_10 <= FP_METER(0.0f)))
+                (curChunk->distance0_C <= Q12(0.0f) || curChunk->distance1_10 <= Q12(0.0f)))
             {
                 Ipd_MaterialsLoad(curChunk->ipdHdr_0, &map->ipdTextures_430.fullPage_0, &map->ipdTextures_430.halfPage_2C, map->texFileIdx_134);
                 Lm_MaterialFlagsApply(curChunk->ipdHdr_0->lmHdr_4);
@@ -1287,7 +1287,7 @@ s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool isExterior)
     activeChunk         = NULL;
     largestOutsideCount = 0;
     largestMatCount     = 0;
-    farthestDist        = FP_METER(0.0f);
+    farthestDist        = Q12(0.0f);
 
     for (curChunk = chunks; curChunk < &chunks[g_Map.ipdActiveSize_158]; curChunk++)
     {
@@ -1327,7 +1327,7 @@ s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool isExterior)
                 matCount = curChunk->materialCount_14;
 
                 dist = curChunk->distance0_C;
-                if (dist == FP_METER(0.0f))
+                if (dist == Q12(0.0f))
                 {
                     continue;
                 }
@@ -1389,7 +1389,7 @@ bool func_80043740() // 0x80043740
                 continue;
         }
 
-        if (curChunk->distance0_C <= FP_METER(0.0f) || curChunk->distance1_10 <= FP_METER(0.0f))
+        if (curChunk->distance0_C <= Q12(0.0f) || curChunk->distance1_10 <= Q12(0.0f))
         {
             return false;
         }
@@ -1407,7 +1407,7 @@ bool func_80043830(void) // 0x80043830
     {
         loadState = IpdHeader_LoadStateGet(curChunk);
         if (loadState == StaticModelLoadState_Invalid || loadState == StaticModelLoadState_Loaded ||
-            (curChunk->distance0_C > FP_METER(0.0f) && curChunk->distance1_10 > FP_METER(0.0f)))
+            (curChunk->distance0_C > Q12(0.0f) && curChunk->distance1_10 > Q12(0.0f)))
         {
             continue;
         }
