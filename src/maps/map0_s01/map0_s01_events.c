@@ -106,7 +106,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
             DmsHeader_FixOffsets(FS_BUFFER_11);
             Chara_Load(0, Chara_Cybil, &g_SysWork.npcCoords_FC0[0], NO_VALUE, NULL, NULL);
             func_80088D0C();
-            Chara_Spawn(Chara_Cybil, 0, FP_METER(4.4f), FP_METER(269.9f), FP_METER(0.0f), 2);
+            Chara_Spawn(Chara_Cybil, 0, Q12(4.4f), Q12(269.9f), FP_ANGLE(0.0f), 2);
             
             g_Timer0 = 0;
             SysWork_StateStepIncrement();
@@ -140,7 +140,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
         
         case 7:
             sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(7.8f), FP_TIME(0.0f), FP_TIME(26.0f), true, false);
-            Map_MessageWithAudio(15, &g_MapMsgSoundIdx, g_MapMsgSoundTable); // "Was I dreaming?"
+            Map_MessageWithAudio(15, &g_MapMsgSoundIdx, g_MapMsgSounds); // "Was I dreaming?"
             break;
         
         case 8:
@@ -159,11 +159,11 @@ void MapEvent_CafeCutscene() // 0x800DA980
             switch (g_SysWork.sysStateStep_C[0])
             {
                 case 10:
-                    Map_MessageWithAudio(16, &g_MapMsgSoundIdx, g_MapMsgSoundTable); // "How do you feel?"
+                    Map_MessageWithAudio(16, &g_MapMsgSoundIdx, g_MapMsgSounds); // "How do you feel?"
                     break;
 
                 case 11:
-                    Map_MessageWithAudio(17, &g_MapMsgSoundIdx, g_MapMsgSoundTable); // "Like I've been hit..."
+                    Map_MessageWithAudio(17, &g_MapMsgSoundIdx, g_MapMsgSounds); // "Like I've been hit..."
                     break;
 
                 case 12:
@@ -174,7 +174,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
                     break;
 
                 case 13:
-                    Map_MessageWithAudio(18, &g_MapMsgSoundIdx, g_MapMsgSoundTable); // "Glad to hear it."
+                    Map_MessageWithAudio(18, &g_MapMsgSoundIdx, g_MapMsgSounds); // "Glad to hear it."
                     break;
             }
 
@@ -198,7 +198,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
 
         case 14:
             sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(3.0f), FP_TIME(49.0f), FP_TIME(139.0f), true, false);
-            Map_MessageWithAudio(25, &g_MapMsgSoundIdx, g_MapMsgSoundTable); // "Have you seen a little girl?"
+            Map_MessageWithAudio(25, &g_MapMsgSoundIdx, g_MapMsgSounds); // "Have you seen a little girl?"
             break;
 
         case 15:
@@ -206,7 +206,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
             SysWork_StateStepIncrement();
 
         case 16:
-            Map_MessageWithAudio(35, &g_MapMsgSoundIdx, g_MapMsgSoundTable); // "What's your name?"
+            Map_MessageWithAudio(35, &g_MapMsgSoundIdx, g_MapMsgSounds); // "What's your name?"
             break;
 
         case 17:
@@ -247,7 +247,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
 
         case 25:
             sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(10.0f), FP_TIME(174.0f), FP_TIME(184.0f), true, false);
-            Map_MessageWithAudio(44, &g_MapMsgSoundIdx, g_MapMsgSoundTable);
+            Map_MessageWithAudio(44, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
 
         case 26:
@@ -257,7 +257,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
 
         case 27:
             sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(10.0f), FP_TIME(185.0f), FP_TIME(194.0f), true, false);
-            Map_MessageWithAudio(45, &g_MapMsgSoundIdx, g_MapMsgSoundTable);
+            Map_MessageWithAudio(45, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
 
         case 28:
@@ -267,7 +267,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
             SysWork_StateStepIncrement();
 
         case 29:
-            Map_MessageWithAudio(46, &g_MapMsgSoundIdx, g_MapMsgSoundTable); // "It's dangerous out there."
+            Map_MessageWithAudio(46, &g_MapMsgSoundIdx, g_MapMsgSounds); // "It's dangerous out there."
             break;
 
         case 30:
@@ -275,7 +275,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
             break;
 
         case 31:
-            Map_MessageWithAudio(49, &g_MapMsgSoundIdx, g_MapMsgSoundTable);
+            Map_MessageWithAudio(49, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
 
         case 32:
@@ -292,7 +292,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
 
         case 35:
             sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(5.0f), FP_TIME(223.0f), FP_TIME(251.0f), true, false);
-            Map_MessageWithAudio(51, &g_MapMsgSoundIdx, g_MapMsgSoundTable);
+            Map_MessageWithAudio(51, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
 
         case 36:
@@ -302,7 +302,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
 
         case 37:
             sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(5.0f), FP_TIME(223.0f), FP_TIME(251.0f), true, false);
-            Map_MessageWithAudio(55, &g_MapMsgSoundIdx, g_MapMsgSoundTable);
+            Map_MessageWithAudio(55, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
 
         case 38:
@@ -312,7 +312,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
 
         case 39:
             sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(10.0f), FP_TIME(252.0f), FP_TIME(280.0f), true, false);
-            Map_MessageWithAudio(57, &g_MapMsgSoundIdx, g_MapMsgSoundTable);
+            Map_MessageWithAudio(57, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
 
         case 40:
@@ -333,7 +333,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
             SysWork_StateStepIncrement();
 
         case 44:
-            Map_MessageWithAudio(58, &g_MapMsgSoundIdx, g_MapMsgSoundTable);
+            Map_MessageWithAudio(58, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
 
         case 45:
@@ -385,7 +385,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(0);
+            sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
             vcReturnPreAutoCamWork(1);
@@ -491,7 +491,7 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(0);
+            sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Game_WarmBoot();
 
@@ -709,7 +709,7 @@ void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
             vcReturnPreAutoCamWork(true);
 
         default:
-            sharedFunc_800D2244_0_s00(0);
+            sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Player_FallBackward();
 
@@ -818,7 +818,7 @@ void MapEvent_MapItemTake() // 0x800DC3C8
 
         case 10:
             // Set cutscene character.
-            Chara_Spawn(Chara_AirScreamer, 0, FP_METER(0.0f), FP_METER(0.0f), FP_METER(0.0f), 12);
+            Chara_Spawn(Chara_AirScreamer, 0, Q12(0.0f), Q12(0.0f), FP_ANGLE(0.0f), 12);
             DmsHeader_FixOffsets(FS_BUFFER_11);
             Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "BIRD", 0, FS_BUFFER_11);
 
@@ -828,8 +828,8 @@ void MapEvent_MapItemTake() // 0x800DC3C8
             vcUserWatchTarget(&g_CutsceneCameraLookAtTarget, NULL, true);
 
             // Warp player.
-            g_SysWork.player_4C.chara_0.position_18.vx = FP_METER(4.585938f);
-            g_SysWork.player_4C.chara_0.position_18.vz = FP_METER(267.285156f);
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(4.585938f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(267.285156f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(90.0f);
 
             // Set flags.
@@ -840,11 +840,11 @@ void MapEvent_MapItemTake() // 0x800DC3C8
             SysWork_StateStepIncrement();
 
         case 11:
-            func_8008616C(1, false, 0, FP_TIME(0.0f), false);
+            func_8008616C(1, false, 0, Q12(0.0f), false);
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(0);
+            sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -900,7 +900,7 @@ void MapEvent_AirScreamerDeath() // 0x800DC8C8
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(0);
+            sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
             Savegame_EventFlagSet(EventFlag_51);
@@ -921,16 +921,16 @@ void Map_WorldObjectsInit() // 0x800DC9C8
     WorldObject_ModelNameSet(&D_800E2450[0], "OUT1_HID");
     WorldObject_ModelNameSet(&D_800E2450[1], "OUT_BLD_");
 
-    WorldObjectPositionInit(&g_EventThing_KitchenKnife.position_1C, 5.09f, -1.01f, 274.12f, 0, 32.0f, 0); 
+    WorldObjectPositionInit(&g_EventThing_KitchenKnife.position_1C, 5.09f, -1.01f, 274.12f, 0.0f, 32.0f, 0.0f); 
     WorldObject_ModelNameSet(&g_EventThing_KitchenKnife.object_0, "KNIFE_HI");
 
-    WorldObjectPositionInit(&g_EventThing_Flashlight.position_1C, 5.18f, -1.0f, 267.28f, -3.0f, 111.0f, 0);
+    WorldObjectPositionInit(&g_EventThing_Flashlight.position_1C, 5.18f, -1.0f, 267.28f, -3.0f, 111.0f, 0.0f);
     WorldObject_ModelNameSet(&g_EventThing_Flashlight.object_0, "FLASH_HI");
 
-    WorldObjectPositionInit(&g_EventThing_Map.position_1C, 5.24f, -1.0f, 267.21f, 0, 57.0f, 0);
+    WorldObjectPositionInit(&g_EventThing_Map.position_1C, 5.24f, -1.0f, 267.21f, 0.0f, 57.0f, 0.0f);
     WorldObject_ModelNameSet(&g_EventThing_Map.object_0, "MAP_HIDE");
 
-    WorldObjectPositionInit(&g_EventThing_PocketRadio.position_1C, 2.31f, -0.6f, 273.95f, 0, 147.0f, 0);
+    WorldObjectPositionInit(&g_EventThing_PocketRadio.position_1C, 2.31f, -0.6f, 273.95f, 0.0f, 147.0f, 0.0f);
     WorldObject_ModelNameSet(&g_EventThing_PocketRadio.object_0, "RADIO_HI");
 
     if (Savegame_EventFlagGet(EventFlag_40) && !Savegame_EventFlagGet(EventFlag_47))
@@ -942,7 +942,7 @@ void Map_WorldObjectsInit() // 0x800DC9C8
         if (Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
         {
             func_80088D0C();
-            Chara_Spawn(Chara_AirScreamer, 0, FP_METER(1048566.0f), FP_METER(280.0f), FP_METER(0.0f), 12);
+            Chara_Spawn(Chara_AirScreamer, 0, Q12(1048566.0f), Q12(280.0f), FP_ANGLE(0.0f), 12);
             func_800D3A3C(&g_SysWork.npcs_1A0[0]);
 
             Fs_QueueStartRead(FILE_ANIM_CAFE2_DMS, FS_BUFFER_11);
@@ -956,7 +956,7 @@ void Map_WorldObjectsInit() // 0x800DC9C8
         func_8003ED74(6, 3);
     }
 
-    g_Timer0 = 0;
+    g_Timer0 = Q12(0.0f);
     D_800E2560 = 0;
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);

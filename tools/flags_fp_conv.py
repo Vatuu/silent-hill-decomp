@@ -54,14 +54,12 @@ def to_signed(val, bits=32):
     return val
 
 def process_fp_text(text):
-    divisor = 4096.0 # Q12
+    qval = 12  # default Q-format is Q12
 
-    # Check for other Q formats, Q4/Q8/etc, and change divisor accordingly
+    # detect and strip Q modifier
     match = re.search(r'\bQ(\d+)\b', text)
     if match:
         qval = int(match.group(1))
-        divisor = float(1 << qval)  # 2^Q
-        # remove this occurence of Q**
         text = re.sub(r'\bQ\d+\b', '', text, count=1)
 
     def convert_value(match):
@@ -78,7 +76,7 @@ def process_fp_text(text):
         else:
             val = int(value_str, 10)
 
-        return str(val / divisor)
+        return f"Q{qval}({val / (1 << qval)}f)"
 
     pattern = re.compile(r'[-+]?0x[0-9A-Fa-f]+|[-+]?\d+')
     return pattern.sub(convert_value, text)
@@ -87,7 +85,7 @@ def process_fp_text(text):
 if __name__ == "__main__":
     print("Enter expressions like '(g_SavegamePtr->eventFlags_168[2] & 8)' or '(g_SavegamePtr->eventFlags_168[2] & (1 << 3))'.")
     print("Or enter a line containing decimal/hexadecimal Q12 numbers (0x7CCC, -0x1444, 4096, 0xFFFE0DDD) to convert to float")
-    print("(change to other Q** formats by including Q format in the text, `chara.field_48 = -0x1999 Q8'")
+    print("(change to other Q** formats by including Q format in the text, `chara.field_48 = Q8(-0x1999)'")
     print()
     print("Type 'exit' to quit.")
     while True:

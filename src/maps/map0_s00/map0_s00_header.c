@@ -16,9 +16,7 @@
 #define func_800CB6B0 (void(*)(void))0x800CB6B0
 
 #define func_800D9748 (void(*)(void))0x800D9748
-#define func_800DA5A0 (void(*)(void))0x800DA5A0
 #define func_800DADD4 (void(*)(void))0x800DADD4
-#define func_800DAEFC (void(*)(void))0x800DAEFC
 #define func_800DB26C (void(*)(void))0x800DB26C
 #define func_800DB514 (void(*)(void))0x800DB514
 #define func_800DB94C (void(*)(void))0x800DB94C

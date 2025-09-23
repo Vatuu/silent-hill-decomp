@@ -147,7 +147,7 @@ MAP_MESSAGES                  = 0x800DF6B8; // type:u32 size:0x9C
 //----------------------------------------------------
 //--- PA: 0x0161DC   VA: 0x800DF754   subsegment: data
 //----------------------------------------------------
-g_MapMsgSoundTable            = 0x800DFABC; // type:u16
+g_MapMsgSounds                = 0x800DFABC; // type:u16
 g_MapMsgSoundIdx              = 0x800DFB58; // type:u8
 sharedData_800DFB64_0_s00     = 0x800DFB64; // type:s32
 sharedData_800DFB68_0_s00     = 0x800DFB68; // type:s32
