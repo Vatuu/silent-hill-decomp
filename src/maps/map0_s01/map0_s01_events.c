@@ -106,7 +106,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
             DmsHeader_FixOffsets(FS_BUFFER_11);
             Chara_Load(0, Chara_Cybil, &g_SysWork.npcCoords_FC0[0], NO_VALUE, NULL, NULL);
             func_80088D0C();
-            Chara_Spawn(Chara_Cybil, 0, FP_METER(4.4f), FP_METER(269.9f), FP_METER(0.0f), 2);
+            Chara_Spawn(Chara_Cybil, 0, Q12(4.4f), Q12(269.9f), FP_ANGLE(0.0f), 2);
             
             g_Timer0 = 0;
             SysWork_StateStepIncrement();
@@ -818,7 +818,7 @@ void MapEvent_MapItemTake() // 0x800DC3C8
 
         case 10:
             // Set cutscene character.
-            Chara_Spawn(Chara_AirScreamer, 0, FP_METER(0.0f), FP_METER(0.0f), FP_METER(0.0f), 12);
+            Chara_Spawn(Chara_AirScreamer, 0, Q12(0.0f), Q12(0.0f), FP_ANGLE(0.0f), 12);
             DmsHeader_FixOffsets(FS_BUFFER_11);
             Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "BIRD", 0, FS_BUFFER_11);
 
@@ -828,8 +828,8 @@ void MapEvent_MapItemTake() // 0x800DC3C8
             vcUserWatchTarget(&g_CutsceneCameraLookAtTarget, NULL, true);
 
             // Warp player.
-            g_SysWork.player_4C.chara_0.position_18.vx = FP_METER(4.585938f);
-            g_SysWork.player_4C.chara_0.position_18.vz = FP_METER(267.285156f);
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(4.585938f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(267.285156f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(90.0f);
 
             // Set flags.
@@ -840,7 +840,7 @@ void MapEvent_MapItemTake() // 0x800DC3C8
             SysWork_StateStepIncrement();
 
         case 11:
-            func_8008616C(1, false, 0, FP_TIME(0.0f), false);
+            func_8008616C(1, false, 0, Q12(0.0f), false);
             break;
 
         default:
@@ -942,7 +942,7 @@ void Map_WorldObjectsInit() // 0x800DC9C8
         if (Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
         {
             func_80088D0C();
-            Chara_Spawn(Chara_AirScreamer, 0, FP_METER(1048566.0f), FP_METER(280.0f), FP_METER(0.0f), 12);
+            Chara_Spawn(Chara_AirScreamer, 0, Q12(1048566.0f), Q12(280.0f), FP_ANGLE(0.0f), 12);
             func_800D3A3C(&g_SysWork.npcs_1A0[0]);
 
             Fs_QueueStartRead(FILE_ANIM_CAFE2_DMS, FS_BUFFER_11);

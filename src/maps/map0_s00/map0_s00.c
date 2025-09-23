@@ -380,8 +380,8 @@ const char* MAP_MESSAGES[] =
 
 void func_800D9610(void) // 0x800D9610
 {
-    VECTOR3           vec0;
-    VECTOR3           vec1;
+    VECTOR3           posCpy;
+    VECTOR3           pos;
     s_AreaLoadParams* areaLoadParams0;
     s_AreaLoadParams* areaLoadParams1;
     s_EventParam*     eventParam;
@@ -392,16 +392,16 @@ void func_800D9610(void) // 0x800D9610
     areaLoadParams0 = &g_MapAreaLoadParams;
     areaLoadParams1 = areaLoadParams0;
 
-    vec1.vx = g_MapAreaLoadParams[eventParam->field_5].char_x_0;
-    vec1.vy = Q12(-1.2f);
-    vec1.vz = g_MapAreaLoadParams[eventParam->field_5].char_z_8;
-    vec0 = vec1;
+    pos.vx = g_MapAreaLoadParams[eventParam->field_5].char_x_0;
+    pos.vy = Q12(-1.2f);
+    pos.vz = g_MapAreaLoadParams[eventParam->field_5].char_z_8;
+    posCpy = pos;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00(areaLoadParams1, eventParam);
-            func_8005DC1C(Sfx_Unk1355, &vec0, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1355, &posCpy, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement();
 
         case 1:
@@ -618,7 +618,7 @@ void func_800DAA68(void) // 0x800DAA68
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            func_800865FC(false, 0, 0, Q12(0.5f), Q12(0.0f), Q12(-1.0f));
+            func_800865FC(false, 0, 0, FP_ANGLE(180.0f), Q12(0.0f), Q12(-1.0f));
             SysWork_StateStepIncrement();
 
         case 1:
@@ -649,7 +649,7 @@ void func_800DAB8C(void) // 0x800DAB8C
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            func_800865FC(false, 0, 0, Q12(0.25f), Q12(1.0f), Q12(0.0f));
+            func_800865FC(false, 0, 0, FP_ANGLE(90.0f), Q12(1.0f), Q12(0.0f));
             SysWork_StateStepIncrement();
 
         case 1:
@@ -680,7 +680,7 @@ void func_800DACB0(void) // 0x800DACB0
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            func_800865FC(false, 0, 0, Q12(-0.25f), Q12(-1.0f), Q12(0.0f));
+            func_800865FC(false, 0, 0, FP_ANGLE(-90.0f), Q12(-1.0f), Q12(0.0f));
             SysWork_StateStepIncrement();
 
         case 1:
@@ -847,7 +847,7 @@ void Event_GreyChildrenSpawn(void) // 0x800DC1E8
     {
         if (PLAYER_IN_MAP_CHUNK(vx, 1, -7, -1, -7) && PLAYER_IN_MAP_CHUNK(vz, 1, 7, -1, 7))
         {
-            Chara_Spawn(Chara_GreyChild, 0, Q12(-252.0f), Q12(223.0f), FP_ANGLE(180.0f),   5);
+            Chara_Spawn(Chara_GreyChild, 0, Q12(-252.0f), Q12(223.0f), FP_ANGLE(180.0f), 5);
             Chara_Spawn(Chara_GreyChild, 1, Q12(-254.0f), Q12(221.0f), FP_ANGLE(135.0f), 5);
             Chara_Spawn(Chara_GreyChild, 2, Q12(-259.0f), Q12(232.0f), FP_ANGLE(0.0f),   5);
         }
