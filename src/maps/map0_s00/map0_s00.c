@@ -392,9 +392,9 @@ void func_800D9610(void) // 0x800D9610
     areaLoadParams0 = &g_MapAreaLoadParams;
     areaLoadParams1 = areaLoadParams0;
 
-    pos.vx = g_MapAreaLoadParams[eventParam->field_5].char_x_0;
+    pos.vx = g_MapAreaLoadParams[eventParam->field_5].positionX_0;
     pos.vy = Q12(-1.2f);
-    pos.vz = g_MapAreaLoadParams[eventParam->field_5].char_z_8;
+    pos.vz = g_MapAreaLoadParams[eventParam->field_5].positionZ_8;
     posCpy = pos;
 
     switch (g_SysWork.sysStateStep_C[0])

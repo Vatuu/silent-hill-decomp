@@ -1268,8 +1268,8 @@ typedef struct
 
 typedef struct
 {
-    u8            field_0;
-    u8            fogEnabled_1; // `bool`
+    u8            field_0;      // `bool`?
+    u8            fogEnabled_1; /** `bool` */
     u8            field_2;
     u8            field_3;
     s_WaterZone*  waterZones_4;
@@ -1289,7 +1289,7 @@ typedef struct
     s32           field_4C;
     s16           field_50;
     s32           field_54;
-    SVECTOR       field_58;
+    SVECTOR       field_58; // Rotation.
     VECTOR3       field_60; // Type assumed.
     SVECTOR       field_6C; // Player current angles?
     SVECTOR       field_74;
@@ -1355,16 +1355,16 @@ STATIC_ASSERT_SIZEOF(s_CharaFileInfo, 16);
 
 typedef struct
 {
-    SVECTOR3 posTarget_0;    // Q7.8
-    SVECTOR3 lookAtTarget_6; // Q7.8
-    s16      field_C[2]; // `field_C[1]` gets passed to `vcChangeProjectionValue`.
+    SVECTOR3 positionTarget_0; /** Q7.8 */
+    SVECTOR3 lookAtTarget_6;   /** Q7.8 */
+    s16      field_C[2];       // `field_C[1]` gets passed to `vcChangeProjectionValue`.
 } s_DmsKeyframeCamera;
 STATIC_ASSERT_SIZEOF(s_DmsKeyframeCamera, 16);
 
 typedef struct
 {
-    SVECTOR3 position_0; // Q7.8
-    SVECTOR3 rotation_6; // Q7.8
+    SVECTOR3 position_0; /** Q7.8 */
+    SVECTOR3 rotation_6; /** Q7.8 */
 } s_DmsKeyframeCharacter;
 STATIC_ASSERT_SIZEOF(s_DmsKeyframeCharacter, 12);
 
@@ -1372,9 +1372,9 @@ typedef struct
 {
     s16       keyframeCount_0;
     u8        svectorCount_2;
-    u8        field_3;        // Usually 0, but sometimes filled in, possibly junk data left in padding byte.
-    char      name_4[4];      // First 4 chars of name. E.g. Code checks for "DAHLIA", file is "DAHL".
-    SVECTOR3* svectorPtr_8;   // Pointer to `SVECTOR3`s. Unknown purpose.
+    u8        field_3;      // Usually 0, but sometimes filled in, possibly junk data left in padding byte.
+    char      name_4[4];    // First 4 chars of name. E.g. Code checks for "DAHLIA", file is "DAHL".
+    SVECTOR3* svectorPtr_8; // Pointer to `SVECTOR3`s. Unknown purpose.
     union
     {
         s_DmsKeyframeCharacter* character;
@@ -1392,13 +1392,13 @@ STATIC_ASSERT_SIZEOF(s_DmsInterval, 4);
 
 typedef struct
 {
-    u8             isLoaded_0;
+    u8             isLoaded_0; /** `bool` */
     u8             characterCount_1;
     u8             intervalCount_2;
     u8             field_3; // Usually 0, but sometimes filled in.
     u32            field_4; // Unknown, correlates with DMS file size.
     s_DmsInterval* intervalPtr_8;
-    VECTOR3        origin_C; // Q23.8 | Origin point, gets added to character positions.
+    VECTOR3        origin_C; /** Q23.8 | Origin point. Gets added to character positions. */
     s_DmsEntry*    characters_18;
     s_DmsEntry     camera_1C;
 } s_DmsHeader;
@@ -1448,14 +1448,14 @@ typedef struct
 /** This also makes use of union from 0x4 - 0x8 for different kinds of params, see https://github.com/Sparagas/Silent-Hill/blob/87549363834af24c65f6432908b2b036f9a300ad/010%20Editor%20-%20Binary%20Templates/sh1_overlays.bt#L126 */
 typedef struct _AreaLoadParams
 {
-    q19_12 char_x_0; // TODO: Rename to `positionX_0`.
+    q19_12 positionX_0;
     u32    mapIdx_4_0          : 5; /** `e_Current2dMapIdx` */
     u32    field_4_5           : 4;
     u32    loadingScreenId_4_9 : 3; /** `e_LoadingScreenId`` */
     u32    field_4_12          : 4;
     u32    rotationY_4_16      : 8; /** Degrees in Q7.8, range [0, 256]. */
     u32    field_4_24          : 8;
-    q19_12 char_z_8; // TODO: Rename to `positionZ_8`.
+    q19_12 positionZ_8;
 } s_AreaLoadParams;
 
 typedef struct
@@ -2572,7 +2572,7 @@ void func_8003EDA8();
 
 void func_8003EF10(s32 idx0, s32 idx1, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
 
-s32 func_8003F4DC(GsCOORDINATE2** arg0, SVECTOR* rot, s32 arg2, s32 arg3, u32 arg4, s_SysWork* sysWork);
+q19_12 func_8003F4DC(GsCOORDINATE2** arg0, SVECTOR* rot, q19_12 alpha, s32 arg3, u32 arg4, s_SysWork* sysWork);
 
 u32 func_8003F654(s_SysWork_2288* arg0);
 
@@ -2589,13 +2589,13 @@ s32 func_800868F4(s32 arg0, s32 arg1, s32 idx);
  * @param weight Weight as a fixed-point alpha in Q3.12, range `[0, 4096]`. 
  * @return Weighted average of `a` and `b`.
  */
-s32 Math_WeightedAverageGet(s32 a, s32 b, s32 weight);
+q19_12 Math_WeightedAverageGet(s32 a, s32 b, q19_12 weight);
 
-void func_8003FCB0(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructUnk3* arg2, s32 arg3);
+void func_8003FCB0(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructUnk3* arg2, q19_12 alphaTo);
 
-void func_8003FD38(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s32 weight0, s32 weight1, s32 alphaTo);
+void func_8003FD38(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q19_12 weight0, q19_12 weight1, q19_12 alphaTo);
 
-void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructUnk3* arg2, s32 alphaTo);
+void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructUnk3* arg2, q19_12 alphaTo);
 
 s32 func_8003FEC0(s_sub_StructUnk3* arg0);
 
@@ -3027,7 +3027,7 @@ s32 func_8005545C(SVECTOR* vec);
 
 s32 func_80055490(SVECTOR* arg0);
 
-void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1, SVECTOR* svec, s32 x, s32 y, s32 z, s_WaterZone* waterZones);
+void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1, SVECTOR* rot, q19_12 x, q19_12 y, q19_12 z, s_WaterZone* waterZones);
 
 void func_80055648(s32 arg0, SVECTOR* arg1);
 

@@ -184,7 +184,7 @@ s32 func_80055490(SVECTOR* arg0) // 0x80055490
     return D_800C4168.field_54;
 }
 
-void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1, SVECTOR* svec, s32 x, s32 y, s32 z, s_WaterZone* waterZones) // 0x800554C4
+void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1, SVECTOR* rot, q19_12 x, q19_12 y, q19_12 z, s_WaterZone* waterZones) // 0x800554C4
 {
     MATRIX   mat;
     SVECTOR  tempSvec;
@@ -198,12 +198,12 @@ void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coo
 
     if (coord0 == NULL)
     {
-        D_800C4168.field_58 = *svec;
+        D_800C4168.field_58 = *rot;
     }
     else
     {
         Vw_CoordHierarchyMatrixCompute(coord0, &mat);
-        ApplyMatrixSV(&mat, svec, &D_800C4168.field_58);
+        ApplyMatrixSV(&mat, rot, &D_800C4168.field_58);
     }
 
     if (coord1 == NULL)

@@ -2485,9 +2485,9 @@ s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2,
     func_8008D1D0(&keyframePrev, &keyframeNext, &alpha, time, camEntry, dmsHdr);
     camProjValue = Dms_CameraKeyframeInterpolate(&curFrame, &camEntry->keyframes_C.camera[keyframePrev], &camEntry->keyframes_C.camera[keyframeNext], alpha);
 
-    posTarget->vx = Q8_TO_Q12(curFrame.posTarget_0.vx + dmsHdr->origin_C.vx);
-    posTarget->vy = Q8_TO_Q12(curFrame.posTarget_0.vy + dmsHdr->origin_C.vy);
-    posTarget->vz = Q8_TO_Q12(curFrame.posTarget_0.vz + dmsHdr->origin_C.vz);
+    posTarget->vx = Q8_TO_Q12(curFrame.positionTarget_0.vx + dmsHdr->origin_C.vx);
+    posTarget->vy = Q8_TO_Q12(curFrame.positionTarget_0.vy + dmsHdr->origin_C.vy);
+    posTarget->vz = Q8_TO_Q12(curFrame.positionTarget_0.vz + dmsHdr->origin_C.vz);
 
     lookAtTarget->vx = Q8_TO_Q12(curFrame.lookAtTarget_6.vx + dmsHdr->origin_C.vx);
     lookAtTarget->vy = Q8_TO_Q12(curFrame.lookAtTarget_6.vy + dmsHdr->origin_C.vy);
@@ -2506,9 +2506,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CF54); // 0x
 
 s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, const s_DmsKeyframeCamera* frame0, const s_DmsKeyframeCamera* frame1, s32 alpha) // 0x8008CFEC
 {
-    result->posTarget_0.vx = frame0->posTarget_0.vx + FP_MULTIPLY_PRECISE(frame1->posTarget_0.vx - frame0->posTarget_0.vx, alpha, Q12_SHIFT);
-    result->posTarget_0.vy = frame0->posTarget_0.vy + FP_MULTIPLY_PRECISE(frame1->posTarget_0.vy - frame0->posTarget_0.vy, alpha, Q12_SHIFT);
-    result->posTarget_0.vz = frame0->posTarget_0.vz + FP_MULTIPLY_PRECISE(frame1->posTarget_0.vz - frame0->posTarget_0.vz, alpha, Q12_SHIFT);
+    result->positionTarget_0.vx = frame0->positionTarget_0.vx + FP_MULTIPLY_PRECISE(frame1->positionTarget_0.vx - frame0->positionTarget_0.vx, alpha, Q12_SHIFT);
+    result->positionTarget_0.vy = frame0->positionTarget_0.vy + FP_MULTIPLY_PRECISE(frame1->positionTarget_0.vy - frame0->positionTarget_0.vy, alpha, Q12_SHIFT);
+    result->positionTarget_0.vz = frame0->positionTarget_0.vz + FP_MULTIPLY_PRECISE(frame1->positionTarget_0.vz - frame0->positionTarget_0.vz, alpha, Q12_SHIFT);
 
     result->lookAtTarget_6.vx = frame0->lookAtTarget_6.vx + FP_MULTIPLY_PRECISE(frame1->lookAtTarget_6.vx - frame0->lookAtTarget_6.vx, alpha, Q12_SHIFT);
     result->lookAtTarget_6.vy = frame0->lookAtTarget_6.vy + FP_MULTIPLY_PRECISE(frame1->lookAtTarget_6.vy - frame0->lookAtTarget_6.vy, alpha, Q12_SHIFT);

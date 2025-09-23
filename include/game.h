@@ -1278,7 +1278,7 @@ typedef struct
     u8           isFlashlightOn_15; /** `bool` | Off: `false`, On: `true`. */
     u8           field_16;          /** `bool` */
     s8           unk_17;
-    s16          flashlightIntensity_18;
+    q3_12        flashlightIntensity_18; // Alpha.
     u16          field_1A;
     s_StructUnk3 field_1C[2];
     s_StructUnk3 field_84[2];
