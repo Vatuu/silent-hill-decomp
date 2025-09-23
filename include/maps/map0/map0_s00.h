@@ -9,6 +9,17 @@ typedef struct
     VECTOR3 position1_C;
 } s_800E32DC;
 
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+} s_800DFB44;
+
+typedef struct {
+    u8 unk0;
+    u8 unk1;
+    u8 unk2;
+} s_800DFB48;
+
 extern s_800E32DC D_800E32DC;
 
 /** "STAGE 0-0" string */
@@ -53,6 +64,12 @@ extern s32 D_800DFAC4;
 
 extern VECTOR3 D_800DFAE0[];  // }  TODO might be one big table.
 extern VECTOR3 D_800DFB28[3]; // }
+
+extern s32 D_800DFB40;
+
+extern s_800DFB44 D_800DFB44;
+
+extern s_800DFB48 D_800DFB48;
 
 void func_800CBFB0(void);
 
