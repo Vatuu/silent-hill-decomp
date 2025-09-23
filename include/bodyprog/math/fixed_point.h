@@ -227,7 +227,7 @@
  * @note 1 degree = 0.711111 units.
  *
  * @param deg Degrees (`float`).
- * @return Unsigned Q0.8 fixed-point angle, clamped integer range `[0, 255]` (`u8`).
+ * @return Unsigned Q0.8 fixed-point packed angle, clamped integer range `[0, 255]` (`u8`).
  */
 #define FP_ANGLE_PACKED(deg) \
     (u8)Q8_CLAMPED((deg) / 360.0f)
@@ -236,15 +236,15 @@
  * unsigned Q0.8 fixed-point, integer range `[0, 255]`.
  *
  * @param angle Unsigned Q3.12 fixed-point angle, integer range `[0, 4096]`.
- * @return Unsigned Q0.8 fixed-point angle, integer range `[0, 255]` (`s16`).
+ * @return Unsigned Q0.8 fixed-point packed angle, integer range `[0, 255]` (`s16`).
  */
 #define FP_ANGLE_TO_PACKED(angle) \
     Q12_TO_Q8(deg);
 
-/** @brief Converts unsigned Q0.8 fixed-point angle, integer range `[0, 255]` to
+/** @brief Converts an unsigned Q0.8 fixed-point packed angle, integer range `[0, 255]` to
  * unsigned Q3.12 fixed-point, integer range `[0, 4096]`.
  *
- * @param packedAngle Unsigned Q0.8 fixed-point angle, integer range `[0, 255]`.
+ * @param packedAngle Unsigned Q0.8 fixed-point packed angle, integer range `[0, 255]`.
  * @return Unsigned Q3.12 fixed-point angle, integer range `[0, 4096]` (`s16`).
  */
 #define FP_ANGLE_FROM_PACKED(packedAngle) \
@@ -260,7 +260,7 @@
 #define ABS_ANGLE(angle) \
     Q12_FRACT((angle) + FP_ANGLE(360.0f))
 
-/** @brief Normalizes a unsigned Q3.12 fixed-point angle to the clamped signed integer range `[-2048, 2047]`.
+/** @brief Normalizes an unsigned Q3.12 fixed-point angle to the clamped signed integer range `[-2048, 2047]`.
  *
  * @param angle Unsigned Q3.12 fixed-point angle, integer range `[0, 4095]`.
  * @return Signed Q3.12 fixed-point angle wrapped to the clamped integer range `[-2048, 2047]` (`s16`).
@@ -268,7 +268,7 @@
 #define FP_ANGLE_NORM_S(angle) \
     (((angle) << 20) >> 20)
 
-/** @brief Normalizes signed Q3.12 fixed-point angle to the clamped unsigned range `[0, 4095]`.
+/** @brief Normalizes a signed Q3.12 fixed-point angle to the clamped unsigned range `[0, 4095]`.
  *
  * @param angle Signed Q3.12 fixed-point angle, integer range `[-2048, 2047]`.
  * @return Unsigned Q3.12 fixed-point angle, wrapped to the clamped integer range `[0, 4095]` (`s16`).
