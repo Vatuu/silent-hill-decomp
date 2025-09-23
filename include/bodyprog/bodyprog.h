@@ -2578,6 +2578,8 @@ s32 func_8003F6F0(s32 arg0, s32 arg1, s32 arg2);
 
 void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s32 weight);
 
+s32 func_800868F4(s32 arg0, s32 arg1, s32 idx);
+
 /** @brief Computes the weighted average of `a` and `b`.
  *
  * @param a First value.

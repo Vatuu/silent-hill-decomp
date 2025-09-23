@@ -591,14 +591,8 @@ void func_800DA454(void)
     }
 }
 
-//MAP0_S00
-s32 func_800868F4(s32, s32, s32);                         /* extern */
-void func_800CB6B0(s32, s8, s32);                          /* extern */
-extern u16 D_800DFABC;
-extern u8 D_800DFAC2;
-extern u8 D_800DFB58;
-
-void func_800DA5A0(void) {
+void func_800DA5A0(void)
+{
     s32 temp_s0;
     s32 temp_s1;
     s32 temp_s1_2;
@@ -609,30 +603,26 @@ void func_800DA5A0(void) {
     s32 temp;
     s32 temp2;
 
-    //temp_v1 = g_SysWork.sysStateStep_C[0];
-    switch (g_SysWork.sysStateStep_C[0]) {                              /* switch 1 */
-    case 0:                                         /* switch 1 */
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+    case 0:
         Camera_TranslationSet(NULL, -0x16000, -0x2666, 0x82199, 0, 0, 0, 0, 1);
         Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, 0, -0x1000, 0, 0, 0, 0, 0, true);
         break;
-    case 1:                                         /* switch 1 */
-    case 2:                                         /* switch 1 */
+    case 1:
+    case 2:
         func_800868DC(0);
         func_800868DC(1);
         func_800868DC(2);
         break;
-    case 4:                                         /* switch 1 */
-    case 5:                                         /* switch 1 */
-    case 6:                                         /* switch 1 */
-        //temp_s1 = -0x16000 - func_800868F4(0x4000, 0x5000, 0);
-        //temp_s0 = -0x2666 - func_800868F4(-0x1800, 0x5000, 1);
-        //temp = 0x82199 - func_800868F4(0x4000, 0x5000, 2);
+    case 4:
+    case 5:
+    case 6:
         Camera_TranslationSet(NULL, -0x16000 - func_800868F4(0x4000, 0x5000, 0), -0x2666 - func_800868F4(-0x1800, 0x5000, 1), 
                               0x82199 - func_800868F4(0x4000, 0x5000, 2), 0, 0, 0, 0, 0);
-        /* fallthrough */
         Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, 0, -0x1000, 0, 0, 0, 0, 0, false);
         break;
-    case 3:                                         /* switch 1 */
+    case 3:
         Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, 0, -0x1000, 0, 0, 0, 0, 0, false);
         break;
     
@@ -641,14 +631,14 @@ void func_800DA5A0(void) {
     case 9:
     case 10:
     case 11:
-    default:                                        /* switch 1 */
+    default:
         vcReturnPreAutoCamWork(D_800DFAC2);
         D_800DFAC2 = 0;
         break;
     }
-    //syswork = &g_SysWork;
-    switch (g_SysWork.sysStateStep_C[0]) {          /* switch 2 */
-    case 0:                                         /* switch 2 */
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+    case 0:
         sharedFunc_800D20E4_0_s00();
         sharedFunc_800D88AC_0_s00(g_SysWork.npcs_1A0);
         func_800865FC(1, 1, 0, -0x600, -0x23000, 0x78000);
@@ -665,24 +655,24 @@ void func_800DA5A0(void) {
         SysWork_StateStepIncrement(); 
 
         break;
-    case 1:                                         /* switch 2 */
+    case 1:
         func_800CB6B0(0, g_SavegamePtr->mapOverlayId_A4, 0);
         SysWork_StateStepIncrement();
 
         /* fallthrough */
-    case 2:                                         /* switch 2 */
+    case 2:
         func_800869E4(0x15, &D_800DFB58, &D_800DFABC);
         break;
-    case 3:                                         /* switch 2 */
+    case 3:
         g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = 0x1CCC;
         func_80086728(&g_SysWork.npcs_1A0[0].model_0, 2, 1, 0);
         func_80085E6C(0x1800, false);
         break;
-    case 4:                                         /* switch 2 */
+    case 4:
         g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = 0x1CCC;
         func_80086728(&g_SysWork.npcs_1A0[0].model_0, 2, 1, 0);
         break;
-    case 5:                                         /* switch 2 */
+    case 5:
         g_SysWork.player_4C.chara_0.position_18.vx = -0x1A000;
         g_SysWork.player_4C.chara_0.position_18.vz = 0x7F000;
         g_SysWork.player_4C.chara_0.rotation_24.vy = -0x600;
@@ -690,31 +680,31 @@ void func_800DA5A0(void) {
         SysWork_StateStepIncrement();
 
         /* fallthrough */
-    case 6:                                         /* switch 2 */
+    case 6:
         func_800866D4(0x36, 1, 0);
         break;
-    case 7:                                         /* switch 2 */
+    case 7:
         if (func_8003C850())
         {
             SysWork_StateStepIncrement();
         }
         break;
-    case 8:                                         /* switch 2 */
+    case 8:
         func_800869E4(0x16, &D_800DFB58, &D_800DFABC);
         break;
-    case 9:                                         /* switch 2 */
+    case 9:
         func_800865FC(1, 1, 0, -0x500, -0x24000, 0x77800);
         SysWork_StateStepIncrement();
 
         /* fallthrough */
-    case 10:                                        /* switch 2 */
+    case 10:
         g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = 0x8CC;
         func_80086728(&g_SysWork.npcs_1A0[0].model_0, 1, 1, 0);
         break;
-    case 11:                                        /* switch 2 */
+    case 11:
         func_800869E4(0x17, &D_800DFB58, &D_800DFABC);
         break;
-    default:                                        /* switch 2 */
+    default:
         func_8008616C(0, false, 2, 0, false);
         g_SavegamePtr->eventFlags_168[0] |= 0x10;
         sharedFunc_800D2244_0_s00(0);
