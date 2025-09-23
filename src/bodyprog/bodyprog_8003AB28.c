@@ -2638,10 +2638,10 @@ void func_8003EDB8(CVECTOR* color0, CVECTOR* color1) // 0x8003EDB8
     *color1 = g_SysWork.field_2388.field_1C[g_SysWork.field_2388.isFlashlightOn_15].field_0.field_25;
 }
 
-void func_8003EE30(s32 arg0, s8* arg1, s32 arg2, s32 arg3) // 0x8003EE30
+void func_8003EE30(s32 arg0, s32* arg1, s32 arg2, s32 arg3) // 0x8003EE30
 {
-    g_SysWork.field_2388.field_4 = arg1;
-    g_SysWork.field_2388.field_0 = 5;
+    g_SysWork.field_2388.field_4 = (s8*)arg1;
+    g_SysWork.field_2388.field_0 = PrimitiveType_S32;
     g_SysWork.field_2388.field_8 = arg2;
     g_SysWork.field_2388.field_C = arg3;
 
@@ -2655,12 +2655,12 @@ void func_8003EEDC(s32 arg0, s32 arg1) // 0x8003EEDC
     func_8003F170();
 }
 
-void func_8003EF10(s32 idx0, s32 idx1, s32 arg2, s8* arg3, s32 arg4, s32 arg5) // 0x8003EF10
+void func_8003EF10(s32 idx0, s32 idx1, e_PrimitiveType primType, s8* primData, s32 arg4, s32 arg5) // 0x8003EF10
 {
-    func_8003EF74(&D_800A93CC[idx0], &D_800A93CC[idx1], arg2, arg3, arg4, arg5);
+    func_8003EF74(&D_800A93CC[idx0], &D_800A93CC[idx1], primType, primData, arg4, arg5);
 }
 
-void func_8003EF74(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s32 arg2, s8* arg3, s32 arg4, s32 arg5) // 0x8003EF74
+void func_8003EF74(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, e_PrimitiveType primType, s8* primData, s32 arg4, s32 arg5) // 0x8003EF74
 {
     if (arg0 == arg1)
     {
@@ -2671,8 +2671,8 @@ void func_8003EF74(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s32 arg2, s8*
         g_SysWork.field_2388.field_16 = false;
     }
 
-    g_SysWork.field_2388.field_4 = arg3;
-    g_SysWork.field_2388.field_0 = arg2;
+    g_SysWork.field_2388.field_4 = primData;
+    g_SysWork.field_2388.field_0 = primType;
     g_SysWork.field_2388.field_8 = arg4;
     g_SysWork.field_2388.field_C = arg5;
 
@@ -2754,7 +2754,7 @@ void func_8003F170() // 0x8003F170
         ptr->field_84[g_SysWork.field_2388.flashlightIntensity_18 != 0].field_30 = sp48.vz + (mat.t[2] * 16);
     }
 
-    if (ptr->field_0 == 0)
+    if (ptr->field_0 == PrimitiveType_None)
     {
         ptr->field_1C[0] = ptr->field_84[0];
         ptr->field_1C[1] = ptr->field_84[1];
@@ -2768,7 +2768,7 @@ void func_8003F170() // 0x8003F170
 
         if (temp_v0 >= FP_FLOAT_TO(1.0f, Q12_SHIFT))
         {
-            ptr->field_0 = 0;
+            ptr->field_0 = PrimitiveType_None;
         }
     }
 

@@ -2571,7 +2571,7 @@ void func_8003ED74(s32 arg0, s32 arg1);
 
 void func_8003EDA8();
 
-void func_8003EF10(s32 idx0, s32 idx1, s32 arg2, s8* arg3, s32 arg4, s32 arg5);
+void func_8003EF10(s32 idx0, s32 idx1, e_PrimitiveType primType, s8* primData, s32 arg4, s32 arg5);
 
 q19_12 func_8003F4DC(GsCOORDINATE2** arg0, SVECTOR* rot, q19_12 alpha, s32 arg3, u32 arg4, s_SysWork* sysWork);
 
@@ -4067,11 +4067,11 @@ void func_8003EDA8();
 
 void func_8003EDB8(CVECTOR* color0, CVECTOR* color1);
 
-void func_8003EE30(s32 arg0, s8* arg1, s32 arg2, s32 arg3);
+void func_8003EE30(s32 arg0, s32* arg1, s32 arg2, s32 arg3);
 
 void func_8003EEDC(s32 arg0, s32 arg1);
 
-void func_8003EF74(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s32 arg2, s8* arg3, s32 arg4, s32 arg5);
+void func_8003EF74(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, e_PrimitiveType arg2, s8* arg3, s32 arg4, s32 arg5);
 
 void func_8003F08C(s_StructUnk3* arg0, s_sub_StructUnk3* arg1);
 
