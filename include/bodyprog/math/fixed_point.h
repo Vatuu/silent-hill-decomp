@@ -2,8 +2,9 @@
 #define _BODYPROG_MATH_FIXED_POINT_H
 
 #include "types.h"
-#include "bodyprog/math/constants.h"
+
 #include "bodyprog/math/arithmetic.h"
+#include "bodyprog/math/constants.h"
 
 // =====================
 // ARITHMETIC AND UTILS
