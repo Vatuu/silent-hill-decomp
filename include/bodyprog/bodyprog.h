@@ -3285,8 +3285,7 @@ void func_800866D4(s32 arg0, s32 arg1, s32 arg2);
 
 void func_80086728(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
-/** `arg0` is `s_SubCharacter` pointer. */
-void func_8008677C(s32 arg0, s32 arg1, s32 arg2);
+void func_8008677C(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
 void func_800867B4(s32 caseParam, s32 idx);
 

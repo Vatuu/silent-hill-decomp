@@ -467,9 +467,9 @@ void func_80086728(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80086728
     }
 }
 
-void func_8008677C(s32 arg0, s32 arg1, s32 arg2) // 0x8008677C
+void func_8008677C(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x8008677C
 {
-    g_MapOverlayHeader.func_13C(arg0, arg1, &D_800C46A0, D_800C4702, arg2);
+    g_MapOverlayHeader.func_13C(chara, arg1, &D_800C46A0, D_800C4702, arg2);
 }
 
 void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4

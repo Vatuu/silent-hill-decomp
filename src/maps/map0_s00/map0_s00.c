@@ -541,7 +541,7 @@ block7:
         }
 
         g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = D_800DFAD0;
-        func_8008677C(g_SysWork.npcs_1A0, 2, 1);
+        func_8008677C(&g_SysWork.npcs_1A0[0], 2, 1);
         return;
     }
 
@@ -616,7 +616,7 @@ block7:
 
         g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = D_800DFAD4;
 
-        func_8008677C((s32)g_SysWork.npcs_1A0, 2, 1);
+        func_8008677C(&g_SysWork.npcs_1A0[0], 2, 1);
         return;
     }
 
@@ -637,7 +637,7 @@ void func_800DC8D8(void) // 0x800DC8D8
     {
         g_SysWork.npcs_1A0[0].position_18.vx = Q12(-61.0f);
         g_SysWork.npcs_1A0[0].position_18.vz = Q12(48.0f);
-        g_SysWork.npcs_1A0[0].rotation_24.vy = Q12(0.25f);
+        g_SysWork.npcs_1A0[0].rotation_24.vy = FP_ANGLE(90.0f);
 
         if (mag < Q12(14.8f))
         {
@@ -652,7 +652,7 @@ void func_800DC8D8(void) // 0x800DC8D8
     {
         g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = Q12(1.8f);
 
-        func_8008677C((s32)g_SysWork.npcs_1A0, 2, 1);
+        func_8008677C(&g_SysWork.npcs_1A0[0], 2, 1);
 
         if (g_SysWork.npcs_1A0[0].position_18.vx > Q12(-58.0f))
         {
