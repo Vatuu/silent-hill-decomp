@@ -520,18 +520,18 @@ void func_800DEDA4(void) // 0x800DEDA4
 {
     if (!Savegame_EventFlagGet(EventFlag_485))
     {
-        if (D_800A9945 != 35 || func_80040B74(35) == false)
+        if (D_800A9945 != Chara_GhostChildAlessa || !func_80040B74(Chara_GhostChildAlessa))
         {
             func_800348C0();
             Chara_Load(0, Chara_GhostChildAlessa, g_SysWork.npcCoords_FC0, NO_VALUE, NULL, NULL);
             func_80088D0C();
         }
     }
-    else if (D_800A9945 == 16)
+    else if (D_800A9945 == Chara_PuppetNurse)
     {
-        if (func_80040B74(16) == false)
+        if (!func_80040B74(Chara_PuppetNurse))
         {
-            g_MapOverlayHeader.charaGroupIds_248[0] = 16;
+            g_MapOverlayHeader.charaGroupIds_248[0] = Chara_PuppetNurse;
 
             func_800348C0();
             Chara_Load(0, Chara_PuppetNurse, g_SysWork.npcCoords_FC0, NO_VALUE, NULL, NULL);
@@ -540,7 +540,7 @@ void func_800DEDA4(void) // 0x800DEDA4
     }
     else
     {
-        g_MapOverlayHeader.charaGroupIds_248[0] = 16;
+        g_MapOverlayHeader.charaGroupIds_248[0] = Chara_PuppetNurse;
 
         func_800348C0();
         Chara_Load(0, Chara_PuppetNurse, g_SysWork.npcCoords_FC0, NO_VALUE, NULL, NULL);

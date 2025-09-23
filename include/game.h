@@ -1346,7 +1346,7 @@ typedef struct _SysWork
     GsCOORDINATE2   npcCoords_FC0[NPC_BONE_COUNT_MAX]; // Dynamic coord buffer? 10 coords per NPC (given max of 6 NPCs).
     s8              field_2280;        // Maybe NPC AI data past this point.
     s8              loadingScreenIdx_2281;
-    s8              field_2282;
+    s8              field_2282; // Room process flags?
     s8              field_2283; // Index into `SfxPairs`.
     u16             field_2284[3];
     u16             field_228A;

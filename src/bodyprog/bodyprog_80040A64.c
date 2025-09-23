@@ -48,13 +48,13 @@ s8 Sound_StereoBalanceGet(const VECTOR3* soundPos) // 0x80040A64
 
 void func_80040B6C() {}
 
-bool func_80040B74(s32 arg0) // 0x80040B74
+bool func_80040B74(s32 charaId) // 0x80040B74
 {
     s32 i;
 
     for (i = 0; i < ARRAY_SIZE(g_WorldGfx.charaModels_CC); i++)
     {
-        if (g_WorldGfx.charaModels_CC[i].charaId_0 == arg0)
+        if (g_WorldGfx.charaModels_CC[i].charaId_0 == charaId)
         {
             return true;
         }

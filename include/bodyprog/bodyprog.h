@@ -1609,7 +1609,7 @@ typedef struct _MapOverlayHeader
     s32*              data_18C;
     s32*              data_190;
     void              (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
-    s8                charaGroupIds_248[4];                                              /** `e_CharacterId` values where if `s_SpawnInfo.charaId_4` == 0, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
+    s8                charaGroupIds_248[4];                                              /** `e_CharacterId` values where if `s_SpawnInfo.charaId_4 == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
     s_SpawnInfo       charaSpawns_24C[2][16];                                            /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `func_80037F24`. */
     VC_ROAD_DATA      roadDataList_3CC[48];
     u32               unk_84C[512];
@@ -2608,7 +2608,7 @@ void func_80040014();
  */
 s8 Sound_StereoBalanceGet(const VECTOR3* soundPos);
 
-bool func_80040B74(s32 arg0);
+bool func_80040B74(s32 charaId);
 
 /** Related to the screen. */
 void func_80040BAC();
