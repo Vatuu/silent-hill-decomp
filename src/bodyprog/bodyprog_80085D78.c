@@ -521,7 +521,7 @@ s32 func_8008694C(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 idx)
     return (arg0 * Math_Sin(arg1 + ((arg2 * D_800C4710[idx]) / arg3))) >> 12;
 }
 
-void func_800869E4(s32 mapMsgIdx, u8* arg1, u16* arg2) // 0x800869E4
+void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* soundTable) // 0x800869E4
 {
     s32 mapMsgState;
 
@@ -534,8 +534,8 @@ void func_800869E4(s32 mapMsgIdx, u8* arg1, u16* arg2) // 0x800869E4
     }
     else if (mapMsgState == MapMsgState_Finish)
     {
-        Sd_EngineCmd(arg2[*arg1]);
-        *arg1 += 1;
+        Sd_EngineCmd(soundTable[*soundIdx]);
+        *soundIdx += 1;
     }
 }
 
