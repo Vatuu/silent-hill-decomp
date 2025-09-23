@@ -2833,15 +2833,15 @@ static inline void WorldObjectPositionSet(s_WorldObjectPos* eventPos, q19_12 pos
 
 #define MAP_CHUNK_CHECK_VARIABLE_DECL() s32 __chunkIdx
 /** @hack This macro requires a variable `s32 __chunkIdx` to be declared before using it.
- * Macro `MAP_CHUNK_CHECK_VARIABLE_DECL` declares that variable, call it before calling this macro!
- * First argument is `vx` or `vz` which is used as the component name in `VECTOR3`.
- * Some maps appear to have a bug, where the negative position check will never be true, because they check
- * if the chunk index will be some positive number. Seems like they forgot to do an ABS ?
+ * The macro `MAP_CHUNK_CHECK_VARIABLE_DECL` declares that variable and must be called before this macro.
+ * The first argument is `vx` or `vz`, which is used as the component name in `VECTOR3`.
+ * @bug Some maps appear to have a bug where the negative position check will never be true because they check
+ * if the chunk index will be a positive number. Seems like they forgot to use `ABS`?
  */
-#define PLAYER_IN_MAP_CHUNK(crd, x1, x2, x3, x4) \
-    (__chunkIdx = g_SysWork.player_4C.chara_0.position_18.crd / FP_METER(40.0f), \
-     ((g_SysWork.player_4C.chara_0.position_18.crd > 0 && (__chunkIdx + x1) == x2) ||\
-       (g_SysWork.player_4C.chara_0.position_18.crd <= 0 && (__chunkIdx + x3) == x4)))
+#define PLAYER_IN_MAP_CHUNK(crd, x0, x1, x2, x3)                                           \
+    (__chunkIdx = g_SysWork.player_4C.chara_0.position_18.crd / FP_METER(40.0f),           \
+     ((g_SysWork.player_4C.chara_0.position_18.crd >  0 && (__chunkIdx + (x0)) == (x1)) || \
+      (g_SysWork.player_4C.chara_0.position_18.crd <= 0 && (__chunkIdx + (x2)) == (x3))))
 
 
 #endif
