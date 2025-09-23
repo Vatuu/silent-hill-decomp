@@ -932,7 +932,92 @@ void func_800DAEFC(void) // 0x800DAEFC
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DB26C);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DB514);
+void func_800DB514(void)
+{
+    s32 temp_v0;
+    s32 var_a1;
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+    case 0:
+        sharedFunc_800D20E4_0_s00();
+        D_800DFB5C = 0;
+        D_800DFB60 = 0;
+        GameFs_FlameGfxLoad();
+        SysWork_StateStepIncrement();
+
+        /* fallthrough */
+    case 1:
+        func_8008616C(2, true, 2, 0, false);
+        break;
+    case 2:
+        func_80085DF0();
+        break;
+    case 3:
+        SysWork_StateStepIncrement();
+
+        /* fallthrough */
+    case 4:
+        MapMsg_DisplayAndHandleSelection(false, 0x19, false, false, 0, false);
+        break;
+    case 5:
+        func_8008605C(0x10, 6, 5, false);
+        break;
+    case 6:
+        if (D_800DFB60)
+        {
+            SysWork_StateStepIncrement();
+        }
+        break;
+        if (Fs_QueueDoThingWhenEmpty() != false)
+        {
+            D_800DFB60++;
+            Chara_Load(1, 8, g_SysWork.npcCoords_FC0, 0, NULL, NULL);
+        }
+    case 7:
+        sharedFunc_800D209C_0_s00();
+        SysWork_StateStepIncrement();
+
+        /* fallthrough */
+    case 8:
+        func_80085EB8(1U, &g_SysWork.player_4C.chara_0, 0, false);
+        break;
+    case 9:
+        func_8003EF10(0xA, 0xA, 5, (s32) &D_800DFB5C, 0, Q12(0.5f));
+        SysWork_StateStepIncrement();
+
+        /* fallthrough */
+    case 10:
+        D_800DFB5C +=g_DeltaTime0;
+        if (D_800DFB5C > Q12(0.5f))
+        {
+            SysWork_StateStepIncrement();
+        }
+        break;
+    case 11:
+        g_SavegamePtr->eventFlags_168[0] |= 0x20000;
+        MapMsg_DisplayAndHandleSelection(false, 0x1E, false, false, 0, false);
+        break;
+    default:
+        func_8008616C(0, false, 2, 0, false);
+        sharedFunc_800D2244_0_s00(1);
+        SysWork_StateSetNext(SysState_Gameplay);
+
+        func_80088D0C();
+        Chara_Spawn(Chara_GreyChild, 0, -0xFC000, 0xDF000, 0x800, 5U);
+        Chara_Spawn(Chara_GreyChild, 1, -0xFE000, 0xDD000, 0x600, 5U);
+        Chara_Spawn(Chara_GreyChild, 2, -0x103000, 0xE8000, 0, 5U);
+        break;
+    }
+
+    if (D_800DFB60 == 0)
+    {
+        if (Fs_QueueDoThingWhenEmpty() != false) {
+            D_800DFB60++;
+            Chara_Load(1, 8, g_SysWork.npcCoords_FC0, 0, NULL, NULL);
+        }
+    }
+}
 
 void func_800DB870(void) // 0x800DB870
 {
