@@ -51,7 +51,7 @@ void func_80070B84(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3) // 0x800
             new_var = &g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126;
             if (chara->model_0.anim_4.keyframeIdx_8 >= arg3)
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = *new_var + TIME_STEP_SCALE(g_DeltaTime0, FP_TIME(0.4f));
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = *new_var + TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f));
             }
 
             g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = CLAMP(*new_var, 0, arg1);
@@ -328,7 +328,7 @@ void Player_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
 
     extra = &g_SysWork.player_4C.extra_128;
 
-    if (g_DeltaTime0 != FP_TIME(0.0f))
+    if (g_DeltaTime0 != Q12(0.0f))
     {
         Player_ReceiveDamage(chara, extra);
 
@@ -772,12 +772,12 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
         chara->flags_3E &= ~CharaFlag_Unk4;
     }
     
-    if (g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 != FP_TIME(0.0f))
+    if (g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 != Q12(0.0f))
     {
         g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 -= g_DeltaTime0;
     }
     
-    g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = CLAMP(g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114, FP_TIME(0.0f), FP_TIME(60.0f));
+    g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = CLAMP(g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114, Q12(0.0f), Q12(60.0f));
     
     if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_Chainsaw || g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill)
     {
@@ -799,7 +799,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
         g_MapOverlayHeader.func_108();
     }
     
-    if (g_DeltaTime0 != FP_TIME(0.0f))
+    if (g_DeltaTime0 != Q12(0.0f))
     {
         Player_Controller();
     }
@@ -914,7 +914,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                 extra->model_0.state_2                          = 0;
                 g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                 g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
-                chara->properties_E4.player.afkTimer_E8         = FP_TIME(10.0f);
+                chara->properties_E4.player.afkTimer_E8         = Q12(10.0f);
             }
             
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
@@ -1013,7 +1013,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                 extra->model_0.state_2                          = 0;
                 g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                 g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
-                chara->properties_E4.player.afkTimer_E8         = FP_TIME(15.0f);
+                chara->properties_E4.player.afkTimer_E8         = Q12(15.0f);
             }
 
             if (IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0))
@@ -1119,7 +1119,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                     chara->field_C8 = CLAMP(chara->field_C8, Q12(-1.6f), Q12(-0.4));
                     chara->field_CE = CLAMP(chara->field_CE, Q12(-1.1f), Q12(-0.2f));
                     
-                    if (chara->health_B0 <= Q12(0.0f) && chara->properties_E4.player.afkTimer_E8 <= FP_TIME(0.0f))
+                    if (chara->health_B0 <= Q12(0.0f) && chara->properties_E4.player.afkTimer_E8 <= Q12(0.0f))
                     {
                         g_MapOverlayHeader.func_DC();
                         //SysWork_StateSetNext(SysState_GameOver); // TODO: Doesn't match.
@@ -1132,7 +1132,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                         g_SysWork.sysStateStep_C[2] = 0;
 
                         chara->health_B0                                                         = Q12(100.0f);
-                        g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_TIME(0.0f);
+                        g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(0.0f);
                         return;
                     }
                     break;
@@ -1218,7 +1218,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                         }
                     }
                     
-                    if (chara->health_B0 <= Q12(0.0f) && chara->properties_E4.player.afkTimer_E8 <= FP_TIME(0.0f))
+                    if (chara->health_B0 <= Q12(0.0f) && chara->properties_E4.player.afkTimer_E8 <= Q12(0.0f))
                     {
                         g_MapOverlayHeader.func_DC();
 
@@ -1232,7 +1232,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                         g_SysWork.sysStateStep_C[2] = 0;
 
                         chara->health_B0                                                         = Q12(100.0f);
-                        g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_TIME(0.0f);
+                        g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(0.0f);
                         return;
                     }
                     break;
@@ -1572,7 +1572,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                 case PlayerState_GetUpFront:
                 case PlayerState_GetUpBack:
                     chara->damageReceived_C0                = Q12(0.0f);
-                    chara->properties_E4.player.afkTimer_E8 = FP_TIME(0.0f);
+                    chara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
 					
                     if (chara->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
                     {
@@ -1602,7 +1602,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                     
                 case PlayerState_EnemyReleasePinnedFront:
                 case PlayerState_EnemyReleasePinnedBack:
-                    chara->properties_E4.player.afkTimer_E8      = FP_TIME(0.0f);
+                    chara->properties_E4.player.afkTimer_E8      = Q12(0.0f);
                     g_SysWork.player_4C.chara_0.field_D8.field_6 = 0;
                     g_SysWork.player_4C.chara_0.field_D8.field_4 = 0;
                     g_SysWork.player_4C.chara_0.field_D8.field_2 = 0;
@@ -1853,7 +1853,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                 extra->model_0.state_2++;
                 chara->health_B0 = Q12(100.0f);
                 chara->model_0.state_2++;
-                g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_TIME(0.0f);
+                g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(0.0f);
                 return;
             }
             break;
@@ -1905,7 +1905,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                     extra->model_0.state_2++;
                     chara->health_B0 = Q12(100.0f);
                     chara->model_0.state_2++;
-                    g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_TIME(0.0f);
+                    g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(0.0f);
                     return;
                 }
                 
@@ -1925,7 +1925,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                 extra->model_0.state_2++;
                 chara->health_B0 = Q12(100.0f);
                 chara->model_0.state_2++;
-                g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_TIME(0.0f);
+                g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(0.0f);
                 return;
             }
             break;
@@ -2609,7 +2609,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
                 }
             }
-            else if (g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 == FP_TIME(0.0f))
+            else if (g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 == Q12(0.0f))
             {
                 if (extra->model_0.anim_4.keyframeIdx_8 >= D_800C44D0 && D_800C44D4 >= extra->model_0.anim_4.keyframeIdx_8 &&
                     !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk2))
@@ -2830,7 +2830,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             }
 
 			// Set idle animation.
-            if (chara->properties_E4.player.exhaustionTimer_FC < FP_TIME(10.0f) && chara->health_B0 >= Q12(30.0f))
+            if (chara->properties_E4.player.exhaustionTimer_FC < Q12(10.0f) && chara->health_B0 >= Q12(30.0f))
             {
                 if (extra->model_0.stateStep_3 == 0)
                 {
@@ -2842,7 +2842,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             }
             else
             {
-                chara->properties_E4.player.afkTimer_E8 = FP_TIME(0.0f);
+                chara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
 				
                 // If not normal idle anim, set it and update `upperBodyState_20`.
                 if (extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_Idle, true))
@@ -3160,7 +3160,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_Chainsaw ||
                 g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill)
             {
-                if (g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 != FP_TIME(0.0f))
+                if (g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 != Q12(0.0f))
                 {
                     if (chara->field_44 <= 0)
                     {
@@ -3336,7 +3336,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_Chainsaw ||
                 g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill)
             {
-                if (g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 != FP_TIME(0.0f))
+                if (g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 != Q12(0.0f))
                 {
                     if (extra->model_0.stateStep_3 == 0)
                     {
@@ -3358,7 +3358,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                       extra->model_0.anim_4.keyframeIdx_8 >= (D_800C44F0[0].field_4 + 9))) &&
                     !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & 4))
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_TIME(60.0f);
+                    g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(60.0f);
 
                     func_8004C564(g_SysWork.playerCombatInfo_38.equippedWeapon_F, 0);
 
@@ -3398,7 +3398,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                     extra->model_0.state_2                                      = extra->model_0.stateStep_3 = 0;
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
 
-                    if (g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 != FP_TIME(0.0f))
+                    if (g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 != Q12(0.0f))
                     {
                         chara->field_44 = 1;
                     }
@@ -4268,7 +4268,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                     }
                 }
 	           // Checks if player has >=30% or <10% health to determine level of exertion.
-                else if (chara->properties_E4.player.exhaustionTimer_FC < FP_TIME(10.0f) && chara->health_B0 >= Q12(30.0f))
+                else if (chara->properties_E4.player.exhaustionTimer_FC < Q12(10.0f) && chara->health_B0 >= Q12(30.0f))
                 {
                     if (chara->model_0.stateStep_3 == 0)
                     {
@@ -4297,7 +4297,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 {
                     if ((g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_Chainsaw ||
                          g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill) &&
-                        g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 != FP_TIME(0.0f))
+                        g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 != Q12(0.0f))
                     {
                         if (chara->model_0.stateStep_3 == 0)
                         {
@@ -5486,7 +5486,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             }
             else
             {
-                D_800C454C = FP_TIME(0.0f);
+                D_800C454C = Q12(0.0f);
             }
 
             if (ABS_DIFF(g_SysWork.player_4C.chara_0.properties_E4.player.field_120, chara->rotation_24.vy) > (FP_ANGLE(180.0f) - ((s32)(g_DeltaTime0 * 24) >> 4)))
@@ -5496,7 +5496,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                     chara->rotation_24.vy                                                   = g_SysWork.player_4C.chara_0.properties_E4.npc.field_120 +
                                                                                               FP_ANGLE(180.0f);
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = FP_METER(1.4f);
-                    D_800C454C                                                              = FP_TIME(0.0f);
+                    D_800C454C                                                              = Q12(0.0f);
 
                     // State change.
                     if (chara->model_0.anim_4.keyframeIdx_8 >= 213)
@@ -5610,7 +5610,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             }
             else
             {
-                D_800C454C = FP_TIME(0.0f);
+                D_800C454C = Q12(0.0f);
             }
 
             if (ABS_DIFF(g_SysWork.player_4C.chara_0.properties_E4.player.field_120, chara->rotation_24.vy) > (FP_ANGLE(180.0f) - ((g_DeltaTime0 * 24) >> 4)))
@@ -5619,7 +5619,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 {
                     chara->rotation_24.vy                                                   = g_SysWork.player_4C.chara_0.properties_E4.npc.field_120 + FP_ANGLE(180.0f);
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = FP_METER(1.4f);
-                    D_800C454C                                                              = FP_TIME(0.0f);
+                    D_800C454C                                                              = Q12(0.0f);
 
                     // State change.
                     if (chara->model_0.anim_4.keyframeIdx_8 >= 226)
@@ -6158,12 +6158,12 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             break;
     }
 
-    chara->properties_E4.player.exhaustionTimer_FC = CLAMP(chara->properties_E4.player.exhaustionTimer_FC, FP_TIME(0.0f), FP_TIME(35.0f));
+    chara->properties_E4.player.exhaustionTimer_FC = CLAMP(chara->properties_E4.player.exhaustionTimer_FC, Q12(0.0f), Q12(35.0f));
 
     // Check if player has >=30% or <10% of health to determine exertion level.
     if (chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_IdleExhausted, true))
     {
-        if (chara->properties_E4.player.exhaustionTimer_FC < FP_TIME(10.0f) &&
+        if (chara->properties_E4.player.exhaustionTimer_FC < Q12(10.0f) &&
             chara->health_B0 >= Q12(30.0f))
         {
             chara->model_0.stateStep_3 = 0;
@@ -7449,7 +7449,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
         }
     }
 
-    if (g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 != FP_TIME(0.0f))
+    if (g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 != Q12(0.0f))
     {
         g_SysWork.timer_2C++;
 
@@ -7840,7 +7840,7 @@ void func_8007E9C4() // 0x8007E9C4
     g_Player_IsShooting            = false;
     g_Player_IsAttacking           = false;
 
-    chara->properties_E4.player.afkTimer_E8                    = FP_TIME(0.0f);
+    chara->properties_E4.player.afkTimer_E8                    = Q12(0.0f);
     chara->properties_E4.player.field_F4                       = 0;
     chara->properties_E4.player.runTimer_F8                    = 0;
     chara->properties_E4.player.field_100                      = 0;
@@ -8455,9 +8455,9 @@ void func_8007FC48(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 animS
         chara->model_0.stateStep_3++;
 
         // Set anim time.
-        extra->model_0.anim_4.time_4 = FP_TIME(g_MapOverlayHeader.field_38[i].time_4);
+        extra->model_0.anim_4.time_4 = Q12(g_MapOverlayHeader.field_38[i].time_4);
         D_800AF220                   = i;
-        chara->model_0.anim_4.time_4 = FP_TIME(g_MapOverlayHeader.field_38[i].time_4);
+        chara->model_0.anim_4.time_4 = Q12(g_MapOverlayHeader.field_38[i].time_4);
         i                            = 41;
 
         // Increment state.

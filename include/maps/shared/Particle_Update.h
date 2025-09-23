@@ -534,7 +534,7 @@ bool Particle_Update(s_Particle* partHead)
             }
 
         #if defined(MAP7_S03)
-            D_800F23D0 = (g_DeltaTime0 * 10936) / FP_TIME(1.0f);
+            D_800F23D0 = (g_DeltaTime0 * 10936) / Q12(1.0f);
         #endif
 
             if (sharedData_800DD78B_0_s01 != 0)

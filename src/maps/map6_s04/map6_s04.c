@@ -161,7 +161,7 @@ void Ai_MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDI
         Ai_MonsterCybil_Init(chara, extraModelPtr);
     }
 
-    if (g_DeltaTime0 != FP_TIME(0.0))
+    if (g_DeltaTime0 != Q12(0.0))
     {
         func_800D8B14(chara, extraModelPtr);
         func_800D8D7C(chara, extraModelPtr, coords);

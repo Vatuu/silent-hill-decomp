@@ -394,7 +394,7 @@ void Ai_Twinfeeler_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINA
 
     if (chara->model_0.state_2 != 1 || Ai_Twinfeeler_Init(chara))
     {
-        if (g_DeltaTime0 != FP_TIME(0.0))
+        if (g_DeltaTime0 != Q12(0.0))
         {
             func_800D3E58(chara);
             func_800D53B0(chara, coords);

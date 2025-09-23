@@ -68,7 +68,7 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3) // 0x800CE000
             break;
 
         default:
-            sharedData_800DD78B_0_s01 = g_DeltaTime0 == FP_TIME(0.0f);
+            sharedData_800DD78B_0_s01 = g_DeltaTime0 == Q12(0.0f);
 
             func_8003EDB8(&D_800E214C, &D_800E2150);
 
@@ -415,7 +415,7 @@ void func_800D16C4(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
         chara->field_34 = 0;
     }
 
-    if (g_DeltaTime0 == FP_TIME(0.0f))
+    if (g_DeltaTime0 == Q12(0.0f))
     {
         chara->rotationSpeed_2C.vy = FP_ANGLE(0.0f);
     } 
@@ -641,7 +641,7 @@ void func_800D3CC4(s_SubCharacter* chara)
     {
         keyframeIdx = func_80044918(&chara->model_0.anim_4)->startKeyframeIdx_C;
         chara->model_0.anim_4.keyframeIdx_8 = keyframeIdx;
-        chara->model_0.anim_4.time_4 = FP_TIME(keyframeIdx);
+        chara->model_0.anim_4.time_4 = Q12(keyframeIdx);
     }
 }
 

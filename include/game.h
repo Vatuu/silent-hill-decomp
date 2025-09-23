@@ -9,7 +9,7 @@ struct _AnmHeader;
 struct _Model;
 
 #define TICKS_PER_SECOND 60                                            /** Game has a variable time step with 60 ticks max. */
-#define TIME_STEP_30_FPS FP_TIME(1.0f / (float)(TICKS_PER_SECOND / 2)) /** Time step at 30 FPS. */
+#define TIME_STEP_30_FPS Q12(1.0f / (float)(TICKS_PER_SECOND / 2)) /** Time step at 30 FPS. */
 
 #define SCREEN_WIDTH                   320
 #define SCREEN_HEIGHT                  240

@@ -333,14 +333,4 @@
 #define FP_METER_FROM_GEO(met) \
     Q8_TO_Q12(met)
 
-/** @brief Converts floating-point seconds to Q19.12 fixed-point.
- *
- * @note 1 second == 4096 units.
- *
- * @param sec Seconds (`float`).
- * @return Q19.12 fixed-point seconds (`s32`).
- */
-#define FP_TIME(sec) \
-    Q12(sec)
-
 #endif

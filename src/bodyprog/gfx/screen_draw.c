@@ -103,19 +103,19 @@ void Screen_FadeUpdate() // 0x8003260C
             Screen_FadeDrawModeSet(drMode);
             queueLength = Fs_QueueGetLength();
 
-            if (g_ScreenFadeTimestep > FP_TIME(0.0f))
+            if (g_ScreenFadeTimestep > Q12(0.0f))
             {
                 timeStep = g_ScreenFadeTimestep;
             }
             else
             {
-                timeStep = FP_TIME(3.0f) / (queueLength + 1);
+                timeStep = Q12(3.0f) / (queueLength + 1);
             }
 
             g_ScreenFadeProgress += FP_MULTIPLY_PRECISE(timeStep, g_DeltaTime1, Q12_SHIFT);
-            if (g_ScreenFadeProgress >= (FP_TIME(1.0f) - 1))
+            if (g_ScreenFadeProgress >= (Q12(1.0f) - 1))
             {
-                g_ScreenFadeProgress = FP_TIME(1.0f) - 1;
+                g_ScreenFadeProgress = Q12(1.0f) - 1;
                 g_Screen_FadeStatus++;
             }
 
@@ -126,7 +126,7 @@ void Screen_FadeUpdate() // 0x8003260C
 
         case SCREEN_FADE_STATUS(ScreenFadeState_ResetTimeStep, false):
         case SCREEN_FADE_STATUS(ScreenFadeState_ResetTimeStep, true):
-            g_ScreenFadeTimestep = FP_TIME(0.0f);
+            g_ScreenFadeTimestep = Q12(0.0f);
 
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false):
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, true):
@@ -145,13 +145,13 @@ void Screen_FadeUpdate() // 0x8003260C
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, true):
             Screen_FadeDrawModeSet(drMode);
 
-            if (g_ScreenFadeTimestep > FP_TIME(0.0f))
+            if (g_ScreenFadeTimestep > Q12(0.0f))
             {
                 timeStep = g_ScreenFadeTimestep;
             }
             else
             {
-                timeStep = FP_TIME(3.0f);
+                timeStep = Q12(3.0f);
             }
 
             g_ScreenFadeProgress -= FP_MULTIPLY_PRECISE(timeStep, g_DeltaTime1, Q12_SHIFT);
@@ -169,7 +169,7 @@ void Screen_FadeUpdate() // 0x8003260C
             break;
 
         case SCREEN_FADE_STATUS(ScreenFadeState_Reset, false):
-            g_ScreenFadeTimestep = FP_TIME(0.0f);
+            g_ScreenFadeTimestep = Q12(0.0f);
             g_ScreenFadeProgress = Q12(0.0f);
             g_Screen_FadeStatus  = SCREEN_FADE_STATUS(ScreenFadeState_None, false);
             return;

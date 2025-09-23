@@ -18,8 +18,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 
     func_8004C564(0, -1);
 
-    playerChara->properties_E4.player.afkTimer_E8        = FP_TIME(0.0f);
-    playerChara->properties_E4.player.exhaustionTimer_FC = FP_TIME(0.0f);
+    playerChara->properties_E4.player.afkTimer_E8        = Q12(0.0f);
+    playerChara->properties_E4.player.exhaustionTimer_FC = Q12(0.0f);
 
     if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_Unk52)
     {

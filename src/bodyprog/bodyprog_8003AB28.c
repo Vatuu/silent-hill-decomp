@@ -81,7 +81,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
             g_IntervalVBlanks    = 1;
             g_Screen_FadeStatus  = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
-            g_ScreenFadeTimestep = FP_TIME(2.0f);
+            g_ScreenFadeTimestep = Q12(2.0f);
             g_MainMenuState++;
 
         case MenuState_Main:
@@ -89,7 +89,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
             {
                 GameFs_MapStartup();
 
-                if (g_GameWork.gameStateStep_598[0] == 1 && g_SysWork.timer_20 == FP_TIME(0.0f))
+                if (g_GameWork.gameStateStep_598[0] == 1 && g_SysWork.timer_20 == Q12(0.0f))
                 {
                     g_Demo_ReproducedCount++;
                 }
@@ -225,7 +225,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
             {
                 GameFs_MapStartup();
 
-                if (g_GameWork.gameStateStep_598[0] == 1 && g_SysWork.timer_20 == FP_TIME(0.0f))
+                if (g_GameWork.gameStateStep_598[0] == 1 && g_SysWork.timer_20 == Q12(0.0f))
                 {
                     g_Demo_ReproducedCount++;
                 }
@@ -2406,7 +2406,7 @@ void func_8003E740() // 0x8003E740
 
     static u32 D_800A9FB0 = 0;
 
-    if (g_DeltaTime0 != FP_TIME(0.0))
+    if (g_DeltaTime0 != Q12(0.0))
     {
         D_800A9FB0 += 8;
         for (i = 0; i < 8; i++)

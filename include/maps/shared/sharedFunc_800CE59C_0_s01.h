@@ -43,7 +43,7 @@ void sharedFunc_800CE59C_0_s01(s_Particle* parts)
     s32         deltaTime;
     s_Particle* part;
 
-    deltaTime = FP_TIME(0.1f / 3.0f);
+    deltaTime = Q12(0.1f / 3.0f);
 
     GsInitCoordinate2(NULL, &g_SysWork.coord_22A8);
 

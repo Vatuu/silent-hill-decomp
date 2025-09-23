@@ -350,7 +350,7 @@ s32 vcExecCamera() // 0x80080FBC
 
 void vcSetAllNpcDeadTimer() // 0x8008123C
 {
-    #define DEATH_TIME_MAX FP_TIME(10.0f)
+    #define DEATH_TIME_MAX Q12(10.0f)
 
     s_SubCharacter* chara;
 
@@ -370,7 +370,7 @@ void vcSetAllNpcDeadTimer() // 0x8008123C
         }
         else
         {
-            chara->deathTimer_C4 = FP_TIME(0.0f);
+            chara->deathTimer_C4 = Q12(0.0f);
         }
         if (chara->deathTimer_C4 > DEATH_TIME_MAX)
         {
@@ -384,8 +384,8 @@ s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVEC
     #define MOVE_DIST_MAX   FP_METER(0.0125f)
     #define ROT_X_ANGLE_MAX FP_ANGLE(20.0f)
     #define ROT_Y_ANGLE_MAX FP_ANGLE(30.0f)
-    #define INTRPT_TIME_MIN FP_TIME(1.0f)
-    #define INTRPT_TIME_MAX FP_TIME(4.0f)
+    #define INTRPT_TIME_MIN Q12(1.0f)
+    #define INTRPT_TIME_MAX Q12(4.0f)
 
     s32 intrpt; // Interpolation time (i.e. alpha)?
     s32 mv_vec; // Movement vector magnitude.
@@ -506,7 +506,7 @@ bool vcRetThroughDoorCamEndF(VC_WORK* w_p) // 0x800815F0
         return true;
     }
 
-    if (prm_p->timer_4 > FP_TIME(1.2f) && w_p->nearest_enemy_xz_dist_2E0 < FP_METER(1.2f))
+    if (prm_p->timer_4 > Q12(1.2f) && w_p->nearest_enemy_xz_dist_2E0 < FP_METER(1.2f))
     {
         return true;
     }
@@ -775,7 +775,7 @@ void vcSetFlagsByCamMvType(VC_CAM_MV_TYPE cam_mv_type, s32 far_watch_rate, bool 
 
 void vcPreSetDataInVC_WORK(VC_WORK* w_p, VC_ROAD_DATA* vc_road_ary_list) // 0x80081B6C
 {
-    if (g_DeltaTime0 != FP_TIME(0.0f))
+    if (g_DeltaTime0 != Q12(0.0f))
     {
         if (vcWork.flags_8 & VC_PRS_F_VIEW_F)
         {
@@ -819,7 +819,7 @@ void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(VC_WORK* w_p, enum _THROUGH_DOOR_SET
     {
         case VC_TDSC_START:
             w_p->through_door_10.active_f_0 = true;
-            prm_p->timer_4                  = FP_TIME(0.0f);
+            prm_p->timer_4                  = Q12(0.0f);
             prm_p->rail_ang_y_8             = w_p->chara_eye_ang_y_144;
             prm_p->rail_sta_pos_C.vx        = w_p->chara_pos_114.vx;
             prm_p->rail_sta_pos_C.vy        = w_p->chara_grnd_y_12C - FP_METER(1.95f);
@@ -828,7 +828,7 @@ void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(VC_WORK* w_p, enum _THROUGH_DOOR_SET
 
         case VC_TDSC_END:
             w_p->through_door_10.active_f_0 = false;
-            prm_p->timer_4                  = FP_TIME(0.0f);
+            prm_p->timer_4                  = Q12(0.0f);
             break;
 
         case VC_TDSC_MAIN:
@@ -846,7 +846,7 @@ void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(VC_WORK* w_p, enum _THROUGH_DOOR_SET
 
 void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
 {
-    #define ENEMY_DEATH_TIME_MAX FP_TIME(1.5f)
+    #define ENEMY_DEATH_TIME_MAX Q12(1.5f)
     #define ENEMY_DIST_MAX       FP_METER(15.0f)
 
     s32             set_active_data_f;
@@ -1845,7 +1845,7 @@ void vcAutoRenewalCamTgtPos(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_CAM_MV_
 
     w_p->cam_tgt_mv_ang_y_10C = ratan2(tgt_vec.vx, tgt_vec.vz);
 
-    if (g_DeltaTime0 != FP_TIME(0.0f) || vcWork.flags_8 & VC_WARP_CAM_TGT_F)
+    if (g_DeltaTime0 != Q12(0.0f) || vcWork.flags_8 & VC_WARP_CAM_TGT_F)
     {
         w_p->cam_tgt_pos_44.vx += tgt_vec.vx;
         w_p->cam_tgt_pos_44.vy += tgt_vec.vy;
@@ -2230,7 +2230,7 @@ void vcMakeBasicCamTgtMvVec(VECTOR3* tgt_mv_vec, VECTOR3* ideal_pos, VC_WORK* w_
         tgt_mv_vec->vz = FP_MULTIPLY(max_tgt_mv_xz_len, Math_Cos(now2ideal_tgt_ang_y), Q12_SHIFT);
     }
 
-    if (g_DeltaTime0 == FP_TIME(0.0f) && !(vcWork.flags_8 & VC_WARP_CAM_TGT_F))
+    if (g_DeltaTime0 == Q12(0.0f) && !(vcWork.flags_8 & VC_WARP_CAM_TGT_F))
     {
         tgt_mv_vec->vy = FP_METER(0.0f);
     }

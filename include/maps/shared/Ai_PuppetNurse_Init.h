@@ -61,19 +61,19 @@ void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
         case 0:
             chara->model_0.state_2              = 11;
             chara->model_0.stateStep_3          = 0;
-            chara->model_0.anim_4.time_4        = FP_TIME(459.0f);
+            chara->model_0.anim_4.time_4        = Q12(459.0f);
             chara->model_0.anim_4.keyframeIdx_8 = 459;
             break;
         case 1:
             chara->model_0.state_2              = 10;
             chara->model_0.stateStep_3          = 0;
-            chara->model_0.anim_4.time_4        = FP_TIME(459.0f);
+            chara->model_0.anim_4.time_4        = Q12(459.0f);
             chara->model_0.anim_4.keyframeIdx_8 = 459;
             break;
         case 2:
             chara->model_0.state_2              = 9;
             chara->model_0.stateStep_3          = 0;
-            chara->model_0.anim_4.time_4        = FP_TIME(459.0f);
+            chara->model_0.anim_4.time_4        = Q12(459.0f);
             chara->model_0.anim_4.keyframeIdx_8 = 459;
             break;
     }

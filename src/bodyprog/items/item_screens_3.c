@@ -494,7 +494,7 @@ s32 D_800AE71C[] =
 };
 
 // Some timer used in func_80066184
-q19_12 D_800AE73C = FP_TIME(-524256.0f);
+q19_12 D_800AE73C = Q12(-524256.0f);
 
 // Used by `func_80068CC0` and `GameState_MapScreen_Update`.
 // I think this is save file flags related to

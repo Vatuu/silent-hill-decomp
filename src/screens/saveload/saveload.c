@@ -1633,7 +1633,7 @@ void Savegame_ScreenInit() // 0x801E63C0
 
     Savegame_ScreenSubInit();
 
-    g_SysWork.timer_20 = FP_TIME(0.0f);
+    g_SysWork.timer_20 = Q12(0.0f);
     g_GameWork.gameStateStep_598[0]++;
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;
@@ -1718,7 +1718,7 @@ void Savegame_ScreenLogic() // 0x801E649C
                     }
                     else
                     {
-                        g_SysWork.timer_20               = FP_TIME(0.0f);
+                        g_SysWork.timer_20               = Q12(0.0f);
                         g_GameWork.gameStateStep_598[1]  = 0;
                         g_GameWork.gameStateStep_598[2]  = 0;
                         g_GameWork.gameStateStep_598[0] += D_800BCD38;

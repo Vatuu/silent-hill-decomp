@@ -8,7 +8,7 @@ void sharedFunc_800D670C_0_s00(s_SubCharacter* chara)
     }
 
     if (!((u16)chara->properties_E4.player.afkTimer_E8 & (1 << 14)) &&
-        chara->model_0.anim_4.time_4 > FP_TIME(211.0f))
+        chara->model_0.anim_4.time_4 > Q12(211.0f))
     {
         sharedFunc_800D7E04_0_s00(chara, 1365);
 

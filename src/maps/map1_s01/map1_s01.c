@@ -153,7 +153,7 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
     {
         chara->model_0.state_2                                      = 1;
         chara->model_0.anim_4.status_0                              = ANIM_STATUS(3, true);
-        chara->model_0.anim_4.time_4                                = FP_TIME(7.0f);
+        chara->model_0.anim_4.time_4                                = Q12(7.0f);
         chara->model_0.anim_4.alpha_A                               = Q12(0.0f);
         chara->model_0.stateStep_3                                  = 0;
         chara->model_0.anim_4.keyframeIdx_8                         = 7;
@@ -166,13 +166,13 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
         if (chara->model_0.state_2 == 2)
         {
             chara->model_0.anim_4.status_0      = ANIM_STATUS(1, true);
-            chara->model_0.anim_4.time_4         = FP_TIME(7.0f);
+            chara->model_0.anim_4.time_4         = Q12(7.0f);
             chara->model_0.anim_4.keyframeIdx_8 = 7;
         }
         else if (chara->model_0.state_2 == 3)
         {
             chara->model_0.anim_4.status_0      = ANIM_STATUS(2, true);
-            chara->model_0.anim_4.time_4         = FP_TIME(23.0f);
+            chara->model_0.anim_4.time_4         = Q12(23.0f);
             chara->model_0.anim_4.keyframeIdx_8 = 23;
         }
 

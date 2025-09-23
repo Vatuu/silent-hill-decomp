@@ -708,7 +708,7 @@ void Ai_Incubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2
 {
     if ((chara->model_0.state_2 != 0 || Ai_Incubus_Init(chara, coords)) && chara->model_0.state_2 != 1)
     {
-        if (g_DeltaTime0 != FP_TIME(0.0))
+        if (g_DeltaTime0 != Q12(0.0))
         {
             func_800DDBBC(chara);
             func_800DEC74(chara, coords);
@@ -891,7 +891,7 @@ void Ai_Unknown23_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINAT
 
     if (chara->model_0.state_2 != 1)
     {
-        if (g_DeltaTime0 != FP_TIME(0.0))
+        if (g_DeltaTime0 != Q12(0.0))
         {
             func_800DFCE4(chara);
             func_800E05DC(chara, coords);
