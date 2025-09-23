@@ -743,9 +743,80 @@ void Map_WorldObjectsInit(void) // 0x800DBE68
     *(s32*)&D_800E3AAC.vx = rotXY;
 }
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DBF08);
+void Map_WorldObjectsUpdate(void) // 0x800DBF08
+{
+    VECTOR3 viewPos;
+    MAP_CHUNK_CHECK_VARIABLE_DECL();
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DC1E8);
+    vwGetViewPosition(&viewPos);
+    if (Savegame_EventFlagGet(4) && !Savegame_EventFlagGet(13))
+    {
+        if (!Savegame_EventFlagGet(6))
+        {
+             func_800DC33C();
+        }
+        else if (!Savegame_EventFlagGet(9))
+        {
+            func_800DC694();
+        }
+        else if (!Savegame_EventFlagGet(11))
+        {
+            func_800DC8D8();
+        }
+        func_800DCA30();
+    }
+
+    if (Savegame_EventFlagGet(13) && !Savegame_EventFlagGet(16))
+    {
+        func_800DCC54();
+    }
+    if (Savegame_EventFlagGet(17))
+    {
+        func_800DD0CC();
+    }
+
+    if (!Savegame_EventFlagGet(24))
+    {
+        if (PLAYER_IN_MAP_CHUNK(vx, 1, -7, -1, -7) && 
+                (PLAYER_IN_MAP_CHUNK(vz, 1, 6, -1, 6) || PLAYER_IN_MAP_CHUNK(vz, 1, 7, -1, 7)))
+        {
+            D_800E3AAC.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, (-0x400 - (Rng_Rand16() & 0x1FF)), Q12_SHIFT);
+            g_WorldGfx_ObjectAdd(&D_800E3A5C[0], &D_800E3A9C, &D_800E3AAC);
+            g_WorldGfx_ObjectAdd(&D_800E3A5C[1], &D_800E3A9C, &D_800E3AAC);
+        
+            if (g_SysWork.field_22A0 & 0x40)
+            {
+                g_SavegamePtr->eventFlags_168[5] &= 0xEFFFFFFF;
+            }
+        
+            if (!(g_SavegamePtr->eventFlags_168[5] & 0x10000000))
+            {
+                func_8004690C(0x551U);
+                Sd_EngineCmd(0x54EU);
+                g_SavegamePtr->eventFlags_168[5] |= 0x10000000;
+            }
+        
+            if (!(g_SavegamePtr->eventFlags_168[0] & 0x01000000))
+            {
+                func_8005DE0C(0x54E, &D_800E3A9C, 0x40, 0x8000, 0);
+            }
+        }
+    }
+}
+
+void func_800DC1E8(void)
+{
+    MAP_CHUNK_CHECK_VARIABLE_DECL();
+
+    if ((g_SavegamePtr->eventFlags_168[0] & 0x20000) && (g_SysWork.npcs_1A0[0].model_0.charaId_0 == 0))
+    {
+        if (PLAYER_IN_MAP_CHUNK(vx, 1, -7, -1, -7) && PLAYER_IN_MAP_CHUNK(vz, 1, 7, -1, 7)) {
+            Chara_Spawn(8, 0, Q12(-252.0f), Q12(223.0f), Q12(0.5f),   5);
+            Chara_Spawn(8, 1, Q12(-254.0f), Q12(221.0f), Q12(0.375f), 5);
+            Chara_Spawn(8, 2, Q12(-259.0f), Q12(232.0f), Q12(0.0f),   5);
+        }
+    }
+}
 
 void func_800DC33C(void) // 0x800DC33C
 {
