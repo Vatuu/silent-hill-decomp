@@ -2,6 +2,7 @@
 
 # Converts `g_SavegamePtr->eventFlags_168[X] & Y` expressions to `Savegame_EventFlagGet(Z)`
 # Also converts Q12 integers (0x7CCC, -0x1444, 0xFFFE0DDD, 4096) into float equivalents (may need to be rounded afterward)
+# (mostly GPT written)
 
 import re
 
@@ -29,6 +30,22 @@ def convert_flag_expression(expr):
     arr_pat   = r'.*?eventFlags_168\[(\d+)\]'
     mask_pat  = r'(0x[0-9a-fA-F]+(?:[uUlL]*)|\d+)'
     shift_pat = r'\(\s*1\s*<<\s*(\d+)\s*\)'
+
+    # `(eventFlags_168 & xx) == xx` -> Get and possibly !Get
+    m = re.search(arr_pat + r'\s*\(?\s*&\s*' + mask_pat + r'\s*\)?\s*==\s*' + mask_pat, expr)
+    if m:
+        array_idx = int(m.group(1))
+        mask = _parse_mask(m.group(2))
+        value = _parse_mask(m.group(3))
+        conditions = []
+        for bit in range(32):
+            if mask & (1 << bit):
+                final_idx = array_idx * 32 + bit
+                if value & (1 << bit):
+                    conditions.append(f"Savegame_EventFlagGet({final_idx})")
+                else:
+                    conditions.append(f"!Savegame_EventFlagGet({final_idx})")
+        return " && ".join(conditions) if conditions else None
 
     # |= (shift)
     m = re.search(arr_pat + r'\s*\|\=\s*' + shift_pat, expr)
