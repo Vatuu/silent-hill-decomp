@@ -1297,7 +1297,40 @@ s32 func_800DCDA8(void)
     return FP_MULTIPLY_PRECISE(D_800DFAE0[var_s2 + 1].vz - D_800DFAE0[var_s2].vz, var_s5, 12) + D_800DFAE0[var_s2].vz;
 }
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DCF38);
+s32 func_800DCF38(s32 arg0)
+{
+    s16 sp20;
+    s32 temp_v0;
+    s32 var_t0;
+    s32 var_v0;
+
+    var_t0 = 0;
+    if (g_SysWork.sysState_8 == SysState_EventCallFunc)
+    {
+        if (!(g_SavegamePtr->eventFlags_168[0] & 0x8000))
+        {
+            return arg0;
+        }
+    }
+    else
+    {
+        if (!(g_SavegamePtr->eventFlags_168[0] & 0x8000))
+        {
+            if (g_SysWork.player_4C.chara_0.position_18.vx < Q12(-200.0f))
+            {
+                func_8005C478(&sp20, g_SysWork.player_4C.chara_0.position_18.vx,
+                                     g_SysWork.player_4C.chara_0.position_18.vz,
+                                     D_800DFB28[0].vx, D_800DFB28[0].vy,
+                                     D_800DFB28[1].vx, D_800DFB28[1].vy);
+                var_v0 = FP_MULTIPLY_PRECISE((D_800DFB28[1].vz - D_800DFB28[0].vz), sp20, 12) + Q12(60.0f);
+                var_t0 = D_800DFB28[0].vz + var_v0;
+            }
+            return MAX(var_t0, arg0);
+        }
+    }
+
+    return FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(9.0f), 12) + arg0;
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DD0CC);
 
