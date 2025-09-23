@@ -645,7 +645,7 @@ void func_800DA5A0(void)
         
         temp_s1_2 = g_SysWork.player_4C.chara_0.position_18.vx;
         temp_s2 = g_SysWork.player_4C.chara_0.position_18.vz;
-        D_800DFB58 = 0;
+        g_MapMsgSoundIdx = 0;
         g_SysWork.player_4C.chara_0.position_18.vx = Q12(-40.0f);
         g_SysWork.player_4C.chara_0.position_18.vz = Q12(127.0f);
         func_8003C3AC();
@@ -661,7 +661,7 @@ void func_800DA5A0(void)
 
         /* fallthrough */
     case 2:
-        Map_MessageWithAudio(0x15, &D_800DFB58, &D_800DFABC);
+        Map_MessageWithAudio(0x15, &g_MapMsgSoundIdx, g_MapMsgSoundTable);
         break;
     case 3:
         g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = 0x1CCC;
@@ -690,7 +690,7 @@ void func_800DA5A0(void)
         }
         break;
     case 8:
-        Map_MessageWithAudio(0x16, &D_800DFB58, &D_800DFABC);
+        Map_MessageWithAudio(0x16, &g_MapMsgSoundIdx, g_MapMsgSoundTable);
         break;
     case 9:
         func_800865FC(1, 1, 0, -0x500, -0x24000, 0x77800);
@@ -702,7 +702,7 @@ void func_800DA5A0(void)
         func_80086728(&g_SysWork.npcs_1A0[0].model_0, 1, 1, 0);
         break;
     case 11:
-        Map_MessageWithAudio(0x17, &D_800DFB58, &D_800DFABC);
+        Map_MessageWithAudio(0x17, &g_MapMsgSoundIdx, g_MapMsgSoundTable);
         break;
     default:
         func_8008616C(0, false, 2, 0, false);

@@ -38,7 +38,7 @@ extern VECTOR3 D_800DE154;
 
 extern q19_12 g_Timer0; // 0x800E239C
 
-extern u8 g_SoundCmdIdx; // 0x800E23A0
+extern u8 g_MapMsgSoundIdx; // 0x800E23A0
 
 extern u8 D_800E23A1;
 
@@ -61,7 +61,7 @@ extern s16 D_800E2560;
 
 extern s_WorldObject_0 g_CommonWorldObjects[];
 
-extern u16 g_SoundCmds[];
+extern u16 g_MapMsgSoundTable[];
 
 extern u8 D_800DE250;
 

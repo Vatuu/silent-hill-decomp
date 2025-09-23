@@ -192,7 +192,7 @@ MAP_MESSAGES                      = 0x800DDE88; // type:u32 size:0x130
 //----------------------------------------------------
 //--- PA: 0x014A40   VA: 0x800DDFB8   subsegment: data
 //----------------------------------------------------
-g_SoundCmds                       = 0x800DE0CC; // type:s16
+g_MapMsgSoundTable                       = 0x800DE0CC; // type:s16
 sharedData_800DE170_0_s01         = 0x800DE170; // type:VECTOR3 size:0xC
 sharedData_800DE180_0_s01         = 0x800DE180; // type:VECTOR3 size:0xC
 sharedData_800DE190_0_s01         = 0x800DE190; // type:VECTOR3 size:0xC
@@ -225,7 +225,7 @@ sharedData_800E237C_0_s01         = 0x800E237C; // type:s32
 g_CutsceneCameraPositionTarget    = 0x800E2380; // type:VECTOR3
 g_CutsceneCameraLookAtTarget      = 0x800E2390; // type:VECTOR3
 g_Timer0                          = 0x800E239C; // type:s32
-g_SoundCmdIdx                     = 0x800E23A0; // type:u8
+g_MapMsgSoundIdx                     = 0x800E23A0; // type:u8
 g_CutscenePosition                = 0x800E2490;
 g_EventThing_KitchenKnife         = 0x800E24A0;
 g_EventThing_Flashlight           = 0x800E24D0;
