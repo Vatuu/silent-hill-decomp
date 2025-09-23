@@ -67,7 +67,7 @@ def convert_value(match):
     else:
         val = int(value_str, 10)
 
-    return str(val / 4096.0)
+    return str(val / 4096.0) + "f"
 
 def process_fp_text(text):
     pattern = re.compile(r'[-+]?0x[0-9A-Fa-f]+|[-+]?\d+')
