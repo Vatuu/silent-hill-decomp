@@ -930,7 +930,55 @@ void func_800DAEFC(void) // 0x800DAEFC
     }
 }
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DB26C);
+void func_800DB26C(void)
+{
+    if (g_SysWork.sysStateStep_C[0] == 0)
+    {
+        Camera_TranslationSet(NULL, Q12(-62.0f), Q12(-2.24f), Q12(117.0f), 0, 0, 0, 0, 1);
+        Camera_RotationSet(NULL, Q12(-62.0f), Q12(-0.7f), Q12(104.0f), 0, 0, 0, 0, true);
+        func_800868DC(2);
+    }
+    switch (g_SysWork.sysStateStep_C[0]) {
+    case 0:
+        sharedFunc_800D20E4_0_s00();
+        func_8008616C(0, true, 2, 0, false);
+        func_800865FC(1, 0, 0, Q12(-0.25f), Q12(-60.5f), g_SysWork.player_4C.chara_0.position_18.vz);
+        g_SysWork.npcs_1A0[0].position_18.vx = Q12(-62.0f);
+        g_SysWork.npcs_1A0[0].rotation_24.vy = Q12(0.5f);
+        g_SysWork.npcs_1A0[0].position_18.vz = g_SysWork.player_4C.chara_0.position_18.vz - Q12(9.0f);
+        SysWork_StateStepIncrement();
+
+        /* fallthrough */
+    case 1:
+        func_80085DF0();
+        return;
+    case 2:
+        func_800866D4(0x36, 1, 0);
+        return;
+    case 3:
+        g_DeltaTime0 >>= 1;
+        func_800865FC(0, 0, 0, Q12(-0.375f), 0, 0);
+        func_80085E6C(Q12(0.8f), false);
+        return;
+    case 4:
+        g_DeltaTime0 >>= 1;
+        g_SavegamePtr->eventFlags_168[0] |= 0x100;
+        func_800866D4(0x36, 1, 0);
+        return;
+    case 5:
+        g_DeltaTime0 >>= 1;
+        func_80085E6C(Q12(1.0f), false);
+        return;
+    default:
+        func_8008616C(0, false, 2, 0, false);
+        g_SavegamePtr->eventFlags_168[0] |= 0x80;
+        func_800865FC(1, 1, 0, Q12(0.5f), Q12(-62.0f), Q12(49.0f));
+        sharedFunc_800D2244_0_s00(0);
+        SysWork_StateSetNext(SysState_Gameplay);
+
+        return;
+    }
+}
 
 void func_800DB514(void)
 {
