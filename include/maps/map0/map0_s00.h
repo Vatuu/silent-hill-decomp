@@ -49,6 +49,11 @@ extern u8 D_800DFAC2;
 
 extern u8 g_MapMsgSoundIdx;
 
+extern s32 D_800DFAC4;
+
+extern VECTOR3 D_800DFAE0[];  // }  TODO might be one big table.
+extern VECTOR3 D_800DFB28[3]; // }
+
 void func_800CBFB0(void);
 
 void func_800D0124();
