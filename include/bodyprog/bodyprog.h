@@ -2320,7 +2320,8 @@ extern s_800C38B0 D_800C38B0;
 
 extern s_800C38B4 D_800C38B4;
 
-extern s32 D_800C4710[];
+/** Times? */
+extern q19_12 D_800C4710[];
 
 extern u8 D_800C37C8;
 
@@ -3297,11 +3298,11 @@ void func_800868DC(s32 idx);
 
 void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* sounds);
 
-void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPosOffset,
-                           s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, bool warpCam);
+void Camera_TranslationSet(VECTOR3* pos, q19_12 offsetOrPosX, q19_12 offsetOrPosY, q19_12 offsetOrPosZ,
+                           q19_12 accelXz, q19_12 accelY, q19_12 speedXzMax, q19_12 speedYMax, bool warpCam);
 
-void Camera_RotationSet(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s32 zLookAtOffset,
-                        s32 xAngularAccel, s32 yAngularAccel, s32 xAngularSpeedMax, s32 yAngularSpeedMax, bool warpLookAt);
+void Camera_RotationSet(VECTOR3* lookAt, q19_12 lookAtOffsetOrPosX, q19_12 lookAtOffsetOrPosY, q19_12 lookAtOffsetOrPosZ,
+                        q19_12 angularAccelX, q19_12 angularAccelY, q19_12 angularSpeedXMax, q19_12 angularSpeedYMax, bool warpLookAt);
 
 void func_80086C58(s_SubCharacter* chara, s32 arg1);
 
@@ -3343,7 +3344,7 @@ void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6,
  * `func_8003D6E0` uses this function and in the last argument
  * it input `arg5` and `arg5` is an undetermined function pointer
  */
-bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coord, s8 flags, s_LmHeader* lmHdr, s_FsImageDesc* tex);
+bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coords, s8 flags, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 bool func_80088D0C();
 

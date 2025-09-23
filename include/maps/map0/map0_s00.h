@@ -9,15 +9,17 @@ typedef struct
     VECTOR3 position1_C;
 } s_800E32DC;
 
-typedef struct {
-    s16 unk0;
-    s16 unk2;
+typedef struct
+{
+    s16 field_0;
+    s16 field_2;
 } s_800DFB44;
 
-typedef struct {
-    u8 unk0;
-    u8 unk1;
-    u8 unk2;
+typedef struct
+{
+    u8 field_0;
+    u8 field_1;
+    u8 field_2;
 } s_800DFB48;
 
 extern s_800E32DC D_800E32DC;
@@ -139,6 +141,8 @@ s32 func_800DCDA8();
 
 s32 func_800DCF38(s32);
 
+void func_800DD0CC(void);
+
 void Map_WorldObjectsInit(void);
 
 void Map_WorldObjectsUpdate(void);
@@ -166,6 +170,8 @@ void func_800DAB8C(void);
 void func_800DACB0(void);
 
 void func_800DAEFC(void);
+
+void func_800DB514(void);
 
 void func_800DB870(void);
 

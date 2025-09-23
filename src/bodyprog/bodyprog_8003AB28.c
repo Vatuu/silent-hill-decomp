@@ -41,7 +41,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
         GameState_MovieIntro
     };
 
-    s32         playIntroFmv;
+    bool        playIntroFmv;
     s32         prevGameDifficultyIdx;
     s32         nextGameDifficultyIdx;
     e_GameState prevState;
@@ -59,7 +59,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
     {
         g_MainMenuState = 0;
         
-        if (playIntroFmv != 0)
+        if (playIntroFmv)
         {
             g_SysWork.processFlags_2298 = SysWorkProcessFlag_BootDemo;
         }
@@ -77,7 +77,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
             g_GameWork.background2dColor_B_58E = 0;
 
             Screen_RectInterlacedClear(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
-            Screen_Init(SCREEN_WIDTH, 1);
+            Screen_Init(SCREEN_WIDTH, true);
 
             g_IntervalVBlanks    = 1;
             g_Screen_FadeStatus  = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
@@ -85,7 +85,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
             g_MainMenuState++;
 
         case MenuState_Main:
-            if (playIntroFmv != 0)
+            if (playIntroFmv)
             {
                 GameFs_MapStartup();
 
@@ -221,7 +221,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
             break;
 
         case MenuState_DifficultySelector:
-            if (playIntroFmv != 0)
+            if (playIntroFmv)
             {
                 GameFs_MapStartup();
 
@@ -337,7 +337,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
         g_SysWork.timer_20 = 0;
     }
 
-    if (playIntroFmv == 0)
+    if (!playIntroFmv)
     {
         switch (g_GameWork.gameStateStep_598[0])
         {
@@ -382,7 +382,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
     *(s32*)0x1F800000 = 0x200000;
     *(s32*)0x1F800004 = 0x01C00140;
     ClearImage2((RECT*)0x1F800000, 0u, 0u, 0u);
-    Screen_Init(SCREEN_WIDTH, 0);
+    Screen_Init(SCREEN_WIDTH, false);
 }
 
 void MainMenu_SelectedOptionIdxReset() // 0x8003B550

@@ -484,7 +484,7 @@ void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
             Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[idx], FS_BUFFER_2, &g_MapImg);
             Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdxs[idx], FS_BUFFER_1, &g_MapMarkerAtlasImg);
 
-            Screen_Init(SCREEN_WIDTH, 1);
+            Screen_Init(SCREEN_WIDTH, true);
             GsSwapDispBuff();
             Fs_QueueWaitForEmpty();
             break;
@@ -496,7 +496,7 @@ void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
         case 2:
             LoadImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(0);
-            Screen_Init(SCREEN_WIDTH, 0);
+            Screen_Init(SCREEN_WIDTH, false);
             break;
     }
 }
@@ -518,7 +518,7 @@ s32 func_8008694C(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 idx)
 {
     D_800C4710[idx] += g_DeltaTime0;
     D_800C4710[idx] = (arg3 < D_800C4710[idx]) ? arg3 : D_800C4710[idx];
-    return (arg0 * Math_Sin(arg1 + ((arg2 * D_800C4710[idx]) / arg3))) >> 12;
+    return FP_MULTIPLY(arg0, Math_Sin(arg1 + ((arg2 * D_800C4710[idx]) / arg3)), Q12_SHIFT);
 }
 
 void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* sounds) // 0x800869E4
@@ -539,8 +539,8 @@ void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* sounds) // 0x800869E
     }
 }
 
-void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPosOffset,
-                           s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, bool warpCam) // 0x80086A94
+void Camera_TranslationSet(VECTOR3* pos, q19_12 offsetOrPosX, q19_12 offsetOrPosY, q19_12 offsetOrPosZ,
+                           q19_12 accelXz, q19_12 accelY, q19_12 speedXzMax, q19_12 speedYMax, bool warpCam) // 0x80086A94
 {
     VECTOR3         posTarget;
     VC_CAM_MV_PARAM camTranslationParams;
@@ -548,63 +548,63 @@ void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPo
     // Set position target.
     if (pos != NULL)
     {
-        posTarget.vx = pos->vx + xPosOffset;
-        posTarget.vy = pos->vy + yPosOffset;
-        posTarget.vz = pos->vz + zPosOffset;
+        posTarget.vx = pos->vx + offsetOrPosX;
+        posTarget.vy = pos->vy + offsetOrPosY;
+        posTarget.vz = pos->vz + offsetOrPosZ;
     }
     else
     {
-        posTarget.vx = xPosOffset;
-        posTarget.vy = yPosOffset;
-        posTarget.vz = zPosOffset;
+        posTarget.vx = offsetOrPosX;
+        posTarget.vy = offsetOrPosY;
+        posTarget.vz = offsetOrPosZ;
     }
 
     // Set acceleration on XZ plane.
-    if (xzAccel == Q12(0.0f))
+    if (accelXz == Q12(0.0f))
     {
         camTranslationParams.accel_xz = cam_mv_prm_user.accel_xz;
     }
     else
     {
-        camTranslationParams.accel_xz = xzAccel;
+        camTranslationParams.accel_xz = accelXz;
     }
 
     // Set acceleration on Y axis.
-    if (yAccel == Q12(0.0f))
+    if (accelY == Q12(0.0f))
     {
         camTranslationParams.accel_y = cam_mv_prm_user.accel_y;
     }
     else
     {
-        camTranslationParams.accel_y = yAccel;
+        camTranslationParams.accel_y = accelY;
     }
 
     // Set max speed on XZ plane.
-    if (xzSpeedMax == Q12(0.0f))
+    if (speedXzMax == Q12(0.0f))
     {
         camTranslationParams.max_spd_xz = cam_mv_prm_user.max_spd_xz;
     }
     else
     {
-        camTranslationParams.max_spd_xz = xzSpeedMax;
+        camTranslationParams.max_spd_xz = speedXzMax;
     }
 
     // Set max speed on Y axis.
-    if (ySpeedMax == Q12(0.0f))
+    if (speedYMax == Q12(0.0f))
     {
         camTranslationParams.max_spd_y = cam_mv_prm_user.max_spd_y;
     }
     else
     {
-        camTranslationParams.max_spd_y = ySpeedMax;
+        camTranslationParams.max_spd_y = speedYMax;
     }
 
     // Set camera position target.
     vcUserCamTarget(&posTarget, &camTranslationParams, warpCam);
 }
 
-void Camera_RotationSet(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s32 zLookAtOffset,
-                        s32 xAngularAccel, s32 yAngularAccel, s32 xAngularSpeedMax, s32 yAngularSpeedMax, bool warpLookAt) // 0x80086B70
+void Camera_RotationSet(VECTOR3* lookAt, q19_12 lookAtOffsetOrPosX, q19_12 lookAtOffsetOrPosY, q19_12 lookAtOffsetOrPosZ,
+                        q19_12 angularAccelX, q19_12 angularAccelY, q19_12 angularSpeedXMax, q19_12 angularSpeedYMax, bool warpLookAt) // 0x80086B70
 {
     VECTOR3           lookAtTarget;
     VC_WATCH_MV_PARAM camRotParams;
@@ -612,55 +612,55 @@ void Camera_RotationSet(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s
     // Set look-at target.
     if (lookAt != NULL)
     {
-        lookAtTarget.vx = lookAt->vx + xLookAtOffset;
-        lookAtTarget.vy = lookAt->vy + yLookAtOffset;
-        lookAtTarget.vz = lookAt->vz + zLookAtOffset;
+        lookAtTarget.vx = lookAt->vx + lookAtOffsetOrPosX;
+        lookAtTarget.vy = lookAt->vy + lookAtOffsetOrPosY;
+        lookAtTarget.vz = lookAt->vz + lookAtOffsetOrPosZ;
     }
     else
     {
-        lookAtTarget.vx = xLookAtOffset;
-        lookAtTarget.vy = yLookAtOffset;
-        lookAtTarget.vz = zLookAtOffset;
+        lookAtTarget.vx = lookAtOffsetOrPosX;
+        lookAtTarget.vy = lookAtOffsetOrPosY;
+        lookAtTarget.vz = lookAtOffsetOrPosZ;
     }
 
     // Set angular acceleration on X axis.
-    if (xAngularAccel == FP_ANGLE(0.0f))
+    if (angularAccelX == FP_ANGLE(0.0f))
     {
         camRotParams.ang_accel_x = deflt_watch_mv_prm.ang_accel_x;
     }
     else
     {
-        camRotParams.ang_accel_x = xAngularAccel;
+        camRotParams.ang_accel_x = angularAccelX;
     }
 
     // Set angular acceleration on Y axis.
-    if (yAngularAccel == FP_ANGLE(0.0f))
+    if (angularAccelY == FP_ANGLE(0.0f))
     {
         camRotParams.ang_accel_y = deflt_watch_mv_prm.ang_accel_y;
     }
     else
     {
-        camRotParams.ang_accel_y = yAngularAccel;
+        camRotParams.ang_accel_y = angularAccelY;
     }
 
     // Set max angular speed on X axis.
-    if (xAngularSpeedMax == FP_ANGLE(0.0f))
+    if (angularSpeedXMax == FP_ANGLE(0.0f))
     {
         camRotParams.max_ang_spd_x = deflt_watch_mv_prm.max_ang_spd_x;
     }
     else
     {
-        camRotParams.max_ang_spd_x = xAngularSpeedMax;
+        camRotParams.max_ang_spd_x = angularSpeedXMax;
     }
     
     // Set max angular speed on Y axis.
-    if (yAngularSpeedMax == FP_ANGLE(0.0f))
+    if (angularSpeedYMax == FP_ANGLE(0.0f))
     {
         camRotParams.max_ang_spd_y = deflt_watch_mv_prm.max_ang_spd_y;
     }
     else
     {
-        camRotParams.max_ang_spd_y = yAngularSpeedMax;
+        camRotParams.max_ang_spd_y = angularSpeedYMax;
     }
 
     // Set camera flags and rotation target.
@@ -1115,7 +1115,7 @@ void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             StoreImage(&D_8002ABA4, IMAGE_BUFFER);
             DrawSync(0);
             Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[mapFlagIdx], FS_BUFFER_2, &g_MapImg);
-            Screen_Init(0x140, 1);
+            Screen_Init(SCREEN_WIDTH, true);
 
             g_IntervalVBlanks = 1;
 
@@ -1181,7 +1181,7 @@ void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
         default:
             LoadImage(&D_8002ABA4, IMAGE_BUFFER);
             DrawSync(0);
-            Screen_Init(0x140, 0);
+            Screen_Init(SCREEN_WIDTH, false);
             func_8008616C(0, false, 0, Q12(0.0f), false);
 
             g_MapOverlayHeader.unfreezePlayerControl_CC(0);
@@ -1352,9 +1352,9 @@ void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6,
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088370); // 0x80088370
 
-bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coord, s8 flags, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x80088C7C
+bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coords, s8 flags, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x80088C7C
 {
-    func_80035338(modelIdx + 1, charaId, NULL, coord);
+    func_80035338(modelIdx + 1, charaId, NULL, coords);
     func_8003D5B4(flags);
     func_8003D6E0(charaId, modelIdx, lmHdr, tex);
     return true;

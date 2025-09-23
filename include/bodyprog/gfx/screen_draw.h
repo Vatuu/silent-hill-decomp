@@ -12,9 +12,9 @@
 
 void Screen_RectInterlacedClear(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
 
-void Screen_Refresh(s32 screenWidth, s32 isInterlaced);
+void Screen_Refresh(s32 screenWidth, bool isInterlaced);
 
-void Screen_Init(s32 screenWidth, s32 isInterlaced);
+void Screen_Init(s32 screenWidth, bool isInterlaced);
 
 void Screen_XyPositionSet(s32 x, s32 y);
 

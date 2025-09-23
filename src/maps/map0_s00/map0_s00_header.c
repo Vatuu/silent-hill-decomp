@@ -18,7 +18,6 @@
 #define func_800D9748 (void(*)(void))0x800D9748
 #define func_800DADD4 (void(*)(void))0x800DADD4
 #define func_800DB26C (void(*)(void))0x800DB26C
-#define func_800DB514 (void(*)(void))0x800DB514
 #define func_800DB94C (void(*)(void))0x800DB94C
 
 extern u8 D_800DF754[];
