@@ -3295,10 +3295,10 @@ void func_800867B4(s32 caseParam, s32 idx);
 
 void func_800868DC(s32 idx);
 
-void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* soundTable);
+void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* sounds);
 
 void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPosOffset,
-                           s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCam);
+                           s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, bool warpCam);
 
 void Camera_RotationSet(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s32 zLookAtOffset,
                         s32 xAngularAccel, s32 yAngularAccel, s32 xAngularSpeedMax, s32 yAngularSpeedMax, bool warpLookAt);

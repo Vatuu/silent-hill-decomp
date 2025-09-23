@@ -610,7 +610,7 @@ void func_800DA454(void)
     }
 }
 
-void func_800DA5A0(void)
+void func_800DA5A0(void) // 0x800DA5A0
 {
     s32 temp_s0;
     s32 temp_s1;
@@ -624,113 +624,133 @@ void func_800DA5A0(void)
 
     switch (g_SysWork.sysStateStep_C[0])
     {
-    case 0:
-        Camera_TranslationSet(NULL, -0x16000, -0x2666, 0x82199, 0, 0, 0, 0, 1);
-        Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, 0, -0x1000, 0, 0, 0, 0, 0, true);
-        break;
-    case 1:
-    case 2:
-        func_800868DC(0);
-        func_800868DC(1);
-        func_800868DC(2);
-        break;
-    case 4:
-    case 5:
-    case 6:
-        Camera_TranslationSet(NULL, -0x16000 - func_800868F4(0x4000, 0x5000, 0), -0x2666 - func_800868F4(-0x1800, 0x5000, 1), 
-                              0x82199 - func_800868F4(0x4000, 0x5000, 2), 0, 0, 0, 0, 0);
-        Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, 0, -0x1000, 0, 0, 0, 0, 0, false);
-        break;
-    case 3:
-        Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, 0, -0x1000, 0, 0, 0, 0, 0, false);
-        break;
-    
-    case 7:
-    case 8:
-    case 9:
-    case 10:
-    case 11:
-    default:
-        vcReturnPreAutoCamWork(D_800DFAC2);
-        D_800DFAC2 = 0;
-        break;
+        case 0:
+            Camera_TranslationSet(NULL, Q12(-22.0f), Q12(-2.4f), Q12(130.1f), 0, 0, 0, 0, true);
+            Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), 0, 0, 0, 0, true);
+            break;
+
+        case 1:
+        case 2:
+            func_800868DC(0);
+            func_800868DC(1);
+            func_800868DC(2);
+            break;
+
+        case 4:
+        case 5:
+        case 6:
+            Camera_TranslationSet(NULL,
+                                  Q12(-22.0f) - func_800868F4(Q12(4.0f),  Q12(5.0f), 0),
+                                  Q12(-2.4f)  - func_800868F4(Q12(-1.5f), Q12(5.0f), 1),
+                                  Q12(130.1f) - func_800868F4(Q12(4.0f),  Q12(5.0f), 2),
+                                  0, 0, 0,
+                                  0, false);
+            Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), 0, 0, 0, 0, false);
+            break;
+
+        case 3:
+            Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), 0, 0, 0, 0, false);
+            break;
+        
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+        default:
+            vcReturnPreAutoCamWork(D_800DFAC2);
+            D_800DFAC2 = 0;
+            break;
     }
+
     switch (g_SysWork.sysStateStep_C[0])
     {
-    case 0:
-        sharedFunc_800D20E4_0_s00();
-        sharedFunc_800D88AC_0_s00(g_SysWork.npcs_1A0);
-        func_800865FC(1, 1, 0, -0x600, -0x23000, 0x78000);
-        
-        temp_s1_2 = g_SysWork.player_4C.chara_0.position_18.vx;
-        temp_s2 = g_SysWork.player_4C.chara_0.position_18.vz;
-        g_MapMsgSoundIdx = 0;
-        g_SysWork.player_4C.chara_0.position_18.vx = Q12(-40.0f);
-        g_SysWork.player_4C.chara_0.position_18.vz = Q12(127.0f);
-        func_8003C3AC();
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            sharedFunc_800D88AC_0_s00(g_SysWork.npcs_1A0);
+            func_800865FC(true, 1, 0, FP_ANGLE(-135.0f), Q12(-35.0f), Q12(120.0f));
 
-        g_SysWork.player_4C.chara_0.position_18.vx = temp_s1_2;
-        g_SysWork.player_4C.chara_0.position_18.vz = temp_s2;
-        SysWork_StateStepIncrement(); 
+            temp_s1_2 = g_SysWork.player_4C.chara_0.position_18.vx;
+            temp_s2 = g_SysWork.player_4C.chara_0.position_18.vz;
+            g_MapMsgSoundIdx = 0;
 
-        break;
-    case 1:
-        func_800CB6B0(0, g_SavegamePtr->mapOverlayId_A4, 0);
-        SysWork_StateStepIncrement();
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(-40.0f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(127.0f);
 
-        /* fallthrough */
-    case 2:
-        Map_MessageWithAudio(0x15, &g_MapMsgSoundIdx, g_MapMsgSoundTable);
-        break;
-    case 3:
-        g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = 0x1CCC;
-        func_80086728(&g_SysWork.npcs_1A0[0].model_0, 2, 1, 0);
-        func_80085E6C(0x1800, false);
-        break;
-    case 4:
-        g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = 0x1CCC;
-        func_80086728(&g_SysWork.npcs_1A0[0].model_0, 2, 1, 0);
-        break;
-    case 5:
-        g_SysWork.player_4C.chara_0.position_18.vx = -0x1A000;
-        g_SysWork.player_4C.chara_0.position_18.vz = 0x7F000;
-        g_SysWork.player_4C.chara_0.rotation_24.vy = -0x600;
-        func_800865FC(1, 0, 0, -0x600, -0x1D000, 0x7D000);
-        SysWork_StateStepIncrement();
+            func_8003C3AC();
 
-        /* fallthrough */
-    case 6:
-        func_800866D4(0x36, 1, 0);
-        break;
-    case 7:
-        if (func_8003C850())
-        {
+            g_SysWork.player_4C.chara_0.position_18.vx = temp_s1_2;
+            g_SysWork.player_4C.chara_0.position_18.vz = temp_s2;
+
             SysWork_StateStepIncrement();
-        }
-        break;
-    case 8:
-        Map_MessageWithAudio(0x16, &g_MapMsgSoundIdx, g_MapMsgSoundTable);
-        break;
-    case 9:
-        func_800865FC(1, 1, 0, -0x500, -0x24000, 0x77800);
-        SysWork_StateStepIncrement();
+            break;
 
-        /* fallthrough */
-    case 10:
-        g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = 0x8CC;
-        func_80086728(&g_SysWork.npcs_1A0[0].model_0, 1, 1, 0);
-        break;
-    case 11:
-        Map_MessageWithAudio(0x17, &g_MapMsgSoundIdx, g_MapMsgSoundTable);
-        break;
-    default:
-        func_8008616C(0, false, 2, 0, false);
-        g_SavegamePtr->eventFlags_168[0] |= 0x10;
-        sharedFunc_800D2244_0_s00(0);
-        SysWork_StateSetNext(SysState_Gameplay);
+        case 1:
+            func_800CB6B0(0, g_SavegamePtr->mapOverlayId_A4, 0);
+            SysWork_StateStepIncrement();
 
-        sharedFunc_800D88C0_0_s00(g_SysWork.npcs_1A0, 0);
-        break;
+        case 2:
+            Map_MessageWithAudio(0x15, &g_MapMsgSoundIdx, g_MapMsgSounds);
+            break;
+
+        case 3:
+            g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = Q12(1.8f);
+
+            func_80086728(&g_SysWork.npcs_1A0[0].model_0, 2, 1, 0);
+            func_80085E6C(Q12(1.5f), false);
+            break;
+
+        case 4:
+            g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = Q12(1.8f);
+            func_80086728(&g_SysWork.npcs_1A0[0].model_0, 2, 1, 0);
+            break;
+
+        case 5:
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(-26.0f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(127.0);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(-135.0f);
+
+            func_800865FC(true, 0, 0, FP_ANGLE(-135.0f), Q12(-29.0f), Q12(125.0f));
+            SysWork_StateStepIncrement();
+
+        case 6:
+            func_800866D4(0x36, 1, 0);
+            break;
+
+        case 7:
+            if (func_8003C850())
+            {
+                SysWork_StateStepIncrement();
+            }
+            break;
+
+        case 8:
+            Map_MessageWithAudio(22, &g_MapMsgSoundIdx, g_MapMsgSounds);
+            break;
+
+        case 9:
+            func_800865FC(true, 1, 0, FP_ANGLE(-112.5f), Q12(-36.0f), Q12(119.5f));
+            SysWork_StateStepIncrement();
+
+        case 10:
+            g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = 0x8CC;
+            func_80086728(&g_SysWork.npcs_1A0[0].model_0, 1, 1, 0);
+            break;
+
+        case 11:
+            Map_MessageWithAudio(0x17, &g_MapMsgSoundIdx, g_MapMsgSounds);
+            break;
+
+        default:
+            func_8008616C(0, false, 2, 0, false);
+
+            g_SavegamePtr->eventFlags_168[0] |= 0x10;
+
+            sharedFunc_800D2244_0_s00(0);
+            SysWork_StateSetNext(SysState_Gameplay);
+
+            sharedFunc_800D88C0_0_s00(g_SysWork.npcs_1A0, 0);
+            break;
     }
 }
 

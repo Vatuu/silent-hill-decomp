@@ -140,7 +140,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
         
         case 7:
             sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(7.8f), FP_TIME(0.0f), FP_TIME(26.0f), true, false);
-            Map_MessageWithAudio(15, &g_MapMsgSoundIdx, g_MapMsgSoundTable); // "Was I dreaming?"
+            Map_MessageWithAudio(15, &g_MapMsgSoundIdx, g_MapMsgSounds); // "Was I dreaming?"
             break;
         
         case 8:
@@ -159,11 +159,11 @@ void MapEvent_CafeCutscene() // 0x800DA980
             switch (g_SysWork.sysStateStep_C[0])
             {
                 case 10:
-                    Map_MessageWithAudio(16, &g_MapMsgSoundIdx, g_MapMsgSoundTable); // "How do you feel?"
+                    Map_MessageWithAudio(16, &g_MapMsgSoundIdx, g_MapMsgSounds); // "How do you feel?"
                     break;
 
                 case 11:
-                    Map_MessageWithAudio(17, &g_MapMsgSoundIdx, g_MapMsgSoundTable); // "Like I've been hit..."
+                    Map_MessageWithAudio(17, &g_MapMsgSoundIdx, g_MapMsgSounds); // "Like I've been hit..."
                     break;
 
                 case 12:
@@ -174,7 +174,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
                     break;
 
                 case 13:
-                    Map_MessageWithAudio(18, &g_MapMsgSoundIdx, g_MapMsgSoundTable); // "Glad to hear it."
+                    Map_MessageWithAudio(18, &g_MapMsgSoundIdx, g_MapMsgSounds); // "Glad to hear it."
                     break;
             }
 
@@ -198,7 +198,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
 
         case 14:
             sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(3.0f), FP_TIME(49.0f), FP_TIME(139.0f), true, false);
-            Map_MessageWithAudio(25, &g_MapMsgSoundIdx, g_MapMsgSoundTable); // "Have you seen a little girl?"
+            Map_MessageWithAudio(25, &g_MapMsgSoundIdx, g_MapMsgSounds); // "Have you seen a little girl?"
             break;
 
         case 15:
@@ -206,7 +206,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
             SysWork_StateStepIncrement();
 
         case 16:
-            Map_MessageWithAudio(35, &g_MapMsgSoundIdx, g_MapMsgSoundTable); // "What's your name?"
+            Map_MessageWithAudio(35, &g_MapMsgSoundIdx, g_MapMsgSounds); // "What's your name?"
             break;
 
         case 17:
@@ -247,7 +247,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
 
         case 25:
             sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(10.0f), FP_TIME(174.0f), FP_TIME(184.0f), true, false);
-            Map_MessageWithAudio(44, &g_MapMsgSoundIdx, g_MapMsgSoundTable);
+            Map_MessageWithAudio(44, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
 
         case 26:
@@ -257,7 +257,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
 
         case 27:
             sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(10.0f), FP_TIME(185.0f), FP_TIME(194.0f), true, false);
-            Map_MessageWithAudio(45, &g_MapMsgSoundIdx, g_MapMsgSoundTable);
+            Map_MessageWithAudio(45, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
 
         case 28:
@@ -267,7 +267,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
             SysWork_StateStepIncrement();
 
         case 29:
-            Map_MessageWithAudio(46, &g_MapMsgSoundIdx, g_MapMsgSoundTable); // "It's dangerous out there."
+            Map_MessageWithAudio(46, &g_MapMsgSoundIdx, g_MapMsgSounds); // "It's dangerous out there."
             break;
 
         case 30:
@@ -275,7 +275,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
             break;
 
         case 31:
-            Map_MessageWithAudio(49, &g_MapMsgSoundIdx, g_MapMsgSoundTable);
+            Map_MessageWithAudio(49, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
 
         case 32:
@@ -292,7 +292,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
 
         case 35:
             sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(5.0f), FP_TIME(223.0f), FP_TIME(251.0f), true, false);
-            Map_MessageWithAudio(51, &g_MapMsgSoundIdx, g_MapMsgSoundTable);
+            Map_MessageWithAudio(51, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
 
         case 36:
@@ -302,7 +302,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
 
         case 37:
             sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(5.0f), FP_TIME(223.0f), FP_TIME(251.0f), true, false);
-            Map_MessageWithAudio(55, &g_MapMsgSoundIdx, g_MapMsgSoundTable);
+            Map_MessageWithAudio(55, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
 
         case 38:
@@ -312,7 +312,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
 
         case 39:
             sharedFunc_800DA8E8_0_s01(&g_Timer0, FP_TIME(10.0f), FP_TIME(252.0f), FP_TIME(280.0f), true, false);
-            Map_MessageWithAudio(57, &g_MapMsgSoundIdx, g_MapMsgSoundTable);
+            Map_MessageWithAudio(57, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
 
         case 40:
@@ -333,7 +333,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
             SysWork_StateStepIncrement();
 
         case 44:
-            Map_MessageWithAudio(58, &g_MapMsgSoundIdx, g_MapMsgSoundTable);
+            Map_MessageWithAudio(58, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
 
         case 45:

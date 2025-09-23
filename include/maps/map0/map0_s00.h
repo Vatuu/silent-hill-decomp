@@ -44,7 +44,7 @@ extern SVECTOR3 D_800E3AAC;
 /** Time. */
 extern q19_12 D_800DFAB8;
 
-extern u16 g_MapMsgSoundTable[];
+extern u16 g_MapMsgSounds[];
 
 extern u8 D_800DFAC2;
 

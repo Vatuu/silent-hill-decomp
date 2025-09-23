@@ -61,7 +61,7 @@ extern s16 D_800E2560;
 
 extern s_WorldObject_0 g_CommonWorldObjects[];
 
-extern u16 g_MapMsgSoundTable[];
+extern u16 g_MapMsgSounds[];
 
 extern u8 D_800DE250;
 

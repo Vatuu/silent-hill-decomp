@@ -521,7 +521,7 @@ s32 func_8008694C(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 idx)
     return (arg0 * Math_Sin(arg1 + ((arg2 * D_800C4710[idx]) / arg3))) >> 12;
 }
 
-void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* soundTable) // 0x800869E4
+void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* sounds) // 0x800869E4
 {
     s32 mapMsgState;
 
@@ -534,13 +534,13 @@ void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* soundTable) // 0x800
     }
     else if (mapMsgState == MapMsgState_Finish)
     {
-        Sd_EngineCmd(soundTable[*soundIdx]);
+        Sd_EngineCmd(sounds[*soundIdx]);
         *soundIdx += 1;
     }
 }
 
 void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPosOffset,
-                           s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCam) // 0x80086A94
+                           s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, bool warpCam) // 0x80086A94
 {
     VECTOR3         posTarget;
     VC_CAM_MV_PARAM camTranslationParams;
