@@ -53,30 +53,40 @@ def to_signed(val, bits=32):
         val -= 1 << bits
     return val
 
-def convert_value(match):
-    value_str = match.group(0)
-
-    if value_str.startswith(("0x", "-0x", "+0x")):
-        val = int(value_str, 16)
-        if value_str.startswith("-0x"):
-            val = -int(value_str[3:], 16)
-        elif value_str.startswith("+0x"):
-            val = int(value_str[3:], 16)
-        else:
-            val = to_signed(val, 32)
-    else:
-        val = int(value_str, 10)
-
-    return "Q12(" + str(val / 4096.0) + "f)"
-
 def process_fp_text(text):
+    qval = 12  # default Q-format is Q12
+
+    # detect and strip Q modifier
+    match = re.search(r'\bQ(\d+)\b', text)
+    if match:
+        qval = int(match.group(1))
+        text = re.sub(r'\bQ\d+\b', '', text, count=1)
+
+    def convert_value(match):
+        value_str = match.group(0)
+
+        if value_str.startswith(("0x", "-0x", "+0x")):
+            val = int(value_str, 16)
+            if value_str.startswith("-0x"):
+                val = -int(value_str[3:], 16)
+            elif value_str.startswith("+0x"):
+                val = int(value_str[3:], 16)
+            else:
+                val = to_signed(val, 32)
+        else:
+            val = int(value_str, 10)
+
+        return f"Q{qval}({val / (1 << qval)}f)"
+
     pattern = re.compile(r'[-+]?0x[0-9A-Fa-f]+|[-+]?\d+')
     return pattern.sub(convert_value, text)
 
 # ---------- Unified REPL ----------
 if __name__ == "__main__":
     print("Enter expressions like '(g_SavegamePtr->eventFlags_168[2] & 8)' or '(g_SavegamePtr->eventFlags_168[2] & (1 << 3))'.")
-    print("Or enter decimal/hexadecimal Q12 numbers (0x7CCC, -0x1444, 0xFFFE0DDD) to convert to float")
+    print("Or enter a line containing decimal/hexadecimal Q12 numbers (0x7CCC, -0x1444, 4096, 0xFFFE0DDD) to convert to float")
+    print("(change to other Q** formats by including Q format in the text, `chara.field_48 = Q8(-0x1999)'")
+    print()
     print("Type 'exit' to quit.")
     while True:
         try:
