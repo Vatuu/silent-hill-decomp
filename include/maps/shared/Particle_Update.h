@@ -66,7 +66,7 @@ bool Particle_Update(s_Particle* partHead)
 
     sharedData_800DF158_1_s02 = sharedFunc_800CBBBC_0_s00();
 
-    g_SysWork.coord_22A8.coord.t[1] = FP_METER_GEO(0.0f);
+    g_SysWork.coord_22A8.coord.t[1] = Q8(0.0f);
     g_SysWork.coord_22A8.coord.t[0] = FP_METER_TO_GEO(sharedData_800E323C_0_s00.vx);
     g_SysWork.coord_22A8.coord.t[2] = FP_METER_TO_GEO(sharedData_800E323C_0_s00.vz);
     

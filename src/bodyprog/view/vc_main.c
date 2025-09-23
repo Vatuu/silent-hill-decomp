@@ -641,21 +641,21 @@ s32 vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, s32 far_watch_rate, 
         return 0;
     }
 
-    cam_max_rate = (cur_cam_mv_type == VC_MV_SELF_VIEW) ? FP_METER_GEO(16.0f) : FP_METER_GEO(5.6f);
+    cam_max_rate = (cur_cam_mv_type == VC_MV_SELF_VIEW) ? Q8(16.0f) : Q8(5.6f);
 
     xyz_dist = Vc_VectorMagnitudeCalc(FP_METER_TO_GEO(w_p->cam_pos_50.vx - w_p->chara_head_pos_130.vx),
                                       FP_METER_TO_GEO(w_p->cam_pos_50.vy - w_p->chara_head_pos_130.vy),
                                       FP_METER_TO_GEO(w_p->cam_pos_50.vz - w_p->chara_head_pos_130.vz));
 
-    if (xyz_dist >= FP_METER_GEO(0.5f))
+    if (xyz_dist >= Q8(0.5f))
     {
-        if (xyz_dist > FP_METER_GEO(1.2f))
+        if (xyz_dist > Q8(1.2f))
         {
             max_rate = 0;
         }
         else
         {
-            max_rate = (cam_max_rate * (FP_METER_GEO(1.2f) - xyz_dist)) / FP_METER_GEO(0.7);
+            max_rate = (cam_max_rate * (Q8(1.2f) - xyz_dist)) / Q8(0.7);
         }
     }
     else
@@ -2138,25 +2138,25 @@ void vcMakeIdealCamPosUseVC_ROAD_DATA(VECTOR3* ideal_pos, VC_WORK* w_p, enum _VC
 
     if (cur_rd_area_size == VC_AREA_TINY)
     {
-        blend_min_dist = FP_METER_GEO(0.7f);
-        blend_max_dist = FP_METER_GEO(2.0f);
+        blend_min_dist = Q8(0.7f);
+        blend_max_dist = Q8(2.0f);
     }
     else if (cur_rd_area_size < VC_AREA_WIDE)
     {
-        blend_min_dist = FP_METER_GEO(0.7f);
-        blend_max_dist = FP_METER_GEO(3.0f);
+        blend_min_dist = Q8(0.7f);
+        blend_max_dist = Q8(3.0f);
     }
     else
     {
-        blend_min_dist = FP_METER_GEO(2.0f);
-        blend_max_dist = FP_METER_GEO(5.0f);
+        blend_min_dist = Q8(2.0f);
+        blend_max_dist = Q8(5.0f);
     }
 
     if (blend_max_dist >= horizontal_distance_fp)
     {
         if (blend_min_dist < horizontal_distance_fp)
         {
-            final_cam_dist = default_cam_dist + (((FP_METER_GEO(6.4f) - default_cam_dist) * (horizontal_distance_fp - blend_min_dist)) / (blend_max_dist - blend_min_dist));
+            final_cam_dist = default_cam_dist + (((Q8(6.4f) - default_cam_dist) * (horizontal_distance_fp - blend_min_dist)) / (blend_max_dist - blend_min_dist));
         }
         else
         {

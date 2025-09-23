@@ -163,9 +163,9 @@ void vcMakeHeroHeadPos(VECTOR3* head_pos) // 0x8004047C
 
     Vw_CoordHierarchyMatrixCompute(&g_SysWork.playerBoneCoords_890[HarryBone_Head], &neck_lwm);
 
-    fpos.vx = FP_METER_GEO(0.0f);
-    fpos.vy = FP_METER_GEO(-0.1f);
-    fpos.vz = FP_METER_GEO(0.0f);
+    fpos.vx = Q8(0.0f);
+    fpos.vy = Q8(-0.1f);
+    fpos.vz = Q8(0.0f);
     ApplyMatrix(&neck_lwm, &fpos, &vec);
 
     head_pos->vx = FP_METER_FROM_GEO(vec.vx + neck_lwm.t[0]);
@@ -293,11 +293,11 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
     {
         if (g_Controller1->btnsHeld_C & ControllerFlag_LStickUp)
         {
-            vec0.vy -= FP_METER_GEO(0.1f);
+            vec0.vy -= Q8(0.1f);
         }
         if (g_Controller1->btnsHeld_C & ControllerFlag_LStickDown)
         {
-            vec0.vy += FP_METER_GEO(0.1f);
+            vec0.vy += Q8(0.1f);
         }
 
         if (g_Controller1->btnsHeld_C & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
@@ -345,7 +345,7 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
     {
         SVECTOR vec1;
 
-        // TODO: `FP_METER_GEO(5.0f)`? But `vwAngleToVector` expects `FP_METER`. Maybe an error by TS.
+        // TODO: `Q8(5.0f)`? But `vwAngleToVector` expects `FP_METER`. Maybe an error by TS.
         vwAngleToVector(&vec1, &cam_ang, FP_METER(0.3125f));
 
         ref_pos->vx = FP_METER_FROM_GEO(vec0.vx + vec1.vx);

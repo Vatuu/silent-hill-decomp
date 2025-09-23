@@ -307,16 +307,6 @@
 #define FP_METER(met) \
     Q12(met)
 
-/** @brief Converts floating-point meters to Q23.8 fixed-point geometry space.
- *
- * @note 1 meter = 256 units.
- *
- * @param met Meters (`float`).
- * @return Q23.8 fixed-point geometry space meters (`s32`).
- */
-#define FP_METER_GEO(met) \
-    Q8(met)
-
 /** @brief Converts Q19.12 fixed-point world space meters to Q23.8 fixed-point geometry space.
  *
  * @param met Q19.12 fixed-point world space meters.
