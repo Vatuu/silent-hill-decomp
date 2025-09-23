@@ -51,6 +51,8 @@ extern u8 g_MapMsgSoundIdx;
 
 extern s32 D_800DFAC4;
 
+extern VECTOR3 D_800DFAE0[];
+
 void func_800CBFB0(void);
 
 void func_800D0124();

@@ -1257,7 +1257,45 @@ void func_800DCC54(void)
     }
 }
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DCDA8);
+s32 func_800DCDA8(void)
+{
+     s16 sp20;
+     s32 i;
+     s32 var_s2;
+     s16 var_s5;
+     s32 var_s4;
+     s32 temp_v1_3;
+
+     var_s4 = 0;
+     var_s5 = 0;
+     var_s2 = 0;
+
+     for (i = 0; i < 5; i++)
+     {
+        temp_v1_3 = func_8005C478(
+            &sp20,
+            g_SysWork.player_4C.chara_0.position_18.vx,
+            g_SysWork.player_4C.chara_0.position_18.vz,
+            D_800DFAE0[i].vx,
+            D_800DFAE0[i].vy,
+            D_800DFAE0[i + 1].vx,
+            D_800DFAE0[i + 1].vy
+        );
+
+        if (!i)
+        {
+            var_s4 = temp_v1_3;
+            var_s5 = sp20;
+            var_s2 = 0;
+        } else if (temp_v1_3 < var_s4) {
+            var_s4 = temp_v1_3;
+            var_s5 = sp20;
+            var_s2 = i;
+        }
+    }
+
+    return FP_MULTIPLY_PRECISE(D_800DFAE0[var_s2 + 1].vz - D_800DFAE0[var_s2].vz, var_s5, 12) + D_800DFAE0[var_s2].vz;
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DCF38);
 
