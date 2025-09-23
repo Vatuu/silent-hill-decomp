@@ -768,7 +768,6 @@ s_800A992C D_800A992C[4] =
     {
         .charaId0_0       = Chara_Harry,
         .charaId1_1       = Chara_Harry,
-        .unk_2            = { 0, 0 },
         .animFile0_4      = FS_BUFFER_0,
         .animFile1_8      = (s_AnmHeader*)FS_BUFFER_0,
         .animFileSize1_C  = 0x2E630,

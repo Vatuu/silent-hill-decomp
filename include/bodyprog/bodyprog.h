@@ -962,7 +962,7 @@ typedef struct
 {
     s8             charaId0_0;  /** `e_CharacterId`. */
     s8             charaId1_1;  /** `e_CharacterId`. */
-    // 2 bytes padding.
+    // 2 bytes of padding.
     s32            animFile0_4; // s_AnmHeader*    animFile0_4; // TODO: Needs to be a pointer.
     s_AnmHeader*   animFile1_8;
     s32            animFileSize1_C;
