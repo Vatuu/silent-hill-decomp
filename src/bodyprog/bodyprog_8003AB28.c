@@ -2655,12 +2655,12 @@ void func_8003EEDC(s32 arg0, s32 arg1) // 0x8003EEDC
     func_8003F170();
 }
 
-void func_8003EF10(s32 idx0, s32 idx1, e_PrimitiveType primType, s8* primData, s32 arg4, s32 arg5) // 0x8003EF10
+void func_8003EF10(s32 idx0, s32 idx1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5) // 0x8003EF10
 {
     func_8003EF74(&D_800A93CC[idx0], &D_800A93CC[idx1], primType, primData, arg4, arg5);
 }
 
-void func_8003EF74(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, e_PrimitiveType primType, s8* primData, s32 arg4, s32 arg5) // 0x8003EF74
+void func_8003EF74(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5) // 0x8003EF74
 {
     if (arg0 == arg1)
     {
