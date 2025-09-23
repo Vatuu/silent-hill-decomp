@@ -50,7 +50,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
             }
 
             Character_AnimSet(chara, ANIM_STATUS(HangedScratcherAnim_Unk14, true), 222);
-            chara->position_18.vy = FP_METER(-3.6f);
+            chara->position_18.vy = Q12(-3.6f);
             chara->rotation_24.vz = FP_ANGLE(180.0f);
 
         default:
@@ -70,7 +70,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* chara)
         case 6:
             chara->model_0.state_2 = 6;
             Character_AnimSet(chara, ANIM_STATUS(HangedScratcherAnim_Unk15, true), 232);
-            chara->position_18.vy = FP_METER(0.0f);
+            chara->position_18.vy = Q12(0.0f);
             chara->rotation_24.vz = FP_ANGLE(0.0f);
             break;
 

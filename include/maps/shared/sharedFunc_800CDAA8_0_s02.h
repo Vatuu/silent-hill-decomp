@@ -18,17 +18,17 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 
     func_8004C564(0, -1);
 
-    playerChara->properties_E4.player.afkTimer_E8        = FP_TIME(0.0f);
-    playerChara->properties_E4.player.exhaustionTimer_FC = FP_TIME(0.0f);
+    playerChara->properties_E4.player.afkTimer_E8        = Q12(0.0f);
+    playerChara->properties_E4.player.exhaustionTimer_FC = Q12(0.0f);
 
     if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_Unk52)
     {
-        if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != FP_METER(0.0f))
+        if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
         {
-            g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= ((g_DeltaTime0 * FP_METER(0.4f)) / FP_METER(0.1f / 3.0f)) * 2;
-            if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < FP_METER(0.0f))
+            g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= ((g_DeltaTime0 * Q12(0.4f)) / Q12(0.1f / 3.0f)) * 2;
+            if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < Q12(0.0f))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = FP_METER(0.0f);
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(0.0f);
             }
         }
 
@@ -101,7 +101,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             // TODO: State used as anim status??
             if (playerChara->model_0.anim_4.status_0 == g_SysWork.player_4C.extra_128.state_1C)
             {
-                func_8005DD44(sfx, &playerChara->position_18, FP_VOLUME(0.25f), pitch);
+                func_8005DD44(sfx, &playerChara->position_18, Q8_CLAMPED(0.25f), pitch);
 
                 playerChara->properties_E4.player.field_10C                 = pitch + 16;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;

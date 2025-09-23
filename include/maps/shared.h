@@ -2824,7 +2824,7 @@ typedef struct
 } s_WorldObjectDesc;
 
 #define WorldObjectPositionInit(eventPos, posX, posY, posZ, rotX, rotY, rotZ) \
-    WorldObjectPositionSet(eventPos, FP_METER(posX), FP_METER(posY), FP_METER(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))
+    WorldObjectPositionSet(eventPos, Q12(posX), Q12(posY), Q12(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))
 
 static inline void WorldObjectPositionSet(s_WorldObjectPos* eventPos, q19_12 posX, q19_12 posY, q19_12 posZ, q8_8 rotX, q8_8 rotY, q8_8 rotZ)
 {
@@ -2841,7 +2841,7 @@ static inline void WorldObjectPositionSet(s_WorldObjectPos* eventPos, q19_12 pos
  * if the chunk index will be a positive number. Seems like they forgot to use `ABS`?
  */
 #define PLAYER_IN_MAP_CHUNK(crd, x0, x1, x2, x3)                                                   \
-    (__chunkIdx = g_SysWork.player_4C.chara_0.position_18.crd / FP_METER(40.0f),                   \
+    (__chunkIdx = g_SysWork.player_4C.chara_0.position_18.crd / Q12(40.0f),                        \
      ((g_SysWork.player_4C.chara_0.position_18.crd >  Q12(0.0f) && (__chunkIdx + (x0)) == (x1)) || \
       (g_SysWork.player_4C.chara_0.position_18.crd <= Q12(0.0f) && (__chunkIdx + (x2)) == (x3))))
 

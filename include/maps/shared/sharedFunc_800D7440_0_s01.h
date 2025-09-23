@@ -20,7 +20,7 @@ s32 sharedFunc_800D7440_0_s01(VECTOR* vec0, VECTOR* vec1, s_SubCharacter* chara)
 
     if (sharedFunc_800D4A80_0_s01(chara) != 4)
     {
-        if (vec1->vy > 0 && temp_s2 < (posY - FP_METER(0.5f)))
+        if (vec1->vy > 0 && temp_s2 < (posY - Q12(0.5f)))
         {
             vecCpy->vx = 0;
             vecCpy->vz = 0;

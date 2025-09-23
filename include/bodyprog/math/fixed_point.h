@@ -2,8 +2,9 @@
 #define _BODYPROG_MATH_FIXED_POINT_H
 
 #include "types.h"
-#include "bodyprog/math/constants.h"
+
 #include "bodyprog/math/arithmetic.h"
+#include "bodyprog/math/constants.h"
 
 // =====================
 // ARITHMETIC AND UTILS
@@ -99,7 +100,7 @@
     FP_MULTIPLY((s64)(aInt), (s64)FP_FLOAT_TO(bFlt, shift), shift)
 
 /** @brief Computes the square 2D distance between two positions in Q19.12 fixed-point,
- * using low-precision Q21.8 fixed-point intermediates to avoid overflow.
+ * using Q21.8 fixed-point intermediates to avoid overflow.
  *
  * @param from First position.
  * @param to Second position.
@@ -189,14 +190,6 @@
 // ABSTRACT Q FORMAT CONVERSION AND UTILS
 // =======================================
 
-/** @brief Converts a normalized floating-point sound volume in the range `[0.0f, 1.0f]` to Q0.8 fixed-point, integer range `[0, 255]`.
- *
- * @param vol Sound volume (`float`).
- * @return Q0.8 fixed-point sound volume, integer range `[0, 255]` (`u8`).
- */
-#define FP_VOLUME(vol) \
-    (u8)CLAMP(FP_FLOAT_TO(vol, Q8_SHIFT), 0, FP_FLOAT_TO(1.0f, Q8_SHIFT) - 1)
-
 /** @brief Converts a normalized floating-point analog stick value in the range `[-1.0f, 1.0f]` to Q0.7 fixed-point, clamped integer range `[-128, 127]`.
  *
  * @param analog Analog stick value (`float`).
@@ -223,66 +216,66 @@
  * @note 1 degree = 11.377778 units.
  *
  * @param deg Degrees (`float`).
- * @return Unsigned Q3.12 fixed-point degrees, integer range `[0, 4096]` (`s16`).
+ * @return Unsigned Q3.12 fixed-point angle, integer range `[0, 4096]` (`s16`).
  */
 #define FP_ANGLE(deg) \
     (s16)((deg) * ((float)Q12(1.0f) / 360.0f))
 
-/** @brief Converts floating-point degrees to unsigned Q0.8 fixed-point, integer range `[0, 255]`.
+/** @brief Converts floating-point degrees to unsigned Q0.8 fixed-point, clamped integer range `[0, 255]`.
  *
  * This angle format is used in map data.
  *
  * @note 1 degree = 0.711111 units.
  *
  * @param deg Degrees (`float`).
- * @return Unsigned Q0.8 fixed-point degrees, clamped integer range `[0, 255]` (`u8`).
+ * @return Unsigned Q0.8 fixed-point packed angle, clamped integer range `[0, 255]` (`u8`).
  */
 #define FP_ANGLE_PACKED(deg) \
     (u8)Q8_CLAMPED((deg) / 360.0f)
 
-/** @brief Converts signed Q3.12 fixed-point degrees, integer range `[0, 4096]` to
+/** @brief Converts a signed Q3.12 fixed-point angle, integer range `[0, 4096]` to
  * unsigned Q0.8 fixed-point, integer range `[0, 255]`.
  *
- * @param deg Unsigned Q3.12fixed-point degrees, integer range `[0, 4096]`.
- * @return Unsigned Q0.8 fixed-point degrees, integer range `[0, 255]` (`s16`).
+ * @param angle Unsigned Q3.12 fixed-point angle, integer range `[0, 4096]`.
+ * @return Unsigned Q0.8 fixed-point packed angle, integer range `[0, 255]` (`s16`).
  */
-#define FP_ANGLE_TO_PACKED(deg) \
+#define FP_ANGLE_TO_PACKED(angle) \
     Q12_TO_Q8(deg);
 
-/** @brief Converts unsigned Q0.8 fixed-point degrees, integer range `[0, 255]` to
+/** @brief Converts an unsigned Q0.8 fixed-point packed angle, integer range `[0, 255]` to
  * unsigned Q3.12 fixed-point, integer range `[0, 4096]`.
  *
- * @param packedDeg Unsigned Q0.8 fixed-point degrees, integer range `[0, 255]`.
- * @return Unsigned Q3.12 fixed-point degrees, integer range `[0, 4096]` (`s16`).
+ * @param packedAngle Unsigned Q0.8 fixed-point packed angle, integer range `[0, 255]`.
+ * @return Unsigned Q3.12 fixed-point angle, integer range `[0, 4096]` (`s16`).
  */
-#define FP_ANGLE_FROM_PACKED(deg) \
-    (s16)Q8_TO_Q12(deg)
+#define FP_ANGLE_FROM_PACKED(packedAngle) \
+    (s16)Q8_TO_Q12(packedAngle)
 
-/** @brief Normalizes signed Q3.12 fixed-point degrees to the clamped unsigned integer range `[0, 4095]`.
+/** @brief Normalizes a signed Q3.12 fixed-point angle to the clamped unsigned integer range `[0, 4095]`.
  *
  * @note Has the same effect as `FP_ANGLE_NORM_U`. Could they somehow be combined?
  *
- * @param deg Signed Q3.12 fixed-point degrees, clamped integer range `[-2048, 2047]`.
- * @return Unsigned Q3.12 fixed-point degrees, wrapped to the clamped integer range `[0, 4095]` (`s16`).
+ * @param angle Signed Q3.12 fixed-point angle, clamped integer range `[-2048, 2047]`.
+ * @return Unsigned Q3.12 fixed-point angle, wrapped to the clamped integer range `[0, 4095]` (`s16`).
  */
-#define ABS_ANGLE(deg) \
-    Q12_FRACT((deg) + FP_ANGLE(360.0f))
+#define ABS_ANGLE(angle) \
+    Q12_FRACT((angle) + FP_ANGLE(360.0f))
 
-/** @brief Normalizes unsigned Q3.12 fixed-point degrees to the clamped signed integer range `[-2048, 2047]`.
+/** @brief Normalizes an unsigned Q3.12 fixed-point angle to the clamped signed integer range `[-2048, 2047]`.
  *
- * @param deg Unsigned Q3.12 fixed-point degrees, integer range `[0, 4095]`.
- * @return Signed Q3.12 fixed-point degrees wrapped to the clamped integer range `[-2048, 2047]` (`s16`).
+ * @param angle Unsigned Q3.12 fixed-point angle, integer range `[0, 4095]`.
+ * @return Signed Q3.12 fixed-point angle wrapped to the clamped integer range `[-2048, 2047]` (`s16`).
  */
-#define FP_ANGLE_NORM_S(deg) \
-    (((deg) << 20) >> 20)
+#define FP_ANGLE_NORM_S(angle) \
+    (((angle) << 20) >> 20)
 
-/** @brief Normalizes signed Q3.12 fixed-point degrees to the clamped unsigned range `[0, 4095]`.
+/** @brief Normalizes a signed Q3.12 fixed-point angle to the clamped unsigned range `[0, 4095]`.
  *
- * @param deg Signed Q3.12 fixed-point degrees, integer range `[-2048, 2047]`.
- * @return Unsigned Q3.12 fixed-point degrees, wrapped to the clamped integer range `[0, 4095]` (`s16`).
+ * @param angle Signed Q3.12 fixed-point angle, integer range `[-2048, 2047]`.
+ * @return Unsigned Q3.12 fixed-point angle, wrapped to the clamped integer range `[0, 4095]` (`s16`).
  */
-#define FP_ANGLE_NORM_U(deg) \
-    ((deg) & (FP_ANGLE(360.0f) - 1))
+#define FP_ANGLE_NORM_U(angle) \
+    ((angle) & (FP_ANGLE(360.0f) - 1))
 
 /** @brief Converts floating-point radians in the range `[-PI, PI]` to the fixed-point integer range `[0, 20480]`.
  *
@@ -291,56 +284,10 @@
  * @note π = 10240 units.
  *
  * @param rad Radians (`float`).
- * @return Fixed-point radians, integer range `[0, 20480]` (`s32`).
+ * @return Fixed-point radian representation, integer range `[0, 20480]` (`s32`).
  */
 #define FP_RADIAN(rad)                                                                \
     (s32)(((((rad) < 0.0f) ? (PI + (PI - ABS(rad))) : (rad)) * ((float)FP_PI / PI)) * \
           (((rad) < 0.0f || (rad) >= PI) ? 1.0f : 2.0f))
-
-/** @brief Converts floating-point meters to Q19.12 fixed-point world space.
- *
- * @note 1 meter = 4096 units.
- *
- * @param met Meters (`float`).
- * @return Q19.12 fixed-point world space meters (`s32`).
- */
-#define FP_METER(met) \
-    Q12(met)
-
-/** @brief Converts floating-point meters to Q23.8 fixed-point geometry space.
- *
- * @note 1 meter = 256 units.
- *
- * @param met Meters (`float`).
- * @return Q23.8 fixed-point geometry space meters (`s32`).
- */
-#define FP_METER_GEO(met) \
-    Q8(met)
-
-/** @brief Converts Q19.12 fixed-point world space meters to Q23.8 fixed-point geometry space.
- *
- * @param met Q19.12 fixed-point world space meters.
- * @return Q23.8 fixed-point geometry space meters (`s32`).
- */
-#define FP_METER_TO_GEO(met) \
-    Q12_TO_Q8(met)
-
-/** @brief Converts Q23.8 fixed-point geometry space meters to Q19.12 fixed-point world space meters.
- *
- * @param met Q23.8 fixed-point geometry space meters.
- * @return Q19.12 fixed-point world space meters (`s32`).
- */
-#define FP_METER_FROM_GEO(met) \
-    Q8_TO_Q12(met)
-
-/** @brief Converts floating-point seconds to Q19.12 fixed-point.
- *
- * @note 1 second == 4096 units.
- *
- * @param sec Seconds (`float`).
- * @return Q19.12 fixed-point seconds (`s32`).
- */
-#define FP_TIME(sec) \
-    Q12(sec)
 
 #endif

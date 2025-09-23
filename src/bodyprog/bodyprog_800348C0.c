@@ -265,7 +265,7 @@ void Gfx_LoadingScreenDraw() // 0x80034E58
     if (g_SysWork.loadingScreenIdx_2281 != LoadingScreenId_None && g_GameWork.gameStateStep_598[0] < 10)
     {
         g_Screen_FadeStatus  = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, false);
-        g_ScreenFadeTimestep = FP_TIME(0.8f);
+        g_ScreenFadeTimestep = Q12(0.8f);
         g_MapOverlayHeader.loadingScreenFuncs_18[g_SysWork.loadingScreenIdx_2281]();
     }
 
@@ -739,9 +739,9 @@ void func_80035AC8(s32 idx) // 0x80035AC8
 void func_80035B04(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord) // 0x80035B04
 {
     coord->flg        = false;
-    coord->coord.t[0] = FP_METER_TO_GEO(pos->vx);
-    coord->coord.t[1] = FP_METER_TO_GEO(pos->vy);
-    coord->coord.t[2] = FP_METER_TO_GEO(pos->vz);
+    coord->coord.t[0] = Q12_TO_Q8(pos->vx);
+    coord->coord.t[1] = Q12_TO_Q8(pos->vy);
+    coord->coord.t[2] = Q12_TO_Q8(pos->vz);
 
     func_80096E78(rot, (MATRIX*)&coord->coord);
 }
@@ -782,7 +782,7 @@ void Gfx_LoadingScreen_PlayerRun() // 0x80035BE0
         vcInitCamera(&g_MapOverlayHeader, &g_SysWork.player_4C.chara_0.position_18);
         func_80040004(&g_MapOverlayHeader);
 
-        camLookAt.vy = FP_METER(-0.6f);
+        camLookAt.vy = Q12(-0.6f);
         camLookAt.vx = g_SysWork.player_4C.chara_0.position_18.vx;
         camLookAt.vz = g_SysWork.player_4C.chara_0.position_18.vz;
 
@@ -790,7 +790,7 @@ void Gfx_LoadingScreen_PlayerRun() // 0x80035BE0
 
         camLookAt.vx -= Math_Sin(g_SysWork.player_4C.chara_0.rotation_24.vy - FP_ANGLE(22.5f)) * 2;
         temp          = Math_Cos(g_SysWork.player_4C.chara_0.rotation_24.vy - FP_ANGLE(22.5f));
-        camLookAt.vy  = FP_METER(-1.0f);
+        camLookAt.vy  = Q12(-1.0f);
         camLookAt.vz -= temp * 2;
 
         vcUserCamTarget(&camLookAt, NULL, true);
@@ -800,8 +800,8 @@ void Gfx_LoadingScreen_PlayerRun() // 0x80035BE0
         model->anim_4.flags_2                             |= AnimFlag_Visible;
         g_SysWork.player_4C.extra_128.disabledAnimBones_18 = 0;
         model->anim_4.flags_2                             |= AnimFlag_Unlocked | AnimFlag_Visible;
-        model->anim_4.time_4                               = FP_TIME(26.0f);
-        g_SysWork.player_4C.chara_0.position_18.vy         = FP_METER(0.2f);
+        model->anim_4.time_4                               = Q12(26.0f);
+        g_SysWork.player_4C.chara_0.position_18.vy         = Q12(0.2f);
 
         D_800A998C.status_4 = model->anim_4.status_0;
 
@@ -1195,7 +1195,7 @@ void func_8003652C() // 0x8003652C
 
 s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 {
-    #define MSG_TIMER_MAX   (FP_TIME(524288.0f) - 1)
+    #define MSG_TIMER_MAX   (Q12(524288.0f) - 1)
     #define FINISH_CUTSCENE 0xFF
     #define FINISH_MAP_MSG  0xFF
 
@@ -1269,7 +1269,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
             if (g_MapMsg_AudioLoadBlock != 0 && g_SysWork.mapMsgTimer_234C > 0)
             {
                 g_SysWork.mapMsgTimer_234C -= g_DeltaTime1;
-                g_SysWork.mapMsgTimer_234C  = CLAMP(g_SysWork.mapMsgTimer_234C, FP_TIME(0.0f), MSG_TIMER_MAX);
+                g_SysWork.mapMsgTimer_234C  = CLAMP(g_SysWork.mapMsgTimer_234C, Q12(0.0f), MSG_TIMER_MAX);
             }
 
             temp_s1 = g_MapMsg_StateMachineIdx1;
@@ -1411,16 +1411,16 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
     mapMsgCode = Gfx_MapMsg_StringDraw(g_MapOverlayHeader.mapMessages_30[mapMsgIdx], *arg1);
 
     g_MapMsg_SelectFlashTimer += g_DeltaTime1;
-    if (g_MapMsg_SelectFlashTimer >= FP_TIME(0.5f))
+    if (g_MapMsg_SelectFlashTimer >= Q12(0.5f))
     {
-        g_MapMsg_SelectFlashTimer -= FP_TIME(0.5f);
+        g_MapMsg_SelectFlashTimer -= Q12(0.5f);
     }
 
     switch (mapMsgCode)
     {
         case NO_VALUE:
         case MapMsgCode_None:
-            g_MapMsg_SelectFlashTimer = FP_TIME(0.0f);
+            g_MapMsg_SelectFlashTimer = Q12(0.0f);
             break;
 
         case MapMsgCode_Select2:
@@ -1477,7 +1477,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
             if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickUp &&
                 (u8)g_MapMsg_Select.selectedEntryIdx_1 != 0)
             {
-                g_MapMsg_SelectFlashTimer = FP_TIME(0.0f);
+                g_MapMsg_SelectFlashTimer = Q12(0.0f);
                 g_MapMsg_Select.selectedEntryIdx_1--;
 
                 Sd_PlaySfx(Sfx_Back, 0, 64);
@@ -1486,7 +1486,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
             if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickDown &&
                 (u8)g_MapMsg_Select.selectedEntryIdx_1 != (mapMsgCode - 1))
             {
-                g_MapMsg_SelectFlashTimer = FP_TIME(0.0f);
+                g_MapMsg_SelectFlashTimer = Q12(0.0f);
                 g_MapMsg_Select.selectedEntryIdx_1++;
 
                 Sd_PlaySfx(Sfx_Back, 0, 64);
@@ -1730,7 +1730,7 @@ void Chara_PositionUpdateFromParams(s_AreaLoadParams* params) // 0x800371E8
     rotY = FP_ANGLE_FROM_PACKED(params->rotationY_4_16);
     Math_SVectorSet(&g_SysWork.player_4C.chara_0.rotation_24, FP_ANGLE(0.0f), rotY, FP_ANGLE(0.0f));
 
-    g_SysWork.player_4C.chara_0.position_18.vy = FP_METER(0.0f);
+    g_SysWork.player_4C.chara_0.position_18.vy = Q12(0.0f);
     g_SysWork.player_4C.chara_0.position_18.vx = params->char_x_0;
     g_SysWork.player_4C.chara_0.position_18.vz = params->char_z_8;
 
@@ -1802,18 +1802,18 @@ bool func_800378D4(s_AreaLoadParams* areaLoadParams) // 0x800378D4
     }
 
     x = areaLoadParams->char_x_0 - D_800A9A24;
-    if (ABS(x) > FP_METER(0.8f))
+    if (ABS(x) > Q12(0.8f))
     {
         return false;
     }
 
     z = areaLoadParams->char_z_8 - D_800A9A28;
-    if (ABS(z) > FP_METER(0.8f))
+    if (ABS(z) > Q12(0.8f))
     {
         return false;
     }
 
-    if ((SQUARE(x) + SQUARE(z)) > SQUARE(FP_METER(0.8f)))
+    if ((SQUARE(x) + SQUARE(z)) > SQUARE(Q12(0.8f)))
     {
         return false;
     }
@@ -2087,7 +2087,7 @@ void GameState_InGame_Update() // 0x80038BD4
     {
         case 0:
             g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
-            g_ScreenFadeTimestep            = FP_TIME(3.0f);
+            g_ScreenFadeTimestep            = Q12(3.0f);
             g_GameWork.gameStateStep_598[0] = 1;
 
         case 1:
@@ -2107,7 +2107,7 @@ void GameState_InGame_Update() // 0x80038BD4
         SysWork_StateSetNext(SysState_Gameplay);
     }
 
-    if (g_DeltaTime0 != FP_TIME(0.0f))
+    if (g_DeltaTime0 != Q12(0.0f))
     {
         g_SomeTimer0 = g_DeltaTime0;
     }
@@ -2346,7 +2346,7 @@ void SysState_OptionsMenu_Update() // 0x80039344
     {
         case 0:
             g_Screen_FadeStatus         = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
-            g_ScreenFadeTimestep        = FP_TIME(0.0f);
+            g_ScreenFadeTimestep        = Q12(0.0f);
             g_SysWork.sysStateStep_C[0] = 1;
 
         case 1:
@@ -2538,7 +2538,7 @@ void SysState_MapScreen_Update() // 0x800396D4
             Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9]);
 
             g_Screen_FadeStatus  = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
-            g_ScreenFadeTimestep = FP_TIME(0.0f);
+            g_ScreenFadeTimestep = Q12(0.0f);
             g_SysWork.sysStateStep_C[0]++;
         }
 
@@ -2970,11 +2970,11 @@ void SysState_GameOver_Update() // 0x8003A52C
             SysWork_StateStepIncrement();
 
         case 1:
-            func_8008616C(2, true, 0, FP_TIME(0.5f), false);
+            func_8008616C(2, true, 0, Q12(0.5f), false);
             break;
 
         case 2:
-            func_8008616C(0, false, 0, FP_TIME(0.5f), false);
+            func_8008616C(0, false, 0, Q12(0.5f), false);
             SysWork_StateStepIncrement();
 
         case 3:
@@ -2993,7 +2993,7 @@ void SysState_GameOver_Update() // 0x8003A52C
         case 4:
             Gfx_StringSetPosition(SCREEN_POSITION_X(32.5f), SCREEN_POSITION_Y(43.5f));
             Gfx_StringDraw("\aGAME_OVER", 0x63);
-            func_8008616C(2, true, 0, FP_TIME(2.0f), false);
+            func_8008616C(2, true, 0, Q12(2.0f), false);
             break;
 
         case 5:
@@ -3010,7 +3010,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             }
 
         case 6:
-            func_8008616C(2, false, 0, FP_TIME(2.0f), false);
+            func_8008616C(2, false, 0, Q12(2.0f), false);
             g_SysWork.field_28 = 0;
             Gfx_BackgroundSpriteDraw(&g_DeathTipImg);
             break;
@@ -3037,7 +3037,7 @@ void SysState_GameOver_Update() // 0x8003A52C
 
         case 8:
             Gfx_BackgroundSpriteDraw(&g_DeathTipImg);
-            func_8008616C(2, true, 0, FP_TIME(2.0f), false);
+            func_8008616C(2, true, 0, Q12(2.0f), false);
             break;
 
         default:

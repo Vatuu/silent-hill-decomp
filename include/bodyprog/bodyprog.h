@@ -2713,7 +2713,7 @@ void func_80042C3C(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
 /** @brief When `isExterior` is `true`, chunks are treated as if they were 1 meter larger in both axes. Then calls `Ipd_DistanceToEdgeGet`. */
 q19_12 Ipd_DistanceToEdgeWithPaddingGet(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ, bool isExterior);
 
-/** @brief Returns `FP_METER(0.0f)` if inside the chunk, distance to closest edge otherwise. */
+/** @brief Returns `Q12(0.0f)` if inside the chunk, distance to closest edge otherwise. */
 q19_12 Ipd_DistanceToEdgeGet(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ);
 
 s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);

@@ -68,7 +68,7 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3) // 0x800CE000
             break;
 
         default:
-            sharedData_800DD78B_0_s01 = g_DeltaTime0 == FP_TIME(0.0f);
+            sharedData_800DD78B_0_s01 = g_DeltaTime0 == Q12(0.0f);
 
             func_8003EDB8(&D_800E214C, &D_800E2150);
 
@@ -409,13 +409,13 @@ void func_800D16C4(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
         if (playerState < PlayerState_Unk87 || (playerState >= PlayerState_Unk89 && playerState != PlayerState_Unk106))
         {
-            chara->position_18.vy = FP_METER(0.0f);
+            chara->position_18.vy = Q12(0.0f);
         }
 
         chara->field_34 = 0;
     }
 
-    if (g_DeltaTime0 == FP_TIME(0.0f))
+    if (g_DeltaTime0 == Q12(0.0f))
     {
         chara->rotationSpeed_2C.vy = FP_ANGLE(0.0f);
     } 
@@ -424,9 +424,9 @@ void func_800D16C4(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
         chara->rotationSpeed_2C.vy = (sharedData_800E39D8_0_s00 << 8) / g_DeltaTime0;
     }
 
-    coord->coord.t[0] = FP_METER_TO_GEO(chara->position_18.vx);
-    coord->coord.t[1] = FP_METER_TO_GEO(chara->position_18.vy);
-    coord->coord.t[2] = FP_METER_TO_GEO(chara->position_18.vz);
+    coord->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
+    coord->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
+    coord->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
 }
 
 #include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800D1B00
@@ -473,7 +473,7 @@ void Player_FallBackward(void) // 0x800D2094
 
     player = &g_SysWork.player_4C;
 
-    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = FP_METER(2.3f);
+    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(2.3f);
     g_SysWork.player_4C.chara_0.properties_E4.player.headingAngle_124       = FP_ANGLE(180.0f);
     g_Player_HeadingAngle                                                   = FP_ANGLE(180.0f);
 
@@ -641,7 +641,7 @@ void func_800D3CC4(s_SubCharacter* chara)
     {
         keyframeIdx = func_80044918(&chara->model_0.anim_4)->startKeyframeIdx_C;
         chara->model_0.anim_4.keyframeIdx_8 = keyframeIdx;
-        chara->model_0.anim_4.time_4 = FP_TIME(keyframeIdx);
+        chara->model_0.anim_4.time_4 = Q12(keyframeIdx);
     }
 }
 

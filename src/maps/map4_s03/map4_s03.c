@@ -394,7 +394,7 @@ void Ai_Twinfeeler_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINA
 
     if (chara->model_0.state_2 != 1 || Ai_Twinfeeler_Init(chara))
     {
-        if (g_DeltaTime0 != FP_TIME(0.0))
+        if (g_DeltaTime0 != Q12(0.0))
         {
             func_800D3E58(chara);
             func_800D53B0(chara, coords);
@@ -467,7 +467,7 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D6554);
     chara->properties_E4.player.field_F0.val32 = g_SysWork.player_4C.chara_0.position_18.vx;
     chara->properties_E4.player.field_F4.val32 = g_SysWork.player_4C.chara_0.position_18.vz;
 
-    if (someDist < FP_METER(1.2f) && someRotY < FP_ANGLE(11.25f))
+    if (someDist < Q12(1.2f) && someRotY < FP_ANGLE(11.25f))
     {
         if (!(chara->properties_E4.player.afkTimer_E8.val16[0] & (1 << 1)))
         {

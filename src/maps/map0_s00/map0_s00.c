@@ -67,9 +67,9 @@ bool func_800D012C(VECTOR3* pos) // 0x800D012C
             return true;
 
         case 2:
-            deltaX = FP_METER_TO_GEO(g_SysWork.player_4C.chara_0.position_18.vx - pos->vx);
-            deltaZ = FP_METER_TO_GEO(g_SysWork.player_4C.chara_0.position_18.vz - pos->vz);
-            return SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)) < FP_METER_GEO(1.0f);
+            deltaX = Q12_TO_Q8(g_SysWork.player_4C.chara_0.position_18.vx - pos->vx);
+            deltaZ = Q12_TO_Q8(g_SysWork.player_4C.chara_0.position_18.vz - pos->vz);
+            return SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)) < Q8(1.0f);
     }
 
     return false;
@@ -96,22 +96,22 @@ void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* arg2) // 0x800D0
             }
 
             partCpy->position0_0.vy = sharedData_800E323C_0_s00.vy;
-            partCpy->movement_18.vz = FP_METER(0.0f);
-            partCpy->movement_18.vx = FP_METER(0.0f);
-            partCpy->movement_18.vy = FP_METER(0.0245f);
+            partCpy->movement_18.vz = Q12(0.0f);
+            partCpy->movement_18.vx = Q12(0.0f);
+            partCpy->movement_18.vy = Q12(0.0245f);
 
             sharedFunc_800D01BC_0_s00(arg2, part, 5);
-            partCpy->position1_C.vz = FP_METER(0.0f);
-            partCpy->position1_C.vy = FP_METER(0.0f);
-            partCpy->position1_C.vx = FP_METER(0.0f);
+            partCpy->position1_C.vz = Q12(0.0f);
+            partCpy->position1_C.vy = Q12(0.0f);
+            partCpy->position1_C.vx = Q12(0.0f);
             break;
 
         case 1:
             partCpy->type_1F = ParticleType_Rain;
-            partCpy->position0_0.vy = sharedData_800E323C_0_s00.vy + FP_METER(Rng_GenerateInt(Rng_Rand16(), 0, 2));
+            partCpy->position0_0.vy = sharedData_800E323C_0_s00.vy + Q12(Rng_GenerateInt(Rng_Rand16(), 0, 2));
 
             partCpy->position1_C.vy = sharedData_800E323C_0_s00.vy;
-            partCpy->movement_18.vy = FP_METER(0.03675f);
+            partCpy->movement_18.vy = Q12(0.03675f);
             sharedFunc_800D01BC_0_s00(arg2, part, 6);
             partCpy->position1_C.vx = partCpy->position0_0.vx;
             partCpy->position1_C.vz = partCpy->position0_0.vz;
@@ -125,7 +125,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0394);
 
 bool func_800D0600() // 0x800D0600
 {
-    #define FIXED_DIST FP_METER(40.0f)
+    #define FIXED_DIST Q12(40.0f)
     
     s32 distX;
     s32 distZ;
@@ -133,11 +133,11 @@ bool func_800D0600() // 0x800D0600
     // Check against first position.
     distX = ABS(g_SysWork.player_4C.chara_0.position_18.vx - D_800E32DC.position0_0.vx);
     distZ = g_SysWork.player_4C.chara_0.position_18.vz - D_800E32DC.position0_0.vz;
-    if (distZ >= FP_METER(0.0f) && (distX + distZ) < FIXED_DIST)
+    if (distZ >= Q12(0.0f) && (distX + distZ) < FIXED_DIST)
     {
         goto ret1;
     }
-    else if (distZ < FP_METER(0.0f) && (distX + (D_800E32DC.position0_0.vz - g_SysWork.player_4C.chara_0.position_18.vz)) < FIXED_DIST)
+    else if (distZ < Q12(0.0f) && (distX + (D_800E32DC.position0_0.vz - g_SysWork.player_4C.chara_0.position_18.vz)) < FIXED_DIST)
     {
         goto ret1;
     }
@@ -145,11 +145,11 @@ bool func_800D0600() // 0x800D0600
     // Check against against second position.
     distX = ABS(g_SysWork.player_4C.chara_0.position_18.vx - D_800E32DC.position1_C.vx);
     distZ = g_SysWork.player_4C.chara_0.position_18.vz - D_800E32DC.position1_C.vz;
-    if (distZ >= FP_METER(0.0f) && (distX + distZ) < FIXED_DIST)
+    if (distZ >= Q12(0.0f) && (distX + distZ) < FIXED_DIST)
     {
         goto ret1;
     }
-    else if (distZ < FP_METER(0.0f) && (distX + (D_800E32DC.position1_C.vz - g_SysWork.player_4C.chara_0.position_18.vz)) < FIXED_DIST)
+    else if (distZ < Q12(0.0f) && (distX + (D_800E32DC.position1_C.vz - g_SysWork.player_4C.chara_0.position_18.vz)) < FIXED_DIST)
     {
         goto ret1;
     }
@@ -1071,14 +1071,14 @@ void Event_GreyChildrenSpawn(void) // 0x800DC1E8
 
 void func_800DC33C(void) // 0x800DC33C
 {
-    VECTOR3     camPos;
-    s16         temp_a0;
-    s16         var_s1;
-    q19_12      temp_a0_2;
-    s32         temp_v1;
-    s32         var_a0;
-    s32         var_a2;
-    s32         var_v1_2;
+    VECTOR3 camPos;
+    s16     temp_a0;
+    s16     var_s1;
+    q19_12  temp_a0_2;
+    s32     temp_v1;
+    s32     var_a0;
+    s32     var_a2;
+    s32     var_v1_2;
 
     if (!Savegame_EventFlagGet(EventFlag_5))
     {
@@ -1271,7 +1271,7 @@ void func_800DC8D8(void) // 0x800DC8D8
             Savegame_EventFlagSet(EventFlag_11);
             g_SysWork.npcs_1A0[0].model_0.charaId_0 = Chara_None;
 
-            func_8005DC1C(Sfx_Unk1354, &D_800CB6A4, 0x80, 0);
+            func_8005DC1C(Sfx_Unk1354, &D_800CB6A4, Q8_CLAMPED(0.5f), 0);
         }
     }
 }
@@ -1282,10 +1282,10 @@ void func_800DCC54(void) // 0x800DCC54
 {
     if (D_800DFADC == NO_VALUE)
     {
-        func_8003EF10(6, 6, 5, (s32)&D_800DFADC, 0, 0x64000);
-        D_800DFADC = 0;
+        func_8003EF10(6, 6, 5, &D_800DFADC, Q12(0.0f), Q12(100.0f));
+        D_800DFADC = Q12(0.0f);
 
-        Sd_PlaySfx(0x54Fu, 0, 0xE0u);
+        Sd_PlaySfx(Sfx_Unk1359, 0, Q8_CLAMPED(0.875f));
     }
 
     if (Savegame_EventFlagGet(EventFlag_14))
@@ -1296,9 +1296,9 @@ void func_800DCC54(void) // 0x800DCC54
 
             Savegame_EventFlagSet(EventFlag_18);
 
-            Sd_PlaySfx(0x54FU, 0, 0xC0u);
+            Sd_PlaySfx(Sfx_Unk1359, 0, Q8_CLAMPED(0.75f));
 
-            D_800DFADC = 0x3C000;
+            D_800DFADC = Q12(60.0f);
         }
 
         D_800DFADC = func_800DCF38(D_800DFADC);
@@ -1308,12 +1308,12 @@ void func_800DCC54(void) // 0x800DCC54
         D_800DFADC = func_800DCDA8();
     }
 
-    if (D_800DFADC > 0x4FFFF)
+    if (D_800DFADC >= Q12(80.0f))
     {
         Savegame_EventFlagSet(EventFlag_15);
     }
 
-    if (D_800DFADC > 0x63FFF)
+    if (D_800DFADC >= Q12(100.0f))
     {
         Savegame_EventFlagSet(EventFlag_16);
     }

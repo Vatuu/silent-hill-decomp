@@ -217,16 +217,16 @@ void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coo
     {
         Vw_CoordHierarchyMatrixCompute(coord1, &mat);
 
-        tempSvec.vx = FP_METER_TO_GEO(x);
-        tempSvec.vy = FP_METER_TO_GEO(y);
-        tempSvec.vz = FP_METER_TO_GEO(z);
+        tempSvec.vx = Q12_TO_Q8(x);
+        tempSvec.vy = Q12_TO_Q8(y);
+        tempSvec.vz = Q12_TO_Q8(z);
 
         ApplyMatrix(&mat, &tempSvec, &vec);
 
         ptr2     = &D_800C4168.field_60;
-        ptr2->vx = FP_METER_FROM_GEO(vec.vx + mat.t[0]);
-        ptr2->vy = FP_METER_FROM_GEO(vec.vy + mat.t[1]);
-        ptr2->vz = FP_METER_FROM_GEO(vec.vz + mat.t[2]);
+        ptr2->vx = Q8_TO_Q12(vec.vx + mat.t[0]);
+        ptr2->vy = Q8_TO_Q12(vec.vy + mat.t[1]);
+        ptr2->vz = Q8_TO_Q12(vec.vz + mat.t[2]);
     }
 
     vwVectorToAngle(&D_800C4168.field_6C, &D_800C4168.field_58);
@@ -241,7 +241,7 @@ s32 func_800557DC() // 0x800557DC
     MATRIX mat;
 
     func_80049C2C(&mat, D_800C4168.field_60.vx, D_800C4168.field_60.vy, D_800C4168.field_60.vz);
-    return FP_METER_FROM_GEO(mat.t[2]);
+    return Q8_TO_Q12(mat.t[2]);
 }
 
 void func_80055814(s32 arg0) // 0x80055814
@@ -1402,9 +1402,9 @@ void func_8005A478(s_GteScratchData* scratchData, q19_12 alpha) // 0x8005A478
     *(u32*)&scratchData->field_3E4.m[0][0] = *(u32*)&D_800C4168.field_74;
     scratchData->field_3E4.m[0][2]         = D_800C4168.field_74.vz;
 
-    scratchData->field_3E4.m[1][0] = FP_METER(temp_s0_neg) / var_t1;
-    scratchData->field_3E4.m[1][1] = FP_METER(temp_s1_neg) / var_t1;
-    scratchData->field_3E4.m[1][2] = FP_METER(temp_s2_neg) / var_t1;
+    scratchData->field_3E4.m[1][0] = Q12(temp_s0_neg) / var_t1;
+    scratchData->field_3E4.m[1][1] = Q12(temp_s1_neg) / var_t1;
+    scratchData->field_3E4.m[1][2] = Q12(temp_s2_neg) / var_t1;
 
     scratchData->field_3E4.m[2][0] = temp_s0_neg;
     scratchData->field_3E4.m[2][1] = temp_s1_neg;
@@ -1458,15 +1458,15 @@ void func_8005A478(s_GteScratchData* scratchData, q19_12 alpha) // 0x8005A478
     }
 
     temp_a0 = (scratchData->field_3E4.m[1][0] * var_a2) >> 7;
-    temp_a0 = CLAMP(temp_a0, FP_METER(-1.4f), FP_METER(1.4f));
+    temp_a0 = CLAMP(temp_a0, Q12(-1.4f), Q12(1.4f));
 
     temp_v1 = (scratchData->field_3E4.m[1][1] * var_a2) >> 7;
-    temp_v1 = CLAMP(temp_v1, FP_METER(-1.4f), FP_METER(1.4f));
+    temp_v1 = CLAMP(temp_v1, Q12(-1.4f), Q12(1.4f));
 
     gte_SetLightSourceXY(temp_a0, temp_v1);
 
     temp_a0 = (scratchData->field_3E4.m[1][2] * var_a2) >> 7;
-    temp_a0 = CLAMP(temp_a0, FP_METER(-1.4f), FP_METER(1.4f));
+    temp_a0 = CLAMP(temp_a0, Q12(-1.4f), Q12(1.4f));
 
     gte_SetLightSourceZ(temp_a0);
 
@@ -2222,13 +2222,13 @@ void func_8005DC3C(s32 sfx, const VECTOR3* pos, s32 vol, s32 soundType, s32 pitc
     }
 
     // Clamp volume.
-    if (vol > FP_VOLUME(1.0f))
+    if (vol > Q8_CLAMPED(1.0f))
     {
-        vol = FP_VOLUME(1.0f);
+        vol = Q8_CLAMPED(1.0f);
     }
-    else if (vol < FP_VOLUME(0.0f))
+    else if (vol < Q8_CLAMPED(0.0f))
     {
-        vol = FP_VOLUME(0.0f);
+        vol = Q8_CLAMPED(0.0f);
     }
 
     if (!(soundType & (1 << 1)))
@@ -2240,9 +2240,9 @@ void func_8005DC3C(s32 sfx, const VECTOR3* pos, s32 vol, s32 soundType, s32 pitc
         volCpy = vol;
     }
 
-    if (volCpy > FP_VOLUME(1.0f))
+    if (volCpy > Q8_CLAMPED(1.0f))
     {
-        volCpy = FP_VOLUME(1.0f);
+        volCpy = Q8_CLAMPED(1.0f);
     }
 
     if (soundType & (1 << 2))
@@ -2271,19 +2271,19 @@ void func_8005DD44(s32 sfx, VECTOR3* pos, s32 vol, s8 pitch) // 0x8005DD44
     }
 
     // Clamp volume.
-    if (vol > FP_VOLUME(1.0f))
+    if (vol > Q8_CLAMPED(1.0f))
     {
-        vol = FP_VOLUME(1.0f);
+        vol = Q8_CLAMPED(1.0f);
     }
-    else if (vol < FP_VOLUME(0.0f))
+    else if (vol < Q8_CLAMPED(0.0f))
     {
-        vol = FP_VOLUME(0.0f);
+        vol = Q8_CLAMPED(0.0f);
     }
 
     volCpy = func_8005D9B8(pos, vol);
-    if (volCpy > FP_VOLUME(1.0f))
+    if (volCpy > Q8_CLAMPED(1.0f))
     {
-        volCpy = FP_VOLUME(1.0f);
+        volCpy = Q8_CLAMPED(1.0f);
     }
 
     func_80046620(sfx, balance, ~volCpy, pitch);
@@ -2552,7 +2552,7 @@ void func_800622B8(s32 arg0, s_SubCharacter* arg1, s32 animStatus, s32 arg3) // 
 
         Collision_Get(&coll, g_MapOverlayHeader.unkTable1_4C[idx].vx_0, g_MapOverlayHeader.unkTable1_4C[idx].vz_4);
 
-        if (ABS_DIFF(coll.groundHeight_0, arg1->position_18.vy) > FP_METER(0.15f))
+        if (ABS_DIFF(coll.groundHeight_0, arg1->position_18.vy) > Q12(0.15f))
         {
             g_MapOverlayHeader.unkTable1_4C[(idx)].field_A = 0;
         }
@@ -2814,14 +2814,14 @@ void Collision_Get(s_Collision* coll, s32 posX, s32 posZ) // 0x800699F8
     s_func_8006CC44     sp38;
     s_IpdCollisionData* ipdCollData;
 
-    sp28.vx = FP_METER(0.0f);
-    sp28.vy = FP_METER(0.0f);
-    sp28.vz = FP_METER(0.0f);
+    sp28.vx = Q12(0.0f);
+    sp28.vy = Q12(0.0f);
+    sp28.vz = Q12(0.0f);
 
     ipdCollData = func_800426E4(posX, posZ);
     if (ipdCollData == NULL)
     {
-        coll->groundHeight_0 = FP_METER(8.0f);
+        coll->groundHeight_0 = Q12(8.0f);
         coll->field_6        = 0;
         coll->field_4        = 0;
         coll->field_8        = 0;
@@ -2829,7 +2829,7 @@ void Collision_Get(s_Collision* coll, s32 posX, s32 posZ) // 0x800699F8
     }
 
     sp10.position_0.vx = posX;
-    sp10.position_0.vy = FP_METER(0.0f);
+    sp10.position_0.vy = Q12(0.0f);
     sp10.position_0.vz = posZ;
     sp10.rotation_C.vx = FP_ANGLE(0.0f);
     sp10.rotation_C.vy = FP_ANGLE(0.0f);
@@ -2844,7 +2844,7 @@ void Collision_Get(s_Collision* coll, s32 posX, s32 posZ) // 0x800699F8
     if (sp38.field_90 == 1)
     {
         coll->field_8        = 0;
-        coll->groundHeight_0 = FP_METER(8.0f);
+        coll->groundHeight_0 = Q12(8.0f);
     }
     else
     {
@@ -2876,7 +2876,7 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara, s32 arg
     #define POINT_COUNT          9
     #define ANGLE_STEP           FP_ANGLE(370.0f / POINT_COUNT) // @bug? Maybe `360.0f` was intended.
     #define WALL_COUNT_THRESHOLD 3                              // Unknown purpose.
-    #define WALL_HEIGHT          FP_METER(0.5f)
+    #define WALL_HEIGHT          Q12(0.5f)
 
     s_Collision     coll;
     e_CollisionType collType;
@@ -2930,8 +2930,8 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara, s32 arg
             for (i = 0, var_s6 = 12; i < POINT_COUNT; i++)
             {
                 Collision_Get(&coll,
-                              chara->position_18.vx + FP_MULTIPLY(Math_Sin(i * ANGLE_STEP), FP_METER(0.2f), Q12_SHIFT),
-                              chara->position_18.vz + FP_MULTIPLY(Math_Cos(i * ANGLE_STEP), FP_METER(0.2f), Q12_SHIFT));
+                              chara->position_18.vx + FP_MULTIPLY(Math_Sin(i * ANGLE_STEP), Q12(0.2f), Q12_SHIFT),
+                              chara->position_18.vz + FP_MULTIPLY(Math_Cos(i * ANGLE_STEP), Q12(0.2f), Q12_SHIFT));
 
                 switch (collType)
                 {
@@ -2993,8 +2993,8 @@ void func_80069DF0(s_800C4590* arg0, VECTOR3* pos, s32 arg2, s32 arg3) // 0x8006
     q19_12      groundHeightMin;
     s32         var_s5;
 
-    groundHeightMin = FP_METER(-30.0f);
-    groundHeightMax = FP_METER(30.0f);
+    groundHeightMin = Q12(-30.0f);
+    groundHeightMax = Q12(30.0f);
     var_s5 = 0;
 
     // Collect ground heights around position?
@@ -3018,9 +3018,9 @@ void func_80069DF0(s_800C4590* arg0, VECTOR3* pos, s32 arg2, s32 arg3) // 0x8006
     }
 
     groundHeight = (groundHeightMin + groundHeightMax) >> 1; // `/ 2`.
-    if (groundHeight < (arg2 - FP_METER(0.1f)))
+    if (groundHeight < (arg2 - Q12(0.1f)))
     {
-        groundHeight = arg2 - FP_METER(0.1f);
+        groundHeight = arg2 - Q12(0.1f);
     }
 
     for (i = var_s5 + 1, var_a0 = var_s5;
@@ -3051,12 +3051,12 @@ s32 func_80069FFC(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara) // 0x80
     s32             var_s1; // TODO: Maybe `bool`?
 
     sp28.position_0.vx = chara->position_18.vx + chara->field_D8.field_4;
-    sp28.position_0.vy = chara->position_18.vy - FP_METER(0.02f);
+    sp28.position_0.vy = chara->position_18.vy - Q12(0.02f);
     sp28.position_0.vz = chara->position_18.vz + chara->field_D8.field_6;
 
     if (func_800426E4(chara->position_18.vx, chara->position_18.vz) == NULL)
     {
-        func_8006A178(arg0, FP_METER(0.0f), FP_METER(0.0f), FP_METER(0.0f), FP_METER(8.0f));
+        func_8006A178(arg0, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(8.0f));
         return 1;
     }
 
@@ -3308,7 +3308,7 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* pos, s_func_8006AB50* arg2, s32 arg
 
     if (sp18.field_90 == 1)
     {
-        var_v0         = FP_METER(8.0f);
+        var_v0         = Q12(8.0f);
         arg0->field_14 = 0;
     }
     else
@@ -3428,17 +3428,17 @@ void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2)
 {
     s16 angleXz;
 
-    result->field_C.vx = FP_METER_TO_GEO(vec->vx);
-    result->field_C.vy = FP_METER_TO_GEO(vec->vy);
-    result->field_C.vz = FP_METER_TO_GEO(vec->vz);
+    result->field_C.vx = Q12_TO_Q8(vec->vx);
+    result->field_C.vy = Q12_TO_Q8(vec->vy);
+    result->field_C.vz = Q12_TO_Q8(vec->vz);
 
     result->field_8 = SquareRoot0(SQUARE(result->field_C.vx) + SQUARE(result->field_C.vz));
 
     if (result->field_8 != 0)
     {
         // @unused
-        result->direction_14.vx = FP_METER(result->field_C.vx) / result->field_8;
-        result->direction_14.vz = FP_METER(result->field_C.vz) / result->field_8;
+        result->direction_14.vx = Q12(result->field_C.vx) / result->field_8;
+        result->direction_14.vz = Q12(result->field_C.vz) / result->field_8;
 
         angleXz                 = ratan2(result->field_C.vz, result->field_C.vx);
         result->direction_14.vx = Math_Cos(angleXz);
@@ -3446,13 +3446,13 @@ void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2)
     }
     else
     {
-        result->direction_14.vx = FP_METER(1.0f);
-        result->direction_14.vz = FP_METER(0.0f);
+        result->direction_14.vx = Q12(1.0f);
+        result->direction_14.vz = Q12(0.0f);
     }
 
     result->field_28     = FP_FROM(arg2->rotation_C.vz, Q4_SHIFT); // TODO: Packed angle?
-    result->positionX_18 = FP_METER_TO_GEO(arg2->position_0.vx);
-    result->positionZ_1C = FP_METER_TO_GEO(arg2->position_0.vz);
+    result->positionX_18 = Q12_TO_Q8(arg2->position_0.vx);
+    result->positionZ_1C = Q12_TO_Q8(arg2->position_0.vz);
     result->field_20     = result->positionX_18 + result->field_C.vx;
     result->field_24     = result->positionZ_1C + result->field_C.vz;
     result->field_2A     = FP_FROM(arg2->rotation_C.vy + arg2->position_0.vy, Q4_SHIFT); // TODO: Position + rotation? Seems wrong.
@@ -4729,20 +4729,20 @@ void func_8006D01C(VECTOR3* arg0, VECTOR3* arg1, s16 arg2, s_func_8006CC44* arg3
     arg1->vx = FP_MULTIPLY(temp_v0, temp_s1, Q12_SHIFT);
     arg1->vz = FP_MULTIPLY(temp_v0, -temp_s0, Q12_SHIFT);
 
-    if (temp_s0 > FP_METER(1.0f / 3.0f))
+    if (temp_s0 > Q12(1.0f / 3.0f))
     {
         arg0->vx += 0x10;
     }
-    else if (temp_s0 < FP_METER(-1.0f / 3.0f))
+    else if (temp_s0 < Q12(-1.0f / 3.0f))
     {
         arg0->vx -= 0x10;
     }
 
-    if (temp_s1 > FP_METER(1.0f / 3.0f))
+    if (temp_s1 > Q12(1.0f / 3.0f))
     {
         arg0->vz += 0x10;
     }
-    else if (temp_s1 < FP_METER(-1.0f / 3.0f))
+    else if (temp_s1 < Q12(-1.0f / 3.0f))
     {
         arg0->vz -= 0x10;
     }
@@ -4979,10 +4979,10 @@ void func_8006D774(s_func_8006CC44* arg0, VECTOR3* arg1, VECTOR3* arg2) // 0x800
     SVECTOR sp10; // Types assumed. `SVECTOR3` might also work but there are 8 bytes between `sp10` and `sp18` and `SVECTOR3` is only 6 bytes.
     SVECTOR sp18;
 
-    sp10.vx = FP_METER_TO_GEO(arg1->vx);
-    sp10.vy = FP_METER_TO_GEO(arg1->vz);
-    sp18.vx = FP_METER_TO_GEO(arg2->vx);
-    sp18.vy = FP_METER_TO_GEO(arg2->vz);
+    sp10.vx = Q12_TO_Q8(arg1->vx);
+    sp10.vy = Q12_TO_Q8(arg1->vz);
+    sp18.vx = Q12_TO_Q8(arg2->vx);
+    sp18.vy = Q12_TO_Q8(arg2->vz);
 
     arg0->field_34 = 0;
     arg0->field_44.field_0.field_0  = 0;
@@ -5019,8 +5019,8 @@ void func_8006D7EC(s_func_8006ABC0* arg0, SVECTOR* arg1, SVECTOR* arg2) // 0x800
     }
     else
     {
-        arg0->direction_14.vx = FP_METER(1.0f);
-        arg0->direction_14.vz = FP_METER(0.0f);
+        arg0->direction_14.vx = Q12(1.0f);
+        arg0->direction_14.vz = Q12(0.0f);
     }
 
     arg0->positionX_18 = arg0->positionX_18 + arg1->vx;
@@ -5155,7 +5155,7 @@ bool func_8006DC18(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2) // 0x8
 
 bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos, VECTOR3* offset, s32 arg5, s32 arg6, s_SubCharacter** charas, s32 charaCount)
 {
-    if (offset->vx == FP_METER(0.0f) && offset->vz == FP_METER(0.0f))
+    if (offset->vx == Q12(0.0f) && offset->vz == Q12(0.0f))
     {
         return false;
     }
@@ -5166,17 +5166,17 @@ bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos, VECT
     arg0->field_8  = 0x7FFF;
     arg0->field_20 = 0;
 
-    arg0->field_2C.vx = FP_METER_TO_GEO(pos->vx);
-    arg0->field_2C.vy = FP_METER_TO_GEO(pos->vy);
-    arg0->field_2C.vz = FP_METER_TO_GEO(pos->vz);
+    arg0->field_2C.vx = Q12_TO_Q8(pos->vx);
+    arg0->field_2C.vy = Q12_TO_Q8(pos->vy);
+    arg0->field_2C.vz = Q12_TO_Q8(pos->vz);
 
-    arg0->field_50.vx = FP_METER_TO_GEO(offset->vx);
-    arg0->field_50.vy = FP_METER_TO_GEO(offset->vy);
-    arg0->field_50.vz = FP_METER_TO_GEO(offset->vz);
+    arg0->field_50.vx = Q12_TO_Q8(offset->vx);
+    arg0->field_50.vy = Q12_TO_Q8(offset->vy);
+    arg0->field_50.vz = Q12_TO_Q8(offset->vz);
 
     arg0->field_3C = arg0->field_2C.vx + arg0->field_50.vx;
 
-    // `FP_METER_TO_GEO`?
+    // `Q12_TO_Q8`?
     arg0->field_4C = FP_FROM(arg5, Q4_SHIFT);
     arg0->field_4E = FP_FROM(arg6, Q4_SHIFT);
 
@@ -5910,10 +5910,10 @@ bool func_8006F3C4(s_func_8006F338* arg0, s_func_8006F8FC* arg1) // 0x8006F3C4
     s32    var_v0;
     s32    var_v0_2;
 
-    minX = FP_METER(arg1->field_0_1);
-    maxX = FP_METER(arg1->field_0_1 + arg1->field_0_21);
-    minZ = FP_METER(arg1->field_0_11);
-    maxZ = FP_METER(arg1->field_0_11 + arg1->field_0_25);
+    minX = Q12(arg1->field_0_1);
+    maxX = Q12(arg1->field_0_1 + arg1->field_0_21);
+    minZ = Q12(arg1->field_0_11);
+    maxZ = Q12(arg1->field_0_11 + arg1->field_0_25);
 
     if ((minX >= arg0->field_1C || arg0->field_18 >= maxX) &&
         (minZ >= arg0->field_24 || arg0->field_20 >= maxZ))
@@ -5925,7 +5925,7 @@ bool func_8006F3C4(s_func_8006F338* arg0, s_func_8006F8FC* arg1) // 0x8006F3C4
         arg0->field_4 >= minZ && maxZ >= arg0->field_4)
     {
         arg0->field_28 = 0;
-        arg0->field_2C = (-FP_METER(arg1->field_0_29) >> 1) - FP_METER(1.5f); // NOTE: `-` sign on the outside required for match.
+        arg0->field_2C = (-Q12(arg1->field_0_29) >> 1) - Q12(1.5f); // NOTE: `-` sign on the outside required for match.
     }
     else
     {
@@ -5973,7 +5973,7 @@ bool func_8006F3C4(s_func_8006F338* arg0, s_func_8006F8FC* arg1) // 0x8006F3C4
         if (var_v1 < arg0->field_28)
         {
             arg0->field_28 = var_v1;
-            arg0->field_2C = (-FP_METER(arg1->field_0_29) >> 1) - FP_METER(1.5f); // NOTE: `-` sign on the outside required for match.
+            arg0->field_2C = (-Q12(arg1->field_0_29) >> 1) - Q12(1.5f); // NOTE: `-` sign on the outside required for match.
         }
     }
 
@@ -6004,10 +6004,10 @@ s32 func_8006F620(VECTOR3* pos, s_func_8006AB50* arg1, s32 arg2, s32 arg3) // 0x
     s32              var_v1;
     s_func_8006F8FC* temp_s2;
 
-    result = FP_METER(-16.0f);
+    result = Q12(-16.0f);
 
-    distX = FP_METER(0.0f);
-    distZ = FP_METER(0.0f);
+    distX = Q12(0.0f);
+    distZ = Q12(0.0f);
     posX  = pos->vx;
     posZ  = pos->vz;
     sp28  = arg1->position_0.vy + arg3;
@@ -6016,7 +6016,7 @@ s32 func_8006F620(VECTOR3* pos, s_func_8006AB50* arg1, s32 arg2, s32 arg3) // 0x
     for (i = 0; i < D_800C4478.field_2; i++)
     {
         temp_s2 = D_800C4478.field_4[i];
-        temp_s0 = (-FP_METER(temp_s2->field_0_29) >> 1) - FP_METER(1.5f); // NOTE: `-` sign on the outside required for match.
+        temp_s0 = (-Q12(temp_s2->field_0_29) >> 1) - Q12(1.5f); // NOTE: `-` sign on the outside required for match.
 
         if ((sp2C - temp_s0) >= 0)
         {
@@ -6030,7 +6030,7 @@ s32 func_8006F620(VECTOR3* pos, s_func_8006AB50* arg1, s32 arg2, s32 arg3) // 0x
             continue;
         }
 
-        mag0 = Vc_VectorMagnitudeCalc(x0, FP_METER(0.0f), z0);
+        mag0 = Vc_VectorMagnitudeCalc(x0, Q12(0.0f), z0);
         if (mag0 >= arg2)
 
         {
@@ -6041,11 +6041,11 @@ s32 func_8006F620(VECTOR3* pos, s_func_8006AB50* arg1, s32 arg2, s32 arg3) // 0x
         {
             func_8006F8FC(&x1, &z1, arg1->position_0.vx, arg1->position_0.vz, temp_s2);
 
-            var_s2 = FP_METER(0.1f);
+            var_s2 = Q12(0.1f);
 
-            max1 = Vc_VectorMagnitudeCalc(x1, FP_METER(0.0f), z1);
+            max1 = Vc_VectorMagnitudeCalc(x1, Q12(0.0f), z1);
 
-            if ((arg2 - max1) <= FP_METER(0.1f))
+            if ((arg2 - max1) <= Q12(0.1f))
             {
                 var_s2 = arg2 - max1;
             }
@@ -6078,12 +6078,12 @@ s32 func_8006F620(VECTOR3* pos, s_func_8006AB50* arg1, s32 arg2, s32 arg3) // 0x
     pos->vx = posX;
     pos->vz = posZ;
 
-    if (result != FP_METER(-16.0f))
+    if (result != Q12(-16.0f))
     {
-        var_v1  = FP_METER(0.1f);
+        var_v1  = Q12(0.1f);
         temp_a0 = result - sp28;
 
-        if (temp_a0 < FP_METER(0.1f))
+        if (temp_a0 < Q12(0.1f))
         {
             var_v1 = temp_a0;
         }
@@ -6104,7 +6104,7 @@ void func_8006F8FC(s32* outX, s32* outZ, s32 posX, s32 posZ, const s_func_8006F8
     q19_12 minZ;
     q19_12 maxZ;
 
-    // TODO: Using `FP_METER` doesn't match? There's an identical block in `func_8006F3C4`.
+    // TODO: Using `Q12` doesn't match? There's an identical block in `func_8006F3C4`.
     minX = FP_TO(arg4->field_0_1, Q12_SHIFT);
     maxX = FP_TO(arg4->field_0_1 + arg4->field_0_21, Q12_SHIFT);
     minZ = FP_TO(arg4->field_0_11, Q12_SHIFT);
@@ -6118,7 +6118,7 @@ void func_8006F8FC(s32* outX, s32* outZ, s32 posX, s32 posZ, const s_func_8006F8
     {
         if (maxX >= posX)
         {
-            *outX = FP_METER(0.0f);
+            *outX = Q12(0.0f);
         }
         else
         {
@@ -6133,7 +6133,7 @@ void func_8006F8FC(s32* outX, s32* outZ, s32 posX, s32 posZ, const s_func_8006F8
     }
     else if (maxZ >= posZ)
     {
-        *outZ = FP_METER(0.0f);
+        *outZ = Q12(0.0f);
         return;
     }
 
@@ -6350,7 +6350,7 @@ bool func_800700F8(s_SubCharacter* chara0, s_SubCharacter* chara1) // 0x800700F8
     pos = chara0->position_18;
 
     offset.vx = chara1->position_18.vx - chara0->position_18.vx;
-    offset.vy = FP_METER(-0.1f);
+    offset.vy = Q12(-0.1f);
     offset.vz = chara1->position_18.vz - chara0->position_18.vz;
 
     return func_8006DB3C(&sp10, &pos, &offset, chara0) && sp10.field_10 == 0;
@@ -6382,7 +6382,7 @@ bool func_80070208(s_SubCharacter* chara, q19_12 dist) // 0x80070208
     bool              cond;
 
     offset.vx = FP_MULTIPLY(dist, Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
-    offset.vy = FP_METER(0.0f);
+    offset.vy = Q12(0.0f);
     offset.vz = FP_MULTIPLY(dist, Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
 
     cond = false;
@@ -6399,7 +6399,7 @@ s32 func_8007029C(s_SubCharacter* chara, q19_12 dist, q3_12 angle) // 0x8007029C
     VECTOR3 offset; // Q19.12
 
     offset.vx = FP_MULTIPLY(dist, Math_Sin(angle), Q12_SHIFT);
-    offset.vy = FP_METER(0.0f);
+    offset.vy = Q12(0.0f);
     offset.vz = FP_MULTIPLY(dist, Math_Cos(angle), Q12_SHIFT);
 
     return func_8006DB3C(&vars, &chara->position_18, &offset, chara);
@@ -6490,7 +6490,7 @@ void func_800705E4(GsCOORDINATE2* coord, s32 idx, s32 scaleX, s32 scaleY, s32 sc
 
     for (col = 0; col < 3; col++)
     {
-        if (scales[col] != FP_METER(1.0f))
+        if (scales[col] != Q12(1.0f))
         {
             for (row = 0; row < 3; row++)
             {

@@ -494,7 +494,7 @@ s32 D_800AE71C[] =
 };
 
 // Some timer used in func_80066184
-q19_12 D_800AE73C = FP_TIME(-524256.0f);
+q19_12 D_800AE73C = Q12(-524256.0f);
 
 // Used by `func_80068CC0` and `GameState_MapScreen_Update`.
 // I think this is save file flags related to
@@ -2147,12 +2147,12 @@ void Gfx_Results_ItemsPosition() // 0x8005227C
 
     const SVECTOR OFFSETS[DISPLAY_ITEM_COUNT] =
     {
-        { FP_METER_GEO(0.0f),      FP_METER_GEO(-3.25f), FP_METER_GEO(20.0f), FP_METER_GEO(0.0f) },
-        { FP_METER_GEO(-3.03125f), FP_METER_GEO(-1.5f),  FP_METER_GEO(20.0f), FP_METER_GEO(0.0f) },
-        { FP_METER_GEO(3.03125f),  FP_METER_GEO(-1.5f),  FP_METER_GEO(20.0f), FP_METER_GEO(0.0f) },
-        { FP_METER_GEO(-3.03125f), FP_METER_GEO(2.0f),   FP_METER_GEO(20.0f), FP_METER_GEO(0.0f) },
-        { FP_METER_GEO(3.03125f),  FP_METER_GEO(2.0f),   FP_METER_GEO(20.0f), FP_METER_GEO(0.0f) },
-        { FP_METER_GEO(0.0f),      FP_METER_GEO(3.75f),  FP_METER_GEO(20.0f), FP_METER_GEO(0.0f) }
+        { Q8(0.0f),      Q8(-3.25f), Q8(20.0f), Q8(0.0f) },
+        { Q8(-3.03125f), Q8(-1.5f),  Q8(20.0f), Q8(0.0f) },
+        { Q8(3.03125f),  Q8(-1.5f),  Q8(20.0f), Q8(0.0f) },
+        { Q8(-3.03125f), Q8(2.0f),   Q8(20.0f), Q8(0.0f) },
+        { Q8(3.03125f),  Q8(2.0f),   Q8(20.0f), Q8(0.0f) },
+        { Q8(0.0f),      Q8(3.75f),  Q8(20.0f), Q8(0.0f) }
     };
 
     if (g_SavegamePtr->clearGameCount_24A == 0)
@@ -2846,9 +2846,9 @@ void Gfx_Items_Render() // 0x80054200
             }
         }
 
-        g_Items_Coords[7].coord.t[0] = FP_METER_GEO(0.0f);
-        g_Items_Coords[7].coord.t[1] = FP_METER_GEO(-2.5);
-        g_Items_Coords[7].coord.t[2] = FP_METER_GEO(0.0f);
+        g_Items_Coords[7].coord.t[0] = Q8(0.0f);
+        g_Items_Coords[7].coord.t[1] = Q8(-2.5);
+        g_Items_Coords[7].coord.t[2] = Q8(0.0f);
     }
     else
     {
@@ -3108,9 +3108,9 @@ bool Gfx_PickupItemAnimate(u8 itemId) // 0x80054AD8
     GsDOBJ2*       obj;
     GsCOORD2PARAM* transform;
 
-    g_Items_Coords[9].coord.t[1] = FP_METER_GEO(0.25f);
-    g_Items_Coords[9].coord.t[0] = FP_METER_GEO(0.0f);
-    g_Items_Coords[9].coord.t[2] = FP_METER_GEO(-32.6875);
+    g_Items_Coords[9].coord.t[1] = Q8(0.25f);
+    g_Items_Coords[9].coord.t[0] = Q8(0.0f);
+    g_Items_Coords[9].coord.t[2] = Q8(-32.6875);
 
     switch (g_Items_PickupAnimState) 
     {

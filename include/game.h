@@ -9,7 +9,7 @@ struct _AnmHeader;
 struct _Model;
 
 #define TICKS_PER_SECOND 60                                            /** Game has a variable time step with 60 ticks max. */
-#define TIME_STEP_30_FPS FP_TIME(1.0f / (float)(TICKS_PER_SECOND / 2)) /** Time step at 30 FPS. */
+#define TIME_STEP_30_FPS Q12(1.0f / (float)(TICKS_PER_SECOND / 2)) /** Time step at 30 FPS. */
 
 #define SCREEN_WIDTH                   320
 #define SCREEN_HEIGHT                  240
@@ -1271,8 +1271,8 @@ typedef struct
 {
     s32          field_0;
     s8*          field_4;
-    s32          field_8;
-    s32          field_C;
+    s32          field_8; // } Q19.12?
+    s32          field_C; // }
     s32          field_10;
     u8           field_14;
     u8           isFlashlightOn_15; /** `bool` | Off: `false`, On: `true`. */

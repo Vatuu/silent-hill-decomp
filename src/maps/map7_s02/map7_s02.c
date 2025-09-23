@@ -204,9 +204,9 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800D8B64);
 
 void Character_CoordTransformUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8BAC
 {
-    coord->coord.t[0] = FP_METER_TO_GEO(chara->position_18.vx);
-    coord->coord.t[1] = FP_METER_TO_GEO(chara->position_18.vy);
-    coord->coord.t[2] = FP_METER_TO_GEO(chara->position_18.vz);
+    coord->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
+    coord->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
+    coord->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
 }
 
 void Ai_GhostDoctor_Init(s_SubCharacter* chara) // 0x800D8BE0

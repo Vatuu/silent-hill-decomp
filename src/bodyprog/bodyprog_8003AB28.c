@@ -81,7 +81,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
             g_IntervalVBlanks    = 1;
             g_Screen_FadeStatus  = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
-            g_ScreenFadeTimestep = FP_TIME(2.0f);
+            g_ScreenFadeTimestep = Q12(2.0f);
             g_MainMenuState++;
 
         case MenuState_Main:
@@ -89,7 +89,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
             {
                 GameFs_MapStartup();
 
-                if (g_GameWork.gameStateStep_598[0] == 1 && g_SysWork.timer_20 == FP_TIME(0.0f))
+                if (g_GameWork.gameStateStep_598[0] == 1 && g_SysWork.timer_20 == Q12(0.0f))
                 {
                     g_Demo_ReproducedCount++;
                 }
@@ -225,7 +225,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
             {
                 GameFs_MapStartup();
 
-                if (g_GameWork.gameStateStep_598[0] == 1 && g_SysWork.timer_20 == FP_TIME(0.0f))
+                if (g_GameWork.gameStateStep_598[0] == 1 && g_SysWork.timer_20 == Q12(0.0f))
                 {
                     g_Demo_ReproducedCount++;
                 }
@@ -731,8 +731,8 @@ void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
     switch (Map_TypeGet())
     {
         case 0:
-            if (chara->position_18.vx >= FP_METER(191.6f) && chara->position_18.vx <= FP_METER(198.8f) && 
-                chara->position_18.vz >= FP_METER(-96.0f) && chara->position_18.vz <= FP_METER(-90.3f))
+            if (chara->position_18.vx >= Q12(191.6f) && chara->position_18.vx <= Q12(198.8f) && 
+                chara->position_18.vz >= Q12(-96.0f) && chara->position_18.vz <= Q12(-90.3f))
             {
                 var_s0 = (var_s0 & ~0x2) | 0x4;
             }
@@ -740,8 +740,8 @@ void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
 
         case 3:
         case 4:
-            if(chara->position_18.vx >= FP_METER(-100.0f) && chara->position_18.vx <= FP_METER(-94.5f) && 
-               chara->position_18.vz >= FP_METER(-70.3f) && chara->position_18.vz <= FP_METER(-62.0f)) 
+            if(chara->position_18.vx >= Q12(-100.0f) && chara->position_18.vx <= Q12(-94.5f) && 
+               chara->position_18.vz >= Q12(-70.3f) && chara->position_18.vz <= Q12(-62.0f)) 
             {
                 var_s0 = (var_s0 & ~0x2) | 0x4;
             }
@@ -1001,18 +1001,18 @@ void func_8003C3AC() // 0x8003C3AC
         pos0 = chara->position_18;
     }
 
-    moveAmt = (chara->moveSpeed_38 * FP_METER(5.5f)) / 16015; // TODO: `FP_METER(3.91f)`? What's this doing?
-    moveAmt = CLAMP(moveAmt, FP_METER(0.0f), FP_METER(5.5f));
+    moveAmt = (chara->moveSpeed_38 * Q12(5.5f)) / 16015; // TODO: `Q12(3.91f)`? What's this doing?
+    moveAmt = CLAMP(moveAmt, Q12(0.0f), Q12(5.5f));
 
     pos0.vx += FP_MULTIPLY_PRECISE(moveAmt, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
     pos0.vz += FP_MULTIPLY_PRECISE(moveAmt, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
 
     if (g_WorldGfx.type_0 == &MAP_TYPES[0] &&
-        chara->position_18.vx >= FP_METER(-40.0f) && chara->position_18.vx <= FP_METER(40.0f) &&
-        chara->position_18.vz >= FP_METER(200.0f) && chara->position_18.vz <= FP_METER(240.0f))
+        chara->position_18.vx >= Q12(-40.0f) && chara->position_18.vx <= Q12(40.0f) &&
+        chara->position_18.vz >= Q12(200.0f) && chara->position_18.vz <= Q12(240.0f))
     {
 
-        pos0.vz = FP_METER(200.0f);
+        pos0.vz = Q12(200.0f);
     }
 
     if (D_800C4168.fogEnabled_1)
@@ -1023,25 +1023,25 @@ void func_8003C3AC() // 0x8003C3AC
         flags1 = g_WorldGfx.type_0->flags_6;
         if (!(flags1 & MapTypeFlag_Interior) || !(flags1 & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks)))
         {
-            var_s1 = FP_MULTIPLY(Math_Cos(pos2.vx), FP_METER(9.0f), Q12_SHIFT);
+            var_s1 = FP_MULTIPLY(Math_Cos(pos2.vx), Q12(9.0f), Q12_SHIFT);
         }
         else
         {
-            var_s1 = FP_METER(0.0f);
+            var_s1 = Q12(0.0f);
         }
         
         temp_s0_2 = FP_MULTIPLY(var_s1, Math_Sin(pos2.vy), Q12_SHIFT);
-        temp_s0_2 = CLAMP(temp_s0_2, FP_METER(-6.0f), FP_METER(6.0f));
+        temp_s0_2 = CLAMP(temp_s0_2, Q12(-6.0f), Q12(6.0f));
 
         temp_v1_4 = FP_MULTIPLY(var_s1, Math_Cos(pos2.vy), Q12_SHIFT);
-        temp_v1_4 = CLAMP(temp_v1_4, FP_METER(-6.0f), FP_METER(6.0f));
+        temp_v1_4 = CLAMP(temp_v1_4, Q12(-6.0f), Q12(6.0f));
 
         pos1.vx += temp_s0_2;
         pos1.vz += temp_v1_4;
 
         if (Vc_VectorMagnitudeCalc(pos1.vx - chara->position_18.vx, 0, pos1.vz - chara->position_18.vz) > 0x10000)
         {
-            var_s1  = FP_METER(14.0f);
+            var_s1  = Q12(14.0f);
             pos1.vx = chara->position_18.vx + FP_MULTIPLY(Math_Sin(pos2.vy), var_s1, Q12_SHIFT);
             pos1.vz = chara->position_18.vz + FP_MULTIPLY(Math_Cos(pos2.vy), var_s1, Q12_SHIFT);
         }
@@ -1056,26 +1056,26 @@ void func_8003C3AC() // 0x8003C3AC
     flags0 = g_WorldGfx.type_0->flags_6;
     if ((flags0 & MapTypeFlag_Interior) && (flags0 & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks)))
     {
-        var_a1 = chara->position_18.vx / FP_METER(2.5f);
-        if (chara->position_18.vx < FP_METER(0.0f))
+        var_a1 = chara->position_18.vx / Q12(2.5f);
+        if (chara->position_18.vx < Q12(0.0f))
         {
             var_a1--;
         }
 
-        var_a0  = chara->position_18.vz / FP_METER(2.5f);
-        temp_a1 = var_a1 * FP_METER(2.5f);
+        var_a0  = chara->position_18.vz / Q12(2.5f);
+        temp_a1 = var_a1 * Q12(2.5f);
 
-        if (chara->position_18.vz < FP_METER(0.0f))
+        if (chara->position_18.vz < Q12(0.0f))
         {
             var_a0--;
         }
 
-        temp_a2 = var_a0 * FP_METER(2.5f);
+        temp_a2 = var_a0 * Q12(2.5f);
 
-        pos0.vx = CLAMP(pos0.vx, temp_a1 + 1, temp_a1 + (FP_METER(2.5f) - 1));
-        pos0.vz = CLAMP(pos0.vz, temp_a2 + 1, temp_a2 + (FP_METER(2.5f) - 1));
-        pos1.vx = CLAMP(pos1.vx, temp_a1 + 1, temp_a1 + (FP_METER(2.5f) - 1));
-        pos1.vz = CLAMP(pos1.vz, temp_a2 + 1, temp_a2 + (FP_METER(2.5f) - 1));
+        pos0.vx = CLAMP(pos0.vx, temp_a1 + 1, temp_a1 + (Q12(2.5f) - 1));
+        pos0.vz = CLAMP(pos0.vz, temp_a2 + 1, temp_a2 + (Q12(2.5f) - 1));
+        pos1.vx = CLAMP(pos1.vx, temp_a1 + 1, temp_a1 + (Q12(2.5f) - 1));
+        pos1.vz = CLAMP(pos1.vz, temp_a2 + 1, temp_a2 + (Q12(2.5f) - 1));
     }
 
     func_80042C3C(pos0.vx, pos0.vz, pos1.vx, pos1.vz);
@@ -1145,9 +1145,9 @@ void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECT
             arg0->field_10.lmIdx_9 = lmIdx;
         } 
 
-        coord0 = FP_METER_TO_GEO(pos->vx);
-        coord1 = FP_METER_TO_GEO(pos->vy);
-        coord2 = FP_METER_TO_GEO(pos->vz);
+        coord0 = Q12_TO_Q8(pos->vx);
+        coord1 = Q12_TO_Q8(pos->vy);
+        coord2 = Q12_TO_Q8(pos->vz);
         vx     = rot->vx >> 2;
         vz     = rot->vz >> 2;
         vy     = rot->vy;
@@ -2406,7 +2406,7 @@ void func_8003E740() // 0x8003E740
 
     static u32 D_800A9FB0 = 0;
 
-    if (g_DeltaTime0 != FP_TIME(0.0))
+    if (g_DeltaTime0 != Q12(0.0))
     {
         D_800A9FB0 += 8;
         for (i = 0; i < 8; i++)
@@ -2524,7 +2524,7 @@ void func_8003EB54() // 0x8003EB54
     g_SysWork.field_235C = &g_SysWork.playerBoneCoords_890[HarryBone_Root];
     g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[HarryBone_Root];
 
-    Math_Vector3Set(&g_SysWork.field_2360, FP_METER(0.0f), FP_METER(-0.2f), FP_METER(-2.0f));
+    Math_Vector3Set(&g_SysWork.field_2360, Q12(0.0f), Q12(-0.2f), Q12(-2.0f));
     Math_SVectorSet(&g_SysWork.field_2370, FP_ANGLE(10.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
 }
 
@@ -2535,7 +2535,7 @@ void func_8003EBA0() // 0x8003EBA0
     g_SysWork.field_235C = &g_SysWork.playerBoneCoords_890[HarryBone_Torso];
     g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[HarryBone_Root];
 
-    Math_Vector3Set(&g_SysWork.field_2360, FP_METER(-0.08f), FP_METER(-0.28f), FP_METER(0.12f));
+    Math_Vector3Set(&g_SysWork.field_2360, Q12(-0.08f), Q12(-0.28f), Q12(0.12f));
     Math_SVectorSet(&g_SysWork.field_2370, FP_ANGLE(-15.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
 }
 
@@ -3156,11 +3156,11 @@ s32 func_8003FEC0(s_sub_StructUnk3* arg0) // 0x8003FEC0
 {
     static q19_12 Y_ARRAY[5] =
     {
-        FP_METER(1.75f),
-        FP_METER(6.0f),
-        FP_METER(9.5f),
-        FP_METER(12.5f),
-        FP_METER(15.0f)
+        Q12(1.75f),
+        Q12(6.0f),
+        Q12(9.5f),
+        Q12(12.5f),
+        Q12(15.0f)
     };
 
     if (D_800C4168.fogEnabled_1)

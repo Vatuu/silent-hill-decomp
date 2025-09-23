@@ -11,7 +11,7 @@ void sharedFunc_800D88C0_0_s00(s_SubCharacter* playerChara, s32 arg1)
     }
     else
     {
-        playerChara->properties_E4.player.afkTimer_E8 = FP_TIME(0.0f);
+        playerChara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
         playerChara->model_0.stateStep_3              = 0;
     }
 

@@ -38,8 +38,8 @@ void sharedFunc_800CEFD0_1_s02(s32 arg0, s_sharedFunc_800CEFD0_1_s02* arg1, u16*
         x  = abs(var_s0->field_0.vx);
         z = var_s0->field_0.vz;
 
-        if ((z >= 0 && (x + z) > FP_METER(6.0f)) ||
-            (z <  0 && (x - z) > FP_METER(6.0f)))
+        if ((z >= 0 && (x + z) > Q12(6.0f)) ||
+            (z <  0 && (x - z) > Q12(6.0f)))
         {
             if (sharedData_800DF158_1_s02 != 0)
             {

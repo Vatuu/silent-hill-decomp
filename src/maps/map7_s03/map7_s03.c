@@ -193,9 +193,9 @@ void func_800D3C80(s_SubCharacter* chara, GsCOORDINATE2* coord)
     chara->position_18.vy  = 0;
     chara->position_18.vz += vec.vz;
 
-    coord->coord.t[0] = FP_METER_TO_GEO(chara->position_18.vx);
-    coord->coord.t[1] = FP_METER_TO_GEO(chara->position_18.vy);
-    coord->coord.t[2] = FP_METER_TO_GEO(chara->position_18.vz);
+    coord->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
+    coord->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
+    coord->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
 }
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D3E18);
@@ -696,8 +696,8 @@ void func_800DEFE8(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800DEFE8
     yPos            = chara->position_18.vy;
     chara->field_CA = yPos;
     chara->field_CC = yPos;
-    chara->field_C8 = yPos - FP_METER(1.0f);
-    chara->field_CE = yPos - FP_METER(0.5f);
+    chara->field_C8 = yPos - Q12(1.0f);
+    chara->field_CE = yPos - Q12(0.5f);
 }
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800DF044);
@@ -708,7 +708,7 @@ void Ai_Incubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2
 {
     if ((chara->model_0.state_2 != 0 || Ai_Incubus_Init(chara, coords)) && chara->model_0.state_2 != 1)
     {
-        if (g_DeltaTime0 != FP_TIME(0.0))
+        if (g_DeltaTime0 != Q12(0.0))
         {
             func_800DDBBC(chara);
             func_800DEC74(chara, coords);
@@ -854,7 +854,7 @@ void func_800E0670(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800E0670
 
     dist = Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
                                g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz);
-    if (dist < FP_METER(2.5f) && func_800DFB04() == 0)
+    if (dist < Q12(2.5f) && func_800DFB04() == 0)
     {
         func_800DFA48(&g_SysWork.player_4C.chara_0.position_18, &chara->position_18);
     }
@@ -891,7 +891,7 @@ void Ai_Unknown23_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINAT
 
     if (chara->model_0.state_2 != 1)
     {
-        if (g_DeltaTime0 != FP_TIME(0.0))
+        if (g_DeltaTime0 != Q12(0.0))
         {
             func_800DFCE4(chara);
             func_800E05DC(chara, coords);
