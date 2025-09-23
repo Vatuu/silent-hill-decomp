@@ -108,6 +108,8 @@ s32 func_800DCF38(s32);
 
 void Map_WorldObjectsInit(void);
 
+void Map_WorldObjectsUpdate(void);
+
 void func_800DA454();
 
 #endif
