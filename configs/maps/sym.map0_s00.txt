@@ -96,6 +96,9 @@ sharedFunc_800D923C_0_s00     = 0x800D923C; // type:func
 sharedFunc_800D929C_0_s00     = 0x800D929C; // type:func
 sharedFunc_800D92AC_0_s00     = 0x800D92AC; // type:func
 Gfx_LoadingScreen_StageString = 0x800D95D4; // type:func
+Map_WorldObjectsInit          = 0x800DBE68; // type:func
+Map_WorldObjectsUpdate        = 0x800DBF08; // type:func
+Event_GreyChildrenSpawn       = 0x800DC1E8; // type:func
 
 
 
@@ -144,6 +147,8 @@ MAP_MESSAGES                  = 0x800DF6B8; // type:u32 size:0x9C
 //----------------------------------------------------
 //--- PA: 0x0161DC   VA: 0x800DF754   subsegment: data
 //----------------------------------------------------
+g_MapMsgSounds                = 0x800DFABC; // type:u16
+g_MapMsgSoundIdx              = 0x800DFB58; // type:u8
 sharedData_800DFB64_0_s00     = 0x800DFB64; // type:s32
 sharedData_800DFB68_0_s00     = 0x800DFB68; // type:s32
 sharedData_800DFB6C_0_s00     = 0x800DFB6C; // type:s32

@@ -680,6 +680,7 @@ vcGetXZSumDistFromLimArea                   = 0x80085C80; // type:func
 //--- PA: 0x061218   VA: 0x80085D78   subsegment: c, bodyprog_80085D78
 //--------------------------------------------------------------------
 MapMsg_DisplayAndHandleSelection            = 0x800860B0; // type:func
+Map_MessageWithAudio                        = 0x800869E4; // type:func
 Camera_TranslationSet                       = 0x80086A94; // type:func
 Camera_RotationSet                          = 0x80086B70; // type:func
 Event_ItemTake                              = 0x800877B8; // type:func
