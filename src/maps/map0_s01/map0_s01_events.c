@@ -969,8 +969,7 @@ void Map_WorldObjectsInit() // 0x800DC9C8
 
 void Map_WorldObjectsUpdate(void) // 0x800DCCF4
 {
-    s32  stepX;
-    s32  stepZ;
+    MAP_CHUNK_CHECK_VARIABLE_DECL();
     s32  temp_a1;
     s32  var_a2;
     s32* ptr;
@@ -1086,33 +1085,19 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
         Savegame_EventFlagSet(EventFlag_52);
     }
 
-    stepX = g_SysWork.player_4C.chara_0.position_18.vx / FP_METER(40.0f);
-    if ((g_SysWork.player_4C.chara_0.position_18.vx > FP_METER(0.0f) && stepX == 0) ||
-        (g_SysWork.player_4C.chara_0.position_18.vx <= FP_METER(0.0f) && (stepX - 1) == 1))
+    if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, 7, -1, 7))
     {
-        stepZ = g_SysWork.player_4C.chara_0.position_18.vz / FP_METER(40.0f);
-        if ((g_SysWork.player_4C.chara_0.position_18.vz > FP_METER(0.0f) && (stepZ + 1) == 7) ||
-            (g_SysWork.player_4C.chara_0.position_18.vz <= FP_METER(0.0f) && (stepZ - 1) == 7))
+        if (!Savegame_EventFlagGet(EventFlag_M0S01_HealthDrink0))
         {
-            if (!Savegame_EventFlagGet(EventFlag_M0S01_HealthDrink0))
-            {
-                g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &D_800DE12C.position_0, &D_800DE12C.rotation_C);
-            }
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &D_800DE12C.position_0, &D_800DE12C.rotation_C);
         }
     }
 
-    stepX = g_SysWork.player_4C.chara_0.position_18.vx / FP_METER(40.0f);
-    if ((g_SysWork.player_4C.chara_0.position_18.vx > FP_METER(0.0f) && stepX == 0) ||
-        (g_SysWork.player_4C.chara_0.position_18.vx <= FP_METER(0.0f) && (stepX - 1) == 1))
+    if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, 7, -1, 7))
     {
-        stepZ = g_SysWork.player_4C.chara_0.position_18.vz / FP_METER(40.0f);
-        if ((g_SysWork.player_4C.chara_0.position_18.vz > FP_METER(0.0f) && (stepZ + 1) == 7) ||
-            (g_SysWork.player_4C.chara_0.position_18.vz <= FP_METER(0.0f) && (stepZ - 1) == 7))
+        if (!Savegame_EventFlagGet(EventFlag_M0S01_HealthDrink1))
         {
-            if (!Savegame_EventFlagGet(EventFlag_M0S01_HealthDrink1))
-            {
-                g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &D_800DE140.position_0, &D_800DE140.rotation_C);
-            }
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &D_800DE140.position_0, &D_800DE140.rotation_C);
         }
     }
 }

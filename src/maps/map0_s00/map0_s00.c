@@ -450,11 +450,213 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DBF08);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DC1E8);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DC33C);
+void func_800DC33C(void)
+{
+    VECTOR3 sp18;
+    s16 temp_a0;
+    s16 var_s1;
+    s32 var_v1;
+    s32 temp_a0_2;
+    s32 temp_v0;
+    s32 temp_v0_2;
+    s32 temp_v1;
+    s32 var_a0;
+    s32 var_a2;
+    s32 var_v1_2;
+    s_Savegame* temp_s0;
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DC694);
+    temp_s0 = g_SavegamePtr;
+    if (!(temp_s0->eventFlags_168[0] & 0x20))
+    {
+        func_800865FC(1, 1, 0, 0x800, -0x3E000, 0x6C000);
+        sharedFunc_800D88AC_0_s00(g_SysWork.npcs_1A0);
+        temp_s0->eventFlags_168[0] |= 0x20;
+    }
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DC8D8);
+    vwGetViewPosition(&sp18);
+    temp_v0 = (g_SysWork.npcs_1A0[0].position_18.vx - sp18.vx) >> 6;
+    temp_v0_2 = (g_SysWork.npcs_1A0[0].position_18.vz - sp18.vz) >> 6;
+
+    if (((SquareRoot0((temp_v0 * temp_v0) + (temp_v0_2 * temp_v0_2)) << 6) <= 0x10800) &&
+        (g_SysWork.npcs_1A0[0].position_18.vx >= FP_METER(-58.0f)))
+    {
+
+        if (!(g_SysWork.flags_22A4 & 0x80))
+        {
+            if (!Vw_AabbVisibleInScreenCheck(
+                    g_SysWork.npcs_1A0[0].position_18.vx - Q12(1.0f),
+                    g_SysWork.npcs_1A0[0].position_18.vx + Q12(1.0f),
+                    g_SysWork.npcs_1A0[0].position_18.vy - Q12(1.5f),
+                    g_SysWork.npcs_1A0[0].position_18.vy,
+                    g_SysWork.npcs_1A0[0].position_18.vz - Q12(1.0f),
+                    g_SysWork.npcs_1A0[0].position_18.vz + Q12(1.0f)))
+            {
+block7:
+                g_SysWork.npcs_1A0[0].position_18.vz = 1;
+                g_SysWork.npcs_1A0[0].position_18.vx = 1;
+                g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = 0;
+                sharedFunc_800D88C0_0_s00(g_SysWork.npcs_1A0, 0);
+                g_SavegamePtr->eventFlags_168[0] |= 0x40;
+                return;
+            }
+        }
+
+        var_s1 = func_8005BF38(
+            (ratan2(g_SysWork.npcs_1A0[0].position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx,
+                   g_SysWork.npcs_1A0[0].position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz) - g_SysWork.player_4C.chara_0.headingAngle_3C));
+
+        temp_a0 = func_8005BF38((
+            ratan2(FP_METER(-62.0f) - g_SysWork.player_4C.chara_0.position_18.vx,
+                   Q12(106.0f) - g_SysWork.player_4C.chara_0.position_18.vz) -
+            g_SysWork.player_4C.chara_0.headingAngle_3C));
+
+
+        if (ABS(var_s1) > ABS(temp_a0))
+        {
+            var_s1 = temp_a0;
+        }
+        var_a0 = var_s1 << 16;
+
+        temp_a0_2 = (g_SysWork.player_4C.chara_0.moveSpeed_38 * Math_Cos(var_a0 >> 0x10) * 0x10) >> 0x10;
+
+        if (temp_a0_2 > Q12(1.8))
+        {
+            D_800DFAD0 = temp_a0_2 + Q12(0.9f);
+        } 
+        else if (D_800DFAD0 > Q12(1.8))
+        {
+            var_a2 = Q12(1.8);
+            temp_v1 = D_800DFAD0 - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.5f, 12);
+            if (temp_v1 >= Q12(1.8))
+            {
+                var_a2 = temp_v1;
+            }
+            D_800DFAD0 = var_a2;
+        }
+        else
+        {
+            var_v1_2 = D_800DFAD0 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.5f, 12);
+
+            if (var_v1_2 > Q12(1.8))
+            {
+                var_v1_2 = Q12(1.8);
+            }
+            D_800DFAD0 = var_v1_2;
+        }
+
+        g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = D_800DFAD0;
+        func_8008677C(g_SysWork.npcs_1A0, 2, 1);
+        return;
+    }
+
+    goto block7;
+}
+
+
+void func_800DC694(void) {
+    s32 temp_a0;
+    s32 temp_a0_2;
+    s32 temp_v0;
+    s32 temp_v0_2;
+    s32 temp_v1;
+    s32 var_a2;
+    s32 var_v1;
+
+    temp_v0 = (g_SysWork.npcs_1A0[0].position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx) >> 6;
+    temp_v0_2 = ((g_SysWork.npcs_1A0[0].position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz) - Q12(2.0f)) >> 6;
+    temp_a0 = SquareRoot0((temp_v0 * temp_v0) + (temp_v0_2 * temp_v0_2)) << 6;
+    if (!(g_SavegamePtr->eventFlags_168[0] & 0x80))
+    {
+        sharedFunc_800D88AC_0_s00(g_SysWork.npcs_1A0);
+        return;
+    }
+
+    if ((temp_a0 <= Q12(14.5f)) && (g_SysWork.npcs_1A0[0].position_18.vz >= Q12(49.0f)))
+    {
+        if (!(g_SysWork.flags_22A4 & 0x80))
+        {
+            if (!Vw_AabbVisibleInScreenCheck(
+                g_SysWork.npcs_1A0[0].position_18.vx - Q12(1.0f),
+                g_SysWork.npcs_1A0[0].position_18.vx + Q12(1.0f),
+                g_SysWork.npcs_1A0[0].position_18.vy - Q12(1.5f),
+                g_SysWork.npcs_1A0[0].position_18.vy,
+                g_SysWork.npcs_1A0[0].position_18.vz - Q12(1.0f),
+                g_SysWork.npcs_1A0[0].position_18.vz + Q12(1.0f)))
+            {
+block7:
+                g_SysWork.npcs_1A0[0].position_18.vz = 1;
+                g_SysWork.npcs_1A0[0].position_18.vx = 1;
+                sharedFunc_800D88C0_0_s00(g_SysWork.npcs_1A0, 0);
+                g_SavegamePtr->eventFlags_168[0] |= 0x200;
+                return;
+            }
+        }
+
+        temp_a0_2 = (s32) (g_SysWork.player_4C.chara_0.moveSpeed_38 * Math_Cos(g_SysWork.player_4C.chara_0.headingAngle_3C + Q12(0.5f))) >> 0xC;
+        if (temp_a0_2 > Q12(1.8))
+        {
+            D_800DFAD4 = temp_a0_2 + Q12(0.6f);
+        }
+        else if (D_800DFAD4 > Q12(1.8))
+        {
+            var_a2 = Q12(1.8);
+            temp_v1 = D_800DFAD4 - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.5f, 12);
+            if (temp_v1 >= Q12(1.8))
+            {
+                var_a2 = temp_v1;
+            }
+            D_800DFAD4 = var_a2;
+        }
+        else
+        {
+            var_v1 = D_800DFAD4 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.5f, 12);
+            if (var_v1 > Q12(1.8))
+            {
+                var_v1 = Q12(1.8);
+            }
+            D_800DFAD4 = var_v1;
+        }
+        g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = D_800DFAD4;
+        func_8008677C((s32) g_SysWork.npcs_1A0, 2, 1);
+        return;
+    }
+block_7:
+    goto block7;
+}
+
+void func_800DC8D8(void)
+{
+    s32 temp_a0;
+    s32 temp_v0;
+    s32 temp_v0_2;
+
+    temp_v0 = (g_SysWork.npcs_1A0[0].position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx) >> 6;
+    temp_v0_2 = ((g_SysWork.npcs_1A0[0].position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz) - Q12(2.0f)) >> 6;
+    temp_a0 = SquareRoot0(SQUARE(temp_v0) + SQUARE(temp_v0_2)) << 6;
+    if (!(g_SavegamePtr->eventFlags_168[0] & 0x400))
+    {
+        g_SysWork.npcs_1A0[0].position_18.vx = Q12(-61.0f);
+        g_SysWork.npcs_1A0[0].position_18.vz = Q12(48.0f);
+        g_SysWork.npcs_1A0[0].rotation_24.vy = Q12(0.25f);
+        if (temp_a0 < Q12(14.8f))
+        {
+            sharedFunc_800D88AC_0_s00(g_SysWork.npcs_1A0);
+            g_SavegamePtr->eventFlags_168[0] |= 0x400;
+            func_800865FC(1, 1, 0, 0x400, Q12(-57.0f), Q12(47.0f));
+        }
+    }
+    else
+    {
+        g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = Q12(1.8f);
+        func_8008677C((s32) g_SysWork.npcs_1A0, 2, 1);
+        if (g_SysWork.npcs_1A0[0].position_18.vx > Q12(-58.0f))
+        {
+            g_SavegamePtr->eventFlags_168[0] |= 0x800;
+            g_SysWork.npcs_1A0[0].model_0.charaId_0 = 0;
+            func_8005DC1C(0x54A, &D_800CB6A4, 0x80, 0);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DCA30);
 
