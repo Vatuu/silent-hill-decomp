@@ -2580,6 +2580,8 @@ s32 func_8003F6F0(s32 arg0, s32 arg1, s32 arg2);
 
 void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s32 weight);
 
+s32 func_800868F4(s32 arg0, s32 arg1, s32 idx);
+
 /** @brief Computes the weighted average of `a` and `b`.
  *
  * @param a First value.
@@ -3293,7 +3295,7 @@ void func_800867B4(s32 caseParam, s32 idx);
 
 void func_800868DC(s32 idx);
 
-void func_800869E4(s32 mapMsgIdx, u8* arg1, u16* arg2);
+void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* soundTable);
 
 void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPosOffset,
                            s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, s32 warpCam);

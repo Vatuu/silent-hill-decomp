@@ -44,6 +44,12 @@ extern SVECTOR3 D_800E3AAC;
 /** Time. */
 extern q19_12 D_800DFAB8;
 
+extern u16 g_MapMsgSoundTable[];
+
+extern u8 D_800DFAC2;
+
+extern u8 g_MapMsgSoundIdx;
+
 void func_800CBFB0(void);
 
 void func_800D0124();
@@ -132,5 +138,7 @@ void func_800DAB8C(void);
 void func_800DACB0(void);
 
 void func_800DB870(void);
+
+void func_800CB6B0(s32 arg0, s8 mapId, s32 arg2);
 
 #endif
