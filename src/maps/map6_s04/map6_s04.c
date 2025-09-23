@@ -333,11 +333,11 @@ void Ai_Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2
         Character_AnimSet(chara, ANIM_STATUS(1, true), 0);
     }
 
-    if (chara->model_0.anim_4.time_4 <= FP_TO(21, Q12_SHIFT))
+    if (chara->model_0.anim_4.time_4 <= Q12(21.0f))
     {
-        if (chara->model_0.anim_4.time_4 > FP_TO(13, Q12_SHIFT))
+        if (chara->model_0.anim_4.time_4 > Q12(13.0f))
         {
-            var_s1 = (chara->model_0.anim_4.time_4 - FP_TO(13, Q12_SHIFT)) >> 3;
+            var_s1 = (chara->model_0.anim_4.time_4 - Q12(13.0f)) >> 3;
         }
         else
         {
@@ -346,7 +346,7 @@ void Ai_Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2
     }
     else
     {
-        var_s1 = FP_TO(1, Q12_SHIFT);
+        var_s1 = Q12(1.0f);
     }
 
     func_80035B04(&chara->position_18, &chara->rotation_24, coords);

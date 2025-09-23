@@ -80,9 +80,9 @@ void Ai_Bloodsucker_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDIN
 
         chara->properties_E4.larvalStalker.properties_E8[3].val32 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 2.0f, Q12_SHIFT);
 
-        if (chara->properties_E4.larvalStalker.properties_E8[3].val32 > FP_FLOAT_TO(1.0f, Q12_SHIFT))
+        if (chara->properties_E4.larvalStalker.properties_E8[3].val32 > Q12(1.0f))
         {
-            chara->properties_E4.larvalStalker.properties_E8[3].val32 = FP_FLOAT_TO(1.0f, Q12_SHIFT);
+            chara->properties_E4.larvalStalker.properties_E8[3].val32 = Q12(1.0f);
         }
 
         func_8005DE0C(Sfx_Unk1527, &chara->position_18, chara->properties_E4.larvalStalker.properties_E8[3].val32 >> 5, 0x10000, 0);

@@ -275,7 +275,7 @@ void func_8004C564(u8 arg0, s32 arg1) // 0x8004C564
             D_800C3961 = 32;
 
             func_8008B398();
-            g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+            g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(0.0f);
             break;
 
         case 1:
@@ -324,7 +324,7 @@ void func_8004C564(u8 arg0, s32 arg1) // 0x8004C564
                     func_8008B398();
                     D_800C3963                                                               = 0;
                     D_800C3962                                                               = 0;
-                    g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+                    g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(0.0f);
                     g_SysWork.player_4C.chara_0.field_44                                     = 0;
                 }
             }
@@ -338,7 +338,7 @@ void func_8004C564(u8 arg0, s32 arg1) // 0x8004C564
                     func_8008B438(0, 0, 0);
                     func_8008B3E4(0);
 
-                    g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+                    g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(0.0f);
                     D_800C3963                                                              -= 2;
                 }
             }

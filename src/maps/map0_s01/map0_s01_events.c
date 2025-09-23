@@ -911,7 +911,7 @@ void MapEvent_AirScreamerDeath() // 0x800DC8C8
 void Map_WorldObjectsInit() // 0x800DC9C8
 {
     D_800E23A1 = 224;
-    Math_Vector3f(&g_CutscenePosition, 0.0f, 0.0f, 280.0f, Q12_SHIFT);
+    Math_Vector3Set(&g_CutscenePosition, Q12(0.0f), Q12(0.0f), Q12(280.0f));
 
     WorldObject_ModelNameSet(&D_800E23B0[0], "IN_BLD1_");
     WorldObject_ModelNameSet(&D_800E23D0[0], "IN1_HIDE");

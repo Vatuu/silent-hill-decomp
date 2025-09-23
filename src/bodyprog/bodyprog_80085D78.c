@@ -1720,17 +1720,17 @@ void func_800893D0(q19_12 arg0) // 0x800893D0
 {
     u32 var;
 
-    if (arg0 > FP_TO(25, Q12_SHIFT))
+    if (arg0 > Q12(25.0f))
     {
         var = 200;
     }
-    else if (arg0 < FP_TO(5, Q12_SHIFT))
+    else if (arg0 < Q12(5.0f))
     {
         var = 100;
     }
     else 
     {
-        var = ((arg0 + FP_TO(15, Q12_SHIFT)) / FP_TO(5, Q12_SHIFT)) * 25;
+        var = ((arg0 + Q12(15.0f)) / Q12(5.0f)) * 25;
     }
     
     func_800892DC(10, var);
@@ -2853,13 +2853,13 @@ s32 func_8008D8C0(s16 x0, s32 x1, s32 x2) // 0x8008D8C0
         0x14CC
     };
 
-    temp0 = vwOresenHokan(&Y_ARRAY_0, ARRAY_SIZE(Y_ARRAY_0), x0, 0, FP_FLOAT_TO(16.0f, Q8_SHIFT));
-    temp1 = vwOresenHokan(&Y_ARRAY_1, ARRAY_SIZE(Y_ARRAY_1), x1, FP_FLOAT_TO(0.8f, Q8_SHIFT), FP_FLOAT_TO(13.0f, Q8_SHIFT));
-    res   = FP_MULTIPLY(vwOresenHokan(&Y_ARRAY_2, ARRAY_SIZE(Y_ARRAY_2), x2, FP_FLOAT_TO(3.335f, Q8_SHIFT), FP_FLOAT_TO(7.425f, Q8_SHIFT)), // Yucky floats, maybe these aren't distances?
+    temp0 = vwOresenHokan(&Y_ARRAY_0, ARRAY_SIZE(Y_ARRAY_0), x0, 0, Q8(16.0f));
+    temp1 = vwOresenHokan(&Y_ARRAY_1, ARRAY_SIZE(Y_ARRAY_1), x1, Q8(0.8f), Q8(13.0f));
+    res   = FP_MULTIPLY(vwOresenHokan(&Y_ARRAY_2, ARRAY_SIZE(Y_ARRAY_2), x2, Q8(3.335f), Q8(7.425f)), // Yucky floats, maybe these aren't distances?
                         FP_MULTIPLY(temp0, temp1, Q12_SHIFT),
                         Q12_SHIFT);
 
-    return (res > FP_FLOAT_TO(24.0f, Q8_SHIFT)) ? FP_FLOAT_TO(24.0f, Q8_SHIFT) : res;
+    return (res > Q8(24.0f)) ? Q8(24.0f) : res;
 }
 
 // Used by `func_8008D990`.

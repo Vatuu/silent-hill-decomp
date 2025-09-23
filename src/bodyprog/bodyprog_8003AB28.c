@@ -857,7 +857,7 @@ void func_8003C048() // 0x8003C048
     Map_Init(FS_BUFFER_13, FS_BUFFER_14, 0x2C000);
     func_800697EC();
 
-    g_SysWork.field_2378 = FP_FLOAT_TO(1.0f, Q12_SHIFT);
+    g_SysWork.field_2378 = Q12(1.0f);
 
     func_8003EBA0();
     func_8005B55C(vwGetViewCoord());
@@ -2519,7 +2519,7 @@ void func_8003E740() // 0x8003E740
  */
 void func_8003EB54() // 0x8003EB54
 {
-    g_SysWork.field_2378 = FP_FLOAT_TO(1.0f, Q12_SHIFT);
+    g_SysWork.field_2378 = Q12(1.0f);
 
     g_SysWork.field_235C = &g_SysWork.playerBoneCoords_890[HarryBone_Root];
     g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[HarryBone_Root];
@@ -2530,7 +2530,7 @@ void func_8003EB54() // 0x8003EB54
 
 void func_8003EBA0() // 0x8003EBA0
 {
-    g_SysWork.field_2378 = FP_FLOAT_TO(1.0f, Q12_SHIFT);
+    g_SysWork.field_2378 = Q12(1.0f);
 
     g_SysWork.field_235C = &g_SysWork.playerBoneCoords_890[HarryBone_Torso];
     g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[HarryBone_Root];
@@ -2689,7 +2689,7 @@ void func_8003F08C(s_StructUnk3* arg0, s_sub_StructUnk3* arg1) // 0x8003F08C
 
     if (arg1->field_0.s_field_0.field_0 & (1 << 2))
     {
-        arg0->field_2E = FP_FLOAT_TO(1.0f, Q12_SHIFT);
+        arg0->field_2E = Q12(1.0f);
     }
     else
     {
@@ -2698,7 +2698,7 @@ void func_8003F08C(s_StructUnk3* arg0, s_sub_StructUnk3* arg1) // 0x8003F08C
 
     if (arg1->field_0.s_field_0.field_0 & (1 << 4))
     {
-        arg0->field_2C = FP_FLOAT_TO(1.0f, Q12_SHIFT);
+        arg0->field_2C = Q12(1.0f);
     }
     else
     {
@@ -2738,14 +2738,14 @@ void func_8003F170() // 0x8003F170
 
     if (g_SysWork.field_2388.isFlashlightOn_15)
     {
-        g_SysWork.field_2388.flashlightIntensity_18 += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_FLOAT_TO(4.0f, Q12_SHIFT), Q12_SHIFT);
+        g_SysWork.field_2388.flashlightIntensity_18 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(4.0f), Q12_SHIFT);
     }
     else
     {
-        g_SysWork.field_2388.flashlightIntensity_18 -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_FLOAT_TO(4.0f, Q12_SHIFT), Q12_SHIFT);
+        g_SysWork.field_2388.flashlightIntensity_18 -= FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(4.0f), Q12_SHIFT);
     }
 
-    g_SysWork.field_2388.flashlightIntensity_18 = CLAMP(g_SysWork.field_2388.flashlightIntensity_18, 0, FP_FLOAT_TO(1.0f, Q12_SHIFT));
+    g_SysWork.field_2388.flashlightIntensity_18 = CLAMP(g_SysWork.field_2388.flashlightIntensity_18, 0, Q12(1.0f));
 
     if (g_SysWork.field_2388.field_84[g_SysWork.field_2388.flashlightIntensity_18 != 0].field_0.field_E == 3)
     {
@@ -2766,7 +2766,7 @@ void func_8003F170() // 0x8003F170
         func_8003F838(&ptr->field_1C[0], &ptr->field_EC[0], &ptr->field_84[0], temp_v0);
         func_8003F838(&ptr->field_1C[1], &ptr->field_EC[1], &ptr->field_84[1], temp_v0);
 
-        if (temp_v0 >= FP_FLOAT_TO(1.0f, Q12_SHIFT))
+        if (temp_v0 >= Q12(1.0f))
         {
             ptr->field_0 = 0;
         }
@@ -2927,7 +2927,7 @@ s32 func_8003F6F0(s32 arg0, s32 arg1, s32 arg2) // 0x8003F6F0
     }
     else
     {
-        return FP_TO(1, Q12_SHIFT);
+        return Q12(1.0f);
     }
 
     leadingZeros = 32 - Lzc(arg2 - arg1);
@@ -3170,10 +3170,10 @@ s32 func_8003FEC0(s_sub_StructUnk3* arg0) // 0x8003FEC0
 
     if (D_800C4168.field_0 == 1)
     {
-        return vwOresenHokan(Y_ARRAY, ARRAY_SIZE(Y_ARRAY), arg0->field_4, 0, FP_FLOAT_TO(2.0f, Q12_SHIFT));
+        return vwOresenHokan(Y_ARRAY, ARRAY_SIZE(Y_ARRAY), arg0->field_4, 0, Q12(2.0f));
     }
 
-    return FP_FLOAT_TO(20.0f, Q12_SHIFT);
+    return Q12(20.0f);
 }
 
 void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
@@ -3190,7 +3190,7 @@ void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
 
     temp_a0 = arg0->field_0.field_10;
 
-    func_80055840(temp_a0, temp_a0 + FP_FLOAT_TO(1.0f, Q12_SHIFT));
+    func_80055840(temp_a0, temp_a0 + Q12(1.0f));
     func_800553E0(arg0->field_0.field_18, arg0->field_0.field_19.r, arg0->field_0.field_19.g, arg0->field_0.field_19.b, arg0->field_0.field_1D.r, arg0->field_0.field_1D.g, arg0->field_0.field_1D.b);
 }
 

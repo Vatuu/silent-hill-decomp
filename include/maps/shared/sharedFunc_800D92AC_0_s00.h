@@ -16,7 +16,7 @@ static inline s32 GetXIndex(s32 x)
         return 2;
     }
 
-    if (CheckRange(x + Q12(16.0f), 0, Q12(40)))
+    if (CheckRange(x + Q12(16.0f), 0, Q12(40.0f)))
     {
         return 3;
     }

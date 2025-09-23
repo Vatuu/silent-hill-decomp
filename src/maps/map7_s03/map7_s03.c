@@ -272,13 +272,13 @@ void Ai_LittleIncubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORD
     }
 
     D_800EDA00 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 10.0f, Q12_SHIFT);
-    var_a2 = FP_TO(D_800EDA00, Q12_SHIFT) / FP_TO(80, Q12_SHIFT);
+    var_a2 = FP_TO(D_800EDA00, Q12_SHIFT) / Q12(80.0f);
 
     temp_s0 = var_a2;
 
-    if (var_a2 > FP_TO(1, Q12_SHIFT))
+    if (var_a2 > Q12(1.0f))
     {
-        var_a2 = FP_TO(1, Q12_SHIFT);
+        var_a2 = Q12(1.0f);
     }
 
     temp_s0 = Math_Sin(var_a2 >> 2);
@@ -593,7 +593,7 @@ bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
 
     chara->moveSpeed_38     = 0;
     chara->headingAngle_3C  = chara->rotation_24.vy;
-    chara->field_D4         = FP_FLOAT_TO(0.3f, Q12_SHIFT);
+    chara->field_D4         = Q12(0.3f);
     chara->field_E1_0       = 4;
     chara->field_D8.field_4 = 0;
     chara->field_D8.field_6 = 0;
@@ -604,11 +604,11 @@ bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
-        localChara->properties_E4.larvalStalker.properties_E8[3].val32 = FP_TO(300, Q12_SHIFT);
+        localChara->properties_E4.larvalStalker.properties_E8[3].val32 = Q12(300.0f);
     }
     else
     {
-        localChara->properties_E4.larvalStalker.properties_E8[3].val32 = FP_TO(30, Q12_SHIFT);
+        localChara->properties_E4.larvalStalker.properties_E8[3].val32 = Q12(30.0f);
     }
 
     curStateStep = chara->model_0.stateStep_3;
@@ -779,7 +779,7 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
     }
 
     chara->moveSpeed_38     = 0;
-    chara->field_D4         = FP_FLOAT_TO(0.3f, Q12_SHIFT);
+    chara->field_D4         = Q12(0.3f);
     chara->field_D8.field_4 = 0;
     chara->field_D8.field_6 = 0;
     chara->field_E1_0       = 4;
@@ -809,11 +809,11 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
-        localChara->properties_E4.player.field_F4 = FP_TO(300, Q12_SHIFT);
+        localChara->properties_E4.player.field_F4 = Q12(300.0f);
     }
     else
     {
-        localChara->properties_E4.player.field_F4 = FP_TO(30, Q12_SHIFT);
+        localChara->properties_E4.player.field_F4 = Q12(30.0f);
     }
 
     func_800DD67C(&chara->position_18, chara, coords);
