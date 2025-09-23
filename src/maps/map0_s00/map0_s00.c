@@ -876,7 +876,7 @@ void func_800DAEFC(void) // 0x800DAEFC
 
         case 1:
             func_80085DF0();
-            return;
+            break;
 
         case 2:
             func_800865FC(false, 0, 0, FP_ANGLE(180.0f), Q12(0.0f), Q12(0.0f));
@@ -886,17 +886,17 @@ void func_800DAEFC(void) // 0x800DAEFC
 
         case 3:
             func_800866D4(53, 1, 0);
-            return;
+            break;
 
         case 4:
             func_800865FC(true, 0, 0, FP_ANGLE(180.0f), Q12(-62.0f), g_SysWork.player_4C.chara_0.position_18.vz - Q12(10.0f));
             func_80085E6C(0x1000, false);
-            return;
+            break;
 
         case 5:
             func_800866D4(54, 1, 0);
             func_80085E6C(Q12(1.0f), false);
-            return;
+            break;
 
         case 6:
             func_800866D4(54, 1, 0);
@@ -923,7 +923,7 @@ void func_800DAEFC(void) // 0x800DAEFC
                                0, D_800DFAC4);
 
             D_800DFAC4 = false;
-            return;
+            break;
 
         default:
             sharedFunc_800D2244_0_s00(0);
