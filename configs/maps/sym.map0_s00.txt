@@ -96,6 +96,8 @@ sharedFunc_800D923C_0_s00     = 0x800D923C; // type:func
 sharedFunc_800D929C_0_s00     = 0x800D929C; // type:func
 sharedFunc_800D92AC_0_s00     = 0x800D92AC; // type:func
 Gfx_LoadingScreen_StageString = 0x800D95D4; // type:func
+Map_WorldObjectsInit          = 0x800DBE68; // type:func
+Map_WorldObjectsUpdate        = 0x800DBF08; // type:func
 
 
 
@@ -176,5 +178,3 @@ sharedData_800E3A20_0_s00     = 0x800E3A20; // type:s32
 sharedData_800E3A24_0_s00     = 0x800E3A24; // type:s32
 sharedData_800E3A28_0_s00     = 0x800E3A28; // type:s32
 sharedData_800E3A2C_0_s00     = 0x800E3A2C; // type:s32
-Map_WorldObjectsInit          = 0x800DBE68; // type:func
-Map_WorldObjectsUpdate        = 0x800DBF08; // type:func
