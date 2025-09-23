@@ -120,8 +120,9 @@ typedef enum _Sfx
 				    
     Sfx_Unk1351     = 1351,
     Sfx_Unk1352     = 1352,
-				    
+    Sfx_Unk1353     = 1353,
     Sfx_Unk1354     = 1354,
+    Sfx_Unk1355     = 1355,
 				    
     Sfx_Unk1357     = 1357,
     Sfx_Unk1358     = 1358,
@@ -2443,7 +2444,8 @@ extern VECTOR3 D_800C4640[][8]; // Or struct?
 
 extern s32 D_800C46A0;
 
-extern s16 D_800C4700[];
+/** Angles? */
+extern q3_12 D_800C4700[];
 
 extern s16 D_800C4702;
 
@@ -3279,7 +3281,7 @@ void func_800862F8(s32 arg0, s32 fileIdx, bool arg2);
 
 void func_80086470(u32 switchVar, s32 arg1, s32 arg2, bool arg3);
 
-void func_800865FC(s32 arg0, s32 idx0, s32 idx1, s16 arg3, s32 arg4, s32 arg5);
+void func_800865FC(bool isPos, s32 idx0, s32 idx1, q3_12 angleY, q19_12 offsetOrPosX, q19_12 offsetOrPosZ);
 
 void func_800866D4(s32 arg0, s32 arg1, s32 arg2);
 
@@ -3345,7 +3347,7 @@ bool func_80088D0C();
 
 void func_80088D34(s32 idx);
 
-s32 Chara_Spawn(s32 charaId, s32 arg1, s32 posX, s32 posZ, s16 posY, u32 stateStep);
+s32 Chara_Spawn(s32 charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12 rotY, u32 stateStep);
 
 void func_80088F94(s_SubCharacter* chara, s32 unused1, s32 unused2);
 

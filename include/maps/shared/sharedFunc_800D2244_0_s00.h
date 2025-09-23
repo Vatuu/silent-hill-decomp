@@ -1,6 +1,6 @@
 #include <bodyprog/player_logic.h>
 
-void sharedFunc_800D2244_0_s00(s32 arg0)
+void sharedFunc_800D2244_0_s00(bool arg0)
 {
     s_MainCharacterExtra* extra;
     s_SubCharacter*       player;
@@ -10,7 +10,7 @@ void sharedFunc_800D2244_0_s00(s32 arg0)
     extra  = &g_SysWork.player_4C.extra_128;
     player = &g_SysWork.player_4C.chara_0;
 
-    if (arg0 != 0)
+    if (arg0)
     {
         g_SysWork.player_4C.extra_128.state_1C          = PlayerState_None;
         g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;

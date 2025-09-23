@@ -2372,7 +2372,7 @@ void sharedFunc_800D20D8_0_s00();
 
 void sharedFunc_800D20E4_0_s00();
 
-void sharedFunc_800D2244_0_s00(s32 arg0);
+void sharedFunc_800D2244_0_s00(bool arg0);
 
 void sharedFunc_800D2C7C_0_s00(s32 arg0);
 
@@ -2840,10 +2840,10 @@ static inline void WorldObjectPositionSet(s_WorldObjectPos* eventPos, q19_12 pos
  * @bug Some maps appear to have a bug where the negative position check will never be true because they check
  * if the chunk index will be a positive number. Seems like they forgot to use `ABS`?
  */
-#define PLAYER_IN_MAP_CHUNK(crd, x0, x1, x2, x3)                                           \
-    (__chunkIdx = g_SysWork.player_4C.chara_0.position_18.crd / FP_METER(40.0f),           \
-     ((g_SysWork.player_4C.chara_0.position_18.crd >  0 && (__chunkIdx + (x0)) == (x1)) || \
-      (g_SysWork.player_4C.chara_0.position_18.crd <= 0 && (__chunkIdx + (x2)) == (x3))))
+#define PLAYER_IN_MAP_CHUNK(crd, x0, x1, x2, x3)                                                   \
+    (__chunkIdx = g_SysWork.player_4C.chara_0.position_18.crd / FP_METER(40.0f),                   \
+     ((g_SysWork.player_4C.chara_0.position_18.crd >  Q12(0.0f) && (__chunkIdx + (x0)) == (x1)) || \
+      (g_SysWork.player_4C.chara_0.position_18.crd <= Q12(0.0f) && (__chunkIdx + (x2)) == (x3))))
 
 
 #endif

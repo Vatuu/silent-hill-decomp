@@ -431,23 +431,23 @@ void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, bool arg3) // 0x800
     }
 }
 
-void func_800865FC(s32 arg0, s32 idx0, s32 idx1, s16 arg3, s32 arg4, s32 arg5) // 0x800865FC
+void func_800865FC(bool isPos, s32 idx0, s32 idx1, q3_12 angleY, q19_12 offsetOrPosX, q19_12 offsetOrPosZ) // 0x800865FC
 {
-    if (arg0 == 0) 
+    if (!isPos) 
     {
-        D_800C4640[idx0][idx1].vx = g_SysWork.player_4C.chara_0.position_18.vx + arg4;
+        D_800C4640[idx0][idx1].vx = g_SysWork.player_4C.chara_0.position_18.vx + offsetOrPosX;
         D_800C4640[idx0][idx1].vy = g_SysWork.player_4C.chara_0.position_18.vy;
-        D_800C4640[idx0][idx1].vz = g_SysWork.player_4C.chara_0.position_18.vz + arg5;
+        D_800C4640[idx0][idx1].vz = g_SysWork.player_4C.chara_0.position_18.vz + offsetOrPosZ;
 
-        D_800C4700[idx0] = arg3;
+        D_800C4700[idx0] = angleY;
     }
-    else if (arg0 == 1)
+    else if (isPos == true)
     {
-        D_800C4640[idx0][idx1].vx = arg4;
+        D_800C4640[idx0][idx1].vx = offsetOrPosX;
         D_800C4640[idx0][idx1].vy = g_SysWork.player_4C.chara_0.position_18.vy;
-        D_800C4640[idx0][idx1].vz = arg5;
+        D_800C4640[idx0][idx1].vz = offsetOrPosZ;
 
-        D_800C4700[idx0] = arg3;
+        D_800C4700[idx0] = angleY;
     }
 }
 
@@ -1373,7 +1373,7 @@ void func_80088D34(s32 idx) // 0x80088D34
     Anim_BoneInit(D_800A992C[idx].animFile1_8, D_800A992C[idx].npcCoords_14);
 }
 
-s32 Chara_Spawn(s32 charaId, s32 arg1, s32 posX, s32 posZ, s16 posY, u32 stateStep) // 0x80088D78
+s32 Chara_Spawn(s32 charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12 rotY, u32 stateStep) // 0x80088D78
 {
     #define HAS_FLAG(ptr, idx) \
         ((((u32*)ptr)[(idx) >> 5] >> ((idx) & 0x1F)) & (1 << 0))
@@ -1450,13 +1450,12 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, s32 posX, s32 posZ, s16 posY, u32 stateSt
 
         g_SysWork.npcs_1A0[i].model_0.state_2     = 0;
         g_SysWork.npcs_1A0[i].model_0.stateStep_3 = stateStep;
-        g_SysWork.npcs_1A0[i].position_18.vx      = posX;
 
+        g_SysWork.npcs_1A0[i].position_18.vx = posX;
         Collision_Get(&coll, posX, posZ);
-
         g_SysWork.npcs_1A0[i].position_18.vy = coll.groundHeight_0;
         g_SysWork.npcs_1A0[i].position_18.vz = posZ;
-        g_SysWork.npcs_1A0[i].rotation_24.vy = posY;
+        g_SysWork.npcs_1A0[i].rotation_24.vy = rotY;
 
         var_s6                          = &g_SysWork.npcs_1A0[i];
         var_s6->model_0.anim_4.flags_2 |= 2;

@@ -5,6 +5,20 @@ typedef enum _EventFlag
 {
     EventFlag_0 = 0, // M0S01 FirstAidKit? Also used in M0S02, might just be a default.
 
+    EventFlag_4 = 4,
+
+    EventFlag_6 = 6,
+
+    EventFlag_9 = 9,
+
+    EventFlag_11 = 11,
+
+    EventFlag_13 = 13,
+
+    EventFlag_16 = 16,
+    EventFlag_17 = 17,
+
+    EventFlag_24 = 24,
     EventFlag_25 = 25,
 
     /** `MAP7_S01` and `MAP7_S02` common item pickups, early numbers could be reclaimed flags, or Nowhere was designed very early on? */

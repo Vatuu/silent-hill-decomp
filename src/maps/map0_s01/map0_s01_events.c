@@ -385,7 +385,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(0);
+            sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
             vcReturnPreAutoCamWork(1);
@@ -491,7 +491,7 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(0);
+            sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Game_WarmBoot();
 
@@ -709,7 +709,7 @@ void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
             vcReturnPreAutoCamWork(true);
 
         default:
-            sharedFunc_800D2244_0_s00(0);
+            sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Player_FallBackward();
 
@@ -844,7 +844,7 @@ void MapEvent_MapItemTake() // 0x800DC3C8
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(0);
+            sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -900,7 +900,7 @@ void MapEvent_AirScreamerDeath() // 0x800DC8C8
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(0);
+            sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
             Savegame_EventFlagSet(EventFlag_51);
