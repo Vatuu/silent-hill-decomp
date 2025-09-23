@@ -795,7 +795,7 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
     {
         case 0:
             g_MapOverlayHeader.freezePlayerControl_C8();
-            func_8005DC1C(sfx, pos, FP_VOLUME(0.5f), 0);
+            func_8005DC1C(sfx, pos, Q8_CLAMPED(0.5f), 0);
 
             g_SysWork.timer_2C = Q12(0.0f);
             g_SysWork.sysStateStep_C[2] = 0;
@@ -2343,7 +2343,7 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
 
     if (sfx != 0)
     {
-        func_8005DC1C(sfx, pos, FP_VOLUME(0.75f), 0);
+        func_8005DC1C(sfx, pos, Q8_CLAMPED(0.75f), 0);
     }
 }
 

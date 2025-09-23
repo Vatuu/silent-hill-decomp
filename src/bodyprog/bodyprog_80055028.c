@@ -2222,13 +2222,13 @@ void func_8005DC3C(s32 sfx, const VECTOR3* pos, s32 vol, s32 soundType, s32 pitc
     }
 
     // Clamp volume.
-    if (vol > FP_VOLUME(1.0f))
+    if (vol > Q8_CLAMPED(1.0f))
     {
-        vol = FP_VOLUME(1.0f);
+        vol = Q8_CLAMPED(1.0f);
     }
-    else if (vol < FP_VOLUME(0.0f))
+    else if (vol < Q8_CLAMPED(0.0f))
     {
-        vol = FP_VOLUME(0.0f);
+        vol = Q8_CLAMPED(0.0f);
     }
 
     if (!(soundType & (1 << 1)))
@@ -2240,9 +2240,9 @@ void func_8005DC3C(s32 sfx, const VECTOR3* pos, s32 vol, s32 soundType, s32 pitc
         volCpy = vol;
     }
 
-    if (volCpy > FP_VOLUME(1.0f))
+    if (volCpy > Q8_CLAMPED(1.0f))
     {
-        volCpy = FP_VOLUME(1.0f);
+        volCpy = Q8_CLAMPED(1.0f);
     }
 
     if (soundType & (1 << 2))
@@ -2271,19 +2271,19 @@ void func_8005DD44(s32 sfx, VECTOR3* pos, s32 vol, s8 pitch) // 0x8005DD44
     }
 
     // Clamp volume.
-    if (vol > FP_VOLUME(1.0f))
+    if (vol > Q8_CLAMPED(1.0f))
     {
-        vol = FP_VOLUME(1.0f);
+        vol = Q8_CLAMPED(1.0f);
     }
-    else if (vol < FP_VOLUME(0.0f))
+    else if (vol < Q8_CLAMPED(0.0f))
     {
-        vol = FP_VOLUME(0.0f);
+        vol = Q8_CLAMPED(0.0f);
     }
 
     volCpy = func_8005D9B8(pos, vol);
-    if (volCpy > FP_VOLUME(1.0f))
+    if (volCpy > Q8_CLAMPED(1.0f))
     {
-        volCpy = FP_VOLUME(1.0f);
+        volCpy = Q8_CLAMPED(1.0f);
     }
 
     func_80046620(sfx, balance, ~volCpy, pitch);

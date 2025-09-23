@@ -99,7 +99,7 @@
     FP_MULTIPLY((s64)(aInt), (s64)FP_FLOAT_TO(bFlt, shift), shift)
 
 /** @brief Computes the square 2D distance between two positions in Q19.12 fixed-point,
- * using low-precision Q21.8 fixed-point intermediates to avoid overflow.
+ * using Q21.8 fixed-point intermediates to avoid overflow.
  *
  * @param from First position.
  * @param to Second position.
@@ -188,14 +188,6 @@
 // =======================================
 // ABSTRACT Q FORMAT CONVERSION AND UTILS
 // =======================================
-
-/** @brief Converts a normalized floating-point sound volume in the range `[0.0f, 1.0f]` to Q0.8 fixed-point, integer range `[0, 255]`.
- *
- * @param vol Sound volume (`float`).
- * @return Q0.8 fixed-point sound volume, integer range `[0, 255]` (`u8`).
- */
-#define FP_VOLUME(vol) \
-    (u8)CLAMP(FP_FLOAT_TO(vol, Q8_SHIFT), 0, FP_FLOAT_TO(1.0f, Q8_SHIFT) - 1)
 
 /** @brief Converts a normalized floating-point analog stick value in the range `[-1.0f, 1.0f]` to Q0.7 fixed-point, clamped integer range `[-128, 127]`.
  *

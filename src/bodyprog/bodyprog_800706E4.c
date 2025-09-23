@@ -250,19 +250,19 @@ bool func_800713E8(s32 animStatus, s_SubCharacter* chara, s32 keyframe0, s32 key
                     case ANIM_STATUS(HarryAnim_SidestepLeft, true):
                     case ANIM_STATUS(HarryAnim_TurnLeft, true):
                     case ANIM_STATUS(HarryAnim_TurnRight, true):
-                        func_8005DD44(sfx, &chara->position_18, FP_VOLUME(0.095f), pitch);
+                        func_8005DD44(sfx, &chara->position_18, Q8_CLAMPED(0.095f), pitch);
                         chara->properties_E4.player.field_10C = pitch;
                         break;
 
                     default:
-                        func_8005DD44(sfx, &chara->position_18, FP_VOLUME(0.25f), pitch);
+                        func_8005DD44(sfx, &chara->position_18, Q8_CLAMPED(0.25f), pitch);
                         chara->properties_E4.player.field_10C = pitch + 0x10;
                         break;
                 }
             } 
             else 
             {
-                func_8005DD44(sfx, &chara->position_18, FP_VOLUME(0.5f), pitch);
+                func_8005DD44(sfx, &chara->position_18, Q8_CLAMPED(0.5f), pitch);
                 chara->properties_E4.player.field_10C = pitch + 0x40;
             } 
 
@@ -287,19 +287,19 @@ bool func_800713E8(s32 animStatus, s_SubCharacter* chara, s32 keyframe0, s32 key
                     case ANIM_STATUS(HarryAnim_SidestepLeft, true):
                     case ANIM_STATUS(HarryAnim_TurnLeft, true):
                     case ANIM_STATUS(HarryAnim_TurnRight, true):
-                        func_8005DD44(sfx, &chara->position_18, FP_VOLUME(0.095f), pitch);
+                        func_8005DD44(sfx, &chara->position_18, Q8_CLAMPED(0.095f), pitch);
                         chara->properties_E4.player.field_10C = pitch;
                         break;
 
                     default:
-                        func_8005DD44(sfx, &chara->position_18, FP_VOLUME(0.25f), pitch);
+                        func_8005DD44(sfx, &chara->position_18, Q8_CLAMPED(0.25f), pitch);
                         chara->properties_E4.player.field_10C = pitch + 0x10;
                         break;
                 }
             } 
             else 
             {
-                func_8005DD44(sfx, &chara->position_18, FP_VOLUME(0.5f), pitch);
+                func_8005DD44(sfx, &chara->position_18, Q8_CLAMPED(0.5f), pitch);
                 chara->properties_E4.player.field_10C = pitch + 0x40;
             }
 
@@ -1699,7 +1699,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                     if (extra->model_0.state_2 == 0 && chara->position_18.vy >= chara->properties_E4.player.positionY_EC)
                     {
                         extra->model_0.state_2++;
-                        func_8005DC1C(Sfx_Unk1317, &chara->position_18, FP_VOLUME(0.125f), 0);
+                        func_8005DC1C(Sfx_Unk1317, &chara->position_18, Q8_CLAMPED(0.125f), 0);
                         chara->properties_E4.player.field_10C = 128;
                         func_80089470();
                     }
@@ -2598,7 +2598,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                     {
                         chara->field_44 = 1;
 
-                        func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx_0, &chara->position_18, FP_VOLUME(0.5f), 0);
+                        func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx_0, &chara->position_18, Q8_CLAMPED(0.5f), 0);
 
                         chara->properties_E4.player.field_10C                       = 0x40;
                         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk2;
@@ -2644,18 +2644,18 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                         g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10--;
                         g_SavegamePtr->items_0[g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12].count_1--;
 
-                        func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx_0, &chara->position_18, FP_VOLUME(0.5f), 0);
+                        func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx_0, &chara->position_18, Q8_CLAMPED(0.5f), 0);
                     }
                     else
                     {
-                        func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx_0, &chara->position_18, FP_VOLUME(0.19f), 0);
+                        func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx_0, &chara->position_18, Q8_CLAMPED(0.19f), 0);
                     }
 
                     chara->properties_E4.player.field_10C = 0xC8;
                 }
                 else
                 {
-                    func_8005DC1C(g_Player_EquippedWeaponInfo.outOfAmmoSfx_4, &chara->position_18, FP_VOLUME(0.5f), 0);
+                    func_8005DC1C(g_Player_EquippedWeaponInfo.outOfAmmoSfx_4, &chara->position_18, Q8_CLAMPED(0.5f), 0);
 
                     chara->properties_E4.player.field_10C = 32;
                     extra->model_0.anim_4.keyframeIdx_8  = D_800C44F0[D_800AF220].field_6 - 3;
@@ -3693,7 +3693,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             if ((D_800AF624 + g_Player_EquippedWeaponInfo.field_9) <= extra->model_0.anim_4.keyframeIdx_8 &&
                 !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk2))
             {
-                func_8005DC1C(g_Player_EquippedWeaponInfo.reloadSfx_2, &chara->position_18, FP_VOLUME(0.5f), 0);
+                func_8005DC1C(g_Player_EquippedWeaponInfo.reloadSfx_2, &chara->position_18, Q8_CLAMPED(0.5f), 0);
 
                 chara->properties_E4.player.field_10C                       = 0x20;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk2;
@@ -6194,7 +6194,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
                   chara->model_0.anim_4.status_0 <= ANIM_STATUS(HarryAnim_IdleExhausted, false)) ||
                  chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_HandgunAim, true)))
             {
-                func_8005DD44(sfx, &chara->position_18, FP_VOLUME(0.095f), pitch0);
+                func_8005DD44(sfx, &chara->position_18, Q8_CLAMPED(0.095f), pitch0);
 
                 chara->properties_E4.player.field_10C                        = pitch0 + 0x10;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
@@ -6203,7 +6203,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             if (chara->model_0.anim_4.keyframeIdx_8 == 246 &&
                 !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk5))
             {
-                func_8005DD44(sfx, &chara->position_18, FP_VOLUME(0.5f), pitch1);
+                func_8005DD44(sfx, &chara->position_18, Q8_CLAMPED(0.5f), pitch1);
 
                 chara->properties_E4.player.field_10C                       = pitch1 + 0x20;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk5;
@@ -6627,7 +6627,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             if (chara->damageReceived_C0 != Q12(0.0f) && !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_DamageReceived))
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_DamageReceived;
-                func_8005DC1C(sfx, &chara->position_18, FP_VOLUME(0.125f), 0);
+                func_8005DC1C(sfx, &chara->position_18, Q8_CLAMPED(0.125f), 0);
                 chara->properties_E4.player.field_10C = 64;
             }
 
@@ -7014,7 +7014,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
         if (!(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_DamageReceived))
         {
-            func_8005DC1C(sfx, &chara->position_18, FP_VOLUME(0.125f), 0);
+            func_8005DC1C(sfx, &chara->position_18, Q8_CLAMPED(0.125f), 0);
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_DamageReceived;
             chara->properties_E4.player.field_10C = 0x40;
         }

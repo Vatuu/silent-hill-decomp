@@ -348,7 +348,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
         case 47:
             D_800DE250 = 0;
 
-            func_8005DC1C(Sfx_Unk1357, &D_800CC8FC, FP_VOLUME(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1357, &D_800CC8FC, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement();
 
         case 48:
@@ -659,7 +659,7 @@ void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
 
         case 15:
             func_800CCB8C(&D_800CCA1C, &D_800CCA28, 0x2800, 0xCC, 0x999, 0x666, 0x199, 0);
-            func_8005DC1C(Sfx_Unk1373, &D_800CCA34, FP_VOLUME(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1373, &D_800CCA34, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement();
 
         case 16:
@@ -673,8 +673,8 @@ void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
 
         case 17:
             func_800CCB8C(&D_800CCA40, &D_800CCA4C, 0x3000, 0x147, 0x666, 0x666, 0xED, 0);
-            func_8005DC1C(Sfx_Unk1374, &D_800CCA58, FP_VOLUME(0.5f), 0);
-            func_8005DC1C(Sfx_Unk1375, &D_800CCA58, FP_VOLUME(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1374, &D_800CCA58, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1375, &D_800CCA58, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement();
 
         case 18:

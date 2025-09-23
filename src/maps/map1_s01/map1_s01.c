@@ -208,7 +208,7 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
 
     if (var_a0 != 0)
     {
-        func_8005DD44(1447, &chara->position_18, FP_VOLUME(0.5f), Rng_GenerateInt(Rng_Rand16(), -7, 8u));
+        func_8005DD44(1447, &chara->position_18, Q8_CLAMPED(0.5f), Rng_GenerateInt(Rng_Rand16(), -7, 8u));
         chara->properties_E4.larvalStalker.properties_E8[0].val8[0] ^= 1;
     }
 }
