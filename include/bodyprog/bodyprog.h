@@ -1451,6 +1451,7 @@ typedef struct _MapPoint2d
     q19_12 positionX_0;
     union
     {
+        u32 raw_4;
         struct
         {
             u32 mapIdx_4_0          : 5; /** `e_Current2dMapIdx` */
