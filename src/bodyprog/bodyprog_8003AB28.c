@@ -457,7 +457,7 @@ void Gfx_MainMenu_DifficultyTextDraw(s32 arg0) // 0x8003B678
     #define COLUMN_POS_Y                    204
     #define STR_OFFSET_Y                    20
 
-    static const u8 STR_OFFSETS_X[] = { 28, 43, 30, 76 };               // @unused Element at index 3 may have been a 4th selectable difficulty.
+    static const u8 STR_OFFSETS_X[] = { 28, 43, 30, 76 };               // @unused Last element may have been for a 4th selectable difficulty. "INTENSE" fits this offset.
     static const u8 UNUSED[]        = { 0, 149, 171, 144, 0, 0, 0, 0 }; // @unused Unknown purpose.
 
     s32 i;
