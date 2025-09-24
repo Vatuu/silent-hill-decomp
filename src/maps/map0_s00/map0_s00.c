@@ -48,7 +48,42 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800CEB24_0_s00
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800CEFF4_0_s00); // 0x800CEFF4
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CF7AC);
+void func_800CF7AC(s32 arg0, s_Particle* arg1, u16* arg2, s32* arg3)
+{
+    s16 temp_v0_2;
+    s16 temp_v1;
+    s32 partCpy2;
+    s32 temp_v0_3;
+    s_Particle *partCpy;
+    u16 random0;
+
+    partCpy = arg1;
+    switch (arg0)
+    {
+    case 0:
+        arg1->movement_18.vx +=((*arg2 % 15) - 7);
+        random0 = Rng_Rand16();
+        *arg2 = random0;
+        partCpy->movement_18.vz += (random0  % 15) - 7;
+        partCpy2 = 4;
+        partCpy->movement_18.vy += (*arg2 % 5) -1;
+        partCpy->position0_0.vy += (((partCpy->movement_18.vy << 0x10) >> 0x11) * partCpy2 * *arg3) / 136;
+
+        break;
+    case 1:
+        partCpy->position1_C.vx = partCpy->position0_0.vx;
+        partCpy->position1_C.vz = partCpy->position0_0.vz;
+        partCpy->position1_C.vy = partCpy->position0_0.vy - partCpy->movement_18.vy;
+        temp_v1 = partCpy->movement_18.vy + D_800E32D4;
+        partCpy->movement_18.vy = temp_v1;
+        partCpy->position0_0.vy += ((temp_v1 << 2) * *arg3) / 136;
+        break;
+    }
+    if (partCpy->position0_0.vy >= 0)
+    {
+        partCpy->position0_0.vy = 0;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800CEFD0_1_s02); // 0x800CF974
 
