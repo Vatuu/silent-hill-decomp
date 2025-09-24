@@ -27,7 +27,7 @@
  * @param shift Fixed-point shift.
  * @return `x` converted to fixed-point (`s32`).
  */
-#define Q(x, shift) \
+#define TO_FIXED(x, shift) \
     (s32)((x) * (1 << (shift)))
 
 /** @brief Converts an integer from a fixed-point Q format.
@@ -47,7 +47,7 @@
  * @return `x` rounded and converted from fixed-point.
  */
 #define FP_ROUND_SCALED(x, scale, shift) \
-    (((x) + ((Q(1.0f, shift) * (scale)) - 1)) / (Q(1.0f, shift) * (scale)))
+    (((x) + ((TO_FIXED(1.0f, shift) * (scale)) - 1)) / (TO_FIXED(1.0f, shift) * (scale)))
 
 /** @brief Converts an integer from a fixed-point Q format rounded toward 0.
  *
@@ -86,7 +86,7 @@
  * @return Fixed-point product of `a` and `b`.
  */
 #define FP_MULTIPLY_FLOAT(aInt, bFlt, shift) \
-    FP_MULTIPLY(aInt, Q(bFlt, shift), shift)
+    FP_MULTIPLY(aInt, TO_FIXED(bFlt, shift), shift)
 
 /** @brief Multiplies an integer in a fixed-point Q format by a float converted to fixed-point Q format,
  * using a 64-bit intermediates for higher precision.
@@ -97,7 +97,7 @@
  * @return Precise product of `a` and `b` converted from fixed-point.
  */
 #define FP_MULTIPLY_FLOAT_PRECISE(aInt, bFlt, shift) \
-    FP_MULTIPLY((s64)(aInt), (s64)Q(bFlt, shift), shift)
+    FP_MULTIPLY((s64)(aInt), (s64)TO_FIXED(bFlt, shift), shift)
 
 /** @brief Computes the square 2D distance between two positions in Q19.12 fixed-point,
  * using Q21.8 fixed-point intermediates to avoid overflow.
@@ -120,7 +120,7 @@
  * @return `x` converted to Q*.4 fixed-point.
  */
 #define Q4(x) \
-    Q(x, Q4_SHIFT)
+    TO_FIXED(x, Q4_SHIFT)
 
 /** @brief Converts a floating-point value to Q*.8 fixed-point.
  *
@@ -128,7 +128,7 @@
  * @return `x` converted to Q*.8 fixed-point.
  */
 #define Q8(x) \
-    Q(x, Q8_SHIFT)
+    TO_FIXED(x, Q8_SHIFT)
 
 /** @brief Converts a floating-point value to clamped Q*.8 fixed-point.
  *
@@ -144,7 +144,7 @@
  * @return `x` converted to Q*.12 fixed-point.
  */
 #define Q12(x) \
-    Q(x, Q12_SHIFT)
+    TO_FIXED(x, Q12_SHIFT)
 
 /** @brief Converts a fixed-point value from Q*.4 to Q*.12.
  *

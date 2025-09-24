@@ -75,7 +75,7 @@
  * @return Fixed-point product of `a` and `b`.
  */
 #define Math_MultiplyFloatPrecise(a, b, shift) \
-    Math_MulFixed(a, Q(b, shift), shift)
+    Math_MulFixed(a, TO_FIXED(b, shift), shift)
 
 /** @brief Computes the dot product(?) of the first column of a matrix with a vector in Q17.15(?).
  *
