@@ -352,7 +352,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
             SysWork_StateStepIncrement();
 
         case 48:
-            func_80088F94(g_SysWork.npcs_1A0, 0, 0);
+            func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
             Sd_EngineCmd(19);
             Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcCoords_FC0[0], NO_VALUE, 0, 0);
             func_80086470(3, InventoryItemId_Handgun, HANDGUN_AMMO_PICKUP_ITEM_COUNT, false);
@@ -687,7 +687,7 @@ void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
             break;
 
         case 19:
-            func_800D3AC0(g_SysWork.npcs_1A0);
+            func_800D3AC0(&g_SysWork.npcs_1A0[0]);
             SysWork_StateStepIncrement();
 
         case 20:
@@ -701,7 +701,7 @@ void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
 
         case 21:
             Savegame_EventFlagSet(EventFlag_47);
-            func_800D39F4(g_SysWork.npcs_1A0);
+            func_800D39F4(&g_SysWork.npcs_1A0[0]);
             func_8008616C(0, false, 2, Q12(0.0f), false);
 
             g_Timer0 = NO_VALUE;

@@ -20,7 +20,10 @@ typedef enum _EventFlag
     EventFlag_16 = 16,
     EventFlag_17 = 17,
     EventFlag_18 = 18,
+    
+    EventFlag_20 = 20,
 
+    EventFlag_23 = 23,
     EventFlag_24 = 24,
     EventFlag_25 = 25,
 

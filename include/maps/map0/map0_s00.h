@@ -78,6 +78,10 @@ extern s32 D_800DFB5C;
 
 extern u8 D_800DFB60;
 
+extern u8 D_800DF2F8;
+
+extern s16 D_800DF300[];
+
 void func_800CBFB0(void);
 
 void func_800D0124();
@@ -149,6 +153,8 @@ void Map_WorldObjectsUpdate(void);
 
 void Event_GreyChildrenSpawn(void);
 
+void func_800DD0CC();
+
 void func_800DCC54(void);
 
 void func_800DA454(void);
@@ -170,6 +176,8 @@ void func_800DAB8C(void);
 void func_800DACB0(void);
 
 void func_800DAEFC(void);
+
+void func_800DB26C(void);
 
 void func_800DB514(void);
 
