@@ -12,7 +12,7 @@ typedef struct
 typedef struct
 {
     s16 field_0;
-    s16 field_2;
+    s16 field_2; // Angle.
 } s_800DFB44;
 
 typedef struct
