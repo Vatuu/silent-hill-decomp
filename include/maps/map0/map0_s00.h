@@ -196,5 +196,6 @@ void func_800D802C(s_SubCharacter* arg0, s_AnmHeader* arg1, GsCOORDINATE2* arg2)
 
 void func_800D8124(s_SubCharacter* chara, GsCOORDINATE2* coord);
 
+s32 func_800D8748(s32 arg0, s_SubCharacter* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
 #endif

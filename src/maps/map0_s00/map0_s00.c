@@ -367,7 +367,59 @@ void func_800D8124(s_SubCharacter* chara, GsCOORDINATE2* coord)
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8310);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8748);
+s32 func_800D8748(s32 arg0, s_SubCharacter* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x800D8748
+{
+    u32 var_a0;
+    u32 temp_a2;
+
+    if (arg1->model_0.anim_4.status_0 == arg0) 
+    {
+        if (arg4 > 0x3D08FF)
+        {
+            if (arg4 <= 0xB71B00)
+            {
+                var_a0 = arg4;
+            }
+            else
+            {
+                var_a0 = 0xB71B00;
+            }
+        }
+        else
+        {
+            var_a0 = 0x3D0900;
+        }
+        temp_a2 = (0xB71B00 - var_a0) >> 0x10;
+        if (arg1->model_0.anim_4.keyframeIdx_8 >= arg3)
+        {
+            if (!(arg1->properties_E4.player.flags_11C & PlayerFlag_Unk4))
+            {
+                func_8005DD44(0x549, &arg1->position_18, temp_a2 & 0xFF, arg5);
+                arg1->properties_E4.player.flags_11C |= PlayerFlag_Unk4;
+                return 1;
+            }
+        }
+        else
+        {
+            arg1->properties_E4.player.flags_11C &= ~PlayerFlag_Unk4;
+        }
+
+        if (arg1->model_0.anim_4.keyframeIdx_8 >= arg2)
+        {
+            if (!(arg1->properties_E4.player.flags_11C & PlayerFlag_Unk5))
+            {
+                func_8005DD44(0x549, &arg1->position_18, temp_a2 & 0xFF, arg5);
+                arg1->properties_E4.player.flags_11C |= PlayerFlag_Unk5;
+                return 1;
+            }
+        }
+        else
+        {
+            arg1->properties_E4.player.flags_11C &= ~PlayerFlag_Unk5;
+        }
+    }
+    return 0;
+}
 
 void Ai_Cheryl_Init(s_SubCharacter* chara) // 0x800D8888
 {
