@@ -326,7 +326,44 @@ void func_800D802C(s_SubCharacter* arg0, s_AnmHeader* arg1, GsCOORDINATE2* arg2)
     }
 }
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8124);
+void func_800D8124(s_SubCharacter* chara, GsCOORDINATE2* coord)
+{
+    VECTOR3 unused;
+    VECTOR3 vec;
+    s32     moveSpeed;
+    s16     headingAngle;
+    s32     moveAmt;
+    s32     scaleRestoreShift;
+    u32     scaleReduceShift;
+
+    unused       = chara->position_18;
+    moveSpeed    = chara->moveSpeed_38;
+    headingAngle = chara->headingAngle_3C;
+    moveAmt      = FP_MULTIPLY_PRECISE(moveSpeed, g_DeltaTime0, Q12_SHIFT);
+
+    scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
+    scaleReduceShift  = scaleRestoreShift >> 1;
+
+    vec.vx = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    vec.vz = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    vec.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
+
+    func_80069B24(&D_800E39BC, &vec, chara);
+
+    chara->position_18.vx += vec.vx;
+    chara->position_18.vy += D_800E39BC.field_0.vy;
+    chara->position_18.vz += vec.vz;
+
+    if (chara->position_18.vy > D_800E39BC.field_C)
+    {
+        chara->position_18.vy = D_800E39BC.field_C;
+        chara->field_34 = 0;
+    }
+
+    coord->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
+    coord->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
+    coord->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8310);
 
