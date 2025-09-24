@@ -38,7 +38,7 @@ void GameState_Boot_Update() // 0x80032D1C
             g_GameWork.background2dColor_G_58D = 0;
             g_GameWork.background2dColor_B_58E = 0;
 
-            Screen_Init(SCREEN_WIDTH, 0);
+            Screen_Init(SCREEN_WIDTH, false);
             g_SysWork.timer_20              = 0;
             g_GameWork.gameStateStep_598[1] = 0;
             g_GameWork.gameStateStep_598[2] = 0;

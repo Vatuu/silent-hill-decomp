@@ -767,7 +767,7 @@ void MapEvent_MapItemTake() // 0x800DC3C8
             StoreImage(&IMG_BUFFER_RECT, IMAGE_BUFFER);
             DrawSync(0);
             Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B5, FS_BUFFER_2, &g_MapImg);
-            Screen_Init(SCREEN_WIDTH, 1);
+            Screen_Init(SCREEN_WIDTH, true);
 
             g_IntervalVBlanks = 1;
 
@@ -786,7 +786,7 @@ void MapEvent_MapItemTake() // 0x800DC3C8
         case 5:
             LoadImage(&IMG_BUFFER_RECT, IMAGE_BUFFER);
             DrawSync(0);
-            Screen_Init(SCREEN_WIDTH, 0);
+            Screen_Init(SCREEN_WIDTH, false);
             func_8008616C(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepReset();
             break;
@@ -808,7 +808,7 @@ void MapEvent_MapItemTake() // 0x800DC3C8
         case 8:
             LoadImage(&IMG_BUFFER_RECT, IMAGE_BUFFER);
             DrawSync(0);
-            Screen_Init(SCREEN_WIDTH, 0);
+            Screen_Init(SCREEN_WIDTH, false);
             func_8008616C(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement();
 

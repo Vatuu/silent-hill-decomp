@@ -17,14 +17,14 @@ void Screen_RectInterlacedClear(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b) //
     DrawSync(0);
 }
 
-void Screen_Refresh(s32 screenWidth, s32 isInterlaced) // 0x800323C8
+void Screen_Refresh(s32 screenWidth, bool isInterlaced) // 0x800323C8
 {
     DrawSync(0);
     Screen_RectInterlacedClear(0, 32, 320, 448, 0, 0, 0);
     Screen_Init(screenWidth, isInterlaced);
 }
 
-void Screen_Init(s32 screenWidth, s32 isInterlaced) // 0x80032428
+void Screen_Init(s32 screenWidth, bool isInterlaced) // 0x80032428
 {
     g_GameWork.gsScreenWidth_588  = screenWidth;
     g_GameWork.gsScreenHeight_58A = !isInterlaced ? FRAMEBUFFER_HEIGHT_PROGRESSIVE : FRAMEBUFFER_HEIGHT_INTERLACED;

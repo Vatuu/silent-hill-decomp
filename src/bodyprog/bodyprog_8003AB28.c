@@ -41,7 +41,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
         GameState_MovieIntro
     };
 
-    s32         playIntroFmv;
+    bool        playIntroFmv;
     s32         prevGameDifficultyIdx;
     s32         nextGameDifficultyIdx;
     e_GameState prevState;
@@ -59,7 +59,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
     {
         g_MainMenuState = 0;
         
-        if (playIntroFmv != 0)
+        if (playIntroFmv)
         {
             g_SysWork.processFlags_2298 = SysWorkProcessFlag_BootDemo;
         }
@@ -77,7 +77,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
             g_GameWork.background2dColor_B_58E = 0;
 
             Screen_RectInterlacedClear(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
-            Screen_Init(SCREEN_WIDTH, 1);
+            Screen_Init(SCREEN_WIDTH, true);
 
             g_IntervalVBlanks    = 1;
             g_Screen_FadeStatus  = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
@@ -85,7 +85,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
             g_MainMenuState++;
 
         case MenuState_Main:
-            if (playIntroFmv != 0)
+            if (playIntroFmv)
             {
                 GameFs_MapStartup();
 
@@ -221,7 +221,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
             break;
 
         case MenuState_DifficultySelector:
-            if (playIntroFmv != 0)
+            if (playIntroFmv)
             {
                 GameFs_MapStartup();
 
@@ -337,7 +337,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
         g_SysWork.timer_20 = 0;
     }
 
-    if (playIntroFmv == 0)
+    if (!playIntroFmv)
     {
         switch (g_GameWork.gameStateStep_598[0])
         {
@@ -382,7 +382,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
     *(s32*)0x1F800000 = 0x200000;
     *(s32*)0x1F800004 = 0x01C00140;
     ClearImage2((RECT*)0x1F800000, 0u, 0u, 0u);
-    Screen_Init(SCREEN_WIDTH, 0);
+    Screen_Init(SCREEN_WIDTH, false);
 }
 
 void MainMenu_SelectedOptionIdxReset() // 0x8003B550
@@ -2689,20 +2689,20 @@ void func_8003F08C(s_StructUnk3* arg0, s_sub_StructUnk3* arg1) // 0x8003F08C
 
     if (arg1->field_0.s_field_0.field_0 & (1 << 2))
     {
-        arg0->field_2E = FP_FLOAT_TO(1.0f, Q12_SHIFT);
+        arg0->field_2E = Q12(1.0f);
     }
     else
     {
-        arg0->field_2E = 0;
+        arg0->field_2E = Q12(0.0f);
     }
 
     if (arg1->field_0.s_field_0.field_0 & (1 << 4))
     {
-        arg0->field_2C = FP_FLOAT_TO(1.0f, Q12_SHIFT);
+        arg0->field_2C = Q12(1.0f);
     }
     else
     {
-        arg0->field_2C = 0;
+        arg0->field_2C = Q12(0.0f);
     }
 
     switch (arg1->field_E)
@@ -2724,9 +2724,9 @@ void func_8003F08C(s_StructUnk3* arg0, s_sub_StructUnk3* arg1) // 0x8003F08C
 
 void func_8003F170() // 0x8003F170
 {
-    MATRIX          sp28;
+    MATRIX          mat;
     VECTOR          sp48;
-    SVECTOR         sp58;
+    SVECTOR         rot;
     GsCOORDINATE2*  sp60;
     s32             temp_v0;
     u8              temp_v1;
@@ -2738,20 +2738,20 @@ void func_8003F170() // 0x8003F170
 
     if (g_SysWork.field_2388.isFlashlightOn_15)
     {
-        g_SysWork.field_2388.flashlightIntensity_18 += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_FLOAT_TO(4.0f, Q12_SHIFT), Q12_SHIFT);
+        g_SysWork.field_2388.flashlightIntensity_18 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 4.0f, Q12_SHIFT);
     }
     else
     {
-        g_SysWork.field_2388.flashlightIntensity_18 -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_FLOAT_TO(4.0f, Q12_SHIFT), Q12_SHIFT);
+        g_SysWork.field_2388.flashlightIntensity_18 -= FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 4.0f, Q12_SHIFT);
     }
 
-    g_SysWork.field_2388.flashlightIntensity_18 = CLAMP(g_SysWork.field_2388.flashlightIntensity_18, 0, FP_FLOAT_TO(1.0f, Q12_SHIFT));
+    g_SysWork.field_2388.flashlightIntensity_18 = CLAMP(g_SysWork.field_2388.flashlightIntensity_18, Q12(0.0f), Q12(1.0f));
 
     if (g_SysWork.field_2388.field_84[g_SysWork.field_2388.flashlightIntensity_18 != 0].field_0.field_E == 3)
     {
-        func_80049AF8(g_SysWork.field_235C, &sp28);
-        ApplyMatrixLV(&sp28, (VECTOR*)&g_SysWork.field_2360, &sp48); // Bug? `g_SysWork.field_2360` is `VECTOR3`.
-        ptr->field_84[g_SysWork.field_2388.flashlightIntensity_18 != 0].field_30 = sp48.vz + (sp28.t[2] * 0x10);
+        func_80049AF8(g_SysWork.field_235C, &mat);
+        ApplyMatrixLV(&mat, (VECTOR*)&g_SysWork.field_2360, &sp48); // Bug? `g_SysWork.field_2360` is `VECTOR3`.
+        ptr->field_84[g_SysWork.field_2388.flashlightIntensity_18 != 0].field_30 = sp48.vz + (mat.t[2] * 16);
     }
 
     if (ptr->field_0 == 0)
@@ -2787,16 +2787,16 @@ void func_8003F170() // 0x8003F170
         }
         else if (temp_v1 & 2)
         {
-            ptr2->field_0.field_4 += 0x4CC;
+            ptr2->field_0.field_4 += Q12(0.3f);
         }
     }
 
     ptr->field_10 = func_8003FEC0(&ptr2->field_0);
     func_8003FF2C(ptr2);
 
-    temp = FP_MULTIPLY(func_8003F4DC(&sp60, &sp58, ptr2->field_0.field_4, ptr2->field_0.field_0.s_field_0.field_2, func_80080A10(), &g_SysWork), g_SysWork.field_2378, Q12_SHIFT);
+    temp = FP_MULTIPLY(func_8003F4DC(&sp60, &rot, ptr2->field_0.field_4, ptr2->field_0.field_0.s_field_0.field_2, func_80080A10(), &g_SysWork), g_SysWork.field_2378, Q12_SHIFT);
 
-    func_800554C4(temp, ptr2->field_2C, sp60, g_SysWork.field_235C, &sp58, 
+    func_800554C4(temp, ptr2->field_2C, sp60, g_SysWork.field_235C, &rot, 
                   g_SysWork.field_2360.vx, g_SysWork.field_2360.vy, g_SysWork.field_2360.vz,
                   g_WorldGfx.type_0->waterZones_8);
     func_80055814(ptr2->field_30);
@@ -2807,21 +2807,21 @@ void func_8003F170() // 0x8003F170
     }
 }
 
-s32 func_8003F4DC(GsCOORDINATE2** arg0, SVECTOR* rot, s32 arg2, s32 arg3, u32 arg4, s_SysWork* sysWork) // 0x8003F4DC
+q19_12 func_8003F4DC(GsCOORDINATE2** arg0, SVECTOR* rot, q19_12 alpha, s32 arg3, u32 arg4, s_SysWork* sysWork) // 0x8003F4DC
 {
     s32     temp;
-    s32     res;
-    SVECTOR vec;
+    q19_12  alphaCpy;
+    SVECTOR rot0;
 
     if (arg3 != 2)
     {
         arg4 = 1;
     }
 
-    res = arg2;
+    alphaCpy = alpha;
     if (arg4 == 0)
     {
-        res = 0;
+        alphaCpy = Q12(0.0f);
     }
 
     switch (arg4)
@@ -2844,45 +2844,45 @@ s32 func_8003F4DC(GsCOORDINATE2** arg0, SVECTOR* rot, s32 arg2, s32 arg3, u32 ar
     {
         default:
         case 1:
-            vec = sysWork->field_2370;
+            rot0 = sysWork->field_2370;
             break;
 
         case 0:
-            vec.vx = 0;
-            vec.vy = 0xFC00;
-            vec.vz = 0;
+            rot0.vx = FP_ANGLE(0.0f);
+            rot0.vy = FP_ANGLE(-90.0f);
+            rot0.vz = FP_ANGLE(0.0f);
             break;
 
         case 2:
-            vec.vx = 0xFF1D;
-            vec.vy = 0x8AA;
-            vec.vz = 0;
+            rot0.vx = FP_ANGLE(-20.0f);
+            rot0.vy = FP_ANGLE(195.0f);
+            rot0.vz = FP_ANGLE(0.0f);
             break;
 
         case 3:
-            vec.vx = 0xFF1D;
-            vec.vy = 0xFCAB;
-            vec.vz = 0;
+            rot0.vx = FP_ANGLE(-20.0f);
+            rot0.vy = FP_ANGLE(-75.0f);
+            rot0.vz = FP_ANGLE(0.0f);
             break;
 
         case 4:
-            vec.vx = 0xFF1D;
-            vec.vy = 0xAA;
-            vec.vz = 0;
+            rot0.vx = FP_ANGLE(-20.0f);
+            rot0.vy = FP_ANGLE(15.0f);
+            rot0.vz = FP_ANGLE(0.0f);
             break;
 
         case 5:
-            vec.vx = 0xFF1D;
-            vec.vy = 0x4AA;
-            vec.vz = 0;
+            rot0.vx = FP_ANGLE(-20.0f);
+            rot0.vy = FP_ANGLE(105.0f);
+            rot0.vz = FP_ANGLE(0.0f);
             break;
     }
 
-    rot->vy = -Math_Sin(vec.vx);
-    temp    = Math_Cos(vec.vx);
-    rot->vz = FP_MULTIPLY(temp, Math_Cos(vec.vy), Q12_SHIFT);
-    rot->vx = FP_MULTIPLY(temp, Math_Sin(vec.vy), Q12_SHIFT);
-    return res;
+    rot->vy = -Math_Sin(rot0.vx);
+    temp    = Math_Cos(rot0.vx);
+    rot->vz = FP_MULTIPLY(temp, Math_Cos(rot0.vy), Q12_SHIFT);
+    rot->vx = FP_MULTIPLY(temp, Math_Sin(rot0.vy), Q12_SHIFT);
+    return alphaCpy;
 }
 
 u32 func_8003F654(s_SysWork_2288* arg0)
@@ -2943,17 +2943,17 @@ s32 func_8003F6F0(s32 arg0, s32 arg1, s32 arg2) // 0x8003F6F0
     return ((arg0 - arg1) << (Q12_SHIFT - shift)) / ((arg2 - arg1) >> shift);
 }
 
-s32 Math_WeightedAverageGet(s32 a, s32 b, s32 weight) // 0x8003F7E4
+q19_12 Math_WeightedAverageGet(s32 a, s32 b, q19_12 weight) // 0x8003F7E4
 {
     return Math_MulFixed(a, Q12(1.0f) - weight, Q12_SHIFT) + Math_MulFixed(b, weight, Q12_SHIFT);
 }
 
 void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s32 weight) // 0x8003F838
 {
-    s32 weight0;
-    s32 weight1;
-    s32 weight2;
-    u32 temp;
+    q19_12 weight0;
+    q19_12 weight1;
+    q19_12 weight2;
+    u32    temp;
 
     weight0 = weight * 2;
     weight0 = CLAMP(weight0, Q12(0.0f), Q12(1.0f));
@@ -3106,16 +3106,16 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s
     }
 }
 
-void func_8003FCB0(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructUnk3* arg2, s32 arg3) // 0x8003FCB0
+void func_8003FCB0(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructUnk3* arg2, q19_12 alphaTo) // 0x8003FCB0
 {
-    s32 p0;
+    q19_12 alphaFrom;
     
-    p0 = Q12(1.0f) - arg3;
-    LoadAverageCol(&arg1->field_21.r, &arg2->field_21.r, p0, arg3, &arg0->field_21.r);
-    LoadAverageCol(&arg1->field_25.r, &arg2->field_25.r, p0, arg3, &arg0->field_25.r);
+    alphaFrom = Q12(1.0f) - alphaTo;
+    LoadAverageCol(&arg1->field_21.r, &arg2->field_21.r, alphaFrom, alphaTo, &arg0->field_21.r);
+    LoadAverageCol(&arg1->field_25.r, &arg2->field_25.r, alphaFrom, alphaTo, &arg0->field_25.r);
 }
 
-void func_8003FD38(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s32 weight0, s32 weight1, s32 alphaTo) // 0x8003FD38
+void func_8003FD38(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q19_12 weight0, q19_12 weight1, q19_12 alphaTo) // 0x8003FD38
 {
     if (arg1->field_2E != arg2->field_2E)
     {
@@ -3133,7 +3133,7 @@ void func_8003FD38(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s
     LoadAverageCol(&arg1->field_0.fogColor_14.r, &arg2->field_0.fogColor_14.r, Q12(1.0f) - alphaTo, alphaTo, &arg0->field_0.fogColor_14.r);
 }
 
-void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructUnk3* arg2, s32 alphaTo) // 0x8003FE04
+void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructUnk3* arg2, q19_12 alphaTo) // 0x8003FE04
 {
     s32 alphaFrom;
 
@@ -3170,20 +3170,20 @@ s32 func_8003FEC0(s_sub_StructUnk3* arg0) // 0x8003FEC0
 
     if (D_800C4168.field_0 == 1)
     {
-        return vwOresenHokan(Y_ARRAY, ARRAY_SIZE(Y_ARRAY), arg0->field_4, 0, FP_FLOAT_TO(2.0f, Q12_SHIFT));
+        return vwOresenHokan(Y_ARRAY, ARRAY_SIZE(Y_ARRAY), arg0->field_4, 0, Q12(2.0f));
     }
 
-    return FP_FLOAT_TO(20.0f, Q12_SHIFT);
+    return Q12(20.0f);
 }
 
 void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
 {
-    s32 temp_a0;
-    s32 temp_v1;
-    s32 var_t0;
+    s32   temp_a0;
+    s32   temp_v1;
+    q23_8 var_t0;
 
-    temp_v1 = FP_MULTIPLY(arg0->field_2E, ((g_GameWork.config_0.optBrightness_22 * 8) + 4), Q12_SHIFT);
-    var_t0  = CLAMP(temp_v1, 0, 0xFF);
+    temp_v1 = FP_MULTIPLY(arg0->field_2E, (g_GameWork.config_0.optBrightness_22 * 8) + 4, Q12_SHIFT);
+    var_t0  = CLAMP(temp_v1, Q8_CLAMPED(0.0f), Q8_CLAMPED(1.0f));
 
     func_80055330(arg0->field_0.field_0.s_field_0.field_2, arg0->field_0.field_6, arg0->field_0.field_0.s_field_0.field_1, arg0->field_0.field_8, arg0->field_0.field_A, arg0->field_0.field_C, var_t0);
     Gfx_FogParamsSet(arg0->field_0.field_E != 0, arg0->field_0.fogColor_14.r, arg0->field_0.fogColor_14.g, arg0->field_0.fogColor_14.b);

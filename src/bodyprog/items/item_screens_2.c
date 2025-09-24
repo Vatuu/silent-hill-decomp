@@ -109,7 +109,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             }
 
             Screen_RectInterlacedClear(0, 0x20, 0x140, 0x1C0, 0u, 0u, 0u);
-            Screen_Init(0x140, 1);
+            Screen_Init(SCREEN_WIDTH, true);
 
             g_IntervalVBlanks    = 1;
             g_Screen_FadeStatus  = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
@@ -265,7 +265,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
         // Results screen triggers here.
         case 21:
             Screen_RectInterlacedClear(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
-            Screen_Init(0x140, 1);
+            Screen_Init(SCREEN_WIDTH, true);
 
             g_IntervalVBlanks                  = 1;
             g_Screen_FadeStatus                = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
@@ -280,7 +280,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
 
             D_800C3994 = g_SavegamePtr->gameDifficulty_260;
 
-            if (g_SavegamePtr->gameDifficulty_260 <= 0)
+            if (g_SavegamePtr->gameDifficulty_260 <= GameDifficulty_Normal)
             {
                 g_SavegamePtr->gameDifficulty_260++;
             }
