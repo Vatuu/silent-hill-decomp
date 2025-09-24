@@ -291,7 +291,40 @@ void Ai_Cheryl_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2*
     func_800D802C(chara, anmHdr, coords); // Modulate speed and something else?
 }
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D802C);
+void func_800D802C(s_SubCharacter* arg0, s_AnmHeader* arg1, GsCOORDINATE2* arg2)
+{
+    s32 speed;
+    s32 animDur;
+    s_AnimInfo* animInfo;
+
+    if (arg0->properties_E4.player.afkTimer_E8 == 1)
+    {
+        D_800DF1CC = FP_MULTIPLY_PRECISE(arg0->moveSpeed_38, 0x1e333, 12);
+    }
+
+    speed = MIN(arg0->moveSpeed_38, Q12(2.5f));
+    arg0->moveSpeed_38 = speed;
+
+    if (arg0->properties_E4.player.afkTimer_E8 == 2)
+    {
+        // @hack KAUFMAN anim in map0_s00 ? this might be a different anim table after all.
+        animInfo = KAUFMANN_ANIM_INFOS;
+        if (speed <= Q12(1.5f))
+        {
+            animDur = FP_MULTIPLY_PRECISE(speed, Q12(18.6), 12);
+        } else
+        {
+            animDur = Q12(27.8999f);
+        }
+        animInfo[7].duration_8.constant = animDur;
+    }
+    if (!arg0->properties_E4.player.field_F0)
+    {
+        KAUFMANN_ANIM_INFOS[arg0->model_0.anim_4.status_0].
+            updateFunc_0(&arg0->model_0, arg1, arg2, 
+                    &KAUFMANN_ANIM_INFOS[arg0->model_0.anim_4.status_0]);
+    }
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8124);
 
