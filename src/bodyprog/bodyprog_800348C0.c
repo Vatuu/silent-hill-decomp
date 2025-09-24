@@ -2302,7 +2302,7 @@ void SysState_GamePaused_Update() // 0x800391E8
     if (((D_800A9A68 >> 11) & (1 << 0)) == 0)
     {
         Gfx_StringSetPosition(SCREEN_POSITION_X(39.25f), SCREEN_POSITION_Y(43.5f));
-        Gfx_StringDraw("\x07PAUSED", 99);
+        Gfx_StringDraw("\x07PAUSED", DEFAULT_MAP_MESSAGE_LENGTH);
     }
 
     func_80091380();
@@ -2979,7 +2979,7 @@ void SysState_GameOver_Update() // 0x8003A52C
 
         case 3:
             Gfx_StringSetPosition(SCREEN_POSITION_X(32.5f), SCREEN_POSITION_Y(43.5f));
-            Gfx_StringDraw("\aGAME_OVER", 0x63);
+            Gfx_StringDraw("\aGAME_OVER", DEFAULT_MAP_MESSAGE_LENGTH);
             g_SysWork.field_28++;
 
             if ((g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
@@ -2992,7 +2992,7 @@ void SysState_GameOver_Update() // 0x8003A52C
 
         case 4:
             Gfx_StringSetPosition(SCREEN_POSITION_X(32.5f), SCREEN_POSITION_Y(43.5f));
-            Gfx_StringDraw("\aGAME_OVER", 0x63);
+            Gfx_StringDraw("\aGAME_OVER", DEFAULT_MAP_MESSAGE_LENGTH);
             func_8008616C(2, true, 0, Q12(2.0f), false);
             break;
 

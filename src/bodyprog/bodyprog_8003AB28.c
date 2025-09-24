@@ -425,21 +425,21 @@ void Gfx_MainMenu_MainTextDraw() // 0x8003B568
 
         if (i == g_MainMenu_SelectedEntry)
         {
-            Gfx_StringDraw("[", 99);
+            Gfx_StringDraw("[", DEFAULT_MAP_MESSAGE_LENGTH);
         }
         else
         {
-            Gfx_StringDraw("_", 99);
+            Gfx_StringDraw("_", DEFAULT_MAP_MESSAGE_LENGTH);
         }
 
-        Gfx_StringDraw(MAIN_MENU_ENTRY_STRINGS[i], 99);
+        Gfx_StringDraw(MAIN_MENU_ENTRY_STRINGS[i], DEFAULT_MAP_MESSAGE_LENGTH);
 
         if (i == g_MainMenu_SelectedEntry)
         {
-            Gfx_StringDraw("]", 99);
+            Gfx_StringDraw("]", DEFAULT_MAP_MESSAGE_LENGTH);
         }
 
-        Gfx_StringDraw("\n", 99);
+        Gfx_StringDraw("\n", DEFAULT_MAP_MESSAGE_LENGTH);
     }
 }
 
@@ -470,21 +470,21 @@ void Gfx_MainMenu_DifficultyTextDraw(s32 arg0) // 0x8003B678
 
         if (i == arg0)
         {
-            Gfx_StringDraw("[", 99);
+            Gfx_StringDraw("[", DEFAULT_MAP_MESSAGE_LENGTH);
         }
         else
         {
-            Gfx_StringDraw("_", 99);
+            Gfx_StringDraw("_", DEFAULT_MAP_MESSAGE_LENGTH);
         }
 
-        Gfx_StringDraw(DIFFICULTY_MENU_ENTRY_STRINGS[i], 99);
+        Gfx_StringDraw(DIFFICULTY_MENU_ENTRY_STRINGS[i], DEFAULT_MAP_MESSAGE_LENGTH);
 
         if (i == arg0)
         {
-            Gfx_StringDraw("]", 99);
+            Gfx_StringDraw("]", DEFAULT_MAP_MESSAGE_LENGTH);
         }
 
-        Gfx_StringDraw("\n", 99);
+        Gfx_StringDraw("\n", DEFAULT_MAP_MESSAGE_LENGTH);
     }
 }
 

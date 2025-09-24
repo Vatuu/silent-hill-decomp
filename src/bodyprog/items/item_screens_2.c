@@ -457,10 +457,10 @@ void Gfx_Results_Save() // 0x8004D1A0
     g_SysWork.enableHighResGlyphs_2350_0 = true;
 
     Gfx_StringSetPosition(90, 92);
-    Gfx_StringDraw("\x07Is_it_OK_to_save?", 99);
+    Gfx_StringDraw("\x07Is_it_OK_to_save?", DEFAULT_MAP_MESSAGE_LENGTH);
 
     Gfx_StringSetPosition(94, 122);
-    Gfx_StringDraw("\x07Yes_____________No", 99);
+    Gfx_StringDraw("\x07Yes_____________No", DEFAULT_MAP_MESSAGE_LENGTH);
 
     g_SysWork.enableHighResGlyphs_2350_0 = false;
 
@@ -1636,7 +1636,7 @@ void Gfx_Inventory_UnavailableMapText(s32 strIdx) // 0x0x8004F57C
 
     Gfx_StringSetPosition(30, 232);
     Gfx_StringSetColor(StringColorId_White);
-    Gfx_StringDraw(strs[strIdx], 99);
+    Gfx_StringDraw(strs[strIdx], DEFAULT_MAP_MESSAGE_LENGTH);
 }
 
 const u8 g_rodataData_800262F6 = 0x2A; // '*' as `char`.

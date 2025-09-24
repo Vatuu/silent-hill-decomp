@@ -610,7 +610,7 @@ void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1) // 0x801E3910
 
             D_801E7554 = strIdx;
             Gfx_StringSetPosition(160 - (xOffsets[strIdx] >> 1), 186);
-            Gfx_StringDraw(strs[strIdx], 99);
+            Gfx_StringDraw(strs[strIdx], DEFAULT_MAP_MESSAGE_LENGTH);
 
             // Finished saving.
             if (strIdx == 5)
@@ -653,9 +653,9 @@ void Gfx_WriteOptionSaveDraw(s32 arg0, s32 optionIdx) // 0x801E3C44
 
         case 1:
             Gfx_StringSetPosition(160 - (xOffsets[arg0] / 2), 178);
-            Gfx_StringDraw(strs[arg0], 99);
+            Gfx_StringDraw(strs[arg0], DEFAULT_MAP_MESSAGE_LENGTH);
             Gfx_StringSetPosition(104, 196);
-            Gfx_StringDraw("\x07Yes__________No", 99);
+            Gfx_StringDraw("\x07Yes__________No", DEFAULT_MAP_MESSAGE_LENGTH);
 
             poly = (POLY_F4*)GsOUT_PACKET_P;
             setPolyF4(poly);

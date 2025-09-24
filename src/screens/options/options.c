@@ -819,14 +819,14 @@ void Options_ExtraOptionsMenu_EntryStringsDraw(void) // 0x801E416C
     Gfx_StringSetColor(StringColorId_White);
     Gfx_StringSetPosition(STR_POS.vx, STR_POS.vy);
     Gfx_Strings2dLayerIdxSet(8);
-    Gfx_StringDraw(EXTRA_OPTIONS_STR, 99);
+    Gfx_StringDraw(EXTRA_OPTIONS_STR, DEFAULT_MAP_MESSAGE_LENGTH);
 
     // Draw entry strings.
     for (i = 0; i < g_ExtraOptionsMenu_EntryCount; i++)
     {
         Gfx_StringSetPosition(LINE_BASE_X, LINE_BASE_Y + (i * LINE_OFFSET_Y));
         Gfx_Strings2dLayerIdxSet(8);
-        Gfx_StringDraw(ENTRY_STRS[i], 99);
+        Gfx_StringDraw(ENTRY_STRS[i], DEFAULT_MAP_MESSAGE_LENGTH);
     }
 }
 
@@ -870,14 +870,14 @@ void Options_MainOptionsMenu_EntryStringsDraw(void) // 0x801E42EC
     Gfx_StringSetColor(StringColorId_White);
     Gfx_StringSetPosition(strPos.vx, strPos.vy);
     Gfx_Strings2dLayerIdxSet(8);
-    Gfx_StringDraw(OPTIONS_STR, 99);
+    Gfx_StringDraw(OPTIONS_STR, DEFAULT_MAP_MESSAGE_LENGTH);
 
     // Draw entry strings.
     for (i = 0; i < MainOptionsMenuEntry_Count; i++)
     {
         Gfx_StringSetPosition(LINE_BASE_X, LINE_BASE_Y + (i * LINE_OFFSET_Y));
         Gfx_Strings2dLayerIdxSet(8);
-        Gfx_StringDraw(ENTRY_STRS[i], 99);
+        Gfx_StringDraw(ENTRY_STRS[i], DEFAULT_MAP_MESSAGE_LENGTH);
     }
 
     Gfx_StringsReset2dLayerIdx();
