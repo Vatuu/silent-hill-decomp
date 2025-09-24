@@ -131,6 +131,9 @@ void func_800D8310(s_SubCharacter*, GsCOORDINATE2*); // `Chara_Cheryl` related.
 
 void Ai_Cheryl_Init(s_SubCharacter* chara); // 0x800D8888
 
+void func_800D94F8(void);
+
+/** Debug function? */
 void Gfx_LoadingScreen_StageString();
 
 void func_800DBE00();

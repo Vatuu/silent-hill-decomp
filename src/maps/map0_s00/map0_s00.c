@@ -339,23 +339,23 @@ void Ai_Cheryl_Init(s_SubCharacter* chara) // 0x800D8888
 
 #include "maps/shared/sharedFunc_800D92AC_0_s00.h" // 0x800D92AC
 
-void func_800D94F8(void)
+void func_800D94F8(void) // 0x800D94F8
 {
-    s32 i;
-    s32 flags1;
-    s32 flags0;
-    u16 saveFlag;
+    s32  i;
+    s32  flags1;
+    s32  flags0;
+    u16  saveFlag;
+    u32  saveByte;
     u16* var_a2;
-    u32 saveByte;
 
-    // @hack not used directly but gets merged with the Savegame_EventFlagGet macros bellow.
+    // @hack Not used directly, but gets merged with  `Savegame_EventFlagGet` macros below.
     saveByte = g_SavegamePtr->eventFlags_168[0];
     flags1 = 0x199;
     flags0 = 0x100;
 
-    if ((g_SysWork.player_4C.chara_0.health_B0 > 0) && (!(Savegame_EventFlagGet(23) && !Savegame_EventFlagGet(20))))
+    if (g_SysWork.player_4C.chara_0.health_B0 > 0 && (!(Savegame_EventFlagGet(23) && !Savegame_EventFlagGet(20))))
     {
-        for (i=1; i < 7; i++)
+        for (i = 1; i < 7; i++)
         {
             saveFlag = D_800DF300[i];
             if (Savegame_EventFlagGet((s16)saveFlag))
@@ -369,13 +369,14 @@ void func_800D94F8(void)
         Savegame_EventFlagClear(EventFlag_20);
         flags1 = 0x4CC;
     }
+
     func_80035F4C(flags0, flags1, &D_800DF2F8);
 }
 
-/** Debug function? */
 void Gfx_LoadingScreen_StageString() // 0x800D95D4
 {
     g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, false);
+
     Gfx_DebugStringPosition(100, 100);
     Gfx_DebugStringDraw("STAGE 0-0");
 }
@@ -649,8 +650,8 @@ void func_800DA5A0(void) // 0x800DA5A0
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            Camera_TranslationSet(NULL, Q12(-22.0f), Q12(-2.4f), Q12(130.1f), 0, 0, 0, 0, true);
-            Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), 0, 0, 0, 0, true);
+            Camera_TranslationSet(NULL, Q12(-22.0f), Q12(-2.4f), Q12(130.1f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             break;
 
         case 1:
@@ -667,13 +668,14 @@ void func_800DA5A0(void) // 0x800DA5A0
                                   Q12(-22.0f) - func_800868F4(Q12(4.0f),  Q12(5.0f), 0),
                                   Q12(-2.4f)  - func_800868F4(Q12(-1.5f), Q12(5.0f), 1),
                                   Q12(130.1f) - func_800868F4(Q12(4.0f),  Q12(5.0f), 2),
-                                  0, 0, 0,
-                                  0, false);
-            Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), 0, 0, 0, 0, false);
+                                  Q12(0.0f), Q12(0.0f),
+                                  Q12(0.0f), Q12(0.0f),
+                                  false);
+            Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
             break;
 
         case 3:
-            Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), 0, 0, 0, 0, false);
+            Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
             break;
         
         case 7:
@@ -757,7 +759,7 @@ void func_800DA5A0(void) // 0x800DA5A0
             SysWork_StateStepIncrement();
 
         case 10:
-            g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = 0x8CC;
+            g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = Q12(0.55f);
             func_80086728(&g_SysWork.npcs_1A0[0], 1, 1, 0);
             break;
 
@@ -901,8 +903,8 @@ void func_800DAEFC(void) // 0x800DAEFC
 
         case 2:
             func_800865FC(false, 0, 0, FP_ANGLE(180.0f), Q12(0.0f), Q12(0.0f));
-            Camera_TranslationSet(&g_SysWork.player_4C.chara_0.position_18, Q12(0.24f), Q12(-4.06f), Q12(-5.0f), 0, 0, 0, 0, true);
-            Camera_RotationSet(&g_SysWork.player_4C.chara_0.position_18, Q12(-0.72f), Q12(-2.11f), Q12(-1.63f), 0, 0, 0, 0, true);
+            Camera_TranslationSet(&g_SysWork.player_4C.chara_0.position_18, Q12(0.24f), Q12(-4.06f), Q12(-5.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_RotationSet(&g_SysWork.player_4C.chara_0.position_18, Q12(-0.72f), Q12(-2.11f), Q12(-1.63f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             SysWork_StateStepIncrement();
 
         case 3:
@@ -935,13 +937,14 @@ void func_800DAEFC(void) // 0x800DAEFC
                 offsetZ = Q12(130.0f);
             }
 
-            Camera_TranslationSet(NULL, Q12(-62.0f), offsetY, offsetZ, 0, 0, 0, 0, D_800DFAC4);
+            Camera_TranslationSet(NULL, Q12(-62.0f), offsetY, offsetZ, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), D_800DFAC4);
             Camera_RotationSet(NULL,
                                g_SysWork.player_4C.chara_0.position_18.vx,
                                Q12(-0.7f),
                                g_SysWork.player_4C.chara_0.position_18.vz - Q12(5.0f),
-                               0, 0, 0,
-                               0, D_800DFAC4);
+                               Q12(0.0f), Q12(0.0f),
+                               Q12(0.0f), Q12(0.0f),
+                               D_800DFAC4);
 
             D_800DFAC4 = false;
             break;
@@ -962,8 +965,8 @@ void func_800DB26C(void) // 0x800DB26C
 {
     if (g_SysWork.sysStateStep_C[0] == 0)
     {
-        Camera_TranslationSet(NULL, Q12(-62.0f), Q12(-2.24f), Q12(117.0f), 0, 0, 0, 0, true);
-        Camera_RotationSet(NULL, Q12(-62.0f), Q12(-0.7f), Q12(104.0f), 0, 0, 0, 0, true);
+        Camera_TranslationSet(NULL, Q12(-62.0f), Q12(-2.24f), Q12(117.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+        Camera_RotationSet(NULL, Q12(-62.0f), Q12(-0.7f), Q12(104.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
         func_800868DC(2);
     }
 
@@ -972,10 +975,10 @@ void func_800DB26C(void) // 0x800DB26C
         case 0:
             sharedFunc_800D20E4_0_s00();
             func_8008616C(0, true, 2, 0, false);
-            func_800865FC(1, 0, 0, Q12(-0.25f), Q12(-60.5f), g_SysWork.player_4C.chara_0.position_18.vz);
+            func_800865FC(1, 0, 0, FP_ANGLE(-90.0f), Q12(-60.5f), g_SysWork.player_4C.chara_0.position_18.vz);
 
             g_SysWork.npcs_1A0[0].position_18.vx = Q12(-62.0f);
-            g_SysWork.npcs_1A0[0].rotation_24.vy = Q12(0.5f);
+            g_SysWork.npcs_1A0[0].rotation_24.vy = FP_ANGLE(180.0f);
             g_SysWork.npcs_1A0[0].position_18.vz = g_SysWork.player_4C.chara_0.position_18.vz - Q12(9.0f);
 
             SysWork_StateStepIncrement();
@@ -985,21 +988,21 @@ void func_800DB26C(void) // 0x800DB26C
             break;
 
         case 2:
-            func_800866D4(0x36, 1, 0);
+            func_800866D4(54, 1, 0);
             break;
 
         case 3:
-            g_DeltaTime0 >>= 1;
+            g_DeltaTime0 >>= 1; // `/ 2`.
 
-            func_800865FC(0, 0, 0, Q12(-0.375f), 0, 0);
+            func_800865FC(0, 0, 0, FP_ANGLE(-135.0f), Q12(0.0f), Q12(0.0f));
             func_80085E6C(Q12(0.8f), false);
             break;
 
         case 4:
-            g_DeltaTime0 >>= 1;
+            g_DeltaTime0 >>= 1; // `/ 2`.
 
             Savegame_EventFlagSet(EventFlag_8);
-            func_800866D4(0x36, 1, 0);
+            func_800866D4(54, 1, 0);
             break;
 
         case 5:
@@ -1010,7 +1013,7 @@ void func_800DB26C(void) // 0x800DB26C
         default:
             func_8008616C(0, false, 2, 0, false);
             Savegame_EventFlagSet(EventFlag_7);
-            func_800865FC(1, 1, 0, Q12(0.5f), Q12(-62.0f), Q12(49.0f));
+            func_800865FC(1, 1, 0, FP_ANGLE(180.0f), Q12(-62.0f), Q12(49.0f));
             sharedFunc_800D2244_0_s00(0);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -1586,9 +1589,9 @@ void func_800DD0CC(void) // 0x800DD0CC
         D_800DFB44.field_0 = 0;
         D_800DFB48.field_0 = Rng_GenerateInt((u32)Rng_Rand16(), 32, 95);
         D_800DFB48.field_1 = Rng_GenerateInt((u32)Rng_Rand16(), 32, 63);
-        vecs[0]           &= Q12_FRACT(vec0[0]);
+        vecs[0]           &= Q12_FRACT(vecs[0]);
     }
-    
+
     vecs[0] = FP_MULTIPLY(D_800DFB48.field_1, Math_Sin(D_800DFB44.field_2), Q12_SHIFT);
     D_800DFB44.field_2 += g_DeltaTime0;
 
@@ -1597,7 +1600,7 @@ void func_800DD0CC(void) // 0x800DD0CC
     {
         D_800DFB44.field_2 = 0;
         D_800DFB48.field_2 = Rng_GenerateInt((u32)Rng_Rand16(), 32, 95);
-        vecs[1]           &= Q12_FRACT(vec0[1]);
+        vecs[1]           &= Q12_FRACT(vecs[1]);
     }
 
     D_800DFB40 = MAX(Q12(0.0f), FP_MULTIPLY((FP_MULTIPLY(vecs[0], Q12(4.5f), 6) + Q12(2.5f)), Math_Sin(vecs[1]), Q12_SHIFT) + Q12(4.0f));

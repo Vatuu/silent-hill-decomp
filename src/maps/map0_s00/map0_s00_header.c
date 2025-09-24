@@ -6,7 +6,6 @@
 #define BLOOD_SPLAT_COUNT_MAX 150
 
 // Undefined functions, unknown signature.
-#define func_800D94F8 (void(*)(s32))0x800D94F8 // Based on the signature of a func in map0_s01.
 #define func_800DBE68 (void(*)(void))0x800DBE68
 #define func_800DBF08 (void(*)(void))0x800DBF08
 #define func_800D0E34 (void(*)(void))0x800D0E34
