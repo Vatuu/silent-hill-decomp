@@ -196,10 +196,13 @@ void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 entr
 
 void func_8008616C(s32 arg0, bool arg1, s32 fadeType, s32 fadeTimestep, bool arg4) // 0x8008616C
 {
-    #define FADE_BLACK    0
-    #define FADE_WHITE    1
-    #define FADE_UNKNOWN  2 // TODO: Investigate. Some state machine flow logic when this is used.
-    #define FADE_UNK_FLAG 3 // TODO: Investigate.
+    typedef enum _FadeType
+    {
+        FadeType_Black = 0,
+        FadeType_White = 1,
+        FadeType_Unk2  = 2, // TODO: Investigate. Some state machine flow logic when this is used.
+        FadeType_Unk3  = 3  // TODO: Investigate.
+    } s_FadeType;
 
     s32 caseVar;
 
@@ -216,18 +219,18 @@ void func_8008616C(s32 arg0, bool arg1, s32 fadeType, s32 fadeTimestep, bool arg
     switch (caseVar)
     {
         case 0:
-            if (fadeType != FADE_UNKNOWN)
+            if (fadeType != FadeType_Unk2)
             {
                 g_ScreenFadeTimestep = fadeTimestep;
             }
 
             if (arg1)
             {
-                if (fadeType == FADE_BLACK)
+                if (fadeType == FadeType_Black)
                 {
                     g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false);
                 }
-                else if (fadeType == FADE_WHITE)
+                else if (fadeType == FadeType_White)
                 {
                     g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, true);
                 }
@@ -235,17 +238,17 @@ void func_8008616C(s32 arg0, bool arg1, s32 fadeType, s32 fadeTimestep, bool arg
                 {
                     g_SysWork.field_30 = 18;
 
-                    if (fadeType == FADE_UNK_FLAG)
+                    if (fadeType == FadeType_Unk3)
                     {
                         g_SysWork.flags_22A4 |= 1 << 3;
                     }
                 }
             }
-            else if (fadeType == FADE_BLACK)
+            else if (fadeType == FadeType_Black)
             {
                 g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, false);
             }
-            else if (fadeType == FADE_WHITE)
+            else if (fadeType == FadeType_White)
             {
                 g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, true);
             }
@@ -262,7 +265,7 @@ void func_8008616C(s32 arg0, bool arg1, s32 fadeType, s32 fadeTimestep, bool arg
             break;
 
         case 1:
-            if (fadeType < FADE_UNKNOWN)
+            if (fadeType < FadeType_Unk2)
             {
                 if (arg1 != 0 || g_Screen_FadeStatus != caseVar)
                 {
@@ -397,7 +400,7 @@ void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, bool arg3) // 0x800
             
             if (switchVar == 0)
             {
-                g_SysWork.sysStateStep_C[1] += 0;
+                g_SysWork.sysStateStep_C[1] += 0; // @hack Required for match.
                 g_SysWork.timer_2C  = 0;
                 g_SysWork.sysStateStep_C[2] = 0;
             }

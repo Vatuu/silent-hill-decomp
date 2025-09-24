@@ -2445,7 +2445,7 @@ extern VECTOR3 D_800C4640[][8]; // Or struct?
 
 extern s32 D_800C46A0;
 
-/** Angles? */
+/** Y angles. */
 extern q3_12 D_800C4700[];
 
 extern s16 D_800C4702;
