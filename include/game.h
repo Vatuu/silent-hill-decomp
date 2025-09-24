@@ -892,7 +892,7 @@ typedef struct _EventParam
     u8  field_5; // Something related to pickup items.
     u8  unk_6[2];
     u32 triggerType_8_0        : 5;
-    u32 pointOfInterestIdx_8_5 : 8; /** Index into `g_MapOverlayHeader.mapAreaLoadParams_1C`. */
+    u32 pointOfInterestIdx_8_5 : 8; /** Index into `g_MapOverlayHeader.mapPointsOfInterest_1C`. */
     u32 flags_8_13             : 6;
     u32 field_8_19             : 5;
     u32 field_8_24             : 1;
@@ -1270,8 +1270,8 @@ STATIC_ASSERT_SIZEOF(s_StructUnk3, 52);
 
 typedef struct
 {
-    s32          field_0;
-    s8*          field_4;
+    s32          field_0; /** `PrimitiveType_S32`. */
+    s8*          field_4; /** Points to different types of data depending on `field_0`. */
     s32          field_8; // } Q19.12?
     s32          field_C; // }
     s32          field_10;

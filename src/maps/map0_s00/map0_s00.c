@@ -412,11 +412,11 @@ const char* MAP_MESSAGES[] =
 
 void func_800D9610(void) // 0x800D9610
 {
-    VECTOR3           posCpy;
-    VECTOR3           pos;
-    s_AreaLoadParams* areaLoadParams0;
-    s_AreaLoadParams* areaLoadParams1;
-    s_EventParam*     eventParam;
+    VECTOR3       posCpy;
+    VECTOR3       pos;
+    s_MapPoint2d* areaLoadParams0;
+    s_MapPoint2d* areaLoadParams1;
+    s_EventParam* eventParam;
 
     // @hack Permuter finds.
     do {} while (false);
@@ -1074,7 +1074,7 @@ void func_800DB514(void) // 0x800DB514
             break;
 
         case 9:
-            func_8003EF10(10, 10, 5, &D_800DFB5C, 0, Q12(0.5f));
+            func_8003EF10(10, 10, PrimitiveType_S32, &D_800DFB5C, 0, Q12(0.5f));
             SysWork_StateStepIncrement();
 
         case 10:
@@ -1461,7 +1461,7 @@ void func_800DCC54(void) // 0x800DCC54
 {
     if (D_800DFADC == NO_VALUE)
     {
-        func_8003EF10(6, 6, 5, &D_800DFADC, Q12(0.0f), Q12(100.0f));
+        func_8003EF10(6, 6, PrimitiveType_S32, &D_800DFADC, Q12(0.0f), Q12(100.0f));
         D_800DFADC = Q12(0.0f);
 
         Sd_PlaySfx(Sfx_Unk1359, 0, Q8_CLAMPED(0.875f));
@@ -1577,7 +1577,7 @@ void func_800DD0CC(void) // 0x800DD0CC
 
     if (D_800DFB40 == NO_VALUE)
     {
-        func_8003EF10(6, 6, 5, &D_800DFB40, 0, Q12(100.0f));
+        func_8003EF10(6, 6, PrimitiveType_S32, &D_800DFB40, 0, Q12(100.0f));
         D_800DFB40 = 0;
     }
 

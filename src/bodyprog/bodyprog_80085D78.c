@@ -1491,10 +1491,10 @@ void func_80088F94(s_SubCharacter* chara, s32 unused1, s32 unsued2) // 0x80088F9
 
 void func_80088FF4(e_CharacterId charaId, s32 spawnIdx, s32 spawnFlags) // 0x80088FF4
 {
-    s_SpawnInfo* spawn;
+    s_MapPoint2d* spawn;
 
-    spawn          = &g_MapOverlayHeader.charaSpawns_24C[D_800A98FC[charaId] - 1][spawnIdx];
-    spawn->flags_6 = spawnFlags;
+    spawn                         = &g_MapOverlayHeader.charaSpawns_24C[D_800A98FC[charaId] - 1][spawnIdx];
+    spawn->data.spawnInfo.flags_6 = spawnFlags;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089034); // 0x80089034

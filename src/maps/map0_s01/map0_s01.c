@@ -652,7 +652,7 @@ void func_800D3DFC(s_SubCharacter* chara)
 
     if (chara->field_40 < 0x20)
     {
-        flags = g_MapOverlayHeader.charaSpawns_24C[0][chara->field_40].flags_6;
+        flags = g_MapOverlayHeader.charaSpawns_24C[0][chara->field_40].data.spawnInfo.flags_6;
         switch (flags)
         {
             case 1:
