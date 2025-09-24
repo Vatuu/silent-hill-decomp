@@ -301,9 +301,9 @@ typedef struct
 
 typedef struct
 {
-    s32 vx_0;
-    s32 vz_4;
-    s16 vy_8;
+    s32 vx_0; // Q23.8
+    s32 vz_4; // Q23.8
+    s16 vy_8; // Q7.8
     u8  field_A;
     s8  field_B;
     s8  field_C;
@@ -3167,16 +3167,16 @@ s32 func_8005D86C(s32 arg0);
 /** Looks like a clamping function. */
 s32 func_8005D974(s32 arg0);
 
-s32 func_8005D9B8(VECTOR3* arg0, s32 arg1);
+s32 func_8005D9B8(VECTOR3* pos, q23_8 vol);
 
 /** Spatial SFX func? */
-void func_8005DC1C(s32 sfx, const VECTOR3* pos, s32 vol, s32 soundType); // Types assumed.
+void func_8005DC1C(s32 sfx, const VECTOR3* pos, q23_8 vol, s32 soundType); // Types assumed.
 
 /** Spatial SFX func? */
-void func_8005DC3C(s32 sfx, const VECTOR3* pos, s32 vol, s32 soundType, s32 pitch);
+void func_8005DC3C(s32 sfx, const VECTOR3* pos, q23_8 vol, s32 soundType, s32 pitch);
 
 /** Spatial SFX func? */
-void func_8005DD44(s32 sfx, VECTOR3* pos, s32 vol, s8 pitch); // Types assumed.
+void func_8005DD44(s32 sfx, VECTOR3* pos, q23_8 vol, s8 pitch); // Types assumed.
 
 /** Checks `field_8` in collision struct. */
 bool func_8005F680(s_Collision* coll);

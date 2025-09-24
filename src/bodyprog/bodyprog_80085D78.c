@@ -462,9 +462,9 @@ void func_800866D4(s32 arg0, s32 arg1, s32 arg2) // 0x800866D4
     }
 }
 
-void func_80086728(s_SubCharacter* arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80086728
+void func_80086728(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3) // 0x80086728
 {
-    if (g_MapOverlayHeader.func_13C(arg0, arg1, &D_800C46A0, D_800C4702, arg2) == 1)
+    if (g_MapOverlayHeader.func_13C(chara, arg1, &D_800C46A0, D_800C4702, arg2) == 1)
     {
         func_80085D78(arg3);
     }
@@ -1461,7 +1461,7 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12 rotY, u32
         g_SysWork.npcs_1A0[i].rotation_24.vy = rotY;
 
         var_s6                          = &g_SysWork.npcs_1A0[i];
-        var_s6->model_0.anim_4.flags_2 |= 2;
+        var_s6->model_0.anim_4.flags_2 |= AnimFlag_Visible;
 
         return i;
     }
@@ -1632,34 +1632,34 @@ const s_8002AC04 D_8002AC04[] =
     { &D_8002AC04[46], 0, 32, 0, 12, {} },
     { &D_8002AC04[28], 0, 32, 0, 18, {} },
     { &D_8002AC04[29], 0, 32, 0, 19, {} },
-    { NULL, 4, 0, 0xFFFF, 20, { .u32 = -255 } },
-    { NULL, 4, 1, 0xFFFF, 21, { .u32 = -255 } },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF70, { 0x2D, 9, 1, 0 } },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF64, { 0x180, 0x30, 1, 0 } },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF5C, { 0x90, 0x18, 1, 0 } },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF54, { 0x5A, 0xF, 1, 0 } },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF48, { 0x96, 0xF, 1, 1 } },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF3C, { 0x60, 0xC, 1, 0 } },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF3C, { 0x60, 0xC, 1, 0 } },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF34, { 0x4B, 0xF, 1, 0 } },
+    { NULL, 4, 0, NO_VALUE, 20, { .u32 = -255 } },
+    { NULL, 4, 1, NO_VALUE, 21, { .u32 = -255 } },
+    { NULL, 2, 1, NO_VALUE, &D_8002AF70, { 0x2D, 9, 1, 0 } },
+    { NULL, 2, 1, NO_VALUE, &D_8002AF64, { 0x180, 0x30, 1, 0 } },
+    { NULL, 2, 1, NO_VALUE, &D_8002AF5C, { 0x90, 0x18, 1, 0 } },
+    { NULL, 2, 1, NO_VALUE, &D_8002AF54, { 0x5A, 0xF, 1, 0 } },
+    { NULL, 2, 1, NO_VALUE, &D_8002AF48, { 0x96, 0xF, 1, 1 } },
+    { NULL, 2, 1, NO_VALUE, &D_8002AF3C, { 0x60, 0xC, 1, 0 } },
+    { NULL, 2, 1, NO_VALUE, &D_8002AF3C, { 0x60, 0xC, 1, 0 } },
+    { NULL, 2, 1, NO_VALUE, &D_8002AF34, { 0x4B, 0xF, 1, 0 } },
     { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 2, 0, 0xFFFF, &D_8002AF2C, { 0x258, 0xF, 0, 0 } },
-    { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 2, 0, 0xFFFF, &D_8002AF28, { 0x1E0, 0xF, 0, 0 } },
+    { NULL, 2, 0, NO_VALUE, &D_8002AF2C, { 0x258, 0xF, 0, 0 } },
     { NULL, 0, 0, 0x0000, 0, {} },
     { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 2, 0, 0xFFFF, &D_8002AF24, { 0x1A4, 0xF, 0, 0 } },
+    { NULL, 2, 0, NO_VALUE, &D_8002AF28, { 0x1E0, 0xF, 0, 0 } },
     { NULL, 0, 0, 0x0000, 0, {} },
     { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 2, 0, 0xFFFF, &D_8002AF20, { 0x168, 0xF, 0, 0 } },
+    { NULL, 2, 0, NO_VALUE, &D_8002AF24, { 0x1A4, 0xF, 0, 0 } },
     { NULL, 0, 0, 0x0000, 0, {} },
     { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 2, 0, 0xFFFF, &D_8002AF20, { 0x10E, 0xF, 0, 0 } },
+    { NULL, 2, 0, NO_VALUE, &D_8002AF20, { 0x168, 0xF, 0, 0 } },
     { NULL, 0, 0, 0x0000, 0, {} },
     { NULL, 0, 0, 0x0000, 0, {} },
-    { &D_8002AC04[47], 2, 0, 0xFFFF, &D_8002AF08, { 0xB40, 0xF, 0, 0 } },
-    { &D_8002AC04[47], 2, 0, 0xFFFF, &D_8002AF04, { 0x1E, 0xF, 0, 0 } },
+    { NULL, 2, 0, NO_VALUE, &D_8002AF20, { 0x10E, 0xF, 0, 0 } },
+    { NULL, 0, 0, 0x0000, 0, {} },
+    { NULL, 0, 0, 0x0000, 0, {} },
+    { &D_8002AC04[47], 2, 0, NO_VALUE, &D_8002AF08, { 0xB40, 0xF, 0, 0 } },
+    { &D_8002AC04[47], 2, 0, NO_VALUE, &D_8002AF04, { 0x1E, 0xF, 0, 0 } },
 };
 
 // TODO: Figure out what kind of data this is. The array above has some entries pointing to it, all of them using funcptr #2 (`func_80089DF0`).
@@ -1716,7 +1716,7 @@ void func_80089314(s32 arg0) // 0x80089314
         D_800AFD04 = (D_800AFD04 + var1) & 0x7F;
     }
     
-    func_800892DC(0x15, D_800AFD04 + 32);
+    func_800892DC(21, D_800AFD04 + 32);
 }
 
 void func_800893D0(q19_12 arg0) // 0x800893D0
