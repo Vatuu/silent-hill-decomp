@@ -3,6 +3,7 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map0/map0_s00.h"
+#include "bodyprog/player_logic.h"
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CB6B0);
 
@@ -183,7 +184,116 @@ void func_800D0E2C() {}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0E34);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D1C38);
+void func_800D1C38(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords)
+{
+    s_Collision coll;
+    VECTOR3 vec;
+    s16 headingAngle;
+    s16 temp_v0;
+    s32 temp_s0;
+    s32 temp_s2;
+    s16 temp_s3;
+    s32 pcState;
+    s32 var_s7;
+    s16 var_s0;
+    s16 var_v1;
+
+    s32 moveSpeed;
+    s32 angle;
+    s32 step;
+    s32 overflow;
+    s32 scale;
+
+    pcState = g_SysWork.player_4C.extra_128.state_1C;
+    var_s7 = 0;
+    if (pcState < PlayerState_Unk58)
+    {
+        var_s7 = 1;
+    }
+    else if (pcState == PlayerState_Unk74)
+    {
+        var_s7 = g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP1_S02;
+    }
+    if (var_s7)
+    {
+        Collision_Get(&coll, chara->position_18.vx, chara->position_18.vz);
+        temp_s2 = Math_Sin(chara->headingAngle_3C);
+        temp_s2 = FP_MULTIPLY(chara->moveSpeed_38, temp_s2, Q12_SHIFT);
+
+        temp_s0 = Math_Cos(chara->headingAngle_3C);
+        temp_s0 = FP_MULTIPLY(chara->moveSpeed_38, temp_s0, Q12_SHIFT);
+
+        temp_s3 = Math_Cos(ABS(coll.field_4) >> 3);
+        temp_v0 = Math_Cos(ABS(coll.field_6) >> 3);
+
+        var_s0 = FP_MULTIPLY(FP_MULTIPLY(temp_s2, temp_s3, Q12_SHIFT), temp_s3, Q12_SHIFT);
+        var_v1 = FP_MULTIPLY(FP_MULTIPLY(temp_s0, temp_v0, Q12_SHIFT), temp_v0, Q12_SHIFT);
+    } 
+    else
+    {
+        var_s0 = FP_MULTIPLY(chara->moveSpeed_38, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
+        var_v1 = FP_MULTIPLY(chara->moveSpeed_38, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
+    }
+    if (chara->moveSpeed_38 >= 0)
+    {
+        chara->moveSpeed_38 = SquareRoot0(SQUARE(var_s0) + SQUARE(var_v1));
+    } 
+    else 
+    {
+        chara->moveSpeed_38 = -SquareRoot0(SQUARE(var_s0) + SQUARE(var_v1));
+    }
+
+    moveSpeed = chara->moveSpeed_38;
+    angle     = chara->headingAngle_3C;
+    step = FP_MULTIPLY_PRECISE(moveSpeed, g_DeltaTime0, Q12_SHIFT);
+    
+    overflow = OVERFLOW_GUARD(step);
+    scale    = overflow >> 1;
+
+    vec.vx = (s32)FP_MULTIPLY_PRECISE(step >> scale, Math_Sin(angle) >> scale, Q12_SHIFT) << overflow;
+    vec.vz = (s32)FP_MULTIPLY_PRECISE(step >> scale, Math_Cos(angle) >> scale, Q12_SHIFT) << overflow;
+    vec.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
+
+    if (var_s7)
+    {
+        func_80069B24(&D_800E39BC.field_0, &vec, chara);
+        chara->position_18.vx += D_800E39BC.field_0.vx;
+        chara->position_18.vy += D_800E39BC.field_0.vy;
+        chara->position_18.vz += D_800E39BC.field_0.vz;
+        if (D_800E39BC.field_14 == 0)
+        {
+            D_800E39BC.field_C = chara->properties_E4.player.positionY_EC;
+        }
+        if (chara->position_18.vy > D_800E39BC.field_C) 
+        {
+            chara->position_18.vy = D_800E39BC.field_C;
+            chara->field_34 = 0;
+        }
+    } 
+    else
+    {
+        chara->position_18.vx += vec.vx;
+        chara->position_18.vz += vec.vz;
+        pcState = g_SysWork.player_4C.extra_128.state_1C;
+        if ((pcState < PlayerState_Unk87) || ((pcState >= PlayerState_Unk89) && (pcState != PlayerState_Unk106)))
+        {
+            chara->position_18.vy = 0;
+        }
+
+        chara->field_34 = 0;
+    }
+    if (g_DeltaTime0 == 0)
+    {
+        chara->rotationSpeed_2C.vy = 0;
+    }
+    else
+    {
+        chara->rotationSpeed_2C.vy = (sharedData_800E39D8_0_s00 << 8) / g_DeltaTime0;
+    }
+    coords->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
+    coords->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
+    coords->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
+}
 
 #include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800D209C
 
