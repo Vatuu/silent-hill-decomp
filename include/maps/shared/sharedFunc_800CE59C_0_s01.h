@@ -154,4 +154,7 @@ void sharedFunc_800CE59C_0_s01(s_Particle* parts)
             }
         }
     }
+#if defined(MAP0_S00)
+    sharedData_800E32CC_0_s00 = sharedData_800DD58C_0_s00;
+#endif
 }
