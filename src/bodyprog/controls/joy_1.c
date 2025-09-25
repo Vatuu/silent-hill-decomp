@@ -240,7 +240,7 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, s32 arg1) // 0x80034
         }
     }
 
-    cont->field_24 = normalizedAnalogData;
+    cont->sticks_24.rawData_0 = normalizedAnalogData;
     cont->field_28 = processedInputFlags;
 }
 

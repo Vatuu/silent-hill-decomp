@@ -1758,6 +1758,30 @@ typedef struct
     u8          unk_B;
 } s_800AE4DC;
 
+typedef struct
+{
+    u8 field_0;
+    u8 field_1;
+    u8 field_2;
+    u8 field_3;
+} s_800AE8A0_0;
+
+typedef struct
+{
+    s8 field_0;
+    s8 field_1;
+    u8 field_2;
+    u8 field_3;
+} s_800AE8A0_4;
+
+typedef struct
+{
+    POLY_FT4*    field_0;
+    s_800AE8A0_0 field_4;
+    s_800AE8A0_4 field_8;
+    s32          field_C;
+} s_func_80068E0C;
+
 // ========
 // GLOBALS
 // ========
@@ -2064,7 +2088,9 @@ extern s16 D_800AE5F0[];
 
 extern u8 D_800AE700[];
 
-extern u8 D_800AE740[];
+extern u8 D_800AE740[][2];
+
+extern s32 D_800AE770;
 
 /** Angle? */
 extern s16 D_800AF210;
@@ -2405,6 +2431,18 @@ extern u16 g_LoadedEffectTextureFlags;
 extern s16 D_800C4408;
 
 extern s8 D_800C4414;
+
+extern u8 D_800C4448;
+
+extern u8 D_800C4449;
+
+extern s8 D_800C444A;
+
+extern s32 D_800C444C;
+
+extern s32 D_800C4450;
+
+extern s16 D_800C4454;
 
 extern s_SubCharacter* D_800C4458;
 
@@ -3532,7 +3570,13 @@ void func_80066E40();
 
 void func_80066E7C();
 
+s32 func_80067914(s32 arg0, u16 arg1, u16 arg2, u16 arg3);
+
 bool func_80068CC0(s32 arg0);
+
+s32 func_80068E0C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4, u16 arg5, u16 arg6);
+
+void func_800692A4(u16 arg0, u16 arg1, u16 arg2);
 
 void func_800697EC();
 
