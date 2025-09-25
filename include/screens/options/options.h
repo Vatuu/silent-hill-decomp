@@ -375,7 +375,7 @@ void Options_BrightnessMenu_ArrowsDraw(void);
  * @param line Reference line for the position and width of the highlight.
  * @param hasShadow If a shadow is to be drawn along with an underline.
  *                  `true` for a shadow, `false` for no shadow.
- * @param invertGradient Whether to invert the color gradient of the underline. Non-functional.
+ * @param invertGradient @unused Whether to invert the color gradient of the underline. Non-functional.
  */
 void Options_Selection_HighlightDraw(s_Line2d* line, bool hasShadow, bool invertGradient);
 

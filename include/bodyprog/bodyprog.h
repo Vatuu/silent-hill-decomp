@@ -2534,7 +2534,7 @@ void func_80032D1C();
 /** Bodyprog entrypoint. Called by `main`. */
 void MainLoop();
 
-void Chara_PositionUpdateFromParams(s_MapPoint2d* params);
+void Chara_PositionUpdateFromParams(s_MapPoint2d* mapPoint);
 
 void func_8003943C();
 
@@ -3857,11 +3857,11 @@ void func_80037334();
 
 void func_80037388();
 
-bool func_800378D4(s_MapPoint2d* areaLoadParams);
+bool func_800378D4(s_MapPoint2d* mapPoint);
 
-bool func_80037A4C(s_MapPoint2d* areaLoadParams);
+bool func_80037A4C(s_MapPoint2d* mapPoint);
 
-bool func_80037C5C(s_MapPoint2d* areaLoadParams);
+bool func_80037C5C(s_MapPoint2d* mapPoint);
 
 void func_80037DC4(s_SubCharacter* chara);
 

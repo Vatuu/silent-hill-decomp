@@ -1723,32 +1723,32 @@ void func_80037188() // 0x80037188
     }
 }
 
-void Chara_PositionUpdateFromParams(s_MapPoint2d* params) // 0x800371E8
+void Chara_PositionUpdateFromParams(s_MapPoint2d* mapPoint) // 0x800371E8
 {
     s32 rotY;
 
-    rotY = FP_ANGLE_FROM_PACKED(params->data.areaLoad.rotationY_4_16);
+    rotY = FP_ANGLE_FROM_PACKED(mapPoint->data.areaLoad.rotationY_4_16);
     Math_SVectorSet(&g_SysWork.player_4C.chara_0.rotation_24, FP_ANGLE(0.0f), rotY, FP_ANGLE(0.0f));
 
     g_SysWork.player_4C.chara_0.position_18.vy = Q12(0.0f);
-    g_SysWork.player_4C.chara_0.position_18.vx = params->positionX_0;
-    g_SysWork.player_4C.chara_0.position_18.vz = params->positionZ_8;
+    g_SysWork.player_4C.chara_0.position_18.vx = mapPoint->positionX_0;
+    g_SysWork.player_4C.chara_0.position_18.vz = mapPoint->positionZ_8;
 
-    if (params->data.areaLoad.field_4_24 >= 2)
+    if (mapPoint->data.areaLoad.field_4_24 >= 2)
     {
         g_SysWork.player_4C.chara_0.position_18.vx += FP_MULTIPLY_FLOAT_PRECISE(Math_Sin(rotY), 0.4f, Q12_SHIFT);
         g_SysWork.player_4C.chara_0.position_18.vz += FP_MULTIPLY_FLOAT_PRECISE(Math_Cos(rotY), 0.4f, Q12_SHIFT);
     }
 
-    g_SysWork.loadingScreenIdx_2281 = params->data.areaLoad.loadingScreenId_4_9;
+    g_SysWork.loadingScreenIdx_2281 = mapPoint->data.areaLoad.loadingScreenId_4_9;
 
-    if (params->data.areaLoad.mapIdx_4_0 == 24)
+    if (mapPoint->data.areaLoad.mapIdx_4_0 == 24)
     {
         g_SavegamePtr->current2dMapIdx_A9 = Current2dMap_OtherPlaces;
     }
-    else if (params->data.areaLoad.mapIdx_4_0 != Current2dMap_OtherPlaces)
+    else if (mapPoint->data.areaLoad.mapIdx_4_0 != Current2dMap_OtherPlaces)
     {
-        g_SavegamePtr->current2dMapIdx_A9 = params->data.areaLoad.mapIdx_4_0;
+        g_SavegamePtr->current2dMapIdx_A9 = mapPoint->data.areaLoad.mapIdx_4_0;
     }
 
     g_SysWork.cameraAngleY_237A = rotY;
@@ -1912,7 +1912,7 @@ bool func_80037A4C(s_MapPoint2d* mapPoint) // 0x80037A4C
     return false;
 }
 
-bool func_80037C5C(s_MapPoint2d* areaLoadParams) // 0x80037C5C
+bool func_80037C5C(s_MapPoint2d* mapPoint) // 0x80037C5C
 {
     s32 sinAngle;
     s32 cosAngle;
@@ -1924,15 +1924,15 @@ bool func_80037C5C(s_MapPoint2d* areaLoadParams) // 0x80037C5C
     s32 scale;
     u32 temp;
 
-    shift8Field_7 = areaLoadParams->data.areaLoad.field_4_24 << 8;
-    deltaX        = g_SysWork.player_4C.chara_0.position_18.vx - areaLoadParams->positionX_0;
+    shift8Field_7 = mapPoint->data.areaLoad.field_4_24 << 8;
+    deltaX        = g_SysWork.player_4C.chara_0.position_18.vx - mapPoint->positionX_0;
 
-    if (areaLoadParams->data.areaLoad.field_4_24 << 9 < ABS(deltaX))
+    if (mapPoint->data.areaLoad.field_4_24 << 9 < ABS(deltaX))
     {
         return false;
     }
 
-    deltaZ = g_SysWork.player_4C.chara_0.position_18.vz - areaLoadParams->positionZ_8;
+    deltaZ = g_SysWork.player_4C.chara_0.position_18.vz - mapPoint->positionZ_8;
     scale  = 2;
 
     if ((shift8Field_7 * scale) < ABS(deltaZ))
@@ -1940,11 +1940,11 @@ bool func_80037C5C(s_MapPoint2d* areaLoadParams) // 0x80037C5C
         return false;
     }
 
-    angle    = -(areaLoadParams->data.areaLoad.rotationY_4_16 << 20) >> 16;
+    angle    = -(mapPoint->data.areaLoad.rotationY_4_16 << 20) >> 16;
     sinAngle = Math_Sin(angle);
 
     temp = FP_FROM((-deltaX * sinAngle) + (deltaZ * Math_Cos(angle)), Q12_SHIFT);
-    if (temp > 0x4000)
+    if (temp > Q12(4.0f))
     {
         return false;
     }
@@ -1964,7 +1964,7 @@ bool func_80037C5C(s_MapPoint2d* areaLoadParams) // 0x80037C5C
 
 void func_80037DC4(s_SubCharacter* chara) // 0x80037DC4
 {
-    if (g_SavegamePtr->gameDifficulty_260 <= GameDifficulty_Normal || func_80080514() >= 1228)
+    if (g_SavegamePtr->gameDifficulty_260 <= GameDifficulty_Normal || func_80080514() >= FP_ANGLE(108.0f))
     {
         g_SavegamePtr->field_B0[g_SavegamePtr->mapOverlayId_A4] &= ~(1 << chara->field_40);
     }

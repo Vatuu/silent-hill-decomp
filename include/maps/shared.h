@@ -2207,7 +2207,7 @@ typedef struct
     MATRIX*        matrices_C;
 } s_sharedData_800E21D0_0_s01;
 
-extern s_MapPoint2d g_MapAreaLoadParams[];
+extern s_MapPoint2d MAP_POINTS[];
 
 extern s_SfxVolume g_SfxVolumes[46];
 

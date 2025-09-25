@@ -70,7 +70,7 @@ g_GameState_SaveScreen_Funcs       = 0x801E7524;
 g_SaveWriteOption                  = 0x801E753C;
 g_IsSaveSelected                   = 0x801E7540;
 g_GameState_DeathLoadScreen_Funcs  = 0x801E7544;
-g_SaveWriteOptionSelected          = 0x801E755C;
+g_IsSaveWriteOptionSelected        = 0x801E755C;
 g_HiddenElementsByDisplacement     = 0x801E7570;
 g_Gfx_SelectedSaveOffsetsY         = 0x801E7578;
 

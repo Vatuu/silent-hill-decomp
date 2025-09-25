@@ -316,7 +316,6 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800D70C4_0_s00
 
 #include "maps/shared/sharedFunc_800D7E04_0_s00.h" // 0x800D7E04
 
-// `arg2` = another `s_SubCharacter`?
 void Ai_Cheryl_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D7FB8
 {
     if (chara->model_0.charaId_0 != Chara_Cheryl)
@@ -577,25 +576,25 @@ void func_800D9610(void) // 0x800D9610
 {
     VECTOR3       posCpy;
     VECTOR3       pos;
-    s_MapPoint2d* areaLoadParams0;
-    s_MapPoint2d* areaLoadParams1;
+    s_MapPoint2d* mapPoint0;
+    s_MapPoint2d* mapPoint;
     s_EventParam* eventParam;
 
     // @hack Permuter finds.
     do {} while (false);
     eventParam = g_MapEventParam;
-    areaLoadParams0 = &g_MapAreaLoadParams;
-    areaLoadParams1 = areaLoadParams0;
+    mapPoint0 = &MAP_POINTS;
+    mapPoint = mapPoint0;
 
-    pos.vx = g_MapAreaLoadParams[eventParam->field_5].positionX_0;
+    pos.vx = MAP_POINTS[eventParam->field_5].positionX_0;
     pos.vy = Q12(-1.2f);
-    pos.vz = g_MapAreaLoadParams[eventParam->field_5].positionZ_8;
+    pos.vz = MAP_POINTS[eventParam->field_5].positionZ_8;
     posCpy = pos;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00(areaLoadParams1, eventParam);
+            sharedFunc_800D20E4_0_s00(mapPoint, eventParam);
             func_8005DC1C(Sfx_Unk1355, &posCpy, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement();
 
