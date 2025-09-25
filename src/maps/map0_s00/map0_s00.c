@@ -48,7 +48,42 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800CEB24_0_s00
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800CEFF4_0_s00); // 0x800CEFF4
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CF7AC);
+void func_800CF7AC(s32 arg0, s_Particle* arg1, u16* arg2, s32* arg3)
+{
+    s16 temp_v0_2;
+    s16 temp_v1;
+    s32 partCpy2;
+    s32 temp_v0_3;
+    s_Particle *partCpy;
+    u16 random0;
+
+    partCpy = arg1;
+    switch (arg0)
+    {
+    case 0:
+        arg1->movement_18.vx +=((*arg2 % 15) - 7);
+        random0 = Rng_Rand16();
+        *arg2 = random0;
+        partCpy->movement_18.vz += (random0  % 15) - 7;
+        partCpy2 = 4;
+        partCpy->movement_18.vy += (*arg2 % 5) -1;
+        partCpy->position0_0.vy += (((partCpy->movement_18.vy << 0x10) >> 0x11) * partCpy2 * *arg3) / 136;
+
+        break;
+    case 1:
+        partCpy->position1_C.vx = partCpy->position0_0.vx;
+        partCpy->position1_C.vz = partCpy->position0_0.vz;
+        partCpy->position1_C.vy = partCpy->position0_0.vy - partCpy->movement_18.vy;
+        temp_v1 = partCpy->movement_18.vy + D_800E32D4;
+        partCpy->movement_18.vy = temp_v1;
+        partCpy->position0_0.vy += ((temp_v1 << 2) * *arg3) / 136;
+        break;
+    }
+    if (partCpy->position0_0.vy >= 0)
+    {
+        partCpy->position0_0.vy = 0;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800CEFD0_1_s02); // 0x800CF974
 
@@ -291,13 +326,135 @@ void Ai_Cheryl_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2*
     func_800D802C(chara, anmHdr, coords); // Modulate speed and something else?
 }
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D802C);
+void func_800D802C(s_SubCharacter* arg0, s_AnmHeader* arg1, GsCOORDINATE2* arg2)
+{
+    s32 speed;
+    s32 animDur;
+    s_AnimInfo* animInfo;
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8124);
+    if (arg0->properties_E4.player.afkTimer_E8 == 1)
+    {
+        D_800DF1CC = FP_MULTIPLY_PRECISE(arg0->moveSpeed_38, 0x1e333, 12);
+    }
+
+    speed = MIN(arg0->moveSpeed_38, Q12(2.5f));
+    arg0->moveSpeed_38 = speed;
+
+    if (arg0->properties_E4.player.afkTimer_E8 == 2)
+    {
+        // @hack KAUFMAN anim in map0_s00 ? this might be a different anim table after all.
+        animInfo = KAUFMANN_ANIM_INFOS;
+        if (speed <= Q12(1.5f))
+        {
+            animDur = FP_MULTIPLY_PRECISE(speed, Q12(18.6), 12);
+        } else
+        {
+            animDur = Q12(27.8999f);
+        }
+        animInfo[7].duration_8.constant = animDur;
+    }
+    if (!arg0->properties_E4.player.field_F0)
+    {
+        KAUFMANN_ANIM_INFOS[arg0->model_0.anim_4.status_0].
+            updateFunc_0(&arg0->model_0, arg1, arg2, 
+                    &KAUFMANN_ANIM_INFOS[arg0->model_0.anim_4.status_0]);
+    }
+}
+
+void func_800D8124(s_SubCharacter* chara, GsCOORDINATE2* coord)
+{
+    VECTOR3 unused;
+    VECTOR3 vec;
+    s32     moveSpeed;
+    s16     headingAngle;
+    s32     moveAmt;
+    s32     scaleRestoreShift;
+    u32     scaleReduceShift;
+
+    unused       = chara->position_18;
+    moveSpeed    = chara->moveSpeed_38;
+    headingAngle = chara->headingAngle_3C;
+    moveAmt      = FP_MULTIPLY_PRECISE(moveSpeed, g_DeltaTime0, Q12_SHIFT);
+
+    scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
+    scaleReduceShift  = scaleRestoreShift >> 1;
+
+    vec.vx = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    vec.vz = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    vec.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
+
+    func_80069B24(&D_800E39BC, &vec, chara);
+
+    chara->position_18.vx += vec.vx;
+    chara->position_18.vy += D_800E39BC.field_0.vy;
+    chara->position_18.vz += vec.vz;
+
+    if (chara->position_18.vy > D_800E39BC.field_C)
+    {
+        chara->position_18.vy = D_800E39BC.field_C;
+        chara->field_34 = 0;
+    }
+
+    coord->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
+    coord->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
+    coord->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8310);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8748);
+s32 func_800D8748(s32 arg0, s_SubCharacter* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x800D8748
+{
+    u32 var_a0;
+    u32 temp_a2;
+
+    if (arg1->model_0.anim_4.status_0 == arg0) 
+    {
+        if (arg4 > 0x3D08FF)
+        {
+            if (arg4 <= 0xB71B00)
+            {
+                var_a0 = arg4;
+            }
+            else
+            {
+                var_a0 = 0xB71B00;
+            }
+        }
+        else
+        {
+            var_a0 = 0x3D0900;
+        }
+        temp_a2 = (0xB71B00 - var_a0) >> 0x10;
+        if (arg1->model_0.anim_4.keyframeIdx_8 >= arg3)
+        {
+            if (!(arg1->properties_E4.player.flags_11C & PlayerFlag_Unk4))
+            {
+                func_8005DD44(0x549, &arg1->position_18, temp_a2 & 0xFF, arg5);
+                arg1->properties_E4.player.flags_11C |= PlayerFlag_Unk4;
+                return 1;
+            }
+        }
+        else
+        {
+            arg1->properties_E4.player.flags_11C &= ~PlayerFlag_Unk4;
+        }
+
+        if (arg1->model_0.anim_4.keyframeIdx_8 >= arg2)
+        {
+            if (!(arg1->properties_E4.player.flags_11C & PlayerFlag_Unk5))
+            {
+                func_8005DD44(0x549, &arg1->position_18, temp_a2 & 0xFF, arg5);
+                arg1->properties_E4.player.flags_11C |= PlayerFlag_Unk5;
+                return 1;
+            }
+        }
+        else
+        {
+            arg1->properties_E4.player.flags_11C &= ~PlayerFlag_Unk5;
+        }
+    }
+    return 0;
+}
 
 void Ai_Cheryl_Init(s_SubCharacter* chara) // 0x800D8888
 {

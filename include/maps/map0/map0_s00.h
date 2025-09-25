@@ -82,6 +82,12 @@ extern u8 D_800DF2F8;
 
 extern s16 D_800DF300[];
 
+extern s32 D_800DF1CC;
+
+extern s_800C4590 D_800E39BC;
+
+extern u16 D_800E32D4;
+
 void func_800CBFB0(void);
 
 void func_800D0124();
@@ -187,5 +193,11 @@ void func_800DB514(void);
 void func_800DB870(void);
 
 void func_800CB6B0(s32 arg0, s8 mapId, s32 arg2);
+
+void func_800D802C(s_SubCharacter* arg0, s_AnmHeader* arg1, GsCOORDINATE2* arg2);
+
+void func_800D8124(s_SubCharacter* chara, GsCOORDINATE2* coord);
+
+s32 func_800D8748(s32 arg0, s_SubCharacter* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
 #endif
