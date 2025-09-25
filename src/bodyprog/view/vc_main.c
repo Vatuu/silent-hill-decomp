@@ -392,7 +392,7 @@ s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVEC
     s32 rot_x;
     s32 rot_y;
 
-    intrpt = FP_TO(g_DeltaTime0, Q12_SHIFT) / FP_FLOAT_TO(1.0f / TICKS_PER_SECOND, Q12_SHIFT);
+    intrpt = FP_TO(g_DeltaTime0, Q12_SHIFT) / Q12(1.0f / TICKS_PER_SECOND);
     intrpt = CLAMP(intrpt, INTRPT_TIME_MIN, INTRPT_TIME_MAX);
 
     mv_vec = Vc_VectorMagnitudeCalc(Q12_TO_Q8(now_pos->vx - old_pos->vx),

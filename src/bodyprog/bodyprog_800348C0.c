@@ -888,7 +888,7 @@ void func_80035ED0() // 0x80035ED0
 
     if (!func_80045BC8())
     {
-        g_SysWork.field_2748[0] = FP_FLOAT_TO(1.0f, Q12_SHIFT);
+        g_SysWork.field_2748[0] = Q12(1.0f);
     }
 
     g_SysWork.field_2748[8] = 0;
@@ -960,11 +960,11 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
             var_t0 = FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime1, 0.25f, Q12_SHIFT);
             if (g_SysWork.field_22A0 & (1 << 1)) 
             {
-                var_a0 = FP_FLOAT_TO(1.0f, Q12_SHIFT);
+                var_a0 = Q12(1.0f);
             } 
             else if (g_SysWork.field_22A0 & (1 << 2)) 
             {
-                var_a0 = FP_FLOAT_TO(0.75f, Q12_SHIFT);
+                var_a0 = Q12(0.75f);
             } 
             else 
             {
@@ -976,12 +976,12 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
             if ((var_s1 >> i) & (1 << 0)) 
             {
                 var_t0 = FP_MULTIPLY(g_DeltaTime1, arg1, Q12_SHIFT - 1); // Should be multiplied by 2 but doesn't match.
-                var_a0 = FP_FLOAT_TO(1.0f, Q12_SHIFT);
+                var_a0 = Q12(1.0f);
             } 
             else 
             {
                 var_t0 = FP_MULTIPLY(g_DeltaTime1, arg1, Q12_SHIFT);
-                var_a0 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+                var_a0 = Q12(0.0f);
             }
         }
 
@@ -1007,7 +1007,7 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
     }
 
     var_s3  = 0;
-    temp_v0 = FP_FLOAT_TO(1.0f, Q12_SHIFT) - ptr[8];
+    temp_v0 = Q12(1.0f) - ptr[8];
 
     for (i = 0; i < 8; i++)
     {
@@ -1212,7 +1212,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
         hasInput = true;
     }
 
-    g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = FP_FLOAT_TO(0.0f, Q12_SHIFT);
+    g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(0.0f);
     func_8004C564(g_SysWork.playerCombatInfo_38.equippedWeapon_F, EquippedWeaponId_RockDrill);
 
     if (g_MapMsg_MainIdx != mapMsgIdx)
@@ -2375,15 +2375,15 @@ void func_8003943C()
 
     func_8008B3E4(0);
 
-    if (g_SysWork.field_275C > FP_TO(256, Q12_SHIFT))
+    if (g_SysWork.field_275C > Q12(256.0f))
     {
-        val0        = g_SysWork.field_275C - FP_TO(256, Q12_SHIFT);
+        val0        = g_SysWork.field_275C - Q12(256.0f);
         roundedVal0 = FP_ROUND_TO_ZERO(val0, Q12_SHIFT);
         func_8008B438(g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill, roundedVal0, 0);
 
         if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill)
         {
-            val1        = g_SysWork.field_2764 - FP_TO(256, Q12_SHIFT);
+            val1        = g_SysWork.field_2764 - Q12(256.0f);
             roundedVal1 = FP_ROUND_TO_ZERO(val1, Q12_SHIFT);
             func_8008B40C(roundedVal1, 0);
         }

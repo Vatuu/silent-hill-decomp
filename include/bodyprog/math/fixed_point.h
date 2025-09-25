@@ -27,7 +27,7 @@
  * @param shift Fixed-point shift.
  * @return `x` converted to fixed-point (`s32`).
  */
-#define FP_FLOAT_TO(x, shift) \
+#define TO_FIXED(x, shift) \
     (s32)((x) * (1 << (shift)))
 
 /** @brief Converts an integer from a fixed-point Q format.
@@ -47,7 +47,7 @@
  * @return `x` rounded and converted from fixed-point.
  */
 #define FP_ROUND_SCALED(x, scale, shift) \
-    (((x) + ((FP_FLOAT_TO(1.0f, shift) * (scale)) - 1)) / (FP_FLOAT_TO(1.0f, shift) * (scale)))
+    (((x) + ((TO_FIXED(1.0f, shift) * (scale)) - 1)) / (TO_FIXED(1.0f, shift) * (scale)))
 
 /** @brief Converts an integer from a fixed-point Q format rounded toward 0.
  *
@@ -86,7 +86,7 @@
  * @return Fixed-point product of `a` and `b`.
  */
 #define FP_MULTIPLY_FLOAT(aInt, bFlt, shift) \
-    FP_MULTIPLY(aInt, FP_FLOAT_TO(bFlt, shift), shift)
+    FP_MULTIPLY(aInt, TO_FIXED(bFlt, shift), shift)
 
 /** @brief Multiplies an integer in a fixed-point Q format by a float converted to fixed-point Q format,
  * using a 64-bit intermediates for higher precision.
@@ -97,7 +97,7 @@
  * @return Precise product of `a` and `b` converted from fixed-point.
  */
 #define FP_MULTIPLY_FLOAT_PRECISE(aInt, bFlt, shift) \
-    FP_MULTIPLY((s64)(aInt), (s64)FP_FLOAT_TO(bFlt, shift), shift)
+    FP_MULTIPLY((s64)(aInt), (s64)TO_FIXED(bFlt, shift), shift)
 
 /** @brief Computes the square 2D distance between two positions in Q19.12 fixed-point,
  * using Q21.8 fixed-point intermediates to avoid overflow.
@@ -120,7 +120,7 @@
  * @return `x` converted to Q*.4 fixed-point.
  */
 #define Q4(x) \
-    FP_FLOAT_TO(x, Q4_SHIFT)
+    TO_FIXED(x, Q4_SHIFT)
 
 /** @brief Converts a floating-point value to Q*.8 fixed-point.
  *
@@ -128,7 +128,7 @@
  * @return `x` converted to Q*.8 fixed-point.
  */
 #define Q8(x) \
-    FP_FLOAT_TO(x, Q8_SHIFT)
+    TO_FIXED(x, Q8_SHIFT)
 
 /** @brief Converts a floating-point value to clamped Q*.8 fixed-point.
  *
@@ -136,7 +136,7 @@
  * @return `x` converted to clamped Q*.8 fixed-point.
  */
 #define Q8_CLAMPED(x) \
-    CLAMP(FP_FLOAT_TO(x, Q8_SHIFT), 0, FP_FLOAT_TO(1.0f, Q8_SHIFT) - 1)
+    CLAMP(Q8(x), 0, Q8(1.0f) - 1)
 
 /** @brief Converts a floating-point value to Q*.12 fixed-point.
  *
@@ -144,7 +144,7 @@
  * @return `x` converted to Q*.12 fixed-point.
  */
 #define Q12(x) \
-    FP_FLOAT_TO(x, Q12_SHIFT)
+    TO_FIXED(x, Q12_SHIFT)
 
 /** @brief Converts a fixed-point value from Q*.4 to Q*.12.
  *
@@ -195,9 +195,9 @@
  * @param analog Analog stick value (`float`).
  * @return Analog stick value in Q0.7 fixed-point, clamped integer range `[-128, 127]`.
  */
-#define FP_STICK(analog)                                                                                        \
-    (s8)(((analog) >= 0) ? CLAMP(FP_FLOAT_TO(analog, Q8_SHIFT) / 2, 0, (FP_FLOAT_TO(1.0f, Q8_SHIFT) / 2) - 1) : \
-                          -CLAMP(FP_FLOAT_TO(ABS(analog), Q8_SHIFT) / 2, 0, FP_FLOAT_TO(1.0f, Q8_SHIFT) / 2))
+#define FP_STICK(analog)                                                  \
+    (s8)(((analog) >= 0) ? CLAMP(Q8(analog) / 2, 0, (Q8(1.0f) / 2) - 1) : \
+                          -CLAMP(Q8(ABS(analog)) / 2, 0, Q8(1.0f) / 2))
 
 /** @brief Converts a normalized floating-point color component in the range `[0.0f, 1.0f]` to Q0.8 fixed-point, integer range `[0, 255]`.
  *

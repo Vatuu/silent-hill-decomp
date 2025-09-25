@@ -11,11 +11,11 @@ void sharedSymbol_800D0ECC_3_s03(s_SubCharacter* chara)
 
     if (IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0))
     {
-        chara->properties_E4.larvalStalker.properties_E8[2].val32 = FP_FLOAT_TO(0.30f, Q12_SHIFT);
+        chara->properties_E4.larvalStalker.properties_E8[2].val32 = Q12(0.3f);
     }
     else
     {
-        chara->properties_E4.larvalStalker.properties_E8[2].val32 = FP_FLOAT_TO(0.75f, Q12_SHIFT);
+        chara->properties_E4.larvalStalker.properties_E8[2].val32 = Q12(0.75f);
     }
 #endif
 }

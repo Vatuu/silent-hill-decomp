@@ -75,7 +75,7 @@
  * @return Fixed-point product of `a` and `b`.
  */
 #define Math_MultiplyFloatPrecise(a, b, shift) \
-    Math_MulFixed(a, FP_FLOAT_TO(b, shift), shift)
+    Math_MulFixed(a, TO_FIXED(b, shift), shift)
 
 /** @brief Computes the dot product(?) of the first column of a matrix with a vector in Q17.15(?).
  *
@@ -96,17 +96,6 @@
  */
 #define Math_Vector2MagCalc(x, z) \
     (SquareRoot0(SQUARE((x) >> 6) + SQUARE((z) >> 6)) << 6)
-    
-/** @brief Sets an `VECTOR3`'s components to `float`s converted to a fixed-point Q format.
- *
- * @param vec Output vector.
- * @param x X component (`float`).
- * @param y Y component (`float`).
- * @param z Z component (`float`).
- * @param shift Fixed-point shift.
- */
-#define Math_Vector3f(vec, x, y, z, shift) \
-    Math_Vector3Set(vec, FP_FLOAT_TO(x, shift), FP_FLOAT_TO(y, shift), FP_FLOAT_TO(z, shift))
 
 /** @brief Normalizes Q19.12 fixed-point degrees, unsigned integer range `[0, 4096]` to the signed integer range `[-2048, 2047]`.
  * Thin wrapper for `FP_ANGLE_NORM_S`.

@@ -248,7 +248,7 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
 
     chara2->properties_E4.larvalStalker.properties_E8[13].val32 = -1;
 
-    chara->field_D4 = FP_FLOAT_TO(0.3f, Q12_SHIFT);
+    chara->field_D4 = Q12(0.3f);
 
     chara->model_0.anim_4.alpha_A = Q12(0.0f);
 
@@ -394,7 +394,7 @@ void Ai_Twinfeeler_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINA
 
     if (chara->model_0.state_2 != 1 || Ai_Twinfeeler_Init(chara))
     {
-        if (g_DeltaTime0 != Q12(0.0))
+        if (g_DeltaTime0 != Q12(0.0f))
         {
             func_800D3E58(chara);
             func_800D53B0(chara, coords);

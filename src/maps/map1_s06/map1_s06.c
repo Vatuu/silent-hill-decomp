@@ -214,7 +214,7 @@ void func_800D63B0(void) // 0x800D63B0
 
 void Map_WorldObjectsInit(void) // 0x800D63D8
 {
-    Math_Vector3f(&D_800DAF84.position_1C.position_0, 20.4568f, -0.8345f, -17.97f, Q12_SHIFT);
+    Math_Vector3Set(&D_800DAF84.position_1C.position_0, Q12(20.4568f), Q12(-0.8345f), Q12(-17.97f));
     WorldObject_ModelNameSet(&D_800DAF84.object_0, "REDX_HID");
 
     WorldObjectPositionInit(&D_800DAFB4.position_1C, 20.9021f, -0.002f, -17.26f, 0.0f, -37.45f, 0.0f);

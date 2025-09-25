@@ -45,8 +45,8 @@ static const s8 D_80025EB0[] =
 
 void Game_TimerUpdate() // 0x8004C8DC
 {
-    #define TIME_290_HOURS        FP_TO(290 * 60 * 60, Q12_SHIFT)
-    #define TIME_130_HOURS        FP_TO(130 * 60 * 60, Q12_SHIFT)
+    #define TIME_290_HOURS        Q12(290.0f * 60.0f * 60.0f)
+    #define TIME_130_HOURS        Q12(130.0f * 60.0f * 60.0f)
     #define TIME_290_OVERFLOW_MAX 3 // `add290Hours_25C_1` has max value of 3.
 
     g_SavegamePtr->gameplayTimer_250 += g_DeltaTime1;

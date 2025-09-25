@@ -9,8 +9,8 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* chara)
     s32 newMoveSpeed1;
     s32 var_v1;
 
-    #define SPEED_0_9 FP_FLOAT_TO(0.9f, Q12_SHIFT)
-    #define SPEED_0_7 FP_FLOAT_TO(0.7f, Q12_SHIFT)
+    #define SPEED_0_9 Q12(0.9f)
+    #define SPEED_0_7 Q12(0.7f)
 
     // TODO: `chara->model_0.anim_4.status_0 == ANIM_STATUS(30, false)` doesn't match?
     if (ANIM_STATUS_IDX_GET(chara->model_0.anim_4.status_0) == 30)

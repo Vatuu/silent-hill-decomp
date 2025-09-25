@@ -105,12 +105,12 @@ void MainLoop() // 0x80032EE0
     #define TICKS_PER_SECOND_MIN (TICKS_PER_SECOND / 4)
     #define H_BLANKS_PER_TICK    263
 
-    #define H_BLANKS_PER_SECOND               (H_BLANKS_PER_TICK * TICKS_PER_SECOND)              // 15780
+    #define H_BLANKS_PER_SECOND               (H_BLANKS_PER_TICK * TICKS_PER_SECOND)          // 15780
     #define H_BLANKS_TO_SEC_CONVERSION_FACTOR ((float)Q12(1.0f) / (float)H_BLANKS_PER_SECOND) // 0.25956907477f
 
-    #define H_BLANKS_PER_FRAME_MIN   (H_BLANKS_PER_SECOND / TICKS_PER_SECOND_MIN)                    // 1052
+    #define H_BLANKS_PER_FRAME_MIN   (H_BLANKS_PER_SECOND / TICKS_PER_SECOND_MIN)                // 1052
     #define H_BLANKS_FP_TO_SEC_SCALE (s32)(H_BLANKS_TO_SEC_CONVERSION_FACTOR * (float)Q12(1.0f)) // 1063
-    #define H_BLANKS_UNKNOWN_SCALE   10419                                                           // TODO: Somehow derive this value.
+    #define H_BLANKS_UNKNOWN_SCALE   10419                                                       // TODO: Somehow derive this value.
     #define V_BLANKS_MAX             4
 
     s32 vBlanks;

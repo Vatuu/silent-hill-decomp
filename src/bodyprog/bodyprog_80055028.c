@@ -246,7 +246,7 @@ s32 func_800557DC() // 0x800557DC
 
 void func_80055814(s32 arg0) // 0x80055814
 {
-    D_800C4168.fogRelated_18 = FP_FLOAT_TO(1.0f, Q12_SHIFT) - func_800559A8(arg0);
+    D_800C4168.fogRelated_18 = Q12(1.0f) - func_800559A8(arg0);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80055840); // 0x80055840
@@ -2589,7 +2589,7 @@ void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3) // 0x800625F4
     g_MapOverlayHeader.unkTable1_4C[idx].field_D  = var;
     g_MapOverlayHeader.unkTable1_4C[idx].field_B  = Rng_TestProbabilityBits(2);
     g_MapOverlayHeader.unkTable1_4C[idx].field_C  = 6;
-    g_MapOverlayHeader.unkTable1_4C[idx].field_10 = arg3 * FP_FLOAT_TO(5.0f, Q12_SHIFT);
+    g_MapOverlayHeader.unkTable1_4C[idx].field_10 = arg3 * Q12(5.0f);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80062708); // 0x80062708
@@ -4534,14 +4534,14 @@ s16 func_8006CB90(s_func_8006CC44* arg0) // 0x8006CB90
 
     if (arg0->field_7C == 0x1E00)
     {
-        return FP_FLOAT_TO(1.0f, Q12_SHIFT);
+        return Q12(1.0f);
     }
 
     temp_v0 = func_8006CC44(arg0->field_4.field_20, arg0->field_4.field_24, arg0);
     if ((arg0->field_4.field_2C + arg0->field_4.field_C.vy) < temp_v0 ||
         temp_v0 == arg0->field_7C)
     {
-        return FP_FLOAT_TO(1.0f, Q12_SHIFT);
+        return Q12(1.0f);
     }
 
     return FP_TO(arg0->field_4.field_8, Q12_SHIFT) / SquareRoot0(SQUARE(arg0->field_4.field_8) +
