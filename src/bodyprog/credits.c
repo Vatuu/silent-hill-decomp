@@ -466,25 +466,25 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
     if (g_GameWork.gameStateStep_598[1] < 0x17)
     {
         Gfx_StringSetPosition(0x64, -0x54);
-        Gfx_StringDraw(D_8002B4C0[0], 0x14);
+        Gfx_StringDraw(D_8002B4C0[0], 20);
         Gfx_StringSetPosition(0x18, -0x38);
-        Gfx_StringDraw(D_8002B4C0[1], 0x14);
+        Gfx_StringDraw(D_8002B4C0[1], 20);
         
         switch (D_800C48D0) 
         {
             case -1:
                 Gfx_StringSetPosition(0xFC, -0x38);
-                Gfx_StringDraw(D_8002B4C0[2], 0x14);
+                Gfx_StringDraw(D_8002B4C0[2], 20);
                 break;
 
             case 0:
                 Gfx_StringSetPosition(0xDE, -0x38);
-                Gfx_StringDraw(D_8002B4C0[3], 0x14);
+                Gfx_StringDraw(D_8002B4C0[3], 20);
                 break;
 
             case 1:
                 Gfx_StringSetPosition(0xF7, -0x38);
-                Gfx_StringDraw(D_8002B4C0[4], 0x14);
+                Gfx_StringDraw(D_8002B4C0[4], 20);
                 break;
 
             default:
@@ -493,7 +493,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
         
         temp_s1 = func_8009134C(D_800C48A0);
         Gfx_StringSetPosition(0x18, 7);
-        Gfx_StringDraw(D_8002B4C0[5], 0x14);
+        Gfx_StringDraw(D_8002B4C0[5], 20);
         Gfx_StringSetPosition(0x11E - ((temp_s1 - 1) * 0xA), 7);
         Gfx_StringSetColor(D_800C48E0.field_2);
         Gfx_StringDrawInt(3, D_800C48A0);
@@ -501,7 +501,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
 
         temp_s1 = func_8009134C(D_800C48D1);
         Gfx_StringSetPosition(0x18, 0x1C);
-        Gfx_StringDraw(D_8002B4C0[6], 0x14);
+        Gfx_StringDraw(D_8002B4C0[6], 20);
         Gfx_StringSetPosition(0x11E - ((temp_s1 - 1) * 0xA), 0x1C);
         Gfx_StringSetColor(D_800C48E0.field_3);
         Gfx_StringDrawInt(3, D_800C48D1);
@@ -509,7 +509,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
 
         temp_s1 = func_8009134C(D_800C48A2);
         Gfx_StringSetPosition(0x18, 0x31);
-        Gfx_StringDraw(D_8002B4C0[7], 0x14);
+        Gfx_StringDraw(D_8002B4C0[7], 20);
         Gfx_StringSetPosition(0xDC - (temp_s1 * 0xA), 0x31);
         Gfx_StringSetColor(D_800C48E0.field_4);
         Gfx_StringDrawInt(5, D_800C48A2);
@@ -527,7 +527,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
 
         temp_s1 = func_8009134C(D_800C48A4);
         Gfx_StringSetPosition(0x18, 0x46);
-        Gfx_StringDraw(D_8002B4C0[13], 0x14);
+        Gfx_StringDraw(D_8002B4C0[13], 20);
         Gfx_StringSetPosition(0xE5 - ((temp_s1 - 1) * 0xA), 0x46);
         Gfx_StringDrawInt(4, D_800C48A4);
         Gfx_StringDraw(D_8002B4C0[11], 5);
@@ -588,40 +588,40 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
         
         temp_s1 = func_8009134C(D_800C48B0);
         Gfx_StringSetPosition(0x18, -0x23);
-        Gfx_StringDraw(D_8002B4C0[18], 0x14);
-        Gfx_StringSetPosition(0x11E - ((temp_s1 - 1) * 0xA), -0x23);
+        Gfx_StringDraw(D_8002B4C0[18], 20);
+        Gfx_StringSetPosition(0x11E - ((temp_s1 - 1) * 10), -0x23);
         Gfx_StringSetColor(D_800C48E0.field_1);
         Gfx_StringDrawInt(3, D_800C48B0);
         Gfx_StringSetColor(StringColorId_White);
         Gfx_StringSetPosition(0x18, -0xE);
-        Gfx_StringDraw(D_8002B4C0[19], 0x14);
+        Gfx_StringDraw(D_8002B4C0[19], 20);
         Gfx_StringSetColor(D_800C48E0.field_0);
 
         switch (D_800C48B2 & 0x1F)
         {
             case 1:
                 Gfx_StringSetPosition(0xEA, -0xE);
-                Gfx_StringDraw(D_8002B4C0[20], 0xA);
+                Gfx_StringDraw(D_8002B4C0[20], 10);
                 break;
 
             case 2:
                 Gfx_StringSetPosition(0xF4, -0xE);
-                Gfx_StringDraw(D_8002B4C0[21], 0xA);
+                Gfx_StringDraw(D_8002B4C0[21], 10);
                 break;
 
             case 4:
                 Gfx_StringSetPosition(0xF9, -0xE);
-                Gfx_StringDraw(D_8002B4C0[22], 0xA);
+                Gfx_StringDraw(D_8002B4C0[22], 10);
                 break;
 
             case 8:
                 Gfx_StringSetPosition(0x102, -0xE);
-                Gfx_StringDraw(D_8002B4C0[23], 0xA);
+                Gfx_StringDraw(D_8002B4C0[23], 10);
                 break;
 
             case 16:
                 Gfx_StringSetPosition(0x100, -0xE);
-                Gfx_StringDraw(D_8002B4C0[24], 0xA);
+                Gfx_StringDraw(D_8002B4C0[24], 10);
                 break;
 
             default:
@@ -631,13 +631,13 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
         Gfx_StringSetColor(StringColorId_White);
         Gfx_StringSetPosition(0x18, 0x9A);
         Gfx_StringDraw(D_8002B4C0[27], 0x20);
-        Gfx_StringSetPosition(0x128 - (func_8009134C(D_800C48B8) * 0xA), 0x9A);
+        Gfx_StringSetPosition(0x128 - (func_8009134C(D_800C48B8) * 10), 154);
         Gfx_StringSetColor(D_800C48E0.field_7);
         Gfx_StringDrawInt(4, D_800C48B8);
         Gfx_StringSetColor(StringColorId_White);
         Gfx_StringSetPosition(0x18, 0x85);
         Gfx_StringDraw(D_8002B4C0[28], 0x20);
-        Gfx_StringSetPosition(0x128 - (func_8009134C(D_800C48BA) * 0xA), 0x85);
+        Gfx_StringSetPosition(0x128 - (func_8009134C(D_800C48BA) * 10), 133);
         Gfx_StringSetColor(D_800C48E0.field_7);
         Gfx_StringDrawInt(4, D_800C48BA);
 

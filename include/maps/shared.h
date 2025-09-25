@@ -2207,7 +2207,7 @@ typedef struct
     MATRIX*        matrices_C;
 } s_sharedData_800E21D0_0_s01;
 
-extern s_AreaLoadParams g_MapAreaLoadParams[];
+extern s_MapPoint2d MAP_POINTS[];
 
 extern s_SfxVolume g_SfxVolumes[46];
 
@@ -2437,10 +2437,10 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 
 void sharedFunc_800D70C4_0_s00(s_SubCharacter*);
 
-void sharedFunc_800D7BE8_0_s00(s_SubCharacter*);
+void sharedFunc_800D7BE8_0_s00(s_SubCharacter* chara);
 
 /** Among other things, sets the players's anim to anim 3 (which might actually be flags if the field packs more data). */
-void sharedFunc_800D88C0_0_s00(s_SubCharacter* playerChara, s32 arg1);
+void sharedFunc_800D88C0_0_s00(s_SubCharacter* playerChara, bool arg1);
 
 /** Resets some player properties. */
 void sharedFunc_800D8904_0_s00(s_SubCharacter* playerChara, q19_12 afkTime);

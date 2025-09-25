@@ -29,6 +29,7 @@ struct _Model;
 #define SHOTGUN_AMMO_PICKUP_ITEM_COUNT 6
 #define RIFLE_AMMO_PICKUP_ITEM_COUNT   6
 
+#define DEFAULT_MAP_MESSAGE_LENGTH     99
 #define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400  /** Long string length is used to display a whole message instantly without a rollout. */
 #define GLYPH_TABLE_ASCII_OFFSET       '\'' /** Subtracted from ASCII bytes to get index to some string-related table. */
 
@@ -891,7 +892,7 @@ typedef struct _EventParam
     u8  field_5; // Something related to pickup items.
     u8  unk_6[2];
     u32 triggerType_8_0        : 5;
-    u32 pointOfInterestIdx_8_5 : 8; /** Index into `g_MapOverlayHeader.mapAreaLoadParams_1C`. */
+    u32 pointOfInterestIdx_8_5 : 8; /** Index into `g_MapOverlayHeader.mapPointsOfInterest_1C`. */
     u32 flags_8_13             : 6;
     u32 field_8_19             : 5;
     u32 field_8_24             : 1;
@@ -1011,8 +1012,8 @@ typedef struct _ModelAnim
     u8          maybeSomeState_1; // State says if `time_4` is anim time/anim status or a func ptr? That field could be a union.
     u16         flags_2;          /** `e_AnimFlags` */
     q19_12      time_4;           /** Time on timeline. */ 
-    s16         keyframeIdx_8;    /** Active keyframe. */
-    q3_12       alpha_A;          /** Frame progress alpha. */ 
+    s16         keyframeIdx_8;    /** Active keyframe index. */
+    q3_12       alpha_A;          /** Keyframe progress alpha. Rename to `keyframeAlpha_A`? */ 
     s_AnimInfo* animInfo_C;       // } Arrays of anim infos?
     s_AnimInfo* animInfo_10;      // }
 } s_ModelAnim;
@@ -1269,8 +1270,8 @@ STATIC_ASSERT_SIZEOF(s_StructUnk3, 52);
 
 typedef struct
 {
-    s32          field_0;
-    s8*          field_4;
+    s32          field_0; /** `e_PrimitiveType` */
+    s8*          field_4; /** Points to different types of data depending on `field_0`. */
     s32          field_8; // } Q19.12?
     s32          field_C; // }
     s32          field_10;
@@ -1278,7 +1279,7 @@ typedef struct
     u8           isFlashlightOn_15; /** `bool` | Off: `false`, On: `true`. */
     u8           field_16;          /** `bool` */
     s8           unk_17;
-    s16          flashlightIntensity_18;
+    q3_12        flashlightIntensity_18; // Alpha.
     u16          field_1A;
     s_StructUnk3 field_1C[2];
     s_StructUnk3 field_84[2];

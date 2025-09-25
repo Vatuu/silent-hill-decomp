@@ -184,7 +184,7 @@ s32 func_80055490(SVECTOR* arg0) // 0x80055490
     return D_800C4168.field_54;
 }
 
-void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1, SVECTOR* svec, s32 x, s32 y, s32 z, s_WaterZone* waterZones) // 0x800554C4
+void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1, SVECTOR* rot, q19_12 x, q19_12 y, q19_12 z, s_WaterZone* waterZones) // 0x800554C4
 {
     MATRIX   mat;
     SVECTOR  tempSvec;
@@ -198,12 +198,12 @@ void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coo
 
     if (coord0 == NULL)
     {
-        D_800C4168.field_58 = *svec;
+        D_800C4168.field_58 = *rot;
     }
     else
     {
         Vw_CoordHierarchyMatrixCompute(coord0, &mat);
-        ApplyMatrixSV(&mat, svec, &D_800C4168.field_58);
+        ApplyMatrixSV(&mat, rot, &D_800C4168.field_58);
     }
 
     if (coord1 == NULL)
@@ -2134,21 +2134,23 @@ s32 func_8005D86C(s32 arg0) // 0x8005D86C
 
 s32 func_8005D974(s32 arg0) // 0x8005D974
 {
-    s32 val = func_8005D86C(arg0);
+    s32 val;
 
-    if (val > 0x4000)
+    val = func_8005D86C(arg0);
+
+    if (val > Q12(4.0f))
     {
-        val = 0x4000;
+        val = Q12(4.0f);
     }
-    else if (val < 0)
+    else if (val < Q12(0.0f))
     {
-        val = 0;
+        val = Q12(0.0f);
     }
 
     return val;
 }
 
-s32 func_8005D9B8(VECTOR3* arg0, s32 arg1) // 0x8005D9B8
+s32 func_8005D9B8(VECTOR3* pos, q23_8 vol) // 0x8005D9B8
 {
     s32 temp_v0;
     s32 deltaX;
@@ -2165,51 +2167,51 @@ s32 func_8005D9B8(VECTOR3* arg0, s32 arg1) // 0x8005D9B8
     deltaZ = D_800C42C0.vz - D_800C42CC->vz;
     var_s0 = func_8005D974((SquareRoot12(FP_MULTIPLY_PRECISE(deltaX, deltaX, Q12_SHIFT) +
                                          FP_MULTIPLY_PRECISE(deltaY, deltaY, Q12_SHIFT) +
-                                         FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT)) - 0x2800) / 10);
-    if (var_s0 > 0x1000)
+                                         FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT)) - Q12(2.5f)) / 10);
+    if (var_s0 > Q12(1.0f))
     {
-        var_s0 = 0x1000;
+        var_s0 = Q12(1.0f);
     }
 
-    deltaX  = D_800C42CC->vx - arg0->vx;
-    deltaY  = D_800C42CC->vy - arg0->vy;
-    deltaZ  = D_800C42CC->vz - arg0->vz;
+    deltaX  = D_800C42CC->vx - pos->vx;
+    deltaY  = D_800C42CC->vy - pos->vy;
+    deltaZ  = D_800C42CC->vz - pos->vz;
     temp_v0 = func_8005D974((SquareRoot12(FP_MULTIPLY_PRECISE(deltaX, deltaX, Q12_SHIFT) +
                                           FP_MULTIPLY_PRECISE(deltaY, deltaY, Q12_SHIFT) +
-                                          FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT)) - 0x6000) / 4);
+                                          FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT)) - Q12(6.0f)) / 4);
 
     var_v0 = FP_MULTIPLY_PRECISE(var_s0, temp_v0, Q12_SHIFT);
-    if (var_v0 > 0x2000)
+    if (var_v0 > Q12(2.0f))
     {
-        var_v0 = 0x2000;
+        var_v0 = Q12(2.0f);
     }
-    else if (var_v0 < 0)
+    else if (var_v0 < Q12(0.0f))
     {
-        var_v0 = 0;
+        var_v0 = Q12(0.0f);
     }
 
-    var_v0 = FP_MULTIPLY_PRECISE(arg1, var_v0, Q12_SHIFT);
-    if (var_v0 > 0xFF)
+    var_v0 = FP_MULTIPLY_PRECISE(vol, var_v0, Q12_SHIFT);
+    if (var_v0 > Q8_CLAMPED(1.0f))
     {
-        var_v0 = 0xFF;
+        var_v0 = Q8_CLAMPED(1.0f);
     }
-    else if (var_v0 < 0)
+    else if (var_v0 < Q12(0.0f))
     {
-        var_v0 = 0;
+        var_v0 = Q12(0.0f);
     }
 
     return var_v0;
 }
 
-void func_8005DC1C(s32 sfx, const VECTOR3* pos, s32 vol, s32 soundType)
+void func_8005DC1C(s32 sfx, const VECTOR3* pos, q23_8 vol, s32 soundType)
 {
     func_8005DC3C(sfx, pos, vol, soundType, 0);
 }
 
-void func_8005DC3C(s32 sfx, const VECTOR3* pos, s32 vol, s32 soundType, s32 pitch) // 0x8005DC3C
+void func_8005DC3C(s32 sfx, const VECTOR3* pos, q23_8 vol, s32 soundType, s32 pitch) // 0x8005DC3C
 {
-    s32 volCpy;
-    s32 balance;
+    q23_8 volCpy;
+    s32   balance;
 
     // Get stereo balance.
     if (soundType & (1 << 0) || g_GameWork.config_0.optSoundType_1E)
@@ -2255,10 +2257,10 @@ void func_8005DC3C(s32 sfx, const VECTOR3* pos, s32 vol, s32 soundType, s32 pitc
     }
 }
 
-void func_8005DD44(s32 sfx, VECTOR3* pos, s32 vol, s8 pitch) // 0x8005DD44
+void func_8005DD44(s32 sfx, VECTOR3* pos, q23_8 vol, s8 pitch) // 0x8005DD44
 {
-    s32 volCpy;
-    s32 balance;
+    q23_8 volCpy;
+    s32   balance;
 
     // Get stereo balance.
     if (g_GameWork.config_0.optSoundType_1E)
@@ -2451,24 +2453,22 @@ void func_8005E70C(void) // 0x8005E70C
 
 s32 func_8005E7E0(s32 arg0) // 0x8005E7E0
 {
-    s32 var_a0;
-    s32 var_a1;
-    s32 var_v1;
+    s32 idx;
+    s32 i;
 
-    var_a0 = D_800C4408;
-    var_a1 = 0;
-
-    while (var_a1 < g_MapOverlayHeader.unkTable1Count_50)
+    idx = D_800C4408;
+    i = 0;
+    while (i < g_MapOverlayHeader.unkTable1Count_50)
     {
-        if (var_a0 >= g_MapOverlayHeader.unkTable1Count_50)
+        if (idx >= g_MapOverlayHeader.unkTable1Count_50)
         {
-            var_a0 = 0;
+            idx = 0;
         }
 
-        if (g_MapOverlayHeader.unkTable1_4C[var_a0].field_A != 0)
+        if (g_MapOverlayHeader.unkTable1_4C[idx].field_A != 0)
         {
-            var_a1 += 1;
-            var_a0 += 1;
+            i++;
+            idx++;
         }
         else
         {
@@ -2476,15 +2476,15 @@ s32 func_8005E7E0(s32 arg0) // 0x8005E7E0
         }
     }
 
-    if (var_a1 == g_MapOverlayHeader.unkTable1Count_50)
+    if (i == g_MapOverlayHeader.unkTable1Count_50)
     {
         return NO_VALUE;
     }
 
-    g_MapOverlayHeader.unkTable1_4C[var_a0].field_A = arg0;
+    g_MapOverlayHeader.unkTable1_4C[idx].field_A = arg0;
 
-    D_800C4408 = var_a0 + 1;
-    return var_a0;
+    D_800C4408 = idx + 1;
+    return idx;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005E89C); // 0x8005E89C
@@ -2512,7 +2512,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80060044); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800611C0); // 0x800611C0
 
-void func_800622B8(s32 arg0, s_SubCharacter* arg1, s32 animStatus, s32 arg3) // 0x800622B8
+void func_800622B8(s32 arg0, s_SubCharacter* chara, s32 animStatus, s32 arg3) // 0x800622B8
 {
     s_Collision coll;
     s32         temp_s0;
@@ -2542,17 +2542,17 @@ void func_800622B8(s32 arg0, s_SubCharacter* arg1, s32 animStatus, s32 arg3) // 
         temp_s3 = Rng_Rand16() % D_800AE5F0[temp_s0 * 4]       + D_800AE5F0[(temp_s0 * 4) + 1];
         temp_s2 = Rng_Rand16() % D_800AE5F0[(temp_s0 * 4) + 2] + D_800AE5F0[(temp_s0 * 4) + 3];
 
-        g_MapOverlayHeader.unkTable1_4C[idx].vx_0 = arg1->position_18.vx +
-                                                        FP_MULTIPLY(temp_s3, Math_Sin(arg1->rotation_24.vy), Q12_SHIFT) -
-                                                        FP_MULTIPLY(temp_s2, Math_Cos(arg1->rotation_24.vy), Q12_SHIFT);
-        g_MapOverlayHeader.unkTable1_4C[idx].vy_8 = arg1->position_18.vy;
-        g_MapOverlayHeader.unkTable1_4C[idx].vz_4 = arg1->position_18.vz +
-                                                        FP_MULTIPLY(temp_s3, Math_Cos(arg1->rotation_24.vy), Q12_SHIFT) +
-                                                        FP_MULTIPLY(temp_s2, Math_Sin(arg1->rotation_24.vy), Q12_SHIFT);
+        g_MapOverlayHeader.unkTable1_4C[idx].vx_0 = chara->position_18.vx +
+                                                    FP_MULTIPLY(temp_s3, Math_Sin(chara->rotation_24.vy), Q12_SHIFT) -
+                                                    FP_MULTIPLY(temp_s2, Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
+        g_MapOverlayHeader.unkTable1_4C[idx].vy_8 = chara->position_18.vy;
+        g_MapOverlayHeader.unkTable1_4C[idx].vz_4 = chara->position_18.vz +
+                                                    FP_MULTIPLY(temp_s3, Math_Cos(chara->rotation_24.vy), Q12_SHIFT) +
+                                                    FP_MULTIPLY(temp_s2, Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
 
         Collision_Get(&coll, g_MapOverlayHeader.unkTable1_4C[idx].vx_0, g_MapOverlayHeader.unkTable1_4C[idx].vz_4);
 
-        if (ABS_DIFF(coll.groundHeight_0, arg1->position_18.vy) > Q12(0.15f))
+        if (ABS_DIFF(coll.groundHeight_0, chara->position_18.vy) > Q12(0.15f))
         {
             g_MapOverlayHeader.unkTable1_4C[(idx)].field_A = 0;
         }
@@ -2560,8 +2560,8 @@ void func_800622B8(s32 arg0, s_SubCharacter* arg1, s32 animStatus, s32 arg3) // 
         {
             g_MapOverlayHeader.unkTable1_4C[idx].field_E  = D_800AE700[animStatus] + (Rng_Rand16() % (D_800AE700[animStatus] >> 2));
             g_MapOverlayHeader.unkTable1_4C[idx].field_D  = arg3;
-            g_MapOverlayHeader.unkTable1_4C[idx].field_B  = (Rng_Rand16() & 3) + 4;
-            g_MapOverlayHeader.unkTable1_4C[idx].field_C  = func_8005C7D0(arg1);
+            g_MapOverlayHeader.unkTable1_4C[idx].field_B  = (Rng_Rand16() & 3) + 4; // TODO: `Rng_GenerateInt` doesn't match?
+            g_MapOverlayHeader.unkTable1_4C[idx].field_C  = func_8005C7D0(chara);
             g_MapOverlayHeader.unkTable1_4C[idx].field_10 = Rng_Rand16() & 0x1FFF;
         }
 
@@ -2603,17 +2603,16 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80064334); // 0x
 
 void func_80064F04(VECTOR3* arg0, s8 arg1, s16 arg2) // 0x80064F04
 {
-    // arg0 type assumed
-    s32 temp_v0;
+    s32 idx;
 
-    temp_v0 = func_8005E7E0(0x1F);
-    if (temp_v0 != -1)
+    idx = func_8005E7E0(31);
+    if (idx != NO_VALUE)
     {
-        g_MapOverlayHeader.unkTable1_4C[temp_v0].vx_0    = FP_FROM(arg0->vx, Q4_SHIFT);
-        g_MapOverlayHeader.unkTable1_4C[temp_v0].vy_8    = FP_FROM(arg0->vy, Q4_SHIFT);
-        g_MapOverlayHeader.unkTable1_4C[temp_v0].vz_4    = FP_FROM(arg0->vz, Q4_SHIFT);
-        g_MapOverlayHeader.unkTable1_4C[temp_v0].field_C = arg1;
-        g_MapOverlayHeader.unkTable1_4C[temp_v0].field_E = arg2;
+        g_MapOverlayHeader.unkTable1_4C[idx].vx_0    = Q12_TO_Q8(arg0->vx);
+        g_MapOverlayHeader.unkTable1_4C[idx].vy_8    = Q12_TO_Q8(arg0->vy);
+        g_MapOverlayHeader.unkTable1_4C[idx].vz_4    = Q12_TO_Q8(arg0->vz);
+        g_MapOverlayHeader.unkTable1_4C[idx].field_C = arg1;
+        g_MapOverlayHeader.unkTable1_4C[idx].field_E = arg2;
     }
 }
 

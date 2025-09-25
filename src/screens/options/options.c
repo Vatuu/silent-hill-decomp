@@ -11,11 +11,12 @@
 #include "screens/options/options.h"
 #include "screens/stream/stream.h"
 
-// ==================================
-// MAIN, EXTRA, AND SUB OPTION MENUS
-// ==================================
-
 #define LINE_CURSOR_TIMER_MAX 8
+
+#define LAYER_24   24
+#define LAYER_40   40
+#define LAYER_36   36
+#define LAYER_8148 8148
 
 s32  g_MainOptionsMenu_SelectedEntry      = 0;
 s32  g_ExtraOptionsMenu_SelectedEntry     = 0;
@@ -99,7 +100,7 @@ void GameState_Options_Update(void) // 0x801E2D44
                     break;
             }
 
-            g_ExtraOptionsMenu_EntryCount   = (g_GameWork.config_0.optExtraOptionsEnabled_27 != 0) ? 8 : 6;
+            g_ExtraOptionsMenu_EntryCount   = (g_GameWork.config_0.optExtraOptionsEnabled_27) ? 8 : 6;
             g_GameWork.gameStateStep_598[0] = OptionsMenuState_MainOptions;
             g_SysWork.timer_20              = 0;
             g_GameWork.gameStateStep_598[1] = 0;
@@ -771,7 +772,7 @@ void Options_MainOptionsMenu_VolumeBarDraw(bool isSfx, u8 vol) // 0x801E3FB8
             setXY1Fast(poly, x0,                           (isSfx * STR_OFFSET_Y) - (j + offset));
             setXY2Fast(poly, (xOffset - j) + NOTCH_SIZE_X, (isSfx * STR_OFFSET_Y) + yOffset);
             setXY3Fast(poly, (xOffset - j) + NOTCH_SIZE_X, (isSfx * STR_OFFSET_Y) - (j + offset));
-            addPrim((u8*)ot->org + 24, poly);
+            addPrim((u8*)ot->org + LAYER_24, poly);
             GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_F4);
         }
     }
@@ -819,14 +820,14 @@ void Options_ExtraOptionsMenu_EntryStringsDraw(void) // 0x801E416C
     Gfx_StringSetColor(StringColorId_White);
     Gfx_StringSetPosition(STR_POS.vx, STR_POS.vy);
     Gfx_Strings2dLayerIdxSet(8);
-    Gfx_StringDraw(EXTRA_OPTIONS_STR, 99);
+    Gfx_StringDraw(EXTRA_OPTIONS_STR, DEFAULT_MAP_MESSAGE_LENGTH);
 
     // Draw entry strings.
     for (i = 0; i < g_ExtraOptionsMenu_EntryCount; i++)
     {
         Gfx_StringSetPosition(LINE_BASE_X, LINE_BASE_Y + (i * LINE_OFFSET_Y));
         Gfx_Strings2dLayerIdxSet(8);
-        Gfx_StringDraw(ENTRY_STRS[i], 99);
+        Gfx_StringDraw(ENTRY_STRS[i], DEFAULT_MAP_MESSAGE_LENGTH);
     }
 }
 
@@ -870,14 +871,14 @@ void Options_MainOptionsMenu_EntryStringsDraw(void) // 0x801E42EC
     Gfx_StringSetColor(StringColorId_White);
     Gfx_StringSetPosition(strPos.vx, strPos.vy);
     Gfx_Strings2dLayerIdxSet(8);
-    Gfx_StringDraw(OPTIONS_STR, 99);
+    Gfx_StringDraw(OPTIONS_STR, DEFAULT_MAP_MESSAGE_LENGTH);
 
     // Draw entry strings.
     for (i = 0; i < MainOptionsMenuEntry_Count; i++)
     {
         Gfx_StringSetPosition(LINE_BASE_X, LINE_BASE_Y + (i * LINE_OFFSET_Y));
         Gfx_Strings2dLayerIdxSet(8);
-        Gfx_StringDraw(ENTRY_STRS[i], 99);
+        Gfx_StringDraw(ENTRY_STRS[i], DEFAULT_MAP_MESSAGE_LENGTH);
     }
 
     Gfx_StringsReset2dLayerIdx();
@@ -1084,7 +1085,7 @@ void Options_Menu_VignetteDraw(void) // 0x801E49F0
         *(u32*)(&poly->x2) = xy2    + ((0xE0 * i) << 16);
         *(u32*)(&poly->x3) = xy3    + ((0xA8 * i) << 16);
 
-        addPrim((u8*)ot->org + 8148, poly);
+        addPrim((u8*)ot->org + LAYER_8148, poly);
         GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_G4);
     }
 
@@ -1644,7 +1645,7 @@ void Options_ScreenPosMenu_ConfigDraw(void) // 0x801E5CBC
         setXY0Fast(line, (u16)(LINE_BASES[i].vx             - g_GameWorkConst->config_0.optScreenPosX_1C), LINE_BASES[i].vy             - g_GameWorkConst->config_0.optScreenPosY_1D);
         setXY1Fast(line, (u16)(LINE_BASES[(i + 1) & 0x3].vx - g_GameWorkConst->config_0.optScreenPosX_1C), LINE_BASES[(i + 1) & 0x3].vy - g_GameWorkConst->config_0.optScreenPosY_1D);
 
-        addPrim((u8*)ot->org + 40, line);
+        addPrim((u8*)ot->org + LAYER_40, line);
         GsOUT_PACKET_P = (u8*)line + sizeof(LINE_F2);
     }
 
@@ -1657,7 +1658,7 @@ void Options_ScreenPosMenu_ConfigDraw(void) // 0x801E5CBC
     setXY2Fast(poly, (u16)(LINE_BASES[3].vx - g_GameWorkConst->config_0.optScreenPosX_1C), LINE_BASES[3].vy - g_GameWorkConst->config_0.optScreenPosY_1D);
     setXY3Fast(poly, (u16)(LINE_BASES[2].vx - g_GameWorkConst->config_0.optScreenPosX_1C), LINE_BASES[2].vy - g_GameWorkConst->config_0.optScreenPosY_1D);
 
-    addPrim((u8*)ot->org + 40, poly);
+    addPrim((u8*)ot->org + LAYER_40, poly);
     GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_F4);
 
     Gfx_StringSetPosition(108 - g_GameWorkConst->config_0.optScreenPosX_1C, 162 - g_GameWorkConst->config_0.optScreenPosY_1D);
@@ -1841,18 +1842,18 @@ void Options_Selection_HighlightDraw(s_Line2d* line, bool hasShadow, bool invert
     // which itself is always passed as `false`. Purpose is guessed based on a similar parameter in `Options_Selection_BulletPointDraw`.
     if (invertGradient)
     {
-        setRGBC0(linePrim, 0xB0, 0xB0, 0xB0, 0x50);
-        setRGBC1(linePrim, 0xA0, 0x80, 0x40, 0x50);
+        setRGBC0(linePrim, 176, 176, 176, 0x50);
+        setRGBC1(linePrim, 160, 128, 64,  0x50);
     }
     else
     {
-        setRGBC0(linePrim, 0xB0, 0xB0, 0xB0, 0x50);
-        setRGBC1(linePrim, 0xA0, 0x80, 0x40, 0x50);
+        setRGBC0(linePrim, 176, 176, 176, 0x50);
+        setRGBC1(linePrim, 160, 128, 64,  0x50);
     }
 
     setXY0Fast(linePrim, localLine->vertex0_0.vx, localLine->vertex0_0.vy);
     setXY1Fast(linePrim, localLine->vertex1_4.vx, localLine->vertex1_4.vy);
-    addPrim((u8*)ot->org + (hasShadow ? 36 : 24), linePrim);
+    addPrim((u8*)ot->org + (hasShadow ? LAYER_36 : LAYER_24), linePrim);
     GsOUT_PACKET_P = (u8*)linePrim + sizeof(LINE_G2);
 
     // Draw shadow gradient.
@@ -1862,14 +1863,14 @@ void Options_Selection_HighlightDraw(s_Line2d* line, bool hasShadow, bool invert
         poly = (POLY_G4*)GsOUT_PACKET_P;
         setPolyG4(poly);
         setSemiTrans(poly, 1);
-        setRGB0(poly, FP_COLOR(0.0f),   FP_COLOR(0.0f),   FP_COLOR(0.0f));
+        setRGB0(poly, 0, 0, 0);
         setRGB1(poly, FP_COLOR(0.375f), FP_COLOR(0.375f), FP_COLOR(0.375f));
-        setRGB2(poly, FP_COLOR(0.0f),   FP_COLOR(0.0f),   FP_COLOR(0.0f));
+        setRGB2(poly, 0, 0, 0);
         setRGB3(poly, FP_COLOR(0.375f), FP_COLOR(0.375f), FP_COLOR(0.375f));
         setXY4(poly,
                localLine->vertex0_0.vx, localLine->vertex0_0.vy - STR_OFFSET_Y, localLine->vertex0_0.vx, localLine->vertex0_0.vy,
                localLine->vertex1_4.vx, localLine->vertex1_4.vy - STR_OFFSET_Y, localLine->vertex1_4.vx, localLine->vertex1_4.vy);
-        addPrim((u8*)ot->org + 36, poly);
+        addPrim((u8*)ot->org + LAYER_36, poly);
         GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_G4);
 
         Gfx_Primitive2dTextureSet(0, 0, 9, 2);
@@ -1961,7 +1962,7 @@ void Options_Selection_ArrowDraw(s_Triangle2d* arrow, bool isFlashing, bool rese
     setXY0Fast(arrowPoly, arrow->vertex0_0.vx, arrow->vertex0_0.vy);
     setXY1Fast(arrowPoly, arrow->vertex1_4.vx, arrow->vertex1_4.vy);
     setXY2Fast(arrowPoly, arrow->vertex2_8.vx, arrow->vertex2_8.vy);
-    addPrim((u8*)ot->org + 40, arrowPoly);
+    addPrim((u8*)ot->org + LAYER_40, arrowPoly);
     GsOUT_PACKET_P = (u8*)arrowPoly + sizeof(POLY_G3);
 }
 
@@ -2046,7 +2047,7 @@ void Options_Selection_BulletPointDraw(s_Quad2d* quad, bool isCenter, bool isIna
             }
         }
 
-        addPrim((u8*)ot->org + 24, poly);
+        addPrim((u8*)ot->org + LAYER_24, poly);
         GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_G3);
     }
 }

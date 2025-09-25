@@ -190,9 +190,9 @@ extern s32 g_MemCardStateTextTimer;
 
 extern void (*g_GameState_SaveScreen_Funcs[])();
 
-extern s32 g_SaveWriteOption; // 0 - Overwrite, 1 - Format
+extern s32 g_SaveWriteOption; // `false` - Overwrite, `true` - Format.
 
-extern s32 g_IsSaveSelected; // 0 - User has `New save` selected, 1 - User has a save selected.
+extern bool g_IsSaveSelected; // `false` - User has `New save` selected, `true` - User has a save selected.
 
 extern void (*g_GameState_DeathLoadScreen_Funcs[])();
 
@@ -200,7 +200,7 @@ extern s32 D_801E7554;
 
 extern s32 D_801E7558;
 
-extern s32 g_SaveWriteOptionSelected; // 0 - No, 1 - Yes
+extern bool g_IsSaveWriteOptionSelected;
 
 /** @brief Dead code?
  * The only time when this is used is when booting the save screen where

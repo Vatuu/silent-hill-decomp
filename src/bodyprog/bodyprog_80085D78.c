@@ -196,10 +196,13 @@ void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 entr
 
 void func_8008616C(s32 arg0, bool arg1, s32 fadeType, s32 fadeTimestep, bool arg4) // 0x8008616C
 {
-    #define FADE_BLACK    0
-    #define FADE_WHITE    1
-    #define FADE_UNKNOWN  2 // TODO: Investigate. Some state machine flow logic when this is used.
-    #define FADE_UNK_FLAG 3 // TODO: Investigate.
+    typedef enum _FadeType
+    {
+        FadeType_Black = 0,
+        FadeType_White = 1,
+        FadeType_Unk2  = 2, // TODO: Investigate. Some state machine flow logic when this is used.
+        FadeType_Unk3  = 3  // TODO: Investigate.
+    } s_FadeType;
 
     s32 caseVar;
 
@@ -216,18 +219,18 @@ void func_8008616C(s32 arg0, bool arg1, s32 fadeType, s32 fadeTimestep, bool arg
     switch (caseVar)
     {
         case 0:
-            if (fadeType != FADE_UNKNOWN)
+            if (fadeType != FadeType_Unk2)
             {
                 g_ScreenFadeTimestep = fadeTimestep;
             }
 
             if (arg1)
             {
-                if (fadeType == FADE_BLACK)
+                if (fadeType == FadeType_Black)
                 {
                     g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false);
                 }
-                else if (fadeType == FADE_WHITE)
+                else if (fadeType == FadeType_White)
                 {
                     g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, true);
                 }
@@ -235,17 +238,17 @@ void func_8008616C(s32 arg0, bool arg1, s32 fadeType, s32 fadeTimestep, bool arg
                 {
                     g_SysWork.field_30 = 18;
 
-                    if (fadeType == FADE_UNK_FLAG)
+                    if (fadeType == FadeType_Unk3)
                     {
                         g_SysWork.flags_22A4 |= 1 << 3;
                     }
                 }
             }
-            else if (fadeType == FADE_BLACK)
+            else if (fadeType == FadeType_Black)
             {
                 g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, false);
             }
-            else if (fadeType == FADE_WHITE)
+            else if (fadeType == FadeType_White)
             {
                 g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, true);
             }
@@ -262,7 +265,7 @@ void func_8008616C(s32 arg0, bool arg1, s32 fadeType, s32 fadeTimestep, bool arg
             break;
 
         case 1:
-            if (fadeType < FADE_UNKNOWN)
+            if (fadeType < FadeType_Unk2)
             {
                 if (arg1 != 0 || g_Screen_FadeStatus != caseVar)
                 {
@@ -397,7 +400,7 @@ void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, bool arg3) // 0x800
             
             if (switchVar == 0)
             {
-                g_SysWork.sysStateStep_C[1] += 0;
+                g_SysWork.sysStateStep_C[1] += 0; // @hack Required for match.
                 g_SysWork.timer_2C  = 0;
                 g_SysWork.sysStateStep_C[2] = 0;
             }
@@ -459,9 +462,9 @@ void func_800866D4(s32 arg0, s32 arg1, s32 arg2) // 0x800866D4
     }
 }
 
-void func_80086728(s_SubCharacter* arg0, s32 arg1, s32 arg2, s32 arg3) // 0x80086728
+void func_80086728(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3) // 0x80086728
 {
-    if (g_MapOverlayHeader.func_13C(arg0, arg1, &D_800C46A0, D_800C4702, arg2) == 1)
+    if (g_MapOverlayHeader.func_13C(chara, arg1, &D_800C46A0, D_800C4702, arg2) == 1)
     {
         func_80085D78(arg3);
     }
@@ -484,7 +487,7 @@ void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
             Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[idx], FS_BUFFER_2, &g_MapImg);
             Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdxs[idx], FS_BUFFER_1, &g_MapMarkerAtlasImg);
 
-            Screen_Init(SCREEN_WIDTH, 1);
+            Screen_Init(SCREEN_WIDTH, true);
             GsSwapDispBuff();
             Fs_QueueWaitForEmpty();
             break;
@@ -496,7 +499,7 @@ void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
         case 2:
             LoadImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(0);
-            Screen_Init(SCREEN_WIDTH, 0);
+            Screen_Init(SCREEN_WIDTH, false);
             break;
     }
 }
@@ -518,7 +521,7 @@ s32 func_8008694C(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 idx)
 {
     D_800C4710[idx] += g_DeltaTime0;
     D_800C4710[idx] = (arg3 < D_800C4710[idx]) ? arg3 : D_800C4710[idx];
-    return (arg0 * Math_Sin(arg1 + ((arg2 * D_800C4710[idx]) / arg3))) >> 12;
+    return FP_MULTIPLY(arg0, Math_Sin(arg1 + ((arg2 * D_800C4710[idx]) / arg3)), Q12_SHIFT);
 }
 
 void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* sounds) // 0x800869E4
@@ -539,8 +542,8 @@ void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* sounds) // 0x800869E
     }
 }
 
-void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPosOffset,
-                           s32 xzAccel, s32 yAccel, s32 xzSpeedMax, s32 ySpeedMax, bool warpCam) // 0x80086A94
+void Camera_TranslationSet(VECTOR3* pos, q19_12 offsetOrPosX, q19_12 offsetOrPosY, q19_12 offsetOrPosZ,
+                           q19_12 accelXz, q19_12 accelY, q19_12 speedXzMax, q19_12 speedYMax, bool warpCam) // 0x80086A94
 {
     VECTOR3         posTarget;
     VC_CAM_MV_PARAM camTranslationParams;
@@ -548,63 +551,63 @@ void Camera_TranslationSet(VECTOR3* pos, s32 xPosOffset, s32 yPosOffset, s32 zPo
     // Set position target.
     if (pos != NULL)
     {
-        posTarget.vx = pos->vx + xPosOffset;
-        posTarget.vy = pos->vy + yPosOffset;
-        posTarget.vz = pos->vz + zPosOffset;
+        posTarget.vx = pos->vx + offsetOrPosX;
+        posTarget.vy = pos->vy + offsetOrPosY;
+        posTarget.vz = pos->vz + offsetOrPosZ;
     }
     else
     {
-        posTarget.vx = xPosOffset;
-        posTarget.vy = yPosOffset;
-        posTarget.vz = zPosOffset;
+        posTarget.vx = offsetOrPosX;
+        posTarget.vy = offsetOrPosY;
+        posTarget.vz = offsetOrPosZ;
     }
 
     // Set acceleration on XZ plane.
-    if (xzAccel == Q12(0.0f))
+    if (accelXz == Q12(0.0f))
     {
         camTranslationParams.accel_xz = cam_mv_prm_user.accel_xz;
     }
     else
     {
-        camTranslationParams.accel_xz = xzAccel;
+        camTranslationParams.accel_xz = accelXz;
     }
 
     // Set acceleration on Y axis.
-    if (yAccel == Q12(0.0f))
+    if (accelY == Q12(0.0f))
     {
         camTranslationParams.accel_y = cam_mv_prm_user.accel_y;
     }
     else
     {
-        camTranslationParams.accel_y = yAccel;
+        camTranslationParams.accel_y = accelY;
     }
 
     // Set max speed on XZ plane.
-    if (xzSpeedMax == Q12(0.0f))
+    if (speedXzMax == Q12(0.0f))
     {
         camTranslationParams.max_spd_xz = cam_mv_prm_user.max_spd_xz;
     }
     else
     {
-        camTranslationParams.max_spd_xz = xzSpeedMax;
+        camTranslationParams.max_spd_xz = speedXzMax;
     }
 
     // Set max speed on Y axis.
-    if (ySpeedMax == Q12(0.0f))
+    if (speedYMax == Q12(0.0f))
     {
         camTranslationParams.max_spd_y = cam_mv_prm_user.max_spd_y;
     }
     else
     {
-        camTranslationParams.max_spd_y = ySpeedMax;
+        camTranslationParams.max_spd_y = speedYMax;
     }
 
     // Set camera position target.
     vcUserCamTarget(&posTarget, &camTranslationParams, warpCam);
 }
 
-void Camera_RotationSet(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s32 zLookAtOffset,
-                        s32 xAngularAccel, s32 yAngularAccel, s32 xAngularSpeedMax, s32 yAngularSpeedMax, bool warpLookAt) // 0x80086B70
+void Camera_RotationSet(VECTOR3* lookAt, q19_12 lookAtOffsetOrPosX, q19_12 lookAtOffsetOrPosY, q19_12 lookAtOffsetOrPosZ,
+                        q19_12 angularAccelX, q19_12 angularAccelY, q19_12 angularSpeedXMax, q19_12 angularSpeedYMax, bool warpLookAt) // 0x80086B70
 {
     VECTOR3           lookAtTarget;
     VC_WATCH_MV_PARAM camRotParams;
@@ -612,55 +615,55 @@ void Camera_RotationSet(VECTOR3* lookAt, s32 xLookAtOffset, s32 yLookAtOffset, s
     // Set look-at target.
     if (lookAt != NULL)
     {
-        lookAtTarget.vx = lookAt->vx + xLookAtOffset;
-        lookAtTarget.vy = lookAt->vy + yLookAtOffset;
-        lookAtTarget.vz = lookAt->vz + zLookAtOffset;
+        lookAtTarget.vx = lookAt->vx + lookAtOffsetOrPosX;
+        lookAtTarget.vy = lookAt->vy + lookAtOffsetOrPosY;
+        lookAtTarget.vz = lookAt->vz + lookAtOffsetOrPosZ;
     }
     else
     {
-        lookAtTarget.vx = xLookAtOffset;
-        lookAtTarget.vy = yLookAtOffset;
-        lookAtTarget.vz = zLookAtOffset;
+        lookAtTarget.vx = lookAtOffsetOrPosX;
+        lookAtTarget.vy = lookAtOffsetOrPosY;
+        lookAtTarget.vz = lookAtOffsetOrPosZ;
     }
 
     // Set angular acceleration on X axis.
-    if (xAngularAccel == FP_ANGLE(0.0f))
+    if (angularAccelX == FP_ANGLE(0.0f))
     {
         camRotParams.ang_accel_x = deflt_watch_mv_prm.ang_accel_x;
     }
     else
     {
-        camRotParams.ang_accel_x = xAngularAccel;
+        camRotParams.ang_accel_x = angularAccelX;
     }
 
     // Set angular acceleration on Y axis.
-    if (yAngularAccel == FP_ANGLE(0.0f))
+    if (angularAccelY == FP_ANGLE(0.0f))
     {
         camRotParams.ang_accel_y = deflt_watch_mv_prm.ang_accel_y;
     }
     else
     {
-        camRotParams.ang_accel_y = yAngularAccel;
+        camRotParams.ang_accel_y = angularAccelY;
     }
 
     // Set max angular speed on X axis.
-    if (xAngularSpeedMax == FP_ANGLE(0.0f))
+    if (angularSpeedXMax == FP_ANGLE(0.0f))
     {
         camRotParams.max_ang_spd_x = deflt_watch_mv_prm.max_ang_spd_x;
     }
     else
     {
-        camRotParams.max_ang_spd_x = xAngularSpeedMax;
+        camRotParams.max_ang_spd_x = angularSpeedXMax;
     }
     
     // Set max angular speed on Y axis.
-    if (yAngularSpeedMax == FP_ANGLE(0.0f))
+    if (angularSpeedYMax == FP_ANGLE(0.0f))
     {
         camRotParams.max_ang_spd_y = deflt_watch_mv_prm.max_ang_spd_y;
     }
     else
     {
-        camRotParams.max_ang_spd_y = yAngularSpeedMax;
+        camRotParams.max_ang_spd_y = angularSpeedYMax;
     }
 
     // Set camera flags and rotation target.
@@ -1115,7 +1118,7 @@ void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             StoreImage(&D_8002ABA4, IMAGE_BUFFER);
             DrawSync(0);
             Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[mapFlagIdx], FS_BUFFER_2, &g_MapImg);
-            Screen_Init(0x140, 1);
+            Screen_Init(SCREEN_WIDTH, true);
 
             g_IntervalVBlanks = 1;
 
@@ -1181,7 +1184,7 @@ void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
         default:
             LoadImage(&D_8002ABA4, IMAGE_BUFFER);
             DrawSync(0);
-            Screen_Init(0x140, 0);
+            Screen_Init(SCREEN_WIDTH, false);
             func_8008616C(0, false, 0, Q12(0.0f), false);
 
             g_MapOverlayHeader.unfreezePlayerControl_CC(0);
@@ -1352,9 +1355,9 @@ void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6,
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088370); // 0x80088370
 
-bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coord, s8 flags, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x80088C7C
+bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coords, s8 flags, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x80088C7C
 {
-    func_80035338(modelIdx + 1, charaId, NULL, coord);
+    func_80035338(modelIdx + 1, charaId, NULL, coords);
     func_8003D5B4(flags);
     func_8003D6E0(charaId, modelIdx, lmHdr, tex);
     return true;
@@ -1458,7 +1461,7 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12 rotY, u32
         g_SysWork.npcs_1A0[i].rotation_24.vy = rotY;
 
         var_s6                          = &g_SysWork.npcs_1A0[i];
-        var_s6->model_0.anim_4.flags_2 |= 2;
+        var_s6->model_0.anim_4.flags_2 |= AnimFlag_Visible;
 
         return i;
     }
@@ -1488,10 +1491,10 @@ void func_80088F94(s_SubCharacter* chara, s32 unused1, s32 unsued2) // 0x80088F9
 
 void func_80088FF4(e_CharacterId charaId, s32 spawnIdx, s32 spawnFlags) // 0x80088FF4
 {
-    s_SpawnInfo* spawn;
+    s_MapPoint2d* mapPoint;
 
-    spawn          = &g_MapOverlayHeader.charaSpawns_24C[D_800A98FC[charaId] - 1][spawnIdx];
-    spawn->flags_6 = spawnFlags;
+    mapPoint                         = &g_MapOverlayHeader.charaSpawns_24C[D_800A98FC[charaId] - 1][spawnIdx];
+    mapPoint->data.spawnInfo.flags_6 = spawnFlags;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089034); // 0x80089034
@@ -1629,34 +1632,34 @@ const s_8002AC04 D_8002AC04[] =
     { &D_8002AC04[46], 0, 32, 0, 12, {} },
     { &D_8002AC04[28], 0, 32, 0, 18, {} },
     { &D_8002AC04[29], 0, 32, 0, 19, {} },
-    { NULL, 4, 0, 0xFFFF, 20, { .u32 = -255 } },
-    { NULL, 4, 1, 0xFFFF, 21, { .u32 = -255 } },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF70, { 0x2D, 9, 1, 0 } },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF64, { 0x180, 0x30, 1, 0 } },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF5C, { 0x90, 0x18, 1, 0 } },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF54, { 0x5A, 0xF, 1, 0 } },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF48, { 0x96, 0xF, 1, 1 } },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF3C, { 0x60, 0xC, 1, 0 } },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF3C, { 0x60, 0xC, 1, 0 } },
-    { NULL, 2, 1, 0xFFFF, &D_8002AF34, { 0x4B, 0xF, 1, 0 } },
+    { NULL, 4, 0, NO_VALUE, 20, { .u32 = -255 } },
+    { NULL, 4, 1, NO_VALUE, 21, { .u32 = -255 } },
+    { NULL, 2, 1, NO_VALUE, &D_8002AF70, { 0x2D, 9, 1, 0 } },
+    { NULL, 2, 1, NO_VALUE, &D_8002AF64, { 0x180, 0x30, 1, 0 } },
+    { NULL, 2, 1, NO_VALUE, &D_8002AF5C, { 0x90, 0x18, 1, 0 } },
+    { NULL, 2, 1, NO_VALUE, &D_8002AF54, { 0x5A, 0xF, 1, 0 } },
+    { NULL, 2, 1, NO_VALUE, &D_8002AF48, { 0x96, 0xF, 1, 1 } },
+    { NULL, 2, 1, NO_VALUE, &D_8002AF3C, { 0x60, 0xC, 1, 0 } },
+    { NULL, 2, 1, NO_VALUE, &D_8002AF3C, { 0x60, 0xC, 1, 0 } },
+    { NULL, 2, 1, NO_VALUE, &D_8002AF34, { 0x4B, 0xF, 1, 0 } },
     { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 2, 0, 0xFFFF, &D_8002AF2C, { 0x258, 0xF, 0, 0 } },
-    { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 2, 0, 0xFFFF, &D_8002AF28, { 0x1E0, 0xF, 0, 0 } },
+    { NULL, 2, 0, NO_VALUE, &D_8002AF2C, { 0x258, 0xF, 0, 0 } },
     { NULL, 0, 0, 0x0000, 0, {} },
     { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 2, 0, 0xFFFF, &D_8002AF24, { 0x1A4, 0xF, 0, 0 } },
+    { NULL, 2, 0, NO_VALUE, &D_8002AF28, { 0x1E0, 0xF, 0, 0 } },
     { NULL, 0, 0, 0x0000, 0, {} },
     { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 2, 0, 0xFFFF, &D_8002AF20, { 0x168, 0xF, 0, 0 } },
+    { NULL, 2, 0, NO_VALUE, &D_8002AF24, { 0x1A4, 0xF, 0, 0 } },
     { NULL, 0, 0, 0x0000, 0, {} },
     { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 2, 0, 0xFFFF, &D_8002AF20, { 0x10E, 0xF, 0, 0 } },
+    { NULL, 2, 0, NO_VALUE, &D_8002AF20, { 0x168, 0xF, 0, 0 } },
     { NULL, 0, 0, 0x0000, 0, {} },
     { NULL, 0, 0, 0x0000, 0, {} },
-    { &D_8002AC04[47], 2, 0, 0xFFFF, &D_8002AF08, { 0xB40, 0xF, 0, 0 } },
-    { &D_8002AC04[47], 2, 0, 0xFFFF, &D_8002AF04, { 0x1E, 0xF, 0, 0 } },
+    { NULL, 2, 0, NO_VALUE, &D_8002AF20, { 0x10E, 0xF, 0, 0 } },
+    { NULL, 0, 0, 0x0000, 0, {} },
+    { NULL, 0, 0, 0x0000, 0, {} },
+    { &D_8002AC04[47], 2, 0, NO_VALUE, &D_8002AF08, { 0xB40, 0xF, 0, 0 } },
+    { &D_8002AC04[47], 2, 0, NO_VALUE, &D_8002AF04, { 0x1E, 0xF, 0, 0 } },
 };
 
 // TODO: Figure out what kind of data this is. The array above has some entries pointing to it, all of them using funcptr #2 (`func_80089DF0`).
@@ -1713,7 +1716,7 @@ void func_80089314(s32 arg0) // 0x80089314
         D_800AFD04 = (D_800AFD04 + var1) & 0x7F;
     }
     
-    func_800892DC(0x15, D_800AFD04 + 32);
+    func_800892DC(21, D_800AFD04 + 32);
 }
 
 void func_800893D0(q19_12 arg0) // 0x800893D0
@@ -2047,7 +2050,7 @@ s64 func_8008A0D4(void) // 0x8008A0D4
     return 0;
 }
 
-s32 func_8008A0E4(s32 arg0, e_EquippedWeaponId weaponId, s_SubCharacter* chara, s_PlayerCombat* combat, s32 arg4, s16 arg5, s16 arg6) // 0x8008A0E4
+s32 func_8008A0E4(s32 arg0, e_EquippedWeaponId weaponId, s_SubCharacter* chara, VECTOR3* pos, s32 arg4, s16 arg5, s16 arg6) // 0x8008A0E4
 {
     s32          var_t1;
     s32          temp_a1;
@@ -2101,7 +2104,7 @@ s32 func_8008A0E4(s32 arg0, e_EquippedWeaponId weaponId, s_SubCharacter* chara, 
     chara->field_47 = 100;
     chara->field_50 = arg5;
     chara->field_52 = arg6;
-    chara->field_5C = combat->field_0;
+    chara->field_5C = *pos;
     temp_a1         = func_8008A3E0(chara);
     ret             = NO_VALUE;
 
@@ -2485,9 +2488,9 @@ s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2,
     func_8008D1D0(&keyframePrev, &keyframeNext, &alpha, time, camEntry, dmsHdr);
     camProjValue = Dms_CameraKeyframeInterpolate(&curFrame, &camEntry->keyframes_C.camera[keyframePrev], &camEntry->keyframes_C.camera[keyframeNext], alpha);
 
-    posTarget->vx = Q8_TO_Q12(curFrame.posTarget_0.vx + dmsHdr->origin_C.vx);
-    posTarget->vy = Q8_TO_Q12(curFrame.posTarget_0.vy + dmsHdr->origin_C.vy);
-    posTarget->vz = Q8_TO_Q12(curFrame.posTarget_0.vz + dmsHdr->origin_C.vz);
+    posTarget->vx = Q8_TO_Q12(curFrame.positionTarget_0.vx + dmsHdr->origin_C.vx);
+    posTarget->vy = Q8_TO_Q12(curFrame.positionTarget_0.vy + dmsHdr->origin_C.vy);
+    posTarget->vz = Q8_TO_Q12(curFrame.positionTarget_0.vz + dmsHdr->origin_C.vz);
 
     lookAtTarget->vx = Q8_TO_Q12(curFrame.lookAtTarget_6.vx + dmsHdr->origin_C.vx);
     lookAtTarget->vy = Q8_TO_Q12(curFrame.lookAtTarget_6.vy + dmsHdr->origin_C.vy);
@@ -2506,9 +2509,9 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CF54); // 0x
 
 s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, const s_DmsKeyframeCamera* frame0, const s_DmsKeyframeCamera* frame1, s32 alpha) // 0x8008CFEC
 {
-    result->posTarget_0.vx = frame0->posTarget_0.vx + FP_MULTIPLY_PRECISE(frame1->posTarget_0.vx - frame0->posTarget_0.vx, alpha, Q12_SHIFT);
-    result->posTarget_0.vy = frame0->posTarget_0.vy + FP_MULTIPLY_PRECISE(frame1->posTarget_0.vy - frame0->posTarget_0.vy, alpha, Q12_SHIFT);
-    result->posTarget_0.vz = frame0->posTarget_0.vz + FP_MULTIPLY_PRECISE(frame1->posTarget_0.vz - frame0->posTarget_0.vz, alpha, Q12_SHIFT);
+    result->positionTarget_0.vx = frame0->positionTarget_0.vx + FP_MULTIPLY_PRECISE(frame1->positionTarget_0.vx - frame0->positionTarget_0.vx, alpha, Q12_SHIFT);
+    result->positionTarget_0.vy = frame0->positionTarget_0.vy + FP_MULTIPLY_PRECISE(frame1->positionTarget_0.vy - frame0->positionTarget_0.vy, alpha, Q12_SHIFT);
+    result->positionTarget_0.vz = frame0->positionTarget_0.vz + FP_MULTIPLY_PRECISE(frame1->positionTarget_0.vz - frame0->positionTarget_0.vz, alpha, Q12_SHIFT);
 
     result->lookAtTarget_6.vx = frame0->lookAtTarget_6.vx + FP_MULTIPLY_PRECISE(frame1->lookAtTarget_6.vx - frame0->lookAtTarget_6.vx, alpha, Q12_SHIFT);
     result->lookAtTarget_6.vy = frame0->lookAtTarget_6.vy + FP_MULTIPLY_PRECISE(frame1->lookAtTarget_6.vy - frame0->lookAtTarget_6.vy, alpha, Q12_SHIFT);

@@ -9,15 +9,17 @@ typedef struct
     VECTOR3 position1_C;
 } s_800E32DC;
 
-typedef struct {
-    s16 unk0;
-    s16 unk2;
+typedef struct
+{
+    s16 field_0;
+    s16 field_2; // Angle.
 } s_800DFB44;
 
-typedef struct {
-    u8 unk0;
-    u8 unk1;
-    u8 unk2;
+typedef struct
+{
+    u8 field_0;
+    u8 field_1;
+    u8 field_2;
 } s_800DFB48;
 
 extern s_800E32DC D_800E32DC;
@@ -76,12 +78,24 @@ extern s32 D_800DFB5C;
 
 extern u8 D_800DFB60;
 
+extern u8 D_800DF2F8;
+
+extern s16 D_800DF300[];
+
+extern s32 D_800DF1CC;
+
+extern s_800C4590 D_800E39BC;
+
+extern u16 D_800E32D4;
+
 void func_800CBFB0(void);
 
 void func_800D0124();
 
 /** Collision space distance check. */
 bool func_800D012C(VECTOR3* pos);
+
+void func_800CF7AC(s32 arg0, s_Particle* part, u16* arg2, s32* deltaTime);
 
 void func_800D0274(s32 arg0, s_Particle* part, u16* arg2);
 
@@ -125,6 +139,9 @@ void func_800D8310(s_SubCharacter*, GsCOORDINATE2*); // `Chara_Cheryl` related.
 
 void Ai_Cheryl_Init(s_SubCharacter* chara); // 0x800D8888
 
+void func_800D94F8(void);
+
+/** Debug function? */
 void Gfx_LoadingScreen_StageString();
 
 void func_800DBE00();
@@ -138,6 +155,8 @@ void func_800DC8D8(void);
 s32 func_800DCDA8();
 
 s32 func_800DCF38(s32);
+
+void func_800DD0CC(void);
 
 void Map_WorldObjectsInit(void);
 
@@ -169,8 +188,18 @@ void func_800DACB0(void);
 
 void func_800DAEFC(void);
 
+void func_800DB26C(void);
+
+void func_800DB514(void);
+
 void func_800DB870(void);
 
 void func_800CB6B0(s32 arg0, s8 mapId, s32 arg2);
+
+void func_800D802C(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coord);
+
+void func_800D8124(s_SubCharacter* chara, GsCOORDINATE2* coord);
+
+bool func_800D8748(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 arg4, s32 pitch);
 
 #endif

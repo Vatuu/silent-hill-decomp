@@ -203,7 +203,8 @@ bool func_801E3124() // 0x801E3124
             break;
 
         case 2:
-            Screen_Init(0x200, 1);
+            Screen_Init(512, true);
+
             g_IntervalVBlanks = 1;
             D_801E5E74        = 0x3C;
             g_GameWork.gameStateStep_598[1]++;
@@ -232,7 +233,8 @@ s32 func_801E3304() // 0x801E3304
     {
         if (g_GameWork.gameStateStep_598[1] == 0)
         {
-            Screen_Init(SCREEN_WIDTH, 0);
+            Screen_Init(SCREEN_WIDTH, false);
+
             g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_Reset, false);
             g_GameWork.gameStateStep_598[1]++;
         }

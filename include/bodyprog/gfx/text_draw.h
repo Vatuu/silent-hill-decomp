@@ -59,7 +59,7 @@ void func_8004B74C(s16 arg0);
 void func_8004B76C(char* str, bool useFixedWidth);
 
 /** Draws an integer string in screen space. */
-void Gfx_StringDrawInt(s32 widthMin, s32 val);
+void Gfx_StringDrawInt(s32 widthMin, s32 strLength);
 
 void func_8004BB10();
 

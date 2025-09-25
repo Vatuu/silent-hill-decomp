@@ -15,9 +15,9 @@ void func_800CBFB0(void) // 0x800CBFB0
     VECTOR3 vecs[4] =
     {
         VECTOR3(-258.0f, -1.4f, 244.1f),
-        VECTOR3(-254.5f,  0.0f,  220.5f),
-        VECTOR3(-249.4f,  0.0f,  219.5f),
-        VECTOR3(-250.5f,  0.0f,  217.7f)
+        VECTOR3(-254.5f,  0.0f, 220.5f),
+        VECTOR3(-249.4f,  0.0f, 219.5f),
+        VECTOR3(-250.5f,  0.0f, 217.7f)
     };
 
     GsInitCoordinate2(NULL, &g_SysWork.coord_22F8);
@@ -48,7 +48,45 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800CEB24_0_s00
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800CEFF4_0_s00); // 0x800CEFF4
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CF7AC);
+void func_800CF7AC(s32 arg0, s_Particle* part, u16* arg2, s32* deltaTime) // 0x800CF7AC
+{
+    s16         temp_v0_2;
+    s16         temp_v1;
+    s32         partCpy2;
+    s32         temp_v0_3;
+    u16         rand;
+    s_Particle* partCpy;
+
+    partCpy = part;
+    switch (arg0)
+    {
+        case 0:
+            part->movement_18.vx += (*arg2 % 15) - 7;
+            rand = Rng_Rand16();
+            *arg2 = rand;
+
+            partCpy->movement_18.vz += (rand % 15) - 7;
+            partCpy2 = 4;
+            partCpy->movement_18.vy += (*arg2 % 5) - 1;
+            partCpy->position0_0.vy += TIME_STEP_SCALE(*deltaTime, ((partCpy->movement_18.vy << 16) >> 17) * partCpy2);
+            break;
+
+        case 1:
+            partCpy->position1_C.vx = partCpy->position0_0.vx;
+            partCpy->position1_C.vz = partCpy->position0_0.vz;
+            partCpy->position1_C.vy = partCpy->position0_0.vy - partCpy->movement_18.vy;
+
+            temp_v1 = partCpy->movement_18.vy + D_800E32D4;
+            partCpy->movement_18.vy = temp_v1;
+            partCpy->position0_0.vy += TIME_STEP_SCALE(*deltaTime, temp_v1 << 2);
+            break;
+    }
+
+    if (partCpy->position0_0.vy >= Q12(0.0f))
+    {
+        partCpy->position0_0.vy = Q12(0.0f);
+    }
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800CEFD0_1_s02); // 0x800CF974
 
@@ -274,11 +312,10 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800D6970_0_s00
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800D70C4_0_s00); // 0x800D70C4
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800D7BE8_0_s00); // 0x800D7BE8
+#include "maps/shared/sharedFunc_800D7BE8_0_s00.h" // 0x800D7BE8
 
 #include "maps/shared/sharedFunc_800D7E04_0_s00.h" // 0x800D7E04
 
-// `arg2` = another `s_SubCharacter`?
 void Ai_Cheryl_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D7FB8
 {
     if (chara->model_0.charaId_0 != Chara_Cheryl)
@@ -291,13 +328,138 @@ void Ai_Cheryl_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2*
     func_800D802C(chara, anmHdr, coords); // Modulate speed and something else?
 }
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D802C);
+void func_800D802C(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coord) // 0x800D802C
+{
+    s32         speed;
+    q19_12      animDur;
+    s_AnimInfo* animInfo;
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8124);
+    if (chara->properties_E4.player.afkTimer_E8 == 1)
+    {
+        D_800DF1CC = FP_MULTIPLY_PRECISE(chara->moveSpeed_38, Q12(30.2f), Q12_SHIFT);
+    }
+
+    speed = MIN(chara->moveSpeed_38, Q12(2.5f));
+    chara->moveSpeed_38 = speed;
+
+    if (chara->properties_E4.player.afkTimer_E8 == 2)
+    {
+        // TODO: KAUFMAN anim in map0_s00? This might be a different anim table after all.
+        animInfo = KAUFMANN_ANIM_INFOS;
+        if (speed <= Q12(1.5f))
+        {
+            animDur = FP_MULTIPLY_PRECISE(speed, Q12(18.6f), Q12_SHIFT);
+        }
+        else
+        {
+            animDur = Q12(27.9f) - 1;
+        }
+
+        animInfo[7].duration_8.constant = animDur;
+    }
+
+    if (chara->properties_E4.player.field_F0 == 0)
+    {
+        KAUFMANN_ANIM_INFOS[chara->model_0.anim_4.status_0].updateFunc_0(&chara->model_0, anmHdr, coord, &KAUFMANN_ANIM_INFOS[chara->model_0.anim_4.status_0]);
+    }
+}
+
+void func_800D8124(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8124
+{
+    VECTOR3 pos; // @hack Unused but required.
+    VECTOR3 vec;
+    s32     moveSpeed;
+    s16     headingAngle;
+    s32     moveAmt;
+    s32     scaleRestoreShift;
+    u32     scaleReduceShift;
+
+    pos          = chara->position_18;
+    moveSpeed    = chara->moveSpeed_38;
+    headingAngle = chara->headingAngle_3C;
+    moveAmt      = FP_MULTIPLY_PRECISE(moveSpeed, g_DeltaTime0, Q12_SHIFT);
+
+    scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
+    scaleReduceShift  = scaleRestoreShift >> 1;
+
+    vec.vx = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    vec.vz = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    vec.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
+
+    func_80069B24(&D_800E39BC, &vec, chara);
+
+    chara->position_18.vx += vec.vx;
+    chara->position_18.vy += D_800E39BC.field_0.vy;
+    chara->position_18.vz += vec.vz;
+
+    if (chara->position_18.vy > D_800E39BC.field_C)
+    {
+        chara->position_18.vy = D_800E39BC.field_C;
+        chara->field_34 = 0;
+    }
+
+    coord->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
+    coord->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
+    coord->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8310);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8748);
+bool func_800D8748(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 arg4, s32 pitch) // 0x800D8748
+{
+    u32 var_a0;
+    u32 vol;
+
+    if (chara->model_0.anim_4.status_0 == animStatus)
+    {
+        if (arg4 >= 4000000)
+        {
+            if (arg4 <= 12000000)
+            {
+                var_a0 = arg4;
+            }
+            else
+            {
+                var_a0 = 12000000;
+            }
+        }
+        else
+        {
+            var_a0 = 4000000;
+        }
+
+        vol = (12000000 - var_a0) >> 16;
+        if (chara->model_0.anim_4.keyframeIdx_8 >= keyframeIdx1)
+        {
+            if (!(chara->properties_E4.player.flags_11C & PlayerFlag_Unk4))
+            {
+                func_8005DD44(Sfx_Unk1353, &chara->position_18, vol & 0xFF, pitch);
+                chara->properties_E4.player.flags_11C |= PlayerFlag_Unk4;
+                return true;
+            }
+        }
+        else
+        {
+            chara->properties_E4.player.flags_11C &= ~PlayerFlag_Unk4;
+        }
+
+        if (chara->model_0.anim_4.keyframeIdx_8 >= keyframeIdx0)
+        {
+            if (!(chara->properties_E4.player.flags_11C & PlayerFlag_Unk5))
+            {
+                func_8005DD44(Sfx_Unk1353, &chara->position_18, vol & 0xFF, pitch);
+                chara->properties_E4.player.flags_11C |= PlayerFlag_Unk5;
+                return true;
+            }
+        }
+        else
+        {
+            chara->properties_E4.player.flags_11C &= ~PlayerFlag_Unk5;
+        }
+    }
+
+    return false;
+}
 
 void Ai_Cheryl_Init(s_SubCharacter* chara) // 0x800D8888
 {
@@ -339,12 +501,44 @@ void Ai_Cheryl_Init(s_SubCharacter* chara) // 0x800D8888
 
 #include "maps/shared/sharedFunc_800D92AC_0_s00.h" // 0x800D92AC
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D94F8);
+void func_800D94F8(void) // 0x800D94F8
+{
+    s32  i;
+    s32  flags1;
+    s32  flags0;
+    u16  saveFlag;
+    u32  saveByte;
+    u16* var_a2;
 
-/** Debug function? */
+    // @hack Not used directly, but gets merged with  `Savegame_EventFlagGet` macros below.
+    saveByte = g_SavegamePtr->eventFlags_168[0];
+    flags1 = 0x199;
+    flags0 = 0x100;
+
+    if (g_SysWork.player_4C.chara_0.health_B0 > 0 && (!(Savegame_EventFlagGet(23) && !Savegame_EventFlagGet(20))))
+    {
+        for (i = 1; i < 7; i++)
+        {
+            saveFlag = D_800DF300[i];
+            if (Savegame_EventFlagGet((s16)saveFlag))
+            {
+                flags0 |= 1 << i;
+            }
+        }
+    }
+    else
+    {     
+        Savegame_EventFlagClear(EventFlag_20);
+        flags1 = 0x4CC;
+    }
+
+    func_80035F4C(flags0, flags1, &D_800DF2F8);
+}
+
 void Gfx_LoadingScreen_StageString() // 0x800D95D4
 {
     g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, false);
+
     Gfx_DebugStringPosition(100, 100);
     Gfx_DebugStringDraw("STAGE 0-0");
 }
@@ -380,27 +574,27 @@ const char* MAP_MESSAGES[] =
 
 void func_800D9610(void) // 0x800D9610
 {
-    VECTOR3           posCpy;
-    VECTOR3           pos;
-    s_AreaLoadParams* areaLoadParams0;
-    s_AreaLoadParams* areaLoadParams1;
-    s_EventParam*     eventParam;
+    VECTOR3       posCpy;
+    VECTOR3       pos;
+    s_MapPoint2d* mapPoint0;
+    s_MapPoint2d* mapPoint;
+    s_EventParam* eventParam;
 
     // @hack Permuter finds.
     do {} while (false);
     eventParam = g_MapEventParam;
-    areaLoadParams0 = &g_MapAreaLoadParams;
-    areaLoadParams1 = areaLoadParams0;
+    mapPoint0 = &MAP_POINTS;
+    mapPoint = mapPoint0;
 
-    pos.vx = g_MapAreaLoadParams[eventParam->field_5].char_x_0;
+    pos.vx = MAP_POINTS[eventParam->field_5].positionX_0;
     pos.vy = Q12(-1.2f);
-    pos.vz = g_MapAreaLoadParams[eventParam->field_5].char_z_8;
+    pos.vz = MAP_POINTS[eventParam->field_5].positionZ_8;
     posCpy = pos;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00(areaLoadParams1, eventParam);
+            sharedFunc_800D20E4_0_s00(mapPoint, eventParam);
             func_8005DC1C(Sfx_Unk1355, &posCpy, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement();
 
@@ -618,8 +812,8 @@ void func_800DA5A0(void) // 0x800DA5A0
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            Camera_TranslationSet(NULL, Q12(-22.0f), Q12(-2.4f), Q12(130.1f), 0, 0, 0, 0, true);
-            Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), 0, 0, 0, 0, true);
+            Camera_TranslationSet(NULL, Q12(-22.0f), Q12(-2.4f), Q12(130.1f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             break;
 
         case 1:
@@ -636,13 +830,14 @@ void func_800DA5A0(void) // 0x800DA5A0
                                   Q12(-22.0f) - func_800868F4(Q12(4.0f),  Q12(5.0f), 0),
                                   Q12(-2.4f)  - func_800868F4(Q12(-1.5f), Q12(5.0f), 1),
                                   Q12(130.1f) - func_800868F4(Q12(4.0f),  Q12(5.0f), 2),
-                                  0, 0, 0,
-                                  0, false);
-            Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), 0, 0, 0, 0, false);
+                                  Q12(0.0f), Q12(0.0f),
+                                  Q12(0.0f), Q12(0.0f),
+                                  false);
+            Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
             break;
 
         case 3:
-            Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), 0, 0, 0, 0, false);
+            Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
             break;
         
         case 7:
@@ -707,7 +902,7 @@ void func_800DA5A0(void) // 0x800DA5A0
             SysWork_StateStepIncrement();
 
         case 6:
-            func_800866D4(0x36, 1, 0);
+            func_800866D4(54, 1, 0);
             break;
 
         case 7:
@@ -726,7 +921,7 @@ void func_800DA5A0(void) // 0x800DA5A0
             SysWork_StateStepIncrement();
 
         case 10:
-            g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = 0x8CC;
+            g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = Q12(0.55f);
             func_80086728(&g_SysWork.npcs_1A0[0], 1, 1, 0);
             break;
 
@@ -736,13 +931,10 @@ void func_800DA5A0(void) // 0x800DA5A0
 
         default:
             func_8008616C(0, false, 2, 0, false);
-
             Savegame_EventFlagSet(EventFlag_4);
-
-            sharedFunc_800D2244_0_s00(0);
+            sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
-
-            sharedFunc_800D88C0_0_s00(&g_SysWork.npcs_1A0[0], 0);
+            sharedFunc_800D88C0_0_s00(&g_SysWork.npcs_1A0[0], false);
             break;
     }
 }
@@ -850,10 +1042,10 @@ void func_800DADD4(void)
 
 void func_800DAEFC(void) // 0x800DAEFC
 {
-    s32 temp_s1;
-    s32 var_a3;
-    s32 temp;
-    s32 temp2;
+    q19_12 offsetY;
+    q19_12 offsetZ;
+    s32    temp;
+    s32    temp2;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -873,8 +1065,8 @@ void func_800DAEFC(void) // 0x800DAEFC
 
         case 2:
             func_800865FC(false, 0, 0, FP_ANGLE(180.0f), Q12(0.0f), Q12(0.0f));
-            Camera_TranslationSet(&g_SysWork.player_4C.chara_0.position_18, Q12(0.24f), Q12(-4.06f), Q12(-5.0f), 0, 0, 0, 0, true);
-            Camera_RotationSet(&g_SysWork.player_4C.chara_0.position_18, Q12(-0.72f), Q12(-2.11f), Q12(-1.63f), 0, 0, 0, 0, true);
+            Camera_TranslationSet(&g_SysWork.player_4C.chara_0.position_18, Q12(0.24f), Q12(-4.06f), Q12(-5.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_RotationSet(&g_SysWork.player_4C.chara_0.position_18, Q12(-0.72f), Q12(-2.11f), Q12(-1.63f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             SysWork_StateStepIncrement();
 
         case 3:
@@ -894,32 +1086,33 @@ void func_800DAEFC(void) // 0x800DAEFC
         case 6:
             func_800866D4(54, 1, 0);
          
-            temp_s1 = FP_MULTIPLY(Math_Cos(g_SysWork.player_4C.chara_0.rotation_24.vy), Q12(0.6f), Q12_SHIFT) - Q12(1.84f);
+            offsetY = FP_MULTIPLY(Math_Cos(g_SysWork.player_4C.chara_0.rotation_24.vy), Q12(0.6f), Q12_SHIFT) - Q12(1.84f);
             temp = FP_MULTIPLY(Math_Cos(g_SysWork.player_4C.chara_0.rotation_24.vy), Q12(2.0f), Q12_SHIFT) + Q12(4.0f);
 
             if ((g_SysWork.player_4C.chara_0.position_18.vz + temp) < Q12(130.0f))
             {
                 temp2 = FP_MULTIPLY(Math_Cos(g_SysWork.player_4C.chara_0.rotation_24.vy), Q12(2.0f), Q12_SHIFT) + Q12(4.0f);
-                var_a3 = g_SysWork.player_4C.chara_0.position_18.vz + temp2;
+                offsetZ = g_SysWork.player_4C.chara_0.position_18.vz + temp2;
             } 
             else 
             {
-                var_a3 = Q12(130.0f);
+                offsetZ = Q12(130.0f);
             }
 
-            Camera_TranslationSet(NULL, Q12(-62.0f), temp_s1, var_a3, 0, 0, 0, 0, D_800DFAC4);
+            Camera_TranslationSet(NULL, Q12(-62.0f), offsetY, offsetZ, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), D_800DFAC4);
             Camera_RotationSet(NULL,
                                g_SysWork.player_4C.chara_0.position_18.vx,
                                Q12(-0.7f),
                                g_SysWork.player_4C.chara_0.position_18.vz - Q12(5.0f),
-                               0, 0, 0,
-                               0, D_800DFAC4);
+                               Q12(0.0f), Q12(0.0f),
+                               Q12(0.0f), Q12(0.0f),
+                               D_800DFAC4);
 
             D_800DFAC4 = false;
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(0);
+            sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             func_8008616C(0, false, 2, 0, false);
 
@@ -930,84 +1123,154 @@ void func_800DAEFC(void) // 0x800DAEFC
     }
 }
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DB26C);
+void func_800DB26C(void) // 0x800DB26C
+{
+    if (g_SysWork.sysStateStep_C[0] == 0)
+    {
+        Camera_TranslationSet(NULL, Q12(-62.0f), Q12(-2.24f), Q12(117.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+        Camera_RotationSet(NULL, Q12(-62.0f), Q12(-0.7f), Q12(104.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+        func_800868DC(2);
+    }
 
-void func_800DB514(void)
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_8008616C(0, true, 2, 0, false);
+            func_800865FC(1, 0, 0, FP_ANGLE(-90.0f), Q12(-60.5f), g_SysWork.player_4C.chara_0.position_18.vz);
+
+            g_SysWork.npcs_1A0[0].position_18.vx = Q12(-62.0f);
+            g_SysWork.npcs_1A0[0].rotation_24.vy = FP_ANGLE(180.0f);
+            g_SysWork.npcs_1A0[0].position_18.vz = g_SysWork.player_4C.chara_0.position_18.vz - Q12(9.0f);
+
+            SysWork_StateStepIncrement();
+
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            func_800866D4(54, 1, 0);
+            break;
+
+        case 3:
+            g_DeltaTime0 >>= 1; // `/ 2`.
+
+            func_800865FC(0, 0, 0, FP_ANGLE(-135.0f), Q12(0.0f), Q12(0.0f));
+            func_80085E6C(Q12(0.8f), false);
+            break;
+
+        case 4:
+            g_DeltaTime0 >>= 1; // `/ 2`.
+
+            Savegame_EventFlagSet(EventFlag_8);
+            func_800866D4(54, 1, 0);
+            break;
+
+        case 5:
+            g_DeltaTime0 >>= 1;
+            func_80085E6C(Q12(1.0f), false);
+            break;
+
+        default:
+            func_8008616C(0, false, 2, 0, false);
+            Savegame_EventFlagSet(EventFlag_7);
+            func_800865FC(1, 1, 0, FP_ANGLE(180.0f), Q12(-62.0f), Q12(49.0f));
+            sharedFunc_800D2244_0_s00(0);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+}
+
+void func_800DB514(void) // 0x800DB514
 {
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
+
             D_800DFB5C = 0;
             D_800DFB60 = 0;
+
             GameFs_FlameGfxLoad();
             SysWork_StateStepIncrement();
 
-            /* fallthrough */
         case 1:
             func_8008616C(2, true, 2, 0, false);
             break;
+
         case 2:
             func_80085DF0();
             break;
+
         case 3:
             SysWork_StateStepIncrement();
 
-            /* fallthrough */
         case 4:
             MapMsg_DisplayAndHandleSelection(false, 25, false, false, 0, false);
             break;
+
         case 5:
             func_8008605C(16, 6, 5, false);
             break;
+
         case 6:
             if (D_800DFB60)
             {
                 SysWork_StateStepIncrement();
             }
             break;
+
+            if (Fs_QueueDoThingWhenEmpty())
+            {
+                D_800DFB60++;
+                Chara_Load(1, Chara_GreyChild, &g_SysWork.npcCoords_FC0[0], 0, NULL, NULL);
+            }
+
         case 7:
             sharedFunc_800D209C_0_s00();
             SysWork_StateStepIncrement();
 
-            /* fallthrough */
         case 8:
             func_80085EB8(1, &g_SysWork.player_4C.chara_0, 0, false);
             break;
+
         case 9:
-            func_8003EF10(10, 10, 5, &D_800DFB5C, 0, Q12(0.5f));
+            func_8003EF10(10, 10, PrimitiveType_S32, &D_800DFB5C, 0, Q12(0.5f));
             SysWork_StateStepIncrement();
 
-            /* fallthrough */
         case 10:
             D_800DFB5C += g_DeltaTime0;
+
             if (D_800DFB5C > Q12(0.5f))
             {
                 SysWork_StateStepIncrement();
             }
             break;
+
         case 11:
             Savegame_EventFlagSet(EventFlag_17);
             MapMsg_DisplayAndHandleSelection(false, 30, false, false, 0, false);
             break;
+
         default:
             func_8008616C(0, false, 2, 0, false);
-            sharedFunc_800D2244_0_s00(1);
+            sharedFunc_800D2244_0_s00(true);
             SysWork_StateSetNext(SysState_Gameplay);
 
             func_80088D0C();
-            Chara_Spawn(Chara_GreyChild, 0, Q12(-252.0f), Q12(223.0f), FP_ANGLE(180.0f), 5U);
-            Chara_Spawn(Chara_GreyChild, 1, Q12(-254.0f), Q12(221.0f), FP_ANGLE(135.0f), 5U);
-            Chara_Spawn(Chara_GreyChild, 2, Q12(-259.0f), Q12(232.0f), 0, 5U);
+            Chara_Spawn(Chara_GreyChild, 0, Q12(-252.0f), Q12(223.0f), FP_ANGLE(180.0f), 5);
+            Chara_Spawn(Chara_GreyChild, 1, Q12(-254.0f), Q12(221.0f), FP_ANGLE(135.0f), 5);
+            Chara_Spawn(Chara_GreyChild, 2, Q12(-259.0f), Q12(232.0f), FP_ANGLE(0.0f),   5);
             break;
     }
 
     if (D_800DFB60 == 0)
     {
-        if (Fs_QueueDoThingWhenEmpty() != false)
+        if (Fs_QueueDoThingWhenEmpty())
         {
             D_800DFB60++;
-            Chara_Load(1, Chara_GreyChild, g_SysWork.npcCoords_FC0, 0, NULL, NULL);
+            Chara_Load(1, Chara_GreyChild, &g_SysWork.npcCoords_FC0[0], 0, NULL, NULL);
         }
     }
 }
@@ -1185,7 +1448,7 @@ block7:
                 g_SysWork.npcs_1A0[0].position_18.vx = 1;
                 g_SysWork.npcs_1A0[0].properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
 
-                sharedFunc_800D88C0_0_s00(&g_SysWork.npcs_1A0[0], 0);
+                sharedFunc_800D88C0_0_s00(&g_SysWork.npcs_1A0[0], false);
 
                 Savegame_EventFlagSet(EventFlag_6);
                 return;
@@ -1273,7 +1536,7 @@ block7:
                 g_SysWork.npcs_1A0[0].position_18.vz = 1;
                 g_SysWork.npcs_1A0[0].position_18.vx = 1;
 
-                sharedFunc_800D88C0_0_s00(&g_SysWork.npcs_1A0[0], 0);
+                sharedFunc_800D88C0_0_s00(&g_SysWork.npcs_1A0[0], false);
 
                 Savegame_EventFlagSet(EventFlag_9);
                 return;
@@ -1360,7 +1623,7 @@ void func_800DCC54(void) // 0x800DCC54
 {
     if (D_800DFADC == NO_VALUE)
     {
-        func_8003EF10(6, 6, 5, &D_800DFADC, Q12(0.0f), Q12(100.0f));
+        func_8003EF10(6, 6, PrimitiveType_S32, &D_800DFADC, Q12(0.0f), Q12(100.0f));
         D_800DFADC = Q12(0.0f);
 
         Sd_PlaySfx(Sfx_Unk1359, 0, Q8_CLAMPED(0.875f));
@@ -1470,40 +1733,39 @@ s32 func_800DCF38(s32 arg0) // 0x800DCF38
     return FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(9.0f), Q12_SHIFT) + arg0;
 }
 
-void func_800DD0CC()
+void func_800DD0CC(void) // 0x800DD0CC
 {
-    s32 vec0[2];
+    s32 vecs[2];
 
     if (D_800DFB40 == NO_VALUE)
     {
-        func_8003EF10(6, 6, 5, &D_800DFB40, 0, Q12(100.0f));
+        func_8003EF10(6, 6, PrimitiveType_S32, &D_800DFB40, 0, Q12(100.0f));
         D_800DFB40 = 0;
     }
 
-    D_800DFB44.unk0 += g_DeltaTime0;
+    D_800DFB44.field_0 += g_DeltaTime0;
 
-    vec0[0] = FP_MULTIPLY(D_800DFB44.unk0, D_800DFB48.unk0, 6);
-    if (vec0[0] >= Q12(1.0f))
+    vecs[0] = FP_MULTIPLY(D_800DFB44.field_0, D_800DFB48.field_0, 6);
+    if (vecs[0] >= Q12(1.0f))
     {
-        D_800DFB44.unk0 = 0;
-        D_800DFB48.unk0 = Rng_GenerateInt((u32)Rng_Rand16(), 32, 95);
-        D_800DFB48.unk1 = Rng_GenerateInt((u32)Rng_Rand16(), 32, 63);
-        vec0[0]         = Q12_FRACT(vec0[0]);
-    }
-    
-    vec0[0] = FP_MULTIPLY(D_800DFB48.unk1, Math_Sin(D_800DFB44.unk2), 12);
-
-    D_800DFB44.unk2 += g_DeltaTime0;
-
-    vec0[1] = FP_MULTIPLY(D_800DFB44.unk2, D_800DFB48.unk2, 6);
-    if (vec0[1] >= Q12(1.0f))
-    {
-        D_800DFB44.unk2 = 0;
-        D_800DFB48.unk2 = Rng_GenerateInt((u32)Rng_Rand16(), 32, 95);
-        vec0[1]         = Q12_FRACT(vec0[1]);
+        D_800DFB44.field_0 = 0;
+        D_800DFB48.field_0 = Rng_GenerateInt((u32)Rng_Rand16(), 32, 95);
+        D_800DFB48.field_1 = Rng_GenerateInt((u32)Rng_Rand16(), 32, 63);
+        vecs[0]           &= Q12_FRACT(vecs[0]);
     }
 
-    D_800DFB40 = MAX(0, FP_MULTIPLY((FP_MULTIPLY(vec0[0], Q12(4.5f), 6) + Q12(2.5f)), Math_Sin(vec0[1]), Q12_SHIFT) + Q12(4.0f));
+    vecs[0] = FP_MULTIPLY(D_800DFB48.field_1, Math_Sin(D_800DFB44.field_2), Q12_SHIFT);
+    D_800DFB44.field_2 += g_DeltaTime0;
+
+    vecs[1] = FP_MULTIPLY(D_800DFB44.field_2, D_800DFB48.field_2, 6);
+    if (vecs[1] >= Q12(1.0f))
+    {
+        D_800DFB44.field_2 = 0;
+        D_800DFB48.field_2 = Rng_GenerateInt((u32)Rng_Rand16(), 32, 95);
+        vecs[1]           &= Q12_FRACT(vecs[1]);
+    }
+
+    D_800DFB40 = MAX(Q12(0.0f), FP_MULTIPLY((FP_MULTIPLY(vecs[0], Q12(4.5f), 6) + Q12(2.5f)), Math_Sin(vecs[1]), Q12_SHIFT) + Q12(4.0f));
 }
 
 INCLUDE_RODATA("asm/maps/map0_s00/nonmatchings/map0_s00", D_800CB6A4);

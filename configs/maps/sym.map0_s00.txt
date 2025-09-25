@@ -136,7 +136,7 @@ sharedData_800DF2DC_0_s00     = 0x800DF2DC; // type:s32 unknown type
 //--- PA: 0x015D98   VA: 0x800DF310   subsegment: .data, map0_s00_header
 //----------------------------------------------------------------------
 g_LoadScreenFuncs             = 0x800DF310;
-g_MapAreaLoadParams           = 0x800DF320;
+MAP_POINTS                    = 0x800DF320;
 g_MapEventFuncs               = 0x800DF674;
 
 //---------------------------------------------------------------

@@ -56,7 +56,7 @@ bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyfra
                         break;
 
 #elif defined(MAP6_S01)
-                    // TODO: this is made of two blocks above, maybe can be merged somehow.
+                    // TODO: This is made of two blocks above, maybe can be merged somehow.
                     case 0x5D0:
                     case 0x5D8:
                         func_8005DC1C(sfx, &chara->position_18, Q8_CLAMPED(0.25f), 0);

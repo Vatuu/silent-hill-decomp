@@ -28,7 +28,7 @@ void (*g_LoadScreenFuncs[])() =
     Gfx_LoadingScreen_StageString
 };
 
-s_AreaLoadParams g_MapAreaLoadParams[] =
+s_MapPoint2d MAP_POINTS[] =
 {
     #include "area_load_params.h"
 };
@@ -59,7 +59,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .field_16 = 0x1,
     .field_17 = 0x2,
     .loadingScreenFuncs_18 = g_LoadScreenFuncs,
-    .mapAreaLoadParams_1C = g_MapAreaLoadParams,
+    .mapPointsOfInterest_1C = MAP_POINTS,
     .mapEventFuncs_20 = g_MapEventFuncs,
     .unk_24 = D_800CFD90,
     .field_28 = &g_SysWork.npcCoords_FC0[0],

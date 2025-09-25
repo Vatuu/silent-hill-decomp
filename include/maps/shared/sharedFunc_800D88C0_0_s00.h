@@ -1,8 +1,8 @@
-void sharedFunc_800D88C0_0_s00(s_SubCharacter* playerChara, s32 arg1)
+void sharedFunc_800D88C0_0_s00(s_SubCharacter* playerChara, bool arg1)
 {
     playerChara->properties_E4.player.field_F4 = 1;
 
-    if (arg1 != 0)
+    if (arg1)
     {
         playerChara->model_0.anim_4.status_0      = ANIM_STATUS(HarryAnim_TransitionToStill, true);
         playerChara->model_0.anim_4.keyframeIdx_8 = 0;

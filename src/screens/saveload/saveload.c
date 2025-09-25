@@ -12,7 +12,13 @@
 #define SLOT_COLUMN_OFFSET   150
 #define SLOT_ROW_OFFSET      20
 
-const s32 pad = 0;
+// TODO: Not sure if calling them "layers" is accurate. -- Sezz
+#define LAYER_24 24
+#define LAYER_28 28
+#define LAYER_32 32
+#define LAYER_36 36
+
+const s32 __pad = 0;
 
 char* g_SaveLocationNames[] =
 {
@@ -70,7 +76,7 @@ void (*g_GameState_SaveScreen_Funcs[])() =
 
 s32 g_SaveWriteOption = 0;
 
-s32 g_IsSaveSelected = 0;
+bool g_IsSaveSelected = false;
 
 // Only used in `GameState_DeathLoadScreen_Update`.
 void (*g_GameState_DeathLoadScreen_Funcs[])() =
@@ -85,7 +91,7 @@ s32 D_801E7554 = 0;
 
 s32 D_801E7558 = 0;
 
-s32 g_SaveWriteOptionSelected = 0;
+bool g_IsSaveWriteOptionSelected = false;
 
 s32 D_801E7560 = 0; // Unused.
 
@@ -158,13 +164,13 @@ void Gfx_SaveScreenBaseDraw() // 0x801E2EBC
     s_Line2d line;
     s32      i;
     
-    DVECTOR slotStrPosTable[] = 
+    const DVECTOR SLOT_STR_POS_TABLE[] = 
     {
         { 59, 16 },
         { 209, 16 }
     };
 
-    char* slotStrs[] =
+    const char* SLOT_STRS[] =
     {
         "SLOT1",
         "SLOT2"
@@ -174,8 +180,8 @@ void Gfx_SaveScreenBaseDraw() // 0x801E2EBC
     
     for (i = 0; i < MEMORY_CARD_SLOT_COUNT; i++)
     {
-        Gfx_StringSetPosition(slotStrPosTable[i].vx, slotStrPosTable[i].vy);
-        Gfx_StringDraw(slotStrs[i], 50);
+        Gfx_StringSetPosition(SLOT_STR_POS_TABLE[i].vx, SLOT_STR_POS_TABLE[i].vy);
+        Gfx_StringDraw(SLOT_STRS[i], 50);
     }
 
     line.vertex0_0.vx = -136;
@@ -197,7 +203,7 @@ void Gfx_SaveSlotFileStringDraw(s32 saveIdx, s32 slotIdx, s32 fileId, s32 entryT
     #define FILE_ID_STR_MARGIN_X FILE_STR_MARGIN_X + SCREEN_POSITION_X(15.75f)
     #define POS_Y                SCREEN_POSITION_Y(14.75f)
 
-    char* fileStr = "FILE";
+    const char* FILE_STR = "FILE";
 
     if (saveIdx == g_SlotElementSelectedIdx[slotIdx] && entryType >= SavegameEntryType_OutOfBlocks)
     {
@@ -205,7 +211,7 @@ void Gfx_SaveSlotFileStringDraw(s32 saveIdx, s32 slotIdx, s32 fileId, s32 entryT
 
         // Draw "FILE" string.
         Gfx_StringSetPosition((slotIdx * OFFSET_X) + FILE_STR_MARGIN_X, POS_Y);
-        Gfx_StringDraw(fileStr, 50);
+        Gfx_StringDraw(FILE_STR, 50);
 
         // Draw file ID string.
         Gfx_StringSetPosition((slotIdx * OFFSET_X) + FILE_ID_STR_MARGIN_X, POS_Y);
@@ -234,7 +240,7 @@ void Gfx_SavegameEntryLocationNameDraw(s_SavegameEntry* saveEntry, s32 saveIdx, 
 
     s32 nameIdx = saveEntry->locationId_8;
 
-    u8 xOffsets[] =
+    const u8 X_OFFSETS[] =
     {
         82, 37, 30, 44,
         81, 81, 61, 61,
@@ -270,7 +276,7 @@ void Gfx_SavegameEntryLocationNameDraw(s_SavegameEntry* saveEntry, s32 saveIdx, 
             Gfx_StringSetColor(colorId);
         }
 
-        Gfx_StringSetPosition(((slotIdx * OFFSET_X) + MARGIN_X) - (xOffsets[nameIdx] / 2),
+        Gfx_StringSetPosition(((slotIdx * OFFSET_X) + MARGIN_X) - (X_OFFSETS[nameIdx] / 2),
                               (var0 * OFFSET_Y) + MARGIN_Y);
         Gfx_StringDraw(g_SaveLocationNames[nameIdx], 50);
     }
@@ -298,7 +304,7 @@ void Gfx_SaveEntryBorder(s_SavegameEntry* saveEntry, s_SavegameEntry* nextSaveEn
 
 void Gfx_SaveScreenDraw(s_SavegameEntry* saveEntry, s32 saveIdx, s32 slotIdx) // 0x801E3304
 {
-    char* statusStrs[11] =
+    const char* DIALOG_STRS[11] =
     {
         "\x07MEMORY_CARD\nis_not_inserted",
         "\x07MEMORY_CARD\nis_\x01not_\x01""formatted",
@@ -449,7 +455,7 @@ void Gfx_SaveScreenDraw(s_SavegameEntry* saveEntry, s32 saveIdx, s32 slotIdx) //
             Gfx_StringSetPosition((slotIdx * SLOT_COLUMN_OFFSET) + 6, (g_LoadingMemCardTimer[slotIdx] * 20) + 53);
             break;
     }
-    Gfx_StringDraw(statusStrs[entryType], 50);
+    Gfx_StringDraw(DIALOG_STRS[entryType], 50);
 
     // Draw memory card message box.
     if (entryType < SavegameEntryType_CorruptedSave)
@@ -478,7 +484,7 @@ void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1) // 0x801E3910
 {
     s32 strIdx;
 
-    char* strs[] =
+    const char* DIALOG_STRS[] =
     {
         " ",
         "\x07You_\x01\x01removed_\x01\x01the_\x01\x01MEMORY_\x01\x01""CARD!",
@@ -494,7 +500,7 @@ void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1) // 0x801E3910
         "\x07Now_loading..."
     };
 
-    s16 xOffsets[] =
+    const s16 X_OFFSETS[] =
     {
         0,   268,
         141, 107,
@@ -609,8 +615,8 @@ void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1) // 0x801E3910
             }
 
             D_801E7554 = strIdx;
-            Gfx_StringSetPosition(160 - (xOffsets[strIdx] >> 1), 186);
-            Gfx_StringDraw(strs[strIdx], 99);
+            Gfx_StringSetPosition(160 - (X_OFFSETS[strIdx] >> 1), 186);
+            Gfx_StringDraw(DIALOG_STRS[strIdx], DEFAULT_MAP_MESSAGE_LENGTH);
 
             // Finished saving.
             if (strIdx == 5)
@@ -623,19 +629,19 @@ void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1) // 0x801E3910
 
 void Gfx_WriteOptionSaveDraw(s32 arg0, s32 optionIdx) // 0x801E3C44
 {
-    GsOT*     ot;
     s8        color;
     u32       time;
+    GsOT*     ot;
     POLY_F4*  poly;
 
-    char* strs[] =
+    const char* DIALOG_STRS[] =
     {
         "\x07Is_it_OK_to_overwrite?",
         "\x07Is_it_OK_to_format?",
         "\x07Yes__________No"
     };
 
-    u8 xOffsets[] =
+    const u8 X_OFFSETS[] =
     {
         180, 154
     };
@@ -652,10 +658,10 @@ void Gfx_WriteOptionSaveDraw(s32 arg0, s32 optionIdx) // 0x801E3C44
             D_801E750C = 1;
 
         case 1:
-            Gfx_StringSetPosition(160 - (xOffsets[arg0] / 2), 178);
-            Gfx_StringDraw(strs[arg0], 99);
+            Gfx_StringSetPosition(160 - (X_OFFSETS[arg0] / 2), 178);
+            Gfx_StringDraw(DIALOG_STRS[arg0], DEFAULT_MAP_MESSAGE_LENGTH);
             Gfx_StringSetPosition(104, 196);
-            Gfx_StringDraw("\x07Yes__________No", 99);
+            Gfx_StringDraw("\x07Yes__________No", DEFAULT_MAP_MESSAGE_LENGTH);
 
             poly = (POLY_F4*)GsOUT_PACKET_P;
             setPolyF4(poly);
@@ -663,13 +669,13 @@ void Gfx_WriteOptionSaveDraw(s32 arg0, s32 optionIdx) // 0x801E3C44
 
             if (time < 32)
             {
-                color = (time * 2) + FP_COLOR(0.125f);
+                color = (time * 2) + 32;
                 setRGB0(poly, color, color, 32);
             }
             else
             {
-                color = FP_COLOR(0.375f) - ((time - 32) * 2);
-                setRGB0(poly, color, color, FP_COLOR(0.125f));
+                color = 96 - ((time - 32) * 2);
+                setRGB0(poly, color, color, 32);
             }
 
             if (optionIdx != 0)
@@ -682,7 +688,7 @@ void Gfx_WriteOptionSaveDraw(s32 arg0, s32 optionIdx) // 0x801E3C44
             }
 
             GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_F4);
-            addPrim((u8*)ot->org + 28, poly);
+            addPrim((u8*)ot->org + LAYER_28, poly);
 
             Gfx_Primitive2dTextureSet(0, 0, 7, 1);
             break;
@@ -709,7 +715,7 @@ void Gfx_SavedFlashDraw() // 0x801E3E78
         setPolyF4(poly);
         setSemiTrans(poly, 1);
 
-        color = ~FP_FROM(sin * FP_COLOR(1.0f), Q12_SHIFT);
+        color = ~FP_FROM(sin * 255, Q12_SHIFT);
         setRGB0(poly, color, color, color);
 
         setXY4(poly,
@@ -719,7 +725,7 @@ void Gfx_SavedFlashDraw() // 0x801E3E78
                (slotIdx * SLOT_COLUMN_OFFSET) - 11,  (rowIdx * SLOT_ROW_OFFSET) - 43);
 
         GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_F4);
-        addPrim((u8*)ot->org + 24, poly);
+        addPrim((u8*)ot->org + LAYER_24, poly);
 
         Gfx_Primitive2dTextureSet(0, 0, 6, 1);
     }
@@ -729,7 +735,6 @@ void Gfx_SaveSlotBorderDraw() // 0x801E4010
 {
     #define BORDER_LINE_COUNT  5
     #define BORDER_PIXEL_WIDTH 2
-    #define LAYER              28
 
     GsOT*    ot;
     LINE_F2* borderLine;
@@ -738,7 +743,7 @@ void Gfx_SaveSlotBorderDraw() // 0x801E4010
     s32      j;
 
     // Lines for green border around slot. Each line is doubled for 2-pixel width.
-    s_Line2d borderLines[BORDER_LINE_COUNT][BORDER_PIXEL_WIDTH] =
+    const s_Line2d BORDER_LINES[BORDER_LINE_COUNT][BORDER_PIXEL_WIDTH] =
     {
         // Top-left.
         {
@@ -768,7 +773,7 @@ void Gfx_SaveSlotBorderDraw() // 0x801E4010
     };
 
     // Polygons for green glow of border around slot. Each line has 2 quads for inner and outer glow.
-    s_Quad2d borderGlowQuads[BORDER_LINE_COUNT][BORDER_PIXEL_WIDTH] =
+    const s_Quad2d BORDER_GLOW_QUADS[BORDER_LINE_COUNT][BORDER_PIXEL_WIDTH] =
     {
         // Top-left.
         {
@@ -777,22 +782,22 @@ void Gfx_SaveSlotBorderDraw() // 0x801E4010
         },
         // Top-right.
         {
-            { { -42, -88 }, { -42, -92 }, { -2, -88 }, { 2, -92 } },
+            { { -42, -88 }, { -42, -92 }, { -2, -88 }, { 2,  -92 } },
             { { -42, -87 }, { -42, -83 }, { -2, -87 }, { -6, -83 } }
         },
         // Left.
         {
-            { { -146, -88 }, { -150, -92 }, { -146, 42 }, {-150, 46 } },
-            { { -145, -87 }, { -141, -83 }, { -145, 41 }, {-141, 37 } }
+            { { -146, -88 }, { -150, -92 }, { -146, 42 }, { -150, 46 } },
+            { { -145, -87 }, { -141, -83 }, { -145, 41 }, { -141, 37 } }
         },
         // Right.
         {
-            { { -2, -88 }, { 2, -92 }, { -2, 42 }, { 2, 46 } },
+            { { -2, -88 }, { 2,  -92 }, { -2, 42 }, {  2, 46 } },
             { { -3, -87 }, { -7, -83 }, { -3, 41 }, { -7, 37 } }
         },
         // Bottom.
         {
-            { { -146, 42 }, { -150, 46 }, { -2, 42 }, { 2, 46 } },
+            { { -146, 42 }, { -150, 46 }, { -2, 42 }, {  2, 46 } },
             { { -145, 41 }, { -141, 37 }, { -3, 41 }, { -7, 37 } }
         }
     };
@@ -810,10 +815,10 @@ void Gfx_SaveSlotBorderDraw() // 0x801E4010
             setRGB0(borderLine, FP_COLOR(0.0f), FP_COLOR(1.0f), FP_COLOR(0.0f));
 
             setXY2(borderLine,
-                   borderLines[j][i].vertex0_0.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), borderLines[j][i].vertex0_0.vy,
-                   borderLines[j][i].vertex1_4.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), borderLines[j][i].vertex1_4.vy);
+                   BORDER_LINES[j][i].vertex0_0.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), BORDER_LINES[j][i].vertex0_0.vy,
+                   BORDER_LINES[j][i].vertex1_4.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), BORDER_LINES[j][i].vertex1_4.vy);
 
-            addPrim((u8*)ot->org + LAYER, borderLine);
+            addPrim((u8*)ot->org + LAYER_28, borderLine);
             GsOUT_PACKET_P = (u8*)borderLine + sizeof(LINE_F2);
         }
     }
@@ -833,12 +838,12 @@ void Gfx_SaveSlotBorderDraw() // 0x801E4010
             setRGB3(glowPoly, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
 
             setXY4(glowPoly,
-                   borderGlowQuads[j][i].vertex0_0.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), borderGlowQuads[j][i].vertex0_0.vy,
-                   borderGlowQuads[j][i].vertex1_4.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), borderGlowQuads[j][i].vertex1_4.vy,
-                   borderGlowQuads[j][i].vertex2_8.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), borderGlowQuads[j][i].vertex2_8.vy,
-                   borderGlowQuads[j][i].vertex3_C.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), borderGlowQuads[j][i].vertex3_C.vy);
+                   BORDER_GLOW_QUADS[j][i].vertex0_0.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), BORDER_GLOW_QUADS[j][i].vertex0_0.vy,
+                   BORDER_GLOW_QUADS[j][i].vertex1_4.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), BORDER_GLOW_QUADS[j][i].vertex1_4.vy,
+                   BORDER_GLOW_QUADS[j][i].vertex2_8.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), BORDER_GLOW_QUADS[j][i].vertex2_8.vy,
+                   BORDER_GLOW_QUADS[j][i].vertex3_C.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), BORDER_GLOW_QUADS[j][i].vertex3_C.vy);
 
-            addPrim((u8*)ot->org + LAYER, glowPoly);
+            addPrim((u8*)ot->org + LAYER_28, glowPoly);
             GsOUT_PACKET_P = (u8*)glowPoly + sizeof(POLY_G4);
         }
     }
@@ -880,7 +885,7 @@ void Gfx_SaveSlotMemCardMsgBoxShineDraw(s32 slotIdx) // 0x801E43C8
                (slotIdx * SLOT_COLUMN_OFFSET) - 6,   -35, (slotIdx * SLOT_COLUMN_OFFSET) - 6,   2);
 
         GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_F4);
-        addPrim((u8*)ot->org + 28, poly);
+        addPrim((u8*)ot->org + LAYER_28, poly);
 
         Gfx_Primitive2dTextureSet(0, 0, 7, 1);
     }
@@ -891,8 +896,6 @@ void Gfx_SaveSlotBoxDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 se
     #define SCROLL_BAR_THUMB_RECT_COUNT 2
     #define SCROLL_BAR_ARROW_COUNT      2
     #define SCROLL_BAR_OFFSET_Y         60
-    #define LAYER_BASE_0                28
-    #define LAYER_BASE_1                32
 
     GsOT*    ot;
     POLY_F4* thumbPoly;
@@ -912,18 +915,18 @@ void Gfx_SaveSlotBoxDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 se
 
     u32 selectedSaveHighlightTimer = (u8)g_SysWork.timer_1C & 0x3F;
 
-    s_Quad2d scrollBarTrackQuads[] =
+    const s_Quad2d SCROLL_BAR_TRACK_QUADS[] =
     {
         { { 0, 0 }, { 0, 96 }, { 4, 0 }, { 4, 96 } }, // Left half.
         { { 8, 0 }, { 8, 96 }, { 4, 0 }, { 4, 96 } }  // Right half.
     };
 
-    s_Triangle2d scrollBarArrowTris[MEMORY_CARD_SLOT_COUNT][SCROLL_BAR_ARROW_COUNT] =
+    const s_Triangle2d SCROLL_BAR_ARROW_TRIS[MEMORY_CARD_SLOT_COUNT][SCROLL_BAR_ARROW_COUNT] =
     {
         // Up arrows.
         {
             { { 4, -1 }, { -1, 7 }, { 8, 7 } }, // Slot 1 up arrow.
-            { { 5, 1 }, { 0, 8 }, { 9, 8 } }    // Slot 2 up arrow.
+            { { 5,  1 }, {  0, 8 }, { 9, 8 } }  // Slot 2 up arrow.
         },
         // Down arrows.
         {
@@ -932,7 +935,7 @@ void Gfx_SaveSlotBoxDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 se
         }
     };
 
-    u8 thumbOffsetsY[] =
+    const u8 THUMB_Y_OFFESTS[] =
     {
         79, 40, 27, 20, 16, 14, 12, 10,
         9, 8, 8, 7, 7, 6, 6, 5,
@@ -968,7 +971,7 @@ void Gfx_SaveSlotBoxDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 se
     if (saveCount != 0)
     {
         thumbOffsetY       = ((selectedSaveIdx * 79) / saveCount) + 8;
-        thumbOffsetBottomY = thumbOffsetsY[saveCount - 1];
+        thumbOffsetBottomY = THUMB_Y_OFFESTS[saveCount - 1];
 
         // Inner and outer rectangles.
         for (i = 0; i < SCROLL_BAR_THUMB_RECT_COUNT; i++)
@@ -991,13 +994,13 @@ void Gfx_SaveSlotBoxDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 se
             thumbOffsetX    = (slotIdx * SLOT_COLUMN_OFFSET) - 139;
             thumbOffsetTopY = i - SCROLL_BAR_OFFSET_Y;
             setXY4(thumbPoly,
-                   (scrollBarTrackQuads[0].vertex0_0.vx + thumbOffsetX) + i,  (scrollBarTrackQuads[0].vertex0_0.vy + thumbOffsetY) + thumbOffsetTopY,
-                   (scrollBarTrackQuads[0].vertex0_0.vx + thumbOffsetX) + i, ((scrollBarTrackQuads[0].vertex0_0.vy + thumbOffsetY) + thumbOffsetBottomY) - (i + SCROLL_BAR_OFFSET_Y),
-                   (scrollBarTrackQuads[1].vertex0_0.vx + thumbOffsetX) - i,  (scrollBarTrackQuads[1].vertex0_0.vy + thumbOffsetY) + thumbOffsetTopY,
-                   (scrollBarTrackQuads[1].vertex0_0.vx + thumbOffsetX) - i, ((scrollBarTrackQuads[1].vertex0_0.vy + thumbOffsetY) + thumbOffsetBottomY) - (i + SCROLL_BAR_OFFSET_Y));
+                   (SCROLL_BAR_TRACK_QUADS[0].vertex0_0.vx + thumbOffsetX) + i,  (SCROLL_BAR_TRACK_QUADS[0].vertex0_0.vy + thumbOffsetY) + thumbOffsetTopY,
+                   (SCROLL_BAR_TRACK_QUADS[0].vertex0_0.vx + thumbOffsetX) + i, ((SCROLL_BAR_TRACK_QUADS[0].vertex0_0.vy + thumbOffsetY) + thumbOffsetBottomY) - (i + SCROLL_BAR_OFFSET_Y),
+                   (SCROLL_BAR_TRACK_QUADS[1].vertex0_0.vx + thumbOffsetX) - i,  (SCROLL_BAR_TRACK_QUADS[1].vertex0_0.vy + thumbOffsetY) + thumbOffsetTopY,
+                   (SCROLL_BAR_TRACK_QUADS[1].vertex0_0.vx + thumbOffsetX) - i, ((SCROLL_BAR_TRACK_QUADS[1].vertex0_0.vy + thumbOffsetY) + thumbOffsetBottomY) - (i + SCROLL_BAR_OFFSET_Y));
 
             // Ensure inner rectangle is on top.
-            addPrim(((u8*)ot->org + LAYER_BASE_0) - (i * 4), thumbPoly);
+            addPrim(((u8*)ot->org + LAYER_28) - (i * 4), thumbPoly);
             GsOUT_PACKET_P = (u8*)thumbPoly + sizeof(POLY_F4);
         }
     }
@@ -1027,7 +1030,7 @@ void Gfx_SaveSlotBoxDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 se
                (slotIdx * SLOT_COLUMN_OFFSET) - 10,  (selectedSaveOffsetY * SLOT_ROW_OFFSET) - 62,
                (slotIdx * SLOT_COLUMN_OFFSET) - 10,  (selectedSaveOffsetY * SLOT_ROW_OFFSET) - 43);
 
-        addPrim((u8*)ot->org + LAYER_BASE_0, highlightPoly);
+        addPrim((u8*)ot->org + LAYER_28, highlightPoly);
         GsOUT_PACKET_P = (u8*)highlightPoly + sizeof(POLY_F4);
 
         Gfx_Primitive2dTextureSet(0, 0, 7, 1);
@@ -1047,11 +1050,11 @@ void Gfx_SaveSlotBoxDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 se
 
             arrowOffsetX = (slotIdx * SLOT_COLUMN_OFFSET) - 139;
             setXY3(arrowPoly,
-                   scrollBarArrowTris[i][j].vertex0_0.vx + arrowOffsetX, scrollBarArrowTris[i][j].vertex0_0.vy - SCROLL_BAR_OFFSET_Y,
-                   scrollBarArrowTris[i][j].vertex1_4.vx + arrowOffsetX, scrollBarArrowTris[i][j].vertex1_4.vy - SCROLL_BAR_OFFSET_Y,
-                   scrollBarArrowTris[i][j].vertex2_8.vx + arrowOffsetX, scrollBarArrowTris[i][j].vertex2_8.vy - SCROLL_BAR_OFFSET_Y);
+                   SCROLL_BAR_ARROW_TRIS[i][j].vertex0_0.vx + arrowOffsetX, SCROLL_BAR_ARROW_TRIS[i][j].vertex0_0.vy - SCROLL_BAR_OFFSET_Y,
+                   SCROLL_BAR_ARROW_TRIS[i][j].vertex1_4.vx + arrowOffsetX, SCROLL_BAR_ARROW_TRIS[i][j].vertex1_4.vy - SCROLL_BAR_OFFSET_Y,
+                   SCROLL_BAR_ARROW_TRIS[i][j].vertex2_8.vx + arrowOffsetX, SCROLL_BAR_ARROW_TRIS[i][j].vertex2_8.vy - SCROLL_BAR_OFFSET_Y);
 
-            addPrim((u8*)ot->org + LAYER_BASE_0, arrowPoly);
+            addPrim((u8*)ot->org + LAYER_28, arrowPoly);
             GsOUT_PACKET_P = (u8*)arrowPoly + sizeof(POLY_G3);
         }
     }
@@ -1069,12 +1072,12 @@ void Gfx_SaveSlotBoxDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 se
 
         trackOffsetX = (slotIdx * SLOT_COLUMN_OFFSET) - 139;
         setXY4(trackPoly,
-               scrollBarTrackQuads[i].vertex0_0.vx + trackOffsetX, scrollBarTrackQuads[i].vertex0_0.vy - SCROLL_BAR_OFFSET_Y,
-               scrollBarTrackQuads[i].vertex1_4.vx + trackOffsetX, scrollBarTrackQuads[i].vertex1_4.vy - SCROLL_BAR_OFFSET_Y,
-               scrollBarTrackQuads[i].vertex2_8.vx + trackOffsetX, scrollBarTrackQuads[i].vertex2_8.vy - SCROLL_BAR_OFFSET_Y,
-               scrollBarTrackQuads[i].vertex3_C.vx + trackOffsetX, scrollBarTrackQuads[i].vertex3_C.vy - SCROLL_BAR_OFFSET_Y);
+               SCROLL_BAR_TRACK_QUADS[i].vertex0_0.vx + trackOffsetX, SCROLL_BAR_TRACK_QUADS[i].vertex0_0.vy - SCROLL_BAR_OFFSET_Y,
+               SCROLL_BAR_TRACK_QUADS[i].vertex1_4.vx + trackOffsetX, SCROLL_BAR_TRACK_QUADS[i].vertex1_4.vy - SCROLL_BAR_OFFSET_Y,
+               SCROLL_BAR_TRACK_QUADS[i].vertex2_8.vx + trackOffsetX, SCROLL_BAR_TRACK_QUADS[i].vertex2_8.vy - SCROLL_BAR_OFFSET_Y,
+               SCROLL_BAR_TRACK_QUADS[i].vertex3_C.vx + trackOffsetX, SCROLL_BAR_TRACK_QUADS[i].vertex3_C.vy - SCROLL_BAR_OFFSET_Y);
 
-        addPrim((u8*)ot->org + LAYER_BASE_1, trackPoly);
+        addPrim((u8*)ot->org + LAYER_32, trackPoly);
         GsOUT_PACKET_P = (u8*)trackPoly + sizeof(POLY_G4);
     }
 
@@ -1091,7 +1094,7 @@ void Gfx_SaveSlotBoxDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 se
            (slotIdx * SLOT_COLUMN_OFFSET) - 9,   -81,
            (slotIdx * SLOT_COLUMN_OFFSET) - 9,    37);
 
-    addPrim((u8*)ot->org + LAYER_BASE_1, unkPoly);
+    addPrim((u8*)ot->org + LAYER_32, unkPoly);
     GsOUT_PACKET_P = (u8*)unkPoly + sizeof(POLY_F4);
 
     Gfx_Primitive2dTextureSet(0, 0, 8, 1);
@@ -1170,7 +1173,7 @@ void Gfx_SaveEntryBorderDraw(s_SavegameEntry* saveEntry, s_SavegameEntry* nextSa
                    entryBorderLines[i].vertex1_4.vx + borderLineOffsetX,  entryBorderLines[i].vertex1_4.vy + borderLineOffsetY);
         }
 
-        addPrim((u8*)ot->org + 24, borderLine);
+        addPrim((u8*)ot->org + LAYER_24, borderLine);
         GsOUT_PACKET_P = (u8*)borderLine + sizeof(LINE_F2);
     }
 
@@ -1188,7 +1191,7 @@ void Gfx_SaveEntryBorderDraw(s_SavegameEntry* saveEntry, s_SavegameEntry* nextSa
             setXY0(cornerTile, tileOffsetX0 + (i * 117), (rowIdx * 20) - 62);
             setWH(cornerTile, 4, 4);
 
-            addPrim((u8*)ot->org + 24, cornerTile);
+            addPrim((u8*)ot->org + LAYER_24, cornerTile);
             GsOUT_PACKET_P = (u8*)cornerTile + sizeof(TILE);
         }
     }
@@ -1207,7 +1210,7 @@ void Gfx_SaveEntryBorderDraw(s_SavegameEntry* saveEntry, s_SavegameEntry* nextSa
             setXY0(cornerTile, tileOffsetX1 + (i * 117), (rowIdx * 20) - 46);
             setWH(cornerTile, 4, 4);
 
-            addPrim((u8*)ot->org + 24, cornerTile);
+            addPrim((u8*)ot->org + LAYER_24, cornerTile);
             GsOUT_PACKET_P = (u8*)cornerTile + sizeof(TILE);
         }
     }
@@ -1221,7 +1224,7 @@ void Gfx_SaveEntryBorderDraw(s_SavegameEntry* saveEntry, s_SavegameEntry* nextSa
 // "Now checking MEMORY CARD"?
 void Gfx_SaveSlotMemCardMsgBoxDraw(s32 slotIdx, s32 entryType) // 0x801E52D8
 {
-    s_ColoredLine2d coloredLines[MEMORY_CARD_SLOT_COUNT] =
+    const s_ColoredLine2d COLORED_LINES[MEMORY_CARD_SLOT_COUNT] =
     {
         // Red line.
         {
@@ -1237,44 +1240,44 @@ void Gfx_SaveSlotMemCardMsgBoxDraw(s32 slotIdx, s32 entryType) // 0x801E52D8
         }
     };
 
-    s_LineBorder borderLines =
+    const s_LineBorder BORDER_LINES =
     {
         {
-            { { -144, -36 }, { -4, -36 } },
-            { { -144, 2 }, { -4, 2 } },
-            { { -144, -36 }, { -144, 2 } },
-            { { -4, -36 }, { -4, 2 } }
+            { { -144, -36 }, { -4,  -36 } },
+            { { -144,  2  }, { -4,   2  } },
+            { { -144, -36 }, { -144, 2  } },
+            { { -4,   -36 }, { -4,   2  } }
         }
     };
 
-    s_QuadBorder borderGlowQuads =
+    const s_QuadBorder BORDER_GLOW_QUADS =
     {
         {
-            { { -144, -36 }, { -148, -40 }, { -4, -36 }, { 0, -40 } },
-            { { -144, 2 }, { -148, 6 }, { -4, 2 }, { 0, 6 } },
-            { { -144, -36 }, { -148, -40 }, { -144, 2 }, { -148, 6 } },
-            { { -4, -36 }, { 0, -40 }, { -4, 2 }, { 0, 6 } }
+            { { -144, -36 }, { -148, -40 }, { -4,  -36 }, { 0,   -40 } },
+            { { -144,  2  }, { -148,  6  }, { -4,   2  }, { 0,    6  } },
+            { { -144, -36 }, { -148, -40 }, { -144, 2  }, { -148, 6  } },
+            { { -4,   -36 }, {  0,   -40 }, { -4,   2  }, { 0,    6  } }
         }
     };
 
     if (entryType == SavegameEntryType_UnformattedMemCard && g_GameWork.gameState_594 == GameState_Unk10) 
     {
-        Gfx_SaveSlotMemCardMsgBoxSubDraw(&borderLines, &borderGlowQuads, &coloredLines[1], slotIdx);
+        Gfx_SaveSlotMemCardMsgBoxSubDraw(&BORDER_LINES, &BORDER_GLOW_QUADS, &COLORED_LINES[1], slotIdx);
     } 
     else 
     {
-        Gfx_SaveSlotMemCardMsgBoxSubDraw(&borderLines, &borderGlowQuads, &coloredLines[0], slotIdx);
+        Gfx_SaveSlotMemCardMsgBoxSubDraw(&BORDER_LINES, &BORDER_GLOW_QUADS, &COLORED_LINES[0], slotIdx);
     }
 }
 
 void Gfx_SaveSlotMemCardMsgBoxSubDraw(s_LineBorder* borderLines, s_QuadBorder* borderGlowQuads, s_ColoredLine2d* coloredLine, s32 slotIdx) // 0x801E54DC
 {
+    s32       i;
     GsOT*     ot;
     LINE_F2*  borderLine;
     POLY_G4*  glowPoly;
     POLY_F4*  unkPoly;
     s_Line2d* glowLine;
-    s32       i;
 
     ot = &g_OrderingTable2[g_ActiveBufferIdx];
 
@@ -1289,7 +1292,7 @@ void Gfx_SaveSlotMemCardMsgBoxSubDraw(s_LineBorder* borderLines, s_QuadBorder* b
                borderLines->lines_0[i].vertex0_0.vx + (slotIdx * SLOT_COLUMN_OFFSET), borderLines->lines_0[i].vertex0_0.vy,
                borderLines->lines_0[i].vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), borderLines->lines_0[i].vertex1_4.vy);
 
-        addPrim((u8*)ot->org + 28, borderLine);
+        addPrim((u8*)ot->org + LAYER_28, borderLine);
         GsOUT_PACKET_P = (u8*)borderLine + sizeof(LINE_F2);
     }
 
@@ -1301,9 +1304,9 @@ void Gfx_SaveSlotMemCardMsgBoxSubDraw(s_LineBorder* borderLines, s_QuadBorder* b
         setSemiTrans(glowPoly, 1);
 
         setRGB0(glowPoly, coloredLine->r_8 / 2, coloredLine->g_A / 2, coloredLine->b_C / 2);
-        setRGB1(glowPoly, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
+        setRGB1(glowPoly, 0, 0, 0);
         setRGB2(glowPoly, coloredLine->r_8 / 2, coloredLine->g_A / 2, coloredLine->b_C / 2);
-        setRGB3(glowPoly, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
+        setRGB3(glowPoly, 0, 0, 0);
 
         glowLine = (s_Line2d*)&borderGlowQuads->quads_0[i].vertex2_8;
         setXY4(glowPoly,
@@ -1312,7 +1315,7 @@ void Gfx_SaveSlotMemCardMsgBoxSubDraw(s_LineBorder* borderLines, s_QuadBorder* b
                borderGlowQuads->quads_0[i].vertex2_8.vx + (slotIdx * SLOT_COLUMN_OFFSET), glowLine->vertex0_0.vy,
                glowLine->vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), glowLine->vertex1_4.vy);
 
-        addPrim((u8*)ot->org + 32, glowPoly);
+        addPrim((u8*)ot->org + LAYER_32, glowPoly);
         GsOUT_PACKET_P = (u8*)glowPoly + sizeof(POLY_G4);
     }
     
@@ -1331,7 +1334,7 @@ void Gfx_SaveSlotMemCardMsgBoxSubDraw(s_LineBorder* borderLines, s_QuadBorder* b
            coloredLine->line_0.vertex0_0.vx + coloredLine->line_0.vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), coloredLine->line_0.vertex0_0.vy,
            coloredLine->line_0.vertex0_0.vx + coloredLine->line_0.vertex1_4.vx + (slotIdx * SLOT_COLUMN_OFFSET), coloredLine->line_0.vertex0_0.vy + coloredLine->line_0.vertex1_4.vy);
 
-    addPrim((u8*)ot->org + 32, unkPoly);
+    addPrim((u8*)ot->org + LAYER_32, unkPoly);
     GsOUT_PACKET_P = (u8*)unkPoly + sizeof(POLY_F4);
 
     Gfx_Primitive2dTextureSet(0, 0, 8, 1);
@@ -1339,15 +1342,15 @@ void Gfx_SaveSlotMemCardMsgBoxSubDraw(s_LineBorder* borderLines, s_QuadBorder* b
 
 void Gfx_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
 {
-    GsOT*    ot;
     s32      color;
     s32      i;
+    GsOT*    ot;
     POLY_F3* poly_f3;
     POLY_F4* poly_f4;
     LINE_G2* line_g2;
 
     // Adjusted lines?
-    DVECTOR sp10[] =
+    DVECTOR adjLines[] =
     {
         { line->vertex0_0.vx,                            line->vertex0_0.vy },
         { (line->vertex0_0.vx + line->vertex1_4.vx) - 8, line->vertex0_0.vy },
@@ -1378,7 +1381,7 @@ void Gfx_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
         poly_f3 = (POLY_F3*)GsOUT_PACKET_P;
         setPolyF3(poly_f3);
 
-        color = FP_COLOR(0.1875f); // HACK
+        color = FP_COLOR(0.1875f); // @hack
 
         setSemiTrans(poly_f3, 1);
         setRGB0(poly_f3, color, FP_COLOR(0.1875f), FP_COLOR(0.1875f));
@@ -1388,7 +1391,7 @@ void Gfx_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
                tris[i].vertex1_4.vx, tris[i].vertex1_4.vy,
                tris[i].vertex2_8.vx, tris[i].vertex2_8.vy);
 
-        addPrim((u8*)ot->org + 32, poly_f3);
+        addPrim((u8*)ot->org + LAYER_32, poly_f3);
         GsOUT_PACKET_P  = (u8*)poly_f3;
         GsOUT_PACKET_P += sizeof(POLY_F3);
     }
@@ -1407,7 +1410,7 @@ void Gfx_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
            line->vertex0_0.vx + line->vertex1_4.vx, line->vertex0_0.vy,
            line->vertex0_0.vx + line->vertex1_4.vx, line->vertex0_0.vy + line->vertex1_4.vy);
 
-    addPrim((u8*)ot->org + 36, poly_f4);
+    addPrim((u8*)ot->org + LAYER_36, poly_f4);
     GsOUT_PACKET_P = (u8*)poly_f4 + sizeof(POLY_F4);
 
     Gfx_Primitive2dTextureSet(0, 0, 9, 1);
@@ -1429,10 +1432,10 @@ void Gfx_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
         }
 
         setXY2(line_g2,
-               sp10[i].vx, sp10[i].vy,
-               sp10[(i + 1) % 6].vx,sp10[(i + 1) % 6].vy);
+               adjLines[i].vx, adjLines[i].vy,
+               adjLines[(i + 1) % 6].vx,adjLines[(i + 1) % 6].vy);
 
-        addPrim((u8*)ot->org + 28, line_g2);
+        addPrim((u8*)ot->org + LAYER_28, line_g2);
         GsOUT_PACKET_P = (u8*)line_g2 + sizeof(LINE_G2);
     }
 }
@@ -1577,7 +1580,7 @@ void Gfx_SaveDataInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
             }
 
             GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_G4);
-            addPrim((u8*)ot->org + 28, poly);
+            addPrim((u8*)ot->org + LAYER_28, poly);
 
             Gfx_Primitive2dTextureSet(0, 0, 7, 1);
         }
@@ -1664,7 +1667,7 @@ void Savegame_ScreenLogic() // 0x801E649C
             if (g_MemCardsTotalElementCount > 0)
             {
                 g_SaveWriteOption     = 0;
-                g_IsSaveSelected      = 0;
+                g_IsSaveSelected      = false;
                 g_ActiveSavegameEntry = GetActiveSavegameEntry(g_SelectedSaveSlotIdx);
 
                 // Move down savegame entry.
@@ -1703,7 +1706,7 @@ void Savegame_ScreenLogic() // 0x801E649C
                     // This is the code that defines if the selected element is the `New Save` option or a save game.
                     if ((u16)(saveEntry->currentScreenSessionSaves_0 - 1) < 31099)
                     {
-                        g_IsSaveSelected = 1;
+                        g_IsSaveSelected = true;
                     }
                 }
 
@@ -1712,7 +1715,7 @@ void Savegame_ScreenLogic() // 0x801E649C
                 {
                     if ((g_SaveWriteOption | g_IsSaveSelected) != 0) 
                     {
-                        g_SaveWriteOptionSelected       = 0;
+                        g_IsSaveWriteOptionSelected       = false;
                         g_GameWork.gameStateStep_598[2] = 0;
                         g_GameWork.gameStateStep_598[1]++;
                     }
@@ -1756,19 +1759,19 @@ void Savegame_ScreenLogic() // 0x801E649C
 
             if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickLeft) 
             {
-                g_SaveWriteOptionSelected = gameStateStep;
+                g_IsSaveWriteOptionSelected = gameStateStep;
                 Sd_EngineCmd(Sfx_Back);
             }
 
             if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickRight) 
             {
-                g_SaveWriteOptionSelected = 0;
+                g_IsSaveWriteOptionSelected = false;
                 Sd_EngineCmd(Sfx_Back);
             }
 
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0) 
             {
-                if (g_SaveWriteOptionSelected == 0)
+                if (!g_IsSaveWriteOptionSelected)
                 {
                     g_GameWork.gameStateStep_598[0] = gameStateStep;
                     g_SysWork.timer_20              = 0;
@@ -1793,7 +1796,7 @@ void Savegame_ScreenLogic() // 0x801E649C
                 Sd_EngineCmd(Sfx_Cancel);
             }
 
-            Gfx_WriteOptionSave(g_SaveWriteOption, g_SaveWriteOptionSelected);
+            Gfx_WriteOptionSave(g_SaveWriteOption, g_IsSaveWriteOptionSelected);
             break;
 
         case 2:
