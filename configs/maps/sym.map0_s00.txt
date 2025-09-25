@@ -26,9 +26,11 @@ sharedData_800CAB70_0_s00     = 0x800CAB70; // type:s32
 //--- PA: 0x002138   VA: 0x800CB6B0   subsegment: c, map0_s00
 //-----------------------------------------------------------
 sharedFunc_800CBBBC_0_s00     = 0x800CBBBC; // type:func
+sharedFunc_800CE59C_0_s01     = 0x800CBC94; // type:func
 Particle_Update               = 0x800CC04C; // type:func
 sharedFunc_800CEB24_0_s00     = 0x800CEB24; // type:func
 sharedFunc_800CEFF4_0_s00     = 0x800CEFF4; // type:func
+sharedFunc_800CF2A4_0_s01     = 0x800CF7AC; // type:func
 sharedFunc_800CEFD0_1_s02     = 0x800CF974; // type:func
 sharedFunc_800CFFF8_0_s00     = 0x800CFFF8; // type:func
 sharedFunc_800CE954_7_s03     = 0x800D0124; // type:func

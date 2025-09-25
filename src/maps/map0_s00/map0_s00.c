@@ -8,7 +8,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CB6B0);
 
 #include "maps/shared/sharedFunc_800CBBBC_0_s00.h" // 0x800CBBBC
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CBC94);
+#include "maps/shared/sharedFunc_800CE59C_0_s01.h"
 
 void func_800CBFB0(void) // 0x800CBFB0
 {
@@ -48,45 +48,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800CEB24_0_s00
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800CEFF4_0_s00); // 0x800CEFF4
 
-void func_800CF7AC(s32 arg0, s_Particle* part, u16* arg2, s32* deltaTime) // 0x800CF7AC
-{
-    s16         temp_v0_2;
-    s16         temp_v1;
-    s32         partCpy2;
-    s32         temp_v0_3;
-    u16         rand;
-    s_Particle* partCpy;
-
-    partCpy = part;
-    switch (arg0)
-    {
-        case 0:
-            part->movement_18.vx += (*arg2 % 15) - 7;
-            rand = Rng_Rand16();
-            *arg2 = rand;
-
-            partCpy->movement_18.vz += (rand % 15) - 7;
-            partCpy2 = 4;
-            partCpy->movement_18.vy += (*arg2 % 5) - 1;
-            partCpy->position0_0.vy += TIME_STEP_SCALE(*deltaTime, ((partCpy->movement_18.vy << 16) >> 17) * partCpy2);
-            break;
-
-        case 1:
-            partCpy->position1_C.vx = partCpy->position0_0.vx;
-            partCpy->position1_C.vz = partCpy->position0_0.vz;
-            partCpy->position1_C.vy = partCpy->position0_0.vy - partCpy->movement_18.vy;
-
-            temp_v1 = partCpy->movement_18.vy + D_800E32D4;
-            partCpy->movement_18.vy = temp_v1;
-            partCpy->position0_0.vy += TIME_STEP_SCALE(*deltaTime, temp_v1 << 2);
-            break;
-    }
-
-    if (partCpy->position0_0.vy >= Q12(0.0f))
-    {
-        partCpy->position0_0.vy = Q12(0.0f);
-    }
-}
+#include "maps/shared/sharedFunc_800CF2A4_0_s01.h"
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800CEFD0_1_s02); // 0x800CF974
 
