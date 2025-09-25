@@ -70,6 +70,14 @@ typedef struct
     DVECTOR field_4;
 } s_Inventory_SelectionOutlineVector;
 
+typedef struct
+{
+    u32* ptr_0;
+    u32* ptr_4;
+    s16  field_8;
+    s16  field_A;
+} s_800AEDBC;
+
 // ========
 // GLOBALS
 // ========
@@ -208,6 +216,8 @@ extern s32 g_Inventory_EquippedItemIdx; // 0x800C3E34
 
 /** Stores item model data. */
 extern GsDOBJ2 g_Items_ItemsModelData[9]; // 0x800C3D78
+
+extern s_800AEDBC D_800AEDBC[];
 
 // ==========
 // FUNCTIONS

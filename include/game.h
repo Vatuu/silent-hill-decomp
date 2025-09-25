@@ -775,7 +775,7 @@ typedef struct _ControllerData
     s32                btnsPulsed_18;    /** `e_ControllerFlags` */
     s32                btnsPulsedGui_1C; /** `e_ControllerFlags` */
     s_AnalogSticks     sticks_20;
-    s32                field_24;
+    s_AnalogSticks     sticks_24;
     s32                field_28;
 } s_ControllerData;
 STATIC_ASSERT_SIZEOF(s_ControllerData, 44);
