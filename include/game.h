@@ -1270,7 +1270,7 @@ STATIC_ASSERT_SIZEOF(s_StructUnk3, 52);
 
 typedef struct
 {
-    s32          field_0; /** `e_PrimitiveType`. */
+    s32          field_0; /** `e_PrimitiveType` */
     s8*          field_4; /** Points to different types of data depending on `field_0`. */
     s32          field_8; // } Q19.12?
     s32          field_C; // }

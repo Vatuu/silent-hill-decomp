@@ -35,7 +35,7 @@ extern u32 g_RngSeed;
  * 16   | 0xFFFF | 1 in 65536 | 0.002%
  *
  * @param bits Number of consecutive bits to use in the probability test.
- * @return `>0` if the probability is met, `0` otherwise.
+ * @return `true` if the probability is met, `false` otherwise.
  */
 #define Rng_TestProbabilityBits(bits) \
     (Rng_Rand16() & ((1 << (bits)) - 1))

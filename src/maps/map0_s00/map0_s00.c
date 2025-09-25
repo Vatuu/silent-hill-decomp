@@ -15,9 +15,9 @@ void func_800CBFB0(void) // 0x800CBFB0
     VECTOR3 vecs[4] =
     {
         VECTOR3(-258.0f, -1.4f, 244.1f),
-        VECTOR3(-254.5f,  0.0f,  220.5f),
-        VECTOR3(-249.4f,  0.0f,  219.5f),
-        VECTOR3(-250.5f,  0.0f,  217.7f)
+        VECTOR3(-254.5f,  0.0f, 220.5f),
+        VECTOR3(-249.4f,  0.0f, 219.5f),
+        VECTOR3(-250.5f,  0.0f, 217.7f)
     };
 
     GsInitCoordinate2(NULL, &g_SysWork.coord_22F8);
@@ -48,40 +48,43 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800CEB24_0_s00
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800CEFF4_0_s00); // 0x800CEFF4
 
-void func_800CF7AC(s32 arg0, s_Particle* arg1, u16* arg2, s32* arg3)
+void func_800CF7AC(s32 arg0, s_Particle* part, u16* arg2, s32* deltaTime) // 0x800CF7AC
 {
-    s16 temp_v0_2;
-    s16 temp_v1;
-    s32 partCpy2;
-    s32 temp_v0_3;
-    s_Particle *partCpy;
-    u16 random0;
+    s16         temp_v0_2;
+    s16         temp_v1;
+    s32         partCpy2;
+    s32         temp_v0_3;
+    u16         rand;
+    s_Particle* partCpy;
 
-    partCpy = arg1;
+    partCpy = part;
     switch (arg0)
     {
-    case 0:
-        arg1->movement_18.vx +=((*arg2 % 15) - 7);
-        random0 = Rng_Rand16();
-        *arg2 = random0;
-        partCpy->movement_18.vz += (random0  % 15) - 7;
-        partCpy2 = 4;
-        partCpy->movement_18.vy += (*arg2 % 5) -1;
-        partCpy->position0_0.vy += (((partCpy->movement_18.vy << 0x10) >> 0x11) * partCpy2 * *arg3) / 136;
+        case 0:
+            part->movement_18.vx += (*arg2 % 15) - 7;
+            rand = Rng_Rand16();
+            *arg2 = rand;
 
-        break;
-    case 1:
-        partCpy->position1_C.vx = partCpy->position0_0.vx;
-        partCpy->position1_C.vz = partCpy->position0_0.vz;
-        partCpy->position1_C.vy = partCpy->position0_0.vy - partCpy->movement_18.vy;
-        temp_v1 = partCpy->movement_18.vy + D_800E32D4;
-        partCpy->movement_18.vy = temp_v1;
-        partCpy->position0_0.vy += ((temp_v1 << 2) * *arg3) / 136;
-        break;
+            partCpy->movement_18.vz += (rand % 15) - 7;
+            partCpy2 = 4;
+            partCpy->movement_18.vy += (*arg2 % 5) - 1;
+            partCpy->position0_0.vy += TIME_STEP_SCALE(*deltaTime, ((partCpy->movement_18.vy << 16) >> 17) * partCpy2);
+            break;
+
+        case 1:
+            partCpy->position1_C.vx = partCpy->position0_0.vx;
+            partCpy->position1_C.vz = partCpy->position0_0.vz;
+            partCpy->position1_C.vy = partCpy->position0_0.vy - partCpy->movement_18.vy;
+
+            temp_v1 = partCpy->movement_18.vy + D_800E32D4;
+            partCpy->movement_18.vy = temp_v1;
+            partCpy->position0_0.vy += TIME_STEP_SCALE(*deltaTime, temp_v1 << 2);
+            break;
     }
-    if (partCpy->position0_0.vy >= 0)
+
+    if (partCpy->position0_0.vy >= Q12(0.0f))
     {
-        partCpy->position0_0.vy = 0;
+        partCpy->position0_0.vy = Q12(0.0f);
     }
 }
 
@@ -326,44 +329,45 @@ void Ai_Cheryl_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2*
     func_800D802C(chara, anmHdr, coords); // Modulate speed and something else?
 }
 
-void func_800D802C(s_SubCharacter* arg0, s_AnmHeader* arg1, GsCOORDINATE2* arg2)
+void func_800D802C(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coord) // 0x800D802C
 {
-    s32 speed;
-    s32 animDur;
+    s32         speed;
+    q19_12      animDur;
     s_AnimInfo* animInfo;
 
-    if (arg0->properties_E4.player.afkTimer_E8 == 1)
+    if (chara->properties_E4.player.afkTimer_E8 == 1)
     {
-        D_800DF1CC = FP_MULTIPLY_PRECISE(arg0->moveSpeed_38, 0x1e333, 12);
+        D_800DF1CC = FP_MULTIPLY_PRECISE(chara->moveSpeed_38, Q12(30.2f), Q12_SHIFT);
     }
 
-    speed = MIN(arg0->moveSpeed_38, Q12(2.5f));
-    arg0->moveSpeed_38 = speed;
+    speed = MIN(chara->moveSpeed_38, Q12(2.5f));
+    chara->moveSpeed_38 = speed;
 
-    if (arg0->properties_E4.player.afkTimer_E8 == 2)
+    if (chara->properties_E4.player.afkTimer_E8 == 2)
     {
-        // @hack KAUFMAN anim in map0_s00 ? this might be a different anim table after all.
+        // TODO: KAUFMAN anim in map0_s00? This might be a different anim table after all.
         animInfo = KAUFMANN_ANIM_INFOS;
         if (speed <= Q12(1.5f))
         {
-            animDur = FP_MULTIPLY_PRECISE(speed, Q12(18.6), 12);
-        } else
-        {
-            animDur = Q12(27.8999f);
+            animDur = FP_MULTIPLY_PRECISE(speed, Q12(18.6f), Q12_SHIFT);
         }
+        else
+        {
+            animDur = Q12(27.9f) - 1;
+        }
+
         animInfo[7].duration_8.constant = animDur;
     }
-    if (!arg0->properties_E4.player.field_F0)
+
+    if (chara->properties_E4.player.field_F0 == 0)
     {
-        KAUFMANN_ANIM_INFOS[arg0->model_0.anim_4.status_0].
-            updateFunc_0(&arg0->model_0, arg1, arg2, 
-                    &KAUFMANN_ANIM_INFOS[arg0->model_0.anim_4.status_0]);
+        KAUFMANN_ANIM_INFOS[chara->model_0.anim_4.status_0].updateFunc_0(&chara->model_0, anmHdr, coord, &KAUFMANN_ANIM_INFOS[chara->model_0.anim_4.status_0]);
     }
 }
 
-void func_800D8124(s_SubCharacter* chara, GsCOORDINATE2* coord)
+void func_800D8124(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8124
 {
-    VECTOR3 unused;
+    VECTOR3 pos; // @hack Unused but required.
     VECTOR3 vec;
     s32     moveSpeed;
     s16     headingAngle;
@@ -371,7 +375,7 @@ void func_800D8124(s_SubCharacter* chara, GsCOORDINATE2* coord)
     s32     scaleRestoreShift;
     u32     scaleReduceShift;
 
-    unused       = chara->position_18;
+    pos          = chara->position_18;
     moveSpeed    = chara->moveSpeed_38;
     headingAngle = chara->headingAngle_3C;
     moveAmt      = FP_MULTIPLY_PRECISE(moveSpeed, g_DeltaTime0, Q12_SHIFT);
@@ -402,58 +406,60 @@ void func_800D8124(s_SubCharacter* chara, GsCOORDINATE2* coord)
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8310);
 
-s32 func_800D8748(s32 arg0, s_SubCharacter* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) // 0x800D8748
+bool func_800D8748(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 arg4, s32 pitch) // 0x800D8748
 {
     u32 var_a0;
-    u32 temp_a2;
+    u32 vol;
 
-    if (arg1->model_0.anim_4.status_0 == arg0) 
+    if (chara->model_0.anim_4.status_0 == animStatus)
     {
-        if (arg4 > 0x3D08FF)
+        if (arg4 >= 4000000)
         {
-            if (arg4 <= 0xB71B00)
+            if (arg4 <= 12000000)
             {
                 var_a0 = arg4;
             }
             else
             {
-                var_a0 = 0xB71B00;
+                var_a0 = 12000000;
             }
         }
         else
         {
-            var_a0 = 0x3D0900;
-        }
-        temp_a2 = (0xB71B00 - var_a0) >> 0x10;
-        if (arg1->model_0.anim_4.keyframeIdx_8 >= arg3)
-        {
-            if (!(arg1->properties_E4.player.flags_11C & PlayerFlag_Unk4))
-            {
-                func_8005DD44(0x549, &arg1->position_18, temp_a2 & 0xFF, arg5);
-                arg1->properties_E4.player.flags_11C |= PlayerFlag_Unk4;
-                return 1;
-            }
-        }
-        else
-        {
-            arg1->properties_E4.player.flags_11C &= ~PlayerFlag_Unk4;
+            var_a0 = 4000000;
         }
 
-        if (arg1->model_0.anim_4.keyframeIdx_8 >= arg2)
+        vol = (12000000 - var_a0) >> 16;
+        if (chara->model_0.anim_4.keyframeIdx_8 >= keyframeIdx1)
         {
-            if (!(arg1->properties_E4.player.flags_11C & PlayerFlag_Unk5))
+            if (!(chara->properties_E4.player.flags_11C & PlayerFlag_Unk4))
             {
-                func_8005DD44(0x549, &arg1->position_18, temp_a2 & 0xFF, arg5);
-                arg1->properties_E4.player.flags_11C |= PlayerFlag_Unk5;
-                return 1;
+                func_8005DD44(Sfx_Unk1353, &chara->position_18, vol & 0xFF, pitch);
+                chara->properties_E4.player.flags_11C |= PlayerFlag_Unk4;
+                return true;
             }
         }
         else
         {
-            arg1->properties_E4.player.flags_11C &= ~PlayerFlag_Unk5;
+            chara->properties_E4.player.flags_11C &= ~PlayerFlag_Unk4;
+        }
+
+        if (chara->model_0.anim_4.keyframeIdx_8 >= keyframeIdx0)
+        {
+            if (!(chara->properties_E4.player.flags_11C & PlayerFlag_Unk5))
+            {
+                func_8005DD44(Sfx_Unk1353, &chara->position_18, vol & 0xFF, pitch);
+                chara->properties_E4.player.flags_11C |= PlayerFlag_Unk5;
+                return true;
+            }
+        }
+        else
+        {
+            chara->properties_E4.player.flags_11C &= ~PlayerFlag_Unk5;
         }
     }
-    return 0;
+
+    return false;
 }
 
 void Ai_Cheryl_Init(s_SubCharacter* chara) // 0x800D8888

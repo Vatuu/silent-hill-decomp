@@ -95,6 +95,8 @@ void func_800D0124();
 /** Collision space distance check. */
 bool func_800D012C(VECTOR3* pos);
 
+void func_800CF7AC(s32 arg0, s_Particle* part, u16* arg2, s32* deltaTime);
+
 void func_800D0274(s32 arg0, s_Particle* part, u16* arg2);
 
 /** @brief 2D player distance check on XZ plane.
@@ -194,10 +196,10 @@ void func_800DB870(void);
 
 void func_800CB6B0(s32 arg0, s8 mapId, s32 arg2);
 
-void func_800D802C(s_SubCharacter* arg0, s_AnmHeader* arg1, GsCOORDINATE2* arg2);
+void func_800D802C(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coord);
 
 void func_800D8124(s_SubCharacter* chara, GsCOORDINATE2* coord);
 
-s32 func_800D8748(s32 arg0, s_SubCharacter* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+bool func_800D8748(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 arg4, s32 pitch);
 
 #endif

@@ -129,7 +129,12 @@ typedef enum _Sfx
     Sfx_Unk1359     = 1359,
     Sfx_Unk1360     = 1360,
     Sfx_Unk1361     = 1361,
-				    
+
+    Sfx_Unk1363     = 1363,
+    Sfx_Unk1364     = 1364,
+    Sfx_Unk1365     = 1365,
+    Sfx_Unk1366     = 1366,
+
     Sfx_Unk1373     = 1373,
     Sfx_Unk1374     = 1374,
     Sfx_Unk1375     = 1375,
@@ -1454,12 +1459,12 @@ typedef struct _MapPoint2d
         u32 raw_4;
         struct
         {
-            u32 mapIdx_4_0          : 5; /** `e_Current2dMapIdx` */
-            u32 field_4_5           : 4;
-            u32 loadingScreenId_4_9 : 3; /** `e_LoadingScreenId`` */
-            u32 field_4_12          : 4;
-            u32 rotationY_4_16      : 8; /** Degrees in Q7.8, range [0, 256]. */
-            u32 field_4_24          : 8;
+            u32   mapIdx_4_0          : 5; /** `e_Current2dMapIdx` */
+            u32   field_4_5           : 4;
+            u32   loadingScreenId_4_9 : 3; /** `e_LoadingScreenId`` */
+            u32   field_4_12          : 4;
+            q24_8 rotationY_4_16      : 8;
+            u32   field_4_24          : 8;
         } areaLoad;
         struct
         {
