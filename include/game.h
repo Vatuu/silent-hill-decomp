@@ -116,13 +116,19 @@ struct _Model;
 #define SCREEN_FADE_STATUS(state, isWhite) \
     ((state) | ((isWhite) ? (1 << 3) : 0))
 
-/** @brief Retrieves the screen fade state from a packed screen fade status.
- *
- * @param fadeStatus Packed screen fade status containing a fade state and white flag.
- * @return Screen fade state.
+/** @brief Check if screen fade is is not in progress (finished step).
+ * This macro masks away the color bit.
+ * @return `true` if finished, `false` if still in progress.
  */
-#define SCREEN_FADE_STATE_GET(fadeStatus) \
-    ((fadeStatus) & 0x7)
+#define ScreenFade_IsFinished() \
+    ((g_Screen_FadeStatus & 0x7) == ScreenFadeState_FadeOutComplete)
+
+/** @brief Check if screen fade is is not in progress (idle step).
+ * This macro does NOT mask away the color bit.
+ * @return `true` if idle, `false` otherwise.
+ */
+#define ScreenFade_IsNone() \
+    (g_Screen_FadeStatus == ScreenFadeState_None)
 
 /** @brief Checks if a screen fade is white.
  * See `g_Screen_FadeStatus` for bit layout.
@@ -132,6 +138,30 @@ struct _Model;
  */
 #define IS_SCREEN_FADE_WHITE(fadeStatus) \
     ((fadeStatus) & (1 << 3))
+
+/** @brief Start screen fade in/out.
+ *
+ * @param reset `true` to reset fade progress to 0, `false` to keep it. Speculation:
+ * Skipping screen fade progress step was a mistake. It still works because once fade
+ * is finished the progress variable will be reset to 0 anyway.
+ * @param fadeIn `true` for a fade in, `false` for fade out.
+ * @param isWhite `true` for white fade, `false` for black fade.
+ */
+#define ScreenFade_Start(reset, fadeIn, isWhite) \
+    g_Screen_FadeStatus = ( \
+    (((reset) == true ? ScreenFadeState_FadeOutStart : ScreenFadeState_FadeOutSteps) + \
+    ((fadeIn) == true ? 4 : 0)) | \
+    ((isWhite) == true ? (1 << 3): 0) )
+
+/** @brief Reset screen fade. */
+#define ScreenFade_Reset() \
+    g_Screen_FadeStatus = ScreenFadeState_Reset
+
+/** @brief Reset custom screen fade timestep back to zero.
+ * This macro disregards the color bit.
+ */
+#define ScreenFade_ResetTimestep() \
+    g_Screen_FadeStatus = ScreenFadeState_ResetTimeStep
 
 /** @brief Screen fade states used by `g_Screen_FadeStatus`. The flow is not linear. */
 typedef enum _ScreenFadeState

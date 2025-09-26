@@ -68,12 +68,12 @@ void GameState_Boot_Update() // 0x80032D1C
             Fs_QueueStartReadTim(FILE_1ST_FONT16_TIM, FS_BUFFER_1, &g_Font16AtlasImg);
             Fs_QueueStartReadTim(FILE_1ST_KONAMI_TIM, FS_BUFFER_1, &g_KonamiLogoImg);
 
-            g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
+            ScreenFade_Start(true, false, false);
             g_GameWork.gameStateStep_598[0]++;
             break;
 
         case 3:
-            if (SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete)
+            if (ScreenFade_IsFinished())
             {
                 Fs_QueueWaitForEmpty();
 
@@ -233,7 +233,7 @@ void MainLoop() // 0x80032EE0
             }
             else
             {
-                if (g_Screen_FadeStatus != SCREEN_FADE_STATUS(ScreenFadeState_None, false))
+                if (!ScreenFade_IsNone())
                 {
                     VSync(0);
                 }
