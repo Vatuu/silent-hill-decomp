@@ -325,7 +325,7 @@ typedef struct _Collision
     q3_12  field_4;  // } Angles??
     q3_12  field_6;  // }
     s8     field_8;  // Count of something? 0, 7, 12 are significant.
-    u8     unk_9[3]; // Padding?
+    // 3 bytes of padding.
 } s_Collision;
 STATIC_ASSERT_SIZEOF(s_Collision, 12);
 
@@ -405,45 +405,45 @@ typedef struct
 // Contains pointers to active characters among other things.
 typedef struct
 {
-    s32                  field_0;
-    s16                  field_4;
-    s16                  field_6;
-    s16                  field_8;
-    s8                   unk_A[2];
-    s32                  field_C;
-    s32                  field_10;
-    s32                  field_14;
-    s8                   unk_18[4];
-    s16                  field_1C;
-    s8                   unk_1E[2];
-    s_SubCharacter*      field_20;
-    s16                  field_24;
-    s16                  field_26;
-    s32                  field_28;
-    VECTOR3              field_2C; // Q23.8
-    s8                   unk_38[4];
-    s32                  field_3C;
-    s32                  field_40;
-    s32                  field_44;
-    s8                   unk_48[4];
-    s16                  field_4C;
-    s16                  field_4E;
-    SVECTOR              field_50; // Q23.8
-    u16                  field_58;
-    s16                  field_5A;
-    s16                  field_5C;
-    s16                  field_5E;
-    s16                  field_60;
-    s8                   unk_62[2];
-    s_SubCharacter**     characters_64; // Active characters?
-    s32                  characterCount_68;
-    s_func_8006DCE0_6C   field_6C;
-    s32                  field_7C;
-    s32                  field_80;
-    u16                  field_84;
-    u8                   unk_86[2];
-    s32                  field_88;
-    s_func_8006DCE0_8C   field_8C[1]; // Unknown size.
+    s32                field_0;
+    s16                field_4;
+    s16                field_6;
+    s16                field_8;
+    s8                 unk_A[2];
+    s32                field_C;
+    s32                field_10;
+    s32                field_14;
+    s8                 unk_18[4];
+    s16                field_1C;
+    s8                 unk_1E[2];
+    s_SubCharacter*    field_20;
+    s16                field_24;
+    s16                field_26;
+    s32                field_28;
+    VECTOR3            field_2C; // Q23.8
+    s8                 unk_38[4];
+    s32                field_3C;
+    s32                field_40;
+    s32                field_44;
+    s8                 unk_48[4];
+    s16                field_4C;
+    s16                field_4E;
+    SVECTOR            field_50; // Q23.8
+    u16                field_58;
+    s16                field_5A;
+    s16                field_5C;
+    s16                field_5E;
+    s16                field_60;
+    s8                 unk_62[2];
+    s_SubCharacter**   characters_64; // Active characters?
+    s32                characterCount_68;
+    s_func_8006DCE0_6C field_6C;
+    s32                field_7C;
+    s32                field_80;
+    u16                field_84;
+    u8                 unk_86[2];
+    s32                field_88;
+    s_func_8006DCE0_8C field_8C[1]; // Unknown size.
 } s_func_8006DCE0;
 
 typedef struct
@@ -458,16 +458,16 @@ typedef struct
 // Function from lib_unk
 typedef struct
 {
-    char unk_0[0xC];
-    s32 field_C;
+    char        unk_0[12];
+    s32         field_C;
     s_8002AC04* field_10;
-    u32 field_14_0  : 16;
-    u32 field_14_16 : 8;
-    u32 field_14_24 : 7;
-    u32 field_14_31 : 1;
-    u32 field_18;
-    u16 field_1C;
-    u16 field_1E;
+    u32         field_14_0  : 16;
+    u32         field_14_16 : 8;
+    u32         field_14_24 : 7;
+    u32         field_14_31 : 1;
+    u32         field_18;
+    u16         field_1C;
+    u16         field_1E;
 } s_func_8009ECCC;
 
 typedef struct
@@ -598,7 +598,7 @@ STATIC_ASSERT_SIZEOF(s_MeshHeader, 24);
 
 typedef struct _ModelHeader
 {
-    u_Filename    modelName_0;
+    u_Filename    name_0;
     u8            meshCount_8;
     u8            vertexOffset_9;
     u8            normalOffset_A;
@@ -1073,7 +1073,7 @@ typedef struct _MapType
 
 typedef struct
 {
-    u_Filename modelName_0;
+    u_Filename name_0;
     s8         field_8;
     s8         lmIdx_9; /** Set to 2 when found in `g_Map.globalLm_138.lmHdr_0` and 3-6 if found in `g_Map.ipdActive_15C[i] (i + 3)`. */
 } s_WorldObject_0_10;

@@ -1635,7 +1635,7 @@ s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmH
 
     for (i = 0; i < lmHdr->modelCount_8; i++, modelHeader++)
     {
-        if (!COMPARE_FILENAMES(modelName, &modelHeader->modelName_0))
+        if (!COMPARE_FILENAMES(modelName, &modelHeader->name_0))
         {
             return modelHeader;
         }
@@ -2395,8 +2395,8 @@ void func_800452EC(s_Skeleton* skel) // 0x800452EC
     while (curBone)
     {
         modelHdr = curBone->modelInfo_0.modelHdr_8;
-        temp_v1 = modelHdr->modelName_0.str[1] - '0';
-        temp_a0 = modelHdr->modelName_0.str[0] - '0';
+        temp_v1 = modelHdr->name_0.str[1] - '0';
+        temp_a0 = modelHdr->name_0.str[0] - '0';
 
         if (temp_v1 < 10 && temp_a0 >= 0 && temp_a0 < 10)
         {

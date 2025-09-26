@@ -1106,7 +1106,7 @@ void WorldObject_ModelNameSet(s_WorldObject_0* arg0, char* newStr) // 0x8003C8F8
     arg0->field_10.lmIdx_9 = 0;
     arg0->modelInfo_0.field_0  = 0;
 
-    StringCopy(arg0->field_10.modelName_0.str, newStr);
+    StringCopy(arg0->field_10.name_0.str, newStr);
 
     arg0->field_10.field_8 = 0;
 }
@@ -1248,7 +1248,7 @@ void func_8003CC7C(s_WorldObject_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x8003C
         }
     }
 
-    if (COMPARE_FILENAMES(&temp_s1->modelName_0, &modelHdr->modelName_0))
+    if (COMPARE_FILENAMES(&temp_s1->name_0, &modelHdr->name_0))
     {
         arg0->field_10.lmIdx_9 = 0;
         return;

@@ -851,7 +851,7 @@ bool Lm_ModelFind(s_WorldObject_0* arg0, s_LmHeader* lmHdr, s_WorldObject_0_10* 
 
     result = false;
 
-    StringCopy(sp10.str, arg2->modelName_0.str);
+    StringCopy(sp10.str, arg2->name_0.str);
 
     modelHdrCount = lmHdr->modelCount_8;
 
@@ -859,7 +859,7 @@ bool Lm_ModelFind(s_WorldObject_0* arg0, s_LmHeader* lmHdr, s_WorldObject_0_10* 
     {
         for (i = 0, modelHdr = &lmHdr->modelHdrs_C[i]; i < modelHdrCount; i++, modelHdr++)
         {
-            if (!COMPARE_FILENAMES(&modelHdr->modelName_0, &sp10))
+            if (!COMPARE_FILENAMES(&modelHdr->name_0, &sp10))
             {
                 result                       = true;
                 arg0->modelInfo_0.modelIdx_C = i;
