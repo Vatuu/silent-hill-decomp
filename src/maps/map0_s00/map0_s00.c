@@ -1,9 +1,9 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map0/map0_s00.h"
-#include "bodyprog/player_logic.h"
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CB6B0);
 
@@ -184,86 +184,91 @@ void func_800D0E2C() {}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0E34);
 
-void func_800D1C38(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords)
+void func_800D1C38(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords) // 0x800D1C38
 {
     s_Collision coll;
-    VECTOR3 vec;
-    s16 headingAngle;
-    s16 temp_v0;
-    s32 temp_s0;
-    s32 temp_s2;
-    s16 temp_s3;
-    s32 pcState;
-    s32 var_s7;
-    s16 var_s0;
-    s16 var_v1;
+    VECTOR3     pos;
+    q19_12      moveSpeedZ;
+    q19_12      moveSpeedX;
+    q3_12       cosRotX;
+    q3_12       cosRotZ;
+    s32         playerState;
+    bool        cond;
+    q3_12       moveX;
+    q3_12       moveZ;
+    q19_12      moveSpeed;
+    q3_12       headingAngle;
+    q19_12      moveStep;
+    s32         overflow;
+    s32         scale;
 
-    s32 moveSpeed;
-    s32 angle;
-    s32 step;
-    s32 overflow;
-    s32 scale;
+    playerState = g_SysWork.player_4C.extra_128.state_1C;
 
-    pcState = g_SysWork.player_4C.extra_128.state_1C;
-    var_s7 = 0;
-    if (pcState < PlayerState_Unk58)
+    cond = false;
+    if (playerState < PlayerState_Unk58)
     {
-        var_s7 = 1;
+        cond = true;
     }
-    else if (pcState == PlayerState_Unk74)
+    else if (playerState == PlayerState_Unk74)
     {
-        var_s7 = g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP1_S02;
+        cond = g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP1_S02;
     }
-    if (var_s7)
+
+    if (cond)
     {
         Collision_Get(&coll, chara->position_18.vx, chara->position_18.vz);
-        temp_s2 = Math_Sin(chara->headingAngle_3C);
-        temp_s2 = FP_MULTIPLY(chara->moveSpeed_38, temp_s2, Q12_SHIFT);
 
-        temp_s0 = Math_Cos(chara->headingAngle_3C);
-        temp_s0 = FP_MULTIPLY(chara->moveSpeed_38, temp_s0, Q12_SHIFT);
+        moveSpeedX = Math_Sin(chara->headingAngle_3C);
+        moveSpeedX = FP_MULTIPLY(chara->moveSpeed_38, moveSpeedX, Q12_SHIFT);
 
-        temp_s3 = Math_Cos(ABS(coll.field_4) >> 3);
-        temp_v0 = Math_Cos(ABS(coll.field_6) >> 3);
+        moveSpeedZ = Math_Cos(chara->headingAngle_3C);
+        moveSpeedZ = FP_MULTIPLY(chara->moveSpeed_38, moveSpeedZ, Q12_SHIFT);
 
-        var_s0 = FP_MULTIPLY(FP_MULTIPLY(temp_s2, temp_s3, Q12_SHIFT), temp_s3, Q12_SHIFT);
-        var_v1 = FP_MULTIPLY(FP_MULTIPLY(temp_s0, temp_v0, Q12_SHIFT), temp_v0, Q12_SHIFT);
+        cosRotX = Math_Cos(ABS(coll.field_4) >> 3); // `/ 8`.
+        cosRotZ = Math_Cos(ABS(coll.field_6) >> 3); // `/ 8`.
+
+        moveX = FP_MULTIPLY(FP_MULTIPLY(moveSpeedX, cosRotX, Q12_SHIFT), cosRotX, Q12_SHIFT);
+        moveZ = FP_MULTIPLY(FP_MULTIPLY(moveSpeedZ, cosRotZ, Q12_SHIFT), cosRotZ, Q12_SHIFT);
     } 
     else
     {
-        var_s0 = FP_MULTIPLY(chara->moveSpeed_38, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
-        var_v1 = FP_MULTIPLY(chara->moveSpeed_38, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
+        moveX = FP_MULTIPLY(chara->moveSpeed_38, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
+        moveZ = FP_MULTIPLY(chara->moveSpeed_38, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
     }
-    if (chara->moveSpeed_38 >= 0)
+
+    if (chara->moveSpeed_38 >= Q12(0.0f))
     {
-        chara->moveSpeed_38 = SquareRoot0(SQUARE(var_s0) + SQUARE(var_v1));
+        chara->moveSpeed_38 = SquareRoot0(SQUARE(moveX) + SQUARE(moveZ));
     } 
     else 
     {
-        chara->moveSpeed_38 = -SquareRoot0(SQUARE(var_s0) + SQUARE(var_v1));
+        chara->moveSpeed_38 = -SquareRoot0(SQUARE(moveX) + SQUARE(moveZ));
     }
 
     moveSpeed = chara->moveSpeed_38;
-    angle     = chara->headingAngle_3C;
-    step = FP_MULTIPLY_PRECISE(moveSpeed, g_DeltaTime0, Q12_SHIFT);
-    
-    overflow = OVERFLOW_GUARD(step);
-    scale    = overflow >> 1;
+    headingAngle = chara->headingAngle_3C;
+    moveStep = FP_MULTIPLY_PRECISE(moveSpeed, g_DeltaTime0, Q12_SHIFT);
 
-    vec.vx = (s32)FP_MULTIPLY_PRECISE(step >> scale, Math_Sin(angle) >> scale, Q12_SHIFT) << overflow;
-    vec.vz = (s32)FP_MULTIPLY_PRECISE(step >> scale, Math_Cos(angle) >> scale, Q12_SHIFT) << overflow;
-    vec.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
+    overflow = OVERFLOW_GUARD(moveStep);
+    scale    = overflow >> 1; // `/ 2`.
 
-    if (var_s7)
+    pos.vx = (s32)FP_MULTIPLY_PRECISE(moveStep >> scale, Math_Sin(headingAngle) >> scale, Q12_SHIFT) << overflow;
+    pos.vz = (s32)FP_MULTIPLY_PRECISE(moveStep >> scale, Math_Cos(headingAngle) >> scale, Q12_SHIFT) << overflow;
+    pos.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
+
+    if (cond)
     {
-        func_80069B24(&D_800E39BC.field_0, &vec, chara);
+        func_80069B24(&D_800E39BC.field_0, &pos, chara);
+
         chara->position_18.vx += D_800E39BC.field_0.vx;
         chara->position_18.vy += D_800E39BC.field_0.vy;
         chara->position_18.vz += D_800E39BC.field_0.vz;
+
         if (D_800E39BC.field_14 == 0)
         {
             D_800E39BC.field_C = chara->properties_E4.player.positionY_EC;
         }
+
         if (chara->position_18.vy > D_800E39BC.field_C) 
         {
             chara->position_18.vy = D_800E39BC.field_C;
@@ -272,24 +277,27 @@ void func_800D1C38(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
     } 
     else
     {
-        chara->position_18.vx += vec.vx;
-        chara->position_18.vz += vec.vz;
-        pcState = g_SysWork.player_4C.extra_128.state_1C;
-        if ((pcState < PlayerState_Unk87) || ((pcState >= PlayerState_Unk89) && (pcState != PlayerState_Unk106)))
+        chara->position_18.vx += pos.vx;
+        chara->position_18.vz += pos.vz;
+
+        playerState = g_SysWork.player_4C.extra_128.state_1C;
+        if (playerState < PlayerState_Unk87 || (playerState >= PlayerState_Unk89 && playerState != PlayerState_Unk106))
         {
-            chara->position_18.vy = 0;
+            chara->position_18.vy = Q12(0.0f);
         }
 
         chara->field_34 = 0;
     }
-    if (g_DeltaTime0 == 0)
+
+    if (g_DeltaTime0 == Q12(0.0f))
     {
-        chara->rotationSpeed_2C.vy = 0;
+        chara->rotationSpeed_2C.vy = FP_ANGLE(0.0f);
     }
     else
     {
         chara->rotationSpeed_2C.vy = (sharedData_800E39D8_0_s00 << 8) / g_DeltaTime0;
     }
+
     coords->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
     coords->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
     coords->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
@@ -331,7 +339,7 @@ void func_800D2E84() {}
 
 void func_800D2E8C() {}
 
-s32 func_800D2E94()
+s32 func_800D2E94() // 0x800D2E94
 {
     return 0;
 }
@@ -402,7 +410,7 @@ void Ai_Cheryl_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2*
 
 void func_800D802C(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coord) // 0x800D802C
 {
-    s32         speed;
+    q19_12      moveSpeed;
     q19_12      animDur;
     s_AnimInfo* animInfo;
 
@@ -411,16 +419,16 @@ void func_800D802C(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
         D_800DF1CC = FP_MULTIPLY_PRECISE(chara->moveSpeed_38, Q12(30.2f), Q12_SHIFT);
     }
 
-    speed = MIN(chara->moveSpeed_38, Q12(2.5f));
-    chara->moveSpeed_38 = speed;
+    moveSpeed = MIN(chara->moveSpeed_38, Q12(2.5f));
+    chara->moveSpeed_38 = moveSpeed;
 
     if (chara->properties_E4.player.afkTimer_E8 == 2)
     {
         // TODO: KAUFMAN anim in map0_s00? This might be a different anim table after all.
         animInfo = KAUFMANN_ANIM_INFOS;
-        if (speed <= Q12(1.5f))
+        if (moveSpeed <= Q12(1.5f))
         {
-            animDur = FP_MULTIPLY_PRECISE(speed, Q12(18.6f), Q12_SHIFT);
+            animDur = FP_MULTIPLY_PRECISE(moveSpeed, Q12(18.6f), Q12_SHIFT);
         }
         else
         {

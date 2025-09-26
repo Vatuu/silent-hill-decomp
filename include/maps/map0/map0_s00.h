@@ -115,6 +115,8 @@ void func_800D0E24();
 
 void func_800D0E2C();
 
+void func_800D1C38(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
+
 void func_800D2E6C();
 
 void func_800D2E74();

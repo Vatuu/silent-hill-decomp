@@ -1132,10 +1132,10 @@ typedef struct _SubCharacter
     s_Model model_0;           // In player: Manage the half lower part of Harry's body animations (legs and feet).
     VECTOR3 position_18;       /** `Q19.12` */
     SVECTOR rotation_24;       // Maybe `SVECTOR3` instead of `SVECTOR` because 4th field is copy of `.xy` field.
-    SVECTOR rotationSpeed_2C;  /** Range [-0x700, 0x700]. */
+    SVECTOR rotationSpeed_2C;  /** Q3.12 | Range: `[FP_ANGLE(-157.5), FP_ANGLE(157.5)]`. */
     q19_12  field_34;          // Character Y position?
     q19_12  moveSpeed_38;
-    q7_8    headingAngle_3C;
+    q3_12   headingAngle_3C;
     s16     flags_3E;          /** `e_CharaFlags` */
     s8      field_40;          // In player: Index of the NPC attacking the player.
                                // In NPCs: Unknown.

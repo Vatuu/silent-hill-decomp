@@ -322,8 +322,8 @@ STATIC_ASSERT_SIZEOF(s_func_800625F4, 20);
 typedef struct _Collision
 {
     q19_12 groundHeight_0;
-    s16    field_4;  // } Angles??
-    s16    field_6;  // }
+    q3_12  field_4;  // } Angles??
+    q3_12  field_6;  // }
     s8     field_8;  // Count of something? 0, 7, 12 are significant.
     u8     unk_9[3]; // Padding?
 } s_Collision;
