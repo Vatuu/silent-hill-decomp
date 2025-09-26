@@ -88,6 +88,8 @@ extern s_800C4590 D_800E39BC;
 
 extern u16 D_800E32D4;
 
+extern s32 D_800DFAD8;
+
 void func_800CBFB0(void);
 
 void func_800D0124();
