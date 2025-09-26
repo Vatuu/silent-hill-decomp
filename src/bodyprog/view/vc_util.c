@@ -25,8 +25,8 @@ void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, const VECTOR3* chr_
 
 void vcSetCameraUseWarp(const VECTOR3* chr_pos, q3_12 chr_ang_y) // 0x800400D4
 {
-    VECTOR3 cam_pos;
-    SVECTOR cam_ang;
+    VECTOR3 cam_pos; // Q19.12
+    SVECTOR cam_ang; // Q3.12
 
     cam_ang.vx = FP_ANGLE(0.0f);
     cam_ang.vy = chr_ang_y;
@@ -112,10 +112,8 @@ void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, b
                 vcMakeHeroHeadPos(&hr_head_pos);
             }
 
-            hero_top_y = hr_p->position_18.vy - Q12(1.7f);
-
-            // TODO: Not sure what this is doing, maybe some kind of `FP_MULTIPLY`.
-            hero_bottom_y = hr_p->position_18.vy + ((s32)-(g_WorldGfx.vcCameraInternalInfo_1BDC.ev_cam_rate * Q12(0.5f)) >> Q12_SHIFT);
+            hero_top_y    = hr_p->position_18.vy + Q12(-1.7f);
+            hero_bottom_y = hr_p->position_18.vy + FP_MULTIPLY(g_WorldGfx.vcCameraInternalInfo_1BDC.ev_cam_rate, Q12(-0.5f), Q12_SHIFT);
 
             if (g_WorldGfx.vcCameraInternalInfo_1BDC.ev_cam_rate > Q12(0.0f))
             {
@@ -157,6 +155,8 @@ void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, b
 
 void vcMakeHeroHeadPos(VECTOR3* head_pos) // 0x8004047C
 {
+    #define Y_OFFSET Q12(-0.3f)
+
     MATRIX  neck_lwm; // Q23.8
     SVECTOR fpos;     // Q23.8
     VECTOR  vec;
@@ -169,7 +169,7 @@ void vcMakeHeroHeadPos(VECTOR3* head_pos) // 0x8004047C
     ApplyMatrix(&neck_lwm, &fpos, &vec);
 
     head_pos->vx = Q8_TO_Q12(vec.vx + neck_lwm.t[0]);
-    head_pos->vy = Q8_TO_Q12(vec.vy + neck_lwm.t[1]) - Q12(0.3f);
+    head_pos->vy = Q8_TO_Q12(vec.vy + neck_lwm.t[1]) + Y_OFFSET;
     head_pos->vz = Q8_TO_Q12(vec.vz + neck_lwm.t[2]);
 }
 

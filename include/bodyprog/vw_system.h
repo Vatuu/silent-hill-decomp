@@ -14,10 +14,11 @@ struct _MapOverlayHeader;
  * ARY:   Array
  * DEFLT: Default
  * EFF:   Effective?
- * EV:    Event?
+ * EV:    Elevation?
  * EXCL:  Exclusion
- * F:     Boolean flag
+ * F:     Boolean or bit flag
  * FIX:   Fixed in place
+ * FS:    Bit flags
  * GRND:  Ground
  * H:     Height
  * LIM:   Limit
@@ -169,7 +170,7 @@ STATIC_ASSERT_SIZEOF(VC_LIMIT_AREA, 8);
 typedef struct _VC_CAMERA_INTINFO
 {
     u32   mode;
-    u8    mv_smooth;
+    u8    mv_smooth; /** `VC_CAM_MV_TYPE` */
     // 1 byte of padding.
     q3_12 ev_cam_rate;
 } VC_CAMERA_INTINFO;
@@ -362,19 +363,31 @@ extern q19_12            vcSelfViewTimer;
 // vc_util.c
 // ==========
 
-/** @brief Initializes the camera.
+/** @brief Initializes the camera subsystem.
  *
- * @param map_overlay_ptr Active map overlay.
+ * @param map_overlay_ptr Active map overlay header.
  * @param chr_pos Character position.
  */
 void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, const VECTOR3* chr_pos);
 
+/** @brief Warps the camera to a specified Y rotation.
+ *
+ * @param chr_pos Character position (Q12.12).
+ * @param chr_ang_y Y rotation to warp the camera to.
+ */
 void vcSetCameraUseWarp(const VECTOR3* chr_pos, q3_12 chr_ang_y);
-s32  vcRetCamMvSmoothF(void);
+
+s32 vcRetCamMvSmoothF(void);
 void func_800401A0(bool arg0);
 void vcSetEvCamRate(q3_12 ev_cam_rate);
 void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, bool back_f, bool right_f, bool left_f, bool up_f, bool down_f);
+
+/** @brief Gets the player's head position, outputting the result to `head_pos`.
+ *
+ * @param head_pos Output player head position (Q19.12).
+ */
 void vcMakeHeroHeadPos(VECTOR3* head_pos);
+
 void vcAddOfsToPos(VECTOR3* out_pos, const VECTOR3* in_pos, q3_12 ofs_xz_r, q3_12 ang_y, q19_12 ofs_y);
 void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p, bool for_f, bool back_f, bool right_f, bool left_f, bool up_f, bool down_f);
 void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p);
