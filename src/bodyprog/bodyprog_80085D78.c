@@ -194,7 +194,7 @@ void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 entr
     }
 }
 
-void func_8008616C(s32 arg0, bool arg1, s32 fadeType, s32 fadeTimestep, bool arg4) // 0x8008616C
+void func_8008616C(s32 arg0, bool arg1, s32 fadeType, q19_12 fadeTimeStep, bool arg4) // 0x8008616C
 {
     typedef enum _FadeType
     {
@@ -221,7 +221,7 @@ void func_8008616C(s32 arg0, bool arg1, s32 fadeType, s32 fadeTimestep, bool arg
         case 0:
             if (fadeType != FadeType_Unk2)
             {
-                g_ScreenFadeTimestep = fadeTimestep;
+                g_ScreenFadeTimeStep = fadeTimeStep;
             }
 
             if (arg1)
@@ -542,11 +542,11 @@ void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* sounds) // 0x800869E
     }
 }
 
-void Camera_TranslationSet(VECTOR3* pos, q19_12 offsetOrPosX, q19_12 offsetOrPosY, q19_12 offsetOrPosZ,
-                           q19_12 accelXz, q19_12 accelY, q19_12 speedXzMax, q19_12 speedYMax, bool warpCam) // 0x80086A94
+void Camera_PositionSet(VECTOR3* pos, q19_12 offsetOrPosX, q19_12 offsetOrPosY, q19_12 offsetOrPosZ,
+                        q19_12 accelXz, q19_12 accelY, q19_12 speedXzMax, q19_12 speedYMax, bool warp) // 0x80086A94
 {
     VECTOR3         posTarget;
-    VC_CAM_MV_PARAM camTranslationParams;
+    VC_CAM_MV_PARAM camMoveParams;
 
     // Set position target.
     if (pos != NULL)
@@ -565,52 +565,52 @@ void Camera_TranslationSet(VECTOR3* pos, q19_12 offsetOrPosX, q19_12 offsetOrPos
     // Set acceleration on XZ plane.
     if (accelXz == Q12(0.0f))
     {
-        camTranslationParams.accel_xz = cam_mv_prm_user.accel_xz;
+        camMoveParams.accel_xz = cam_mv_prm_user.accel_xz;
     }
     else
     {
-        camTranslationParams.accel_xz = accelXz;
+        camMoveParams.accel_xz = accelXz;
     }
 
     // Set acceleration on Y axis.
     if (accelY == Q12(0.0f))
     {
-        camTranslationParams.accel_y = cam_mv_prm_user.accel_y;
+        camMoveParams.accel_y = cam_mv_prm_user.accel_y;
     }
     else
     {
-        camTranslationParams.accel_y = accelY;
+        camMoveParams.accel_y = accelY;
     }
 
     // Set max speed on XZ plane.
     if (speedXzMax == Q12(0.0f))
     {
-        camTranslationParams.max_spd_xz = cam_mv_prm_user.max_spd_xz;
+        camMoveParams.max_spd_xz = cam_mv_prm_user.max_spd_xz;
     }
     else
     {
-        camTranslationParams.max_spd_xz = speedXzMax;
+        camMoveParams.max_spd_xz = speedXzMax;
     }
 
     // Set max speed on Y axis.
     if (speedYMax == Q12(0.0f))
     {
-        camTranslationParams.max_spd_y = cam_mv_prm_user.max_spd_y;
+        camMoveParams.max_spd_y = cam_mv_prm_user.max_spd_y;
     }
     else
     {
-        camTranslationParams.max_spd_y = speedYMax;
+        camMoveParams.max_spd_y = speedYMax;
     }
 
     // Set camera position target.
-    vcUserCamTarget(&posTarget, &camTranslationParams, warpCam);
+    vcUserCamTarget(&posTarget, &camMoveParams, warp);
 }
 
-void Camera_RotationSet(VECTOR3* lookAt, q19_12 lookAtOffsetOrPosX, q19_12 lookAtOffsetOrPosY, q19_12 lookAtOffsetOrPosZ,
-                        q19_12 angularAccelX, q19_12 angularAccelY, q19_12 angularSpeedXMax, q19_12 angularSpeedYMax, bool warpLookAt) // 0x80086B70
+void Camera_LookAtSet(VECTOR3* lookAt, q19_12 lookAtOffsetOrPosX, q19_12 lookAtOffsetOrPosY, q19_12 lookAtOffsetOrPosZ,
+                      q19_12 angularAccelX, q19_12 angularAccelY, q19_12 angularSpeedXMax, q19_12 angularSpeedYMax, bool warp) // 0x80086B70
 {
     VECTOR3           lookAtTarget;
-    VC_WATCH_MV_PARAM camRotParams;
+    VC_WATCH_MV_PARAM camLookAtMoveParams;
 
     // Set look-at target.
     if (lookAt != NULL)
@@ -629,46 +629,46 @@ void Camera_RotationSet(VECTOR3* lookAt, q19_12 lookAtOffsetOrPosX, q19_12 lookA
     // Set angular acceleration on X axis.
     if (angularAccelX == FP_ANGLE(0.0f))
     {
-        camRotParams.ang_accel_x = deflt_watch_mv_prm.ang_accel_x;
+        camLookAtMoveParams.ang_accel_x = deflt_watch_mv_prm.ang_accel_x;
     }
     else
     {
-        camRotParams.ang_accel_x = angularAccelX;
+        camLookAtMoveParams.ang_accel_x = angularAccelX;
     }
 
     // Set angular acceleration on Y axis.
     if (angularAccelY == FP_ANGLE(0.0f))
     {
-        camRotParams.ang_accel_y = deflt_watch_mv_prm.ang_accel_y;
+        camLookAtMoveParams.ang_accel_y = deflt_watch_mv_prm.ang_accel_y;
     }
     else
     {
-        camRotParams.ang_accel_y = angularAccelY;
+        camLookAtMoveParams.ang_accel_y = angularAccelY;
     }
 
     // Set max angular speed on X axis.
     if (angularSpeedXMax == FP_ANGLE(0.0f))
     {
-        camRotParams.max_ang_spd_x = deflt_watch_mv_prm.max_ang_spd_x;
+        camLookAtMoveParams.max_ang_spd_x = deflt_watch_mv_prm.max_ang_spd_x;
     }
     else
     {
-        camRotParams.max_ang_spd_x = angularSpeedXMax;
+        camLookAtMoveParams.max_ang_spd_x = angularSpeedXMax;
     }
     
     // Set max angular speed on Y axis.
     if (angularSpeedYMax == FP_ANGLE(0.0f))
     {
-        camRotParams.max_ang_spd_y = deflt_watch_mv_prm.max_ang_spd_y;
+        camLookAtMoveParams.max_ang_spd_y = deflt_watch_mv_prm.max_ang_spd_y;
     }
     else
     {
-        camRotParams.max_ang_spd_y = angularSpeedYMax;
+        camLookAtMoveParams.max_ang_spd_y = angularSpeedYMax;
     }
 
     // Set camera flags and rotation target.
     vcWorkSetFlags(0, VC_VISIBLE_CHARA_F);
-    vcUserWatchTarget(&lookAtTarget, &camRotParams, warpLookAt);
+    vcUserWatchTarget(&lookAtTarget, &camLookAtMoveParams, warp);
 }
 
 void func_80086C58(s_SubCharacter* chara, s32 arg1) // 0x80086C58
@@ -715,12 +715,12 @@ void func_80086D04(s_SubCharacter* chara) // 0x80086D04
     }
 }
 
-void func_80086DA8(s32 fileIdx, s32 fadeTimestep) // 0x80086DA8
+void func_80086DA8(s32 fileIdx, s32 fadeTimeStep) // 0x80086DA8
 {
     switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
-            func_8008616C(0, true, 0, fadeTimestep, false);
+            func_8008616C(0, true, 0, fadeTimeStep, false);
             g_SysWork.timer_2C = Q12(0.0f);
             g_SysWork.sysStateStep_C[2] = 0;
             g_SysWork.sysStateStep_C[1]++;
@@ -735,12 +735,12 @@ void func_80086DA8(s32 fileIdx, s32 fadeTimestep) // 0x80086DA8
     }
 }
 
-void func_80086E50(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1) // 0x80086E50
+void func_80086E50(s32 fileIdx, s32 fadeTimeStep0, s32 fadeTimeStep1) // 0x80086E50
 {
     switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
-            func_8008616C(0, true, 0, fadeTimestep0, false);
+            func_8008616C(0, true, 0, fadeTimeStep0, false);
             g_SysWork.timer_2C = Q12(0.0f);
             g_SysWork.sysStateStep_C[2] = 0;
             g_SysWork.sysStateStep_C[1]++;
@@ -755,20 +755,20 @@ void func_80086E50(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1) // 0x80086
 
         default:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            func_8008616C(2, false, 0, fadeTimestep1, false);
+            func_8008616C(2, false, 0, fadeTimeStep1, false);
     }
 }
 
-void func_80086F44(s32 fadeTimestep0, s32 fadeTimestep1) // 0x80086F44
+void func_80086F44(s32 fadeTimeStep0, s32 fadeTimeStep1) // 0x80086F44
 {
     if (g_SysWork.sysStateStep_C[1] == 0)
     {
         func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-        func_8008616C(2, true, 0, fadeTimestep1, true);
+        func_8008616C(2, true, 0, fadeTimeStep1, true);
         return;
     }
 
-    func_8008616C(0, false, 0, fadeTimestep0, false);
+    func_8008616C(0, false, 0, fadeTimeStep0, false);
     SysWork_StateStepIncrement();
 }
 
@@ -820,13 +820,13 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
     }
 }
 
-void func_8008716C(s32 itemId, s32 fadeTimestep0, s32 fadeTimestep1) // 0x8008716C
+void func_8008716C(s32 itemId, s32 fadeTimeStep0, s32 fadeTimeStep1) // 0x8008716C
 {
     switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
             g_MapOverlayHeader.freezePlayerControl_C8();
-            func_8008616C(0, true, 0, fadeTimestep0, false);
+            func_8008616C(0, true, 0, fadeTimeStep0, false);
             g_SysWork.timer_2C = Q12(0.0f);
             g_SysWork.sysStateStep_C[2] = 0;
             g_SysWork.sysStateStep_C[1]++;
@@ -841,7 +841,7 @@ void func_8008716C(s32 itemId, s32 fadeTimestep0, s32 fadeTimestep1) // 0x800871
 
         case 3:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            func_8008616C(2, false, 0, fadeTimestep1, true);
+            func_8008616C(2, false, 0, fadeTimeStep1, true);
             break;
 
         case 4:
@@ -858,24 +858,24 @@ void func_8008716C(s32 itemId, s32 fadeTimestep0, s32 fadeTimestep1) // 0x800871
 
         case 5:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            func_8008616C(2, true, 0, fadeTimestep1, true);
+            func_8008616C(2, true, 0, fadeTimeStep1, true);
             break;
 
         default:
-            func_8008616C(0, false, 0, fadeTimestep0, false);
+            func_8008616C(0, false, 0, fadeTimeStep0, false);
             g_MapOverlayHeader.unfreezePlayerControl_CC(0);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }
 
-void func_80087360(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsgIdx) // 0x80087360
+void func_80087360(s32 fileIdx, s32 fadeTimeStep0, s32 fadeTimeStep1, s32 mapMsgIdx) // 0x80087360
 {
     switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
             g_MapOverlayHeader.freezePlayerControl_C8();
-            func_8008616C(0, true, 0, fadeTimestep0, false);
+            func_8008616C(0, true, 0, fadeTimeStep0, false);
 
             g_SysWork.timer_2C = Q12(0.0f);
             g_SysWork.sysStateStep_C[2] = 0;
@@ -891,7 +891,7 @@ void func_80087360(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsg
 
         case 3:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            func_8008616C(2, false, 0, fadeTimestep1, true);
+            func_8008616C(2, false, 0, fadeTimeStep1, true);
             break;
 
         case 4:
@@ -901,24 +901,24 @@ void func_80087360(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsg
         
         case 5:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            func_8008616C(2, true, 0, fadeTimestep1, true);
+            func_8008616C(2, true, 0, fadeTimeStep1, true);
             break;
 
         default:
-            func_8008616C(0, false, 0, fadeTimestep0, false);
+            func_8008616C(0, false, 0, fadeTimeStep0, false);
             g_MapOverlayHeader.unfreezePlayerControl_CC(0);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }
 
-void func_80087540(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1) // 0x80087540
+void func_80087540(s32 fileIdx, s32 fadeTimeStep0, s32 fadeTimeStep1, s32 mapMsgIdx0, s32 mapMsgIdx1) // 0x80087540
 {
     switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
             g_MapOverlayHeader.freezePlayerControl_C8();
-            func_8008616C(0, true, 0, fadeTimestep0, false);
+            func_8008616C(0, true, 0, fadeTimeStep0, false);
 
             g_SysWork.timer_2C = Q12(0.0f);
             g_SysWork.sysStateStep_C[2] = 0;
@@ -934,7 +934,7 @@ void func_80087540(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsg
 
         case 3:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            func_8008616C(2, false, 0, fadeTimestep1, true);
+            func_8008616C(2, false, 0, fadeTimeStep1, true);
             break;
 
         case 4:
@@ -965,11 +965,11 @@ void func_80087540(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsg
             g_BackgroundColor = 48;
 
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            func_8008616C(2, true, 0, fadeTimestep1, true);
+            func_8008616C(2, true, 0, fadeTimeStep1, true);
             break;
 
         default:
-            func_8008616C(0, false, 0, fadeTimestep0, false);
+            func_8008616C(0, false, 0, fadeTimeStep0, false);
             g_MapOverlayHeader.unfreezePlayerControl_CC(0);
             SysWork_StateSetNext(SysState_Gameplay);
             break;

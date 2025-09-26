@@ -137,7 +137,7 @@ bool func_801E2FC0() // 0x801E2FC0
 
         default:
             g_Screen_FadeStatus  = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, true);
-            g_ScreenFadeTimestep = Q12(1.0f);
+            g_ScreenFadeTimeStep = Q12(1.0f);
             break;
     }
 
@@ -297,7 +297,7 @@ bool func_801E342C() // 0x801E342C
                     break;
             }
 
-            g_ScreenFadeTimestep = Q12(1.0f);
+            g_ScreenFadeTimeStep = Q12(1.0f);
             g_GameWork.gameStateStep_598[1]++;
             D_801E5E78 = 180;
             break;

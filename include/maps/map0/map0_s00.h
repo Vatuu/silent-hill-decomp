@@ -88,7 +88,7 @@ extern s_800C4590 D_800E39BC;
 
 extern u16 D_800E32D4;
 
-extern s32 D_800DFAD8;
+extern bool g_WarpCamera;
 
 void func_800CBFB0(void);
 
@@ -155,6 +155,8 @@ void func_800DC33C(void);
 void func_800DC694(void);
 
 void func_800DC8D8(void);
+
+void func_800DCA30(void);
 
 s32 func_800DCDA8();
 

@@ -81,7 +81,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
             g_IntervalVBlanks    = 1;
             g_Screen_FadeStatus  = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
-            g_ScreenFadeTimestep = Q12(2.0f);
+            g_ScreenFadeTimeStep = Q12(2.0f);
             g_MainMenuState++;
 
         case MenuState_Main:

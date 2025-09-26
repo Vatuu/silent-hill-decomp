@@ -2154,7 +2154,7 @@ extern const char* g_ItemDescriptions[];
 
 extern q19_12 g_PrevScreenFadeProgress;
 
-extern s32 g_ScreenFadeTimestep;
+extern q19_12 g_ScreenFadeTimeStep;
 
 extern GsOT_TAG g_OtTags0[2][16];
 
@@ -3344,7 +3344,7 @@ void func_8008605C(s32 arg0, s32 arg1, s32 arg2, bool arg3);
 void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 entry0, s32 entry1, s32 entry2, bool arg5);
 
 /** Handles giving the player items. */
-void func_8008616C(s32 arg0, bool arg1, s32 arg2, s32 fadeTimestep, bool arg4);
+void func_8008616C(s32 arg0, bool arg1, s32 arg2, q19_12 fadeTimeStep, bool arg4);
 
 void func_800862F8(s32 arg0, s32 fileIdx, bool arg2);
 
@@ -3364,29 +3364,53 @@ void func_800868DC(s32 idx);
 
 void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* sounds);
 
-void Camera_TranslationSet(VECTOR3* pos, q19_12 offsetOrPosX, q19_12 offsetOrPosY, q19_12 offsetOrPosZ,
-                           q19_12 accelXz, q19_12 accelY, q19_12 speedXzMax, q19_12 speedYMax, bool warpCam);
+/** @brief Sets the camera's position target.
+ *
+ * @param pos Target position (Q19.12).
+ * @param offsetOrPosX If `pos` is valid, X offset for `pos`. If `pos` is `NULL`, X target position.
+ * @param offsetOrPosY If `pos` is valid, Y offset for `pos`. If `pos` is `NULL`, Y target position.
+ * @param offsetOrPosZ If `pos` is valid, Z offset for `pos`. If `pos` is `NULL`, Z target position.
+ * @param accelX X acceleration.
+ * @param accelY X acceleration.
+ * @param speedXMax Max X speed.
+ * @param speedYMax Max Y speed.
+ * @param warp If `true`, warp to the position target, otherwise transition over time.
+ */
+void Camera_PositionSet(VECTOR3* pos, q19_12 offsetOrPosX, q19_12 offsetOrPosY, q19_12 offsetOrPosZ,
+                        q19_12 accelXz, q19_12 accelY, q19_12 speedXzMax, q19_12 speedYMax, bool warp);
 
-void Camera_RotationSet(VECTOR3* lookAt, q19_12 lookAtOffsetOrPosX, q19_12 lookAtOffsetOrPosY, q19_12 lookAtOffsetOrPosZ,
-                        q19_12 angularAccelX, q19_12 angularAccelY, q19_12 angularSpeedXMax, q19_12 angularSpeedYMax, bool warpLookAt);
+/** @brief Sets the camera's rotation and look-at position targets.
+ *
+ * @param lookAt Target look-at position (Q19.12).
+ * @param lookAtOffsetOrPosX If `lookAt` is valid, X offset for `lookAt`. If `lookAt` is `NULL`, X target look-at position.
+ * @param lookAtOffsetOrPosY If `lookAt` is valid, X offset for `lookAt`. If `lookAt` is `NULL`, Y target look-at position.
+ * @param lookAtOffsetOrPosZ If `lookAt` is valid, Z offset for `lookAt`. If `lookAt` is `NULL`, Z target look-at position.
+ * @param angularAccelX TODO
+ * @param angularAccelY TODO
+ * @param angularSpeedXMax TODO
+ * @param angularSpeedYMax TODO
+ * @param warp If `true`, warp to the look-at target, otherwise transition over time.
+ */
+void Camera_LookAtSet(VECTOR3* lookAt, q19_12 lookAtOffsetOrPosX, q19_12 lookAtOffsetOrPosY, q19_12 lookAtOffsetOrPosZ,
+                      q19_12 angularAccelX, q19_12 angularAccelY, q19_12 angularSpeedXMax, q19_12 angularSpeedYMax, bool warp);
 
 void func_80086C58(s_SubCharacter* chara, s32 arg1);
 
 void func_80086D04(s_SubCharacter* chara);
 
-void func_80086DA8(s32 fileIdx, s32 fadeTimestep);
+void func_80086DA8(s32 fileIdx, s32 fadeTimeStep);
 
-void func_80086E50(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1);
+void func_80086E50(s32 fileIdx, s32 fadeTimeStep0, s32 fadeTimeStep1);
 
-void func_80086F44(s32 fadeTimestep0, s32 fadeTimestep1);
+void func_80086F44(s32 fadeTimeStep0, s32 fadeTimeStep1);
 
 void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos);
 
-void func_8008716C(s32 itemId, s32 fadeTimestep0, s32 fadeTimestep1);
+void func_8008716C(s32 itemId, s32 fadeTimeStep0, s32 fadeTimeStep1);
 
-void func_80087360(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsgIdx);
+void func_80087360(s32 fileIdx, s32 fadeTimeStep0, s32 fadeTimeStep1, s32 mapMsgIdx);
 
-void func_80087540(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1);
+void func_80087540(s32 fileIdx, s32 fadeTimeStep0, s32 fadeTimeStep1, s32 mapMsgIdx0, s32 mapMsgIdx1);
 
 void Event_ItemTake(s32 itemId, s32 itemCount, s32 eventFlagIdx, s32 mapMsgIdx);
 

@@ -13,6 +13,7 @@ struct _MapOverlayHeader;
  * ANG:   Angle
  * ARY:   Array
  * DEFLT: Default
+ * EFF:   Effective?
  * EV:    Event?
  * EXCL:  Exclusion
  * F:     Flag/flags
@@ -177,10 +178,10 @@ STATIC_ASSERT_SIZEOF(VC_CAMERA_INTINFO, 8);
  */
 typedef struct _VC_WATCH_MV_PARAM
 {
-    s32 ang_accel_x;   /** Angular acceleration on X axis. */
-    s32 ang_accel_y;   /** Angular acceleration on Y axis. */
-    s16 max_ang_spd_x; /** Max angular speed on X axis. */
-    s16 max_ang_spd_y; /** Max angular speed on Y axis. */
+    q19_12 ang_accel_x;   /** Angular acceleration on X axis. */
+    q19_12 ang_accel_y;   /** Angular acceleration on Y axis. */
+    q3_12  max_ang_spd_x; /** Max angular speed on X axis. */
+    q3_12  max_ang_spd_y; /** Max angular speed on Y axis. */
 } VC_WATCH_MV_PARAM;
 STATIC_ASSERT_SIZEOF(VC_WATCH_MV_PARAM, 12);
 

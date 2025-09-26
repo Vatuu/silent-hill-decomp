@@ -113,7 +113,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
 
             g_IntervalVBlanks    = 1;
             g_Screen_FadeStatus  = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
-            g_ScreenFadeTimestep = Q12(3.0f);
+            g_ScreenFadeTimeStep = Q12(3.0f);
 
             func_80037188();
 
@@ -269,7 +269,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
 
             g_IntervalVBlanks                  = 1;
             g_Screen_FadeStatus                = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
-            g_ScreenFadeTimestep               = Q12(3.0f);
+            g_ScreenFadeTimeStep               = Q12(3.0f);
             g_GameWork.background2dColor_R_58C = 0;
             g_GameWork.background2dColor_G_58D = 0;
             g_GameWork.background2dColor_B_58E = 0;

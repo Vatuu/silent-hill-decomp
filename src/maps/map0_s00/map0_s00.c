@@ -892,8 +892,8 @@ void func_800DA5A0(void) // 0x800DA5A0
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            Camera_TranslationSet(NULL, Q12(-22.0f), Q12(-2.4f), Q12(130.1f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_PositionSet(NULL, Q12(-22.0f), Q12(-2.4f), Q12(130.1f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             break;
 
         case 1:
@@ -906,18 +906,18 @@ void func_800DA5A0(void) // 0x800DA5A0
         case 4:
         case 5:
         case 6:
-            Camera_TranslationSet(NULL,
-                                  Q12(-22.0f) - func_800868F4(Q12(4.0f),  Q12(5.0f), 0),
-                                  Q12(-2.4f)  - func_800868F4(Q12(-1.5f), Q12(5.0f), 1),
-                                  Q12(130.1f) - func_800868F4(Q12(4.0f),  Q12(5.0f), 2),
-                                  Q12(0.0f), Q12(0.0f),
-                                  Q12(0.0f), Q12(0.0f),
-                                  false);
-            Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
+            Camera_PositionSet(NULL,
+                               Q12(-22.0f) - func_800868F4(Q12(4.0f),  Q12(5.0f), 0),
+                               Q12(-2.4f)  - func_800868F4(Q12(-1.5f), Q12(5.0f), 1),
+                               Q12(130.1f) - func_800868F4(Q12(4.0f),  Q12(5.0f), 2),
+                               Q12(0.0f), Q12(0.0f),
+                               Q12(0.0f), Q12(0.0f),
+                               false);
+            Camera_LookAtSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
             break;
 
         case 3:
-            Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
+            Camera_LookAtSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
             break;
         
         case 7:
@@ -1145,8 +1145,8 @@ void func_800DAEFC(void) // 0x800DAEFC
 
         case 2:
             func_800865FC(false, 0, 0, FP_ANGLE(180.0f), Q12(0.0f), Q12(0.0f));
-            Camera_TranslationSet(&g_SysWork.player_4C.chara_0.position_18, Q12(0.24f), Q12(-4.06f), Q12(-5.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_RotationSet(&g_SysWork.player_4C.chara_0.position_18, Q12(-0.72f), Q12(-2.11f), Q12(-1.63f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_PositionSet(&g_SysWork.player_4C.chara_0.position_18, Q12(0.24f), Q12(-4.06f), Q12(-5.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(&g_SysWork.player_4C.chara_0.position_18, Q12(-0.72f), Q12(-2.11f), Q12(-1.63f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             SysWork_StateStepIncrement();
 
         case 3:
@@ -1179,8 +1179,8 @@ void func_800DAEFC(void) // 0x800DAEFC
                 offsetZ = Q12(130.0f);
             }
 
-            Camera_TranslationSet(NULL, Q12(-62.0f), offsetY, offsetZ, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), D_800DFAC4);
-            Camera_RotationSet(NULL,
+            Camera_PositionSet(NULL, Q12(-62.0f), offsetY, offsetZ, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), D_800DFAC4);
+            Camera_LookAtSet(NULL,
                                g_SysWork.player_4C.chara_0.position_18.vx,
                                Q12(-0.7f),
                                g_SysWork.player_4C.chara_0.position_18.vz - Q12(5.0f),
@@ -1207,8 +1207,8 @@ void func_800DB26C(void) // 0x800DB26C
 {
     if (g_SysWork.sysStateStep_C[0] == 0)
     {
-        Camera_TranslationSet(NULL, Q12(-62.0f), Q12(-2.24f), Q12(117.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-        Camera_RotationSet(NULL, Q12(-62.0f), Q12(-0.7f), Q12(104.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+        Camera_PositionSet(NULL, Q12(-62.0f), Q12(-2.24f), Q12(117.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+        Camera_LookAtSet(NULL, Q12(-62.0f), Q12(-0.7f), Q12(104.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
         func_800868DC(2);
     }
 
@@ -1697,45 +1697,47 @@ void func_800DC8D8(void) // 0x800DC8D8
     }
 }
 
-void func_800DCA30(void)
+void func_800DCA30(void) // 0x800DCA30
 {
-    s16 pcRotY;
-    s32 offsetZ;
-    s32 offsetY;
-    s32 pcX;
-    s32 pcZ;
-    s32 temp_v1;
-    s32 offsetX;
-    float four; // @hack permuter find.
+    q19_12 offsetX;
+    q19_12 offsetY;
+    q19_12 offsetZ;
+    q19_12 posX;
+    q19_12 posZ;
+    q3_12  rotY;
+    float  four; // @hack Permuter find.
 
-    pcX = g_SysWork.player_4C.chara_0.position_18.vx;
-    pcZ = g_SysWork.player_4C.chara_0.position_18.vz;
-    pcRotY = g_SysWork.player_4C.chara_0.rotation_24.vy;
-    if (g_SavegamePtr->eventFlags_168[0] & 0x100)
+    posX = g_SysWork.player_4C.chara_0.position_18.vx;
+    posZ = g_SysWork.player_4C.chara_0.position_18.vz;
+    rotY = g_SysWork.player_4C.chara_0.rotation_24.vy;
+
+    if (Savegame_EventFlagGet(EventFlag_8))
     {
-        if (pcZ < Q12(48.0f) && pcX > Q12(-59.0f))
+        if (posZ < Q12(48.0f) && posX > Q12(-59.0f))
         {
-            Camera_TranslationSet(NULL, Q12(-60.55f), Q12(-0.51f), Q12(47.63f), 0, 0, 0, 0, D_800DFAD8);
-            Camera_RotationSet(NULL, Q12(-56.91f), Q12(-1.26f), Q12(46.14f), 0, 0, 0, 0, D_800DFAD8);
-            D_800DFAD8 = false;
+            Camera_PositionSet(NULL, Q12(-60.55f), Q12(-0.51f), Q12(47.63f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), g_WarpCamera);
+            Camera_LookAtSet(NULL, Q12(-56.91f), Q12(-1.26f), Q12(46.14f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), g_WarpCamera);
+            g_WarpCamera = false;
             return;
         }
 
-        if ((pcZ < Q12(100.0f)) || ((pcZ < Q12(121.0f)) && (pcX < Q12(-58.0f))))
+        if (posZ < Q12(100.0f) || (posZ < Q12(121.0f) && posX < Q12(-58.0f)))
         {
             four = 4.0f;
-            offsetY = FP_MULTIPLY(Math_Cos(pcRotY), Q12(0.2f), Q12_SHIFT) - Q12(1.8f);
-            offsetZ = pcZ;
-            offsetZ += FP_MULTIPLY(Math_Cos(pcRotY), Q12(2.0f), Q12_SHIFT) + Q12(four);
-            offsetX = MAX(MIN(Q12(-61.5f), pcX), Q12(-63.5f));
 
-            Camera_TranslationSet(NULL, offsetX, offsetY, offsetZ, 0, 0, 0, 0, D_800DFAD8 == false);
-            Camera_RotationSet(NULL, pcX, Q12(-0.7f), pcZ - Q12(5.0f), 0, 0, 0, 0, D_800DFAD8 == false);
-            D_800DFAD8 = true;
+            offsetY = FP_MULTIPLY(Math_Cos(rotY), Q12(0.2f), Q12_SHIFT) - Q12(1.8f);
+            offsetZ = posZ;
+            offsetZ += FP_MULTIPLY(Math_Cos(rotY), Q12(2.0f), Q12_SHIFT) + Q12(four);
+            offsetX = MAX(MIN(Q12(-61.5f), posX), Q12(-63.5f));
+
+            Camera_PositionSet(NULL, offsetX, offsetY, offsetZ, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), !g_WarpCamera);
+            Camera_LookAtSet(NULL, posX, Q12(-0.7f), posZ - Q12(5.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), !g_WarpCamera);
+            g_WarpCamera = true;
             return;
         }
-        vcReturnPreAutoCamWork(D_800DFAD8);
-        D_800DFAD8 = false;
+
+        vcReturnPreAutoCamWork(g_WarpCamera);
+        g_WarpCamera = false;
     }
 }
 
