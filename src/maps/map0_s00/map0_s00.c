@@ -478,10 +478,10 @@ void func_800D8124(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8124
 void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
 {
     s_Collision sp18;
-    s32         sp28;
-    s8          sp2C;
-    s8          sp2D;
-    s32         temp_a3;
+    s32         unused;
+    s8          pitch0;
+    s8          pitch1;
+    s32         distSquared;
 
     D_800E3A30 = 0;
     switch (chara->properties_E4.player.afkTimer_E8)
@@ -499,7 +499,7 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
             if (chara->model_0.stateStep_3 == 0)
             {
                 chara->model_0.anim_4.status_0 = 2;
-                chara->model_0.stateStep_3    += 1;
+                chara->model_0.stateStep_3++;
             }
 
             if (chara->properties_E4.player.runTimer_F8 != 0)
@@ -517,7 +517,7 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
             if (chara->model_0.stateStep_3 == 0)
             {
                 chara->model_0.anim_4.status_0 = 4;
-                chara->model_0.stateStep_3    += 1;
+                chara->model_0.stateStep_3++;
             }
 
             if (chara->properties_E4.player.runTimer_F8 != 0)
@@ -534,7 +534,7 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
             if (chara->model_0.stateStep_3 == 0)
             {
                 chara->model_0.anim_4.status_0 = 6;
-                chara->model_0.stateStep_3    += 1;
+                chara->model_0.stateStep_3++;
             }
 
             if (chara->properties_E4.player.runTimer_F8 != 0)
@@ -560,7 +560,7 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
             if (chara->model_0.stateStep_3 == 0)
             {
                 chara->model_0.anim_4.status_0 = 4;
-                chara->model_0.stateStep_3    += 1;
+                chara->model_0.stateStep_3++;
             }
 
             if (chara->properties_E4.player.runTimer_F8 != 0)
@@ -588,7 +588,7 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
             if (chara->model_0.stateStep_3 == 0)
             {
                 chara->model_0.anim_4.status_0 = 4;
-                chara->model_0.stateStep_3    += 1;
+                chara->model_0.stateStep_3++;
             }
 
             if (chara->properties_E4.player.runTimer_F8 != 0)
@@ -604,20 +604,20 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
     }
 
     Collision_Get(&sp18, chara->position_18.vx, chara->position_18.vz);
-    func_8007FDE0(sp18.field_8, &sp28, &sp2C, &sp2D);
+    func_8007FDE0(sp18.field_8, &unused, &pitch0, &pitch1);
 
-    temp_a3 = SQUARE(Q12_TO_Q8(chara->position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx)) +
-              SQUARE(Q12_TO_Q8(chara->position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz));
+    distSquared = SQUARE(Q12_TO_Q8(chara->position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx)) +
+                  SQUARE(Q12_TO_Q8(chara->position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz));
 
     if (g_Player_DisableControl)
     {
         switch (chara->properties_E4.player.afkTimer_E8)
         {
             case 1:
-                sharedFunc_800D908C_0_s00(5, chara, 16, 28, Sfx_Unk1353, sp2C);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(2, true), chara, 16, 28, Sfx_Unk1353, pitch0);
                 break;
             case 2:
-                sharedFunc_800D908C_0_s00(7, chara, 53, 42, Sfx_Unk1353, sp2D);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(3, true), chara, 53, 42, Sfx_Unk1353, pitch1);
                 break;
         }
     }
@@ -626,10 +626,10 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
         switch (chara->properties_E4.player.afkTimer_E8)
         {
             case 1:
-                func_800D8748(5, chara, 16, 28, temp_a3, sp2C);
+                func_800D8748(ANIM_STATUS(2, true), chara, 16, 28, distSquared, pitch0);
                 break;
             case 2:
-                func_800D8748(7, chara, 53, 42, temp_a3, sp2D);
+                func_800D8748(ANIM_STATUS(3, true), chara, 53, 42, distSquared, pitch1);
                 break;
         }
     }
