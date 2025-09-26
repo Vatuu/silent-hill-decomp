@@ -1697,7 +1697,47 @@ void func_800DC8D8(void) // 0x800DC8D8
     }
 }
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DCA30);
+void func_800DCA30(void)
+{
+    s16 pcRotY;
+    s32 offsetZ;
+    s32 offsetY;
+    s32 pcX;
+    s32 pcZ;
+    s32 temp_v1;
+    s32 offsetX;
+    float four; // @hack permuter find.
+
+    pcX = g_SysWork.player_4C.chara_0.position_18.vx;
+    pcZ = g_SysWork.player_4C.chara_0.position_18.vz;
+    pcRotY = g_SysWork.player_4C.chara_0.rotation_24.vy;
+    if (g_SavegamePtr->eventFlags_168[0] & 0x100)
+    {
+        if (pcZ < Q12(48.0f) && pcX > Q12(-59.0f))
+        {
+            Camera_TranslationSet(NULL, Q12(-60.55f), Q12(-0.51f), Q12(47.63f), 0, 0, 0, 0, D_800DFAD8);
+            Camera_RotationSet(NULL, Q12(-56.91f), Q12(-1.26f), Q12(46.14f), 0, 0, 0, 0, D_800DFAD8);
+            D_800DFAD8 = false;
+            return;
+        }
+
+        if ((pcZ < Q12(100.0f)) || ((pcZ < Q12(121.0f)) && (pcX < Q12(-58.0f))))
+        {
+            four = 4.0f;
+            offsetY = FP_MULTIPLY(Math_Cos(pcRotY), Q12(0.2f), Q12_SHIFT) - Q12(1.8f);
+            offsetZ = pcZ;
+            offsetZ += FP_MULTIPLY(Math_Cos(pcRotY), Q12(2.0f), Q12_SHIFT) + Q12(four);
+            offsetX = MAX(MIN(Q12(-61.5f), pcX), Q12(-63.5f));
+
+            Camera_TranslationSet(NULL, offsetX, offsetY, offsetZ, 0, 0, 0, 0, D_800DFAD8 == false);
+            Camera_RotationSet(NULL, pcX, Q12(-0.7f), pcZ - Q12(5.0f), 0, 0, 0, 0, D_800DFAD8 == false);
+            D_800DFAD8 = true;
+            return;
+        }
+        vcReturnPreAutoCamWork(D_800DFAD8);
+        D_800DFAD8 = false;
+    }
+}
 
 void func_800DCC54(void) // 0x800DCC54
 {
