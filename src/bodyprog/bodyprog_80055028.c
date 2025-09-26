@@ -2670,12 +2670,12 @@ INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80055028", D_80028A20);
 
 void GameState_MapScreen_Update() // 0x80066EB0
 {
-#define CLAMP_LOW(v, lo)       ((v) < (lo) ? (lo) : (v))
-#define CLAMP_HIGH(v, hi)      ((v) > (hi) ? (hi) : (v))
-#define CLAMP_RANGE(v, lo, hi) (CLAMP_LOW(CLAMP_HIGH((v), (hi)), (lo)))
+    #define CLAMP_LOW(v, lo)       ((v) < (lo) ? (lo) : (v))
+    #define CLAMP_HIGH(v, hi)      ((v) > (hi) ? (hi) : (v))
+    #define CLAMP_RANGE(v, lo, hi) (CLAMP_LOW(CLAMP_HIGH((v), (hi)), (lo)))
 
-#define CLAMP_HIGH_EQ(v, hi)      ((v) >= (hi) ? (hi) : (v))
-#define CLAMP_RANGE_EQ(v, lo, hi) ((CLAMP_HIGH_EQ(CLAMP_LOW((v), (lo)), (hi))))
+    #define CLAMP_HIGH_EQ(v, hi)      ((v) >= (hi) ? (hi) : (v))
+    #define CLAMP_RANGE_EQ(v, lo, hi) ((CLAMP_HIGH_EQ(CLAMP_LOW((v), (lo)), (hi))))
 
     s32 temp_s0_2;
     s32 temp_s4;
@@ -2694,18 +2694,21 @@ void GameState_MapScreen_Update() // 0x80066EB0
     switch (g_GameWork.gameStateStep_598[0])
     {
         case 0:
-            Screen_Refresh(0x140, 1);
+            Screen_Refresh(SCREEN_WIDTH, true);
+
             D_800C444A = g_MapMarkingTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9];
             temp_a0    = g_SavegamePtr->current2dMapIdx_A9;
-            D_800C444C = -1;
-            D_800C4454 = 0x1000;
+            D_800C444C = NO_VALUE;
+            D_800C4454 = Q12(1.0f);
             D_800AE770 = 0;
             D_800C4448 = temp_a0;
+
             func_80037188(temp_a0);
-            Sd_EngineCmd(0x51C);
+            Sd_EngineCmd(Sfx_Unk1308);
             func_80066E40();
-            Fs_QueueStartReadTim(g_FullscreenMapTimFileIdxs[D_800C4448] + 0x768, FS_BUFFER_2, &g_MapImg);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[D_800C4448], FS_BUFFER_2, &g_MapImg);
             Fs_QueueWaitForEmpty();
+
             g_IntervalVBlanks   = 1;
             g_Screen_FadeStatus = 6;
 
@@ -2737,7 +2740,7 @@ void GameState_MapScreen_Update() // 0x80066EB0
 
             if (g_Screen_FadeStatus == 1)
             {
-                if (D_800AE770 == 0 && D_800C4454 == 0x1000)
+                if (D_800AE770 == 0 && D_800C4454 == Q12(1.0f))
                 {
                     func_80068CC0(D_800C4448);
                 }
@@ -2746,18 +2749,20 @@ void GameState_MapScreen_Update() // 0x80066EB0
             func_800692A4(var_s6, var_s5, temp_s4);
 
             if ((g_GameWork.gameStatePrev_590 == GameState_InventoryScreen && g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2) ||
-                (g_GameWork.gameStatePrev_590 != GameState_InventoryScreen && g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.cancel_2 | g_GameWorkPtr->config_0.controllerConfig_0.map_18)))
+                (g_GameWork.gameStatePrev_590 != GameState_InventoryScreen && g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.cancel_2 |
+                                                                                                               g_GameWorkPtr->config_0.controllerConfig_0.map_18)))
             {
-                Sd_EngineCmd(0x51C);
+                Sd_EngineCmd(Sfx_Unk1308);
+
                 if (g_GameWork.gameStatePrev_590 == GameState_InventoryScreen)
                 {
-
                     GsDrawOt(&g_OrderingTable0[g_ActiveBufferIdx]);
                     VSync(0);
                     GsDrawOt(&g_OrderingTable0[g_ActiveBufferIdx]);
                     func_80066E7C();
                     GameFs_MapItemsTextureLoad(g_SavegamePtr->mapOverlayId_A4);
                     func_80066D90();
+
                     g_Screen_FadeStatus = 4;
                 }
                 else
@@ -2784,24 +2789,26 @@ void GameState_MapScreen_Update() // 0x80066EB0
 
                     if (D_800C444C < 0)
                     {
-                        D_800C444C = FP_TO(CLAMP_RANGE_EQ((s16)temp_s0_2 + 0x50, 0, 0xA0), Q12_SHIFT);
-                        D_800C4450 = FP_TO(CLAMP_RANGE_EQ((temp_s0_2 >> 16) + 0x3C, 0, 0x78), Q12_SHIFT);
+                        D_800C444C = Q12(CLAMP_RANGE_EQ((s16)temp_s0_2 + 80, 0, 160));
+                        D_800C4450 = Q12(CLAMP_RANGE_EQ((temp_s0_2 >> 16) + 60, 0, 120));
                     }
                 }
             }
 
             if (D_800AE770 == 0)
             {
-                if (D_800C4454 == 0x1000)
+                if (D_800C4454 == Q12(1.0f))
                 {
                     if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickUp)
                     {
                         if (HAS_MAP(D_800AE740[D_800C4448][0]))
                         {
                             D_800C4449 = D_800AE740[D_800C4448][0];
-                            Fs_QueueStartSeek(g_FullscreenMapTimFileIdxs[D_800C4449] + 0x768);
+
+                            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[D_800C4449]);
+
                             g_Screen_FadeStatus             = 2;
-                            D_800C444C                      = -1;
+                            D_800C444C                      = NO_VALUE;
                             g_GameWork.gameStateStep_598[0] = 3;
                             g_SysWork.timer_20              = 0;
                             g_GameWork.gameStateStep_598[1] = 0;
@@ -2809,14 +2816,17 @@ void GameState_MapScreen_Update() // 0x80066EB0
                             break;
                         }
                     }
+
                     if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickDown)
                     {
                         if (HAS_MAP(D_800AE740[D_800C4448][1]))
                         {
                             D_800C4449 = D_800AE740[D_800C4448][1];
-                            Fs_QueueStartSeek(g_FullscreenMapTimFileIdxs[D_800C4449] + 0x768);
+
+                            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[D_800C4449]);
+
                             g_Screen_FadeStatus = 2;
-                            D_800C444C          = -1;
+                            D_800C444C          = NO_VALUE;
 
                             g_GameWork.gameStateStep_598[0] = 3;
                             g_SysWork.timer_20              = 0;
@@ -2828,43 +2838,48 @@ void GameState_MapScreen_Update() // 0x80066EB0
                     break;
                 }
 
-                D_800C4454 = MIN(D_800C4454 + 0xC4, 0x1000);
+                D_800C4454 = MIN(D_800C4454 + 196, Q12(1.0f));
                 break;
             }
 
-            D_800C4454  = CLAMP_LOW(D_800C4454 - 0xC4, 0);
-            D_800C444C += ((g_Controller0->sticks_24.sticks_0.leftX << 0xE) / 75);
+            D_800C4454  = CLAMP_LOW(D_800C4454 - 196, 0);
+            D_800C444C += ((g_Controller0->sticks_24.sticks_0.leftX << 14) / 75);
             D_800C444C  = CLAMP_RANGE(D_800C444C, 0, 0xA0000);
-            D_800C4450 += ((g_Controller0->sticks_24.sticks_0.leftY << 0xE) / 75);
+            D_800C4450 += ((g_Controller0->sticks_24.sticks_0.leftY << 14) / 75);
             D_800C4450  = CLAMP_RANGE(D_800C4450, 0, 0x78000);
             break;
 
         case 3:
-            if ((g_Screen_FadeStatus & 7) == 5)
+            if (SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete)
             {
                 D_800C4448 = D_800C4449;
+
                 Sd_EngineCmd(0x51C);
+
                 g_GameWork.gameStateStep_598[0] = 1;
                 g_SysWork.timer_20              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
                 break;
             }
-            func_80067914(D_800C4448, 0, 0, 0x1000);
-            func_80068E0C(1, D_800C4448, 0, 0, 0, 0, 0x1000);
-            func_800692A4(0, 0, 0x1000);
+
+            func_80067914(D_800C4448, 0, 0, Q12(1.0f));
+            func_80068E0C(1, D_800C4448, 0, 0, 0, 0, Q12(1.0f));
+            func_800692A4(0, 0, Q12(1.0f));
             break;
 
         case 1:
-            Fs_QueueStartReadTim(g_FullscreenMapTimFileIdxs[D_800C4448] + 0x768, FS_BUFFER_2, &g_MapImg);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[D_800C4448], FS_BUFFER_2, &g_MapImg);
 
             temp_a0_4 = g_MapMarkingTimFileIdxs[D_800C4448];
-            if (temp_a0_4 != D_800C444A && temp_a0_4 != -1)
+            if (temp_a0_4 != D_800C444A && temp_a0_4 != NO_VALUE)
             {
                 D_800C444A = g_MapMarkingTimFileIdxs[D_800C4448];
-                Fs_QueueStartReadTim(g_MapMarkingTimFileIdxs[D_800C4448] + 0x776, FS_BUFFER_1, &g_MapMarkerAtlasImg);
+                Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdxs[D_800C4448], FS_BUFFER_1, &g_MapMarkerAtlasImg);
             }
+
             Fs_QueueWaitForEmpty();
+
             g_Screen_FadeStatus             = 6;
             g_GameWork.gameStateStep_598[0] = 2;
             g_SysWork.timer_20              = 0;
@@ -2883,14 +2898,15 @@ void GameState_MapScreen_Update() // 0x80066EB0
             func_80068E0C(1, D_800C4448, 0, 0, var_s6, var_s5, temp_s4);
             func_800692A4(var_s6, var_s5, temp_s4);
 
-            if ((g_Screen_FadeStatus & 7) == 5)
+            if (SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete)
             {
                 if (g_GameWork.gameStatePrev_590 == GameState_InGame || g_GameWork.gameStatePrev_590 == GameState_LoadMapScreen)
                 {
                     func_80066E7C();
-                    Screen_Init(0x140, 0);
+                    Screen_Init(SCREEN_WIDTH, false);
                     g_GameWork.gameStatePrev_590 = GameState_InGame;
                 }
+
                 Game_StateSetPrevious();
             }
             break;
@@ -2899,7 +2915,7 @@ void GameState_MapScreen_Update() // 0x80066EB0
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80067914); // 0x80067914
 
-bool func_80068CC0(s32 arg0)                                               // 0x80068CC0
+bool func_80068CC0(s32 arg0) // 0x80068CC0
 {
     s32      i;
     POLY_G3* poly;
@@ -2939,7 +2955,7 @@ bool func_80068CC0(s32 arg0)                                               // 0x
     return true;
 }
 
-s32 func_80068E0C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4, u16 arg5, u16 arg6) // 0x80068E0C
+bool func_80068E0C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4, u16 arg5, u16 arg6) // 0x80068E0C
 {
     s32              sp0;
     u16              sp4;
@@ -2949,28 +2965,28 @@ s32 func_80068E0C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4, u16 arg5, u1
     s32              temp_v1_4;
     s32              var_t4;
     s32              var_t5;
-    s_func_80068E0C* ptr;
     s32              temp;
     s32              temp2;
     s16              temp3;
     s32              temp4;
     s32              temp6;
+    s_func_80068E0C* ptr;
 
     ptr = PSX_SCRATCH;
 
-    if (g_MapMarkingTimFileIdxs[arg1] == -1)
+    if (g_MapMarkingTimFileIdxs[arg1] == NO_VALUE)
     {
-        return 0;
+        return false;
     }
 
     if (D_800AEDBC[arg1].ptr_0 == NULL)
     {
-        return 0;
+        return false;
     }
 
     if (D_800AEDBC[arg1].ptr_4 == NULL)
     {
-        return 0;
+        return false;
     }
 
     ptr->field_0 = (POLY_FT4*)GsOUT_PACKET_P;
@@ -3053,8 +3069,9 @@ s32 func_80068E0C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4, u16 arg5, u1
             ptr->field_0++;
         }
     }
+
     GsOUT_PACKET_P = (PACKET*)ptr->field_0;
-    return 1;
+    return true;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800692A4); // 0x800692A4

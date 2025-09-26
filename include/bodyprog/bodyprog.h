@@ -94,7 +94,8 @@ typedef enum _Sfx
     Sfx_Back        = Sfx_Base + 25,
     Sfx_Cancel      = Sfx_Base + 26,
     Sfx_Confirm     = Sfx_Base + 27, // TODO: Continue this pattern.
-				    
+
+    Sfx_Unk1308     = 1308,
     Sfx_Unk1309     = 1309,
     Sfx_Unk1310     = 1310,
 				    
@@ -3574,7 +3575,7 @@ s32 func_80067914(s32 arg0, u16 arg1, u16 arg2, u16 arg3);
 
 bool func_80068CC0(s32 arg0);
 
-s32 func_80068E0C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4, u16 arg5, u16 arg6);
+bool func_80068E0C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4, u16 arg5, u16 arg6);
 
 void func_800692A4(u16 arg0, u16 arg1, u16 arg2);
 

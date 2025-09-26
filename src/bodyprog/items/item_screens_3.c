@@ -323,7 +323,7 @@ u32 D_800AE1C0[] =
     0xF0,
     0xF5,
     0xFA,
-    0xFF,
+    0xFF
 };
 
 s_800AE204 D_800AE204[26] =
@@ -360,7 +360,7 @@ s_800AE4DC D_800AE4DC[3] = // Used in `func_8005B62C` (https://decomp.me/scratch
 {
     { &D_800AE204[1],  3,  0,      0, 0x80, 0x3F, 0xBF },
     { &D_800AE204[0],  12, 0,      0, 0x80, 0x3F, 0xBF },
-    { &D_800AE204[12], 5,  0xFF67, 0, 0x80, 0x3F, 0xBF }, 
+    { &D_800AE204[12], 5,  0xFF67, 0, 0x80, 0x3F, 0xBF },
 };
 
 SVECTOR D_800AE500[4] =
@@ -368,7 +368,7 @@ SVECTOR D_800AE500[4] =
     SVECTOR(0.0f,      255.65f,  255.65f),
     SVECTOR(-255.65f,  0.0f,     255.65f),
     SVECTOR(255.65f,   0.0f,     255.65f),
-    SVECTOR(0.0f,     -255.65f,  255.65f),
+    SVECTOR(0.0f,     -255.65f,  255.65f)
 };
 
 s16 D_800AE520[] =
@@ -457,7 +457,7 @@ s16 D_800AE5F0[136] =
     0x0300, 0x12E0, 0x02E0, 0x00F0,
     0x0AE0, 0x0B60, 0x02E0, 0x0210,
     0x08A0, 0xEDF0, 0x02A0, 0x0220,
-    0x0300, 0xEDA0, 0x02E0, 0xFD70,
+    0x0300, 0xEDA0, 0x02E0, 0xFD70
 };
 // https://decomp.me/scratch/HNL4n `temp_a0 = D_800AE700[animStatus];`
 u8 D_800AE700[16] =
@@ -465,7 +465,7 @@ u8 D_800AE700[16] =
     0x64, 0x48, 0x48, 0x3C,
     0x3C, 0x6E, 0x6E, 0x6E,
     0x3A, 0x50, 0x3C, 0x3C,
-    0x48, 0x5E, 0x64, 0x64,
+    0x48, 0x5E, 0x64, 0x64
 };
 
 // layout based on `func_800652F4`
@@ -490,7 +490,7 @@ s32 D_800AE71C[] =
     0x00015AE1, 0xFFFEAEB9,
     0x00017B33, 0xFFFEAEB9,
     0x00015AE1, 0xFFFE8E67,
-    0x00017B33, 0xFFFE8E67,
+    0x00017B33, 0xFFFE8E67
 };
 
 // Some timer used in func_80066184
@@ -499,7 +499,8 @@ q19_12 D_800AE73C = Q12(-524256.0f);
 // Used by `func_80068CC0` and `GameState_MapScreen_Update`.
 // I think this is save file flags related to
 // placing the markings on the map.
-u8 D_800AE740[][2] = {
+u8 D_800AE740[][2] =
+{
     { 0x00, 0x00 },
     { 0x00, 0x00 },
     { 0x00, 0x00 },
@@ -523,7 +524,7 @@ u8 D_800AE740[][2] = {
     { 0x15, 0x00 },
     { 0x16, 0x14 },
     { 0x17, 0x15 },
-    { 0x00, 0x16 },
+    { 0x00, 0x16 }
 };
 
 s32 D_800AE770 = 0; // `GameState_MapScreen_Update` uses this like a `bool`.
