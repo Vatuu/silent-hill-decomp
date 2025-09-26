@@ -5,13 +5,13 @@
 
 void vwInitViewInfo(void) // 0x80048A38
 {
-    vwViewPointInfo.rview.vp.vz = 0;
-    vwViewPointInfo.rview.vp.vy = 0;
-    vwViewPointInfo.rview.vp.vx = 0;
-    vwViewPointInfo.rview.vr.vx = 0;
-    vwViewPointInfo.rview.vr.vy = 0;
+    vwViewPointInfo.rview.vp.vz = Q12(0.0f);
+    vwViewPointInfo.rview.vp.vy = Q12(0.0f);
+    vwViewPointInfo.rview.vp.vx = Q12(0.0f);
+    vwViewPointInfo.rview.vr.vx = Q12(0.0f);
+    vwViewPointInfo.rview.vr.vy = Q12(0.0f);
     vwViewPointInfo.rview.vr.vz = Q12(1.0f);
-    vwViewPointInfo.rview.rz    = 0;
+    vwViewPointInfo.rview.rz    = Q12(0.0f);
     vwViewPointInfo.rview.super = &vwViewPointInfo.vwcoord;
     GsInitCoordinate2(NULL, &vwViewPointInfo.vwcoord);
     vwSetViewInfo();
