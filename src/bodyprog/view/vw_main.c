@@ -38,7 +38,7 @@ void Vw_SetLookAtMatrix(const VECTOR3* pos, const VECTOR3* lookAt) // 0x80048AF4
     q23_8   deltaY;
     q23_8   deltaZ;
     MATRIX  viewMat;
-    SVECTOR rot;
+    SVECTOR rot; // Q3.12
 
     // Compute direction vector components.
     deltaX = Q12_TO_Q8(lookAt->vx - pos->vx);

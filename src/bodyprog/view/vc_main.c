@@ -25,22 +25,22 @@ VC_NEAR_ROAD_DATA vcNullNearRoad =
 /** @brief Default look-at move parameters. */
 VC_WATCH_MV_PARAM deflt_watch_mv_prm =
 {
-    0x1333,
-    0x2333,
-    0x385,
-    0xB33
+    Q12(1.2f),
+    Q12(2.2f),
+    Q12(0.22f),
+    Q12(0.7f)
 };
 
 /** @brief First-person look-at move parameters. */
 VC_WATCH_MV_PARAM self_view_watch_mv_prm =
 {
-    0x1AE1,
-    0x3147,
-    0x070A,
-    0x1666
+    Q12(1.68f),
+    Q12(3.08f),
+    Q12(0.44f),
+    Q12(1.4f)
 };
 
-/** @brief Camera move parameters for user. */
+/** @brief Camera move parameters for user? */
 VC_CAM_MV_PARAM cam_mv_prm_user =
 {
     Q12(10.0f),
@@ -49,7 +49,7 @@ VC_CAM_MV_PARAM cam_mv_prm_user =
     Q12(2.0f)
 };
 
-/** @brief Exclusion radii. */
+/** @brief Boundary radii. */
 q19_12 excl_r_ary[9] =
 {
     Q12(4.0f),
@@ -67,10 +67,12 @@ void vcInitVCSystem(VC_ROAD_DATA* vc_road_ary_list) // 0x80080940
 {
     vcWork.view_cam_active_f_0 = false;
 
+    // Fall back on default camera paths.
     if (vc_road_ary_list == NULL)
     {
         vcWork.vc_road_ary_list_4 = vcNullRoadArray;
     }
+    // Use provided camera paths.
     else
     {
         vcWork.vc_road_ary_list_4 = vc_road_ary_list;
