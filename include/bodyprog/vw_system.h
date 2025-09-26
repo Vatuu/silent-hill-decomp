@@ -45,7 +45,7 @@ struct _MapOverlayHeader;
  *
  * Area:         A camera path's spatial constraint defining its area of influence.
  * Entou:        "Cylinder" in Japanese. Refers to a 2D radius on the XZ plane.
- * Exclusion:    Threshold or boundary.
+ * Exclusion:    Threshold or boundary. Used in the context of a camera sphere.
  * Eye:          ?
  * Flipped:      ?
  * Limit area:   2D AABB parameters defining a camera path's spatial constraint.
