@@ -2029,15 +2029,15 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800348C0", func_800382EC); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800348C0", func_80038354); // 0x80038354
 
-bool Math_Distance2dCheck(const VECTOR3* pos0, const VECTOR3* pos1, s32 radius) // 0x80038A6C
+bool Math_Distance2dCheck(const VECTOR3* posFrom, const VECTOR3* posTo, q19_12 radius) // 0x80038A6C
 {
-    s32 deltaX;
-    s32 deltaZ;
-    s32 radiusSqr;
-    s32 sum;
+    q19_12 deltaX;
+    q19_12 deltaZ;
+    q19_12 radiusSqr;
+    q19_12 sum;
 
     // Check rough radius intersection on X axis.
-    deltaX = pos0->vx - pos1->vx;
+    deltaX = posFrom->vx - posTo->vx;
     if (radius < deltaX)
     {
         return true;
@@ -2048,7 +2048,7 @@ bool Math_Distance2dCheck(const VECTOR3* pos0, const VECTOR3* pos1, s32 radius) 
     }
 
     // Check rough radius intersection on Z axis.
-    deltaZ = pos0->vz - pos1->vz;
+    deltaZ = posFrom->vz - posTo->vz;
     if (radius < deltaZ)
     {
         return true;
@@ -2066,14 +2066,13 @@ bool Math_Distance2dCheck(const VECTOR3* pos0, const VECTOR3* pos1, s32 radius) 
 
 s32 Camera_Distance2dGet(const VECTOR3* pos) // 0x80038B44
 {
-    VECTOR3 camPos;
-    s32     deltaX;
-    s32     deltaZ;
+    VECTOR3 camPos; // Q19.12
+    q25_6   deltaX;
+    q25_6   deltaZ;
 
-    // Something similar to `Math_Vector2MagCalc`?
     vwGetViewPosition(&camPos);
-    deltaX = (camPos.vx - pos->vx) >> 6;
-    deltaZ = (camPos.vz - pos->vz) >> 6;
+    deltaX = Q12_TO_Q6(camPos.vx - pos->vx);
+    deltaZ = Q12_TO_Q6(camPos.vz - pos->vz);
     return FP_MULTIPLY_PRECISE(deltaX, deltaX, Q12_SHIFT) + FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT);
 }
 

@@ -8509,20 +8509,20 @@ void func_8007FD4C(s32 arg0) // 0x8007FD4C
 // Large function.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800706E4", func_8007FDE0); // 0x8007FDE0
 
-q19_12 Math_DistanceGet(const VECTOR3* pos0, const VECTOR3* pos1) // 0x800802CC
+q19_12 Math_DistanceGet(const VECTOR3* posFrom, const VECTOR3* posTo) // 0x800802CC
 {
-    q19_12 deltaX = pos1->vx - pos0->vx;
-    q19_12 deltaY = pos1->vy - pos0->vy;
-    q19_12 deltaZ = pos1->vz - pos0->vz;
+    q19_12 deltaX = posTo->vx - posFrom->vx;
+    q19_12 deltaY = posTo->vy - posFrom->vy;
+    q19_12 deltaZ = posTo->vz - posFrom->vz;
     return SquareRoot12(FP_MULTIPLY_PRECISE(deltaX, deltaX, Q12_SHIFT) +
                         FP_MULTIPLY_PRECISE(deltaY, deltaY, Q12_SHIFT) +
                         FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT));
 }
 
-q19_12 Math_Distance2dGet(const VECTOR3* pos0, const VECTOR3* pos1) // 0x8008037C
+q19_12 Math_Distance2dGet(const VECTOR3* posFrom, const VECTOR3* posTo) // 0x8008037C
 {
-    q19_12 deltaX = pos1->vx - pos0->vx;
-    q19_12 deltaZ = pos1->vz - pos0->vz;
+    q19_12 deltaX = posTo->vx - posFrom->vx;
+    q19_12 deltaZ = posTo->vz - posFrom->vz;
     return SquareRoot12(FP_MULTIPLY_PRECISE(deltaX, deltaX, Q12_SHIFT) +
                         FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT));
 }

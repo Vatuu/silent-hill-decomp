@@ -3920,36 +3920,36 @@ s32 func_800382B0(s32 arg0);
 
 /** @brief Computes the distance between two positions.
  *
- * @param pos0 First position.
- * @param pos1 Second position.
+ * @param posFrom First position (Q19.12).
+ * @param posTo Second position (Q19.12).
  * @return Distance between positions.
  */
-q19_12 Math_DistanceGet(const VECTOR3* pos0, const VECTOR3* pos1);
+q19_12 Math_DistanceGet(const VECTOR3* posFrom, const VECTOR3* posTo);
 
 /** @brief Computes the 2D distance on the XZ plane between two positions.
  *
- * @param pos0 First position.
- * @param pos1 Second position.
+ * @param posFrom First position (Q19.12).
+ * @param posTo Second position (Q19.12).
  * @return 2D distance between positions.
  */
-q19_12 Math_Distance2dGet(const VECTOR3* pos0, const VECTOR3* pos1);
+q19_12 Math_Distance2dGet(const VECTOR3* posFrom, const VECTOR3* posTo);
 
 /** @brief Forces a clicked controller input status for `ControllerFlag_Select`. */
 void Input_SelectClickSet();
 
 /** @brief Performs a 2D distance check on the XZ plane between two positions.
  *
- * @param pos0 First position.
- * @param pos1 Second position.
+ * @param posFrom First position (Q19.12).
+ * @param posTo Second position (Q19.12).
  * @param radius Intersection radius.
  * @return `true` if the 2D distance exceeds the radius, `false` otherwise.
  */
-bool Math_Distance2dCheck(const VECTOR3* pos0, const VECTOR3* pos1, s32 radius);
+bool Math_Distance2dCheck(const VECTOR3* posFrom, const VECTOR3* posTo, q19_12 radius);
 
 /** @brief Computes the squared 2D distance on the XZ plane from the reference position to the camera.
  *
- * @param pos Reference position.
- * @return 2D distance to the camera.
+ * @param pos Reference position (Q19.12).
+ * @return 2D distance to the camera. TODO: Does it stay in Q25.6?
  */
 s32 Camera_Distance2dGet(const VECTOR3* pos);
 

@@ -318,7 +318,7 @@ typedef struct _VW_VIEW_WORK
 {
     VbRVIEW       rview;
     GsCOORDINATE2 vwcoord;
-    VECTOR3       worldpos; // Q19.12
+    VECTOR3       worldpos; /** Q19.12 | Camera world position. */
     SVECTOR       worldang;
 } VW_VIEW_WORK;
 STATIC_ASSERT_SIZEOF(VW_VIEW_WORK, 132);
@@ -372,7 +372,13 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p);
 
 void           vwInitViewInfo(void);
 GsCOORDINATE2* vwGetViewCoord(void);
-void           vwGetViewPosition(VECTOR3* pos);
+
+/** @brief Gets the camera's position, outputting the result to `pos`.
+ *
+ * @param pos Output camera position (Q19.12).
+ */
+void vwGetViewPosition(VECTOR3* pos);
+
 void           vwGetViewAngle(SVECTOR* ang);
 void           Vw_SetLookAtMatrix(const VECTOR3* pos, const VECTOR3* lookAt);
 void           vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, q19_12 ref_x, q19_12 ref_y, q19_12 ref_z, q3_12 cam_ang_y, q3_12 cam_ang_z, q19_12 cam_y, q19_12 cam_xz_r);
