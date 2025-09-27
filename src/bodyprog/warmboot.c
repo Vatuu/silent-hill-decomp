@@ -87,7 +87,7 @@ void Game_WarmBoot() // 0x80034264
     while (func_80045B28())
     {
         func_800485D8();
-        VSync(0);
+        VSync(VSyncMode_Wait);
     }
 
     Sd_EngineCmd(20);
@@ -95,7 +95,7 @@ void Game_WarmBoot() // 0x80034264
     while (func_80045B28())
     {
         func_800485D8();
-        VSync(0);
+        VSync(VSyncMode_Wait);
     }
 
     Fs_QueueReset();
@@ -106,7 +106,7 @@ void Game_WarmBoot() // 0x80034264
     while (func_80045B28())
     {
         func_800485D8();
-        VSync(0);
+        VSync(VSyncMode_Wait);
     }
 
     if (g_SysWork.flags_22A4 & (1 << 1))

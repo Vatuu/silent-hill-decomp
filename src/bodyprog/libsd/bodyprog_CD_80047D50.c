@@ -477,7 +477,7 @@ void func_800485D8() // 0x800485D8
 
     if (D_800C1658.field_4 != 0)
     {
-        D_800C1688.field_4 = VSync(-1) - D_800C1688.field_8;
+        D_800C1688.field_4 = VSync(VSyncMode_Count) - D_800C1688.field_8;
     }
 
     if (D_800C1658.field_14 != 0)
@@ -535,7 +535,7 @@ void func_800485D8() // 0x800485D8
                 func_800478DC(2);
             }
 
-            D_800C1688.field_8 = VSync(-1);
+            D_800C1688.field_8 = VSync(VSyncMode_Count);
             D_800C1688.field_4 = 0;
         }
     }
@@ -602,7 +602,7 @@ u8 func_80048954(s32 com, u8* param, u8* res) // 0x80048954
     {
         CdReset(0);
         CdControlB(1, 0, 0);
-        VSync(3);
+        VSync(VSyncMode_Wait3);
         
         if (D_800C1670.field_0 != 0)
         {

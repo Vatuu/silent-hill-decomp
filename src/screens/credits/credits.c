@@ -248,7 +248,7 @@ s32 func_801E3304() // 0x801E3304
             LoadImage(&D_801E557C[0], IMAGE_BUFFER_0);
             LoadImage(&D_801E557C[1], IMAGE_BUFFER_1);
             DrawSync(0);
-            VSync(2);
+            VSync(VSyncMode_Wait2);
 
             Game_StateSetPrevious();
         }

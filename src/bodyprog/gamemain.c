@@ -195,7 +195,7 @@ void MainLoop() // 0x80032EE0
         // Handle V sync.
         if (g_SysWork.flags_22A4 & (1 << 1))
         {
-            vBlanks   = VSync(-1);
+            vBlanks   = VSync(VSyncMode_Count);
             g_VBlanks = vBlanks - g_PrevVBlanks;
 
             Demo_PresentIntervalUpdate();
@@ -210,7 +210,7 @@ void MainLoop() // 0x80032EE0
 
             do
             {
-                VSync(0);
+                VSync(VSyncMode_Wait);
                 g_VBlanks++;
                 g_PrevVBlanks++;
             }
@@ -227,23 +227,23 @@ void MainLoop() // 0x80032EE0
         {
             if (g_SysWork.sysState_8 != SysState_Gameplay)
             {
-                g_VBlanks     = VSync(-1) - g_PrevVBlanks;
-                g_PrevVBlanks = VSync(-1);
-                VSync(0);
+                g_VBlanks     = VSync(VSyncMode_Count) - g_PrevVBlanks;
+                g_PrevVBlanks = VSync(VSyncMode_Count);
+                VSync(VSyncMode_Wait);
             }
             else
             {
                 if (g_Screen_FadeStatus != SCREEN_FADE_STATUS(ScreenFadeState_None, false))
                 {
-                    VSync(0);
+                    VSync(VSyncMode_Wait);
                 }
 
-                g_VBlanks     = VSync(-1) - g_PrevVBlanks;
-                g_PrevVBlanks = VSync(-1);
+                g_VBlanks     = VSync(VSyncMode_Count) - g_PrevVBlanks;
+                g_PrevVBlanks = VSync(VSyncMode_Count);
 
                 while (g_VBlanks < g_IntervalVBlanks)
                 {
-                    VSync(0);
+                    VSync(VSyncMode_Wait);
                     g_VBlanks++;
                     g_PrevVBlanks++;
                 }

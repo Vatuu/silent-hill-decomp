@@ -48,7 +48,7 @@ void GameState_Options_Update(void) // 0x801E2D44
 
             if (g_GameWork.gameStatePrev_590 != GameState_InGame)
             {
-                VSync(8);
+                VSync(VSyncMode_Wait8);
             }
 
             g_GameWork.background2dColor_R_58C = 0;

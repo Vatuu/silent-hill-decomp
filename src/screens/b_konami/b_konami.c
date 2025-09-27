@@ -97,7 +97,7 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
         func_8002EB88();
         func_80033548();
         nullsub_800334C8();
-        VSync(0);
+        VSync(VSyncMode_Wait);
         GsSwapDispBuff();
         GsDrawOt(&g_OrderingTable2[g_ActiveBufferIdx]);
 
@@ -179,7 +179,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                     {
                         g_GameWork.gameStateStep_598[0] = func_800C9874();
                         func_8002EB88();
-                        VSync(0);
+                        VSync(VSyncMode_Wait);
                     }
                 }
                 break;
@@ -256,7 +256,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
 
                     func_80033548();
                     func_8002EB88();
-                    VSync(0);
+                    VSync(VSyncMode_Wait);
                 }
 
                 g_GameWork.gameStateStep_598[0] = 6;
@@ -321,7 +321,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
         func_8002EB88();
         func_80033548();
         nullsub_800334C8();
-        VSync(0);
+        VSync(VSyncMode_Wait);
         GsSwapDispBuff();
         GsDrawOt(&g_OrderingTable2[g_ActiveBufferIdx]);
 
@@ -471,7 +471,7 @@ void func_800CA2C8(s32 arg0) // 0x800CA2C8
     var_s2 = D_800CA510;
     temp_s5 = D_800CA50C;
 
-    currentTime = VSync(1);
+    currentTime = VSync(VSyncMode_Immediate);
 
     if (expectedTime - currentTime < timeVar1)
     {
@@ -488,7 +488,7 @@ void func_800CA2C8(s32 arg0) // 0x800CA2C8
             break;
         }
 
-        if (!(var_s2 & (1 << 9)) && VSync(1) > expectedTime && arg0 != NO_VALUE)
+        if (!(var_s2 & (1 << 9)) && VSync(VSyncMode_Immediate) > expectedTime && arg0 != NO_VALUE)
         {
             break;
         }

@@ -12,7 +12,7 @@ const s32 rodataPad_80024CA0 = 0;
 void Screen_RectInterlacedClear(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b) // 0x80032358
 {
     setRECT((RECT*)PSX_SCRATCH, x, y, w, h);
-    VSync(0);
+    VSync(VSyncMode_Wait);
     ClearImage2((RECT*)PSX_SCRATCH, r, g, b);
     DrawSync(0);
 }

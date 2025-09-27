@@ -2645,7 +2645,7 @@ void func_80066D90() // 0x80066D90
         DrawPrim(var2);
 
         Fs_QueueUpdate();
-        VSync(0);
+        VSync(VSyncMode_Wait);
     }
 
     Fs_QueueWaitForEmpty();
@@ -2757,7 +2757,7 @@ void GameState_MapScreen_Update() // 0x80066EB0
                 if (g_GameWork.gameStatePrev_590 == GameState_InventoryScreen)
                 {
                     GsDrawOt(&g_OrderingTable0[g_ActiveBufferIdx]);
-                    VSync(0);
+                    VSync(VSyncMode_Wait);
                     GsDrawOt(&g_OrderingTable0[g_ActiveBufferIdx]);
                     func_80066E7C();
                     GameFs_MapItemsTextureLoad(g_SavegamePtr->mapOverlayId_A4);

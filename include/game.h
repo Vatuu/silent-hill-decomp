@@ -139,6 +139,7 @@ typedef enum _VSyncMode
     VSyncMode_Wait      = 0,
     VSyncMode_Immediate = 1,
     VSyncMode_Wait2     = 2,
+    VSyncMode_Wait3     = 3,
     VSyncMode_Wait8     = 8
 } e_VSyncMode;
 
