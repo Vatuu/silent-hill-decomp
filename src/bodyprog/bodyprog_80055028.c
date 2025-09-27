@@ -580,7 +580,7 @@ void func_800563E8(s_LmHeader* lmHdr, s32 arg1, s32 arg2, s32 arg3) // 0x800563E
     }
 }
 
-void Lm_MaterialFileIdxApply(s_LmHeader* lmHdr, s32 fileIdx, s_FsImageDesc* image, s32 arg3) // 0x80056464
+void Lm_MaterialFileIdxApply(s_LmHeader* lmHdr, s32 fileIdx, s_FsImageDesc* image, s32 blendMode) // 0x80056464
 {
     char  sp10[8];
     char  sp18[16];
@@ -600,18 +600,18 @@ void Lm_MaterialFileIdxApply(s_LmHeader* lmHdr, s32 fileIdx, s_FsImageDesc* imag
         *sp10Ptr++ = *sp18Ptr++;
     }
 
-    Lm_MaterialFsImageApply(lmHdr, sp10, image, arg3);
+    Lm_MaterialFsImageApply(lmHdr, sp10, image, blendMode);
 }
 
-void func_80056504(s_LmHeader* lmHdr, char* newStr, s_FsImageDesc* image, s32 arg3) // 0x80056504
+void func_80056504(s_LmHeader* lmHdr, char* newStr, s_FsImageDesc* image, s32 blendMode) // 0x80056504
 {
     char sp10[8];
 
     StringCopy(sp10, newStr);
-    Lm_MaterialFsImageApply(lmHdr, sp10, image, arg3);
+    Lm_MaterialFsImageApply(lmHdr, sp10, image, blendMode);
 }
 
-bool Lm_MaterialFsImageApply(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* image, s32 arg3) // 0x80056558
+bool Lm_MaterialFsImageApply(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* image, s32 blendMode) // 0x80056558
 {
     s_Material* curMat;
 
@@ -622,7 +622,7 @@ bool Lm_MaterialFsImageApply(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* i
         if (!COMPARE_FILENAMES(&curMat->name_0, fileName))
         {
             curMat->field_C = 1;
-            Material_FsImageApply(curMat, image, arg3);
+            Material_FsImageApply(curMat, image, blendMode);
             return true;
         }
     }
@@ -630,7 +630,7 @@ bool Lm_MaterialFsImageApply(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* i
     return false;
 }
 
-void Material_FsImageApply(s_Material* mat, s_FsImageDesc* image, s32 arg2) // 0x8005660C
+void Material_FsImageApply(s_Material* mat, s_FsImageDesc* image, s32 blendMode) // 0x8005660C
 {
     s32 coeff;
 
@@ -653,11 +653,16 @@ void Material_FsImageApply(s_Material* mat, s_FsImageDesc* image, s32 arg2) // 0
     mat->field_14.u8[0] = image->u * coeff;
     mat->field_14.u8[1] = image->v;
 
-    mat->field_E  = ((image->tPage[0] & 0x3) << 7) | ((arg2 & 0x3) << 5) | (image->tPage[1] & (1 << 4)) | (image->tPage[1] & 0xF);
-    mat->field_10 = (image->clutY << 6) | ((image->clutX >> 4) & 0x3F);
+    // Set GPU flags.
+    mat->field_E  = ((image->tPage[0] & 0x3) << 7) | // X bits of texture page.
+                    ((blendMode & 0x3) << 5) |       // Semi-transparency blend mode.
+                    (image->tPage[1] & (1 << 4)) |   // dither/texture-depth flag.
+                    (image->tPage[1] & 0xF);         // Y bits + color depth.
+    mat->field_10 = (image->clutY << 6) |
+                    ((image->clutX >> 4) & 0x3F);
 }
 
-void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* images, s8 unused, s32 startIdx, s32 arg4) // 0x800566B4
+void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* images, s8 unused, s32 startIdx, s32 blendMode) // 0x800566B4
 {
     char           filename[16];
     s32            i;
@@ -671,11 +676,11 @@ void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* images, s8 unused, s32 star
     {
         Material_TimFileNameGet(filename, curMat);
         Fs_QueueStartReadTim(Fs_FindNextFile(filename, 0, startIdx), FS_BUFFER_9, curImage);
-        Material_FsImageApply(curMat, curImage, arg4);
+        Material_FsImageApply(curMat, curImage, blendMode);
     }
 }
 
-void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* activeTexs, bool (*filterFunc)(s_Material* mat), s32 fileIdx, s32 arg4) // 0x80056774
+void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* activeTexs, bool (*filterFunc)(s_Material* mat), s32 fileIdx, s32 blendMode) // 0x80056774
 {
     s_Material* curMat;
 
@@ -684,10 +689,10 @@ void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* activeTexs,
         if (curMat->field_C == 0 && curMat->texture_8 == NULL &&
             (filterFunc == NULL || filterFunc(curMat)))
         {
-            curMat->texture_8 = Texture_Get(curMat, activeTexs, FS_BUFFER_9, fileIdx, arg4);
+            curMat->texture_8 = Texture_Get(curMat, activeTexs, FS_BUFFER_9, fileIdx, blendMode);
             if (curMat->texture_8 != NULL)
             {
-                Material_FsImageApply(curMat, &curMat->texture_8->imageDesc_0, arg4);
+                Material_FsImageApply(curMat, &curMat->texture_8->imageDesc_0, blendMode);
             }
         }
     }
@@ -851,7 +856,7 @@ bool Lm_ModelFind(s_WorldObject_0* arg0, s_LmHeader* lmHdr, s_WorldObject_0_10* 
 
     result = false;
 
-    StringCopy(sp10.str, arg2->modelName_0.str);
+    StringCopy(sp10.str, arg2->name_0.str);
 
     modelHdrCount = lmHdr->modelCount_8;
 
@@ -859,7 +864,7 @@ bool Lm_ModelFind(s_WorldObject_0* arg0, s_LmHeader* lmHdr, s_WorldObject_0_10* 
     {
         for (i = 0, modelHdr = &lmHdr->modelHdrs_C[i]; i < modelHdrCount; i++, modelHdr++)
         {
-            if (!COMPARE_FILENAMES(&modelHdr->modelName_0, &sp10))
+            if (!COMPARE_FILENAMES(&modelHdr->name_0, &sp10))
             {
                 result                       = true;
                 arg0->modelInfo_0.modelIdx_C = i;
@@ -2645,7 +2650,7 @@ void func_80066D90() // 0x80066D90
         DrawPrim(var2);
 
         Fs_QueueUpdate();
-        VSync(0);
+        VSync(SyncMode_Wait);
     }
 
     Fs_QueueWaitForEmpty();
@@ -2653,15 +2658,15 @@ void func_80066D90() // 0x80066D90
 
 void func_80066E40() // 0x80066E40
 {
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
     StoreImage(&D_80028A20, FS_BUFFER_3);
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
 }
 
 void func_80066E7C() // 0x80066E7C
 {
     LoadImage(&D_80028A20, FS_BUFFER_3);
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
 }
 
 INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80055028", hack_D_80028A18_fix);
@@ -2670,12 +2675,12 @@ INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80055028", D_80028A20);
 
 void GameState_MapScreen_Update() // 0x80066EB0
 {
-#define CLAMP_LOW(v, lo)       ((v) < (lo) ? (lo) : (v))
-#define CLAMP_HIGH(v, hi)      ((v) > (hi) ? (hi) : (v))
-#define CLAMP_RANGE(v, lo, hi) (CLAMP_LOW(CLAMP_HIGH((v), (hi)), (lo)))
+    #define CLAMP_LOW(v, lo)       ((v) < (lo) ? (lo) : (v))
+    #define CLAMP_HIGH(v, hi)      ((v) > (hi) ? (hi) : (v))
+    #define CLAMP_RANGE(v, lo, hi) (CLAMP_LOW(CLAMP_HIGH((v), (hi)), (lo)))
 
-#define CLAMP_HIGH_EQ(v, hi)      ((v) >= (hi) ? (hi) : (v))
-#define CLAMP_RANGE_EQ(v, lo, hi) ((CLAMP_HIGH_EQ(CLAMP_LOW((v), (lo)), (hi))))
+    #define CLAMP_HIGH_EQ(v, hi)      ((v) >= (hi) ? (hi) : (v))
+    #define CLAMP_RANGE_EQ(v, lo, hi) ((CLAMP_HIGH_EQ(CLAMP_LOW((v), (lo)), (hi))))
 
     s32 temp_s0_2;
     s32 temp_s4;
@@ -2694,18 +2699,21 @@ void GameState_MapScreen_Update() // 0x80066EB0
     switch (g_GameWork.gameStateStep_598[0])
     {
         case 0:
-            Screen_Refresh(0x140, 1);
+            Screen_Refresh(SCREEN_WIDTH, true);
+
             D_800C444A = g_MapMarkingTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9];
             temp_a0    = g_SavegamePtr->current2dMapIdx_A9;
-            D_800C444C = -1;
-            D_800C4454 = 0x1000;
+            D_800C444C = NO_VALUE;
+            D_800C4454 = Q12(1.0f);
             D_800AE770 = 0;
             D_800C4448 = temp_a0;
+
             func_80037188(temp_a0);
-            Sd_EngineCmd(0x51C);
+            Sd_EngineCmd(Sfx_Unk1308);
             func_80066E40();
-            Fs_QueueStartReadTim(g_FullscreenMapTimFileIdxs[D_800C4448] + 0x768, FS_BUFFER_2, &g_MapImg);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[D_800C4448], FS_BUFFER_2, &g_MapImg);
             Fs_QueueWaitForEmpty();
+
             g_IntervalVBlanks   = 1;
             ScreenFade_Start(true, true, false);
 
@@ -2737,7 +2745,7 @@ void GameState_MapScreen_Update() // 0x80066EB0
 
             if (ScreenFade_IsNone())
             {
-                if (D_800AE770 == 0 && D_800C4454 == 0x1000)
+                if (D_800AE770 == 0 && D_800C4454 == Q12(1.0f))
                 {
                     func_80068CC0(D_800C4448);
                 }
@@ -2746,14 +2754,15 @@ void GameState_MapScreen_Update() // 0x80066EB0
             func_800692A4(var_s6, var_s5, temp_s4);
 
             if ((g_GameWork.gameStatePrev_590 == GameState_InventoryScreen && g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2) ||
-                (g_GameWork.gameStatePrev_590 != GameState_InventoryScreen && g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.cancel_2 | g_GameWorkPtr->config_0.controllerConfig_0.map_18)))
+                (g_GameWork.gameStatePrev_590 != GameState_InventoryScreen && g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.cancel_2 |
+                                                                                                               g_GameWorkPtr->config_0.controllerConfig_0.map_18)))
             {
-                Sd_EngineCmd(0x51C);
+                Sd_EngineCmd(Sfx_Unk1308);
+
                 if (g_GameWork.gameStatePrev_590 == GameState_InventoryScreen)
                 {
-
                     GsDrawOt(&g_OrderingTable0[g_ActiveBufferIdx]);
-                    VSync(0);
+                    VSync(SyncMode_Wait);
                     GsDrawOt(&g_OrderingTable0[g_ActiveBufferIdx]);
                     func_80066E7C();
                     GameFs_MapItemsTextureLoad(g_SavegamePtr->mapOverlayId_A4);
@@ -2784,24 +2793,26 @@ void GameState_MapScreen_Update() // 0x80066EB0
 
                     if (D_800C444C < 0)
                     {
-                        D_800C444C = FP_TO(CLAMP_RANGE_EQ((s16)temp_s0_2 + 0x50, 0, 0xA0), Q12_SHIFT);
-                        D_800C4450 = FP_TO(CLAMP_RANGE_EQ((temp_s0_2 >> 16) + 0x3C, 0, 0x78), Q12_SHIFT);
+                        D_800C444C = Q12(CLAMP_RANGE_EQ((s16)temp_s0_2 + 80, 0, 160));
+                        D_800C4450 = Q12(CLAMP_RANGE_EQ((temp_s0_2 >> 16) + 60, 0, 120));
                     }
                 }
             }
 
             if (D_800AE770 == 0)
             {
-                if (D_800C4454 == 0x1000)
+                if (D_800C4454 == Q12(1.0f))
                 {
                     if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickUp)
                     {
                         if (HAS_MAP(D_800AE740[D_800C4448][0]))
                         {
                             D_800C4449 = D_800AE740[D_800C4448][0];
-                            Fs_QueueStartSeek(g_FullscreenMapTimFileIdxs[D_800C4449] + 0x768);
+
+                            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[D_800C4449]);
                             ScreenFade_Start(true, false, false);
-                            D_800C444C                      = -1;
+
+                            D_800C444C                      = NO_VALUE;
                             g_GameWork.gameStateStep_598[0] = 3;
                             g_SysWork.timer_20              = 0;
                             g_GameWork.gameStateStep_598[1] = 0;
@@ -2809,15 +2820,17 @@ void GameState_MapScreen_Update() // 0x80066EB0
                             break;
                         }
                     }
+
                     if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickDown)
                     {
                         if (HAS_MAP(D_800AE740[D_800C4448][1]))
                         {
                             D_800C4449 = D_800AE740[D_800C4448][1];
-                            Fs_QueueStartSeek(g_FullscreenMapTimFileIdxs[D_800C4449] + 0x768);
-                            ScreenFade_Start(true, false, false);
-                            D_800C444C = -1;
 
+                            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[D_800C4449]);
+                            ScreenFade_Start(true, false, false);
+
+                            D_800C444C = NO_VALUE;
                             g_GameWork.gameStateStep_598[0] = 3;
                             g_SysWork.timer_20              = 0;
                             g_GameWork.gameStateStep_598[1] = 0;
@@ -2828,14 +2841,14 @@ void GameState_MapScreen_Update() // 0x80066EB0
                     break;
                 }
 
-                D_800C4454 = MIN(D_800C4454 + 0xC4, 0x1000);
+                D_800C4454 = MIN(D_800C4454 + 196, Q12(1.0f));
                 break;
             }
 
-            D_800C4454  = CLAMP_LOW(D_800C4454 - 0xC4, 0);
-            D_800C444C += ((g_Controller0->sticks_24.sticks_0.leftX << 0xE) / 75);
+            D_800C4454  = CLAMP_LOW(D_800C4454 - 196, 0);
+            D_800C444C += ((g_Controller0->sticks_24.sticks_0.leftX << 14) / 75);
             D_800C444C  = CLAMP_RANGE(D_800C444C, 0, 0xA0000);
-            D_800C4450 += ((g_Controller0->sticks_24.sticks_0.leftY << 0xE) / 75);
+            D_800C4450 += ((g_Controller0->sticks_24.sticks_0.leftY << 14) / 75);
             D_800C4450  = CLAMP_RANGE(D_800C4450, 0, 0x78000);
             break;
 
@@ -2843,29 +2856,34 @@ void GameState_MapScreen_Update() // 0x80066EB0
             if (ScreenFade_IsFinished())
             {
                 D_800C4448 = D_800C4449;
+
                 Sd_EngineCmd(0x51C);
+
                 g_GameWork.gameStateStep_598[0] = 1;
                 g_SysWork.timer_20              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
                 break;
             }
-            func_80067914(D_800C4448, 0, 0, 0x1000);
-            func_80068E0C(1, D_800C4448, 0, 0, 0, 0, 0x1000);
-            func_800692A4(0, 0, 0x1000);
+
+            func_80067914(D_800C4448, 0, 0, Q12(1.0f));
+            func_80068E0C(1, D_800C4448, 0, 0, 0, 0, Q12(1.0f));
+            func_800692A4(0, 0, Q12(1.0f));
             break;
 
         case 1:
-            Fs_QueueStartReadTim(g_FullscreenMapTimFileIdxs[D_800C4448] + 0x768, FS_BUFFER_2, &g_MapImg);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[D_800C4448], FS_BUFFER_2, &g_MapImg);
 
             temp_a0_4 = g_MapMarkingTimFileIdxs[D_800C4448];
-            if (temp_a0_4 != D_800C444A && temp_a0_4 != -1)
+            if (temp_a0_4 != D_800C444A && temp_a0_4 != NO_VALUE)
             {
                 D_800C444A = g_MapMarkingTimFileIdxs[D_800C4448];
-                Fs_QueueStartReadTim(g_MapMarkingTimFileIdxs[D_800C4448] + 0x776, FS_BUFFER_1, &g_MapMarkerAtlasImg);
+                Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdxs[D_800C4448], FS_BUFFER_1, &g_MapMarkerAtlasImg);
             }
+
             Fs_QueueWaitForEmpty();
             ScreenFade_Start(true, true, false);
+
             g_GameWork.gameStateStep_598[0] = 2;
             g_SysWork.timer_20              = 0;
             g_GameWork.gameStateStep_598[1] = 0;
@@ -2888,9 +2906,10 @@ void GameState_MapScreen_Update() // 0x80066EB0
                 if (g_GameWork.gameStatePrev_590 == GameState_InGame || g_GameWork.gameStatePrev_590 == GameState_LoadMapScreen)
                 {
                     func_80066E7C();
-                    Screen_Init(0x140, 0);
+                    Screen_Init(SCREEN_WIDTH, false);
                     g_GameWork.gameStatePrev_590 = GameState_InGame;
                 }
+
                 Game_StateSetPrevious();
             }
             break;
@@ -2899,7 +2918,7 @@ void GameState_MapScreen_Update() // 0x80066EB0
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80067914); // 0x80067914
 
-bool func_80068CC0(s32 arg0)                                               // 0x80068CC0
+bool func_80068CC0(s32 arg0) // 0x80068CC0
 {
     s32      i;
     POLY_G3* poly;
@@ -2939,7 +2958,7 @@ bool func_80068CC0(s32 arg0)                                               // 0x
     return true;
 }
 
-s32 func_80068E0C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4, u16 arg5, u16 arg6) // 0x80068E0C
+bool func_80068E0C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4, u16 arg5, u16 arg6) // 0x80068E0C
 {
     s32              sp0;
     u16              sp4;
@@ -2949,28 +2968,28 @@ s32 func_80068E0C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4, u16 arg5, u1
     s32              temp_v1_4;
     s32              var_t4;
     s32              var_t5;
-    s_func_80068E0C* ptr;
     s32              temp;
     s32              temp2;
     s16              temp3;
     s32              temp4;
     s32              temp6;
+    s_func_80068E0C* ptr;
 
     ptr = PSX_SCRATCH;
 
-    if (g_MapMarkingTimFileIdxs[arg1] == -1)
+    if (g_MapMarkingTimFileIdxs[arg1] == NO_VALUE)
     {
-        return 0;
+        return false;
     }
 
     if (D_800AEDBC[arg1].ptr_0 == NULL)
     {
-        return 0;
+        return false;
     }
 
     if (D_800AEDBC[arg1].ptr_4 == NULL)
     {
-        return 0;
+        return false;
     }
 
     ptr->field_0 = (POLY_FT4*)GsOUT_PACKET_P;
@@ -3053,8 +3072,9 @@ s32 func_80068E0C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4, u16 arg5, u1
             ptr->field_0++;
         }
     }
+
     GsOUT_PACKET_P = (PACKET*)ptr->field_0;
-    return 1;
+    return true;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800692A4); // 0x800692A4

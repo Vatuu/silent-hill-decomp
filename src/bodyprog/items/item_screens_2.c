@@ -268,8 +268,10 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
             Screen_Init(SCREEN_WIDTH, true);
 
             g_IntervalVBlanks                  = 1;
+
             ScreenFade_Start(true, true, false);
             g_ScreenFadeTimestep               = Q12(3.0f);
+
             g_GameWork.background2dColor_R_58C = 0;
             g_GameWork.background2dColor_G_58D = 0;
             g_GameWork.background2dColor_B_58E = 0;
@@ -1338,7 +1340,7 @@ void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId) // 0x8004EC7C
 
     s32      baseColor;
     s32      i;
-    s8       timeStep;
+    s8       timestep;
     POLY_G3* arrowPoly;
     GsOT*    ot = &g_OrderingTable2[g_ActiveBufferIdx];
 
@@ -1361,16 +1363,16 @@ void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId) // 0x8004EC7C
     // Draw 2 flashing left/right double arrows.
     for (i = 0; i < ARROW_COUNT; i++) 
     {
-        timeStep = g_SysWork.timer_1C & 0x1F;
+        timestep = g_SysWork.timer_1C & 0x1F;
 
         arrowPoly = (POLY_G3*)GsOUT_PACKET_P;
         setPolyG3(arrowPoly);
         setSemiTrans(arrowPoly, 1);
 
-        baseColor = 255 - (timeStep * 8);
+        baseColor = 255 - (timestep * 8);
         setRGB0(arrowPoly, baseColor, baseColor, baseColor);
-        setRGB1(arrowPoly, timeStep * 8, timeStep * 8, timeStep * 8);
-        setRGB2(arrowPoly, timeStep * 8, timeStep * 8, timeStep * 8);
+        setRGB1(arrowPoly, timestep * 8, timestep * 8, timestep * 8);
+        setRGB2(arrowPoly, timestep * 8, timestep * 8, timestep * 8);
 
         setXY3(arrowPoly,
                ARROW_TRIS[i].vertex0_0.vx, ARROW_TRIS[i].vertex0_0.vy,

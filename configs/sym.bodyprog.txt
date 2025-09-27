@@ -76,7 +76,7 @@ STRING_COLORS                               = 0x80025DC0;
 //-----------------------------------------------------------------------------
 //--- PA: 0x001770   VA: 0x800262D0   subsegment: .rodata, items/item_screens_3
 //-----------------------------------------------------------------------------
-g_InventoryItemRotations                    = 0x800262FC; // type:DVECTOR size:0x380
+INVENTORY_ITEM_ROTATIONS                    = 0x800262FC; // type:DVECTOR size:0x380
 
 //--------------------------------------------------------------------------
 //--- PA: 0x0039CC   VA: 0x8002852C   subsegment: .rodata, bodyprog_80055028
@@ -364,7 +364,7 @@ g_WorldGfx_ObjectAdd                        = 0x8003C92C; // type:func
 WorldGfx_HarryCharaLoad                     = 0x8003D160; // type:func
 WorldGfx_CharaLmBufferAdvance               = 0x8003D354; // type:func
 Chara_FsImageCalc                           = 0x8003D3BC; // type:func
-WorldGfx_CharaModelPresent                  = 0x8003D444; // type:func
+WorldGfx_IsCharaModelPresent                = 0x8003D444; // type:func
 WorldGfx_CharaLmBufferAssign                = 0x8003D5B4; // type:func
 WorldGfx_CharaFree                          = 0x8003D6A4; // type:func
 WorldGfx_CharaLoad                          = 0x8003D7D4; // type:func
@@ -690,8 +690,8 @@ vcGetXZSumDistFromLimArea                   = 0x80085C80; // type:func
 //--------------------------------------------------------------------
 MapMsg_DisplayAndHandleSelection            = 0x800860B0; // type:func
 Map_MessageWithAudio                        = 0x800869E4; // type:func
-Camera_TranslationSet                       = 0x80086A94; // type:func
-Camera_RotationSet                          = 0x80086B70; // type:func
+Camera_PositionSet                          = 0x80086A94; // type:func
+Camera_LookAtSet                            = 0x80086B70; // type:func
 Event_ItemTake                              = 0x800877B8; // type:func
 Event_CommonItemTake                        = 0x800879FC; // type:func
 Event_MapTake                               = 0x80087AF4; // type:func

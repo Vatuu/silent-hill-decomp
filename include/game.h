@@ -116,21 +116,21 @@ struct _Model;
 #define SCREEN_FADE_STATUS(state, isWhite) \
     ((state) | ((isWhite) ? (1 << 3) : 0))
 
-/** @brief Check if screen fade is is not in progress (finished step).
- * This macro masks away the color bit.
+/** @brief Checks if the screen fade is is not in progress (finished step) by masking away the color bit.
+ *
  * @return `true` if finished, `false` if still in progress.
  */
 #define ScreenFade_IsFinished() \
     ((g_Screen_FadeStatus & 0x7) == ScreenFadeState_FadeOutComplete)
 
-/** @brief Check if screen fade is is not in progress (idle step).
- * This macro does NOT mask away the color bit.
+/** @brief Checks if the screen fade is is not in progress (idle step) without masking away the color bit.
+ *
  * @return `true` if idle, `false` otherwise.
  */
 #define ScreenFade_IsNone() \
     (g_Screen_FadeStatus == ScreenFadeState_None)
 
-/** @brief Checks if a screen fade is white.
+/** @brief Checks if the screen fade is white.
  * See `g_Screen_FadeStatus` for bit layout.
  *
  * @param fadeStatus Packed screen fade status containing a fade state and white flag.
@@ -139,29 +139,36 @@ struct _Model;
 #define IS_SCREEN_FADE_WHITE(fadeStatus) \
     ((fadeStatus) & (1 << 3))
 
-/** @brief Start screen fade in/out.
+/** @brief Starts a screen fade in/out.
  *
- * @param reset `true` to reset fade progress to 0, `false` to keep it. Speculation:
- * Skipping screen fade progress step was a mistake. It still works because once fade
- * is finished the progress variable will be reset to 0 anyway.
- * @param fadeIn `true` for a fade in, `false` for fade out.
+ * @param reset `true` to reset fade progress to 0, `false` to keep it.
+ *              Speculation: Skipping the screen fade progress step is a mistake. It still works because once a fade
+ *              is finished, the progress variable will be reset to 0 anyway.
+ * @param fadeIn `true` for fade in, `false` for fade out.
  * @param isWhite `true` for white fade, `false` for black fade.
  */
 #define ScreenFade_Start(reset, fadeIn, isWhite) \
-    g_Screen_FadeStatus = ( \
-    (((reset) == true ? ScreenFadeState_FadeOutStart : ScreenFadeState_FadeOutSteps) + \
-    ((fadeIn) == true ? 4 : 0)) | \
-    ((isWhite) == true ? (1 << 3): 0) )
+    g_Screen_FadeStatus = (((((reset) == true) ? ScreenFadeState_FadeOutStart : ScreenFadeState_FadeOutSteps) + \
+                           (((fadeIn) == true) ? 4 : 0)) | \
+                           (((isWhite) == true) ? (1 << 3) : 0))
 
-/** @brief Reset screen fade. */
+/** @brief Resets the screen fade. */
 #define ScreenFade_Reset() \
     g_Screen_FadeStatus = ScreenFadeState_Reset
 
-/** @brief Reset custom screen fade timestep back to zero.
- * This macro disregards the color bit.
- */
+/** @brief Resets the custom screen fade timestep back to zero, disregarding the color bit. */
 #define ScreenFade_ResetTimestep() \
-    g_Screen_FadeStatus = ScreenFadeState_ResetTimeStep
+    g_Screen_FadeStatus = ScreenFadeState_ResetTimestep
+
+typedef enum _SyncMode
+{
+    SyncMode_Count     = -1,
+    SyncMode_Wait      = 0,
+    SyncMode_Immediate = 1,
+    SyncMode_Wait2     = 2,
+    SyncMode_Wait3     = 3,
+    SyncMode_Wait8     = 8
+} e_SyncMode;
 
 /** @brief Screen fade states used by `g_Screen_FadeStatus`. The flow is not linear. */
 typedef enum _ScreenFadeState
@@ -170,7 +177,7 @@ typedef enum _ScreenFadeState
     ScreenFadeState_None            = 1,
     ScreenFadeState_FadeOutStart    = 2,
     ScreenFadeState_FadeOutSteps    = 3,
-    ScreenFadeState_ResetTimeStep   = 4,
+    ScreenFadeState_ResetTimestep   = 4,
     ScreenFadeState_FadeOutComplete = 5,
     ScreenFadeState_FadeInStart     = 6,
     ScreenFadeState_FadeInSteps     = 7
@@ -1162,10 +1169,10 @@ typedef struct _SubCharacter
     s_Model model_0;           // In player: Manage the half lower part of Harry's body animations (legs and feet).
     VECTOR3 position_18;       /** `Q19.12` */
     SVECTOR rotation_24;       // Maybe `SVECTOR3` instead of `SVECTOR` because 4th field is copy of `.xy` field.
-    SVECTOR rotationSpeed_2C;  /** Range [-0x700, 0x700]. */
+    SVECTOR rotationSpeed_2C;  /** Q3.12 | Range: `[FP_ANGLE(-157.5f), FP_ANGLE(157.5f)]`. */
     q19_12  field_34;          // Character Y position?
     q19_12  moveSpeed_38;
-    q7_8    headingAngle_3C;
+    q3_12   headingAngle_3C;
     s16     flags_3E;          /** `e_CharaFlags` */
     s8      field_40;          // In player: Index of the NPC attacking the player.
                                // In NPCs: Unknown.
@@ -1251,7 +1258,7 @@ typedef struct _PlayerCombat
     u8      currentWeaponAmmo_10;
     u8      totalWeaponAmmo_11;
     s8      weaponInventoryIdx_12; /** Index of the currently equipped weapon in the inventory. */
-    u8      isAiming_13; /** `bool` */
+    u8      isAiming_13;           /** `bool` */
 } s_PlayerCombat;
 STATIC_ASSERT_SIZEOF(s_PlayerCombat, 20);
 

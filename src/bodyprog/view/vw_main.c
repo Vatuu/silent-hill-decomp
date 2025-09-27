@@ -5,13 +5,13 @@
 
 void vwInitViewInfo(void) // 0x80048A38
 {
-    vwViewPointInfo.rview.vp.vz = 0;
-    vwViewPointInfo.rview.vp.vy = 0;
-    vwViewPointInfo.rview.vp.vx = 0;
-    vwViewPointInfo.rview.vr.vx = 0;
-    vwViewPointInfo.rview.vr.vy = 0;
+    vwViewPointInfo.rview.vp.vz = Q12(0.0f);
+    vwViewPointInfo.rview.vp.vy = Q12(0.0f);
+    vwViewPointInfo.rview.vp.vx = Q12(0.0f);
+    vwViewPointInfo.rview.vr.vx = Q12(0.0f);
+    vwViewPointInfo.rview.vr.vy = Q12(0.0f);
     vwViewPointInfo.rview.vr.vz = Q12(1.0f);
-    vwViewPointInfo.rview.rz    = 0;
+    vwViewPointInfo.rview.rz    = Q12(0.0f);
     vwViewPointInfo.rview.super = &vwViewPointInfo.vwcoord;
     GsInitCoordinate2(NULL, &vwViewPointInfo.vwcoord);
     vwSetViewInfo();
@@ -34,11 +34,11 @@ void vwGetViewAngle(SVECTOR* ang) // 0x80048AC4
 
 void Vw_SetLookAtMatrix(const VECTOR3* pos, const VECTOR3* lookAt) // 0x80048AF4
 {
-    s32     deltaX; // Q23.8
-    s32     deltaY; // Q23.8
-    s32     deltaZ; // Q23.8
+    q23_8   deltaX;
+    q23_8   deltaY;
+    q23_8   deltaZ;
     MATRIX  viewMat;
-    SVECTOR rot;
+    SVECTOR rot; // Q3.12
 
     // Compute direction vector components.
     deltaX = Q12_TO_Q8(lookAt->vx - pos->vx);
@@ -75,7 +75,6 @@ void vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, q19_12 ref_x, q19_12 ref_y, 
 
     func_80096E78(&view_ang, view_mtx);
 
-    // TODO: What's happening here?
     view_mtx->t[0] = Q12_TO_Q8(ref_x) + FP_MULTIPLY(Q12_TO_Q8(cam_xz_r), Math_Sin(cam_ang_y), Q12_SHIFT);
     view_mtx->t[1] = Q12_TO_Q8(ref_y) + Q12_TO_Q8(cam_y);
     view_mtx->t[2] = Q12_TO_Q8(ref_z) + FP_MULTIPLY(Q12_TO_Q8(cam_xz_r), Math_Cos(cam_ang_y), Q12_SHIFT);
@@ -88,11 +87,11 @@ void vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, const MATRIX* cammat) // 0
     vwViewPointInfo.vwcoord.coord = *cammat;
 }
 
-/** @brief Converts a matrix transform in Q23.8 to Q19.12, outputting the result to `pos`.
+/** @brief Converts a Q23.8 matrix transform to Q19.12, outputting the result to `pos`.
  *
  * Possible original name: `vwMatrixToPosition`.
  *
- * @param `pos` Output position.
+ * @param `pos` Output position (Q19.12).
  * @param `mat` Matrix to use for conversion.
  */
 static inline void Math_MatrixToPosition(VECTOR3* pos, MATRIX* mat)

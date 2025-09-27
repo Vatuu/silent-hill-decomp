@@ -2255,6 +2255,7 @@ extern VECTOR3 sharedData_800E324C_0_s00;
 /** Previous particle Y angle? */
 extern s16 sharedData_800E3260_0_s00;
 
+/** Something related to rotation. */
 extern s32 sharedData_800E39D8_0_s00;
 
 // Next 4 set by `Ai_Stalker_Update`.

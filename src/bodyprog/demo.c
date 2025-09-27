@@ -179,11 +179,11 @@ bool Gfx_ScreenFadeIn_IsInProgress(s32 arg0)
     {
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false):
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false):
-        case SCREEN_FADE_STATUS(ScreenFadeState_ResetTimeStep, false):
+        case SCREEN_FADE_STATUS(ScreenFadeState_ResetTimestep, false):
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, false):
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, true):
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, true):
-        case SCREEN_FADE_STATUS(ScreenFadeState_ResetTimeStep, true):
+        case SCREEN_FADE_STATUS(ScreenFadeState_ResetTimestep, true):
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, true):
             return false;
     }

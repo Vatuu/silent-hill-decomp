@@ -250,7 +250,7 @@ void GameFs_MapStartup() // 0x80034964
                 if (func_80039F90() & (1 << 1))
                 {
                     g_GameWork.gameStateStep_598[0] = 1;
-                    g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_ResetTimeStep, IS_SCREEN_FADE_WHITE(g_Screen_FadeStatus));
+                    g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_ResetTimestep, IS_SCREEN_FADE_WHITE(g_Screen_FadeStatus));
                 }
             }
             break;
@@ -269,7 +269,7 @@ void Gfx_LoadingScreenDraw() // 0x80034E58
         g_MapOverlayHeader.loadingScreenFuncs_18[g_SysWork.loadingScreenIdx_2281]();
     }
 
-    Gfx_2dBackgroundMotionBlur(2);
+    Gfx_2dBackgroundMotionBlur(SyncMode_Wait2);
 }
 
 void func_80034EC8() // 0x80034EC8
@@ -349,7 +349,7 @@ void Game_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
     var = g_SavegamePtr->field_B0;
 
     g_SavegamePtr->gameDifficulty_260 = difficulty;
-    g_SavegamePtr->current2dMapIdx_A9 = 1;
+    g_SavegamePtr->current2dMapIdx_A9 = Current2dMap_OldTown;
 
     for (i = 0; i < 45; i++)
     {
@@ -1693,7 +1693,7 @@ void func_80037124() // 0x80037124
 {
     g_MapMsg_Select.maxIdx_0 = NO_VALUE;
     func_8003652C();
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
 }
 
 void func_80037154() // 0x80037154
@@ -2029,15 +2029,15 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800348C0", func_800382EC); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800348C0", func_80038354); // 0x80038354
 
-bool Math_Distance2dCheck(const VECTOR3* pos0, const VECTOR3* pos1, s32 radius) // 0x80038A6C
+bool Math_Distance2dCheck(const VECTOR3* posFrom, const VECTOR3* posTo, q19_12 radius) // 0x80038A6C
 {
-    s32 deltaX;
-    s32 deltaZ;
-    s32 radiusSqr;
-    s32 sum;
+    q19_12 deltaX;
+    q19_12 deltaZ;
+    q19_12 radiusSqr;
+    q19_12 sum;
 
     // Check rough radius intersection on X axis.
-    deltaX = pos0->vx - pos1->vx;
+    deltaX = posFrom->vx - posTo->vx;
     if (radius < deltaX)
     {
         return true;
@@ -2048,7 +2048,7 @@ bool Math_Distance2dCheck(const VECTOR3* pos0, const VECTOR3* pos1, s32 radius) 
     }
 
     // Check rough radius intersection on Z axis.
-    deltaZ = pos0->vz - pos1->vz;
+    deltaZ = posFrom->vz - posTo->vz;
     if (radius < deltaZ)
     {
         return true;
@@ -2066,14 +2066,13 @@ bool Math_Distance2dCheck(const VECTOR3* pos0, const VECTOR3* pos1, s32 radius) 
 
 s32 Camera_Distance2dGet(const VECTOR3* pos) // 0x80038B44
 {
-    VECTOR3 camPos;
-    s32     deltaX;
-    s32     deltaZ;
+    VECTOR3 camPos; // Q19.12
+    q25_6   deltaX;
+    q25_6   deltaZ;
 
-    // Something similar to `Math_Vector2MagCalc`?
     vwGetViewPosition(&camPos);
-    deltaX = (camPos.vx - pos->vx) >> 6;
-    deltaZ = (camPos.vz - pos->vz) >> 6;
+    deltaX = Q12_TO_Q6(camPos.vx - pos->vx);
+    deltaZ = Q12_TO_Q6(camPos.vz - pos->vz);
     return FP_MULTIPLY_PRECISE(deltaX, deltaX, Q12_SHIFT) + FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT);
 }
 
@@ -2091,7 +2090,7 @@ void GameState_InGame_Update() // 0x80038BD4
             g_GameWork.gameStateStep_598[0] = 1;
 
         case 1:
-            DrawSync(0);
+            DrawSync(SyncMode_Wait);
             func_80037154();
             Savegame_MapRoomIdxSet();
             func_800892A4(1);
@@ -2480,7 +2479,7 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
 
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
-        DrawSync(0);
+        DrawSync(SyncMode_Wait);
         g_IntervalVBlanks   = 1;
         ScreenFade_Reset();
 
@@ -2498,7 +2497,7 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
         g_GameWork.gameStateStep_598[0]++;
     }
 
-    Gfx_2dBackgroundMotionBlur(2);
+    Gfx_2dBackgroundMotionBlur(SyncMode_Wait2);
 
     if (Fs_QueueDoThingWhenEmpty())
     {
@@ -2553,7 +2552,7 @@ void GameState_LoadMapScreen_Update() // 0x8003991C
 {
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
-        DrawSync(0);
+        DrawSync(SyncMode_Wait);
         g_IntervalVBlanks = 1;
 
         func_8003943C();
@@ -2568,7 +2567,7 @@ void GameState_LoadMapScreen_Update() // 0x8003991C
         g_GameWork.gameStateStep_598[0]++;
     }
 
-    Gfx_2dBackgroundMotionBlur(2);
+    Gfx_2dBackgroundMotionBlur(SyncMode_Wait2);
 
     if (Fs_QueueDoThingWhenEmpty())
     {
@@ -2602,9 +2601,9 @@ void SysState_Fmv_Update() // 0x80039A58
     }
 
     // Copy framebuffer into `IMAGE_BUFFER_0` before movie playback.
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
     StoreImage(&D_800A9A6C, (u32*)IMAGE_BUFFER_0);
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
 
     func_800892A4(0);
     func_80089128();
@@ -2618,7 +2617,7 @@ void SysState_Fmv_Update() // 0x80039A58
     // Restore copied framebuffer from `IMAGE_BUFFER_0`.
     GsSwapDispBuff();
     LoadImage(&D_800A9A6C, (u32*)IMAGE_BUFFER_0);
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
 
     // Set savegame flag based on `D_800BCDD8->eventFlagNum_2` flag ID.
     Savegame_EventFlagSetAlt(g_MapEventParam->eventFlagId_2);
@@ -2693,7 +2692,7 @@ void SysState_LoadArea_Update() // 0x80039C40
 
     g_SysWork.field_22A0 |= 1 << 0;
     Game_StateSetNext(GameState_MainLoadScreen);
-    Gfx_2dBackgroundMotionBlur(1);
+    Gfx_2dBackgroundMotionBlur(SyncMode_Immediate);
 }
 
 void AreaLoad_UpdatePlayerPosition() // 0x80039F30

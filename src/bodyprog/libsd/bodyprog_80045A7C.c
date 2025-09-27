@@ -79,7 +79,7 @@ u8 func_80045B28() // 0x80045B28
     {
         if (D_800C1673 != 0)
         {
-            D_800C1688.field_8 = VSync(-1);
+            D_800C1688.field_8 = VSync(SyncMode_Count);
             D_800C1688.field_4 = 0;
             return 3;
         }
@@ -404,7 +404,7 @@ void func_800463C0(u16 sfx, s8 balance, u8 vol, s8 pitch) // 0x800463C0
 {
     SpuVoiceAttr attr;
     s16          convertedVol;
-    s32          temp;
+    s32          voiceIdx;
     s32          i;
 
     if (sfx == Sfx_Base)
@@ -417,37 +417,37 @@ void func_800463C0(u16 sfx, s8 balance, u8 vol, s8 pitch) // 0x800463C0
 
     if (sfx == Sfx_Unk1321)
     {
-        temp       = 22;
-        attr.voice = 0x400000;
+        voiceIdx   = 22;
+        attr.voice = 1 << 22;
     }
     else if (sfx == Sfx_Unk1322)
     {
-        temp       = 23;
-        attr.voice = 0x800000;
+        voiceIdx   = 23;
+        attr.voice = 1 << 23;
     }
     else
     {
-        temp = NO_VALUE;
-
-        for (i = 0; i < 24; i++)
+        voiceIdx = NO_VALUE;
+        for (i = 0; i < SD_VOICE_COUNT; i++)
         {
             if (D_800C15F8[i] == sfx)
             {
-                temp = i;
+                voiceIdx = i;
             }
         }
 
-        if (temp < 0)
+        if (voiceIdx < 0)
         {
             return;
         }
 
-        attr.voice = 1 << temp;
+        // Set voice flag.
+        attr.voice = 1 << voiceIdx;
     }
 
     D_800C1698.field_A = 0;
     D_800C1698.field_8 = g_Sfx_Table0[g_Sound_ActiveSfxIdx].field_4;
-    D_800C15C0         = D_800C1628[temp] + (pitch * 2);
+    D_800C15C0         = D_800C1628[voiceIdx] + (pitch * 2);
     convertedVol       = vol;
     convertedVol       = D_800C1698.volumeLeft_C - ((D_800C1698.volumeLeft_C * (convertedVol)) / 255);
 
@@ -561,12 +561,12 @@ void func_8004690C(u16 sfx) // 0x8004690C
 
 void func_8004692C(u16 cmd) // 0x8004692C
 {
-    if (cmd == 0x500)
+    if (cmd == 1280)
     {
         return;
     }
 
-    D_800C15C4 = cmd - 0x500;
+    D_800C15C4 = cmd - 1280;
     D_800C15C6 = g_Sfx_Table0[D_800C15C4].field_2;
     D_800C15C8 = g_Sfx_Table0[D_800C15C4].field_4 << 8;
     SdVoKeyOff(D_800C15C6, D_800C15C8);
@@ -1926,7 +1926,7 @@ void func_80046D3C(u16 cmd) // 0x80046D3C
     if (D_800AA894[D_800C1658.field_2].field_0 != 0)
     {
         D_800C37DC         = 1;
-        D_800C1688.field_8 = VSync(-1);
+        D_800C1688.field_8 = VSync(SyncMode_Count);
         D_800C1688.field_4 = 0;
 
         func_800478DC(2);
@@ -2058,7 +2058,7 @@ void func_80046E00() // 0x80046E00
             D_800C1658.field_4 = D_800C15CA;
 
             SdSetSerialAttr(0, 0, 1);
-            D_800C1688.field_8 = VSync(-1);
+            D_800C1688.field_8 = VSync(SyncMode_Count);
             D_800C1688.field_4 = 0;
             D_800C1671         = 0;
 

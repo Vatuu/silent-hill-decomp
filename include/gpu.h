@@ -11,6 +11,14 @@
 #define RECT_VERT_COUNT 4
 #define BOX_VERT_COUNT  8
 
+/** @brief Semi-transparency blend modes. */
+typedef enum _BlendMode
+{
+    BlendMode_Average     = 0,
+    BlendMode_Additive    = 1,
+    BlendMode_Subtractive = 2
+} e_BlendMode;
+
 /** @brief Primitive types. */
 enum PrimType
 {

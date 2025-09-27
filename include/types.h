@@ -22,6 +22,7 @@ typedef signed short       q11_4;  // Q11.4 fixed-point.
 typedef signed short       q7_8;   // Q7.8 fixed-point.
 typedef signed short       q3_12;  // Q3.12 fixed-point.
 typedef signed int         q27_4;  // Q27.4 fixed-point.
+typedef signed int         q25_6;  // Q25.6 fixed-point.
 typedef signed int         q23_8;  // Q23.8 fixed-point.
 typedef signed int         q19_12; // Q19.12 fixed-point.
 typedef unsigned short     q8_8;   // Q8.8 fixed-point.

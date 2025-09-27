@@ -1,9 +1,9 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map0/map0_s00.h"
-#include "bodyprog/player_logic.h"
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CB6B0);
 
@@ -122,19 +122,19 @@ void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* arg2) // 0x800D0
     partCpy->stateStep_1E++;
 }
 
-void func_800D0394(s32 arg0, VECTOR3* vecs)
+void func_800D0394(s32 arg0, VECTOR3* vecs) // 0x800D0394
 {
-    VECTOR3* vec;
-    s32 temp_v0_2;
-    s32 i;
-    s32 var_v0;
-    s_800E330C* bar_ptr0;
+    VECTOR3*    vec;
+    s32         unkZ;
+    s32         i;
+    s32         var_v0;
+    s32         idx;
+    s32         rand0;
+    s32         rand1;
+    s32         rand;
+    s32         mult;
+    s_800E330C* curUnk;
     s_800E34FC* var_s1;
-    s32 index;
-    s32 rand0;
-    s32 rand1;
-    s32 rem;
-    s32 q;
 
     g_SysWork.field_234B_4 = arg0;
     if (arg0)
@@ -155,20 +155,21 @@ void func_800D0394(s32 arg0, VECTOR3* vecs)
                 
                 for (i = 0; i < ARRAY_SIZE(D_800E34FC); i++)
                 {
-                    rem = Rng_Rand16();
-                    rand0 = rem;
+                    rand = Rng_Rand16();
+                    rand0 = rand;
                     var_s1 = &D_800E34FC[i];
-                    index = (i / 20) + 1;
-                    vec = &D_800E32DC[index];
+                    idx = (i / 20) + 1;
+                    vec = &D_800E32DC[idx];
 
-                    var_s1->field_0.vx  = (vec->vx + (rand0 & 0xFFF)) - Q12(0.5f);
-                    var_s1->field_0.vz  = (vec->vz + (Rng_Rand16() & 0xFFF)) - Q12(0.5f);
-                    var_s1->field_0.vy  = vec->vy;
+                    // TODO: Is this angle math?
+                    var_s1->field_0.vx = (vec->vx + Q12_FRACT(rand0)) - Q12(0.5f);
+                    var_s1->field_0.vz = (vec->vz + Q12_FRACT(Rng_Rand16())) - Q12(0.5f);
+                    var_s1->field_0.vy = vec->vy;
                     var_s1->field_11 = 1;
                     var_s1->field_10 = 1;
                     var_s1->field_12 = 0;
-                    var_s1->field_C  = 0;
-                    var_s1->field_E  = 0;
+                    var_s1->field_C = 0;
+                    var_s1->field_E = 0;
                 }
             }
 
@@ -176,27 +177,30 @@ void func_800D0394(s32 arg0, VECTOR3* vecs)
             {
                 for (i = 0; i < ARRAY_SIZE(D_800E330C); i++)
                 {
-                    bar_ptr0 = &D_800E330C[i];
-                     // TODO Rng_GenerateInt(-2.5, 2.5) but the casts in this macro make it not fit here.
-                    bar_ptr0->field_0.vx = D_800E32DC[0].vx + (Rng_Rand16() % Q12(5.0f)) - Q12(2.5f);
+                    curUnk = &D_800E330C[i];
+                 
+                    // TODO: Should be `Rng_GenerateInt(-2.5f, 2.5f)`, but casts in this macro make it not fit here.
+                    curUnk->field_0.vx = D_800E32DC[0].vx + (Rng_Rand16() % Q12(5.0f)) - Q12(2.5f);
+
                     rand0 = -Rng_Rand16();
                     var_v0 = rand0;
                     if (rand0 < 0)
                     {
-                        var_v0 = rand0 + Q12(3.9998f);
+                        var_v0 = rand0 + (Q12(4.0f) - 1);
                     }
-                    bar_ptr0->field_0.vy = D_800E32DC[0].vy + (rand0 - ((var_v0 >> 14) << 14));
+
+                    curUnk->field_0.vy = D_800E32DC[0].vy + (rand0 - ((var_v0 >> 14) << 14));
 
                     rand1 = Rng_Rand16();
-                    temp_v0_2 = D_800E32DC[0].vz;
-                    q = rand1 / Q12(5.0f);
-                    rem = rand1 - q * Q12(5.0f);
+                    unkZ = D_800E32DC[0].vz;
+                    mult = rand1 / Q12(5.0f);
+                    rand = rand1 - (mult * Q12(5.0f));
 
-                    bar_ptr0->field_15 = 1;
-                    bar_ptr0->field_14 = 1;
-                    bar_ptr0->field_C  = 0;
-                    bar_ptr0->field_10 = 0;
-                    bar_ptr0->field_0.vz = (temp_v0_2 + rem) - Q12(2.5f);
+                    curUnk->field_15 = 1;
+                    curUnk->field_14 = 1;
+                    curUnk->field_C  = 0;
+                    curUnk->field_10 = 0;
+                    curUnk->field_0.vz = (unkZ + rand) - Q12(2.5f);
                 }
             }
         }
@@ -263,86 +267,91 @@ void func_800D0E2C() {}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0E34);
 
-void func_800D1C38(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords)
+void func_800D1C38(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords) // 0x800D1C38
 {
     s_Collision coll;
-    VECTOR3 vec;
-    s16 headingAngle;
-    s16 temp_v0;
-    s32 temp_s0;
-    s32 temp_s2;
-    s16 temp_s3;
-    s32 pcState;
-    s32 var_s7;
-    s16 var_s0;
-    s16 var_v1;
+    VECTOR3     pos;
+    q19_12      moveSpeedZ;
+    q19_12      moveSpeedX;
+    q3_12       cosRotX;
+    q3_12       cosRotZ;
+    s32         playerState;
+    bool        cond;
+    q3_12       moveX;
+    q3_12       moveZ;
+    q19_12      moveSpeed;
+    q3_12       headingAngle;
+    q19_12      moveStep;
+    s32         overflow;
+    s32         scale;
 
-    s32 moveSpeed;
-    s32 angle;
-    s32 step;
-    s32 overflow;
-    s32 scale;
+    playerState = g_SysWork.player_4C.extra_128.state_1C;
 
-    pcState = g_SysWork.player_4C.extra_128.state_1C;
-    var_s7 = 0;
-    if (pcState < PlayerState_Unk58)
+    cond = false;
+    if (playerState < PlayerState_Unk58)
     {
-        var_s7 = 1;
+        cond = true;
     }
-    else if (pcState == PlayerState_Unk74)
+    else if (playerState == PlayerState_Unk74)
     {
-        var_s7 = g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP1_S02;
+        cond = g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP1_S02;
     }
-    if (var_s7)
+
+    if (cond)
     {
         Collision_Get(&coll, chara->position_18.vx, chara->position_18.vz);
-        temp_s2 = Math_Sin(chara->headingAngle_3C);
-        temp_s2 = FP_MULTIPLY(chara->moveSpeed_38, temp_s2, Q12_SHIFT);
 
-        temp_s0 = Math_Cos(chara->headingAngle_3C);
-        temp_s0 = FP_MULTIPLY(chara->moveSpeed_38, temp_s0, Q12_SHIFT);
+        moveSpeedX = Math_Sin(chara->headingAngle_3C);
+        moveSpeedX = FP_MULTIPLY(chara->moveSpeed_38, moveSpeedX, Q12_SHIFT);
 
-        temp_s3 = Math_Cos(ABS(coll.field_4) >> 3);
-        temp_v0 = Math_Cos(ABS(coll.field_6) >> 3);
+        moveSpeedZ = Math_Cos(chara->headingAngle_3C);
+        moveSpeedZ = FP_MULTIPLY(chara->moveSpeed_38, moveSpeedZ, Q12_SHIFT);
 
-        var_s0 = FP_MULTIPLY(FP_MULTIPLY(temp_s2, temp_s3, Q12_SHIFT), temp_s3, Q12_SHIFT);
-        var_v1 = FP_MULTIPLY(FP_MULTIPLY(temp_s0, temp_v0, Q12_SHIFT), temp_v0, Q12_SHIFT);
+        cosRotX = Math_Cos(ABS(coll.field_4) >> 3); // `/ 8`.
+        cosRotZ = Math_Cos(ABS(coll.field_6) >> 3); // `/ 8`.
+
+        moveX = FP_MULTIPLY(FP_MULTIPLY(moveSpeedX, cosRotX, Q12_SHIFT), cosRotX, Q12_SHIFT);
+        moveZ = FP_MULTIPLY(FP_MULTIPLY(moveSpeedZ, cosRotZ, Q12_SHIFT), cosRotZ, Q12_SHIFT);
     } 
     else
     {
-        var_s0 = FP_MULTIPLY(chara->moveSpeed_38, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
-        var_v1 = FP_MULTIPLY(chara->moveSpeed_38, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
+        moveX = FP_MULTIPLY(chara->moveSpeed_38, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
+        moveZ = FP_MULTIPLY(chara->moveSpeed_38, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
     }
-    if (chara->moveSpeed_38 >= 0)
+
+    if (chara->moveSpeed_38 >= Q12(0.0f))
     {
-        chara->moveSpeed_38 = SquareRoot0(SQUARE(var_s0) + SQUARE(var_v1));
+        chara->moveSpeed_38 = SquareRoot0(SQUARE(moveX) + SQUARE(moveZ));
     } 
     else 
     {
-        chara->moveSpeed_38 = -SquareRoot0(SQUARE(var_s0) + SQUARE(var_v1));
+        chara->moveSpeed_38 = -SquareRoot0(SQUARE(moveX) + SQUARE(moveZ));
     }
 
     moveSpeed = chara->moveSpeed_38;
-    angle     = chara->headingAngle_3C;
-    step = FP_MULTIPLY_PRECISE(moveSpeed, g_DeltaTime0, Q12_SHIFT);
-    
-    overflow = OVERFLOW_GUARD(step);
-    scale    = overflow >> 1;
+    headingAngle = chara->headingAngle_3C;
+    moveStep = FP_MULTIPLY_PRECISE(moveSpeed, g_DeltaTime0, Q12_SHIFT);
 
-    vec.vx = (s32)FP_MULTIPLY_PRECISE(step >> scale, Math_Sin(angle) >> scale, Q12_SHIFT) << overflow;
-    vec.vz = (s32)FP_MULTIPLY_PRECISE(step >> scale, Math_Cos(angle) >> scale, Q12_SHIFT) << overflow;
-    vec.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
+    overflow = OVERFLOW_GUARD(moveStep);
+    scale    = overflow >> 1; // `/ 2`.
 
-    if (var_s7)
+    pos.vx = (s32)FP_MULTIPLY_PRECISE(moveStep >> scale, Math_Sin(headingAngle) >> scale, Q12_SHIFT) << overflow;
+    pos.vz = (s32)FP_MULTIPLY_PRECISE(moveStep >> scale, Math_Cos(headingAngle) >> scale, Q12_SHIFT) << overflow;
+    pos.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
+
+    if (cond)
     {
-        func_80069B24(&D_800E39BC.field_0, &vec, chara);
+        func_80069B24(&D_800E39BC.field_0, &pos, chara);
+
         chara->position_18.vx += D_800E39BC.field_0.vx;
         chara->position_18.vy += D_800E39BC.field_0.vy;
         chara->position_18.vz += D_800E39BC.field_0.vz;
+
         if (D_800E39BC.field_14 == 0)
         {
             D_800E39BC.field_C = chara->properties_E4.player.positionY_EC;
         }
+
         if (chara->position_18.vy > D_800E39BC.field_C) 
         {
             chara->position_18.vy = D_800E39BC.field_C;
@@ -351,24 +360,27 @@ void func_800D1C38(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
     } 
     else
     {
-        chara->position_18.vx += vec.vx;
-        chara->position_18.vz += vec.vz;
-        pcState = g_SysWork.player_4C.extra_128.state_1C;
-        if ((pcState < PlayerState_Unk87) || ((pcState >= PlayerState_Unk89) && (pcState != PlayerState_Unk106)))
+        chara->position_18.vx += pos.vx;
+        chara->position_18.vz += pos.vz;
+
+        playerState = g_SysWork.player_4C.extra_128.state_1C;
+        if (playerState < PlayerState_Unk87 || (playerState >= PlayerState_Unk89 && playerState != PlayerState_Unk106))
         {
-            chara->position_18.vy = 0;
+            chara->position_18.vy = Q12(0.0f);
         }
 
         chara->field_34 = 0;
     }
-    if (g_DeltaTime0 == 0)
+
+    if (g_DeltaTime0 == Q12(0.0f))
     {
-        chara->rotationSpeed_2C.vy = 0;
+        chara->rotationSpeed_2C.vy = FP_ANGLE(0.0f);
     }
     else
     {
         chara->rotationSpeed_2C.vy = (sharedData_800E39D8_0_s00 << 8) / g_DeltaTime0;
     }
+
     coords->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
     coords->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
     coords->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
@@ -410,7 +422,7 @@ void func_800D2E84() {}
 
 void func_800D2E8C() {}
 
-s32 func_800D2E94()
+s32 func_800D2E94() // 0x800D2E94
 {
     return 0;
 }
@@ -481,7 +493,7 @@ void Ai_Cheryl_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2*
 
 void func_800D802C(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coord) // 0x800D802C
 {
-    s32         speed;
+    q19_12      moveSpeed;
     q19_12      animDur;
     s_AnimInfo* animInfo;
 
@@ -490,16 +502,16 @@ void func_800D802C(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
         D_800DF1CC = FP_MULTIPLY_PRECISE(chara->moveSpeed_38, Q12(30.2f), Q12_SHIFT);
     }
 
-    speed = MIN(chara->moveSpeed_38, Q12(2.5f));
-    chara->moveSpeed_38 = speed;
+    moveSpeed = MIN(chara->moveSpeed_38, Q12(2.5f));
+    chara->moveSpeed_38 = moveSpeed;
 
     if (chara->properties_E4.player.afkTimer_E8 == 2)
     {
         // TODO: KAUFMAN anim in map0_s00? This might be a different anim table after all.
         animInfo = KAUFMANN_ANIM_INFOS;
-        if (speed <= Q12(1.5f))
+        if (moveSpeed <= Q12(1.5f))
         {
-            animDur = FP_MULTIPLY_PRECISE(speed, Q12(18.6f), Q12_SHIFT);
+            animDur = FP_MULTIPLY_PRECISE(moveSpeed, Q12(18.6f), Q12_SHIFT);
         }
         else
         {
@@ -560,9 +572,10 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
     s32         unused;
     s8          pitch0;
     s8          pitch1;
-    s32         distSquared;
+    s32         distSqr;
 
     D_800E3A30 = 0;
+
     switch (chara->properties_E4.player.afkTimer_E8)
     {
         case 0:
@@ -577,7 +590,7 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
 
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = 2;
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(1, false);
                 chara->model_0.stateStep_3++;
             }
 
@@ -590,12 +603,13 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
 
             chara->properties_E4.player.headingAngle_124 = 0;
             break;
+
         case 1:
             chara->properties_E4.player.playerMoveDistance_126 = chara->properties_E4.player.headingAngle_124;
 
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = 4;
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(2, false);
                 chara->model_0.stateStep_3++;
             }
 
@@ -605,14 +619,14 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
                 chara->model_0.stateStep_3              = 0;
                 chara->properties_E4.player.runTimer_F8 = 0;
             }
-
             break;
+
         case 2:
             chara->properties_E4.player.playerMoveDistance_126 = chara->properties_E4.player.headingAngle_124;
 
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = 6;
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(3, false);
                 chara->model_0.stateStep_3++;
             }
 
@@ -622,8 +636,8 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
                 chara->model_0.stateStep_3              = 0;
                 chara->properties_E4.player.runTimer_F8 = 0;
             }
-
             break;
+
         case 3:
             if (chara->properties_E4.player.playerMoveDistance_126 != 0)
             {
@@ -638,7 +652,7 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
 
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = 4;
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(2, false);
                 chara->model_0.stateStep_3++;
             }
 
@@ -652,6 +666,7 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
             g_SysWork.player_4C.chara_0.properties_E4.player.headingAngle_124 = 0;
             chara->properties_E4.player.headingAngle_124                      = 0;
             break;
+
         case 4:
             if (chara->properties_E4.player.playerMoveDistance_126 != 0)
             {
@@ -666,7 +681,7 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
 
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = 4;
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(2, false);
                 chara->model_0.stateStep_3++;
             }
 
@@ -685,8 +700,8 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
     Collision_Get(&sp18, chara->position_18.vx, chara->position_18.vz);
     func_8007FDE0(sp18.field_8, &unused, &pitch0, &pitch1);
 
-    distSquared = SQUARE(Q12_TO_Q8(chara->position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx)) +
-                  SQUARE(Q12_TO_Q8(chara->position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz));
+    distSqr = SQUARE(Q12_TO_Q8(chara->position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx)) +
+              SQUARE(Q12_TO_Q8(chara->position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz));
 
     if (g_Player_DisableControl)
     {
@@ -695,6 +710,7 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
             case 1:
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(2, true), chara, 16, 28, Sfx_Unk1353, pitch0);
                 break;
+
             case 2:
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(3, true), chara, 53, 42, Sfx_Unk1353, pitch1);
                 break;
@@ -705,20 +721,21 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
         switch (chara->properties_E4.player.afkTimer_E8)
         {
             case 1:
-                func_800D8748(ANIM_STATUS(2, true), chara, 16, 28, distSquared, pitch0);
+                func_800D8748(ANIM_STATUS(2, true), chara, 16, 28, distSqr, pitch0);
                 break;
+
             case 2:
-                func_800D8748(ANIM_STATUS(3, true), chara, 53, 42, distSquared, pitch1);
+                func_800D8748(ANIM_STATUS(3, true), chara, 53, 42, distSqr, pitch1);
                 break;
         }
     }
 
-    chara->rotation_24.vy  = ABS_ANGLE(chara->rotation_24.vy + Q12_TO_Q8(D_800E3A30));
+    chara->rotation_24.vy  = ABS_ANGLE(chara->rotation_24.vy + (D_800E3A30 >> 4)); // TODO: Why shift 4?
     chara->headingAngle_3C = chara->rotation_24.vy;
     chara->moveSpeed_38    = chara->properties_E4.player.headingAngle_124;
     chara->field_34       += g_DeltaTime2;
 
-    coords->flg = 0;
+    coords->flg = false;
     func_80096E78(&chara->rotation_24, &coords->coord);
 }
 
@@ -1129,8 +1146,8 @@ void func_800DA5A0(void) // 0x800DA5A0
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            Camera_TranslationSet(NULL, Q12(-22.0f), Q12(-2.4f), Q12(130.1f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_PositionSet(NULL, Q12(-22.0f), Q12(-2.4f), Q12(130.1f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             break;
 
         case 1:
@@ -1143,18 +1160,18 @@ void func_800DA5A0(void) // 0x800DA5A0
         case 4:
         case 5:
         case 6:
-            Camera_TranslationSet(NULL,
-                                  Q12(-22.0f) - func_800868F4(Q12(4.0f),  Q12(5.0f), 0),
-                                  Q12(-2.4f)  - func_800868F4(Q12(-1.5f), Q12(5.0f), 1),
-                                  Q12(130.1f) - func_800868F4(Q12(4.0f),  Q12(5.0f), 2),
-                                  Q12(0.0f), Q12(0.0f),
-                                  Q12(0.0f), Q12(0.0f),
-                                  false);
-            Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
+            Camera_PositionSet(NULL,
+                               Q12(-22.0f) - func_800868F4(Q12(4.0f),  Q12(5.0f), 0),
+                               Q12(-2.4f)  - func_800868F4(Q12(-1.5f), Q12(5.0f), 1),
+                               Q12(130.1f) - func_800868F4(Q12(4.0f),  Q12(5.0f), 2),
+                               Q12(0.0f), Q12(0.0f),
+                               Q12(0.0f), Q12(0.0f),
+                               false);
+            Camera_LookAtSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
             break;
 
         case 3:
-            Camera_RotationSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
+            Camera_LookAtSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
             break;
         
         case 7:
@@ -1382,8 +1399,8 @@ void func_800DAEFC(void) // 0x800DAEFC
 
         case 2:
             func_800865FC(false, 0, 0, FP_ANGLE(180.0f), Q12(0.0f), Q12(0.0f));
-            Camera_TranslationSet(&g_SysWork.player_4C.chara_0.position_18, Q12(0.24f), Q12(-4.06f), Q12(-5.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_RotationSet(&g_SysWork.player_4C.chara_0.position_18, Q12(-0.72f), Q12(-2.11f), Q12(-1.63f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_PositionSet(&g_SysWork.player_4C.chara_0.position_18, Q12(0.24f), Q12(-4.06f), Q12(-5.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(&g_SysWork.player_4C.chara_0.position_18, Q12(-0.72f), Q12(-2.11f), Q12(-1.63f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             SysWork_StateStepIncrement();
 
         case 3:
@@ -1416,8 +1433,8 @@ void func_800DAEFC(void) // 0x800DAEFC
                 offsetZ = Q12(130.0f);
             }
 
-            Camera_TranslationSet(NULL, Q12(-62.0f), offsetY, offsetZ, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), D_800DFAC4);
-            Camera_RotationSet(NULL,
+            Camera_PositionSet(NULL, Q12(-62.0f), offsetY, offsetZ, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), D_800DFAC4);
+            Camera_LookAtSet(NULL,
                                g_SysWork.player_4C.chara_0.position_18.vx,
                                Q12(-0.7f),
                                g_SysWork.player_4C.chara_0.position_18.vz - Q12(5.0f),
@@ -1444,8 +1461,8 @@ void func_800DB26C(void) // 0x800DB26C
 {
     if (g_SysWork.sysStateStep_C[0] == 0)
     {
-        Camera_TranslationSet(NULL, Q12(-62.0f), Q12(-2.24f), Q12(117.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-        Camera_RotationSet(NULL, Q12(-62.0f), Q12(-0.7f), Q12(104.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+        Camera_PositionSet(NULL, Q12(-62.0f), Q12(-2.24f), Q12(117.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+        Camera_LookAtSet(NULL, Q12(-62.0f), Q12(-0.7f), Q12(104.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
         func_800868DC(2);
     }
 
@@ -1934,45 +1951,47 @@ void func_800DC8D8(void) // 0x800DC8D8
     }
 }
 
-void func_800DCA30(void)
+void func_800DCA30(void) // 0x800DCA30
 {
-    s16 pcRotY;
-    s32 offsetZ;
-    s32 offsetY;
-    s32 pcX;
-    s32 pcZ;
-    s32 temp_v1;
-    s32 offsetX;
-    float four; // @hack permuter find.
+    q19_12 offsetX;
+    q19_12 offsetY;
+    q19_12 offsetZ;
+    q19_12 posX;
+    q19_12 posZ;
+    q3_12  rotY;
+    float  four; // @hack Permuter find.
 
-    pcX = g_SysWork.player_4C.chara_0.position_18.vx;
-    pcZ = g_SysWork.player_4C.chara_0.position_18.vz;
-    pcRotY = g_SysWork.player_4C.chara_0.rotation_24.vy;
-    if (g_SavegamePtr->eventFlags_168[0] & 0x100)
+    posX = g_SysWork.player_4C.chara_0.position_18.vx;
+    posZ = g_SysWork.player_4C.chara_0.position_18.vz;
+    rotY = g_SysWork.player_4C.chara_0.rotation_24.vy;
+
+    if (Savegame_EventFlagGet(EventFlag_8))
     {
-        if (pcZ < Q12(48.0f) && pcX > Q12(-59.0f))
+        if (posZ < Q12(48.0f) && posX > Q12(-59.0f))
         {
-            Camera_TranslationSet(NULL, Q12(-60.55f), Q12(-0.51f), Q12(47.63f), 0, 0, 0, 0, D_800DFAD8);
-            Camera_RotationSet(NULL, Q12(-56.91f), Q12(-1.26f), Q12(46.14f), 0, 0, 0, 0, D_800DFAD8);
-            D_800DFAD8 = false;
+            Camera_PositionSet(NULL, Q12(-60.55f), Q12(-0.51f), Q12(47.63f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), g_WarpCamera);
+            Camera_LookAtSet(NULL, Q12(-56.91f), Q12(-1.26f), Q12(46.14f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), g_WarpCamera);
+            g_WarpCamera = false;
             return;
         }
 
-        if ((pcZ < Q12(100.0f)) || ((pcZ < Q12(121.0f)) && (pcX < Q12(-58.0f))))
+        if (posZ < Q12(100.0f) || (posZ < Q12(121.0f) && posX < Q12(-58.0f)))
         {
             four = 4.0f;
-            offsetY = FP_MULTIPLY(Math_Cos(pcRotY), Q12(0.2f), Q12_SHIFT) - Q12(1.8f);
-            offsetZ = pcZ;
-            offsetZ += FP_MULTIPLY(Math_Cos(pcRotY), Q12(2.0f), Q12_SHIFT) + Q12(four);
-            offsetX = MAX(MIN(Q12(-61.5f), pcX), Q12(-63.5f));
 
-            Camera_TranslationSet(NULL, offsetX, offsetY, offsetZ, 0, 0, 0, 0, D_800DFAD8 == false);
-            Camera_RotationSet(NULL, pcX, Q12(-0.7f), pcZ - Q12(5.0f), 0, 0, 0, 0, D_800DFAD8 == false);
-            D_800DFAD8 = true;
+            offsetY = FP_MULTIPLY(Math_Cos(rotY), Q12(0.2f), Q12_SHIFT) - Q12(1.8f);
+            offsetZ = posZ;
+            offsetZ += FP_MULTIPLY(Math_Cos(rotY), Q12(2.0f), Q12_SHIFT) + Q12(four);
+            offsetX = MAX(MIN(Q12(-61.5f), posX), Q12(-63.5f));
+
+            Camera_PositionSet(NULL, offsetX, offsetY, offsetZ, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), !g_WarpCamera);
+            Camera_LookAtSet(NULL, posX, Q12(-0.7f), posZ - Q12(5.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), !g_WarpCamera);
+            g_WarpCamera = true;
             return;
         }
-        vcReturnPreAutoCamWork(D_800DFAD8);
-        D_800DFAD8 = false;
+
+        vcReturnPreAutoCamWork(g_WarpCamera);
+        g_WarpCamera = false;
     }
 }
 

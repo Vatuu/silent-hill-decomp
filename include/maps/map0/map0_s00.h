@@ -16,27 +16,29 @@ typedef struct
     u8 field_2;
 } s_800DFB48;
 
-typedef struct {
-    VECTOR3 field_0;
-    s16 field_C;
-    s16 field_E;
-    s8  field_10;
-    s8  field_11;
-    s8  field_12;
-    s8  field_13;
+typedef struct
+{
+    VECTOR3 field_0; // Rotation?
+    s16     field_C;
+    s16     field_E;
+    s8      field_10;
+    s8      field_11;
+    s8      field_12;
+    s8      field_13;
 } s_800E34FC;
-STATIC_ASSERT_SIZEOF(s_800E34FC, 0x14);
+STATIC_ASSERT_SIZEOF(s_800E34FC, 20);
 
-typedef struct {
+typedef struct
+{
     VECTOR3 field_0;
-    s16 field_C;
-    s16 field_E;
-    s16 field_10;
-    s16 field_12;
-    s8  field_14;
-    s8  field_15;
+    s16     field_C;
+    s16     field_E;
+    s16     field_10;
+    s16     field_12;
+    s8      field_14;
+    s8      field_15;
 } s_800E330C;
-STATIC_ASSERT_SIZEOF(s_800E330C, 0x18);
+STATIC_ASSERT_SIZEOF(s_800E330C, 24);
 
 extern VECTOR3 D_800E32DC[4];
 
@@ -45,7 +47,8 @@ extern char D_800CAE7C[];
 
 extern VECTOR3 D_800CB6A4;
 
-extern s32 D_800E3A30;
+/** Timer. */
+extern q19_12 D_800E3A30;
 
 extern u8 D_800DD592;
 
@@ -104,7 +107,7 @@ extern s_800C4590 D_800E39BC;
 
 extern u16 D_800E32D4;
 
-extern s32 D_800DFAD8;
+extern bool g_WarpCamera;
 
 extern s_800E330C D_800E330C[20];
 
@@ -136,6 +139,8 @@ bool func_800D0600();
 void func_800D0E24();
 
 void func_800D0E2C();
+
+void func_800D1C38(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
 
 void func_800D2E6C();
 
@@ -173,6 +178,8 @@ void func_800DC33C(void);
 void func_800DC694(void);
 
 void func_800DC8D8(void);
+
+void func_800DCA30(void);
 
 s32 func_800DCDA8();
 

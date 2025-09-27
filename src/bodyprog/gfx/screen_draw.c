@@ -12,14 +12,14 @@ const s32 rodataPad_80024CA0 = 0;
 void Screen_RectInterlacedClear(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b) // 0x80032358
 {
     setRECT((RECT*)PSX_SCRATCH, x, y, w, h);
-    VSync(0);
+    VSync(SyncMode_Wait);
     ClearImage2((RECT*)PSX_SCRATCH, r, g, b);
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
 }
 
 void Screen_Refresh(s32 screenWidth, bool isInterlaced) // 0x800323C8
 {
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
     Screen_RectInterlacedClear(0, 32, 320, 448, 0, 0, 0);
     Screen_Init(screenWidth, isInterlaced);
 }
@@ -29,7 +29,7 @@ void Screen_Init(s32 screenWidth, bool isInterlaced) // 0x80032428
     g_GameWork.gsScreenWidth_588  = screenWidth;
     g_GameWork.gsScreenHeight_58A = !isInterlaced ? FRAMEBUFFER_HEIGHT_PROGRESSIVE : FRAMEBUFFER_HEIGHT_INTERLACED;
 
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
     GsInitGraph2(g_GameWork.gsScreenWidth_588, g_GameWork.gsScreenHeight_58A, isInterlaced | 0x4, 1, 0);
     GsDefDispBuff2(0, 32, 0, isInterlaced ? 32 : 256);
 
@@ -82,7 +82,7 @@ q19_12 Screen_FadeInProgressGet() // 0x800325F8
 void Screen_FadeUpdate() // 0x8003260C
 {
     s32      queueLength;
-    s32      timeStep;
+    s32      timestep;
     GsOT*    ot;
     TILE*    tile;
     DR_MODE* drMode;
@@ -105,14 +105,14 @@ void Screen_FadeUpdate() // 0x8003260C
 
             if (g_ScreenFadeTimestep > Q12(0.0f))
             {
-                timeStep = g_ScreenFadeTimestep;
+                timestep = g_ScreenFadeTimestep;
             }
             else
             {
-                timeStep = Q12(3.0f) / (queueLength + 1);
+                timestep = Q12(3.0f) / (queueLength + 1);
             }
 
-            g_ScreenFadeProgress += FP_MULTIPLY_PRECISE(timeStep, g_DeltaTime1, Q12_SHIFT);
+            g_ScreenFadeProgress += FP_MULTIPLY_PRECISE(timestep, g_DeltaTime1, Q12_SHIFT);
             if (g_ScreenFadeProgress >= (Q12(1.0f) - 1))
             {
                 g_ScreenFadeProgress = Q12(1.0f) - 1;
@@ -124,8 +124,8 @@ void Screen_FadeUpdate() // 0x8003260C
             tile->b0 = Q12_TO_Q8(g_ScreenFadeProgress);
             break;
 
-        case SCREEN_FADE_STATUS(ScreenFadeState_ResetTimeStep, false):
-        case SCREEN_FADE_STATUS(ScreenFadeState_ResetTimeStep, true):
+        case SCREEN_FADE_STATUS(ScreenFadeState_ResetTimestep, false):
+        case SCREEN_FADE_STATUS(ScreenFadeState_ResetTimestep, true):
             g_ScreenFadeTimestep = Q12(0.0f);
 
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false):
@@ -147,14 +147,14 @@ void Screen_FadeUpdate() // 0x8003260C
 
             if (g_ScreenFadeTimestep > Q12(0.0f))
             {
-                timeStep = g_ScreenFadeTimestep;
+                timestep = g_ScreenFadeTimestep;
             }
             else
             {
-                timeStep = Q12(3.0f);
+                timestep = Q12(3.0f);
             }
 
-            g_ScreenFadeProgress -= FP_MULTIPLY_PRECISE(timeStep, g_DeltaTime1, Q12_SHIFT);
+            g_ScreenFadeProgress -= FP_MULTIPLY_PRECISE(timestep, g_DeltaTime1, Q12_SHIFT);
 
             if (g_ScreenFadeProgress <= Q12(0.0f))
             {
@@ -284,7 +284,7 @@ void Screen_CutsceneCameraStateUpdate() // 0x80032904
     AddPrim(ot, &poly[2]);
     AddPrim(ot, drMode);
 
-    if (!(g_SysWork.flags_22A4 & 8))
+    if (!(g_SysWork.flags_22A4 & (1 << 3)))
     {
         vcChangeProjectionValue(g_GameWork.gsScreenHeight_58A + FP_MULTIPLY(377 - g_GameWork.gsScreenHeight_58A, D_800A8F40, Q12_SHIFT));
     }

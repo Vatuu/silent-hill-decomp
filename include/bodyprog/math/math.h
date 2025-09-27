@@ -88,14 +88,14 @@
            ((mat).m[1][0] * (vec).vy) + \
            ((mat).m[2][0] * (vec).vz)) >> 17)
 
-/** @brief Computes the magnitude of a 2D vector in Q19.12, using intermediate components in Q23.8 to avoid overflow.
+/** @brief Computes the magnitude of a 2D vector in Q19.12, using intermediate components in Q25.6 to avoid overflow.
  *
- * @param x X vector component.
- * @param z Z vector component.
- * @return 2D vector magnitude in Q19.12.
+ * @param x X vector component (Q19.12).
+ * @param z Z vector component (Q19.12).
+ * @return 2D vector magnitude (Q19.12).
  */
 #define Math_Vector2MagCalc(x, z) \
-    (SquareRoot0(SQUARE((x) >> 6) + SQUARE((z) >> 6)) << 6)
+    Q6_TO_Q12(SquareRoot0(SQUARE(Q12_TO_Q6(x)) + SQUARE(Q12_TO_Q6(z))))
 
 /** @brief Normalizes Q19.12 fixed-point degrees, unsigned integer range `[0, 4096]` to the signed integer range `[-2048, 2047]`.
  * Thin wrapper for `FP_ANGLE_NORM_S`.

@@ -46,13 +46,16 @@
 
 #define FONT24_BUFFER (u_long*)0x801F5600 // Loaded by `GameFs_StfRollBinLoad`.
 
-/** @brief Harry's model. */
-#define HARRY_LM_BUFFER (void*)0x800FE600
-/** @brief Model of an item held in hand. */
-#define HELD_ITEM_LM_BUFFER (s_LmHeader*)((HARRY_LM_BUFFER) + Fs_GetFileSize(FILE_CHARA_HERO_ILM))
-#define MAP_CHARA_BASE (void*)0x800FEE00
-/** @brief Up to 4 chara models used in a map. */
-#define MAP_CHARA_LM_BUFFER (s_LmHeader*)((MAP_CHARA_BASE) + Fs_GetFileSize(FILE_CHARA_HERO_ILM))
+#define HARRY_LM_BUFFER (void*)0x800FE600 /** Harry character model. */
+#define MAP_CHARA_BASE  (void*)0x800FEE00
+
+/** Model of an item held in the player's hand. */
+#define HELD_ITEM_LM_BUFFER \
+    (s_LmHeader*)((HARRY_LM_BUFFER) + Fs_GetFileSize(FILE_CHARA_HERO_ILM))
+
+/** Up to 4 chara models used in a map. */
+#define MAP_CHARA_LM_BUFFER \
+    (s_LmHeader*)((MAP_CHARA_BASE) + Fs_GetFileSize(FILE_CHARA_HERO_ILM))
 
 /** @brief `FsQueue::state`s when processing a read operation (`Fs_QueueUpdateRead`).
  *
