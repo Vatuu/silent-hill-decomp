@@ -1612,54 +1612,54 @@ const s_8002AC04 D_8002AC04[] =
     // #2 5th field points to some data that comes after this array.
     // #3 5th field is always 0.
     // #4 5th field is index/counter.
-    { NULL, 3, 2, 0, 0, {} },
-    { NULL, 3, 3, 0, 0, {} },
-    { NULL, 3, 1, 0, 0, {} },
-    { NULL, 3, 0, 0, 0, {} },
-    { NULL, 3, 4, 0, 0, {} },
-    { &D_8002AC04[22], 0, 0, 0, 5, {} },
-    { &D_8002AC04[25], 0, 32, 0, 6, {} },
-    { &D_8002AC04[26], 0, 32, 0, 7, {} },
-    { &D_8002AC04[27], 0, 32, 0, 8, {} },
-    { &D_8002AC04[23], 0, 32, 0, 9, {} },
-    { &D_8002AC04[24], 0, 32, 0, 10, {} },
-    { &D_8002AC04[5], 1, 0, 0, &D_8002AC04[6], {} },
-    { &D_8002AC04[31], 0, 32, 0, 12, {} },
-    { &D_8002AC04[34], 0, 32, 0, 12, {} },
-    { &D_8002AC04[37], 0, 32, 0, 12, {} },
-    { &D_8002AC04[40], 0, 32, 0, 12, {} },
-    { &D_8002AC04[43], 0, 32, 0, 12, {} },
-    { &D_8002AC04[46], 0, 32, 0, 12, {} },
-    { &D_8002AC04[28], 0, 32, 0, 18, {} },
-    { &D_8002AC04[29], 0, 32, 0, 19, {} },
-    { NULL, 4, 0, NO_VALUE, 20, { .u32 = -255 } },
-    { NULL, 4, 1, NO_VALUE, 21, { .u32 = -255 } },
-    { NULL, 2, 1, NO_VALUE, &D_8002AF70, { 0x2D, 9, 1, 0 } },
-    { NULL, 2, 1, NO_VALUE, &D_8002AF64, { 0x180, 0x30, 1, 0 } },
-    { NULL, 2, 1, NO_VALUE, &D_8002AF5C, { 0x90, 0x18, 1, 0 } },
-    { NULL, 2, 1, NO_VALUE, &D_8002AF54, { 0x5A, 0xF, 1, 0 } },
-    { NULL, 2, 1, NO_VALUE, &D_8002AF48, { 0x96, 0xF, 1, 1 } },
-    { NULL, 2, 1, NO_VALUE, &D_8002AF3C, { 0x60, 0xC, 1, 0 } },
-    { NULL, 2, 1, NO_VALUE, &D_8002AF3C, { 0x60, 0xC, 1, 0 } },
-    { NULL, 2, 1, NO_VALUE, &D_8002AF34, { 0x4B, 0xF, 1, 0 } },
-    { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 2, 0, NO_VALUE, &D_8002AF2C, { 0x258, 0xF, 0, 0 } },
-    { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 2, 0, NO_VALUE, &D_8002AF28, { 0x1E0, 0xF, 0, 0 } },
-    { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 2, 0, NO_VALUE, &D_8002AF24, { 0x1A4, 0xF, 0, 0 } },
-    { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 2, 0, NO_VALUE, &D_8002AF20, { 0x168, 0xF, 0, 0 } },
-    { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 2, 0, NO_VALUE, &D_8002AF20, { 0x10E, 0xF, 0, 0 } },
-    { NULL, 0, 0, 0x0000, 0, {} },
-    { NULL, 0, 0, 0x0000, 0, {} },
-    { &D_8002AC04[47], 2, 0, NO_VALUE, &D_8002AF08, { 0xB40, 0xF, 0, 0 } },
-    { &D_8002AC04[47], 2, 0, NO_VALUE, &D_8002AF04, { 0x1E, 0xF, 0, 0 } },
+    { NULL, { .func_8008973C_data = { 3, 2, 0, 0, 0 } } },
+    { NULL, { .func_8008973C_data = { 3, 3, 0, 0, 0 } } },
+    { NULL, { .func_8008973C_data = { 3, 1, 0, 0, 0 } } },
+    { NULL, { .func_8008973C_data = { 3, 0, 0, 0, 0 } } },
+    { NULL, { .func_8008973C_data = { 3, 4, 0, 0, 0 } } },
+    { &D_8002AC04[22], { .func_8008973C_data = { 0, 0, 0, 5, 0 } } },
+    { &D_8002AC04[25], { .func_8008973C_data = { 0, 32, 0, 6, 0 } } },
+    { &D_8002AC04[26], { .func_8008973C_data = { 0, 32, 0, 7, 0 } } },
+    { &D_8002AC04[27], { .func_8008973C_data = { 0, 32, 0, 8, 0 } } },
+    { &D_8002AC04[23], { .func_8008973C_data = { 0, 32, 0, 9, 0 } } },
+    { &D_8002AC04[24], { .func_8008973C_data = { 0, 32, 0, 10, 0 } } },
+    { &D_8002AC04[5], { .func_8008973C_data = { 1, 0, 0, &D_8002AC04[6], 0 } } },
+    { &D_8002AC04[31], { .func_8008973C_data = { 0, 32, 0, 12, 0 } } },
+    { &D_8002AC04[34], { .func_8008973C_data = { 0, 32, 0, 12, 0 } } },
+    { &D_8002AC04[37], { .func_8008973C_data = { 0, 32, 0, 12, 0 } } },
+    { &D_8002AC04[40], { .func_8008973C_data = { 0, 32, 0, 12, 0 } } },
+    { &D_8002AC04[43], { .func_8008973C_data = { 0, 32, 0, 12, 0 } } },
+    { &D_8002AC04[46], { .func_8008973C_data = { 0, 32, 0, 12, 0 } } },
+    { &D_8002AC04[28], { .func_8008973C_data = { 0, 32, 0, 18, 0 } } },
+    { &D_8002AC04[29], { .func_8008973C_data = { 0, 32, 0, 19, 0 } } },
+    { NULL, { .func_8008973C_data = { 4, 0, NO_VALUE, 20, -255 } } },
+    { NULL, { .func_8008973C_data = { 4, 1, NO_VALUE, 21, -255 } } },
+    { NULL, { .func_80089DF0_data = { 2, 1, NO_VALUE, &D_8002AF70, 0x2D, 9, 1, 0 } } },
+    { NULL, { .func_80089DF0_data = { 2, 1, NO_VALUE, &D_8002AF64, 0x180, 0x30, 1, 0 } } },
+    { NULL, { .func_80089DF0_data = { 2, 1, NO_VALUE, &D_8002AF5C, 0x90, 0x18, 1, 0 } } },
+    { NULL, { .func_80089DF0_data = { 2, 1, NO_VALUE, &D_8002AF54, 0x5A, 0xF, 1, 0 } } },
+    { NULL, { .func_80089DF0_data = { 2, 1, NO_VALUE, &D_8002AF48, 0x96, 0xF, 1, 1 } } },
+    { NULL, { .func_80089DF0_data = { 2, 1, NO_VALUE, &D_8002AF3C, 0x60, 0xC, 1, 0 } } },
+    { NULL, { .func_80089DF0_data = { 2, 1, NO_VALUE, &D_8002AF3C, 0x60, 0xC, 1, 0 } } },
+    { NULL, { .func_80089DF0_data = { 2, 1, NO_VALUE, &D_8002AF34, 0x4B, 0xF, 1, 0 } } },
+    { NULL, { .func_8008973C_data = { 0, 0, 0x0000, 0, 0 } } },
+    { NULL, { .func_80089DF0_data = { 2, 0, NO_VALUE, &D_8002AF2C, 0x258, 0xF, 0, 0 } } },
+    { NULL, { .func_8008973C_data = { 0, 0, 0x0000, 0, 0 } } },
+    { NULL, { .func_8008973C_data = { 0, 0, 0x0000, 0, 0 } } },
+    { NULL, { .func_80089DF0_data = { 2, 0, NO_VALUE, &D_8002AF28, 0x1E0, 0xF, 0, 0 } } },
+    { NULL, { .func_8008973C_data = { 0, 0, 0x0000, 0, 0 } } },
+    { NULL, { .func_8008973C_data = { 0, 0, 0x0000, 0, 0 } } },
+    { NULL, { .func_80089DF0_data = { 2, 0, NO_VALUE, &D_8002AF24, 0x1A4, 0xF, 0, 0 } } },
+    { NULL, { .func_8008973C_data = { 0, 0, 0x0000, 0, 0 } } },
+    { NULL, { .func_8008973C_data = { 0, 0, 0x0000, 0, 0 } } },
+    { NULL, { .func_80089DF0_data = { 2, 0, NO_VALUE, &D_8002AF20, 0x168, 0xF, 0, 0 } } },
+    { NULL, { .func_8008973C_data = { 0, 0, 0x0000, 0, 0 } } },
+    { NULL, { .func_8008973C_data = { 0, 0, 0x0000, 0, 0 } } },
+    { NULL, { .func_80089DF0_data = { 2, 0, NO_VALUE, &D_8002AF20, 0x10E, 0xF, 0, 0 } } },
+    { NULL, { .func_8008973C_data = { 0, 0, 0x0000, 0, 0 } } },
+    { NULL, { .func_8008973C_data = { 0, 0, 0x0000, 0, 0 } } },
+    { &D_8002AC04[47], { .func_80089DF0_data = { 2, 0, NO_VALUE, &D_8002AF08, 0xB40, 0xF, 0, 0 } } },
+    { &D_8002AC04[47], { .func_80089DF0_data = { 2, 0, NO_VALUE, &D_8002AF04, 0x1E, 0xF, 0, 0 } } },
 };
 
 // TODO: Figure out what kind of data this is. The array above has some entries pointing to it, all of them using funcptr #2 (`func_80089DF0`).
@@ -1806,7 +1806,7 @@ s32 func_800895E4(s_SysWork_2514* arg0, s_8002AC04* arg1, u8 arg2) // 0x800895E4
         return 0;
     }
 
-    return D_800AFD08[arg1->field_4](arg0, 0, arg1, &sp10);
+    return D_800AFD08[arg1->field_4.funcIdx_4](arg0, 0, arg1, &sp10);
 }
 
 bool func_80089644(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s32 arg2, u32 arg3) // 0x80089644
@@ -1826,7 +1826,7 @@ bool func_80089644(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s32 arg2, u32 ar
             break;
         }
 
-        if (D_800AFD08[ptr1->field_4](arg0, arg1, ptr1, &arg3) == 0)
+        if (D_800AFD08[ptr1->field_4.funcIdx_4](arg0, arg1, ptr1, &arg3) == 0)
         {
             break;
         }
@@ -1852,12 +1852,12 @@ bool func_8008973C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* ptr,
         return false;
     }
 
-    if (ptr == NULL || ptr->field_4 != 3)
+    if (ptr == NULL || ptr->field_4.func_8008973C_data.funcIdx_4 != 3)
     {
         return false;
     }
 
-    switch (ptr->field_5)
+    switch (ptr->field_4.func_8008973C_data.field_5)
     {
         case 0:
             func_8009E2A0(arg0);
@@ -1880,15 +1880,15 @@ bool func_8008973C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* ptr,
             break;
 
         case 5:
-            func_8008989C(arg0, ptr->field_6, ptr->field_C.u32);
+            func_8008989C(arg0, ptr->field_4.func_8008973C_data.field_6, ptr->field_4.func_8008973C_data.field_C);
             break;
 
         case 6:
-            func_8008992C(arg0, ptr->field_6, ptr->field_C.u32);
+            func_8008992C(arg0, ptr->field_4.func_8008973C_data.field_6, ptr->field_4.func_8008973C_data.field_C);
             break;
 
         case 7:
-            func_800899BC(arg0, ptr->field_8);
+            func_800899BC(arg0, ptr->field_4.func_8008973C_data.field_8);
             break;
     }
 
@@ -2000,7 +2000,76 @@ void func_800899BC(s_SysWork_2514* arg0, s32 arg1) // 0x800899BC
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089A30); // 0x80089A30
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089BB8); // 0x80089BB8
+bool func_80089BB8(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u32* arg3) // 0x80089BB8
+{
+    s_func_8009ECCC* temp_a0;
+    s_func_8009ECCC* temp_v0;
+    u32              var_s1;
+
+    if (arg0 == NULL || arg2 == NULL)
+    {
+        return false;
+    }
+
+    if (arg2->field_4.funcIdx_4 != 1)
+    {
+        return false;
+    }
+
+    if (arg1 == NULL)
+    {
+        var_s1 = arg2->field_4.func_80089BB8_data.field_C;
+        arg1   = func_8009ECCC(arg0, var_s1);
+        if (arg1 == NULL)
+        {
+            return false;
+        }
+        arg1->field_14_16 = *arg3;
+    }
+    else
+    {
+        if (arg1->field_10 != arg2)
+        {
+            arg1->field_10 = NULL;
+            return false;
+        }
+        else
+        {
+            var_s1 = arg1->field_8;
+        }
+    }
+
+    arg1->field_10   = arg2->field_0;
+    arg1->field_14_0 = 0;
+
+    if (arg2->field_4.func_80089BB8_data.field_5_7)
+    {
+        arg1->field_1C = arg2->field_4.func_80089BB8_data.field_6;
+    }
+
+    temp_v0 = func_8009ECCC(arg0, var_s1);
+    if (temp_v0 != NULL)
+    {
+        temp_a0                   = temp_v0->field_0;
+        temp_a0->field_4          = temp_v0->field_4;
+        temp_a0->field_4->field_0 = temp_a0;
+
+        temp_a0          = arg1->field_0;
+        temp_v0->field_4 = arg1;
+        temp_v0->field_0 = temp_a0;
+        temp_a0->field_4 = temp_v0;
+
+        arg1->field_0 = temp_v0;
+
+        temp_v0->field_10    = arg2->field_4.func_80089BB8_data.field_8;
+        temp_v0->field_14_0  = 0;
+        temp_v0->field_C     = arg1->field_C;
+        temp_v0->field_14_16 = arg1->field_14_16;
+        temp_v0->field_1C    = arg1->field_1C;
+    }
+
+    return true;
+}
 
 bool func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u32* arg3) // 0x80089D0C
 {
@@ -2009,12 +2078,12 @@ bool func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2
         return false;
     }
 
-    if (arg2->field_4 == 4)
+    if (arg2->field_4.func_80089D0C_data.funcIdx_4 == 4)
     {
         if (arg1 != NULL)
         {
-            arg1->field_14_24 = arg2->field_5 & 0x7F;
-            arg1->field_1E    = arg2->field_6;
+            arg1->field_14_24 = arg2->field_4.func_80089D0C_data.field_5 & 0x7F;
+            arg1->field_1E    = arg2->field_4.func_80089D0C_data.field_6;
             arg1->field_10    = arg2->field_0;
             arg1->field_14_31 = 1;
             arg1->field_18    = arg1->field_14_16 << 24;
@@ -2022,12 +2091,12 @@ bool func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2
         }
         else
         {
-            arg1 = func_8009ECCC(arg0, arg2->field_C);
+            arg1 = func_8009ECCC(arg0, arg2->field_4.func_80089D0C_data.field_C);
             if (arg1 != NULL)
             {
                 arg1->field_10    = arg2;
                 arg1->field_14_16 = *arg3;
-                arg1->field_C     = arg2->field_8;
+                arg1->field_C     = arg2->field_4.func_80089D0C_data.field_8;
                 return true;
             }
         }
@@ -2505,7 +2574,19 @@ s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2,
     return camProjValue;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008CF54); // 0x8008CF54
+bool func_8008CF54(SVECTOR3* rot0, SVECTOR3* rot1) // 0x8008CF54
+{
+    #define ANGLE_EPSILON FP_ANGLE(360.0f / 16.0f) // 22.5 degrees
+
+    if (ABS(rot0->vx - rot1->vx) > ANGLE_EPSILON ||
+        ABS(rot0->vy - rot1->vy) > ANGLE_EPSILON ||
+        ABS(rot0->vz - rot1->vz) > ANGLE_EPSILON)
+    {
+        return true;
+    }
+
+    return false;
+}
 
 s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, const s_DmsKeyframeCamera* frame0, const s_DmsKeyframeCamera* frame1, s32 alpha) // 0x8008CFEC
 {

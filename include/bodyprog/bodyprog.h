@@ -250,23 +250,50 @@ typedef struct
 typedef struct _s_8002AC04
 {
     struct _s_8002AC04* field_0;
-    u8                  field_4;
-    u8                  field_5;
-    u16                 field_6;
-    s32                 field_8;
+
     union
     {
-        // `func_80089DF0` reads `field_C` as bitfield, other `D_800AFD08` funcptrs read as `u32`?
-        // TODO: Some funcs also treat `field_8` differently, should probably be part of union too.
+        u8 funcIdx_4; // `funcIdx_4` in structs below, needs to be part of those structs for match.
+
         struct
         {
+            u8  funcIdx_4;
+            u8  field_5;
+            u16 field_6;
+            s32 field_8;
+            u32 field_C;
+        } func_8008973C_data;
+        struct
+        {
+            u8  funcIdx_4;
+            u8  field_5;
+            u16 field_6;
+            s32 field_8;
+            u32 field_C;
+        } func_80089D0C_data;
+
+        struct
+        {
+            u8                  funcIdx_4;
+            u8                  field_5   : 7;
+            u32                 field_5_7 : 1;
+            u16                 field_6;
+            struct _s_8002AC04* field_8;
+            u32                 field_C;
+        } func_80089BB8_data;
+
+        struct
+        {
+            u8  funcIdx_4;
+            u8  field_5;
+            u16 field_6;
+            s32 field_8;
             u32 field_C_0  : 16;
             u32 field_C_16 : 12;
             u32 field_C_28 : 3;
             u32 field_C_31 : 1;
-        } bitField;
-        u32 u32;
-    } field_C;
+        } func_80089DF0_data;
+    } field_4;
 } s_8002AC04;
 STATIC_ASSERT_SIZEOF(s_8002AC04, 16);
 
@@ -456,18 +483,20 @@ typedef struct
 } s_func_800CFFF8;
 
 // Function from lib_unk
-typedef struct
+typedef struct _func_8009ECCC
 {
-    char        unk_0[12];
-    s32         field_C;
-    s_8002AC04* field_10;
-    u32         field_14_0  : 16;
-    u32         field_14_16 : 8;
-    u32         field_14_24 : 7;
-    u32         field_14_31 : 1;
-    u32         field_18;
-    u16         field_1C;
-    u16         field_1E;
+    struct _func_8009ECCC* field_0; // TODO: Not sure if these point to other struct type or same type.
+    struct _func_8009ECCC* field_4;
+    s32                    field_8;
+    s32                    field_C;
+    s_8002AC04*            field_10;
+    u32                    field_14_0  : 16;
+    u32                    field_14_16 : 8;
+    u32                    field_14_24 : 7;
+    u32                    field_14_31 : 1;
+    u32                    field_18;
+    u16                    field_1C;
+    u16                    field_1E;
 } s_func_8009ECCC;
 
 typedef struct
@@ -3282,6 +3311,9 @@ void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyfr
 s16 func_8008CDBC(s16 angle);
 
 s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, q19_12 time, s_DmsHeader* dmsHdr);
+
+/** @unused Returns whether any axis differs by more than 22.5 degrees (1/16 of full rotation). */
+bool func_8008CF54(SVECTOR3* rot0, SVECTOR3* rot1);
 
 s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, const s_DmsKeyframeCamera* frame0, const s_DmsKeyframeCamera* frame1, s32 alpha);
 

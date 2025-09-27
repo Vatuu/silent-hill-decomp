@@ -483,7 +483,173 @@ void func_800D8124(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8124
     coord->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
 }
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D8310);
+void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
+{
+    s_Collision sp18;
+    s32         unused;
+    s8          pitch0;
+    s8          pitch1;
+    s32         distSquared;
+
+    D_800E3A30 = 0;
+    switch (chara->properties_E4.player.afkTimer_E8)
+    {
+        case 0:
+            if (chara->properties_E4.player.playerMoveDistance_126 != 0)
+            {
+                chara->properties_E4.player.playerMoveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
+                if (chara->properties_E4.player.playerMoveDistance_126 < 0)
+                {
+                    chara->properties_E4.player.playerMoveDistance_126 = 0;
+                }
+            }
+
+            if (chara->model_0.stateStep_3 == 0)
+            {
+                chara->model_0.anim_4.status_0 = 2;
+                chara->model_0.stateStep_3++;
+            }
+
+            if (chara->properties_E4.player.runTimer_F8 != 0)
+            {
+                chara->properties_E4.player.afkTimer_E8 = 0;
+                chara->model_0.stateStep_3              = 0;
+                chara->properties_E4.player.runTimer_F8 = 0;
+            }
+
+            chara->properties_E4.player.headingAngle_124 = 0;
+            break;
+        case 1:
+            chara->properties_E4.player.playerMoveDistance_126 = chara->properties_E4.player.headingAngle_124;
+
+            if (chara->model_0.stateStep_3 == 0)
+            {
+                chara->model_0.anim_4.status_0 = 4;
+                chara->model_0.stateStep_3++;
+            }
+
+            if (chara->properties_E4.player.runTimer_F8 != 0)
+            {
+                chara->properties_E4.player.afkTimer_E8 = 0;
+                chara->model_0.stateStep_3              = 0;
+                chara->properties_E4.player.runTimer_F8 = 0;
+            }
+
+            break;
+        case 2:
+            chara->properties_E4.player.playerMoveDistance_126 = chara->properties_E4.player.headingAngle_124;
+
+            if (chara->model_0.stateStep_3 == 0)
+            {
+                chara->model_0.anim_4.status_0 = 6;
+                chara->model_0.stateStep_3++;
+            }
+
+            if (chara->properties_E4.player.runTimer_F8 != 0)
+            {
+                chara->properties_E4.player.afkTimer_E8 = 0;
+                chara->model_0.stateStep_3              = 0;
+                chara->properties_E4.player.runTimer_F8 = 0;
+            }
+
+            break;
+        case 3:
+            if (chara->properties_E4.player.playerMoveDistance_126 != 0)
+            {
+                chara->properties_E4.player.playerMoveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
+                if (chara->properties_E4.player.playerMoveDistance_126 < 0)
+                {
+                    chara->properties_E4.player.playerMoveDistance_126 = 0;
+                }
+            }
+
+            D_800E3A30 = (g_DeltaTime0 * 8) - g_DeltaTime0;
+
+            if (chara->model_0.stateStep_3 == 0)
+            {
+                chara->model_0.anim_4.status_0 = 4;
+                chara->model_0.stateStep_3++;
+            }
+
+            if (chara->properties_E4.player.runTimer_F8 != 0)
+            {
+                chara->properties_E4.player.afkTimer_E8 = 0;
+                chara->model_0.stateStep_3              = 0;
+                chara->properties_E4.player.runTimer_F8 = 0;
+            }
+
+            g_SysWork.player_4C.chara_0.properties_E4.player.headingAngle_124 = 0;
+            chara->properties_E4.player.headingAngle_124                      = 0;
+            break;
+        case 4:
+            if (chara->properties_E4.player.playerMoveDistance_126 != 0)
+            {
+                chara->properties_E4.player.playerMoveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
+                if (chara->properties_E4.player.playerMoveDistance_126 < 0)
+                {
+                    chara->properties_E4.player.playerMoveDistance_126 = 0;
+                }
+            }
+
+            D_800E3A30 = g_DeltaTime0 - (g_DeltaTime0 * 8);
+
+            if (chara->model_0.stateStep_3 == 0)
+            {
+                chara->model_0.anim_4.status_0 = 4;
+                chara->model_0.stateStep_3++;
+            }
+
+            if (chara->properties_E4.player.runTimer_F8 != 0)
+            {
+                chara->properties_E4.player.afkTimer_E8 = 0;
+                chara->model_0.stateStep_3              = 0;
+                chara->properties_E4.player.runTimer_F8 = 0;
+            }
+
+            g_SysWork.player_4C.chara_0.properties_E4.player.headingAngle_124 = 0;
+            chara->properties_E4.player.headingAngle_124                      = 0;
+            break;
+    }
+
+    Collision_Get(&sp18, chara->position_18.vx, chara->position_18.vz);
+    func_8007FDE0(sp18.field_8, &unused, &pitch0, &pitch1);
+
+    distSquared = SQUARE(Q12_TO_Q8(chara->position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx)) +
+                  SQUARE(Q12_TO_Q8(chara->position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz));
+
+    if (g_Player_DisableControl)
+    {
+        switch (chara->properties_E4.player.afkTimer_E8)
+        {
+            case 1:
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(2, true), chara, 16, 28, Sfx_Unk1353, pitch0);
+                break;
+            case 2:
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(3, true), chara, 53, 42, Sfx_Unk1353, pitch1);
+                break;
+        }
+    }
+    else
+    {
+        switch (chara->properties_E4.player.afkTimer_E8)
+        {
+            case 1:
+                func_800D8748(ANIM_STATUS(2, true), chara, 16, 28, distSquared, pitch0);
+                break;
+            case 2:
+                func_800D8748(ANIM_STATUS(3, true), chara, 53, 42, distSquared, pitch1);
+                break;
+        }
+    }
+
+    chara->rotation_24.vy  = ABS_ANGLE(chara->rotation_24.vy + Q12_TO_Q8(D_800E3A30));
+    chara->headingAngle_3C = chara->rotation_24.vy;
+    chara->moveSpeed_38    = chara->properties_E4.player.headingAngle_124;
+    chara->field_34       += g_DeltaTime2;
+
+    coords->flg = 0;
+    func_80096E78(&chara->rotation_24, &coords->coord);
+}
 
 bool func_800D8748(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 arg4, s32 pitch) // 0x800D8748
 {
