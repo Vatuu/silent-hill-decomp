@@ -1702,12 +1702,12 @@ void func_8003D468(s32 charaId, bool flag) // 0x8003D468
     LoadImage(&rect, &data);
 }
 
-void func_8003D550(s32 charaId, s32 arg1) // 0x8003D550
+void func_8003D550(s32 charaId, s32 blendMode) // 0x8003D550
 {
     s_CharaModel* model;
 
     model = g_WorldGfx.charaModels_18[charaId];
-    Lm_MaterialFileIdxApply(model->lmHdr_8, CHARA_FILE_INFOS[charaId].textureFileIdx, &model->texture_C, arg1);
+    Lm_MaterialFileIdxApply(model->lmHdr_8, CHARA_FILE_INFOS[charaId].textureFileIdx, &model->texture_C, blendMode);
     Lm_MaterialFlagsApply(model->lmHdr_8);
 }
 
@@ -1865,7 +1865,7 @@ void func_8003D9C8(s_CharaModel* model) // 0x8003D9C8
         model->isLoaded_1 = true;
 
         LmHeader_FixOffsets(model->lmHdr_8);
-        Lm_MaterialFileIdxApply(model->lmHdr_8, CHARA_FILE_INFOS[model->charaId_0].textureFileIdx, &model->texture_C, CHARA_FILE_INFOS[model->charaId_0].field_6_10 % 4);
+        Lm_MaterialFileIdxApply(model->lmHdr_8, CHARA_FILE_INFOS[model->charaId_0].textureFileIdx, &model->texture_C, CHARA_FILE_INFOS[model->charaId_0].materialBlendMode_6_10 % 4);
 
         skel = &model->skeleton_14;
 

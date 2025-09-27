@@ -1376,11 +1376,11 @@ typedef struct
 {
     s16            animFileIdx;
     s16            modelFileIdx;
-    s16            textureFileIdx : 16;
-    u16            field_6        : 10;
-    u16            field_6_10     : 6;   // Something related to material.
-    s_FsImageDesc* field_8;
-    u16            cameraAnchor_C_0  : 2; /** `e_CameraAnchor` */
+    s16            textureFileIdx         : 16;
+    u16            field_6                : 10;
+    u16            materialBlendMode_6_10 : 6; /** `e_BlendMode` */
+    s_FsImageDesc* field_8;                    // Extra texture pointer? Usually `NULL` in `CHARA_FILE_INFOS`.
+    u16            cameraAnchor_C_0  : 2;      /** `e_CameraAnchor` */
     q19_12         cameraOffsetY_C_2 : 14;
     // 2 bytes of padding.
 } s_CharaFileInfo;
@@ -2641,7 +2641,7 @@ void func_8003D03C();
 
 bool WorldGfx_IsCharaModelPresent(s32 charaId);
 
-void func_8003D550(s32 charaId, s32 arg1);
+void func_8003D550(s32 charaId, s32 blendMode);
 
 /** Called by some chara init funcs, similar to `func_8003DD80`? */
 void func_8003D468(s32 arg0, bool flag);
@@ -3195,18 +3195,17 @@ void func_8005B424(VECTOR3* vec0, VECTOR3* vec1);
 /** @unused No references. */
 void func_800563E8(s_LmHeader* lmHdr, s32 arg1, s32 arg2, s32 arg3);
 
-void Lm_MaterialFileIdxApply(s_LmHeader* lmHdr, s32 fileIdx, s_FsImageDesc* image, s32 arg3);
+void Lm_MaterialFileIdxApply(s_LmHeader* lmHdr, s32 fileIdx, s_FsImageDesc* image, s32 blendMode);
 
-void func_80056504(s_LmHeader* lmHdr, char* newStr, s_FsImageDesc* image, s32 arg3);
+void func_80056504(s_LmHeader* lmHdr, char* newStr, s_FsImageDesc* image, s32 blendMode);
 
-bool Lm_MaterialFsImageApply(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* image, s32 arg3);
+bool Lm_MaterialFsImageApply(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* image, s32 blendMode);
 
-void Material_FsImageApply(s_Material* mat, s_FsImageDesc* image, s32 arg2);
+void Material_FsImageApply(s_Material* mat, s_FsImageDesc* image, s32 blendMode);
 
-void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* images, s8 unused, s32 startIdx, s32 arg4);
+void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* images, s8 unused, s32 startIdx, s32 blendMode);
 
-/** Unknown `arg4` type. */
-void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* activeTexs, bool (*filterFunc)(s_Material* mat), s32 fileIdx, s32 arg4);
+void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* activeTexs, bool (*filterFunc)(s_Material* mat), s32 fileIdx, s32 blendMode);
 
 /** Checks if LM textures are loaded? */
 bool LmHeader_IsTextureLoaded(s_LmHeader* lmHdr);

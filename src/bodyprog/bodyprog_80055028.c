@@ -580,7 +580,7 @@ void func_800563E8(s_LmHeader* lmHdr, s32 arg1, s32 arg2, s32 arg3) // 0x800563E
     }
 }
 
-void Lm_MaterialFileIdxApply(s_LmHeader* lmHdr, s32 fileIdx, s_FsImageDesc* image, s32 arg3) // 0x80056464
+void Lm_MaterialFileIdxApply(s_LmHeader* lmHdr, s32 fileIdx, s_FsImageDesc* image, s32 blendMode) // 0x80056464
 {
     char  sp10[8];
     char  sp18[16];
@@ -600,18 +600,18 @@ void Lm_MaterialFileIdxApply(s_LmHeader* lmHdr, s32 fileIdx, s_FsImageDesc* imag
         *sp10Ptr++ = *sp18Ptr++;
     }
 
-    Lm_MaterialFsImageApply(lmHdr, sp10, image, arg3);
+    Lm_MaterialFsImageApply(lmHdr, sp10, image, blendMode);
 }
 
-void func_80056504(s_LmHeader* lmHdr, char* newStr, s_FsImageDesc* image, s32 arg3) // 0x80056504
+void func_80056504(s_LmHeader* lmHdr, char* newStr, s_FsImageDesc* image, s32 blendMode) // 0x80056504
 {
     char sp10[8];
 
     StringCopy(sp10, newStr);
-    Lm_MaterialFsImageApply(lmHdr, sp10, image, arg3);
+    Lm_MaterialFsImageApply(lmHdr, sp10, image, blendMode);
 }
 
-bool Lm_MaterialFsImageApply(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* image, s32 arg3) // 0x80056558
+bool Lm_MaterialFsImageApply(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* image, s32 blendMode) // 0x80056558
 {
     s_Material* curMat;
 
@@ -622,7 +622,7 @@ bool Lm_MaterialFsImageApply(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* i
         if (!COMPARE_FILENAMES(&curMat->name_0, fileName))
         {
             curMat->field_C = 1;
-            Material_FsImageApply(curMat, image, arg3);
+            Material_FsImageApply(curMat, image, blendMode);
             return true;
         }
     }
@@ -630,7 +630,7 @@ bool Lm_MaterialFsImageApply(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* i
     return false;
 }
 
-void Material_FsImageApply(s_Material* mat, s_FsImageDesc* image, s32 arg2) // 0x8005660C
+void Material_FsImageApply(s_Material* mat, s_FsImageDesc* image, s32 blendMode) // 0x8005660C
 {
     s32 coeff;
 
@@ -653,11 +653,16 @@ void Material_FsImageApply(s_Material* mat, s_FsImageDesc* image, s32 arg2) // 0
     mat->field_14.u8[0] = image->u * coeff;
     mat->field_14.u8[1] = image->v;
 
-    mat->field_E  = ((image->tPage[0] & 0x3) << 7) | ((arg2 & 0x3) << 5) | (image->tPage[1] & (1 << 4)) | (image->tPage[1] & 0xF);
-    mat->field_10 = (image->clutY << 6) | ((image->clutX >> 4) & 0x3F);
+    // Set GPU flags.
+    mat->field_E  = ((image->tPage[0] & 0x3) << 7) | // X bits of texture page.
+                    ((blendMode & 0x3) << 5) |       // Semi-transparency blend mode.
+                    (image->tPage[1] & (1 << 4)) |   // dither/texture-depth flag.
+                    (image->tPage[1] & 0xF);         // Y bits + color depth.
+    mat->field_10 = (image->clutY << 6) |
+                    ((image->clutX >> 4) & 0x3F);
 }
 
-void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* images, s8 unused, s32 startIdx, s32 arg4) // 0x800566B4
+void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* images, s8 unused, s32 startIdx, s32 blendMode) // 0x800566B4
 {
     char           filename[16];
     s32            i;
@@ -671,11 +676,11 @@ void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* images, s8 unused, s32 star
     {
         Material_TimFileNameGet(filename, curMat);
         Fs_QueueStartReadTim(Fs_FindNextFile(filename, 0, startIdx), FS_BUFFER_9, curImage);
-        Material_FsImageApply(curMat, curImage, arg4);
+        Material_FsImageApply(curMat, curImage, blendMode);
     }
 }
 
-void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* activeTexs, bool (*filterFunc)(s_Material* mat), s32 fileIdx, s32 arg4) // 0x80056774
+void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* activeTexs, bool (*filterFunc)(s_Material* mat), s32 fileIdx, s32 blendMode) // 0x80056774
 {
     s_Material* curMat;
 
@@ -684,10 +689,10 @@ void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* activeTexs,
         if (curMat->field_C == 0 && curMat->texture_8 == NULL &&
             (filterFunc == NULL || filterFunc(curMat)))
         {
-            curMat->texture_8 = Texture_Get(curMat, activeTexs, FS_BUFFER_9, fileIdx, arg4);
+            curMat->texture_8 = Texture_Get(curMat, activeTexs, FS_BUFFER_9, fileIdx, blendMode);
             if (curMat->texture_8 != NULL)
             {
-                Material_FsImageApply(curMat, &curMat->texture_8->imageDesc_0, arg4);
+                Material_FsImageApply(curMat, &curMat->texture_8->imageDesc_0, blendMode);
             }
         }
     }

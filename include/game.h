@@ -148,10 +148,9 @@ struct _Model;
  * @param isWhite `true` for white fade, `false` for black fade.
  */
 #define ScreenFade_Start(reset, fadeIn, isWhite) \
-    g_Screen_FadeStatus = ( \
-    (((reset) == true ? ScreenFadeState_FadeOutStart : ScreenFadeState_FadeOutSteps) + \
-    ((fadeIn) == true ? 4 : 0)) | \
-    ((isWhite) == true ? (1 << 3): 0) )
+    g_Screen_FadeStatus = (((((reset) == true) ? ScreenFadeState_FadeOutStart : ScreenFadeState_FadeOutSteps) + \
+                           (((fadeIn) == true) ? 4 : 0)) | \
+                           (((isWhite) == true) ? (1 << 3) : 0))
 
 /** @brief Resets the screen fade. */
 #define ScreenFade_Reset() \

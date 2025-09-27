@@ -1060,7 +1060,7 @@ void func_80042C3C(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1) // 0x
         g_Map.ipdTextures_430.fullPage_0.count_0 = 4;
 
         LmHeader_FixOffsets(g_Map.globalLm_138.lmHdr_0);
-        Lm_MaterialsLoadWithFilter(g_Map.globalLm_138.lmHdr_0, &g_Map.ipdTextures_430.fullPage_0, NULL, g_Map.texFileIdx_134, 1);
+        Lm_MaterialsLoadWithFilter(g_Map.globalLm_138.lmHdr_0, &g_Map.ipdTextures_430.fullPage_0, NULL, g_Map.texFileIdx_134, BlendMode_Additive);
         Lm_MaterialFlagsApply(g_Map.globalLm_138.lmHdr_0);
 
         g_Map.ipdTextures_430.fullPage_0.count_0 = fullPageTexCount;
@@ -1536,12 +1536,12 @@ void Ipd_MaterialsLoad(s_IpdHeader* ipdHdr, s_ActiveTextures* arg1, s_ActiveText
 
     if (arg1 != NULL)
     {
-        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr_4, arg1, &LmFilter_IsFullPage, fileIdx, 1);
+        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr_4, arg1, &LmFilter_IsFullPage, fileIdx, BlendMode_Additive);
     }
 
     if (arg2 != NULL)
     {
-        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr_4, arg2, &LmFilter_IsHalfPage, fileIdx, 1);
+        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr_4, arg2, &LmFilter_IsHalfPage, fileIdx, BlendMode_Additive);
     }
 }
 
