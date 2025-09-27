@@ -1706,7 +1706,7 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
             use_dist = Q12(0.4f);
         }
 
-        ofs_y = CHARA_FILE_INFOS[sc_p->model_0.charaId_0].field_C_2 * 16;
+        ofs_y = Q8_TO_Q12(CHARA_FILE_INFOS[sc_p->model_0.charaId_0].offsetY_C_2);
 
         switch (CHARA_FILE_INFOS[sc_p->model_0.charaId_0].field_C_0)
         {
