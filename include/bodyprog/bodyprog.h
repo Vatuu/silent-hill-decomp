@@ -4110,7 +4110,7 @@ void func_8003CC7C(s_WorldObject_0* arg0, MATRIX* arg1, MATRIX* arg2);
 void WorldGfx_CharaLmBufferAdvance(s32* arg0, s32 charaId);
 
 /** Texture UV setup for NPCs. */
-void func_8003D3BC(s_FsImageDesc* image, s32 groupIds, s32 modelIdx);
+void Chara_FsImageCalc(s_FsImageDesc* image, s32 groupIds, s32 modelIdx);
 
 s32 WorldGfx_CharaLoad(u32 charaId, s32 modelIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 

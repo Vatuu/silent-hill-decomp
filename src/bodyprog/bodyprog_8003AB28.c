@@ -1532,7 +1532,7 @@ void func_8003D160() // 0x8003D160
     s_CharaModel* harryModel;
     s_LmHeader*   lmHdr = HARRY_LM_BUFFER;
 
-    func_8003D3BC(&image, 1, 0);
+    Chara_FsImageCalc(&image, 1, 0);
 
     worldGfx                                    = &g_WorldGfx;
     harryModel                                  = &worldGfx->harryModel_164C;
@@ -1581,7 +1581,7 @@ s32 func_8003D21C(s_MapOverlayHeader* arg0) // 0x8003D21C
 
             if (cond) 
             {
-                func_8003D3BC(&image, curCharaId, i);
+                Chara_FsImageCalc(&image, curCharaId, i);
                 queueIdx = WorldGfx_CharaLoad(curCharaId, i, (s_LmHeader*)g_WorldGfx.charaLmBufferPtr_14, &image);
             }
 
@@ -1605,7 +1605,7 @@ void WorldGfx_CharaLmBufferAdvance(s32* arg0, s32 charaId) // 0x8003D354
     *arg0 += (fileSize + 3) & ~0x3;
 }
 
-void func_8003D3BC(s_FsImageDesc* image, s32 charaId, s32 modelIdx) // 0x8003D3BC
+void Chara_FsImageCalc(s_FsImageDesc* image, s32 charaId, s32 modelIdx) // 0x8003D3BC
 {
     s16 clutX;
     s16 clutY;
@@ -1779,7 +1779,7 @@ void func_8003D6E0(s32 charaId, s32 modeIdx, s_LmHeader* lmHdr, s_FsImageDesc* t
     } 
     else 
     {
-        func_8003D3BC(&image, charaId, modeIdx);
+        Chara_FsImageCalc(&image, charaId, modeIdx);
     }
 
     WorldGfx_CharaLoad(charaId, modeIdx, plmHdrPtr, &image);

@@ -2759,3 +2759,4 @@ hack_D_800FE5FC_fix                         = 0x800FE5FC; // ignore:true - Part 
 WorldGfx_CharaLoad = 0x8003D7D4; // type:func
 WorldGfx_CharaLmBufferAdvance = 0x8003D354; // type:func
 WorldGfx_CharaModelPresent = 0x8003D444; // type:func
+Chara_FsImageCalc = 0x8003D3BC; // type:func
