@@ -1358,7 +1358,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088370); // 0x
 bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coords, s8 forceFree, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x80088C7C
 {
     func_80035338(modelIdx + 1, charaId, NULL, coords);
-    func_8003D5B4(forceFree);
+    WorldGfx_CharaLmBufferAssign(forceFree);
     func_8003D6E0(charaId, modelIdx, lmHdr, tex);
     return true;
 }

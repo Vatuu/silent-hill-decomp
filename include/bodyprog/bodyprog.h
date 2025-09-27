@@ -2650,7 +2650,7 @@ void WorldGfx_HarryCharaLoad();
 
 s32 func_8003D21C(s_MapOverlayHeader* arg0);
 
-void func_8003D5B4(s8 forceFree);
+void WorldGfx_CharaLmBufferAssign(s8 forceFree);
 
 void func_8003D6E0(s32 charaId, s32 modeIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 

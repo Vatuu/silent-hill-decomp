@@ -1711,7 +1711,7 @@ void func_8003D550(s32 charaId, s32 arg1) // 0x8003D550
     Lm_MaterialFlagsApply(model->lmHdr_8);
 }
 
-void func_8003D5B4(s8 forceFree) // 0x8003D5B4
+void WorldGfx_CharaLmBufferAssign(s8 forceFree) // 0x8003D5B4
 {
     u8            charaId;
     s32           i;
