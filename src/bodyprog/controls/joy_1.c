@@ -54,7 +54,7 @@ void Joy_ControllerDataUpdate() // 0x80034494
         // Update held button flags.
         if (cont->analogController_0.status == 0xFF)
         {
-            cont->btnsHeld_C = 0;
+            cont->btnsHeld_C = ControllerFlag_None;
         }
         else
         {
@@ -82,7 +82,7 @@ void Joy_ControllerDataUpdate() // 0x80034494
 
         // Update clicked and released button flags.
         cont->btnsClicked_10  = ~prevBtnsHeld & cont->btnsHeld_C;
-        cont->btnsReleased_14 = prevBtnsHeld  & ~cont->btnsHeld_C;
+        cont->btnsReleased_14 =  prevBtnsHeld & ~cont->btnsHeld_C;
 
         // Update pulse ticks.
         pulseTicks = cont->pulseTicks_8;
@@ -123,14 +123,14 @@ void Joy_ControllerDataUpdate() // 0x80034494
         }
 
         // Clear left/right pulse flags if up/down is concurrent.
-        if ((cont->btnsPulsedGui_1C & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)) != 0)
+        if ((cont->btnsPulsedGui_1C & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)))
         {
             cont->btnsPulsedGui_1C &= ~(ControllerFlag_LStickRight | ControllerFlag_LStickLeft);
         }
     }
 }
 
-void ControllerData_AnalogToDigital(s_ControllerData* cont, s32 arg1) // 0x80034670
+void ControllerData_AnalogToDigital(s_ControllerData* cont, bool arg1) // 0x80034670
 {
     s32 val;
     s32 axisIdx;
@@ -144,12 +144,14 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, s32 arg1) // 0x80034
 
     btnsHeld = cont->btnsHeld_C;
 
-    if (arg1 != 0)
+    if (arg1)
     {
         signedRawAnalog     = *(u32*)&cont->analogController_0.rightX ^ 0x80808080;
         xorShiftedRawAnalog = signedRawAnalog;
 
-        for (normalizedAnalogData = 0, axisIdx = 3; axisIdx >= 0; axisIdx--)
+        for (normalizedAnalogData = 0, axisIdx = 3;
+             axisIdx >= 0;
+             axisIdx--)
         {
             normalizedAnalogData <<= 8;
             val                    = xorShiftedRawAnalog >> 24;
@@ -177,7 +179,7 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, s32 arg1) // 0x80034
         normalizedAnalogData = 0;
     }
 
-    processedInputFlags      = normalizedAnalogData;
+    processedInputFlags       = normalizedAnalogData;
     cont->sticks_20.rawData_0 = signedRawAnalog;
 
     // TODO: Demagic hex values. Analog stick or button flags?
