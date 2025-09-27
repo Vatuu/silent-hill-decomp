@@ -71,12 +71,12 @@ struct _MapOverlayHeader;
 
 #define CAMERA_PATH_COLL_COUNT_MAX 10
 
-typedef enum _CameraLookAtAnchor
+typedef enum _CameraAnchor
 {
-    CameraLookAtAnchor_Character = 0,
-    CameraLookAtAnchor_Ground    = 1,
-    CameraLookAtAnchor_Camera    = 2 // TODO: Name uncertain. Relies on some backup camera Y value? -- Sezz
-} e_CameraLookAtAnchor;
+    CameraAnchor_Character = 0,
+    CameraAnchor_Ground    = 1,
+    CameraAnchor_Camera    = 2 // TODO: Name uncertain. Relies on some backup camera Y value? -- Sezz
+} e_CameraAnchor;
 
 typedef enum _VC_ROAD_FLAGS
 {

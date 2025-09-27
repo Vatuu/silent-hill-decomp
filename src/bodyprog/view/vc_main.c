@@ -1706,17 +1706,16 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
             use_dist = Q12(0.4f);
         }
 
+        // Compute look-at Y anchor.
         ofs_y = Q8_TO_Q12(CHARA_FILE_INFOS[sc_p->model_0.charaId_0].offsetY_C_2);
-
-        // Set look-at Y anchor.
         switch (CHARA_FILE_INFOS[sc_p->model_0.charaId_0].field_C_0)
         {
             default:
-            case CameraLookAtAnchor_Character:
+            case CameraAnchor_Character:
                 watch_y = sc_p->position_18.vy + ofs_y;
                 break;
 
-            case CameraLookAtAnchor_Ground:
+            case CameraAnchor_Ground:
                 Collision_Get(&coll, sc_p->position_18.vx, sc_p->position_18.vz);
 
                 // If no valid ground, fall back on character Y position.
@@ -1731,7 +1730,7 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
                 }
                 break;
 
-            case CameraLookAtAnchor_Camera:
+            case CameraAnchor_Camera:
                 watch_y = w_p->field_2E4 + ofs_y;
                 break;
         }
