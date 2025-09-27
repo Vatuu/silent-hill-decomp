@@ -854,7 +854,7 @@ void func_8003C048() // 0x8003C048
 
     g_WorldGfx.useStoredPoint_4 = false;
 
-    Map_Init(FS_BUFFER_13, FS_BUFFER_14, 0x2C000);
+    Map_Init(GLOBAL_LM_BUFFER, IPD_BUFFER, 0x2C000);
     func_800697EC();
 
     g_SysWork.field_2378 = Q12(1.0f);
