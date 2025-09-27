@@ -25,8 +25,7 @@
 #define LM_HEADER_MAGIC  '0'
 #define LM_VERSION       6
 
-// Chara_Load can force free already loaded models to make room for a new one.
-#define CHARA_FORCE_FREE_ALL 0xFF
+#define CHARA_FORCE_FREE_ALL 0xFF /** `Chara_Load` can force free already loaded models to make room for new ones. */
 
 // ==============
 // HELPER MACROS
@@ -1147,7 +1146,7 @@ typedef struct _WorldGfx
     s_HeldItem        heldItem_1BAC;
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; /** Debug camera info. */
     s_LmHeader        itemLmHdr_1BE4;
-    u8                itemLmData_1BF4[4096 - sizeof(s_LmHeader)]; // retail game uses 2.75kb file, but they allocate 4kb for it.
+    u8                itemLmData_1BF4[4096 - sizeof(s_LmHeader)]; // Retail game uses 2.75kb file, but they allocate 4kb for it.
     s32               itemLmQueueIdx_2BE4;
     s32               objectCount_2BE8;
     s_WorldObject     objects_2BEC[29]; // Size based on the check in `g_WorldGfx_ObjectAdd`.
@@ -2640,7 +2639,7 @@ void func_8003D01C();
 
 void func_8003D03C();
 
-s32 WorldGfx_CharaModelPresent(s32 charaId);
+bool WorldGfx_IsCharaModelPresent(s32 charaId);
 
 void func_8003D550(s32 charaId, s32 arg1);
 
@@ -2649,7 +2648,6 @@ void func_8003D468(s32 arg0, bool flag);
 
 void WorldGfx_CharaFree(s_CharaModel* model);
 
-/** Return type assumed. */
 void WorldGfx_HarryCharaLoad();
 
 s32 func_8003D21C(s_MapOverlayHeader* arg0);

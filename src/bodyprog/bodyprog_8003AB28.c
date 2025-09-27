@@ -1657,7 +1657,7 @@ void Chara_FsImageCalc(s_FsImageDesc* image, s32 charaId, s32 modelIdx) // 0x800
     image->clutY    = clutY;
 }
 
-s32 WorldGfx_CharaModelPresent(s32 charaId) // 0x8003D444
+bool WorldGfx_IsCharaModelPresent(s32 charaId) // 0x8003D444
 {
     return g_WorldGfx.charaModelsTable_18[charaId] != NULL;
 }

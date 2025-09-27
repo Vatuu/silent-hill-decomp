@@ -116,21 +116,21 @@ struct _Model;
 #define SCREEN_FADE_STATUS(state, isWhite) \
     ((state) | ((isWhite) ? (1 << 3) : 0))
 
-/** @brief Check if screen fade is is not in progress (finished step).
- * This macro masks away the color bit.
+/** @brief Checks if the screen fade is is not in progress (finished step) by masking away the color bit.
+ *
  * @return `true` if finished, `false` if still in progress.
  */
 #define ScreenFade_IsFinished() \
     ((g_Screen_FadeStatus & 0x7) == ScreenFadeState_FadeOutComplete)
 
-/** @brief Check if screen fade is is not in progress (idle step).
- * This macro does NOT mask away the color bit.
+/** @brief Checks if the screen fade is is not in progress (idle step) without masking away the color bit.
+ *
  * @return `true` if idle, `false` otherwise.
  */
 #define ScreenFade_IsNone() \
     (g_Screen_FadeStatus == ScreenFadeState_None)
 
-/** @brief Checks if a screen fade is white.
+/** @brief Checks if the screen fade is white.
  * See `g_Screen_FadeStatus` for bit layout.
  *
  * @param fadeStatus Packed screen fade status containing a fade state and white flag.
@@ -139,12 +139,12 @@ struct _Model;
 #define IS_SCREEN_FADE_WHITE(fadeStatus) \
     ((fadeStatus) & (1 << 3))
 
-/** @brief Start screen fade in/out.
+/** @brief Starts a screen fade in/out.
  *
- * @param reset `true` to reset fade progress to 0, `false` to keep it. Speculation:
- * Skipping screen fade progress step was a mistake. It still works because once fade
- * is finished the progress variable will be reset to 0 anyway.
- * @param fadeIn `true` for a fade in, `false` for fade out.
+ * @param reset `true` to reset fade progress to 0, `false` to keep it.
+ *              Speculation: Skipping the screen fade progress step is a mistake. It still works because once a fade
+ *              is finished, the progress variable will be reset to 0 anyway.
+ * @param fadeIn `true` for fade in, `false` for fade out.
  * @param isWhite `true` for white fade, `false` for black fade.
  */
 #define ScreenFade_Start(reset, fadeIn, isWhite) \
@@ -153,13 +153,11 @@ struct _Model;
     ((fadeIn) == true ? 4 : 0)) | \
     ((isWhite) == true ? (1 << 3): 0) )
 
-/** @brief Reset screen fade. */
+/** @brief Resets the screen fade. */
 #define ScreenFade_Reset() \
     g_Screen_FadeStatus = ScreenFadeState_Reset
 
-/** @brief Reset custom screen fade timestep back to zero.
- * This macro disregards the color bit.
- */
+/** @brief Resets the custom screen fade timestep back to zero, disregarding the color bit. */
 #define ScreenFade_ResetTimestep() \
     g_Screen_FadeStatus = ScreenFadeState_ResetTimeStep
 
