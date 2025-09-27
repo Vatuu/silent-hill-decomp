@@ -136,7 +136,7 @@ bool func_801E2FC0() // 0x801E2FC0
             break;
 
         default:
-            g_Screen_FadeStatus  = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, true);
+            ScreenFade_Start(true, false, true);
             g_ScreenFadeTimeStep = Q12(1.0f);
             break;
     }
@@ -235,7 +235,7 @@ s32 func_801E3304() // 0x801E3304
         {
             Screen_Init(SCREEN_WIDTH, false);
 
-            g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_Reset, false);
+            ScreenFade_Reset();
             g_GameWork.gameStateStep_598[1]++;
         }
         else if (g_GameWork.gameStateStep_598[1] != 10)
@@ -289,11 +289,11 @@ bool func_801E342C() // 0x801E342C
             switch (g_Screen_FadeStatus)
             {
                 case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, true):
-                    g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, true);
+                    ScreenFade_Start(true, true, true);
                     break;
 
                 case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, false):
-                    g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
+                    ScreenFade_Start(true, true, false);
                     break;
             }
 

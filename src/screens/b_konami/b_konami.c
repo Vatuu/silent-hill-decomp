@@ -50,13 +50,13 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
             case 0:
                 Screen_Init(SCREEN_WIDTH * 2, true);
 
-                g_Screen_FadeStatus  = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
+                ScreenFade_Start(true, true, false);
                 g_ScreenFadeTimeStep = Q12(0.2f);
 
                 // Load `1ST/KONAMI2.TIM` (Konami logo).
                 Fs_QueueStartReadTim(FILE_1ST_KONAMI2_TIM, FS_BUFFER_1, &g_KcetLogoImg);
                 
-                func_8003D160();
+                WorldGfx_HarryCharaLoad();
                 GameFs_BgItemLoad();
                 Map_EffectTexturesLoad(NO_VALUE);
 
@@ -76,14 +76,14 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
             case 2:
                 if (g_Controller0->btnsHeld_C != 0 || g_SysWork.timer_1C >= 181)
                 {
-                    g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false);
+                    ScreenFade_Start(false, false, false);
                     g_ScreenFadeTimeStep            = Q12(0.2f);
                     g_GameWork.gameStateStep_598[0] = 3;
                 }
                 break;
 
             case 3:
-                if (SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete)
+                if (ScreenFade_IsFinished())
                 {
                     Fs_QueueWaitForEmpty();
                     Game_StateSetNext(GameState_KcetLogo);
@@ -162,7 +162,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
             case 0:
                 Settings_RestoreDefaults();
 
-                g_Screen_FadeStatus  = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
+                ScreenFade_Start(true, true, false);
                 g_ScreenFadeTimeStep = Q12(0.2f);
 
                 GameFs_BgEtcGfxLoad();
@@ -172,7 +172,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                 break;
 
             case 1:
-                if (g_Screen_FadeStatus == SCREEN_FADE_STATUS(ScreenFadeState_None, false))
+                if (ScreenFade_IsNone())
                 {
                     Fs_QueueWaitForEmpty();
                     while (g_GameWork.gameStateStep_598[0] < 2)
@@ -268,14 +268,14 @@ void GameState_KcetLogo_Update() // 0x800C99A4
             case 6:
                 if (g_Controller0->btnsHeld_C != 0 || g_SysWork.timer_1C > 180)
                 {
-                    g_Screen_FadeStatus  = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false);
+                    ScreenFade_Start(false, false, false);
                     g_ScreenFadeTimeStep = Q12(0.2f);
                     g_GameWork.gameStateStep_598[0]++;
                 }
                 break;
 
             case 7:
-                if (SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete)
+                if (ScreenFade_IsFinished())
                 {
                     Settings_ScreenAndVolUpdate();
                     Screen_Init(SCREEN_WIDTH, false);

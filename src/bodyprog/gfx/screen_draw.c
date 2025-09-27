@@ -159,7 +159,7 @@ void Screen_FadeUpdate() // 0x8003260C
             if (g_ScreenFadeProgress <= Q12(0.0f))
             {
                 g_ScreenFadeProgress = Q12(0.0f);
-                g_Screen_FadeStatus  = SCREEN_FADE_STATUS(ScreenFadeState_Reset, false);
+                ScreenFade_Reset();
                 return;
             }
 

@@ -25,6 +25,9 @@
 #define LM_HEADER_MAGIC  '0'
 #define LM_VERSION       6
 
+// Chara_Load can force free already loaded models to make room for a new one.
+#define CHARA_FORCE_FREE_ALL 0xFF
+
 // ==============
 // HELPER MACROS
 // ==============
@@ -681,12 +684,6 @@ typedef struct _LmHeader
     u8             unk_9[3];
     s_ModelHeader* modelHdrs_C;
     u8*            modelOrder_10;
-
-    // File header ends, extra data below.
-    // After this goes array of `s_Material`, `s_ModelHeader` `modelsOrder`.
-    // See https://github.com/Sparagas/Silent-Hill/blob/main/010%20Editor%20-%20Binary%20Templates/sh1_model.bt
-    s8            unk_11[4075];
-    s32           queueIdx_1000;
 } s_LmHeader;
 
 typedef struct _IpdCollisionData_10
@@ -1143,13 +1140,15 @@ typedef struct _WorldGfx
     u8                useStoredPoint_4; /** `bool` */
     u8                unk_5[3];
     VECTOR3           ipdSamplePoint_8; /** Used by IPD logic to sample which chunks to load or unload. */
-    s32               dataPtr_14;       // Used frequently as `s_LmHeader*`, but code adds file lengths to it. Could just be `u8*` pointing to current file data?
+    u8*               charaLmBufferPtr_14;
     s_CharaModel*     charaModelsTable_18[Chara_Count];
     s_CharaModel      charaModels_CC[4];
     s_CharaModel      harryModel_164C;
     s_HeldItem        heldItem_1BAC;
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; /** Debug camera info. */
     s_LmHeader        itemLmHdr_1BE4;
+    u8                itemLmData_1BF4[4096 - sizeof(s_LmHeader)]; // retail game uses 2.75kb file, but they allocate 4kb for it.
+    s32               itemLmQueueIdx_2BE4;
     s32               objectCount_2BE8;
     s_WorldObject     objects_2BEC[29]; // Size based on the check in `g_WorldGfx_ObjectAdd`.
 } s_WorldGfx;
@@ -2641,21 +2640,21 @@ void func_8003D01C();
 
 void func_8003D03C();
 
-s32 func_8003D444(s32 charaId);
+s32 WorldGfx_CharaModelPresent(s32 charaId);
 
 void func_8003D550(s32 charaId, s32 arg1);
 
 /** Called by some chara init funcs, similar to `func_8003DD80`? */
 void func_8003D468(s32 arg0, bool flag);
 
-void func_8003D6A4(s_CharaModel* model);
+void WorldGfx_CharaFree(s_CharaModel* model);
 
 /** Return type assumed. */
-void func_8003D160();
+void WorldGfx_HarryCharaLoad();
 
 s32 func_8003D21C(s_MapOverlayHeader* arg0);
 
-void func_8003D5B4(s8 arg0);
+void WorldGfx_CharaLmBufferAssign(s8 forceFree);
 
 void func_8003D6E0(s32 charaId, s32 modeIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
@@ -3465,11 +3464,7 @@ void func_800880F0(s32 arg0);
 
 void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, u32 arg9, s16 argA, s32 argB);
 
-/** `arg5` could be a pointer.
- * `func_8003D6E0` uses this function and in the last argument
- * it input `arg5` and `arg5` is an undetermined function pointer
- */
-bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coords, s8 flags, s_LmHeader* lmHdr, s_FsImageDesc* tex);
+bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coords, s8 forceFree, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 bool func_80088D0C();
 
@@ -4139,12 +4134,12 @@ void func_8003CBA4(s_WorldObject* obj);
 
 void func_8003CC7C(s_WorldObject_0* arg0, MATRIX* arg1, MATRIX* arg2);
 
-void func_8003D354(s32* arg0, s32 charaId);
+void WorldGfx_CharaLmBufferAdvance(u8** bufPtr, s32 charaId);
 
 /** Texture UV setup for NPCs. */
-void func_8003D3BC(s_FsImageDesc* image, s32 groupIds, s32 modelIdx);
+void Chara_FsImageCalc(s_FsImageDesc* image, s32 groupIds, s32 modelIdx);
 
-s32 func_8003D7D4(u32 charaId, s32 modelIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex);
+s32 WorldGfx_CharaLoad(u32 charaId, s32 modelIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 /** Something related to animations. */
 void func_8003D938();

@@ -19,21 +19,22 @@ void GameState_StartMovieIntro_Update() // 0x801E2654
     {
         case 0:
             VSync(SyncMode_Wait8);
-            g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
+            ScreenFade_Start(true, true, false);
             GameFs_TitleGfxLoad();
+
             g_GameWork.gameStateStep_598[0]++;
             break;
 
         case 1:
             if (g_Controller0->btnsHeld_C != 0 || g_SysWork.timer_1C > 300)
             {
-                g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false);
+                ScreenFade_Start(false, false, false);
                 g_GameWork.gameStateStep_598[0] = 2;
             }
             break;
 
         case 2:
-            if (SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete)
+            if (ScreenFade_IsFinished())
             {
                 Fs_QueueWaitForEmpty();
                 Game_StateSetNext(GameState_MovieIntro);
