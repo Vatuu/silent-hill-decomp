@@ -3399,7 +3399,7 @@ void func_800868DC(s32 idx);
 
 void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* sounds);
 
-/** @brief Sets the camera's position target.
+/** @brief Sets the camera position target.
  *
  * @param pos Target position (Q19.12).
  * @param offsetOrPosX If `pos` is valid, X offset for `pos`. If `pos` is `NULL`, X target position.
@@ -3414,7 +3414,7 @@ void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* sounds);
 void Camera_PositionSet(VECTOR3* pos, q19_12 offsetOrPosX, q19_12 offsetOrPosY, q19_12 offsetOrPosZ,
                         q19_12 accelXz, q19_12 accelY, q19_12 speedXzMax, q19_12 speedYMax, bool warp);
 
-/** @brief Sets the camera's rotation and look-at position targets.
+/** @brief Sets the camera rotation and look-at position targets.
  *
  * @param lookAt Target look-at position (Q19.12).
  * @param lookAtOffsetOrPosX If `lookAt` is valid, X offset for `lookAt`. If `lookAt` is `NULL`, X target look-at position.

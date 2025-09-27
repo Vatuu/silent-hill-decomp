@@ -1395,6 +1395,7 @@ void vcMakeNormalWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang_z_p, VC_
 
         vwAngleToVector(&vec, &ang, Q12(0.25f));
 
+        // TODO: `<< 4`?
         watch_tgt_pos->vx = (vec.vx * 16) + w_p->cam_pos_50.vx;
         watch_tgt_pos->vy = (vec.vy * 16) + w_p->cam_pos_50.vy;
         watch_tgt_pos->vz = (vec.vz * 16) + w_p->cam_pos_50.vz;
@@ -1745,7 +1746,7 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
     watch_tgt_pos->vz = w_p->chara_pos_114.vz + FP_MULTIPLY(use_dist, Math_Cos(w_p->chara_eye_ang_y_144), Q12_SHIFT);
 }
 
-void vcSetWatchTgtXzPos(VECTOR3* watch_pos, VECTOR3* center_pos, VECTOR3* cam_pos, q19_12 tgt_chara2watch_cir_dist, q19_12 tgt_watch_cir_r, q3_12 watch_cir_ang_y) // 0x800834A8
+void vcSetWatchTgtXzPos(VECTOR3* watch_pos, const VECTOR3* center_pos, const VECTOR3* cam_pos, q19_12 tgt_chara2watch_cir_dist, q19_12 tgt_watch_cir_r, q3_12 watch_cir_ang_y) // 0x800834A8
 {
     q3_12  cam2chr_ang;
     q19_12 chr2watch_x;

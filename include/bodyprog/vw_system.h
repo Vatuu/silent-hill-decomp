@@ -12,6 +12,7 @@ struct _MapOverlayHeader;
  * ACCEL: Acceleration
  * ANG:   Angle
  * ARY:   Array
+ * CIR:   Circle
  * DEFLT: Default
  * EFF:   Effective?
  * EV:    Elevation?
@@ -391,8 +392,8 @@ void vcMakeHeroHeadPos(VECTOR3* head_pos);
 
 /** @brief Translates a position by a horizontal and vertical offset in the direction of a given angle, outputting the result to `out_pos`.
  *
- * @param out_pos Output position (Q19.12).
- * @param in_pos Input position (Q19.12).
+ * @param out_pos Translated output position (Q19.12).
+ * @param in_pos Position to translate (Q19.12).
  * @param ofs_xz_r Horizontal offset.
  * @param ang_y Offset angle defining the direction of translation.
  * @param ofs_y Vertical offset.
@@ -528,7 +529,18 @@ void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, V
 void vcMakeNormalWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang_z_p, VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_AREA_SIZE_TYPE cur_rd_area_size);
 void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang_z_p, s16 effect_rate, VC_WORK* w_p, MATRIX* head_mat, s32 anim_status);
 void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYPE cur_rd_area_size);
-void vcSetWatchTgtXzPos(VECTOR3* watch_pos, VECTOR3* center_pos, VECTOR3* cam_pos, q19_12 tgt_chara2watch_cir_dist, q19_12 tgt_watch_cir_r, q3_12 watch_cir_ang_y);
+
+/** @brief Sets a camera look-at position. This is the top-level function which incorporates all camera sphere parameters.
+ *
+ * @param watch_pos Output look-at position (Q19.12).
+ * @param center_pos Center reference position (Q19.12).
+ * @param cam_pos Current position (Q19.12).
+ * @param tgt_chara2watch_cir_dist Look-at offset radius.
+ * @param tgt_watch_cir_r Camera position radius???
+ * @param watch_cir_ang_y Y angle from the center to the look-at.
+ */
+void vcSetWatchTgtXzPos(VECTOR3* watch_pos, const VECTOR3* center_pos, const VECTOR3* cam_pos, q19_12 tgt_chara2watch_cir_dist, q19_12 tgt_watch_cir_r, q3_12 watch_cir_ang_y);
+
 void vcSetWatchTgtYParam(VECTOR3* watch_pos, VC_WORK* w_p, s32 cam_mv_type, q19_12 watch_y);
 void vcAdjustWatchYLimitHighWhenFarView(VECTOR3* watch_pos, VECTOR3* cam_pos, s16 sy);
 void vcAutoRenewalCamTgtPos(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_CAM_MV_PARAM* cam_mv_prm_p, VC_ROAD_FLAGS cur_rd_flags, VC_AREA_SIZE_TYPE cur_rd_area_size, s32 far_watch_rate);
@@ -558,7 +570,7 @@ void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type);
 s32  vcCamMatNoise(s32 noise_w, s32 ang_spd1, s32 ang_spd2, q19_12 vcSelfViewTimer);
 s32  Vc_VectorMagnitudeCalc(s32 x, s32 y, s32 z); // Q19.12
 q19_12 vcGetXZSumDistFromLimArea(s32* out_vec_x_p, s32* out_vec_z_p, q19_12 chk_wld_x, q19_12 chk_wld_z,
-                               q19_12 lim_min_x, q19_12 lim_max_x, q19_12 lim_min_z, q19_12 lim_max_z, bool can_ret_minus_dist_f);
+                                 q19_12 lim_min_x, q19_12 lim_max_x, q19_12 lim_min_z, q19_12 lim_max_z, bool can_ret_minus_dist_f);
 
 static inline void Vc_CurNearRoadSet(VC_WORK* work, VC_NEAR_ROAD_DATA* road)
 {
