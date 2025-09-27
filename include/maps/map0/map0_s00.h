@@ -29,7 +29,8 @@ extern char D_800CAE7C[];
 
 extern VECTOR3 D_800CB6A4;
 
-extern s32 D_800E3A30;
+/** Timer. */
+extern q19_12 D_800E3A30;
 
 extern u8 D_800DD592;
 

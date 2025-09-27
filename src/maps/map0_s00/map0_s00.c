@@ -489,9 +489,10 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
     s32         unused;
     s8          pitch0;
     s8          pitch1;
-    s32         distSquared;
+    s32         distSqr;
 
     D_800E3A30 = 0;
+
     switch (chara->properties_E4.player.afkTimer_E8)
     {
         case 0:
@@ -506,7 +507,7 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
 
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = 2;
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(1, false);
                 chara->model_0.stateStep_3++;
             }
 
@@ -519,12 +520,13 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
 
             chara->properties_E4.player.headingAngle_124 = 0;
             break;
+
         case 1:
             chara->properties_E4.player.playerMoveDistance_126 = chara->properties_E4.player.headingAngle_124;
 
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = 4;
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(2, false);
                 chara->model_0.stateStep_3++;
             }
 
@@ -534,14 +536,14 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
                 chara->model_0.stateStep_3              = 0;
                 chara->properties_E4.player.runTimer_F8 = 0;
             }
-
             break;
+
         case 2:
             chara->properties_E4.player.playerMoveDistance_126 = chara->properties_E4.player.headingAngle_124;
 
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = 6;
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(3, false);
                 chara->model_0.stateStep_3++;
             }
 
@@ -551,8 +553,8 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
                 chara->model_0.stateStep_3              = 0;
                 chara->properties_E4.player.runTimer_F8 = 0;
             }
-
             break;
+
         case 3:
             if (chara->properties_E4.player.playerMoveDistance_126 != 0)
             {
@@ -567,7 +569,7 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
 
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = 4;
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(2, false);
                 chara->model_0.stateStep_3++;
             }
 
@@ -581,6 +583,7 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
             g_SysWork.player_4C.chara_0.properties_E4.player.headingAngle_124 = 0;
             chara->properties_E4.player.headingAngle_124                      = 0;
             break;
+
         case 4:
             if (chara->properties_E4.player.playerMoveDistance_126 != 0)
             {
@@ -595,7 +598,7 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
 
             if (chara->model_0.stateStep_3 == 0)
             {
-                chara->model_0.anim_4.status_0 = 4;
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(2, false);
                 chara->model_0.stateStep_3++;
             }
 
@@ -614,8 +617,8 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
     Collision_Get(&sp18, chara->position_18.vx, chara->position_18.vz);
     func_8007FDE0(sp18.field_8, &unused, &pitch0, &pitch1);
 
-    distSquared = SQUARE(Q12_TO_Q8(chara->position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx)) +
-                  SQUARE(Q12_TO_Q8(chara->position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz));
+    distSqr = SQUARE(Q12_TO_Q8(chara->position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx)) +
+              SQUARE(Q12_TO_Q8(chara->position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz));
 
     if (g_Player_DisableControl)
     {
@@ -624,6 +627,7 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
             case 1:
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(2, true), chara, 16, 28, Sfx_Unk1353, pitch0);
                 break;
+
             case 2:
                 sharedFunc_800D908C_0_s00(ANIM_STATUS(3, true), chara, 53, 42, Sfx_Unk1353, pitch1);
                 break;
@@ -634,20 +638,21 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
         switch (chara->properties_E4.player.afkTimer_E8)
         {
             case 1:
-                func_800D8748(ANIM_STATUS(2, true), chara, 16, 28, distSquared, pitch0);
+                func_800D8748(ANIM_STATUS(2, true), chara, 16, 28, distSqr, pitch0);
                 break;
+
             case 2:
-                func_800D8748(ANIM_STATUS(3, true), chara, 53, 42, distSquared, pitch1);
+                func_800D8748(ANIM_STATUS(3, true), chara, 53, 42, distSqr, pitch1);
                 break;
         }
     }
 
-    chara->rotation_24.vy  = ABS_ANGLE(chara->rotation_24.vy + Q12_TO_Q8(D_800E3A30));
+    chara->rotation_24.vy  = ABS_ANGLE(chara->rotation_24.vy + (D_800E3A30 >> 4)); // TODO: Why shift 4?
     chara->headingAngle_3C = chara->rotation_24.vy;
     chara->moveSpeed_38    = chara->properties_E4.player.headingAngle_124;
     chara->field_34       += g_DeltaTime2;
 
-    coords->flg = 0;
+    coords->flg = false;
     func_80096E78(&chara->rotation_24, &coords->coord);
 }
 
