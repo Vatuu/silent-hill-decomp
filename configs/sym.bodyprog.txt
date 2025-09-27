@@ -2758,3 +2758,4 @@ D_800FE5F8                                  = 0x800FE5F8; // ignore:True - Fixes
 hack_D_800FE5FC_fix                         = 0x800FE5FC; // ignore:true - Part of temp memory block at 800FDE00, has to be unsymbolized for C to match.
 WorldGfx_CharaLoad = 0x8003D7D4; // type:func
 WorldGfx_CharaLmBufferAdvance = 0x8003D354; // type:func
+WorldGfx_CharaModelPresent = 0x8003D444; // type:func

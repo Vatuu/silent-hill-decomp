@@ -2633,7 +2633,7 @@ void func_8003D01C();
 
 void func_8003D03C();
 
-s32 func_8003D444(s32 charaId);
+s32 WorldGfx_CharaModelPresent(s32 charaId);
 
 void func_8003D550(s32 charaId, s32 arg1);
 

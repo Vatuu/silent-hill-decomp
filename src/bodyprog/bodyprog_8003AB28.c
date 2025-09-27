@@ -1657,7 +1657,7 @@ void func_8003D3BC(s_FsImageDesc* image, s32 charaId, s32 modelIdx) // 0x8003D3B
     image->clutY    = clutY;
 }
 
-s32 func_8003D444(s32 charaId) // 0x8003D444
+s32 WorldGfx_CharaModelPresent(s32 charaId) // 0x8003D444
 {
     return g_WorldGfx.charaModelsTable_18[charaId] != NULL;
 }
