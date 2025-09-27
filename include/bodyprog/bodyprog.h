@@ -2292,6 +2292,7 @@ extern s16 D_800C15BC;
 
 extern s16 g_Sound_ActiveSfxIdx;
 
+/** Pitch? */
 extern u16 D_800C15C0;
 
 /** Base-0 SFX index. */
@@ -2319,8 +2320,10 @@ extern s32 D_800C15E0;
 
 extern s_800C15F0 D_800C15F0;
 
+/** SFX IDs? */
 extern u16 D_800C15F8[];
 
+/** Voices? */
 extern s16 D_800C1628[];
 
 extern s_800C1658 D_800C1658;

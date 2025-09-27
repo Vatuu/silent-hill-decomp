@@ -284,7 +284,7 @@ void Screen_CutsceneCameraStateUpdate() // 0x80032904
     AddPrim(ot, &poly[2]);
     AddPrim(ot, drMode);
 
-    if (!(g_SysWork.flags_22A4 & 8))
+    if (!(g_SysWork.flags_22A4 & (1 << 3)))
     {
         vcChangeProjectionValue(g_GameWork.gsScreenHeight_58A + FP_MULTIPLY(377 - g_GameWork.gsScreenHeight_58A, D_800A8F40, Q12_SHIFT));
     }

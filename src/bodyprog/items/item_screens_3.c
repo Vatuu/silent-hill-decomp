@@ -1066,8 +1066,8 @@ void Gfx_ItemScreens_RenderInit(u32* selectedItemId) // 0x8004F764
                     continue;
                 }
 
-            g_Items_Transforms[i].rotate.vx = g_InventoryItemRotations[g_SavegamePtr->items_0[D_800C3E18[i]].id_0 - 32].vx;
-            g_Items_Transforms[i].rotate.vz = g_InventoryItemRotations[g_SavegamePtr->items_0[D_800C3E18[i]].id_0 - 32].vy;
+            g_Items_Transforms[i].rotate.vx = INVENTORY_ITEM_ROTATIONS[g_SavegamePtr->items_0[D_800C3E18[i]].id_0 - 32].vx;
+            g_Items_Transforms[i].rotate.vz = INVENTORY_ITEM_ROTATIONS[g_SavegamePtr->items_0[D_800C3E18[i]].id_0 - 32].vy;
 
             Gfx_Items_ItemRotate(&g_Items_Coords[i].param->rotate, &g_Items_Coords[i]);
             func_800548D8(i);
@@ -1079,8 +1079,8 @@ void Gfx_ItemScreens_RenderInit(u32* selectedItemId) // 0x8004F764
         // Equipped item.
         if (g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 != 0xFF && g_Inventory_EquippedItemIdx != NO_VALUE)
         {
-            g_Items_Transforms[7].rotate.vx = g_InventoryItemRotations[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vx;
-            g_Items_Transforms[7].rotate.vz = g_InventoryItemRotations[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vy;
+            g_Items_Transforms[7].rotate.vx = INVENTORY_ITEM_ROTATIONS[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vx;
+            g_Items_Transforms[7].rotate.vz = INVENTORY_ITEM_ROTATIONS[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vy;
 
             Gfx_Items_ItemRotate(&g_Items_Coords[7].param->rotate, &g_Items_Coords[7]);
             func_800548D8(7);
@@ -3128,8 +3128,8 @@ bool Gfx_PickupItemAnimate(u8 itemId) // 0x80054AD8
             transform = &g_Items_Transforms[0];
             scale     = g_Items_PickupScale << 12;
 
-            rotX = g_InventoryItemRotations[itemId - 32].vx;
-            rotZ = g_InventoryItemRotations[itemId - 32].vy;
+            rotX = INVENTORY_ITEM_ROTATIONS[itemId - 32].vx;
+            rotZ = INVENTORY_ITEM_ROTATIONS[itemId - 32].vy;
 
             // Double scale via `<< 12` then `>> 11`.
             transform[9].scale.vz = scale >> 11;
