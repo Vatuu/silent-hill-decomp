@@ -194,7 +194,7 @@ void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 entr
     }
 }
 
-void func_8008616C(s32 arg0, bool arg1, s32 fadeType, q19_12 fadeTimeStep, bool arg4) // 0x8008616C
+void func_8008616C(s32 arg0, bool arg1, s32 fadeType, q19_12 fadeTimestep, bool arg4) // 0x8008616C
 {
     typedef enum _FadeType
     {
@@ -221,7 +221,7 @@ void func_8008616C(s32 arg0, bool arg1, s32 fadeType, q19_12 fadeTimeStep, bool 
         case 0:
             if (fadeType != FadeType_Unk2)
             {
-                g_ScreenFadeTimeStep = fadeTimeStep;
+                g_ScreenFadeTimestep = fadeTimestep;
             }
 
             if (arg1)
@@ -715,12 +715,12 @@ void func_80086D04(s_SubCharacter* chara) // 0x80086D04
     }
 }
 
-void func_80086DA8(s32 fileIdx, s32 fadeTimeStep) // 0x80086DA8
+void func_80086DA8(s32 fileIdx, s32 fadeTimestep) // 0x80086DA8
 {
     switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
-            func_8008616C(0, true, 0, fadeTimeStep, false);
+            func_8008616C(0, true, 0, fadeTimestep, false);
             g_SysWork.timer_2C = Q12(0.0f);
             g_SysWork.sysStateStep_C[2] = 0;
             g_SysWork.sysStateStep_C[1]++;
@@ -735,12 +735,12 @@ void func_80086DA8(s32 fileIdx, s32 fadeTimeStep) // 0x80086DA8
     }
 }
 
-void func_80086E50(s32 fileIdx, s32 fadeTimeStep0, s32 fadeTimeStep1) // 0x80086E50
+void func_80086E50(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1) // 0x80086E50
 {
     switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
-            func_8008616C(0, true, 0, fadeTimeStep0, false);
+            func_8008616C(0, true, 0, fadeTimestep0, false);
             g_SysWork.timer_2C = Q12(0.0f);
             g_SysWork.sysStateStep_C[2] = 0;
             g_SysWork.sysStateStep_C[1]++;
@@ -755,20 +755,20 @@ void func_80086E50(s32 fileIdx, s32 fadeTimeStep0, s32 fadeTimeStep1) // 0x80086
 
         default:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            func_8008616C(2, false, 0, fadeTimeStep1, false);
+            func_8008616C(2, false, 0, fadeTimestep1, false);
     }
 }
 
-void func_80086F44(s32 fadeTimeStep0, s32 fadeTimeStep1) // 0x80086F44
+void func_80086F44(s32 fadeTimestep0, s32 fadeTimestep1) // 0x80086F44
 {
     if (g_SysWork.sysStateStep_C[1] == 0)
     {
         func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-        func_8008616C(2, true, 0, fadeTimeStep1, true);
+        func_8008616C(2, true, 0, fadeTimestep1, true);
         return;
     }
 
-    func_8008616C(0, false, 0, fadeTimeStep0, false);
+    func_8008616C(0, false, 0, fadeTimestep0, false);
     SysWork_StateStepIncrement();
 }
 
@@ -820,13 +820,13 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
     }
 }
 
-void func_8008716C(s32 itemId, s32 fadeTimeStep0, s32 fadeTimeStep1) // 0x8008716C
+void func_8008716C(s32 itemId, s32 fadeTimestep0, s32 fadeTimestep1) // 0x8008716C
 {
     switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
             g_MapOverlayHeader.freezePlayerControl_C8();
-            func_8008616C(0, true, 0, fadeTimeStep0, false);
+            func_8008616C(0, true, 0, fadeTimestep0, false);
             g_SysWork.timer_2C = Q12(0.0f);
             g_SysWork.sysStateStep_C[2] = 0;
             g_SysWork.sysStateStep_C[1]++;
@@ -841,7 +841,7 @@ void func_8008716C(s32 itemId, s32 fadeTimeStep0, s32 fadeTimeStep1) // 0x800871
 
         case 3:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            func_8008616C(2, false, 0, fadeTimeStep1, true);
+            func_8008616C(2, false, 0, fadeTimestep1, true);
             break;
 
         case 4:
@@ -858,24 +858,24 @@ void func_8008716C(s32 itemId, s32 fadeTimeStep0, s32 fadeTimeStep1) // 0x800871
 
         case 5:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            func_8008616C(2, true, 0, fadeTimeStep1, true);
+            func_8008616C(2, true, 0, fadeTimestep1, true);
             break;
 
         default:
-            func_8008616C(0, false, 0, fadeTimeStep0, false);
+            func_8008616C(0, false, 0, fadeTimestep0, false);
             g_MapOverlayHeader.unfreezePlayerControl_CC(0);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }
 
-void func_80087360(s32 fileIdx, s32 fadeTimeStep0, s32 fadeTimeStep1, s32 mapMsgIdx) // 0x80087360
+void func_80087360(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsgIdx) // 0x80087360
 {
     switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
             g_MapOverlayHeader.freezePlayerControl_C8();
-            func_8008616C(0, true, 0, fadeTimeStep0, false);
+            func_8008616C(0, true, 0, fadeTimestep0, false);
 
             g_SysWork.timer_2C = Q12(0.0f);
             g_SysWork.sysStateStep_C[2] = 0;
@@ -891,7 +891,7 @@ void func_80087360(s32 fileIdx, s32 fadeTimeStep0, s32 fadeTimeStep1, s32 mapMsg
 
         case 3:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            func_8008616C(2, false, 0, fadeTimeStep1, true);
+            func_8008616C(2, false, 0, fadeTimestep1, true);
             break;
 
         case 4:
@@ -901,24 +901,24 @@ void func_80087360(s32 fileIdx, s32 fadeTimeStep0, s32 fadeTimeStep1, s32 mapMsg
         
         case 5:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            func_8008616C(2, true, 0, fadeTimeStep1, true);
+            func_8008616C(2, true, 0, fadeTimestep1, true);
             break;
 
         default:
-            func_8008616C(0, false, 0, fadeTimeStep0, false);
+            func_8008616C(0, false, 0, fadeTimestep0, false);
             g_MapOverlayHeader.unfreezePlayerControl_CC(0);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }
 
-void func_80087540(s32 fileIdx, s32 fadeTimeStep0, s32 fadeTimeStep1, s32 mapMsgIdx0, s32 mapMsgIdx1) // 0x80087540
+void func_80087540(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1) // 0x80087540
 {
     switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
             g_MapOverlayHeader.freezePlayerControl_C8();
-            func_8008616C(0, true, 0, fadeTimeStep0, false);
+            func_8008616C(0, true, 0, fadeTimestep0, false);
 
             g_SysWork.timer_2C = Q12(0.0f);
             g_SysWork.sysStateStep_C[2] = 0;
@@ -934,7 +934,7 @@ void func_80087540(s32 fileIdx, s32 fadeTimeStep0, s32 fadeTimeStep1, s32 mapMsg
 
         case 3:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            func_8008616C(2, false, 0, fadeTimeStep1, true);
+            func_8008616C(2, false, 0, fadeTimestep1, true);
             break;
 
         case 4:
@@ -965,11 +965,11 @@ void func_80087540(s32 fileIdx, s32 fadeTimeStep0, s32 fadeTimeStep1, s32 mapMsg
             g_BackgroundColor = 48;
 
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            func_8008616C(2, true, 0, fadeTimeStep1, true);
+            func_8008616C(2, true, 0, fadeTimestep1, true);
             break;
 
         default:
-            func_8008616C(0, false, 0, fadeTimeStep0, false);
+            func_8008616C(0, false, 0, fadeTimestep0, false);
             g_MapOverlayHeader.unfreezePlayerControl_CC(0);
             SysWork_StateSetNext(SysState_Gameplay);
             break;

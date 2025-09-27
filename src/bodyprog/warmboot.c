@@ -138,5 +138,5 @@ void Game_WarmBoot() // 0x80034264
     g_GameWork.gameStatePrev_590    = prevState;
     g_GameWork.gameStateStep_598[0] = 0;
 
-    g_ScreenFadeTimeStep = Q12(0.0f);
+    g_ScreenFadeTimestep = Q12(0.0f);
 }

@@ -2429,7 +2429,7 @@ D_800B5508                                  = 0x800B5508; // size:0x718
 g_Gfx_DebugStringPosition0                  = 0x800B5C20; // type:DVECTOR size:4
 g_Gfx_DebugStringPosition1                  = 0x800B5C24; // type:DVECTOR size:4
 g_PrevScreenFadeProgress                    = 0x800B5C28; // type:s32
-g_ScreenFadeTimeStep                        = 0x800B5C30; // type:s32
+g_ScreenFadeTimestep                        = 0x800B5C30; // type:s32
 g_VBlanks                                   = 0x800B5C34; // type:s32
 g_UncappedVBlanks                           = 0x800B5C38; // type:s32
 

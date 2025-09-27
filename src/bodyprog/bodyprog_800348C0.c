@@ -250,7 +250,7 @@ void GameFs_MapStartup() // 0x80034964
                 if (func_80039F90() & (1 << 1))
                 {
                     g_GameWork.gameStateStep_598[0] = 1;
-                    g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_ResetTimeStep, IS_SCREEN_FADE_WHITE(g_Screen_FadeStatus));
+                    g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_ResetTimestep, IS_SCREEN_FADE_WHITE(g_Screen_FadeStatus));
                 }
             }
             break;
@@ -265,7 +265,7 @@ void Gfx_LoadingScreenDraw() // 0x80034E58
     if (g_SysWork.loadingScreenIdx_2281 != LoadingScreenId_None && g_GameWork.gameStateStep_598[0] < 10)
     {
         ScreenFade_Start(false, true, false);
-        g_ScreenFadeTimeStep = Q12(0.8f);
+        g_ScreenFadeTimestep = Q12(0.8f);
         g_MapOverlayHeader.loadingScreenFuncs_18[g_SysWork.loadingScreenIdx_2281]();
     }
 
@@ -2086,7 +2086,7 @@ void GameState_InGame_Update() // 0x80038BD4
     {
         case 0:
             ScreenFade_Start(true, true, false);
-            g_ScreenFadeTimeStep            = Q12(3.0f);
+            g_ScreenFadeTimestep            = Q12(3.0f);
             g_GameWork.gameStateStep_598[0] = 1;
 
         case 1:
@@ -2345,7 +2345,7 @@ void SysState_OptionsMenu_Update() // 0x80039344
     {
         case 0:
             ScreenFade_Start(true, false, false);
-            g_ScreenFadeTimeStep        = Q12(0.0f);
+            g_ScreenFadeTimestep        = Q12(0.0f);
             g_SysWork.sysStateStep_C[0] = 1;
 
         case 1:
@@ -2537,7 +2537,7 @@ void SysState_MapScreen_Update() // 0x800396D4
             Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9]);
 
             ScreenFade_Start(true, false, false);
-            g_ScreenFadeTimeStep = Q12(0.0f);
+            g_ScreenFadeTimestep = Q12(0.0f);
             g_SysWork.sysStateStep_C[0]++;
         }
 

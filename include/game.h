@@ -159,7 +159,7 @@ struct _Model;
 
 /** @brief Resets the custom screen fade timestep back to zero, disregarding the color bit. */
 #define ScreenFade_ResetTimestep() \
-    g_Screen_FadeStatus = ScreenFadeState_ResetTimeStep
+    g_Screen_FadeStatus = ScreenFadeState_ResetTimestep
 
 typedef enum _SyncMode
 {
@@ -178,7 +178,7 @@ typedef enum _ScreenFadeState
     ScreenFadeState_None            = 1,
     ScreenFadeState_FadeOutStart    = 2,
     ScreenFadeState_FadeOutSteps    = 3,
-    ScreenFadeState_ResetTimeStep   = 4,
+    ScreenFadeState_ResetTimestep   = 4,
     ScreenFadeState_FadeOutComplete = 5,
     ScreenFadeState_FadeInStart     = 6,
     ScreenFadeState_FadeInSteps     = 7

@@ -57,7 +57,7 @@ void GameState_MovieIntro_Update() // 0x801E279C
     open_main(fileIdx, 0);
     Game_StateSetNext(GameState_MainMenu);
 
-    g_ScreenFadeTimeStep = Q12(1.0f);
+    g_ScreenFadeTimestep = Q12(1.0f);
 }
 
 void GameState_MovieOpening_Update() // 0x801E2838
@@ -109,7 +109,7 @@ void GameState_MovieIntroAlternate_Update() // 0x801E2A24
     open_main(FILE_XA_C1_20670, 2060); // Second param looks like file ID for `FILE_XA_M6_02112`, but is actually frame count?
     Game_StateSetNext(GameState_MainMenu);
 
-    g_ScreenFadeTimeStep = Q12(1.0f);
+    g_ScreenFadeTimestep = Q12(1.0f);
 }
 
 s32 max_frame = 0; // 0x801E3F40

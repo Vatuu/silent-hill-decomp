@@ -51,7 +51,7 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
                 Screen_Init(SCREEN_WIDTH * 2, true);
 
                 ScreenFade_Start(true, true, false);
-                g_ScreenFadeTimeStep = Q12(0.2f);
+                g_ScreenFadeTimestep = Q12(0.2f);
 
                 // Load `1ST/KONAMI2.TIM` (Konami logo).
                 Fs_QueueStartReadTim(FILE_1ST_KONAMI2_TIM, FS_BUFFER_1, &g_KcetLogoImg);
@@ -77,7 +77,7 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
                 if (g_Controller0->btnsHeld_C != 0 || g_SysWork.timer_1C >= 181)
                 {
                     ScreenFade_Start(false, false, false);
-                    g_ScreenFadeTimeStep            = Q12(0.2f);
+                    g_ScreenFadeTimestep            = Q12(0.2f);
                     g_GameWork.gameStateStep_598[0] = 3;
                 }
                 break;
@@ -163,7 +163,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                 Settings_RestoreDefaults();
 
                 ScreenFade_Start(true, true, false);
-                g_ScreenFadeTimeStep = Q12(0.2f);
+                g_ScreenFadeTimestep = Q12(0.2f);
 
                 GameFs_BgEtcGfxLoad();
                 Fs_QueueStartRead(FILE_BG_HP_SAFE1_BIN, FS_BUFFER_5);
@@ -269,7 +269,7 @@ void GameState_KcetLogo_Update() // 0x800C99A4
                 if (g_Controller0->btnsHeld_C != 0 || g_SysWork.timer_1C > 180)
                 {
                     ScreenFade_Start(false, false, false);
-                    g_ScreenFadeTimeStep = Q12(0.2f);
+                    g_ScreenFadeTimestep = Q12(0.2f);
                     g_GameWork.gameStateStep_598[0]++;
                 }
                 break;

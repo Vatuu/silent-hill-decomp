@@ -1979,7 +1979,7 @@ q19_12 Anim_DurationGet(s_Model* model, s_AnimInfo* anim) // 0x800449AC
 }
 
 /** @brief Computes the time step of the target animation. */
-static inline q19_12 Anim_TimeStepGet(s_Model* model, s_AnimInfo* animInfo)
+static inline q19_12 Anim_TimestepGet(s_Model* model, s_AnimInfo* animInfo)
 {
     q19_12 duration;
 
@@ -1995,7 +1995,7 @@ static inline q19_12 Anim_TimeStepGet(s_Model* model, s_AnimInfo* animInfo)
 void Anim_Update0(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coords, s_AnimInfo* animInfo) // 0x800449F0
 {
     bool setNewAnimStatus;
-    s32  timeStep;
+    s32  timestep;
     s32  newTime;
     s32  newKeyframeIdx;
     s32  startTime;
@@ -2005,14 +2005,14 @@ void Anim_Update0(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coords, s_
     setNewAnimStatus = false;
 
     // Get time step.
-    timeStep = Anim_TimeStepGet(model, animInfo);
+    timestep = Anim_TimestepGet(model, animInfo);
 
     // Compute new time and keyframe index.
     newTime        = model->anim_4.time_4;
     newKeyframeIdx = FP_FROM(newTime, Q12_SHIFT);
-    if (timeStep != Q12(0.0f))
+    if (timestep != Q12(0.0f))
     {
-        newTime += timeStep;
+        newTime += timestep;
 
         // Clamp new time to valid keyframe range.
         endTime = Q12(animInfo->endKeyframeIdx_E);
@@ -2062,7 +2062,7 @@ void Anim_Update1(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_A
     s32 startTime;
     s32 nextStartTime;
     s32 duration;
-    s32 timeStep;
+    s32 timestep;
     s32 newTime;
     s32 newKeyframeIdx0;
     s32 newKeyframeIdx1;
@@ -2078,10 +2078,10 @@ void Anim_Update1(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_A
     duration      = Q12(keyframeCount);
 
     // Get time step.
-    timeStep = Anim_TimeStepGet(model, animInfo);
+    timestep = Anim_TimestepGet(model, animInfo);
 
     // Wrap new time to valid keyframe range.
-    newTime = model->anim_4.time_4 + timeStep;
+    newTime = model->anim_4.time_4 + timestep;
     while (newTime < startTime)
     {
         newTime += duration;
@@ -2117,7 +2117,7 @@ void Anim_Update2(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_A
     bool setNewAnimStatus;
     s32  startKeyframeIdx;
     s32  endKeyframeIdx;
-    s32  timeStep;
+    s32  timestep;
     s32  alpha;
     
     setNewAnimStatus = false;
@@ -2131,11 +2131,11 @@ void Anim_Update2(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_A
     }
 
     // Get time step.
-    timeStep = Anim_TimeStepGet(model, animInfo);
+    timestep = Anim_TimestepGet(model, animInfo);
 
     // Update time to start or end keyframe, whichever is closest.
     alpha  = model->anim_4.alpha_A;
-    alpha += timeStep;
+    alpha += timestep;
     if (alpha >= Q12(0.5f))
     {
         model->anim_4.time_4 = Q12(endKeyframeIdx);
@@ -2176,7 +2176,7 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_A
     s32    startKeyframeIdx;
     s32    endKeyframeIdx;
     s32    timeDelta;
-    s32    timeStep;
+    s32    timestep;
     s32    alpha;
     q19_12 sinVal;
     s32    newTime;
@@ -2185,20 +2185,20 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_A
     startKeyframeIdx = animInfo->startKeyframeIdx_C;
     endKeyframeIdx   = animInfo->endKeyframeIdx_E;
 
-    // Compute time step. TODO: Can't call `Anim_TimeStepGet` inline due to register constraints.
+    // Compute time step. TODO: Can't call `Anim_TimestepGet` inline due to register constraints.
     if (model->anim_4.flags_2 & AnimFlag_Unlocked)
     {
         timeDelta = Anim_DurationGet(model, animInfo);
-        timeStep  = FP_MULTIPLY_PRECISE(timeDelta, g_DeltaTime0, Q12_SHIFT);
+        timestep  = FP_MULTIPLY_PRECISE(timeDelta, g_DeltaTime0, Q12_SHIFT);
     }
     else
     {
-        timeStep = Q12(0.0f);
+        timestep = Q12(0.0f);
     }
 
     // Update alpha.
     newAlpha              = model->anim_4.alpha_A;
-    alpha                 = newAlpha + timeStep;
+    alpha                 = newAlpha + timestep;
     model->anim_4.alpha_A = alpha;
 
     // Compute ease-out alpha.

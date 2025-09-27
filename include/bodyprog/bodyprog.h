@@ -2181,7 +2181,7 @@ extern const char* g_ItemDescriptions[];
 
 extern q19_12 g_PrevScreenFadeProgress;
 
-extern q19_12 g_ScreenFadeTimeStep;
+extern q19_12 g_ScreenFadeTimestep;
 
 extern GsOT_TAG g_OtTags0[2][16];
 
@@ -3376,7 +3376,7 @@ void func_8008605C(s32 arg0, s32 arg1, s32 arg2, bool arg3);
 void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 entry0, s32 entry1, s32 entry2, bool arg5);
 
 /** Handles giving the player items. */
-void func_8008616C(s32 arg0, bool arg1, s32 arg2, q19_12 fadeTimeStep, bool arg4);
+void func_8008616C(s32 arg0, bool arg1, s32 arg2, q19_12 fadeTimestep, bool arg4);
 
 void func_800862F8(s32 arg0, s32 fileIdx, bool arg2);
 
@@ -3430,19 +3430,19 @@ void func_80086C58(s_SubCharacter* chara, s32 arg1);
 
 void func_80086D04(s_SubCharacter* chara);
 
-void func_80086DA8(s32 fileIdx, s32 fadeTimeStep);
+void func_80086DA8(s32 fileIdx, s32 fadeTimestep);
 
-void func_80086E50(s32 fileIdx, s32 fadeTimeStep0, s32 fadeTimeStep1);
+void func_80086E50(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1);
 
-void func_80086F44(s32 fadeTimeStep0, s32 fadeTimeStep1);
+void func_80086F44(s32 fadeTimestep0, s32 fadeTimestep1);
 
 void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos);
 
-void func_8008716C(s32 itemId, s32 fadeTimeStep0, s32 fadeTimeStep1);
+void func_8008716C(s32 itemId, s32 fadeTimestep0, s32 fadeTimestep1);
 
-void func_80087360(s32 fileIdx, s32 fadeTimeStep0, s32 fadeTimeStep1, s32 mapMsgIdx);
+void func_80087360(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsgIdx);
 
-void func_80087540(s32 fileIdx, s32 fadeTimeStep0, s32 fadeTimeStep1, s32 mapMsgIdx0, s32 mapMsgIdx1);
+void func_80087540(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1);
 
 void Event_ItemTake(s32 itemId, s32 itemCount, s32 eventFlagIdx, s32 mapMsgIdx);
 
