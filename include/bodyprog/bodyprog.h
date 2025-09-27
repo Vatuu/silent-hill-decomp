@@ -1383,7 +1383,7 @@ typedef struct
     u16            field_6_10     : 6;   // Something related to material.
     s_FsImageDesc* field_8;
     u16            cameraAnchor_C_0  : 2; /** `e_CameraAnchor` */
-    q23_8          cameraOffsetY_C_2 : 14;
+    q19_12         cameraOffsetY_C_2 : 14;
     // 2 bytes of padding.
 } s_CharaFileInfo;
 STATIC_ASSERT_SIZEOF(s_CharaFileInfo, 16);
