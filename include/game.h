@@ -133,15 +133,15 @@ struct _Model;
 #define IS_SCREEN_FADE_WHITE(fadeStatus) \
     ((fadeStatus) & (1 << 3))
 
-typedef enum _VSyncMode
+typedef enum _SyncMode
 {
-    VSyncMode_Count     = -1,
-    VSyncMode_Wait      = 0,
-    VSyncMode_Immediate = 1,
-    VSyncMode_Wait2     = 2,
-    VSyncMode_Wait3     = 3,
-    VSyncMode_Wait8     = 8
-} e_VSyncMode;
+    SyncMode_Count     = -1,
+    SyncMode_Wait      = 0,
+    SyncMode_Immediate = 1,
+    SyncMode_Wait2     = 2,
+    SyncMode_Wait3     = 3,
+    SyncMode_Wait8     = 8
+} e_SyncMode;
 
 /** @brief Screen fade states used by `g_Screen_FadeStatus`. The flow is not linear. */
 typedef enum _ScreenFadeState

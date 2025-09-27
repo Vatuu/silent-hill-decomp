@@ -1681,7 +1681,7 @@ void func_8003D468(s32 charaId, bool flag) // 0x8003D468
     rect.w = 16;
     rect.h = 16;
 
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
     StoreImage(&rect, &data);
 
     for (y = 0, i = 0; y < 16; y++)

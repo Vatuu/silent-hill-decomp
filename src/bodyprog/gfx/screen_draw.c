@@ -12,14 +12,14 @@ const s32 rodataPad_80024CA0 = 0;
 void Screen_RectInterlacedClear(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b) // 0x80032358
 {
     setRECT((RECT*)PSX_SCRATCH, x, y, w, h);
-    VSync(VSyncMode_Wait);
+    VSync(SyncMode_Wait);
     ClearImage2((RECT*)PSX_SCRATCH, r, g, b);
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
 }
 
 void Screen_Refresh(s32 screenWidth, bool isInterlaced) // 0x800323C8
 {
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
     Screen_RectInterlacedClear(0, 32, 320, 448, 0, 0, 0);
     Screen_Init(screenWidth, isInterlaced);
 }
@@ -29,7 +29,7 @@ void Screen_Init(s32 screenWidth, bool isInterlaced) // 0x80032428
     g_GameWork.gsScreenWidth_588  = screenWidth;
     g_GameWork.gsScreenHeight_58A = !isInterlaced ? FRAMEBUFFER_HEIGHT_PROGRESSIVE : FRAMEBUFFER_HEIGHT_INTERLACED;
 
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
     GsInitGraph2(g_GameWork.gsScreenWidth_588, g_GameWork.gsScreenHeight_58A, isInterlaced | 0x4, 1, 0);
     GsDefDispBuff2(0, 32, 0, isInterlaced ? 32 : 256);
 

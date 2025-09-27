@@ -78,7 +78,7 @@ void Game_WarmBoot() // 0x80034264
 {
     e_GameState prevState;
 
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
     Screen_RectInterlacedClear(0, 32, 512, 448, 0, 0, 0);
     func_800892A4(4);
     func_80089128();
@@ -87,7 +87,7 @@ void Game_WarmBoot() // 0x80034264
     while (func_80045B28())
     {
         func_800485D8();
-        VSync(VSyncMode_Wait);
+        VSync(SyncMode_Wait);
     }
 
     Sd_EngineCmd(20);
@@ -95,7 +95,7 @@ void Game_WarmBoot() // 0x80034264
     while (func_80045B28())
     {
         func_800485D8();
-        VSync(VSyncMode_Wait);
+        VSync(SyncMode_Wait);
     }
 
     Fs_QueueReset();
@@ -106,7 +106,7 @@ void Game_WarmBoot() // 0x80034264
     while (func_80045B28())
     {
         func_800485D8();
-        VSync(VSyncMode_Wait);
+        VSync(SyncMode_Wait);
     }
 
     if (g_SysWork.flags_22A4 & (1 << 1))

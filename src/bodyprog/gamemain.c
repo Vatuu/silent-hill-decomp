@@ -190,12 +190,12 @@ void MainLoop() // 0x80032EE0
 
         func_80089128();
         func_8008D78C(); // Camera update?
-        DrawSync(0);
+        DrawSync(SyncMode_Wait);
 
         // Handle V sync.
         if (g_SysWork.flags_22A4 & (1 << 1))
         {
-            vBlanks   = VSync(VSyncMode_Count);
+            vBlanks   = VSync(SyncMode_Count);
             g_VBlanks = vBlanks - g_PrevVBlanks;
 
             Demo_PresentIntervalUpdate();
@@ -210,7 +210,7 @@ void MainLoop() // 0x80032EE0
 
             do
             {
-                VSync(VSyncMode_Wait);
+                VSync(SyncMode_Wait);
                 g_VBlanks++;
                 g_PrevVBlanks++;
             }
@@ -227,23 +227,23 @@ void MainLoop() // 0x80032EE0
         {
             if (g_SysWork.sysState_8 != SysState_Gameplay)
             {
-                g_VBlanks     = VSync(VSyncMode_Count) - g_PrevVBlanks;
-                g_PrevVBlanks = VSync(VSyncMode_Count);
-                VSync(VSyncMode_Wait);
+                g_VBlanks     = VSync(SyncMode_Count) - g_PrevVBlanks;
+                g_PrevVBlanks = VSync(SyncMode_Count);
+                VSync(SyncMode_Wait);
             }
             else
             {
                 if (g_Screen_FadeStatus != SCREEN_FADE_STATUS(ScreenFadeState_None, false))
                 {
-                    VSync(VSyncMode_Wait);
+                    VSync(SyncMode_Wait);
                 }
 
-                g_VBlanks     = VSync(VSyncMode_Count) - g_PrevVBlanks;
-                g_PrevVBlanks = VSync(VSyncMode_Count);
+                g_VBlanks     = VSync(SyncMode_Count) - g_PrevVBlanks;
+                g_PrevVBlanks = VSync(SyncMode_Count);
 
                 while (g_VBlanks < g_IntervalVBlanks)
                 {
-                    VSync(VSyncMode_Wait);
+                    VSync(SyncMode_Wait);
                     g_VBlanks++;
                     g_PrevVBlanks++;
                 }

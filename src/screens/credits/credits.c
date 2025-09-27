@@ -186,7 +186,7 @@ bool func_801E3124() // 0x801E3124
         case 1:
             StoreImage(&D_801E557C[0], (u_long*)IMAGE_BUFFER_0);
             StoreImage(&D_801E557C[1], (u_long*)IMAGE_BUFFER_1);
-            DrawSync(0);
+            DrawSync(SyncMode_Wait);
 
             switch (g_Screen_FadeStatus)
             {
@@ -247,8 +247,8 @@ s32 func_801E3304() // 0x801E3304
             Screen_RectInterlacedClear(0, 32, 320, 448, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
             LoadImage(&D_801E557C[0], IMAGE_BUFFER_0);
             LoadImage(&D_801E557C[1], IMAGE_BUFFER_1);
-            DrawSync(0);
-            VSync(VSyncMode_Wait2);
+            DrawSync(SyncMode_Wait);
+            VSync(SyncMode_Wait2);
 
             Game_StateSetPrevious();
         }

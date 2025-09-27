@@ -79,7 +79,7 @@ u8 func_80045B28() // 0x80045B28
     {
         if (D_800C1673 != 0)
         {
-            D_800C1688.field_8 = VSync(VSyncMode_Count);
+            D_800C1688.field_8 = VSync(SyncMode_Count);
             D_800C1688.field_4 = 0;
             return 3;
         }
@@ -1926,7 +1926,7 @@ void func_80046D3C(u16 cmd) // 0x80046D3C
     if (D_800AA894[D_800C1658.field_2].field_0 != 0)
     {
         D_800C37DC         = 1;
-        D_800C1688.field_8 = VSync(VSyncMode_Count);
+        D_800C1688.field_8 = VSync(SyncMode_Count);
         D_800C1688.field_4 = 0;
 
         func_800478DC(2);
@@ -2058,7 +2058,7 @@ void func_80046E00() // 0x80046E00
             D_800C1658.field_4 = D_800C15CA;
 
             SdSetSerialAttr(0, 0, 1);
-            D_800C1688.field_8 = VSync(VSyncMode_Count);
+            D_800C1688.field_8 = VSync(SyncMode_Count);
             D_800C1688.field_4 = 0;
             D_800C1671         = 0;
 

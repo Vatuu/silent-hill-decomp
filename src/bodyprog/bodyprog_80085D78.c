@@ -341,9 +341,9 @@ void func_800862F8(s32 arg0, s32 fileIdx, bool arg2) // 0x800862F8
             break;
 
         case 3:
-            DrawSync(0);
+            DrawSync(SyncMode_Wait);
             StoreImage(&D_8002AB10, IMAGE_BUFFER_2);
-            DrawSync(0);
+            DrawSync(SyncMode_Wait);
             break;
 
         case 4:
@@ -361,7 +361,7 @@ void func_800862F8(s32 arg0, s32 fileIdx, bool arg2) // 0x800862F8
 
         case 6:
             LoadImage(&D_8002AB10, IMAGE_BUFFER_2);
-            DrawSync(0);
+            DrawSync(SyncMode_Wait);
             break;
     }
 }
@@ -480,9 +480,9 @@ void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
     switch (caseParam)
     {
         case 0:
-            DrawSync(0);
+            DrawSync(SyncMode_Wait);
             StoreImage(&D_8002AB10, IMAGE_BUFFER_2);
-            DrawSync(0);
+            DrawSync(SyncMode_Wait);
 
             Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[idx], FS_BUFFER_2, &g_MapImg);
             Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdxs[idx], FS_BUFFER_1, &g_MapMarkerAtlasImg);
@@ -498,7 +498,7 @@ void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
 
         case 2:
             LoadImage(&D_8002AB10, IMAGE_BUFFER_2);
-            DrawSync(0);
+            DrawSync(SyncMode_Wait);
             Screen_Init(SCREEN_WIDTH, false);
             break;
     }
@@ -1114,9 +1114,9 @@ void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             break;
 
         case 2:
-            DrawSync(0);
+            DrawSync(SyncMode_Wait);
             StoreImage(&D_8002ABA4, IMAGE_BUFFER);
-            DrawSync(0);
+            DrawSync(SyncMode_Wait);
             Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[mapFlagIdx], FS_BUFFER_2, &g_MapImg);
             Screen_Init(SCREEN_WIDTH, true);
 
@@ -1183,7 +1183,7 @@ void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
 
         default:
             LoadImage(&D_8002ABA4, IMAGE_BUFFER);
-            DrawSync(0);
+            DrawSync(SyncMode_Wait);
             Screen_Init(SCREEN_WIDTH, false);
             func_8008616C(0, false, 0, Q12(0.0f), false);
 
@@ -2894,9 +2894,9 @@ s32 func_8008D850() // 0x8008D850
     rect.x = rectX;
     rect.h = 1;
     
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
     StoreImage2(&rect, &unk.field_0);
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
 
     return (unk.field_0 & 0x7FFF) == 0x7FFF;
 }

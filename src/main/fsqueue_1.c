@@ -42,7 +42,7 @@ void Fs_QueueWaitForEmpty()
 
     while (true)
     {
-        VSync(VSyncMode_Wait);
+        VSync(SyncMode_Wait);
         if (Fs_QueueGetLength() <= 0)
         {
             break;
@@ -52,8 +52,8 @@ void Fs_QueueWaitForEmpty()
     }
 
     func_800892A4(1);
-    DrawSync(0);
-    VSync(VSyncMode_Wait);
+    DrawSync(SyncMode_Wait);
+    VSync(SyncMode_Wait);
 }
 
 s32 Fs_QueueStartSeek(s32 fileIdx)

@@ -269,7 +269,7 @@ void Gfx_LoadingScreenDraw() // 0x80034E58
         g_MapOverlayHeader.loadingScreenFuncs_18[g_SysWork.loadingScreenIdx_2281]();
     }
 
-    Gfx_2dBackgroundMotionBlur(VSyncMode_Wait2);
+    Gfx_2dBackgroundMotionBlur(SyncMode_Wait2);
 }
 
 void func_80034EC8() // 0x80034EC8
@@ -1693,7 +1693,7 @@ void func_80037124() // 0x80037124
 {
     g_MapMsg_Select.maxIdx_0 = NO_VALUE;
     func_8003652C();
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
 }
 
 void func_80037154() // 0x80037154
@@ -2090,7 +2090,7 @@ void GameState_InGame_Update() // 0x80038BD4
             g_GameWork.gameStateStep_598[0] = 1;
 
         case 1:
-            DrawSync(0);
+            DrawSync(SyncMode_Wait);
             func_80037154();
             Savegame_MapRoomIdxSet();
             func_800892A4(1);
@@ -2479,7 +2479,7 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
 
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
-        DrawSync(0);
+        DrawSync(SyncMode_Wait);
         g_IntervalVBlanks   = 1;
         g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_Reset, false);
 
@@ -2497,7 +2497,7 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
         g_GameWork.gameStateStep_598[0]++;
     }
 
-    Gfx_2dBackgroundMotionBlur(VSyncMode_Wait2);
+    Gfx_2dBackgroundMotionBlur(SyncMode_Wait2);
 
     if (Fs_QueueDoThingWhenEmpty())
     {
@@ -2552,7 +2552,7 @@ void GameState_LoadMapScreen_Update() // 0x8003991C
 {
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
-        DrawSync(0);
+        DrawSync(SyncMode_Wait);
         g_IntervalVBlanks = 1;
 
         func_8003943C();
@@ -2567,7 +2567,7 @@ void GameState_LoadMapScreen_Update() // 0x8003991C
         g_GameWork.gameStateStep_598[0]++;
     }
 
-    Gfx_2dBackgroundMotionBlur(VSyncMode_Wait2);
+    Gfx_2dBackgroundMotionBlur(SyncMode_Wait2);
 
     if (Fs_QueueDoThingWhenEmpty())
     {
@@ -2601,9 +2601,9 @@ void SysState_Fmv_Update() // 0x80039A58
     }
 
     // Copy framebuffer into `IMAGE_BUFFER_0` before movie playback.
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
     StoreImage(&D_800A9A6C, (u32*)IMAGE_BUFFER_0);
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
 
     func_800892A4(0);
     func_80089128();
@@ -2617,7 +2617,7 @@ void SysState_Fmv_Update() // 0x80039A58
     // Restore copied framebuffer from `IMAGE_BUFFER_0`.
     GsSwapDispBuff();
     LoadImage(&D_800A9A6C, (u32*)IMAGE_BUFFER_0);
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
 
     // Set savegame flag based on `D_800BCDD8->eventFlagNum_2` flag ID.
     Savegame_EventFlagSetAlt(g_MapEventParam->eventFlagId_2);
@@ -2692,7 +2692,7 @@ void SysState_LoadArea_Update() // 0x80039C40
 
     g_SysWork.field_22A0 |= 1 << 0;
     Game_StateSetNext(GameState_MainLoadScreen);
-    Gfx_2dBackgroundMotionBlur(VSyncMode_Immediate);
+    Gfx_2dBackgroundMotionBlur(SyncMode_Immediate);
 }
 
 void AreaLoad_UpdatePlayerPosition() // 0x80039F30

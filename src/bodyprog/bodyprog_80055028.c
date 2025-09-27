@@ -2645,7 +2645,7 @@ void func_80066D90() // 0x80066D90
         DrawPrim(var2);
 
         Fs_QueueUpdate();
-        VSync(VSyncMode_Wait);
+        VSync(SyncMode_Wait);
     }
 
     Fs_QueueWaitForEmpty();
@@ -2653,15 +2653,15 @@ void func_80066D90() // 0x80066D90
 
 void func_80066E40() // 0x80066E40
 {
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
     StoreImage(&D_80028A20, FS_BUFFER_3);
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
 }
 
 void func_80066E7C() // 0x80066E7C
 {
     LoadImage(&D_80028A20, FS_BUFFER_3);
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
 }
 
 INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80055028", hack_D_80028A18_fix);
@@ -2757,7 +2757,7 @@ void GameState_MapScreen_Update() // 0x80066EB0
                 if (g_GameWork.gameStatePrev_590 == GameState_InventoryScreen)
                 {
                     GsDrawOt(&g_OrderingTable0[g_ActiveBufferIdx]);
-                    VSync(VSyncMode_Wait);
+                    VSync(SyncMode_Wait);
                     GsDrawOt(&g_OrderingTable0[g_ActiveBufferIdx]);
                     func_80066E7C();
                     GameFs_MapItemsTextureLoad(g_SavegamePtr->mapOverlayId_A4);

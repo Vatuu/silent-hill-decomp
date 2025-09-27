@@ -62,15 +62,15 @@ int main()
     ResetCallback();
     CdInit();
     Fs_QueueInitialize();
-    VSync(VSyncMode_Wait);
+    VSync(SyncMode_Wait);
     ResetGraph(3);
 
     // Clear framebuffer area of VRAM.
     // NOTE: This and some other GPU macros here are custom to ensure a match.
     setRECTFast((RECT*)PSX_SCRATCH, 0, 0, SCREEN_WIDTH * 2, 512);
-    VSync(VSyncMode_Wait);
+    VSync(SyncMode_Wait);
     ClearImage2((RECT*)PSX_SCRATCH, 0, 0, 0);
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
 
     // Display area = (0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
     PutDispEnv(&g_MainDispEnv);
@@ -83,7 +83,7 @@ int main()
     while (Fs_QueueGetLength() > 0)
     {
         Fs_QueueUpdate();
-        VSync(VSyncMode_Wait);
+        VSync(SyncMode_Wait);
     }
 
     // Start loading `1ST/BODYPROG.BIN` and `1ST\B_KONAMI.BIN`.
@@ -143,14 +143,14 @@ int main()
 
         // Keep loading files in meantime.
         Fs_QueueUpdate();
-        VSync(VSyncMode_Wait);
+        VSync(SyncMode_Wait);
     }
 
     // If files haven't loaded yet, wait until they do.
     while (Fs_QueueGetLength() > 0)
     {
         Fs_QueueUpdate();
-        VSync(VSyncMode_Wait);
+        VSync(SyncMode_Wait);
     }
 
     // Decrypt `BODYPROG` and `B_KONAMI` into place.
@@ -162,7 +162,7 @@ int main()
     while (Fs_QueueGetLength() > 0)
     {
         Fs_QueueUpdate();
-        VSync(VSyncMode_Wait);
+        VSync(SyncMode_Wait);
     }
 
     // Fade image back out?

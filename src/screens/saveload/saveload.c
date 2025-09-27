@@ -1612,7 +1612,7 @@ void Savegame_ScreenInit() // 0x801E63C0
 {
     if (g_GameWork.gameStatePrev_590 == GameState_MainMenu)
     {
-        VSync(VSyncMode_Wait8);
+        VSync(SyncMode_Wait8);
     }
 
     g_IntervalVBlanks   = 1;

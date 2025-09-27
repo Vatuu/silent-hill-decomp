@@ -44,11 +44,11 @@ void GameState_Options_Update(void) // 0x801E2D44
     switch (g_GameWork.gameStateStep_598[0])
     {
         case OptionsMenuState_EnterMainOptions:
-            DrawSync(0);
+            DrawSync(SyncMode_Wait);
 
             if (g_GameWork.gameStatePrev_590 != GameState_InGame)
             {
-                VSync(VSyncMode_Wait8);
+                VSync(SyncMode_Wait8);
             }
 
             g_GameWork.background2dColor_R_58C = 0;
