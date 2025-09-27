@@ -1723,7 +1723,7 @@ void func_8003D5B4(s8 flags) // 0x8003D5B4
         model = &g_WorldGfx.charaModels_CC[i];
         if ((flags >> i) & (1 << 0))
         {
-            func_8003D6A4(model);
+            WorldGfx_CharaFree(model);
         }
     }
 
@@ -1745,7 +1745,7 @@ void func_8003D5B4(s8 flags) // 0x8003D5B4
     }
 }
 
-void func_8003D6A4(s_CharaModel* model) // 0x8003D6A4
+void WorldGfx_CharaFree(s_CharaModel* model) // 0x8003D6A4
 {
     if (model->charaId_0 != Chara_None)
     {

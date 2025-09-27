@@ -2761,3 +2761,4 @@ WorldGfx_CharaLmBufferAdvance = 0x8003D354; // type:func
 WorldGfx_CharaModelPresent = 0x8003D444; // type:func
 Chara_FsImageCalc = 0x8003D3BC; // type:func
 WorldGfx_HarryCharaLoad = 0x8003D160; // type:func
+WorldGfx_CharaFree = 0x8003D6A4; // type:func

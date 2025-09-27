@@ -2640,7 +2640,7 @@ void func_8003D550(s32 charaId, s32 arg1);
 /** Called by some chara init funcs, similar to `func_8003DD80`? */
 void func_8003D468(s32 arg0, bool flag);
 
-void func_8003D6A4(s_CharaModel* model);
+void WorldGfx_CharaFree(s_CharaModel* model);
 
 /** Return type assumed. */
 void WorldGfx_HarryCharaLoad();
