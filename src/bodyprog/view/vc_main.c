@@ -1708,7 +1708,7 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
 
         // Compute look-at Y anchor.
         ofs_y = Q8_TO_Q12(CHARA_FILE_INFOS[sc_p->model_0.charaId_0].offsetY_C_2);
-        switch (CHARA_FILE_INFOS[sc_p->model_0.charaId_0].field_C_0)
+        switch (CHARA_FILE_INFOS[sc_p->model_0.charaId_0].cameraAnchor_C_0)
         {
             default:
             case CameraAnchor_Character:

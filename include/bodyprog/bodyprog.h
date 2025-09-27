@@ -1380,10 +1380,10 @@ typedef struct
     s16            modelFileIdx;
     s16            textureFileIdx : 16;
     u16            field_6        : 10;
-    u16            field_6_10     : 6; // Something related to material.
-    s_FsImageDesc* field_8;            // Guessed type.
-    u16            field_C_0   : 2;    // Some enum type (0-3).
-    q23_8          offsetY_C_2 : 14;
+    u16            field_6_10     : 6;   // Something related to material.
+    s_FsImageDesc* field_8;
+    u16            cameraAnchor_C_0 : 2; /** `e_CameraAnchor` */
+    q23_8          offsetY_C_2      : 14;
     // 2 bytes of padding.
 } s_CharaFileInfo;
 STATIC_ASSERT_SIZEOF(s_CharaFileInfo, 16);
