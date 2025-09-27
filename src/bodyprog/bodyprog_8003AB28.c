@@ -1585,14 +1585,14 @@ s32 func_8003D21C(s_MapOverlayHeader* arg0) // 0x8003D21C
                 queueIdx = WorldGfx_CharaLoad(curCharaId, i, (s_LmHeader*)g_WorldGfx.charaLmBufferPtr_14, &image);
             }
 
-            func_8003D354(&g_WorldGfx.charaLmBufferPtr_14, curCharaId);
+            WorldGfx_CharaLmBufferAdvance(&g_WorldGfx.charaLmBufferPtr_14, curCharaId);
         }
     }
 
     return queueIdx;
 }
 
-void func_8003D354(s32* arg0, s32 charaId) // 0x8003D354
+void WorldGfx_CharaLmBufferAdvance(s32* arg0, s32 charaId) // 0x8003D354
 {
     s16 idx;
     s32 fileSize;
@@ -1770,7 +1770,7 @@ void func_8003D6E0(s32 charaId, s32 modeIdx, s_LmHeader* lmHdr, s_FsImageDesc* t
     else 
     {
         plmHdrPtr = (s_LmHeader*)g_WorldGfx.charaLmBufferPtr_14;
-        func_8003D354(&g_WorldGfx.charaLmBufferPtr_14, charaId); // Increments `field_14`?
+        WorldGfx_CharaLmBufferAdvance(&g_WorldGfx.charaLmBufferPtr_14, charaId); // Increments `field_14`?
     }
 
     if (tex != NULL)

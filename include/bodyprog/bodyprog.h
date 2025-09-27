@@ -4107,7 +4107,7 @@ void func_8003CBA4(s_WorldObject* obj);
 
 void func_8003CC7C(s_WorldObject_0* arg0, MATRIX* arg1, MATRIX* arg2);
 
-void func_8003D354(s32* arg0, s32 charaId);
+void WorldGfx_CharaLmBufferAdvance(s32* arg0, s32 charaId);
 
 /** Texture UV setup for NPCs. */
 void func_8003D3BC(s_FsImageDesc* image, s32 groupIds, s32 modelIdx);
