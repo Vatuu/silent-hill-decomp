@@ -1384,7 +1384,7 @@ typedef struct
     s_FsImageDesc* field_8;            // Guessed type.
     u16            field_C_0   : 2;    // Some enum type (0-3).
     q23_8          offsetY_C_2 : 14;
-    u16            field_C_16  : 16; // Padding?
+    // 2 bytes of padding.
 } s_CharaFileInfo;
 STATIC_ASSERT_SIZEOF(s_CharaFileInfo, 16);
 
@@ -4308,8 +4308,6 @@ s32 func_800808AC(s32 posX, s32 posZ);
 
 /** Returns a Q shift based on a magnitude. */
 s32 Math_MagnitudeShiftGet(s32 mag);
-
-s32 func_80080A10();
 
 u8 func_8008A2E0(s32 arg0);
 

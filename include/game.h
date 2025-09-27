@@ -1231,7 +1231,7 @@ typedef struct _PlayerCombat
     u8      currentWeaponAmmo_10;
     u8      totalWeaponAmmo_11;
     s8      weaponInventoryIdx_12; /** Index of the currently equipped weapon in the inventory. */
-    u8      isAiming_13; /** `bool` */
+    u8      isAiming_13;           /** `bool` */
 } s_PlayerCombat;
 STATIC_ASSERT_SIZEOF(s_PlayerCombat, 20);
 

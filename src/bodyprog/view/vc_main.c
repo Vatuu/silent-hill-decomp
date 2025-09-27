@@ -1711,11 +1711,11 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
         switch (CHARA_FILE_INFOS[sc_p->model_0.charaId_0].field_C_0)
         {
             default:
-            case 0:
+            case 0: // Character.
                 watch_y = sc_p->position_18.vy + ofs_y;
                 break;
 
-            case 1:
+            case 1: // Ground.
                 Collision_Get(&coll, sc_p->position_18.vx, sc_p->position_18.vz);
 
                 if (coll.field_8 == 0)
@@ -1728,7 +1728,7 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
                 }
                 break;
 
-            case 2:
+            case 2: // Camera?
                 watch_y = w_p->field_2E4 + ofs_y;
                 break;
         }

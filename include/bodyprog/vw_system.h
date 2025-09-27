@@ -307,7 +307,7 @@ typedef struct _VC_WORK
     VC_NEAR_ROAD_DATA         cur_near_road_2B8;                             /** Closest camera path? */
     struct _SubCharacter*     nearest_enemy_2DC;                             /** Closest enemy character. */
     q19_12                    nearest_enemy_xz_dist_2E0;                     /** Distance to the closest enemy character on the XZ plane. */
-    s32                       field_2E4;
+    q19_12                    field_2E4;                                     // Some Y position?
 } VC_WORK;
 STATIC_ASSERT_SIZEOF(VC_WORK, 744);
 
@@ -481,6 +481,9 @@ void vcInitVCSystem(VC_ROAD_DATA* vc_road_ary_list);
 
 void vcStartCameraSystem();
 void vcEndCameraSystem();
+s32 func_80080A10();
+void func_80080A30(s32 arg0);
+s32 func_80080A3C();
 void vcSetFirstCamWork(VECTOR3* cam_pos, s16 chara_eye_ang_y, bool use_through_door_cam_f);
 void func_80080B58(GsCOORDINATE2* arg0, SVECTOR* rot, VECTOR3* pos);
 void vcWorkSetFlags(VC_FLAGS enable, VC_FLAGS disable);
