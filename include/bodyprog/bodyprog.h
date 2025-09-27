@@ -680,12 +680,6 @@ typedef struct _LmHeader
     u8             unk_9[3];
     s_ModelHeader* modelHdrs_C;
     u8*            modelOrder_10;
-
-    // File header ends, extra data below.
-    // After this goes array of `s_Material`, `s_ModelHeader` `modelsOrder`.
-    // See https://github.com/Sparagas/Silent-Hill/blob/main/010%20Editor%20-%20Binary%20Templates/sh1_model.bt
-    s8            unk_11[4075];
-    s32           queueIdx_1000;
 } s_LmHeader;
 
 typedef struct _IpdCollisionData_10
@@ -1149,6 +1143,8 @@ typedef struct _WorldGfx
     s_HeldItem        heldItem_1BAC;
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; /** Debug camera info. */
     s_LmHeader        itemLmHdr_1BE4;
+    u8                itemLmData_1BF4[4096 - sizeof(s_LmHeader)]; // retail game uses 2.75kb file, but they allocate 4kb for it.
+    s32               itemLmQueueIdx_2BE4;
     s32               objectCount_2BE8;
     s_WorldObject     objects_2BEC[29]; // Size based on the check in `g_WorldGfx_ObjectAdd`.
 } s_WorldGfx;

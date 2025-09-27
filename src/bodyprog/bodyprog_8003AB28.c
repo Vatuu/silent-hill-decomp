@@ -773,7 +773,7 @@ void GameFs_BgEtcGfxLoad() // 0x8003BE6C
 
 void GameFs_BgItemLoad() // 0x8003BE9C
 {
-    g_WorldGfx.itemLmHdr_1BE4.queueIdx_1000 = Fs_QueueStartRead(FILE_BG_BG_ITEM_PLM, &g_WorldGfx.itemLmHdr_1BE4);
+    g_WorldGfx.itemLmQueueIdx_2BE4 = Fs_QueueStartRead(FILE_BG_BG_ITEM_PLM, &g_WorldGfx.itemLmHdr_1BE4);
 }
 
 void func_8003BED0() // 0x8003BED0
@@ -800,7 +800,7 @@ void func_8003BED0() // 0x8003BED0
 
     itemLmHdr = &g_WorldGfx.itemLmHdr_1BE4;
 
-    if (!Fs_QueueIsEntryLoaded(itemLmHdr->queueIdx_1000) || itemLmHdr->isLoaded_2)
+    if (!Fs_QueueIsEntryLoaded(g_WorldGfx.itemLmQueueIdx_2BE4) || itemLmHdr->isLoaded_2)
     {
         return;
     }
