@@ -1592,7 +1592,7 @@ s32 func_8003D21C(s_MapOverlayHeader* arg0) // 0x8003D21C
     return queueIdx;
 }
 
-void WorldGfx_CharaLmBufferAdvance(s32* arg0, s32 charaId) // 0x8003D354
+void WorldGfx_CharaLmBufferAdvance(u8** bufPtr, s32 charaId) // 0x8003D354
 {
     s16 idx;
     s32 fileSize;
@@ -1602,7 +1602,7 @@ void WorldGfx_CharaLmBufferAdvance(s32* arg0, s32 charaId) // 0x8003D354
 
     Fs_GetFileSectorAlignedSize(idx);
 
-    *arg0 += (fileSize + 3) & ~0x3;
+    *bufPtr += (fileSize + 3) & ~0x3;
 }
 
 void Chara_FsImageCalc(s_FsImageDesc* image, s32 charaId, s32 modelIdx) // 0x8003D3BC
@@ -1711,7 +1711,7 @@ void func_8003D550(s32 charaId, s32 arg1) // 0x8003D550
     Lm_MaterialFlagsApply(model->lmHdr_8);
 }
 
-void func_8003D5B4(s8 flags) // 0x8003D5B4
+void func_8003D5B4(s8 forceFree) // 0x8003D5B4
 {
     u8            charaId;
     s32           i;
@@ -1721,7 +1721,7 @@ void func_8003D5B4(s8 flags) // 0x8003D5B4
     for (i = 0; i < 4; i++)
     {
         model = &g_WorldGfx.charaModels_CC[i];
-        if ((flags >> i) & (1 << 0))
+        if ((forceFree >> i) & (1 << 0))
         {
             WorldGfx_CharaFree(model);
         }
@@ -1770,7 +1770,7 @@ void func_8003D6E0(s32 charaId, s32 modeIdx, s_LmHeader* lmHdr, s_FsImageDesc* t
     else 
     {
         plmHdrPtr = (s_LmHeader*)g_WorldGfx.charaLmBufferPtr_14;
-        WorldGfx_CharaLmBufferAdvance(&g_WorldGfx.charaLmBufferPtr_14, charaId); // Increments `field_14`?
+        WorldGfx_CharaLmBufferAdvance(&g_WorldGfx.charaLmBufferPtr_14, charaId);
     }
 
     if (tex != NULL)

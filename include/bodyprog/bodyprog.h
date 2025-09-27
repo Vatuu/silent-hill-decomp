@@ -25,6 +25,9 @@
 #define LM_HEADER_MAGIC  '0'
 #define LM_VERSION       6
 
+// Chara_Load can force free already loaded models to make room for a new one.
+#define CHARA_FORCE_FREE_ALL 0xFF
+
 // ==============
 // HELPER MACROS
 // ==============
@@ -2647,7 +2650,7 @@ void WorldGfx_HarryCharaLoad();
 
 s32 func_8003D21C(s_MapOverlayHeader* arg0);
 
-void func_8003D5B4(s8 arg0);
+void func_8003D5B4(s8 forceFree);
 
 void func_8003D6E0(s32 charaId, s32 modeIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
@@ -3433,11 +3436,7 @@ void func_800880F0(s32 arg0);
 
 void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, u32 arg9, s16 argA, s32 argB);
 
-/** `arg5` could be a pointer.
- * `func_8003D6E0` uses this function and in the last argument
- * it input `arg5` and `arg5` is an undetermined function pointer
- */
-bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coords, s8 flags, s_LmHeader* lmHdr, s_FsImageDesc* tex);
+bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coords, s8 forceFree, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 bool func_80088D0C();
 
@@ -4107,7 +4106,7 @@ void func_8003CBA4(s_WorldObject* obj);
 
 void func_8003CC7C(s_WorldObject_0* arg0, MATRIX* arg1, MATRIX* arg2);
 
-void WorldGfx_CharaLmBufferAdvance(s32* arg0, s32 charaId);
+void WorldGfx_CharaLmBufferAdvance(u8** bufPtr, s32 charaId);
 
 /** Texture UV setup for NPCs. */
 void Chara_FsImageCalc(s_FsImageDesc* image, s32 groupIds, s32 modelIdx);
