@@ -1355,10 +1355,10 @@ void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6,
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088370); // 0x80088370
 
-bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coords, s8 flags, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x80088C7C
+bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coords, s8 forceFree, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x80088C7C
 {
     func_80035338(modelIdx + 1, charaId, NULL, coords);
-    func_8003D5B4(flags);
+    WorldGfx_CharaLmBufferAssign(forceFree);
     func_8003D6E0(charaId, modelIdx, lmHdr, tex);
     return true;
 }

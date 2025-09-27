@@ -523,7 +523,7 @@ void func_800DEDA4(void) // 0x800DEDA4
         if (D_800A9945 != Chara_GhostChildAlessa || !func_80040B74(Chara_GhostChildAlessa))
         {
             func_800348C0();
-            Chara_Load(0, Chara_GhostChildAlessa, g_SysWork.npcCoords_FC0, NO_VALUE, NULL, NULL);
+            Chara_Load(0, Chara_GhostChildAlessa, g_SysWork.npcCoords_FC0, CHARA_FORCE_FREE_ALL, NULL, NULL);
             func_80088D0C();
         }
     }
@@ -534,7 +534,7 @@ void func_800DEDA4(void) // 0x800DEDA4
             g_MapOverlayHeader.charaGroupIds_248[0] = Chara_PuppetNurse;
 
             func_800348C0();
-            Chara_Load(0, Chara_PuppetNurse, g_SysWork.npcCoords_FC0, NO_VALUE, NULL, NULL);
+            Chara_Load(0, Chara_PuppetNurse, g_SysWork.npcCoords_FC0, CHARA_FORCE_FREE_ALL, NULL, NULL);
             func_80088D0C();
         }
     }
@@ -543,7 +543,7 @@ void func_800DEDA4(void) // 0x800DEDA4
         g_MapOverlayHeader.charaGroupIds_248[0] = Chara_PuppetNurse;
 
         func_800348C0();
-        Chara_Load(0, Chara_PuppetNurse, g_SysWork.npcCoords_FC0, NO_VALUE, NULL, NULL);
+        Chara_Load(0, Chara_PuppetNurse, g_SysWork.npcCoords_FC0, CHARA_FORCE_FREE_ALL, NULL, NULL);
         func_80088D0C();
     }
 
