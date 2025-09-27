@@ -269,7 +269,7 @@ void Gfx_LoadingScreenDraw() // 0x80034E58
         g_MapOverlayHeader.loadingScreenFuncs_18[g_SysWork.loadingScreenIdx_2281]();
     }
 
-    Gfx_2dBackgroundMotionBlur(2);
+    Gfx_2dBackgroundMotionBlur(VSyncMode_Wait2);
 }
 
 void func_80034EC8() // 0x80034EC8
@@ -349,7 +349,7 @@ void Game_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
     var = g_SavegamePtr->field_B0;
 
     g_SavegamePtr->gameDifficulty_260 = difficulty;
-    g_SavegamePtr->current2dMapIdx_A9 = 1;
+    g_SavegamePtr->current2dMapIdx_A9 = Current2dMap_OldTown;
 
     for (i = 0; i < 45; i++)
     {
@@ -2497,7 +2497,7 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
         g_GameWork.gameStateStep_598[0]++;
     }
 
-    Gfx_2dBackgroundMotionBlur(2);
+    Gfx_2dBackgroundMotionBlur(VSyncMode_Wait2);
 
     if (Fs_QueueDoThingWhenEmpty())
     {
@@ -2567,7 +2567,7 @@ void GameState_LoadMapScreen_Update() // 0x8003991C
         g_GameWork.gameStateStep_598[0]++;
     }
 
-    Gfx_2dBackgroundMotionBlur(2);
+    Gfx_2dBackgroundMotionBlur(VSyncMode_Wait2);
 
     if (Fs_QueueDoThingWhenEmpty())
     {
@@ -2692,7 +2692,7 @@ void SysState_LoadArea_Update() // 0x80039C40
 
     g_SysWork.field_22A0 |= 1 << 0;
     Game_StateSetNext(GameState_MainLoadScreen);
-    Gfx_2dBackgroundMotionBlur(1);
+    Gfx_2dBackgroundMotionBlur(VSyncMode_Immediate);
 }
 
 void AreaLoad_UpdatePlayerPosition() // 0x80039F30

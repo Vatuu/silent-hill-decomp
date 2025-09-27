@@ -167,7 +167,7 @@ void Gfx_BackgroundSpriteDraw_2(s_FsImageDesc* image) // 0x80031AAC
     g_BackgroundColor     = 0x80;
 }
 
-bool Gfx_2dBackgroundMotionBlur(s32 vBlanks) // 0x80031CCC
+bool Gfx_2dBackgroundMotionBlur(s32 vSyncMode) // 0x80031CCC
 {
     s32       sp10;
     s32       i;
@@ -202,7 +202,7 @@ bool Gfx_2dBackgroundMotionBlur(s32 vBlanks) // 0x80031CCC
 
             addPrimFast(ot, sprt, 4);
 
-            if ((VSync(VSyncMode_Count) % vBlanks) == 0)
+            if ((VSync(VSyncMode_Count) % vSyncMode) == 0)
             {
                 setRGBC0(sprt, 127, 127, 127, PRIM_RECT | RECT_TEXTURE);
             }

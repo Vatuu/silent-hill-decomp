@@ -2590,7 +2590,7 @@ void Gfx_BackgroundSpriteDraw_2(s_FsImageDesc* image);
  *
  * Used only in the loading screen.
  */
-bool Gfx_2dBackgroundMotionBlur(s32 vBlanks);
+bool Gfx_2dBackgroundMotionBlur(s32 vSyncMode);
 
 /** @unused Possibly a leftover from when the save menu was part of `BODYPROG.BIN`.
  * Draws some string in display space.
