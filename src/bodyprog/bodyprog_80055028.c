@@ -2707,7 +2707,7 @@ void GameState_MapScreen_Update() // 0x80066EB0
             Fs_QueueStartReadTim(g_FullscreenMapTimFileIdxs[D_800C4448] + 0x768, FS_BUFFER_2, &g_MapImg);
             Fs_QueueWaitForEmpty();
             g_IntervalVBlanks   = 1;
-            g_Screen_FadeStatus = 6;
+            ScreenFade_Start(true, true, false);
 
             g_GameWork.gameStateStep_598[0] = 2;
             g_SysWork.timer_20              = 0;
@@ -2735,7 +2735,7 @@ void GameState_MapScreen_Update() // 0x80066EB0
             temp_s0_2 = func_80067914(D_800C4448, var_s6, var_s5, temp_s4);
             func_80068E0C(1, D_800C4448, 0, 0, var_s6, var_s5, temp_s4);
 
-            if (g_Screen_FadeStatus == 1)
+            if (ScreenFade_IsNone())
             {
                 if (D_800AE770 == 0 && D_800C4454 == 0x1000)
                 {
@@ -2758,11 +2758,11 @@ void GameState_MapScreen_Update() // 0x80066EB0
                     func_80066E7C();
                     GameFs_MapItemsTextureLoad(g_SavegamePtr->mapOverlayId_A4);
                     func_80066D90();
-                    g_Screen_FadeStatus = 4;
+                    ScreenFade_ResetTimestep();
                 }
                 else
                 {
-                    g_Screen_FadeStatus = 2;
+                    ScreenFade_Start(true, false, false);
                 }
 
                 g_GameWork.gameStateStep_598[0] = 4;
@@ -2800,7 +2800,7 @@ void GameState_MapScreen_Update() // 0x80066EB0
                         {
                             D_800C4449 = D_800AE740[D_800C4448][0];
                             Fs_QueueStartSeek(g_FullscreenMapTimFileIdxs[D_800C4449] + 0x768);
-                            g_Screen_FadeStatus             = 2;
+                            ScreenFade_Start(true, false, false);
                             D_800C444C                      = -1;
                             g_GameWork.gameStateStep_598[0] = 3;
                             g_SysWork.timer_20              = 0;
@@ -2815,8 +2815,8 @@ void GameState_MapScreen_Update() // 0x80066EB0
                         {
                             D_800C4449 = D_800AE740[D_800C4448][1];
                             Fs_QueueStartSeek(g_FullscreenMapTimFileIdxs[D_800C4449] + 0x768);
-                            g_Screen_FadeStatus = 2;
-                            D_800C444C          = -1;
+                            ScreenFade_Start(true, false, false);
+                            D_800C444C = -1;
 
                             g_GameWork.gameStateStep_598[0] = 3;
                             g_SysWork.timer_20              = 0;
@@ -2840,7 +2840,7 @@ void GameState_MapScreen_Update() // 0x80066EB0
             break;
 
         case 3:
-            if ((g_Screen_FadeStatus & 7) == 5)
+            if (ScreenFade_IsFinished())
             {
                 D_800C4448 = D_800C4449;
                 Sd_EngineCmd(0x51C);
@@ -2865,7 +2865,7 @@ void GameState_MapScreen_Update() // 0x80066EB0
                 Fs_QueueStartReadTim(g_MapMarkingTimFileIdxs[D_800C4448] + 0x776, FS_BUFFER_1, &g_MapMarkerAtlasImg);
             }
             Fs_QueueWaitForEmpty();
-            g_Screen_FadeStatus             = 6;
+            ScreenFade_Start(true, true, false);
             g_GameWork.gameStateStep_598[0] = 2;
             g_SysWork.timer_20              = 0;
             g_GameWork.gameStateStep_598[1] = 0;
@@ -2883,7 +2883,7 @@ void GameState_MapScreen_Update() // 0x80066EB0
             func_80068E0C(1, D_800C4448, 0, 0, var_s6, var_s5, temp_s4);
             func_800692A4(var_s6, var_s5, temp_s4);
 
-            if ((g_Screen_FadeStatus & 7) == 5)
+            if (ScreenFade_IsFinished())
             {
                 if (g_GameWork.gameStatePrev_590 == GameState_InGame || g_GameWork.gameStatePrev_590 == GameState_LoadMapScreen)
                 {

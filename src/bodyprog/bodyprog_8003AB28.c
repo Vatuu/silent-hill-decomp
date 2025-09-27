@@ -80,7 +80,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
             Screen_Init(SCREEN_WIDTH, true);
 
             g_IntervalVBlanks    = 1;
-            g_Screen_FadeStatus  = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
+            ScreenFade_Start(true, true, false);
             g_ScreenFadeTimestep = Q12(2.0f);
             g_MainMenuState++;
 
@@ -168,7 +168,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                     Fs_QueueReset();
                 }
 
-                g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
+                ScreenFade_Start(true, false, false);
                 g_MainMenuState++;
 
                 if (g_MainMenu_SelectedEntry < (u32)MainMenuEntry_Start) // TODO: Odd cast.
@@ -202,7 +202,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                         break;
 
                     case MainMenuEntry_Start:
-                        g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_Reset, false);
+                        ScreenFade_Reset();
                         g_MainMenuState     = MenuState_DifficultySelector;
                         break;
 
@@ -287,7 +287,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 GameFs_StreamBinLoad();
                 Sd_EngineCmd(Sfx_StartGame);
 
-                g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
+                ScreenFade_Start(true, false, false);
                 g_MainMenuState     = 4;
             }
             // Cancel.
@@ -300,7 +300,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
         case MenuState_LoadGame:
         case MenuState_NewGameStart:
-            if (SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete)
+            if (ScreenFade_IsFinished())
             {
                 Screen_Refresh(SCREEN_WIDTH, 0);
                 Fs_QueueWaitForEmpty();

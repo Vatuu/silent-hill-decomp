@@ -989,7 +989,7 @@ void func_800DA7FC() // 0x800DA7FC
 
 void Gfx_LoadingScreen_StageString() // 0x800DA8A4
 {
-    g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeInSteps, false);
+    ScreenFade_Start(false, true, false);
 
     Gfx_DebugStringPosition(100, 100);
     Gfx_DebugStringDraw("STAGE 0-1");

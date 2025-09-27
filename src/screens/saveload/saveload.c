@@ -1616,7 +1616,7 @@ void Savegame_ScreenInit() // 0x801E63C0
     }
 
     g_IntervalVBlanks   = 1;
-    g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false);
+    ScreenFade_Start(true, true, false);
 
     g_GameWork.background2dColor_R_58C = 0;
     g_GameWork.background2dColor_G_58D = 0;
@@ -1734,7 +1734,7 @@ void Savegame_ScreenLogic() // 0x801E649C
             // Exit save screen.
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2) 
             {
-                g_Screen_FadeStatus             = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false);
+                ScreenFade_Start(false, false, false);
                 g_GameWork.gameStateStep_598[1] = 2;
                 g_GameWork.gameStateStep_598[2] = 0;
 
@@ -1800,7 +1800,7 @@ void Savegame_ScreenLogic() // 0x801E649C
             break;
 
         case 2:
-            if (SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete)
+            if (ScreenFade_IsFinished())
             {
                 g_GameWork.background2dColor_R_58C = 0;
                 g_GameWork.background2dColor_G_58D = 0;
@@ -2041,14 +2041,14 @@ void Savegame_ContinueLogic() // 0x801E6F38
 
             GameFs_MapLoad(g_SavegamePtr->mapOverlayId_A4);
 
-            g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false);
+            ScreenFade_Start(true, false, false);
             g_GameWork.gameStateStep_598[1]++;
             g_GameWork.gameStateStep_598[2] = 0;
             break;
 
         case ContinueState_1:
         {
-            if (SCREEN_FADE_STATE_GET(g_Screen_FadeStatus) == ScreenFadeState_FadeOutComplete)
+            if (ScreenFade_IsFinished())
             {
                 Fs_QueueWaitForEmpty();
                 Settings_ScreenAndVolUpdate();
@@ -2178,7 +2178,7 @@ void func_801E737C() // 0x801E737C
             g_GameWork.gameStateStep_598[0] = 1;
             g_GameWork.gameStateStep_598[1] = g_GameWork.gameStatePrev_590;
 
-            g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false);
+            ScreenFade_Start(false, false, false);
 
             GameFs_TitleGfxLoad();
         }
