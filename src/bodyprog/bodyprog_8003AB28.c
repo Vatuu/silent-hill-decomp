@@ -1532,14 +1532,14 @@ void WorldGfx_HarryCharaLoad() // 0x8003D160
     s_CharaModel* harryModel;
     s_LmHeader*   lmHdr = HARRY_LM_BUFFER;
 
-    Chara_FsImageCalc(&image, 1, 0);
+    Chara_FsImageCalc(&image, Chara_Harry, 0);
 
-    worldGfx                                    = &g_WorldGfx;
-    harryModel                                  = &worldGfx->harryModel_164C;
+    worldGfx                               = &g_WorldGfx;
+    harryModel                             = &worldGfx->harryModel_164C;
     g_WorldGfx.charaModels_18[Chara_Harry] = harryModel;
 
-    Fs_QueueStartRead(CHARA_FILE_INFOS[1].modelFileIdx, lmHdr);
-    queueIdx = Fs_QueueStartReadTim(CHARA_FILE_INFOS[1].textureFileIdx, FS_BUFFER_1, &image);
+    Fs_QueueStartRead(CHARA_FILE_INFOS[Chara_Harry].modelFileIdx, lmHdr);
+    queueIdx = Fs_QueueStartReadTim(CHARA_FILE_INFOS[Chara_Harry].textureFileIdx, FS_BUFFER_1, &image);
 
     g_WorldGfx.harryModel_164C.charaId_0 = Chara_Harry;
     harryModel->isLoaded_1               = false;
@@ -1572,7 +1572,7 @@ s32 func_8003D21C(s_MapOverlayHeader* arg0) // 0x8003D21C
                 if (curCharaId != curModel->charaId_0) 
                 {
                     cond = true;
-                    for (j = i; j < 4; j++)
+                    for (j = i; j < ARRAY_SIZE(g_WorldGfx.charaModels_CC); j++)
                     {
                         g_WorldGfx.charaModels_CC[j].charaId_0 = Chara_None;
                     }
@@ -1718,7 +1718,7 @@ void WorldGfx_CharaLmBufferAssign(s8 forceFree) // 0x8003D5B4
     u32           dataPtr;
     s_CharaModel* model;
 
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < ARRAY_SIZE(g_WorldGfx.charaModels_CC); i++)
     {
         model = &g_WorldGfx.charaModels_CC[i];
         if ((forceFree >> i) & (1 << 0))
@@ -1729,7 +1729,7 @@ void WorldGfx_CharaLmBufferAssign(s8 forceFree) // 0x8003D5B4
 
     i = 0; 
     g_WorldGfx.charaLmBufferPtr_14 = MAP_CHARA_LM_BUFFER;
-    for (; i < 4; i++)
+    for (; i < ARRAY_SIZE(g_WorldGfx.charaModels_CC); i++)
     {
         model = &g_WorldGfx.charaModels_CC[i];
 
@@ -2332,9 +2332,9 @@ void func_8003E544(s_Skeleton* skel, s32 arg1) // 0x8003E544
 
 void func_8003E5E8(s32 arg0) // 0x8003E5E8
 {
-    GsOT_TAG* ot;
     s32       i;
     u8        color;
+    GsOT_TAG* ot;
     PACKET*   packet;
     LINE_G2*  line;
 
@@ -2438,16 +2438,16 @@ void func_8003E740() // 0x8003E740
         var_s5 = 0;
     }
 
-    if (temp_s6 >= 0x81 && var_s5 < 0x7FF)
+    if (temp_s6 >= 129 && var_s5 < 2047)
     {
         SetPolyFT4(poly);
         setSemiTrans(poly, 1);
 
         temp_a0 = D_800BCDE8[temp_s2++];
 
-        if ((temp_a0 & 0xFFF) >= 0xD9A)
+        if ((temp_a0 & 0xFFF) >= 3482)
         {
-            D_800A9FB0 -= 0x10 + (temp_a0 & 0xF);
+            D_800A9FB0 -= 16 + (temp_a0 & 0xF);
         }
 
         if (D_800A9FB0 >= 33)
@@ -2455,9 +2455,9 @@ void func_8003E740() // 0x8003E740
             D_800A9FB0 = 0;
         }
 
-        setRGB0(poly, D_800A9FB0 + FP_COLOR(0.1875f), D_800A9FB0 + FP_COLOR(0.1875f), D_800A9FB0 + FP_COLOR(0.1875f));
-        poly->tpage = 0x2C;
-        poly->clut  = 0x1032;
+        setRGB0(poly, D_800A9FB0 + 48, D_800A9FB0 + 48, D_800A9FB0 + 48);
+        poly->tpage = 44;
+        poly->clut  = 4146;
 
         var_a0 = &D_800BCDE8[temp_s2++];
 
@@ -2470,44 +2470,44 @@ void func_8003E740() // 0x8003E740
         SetTransMatrix(&GsIDMATRIX);
 
         sp50.vz = temp_s6;
-        sp50.vx = sp40[0] - 0x33;
-        sp50.vy = sp40[2] - 0x33;
+        sp50.vx = sp40[0] - 51;
+        sp50.vy = sp40[2] - 51;
 
         RotTransPers(&sp50, &sp58, &sp60, &sp60);
 
         poly->x0 = sp10.vx + sp58.vx;
         poly->y0 = sp10.vy + sp58.vy;
-        sp50.vx  = sp40[1] + 0x33;
-        sp50.vy  = sp40[3] - 0x33;
+        sp50.vx  = sp40[1] + 51;
+        sp50.vy  = sp40[3] - 51;
 
         RotTransPers(&sp50, &sp58, &sp60, &sp60);
 
         poly->x1 = sp10.vx + sp58.vx;
         poly->y1 = sp10.vy + sp58.vy;
-        sp50.vx  = -0x33 - sp40[1];
-        sp50.vy  = 0x33 - sp40[3];
+        sp50.vx  = -51 - sp40[1];
+        sp50.vy  = 51 - sp40[3];
 
         RotTransPers(&sp50, &sp58, &sp60, &sp60);
 
         poly->x2 = sp10.vx + sp58.vx;
         poly->y2 = sp10.vy + sp58.vy;
-        sp50.vx  = 0x33 - sp40[0];
-        sp50.vy  = 0x33 - sp40[2];
+        sp50.vx  = 51 - sp40[0];
+        sp50.vy  = 51 - sp40[2];
 
         RotTransPers(&sp50, &sp58, &sp60, &sp60);
 
         poly->x3 = sp10.vx + sp58.vx;
         poly->y3 = sp10.vy + sp58.vy;
 
-        poly->u0 = 0x80;
-        poly->u1 = 0xBF;
-        poly->u2 = 0x80;
-        poly->u3 = 0xBF;
+        poly->u0 = 128;
+        poly->u1 = 191;
+        poly->u2 = 128;
+        poly->u3 = 191;
 
         poly->v0 = 0;
         poly->v1 = 0;
-        poly->v2 = 0x3F;
-        poly->v3 = 0x3F;
+        poly->v2 = 63;
+        poly->v3 = 63;
 
         AddPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[var_s5], poly);
         GsOUT_PACKET_P = (PACKET*)poly + sizeof(POLY_FT4);
@@ -2549,7 +2549,7 @@ void func_8003EBF4(s_MapOverlayHeader* arg0) // 0x8003EBF4
 
     var_v1 = 0;
 
-    if (temp_a1 & 4)
+    if (temp_a1 & (1 << 2))
     {
         var_v1 = (temp_a1 & 3) > 0;
     }
@@ -2728,10 +2728,10 @@ void func_8003F170() // 0x8003F170
     MATRIX          mat;
     VECTOR          sp48;
     SVECTOR         rot;
-    GsCOORDINATE2*  sp60;
     s32             temp_v0;
     u8              temp_v1;
     s32             temp;
+    GsCOORDINATE2*  sp60;
     s_StructUnk3*   ptr2;
     s_SysWork_2288* ptr;
 
