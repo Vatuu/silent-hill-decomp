@@ -871,7 +871,7 @@ void func_8003C0C0() // 0x8003C0C0
     heldItem = &g_WorldGfx.heldItem_1BAC;
 
     heldItem->itemId_0 = NO_VALUE;
-    heldItem->lmHdr_14 = (s_LmHeader*)ILM_BUFFER_0;
+    heldItem->lmHdr_14 = HELD_ITEM_LM_BUFFER;
     heldItem->bone_18.modelInfo_0.field_0 = 0;
     heldItem->bone_18.modelInfo_0.field_4 = NULL;
     heldItem->bone_18.modelInfo_0.modelHdr_8 = NULL;
@@ -890,7 +890,7 @@ void func_8003C110() // 0x8003C110
         }
     } 
 
-    g_WorldGfx.dataPtr_14 = (s_LmHeader*)ILM_BUFFER_1;
+    g_WorldGfx.charaLmBufferPtr_14 = MAP_CHARA_LM_BUFFER;
     for (curModel = &g_WorldGfx.charaModels_CC[0]; curModel < &g_WorldGfx.charaModels_CC[4]; curModel++)
     {
         CharaModel_Free(curModel);
@@ -905,7 +905,7 @@ void CharaModel_Free(s_CharaModel* model) // 0x8003C1AC
     model->charaId_0  = Chara_None;
     model->isLoaded_1 = false;
     model->queueIdx_4 = 0;
-    model->lmHdr_8    = (s_LmHeader*)ILM_BUFFER_1;
+    model->lmHdr_8    = MAP_CHARA_LM_BUFFER;
     model->texture_C  = image;
 }
 
@@ -1530,7 +1530,7 @@ void func_8003D160() // 0x8003D160
     s32           queueIdx;
     s_WorldGfx*   worldGfx;
     s_CharaModel* harryModel;
-    s_LmHeader*   lmHdr = (void*)0x800FE600;
+    s_LmHeader*   lmHdr = HARRY_LM_BUFFER;
 
     func_8003D3BC(&image, 1, 0);
 
@@ -1558,7 +1558,7 @@ s32 func_8003D21C(s_MapOverlayHeader* arg0) // 0x8003D21C
     s32           curCharaId;
     s_CharaModel* curModel;
 
-    for (queueIdx = 0, i = 0, g_WorldGfx.dataPtr_14 = Fs_GetFileSize(FILE_CHARA_HERO_ILM) + 0x800FEE00, cond = false;
+    for (queueIdx = 0, i = 0, g_WorldGfx.charaLmBufferPtr_14 = MAP_CHARA_LM_BUFFER, cond = false;
          i < 4;
          i++)
     {
@@ -1582,10 +1582,10 @@ s32 func_8003D21C(s_MapOverlayHeader* arg0) // 0x8003D21C
             if (cond) 
             {
                 func_8003D3BC(&image, curCharaId, i);
-                queueIdx = func_8003D7D4(curCharaId, i, (s_LmHeader*)g_WorldGfx.dataPtr_14, &image);
+                queueIdx = WorldGfx_CharaLoad(curCharaId, i, (s_LmHeader*)g_WorldGfx.charaLmBufferPtr_14, &image);
             }
 
-            func_8003D354(&g_WorldGfx.dataPtr_14, curCharaId);
+            func_8003D354(&g_WorldGfx.charaLmBufferPtr_14, curCharaId);
         }
     }
 
@@ -1728,7 +1728,7 @@ void func_8003D5B4(s8 flags) // 0x8003D5B4
     }
 
     i = 0; 
-    g_WorldGfx.dataPtr_14 = ILM_BUFFER_1;
+    g_WorldGfx.charaLmBufferPtr_14 = MAP_CHARA_LM_BUFFER;
     for (; i < 4; i++)
     {
         model = &g_WorldGfx.charaModels_CC[i];
@@ -1737,9 +1737,9 @@ void func_8003D5B4(s8 flags) // 0x8003D5B4
         if (charaId != 0)
         {
             dataPtr = (s32)model->lmHdr_8 + Fs_GetFileSize(CHARA_FILE_INFOS[charaId].modelFileIdx);
-            if (g_WorldGfx.dataPtr_14 < dataPtr)
+            if (g_WorldGfx.charaLmBufferPtr_14 < dataPtr)
             {
-                g_WorldGfx.dataPtr_14 = dataPtr;
+                g_WorldGfx.charaLmBufferPtr_14 = dataPtr;
             }
         }
     }
@@ -1769,8 +1769,8 @@ void func_8003D6E0(s32 charaId, s32 modeIdx, s_LmHeader* lmHdr, s_FsImageDesc* t
     } 
     else 
     {
-        plmHdrPtr = (s_LmHeader*)g_WorldGfx.dataPtr_14;
-        func_8003D354(&g_WorldGfx.dataPtr_14, charaId); // Increments `field_14`?
+        plmHdrPtr = (s_LmHeader*)g_WorldGfx.charaLmBufferPtr_14;
+        func_8003D354(&g_WorldGfx.charaLmBufferPtr_14, charaId); // Increments `field_14`?
     }
 
     if (tex != NULL)
@@ -1782,10 +1782,10 @@ void func_8003D6E0(s32 charaId, s32 modeIdx, s_LmHeader* lmHdr, s_FsImageDesc* t
         func_8003D3BC(&image, charaId, modeIdx);
     }
 
-    func_8003D7D4(charaId, modeIdx, plmHdrPtr, &image);
+    WorldGfx_CharaLoad(charaId, modeIdx, plmHdrPtr, &image);
 }
 
-s32 func_8003D7D4(u32 charaId, s32 modelIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x8003D7D4
+s32 WorldGfx_CharaLoad(u32 charaId, s32 modelIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x8003D7D4
 {
     s32            queueIdx;
     s32            modelCharaId;

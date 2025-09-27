@@ -1136,7 +1136,7 @@ typedef struct _WorldGfx
     u8                useStoredPoint_4; /** `bool` */
     u8                unk_5[3];
     VECTOR3           ipdSamplePoint_8; /** Used by IPD logic to sample which chunks to load or unload. */
-    s32               dataPtr_14;       // Used frequently as `s_LmHeader*`, but code adds file lengths to it. Could just be `u8*` pointing to current file data?
+    u8*               charaLmBufferPtr_14;
     s_CharaModel*     charaModelsTable_18[Chara_Count];
     s_CharaModel      charaModels_CC[4];
     s_CharaModel      harryModel_164C;
@@ -4112,7 +4112,7 @@ void func_8003D354(s32* arg0, s32 charaId);
 /** Texture UV setup for NPCs. */
 void func_8003D3BC(s_FsImageDesc* image, s32 groupIds, s32 modelIdx);
 
-s32 func_8003D7D4(u32 charaId, s32 modelIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex);
+s32 WorldGfx_CharaLoad(u32 charaId, s32 modelIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 /** Something related to animations. */
 void func_8003D938();
