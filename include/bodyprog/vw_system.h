@@ -219,7 +219,7 @@ typedef struct _VC_ROAD_DATA
     VC_AREA_SIZE_TYPE area_size_type_11 : 2;
     VC_ROAD_TYPE      rd_type_11        : 3; /** Path type. */
     u32               mv_y_type_11      : 3; /** `VC_CAM_MV_TYPE` */
-    q27_4             lim_rd_max_hy_12  : 8; /** In SH2 `max_hy/min_hy` are part of `VC_LIMIT_AREA`, in SH1 these are separate for some reason. */
+    q27_4             lim_rd_max_hy_12  : 8; /** In SH2, `max_hy` and `min_hy` are part of `VC_LIMIT_AREA`.In SH1, these are separate for some reason. */
     q27_4             lim_rd_min_hy_13  : 8;
     q27_4             ofs_watch_hy_14   : 8;
     u32               field_15          : 4;
@@ -391,7 +391,7 @@ void func_800401A0(bool arg0);
 void vcSetEvCamRate(q3_12 ev_cam_rate);
 void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, bool back_f, bool right_f, bool left_f, bool up_f, bool down_f);
 
-/** @brief Gets the player's head position, outputting the result to `head_pos`.
+/** @brief Gets the head position of the player, outputting the result to `head_pos`.
  *
  * @param head_pos Output player head position (Q19.12).
  */
@@ -403,7 +403,7 @@ void vcMakeHeroHeadPos(VECTOR3* head_pos);
  * @param in_pos Position to translate (Q19.12).
  * @param ofs_xz_r Horizontal offset.
  * @param ang_y Offset angle defining the direction of translation.
- * @param ofs_y Vertical offset.
+ * @param ofs_y Y offset.
  */
 void vcAddOfsToPos(VECTOR3* out_pos, const VECTOR3* in_pos, q3_12 ofs_xz_r, q3_12 ang_y, q19_12 ofs_y);
 
