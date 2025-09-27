@@ -24,8 +24,8 @@ void func_800CBFB0(void) // 0x800CBFB0
     GsInitCoordinate2(NULL, &g_SysWork.coord_22F8);
     D_800DD594 = 1;
     D_800DD593 = 1;
-    D_800E34EC = 20;
-    D_800E39AC = 60;
+    D_800E34EC = ARRAY_SIZE(D_800E330C);
+    D_800E39AC = ARRAY_SIZE(D_800E34FC);
     func_800D0394(2, vecs);
 }
 
@@ -122,7 +122,86 @@ void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* arg2) // 0x800D0
     partCpy->stateStep_1E++;
 }
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0394);
+void func_800D0394(s32 arg0, VECTOR3* vecs)
+{
+    VECTOR3* vec;
+    s32 temp_v0_2;
+    s32 i;
+    s32 var_v0;
+    s_800E330C* bar_ptr0;
+    s_800E34FC* var_s1;
+    s32 index;
+    s32 rand0;
+    s32 rand1;
+    s32 rem;
+    s32 q;
+
+    g_SysWork.field_234B_4 = arg0;
+    if (arg0)
+    {
+        sharedFunc_800D0A60_0_s00(D_800C39A0);
+
+        if (arg0 == 2)
+        {
+            for (i = 0; i < 4; i++, vecs++)
+            {
+                D_800E32DC[i].vx = vecs->vx;
+                D_800E32DC[i].vy = vecs->vy;
+                D_800E32DC[i].vz = vecs->vz;
+            }
+
+            if (D_800DD593)
+            {
+                
+                for (i = 0; i < ARRAY_SIZE(D_800E34FC); i++)
+                {
+                    rem = Rng_Rand16();
+                    rand0 = rem;
+                    var_s1 = &D_800E34FC[i];
+                    index = (i / 20) + 1;
+                    vec = &D_800E32DC[index];
+
+                    var_s1->field_0.vx  = (vec->vx + (rand0 & 0xFFF)) - Q12(0.5f);
+                    var_s1->field_0.vz  = (vec->vz + (Rng_Rand16() & 0xFFF)) - Q12(0.5f);
+                    var_s1->field_0.vy  = vec->vy;
+                    var_s1->field_11 = 1;
+                    var_s1->field_10 = 1;
+                    var_s1->field_12 = 0;
+                    var_s1->field_C  = 0;
+                    var_s1->field_E  = 0;
+                }
+            }
+
+            if (D_800DD594)
+            {
+                for (i = 0; i < ARRAY_SIZE(D_800E330C); i++)
+                {
+                    bar_ptr0 = &D_800E330C[i];
+                     // TODO Rng_GenerateInt(-2.5, 2.5) but the casts in this macro make it not fit here.
+                    bar_ptr0->field_0.vx = D_800E32DC[0].vx + (Rng_Rand16() % Q12(5.0f)) - Q12(2.5f);
+                    rand0 = -Rng_Rand16();
+                    var_v0 = rand0;
+                    if (rand0 < 0)
+                    {
+                        var_v0 = rand0 + Q12(3.9998f);
+                    }
+                    bar_ptr0->field_0.vy = D_800E32DC[0].vy + (rand0 - ((var_v0 >> 14) << 14));
+
+                    rand1 = Rng_Rand16();
+                    temp_v0_2 = D_800E32DC[0].vz;
+                    q = rand1 / Q12(5.0f);
+                    rem = rand1 - q * Q12(5.0f);
+
+                    bar_ptr0->field_15 = 1;
+                    bar_ptr0->field_14 = 1;
+                    bar_ptr0->field_C  = 0;
+                    bar_ptr0->field_10 = 0;
+                    bar_ptr0->field_0.vz = (temp_v0_2 + rem) - Q12(2.5f);
+                }
+            }
+        }
+    }
+}
 
 bool func_800D0600() // 0x800D0600
 {
@@ -132,25 +211,25 @@ bool func_800D0600() // 0x800D0600
     s32 distZ;
 
     // Check against first position.
-    distX = ABS(g_SysWork.player_4C.chara_0.position_18.vx - D_800E32DC.position0_0.vx);
-    distZ = g_SysWork.player_4C.chara_0.position_18.vz - D_800E32DC.position0_0.vz;
+    distX = ABS(g_SysWork.player_4C.chara_0.position_18.vx - D_800E32DC[0].vx);
+    distZ = g_SysWork.player_4C.chara_0.position_18.vz - D_800E32DC[0].vz;
     if (distZ >= Q12(0.0f) && (distX + distZ) < FIXED_DIST)
     {
         goto ret1;
     }
-    else if (distZ < Q12(0.0f) && (distX + (D_800E32DC.position0_0.vz - g_SysWork.player_4C.chara_0.position_18.vz)) < FIXED_DIST)
+    else if (distZ < Q12(0.0f) && (distX + (D_800E32DC[0].vz - g_SysWork.player_4C.chara_0.position_18.vz)) < FIXED_DIST)
     {
         goto ret1;
     }
 
     // Check against against second position.
-    distX = ABS(g_SysWork.player_4C.chara_0.position_18.vx - D_800E32DC.position1_C.vx);
-    distZ = g_SysWork.player_4C.chara_0.position_18.vz - D_800E32DC.position1_C.vz;
+    distX = ABS(g_SysWork.player_4C.chara_0.position_18.vx - D_800E32DC[1].vx);
+    distZ = g_SysWork.player_4C.chara_0.position_18.vz - D_800E32DC[1].vz;
     if (distZ >= Q12(0.0f) && (distX + distZ) < FIXED_DIST)
     {
         goto ret1;
     }
-    else if (distZ < Q12(0.0f) && (distX + (D_800E32DC.position1_C.vz - g_SysWork.player_4C.chara_0.position_18.vz)) < FIXED_DIST)
+    else if (distZ < Q12(0.0f) && (distX + (D_800E32DC[1].vz - g_SysWork.player_4C.chara_0.position_18.vz)) < FIXED_DIST)
     {
         goto ret1;
     }
