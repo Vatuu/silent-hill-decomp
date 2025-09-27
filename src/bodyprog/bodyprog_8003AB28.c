@@ -757,7 +757,7 @@ void func_8003BE28() // 0x8003BE28
 
 s_Bone* func_8003BE50(s32 modelIdx) // 0x8003BE50
 {
-    return g_WorldGfx.charaModelsTable_18[modelIdx]->skeleton_14.bones_C;
+    return g_WorldGfx.charaModels_18[modelIdx]->skeleton_14.bones_C;
 }
 
 // ========================================
@@ -886,7 +886,7 @@ void func_8003C110() // 0x8003C110
     {
         if (i != Chara_Harry)
         {
-            g_WorldGfx.charaModelsTable_18[i] = NULL;
+            g_WorldGfx.charaModels_18[i] = NULL;
         }
     } 
 
@@ -1536,7 +1536,7 @@ void WorldGfx_HarryCharaLoad() // 0x8003D160
 
     worldGfx                                    = &g_WorldGfx;
     harryModel                                  = &worldGfx->harryModel_164C;
-    g_WorldGfx.charaModelsTable_18[Chara_Harry] = harryModel;
+    g_WorldGfx.charaModels_18[Chara_Harry] = harryModel;
 
     Fs_QueueStartRead(CHARA_FILE_INFOS[1].modelFileIdx, lmHdr);
     queueIdx = Fs_QueueStartReadTim(CHARA_FILE_INFOS[1].textureFileIdx, FS_BUFFER_1, &image);
@@ -1659,7 +1659,7 @@ void Chara_FsImageCalc(s_FsImageDesc* image, s32 charaId, s32 modelIdx) // 0x800
 
 bool WorldGfx_IsCharaModelPresent(s32 charaId) // 0x8003D444
 {
-    return g_WorldGfx.charaModelsTable_18[charaId] != NULL;
+    return g_WorldGfx.charaModels_18[charaId] != NULL;
 }
 
 void func_8003D460() {}
@@ -1673,7 +1673,7 @@ void func_8003D468(s32 charaId, bool flag) // 0x8003D468
     s32           y;
     s_CharaModel* model;
 
-    model = g_WorldGfx.charaModelsTable_18[charaId];
+    model = g_WorldGfx.charaModels_18[charaId];
     func_80056244(model->lmHdr_8, flag);
 
     rect.x = model->texture_C.clutX;
@@ -1706,7 +1706,7 @@ void func_8003D550(s32 charaId, s32 arg1) // 0x8003D550
 {
     s_CharaModel* model;
 
-    model = g_WorldGfx.charaModelsTable_18[charaId];
+    model = g_WorldGfx.charaModels_18[charaId];
     Lm_MaterialFileIdxApply(model->lmHdr_8, CHARA_FILE_INFOS[charaId].textureFileIdx, &model->texture_C, arg1);
     Lm_MaterialFlagsApply(model->lmHdr_8);
 }
@@ -1749,7 +1749,7 @@ void WorldGfx_CharaFree(s_CharaModel* model) // 0x8003D6A4
 {
     if (model->charaId_0 != Chara_None)
     {
-        g_WorldGfx.charaModelsTable_18[model->charaId_0] = NULL;
+        g_WorldGfx.charaModels_18[model->charaId_0] = NULL;
         CharaModel_Free(model);
     }
 }
@@ -1798,7 +1798,7 @@ s32 WorldGfx_CharaLoad(u32 charaId, s32 modelIdx, s_LmHeader* lmHdr, s_FsImageDe
 
     if (charaId == Chara_None) 
     {
-        g_WorldGfx.charaModelsTable_18[modelCharaId] = NULL;
+        g_WorldGfx.charaModels_18[modelCharaId] = NULL;
         return 0;
     }
 
@@ -1812,10 +1812,10 @@ s32 WorldGfx_CharaLoad(u32 charaId, s32 modelIdx, s_LmHeader* lmHdr, s_FsImageDe
             }
         }
 
-        g_WorldGfx.charaModelsTable_18[modelCharaId] = NULL;
+        g_WorldGfx.charaModels_18[modelCharaId] = NULL;
     }
 
-    g_WorldGfx.charaModelsTable_18[charaId] = model;
+    g_WorldGfx.charaModels_18[charaId] = model;
 
     queueIdx = Fs_QueueStartRead(CHARA_FILE_INFOS[charaId].modelFileIdx, lmHdr);
 
@@ -1847,7 +1847,7 @@ void func_8003D95C() // 0x8003D95C
     {
         if (i != Chara_Harry) 
         {
-            model = g_WorldGfx.charaModelsTable_18[i];
+            model = g_WorldGfx.charaModels_18[i];
             if (model != NULL) 
             {
                 func_8003D9C8(model);
@@ -1908,7 +1908,7 @@ void func_8003DA9C(s32 charaId, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 ar
                       D_800C4168.screenBrightness_8);
     }
 
-    func_80045534(&g_WorldGfx.charaModelsTable_18[charaId]->skeleton_14, &g_OrderingTable0[g_ActiveBufferIdx], arg2,
+    func_80045534(&g_WorldGfx.charaModels_18[charaId]->skeleton_14, &g_OrderingTable0[g_ActiveBufferIdx], arg2,
                   coord, CHARA_FILE_INFOS[charaId].field_6 * 16, ret, CHARA_FILE_INFOS[charaId].field_8);
 
     if (arg3 != 0)
@@ -1926,7 +1926,7 @@ void func_8003DD80(s32 modelIdx, s32 arg1) // 0x8003DD80
 {
     s_CharaModel* model;
 
-    model = g_WorldGfx.charaModelsTable_18[modelIdx];
+    model = g_WorldGfx.charaModels_18[modelIdx];
 
     switch (modelIdx)
     {

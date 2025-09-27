@@ -1140,7 +1140,7 @@ typedef struct _WorldGfx
     u8                unk_5[3];
     VECTOR3           ipdSamplePoint_8; /** Used by IPD logic to sample which chunks to load or unload. */
     u8*               charaLmBufferPtr_14;
-    s_CharaModel*     charaModelsTable_18[Chara_Count];
+    s_CharaModel*     charaModels_18[Chara_Count];
     s_CharaModel      charaModels_CC[4];
     s_CharaModel      harryModel_164C;
     s_HeldItem        heldItem_1BAC;
