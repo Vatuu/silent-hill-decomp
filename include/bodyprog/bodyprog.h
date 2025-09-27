@@ -2643,7 +2643,7 @@ void func_8003D468(s32 arg0, bool flag);
 void func_8003D6A4(s_CharaModel* model);
 
 /** Return type assumed. */
-void func_8003D160();
+void WorldGfx_HarryCharaLoad();
 
 s32 func_8003D21C(s_MapOverlayHeader* arg0);
 

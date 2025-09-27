@@ -1524,7 +1524,7 @@ void func_8003D058() // 0x8003D058
     }
 }
 
-void func_8003D160() // 0x8003D160
+void WorldGfx_HarryCharaLoad() // 0x8003D160
 {
     s_FsImageDesc image;
     s32           queueIdx;

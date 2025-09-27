@@ -56,7 +56,7 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
                 // Load `1ST/KONAMI2.TIM` (Konami logo).
                 Fs_QueueStartReadTim(FILE_1ST_KONAMI2_TIM, FS_BUFFER_1, &g_KcetLogoImg);
                 
-                func_8003D160();
+                WorldGfx_HarryCharaLoad();
                 GameFs_BgItemLoad();
                 Map_EffectTexturesLoad(NO_VALUE);
 
