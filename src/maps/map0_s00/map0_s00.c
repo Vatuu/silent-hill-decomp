@@ -122,19 +122,19 @@ void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* arg2) // 0x800D0
     partCpy->stateStep_1E++;
 }
 
-void func_800D0394(s32 arg0, VECTOR3* vecs)
+void func_800D0394(s32 arg0, VECTOR3* vecs) // 0x800D0394
 {
-    VECTOR3* vec;
-    s32 temp_v0_2;
-    s32 i;
-    s32 var_v0;
-    s_800E330C* bar_ptr0;
+    VECTOR3*    vec;
+    s32         unkZ;
+    s32         i;
+    s32         var_v0;
+    s32         idx;
+    s32         rand0;
+    s32         rand1;
+    s32         rand;
+    s32         mult;
+    s_800E330C* curUnk;
     s_800E34FC* var_s1;
-    s32 index;
-    s32 rand0;
-    s32 rand1;
-    s32 rem;
-    s32 q;
 
     g_SysWork.field_234B_4 = arg0;
     if (arg0)
@@ -155,20 +155,21 @@ void func_800D0394(s32 arg0, VECTOR3* vecs)
                 
                 for (i = 0; i < ARRAY_SIZE(D_800E34FC); i++)
                 {
-                    rem = Rng_Rand16();
-                    rand0 = rem;
+                    rand = Rng_Rand16();
+                    rand0 = rand;
                     var_s1 = &D_800E34FC[i];
-                    index = (i / 20) + 1;
-                    vec = &D_800E32DC[index];
+                    idx = (i / 20) + 1;
+                    vec = &D_800E32DC[idx];
 
-                    var_s1->field_0.vx  = (vec->vx + (rand0 & 0xFFF)) - Q12(0.5f);
-                    var_s1->field_0.vz  = (vec->vz + (Rng_Rand16() & 0xFFF)) - Q12(0.5f);
-                    var_s1->field_0.vy  = vec->vy;
+                    // TODO: Is this angle math?
+                    var_s1->field_0.vx = (vec->vx + Q12_FRACT(rand0)) - Q12(0.5f);
+                    var_s1->field_0.vz = (vec->vz + Q12_FRACT(Rng_Rand16())) - Q12(0.5f);
+                    var_s1->field_0.vy = vec->vy;
                     var_s1->field_11 = 1;
                     var_s1->field_10 = 1;
                     var_s1->field_12 = 0;
-                    var_s1->field_C  = 0;
-                    var_s1->field_E  = 0;
+                    var_s1->field_C = 0;
+                    var_s1->field_E = 0;
                 }
             }
 
@@ -176,27 +177,30 @@ void func_800D0394(s32 arg0, VECTOR3* vecs)
             {
                 for (i = 0; i < ARRAY_SIZE(D_800E330C); i++)
                 {
-                    bar_ptr0 = &D_800E330C[i];
-                     // TODO Rng_GenerateInt(-2.5, 2.5) but the casts in this macro make it not fit here.
-                    bar_ptr0->field_0.vx = D_800E32DC[0].vx + (Rng_Rand16() % Q12(5.0f)) - Q12(2.5f);
+                    curUnk = &D_800E330C[i];
+                 
+                    // TODO: Should be `Rng_GenerateInt(-2.5f, 2.5f)`, but casts in this macro make it not fit here.
+                    curUnk->field_0.vx = D_800E32DC[0].vx + (Rng_Rand16() % Q12(5.0f)) - Q12(2.5f);
+
                     rand0 = -Rng_Rand16();
                     var_v0 = rand0;
                     if (rand0 < 0)
                     {
-                        var_v0 = rand0 + Q12(3.9998f);
+                        var_v0 = rand0 + (Q12(4.0f) - 1);
                     }
-                    bar_ptr0->field_0.vy = D_800E32DC[0].vy + (rand0 - ((var_v0 >> 14) << 14));
+
+                    curUnk->field_0.vy = D_800E32DC[0].vy + (rand0 - ((var_v0 >> 14) << 14));
 
                     rand1 = Rng_Rand16();
-                    temp_v0_2 = D_800E32DC[0].vz;
-                    q = rand1 / Q12(5.0f);
-                    rem = rand1 - q * Q12(5.0f);
+                    unkZ = D_800E32DC[0].vz;
+                    mult = rand1 / Q12(5.0f);
+                    rand = rand1 - (mult * Q12(5.0f));
 
-                    bar_ptr0->field_15 = 1;
-                    bar_ptr0->field_14 = 1;
-                    bar_ptr0->field_C  = 0;
-                    bar_ptr0->field_10 = 0;
-                    bar_ptr0->field_0.vz = (temp_v0_2 + rem) - Q12(2.5f);
+                    curUnk->field_15 = 1;
+                    curUnk->field_14 = 1;
+                    curUnk->field_C  = 0;
+                    curUnk->field_10 = 0;
+                    curUnk->field_0.vz = (unkZ + rand) - Q12(2.5f);
                 }
             }
         }

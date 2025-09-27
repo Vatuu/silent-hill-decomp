@@ -16,27 +16,29 @@ typedef struct
     u8 field_2;
 } s_800DFB48;
 
-typedef struct {
-    VECTOR3 field_0;
-    s16 field_C;
-    s16 field_E;
-    s8  field_10;
-    s8  field_11;
-    s8  field_12;
-    s8  field_13;
+typedef struct
+{
+    VECTOR3 field_0; // Rotation?
+    s16     field_C;
+    s16     field_E;
+    s8      field_10;
+    s8      field_11;
+    s8      field_12;
+    s8      field_13;
 } s_800E34FC;
-STATIC_ASSERT_SIZEOF(s_800E34FC, 0x14);
+STATIC_ASSERT_SIZEOF(s_800E34FC, 20);
 
-typedef struct {
+typedef struct
+{
     VECTOR3 field_0;
-    s16 field_C;
-    s16 field_E;
-    s16 field_10;
-    s16 field_12;
-    s8  field_14;
-    s8  field_15;
+    s16     field_C;
+    s16     field_E;
+    s16     field_10;
+    s16     field_12;
+    s8      field_14;
+    s8      field_15;
 } s_800E330C;
-STATIC_ASSERT_SIZEOF(s_800E330C, 0x18);
+STATIC_ASSERT_SIZEOF(s_800E330C, 24);
 
 extern VECTOR3 D_800E32DC[4];
 
