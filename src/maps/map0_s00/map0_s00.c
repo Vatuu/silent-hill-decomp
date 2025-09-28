@@ -143,7 +143,7 @@ void func_800D0394(s32 arg0, VECTOR3* vecs) // 0x800D0394
 
         if (arg0 == 2)
         {
-            for (i = 0; i < 4; i++, vecs++)
+            for (i = 0; i < ARRAY_SIZE(D_800E32DC); i++, vecs++)
             {
                 D_800E32DC[i].vx = vecs->vx;
                 D_800E32DC[i].vy = vecs->vy;
@@ -209,7 +209,7 @@ void func_800D0394(s32 arg0, VECTOR3* vecs) // 0x800D0394
 
 bool func_800D0600() // 0x800D0600
 {
-    #define FIXED_DIST Q12(40.0f)
+    #define DIST_MAX Q12(40.0f)
     
     s32 distX;
     s32 distZ;
@@ -217,11 +217,11 @@ bool func_800D0600() // 0x800D0600
     // Check against first position.
     distX = ABS(g_SysWork.player_4C.chara_0.position_18.vx - D_800E32DC[0].vx);
     distZ = g_SysWork.player_4C.chara_0.position_18.vz - D_800E32DC[0].vz;
-    if (distZ >= Q12(0.0f) && (distX + distZ) < FIXED_DIST)
+    if (distZ >= Q12(0.0f) && (distX + distZ) < DIST_MAX)
     {
         goto ret1;
     }
-    else if (distZ < Q12(0.0f) && (distX + (D_800E32DC[0].vz - g_SysWork.player_4C.chara_0.position_18.vz)) < FIXED_DIST)
+    else if (distZ < Q12(0.0f) && (distX + (D_800E32DC[0].vz - g_SysWork.player_4C.chara_0.position_18.vz)) < DIST_MAX)
     {
         goto ret1;
     }
@@ -229,11 +229,11 @@ bool func_800D0600() // 0x800D0600
     // Check against against second position.
     distX = ABS(g_SysWork.player_4C.chara_0.position_18.vx - D_800E32DC[1].vx);
     distZ = g_SysWork.player_4C.chara_0.position_18.vz - D_800E32DC[1].vz;
-    if (distZ >= Q12(0.0f) && (distX + distZ) < FIXED_DIST)
+    if (distZ >= Q12(0.0f) && (distX + distZ) < DIST_MAX)
     {
         goto ret1;
     }
-    else if (distZ < Q12(0.0f) && (distX + (D_800E32DC[1].vz - g_SysWork.player_4C.chara_0.position_18.vz)) < FIXED_DIST)
+    else if (distZ < Q12(0.0f) && (distX + (D_800E32DC[1].vz - g_SysWork.player_4C.chara_0.position_18.vz)) < DIST_MAX)
     {
         goto ret1;
     }
@@ -369,7 +369,7 @@ void func_800D1C38(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             chara->position_18.vy = Q12(0.0f);
         }
 
-        chara->field_34 = 0;
+        chara->field_34 = Q12(0.0f);
     }
 
     if (g_DeltaTime0 == Q12(0.0f))
@@ -568,7 +568,7 @@ void func_800D8124(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8124
 
 void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
 {
-    s_Collision sp18;
+    s_Collision coll;
     s32         unused;
     s8          pitch0;
     s8          pitch1;
@@ -579,12 +579,12 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
     switch (chara->properties_E4.player.afkTimer_E8)
     {
         case 0:
-            if (chara->properties_E4.player.playerMoveDistance_126 != 0)
+            if (chara->properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
             {
                 chara->properties_E4.player.playerMoveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
-                if (chara->properties_E4.player.playerMoveDistance_126 < 0)
+                if (chara->properties_E4.player.playerMoveDistance_126 < Q12(0.0f))
                 {
-                    chara->properties_E4.player.playerMoveDistance_126 = 0;
+                    chara->properties_E4.player.playerMoveDistance_126 = Q12(0.0f);
                 }
             }
 
@@ -596,12 +596,12 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
 
             if (chara->properties_E4.player.runTimer_F8 != 0)
             {
-                chara->properties_E4.player.afkTimer_E8 = 0;
+                chara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
                 chara->model_0.stateStep_3              = 0;
                 chara->properties_E4.player.runTimer_F8 = 0;
             }
 
-            chara->properties_E4.player.headingAngle_124 = 0;
+            chara->properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
             break;
 
         case 1:
@@ -615,7 +615,7 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
 
             if (chara->properties_E4.player.runTimer_F8 != 0)
             {
-                chara->properties_E4.player.afkTimer_E8 = 0;
+                chara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
                 chara->model_0.stateStep_3              = 0;
                 chara->properties_E4.player.runTimer_F8 = 0;
             }
@@ -632,19 +632,19 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
 
             if (chara->properties_E4.player.runTimer_F8 != 0)
             {
-                chara->properties_E4.player.afkTimer_E8 = 0;
+                chara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
                 chara->model_0.stateStep_3              = 0;
                 chara->properties_E4.player.runTimer_F8 = 0;
             }
             break;
 
         case 3:
-            if (chara->properties_E4.player.playerMoveDistance_126 != 0)
+            if (chara->properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
             {
                 chara->properties_E4.player.playerMoveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
-                if (chara->properties_E4.player.playerMoveDistance_126 < 0)
+                if (chara->properties_E4.player.playerMoveDistance_126 < Q12(0.0f))
                 {
-                    chara->properties_E4.player.playerMoveDistance_126 = 0;
+                    chara->properties_E4.player.playerMoveDistance_126 = Q12(0.0f);
                 }
             }
 
@@ -658,22 +658,22 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
 
             if (chara->properties_E4.player.runTimer_F8 != 0)
             {
-                chara->properties_E4.player.afkTimer_E8 = 0;
+                chara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
                 chara->model_0.stateStep_3              = 0;
                 chara->properties_E4.player.runTimer_F8 = 0;
             }
 
-            g_SysWork.player_4C.chara_0.properties_E4.player.headingAngle_124 = 0;
-            chara->properties_E4.player.headingAngle_124                      = 0;
+            g_SysWork.player_4C.chara_0.properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
+            chara->properties_E4.player.headingAngle_124                      = FP_ANGLE(0.0f);
             break;
 
         case 4:
-            if (chara->properties_E4.player.playerMoveDistance_126 != 0)
+            if (chara->properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
             {
                 chara->properties_E4.player.playerMoveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
-                if (chara->properties_E4.player.playerMoveDistance_126 < 0)
+                if (chara->properties_E4.player.playerMoveDistance_126 < Q12(0.0f))
                 {
-                    chara->properties_E4.player.playerMoveDistance_126 = 0;
+                    chara->properties_E4.player.playerMoveDistance_126 = Q12(0.0f);
                 }
             }
 
@@ -687,18 +687,18 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
 
             if (chara->properties_E4.player.runTimer_F8 != 0)
             {
-                chara->properties_E4.player.afkTimer_E8 = 0;
+                chara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
                 chara->model_0.stateStep_3              = 0;
                 chara->properties_E4.player.runTimer_F8 = 0;
             }
 
-            g_SysWork.player_4C.chara_0.properties_E4.player.headingAngle_124 = 0;
-            chara->properties_E4.player.headingAngle_124                      = 0;
+            g_SysWork.player_4C.chara_0.properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
+            chara->properties_E4.player.headingAngle_124                      = FP_ANGLE(0.0f);
             break;
     }
 
-    Collision_Get(&sp18, chara->position_18.vx, chara->position_18.vz);
-    func_8007FDE0(sp18.field_8, &unused, &pitch0, &pitch1);
+    Collision_Get(&coll, chara->position_18.vx, chara->position_18.vz);
+    func_8007FDE0(coll.field_8, &unused, &pitch0, &pitch1);
 
     distSqr = SQUARE(Q12_TO_Q8(chara->position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx)) +
               SQUARE(Q12_TO_Q8(chara->position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz));
@@ -708,11 +708,11 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
         switch (chara->properties_E4.player.afkTimer_E8)
         {
             case 1:
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(2, true), chara, 16, 28, Sfx_Unk1353, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(HarryAnim_WalkForward, true), chara, 16, 28, Sfx_Unk1353, pitch0);
                 break;
 
             case 2:
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(3, true), chara, 53, 42, Sfx_Unk1353, pitch1);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(HarryAnim_RunForward, true), chara, 53, 42, Sfx_Unk1353, pitch1);
                 break;
         }
     }
@@ -721,11 +721,11 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
         switch (chara->properties_E4.player.afkTimer_E8)
         {
             case 1:
-                func_800D8748(ANIM_STATUS(2, true), chara, 16, 28, distSqr, pitch0);
+                func_800D8748(ANIM_STATUS(HarryAnim_WalkForward, true), chara, 16, 28, distSqr, pitch0);
                 break;
 
             case 2:
-                func_800D8748(ANIM_STATUS(3, true), chara, 53, 42, distSqr, pitch1);
+                func_800D8748(ANIM_STATUS(HarryAnim_RunForward, true), chara, 53, 42, distSqr, pitch1);
                 break;
         }
     }
@@ -798,7 +798,7 @@ bool func_800D8748(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 
 void Ai_Cheryl_Init(s_SubCharacter* chara) // 0x800D8888
 {
     sharedFunc_800D923C_0_s00(chara);
-    D_800E3A30 = 0;
+    D_800E3A30 = Q12(0.0f);
 }
 
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800D88AC

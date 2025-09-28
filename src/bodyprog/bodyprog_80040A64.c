@@ -2468,7 +2468,7 @@ void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
     }
 }
 
-void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord, s16 arg4, u16 arg5, s_FsImageDesc* images) // 0x80045534
+void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord, q3_12 arg4, u16 arg5, s_FsImageDesc* images) // 0x80045534
 {
     MATRIX         mat0;
     MATRIX         mat1;
@@ -2495,12 +2495,12 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord,
     s_FsImageDesc* curImage;
     s_Bone*        curBone;
 
-    var_s5 = 0x7FFF;
-    var_s6 = 0x7FFF;
-    var_s4 = 0x7FFF;
-    var_s7 = -0x7FFF;
-    var_fp = -0x7FFF;
-    var_s3 = -0x7FFF;
+    var_s5 = SHRT_MAX;
+    var_s6 = SHRT_MAX;
+    var_s4 = SHRT_MAX;
+    var_s7 = -SHRT_MAX;
+    var_fp = -SHRT_MAX;
+    var_s3 = -SHRT_MAX;
 
     if (skel->field_2 == 0)
     {
@@ -2660,11 +2660,11 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord,
 
         var_s3_2 = MAX(var_s3_2, 4);
 
-        var_s2 = (var_s4 * 16) - arg4;
+        var_s2 = Q8_TO_Q12(var_s4) - arg4;
         var_s2 = MAX(var_s2, 0);
 
         var_s0   = ReadGeomScreen();
-        var_v0_4 = (arg4 >> 4) * var_s0;
+        var_v0_4 = Q12_TO_Q8(arg4) * var_s0;
 
         if (var_s4 >= 5)
         {

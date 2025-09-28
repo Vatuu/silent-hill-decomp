@@ -1118,7 +1118,7 @@ typedef struct _SubCharaPropertiesPlayer
     s32    flags_11C; /** `e_PlayerFlags`. */
     s16    field_120; // Angle which the player turns when doing a quick turn. In order words, some sort of holder for angle Y.
     s16    field_122; // Some sort of X angle for the player. Specially used when aiming an enemy.
-    q7_8   headingAngle_124;
+    q3_12  headingAngle_124;
     q3_12  playerMoveDistance_126; // Used to indicate how much the player should move foward. Seems to be squared.
 } s_SubCharaPropertiesPlayer;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPlayer, 68);

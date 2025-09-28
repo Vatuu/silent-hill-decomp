@@ -1377,7 +1377,7 @@ typedef struct
     s16            animFileIdx;
     s16            modelFileIdx;
     s16            textureFileIdx         : 16;
-    u16            field_6                : 10;
+    q8_8           field_6                : 10;
     u16            materialBlendMode_6_10 : 6; /** `e_BlendMode` */
     s_FsImageDesc* field_8;                    // Extra texture pointer? Usually `NULL` in `CHARA_FILE_INFOS`.
     u16            cameraAnchor_C_0  : 2;      /** `e_CameraAnchor` */
@@ -2943,7 +2943,7 @@ void func_800453E8(s_Skeleton* skel, bool cond);
 /** Does something with skeleton bones. `arg0` is a struct pointer. */
 void func_80045468(s_Skeleton* skel, s32* arg1, bool cond);
 
-void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord, s16 arg4, u16 arg5, s_FsImageDesc* images);
+void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord, q3_12 arg4, u16 arg5, s_FsImageDesc* images);
 
 /** Passes a command to the sound driver. Plays SFX among other things. */
 void Sd_EngineCmd(u32 cmd);

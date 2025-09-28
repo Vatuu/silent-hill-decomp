@@ -1909,7 +1909,7 @@ void func_8003DA9C(s32 charaId, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 ar
     }
 
     func_80045534(&g_WorldGfx.charaModels_18[charaId]->skeleton_14, &g_OrderingTable0[g_ActiveBufferIdx], arg2,
-                  coord, CHARA_FILE_INFOS[charaId].field_6 * 16, ret, CHARA_FILE_INFOS[charaId].field_8);
+                  coord, Q8_TO_Q12(CHARA_FILE_INFOS[charaId].field_6), ret, CHARA_FILE_INFOS[charaId].field_8);
 
     if (arg3 != 0)
     {
