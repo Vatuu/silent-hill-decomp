@@ -1216,7 +1216,7 @@ typedef struct _SubCharacter
     s16               field_D2;
     q3_12             field_D4;
     q3_12             field_D6;
-    s_SubCharacter_D8 field_D8;
+    s_SubCharacter_D8 field_D8; // Translation data?
 
     u8 field_E0; // Related to collision. If the player collides with the only enemy in memory and the enemy is knocked down, this is set to 1.
 

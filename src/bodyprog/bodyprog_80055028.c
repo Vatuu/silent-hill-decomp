@@ -1961,23 +1961,23 @@ void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara) // 0x8005C814
 {
     q3_12 sinRotY;
     q3_12 cosRotY;
-    s16   temp_s0;
-    s16   temp_s2;
-    s16   temp_s3;
-    s16   temp_s4;
+    q3_12 offsetX0;
+    q3_12 offsetX1;
+    q3_12 offsetZ0;
+    q3_12 offsetZ1;
 
-    temp_s0 = arg0->offsetX_0;
-    temp_s3 = arg0->offsetZ_2;
-    temp_s2 = arg0->offsetX_4;
-    temp_s4 = arg0->offsetZ_6;
+    offsetX0 = arg0->offsetX_0;
+    offsetZ0 = arg0->offsetZ_2;
+    offsetX1 = arg0->offsetX_4;
+    offsetZ1 = arg0->offsetZ_6;
 
     cosRotY = Math_Cos(chara->rotation_24.vy);
     sinRotY = Math_Sin(chara->rotation_24.vy);
 
-    chara->field_D8.offsetX_0 = FP_FROM((temp_s0 * cosRotY) + (temp_s3 * sinRotY), Q12_SHIFT);
-    chara->field_D8.offsetZ_2 = FP_FROM((-temp_s0 * sinRotY) + (temp_s3 * cosRotY), Q12_SHIFT);
-    chara->field_D8.offsetX_4 = FP_FROM((temp_s2 * cosRotY) + (temp_s4 * sinRotY), Q12_SHIFT);
-    chara->field_D8.offsetZ_6 = FP_FROM((-temp_s2 * sinRotY) + (temp_s4 * cosRotY), Q12_SHIFT);
+    chara->field_D8.offsetX_0 = FP_FROM(( offsetX0 * cosRotY) + (offsetZ0 * sinRotY), Q12_SHIFT);
+    chara->field_D8.offsetZ_2 = FP_FROM((-offsetX0 * sinRotY) + (offsetZ0 * cosRotY), Q12_SHIFT);
+    chara->field_D8.offsetX_4 = FP_FROM(( offsetX1 * cosRotY) + (offsetZ1 * sinRotY), Q12_SHIFT);
+    chara->field_D8.offsetZ_6 = FP_FROM((-offsetX1 * sinRotY) + (offsetZ1 * cosRotY), Q12_SHIFT);
 }
 
 s32 func_8005C944(s_SubCharacter* chara, s_800C4590* arg1) // 0x8005C944
