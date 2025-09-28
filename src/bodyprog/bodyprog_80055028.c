@@ -3613,12 +3613,11 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* pos, s_func_8006AB50* arg2, s32 arg
                 var_a0 -= 15;
             }
 
-            // TODO: `>> 4` converts from world to geometry space here?
-            sp18.field_98.field_0 = (chara->position_18.vx + chara->field_D8.offsetX_4) >> 4;
-            sp18.field_9C.field_0 = (chara->position_18.vz + chara->field_D8.offsetZ_6) >> 4;
+            sp18.field_98.field_0 = Q12_TO_Q8(chara->position_18.vx + chara->field_D8.offsetX_4);
+            sp18.field_9C.field_0 = Q12_TO_Q8(chara->position_18.vz + chara->field_D8.offsetZ_6);
 
-            sp18.field_A0.s_1.field_0 = (chara->field_C8 + chara->position_18.vy) >> 4;
-            sp18.field_A0.s_1.field_2 = (chara->field_CA + chara->position_18.vy) >> 4;
+            sp18.field_A0.s_1.field_0 = Q12_TO_Q8(chara->field_C8 + chara->position_18.vy);
+            sp18.field_A0.s_1.field_2 = Q12_TO_Q8(chara->field_CA + chara->position_18.vy);
             sp18.field_A0.s_1.field_4 = var_a0;
             sp18.field_A0.s_1.field_6 = chara->field_E1_0;
             sp18.field_A0.s_1.field_8 = &chara->field_E0;
@@ -6065,23 +6064,23 @@ void func_8006EE0C(s_func_8006DCE0_6C* arg0, s32 arg1, s_SubCharacter* chara) //
 
     if (arg1 == 1)
     {
-        arg0->field_C = chara->field_D4 >> 4;
+        arg0->field_C = Q12_TO_Q8(chara->field_D4);
         offsetX       = chara->field_D8.offsetX_4;
         offsetZ       = chara->field_D8.offsetZ_6;
         unkY          = chara->position_18.vy + chara->field_CA;
     }
     else
     {
-        arg0->field_C = chara->field_D6 >> 4;
+        arg0->field_C = Q12_TO_Q8(chara->field_D6);
         offsetX       = chara->field_D8.offsetX_0;
         offsetZ       = chara->field_D8.offsetZ_2;
         unkY          = chara->position_18.vy + chara->field_CC;
     }
 
-    arg0->field_A = unkY >> 4;
-    arg0->field_0 = (chara->position_18.vx + offsetX) >> 4;
-    arg0->field_4 = (chara->position_18.vz + offsetZ) >> 4;
-    arg0->field_8 = (chara->position_18.vy + chara->field_C8) >> 4;
+    arg0->field_A = Q12_TO_Q8(unkY);
+    arg0->field_0 = Q12_TO_Q8(chara->position_18.vx + offsetX);
+    arg0->field_4 = Q12_TO_Q8(chara->position_18.vz + offsetZ);
+    arg0->field_8 = Q12_TO_Q8(chara->position_18.vy + chara->field_C8);
 }
 
 void func_8006EEB8(s_func_8006DCE0* arg0, s_SubCharacter* chara) // 0x8006EEB8

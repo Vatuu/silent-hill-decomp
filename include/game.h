@@ -1213,7 +1213,7 @@ typedef struct _SubCharacter
     q3_12             field_CE;
     s16               field_D0;
     s16               field_D2;
-    q3_12             field_D4; // Z angle?
+    q3_12             field_D4;
     q3_12             field_D6;
     s_SubCharacter_D8 field_D8;
 

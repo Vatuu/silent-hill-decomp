@@ -417,12 +417,12 @@ typedef struct
 
 typedef struct
 {
-    s32 field_0; // X position.                } Q8 according to `func_8006EE0C`?
-    s32 field_4; // Y position.                }
-    s16 field_8; // Z position, but why `s16`? }
-    s16 field_A; // Y??
-    s16 field_C; // Angle?
-    s16 field_E;
+    q23_8 field_0; // X position.                } Q8 according to `func_8006EE0C`?
+    q23_8 field_4; // Y position.                }
+    q7_8  field_8; // Z position, but why `s16`? }
+    q7_8  field_A; // Y??
+    q7_8  field_C;
+    s16   field_E;
 } s_func_8006DCE0_6C; // Unknown size;
 
 typedef struct
@@ -925,12 +925,12 @@ typedef struct
         } s_0;
         struct
         {
-            s16 field_0;
-            s16 field_2;
-            s16 field_4;
-            u8  field_6;
-            u8* field_8;
-            s8  unk_C[28];
+            q7_8 field_0;
+            q7_8 field_2;
+            s16  field_4;
+            u8   field_6;
+            u8*  field_8;
+            s8   unk_C[28];
         } s_1;
     } field_A0;
     u8                 field_C8;
