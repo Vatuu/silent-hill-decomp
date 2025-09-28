@@ -1154,13 +1154,13 @@ typedef struct _SubCharPropertiesLarvalStalker
 } s_SubCharaPropertiesLarvalStalker;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesLarvalStalker, 68);
 
-/** For translation? */
+/** Offsets for translation? */
 typedef struct
 {
-    s16 field_0; // X?
-    s16 field_2; // Z?
-    s16 field_4; // X?
-    s16 field_6; // Z?
+    q3_12 field_0; // X
+    q3_12 field_2; // Z
+    q3_12 field_4; // X
+    q3_12 field_6; // Z
 } s_SubCharacter_D8;
 STATIC_ASSERT_SIZEOF(s_SubCharacter_D8, 8);
 

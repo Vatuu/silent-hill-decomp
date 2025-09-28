@@ -376,7 +376,7 @@ typedef struct
     q23_8      positionZ_1C;
     s32        field_20;
     s32        field_24;
-    s16        field_28; // } `SVECTOR3`, packed rotation?
+    s16        field_28; // } `SVECTOR3`, packed rotation? Probably not.
     s16        field_2A; // }
     s16        field_2C; // }
 } s_func_8006ABC0;
@@ -401,7 +401,7 @@ typedef struct
 {
     s8      field_0;
     s8      unk_1;
-    DVECTOR field_2; // Rotation?
+    DVECTOR field_2; // Q3.12 | XY rotation.
 } s_func_8006CC44_44_0;
 
 typedef struct
@@ -417,11 +417,11 @@ typedef struct
 
 typedef struct
 {
-    s32 field_0;
-    s32 field_4;
-    s16 field_8;
-    s16 field_A;
-    s16 field_C;
+    s32 field_0; // X position.                } Q8 according to `func_8006EE0C`?
+    s32 field_4; // Y position.                }
+    s16 field_8; // Z position, but why `s16`? }
+    s16 field_A; // Y??
+    s16 field_C; // Angle?
     s16 field_E;
 } s_func_8006DCE0_6C; // Unknown size;
 
@@ -916,7 +916,7 @@ typedef struct
     {
         struct
         {
-            u8                 field_0;
+            u8                 field_0; // Start index for something.
             u8                 field_1;
             u8                 field_2;
             u8                 field_3;
@@ -1703,9 +1703,9 @@ typedef struct
     s8   field_0; /** `bool` */
     u8   field_1;
     s8   unk_2[2];
-    s32* field_4;
-    s32* field_8;
-    s32  field_C;
+    s32* field_4; // X
+    s32* field_8; // Y
+    s32  field_C; // Z
     u32  field_10; // Maybe `bool`, not enough context.
     s32  field_14;
     s32  field_18;
@@ -3699,9 +3699,9 @@ void func_8006BB50(s_func_8006CC44* arg0, s32 arg1);
 s32 func_8006BC34(s_func_8006CC44* arg0);
 
 /** `arg3` and `arg4` might be XY or XZ position components. */
-void func_8006BCC4(s_func_8006CC44_44* arg0, s8* arg1, u32 arg2, s16 arg3, s16 arg4, s16 arg5);
+void func_8006BCC4(s_func_8006CC44_44* arg0, s8* arg1, u32 arg2, q3_12 deltaX, q3_12 deltaZ, s16 arg5);
 
-void func_8006BDDC(s_func_8006CC44_44_0* arg0, s16 arg1, s16 arg2);
+void func_8006BDDC(s_func_8006CC44_44_0* arg0, q3_12 rotX, q3_12 rotY);
 
 void func_8006BE40(s_func_8006CC44* arg0);
 
@@ -3711,13 +3711,13 @@ void func_8006C0C8(s_func_8006CC44*, s16, s16);
 
 bool func_8006C1B8(u32 arg0, s16 arg1, s_func_8006CC44* arg2);
 
-s16 func_8006C248(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
+s16 func_8006C248(s32 arg0, s16 arg1, q3_12 deltaX, q3_12 deltaZ, s16 arg4);
 
 bool func_8006C3D4(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s32 idx);
 
 void func_8006C45C(s_func_8006CC44* arg0);
 
-void func_8006C794(s_func_8006CC44* arg0, s32 arg1, s32 arg2);
+void func_8006C794(s_func_8006CC44* arg0, s32 arg1, s32 dist);
 
 void func_8006C838(s_func_8006CC44* arg0, s_IpdCollisionData* collData);
 
@@ -3768,9 +3768,9 @@ void func_8006E78C(s_func_8006DCE0* arg0, s_IpdCollisionData_14* arg1, SVECTOR3*
 
 void func_8006EB8C(s_func_8006DCE0* arg0, s_IpdCollisionData_18* arg1);
 
-void func_8006EE0C(s_func_8006DCE0_6C* arg0, s32 arg1, s_SubCharacter* arg2);
+void func_8006EE0C(s_func_8006DCE0_6C* arg0, s32 arg1, s_SubCharacter* chara);
 
-void func_8006EEB8(s_func_8006DCE0* arg0, s_SubCharacter* arg1);
+void func_8006EEB8(s_func_8006DCE0* arg0, s_SubCharacter* chara);
 
 void func_8006F250(s_func_8006F250* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
