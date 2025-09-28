@@ -31,7 +31,61 @@ void func_800CBFB0(void) // 0x800CBFB0
 
 #include "maps/shared/Particle_Update.h" // 0x800CC04C
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CC6E8);
+s32 func_800CC6E8(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId)
+{
+    MATRIX sp10;
+    MATRIX sp30;
+    MATRIX sp50;      // @hack guessed type based on func_800CC8FC. It doesn't fully match at first glance.
+    MATRIX sp70;      // @hack unused or sp50 and sp70 are one big type together.
+    VECTOR3 sp90[12]; // @hack guessed type based on func_800CC8FC. This one is fairly certain.
+    s32 sp120[0x20];  // @hack unknown type, it's passed to func_800CC8FC but it's an unused parameter. 
+    s32 temp_s4;
+    s32 i;
+    s_800E330C* arg1Cpy;
+    s_800E34FC* arg0Cpy;
+
+    if(g_SysWork.field_234B_4 == 0)
+        return 0;
+
+    if(g_SysWork.field_234B_4 == 2 && !func_800D0600())
+        return 0;
+
+    arg0Cpy = arg0;
+    arg1Cpy = arg1;
+
+    if (func_8003ED64() == 0)
+    {
+        D_800E0C64 = -0x400;
+    }
+
+    temp_s4 = func_800CC8FC(&sp90, &sp120, &sp50);
+    GsInitCoordinate2(NULL, &g_SysWork.coord_22F8);
+
+    g_SysWork.coord_22F8.coord.t[2] = 0;
+    g_SysWork.coord_22F8.coord.t[1] = 0;
+    g_SysWork.coord_22F8.coord.t[0] = 0;
+    g_SysWork.coord_22F8.flg = 0;
+    func_80049B6C(&g_SysWork.coord_22F8, &sp10, &sp30);
+    gte_SetRotMatrix(&sp30);
+    gte_SetTransMatrix(&sp30);
+
+    if (D_800DD593)
+    {
+        for (i = 0; i < D_800E39AC; i++, arg0Cpy++ )
+        {
+            func_800CE02C(i, func_800D012C(&arg0Cpy->field_0, &sp50, temp_s4), &arg0Cpy->field_0, mapId);
+        }
+
+    }
+    if (D_800DD594)
+    {
+        for (i = 0; i < D_800E34EC; i++, arg1Cpy++)
+        {
+            func_800CD8E8(i, (s32) (Rng_Rand16() % 65) >> 6, arg1Cpy);
+        }
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CC8FC);
 
@@ -57,7 +111,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800CEFD0_1_s02
 
 #include "maps/shared/sharedFunc_800CE954_7_s03.h" // 0x800D0124
 
-bool func_800D012C(VECTOR3* pos) // 0x800D012C
+bool func_800D012C(VECTOR3* pos, MATRIX* unused0, s32* unused1) // 0x800D012C
 {
     s32 deltaX;
     s32 deltaZ;
