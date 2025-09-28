@@ -2190,14 +2190,17 @@ typedef struct _SfxVolume
     u8  volume_2;
     u8  __pad_3;
 } s_SfxVolume;
-/** Likely maps onto another struct somewhere. Starts with an `s_AnimInfo`, has some index properties deeper in it. */
+
 typedef struct
 {
-    s_AnimInfo  animInfo_0; // This might be a pointer instead - not enough clues available yet to tell.
-    s8          unk_10[3288];
+    s_AnimInfo  animInfo_0[56];
+    u8          unk_380[0x968];
     s_SfxVolume sfxVolumes_CE8[11];
-    u_Property  properties_D14[4]; // Read as 4 pairs of `u16`s.
+    u_Property  properties_D14[4];
+    u8          unk_D24[0x24]; // @hack Might not be part of this struct but disasm refuses to split here.
+    u8*         ptr_D48;    // Pointer to some rodata.
 } s_func_800D2E04;
+typedef char static_assertion_sizeof_s_func_800D2E04[(sizeof(s_func_800D2E04) == (0xD4C)) ? 1 : -1];
 
 typedef struct
 {
@@ -2219,8 +2222,6 @@ typedef struct
 } s_sharedData_800E21D0_0_s01;
 
 extern s_MapPoint2d MAP_POINTS[];
-
-extern s_SfxVolume g_SfxVolumes[46];
 
 /** Scale. */
 extern VECTOR sharedData_800DD870_0_s01;
