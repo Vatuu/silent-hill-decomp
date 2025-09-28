@@ -2201,10 +2201,21 @@ typedef struct
 
 typedef struct
 {
+    s8  unk_0[180];
+    s32 field_B4;
+    s32 field_B8;
+    s32 field_BC;
+    s32 field_C0;
+} s_sharedData_800E21D0_0_s01_sub;
+
+typedef struct
+{
     s32            flags_0;
     s_AnmHeader*   anmHdr_4;
     GsCOORDINATE2* coords_8;
     MATRIX*        matrices_C;
+    s8             unk_10[0x40];
+    s_sharedData_800E21D0_0_s01_sub field_B4;
 } s_sharedData_800E21D0_0_s01;
 
 extern s_MapPoint2d MAP_POINTS[];
