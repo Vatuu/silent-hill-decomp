@@ -2103,7 +2103,7 @@ s32 func_8005D86C(s32 arg0) // 0x8005D86C
     }
     if (temp_a1 < -20)
     {
-        return 0x7FFFFFFF;
+        return INT_MAX;
     }
 
     temp_a2 = (arg0 & 0x7F) << 5;
@@ -3891,13 +3891,13 @@ bool func_8006AEAC(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x800
 
     arg0->field_A0.s_0.field_4 = (s_func_8006CA18*)&collData->ptr_20[((arg0->field_98.vec_0.vz / collData->field_1C) * collData->field_1E) +
                                                                      (arg0->field_98.vec_0.vx / collData->field_1C)];
-    arg0->field_C8             = 0xFF;
+    arg0->field_C8             = UCHAR_MAX;
 
     for (curUnk = arg0->field_A0.s_0.field_8; curUnk < &arg0->field_C8; curUnk++)
     {
         curUnk->field_0 = 0;
-        curUnk->field_1 = 0xFF;
-        curUnk->field_4 = 0x7FFFFFFF;
+        curUnk->field_1 = UCHAR_MAX;
+        curUnk->field_4 = INT_MAX;
     }
 
     return true;
@@ -6198,29 +6198,29 @@ void func_8006EEB8(s_func_8006DCE0* arg0, s_SubCharacter* chara) // 0x8006EEB8
 
 void func_8006F250(s_func_8006F250* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8006F250
 {
-    s32              idx;
+    s32              i;
     s_func_8006F338* scratch;
 
     scratch = PSX_SCRATCH;
 
     func_8006F338(scratch, arg1, arg2, arg3, arg4);
 
-    for (idx = 0; idx < D_800C4478.field_2; idx++)
+    for (i = 0; i < D_800C4478.field_2; i++)
     {
-        if (func_8006F3C4(scratch, D_800C4478.field_4[idx]) != 0)
+        if (func_8006F3C4(scratch, D_800C4478.field_4[i]))
         {
             break;
         }
     }
 
-    if (scratch->field_28 == 0x1000)
+    if (scratch->field_28 == Q12(1.0f))
     {
-        arg0->field_0 = 0x20000;
-        arg0->field_4 = -0x10000;
+        arg0->field_0 = Q12(32.0f);
+        arg0->field_4 = Q12(-16.0f);
     }
     else
     {
-        arg0->field_0 = Math_MulFixed(Vc_VectorMagnitudeCalc(scratch->field_10, 0, scratch->field_14), scratch->field_28, Q12_SHIFT);
+        arg0->field_0 = Math_MulFixed(Vc_VectorMagnitudeCalc(scratch->field_10, Q12(0.0f), scratch->field_14), scratch->field_28, Q12_SHIFT);
         arg0->field_4 = scratch->field_2C;
     }
 }
@@ -6292,14 +6292,14 @@ bool func_8006F3C4(s_func_8006F338* arg0, s_func_8006F8FC* arg1) // 0x8006F3C4
     if (arg0->field_0 >= minX && maxX >= arg0->field_0 &&
         arg0->field_4 >= minZ && maxZ >= arg0->field_4)
     {
-        arg0->field_28 = 0;
+        arg0->field_28 = Q12(0.0f);
         arg0->field_2C = (-Q12(arg1->field_0_29) >> 1) - Q12(1.5f); // NOTE: `-` sign on the outside required for match.
     }
     else
     {
-        if (arg0->field_10 >= 0)
+        if (arg0->field_10 >= Q12(0.0f))
         {
-            if (arg0->field_14 >= 0)
+            if (arg0->field_14 >= Q12(0.0f))
             {
                 var_s1   = minX;
                 var_v0_2 = minZ;
@@ -6312,7 +6312,7 @@ bool func_8006F3C4(s_func_8006F338* arg0, s_func_8006F8FC* arg1) // 0x8006F3C4
         }
         else
         {
-            if (arg0->field_14 >= 0)
+            if (arg0->field_14 >= Q12(0.0f))
             {
                 var_s1   = maxX;
                 var_v0_2 = minZ;
@@ -6570,7 +6570,7 @@ q7_8 func_8006FAFC(s_SubCharacter* chara, s32 dist, s32 arg2, s32 arg3, s16 arg4
 
     if (arg5 != 0)
     {
-        var_s4 = 0x7FFFFFFF;
+        var_s4 = INT_MAX;
     }
 
     temp_v1         = arg4 / 3;

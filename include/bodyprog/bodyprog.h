@@ -507,8 +507,8 @@ typedef struct
     s32    field_4;
     s32    field_8;
     s32    field_C;
-    s32    field_10;
-    s32    field_14;
+    q19_12 field_10; // X
+    q19_12 field_14; // Z
     s32    field_18; // X } Bounds?
     s32    field_1C; // X }
     s32    field_20; // Z }
@@ -746,8 +746,8 @@ typedef struct _IpdCollisionData
     s_IpdCollisionData_14* ptr_14;
     s_IpdCollisionData_18* ptr_18;
     s16                    field_1C;
-    u8                     field_1E;
-    u8                     field_1F;
+    u8                     field_1E; // } Used as multipliers for `field_1C` in `func_8006B004`.
+    u8                     field_1F; // }
     s_IpdCollisionData_20* ptr_20;
     u16                    field_24; // `field_24/``field_26` defined in ipd2obj but haven't seen used yet, might be size of `ptr_28`/`ptr_2C`.
     u16                    field_26;
@@ -1344,7 +1344,7 @@ typedef struct
 typedef struct
 {
     u16              field_0;
-    u8               field_2;
+    u8               field_2; // Size of `field_4`.
     u8               unk_3;
     s_func_8006F8FC* field_4[20]; // Guessed size.
 } s_800C4478;
