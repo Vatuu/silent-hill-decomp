@@ -421,7 +421,7 @@ typedef struct
     q23_8 field_4; // Y position.                }
     q7_8  field_8; // Z position, but why `s16`? }
     q7_8  field_A; // Y??
-    q7_8  field_C;
+    q7_8  field_C; // Some kind of bound or threshold?
     s16   field_E;
 } s_func_8006DCE0_6C; // Unknown size;
 
@@ -439,21 +439,21 @@ typedef struct
     s16                field_6;
     s16                field_8;
     s8                 unk_A[2];
-    s32                field_C;
-    s32                field_10;
-    s32                field_14;
+    s32                field_C;  // } Q19.12 `VECTOR3`
+    s32                field_10; // }
+    s32                field_14; // }
     s8                 unk_18[4];
     s16                field_1C;
     s8                 unk_1E[2];
     s_SubCharacter*    field_20;
-    s16                field_24;
-    s16                field_26;
+    s16                field_24; // X } Q19.12
+    s16                field_26; // Z }
     s32                field_28;
     VECTOR3            field_2C; // Q23.8
     s8                 unk_38[4];
-    s32                field_3C;
-    s32                field_40;
-    s32                field_44;
+    s32                field_3C; // X  } Q23.8 `VECTOR3`?
+    s32                field_40; // Y? }
+    s32                field_44; // Z  }
     s8                 unk_48[4];
     s16                field_4C;
     s16                field_4E;
@@ -503,18 +503,18 @@ typedef struct _func_8009ECCC
 
 typedef struct
 {
-    s32 field_0;
-    s32 field_4;
-    s32 field_8;
-    s32 field_C;
-    s32 field_10;
-    s32 field_14;
-    s32 field_18; // X } Bounds?
-    s32 field_1C; // X }
-    s32 field_20; // Z }
-    s32 field_24; // Z }
-    s32 field_28; // } Q19.12, maybe XZ position.
-    s32 field_2C; // }
+    s32    field_0;
+    s32    field_4;
+    s32    field_8;
+    s32    field_C;
+    s32    field_10;
+    s32    field_14;
+    s32    field_18; // X } Bounds?
+    s32    field_1C; // X }
+    s32    field_20; // Z }
+    s32    field_24; // Z }
+    q19_12 field_28; // } Maybe XZ position.
+    q19_12 field_2C; // }
 } s_func_8006F338;
 
 typedef struct
@@ -3796,7 +3796,7 @@ bool func_80070084(s_SubCharacter* chara, q19_12 x, q19_12 y, q19_12 z);
 
 bool func_800700F8(s_SubCharacter* chara0, s_SubCharacter* chara1);
 
-bool func_80070184(s_SubCharacter* chara, s32 arg1, s16 rotY);
+bool func_80070184(s_SubCharacter* chara, s32 arg1, q3_12 rotY);
 
 bool func_80070320();
 

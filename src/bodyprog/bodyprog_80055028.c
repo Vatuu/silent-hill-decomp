@@ -6085,46 +6085,45 @@ void func_8006EE0C(s_func_8006DCE0_6C* arg0, s32 arg1, s_SubCharacter* chara) //
 
 void func_8006EEB8(s_func_8006DCE0* arg0, s_SubCharacter* chara) // 0x8006EEB8
 {
-    VECTOR3 sp18;
-    s32     temp_t0;
+    VECTOR3 sp18; // Q23.8?
+    s32     bound;
     s16     temp_v0;
     s16     temp_v0_2;
-    s32     var_a0;
-    s32     var_a1;
-    s32     var_a2;
-    s32     var_a3;
+    q23_8   x1;
+    q23_8   z1;
+    q23_8   x0;
+    q23_8   z0;
     q19_12  var_v1;
 
     if (arg0->field_2C.vx <= arg0->field_3C)
     {
-        var_a2 = arg0->field_2C.vx;
-        var_a3 = arg0->field_3C;
+        x0 = arg0->field_2C.vx;
+        z0 = arg0->field_3C;
     }
     else
     {
-        var_a2 = arg0->field_3C;
-        var_a3 = arg0->field_2C.vx;
+        x0 = arg0->field_3C;
+        z0 = arg0->field_2C.vx;
     }
 
     if (arg0->field_2C.vz <= arg0->field_44)
     {
-        var_a1 = arg0->field_2C.vz;
-        var_a0 = arg0->field_44;
+        z1 = arg0->field_2C.vz;
+        x1 = arg0->field_44;
     }
     else
     {
-        var_a1 = arg0->field_44;
-        var_a0 = arg0->field_2C.vz;
+        z1 = arg0->field_44;
+        x1 = arg0->field_2C.vz;
     }
 
-    temp_t0 = arg0->field_6C.field_C;
-
-    if (arg0->field_6C.field_0 + temp_t0 < var_a2 || var_a3 < arg0->field_6C.field_0 - temp_t0)
+    bound = arg0->field_6C.field_C;
+    if ((arg0->field_6C.field_0 + bound) < x0 || z0 < (arg0->field_6C.field_0 - bound))
     {
         return;
     }
 
-    if ((arg0->field_6C.field_4 + temp_t0) < var_a1 || var_a0 < (arg0->field_6C.field_4 - temp_t0) ||
+    if ((arg0->field_6C.field_4 + bound) < z1 || x1 < (arg0->field_6C.field_4 - bound) ||
         ((arg0->field_2C.vy + arg0->field_4E) < arg0->field_6C.field_8 && (arg0->field_40 + arg0->field_4E) < arg0->field_6C.field_8) ||
         ((arg0->field_2C.vy + arg0->field_4C) > arg0->field_6C.field_A && arg0->field_6C.field_A < (arg0->field_40 + arg0->field_4C)))
     {
@@ -6134,21 +6133,19 @@ void func_8006EEB8(s_func_8006DCE0* arg0, s_SubCharacter* chara) // 0x8006EEB8
     temp_v0 = func_8006C248(*(s32*)&arg0->field_58, arg0->field_5C,
                             arg0->field_6C.field_0 - arg0->field_2C.vx,
                             arg0->field_6C.field_4 - arg0->field_2C.vz,
-                            temp_t0);
+                            bound);
     if (temp_v0 == NO_VALUE)
     {
         return;
     }
 
     temp_v0_2 = FP_MULTIPLY(arg0->field_5C, temp_v0, Q12_SHIFT);
-
     if (temp_v0_2 >= arg0->field_8)
     {
         return;
     }
 
     sp18.vy = arg0->field_2C.vy + (FP_MULTIPLY(arg0->field_50.vy, temp_v0, Q12_SHIFT));
-
     if (((sp18.vy + arg0->field_4E) < arg0->field_6C.field_8) || (arg0->field_6C.field_A < (sp18.vy + arg0->field_4C)))
     {
         if (arg0->field_50.vy == 0)
@@ -6177,8 +6174,7 @@ void func_8006EEB8(s_func_8006DCE0* arg0, s_SubCharacter* chara) // 0x8006EEB8
 
         sp18.vx = arg0->field_2C.vx + FP_MULTIPLY(arg0->field_50.vx, var_v1, Q12_SHIFT);
         sp18.vz = arg0->field_2C.vz + FP_MULTIPLY(arg0->field_50.vz, var_v1, Q12_SHIFT);
-
-        if (SQUARE(arg0->field_6C.field_0 - sp18.vx) + SQUARE(arg0->field_6C.field_4 - sp18.vz) >= SQUARE(arg0->field_6C.field_C))
+        if ((SQUARE(arg0->field_6C.field_0 - sp18.vx) + SQUARE(arg0->field_6C.field_4 - sp18.vz)) >= SQUARE(arg0->field_6C.field_C))
         {
             return;
         }
@@ -6240,8 +6236,8 @@ void func_8006F338(s_func_8006F338* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4
     arg0->field_4  = arg2;
     arg0->field_10 = arg3;
     arg0->field_8  = arg1 + arg3;
-    arg0->field_28 = 0x1000;
-    arg0->field_2C = 0xFFFF0000;
+    arg0->field_28 = Q12(1.0f);
+    arg0->field_2C = Q12(1048560.0f);
     arg0->field_14 = arg4;
 
     arg0->field_C = arg2 + arg4;
@@ -6728,7 +6724,7 @@ bool func_800700F8(s_SubCharacter* chara0, s_SubCharacter* chara1) // 0x800700F8
     return func_8006DB3C(&sp10, &pos, &offset, chara0) && sp10.field_10 == 0;
 }
 
-bool func_80070184(s_SubCharacter* chara, s32 arg1, s16 rotY) // 0x80070184
+bool func_80070184(s_SubCharacter* chara, s32 arg1, q3_12 rotY) // 0x80070184
 {
     s32 iVar0;
     s32 varX;
@@ -6781,7 +6777,7 @@ bool func_80070320() // 0x80070320
 {
     s32 i;
 
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < ARRAY_SIZE(g_SysWork.field_2354); i++)
     {
         if (g_SysWork.field_2354[i] != NO_VALUE)
         {
