@@ -110,6 +110,8 @@ extern s_800E330C D_800E330C[20];
 
 extern s_800E34FC D_800E34FC[60];
 
+extern s16 D_800E0C64;
+
 void func_800CBFB0(void);
 
 void func_800D0124();
@@ -225,5 +227,11 @@ void func_800D8124(s_SubCharacter* chara, GsCOORDINATE2* coord);
 bool func_800D8748(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 arg4, s32 pitch);
 
 void func_800D0394(s32 count, VECTOR3* vecs);
+
+s32 func_800CC8FC(VECTOR3*, s32*, MATRIX*);
+
+void func_800CD8E8(s32, s32, s_800E330C*);
+
+void func_800CE02C(s32, s32, VECTOR3*, s32);
 
 #endif
