@@ -360,8 +360,8 @@ STATIC_ASSERT_SIZEOF(s_Collision, 12);
 
 typedef struct
 {
-    VECTOR3  position_0;
-    SVECTOR3 rotation_C;
+    VECTOR3  position_0; // Q19.12
+    SVECTOR3 rotation_C; // Q3.12
     s8       field_12;
 } s_func_8006AB50;
 
@@ -370,7 +370,7 @@ typedef struct
     s32        field_0;
     s32        field_4; // `bool`?
     s32        field_8; // 2D distance.
-    SVECTOR    field_C; // 2D position?
+    SVECTOR    field_C; // Q23.8 | Position.
     DVECTOR_XZ direction_14;
     q23_8      positionX_18;
     q23_8      positionZ_1C;
@@ -3648,7 +3648,7 @@ void func_80069994(s_IpdCollisionData* collData);
 
 void func_800699E4(s_IpdCollisionData* collData);
 
-void Collision_Get(s_Collision* coll, s32 posX, s32 posZ);
+void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ);
 
 s32 func_80069B24(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara);
 
@@ -3671,9 +3671,9 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* pos, s_func_8006AB50* arg2, s32 arg
 
 void func_8006A940(VECTOR3* pos, s_func_8006AB50* arg1, s_SubCharacter** charas, s32 charaCount);
 
-void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* vec, s_func_8006AB50* arg2, s32 arg3);
+void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* pos, s_func_8006AB50* arg2, s32 arg3);
 
-void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2);
+void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* pos, s_func_8006AB50* arg2);
 
 void func_8006AD44(s_func_8006CC44* arg0, s_IpdCollisionData* collData);
 

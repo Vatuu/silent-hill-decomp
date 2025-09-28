@@ -3169,16 +3169,16 @@ void func_800699E4(s_IpdCollisionData* collData) // 0x800699E4
     collData->field_30++;
 }
 
-void Collision_Get(s_Collision* coll, s32 posX, s32 posZ) // 0x800699F8
+void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
 {
     s_func_8006AB50     sp10;
-    VECTOR3             sp28;
+    VECTOR3             pos;
     s_func_8006CC44     sp38;
     s_IpdCollisionData* ipdCollData;
 
-    sp28.vx = Q12(0.0f);
-    sp28.vy = Q12(0.0f);
-    sp28.vz = Q12(0.0f);
+    pos.vx = Q12(0.0f);
+    pos.vy = Q12(0.0f);
+    pos.vz = Q12(0.0f);
 
     ipdCollData = func_800426E4(posX, posZ);
     if (ipdCollData == NULL)
@@ -3196,7 +3196,7 @@ void Collision_Get(s_Collision* coll, s32 posX, s32 posZ) // 0x800699F8
     sp10.rotation_C.vx = FP_ANGLE(0.0f);
     sp10.rotation_C.vy = FP_ANGLE(0.0f);
     sp10.rotation_C.vz = FP_ANGLE(0.0f);
-    func_8006AB50(&sp38, &sp28, &sp10, 0);
+    func_8006AB50(&sp38, &pos, &sp10, 0);
 
     sp38.field_0_8  = 0;
     sp38.field_0_9  = 0;
@@ -3211,7 +3211,7 @@ void Collision_Get(s_Collision* coll, s32 posX, s32 posZ) // 0x800699F8
     else
     {
         coll->field_8        = sp38.field_94;
-        coll->groundHeight_0 = func_8006CC44(sp38.field_4.positionX_18, sp38.field_4.positionZ_1C, &sp38) * 16;
+        coll->groundHeight_0 = func_8006CC44(sp38.field_4.positionX_18, sp38.field_4.positionZ_1C, &sp38) * 16; // TODO: Converting from Q8 to Q12?
     }
 
     coll->field_4 = sp38.field_88;
@@ -3765,13 +3765,13 @@ void func_8006A940(VECTOR3* pos, s_func_8006AB50* arg1, s_SubCharacter** charas,
     pos->vz = FP_MULTIPLY(var_s4, pos->vz, Q12_SHIFT);
 }
 
-void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* vec, s_func_8006AB50* arg2, s32 arg3) // 0x8006AB50
+void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* pos, s_func_8006AB50* arg2, s32 arg3) // 0x8006AB50
 {
     arg0->field_0_0       = 0;
     arg0->field_2         = D_800C4478.field_0;
     arg0->field_4.field_4 = arg3;
 
-    func_8006ABC0(&arg0->field_4, vec, arg2);
+    func_8006ABC0(&arg0->field_4, pos, arg2);
 
     arg0->field_7C = 0x1E00;
     arg0->field_34 = 0;
@@ -3786,13 +3786,13 @@ void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* vec, s_func_8006AB50* arg2, s
     arg0->field_94 = 0;
 }
 
-void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2) // 0x8006ABC0
+void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* pos, s_func_8006AB50* arg2) // 0x8006ABC0
 {
-    s16 angleXz;
+    q3_12 angleXz;
 
-    result->field_C.vx = Q12_TO_Q8(vec->vx);
-    result->field_C.vy = Q12_TO_Q8(vec->vy);
-    result->field_C.vz = Q12_TO_Q8(vec->vz);
+    result->field_C.vx = Q12_TO_Q8(pos->vx);
+    result->field_C.vy = Q12_TO_Q8(pos->vy);
+    result->field_C.vz = Q12_TO_Q8(pos->vz);
 
     result->field_8 = SquareRoot0(SQUARE(result->field_C.vx) + SQUARE(result->field_C.vz));
 
