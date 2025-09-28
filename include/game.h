@@ -160,6 +160,7 @@ struct _Model;
 #define ScreenFade_ResetTimestep() \
     g_Screen_FadeStatus = ScreenFadeState_ResetTimestep
 
+/** @brief Sync modes used by `DrawSync` and `VSync`. */
 typedef enum _SyncMode
 {
     SyncMode_Count     = -1,
