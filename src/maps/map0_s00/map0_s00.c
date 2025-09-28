@@ -57,7 +57,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800CEFD0_1_s02
 
 #include "maps/shared/sharedFunc_800CE954_7_s03.h" // 0x800D0124
 
-bool func_800D012C(VECTOR3* pos) // 0x800D012C
+bool func_800D012C(VECTOR3* pos, MATRIX* unused0, s32* unused1) // 0x800D012C
 {
     s32 deltaX;
     s32 deltaZ;

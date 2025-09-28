@@ -115,7 +115,7 @@ void func_800CBFB0(void);
 void func_800D0124();
 
 /** Collision space distance check. */
-bool func_800D012C(VECTOR3* pos);
+bool func_800D012C(VECTOR3* pos, MATRIX* unused0, s32* unused1); // @hack guessed types.
 
 void func_800CF7AC(s32 arg0, s_Particle* part, u16* arg2, s32* deltaTime);
 
