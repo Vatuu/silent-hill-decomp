@@ -267,9 +267,9 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
 
     func_800D3CBC(chara, charaPosX, charaPosZ);
 
-    chara->field_D8.field_4 = 0;
-    chara->field_D8.field_6 = 0;
-    chara->flags_3E        |= CharaFlag_Unk3;
+    chara->field_D8.offsetX_4 = Q12(0.0f);
+    chara->field_D8.offsetZ_6 = Q12(0.0f);
+    chara->flags_3E          |= CharaFlag_Unk3;
 
     if (chara->model_0.stateStep_3 != 0)
     {
@@ -457,7 +457,7 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D6554);
         var = func_8006FD90(chara, 1, 0x666, 0xCCC);
     }
 
-    var |= func_80070360(chara, someDist, 0x1000);
+    var |= func_80070360(chara, someDist, Q12(1.0f));
 
     if (var == 0)
     {

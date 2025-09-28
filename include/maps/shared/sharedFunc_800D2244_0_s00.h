@@ -67,10 +67,10 @@ void sharedFunc_800D2244_0_s00(bool arg0)
     g_SysWork.player_4C.chara_0.field_C8                        = Q12(-1.6f);
     g_SysWork.player_4C.chara_0.field_CE                        = Q12(-1.1f);
     g_SysWork.player_4C.chara_0.field_CA                        = 0;
-    g_SysWork.player_4C.chara_0.field_D8.field_6                = 0;
-    g_SysWork.player_4C.chara_0.field_D8.field_4                = 0;
-    g_SysWork.player_4C.chara_0.field_D8.field_2                = 0;
-    g_SysWork.player_4C.chara_0.field_D8.field_0                = 0;
+    g_SysWork.player_4C.chara_0.field_D8.offsetZ_6              = Q12(0.0f);
+    g_SysWork.player_4C.chara_0.field_D8.offsetX_4              = Q12(0.0f);
+    g_SysWork.player_4C.chara_0.field_D8.offsetZ_2              = Q12(0.0f);
+    g_SysWork.player_4C.chara_0.field_D8.offsetX_0              = Q12(0.0f);
     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(PlayerFlag_Unk2 |
                                                                     PlayerFlag_Unk13 |
                                                                     PlayerFlag_DamageReceived |

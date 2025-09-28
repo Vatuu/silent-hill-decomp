@@ -1966,18 +1966,18 @@ void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara) // 0x8005C814
     s16   temp_s3;
     s16   temp_s4;
 
-    temp_s0 = arg0->field_0;
-    temp_s3 = arg0->field_2;
-    temp_s2 = arg0->field_4;
-    temp_s4 = arg0->field_6;
+    temp_s0 = arg0->offsetX_0;
+    temp_s3 = arg0->offsetZ_2;
+    temp_s2 = arg0->offsetX_4;
+    temp_s4 = arg0->offsetZ_6;
 
     cosRotY = Math_Cos(chara->rotation_24.vy);
     sinRotY = Math_Sin(chara->rotation_24.vy);
 
-    chara->field_D8.field_0 = FP_FROM((temp_s0 * cosRotY) + (temp_s3 * sinRotY), Q12_SHIFT);
-    chara->field_D8.field_2 = FP_FROM((-temp_s0 * sinRotY) + (temp_s3 * cosRotY), Q12_SHIFT);
-    chara->field_D8.field_4 = FP_FROM((temp_s2 * cosRotY) + (temp_s4 * sinRotY), Q12_SHIFT);
-    chara->field_D8.field_6 = FP_FROM((-temp_s2 * sinRotY) + (temp_s4 * cosRotY), Q12_SHIFT);
+    chara->field_D8.offsetX_0 = FP_FROM((temp_s0 * cosRotY) + (temp_s3 * sinRotY), Q12_SHIFT);
+    chara->field_D8.offsetZ_2 = FP_FROM((-temp_s0 * sinRotY) + (temp_s3 * cosRotY), Q12_SHIFT);
+    chara->field_D8.offsetX_4 = FP_FROM((temp_s2 * cosRotY) + (temp_s4 * sinRotY), Q12_SHIFT);
+    chara->field_D8.offsetZ_6 = FP_FROM((-temp_s2 * sinRotY) + (temp_s4 * cosRotY), Q12_SHIFT);
 }
 
 s32 func_8005C944(s_SubCharacter* chara, s_800C4590* arg1) // 0x8005C944
@@ -3412,9 +3412,9 @@ s32 func_80069FFC(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara) // 0x80
     s32             charaCount;
     s32             var_s1; // TODO: Maybe `bool`?
 
-    sp28.position_0.vx = chara->position_18.vx + chara->field_D8.field_4;
+    sp28.position_0.vx = chara->position_18.vx + chara->field_D8.offsetX_4;
     sp28.position_0.vy = chara->position_18.vy - Q12(0.02f);
-    sp28.position_0.vz = chara->position_18.vz + chara->field_D8.field_6;
+    sp28.position_0.vz = chara->position_18.vz + chara->field_D8.offsetZ_6;
 
     if (func_800426E4(chara->position_18.vx, chara->position_18.vz) == NULL)
     {
@@ -3614,8 +3614,8 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* pos, s_func_8006AB50* arg2, s32 arg
             }
 
             // TODO: `>> 4` converts from world to geometry space here?
-            sp18.field_98.field_0 = (chara->position_18.vx + chara->field_D8.field_4) >> 4;
-            sp18.field_9C.field_0 = (chara->position_18.vz + chara->field_D8.field_6) >> 4;
+            sp18.field_98.field_0 = (chara->position_18.vx + chara->field_D8.offsetX_4) >> 4;
+            sp18.field_9C.field_0 = (chara->position_18.vz + chara->field_D8.offsetZ_6) >> 4;
 
             sp18.field_A0.s_1.field_0 = (chara->field_C8 + chara->position_18.vy) >> 4;
             sp18.field_A0.s_1.field_2 = (chara->field_CA + chara->position_18.vy) >> 4;
@@ -3732,8 +3732,8 @@ void func_8006A940(VECTOR3* pos, s_func_8006AB50* arg1, s_SubCharacter** charas,
             continue;
         }
 
-        posX = (curChara->position_18.vx + curChara->field_D8.field_4) - arg1->position_0.vx;
-        posZ = (curChara->position_18.vz + curChara->field_D8.field_6) - arg1->position_0.vz;
+        posX = (curChara->position_18.vx + curChara->field_D8.offsetX_4) - arg1->position_0.vx;
+        posZ = (curChara->position_18.vz + curChara->field_D8.offsetZ_6) - arg1->position_0.vz;
 
         temp2 = Vc_VectorMagnitudeCalc(posX, Q12(0.0f), posZ);
         if (((curChara->field_D4 + arg1->rotation_C.vz) + FP_ANGLE(36.0f)) < temp2)
@@ -6061,26 +6061,24 @@ void func_8006EE0C(s_func_8006DCE0_6C* arg0, s32 arg1, s_SubCharacter* chara) //
 {
     q19_12 offsetZ;
     q19_12 offsetX;
-    q19_12 var_v0;
-
-    // TODO: `>> 4`s here are probably Q format conversion.
+    q19_12 unkY;
 
     if (arg1 == 1)
     {
         arg0->field_C = chara->field_D4 >> 4;
-        offsetX       = chara->field_D8.field_4;
-        offsetZ       = chara->field_D8.field_6;
-        var_v0        = chara->position_18.vy + chara->field_CA;
+        offsetX       = chara->field_D8.offsetX_4;
+        offsetZ       = chara->field_D8.offsetZ_6;
+        unkY          = chara->position_18.vy + chara->field_CA;
     }
     else
     {
         arg0->field_C = chara->field_D6 >> 4;
-        offsetX       = chara->field_D8.field_0;
-        offsetZ       = chara->field_D8.field_2;
-        var_v0        = chara->position_18.vy + chara->field_CC;
+        offsetX       = chara->field_D8.offsetX_0;
+        offsetZ       = chara->field_D8.offsetZ_2;
+        unkY          = chara->position_18.vy + chara->field_CC;
     }
 
-    arg0->field_A = var_v0 >> 4;
+    arg0->field_A = unkY >> 4;
     arg0->field_0 = (chara->position_18.vx + offsetX) >> 4;
     arg0->field_4 = (chara->position_18.vz + offsetZ) >> 4;
     arg0->field_8 = (chara->position_18.vy + chara->field_C8) >> 4;
@@ -6795,27 +6793,28 @@ bool func_80070320() // 0x80070320
     return false;
 }
 
-s32 func_80070360(s_SubCharacter* chara, s32 someDist, s16 arg2) // 0x80070360
+q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2) // 0x80070360
 {
-    s32 vx;
-    s32 vz;
-    s32 var_a1;
-    s32 result;
+    q25_6  deltaX;
+    q25_6  deltaZ;
+    q19_12 dist;
+    q19_12 result;
 
-    var_a1 = someDist;
-    if (var_a1 == 0)
+    dist = someDist;
+    if (dist == Q12(0.0f))
     {
-        vx = g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx;
-        vx = FP_FROM(vx, 6);
+        deltaX = g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx;
+        deltaX = Q12_TO_Q6(deltaX);
 
-        vz = g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz;
-        vz = FP_FROM(vz, 6);
+        deltaZ = g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz;
+        deltaZ = Q12_TO_Q6(deltaZ);
 
-        var_a1 = SquareRoot0(SQUARE(vx) + SQUARE(vz));
-        var_a1 = FP_TO(var_a1, 6);
+        dist = SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ));
+        dist = Q6_TO_Q12(dist);
     }
 
-    result = FP_MULTIPLY(arg2, g_SysWork.player_4C.chara_0.properties_E4.player.field_10C, Q12_SHIFT) - FP_FROM(var_a1, Q8_SHIFT);
+    // TODO: Why `>> 8`?
+    result = FP_MULTIPLY(arg2, g_SysWork.player_4C.chara_0.properties_E4.player.field_10C, Q12_SHIFT) - (dist >> 8);
     if (result < 0)
     {
         result = 0;
@@ -6825,11 +6824,11 @@ s32 func_80070360(s_SubCharacter* chara, s32 someDist, s16 arg2) // 0x80070360
 
 void func_80070400(s_SubCharacter* chara, s_func_80070400_1* arg1, s_func_80070400_1* arg2) // 0x80070400
 {
-    s32 alpha;
-    s32 invAlpha;
+    q19_12 alpha;
+    q19_12 invAlpha;
 
     // Compute alpha.
-    if (chara->model_0.anim_4.status_0 & (1 << 0))
+    if (IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0))
     {
         alpha = Q12_FRACT(chara->model_0.anim_4.time_4);
     }
@@ -6841,16 +6840,16 @@ void func_80070400(s_SubCharacter* chara, s_func_80070400_1* arg1, s_func_800704
     // Compute inverse alpha.
     invAlpha = Q12(1.0f) - alpha;
 
-    chara->field_C8         = FP_FROM((arg1->field_0 * invAlpha) + (arg2->field_0 * alpha), Q12_SHIFT);
-    chara->field_CA         = FP_FROM((arg1->field_2 * invAlpha) + (arg2->field_2 * alpha), Q12_SHIFT);
-    chara->field_CC         = FP_FROM((arg1->field_4 * invAlpha) + (arg2->field_4 * alpha), Q12_SHIFT);
-    chara->field_CE         = FP_FROM((arg1->field_6 * invAlpha) + (arg2->field_6 * alpha), Q12_SHIFT);
-    chara->field_D8.field_4 = FP_FROM((arg1->field_10 * invAlpha) + (arg2->field_10 * alpha), Q12_SHIFT);
-    chara->field_D8.field_6 = FP_FROM((arg1->field_12 * invAlpha) + (arg2->field_12 * alpha), Q12_SHIFT);
-    chara->field_D4         = FP_FROM((arg1->field_8 * invAlpha) + (arg2->field_8 * alpha), Q12_SHIFT);
-    chara->field_D8.field_0 = FP_FROM((arg1->field_C * invAlpha) + (arg2->field_C * alpha), Q12_SHIFT);
-    chara->field_D8.field_2 = FP_FROM((arg1->field_E * invAlpha) + (arg2->field_E * alpha), Q12_SHIFT);
-    chara->field_D6         = FP_FROM((arg1->field_A * invAlpha) + (arg2->field_A * alpha), Q12_SHIFT);
+    chara->field_C8           = FP_FROM((arg1->field_0 * invAlpha) + (arg2->field_0 * alpha), Q12_SHIFT);
+    chara->field_CA           = FP_FROM((arg1->field_2 * invAlpha) + (arg2->field_2 * alpha), Q12_SHIFT);
+    chara->field_CC           = FP_FROM((arg1->field_4 * invAlpha) + (arg2->field_4 * alpha), Q12_SHIFT);
+    chara->field_CE           = FP_FROM((arg1->field_6 * invAlpha) + (arg2->field_6 * alpha), Q12_SHIFT);
+    chara->field_D8.offsetX_4 = FP_FROM((arg1->field_10 * invAlpha) + (arg2->field_10 * alpha), Q12_SHIFT);
+    chara->field_D8.offsetZ_6 = FP_FROM((arg1->field_12 * invAlpha) + (arg2->field_12 * alpha), Q12_SHIFT);
+    chara->field_D4           = FP_FROM((arg1->field_8 * invAlpha) + (arg2->field_8 * alpha), Q12_SHIFT);
+    chara->field_D8.offsetX_0 = FP_FROM((arg1->field_C * invAlpha) + (arg2->field_C * alpha), Q12_SHIFT);
+    chara->field_D8.offsetZ_2 = FP_FROM((arg1->field_E * invAlpha) + (arg2->field_E * alpha), Q12_SHIFT);
+    chara->field_D6           = FP_FROM((arg1->field_A * invAlpha) + (arg2->field_A * alpha), Q12_SHIFT);
 }
 
 void func_800705E4(GsCOORDINATE2* coord, s32 idx, s32 scaleX, s32 scaleY, s32 scaleZ) // 0x800705E4
@@ -6863,7 +6862,7 @@ void func_800705E4(GsCOORDINATE2* coord, s32 idx, s32 scaleX, s32 scaleY, s32 sc
     scales[1] = scaleY;
     scales[2] = scaleZ;
 
-    for (col = 0; col < 3; col++)
+    for (col = 0; col < ARRAY_SIZE(scales); col++)
     {
         if (scales[col] != Q12(1.0f))
         {

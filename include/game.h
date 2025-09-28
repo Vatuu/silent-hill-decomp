@@ -1157,10 +1157,10 @@ STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesLarvalStalker, 68);
 /** Offsets for translation? */
 typedef struct
 {
-    q3_12 field_0; // X
-    q3_12 field_2; // Z
-    q3_12 field_4; // X
-    q3_12 field_6; // Z
+    q3_12 offsetX_0;
+    q3_12 offsetZ_2;
+    q3_12 offsetX_4;
+    q3_12 offsetZ_6;
 } s_SubCharacter_D8;
 STATIC_ASSERT_SIZEOF(s_SubCharacter_D8, 8);
 
@@ -1207,14 +1207,14 @@ typedef struct _SubCharacter
 
     // Fields seen used inside maps (eg. `map0_s00` `func_800D923C`)
 
-    s16               field_C8; // } Anim root offset?
-    s16               field_CA; // }
-    s16               field_CC; // }
-    s16               field_CE;
+    q3_12             field_C8; // } Anim root offset?
+    q3_12             field_CA; // }
+    q3_12             field_CC; // }
+    q3_12             field_CE;
     s16               field_D0;
     s16               field_D2;
-    s16               field_D4; // Z angle?
-    s16               field_D6;
+    q3_12             field_D4; // Z angle?
+    q3_12             field_D6;
     s_SubCharacter_D8 field_D8;
 
     u8 field_E0; // Related to collision. If the player collides with the only enemy in memory and the enemy is knocked down, this is set to 1.

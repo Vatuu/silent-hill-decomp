@@ -539,16 +539,16 @@ typedef struct
 
 typedef struct
 {
-    s16 field_0;
-    s16 field_2;
-    s16 field_4;
-    s16 field_6;
-    s16 field_8;
-    s16 field_A;
-    s16 field_C;
-    s16 field_E;
-    s16 field_10;
-    s16 field_12;
+    q3_12 field_0;
+    q3_12 field_2;
+    q3_12 field_4;
+    q3_12 field_6;
+    q3_12 field_8;
+    q3_12 field_A;
+    q3_12 field_C;
+    q3_12 field_E;
+    q3_12 field_10; // X offset?
+    q3_12 field_12; // Z offset?
 } s_func_80070400_1;
 
 typedef struct
@@ -3800,7 +3800,8 @@ bool func_80070184(s_SubCharacter* chara, s32 arg1, s16 rotY);
 
 bool func_80070320();
 
-s32 func_80070360(s_SubCharacter* chara, s32 someDist, s16 arg2);
+/** TODO: Return type uncertain. */
+q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2);
 
 void func_80070400(s_SubCharacter* chara, s_func_80070400_1* arg1, s_func_80070400_1* arg2);
 
