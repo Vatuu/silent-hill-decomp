@@ -87,7 +87,7 @@ void func_800CFD84(void) {}
 
 #include "maps/shared/Ai_Cybil_Update.h" // 0x800CFDF0
 
-INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", sharedFunc_800D8888_0_s01); // 0x800CFE64
+#include "maps/shared/sharedFunc_800D8888_0_s01.h"
 
 #include "maps/shared/sharedFunc_800D88D0_0_s01.h" // 0x800CFEAC
 

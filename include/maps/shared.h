@@ -2339,6 +2339,7 @@ extern s32 sharedData_800DD78C_0_s01[2];
 extern u8 sharedData_800E2156_0_s01;
 
 extern s_AnimInfo KAUFMANN_ANIM_INFOS[]; // Used by `Anim_StartKeyframeIdxGet`, `Ai_Kaufmann` related?
+extern s_AnimInfo CYBIL_ANIM_INFOS[];
 
 extern s_AnimInfo BLOODY_LISA_ANIM_INFOS[]; // `Ai_BloodyLisa` related?
 

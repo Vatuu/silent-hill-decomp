@@ -920,7 +920,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D8804);
 
 #include "maps/shared/Ai_Cybil_Update.h" // 0x800D8814
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D8888_0_s01); // 0x800D8888
+#include "maps/shared/sharedFunc_800D8888_0_s01.h"
 
 #include "maps/shared/sharedFunc_800D88D0_0_s01.h" // 0x800D88D0
 
