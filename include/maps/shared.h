@@ -2254,7 +2254,7 @@ typedef struct _SfxVolume
 typedef struct
 {
     s_AnimInfo  animInfo_0[56];
-    u8          unk_380[2408];
+    s32         unk_380[0x12D][2]; // unknown size, biggest constant index used is 35
     s_SfxVolume sfxVolumes_CE8[11];
     u_Property  properties_D14[4];
     u8          unk_D24[36]; // @hack Might not be part of this struct but disasm refuses to split here.
