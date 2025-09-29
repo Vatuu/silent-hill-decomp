@@ -522,7 +522,7 @@ void func_800D4420(s_SubCharacter* subChar)
     switch (subChar->model_0.stateStep_3)
     {
         case 0:
-            subChar->properties_E4.unk0.properties_E8[0xE].val32 = Q12(1.5f);
+            subChar->properties_E4.unk0.properties_120.val32 = Q12(1.5f);
             subChar->model_0.stateStep_3 = 1;
             break;
         case 1:
@@ -664,6 +664,7 @@ void func_800D57C8(s_SubCharacter* chara)
     s32 idx0;
     s32 idx1;
     s32 idx2;
+    s32 idx3;
 
     s32 status45;
 
@@ -678,9 +679,8 @@ void func_800D57C8(s_SubCharacter* chara)
     s32 element5;
 
     s32* sub;
-    s32 *sub2;
-    s32 *sub3;
     s32 tmp;
+    s_sharedData_800E21D0_0_s01* base;
 
     pos = &chara->position_18;
     vec1 = &chara->properties_E4.unk0.field_110;
@@ -747,28 +747,31 @@ void func_800D57C8(s_SubCharacter* chara)
 
     element2 = sharedData_800CAA98_0_s01.unk_380[idx0][0];
     element3 = sharedData_800CAA98_0_s01.unk_380[idx0][1];
-    sub = &((s32*)&sharedData_800E21D0_0_s01)[0];
-    sub[0x2f] = element2;
-    sub[0x2e] = element3;
-    sub[0x30] = dist;
-    sub[0x2d] = 1;
+    base = &sharedData_800E21D0_0_s01;
+
+    idx3 = 0;
+    base->field_B4[idx3][2] = element2;
+    base->field_B4[idx3][1] = element3;
+    base->field_B4[idx3][3] = dist;
+    base->field_B4[idx3][0] = 1;
 
     element4 = sharedData_800CAA98_0_s01.unk_380[idx2][0];
     element5 = sharedData_800CAA98_0_s01.unk_380[idx2][1];
-    sub2 = &((s32*)&sharedData_800E21D0_0_s01)[4];
-    sub2[0x2f] = element4;
-    sub2[0x2e] = element5;
+
+    idx3 = 1;
+    base->field_B4[idx3][2] = element4;
+    base->field_B4[idx3][1] = element5;
     if (var_t4)
     {
-        sub2[0x30] = posY;
-        sub2[0x2d] = 1;
+        base->field_B4[idx3][3] = posY;
+        base->field_B4[idx3][0] = 1;
     }
 
-    sub3 = &((s32*)&sharedData_800E21D0_0_s01)[12];
-    sub3[0x2f] = element0;
-    sub3[0x2e] = element1;
-    sub3[0x30] = angle;
-    sub3[0x2d]= 1;
+    idx3 = 3;
+    base->field_B4[idx3][2] = element0;
+    base->field_B4[idx3][1] = element1;
+    base->field_B4[idx3][3] = angle;
+    base->field_B4[idx3][0]= 1;
 
     idx0 = angle/2;
     func_800D5E78(chara, idx0);
@@ -786,12 +789,12 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5E14);
 
 void func_800D5E78(s_SubCharacter* chara, q19_12 angle) // 0x800D5E78
 {
-    q19_12 angleDelta;
-    q19_12 angleCpy;
-    q19_12 angle0;
-    q19_12 angle1;
-    s32*   base;
-    s32*   ptr;
+    q19_12                       angleDelta;
+    q19_12                       angleCpy;
+    q19_12                       angle0;
+    q19_12                       angle1;
+    s_sharedData_800E21D0_0_s01* base;
+    s32                          idx0;
 
     angleCpy = angle;
 
@@ -829,12 +832,12 @@ void func_800D5E78(s_SubCharacter* chara, q19_12 angle) // 0x800D5E78
         }
     }
 
-    base = (s32*)&sharedData_800E21D0_0_s01;
-    ptr = &base[20];
-    ptr[47] = angle0;
-    ptr[46] = 0x1800;
-    ptr[48] = angleDelta;
-    ptr[45] = 1;
+    base = &sharedData_800E21D0_0_s01;
+    idx0 = 5;
+    base->field_B4[idx0][2]= angle0;
+    base->field_B4[idx0][1] = 0x1800;
+    base->field_B4[idx0][3] = angleDelta;
+    base->field_B4[idx0][0] = 1;
 }
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5F00);

@@ -2262,12 +2262,6 @@ typedef struct
 } s_func_800D2E04;
 typedef char static_assertion_sizeof_s_func_800D2E04[(sizeof(s_func_800D2E04) == 3404) ? 1 : -1];
 
-/** @hack It appears `sharedData_800E21D0_0_s01` is just a flat array of ints. All functions
- * that use it have such access patterns that it only makes sense to address it as such.
- * This structure is more of an information on "what's where", rather than something that should
- * be used directly. At least for now. Maybe someone figures out the specific code that fits
- * with this structure as actual structure...
- */
 typedef struct
 {
     s32            flags_0;
@@ -2275,8 +2269,6 @@ typedef struct
     GsCOORDINATE2* coords_8;
     MATRIX*        matrices_C;
     s8             unk_10[0xA4];
-    /* `func_800D57C8` and `func_800D5E78` access 4x s32 at offset 0xB4, 0xB8, 0xBC, 0xC0,
-     * then increment the base address. The maximum number of rows is currently unknown but at lest 35. */
     s32            field_B4[35][4];
 } s_sharedData_800E21D0_0_s01;
 
