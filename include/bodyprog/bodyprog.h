@@ -1327,7 +1327,7 @@ typedef struct
     SVECTOR       field_6C; // Player current angles?
     SVECTOR       field_74;
     SVECTOR       field_7C;
-    u8            unk_84[72];
+    VECTOR3       field_84[6];
     u8            field_CC[1]; // Unknown size.
 } s_800C4168;
 
@@ -1809,6 +1809,40 @@ typedef struct
     s_800AE8A0_4 field_8;
     s32          field_C;
 } s_func_80068E0C;
+
+typedef struct
+{
+    POLY_FT4* field_0;
+    SVECTOR   field_4;
+    MATRIX    field_C;
+    VECTOR3   field_2C;
+    s32       field_38;
+    DVECTOR   field_3C;
+    s32       field_40;
+    DVECTOR   field_44;
+    DVECTOR   field_48;
+} s_func_80065B94;
+
+typedef struct
+{
+    POLY_GT4* field_0;
+    MATRIX    field_4;
+    SVECTOR   field_24[3];
+    VECTOR3   field_3C;
+    s32       field_48;
+    DVECTOR   field_4C;
+    DVECTOR   field_50;
+    DVECTOR   field_54;
+    DVECTOR   field_58;
+    s32       field_5C;
+    s32       field_60;
+    s32       field_64;
+    s32       field_68;
+    s32       field_6C;
+    s32       field_70;
+    s32       field_74;
+    s32       field_78;
+} s_func_80066184;
 
 // ========
 // GLOBALS
@@ -2462,6 +2496,10 @@ extern u16 g_LoadedEffectTextureFlags;
 extern s16 D_800C4408;
 
 extern s8 D_800C4414;
+
+extern s16 D_800C4428[];
+
+extern s16 D_800C4438[];
 
 extern u8 D_800C4448;
 
@@ -3141,9 +3179,9 @@ void func_80055A90(CVECTOR* arg0, CVECTOR* arg1, u8 arg2, s32 arg3);
  */
 void func_80055B74(CVECTOR* result, CVECTOR* color, s32 arg2);
 
-void func_80055C3C(CVECTOR* result, CVECTOR* color, void* arg2, void* arg3, s32 arg4, s32 arg5);
+void func_80055C3C(CVECTOR* result, CVECTOR* color, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
-u8 func_80055D78(void*, void*, s32);
+u8 func_80055D78(s32 x, s32 y, s32 z);
 
 void func_80055E90(CVECTOR* color, u8 fadeAmount);
 
@@ -3615,6 +3653,10 @@ s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 x, s16 z);
 void func_800622B8(s32 arg0, s_SubCharacter* chara, s32 animStatus, s32 arg3);
 
 void func_80064F04(VECTOR3* arg0, s8 arg1, s16 arg2);
+
+void func_80065B94(VECTOR3* arg0, s16 arg1);
+
+void func_80066184();
 
 void func_80066D90();
 

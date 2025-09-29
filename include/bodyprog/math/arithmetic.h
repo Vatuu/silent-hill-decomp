@@ -98,4 +98,56 @@
 #define OVERFLOW_GUARD(x) \
     (((u32)((x) + SHRT_MAX) >= USHRT_MAX) ? 4 : 0)
 
+/** @brief Clamps a value to be not less than the given lower bound.
+ *
+ * @param v Value to be clamped.
+ * @param lo Lower bound.
+ * @return `v` if `v >= lo`, otherwise `lo`.
+ */
+#define CLAMP_LOW(v, lo) ((v) < (lo) ? (lo) : (v))
+
+/** @brief Clamps a value to be not greater than the given upper bound.
+ *
+ * @param v Value to be clamped.
+ * @param hi Upper bound.
+ * @return `v` if `v <= hi`, otherwise `hi`.
+ */
+#define CLAMP_HIGH(v, hi) ((v) > (hi) ? (hi) : (v))
+
+/** @brief Clamps a value to the inclusive range `[lo, hi]`.
+ *
+ * Uses `CLAMP_HIGH` followed by `CLAMP_LOW` to ensure the value
+ * lies between the specified bounds.
+ *
+ * @param v Value to be clamped.
+ * @param lo Lower bound.
+ * @param hi Upper bound.
+ * @return `v` clamped to the range `[lo, hi]`.
+ */
+#define CLAMP_RANGE(v, lo, hi) (CLAMP_LOW(CLAMP_HIGH((v), (hi)), (lo)))
+
+/** @brief Clamps a value to the range `[lo, hi]` using `MIN` first.
+ *
+ * Takes the smaller of `v` and `hi`, then ensures the result
+ * is not less than `lo`.
+ *
+ * @param v Value to be clamped.
+ * @param lo Lower bound.
+ * @param hi Upper bound.
+ * @return `v` clamped to the range `[lo, hi]`.
+ */
+#define CLAMP_MIN_THEN_LOW(v, lo, hi) (CLAMP_LOW(MIN((v), (hi)), (lo)))
+
+/** @brief Clamps a value to the range `[lo, hi]` using `CLAMP_LOW` first.
+ *
+ * Ensures `v` is not less than `lo`, then applies `MIN` to restrict
+ * the result to not exceed `hi`.
+ *
+ * @param v Value to be clamped.
+ * @param lo Lower bound.
+ * @param hi Upper bound.
+ * @return `v` clamped to the range `[lo, hi]`.
+ */
+#define CLAMP_LOW_THEN_MIN(v, lo, hi) (MIN(CLAMP_LOW((v), (lo)), (hi)))
+
 #endif

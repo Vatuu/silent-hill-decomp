@@ -485,16 +485,18 @@ s_800AE710 D_800AE710[4] =
 };
 
 // Seems like a struct of 2 s32 based on `func_80066184`.
-s32 D_800AE71C[] =
+s32 D_800AE71C[][2] =
 {
-    0x00015AE1, 0xFFFEAEB9,
-    0x00017B33, 0xFFFEAEB9,
-    0x00015AE1, 0xFFFE8E67,
-    0x00017B33, 0xFFFE8E67
+    { 0x00015AE1, 0xFFFEAEB9 },
+    { 0x00017B33, 0xFFFEAEB9 },
+    { 0x00015AE1, 0xFFFE8E67 },
+    { 0x00017B33, 0xFFFE8E67 }
 };
 
 // Some timer used in func_80066184
-q19_12 D_800AE73C = Q12(-524256.0f);
+s16 D_800AE73C = 0;
+
+s16 D_800AE73E = 0x8002;
 
 // Used by `func_80068CC0` and `GameState_MapScreen_Update`.
 // I think this is save file flags related to

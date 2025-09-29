@@ -219,6 +219,10 @@ extern GsDOBJ2 g_Items_ItemsModelData[9]; // 0x800C3D78
 
 extern s_800AEDBC D_800AEDBC[];
 
+extern s32 D_800AE71C[][2];
+
+extern s16 D_800AE73C;
+
 // ==========
 // FUNCTIONS
 // ==========

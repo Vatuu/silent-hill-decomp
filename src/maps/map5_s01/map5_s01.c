@@ -182,10 +182,6 @@ INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", D_800CA848);
 
 INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", sharedData_800CAA98_0_s01);
 
-INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", D_800CAC60);
-
-INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", g_SfxVolumes);
-
 INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", D_800CB5E4);
 
 INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", D_800CB5F0);

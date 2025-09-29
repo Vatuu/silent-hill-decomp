@@ -4,7 +4,6 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map0/map0_s01.h"
-
 const u32 D_800CA5C8[4] = {};
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800CCB8C);
@@ -578,8 +577,6 @@ INCLUDE_RODATA("asm/maps/map0_s01/nonmatchings/map0_s01", D_800CAA48);
 
 INCLUDE_RODATA("asm/maps/map0_s01/nonmatchings/map0_s01", sharedData_800CAA98_0_s01);
 
-INCLUDE_RODATA("asm/maps/map0_s01/nonmatchings/map0_s01", g_SfxVolumes);
-
 INCLUDE_RODATA("asm/maps/map0_s01/nonmatchings/map0_s01", D_800CB7E4);
 
 INCLUDE_RODATA("asm/maps/map0_s01/nonmatchings/map0_s01", D_800CB7F0);
@@ -810,7 +807,59 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5D80);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5E14);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5E78);
+void func_800D5E78(s_SubCharacter* chara, s32 angle)
+{
+    s32 angleDelta;
+    s32 angleCpy;
+    s32 angle0;
+    s32 angle1;
+    s_sharedData_800E21D0_0_s01_sub* ptr;
+    s_sharedData_800E21D0_0_s01* base;
+
+    angleCpy = angle;
+
+    if (angleCpy > FP_ANGLE(60.0f))
+    {
+        angleCpy = FP_ANGLE(60.0f);
+    }
+    else if (angleCpy < FP_ANGLE(-60.0f))
+    {
+        angleCpy = FP_ANGLE(-60.0f);
+    }
+
+    angleDelta = angleCpy - chara->rotation_24.pad;
+
+    if (angleDelta > FP_ANGLE(0.5f))
+    {
+        angleDelta -= FP_ANGLE(0.5f);
+    }
+    else if (angleDelta >= FP_ANGLE(-0.5f))
+    {
+        angleDelta = FP_ANGLE(0.0f);
+    }
+    else
+    {
+        angleDelta += FP_ANGLE(0.5f);
+    }
+
+    angle0 = FP_ANGLE(90.0f);
+
+    if (angleDelta <= FP_ANGLE(0.0f))
+    {
+        angle0 = FP_ANGLE(0.0f);
+        if (angleDelta < FP_ANGLE(0.0f))
+        {
+            angle0 = FP_ANGLE(-90.0f);
+        }
+    }
+
+    base = &sharedData_800E21D0_0_s01;
+    ptr = &base->field_B4;
+    ptr->field_BC = angle0;
+    ptr->field_B8 = 0x1800;
+    ptr->field_C0 = angleDelta;
+    ptr->field_B4 = 1;
+}
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5F00);
 
@@ -871,7 +920,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D8804);
 
 #include "maps/shared/Ai_Cybil_Update.h" // 0x800D8814
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D8888_0_s01); // 0x800D8888
+#include "maps/shared/sharedFunc_800D8888_0_s01.h"
 
 #include "maps/shared/sharedFunc_800D88D0_0_s01.h" // 0x800D88D0
 
@@ -995,5 +1044,4 @@ void Gfx_LoadingScreen_StageString() // 0x800DA8A4
     Gfx_DebugStringDraw("STAGE 0-1");
     Gfx_LoadingScreen_BackgroundTexture();
 }
-
 #include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800DA8E8

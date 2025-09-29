@@ -100,7 +100,7 @@ void func_800D102C() {}
 
 #include "maps/shared/Ai_Cybil_Update.h" // 0x800D1098
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800D8888_0_s01); // 0x800D110C
+#include "maps/shared/sharedFunc_800D8888_0_s01.h"
 
 #include "maps/shared/sharedFunc_800D88D0_0_s01.h" // 0x800D1154
 
