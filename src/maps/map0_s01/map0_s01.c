@@ -522,7 +522,7 @@ void func_800D4420(s_SubCharacter* subChar)
     switch (subChar->model_0.stateStep_3)
     {
         case 0:
-            subChar->properties_E4.larvalStalker.properties_E8[0xE].val32 = Q12(1.5f);
+            subChar->properties_E4.unk0.properties_E8[0xE].val32 = Q12(1.5f);
             subChar->model_0.stateStep_3 = 1;
             break;
         case 1:
@@ -617,10 +617,8 @@ s32 func_800D569C(s_SubCharacter* chara, q19_12 vecY, q19_12 dist)
     // @hack: We should not mix unions (npc vs larvalStalker).
     someY = chara->properties_E4.npc.field_124;
 
-    // @hack: chara->0x110 holds a VECTOR3. This shows up in another function too.
-    // Hard to handle with the current union properties setup we have.
-    vec_x = chara->properties_E4.larvalStalker.properties_E8[10].val32; //0x110 VECTOR3.vx
-    vec_z = chara->properties_E4.larvalStalker.properties_E8[12].val32; //0x110 VECTOR3.vz
+    vec_x = chara->properties_E4.unk0.field_110.vx;
+    vec_z = chara->properties_E4.unk0.field_110.vz;
 
     if (someY < calcY)
     {
@@ -685,8 +683,7 @@ void func_800D57C8(s_SubCharacter* chara)
     s32 tmp;
 
     pos = &chara->position_18;
-    // @hack chara->0x100 = VECTOR3. Also used in func_800D569C
-    vec1 = (VECTOR3*)&chara->properties_E4.larvalStalker.properties_E8[10];
+    vec1 = &chara->properties_E4.unk0.field_110;
     dist = Math_Distance2dGet(pos, vec1);
     angle = FP_ANGLE_NORM_S(func_80080478(pos, vec1) - chara->rotation_24.vy);
 
