@@ -114,4 +114,6 @@ void MapEvent_ToBeContinued(void);
 
 void MapEvent_CafeCutscene();
 
+s32 func_800D569C(s_SubCharacter* chara, q19_12 vecY, q19_12 dist);
+
 #endif
