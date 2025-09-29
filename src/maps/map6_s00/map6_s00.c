@@ -7,11 +7,11 @@ INCLUDE_RODATA("asm/maps/map6_s00/nonmatchings/map6_s00", D_800C9578);
 
 INCLUDE_RODATA("asm/maps/map6_s00/nonmatchings/map6_s00", g_MapOverlayHeader);
 
-INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", sharedFunc_800CB6B0_0_s00); // 0x800CCB30
+#include "maps/shared/sharedFunc_800CB6B0_0_s00.h" // 0x800CCB30
 
 #include "maps/shared/sharedFunc_800CBBBC_0_s00.h" // 0x800CCFCC
 
-INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800CD0A4);
+INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", sharedFunc_800CBC94_0_s00); // 0x800CD0A4
 
 #include "maps/shared/Particle_Update.h" // 0x800CD3C0
 

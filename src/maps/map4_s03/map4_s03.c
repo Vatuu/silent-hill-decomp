@@ -16,11 +16,15 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800CBE54);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800CC004);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", sharedFunc_800CB6B0_0_s00); // 0x800CC700
+// TODO: Doesn't currently match due to `sharedData_800E5768_1_s02` mismatch
+// This func expects it at `0x800DF4E0`, but other funcs expect at `0x800DF548`
+// (some funcs treat as u16, other funcs as `s_func_800CB560`, maybe mis-share and needs usages split to different symbols)
+// #include "maps/shared/sharedFunc_800CB6B0_0_s00.h" // 0x800CC700
+INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", sharedFunc_800CB6B0_0_s00); // 0x800CCC24
 
 #include "maps/shared/sharedFunc_800CBBBC_0_s00.h" // 0x800CCB4C
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800CCC24);
+INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", sharedFunc_800CBC94_0_s00); // 0x800CCC24
 
 #include "maps/shared/Particle_Update.h" // 0x800CCF40
 

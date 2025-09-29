@@ -1,3 +1,9 @@
+#if defined(MAP7_S03)
+// TODO: Move these to map .c / .h?
+#define PARTICLE_COUNT_MAX 450
+extern s32 D_800F23D4;
+#endif
+
 void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
 {
     s32 temp_a2;
@@ -12,22 +18,36 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
     u32 temp_v1_2;
     u16 temp_v1_3;
 
-#if defined(MAP0_S00) || defined(MAP1_S02) || defined(MAP1_S03) || defined(MAP4_S02) || defined(MAP4_S04) || defined(MAP4_S05)
+#if defined(MAP5_S01)
+    if (g_MapEventIdx == 7 && g_SysWork.sysStateStep_C[0] == 8)
+    {
+        return;
+    }
+#endif
+
+#if defined(MAP0_S00) || defined(MAP1_S02) || defined(MAP1_S03) || defined(MAP4_S02) || \
+    defined(MAP4_S03) || defined(MAP4_S04) || defined(MAP4_S05) || defined(MAP5_S00) || \
+    defined(MAP6_S00) || defined(MAP6_S03)
     sharedFunc_800D0CB8_0_s00();
 #endif
-    
-    func_80055434(&g_ParticleVectors0.vector_0);
 
+    func_80055434(&g_ParticleVectors0.vector_0);
     g_ParticleVectors0.field_28 = func_8005545C(&g_ParticleVectors0.svec_18);
+
     vwGetViewPosition(&g_ParticleVectors0.viewPosition_C);
     vwGetViewAngle(&g_ParticleVectors0.viewRotation_20);
+
+#if defined(MAP5_S01)
+    sharedData_800DFB64_0_s00 = 0;
+#endif
 
     switch (arg3)
     {
         case 0:
         case -1:
 
-            // TODO: Meters?
+            // TODO: `sharedData_800E326C_0_s00` should be changed to same type as `sharedData_800E5768_1_s02`?
+            // (may also need to rename them to same symbol name, not completely sure yet though)
 #if defined(MAP0_S00)
             sharedData_800DD591_0_s00 = 1;
             
@@ -39,7 +59,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
             sharedData_800E326C_0_s00.vector_C.vy = Q12(-4.5f);
             sharedData_800E326C_0_s00.vector_C.vz = Q12(211.0f);
 
-            D_800E32D4 = 30;
+            D_800E32D4 = 30; // TODO: Might be `sharedData_800E5768_1_s02` as below.
 #elif defined(MAP0_S01)
             sharedData_800DD591_0_s00 = 1;
             
@@ -47,10 +67,184 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
             sharedData_800E326C_0_s00.vector_0.vz = Q12(275.0f);
             sharedData_800E326C_0_s00.vector_C.vx = Q12(-0.30f);
             sharedData_800E326C_0_s00.vector_C.vz = Q12(265.0f);
+#elif defined(MAP1_S06)
+            switch (g_SavegamePtr->mapRoomIdx_A5)
+            {
+                case 12:
+                    sharedData_800DD591_0_s00             = 1;
+                    sharedData_800E326C_0_s00.vector_0.vx = Q12(105.5f);
+                    sharedData_800E326C_0_s00.vector_0.vz = Q12(67.0f);
+                    sharedData_800E326C_0_s00.vector_C.vx = Q12(105.5f);
+                    sharedData_800E326C_0_s00.vector_C.vz = Q12(50.0f);
+                    break;
+                case 13:
+                    sharedData_800DD591_0_s00             = 1;
+                    sharedData_800E326C_0_s00.vector_0.vx = Q12(145.0f);
+                    sharedData_800E326C_0_s00.vector_0.vz = Q12(24.0f);
+                    sharedData_800E326C_0_s00.vector_C.vx = Q12(132.0f);
+                    sharedData_800E326C_0_s00.vector_C.vz = Q12(24.0f);
+                    break;
+                case 9:
+                    sharedData_800DD591_0_s00             = 1;
+                    sharedData_800E326C_0_s00.vector_0.vx = Q12(55.0f);
+                    sharedData_800E326C_0_s00.vector_0.vz = Q12(137.0f);
+                    sharedData_800E326C_0_s00.vector_C.vx = Q12(62.0f);
+                    sharedData_800E326C_0_s00.vector_C.vz = Q12(137.0f);
+                    break;
+                case 14:
+                    sharedData_800DD591_0_s00             = 2;
+                    sharedData_800E326C_0_s00.vector_0.vx = Q12(96.5f);
+                    sharedData_800E326C_0_s00.vector_0.vz = Q12(15.0f);
+                    sharedData_800E326C_0_s00.vector_C.vx = Q12(103.5f);
+                    sharedData_800E326C_0_s00.vector_C.vz = Q12(15.0f);
+                    break;
+            }
+#elif defined(MAP2_S00)
+            switch (g_SavegamePtr->mapRoomIdx_A5)
+            {
+                case 38:
+                    sharedData_800DD591_0_s00                 = 10;
+                    sharedData_800E5768_1_s02.corners_0[0].vx = Q12(120.0f);
+                    sharedData_800E5768_1_s02.corners_0[0].vz = Q12(303.5f);
+                    sharedData_800E5768_1_s02.corners_0[1].vx = Q12(110.0f);
+                    sharedData_800E5768_1_s02.corners_0[1].vz = Q12(303.5f);
+                    sharedData_800E5768_1_s02.corners_0[2].vx = Q12(128.3f);
+                    sharedData_800E5768_1_s02.corners_0[2].vz = Q12(295.0f);
+                    sharedData_800E5768_1_s02.corners_0[3].vx = Q12(128.3f);
+                    sharedData_800E5768_1_s02.corners_0[3].vz = Q12(305.0f);
+                    sharedData_800E5768_1_s02.corners_0[4].vx = Q12(111.3f);
+                    sharedData_800E5768_1_s02.corners_0[4].vz = Q12(298.0f);
+                    sharedData_800E5768_1_s02.corners_0[5].vx = Q12(111.3f);
+                    sharedData_800E5768_1_s02.corners_0[5].vz = Q12(295.0f);
+                    break;
+
+                case 23:
+                    sharedData_800DD591_0_s00                 = 1;
+                    sharedData_800E5768_1_s02.corners_0[0].vx = Q12(-186.0f);
+                    sharedData_800E5768_1_s02.corners_0[0].vz = Q12(301.0f);
+                    sharedData_800E5768_1_s02.corners_0[1].vx = Q12(-188.0f);
+                    sharedData_800E5768_1_s02.corners_0[1].vz = Q12(301.0f);
+                    break;
+
+                case 37:
+                    sharedData_800DD591_0_s00                 = 9;
+                    sharedData_800E5768_1_s02.corners_0[0].vx = Q12(121.0f);
+                    sharedData_800E5768_1_s02.corners_0[0].vz = Q12(223.0f);
+                    sharedData_800E5768_1_s02.corners_0[1].vx = Q12(114.0f);
+                    sharedData_800E5768_1_s02.corners_0[1].vz = Q12(223.0f);
+                    sharedData_800E5768_1_s02.corners_0[2].vx = Q12(128.3f);
+                    sharedData_800E5768_1_s02.corners_0[2].vz = Q12(215.0f);
+                    sharedData_800E5768_1_s02.corners_0[3].vx = Q12(128.3f);
+                    sharedData_800E5768_1_s02.corners_0[3].vz = Q12(220.0f);
+                    break;
+
+                case 40:
+                    sharedData_800DD591_0_s00                 = 11;
+                    sharedData_800E5768_1_s02.corners_0[0].vx = Q12(-48.0f);
+                    sharedData_800E5768_1_s02.corners_0[0].vz = Q12(349.0f);
+                    sharedData_800E5768_1_s02.corners_0[1].vx = Q12(-48.0f);
+                    sharedData_800E5768_1_s02.corners_0[1].vz = Q12(343.0f);
+                    sharedData_800E5768_1_s02.corners_0[2].vx = Q12(-39.0f);
+                    sharedData_800E5768_1_s02.corners_0[2].vz = Q12(343.0f);
+                    sharedData_800E5768_1_s02.corners_0[3].vx = Q12(-39.0f);
+                    sharedData_800E5768_1_s02.corners_0[3].vz = Q12(349.0f);
+                    sharedData_800E5768_1_s02.corners_0[4].vx = Q12(-39.0f);
+                    sharedData_800E5768_1_s02.corners_0[4].vz = Q12(349.0f);
+                    sharedData_800E5768_1_s02.corners_0[5].vx = Q12(-48.0f);
+                    sharedData_800E5768_1_s02.corners_0[5].vz = Q12(349.0f);
+                    sharedData_800E5768_1_s02.corners_0[6].vx = Q12(-48.0f);
+                    sharedData_800E5768_1_s02.corners_0[6].vz = Q12(343.0f);
+                    sharedData_800E5768_1_s02.corners_0[7].vx = Q12(-39.0f);
+                    sharedData_800E5768_1_s02.corners_0[7].vz = Q12(343.0f);
+                    break;
+
+                default:
+                    sharedData_800DD591_0_s00 = 0;
+                    break;
+            }
+#elif defined(MAP2_S02)
+            sharedData_800DD591_0_s00                 = 0;
+            sharedData_800E5768_1_s02.corners_0[0].vx = Q12(-31.0f);
+            sharedData_800E5768_1_s02.corners_0[0].vz = Q12(-8.0f);
+            sharedData_800E5768_1_s02.corners_0[1].vx = Q12(-31.0f);
+            sharedData_800E5768_1_s02.corners_0[1].vz = Q12(-11.0f);
+            sharedData_800E5768_1_s02.corners_0[2].vx = Q12(-25.5f);
+            sharedData_800E5768_1_s02.corners_0[2].vz = Q12(-8.0f);
+            sharedData_800E5768_1_s02.corners_0[3].vx = Q12(-31.0f);
+            sharedData_800E5768_1_s02.corners_0[3].vz = Q12(-8.0f);
+            sharedData_800E5768_1_s02.corners_0[4].vx = Q12(-25.5f);
+            sharedData_800E5768_1_s02.corners_0[4].vz = Q12(-11.0f);
+            sharedData_800E5768_1_s02.corners_0[5].vx = Q12(-25.5f);
+            sharedData_800E5768_1_s02.corners_0[5].vz = Q12(-8.0f);
+#elif defined(MAP3_S00) || defined(MAP3_S01) || defined(MAP3_S06)
+            switch (g_SavegamePtr->mapRoomIdx_A5)
+            {
+                case 3:
+                    sharedData_800DD591_0_s00                 = 2;
+                    sharedData_800E5768_1_s02.corners_0[0].vx = Q12(101.5f);
+                    sharedData_800E5768_1_s02.corners_0[0].vz = Q12(100.0f);
+                    sharedData_800E5768_1_s02.corners_0[1].vx = Q12(101.5f);
+                    sharedData_800E5768_1_s02.corners_0[1].vz = Q12(105.0f);
+                    break;
+                case 5:
+                    sharedData_800DD591_0_s00                 = 1;
+                    sharedData_800E5768_1_s02.corners_0[0].vx = Q12(17.7f);
+                    sharedData_800E5768_1_s02.corners_0[0].vz = Q12(30.0f);
+                    sharedData_800E5768_1_s02.corners_0[1].vx = Q12(17.7f);
+                    sharedData_800E5768_1_s02.corners_0[1].vz = Q12(17.0f);
+                    sharedData_800E5768_1_s02.corners_0[2].vx = Q12(17.5f);
+                    sharedData_800E5768_1_s02.corners_0[2].vz = Q12(15.0f);
+                    sharedData_800E5768_1_s02.corners_0[3].vx = Q12(15.0f);
+                    sharedData_800E5768_1_s02.corners_0[3].vz = Q12(15.0f);
+                    break;
+                case 8:
+                    sharedData_800DD591_0_s00                 = 2;
+                    sharedData_800E5768_1_s02.corners_0[0].vx = Q12(63.5f);
+                    sharedData_800E5768_1_s02.corners_0[0].vz = Q12(57.0f);
+                    sharedData_800E5768_1_s02.corners_0[1].vx = Q12(63.5f);
+                    sharedData_800E5768_1_s02.corners_0[1].vz = Q12(63.0f);
+                    break;
+                case 9:
+                    sharedData_800DD591_0_s00                 = 2;
+                    sharedData_800E5768_1_s02.corners_0[0].vx = Q12(104.0f);
+                    sharedData_800E5768_1_s02.corners_0[0].vz = Q12(56.0f);
+                    sharedData_800E5768_1_s02.corners_0[1].vx = Q12(104.0f);
+                    sharedData_800E5768_1_s02.corners_0[1].vz = Q12(61.5f);
+                    break;
+                case 11:
+                    sharedData_800DD591_0_s00                 = 2;
+                    sharedData_800E5768_1_s02.corners_0[0].vx = Q12(143.8f);
+                    sharedData_800E5768_1_s02.corners_0[0].vz = Q12(18.0f);
+                    sharedData_800E5768_1_s02.corners_0[1].vx = Q12(143.8f);
+                    sharedData_800E5768_1_s02.corners_0[1].vz = Q12(22.0f);
+                    break;
+                default:
+                    sharedData_800DD591_0_s00 = 0;
+                    break;
+            }
+#elif defined(MAP4_S03)
+            if (g_SavegamePtr->mapRoomIdx_A5 == 20)
+            {
+                sharedData_800DD591_0_s00                 = 1;
+                sharedData_800E5768_1_s02.corners_0[0].vx = Q12(133.0f);
+                sharedData_800E5768_1_s02.corners_0[0].vz = Q12(130.0f);
+                sharedData_800E5768_1_s02.corners_0[1].vx = Q12(133.0f);
+                sharedData_800E5768_1_s02.corners_0[1].vz = Q12(150.0f);
+            }
+#elif defined(MAP5_S03)
+            sharedData_800DD591_0_s00 = 2;
 #endif
-            
-#if defined(MAP1_S02) || defined(MAP1_S03) || defined(MAP4_S02) || defined(MAP4_S04) || defined(MAP4_S05)
+
+#if defined(MAP1_S02) || defined(MAP1_S03) || defined(MAP4_S02) || \
+    defined(MAP4_S04) || defined(MAP4_S05)
+            *(u16*)&sharedData_800E5768_1_s02 = 30; // @hack, did these maps mis-share sharedData_800E5768_1_s02?
+#elif defined(MAP4_S03)
+            *(u16*)&sharedData_800E5768_1_s02.corners_0[8].vz = 30; // @hack
+#elif defined(MAP5_S00) || defined(MAP6_S03)
+            *(u16*)&sharedData_800E5768_1_s02 = 3;
+#elif defined(MAP6_S00)
             *(u16*)&sharedData_800E5768_1_s02 = 30;
+            sharedData_800DD592_0_s00         = 1;
 #else
             sharedData_800DD592_0_s00 = 1;
 #endif
@@ -62,18 +256,15 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
             }
 
             sharedData_800DD598_0_s00 = 0;
-            sharedData_800E324C_0_s00.vz = 0;
-#if defined(MAP1_S02) || defined(MAP1_S03) || defined(MAP4_S02) || defined(MAP4_S04) || defined(MAP4_S05)
-            sharedData_800E324C_0_s00.vx = 0;
+#if defined(MAP7_S03)
+            D_800F23D4 = 0;
 #endif
+            sharedData_800E324C_0_s00.vz = 0;
+            sharedData_800E324C_0_s00.vx = 0;
 
             g_SysWork.field_234A = 1;
             sharedData_800DFB4C_0_s00 = arg2;
-            
-#if !defined(MAP1_S02) && !defined(MAP1_S03) && !defined(MAP4_S02) && !defined(MAP4_S04) && !defined(MAP4_S05)
-            sharedData_800E324C_0_s00.vx = 0;
-#endif
-            
+
             sharedData_800E0CB8_0_s00 = FP_FROM(sharedData_800E0CB0_0_s00, Q12_SHIFT);
             sharedData_800E0CB6_0_s00 = sharedData_800E0CB0_0_s00;
             sharedData_800E0CB4_0_s00 = sharedData_800E0CB0_0_s00;
@@ -82,13 +273,18 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
 
             sharedFunc_800CBC94_0_s00(&sharedData_800E0CBC_0_s00);
 #if defined(MAP0_S00)
-            func_800CBFB0(&sharedData_800E34FC_0_s00, &sharedData_800E330C_0_s00, sharedData_800DFB4C_0_s00); // TODO: defined in header as (void)
+            func_800CBFB0(&sharedData_800E34FC_0_s00, &sharedData_800E330C_0_s00, sharedData_800DFB4C_0_s00);
 #endif
             SetSp(temp_s0);
             break;
 
         default:
+#if defined(MAP7_S03)
+            sharedData_800DD584_0_s00 = 0;
+            D_800F23D4               += g_DeltaTime0;
+#else
             sharedData_800DD584_0_s00 = g_DeltaTime0 == Q12(0.0f);
+#endif
 
             func_8003EDB8(&sharedData_800E3258_0_s00, &sharedData_800E325C_0_s00);
 
@@ -99,8 +295,8 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                     sharedData_800DD598_0_s00++;
                 }
 
-                temp_s0_2 = FP_MULTIPLY(Math_Sin(FP_ANGLE(270.0f) + (sharedData_800DD598_0_s00 * 2)), 150, Q12_SHIFT) + 150;
-                temp_a2 = FP_MULTIPLY(Math_Sin(FP_ANGLE(180.0f) + (sharedData_800DD598_0_s00 * 2)), 150, Q12_SHIFT) + 150;
+                temp_s0_2 = FP_MULTIPLY(Math_Sin(FP_ANGLE(270.0f) + (sharedData_800DD598_0_s00 * 2)), (PARTICLE_COUNT_MAX / 2), Q12_SHIFT) + (PARTICLE_COUNT_MAX / 2);
+                temp_a2   = FP_MULTIPLY(Math_Sin(FP_ANGLE(180.0f) + (sharedData_800DD598_0_s00 * 2)), (PARTICLE_COUNT_MAX / 2), Q12_SHIFT) + (PARTICLE_COUNT_MAX / 2);
                 temp_t0 = sharedData_800E0CB6_0_s00 >> 14;
                
                 for (i = 0; i < 2; i++)
@@ -131,7 +327,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                         case 39:
                         case 53:
                         case 55:
-                            var_v0 = temp_s0_2 + 150;
+                            var_v0                       = temp_s0_2 + (PARTICLE_COUNT_MAX / 2);
                             sharedData_800DD588_0_s00[i] = var_v0;
                             break;
 
@@ -145,7 +341,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                         case 46:
                         case 60:
                         case 62:
-                            var_v0 = temp_a2 + 150;
+                            var_v0                       = temp_a2 + (PARTICLE_COUNT_MAX / 2);
                             sharedData_800DD588_0_s00[i] = var_v0;
                             break;
 
@@ -157,7 +353,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                         case 38:
                         case 52:
                         case 54:
-                            var_v0 = 150;
+                            var_v0                       = (PARTICLE_COUNT_MAX / 2);
                             sharedData_800DD588_0_s00[i] = var_v0;
                             break;
 
@@ -165,12 +361,13 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                         case 47:
                         case 61:
                         case 63:
-                            var_v0 = 300;
+                            var_v0                       = PARTICLE_COUNT_MAX;
                             sharedData_800DD588_0_s00[i] = var_v0;
                             break;
                     }
-                    
-#if !defined(MAP1_S02) && !defined(MAP1_S03) && !defined(MAP4_S02) && !defined(MAP4_S04) && !defined(MAP4_S05)
+
+#if !defined(MAP1_S02) && !defined(MAP1_S03) && !defined(MAP4_S02) && !defined(MAP4_S03) && \
+    !defined(MAP4_S04) && !defined(MAP4_S05) && !defined(MAP5_S00) && !defined(MAP6_S03)
                     if (i == 0)
                     {
                         if (temp_t0 < 2)
@@ -188,7 +385,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                             case 6:
                             case 32:
                             case 48:
-                                var_v0_3 = sharedData_800DD588_0_s00[i] < (75 + 1);
+                                var_v0_3                  = sharedData_800DD588_0_s00[i] < ((PARTICLE_COUNT_MAX / 4) + 1);
                                 sharedData_800DD592_0_s00 = var_v0_3 ^ 1;
                                 break;
 
@@ -196,7 +393,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                             case 7:
                             case 40:
                             case 56:
-                                var_v0_3 = sharedData_800DD588_0_s00[i] < (150 + 1);
+                                var_v0_3                  = sharedData_800DD588_0_s00[i] < ((PARTICLE_COUNT_MAX / 2) + 1);
                                 sharedData_800DD592_0_s00 = var_v0_3 ^ 1;
                                 break;
 
