@@ -238,3 +238,6 @@ g_EventThing_Flashlight           = 0x800E24D0;
 g_EventThing_Map                  = 0x800E2500;
 g_EventThing_PocketRadio          = 0x800E2530;
 g_CommonWorldObjects              = 0x800E2570; // size:0xA8
+sharedFunc_800D57C8_0_s01 = 0x800D57C8; // type:func
+sharedFunc_800D569C_0_s01 = 0x800D569C; // type:func
+sharedFunc_800D5E78_0_s01 = 0x800D5E78; // type:func

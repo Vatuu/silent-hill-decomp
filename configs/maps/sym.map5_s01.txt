@@ -1,26 +1,4 @@
-
-
-
-//================================================
-//=== .rodata section
-//================================================
-
-
-//-----------------------------------------------------------------
-//--- PA: 0x000000   VA: 0x800C9578   subsegment: .rodata, map5_s01
-//-----------------------------------------------------------------
 sharedData_800CAA98_0_s01   = 0x800CA898; // type:s32 size:0xD40
-
-
-
-//================================================
-//=== .text section
-//================================================
-
-
-//-----------------------------------------------------------
-//--- PA: 0x003518   VA: 0x800CCA90   subsegment: c, map5_s01
-//-----------------------------------------------------------
 sharedFunc_800CB6B0_0_s00   = 0x800CE2B4; // type:func
 sharedFunc_800CBBBC_0_s00   = 0x800CE76C; // type:func
 sharedFunc_800CBC94_0_s00   = 0x800CE844; // type:func
@@ -78,6 +56,9 @@ sharedFunc_800D3928_0_s01   = 0x800D3A20; // type:func
 sharedSymbol_800D3B0C_0_s01 = 0x800D3AEC; // type:func
 sharedFunc_800D4A80_0_s01   = 0x800DC238; // type:func
 sharedFunc_800D5274_0_s01   = 0x800DD430; // type:func
+sharedFunc_800D569C_0_s01 = 0x800DFC6C; // type:func
+sharedFunc_800D57C8_0_s01 = 0x800DFD98; // type:func
+sharedFunc_800D5E78_0_s01 = 0x800E092C; // type:func
 sharedFunc_800D62D8_0_s01   = 0x800E0D8C; // type:func
 sharedFunc_800D633C_0_s01   = 0x800E0DF0; // type:func
 sharedFunc_800D63A4_0_s01   = 0x800E0E58; // type:func
@@ -114,17 +95,6 @@ sharedFunc_800E8A40_2_s02   = 0x800EA574; // type:func
 sharedFunc_800E8DFC_2_s02   = 0x800EA930; // type:func
 sharedFunc_800D929C_0_s00   = 0x800EB460; // type:func
 sharedFunc_800DA8E8_0_s01   = 0x800EC394; // type:func
-
-
-
-//================================================
-//=== .data section
-//================================================
-
-
-//----------------------------------------------------
-//--- PA: 0x023D6C   VA: 0x800ED2E4   subsegment: data
-//----------------------------------------------------
 HARRY_M5S01_ANIM_INFOS      = 0x800ED2E4;
 sharedData_800DD584_0_s00   = 0x800ED5CC; // type:u8
 sharedData_800DD588_0_s00   = 0x800ED5D0; // type:s32
@@ -137,15 +107,7 @@ sharedData_800DD870_0_s01   = 0x800ED6E4; // type:VECTOR3 size:0xC
 sharedData_800DD880_0_s01   = 0x800ED6F4; // type:VECTOR3 size:0xC
 GROANER_ANIM_INFOS          = 0x800ED704; // type:s32 unknown type
 ROPMER_ANIM_INFOS           = 0x800EF1CC; // type:s32 unknown type
-
-//---------------------------------------------------------------
-//--- PA: 0x026980   VA: 0x800EFEF8   subsegment: .data, map5_s01
-//---------------------------------------------------------------
 MAP_MESSAGES                = 0x800EFEF8; // type:u32 size:0x50
-
-//----------------------------------------------------
-//--- PA: 0x0269D0   VA: 0x800EFF48   subsegment: data
-//----------------------------------------------------
 sharedData_800DFB4C_0_s00   = 0x800F01F0;
 sharedData_800DFB50_0_s00   = 0x800F01F4;
 sharedData_800DE170_0_s01   = 0x800F0200; // type:VECTOR3 size:0xC

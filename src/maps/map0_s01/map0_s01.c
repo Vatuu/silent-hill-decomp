@@ -533,7 +533,7 @@ void func_800D4420(s_SubCharacter* subChar)
             break;
     }
     func_800D53AC(subChar);
-    func_800D57C8(subChar);
+    sharedFunc_800D57C8_0_s01(subChar);
     switch (func_800D2C0C(subChar, 0x1000))
     {
         case 0:
@@ -599,183 +599,9 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D53AC);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5638);
 
-s32 func_800D569C(s_SubCharacter* chara, q19_12 vecY, q19_12 dist)
-{
-    q19_12 posY;
-    s32 someY;
-    s32 calcY;
-    q19_12 vecYCpy;
-    q19_12 distCpy;
+#include "maps/shared/sharedFunc_800D569C_0_s01.h" // 0x800D569C
 
-    q19_12 vec_x;
-    q19_12 vec_z;
-
-    vecYCpy = vecY;
-    posY = chara->position_18.vy;
-    distCpy = dist;
-    calcY = func_80080884(chara->position_18.vx, chara->position_18.vz);
-    // @hack: We should not mix unions (npc vs larvalStalker).
-    someY = chara->properties_E4.npc.field_124;
-
-    vec_x = chara->properties_E4.unk0.field_110.vx;
-    vec_z = chara->properties_E4.unk0.field_110.vz;
-
-    if (someY < calcY)
-    {
-        calcY = someY;
-    }
-    
-    calcY -= Q12(1.7f);
-    someY = func_800808AC(vec_x, vec_z); // collision type ? this returns `caseVar` from func_8008076C
-
-    if (someY == 12 || someY == 0 || someY == 7)
-    {
-        distCpy = 0;
-    }
-    if (posY < calcY)
-    {
-        calcY = posY;
-    }
-    if (distCpy > Q12(12.0f))
-    {
-        vecYCpy = calcY;
-    } 
-    else if (distCpy > Q12(4.0f))
-    {
-        someY = FP_TO(distCpy - Q12(4.0f), Q12_SHIFT) / Q12(8.0f);
-        vecYCpy += FP_MULTIPLY_PRECISE((calcY - vecYCpy), someY, Q12_SHIFT);
-    }
-
-    if (vecYCpy < sharedFunc_800D5274_0_s01()) 
-    {
-        vecYCpy = sharedFunc_800D5274_0_s01();
-    }
-
-    return vecYCpy;
-}
-
-void func_800D57C8(s_SubCharacter* chara)
-{
-    VECTOR3* vec1;
-    VECTOR3* pos;
-    s32 angle;
-    s32 dist;
-    s32 posY;
-    s32 idx0;
-    s32 idx1;
-    s32 idx2;
-    s32 idx3;
-
-    s32 status45;
-
-    bool var_t4;
-
-    s32 animStatus;
-    s32 element0;
-    s32 element1;
-    s32 element3;
-    s32 element2;
-    s32 element4;
-    s32 element5;
-
-    s32* sub;
-    s32 tmp;
-    s_sharedData_800E21D0_0_s01* base;
-
-    pos = &chara->position_18;
-    vec1 = &chara->properties_E4.unk0.field_110;
-    dist = Math_Distance2dGet(pos, vec1);
-    angle = FP_ANGLE_NORM_S(func_80080478(pos, vec1) - chara->rotation_24.vy);
-
-    tmp = func_800D569C(chara, vec1->vy, dist);
-    var_t4 = 0;
-    posY = tmp - chara->position_18.vy;
-    
-    if (dist > (chara->field_D4 + 0xCC) && (angle + 0x200) < 0x400U)
-    {
-        idx0 = 5;
-        idx1 = 33;
-    }
-    else
-    {
-        idx0 = 7;
-        idx1 = 35;
-    }
-    
-    animStatus = chara->model_0.anim_4.status_0;
-
-    status45 = 45;
-    if (animStatus == status45)
-    {
-        idx2 = 17;
-    }
-    else if (animStatus < status45 || animStatus >= 0x38 || animStatus < 0x36)
-    {
-        var_t4 = 1;
-        idx2 = 14;
-        if (posY <= 0xCC)
-        {
-            idx2 = 15;
-            if (posY < -0xCC)
-            {
-                idx2 = 16;
-            }
-        }
-    }
-    else
-    {
-        idx2 = 0x12;
-    }
-
-
-    element0 = sharedData_800CAA98_0_s01.unk_380[idx1][0];
-    element1 = sharedData_800CAA98_0_s01.unk_380[idx1][1];
-    if (angle < 6)
-    {
-        element1 = -element1;
-        if (angle < -5)
-        {
-            element0 = -element0;
-        }
-        else
-        {
-            element1 = 0;
-
-            element0 = 0;
-        }
-    }
-
-    element2 = sharedData_800CAA98_0_s01.unk_380[idx0][0];
-    element3 = sharedData_800CAA98_0_s01.unk_380[idx0][1];
-    base = &sharedData_800E21D0_0_s01;
-
-    idx3 = 0;
-    base->field_B4[idx3][2] = element2;
-    base->field_B4[idx3][1] = element3;
-    base->field_B4[idx3][3] = dist;
-    base->field_B4[idx3][0] = 1;
-
-    element4 = sharedData_800CAA98_0_s01.unk_380[idx2][0];
-    element5 = sharedData_800CAA98_0_s01.unk_380[idx2][1];
-
-    idx3 = 1;
-    base->field_B4[idx3][2] = element4;
-    base->field_B4[idx3][1] = element5;
-    if (var_t4)
-    {
-        base->field_B4[idx3][3] = posY;
-        base->field_B4[idx3][0] = 1;
-    }
-
-    idx3 = 3;
-    base->field_B4[idx3][2] = element0;
-    base->field_B4[idx3][1] = element1;
-    base->field_B4[idx3][3] = angle;
-    base->field_B4[idx3][0]= 1;
-
-    idx0 = angle/2;
-    func_800D5E78(chara, idx0);
-}
+#include "maps/shared/sharedFunc_800D57C8_0_s01.h" // 0x800D57C8
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D598C);
 
@@ -787,58 +613,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5D80);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5E14);
 
-void func_800D5E78(s_SubCharacter* chara, q19_12 angle) // 0x800D5E78
-{
-    q19_12                       angleDelta;
-    q19_12                       angleCpy;
-    q19_12                       angle0;
-    q19_12                       angle1;
-    s_sharedData_800E21D0_0_s01* base;
-    s32                          idx0;
-
-    angleCpy = angle;
-
-    if (angleCpy > FP_ANGLE(60.0f))
-    {
-        angleCpy = FP_ANGLE(60.0f);
-    }
-    else if (angleCpy < FP_ANGLE(-60.0f))
-    {
-        angleCpy = FP_ANGLE(-60.0f);
-    }
-
-    angleDelta = angleCpy - chara->rotation_24.pad;
-
-    if (angleDelta > FP_ANGLE(0.5f))
-    {
-        angleDelta -= FP_ANGLE(0.5f);
-    }
-    else if (angleDelta >= FP_ANGLE(-0.5f))
-    {
-        angleDelta = FP_ANGLE(0.0f);
-    }
-    else
-    {
-        angleDelta += FP_ANGLE(0.5f);
-    }
-
-    angle0 = FP_ANGLE(90.0f);
-    if (angleDelta <= FP_ANGLE(0.0f))
-    {
-        angle0 = FP_ANGLE(0.0f);
-        if (angleDelta < FP_ANGLE(0.0f))
-        {
-            angle0 = FP_ANGLE(-90.0f);
-        }
-    }
-
-    base = &sharedData_800E21D0_0_s01;
-    idx0 = 5;
-    base->field_B4[idx0][2]= angle0;
-    base->field_B4[idx0][1] = 0x1800;
-    base->field_B4[idx0][3] = angleDelta;
-    base->field_B4[idx0][0] = 1;
-}
+#include "maps/shared/sharedFunc_800D5E78_0_s01.h" // 0x800D5E78
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5F00);
 
