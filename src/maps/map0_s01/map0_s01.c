@@ -604,12 +604,12 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5E14);
 
 void func_800D5E78(s_SubCharacter* chara, q19_12 angle) // 0x800D5E78
 {
-    q19_12                           angleDelta;
-    q19_12                           angleCpy;
-    q19_12                           angle0;
-    q19_12                           angle1;
-    s_sharedData_800E21D0_0_s01_sub* ptr;
-    s_sharedData_800E21D0_0_s01*     base;
+    q19_12 angleDelta;
+    q19_12 angleCpy;
+    q19_12 angle0;
+    q19_12 angle1;
+    s32*   base;
+    s32*   ptr;
 
     angleCpy = angle;
 
@@ -647,12 +647,12 @@ void func_800D5E78(s_SubCharacter* chara, q19_12 angle) // 0x800D5E78
         }
     }
 
-    base = &sharedData_800E21D0_0_s01;
-    ptr = &base->field_B4;
-    ptr->field_BC = angle0;
-    ptr->field_B8 = 0x1800;
-    ptr->field_C0 = angleDelta;
-    ptr->field_B4 = 1;
+    base = (s32*)&sharedData_800E21D0_0_s01;
+    ptr = &base[20];
+    ptr[47] = angle0;
+    ptr[46] = 0x1800;
+    ptr[48] = angleDelta;
+    ptr[45] = 1;
 }
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5F00);
