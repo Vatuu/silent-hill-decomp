@@ -118,4 +118,9 @@ s32 func_800D569C(s_SubCharacter* chara, q19_12 vecY, q19_12 dist);
 
 void func_800D57C8(s_SubCharacter* chara);
 
+u32 func_800D2C0C(s_SubCharacter*, s32);
+
+void func_800D53AC(s_SubCharacter*);
+
+
 #endif

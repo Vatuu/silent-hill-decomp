@@ -509,7 +509,73 @@ void func_800D4264() {}
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D426C);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D4420);
+void func_800D4420(s_SubCharacter* subChar)
+{
+    VECTOR3* pos;
+    s32 dist0;
+    VECTOR3* vec_F8;
+    u32 temp_v0;
+
+    s32 dist;
+    s32 vec2;
+
+    switch (subChar->model_0.stateStep_3)
+    {
+        case 0:
+            subChar->properties_E4.larvalStalker.properties_E8[0xE].val32 = Q12(1.5f);
+            subChar->model_0.stateStep_3 = 1;
+            break;
+        case 1:
+            if (Math_Distance2dGet(&subChar->position_18, &subChar->properties_E4.unk0.field_F8) < Q12(0.5f))
+            {
+                subChar->model_0.stateStep_3 = 0;
+            }
+            break;
+    }
+    func_800D53AC(subChar);
+    func_800D57C8(subChar);
+    switch (func_800D2C0C(subChar, 0x1000))
+    {
+        case 0:
+            dist0 = -1;
+            if (((subChar->properties_E4.unk0.field_F8.vy - subChar->position_18.vy) + 0x332) < 0xFFEU)
+            {
+                dist0 = subChar->field_D4 + 0x266;
+            }
+            pos = &subChar->position_18;
+            vec_F8 = &subChar->properties_E4.unk0.field_F8;
+            dist = Math_Distance2dGet(pos, vec_F8);
+            if ((dist < dist0) && 
+                ( ((FP_ANGLE_NORM_S ((func_80080478(pos, vec_F8) - subChar->rotation_24.vy))) + 0x5B) < 0xB6U))
+            {
+                subChar->model_0.state_2 = 49;
+                subChar->model_0.stateStep_3 = 0;
+            }
+            break;
+
+        case 1:
+        case 2:
+            subChar->model_0.state_2 = 50;
+            subChar->model_0.stateStep_3 = 0;
+            subChar->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
+            break;
+        case 3:
+        case 4:
+            subChar->model_0.state_2 = 51;
+            subChar->model_0.stateStep_3 = 0;
+            if (subChar->health_B0 <= 0)
+            {
+                subChar->properties_E4.player.flags_11C |= PlayerFlag_Unk6;
+            }
+            else
+            {
+                subChar->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
+            }
+            break;
+        default:
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D45BC);
 
