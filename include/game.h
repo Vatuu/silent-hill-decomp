@@ -1155,6 +1155,23 @@ typedef struct _SubCharPropertiesLarvalStalker
 } s_SubCharaPropertiesLarvalStalker;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesLarvalStalker, 68);
 
+typedef struct _SubCharPropertiesUnk0
+{
+    s32        unk_E4;            // Is this part of `a_SubCharacter`?
+    u_Property properties_E8;
+    u_Property properties_EC;
+    u_Property properties_F0;
+    u_Property properties_F4;
+    VECTOR3    field_F8;
+    u_Property properties_104;
+    u_Property properties_108;
+    u_Property properties_10C;
+    VECTOR3    field_110;
+    u_Property properties_11C;
+    u_Property properties_120;
+    u_Property properties_124;
+} s_SubCharaPropertiesUnk0;
+STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesUnk0, 68);
 /** Offsets for translation? */
 typedef struct
 {
@@ -1228,6 +1245,7 @@ typedef struct _SubCharacter
         s_SubCharaPropertiesPlayer        player;
         s_SubCharaPropertiesNpc           npc;
         s_SubCharaPropertiesLarvalStalker larvalStalker;
+        s_SubCharaPropertiesUnk0          unk0;
     } properties_E4;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
