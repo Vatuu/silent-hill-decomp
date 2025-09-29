@@ -58,8 +58,6 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
             sharedData_800E326C_0_s00.vector_C.vx = Q12(15.0f);
             sharedData_800E326C_0_s00.vector_C.vy = Q12(-4.5f);
             sharedData_800E326C_0_s00.vector_C.vz = Q12(211.0f);
-
-            D_800E32D4 = 30; // TODO: Might be `sharedData_800E5768_1_s02` as below.
 #elif defined(MAP0_S01)
             sharedData_800DD591_0_s00 = 1;
             
@@ -235,16 +233,14 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
             sharedData_800DD591_0_s00 = 2;
 #endif
 
-#if defined(MAP1_S02) || defined(MAP1_S03) || defined(MAP4_S02) || \
-    defined(MAP4_S04) || defined(MAP4_S05)
-            *(u16*)&sharedData_800E5768_1_s02 = 30; // @hack, did these maps mis-share sharedData_800E5768_1_s02?
-#elif defined(MAP4_S03)
-            *(u16*)&sharedData_800E5768_1_s02.corners_0[8].vz = 30; // @hack
+#if defined(MAP0_S00) || defined(MAP1_S02) || defined(MAP1_S03) || defined(MAP4_S02) || \
+    defined(MAP4_S03) || defined(MAP4_S04) || defined(MAP4_S05) || defined(MAP6_S00)
+            sharedData_800E32D4_0_s00 = 30;
+#if defined(MAP0_S00) || defined(MAP6_S00)
+            sharedData_800DD592_0_s00 = 1;
+#endif
 #elif defined(MAP5_S00) || defined(MAP6_S03)
-            *(u16*)&sharedData_800E5768_1_s02 = 3;
-#elif defined(MAP6_S00)
-            *(u16*)&sharedData_800E5768_1_s02 = 30;
-            sharedData_800DD592_0_s00         = 1;
+            *(u16*)&sharedData_800E5768_1_s02 = 3; // @hack Mis-share? Is this meant to be `sharedData_800DD591_0_s00`?
 #else
             sharedData_800DD592_0_s00 = 1;
 #endif

@@ -33,7 +33,7 @@ void sharedFunc_800CF2A4_0_s01(s32 arg0, s_Particle* part, u16* rand, s32* delta
             part->position1_C.vx = pos->vx;
             part->position1_C.vz = pos->vz;
             part->position1_C.vy = pos->vy - part->movement_18.vy;
-            part->movement_18.vy += D_800E32D4;
+            part->movement_18.vy += sharedData_800E32D4_0_s00;
 
             pos->vy += TIME_STEP_SCALE(*deltaTime, part->movement_18.vy << 2);
     #endif

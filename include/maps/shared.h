@@ -2422,6 +2422,8 @@ extern u16 sharedData_800D21E8_3_s00[];
 
 extern s_func_800CB560 sharedData_800E5768_1_s02;
 
+extern u16 sharedData_800E32D4_0_s00;
+
 /** TODO: Rename to `g_Particles` after funcs have been shared. */
 extern s_Particle sharedData_800E0CBC_0_s00[PARTICLE_COUNT_MAX];
 

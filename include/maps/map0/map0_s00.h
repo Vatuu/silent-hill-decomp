@@ -79,8 +79,6 @@ extern s32 D_800DF1CC;
 
 extern s_800C4590 D_800E39BC;
 
-extern u16 D_800E32D4;
-
 extern bool g_WarpCamera;
 
 extern s16 D_800E0C64;
