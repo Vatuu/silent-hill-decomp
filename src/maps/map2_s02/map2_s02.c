@@ -11,7 +11,7 @@ INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800CC8A4);
 
 #include "maps/shared/sharedFunc_800CBBBC_0_s00.h" // 0x800CCD90
 
-#include "maps/shared/sharedFunc_800CE59C_0_s01.h" // 0x800CCE68
+#include "maps/shared/sharedFunc_800CBC94_0_s00.h" // 0x800CCE68
 
 #include "maps/shared/Particle_Update.h" // 0x800CD174
 

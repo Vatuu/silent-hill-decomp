@@ -22,7 +22,7 @@ sharedData_800CAB70_0_s00 = 0x800CAAA8; // type:VECTOR
 //--- PA: 0x002230   VA: 0x800CB7A8   subsegment: c, map1_s00
 //-----------------------------------------------------------
 sharedFunc_800CBBBC_0_s00 = 0x800CBC34; // type:func
-sharedFunc_800CE59C_0_s01 = 0x800CBD0C; // type:func
+sharedFunc_800CBC94_0_s00 = 0x800CBD0C; // type:func
 Particle_Update           = 0x800CC018; // type:func
 sharedFunc_800CEB24_0_s00 = 0x800CC59C; // type:func
 sharedFunc_800CF2A4_0_s01 = 0x800CC914; // type:func
@@ -92,10 +92,10 @@ sharedFunc_800D7758_1_s00 = 0x800D7758; // type:func
 //--- PA: 0x010ED4   VA: 0x800DA44C   subsegment: data
 //----------------------------------------------------
 HARRY_M1S00_ANIM_INFOS    = 0x800DA44C;
-sharedData_800DD78B_0_s01 = 0x800DA6B3; // type:u8
-sharedData_800DD78C_0_s01 = 0x800DA6B4; // type:s32
+sharedData_800DD584_0_s00 = 0x800DA6B3; // type:u8
+sharedData_800DD588_0_s00 = 0x800DA6B4; // type:s32
 sharedData_800DF158_1_s02 = 0x800DA6BC; // type:u8
-sharedData_800DD796_0_s01 = 0x800DA6BD; // type:u8
+sharedData_800DD592_0_s00 = 0x800DA6BD; // type:u8
 sharedData_800DD59C_0_s00 = 0x800DA6C4; // type:u8
 LARVAL_STALKER_ANIM_INFOS = 0x800DA6C8;
 sharedData_800DD5A6_0_s00 = 0x800DB044; // type:u8

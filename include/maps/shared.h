@@ -2390,11 +2390,11 @@ extern s32 sharedData_800D5CF4_3_s00; // Used by `Ai_Kaufmann_Init`.
 extern s_AnimInfo BLOODSUCKER_ANIM_INFOS[];
 
 extern u8 sharedData_800DD591_0_s00;
-extern u8 sharedData_800DD78B_0_s01;
-extern u8 sharedData_800DD796_0_s01;
+extern u8 sharedData_800DD584_0_s00;
+extern u8 sharedData_800DD592_0_s00;
 
 /** `g_ParticlesAddedCounts`. Tracks how many total particles have been added. */
-extern s32 sharedData_800DD78C_0_s01[2];
+extern s32 sharedData_800DD588_0_s00[2];
 
 /** `g_ParticleSpawnCount`. Tracks how many particles have been added per call. */
 extern u8 sharedData_800E2156_0_s01;
@@ -2541,7 +2541,7 @@ void sharedFunc_800D923C_0_s00(s_SubCharacter* chara);
 u8 sharedFunc_800D92AC_0_s00(s32 x, s32 y);
 
 /** Snow effect init. */
-void sharedFunc_800CE59C_0_s01(s_Particle* particles);
+void sharedFunc_800CBC94_0_s00(s_Particle* particles);
 
 /** Snow particle update. */
 void sharedFunc_800CF2A4_0_s01(s32 arg0, s_Particle* part, u16* rand, s32* deltaTime);

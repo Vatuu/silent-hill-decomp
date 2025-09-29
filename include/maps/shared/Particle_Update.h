@@ -493,7 +493,7 @@ bool Particle_Update(s_Particle* partHead)
         
         // Handle particles in this state.
         for (updateCount = updatePrev;
-             updateCount < (updatePrev + sharedData_800DD78C_0_s01[pass]);
+             updateCount < (updatePrev + sharedData_800DD588_0_s00[pass]);
              updateCount++, partIter++)
         {
             // Keep only the lower 4 bits.
@@ -537,7 +537,7 @@ bool Particle_Update(s_Particle* partHead)
             D_800F23D0 = (g_DeltaTime0 * 10936) / Q12(1.0f);
         #endif
 
-            if (sharedData_800DD78B_0_s01 != 0)
+            if (sharedData_800DD584_0_s00 != 0)
             {
                 // NOTE: This function only has a body in `MAP07_S03` and everything else calls an empty function.
                 sharedFunc_800CE954_7_s03(pass, partIter, &rand, &g_DeltaTime0);
@@ -579,7 +579,7 @@ bool Particle_Update(s_Particle* partHead)
                 }
             }
         }
-        updatePrev += sharedData_800DD78C_0_s01[pass];
+        updatePrev += sharedData_800DD588_0_s00[pass];
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -595,12 +595,12 @@ bool Particle_Update(s_Particle* partHead)
         defined(MAP6_S00) || defined(MAP6_S03)
         if (pass != 0)
         {
-            sharedData_800E32D0_0_s00 += sharedData_800DD78C_0_s01[pass];
+            sharedData_800E32D0_0_s00 += sharedData_800DD588_0_s00[pass];
             limitRange(sharedData_800E32D0_0_s00, 0, 135000);
         }
     #endif
         for (updateCount = updatePrev;
-             updateCount < (updatePrev + sharedData_800DD78C_0_s01[pass]);
+             updateCount < (updatePrev + sharedData_800DD588_0_s00[pass]);
              updateCount++, partIter++)
         {
             switch (pass)
@@ -629,7 +629,7 @@ bool Particle_Update(s_Particle* partHead)
             }
         }
 
-        updatePrev += sharedData_800DD78C_0_s01[pass];
+        updatePrev += sharedData_800DD588_0_s00[pass];
     }
 
     ////////////////////////////////////////////////////////////////////////////

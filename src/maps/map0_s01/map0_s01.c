@@ -42,7 +42,7 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3) // 0x800CE000
             D_800E2160.vector_C.vx = Q12(-0.30f);
             D_800E2160.vector_C.vz = Q12(265.0f);
 
-            sharedData_800DD796_0_s01 = 1;
+            sharedData_800DD592_0_s00 = 1;
 
             if (arg3 == NO_VALUE)
             {
@@ -62,18 +62,18 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3) // 0x800CE000
 
             temp_s0 = SetSp(0x1F8003D8);
 
-            sharedFunc_800CE59C_0_s01(g_Particles);
+            sharedFunc_800CBC94_0_s00(g_Particles);
             SetSp(temp_s0);
             break;
 
         default:
-            sharedData_800DD78B_0_s01 = g_DeltaTime0 == Q12(0.0f);
+            sharedData_800DD584_0_s00 = g_DeltaTime0 == Q12(0.0f);
 
             func_8003EDB8(&D_800E214C, &D_800E2150);
 
             if (sharedData_800E0CB6_0_s00 != sharedData_800E0CB4_0_s00)
             {
-                if (sharedData_800DD78B_0_s01 == 0)
+                if (sharedData_800DD584_0_s00 == 0)
                 {
                     D_800DD798++;
                 }
@@ -92,18 +92,18 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3) // 0x800CE000
                     {
                         case 4:
                         case 6:
-                            sharedData_800DD78C_0_s01[i] = temp_s0_2;
+                            sharedData_800DD588_0_s00[i] = temp_s0_2;
                             break;
 
                         case 5:
                         case 7:
                             var_v0 = temp_s0_2 * 2;
-                            sharedData_800DD78C_0_s01[i] = var_v0;
+                            sharedData_800DD588_0_s00[i] = var_v0;
                             break;
 
                         case 32:
                         case 48:
-                            sharedData_800DD78C_0_s01[i] = temp_a2;
+                            sharedData_800DD588_0_s00[i] = temp_a2;
                             break;
 
                         case 37:
@@ -111,13 +111,13 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3) // 0x800CE000
                         case 53:
                         case 55:
                             var_v0 = temp_s0_2 + 150;
-                            sharedData_800DD78C_0_s01[i] = var_v0;
+                            sharedData_800DD588_0_s00[i] = var_v0;
                             break;
 
                         case 40:
                         case 56:
                             var_v0 = temp_a2 * 2;
-                            sharedData_800DD78C_0_s01[i] = var_v0;
+                            sharedData_800DD588_0_s00[i] = var_v0;
                             break;
 
                         case 44:
@@ -125,11 +125,11 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3) // 0x800CE000
                         case 60:
                         case 62:
                             var_v0 = temp_a2 + 150;
-                            sharedData_800DD78C_0_s01[i] = var_v0;
+                            sharedData_800DD588_0_s00[i] = var_v0;
                             break;
 
                         case 0:
-                            sharedData_800DD78C_0_s01[i] = 0;
+                            sharedData_800DD588_0_s00[i] = 0;
                             break;
 
                         case 36:
@@ -137,7 +137,7 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3) // 0x800CE000
                         case 52:
                         case 54:
                             var_v0 = 150;
-                            sharedData_800DD78C_0_s01[i] = var_v0;
+                            sharedData_800DD588_0_s00[i] = var_v0;
                             break;
 
                         case 45:
@@ -145,7 +145,7 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3) // 0x800CE000
                         case 61:
                         case 63:
                             var_v0 = 300;
-                            sharedData_800DD78C_0_s01[i] = var_v0;
+                            sharedData_800DD588_0_s00[i] = var_v0;
                             break;
                     }
 
@@ -155,7 +155,7 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3) // 0x800CE000
                         {
                             if (temp_t0 != 1 || (sharedData_800E0CB4_0_s00 >> 14) < 2)
                             {
-                                sharedData_800DD796_0_s01 = 1;
+                                sharedData_800DD592_0_s00 = 1;
                                 continue;
                             }
                         }
@@ -166,16 +166,16 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3) // 0x800CE000
                             case 6:
                             case 32:
                             case 48:
-                                var_v0_3 = sharedData_800DD78C_0_s01[i] < (75 + 1);
-                                sharedData_800DD796_0_s01 = var_v0_3 ^ 1;
+                                var_v0_3 = sharedData_800DD588_0_s00[i] < (75 + 1);
+                                sharedData_800DD592_0_s00 = var_v0_3 ^ 1;
                                 break;
 
                             case 5:
                             case 7:
                             case 40:
                             case 56:
-                                var_v0_3 = sharedData_800DD78C_0_s01[i] < (150 + 1);
-                                sharedData_800DD796_0_s01 = var_v0_3 ^ 1;
+                                var_v0_3 = sharedData_800DD588_0_s00[i] < (150 + 1);
+                                sharedData_800DD592_0_s00 = var_v0_3 ^ 1;
                                 break;
 
                             case 8:
@@ -224,7 +224,7 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3) // 0x800CE000
                             case 54:
                             case 55:
                             default:
-                                sharedData_800DD796_0_s01 = 1;
+                                sharedData_800DD592_0_s00 = 1;
                                 break;
                         }
                     }
@@ -262,7 +262,7 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3) // 0x800CE000
             Particle_Update(g_Particles);
             SetSp(temp_s0_3);
 
-            for (i = sharedData_800DD78C_0_s01[0] + sharedData_800DD78C_0_s01[1]; i < PARTICLE_COUNT_MAX; i++)
+            for (i = sharedData_800DD588_0_s00[0] + sharedData_800DD588_0_s00[1]; i < PARTICLE_COUNT_MAX; i++)
             {
                 g_Particles[i].stateStep_1E = 0;
             }
@@ -274,7 +274,7 @@ void func_800CE000(s32 arg1, s32 arg2, s32 arg3) // 0x800CE000
 
 #include "maps/shared/sharedFunc_800CBBBC_0_s00.h" // 0x800CE4C4
 
-#include "maps/shared/sharedFunc_800CE59C_0_s01.h" // 0x800CE59C
+#include "maps/shared/sharedFunc_800CBC94_0_s00.h" // 0x800CE59C
 
 #include "maps/shared/Particle_Update.h" // 0x800CE8A8
 

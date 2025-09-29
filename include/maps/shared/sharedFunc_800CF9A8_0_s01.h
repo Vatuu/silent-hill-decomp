@@ -10,7 +10,7 @@ void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* rand)
 
     if (arg0 == 0)
     {
-        if (sharedData_800DD796_0_s01 != 0)
+        if (sharedData_800DD592_0_s00 != 0)
         {
             part->type_1F = 0;
         }

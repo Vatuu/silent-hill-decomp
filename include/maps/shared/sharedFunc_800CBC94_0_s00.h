@@ -27,7 +27,7 @@
  *     }
  * }
  */
-void sharedFunc_800CE59C_0_s01(s_Particle* parts)
+void sharedFunc_800CBC94_0_s00(s_Particle* parts)
 {
     #define SNOW_COUNT_MAX       300
     #define SNOW_SPAWN_COUNT_MAX 150
@@ -54,8 +54,8 @@ void sharedFunc_800CE59C_0_s01(s_Particle* parts)
     }
 
     // Reset counts. NOTE: One is unused.
-    sharedData_800DD78C_0_s01[1] = 0;
-    sharedData_800DD78C_0_s01[0] = 0;
+    sharedData_800DD588_0_s00[1] = 0;
+    sharedData_800DD588_0_s00[0] = 0;
 
     // Settings byte holds state and snow type. Can be 0-2. 1 enables snow. TODO: Move doc.
     settingsState = (sharedData_800E0CB8_0_s00 & 0xC) >> 2;
@@ -108,19 +108,19 @@ void sharedFunc_800CE59C_0_s01(s_Particle* parts)
             sharedData_800E2156_0_s01 = 0;
 
             rand                                      = Rng_Rand16();
-            sharedData_800DD78C_0_s01[settingsState] += spawnMult;
+            sharedData_800DD588_0_s00[settingsState] += spawnMult;
 
             // Clamp spawn count.
             if (snowType == SnowType_Light || snowType == SnowType_LightWindy)
             {
-                limitRange(sharedData_800DD78C_0_s01[settingsState], 0, SNOW_SPAWN_COUNT_MAX);
+                limitRange(sharedData_800DD588_0_s00[settingsState], 0, SNOW_SPAWN_COUNT_MAX);
             }
             else
             {
-                limitRange(sharedData_800DD78C_0_s01[settingsState], 0, SNOW_COUNT_MAX);
+                limitRange(sharedData_800DD588_0_s00[settingsState], 0, SNOW_COUNT_MAX);
             }
 
-            for (i = 0, part = parts; i < sharedData_800DD78C_0_s01[settingsState]; i++, part++)
+            for (i = 0, part = parts; i < sharedData_800DD588_0_s00[settingsState]; i++, part++)
             {
                 switch (part->stateStep_1E)
                 {

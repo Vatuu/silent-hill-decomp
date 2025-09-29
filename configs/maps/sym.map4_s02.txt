@@ -124,8 +124,8 @@ sharedFunc_800D929C_0_s00   = 0x800E9D28; // type:func
 //--- PA: 0x0214D8   VA: 0x800EAA50   subsegment: data
 //----------------------------------------------------
 HARRY_M4S02_ANIM_INFOS      = 0x800EAA50;
-sharedData_800DD78B_0_s01   = 0x800EAD33; // type:u8
-sharedData_800DD78C_0_s01   = 0x800EAD34; // type:s32
+sharedData_800DD584_0_s00   = 0x800EAD33; // type:u8
+sharedData_800DD588_0_s00   = 0x800EAD34; // type:s32
 sharedData_800DD58C_0_s00   = 0x800EAD38; // type:s32
 sharedData_800DF158_1_s02   = 0x800EAD3C; // type:u8
 sharedData_800DD59C_0_s00   = 0x800EAD44; // type:u8

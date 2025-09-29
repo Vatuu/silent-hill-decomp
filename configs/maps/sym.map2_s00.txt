@@ -21,7 +21,7 @@ sharedData_800CAA98_0_s01   = 0x800CA908; // type:s32 size:0xD40
 //--- PA: 0x004048   VA: 0x800CD5C0   subsegment: c, map2_s00
 //-----------------------------------------------------------
 sharedFunc_800CBBBC_0_s00   = 0x800CDC3C; // type:func
-sharedFunc_800CE59C_0_s01   = 0x800CDD14; // type:func
+sharedFunc_800CBC94_0_s00   = 0x800CDD14; // type:func
 Particle_Update             = 0x800CE020; // type:func
 sharedFunc_800CEB24_0_s00   = 0x800CEA04; // type:func
 sharedFunc_800CF2A4_0_s01   = 0x800CF02C; // type:func
@@ -115,11 +115,11 @@ sharedFunc_800D92AC_0_s00   = 0x800E76C8; // type:func
 //--- PA: 0x025134   VA: 0x800EE6AC   subsegment: data
 //----------------------------------------------------
 HARRY_M2S00_ANIM_INFOS      = 0x800EE6AC;
-sharedData_800DD78B_0_s01   = 0x800EE9DF; // type:u8
-sharedData_800DD78C_0_s01   = 0x800EE9E0; // type:s32
+sharedData_800DD584_0_s00   = 0x800EE9DF; // type:u8
+sharedData_800DD588_0_s00   = 0x800EE9E0; // type:s32
 sharedData_800DF158_1_s02   = 0x800EE9E8; // type:u8
 sharedData_800DD591_0_s00   = 0x800EE9E9; // type:u8
-sharedData_800DD796_0_s01   = 0x800EE9EA; // type:u8
+sharedData_800DD592_0_s00   = 0x800EE9EA; // type:u8
 sharedData_800DD59C_0_s00   = 0x800EE9F0; // type:u8
 sharedData_800DD870_0_s01   = 0x800EEAF4; // type:VECTOR3 size:0xC
 sharedData_800DD880_0_s01   = 0x800EEB04; // type:VECTOR3 size:0xC
