@@ -2422,13 +2422,64 @@ extern u16 sharedData_800D21E8_3_s00[];
 
 extern s_func_800CB560 sharedData_800E5768_1_s02;
 
-extern s_Particle g_Particles[PARTICLE_COUNT_MAX];
+/** TODO: Rename to `g_Particles` after funcs have been shared. */
+extern s_Particle sharedData_800E0CBC_0_s00[PARTICLE_COUNT_MAX];
 
 extern s_ParticleVectors g_ParticleVectors0;
 
 extern s_ParticleVectors g_ParticleVectors1;
 
+extern u8 sharedData_800DD592_0_s00;
+
+typedef struct
+{
+    VECTOR3 vector_0;
+    VECTOR3 vector_C;
+} s_2Vectors;
+
+extern s32 sharedData_800DD598_0_s00;
+
+extern s32 sharedData_800DFB4C_0_s00;
+
+extern s32 sharedData_800DFB50_0_s00;
+
+extern CVECTOR sharedData_800E3258_0_s00;
+
+extern CVECTOR sharedData_800E325C_0_s00;
+
+extern s_2Vectors sharedData_800E326C_0_s00;
+
+typedef struct
+{
+    VECTOR3 field_0; // Rotation?
+    s16     field_C;
+    s16     field_E;
+    s8      field_10;
+    s8      field_11;
+    s8      field_12;
+    s8      field_13;
+} s_800E34FC;
+STATIC_ASSERT_SIZEOF(s_800E34FC, 20);
+
+typedef struct
+{
+    VECTOR3 field_0;
+    s16     field_C;
+    s16     field_E;
+    s16     field_10;
+    s16     field_12;
+    s8      field_14;
+    s8      field_15;
+} s_800E330C;
+STATIC_ASSERT_SIZEOF(s_800E330C, 24);
+
+extern s_800E330C sharedData_800E330C_0_s00[20];
+
+extern s_800E34FC sharedData_800E34FC_0_s00[60];
+
 extern const char* MAP_MESSAGES[]; // 0x800DF6B8
+
+void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3);
 
 bool sharedFunc_800CBBBC_0_s00();
 
@@ -2437,6 +2488,8 @@ void sharedFunc_800D01BC_0_s00(u16* arg0, VECTOR3* arg1, s32 arg2);
 void sharedFunc_800D0A60_0_s00(s32 caseArg);
 
 bool sharedFunc_800D0B18_0_s00(s32 arg0);
+
+void sharedFunc_800D0CB8_0_s00(void);
 
 void sharedFunc_800D0E04_0_s00();
 

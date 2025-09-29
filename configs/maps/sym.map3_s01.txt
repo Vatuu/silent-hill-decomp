@@ -20,6 +20,7 @@
 //-----------------------------------------------------------
 //--- PA: 0x001C9C   VA: 0x800CB214   subsegment: c, map3_s01
 //-----------------------------------------------------------
+sharedFunc_800CB6B0_0_s00 = 0x800CB214; // type:func
 sharedFunc_800CBBBC_0_s00 = 0x800CB7E0; // type:func
 sharedFunc_800CBC94_0_s00 = 0x800CB8B8; // type:func
 Particle_Update           = 0x800CBBC4; // type:func

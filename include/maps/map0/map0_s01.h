@@ -6,24 +6,6 @@
 #include "game.h"
 #include "types.h"
 
-typedef struct
-{
-    VECTOR3 vector_0;
-    VECTOR3 vector_C;
-} s_2Vectors;
-
-extern s32 D_800DD798;
-
-extern s32 D_800DE160;
-
-extern s32 D_800DE164;
-
-extern CVECTOR D_800E214C;
-
-extern CVECTOR D_800E2150;
-
-extern s_2Vectors D_800E2160;
-
 extern s8 D_800CBAD4;
 
 extern u16 D_800DE124;
@@ -66,8 +48,6 @@ extern u16 g_MapMsgSounds[];
 extern u8 D_800DE250;
 
 extern u8 D_800DE251;
-
-void func_800CE000(s32 arg1, s32 arg2, s32 arg3);
 
 void func_800D16C4(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord);
 

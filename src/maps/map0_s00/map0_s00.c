@@ -5,13 +5,13 @@
 #include "maps/shared.h"
 #include "maps/map0/map0_s00.h"
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CB6B0);
+#include "maps/shared/sharedFunc_800CB6B0_0_s00.h" // 0x800CB6B0
 
 #include "maps/shared/sharedFunc_800CBBBC_0_s00.h" // 0x800CBBBC
 
-#include "maps/shared/sharedFunc_800CBC94_0_s00.h"
+#include "maps/shared/sharedFunc_800CBC94_0_s00.h" // 0x800CBC94
 
-void func_800CBFB0(void) // 0x800CBFB0
+void func_800CBFB0(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId) // 0x800CBFB0
 {
     VECTOR3 vecs[4] =
     {
@@ -24,8 +24,8 @@ void func_800CBFB0(void) // 0x800CBFB0
     GsInitCoordinate2(NULL, &g_SysWork.coord_22F8);
     D_800DD594 = 1;
     D_800DD593 = 1;
-    D_800E34EC = ARRAY_SIZE(D_800E330C);
-    D_800E39AC = ARRAY_SIZE(D_800E34FC);
+    D_800E34EC = ARRAY_SIZE(sharedData_800E330C_0_s00);
+    D_800E39AC = ARRAY_SIZE(sharedData_800E34FC_0_s00);
     func_800D0394(2, vecs);
 }
 
@@ -148,7 +148,7 @@ void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* arg2) // 0x800D0
     switch (arg0)
     {
         case 0:
-            if (D_800DD592 != 0)
+            if (sharedData_800DD592_0_s00 != 0)
             {
                 part->type_1F = ParticleType_Snow;
             }
@@ -213,12 +213,12 @@ void func_800D0394(s32 arg0, VECTOR3* vecs) // 0x800D0394
 
             if (D_800DD593)
             {
-                
-                for (i = 0; i < ARRAY_SIZE(D_800E34FC); i++)
+
+                for (i = 0; i < ARRAY_SIZE(sharedData_800E34FC_0_s00); i++)
                 {
                     rand = Rng_Rand16();
                     rand0 = rand;
-                    var_s1 = &D_800E34FC[i];
+                    var_s1 = &sharedData_800E34FC_0_s00[i];
                     idx = (i / 20) + 1;
                     vec = &D_800E32DC[idx];
 
@@ -236,10 +236,10 @@ void func_800D0394(s32 arg0, VECTOR3* vecs) // 0x800D0394
 
             if (D_800DD594)
             {
-                for (i = 0; i < ARRAY_SIZE(D_800E330C); i++)
+                for (i = 0; i < ARRAY_SIZE(sharedData_800E330C_0_s00); i++)
                 {
-                    curUnk = &D_800E330C[i];
-                 
+                    curUnk = &sharedData_800E330C_0_s00[i];
+
                     // TODO: Should be `Rng_GenerateInt(-2.5f, 2.5f)`, but casts in this macro make it not fit here.
                     curUnk->field_0.vx = D_800E32DC[0].vx + (Rng_Rand16() % Q12(5.0f)) - Q12(2.5f);
 
@@ -1269,7 +1269,7 @@ void func_800DA5A0(void) // 0x800DA5A0
             break;
 
         case 1:
-            func_800CB6B0(0, g_SavegamePtr->mapOverlayId_A4, 0);
+            sharedFunc_800CB6B0_0_s00(0, g_SavegamePtr->mapOverlayId_A4, 0);
             SysWork_StateStepIncrement();
 
         case 2:

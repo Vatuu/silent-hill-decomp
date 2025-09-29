@@ -1,0 +1,298 @@
+void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
+{
+    s32 temp_a2;
+    s32 temp_s0;
+    s32 temp_s0_2;
+    s32 temp_s0_3;
+    s32 temp_v0;
+    s32 i;
+    s32 var_v0;
+    s32 var_v0_3;
+    u32 temp_t0;
+    u32 temp_v1_2;
+    u16 temp_v1_3;
+
+#if defined(MAP0_S00) || defined(MAP1_S02) || defined(MAP1_S03) || defined(MAP4_S02) || defined(MAP4_S04) || defined(MAP4_S05)
+    sharedFunc_800D0CB8_0_s00();
+#endif
+    
+    func_80055434(&g_ParticleVectors0.vector_0);
+
+    g_ParticleVectors0.field_28 = func_8005545C(&g_ParticleVectors0.svec_18);
+    vwGetViewPosition(&g_ParticleVectors0.viewPosition_C);
+    vwGetViewAngle(&g_ParticleVectors0.viewRotation_20);
+
+    switch (arg3)
+    {
+        case 0:
+        case -1:
+
+            // TODO: Meters?
+#if defined(MAP0_S00)
+            sharedData_800DD591_0_s00 = 1;
+            
+            sharedData_800E326C_0_s00.vector_0.vx = Q12(-5.0f);
+            sharedData_800E326C_0_s00.vector_0.vy = Q12(-4.5f);
+            sharedData_800E326C_0_s00.vector_0.vz = Q12(211.0f);
+            
+            sharedData_800E326C_0_s00.vector_C.vx = Q12(15.0f);
+            sharedData_800E326C_0_s00.vector_C.vy = Q12(-4.5f);
+            sharedData_800E326C_0_s00.vector_C.vz = Q12(211.0f);
+
+            D_800E32D4 = 30;
+#elif defined(MAP0_S01)
+            sharedData_800DD591_0_s00 = 1;
+            
+            sharedData_800E326C_0_s00.vector_0.vx = Q12(-0.30f);
+            sharedData_800E326C_0_s00.vector_0.vz = Q12(275.0f);
+            sharedData_800E326C_0_s00.vector_C.vx = Q12(-0.30f);
+            sharedData_800E326C_0_s00.vector_C.vz = Q12(265.0f);
+#endif
+            
+#if defined(MAP1_S02) || defined(MAP1_S03) || defined(MAP4_S02) || defined(MAP4_S04) || defined(MAP4_S05)
+            *(u16*)&sharedData_800E5768_1_s02 = 30;
+#else
+            sharedData_800DD592_0_s00 = 1;
+#endif
+
+            if (arg3 == NO_VALUE)
+            {
+                g_SysWork.field_2349 = g_MapOverlayHeader.field_17;
+                g_SysWork.field_2348 = g_MapOverlayHeader.field_17;
+            }
+
+            sharedData_800DD598_0_s00 = 0;
+            sharedData_800E324C_0_s00.vz = 0;
+#if defined(MAP1_S02) || defined(MAP1_S03) || defined(MAP4_S02) || defined(MAP4_S04) || defined(MAP4_S05)
+            sharedData_800E324C_0_s00.vx = 0;
+#endif
+
+            g_SysWork.field_234A = 1;
+            sharedData_800DFB4C_0_s00 = arg2;
+            
+#if !defined(MAP1_S02) && !defined(MAP1_S03) && !defined(MAP4_S02) && !defined(MAP4_S04) && !defined(MAP4_S05)
+            sharedData_800E324C_0_s00.vx = 0;
+#endif
+            
+            sharedData_800E0CB8_0_s00 = FP_FROM(sharedData_800E0CB0_0_s00, Q12_SHIFT);
+            sharedData_800E0CB6_0_s00 = sharedData_800E0CB0_0_s00;
+            sharedData_800E0CB4_0_s00 = sharedData_800E0CB0_0_s00;
+
+            temp_s0 = SetSp(0x1F8003D8);
+
+            sharedFunc_800CBC94_0_s00(&sharedData_800E0CBC_0_s00);
+#if defined(MAP0_S00)
+            func_800CBFB0(&sharedData_800E34FC_0_s00, &sharedData_800E330C_0_s00, sharedData_800DFB4C_0_s00); // TODO: defined in header as (void)
+#endif
+            SetSp(temp_s0);
+            break;
+
+        default:
+            sharedData_800DD584_0_s00 = g_DeltaTime0 == Q12(0.0f);
+
+            func_8003EDB8(&sharedData_800E3258_0_s00, &sharedData_800E325C_0_s00);
+
+            if (sharedData_800E0CB6_0_s00 != sharedData_800E0CB4_0_s00)
+            {
+                if (sharedData_800DD584_0_s00 == 0)
+                {
+                    sharedData_800DD598_0_s00++;
+                }
+
+                temp_s0_2 = FP_MULTIPLY(Math_Sin(FP_ANGLE(270.0f) + (sharedData_800DD598_0_s00 * 2)), 150, Q12_SHIFT) + 150;
+                temp_a2 = FP_MULTIPLY(Math_Sin(FP_ANGLE(180.0f) + (sharedData_800DD598_0_s00 * 2)), 150, Q12_SHIFT) + 150;
+                temp_t0 = sharedData_800E0CB6_0_s00 >> 14;
+               
+                for (i = 0; i < 2; i++)
+                {
+                    temp_v1_2 = (sharedData_800E0CB4_0_s00 >> ((1 - i) * 6)) & 0x3F;
+                    temp_v1_3 = (sharedData_800E0CB4_0_s00 >> 6) & 0x3F;
+                    temp_v0 = temp_v1_3;
+
+                    switch (temp_v1_2)
+                    {
+                        case 4:
+                        case 6:
+                            sharedData_800DD588_0_s00[i] = temp_s0_2;
+                            break;
+
+                        case 5:
+                        case 7:
+                            var_v0 = temp_s0_2 * 2;
+                            sharedData_800DD588_0_s00[i] = var_v0;
+                            break;
+
+                        case 32:
+                        case 48:
+                            sharedData_800DD588_0_s00[i] = temp_a2;
+                            break;
+
+                        case 37:
+                        case 39:
+                        case 53:
+                        case 55:
+                            var_v0 = temp_s0_2 + 150;
+                            sharedData_800DD588_0_s00[i] = var_v0;
+                            break;
+
+                        case 40:
+                        case 56:
+                            var_v0 = temp_a2 * 2;
+                            sharedData_800DD588_0_s00[i] = var_v0;
+                            break;
+
+                        case 44:
+                        case 46:
+                        case 60:
+                        case 62:
+                            var_v0 = temp_a2 + 150;
+                            sharedData_800DD588_0_s00[i] = var_v0;
+                            break;
+
+                        case 0:
+                            sharedData_800DD588_0_s00[i] = 0;
+                            break;
+
+                        case 36:
+                        case 38:
+                        case 52:
+                        case 54:
+                            var_v0 = 150;
+                            sharedData_800DD588_0_s00[i] = var_v0;
+                            break;
+
+                        case 45:
+                        case 47:
+                        case 61:
+                        case 63:
+                            var_v0 = 300;
+                            sharedData_800DD588_0_s00[i] = var_v0;
+                            break;
+                    }
+                    
+#if !defined(MAP1_S02) && !defined(MAP1_S03) && !defined(MAP4_S02) && !defined(MAP4_S04) && !defined(MAP4_S05)
+                    if (i == 0)
+                    {
+                        if (temp_t0 < 2)
+                        {
+                            if (temp_t0 != 1 || (sharedData_800E0CB4_0_s00 >> 14) < 2)
+                            {
+                                sharedData_800DD592_0_s00 = 1;
+                                continue;
+                            }
+                        }
+
+                        switch (temp_v0)
+                        {
+                            case 4:
+                            case 6:
+                            case 32:
+                            case 48:
+                                var_v0_3 = sharedData_800DD588_0_s00[i] < (75 + 1);
+                                sharedData_800DD592_0_s00 = var_v0_3 ^ 1;
+                                break;
+
+                            case 5:
+                            case 7:
+                            case 40:
+                            case 56:
+                                var_v0_3 = sharedData_800DD588_0_s00[i] < (150 + 1);
+                                sharedData_800DD592_0_s00 = var_v0_3 ^ 1;
+                                break;
+
+                            case 8:
+                            case 9:
+                            case 10:
+                            case 11:
+                            case 12:
+                            case 13:
+                            case 14:
+                            case 15:
+                            case 16:
+                            case 17:
+                            case 18:
+                            case 19:
+                            case 20:
+                            case 21:
+                            case 22:
+                            case 23:
+                            case 24:
+                            case 25:
+                            case 26:
+                            case 27:
+                            case 28:
+                            case 29:
+                            case 30:
+                            case 31:
+                            case 33:
+                            case 34:
+                            case 35:
+                            case 36:
+                            case 37:
+                            case 38:
+                            case 39:
+                            case 41:
+                            case 42:
+                            case 43:
+                            case 44:
+                            case 45:
+                            case 46:
+                            case 47:
+                            case 49:
+                            case 50:
+                            case 51:
+                            case 52:
+                            case 53:
+                            case 54:
+                            case 55:
+                            default:
+                                sharedData_800DD592_0_s00 = 1;
+                                break;
+                        }
+                    }
+#endif
+                }
+
+                if (sharedData_800DD598_0_s00 >= 0x200)
+                {
+                    sharedData_800DD598_0_s00 = 0;
+                    g_SysWork.field_234A = 1;
+                    sharedData_800E0CB6_0_s00 = sharedData_800E0CB4_0_s00;
+
+                    switch ((sharedData_800E0CB8_0_s00 & 0xF) >> 2)
+                    {
+                        case 0:
+                            sharedData_800DFB6C_0_s00 = 0;
+                            sharedData_800DFB70_0_s00 = 0;
+                            break;
+
+                        case 1:
+                            sharedData_800DFB6C_0_s00 = 1;
+                            sharedData_800DFB70_0_s00 = 0;
+                            break;
+
+                        case 2:
+                            sharedData_800DFB6C_0_s00 = 0;
+                            sharedData_800DFB70_0_s00 = 1;
+                            break;
+                    }
+                }
+            }
+
+            sharedData_800DFB50_0_s00 = arg2;
+            temp_s0_3 = SetSp(0x1F8003D8);
+
+            Particle_Update(sharedData_800E0CBC_0_s00);
+#if defined(MAP0_S00)
+            func_800CC6E8(&sharedData_800E34FC_0_s00, &sharedData_800E330C_0_s00, sharedData_800DFB50_0_s00);
+#endif
+            SetSp(temp_s0_3);
+
+            for (i = sharedData_800DD588_0_s00[0] + sharedData_800DD588_0_s00[1]; i < PARTICLE_COUNT_MAX; i++)
+            {
+                sharedData_800E0CBC_0_s00[i].stateStep_1E = 0;
+            }
+    }
+
+    g_ParticleVectors1 = g_ParticleVectors0;
+}

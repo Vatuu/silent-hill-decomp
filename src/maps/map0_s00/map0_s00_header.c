@@ -12,7 +12,6 @@
 #define func_800D1C38 (void(*)(void))0x800D1C38
 #define func_800D23EC (void(*)(void))0x800D23EC
 #define func_800D8A00 (void(*)(void))0x800D8A00
-#define func_800CB6B0 (void(*)(void))0x800CB6B0
 
 #define func_800D9748 (void(*)(void))0x800D9748
 #define func_800DADD4 (void(*)(void))0x800DADD4
@@ -159,7 +158,7 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .func_15C = NULL,
     .func_160 = NULL,
     .func_164 = NULL,
-    .func_168 = func_800CB6B0,
+    .func_168 = sharedFunc_800CB6B0_0_s00,
     .func_16C = sharedFunc_800D08B8_0_s00,
     .func_170 = sharedFunc_800D0A60_0_s00,
     .func_174 = sharedFunc_800D0B18_0_s00,

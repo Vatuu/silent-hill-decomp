@@ -16,30 +16,6 @@ typedef struct
     u8 field_2;
 } s_800DFB48;
 
-typedef struct
-{
-    VECTOR3 field_0; // Rotation?
-    s16     field_C;
-    s16     field_E;
-    s8      field_10;
-    s8      field_11;
-    s8      field_12;
-    s8      field_13;
-} s_800E34FC;
-STATIC_ASSERT_SIZEOF(s_800E34FC, 20);
-
-typedef struct
-{
-    VECTOR3 field_0;
-    s16     field_C;
-    s16     field_E;
-    s16     field_10;
-    s16     field_12;
-    s8      field_14;
-    s8      field_15;
-} s_800E330C;
-STATIC_ASSERT_SIZEOF(s_800E330C, 24);
-
 extern VECTOR3 D_800E32DC[4];
 
 /** "STAGE 0-0" string */
@@ -49,8 +25,6 @@ extern VECTOR3 D_800CB6A4;
 
 /** Timer. */
 extern q19_12 D_800E3A30;
-
-extern u8 D_800DD592;
 
 extern u8 D_800DD593;
 
@@ -109,13 +83,9 @@ extern u16 D_800E32D4;
 
 extern bool g_WarpCamera;
 
-extern s_800E330C D_800E330C[20];
-
-extern s_800E34FC D_800E34FC[60];
-
 extern s16 D_800E0C64;
 
-void func_800CBFB0(void);
+void func_800CBFB0(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId);
 
 bool func_800CC6E8(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId);
 
@@ -232,8 +202,6 @@ void func_800DB26C(void);
 void func_800DB514(void);
 
 void func_800DB870(void);
-
-void func_800CB6B0(s32 arg0, s8 mapId, s32 arg2);
 
 void func_800D802C(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coord);
 

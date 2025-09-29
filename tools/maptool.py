@@ -254,7 +254,7 @@ def parse_sym_comments(content):
 
     for line in lines:
         # Use regex to extract variable name and comment
-        match = re.match(r'\s*(\w+)\s*=.*?;\s*//\s*(.*)', line)
+        match = re.match(r'\s*(\w+)\s*=.*?;\s*(?://\s*(.*))?', line)
         if match:
             var_name = match.group(1)
             comment = match.group(2)
@@ -586,11 +586,14 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
             try:
                 updated = False
                 for sym_addr in sorted(sharedFuncSymbols.keys()):
-                    sym_addr_text = f"0x{sym_addr:08X}"
+                    sym_addr_text = f"0x{sym_addr:08X};"
                     sym_name = sharedFuncSymbols[sym_addr]
                     if sym_addr_text not in file2_sym_text:
                         if sym_name in file1_syms:
-                            sym_line = f"{sym_name} = {sym_addr_text}; // {file1_syms[sym_name]}"
+                            if file1_syms[sym_name] is not None:
+                                sym_line = f"{sym_name} = {sym_addr_text} // {file1_syms[sym_name]}"
+                            else:
+                                sym_line = f"{sym_name} = {sym_addr_text}"
                             file2_sym_text = file2_sym_text + "\n" + sym_line
                             print(f"Added line: {sym_line}")
                             updated = True

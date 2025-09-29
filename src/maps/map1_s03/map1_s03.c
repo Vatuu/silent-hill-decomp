@@ -28,11 +28,11 @@ INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800CE5D4);
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800CE688);
 
-INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800CED50);
+#include "maps/shared/sharedFunc_800CB6B0_0_s00.h" // 0x800CED50
 
 #include "maps/shared/sharedFunc_800CBBBC_0_s00.h" // 0x800CF144
 
-INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800CF21C);
+INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", sharedFunc_800CBC94_0_s00); // 0x800CF21C
 
 #include "maps/shared/Particle_Update.h" // 0x800CF538
 

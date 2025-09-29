@@ -21,6 +21,7 @@ sharedData_800CAA98_0_s01   = 0x800CA898; // type:s32 size:0xD40
 //-----------------------------------------------------------
 //--- PA: 0x00332C   VA: 0x800CC8A4   subsegment: c, map2_s02
 //-----------------------------------------------------------
+sharedFunc_800CB6B0_0_s00   = 0x800CC8A4; // type:func
 sharedFunc_800CBBBC_0_s00   = 0x800CCD90; // type:func
 sharedFunc_800CBC94_0_s00   = 0x800CCE68; // type:func
 Particle_Update             = 0x800CD174; // type:func
