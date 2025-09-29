@@ -1813,9 +1813,9 @@ typedef struct
 typedef struct
 {
     POLY_FT4* field_0;
-    SVECTOR   field_4;
+    SVECTOR   field_4; // Q23.8
     MATRIX    field_C;
-    VECTOR3   field_2C;
+    VECTOR3   field_2C; // Q23.8
     s32       field_38;
     DVECTOR   field_3C;
     s32       field_40;
@@ -1828,7 +1828,7 @@ typedef struct
     POLY_GT4* field_0;
     MATRIX    field_4;
     SVECTOR   field_24[3];
-    VECTOR3   field_3C;
+    VECTOR3   field_3C; // Q19.12
     s32       field_48;
     DVECTOR   field_4C;
     DVECTOR   field_50;
@@ -2497,8 +2497,10 @@ extern s16 D_800C4408;
 
 extern s8 D_800C4414;
 
+/** Angles. */
 extern s16 D_800C4428[];
 
+/** Angles? */
 extern s16 D_800C4438[];
 
 extern u8 D_800C4448;
@@ -3181,7 +3183,7 @@ void func_80055B74(CVECTOR* result, CVECTOR* color, s32 arg2);
 
 void func_80055C3C(CVECTOR* result, CVECTOR* color, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
-u8 func_80055D78(s32 x, s32 y, s32 z);
+u8 func_80055D78(q19_12 x, q19_12 y, q19_12 z);
 
 void func_80055E90(CVECTOR* color, u8 fadeAmount);
 

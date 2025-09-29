@@ -493,8 +493,8 @@ s32 D_800AE71C[][2] =
     { 0x00017B33, 0xFFFE8E67 }
 };
 
-// Some timer used in func_80066184
-s16 D_800AE73C = 0;
+// Some timer used in `func_80066184`.
+q3_12 D_800AE73C = Q12(0.0f);
 
 s16 D_800AE73E = 0x8002;
 

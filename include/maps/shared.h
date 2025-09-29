@@ -2254,13 +2254,13 @@ typedef struct _SfxVolume
 typedef struct
 {
     s_AnimInfo  animInfo_0[56];
-    u8          unk_380[0x968];
+    u8          unk_380[2408];
     s_SfxVolume sfxVolumes_CE8[11];
     u_Property  properties_D14[4];
-    u8          unk_D24[0x24]; // @hack Might not be part of this struct but disasm refuses to split here.
-    u8*         ptr_D48;    // Pointer to some rodata.
+    u8          unk_D24[36]; // @hack Might not be part of this struct but disasm refuses to split here.
+    u8*         ptr_D48;     // Pointer to some rodata.
 } s_func_800D2E04;
-typedef char static_assertion_sizeof_s_func_800D2E04[(sizeof(s_func_800D2E04) == (0xD4C)) ? 1 : -1];
+typedef char static_assertion_sizeof_s_func_800D2E04[(sizeof(s_func_800D2E04) == 3404) ? 1 : -1];
 
 typedef struct
 {
@@ -2273,11 +2273,11 @@ typedef struct
 
 typedef struct
 {
-    s32            flags_0;
-    s_AnmHeader*   anmHdr_4;
-    GsCOORDINATE2* coords_8;
-    MATRIX*        matrices_C;
-    s8             unk_10[0x40];
+    s32                             flags_0;
+    s_AnmHeader*                    anmHdr_4;
+    GsCOORDINATE2*                  coords_8;
+    MATRIX*                         matrices_C;
+    s8                              unk_10[64];
     s_sharedData_800E21D0_0_s01_sub field_B4;
 } s_sharedData_800E21D0_0_s01;
 
@@ -2738,7 +2738,7 @@ extern GsCOORDINATE2* sharedData_800D8610_1_s05;
 
 void Ai_Cybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void sharedFunc_800D8888_0_s01(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
+void sharedFunc_800D8888_0_s01(s_SubCharacter* chara, s_AnmHeader* animHdr, GsCOORDINATE2* coord);
 
 void sharedFunc_800D88D0_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coord);
 

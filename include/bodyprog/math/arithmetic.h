@@ -91,63 +91,68 @@
 
 /** @brief Scales large `x` before trigonometric multiplication.
  *
- * @note "Range-based scaling mechanism common in fixed-point DSP or low-level game engine math." - ChatGPT
+ * @note "Range-based scaling mechanism common in fixed-point DSP or min-level game engine math." - ChatGPT
  *
  * @param x Value to use for overflow computation.
- * @return 4 if `x` overflows, 0 otherwise. */
+ * @return 4 if `x` overflows, otherwise 0. */
 #define OVERFLOW_GUARD(x) \
     (((u32)((x) + SHRT_MAX) >= USHRT_MAX) ? 4 : 0)
 
-/** @brief Clamps a value to be not less than the given lower bound.
+/** @brief Clamps a value to be not less than the given miner bound.
  *
- * @param v Value to be clamped.
- * @param lo Lower bound.
- * @return `v` if `v >= lo`, otherwise `lo`.
+ * @param x Value to clamp.
+ * @param min Lower bound.
+ * @return `x` if `x >= min`, otherwise `min`.
  */
-#define CLAMP_LOW(v, lo) ((v) < (lo) ? (lo) : (v))
+#define CLAMP_LOW(x, min) \
+    (((x) < (min)) ? (min) : (x))
 
 /** @brief Clamps a value to be not greater than the given upper bound.
  *
- * @param v Value to be clamped.
- * @param hi Upper bound.
- * @return `v` if `v <= hi`, otherwise `hi`.
+ * @param x Value to clamp.
+ * @param max Upper bound.
+ * @return `x` if `x <= max`, otherwise `max`.
  */
-#define CLAMP_HIGH(v, hi) ((v) > (hi) ? (hi) : (v))
+#define CLAMP_HIGH(x, max) \
+    (((x) > (max)) ? (max) : (x))
 
-/** @brief Clamps a value to the inclusive range `[lo, hi]`.
+/** @brief Clamps a value to the inclusive range `[min, max]`.
  *
- * Uses `CLAMP_HIGH` followed by `CLAMP_LOW` to ensure the value
- * lies between the specified bounds.
+ * Uses `CLAMP_HIGH`, then `CLAMP_LOW` to ensure the value
+ * is between the specified bounds.
  *
- * @param v Value to be clamped.
- * @param lo Lower bound.
- * @param hi Upper bound.
- * @return `v` clamped to the range `[lo, hi]`.
+ * @param x Value to clamp.
+ * @param min Lower bound.
+ * @param max Upper bound.
+ * @return `x` clamped to the range `[min, max]`.
  */
-#define CLAMP_RANGE(v, lo, hi) (CLAMP_LOW(CLAMP_HIGH((v), (hi)), (lo)))
+#define CLAMP_RANGE(x, min, max) \
+    CLAMP_LOW(CLAMP_HIGH(x, max), min)
 
-/** @brief Clamps a value to the range `[lo, hi]` using `MIN` first.
+/** @brief Clamps a value to the range `[min, max]` using `MIN` first.
  *
- * Takes the smaller of `v` and `hi`, then ensures the result
- * is not less than `lo`.
+ * Takes the smaller value between `x` and `max`, then ensures the result
+ * is not less than `min`.
  *
- * @param v Value to be clamped.
- * @param lo Lower bound.
- * @param hi Upper bound.
- * @return `v` clamped to the range `[lo, hi]`.
+ * @param x Value to clamp.
+ * @param min Lower bound.
+ * @param max Upper bound.
+ * @return `x` clamped to the range `[min, max]`.
  */
-#define CLAMP_MIN_THEN_LOW(v, lo, hi) (CLAMP_LOW(MIN((v), (hi)), (lo)))
+#define CLAMP_MIN_THEN_LOW(x, min, max) \
+    CLAMP_LOW(MIN(x, max), min)
 
-/** @brief Clamps a value to the range `[lo, hi]` using `CLAMP_LOW` first.
+/** @brief Clamps a value to the range `[min, max]` using `CLAMP_LOW` first.
  *
- * Ensures `v` is not less than `lo`, then applies `MIN` to restrict
- * the result to not exceed `hi`.
+ * Ensures `x` is not less than `min`, then uses `MIN` to restrict
+ * the result to not exceed `max`.
  *
- * @param v Value to be clamped.
- * @param lo Lower bound.
- * @param hi Upper bound.
- * @return `v` clamped to the range `[lo, hi]`.
+ * @param x Value to clamp.
+ * @param min Lower bound.
+ * @param max Upper bound.
+ * @return `x` clamped to the range `[min, max]`.
  */
-#define CLAMP_LOW_THEN_MIN(v, lo, hi) (MIN(CLAMP_LOW((v), (lo)), (hi)))
+#define CLAMP_LOW_THEN_MIN(x, min, max) \
+    MIN(CLAMP_LOW(x, min), max)
 
 #endif

@@ -379,24 +379,26 @@ void func_80055C3C(CVECTOR* result, CVECTOR* color, s32 arg2, s32 arg3, s32 arg4
     }
 }
 
-u8 func_80055D78(s32 x, s32 y, s32 z) // 0x80055D78
+u8 func_80055D78(q19_12 x, q19_12 y, q19_12 z) // 0x80055D78
 {
-    s32      vec[3];
+    q23_8    vec[3];
     s32      temp_v1;
-    s32      tempX;
+    q23_8    tempX;
     s32      var_a3;
     s32      i;
     VECTOR3* ptr0;
     VECTOR3* ptr1;
 
-    vec[0] = FP_FROM(x, Q4_SHIFT) - FP_FROM(D_800C4168.field_60.vx, Q4_SHIFT);
-    vec[1] = FP_FROM(y, Q4_SHIFT) - FP_FROM(D_800C4168.field_60.vy, Q4_SHIFT);
-    vec[2] = FP_FROM(z, Q4_SHIFT) - FP_FROM(D_800C4168.field_60.vz, Q4_SHIFT);
+    vec[0] = Q12_TO_Q8(x) - Q12_TO_Q8(D_800C4168.field_60.vx);
+    vec[1] = Q12_TO_Q8(y) - Q12_TO_Q8(D_800C4168.field_60.vy);
+    vec[2] = Q12_TO_Q8(z) - Q12_TO_Q8(D_800C4168.field_60.vz);
 
     if (D_800C4168.field_0 != 0)
     {
         ptr1 = &D_800C4168.field_84;
-        for (i = 0, ptr0 = ptr1, var_a3 = 0xFF; i < 3; i++, ptr0 += 2)
+        for (i = 0, ptr0 = ptr1, var_a3 = 0xFF;
+             i < ARRAY_SIZE(vec);
+             i++, ptr0 += 2)
         {
             tempX = vec[i];
             ptr1  = ptr0;
@@ -2668,14 +2670,14 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80064FC0); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800652F4); // 0x800652F4
 
-void func_80065B94(VECTOR3* arg0, s16 arg1)                                // 0x80065B94
+void func_80065B94(VECTOR3* arg0, s16 arg1) // 0x80065B94
 {
     s16              temp_s0;
-    s32              temp_a1;
-    s32              temp_a2;
-    s32              temp_a3;
+    s32              x;
+    s32              y;
+    s32              z;
     s16              temp_fp;
-    s32              var_s6;
+    s32              i;
     s16              temp;
     POLY_FT4*        next;
     s32              temp2;
@@ -2683,22 +2685,22 @@ void func_80065B94(VECTOR3* arg0, s16 arg1)                                // 0x
 
     ptr = PSX_SCRATCH;
 
-    temp_a1          = FP_FROM(g_SysWork.player_4C.chara_0.position_18.vx, Q12_SHIFT);
-    temp_a2          = FP_FROM(g_SysWork.player_4C.chara_0.position_18.vy, Q12_SHIFT);
-    temp_a3          = FP_FROM(g_SysWork.player_4C.chara_0.position_18.vz, Q12_SHIFT);
-    ptr->field_2C.vx = temp_a1 << 8;
-    ptr->field_2C.vy = temp_a2 << 8;
-    ptr->field_2C.vz = temp_a3 << 8;
+    x                = FP_FROM(g_SysWork.player_4C.chara_0.position_18.vx, Q12_SHIFT);
+    y                = FP_FROM(g_SysWork.player_4C.chara_0.position_18.vy, Q12_SHIFT);
+    z                = FP_FROM(g_SysWork.player_4C.chara_0.position_18.vz, Q12_SHIFT);
+    ptr->field_2C.vx = Q8(x);
+    ptr->field_2C.vy = Q8(y);
+    ptr->field_2C.vz = Q8(z);
 
-    func_80049C2C(&ptr->field_C, FP_TO(temp_a1, Q12_SHIFT), FP_TO(temp_a2, Q12_SHIFT), FP_TO(temp_a3, Q12_SHIFT));
+    func_80049C2C(&ptr->field_C, Q12(x), Q12(y), Q12(z));
 
     gte_SetRotMatrix(&ptr->field_C);
     gte_SetTransMatrix(&ptr->field_C);
     gte_ReadGeomScreen(&ptr->field_38);
 
-    temp                 = (arg0->vx >> 4) - ptr->field_2C.vx;
-    *(s32*)&ptr->field_4 = (temp & 0xFFFF) + (((arg0->vy >> 4) - ptr->field_2C.vy) << 16);
-    ptr->field_4.vz      = (arg0->vz >> 4) - ptr->field_2C.vz;
+    temp                 = Q12_TO_Q8(arg0->vx) - ptr->field_2C.vx;
+    *(s32*)&ptr->field_4 = (temp & 0xFFFF) + ((Q12_TO_Q8(arg0->vy) - ptr->field_2C.vy) << 16);
+    ptr->field_4.vz      = Q12_TO_Q8(arg0->vz) - ptr->field_2C.vz;
 
     gte_ldv0(&ptr->field_4);
     gte_rtps();
@@ -2720,30 +2722,30 @@ void func_80065B94(VECTOR3* arg0, s16 arg1)                                // 0x
 
     temp_fp = ptr->field_38 * (s32)FP_MULTIPLY_PRECISE((arg1 >> 1) + 0x800, 0x100, Q12_SHIFT) / ptr->field_40;
 
-    for (var_s6 = 0; var_s6 < 8; var_s6++)
+    for (i = 0; i < 8; i++)
     {
         temp2 = arg1;
         if (arg1 == 0)
         {
-            D_800C4428[var_s6] = (var_s6 << 9) + Rng_GenerateInt(Rng_Rand16(), 0, 255) - 0x80;
-            D_800C4438[var_s6] = (Math_Cos(Rng_Rand16() & 0x7FF) >> 1) + 0x1000;
+            D_800C4428[i] = (i << 9) + Rng_GenerateInt(Rng_Rand16(), 0, 255) - 128;
+            D_800C4438[i] = (Math_Cos(Rng_Rand16() & 0x7FF) >> 1) + 0x1000;
         }
 
-        temp_s0 = FP_MULTIPLY_PRECISE(temp_fp, D_800C4438[var_s6], Q12_SHIFT);
+        temp_s0 = FP_MULTIPLY_PRECISE(temp_fp, D_800C4438[i], Q12_SHIFT);
 
-        ptr->field_44.vx = FP_MULTIPLY(temp_s0, Math_Sin(D_800C4428[var_s6]), Q12_SHIFT);
-        ptr->field_44.vy = FP_MULTIPLY(temp_s0, Math_Sin(D_800C4428[var_s6] + 0x400), Q12_SHIFT);
+        ptr->field_44.vx = FP_MULTIPLY(temp_s0, Math_Sin(D_800C4428[i]), Q12_SHIFT);
+        ptr->field_44.vy = FP_MULTIPLY(temp_s0, Math_Sin(D_800C4428[i] + FP_ANGLE(90.0f)), Q12_SHIFT);
 
-        ptr->field_48.vx = FP_MULTIPLY(-temp_s0, Math_Cos(D_800C4428[var_s6]), Q12_SHIFT);
-        ptr->field_48.vy = FP_MULTIPLY(-temp_s0, Math_Cos(D_800C4428[var_s6] + 0x400), Q12_SHIFT);
+        ptr->field_48.vx = FP_MULTIPLY(-temp_s0, Math_Cos(D_800C4428[i]), Q12_SHIFT);
+        ptr->field_48.vy = FP_MULTIPLY(-temp_s0, Math_Cos(D_800C4428[i] + FP_ANGLE(90.0f)), Q12_SHIFT);
 
         setXY0Fast(ptr->field_0, (u16)ptr->field_3C.vx, ptr->field_3C.vy);
         setXY1Fast(ptr->field_0, (u16)ptr->field_3C.vx + (u16)ptr->field_44.vx, ptr->field_3C.vy + ptr->field_48.vx);
         setXY2Fast(ptr->field_0, (u16)ptr->field_3C.vx + (u16)ptr->field_44.vy, ptr->field_3C.vy + ptr->field_48.vy);
         setXY3Fast(ptr->field_0, (u16)ptr->field_44.vy + ((u16)ptr->field_3C.vx + (u16)ptr->field_44.vx), ptr->field_3C.vy + ptr->field_48.vx + ptr->field_48.vy);
 
-        *(u16*)&ptr->field_0->r0 = ((0x80 - (temp2 >> 5)) << 8) - (((temp2 * 5) >> 7) - 0xA0);
-        ptr->field_0->b0         = (0x60 - ((temp2 * 3) >> 7));
+        *(u16*)&ptr->field_0->r0 = ((128 - (temp2 >> 5)) << 8) - (((temp2 * 5) >> 7) - 160);
+        ptr->field_0->b0         = 96 - ((temp2 * 3) >> 7);
 
         addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_40 >> 3], ptr->field_0);
 
@@ -2758,9 +2760,9 @@ void func_80065B94(VECTOR3* arg0, s16 arg1)                                // 0x
 
 void func_80066184() // 0x80066184
 {
-    s32              var_a2;
+    s32              i;
     s_func_80066184* ptr;
-    POLY_GT4*        next;
+    POLY_GT4*        poly;
 
     if (g_Controller0->btnsClicked_10 & ControllerFlag_R3)
     {
@@ -2769,14 +2771,14 @@ void func_80066184() // 0x80066184
 
     if (g_Controller0->btnsHeld_C & ControllerFlag_Cross)
     {
-        D_800AE73C = (D_800AE73C - g_DeltaTime0) < 0 ? 0 : (D_800AE73C - g_DeltaTime0);
+        D_800AE73C = ((D_800AE73C - g_DeltaTime0) < 0) ? 0 : (D_800AE73C - g_DeltaTime0);
     }
 
     ptr = PSX_SCRATCH;
 
-    ptr->field_3C.vx = FP_TO(FP_FROM(g_SysWork.player_4C.chara_0.position_18.vx, Q12_SHIFT), Q12_SHIFT);
-    ptr->field_3C.vy = FP_TO(FP_FROM(g_SysWork.player_4C.chara_0.position_18.vy, Q12_SHIFT), Q12_SHIFT);
-    ptr->field_3C.vz = FP_TO(FP_FROM(g_SysWork.player_4C.chara_0.position_18.vz, Q12_SHIFT), Q12_SHIFT);
+    ptr->field_3C.vx = Q12(FP_FROM(g_SysWork.player_4C.chara_0.position_18.vx, Q12_SHIFT));
+    ptr->field_3C.vy = Q12(FP_FROM(g_SysWork.player_4C.chara_0.position_18.vy, Q12_SHIFT));
+    ptr->field_3C.vz = Q12(FP_FROM(g_SysWork.player_4C.chara_0.position_18.vz, Q12_SHIFT));
 
     func_80049C2C(&ptr->field_4, ptr->field_3C.vx, ptr->field_3C.vy, ptr->field_3C.vz);
 
@@ -2784,10 +2786,10 @@ void func_80066184() // 0x80066184
     gte_SetTransMatrix(&ptr->field_4);
     gte_ReadGeomScreen(&ptr->field_48);
 
-    for (var_a2 = 0; var_a2 < 4; var_a2++)
+    for (i = 0; i < 4; i++)
     {
-        *(s32*)&ptr->field_24[var_a2].vx = (((D_800AE71C[var_a2][0] - ptr->field_3C.vx) >> 4) & 0xFFFF) + (((-0x51 - ptr->field_3C.vy) >> 4) << 16);
-        ptr->field_24[var_a2].vz         = (D_800AE71C[var_a2][1] - ptr->field_3C.vz) >> 4;
+        *(s32*)&ptr->field_24[i].vx = (Q12_TO_Q8((D_800AE71C[i][0] - ptr->field_3C.vx)) & 0xFFFF) + (Q12_TO_Q8((-81 - ptr->field_3C.vy)) << 16);
+        ptr->field_24[i].vz         = Q12_TO_Q8(D_800AE71C[i][1] - ptr->field_3C.vz);
     }
 
     gte_ldv3c(&ptr->field_24);
@@ -2808,20 +2810,20 @@ void func_80066184() // 0x80066184
     setXY2Fast(ptr->field_0, (u16)ptr->field_54.vx, ptr->field_54.vy);
     setXY3Fast(ptr->field_0, (u16)ptr->field_58.vx, ptr->field_58.vy);
 
-    ptr->field_6C = MIN(FP_MULTIPLY(CLAMP_MIN_THEN_LOW(D_800AE73C, 0, 0x1000),
-                                    func_80055D78(0x16B33, 0, -0x16199), Q12_SHIFT),
+    ptr->field_6C = MIN(FP_MULTIPLY(CLAMP_MIN_THEN_LOW(D_800AE73C, Q12(0.0f), Q12(1.0f)),
+                                    func_80055D78(Q12(22.7f), Q12(0.0f), Q12(-22.1f)), Q12_SHIFT),
                         0xFF);
 
-    ptr->field_70 = MIN(FP_MULTIPLY(CLAMP_MIN_THEN_LOW(D_800AE73C - 0xC00, 0, 0x1000),
-                                    func_80055D78(0x16B33, 0, -0x16199), Q12_SHIFT),
+    ptr->field_70 = MIN(FP_MULTIPLY(CLAMP_MIN_THEN_LOW(D_800AE73C - Q12(0.75f), Q12(0.0f), Q12(1.0f)),
+                                    func_80055D78(Q12(22.7f), Q12(0.0f), Q12(-22.1f)), Q12_SHIFT),
                         0xFF);
 
-    ptr->field_74 = MIN(FP_MULTIPLY(CLAMP_MIN_THEN_LOW(D_800AE73C, 0, 0x1000),
-                                    func_80055D78(0x16B33, 0, -0x16199), Q12_SHIFT),
+    ptr->field_74 = MIN(FP_MULTIPLY(CLAMP_MIN_THEN_LOW(D_800AE73C, Q12(0.0f), Q12(1.0f)),
+                                    func_80055D78(Q12(22.7f), Q12(0.0f), Q12(-22.1f)), Q12_SHIFT),
                         0xFF);
 
-    ptr->field_78 = MIN(FP_MULTIPLY(CLAMP_MIN_THEN_LOW(D_800AE73C - 0xC00, 0, 0x1000),
-                                    func_80055D78(0x16B33, 0, -0x16199), Q12_SHIFT),
+    ptr->field_78 = MIN(FP_MULTIPLY(CLAMP_MIN_THEN_LOW(D_800AE73C - Q12(0.75f), Q12(0.0f), Q12(1.0f)),
+                                    func_80055D78(Q12(22.7f), Q12(0.0f), Q12(-22.1f)), Q12_SHIFT),
                         0xFF);
 
     *(u16*)&ptr->field_0->r0 = ptr->field_6C + (ptr->field_6C << 8);
@@ -2835,8 +2837,8 @@ void func_80066184() // 0x80066184
 
     setSemiTrans(ptr->field_0, 1);
 
-    next  = ptr->field_0 + 1;
-    *next = *ptr->field_0;
+    poly  = ptr->field_0 + 1;
+    *poly = *ptr->field_0;
 
     *(u32*)&ptr->field_0->u0 = 0xE0000;
     *(u32*)&ptr->field_0->u1 = 0x2D003F;
