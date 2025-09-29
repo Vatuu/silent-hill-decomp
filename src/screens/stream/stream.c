@@ -18,9 +18,10 @@ void GameState_StartMovieIntro_Update() // 0x801E2654
     switch (g_GameWork.gameStateStep_598[0])
     {
         case 0:
-            VSync(8);
+            VSync(SyncMode_Wait8);
             ScreenFade_Start(true, true, false);
             GameFs_TitleGfxLoad();
+
             g_GameWork.gameStateStep_598[0]++;
             break;
 
@@ -137,7 +138,7 @@ void open_main(s32 file_idx, s16 num_frames) // 0x801E2AA4
     Screen_RectInterlacedClear(0, 16, 480, 480, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
     movie_main(NULL, num_frames, g_FileTable[file_idx].startSector_0_0);
     Screen_RectInterlacedClear(0, 16, 480, 480, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
-    VSync(0);
+    VSync(SyncMode_Wait);
     GsSwapDispBuff();
 }
 
@@ -181,7 +182,7 @@ void movie_main(char* file_name, s32 f_size, s32 sector) // 0x801E2B9C
     }
 
     strSetDefDecEnv(&m->dec, 0, 16, 0, 256);
-    VSync(0);
+    VSync(SyncMode_Wait);
     strInit(&m->loc, strCallback);
 
     while (strNextVlc(&m->dec) == NO_VALUE)
@@ -192,7 +193,7 @@ void movie_main(char* file_name, s32 f_size, s32 sector) // 0x801E2B9C
 
     SsSetSerialAttr(0, 0, 1);
     SsSetSerialVol(0, 80, 80);
-    VSync(0);
+    VSync(SyncMode_Wait);
 
     prev_frame_no = 0;
 
@@ -229,7 +230,7 @@ void movie_main(char* file_name, s32 f_size, s32 sector) // 0x801E2B9C
         prev_frame_no = frame_cnt;
 
         strSync(&m->dec);
-        VSync(0);
+        VSync(SyncMode_Wait);
     }
     while (!(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) && MainLoop_ShouldWarmReset() <= 0);
 
@@ -280,7 +281,7 @@ void strCallback() // 0x801E307C
 
     snap_rect = m->dec.slice;
 
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
     LoadImage(&snap_rect, (u_long*)m->dec.imgbuf);
 
     imgbuf = m->imgbuf0;
@@ -299,7 +300,7 @@ void strCallback() // 0x801E307C
     }
     else
     {
-        DrawSync(0);
+        DrawSync(SyncMode_Wait);
         m->dec.isdone = 1;
 
         m->dec.rectid  = m->dec.rectid ^ 1;
@@ -316,7 +317,7 @@ void strKickCD(CdlLOC* loc) // 0x801E31CC
     while (!CdControlB(CdlNop, 0, v2) || (v2[0] & (1 << 1)) == 0)
     {
         CdControlB(CdlStandby, 0, 0);
-        VSync(0);
+        VSync(SyncMode_Wait);
     }
 
     param = 0x80;
@@ -327,12 +328,12 @@ void strKickCD(CdlLOC* loc) // 0x801E31CC
 
     while (!CdControl(CdlSeekL, loc, 0))
     {
-        VSync(0);
+        VSync(SyncMode_Wait);
     }
 
     while (!CdRead2(CdlModeStream | CdlModeSpeed | CdlModeRT | CdlModeSize1))
     {
-        VSync(0);
+        VSync(SyncMode_Wait);
     }
 }
 

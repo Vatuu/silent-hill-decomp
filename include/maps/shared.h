@@ -1346,6 +1346,66 @@
 // NPC TABLES
 // ===========
 
+/*s_AnimInfo AIR_SCREAMER_ANIM_INFOS[] =
+{
+    { Anim_Update2, ANIM_STATUS(0, false), false, NO_VALUE, { Q12(10) }, NO_VALUE, NO_VALUE },
+    { Anim_Update1, ANIM_STATUS(0, true), false, NO_VALUE, { Q12(10) }, NO_VALUE, NO_VALUE },
+    { Anim_Update2, ANIM_STATUS(1, false), false, ANIM_STATUS(1, true), { Q12(10) }, NO_VALUE, 0 },
+    { Anim_Update0, ANIM_STATUS(1, true), false, ANIM_STATUS(23, false), { Q12(20) }, 0, 11 },
+    { Anim_Update2, ANIM_STATUS(2, false), false, ANIM_STATUS(2, true), { Q12(15) }, NO_VALUE, 12 },
+    { Anim_Update0, ANIM_STATUS(2, true), false, ANIM_STATUS(19, false), { Q12(15) }, 12, 25 },
+    { Anim_Update2, ANIM_STATUS(3, false), false, ANIM_STATUS(3, true), { Q12(30) }, NO_VALUE, 26 },
+    { Anim_Update0, ANIM_STATUS(3, true), false, ANIM_STATUS(17, false), { Q12(25) }, 26, 55 },
+    { Anim_Update2, ANIM_STATUS(4, false), false, ANIM_STATUS(4, true), { Q12(15) }, NO_VALUE, 56 },
+    { Anim_Update0, ANIM_STATUS(4, true), false, ANIM_STATUS(26, false), { Q12(15) }, 56, 80 },
+    { Anim_Update2, ANIM_STATUS(5, false), false, ANIM_STATUS(5, true), { Q12(10) }, NO_VALUE, 81 },
+    { Anim_Update0, ANIM_STATUS(5, true), false, ANIM_STATUS(26, false), { Q12(10) }, 81, 99 },
+    { Anim_Update2, ANIM_STATUS(6, false), false, ANIM_STATUS(6, true), { Q12(30) }, NO_VALUE, 100 },
+    { Anim_Update0, ANIM_STATUS(6, true), false, ANIM_STATUS(23, false), { Q12(20) }, 100, 114 },
+    { Anim_Update2, ANIM_STATUS(7, false), false, ANIM_STATUS(7, true), { Q12(30) }, NO_VALUE, 115 },
+    { Anim_Update0, ANIM_STATUS(7, true), false, ANIM_STATUS(19, false), { Q12(20) }, 115, 129 },
+    { Anim_Update2, ANIM_STATUS(8, false), false, ANIM_STATUS(8, true), { Q12(30) }, NO_VALUE, 130 },
+    { Anim_Update0, ANIM_STATUS(8, true), false, ANIM_STATUS(17, false), { Q12(25) }, 130, 153 },
+    { Anim_Update2, ANIM_STATUS(9, false), false, ANIM_STATUS(9, true), { Q12(30) }, NO_VALUE, 154 },
+    { Anim_Update0, ANIM_STATUS(9, true), false, ANIM_STATUS(21, false), { Q12(24) }, 154, 171 },
+    { Anim_Update2, ANIM_STATUS(10, false), false, ANIM_STATUS(10, true), { Q12(10) }, NO_VALUE, 172 },
+    { Anim_Update0, ANIM_STATUS(10, true), false, ANIM_STATUS(26, false), sharedFunc_800D77D0_0_s01, 172, 189 },
+    { Anim_Update2, ANIM_STATUS(11, false), false, ANIM_STATUS(11, true), { Q12(10) }, NO_VALUE, 190 },
+    { Anim_Update0, ANIM_STATUS(11, true), false, ANIM_STATUS(26, false), sharedFunc_800D77D0_0_s01, 190, 230 },
+    { Anim_Update2, ANIM_STATUS(12, false), false, ANIM_STATUS(12, true), { Q12(10) }, NO_VALUE, 231 },
+    { Anim_Update0, ANIM_STATUS(12, true), false, ANIM_STATUS(26, false), { Q12(10) }, 231, 242 },
+    { Anim_Update2, ANIM_STATUS(13, false), false, ANIM_STATUS(13, true), { Q12(5) }, NO_VALUE, 243 },
+    { Anim_Update0, ANIM_STATUS(13, true), false, ANIM_STATUS(14, false), { Q12(10) }, 243, 272 },
+    { Anim_Update2, ANIM_STATUS(14, false), false, ANIM_STATUS(14, true), { Q12(1.5) }, NO_VALUE, 273 },
+    { Anim_Update1, ANIM_STATUS(14, true), false, NO_VALUE, { Q12(10) }, 273, 302 },
+    { Anim_Update2, ANIM_STATUS(15, false), false, ANIM_STATUS(15, true), func_800E21C8, NO_VALUE, 303 },
+    { Anim_Update0, ANIM_STATUS(15, true), false, ANIM_STATUS(19, false), func_800E21C8, 303, 314 },
+    { Anim_Update2, ANIM_STATUS(16, false), false, ANIM_STATUS(16, true), { Q12(30) }, NO_VALUE, 315 },
+    { Anim_Update0, ANIM_STATUS(16, true), false, ANIM_STATUS(25, false), sharedFunc_800D77D0_0_s01, 315, 339 },
+    { Anim_Update2, ANIM_STATUS(17, false), false, ANIM_STATUS(17, true), func_800E21C8, NO_VALUE, 340 },
+    { Anim_Update1, ANIM_STATUS(17, true), false, NO_VALUE, sharedFunc_800D77D0_0_s01, 340, 352 },
+    { Anim_Update2, ANIM_STATUS(18, false), false, ANIM_STATUS(18, true), { Q12(30) }, NO_VALUE, 353 },
+    { Anim_Update0, ANIM_STATUS(18, true), false, ANIM_STATUS(17, false), { Q12(20) }, 353, 364 },
+    { Anim_Update2, ANIM_STATUS(19, false), false, ANIM_STATUS(19, true), func_800E21C8, NO_VALUE, 365 },
+    { Anim_Update1, ANIM_STATUS(19, true), false, NO_VALUE, sharedFunc_800D77D0_0_s01, 365, 376 },
+    { Anim_Update2, ANIM_STATUS(20, false), false, ANIM_STATUS(20, true), { Q12(10) }, NO_VALUE, 377 },
+    { Anim_Update0, ANIM_STATUS(20, true), false, ANIM_STATUS(26, false), { Q12(10) }, 377, 383 },
+    { Anim_Update2, ANIM_STATUS(21, false), false, ANIM_STATUS(21, true), { Q12(15) }, NO_VALUE, 384 },
+    { Anim_Update1, ANIM_STATUS(21, true), false, NO_VALUE, sharedFunc_800D77D0_0_s01, 384, 407 },
+    { Anim_Update2, ANIM_STATUS(22, false), false, ANIM_STATUS(22, true), { Q12(30) }, NO_VALUE, 408 },
+    { Anim_Update0, ANIM_STATUS(22, true), false, ANIM_STATUS(19, false), { Q12(20) }, 408, 432 },
+    { Anim_Update2, ANIM_STATUS(23, false), false, ANIM_STATUS(23, true), { Q12(10) }, NO_VALUE, 433 },
+    { Anim_Update1, ANIM_STATUS(23, true), false, NO_VALUE, func_800E21C8, 433, 447 },
+    { Anim_Update2, ANIM_STATUS(24, false), false, ANIM_STATUS(24, true), func_800E21C8, NO_VALUE, 448 },
+    { Anim_Update0, ANIM_STATUS(24, true), false, ANIM_STATUS(17, false), func_800E21C8, 448, 482 },
+    { Anim_Update2, ANIM_STATUS(25, false), false, ANIM_STATUS(25, true), { Q12(30) }, NO_VALUE, 483 },
+    { Anim_Update1, ANIM_STATUS(25, true), false, NO_VALUE, sharedFunc_800D77D0_0_s01, 483, 523 },
+    { Anim_Update2, ANIM_STATUS(26, false), false, ANIM_STATUS(26, true), { Q12(1.5) }, NO_VALUE, 96 },
+    { Anim_Update1, ANIM_STATUS(26, true), false, NO_VALUE, sharedFunc_800D77D0_0_s01, 96, 99 },
+    { Anim_Update2, ANIM_STATUS(27, false), false, ANIM_STATUS(27, true), { Q12(30) }, NO_VALUE, 365 },
+    { Anim_Update1, ANIM_STATUS(27, true), false, NO_VALUE, sharedFunc_800D77D0_0_s01, 365, 376 }
+};*/
+
 /*s_AnimInfo ALESSA_ANIM_INFOS[] =
 {
     { Anim_Update2, ANIM_STATUS(0,  false), false, ANIM_STATUS(0,  false), { Q12(0)  }, NO_VALUE, 0   },
@@ -2194,13 +2254,13 @@ typedef struct _SfxVolume
 typedef struct
 {
     s_AnimInfo  animInfo_0[56];
-    u8          unk_380[0x968];
+    u8          unk_380[2408];
     s_SfxVolume sfxVolumes_CE8[11];
     u_Property  properties_D14[4];
-    u8          unk_D24[0x24]; // @hack Might not be part of this struct but disasm refuses to split here.
-    u8*         ptr_D48;    // Pointer to some rodata.
+    u8          unk_D24[36]; // @hack Might not be part of this struct but disasm refuses to split here.
+    u8*         ptr_D48;     // Pointer to some rodata.
 } s_func_800D2E04;
-typedef char static_assertion_sizeof_s_func_800D2E04[(sizeof(s_func_800D2E04) == (0xD4C)) ? 1 : -1];
+typedef char static_assertion_sizeof_s_func_800D2E04[(sizeof(s_func_800D2E04) == 3404) ? 1 : -1];
 
 typedef struct
 {
@@ -2213,11 +2273,11 @@ typedef struct
 
 typedef struct
 {
-    s32            flags_0;
-    s_AnmHeader*   anmHdr_4;
-    GsCOORDINATE2* coords_8;
-    MATRIX*        matrices_C;
-    s8             unk_10[0x40];
+    s32                             flags_0;
+    s_AnmHeader*                    anmHdr_4;
+    GsCOORDINATE2*                  coords_8;
+    MATRIX*                         matrices_C;
+    s8                              unk_10[64];
     s_sharedData_800E21D0_0_s01_sub field_B4;
 } s_sharedData_800E21D0_0_s01;
 
@@ -2267,6 +2327,7 @@ extern VECTOR3 sharedData_800E324C_0_s00;
 /** Previous particle Y angle? */
 extern s16 sharedData_800E3260_0_s00;
 
+/** Something related to rotation. */
 extern s32 sharedData_800E39D8_0_s00;
 
 // Next 4 set by `Ai_Stalker_Update`.
@@ -2677,7 +2738,7 @@ extern GsCOORDINATE2* sharedData_800D8610_1_s05;
 
 void Ai_Cybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void sharedFunc_800D8888_0_s01(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
+void sharedFunc_800D8888_0_s01(s_SubCharacter* chara, s_AnmHeader* animHdr, GsCOORDINATE2* coord);
 
 void sharedFunc_800D88D0_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coord);
 

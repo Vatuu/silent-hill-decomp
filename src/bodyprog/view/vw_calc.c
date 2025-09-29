@@ -8,90 +8,90 @@
 // Reference view transform?
 extern MATRIX D_800C3868;
 
-void vwRenewalXZVelocityToTargetPos(s32* velo_x, s32* velo_z, const VECTOR3* now_pos, const VECTOR3* tgt_pos, s32 tgt_r,
-                                    s32 accel, s32 total_max_spd, s32 dec_forwd_lim_spd, s32 dec_accel_side) // 0x80048F28
+void vwRenewalXZVelocityToTargetPos(q19_12* velo_x, q19_12* velo_z, const VECTOR3* now_pos, const VECTOR3* tgt_pos, q19_12 tgt_r,
+                                    q19_12 accel, q19_12 total_max_spd, q19_12 dec_forwd_lim_spd, q19_12 dec_accel_side) // 0x80048F28
 {
 // SH2 locals
 #if 0
-    /* 0x1d */ float vec_xz[4];
+    /* 0x1d */ float vec_xz[4];//
     /* 0x1d */ float lim_spd;
     /* 0x1d */ float to_tgt_dist;
     /* 0x16 */ float to_tgt_ang_y;
     /* 0x18 */ float ang_y;
     /* 0x1d */ float spd;
     /* 0x2 */ float add_spd;
-    /* 0x1d */ float cam2tgt_dir_vec[4];
-    /* 0x1d */ float cam_mv_ang_y;
+    /* 0x1d */ float cam2tgt_dir_vec[4];//
+    /* 0x1d */ float cam_mv_ang_y;//
     /* 0x1d */ float cam2tgt_ang_y;
 #endif
 
     SVECTOR unused; // `cam2tgt_dir_vec`?
-    s16     temp_v0;
-    s32     ang_y;
-    s32     temp_s0;
-    s32     to_tgt_ang_y;
-    s32     add_spd;
-    s32     temp_s1_2;
-    s32     temp_s1_3;
-    s32     temp_v0_2;
-    s32     var_s1;
+    q3_12   cam2tgt_ang_y;
+    q19_12  ang_y;
+    q19_12  to_tgt_ang_y;
+    q19_12  add_spd;
+    q19_12  spd;
+    q19_12  to_tgt_dist;
+    q19_12  lim_spd;
+    q19_12  deltaZ;
+    q19_12  deltaX;
 
-    temp_v0 = ratan2(tgt_pos->vx - now_pos->vx, tgt_pos->vz - now_pos->vz);
+    cam2tgt_ang_y = ratan2(tgt_pos->vx - now_pos->vx, tgt_pos->vz - now_pos->vz);
 
     // `shSinCosV` is called in SH2 while SH just calls `Math_Sin`/`Math_Cos` and does nothing with result.
-    unused.vx = Math_Sin(temp_v0);
-    unused.vy = Math_Cos(temp_v0);
+    unused.vx = Math_Sin(cam2tgt_ang_y);
+    unused.vy = Math_Cos(cam2tgt_ang_y);
 
     ratan2(*velo_x, *velo_z);
 
     add_spd = Math_MulFixed(accel, g_DeltaTime0, Q12_SHIFT);
-    *velo_x += FP_MULTIPLY(add_spd, Math_Sin(temp_v0), Q12_SHIFT);
-    *velo_z += FP_MULTIPLY(add_spd, Math_Cos(temp_v0), Q12_SHIFT);
+    *velo_x += FP_MULTIPLY(add_spd, Math_Sin(cam2tgt_ang_y), Q12_SHIFT);
+    *velo_z += FP_MULTIPLY(add_spd, Math_Cos(cam2tgt_ang_y), Q12_SHIFT);
 
-    temp_v0_2 = Vc_VectorMagnitudeCalc(*velo_x, 0, *velo_z);
-    if (total_max_spd < temp_v0_2)
+    lim_spd = Vc_VectorMagnitudeCalc(*velo_x, Q12(0.0f), *velo_z);
+    if (total_max_spd < lim_spd)
     {
-        temp_s1_2 = temp_v0_2 - total_max_spd;
-        ang_y = ratan2(*velo_x, *velo_z);
-        *velo_x -= Math_MulFixed(temp_s1_2, Math_Sin(ang_y), Q12_SHIFT);
-        *velo_z -= Math_MulFixed(temp_s1_2, Math_Cos(ang_y), Q12_SHIFT);
+        spd      = lim_spd - total_max_spd;
+        ang_y    = ratan2(*velo_x, *velo_z);
+        *velo_x -= Math_MulFixed(spd, Math_Sin(ang_y), Q12_SHIFT);
+        *velo_z -= Math_MulFixed(spd, Math_Cos(ang_y), Q12_SHIFT);
     }
 
-    temp_s1_3    = tgt_pos->vx - now_pos->vx;
-    temp_s0      = tgt_pos->vz - now_pos->vz;
-    to_tgt_ang_y = ratan2(temp_s1_3, temp_s0);
-    var_s1       = Math_MulFixed(dec_forwd_lim_spd, Vc_VectorMagnitudeCalc(temp_s1_3, 0, temp_s0) - tgt_r, Q12_SHIFT);
+    deltaX       = tgt_pos->vx - now_pos->vx;
+    deltaZ       = tgt_pos->vz - now_pos->vz;
+    to_tgt_ang_y = ratan2(deltaX, deltaZ);
+    to_tgt_dist  = Math_MulFixed(dec_forwd_lim_spd, Vc_VectorMagnitudeCalc(deltaX, Q12(0.0f), deltaZ) - tgt_r, Q12_SHIFT);
 
-    if (var_s1 < 0)
+    if (to_tgt_dist < Q12(0.0f))
     {
-        var_s1 = 0;
+        to_tgt_dist = Q12(0.0f);
     }
 
-    vwLimitOverLimVector(velo_x, velo_z, var_s1, to_tgt_ang_y);
-    vwDecreaseSideOfVector(velo_x, velo_z, Math_MulFixed(dec_accel_side, g_DeltaTime0, Q12_SHIFT), var_s1 >> 1, to_tgt_ang_y);
+    vwLimitOverLimVector(velo_x, velo_z, to_tgt_dist, to_tgt_ang_y);
+    vwDecreaseSideOfVector(velo_x, velo_z, Math_MulFixed(dec_accel_side, g_DeltaTime0, Q12_SHIFT), to_tgt_dist >> 1, to_tgt_ang_y);
 }
 
-void vwLimitOverLimVector(s32* vec_x, s32* vec_z, s32 lim_vec_len, s16 lim_vec_ang_y) // 0x8004914C
+void vwLimitOverLimVector(q19_12* vec_x, q19_12* vec_z, q19_12 lim_vec_len, q3_12 lim_vec_ang_y) // 0x8004914C
 {
-    s32 over_spd;
-    s32 lim_spd_dir_x;
-    s32 lim_spd_dir_z;
+    q19_12 over_spd;
+    q19_12 lim_spd_dir_x;
+    q19_12 lim_spd_dir_z;
 
     lim_spd_dir_x = Math_Sin(lim_vec_ang_y);
     lim_spd_dir_z = Math_Cos(lim_vec_ang_y);
 
     over_spd = (Math_MulFixed(*vec_x, lim_spd_dir_x, Q12_SHIFT) + Math_MulFixed(*vec_z, lim_spd_dir_z, Q12_SHIFT)) - lim_vec_len;
-    if (over_spd > 0)
+    if (over_spd > Q12(0.0f))
     {
         *vec_x -= Math_MulFixed(over_spd, lim_spd_dir_x, Q12_SHIFT);
         *vec_z -= Math_MulFixed(over_spd, lim_spd_dir_z, Q12_SHIFT);
     }
 }
 
-void vwDecreaseSideOfVector(s32* vec_x, s32* vec_z, s32 dec_val, s32 max_side_vec_len, s16 dir_ang_y)
+void vwDecreaseSideOfVector(q19_12* vec_x, q19_12* vec_z, q19_12 dec_val, q19_12 max_side_vec_len, q3_12 dir_ang_y)
 {
-    s32 temp_s1;
-    s32 var_s1;
+    q19_12 temp_s1;
+    q19_12 var_s1;
 
     var_s1 = Math_MulFixed(*vec_x, Math_Sin(dir_ang_y + FP_ANGLE(90.0f)), Q12_SHIFT) +
              Math_MulFixed(*vec_z, Math_Cos(dir_ang_y + FP_ANGLE(90.0f)), Q12_SHIFT);
@@ -107,7 +107,7 @@ void vwDecreaseSideOfVector(s32* vec_x, s32* vec_z, s32 dec_val, s32 max_side_ve
     {
         if (var_s1 >= -dec_val)
         {
-            var_s1 = 0;
+            var_s1 = Q12(0.0f);
         }
         else
         {
@@ -119,17 +119,17 @@ void vwDecreaseSideOfVector(s32* vec_x, s32* vec_z, s32 dec_val, s32 max_side_ve
     *vec_z += Math_MulFixed(var_s1 - temp_s1, Math_Cos(dir_ang_y + FP_ANGLE(90.0f)), Q12_SHIFT);
 }
 
-s32 vwRetNewVelocityToTargetVal(s32 now_spd, s32 mv_pos, s32 tgt_pos, s32 accel, s32 total_max_spd, s32 dec_val_lim_spd)
+q19_12 vwRetNewVelocityToTargetVal(q19_12 now_spd, q19_12 mv_pos, q19_12 tgt_pos, q19_12 accel, q19_12 total_max_spd, q19_12 dec_val_lim_spd)
 {
-    s32 pos_diff;
-    s32 abs_pos_diff;
-    s32 spd_lim;
-    s32 new_spd;
-    s32 result_spd;
+    q19_12 pos_diff;
+    q19_12 abs_pos_diff;
+    q19_12 spd_lim;
+    q19_12 new_spd;
+    q19_12 result_spd;
 
     pos_diff = tgt_pos - mv_pos;
 
-    if (pos_diff >= 0)
+    if (pos_diff >= Q12(0.0f))
     {
         new_spd = Math_MulFixed(accel, g_DeltaTime0, Q12_SHIFT) + now_spd;
     }
@@ -139,10 +139,10 @@ s32 vwRetNewVelocityToTargetVal(s32 now_spd, s32 mv_pos, s32 tgt_pos, s32 accel,
     }
 
     new_spd      = CLAMP(new_spd, -total_max_spd, total_max_spd);
-    abs_pos_diff = pos_diff < 0 ? -pos_diff : pos_diff;
+    abs_pos_diff = (pos_diff < Q12(0.0f)) ? -pos_diff : pos_diff;
     spd_lim      = Math_MulFixed(dec_val_lim_spd, abs_pos_diff, Q12_SHIFT);
 
-    if (pos_diff >= 0)
+    if (pos_diff >= Q12(0.0f))
     {
         result_spd = spd_lim;
         if (result_spd >= new_spd)
@@ -164,20 +164,23 @@ s32 vwRetNewVelocityToTargetVal(s32 now_spd, s32 mv_pos, s32 tgt_pos, s32 accel,
     return new_spd;
 }
 
-s32 vwRetNewAngSpdToTargetAng(s32 now_ang_spd, s16 now_ang, s16 tgt_ang, s32 accel_spd, s32 total_max_ang_spd, s32 dec_val_lim_spd) // 0x80049464
+q19_12 vwRetNewAngSpdToTargetAng(q19_12 now_ang_spd, q3_12 now_ang, q3_12 tgt_ang, q19_12 accel_spd, q19_12 total_max_ang_spd, q19_12 dec_val_lim_spd) // 0x80049464
 {
-    return vwRetNewVelocityToTargetVal(now_ang_spd, 0, FP_ANGLE_NORM_S(tgt_ang - now_ang), accel_spd, total_max_ang_spd, dec_val_lim_spd);
+    return vwRetNewVelocityToTargetVal(now_ang_spd, Q12(0.0f), FP_ANGLE_NORM_S(tgt_ang - now_ang), accel_spd, total_max_ang_spd, dec_val_lim_spd);
 }
 
 s32 func_800494B0(s32 arg0, s32 arg1, s32 arg2)
 {
-    s32 range  = FP_MULTIPLY_PRECISE(arg2, g_DeltaTime0, Q12_SHIFT);
-    s32 arange = arg1 - arg0;
-    arange     = CLAMP(arange, -range, range);
+    s32 range;
+    s32 arange;
 
-    if (g_DeltaTime0 == 0)
+    range  = FP_MULTIPLY_PRECISE(arg2, g_DeltaTime0, Q12_SHIFT);
+    arange = arg1 - arg0;
+    arange = CLAMP(arange, -range, range);
+
+    if (g_DeltaTime0 == Q12(0.0f))
     {
-        return 0;
+        return Q12(0.0f);
     }
 
     return FP_TO(arange, Q12_SHIFT) / g_DeltaTime0;
@@ -189,6 +192,8 @@ s32 func_80049530(VECTOR* arg0, VECTOR* arg1) // 0x80049530
     s32    ret;
 
     ApplyRotMatrixLV(arg0, &sp10);
+
+    // TODO: Make macros for there?
 
     __asm__ volatile(
         "cfc2        $12, $5;"
@@ -226,17 +231,19 @@ s32 func_80049530(VECTOR* arg0, VECTOR* arg1) // 0x80049530
 
 void vwMatrixToAngleYXZ(SVECTOR* ang, const MATRIX* mat) // 0x800495D4
 {
-    s32 r_xz = SquareRoot0((mat->m[0][2] * mat->m[0][2]) + (mat->m[2][2] * mat->m[2][2]));
-    ang->vx  = ratan2(-mat->m[1][2], r_xz);
+    s32 r_xz;
+
+    r_xz    = SquareRoot0((mat->m[0][2] * mat->m[0][2]) + (mat->m[2][2] * mat->m[2][2]));
+    ang->vx = ratan2(-mat->m[1][2], r_xz);
 
     if (ang->vx == FP_ANGLE(90.0f))
     {
-        ang->vz = 0;
+        ang->vz = FP_ANGLE(0.0f);
         ang->vy = ratan2(mat->m[0][1], mat->m[2][1]);
     }
     else if (ang->vx == FP_ANGLE(-90.0f))
     {
-        ang->vz = 0;
+        ang->vz = FP_ANGLE(0.0f);
         ang->vy = ratan2(-mat->m[0][1], -mat->m[2][1]);
     }
     else
@@ -273,9 +280,9 @@ void vbSetWorldScreenMatrix(GsCOORDINATE2* coord) // 0x800497E4
     TransposeMatrix(&D_800C3868, &work);
     MulMatrix0(&work, &GsIDMATRIX2, &VbWvsMatrix);
 
-    VbWvsMatrix.t[2] = 0;
-    VbWvsMatrix.t[1] = 0;
-    VbWvsMatrix.t[0] = 0;
+    VbWvsMatrix.t[2] = Q8(0.0f);
+    VbWvsMatrix.t[1] = Q8(0.0f);
+    VbWvsMatrix.t[0] = Q8(0.0f);
 
     GsWSMATRIX.m[0][0] = VbWvsMatrix.m[0][0];
     GsWSMATRIX.m[0][1] = VbWvsMatrix.m[0][1];
@@ -295,22 +302,22 @@ void vbSetWorldScreenMatrix(GsCOORDINATE2* coord) // 0x800497E4
 
 void vbSetRefView(VbRVIEW* rview) // 0x800498D8
 {
-    GsCOORDINATE2 sp10;
-    SVECTOR       sp60;
-    SVECTOR       sp68;
+    GsCOORDINATE2 coord;
+    SVECTOR       rot; // Q3.12
+    SVECTOR       pos; // Q3.12
 
-    sp10.flg   = false;
-    sp10.super = rview->super;
-    sp68.vx    = rview->vr.vx - rview->vp.vx;
-    sp68.vy    = rview->vr.vy - rview->vp.vy;
-    sp68.vz    = rview->vr.vz - rview->vp.vz;
-    vwVectorToAngle(&sp60, &sp68);
-    func_80096E78(&sp60, &sp10.coord);
+    coord.flg   = false;
+    coord.super = rview->super;
+    pos.vx      = rview->vr.vx - rview->vp.vx;
+    pos.vy      = rview->vr.vy - rview->vp.vy;
+    pos.vz      = rview->vr.vz - rview->vp.vz;
+    vwVectorToAngle(&rot, &pos);
+    func_80096E78(&rot, &coord.coord);
 
-    sp10.coord.t[0] = rview->vp.vx;
-    sp10.coord.t[1] = rview->vp.vy;
-    sp10.coord.t[2] = rview->vp.vz;
-    vbSetWorldScreenMatrix(&sp10);
+    coord.coord.t[0] = rview->vp.vx;
+    coord.coord.t[1] = rview->vp.vy;
+    coord.coord.t[2] = rview->vp.vz;
+    vbSetWorldScreenMatrix(&coord);
 }
 
 // Something to do with bone hierarchy?
@@ -409,7 +416,7 @@ void func_80049B6C(GsCOORDINATE2* rootCoord, MATRIX* outMat0, MATRIX* outMat1) /
 
 void func_80049C2C(MATRIX* outMat, s32 x, s32 y, s32 z) // 0x80049C2C
 {
-    VECTOR in;  // Q23.8
+    VECTOR in; // Q23.8
     VECTOR out;
 
     in.vx = Q12_TO_Q8(x);
@@ -449,10 +456,10 @@ bool Vw_AabbVisibleInScreenCheck(s32 xMin, s32 xMax, s32 yMin, s32 yMax, s32 zMi
     SetRotMatrix(&worldMat);
     SetTransMatrix(&worldMat);
     
-    screenMaxY = 0x80000000;
-    screenMaxX = 0x80000000;
-    screenMinY = 0x7FFFFFFF;
-    screenMinX = 0x7FFFFFFF;
+    screenMaxY = INT_MAX + 1;
+    screenMaxX = INT_MAX + 1;
+    screenMinY = INT_MAX;
+    screenMinX = INT_MAX;
 
     for (i = 0; i < BOX_VERT_COUNT; i++)
     {
@@ -494,7 +501,7 @@ bool Vw_AabbVisibleInScreenCheck(s32 xMin, s32 xMax, s32 yMin, s32 yMax, s32 zMi
         }
     }
 
-    if (screenMaxX == 0x7FFFFFFF)
+    if (screenMaxX == INT_MAX)
     {
         return false;
     }
@@ -595,7 +602,9 @@ bool Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ
     cullData->field_C0  = 0;
     cullData->field_114 = 0;
 
-    for (i = 0, pointsOutsideFarClipCount = 0, pointsOutsideNearPlaneCount = 0; i < 8; i++)
+    for (i = 0, pointsOutsideFarClipCount = 0, pointsOutsideNearPlaneCount = 0;
+         i < 8;
+         i++)
     {
         transformedZ = 4;
         transformedZ = RotTransPers(&cullData->field_20[i], &screenPos, &cullData->field_178, &cullData->field_178) * transformedZ;
@@ -778,10 +787,15 @@ bool Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ
 
 bool func_8004A54C(s_func_8004A54C* arg0) // 0x8004A54C
 {
-    s32 var_v1 = 0;
-    s32 var_a1 = 0;
-    s32 var_a2 = 0;
-    s32 var_a3 = 0;
+    bool cond0;
+    bool cond1;
+    bool cond2;
+    bool cond3;
+
+    cond0 = false;
+    cond1 = false;
+    cond2 = false;
+    cond3 = false;
 
     if (arg0->field_0[1][1] != 0)
     {
@@ -790,26 +804,26 @@ bool func_8004A54C(s_func_8004A54C* arg0) // 0x8004A54C
 
     if (arg0->field_0[1][0] || (arg0->field_0[0][0] && arg0->field_0[2][0]))
     {
-        var_v1 = 1;
+        cond0 = true;
     }
     if (arg0->field_0[1][2] || (arg0->field_0[0][2] && arg0->field_0[2][2]))
     {
-        var_a1 = 1;
+        cond1 = true;
     }
-    if (var_v1 && var_a1)
+    if (cond0 && cond1)
     {
         return true;
     }
 
     if (arg0->field_0[0][1] || (arg0->field_0[0][0] && arg0->field_0[0][2]))
     {
-        var_a2 = 1;
+        cond2 = true;
     }
     if (arg0->field_0[2][1] || (arg0->field_0[2][0] && arg0->field_0[2][2]))
     {
-        var_a3 = 1;
+        cond3 = true;
     }
-    if (var_a2 && var_a3)
+    if (cond2 && cond3)
     {
         return true;
     }
@@ -827,10 +841,10 @@ void vwAngleToVector(SVECTOR* vec, const SVECTOR* ang, s32 r) // 0x8004A66C
     vec->vz = FP_MULTIPLY(entou_r, Math_Cos(ang->vy), Q12_SHIFT);
 }
 
-s32 vwVectorToAngle(SVECTOR* ang, const SVECTOR* vec) // 0x8004A714
+q19_12 vwVectorToAngle(SVECTOR* ang, const SVECTOR* vec) // 0x8004A714
 {
     VECTOR localVec;
-    s32    ret_r;
+    q19_12 ret_r;
 
     localVec.vx = vec->vx;
     localVec.vy = vec->vy;

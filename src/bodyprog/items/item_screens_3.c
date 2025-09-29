@@ -323,7 +323,7 @@ u32 D_800AE1C0[] =
     0xF0,
     0xF5,
     0xFA,
-    0xFF,
+    0xFF
 };
 
 s_800AE204 D_800AE204[26] =
@@ -360,7 +360,7 @@ s_800AE4DC D_800AE4DC[3] = // Used in `func_8005B62C` (https://decomp.me/scratch
 {
     { &D_800AE204[1],  3,  0,      0, 0x80, 0x3F, 0xBF },
     { &D_800AE204[0],  12, 0,      0, 0x80, 0x3F, 0xBF },
-    { &D_800AE204[12], 5,  0xFF67, 0, 0x80, 0x3F, 0xBF }, 
+    { &D_800AE204[12], 5,  0xFF67, 0, 0x80, 0x3F, 0xBF },
 };
 
 SVECTOR D_800AE500[4] =
@@ -368,7 +368,7 @@ SVECTOR D_800AE500[4] =
     SVECTOR(0.0f,      255.65f,  255.65f),
     SVECTOR(-255.65f,  0.0f,     255.65f),
     SVECTOR(255.65f,   0.0f,     255.65f),
-    SVECTOR(0.0f,     -255.65f,  255.65f),
+    SVECTOR(0.0f,     -255.65f,  255.65f)
 };
 
 s16 D_800AE520[] =
@@ -403,7 +403,7 @@ s16 D_800AE564[] =
 // The last 0x10 bytes of the above table might be `RECT` as well.
 RECT D_800AE5B8[2] =
 {
-    { 0x140, 0x100, 0x140, 0xE0 },
+    { 0x140, 0x100, 0x140, 0xE0  },
     { 0xA0,  0x90,  0xA0,  0x170 }
 };
 
@@ -413,11 +413,11 @@ u16 D_800AE5C8[2] = {0x01E0, 0x0170}; // Passed to `SetDrawOffset`.
 // `var_s7 = *(((animStatus + 1) * 2) + &D_800AE5CC) - *((animStatus * 2) + &D_800AE5CC);`
 s16 D_800AE5CC[18] = 
 {
-    0x0000, 0x0001, 0x0004, 0x0007,
-    0x0009, 0x000B, 0x000D, 0x000F,
-    0x0011, 0x0014, 0x0017, 0x0018,
-    0x0019, 0x001C, 0x001E, 0x0020,
-    0x0022, 0x0000
+    0x0,  0x1,  0x4,  0x7,
+    0x09, 0xB,  0xD,  0xF,
+    0x11, 0x14, 0x17, 0x18,
+    0x19, 0x1C, 0x1E, 0x20,
+    0x22, 0x0
 };
 
 // https://decomp.me/scratch/HNL4n Referenced under `if (g_GameWork.config_0.optExtraBloodColor_24 != 0xE)`
@@ -457,7 +457,7 @@ s16 D_800AE5F0[136] =
     0x0300, 0x12E0, 0x02E0, 0x00F0,
     0x0AE0, 0x0B60, 0x02E0, 0x0210,
     0x08A0, 0xEDF0, 0x02A0, 0x0220,
-    0x0300, 0xEDA0, 0x02E0, 0xFD70,
+    0x0300, 0xEDA0, 0x02E0, 0xFD70
 };
 // https://decomp.me/scratch/HNL4n `temp_a0 = D_800AE700[animStatus];`
 u8 D_800AE700[16] =
@@ -465,7 +465,7 @@ u8 D_800AE700[16] =
     0x64, 0x48, 0x48, 0x3C,
     0x3C, 0x6E, 0x6E, 0x6E,
     0x3A, 0x50, 0x3C, 0x3C,
-    0x48, 0x5E, 0x64, 0x64,
+    0x48, 0x5E, 0x64, 0x64
 };
 
 // layout based on `func_800652F4`
@@ -479,28 +479,30 @@ typedef struct
 s_800AE710 D_800AE710[4] =
 {
     {},
-    {0x4C, 0x27, 0x7F},
+    { 0x4C, 0x27, 0x7F },
     {},
     {}
 };
 
 // Seems like a struct of 2 s32 based on `func_80066184`.
-s32 D_800AE71C[][2] = {
+s32 D_800AE71C[][2] =
+{
     { 0x00015AE1, 0xFFFEAEB9 },
     { 0x00017B33, 0xFFFEAEB9 },
     { 0x00015AE1, 0xFFFE8E67 },
     { 0x00017B33, 0xFFFE8E67 }
 };
 
-// Some timer used in func_80066184
-s16 D_800AE73C = 0;
+// Some timer used in `func_80066184`.
+q3_12 D_800AE73C = Q12(0.0f);
 
 s16 D_800AE73E = 0x8002;
 
 // Used by `func_80068CC0` and `GameState_MapScreen_Update`.
 // I think this is save file flags related to
 // placing the markings on the map.
-u8 D_800AE740[][2] = {
+u8 D_800AE740[][2] =
+{
     { 0x00, 0x00 },
     { 0x00, 0x00 },
     { 0x00, 0x00 },
@@ -524,7 +526,7 @@ u8 D_800AE740[][2] = {
     { 0x15, 0x00 },
     { 0x16, 0x14 },
     { 0x17, 0x15 },
-    { 0x00, 0x16 },
+    { 0x00, 0x16 }
 };
 
 s32 D_800AE770 = 0; // `GameState_MapScreen_Update` uses this like a `bool`.
@@ -1066,8 +1068,8 @@ void Gfx_ItemScreens_RenderInit(u32* selectedItemId) // 0x8004F764
                     continue;
                 }
 
-            g_Items_Transforms[i].rotate.vx = g_InventoryItemRotations[g_SavegamePtr->items_0[D_800C3E18[i]].id_0 - 32].vx;
-            g_Items_Transforms[i].rotate.vz = g_InventoryItemRotations[g_SavegamePtr->items_0[D_800C3E18[i]].id_0 - 32].vy;
+            g_Items_Transforms[i].rotate.vx = INVENTORY_ITEM_ROTATIONS[g_SavegamePtr->items_0[D_800C3E18[i]].id_0 - 32].vx;
+            g_Items_Transforms[i].rotate.vz = INVENTORY_ITEM_ROTATIONS[g_SavegamePtr->items_0[D_800C3E18[i]].id_0 - 32].vy;
 
             Gfx_Items_ItemRotate(&g_Items_Coords[i].param->rotate, &g_Items_Coords[i]);
             func_800548D8(i);
@@ -1079,8 +1081,8 @@ void Gfx_ItemScreens_RenderInit(u32* selectedItemId) // 0x8004F764
         // Equipped item.
         if (g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 != 0xFF && g_Inventory_EquippedItemIdx != NO_VALUE)
         {
-            g_Items_Transforms[7].rotate.vx = g_InventoryItemRotations[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vx;
-            g_Items_Transforms[7].rotate.vz = g_InventoryItemRotations[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vy;
+            g_Items_Transforms[7].rotate.vx = INVENTORY_ITEM_ROTATIONS[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vx;
+            g_Items_Transforms[7].rotate.vz = INVENTORY_ITEM_ROTATIONS[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vy;
 
             Gfx_Items_ItemRotate(&g_Items_Coords[7].param->rotate, &g_Items_Coords[7]);
             func_800548D8(7);
@@ -3128,8 +3130,8 @@ bool Gfx_PickupItemAnimate(u8 itemId) // 0x80054AD8
             transform = &g_Items_Transforms[0];
             scale     = g_Items_PickupScale << 12;
 
-            rotX = g_InventoryItemRotations[itemId - 32].vx;
-            rotZ = g_InventoryItemRotations[itemId - 32].vy;
+            rotX = INVENTORY_ITEM_ROTATIONS[itemId - 32].vx;
+            rotZ = INVENTORY_ITEM_ROTATIONS[itemId - 32].vy;
 
             // Double scale via `<< 12` then `>> 11`.
             transform[9].scale.vz = scale >> 11;

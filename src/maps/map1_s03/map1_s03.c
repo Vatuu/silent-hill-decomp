@@ -231,16 +231,16 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
     animInfo = &LOCKER_DEAD_BODY_ANIM_INFOS[chara->model_0.anim_4.status_0];
     animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
 
-    chara->field_C8         = -0x4CC;
-    chara->field_D8.field_4 = 0xF5;
-    chara->field_D8.field_6 = 0xEE1;
-    chara->field_CA         = 0;
-    chara->field_CC         = 0;
-    chara->field_CE         = 0;
-    chara->field_D8.field_0 = 0;
-    chara->field_D8.field_2 = 0;
-    chara->field_D6         = 0;
-    chara->field_D4         = 0x547;
+    chara->field_C8           = Q12(-0.3f);
+    chara->field_D8.offsetX_4 = Q12(0.06f);
+    chara->field_D8.offsetZ_6 = Q12(0.93f);
+    chara->field_CA           = Q12(0.0f);
+    chara->field_CC           = Q12(0.0f);
+    chara->field_CE           = Q12(0.0f);
+    chara->field_D8.offsetX_0 = Q12(0.0f);
+    chara->field_D8.offsetZ_2 = Q12(0.0f);
+    chara->field_D6           = Q12(0.0f);
+    chara->field_D4           = Q12(0.33f);
 
     func_8005C814(&chara->field_D8, chara);
 }

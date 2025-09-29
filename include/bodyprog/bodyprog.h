@@ -25,8 +25,7 @@
 #define LM_HEADER_MAGIC  '0'
 #define LM_VERSION       6
 
-// Chara_Load can force free already loaded models to make room for a new one.
-#define CHARA_FORCE_FREE_ALL 0xFF
+#define CHARA_FORCE_FREE_ALL 0xFF /** `Chara_Load` can force free already loaded models to make room for new ones. */
 
 // ==============
 // HELPER MACROS
@@ -97,7 +96,8 @@ typedef enum _Sfx
     Sfx_Back        = Sfx_Base + 25,
     Sfx_Cancel      = Sfx_Base + 26,
     Sfx_Confirm     = Sfx_Base + 27, // TODO: Continue this pattern.
-				    
+
+    Sfx_Unk1308     = 1308,
     Sfx_Unk1309     = 1309,
     Sfx_Unk1310     = 1310,
 				    
@@ -351,17 +351,17 @@ STATIC_ASSERT_SIZEOF(s_func_800625F4, 20);
 typedef struct _Collision
 {
     q19_12 groundHeight_0;
-    s16    field_4;  // } Angles??
-    s16    field_6;  // }
-    s8     field_8;  // Count of something? 0, 7, 12 are significant.
-    u8     unk_9[3]; // Padding?
+    q3_12  field_4;  // } Angles??
+    q3_12  field_6;  // }
+    s8     field_8;  // Count of something, maybe valid ground at probed points around center? 0, 7, 12 are significant.
+    // 3 bytes of padding.
 } s_Collision;
 STATIC_ASSERT_SIZEOF(s_Collision, 12);
 
 typedef struct
 {
-    VECTOR3  position_0;
-    SVECTOR3 rotation_C;
+    VECTOR3  position_0; // Q19.12
+    SVECTOR3 rotation_C; // Q3.12
     s8       field_12;
 } s_func_8006AB50;
 
@@ -370,13 +370,13 @@ typedef struct
     s32        field_0;
     s32        field_4; // `bool`?
     s32        field_8; // 2D distance.
-    SVECTOR    field_C; // 2D position?
+    SVECTOR    field_C; // Q23.8 | Position.
     DVECTOR_XZ direction_14;
     q23_8      positionX_18;
     q23_8      positionZ_1C;
     s32        field_20;
     s32        field_24;
-    s16        field_28; // } `SVECTOR3`, packed rotation?
+    s16        field_28; // } `SVECTOR3`, packed rotation? Probably not.
     s16        field_2A; // }
     s16        field_2C; // }
 } s_func_8006ABC0;
@@ -401,7 +401,7 @@ typedef struct
 {
     s8      field_0;
     s8      unk_1;
-    DVECTOR field_2; // Rotation?
+    DVECTOR field_2; // Q3.12 | XY rotation.
 } s_func_8006CC44_44_0;
 
 typedef struct
@@ -417,12 +417,12 @@ typedef struct
 
 typedef struct
 {
-    s32 field_0;
-    s32 field_4;
-    s16 field_8;
-    s16 field_A;
-    s16 field_C;
-    s16 field_E;
+    q23_8 field_0; // X position.                } Q8 according to `func_8006EE0C`?
+    q23_8 field_4; // Y position.                }
+    q7_8  field_8; // Z position, but why `s16`? }
+    q7_8  field_A; // Y??
+    q7_8  field_C; // Some kind of bound or threshold?
+    s16   field_E;
 } s_func_8006DCE0_6C; // Unknown size;
 
 typedef struct
@@ -434,45 +434,45 @@ typedef struct
 // Contains pointers to active characters among other things.
 typedef struct
 {
-    s32                  field_0;
-    s16                  field_4;
-    s16                  field_6;
-    s16                  field_8;
-    s8                   unk_A[2];
-    s32                  field_C;
-    s32                  field_10;
-    s32                  field_14;
-    s8                   unk_18[4];
-    s16                  field_1C;
-    s8                   unk_1E[2];
-    s_SubCharacter*      field_20;
-    s16                  field_24;
-    s16                  field_26;
-    s32                  field_28;
-    VECTOR3              field_2C; // Q23.8
-    s8                   unk_38[4];
-    s32                  field_3C;
-    s32                  field_40;
-    s32                  field_44;
-    s8                   unk_48[4];
-    s16                  field_4C;
-    s16                  field_4E;
-    SVECTOR              field_50; // Q23.8
-    u16                  field_58;
-    s16                  field_5A;
-    s16                  field_5C;
-    s16                  field_5E;
-    s16                  field_60;
-    s8                   unk_62[2];
-    s_SubCharacter**     characters_64; // Active characters?
-    s32                  characterCount_68;
-    s_func_8006DCE0_6C   field_6C;
-    s32                  field_7C;
-    s32                  field_80;
-    u16                  field_84;
-    u8                   unk_86[2];
-    s32                  field_88;
-    s_func_8006DCE0_8C   field_8C[1]; // Unknown size.
+    s32                field_0;
+    s16                field_4;
+    s16                field_6;
+    s16                field_8;
+    s8                 unk_A[2];
+    s32                field_C;  // } Q19.12 `VECTOR3`
+    s32                field_10; // }
+    s32                field_14; // }
+    s8                 unk_18[4];
+    s16                field_1C;
+    s8                 unk_1E[2];
+    s_SubCharacter*    field_20;
+    s16                field_24; // X } Q19.12
+    s16                field_26; // Z }
+    s32                field_28;
+    VECTOR3            field_2C; // Q23.8
+    s8                 unk_38[4];
+    s32                field_3C; // X  } Q23.8 `VECTOR3`?
+    s32                field_40; // Y? }
+    s32                field_44; // Z  }
+    s8                 unk_48[4];
+    s16                field_4C;
+    s16                field_4E;
+    SVECTOR            field_50; // Q23.8
+    u16                field_58;
+    s16                field_5A;
+    s16                field_5C;
+    s16                field_5E;
+    s16                field_60;
+    s8                 unk_62[2];
+    s_SubCharacter**   characters_64; // Active characters?
+    s32                characterCount_68;
+    s_func_8006DCE0_6C field_6C;
+    s32                field_7C;
+    s32                field_80;
+    u16                field_84;
+    u8                 unk_86[2];
+    s32                field_88;
+    s_func_8006DCE0_8C field_8C[1]; // Unknown size.
 } s_func_8006DCE0;
 
 typedef struct
@@ -490,31 +490,31 @@ typedef struct _func_8009ECCC
     struct _func_8009ECCC* field_0; // TODO: Not sure if these point to other struct type or same type.
     struct _func_8009ECCC* field_4;
     s32                    field_8;
-    s32 field_C;
-    s_8002AC04* field_10;
-    u32 field_14_0  : 16;
-    u32 field_14_16 : 8;
-    u32 field_14_24 : 7;
-    u32 field_14_31 : 1;
-    u32 field_18;
-    u16 field_1C;
-    u16 field_1E;
+    s32                    field_C;
+    s_8002AC04*            field_10;
+    u32                    field_14_0  : 16;
+    u32                    field_14_16 : 8;
+    u32                    field_14_24 : 7;
+    u32                    field_14_31 : 1;
+    u32                    field_18;
+    u16                    field_1C;
+    u16                    field_1E;
 } s_func_8009ECCC;
 
 typedef struct
 {
-    s32 field_0;
-    s32 field_4;
-    s32 field_8;
-    s32 field_C;
-    s32 field_10;
-    s32 field_14;
-    s32 field_18; // X } Bounds?
-    s32 field_1C; // X }
-    s32 field_20; // Z }
-    s32 field_24; // Z }
-    s32 field_28; // } Q19.12, maybe XZ position.
-    s32 field_2C; // }
+    s32    field_0;
+    s32    field_4;
+    s32    field_8;
+    s32    field_C;
+    q19_12 field_10; // X
+    q19_12 field_14; // Z
+    s32    field_18; // X } Bounds?
+    s32    field_1C; // X }
+    s32    field_20; // Z }
+    s32    field_24; // Z }
+    q19_12 field_28; // } Maybe XZ position.
+    q19_12 field_2C; // }
 } s_func_8006F338;
 
 typedef struct
@@ -539,16 +539,16 @@ typedef struct
 
 typedef struct
 {
-    s16 field_0;
-    s16 field_2;
-    s16 field_4;
-    s16 field_6;
-    s16 field_8;
-    s16 field_A;
-    s16 field_C;
-    s16 field_E;
-    s16 field_10;
-    s16 field_12;
+    q3_12 field_0;
+    q3_12 field_2;
+    q3_12 field_4;
+    q3_12 field_6;
+    q3_12 field_8;
+    q3_12 field_A;
+    q3_12 field_C;
+    q3_12 field_E;
+    q3_12 field_10; // X offset?
+    q3_12 field_12; // Z offset?
 } s_func_80070400_1;
 
 typedef struct
@@ -629,7 +629,7 @@ STATIC_ASSERT_SIZEOF(s_MeshHeader, 24);
 
 typedef struct _ModelHeader
 {
-    u_Filename    modelName_0;
+    u_Filename    name_0;
     u8            meshCount_8;
     u8            vertexOffset_9;
     u8            normalOffset_A;
@@ -746,8 +746,8 @@ typedef struct _IpdCollisionData
     s_IpdCollisionData_14* ptr_14;
     s_IpdCollisionData_18* ptr_18;
     s16                    field_1C;
-    u8                     field_1E;
-    u8                     field_1F;
+    u8                     field_1E; // } Used as multipliers for `field_1C` in `func_8006B004`.
+    u8                     field_1F; // }
     s_IpdCollisionData_20* ptr_20;
     u16                    field_24; // `field_24/``field_26` defined in ipd2obj but haven't seen used yet, might be size of `ptr_28`/`ptr_2C`.
     u16                    field_26;
@@ -916,7 +916,7 @@ typedef struct
     {
         struct
         {
-            u8                 field_0;
+            u8                 field_0; // Start index for something.
             u8                 field_1;
             u8                 field_2;
             u8                 field_3;
@@ -925,12 +925,12 @@ typedef struct
         } s_0;
         struct
         {
-            s16 field_0;
-            s16 field_2;
-            s16 field_4;
-            u8  field_6;
-            u8* field_8;
-            s8  unk_C[28];
+            q7_8 field_0;
+            q7_8 field_2;
+            s16  field_4;
+            u8   field_6;
+            u8*  field_8;
+            s8   unk_C[28];
         } s_1;
     } field_A0;
     u8                 field_C8;
@@ -1098,7 +1098,7 @@ typedef struct _MapType
 
 typedef struct
 {
-    u_Filename modelName_0;
+    u_Filename name_0;
     s8         field_8;
     s8         lmIdx_9; /** Set to 2 when found in `g_Map.globalLm_138.lmHdr_0` and 3-6 if found in `g_Map.ipdActive_15C[i] (i + 3)`. */
 } s_WorldObject_0_10;
@@ -1140,13 +1140,13 @@ typedef struct _WorldGfx
     u8                unk_5[3];
     VECTOR3           ipdSamplePoint_8; /** Used by IPD logic to sample which chunks to load or unload. */
     u8*               charaLmBufferPtr_14;
-    s_CharaModel*     charaModelsTable_18[Chara_Count];
+    s_CharaModel*     charaModels_18[Chara_Count];
     s_CharaModel      charaModels_CC[4];
     s_CharaModel      harryModel_164C;
     s_HeldItem        heldItem_1BAC;
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; /** Debug camera info. */
     s_LmHeader        itemLmHdr_1BE4;
-    u8                itemLmData_1BF4[4096 - sizeof(s_LmHeader)]; // retail game uses 2.75kb file, but they allocate 4kb for it.
+    u8                itemLmData_1BF4[4096 - sizeof(s_LmHeader)]; // Retail game uses 2.75kb file, but they allocate 4kb for it.
     s32               itemLmQueueIdx_2BE4;
     s32               objectCount_2BE8;
     s_WorldObject     objects_2BEC[29]; // Size based on the check in `g_WorldGfx_ObjectAdd`.
@@ -1344,7 +1344,7 @@ typedef struct
 typedef struct
 {
     u16              field_0;
-    u8               field_2;
+    u8               field_2; // Size of `field_4`.
     u8               unk_3;
     s_func_8006F8FC* field_4[20]; // Guessed size.
 } s_800C4478;
@@ -1376,13 +1376,13 @@ typedef struct
 {
     s16            animFileIdx;
     s16            modelFileIdx;
-    s16            textureFileIdx : 16;
-    u16            field_6        : 10;
-    u16            field_6_10     : 6;
-    s_FsImageDesc* field_8; // Guessed type.
-    u16            field_C_0  : 2;
-    s32            field_C_2  : 14;
-    u16            field_C_16 : 16;
+    s16            textureFileIdx         : 16;
+    q8_8           field_6                : 10;
+    u16            materialBlendMode_6_10 : 6; /** `e_BlendMode` */
+    s_FsImageDesc* field_8;                    // Extra texture pointer? Usually `NULL` in `CHARA_FILE_INFOS`.
+    u16            cameraAnchor_C_0  : 2;      /** `e_CameraAnchor` */
+    q19_12         cameraOffsetY_C_2 : 14;
+    // 2 bytes of padding.
 } s_CharaFileInfo;
 STATIC_ASSERT_SIZEOF(s_CharaFileInfo, 16);
 
@@ -1703,9 +1703,9 @@ typedef struct
     s8   field_0; /** `bool` */
     u8   field_1;
     s8   unk_2[2];
-    s32* field_4;
-    s32* field_8;
-    s32  field_C;
+    s32* field_4; // X
+    s32* field_8; // Y
+    s32  field_C; // Z
     u32  field_10; // Maybe `bool`, not enough context.
     s32  field_14;
     s32  field_18;
@@ -1813,9 +1813,9 @@ typedef struct
 typedef struct
 {
     POLY_FT4* field_0;
-    SVECTOR   field_4;
+    SVECTOR   field_4; // Q23.8
     MATRIX    field_C;
-    VECTOR3   field_2C;
+    VECTOR3   field_2C; // Q23.8
     s32       field_38;
     DVECTOR   field_3C;
     s32       field_40;
@@ -1828,7 +1828,7 @@ typedef struct
     POLY_GT4* field_0;
     MATRIX    field_4;
     SVECTOR   field_24[3];
-    VECTOR3   field_3C;
+    VECTOR3   field_3C; // Q19.12
     s32       field_48;
     DVECTOR   field_4C;
     DVECTOR   field_50;
@@ -2215,7 +2215,7 @@ extern const char* g_ItemDescriptions[];
 
 extern q19_12 g_PrevScreenFadeProgress;
 
-extern s32 g_ScreenFadeTimestep;
+extern q19_12 g_ScreenFadeTimestep;
 
 extern GsOT_TAG g_OtTags0[2][16];
 
@@ -2324,6 +2324,7 @@ extern s16 D_800C15BC;
 
 extern s16 g_Sound_ActiveSfxIdx;
 
+/** Pitch? */
 extern u16 D_800C15C0;
 
 /** Base-0 SFX index. */
@@ -2351,8 +2352,10 @@ extern s32 D_800C15E0;
 
 extern s_800C15F0 D_800C15F0;
 
+/** SFX IDs? */
 extern u16 D_800C15F8[];
 
+/** Voices? */
 extern s16 D_800C1628[];
 
 extern s_800C1658 D_800C1658;
@@ -2494,8 +2497,10 @@ extern s16 D_800C4408;
 
 extern s8 D_800C4414;
 
+/** Angles. */
 extern s16 D_800C4428[];
 
+/** Angles? */
 extern s16 D_800C4438[];
 
 extern u8 D_800C4448;
@@ -2626,7 +2631,7 @@ void Gfx_BackgroundSpriteDraw_2(s_FsImageDesc* image);
  *
  * Used only in the loading screen.
  */
-bool Gfx_2dBackgroundMotionBlur(s32 arg0);
+bool Gfx_2dBackgroundMotionBlur(s32 vBlanks);
 
 /** @unused Possibly a leftover from when the save menu was part of `BODYPROG.BIN`.
  * Draws some string in display space.
@@ -2674,16 +2679,15 @@ void func_8003D01C();
 
 void func_8003D03C();
 
-s32 WorldGfx_CharaModelPresent(s32 charaId);
+bool WorldGfx_IsCharaModelPresent(s32 charaId);
 
-void func_8003D550(s32 charaId, s32 arg1);
+void func_8003D550(s32 charaId, s32 blendMode);
 
 /** Called by some chara init funcs, similar to `func_8003DD80`? */
 void func_8003D468(s32 arg0, bool flag);
 
 void WorldGfx_CharaFree(s_CharaModel* model);
 
-/** Return type assumed. */
 void WorldGfx_HarryCharaLoad();
 
 s32 func_8003D21C(s_MapOverlayHeader* arg0);
@@ -2979,7 +2983,7 @@ void func_800453E8(s_Skeleton* skel, bool cond);
 /** Does something with skeleton bones. `arg0` is a struct pointer. */
 void func_80045468(s_Skeleton* skel, s32* arg1, bool cond);
 
-void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord, s16 arg4, u16 arg5, s_FsImageDesc* images);
+void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord, q3_12 arg4, u16 arg5, s_FsImageDesc* images);
 
 /** Passes a command to the sound driver. Plays SFX among other things. */
 void Sd_EngineCmd(u32 cmd);
@@ -3179,7 +3183,7 @@ void func_80055B74(CVECTOR* result, CVECTOR* color, s32 arg2);
 
 void func_80055C3C(CVECTOR* result, CVECTOR* color, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
-u8 func_80055D78(s32 x, s32 y, s32 z);
+u8 func_80055D78(q19_12 x, q19_12 y, q19_12 z);
 
 void func_80055E90(CVECTOR* color, u8 fadeAmount);
 
@@ -3231,18 +3235,17 @@ void func_8005B424(VECTOR3* vec0, VECTOR3* vec1);
 /** @unused No references. */
 void func_800563E8(s_LmHeader* lmHdr, s32 arg1, s32 arg2, s32 arg3);
 
-void Lm_MaterialFileIdxApply(s_LmHeader* lmHdr, s32 fileIdx, s_FsImageDesc* image, s32 arg3);
+void Lm_MaterialFileIdxApply(s_LmHeader* lmHdr, s32 fileIdx, s_FsImageDesc* image, s32 blendMode);
 
-void func_80056504(s_LmHeader* lmHdr, char* newStr, s_FsImageDesc* image, s32 arg3);
+void func_80056504(s_LmHeader* lmHdr, char* newStr, s_FsImageDesc* image, s32 blendMode);
 
-bool Lm_MaterialFsImageApply(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* image, s32 arg3);
+bool Lm_MaterialFsImageApply(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* image, s32 blendMode);
 
-void Material_FsImageApply(s_Material* mat, s_FsImageDesc* image, s32 arg2);
+void Material_FsImageApply(s_Material* mat, s_FsImageDesc* image, s32 blendMode);
 
-void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* images, s8 unused, s32 startIdx, s32 arg4);
+void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* images, s8 unused, s32 startIdx, s32 blendMode);
 
-/** Unknown `arg4` type. */
-void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* activeTexs, bool (*filterFunc)(s_Material* mat), s32 fileIdx, s32 arg4);
+void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* activeTexs, bool (*filterFunc)(s_Material* mat), s32 fileIdx, s32 blendMode);
 
 /** Checks if LM textures are loaded? */
 bool LmHeader_IsTextureLoaded(s_LmHeader* lmHdr);
@@ -3412,7 +3415,7 @@ void func_8008605C(s32 arg0, s32 arg1, s32 arg2, bool arg3);
 void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 entry0, s32 entry1, s32 entry2, bool arg5);
 
 /** Handles giving the player items. */
-void func_8008616C(s32 arg0, bool arg1, s32 arg2, s32 fadeTimestep, bool arg4);
+void func_8008616C(s32 arg0, bool arg1, s32 arg2, q19_12 fadeTimestep, bool arg4);
 
 void func_800862F8(s32 arg0, s32 fileIdx, bool arg2);
 
@@ -3432,11 +3435,35 @@ void func_800868DC(s32 idx);
 
 void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* sounds);
 
-void Camera_TranslationSet(VECTOR3* pos, q19_12 offsetOrPosX, q19_12 offsetOrPosY, q19_12 offsetOrPosZ,
-                           q19_12 accelXz, q19_12 accelY, q19_12 speedXzMax, q19_12 speedYMax, bool warpCam);
+/** @brief Sets the camera position target.
+ *
+ * @param pos Target position (Q19.12).
+ * @param offsetOrPosX If `pos` is valid, X offset for `pos`. If `pos` is `NULL`, X target position.
+ * @param offsetOrPosY If `pos` is valid, Y offset for `pos`. If `pos` is `NULL`, Y target position.
+ * @param offsetOrPosZ If `pos` is valid, Z offset for `pos`. If `pos` is `NULL`, Z target position.
+ * @param accelX X acceleration.
+ * @param accelY X acceleration.
+ * @param speedXMax Max X speed.
+ * @param speedYMax Max Y speed.
+ * @param warp If `true`, warp to the position target, otherwise transition over time.
+ */
+void Camera_PositionSet(VECTOR3* pos, q19_12 offsetOrPosX, q19_12 offsetOrPosY, q19_12 offsetOrPosZ,
+                        q19_12 accelXz, q19_12 accelY, q19_12 speedXzMax, q19_12 speedYMax, bool warp);
 
-void Camera_RotationSet(VECTOR3* lookAt, q19_12 lookAtOffsetOrPosX, q19_12 lookAtOffsetOrPosY, q19_12 lookAtOffsetOrPosZ,
-                        q19_12 angularAccelX, q19_12 angularAccelY, q19_12 angularSpeedXMax, q19_12 angularSpeedYMax, bool warpLookAt);
+/** @brief Sets the camera rotation and look-at position targets.
+ *
+ * @param lookAt Target look-at position (Q19.12).
+ * @param lookAtOffsetOrPosX If `lookAt` is valid, X offset for `lookAt`. If `lookAt` is `NULL`, X target look-at position.
+ * @param lookAtOffsetOrPosY If `lookAt` is valid, X offset for `lookAt`. If `lookAt` is `NULL`, Y target look-at position.
+ * @param lookAtOffsetOrPosZ If `lookAt` is valid, Z offset for `lookAt`. If `lookAt` is `NULL`, Z target look-at position.
+ * @param angularAccelX TODO
+ * @param angularAccelY TODO
+ * @param angularSpeedXMax TODO
+ * @param angularSpeedYMax TODO
+ * @param warp If `true`, warp to the look-at target, otherwise transition over time.
+ */
+void Camera_LookAtSet(VECTOR3* lookAt, q19_12 lookAtOffsetOrPosX, q19_12 lookAtOffsetOrPosY, q19_12 lookAtOffsetOrPosZ,
+                      q19_12 angularAccelX, q19_12 angularAccelY, q19_12 angularSpeedXMax, q19_12 angularSpeedYMax, bool warp);
 
 void func_80086C58(s_SubCharacter* chara, s32 arg1);
 
@@ -3643,7 +3670,7 @@ s32 func_80067914(s32 arg0, u16 arg1, u16 arg2, u16 arg3);
 
 bool func_80068CC0(s32 arg0);
 
-s32 func_80068E0C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4, u16 arg5, u16 arg6);
+bool func_80068E0C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4, u16 arg5, u16 arg6);
 
 void func_800692A4(u16 arg0, u16 arg1, u16 arg2);
 
@@ -3665,7 +3692,7 @@ void func_80069994(s_IpdCollisionData* collData);
 
 void func_800699E4(s_IpdCollisionData* collData);
 
-void Collision_Get(s_Collision* coll, s32 posX, s32 posZ);
+void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ);
 
 s32 func_80069B24(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara);
 
@@ -3688,9 +3715,9 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* pos, s_func_8006AB50* arg2, s32 arg
 
 void func_8006A940(VECTOR3* pos, s_func_8006AB50* arg1, s_SubCharacter** charas, s32 charaCount);
 
-void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* vec, s_func_8006AB50* arg2, s32 arg3);
+void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* pos, s_func_8006AB50* arg2, s32 arg3);
 
-void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* vec, s_func_8006AB50* arg2);
+void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* pos, s_func_8006AB50* arg2);
 
 void func_8006AD44(s_func_8006CC44* arg0, s_IpdCollisionData* collData);
 
@@ -3716,9 +3743,9 @@ void func_8006BB50(s_func_8006CC44* arg0, s32 arg1);
 s32 func_8006BC34(s_func_8006CC44* arg0);
 
 /** `arg3` and `arg4` might be XY or XZ position components. */
-void func_8006BCC4(s_func_8006CC44_44* arg0, s8* arg1, u32 arg2, s16 arg3, s16 arg4, s16 arg5);
+void func_8006BCC4(s_func_8006CC44_44* arg0, s8* arg1, u32 arg2, q3_12 deltaX, q3_12 deltaZ, s16 arg5);
 
-void func_8006BDDC(s_func_8006CC44_44_0* arg0, s16 arg1, s16 arg2);
+void func_8006BDDC(s_func_8006CC44_44_0* arg0, q3_12 rotX, q3_12 rotY);
 
 void func_8006BE40(s_func_8006CC44* arg0);
 
@@ -3728,13 +3755,13 @@ void func_8006C0C8(s_func_8006CC44*, s16, s16);
 
 bool func_8006C1B8(u32 arg0, s16 arg1, s_func_8006CC44* arg2);
 
-s16 func_8006C248(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
+s16 func_8006C248(s32 arg0, s16 arg1, q3_12 deltaX, q3_12 deltaZ, s16 arg4);
 
 bool func_8006C3D4(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s32 idx);
 
 void func_8006C45C(s_func_8006CC44* arg0);
 
-void func_8006C794(s_func_8006CC44* arg0, s32 arg1, s32 arg2);
+void func_8006C794(s_func_8006CC44* arg0, s32 arg1, s32 dist);
 
 void func_8006C838(s_func_8006CC44* arg0, s_IpdCollisionData* collData);
 
@@ -3785,9 +3812,9 @@ void func_8006E78C(s_func_8006DCE0* arg0, s_IpdCollisionData_14* arg1, SVECTOR3*
 
 void func_8006EB8C(s_func_8006DCE0* arg0, s_IpdCollisionData_18* arg1);
 
-void func_8006EE0C(s_func_8006DCE0_6C* arg0, s32 arg1, s_SubCharacter* arg2);
+void func_8006EE0C(s_func_8006DCE0_6C* arg0, s32 arg1, s_SubCharacter* chara);
 
-void func_8006EEB8(s_func_8006DCE0* arg0, s_SubCharacter* arg1);
+void func_8006EEB8(s_func_8006DCE0* arg0, s_SubCharacter* chara);
 
 void func_8006F250(s_func_8006F250* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
@@ -3813,11 +3840,12 @@ bool func_80070084(s_SubCharacter* chara, q19_12 x, q19_12 y, q19_12 z);
 
 bool func_800700F8(s_SubCharacter* chara0, s_SubCharacter* chara1);
 
-bool func_80070184(s_SubCharacter* chara, s32 arg1, s16 rotY);
+bool func_80070184(s_SubCharacter* chara, s32 arg1, q3_12 rotY);
 
 bool func_80070320();
 
-s32 func_80070360(s_SubCharacter* chara, s32 someDist, s16 arg2);
+/** TODO: Return type uncertain. */
+q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2);
 
 void func_80070400(s_SubCharacter* chara, s_func_80070400_1* arg1, s_func_80070400_1* arg2);
 
@@ -3988,36 +4016,36 @@ s32 func_800382B0(s32 arg0);
 
 /** @brief Computes the distance between two positions.
  *
- * @param pos0 First position.
- * @param pos1 Second position.
+ * @param posFrom First position (Q19.12).
+ * @param posTo Second position (Q19.12).
  * @return Distance between positions.
  */
-q19_12 Math_DistanceGet(const VECTOR3* pos0, const VECTOR3* pos1);
+q19_12 Math_DistanceGet(const VECTOR3* posFrom, const VECTOR3* posTo);
 
 /** @brief Computes the 2D distance on the XZ plane between two positions.
  *
- * @param pos0 First position.
- * @param pos1 Second position.
+ * @param posFrom First position (Q19.12).
+ * @param posTo Second position (Q19.12).
  * @return 2D distance between positions.
  */
-q19_12 Math_Distance2dGet(const VECTOR3* pos0, const VECTOR3* pos1);
+q19_12 Math_Distance2dGet(const VECTOR3* posFrom, const VECTOR3* posTo);
 
 /** @brief Forces a clicked controller input status for `ControllerFlag_Select`. */
 void Input_SelectClickSet();
 
 /** @brief Performs a 2D distance check on the XZ plane between two positions.
  *
- * @param pos0 First position.
- * @param pos1 Second position.
+ * @param posFrom First position (Q19.12).
+ * @param posTo Second position (Q19.12).
  * @param radius Intersection radius.
  * @return `true` if the 2D distance exceeds the radius, `false` otherwise.
  */
-bool Math_Distance2dCheck(const VECTOR3* pos0, const VECTOR3* pos1, s32 radius);
+bool Math_Distance2dCheck(const VECTOR3* posFrom, const VECTOR3* posTo, q19_12 radius);
 
 /** @brief Computes the squared 2D distance on the XZ plane from the reference position to the camera.
  *
- * @param pos Reference position.
- * @return 2D distance to the camera.
+ * @param pos Reference position (Q19.12).
+ * @return 2D distance to the camera. TODO: Does it stay in Q25.6?
  */
 s32 Camera_Distance2dGet(const VECTOR3* pos);
 
@@ -4317,8 +4345,6 @@ s32 func_800808AC(s32 posX, s32 posZ);
 
 /** Returns a Q shift based on a magnitude. */
 s32 Math_MagnitudeShiftGet(s32 mag);
-
-s32 func_80080A10();
 
 u8 func_8008A2E0(s32 arg0);
 

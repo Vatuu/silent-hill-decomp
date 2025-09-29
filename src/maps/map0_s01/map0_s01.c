@@ -807,14 +807,14 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5D80);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5E14);
 
-void func_800D5E78(s_SubCharacter* chara, s32 angle)
+void func_800D5E78(s_SubCharacter* chara, q19_12 angle) // 0x800D5E78
 {
-    s32 angleDelta;
-    s32 angleCpy;
-    s32 angle0;
-    s32 angle1;
+    q19_12                           angleDelta;
+    q19_12                           angleCpy;
+    q19_12                           angle0;
+    q19_12                           angle1;
     s_sharedData_800E21D0_0_s01_sub* ptr;
-    s_sharedData_800E21D0_0_s01* base;
+    s_sharedData_800E21D0_0_s01*     base;
 
     angleCpy = angle;
 
@@ -843,7 +843,6 @@ void func_800D5E78(s_SubCharacter* chara, s32 angle)
     }
 
     angle0 = FP_ANGLE(90.0f);
-
     if (angleDelta <= FP_ANGLE(0.0f))
     {
         angle0 = FP_ANGLE(0.0f);
@@ -1044,4 +1043,5 @@ void Gfx_LoadingScreen_StageString() // 0x800DA8A4
     Gfx_DebugStringDraw("STAGE 0-1");
     Gfx_LoadingScreen_BackgroundTexture();
 }
+
 #include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800DA8E8

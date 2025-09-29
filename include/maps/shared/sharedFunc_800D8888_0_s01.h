@@ -1,14 +1,14 @@
-void sharedFunc_800D8888_0_s01(s_SubCharacter* arg0, s_AnmHeader* arg1, GsCOORDINATE2* arg2)
+void sharedFunc_800D8888_0_s01(s_SubCharacter* chara, s_AnmHeader* animHdr, GsCOORDINATE2* coord)
 {
-    s_AnimInfo* temp_a3;
+    s_AnimInfo* animInfo;
 
-    if (arg0->properties_E4.player.field_F0 == 0)
+    if (chara->properties_E4.player.field_F0 == 0)
     {
     #if defined(MAP6_S01) || defined(MAP7_S03)
-        temp_a3 = &CYBIL_ANIM_INFOS[arg0->model_0.anim_4.status_0];
+        animInfo = &CYBIL_ANIM_INFOS[chara->model_0.anim_4.status_0];
     #else
-        temp_a3 = &KAUFMANN_ANIM_INFOS[arg0->model_0.anim_4.status_0];
+        animInfo = &KAUFMANN_ANIM_INFOS[chara->model_0.anim_4.status_0];
     #endif
-        temp_a3->updateFunc_0(&arg0->model_0, arg1, arg2, temp_a3);
+        animInfo->updateFunc_0(&chara->model_0, animHdr, coord, animInfo);
     }
 }

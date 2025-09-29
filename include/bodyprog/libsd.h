@@ -9,7 +9,9 @@
  * libref.pdf v4.4 may be useful, though was likely based on an earlier SDK.
  */
 
-/** SD_ALLOC_SLOTS must equal SD_VAB_SLOTS due to SdWorkInit loop, but they're mostly unrelated. */
+ #define SD_VOICE_COUNT 24
+
+/** `SD_ALLOC_SLOTS` must equal `SD_VAB_SLOTS` due to `SdWorkInit` loop, but they're mostly unrelated. */
 
 #define SD_ALLOC_SLOTS 16
 #define SD_VAB_SLOTS   16

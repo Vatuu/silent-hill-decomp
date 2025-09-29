@@ -116,21 +116,21 @@ struct _Model;
 #define SCREEN_FADE_STATUS(state, isWhite) \
     ((state) | ((isWhite) ? (1 << 3) : 0))
 
-/** @brief Check if screen fade is is not in progress (finished step).
- * This macro masks away the color bit.
+/** @brief Checks if the screen fade is is not in progress (finished step) by masking away the color bit.
+ *
  * @return `true` if finished, `false` if still in progress.
  */
 #define ScreenFade_IsFinished() \
     ((g_Screen_FadeStatus & 0x7) == ScreenFadeState_FadeOutComplete)
 
-/** @brief Check if screen fade is is not in progress (idle step).
- * This macro does NOT mask away the color bit.
+/** @brief Checks if the screen fade is is not in progress (idle step) without masking away the color bit.
+ *
  * @return `true` if idle, `false` otherwise.
  */
 #define ScreenFade_IsNone() \
     (g_Screen_FadeStatus == ScreenFadeState_None)
 
-/** @brief Checks if a screen fade is white.
+/** @brief Checks if the screen fade is white.
  * See `g_Screen_FadeStatus` for bit layout.
  *
  * @param fadeStatus Packed screen fade status containing a fade state and white flag.
@@ -139,29 +139,37 @@ struct _Model;
 #define IS_SCREEN_FADE_WHITE(fadeStatus) \
     ((fadeStatus) & (1 << 3))
 
-/** @brief Start screen fade in/out.
+/** @brief Starts a screen fade in/out.
  *
- * @param reset `true` to reset fade progress to 0, `false` to keep it. Speculation:
- * Skipping screen fade progress step was a mistake. It still works because once fade
- * is finished the progress variable will be reset to 0 anyway.
- * @param fadeIn `true` for a fade in, `false` for fade out.
+ * @param reset `true` to reset fade progress to 0, `false` to keep it.
+ *              Speculation: Skipping the screen fade progress step is a mistake. It still works because once a fade
+ *              is finished, the progress variable will be reset to 0 anyway.
+ * @param fadeIn `true` for fade in, `false` for fade out.
  * @param isWhite `true` for white fade, `false` for black fade.
  */
 #define ScreenFade_Start(reset, fadeIn, isWhite) \
-    g_Screen_FadeStatus = ( \
-    (((reset) == true ? ScreenFadeState_FadeOutStart : ScreenFadeState_FadeOutSteps) + \
-    ((fadeIn) == true ? 4 : 0)) | \
-    ((isWhite) == true ? (1 << 3): 0) )
+    g_Screen_FadeStatus = (((((reset) == true) ? ScreenFadeState_FadeOutStart : ScreenFadeState_FadeOutSteps) + \
+                           (((fadeIn) == true) ? 4 : 0)) | \
+                           (((isWhite) == true) ? (1 << 3) : 0))
 
-/** @brief Reset screen fade. */
+/** @brief Resets the screen fade. */
 #define ScreenFade_Reset() \
     g_Screen_FadeStatus = ScreenFadeState_Reset
 
-/** @brief Reset custom screen fade timestep back to zero.
- * This macro disregards the color bit.
- */
+/** @brief Resets the custom screen fade timestep back to zero, disregarding the color bit. */
 #define ScreenFade_ResetTimestep() \
-    g_Screen_FadeStatus = ScreenFadeState_ResetTimeStep
+    g_Screen_FadeStatus = ScreenFadeState_ResetTimestep
+
+/** @brief Sync modes used by `DrawSync` and `VSync`. */
+typedef enum _SyncMode
+{
+    SyncMode_Count     = -1,
+    SyncMode_Wait      = 0,
+    SyncMode_Immediate = 1,
+    SyncMode_Wait2     = 2,
+    SyncMode_Wait3     = 3,
+    SyncMode_Wait8     = 8
+} e_SyncMode;
 
 /** @brief Screen fade states used by `g_Screen_FadeStatus`. The flow is not linear. */
 typedef enum _ScreenFadeState
@@ -170,7 +178,7 @@ typedef enum _ScreenFadeState
     ScreenFadeState_None            = 1,
     ScreenFadeState_FadeOutStart    = 2,
     ScreenFadeState_FadeOutSteps    = 3,
-    ScreenFadeState_ResetTimeStep   = 4,
+    ScreenFadeState_ResetTimestep   = 4,
     ScreenFadeState_FadeOutComplete = 5,
     ScreenFadeState_FadeInStart     = 6,
     ScreenFadeState_FadeInSteps     = 7
@@ -1111,7 +1119,7 @@ typedef struct _SubCharaPropertiesPlayer
     s32    flags_11C; /** `e_PlayerFlags`. */
     s16    field_120; // Angle which the player turns when doing a quick turn. In order words, some sort of holder for angle Y.
     s16    field_122; // Some sort of X angle for the player. Specially used when aiming an enemy.
-    q7_8   headingAngle_124;
+    q3_12  headingAngle_124;
     q3_12  playerMoveDistance_126; // Used to indicate how much the player should move foward. Seems to be squared.
 } s_SubCharaPropertiesPlayer;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPlayer, 68);
@@ -1147,13 +1155,13 @@ typedef struct _SubCharPropertiesLarvalStalker
 } s_SubCharaPropertiesLarvalStalker;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesLarvalStalker, 68);
 
-/** For translation? */
+/** Offsets for translation? */
 typedef struct
 {
-    s16 field_0; // X?
-    s16 field_2; // Z?
-    s16 field_4; // X?
-    s16 field_6; // Z?
+    q3_12 offsetX_0;
+    q3_12 offsetZ_2;
+    q3_12 offsetX_4;
+    q3_12 offsetZ_6;
 } s_SubCharacter_D8;
 STATIC_ASSERT_SIZEOF(s_SubCharacter_D8, 8);
 
@@ -1162,10 +1170,10 @@ typedef struct _SubCharacter
     s_Model model_0;           // In player: Manage the half lower part of Harry's body animations (legs and feet).
     VECTOR3 position_18;       /** `Q19.12` */
     SVECTOR rotation_24;       // Maybe `SVECTOR3` instead of `SVECTOR` because 4th field is copy of `.xy` field.
-    SVECTOR rotationSpeed_2C;  /** Range [-0x700, 0x700]. */
+    SVECTOR rotationSpeed_2C;  /** Q3.12 | Range: `[FP_ANGLE(-157.5f), FP_ANGLE(157.5f)]`. */
     q19_12  field_34;          // Character Y position?
     q19_12  moveSpeed_38;
-    q7_8    headingAngle_3C;
+    q3_12   headingAngle_3C;
     s16     flags_3E;          /** `e_CharaFlags` */
     s8      field_40;          // In player: Index of the NPC attacking the player.
                                // In NPCs: Unknown.
@@ -1200,15 +1208,15 @@ typedef struct _SubCharacter
 
     // Fields seen used inside maps (eg. `map0_s00` `func_800D923C`)
 
-    s16               field_C8; // } Anim root offset?
-    s16               field_CA; // }
-    s16               field_CC; // }
-    s16               field_CE;
+    q3_12             field_C8; // } Anim root offset?
+    q3_12             field_CA; // }
+    q3_12             field_CC; // }
+    q3_12             field_CE;
     s16               field_D0;
     s16               field_D2;
-    s16               field_D4; // Z angle?
-    s16               field_D6;
-    s_SubCharacter_D8 field_D8;
+    q3_12             field_D4;
+    q3_12             field_D6;
+    s_SubCharacter_D8 field_D8; // Translation data?
 
     u8 field_E0; // Related to collision. If the player collides with the only enemy in memory and the enemy is knocked down, this is set to 1.
 
@@ -1251,7 +1259,7 @@ typedef struct _PlayerCombat
     u8      currentWeaponAmmo_10;
     u8      totalWeaponAmmo_11;
     s8      weaponInventoryIdx_12; /** Index of the currently equipped weapon in the inventory. */
-    u8      isAiming_13; /** `bool` */
+    u8      isAiming_13;           /** `bool` */
 } s_PlayerCombat;
 STATIC_ASSERT_SIZEOF(s_PlayerCombat, 20);
 

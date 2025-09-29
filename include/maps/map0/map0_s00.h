@@ -16,27 +16,29 @@ typedef struct
     u8 field_2;
 } s_800DFB48;
 
-typedef struct {
-    VECTOR3 field_0;
-    s16 field_C;
-    s16 field_E;
-    s8  field_10;
-    s8  field_11;
-    s8  field_12;
-    s8  field_13;
+typedef struct
+{
+    VECTOR3 field_0; // Rotation?
+    s16     field_C;
+    s16     field_E;
+    s8      field_10;
+    s8      field_11;
+    s8      field_12;
+    s8      field_13;
 } s_800E34FC;
-STATIC_ASSERT_SIZEOF(s_800E34FC, 0x14);
+STATIC_ASSERT_SIZEOF(s_800E34FC, 20);
 
-typedef struct {
+typedef struct
+{
     VECTOR3 field_0;
-    s16 field_C;
-    s16 field_E;
-    s16 field_10;
-    s16 field_12;
-    s8  field_14;
-    s8  field_15;
+    s16     field_C;
+    s16     field_E;
+    s16     field_10;
+    s16     field_12;
+    s8      field_14;
+    s8      field_15;
 } s_800E330C;
-STATIC_ASSERT_SIZEOF(s_800E330C, 0x18);
+STATIC_ASSERT_SIZEOF(s_800E330C, 24);
 
 extern VECTOR3 D_800E32DC[4];
 
@@ -45,7 +47,8 @@ extern char D_800CAE7C[];
 
 extern VECTOR3 D_800CB6A4;
 
-extern s32 D_800E3A30;
+/** Timer. */
+extern q19_12 D_800E3A30;
 
 extern u8 D_800DD592;
 
@@ -104,7 +107,7 @@ extern s_800C4590 D_800E39BC;
 
 extern u16 D_800E32D4;
 
-extern s32 D_800DFAD8;
+extern bool g_WarpCamera;
 
 extern s_800E330C D_800E330C[20];
 
@@ -114,10 +117,18 @@ extern s16 D_800E0C64;
 
 void func_800CBFB0(void);
 
+bool func_800CC6E8(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId);
+
+s32 func_800CC8FC(VECTOR3*, s32*, MATRIX*);
+
+void func_800CD8E8(s32, s32, s_800E330C*);
+
+void func_800CE02C(s32, s32, VECTOR3*, s32 mapId);
+
 void func_800D0124();
 
-/** Collision space distance check. */
-bool func_800D012C(VECTOR3* pos, MATRIX* unused0, s32* unused1); // @hack guessed types.
+/** Collision space distance check. @hack Guessed types. */
+bool func_800D012C(VECTOR3* pos, MATRIX* unused0, s32* unused1);
 
 void func_800CF7AC(s32 arg0, s_Particle* part, u16* arg2, s32* deltaTime);
 
@@ -138,6 +149,8 @@ bool func_800D0600();
 void func_800D0E24();
 
 void func_800D0E2C();
+
+void func_800D1C38(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
 
 void func_800D2E6C();
 
@@ -175,6 +188,8 @@ void func_800DC33C(void);
 void func_800DC694(void);
 
 void func_800DC8D8(void);
+
+void func_800DCA30(void);
 
 s32 func_800DCDA8();
 
@@ -227,11 +242,5 @@ void func_800D8124(s_SubCharacter* chara, GsCOORDINATE2* coord);
 bool func_800D8748(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 arg4, s32 pitch);
 
 void func_800D0394(s32 count, VECTOR3* vecs);
-
-s32 func_800CC8FC(VECTOR3*, s32*, MATRIX*);
-
-void func_800CD8E8(s32, s32, s_800E330C*);
-
-void func_800CE02C(s32, s32, VECTOR3*, s32);
 
 #endif

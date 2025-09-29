@@ -757,7 +757,7 @@ void func_8003BE28() // 0x8003BE28
 
 s_Bone* func_8003BE50(s32 modelIdx) // 0x8003BE50
 {
-    return g_WorldGfx.charaModelsTable_18[modelIdx]->skeleton_14.bones_C;
+    return g_WorldGfx.charaModels_18[modelIdx]->skeleton_14.bones_C;
 }
 
 // ========================================
@@ -886,7 +886,7 @@ void func_8003C110() // 0x8003C110
     {
         if (i != Chara_Harry)
         {
-            g_WorldGfx.charaModelsTable_18[i] = NULL;
+            g_WorldGfx.charaModels_18[i] = NULL;
         }
     } 
 
@@ -1106,7 +1106,7 @@ void WorldObject_ModelNameSet(s_WorldObject_0* arg0, char* newStr) // 0x8003C8F8
     arg0->field_10.lmIdx_9 = 0;
     arg0->modelInfo_0.field_0  = 0;
 
-    StringCopy(arg0->field_10.modelName_0.str, newStr);
+    StringCopy(arg0->field_10.name_0.str, newStr);
 
     arg0->field_10.field_8 = 0;
 }
@@ -1248,7 +1248,7 @@ void func_8003CC7C(s_WorldObject_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x8003C
         }
     }
 
-    if (COMPARE_FILENAMES(&temp_s1->modelName_0, &modelHdr->modelName_0))
+    if (COMPARE_FILENAMES(&temp_s1->name_0, &modelHdr->name_0))
     {
         arg0->field_10.lmIdx_9 = 0;
         return;
@@ -1532,14 +1532,14 @@ void WorldGfx_HarryCharaLoad() // 0x8003D160
     s_CharaModel* harryModel;
     s_LmHeader*   lmHdr = HARRY_LM_BUFFER;
 
-    Chara_FsImageCalc(&image, 1, 0);
+    Chara_FsImageCalc(&image, Chara_Harry, 0);
 
-    worldGfx                                    = &g_WorldGfx;
-    harryModel                                  = &worldGfx->harryModel_164C;
-    g_WorldGfx.charaModelsTable_18[Chara_Harry] = harryModel;
+    worldGfx                               = &g_WorldGfx;
+    harryModel                             = &worldGfx->harryModel_164C;
+    g_WorldGfx.charaModels_18[Chara_Harry] = harryModel;
 
-    Fs_QueueStartRead(CHARA_FILE_INFOS[1].modelFileIdx, lmHdr);
-    queueIdx = Fs_QueueStartReadTim(CHARA_FILE_INFOS[1].textureFileIdx, FS_BUFFER_1, &image);
+    Fs_QueueStartRead(CHARA_FILE_INFOS[Chara_Harry].modelFileIdx, lmHdr);
+    queueIdx = Fs_QueueStartReadTim(CHARA_FILE_INFOS[Chara_Harry].textureFileIdx, FS_BUFFER_1, &image);
 
     g_WorldGfx.harryModel_164C.charaId_0 = Chara_Harry;
     harryModel->isLoaded_1               = false;
@@ -1572,7 +1572,7 @@ s32 func_8003D21C(s_MapOverlayHeader* arg0) // 0x8003D21C
                 if (curCharaId != curModel->charaId_0) 
                 {
                     cond = true;
-                    for (j = i; j < 4; j++)
+                    for (j = i; j < ARRAY_SIZE(g_WorldGfx.charaModels_CC); j++)
                     {
                         g_WorldGfx.charaModels_CC[j].charaId_0 = Chara_None;
                     }
@@ -1657,9 +1657,9 @@ void Chara_FsImageCalc(s_FsImageDesc* image, s32 charaId, s32 modelIdx) // 0x800
     image->clutY    = clutY;
 }
 
-s32 WorldGfx_CharaModelPresent(s32 charaId) // 0x8003D444
+bool WorldGfx_IsCharaModelPresent(s32 charaId) // 0x8003D444
 {
-    return g_WorldGfx.charaModelsTable_18[charaId] != NULL;
+    return g_WorldGfx.charaModels_18[charaId] != NULL;
 }
 
 void func_8003D460() {}
@@ -1673,7 +1673,7 @@ void func_8003D468(s32 charaId, bool flag) // 0x8003D468
     s32           y;
     s_CharaModel* model;
 
-    model = g_WorldGfx.charaModelsTable_18[charaId];
+    model = g_WorldGfx.charaModels_18[charaId];
     func_80056244(model->lmHdr_8, flag);
 
     rect.x = model->texture_C.clutX;
@@ -1681,7 +1681,7 @@ void func_8003D468(s32 charaId, bool flag) // 0x8003D468
     rect.w = 16;
     rect.h = 16;
 
-    DrawSync(0);
+    DrawSync(SyncMode_Wait);
     StoreImage(&rect, &data);
 
     for (y = 0, i = 0; y < 16; y++)
@@ -1702,12 +1702,12 @@ void func_8003D468(s32 charaId, bool flag) // 0x8003D468
     LoadImage(&rect, &data);
 }
 
-void func_8003D550(s32 charaId, s32 arg1) // 0x8003D550
+void func_8003D550(s32 charaId, s32 blendMode) // 0x8003D550
 {
     s_CharaModel* model;
 
-    model = g_WorldGfx.charaModelsTable_18[charaId];
-    Lm_MaterialFileIdxApply(model->lmHdr_8, CHARA_FILE_INFOS[charaId].textureFileIdx, &model->texture_C, arg1);
+    model = g_WorldGfx.charaModels_18[charaId];
+    Lm_MaterialFileIdxApply(model->lmHdr_8, CHARA_FILE_INFOS[charaId].textureFileIdx, &model->texture_C, blendMode);
     Lm_MaterialFlagsApply(model->lmHdr_8);
 }
 
@@ -1718,7 +1718,7 @@ void WorldGfx_CharaLmBufferAssign(s8 forceFree) // 0x8003D5B4
     u32           dataPtr;
     s_CharaModel* model;
 
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < ARRAY_SIZE(g_WorldGfx.charaModels_CC); i++)
     {
         model = &g_WorldGfx.charaModels_CC[i];
         if ((forceFree >> i) & (1 << 0))
@@ -1729,7 +1729,7 @@ void WorldGfx_CharaLmBufferAssign(s8 forceFree) // 0x8003D5B4
 
     i = 0; 
     g_WorldGfx.charaLmBufferPtr_14 = MAP_CHARA_LM_BUFFER;
-    for (; i < 4; i++)
+    for (; i < ARRAY_SIZE(g_WorldGfx.charaModels_CC); i++)
     {
         model = &g_WorldGfx.charaModels_CC[i];
 
@@ -1749,7 +1749,7 @@ void WorldGfx_CharaFree(s_CharaModel* model) // 0x8003D6A4
 {
     if (model->charaId_0 != Chara_None)
     {
-        g_WorldGfx.charaModelsTable_18[model->charaId_0] = NULL;
+        g_WorldGfx.charaModels_18[model->charaId_0] = NULL;
         CharaModel_Free(model);
     }
 }
@@ -1798,7 +1798,7 @@ s32 WorldGfx_CharaLoad(u32 charaId, s32 modelIdx, s_LmHeader* lmHdr, s_FsImageDe
 
     if (charaId == Chara_None) 
     {
-        g_WorldGfx.charaModelsTable_18[modelCharaId] = NULL;
+        g_WorldGfx.charaModels_18[modelCharaId] = NULL;
         return 0;
     }
 
@@ -1812,10 +1812,10 @@ s32 WorldGfx_CharaLoad(u32 charaId, s32 modelIdx, s_LmHeader* lmHdr, s_FsImageDe
             }
         }
 
-        g_WorldGfx.charaModelsTable_18[modelCharaId] = NULL;
+        g_WorldGfx.charaModels_18[modelCharaId] = NULL;
     }
 
-    g_WorldGfx.charaModelsTable_18[charaId] = model;
+    g_WorldGfx.charaModels_18[charaId] = model;
 
     queueIdx = Fs_QueueStartRead(CHARA_FILE_INFOS[charaId].modelFileIdx, lmHdr);
 
@@ -1847,7 +1847,7 @@ void func_8003D95C() // 0x8003D95C
     {
         if (i != Chara_Harry) 
         {
-            model = g_WorldGfx.charaModelsTable_18[i];
+            model = g_WorldGfx.charaModels_18[i];
             if (model != NULL) 
             {
                 func_8003D9C8(model);
@@ -1865,7 +1865,7 @@ void func_8003D9C8(s_CharaModel* model) // 0x8003D9C8
         model->isLoaded_1 = true;
 
         LmHeader_FixOffsets(model->lmHdr_8);
-        Lm_MaterialFileIdxApply(model->lmHdr_8, CHARA_FILE_INFOS[model->charaId_0].textureFileIdx, &model->texture_C, CHARA_FILE_INFOS[model->charaId_0].field_6_10 % 4);
+        Lm_MaterialFileIdxApply(model->lmHdr_8, CHARA_FILE_INFOS[model->charaId_0].textureFileIdx, &model->texture_C, CHARA_FILE_INFOS[model->charaId_0].materialBlendMode_6_10 % 4);
 
         skel = &model->skeleton_14;
 
@@ -1908,8 +1908,8 @@ void func_8003DA9C(s32 charaId, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 ar
                       D_800C4168.screenBrightness_8);
     }
 
-    func_80045534(&g_WorldGfx.charaModelsTable_18[charaId]->skeleton_14, &g_OrderingTable0[g_ActiveBufferIdx], arg2,
-                  coord, CHARA_FILE_INFOS[charaId].field_6 * 16, ret, CHARA_FILE_INFOS[charaId].field_8);
+    func_80045534(&g_WorldGfx.charaModels_18[charaId]->skeleton_14, &g_OrderingTable0[g_ActiveBufferIdx], arg2,
+                  coord, Q8_TO_Q12(CHARA_FILE_INFOS[charaId].field_6), ret, CHARA_FILE_INFOS[charaId].field_8);
 
     if (arg3 != 0)
     {
@@ -1926,7 +1926,7 @@ void func_8003DD80(s32 modelIdx, s32 arg1) // 0x8003DD80
 {
     s_CharaModel* model;
 
-    model = g_WorldGfx.charaModelsTable_18[modelIdx];
+    model = g_WorldGfx.charaModels_18[modelIdx];
 
     switch (modelIdx)
     {
@@ -2332,9 +2332,9 @@ void func_8003E544(s_Skeleton* skel, s32 arg1) // 0x8003E544
 
 void func_8003E5E8(s32 arg0) // 0x8003E5E8
 {
-    GsOT_TAG* ot;
     s32       i;
     u8        color;
+    GsOT_TAG* ot;
     PACKET*   packet;
     LINE_G2*  line;
 
@@ -2438,16 +2438,16 @@ void func_8003E740() // 0x8003E740
         var_s5 = 0;
     }
 
-    if (temp_s6 >= 0x81 && var_s5 < 0x7FF)
+    if (temp_s6 >= 129 && var_s5 < 2047)
     {
         SetPolyFT4(poly);
         setSemiTrans(poly, 1);
 
         temp_a0 = D_800BCDE8[temp_s2++];
 
-        if ((temp_a0 & 0xFFF) >= 0xD9A)
+        if ((temp_a0 & 0xFFF) >= 3482)
         {
-            D_800A9FB0 -= 0x10 + (temp_a0 & 0xF);
+            D_800A9FB0 -= 16 + (temp_a0 & 0xF);
         }
 
         if (D_800A9FB0 >= 33)
@@ -2455,9 +2455,9 @@ void func_8003E740() // 0x8003E740
             D_800A9FB0 = 0;
         }
 
-        setRGB0(poly, D_800A9FB0 + FP_COLOR(0.1875f), D_800A9FB0 + FP_COLOR(0.1875f), D_800A9FB0 + FP_COLOR(0.1875f));
-        poly->tpage = 0x2C;
-        poly->clut  = 0x1032;
+        setRGB0(poly, D_800A9FB0 + 48, D_800A9FB0 + 48, D_800A9FB0 + 48);
+        poly->tpage = 44;
+        poly->clut  = 4146;
 
         var_a0 = &D_800BCDE8[temp_s2++];
 
@@ -2470,44 +2470,44 @@ void func_8003E740() // 0x8003E740
         SetTransMatrix(&GsIDMATRIX);
 
         sp50.vz = temp_s6;
-        sp50.vx = sp40[0] - 0x33;
-        sp50.vy = sp40[2] - 0x33;
+        sp50.vx = sp40[0] - 51;
+        sp50.vy = sp40[2] - 51;
 
         RotTransPers(&sp50, &sp58, &sp60, &sp60);
 
         poly->x0 = sp10.vx + sp58.vx;
         poly->y0 = sp10.vy + sp58.vy;
-        sp50.vx  = sp40[1] + 0x33;
-        sp50.vy  = sp40[3] - 0x33;
+        sp50.vx  = sp40[1] + 51;
+        sp50.vy  = sp40[3] - 51;
 
         RotTransPers(&sp50, &sp58, &sp60, &sp60);
 
         poly->x1 = sp10.vx + sp58.vx;
         poly->y1 = sp10.vy + sp58.vy;
-        sp50.vx  = -0x33 - sp40[1];
-        sp50.vy  = 0x33 - sp40[3];
+        sp50.vx  = -51 - sp40[1];
+        sp50.vy  = 51 - sp40[3];
 
         RotTransPers(&sp50, &sp58, &sp60, &sp60);
 
         poly->x2 = sp10.vx + sp58.vx;
         poly->y2 = sp10.vy + sp58.vy;
-        sp50.vx  = 0x33 - sp40[0];
-        sp50.vy  = 0x33 - sp40[2];
+        sp50.vx  = 51 - sp40[0];
+        sp50.vy  = 51 - sp40[2];
 
         RotTransPers(&sp50, &sp58, &sp60, &sp60);
 
         poly->x3 = sp10.vx + sp58.vx;
         poly->y3 = sp10.vy + sp58.vy;
 
-        poly->u0 = 0x80;
-        poly->u1 = 0xBF;
-        poly->u2 = 0x80;
-        poly->u3 = 0xBF;
+        poly->u0 = 128;
+        poly->u1 = 191;
+        poly->u2 = 128;
+        poly->u3 = 191;
 
         poly->v0 = 0;
         poly->v1 = 0;
-        poly->v2 = 0x3F;
-        poly->v3 = 0x3F;
+        poly->v2 = 63;
+        poly->v3 = 63;
 
         AddPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[var_s5], poly);
         GsOUT_PACKET_P = (PACKET*)poly + sizeof(POLY_FT4);
@@ -2549,7 +2549,7 @@ void func_8003EBF4(s_MapOverlayHeader* arg0) // 0x8003EBF4
 
     var_v1 = 0;
 
-    if (temp_a1 & 4)
+    if (temp_a1 & (1 << 2))
     {
         var_v1 = (temp_a1 & 3) > 0;
     }
@@ -2728,10 +2728,10 @@ void func_8003F170() // 0x8003F170
     MATRIX          mat;
     VECTOR          sp48;
     SVECTOR         rot;
-    GsCOORDINATE2*  sp60;
     s32             temp_v0;
     u8              temp_v1;
     s32             temp;
+    GsCOORDINATE2*  sp60;
     s_StructUnk3*   ptr2;
     s_SysWork_2288* ptr;
 

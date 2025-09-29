@@ -30,7 +30,7 @@ void sharedFunc_800D6554_0_s00(s_SubCharacter* chara)
         var = func_8006FD90(chara, 1, 0x666, 0xCCC);
     }
 
-    var |= func_80070360(chara, someDist, 0x1000);
+    var |= func_80070360(chara, someDist, Q12(1.0f));
     if (var == 0)
     {
         return;

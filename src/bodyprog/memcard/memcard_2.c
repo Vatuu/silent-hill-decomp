@@ -87,8 +87,8 @@ bool func_80033548() // 0x80033548
     s32                 j;
     s32                 k;
     s32                 var_v1;
-    s_SavegameMetadata* savegameMetaPtr;
     u32                 temp_a2;
+    s_SavegameMetadata* saveMetadata;
 
     sp3C = 1;
 
@@ -248,17 +248,17 @@ bool func_80033548() // 0x80033548
                 {
                     for (k = 0; k < 11; k++)
                     {
-                        savegameMetaPtr = Savegame_MetadataGet(i, j, k);
+                        saveMetadata = Savegame_MetadataGet(i, j, k);
 
-                        g_ActiveSavegameEntry->currentScreenSessionSaves_0 = savegameMetaPtr->field_0;
+                        g_ActiveSavegameEntry->currentScreenSessionSaves_0 = saveMetadata->field_0;
                         g_ActiveSavegameEntry->field_5                     = i;
                         g_ActiveSavegameEntry->fileIdx_6                   = j;
                         g_ActiveSavegameEntry->elementIdx_7                = k;
-                        g_ActiveSavegameEntry->savegameCount_2             = savegameMetaPtr->savegameCount_8;
-                        g_ActiveSavegameEntry->locationId_8                = savegameMetaPtr->locationId_A;
-                        g_ActiveSavegameEntry->field_C                     = savegameMetaPtr;
+                        g_ActiveSavegameEntry->savegameCount_2             = saveMetadata->savegameCount_8;
+                        g_ActiveSavegameEntry->locationId_8                = saveMetadata->locationId_A;
+                        g_ActiveSavegameEntry->field_C                     = saveMetadata;
 
-                        if (savegameMetaPtr->field_0 > 0)
+                        if (saveMetadata->field_0 > 0)
                         {
                             g_ActiveSavegameEntry->type_4 = SavegameEntryType_Save;
 

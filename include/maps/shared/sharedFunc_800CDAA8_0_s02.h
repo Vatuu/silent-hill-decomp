@@ -2,12 +2,12 @@
 
 void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord)
 {
-    s_Collision sp10;
-    s32             sfx;
-    s8              pitch;
-    s8              sp25;
-    s32             headingAngle; // Serves no meaaningful purpose as it's always `FP_ANGLE(0.0f)`.
-    s32             newMoveSpeed;
+    s_Collision coll;
+    s32         sfx;
+    s8          pitch;
+    s8          sp25;
+    s32         headingAngle; // Serves no meaaningful purpose as it's always `FP_ANGLE(0.0f)`.
+    s32         newMoveSpeed;
 
     headingAngle              = FP_ANGLE(0.0f);
     sharedData_800D32A0_0_s02 = 0;
@@ -91,8 +91,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
         headingAngle                                                      = FP_ANGLE(0.0f);
     }
 
-    Collision_Get(&sp10, playerChara->position_18.vx, playerChara->position_18.vz);
-    func_8007FDE0(sp10.field_8, &sfx, &pitch, &sp25);
+    Collision_Get(&coll, playerChara->position_18.vx, playerChara->position_18.vz);
+    func_8007FDE0(coll.field_8, &sfx, &pitch, &sp25);
 
     if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_Unk52)
     {

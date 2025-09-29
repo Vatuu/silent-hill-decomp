@@ -591,13 +591,13 @@ bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
         chara->health_B0 = Q12(40000.0f);
     }
 
-    chara->moveSpeed_38     = 0;
-    chara->headingAngle_3C  = chara->rotation_24.vy;
-    chara->field_D4         = Q12(0.3f);
-    chara->field_E1_0       = 4;
-    chara->field_D8.field_4 = 0;
-    chara->field_D8.field_6 = 0;
-    chara->flags_3E        |= CharaFlag_Unk3;
+    chara->moveSpeed_38       = 0;
+    chara->headingAngle_3C    = chara->rotation_24.vy;
+    chara->field_D4           = Q12(0.3f);
+    chara->field_E1_0         = 4;
+    chara->field_D8.offsetX_4 = Q12(0.0f);
+    chara->field_D8.offsetZ_6 = Q12(0.0f);
+    chara->flags_3E          |= CharaFlag_Unk3;
 
     localChara->properties_E4.larvalStalker.properties_E8[2].val32 = 0;
     localChara->properties_E4.larvalStalker.properties_E8[1].val32 = 0;
@@ -778,13 +778,13 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
         chara->health_B0 = Q12(30000.0f);
     }
 
-    chara->moveSpeed_38     = 0;
-    chara->field_D4         = Q12(0.3f);
-    chara->field_D8.field_4 = 0;
-    chara->field_D8.field_6 = 0;
-    chara->field_E1_0       = 4;
-    chara->headingAngle_3C  = chara->rotation_24.vy;
-    chara->flags_3E        |= CharaFlag_Unk3;
+    chara->moveSpeed_38       = 0;
+    chara->field_D4           = Q12(0.3f);
+    chara->field_D8.offsetX_4 = Q12(0.0f);
+    chara->field_D8.offsetZ_6 = Q12(0.0f);
+    chara->field_E1_0         = 4;
+    chara->headingAngle_3C    = chara->rotation_24.vy;
+    chara->flags_3E          |= CharaFlag_Unk3;
 
     localChara->properties_E4.player.field_F0 = 0;
 
