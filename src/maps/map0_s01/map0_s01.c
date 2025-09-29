@@ -509,7 +509,73 @@ void func_800D4264() {}
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D426C);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D4420);
+void func_800D4420(s_SubCharacter* subChar)
+{
+    VECTOR3* pos;
+    s32 dist0;
+    VECTOR3* vec_F8;
+    u32 temp_v0;
+
+    s32 dist;
+    s32 vec2;
+
+    switch (subChar->model_0.stateStep_3)
+    {
+        case 0:
+            subChar->properties_E4.unk0.properties_120.val32 = Q12(1.5f);
+            subChar->model_0.stateStep_3 = 1;
+            break;
+        case 1:
+            if (Math_Distance2dGet(&subChar->position_18, &subChar->properties_E4.unk0.field_F8) < Q12(0.5f))
+            {
+                subChar->model_0.stateStep_3 = 0;
+            }
+            break;
+    }
+    func_800D53AC(subChar);
+    sharedFunc_800D57C8_0_s01(subChar);
+    switch (func_800D2C0C(subChar, 0x1000))
+    {
+        case 0:
+            dist0 = -1;
+            if (((subChar->properties_E4.unk0.field_F8.vy - subChar->position_18.vy) + 0x332) < 0xFFEU)
+            {
+                dist0 = subChar->field_D4 + 0x266;
+            }
+            pos = &subChar->position_18;
+            vec_F8 = &subChar->properties_E4.unk0.field_F8;
+            dist = Math_Distance2dGet(pos, vec_F8);
+            if ((dist < dist0) && 
+                ( ((FP_ANGLE_NORM_S ((func_80080478(pos, vec_F8) - subChar->rotation_24.vy))) + 0x5B) < 0xB6U))
+            {
+                subChar->model_0.state_2 = 49;
+                subChar->model_0.stateStep_3 = 0;
+            }
+            break;
+
+        case 1:
+        case 2:
+            subChar->model_0.state_2 = 50;
+            subChar->model_0.stateStep_3 = 0;
+            subChar->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
+            break;
+        case 3:
+        case 4:
+            subChar->model_0.state_2 = 51;
+            subChar->model_0.stateStep_3 = 0;
+            if (subChar->health_B0 <= 0)
+            {
+                subChar->properties_E4.player.flags_11C |= PlayerFlag_Unk6;
+            }
+            else
+            {
+                subChar->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
+            }
+            break;
+        default:
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D45BC);
 
@@ -533,64 +599,9 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D53AC);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5638);
 
-s32 func_800D569C(s_SubCharacter* chara, q19_12 vecY, q19_12 dist)
-{
-    q19_12 posY;
-    s32 someY;
-    s32 calcY;
-    q19_12 vecYCpy;
-    q19_12 distCpy;
+#include "maps/shared/sharedFunc_800D569C_0_s01.h" // 0x800D569C
 
-    q19_12 vec_x;
-    q19_12 vec_z;
-
-    vecYCpy = vecY;
-    posY = chara->position_18.vy;
-    distCpy = dist;
-    calcY = func_80080884(chara->position_18.vx, chara->position_18.vz);
-    // @hack: We should not mix unions (npc vs larvalStalker).
-    someY = chara->properties_E4.npc.field_124;
-
-    // @hack: chara->0x110 holds a VECTOR3. This shows up in another function too.
-    // Hard to handle with the current union properties setup we have.
-    vec_x = chara->properties_E4.larvalStalker.properties_E8[10].val32; //0x110 VECTOR3.vx
-    vec_z = chara->properties_E4.larvalStalker.properties_E8[12].val32; //0x110 VECTOR3.vz
-
-    if (someY < calcY)
-    {
-        calcY = someY;
-    }
-    
-    calcY -= Q12(1.7f);
-    someY = func_800808AC(vec_x, vec_z); // collision type ? this returns `caseVar` from func_8008076C
-
-    if (someY == 12 || someY == 0 || someY == 7)
-    {
-        distCpy = 0;
-    }
-    if (posY < calcY)
-    {
-        calcY = posY;
-    }
-    if (distCpy > Q12(12.0f))
-    {
-        vecYCpy = calcY;
-    } 
-    else if (distCpy > Q12(4.0f))
-    {
-        someY = FP_TO(distCpy - Q12(4.0f), Q12_SHIFT) / Q12(8.0f);
-        vecYCpy += FP_MULTIPLY_PRECISE((calcY - vecYCpy), someY, Q12_SHIFT);
-    }
-
-    if (vecYCpy < sharedFunc_800D5274_0_s01()) 
-    {
-        vecYCpy = sharedFunc_800D5274_0_s01();
-    }
-
-    return vecYCpy;
-}
-
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D57C8);
+#include "maps/shared/sharedFunc_800D57C8_0_s01.h" // 0x800D57C8
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D598C);
 
@@ -602,58 +613,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5D80);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5E14);
 
-void func_800D5E78(s_SubCharacter* chara, q19_12 angle) // 0x800D5E78
-{
-    q19_12                           angleDelta;
-    q19_12                           angleCpy;
-    q19_12                           angle0;
-    q19_12                           angle1;
-    s_sharedData_800E21D0_0_s01_sub* ptr;
-    s_sharedData_800E21D0_0_s01*     base;
-
-    angleCpy = angle;
-
-    if (angleCpy > FP_ANGLE(60.0f))
-    {
-        angleCpy = FP_ANGLE(60.0f);
-    }
-    else if (angleCpy < FP_ANGLE(-60.0f))
-    {
-        angleCpy = FP_ANGLE(-60.0f);
-    }
-
-    angleDelta = angleCpy - chara->rotation_24.pad;
-
-    if (angleDelta > FP_ANGLE(0.5f))
-    {
-        angleDelta -= FP_ANGLE(0.5f);
-    }
-    else if (angleDelta >= FP_ANGLE(-0.5f))
-    {
-        angleDelta = FP_ANGLE(0.0f);
-    }
-    else
-    {
-        angleDelta += FP_ANGLE(0.5f);
-    }
-
-    angle0 = FP_ANGLE(90.0f);
-    if (angleDelta <= FP_ANGLE(0.0f))
-    {
-        angle0 = FP_ANGLE(0.0f);
-        if (angleDelta < FP_ANGLE(0.0f))
-        {
-            angle0 = FP_ANGLE(-90.0f);
-        }
-    }
-
-    base = &sharedData_800E21D0_0_s01;
-    ptr = &base->field_B4;
-    ptr->field_BC = angle0;
-    ptr->field_B8 = 0x1800;
-    ptr->field_C0 = angleDelta;
-    ptr->field_B4 = 1;
-}
+#include "maps/shared/sharedFunc_800D5E78_0_s01.h" // 0x800D5E78
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5F00);
 

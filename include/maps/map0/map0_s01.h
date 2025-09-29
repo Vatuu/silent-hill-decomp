@@ -58,8 +58,6 @@ void func_800D3CC4(s_SubCharacter* chara);
 
 void func_800D3DFC(s_SubCharacter* chara);
 
-void func_800D5E78(s_SubCharacter* chara, q19_12 angle);
-
 q19_12 Model_AnimDurationGet(s_Model* model);
 
 void func_800DA778(s32 arg0);
@@ -114,6 +112,9 @@ void MapEvent_ToBeContinued(void);
 
 void MapEvent_CafeCutscene();
 
-s32 func_800D569C(s_SubCharacter* chara, q19_12 vecY, q19_12 dist);
+u32 func_800D2C0C(s_SubCharacter*, s32);
+
+void func_800D53AC(s_SubCharacter*);
+
 
 #endif

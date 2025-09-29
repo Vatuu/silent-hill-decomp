@@ -2254,7 +2254,7 @@ typedef struct _SfxVolume
 typedef struct
 {
     s_AnimInfo  animInfo_0[56];
-    u8          unk_380[2408];
+    s32         unk_380[0x12D][2]; // unknown size, biggest constant index used is 35
     s_SfxVolume sfxVolumes_CE8[11];
     u_Property  properties_D14[4];
     u8          unk_D24[36]; // @hack Might not be part of this struct but disasm refuses to split here.
@@ -2264,21 +2264,12 @@ typedef char static_assertion_sizeof_s_func_800D2E04[(sizeof(s_func_800D2E04) ==
 
 typedef struct
 {
-    s8  unk_0[180];
-    s32 field_B4;
-    s32 field_B8;
-    s32 field_BC;
-    s32 field_C0;
-} s_sharedData_800E21D0_0_s01_sub;
-
-typedef struct
-{
-    s32                             flags_0;
-    s_AnmHeader*                    anmHdr_4;
-    GsCOORDINATE2*                  coords_8;
-    MATRIX*                         matrices_C;
-    s8                              unk_10[64];
-    s_sharedData_800E21D0_0_s01_sub field_B4;
+    s32            flags_0;
+    s_AnmHeader*   anmHdr_4;
+    GsCOORDINATE2* coords_8;
+    MATRIX*        matrices_C;
+    s8             unk_10[0xA4];
+    s32            field_B4[35][4];
 } s_sharedData_800E21D0_0_s01;
 
 extern s_MapPoint2d MAP_POINTS[];
@@ -2932,6 +2923,12 @@ void sharedSymbol_800D0E38_3_s03(s_SubCharacter*);
 void sharedFunc_800D0E80_3_s03(s_SubCharacter*);
 void sharedSymbol_800D0ECC_3_s03(s_SubCharacter*);
 void sharedFunc_800D0F28_3_s03(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
+
+void sharedFunc_800D5E78_0_s01(s_SubCharacter* chara, q19_12 angle);
+
+s32 sharedFunc_800D569C_0_s01(s_SubCharacter* chara, q19_12 vecY, q19_12 dist);
+
+void sharedFunc_800D57C8_0_s01(s_SubCharacter* chara);
 
 static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo)
 {
