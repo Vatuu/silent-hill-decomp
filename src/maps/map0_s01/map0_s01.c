@@ -804,8 +804,6 @@ s32 func_800D569C(s_SubCharacter* chara, q19_12 vecY, q19_12 dist)
     q19_12 vec_x;
     q19_12 vec_z;
 
-    s32 tmp;
-
     vecYCpy = vecY;
     posY = chara->position_18.vy;
     distCpy = dist;
@@ -840,14 +838,7 @@ s32 func_800D569C(s_SubCharacter* chara, q19_12 vecY, q19_12 dist)
     } 
     else if (distCpy > Q12(4.0f))
     {
-        // "optimised" `someY = (var_s3 - 0x4000) / 8;` Writing it directly actually producess less code.
-        tmp = (distCpy - Q12(4.0f)) << 12;
-        someY = tmp >> 15;
-        if (tmp < 0)
-        {
-            someY = (tmp + SHRT_MAX) >> 15;
-        }
-
+        someY = FP_TO(distCpy - Q12(4.0f), Q12_SHIFT) / Q12(8.0f);
         vecYCpy += FP_MULTIPLY_PRECISE((calcY - vecYCpy), someY, Q12_SHIFT);
     }
 
