@@ -511,13 +511,11 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D426C);
 
 void func_800D4420(s_SubCharacter* subChar)
 {
-    VECTOR3* pos;
     s32 dist0;
-    VECTOR3* vec_F8;
-    u32 temp_v0;
+    s32 temp_v0;
+    s32 temp_v0_2;
 
     s32 dist;
-    s32 vec2;
 
     switch (subChar->model_0.stateStep_3)
     {
@@ -532,24 +530,29 @@ void func_800D4420(s_SubCharacter* subChar)
             }
             break;
     }
+
     func_800D53AC(subChar);
     sharedFunc_800D57C8_0_s01(subChar);
+
     switch (func_800D2C0C(subChar, 0x1000))
     {
         case 0:
             dist0 = -1;
-            if (((subChar->properties_E4.unk0.field_F8.vy - subChar->position_18.vy) + 0x332) < 0xFFEU)
+            temp_v0 = subChar->properties_E4.unk0.field_F8.vy - subChar->position_18.vy;
+            if (temp_v0 > Q12(-0.2f) && temp_v0 < Q12(0.8f))
             {
-                dist0 = subChar->field_D4 + 0x266;
+                dist0 = subChar->field_D4 + Q12(0.15f);
             }
-            pos = &subChar->position_18;
-            vec_F8 = &subChar->properties_E4.unk0.field_F8;
-            dist = Math_Distance2dGet(pos, vec_F8);
-            if ((dist < dist0) && 
-                ( ((FP_ANGLE_NORM_S ((func_80080478(pos, vec_F8) - subChar->rotation_24.vy))) + 0x5B) < 0xB6U))
+
+            dist = Math_Distance2dGet(&subChar->position_18, &subChar->properties_E4.unk0.field_F8);
+            if (dist < dist0)
             {
-                subChar->model_0.state_2 = 49;
-                subChar->model_0.stateStep_3 = 0;
+                temp_v0_2 = FP_ANGLE_NORM_S(func_80080478(&subChar->position_18, &subChar->properties_E4.unk0.field_F8) - subChar->rotation_24.vy);
+                if (temp_v0_2 >= FP_ANGLE(-8.0f) && temp_v0_2 < FP_ANGLE(8.0f))
+                {
+                    subChar->model_0.state_2 = 49;
+                    subChar->model_0.stateStep_3 = 0;
+                }
             }
             break;
 
