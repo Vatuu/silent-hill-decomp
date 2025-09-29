@@ -793,7 +793,71 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D53AC);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5638);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D569C);
+s32 func_800D569C(s_SubCharacter* chara, q19_12 vecY, q19_12 dist)
+{
+    q19_12 posY;
+    s32 someY;
+    s32 calcY;
+    q19_12 vecYCpy;
+    q19_12 distCpy;
+
+    q19_12 vec_x;
+    q19_12 vec_z;
+
+    s32 tmp;
+
+    vecYCpy = vecY;
+    posY = chara->position_18.vy;
+    distCpy = dist;
+    calcY = func_80080884(chara->position_18.vx, chara->position_18.vz);
+    // @hack: We should not mix unions (npc vs larvalStalker).
+    someY = chara->properties_E4.npc.field_124;
+
+    // @hack: chara->0x110 holds a VECTOR3. This shows up in another function too.
+    // Hard to handle with the current union properties setup we have.
+    vec_x = chara->properties_E4.larvalStalker.properties_E8[10].val32; //0x110 VECTOR3.vx
+    vec_z = chara->properties_E4.larvalStalker.properties_E8[12].val32; //0x110 VECTOR3.vz
+
+    if (someY < calcY)
+    {
+        calcY = someY;
+    }
+    
+    calcY -= Q12(1.7f);
+    someY = func_800808AC(vec_x, vec_z); // collision type ? this returns `caseVar` from func_8008076C
+
+    if (someY == 12 || someY == 0 || someY == 7)
+    {
+        distCpy = 0;
+    }
+    if (posY < calcY)
+    {
+        calcY = posY;
+    }
+    if (distCpy > Q12(12.0f))
+    {
+        vecYCpy = calcY;
+    } 
+    else if (distCpy > Q12(4.0f))
+    {
+        // "optimised" `someY = (var_s3 - 0x4000) / 8;` Writing it directly actually producess less code.
+        tmp = (distCpy - Q12(4.0f)) << 12;
+        someY = tmp >> 15;
+        if (tmp < 0)
+        {
+            someY = (tmp + SHRT_MAX) >> 15;
+        }
+
+        vecYCpy += FP_MULTIPLY_PRECISE((calcY - vecYCpy), someY, Q12_SHIFT);
+    }
+
+    if (vecYCpy < sharedFunc_800D5274_0_s01()) 
+    {
+        vecYCpy = sharedFunc_800D5274_0_s01();
+    }
+
+    return vecYCpy;
+}
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D57C8);
 
