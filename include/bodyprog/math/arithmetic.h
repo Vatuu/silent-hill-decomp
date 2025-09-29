@@ -29,7 +29,7 @@
 
 /** @brief Clamps a value to the range `[min, max]`.
  *
- * @param x Value to be clamped.
+ * @param x Value to clamp.
  * @param min Lower range.
  * @param max Upper range.
  * @return `x` clamped to the range `[min, max]`.
