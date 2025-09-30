@@ -321,7 +321,107 @@ INCLUDE_RODATA("asm/maps/map0_s01/nonmatchings/map0_s01", sharedData_800CAA98_0_
 
 #include "maps/shared/sharedFunc_800D3DFC_0_s01.h" // 0x800D3DFC
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D3EB8);
+void func_800D3EB8(s_SubCharacter* arg0)
+{
+    s32 deltaTime10;
+    bool temp_s2;
+    bool var_s1;
+    s32 temp_s3;
+    u32 animStatus;
+    s32 animStatus12;
+    s32 animStatusActive;
+    u32 stateStep;
+
+    animStatus = arg0->model_0.anim_4.status_0;
+    animStatus12 = ANIM_STATUS(12, true);
+    func_800D5638(arg0);
+    animStatusActive = animStatus | 1;
+    stateStep =  arg0->model_0.stateStep_3;
+
+    switch (stateStep)
+    {
+        case 0:
+            temp_s3 = func_800D5F00(arg0);
+            var_s1 = 0;
+            temp_s2 = arg0->position_18.vy >= Q12(8.0f);
+            if (func_800808AC(arg0->position_18.vx, arg0->position_18.vz) == 7)
+            {
+                var_s1 = (arg0->position_18.vy >= func_80080884(arg0->position_18.vx, arg0->position_18.vz));
+            }
+            if (temp_s2)
+            {
+                sharedFunc_800D2C0C_0_s01(arg0, 0);
+                arg0->position_18.vx = g_SysWork.player_4C.chara_0.position_18.vx + 0x64000;
+                arg0->position_18.vz = g_SysWork.player_4C.chara_0.position_18.vz + 0x64000;
+                sharedFunc_800D3DFC_0_s01(arg0);
+                return;
+            }
+            if (var_s1)
+            {
+                sharedFunc_800D2C0C_0_s01(arg0, 0);
+                sharedFunc_800D2364_0_s01(arg0);
+                arg0->position_18.vx = g_SysWork.player_4C.chara_0.position_18.vx + 0x64000;
+                arg0->position_18.vz = g_SysWork.player_4C.chara_0.position_18.vz + 0x64000;
+                sharedFunc_800D3DFC_0_s01(arg0);
+                return;
+            }
+            if (arg0->health_B0 <= 0)
+            {
+                sharedFunc_800D2C0C_0_s01(arg0, 0);
+                if ((animStatus == ANIM_STATUS(26, true)) && (temp_s3 == 1))
+                {
+                    arg0->health_B0 = -1;
+                    func_800622B8(3, arg0, 9, 2);
+                    arg0->model_0.stateStep_3 = temp_s3;
+                    sharedFunc_800D3DFC_0_s01(arg0);
+                    return;
+                }
+            }
+            else
+            {
+                arg0->flags_3E |= 2;
+                if (sharedFunc_800D2C0C_0_s01(arg0, 0x1000) == 4)
+                {
+                    if (arg0->health_B0 <= 0)
+                    {
+                        arg0->model_0.anim_4.status_0 = ANIM_STATUS(5, false);
+                        arg0->properties_E4.player.flags_11C |= PlayerFlag_Unk6;
+                        return;
+                    }
+                    arg0->model_0.anim_4.status_0 = ANIM_STATUS(12, false);
+                    arg0->model_0.stateStep_3 = 2;
+                    arg0->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
+                    return;
+                }
+
+                deltaTime10 = g_DeltaTime0 * 10;
+                if (deltaTime10 < arg0->health_B0)
+                {
+                    arg0->health_B0 -= deltaTime10;
+                    return;
+                }
+                if (arg0->health_B0 > 0)
+                {
+                    arg0->health_B0 = 0;
+                    return;
+                }
+                return;
+            }
+            break;
+        case 1:
+            sharedFunc_800D2C0C_0_s01(arg0, 0);
+            break;
+        case 2:
+            sharedFunc_800D2C0C_0_s01(arg0, 0x800);
+            if (animStatusActive != animStatus12)
+            {
+                arg0->model_0.stateStep_3 = 0;
+            }
+            break;
+        default:
+            break;
+    }
+}
 
 void func_800D4114() {}
 
