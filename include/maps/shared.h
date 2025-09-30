@@ -2262,10 +2262,11 @@ typedef struct
     s32         unk_380[0x12D][2]; // unknown size, biggest constant index used is 35
     s_SfxVolume sfxVolumes_CE8[11];
     u_Property  properties_D14[4];
-    u8          unk_D24[36]; // @hack Might not be part of this struct but disasm refuses to split here.
-    u8*         ptr_D48;     // Pointer to some rodata.
+    s8          unk_D24[36];
+    s8*         ptr_D48[5];
+    s16         field_D5C[4][2];
 } s_func_800D2E04;
-typedef char static_assertion_sizeof_s_func_800D2E04[(sizeof(s_func_800D2E04) == 3404) ? 1 : -1];
+typedef char static_assertion_sizeof_s_func_800D2E04[(sizeof(s_func_800D2E04) == 3436) ? 1 : -1];
 
 typedef struct
 {
