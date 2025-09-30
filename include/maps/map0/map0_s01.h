@@ -54,10 +54,6 @@ void func_800D16C4(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 /** `arg0` is a struct pointer, might be `s_SubCharacter`. */
 void func_800D2364(s_SubCharacter* chara);
 
-void func_800D3CC4(s_SubCharacter* chara);
-
-void func_800D3DFC(s_SubCharacter* chara);
-
 q19_12 Model_AnimDurationGet(s_Model* model);
 
 void func_800DA778(s32 arg0);
@@ -111,8 +107,6 @@ s32 func_800D20FC();
 void MapEvent_ToBeContinued(void);
 
 void MapEvent_CafeCutscene();
-
-u32 func_800D2C0C(s_SubCharacter*, s32);
 
 void func_800D53AC(s_SubCharacter*);
 

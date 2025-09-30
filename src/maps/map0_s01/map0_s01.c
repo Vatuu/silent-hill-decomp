@@ -275,7 +275,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D2B4C_0_s01
 
 #include "maps/shared/sharedFunc_800D2BF4_0_s01.h" // 0x800D2BF4
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D2C0C);
+INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D2C0C_0_s01); // 0x800D2C0C
 
 #include "maps/shared/sharedFunc_800D2E04_0_s01.h" // 0x800D2E04
 
@@ -321,103 +321,9 @@ INCLUDE_RODATA("asm/maps/map0_s01/nonmatchings/map0_s01", D_800CB7E4);
 
 INCLUDE_RODATA("asm/maps/map0_s01/nonmatchings/map0_s01", D_800CB7F0);
 
-void func_800D3CC4(s_SubCharacter* chara)
-{
-    u32  keyframeIdx;
-    bool cond;
+#include "maps/shared/sharedFunc_800D3CC4_0_s01.h" // 0x800D3CC4
 
-    sharedData_800E21D0_0_s01.flags_0 |= 1 << 31;
-    cond = false;
-
-    switch (chara->model_0.stateStep_3)
-    {
-        case 0:
-            cond = true;
-            chara->model_0.anim_4.status_0 = ANIM_STATUS(23, true);
-            chara->model_0.stateStep_3 = 1;
-        
-        case 1:
-            chara->properties_E4.player.flags_11C |= 1 << 16;
-            break;
-
-        case 2:
-            cond = true;
-            chara->model_0.anim_4.status_0 = ANIM_STATUS(24, true);
-            chara->model_0.stateStep_3 = 3;
-
-        case 3:
-            chara->properties_E4.player.flags_11C |= 1 << 16;
-            break;
-
-        case 4:
-            cond = true;
-            chara->model_0.anim_4.status_0 = ANIM_STATUS(15, true);
-            chara->model_0.stateStep_3 = 5;
-
-        case 5:
-            chara->properties_E4.player.flags_11C &= ~(1 << 16);
-            break;
-
-        case 6:
-            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(19, true))
-            {
-                chara->model_0.stateStep_3 = 7;
-            }
-            break;
-
-        case 7:
-            chara->model_0.state_2 = 0;
-            chara->model_0.stateStep_3 = 13;
-            sharedSymbol_800D3B0C_0_s01(chara);
-            break;
-    }
-
-    func_800D2C0C(chara, 0);
-
-    if (cond)
-    {
-        keyframeIdx = func_80044918(&chara->model_0.anim_4)->startKeyframeIdx_C;
-        chara->model_0.anim_4.keyframeIdx_8 = keyframeIdx;
-        chara->model_0.anim_4.time_4 = Q12(keyframeIdx);
-    }
-}
-
-void func_800D3DFC(s_SubCharacter* chara)
-{
-    s32 angle; // Maybe not angle.
-    s32 flags;
-
-    if (chara->field_40 < 0x20)
-    {
-        flags = g_MapOverlayHeader.charaSpawns_24C[0][chara->field_40].data.spawnInfo.flags_6;
-        switch (flags)
-        {
-            case 1:
-            case 8:
-            case 9:
-                angle = FP_ANGLE(0.0f);
-                break;
-
-            case 10:
-                angle = FP_ANGLE(360.0f);
-                break;
-
-            case 2:
-            case 3:
-                angle = FP_ANGLE(108.0f);
-                break;
-
-            default:
-                angle = FP_ANGLE(252.0f);
-                break;
-        }
-
-        if (func_80080514() >= angle)
-        {
-            func_80037DC4(chara);
-        }
-    }
-}
+#include "maps/shared/sharedFunc_800D3DFC_0_s01.h" // 0x800D3DFC
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D3EB8);
 
@@ -534,7 +440,7 @@ void func_800D4420(s_SubCharacter* subChar)
     func_800D53AC(subChar);
     sharedFunc_800D57C8_0_s01(subChar);
 
-    switch (func_800D2C0C(subChar, 0x1000))
+    switch (sharedFunc_800D2C0C_0_s01(subChar, 0x1000))
     {
         case 0:
             dist0 = -1;

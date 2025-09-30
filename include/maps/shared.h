@@ -2929,11 +2929,17 @@ void sharedFunc_800D0E80_3_s03(s_SubCharacter*);
 void sharedSymbol_800D0ECC_3_s03(s_SubCharacter*);
 void sharedFunc_800D0F28_3_s03(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 
-void sharedFunc_800D5E78_0_s01(s_SubCharacter* chara, q19_12 angle);
+u32 sharedFunc_800D2C0C_0_s01(s_SubCharacter*, s32);
+
+void sharedFunc_800D3CC4_0_s01(s_SubCharacter* chara);
+
+void sharedFunc_800D3DFC_0_s01(s_SubCharacter* chara);
 
 s32 sharedFunc_800D569C_0_s01(s_SubCharacter* chara, q19_12 vecY, q19_12 dist);
 
 void sharedFunc_800D57C8_0_s01(s_SubCharacter* chara);
+
+void sharedFunc_800D5E78_0_s01(s_SubCharacter* chara, q19_12 angle);
 
 static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo)
 {
