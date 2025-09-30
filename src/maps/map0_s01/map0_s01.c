@@ -602,7 +602,30 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D529C);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D53AC);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5638);
+void func_800D5638(s_SubCharacter* arg0)
+{
+    s32 idx0;
+    s32 idx1;
+    s_sharedData_800E21D0_0_s01* dst;
+    s_func_800D2E04* src;
+
+    src = &sharedData_800CAA98_0_s01;
+    dst = &sharedData_800E21D0_0_s01;
+
+    idx0 = 3;
+    dst->field_B4[idx0][2] = 0;
+    idx0 = 0;
+    dst->field_B4[idx0][2] = src->unk_380[2][0];
+    dst->field_B4[idx0][1] = src->unk_380[2][1];
+
+    idx0 = 1;
+    dst->field_B4[idx0][2] = sharedData_800CAA98_0_s01.unk_380[0xB][0];
+    dst->field_B4[idx0][1] = sharedData_800CAA98_0_s01.unk_380[0xB][1];
+    idx0 = 3;
+    dst->field_B4[idx0][1] = sharedData_800CAA98_0_s01.unk_380[0x1E][1];
+
+    sharedFunc_800D5E78_0_s01(arg0, 0);
+}
 
 #include "maps/shared/sharedFunc_800D569C_0_s01.h" // 0x800D569C
 
