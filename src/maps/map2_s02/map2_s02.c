@@ -441,7 +441,7 @@ INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800D8244_0_s01
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800D82B8_0_s01); // 0x800E1204
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800D8714_0_s01); // 0x800E1660
+#include "maps/shared/sharedFunc_800D8714_0_s01.h" // 0x800E1660
 
 #include "maps/shared/sharedFunc_800D87FC_0_s01.h" // 0x800E1748
 
