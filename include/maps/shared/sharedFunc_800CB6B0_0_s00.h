@@ -239,7 +239,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                 sharedData_800DD592_0_s00 = 1;
     #endif
 #elif defined(MAP5_S00) || defined(MAP6_S03)
-            sharedData_800E32D4_0_s00 = 3; // @hack Mis-share? Is this meant to be `sharedData_800DD591_0_s00`?
+            sharedData_800E32D4_0_s00 = 3;
 #else
             sharedData_800DD592_0_s00 = 1;
 #endif

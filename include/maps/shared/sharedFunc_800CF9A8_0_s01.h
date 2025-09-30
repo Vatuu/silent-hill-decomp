@@ -1,41 +1,68 @@
 /** @brief Reset function for a snow particle */
-void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* rand)
+void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* rand) // 0x800D0274
 {
+    #define SNOW_Y_START_SPEED  Q12(0.0245f)
+
+#if defined(MAP1_S06)
+    #define SNOW_XZ_SPAWN_RANGE 6
+#elif defined(MAP7_S03)
+    #define SNOW_XZ_SPAWN_RANGE 8
+#else
     #define SNOW_XZ_SPAWN_RANGE 5
-    #define SNOW_Y_START_SPEED  100
+#endif
 
-    VECTOR3* pos;
+    s_Particle* partCpy;
 
-    pos = &part->position0_0;
+    partCpy = part;
 
-    if (arg0 == 0)
+    switch (arg0)
     {
-        if (sharedData_800DD592_0_s00 != 0)
-        {
-            part->type_1F = 0;
-        }
-        else
-        {
-            part->type_1F = 1;
-        }
+        case 0:
+// TODO: Probably better to change this to the maps that include it instead.
+#if !defined(MAP1_S02) && !defined(MAP1_S03) && !defined(MAP4_S02) && !defined(MAP4_S03) && \
+    !defined(MAP4_S04) && !defined(MAP4_S05) && !defined(MAP5_S00) && !defined(MAP6_S03)
+            if (sharedData_800DD592_0_s00 != 0)
+            {
+                part->type_1F = ParticleType_Snow;
+            }
+            else
+            {
+                part->type_1F = ParticleType_Unk1;
+            }
 
-        // Set start position.
-        part->position0_0.vy = sharedData_800E323C_0_s00.vy;
+            partCpy->position0_0.vy = sharedData_800E323C_0_s00.vy;
+            partCpy->movement_18.vz = Q12(0.0f);
+            partCpy->movement_18.vx = Q12(0.0f);
+            partCpy->movement_18.vy = SNOW_Y_START_SPEED;
 
-        // Set downward movement.
-        part->movement_18.vz = 0;
-        part->movement_18.vx = 0;
-        part->movement_18.vy = SNOW_Y_START_SPEED;
+            sharedFunc_800D01BC_0_s00(rand, part, SNOW_XZ_SPAWN_RANGE);
 
-        // Set random start XZ position.
-        sharedFunc_800D01BC_0_s00(rand, pos, SNOW_XZ_SPAWN_RANGE);
+            partCpy->position1_C.vz = Q12(0.0f);
+            partCpy->position1_C.vy = Q12(0.0f);
+            partCpy->position1_C.vx = Q12(0.0f);
+#endif
+            break;
 
-        // 2nd position unused for snow.
-        part->position1_C.vz = 0;
-        part->position1_C.vy = 0;
-        part->position1_C.vx = 0;
+        case 1:
+#if defined(MAP0_S00) || defined(MAP1_S02) || defined(MAP1_S03) || defined(MAP4_S02) || \
+    defined(MAP4_S03) || defined(MAP4_S04) || defined(MAP4_S05) || defined(MAP5_S00) || \
+    defined(MAP6_S00) || defined(MAP6_S03)
+            partCpy->type_1F = ParticleType_Rain;
+            partCpy->position0_0.vy = sharedData_800E323C_0_s00.vy + Q12(Rng_GenerateInt(Rng_Rand16(), 0, 2));
+
+#if defined(MAP5_S00) || defined(MAP6_S03)
+            partCpy->position1_C.vy = partCpy->position0_0.vy - Q12(0.125f);
+            partCpy->movement_18.vy = Q12(0.009033203125f);
+#else
+            partCpy->position1_C.vy = sharedData_800E323C_0_s00.vy;
+            partCpy->movement_18.vy = Q12(0.03675f);
+#endif
+            sharedFunc_800D01BC_0_s00(rand, part, 6);
+            partCpy->position1_C.vx = partCpy->position0_0.vx;
+            partCpy->position1_C.vz = partCpy->position0_0.vz;
+#endif
+            break;
     }
 
-    // Step to active state.
-    part->stateStep_1E++;
+    partCpy->stateStep_1E++;
 }

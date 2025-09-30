@@ -139,49 +139,7 @@ bool func_800D012C(VECTOR3* pos, MATRIX* unused0, s32* unused1) // 0x800D012C
 
 #include "maps/shared/sharedFunc_800D01BC_0_s00.h" // 0x800D01BC
 
-void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* arg2) // 0x800D0274
-{
-    s_Particle* partCpy;
-
-    partCpy = part;
-
-    switch (arg0)
-    {
-        case 0:
-            if (sharedData_800DD592_0_s00 != 0)
-            {
-                part->type_1F = ParticleType_Snow;
-            }
-            else
-            {
-                part->type_1F = ParticleType_Unk1;
-            }
-
-            partCpy->position0_0.vy = sharedData_800E323C_0_s00.vy;
-            partCpy->movement_18.vz = Q12(0.0f);
-            partCpy->movement_18.vx = Q12(0.0f);
-            partCpy->movement_18.vy = Q12(0.0245f);
-
-            sharedFunc_800D01BC_0_s00(arg2, part, 5);
-            partCpy->position1_C.vz = Q12(0.0f);
-            partCpy->position1_C.vy = Q12(0.0f);
-            partCpy->position1_C.vx = Q12(0.0f);
-            break;
-
-        case 1:
-            partCpy->type_1F = ParticleType_Rain;
-            partCpy->position0_0.vy = sharedData_800E323C_0_s00.vy + Q12(Rng_GenerateInt(Rng_Rand16(), 0, 2));
-
-            partCpy->position1_C.vy = sharedData_800E323C_0_s00.vy;
-            partCpy->movement_18.vy = Q12(0.03675f);
-            sharedFunc_800D01BC_0_s00(arg2, part, 6);
-            partCpy->position1_C.vx = partCpy->position0_0.vx;
-            partCpy->position1_C.vz = partCpy->position0_0.vz;
-            break;
-    }
-
-    partCpy->stateStep_1E++;
-}
+#include "maps/shared/sharedFunc_800CF9A8_0_s01.h" // 0x800D0274
 
 void func_800D0394(s32 arg0, VECTOR3* vecs) // 0x800D0394
 {
