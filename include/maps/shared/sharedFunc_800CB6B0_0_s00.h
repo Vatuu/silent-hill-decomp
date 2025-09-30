@@ -1,6 +1,5 @@
 #if defined(MAP7_S03)
-// TODO: Move these to map .c / .h?
-#define PARTICLE_COUNT_MAX 450
+// TODO: Move to map .c / .h
 extern s32 D_800F23D4;
 #endif
 
@@ -236,11 +235,11 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
 #if defined(MAP0_S00) || defined(MAP1_S02) || defined(MAP1_S03) || defined(MAP4_S02) || \
     defined(MAP4_S03) || defined(MAP4_S04) || defined(MAP4_S05) || defined(MAP6_S00)
             sharedData_800E32D4_0_s00 = 30;
-#if defined(MAP0_S00) || defined(MAP6_S00)
-            sharedData_800DD592_0_s00 = 1;
-#endif
+    #if defined(MAP0_S00) || defined(MAP6_S00)
+                sharedData_800DD592_0_s00 = 1;
+    #endif
 #elif defined(MAP5_S00) || defined(MAP6_S03)
-            *(u16*)&sharedData_800E5768_1_s02 = 3; // @hack Mis-share? Is this meant to be `sharedData_800DD591_0_s00`?
+            sharedData_800E32D4_0_s00 = 3; // @hack Mis-share? Is this meant to be `sharedData_800DD591_0_s00`?
 #else
             sharedData_800DD592_0_s00 = 1;
 #endif

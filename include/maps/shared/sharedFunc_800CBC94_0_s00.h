@@ -29,8 +29,8 @@
  */
 void sharedFunc_800CBC94_0_s00(s_Particle* parts)
 {
-    #define SNOW_COUNT_MAX       300
-    #define SNOW_SPAWN_COUNT_MAX 150
+    #define SNOW_COUNT_MAX       PARTICLE_COUNT_MAX
+    #define SNOW_SPAWN_COUNT_MAX (PARTICLE_COUNT_MAX/2)
     #define SNOW_REST_TICKS_MAX  16
 
     s32         i;
@@ -75,7 +75,11 @@ void sharedFunc_800CBC94_0_s00(s_Particle* parts)
             part->type_1F = settingsState;
         }
 
+#if defined(MAP5_S00) || defined(MAP6_S03)
+        density = 1;
+#else
         density = 10;
+#endif
     }
 
     if (settingsState)
@@ -86,8 +90,8 @@ void sharedFunc_800CBC94_0_s00(s_Particle* parts)
         // Set wind speed on XZ plane.
         if (snowType >= SnowType_LightWindy)
         {
-            sharedData_800DFB68_0_s00 = SNOW_COUNT_MAX * 2;
-            sharedData_800DFB64_0_s00 = SNOW_COUNT_MAX * 2;
+            sharedData_800DFB68_0_s00 = SNOW_COUNT_MAX_LIGHT * 2;
+            sharedData_800DFB64_0_s00 = SNOW_COUNT_MAX_LIGHT * 2;
         }
         else
         {
@@ -96,7 +100,11 @@ void sharedFunc_800CBC94_0_s00(s_Particle* parts)
         }
 
         // Set start position.
+#if defined(MAP1_S06)
+        sharedData_800E323C_0_s00.vy = Q12(-10.0f);
+#else
         sharedData_800E323C_0_s00.vy = Q12(-6.0f);
+#endif
 
         // Particle type determines particle multiplier for spawn loop.
         spawnMult = (snowType == SnowType_Light || snowType == SnowType_LightWindy) ? 1 : 2;
@@ -139,7 +147,11 @@ void sharedFunc_800CBC94_0_s00(s_Particle* parts)
                         // Step to rest state when Y position reaches 0.
                         if (part->position0_0.vy == 0)
                         {
+#if defined(MAP1_S06)
+                            part->stateStep_1E = 0;
+#else
                             part->stateStep_1E++;
+#endif
                         }
                         break;
 
@@ -154,7 +166,10 @@ void sharedFunc_800CBC94_0_s00(s_Particle* parts)
             }
         }
     }
-#if defined(MAP0_S00)
+#if defined(MAP0_S00) || defined(MAP1_S02) || defined(MAP1_S03) || defined(MAP4_S02) || \
+    defined(MAP4_S03) || defined(MAP4_S04) || defined(MAP4_S05) || defined(MAP5_S00) || \
+    defined(MAP6_S00) || defined(MAP6_S03)
     sharedData_800E32CC_0_s00 = sharedData_800DD58C_0_s00;
 #endif
 }
+

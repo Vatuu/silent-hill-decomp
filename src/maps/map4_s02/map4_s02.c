@@ -11,13 +11,13 @@ INCLUDE_RODATA("asm/maps/map4_s02/nonmatchings/map4_s02", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CBBBC_0_s00.h" // 0x800CCBFC
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", sharedFunc_800CBC94_0_s00); // 0x800CCCD4
+#include "maps/shared/sharedFunc_800CBC94_0_s00.h" // 0x800CCCD4
 
 #include "maps/shared/Particle_Update.h" // 0x800CCFF0
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", sharedFunc_800CEFF4_0_s00); // 0x800CD634
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800CDED8);
+#include "maps/shared/sharedFunc_800CF2A4_0_s01.h" // 0x800CDED8
 
 #include "maps/shared/sharedFunc_800CEFD0_1_s02.h" // 0x800CDF74
 

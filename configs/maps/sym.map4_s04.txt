@@ -25,6 +25,7 @@ sharedFunc_800CBBBC_0_s00   = 0x800CC054; // type:func
 sharedFunc_800CBC94_0_s00   = 0x800CC12C; // type:func
 Particle_Update             = 0x800CC448; // type:func
 sharedFunc_800CEFF4_0_s00   = 0x800CCA70; // type:func
+sharedFunc_800CF2A4_0_s01   = 0x800CD160; // type:func
 sharedFunc_800CEFD0_1_s02   = 0x800CD1FC; // type:func
 sharedFunc_800CFFF8_0_s00   = 0x800CD4E0; // type:func
 sharedFunc_800D0690_1_s03   = 0x800CD5A0; // type:func

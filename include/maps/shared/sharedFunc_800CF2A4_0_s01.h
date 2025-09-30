@@ -10,6 +10,9 @@ void sharedFunc_800CF2A4_0_s01(s32 arg0, s_Particle* part, u16* rand, s32* delta
     switch (arg0)
     {
         case 0:
+// TODO: Probably better to change this to the maps that include it instead.
+#if !defined(MAP1_S02) && !defined(MAP1_S03) && !defined(MAP4_S02) && !defined(MAP4_S03) && \
+    !defined(MAP4_S04) && !defined(MAP4_S05) && !defined(MAP5_S00) && !defined(MAP6_S03)
             // Random value has been generated in caller and `rand` argument.
             // Add random X offset.
             part->movement_18.vx += Rng_GenerateInt(*rand, -7, 7);
@@ -26,17 +29,20 @@ void sharedFunc_800CF2A4_0_s01(s32 arg0, s_Particle* part, u16* rand, s32* delta
 
             // Apply movement to position over time.
             part->position0_0.vy += TIME_STEP_SCALE(*deltaTime, (part->movement_18.vy >> 1) << 2);
+#endif
             break;
 
         case 1:
-    #if defined(MAP0_S00)
+#if defined(MAP0_S00) || defined(MAP1_S02) || defined(MAP1_S03) || defined(MAP4_S02) || \
+    defined(MAP4_S03) || defined(MAP4_S04) || defined(MAP4_S05) || defined(MAP5_S00) || \
+    defined(MAP6_S00) || defined(MAP6_S03)
             part->position1_C.vx = pos->vx;
             part->position1_C.vz = pos->vz;
             part->position1_C.vy = pos->vy - part->movement_18.vy;
             part->movement_18.vy += sharedData_800E32D4_0_s00;
 
             pos->vy += TIME_STEP_SCALE(*deltaTime, part->movement_18.vy << 2);
-    #endif
+#endif
             break;
     }
 

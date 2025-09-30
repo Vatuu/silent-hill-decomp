@@ -2169,7 +2169,12 @@ typedef enum _StalkerAnim
     { Anim_Update0, ANIM_STATUS(25, true), false, ANIM_STATUS(24, true), { Q12(0) }, 260, 296 }
 };*/
 
+#if defined(MAP7_S03)
+#define PARTICLE_COUNT_MAX 450
+#else
 #define PARTICLE_COUNT_MAX 300
+#endif
+#define SNOW_COUNT_MAX_LIGHT 300
 
 typedef enum
 {
