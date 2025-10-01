@@ -183,3 +183,4 @@ sharedData_800E39D8_0_s00   = 0x800F3C30; // type:s32
 sharedData_800D32A0_0_s02   = 0x800F3C34; // type:s32
 sharedData_800E21D0_0_s01   = 0x800F3C40; // type:s32
 sharedData_800E2330_0_s01   = 0x800F3DA0; // type:s32 - unknown type
+sharedData_800E2370_0_s01   = 0x800F3DE0; //type:s32 size:0x08

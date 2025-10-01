@@ -551,12 +551,6 @@ typedef struct
     q3_12 field_12; // Z offset?
 } s_func_80070400_1;
 
-typedef struct
-{
-    s32 field_0;
-    s32 field_4;
-} s_func_8006F250;
-
 // ========
 // STRUCTS
 // ========
@@ -3816,7 +3810,7 @@ void func_8006EE0C(s_func_8006DCE0_6C* arg0, s32 arg1, s_SubCharacter* chara);
 
 void func_8006EEB8(s_func_8006DCE0* arg0, s_SubCharacter* chara);
 
-void func_8006F250(s_func_8006F250* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void func_8006F250(s32* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 void func_8006F338(s_func_8006F338* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
