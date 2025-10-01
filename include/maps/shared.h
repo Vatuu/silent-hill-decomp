@@ -2448,6 +2448,8 @@ extern CVECTOR sharedData_800E325C_0_s00;
 
 extern s_2Vectors sharedData_800E326C_0_s00;
 
+extern s32 D_800E2370[2];
+
 typedef struct
 {
     VECTOR3 field_0; // Rotation?

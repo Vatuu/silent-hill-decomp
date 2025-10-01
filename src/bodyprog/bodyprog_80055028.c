@@ -6444,7 +6444,7 @@ void func_8006EEB8(s_func_8006DCE0* arg0, s_SubCharacter* chara) // 0x8006EEB8
     arg0->field_28 = 0;
 }
 
-void func_8006F250(s_func_8006F250* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8006F250
+void func_8006F250(s32* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8006F250
 {
     s32              i;
     s_func_8006F338* scratch;
@@ -6463,13 +6463,13 @@ void func_8006F250(s_func_8006F250* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4
 
     if (scratch->field_28 == Q12(1.0f))
     {
-        arg0->field_0 = Q12(32.0f);
-        arg0->field_4 = Q12(-16.0f);
+        arg0[0] = Q12(32.0f);
+        arg0[1] = Q12(-16.0f);
     }
     else
     {
-        arg0->field_0 = Math_MulFixed(Vc_VectorMagnitudeCalc(scratch->field_10, Q12(0.0f), scratch->field_14), scratch->field_28, Q12_SHIFT);
-        arg0->field_4 = scratch->field_2C;
+        arg0[0] = Math_MulFixed(Vc_VectorMagnitudeCalc(scratch->field_10, Q12(0.0f), scratch->field_14), scratch->field_28, Q12_SHIFT);
+        arg0[1] = scratch->field_2C;
     }
 }
 
