@@ -317,7 +317,7 @@ bool func_800713E8(s32 animStatus, s_SubCharacter* chara, s32 keyframe0, s32 key
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800706E4", func_80071620); // 0x80071620
 
-void Player_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coord) // 0x800717D0
+void Player_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800717D0
 {
     // Called by `GameState_InGame_Update`, might be player update function.
     // - `chara` always `&g_SysWork.player_4C.chara_0`.
@@ -353,24 +353,24 @@ void Player_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
 
         if (!g_Player_DisableControl)
         {
-            Player_LogicUpdate(chara, extra, coord);
+            Player_LogicUpdate(chara, extra, coords);
         }
         else
         {
-            g_MapOverlayHeader.func_B8(chara, extra, coord);
+            g_MapOverlayHeader.func_B8(chara, extra, coords);
         }
 
         if (!g_Player_DisableControl)
         {
-            func_8007C0D8(chara, extra, coord);
+            func_8007C0D8(chara, extra, coords);
         }
         else
         {
-            g_MapOverlayHeader.func_BC(chara, extra, coord);
+            g_MapOverlayHeader.func_BC(chara, extra, coords);
         }
 
-        Player_AnimUpdate(chara, extra, anmHdr, coord);
-        func_8007D090(chara, extra, coord);
+        Player_AnimUpdate(chara, extra, anmHdr, coords);
+        func_8007D090(chara, extra, coords);
     }
 
     D_800C45B0.vx = 0;
@@ -385,27 +385,27 @@ static inline void func_80071968_Switch0()
     {
         switch (g_SysWork.playerCombatInfo_38.equippedWeapon_F)
         {
-            case WeaponId_AttackVariantGet(EquippedWeaponId_KitchenKnife, AttackInputType_Tap): 
-            case WeaponId_AttackVariantGet(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_RockDrill, AttackInputType_Tap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Hammer, AttackInputType_Tap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Katana, AttackInputType_Tap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Axe, AttackInputType_Tap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_KitchenKnife, AttackInputType_Hold):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_SteelPipe, AttackInputType_Hold):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_RockDrill, AttackInputType_Hold):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Hammer, AttackInputType_Hold):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Chainsaw, AttackInputType_Hold):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Katana, AttackInputType_Hold):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Axe, AttackInputType_Hold):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_KitchenKnife, AttackInputType_Multitap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_SteelPipe, AttackInputType_Multitap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_RockDrill, AttackInputType_Multitap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Hammer, AttackInputType_Multitap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Chainsaw, AttackInputType_Multitap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Katana, AttackInputType_Multitap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Axe, AttackInputType_Multitap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_KitchenKnife, AttackInputType_Tap): 
+            case WEAPON_ATTACK_ID(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_RockDrill, AttackInputType_Tap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Hammer, AttackInputType_Tap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Katana, AttackInputType_Tap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Axe, AttackInputType_Tap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_KitchenKnife, AttackInputType_Hold):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_SteelPipe, AttackInputType_Hold):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_RockDrill, AttackInputType_Hold):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Hammer, AttackInputType_Hold):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Chainsaw, AttackInputType_Hold):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Katana, AttackInputType_Hold):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Axe, AttackInputType_Hold):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_KitchenKnife, AttackInputType_Multitap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_SteelPipe, AttackInputType_Multitap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_RockDrill, AttackInputType_Multitap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Hammer, AttackInputType_Multitap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Chainsaw, AttackInputType_Multitap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Katana, AttackInputType_Multitap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Axe, AttackInputType_Multitap):
                 func_8003DD80(1, 34); // `arg2` holds two values, split with `& 0xF0` / `& 0x0F` later on.
                 break;
 
@@ -419,15 +419,15 @@ static inline void func_80071968_Switch0()
                 func_8003DD80(1, 36);
                 break;
 
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Unk3, AttackInputType_Tap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Unk8, AttackInputType_Tap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Unk9, AttackInputType_Tap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Unk3, AttackInputType_Hold):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Unk8, AttackInputType_Hold):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Unk9, AttackInputType_Hold):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Unk3, AttackInputType_Multitap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Unk8, AttackInputType_Multitap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Unk9, AttackInputType_Multitap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk3, AttackInputType_Tap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk8, AttackInputType_Tap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk9, AttackInputType_Tap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk3, AttackInputType_Hold):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk8, AttackInputType_Hold):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk9, AttackInputType_Hold):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk3, AttackInputType_Multitap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk8, AttackInputType_Multitap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk9, AttackInputType_Multitap):
             case 31:
                 break;
         }
@@ -444,27 +444,27 @@ static inline void func_80071968_Switch1()
     {
         switch (g_SysWork.playerCombatInfo_38.equippedWeapon_F)
         {
-            case WeaponId_AttackVariantGet(EquippedWeaponId_KitchenKnife, AttackInputType_Tap): 
-            case WeaponId_AttackVariantGet(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_RockDrill, AttackInputType_Tap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Hammer, AttackInputType_Tap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Katana, AttackInputType_Tap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Axe, AttackInputType_Tap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_KitchenKnife, AttackInputType_Hold):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_SteelPipe, AttackInputType_Hold):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_RockDrill, AttackInputType_Hold):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Hammer, AttackInputType_Hold):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Chainsaw, AttackInputType_Hold):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Katana, AttackInputType_Hold):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Axe, AttackInputType_Hold):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_KitchenKnife, AttackInputType_Multitap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_SteelPipe, AttackInputType_Multitap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_RockDrill, AttackInputType_Multitap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Hammer, AttackInputType_Multitap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Chainsaw, AttackInputType_Multitap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Katana, AttackInputType_Multitap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Axe, AttackInputType_Multitap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_KitchenKnife, AttackInputType_Tap): 
+            case WEAPON_ATTACK_ID(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_RockDrill, AttackInputType_Tap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Hammer, AttackInputType_Tap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Katana, AttackInputType_Tap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Axe, AttackInputType_Tap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_KitchenKnife, AttackInputType_Hold):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_SteelPipe, AttackInputType_Hold):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_RockDrill, AttackInputType_Hold):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Hammer, AttackInputType_Hold):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Chainsaw, AttackInputType_Hold):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Katana, AttackInputType_Hold):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Axe, AttackInputType_Hold):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_KitchenKnife, AttackInputType_Multitap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_SteelPipe, AttackInputType_Multitap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_RockDrill, AttackInputType_Multitap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Hammer, AttackInputType_Multitap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Chainsaw, AttackInputType_Multitap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Katana, AttackInputType_Multitap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Axe, AttackInputType_Multitap):
                 func_8003DD80(1, 18);
                 break;
 
@@ -478,15 +478,15 @@ static inline void func_80071968_Switch1()
                 func_8003DD80(1, 20);
                 break;
 
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Unk3, AttackInputType_Tap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Unk8, AttackInputType_Tap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Unk9, AttackInputType_Tap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Unk3, AttackInputType_Hold):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Unk8, AttackInputType_Hold):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Unk9, AttackInputType_Hold):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Unk3, AttackInputType_Multitap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Unk8, AttackInputType_Multitap):
-            case WeaponId_AttackVariantGet(EquippedWeaponId_Unk9, AttackInputType_Multitap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk3, AttackInputType_Tap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk8, AttackInputType_Tap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk9, AttackInputType_Tap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk3, AttackInputType_Hold):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk8, AttackInputType_Hold):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk9, AttackInputType_Hold):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk3, AttackInputType_Multitap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk8, AttackInputType_Multitap):
+            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk9, AttackInputType_Multitap):
             case 31:
                 break;
         }
@@ -497,7 +497,7 @@ static inline void func_80071968_Switch1()
     }
 }
 
-void Player_AnimUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, s_AnmHeader* anmHdr, GsCOORDINATE2* coord) // 0x80071968
+void Player_AnimUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x80071968
 {
     s_AnimInfo* animInfo;
 
@@ -696,13 +696,13 @@ void Player_AnimUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, s_Anm
         g_SysWork.player_4C.extra_128.disabledAnimBones_18 = HARRY_UPPER_BODY_BONE_MASK;
 
         animInfo = &HARRY_BASE_ANIM_INFOS[chara->model_0.anim_4.status_0];
-        animInfo->updateFunc_0(&chara->model_0, anmHdr, coord, animInfo);
+        animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
 
         // Re-enable upper body bones, disable lower body bones.
         g_SysWork.player_4C.extra_128.disabledAnimBones_18 = HARRY_LOWER_BODY_BONE_MASK;
 
         animInfo = &HARRY_BASE_ANIM_INFOS[extra->model_0.anim_4.status_0];
-        animInfo->updateFunc_0(&extra->model_0, anmHdr, coord, animInfo);
+        animInfo->updateFunc_0(&extra->model_0, anmHdr, coords, animInfo);
         return;
     }
 
@@ -711,13 +711,13 @@ void Player_AnimUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, s_Anm
     chara->model_0.anim_4.status_0                     = ANIM_STATUS(HarryAnim_Still, false);
 
     animInfo = &HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)];
-    animInfo->updateFunc_0(&chara->model_0, anmHdr, coord, animInfo);
+    animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
 
     // Re-enable upper body bones, disable lower body bones.
     g_SysWork.player_4C.extra_128.disabledAnimBones_18 = HARRY_LOWER_BODY_BONE_MASK;
 
     animInfo = &HARRY_BASE_ANIM_INFOS[extra->model_0.anim_4.status_0];
-    animInfo->updateFunc_0(&extra->model_0, anmHdr, coord, animInfo);
+    animInfo->updateFunc_0(&extra->model_0, anmHdr, coords, animInfo);
 
     if (chara->model_0.anim_4.status_0 == HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].status_6)
     {
@@ -725,7 +725,7 @@ void Player_AnimUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, s_Anm
     }
 }
 
-void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord)
+void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords)
 {
     SVECTOR       playerAngles;
     s16           headingAngle0;
@@ -733,7 +733,6 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
     s16           sp1C;
     s16           sp1E;
     s32           temp_a2;
-    s_Model**     new_var;
     s32           temp_s0;
     s16           temp_v0;
     s32           var_v1_5;
@@ -750,8 +749,9 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
     s16           var_s7;
     s32           npcIdx;
     s32           animStatus;
-    s_Model*      model;
     s32           temp;
+    s_Model**     models; // Maybe model pointer array?
+    s_Model*      model;
 
     animStatus = ANIM_STATUS(HarryAnim_Still, false);
     
@@ -999,7 +999,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             g_Player_HeadingAngle =
             temp                  = headingAngle0;
 
-            if ((*new_var) != NULL) // @hack Required for match.
+            if ((*models) != NULL) // @hack Required for match.
             {
                 g_Player_HeadingAngle += FP_ANGLE(0.0f);
             }
@@ -2094,9 +2094,9 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
     chara->moveSpeed_38        = D_800C4550;
     chara->field_34           += g_DeltaTime2;
     chara->rotationSpeed_2C.vy = (D_800C454C << 8) / g_DeltaTime0;
-    coord->flg                 = false;
+    coords->flg                 = false;
                 
-    func_80096E78(&chara->rotation_24, &coord->coord);
+    func_80096E78(&chara->rotation_24, &coords->coord);
 }
 
 void Player_UpperBodyStateUpdate(s_MainCharacterExtra* extra, e_PlayerUpperBodyState upperState, s32 unused, s32 arg3) // 0x80073FC0
@@ -6391,7 +6391,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
     }
 }
 
-void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord) // 0x8007C0D8
+void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords) // 0x8007C0D8
 {
     s_Collision coll;
     VECTOR3     sp20;
@@ -6553,9 +6553,9 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
     }
 
     chara->properties_E4.player.positionY_EC = D_800C4590.field_C;
-    coord->coord.t[0]                        = Q12_TO_Q8(chara->position_18.vx);
-    coord->coord.t[1]                        = Q12_TO_Q8(chara->position_18.vy);
-    coord->coord.t[2]                        = Q12_TO_Q8(chara->position_18.vz);
+    coords->coord.t[0]                        = Q12_TO_Q8(chara->position_18.vx);
+    coords->coord.t[1]                        = Q12_TO_Q8(chara->position_18.vy);
+    coords->coord.t[2]                        = Q12_TO_Q8(chara->position_18.vz);
 }
 
 void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007C800
@@ -7085,7 +7085,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
     }
 }
 
-void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord) // 0x8007D090
+void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords) // 0x8007D090
 {
     s32 temp_a1_3;
     s32 temp_v0;
@@ -7232,9 +7232,9 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                 D_800AF212 = CLAMP(D_800AF212, FP_ANGLE(-56.25), FP_ANGLE(56.25));
                 D_800AF210 = CLAMP(D_800AF210, FP_ANGLE(-33.75f), FP_ANGLE(33.75f));
 
-                func_80044F14(&coord[1], 0, D_800AF212 >> 1, D_800AF210);
-                shRotMatrixZ(D_800AF212 >> 1, &coord[4].coord);
-                shRotMatrixZ(D_800AF212 >> 1, &coord[8].coord);
+                func_80044F14(&coords[1], 0, D_800AF212 >> 1, D_800AF210);
+                shRotMatrixZ(D_800AF212 >> 1, &coords[4].coord);
+                shRotMatrixZ(D_800AF212 >> 1, &coords[8].coord);
             }
             break;
 
@@ -7284,16 +7284,16 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                 }
             }
 
-            func_80044F14(&coord[1], 0, D_800AF212 >> 1, D_800AF210);
-            shRotMatrixZ(D_800AF212 >> 1, &coord[4].coord);
-            shRotMatrixZ(D_800AF212 >> 1, &coord[8].coord);
+            func_80044F14(&coords[1], 0, D_800AF212 >> 1, D_800AF210);
+            shRotMatrixZ(D_800AF212 >> 1, &coords[4].coord);
+            shRotMatrixZ(D_800AF212 >> 1, &coords[8].coord);
             break;
 
         case PlayerState_Unk180:
             if (D_800AF210 != 0)
             {
-                func_80044F14(&coord[1], 0, 0,     0xC0);
-                func_80044F14(&coord[2], 0, 0x140, 0xE0);
+                func_80044F14(&coords[1], 0, 0,     0xC0);
+                func_80044F14(&coords[2], 0, 0x140, 0xE0);
             }
             break;
 
@@ -7301,7 +7301,7 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             if (g_SysWork.player_4C.extra_128.state_1C >= PlayerState_Unk52 &&
                 g_SysWork.player_4C.extra_128.state_1C <  PlayerState_Unk59)
             {
-                func_80044F14(&coord[2], 0, 0, D_800AF210);
+                func_80044F14(&coords[2], 0, 0, D_800AF210);
             }
             else
             {

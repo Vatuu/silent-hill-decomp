@@ -1609,8 +1609,8 @@ typedef struct _MapOverlayHeader
     void              (*func_AC)(); // func(?) only map4_s03, map4_s05.
     void              (*func_B0)(); // func(?) only map4_s03, map4_s05.
     void              (*func_B4)(); // func(?) only map1_s03, map4_s05, map6_s01, map6_s02, map5_s01.
-    void              (*func_B8)(s_SubCharacter*, s_MainCharacterExtra*, GsCOORDINATE2*);
-    void              (*func_BC)(s_SubCharacter*, s_MainCharacterExtra*, GsCOORDINATE2*);
+    void              (*func_B8)(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
+    void              (*func_BC)(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
     void              (*func_C0)(); // func(?).
     void              (*func_C4)(); // func(?).
     void              (*freezePlayerControl_C8)();
@@ -1653,7 +1653,7 @@ typedef struct _MapOverlayHeader
     void              (*func_15C)(); // func(?) only map5_s01.
     void              (*func_160)(); // func(?) only map5_s01.
     void              (*func_164)(); // func(?) only map5_s01.
-    void              (*func_168)(s32, s32, s32);
+    void              (*func_168)(s32, s32 mapId, s32);
     void              (*func_16C)(VECTOR3*, s16);
     void              (*func_170)(); // func(?).
     void              (*func_174)(); // func(?).
@@ -4266,9 +4266,9 @@ s32 func_800706E4();
 /** Special player SFX handler for heavy breath and damage. */
 bool func_80071620(u8 animStatus, s_SubCharacter*, s32, s32 sfx);
 
-void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord);
+void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
 
-void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord);
+void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
 
 void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord);
 

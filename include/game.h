@@ -52,8 +52,14 @@ struct _Model;
 #define HAS_MAP(mapIdx) \
     ((((u32*)&g_SavegamePtr->hasMapsFlags_164)[(mapIdx) / 32] >> ((mapIdx) % 32)) & (1 << 0))
 
-#define WeaponId_AttackVariantGet(weaponId, type) \
-	((weaponId) + ((type) * 10))
+/** @brief Gets the weapon attack ID based on an attack input type.
+ *
+ * @param weaponId Weapon ID.
+ * @param attackInputType Attack input type.
+ * @return Weapon attack ID.
+ */
+#define WEAPON_ATTACK_ID(weaponId, attackInputType) \
+	((weaponId) + ((attackInputType) * 10))
 
 /** @brief Packs an animation status containing the animation index and active flag.
  *
@@ -628,7 +634,6 @@ typedef enum _AttackInputType
  * If the player perform a tap attack the id doesn't change, if they perform a hold
  * attack the Id is multiplied by 10 and if the player performs a multitap attack
  * the Id multiplies by 20.
- *
  *
  * See `func_80071968`.
  */
@@ -1273,7 +1278,7 @@ typedef struct _PlayerCombat
 {
     VECTOR3 field_0;
     s8      unk_C[3];
-    s8      equippedWeapon_F; /** `e_EquippedWeaponId` */
+    s8      equippedWeapon_F; /** `e_EquippedWeaponId` | See `WEAPON_ATTACK_ID`. maybe "weapon attack ID" is more accurate? */
     u8      currentWeaponAmmo_10;
     u8      totalWeaponAmmo_11;
     s8      weaponInventoryIdx_12; /** Index of the currently equipped weapon in the inventory. */
