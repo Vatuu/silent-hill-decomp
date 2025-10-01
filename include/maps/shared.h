@@ -2450,6 +2450,8 @@ extern s_2Vectors sharedData_800E326C_0_s00;
 
 extern s32 sharedData_800E2370_0_s01[2];
 
+extern s32 sharedData_800E22E4_0_s01;
+
 typedef struct
 {
     VECTOR3 field_0; // Rotation?
@@ -2943,6 +2945,10 @@ s32 sharedFunc_800D569C_0_s01(s_SubCharacter* chara, q19_12 vecY, q19_12 dist);
 void sharedFunc_800D57C8_0_s01(s_SubCharacter* chara);
 
 void sharedFunc_800D5E78_0_s01(s_SubCharacter* chara, q19_12 angle);
+
+s32 sharedFunc_800D6A60_0_s01(VECTOR3* vec0, VECTOR3* vec1, s_SubCharacter* chara, s32 arg3, VECTOR3* vec2);
+
+void sharedFunc_800D6C7C_0_s01(VECTOR* arg0, s_SubCharacter* arg1, s32 arg2, VECTOR3* arg3);
 
 static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo)
 {

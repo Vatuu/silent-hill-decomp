@@ -6,8 +6,6 @@
 #include "game.h"
 #include "types.h"
 
-extern s32 D_800E22E4;
-
 extern s8 D_800CBAD4;
 
 extern u16 D_800DE124;
@@ -123,9 +121,5 @@ void func_800D4E84(s_SubCharacter*);
 void func_800D529C(s_SubCharacter* chara, s32 thousand, s32 angle);
 
 void func_800D598C(s_SubCharacter* chara);
-
-s32 func_800D6A60(VECTOR3* vec0, VECTOR3* vec1, s_SubCharacter* chara, s32 arg3, VECTOR3* vec2);
-
-void func_800D6C7C(VECTOR* arg0, s_SubCharacter* arg1, s32 arg2, VECTOR3* arg3);
 
 #endif
