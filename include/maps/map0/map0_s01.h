@@ -54,6 +54,8 @@ void func_800D16C4(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 /** `arg0` is a struct pointer, might be `s_SubCharacter`. */
 void func_800D2364(s_SubCharacter* chara);
 
+void func_800D426C(s_SubCharacter* chara);
+
 void func_800D4420(s_SubCharacter* chara);
 
 q19_12 Model_AnimDurationGet(s_Model* model);
@@ -122,7 +124,7 @@ void func_800D5638(s_SubCharacter* chara);
 
 void func_800D4E84(s_SubCharacter*);
 
-void func_800D529C(s_SubCharacter* chara, s32 thousand, s32 angle);
+void func_800D529C(s_SubCharacter* chara, q19_12 arg1, q19_12 angle);
 
 void func_800D598C(s_SubCharacter* chara);
 

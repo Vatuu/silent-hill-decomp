@@ -714,7 +714,7 @@ typedef enum _PlayerFlags
     PlayerFlag_Moving         = 1 << 15
 } e_PlayerFlags;
 
-/** @brief Unk0 character flags */
+/** @brief Unk0 character flags. */
 typedef enum _CharaUnk0Flags
 {
     CharaUnk0Flag_None  = 0,
@@ -1197,7 +1197,7 @@ typedef struct _SubCharPropertiesUnk0
     u_Property properties_108;
     u_Property properties_10C;
     VECTOR3    field_110;
-    s32        flags_11C;
+    s32        flags_11C; /** `e_CharaUnk0Flags` */
     u_Property properties_120;
     u_Property properties_124;
 } s_SubCharaPropertiesUnk0;

@@ -525,34 +525,32 @@ void func_800D425C() {}
 
 void func_800D4264() {}
 
-void func_800D426C(s_SubCharacter* chara)
+void func_800D426C(s_SubCharacter* chara) // 0x800D426C
 {
-    s32 var_v0;
-    u32 temp_v0_2;
-    u8 temp_v0;
     s32 animStatus;
 
     animStatus = chara->model_0.anim_4.status_0;
+
     if (chara->model_0.stateStep_3 != 1)
     {
-        if (chara->model_0.stateStep_3 == 0 && animStatus == ANIM_STATUS(2, true) && chara->model_0.anim_4.keyframeIdx_8 < 0x200C)
+        if (chara->model_0.stateStep_3 == 0 && animStatus == ANIM_STATUS(2, true) && chara->model_0.anim_4.keyframeIdx_8 < 8204)
         {
             chara->properties_E4.unk0.properties_120.val32 = Q12(4.0f);
             chara->model_0.stateStep_3 = 1;
-            chara->properties_E4.unk0.flags_11C |= 0x20;
-            chara->flags_3E |= 4;
+            chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk5;
+            chara->flags_3E |= CharaFlag_Unk3;
         }
     }
-    else if ((animStatus | 1) == ANIM_STATUS(19, true))
+    else if ((animStatus | 0x1) == ANIM_STATUS(19, true))
     {
         chara->model_0.stateStep_3 = 2;
         chara->properties_E4.unk0.properties_120.val32 = Q12(4.0f);
     }
 
-    func_800D529C(chara, 0x1000, func_80080478(&chara->position_18, &g_SysWork.player_4C.chara_0.position_18));
+    func_800D529C(chara, Q12(1.0f), func_80080478(&chara->position_18, &g_SysWork.player_4C.chara_0.position_18));
     func_800D598C(chara);
 
-    switch (sharedFunc_800D2C0C_0_s01(chara, Q12(1.0f))) // Chara_TakeDamage(chara, mulitplier) ?
+    switch (sharedFunc_800D2C0C_0_s01(chara, Q12(1.0f)))
     {
         case 0:
             if (!chara->properties_E4.unk0.properties_120.val32 ||
@@ -564,14 +562,17 @@ void func_800D426C(s_SubCharacter* chara)
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk4;
                 return;
             }
+
         default:
             return;
+
         case 1:
         case 2:
             chara->model_0.state_2 = 50;
             chara->model_0.stateStep_3 = 0;
             chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             return;
+
         case 3:
         case 4:
             chara->model_0.state_2 = 51;
@@ -588,7 +589,7 @@ void func_800D426C(s_SubCharacter* chara)
     }
 }
 
-void func_800D4420(s_SubCharacter* chara)
+void func_800D4420(s_SubCharacter* chara) // 0x800D4420
 {
     q19_12 dist0;
     q19_12 deltaY;
@@ -675,28 +676,30 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D4E84);
 
 #include "maps/shared/sharedFunc_800D5274_0_s01.h" // 0x800D5274
 
-void func_800D529C(s_SubCharacter* arg0, s32 thousand, s32 angle)
+void func_800D529C(s_SubCharacter* chara, q19_12 arg1, q19_12 angle) // 0x800D529C
 {
-    s32 posX;
-    s32 posZ;
-    s32 x;
-    s32 z;
-    s32 y;
-    s32 calcY;
-    s32 someY;
-    s32 someConst;
+    q19_12 posX;
+    q19_12 posZ;
+    q19_12 x;
+    q19_12 z;
+    q19_12 y;
+    s32    calcY;
+    s32    someY;
+    s32    someConst;
 
-    posX = arg0->position_18.vx;
-    posZ = arg0->position_18.vz;
-    someConst = 0x1800; // } @hack permuter find.
-    arg0++;             // }
-    arg0--;             // }
-    x = posX + FP_MULTIPLY_PRECISE(thousand, Math_Sin(angle), Q12_SHIFT);
-    z = posZ + FP_MULTIPLY_PRECISE(thousand, Math_Cos(angle), Q12_SHIFT);
+    posX = chara->position_18.vx;
+    posZ = chara->position_18.vz;
 
+    // @hack Permuter find.
+    someConst = 0x1800;
+    chara++;
+    chara--;
+
+    x = posX + FP_MULTIPLY_PRECISE(arg1, Math_Sin(angle), Q12_SHIFT);
+    z = posZ + FP_MULTIPLY_PRECISE(arg1, Math_Cos(angle), Q12_SHIFT);
 
     calcY = func_80080884(x, z);
-    someY = arg0->properties_E4.unk0.properties_124.val32;
+    someY = chara->properties_E4.unk0.properties_124.val32;
     if (someY < calcY)
     {
         calcY = someY;
@@ -709,15 +712,15 @@ void func_800D529C(s_SubCharacter* arg0, s32 thousand, s32 angle)
         y = sharedFunc_800D5274_0_s01();
     }
 
-    arg0->properties_E4.unk0.field_F8.vx = x;
-    arg0->properties_E4.unk0.field_F8.vy = y;
-    arg0->properties_E4.unk0.field_F8.vz = z;
-    func_800D4E84(arg0);
+    chara->properties_E4.unk0.field_F8.vx = x;
+    chara->properties_E4.unk0.field_F8.vy = y;
+    chara->properties_E4.unk0.field_F8.vz = z;
+    func_800D4E84(chara);
 }
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D53AC);
 
-void func_800D5638(s_SubCharacter* chara)
+void func_800D5638(s_SubCharacter* chara) // 0x800D5638
 {
     s32                          idx0;
     s32                          idx1;
