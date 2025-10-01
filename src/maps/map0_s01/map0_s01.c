@@ -618,10 +618,10 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D53AC);
 
 void func_800D5638(s_SubCharacter* chara)
 {
-    s32 idx0;
-    s32 idx1;
+    s32                          idx0;
+    s32                          idx1;
     s_sharedData_800E21D0_0_s01* dst;
-    s_func_800D2E04* src;
+    s_func_800D2E04*             src;
 
     src = &sharedData_800CAA98_0_s01;
     dst = &sharedData_800E21D0_0_s01;
@@ -633,12 +633,12 @@ void func_800D5638(s_SubCharacter* chara)
     dst->field_B4[idx0][1] = src->unk_380[2][1];
 
     idx0 = 1;
-    dst->field_B4[idx0][2] = sharedData_800CAA98_0_s01.unk_380[0xB][0];
-    dst->field_B4[idx0][1] = sharedData_800CAA98_0_s01.unk_380[0xB][1];
+    dst->field_B4[idx0][2] = sharedData_800CAA98_0_s01.unk_380[11][0];
+    dst->field_B4[idx0][1] = sharedData_800CAA98_0_s01.unk_380[11][1];
     idx0 = 3;
-    dst->field_B4[idx0][1] = sharedData_800CAA98_0_s01.unk_380[0x1E][1];
+    dst->field_B4[idx0][1] = sharedData_800CAA98_0_s01.unk_380[30][1];
 
-    sharedFunc_800D5E78_0_s01(chara, 0);
+    sharedFunc_800D5E78_0_s01(chara, FP_ANGLE(0.0f));
 }
 
 #include "maps/shared/sharedFunc_800D569C_0_s01.h" // 0x800D569C
@@ -788,7 +788,7 @@ void func_800DA7AC() // 0x800DA7AC
 
 void func_800DA7FC() // 0x800DA7FC
 {
-    s32 var0;
+    s32 flags;
     s32 var1;
 
     var1 = 0x553;
@@ -799,11 +799,11 @@ void func_800DA7FC() // 0x800DA7FC
             var1 = 0xF0000;
             if (Savegame_EventFlagGet(EventFlag_39) && g_GameWork.soundCmd_5B2 == 9)
             {
-                var0 = 2;
+                flags = 2;
             }
             else
             {
-                var0 = 0x201;
+                flags = (1 << 0) | (1 << 9);
             }
         }
         else if (Savegame_EventFlagGet(EventFlag_47))
@@ -811,25 +811,25 @@ void func_800DA7FC() // 0x800DA7FC
             if (!Savegame_EventFlagGet(EventFlag_48))
             {
                 var1 = 0xF0000;
-                var0 = 0x100;
+                flags = 1 << 8;
             }
             else
             {
                 var1 = 0x200;
-                var0 = 0x201;
+                flags = (1 << 0) | (1 << 9);
             }
         }
         else
         {
-            var0 = 1;
+            flags = 1 << 0;
         }
     }
     else
     {
-        var0 = 1;
+        flags = 1 << 0;
     }
 
-    func_80035F4C(var0, var1, NULL);
+    func_80035F4C(flags, var1, NULL);
 }
 
 void Gfx_LoadingScreen_StageString() // 0x800DA8A4

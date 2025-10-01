@@ -2260,6 +2260,7 @@ extern s16 g_SavegameCount;
  */
 extern s32 g_DemoLoadAttempCount;
 
+/** Values capped at 127. */
 extern s8 D_800BCD50[8];
 
 extern u32 D_800BCD58;
@@ -3962,7 +3963,7 @@ bool func_80035E44();
 
 void func_80035ED0();
 
-void func_80035F4C(s32 arg0, s32 arg1, u8* arg2);
+void func_80035F4C(s32 flags, s32 arg1, u8* arg2);
 
 void func_800363D0();
 

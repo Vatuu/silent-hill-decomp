@@ -828,7 +828,7 @@ void func_80035DB4(s32 arg0) // 0x80035DB4
         g_MapOverlayHeader.func_10(arg0);
         if (arg0 == 0 && D_800BCD5C == 0)
         {
-            func_80035F4C(1, 0xF0000, 0);
+            func_80035F4C(1 << 0, 0xF0000, 0);
         }
     }
 }
@@ -894,7 +894,7 @@ void func_80035ED0() // 0x80035ED0
     g_SysWork.field_2748[8] = 0;
 }
 
-void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
+void func_80035F4C(s32 flags, s32 arg1, u8* arg2) // 0x80035F4C
 {
     s16  temp_v0;
     s32  var_a0;
@@ -903,16 +903,16 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
     s32  var_v1;
     s32  temp_s2;
     s32  i;
-    s32  var_s1;
+    s32  flagsCpy;
     s32  var_s3;
     s32  var_s4;
     s32  var_t0;
-    s32  var_v0_2;
+    bool cond;
     s32  temp_s7;
     s16* ptr;
     u8*  var_t4;
 
-    var_s1 = arg0;
+    flagsCpy = flags;
     var_t4 = arg2;
     ptr    = g_SysWork.field_2748;
 
@@ -923,12 +923,12 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
 
     if (g_SysWork.player_4C.chara_0.health_B0 <= Q12(0.0f) || g_SysWork.sysState_8 == SysState_GameOver)
     {
-        var_s1 &= 1 << 8;
-        var_s1 |= 1 << 0;
+        flagsCpy &= 1 << 8;
+        flagsCpy |= 1 << 0;
         arg1    = 0x333;
     }
     
-    if ((var_s1 & (1 << 8)) == 0)
+    if ((flagsCpy & (1 << 8)) == 0)
     {
         if (D_800A9A1C > 0 && g_SavegamePtr->flags_AC & (1 << 0))
         {
@@ -938,17 +938,17 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
 
     if (g_SysWork.field_22A0 & (1 << 7))
     {
-        var_s1                = (1 << 0) | (1 << 9);
+        flagsCpy              = (1 << 0) | (1 << 9);
         g_SysWork.field_22A0 |= 1 << 1;
     }
 
-    if (var_s1 & (1 << 0))
+    if (flagsCpy & (1 << 0))
     {
-        var_s1 &= (1 << 8) | (1 << 9);
+        flagsCpy &= (1 << 8) | (1 << 9);
     }
     else
     {
-        var_s1 ^= 1 << 0;
+        flagsCpy ^= 1 << 0;
     }
 
     for (i = 0, temp_s7 = 8; i < 9; i++)
@@ -973,7 +973,7 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
         } 
         else 
         {
-            if ((var_s1 >> i) & (1 << 0)) 
+            if ((flagsCpy >> i) & (1 << 0)) 
             {
                 var_t0 = FP_MULTIPLY(g_DeltaTime1, arg1, Q12_SHIFT - 1); // Should be multiplied by 2 but doesn't match.
                 var_a0 = Q12(1.0f);
@@ -1019,16 +1019,16 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
             var_v1 = FP_MULTIPLY_PRECISE(var_v1, temp_v0, Q12_SHIFT);
         }
 
-        var_v1 = FP_MULTIPLY_PRECISE(var_v1, 0x7F, Q12_SHIFT);
-        if (var_v1 >= 0x80) 
+        var_v1 = FP_MULTIPLY_PRECISE(var_v1, 127, Q12_SHIFT);
+        if (var_v1 > 127) 
         {
-            var_v1 = 0x7F;
+            var_v1 = 127;
         }
 
         var_v1 = (var_v1 * var_t4[i]) >> 7;
-        if (var_v1 >= 0x80) 
+        if (var_v1 > 127) 
         {
-            var_v1 = 0x7F;
+            var_v1 = 127;
         }
 
         D_800BCD50[i] = var_v1;
@@ -1037,8 +1037,8 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
     var_s4  = 0;
     temp_s2 = func_80045BC8();
 
-    var_v0_2 = temp_s2;
-    var_v0_2 = temp_s2 != 0 && var_v0_2 != 0xFFFF;
+    cond = temp_s2;
+    cond = temp_s2 != 0 && cond != 0xFFFF;
 
     if (var_s3 != 0) 
     {
@@ -1047,7 +1047,7 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
             case 3:
                 func_80035E1C();
 
-                if (var_v0_2 != 0) 
+                if (cond) 
                 {
                     D_800A99A0 = 0;
                 } 
@@ -1064,7 +1064,7 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
                 break;
 
             case 1:
-                if (var_v0_2 != 0) 
+                if (cond) 
                 {
                     func_80035ED0();
                 } 
@@ -1081,7 +1081,7 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
                 break;
         }
     } 
-    else if (var_s1 & (1 << 9)) 
+    else if (flagsCpy & (1 << 9)) 
     {
         if (D_800A99A0 != 3) 
         {
@@ -1096,7 +1096,7 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
 
     if (var_s4 != 0) 
     {
-        if (var_v0_2 != 0) 
+        if (cond) 
         {
             for (i = 0; i < 8; i++)
             {
