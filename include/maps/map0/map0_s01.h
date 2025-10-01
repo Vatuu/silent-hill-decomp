@@ -118,6 +118,8 @@ void func_800D5638(s_SubCharacter* arg0);
 
 void func_800D4E84(s_SubCharacter*);
 
-void func_800D529C(s_SubCharacter* arg0, s32 thousand, s32 angle);
+void func_800D529C(s_SubCharacter* chara, s32 thousand, s32 angle);
+
+void func_800D598C(s_SubCharacter* chara);
 
 #endif
