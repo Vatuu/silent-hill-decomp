@@ -230,10 +230,10 @@ bool func_800D0600() // 0x800D0600
 {
     #define DIST_MAX Q12(40.0f)
 
-    if ((ABS(g_SysWork.player_4C.chara_0.position_18.vx - D_800E32DC[0].vx) +
-         ABS(g_SysWork.player_4C.chara_0.position_18.vz - D_800E32DC[0].vz) < DIST_MAX) ||
-        (ABS(g_SysWork.player_4C.chara_0.position_18.vx - D_800E32DC[1].vx) +
-         ABS(g_SysWork.player_4C.chara_0.position_18.vz - D_800E32DC[1].vz) < DIST_MAX))
+    if (ABS(g_SysWork.player_4C.chara_0.position_18.vx - D_800E32DC[0].vx) +
+        ABS(g_SysWork.player_4C.chara_0.position_18.vz - D_800E32DC[0].vz) < DIST_MAX ||
+        ABS(g_SysWork.player_4C.chara_0.position_18.vx - D_800E32DC[1].vx) +
+        ABS(g_SysWork.player_4C.chara_0.position_18.vz - D_800E32DC[1].vz) < DIST_MAX)
     {
         return true;
     }

@@ -6634,7 +6634,7 @@ s32 func_8006F620(VECTOR3* pos, s_func_8006AB50* arg1, s32 arg2, s32 arg3) // 0x
         temp_s2 = D_800C4478.field_4[i];
         temp_s0 = (-Q12(temp_s2->field_0_29) >> 1) - Q12(1.5f); // NOTE: `-` sign on the outside required for match.
 
-        if ((sp2C - temp_s0) >= 0)
+        if (sp2C - temp_s0 >= 0)
         {
             continue;
         }

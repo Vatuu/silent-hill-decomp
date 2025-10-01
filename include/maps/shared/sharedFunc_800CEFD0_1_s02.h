@@ -1,8 +1,6 @@
 void sharedFunc_800CEFD0_1_s02(s32 arg0, s_sharedFunc_800CEFD0_1_s02* arg1, u16* arg2, s32* deltaTime)
 {
     s_Collision                  coll;
-    s32                          x;
-    s32                          z;
     s32                          var_t0;
     s32                          var_t1;
     s_sharedFunc_800CEFD0_1_s02* var_s0;
@@ -35,11 +33,7 @@ void sharedFunc_800CEFD0_1_s02(s32 arg0, s_sharedFunc_800CEFD0_1_s02* arg1, u16*
             var_s0->field_C.vz = var_s0->field_0.vz;
         }
 
-        x  = abs(var_s0->field_0.vx);
-        z = var_s0->field_0.vz;
-
-        if ((z >= 0 && (x + z) > Q12(6.0f)) ||
-            (z <  0 && (x - z) > Q12(6.0f)))
+        if (ABS(var_s0->field_0.vx) + ABS(var_s0->field_0.vz) > Q12(6.0f))
         {
             if (sharedData_800DF158_1_s02 != 0)
             {

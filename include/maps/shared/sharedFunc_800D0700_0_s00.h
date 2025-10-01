@@ -51,62 +51,22 @@ void sharedFunc_800D0700_0_s00(VECTOR3* point, VECTOR3* lineStart, VECTOR3* line
             {
                 if (lineStart->vx < offset0.vx)
                 {
-                    s32 dist  = offset0.vx - lineStart->vx;  
-                    s32 baseX = point->vx;
-
-                    if (dist >= 0)
-                    {
-                        point->vx = baseX - (dist * 2);
-                    }
-                    else
-                    {
-                        dist      = lineStart->vx - offset0.vx;
-                        point->vx = baseX - (dist * 2);
-                    }
+                    point->vx -= ABS(offset0.vx - lineStart->vx) * 2;
                 }
                 else
                 {
-                    s32 dist  = offset0.vx - lineStart->vx;  
-                    s32 baseX = point->vx;
-
-                    if (dist >= 0)
-                    {
-                        point->vx = baseX + (dist * 2);
-                    }
-                    else
-                    {
-                        dist      = lineStart->vx - offset0.vx;
-                        point->vx = baseX + (dist * 2);
-                    }
+                    point->vx += ABS(offset0.vx - lineStart->vx) * 2;
                 }
             }
             else
             {
                 if (lineStart->vz < offset0.vz)
                 {
-                    s32 dist  = offset0.vz - lineStart->vz;
-                    s32 baseZ = point->vz;
-
-                    if (dist < 0)
-                    {
-                        dist = lineStart->vz - offset0.vz;
-                    }
-                    point->vz = baseZ - (dist * 2);
+                    point->vz -= ABS(offset0.vz - lineStart->vz) * 2;
                 }
                 else
                 {
-                    s32 dist  = offset0.vz - lineStart->vz;
-                    s32 baseZ = point->vz;
-
-                    if (dist >= 0)
-                    {
-                        point->vz = baseZ + (dist * 2);
-                    }
-                    else
-                    {
-                        dist      = lineStart->vz - offset0.vz;
-                        point->vz = baseZ + (dist * 2);
-                    }
+                    point->vz += ABS(offset0.vz - lineStart->vz) * 2;
                 }
             }
         }
