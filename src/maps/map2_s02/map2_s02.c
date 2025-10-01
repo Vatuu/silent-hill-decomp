@@ -267,7 +267,7 @@ void func_800DA6F4(void) {}
 
 void func_800DA6FC(void) {}
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800D4A80_0_s01); // 0x800DA704
+#include "maps/shared/sharedFunc_800D4A80_0_s01.h" // 0x800DA704
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DA770);
 

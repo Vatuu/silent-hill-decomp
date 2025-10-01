@@ -288,7 +288,7 @@ void func_800DC228() {}
 
 void func_800DC230() {}
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800D4A80_0_s01); // 0x800DC238
+#include "maps/shared/sharedFunc_800D4A80_0_s01.h" // 0x800DC238
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800DC2A4);
 
