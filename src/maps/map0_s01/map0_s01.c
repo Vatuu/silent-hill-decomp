@@ -598,7 +598,45 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D4E84);
 
 #include "maps/shared/sharedFunc_800D5274_0_s01.h" // 0x800D5274
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D529C);
+void func_800D529C(s_SubCharacter* arg0, s32 thousand, s32 angle)
+{
+    s32 posX;
+    s32 posZ;
+    s32 x;
+    s32 z;
+    s32 y;
+    s32 calcY;
+    s32 someY;
+    s32 someConst;
+
+    posX = arg0->position_18.vx;
+    posZ = arg0->position_18.vz;
+    someConst = 0x1800; // } @hack permuter find.
+    arg0++;             // }
+    arg0--;             // }
+    x = posX + FP_MULTIPLY_PRECISE(thousand, Math_Sin(angle), Q12_SHIFT);
+    z = posZ + FP_MULTIPLY_PRECISE(thousand, Math_Cos(angle), Q12_SHIFT);
+
+
+    calcY = func_80080884(x, z);
+    someY = arg0->properties_E4.unk0.properties_124.val32;
+    if (someY < calcY)
+    {
+        calcY = someY;
+    }
+
+    y = (calcY - someConst) - func_80080514() / 2;
+    
+    if (y < sharedFunc_800D5274_0_s01())
+    {
+        y = sharedFunc_800D5274_0_s01();
+    }
+
+    arg0->properties_E4.unk0.field_F8.vx = x;
+    arg0->properties_E4.unk0.field_F8.vy = y;
+    arg0->properties_E4.unk0.field_F8.vz = z;
+    func_800D4E84(arg0);
+}
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D53AC);
 
