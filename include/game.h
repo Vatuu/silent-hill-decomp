@@ -1162,7 +1162,7 @@ typedef struct _SubCharPropertiesUnk0
     u_Property properties_EC;
     u_Property properties_F0;
     u_Property properties_F4;
-    VECTOR3    field_F8;
+    VECTOR3    field_F8; // Q19.12 | Position or offset.
     u_Property properties_104;
     u_Property properties_108;
     u_Property properties_10C;

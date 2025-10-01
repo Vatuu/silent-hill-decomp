@@ -41,7 +41,7 @@ void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* rand)
             // Set random start XZ position.
             sharedFunc_800D01BC_0_s00(rand, part, SNOW_XZ_SPAWN_RANGE);
 
-            // 2nd position unused for snow.
+            // Second position unused for snow.
             partCpy->position1_C.vz = Q12(0.0f);
             partCpy->position1_C.vy = Q12(0.0f);
             partCpy->position1_C.vx = Q12(0.0f);
@@ -68,7 +68,7 @@ void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* rand)
             // Set random start XZ position.
             sharedFunc_800D01BC_0_s00(rand, part, RAIN_XZ_SPAWN_RANGE);
 
-            // Copy random XZ to 2nd position.
+            // Copy random XZ to second position.
             partCpy->position1_C.vx = partCpy->position0_0.vx;
             partCpy->position1_C.vz = partCpy->position0_0.vz;
 #endif

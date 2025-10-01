@@ -44,7 +44,6 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
     {
         case 0:
         case -1:
-
             // TODO: `sharedData_800E326C_0_s00` should be changed to same type as `sharedData_800E5768_1_s02`?
             // (may also need to rename them to same symbol name, not completely sure yet though)
 #if defined(MAP0_S00)
@@ -53,13 +52,13 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
             sharedData_800E326C_0_s00.vector_0.vx = Q12(-5.0f);
             sharedData_800E326C_0_s00.vector_0.vy = Q12(-4.5f);
             sharedData_800E326C_0_s00.vector_0.vz = Q12(211.0f);
-            
+
             sharedData_800E326C_0_s00.vector_C.vx = Q12(15.0f);
             sharedData_800E326C_0_s00.vector_C.vy = Q12(-4.5f);
             sharedData_800E326C_0_s00.vector_C.vz = Q12(211.0f);
 #elif defined(MAP0_S01)
             sharedData_800DD591_0_s00 = 1;
-            
+
             sharedData_800E326C_0_s00.vector_0.vx = Q12(-0.30f);
             sharedData_800E326C_0_s00.vector_0.vz = Q12(275.0f);
             sharedData_800E326C_0_s00.vector_C.vx = Q12(-0.30f);
@@ -74,6 +73,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                     sharedData_800E326C_0_s00.vector_C.vx = Q12(105.5f);
                     sharedData_800E326C_0_s00.vector_C.vz = Q12(50.0f);
                     break;
+
                 case 13:
                     sharedData_800DD591_0_s00             = 1;
                     sharedData_800E326C_0_s00.vector_0.vx = Q12(145.0f);
@@ -81,6 +81,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                     sharedData_800E326C_0_s00.vector_C.vx = Q12(132.0f);
                     sharedData_800E326C_0_s00.vector_C.vz = Q12(24.0f);
                     break;
+
                 case 9:
                     sharedData_800DD591_0_s00             = 1;
                     sharedData_800E326C_0_s00.vector_0.vx = Q12(55.0f);
@@ -88,6 +89,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                     sharedData_800E326C_0_s00.vector_C.vx = Q12(62.0f);
                     sharedData_800E326C_0_s00.vector_C.vz = Q12(137.0f);
                     break;
+
                 case 14:
                     sharedData_800DD591_0_s00             = 2;
                     sharedData_800E326C_0_s00.vector_0.vx = Q12(96.5f);
@@ -183,6 +185,8 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                     sharedData_800E5768_1_s02.corners_0[1].vx = Q12(101.5f);
                     sharedData_800E5768_1_s02.corners_0[1].vz = Q12(105.0f);
                     break;
+
+
                 case 5:
                     sharedData_800DD591_0_s00                 = 1;
                     sharedData_800E5768_1_s02.corners_0[0].vx = Q12(17.7f);
@@ -201,6 +205,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                     sharedData_800E5768_1_s02.corners_0[1].vx = Q12(63.5f);
                     sharedData_800E5768_1_s02.corners_0[1].vz = Q12(63.0f);
                     break;
+
                 case 9:
                     sharedData_800DD591_0_s00                 = 2;
                     sharedData_800E5768_1_s02.corners_0[0].vx = Q12(104.0f);
@@ -208,6 +213,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                     sharedData_800E5768_1_s02.corners_0[1].vx = Q12(104.0f);
                     sharedData_800E5768_1_s02.corners_0[1].vz = Q12(61.5f);
                     break;
+
                 case 11:
                     sharedData_800DD591_0_s00                 = 2;
                     sharedData_800E5768_1_s02.corners_0[0].vx = Q12(143.8f);
@@ -215,6 +221,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                     sharedData_800E5768_1_s02.corners_0[1].vx = Q12(143.8f);
                     sharedData_800E5768_1_s02.corners_0[1].vz = Q12(22.0f);
                     break;
+
                 default:
                     sharedData_800DD591_0_s00 = 0;
                     break;
@@ -228,6 +235,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                 sharedData_800E5768_1_s02.corners_0[1].vx = Q12(133.0f);
                 sharedData_800E5768_1_s02.corners_0[1].vz = Q12(150.0f);
             }
+
 #elif defined(MAP5_S03)
             sharedData_800DD591_0_s00 = 2;
 #endif
@@ -293,7 +301,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                 temp_s0_2 = FP_MULTIPLY(Math_Sin(FP_ANGLE(270.0f) + (sharedData_800DD598_0_s00 * 2)), (PARTICLE_COUNT_MAX / 2), Q12_SHIFT) + (PARTICLE_COUNT_MAX / 2);
                 temp_a2   = FP_MULTIPLY(Math_Sin(FP_ANGLE(180.0f) + (sharedData_800DD598_0_s00 * 2)), (PARTICLE_COUNT_MAX / 2), Q12_SHIFT) + (PARTICLE_COUNT_MAX / 2);
                 temp_t0 = sharedData_800E0CB6_0_s00 >> 14;
-               
+
                 for (i = 0; i < 2; i++)
                 {
                     temp_v1_2 = (sharedData_800E0CB4_0_s00 >> ((1 - i) * 6)) & 0x3F;
@@ -348,7 +356,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                         case 38:
                         case 52:
                         case 54:
-                            var_v0                       = (PARTICLE_COUNT_MAX / 2);
+                            var_v0                       = PARTICLE_COUNT_MAX / 2;
                             sharedData_800DD588_0_s00[i] = var_v0;
                             break;
 

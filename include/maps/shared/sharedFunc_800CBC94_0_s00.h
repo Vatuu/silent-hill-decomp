@@ -90,8 +90,8 @@ void sharedFunc_800CBC94_0_s00(s_Particle* parts)
         // Set wind speed on XZ plane.
         if (snowType >= SnowType_LightWindy)
         {
-            sharedData_800DFB68_0_s00 = SNOW_COUNT_MAX_LIGHT * 2;
-            sharedData_800DFB64_0_s00 = SNOW_COUNT_MAX_LIGHT * 2;
+            sharedData_800DFB68_0_s00 = SNOW_COUNT_LIGHT_MAX * 2;
+            sharedData_800DFB64_0_s00 = SNOW_COUNT_LIGHT_MAX * 2;
         }
         else
         {
@@ -172,4 +172,3 @@ void sharedFunc_800CBC94_0_s00(s_Particle* parts)
     sharedData_800E32CC_0_s00 = sharedData_800DD58C_0_s00;
 #endif
 }
-

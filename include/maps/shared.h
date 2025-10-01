@@ -2174,7 +2174,7 @@ typedef enum _StalkerAnim
 #else
 #define PARTICLE_COUNT_MAX 300
 #endif
-#define SNOW_COUNT_MAX_LIGHT 300
+#define SNOW_COUNT_LIGHT_MAX 300
 
 typedef enum
 {
@@ -2259,7 +2259,7 @@ typedef struct _SfxVolume
 typedef struct
 {
     s_AnimInfo  animInfo_0[56];
-    s32         unk_380[0x12D][2]; // unknown size, biggest constant index used is 35
+    s32         unk_380[301][2]; // Unknown size, biggest constant index used is 35.
     s_SfxVolume sfxVolumes_CE8[11];
     u_Property  properties_D14[4];
     s8          unk_D24[36];
@@ -2274,7 +2274,7 @@ typedef struct
     s_AnmHeader*   anmHdr_4;
     GsCOORDINATE2* coords_8;
     MATRIX*        matrices_C;
-    s8             unk_10[0xA4];
+    s8             unk_10[164];
     s32            field_B4[35][4];
 } s_sharedData_800E21D0_0_s01;
 
@@ -2936,7 +2936,7 @@ void sharedFunc_800D3CC4_0_s01(s_SubCharacter* chara);
 
 void sharedFunc_800D3DFC_0_s01(s_SubCharacter* chara);
 
-s32 sharedFunc_800D569C_0_s01(s_SubCharacter* chara, q19_12 vecY, q19_12 dist);
+s32 sharedFunc_800D569C_0_s01(s_SubCharacter* chara, q19_12 posY, q19_12 dist);
 
 void sharedFunc_800D57C8_0_s01(s_SubCharacter* chara);
 
