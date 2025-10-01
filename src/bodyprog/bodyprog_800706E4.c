@@ -428,7 +428,7 @@ static inline void func_80071968_Switch0()
             case WEAPON_ATTACK(EquippedWeaponId_Unk3, AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Unk8, AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Unk9, AttackInputType_Multitap):
-            case 31:
+            case EquippedWeaponId_Unk31:
                 break;
         }
     }
@@ -487,7 +487,7 @@ static inline void func_80071968_Switch1()
             case WEAPON_ATTACK(EquippedWeaponId_Unk3, AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Unk8, AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Unk9, AttackInputType_Multitap):
-            case 31:
+            case EquippedWeaponId_Unk31:
                 break;
         }
     }

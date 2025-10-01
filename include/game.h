@@ -652,6 +652,7 @@ typedef enum _EquippedWeaponId
     EquippedWeaponId_Unk8           = 8,
     EquippedWeaponId_Unk9           = 9,
 
+    EquippedWeaponId_Unk31          = 31,
     EquippedWeaponId_Handgun        = 32,
     EquippedWeaponId_HuntingRifle   = 33,
     EquippedWeaponId_Shotgun        = 34,
