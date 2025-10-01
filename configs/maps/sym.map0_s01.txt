@@ -244,3 +244,4 @@ g_EventThing_Flashlight           = 0x800E24D0;
 g_EventThing_Map                  = 0x800E2500;
 g_EventThing_PocketRadio          = 0x800E2530;
 g_CommonWorldObjects              = 0x800E2570; // size:0xA8
+sharedData_800E2370_0_s01         = 0x800E2370; //type:s32 size:0x08

@@ -2448,7 +2448,7 @@ extern CVECTOR sharedData_800E325C_0_s00;
 
 extern s_2Vectors sharedData_800E326C_0_s00;
 
-extern s32 D_800E2370[2];
+extern s32 sharedData_800E2370_0_s01[2];
 
 typedef struct
 {
