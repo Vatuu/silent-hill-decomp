@@ -856,7 +856,62 @@ s32 func_800D6A60(VECTOR3* vec0, VECTOR3* vec1, s_SubCharacter* chara, s32 arg3,
     return ret;
 }
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D6C7C);
+void func_800D6C7C(VECTOR* arg0, s_SubCharacter* arg1, s32 arg2, VECTOR3* arg3)
+{
+    s32 temp_a0;
+    s32 temp_hi;
+    s32 temp_s1;
+    s32 temp_s2;
+    s32 temp_s3;
+    s32 temp_t0;
+    s32 temp_t0_2;
+    s32 sqr;
+    s32 z;
+    s32 y;
+    s32 x;
+    u32 temp_lo;
+    u32 temp_v0;
+    u32 temp_v0_2;
+    u32 temp_v0_3;
+
+    if (arg2 == 0)
+    {
+        x = 0;
+        y = 0;
+        z = 0;
+    } 
+    else 
+    {
+        x = arg0->vx;
+        y = arg0->vy;
+        z = arg0->vz;
+
+        sqr = FP_MULTIPLY_PRECISE(x, x, Q12_SHIFT);
+        sqr += FP_MULTIPLY_PRECISE(y, y, Q12_SHIFT);
+        sqr += FP_MULTIPLY_PRECISE(z, z, Q12_SHIFT);
+        
+        sqr = SquareRoot12(sqr);
+        
+        arg1->damageReceived_C0 += Math_PreservedSignSubtract(sqr, 0x5000);
+        if (sqr != 0) 
+        {
+            sqr = (s32) (Math_PreservedSignSubtract(sqr, Q12(6.0f)) << Q12_SHIFT) / sqr;
+        }
+        x = FP_MULTIPLY_PRECISE(x, sqr, Q12_SHIFT);
+        y = FP_MULTIPLY_PRECISE(y, sqr, Q12_SHIFT);
+        z = FP_MULTIPLY_PRECISE(z, sqr, Q12_SHIFT);
+        
+        if ((x | y | z) != 0)
+        {
+            arg1->field_B4 += FP_MULTIPLY_PRECISE(x, Q12(0.8f), Q12_SHIFT);
+            arg1->field_B8 += FP_MULTIPLY_PRECISE(y, Q12(0.8f), Q12_SHIFT);
+            arg1->field_BC += FP_MULTIPLY_PRECISE(z, Q12(0.8f), Q12_SHIFT);
+        }
+    }
+    arg3->vx = x;
+    arg3->vy = y;
+    arg3->vz = z;
+}
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D6EC4);
 
