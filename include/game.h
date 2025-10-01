@@ -1167,7 +1167,7 @@ typedef struct _SubCharPropertiesUnk0
     u_Property properties_108;
     u_Property properties_10C;
     VECTOR3    field_110;
-    u_Property properties_11C;
+    s32        flags_11C;
     u_Property properties_120;
     u_Property properties_124;
 } s_SubCharaPropertiesUnk0;
