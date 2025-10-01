@@ -250,8 +250,10 @@ void func_8004C040(); // 0x8004C040
  * aim animation to the idle animation, then changes the weapon to another
  * type (e.g. from a gun weapon to a melee weapon), Harry will continue
  * aiming until he interacts with something or starts running.
+ *
+ * @param weaponAttack @unused
  */
-void Inventory_ExitAnimEquippedItemUpdate(u8* arg0); // 0x8004C088
+void Inventory_ExitAnimEquippedItemUpdate(u8* weaponAttack); // 0x8004C088
 
 /** Returns `true` if player has usable ammo in inventory (i.e. ammo + gun needed
  * for it, or gun with ammo loaded) for the shotgun and the hunting rifle.
@@ -280,9 +282,6 @@ s32 Inventory_HyperBlasterFunctionalTest(); // 0x8004C4F8
 
 /** @note Rough name. */
 u32 Game_HyperBlasterBeamColorGet(); // 0x8004C54C
-
-/** `arg0` is probably a bit flag. */
-void func_8004C564(u8 arg0, s32 arg1); // 0x8004C564
 
 void Game_TimerUpdate(); // 0x8004C8DC
 

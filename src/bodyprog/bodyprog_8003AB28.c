@@ -1264,36 +1264,34 @@ s32 func_8003CD5C() // 0x8003CD5C
 
 void func_8003CD6C(s_PlayerCombat* combat) // 0x8003CD6C
 {
-	#define INVENTORY_WEAPONS_ID_BASE InventoryItemId_KitchenKnife
-
     s32 itemId;
-    s8  equippedWeaponId;
+    s8  weaponAttack;
 
-    equippedWeaponId = combat->equippedWeapon_F;
-    itemId           = NO_VALUE;
-    if (equippedWeaponId != NO_VALUE)
+    weaponAttack = combat->weaponAttack_F;
+    itemId       = NO_VALUE;
+    if (weaponAttack != NO_VALUE)
     {
-        itemId = equippedWeaponId + INVENTORY_WEAPONS_ID_BASE;
+        itemId = weaponAttack + InventoryItemId_KitchenKnife;
     }
 
     func_8003CDA0(itemId);
 }
 
-s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
+s32 func_8003CDA0(s32 itemId) // 0x8003CDA0
 {
     s32         fileIdx;
     s_HeldItem* heldItem;
 
     heldItem = &g_WorldGfx.heldItem_1BAC;
 
-    if (heldItem->itemId_0 == itemIdx)
+    if (heldItem->itemId_0 == itemId)
     {
         return 0;
     }
 
-    heldItem->itemId_0 = itemIdx;
+    heldItem->itemId_0 = itemId;
 
-    switch (itemIdx)
+    switch (itemId)
     {
         default:
             fileIdx = NO_VALUE;
@@ -1390,7 +1388,7 @@ s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
         heldItem->queueIdx_4 = Fs_QueueStartReadTim(fileIdx, FS_BUFFER_10, &heldItem->imageDesc_C);
     }
 
-    switch (itemIdx)
+    switch (itemId)
     {
         case NO_VALUE:
         default:

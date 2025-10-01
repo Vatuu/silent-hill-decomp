@@ -2119,7 +2119,7 @@ s64 func_8008A0D4(void) // 0x8008A0D4
     return 0;
 }
 
-s32 func_8008A0E4(s32 arg0, e_EquippedWeaponId weaponId, s_SubCharacter* chara, VECTOR3* pos, s32 arg4, s16 arg5, s16 arg6) // 0x8008A0E4
+s32 func_8008A0E4(s32 arg0, e_EquippedWeaponId weaponAttack, s_SubCharacter* chara, VECTOR3* pos, s32 arg4, s16 arg5, s16 arg6) // 0x8008A0E4
 {
     s32          var_t1;
     s32          temp_a1;
@@ -2158,7 +2158,7 @@ s32 func_8008A0E4(s32 arg0, e_EquippedWeaponId weaponId, s_SubCharacter* chara, 
         chara->field_44 = 0;
     }
 
-    chara->field_46 = weaponId;
+    chara->field_46 = weaponAttack;
     if (!(modelAnim->status_0 & (1 << 0)))
     {
         chara->field_44 = 0;

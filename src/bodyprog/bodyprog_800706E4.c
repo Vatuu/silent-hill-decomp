@@ -64,7 +64,7 @@ void func_80070B84(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3) // 0x800
 // Scratch: https://decomp.me/scratch/AItzp
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800706E4", func_80070CF0); // 0x80070CF0
 
-void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 arg2, s32 animStatus)  // 0x80070DF0
+void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 weaponAttack, s32 animStatus)  // 0x80070DF0
 {
     s16 shortestAngle;
     s16 temp_a1;
@@ -99,10 +99,10 @@ void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 arg2,
         }
     }
 
-    if (extra->model_0.anim_4.keyframeIdx_8 >= (HARRY_BASE_ANIM_INFOS[animStatus].startKeyframeIdx_C + D_800AD4C8[arg2].field_E) && 
-        HARRY_BASE_ANIM_INFOS[animStatus].startKeyframeIdx_C + D_800AD4C8[arg2].field_E + D_800AD4C8[arg2].field_F >= extra->model_0.anim_4.keyframeIdx_8)
+    if (extra->model_0.anim_4.keyframeIdx_8 >= (HARRY_BASE_ANIM_INFOS[animStatus].startKeyframeIdx_C + D_800AD4C8[weaponAttack].field_E) && 
+        HARRY_BASE_ANIM_INFOS[animStatus].startKeyframeIdx_C + D_800AD4C8[weaponAttack].field_E + D_800AD4C8[weaponAttack].field_F >= extra->model_0.anim_4.keyframeIdx_8)
     {
-        g_SysWork.playerCombatInfo_38.equippedWeapon_F = arg2;
+        g_SysWork.playerCombatInfo_38.weaponAttack_F = weaponAttack;
 
         if (!(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk2)) 
         {
@@ -142,7 +142,7 @@ void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 arg2,
         g_SysWork.player_4C.chara_0.field_D8.offsetX_4              = Q12(0.0f);
         g_SysWork.player_4C.chara_0.field_D8.offsetZ_2              = Q12(0.0f);
         g_SysWork.player_4C.chara_0.field_D8.offsetX_0              = Q12(0.0f);
-        g_SysWork.playerCombatInfo_38.equippedWeapon_F              = (g_SavegamePtr->equippedWeapon_AA == InventoryItemId_Unequipped) ? InventoryItemId_Empty : (g_SavegamePtr->equippedWeapon_AA + 128);
+        g_SysWork.playerCombatInfo_38.weaponAttack_F                = (g_SavegamePtr->equippedWeapon_AA == InventoryItemId_Unequipped) ? NO_VALUE : (g_SavegamePtr->equippedWeapon_AA + InventoryItemId_KitchenKnife);
         g_SysWork.enemyTargetIdx_2353                               = NO_VALUE;
         g_SysWork.playerCombatInfo_38.isAiming_13                   = false;
     }
@@ -381,53 +381,53 @@ INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_800706E4", D_800297B8);
 
 static inline void func_80071968_Switch0()
 {
-    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F != NO_VALUE)
+    if (g_SysWork.playerCombatInfo_38.weaponAttack_F != NO_VALUE)
     {
-        switch (g_SysWork.playerCombatInfo_38.equippedWeapon_F)
+        switch (g_SysWork.playerCombatInfo_38.weaponAttack_F)
         {
-            case WEAPON_ATTACK_ID(EquippedWeaponId_KitchenKnife, AttackInputType_Tap): 
-            case WEAPON_ATTACK_ID(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_RockDrill, AttackInputType_Tap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Hammer, AttackInputType_Tap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Katana, AttackInputType_Tap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Axe, AttackInputType_Tap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_KitchenKnife, AttackInputType_Hold):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_SteelPipe, AttackInputType_Hold):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_RockDrill, AttackInputType_Hold):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Hammer, AttackInputType_Hold):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Chainsaw, AttackInputType_Hold):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Katana, AttackInputType_Hold):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Axe, AttackInputType_Hold):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_KitchenKnife, AttackInputType_Multitap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_SteelPipe, AttackInputType_Multitap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_RockDrill, AttackInputType_Multitap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Hammer, AttackInputType_Multitap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Chainsaw, AttackInputType_Multitap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Katana, AttackInputType_Multitap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Axe, AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap): 
+            case WEAPON_ATTACK(EquippedWeaponId_SteelPipe,    AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_RockDrill,    AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Hammer,       AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_SteelPipe,    AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_RockDrill,    AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_Hammer,       AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_SteelPipe,    AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_RockDrill,    AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_Hammer,       AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Multitap):
                 func_8003DD80(1, 34); // `arg2` holds two values, split with `& 0xF0` / `& 0x0F` later on.
                 break;
 
-            case EquippedWeaponId_Handgun:
-            case EquippedWeaponId_Shotgun:
-            case EquippedWeaponId_HyperBlaster:
+            case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
                 func_8003DD80(1, 35);
                 break;
 
-            case EquippedWeaponId_HuntingRifle:
+            case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
                 func_8003DD80(1, 36);
                 break;
 
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk3, AttackInputType_Tap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk8, AttackInputType_Tap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk9, AttackInputType_Tap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk3, AttackInputType_Hold):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk8, AttackInputType_Hold):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk9, AttackInputType_Hold):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk3, AttackInputType_Multitap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk8, AttackInputType_Multitap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk9, AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk3, AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk8, AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk9, AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk3, AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk8, AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk9, AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk3, AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk8, AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk9, AttackInputType_Multitap):
             case 31:
                 break;
         }
@@ -440,53 +440,53 @@ static inline void func_80071968_Switch0()
 
 static inline void func_80071968_Switch1()
 {
-    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F != NO_VALUE)
+    if (g_SysWork.playerCombatInfo_38.weaponAttack_F != NO_VALUE)
     {
-        switch (g_SysWork.playerCombatInfo_38.equippedWeapon_F)
+        switch (g_SysWork.playerCombatInfo_38.weaponAttack_F)
         {
-            case WEAPON_ATTACK_ID(EquippedWeaponId_KitchenKnife, AttackInputType_Tap): 
-            case WEAPON_ATTACK_ID(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_RockDrill, AttackInputType_Tap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Hammer, AttackInputType_Tap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Katana, AttackInputType_Tap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Axe, AttackInputType_Tap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_KitchenKnife, AttackInputType_Hold):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_SteelPipe, AttackInputType_Hold):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_RockDrill, AttackInputType_Hold):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Hammer, AttackInputType_Hold):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Chainsaw, AttackInputType_Hold):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Katana, AttackInputType_Hold):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Axe, AttackInputType_Hold):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_KitchenKnife, AttackInputType_Multitap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_SteelPipe, AttackInputType_Multitap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_RockDrill, AttackInputType_Multitap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Hammer, AttackInputType_Multitap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Chainsaw, AttackInputType_Multitap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Katana, AttackInputType_Multitap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Axe, AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_SteelPipe,    AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_RockDrill,    AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Hammer,       AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_SteelPipe,    AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_RockDrill,    AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_Hammer,       AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_SteelPipe,    AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_RockDrill,    AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_Hammer,       AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Multitap):
                 func_8003DD80(1, 18);
                 break;
 
-            case EquippedWeaponId_Handgun:
-            case EquippedWeaponId_Shotgun:
-            case EquippedWeaponId_HyperBlaster:
+            case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
                 func_8003DD80(1, 19);
                 break;
 
-            case EquippedWeaponId_HuntingRifle:
+            case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
                 func_8003DD80(1, 20);
                 break;
 
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk3, AttackInputType_Tap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk8, AttackInputType_Tap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk9, AttackInputType_Tap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk3, AttackInputType_Hold):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk8, AttackInputType_Hold):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk9, AttackInputType_Hold):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk3, AttackInputType_Multitap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk8, AttackInputType_Multitap):
-            case WEAPON_ATTACK_ID(EquippedWeaponId_Unk9, AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk3, AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk8, AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk9, AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk3, AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk8, AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk9, AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk3, AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk8, AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk9, AttackInputType_Multitap):
             case 31:
                 break;
         }
@@ -779,9 +779,10 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
     
     g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = CLAMP(g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114, Q12(0.0f), Q12(60.0f));
     
-    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_Chainsaw || g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill)
+    if (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
+        g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
     {
-        func_8004C564(g_SysWork.playerCombatInfo_38.equippedWeapon_F, (g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 != 0) ? 4 : 2);
+        func_8004C564(g_SysWork.playerCombatInfo_38.weaponAttack_F, (g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 != 0) ? 4 : 2);
     }
     
     g_SavegamePtr->healthSaturation_238 -= g_DeltaTime0;
@@ -2322,11 +2323,11 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         s16 temp_a1;
         s32 keyframeIdx0;
         s32 keyframeIdx1;
-        u8  equippedWeaponId;
+        u8  weaponAttack;
 
-        equippedWeaponId = g_SysWork.playerCombatInfo_38.equippedWeapon_F;
+        weaponAttack = g_SysWork.playerCombatInfo_38.weaponAttack_F;
 
-        switch (g_SysWork.playerCombatInfo_38.equippedWeapon_F)
+        switch (g_SysWork.playerCombatInfo_38.weaponAttack_F)
         {
             case EquippedWeaponId_KitchenKnife:
                 keyframeIdx0 = 619;
@@ -2398,13 +2399,13 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Shooting;
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk6;
 
-            if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun)
+            if (g_SysWork.playerCombatInfo_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
                 g_Player_MeleeAttackType    = 0;
                 g_Player_AttackAnimIdx = g_Player_EquippedWeaponInfo.animAttackHold_8;
                 D_800AF220                  = g_Player_EquippedWeaponInfo.field_A >> 4;
             }
-            else if (g_Player_IsAttacking && g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill)
+            else if (g_Player_IsAttacking && g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
                 g_Player_MeleeAttackType = 1;
                 g_Player_AttackAnimIdx   = g_Player_EquippedWeaponInfo.animAttackHold_8 - 4;
@@ -2415,10 +2416,11 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 g_Player_MeleeAttackType = 0;
 				
 				// Handle Rock Drill animation.
-                if (g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill || g_Player_RockDrill_DirectionAttack == 0)
+                if (g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) ||
+                    g_Player_RockDrill_DirectionAttack == 0)
                 {
                     g_Player_AttackAnimIdx = g_Player_EquippedWeaponInfo.animAttackHold_8;
-                    D_800AF220                  = g_Player_EquippedWeaponInfo.field_A >> 4;
+                    D_800AF220             = g_Player_EquippedWeaponInfo.field_A >> 4;
                 }
                 else if (g_Player_RockDrill_DirectionAttack == NO_VALUE)
                 {
@@ -2434,20 +2436,21 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
             extra->model_0.state_2++;
 
-            if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun)
+            if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
-                g_SysWork.playerCombatInfo_38.equippedWeapon_F %= 10;
+                g_SysWork.playerCombatInfo_38.weaponAttack_F = WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F);
             }
 
-            g_SysWork.playerCombatInfo_38.equippedWeapon_F += g_Player_MeleeAttackType * 10;
+            g_SysWork.playerCombatInfo_38.weaponAttack_F += g_Player_MeleeAttackType * 10; // TODO: Macro for this?
 
-            D_800C44D0 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx_C + D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_E;
-            D_800C44D4 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx_C + D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_E +
-                         D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_F;
+            D_800C44D0 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx_C + D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_E;
+            D_800C44D4 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx_C + D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_E +
+                         D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_F;
         }
 
 		// Used for make continuos/hold shooting smoother?
-        if (g_SysWork.enemyTargetIdx_2353 != NO_VALUE && g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun)
+        if (g_SysWork.enemyTargetIdx_2353 != NO_VALUE &&
+            g_SysWork.playerCombatInfo_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
         {
             if (!g_GameWork.config_0.optExtraAutoAiming_2C)
             {
@@ -2532,7 +2535,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 chara->rotation_24.pad                                     = chara->rotation_24.vy;
             }
 
-            if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun)
+            if (g_SysWork.playerCombatInfo_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk11)
                 {
@@ -2551,7 +2554,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                     }
                 }
             }
-            else if (g_Player_IsAttacking && g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill)
+            else if (g_Player_IsAttacking && g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
                 if (extra->model_0.stateStep_3 == 0)
                 {
@@ -2559,7 +2562,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                     extra->model_0.stateStep_3++;
                 }
             }
-            else if (g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill || g_Player_RockDrill_DirectionAttack == 0)
+            else if (g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) ||
+                     g_Player_RockDrill_DirectionAttack == 0)
             {
                 if (extra->model_0.stateStep_3 == 0)
                 {
@@ -2587,10 +2591,10 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
 		// Audio effects for attack animations, no ammo audio and removes ammo value.
 		// Additionally trigger some special state for the Rock Drill.
-        if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun)
+        if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
         {
-            if ((g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) != EquippedWeaponId_Chainsaw &&
-                (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) != EquippedWeaponId_RockDrill)
+            if (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
+                WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
                 if (extra->model_0.anim_4.keyframeIdx_8 >= D_800C44D0 && D_800C44D4 >= extra->model_0.anim_4.keyframeIdx_8)
                 {
@@ -2639,7 +2643,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 {
                     chara->field_44 = 1;
 
-                    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_HyperBlaster)
+                    if (g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
                     {
                         g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10--;
                         g_SavegamePtr->items_0[g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12].count_1--;
@@ -2673,7 +2677,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         // Finish attack animation.
 		// Though more context about `D_800AF220` and `D_800C44F0` is required,
 		// they likely indicate if an attack animation has finished.
-        if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun)
+        if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
         {
             // Attack anim.
             if (extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk29, true) ||
@@ -2718,7 +2722,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                     g_SysWork.player_4C.chara_0.properties_E4.player.field_104  = 0;
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Shooting;
-                    g_SysWork.playerCombatInfo_38.equippedWeapon_F             %= 10;
+                    g_SysWork.playerCombatInfo_38.weaponAttack_F                = WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F);
                     return true;
                 }
             }
@@ -2763,9 +2767,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk6;
 
         // Handles multitap attack.
-        if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun)
+        if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
         {
-            if (g_Player_MeleeAttackType == 0 && g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill)
+            if (g_Player_MeleeAttackType == 0 && g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
                 if (extra->model_0.anim_4.keyframeIdx_8 >= keyframeIdx1 &&
                     extra->model_0.anim_4.keyframeIdx_8 < keyframeIdx0 &&
@@ -2789,10 +2793,10 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                     chara->model_0.stateStep_3 = 0;
                 }
 
-                g_Player_AttackAnimIdx                         = g_Player_EquippedWeaponInfo.animAttackHold_8 - 2;
-                D_800AF220                                     = (g_Player_EquippedWeaponInfo.field_A >> 4) - 1;
-                g_Player_MeleeAttackType                       = 2;
-                g_SysWork.playerCombatInfo_38.equippedWeapon_F = (equippedWeaponId % 10) + 20;
+                g_Player_AttackAnimIdx                       = g_Player_EquippedWeaponInfo.animAttackHold_8 - 2;
+                D_800AF220                                   = (g_Player_EquippedWeaponInfo.field_A >> 4) - 1;
+                g_Player_MeleeAttackType                     = 2;
+                g_SysWork.playerCombatInfo_38.weaponAttack_F = WEAPON_ATTACK_ID_GET(weaponAttack ) + 20; // TODO: Demagic `+ 20`.
 
                 if (extra->model_0.stateStep_3 == 0)
                 {
@@ -2800,9 +2804,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                     extra->model_0.stateStep_3++;
                 }
 
-                D_800C44D0 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx_C + D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_E;
-                D_800C44D4 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx_C + D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_E +
-                             D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_F;
+                D_800C44D0 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx_C + D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_E;
+                D_800C44D4 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx_C + D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_E +
+                             D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_F;
                 g_Player_IsMultiTapAttack = 0;
 
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
@@ -3157,8 +3161,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
         case PlayerUpperBodyState_Aim:
             g_SysWork.enemyTargetIdx_2353 = NO_VALUE;
-            if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_Chainsaw ||
-                g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill)
+
+            if (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
+                g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 != Q12(0.0f))
                 {
@@ -3184,7 +3189,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk6;
             chara->rotation_24.pad                                      = chara->rotation_24.vy;
 
-            if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun)
+            if (g_SysWork.playerCombatInfo_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
 				// Aim.
                 if (extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_HandgunAim, true) &&
@@ -3333,8 +3338,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         case PlayerUpperBodyState_AimStart:
             chara->rotation_24.pad = chara->rotation_24.vy;
 
-            if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_Chainsaw ||
-                g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill)
+            if (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
+                g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 != Q12(0.0f))
                 {
@@ -3350,23 +3355,23 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                     extra->model_0.stateStep_3++;
                 }
 
-                if (((g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_Chainsaw &&
+                if (((g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap) &&
                       extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_HandgunAim, true) &&
                       extra->model_0.anim_4.keyframeIdx_8 >= (D_800C44F0[0].field_4 + 5)) ||
-                     (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill &&
+                     (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) &&
                       extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_HandgunAim, true) &&
                       extra->model_0.anim_4.keyframeIdx_8 >= (D_800C44F0[0].field_4 + 9))) &&
                     !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & 4))
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(60.0f);
 
-                    func_8004C564(g_SysWork.playerCombatInfo_38.equippedWeapon_F, 0);
+                    func_8004C564(g_SysWork.playerCombatInfo_38.weaponAttack_F, 0);
 
                     chara->properties_E4.player.field_10C                       = 0x40;
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk2;
                 }
             }
-            else if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_HuntingRifle)
+            else if (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap))
             {
                 if (extra->model_0.stateStep_3 == 0)
                 {
@@ -3383,15 +3388,15 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 }
             }
 
-            if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_Chainsaw ||
-                g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill)
+            if (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
+                g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
                 if (extra->model_0.anim_4.keyframeIdx_8 == D_800C44F0[0].field_6 ||
                     extra->model_0.anim_4.keyframeIdx_8 == D_800C44F0[5].field_6)
                 {
                     if (extra->model_0.anim_4.keyframeIdx_8 == D_800C44F0[0].field_6)
                     {
-                        func_8004C564(g_SysWork.playerCombatInfo_38.equippedWeapon_F, 1);
+                        func_8004C564(g_SysWork.playerCombatInfo_38.weaponAttack_F, 1);
                     }
 
                     g_SysWork.player_4C.extra_128.upperBodyState_20             = PlayerUpperBodyState_Aim;
@@ -3720,18 +3725,18 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                     currentAmmoVar = g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10;
                     totalAmmoVar   = g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11;
 
-                    Items_AmmoReloadCalculation(&currentAmmoVar, &totalAmmoVar, g_SysWork.playerCombatInfo_38.equippedWeapon_F);
+                    Items_AmmoReloadCalculation(&currentAmmoVar, &totalAmmoVar, g_SysWork.playerCombatInfo_38.weaponAttack_F);
 
                     g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10 = currentAmmoVar;
                     g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11   = totalAmmoVar;
 
                     for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
                     {
-                        if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombatInfo_38.equippedWeapon_F + InventoryItemId_KitchenKnife))
+                        if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombatInfo_38.weaponAttack_F + InventoryItemId_KitchenKnife))
                         {
                             g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10;
                         }
-                        if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombatInfo_38.equippedWeapon_F + InventoryItemId_Handgun))
+                        if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombatInfo_38.weaponAttack_F + InventoryItemId_Handgun))
                         {
                             g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11;
                         }
@@ -3762,12 +3767,12 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
         case PlayerUpperBodyState_TurnLeft:
             if (!g_Player_IsInWalkToRunTransition)
             {
-                if ((g_Player_IsAiming && g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_KitchenKnife) ||
+                if ((g_Player_IsAiming && g_SysWork.playerCombatInfo_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap)) ||
                     g_SysWork.playerCombatInfo_38.isAiming_13)
                 {
                     g_SysWork.playerCombatInfo_38.isAiming_13 = true;
 
-                    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun)
+                    if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                     {
                         D_800AF21C = NO_VALUE;
                     }
@@ -3823,27 +3828,27 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
 
                     if (g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11 != 0)
                     {
-                        if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun)
+                        if (g_SysWork.playerCombatInfo_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                         {
                             currentAmmoVar = g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10;
                             totalAmmoVar   = g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11;
 							
-                            Items_AmmoReloadCalculation(&currentAmmoVar, &totalAmmoVar, g_SysWork.playerCombatInfo_38.equippedWeapon_F);
+                            Items_AmmoReloadCalculation(&currentAmmoVar, &totalAmmoVar, g_SysWork.playerCombatInfo_38.weaponAttack_F);
 
                             g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10 = currentAmmoVar;
                             g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11   = totalAmmoVar;
                         }
                     }
 
-                    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun)
+                    if (g_SysWork.playerCombatInfo_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                     {
                         for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
                         {
-                            if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombatInfo_38.equippedWeapon_F + InventoryItemId_KitchenKnife))
+                            if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombatInfo_38.weaponAttack_F + InventoryItemId_KitchenKnife))
                             {
                                 g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10;
                             }
-                            if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombatInfo_38.equippedWeapon_F + InventoryItemId_Handgun))
+                            if (g_SavegamePtr->items_0[i].id_0 == (g_SysWork.playerCombatInfo_38.weaponAttack_F + InventoryItemId_Handgun))
                             {
                                 g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11;
                             }
@@ -3936,10 +3941,10 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
                 g_SysWork.player_4C.extra_128.lowerBodyState_24 != PlayerLowerBodyState_AimQuickTurnRight &&
                 g_SysWork.player_4C.extra_128.lowerBodyState_24 != PlayerLowerBodyState_AimQuickTurnLeft)
             {
-                if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun)
+                if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                 {
-                    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_Chainsaw ||
-                        g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill)
+                    if (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
+                        g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
                     {
                         if ((extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_HandgunAim, true) ||
                              extra->model_0.anim_4.keyframeIdx_8 != D_800C44F0[0].field_6) &&
@@ -3996,7 +4001,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
 
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk0;
 
-                if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun)
+                if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                 {
                     if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 0)))
                     {
@@ -4024,7 +4029,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
                 switch (D_800AF21C)
                 {
                     default:
-                        if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun)
+                        if (g_SysWork.playerCombatInfo_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                         {
                             g_SysWork.player_4C.extra_128.state_1C                      = PlayerState_Combat;
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk0 | PlayerFlag_Unk9;
@@ -4072,13 +4077,13 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
                         break;
                 }
 
-                if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun)
+                if (g_SysWork.playerCombatInfo_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                 {
                     if (g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10 == 0 &&
                         (g_SavegamePtr->equippedWeapon_AA >> 5) == 5 &&
                         g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11 != 0)
                     {
-                        g_SysWork.player_4C.extra_128.upperBodyState_20       = PlayerUpperBodyState_Reload;
+                        g_SysWork.player_4C.extra_128.upperBodyState_20             = PlayerUpperBodyState_Reload;
                         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk9;
 
                         if (g_SysWork.player_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_Aim ||
@@ -4095,10 +4100,10 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
                     g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_Attack;
 
                     if (g_SysWork.player_4C.extra_128.lowerBodyState_24 == PlayerLowerBodyState_Aim ||
-                        (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) == EquippedWeaponId_SteelPipe ||
-                        (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) == EquippedWeaponId_Hammer    ||
-                        (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) == EquippedWeaponId_RockDrill ||
-                        (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) == EquippedWeaponId_Katana)
+                        WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) == EquippedWeaponId_SteelPipe ||
+                        WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) == EquippedWeaponId_Hammer    ||
+                        WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) == EquippedWeaponId_RockDrill ||
+                        WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) == EquippedWeaponId_Katana)
                     {
                         g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_Attack;
                         chara->model_0.stateStep_3                      = 0;
@@ -4293,10 +4298,10 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                     }
                 }
                 // Non-gun weapon.
-                else if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun)
+                else if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                 {
-                    if ((g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_Chainsaw ||
-                         g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill) &&
+                    if ((g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
+                         g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap)) &&
                         g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 != Q12(0.0f))
                     {
                         if (chara->model_0.stateStep_3 == 0)
@@ -4327,7 +4332,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                         chara->model_0.stateStep_3++;
                     }
                 }
-                else if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_HuntingRifle)
+                else if (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap))
                 {
                     if (chara->model_0.stateStep_3 == 0)
                     {
@@ -4386,7 +4391,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                             if ((g_Player_IsRunning && temp_s3 == PlayerLowerBodyState_None) &&
                                 (aimState == 0 || ((g_GameWork.config_0.optExtraWeaponCtrl_23 && !g_Player_IsAiming) ||
                                                    (!g_GameWork.config_0.optExtraWeaponCtrl_23 && g_Player_IsAiming)) && 
-                                 (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) == EquippedWeaponId_SteelPipe))
+                                 WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) == EquippedWeaponId_SteelPipe))
                             {
                                 g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunForward;
                             }
@@ -4466,7 +4471,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                     if (D_800C454C != Q12(0.0f))
                     {
 						// Determine speed if using certain weapons while moving?
-                        switch (g_SysWork.playerCombatInfo_38.equippedWeapon_F)
+                        switch (g_SysWork.playerCombatInfo_38.weaponAttack_F)
                         {
                             case EquippedWeaponId_KitchenKnife:
                                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = (u32)(D_800C454C * 0x465) >> 9;
@@ -4628,7 +4633,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
                 Player_MovementStateReset(chara, aimState | (1 << 0));
 
-                if (g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_HyperBlaster)
+                if (g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
                 {
                     Player_CharaRotate(5);
                 }
@@ -4647,15 +4652,15 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                             if (chara->model_0.anim_4.keyframeIdx_8 >= 10 && chara->model_0.anim_4.keyframeIdx_8 <= 11)
                             {
                                 g_SysWork.player_4C.extra_128.lowerBodyState_24             = PlayerLowerBodyState_RunForward;
-                                HARRY_BASE_ANIM_INFOS[0].endKeyframeIdx_E                        = 36;
-                                HARRY_BASE_ANIM_INFOS[0].status_6                             = 7;
+                                HARRY_BASE_ANIM_INFOS[0].endKeyframeIdx_E                   = 36;
+                                HARRY_BASE_ANIM_INFOS[0].status_6                           = 7;
                                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk5;
                             }
                             else if (chara->model_0.anim_4.keyframeIdx_8 >= 21 && chara->model_0.anim_4.keyframeIdx_8 <= 22)
                             {
                                 g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunForward;
-                                HARRY_BASE_ANIM_INFOS[0].endKeyframeIdx_E            = 26;
-                                HARRY_BASE_ANIM_INFOS[0].status_6                 = 7;
+                                HARRY_BASE_ANIM_INFOS[0].endKeyframeIdx_E       = 26;
+                                HARRY_BASE_ANIM_INFOS[0].status_6               = 7;
                             }
                         }
                     }
@@ -4666,12 +4671,13 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                           chara->model_0.anim_4.keyframeIdx_8 == 22 || chara->model_0.anim_4.keyframeIdx_8 == 21)
                 {
 					// Aparently, code intended to change player's state if the player stop walking while either aiming or attacking.
-                    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun && aimState != 0)
+                    if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+                        aimState != 0)
                     {
                         if (((extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk29, true) ||
                               extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk30, true)) && 
-                            (g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_Chainsaw &&
-                             g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill)) || 
+                            (g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
+                             g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) || 
                             extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk10;
@@ -5039,7 +5045,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
                 Player_MovementStateReset(chara, aimState + PlayerLowerBodyState_WalkBackward);
 
-                if (g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_HyperBlaster)
+                if (g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
                 {
                     Player_CharaRotate(5);
                 }
@@ -5071,12 +5077,13 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                          (chara->model_0.anim_4.keyframeIdx_8 >= 56 && chara->model_0.anim_4.keyframeIdx_8 <= 57) ||
                           chara->model_0.anim_4.keyframeIdx_8 == 67 || chara->model_0.anim_4.keyframeIdx_8 == 66)
                 {
-                    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun && aimState != 0)
+                    if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+                        aimState != 0)
                     {
                         if (((extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk29, true) ||
                               extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk30, true)) &&
-                             (g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_Chainsaw &&
-                              g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill)) || 
+                             (g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
+                              g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) || 
                             extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk10;
@@ -5150,13 +5157,14 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 				// If attacking with gun, dispatches to idle aim state instead of attack state.
                 if (!g_Player_IsSteppingRightHold)
                 {
-                    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun && aimState != 0)
+                    if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+                        aimState != 0)
                     {
 						// Some melee weapons allow attack while sidestepping.
                         if (((extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk29, true) ||
                               extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk30, true)) &&
-                             (g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_Chainsaw &&
-                              g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill)) || 
+                             (g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
+                              g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) || 
                               extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk10;
@@ -5231,12 +5239,13 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 				// If attacking with gun, dispatches to idle aim state instead of attack state.
                 if (!g_Player_IsSteppingLeftHold)
                 {
-                    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun && aimState != 0)
+                    if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+                        aimState != 0)
                     {
                         if (((extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk29, true) ||
                               extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk30, true)) &&
-                             (g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_Chainsaw &&
-                              g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill)) || 
+                             (g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
+                              g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) || 
                              extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk10;
@@ -5880,10 +5889,10 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
         case PlayerLowerBodyState_Attack:
 		    // If weapon is katana.
-            if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun &&
-                (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) == EquippedWeaponId_Katana)
+            if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+                WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) == WEAPON_ATTACK(EquippedWeaponId_Katana, AttackInputType_Tap))
             {
-                if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == 16)
+                if (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_Katana, AttackInputType_Hold))
                 {
                     if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 == Q12(0.0f) && 
                         (extra->model_0.anim_4.keyframeIdx_8 >= D_800C44F0[D_800AF220].field_4 + 7))
@@ -5899,8 +5908,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 }
             }
 			
-            if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun &&
-                (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) == EquippedWeaponId_Katana)
+            if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+                WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) == EquippedWeaponId_Katana)
             {
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
                 {
@@ -5923,9 +5932,10 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 }
             }
 
-            if (g_SysWork.enemyTargetIdx_2353 == NO_VALUE || g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun)
+            if (g_SysWork.enemyTargetIdx_2353 == NO_VALUE ||
+                g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
-                if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun)
+                if (g_SysWork.playerCombatInfo_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                 {
                     if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk11)
                     {
@@ -5946,7 +5956,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 }
                 else if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk10)
                 {
-                    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_Chainsaw || g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill)
+                    if (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap) ||
+                        g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
                     {
                         if (chara->model_0.stateStep_3 == 0)
                         {
@@ -5968,7 +5979,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                         chara->model_0.stateStep_3++;
                     }
                 }
-                else if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill)
+                else if (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
                 {
                     if (g_Player_RockDrill_DirectionAttack == 1)
                     {
@@ -6028,11 +6039,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 chara->model_0.stateStep_3++;
             }
 
-            if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun ||
-                ((g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) != EquippedWeaponId_SteelPipe &&
-                 (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) != EquippedWeaponId_Hammer    &&
-                 (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) != EquippedWeaponId_RockDrill &&
-                 (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) != EquippedWeaponId_Katana))
+            if (g_SysWork.playerCombatInfo_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) ||
+                (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) != EquippedWeaponId_SteelPipe &&
+                 WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) != EquippedWeaponId_Hammer    &&
+                 WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) != EquippedWeaponId_RockDrill &&
+                 WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) != EquippedWeaponId_Katana))
             {
                 if (IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0) && IS_ANIM_STATUS_ACTIVE(extra->model_0.anim_4.status_0) &&
                     (chara->model_0.anim_4.status_0 >= ANIM_STATUS(HarryAnim_Unk29, false) || chara->model_0.anim_4.keyframeIdx_8 == D_800C44F0[0].field_6))
@@ -6128,7 +6139,8 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
     func_8007FDE0(D_800C4590.field_14, &sfx, &pitch0, &pitch1);
 
 	// This entire conditional is the reason why movement stop working when removing this function call.
-    if (g_SysWork.player_4C.extra_128.lowerBodyState_24 != PlayerLowerBodyState_JumpBackward && g_SysWork.player_4C.extra_128.lowerBodyState_24 != PlayerLowerBodyState_Reload)
+    if (g_SysWork.player_4C.extra_128.lowerBodyState_24 != PlayerLowerBodyState_JumpBackward &&
+        g_SysWork.player_4C.extra_128.lowerBodyState_24 != PlayerLowerBodyState_Reload)
     {
         D_800C4550 = g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126;
     }
@@ -6699,9 +6711,9 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             }
 
             g_SysWork.enemyTargetIdx_2353                  = NO_VALUE;
-            g_SysWork.playerCombatInfo_38.equippedWeapon_F = (g_SavegamePtr->equippedWeapon_AA == InventoryItemId_Unequipped) ? NO_VALUE : (g_SavegamePtr->equippedWeapon_AA - 0x80);
+            g_SysWork.playerCombatInfo_38.weaponAttack_F = (g_SavegamePtr->equippedWeapon_AA == InventoryItemId_Unequipped) ? NO_VALUE : (g_SavegamePtr->equippedWeapon_AA - InventoryItemId_KitchenKnife);
 
-            if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill)
+            if (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
                 func_8004C564(2, 3);
             }
@@ -7097,24 +7109,24 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
     switch (g_SysWork.player_4C.extra_128.state_1C)
     {
         case PlayerState_Combat:
-            switch (g_SysWork.playerCombatInfo_38.equippedWeapon_F)
+            switch (g_SysWork.playerCombatInfo_38.weaponAttack_F)
             {
-                case EquippedWeaponId_Handgun:
+                case WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap):
                     var_a2 = 20;
                     var_a3 = 2;
                     break;
 
-                case EquippedWeaponId_HuntingRifle:
+                case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
                     var_a2 = 18;
                     var_a3 = 6;
                     break;
 
-                case EquippedWeaponId_Shotgun:
+                case WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap):
                     var_a2 = 26;
                     var_a3 = 3;
                     break;
 
-                case EquippedWeaponId_HyperBlaster:
+                case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
                     var_a2 = 30;
                     var_a3 = 0;
                     break;
@@ -7125,7 +7137,8 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     break;
             }
 
-            if (g_SysWork.player_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_Reload || g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun)
+            if (g_SysWork.player_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_Reload ||
+                g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
                 D_800AF212 = 0;
                 D_800AF210 = 0;
@@ -7429,7 +7442,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
     }
     else
     {
-        switch (g_SysWork.playerCombatInfo_38.equippedWeapon_F)
+        switch (g_SysWork.playerCombatInfo_38.weaponAttack_F)
         {
             case NO_VALUE:
             case 8:
@@ -7462,7 +7475,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
     if (!(g_SysWork.player_4C.extra_128.state_1C >= PlayerState_Unk7 && g_SysWork.player_4C.extra_128.state_1C < PlayerState_Unk51) &&
         ((u32)g_SysWork.player_4C.extra_128.state_1C < PlayerState_Idle || g_SysWork.player_4C.extra_128.state_1C == PlayerState_KickEnemy || g_SysWork.player_4C.extra_128.state_1C == PlayerState_StompEnemy))
     {
-        if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun && g_SysWork.player_4C.extra_128.lowerBodyState_24 >= PlayerLowerBodyState_Aim)
+        if (g_SysWork.playerCombatInfo_38.weaponAttack_F >= EquippedWeaponId_Handgun && g_SysWork.player_4C.extra_128.lowerBodyState_24 >= PlayerLowerBodyState_Aim)
         {
             if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_Combat && D_800AF21C != NO_VALUE)
             {
@@ -7494,12 +7507,12 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
 
             if (chara->field_44 > 0)
             {
-                func_8006342C(g_SysWork.playerCombatInfo_38.equippedWeapon_F, var_a1, sp98.vx, coord);
+                func_8006342C(g_SysWork.playerCombatInfo_38.weaponAttack_F, var_a1, sp98.vx, coord);
             }
         }
         else
         {
-            switch (g_SysWork.playerCombatInfo_38.equippedWeapon_F)
+            switch (g_SysWork.playerCombatInfo_38.weaponAttack_F)
             {
                 case NO_VALUE:
                 case EquippedWeaponId_Unk8:
@@ -7518,46 +7531,46 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
                     }
                     else
                     {
-                        switch (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10)
+                        switch (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F))
                         {
                             case EquippedWeaponId_KitchenKnife:
-                                *(u32*)&sp90 = (FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0xF, Q12_SHIFT) & 0xFFFF) +
-                                               (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x4B, Q12_SHIFT - 1)) << 16);
-                                sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x4B, Q12_SHIFT) >> 1;
+                                *(u32*)&sp90 = (FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT) & 0xFFFF) +
+                                               (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x4B, Q12_SHIFT - 1)) << 16);
+                                sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x4B, Q12_SHIFT) >> 1;
                                 break;
 
                             case EquippedWeaponId_SteelPipe:
-                                *(u32*)&sp90 = (FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0xF, Q12_SHIFT) & 0xFFFF) +
-                                               (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0xE1, Q12_SHIFT) >> 1) << 16);
-                                sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x2D, Q12_SHIFT - 2);
+                                *(u32*)&sp90 = (FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT) & 0xFFFF) +
+                                               (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xE1, Q12_SHIFT) >> 1) << 16);
+                                sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x2D, Q12_SHIFT - 2);
                                 break;
 
                             case EquippedWeaponId_Chainsaw:
-                                *(u32*)&sp90 = ((FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0xF, Q12_SHIFT) >> 1) & 0xFFFF) +
-                                               (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x87, Q12_SHIFT) >> 1) << 16);
-                                sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x1EF, Q12_SHIFT) >> 1;
+                                *(u32*)&sp90 = ((FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT) >> 1) & 0xFFFF) +
+                                               (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x87, Q12_SHIFT) >> 1) << 16);
+                                sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x1EF, Q12_SHIFT) >> 1;
                                 break;
 
                             case EquippedWeaponId_RockDrill:
-                                *(u32*)&sp90 = (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x2D, Q12_SHIFT)) << 16);
-                                sp90.vz          = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x2D, Q12_SHIFT - 2);
+                                *(u32*)&sp90 = (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x2D, Q12_SHIFT)) << 16);
+                                sp90.vz          = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x2D, Q12_SHIFT - 2);
                                 break;
 
                             case EquippedWeaponId_Axe:
-                                *(u32*)&sp90 = (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x2C1, Q12_SHIFT) >> 1) << 16);
-                                sp90.vz      = FP_MULTIPLY((u32)D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0xC3, Q12_SHIFT);
+                                *(u32*)&sp90 = (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x2C1, Q12_SHIFT) >> 1) << 16);
+                                sp90.vz      = FP_MULTIPLY((u32)D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xC3, Q12_SHIFT);
                                 break;
 
                             case EquippedWeaponId_Hammer:
-                                *(u32*)&sp90 = ((FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0xF, Q12_SHIFT) >> 1) & 0xFFFF) +
-                                               (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x69, Q12_SHIFT)) << 16);
-                                sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x13B, Q12_SHIFT) >> 1;
+                                *(u32*)&sp90 = ((FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT) >> 1) & 0xFFFF) +
+                                               (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x69, Q12_SHIFT)) << 16);
+                                sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x13B, Q12_SHIFT) >> 1;
                                 break;
 
                             case EquippedWeaponId_Katana:
-                                *(u32*)&sp90 = ((FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0xF, Q12_SHIFT) >> 1) & 0xFFFF) +
-                                               (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0x13B, Q12_SHIFT) >> 1) << 16);
-                                sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.equippedWeapon_F].field_0, 0xF, Q12_SHIFT);
+                                *(u32*)&sp90 = ((FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT) >> 1) & 0xFFFF) +
+                                               (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x13B, Q12_SHIFT) >> 1) << 16);
+                                sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT);
                                 break;
                         }
 
@@ -7581,7 +7594,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
             sp98.vy = ratan2(temp_s0, sp70.vy - Q12_TO_Q8(g_SysWork.playerCombatInfo_38.field_0.vy));
         }
 
-        if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_HyperBlaster &&
+        if (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap) &&
             g_SysWork.playerCombatInfo_38.isAiming_13 &&
             model->anim_4.status_0 >= ANIM_STATUS(HarryAnim_HandgunAim, true) && model->anim_4.keyframeIdx_8 >= 574)
         {
@@ -7617,9 +7630,9 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
 
         if (g_SysWork.player_4C.extra_128.state_1C < PlayerState_Idle)
         {
-            if ((g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_Chainsaw &&
-                 model->anim_4.keyframeIdx_8 >= 572 && model->anim_4.keyframeIdx_8 <  584) ||
-                (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill &&
+            if ((g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap) &&
+                 model->anim_4.keyframeIdx_8 >= 572 && model->anim_4.keyframeIdx_8 < 584) ||
+                (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) &&
                  chara->model_0.anim_4.keyframeIdx_8 >= 577 && model->anim_4.keyframeIdx_8 <  583))
             {
                 *(u32*)&sp90 = 0;
@@ -7654,20 +7667,20 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
 
         if (g_SysWork.player_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_AimStop)
         {
-            if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun)
+            if (g_SysWork.playerCombatInfo_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
                 if (D_800C4554 != NO_VALUE || D_800C4556 != D_800C4554)
                 {
-                    func_8008A0E4(chara->field_44, g_SysWork.playerCombatInfo_38.equippedWeapon_F, chara, &D_800C44E0.field_0, g_SysWork.npcs_1A0, D_800C4556, D_800C4554);
+                    func_8008A0E4(chara->field_44, g_SysWork.playerCombatInfo_38.weaponAttack_F, chara, &D_800C44E0.field_0, g_SysWork.npcs_1A0, D_800C4556, D_800C4554);
                 }
                 else
                 {
-                    func_8008A0E4(chara->field_44, g_SysWork.playerCombatInfo_38.equippedWeapon_F, chara, &D_800C44E0.field_0, g_SysWork.npcs_1A0, sp98.vx, sp98.vy);
+                    func_8008A0E4(chara->field_44, g_SysWork.playerCombatInfo_38.weaponAttack_F, chara, &D_800C44E0.field_0, g_SysWork.npcs_1A0, sp98.vx, sp98.vy);
                 }
             }
             else
             {
-                func_8008A0E4(chara->field_44, g_SysWork.playerCombatInfo_38.equippedWeapon_F, chara, &g_SysWork.playerCombatInfo_38.field_0, g_SysWork.npcs_1A0, sp98.vx, sp98.vy);
+                func_8008A0E4(chara->field_44, g_SysWork.playerCombatInfo_38.weaponAttack_F, chara, &g_SysWork.playerCombatInfo_38.field_0, g_SysWork.npcs_1A0, sp98.vx, sp98.vy);
             }
 
             D_800C42D2 = sp98.vx;
@@ -7735,7 +7748,7 @@ void func_8007E5AC() // 0x8007E5AC
     {
         for (i = 0; g_SavegamePtr->items_0[i].id_0 != g_SavegamePtr->equippedWeapon_AA && i < INVENTORY_ITEM_COUNT_MAX; i++);
 
-        g_SysWork.playerCombatInfo_38.equippedWeapon_F      = g_SavegamePtr->equippedWeapon_AA + InventoryItemId_KitchenKnife;
+        g_SysWork.playerCombatInfo_38.weaponAttack_F      = g_SavegamePtr->equippedWeapon_AA + InventoryItemId_KitchenKnife;
         g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10  = g_SavegamePtr->items_0[i].count_1;
         g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12 = i;
 
@@ -7759,7 +7772,7 @@ void func_8007E5AC() // 0x8007E5AC
     }
     else
     {
-        g_SysWork.playerCombatInfo_38.equippedWeapon_F      = NO_VALUE;
+        g_SysWork.playerCombatInfo_38.weaponAttack_F      = NO_VALUE;
         g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10  = 0;
         g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11    = 0;
         g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12 = NO_VALUE;
@@ -7905,8 +7918,8 @@ void func_8007EBBC() // 0x8007EBBC
     var_a2 = 0;
 
     g_SysWork.enemyTargetIdx_2353 = NO_VALUE;
-    temp_v1                       = g_SysWork.playerCombatInfo_38.equippedWeapon_F + 1;
 
+    temp_v1 = g_SysWork.playerCombatInfo_38.weaponAttack_F + 1;
     switch (temp_v1)
     {
         case 0:
@@ -7933,14 +7946,14 @@ void func_8007EBBC() // 0x8007EBBC
         case 2:
         case 5:
             g_Player_EquippedWeaponInfo = D_800AFBF4[2];
-            switch (g_SysWork.playerCombatInfo_38.equippedWeapon_F)
+            switch (g_SysWork.playerCombatInfo_38.weaponAttack_F)
             {
-                case EquippedWeaponId_Hammer:
+                case WEAPON_ATTACK(EquippedWeaponId_Hammer, AttackInputType_Tap):
                     var_a1 = 10;
                     var_a2 = 5;
                     break;
 
-                case EquippedWeaponId_SteelPipe:
+                case WEAPON_ATTACK(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
                     var_a1 = 20;
                     var_a2 = 10;
                     break;
@@ -8009,51 +8022,51 @@ void func_8007EBBC() // 0x8007EBBC
         D_800C44F0[i] = D_800294F4[i + var_a2];
     }
 
-    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F != NO_VALUE && D_800AF224 != g_SysWork.playerCombatInfo_38.equippedWeapon_F)
+    if (g_SysWork.playerCombatInfo_38.weaponAttack_F != NO_VALUE && D_800AF224 != g_SysWork.playerCombatInfo_38.weaponAttack_F)
     {
-        D_800AF224 = g_SysWork.playerCombatInfo_38.equippedWeapon_F;
-        func_8007F14C(g_SysWork.playerCombatInfo_38.equippedWeapon_F);
+        D_800AF224 = g_SysWork.playerCombatInfo_38.weaponAttack_F;
+        func_8007F14C(g_SysWork.playerCombatInfo_38.weaponAttack_F);
 
-        switch (g_SysWork.playerCombatInfo_38.equippedWeapon_F)
+        switch (g_SysWork.playerCombatInfo_38.weaponAttack_F)
         {
-            case EquippedWeaponId_KitchenKnife:
+            case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP3_ANM, FS_BUFFER_12);
                 break;
 
-            case EquippedWeaponId_Axe:
+            case WEAPON_ATTACK(EquippedWeaponId_Axe, AttackInputType_Tap):
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP1_ANM, FS_BUFFER_12);
                 break;
 
-            case EquippedWeaponId_SteelPipe:
-            case EquippedWeaponId_Hammer:
+            case WEAPON_ATTACK(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Hammer, AttackInputType_Tap):
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP2_ANM, FS_BUFFER_12);
                 break;
 
-            case EquippedWeaponId_Chainsaw:
+            case WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP6_ANM, FS_BUFFER_12);
                 break;
 
-            case EquippedWeaponId_RockDrill:
+            case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP8_ANM, FS_BUFFER_12);
                 break;
 
-            case EquippedWeaponId_Katana:
+            case WEAPON_ATTACK(EquippedWeaponId_Katana, AttackInputType_Tap):
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP9_ANM, FS_BUFFER_12);
                 break;
 
-            case EquippedWeaponId_Handgun:
+            case WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap):
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP4_ANM, FS_BUFFER_12);
                 break;
 
-            case EquippedWeaponId_HuntingRifle:
+            case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP51_ANM, FS_BUFFER_12);
                 break;
 
-            case EquippedWeaponId_Shotgun:
+            case WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap):
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP52_ANM, FS_BUFFER_12);
                 break;
 
-            case EquippedWeaponId_HyperBlaster:
+            case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP53_ANM, FS_BUFFER_12);
                 break;
         }
@@ -8213,7 +8226,7 @@ void Player_Controller() // 0x8007F32C
         g_Player_IsAiming = g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.aim_8;
     }
 
-    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_Handgun && // Weapon is gun.
+    if (g_SysWork.playerCombatInfo_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
 	    g_SysWork.player_4C.extra_128.lowerBodyState_24 >= PlayerLowerBodyState_Aim)
     {
         g_Player_IsShooting  = g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.action_6;
@@ -8247,7 +8260,7 @@ void Player_Controller() // 0x8007F32C
         g_Player_IsHoldAttack = false;
     }
 
-    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_HyperBlaster)
+    if (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
     {
         switch (Inventory_HyperBlasterFunctionalTest())
         {
@@ -8267,11 +8280,11 @@ void Player_Controller() // 0x8007F32C
     }
 
 	// This is the conditional that makes impossible to move when aiming with specific weapons.
-    if (g_SysWork.playerCombatInfo_38.isAiming_13 && (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_HuntingRifle ||
-                                                      (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun &&
-                                                       ((g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) == EquippedWeaponId_Hammer ||
-                                                        (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) == EquippedWeaponId_RockDrill ||
-                                                        (g_SysWork.playerCombatInfo_38.equippedWeapon_F % 10) == EquippedWeaponId_Katana))))
+    if (g_SysWork.playerCombatInfo_38.isAiming_13 && (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap) ||
+                                                      (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+                                                       (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) == EquippedWeaponId_Hammer ||
+                                                        WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) == EquippedWeaponId_RockDrill ||
+                                                        WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) == EquippedWeaponId_Katana))))
     {
         if (g_Player_IsMovingForward)
         {
@@ -8302,10 +8315,10 @@ bool func_8007F95C() // 0x8007F95C
     VECTOR3         pos1;
     u16             sp30;
     s32             i;
-    s_SubCharacter* ptr0;
-    s_SubCharacter* ptr1;
     u16             temp;
-    s32             radius;
+    q19_12          radius;
+    s_SubCharacter* curNpc1;
+    s_SubCharacter* curNpc0;
 
     if (g_Player_IsInWalkToRunTransition)
     {
@@ -8316,19 +8329,23 @@ bool func_8007F95C() // 0x8007F95C
     pos0.vy = g_SysWork.player_4C.chara_0.position_18.vy;
     pos0.vz = g_SysWork.player_4C.chara_0.position_18.vz;
 
-    if (!g_SysWork.playerCombatInfo_38.isAiming_13 || g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun)
+    if (!g_SysWork.playerCombatInfo_38.isAiming_13 ||
+        g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
     {
-        for (i = 0, ptr1 = g_SysWork.npcs_1A0, ptr0 = g_SysWork.npcs_1A0; i < 6; i++, ptr1++, ptr0++)
+        for (i = 0, curNpc0 = g_SysWork.npcs_1A0, curNpc1 = g_SysWork.npcs_1A0;
+             i < ARRAY_SIZE(g_SysWork.npcs_1A0);
+             i++, curNpc0++, curNpc1++)
         {
-            if (ptr0->model_0.charaId_0 != Chara_None)
+            if (curNpc1->model_0.charaId_0 != Chara_None)
             {
-                if (ptr0->model_0.charaId_0 == Chara_AirScreamer || ptr0->model_0.charaId_0 == Chara_NightFlutter)
+                if (curNpc1->model_0.charaId_0 == Chara_AirScreamer ||
+                    curNpc1->model_0.charaId_0 == Chara_NightFlutter)
                 {
                     radius = Q12(1.2f);
                 }
                 else
                 {
-                    if (ptr0->model_0.charaId_0 == Chara_Creaper)
+                    if (curNpc1->model_0.charaId_0 == Chara_Creaper)
                     {
                         radius = Q12(0.65f);
                     }
@@ -8338,12 +8355,12 @@ bool func_8007F95C() // 0x8007F95C
                     }
                 }
 
-                pos1.vx = ptr1->position_18.vx + ptr1->field_D8.offsetX_0;
-                pos1.vy = ptr1->position_18.vy;
-                pos1.vz = ptr1->position_18.vz + ptr1->field_D8.offsetZ_2;
+                pos1.vx = curNpc0->position_18.vx + curNpc0->field_D8.offsetX_0;
+                pos1.vy = curNpc0->position_18.vy;
+                pos1.vz = curNpc0->position_18.vz + curNpc0->field_D8.offsetZ_2;
 
                 if (!Math_Distance2dCheck(&pos0, &pos1, radius) && ABS(pos1.vy - pos0.vy) < Q12(0.3f) &&
-                    ptr1->health_B0 > Q12(0.0f) && (ptr1->flags_3E & CharaFlag_Unk2))
+                    curNpc0->health_B0 > Q12(0.0f) && (curNpc0->flags_3E & CharaFlag_Unk2))
                 {
                     Math_ShortestAngleGet(g_SysWork.player_4C.chara_0.rotation_24.vy,
                                        FP_ANGLE_NORM_U(ratan2(pos1.vx - pos0.vx, pos1.vz - pos0.vz) + FP_ANGLE(360.0f)),

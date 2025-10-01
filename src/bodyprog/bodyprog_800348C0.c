@@ -402,7 +402,7 @@ void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
         func_8003CD6C(&g_SysWork.playerCombatInfo_38);
     }
 
-    func_800546A8(g_SysWork.playerCombatInfo_38.equippedWeapon_F);
+    func_800546A8(g_SysWork.playerCombatInfo_38.weaponAttack_F);
 }
 
 // ========================================
@@ -1213,7 +1213,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
     }
 
     g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(0.0f);
-    func_8004C564(g_SysWork.playerCombatInfo_38.equippedWeapon_F, EquippedWeaponId_RockDrill);
+    func_8004C564(g_SysWork.playerCombatInfo_38.weaponAttack_F, WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap));
 
     if (g_MapMsg_MainIdx != mapMsgIdx)
     {
@@ -2378,9 +2378,9 @@ void func_8003943C()
     {
         val0        = g_SysWork.field_275C - Q12(256.0f);
         roundedVal0 = FP_ROUND_TO_ZERO(val0, Q12_SHIFT);
-        func_8008B438(g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill, roundedVal0, 0);
+        func_8008B438(g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap), roundedVal0, 0);
 
-        if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill)
+        if (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
         {
             val1        = g_SysWork.field_2764 - Q12(256.0f);
             roundedVal1 = FP_ROUND_TO_ZERO(val1, Q12_SHIFT);
@@ -2389,9 +2389,9 @@ void func_8003943C()
     }
     else
     {
-        func_8008B438(g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill, 0, 0);
+        func_8008B438(g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap), 0, 0);
 
-        if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill)
+        if (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
         {
             func_8008B40C(0, 0);
         }

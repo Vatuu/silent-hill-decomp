@@ -1016,6 +1016,7 @@ typedef struct
 } s_800AA894;
 STATIC_ASSERT_SIZEOF(s_800AA894, 12);
 
+/** Related to weapon attacks. */
 typedef struct
 {
     u16  field_0;
@@ -2412,6 +2413,7 @@ extern s32 D_800C16C8; // Type assumed.
 
 extern s32 D_800C3920;
 
+/** Weapon attack. */
 extern s8 D_800C3950;
 
 extern s32 D_800C3954;
@@ -2608,6 +2610,7 @@ extern s_Sfx g_Sfx_Table0[420];
 
 extern u8 D_800AD480[24];
 
+/** Weapon attacks. */
 extern s_800AD4C8 D_800AD4C8[70];
 
 extern const s_MapOverlayHeader g_MapOverlayHeader; // 0x800C957C
@@ -2674,7 +2677,7 @@ s32 func_8003CD5C();
 void func_8003CD6C(s_PlayerCombat* combat);
 
 /** Returns `bool`? */
-s32 func_8003CDA0(s32 invSlotIdx);
+s32 func_8003CDA0(s32 itemId);
 
 void func_8003D01C();
 
@@ -3123,7 +3126,8 @@ void func_800485D8();
 /** Boolean. */
 u8 func_80048954(s32 com, u8* param, u8* res);
 
-void func_8004C564(u8, s32);
+/** `arg0` is probably a bit flag. */
+void func_8004C564(u8 arg0, s32 weaponAttack);
 
 // TODO: Can probably create status enums for the below funcs' return values to avoid magic,
 // but other funcs using similar return patterns should be identified first if they exist.
@@ -3132,7 +3136,7 @@ void GameFs_UniqueItemModelLoad(u8 itemId);
 
 void GameFs_MapItemsTextureLoad(s32 mapId);
 
-void func_800546A8(u8 weaponId);
+void func_800546A8(u8 weaponAttack);
 
 void func_8005487C(s32);
 
@@ -3571,7 +3575,7 @@ s32 func_8008A0CC(); /** Returns 0. */
 
 s64 func_8008A0D4(void); /** Returns 0. */
 
-s32 func_8008A0E4(s32 arg0, e_EquippedWeaponId weaponId, s_SubCharacter* chara, VECTOR3* pos, s32 arg4, s16 arg5, s16 arg6);
+s32 func_8008A0E4(s32 arg0, e_EquippedWeaponId weaponAttack, s_SubCharacter* chara, VECTOR3* pos, s32 arg4, s16 arg5, s16 arg6);
 
 u8 func_8008A270(s32 idx);
 
@@ -3649,7 +3653,7 @@ s16 func_8005C7B0(s32 arg0);
 /** `arg0` type assumed. */
 void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3);
 
-void func_8006342C(s32 invItemId, s16, s16, GsCOORDINATE2*);
+void func_8006342C(s32 weaponAttack, s16, s16, GsCOORDINATE2*);
 
 s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 x, s16 z);
 
@@ -4258,7 +4262,7 @@ void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 
 void func_80070B84(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3);
 
-void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 arg2, s32 animStatus);
+void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 weaponAttack, s32 animStatus);
 
 // Variable anim duration func for player. It's nearly completely matched https://decomp.me/scratch/PBvwU.
 s32 func_800706E4();

@@ -52,16 +52,26 @@ struct _Model;
 #define HAS_MAP(mapIdx) \
     ((((u32*)&g_SavegamePtr->hasMapsFlags_164)[(mapIdx) / 32] >> ((mapIdx) % 32)) & (1 << 0))
 
-/** @brief Gets the weapon attack ID based on an attack input type.
+/** @brief Packs a weapon attack containing a weapon ID and attack input type
  *
  * @param weaponId Weapon ID.
  * @param attackInputType Attack input type.
- * @return Weapon attack ID.
+ * @return Packed weapon attack containing a weapon ID and attack input type.
  */
-#define WEAPON_ATTACK_ID(weaponId, attackInputType) \
+#define WEAPON_ATTACK(weaponId, attackInputType) \
 	((weaponId) + ((attackInputType) * 10))
 
-/** @brief Packs an animation status containing the animation index and active flag.
+/** @brief Retrieves the weapon ID from a packed weapon attack.
+ *
+ * @note The return value counts as a valid weapon attack with an `AttackInputType_Tap` attack input type.
+ *
+ * @param weaponAttack Packed weapon attack containing a weapon ID and attack input type.
+ * @return Weapon ID.
+ */
+#define WEAPON_ATTACK_ID_GET(weaponAttack) \
+    ((weaponAttack) % 10)
+
+/** @brief Packs an animation status containing a animation index and active flag.
  *
  * @param animIdx Animation index.
  * @param isActive Active status (`bool`).
@@ -617,7 +627,7 @@ typedef enum _CommonPickupItemId
     CommonPickupItemId_ShotgunShells  = 5
 } e_CommonPickupItemId;
 
-/** @brief Attack input types. */
+/** @brief Attack input types. Packed into a weapon attack using `WEAPON_ATTACK`. */
 typedef enum _AttackInputType
 {
 	AttackInputType_Tap      = 0,
@@ -627,15 +637,7 @@ typedef enum _AttackInputType
 
 /** @brief Equipped weapon IDs. Derivative of `e_InventoryItemId`.
  *
- * Maybe weapon state instead?
- * In intances where this enum is used in code related to melee weapons
- * the Id changes depending in the attack the player is performing. For example:
- *
- * If the player perform a tap attack the id doesn't change, if they perform a hold
- * attack the Id is multiplied by 10 and if the player performs a multitap attack
- * the Id multiplies by 20.
- *
- * See `func_80071968`.
+ * TODO: Maybe just "Weapon ID", "equipable item ID", "[something else] item ID"?
  */
 typedef enum _EquippedWeaponId
 {
@@ -1278,7 +1280,7 @@ typedef struct _PlayerCombat
 {
     VECTOR3 field_0;
     s8      unk_C[3];
-    s8      equippedWeapon_F; /** `e_EquippedWeaponId` | See `WEAPON_ATTACK_ID`. maybe "weapon attack ID" is more accurate? */
+    s8      weaponAttack_F; /** See `WEAPON_ATTACK`. */
     u8      currentWeaponAmmo_10;
     u8      totalWeaponAmmo_11;
     s8      weaponInventoryIdx_12; /** Index of the currently equipped weapon in the inventory. */
