@@ -103,6 +103,8 @@ void Player_FallBackward(void);
 
 s32 func_800D20FC();
 
+void func_800D3EB8(s_SubCharacter* chara);
+
 /** @brief @unused Handles the demo end screen event after the Air Screamer breaks through the cafe window. Seen in demo builds. */
 void MapEvent_ToBeContinued(void);
 
@@ -110,10 +112,10 @@ void MapEvent_CafeCutscene();
 
 void func_800D53AC(s_SubCharacter*);
 
-s32 func_800D5F00(s_SubCharacter* arg0);
+s32 func_800D5F00(s_SubCharacter* chara);
 
 void sharedFunc_800D2364_0_s01(s_SubCharacter* chara);
 
-void func_800D5638(s_SubCharacter* arg0);
+void func_800D5638(s_SubCharacter* chara);
 
 #endif

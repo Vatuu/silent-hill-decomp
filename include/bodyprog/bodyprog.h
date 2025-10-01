@@ -1039,7 +1039,7 @@ STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
  */
 typedef struct
 {
-    VECTOR3     position_0;
+    VECTOR3     position_0; // Q19.12
     s_Collision collision_C;
     s32         field_18;
 } s_CollisionPoint;
@@ -4339,7 +4339,7 @@ bool func_8008074C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_8008076C(s32 posX, s32 posZ);
 
 /** Returns ground height? */
-s32 func_80080884(s32 posX, s32 posZ);
+q19_12 func_80080884(s32 posX, s32 posZ);
 
 s32 func_800808AC(s32 posX, s32 posZ);
 

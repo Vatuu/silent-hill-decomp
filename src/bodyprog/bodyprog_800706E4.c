@@ -8647,17 +8647,17 @@ bool func_8008074C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8008074C
 
 void func_8008076C(s32 posX, s32 posZ) // 0x8008076C
 {
-    s32          groundHeight;
+    q19_12       groundHeight;
     s32          caseVar;
-    s32          x;
-    s32          z;
+    q19_12       collX;
+    q19_12       collZ;
     s_Collision* coll;
 
     coll = &D_800AFC78.collision_C;
 
-    x = D_800AFC78.position_0.vx;
-    z = D_800AFC78.position_0.vz;
-    if (D_800AFC78.field_18 != NO_VALUE && x == posX && z == posZ)
+    collX = D_800AFC78.position_0.vx;
+    collZ = D_800AFC78.position_0.vz;
+    if (D_800AFC78.field_18 != NO_VALUE && collX == posX && collZ == posZ)
     {
         return;
     }
@@ -8674,7 +8674,7 @@ void func_8008076C(s32 posX, s32 posZ) // 0x8008076C
             switch (g_SavegamePtr->mapOverlayId_A4)
             {
                 case MapOverlayId_MAP5_S01:
-                    if (posZ <= 0)
+                    if (posZ <= Q12(0.0f))
                     {
                         groundHeight = Q12(4.0f);
                         caseVar      = 7;
@@ -8708,7 +8708,7 @@ void func_8008076C(s32 posX, s32 posZ) // 0x8008076C
     D_800AFC78.field_18      = caseVar;
 }
 
-s32 func_80080884(s32 posX, s32 posZ) // 0x80080884
+q19_12 func_80080884(s32 posX, s32 posZ) // 0x80080884
 {
     func_8008076C(posX, posZ);
     return D_800AFC78.position_0.vy;

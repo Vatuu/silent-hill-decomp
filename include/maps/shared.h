@@ -2264,7 +2264,7 @@ typedef struct
     u_Property  properties_D14[4];
     s8          unk_D24[36];
     s8*         ptr_D48[5];
-    s16         field_D5C[4][2];
+    s16         field_D5C[4][2]; // Related to animations. Move offset distances?
 } s_func_800D2E04;
 typedef char static_assertion_sizeof_s_func_800D2E04[(sizeof(s_func_800D2E04) == 3436) ? 1 : -1];
 
@@ -2818,7 +2818,7 @@ void sharedFunc_800D2B10_0_s01(s_SubCharacter* chara);
 
 void sharedFunc_800D2B28_0_s01(s_SubCharacter* chara);
 
-void sharedFunc_800D2B4C_0_s01(s_SubCharacter*);
+void sharedFunc_800D2B4C_0_s01(s_SubCharacter* chara);
 
 void sharedFunc_800D2BB0_0_s01(s_SubCharacter* chara);
 
@@ -2868,7 +2868,7 @@ bool sharedFunc_800D81B0_0_s01(s_SubCharacter* chara);
 
 void sharedFunc_800D82B8_0_s01(s_SubCharacter*);
 
-void sharedFunc_800D8714_0_s01(s_SubCharacter*, s32, s32);
+void sharedFunc_800D8714_0_s01(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
 void sharedFunc_800D87FC_0_s01(s_SubCharacter* chara);
 
@@ -2930,7 +2930,7 @@ void sharedFunc_800D0E80_3_s03(s_SubCharacter*);
 void sharedSymbol_800D0ECC_3_s03(s_SubCharacter*);
 void sharedFunc_800D0F28_3_s03(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 
-u32 sharedFunc_800D2C0C_0_s01(s_SubCharacter*, s32);
+q20_12 sharedFunc_800D2C0C_0_s01(s_SubCharacter*, s32);
 
 void sharedFunc_800D3CC4_0_s01(s_SubCharacter* chara);
 

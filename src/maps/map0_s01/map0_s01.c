@@ -321,104 +321,118 @@ INCLUDE_RODATA("asm/maps/map0_s01/nonmatchings/map0_s01", sharedData_800CAA98_0_
 
 #include "maps/shared/sharedFunc_800D3DFC_0_s01.h" // 0x800D3DFC
 
-void func_800D3EB8(s_SubCharacter* arg0)
+void func_800D3EB8(s_SubCharacter* chara) // 0x800D3EB8
 {
-    s32 deltaTime10;
-    bool temp_s2;
-    bool var_s1;
-    s32 temp_s3;
-    u32 animStatus;
-    s32 animStatus12;
-    s32 animStatusActive;
-    u32 stateStep;
+    q19_12 damage;
+    bool   cond1;
+    bool   cond0;
+    s32    temp_s3;
+    u32    animStatus;
+    s32    animStatus12;
+    bool   isAnimStatusActive;
+    u32    stateStep;
 
-    animStatus = arg0->model_0.anim_4.status_0;
+    animStatus = chara->model_0.anim_4.status_0;
     animStatus12 = ANIM_STATUS(12, true);
-    func_800D5638(arg0);
-    animStatusActive = animStatus | 1;
-    stateStep =  arg0->model_0.stateStep_3;
 
+    func_800D5638(chara);
+
+    isAnimStatusActive = animStatus | (1 << 0);
+
+    stateStep = chara->model_0.stateStep_3;
     switch (stateStep)
     {
         case 0:
-            temp_s3 = func_800D5F00(arg0);
-            var_s1 = 0;
-            temp_s2 = arg0->position_18.vy >= Q12(8.0f);
-            if (func_800808AC(arg0->position_18.vx, arg0->position_18.vz) == 7)
+            temp_s3 = func_800D5F00(chara);
+            cond0 = false;
+            cond1 = chara->position_18.vy >= Q12(8.0f);
+
+            if (func_800808AC(chara->position_18.vx, chara->position_18.vz) == 7)
             {
-                var_s1 = (arg0->position_18.vy >= func_80080884(arg0->position_18.vx, arg0->position_18.vz));
+                cond0 = chara->position_18.vy >= func_80080884(chara->position_18.vx, chara->position_18.vz);
             }
-            if (temp_s2)
+
+            if (cond1)
             {
-                sharedFunc_800D2C0C_0_s01(arg0, 0);
-                arg0->position_18.vx = g_SysWork.player_4C.chara_0.position_18.vx + 0x64000;
-                arg0->position_18.vz = g_SysWork.player_4C.chara_0.position_18.vz + 0x64000;
-                sharedFunc_800D3DFC_0_s01(arg0);
-                return;
+                sharedFunc_800D2C0C_0_s01(chara, Q12(0.0f));
+
+                chara->position_18.vx = g_SysWork.player_4C.chara_0.position_18.vx + Q12(100.0f);
+                chara->position_18.vz = g_SysWork.player_4C.chara_0.position_18.vz + Q12(100.0f);
+
+                sharedFunc_800D3DFC_0_s01(chara);
+                break;
             }
-            if (var_s1)
+
+            if (cond0)
             {
-                sharedFunc_800D2C0C_0_s01(arg0, 0);
-                sharedFunc_800D2364_0_s01(arg0);
-                arg0->position_18.vx = g_SysWork.player_4C.chara_0.position_18.vx + 0x64000;
-                arg0->position_18.vz = g_SysWork.player_4C.chara_0.position_18.vz + 0x64000;
-                sharedFunc_800D3DFC_0_s01(arg0);
-                return;
+                sharedFunc_800D2C0C_0_s01(chara, Q12(0.0f));
+                sharedFunc_800D2364_0_s01(chara);
+
+                chara->position_18.vx = g_SysWork.player_4C.chara_0.position_18.vx + Q12(100.0f);
+                chara->position_18.vz = g_SysWork.player_4C.chara_0.position_18.vz + Q12(100.0f);
+
+                sharedFunc_800D3DFC_0_s01(chara);
+                break;
             }
-            if (arg0->health_B0 <= 0)
+
+            if (chara->health_B0 <= Q12(0.0f))
             {
-                sharedFunc_800D2C0C_0_s01(arg0, 0);
-                if ((animStatus == ANIM_STATUS(26, true)) && (temp_s3 == 1))
+                sharedFunc_800D2C0C_0_s01(chara, Q12(0.0f));
+
+                if (animStatus == ANIM_STATUS(26, true) && temp_s3 == 1)
                 {
-                    arg0->health_B0 = -1;
-                    func_800622B8(3, arg0, 9, 2);
-                    arg0->model_0.stateStep_3 = temp_s3;
-                    sharedFunc_800D3DFC_0_s01(arg0);
-                    return;
+                    chara->health_B0 = NO_VALUE;
+
+                    func_800622B8(3, chara, ANIM_STATUS(4, true), 2);
+
+                    chara->model_0.stateStep_3 = temp_s3;
+
+                    sharedFunc_800D3DFC_0_s01(chara);
+                    break;
                 }
             }
             else
             {
-                arg0->flags_3E |= 2;
-                if (sharedFunc_800D2C0C_0_s01(arg0, 0x1000) == 4)
+                chara->flags_3E |= CharaFlag_Unk2;
+
+                if (sharedFunc_800D2C0C_0_s01(chara, Q12(1.0f)) == 4)
                 {
-                    if (arg0->health_B0 <= 0)
+                    if (chara->health_B0 <= Q12(0.0f))
                     {
-                        arg0->model_0.anim_4.status_0 = ANIM_STATUS(5, false);
-                        arg0->properties_E4.player.flags_11C |= PlayerFlag_Unk6;
-                        return;
+                        chara->model_0.anim_4.status_0 = ANIM_STATUS(5, false);
+                        chara->properties_E4.player.flags_11C |= PlayerFlag_Unk6;
+                        break;
                     }
-                    arg0->model_0.anim_4.status_0 = ANIM_STATUS(12, false);
-                    arg0->model_0.stateStep_3 = 2;
-                    arg0->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
-                    return;
+
+                    chara->model_0.anim_4.status_0 = ANIM_STATUS(12, false);
+                    chara->model_0.stateStep_3 = 2;
+                    chara->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
+                    break;
                 }
 
-                deltaTime10 = g_DeltaTime0 * 10;
-                if (deltaTime10 < arg0->health_B0)
+                damage = g_DeltaTime0 * 10;
+                if (damage < chara->health_B0)
                 {
-                    arg0->health_B0 -= deltaTime10;
-                    return;
+                    chara->health_B0 -= damage;
                 }
-                if (arg0->health_B0 > 0)
+                else if (chara->health_B0 > Q12(0.0f))
                 {
-                    arg0->health_B0 = 0;
-                    return;
+                    chara->health_B0 = Q12(0.0f);
                 }
-                return;
             }
             break;
+
         case 1:
-            sharedFunc_800D2C0C_0_s01(arg0, 0);
+            sharedFunc_800D2C0C_0_s01(chara, Q12(0.0f));
             break;
+
         case 2:
-            sharedFunc_800D2C0C_0_s01(arg0, 0x800);
-            if (animStatusActive != animStatus12)
+            sharedFunc_800D2C0C_0_s01(chara, Q12(0.5f));
+
+            if (isAnimStatusActive != animStatus12)
             {
-                arg0->model_0.stateStep_3 = 0;
+                chara->model_0.stateStep_3 = 0;
             }
-            break;
-        default:
             break;
     }
 }
@@ -602,7 +616,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D529C);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D53AC);
 
-void func_800D5638(s_SubCharacter* arg0)
+void func_800D5638(s_SubCharacter* chara)
 {
     s32 idx0;
     s32 idx1;
@@ -624,7 +638,7 @@ void func_800D5638(s_SubCharacter* arg0)
     idx0 = 3;
     dst->field_B4[idx0][1] = sharedData_800CAA98_0_s01.unk_380[0x1E][1];
 
-    sharedFunc_800D5E78_0_s01(arg0, 0);
+    sharedFunc_800D5E78_0_s01(chara, 0);
 }
 
 #include "maps/shared/sharedFunc_800D569C_0_s01.h" // 0x800D569C
