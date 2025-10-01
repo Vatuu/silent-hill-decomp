@@ -112,14 +112,6 @@ void func_800D53AC(s_SubCharacter*);
 
 s32 func_800D5F00(s_SubCharacter* arg0);
 
-void sharedFunc_800D2364_0_s01(s_SubCharacter* chara);
-
-void func_800D5638(s_SubCharacter* arg0);
-
-void func_800D4E84(s_SubCharacter*);
-
-void func_800D529C(s_SubCharacter* chara, s32 thousand, s32 angle);
-
 void func_800D598C(s_SubCharacter* chara);
 
 #endif

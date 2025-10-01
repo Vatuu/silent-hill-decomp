@@ -334,7 +334,7 @@ void func_800D3EB8(s_SubCharacter* arg0)
 
     animStatus = arg0->model_0.anim_4.status_0;
     animStatus12 = ANIM_STATUS(12, true);
-    func_800D5638(arg0);
+    sharedFunc_800D5638_0_s01(arg0);
     animStatusActive = animStatus | 1;
     stateStep =  arg0->model_0.stateStep_3;
 
@@ -533,7 +533,7 @@ void func_800D426C(s_SubCharacter* chara)
         chara->properties_E4.unk0.properties_120.val32 = Q12(4.0f);
     }
 
-    func_800D529C(chara, 0x1000, func_80080478(&chara->position_18, &g_SysWork.player_4C.chara_0.position_18));
+    sharedFunc_800D529C_0_s01(chara, 0x1000, func_80080478(&chara->position_18, &g_SysWork.player_4C.chara_0.position_18));
     func_800D598C(chara);
 
     switch (sharedFunc_800D2C0C_0_s01(chara, Q12(1.0f))) // Chara_TakeDamage(chara, mulitplier) ?
@@ -655,76 +655,15 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D49B0);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D4AEC);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D4E84);
+INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D4E84_0_s01); // 0x800D4E84
 
 #include "maps/shared/sharedFunc_800D5274_0_s01.h" // 0x800D5274
 
-void func_800D529C(s_SubCharacter* arg0, s32 thousand, s32 angle)
-{
-    s32 posX;
-    s32 posZ;
-    s32 x;
-    s32 z;
-    s32 y;
-    s32 calcY;
-    s32 someY;
-    s32 someConst;
-
-    posX = arg0->position_18.vx;
-    posZ = arg0->position_18.vz;
-    someConst = 0x1800; // } @hack permuter find.
-    arg0++;             // }
-    arg0--;             // }
-    x = posX + FP_MULTIPLY_PRECISE(thousand, Math_Sin(angle), Q12_SHIFT);
-    z = posZ + FP_MULTIPLY_PRECISE(thousand, Math_Cos(angle), Q12_SHIFT);
-
-
-    calcY = func_80080884(x, z);
-    someY = arg0->properties_E4.unk0.properties_124.val32;
-    if (someY < calcY)
-    {
-        calcY = someY;
-    }
-
-    y = (calcY - someConst) - func_80080514() / 2;
-    
-    if (y < sharedFunc_800D5274_0_s01())
-    {
-        y = sharedFunc_800D5274_0_s01();
-    }
-
-    arg0->properties_E4.unk0.field_F8.vx = x;
-    arg0->properties_E4.unk0.field_F8.vy = y;
-    arg0->properties_E4.unk0.field_F8.vz = z;
-    func_800D4E84(arg0);
-}
+#include "maps/shared/sharedFunc_800D529C_0_s01.h" // 0x800D529C
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D53AC);
 
-void func_800D5638(s_SubCharacter* arg0)
-{
-    s32 idx0;
-    s32 idx1;
-    s_sharedData_800E21D0_0_s01* dst;
-    s_func_800D2E04* src;
-
-    src = &sharedData_800CAA98_0_s01;
-    dst = &sharedData_800E21D0_0_s01;
-
-    idx0 = 3;
-    dst->field_B4[idx0][2] = 0;
-    idx0 = 0;
-    dst->field_B4[idx0][2] = src->unk_380[2][0];
-    dst->field_B4[idx0][1] = src->unk_380[2][1];
-
-    idx0 = 1;
-    dst->field_B4[idx0][2] = sharedData_800CAA98_0_s01.unk_380[0xB][0];
-    dst->field_B4[idx0][1] = sharedData_800CAA98_0_s01.unk_380[0xB][1];
-    idx0 = 3;
-    dst->field_B4[idx0][1] = sharedData_800CAA98_0_s01.unk_380[0x1E][1];
-
-    sharedFunc_800D5E78_0_s01(arg0, 0);
-}
+#include "maps/shared/sharedFunc_800D5638_0_s01.h" // 0x800D5638
 
 #include "maps/shared/sharedFunc_800D569C_0_s01.h" // 0x800D569C
 

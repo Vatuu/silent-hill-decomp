@@ -2950,6 +2950,14 @@ s32 sharedFunc_800D6A60_0_s01(VECTOR3* vec0, VECTOR3* vec1, s_SubCharacter* char
 
 void sharedFunc_800D6C7C_0_s01(VECTOR* arg0, s_SubCharacter* arg1, s32 arg2, VECTOR3* arg3);
 
+void sharedFunc_800D2364_0_s01(s_SubCharacter* chara);
+
+void sharedFunc_800D5638_0_s01(s_SubCharacter* arg0);
+
+void sharedFunc_800D4E84_0_s01(s_SubCharacter*);
+
+void sharedFunc_800D529C_0_s01(s_SubCharacter* chara, s32 thousand, s32 angle);
+
 static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo)
 {
     anim->animInfo_C  = animInfo;

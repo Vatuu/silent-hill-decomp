@@ -3,7 +3,7 @@
 
 void func_800DEF80();
 
-void func_800DEFA0();
+void func_800DEFA0(s_SubCharacter* chara, s32 thousand, s32 angles);
 
 void func_800DEFC0();
 
