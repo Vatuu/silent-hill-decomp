@@ -2413,8 +2413,8 @@ extern s32 D_800C16C8; // Type assumed.
 
 extern s32 D_800C3920;
 
-/** Weapon attack. */
-extern s8 D_800C3950;
+/** See `WEAPON_ATTACK`. */
+extern s8 g_Player_ActiveWeaponAttack;
 
 extern s32 D_800C3954;
 

@@ -2499,6 +2499,7 @@ g_StringPosition                            = 0x800C38A8; // type:DVECTOR
 g_StringPositionX1                          = 0x800C38AC; // type:s32
 g_MapMsg_WidthTable                         = 0x800C38C8; // type:s32
 D_800C3928                                  = 0x800C3928;
+g_Player_ActiveWeaponAttack                 = 0x800C3950;
 g_Inventory_IsUpClicked                     = 0x800C3968; // type:s32
 g_Inventory_IsDownClicked                   = 0x800C396C; // type:s32
 g_Inventory_IsLeftClicked                   = 0x800C3970; // type:s32

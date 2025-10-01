@@ -150,7 +150,7 @@ void func_8004BFE8() // 0x8004BFE8
     // Save constant rotation matrix in stack.
     PushMatrix();
 
-    // Read distance h from viewpoint to screen.
+    // Read distance from viewpoint to screen.
     D_800C3954 = ReadGeomScreen();
 
     // Read GTE offset value.
@@ -159,7 +159,7 @@ void func_8004BFE8() // 0x8004BFE8
     // Set distance between projection plane and viewpoint. Results in FOV change.
     GsSetProjection(1000);
 
-    D_800C3950 = g_SysWork.playerCombatInfo_38.weaponAttack_F;
+    g_Player_ActiveWeaponAttack = g_SysWork.playerCombatInfo_38.weaponAttack_F;
 }
 
 /** Possible failsafe?

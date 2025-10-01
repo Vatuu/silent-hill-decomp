@@ -25,12 +25,12 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponAttack) // 0x8004C088
     if (g_SysWork.player_4C.extra_128.state_1C < PlayerState_Idle &&
         playerState >= PlayerState_None)
     {
-        if (D_800C3950 != g_SysWork.playerCombatInfo_38.weaponAttack_F)
+        if (g_Player_ActiveWeaponAttack != g_SysWork.playerCombatInfo_38.weaponAttack_F)
         {
             g_SysWork.playerCombatInfo_38.isAiming_13 = false;
         }
 
-        weaponAttack = WEAPON_ATTACK_ID_GET(D_800C3950);
+        weaponAttack = WEAPON_ATTACK_ID_GET(g_Player_ActiveWeaponAttack);
         if (weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap) &&
             g_SysWork.playerCombatInfo_38.weaponAttack_F != weaponAttack)
         {
@@ -56,14 +56,16 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponAttack) // 0x8004C088
 
             default:
 
-                if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_Combat && (s8)D_800C3950 != g_SysWork.playerCombatInfo_38.weaponAttack_F)
+                if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_Combat &&
+                    g_Player_ActiveWeaponAttack != g_SysWork.playerCombatInfo_38.weaponAttack_F)
                 {
                     g_SysWork.player_4C.extra_128.state_1C                     = PlayerState_None;
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C = PlayerFlag_None;
                 }
 
-                if (g_SysWork.player_4C.extra_128.lowerBodyState_24 >= PlayerLowerBodyState_Aim && g_SysWork.playerCombatInfo_38.weaponAttack_F != NO_VALUE &&
-                    (s8)D_800C3950 == g_SysWork.playerCombatInfo_38.weaponAttack_F)
+                if (g_SysWork.player_4C.extra_128.lowerBodyState_24 >= PlayerLowerBodyState_Aim &&
+                    g_SysWork.playerCombatInfo_38.weaponAttack_F != NO_VALUE &&
+                    g_Player_ActiveWeaponAttack == g_SysWork.playerCombatInfo_38.weaponAttack_F)
                 {
                     extraModelPtr0 = &g_SysWork.player_4C.extra_128.model_0;
                     if (extraModelPtr0->anim_4.status_0 >= ANIM_STATUS(33, false))
@@ -103,14 +105,14 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponAttack) // 0x8004C088
     modelPtr3      = &g_SysWork.player_4C.chara_0.model_0;
     extraModelPtr2 = &g_SysWork.player_4C.extra_128.model_0;
 
-    // Set anim alpha.
+    // Set animation alpha.
     modelPtr3->anim_4.alpha_A      = Q12(1.0f);
     extraModelPtr2->anim_4.alpha_A = Q12(1.0f);
 
     // Disable upper body bones.
     g_SysWork.player_4C.extra_128.disabledAnimBones_18 = HARRY_UPPER_BODY_BONE_MASK;
 
-    // Set anim time.
+    // Set animation time.
     modelPtr3->anim_4.time_4      = Q12(modelPtr3->anim_4.keyframeIdx_8);
     extraModelPtr2->anim_4.time_4 = Q12(extraModelPtr2->anim_4.keyframeIdx_8);
 
