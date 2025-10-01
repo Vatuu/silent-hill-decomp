@@ -525,73 +525,73 @@ void func_800D4264() {}
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D426C);
 
-void func_800D4420(s_SubCharacter* subChar)
+void func_800D4420(s_SubCharacter* chara)
 {
-    s32 dist0;
-    s32 temp_v0;
-    s32 temp_v0_2;
+    q19_12 dist0;
+    q19_12 deltaY;
+    q19_12 angle;
+    q19_12 dist;
 
-    s32 dist;
-
-    switch (subChar->model_0.stateStep_3)
+    switch (chara->model_0.stateStep_3)
     {
         case 0:
-            subChar->properties_E4.unk0.properties_120.val32 = Q12(1.5f);
-            subChar->model_0.stateStep_3 = 1;
+            chara->properties_E4.unk0.properties_120.val32 = Q12(1.5f);
+            chara->model_0.stateStep_3 = 1;
             break;
+
         case 1:
-            if (Math_Distance2dGet(&subChar->position_18, &subChar->properties_E4.unk0.field_F8) < Q12(0.5f))
+            if (Math_Distance2dGet(&chara->position_18, &chara->properties_E4.unk0.field_F8) < Q12(0.5f))
             {
-                subChar->model_0.stateStep_3 = 0;
+                chara->model_0.stateStep_3 = 0;
             }
             break;
     }
 
-    func_800D53AC(subChar);
-    sharedFunc_800D57C8_0_s01(subChar);
+    func_800D53AC(chara);
+    sharedFunc_800D57C8_0_s01(chara);
 
-    switch (sharedFunc_800D2C0C_0_s01(subChar, 0x1000))
+    switch (sharedFunc_800D2C0C_0_s01(chara, Q12(1.0f)))
     {
         case 0:
-            dist0 = -1;
-            temp_v0 = subChar->properties_E4.unk0.field_F8.vy - subChar->position_18.vy;
-            if (temp_v0 > Q12(-0.2f) && temp_v0 < Q12(0.8f))
+            dist0 = NO_VALUE;
+            deltaY = chara->properties_E4.unk0.field_F8.vy - chara->position_18.vy;
+            if (deltaY > Q12(-0.2f) && deltaY < Q12(0.8f))
             {
-                dist0 = subChar->field_D4 + Q12(0.15f);
+                dist0 = chara->field_D4 + Q12(0.15f);
             }
 
-            dist = Math_Distance2dGet(&subChar->position_18, &subChar->properties_E4.unk0.field_F8);
+            dist = Math_Distance2dGet(&chara->position_18, &chara->properties_E4.unk0.field_F8);
             if (dist < dist0)
             {
-                temp_v0_2 = FP_ANGLE_NORM_S(func_80080478(&subChar->position_18, &subChar->properties_E4.unk0.field_F8) - subChar->rotation_24.vy);
-                if (temp_v0_2 >= FP_ANGLE(-8.0f) && temp_v0_2 < FP_ANGLE(8.0f))
+                angle = FP_ANGLE_NORM_S(func_80080478(&chara->position_18, &chara->properties_E4.unk0.field_F8) - chara->rotation_24.vy);
+                if (angle >= FP_ANGLE(-8.0f) && angle < FP_ANGLE(8.0f))
                 {
-                    subChar->model_0.state_2 = 49;
-                    subChar->model_0.stateStep_3 = 0;
+                    chara->model_0.state_2 = 49;
+                    chara->model_0.stateStep_3 = 0;
                 }
             }
             break;
 
         case 1:
         case 2:
-            subChar->model_0.state_2 = 50;
-            subChar->model_0.stateStep_3 = 0;
-            subChar->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
+            chara->model_0.state_2 = 50;
+            chara->model_0.stateStep_3 = 0;
+            chara->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
             break;
+
         case 3:
         case 4:
-            subChar->model_0.state_2 = 51;
-            subChar->model_0.stateStep_3 = 0;
-            if (subChar->health_B0 <= 0)
+            chara->model_0.state_2 = 51;
+            chara->model_0.stateStep_3 = 0;
+
+            if (chara->health_B0 <= Q12(0.0f))
             {
-                subChar->properties_E4.player.flags_11C |= PlayerFlag_Unk6;
+                chara->properties_E4.player.flags_11C |= PlayerFlag_Unk6;
             }
             else
             {
-                subChar->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
+                chara->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
             }
-            break;
-        default:
             break;
     }
 }

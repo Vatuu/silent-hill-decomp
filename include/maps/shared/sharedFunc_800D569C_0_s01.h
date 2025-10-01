@@ -5,7 +5,6 @@ s32 sharedFunc_800D569C_0_s01(s_SubCharacter* chara, q19_12 vecY, q19_12 dist)
     s32    calcY;
     q19_12 vecYCpy;
     q19_12 distCpy;
-
     q19_12 vec_x;
     q19_12 vec_z;
 
@@ -13,7 +12,8 @@ s32 sharedFunc_800D569C_0_s01(s_SubCharacter* chara, q19_12 vecY, q19_12 dist)
     posY    = chara->position_18.vy;
     distCpy = dist;
     calcY   = func_80080884(chara->position_18.vx, chara->position_18.vz);
-    // @hack: We should not mix unions (npc vs larvalStalker).
+
+    // @hack: Unions shouldn't be mixed (NPC vs. Larval Stalker).
     someY = chara->properties_E4.npc.field_124;
 
     vec_x = chara->properties_E4.unk0.field_110.vx;
@@ -25,16 +25,18 @@ s32 sharedFunc_800D569C_0_s01(s_SubCharacter* chara, q19_12 vecY, q19_12 dist)
     }
 
     calcY -= Q12(1.7f);
-    someY  = func_800808AC(vec_x, vec_z); // collision type ? this returns `caseVar` from func_8008076C
+    someY  = func_800808AC(vec_x, vec_z); // Collision type? This returns `caseVar` from `func_8008076C`.
 
     if (someY == 12 || someY == 0 || someY == 7)
     {
         distCpy = 0;
     }
+
     if (posY < calcY)
     {
         calcY = posY;
     }
+
     if (distCpy > Q12(12.0f))
     {
         vecYCpy = calcY;
