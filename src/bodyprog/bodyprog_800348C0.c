@@ -1164,7 +1164,7 @@ u32 func_800364BC() // 0x800364BC
     u32 var0;
     u32 var1;
 
-    D_800BCD58 += g_DeltaTime1 * 0x40001;
+    D_800BCD58 += g_DeltaTime1 * (Q12(64.0f) + 1);
 
     var0  = 0x40000;
     var0 += Math_Sin(D_800BCD58 >> 18) * 8;
@@ -1179,10 +1179,10 @@ void func_8003652C() // 0x8003652C
 {
     RECT rect;
 
-    u32 vals[] = // 0x8002523C
+    u32 VALS[] =
     {
         0xFFFF0000, 0xBBEEE318, 0xFFEC9304, 0x83FFE30C,
-        0x001F8318, 0x90840018, 0x90808080, 0x80048084
+        0x1F8318,   0x90840018, 0x90808080, 0x80048084
     };
 
     rect.x = 304;
@@ -1190,7 +1190,7 @@ void func_8003652C() // 0x8003652C
     rect.w = 16;
     rect.h = 1;
 
-    LoadImage(&rect, vals);
+    LoadImage(&rect, VALS);
 }
 
 s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
@@ -1302,7 +1302,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                         g_MapMsg_Select.maxIdx_0           = temp;
                         g_MapMsg_Select.selectedEntryIdx_1 = g_MapMsg_SelectCancelIdx;
 
-                        Sd_PlaySfx(Sfx_Cancel, 0, 64);
+                        Sd_PlaySfx(Sfx_Cancel, 0, Q8_CLAMPED(0.25f));
 
                         if (g_SysWork.silentYesSelection_2350_4)
                         {
@@ -1318,11 +1318,11 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 
                         if ((u8)g_MapMsg_Select.selectedEntryIdx_1 == (s8)g_MapMsg_SelectCancelIdx)
                         {
-                            Sd_PlaySfx(Sfx_Cancel, 0, 64);
+                            Sd_PlaySfx(Sfx_Cancel, 0, Q8_CLAMPED(0.25f));
                         }
                         else if (!g_SysWork.silentYesSelection_2350_4)
                         {
-                            Sd_PlaySfx(Sfx_Confirm, 0, 64);
+                            Sd_PlaySfx(Sfx_Confirm, 0, Q8_CLAMPED(0.25f));
                         }
 
                         if (g_SysWork.silentYesSelection_2350_4)
@@ -1480,7 +1480,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                 g_MapMsg_SelectFlashTimer = Q12(0.0f);
                 g_MapMsg_Select.selectedEntryIdx_1--;
 
-                Sd_PlaySfx(Sfx_Back, 0, 64);
+                Sd_PlaySfx(Sfx_Back, 0, Q8_CLAMPED(0.25f));
             }
 
             if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickDown &&
@@ -1489,7 +1489,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                 g_MapMsg_SelectFlashTimer = Q12(0.0f);
                 g_MapMsg_Select.selectedEntryIdx_1++;
 
-                Sd_PlaySfx(Sfx_Back, 0, 64);
+                Sd_PlaySfx(Sfx_Back, 0, Q8_CLAMPED(0.25f));
             }
 
             mapMsgCode = NO_VALUE;
@@ -1511,14 +1511,14 @@ const s32 RodataPad_800252B8 = 0;
  * opening and closing door SFX when the player moves between rooms. */
 s_AreaLoadSfx const SfxPairs[25] = // 0x800252BC
 {
-    { Sfx_Base,    Sfx_Base },
+    { Sfx_Base,    Sfx_Base    },
     { Sfx_Unk1309, Sfx_Unk1310 },
     { Sfx_Unk1323, Sfx_Unk1324 },
-    { Sfx_Unk1418, Sfx_Base },
-    { Sfx_Unk1354, Sfx_Base },
-    { Sfx_Unk1387, Sfx_Base },
-    { Sfx_Unk1391, Sfx_Base },
-    { Sfx_Unk1521, Sfx_Base },
+    { Sfx_Unk1418, Sfx_Base    },
+    { Sfx_Unk1354, Sfx_Base    },
+    { Sfx_Unk1387, Sfx_Base    },
+    { Sfx_Unk1391, Sfx_Base    },
+    { Sfx_Unk1521, Sfx_Base    },
     { Sfx_Unk1458, Sfx_Unk1459 },
     { Sfx_Unk1604, Sfx_Unk1605 },
     { Sfx_Unk1609, Sfx_Unk1610 },
@@ -1531,11 +1531,11 @@ s_AreaLoadSfx const SfxPairs[25] = // 0x800252BC
     { Sfx_Unk1431, Sfx_Unk1432 },
     { Sfx_Unk1398, Sfx_Unk1399 },
     { Sfx_Unk1504, Sfx_Unk1505 },
-    { Sfx_Unk1309, Sfx_Base },
-    { Sfx_Unk1323, Sfx_Base },
+    { Sfx_Unk1309, Sfx_Base    },
+    { Sfx_Unk1323, Sfx_Base    },
     { Sfx_Base,    Sfx_Unk1324 },
     { Sfx_Unk1351, Sfx_Unk1352 },
-    { Sfx_Unk1487, Sfx_Base }
+    { Sfx_Unk1487, Sfx_Base    }
 };
 
 // These are referenced by pointers at `0x800A99E8`, which are then used by `func_800D3EAC`.
@@ -1556,7 +1556,7 @@ void func_80036E48(u16* arg0, s16* arg1) // 0x80036E48
     s32  temp_a0;
     s32  temp_v0_2;
     s32  var_a2;
-    s32  var_t3;
+    s32  i;
     u8   var_t4;
     s32  var_v0;
     u16  temp_v0;
@@ -1568,7 +1568,7 @@ void func_80036E48(u16* arg0, s16* arg1) // 0x80036E48
     var_t4 = 0;
     var_t7 = arg0;
 
-    for (var_t3 = 0; var_t3 < 15;)
+    for (i = 0; i < 15;)
     {
         temp_v0 = *var_t7;
 
@@ -1612,21 +1612,21 @@ void func_80036E48(u16* arg0, s16* arg1) // 0x80036E48
             {
                 if (var_a2 > 0 && sp28[var_a2 - 1] != 0)
                 {
-                    var_a3 |= 0xB << temp_a0;
+                    var_a3 |= 11 << temp_a0;
                 }
 
-                if (var_t3 > 0)
+                if (i > 0)
                 {
-                    if (var_a2 != 0 && ((sp10[var_a2 >> 2] >> temp_a0) & 0xF) == 0xB && var_t4)
+                    if (var_a2 != 0 && ((sp10[var_a2 >> 2] >> temp_a0) & 0xF) == 11 && var_t4)
                     {
-                        var_a3 |= 0xB << temp_a0;
+                        var_a3 |= 11 << temp_a0;
                     }
 
                     temp_v0_2 = (sp10[var_a2 >> 2] >> temp_a0) & 0xF;
 
-                    if (temp_v0_2 > 0 && temp_v0_2 != 0xB)
+                    if (temp_v0_2 > 0 && temp_v0_2 != 11)
                     {
-                        var_a3 |= 0xB << temp_a0;
+                        var_a3 |= 11 << temp_a0;
                         var_t4 = 1;
                     }
                     else
@@ -1645,7 +1645,8 @@ void func_80036E48(u16* arg0, s16* arg1) // 0x80036E48
             }
         }
 
-        do { var_t3++; } while (0); // @hack Required for match.
+        do { i++; } while (0); // @hack Required for match.
+
         var_t7++;
         var_t2 += (D_800C3920 - 1) * 3;
     }
@@ -1680,7 +1681,7 @@ void func_8003708C(s16* ptr0, u16* ptr1) // 0x8003708C
             var0  = 1;
         }
 
-        if ((i & 3) == 3 || i == 12)
+        if ((i & 0x3) == 3 || i == 12)
         {
             ptr1++;
             *ptr0++ = var1;
@@ -1698,7 +1699,7 @@ void func_80037124() // 0x80037124
 
 void func_80037154() // 0x80037154
 {
-    s32         i;
+    s32 i;
 
     for (i = 0; i < 2; i++)
     {
@@ -1788,37 +1789,37 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800348C0", func_800373CC); // 0x
 
 bool func_800378D4(s_MapPoint2d* mapPoint) // 0x800378D4
 {
-    s16 rotY;
-    s32 x;
-    s32 z;
-    s32 deltaRotY;
+    q19_12 deltaX;
+    q19_12 deltaZ;
+    q3_12  rotY;
+    q19_12 deltaRotY;
 
     if (g_MainLoop_FrameCount > D_800A9A20)
     {
         rotY       = g_SysWork.player_4C.chara_0.rotation_24.vy;
-        D_800A9A24 = g_SysWork.player_4C.chara_0.position_18.vx - (Math_Sin(rotY) >> 3);
-        D_800A9A28 = g_SysWork.player_4C.chara_0.position_18.vz - (Math_Cos(rotY) >> 3);
+        D_800A9A24 = g_SysWork.player_4C.chara_0.position_18.vx - (Math_Sin(rotY) >> 3); // `/ 8`.
+        D_800A9A28 = g_SysWork.player_4C.chara_0.position_18.vz - (Math_Cos(rotY) >> 3); // `/ 8`.
         D_800A9A20 = g_MainLoop_FrameCount;
     }
 
-    x = mapPoint->positionX_0 - D_800A9A24;
-    if (ABS(x) > Q12(0.8f))
+    deltaX = mapPoint->positionX_0 - D_800A9A24;
+    if (ABS(deltaX) > Q12(0.8f))
     {
         return false;
     }
 
-    z = mapPoint->positionZ_8 - D_800A9A28;
-    if (ABS(z) > Q12(0.8f))
+    deltaZ = mapPoint->positionZ_8 - D_800A9A28;
+    if (ABS(deltaZ) > Q12(0.8f))
     {
         return false;
     }
 
-    if ((SQUARE(x) + SQUARE(z)) > SQUARE(Q12(0.8f)))
+    if ((SQUARE(deltaX) + SQUARE(deltaZ)) > SQUARE(Q12(0.8f)))
     {
         return false;
     }
 
-    deltaRotY = g_SysWork.player_4C.chara_0.rotation_24.vy - ratan2(x, z);
+    deltaRotY = g_SysWork.player_4C.chara_0.rotation_24.vy - ratan2(deltaX, deltaZ);
     if (deltaRotY >= FP_ANGLE(180.0f))
     {
         deltaRotY -= FP_ANGLE(360.0f);
@@ -1836,26 +1837,26 @@ bool func_800378D4(s_MapPoint2d* mapPoint) // 0x800378D4
 
 bool func_80037A4C(s_MapPoint2d* mapPoint) // 0x80037A4C
 {
-    s32  temp_a0_2;
-    s32  temp_a2;
-    s32  halfCosPlayerRotY;
-    s32  temp_s2;
-    s32  halfSinRotY;
-    s32  temp_s4;
-    s32  deltaX;
-    s32  deltaZ;
-    s32  temp_v1;
-    s32  clampedHalfCosPlayerRotY;
-    bool cond;
-    s32  scaledSinPlayerRotY;
-    s32  scaledCosRotY;
+    s32    temp_a0_2;
+    s32    temp_a2;
+    q19_12 halfCosPlayerRotY;
+    s32    temp_s2;
+    s32    halfSinRotY;
+    s32    temp_s4;
+    q19_12 deltaX;
+    q19_12 deltaZ;
+    s32    temp_v1;
+    q19_12 clampedHalfCosPlayerRotY;
+    bool   cond;
+    s32    scaledSinPlayerRotY;
+    s32    scaledCosRotY;
 
-    halfSinRotY   = Math_Sin(g_SysWork.player_4C.chara_0.rotation_24.vy) >> 1;
+    halfSinRotY   = Math_Sin(g_SysWork.player_4C.chara_0.rotation_24.vy) >> 1; // `/ 2`.
     scaledCosRotY = -Math_Cos(FP_ANGLE_FROM_PACKED(mapPoint->data.areaLoad.rotationY_4_16)) * mapPoint->data.areaLoad.field_4_24;
 
     clampedHalfCosPlayerRotY = halfSinRotY;
 
-    temp_a0_2 = scaledCosRotY >> 4;
+    temp_a0_2 = scaledCosRotY >> 4; // `/ 16`.
     deltaX    = mapPoint->positionX_0 - g_SysWork.player_4C.chara_0.position_18.vx;
     temp_s2   = deltaX - temp_a0_2;
     temp_s4   = deltaX + temp_a0_2;
@@ -1875,12 +1876,12 @@ bool func_80037A4C(s_MapPoint2d* mapPoint) // 0x80037A4C
     {
         if (MIN(halfSinRotY, 0) <= MAX(temp_s2, temp_s4))
         {
-            halfCosPlayerRotY   = Math_Cos(g_SysWork.player_4C.chara_0.rotation_24.vy) >> 1;
+            halfCosPlayerRotY   = Math_Cos(g_SysWork.player_4C.chara_0.rotation_24.vy) >> 1; // `/ 2`.
             scaledSinPlayerRotY = Math_Sin(FP_ANGLE_FROM_PACKED(mapPoint->data.areaLoad.rotationY_4_16)) * mapPoint->data.areaLoad.field_4_24;
 
             clampedHalfCosPlayerRotY = halfCosPlayerRotY;
 
-            temp_a0_2 = scaledSinPlayerRotY >> 4;
+            temp_a0_2 = scaledSinPlayerRotY >> 4; // `/ 16`.
             deltaZ    = mapPoint->positionZ_8 - g_SysWork.player_4C.chara_0.position_18.vz;
             temp_v1   = deltaZ - temp_a0_2;
             temp_a2   = deltaZ + temp_a0_2;
@@ -1914,19 +1915,19 @@ bool func_80037A4C(s_MapPoint2d* mapPoint) // 0x80037A4C
 
 bool func_80037C5C(s_MapPoint2d* mapPoint) // 0x80037C5C
 {
-    s32 sinAngle;
-    s32 cosAngle;
-    s32 angle;
-    s32 deltaZ;
-    s32 deltaX;
-    s32 shift8Field_7;
-    s32 temp_v0;
-    s32 scale;
-    u32 temp;
+    q19_12 sinAngle;
+    q19_12 cosAngle;
+    q19_12 angle;
+    q19_12 deltaX;
+    q19_12 deltaZ;
+    s32    shift8Field_7;
+    s32    temp_v0;
+    s32    scale;
+    u32    temp;
 
     shift8Field_7 = mapPoint->data.areaLoad.field_4_24 << 8;
-    deltaX        = g_SysWork.player_4C.chara_0.position_18.vx - mapPoint->positionX_0;
 
+    deltaX = g_SysWork.player_4C.chara_0.position_18.vx - mapPoint->positionX_0;
     if (mapPoint->data.areaLoad.field_4_24 << 9 < ABS(deltaX))
     {
         return false;
@@ -1934,12 +1935,12 @@ bool func_80037C5C(s_MapPoint2d* mapPoint) // 0x80037C5C
 
     deltaZ = g_SysWork.player_4C.chara_0.position_18.vz - mapPoint->positionZ_8;
     scale  = 2;
-
     if ((shift8Field_7 * scale) < ABS(deltaZ))
     {
         return false;
     }
 
+    // TODO: Odd packed angle conversion method. `FP_ANGLE_FROM_PACKED` doesn't match here.
     angle    = -(mapPoint->data.areaLoad.rotationY_4_16 << 20) >> 16;
     sinAngle = Math_Sin(angle);
 
@@ -1951,7 +1952,6 @@ bool func_80037C5C(s_MapPoint2d* mapPoint) // 0x80037C5C
 
     cosAngle = Math_Cos(angle);
     temp_v0  = FP_FROM((deltaX * cosAngle) + (deltaZ * Math_Sin(angle)), Q12_SHIFT);
-
     if (shift8Field_7 < ABS(temp_v0))
     {
         return false;
