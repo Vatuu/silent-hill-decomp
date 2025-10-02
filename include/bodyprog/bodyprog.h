@@ -1838,6 +1838,33 @@ typedef struct
     s32       field_78;
 } s_func_80066184;
 
+typedef struct
+{
+    VECTOR3 field_0;
+    s8      unk_C[32];
+    s32     field_2C;
+    s8      unk_30[252];
+    SVECTOR field_12C;
+    s8      unk_138[8];
+    DVECTOR field_13C;
+    s32     field_140;
+    s32     field_144;
+} s_func_80064FC0;
+
+typedef struct
+{
+    POLY_G4*  field_0;
+    DR_TPAGE* field_4;
+    SVECTOR   field_8[3];
+    MATRIX    field_20;
+    VECTOR3   field_40;
+    s32       field_4C;
+    s16       field_50;
+    s32       field_54[3];
+    s16       field_60[3];
+    s32       field_68;
+} s_func_800652F4;
+
 // ========
 // GLOBALS
 // ========
@@ -3649,6 +3676,10 @@ s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 x, s16 z);
 void func_800622B8(s32 arg0, s_SubCharacter* chara, s32 animStatus, s32 arg3);
 
 void func_80064F04(VECTOR3* arg0, s8 arg1, s16 arg2);
+
+s32 func_80064FC0(POLY_FT4** arg0, s32 arg1);
+
+void func_800652F4(VECTOR3* arg0, s16 arg1, s16 arg2, s16 arg3);
 
 void func_80065B94(VECTOR3* arg0, s16 arg1);
 
