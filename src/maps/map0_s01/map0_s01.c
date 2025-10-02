@@ -42,9 +42,9 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800CEFD0_1_s02
 
 #include "maps/shared/sharedFunc_800D0E04_0_s00.h" // 0x800CFFB8
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800CFFD8);
+#include "maps/shared/sharedFunc_800CFFD8_0_s01.h" // 0x800CFFD8
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D0850);
+#include "maps/shared/sharedFunc_800D0850_0_s01.h" // 0x800D0850
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D0C3C);
 
@@ -124,7 +124,7 @@ void func_800D16C4(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
     if (cond)
     {
-        func_80069B24(&D_800C4590.field_0, &sp20, chara);
+        func_80069B24(&D_800C4590, &sp20, chara);
         chara->position_18.vx += D_800C4590.field_0.vx;
         chara->position_18.vy += D_800C4590.field_0.vy;
         chara->position_18.vz += D_800C4590.field_0.vz;
@@ -134,7 +134,7 @@ void func_800D16C4(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             D_800C4590.field_C = chara->properties_E4.player.positionY_EC;
         }
 
-        if ( chara->position_18.vy > D_800C4590.field_C)
+        if (chara->position_18.vy > D_800C4590.field_C)
         {
             chara->position_18.vy = D_800C4590.field_C;
             chara->field_34 = 0;
@@ -295,9 +295,18 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D3508_0_s01
 
 #include "maps/shared/sharedFunc_800D3814_0_s01.h" // 0x800D3814
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D3928_0_s01); // 0x800D3928
+#include "maps/shared/sharedFunc_800D3928_0_s01.h" // 0x800D3928
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D39F4);
+void func_800D39F4(s_SubCharacter* chara)
+{
+    s32 animTime;
+
+    chara->model_0.anim_4.status_0 = ANIM_STATUS(19, true);
+    animTime = func_80044918(&chara->model_0.anim_4)->startKeyframeIdx_C;
+    chara->model_0.stateStep_3 = 7;
+    chara->model_0.anim_4.keyframeIdx_8 = animTime;
+    chara->model_0.anim_4.time_4 = FP_TO(animTime, Q12_SHIFT);
+}
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D3A3C);
 
@@ -337,7 +346,7 @@ void func_800D3EB8(s_SubCharacter* chara) // 0x800D3EB8
     animStatus = chara->model_0.anim_4.status_0;
     animStatus12 = ANIM_STATUS(12, true);
 
-    func_800D5638(chara);
+    sharedFunc_800D5638_0_s01(chara);
 
     activeAnimStatus = ANIM_STATUS(ANIM_STATUS_IDX_GET(animStatus), true);
 
@@ -547,7 +556,7 @@ void func_800D426C(s_SubCharacter* chara) // 0x800D426C
         chara->properties_E4.unk0.properties_120.val32 = Q12(4.0f);
     }
 
-    func_800D529C(chara, Q12(1.0f), func_80080478(&chara->position_18, &g_SysWork.player_4C.chara_0.position_18));
+    sharedFunc_800D529C_0_s01(chara, Q12(1.0f), func_80080478(&chara->position_18, &g_SysWork.player_4C.chara_0.position_18));
     func_800D598C(chara);
 
     switch (Chara_TakeDamage(chara, Q12(1.0f)))
@@ -660,7 +669,52 @@ void func_800D4420(s_SubCharacter* chara) // 0x800D4420
     }
 }
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D45BC);
+void func_800D45BC(s_SubCharacter* chara)
+{
+    u32 temp_v0;
+
+    if (!chara->model_0.stateStep_3)
+    {
+        chara->properties_E4.unk0.properties_120.val32 = Q12(2.0f);
+        chara->model_0.stateStep_3 = 1;
+    }
+
+    func_800D53AC(chara);
+    func_800D5B10(chara);
+    temp_v0 = sharedFunc_800D2C0C_0_s01(chara, Q12(1.0f));
+    switch (temp_v0)
+    {
+        case 0:
+            if (!chara->properties_E4.unk0.properties_120.val32 ||
+                Math_Distance2dGet(&chara->position_18, &g_SysWork.player_4C.chara_0.position_18) > Q12(2.0f))
+            {
+                chara->model_0.state_2 = 47;
+                chara->model_0.stateStep_3 = 0;
+                return;
+            }
+        default:
+            return;
+        case 1:
+        case 2:
+            chara->model_0.state_2 = 50;
+            chara->model_0.stateStep_3 = 0;
+            chara->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
+            return;
+        case 3:
+        case 4:
+            chara->model_0.state_2 = 51;
+            chara->model_0.stateStep_3 = 0;
+            if (chara->health_B0 <= 0)
+            {
+                chara->properties_E4.player.flags_11C |= PlayerFlag_Unk6;
+            }
+            else
+            {
+                chara->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
+            }
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D46C4);
 
@@ -668,82 +722,19 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D4894);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D49B0);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D4A80_0_s01);
+#include "maps/shared/sharedFunc_800D4A80_0_s01.h"
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D4AEC);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D4E84);
+INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D4E84_0_s01); // 0x800D4E84
 
 #include "maps/shared/sharedFunc_800D5274_0_s01.h" // 0x800D5274
 
-void func_800D529C(s_SubCharacter* chara, q19_12 arg1, q19_12 angle) // 0x800D529C
-{
-    q19_12 posX;
-    q19_12 posZ;
-    q19_12 x;
-    q19_12 z;
-    q19_12 y;
-    s32    calcY;
-    s32    someY;
-    s32    someConst;
-
-    posX = chara->position_18.vx;
-    posZ = chara->position_18.vz;
-
-    // @hack Permuter find.
-    someConst = 0x1800;
-    chara++;
-    chara--;
-
-    x = posX + FP_MULTIPLY_PRECISE(arg1, Math_Sin(angle), Q12_SHIFT);
-    z = posZ + FP_MULTIPLY_PRECISE(arg1, Math_Cos(angle), Q12_SHIFT);
-
-    calcY = func_80080884(x, z);
-    someY = chara->properties_E4.unk0.properties_124.val32;
-    if (someY < calcY)
-    {
-        calcY = someY;
-    }
-
-    y = (calcY - someConst) - func_80080514() / 2;
-    
-    if (y < sharedFunc_800D5274_0_s01())
-    {
-        y = sharedFunc_800D5274_0_s01();
-    }
-
-    chara->properties_E4.unk0.field_F8.vx = x;
-    chara->properties_E4.unk0.field_F8.vy = y;
-    chara->properties_E4.unk0.field_F8.vz = z;
-    func_800D4E84(chara);
-}
+#include "maps/shared/sharedFunc_800D529C_0_s01.h" // 0x800D529C
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D53AC);
 
-void func_800D5638(s_SubCharacter* chara) // 0x800D5638
-{
-    s32                          idx0;
-    s32                          idx1;
-    s_sharedData_800E21D0_0_s01* dst;
-    s_func_800D2E04*             src;
-
-    src = &sharedData_800CAA98_0_s01;
-    dst = &sharedData_800E21D0_0_s01;
-
-    idx0 = 3;
-    dst->field_B4[idx0][2] = 0;
-    idx0 = 0;
-    dst->field_B4[idx0][2] = src->unk_380[2][0];
-    dst->field_B4[idx0][1] = src->unk_380[2][1];
-
-    idx0 = 1;
-    dst->field_B4[idx0][2] = sharedData_800CAA98_0_s01.unk_380[11][0];
-    dst->field_B4[idx0][1] = sharedData_800CAA98_0_s01.unk_380[11][1];
-    idx0 = 3;
-    dst->field_B4[idx0][1] = sharedData_800CAA98_0_s01.unk_380[30][1];
-
-    sharedFunc_800D5E78_0_s01(chara, FP_ANGLE(0.0f));
-}
+#include "maps/shared/sharedFunc_800D5638_0_s01.h" // 0x800D5638
 
 #include "maps/shared/sharedFunc_800D569C_0_s01.h" // 0x800D569C
 
@@ -765,15 +756,15 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5F00);
 
 #include "maps/shared/sharedFunc_800D62D8_0_s01.h" // 0x800D62D8
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D633C_0_s01); // 0x800D633C
+#include "maps/shared/sharedFunc_800D633C_0_s01.h" // 0x800D633C
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D63A4_0_s01); // 0x800D63A4
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D6600_0_s01); // 0x800D6600
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D6A60);
+#include "maps/shared/sharedFunc_800D6A60_0_s01.h" // 0x800D6A60
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D6C7C);
+#include "maps/shared/sharedFunc_800D6C7C_0_s01.h" // 0x800D6C7C
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D6EC4);
 

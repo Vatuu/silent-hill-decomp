@@ -2,6 +2,7 @@
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
 #include "maps/shared.h"
+#include "maps/map0/map0_s02.h"
 
 #include "maps/shared/sharedFunc_800CB6B0_0_s00.h" // 0x800CACF0
 
@@ -35,9 +36,9 @@ INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", sharedFunc_800CEFD0_1_s02
 
 #include "maps/shared/sharedFunc_800D0E04_0_s00.h" // 0x800CCE24
 
-INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CCE44);
+#include "maps/shared/sharedFunc_800CFFD8_0_s01.h" // 0x800CCE44
 
-INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CD6BC);
+#include "maps/shared/sharedFunc_800D0850_0_s01.h" // 0x800CD6BC
 
 #include "maps/shared/sharedFunc_800CDAA8_0_s02.h" // 0x800CDAA8
 
@@ -107,7 +108,7 @@ void func_800CE884(s32 arg0) // 0x800CE884
         return;
     }
 
-    func_800CE934();
+    sharedFunc_800CE934_0_s02();
 }
 
 void func_800CE8B8(void) // 0x800CE8B8
@@ -128,6 +129,6 @@ void func_800CE8B8(void) // 0x800CE8B8
     }
 }
 
-INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CE934);
+#include "maps/shared/sharedFunc_800CE934_0_s02.h" // 0x800CE934
 
 void Gfx_LoadingScreen_StageString(void) {}

@@ -2666,9 +2666,164 @@ void func_80064F04(VECTOR3* arg0, s8 arg1, s16 arg2) // 0x80064F04
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80064FC0); // 0x80064FC0
+s32 func_80064FC0(POLY_FT4** arg0, s32 arg1) // 0x80064FC0
+{
+    s_func_80064FC0* ptr;
+    s16              temp;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800652F4); // 0x800652F4
+    ptr = PSX_SCRATCH;
+
+    g_MapOverlayHeader.unkTable1_4C[arg1].field_A = 0;
+    temp                                          = g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 - ptr->field_0.vx;
+    *(s32*)&ptr->field_12C.vx                     = (temp & 0xFFFF) + ((g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 - ptr->field_0.vy) << 16);
+    ptr->field_12C.vz                             = g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 - ptr->field_0.vz;
+
+    gte_ldv0(&ptr->field_12C);
+    gte_rtps();
+    gte_stsxy(&ptr->field_13C);
+    gte_stsz(&ptr->field_140);
+
+    if (ABS(ptr->field_13C.vx) >= 0xC9 || ABS(ptr->field_13C.vy) >= 0xA1)
+    {
+        return 0;
+    }
+
+    ptr->field_144 = ((g_MapOverlayHeader.unkTable1_4C[arg1].field_E * ptr->field_2C) / ptr->field_140) >> 4;
+    setPolyFT4(*arg0);
+    setXY0Fast(*arg0, (u16)ptr->field_13C.vx - (u16)ptr->field_144, ptr->field_13C.vy + ptr->field_144);
+    setXY1Fast(*arg0, (u16)ptr->field_13C.vx + (u16)ptr->field_144, ptr->field_13C.vy + ptr->field_144);
+    setXY2Fast(*arg0, (u16)ptr->field_13C.vx - (u16)ptr->field_144, ptr->field_13C.vy - ptr->field_144);
+    setXY3Fast(*arg0, (u16)ptr->field_13C.vx + (u16)ptr->field_144, ptr->field_13C.vy - ptr->field_144);
+    *(u16*)&(*arg0)->r0 = 0x1020;
+    (*arg0)->b0         = 0x10;
+
+    setSemiTrans((*arg0), 1);
+
+    *(u32*)&(*arg0)->u0 = 0x018C0000;
+    *(u32*)&(*arg0)->u1 = 0x2C003F;
+    *(u16*)&(*arg0)->u2 = 0x3F00;
+    *(u16*)&(*arg0)->u3 = 0x3F3F;
+
+    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - 0x20) >> 3], (*arg0));
+
+    *arg0 += 1;
+    return 1;
+}
+
+void func_800652F4(VECTOR3* arg0, s16 arg1, s16 arg2, s16 arg3) // 0x800652F4
+{
+    DVECTOR          sp10[32][3];
+    s32              sp190[32][3];
+    s32              i;
+    s32              temp_a1;
+    s32              temp_t0;
+    s32              temp_t1;
+    s32              temp_v1;
+    s32              temp_v1_3;
+    s32              j;
+    s32              var_s1;
+    s32              var_v0_3;
+    s_func_800652F4* ptr;
+    s32              temp;
+
+    ptr = PSX_SCRATCH;
+
+    temp_t1          = FP_FROM(g_SysWork.player_4C.chara_0.position_18.vx, Q12_SHIFT);
+    temp_t0          = FP_FROM(g_SysWork.player_4C.chara_0.position_18.vy, Q12_SHIFT);
+    temp_v1          = FP_FROM(g_SysWork.player_4C.chara_0.position_18.vz, Q12_SHIFT);
+    ptr->field_40.vx = temp_t1 << 8;
+    ptr->field_40.vy = temp_t0 << 8;
+    ptr->field_40.vz = temp_v1 << 8;
+
+    func_80049C2C(&ptr->field_20, FP_TO(temp_t1, Q12_SHIFT), FP_TO(temp_t0, Q12_SHIFT), FP_TO(temp_v1, Q12_SHIFT));
+
+    gte_SetRotMatrix(&ptr->field_20);
+    gte_SetTransMatrix(&ptr->field_20);
+    gte_ReadGeomScreen(&ptr->field_4C);
+
+    for (i = 0; i < 3; i++)
+    {
+        var_s1           = ((arg2 >> 4) + 0x80) * i;
+        temp             = 0x1000;
+        ptr->field_54[i] = -FP_MULTIPLY_PRECISE(
+            CLAMP_LOW((temp - FP_MULTIPLY(var_s1, Math_Sin(arg2 >> 2), Q12_SHIFT)) - Math_Cos(arg2 >> 2), 0),
+            0x2800,
+            Q12_SHIFT);
+        temp             = 0x80;
+        ptr->field_60[i] = FP_MULTIPLY_PRECISE(
+            CLAMP_LOW(arg2 - (FP_MULTIPLY(var_s1, Math_Cos(arg2 >> 2), Q12_SHIFT) - temp), 0),
+            0x2800,
+            Q12_SHIFT);
+    }
+
+    ptr->field_50 = -0x40;
+
+    for (i = 0; i < 32; i++)
+    {
+        for (j = 0; j < 3; j++)
+        {
+            *(s32*)&ptr->field_8[j] = ((((arg0->vx + FP_FROM(FP_MULTIPLY(ptr->field_60[j], Math_Sin(ptr->field_50), Q12_SHIFT) * Math_Cos(arg1) -
+                                        ptr->field_54[j] * Math_Sin(arg1), Q12_SHIFT)) >> 4) - (u16)ptr->field_40.vx) & 0xFFFF) +
+                                      ((((arg0->vy + FP_MULTIPLY(ptr->field_60[j], Math_Cos(ptr->field_50), Q12_SHIFT)) >> 4) - ptr->field_40.vy) << 16);
+
+            (&ptr->field_8[j])->vz = ((arg0->vz + (((FP_MULTIPLY(ptr->field_60[j], Math_Sin(ptr->field_50), Q12_SHIFT) * Math_Sin(arg1)) +
+                                    (ptr->field_54[j] * Math_Cos(arg1))) >> Q12_SHIFT)) >> 4) - ptr->field_40.vz;
+        }
+
+        gte_ldv3c(&ptr->field_8);
+        gte_rtpt();
+        gte_stsxy3c(&sp10[i]);
+        gte_stsz3c(&sp190[i]);
+
+        ptr->field_50 += 0x80;
+    }
+
+    ptr->field_0 = (POLY_G4*)GsOUT_PACKET_P;
+
+    for (i = 0; i < 32; i++)
+    {
+        temp_v1_3 = i + 1;
+        var_v0_3  = temp_v1_3;
+        if (temp_v1_3 < 0)
+        {
+            var_v0_3 = i + 32;
+        }
+        temp_a1 = var_v0_3 >> 5;
+        temp_a1 = temp_v1_3 - (temp_a1 << 5);
+
+        for (j = 0; j < 2; j++)
+        {
+            setPolyG4(ptr->field_0);
+
+            setXY0Fast(ptr->field_0, sp10[i][j].vx, sp10[i][j].vy);
+            setXY1Fast(ptr->field_0, sp10[temp_a1][j].vx, sp10[temp_a1][j].vy);
+            setXY2Fast(ptr->field_0, sp10[i][j + 1].vx, sp10[i][j + 1].vy);
+            setXY3Fast(ptr->field_0, sp10[temp_a1][j + 1].vx, sp10[temp_a1][j + 1].vy);
+
+            ptr->field_68 = (sp190[i][j] + sp190[temp_a1][j] + sp190[i][j + 1] + sp190[temp_a1][j + 1]) >> 2;
+            setSemiTrans(ptr->field_0, 1);
+
+            ptr->field_0->r0 = ptr->field_0->r1 = CLAMP_LOW(D_800AE710[j].field_0 - (arg3 >> 4) - (arg2 >> 5), 0);
+            ptr->field_0->g0 = ptr->field_0->g1 = CLAMP_LOW(D_800AE710[j].field_1 - (arg3 >> 4) - (arg2 >> 5), 0);
+            ptr->field_0->b0 = ptr->field_0->b1 = CLAMP_LOW(D_800AE710[j].field_2 - (arg3 >> 4) - (arg2 >> 5), 0);
+
+            ptr->field_0->r2 = ptr->field_0->r3 = CLAMP_LOW(D_800AE710[j + 1].field_0 - (arg3 >> 4) - (arg2 >> 5), 0);
+            ptr->field_0->g2 = ptr->field_0->g3 = CLAMP_LOW(D_800AE710[j + 1].field_1 - (arg3 >> 4) - (arg2 >> 5), 0);
+            ptr->field_0->b2 = ptr->field_0->b3 = CLAMP_LOW(D_800AE710[j + 1].field_2 - (arg3 >> 4) - (arg2 >> 5), 0);
+
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_68 >> 3], ptr->field_0);
+
+            ptr->field_0++;
+            ptr->field_4 = (DR_TPAGE*)ptr->field_0;
+            setDrawTPage(ptr->field_4, 0, 1, 0x20);
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_68 >> 3], ptr->field_4);
+            ptr->field_4++;
+            ptr->field_0 = (POLY_G4*)ptr->field_4;
+        }
+    }
+
+    GsOUT_PACKET_P = (PACKET*)ptr->field_0;
+}
 
 void func_80065B94(VECTOR3* arg0, s16 arg1) // 0x80065B94
 {
@@ -5703,15 +5858,15 @@ bool func_8006DA08(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2, s_SubC
 
 void func_8006DAE4(s_func_800700F8_2* arg0, VECTOR3* pos, VECTOR3* offset, s32 arg3) // 0x8006DAE4
 {
-    arg0->field_0  = 0;
-    arg0->field_1  = 0;
-    arg0->field_4  = pos->vx + offset->vx;
-    arg0->field_8  = pos->vy + offset->vy;
-    arg0->field_C  = pos->vz + offset->vz;
-    arg0->field_10 = 0;
-    arg0->field_14 = arg3 * 16; // Q8 to Q12?
-    arg0->field_18 = 0x1E00;
-    arg0->field_1C = 0;
+    arg0->field_0    = 0;
+    arg0->field_1    = 0;
+    arg0->field_4.vx = pos->vx + offset->vx;
+    arg0->field_4.vy = pos->vy + offset->vy;
+    arg0->field_4.vz = pos->vz + offset->vz;
+    arg0->field_10   = 0;
+    arg0->field_14   = arg3 * 16; // Q8 to Q12?
+    arg0->field_18   = 0x1E00;
+    arg0->field_1C   = 0;
 }
 
 static inline void func_8006DB3C_Inline(s_func_800700F8_2* arg0, VECTOR3* pos, VECTOR3* offset, u16* p)
@@ -5864,14 +6019,14 @@ bool func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1) // 0x8006DEB0
     // TODO: `* 16`s are Q8 to Q12?
     if (arg1->field_8 != 0x7FFF)
     {
-        arg0->field_4  = arg1->field_C * 16;
-        arg0->field_8  = arg1->field_10 * 16;
-        arg0->field_C  = arg1->field_14 * 16;
-        arg0->field_10 = arg1->field_20;
-        arg0->field_14 = arg1->field_8 * 16;
-        arg0->field_18 = arg1->field_1C * 16;
-        arg0->field_1C = ratan2(arg1->field_24, arg1->field_26);
-        arg0->field_1  = arg1->field_28;
+        arg0->field_4.vx = arg1->field_C * 16;
+        arg0->field_4.vy = arg1->field_10 * 16;
+        arg0->field_4.vz = arg1->field_14 * 16;
+        arg0->field_10   = arg1->field_20;
+        arg0->field_14   = arg1->field_8 * 16;
+        arg0->field_18   = arg1->field_1C * 16;
+        arg0->field_1C   = ratan2(arg1->field_24, arg1->field_26);
+        arg0->field_1    = arg1->field_28;
         return true;
     }
 
@@ -6444,7 +6599,7 @@ void func_8006EEB8(s_func_8006DCE0* arg0, s_SubCharacter* chara) // 0x8006EEB8
     arg0->field_28 = 0;
 }
 
-void func_8006F250(s_func_8006F250* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8006F250
+void func_8006F250(s32* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8006F250
 {
     s32              i;
     s_func_8006F338* scratch;
@@ -6463,13 +6618,13 @@ void func_8006F250(s_func_8006F250* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4
 
     if (scratch->field_28 == Q12(1.0f))
     {
-        arg0->field_0 = Q12(32.0f);
-        arg0->field_4 = Q12(-16.0f);
+        arg0[0] = Q12(32.0f);
+        arg0[1] = Q12(-16.0f);
     }
     else
     {
-        arg0->field_0 = Math_MulFixed(Vc_VectorMagnitudeCalc(scratch->field_10, Q12(0.0f), scratch->field_14), scratch->field_28, Q12_SHIFT);
-        arg0->field_4 = scratch->field_2C;
+        arg0[0] = Math_MulFixed(Vc_VectorMagnitudeCalc(scratch->field_10, Q12(0.0f), scratch->field_14), scratch->field_28, Q12_SHIFT);
+        arg0[1] = scratch->field_2C;
     }
 }
 
@@ -6634,7 +6789,7 @@ s32 func_8006F620(VECTOR3* pos, s_func_8006AB50* arg1, s32 arg2, s32 arg3) // 0x
         temp_s2 = D_800C4478.field_4[i];
         temp_s0 = (-Q12(temp_s2->field_0_29) >> 1) - Q12(1.5f); // NOTE: `-` sign on the outside required for match.
 
-        if ((sp2C - temp_s0) >= 0)
+        if (sp2C - temp_s0 >= 0)
         {
             continue;
         }

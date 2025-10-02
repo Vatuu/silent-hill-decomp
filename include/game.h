@@ -711,7 +711,15 @@ typedef enum _PlayerFlags
     PlayerFlag_Unk12          = 1 << 12,
     PlayerFlag_Unk13          = 1 << 13,
     PlayerFlag_DamageReceived = 1 << 14,
-    PlayerFlag_Moving         = 1 << 15
+    PlayerFlag_Moving         = 1 << 15,
+    PlayerFlag_Unk16          = 1 << 16,
+    PlayerFlag_Unk17          = 1 << 17,
+    PlayerFlag_Unk18          = 1 << 18,
+    PlayerFlag_Unk19          = 1 << 19,
+    PlayerFlag_Unk20          = 1 << 20,
+    PlayerFlag_Unk30          = 1 << 30,
+    PlayerFlag_Unk31          = 1 << 31,
+
 } e_PlayerFlags;
 
 /** @brief Unk0 character flags. */

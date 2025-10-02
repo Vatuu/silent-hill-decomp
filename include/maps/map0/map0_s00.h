@@ -114,10 +114,6 @@ void func_800D0274(s32 arg0, s_Particle* part, u16* arg2);
  */
 bool func_800D0600();
 
-void func_800D0E24();
-
-void func_800D0E2C();
-
 void func_800D1C38(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
 
 void func_800D2E6C();

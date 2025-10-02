@@ -128,4 +128,10 @@ void func_800D529C(s_SubCharacter* chara, q19_12 arg1, q19_12 angle);
 
 void func_800D598C(s_SubCharacter* chara);
 
+void func_800D39F4(s_SubCharacter* chara);
+
+void func_800D5B10(s_SubCharacter* chara);
+
+void func_800D45BC(s_SubCharacter* chara);
+
 #endif

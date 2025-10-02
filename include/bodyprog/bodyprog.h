@@ -551,12 +551,6 @@ typedef struct
     q3_12 field_12; // Z offset?
 } s_func_80070400_1;
 
-typedef struct
-{
-    s32 field_0;
-    s32 field_4;
-} s_func_8006F250;
-
 // ========
 // STRUCTS
 // ========
@@ -1658,8 +1652,8 @@ typedef struct _MapOverlayHeader
     void              (*func_16C)(VECTOR3*, s16);
     void              (*func_170)(); // func(?).
     void              (*func_174)(); // func(?).
-    void              (*func_178)(void*, void*, void*);
-    void              (*func_17C)(void*, void*);
+    void              (*func_178)(VECTOR3* vec0, s16* rotX, s16* rotY);
+    void              (*func_17C)(VECTOR3* vec0, VECTOR3* vec1);
     void              (*func_180)(); // func(?).
     s32*              windSpeedX_184;
     s32*              windSpeedZ_188;
@@ -1704,9 +1698,7 @@ typedef struct
     s8   field_0; /** `bool` */
     u8   field_1;
     s8   unk_2[2];
-    s32* field_4; // X
-    s32* field_8; // Y
-    s32  field_C; // Z
+    VECTOR3 field_4;
     u32  field_10; // Maybe `bool`, not enough context.
     s32  field_14;
     s32  field_18;
@@ -1844,6 +1836,33 @@ typedef struct
     s32       field_74;
     s32       field_78;
 } s_func_80066184;
+
+typedef struct
+{
+    VECTOR3 field_0;
+    s8      unk_C[32];
+    s32     field_2C;
+    s8      unk_30[252];
+    SVECTOR field_12C;
+    s8      unk_138[8];
+    DVECTOR field_13C;
+    s32     field_140;
+    s32     field_144;
+} s_func_80064FC0;
+
+typedef struct
+{
+    POLY_G4*  field_0;
+    DR_TPAGE* field_4;
+    SVECTOR   field_8[3];
+    MATRIX    field_20;
+    VECTOR3   field_40;
+    s32       field_4C;
+    s16       field_50;
+    s32       field_54[3];
+    s16       field_60[3];
+    s32       field_68;
+} s_func_800652F4;
 
 // ========
 // GLOBALS
@@ -3661,6 +3680,10 @@ void func_800622B8(s32 arg0, s_SubCharacter* chara, s32 animStatus, s32 arg3);
 
 void func_80064F04(VECTOR3* arg0, s8 arg1, s16 arg2);
 
+s32 func_80064FC0(POLY_FT4** arg0, s32 arg1);
+
+void func_800652F4(VECTOR3* arg0, s16 arg1, s16 arg2, s16 arg3);
+
 void func_80065B94(VECTOR3* arg0, s16 arg1);
 
 void func_80066184();
@@ -3821,7 +3844,7 @@ void func_8006EE0C(s_func_8006DCE0_6C* arg0, s32 arg1, s_SubCharacter* chara);
 
 void func_8006EEB8(s_func_8006DCE0* arg0, s_SubCharacter* chara);
 
-void func_8006F250(s_func_8006F250* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void func_8006F250(s32* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 void func_8006F338(s_func_8006F338* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 

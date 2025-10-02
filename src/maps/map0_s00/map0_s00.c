@@ -229,43 +229,18 @@ void func_800D0394(s32 arg0, VECTOR3* vecs) // 0x800D0394
 bool func_800D0600() // 0x800D0600
 {
     #define DIST_MAX Q12(40.0f)
-    
-    s32 distX;
-    s32 distZ;
 
-    // Check against first position.
-    distX = ABS(g_SysWork.player_4C.chara_0.position_18.vx - D_800E32DC[0].vx);
-    distZ = g_SysWork.player_4C.chara_0.position_18.vz - D_800E32DC[0].vz;
-    if (distZ >= Q12(0.0f) && (distX + distZ) < DIST_MAX)
+    if (ABS(g_SysWork.player_4C.chara_0.position_18.vx - D_800E32DC[0].vx) +
+        ABS(g_SysWork.player_4C.chara_0.position_18.vz - D_800E32DC[0].vz) < DIST_MAX ||
+        ABS(g_SysWork.player_4C.chara_0.position_18.vx - D_800E32DC[1].vx) +
+        ABS(g_SysWork.player_4C.chara_0.position_18.vz - D_800E32DC[1].vz) < DIST_MAX)
     {
-        goto ret1;
-    }
-    else if (distZ < Q12(0.0f) && (distX + (D_800E32DC[0].vz - g_SysWork.player_4C.chara_0.position_18.vz)) < DIST_MAX)
-    {
-        goto ret1;
-    }
-
-    // Check against against second position.
-    distX = ABS(g_SysWork.player_4C.chara_0.position_18.vx - D_800E32DC[1].vx);
-    distZ = g_SysWork.player_4C.chara_0.position_18.vz - D_800E32DC[1].vz;
-    if (distZ >= Q12(0.0f) && (distX + distZ) < DIST_MAX)
-    {
-        goto ret1;
-    }
-    else if (distZ < Q12(0.0f) && (distX + (D_800E32DC[1].vz - g_SysWork.player_4C.chara_0.position_18.vz)) < DIST_MAX)
-    {
-        goto ret1;
-    }
-    else
-    {
-        // TODO: Ideally would return `false` here, but code matching requires jump to end.
-        goto ret0;
+        return true;
     }
     
-ret1:
-    return true;
-ret0:
     return false;
+
+    #undef DIST_MAX
 }
 
 #include "maps/shared/sharedFunc_800D0700_0_s00.h" // 0x800D0700
@@ -280,9 +255,9 @@ ret0:
 
 #include "maps/shared/sharedFunc_800D0E04_0_s00.h" // 0x800D0E04
 
-void func_800D0E24() {}
+#include "maps/shared/sharedFunc_800CFFD8_0_s01.h" // 0x800D0E24
 
-void func_800D0E2C() {}
+#include "maps/shared/sharedFunc_800D0850_0_s01.h" // 0x800D0E2C
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0E34);
 

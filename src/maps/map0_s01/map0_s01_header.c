@@ -13,8 +13,6 @@
 #define func_800D2054 ((void(*)())0x800D2054)
 #define func_800D2104 ((void(*)())0x800D2104)
 #define func_800D9C60 ((void(*)())0x800D9C60)
-#define func_800CFFD8 ((void(*)())0x800CFFD8)
-#define func_800D0850 ((void(*)())0x800D0850)
 
 extern u8 D_800DDFB8[];
 extern s_AnimInfo HARRY_M0S01_ANIM_INFOS[];
@@ -155,8 +153,8 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .func_16C = sharedFunc_800D08B8_0_s00,
     .func_170 = sharedFunc_800D0A60_0_s00,
     .func_174 = sharedFunc_800D0B18_0_s00,
-    .func_178 = func_800CFFD8,
-    .func_17C = func_800D0850,
+    .func_178 = sharedFunc_800CFFD8_0_s01,
+    .func_17C = sharedFunc_800D0850_0_s01,
     .func_180 = sharedFunc_800D0E04_0_s00,
     .windSpeedX_184 = (void*)&sharedData_800DFB64_0_s00,
     .windSpeedZ_188 = (void*)&sharedData_800DFB68_0_s00,
