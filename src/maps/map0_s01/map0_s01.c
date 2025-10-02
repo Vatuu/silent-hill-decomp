@@ -293,7 +293,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D3508_0_s01
 
 #include "maps/shared/sharedFunc_800D3814_0_s01.h" // 0x800D3814
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D3928_0_s01); // 0x800D3928
+#include "maps/shared/sharedFunc_800D3928_0_s01.h" // 0x800D3928
 
 void func_800D39F4(s_SubCharacter* chara)
 {
