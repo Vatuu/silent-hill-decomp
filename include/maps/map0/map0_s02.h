@@ -3,6 +3,8 @@
 
 #include "types.h"
 
+void func_800CD6BC(VECTOR3* vec0, VECTOR3* vec1);
+
 s32 func_800CE548(void);
 
 void func_800CE740(void);

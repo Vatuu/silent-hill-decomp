@@ -13,7 +13,6 @@
 #define func_800CDD9C (0x800CDD9C)
 #define func_800CACF0 (0x800CACF0)
 #define func_800CCE44 (0x800CCE44)
-#define func_800CD6BC (0x800CD6BC)
 
 extern u8 D_800CFD90[];
 extern s_func_800625F4 D_800D03DC[100];
