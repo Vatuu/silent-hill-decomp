@@ -2275,7 +2275,12 @@ typedef struct
     GsCOORDINATE2* coords_8;
     MATRIX*        matrices_C;
     s8             unk_10[0xA4];
-    s32            field_B4[35][4];
+    s32            field_B4[6][4]; // Might be array of VECTOR, but not sure if it makes sense given the data that is written here
+    s32            someY_114;
+    s32            someY_118;
+    VECTOR3        vec_11C;
+    VECTOR3        vec_128;
+    VECTOR3        vec_134;
 } s_sharedData_800E21D0_0_s01;
 
 extern s_MapPoint2d MAP_POINTS[];
