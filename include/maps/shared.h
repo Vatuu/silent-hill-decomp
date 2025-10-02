@@ -2306,7 +2306,7 @@ extern u16 sharedData_800E0CB8_0_s00;
 extern s8  sharedData_800E0CBA_0_s00;
 extern s32 sharedData_800E32D0_0_s00;
 
-/** `See `WEAPON_ATTACK`. */
+/** Packed weapon attack. `See `WEAPON_ATTACK`. */
 extern s8 sharedData_800DD59C_0_s00;
 
 extern s32 sharedData_800DF1F4_0_s00;
@@ -2931,7 +2931,7 @@ void sharedSymbol_800D0ECC_3_s03(s_SubCharacter*);
 void sharedFunc_800D0F28_3_s03(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 
 /** `arg1` is a multiplier? */
-q20_12 sharedFunc_800D2C0C_0_s01(s_SubCharacter*, s32);
+q20_12 Chara_TakeDamage(s_SubCharacter*, s32 mult);
 
 void sharedFunc_800D3CC4_0_s01(s_SubCharacter* chara);
 

@@ -1303,7 +1303,7 @@ typedef struct _PlayerCombat
 {
     VECTOR3 field_0;
     s8      unk_C[3];
-    s8      weaponAttack_F; /** See `WEAPON_ATTACK`. */
+    s8      weaponAttack_F; /** Packed weapon attack. See `WEAPON_ATTACK`. */
     u8      currentWeaponAmmo_10;
     u8      totalWeaponAmmo_11;
     s8      weaponInventoryIdx_12; /** Index of the currently equipped weapon in the inventory. */

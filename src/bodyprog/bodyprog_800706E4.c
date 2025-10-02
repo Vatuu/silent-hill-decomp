@@ -2438,7 +2438,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
             if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
-                g_SysWork.playerCombatInfo_38.weaponAttack_F = WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F);
+                g_SysWork.playerCombatInfo_38.weaponAttack_F = WEAPON_ATTACK(WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F), AttackInputType_Tap);
             }
 
             g_SysWork.playerCombatInfo_38.weaponAttack_F += g_Player_MeleeAttackType * 10; // TODO: Macro for this?
@@ -2722,7 +2722,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                     g_SysWork.player_4C.chara_0.properties_E4.player.field_104  = 0;
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Shooting;
-                    g_SysWork.playerCombatInfo_38.weaponAttack_F                = WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F);
+                    g_SysWork.playerCombatInfo_38.weaponAttack_F                = WEAPON_ATTACK(WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F), AttackInputType_Tap);
                     return true;
                 }
             }
@@ -2796,7 +2796,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 g_Player_AttackAnimIdx                       = g_Player_EquippedWeaponInfo.animAttackHold_8 - 2;
                 D_800AF220                                   = (g_Player_EquippedWeaponInfo.field_A >> 4) - 1;
                 g_Player_MeleeAttackType                     = 2;
-                g_SysWork.playerCombatInfo_38.weaponAttack_F = WEAPON_ATTACK_ID_GET(weaponAttack ) + 20; // TODO: Demagic `+ 20`.
+                g_SysWork.playerCombatInfo_38.weaponAttack_F = WEAPON_ATTACK(WEAPON_ATTACK_ID_GET(weaponAttack), AttackInputType_Multitap);
 
                 if (extra->model_0.stateStep_3 == 0)
                 {
@@ -5890,7 +5890,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
         case PlayerLowerBodyState_Attack:
 		    // If weapon is katana.
             if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
-                WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) == WEAPON_ATTACK(EquippedWeaponId_Katana, AttackInputType_Tap))
+                WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) == EquippedWeaponId_Katana)
             {
                 if (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_Katana, AttackInputType_Hold))
                 {
@@ -8363,8 +8363,8 @@ bool func_8007F95C() // 0x8007F95C
                     curNpc0->health_B0 > Q12(0.0f) && (curNpc0->flags_3E & CharaFlag_Unk2))
                 {
                     Math_ShortestAngleGet(g_SysWork.player_4C.chara_0.rotation_24.vy,
-                                       FP_ANGLE_NORM_U(ratan2(pos1.vx - pos0.vx, pos1.vz - pos0.vz) + FP_ANGLE(360.0f)),
-                                       &sp30);
+                                          FP_ANGLE_NORM_U(ratan2(pos1.vx - pos0.vx, pos1.vz - pos0.vz) + FP_ANGLE(360.0f)),
+                                          &sp30);
 
                     temp = sp30 + FP_ANGLE(89.98f);
                     if (temp < FP_ANGLE(202.49f))

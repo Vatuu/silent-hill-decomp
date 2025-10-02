@@ -7,7 +7,7 @@
 
 const s32 rodataPad_80025E90 = 0;
 
-void Inventory_ExitAnimEquippedItemUpdate(u8* weaponAttack) // 0x8004C088
+void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
 {
     s8       weaponAttack;
     s32      playerState;
@@ -25,20 +25,20 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponAttack) // 0x8004C088
     if (g_SysWork.player_4C.extra_128.state_1C < PlayerState_Idle &&
         playerState >= PlayerState_None)
     {
-        if (g_Player_ActiveWeaponAttack != g_SysWork.playerCombatInfo_38.weaponAttack_F)
+        if (g_Player_WeaponAttack != g_SysWork.playerCombatInfo_38.weaponAttack_F)
         {
             g_SysWork.playerCombatInfo_38.isAiming_13 = false;
         }
 
-        weaponAttack = WEAPON_ATTACK_ID_GET(g_Player_ActiveWeaponAttack);
-        if (weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap) &&
-            g_SysWork.playerCombatInfo_38.weaponAttack_F != weaponAttack)
+        weaponId = WEAPON_ATTACK_ID_GET(g_Player_WeaponAttack);
+        if (weaponId == EquippedWeaponId_Chainsaw &&
+            g_SysWork.playerCombatInfo_38.weaponAttack_F != weaponId)
         {
             goto Inventory_ExitAnimEquippedItemUpdate_block; // TODO: Remove goto if possible.
         }
 
-        if (weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) &&
-            g_SysWork.playerCombatInfo_38.weaponAttack_F != weaponAttack)
+        if (weaponId == EquippedWeaponId_RockDrill &&
+            g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(weaponId, AttackInputType_Tap))
         {
         Inventory_ExitAnimEquippedItemUpdate_block:
             g_SysWork.player_4C.chara_0.field_44                                     = 0;
@@ -57,7 +57,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponAttack) // 0x8004C088
             default:
 
                 if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_Combat &&
-                    g_Player_ActiveWeaponAttack != g_SysWork.playerCombatInfo_38.weaponAttack_F)
+                    g_Player_WeaponAttack != g_SysWork.playerCombatInfo_38.weaponAttack_F)
                 {
                     g_SysWork.player_4C.extra_128.state_1C                     = PlayerState_None;
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C = PlayerFlag_None;
@@ -65,7 +65,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponAttack) // 0x8004C088
 
                 if (g_SysWork.player_4C.extra_128.lowerBodyState_24 >= PlayerLowerBodyState_Aim &&
                     g_SysWork.playerCombatInfo_38.weaponAttack_F != NO_VALUE &&
-                    g_Player_ActiveWeaponAttack == g_SysWork.playerCombatInfo_38.weaponAttack_F)
+                    g_Player_WeaponAttack == g_SysWork.playerCombatInfo_38.weaponAttack_F)
                 {
                     extraModelPtr0 = &g_SysWork.player_4C.extra_128.model_0;
                     if (extraModelPtr0->anim_4.status_0 >= ANIM_STATUS(33, false))
