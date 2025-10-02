@@ -114,4 +114,6 @@ s32 func_800D5F00(s_SubCharacter* arg0);
 
 void func_800D598C(s_SubCharacter* chara);
 
+void func_800D39F4(s_SubCharacter* chara);
+
 #endif

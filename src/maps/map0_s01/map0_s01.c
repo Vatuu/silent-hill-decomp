@@ -295,7 +295,16 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D3508_0_s01
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D3928_0_s01); // 0x800D3928
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D39F4);
+void func_800D39F4(s_SubCharacter* chara)
+{
+    s32 animTime;
+
+    chara->model_0.anim_4.status_0 = ANIM_STATUS(19, true);
+    animTime = func_80044918(&chara->model_0.anim_4)->startKeyframeIdx_C;
+    chara->model_0.stateStep_3 = 7;
+    chara->model_0.anim_4.keyframeIdx_8 = animTime;
+    chara->model_0.anim_4.time_4 = FP_TO(animTime, Q12_SHIFT);
+}
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D3A3C);
 
