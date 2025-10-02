@@ -2452,6 +2452,17 @@ extern s32 sharedData_800E2370_0_s01[2];
 
 extern s32 sharedData_800E22E4_0_s01;
 
+// Each of these holds 8 bytes, passed to `func_80035F4C` which loops through each byte.
+extern u8 sharedData_800CFB14_0_s02[8];
+extern u8 sharedData_800CFB1C_0_s02[8];
+extern u8 sharedData_800CFB24_0_s02[8];
+extern u8 sharedData_800CFB2C_0_s02[8];
+extern u8 sharedData_800CFB34_0_s02[8];
+extern u8 sharedData_800CFB3C_0_s02[8];
+extern u8 sharedData_800CFB44_0_s02[8];
+extern u8 sharedData_800CFB4C_0_s02[8];
+extern u8 sharedData_800CFB54_0_s02[8];
+
 typedef struct
 {
     VECTOR3 field_0; // Rotation?
@@ -2957,6 +2968,8 @@ void sharedFunc_800D5638_0_s01(s_SubCharacter* arg0);
 void sharedFunc_800D4E84_0_s01(s_SubCharacter*);
 
 void sharedFunc_800D529C_0_s01(s_SubCharacter* chara, s32 thousand, s32 angle);
+
+void sharedFunc_800CE934_0_s02(void);
 
 static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo)
 {

@@ -2,6 +2,7 @@
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
 #include "maps/shared.h"
+#include "maps/map0/map0_s02.h"
 
 #include "maps/shared/sharedFunc_800CB6B0_0_s00.h" // 0x800CACF0
 
@@ -107,7 +108,7 @@ void func_800CE884(s32 arg0) // 0x800CE884
         return;
     }
 
-    func_800CE934();
+    sharedFunc_800CE934_0_s02();
 }
 
 void func_800CE8B8(void) // 0x800CE8B8
@@ -128,6 +129,6 @@ void func_800CE8B8(void) // 0x800CE8B8
     }
 }
 
-INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", func_800CE934);
+#include "maps/shared/sharedFunc_800CE934_0_s02.h" // 0x800CE934
 
 void Gfx_LoadingScreen_StageString(void) {}

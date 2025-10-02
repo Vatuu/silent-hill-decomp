@@ -20,7 +20,7 @@ typedef enum _EventFlag
     EventFlag_16 = 16,
     EventFlag_17 = 17,
     EventFlag_18 = 18,
-    
+
     EventFlag_20 = 20,
 
     EventFlag_23 = 23,
@@ -86,7 +86,7 @@ typedef enum _EventFlag
     EventFlag_M2S00_PickupMap = 171, // Shared with M2S04
 
     EventFlag_181 = 181,
-
+    EventFlag_182 = 182,
     EventFlag_183 = 183,
 
     EventFlag_SeenSaveScreen = 186,
@@ -108,13 +108,31 @@ typedef enum _EventFlag
 
     EventFlag_295 = 295,
 
+    EventFlag_303 = 303,
+
     EventFlag_306 = 306,
+
+    EventFlag_311 = 311,
+    EventFlag_312 = 312,
 
     EventFlag_M5S00_PickupMap = 361,
 
     EventFlag_M5S01_PickupMap = 370,
 
+    EventFlag_378 = 378,
     EventFlag_379 = 379,
+
+    EventFlag_381 = 381,
+
+    EventFlag_391 = 391,
+
+    EventFlag_395 = 395,
+
+    EventFlag_423 = 423,
+    EventFlag_424 = 424,
+    EventFlag_425 = 425,
+    EventFlag_426 = 426,
+    EventFlag_427 = 427,
 
     EventFlag_M6S03_PickupMap = 436,
 
