@@ -293,7 +293,54 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D3508_0_s01
 
 #include "maps/shared/sharedFunc_800D3814_0_s01.h" // 0x800D3814
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D3928_0_s01); // 0x800D3928
+typedef struct 
+{
+    s32 result_0;
+    s32 dist_4;
+    s32 angle_8;
+    s32 field_C;
+    s32 field_10;
+} s_f00;
+
+extern s_f00 D_800E231C;
+extern void (*D_800DD7A0[52])(s_SubCharacter*);
+bool sharedFunc_800D3928_0_s01(s_SubCharacter* chara)
+{
+    u32 someTime;
+    s32 flag;
+    s32 deltaTime;
+    void (*func)(s_SubCharacter*);
+
+    deltaTime = g_DeltaTime0;
+    if (deltaTime < 0)
+    {
+        deltaTime = 0;
+    }
+    someTime = chara->properties_E4.unk0.properties_120.val32;
+    if (someTime < deltaTime)
+    {
+        chara->properties_E4.unk0.properties_120.val32 = 0;
+    }
+    else
+    {
+        chara->properties_E4.unk0.properties_120.val32 = someTime - deltaTime;
+    }
+    D_800E231C.result_0 = sharedFunc_800D3758_0_s01(chara, &D_800E231C.dist_4, &D_800E231C.angle_8, &D_800E231C.field_C, &D_800E231C.field_10);
+
+    /* TODO: Looks similar to field_E0 bitfield in s_SubCharacter but code doesn't match with that layout */
+    flag = chara->properties_E4.unk0.properties_E8.val32;
+    if ((flag & 0xF) == 3)
+    {
+        chara->properties_E4.unk0.properties_E8.val32 = flag & ~0xF00;
+    }
+    func = D_800DD7A0[chara->model_0.state_2];
+    if (func)
+    {
+        func(chara);
+    }
+
+    return true;
+}
 
 void func_800D39F4(s_SubCharacter* chara)
 {

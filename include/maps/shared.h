@@ -2849,7 +2849,7 @@ s32 sharedFunc_800D3814_0_s01(s_SubCharacter* chara);
 
 s32 sharedFunc_800D31D0_0_s01(s_SubCharacter* chara, VECTOR3* arg1, s32 arg2);
 
-void sharedFunc_800D3928_0_s01(s_SubCharacter*);
+bool sharedFunc_800D3928_0_s01(s_SubCharacter*);
 
 void sharedSymbol_800D3B0C_0_s01(s_SubCharacter*);
 
