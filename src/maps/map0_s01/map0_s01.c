@@ -44,7 +44,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800CEFD0_1_s02
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800CFFD8);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D0850);
+#include "maps/shared/sharedFunc_800D0850_0_s01.h" // 0x800D0850
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D0C3C);
 
@@ -124,7 +124,7 @@ void func_800D16C4(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
     if (cond)
     {
-        func_80069B24(&D_800C4590.field_0, &sp20, chara);
+        func_80069B24(&D_800C4590, &sp20, chara);
         chara->position_18.vx += D_800C4590.field_0.vx;
         chara->position_18.vy += D_800C4590.field_0.vy;
         chara->position_18.vz += D_800C4590.field_0.vz;
@@ -134,7 +134,7 @@ void func_800D16C4(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             D_800C4590.field_C = chara->properties_E4.player.positionY_EC;
         }
 
-        if ( chara->position_18.vy > D_800C4590.field_C)
+        if (chara->position_18.vy > D_800C4590.field_C)
         {
             chara->position_18.vy = D_800C4590.field_C;
             chara->field_34 = 0;
