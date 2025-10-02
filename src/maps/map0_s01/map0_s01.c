@@ -652,7 +652,52 @@ void func_800D4420(s_SubCharacter* subChar)
     }
 }
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D45BC);
+void func_800D45BC(s_SubCharacter* chara)
+{
+    u32 temp_v0;
+
+    if (!chara->model_0.stateStep_3)
+    {
+        chara->properties_E4.unk0.properties_120.val32 = Q12(2.0f);
+        chara->model_0.stateStep_3 = 1;
+    }
+
+    func_800D53AC(chara);
+    func_800D5B10(chara);
+    temp_v0 = sharedFunc_800D2C0C_0_s01(chara, Q12(1.0f));
+    switch (temp_v0)
+    {
+        case 0:
+            if (!chara->properties_E4.unk0.properties_120.val32 ||
+                Math_Distance2dGet(&chara->position_18, &g_SysWork.player_4C.chara_0.position_18) > Q12(2.0f))
+            {
+                chara->model_0.state_2 = 47;
+                chara->model_0.stateStep_3 = 0;
+                return;
+            }
+        default:
+            return;
+        case 1:
+        case 2:
+            chara->model_0.state_2 = 50;
+            chara->model_0.stateStep_3 = 0;
+            chara->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
+            return;
+        case 3:
+        case 4:
+            chara->model_0.state_2 = 51;
+            chara->model_0.stateStep_3 = 0;
+            if (chara->health_B0 <= 0)
+            {
+                chara->properties_E4.player.flags_11C |= PlayerFlag_Unk6;
+            }
+            else
+            {
+                chara->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
+            }
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D46C4);
 
