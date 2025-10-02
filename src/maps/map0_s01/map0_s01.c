@@ -331,7 +331,7 @@ void func_800D3EB8(s_SubCharacter* chara) // 0x800D3EB8
     s32    temp_s3;
     u32    animStatus;
     s32    animStatus12;
-    bool   isAnimStatusActive;
+    bool   activeAnimStatus;
     u32    stateStep;
 
     animStatus = chara->model_0.anim_4.status_0;
@@ -339,7 +339,7 @@ void func_800D3EB8(s_SubCharacter* chara) // 0x800D3EB8
 
     func_800D5638(chara);
 
-    isAnimStatusActive = animStatus | (1 << 0);
+    activeAnimStatus = ANIM_STATUS(ANIM_STATUS_IDX_GET(animStatus), true);
 
     stateStep = chara->model_0.stateStep_3;
     switch (stateStep)
@@ -431,7 +431,7 @@ void func_800D3EB8(s_SubCharacter* chara) // 0x800D3EB8
         case 2:
             Chara_TakeDamage(chara, Q12(0.5f));
 
-            if (isAnimStatusActive != animStatus12)
+            if (activeAnimStatus != animStatus12)
             {
                 chara->model_0.stateStep_3 = 0;
             }
@@ -541,7 +541,7 @@ void func_800D426C(s_SubCharacter* chara) // 0x800D426C
             chara->flags_3E |= CharaFlag_Unk3;
         }
     }
-    else if ((animStatus | 0x1) == ANIM_STATUS(19, true))
+    else if (ANIM_STATUS(ANIM_STATUS_IDX_GET(animStatus), true) == ANIM_STATUS(19, true))
     {
         chara->model_0.stateStep_3 = 2;
         chara->properties_E4.unk0.properties_120.val32 = Q12(4.0f);
