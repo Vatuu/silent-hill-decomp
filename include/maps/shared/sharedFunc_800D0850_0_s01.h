@@ -8,10 +8,10 @@ void sharedFunc_800D0850_0_s01(VECTOR3* vec0, VECTOR3* vec1)
     MATRIX    mtxUnused0;
     MATRIX    worldMtx;
     s32       depth;
-    GsOT*     ot;
     s32       clutBase;
-    POLY_FT4* prim;
     s32       primCodeHack;
+    GsOT*     ot;
+    POLY_FT4* prim;
 
     ot = &g_OrderingTable0[g_ActiveBufferIdx];
 
@@ -46,14 +46,14 @@ void sharedFunc_800D0850_0_s01(VECTOR3* vec0, VECTOR3* vec1)
     gte_rtps();
     gte_stsxy(&prim->x1);
 
-    // Return if depth/2 isn't between 1 and 158 (inclusive)
+    // Return if `depth / 2` isn't in range `[1, 158]`.
     if ((depth >> 1) < 1 || (depth >> 1) > 158)
     {
         return;
     }
 
     primCodeHack = 0x2C;
-    setlen(prim, 9); setcode(prim, primCodeHack); // @hack line should be setPolyFT4(prim), primCodeHack needed to remove tpage `li 0x2C` insn.
+    setlen(prim, 9); setcode(prim, primCodeHack); // @hack Line should be `setPolyFT4(prim)`, `primCodeHack` is needed to remove tpage `li 0x2C` insn.
     prim->tpage = 0x2C;
 
     switch (g_MapOverlayHeader.field_16)
@@ -68,7 +68,7 @@ void sharedFunc_800D0850_0_s01(VECTOR3* vec0, VECTOR3* vec1)
             break;
 
         case 2:
-            if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 2))
+            if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 0x2))
             {
                 prim->r0 = 0xFF;
                 prim->g0 = 0xFF;
@@ -86,7 +86,7 @@ void sharedFunc_800D0850_0_s01(VECTOR3* vec0, VECTOR3* vec1)
                 prim->g0 = 0x30;
                 prim->b0 = 0x30;
             }
-            else if (!(g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & 1))
+            else if (!(g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & 0x1))
             {
                 prim->r0 = 0xFF;
                 prim->g0 = 0xFF;

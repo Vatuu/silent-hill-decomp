@@ -58,6 +58,8 @@ void func_800D426C(s_SubCharacter* chara);
 
 void func_800D4420(s_SubCharacter* chara);
 
+void func_800D45BC(s_SubCharacter* chara);
+
 q19_12 Model_AnimDurationGet(s_Model* model);
 
 void func_800DA778(s32 arg0);
@@ -131,7 +133,5 @@ void func_800D598C(s_SubCharacter* chara);
 void func_800D39F4(s_SubCharacter* chara);
 
 void func_800D5B10(s_SubCharacter* chara);
-
-void func_800D45BC(s_SubCharacter* chara);
 
 #endif

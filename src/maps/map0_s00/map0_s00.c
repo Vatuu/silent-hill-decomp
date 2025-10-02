@@ -237,10 +237,8 @@ bool func_800D0600() // 0x800D0600
     {
         return true;
     }
-    
-    return false;
 
-    #undef DIST_MAX
+    return false;
 }
 
 #include "maps/shared/sharedFunc_800D0700_0_s00.h" // 0x800D0700

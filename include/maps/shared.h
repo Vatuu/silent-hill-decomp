@@ -2862,18 +2862,18 @@ s32 sharedFunc_800D3814_0_s01(s_SubCharacter* chara);
 
 s32 sharedFunc_800D31D0_0_s01(s_SubCharacter* chara, VECTOR3* arg1, s32 arg2);
 
-bool sharedFunc_800D3928_0_s01(s_SubCharacter*);
+bool sharedFunc_800D3928_0_s01(s_SubCharacter* chara);
 
 void sharedSymbol_800D3B0C_0_s01(s_SubCharacter*);
 
 bool sharedFunc_800D62D8_0_s01(s_SubCharacter* chara);
 
 /** Returns anim-related index. */
-s32 sharedFunc_800D4A80_0_s01(s_SubCharacter*);
+s32 sharedFunc_800D4A80_0_s01(s_SubCharacter* chara);
 
 s32 sharedFunc_800D5274_0_s01();
 
-void sharedFunc_800D633C_0_s01(s_SubCharacter*);
+void sharedFunc_800D633C_0_s01(s_SubCharacter* chara);
 void sharedFunc_800D63A4_0_s01(s_SubCharacter*);
 void sharedFunc_800D6600_0_s01(s_SubCharacter*);
 
@@ -2973,21 +2973,21 @@ void sharedFunc_800D5E78_0_s01(s_SubCharacter* chara, q19_12 angle);
 
 s32 sharedFunc_800D6A60_0_s01(VECTOR3* vec0, VECTOR3* vec1, s_SubCharacter* chara, s32 arg3, VECTOR3* vec2);
 
-void sharedFunc_800D6C7C_0_s01(VECTOR* arg0, s_SubCharacter* arg1, s32 arg2, VECTOR3* arg3);
+void sharedFunc_800D6C7C_0_s01(VECTOR* arg0, s_SubCharacter* chara, s32 arg2, VECTOR3* arg3);
 
 void sharedFunc_800D2364_0_s01(s_SubCharacter* chara);
 
-void sharedFunc_800D5638_0_s01(s_SubCharacter* arg0);
+void sharedFunc_800D5638_0_s01(s_SubCharacter* chara);
 
-void sharedFunc_800D4E84_0_s01(s_SubCharacter*);
+void sharedFunc_800D4E84_0_s01(s_SubCharacter* chara);
 
-void sharedFunc_800D529C_0_s01(s_SubCharacter* chara, s32 thousand, s32 angle);
+void sharedFunc_800D529C_0_s01(s_SubCharacter* chara, s32 arg1, s32 angle);
 
 void sharedFunc_800CE934_0_s02(void);
 
 void sharedFunc_800D0850_0_s01(VECTOR3* vec0, VECTOR3* vec1);
 
-void sharedFunc_800CFFD8_0_s01(VECTOR3* vec0, s16* rotX, s16* rotY);
+void sharedFunc_800CFFD8_0_s01(VECTOR3* vec0, q3_12* rotX, q3_12* rotY);
 
 static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo)
 {

@@ -297,10 +297,11 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D3508_0_s01
 
 #include "maps/shared/sharedFunc_800D3928_0_s01.h" // 0x800D3928
 
-void func_800D39F4(s_SubCharacter* chara)
+void func_800D39F4(s_SubCharacter* chara) // 0x800D39F4
 {
-    s32 animTime;
+    q19_12 animTime;
 
+    // TODO: `Character_AnimSet` doesn't match?
     chara->model_0.anim_4.status_0 = ANIM_STATUS(19, true);
     animTime = func_80044918(&chara->model_0.anim_4)->startKeyframeIdx_C;
     chara->model_0.stateStep_3 = 7;
@@ -669,7 +670,7 @@ void func_800D4420(s_SubCharacter* chara) // 0x800D4420
     }
 }
 
-void func_800D45BC(s_SubCharacter* chara)
+void func_800D45BC(s_SubCharacter* chara) // 0x800D45BC
 {
     u32 temp_v0;
 
@@ -681,7 +682,8 @@ void func_800D45BC(s_SubCharacter* chara)
 
     func_800D53AC(chara);
     func_800D5B10(chara);
-    temp_v0 = sharedFunc_800D2C0C_0_s01(chara, Q12(1.0f));
+
+    temp_v0 = Chara_TakeDamage(chara, Q12(1.0f));
     switch (temp_v0)
     {
         case 0:
@@ -690,21 +692,25 @@ void func_800D45BC(s_SubCharacter* chara)
             {
                 chara->model_0.state_2 = 47;
                 chara->model_0.stateStep_3 = 0;
-                return;
+                break;
             }
+
         default:
-            return;
+            break;
+
         case 1:
         case 2:
             chara->model_0.state_2 = 50;
             chara->model_0.stateStep_3 = 0;
             chara->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
-            return;
+            break;
+
         case 3:
         case 4:
             chara->model_0.state_2 = 51;
             chara->model_0.stateStep_3 = 0;
-            if (chara->health_B0 <= 0)
+
+            if (chara->health_B0 <= Q12(0.0f))
             {
                 chara->properties_E4.player.flags_11C |= PlayerFlag_Unk6;
             }

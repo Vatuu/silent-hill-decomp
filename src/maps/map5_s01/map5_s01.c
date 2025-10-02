@@ -360,30 +360,31 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800DEC5C);
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800DEEE8);
 
-void func_800DEF80()
+void func_800DEF80() // 0x800DEF80
 {
     func_800DE56C();
 }
 
-void func_800DEFA0(s_SubCharacter* chara, s32 thousand, s32 angles)
+void func_800DEFA0(s_SubCharacter* chara, s32 arg1, s32 angles) // 0x800DEFA0
 {
-    sharedFunc_800D529C_0_s01(chara, thousand, angles);
+    sharedFunc_800D529C_0_s01(chara, arg1, angles);
 }
 
-void func_800DEFC0()
+void func_800DEFC0() // 0x800DEFC0
 {
     func_800DE9C4();
 }
+
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800DEFE0);
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800DF140);
 
-void func_800DF548()
+void func_800DF548() // 0x800DF548
 {
     func_800DEEE8();
 }
 
-void func_800DF568()
+void func_800DF568() // 0x800DF568
 {
     func_800DE56C();
 }

@@ -718,8 +718,7 @@ typedef enum _PlayerFlags
     PlayerFlag_Unk19          = 1 << 19,
     PlayerFlag_Unk20          = 1 << 20,
     PlayerFlag_Unk30          = 1 << 30,
-    PlayerFlag_Unk31          = 1 << 31,
-
+    PlayerFlag_Unk31          = 1 << 31
 } e_PlayerFlags;
 
 /** @brief Unk0 character flags. */

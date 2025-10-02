@@ -2520,7 +2520,7 @@ extern s16 D_800C4408;
 extern s8 D_800C4414;
 
 /** Angles. */
-extern s16 D_800C4428[];
+extern q3_12 D_800C4428[];
 
 /** Angles? */
 extern s16 D_800C4438[];
@@ -3680,7 +3680,7 @@ void func_800622B8(s32 arg0, s_SubCharacter* chara, s32 animStatus, s32 arg3);
 
 void func_80064F04(VECTOR3* arg0, s8 arg1, s16 arg2);
 
-s32 func_80064FC0(POLY_FT4** arg0, s32 arg1);
+bool func_80064FC0(POLY_FT4** polys, s32 arg1);
 
 void func_800652F4(VECTOR3* arg0, s16 arg1, s16 arg2, s16 arg3);
 
