@@ -120,4 +120,8 @@ void func_800D5B10(s_SubCharacter* chara);
 
 void func_800D45BC(s_SubCharacter* chara);
 
+void func_800D5C90(s_SubCharacter*);
+
+void func_800D46C4(s_SubCharacter* chara);
+
 #endif

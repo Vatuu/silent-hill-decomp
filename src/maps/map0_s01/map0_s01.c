@@ -699,7 +699,104 @@ void func_800D45BC(s_SubCharacter* chara)
     }
 }
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D46C4);
+void func_800D46C4(s_SubCharacter* chara)
+{
+    s32 cond0;
+    s32 cond1;
+    s32 animStatus;
+
+    cond0 = 0;
+    animStatus = chara->model_0.anim_4.status_0;
+    cond1 = 0;
+    switch (chara->model_0.stateStep_3)
+    {
+        case 0:
+            chara->model_0.stateStep_3 = 1;
+            /* fallthrough */
+        case 1:
+            if (animStatus == ANIM_STATUS(19, true))
+            {
+                chara->model_0.stateStep_3 = 2;
+                chara->model_0.anim_4.status_0 = 4;
+            }
+            break;
+        case 2:
+            if (animStatus == ANIM_STATUS(2, true) && chara->model_0.anim_4.keyframeIdx_8 < 0x2000)
+            {
+                chara->model_0.stateStep_3 = 3;
+                chara->properties_E4.player.flags_11C |= 0x20;
+            }
+            break;
+        case 3:
+            if (animStatus == ANIM_STATUS(19, true))
+            {
+                cond0 = 1;
+            }
+            else if (chara->field_4C == NO_VALUE)
+            {
+                cond0 = 1;
+                cond1 = 1;
+                chara->model_0.stateStep_3 = 4;
+            }
+            break;
+        case 4:
+            if (animStatus == 0x27)
+            {
+                cond0 = 1;
+                cond1 = 1;
+            }
+            break;
+    }
+
+    func_800D53AC(chara);
+    func_800D5C90(chara);
+
+    switch (sharedFunc_800D2C0C_0_s01(chara, Q12(1.2f)))
+    {
+        case 0: 
+            if (cond0)
+            {
+                if (!cond1)
+                {
+                    if (func_80080514() >= 0x800)
+                    {
+                        chara->model_0.state_2 = 47;
+                    }
+                    else
+                    {
+                        chara->model_0.state_2 = 48;
+                    }
+                }
+                else
+                {
+                    chara->model_0.state_2 = 48;
+                }
+                chara->model_0.stateStep_3 = 0;
+                break;
+            }
+        default:
+            break;
+        case 1: 
+        case 2: 
+            chara->model_0.state_2 = 50;
+            chara->model_0.stateStep_3 = 0;
+            chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
+            break;
+        case 3: 
+        case 4: 
+            chara->model_0.state_2 = 51;
+            chara->model_0.stateStep_3 = 0;
+            if (chara->health_B0 <= Q12(0.0f))
+            {
+                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
+            }
+            else
+            {
+                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
+            }
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D4894);
 
