@@ -2278,6 +2278,19 @@ typedef struct
     s32            field_B4[35][4];
 } s_sharedData_800E21D0_0_s01;
 
+typedef struct 
+{
+    s32 result_0;
+    s32 dist_4;
+    s32 angle_8;
+    s32 field_C;
+    s32 field_10;
+} s_sharedData_800E231C_0_s01;
+
+extern s_sharedData_800E231C_0_s01 sharedData_800E231C_0_s01;
+
+extern void (*sharedData_800DD7A0_0_s01[52])(s_SubCharacter*);
+
 extern s_MapPoint2d MAP_POINTS[];
 
 /** Scale. */

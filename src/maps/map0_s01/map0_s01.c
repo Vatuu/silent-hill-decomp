@@ -293,17 +293,6 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D3508_0_s01
 
 #include "maps/shared/sharedFunc_800D3814_0_s01.h" // 0x800D3814
 
-typedef struct 
-{
-    s32 result_0;
-    s32 dist_4;
-    s32 angle_8;
-    s32 field_C;
-    s32 field_10;
-} s_f00;
-
-extern s_f00 sharedData_800E231C_0_s01;
-extern void (*sharedData_800DD7A0_0_s01[52])(s_SubCharacter*);
 bool sharedFunc_800D3928_0_s01(s_SubCharacter* chara)
 {
     u32 someTime;
@@ -325,7 +314,14 @@ bool sharedFunc_800D3928_0_s01(s_SubCharacter* chara)
     {
         chara->properties_E4.unk0.properties_120.val32 = someTime - deltaTime;
     }
-    sharedData_800E231C_0_s01.result_0 = sharedFunc_800D3758_0_s01(chara, &sharedData_800E231C_0_s01.dist_4, &sharedData_800E231C_0_s01.angle_8, &sharedData_800E231C_0_s01.field_C, &sharedData_800E231C_0_s01.field_10);
+
+    sharedData_800E231C_0_s01.result_0 = sharedFunc_800D3758_0_s01(
+        chara,
+        &sharedData_800E231C_0_s01.dist_4,
+        &sharedData_800E231C_0_s01.angle_8,
+        &sharedData_800E231C_0_s01.field_C,
+        &sharedData_800E231C_0_s01.field_10
+    );
 
     /* TODO: Looks similar to field_E0 bitfield in s_SubCharacter but code doesn't match with that layout */
     flag = chara->properties_E4.unk0.properties_E8.val32;
