@@ -2973,6 +2973,8 @@ void sharedFunc_800CE934_0_s02(void);
 
 void sharedFunc_800D0850_0_s01(VECTOR3* vec0, VECTOR3* vec1);
 
+void sharedFunc_800CFFD8_0_s01(VECTOR3* vec0, s16* rotX, s16* rotY);
+
 static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo)
 {
     anim->animInfo_C  = animInfo;

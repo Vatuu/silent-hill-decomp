@@ -7611,7 +7611,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
                     sp98.vx = chara->rotation_24.pad;
                 }
 
-                g_MapOverlayHeader.func_178(&sp20.vx, &sp98.vx, &sp98.vy);
+                g_MapOverlayHeader.func_178(&sp20, &sp98.vx, &sp98.vy);
             }
         }
 
@@ -7648,7 +7648,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
                 sp40.vx = sp80.vx * 16;
                 sp40.vy = sp80.vy * 16;
                 sp40.vz = sp80.vz * 16;
-                g_MapOverlayHeader.func_17C(&sp30.vx, &sp40.vx);
+                g_MapOverlayHeader.func_17C(&sp30, &sp40);
             }
         }
 

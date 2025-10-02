@@ -5703,15 +5703,15 @@ bool func_8006DA08(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2, s_SubC
 
 void func_8006DAE4(s_func_800700F8_2* arg0, VECTOR3* pos, VECTOR3* offset, s32 arg3) // 0x8006DAE4
 {
-    arg0->field_0  = 0;
-    arg0->field_1  = 0;
-    arg0->field_4  = pos->vx + offset->vx;
-    arg0->field_8  = pos->vy + offset->vy;
-    arg0->field_C  = pos->vz + offset->vz;
-    arg0->field_10 = 0;
-    arg0->field_14 = arg3 * 16; // Q8 to Q12?
-    arg0->field_18 = 0x1E00;
-    arg0->field_1C = 0;
+    arg0->field_0    = 0;
+    arg0->field_1    = 0;
+    arg0->field_4.vx = pos->vx + offset->vx;
+    arg0->field_4.vy = pos->vy + offset->vy;
+    arg0->field_4.vz = pos->vz + offset->vz;
+    arg0->field_10   = 0;
+    arg0->field_14   = arg3 * 16; // Q8 to Q12?
+    arg0->field_18   = 0x1E00;
+    arg0->field_1C   = 0;
 }
 
 static inline void func_8006DB3C_Inline(s_func_800700F8_2* arg0, VECTOR3* pos, VECTOR3* offset, u16* p)
@@ -5864,14 +5864,14 @@ bool func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1) // 0x8006DEB0
     // TODO: `* 16`s are Q8 to Q12?
     if (arg1->field_8 != 0x7FFF)
     {
-        arg0->field_4  = arg1->field_C * 16;
-        arg0->field_8  = arg1->field_10 * 16;
-        arg0->field_C  = arg1->field_14 * 16;
-        arg0->field_10 = arg1->field_20;
-        arg0->field_14 = arg1->field_8 * 16;
-        arg0->field_18 = arg1->field_1C * 16;
-        arg0->field_1C = ratan2(arg1->field_24, arg1->field_26);
-        arg0->field_1  = arg1->field_28;
+        arg0->field_4.vx = arg1->field_C * 16;
+        arg0->field_4.vy = arg1->field_10 * 16;
+        arg0->field_4.vz = arg1->field_14 * 16;
+        arg0->field_10   = arg1->field_20;
+        arg0->field_14   = arg1->field_8 * 16;
+        arg0->field_18   = arg1->field_1C * 16;
+        arg0->field_1C   = ratan2(arg1->field_24, arg1->field_26);
+        arg0->field_1    = arg1->field_28;
         return true;
     }
 

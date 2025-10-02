@@ -255,7 +255,7 @@ bool func_800D0600() // 0x800D0600
 
 #include "maps/shared/sharedFunc_800D0E04_0_s00.h" // 0x800D0E04
 
-void func_800D0E24() {}
+#include "maps/shared/sharedFunc_800CFFD8_0_s01.h" // 0x800D0E24
 
 #include "maps/shared/sharedFunc_800D0850_0_s01.h" // 0x800D0E2C
 

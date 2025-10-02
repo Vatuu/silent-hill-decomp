@@ -11,8 +11,6 @@
 #define func_800CED08 (0x800CED08)
 #define func_800CEFD4 (0x800CEFD4)
 #define func_800CDD9C (0x800CDD9C)
-#define func_800CACF0 (0x800CACF0)
-#define func_800CCE44 (0x800CCE44)
 
 extern u8 D_800CFD90[];
 extern s_func_800625F4 D_800D03DC[100];
@@ -141,11 +139,11 @@ const s_MapOverlayHeader g_MapOverlayHeader =
     .func_15C = NULL,
     .func_160 = NULL,
     .func_164 = NULL,
-    .func_168 = func_800CACF0,
+    .func_168 = sharedFunc_800CB6B0_0_s00,
     .func_16C = sharedFunc_800D08B8_0_s00,
     .func_170 = sharedFunc_800D0A60_0_s00,
     .func_174 = sharedFunc_800D0B18_0_s00,
-    .func_178 = func_800CCE44,
+    .func_178 = sharedFunc_800CFFD8_0_s01,
     .func_17C = sharedFunc_800D0850_0_s01,
     .func_180 = sharedFunc_800D0E04_0_s00,
     .windSpeedX_184 = (void*)&sharedData_800DFB64_0_s00,

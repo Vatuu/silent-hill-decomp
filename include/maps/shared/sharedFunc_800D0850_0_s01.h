@@ -74,7 +74,7 @@ void sharedFunc_800D0850_0_s01(VECTOR3* vec0, VECTOR3* vec1)
                 prim->g0 = 0xFF;
                 prim->b0 = 0xFF;
             }
-            else if (g_SysWork.field_2388.isFlashlightOn_15 != 0)
+            else if (g_SysWork.field_2388.isFlashlightOn_15)
             {
                 prim->r0 = 0xFF;
                 prim->g0 = 0xFF;
@@ -118,7 +118,7 @@ void sharedFunc_800D0850_0_s01(VECTOR3* vec0, VECTOR3* vec1)
 
     clutBase   = ((depth >> 6) + 104) << 6;
     depth      = depth >> 1;
-    prim->clut = (clutBase | 0x30);
+    prim->clut = clutBase | 0x30;
 
     if ((prim->x0 < prim->x1 && prim->y0 < prim->y1) ||
         (prim->x0 > prim->x1 && prim->y0 > prim->y1))

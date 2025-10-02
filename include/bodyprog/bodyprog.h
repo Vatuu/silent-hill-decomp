@@ -1651,8 +1651,8 @@ typedef struct _MapOverlayHeader
     void              (*func_16C)(VECTOR3*, s16);
     void              (*func_170)(); // func(?).
     void              (*func_174)(); // func(?).
-    void              (*func_178)(void*, void*, void*);
-    void              (*func_17C)(void*, void*);
+    void              (*func_178)(VECTOR3* vec0, s16* rotX, s16* rotY);
+    void              (*func_17C)(VECTOR3* vec0, VECTOR3* vec1);
     void              (*func_180)(); // func(?).
     s32*              windSpeedX_184;
     s32*              windSpeedZ_188;
@@ -1697,9 +1697,7 @@ typedef struct
     s8   field_0; /** `bool` */
     u8   field_1;
     s8   unk_2[2];
-    s32* field_4; // X
-    s32* field_8; // Y
-    s32  field_C; // Z
+    VECTOR3 field_4;
     u32  field_10; // Maybe `bool`, not enough context.
     s32  field_14;
     s32  field_18;
