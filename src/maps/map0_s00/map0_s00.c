@@ -257,7 +257,7 @@ bool func_800D0600() // 0x800D0600
 
 void func_800D0E24() {}
 
-void func_800D0E2C() {}
+#include "maps/shared/sharedFunc_800D0850_0_s01.h" // 0x800D0E2C
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0E34);
 

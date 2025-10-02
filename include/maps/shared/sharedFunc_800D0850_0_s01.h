@@ -2,6 +2,7 @@
 
 void sharedFunc_800D0850_0_s01(VECTOR3* vec0, VECTOR3* vec1)
 {
+#if !defined(MAP0_S00)
     SVECTOR   vec0Delta;
     SVECTOR   vec1Delta;
     MATRIX    mtxUnused0;
@@ -137,4 +138,5 @@ void sharedFunc_800D0850_0_s01(VECTOR3* vec0, VECTOR3* vec1)
     addPrim(&ot->org[depth], prim);
 
     GsOUT_PACKET_P = (PACKET*)&prim[1];
+#endif
 }
