@@ -2091,7 +2091,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
     chara->rotationSpeed_2C.vy = (D_800C454C << 8) / g_DeltaTime0;
     coords->flg                 = false;
 
-    func_80096E78(&chara->rotation_24, &coords->coord);
+    Math_MatrixRotate1(&chara->rotation_24, &coords->coord);
 }
 
 void Player_UpperBodyStateUpdate(s_MainCharacterExtra* extra, e_PlayerUpperBodyState upperState, s32 unused, s32 arg3) // 0x80073FC0

@@ -79,11 +79,11 @@ bool sharedFunc_800D0B18_0_s00(s32 arg0)
     defined(MAP7_S03)
         if (sharedData_800E0CAC_0_s00 == 0 || sharedData_800E0CAC_0_s00 == 2)
         {
-            sharedData_800E324C_0_s00.vy = 2;
+            g_Particle_PrevPosition.vy = Q12(0.0005f);
         }
         else
         {
-            sharedData_800E324C_0_s00.vy = 0;
+            g_Particle_PrevPosition.vy = Q12(0.0f);
         }
 #endif
 

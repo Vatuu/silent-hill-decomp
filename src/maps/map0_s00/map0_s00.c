@@ -728,7 +728,7 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
     chara->field_34       += g_DeltaTime2;
 
     coords->flg = false;
-    func_80096E78(&chara->rotation_24, &coords->coord);
+    Math_MatrixRotate1(&chara->rotation_24, &coords->coord);
 }
 
 bool func_800D8748(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 arg4, s32 pitch) // 0x800D8748

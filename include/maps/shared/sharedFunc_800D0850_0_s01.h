@@ -5,8 +5,8 @@ void sharedFunc_800D0850_0_s01(VECTOR3* vec0, VECTOR3* vec1)
 #if !defined(MAP0_S00)
     SVECTOR   vec0Delta;
     SVECTOR   vec1Delta;
-    MATRIX    mtxUnused0;
-    MATRIX    worldMtx;
+    MATRIX    matUnused0;
+    MATRIX    worldMat;
     s32       depth;
     s32       clutBase;
     s32       primCodeHack;
@@ -16,15 +16,15 @@ void sharedFunc_800D0850_0_s01(VECTOR3* vec0, VECTOR3* vec1)
     ot = &g_OrderingTable0[g_ActiveBufferIdx];
 
     GsInitCoordinate2(NULL, &g_SysWork.coord_22F8);
-    g_SysWork.coord_22F8.flg        = 0;
+    g_SysWork.coord_22F8.flg        = false;
     g_SysWork.coord_22F8.coord.t[0] = Q12_TO_Q8(g_SysWork.player_4C.chara_0.position_18.vx);
     g_SysWork.coord_22F8.coord.t[1] = Q12_TO_Q8(g_SysWork.player_4C.chara_0.position_18.vy);
     g_SysWork.coord_22F8.coord.t[2] = Q12_TO_Q8(g_SysWork.player_4C.chara_0.position_18.vz);
 
-    func_80049B6C(&g_SysWork.coord_22F8, &mtxUnused0, &worldMtx);
+    func_80049B6C(&g_SysWork.coord_22F8, &matUnused0, &worldMat);
 
-    gte_SetRotMatrix(&worldMtx);
-    gte_SetTransMatrix(&worldMtx);
+    gte_SetRotMatrix(&worldMat);
+    gte_SetTransMatrix(&worldMat);
 
     prim = (POLY_FT4*)GsOUT_PACKET_P;
 

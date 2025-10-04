@@ -19,7 +19,7 @@ bool Particle_Update(s_Particle* partHead)
     s32         density;
     s32         updateCount;
     s32         updatePrev;
-    s_Particle* partIter;
+    s_Particle* curPart;
 
     density = 0;
 
@@ -47,28 +47,28 @@ bool Particle_Update(s_Particle* partHead)
     
     GsInitCoordinate2(0, &g_SysWork.coord_22A8);
 
-    sharedData_800E323C_0_s00.vx = g_ParticleVectors0.viewPosition_C.vx + FP_MULTIPLY(Math_Sin(g_ParticleVectors0.viewRotation_20.vy), Q12(3.0), Q12_SHIFT);
-    sharedData_800E323C_0_s00.vz = g_ParticleVectors0.viewPosition_C.vz + FP_MULTIPLY(Math_Cos(g_ParticleVectors0.viewRotation_20.vy), Q12(3.0), Q12_SHIFT);
+    g_Particle_Position.vx = g_ParticleVectors0.viewPosition_C.vx + FP_MULTIPLY(Math_Sin(g_ParticleVectors0.viewRotation_20.vy), Q12(3.0), Q12_SHIFT);
+    g_Particle_Position.vz = g_ParticleVectors0.viewPosition_C.vz + FP_MULTIPLY(Math_Cos(g_ParticleVectors0.viewRotation_20.vy), Q12(3.0), Q12_SHIFT);
 #if defined(MAP1_S06)
-    sharedData_800E323C_0_s00.vy = Q12(-10.0);
+    g_Particle_Position.vy = Q12(-10.0);
 #else
-    sharedData_800E323C_0_s00.vy = Q12(-6.0);
+    g_Particle_Position.vy = Q12(-6.0);
 #endif
 
-    partIter = partHead;
+    curPart = partHead;
 
-    prevPos = sharedData_800E323C_0_s00;
-    if (sharedData_800E324C_0_s00.vx == Q12(0.0f) && sharedData_800E324C_0_s00.vz == Q12(0.0f))
+    prevPos = g_Particle_Position;
+    if (g_Particle_PrevPosition.vx == Q12(0.0f) && g_Particle_PrevPosition.vz == Q12(0.0f))
     {
-        sharedData_800E324C_0_s00.vx = prevPos.vx;
-        sharedData_800E324C_0_s00.vz = prevPos.vz;
+        g_Particle_PrevPosition.vx = prevPos.vx;
+        g_Particle_PrevPosition.vz = prevPos.vz;
     }
 
     sharedData_800DF158_1_s02 = sharedFunc_800CBBBC_0_s00();
 
     g_SysWork.coord_22A8.coord.t[1] = Q8(0.0f);
-    g_SysWork.coord_22A8.coord.t[0] = Q12_TO_Q8(sharedData_800E323C_0_s00.vx);
-    g_SysWork.coord_22A8.coord.t[2] = Q12_TO_Q8(sharedData_800E323C_0_s00.vz);
+    g_SysWork.coord_22A8.coord.t[0] = Q12_TO_Q8(g_Particle_Position.vx);
+    g_SysWork.coord_22A8.coord.t[2] = Q12_TO_Q8(g_Particle_Position.vz);
     
     g_SysWork.coord_22A8.flg = false;
     func_80049B6C(&g_SysWork.coord_22A8, &mat1, &mat0);
@@ -85,41 +85,41 @@ bool Particle_Update(s_Particle* partHead)
         // Wind is active.
         // Ramp up the speed to 200, then add some randomness once fast enough.
 
-        // X.
-        if (sharedData_800DFB64_0_s00 < 200)
+        // Modulate X-axis speed.
+        if (g_Particle_SpeedX < 200)
         {
-            sharedData_800DFB64_0_s00++;
+            g_Particle_SpeedX++;
         }
         else
         {
-            sharedData_800DFB64_0_s00 += Rng_GenerateInt(Rng_Rand16(), -8, 8);
-            limitRange(sharedData_800DFB64_0_s00, 200, 800);
+            g_Particle_SpeedX += Rng_GenerateInt(Rng_Rand16(), -8, 8);
+            limitRange(g_Particle_SpeedX, 200, 800);
         }
 
-        // Z.
-        if (sharedData_800DFB68_0_s00 < 200)
+        // Modulate Z-axis speed.
+        if (g_Particle_SpeedZ < 200)
         {
-            sharedData_800DFB68_0_s00++;
+            g_Particle_SpeedZ++;
         }
         else
         {
-            sharedData_800DFB68_0_s00 += Rng_GenerateInt(Rng_Rand16(), -8, 8);
-            limitRange(sharedData_800DFB68_0_s00, 20, 800); // Might be a dev mistake? Makes more sense to be 200 like above.
+            g_Particle_SpeedZ += Rng_GenerateInt(Rng_Rand16(), -8, 8);
+            limitRange(g_Particle_SpeedZ, 20, 800); // Might be a dev mistake? Makes more sense to be 200 like above.
         }
     }
     // Wind is disabled, ramp speed down to 0.
     else
     {
         // X.
-        if (sharedData_800DFB64_0_s00 != 0)
+        if (g_Particle_SpeedX != 0)
         {
-            sharedData_800DFB64_0_s00--;
+            g_Particle_SpeedX--;
         }
 
         // Z.
-        if (sharedData_800DFB68_0_s00 != 0)
+        if (g_Particle_SpeedZ != 0)
         {
-            sharedData_800DFB68_0_s00--;
+            g_Particle_SpeedZ--;
         }
     }
 
@@ -494,11 +494,11 @@ bool Particle_Update(s_Particle* partHead)
         // Handle particles in this state.
         for (updateCount = updatePrev;
              updateCount < (updatePrev + sharedData_800DD588_0_s00[pass]);
-             updateCount++, partIter++)
+             updateCount++, curPart++)
         {
             // Keep only the lower 4 bits.
             // NOTE: &= 0xF would be faster, but this is what they've done.
-            partIter->type_1F %= 0xF0;
+            curPart->type_1F %= 0xF0;
 
             switch (pass)
             {
@@ -510,10 +510,10 @@ bool Particle_Update(s_Particle* partHead)
                     defined(MAP5_S01) || defined(MAP5_S03) || \
                     defined(MAP6_S00) || \
                     defined(MAP7_S03)
-                    if (partIter->type_1F >= 2)
+                    if (curPart->type_1F >= 2)
                     {
-                        partIter->stateStep_1E = 0u;
-                        partIter->type_1F = 0u;
+                        curPart->stateStep_1E = 0u;
+                        curPart->type_1F = 0u;
                     }
                 #endif
                     break;
@@ -524,10 +524,10 @@ bool Particle_Update(s_Particle* partHead)
                     defined(MAP4_S02) || defined(MAP4_S03) || defined(MAP4_S04) || defined(MAP4_S05) || \
                     defined(MAP5_S00) || \
                     defined(MAP6_S00) || defined(MAP6_S03)
-                    if (partIter->type_1F < 2 || partIter->type_1F > 3)
+                    if (curPart->type_1F < 2 || curPart->type_1F > 3)
                     {
-                        partIter->stateStep_1E = 0u;
-                        partIter->type_1F = 2u;
+                        curPart->stateStep_1E = 0u;
+                        curPart->type_1F = 2u;
                     }
                 #endif
                     break;
@@ -540,31 +540,31 @@ bool Particle_Update(s_Particle* partHead)
             if (sharedData_800DD584_0_s00 != 0)
             {
                 // NOTE: This function only has a body in `MAP07_S03` and everything else calls an empty function.
-                sharedFunc_800CE954_7_s03(pass, partIter, &rand, &g_DeltaTime0);
+                sharedFunc_800CE954_7_s03(pass, curPart, &rand, &g_DeltaTime0);
             }
             else
             {
-                switch (partIter->stateStep_1E)
+                switch (curPart->stateStep_1E)
                 {
                     case ParticleState_Spawn:
                         if (sharedData_800E2156_0_s01 < density)
                         {
                             sharedData_800E2156_0_s01++;
-                            sharedFunc_800CF9A8_0_s01(pass, partIter, &rand);
+                            sharedFunc_800CF9A8_0_s01(pass, curPart, &rand);
                         }
                         break;
 
                     case ParticleState_Active:
                         // TODO: This should pass `s_Particle*` but the matcher is struggling with that atm.
-                        sharedFunc_800CEFD0_1_s02(pass, (s_sharedFunc_800CEFD0_1_s02*)partIter, &rand, &g_DeltaTime0);
+                        sharedFunc_800CEFD0_1_s02(pass, (s_sharedFunc_800CEFD0_1_s02*)curPart, &rand, &g_DeltaTime0);
                         break;
 
                     default: // `ParticleState_Rest`
-                        partIter->stateStep_1E++;
-                        if (partIter->stateStep_1E < SNOW_REST_TICKS_UPDATE_MAX)
+                        curPart->stateStep_1E++;
+                        if (curPart->stateStep_1E < SNOW_REST_TICKS_UPDATE_MAX)
                         {
                             // TODO: This should pass `s_Particle*` but the matcher is struggling with that atm.
-                            sharedFunc_800CFFF8_0_s00(pass, (s_func_800CFFF8*)partIter, &rand);
+                            sharedFunc_800CFFF8_0_s00(pass, (s_func_800CFFF8*)curPart, &rand);
                         }
                         #if defined(MAP1_S03) || \
                             defined(MAP4_S02) || defined(MAP4_S04) || defined(MAP4_S05) || \
@@ -572,7 +572,7 @@ bool Particle_Update(s_Particle* partHead)
                             defined(MAP6_S00) || defined(MAP6_S03)
                         else
                         {
-                            sharedFunc_800D0690_1_s03(pass, partIter, &rand, &g_DeltaTime0);
+                            sharedFunc_800D0690_1_s03(pass, curPart, &rand, &g_DeltaTime0);
                         }
                         #endif
                         break;
@@ -584,7 +584,7 @@ bool Particle_Update(s_Particle* partHead)
 
     ////////////////////////////////////////////////////////////////////////////
 
-    partIter = partHead;
+    curPart = partHead;
     updatePrev = 0;
     for (pass = 0; pass < 2; pass++)
     {
@@ -601,7 +601,7 @@ bool Particle_Update(s_Particle* partHead)
     #endif
         for (updateCount = updatePrev;
              updateCount < (updatePrev + sharedData_800DD588_0_s00[pass]);
-             updateCount++, partIter++)
+             updateCount++, curPart++)
         {
             switch (pass)
             {
@@ -611,7 +611,7 @@ bool Particle_Update(s_Particle* partHead)
                     defined(MAP4_S02) || defined(MAP4_S03) || defined(MAP4_S04) || defined(MAP4_S05) || \
                     defined(MAP5_S00) || \
                     defined(MAP6_S00) || defined(MAP6_S03)
-                    sharedFunc_800CEFF4_0_s00(partIter, sp64);
+                    sharedFunc_800CEFF4_0_s00(curPart, sp64);
                 #endif
                     break;
 
@@ -623,7 +623,7 @@ bool Particle_Update(s_Particle* partHead)
                     defined(MAP5_S01) || defined(MAP5_S03) || \
                     defined(MAP6_S00) || \
                     defined(MAP7_S03)
-                    sharedFunc_800CEB24_0_s00(partIter);
+                    sharedFunc_800CEB24_0_s00(curPart);
                 #endif
                     break;
             }
@@ -635,9 +635,9 @@ bool Particle_Update(s_Particle* partHead)
     ////////////////////////////////////////////////////////////////////////////
 
     // Likely previous position for next particle system update.
-    // Stores XZ position and rotation.
-    sharedData_800E324C_0_s00.vx = prevPos.vx;
-    sharedData_800E324C_0_s00.vz = prevPos.vz;
-    sharedData_800E3260_0_s00 = sharedData_800E0C6E_0_s00;
+    // Stores XZ position and Y rotation.
+    g_Particle_PrevPosition.vx = prevPos.vx;
+    g_Particle_PrevPosition.vz = prevPos.vz;
+    g_Particle_PrevRotationY   = g_Particle_RotationY;
     return false;
 }

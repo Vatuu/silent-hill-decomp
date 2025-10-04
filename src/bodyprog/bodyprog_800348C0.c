@@ -736,14 +736,14 @@ void func_80035AC8(s32 idx) // 0x80035AC8
 // LOADING SCREEN RELATED
 // ========================================
 
-void func_80035B04(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord) // 0x80035B04
+void Math_MatrixTransform(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord) // 0x80035B04
 {
     coord->flg        = false;
     coord->coord.t[0] = Q12_TO_Q8(pos->vx);
     coord->coord.t[1] = Q12_TO_Q8(pos->vy);
     coord->coord.t[2] = Q12_TO_Q8(pos->vz);
 
-    func_80096E78(rot, (MATRIX*)&coord->coord);
+    Math_MatrixRotate1(rot, (MATRIX*)&coord->coord);
 }
 
 void func_80035B58(s32 arg0) // 0x80035B58
@@ -805,7 +805,7 @@ void Gfx_LoadingScreen_PlayerRun() // 0x80035BE0
 
         D_800A998C.status_4 = model->anim_4.status_0;
 
-        func_80035B04(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, boneCoords);
+        Math_MatrixTransform(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, boneCoords);
         g_SysWork.sysState_8++;
     }
 

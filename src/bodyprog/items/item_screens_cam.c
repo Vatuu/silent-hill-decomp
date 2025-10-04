@@ -87,7 +87,7 @@ void Gfx_Items_ItemRotate(SVECTOR* arg0, GsCOORDINATE2* arg1) // 0x8004BCDC
     mat.t[1] = arg1->coord.t[1];
     mat.t[2] = arg1->coord.t[2];
 
-    func_80096E78(arg0, &mat);
+    Math_MatrixRotate1(arg0, &mat);
 
     arg1->coord = mat;
 

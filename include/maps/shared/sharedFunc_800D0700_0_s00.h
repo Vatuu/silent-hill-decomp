@@ -18,10 +18,10 @@ void sharedFunc_800D0700_0_s00(VECTOR3* point, VECTOR3* lineStart, VECTOR3* line
         return;
     }
 
-    point->vx += sharedData_800E323C_0_s00.vx;
+    point->vx += g_Particle_Position.vx;
     offset0.vx = point->vx;
 
-    point->vz += sharedData_800E323C_0_s00.vz;
+    point->vz += g_Particle_Position.vz;
     offset0.vz = point->vz;
 
     offset1.vx = offset0.vx;
@@ -77,6 +77,6 @@ void sharedFunc_800D0700_0_s00(VECTOR3* point, VECTOR3* lineStart, VECTOR3* line
         point->vy = 1;
     }
 
-    point->vx -= sharedData_800E323C_0_s00.vx;
-    point->vz -= sharedData_800E323C_0_s00.vz;
+    point->vx -= g_Particle_Position.vx;
+    point->vz -= g_Particle_Position.vz;
 }

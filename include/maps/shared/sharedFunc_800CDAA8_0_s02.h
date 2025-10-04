@@ -121,5 +121,5 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
     playerChara->field_34       += g_DeltaTime2;
 
     coord->flg = false;
-    func_80096E78(&playerChara->rotation_24, &coord->coord);
+    Math_MatrixRotate1(&playerChara->rotation_24, &coord->coord);
 }

@@ -2339,16 +2339,11 @@ extern s32 sharedData_800DF1F4_0_s00;
 extern s16 sharedData_800DF1F8_0_s00;
 extern s16 sharedData_800DF1FA_0_s00;
 
-extern s16 sharedData_800E0C6E_0_s00;
+extern s16 g_Particle_RotationY;
 
-/** Related to particle position. */
-extern VECTOR3 sharedData_800E323C_0_s00;
-
-/** Previous particle position? */
-extern VECTOR3 sharedData_800E324C_0_s00;
-
-/** Previous particle Y angle? */
-extern s16 sharedData_800E3260_0_s00;
+extern VECTOR3 g_Particle_Position;     // Q19_12
+extern VECTOR3 g_Particle_PrevPosition; // Q19_12
+extern q3_12   g_Particle_PrevRotationY;
 
 /** Something related to rotation. */
 extern s32 sharedData_800E39D8_0_s00;
@@ -2427,11 +2422,8 @@ extern s_AnimInfo CYBIL_ANIM_INFOS[];
 
 extern s_AnimInfo BLOODY_LISA_ANIM_INFOS[]; // `Ai_BloodyLisa` related?
 
-/** Particle speed X. */
-extern s32 sharedData_800DFB64_0_s00;
-
-/** Particles speed Z. */
-extern s32 sharedData_800DFB68_0_s00;
+extern s32 g_Particle_SpeedX;
+extern s32 g_Particle_SpeedZ;
 
 extern s32 sharedData_800DFB6C_0_s00;
 extern s32 sharedData_800DFB70_0_s00;

@@ -3979,8 +3979,13 @@ s32 func_80035AB0(s32 arg0);
 
 void func_80035AC8(s32 idx);
 
-/** Related to NPC and player movement? */
-void func_80035B04(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord);
+/** @brief Updates the translation and rotation (pose) of a matrix in a coordinate.
+ *
+ * @param pos Translation to apply.
+ * @param rot Rotation to apply.
+ * @param coord Coordinate to update.
+ */
+void Math_MatrixTransform(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord);
 
 void func_80035B58(s32 arg0);
 

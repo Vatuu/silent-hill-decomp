@@ -1220,7 +1220,7 @@ void func_8003CBA4(s_WorldObject* obj) // 0x8003CBA4
     vec.vy = obj->vy_C;
     vec.vz = obj->vz_C << 2;
 
-    func_80096C94(&vec, &coord.coord);
+    Math_MatrixRotate0(&vec, &coord.coord);
     func_80049B6C(&coord, &mats[1], &mats[0]);
     func_8003CC7C(obj->field_0, &mats[0], &mats[1]);
 }

@@ -147,7 +147,7 @@ INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", sharedFunc_800D70C4_0_s00
 void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D6D40
 {
     s_AnimInfo* animInfo;
-    s32         var_a0;
+    bool        cond;
 
     if (chara->model_0.state_2 == 0)
     {
@@ -179,12 +179,12 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
         chara->model_0.stateStep_3++;
     }
 
-    func_80035B04(&chara->position_18, &chara->rotation_24, coords);
+    Math_MatrixTransform(&chara->position_18, &chara->rotation_24, coords);
 
     animInfo = &CAT_ANIM_INFOS[chara->model_0.anim_4.status_0];
     animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
 
-    var_a0 = 0;
+    cond = false;
     if (chara->model_0.anim_4.status_0 == ANIM_STATUS(1, true))
     {
         if (((u8)chara->properties_E4.larvalStalker.properties_E8[0].val8[0] == 0 &&
@@ -192,7 +192,7 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
             ((u8)chara->properties_E4.larvalStalker.properties_E8[0].val8[0] != 0 &&
              (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 25) < 3u))
         {
-            var_a0 = 1;
+            cond = true;
         }
     }
     else
@@ -202,11 +202,11 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
             ((u8)chara->properties_E4.larvalStalker.properties_E8[0].val8[0] != 0 &&
              (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 36) < 3u))
         {
-            var_a0 = 1;
+            cond = true;
         }
     }
 
-    if (var_a0 != 0)
+    if (cond)
     {
         func_8005DD44(1447, &chara->position_18, Q8_CLAMPED(0.5f), Rng_GenerateInt(Rng_Rand16(), -7, 8u));
         chara->properties_E4.larvalStalker.properties_E8[0].val8[0] ^= 1;

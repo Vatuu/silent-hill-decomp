@@ -37,7 +37,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
     vwGetViewAngle(&g_ParticleVectors0.viewRotation_20);
 
 #if defined(MAP5_S01)
-    sharedData_800DFB64_0_s00 = 0;
+    g_Particle_SpeedX = 0;
 #endif
 
     switch (arg3)
@@ -262,8 +262,8 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
 #if defined(MAP7_S03)
             D_800F23D4 = 0;
 #endif
-            sharedData_800E324C_0_s00.vz = 0;
-            sharedData_800E324C_0_s00.vx = 0;
+            g_Particle_PrevPosition.vz = Q12(0.0f);
+            g_Particle_PrevPosition.vx = Q12(0.0f);
 
             g_SysWork.field_234A = 1;
             sharedData_800DFB4C_0_s00 = arg2;

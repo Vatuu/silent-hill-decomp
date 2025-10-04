@@ -22,10 +22,10 @@ void sharedFunc_800CEFD0_1_s02(s32 arg0, s_sharedFunc_800CEFD0_1_s02* arg1, u16*
         var_s0->field_C.vy = var_s0->field_0.vy - var_s0->field_1A;
 
         // TODO: Similar to `Math_DeltaTimeDistScale`.
-        var_s0->field_0.vx += TIME_STEP_SCALE(*deltaTime, sharedData_800DFB64_0_s00 + var_t0);
+        var_s0->field_0.vx += TIME_STEP_SCALE(*deltaTime, g_Particle_SpeedX + var_t0);
         var_s0->field_1A   += *(s32*)&sharedData_800E32D4_0_s00; // TODO: Should field be changed to `s32`?
         var_s0->field_0.vy += TIME_STEP_SCALE(*deltaTime, var_s0->field_1A << 2);
-        var_s0->field_0.vz += TIME_STEP_SCALE(*deltaTime, sharedData_800DFB68_0_s00 + var_t1);
+        var_s0->field_0.vz += TIME_STEP_SCALE(*deltaTime, g_Particle_SpeedZ + var_t1);
 
         if (sharedData_800DF158_1_s02 != 0)
         {
@@ -58,7 +58,7 @@ void sharedFunc_800CEFD0_1_s02(s32 arg0, s_sharedFunc_800CEFD0_1_s02* arg1, u16*
         if (var_s0->field_0.vy >= 0)
         {
             PushMatrix();
-            Collision_Get(&coll, var_s0->field_0.vx + sharedData_800E323C_0_s00.vx, var_s0->field_0.vz + sharedData_800E323C_0_s00.vz);
+            Collision_Get(&coll, var_s0->field_0.vx + g_Particle_Position.vx, var_s0->field_0.vz + g_Particle_Position.vz);
             PopMatrix();
 
             var_s0->field_0.vy = coll.groundHeight_0;

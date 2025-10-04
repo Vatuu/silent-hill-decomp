@@ -312,7 +312,7 @@ void vbSetRefView(VbRVIEW* rview) // 0x800498D8
     pos.vy      = rview->vr.vy - rview->vp.vy;
     pos.vz      = rview->vr.vz - rview->vp.vz;
     vwVectorToAngle(&rot, &pos);
-    func_80096E78(&rot, &coord.coord);
+    Math_MatrixRotate1(&rot, &coord.coord);
 
     coord.coord.t[0] = rview->vp.vx;
     coord.coord.t[1] = rview->vp.vy;

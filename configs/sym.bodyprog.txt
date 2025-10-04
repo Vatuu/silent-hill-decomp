@@ -309,6 +309,7 @@ Game_InGameInit                             = 0x80034FB8; // type:func
 Game_SavegameInitialize                     = 0x800350BC; // type:func
 Game_PlayerInit                             = 0x80035178; // type:func
 GameFs_MapLoad                              = 0x8003521C; // type:func
+Math_MatrixTransform                        = 0x80035B04; // type:func
 Gfx_LoadingScreen_BackgroundTexture         = 0x80035BBC; // type:func
 Gfx_LoadingScreen_PlayerRun                 = 0x80035BE0; // type:func
 Savegame_MapRoomIdxSet                      = 0x80036420; // type:func
@@ -1257,6 +1258,8 @@ GsSortObject4J                              = 0x80095FEC; // type:func
 Math_Sin                                    = 0x8009687C; // type:func
 Math_Cos                                    = 0x8009689C; // type:func
 shRotMatrixZ                                = 0x800968BC; // type:func
+Math_MatrixRotate0                          = 0x80096C94; // type:func
+Math_MatrixRotate1                          = 0x80096E78; // type:func
 
 //------------------------------------------------------------------
 //--- PA: 0x072368   VA: 0x80096EC8   subsegment: lib, libgte, msc00

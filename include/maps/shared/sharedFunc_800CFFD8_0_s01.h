@@ -5,8 +5,8 @@ void sharedFunc_800CFFD8_0_s01(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
 #if !defined(MAP0_S00)
     SVECTOR           startRelPos;
     SVECTOR           endRelPos;
-    MATRIX            mtxUnused;
-    MATRIX            worldMtx;
+    MATRIX            matUnused;
+    MATRIX            worldMat;
     s_func_800700F8_2 sp60;
     VECTOR3           beamStart;
     VECTOR3           beamOffset;
@@ -27,15 +27,15 @@ void sharedFunc_800CFFD8_0_s01(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
     ot = &g_OrderingTable0[g_ActiveBufferIdx];
     GsInitCoordinate2(NULL, &g_SysWork.coord_22F8);
 
-    g_SysWork.coord_22F8.flg        = 0;
+    g_SysWork.coord_22F8.flg        = false;
     g_SysWork.coord_22F8.coord.t[0] = Q12_TO_Q8(g_SysWork.player_4C.chara_0.position_18.vx);
     g_SysWork.coord_22F8.coord.t[1] = Q12_TO_Q8(g_SysWork.player_4C.chara_0.position_18.vy);
     g_SysWork.coord_22F8.coord.t[2] = Q12_TO_Q8(g_SysWork.player_4C.chara_0.position_18.vz);
 
-    func_80049B6C(&g_SysWork.coord_22F8, &mtxUnused, &worldMtx);
+    func_80049B6C(&g_SysWork.coord_22F8, &matUnused, &worldMat);
 
-    gte_SetRotMatrix(&worldMtx);
-    gte_SetTransMatrix(&worldMtx);
+    gte_SetRotMatrix(&worldMat);
+    gte_SetTransMatrix(&worldMat);
 
     beamDirY      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, Math_Cos(*rotY), Q12_SHIFT);
     beamDirX      = FP_MULTIPLY(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, Math_Sin(*rotY), Q12_SHIFT), Math_Sin(*rotX), Q12_SHIFT);
