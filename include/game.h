@@ -1073,7 +1073,7 @@ STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 /** @brief Const data passed over to `Anim_Update` funcs. Struct itself contains which `Anim_Update` func is to be called. */
 typedef struct _AnimInfo
 {
-    void (*updateFunc_0)(struct _Model*, struct _AnmHeader*, GsCOORDINATE2*, struct _AnimInfo*);
+    void (*updateFunc_0)(struct _Model* model, struct _AnmHeader* anmHdr, GsCOORDINATE2* coords, struct _AnimInfo* animInfo);
     u8 status_4;                 /** Packed anim status. Init base? See `s_ModelAnimData::status_0`. */
     s8 hasVariableDuration_5;    /** `bool` | Use `duration_8.variableFunc`: `true`, Use `duration_8.constant`: `false`. */
     u8 status_6;                 /** Packed anim status. Link target? Sometimes `NO_VALUE`, unknown why. See `s_ModelAnim::status_0`. */
