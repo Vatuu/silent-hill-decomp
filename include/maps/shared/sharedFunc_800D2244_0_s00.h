@@ -2,8 +2,8 @@
 
 void sharedFunc_800D2244_0_s00(bool arg0)
 {
-    s_MainCharacterExtra* extra;
     s_SubCharacter*       player;
+    s_MainCharacterExtra* extra;
 
     g_Player_DisableControl = false;
 
@@ -16,15 +16,15 @@ void sharedFunc_800D2244_0_s00(bool arg0)
         g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
         g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
 
+        // TODO: Will `Character_AnimSet` work here?
         player->model_0.anim_4.status_0      = ANIM_STATUS(26, true);
         player->model_0.anim_4.keyframeIdx_8 = 503;
         extra->model_0.anim_4.status_0       = ANIM_STATUS(26, true);
         extra->model_0.anim_4.keyframeIdx_8  = 503;
-
-        player->model_0.anim_4.time_4  = Q12(503);
-        player->model_0.anim_4.alpha_A = Q12(1.0f);
-        extra->model_0.anim_4.time_4   = Q12(503);
-        extra->model_0.anim_4.alpha_A  = Q12(1.0f);
+        player->model_0.anim_4.time_4        = Q12(503);
+        player->model_0.anim_4.alpha_A       = Q12(1.0f);
+        extra->model_0.anim_4.time_4         = Q12(503);
+        extra->model_0.anim_4.alpha_A        = Q12(1.0f);
     }
     else
     {
@@ -65,7 +65,7 @@ void sharedFunc_800D2244_0_s00(bool arg0)
     player->field_D6                                            = Q12(0.23f);
     g_SysWork.player_4C.chara_0.field_C8                        = Q12(-1.6f);
     g_SysWork.player_4C.chara_0.field_CE                        = Q12(-1.1f);
-    g_SysWork.player_4C.chara_0.field_CA                        = 0;
+    g_SysWork.player_4C.chara_0.field_CA                        = Q12(0.0f);
     g_SysWork.player_4C.chara_0.field_D8.offsetZ_6              = Q12(0.0f);
     g_SysWork.player_4C.chara_0.field_D8.offsetX_4              = Q12(0.0f);
     g_SysWork.player_4C.chara_0.field_D8.offsetZ_2              = Q12(0.0f);

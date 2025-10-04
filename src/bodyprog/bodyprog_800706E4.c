@@ -1587,7 +1587,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                         g_SysWork.player_4C.chara_0.field_D8.offsetX_4              = Q12(0.0f);
                         g_SysWork.player_4C.chara_0.field_D8.offsetZ_2              = Q12(0.0f);
                         g_SysWork.player_4C.chara_0.field_D8.offsetX_0              = Q12(0.0f);
-                        g_SysWork.player_4C.chara_0.field_CA                        = 0;
+                        g_SysWork.player_4C.chara_0.field_CA                        = Q12(0.0f);
                         g_SysWork.player_4C.chara_0.field_CE                        = Q12(-1.1f);
                     }
 
@@ -1733,7 +1733,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                             }
 
                             g_SysWork.player_4C.chara_0.field_C8 = Q12(-1.6f);
-                            g_SysWork.player_4C.chara_0.field_CA = 0;
+                            g_SysWork.player_4C.chara_0.field_CA = Q12(0.0f);
                             g_SysWork.player_4C.chara_0.field_CE = Q12(-1.1f);
                             chara->field_D4                      = Q12(0.3f);
                         }
@@ -1744,8 +1744,8 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                         
                         if (IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0))
                         {
-                            g_SysWork.player_4C.chara_0.field_C8 = D_800AEF78[chara->model_0.anim_4.keyframeIdx_8 - 0x1A2][0];
-                            g_SysWork.player_4C.chara_0.field_CE = D_800AEF78[chara->model_0.anim_4.keyframeIdx_8 - 0x1A2][1];
+                            g_SysWork.player_4C.chara_0.field_C8 = D_800AEF78[chara->model_0.anim_4.keyframeIdx_8 - 418][0];
+                            g_SysWork.player_4C.chara_0.field_CE = D_800AEF78[chara->model_0.anim_4.keyframeIdx_8 - 418][1];
                         }
 
                         if (chara->model_0.anim_4.keyframeIdx_8 == HARRY_BASE_ANIM_INFOS[47].endKeyframeIdx_E)
@@ -6719,9 +6719,9 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             if (g_SysWork.player_4C.extra_128.state_1C >= PlayerState_FallForward &&
                 g_SysWork.player_4C.extra_128.state_1C <  PlayerState_Unk7)
             {
-                g_SysWork.player_4C.chara_0.field_C8           = Q8(-25.6f);
-                g_SysWork.player_4C.chara_0.field_CA           = 0;
-                g_SysWork.player_4C.chara_0.field_CE           = Q8(-17.6f);
+                g_SysWork.player_4C.chara_0.field_C8           = Q12(-1.6f);
+                g_SysWork.player_4C.chara_0.field_CA           = Q12(0.0f);
+                g_SysWork.player_4C.chara_0.field_CE           = Q12(-1.1f);
                 g_SysWork.player_4C.chara_0.field_D8.offsetZ_6 = Q12(0.0f);
                 g_SysWork.player_4C.chara_0.field_D8.offsetX_4 = Q12(0.0f);
                 g_SysWork.player_4C.chara_0.field_D8.offsetZ_2 = Q12(0.0f);
