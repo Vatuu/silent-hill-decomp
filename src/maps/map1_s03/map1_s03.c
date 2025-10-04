@@ -78,7 +78,7 @@ INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800D235C);
 
 #include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800D2954
 
-s32 func_800D2B2C()
+s32 func_800D2B2C() // 0x800D2B2C
 {
     return 0;
 }
@@ -109,7 +109,7 @@ void func_800D2D3C(void) {}
 
 void func_800D2D44(void) {}
 
-s32 func_800D2D4C()
+s32 func_800D2D4C() // 0x800D2D4C
 {
     return 0;
 }
@@ -197,7 +197,7 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
     if (chara->model_0.state_2 == 0)
     {
         chara->model_0.anim_4.alpha_A = Q12(0.0f);
-        Character_AnimSet(chara, ANIM_STATUS(2, true), 0);
+        Character_AnimSet(chara, ANIM_STATUS(LockerDeadBodyAnim_2, true), 0);
         chara->model_0.state_2++;
         chara->position_18.vy = Q12(0.0f);
     }
@@ -213,20 +213,20 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
 
     if (!Savegame_EventFlagGet(EventFlag_106))
     {
-        if (chara->model_0.anim_4.status_0 == ANIM_STATUS(2, true))
+        if (chara->model_0.anim_4.status_0 == ANIM_STATUS(LockerDeadBodyAnim_2, true))
         {
-            chara->model_0.anim_4.status_0 = ANIM_STATUS(1, true);
+            chara->model_0.anim_4.status_0 = ANIM_STATUS(LockerDeadBodyAnim_1, true);
         }
 
         chara->field_E1_0 = 0;
     }
     else
     {
-        Character_AnimSet(chara, ANIM_STATUS(3, true), 16);
+        Character_AnimSet(chara, ANIM_STATUS(LockerDeadBodyAnim_3, true), 16);
         chara->field_E1_0 = 3;
     }
 
-    func_80035B04(&chara->position_18, &chara->rotation_24, coords);
+    Math_MatrixTransform(&chara->position_18, &chara->rotation_24, coords);
 
     animInfo = &LOCKER_DEAD_BODY_ANIM_INFOS[chara->model_0.anim_4.status_0];
     animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);

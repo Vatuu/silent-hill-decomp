@@ -21,5 +21,5 @@ void sharedFunc_800D5638_0_s01(s_SubCharacter* chara)
     idx0 = 3;
     dst->field_B4[idx0][1] = src->unk_380[30][1];
 
-    sharedFunc_800D5E78_0_s01(chara, 0);
+    sharedFunc_800D5E78_0_s01(chara, FP_ANGLE(0.0f));
 }

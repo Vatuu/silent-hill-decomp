@@ -51,7 +51,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D0C3C);
 void func_800D16C4(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord) // 0x800D16C4
 {
     s_Collision coll;
-    VECTOR3     sp20;
+    VECTOR3     offset;
     s32         headingAngle;
     s16         temp_v0;
     s32         temp_s0;
@@ -114,20 +114,20 @@ void func_800D16C4(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
     temp_v0_2 = Math_Sin(headingAngle) >> scaleReduceShift;
     temp_s0 = moveAmt >> scaleReduceShift;
     temp_s2 = FP_MULTIPLY_PRECISE(temp_s0, temp_v0_2, Q12_SHIFT);
-    sp20.vx = temp_s2 << scaleRestoreShift;
+    offset.vx = temp_s2 << scaleRestoreShift;
 
     temp_v0_3 = Math_Cos(headingAngle) >> scaleReduceShift;
     temp_s2   = FP_MULTIPLY_PRECISE(temp_s0, temp_v0_3, Q12_SHIFT);
-    sp20.vz   = temp_s2 << scaleRestoreShift;
+    offset.vz   = temp_s2 << scaleRestoreShift;
     
-    sp20.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
+    offset.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
 
     if (cond)
     {
-        func_80069B24(&D_800C4590, &sp20, chara);
-        chara->position_18.vx += D_800C4590.field_0.vx;
-        chara->position_18.vy += D_800C4590.field_0.vy;
-        chara->position_18.vz += D_800C4590.field_0.vz;
+        func_80069B24(&D_800C4590, &offset, chara);
+        chara->position_18.vx += D_800C4590.offset_0.vx;
+        chara->position_18.vy += D_800C4590.offset_0.vy;
+        chara->position_18.vz += D_800C4590.offset_0.vz;
 
         if (D_800C4590.field_14 == 0)
         {
@@ -142,8 +142,8 @@ void func_800D16C4(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
     }
     else
     {
-        chara->position_18.vx += sp20.vx;
-        chara->position_18.vz += sp20.vz;
+        chara->position_18.vx += offset.vx;
+        chara->position_18.vz += offset.vz;
         playerState = g_SysWork.player_4C.extra_128.state_1C;
 
         if (playerState < PlayerState_Unk87 || (playerState >= PlayerState_Unk89 && playerState != PlayerState_Unk106))
@@ -199,9 +199,11 @@ s32 func_800D1E5C() // 0x800D1E5C
 
 void func_800D2054(void) // 0x800D2054
 {
-    g_SysWork.playerCombatInfo_38.equippedWeapon_F = EquippedWeaponId_Handgun;
+    g_SysWork.playerCombatInfo_38.weaponAttack_F = WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap);
     func_8003CD6C(&g_SysWork.playerCombatInfo_38);
-    g_SysWork.playerCombatInfo_38.equippedWeapon_F = NO_VALUE;
+
+    g_SysWork.playerCombatInfo_38.weaponAttack_F = NO_VALUE;
+
     func_8003D03C();
 }
 
@@ -275,7 +277,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D2390_0_s01
 
 #include "maps/shared/sharedFunc_800D2BF4_0_s01.h" // 0x800D2BF4
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D2C0C_0_s01); // 0x800D2C0C
+INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", Chara_DamageTake); // 0x800D2C0C
 
 #include "maps/shared/sharedFunc_800D2E04_0_s01.h" // 0x800D2E04
 
@@ -295,10 +297,11 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D3508_0_s01
 
 #include "maps/shared/sharedFunc_800D3928_0_s01.h" // 0x800D3928
 
-void func_800D39F4(s_SubCharacter* chara)
+void func_800D39F4(s_SubCharacter* chara) // 0x800D39F4
 {
-    s32 animTime;
+    q19_12 animTime;
 
+    // TODO: `Character_AnimSet` doesn't match?
     chara->model_0.anim_4.status_0 = ANIM_STATUS(19, true);
     animTime = func_80044918(&chara->model_0.anim_4)->startKeyframeIdx_C;
     chara->model_0.stateStep_3 = 7;
@@ -330,104 +333,118 @@ INCLUDE_RODATA("asm/maps/map0_s01/nonmatchings/map0_s01", sharedData_800CAA98_0_
 
 #include "maps/shared/sharedFunc_800D3DFC_0_s01.h" // 0x800D3DFC
 
-void func_800D3EB8(s_SubCharacter* arg0)
+void func_800D3EB8(s_SubCharacter* chara) // 0x800D3EB8
 {
-    s32 deltaTime10;
-    bool temp_s2;
-    bool var_s1;
-    s32 temp_s3;
-    u32 animStatus;
-    s32 animStatus12;
-    s32 animStatusActive;
-    u32 stateStep;
+    q19_12 damage;
+    bool   cond1;
+    bool   cond0;
+    s32    temp_s3;
+    u32    animStatus;
+    s32    animStatus12;
+    bool   activeAnimStatus;
+    u32    stateStep;
 
-    animStatus = arg0->model_0.anim_4.status_0;
+    animStatus = chara->model_0.anim_4.status_0;
     animStatus12 = ANIM_STATUS(12, true);
-    sharedFunc_800D5638_0_s01(arg0);
-    animStatusActive = animStatus | 1;
-    stateStep =  arg0->model_0.stateStep_3;
 
+    sharedFunc_800D5638_0_s01(chara);
+
+    activeAnimStatus = ANIM_STATUS(ANIM_STATUS_IDX_GET(animStatus), true);
+
+    stateStep = chara->model_0.stateStep_3;
     switch (stateStep)
     {
         case 0:
-            temp_s3 = func_800D5F00(arg0);
-            var_s1 = 0;
-            temp_s2 = arg0->position_18.vy >= Q12(8.0f);
-            if (func_800808AC(arg0->position_18.vx, arg0->position_18.vz) == 7)
+            temp_s3 = func_800D5F00(chara);
+            cond0 = false;
+            cond1 = chara->position_18.vy >= Q12(8.0f);
+
+            if (func_800808AC(chara->position_18.vx, chara->position_18.vz) == 7)
             {
-                var_s1 = (arg0->position_18.vy >= func_80080884(arg0->position_18.vx, arg0->position_18.vz));
+                cond0 = chara->position_18.vy >= func_80080884(chara->position_18.vx, chara->position_18.vz);
             }
-            if (temp_s2)
+
+            if (cond1)
             {
-                sharedFunc_800D2C0C_0_s01(arg0, 0);
-                arg0->position_18.vx = g_SysWork.player_4C.chara_0.position_18.vx + 0x64000;
-                arg0->position_18.vz = g_SysWork.player_4C.chara_0.position_18.vz + 0x64000;
-                sharedFunc_800D3DFC_0_s01(arg0);
-                return;
+                Chara_DamageTake(chara, Q12(0.0f));
+
+                chara->position_18.vx = g_SysWork.player_4C.chara_0.position_18.vx + Q12(100.0f);
+                chara->position_18.vz = g_SysWork.player_4C.chara_0.position_18.vz + Q12(100.0f);
+
+                sharedFunc_800D3DFC_0_s01(chara);
+                break;
             }
-            if (var_s1)
+
+            if (cond0)
             {
-                sharedFunc_800D2C0C_0_s01(arg0, 0);
-                sharedFunc_800D2364_0_s01(arg0);
-                arg0->position_18.vx = g_SysWork.player_4C.chara_0.position_18.vx + 0x64000;
-                arg0->position_18.vz = g_SysWork.player_4C.chara_0.position_18.vz + 0x64000;
-                sharedFunc_800D3DFC_0_s01(arg0);
-                return;
+                Chara_DamageTake(chara, Q12(0.0f));
+                sharedFunc_800D2364_0_s01(chara);
+
+                chara->position_18.vx = g_SysWork.player_4C.chara_0.position_18.vx + Q12(100.0f);
+                chara->position_18.vz = g_SysWork.player_4C.chara_0.position_18.vz + Q12(100.0f);
+
+                sharedFunc_800D3DFC_0_s01(chara);
+                break;
             }
-            if (arg0->health_B0 <= 0)
+
+            if (chara->health_B0 <= Q12(0.0f))
             {
-                sharedFunc_800D2C0C_0_s01(arg0, 0);
-                if ((animStatus == ANIM_STATUS(26, true)) && (temp_s3 == 1))
+                Chara_DamageTake(chara, Q12(0.0f));
+
+                if (animStatus == ANIM_STATUS(26, true) && temp_s3 == 1)
                 {
-                    arg0->health_B0 = -1;
-                    func_800622B8(3, arg0, 9, 2);
-                    arg0->model_0.stateStep_3 = temp_s3;
-                    sharedFunc_800D3DFC_0_s01(arg0);
-                    return;
+                    chara->health_B0 = NO_VALUE;
+
+                    func_800622B8(3, chara, ANIM_STATUS(4, true), 2);
+
+                    chara->model_0.stateStep_3 = temp_s3;
+
+                    sharedFunc_800D3DFC_0_s01(chara);
+                    break;
                 }
             }
             else
             {
-                arg0->flags_3E |= 2;
-                if (sharedFunc_800D2C0C_0_s01(arg0, 0x1000) == 4)
+                chara->flags_3E |= CharaFlag_Unk2;
+
+                if (Chara_DamageTake(chara, Q12(1.0f)) == 4)
                 {
-                    if (arg0->health_B0 <= 0)
+                    if (chara->health_B0 <= Q12(0.0f))
                     {
-                        arg0->model_0.anim_4.status_0 = ANIM_STATUS(5, false);
-                        arg0->properties_E4.player.flags_11C |= PlayerFlag_Unk6;
-                        return;
+                        chara->model_0.anim_4.status_0 = ANIM_STATUS(5, false);
+                        chara->properties_E4.player.flags_11C |= PlayerFlag_Unk6;
+                        break;
                     }
-                    arg0->model_0.anim_4.status_0 = ANIM_STATUS(12, false);
-                    arg0->model_0.stateStep_3 = 2;
-                    arg0->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
-                    return;
+
+                    chara->model_0.anim_4.status_0 = ANIM_STATUS(12, false);
+                    chara->model_0.stateStep_3 = 2;
+                    chara->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
+                    break;
                 }
 
-                deltaTime10 = g_DeltaTime0 * 10;
-                if (deltaTime10 < arg0->health_B0)
+                damage = g_DeltaTime0 * 10;
+                if (damage < chara->health_B0)
                 {
-                    arg0->health_B0 -= deltaTime10;
-                    return;
+                    chara->health_B0 -= damage;
                 }
-                if (arg0->health_B0 > 0)
+                else if (chara->health_B0 > Q12(0.0f))
                 {
-                    arg0->health_B0 = 0;
-                    return;
+                    chara->health_B0 = Q12(0.0f);
                 }
-                return;
             }
             break;
+
         case 1:
-            sharedFunc_800D2C0C_0_s01(arg0, 0);
+            Chara_DamageTake(chara, Q12(0.0f));
             break;
+
         case 2:
-            sharedFunc_800D2C0C_0_s01(arg0, 0x800);
-            if (animStatusActive != animStatus12)
+            Chara_DamageTake(chara, Q12(0.5f));
+
+            if (activeAnimStatus != animStatus12)
             {
-                arg0->model_0.stateStep_3 = 0;
+                chara->model_0.stateStep_3 = 0;
             }
-            break;
-        default:
             break;
     }
 }
@@ -518,34 +535,32 @@ void func_800D425C() {}
 
 void func_800D4264() {}
 
-void func_800D426C(s_SubCharacter* chara)
+void func_800D426C(s_SubCharacter* chara) // 0x800D426C
 {
-    s32 var_v0;
-    u32 temp_v0_2;
-    u8 temp_v0;
     s32 animStatus;
 
     animStatus = chara->model_0.anim_4.status_0;
+
     if (chara->model_0.stateStep_3 != 1)
     {
-        if (chara->model_0.stateStep_3 == 0 && animStatus == ANIM_STATUS(2, true) && chara->model_0.anim_4.keyframeIdx_8 < 0x200C)
+        if (chara->model_0.stateStep_3 == 0 && animStatus == ANIM_STATUS(2, true) && chara->model_0.anim_4.keyframeIdx_8 < 8204)
         {
             chara->properties_E4.unk0.properties_120.val32 = Q12(4.0f);
             chara->model_0.stateStep_3 = 1;
-            chara->properties_E4.unk0.flags_11C |= 0x20;
-            chara->flags_3E |= 4;
+            chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk5;
+            chara->flags_3E |= CharaFlag_Unk3;
         }
     }
-    else if ((animStatus | 1) == ANIM_STATUS(19, true))
+    else if (ANIM_STATUS(ANIM_STATUS_IDX_GET(animStatus), true) == ANIM_STATUS(19, true))
     {
         chara->model_0.stateStep_3 = 2;
         chara->properties_E4.unk0.properties_120.val32 = Q12(4.0f);
     }
 
-    sharedFunc_800D529C_0_s01(chara, 0x1000, func_80080478(&chara->position_18, &g_SysWork.player_4C.chara_0.position_18));
+    sharedFunc_800D529C_0_s01(chara, Q12(1.0f), func_80080478(&chara->position_18, &g_SysWork.player_4C.chara_0.position_18));
     func_800D598C(chara);
 
-    switch (sharedFunc_800D2C0C_0_s01(chara, Q12(1.0f))) // Chara_TakeDamage(chara, mulitplier) ?
+    switch (Chara_DamageTake(chara, Q12(1.0f)))
     {
         case 0:
             if (!chara->properties_E4.unk0.properties_120.val32 ||
@@ -557,14 +572,17 @@ void func_800D426C(s_SubCharacter* chara)
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk4;
                 return;
             }
+
         default:
             return;
+
         case 1:
         case 2:
             chara->model_0.state_2 = 50;
             chara->model_0.stateStep_3 = 0;
             chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             return;
+
         case 3:
         case 4:
             chara->model_0.state_2 = 51;
@@ -581,113 +599,66 @@ void func_800D426C(s_SubCharacter* chara)
     }
 }
 
-void func_800D4420(s_SubCharacter* subChar)
+void func_800D4420(s_SubCharacter* chara) // 0x800D4420
 {
-    s32 dist0;
-    s32 temp_v0;
-    s32 temp_v0_2;
+    q19_12 dist0;
+    q19_12 deltaY;
+    q19_12 angle;
+    q19_12 dist;
 
-    s32 dist;
-
-    switch (subChar->model_0.stateStep_3)
+    switch (chara->model_0.stateStep_3)
     {
         case 0:
-            subChar->properties_E4.unk0.properties_120.val32 = Q12(1.5f);
-            subChar->model_0.stateStep_3 = 1;
+            chara->properties_E4.unk0.properties_120.val32 = Q12(1.5f);
+            chara->model_0.stateStep_3 = 1;
             break;
+
         case 1:
-            if (Math_Distance2dGet(&subChar->position_18, &subChar->properties_E4.unk0.field_F8) < Q12(0.5f))
+            if (Math_Distance2dGet(&chara->position_18, &chara->properties_E4.unk0.field_F8) < Q12(0.5f))
             {
-                subChar->model_0.stateStep_3 = 0;
+                chara->model_0.stateStep_3 = 0;
             }
             break;
     }
 
-    func_800D53AC(subChar);
-    sharedFunc_800D57C8_0_s01(subChar);
+    func_800D53AC(chara);
+    sharedFunc_800D57C8_0_s01(chara);
 
-    switch (sharedFunc_800D2C0C_0_s01(subChar, 0x1000))
+    switch (Chara_DamageTake(chara, Q12(1.0f)))
     {
         case 0:
-            dist0 = -1;
-            temp_v0 = subChar->properties_E4.unk0.field_F8.vy - subChar->position_18.vy;
-            if (temp_v0 > Q12(-0.2f) && temp_v0 < Q12(0.8f))
+            dist0 = NO_VALUE;
+            deltaY = chara->properties_E4.unk0.field_F8.vy - chara->position_18.vy;
+            if (deltaY > Q12(-0.2f) && deltaY < Q12(0.8f))
             {
-                dist0 = subChar->field_D4 + Q12(0.15f);
+                dist0 = chara->field_D4 + Q12(0.15f);
             }
 
-            dist = Math_Distance2dGet(&subChar->position_18, &subChar->properties_E4.unk0.field_F8);
+            dist = Math_Distance2dGet(&chara->position_18, &chara->properties_E4.unk0.field_F8);
             if (dist < dist0)
             {
-                temp_v0_2 = FP_ANGLE_NORM_S(func_80080478(&subChar->position_18, &subChar->properties_E4.unk0.field_F8) - subChar->rotation_24.vy);
-                if (temp_v0_2 >= FP_ANGLE(-8.0f) && temp_v0_2 < FP_ANGLE(8.0f))
+                angle = FP_ANGLE_NORM_S(func_80080478(&chara->position_18, &chara->properties_E4.unk0.field_F8) - chara->rotation_24.vy);
+                if (angle >= FP_ANGLE(-8.0f) && angle < FP_ANGLE(8.0f))
                 {
-                    subChar->model_0.state_2 = 49;
-                    subChar->model_0.stateStep_3 = 0;
+                    chara->model_0.state_2 = 49;
+                    chara->model_0.stateStep_3 = 0;
                 }
             }
             break;
 
         case 1:
         case 2:
-            subChar->model_0.state_2 = 50;
-            subChar->model_0.stateStep_3 = 0;
-            subChar->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
-            break;
-        case 3:
-        case 4:
-            subChar->model_0.state_2 = 51;
-            subChar->model_0.stateStep_3 = 0;
-            if (subChar->health_B0 <= 0)
-            {
-                subChar->properties_E4.player.flags_11C |= PlayerFlag_Unk6;
-            }
-            else
-            {
-                subChar->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
-            }
-            break;
-        default:
-            break;
-    }
-}
-
-void func_800D45BC(s_SubCharacter* chara)
-{
-    u32 temp_v0;
-
-    if (!chara->model_0.stateStep_3)
-    {
-        chara->properties_E4.unk0.properties_120.val32 = Q12(2.0f);
-        chara->model_0.stateStep_3 = 1;
-    }
-
-    func_800D53AC(chara);
-    func_800D5B10(chara);
-    temp_v0 = sharedFunc_800D2C0C_0_s01(chara, Q12(1.0f));
-    switch (temp_v0)
-    {
-        case 0:
-            if (!chara->properties_E4.unk0.properties_120.val32 ||
-                Math_Distance2dGet(&chara->position_18, &g_SysWork.player_4C.chara_0.position_18) > Q12(2.0f))
-            {
-                chara->model_0.state_2 = 47;
-                chara->model_0.stateStep_3 = 0;
-                return;
-            }
-        default:
-            return;
-        case 1:
-        case 2:
             chara->model_0.state_2 = 50;
             chara->model_0.stateStep_3 = 0;
             chara->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
-            return;
+            break;
+
         case 3:
         case 4:
             chara->model_0.state_2 = 51;
             chara->model_0.stateStep_3 = 0;
-            if (chara->health_B0 <= 0)
+
+            if (chara->health_B0 <= Q12(0.0f))
             {
                 chara->properties_E4.player.flags_11C |= PlayerFlag_Unk6;
             }
@@ -699,20 +670,73 @@ void func_800D45BC(s_SubCharacter* chara)
     }
 }
 
-void func_800D46C4(s_SubCharacter* chara)
+void func_800D45BC(s_SubCharacter* chara) // 0x800D45BC
 {
-    s32 cond0;
-    s32 cond1;
-    s32 animStatus;
+    u32 temp_v0;
 
-    cond0 = 0;
+    if (!chara->model_0.stateStep_3)
+    {
+        chara->properties_E4.unk0.properties_120.val32 = Q12(2.0f);
+        chara->model_0.stateStep_3 = 1;
+    }
+
+    func_800D53AC(chara);
+    func_800D5B10(chara);
+
+    temp_v0 = Chara_DamageTake(chara, Q12(1.0f));
+    switch (temp_v0)
+    {
+        case 0:
+            if (!chara->properties_E4.unk0.properties_120.val32 ||
+                Math_Distance2dGet(&chara->position_18, &g_SysWork.player_4C.chara_0.position_18) > Q12(2.0f))
+            {
+                chara->model_0.state_2 = 47;
+                chara->model_0.stateStep_3 = 0;
+                break;
+            }
+
+        default:
+            break;
+
+        case 1:
+        case 2:
+            chara->model_0.state_2 = 50;
+            chara->model_0.stateStep_3 = 0;
+            chara->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
+            break;
+
+        case 3:
+        case 4:
+            chara->model_0.state_2 = 51;
+            chara->model_0.stateStep_3 = 0;
+
+            if (chara->health_B0 <= Q12(0.0f))
+            {
+                chara->properties_E4.player.flags_11C |= PlayerFlag_Unk6;
+            }
+            else
+            {
+                chara->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
+            }
+            break;
+    }
+}
+
+void func_800D46C4(s_SubCharacter* chara) // 0x800D46C4
+{
+    bool cond0;
+    bool cond1;
+    s32  animStatus;
+
+    cond0 = false;
     animStatus = chara->model_0.anim_4.status_0;
-    cond1 = 0;
+    cond1 = false;
+
     switch (chara->model_0.stateStep_3)
     {
         case 0:
             chara->model_0.stateStep_3 = 1;
-            /* fallthrough */
+
         case 1:
             if (animStatus == ANIM_STATUS(19, true))
             {
@@ -720,30 +744,33 @@ void func_800D46C4(s_SubCharacter* chara)
                 chara->model_0.anim_4.status_0 = 4;
             }
             break;
+
         case 2:
-            if (animStatus == ANIM_STATUS(2, true) && chara->model_0.anim_4.keyframeIdx_8 < 0x2000)
+            if (animStatus == ANIM_STATUS(2, true) && chara->model_0.anim_4.keyframeIdx_8 < 8192)
             {
                 chara->model_0.stateStep_3 = 3;
-                chara->properties_E4.player.flags_11C |= 0x20;
+                chara->properties_E4.player.flags_11C |= PlayerFlag_Unk5;
             }
             break;
+
         case 3:
             if (animStatus == ANIM_STATUS(19, true))
             {
-                cond0 = 1;
+                cond0 = true;
             }
             else if (chara->field_4C == NO_VALUE)
             {
-                cond0 = 1;
-                cond1 = 1;
+                cond0 = true;
+                cond1 = true;
                 chara->model_0.stateStep_3 = 4;
             }
             break;
+
         case 4:
-            if (animStatus == 0x27)
+            if (animStatus == ANIM_STATUS(19, true))
             {
-                cond0 = 1;
-                cond1 = 1;
+                cond0 = true;
+                cond1 = true;
             }
             break;
     }
@@ -751,14 +778,14 @@ void func_800D46C4(s_SubCharacter* chara)
     func_800D53AC(chara);
     func_800D5C90(chara);
 
-    switch (sharedFunc_800D2C0C_0_s01(chara, Q12(1.2f)))
+    switch (Chara_DamageTake(chara, Q12(1.2f)))
     {
         case 0: 
             if (cond0)
             {
                 if (!cond1)
                 {
-                    if (func_80080514() >= 0x800)
+                    if (func_80080514() >= FP_ANGLE(180.0f))
                     {
                         chara->model_0.state_2 = 47;
                     }
@@ -771,21 +798,26 @@ void func_800D46C4(s_SubCharacter* chara)
                 {
                     chara->model_0.state_2 = 48;
                 }
+
                 chara->model_0.stateStep_3 = 0;
                 break;
             }
+
         default:
             break;
+
         case 1: 
         case 2: 
             chara->model_0.state_2 = 50;
             chara->model_0.stateStep_3 = 0;
             chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             break;
+
         case 3: 
         case 4: 
             chara->model_0.state_2 = 51;
             chara->model_0.stateStep_3 = 0;
+
             if (chara->health_B0 <= Q12(0.0f))
             {
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
@@ -963,7 +995,7 @@ void func_800DA7AC() // 0x800DA7AC
 
 void func_800DA7FC() // 0x800DA7FC
 {
-    s32 var0;
+    s32 flags;
     s32 var1;
 
     var1 = 0x553;
@@ -974,11 +1006,11 @@ void func_800DA7FC() // 0x800DA7FC
             var1 = 0xF0000;
             if (Savegame_EventFlagGet(EventFlag_39) && g_GameWork.soundCmd_5B2 == 9)
             {
-                var0 = 2;
+                flags = 2;
             }
             else
             {
-                var0 = 0x201;
+                flags = (1 << 0) | (1 << 9);
             }
         }
         else if (Savegame_EventFlagGet(EventFlag_47))
@@ -986,25 +1018,25 @@ void func_800DA7FC() // 0x800DA7FC
             if (!Savegame_EventFlagGet(EventFlag_48))
             {
                 var1 = 0xF0000;
-                var0 = 0x100;
+                flags = 1 << 8;
             }
             else
             {
                 var1 = 0x200;
-                var0 = 0x201;
+                flags = (1 << 0) | (1 << 9);
             }
         }
         else
         {
-            var0 = 1;
+            flags = 1 << 0;
         }
     }
     else
     {
-        var0 = 1;
+        flags = 1 << 0;
     }
 
-    func_80035F4C(var0, var1, NULL);
+    func_80035F4C(flags, var1, NULL);
 }
 
 void Gfx_LoadingScreen_StageString() // 0x800DA8A4

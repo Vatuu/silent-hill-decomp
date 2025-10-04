@@ -852,21 +852,21 @@ s16 D_800AF070[] =
 s16 D_800AF1FC[] =
 {
     0x0147, 0x028F, 0x03D7, 0x051E,
-    0x0666, 0x07AE, 0x07AE, 0x0000,
+    0x0666, 0x07AE, 0x07AE, 0x0000
 };
 
-s32 g_Player_GrabFree_InputCount = 0;
-s16 D_800AF210 = 0;
-s16 D_800AF212 = 0;
-u8 g_Player_IsInWalkToRunTransition = 0;
-u8 g_Player_DisableControl = 0;
-u8 D_800AF216 = 0; // Left Y analog stick value.
-s8 g_Player_RockDrill_DirectionAttack = 0;
-u32 D_800AF218 = 0;
-s32 D_800AF21C = NO_VALUE;
-u8 D_800AF220 = 0;
+s32   g_Player_GrabFree_InputCount       = 0;
+q3_12 g_Player_FlexRotationY             = FP_ANGLE(0.0f);
+q3_12 g_Player_FlexRotationX             = FP_ANGLE(0.0f);
+u8    g_Player_IsInWalkToRunTransition   = false;
+u8    g_Player_DisableControl            = false;
+u8    D_800AF216                         = 0; // Left Y analog stick value.
+s8    g_Player_RockDrill_DirectionAttack = 0;
+u32   D_800AF218                         = 0;
+s32   D_800AF21C                         = NO_VALUE;
+u8    D_800AF220                         = 0;
 // 3 bytes of padding.
-s32 D_800AF224 = NO_VALUE;
+s32   D_800AF224                         = NO_VALUE; // Weapon attack.
 
 s_AnimInfo HARRY_BASE_ANIM_INFOS[57] =
 {
@@ -2912,45 +2912,45 @@ void Gfx_Items_RenderInit() // 0x80054558
 
 void Inventory_ExitAnimFixes() // 0x80054634
 {
-    u8 field_F;
+    u8 weaponAttack;
 
-    field_F                          = (u8)g_SysWork.playerCombatInfo_38.equippedWeapon_F;
+    weaponAttack = (u8)g_SysWork.playerCombatInfo_38.weaponAttack_F;
+
     g_SavegamePtr->equippedWeapon_AA = g_Inventory_EquippedItem;
-
     if (g_SavegamePtr->equippedWeapon_AA)
     {
-        g_SysWork.playerCombatInfo_38.equippedWeapon_F = g_SavegamePtr->equippedWeapon_AA + InventoryItemId_KitchenKnife;
+        g_SysWork.playerCombatInfo_38.weaponAttack_F = WEAPON_ATTACK(g_SavegamePtr->equippedWeapon_AA + InventoryItemId_KitchenKnife, AttackInputType_Tap);
     }
     else
     {
-        g_SysWork.playerCombatInfo_38.equippedWeapon_F = NO_VALUE;
-        g_SysWork.playerCombatInfo_38.isAiming_13      = false;
+        g_SysWork.playerCombatInfo_38.weaponAttack_F = NO_VALUE;
+        g_SysWork.playerCombatInfo_38.isAiming_13    = false;
     }
 
-    func_800546A8(g_SysWork.playerCombatInfo_38.equippedWeapon_F);
-    Inventory_ExitAnimEquippedItemUpdate(&field_F);
+    func_800546A8(g_SysWork.playerCombatInfo_38.weaponAttack_F);
+    Inventory_ExitAnimEquippedItemUpdate(&weaponAttack);
 }
 
-void func_800546A8(u8 weaponId) // 0x800546A8
+void func_800546A8(u8 weaponAttack) // 0x800546A8
 {
-    switch (weaponId)
+    switch (weaponAttack)
     {
-        case EquippedWeaponId_KitchenKnife:
+        case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
             func_8003DD80(1, 34);
             break;
 
-        case EquippedWeaponId_SteelPipe:
-        case EquippedWeaponId_Hammer:
-        case EquippedWeaponId_Chainsaw:
-        case EquippedWeaponId_Katana:
-        case EquippedWeaponId_Axe:
-        case EquippedWeaponId_RockDrill:
+        case WEAPON_ATTACK(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
+        case WEAPON_ATTACK(EquippedWeaponId_Hammer,    AttackInputType_Tap):
+        case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap):
+        case WEAPON_ATTACK(EquippedWeaponId_Katana,    AttackInputType_Tap):
+        case WEAPON_ATTACK(EquippedWeaponId_Axe,       AttackInputType_Tap):
+        case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
             func_8003DD80(1, 34);
             break;
 
-        case EquippedWeaponId_Handgun:
-        case EquippedWeaponId_HuntingRifle:
-        case EquippedWeaponId_Shotgun:
+        case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
+        case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
+        case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
             func_8003DD80(1, 19);
             break;
 

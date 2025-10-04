@@ -49,7 +49,7 @@ void sharedFunc_800D3CC4_0_s01(s_SubCharacter* chara)
             break;
     }
 
-    sharedFunc_800D2C0C_0_s01(chara, 0);
+    Chara_DamageTake(chara, Q12(0.0f));
 
     if (cond)
     {

@@ -86,11 +86,17 @@ typedef enum _SpeedZoneType
     SpeedZoneType_Fast   = 2
 } e_SpeedZoneType;
 
+// TODO: Rename to `SfxId`. There's a name clash with an SFX struct.
 typedef enum _Sfx
 {
-    Sfx_Base        = 1280,
+    Sfx_Base        = 1280,          // Base SFX (not valid in itself).
 				    
     Sfx_StartGame   = Sfx_Base + 1,  // `SND/FIRST.VAB`
+
+    Sfx_Unk1286     = Sfx_Base + 6,
+
+    Sfx_Unk1296     = Sfx_Base + 16,
+    Sfx_Unk1297     = Sfx_Base + 17,
 				    
     Sfx_Denied      = Sfx_Base + 24, // `1ST/BASE.VAB` onward, but loaded out of order?
     Sfx_Back        = Sfx_Base + 25,
@@ -103,6 +109,7 @@ typedef enum _Sfx
 				    
     Sfx_Stumble0    = 1314,
 
+    Sfx_Unk1316     = 1316,
     Sfx_Unk1317     = 1317,
     Sfx_Unk1318     = 1318,
     Sfx_Unk1319     = 1319,
@@ -111,6 +118,11 @@ typedef enum _Sfx
     Sfx_Unk1322     = 1322,
     Sfx_Unk1323     = 1323,
     Sfx_Unk1324     = 1324,
+
+    Sfx_Unk1326     = 1326,
+    Sfx_Unk1327     = 1327,
+    Sfx_Unk1328     = 1328,
+    Sfx_Unk1329     = 1329,
 				    
     Sfx_Stumble1    = 1333,
 				    
@@ -943,7 +955,7 @@ typedef struct _GlobalLm
 
 typedef struct
 {
-    s32            field_0;
+    s32            field_0; // Bone flags?
     GsCOORDINATE2* field_4;
     s_ModelHeader* modelHdr_8;
     s32            modelIdx_C;
@@ -1010,6 +1022,7 @@ typedef struct
 } s_800AA894;
 STATIC_ASSERT_SIZEOF(s_800AA894, 12);
 
+/** Related to weapon attacks. */
 typedef struct
 {
     u16  field_0;
@@ -1033,7 +1046,7 @@ STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
  */
 typedef struct
 {
-    VECTOR3     position_0;
+    VECTOR3     position_0; // Q19.12
     s_Collision collision_C;
     s32         field_18;
 } s_CollisionPoint;
@@ -1413,7 +1426,7 @@ STATIC_ASSERT_SIZEOF(s_DmsEntry, 16);
 typedef struct
 {
     s16 startKeyframeIdx_0;
-    s16 frameCount_2; /** Keyframe count or frame duration at 30FPS? */
+    s16 frameCount_2; /** Frame duration at 30 FPS. */
 } s_DmsInterval;
 STATIC_ASSERT_SIZEOF(s_DmsInterval, 4);
 
@@ -1603,8 +1616,8 @@ typedef struct _MapOverlayHeader
     void              (*func_AC)(); // func(?) only map4_s03, map4_s05.
     void              (*func_B0)(); // func(?) only map4_s03, map4_s05.
     void              (*func_B4)(); // func(?) only map1_s03, map4_s05, map6_s01, map6_s02, map5_s01.
-    void              (*func_B8)(s_SubCharacter*, s_MainCharacterExtra*, GsCOORDINATE2*);
-    void              (*func_BC)(s_SubCharacter*, s_MainCharacterExtra*, GsCOORDINATE2*);
+    void              (*func_B8)(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
+    void              (*func_BC)(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
     void              (*func_C0)(); // func(?).
     void              (*func_C4)(); // func(?).
     void              (*freezePlayerControl_C8)();
@@ -1647,7 +1660,7 @@ typedef struct _MapOverlayHeader
     void              (*func_15C)(); // func(?) only map5_s01.
     void              (*func_160)(); // func(?) only map5_s01.
     void              (*func_164)(); // func(?) only map5_s01.
-    void              (*func_168)(s32, s32, s32);
+    void              (*func_168)(s32, s32 mapId, s32);
     void              (*func_16C)(VECTOR3*, s16);
     void              (*func_170)(); // func(?).
     void              (*func_174)(); // func(?).
@@ -1706,7 +1719,7 @@ typedef struct
 
 typedef struct
 {
-    VECTOR3 field_0;
+    VECTOR3 offset_0;
     s32     field_C; // Absolute ground height?
     s16     field_10;
     s16     field_12;
@@ -2173,11 +2186,9 @@ extern u8 D_800AE740[][2];
 
 extern s32 D_800AE770;
 
-/** Angle? */
-extern s16 D_800AF210;
+extern q3_12 g_Player_FlexRotationY;
 
-/** Angle? */
-extern s16 D_800AF212;
+extern q3_12 g_Player_FlexRotationX;
 
 extern u8 D_800AF220;
 
@@ -2279,6 +2290,7 @@ extern s16 g_SavegameCount;
  */
 extern s32 g_DemoLoadAttempCount;
 
+/** Values capped at 127. */
 extern s8 D_800BCD50[8];
 
 extern u32 D_800BCD58;
@@ -2430,7 +2442,8 @@ extern s32 D_800C16C8; // Type assumed.
 
 extern s32 D_800C3920;
 
-extern s8 D_800C3950;
+/** Packed weapon attack. See `WEAPON_ATTACK`. */
+extern s8 g_Player_WeaponAttack;
 
 extern s32 D_800C3954;
 
@@ -2517,7 +2530,7 @@ extern s16 D_800C4408;
 extern s8 D_800C4414;
 
 /** Angles. */
-extern s16 D_800C4428[];
+extern q3_12 D_800C4428[];
 
 /** Angles? */
 extern s16 D_800C4438[];
@@ -2575,6 +2588,7 @@ extern s16 D_800AF1FC[]; // Type assumed.
 
 extern s8 D_800C4588;
 
+/** Player instance of this struct. */
 extern s_800C4590 D_800C4590;
 
 extern VECTOR3 D_800C45B0; // Assumed type
@@ -2626,6 +2640,7 @@ extern s_Sfx g_Sfx_Table0[420];
 
 extern u8 D_800AD480[24];
 
+/** Weapon attacks. */
 extern s_800AD4C8 D_800AD4C8[70];
 
 extern const s_MapOverlayHeader g_MapOverlayHeader; // 0x800C957C
@@ -2692,7 +2707,7 @@ s32 func_8003CD5C();
 void func_8003CD6C(s_PlayerCombat* combat);
 
 /** Returns `bool`? */
-s32 func_8003CDA0(s32 invSlotIdx);
+s32 func_8003CDA0(s32 itemId);
 
 void func_8003D01C();
 
@@ -2966,7 +2981,7 @@ void Anim_Update2(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_A
 void Anim_Update3(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
 
 /** Something related to player weapon position. Takes coords to arm bones. */
-void func_80044F14(GsCOORDINATE2* coord, s16 z, s16 x, s16 y);
+void func_80044F14(GsCOORDINATE2* coord, q3_12 rotZ, q3_12 rotX, q3_12 rotY);
 
 s8 Bone_ModelIdxGet(s8* ptr, bool arg1);
 
@@ -3141,7 +3156,8 @@ void func_800485D8();
 /** Boolean. */
 u8 func_80048954(s32 com, u8* param, u8* res);
 
-void func_8004C564(u8, s32);
+/** `arg0` is probably a bit flag. */
+void func_8004C564(u8 arg0, s32 weaponAttack);
 
 // TODO: Can probably create status enums for the below funcs' return values to avoid magic,
 // but other funcs using similar return patterns should be identified first if they exist.
@@ -3150,7 +3166,7 @@ void GameFs_UniqueItemModelLoad(u8 itemId);
 
 void GameFs_MapItemsTextureLoad(s32 mapId);
 
-void func_800546A8(u8 weaponId);
+void func_800546A8(u8 weaponAttack);
 
 void func_8005487C(s32);
 
@@ -3366,7 +3382,7 @@ void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q19_
 void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 alpha);
 
 /** @unused? Returns `96 * cotangent(angle / 2)`. Possibly camera/FOV related. */
-s16 func_8008CDBC(s16 angle);
+q3_12 func_8008CDBC(q3_12 angle);
 
 s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, q19_12 time, s_DmsHeader* dmsHdr);
 
@@ -3375,13 +3391,13 @@ bool func_8008CF54(SVECTOR3* rot0, SVECTOR3* rot1);
 
 s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, const s_DmsKeyframeCamera* frame0, const s_DmsKeyframeCamera* frame1, s32 alpha);
 
-void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, s32* alpha, q19_12 time, s_DmsEntry* camEntry, s_DmsHeader* dmsHdr);
+void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, q19_12* alpha, q19_12 time, s_DmsEntry* camEntry, s_DmsHeader* dmsHdr);
 
-u32 Dms_IntervalStatusGet(s32 time, s_DmsHeader* dmsHdr);
+u32 Dms_IntervalStateGet(q19_12 time, s_DmsHeader* dmsHdr);
 
 s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry);
 
-s32 Math_LerpFixed12(s16 from, s16 to, s32 alpha);
+s32 Math_LerpFixed12(s16 from, s16 to, q19_12 alpha);
 
 void func_8008D41C();
 
@@ -3412,7 +3428,7 @@ s_WaterZone* Map_WaterZoneGet(q27_4 posX, q27_4 posZ, s_WaterZone* waterZones);
 
 void func_8008E5B4(void);
 
-void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2);
+void func_8008E794(VECTOR3* arg0, q3_12 angle, s32 arg2);
 
 void func_8008EA68(SVECTOR*, VECTOR3*, s32);
 
@@ -3589,7 +3605,7 @@ s32 func_8008A0CC(); /** Returns 0. */
 
 s64 func_8008A0D4(void); /** Returns 0. */
 
-s32 func_8008A0E4(s32 arg0, e_EquippedWeaponId weaponId, s_SubCharacter* chara, VECTOR3* pos, s32 arg4, s16 arg5, s16 arg6);
+s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* pos, s32 arg4, s16 arg5, s16 arg6);
 
 u8 func_8008A270(s32 idx);
 
@@ -3667,7 +3683,7 @@ s16 func_8005C7B0(s32 arg0);
 /** `arg0` type assumed. */
 void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3);
 
-void func_8006342C(s32 invItemId, s16, s16, GsCOORDINATE2*);
+void func_8006342C(s32 weaponAttack, s16, s16, GsCOORDINATE2*);
 
 s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 x, s16 z);
 
@@ -3675,7 +3691,7 @@ void func_800622B8(s32 arg0, s_SubCharacter* chara, s32 animStatus, s32 arg3);
 
 void func_80064F04(VECTOR3* arg0, s8 arg1, s16 arg2);
 
-s32 func_80064FC0(POLY_FT4** arg0, s32 arg1);
+bool func_80064FC0(POLY_FT4** polys, s32 arg1);
 
 void func_800652F4(VECTOR3* arg0, s16 arg1, s16 arg2, s16 arg3);
 
@@ -3717,26 +3733,26 @@ void func_800699E4(s_IpdCollisionData* collData);
 
 void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ);
 
-s32 func_80069B24(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara);
+s32 func_80069B24(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara);
 
-s32 func_80069BA8(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara, s32 arg4);
+s32 func_80069BA8(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara, s32 arg4);
 
 void func_80069DF0(s_800C4590* arg0, VECTOR3* pos, s32 arg2, s32 arg3);
 
-s32 func_80069FFC(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara);
+s32 func_80069FFC(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara);
 
 void func_8006A178(s_800C4590* arg0, q19_12 posX, q19_12 posY, q19_12 posZ, q19_12 heightY);
 
 s_SubCharacter** func_8006A1A4(s32* charaCount, s_SubCharacter* chara, bool arg2);
 
-s32 func_8006A3B4(s32 arg0, VECTOR* pos, s_func_8006AB50* arg2);
+s32 func_8006A3B4(s32 arg0, VECTOR* offset, s_func_8006AB50* arg2);
 
-s32 func_8006A42C(s32 arg0, VECTOR3* pos, s_func_8006AB50* arg2);
+s32 func_8006A42C(s32 arg0, VECTOR3* offset, s_func_8006AB50* arg2);
 
-s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* pos, s_func_8006AB50* arg2, s32 arg3,
+s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* offset, s_func_8006AB50* arg2, s32 arg3,
                   s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7, s_SubCharacter** charas, s32 charaCount);
 
-void func_8006A940(VECTOR3* pos, s_func_8006AB50* arg1, s_SubCharacter** charas, s32 charaCount);
+void func_8006A940(VECTOR3* offset, s_func_8006AB50* arg1, s_SubCharacter** charas, s32 charaCount);
 
 void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* pos, s_func_8006AB50* arg2, s32 arg3);
 
@@ -3878,7 +3894,7 @@ s32 func_8007029C(s_SubCharacter* chara, q19_12 arg1, q3_12 angle);
 
 void func_800705E4(GsCOORDINATE2* coord, s32 idx, s32 scaleX, s32 scaleY, s32 scaleZ);
 
-void func_8007D6E0();
+void Player_FlexRotationYReset();
 
 void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2);
 
@@ -3963,8 +3979,13 @@ s32 func_80035AB0(s32 arg0);
 
 void func_80035AC8(s32 idx);
 
-/** Related to NPC and player movement? */
-void func_80035B04(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord);
+/** @brief Updates the translation and rotation (pose) of a matrix in a coordinate.
+ *
+ * @param pos Translation to apply.
+ * @param rot Rotation to apply.
+ * @param coord Coordinate to update.
+ */
+void Math_MatrixTransform(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord);
 
 void func_80035B58(s32 arg0);
 
@@ -3985,7 +4006,7 @@ bool func_80035E44();
 
 void func_80035ED0();
 
-void func_80035F4C(s32 arg0, s32 arg1, u8* arg2);
+void func_80035F4C(s32 flags, s32 arg1, u8* arg2);
 
 void func_800363D0();
 
@@ -4280,7 +4301,7 @@ void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 
 void func_80070B84(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3);
 
-void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 arg2, s32 animStatus);
+void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 weaponAttack, s32 animStatus);
 
 // Variable anim duration func for player. It's nearly completely matched https://decomp.me/scratch/PBvwU.
 s32 func_800706E4();
@@ -4288,9 +4309,9 @@ s32 func_800706E4();
 /** Special player SFX handler for heavy breath and damage. */
 bool func_80071620(u8 animStatus, s_SubCharacter*, s32, s32 sfx);
 
-void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord);
+void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
 
-void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord);
+void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
 
 void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord);
 
@@ -4362,7 +4383,7 @@ bool func_8008074C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_8008076C(s32 posX, s32 posZ);
 
 /** Returns ground height? */
-s32 func_80080884(s32 posX, s32 posZ);
+q19_12 func_80080884(s32 posX, s32 posZ);
 
 s32 func_800808AC(s32 posX, s32 posZ);
 

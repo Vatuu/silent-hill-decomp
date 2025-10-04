@@ -90,20 +90,20 @@ void sharedFunc_800CBC94_0_s00(s_Particle* parts)
         // Set wind speed on XZ plane.
         if (snowType >= SnowType_LightWindy)
         {
-            sharedData_800DFB68_0_s00 = SNOW_COUNT_MAX_LIGHT * 2;
-            sharedData_800DFB64_0_s00 = SNOW_COUNT_MAX_LIGHT * 2;
+            g_Particle_SpeedZ = SNOW_COUNT_LIGHT_MAX * 2;
+            g_Particle_SpeedX = SNOW_COUNT_LIGHT_MAX * 2;
         }
         else
         {
-            sharedData_800DFB68_0_s00 = 0;
-            sharedData_800DFB64_0_s00 = 0;
+            g_Particle_SpeedZ = 0;
+            g_Particle_SpeedX = 0;
         }
 
         // Set start position.
 #if defined(MAP1_S06)
-        sharedData_800E323C_0_s00.vy = Q12(-10.0f);
+        g_Particle_Position.vy = Q12(-10.0f);
 #else
-        sharedData_800E323C_0_s00.vy = Q12(-6.0f);
+        g_Particle_Position.vy = Q12(-6.0f);
 #endif
 
         // Particle type determines particle multiplier for spawn loop.
@@ -172,4 +172,3 @@ void sharedFunc_800CBC94_0_s00(s_Particle* parts)
     sharedData_800E32CC_0_s00 = sharedData_800DD58C_0_s00;
 #endif
 }
-

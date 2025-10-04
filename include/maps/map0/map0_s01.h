@@ -54,6 +54,12 @@ void func_800D16C4(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 /** `arg0` is a struct pointer, might be `s_SubCharacter`. */
 void func_800D2364(s_SubCharacter* chara);
 
+void func_800D426C(s_SubCharacter* chara);
+
+void func_800D4420(s_SubCharacter* chara);
+
+void func_800D45BC(s_SubCharacter* chara);
+
 q19_12 Model_AnimDurationGet(s_Model* model);
 
 void func_800DA778(s32 arg0);
@@ -103,14 +109,21 @@ void Player_FallBackward(void);
 
 s32 func_800D20FC();
 
-/** @brief @unused Handles the demo end screen event after the Air Screamer breaks through the cafe window. Seen in demo builds. */
-void MapEvent_ToBeContinued(void);
+void func_800D3EB8(s_SubCharacter* chara);
 
-void MapEvent_CafeCutscene();
+void func_800D46C4(s_SubCharacter* chara);
 
 void func_800D53AC(s_SubCharacter*);
 
-s32 func_800D5F00(s_SubCharacter* arg0);
+s32 func_800D5F00(s_SubCharacter* chara);
+
+void sharedFunc_800D2364_0_s01(s_SubCharacter* chara);
+
+void func_800D5638(s_SubCharacter* chara);
+
+void func_800D4E84(s_SubCharacter*);
+
+void func_800D529C(s_SubCharacter* chara, q19_12 arg1, q19_12 angle);
 
 void func_800D598C(s_SubCharacter* chara);
 
@@ -118,10 +131,11 @@ void func_800D39F4(s_SubCharacter* chara);
 
 void func_800D5B10(s_SubCharacter* chara);
 
-void func_800D45BC(s_SubCharacter* chara);
-
 void func_800D5C90(s_SubCharacter*);
 
-void func_800D46C4(s_SubCharacter* chara);
+void MapEvent_CafeCutscene();
+
+/** @brief @unused Handles the demo end screen event after the Air Screamer breaks through the cafe window. Seen in demo builds. */
+void MapEvent_ToBeContinued(void);
 
 #endif

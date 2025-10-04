@@ -1900,6 +1900,19 @@ typedef enum _HangedScratcher
     { Anim_Update1, ANIM_STATUS(17, true),  false, NO_VALUE,               { Q12(5)    }, 603,      618 }
 };*/
 
+typedef enum _LockerDeadBodyAnim
+{
+    LockerDeadBodyAnim_Still = 0,
+    LockerDeadBodyAnim_1     = 1,
+    LockerDeadBodyAnim_2     = 2,
+    LockerDeadBodyAnim_3     = 3
+} e_LockerDeadBodyAnim;
+
+/*s_AnimInfo LOCKERR_DEAD_BODY_ANIM_INFOS[] =
+{
+
+};*/
+
 /*s_AnimInfo MONSTER_CYBIL_ANIM_INFOS[] =
 {
     { Anim_Update2, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0)  }, NO_VALUE, 0  },
@@ -1916,7 +1929,7 @@ typedef enum _RomperAnim
     RomperAnim_Unk15 = 15,
 } e_RomperAnim;
 
-/*s_AnimInfo ROPMER_ANIM_INFOS[] =
+/*s_AnimInfo ROMPER_ANIM_INFOS[] =
 {
     { Anim_Update2, NO_VALUE, false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },
     { NULL, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0) }, 0, 0 },
@@ -2174,7 +2187,7 @@ typedef enum _StalkerAnim
 #else
 #define PARTICLE_COUNT_MAX 300
 #endif
-#define SNOW_COUNT_MAX_LIGHT 300
+#define SNOW_COUNT_LIGHT_MAX 300
 
 typedef enum
 {
@@ -2259,12 +2272,12 @@ typedef struct _SfxVolume
 typedef struct
 {
     s_AnimInfo  animInfo_0[56];
-    s32         unk_380[0x12D][2]; // unknown size, biggest constant index used is 35
+    s32         unk_380[301][2]; // Unknown size, biggest constant index used is 35.
     s_SfxVolume sfxVolumes_CE8[11];
     u_Property  properties_D14[4];
     s8          unk_D24[36];
     s8*         ptr_D48[5];
-    s16         field_D5C[4][2];
+    s16         field_D5C[4][2]; // Related to animations. Move offset distances?
 } s_func_800D2E04;
 typedef char static_assertion_sizeof_s_func_800D2E04[(sizeof(s_func_800D2E04) == 3436) ? 1 : -1];
 
@@ -2274,7 +2287,7 @@ typedef struct
     s_AnmHeader*   anmHdr_4;
     GsCOORDINATE2* coords_8;
     MATRIX*        matrices_C;
-    s8             unk_10[0xA4];
+    s8             unk_10[164];
     s32            field_B4[35][4];
 } s_sharedData_800E21D0_0_s01;
 
@@ -2319,23 +2332,18 @@ extern u16 sharedData_800E0CB8_0_s00;
 extern s8  sharedData_800E0CBA_0_s00;
 extern s32 sharedData_800E32D0_0_s00;
 
-/** `e_EquippedWeaponId` */
+/** Packed weapon attack. `See `WEAPON_ATTACK`. */
 extern s8 sharedData_800DD59C_0_s00;
 
 extern s32 sharedData_800DF1F4_0_s00;
 extern s16 sharedData_800DF1F8_0_s00;
 extern s16 sharedData_800DF1FA_0_s00;
 
-extern s16 sharedData_800E0C6E_0_s00;
+extern s16 g_Particle_RotationY;
 
-/** Related to particle position. */
-extern VECTOR3 sharedData_800E323C_0_s00;
-
-/** Previous particle position? */
-extern VECTOR3 sharedData_800E324C_0_s00;
-
-/** Previous particle Y angle? */
-extern s16 sharedData_800E3260_0_s00;
+extern VECTOR3 g_Particle_Position;     // Q19_12
+extern VECTOR3 g_Particle_PrevPosition; // Q19_12
+extern q3_12   g_Particle_PrevRotationY;
 
 /** Something related to rotation. */
 extern s32 sharedData_800E39D8_0_s00;
@@ -2414,11 +2422,8 @@ extern s_AnimInfo CYBIL_ANIM_INFOS[];
 
 extern s_AnimInfo BLOODY_LISA_ANIM_INFOS[]; // `Ai_BloodyLisa` related?
 
-/** Particle speed X. */
-extern s32 sharedData_800DFB64_0_s00;
-
-/** Particles speed Z. */
-extern s32 sharedData_800DFB68_0_s00;
+extern s32 g_Particle_SpeedX;
+extern s32 g_Particle_SpeedZ;
 
 extern s32 sharedData_800DFB6C_0_s00;
 extern s32 sharedData_800DFB70_0_s00;
@@ -2846,7 +2851,7 @@ void sharedFunc_800D2B10_0_s01(s_SubCharacter* chara);
 
 void sharedFunc_800D2B28_0_s01(s_SubCharacter* chara);
 
-void sharedFunc_800D2B4C_0_s01(s_SubCharacter*);
+void sharedFunc_800D2B4C_0_s01(s_SubCharacter* chara);
 
 void sharedFunc_800D2BB0_0_s01(s_SubCharacter* chara);
 
@@ -2862,25 +2867,25 @@ s32 sharedFunc_800D3814_0_s01(s_SubCharacter* chara);
 
 s32 sharedFunc_800D31D0_0_s01(s_SubCharacter* chara, VECTOR3* arg1, s32 arg2);
 
-bool sharedFunc_800D3928_0_s01(s_SubCharacter*);
+bool sharedFunc_800D3928_0_s01(s_SubCharacter* chara);
 
 void sharedSymbol_800D3B0C_0_s01(s_SubCharacter*);
 
 bool sharedFunc_800D62D8_0_s01(s_SubCharacter* chara);
 
 /** Returns anim-related index. */
-s32 sharedFunc_800D4A80_0_s01(s_SubCharacter*);
+s32 sharedFunc_800D4A80_0_s01(s_SubCharacter* chara);
 
 s32 sharedFunc_800D5274_0_s01();
 
-void sharedFunc_800D633C_0_s01(s_SubCharacter*);
+void sharedFunc_800D633C_0_s01(s_SubCharacter* chara);
 void sharedFunc_800D63A4_0_s01(s_SubCharacter*);
 void sharedFunc_800D6600_0_s01(s_SubCharacter*);
 
 s32 sharedFunc_800D7120_0_s01(s32, s32, s32);
 s32 sharedFunc_800D71F0_0_s01(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
-s32 sharedFunc_800D7440_0_s01(VECTOR* vec0, VECTOR* vec1, s_SubCharacter* chara);
+s32 sharedFunc_800D7440_0_s01(s_800C4590* arg0, VECTOR* vec1, s_SubCharacter* chara);
 
 void sharedFunc_800D7560_0_s01(s_SubCharacter* chara);
 
@@ -2896,7 +2901,7 @@ bool sharedFunc_800D81B0_0_s01(s_SubCharacter* chara);
 
 void sharedFunc_800D82B8_0_s01(s_SubCharacter*);
 
-void sharedFunc_800D8714_0_s01(s_SubCharacter*, s32, s32);
+void sharedFunc_800D8714_0_s01(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
 void sharedFunc_800D87FC_0_s01(s_SubCharacter* chara);
 
@@ -2958,13 +2963,14 @@ void sharedFunc_800D0E80_3_s03(s_SubCharacter*);
 void sharedSymbol_800D0ECC_3_s03(s_SubCharacter*);
 void sharedFunc_800D0F28_3_s03(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 
-u32 sharedFunc_800D2C0C_0_s01(s_SubCharacter*, s32);
+/** `arg1` is a multiplier? */
+q20_12 Chara_DamageTake(s_SubCharacter*, s32 mult);
 
 void sharedFunc_800D3CC4_0_s01(s_SubCharacter* chara);
 
 void sharedFunc_800D3DFC_0_s01(s_SubCharacter* chara);
 
-s32 sharedFunc_800D569C_0_s01(s_SubCharacter* chara, q19_12 vecY, q19_12 dist);
+s32 sharedFunc_800D569C_0_s01(s_SubCharacter* chara, q19_12 posY, q19_12 dist);
 
 void sharedFunc_800D57C8_0_s01(s_SubCharacter* chara);
 
@@ -2972,21 +2978,21 @@ void sharedFunc_800D5E78_0_s01(s_SubCharacter* chara, q19_12 angle);
 
 s32 sharedFunc_800D6A60_0_s01(VECTOR3* vec0, VECTOR3* vec1, s_SubCharacter* chara, s32 arg3, VECTOR3* vec2);
 
-void sharedFunc_800D6C7C_0_s01(VECTOR* arg0, s_SubCharacter* arg1, s32 arg2, VECTOR3* arg3);
+void sharedFunc_800D6C7C_0_s01(VECTOR* arg0, s_SubCharacter* chara, s32 arg2, VECTOR3* arg3);
 
 void sharedFunc_800D2364_0_s01(s_SubCharacter* chara);
 
-void sharedFunc_800D5638_0_s01(s_SubCharacter* arg0);
+void sharedFunc_800D5638_0_s01(s_SubCharacter* chara);
 
-void sharedFunc_800D4E84_0_s01(s_SubCharacter*);
+void sharedFunc_800D4E84_0_s01(s_SubCharacter* chara);
 
-void sharedFunc_800D529C_0_s01(s_SubCharacter* chara, s32 thousand, s32 angle);
+void sharedFunc_800D529C_0_s01(s_SubCharacter* chara, s32 arg1, s32 angle);
 
 void sharedFunc_800CE934_0_s02(void);
 
 void sharedFunc_800D0850_0_s01(VECTOR3* vec0, VECTOR3* vec1);
 
-void sharedFunc_800CFFD8_0_s01(VECTOR3* vec0, s16* rotX, s16* rotY);
+void sharedFunc_800CFFD8_0_s01(VECTOR3* vec0, q3_12* rotX, q3_12* rotY);
 
 static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo)
 {

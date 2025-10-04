@@ -21,7 +21,7 @@ void sharedFunc_800D20E4_0_s00()
 
     chara->properties_E4.player.afkTimer_E8      = 0;
     chara->properties_E4.player.runTimer_F8      = 0;
-    chara->properties_E4.player.exhaustionTimer_FC = 0;
+    chara->properties_E4.player.exhaustionTimer_FC = Q12(0.0f);
 
     g_SysWork.player_4C.extra_128.state_1C = PlayerState_Unk52;
     chara->model_0.stateStep_3             = 0;
@@ -48,13 +48,13 @@ void sharedFunc_800D20E4_0_s00()
 
     sharedData_800E39D8_0_s00 = 0;
 
-    chara->field_D6                                             = 0;
+    chara->field_D6                                             = Q12(0.0f);
     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk4 | PlayerFlag_Unk5;
     chara->flags_3E                                            |= CharaFlag_Unk4;
     chara->field_E1_0                                           = 4;
 
-    if (g_SysWork.playerCombatInfo_38.equippedWeapon_F < EquippedWeaponId_Handgun)
+    if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
     {
-        g_SysWork.playerCombatInfo_38.equippedWeapon_F %= 10;
+        g_SysWork.playerCombatInfo_38.weaponAttack_F = WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F);
     }
 }

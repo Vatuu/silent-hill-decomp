@@ -7,9 +7,9 @@
 
 const s32 rodataPad_80025E90 = 0;
 
-void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
+void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
 {
-    s8       temp_v0;
+    s8       weaponAttack; // Packed weapon attack. See `WEAPON_ATTACK`.
     s32      playerState;
     s_Model* modelPtr3;
     s_Model* extraModelPtr2;
@@ -25,19 +25,20 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
     if (g_SysWork.player_4C.extra_128.state_1C < PlayerState_Idle &&
         playerState >= PlayerState_None)
     {
-        if (D_800C3950 != g_SysWork.playerCombatInfo_38.equippedWeapon_F)
+        if (g_Player_WeaponAttack != g_SysWork.playerCombatInfo_38.weaponAttack_F)
         {
             g_SysWork.playerCombatInfo_38.isAiming_13 = false;
         }
 
-        temp_v0 = D_800C3950 % 10;
-
-        if (temp_v0 == 5 && g_SysWork.playerCombatInfo_38.equippedWeapon_F != temp_v0)
+        weaponId = WEAPON_ATTACK_ID_GET(g_Player_WeaponAttack);
+        if (weaponId == EquippedWeaponId_Chainsaw &&
+            g_SysWork.playerCombatInfo_38.weaponAttack_F != weaponId)
         {
             goto Inventory_ExitAnimEquippedItemUpdate_block; // TODO: Remove goto if possible.
         }
 
-        if (temp_v0 == 2 && g_SysWork.playerCombatInfo_38.equippedWeapon_F != temp_v0)
+        if (weaponId == EquippedWeaponId_RockDrill &&
+            g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(weaponId, AttackInputType_Tap))
         {
         Inventory_ExitAnimEquippedItemUpdate_block:
             g_SysWork.player_4C.chara_0.field_44                                     = 0;
@@ -55,14 +56,16 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
 
             default:
 
-                if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_Combat && (s8)D_800C3950 != g_SysWork.playerCombatInfo_38.equippedWeapon_F)
+                if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_Combat &&
+                    g_Player_WeaponAttack != g_SysWork.playerCombatInfo_38.weaponAttack_F)
                 {
                     g_SysWork.player_4C.extra_128.state_1C                     = PlayerState_None;
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C = PlayerFlag_None;
                 }
 
-                if (g_SysWork.player_4C.extra_128.lowerBodyState_24 >= PlayerLowerBodyState_Aim && g_SysWork.playerCombatInfo_38.equippedWeapon_F != NO_VALUE &&
-                    (s8)D_800C3950 == g_SysWork.playerCombatInfo_38.equippedWeapon_F)
+                if (g_SysWork.player_4C.extra_128.lowerBodyState_24 >= PlayerLowerBodyState_Aim &&
+                    g_SysWork.playerCombatInfo_38.weaponAttack_F != NO_VALUE &&
+                    g_Player_WeaponAttack == g_SysWork.playerCombatInfo_38.weaponAttack_F)
                 {
                     extraModelPtr0 = &g_SysWork.player_4C.extra_128.model_0;
                     if (extraModelPtr0->anim_4.status_0 >= ANIM_STATUS(33, false))
@@ -102,14 +105,14 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* arg0) // 0x8004C088
     modelPtr3      = &g_SysWork.player_4C.chara_0.model_0;
     extraModelPtr2 = &g_SysWork.player_4C.extra_128.model_0;
 
-    // Set anim alpha.
+    // Set animation alpha.
     modelPtr3->anim_4.alpha_A      = Q12(1.0f);
     extraModelPtr2->anim_4.alpha_A = Q12(1.0f);
 
     // Disable upper body bones.
     g_SysWork.player_4C.extra_128.disabledAnimBones_18 = HARRY_UPPER_BODY_BONE_MASK;
 
-    // Set anim time.
+    // Set animation time.
     modelPtr3->anim_4.time_4      = Q12(modelPtr3->anim_4.keyframeIdx_8);
     extraModelPtr2->anim_4.time_4 = Q12(extraModelPtr2->anim_4.keyframeIdx_8);
 
@@ -260,12 +263,12 @@ u32 Game_HyperBlasterBeamColorGet() // 0x8004C54C
     return g_SavegamePtr->pickedUpSpecialItemCount_25C_3 >> 3;
 }
 
-void func_8004C564(u8 arg0, s32 arg1) // 0x8004C564
+void func_8004C564(u8 arg0, s32 weaponAttack) // 0x8004C564
 {
     s32 temp_v1;
     s8  temp_a1;
 
-    temp_a1 = arg1 + 1;
+    temp_a1 = weaponAttack + 1;
     switch (temp_a1)
     {
         case 0:

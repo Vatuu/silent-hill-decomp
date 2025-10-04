@@ -1220,7 +1220,7 @@ void func_8003CBA4(s_WorldObject* obj) // 0x8003CBA4
     vec.vy = obj->vy_C;
     vec.vz = obj->vz_C << 2;
 
-    func_80096C94(&vec, &coord.coord);
+    Math_MatrixRotate0(&vec, &coord.coord);
     func_80049B6C(&coord, &mats[1], &mats[0]);
     func_8003CC7C(obj->field_0, &mats[0], &mats[1]);
 }
@@ -1264,36 +1264,34 @@ s32 func_8003CD5C() // 0x8003CD5C
 
 void func_8003CD6C(s_PlayerCombat* combat) // 0x8003CD6C
 {
-	#define INVENTORY_WEAPONS_ID_BASE InventoryItemId_KitchenKnife
-
     s32 itemId;
-    s8  equippedWeaponId;
+    s8  weaponAttack;
 
-    equippedWeaponId = combat->equippedWeapon_F;
-    itemId           = NO_VALUE;
-    if (equippedWeaponId != NO_VALUE)
+    weaponAttack = combat->weaponAttack_F;
+    itemId       = NO_VALUE;
+    if (weaponAttack != NO_VALUE)
     {
-        itemId = equippedWeaponId + INVENTORY_WEAPONS_ID_BASE;
+        itemId = weaponAttack + InventoryItemId_KitchenKnife;
     }
 
     func_8003CDA0(itemId);
 }
 
-s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
+s32 func_8003CDA0(s32 itemId) // 0x8003CDA0
 {
     s32         fileIdx;
     s_HeldItem* heldItem;
 
     heldItem = &g_WorldGfx.heldItem_1BAC;
 
-    if (heldItem->itemId_0 == itemIdx)
+    if (heldItem->itemId_0 == itemId)
     {
         return 0;
     }
 
-    heldItem->itemId_0 = itemIdx;
+    heldItem->itemId_0 = itemId;
 
-    switch (itemIdx)
+    switch (itemId)
     {
         default:
             fileIdx = NO_VALUE;
@@ -1390,7 +1388,7 @@ s32 func_8003CDA0(s32 itemIdx) // 0x8003CDA0
         heldItem->queueIdx_4 = Fs_QueueStartReadTim(fileIdx, FS_BUFFER_10, &heldItem->imageDesc_C);
     }
 
-    switch (itemIdx)
+    switch (itemId)
     {
         case NO_VALUE:
         default:
@@ -1494,33 +1492,34 @@ void func_8003D058() // 0x8003D058
     s_LmHeader*    lmHdr;
 
     heldItem = &g_WorldGfx.heldItem_1BAC;
-
-    if (heldItem->itemId_0 != NO_VALUE)
+    if (heldItem->itemId_0 == NO_VALUE)
     {
-        if (heldItem->itemId_0 == InventoryItemId_CutscenePhone)
+        return;
+    }
+
+    if (heldItem->itemId_0 == InventoryItemId_CutscenePhone)
+    {
+        coord = &g_SysWork.playerBoneCoords_890[HarryBone_LeftHand];
+    } 
+    else 
+    {
+        coord = &g_SysWork.playerBoneCoords_890[HarryBone_RightHand];
+    }
+
+    if (Fs_QueueIsEntryLoaded(heldItem->queueIdx_4)) 
+    {
+        lmHdr = heldItem->lmHdr_14;
+
+        if (!lmHdr->isLoaded_2)
         {
-            coord = &g_SysWork.playerBoneCoords_890[HarryBone_LeftHand];
-        } 
-        else 
-        {
-            coord = &g_SysWork.playerBoneCoords_890[HarryBone_RightHand];
+            LmHeader_FixOffsets(lmHdr);
+            func_80056504(lmHdr, heldItem->textureName_8, &heldItem->imageDesc_C, BlendMode_Additive);
+            Lm_MaterialFlagsApply(lmHdr);
+            Bone_ModelAssign(&heldItem->bone_18, heldItem->lmHdr_14, 0);
         }
 
-        if (Fs_QueueIsEntryLoaded(heldItem->queueIdx_4)) 
-        {
-            lmHdr = heldItem->lmHdr_14;
-
-            if (!lmHdr->isLoaded_2)
-            {
-                LmHeader_FixOffsets(lmHdr);
-                func_80056504(lmHdr, heldItem->textureName_8, &heldItem->imageDesc_C, 1);
-                Lm_MaterialFlagsApply(lmHdr);
-                Bone_ModelAssign(&heldItem->bone_18, heldItem->lmHdr_14, 0);
-            }
-
-            func_80049B6C(coord, &mat1, &mat0);
-            func_80057090(&heldItem->bone_18.modelInfo_0, &g_OrderingTable0[g_ActiveBufferIdx], 1, &mat0, &mat1, 0);
-        }
+        func_80049B6C(coord, &mat1, &mat0);
+        func_80057090(&heldItem->bone_18.modelInfo_0, &g_OrderingTable0[g_ActiveBufferIdx], 1, &mat0, &mat1, 0);
     }
 }
 
@@ -1614,7 +1613,7 @@ void Chara_FsImageCalc(s_FsImageDesc* image, s32 charaId, s32 modelIdx) // 0x800
     s8  u;
 
     // TODO: Deoptimise.
-    v = (charaId < Chara_AirScreamer);
+    v = charaId < Chara_AirScreamer;
     if (charaId >= Chara_None && v)
     {
         tPage = 27;

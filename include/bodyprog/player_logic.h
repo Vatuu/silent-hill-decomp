@@ -495,7 +495,8 @@ extern u8 g_Player_DisableDamage; // 0x800C4562
 
 extern q19_12 D_800C45DC;
 
-extern VECTOR3 D_800C45F8;
+/** XZ player position copy. */
+extern VECTOR3 g_Player_PrevPosition;
 
 // ==========
 // FUNCTIONS
@@ -526,13 +527,13 @@ bool func_800713E8(s32 animStatus, s_SubCharacter* chara, s32 keyframe0, s32 key
  * @note SH2 symbols have a similar function named `PlayerFunction`, but code-wise they
  * doesn't share many similarities.
  */
-void Player_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coord); // 0x800717D0
+void Player_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords); // 0x800717D0
 
 /** Player anim handler? */
-void Player_AnimUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, s_AnmHeader* anmHdr, GsCOORDINATE2* coord); // 0x80071968
+void Player_AnimUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, s_AnmHeader* anmHdr, GsCOORDINATE2* coords); // 0x80071968
 
 /** @brief Main update function for player logic. */
-void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord); // 0x80071CE8
+void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords); // 0x80071CE8
 
 /** @brief Updates `g_SysWork.player_4C.extra_128.upperBodyState_20` and prepares
  * transitions between running to and from walking animations.

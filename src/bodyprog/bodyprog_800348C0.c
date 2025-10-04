@@ -402,7 +402,7 @@ void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
         func_8003CD6C(&g_SysWork.playerCombatInfo_38);
     }
 
-    func_800546A8(g_SysWork.playerCombatInfo_38.equippedWeapon_F);
+    func_800546A8(g_SysWork.playerCombatInfo_38.weaponAttack_F);
 }
 
 // ========================================
@@ -736,14 +736,14 @@ void func_80035AC8(s32 idx) // 0x80035AC8
 // LOADING SCREEN RELATED
 // ========================================
 
-void func_80035B04(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord) // 0x80035B04
+void Math_MatrixTransform(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord) // 0x80035B04
 {
     coord->flg        = false;
     coord->coord.t[0] = Q12_TO_Q8(pos->vx);
     coord->coord.t[1] = Q12_TO_Q8(pos->vy);
     coord->coord.t[2] = Q12_TO_Q8(pos->vz);
 
-    func_80096E78(rot, (MATRIX*)&coord->coord);
+    Math_MatrixRotate1(rot, (MATRIX*)&coord->coord);
 }
 
 void func_80035B58(s32 arg0) // 0x80035B58
@@ -805,7 +805,7 @@ void Gfx_LoadingScreen_PlayerRun() // 0x80035BE0
 
         D_800A998C.status_4 = model->anim_4.status_0;
 
-        func_80035B04(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, boneCoords);
+        Math_MatrixTransform(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, boneCoords);
         g_SysWork.sysState_8++;
     }
 
@@ -828,7 +828,7 @@ void func_80035DB4(s32 arg0) // 0x80035DB4
         g_MapOverlayHeader.func_10(arg0);
         if (arg0 == 0 && D_800BCD5C == 0)
         {
-            func_80035F4C(1, 0xF0000, 0);
+            func_80035F4C(1 << 0, 0xF0000, 0);
         }
     }
 }
@@ -894,7 +894,7 @@ void func_80035ED0() // 0x80035ED0
     g_SysWork.field_2748[8] = 0;
 }
 
-void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
+void func_80035F4C(s32 flags, s32 arg1, u8* arg2) // 0x80035F4C
 {
     s16  temp_v0;
     s32  var_a0;
@@ -903,16 +903,16 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
     s32  var_v1;
     s32  temp_s2;
     s32  i;
-    s32  var_s1;
+    s32  flagsCpy;
     s32  var_s3;
     s32  var_s4;
     s32  var_t0;
-    s32  var_v0_2;
+    bool cond;
     s32  temp_s7;
     s16* ptr;
     u8*  var_t4;
 
-    var_s1 = arg0;
+    flagsCpy = flags;
     var_t4 = arg2;
     ptr    = g_SysWork.field_2748;
 
@@ -923,12 +923,12 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
 
     if (g_SysWork.player_4C.chara_0.health_B0 <= Q12(0.0f) || g_SysWork.sysState_8 == SysState_GameOver)
     {
-        var_s1 &= 1 << 8;
-        var_s1 |= 1 << 0;
+        flagsCpy &= 1 << 8;
+        flagsCpy |= 1 << 0;
         arg1    = 0x333;
     }
     
-    if ((var_s1 & (1 << 8)) == 0)
+    if ((flagsCpy & (1 << 8)) == 0)
     {
         if (D_800A9A1C > 0 && g_SavegamePtr->flags_AC & (1 << 0))
         {
@@ -938,17 +938,17 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
 
     if (g_SysWork.field_22A0 & (1 << 7))
     {
-        var_s1                = (1 << 0) | (1 << 9);
+        flagsCpy              = (1 << 0) | (1 << 9);
         g_SysWork.field_22A0 |= 1 << 1;
     }
 
-    if (var_s1 & (1 << 0))
+    if (flagsCpy & (1 << 0))
     {
-        var_s1 &= (1 << 8) | (1 << 9);
+        flagsCpy &= (1 << 8) | (1 << 9);
     }
     else
     {
-        var_s1 ^= 1 << 0;
+        flagsCpy ^= 1 << 0;
     }
 
     for (i = 0, temp_s7 = 8; i < 9; i++)
@@ -973,7 +973,7 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
         } 
         else 
         {
-            if ((var_s1 >> i) & (1 << 0)) 
+            if ((flagsCpy >> i) & (1 << 0)) 
             {
                 var_t0 = FP_MULTIPLY(g_DeltaTime1, arg1, Q12_SHIFT - 1); // Should be multiplied by 2 but doesn't match.
                 var_a0 = Q12(1.0f);
@@ -1019,16 +1019,16 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
             var_v1 = FP_MULTIPLY_PRECISE(var_v1, temp_v0, Q12_SHIFT);
         }
 
-        var_v1 = FP_MULTIPLY_PRECISE(var_v1, 0x7F, Q12_SHIFT);
-        if (var_v1 >= 0x80) 
+        var_v1 = FP_MULTIPLY_PRECISE(var_v1, 127, Q12_SHIFT);
+        if (var_v1 > 127) 
         {
-            var_v1 = 0x7F;
+            var_v1 = 127;
         }
 
         var_v1 = (var_v1 * var_t4[i]) >> 7;
-        if (var_v1 >= 0x80) 
+        if (var_v1 > 127) 
         {
-            var_v1 = 0x7F;
+            var_v1 = 127;
         }
 
         D_800BCD50[i] = var_v1;
@@ -1037,8 +1037,8 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
     var_s4  = 0;
     temp_s2 = func_80045BC8();
 
-    var_v0_2 = temp_s2;
-    var_v0_2 = temp_s2 != 0 && var_v0_2 != 0xFFFF;
+    cond = temp_s2;
+    cond = temp_s2 != 0 && cond != 0xFFFF;
 
     if (var_s3 != 0) 
     {
@@ -1047,7 +1047,7 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
             case 3:
                 func_80035E1C();
 
-                if (var_v0_2 != 0) 
+                if (cond) 
                 {
                     D_800A99A0 = 0;
                 } 
@@ -1064,7 +1064,7 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
                 break;
 
             case 1:
-                if (var_v0_2 != 0) 
+                if (cond) 
                 {
                     func_80035ED0();
                 } 
@@ -1081,7 +1081,7 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
                 break;
         }
     } 
-    else if (var_s1 & (1 << 9)) 
+    else if (flagsCpy & (1 << 9)) 
     {
         if (D_800A99A0 != 3) 
         {
@@ -1096,7 +1096,7 @@ void func_80035F4C(s32 arg0, s32 arg1, u8* arg2) // 0x80035F4C
 
     if (var_s4 != 0) 
     {
-        if (var_v0_2 != 0) 
+        if (cond) 
         {
             for (i = 0; i < 8; i++)
             {
@@ -1164,7 +1164,7 @@ u32 func_800364BC() // 0x800364BC
     u32 var0;
     u32 var1;
 
-    D_800BCD58 += g_DeltaTime1 * 0x40001;
+    D_800BCD58 += g_DeltaTime1 * (Q12(64.0f) + 1);
 
     var0  = 0x40000;
     var0 += Math_Sin(D_800BCD58 >> 18) * 8;
@@ -1179,10 +1179,10 @@ void func_8003652C() // 0x8003652C
 {
     RECT rect;
 
-    u32 vals[] = // 0x8002523C
+    u32 VALS[] =
     {
         0xFFFF0000, 0xBBEEE318, 0xFFEC9304, 0x83FFE30C,
-        0x001F8318, 0x90840018, 0x90808080, 0x80048084
+        0x1F8318,   0x90840018, 0x90808080, 0x80048084
     };
 
     rect.x = 304;
@@ -1190,7 +1190,7 @@ void func_8003652C() // 0x8003652C
     rect.w = 16;
     rect.h = 1;
 
-    LoadImage(&rect, vals);
+    LoadImage(&rect, VALS);
 }
 
 s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
@@ -1213,7 +1213,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
     }
 
     g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(0.0f);
-    func_8004C564(g_SysWork.playerCombatInfo_38.equippedWeapon_F, EquippedWeaponId_RockDrill);
+    func_8004C564(g_SysWork.playerCombatInfo_38.weaponAttack_F, WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap));
 
     if (g_MapMsg_MainIdx != mapMsgIdx)
     {
@@ -1302,7 +1302,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                         g_MapMsg_Select.maxIdx_0           = temp;
                         g_MapMsg_Select.selectedEntryIdx_1 = g_MapMsg_SelectCancelIdx;
 
-                        Sd_PlaySfx(Sfx_Cancel, 0, 64);
+                        Sd_PlaySfx(Sfx_Cancel, 0, Q8_CLAMPED(0.25f));
 
                         if (g_SysWork.silentYesSelection_2350_4)
                         {
@@ -1318,11 +1318,11 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 
                         if ((u8)g_MapMsg_Select.selectedEntryIdx_1 == (s8)g_MapMsg_SelectCancelIdx)
                         {
-                            Sd_PlaySfx(Sfx_Cancel, 0, 64);
+                            Sd_PlaySfx(Sfx_Cancel, 0, Q8_CLAMPED(0.25f));
                         }
                         else if (!g_SysWork.silentYesSelection_2350_4)
                         {
-                            Sd_PlaySfx(Sfx_Confirm, 0, 64);
+                            Sd_PlaySfx(Sfx_Confirm, 0, Q8_CLAMPED(0.25f));
                         }
 
                         if (g_SysWork.silentYesSelection_2350_4)
@@ -1480,7 +1480,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                 g_MapMsg_SelectFlashTimer = Q12(0.0f);
                 g_MapMsg_Select.selectedEntryIdx_1--;
 
-                Sd_PlaySfx(Sfx_Back, 0, 64);
+                Sd_PlaySfx(Sfx_Back, 0, Q8_CLAMPED(0.25f));
             }
 
             if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickDown &&
@@ -1489,7 +1489,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                 g_MapMsg_SelectFlashTimer = Q12(0.0f);
                 g_MapMsg_Select.selectedEntryIdx_1++;
 
-                Sd_PlaySfx(Sfx_Back, 0, 64);
+                Sd_PlaySfx(Sfx_Back, 0, Q8_CLAMPED(0.25f));
             }
 
             mapMsgCode = NO_VALUE;
@@ -1511,14 +1511,14 @@ const s32 RodataPad_800252B8 = 0;
  * opening and closing door SFX when the player moves between rooms. */
 s_AreaLoadSfx const SfxPairs[25] = // 0x800252BC
 {
-    { Sfx_Base,    Sfx_Base },
+    { Sfx_Base,    Sfx_Base    },
     { Sfx_Unk1309, Sfx_Unk1310 },
     { Sfx_Unk1323, Sfx_Unk1324 },
-    { Sfx_Unk1418, Sfx_Base },
-    { Sfx_Unk1354, Sfx_Base },
-    { Sfx_Unk1387, Sfx_Base },
-    { Sfx_Unk1391, Sfx_Base },
-    { Sfx_Unk1521, Sfx_Base },
+    { Sfx_Unk1418, Sfx_Base    },
+    { Sfx_Unk1354, Sfx_Base    },
+    { Sfx_Unk1387, Sfx_Base    },
+    { Sfx_Unk1391, Sfx_Base    },
+    { Sfx_Unk1521, Sfx_Base    },
     { Sfx_Unk1458, Sfx_Unk1459 },
     { Sfx_Unk1604, Sfx_Unk1605 },
     { Sfx_Unk1609, Sfx_Unk1610 },
@@ -1531,11 +1531,11 @@ s_AreaLoadSfx const SfxPairs[25] = // 0x800252BC
     { Sfx_Unk1431, Sfx_Unk1432 },
     { Sfx_Unk1398, Sfx_Unk1399 },
     { Sfx_Unk1504, Sfx_Unk1505 },
-    { Sfx_Unk1309, Sfx_Base },
-    { Sfx_Unk1323, Sfx_Base },
+    { Sfx_Unk1309, Sfx_Base    },
+    { Sfx_Unk1323, Sfx_Base    },
     { Sfx_Base,    Sfx_Unk1324 },
     { Sfx_Unk1351, Sfx_Unk1352 },
-    { Sfx_Unk1487, Sfx_Base }
+    { Sfx_Unk1487, Sfx_Base    }
 };
 
 // These are referenced by pointers at `0x800A99E8`, which are then used by `func_800D3EAC`.
@@ -1556,7 +1556,7 @@ void func_80036E48(u16* arg0, s16* arg1) // 0x80036E48
     s32  temp_a0;
     s32  temp_v0_2;
     s32  var_a2;
-    s32  var_t3;
+    s32  i;
     u8   var_t4;
     s32  var_v0;
     u16  temp_v0;
@@ -1568,7 +1568,7 @@ void func_80036E48(u16* arg0, s16* arg1) // 0x80036E48
     var_t4 = 0;
     var_t7 = arg0;
 
-    for (var_t3 = 0; var_t3 < 15;)
+    for (i = 0; i < 15;)
     {
         temp_v0 = *var_t7;
 
@@ -1612,21 +1612,21 @@ void func_80036E48(u16* arg0, s16* arg1) // 0x80036E48
             {
                 if (var_a2 > 0 && sp28[var_a2 - 1] != 0)
                 {
-                    var_a3 |= 0xB << temp_a0;
+                    var_a3 |= 11 << temp_a0;
                 }
 
-                if (var_t3 > 0)
+                if (i > 0)
                 {
-                    if (var_a2 != 0 && ((sp10[var_a2 >> 2] >> temp_a0) & 0xF) == 0xB && var_t4)
+                    if (var_a2 != 0 && ((sp10[var_a2 >> 2] >> temp_a0) & 0xF) == 11 && var_t4)
                     {
-                        var_a3 |= 0xB << temp_a0;
+                        var_a3 |= 11 << temp_a0;
                     }
 
                     temp_v0_2 = (sp10[var_a2 >> 2] >> temp_a0) & 0xF;
 
-                    if (temp_v0_2 > 0 && temp_v0_2 != 0xB)
+                    if (temp_v0_2 > 0 && temp_v0_2 != 11)
                     {
-                        var_a3 |= 0xB << temp_a0;
+                        var_a3 |= 11 << temp_a0;
                         var_t4 = 1;
                     }
                     else
@@ -1645,7 +1645,8 @@ void func_80036E48(u16* arg0, s16* arg1) // 0x80036E48
             }
         }
 
-        do { var_t3++; } while (0); // @hack Required for match.
+        do { i++; } while (0); // @hack Required for match.
+
         var_t7++;
         var_t2 += (D_800C3920 - 1) * 3;
     }
@@ -1680,7 +1681,7 @@ void func_8003708C(s16* ptr0, u16* ptr1) // 0x8003708C
             var0  = 1;
         }
 
-        if ((i & 3) == 3 || i == 12)
+        if ((i & 0x3) == 3 || i == 12)
         {
             ptr1++;
             *ptr0++ = var1;
@@ -1698,7 +1699,7 @@ void func_80037124() // 0x80037124
 
 void func_80037154() // 0x80037154
 {
-    s32         i;
+    s32 i;
 
     for (i = 0; i < 2; i++)
     {
@@ -1788,37 +1789,37 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800348C0", func_800373CC); // 0x
 
 bool func_800378D4(s_MapPoint2d* mapPoint) // 0x800378D4
 {
-    s16 rotY;
-    s32 x;
-    s32 z;
-    s32 deltaRotY;
+    q19_12 deltaX;
+    q19_12 deltaZ;
+    q3_12  rotY;
+    q19_12 deltaRotY;
 
     if (g_MainLoop_FrameCount > D_800A9A20)
     {
         rotY       = g_SysWork.player_4C.chara_0.rotation_24.vy;
-        D_800A9A24 = g_SysWork.player_4C.chara_0.position_18.vx - (Math_Sin(rotY) >> 3);
-        D_800A9A28 = g_SysWork.player_4C.chara_0.position_18.vz - (Math_Cos(rotY) >> 3);
+        D_800A9A24 = g_SysWork.player_4C.chara_0.position_18.vx - (Math_Sin(rotY) >> 3); // `/ 8`.
+        D_800A9A28 = g_SysWork.player_4C.chara_0.position_18.vz - (Math_Cos(rotY) >> 3); // `/ 8`.
         D_800A9A20 = g_MainLoop_FrameCount;
     }
 
-    x = mapPoint->positionX_0 - D_800A9A24;
-    if (ABS(x) > Q12(0.8f))
+    deltaX = mapPoint->positionX_0 - D_800A9A24;
+    if (ABS(deltaX) > Q12(0.8f))
     {
         return false;
     }
 
-    z = mapPoint->positionZ_8 - D_800A9A28;
-    if (ABS(z) > Q12(0.8f))
+    deltaZ = mapPoint->positionZ_8 - D_800A9A28;
+    if (ABS(deltaZ) > Q12(0.8f))
     {
         return false;
     }
 
-    if ((SQUARE(x) + SQUARE(z)) > SQUARE(Q12(0.8f)))
+    if ((SQUARE(deltaX) + SQUARE(deltaZ)) > SQUARE(Q12(0.8f)))
     {
         return false;
     }
 
-    deltaRotY = g_SysWork.player_4C.chara_0.rotation_24.vy - ratan2(x, z);
+    deltaRotY = g_SysWork.player_4C.chara_0.rotation_24.vy - ratan2(deltaX, deltaZ);
     if (deltaRotY >= FP_ANGLE(180.0f))
     {
         deltaRotY -= FP_ANGLE(360.0f);
@@ -1836,26 +1837,26 @@ bool func_800378D4(s_MapPoint2d* mapPoint) // 0x800378D4
 
 bool func_80037A4C(s_MapPoint2d* mapPoint) // 0x80037A4C
 {
-    s32  temp_a0_2;
-    s32  temp_a2;
-    s32  halfCosPlayerRotY;
-    s32  temp_s2;
-    s32  halfSinRotY;
-    s32  temp_s4;
-    s32  deltaX;
-    s32  deltaZ;
-    s32  temp_v1;
-    s32  clampedHalfCosPlayerRotY;
-    bool cond;
-    s32  scaledSinPlayerRotY;
-    s32  scaledCosRotY;
+    s32    temp_a0_2;
+    s32    temp_a2;
+    q19_12 halfCosPlayerRotY;
+    s32    temp_s2;
+    s32    halfSinRotY;
+    s32    temp_s4;
+    q19_12 deltaX;
+    q19_12 deltaZ;
+    s32    temp_v1;
+    q19_12 clampedHalfCosPlayerRotY;
+    bool   cond;
+    s32    scaledSinPlayerRotY;
+    s32    scaledCosRotY;
 
-    halfSinRotY   = Math_Sin(g_SysWork.player_4C.chara_0.rotation_24.vy) >> 1;
+    halfSinRotY   = Math_Sin(g_SysWork.player_4C.chara_0.rotation_24.vy) >> 1; // `/ 2`.
     scaledCosRotY = -Math_Cos(FP_ANGLE_FROM_PACKED(mapPoint->data.areaLoad.rotationY_4_16)) * mapPoint->data.areaLoad.field_4_24;
 
     clampedHalfCosPlayerRotY = halfSinRotY;
 
-    temp_a0_2 = scaledCosRotY >> 4;
+    temp_a0_2 = scaledCosRotY >> 4; // `/ 16`.
     deltaX    = mapPoint->positionX_0 - g_SysWork.player_4C.chara_0.position_18.vx;
     temp_s2   = deltaX - temp_a0_2;
     temp_s4   = deltaX + temp_a0_2;
@@ -1875,12 +1876,12 @@ bool func_80037A4C(s_MapPoint2d* mapPoint) // 0x80037A4C
     {
         if (MIN(halfSinRotY, 0) <= MAX(temp_s2, temp_s4))
         {
-            halfCosPlayerRotY   = Math_Cos(g_SysWork.player_4C.chara_0.rotation_24.vy) >> 1;
+            halfCosPlayerRotY   = Math_Cos(g_SysWork.player_4C.chara_0.rotation_24.vy) >> 1; // `/ 2`.
             scaledSinPlayerRotY = Math_Sin(FP_ANGLE_FROM_PACKED(mapPoint->data.areaLoad.rotationY_4_16)) * mapPoint->data.areaLoad.field_4_24;
 
             clampedHalfCosPlayerRotY = halfCosPlayerRotY;
 
-            temp_a0_2 = scaledSinPlayerRotY >> 4;
+            temp_a0_2 = scaledSinPlayerRotY >> 4; // `/ 16`.
             deltaZ    = mapPoint->positionZ_8 - g_SysWork.player_4C.chara_0.position_18.vz;
             temp_v1   = deltaZ - temp_a0_2;
             temp_a2   = deltaZ + temp_a0_2;
@@ -1914,19 +1915,19 @@ bool func_80037A4C(s_MapPoint2d* mapPoint) // 0x80037A4C
 
 bool func_80037C5C(s_MapPoint2d* mapPoint) // 0x80037C5C
 {
-    s32 sinAngle;
-    s32 cosAngle;
-    s32 angle;
-    s32 deltaZ;
-    s32 deltaX;
-    s32 shift8Field_7;
-    s32 temp_v0;
-    s32 scale;
-    u32 temp;
+    q19_12 sinAngle;
+    q19_12 cosAngle;
+    q19_12 angle;
+    q19_12 deltaX;
+    q19_12 deltaZ;
+    s32    shift8Field_7;
+    s32    temp_v0;
+    s32    scale;
+    u32    temp;
 
     shift8Field_7 = mapPoint->data.areaLoad.field_4_24 << 8;
-    deltaX        = g_SysWork.player_4C.chara_0.position_18.vx - mapPoint->positionX_0;
 
+    deltaX = g_SysWork.player_4C.chara_0.position_18.vx - mapPoint->positionX_0;
     if (mapPoint->data.areaLoad.field_4_24 << 9 < ABS(deltaX))
     {
         return false;
@@ -1934,12 +1935,12 @@ bool func_80037C5C(s_MapPoint2d* mapPoint) // 0x80037C5C
 
     deltaZ = g_SysWork.player_4C.chara_0.position_18.vz - mapPoint->positionZ_8;
     scale  = 2;
-
     if ((shift8Field_7 * scale) < ABS(deltaZ))
     {
         return false;
     }
 
+    // TODO: Odd packed angle conversion method. `FP_ANGLE_FROM_PACKED` doesn't match here.
     angle    = -(mapPoint->data.areaLoad.rotationY_4_16 << 20) >> 16;
     sinAngle = Math_Sin(angle);
 
@@ -1951,7 +1952,6 @@ bool func_80037C5C(s_MapPoint2d* mapPoint) // 0x80037C5C
 
     cosAngle = Math_Cos(angle);
     temp_v0  = FP_FROM((deltaX * cosAngle) + (deltaZ * Math_Sin(angle)), Q12_SHIFT);
-
     if (shift8Field_7 < ABS(temp_v0))
     {
         return false;
@@ -2378,9 +2378,9 @@ void func_8003943C()
     {
         val0        = g_SysWork.field_275C - Q12(256.0f);
         roundedVal0 = FP_ROUND_TO_ZERO(val0, Q12_SHIFT);
-        func_8008B438(g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill, roundedVal0, 0);
+        func_8008B438(g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap), roundedVal0, 0);
 
-        if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill)
+        if (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
         {
             val1        = g_SysWork.field_2764 - Q12(256.0f);
             roundedVal1 = FP_ROUND_TO_ZERO(val1, Q12_SHIFT);
@@ -2389,9 +2389,9 @@ void func_8003943C()
     }
     else
     {
-        func_8008B438(g_SysWork.playerCombatInfo_38.equippedWeapon_F != EquippedWeaponId_RockDrill, 0, 0);
+        func_8008B438(g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap), 0, 0);
 
-        if (g_SysWork.playerCombatInfo_38.equippedWeapon_F == EquippedWeaponId_RockDrill)
+        if (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
         {
             func_8008B40C(0, 0);
         }
@@ -2475,7 +2475,7 @@ void SysState_StatusMenu_Update() // 0x80039568
 
 void GameState_LoadStatusScreen_Update() // 0x800395C0
 {
-    s_Savegame* savegame;
+    s_Savegame* save;
 
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
@@ -2490,9 +2490,9 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
             Sd_EngineCmd(19);
         }
 
-        savegame = g_SavegamePtr;
-        func_800540A4(savegame->mapOverlayId_A4);
-        GameFs_MapItemsTextureLoad(savegame->mapOverlayId_A4);
+        save = g_SavegamePtr;
+        func_800540A4(save->mapOverlayId_A4);
+        GameFs_MapItemsTextureLoad(save->mapOverlayId_A4);
 
         g_GameWork.gameStateStep_598[0]++;
     }
@@ -2879,7 +2879,7 @@ void SysState_EventPlaySound_Update() // 0x8003A4B4
 {
     g_DeltaTime0 = g_SomeTimer0;
 
-    Sd_EngineCmd(((u16)g_MapEventIdx + 0x500) & 0xFFFF);
+    Sd_EngineCmd(((u16)g_MapEventIdx + Sfx_Base) & 0xFFFF);
 
     Savegame_EventFlagSetAlt(g_MapEventParam->eventFlagId_2);
     g_SysWork.sysState_8 = SysState_Gameplay;

@@ -87,7 +87,7 @@ void Gfx_Items_ItemRotate(SVECTOR* arg0, GsCOORDINATE2* arg1) // 0x8004BCDC
     mat.t[1] = arg1->coord.t[1];
     mat.t[2] = arg1->coord.t[2];
 
-    func_80096E78(arg0, &mat);
+    Math_MatrixRotate1(arg0, &mat);
 
     arg1->coord = mat;
 
@@ -150,7 +150,7 @@ void func_8004BFE8() // 0x8004BFE8
     // Save constant rotation matrix in stack.
     PushMatrix();
 
-    // Read distance h from viewpoint to screen.
+    // Read distance from viewpoint to screen.
     D_800C3954 = ReadGeomScreen();
 
     // Read GTE offset value.
@@ -159,7 +159,7 @@ void func_8004BFE8() // 0x8004BFE8
     // Set distance between projection plane and viewpoint. Results in FOV change.
     GsSetProjection(1000);
 
-    D_800C3950 = g_SysWork.playerCombatInfo_38.equippedWeapon_F;
+    g_Player_WeaponAttack = g_SysWork.playerCombatInfo_38.weaponAttack_F;
 }
 
 /** Possible failsafe?
