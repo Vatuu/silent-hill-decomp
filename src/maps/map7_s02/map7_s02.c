@@ -233,7 +233,7 @@ void func_800D8C00(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8C00
     }
 
     coord->flg = false;
-    func_80096E78(&chara->rotation_24, &coord->coord);
+    Math_MatrixRotate1(&chara->rotation_24, &coord->coord);
 }
 
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800D8C74

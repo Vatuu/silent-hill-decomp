@@ -237,10 +237,8 @@ bool func_800D0600() // 0x800D0600
     {
         return true;
     }
-    
-    return false;
 
-    #undef DIST_MAX
+    return false;
 }
 
 #include "maps/shared/sharedFunc_800D0700_0_s00.h" // 0x800D0700
@@ -264,7 +262,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0E34);
 void func_800D1C38(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords) // 0x800D1C38
 {
     s_Collision coll;
-    VECTOR3     pos;
+    VECTOR3     offset;
     q19_12      moveSpeedZ;
     q19_12      moveSpeedX;
     q3_12       cosRotX;
@@ -329,17 +327,17 @@ void func_800D1C38(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
     overflow = OVERFLOW_GUARD(moveStep);
     scale    = overflow >> 1; // `/ 2`.
 
-    pos.vx = (s32)FP_MULTIPLY_PRECISE(moveStep >> scale, Math_Sin(headingAngle) >> scale, Q12_SHIFT) << overflow;
-    pos.vz = (s32)FP_MULTIPLY_PRECISE(moveStep >> scale, Math_Cos(headingAngle) >> scale, Q12_SHIFT) << overflow;
-    pos.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
+    offset.vx = (s32)FP_MULTIPLY_PRECISE(moveStep >> scale, Math_Sin(headingAngle) >> scale, Q12_SHIFT) << overflow;
+    offset.vz = (s32)FP_MULTIPLY_PRECISE(moveStep >> scale, Math_Cos(headingAngle) >> scale, Q12_SHIFT) << overflow;
+    offset.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
 
     if (cond)
     {
-        func_80069B24(&D_800E39BC.field_0, &pos, chara);
+        func_80069B24(&D_800E39BC.offset_0, &offset, chara);
 
-        chara->position_18.vx += D_800E39BC.field_0.vx;
-        chara->position_18.vy += D_800E39BC.field_0.vy;
-        chara->position_18.vz += D_800E39BC.field_0.vz;
+        chara->position_18.vx += D_800E39BC.offset_0.vx;
+        chara->position_18.vy += D_800E39BC.offset_0.vy;
+        chara->position_18.vz += D_800E39BC.offset_0.vz;
 
         if (D_800E39BC.field_14 == 0)
         {
@@ -354,8 +352,8 @@ void func_800D1C38(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
     } 
     else
     {
-        chara->position_18.vx += pos.vx;
-        chara->position_18.vz += pos.vz;
+        chara->position_18.vx += offset.vx;
+        chara->position_18.vz += offset.vz;
 
         playerState = g_SysWork.player_4C.extra_128.state_1C;
         if (playerState < PlayerState_Unk87 || (playerState >= PlayerState_Unk89 && playerState != PlayerState_Unk106))
@@ -524,7 +522,7 @@ void func_800D802C(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
 void func_800D8124(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8124
 {
     VECTOR3 pos; // @hack Unused but required.
-    VECTOR3 vec;
+    VECTOR3 offset;
     s32     moveSpeed;
     s16     headingAngle;
     s32     moveAmt;
@@ -539,15 +537,15 @@ void func_800D8124(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8124
     scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
     scaleReduceShift  = scaleRestoreShift >> 1;
 
-    vec.vx = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
-    vec.vz = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
-    vec.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
+    offset.vx = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    offset.vz = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    offset.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
 
-    func_80069B24(&D_800E39BC, &vec, chara);
+    func_80069B24(&D_800E39BC, &offset, chara);
 
-    chara->position_18.vx += vec.vx;
-    chara->position_18.vy += D_800E39BC.field_0.vy;
-    chara->position_18.vz += vec.vz;
+    chara->position_18.vx += offset.vx;
+    chara->position_18.vy += D_800E39BC.offset_0.vy;
+    chara->position_18.vz += offset.vz;
 
     if (chara->position_18.vy > D_800E39BC.field_C)
     {
@@ -730,7 +728,7 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
     chara->field_34       += g_DeltaTime2;
 
     coords->flg = false;
-    func_80096E78(&chara->rotation_24, &coords->coord);
+    Math_MatrixRotate1(&chara->rotation_24, &coords->coord);
 }
 
 bool func_800D8748(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 arg4, s32 pitch) // 0x800D8748

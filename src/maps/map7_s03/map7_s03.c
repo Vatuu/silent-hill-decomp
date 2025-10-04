@@ -283,7 +283,7 @@ void Ai_LittleIncubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORD
 
     temp_s0 = Math_Sin(var_a2 >> 2);
 
-    func_80035B04(&chara->position_18, &chara->rotation_24, coords);
+    Math_MatrixTransform(&chara->position_18, &chara->rotation_24, coords);
 
     animInfo = &LITTLE_INCUBUS_ANIM_INFOS[chara->model_0.anim_4.status_0];
     animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);

@@ -7,8 +7,8 @@ void sharedFunc_800CE954_7_s03(s32 pass, s_Particle* part, s16* rand, s32* delta
 
     ptr = part;
     
-    xDelta = sharedData_800E324C_0_s00.vx - sharedData_800E323C_0_s00.vx;
-    zDelta = sharedData_800E324C_0_s00.vz - sharedData_800E323C_0_s00.vz;
+    xDelta = g_Particle_PrevPosition.vx - g_Particle_Position.vx;
+    zDelta = g_Particle_PrevPosition.vz - g_Particle_Position.vz;
 
     if (pass == 0)
     {

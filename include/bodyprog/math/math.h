@@ -158,8 +158,8 @@ static inline void Math_Vector3Set(VECTOR3* vec, s32 x, s32 y, s32 z)
     vec->vz = z;
 }
 
-void func_80096C94(SVECTOR* rot, MATRIX* mat); // Custom `vwRotMatrix[...]`?
-void func_80096E78(SVECTOR* rot, MATRIX* mat); // Another custom `vwRotMatrix[...]`?
+void Math_MatrixRotate0(SVECTOR* rot, MATRIX* mat); // Custom `vwRotMatrix[...]`?
+void Math_MatrixRotate1(SVECTOR* rot, MATRIX* mat); // Another custom `vwRotMatrix[...]`?
 
 /** @brief Multiplies two integers in a fixed-point Q format.
  *

@@ -3,13 +3,13 @@ void sharedFunc_800CFFF8_0_s00(s32 arg0, s_func_800CFFF8* arg1, s16* rand)
     s32 absX;
     s32 threshold;
 
-    arg1->field_0.vx += sharedData_800E324C_0_s00.vx - sharedData_800E323C_0_s00.vx;
-    arg1->field_0.vz += sharedData_800E324C_0_s00.vz - sharedData_800E323C_0_s00.vz;
+    arg1->field_0.vx += g_Particle_PrevPosition.vx - g_Particle_Position.vx;
+    arg1->field_0.vz += g_Particle_PrevPosition.vz - g_Particle_Position.vz;
 
     if (arg0 == 0 && sharedData_800E0CAC_0_s00 == 3)
     {
-        arg1->field_0.vx += FP_FROM(sharedData_800DFB64_0_s00, Q4_SHIFT);
-        arg1->field_0.vz += FP_FROM(sharedData_800DFB68_0_s00, Q4_SHIFT);
+        arg1->field_0.vx += FP_FROM(g_Particle_SpeedX, Q4_SHIFT);
+        arg1->field_0.vz += FP_FROM(g_Particle_SpeedZ, Q4_SHIFT);
     }
 
     if (sharedData_800DD591_0_s00 != 0)

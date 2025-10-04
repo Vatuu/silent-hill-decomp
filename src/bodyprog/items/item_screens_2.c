@@ -562,7 +562,7 @@ void Inventory_Logic() // 0x8004D518
             {
                 g_Gfx_Inventory_SelectionBordersDraw = 1;
 
-                if (g_SysWork.playerCombatInfo_38.equippedWeapon_F >= EquippedWeaponId_KitchenKnife)
+                if (g_SysWork.playerCombatInfo_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap))
                 {
                     g_Inventory_SelectionId = InventorySelectionId_EquippedItem;
                     Sd_PlaySfx(Sfx_Back, 0, 64);

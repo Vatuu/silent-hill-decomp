@@ -349,7 +349,7 @@ void Ai_Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2
         var_s1 = Q12(1.0f);
     }
 
-    func_80035B04(&chara->position_18, &chara->rotation_24, coords);
+    Math_MatrixTransform(&chara->position_18, &chara->rotation_24, coords);
 
     animInfo = &FLAUROS_ANIM_INFOS[chara->model_0.anim_4.status_0];
     animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
@@ -372,7 +372,7 @@ void Ai_Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE
         Character_AnimSet(chara, ANIM_STATUS(1, true), 0);
     }
 
-    func_80035B04(&chara->position_18, &chara->rotation_24, coords);
+    Math_MatrixTransform(&chara->position_18, &chara->rotation_24, coords);
 
     animInfo = &PARASITE_ANIM_INFOS[chara->model_0.anim_4.status_0];
     animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);

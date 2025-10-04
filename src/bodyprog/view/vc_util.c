@@ -332,7 +332,7 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
         }
     }
 
-    func_80096E78(&cam_ang, &mat);
+    Math_MatrixRotate1(&cam_ang, &mat);
 
     mat.t[0] = vec0.vx;
     mat.t[1] = vec0.vy;

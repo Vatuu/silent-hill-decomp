@@ -1,15 +1,15 @@
-void sharedFunc_800D529C_0_s01(s_SubCharacter* chara, s32 thousand, s32 angles)
+void sharedFunc_800D529C_0_s01(s_SubCharacter* chara, s32 arg1, s32 angle)
 {
-    s32 posX;
-    s32 posZ;
-    s32 posY;
-    s32 posYMinus1_5;
+    q19_12 posX;
+    q19_12 posY;
+    q19_12 posZ;
+    q19_12 posYMinus1_5;
 
     posX = chara->position_18.vx;
     posZ = chara->position_18.vz;
 
-    posX = posX + FP_MULTIPLY_PRECISE(thousand, Math_Sin(angles), Q12_SHIFT);
-    posZ = posZ + FP_MULTIPLY_PRECISE(thousand, Math_Cos(angles), Q12_SHIFT);
+    posX = posX + FP_MULTIPLY_PRECISE(arg1, Math_Sin(angle), Q12_SHIFT);
+    posZ = posZ + FP_MULTIPLY_PRECISE(arg1, Math_Cos(angle), Q12_SHIFT);
 
     posY = func_80080884(posX, posZ);
 
@@ -19,9 +19,7 @@ void sharedFunc_800D529C_0_s01(s_SubCharacter* chara, s32 thousand, s32 angles)
     }
 
     posYMinus1_5 = posY - Q12(1.5f);
-
     posY = posYMinus1_5 - func_80080514() / 2;
-
     if (posY < sharedFunc_800D5274_0_s01())
     {
         posY = sharedFunc_800D5274_0_s01();

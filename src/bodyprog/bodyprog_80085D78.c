@@ -2119,7 +2119,7 @@ s64 func_8008A0D4(void) // 0x8008A0D4
     return 0;
 }
 
-s32 func_8008A0E4(s32 arg0, e_EquippedWeaponId weaponId, s_SubCharacter* chara, VECTOR3* pos, s32 arg4, s16 arg5, s16 arg6) // 0x8008A0E4
+s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* pos, s32 arg4, s16 arg5, s16 arg6) // 0x8008A0E4
 {
     s32          var_t1;
     s32          temp_a1;
@@ -2158,7 +2158,7 @@ s32 func_8008A0E4(s32 arg0, e_EquippedWeaponId weaponId, s_SubCharacter* chara, 
         chara->field_44 = 0;
     }
 
-    chara->field_46 = weaponId;
+    chara->field_46 = weaponAttack;
     if (!(modelAnim->status_0 & (1 << 0)))
     {
         chara->field_44 = 0;
@@ -2261,9 +2261,6 @@ u8 func_8008A2E0(s32 arg0)
             case 12:
             case 22:
                 return 13;
-
-            default:
-                break;
         }
     }
 
@@ -2371,7 +2368,7 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
         case 16:
         case 20:
         case 26:
-            sfx = 0x511;
+            sfx = Sfx_Unk1297;
             break;
 
         case 1:
@@ -2383,13 +2380,13 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
         case 21:
         case 24:
         case 27:
-            sfx = 0x510;
+            sfx = Sfx_Unk1296;
             break;
 
         case 32:
         case 33:
         case 34:
-            sfx = 0x506;
+            sfx = Sfx_Unk1286;
             break;
 
         case 2:
@@ -2404,12 +2401,10 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
 
         case 8:
         case 9:
-            sfx = 0x524;
+            sfx = Sfx_Unk1316;
             break;
 
         case 35:
-        default:
-            break;
     }
 
     if (sfx != 0)
@@ -2425,7 +2420,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008BF84); // 0x
 
 void DmsHeader_FixOffsets(s_DmsHeader* dmsHdr) // 0x8008C9A0
 {
-    s_DmsEntry* entry;
+    s_DmsEntry* curEntry;
 
     if (dmsHdr->isLoaded_0)
     {
@@ -2440,11 +2435,11 @@ void DmsHeader_FixOffsets(s_DmsHeader* dmsHdr) // 0x8008C9A0
 
     DmsEntry_FixOffsets(&dmsHdr->camera_1C, dmsHdr);
 
-    for (entry = dmsHdr->characters_18;
-         entry < &dmsHdr->characters_18[dmsHdr->characterCount_1];
-         entry++)
+    for (curEntry = dmsHdr->characters_18;
+         curEntry < &dmsHdr->characters_18[dmsHdr->characterCount_1];
+         curEntry++)
     {
-        DmsEntry_FixOffsets(entry, dmsHdr);
+        DmsEntry_FixOffsets(curEntry, dmsHdr);
     }
 }
 
@@ -2538,7 +2533,7 @@ void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyfr
     result->rotation_6.vz = Math_LerpFixed12(frame0->rotation_6.vz, frame1->rotation_6.vz, alpha);
 }
 
-s16 func_8008CDBC(s16 angle) // 0x8008CDBC
+q3_12 func_8008CDBC(q3_12 angle) // 0x8008CDBC
 {
     return (96 * Math_Cos(angle / 2)) / Math_Sin(angle / 2);
 }
@@ -2604,7 +2599,7 @@ s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, const s_DmsKeyfra
     return result->field_C[1];
 }
 
-void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, s32* alpha, q19_12 time, s_DmsEntry* camEntry, s_DmsHeader* dmsHdr) // 0x8008D1D0
+void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, q19_12* alpha, q19_12 time, s_DmsEntry* camEntry, s_DmsHeader* dmsHdr) // 0x8008D1D0
 {
     s32 prevVal;
     s32 nextVal;
@@ -2612,24 +2607,24 @@ void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, s32* alpha, q19_12 time
     prevVal = 0;
     nextVal = 0;
     
-    switch (Dms_IntervalStatusGet(time, dmsHdr))
+    switch (Dms_IntervalStateGet(time, dmsHdr))
     {
-        case 0:
+        case DmsIntervalState_Interpolating:
             prevVal = FP_FROM(time, Q12_SHIFT);
             nextVal = prevVal + 1;
-            *alpha = Q12_FRACT(time);
+            *alpha  = Q12_FRACT(time);
             break;
 
-        case 1:
+        case DmsIntervalState_SingleFrame:
             prevVal = FP_FROM(time, Q12_SHIFT);
             nextVal = prevVal;
-            *alpha = 0;
+            *alpha  = Q12(0.0f);
             break;
 
-        case 2:
+        case DmsIntervalState_Ending:
             prevVal = FP_FROM(time, Q12_SHIFT) - 1;
             nextVal = prevVal + 1;
-            *alpha = Q12_FRACT(time) + Q12(1.0f);
+            *alpha  = Q12_FRACT(time) + Q12(1.0f);
             break;
     }
 
@@ -2637,57 +2632,55 @@ void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, s32* alpha, q19_12 time
     *nextKeyframe = func_8008D330(nextVal, camEntry);
 }
 
-u32 Dms_IntervalStatusGet(s32 time, s_DmsHeader* dmsHdr)
+u32 Dms_IntervalStateGet(q19_12 time, s_DmsHeader* dmsHdr)
 {
-    s_DmsInterval* interval;
+    s32            frameTime;
+    s_DmsInterval* curInterval;
 
-    // Keyframe index.
-    time = FP_FROM(time, Q12_SHIFT);
+    frameTime = FP_FROM(time, Q12_SHIFT);
 
-    for (interval = dmsHdr->intervalPtr_8;
-         interval < &dmsHdr->intervalPtr_8[dmsHdr->intervalCount_2];
-         interval++)
+    for (curInterval = dmsHdr->intervalPtr_8;
+         curInterval < &dmsHdr->intervalPtr_8[dmsHdr->intervalCount_2];
+         curInterval++)
     {
-        if (time != ((interval->startKeyframeIdx_0 + interval->frameCount_2) - 1))
+        if (frameTime != ((curInterval->startKeyframeIdx_0 + curInterval->frameCount_2) - 1))
         {
             continue;
         }
 
-        if (interval->frameCount_2 > 1)
+        if (curInterval->frameCount_2 > 1)
         {
-            return 2;
+            return DmsIntervalState_Ending;
         }
 
-        return 1;
+        return DmsIntervalState_SingleFrame;
     }
 
-    return 0;
+    return DmsIntervalState_Interpolating;
 }
 
 s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry) // 0x8008D330
 {
     s32       keyframeIdx0;
     s32       keyframeIdx1;
-    SVECTOR3* vec;
+    SVECTOR3* curVec;
 
     keyframeIdx0 = arg0;
-    vec = camEntry->svectorPtr_8;
-
-    for (; vec < &camEntry->svectorPtr_8[camEntry->svectorCount_2]; vec++)
+    for (curVec = camEntry->svectorPtr_8; curVec < &camEntry->svectorPtr_8[camEntry->svectorCount_2]; curVec++)
     {
 
-        if (arg0 < vec->vx)
+        if (arg0 < curVec->vx)
         {
             break;
         }
 
-        if (arg0 <= vec->vy)
+        if (arg0 <= curVec->vy)
         {
-            keyframeIdx0 = vec->vz;
+            keyframeIdx0 = curVec->vz;
             break;
         }
 
-        keyframeIdx0 -= vec->vy - vec->vx;
+        keyframeIdx0 -= curVec->vy - curVec->vx;
     }
 
     if (keyframeIdx0 >= 0)
@@ -2709,7 +2702,7 @@ s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry) // 0x8008D330
     return keyframeIdx1;
 }
 
-s32 Math_LerpFixed12(s16 from, s16 to, s32 alpha) // 0x8008D3D4
+s32 Math_LerpFixed12(s16 from, s16 to, q19_12 alpha) // 0x8008D3D4
 {
     return FP_ANGLE_NORM_S((s32)(FP_MULTIPLY_PRECISE(FP_ANGLE_NORM_S(to - from), alpha, Q12_SHIFT)) + from);
 }
@@ -2967,19 +2960,19 @@ void func_8008E4EC(s_LmHeader* lmHdr) // 0x8008E4EC
 
 s_WaterZone* Map_WaterZoneGet(q27_4 posX, q27_4 posZ, s_WaterZone* waterZones)
 {
-    s_WaterZone* curZone;
+    s_WaterZone* curWaterZone;
 
     if (waterZones == NULL)
     {
         return NULL;
     }
 
-    for (curZone = waterZones; curZone->isEnabled_0; curZone++)
+    for (curWaterZone = waterZones; curWaterZone->isEnabled_0; curWaterZone++)
     {
-        if (posX >= curZone->minX_4 && posX < curZone->maxX_6 &&
-            posZ >= curZone->minZ_8 && posZ < curZone->maxZ_A)
+        if (posX >= curWaterZone->minX_4 && posX < curWaterZone->maxX_6 &&
+            posZ >= curWaterZone->minZ_8 && posZ < curWaterZone->maxZ_A)
         {
-            return curZone;
+            return curWaterZone;
         }
     }
 
@@ -3020,15 +3013,15 @@ void func_8008E5B4(void) // 0x8008E5B4
         D_800AFDAC++;
     }
 
-    setRGBC0(&packet->poly_1C[1], 0x80, 0x80, 0x80, 0);
-    setRGBC0(&packet->poly_1C[0], 0x80, 0x80, 0x80, 0);
+    setRGBC0(&packet->poly_1C[1], 128, 128, 128, 0);
+    setRGBC0(&packet->poly_1C[0], 128, 128, 128, 0);
 
     setPolyFT4(&packet->poly_1C[0]);
     setPolyFT4(&packet->poly_1C[1]);
     setSemiTrans(&packet->poly_1C[1], 1);
 
-    packet->poly_1C[1].tpage = 0x2D;
-    packet->poly_1C[0].tpage = 0x2D;
+    packet->poly_1C[1].tpage = 45;
+    packet->poly_1C[0].tpage = 45;
 
     setXY0Fast(&packet->poly_1C[1], 0, 0);
     setXY0Fast(&packet->poly_1C[0], 0, 0);
@@ -3039,8 +3032,8 @@ void func_8008E5B4(void) // 0x8008E5B4
     setXY3Fast(&packet->poly_1C[1], 32, 32);
     setXY3Fast(&packet->poly_1C[0], 32, 32);
 
-    packet->poly_1C[1].clut = 0xE;
-    packet->poly_1C[0].clut = 0xE;
+    packet->poly_1C[1].clut = 14;
+    packet->poly_1C[0].clut = 14;
 
     temp_v0               = (D_800AFDAC >> 1) & 0x1F;
     packet->poly_1C[0].u0 = 0;
@@ -3071,21 +3064,22 @@ void func_8008E5B4(void) // 0x8008E5B4
     DrawOTag((u32*)packet);
 }
 
-void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2) // 0x8008E794
+void func_8008E794(VECTOR3* arg0, q3_12 angle, s32 arg2) // 0x8008E794
 {
     VECTOR    sp10;
-    VECTOR    sp20;
+    VECTOR    sp20; // Q23.8
     MATRIX    sp30;
     s32       sp50;
-    s32       angle0;
-    u32       sinAngle0;
+    q19_12    angle0;
+    q20_12    sinAngle0;
     POLY_FT4* poly;
+
     static SVECTOR svec0 = {};
 
     memset(&sp20, 0, 16);
-    sp20.vx = arg0->vx >> 4;
-    sp20.vy = ((arg2 * 2) >> 4) - (arg0->vy >> 4);
-    sp20.vz = arg0->vz >> 4;
+    sp20.vx = Q12_TO_Q8(arg0->vx);
+    sp20.vy = Q12_TO_Q8(arg2 * 2) - Q12_TO_Q8(arg0->vy);
+    sp20.vz = Q12_TO_Q8(arg0->vz);
     sp10    = sp20;
 
     sp30 = GsWSMATRIX;
@@ -3095,7 +3089,7 @@ void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2) // 0x8008E794
     sp30.t[2] += GsWSMATRIX.t[2];
     SetTransMatrix(&sp30);
 
-    if ((RotTransPers(&svec0, &sp20, &sp50, &sp50) * 4) >= 0x80)
+    if ((RotTransPers(&svec0, &sp20, &sp50, &sp50) * 4) >= 128)
     {
         poly = GsOUT_PACKET_P;
         SetPolyFT4(poly);
@@ -3107,20 +3101,20 @@ void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2) // 0x8008E794
             angle0 = FP_ANGLE(90.0f);
         }
 
-        if (Math_Sin(angle0) >= 0)
+        if (Math_Sin(angle0) >= Q12(0.0f))
         {
             sinAngle0 = Math_Sin(angle0);
         }
         else
         {
-            sinAngle0 = 0;
+            sinAngle0 = Q12(0.0f);
         }
 
         poly->r0    = sinAngle0 >> 6;
         poly->g0    = (sinAngle0 * 7) >> 9;
         poly->b0    = (sinAngle0 * 5) >> 9;
         poly->tpage = 45;
-        poly->clut  = 0x4E;
+        poly->clut  = 78;
         poly->u0    = 64;
         poly->u1    = 64;
         poly->v0    = 31;

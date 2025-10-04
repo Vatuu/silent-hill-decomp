@@ -147,7 +147,7 @@ void func_80080B58(GsCOORDINATE2* arg0, SVECTOR* rot, VECTOR3* pos) // 0x80080B5
     vcWork.field_FC = true;
 
     Vw_CoordHierarchyMatrixCompute(arg0, &vcWork.field_DC);
-    func_80096C94(rot, &mat);
+    Math_MatrixRotate0(rot, &mat);
     MulMatrix(&vcWork.field_DC, &mat);
 
     vcWork.field_DC.t[0] = Q12_TO_Q8(pos->vx);
@@ -2547,7 +2547,7 @@ void vcRenewalCamMatAng(VC_WORK* w_p, VC_WATCH_MV_PARAM* watch_mv_prm_p, VC_CAM_
         vcRenewalBaseCamAngAndAdjustOfsCamAng(w_p, &new_base_cam_ang);
     }
 
-    func_80096C94(&w_p->base_cam_ang_C8, &new_base_matT);
+    Math_MatrixRotate0(&w_p->base_cam_ang_C8, &new_base_matT);
     TransposeMatrix(&new_base_matT, &new_base_matT);
     vcMakeOfsCamTgtAng(&ofs_tgt_ang, &new_base_matT, w_p);
     if (visible_chara_f)
@@ -2681,10 +2681,10 @@ void vcRenewalBaseCamAngAndAdjustOfsCamAng(VC_WORK* w_p, SVECTOR* new_base_cam_a
     MATRIX adj_ofs_mat; // } 
 
     ofs_mat = GsIDMATRIX;
-    func_80096C94(&w_p->base_cam_ang_C8, &old_base_mat);
-    func_80096C94(new_base_cam_ang, &new_base_mat);
+    Math_MatrixRotate0(&w_p->base_cam_ang_C8, &old_base_mat);
+    Math_MatrixRotate0(new_base_cam_ang, &new_base_mat);
     TransposeMatrix(&new_base_mat, &new_base_matT);
-    func_80096C94(&w_p->ofs_cam_ang_B8, &adj_ofs_mat);
+    Math_MatrixRotate0(&w_p->ofs_cam_ang_B8, &adj_ofs_mat);
     MulMatrix0(&new_base_matT, &old_base_mat, &ofs_mat);
     MulMatrix2(&ofs_mat, &adj_ofs_mat);
     vwMatrixToAngleYXZ(&w_p->ofs_cam_ang_B8, &adj_ofs_mat);
@@ -2804,8 +2804,8 @@ void vcMakeCamMatAndCamAngByBaseAngAndOfsAng(SVECTOR* cam_mat_ang, MATRIX* cam_m
     cam_mat->t[1] = Q12_TO_Q8(cam_pos->vy);
     cam_mat->t[2] = Q12_TO_Q8(cam_pos->vz);
 
-    func_80096C94(base_cam_ang, &base_mat);
-    func_80096C94(ofs_cam_ang, &ofs_mat);
+    Math_MatrixRotate0(base_cam_ang, &base_mat);
+    Math_MatrixRotate0(ofs_cam_ang, &ofs_mat);
     MulMatrix0(&base_mat, &ofs_mat, cam_mat);
     vwMatrixToAngleYXZ(cam_mat_ang, cam_mat);
 }
@@ -2835,7 +2835,7 @@ void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type) // 0x80085884
         noise_ang.vx = vcCamMatNoise(4, FP_RADIAN((PI / 18.0f) * 5.0f), FP_RADIAN((PI / 9.0f) *  4.0f), vcSelfViewTimer);
         noise_ang.vy = vcCamMatNoise(2, FP_RADIAN((PI / 9.0f)  * 2.0f), FP_RADIAN((PI / 9.0f) * -8.0f), vcSelfViewTimer);
         noise_ang.vz = FP_ANGLE(0.0f);
-        func_80096C94(&noise_ang, &noise_mat);
+        Math_MatrixRotate0(&noise_ang, &noise_mat);
 
         noise_mat.m[0][0] += vcCamMatNoise(12, FP_RADIAN((PI / 18.0f) * 7.0f),  FP_RADIAN(PI),                    vcSelfViewTimer);
         noise_mat.m[0][1] += vcCamMatNoise(12, FP_RADIAN(PI / 3.0f),            FP_RADIAN((PI / 9.0f)  * -8.0f),  vcSelfViewTimer);

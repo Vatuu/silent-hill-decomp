@@ -1,40 +1,36 @@
 void sharedFunc_800D57C8_0_s01(s_SubCharacter* chara)
 {
-    VECTOR3* vec1;
-    VECTOR3* pos;
-    s32      angle;
-    s32      dist;
-    s32      posY;
-    s32      idx0;
-    s32      idx1;
-    s32      idx2;
-    s32      idx3;
-
-    s32 status45;
-
-    bool var_t4;
-
-    s32 animStatus;
-    s32 element0;
-    s32 element1;
-    s32 element3;
-    s32 element2;
-    s32 element4;
-    s32 element5;
-
+    q19_12                       angle;
+    q19_12                       dist;
+    s32                          posY;
+    s32                          idx0;
+    s32                          idx1;
+    s32                          idx2;
+    s32                          idx3;
+    s32                          animStatus0;
+    bool                         var_t4;
+    s32                          animStatus;
+    s32                          element0;
+    s32                          element1;
+    s32                          element3;
+    s32                          element2;
+    s32                          element4;
+    s32                          element5;
     s32                          tmp;
+    VECTOR3*                     pos0;
+    VECTOR3*                     pos;
     s_sharedData_800E21D0_0_s01* base;
 
     pos   = &chara->position_18;
-    vec1  = &chara->properties_E4.unk0.field_110;
-    dist  = Math_Distance2dGet(pos, vec1);
-    angle = FP_ANGLE_NORM_S(func_80080478(pos, vec1) - chara->rotation_24.vy);
+    pos0  = &chara->properties_E4.unk0.field_110;
+    dist  = Math_Distance2dGet(pos, pos0);
+    angle = FP_ANGLE_NORM_S(func_80080478(pos, pos0) - chara->rotation_24.vy);
 
-    tmp    = sharedFunc_800D569C_0_s01(chara, vec1->vy, dist);
+    tmp    = sharedFunc_800D569C_0_s01(chara, pos0->vy, dist);
     var_t4 = 0;
     posY   = tmp - chara->position_18.vy;
 
-    if (dist > (chara->field_D4 + 0xCC) && (angle + 0x200) < 0x400U)
+    if (dist > (chara->field_D4 + Q12(0.05f)) && (angle + FP_ANGLE(45.0f)) < (u32)FP_ANGLE(90.0f))
     {
         idx0 = 5;
         idx1 = 33;
@@ -47,19 +43,20 @@ void sharedFunc_800D57C8_0_s01(s_SubCharacter* chara)
 
     animStatus = chara->model_0.anim_4.status_0;
 
-    status45 = 45;
-    if (animStatus == status45)
+    animStatus0 = ANIM_STATUS(22, true);
+    if (animStatus == animStatus0)
     {
         idx2 = 17;
     }
-    else if (animStatus < status45 || animStatus >= 0x38 || animStatus < 0x36)
+    else if (animStatus < animStatus0 || animStatus >= ANIM_STATUS(28, false) || animStatus < ANIM_STATUS(27, false))
     {
         var_t4 = 1;
         idx2   = 14;
-        if (posY <= 0xCC)
+
+        if (posY <= Q12(0.05f))
         {
             idx2 = 15;
-            if (posY < -0xCC)
+            if (posY < Q12(-0.05f))
             {
                 idx2 = 16;
             }
@@ -67,15 +64,15 @@ void sharedFunc_800D57C8_0_s01(s_SubCharacter* chara)
     }
     else
     {
-        idx2 = 0x12;
+        idx2 = 18;
     }
 
     element0 = sharedData_800CAA98_0_s01.unk_380[idx1][0];
     element1 = sharedData_800CAA98_0_s01.unk_380[idx1][1];
-    if (angle < 6)
+    if (angle <= FP_ANGLE(0.5f))
     {
         element1 = -element1;
-        if (angle < -5)
+        if (angle < FP_ANGLE(-0.5f))
         {
             element0 = -element0;
         }

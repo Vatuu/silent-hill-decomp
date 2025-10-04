@@ -52,10 +52,26 @@ struct _Model;
 #define HAS_MAP(mapIdx) \
     ((((u32*)&g_SavegamePtr->hasMapsFlags_164)[(mapIdx) / 32] >> ((mapIdx) % 32)) & (1 << 0))
 
-#define WeaponId_AttackVariantGet(weaponId, type) \
-	((weaponId) + ((type) * 10))
+/** @brief Packs a weapon attack containing a weapon ID and attack input type
+ *
+ * @param weaponId Weapon ID.
+ * @param attackInputType Attack input type.
+ * @return Packed weapon attack containing a weapon ID and attack input type.
+ */
+#define WEAPON_ATTACK(weaponId, attackInputType) \
+	((weaponId) + ((attackInputType) * 10))
 
-/** @brief Packs an animation status containing the animation index and active flag.
+/** @brief Retrieves the weapon ID from a packed weapon attack.
+ *
+ * @note The return value counts as a valid weapon attack with an `AttackInputType_Tap` attack input type.
+ *
+ * @param weaponAttack Packed weapon attack containing a weapon ID and attack input type.
+ * @return Weapon ID.
+ */
+#define WEAPON_ATTACK_ID_GET(weaponAttack) \
+    ((weaponAttack) % 10)
+
+/** @brief Packs an animation status containing a animation index and active flag.
  *
  * @param animIdx Animation index.
  * @param isActive Active status (`bool`).
@@ -170,6 +186,13 @@ typedef enum _SyncMode
     SyncMode_Wait3     = 3,
     SyncMode_Wait8     = 8
 } e_SyncMode;
+
+typedef enum _DmsIntervalState
+{
+    DmsIntervalState_Interpolating = 0,
+    DmsIntervalState_SingleFrame   = 1,
+    DmsIntervalState_Ending        = 2
+} e_DmsIntervalState;
 
 /** @brief Screen fade states used by `g_Screen_FadeStatus`. The flow is not linear. */
 typedef enum _ScreenFadeState
@@ -611,7 +634,7 @@ typedef enum _CommonPickupItemId
     CommonPickupItemId_ShotgunShells  = 5
 } e_CommonPickupItemId;
 
-/** @brief Attack input types. */
+/** @brief Attack input types. Packed into a weapon attack using `WEAPON_ATTACK`. */
 typedef enum _AttackInputType
 {
 	AttackInputType_Tap      = 0,
@@ -621,16 +644,7 @@ typedef enum _AttackInputType
 
 /** @brief Equipped weapon IDs. Derivative of `e_InventoryItemId`.
  *
- * Maybe weapon state instead?
- * In intances where this enum is used in code related to melee weapons
- * the Id changes depending in the attack the player is performing. For example:
- *
- * If the player perform a tap attack the id doesn't change, if they perform a hold
- * attack the Id is multiplied by 10 and if the player performs a multitap attack
- * the Id multiplies by 20.
- *
- *
- * See `func_80071968`.
+ * TODO: Maybe just "Weapon ID", "equipable item ID", "[something else] item ID"?
  */
 typedef enum _EquippedWeaponId
 {
@@ -645,6 +659,7 @@ typedef enum _EquippedWeaponId
     EquippedWeaponId_Unk8           = 8,
     EquippedWeaponId_Unk9           = 9,
 
+    EquippedWeaponId_Unk31          = 31,
     EquippedWeaponId_Handgun        = 32,
     EquippedWeaponId_HuntingRifle   = 33,
     EquippedWeaponId_Shotgun        = 34,
@@ -710,11 +725,10 @@ typedef enum _PlayerFlags
     PlayerFlag_Unk19          = 1 << 19,
     PlayerFlag_Unk20          = 1 << 20,
     PlayerFlag_Unk30          = 1 << 30,
-    PlayerFlag_Unk31          = 1 << 31,
-
+    PlayerFlag_Unk31          = 1 << 31
 } e_PlayerFlags;
 
-/** @brief Unk0 character flags */
+/** @brief Unk0 character flags. */
 typedef enum _CharaUnk0Flags
 {
     CharaUnk0Flag_None  = 0,
@@ -1059,7 +1073,7 @@ STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 /** @brief Const data passed over to `Anim_Update` funcs. Struct itself contains which `Anim_Update` func is to be called. */
 typedef struct _AnimInfo
 {
-    void (*updateFunc_0)(struct _Model*, struct _AnmHeader*, GsCOORDINATE2*, struct _AnimInfo*);
+    void (*updateFunc_0)(struct _Model* model, struct _AnmHeader* anmHdr, GsCOORDINATE2* coords, struct _AnimInfo* animInfo);
     u8 status_4;                 /** Packed anim status. Init base? See `s_ModelAnimData::status_0`. */
     s8 hasVariableDuration_5;    /** `bool` | Use `duration_8.variableFunc`: `true`, Use `duration_8.constant`: `false`. */
     u8 status_6;                 /** Packed anim status. Link target? Sometimes `NO_VALUE`, unknown why. See `s_ModelAnim::status_0`. */
@@ -1134,10 +1148,10 @@ typedef struct _SubCharaPropertiesPlayer
     q19_12 afkTimer_E8; // Increments every tick for 10 seconds before AFK anim starts.
     q19_12 positionY_EC;
     s32    field_F0;
-    s32    field_F4;
+    q19_12 field_F4; // Angle. Related to X axis flex rotation.
     s32    runTimer_F8; // Tick counter?
     q19_12 exhaustionTimer_FC;
-    s32    field_100;
+    q19_12 field_100;    // Angle?
     s32    field_104;    // Distance?
     q19_12 runTimer_108;
     u8     field_10C;    // Player SFX pitch?
@@ -1192,12 +1206,12 @@ typedef struct _SubCharPropertiesUnk0
     u_Property properties_EC;
     u_Property properties_F0;
     u_Property properties_F4;
-    VECTOR3    field_F8;
+    VECTOR3    field_F8; // Q19.12 | Position or offset.
     u_Property properties_104;
     u_Property properties_108;
     u_Property properties_10C;
     VECTOR3    field_110;
-    s32        flags_11C;
+    s32        flags_11C; /** `e_CharaUnk0Flags` */
     u_Property properties_120;
     u_Property properties_124;
 } s_SubCharaPropertiesUnk0;
@@ -1227,7 +1241,7 @@ typedef struct _SubCharacter
     s8      attackReceived_41; // Indicates what attack has been performed to the character. For enemies is based on `e_EquippedWeaponId` enum.
     s8      unk_42[2];
     s16     field_44;
-    s8      field_46; // In player: The ID (from `e_EquippedWeaponId`) of the weapon which player is using.
+    s8      field_46; // In player: packed weapon attack. See `WEAPON_ATTACK`.
                       // This is not the same as `attackReceived_41`, as this value only resets when player is aiming.
                       // In NPCs: Indicates attack performed on player.
     s8      field_47;
@@ -1259,7 +1273,7 @@ typedef struct _SubCharacter
     q3_12             field_CA; // }
     q3_12             field_CC; // }
     q3_12             field_CE;
-    s16               field_D0;
+    s16               field_D0; // Q3.12? Maybe weapon range?
     s16               field_D2;
     q3_12             field_D4;
     q3_12             field_D6;
@@ -1303,7 +1317,7 @@ typedef struct _PlayerCombat
 {
     VECTOR3 field_0;
     s8      unk_C[3];
-    s8      equippedWeapon_F; /** `e_EquippedWeaponId` */
+    s8      weaponAttack_F; /** Packed weapon attack. See `WEAPON_ATTACK`. */
     u8      currentWeaponAmmo_10;
     u8      totalWeaponAmmo_11;
     s8      weaponInventoryIdx_12; /** Index of the currently equipped weapon in the inventory. */
@@ -1458,7 +1472,7 @@ typedef struct _SysWork
     u32             flags_2352                      : 8;
     s8              enemyTargetIdx_2353; // Index of the enemy that is being attacked by the player.
     s8              field_2354[4];       // Size dervied from `func_80070320`.
-    u8              field_2358;
+    u8              field_2358;          /** `bool` */
     s8              unk_2359[1];
     u8              field_235A; /** If the player stop walking or running forward the value (as a bit) changes
                                  * to 00000001 and if the player stop walking backward the value changes
@@ -1694,7 +1708,7 @@ static inline s32 Flags16b_IsSet(const u16* flags, s32 flagIdx)
  */
 static inline void Character_AnimSet(s_SubCharacter* chara, s32 animStatus, s32 keyframeIdx)
 {
-    // TODO: Problem with header includes prevents `QX_12` macro use.
+    // TODO: Problem with header includes prevents `Q12` macro use.
     chara->model_0.anim_4.status_0      = animStatus;
     chara->model_0.anim_4.time_4        = keyframeIdx << 12;//Q12(keyframeIdx);
     chara->model_0.anim_4.keyframeIdx_8 = keyframeIdx;
