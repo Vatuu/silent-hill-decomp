@@ -495,7 +495,8 @@ extern u8 g_Player_DisableDamage; // 0x800C4562
 
 extern q19_12 D_800C45DC;
 
-extern VECTOR3 D_800C45F8;
+/** XZ player position copy. */
+extern VECTOR3 g_Player_PrevPosition;
 
 // ==========
 // FUNCTIONS

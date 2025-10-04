@@ -81,11 +81,11 @@ void sharedFunc_800D2244_0_s00(bool arg0)
 
     Player_AnimFlagsSet(AnimFlag_Unlocked);
 
-    D_800C45F8.vx = player->position_18.vx;
-    D_800C45F8.vz = player->position_18.vz;
+    g_Player_PrevPosition.vx = player->position_18.vx;
+    g_Player_PrevPosition.vz = player->position_18.vz;
 
 #if !defined(MAP0_S00)
-    D_800AF210 = 0;
-    D_800AF212 = 0;
+    g_Player_FlexRotationY = FP_ANGLE(0.0f);
+    g_Player_FlexRotationX = FP_ANGLE(0.0f);
 #endif
 }

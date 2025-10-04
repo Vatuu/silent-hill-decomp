@@ -2663,26 +2663,24 @@ s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry) // 0x8008D330
 {
     s32       keyframeIdx0;
     s32       keyframeIdx1;
-    SVECTOR3* vec;
+    SVECTOR3* curVec;
 
     keyframeIdx0 = arg0;
-    vec = camEntry->svectorPtr_8;
-
-    for (; vec < &camEntry->svectorPtr_8[camEntry->svectorCount_2]; vec++)
+    for (curVec = camEntry->svectorPtr_8; curVec < &camEntry->svectorPtr_8[camEntry->svectorCount_2]; curVec++)
     {
 
-        if (arg0 < vec->vx)
+        if (arg0 < curVec->vx)
         {
             break;
         }
 
-        if (arg0 <= vec->vy)
+        if (arg0 <= curVec->vy)
         {
-            keyframeIdx0 = vec->vz;
+            keyframeIdx0 = curVec->vz;
             break;
         }
 
-        keyframeIdx0 -= vec->vy - vec->vx;
+        keyframeIdx0 -= curVec->vy - curVec->vx;
     }
 
     if (keyframeIdx0 >= 0)
@@ -2962,19 +2960,19 @@ void func_8008E4EC(s_LmHeader* lmHdr) // 0x8008E4EC
 
 s_WaterZone* Map_WaterZoneGet(q27_4 posX, q27_4 posZ, s_WaterZone* waterZones)
 {
-    s_WaterZone* curZone;
+    s_WaterZone* curWaterZone;
 
     if (waterZones == NULL)
     {
         return NULL;
     }
 
-    for (curZone = waterZones; curZone->isEnabled_0; curZone++)
+    for (curWaterZone = waterZones; curWaterZone->isEnabled_0; curWaterZone++)
     {
-        if (posX >= curZone->minX_4 && posX < curZone->maxX_6 &&
-            posZ >= curZone->minZ_8 && posZ < curZone->maxZ_A)
+        if (posX >= curWaterZone->minX_4 && posX < curWaterZone->maxX_6 &&
+            posZ >= curWaterZone->minZ_8 && posZ < curWaterZone->maxZ_A)
         {
-            return curZone;
+            return curWaterZone;
         }
     }
 
@@ -3015,15 +3013,15 @@ void func_8008E5B4(void) // 0x8008E5B4
         D_800AFDAC++;
     }
 
-    setRGBC0(&packet->poly_1C[1], 0x80, 0x80, 0x80, 0);
-    setRGBC0(&packet->poly_1C[0], 0x80, 0x80, 0x80, 0);
+    setRGBC0(&packet->poly_1C[1], 128, 128, 128, 0);
+    setRGBC0(&packet->poly_1C[0], 128, 128, 128, 0);
 
     setPolyFT4(&packet->poly_1C[0]);
     setPolyFT4(&packet->poly_1C[1]);
     setSemiTrans(&packet->poly_1C[1], 1);
 
-    packet->poly_1C[1].tpage = 0x2D;
-    packet->poly_1C[0].tpage = 0x2D;
+    packet->poly_1C[1].tpage = 45;
+    packet->poly_1C[0].tpage = 45;
 
     setXY0Fast(&packet->poly_1C[1], 0, 0);
     setXY0Fast(&packet->poly_1C[0], 0, 0);
@@ -3034,8 +3032,8 @@ void func_8008E5B4(void) // 0x8008E5B4
     setXY3Fast(&packet->poly_1C[1], 32, 32);
     setXY3Fast(&packet->poly_1C[0], 32, 32);
 
-    packet->poly_1C[1].clut = 0xE;
-    packet->poly_1C[0].clut = 0xE;
+    packet->poly_1C[1].clut = 14;
+    packet->poly_1C[0].clut = 14;
 
     temp_v0               = (D_800AFDAC >> 1) & 0x1F;
     packet->poly_1C[0].u0 = 0;
@@ -3066,21 +3064,22 @@ void func_8008E5B4(void) // 0x8008E5B4
     DrawOTag((u32*)packet);
 }
 
-void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2) // 0x8008E794
+void func_8008E794(VECTOR3* arg0, q3_12 angle, s32 arg2) // 0x8008E794
 {
     VECTOR    sp10;
-    VECTOR    sp20;
+    VECTOR    sp20; // Q23.8
     MATRIX    sp30;
     s32       sp50;
-    s32       angle0;
-    u32       sinAngle0;
+    q19_12    angle0;
+    q20_12    sinAngle0;
     POLY_FT4* poly;
+
     static SVECTOR svec0 = {};
 
     memset(&sp20, 0, 16);
-    sp20.vx = arg0->vx >> 4;
-    sp20.vy = ((arg2 * 2) >> 4) - (arg0->vy >> 4);
-    sp20.vz = arg0->vz >> 4;
+    sp20.vx = Q12_TO_Q8(arg0->vx);
+    sp20.vy = Q12_TO_Q8(arg2 * 2) - Q12_TO_Q8(arg0->vy);
+    sp20.vz = Q12_TO_Q8(arg0->vz);
     sp10    = sp20;
 
     sp30 = GsWSMATRIX;
@@ -3090,7 +3089,7 @@ void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2) // 0x8008E794
     sp30.t[2] += GsWSMATRIX.t[2];
     SetTransMatrix(&sp30);
 
-    if ((RotTransPers(&svec0, &sp20, &sp50, &sp50) * 4) >= 0x80)
+    if ((RotTransPers(&svec0, &sp20, &sp50, &sp50) * 4) >= 128)
     {
         poly = GsOUT_PACKET_P;
         SetPolyFT4(poly);
@@ -3102,20 +3101,20 @@ void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2) // 0x8008E794
             angle0 = FP_ANGLE(90.0f);
         }
 
-        if (Math_Sin(angle0) >= 0)
+        if (Math_Sin(angle0) >= Q12(0.0f))
         {
             sinAngle0 = Math_Sin(angle0);
         }
         else
         {
-            sinAngle0 = 0;
+            sinAngle0 = Q12(0.0f);
         }
 
         poly->r0    = sinAngle0 >> 6;
         poly->g0    = (sinAngle0 * 7) >> 9;
         poly->b0    = (sinAngle0 * 5) >> 9;
         poly->tpage = 45;
-        poly->clut  = 0x4E;
+        poly->clut  = 78;
         poly->u0    = 64;
         poly->u1    = 64;
         poly->v0    = 31;

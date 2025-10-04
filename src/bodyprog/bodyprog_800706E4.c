@@ -493,7 +493,7 @@ static inline void func_80071968_Switch1()
     }
     else
     {
-        func_8003DD80(1, (g_SysWork.field_2358 != 0) ? 18 : 17);
+        func_8003DD80(1, g_SysWork.field_2358 ? 18 : 17);
     }
 }
 
@@ -3245,7 +3245,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             if (playerTurn != 0)
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk9;
-                chara->properties_E4.player.field_F4                 = D_800AF212;
+                chara->properties_E4.player.field_F4                 = g_Player_FlexRotationX;
 
                 if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 0)))
                 {
@@ -3286,8 +3286,12 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             {
                 if (extra->model_0.state_2 != 0)
                 {
-                    if (g_TargetEnemyPosition.vx != g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].position_18.vx || g_TargetEnemyPosition.vy != g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].position_18.vy || g_TargetEnemyPosition.vz != g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].position_18.vz ||
-						D_800C45F8.vx != g_SysWork.player_4C.chara_0.position_18.vx || D_800C45F8.vy != g_SysWork.player_4C.chara_0.position_18.vy || D_800C45F8.vz != g_SysWork.player_4C.chara_0.position_18.vz)
+                    if (g_TargetEnemyPosition.vx != g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].position_18.vx ||
+                        g_TargetEnemyPosition.vy != g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].position_18.vy ||
+                        g_TargetEnemyPosition.vz != g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].position_18.vz ||
+						g_Player_PrevPosition.vx != g_SysWork.player_4C.chara_0.position_18.vx ||
+                        g_Player_PrevPosition.vy != g_SysWork.player_4C.chara_0.position_18.vy ||
+                        g_Player_PrevPosition.vz != g_SysWork.player_4C.chara_0.position_18.vz)
                     {
                         if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 0)))
                         {
@@ -4202,8 +4206,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
     // Compute move distance step.
     temp_s3        = func_8007D6F0(chara, &D_800C45C8);
     speedZoneType  = Map_SpeedZoneTypeGet(chara->position_18.vx, chara->position_18.vz);
-    speedX         = SQUARE(chara->position_18.vx - D_800C45F8.vx);
-    speedZ         = SQUARE(chara->position_18.vz - D_800C45F8.vz);
+    speedX         = SQUARE(chara->position_18.vx - g_Player_PrevPosition.vx);
+    speedZ         = SQUARE(chara->position_18.vz - g_Player_PrevPosition.vz);
     travelDistStep = SquareRoot0(speedX + speedZ);
 
     switch (g_SysWork.player_4C.extra_128.lowerBodyState_24)
@@ -6422,7 +6426,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
     s32         posY;
     u32         temp;
 
-    D_800C45F8 = chara->position_18;
+    g_Player_PrevPosition = chara->position_18;
 
     Collision_Get(&coll, chara->position_18.vx, chara->position_18.vz);
 
@@ -6525,7 +6529,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
         chara->field_34       = 0;
     }
 
-    someAngle = FP_ANGLE_NORM_U(ratan2(chara->position_18.vx - D_800C45F8.vx, chara->position_18.vz - D_800C45F8.vz) + FP_ANGLE(360.0f));
+    someAngle = FP_ANGLE_NORM_U(ratan2(chara->position_18.vx - g_Player_PrevPosition.vx, chara->position_18.vz - g_Player_PrevPosition.vz) + FP_ANGLE(360.0f));
 
     if (!(g_SysWork.player_4C.extra_128.state_1C >= PlayerState_FallForward && g_SysWork.player_4C.extra_128.state_1C < PlayerState_KickEnemy))
     {
@@ -6580,21 +6584,21 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
     s8  temp_v0_3;
 
     // Set damage SFX according to something.
-    sfx = 1326;
+    sfx = Sfx_Unk1326;
     if (chara->attackReceived_41 != NO_VALUE)
     {
         switch (D_800AD4C8[chara->attackReceived_41].field_11)
         {
             case 2:
-                sfx = 1327;
+                sfx = Sfx_Unk1327;
                 break;
 
             case 4:
-                sfx = 1328;
+                sfx = Sfx_Unk1328;
                 break;
 
             case 5:
-                sfx = 1329;
+                sfx = Sfx_Unk1329;
                 break;
 
             case 0:
@@ -6759,7 +6763,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                     break;
 
                 case 23:
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0x1800;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(1.5f);
                     Math_ShortestAngleGet(chara->rotation_24.vy, g_SysWork.npcs_1A0[0].rotation_24.vy, &headingAngle);
                     g_Player_HeadingAngle = headingAngle;
 
@@ -6953,22 +6957,25 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                 case 21:
                 case 24:
                 case 25:
-                    // Harm animations.
+                    // Left harm animation.
                     if (enemyRotY >= FP_ANGLE(45.0f) && enemyRotY < FP_ANGLE(135.0f))
                     {
-                        angleState = PlayerState_DamageTorsoLeft; // Left harm animation.
+                        angleState = PlayerState_DamageTorsoLeft;
                     }
+                    // Front harm animation.
                     else if (enemyRotY >= FP_ANGLE(135.0f) && enemyRotY < FP_ANGLE(225.0f))
                     {
-                        angleState = PlayerState_DamageTorsoFront; // Front harm animation.
+                        angleState = PlayerState_DamageTorsoFront;
                     }
+                    // Right harm animation.
                     else if (enemyRotY >= FP_ANGLE(225.0f) && enemyRotY < FP_ANGLE(315.0f))
                     {
-                        angleState = PlayerState_DamageTorsoRight; // Right harm animation.
+                        angleState = PlayerState_DamageTorsoRight;
                     }
+                    // Back harm animation.
                     else
                     {
-                        angleState = PlayerState_DamageTorsoBack; // Back harm animation.
+                        angleState = PlayerState_DamageTorsoBack;
                     }
 
                     g_SysWork.player_4C.extra_128.state_1C          = angleState;
@@ -7040,11 +7047,11 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             switch (g_SavegamePtr->gameDifficulty_260)
             {
                 case GameDifficulty_Easy:
-                    chara->damageReceived_C0 = (chara->damageReceived_C0 * 3) >> 2;
+                    chara->damageReceived_C0 = (chara->damageReceived_C0 * 3) >> 2; // `/ 4`.
                     break;
 
                 case GameDifficulty_Hard:
-                    chara->damageReceived_C0 = (chara->damageReceived_C0 * 6) >> 2;
+                    chara->damageReceived_C0 = (chara->damageReceived_C0 * 6) >> 2; // `/ 4`.
                     break;
             }
 
@@ -7099,12 +7106,15 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
 
 void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords) // 0x8007D090
 {
-    s32 temp_a1_3;
-    s32 temp_v0;
-    s32 var_a0;
-    s32 var_a2;
-    s32 var_a3;
-    s32 var_v1;
+    #define FLEX_ROT_X_RANGE FP_ANGLE(56.25f)
+    #define FLEX_ROT_Y_RANGE FP_ANGLE(33.75f)
+
+    q19_12 flexRotStep;
+    s32    temp_v0;
+    q19_12 flexRotMax;
+    q19_12 var_a2;
+    s32    var_a3;
+    q19_12 var_v1;
 
     switch (g_SysWork.player_4C.extra_128.state_1C)
     {
@@ -7140,27 +7150,27 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             if (g_SysWork.player_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_Reload ||
                 g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
-                D_800AF212 = 0;
-                D_800AF210 = 0;
+                g_Player_FlexRotationX = FP_ANGLE(0.0f);
+                g_Player_FlexRotationY = FP_ANGLE(0.0f);
             }
             else
             {
-                D_800AF212 = g_SysWork.player_4C.chara_0.properties_E4.npc.field_122 - (1 << 10);
+                g_Player_FlexRotationX = g_SysWork.player_4C.chara_0.properties_E4.npc.field_122 - (1 << 10);
 
                 if (ABS(chara->rotation_24.pad - chara->rotation_24.vy) > FP_ANGLE(180.0f))
                 {
                     if (chara->rotation_24.pad > chara->rotation_24.vy)
                     {
-                        D_800AF210 = -FP_ANGLE_NORM_U((chara->rotation_24.vy + FP_ANGLE(360.0f)) - chara->rotation_24.pad);
+                        g_Player_FlexRotationY = -FP_ANGLE_NORM_U((chara->rotation_24.vy + FP_ANGLE(360.0f)) - chara->rotation_24.pad);
                     }
                     else
                     {
-                        D_800AF210 = FP_ANGLE_NORM_U((chara->rotation_24.pad + FP_ANGLE(360.0f)) - chara->rotation_24.vy);
+                        g_Player_FlexRotationY = FP_ANGLE_NORM_U((chara->rotation_24.pad + FP_ANGLE(360.0f)) - chara->rotation_24.vy);
                     }
                 }
                 else
                 {
-                    D_800AF210 = chara->rotation_24.pad - chara->rotation_24.vy;
+                    g_Player_FlexRotationY = chara->rotation_24.pad - chara->rotation_24.vy;
                 }
 
                 if (chara->properties_E4.player.field_100 != 0 || g_SysWork.player_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_AimStartTargetLock ||
@@ -7168,7 +7178,7 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                 {
                     if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & (1 << 8))
                     {
-                        var_v1 = 0;
+                        var_v1 = FP_ANGLE(0.0f);
                     }
                     else
                     {
@@ -7177,21 +7187,21 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
                     if (chara->properties_E4.player.field_F4 != 0)
                     {
-                        temp_a1_3 = chara->properties_E4.player.field_F4 - D_800AF212;
-                        if (D_800AF212 < chara->properties_E4.player.field_F4)
+                        flexRotStep = chara->properties_E4.player.field_F4 - g_Player_FlexRotationX;
+                        if (g_Player_FlexRotationX < chara->properties_E4.player.field_F4)
                         {
-                            var_a0 = chara->properties_E4.player.field_100 * TIME_STEP_SCALE(g_DeltaTime0, var_a2 + chara->properties_E4.player.field_100);
-                            if (var_a0 < temp_a1_3)
+                            flexRotMax = chara->properties_E4.player.field_100 * TIME_STEP_SCALE(g_DeltaTime0, var_a2 + chara->properties_E4.player.field_100);
+                            if (flexRotMax < flexRotStep)
                             {
-                                D_800AF212 = chara->properties_E4.larvalStalker.properties_E8[3].val16[0] - var_a0;
+                                g_Player_FlexRotationX = chara->properties_E4.larvalStalker.properties_E8[3].val16[0] - flexRotMax;
                             }
                         }
                         else
                         {
-                            var_a0 = -(chara->properties_E4.player.field_100 * TIME_STEP_SCALE(g_DeltaTime0, var_a2 + chara->properties_E4.player.field_100));
-                            if (temp_a1_3 < var_a0)
+                            flexRotMax = -(chara->properties_E4.player.field_100 * TIME_STEP_SCALE(g_DeltaTime0, var_a2 + chara->properties_E4.player.field_100));
+                            if (flexRotStep < flexRotMax)
                             {
-                                D_800AF212 = chara->properties_E4.larvalStalker.properties_E8[3].val16[0] - var_a0;
+                                g_Player_FlexRotationX = chara->properties_E4.larvalStalker.properties_E8[3].val16[0] - flexRotMax;
                             }
                         }
                     }
@@ -7199,114 +7209,121 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                     {
                         if (chara->properties_E4.player.field_100 < var_v1)
                         {
-                            D_800AF210 = 0;
-                            D_800AF212 = 0;
+                            g_Player_FlexRotationY = FP_ANGLE(0.0f);
+                            g_Player_FlexRotationX = FP_ANGLE(0.0f);
                         }
                         else
                         {
-                            temp_v0   = chara->properties_E4.player.field_100 + 1;
-                            temp_a1_3 = temp_v0 - var_v1;
-                            var_a0    = 4;
-                            var_a0    = temp_a1_3 * TIME_STEP_SCALE(g_DeltaTime0, var_a2 + ((temp_a1_3 * 2) + var_a0));
+                            temp_v0     = chara->properties_E4.player.field_100 + 1;
+                            flexRotStep = temp_v0 - var_v1;
+                            flexRotMax  = FP_ANGLE(0.4f);
+                            flexRotMax  = flexRotStep * TIME_STEP_SCALE(g_DeltaTime0, var_a2 + ((flexRotStep * 2) + flexRotMax));
 
-                            if (D_800AF212 > 0)
+                            // Clamp X-axis flex angle.
+                            if (g_Player_FlexRotationX > FP_ANGLE(0.0f))
                             {
-                                if (var_a0 < D_800AF212)
+                                if (flexRotMax < g_Player_FlexRotationX)
                                 {
-                                    D_800AF212 = var_a0;
+                                    g_Player_FlexRotationX = flexRotMax;
                                 }
                             }
-                            else if (D_800AF212 < 0)
+                            else if (g_Player_FlexRotationX < FP_ANGLE(0.0f))
                             {
-                                if (D_800AF212 < -var_a0)
+                                if (g_Player_FlexRotationX < -flexRotMax)
                                 {
-                                    D_800AF212 = -var_a0;
+                                    g_Player_FlexRotationX = -flexRotMax;
                                 }
                             }
 
-                            if (D_800AF210 > 0)
+                            // Clamp Y-axis flex angle.
+                            if (g_Player_FlexRotationY > FP_ANGLE(0.0f))
                             {
-                                if (var_a0 < D_800AF210)
+                                if (flexRotMax < g_Player_FlexRotationY)
                                 {
-                                    D_800AF210 = var_a0;
+                                    g_Player_FlexRotationY = flexRotMax;
                                 }
                             }
-                            else if (D_800AF210 < 0)
+                            else if (g_Player_FlexRotationY < FP_ANGLE(0.0f))
                             {
-                                if (D_800AF210 < -var_a0)
+                                if (g_Player_FlexRotationY < -flexRotMax)
                                 {
-                                    D_800AF210 = -var_a0;
+                                    g_Player_FlexRotationY = -flexRotMax;
                                 }
                             }
                         }
                     }
                 }
 
-                D_800AF212 = CLAMP(D_800AF212, FP_ANGLE(-56.25), FP_ANGLE(56.25));
-                D_800AF210 = CLAMP(D_800AF210, FP_ANGLE(-33.75f), FP_ANGLE(33.75f));
+                g_Player_FlexRotationX = CLAMP(g_Player_FlexRotationX, -FLEX_ROT_X_RANGE, FLEX_ROT_X_RANGE);
+                g_Player_FlexRotationY = CLAMP(g_Player_FlexRotationY, -FLEX_ROT_Y_RANGE, FLEX_ROT_Y_RANGE);
 
-                func_80044F14(&coords[1], 0, D_800AF212 >> 1, D_800AF210);
-                shRotMatrixZ(D_800AF212 >> 1, &coords[4].coord);
-                shRotMatrixZ(D_800AF212 >> 1, &coords[8].coord);
+                // Apply flex rotation to torso and arms.
+                func_80044F14(&coords[HarryBone_Torso], FP_ANGLE(0.0f), g_Player_FlexRotationX >> 1, g_Player_FlexRotationY);
+                shRotMatrixZ(g_Player_FlexRotationX >> 1, &coords[HarryBone_LeftUpperArm].coord);
+                shRotMatrixZ(g_Player_FlexRotationX >> 1, &coords[HarryBone_RightUpperArm].coord);
             }
             break;
 
         case PlayerState_None:
-            if (D_800AF212 > 0)
+            // Pre-modulate X-axis flex angle.
+            if (g_Player_FlexRotationX > FP_ANGLE(0.0f))
             {
-                D_800AF212 -= 0x20;
+                g_Player_FlexRotationX -= FP_ANGLE(2.9f);
             }
-            else if (D_800AF212 < 0)
+            else if (g_Player_FlexRotationX < FP_ANGLE(0.0f))
             {
-                D_800AF212 += 0x20;
-            }
-
-            temp_a1_3 = TIME_STEP_SCALE(g_DeltaTime0, 24);
-
-            if (D_800AF212 > 0)
-            {
-                D_800AF212 -= temp_a1_3;
-                if (D_800AF212 < 0)
-                {
-                    D_800AF212 = 0;
-                }
-            }
-            else if (D_800AF212 < 0)
-            {
-                D_800AF212 += temp_a1_3;
-                if (D_800AF212 > 0)
-                {
-                    D_800AF212 = 0;
-                }
+                g_Player_FlexRotationX += FP_ANGLE(2.9f);
             }
 
-            if (D_800AF210 > 0)
+            flexRotStep = TIME_STEP_SCALE(g_DeltaTime0, FP_ANGLE(2.15f));
+
+            // Modulate X-axis flex angle.
+            if (g_Player_FlexRotationX > FP_ANGLE(0.0f))
             {
-                D_800AF210 -= temp_a1_3;
-                if (D_800AF210 < 0)
+                g_Player_FlexRotationX -= flexRotStep;
+                if (g_Player_FlexRotationX < FP_ANGLE(0.0f))
                 {
-                    D_800AF210 = 0;
+                    g_Player_FlexRotationX = FP_ANGLE(0.0f);
                 }
             }
-            else if (D_800AF210 < 0)
+            else if (g_Player_FlexRotationX < FP_ANGLE(0.0f))
             {
-                D_800AF210 += temp_a1_3;
-                if (D_800AF210 > 0)
+                g_Player_FlexRotationX += flexRotStep;
+                if (g_Player_FlexRotationX > FP_ANGLE(0.0f))
                 {
-                    D_800AF210 = 0;
+                    g_Player_FlexRotationX = FP_ANGLE(0.0f);
                 }
             }
 
-            func_80044F14(&coords[1], 0, D_800AF212 >> 1, D_800AF210);
-            shRotMatrixZ(D_800AF212 >> 1, &coords[4].coord);
-            shRotMatrixZ(D_800AF212 >> 1, &coords[8].coord);
+            // Modulate Y-axis flex angle.
+            if (g_Player_FlexRotationY > FP_ANGLE(0.0f))
+            {
+                g_Player_FlexRotationY -= flexRotStep;
+                if (g_Player_FlexRotationY < FP_ANGLE(0.0f))
+                {
+                    g_Player_FlexRotationY = FP_ANGLE(0.0f);
+                }
+            }
+            else if (g_Player_FlexRotationY < FP_ANGLE(0.0f))
+            {
+                g_Player_FlexRotationY += flexRotStep;
+                if (g_Player_FlexRotationY > FP_ANGLE(0.0f))
+                {
+                    g_Player_FlexRotationY = FP_ANGLE(0.0f);
+                }
+            }
+
+            // Apply flex rotation to torso and arms.
+            func_80044F14(&coords[HarryBone_Torso], FP_ANGLE(0.0f), g_Player_FlexRotationX >> 1, g_Player_FlexRotationY);
+            shRotMatrixZ(g_Player_FlexRotationX >> 1, &coords[HarryBone_LeftUpperArm].coord);
+            shRotMatrixZ(g_Player_FlexRotationX >> 1, &coords[HarryBone_RightUpperArm].coord);
             break;
 
         case PlayerState_Unk180:
-            if (D_800AF210 != 0)
+            if (g_Player_FlexRotationY != FP_ANGLE(0.0f))
             {
-                func_80044F14(&coords[1], 0, 0,     0xC0);
-                func_80044F14(&coords[2], 0, 0x140, 0xE0);
+                func_80044F14(&coords[HarryBone_Torso], FP_ANGLE(0.0f), FP_ANGLE(0.0f),  FP_ANGLE(16.9f));
+                func_80044F14(&coords[HarryBone_Head],  FP_ANGLE(0.0f), FP_ANGLE(28.2f), FP_ANGLE(19.7f));
             }
             break;
 
@@ -7314,27 +7331,27 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             if (g_SysWork.player_4C.extra_128.state_1C >= PlayerState_Unk52 &&
                 g_SysWork.player_4C.extra_128.state_1C <  PlayerState_Unk59)
             {
-                func_80044F14(&coords[2], 0, 0, D_800AF210);
+                func_80044F14(&coords[HarryBone_Head], FP_ANGLE(0.0f), FP_ANGLE(0.0f), g_Player_FlexRotationY);
             }
             else
             {
-                D_800AF210 = 0;
-                D_800AF212 = 0;
+                g_Player_FlexRotationY = FP_ANGLE(0.0f);
+                g_Player_FlexRotationX = FP_ANGLE(0.0f);
             }
             break;
     }
 
-    if (g_SysWork.field_2358 != 0 && g_SysWork.player_4C.extra_128.state_1C < PlayerState_Unk58)
+    if (g_SysWork.field_2358 && g_SysWork.player_4C.extra_128.state_1C < PlayerState_Unk58)
     {
-        func_80044F14(&g_SysWork.playerBoneCoords_890[HarryBone_RightUpperArm], 0, 0x2D0, -0x64);
-        func_80044F14(&g_SysWork.playerBoneCoords_890[HarryBone_RightForearm], -0xA0, 0x100, -0x15E);
-        func_80044F14(&g_SysWork.playerBoneCoords_890[HarryBone_RightHand], 0x96, 0, 0);
+        func_80044F14(&g_SysWork.playerBoneCoords_890[HarryBone_RightUpperArm], FP_ANGLE(0.0f),   FP_ANGLE(63.3f), FP_ANGLE(-8.8f));
+        func_80044F14(&g_SysWork.playerBoneCoords_890[HarryBone_RightForearm],  FP_ANGLE(-14.1f), FP_ANGLE(22.5f), FP_ANGLE(-30.8f));
+        func_80044F14(&g_SysWork.playerBoneCoords_890[HarryBone_RightHand],     FP_ANGLE(13.2f),  FP_ANGLE(0.0f),  FP_ANGLE(0.0f));
     }
 }
 
-void func_8007D6E0() // 0x8007D6E0
+void Player_FlexRotationYReset() // 0x8007D6E0
 {
-    D_800AF210 = 1;
+    g_Player_FlexRotationY = FP_ANGLE(0.1f);
 }
 
 s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1) // 0x8007D6F0
@@ -7728,13 +7745,13 @@ void func_8007E5AC() // 0x8007E5AC
 
     g_SysWork.player_4C.chara_0.model_0.charaId_0   = Chara_Harry;
     g_SysWork.player_4C.extra_128.model_0.charaId_0 = Chara_Harry;
-    g_SysWork.player_4C.chara_0.field_D4            = 0x4CC;
-    g_SysWork.player_4C.chara_0.field_D6            = 0x3AE;
+    g_SysWork.player_4C.chara_0.field_D4            = Q12(0.3f);
+    g_SysWork.player_4C.chara_0.field_D6            = Q12(0.23f);
 
     extraModel = &g_SysWork.player_4C.chara_0.model_0;
     model      = &g_SysWork.player_4C.extra_128.model_0;
 
-    g_SysWork.field_2358 = 0;
+    g_SysWork.field_2358 = false;
 
     extraModel->anim_4.flags_2 |= AnimFlag_Unlocked | AnimFlag_Visible;
     model->anim_4.flags_2      |= AnimFlag_Unlocked | AnimFlag_Visible;
@@ -7743,12 +7760,11 @@ void func_8007E5AC() // 0x8007E5AC
     g_Inventory_EquippedItem               = g_SavegamePtr->equippedWeapon_AA;
 
     temp_t0 = g_SavegamePtr->equippedWeapon_AA >> 5;
-
     if (temp_t0 >= 4 && temp_t0 < 6)
     {
         for (i = 0; g_SavegamePtr->items_0[i].id_0 != g_SavegamePtr->equippedWeapon_AA && i < INVENTORY_ITEM_COUNT_MAX; i++);
 
-        g_SysWork.playerCombatInfo_38.weaponAttack_F      = g_SavegamePtr->equippedWeapon_AA + InventoryItemId_KitchenKnife;
+        g_SysWork.playerCombatInfo_38.weaponAttack_F        = g_SavegamePtr->equippedWeapon_AA + InventoryItemId_KitchenKnife;
         g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10  = g_SavegamePtr->items_0[i].count_1;
         g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12 = i;
 
@@ -7758,7 +7774,9 @@ void func_8007E5AC() // 0x8007E5AC
         }
         else
         {
-            for (i = 0; g_SavegamePtr->items_0[i].id_0 != (g_SavegamePtr->equippedWeapon_AA + InventoryItemId_HealthDrink) && i < INVENTORY_ITEM_COUNT_MAX; i++);
+            for (i = 0;
+                 g_SavegamePtr->items_0[i].id_0 != (g_SavegamePtr->equippedWeapon_AA + InventoryItemId_HealthDrink) && i < INVENTORY_ITEM_COUNT_MAX;
+                 i++);
 
             if (i == INVENTORY_ITEM_COUNT_MAX)
             {
@@ -7772,7 +7790,7 @@ void func_8007E5AC() // 0x8007E5AC
     }
     else
     {
-        g_SysWork.playerCombatInfo_38.weaponAttack_F      = NO_VALUE;
+        g_SysWork.playerCombatInfo_38.weaponAttack_F        = NO_VALUE;
         g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10  = 0;
         g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11    = 0;
         g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12 = NO_VALUE;
@@ -7813,7 +7831,7 @@ void func_8007E860() // 0x8007E860
 
     for (i = 0; i < 8; i++)
     {
-        startIdx                         = 92;
+        startIdx                            = 92;
         HARRY_BASE_ANIM_INFOS[startIdx + i] = g_MapOverlayHeader.animInfos_34[i + 16];
     }
 }
@@ -7838,8 +7856,8 @@ void func_8007E9C4() // 0x8007E9C4
     chara->model_0.stateStep_3                = 0;
     chara->model_0.state_2                    = 0;
     g_SysWork.field_235A                      = 0;
-    D_800AF210                                = 0;
-    D_800AF212                                = 0;
+    g_Player_FlexRotationY                    = FP_ANGLE(0.0f);
+    g_Player_FlexRotationX                    = FP_ANGLE(0.0f);
     D_800C4560                                = NO_VALUE;
     g_SysWork.playerCombatInfo_38.isAiming_13 = false;
 
@@ -7870,7 +7888,7 @@ void func_8007E9C4() // 0x8007E9C4
 
     g_Player_IsHoldAttack         = false;
     chara->flags_3E              &= ~CharaFlag_Unk4;
-    D_800C45F8                    = chara->position_18;
+    g_Player_PrevPosition         = chara->position_18;
     g_SysWork.enemyTargetIdx_2353 = NO_VALUE;
     chara->field_40               = NO_VALUE;
     chara->attackReceived_41      = NO_VALUE;
@@ -7879,7 +7897,7 @@ void func_8007E9C4() // 0x8007E9C4
     g_SysWork.field_2354[2] = NO_VALUE;
     g_SysWork.field_2354[1] = NO_VALUE;
     g_SysWork.field_2354[0] = NO_VALUE;
-    chara->field_D6         = 0x3AE;
+    chara->field_D6         = Q12(0.23f);
 
     g_Player_IsAiming              = false;
     g_Player_IsRunning             = false;

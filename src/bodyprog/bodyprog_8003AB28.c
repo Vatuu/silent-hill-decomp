@@ -1492,33 +1492,34 @@ void func_8003D058() // 0x8003D058
     s_LmHeader*    lmHdr;
 
     heldItem = &g_WorldGfx.heldItem_1BAC;
-
-    if (heldItem->itemId_0 != NO_VALUE)
+    if (heldItem->itemId_0 == NO_VALUE)
     {
-        if (heldItem->itemId_0 == InventoryItemId_CutscenePhone)
+        return;
+    }
+
+    if (heldItem->itemId_0 == InventoryItemId_CutscenePhone)
+    {
+        coord = &g_SysWork.playerBoneCoords_890[HarryBone_LeftHand];
+    } 
+    else 
+    {
+        coord = &g_SysWork.playerBoneCoords_890[HarryBone_RightHand];
+    }
+
+    if (Fs_QueueIsEntryLoaded(heldItem->queueIdx_4)) 
+    {
+        lmHdr = heldItem->lmHdr_14;
+
+        if (!lmHdr->isLoaded_2)
         {
-            coord = &g_SysWork.playerBoneCoords_890[HarryBone_LeftHand];
-        } 
-        else 
-        {
-            coord = &g_SysWork.playerBoneCoords_890[HarryBone_RightHand];
+            LmHeader_FixOffsets(lmHdr);
+            func_80056504(lmHdr, heldItem->textureName_8, &heldItem->imageDesc_C, BlendMode_Additive);
+            Lm_MaterialFlagsApply(lmHdr);
+            Bone_ModelAssign(&heldItem->bone_18, heldItem->lmHdr_14, 0);
         }
 
-        if (Fs_QueueIsEntryLoaded(heldItem->queueIdx_4)) 
-        {
-            lmHdr = heldItem->lmHdr_14;
-
-            if (!lmHdr->isLoaded_2)
-            {
-                LmHeader_FixOffsets(lmHdr);
-                func_80056504(lmHdr, heldItem->textureName_8, &heldItem->imageDesc_C, 1);
-                Lm_MaterialFlagsApply(lmHdr);
-                Bone_ModelAssign(&heldItem->bone_18, heldItem->lmHdr_14, 0);
-            }
-
-            func_80049B6C(coord, &mat1, &mat0);
-            func_80057090(&heldItem->bone_18.modelInfo_0, &g_OrderingTable0[g_ActiveBufferIdx], 1, &mat0, &mat1, 0);
-        }
+        func_80049B6C(coord, &mat1, &mat0);
+        func_80057090(&heldItem->bone_18.modelInfo_0, &g_OrderingTable0[g_ActiveBufferIdx], 1, &mat0, &mat1, 0);
     }
 }
 
@@ -1612,7 +1613,7 @@ void Chara_FsImageCalc(s_FsImageDesc* image, s32 charaId, s32 modelIdx) // 0x800
     s8  u;
 
     // TODO: Deoptimise.
-    v = (charaId < Chara_AirScreamer);
+    v = charaId < Chara_AirScreamer;
     if (charaId >= Chara_None && v)
     {
         tPage = 27;

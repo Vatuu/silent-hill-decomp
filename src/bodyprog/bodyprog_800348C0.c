@@ -2475,7 +2475,7 @@ void SysState_StatusMenu_Update() // 0x80039568
 
 void GameState_LoadStatusScreen_Update() // 0x800395C0
 {
-    s_Savegame* savegame;
+    s_Savegame* save;
 
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
@@ -2490,9 +2490,9 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
             Sd_EngineCmd(19);
         }
 
-        savegame = g_SavegamePtr;
-        func_800540A4(savegame->mapOverlayId_A4);
-        GameFs_MapItemsTextureLoad(savegame->mapOverlayId_A4);
+        save = g_SavegamePtr;
+        func_800540A4(save->mapOverlayId_A4);
+        GameFs_MapItemsTextureLoad(save->mapOverlayId_A4);
 
         g_GameWork.gameStateStep_598[0]++;
     }
@@ -2879,7 +2879,7 @@ void SysState_EventPlaySound_Update() // 0x8003A4B4
 {
     g_DeltaTime0 = g_SomeTimer0;
 
-    Sd_EngineCmd(((u16)g_MapEventIdx + 0x500) & 0xFFFF);
+    Sd_EngineCmd(((u16)g_MapEventIdx + Sfx_Base) & 0xFFFF);
 
     Savegame_EventFlagSetAlt(g_MapEventParam->eventFlagId_2);
     g_SysWork.sysState_8 = SysState_Gameplay;

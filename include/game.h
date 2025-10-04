@@ -1148,10 +1148,10 @@ typedef struct _SubCharaPropertiesPlayer
     q19_12 afkTimer_E8; // Increments every tick for 10 seconds before AFK anim starts.
     q19_12 positionY_EC;
     s32    field_F0;
-    s32    field_F4;
+    q19_12 field_F4; // Angle. Related to X axis flex rotation.
     s32    runTimer_F8; // Tick counter?
     q19_12 exhaustionTimer_FC;
-    s32    field_100;
+    q19_12 field_100;    // Angle?
     s32    field_104;    // Distance?
     q19_12 runTimer_108;
     u8     field_10C;    // Player SFX pitch?
@@ -1273,7 +1273,7 @@ typedef struct _SubCharacter
     q3_12             field_CA; // }
     q3_12             field_CC; // }
     q3_12             field_CE;
-    s16               field_D0;
+    s16               field_D0; // Q3.12? Maybe weapon range?
     s16               field_D2;
     q3_12             field_D4;
     q3_12             field_D6;
@@ -1472,7 +1472,7 @@ typedef struct _SysWork
     u32             flags_2352                      : 8;
     s8              enemyTargetIdx_2353; // Index of the enemy that is being attacked by the player.
     s8              field_2354[4];       // Size dervied from `func_80070320`.
-    u8              field_2358;
+    u8              field_2358; /** `bool` */
     s8              unk_2359[1];
     u8              field_235A; /** If the player stop walking or running forward the value (as a bit) changes
                                  * to 00000001 and if the player stop walking backward the value changes

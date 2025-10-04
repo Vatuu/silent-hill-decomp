@@ -86,6 +86,7 @@ typedef enum _SpeedZoneType
     SpeedZoneType_Fast   = 2
 } e_SpeedZoneType;
 
+// TODO: Rename to `SfxId`. There's a name clash with an SFX struct.
 typedef enum _Sfx
 {
     Sfx_Base        = 1280,          // Base SFX (not valid in itself).
@@ -117,6 +118,11 @@ typedef enum _Sfx
     Sfx_Unk1322     = 1322,
     Sfx_Unk1323     = 1323,
     Sfx_Unk1324     = 1324,
+
+    Sfx_Unk1326     = 1326,
+    Sfx_Unk1327     = 1327,
+    Sfx_Unk1328     = 1328,
+    Sfx_Unk1329     = 1329,
 				    
     Sfx_Stumble1    = 1333,
 				    
@@ -949,7 +955,7 @@ typedef struct _GlobalLm
 
 typedef struct
 {
-    s32            field_0;
+    s32            field_0; // Bone flags?
     GsCOORDINATE2* field_4;
     s_ModelHeader* modelHdr_8;
     s32            modelIdx_C;
@@ -1713,7 +1719,7 @@ typedef struct
 
 typedef struct
 {
-    VECTOR3 field_0;
+    VECTOR3 field_0; // For player, used as translation offset.
     s32     field_C; // Absolute ground height?
     s16     field_10;
     s16     field_12;
@@ -2180,11 +2186,9 @@ extern u8 D_800AE740[][2];
 
 extern s32 D_800AE770;
 
-/** Angle? */
-extern s16 D_800AF210;
+extern q3_12 g_Player_FlexRotationY;
 
-/** Angle? */
-extern s16 D_800AF212;
+extern q3_12 g_Player_FlexRotationX;
 
 extern u8 D_800AF220;
 
@@ -2584,6 +2588,7 @@ extern s16 D_800AF1FC[]; // Type assumed.
 
 extern s8 D_800C4588;
 
+/** Player instance of this struct. */
 extern s_800C4590 D_800C4590;
 
 extern VECTOR3 D_800C45B0; // Assumed type
@@ -2976,7 +2981,7 @@ void Anim_Update2(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_A
 void Anim_Update3(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
 
 /** Something related to player weapon position. Takes coords to arm bones. */
-void func_80044F14(GsCOORDINATE2* coord, s16 z, s16 x, s16 y);
+void func_80044F14(GsCOORDINATE2* coord, q3_12 rotZ, q3_12 rotX, q3_12 rotY);
 
 s8 Bone_ModelIdxGet(s8* ptr, bool arg1);
 
@@ -3423,7 +3428,7 @@ s_WaterZone* Map_WaterZoneGet(q27_4 posX, q27_4 posZ, s_WaterZone* waterZones);
 
 void func_8008E5B4(void);
 
-void func_8008E794(VECTOR3* arg0, s16 angle, s32 arg2);
+void func_8008E794(VECTOR3* arg0, q3_12 angle, s32 arg2);
 
 void func_8008EA68(SVECTOR*, VECTOR3*, s32);
 
@@ -3889,7 +3894,7 @@ s32 func_8007029C(s_SubCharacter* chara, q19_12 arg1, q3_12 angle);
 
 void func_800705E4(GsCOORDINATE2* coord, s32 idx, s32 scaleX, s32 scaleY, s32 scaleZ);
 
-void func_8007D6E0();
+void Player_FlexRotationYReset();
 
 void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2);
 

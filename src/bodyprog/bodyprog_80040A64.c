@@ -2230,11 +2230,13 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_A
     model->anim_4.keyframeIdx_8 = FP_FROM(newTime, Q12_SHIFT);
 }
 
-void func_80044F14(GsCOORDINATE2* coord, s16 z, s16 x, s16 y) // 0x80044F14
+void func_80044F14(GsCOORDINATE2* coord, q3_12 rotZ, q3_12 rotX, q3_12 rotY) // 0x80044F14
 {
-    *(s16*)0x1F800004 = z;
-    *(s16*)0x1F800002 = y;
-    *(s16*)0x1F800000 = x;
+    *(q3_12*)0x1F800004 = rotZ;
+    *(q3_12*)0x1F800002 = rotY;
+    *(q3_12*)0x1F800000 = rotX;
+
+    // TODO: Make FS buffer constant for this.
     
     func_80096E78((SVECTOR*)0x1F800000, (MATRIX*)0x1F800008);
     MulMatrix(&coord->coord, (MATRIX*)0x1F800008);
@@ -2275,31 +2277,31 @@ void Skeleton_Init(s_Skeleton* skel, s_Bone* bones, u8 boneCount) // 0x80044FE0
     skel->boneCount_0 = boneCount;
     skel->boneIdx_1 = 0;
     skel->field_2 = 1;
-    skel->bones_4 = 0;
+    skel->bones_4 = NULL;
 
     func_80045014(skel);
 }
 
 void func_80045014(s_Skeleton* skel) // 0x80045014
 {
-    s_Bone* bone;
+    s_Bone* curBone;
 
     // Traverse bone hierarchy and clear flags.
-    for (bone = &skel->bones_8[0]; bone < &skel->bones_8[skel->boneCount_0]; bone++)
+    for (curBone = &skel->bones_8[0]; curBone < &skel->bones_8[skel->boneCount_0]; curBone++)
     {
-        bone->modelInfo_0.field_0 = 0;
+        curBone->modelInfo_0.field_0 = 0;
     }
 }
 
 void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHdr) // 0x8004506C
 {
     u8  sp10[4]; // Size unsure, this could be larger.
-    s32 switchVar;
+    s32 modelCount;
 
-    switchVar = LmHeader_ModelCountGet(lmHdr);
+    modelCount = LmHeader_ModelCountGet(lmHdr);
     sp10[0]   = 0;
 
-    switch (switchVar)
+    switch (modelCount)
     {
         case 0:
             sp10[0] = BoneHierarchy_End;
@@ -2364,17 +2366,17 @@ void Skeleton_BoneModelAssign(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2) // 
 
 void func_80045258(s_Bone** boneOrd, s_Bone* bones, s32 boneIdx, s_LmHeader* lmHdr) // 0x80045258
 {
-    s_Bone* bone;
+    s_Bone* curBone;
     u8*     curObjOrd;
 
     for (curObjOrd = lmHdr->modelOrder_10; curObjOrd < &lmHdr->modelOrder_10[lmHdr->modelCount_8]; curObjOrd++)
     {
-        for (bone = bones; bone < &bones[boneIdx]; bone++)
+        for (curBone = bones; curBone < &bones[boneIdx]; curBone++)
         {
-            if (bone->modelInfo_0.modelIdx_C == *curObjOrd)
+            if (curBone->modelInfo_0.modelIdx_C == *curObjOrd)
             {
-                *boneOrd = bone;
-                boneOrd  = &bone->next_14;
+                *boneOrd = curBone;
+                boneOrd  = &curBone->next_14;
             }
         }
     }
@@ -2426,45 +2428,43 @@ void func_80045360(s_Skeleton* skel, s8* arg1) // 0x80045360
 
 void func_800453E8(s_Skeleton* skel, bool cond) // 0x800453E8
 {
-    s_Bone* bone;
+    s_Bone* curBone;
 
     // Traverse bone hierarchy and set flags according to cond.
-    for (bone = &skel->bones_8[0]; bone < &skel->bones_8[skel->boneCount_0]; bone++)
+    for (curBone = &skel->bones_8[0]; curBone < &skel->bones_8[skel->boneCount_0]; curBone++)
     {
         if (cond)
         {
-            bone->modelInfo_0.field_0 &= ~(1 << 31);
+            curBone->modelInfo_0.field_0 &= ~(1 << 31);
         }
         else
         {
-            bone->modelInfo_0.field_0 |= 1 << 31;
+            curBone->modelInfo_0.field_0 |= 1 << 31;
         }
     }
 }
 
 void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
 {
-    s_Bone* bone;
-    s32     status;
+    s_Bone* bones;
+    s32     modelIdx;
 
-    bone = skel->bones_8;
+    bones = skel->bones_8;
 
-    // Get skeleton status?
-    status = Bone_ModelIdxGet(arg1, true);
-
-    // Traverse bone hierarchy and set flags according to some condition.
-    while (status != -2)
+    // Traverse bone hierarchy and set flag 31 according to some condition.
+    modelIdx = Bone_ModelIdxGet(arg1, true);
+    while (modelIdx != -2)
     {
         if (cond)
         {
-            bone[status].modelInfo_0.field_0 &= ~(1 << 31);
+            bones[modelIdx].modelInfo_0.field_0 &= ~(1 << 31);
         }
         else
         {
-            bone[status].modelInfo_0.field_0 |= 1 << 31;
+            bones[modelIdx].modelInfo_0.field_0 |= 1 << 31;
         }
         
-        status = Bone_ModelIdxGet(arg1, false);
+        modelIdx = Bone_ModelIdxGet(arg1, false);
     }
 }
 
