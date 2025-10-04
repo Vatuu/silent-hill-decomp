@@ -1900,6 +1900,19 @@ typedef enum _HangedScratcher
     { Anim_Update1, ANIM_STATUS(17, true),  false, NO_VALUE,               { Q12(5)    }, 603,      618 }
 };*/
 
+typedef enum _LockerDeadBodyAnim
+{
+    LockerDeadBodyAnim_Still = 0,
+    LockerDeadBodyAnim_1     = 1,
+    LockerDeadBodyAnim_2     = 2,
+    LockerDeadBodyAnim_3     = 3
+} e_LockerDeadBodyAnim;
+
+/*s_AnimInfo LOCKERR_DEAD_BODY_ANIM_INFOS[] =
+{
+
+};*/
+
 /*s_AnimInfo MONSTER_CYBIL_ANIM_INFOS[] =
 {
     { Anim_Update2, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0)  }, NO_VALUE, 0  },
@@ -1916,7 +1929,7 @@ typedef enum _RomperAnim
     RomperAnim_Unk15 = 15,
 } e_RomperAnim;
 
-/*s_AnimInfo ROPMER_ANIM_INFOS[] =
+/*s_AnimInfo ROMPER_ANIM_INFOS[] =
 {
     { Anim_Update2, NO_VALUE, false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },
     { NULL, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0) }, 0, 0 },

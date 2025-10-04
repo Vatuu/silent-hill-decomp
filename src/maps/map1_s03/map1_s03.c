@@ -197,7 +197,7 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
     if (chara->model_0.state_2 == 0)
     {
         chara->model_0.anim_4.alpha_A = Q12(0.0f);
-        Character_AnimSet(chara, ANIM_STATUS(2, true), 0);
+        Character_AnimSet(chara, ANIM_STATUS(LockerDeadBodyAnim_2, true), 0);
         chara->model_0.state_2++;
         chara->position_18.vy = Q12(0.0f);
     }
@@ -213,16 +213,16 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
 
     if (!Savegame_EventFlagGet(EventFlag_106))
     {
-        if (chara->model_0.anim_4.status_0 == ANIM_STATUS(2, true))
+        if (chara->model_0.anim_4.status_0 == ANIM_STATUS(LockerDeadBodyAnim_2, true))
         {
-            chara->model_0.anim_4.status_0 = ANIM_STATUS(1, true);
+            chara->model_0.anim_4.status_0 = ANIM_STATUS(LockerDeadBodyAnim_1, true);
         }
 
         chara->field_E1_0 = 0;
     }
     else
     {
-        Character_AnimSet(chara, ANIM_STATUS(3, true), 16);
+        Character_AnimSet(chara, ANIM_STATUS(LockerDeadBodyAnim_3, true), 16);
         chara->field_E1_0 = 3;
     }
 
