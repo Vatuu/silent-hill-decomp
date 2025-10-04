@@ -277,7 +277,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D2390_0_s01
 
 #include "maps/shared/sharedFunc_800D2BF4_0_s01.h" // 0x800D2BF4
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", Chara_TakeDamage); // 0x800D2C0C
+INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", Chara_DamageTake); // 0x800D2C0C
 
 #include "maps/shared/sharedFunc_800D2E04_0_s01.h" // 0x800D2E04
 
@@ -366,7 +366,7 @@ void func_800D3EB8(s_SubCharacter* chara) // 0x800D3EB8
 
             if (cond1)
             {
-                Chara_TakeDamage(chara, Q12(0.0f));
+                Chara_DamageTake(chara, Q12(0.0f));
 
                 chara->position_18.vx = g_SysWork.player_4C.chara_0.position_18.vx + Q12(100.0f);
                 chara->position_18.vz = g_SysWork.player_4C.chara_0.position_18.vz + Q12(100.0f);
@@ -377,7 +377,7 @@ void func_800D3EB8(s_SubCharacter* chara) // 0x800D3EB8
 
             if (cond0)
             {
-                Chara_TakeDamage(chara, Q12(0.0f));
+                Chara_DamageTake(chara, Q12(0.0f));
                 sharedFunc_800D2364_0_s01(chara);
 
                 chara->position_18.vx = g_SysWork.player_4C.chara_0.position_18.vx + Q12(100.0f);
@@ -389,7 +389,7 @@ void func_800D3EB8(s_SubCharacter* chara) // 0x800D3EB8
 
             if (chara->health_B0 <= Q12(0.0f))
             {
-                Chara_TakeDamage(chara, Q12(0.0f));
+                Chara_DamageTake(chara, Q12(0.0f));
 
                 if (animStatus == ANIM_STATUS(26, true) && temp_s3 == 1)
                 {
@@ -407,7 +407,7 @@ void func_800D3EB8(s_SubCharacter* chara) // 0x800D3EB8
             {
                 chara->flags_3E |= CharaFlag_Unk2;
 
-                if (Chara_TakeDamage(chara, Q12(1.0f)) == 4)
+                if (Chara_DamageTake(chara, Q12(1.0f)) == 4)
                 {
                     if (chara->health_B0 <= Q12(0.0f))
                     {
@@ -435,11 +435,11 @@ void func_800D3EB8(s_SubCharacter* chara) // 0x800D3EB8
             break;
 
         case 1:
-            Chara_TakeDamage(chara, Q12(0.0f));
+            Chara_DamageTake(chara, Q12(0.0f));
             break;
 
         case 2:
-            Chara_TakeDamage(chara, Q12(0.5f));
+            Chara_DamageTake(chara, Q12(0.5f));
 
             if (activeAnimStatus != animStatus12)
             {
@@ -560,7 +560,7 @@ void func_800D426C(s_SubCharacter* chara) // 0x800D426C
     sharedFunc_800D529C_0_s01(chara, Q12(1.0f), func_80080478(&chara->position_18, &g_SysWork.player_4C.chara_0.position_18));
     func_800D598C(chara);
 
-    switch (Chara_TakeDamage(chara, Q12(1.0f)))
+    switch (Chara_DamageTake(chara, Q12(1.0f)))
     {
         case 0:
             if (!chara->properties_E4.unk0.properties_120.val32 ||
@@ -624,7 +624,7 @@ void func_800D4420(s_SubCharacter* chara) // 0x800D4420
     func_800D53AC(chara);
     sharedFunc_800D57C8_0_s01(chara);
 
-    switch (Chara_TakeDamage(chara, Q12(1.0f)))
+    switch (Chara_DamageTake(chara, Q12(1.0f)))
     {
         case 0:
             dist0 = NO_VALUE;
@@ -683,7 +683,7 @@ void func_800D45BC(s_SubCharacter* chara) // 0x800D45BC
     func_800D53AC(chara);
     func_800D5B10(chara);
 
-    temp_v0 = Chara_TakeDamage(chara, Q12(1.0f));
+    temp_v0 = Chara_DamageTake(chara, Q12(1.0f));
     switch (temp_v0)
     {
         case 0:
@@ -778,7 +778,7 @@ void func_800D46C4(s_SubCharacter* chara) // 0x800D46C4
     func_800D53AC(chara);
     func_800D5C90(chara);
 
-    switch (Chara_TakeDamage(chara, Q12(1.2f)))
+    switch (Chara_DamageTake(chara, Q12(1.2f)))
     {
         case 0: 
             if (cond0)

@@ -2972,7 +2972,7 @@ void sharedSymbol_800D0ECC_3_s03(s_SubCharacter*);
 void sharedFunc_800D0F28_3_s03(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 
 /** `arg1` is a multiplier? */
-q20_12 Chara_TakeDamage(s_SubCharacter*, s32 mult);
+q20_12 Chara_DamageTake(s_SubCharacter*, s32 mult);
 
 void sharedFunc_800D3CC4_0_s01(s_SubCharacter* chara);
 
