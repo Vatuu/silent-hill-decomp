@@ -9,7 +9,7 @@ const s32 rodataPad_80025E90 = 0;
 
 void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
 {
-    s8       weaponAttack;
+    s8       weaponAttack; // Packed weapon attack. See `WEAPON_ATTACK`.
     s32      playerState;
     s_Model* modelPtr3;
     s_Model* extraModelPtr2;

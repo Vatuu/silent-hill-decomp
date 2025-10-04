@@ -1472,7 +1472,7 @@ typedef struct _SysWork
     u32             flags_2352                      : 8;
     s8              enemyTargetIdx_2353; // Index of the enemy that is being attacked by the player.
     s8              field_2354[4];       // Size dervied from `func_80070320`.
-    u8              field_2358; /** `bool` */
+    u8              field_2358;          /** `bool` */
     s8              unk_2359[1];
     u8              field_235A; /** If the player stop walking or running forward the value (as a bit) changes
                                  * to 00000001 and if the player stop walking backward the value changes
