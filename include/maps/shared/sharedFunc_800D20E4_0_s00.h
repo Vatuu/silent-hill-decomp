@@ -48,7 +48,7 @@ void sharedFunc_800D20E4_0_s00()
 
     sharedData_800E39D8_0_s00 = 0;
 
-    chara->field_D6                                             = 0;
+    chara->field_D6                                             = Q12(0.0f);
     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk4 | PlayerFlag_Unk5;
     chara->flags_3E                                            |= CharaFlag_Unk4;
     chara->field_E1_0                                           = 4;
