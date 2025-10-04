@@ -6410,7 +6410,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords) // 0x8007C0D8
 {
     s_Collision coll;
-    VECTOR3     sp20;
+    VECTOR3     offset;
     VECTOR3     sp30;
     VECTOR3     sp40;
     s16         temp_v0;
@@ -6455,38 +6455,38 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
     temp_s2_2 = (temp > 0xFFFE) * 4;
     temp_s3_2 = temp_s2_2 >> 1;
 
-    sp20.vx = FP_MULTIPLY_PRECISE((temp_s0_2 >> temp_s3_2), Math_Sin(temp_v0_3) >> temp_s3_2, Q12_SHIFT);
-    sp20.vx <<= temp_s2_2;
+    offset.vx = FP_MULTIPLY_PRECISE((temp_s0_2 >> temp_s3_2), Math_Sin(temp_v0_3) >> temp_s3_2, Q12_SHIFT);
+    offset.vx <<= temp_s2_2;
 
-    sp20.vz = FP_MULTIPLY_PRECISE((temp_s0_2 >> temp_s3_2), Math_Cos(temp_v0_3) >> temp_s3_2, Q12_SHIFT);
-    sp20.vz <<= temp_s2_2;
+    offset.vz = FP_MULTIPLY_PRECISE((temp_s0_2 >> temp_s3_2), Math_Cos(temp_v0_3) >> temp_s3_2, Q12_SHIFT);
+    offset.vz <<= temp_s2_2;
 
-    sp20.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
+    offset.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
 
     if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP1_S05)
     {
-        sp20.vx = sp20.vx + D_800C45B0.vx;
-        sp30.vx = sp20.vx;
-        sp20.vz = sp20.vz + D_800C45B0.vz;
-        sp30.vz = sp20.vz;
+        offset.vx = offset.vx + D_800C45B0.vx;
+        sp30.vx = offset.vx;
+        offset.vz = offset.vz + D_800C45B0.vz;
+        sp30.vz = offset.vz;
     }
 
-    func_80069B24(&D_800C4590, &sp20, chara);
+    func_80069B24(&D_800C4590, &offset, chara);
 
     if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP1_S05)
     {
-        if (D_800C45B0.vx != 0 && (DIFF_SIGN(sp30.vx, D_800C4590.field_0.vx) || abs(sp30.vx) >= ABS(D_800C4590.field_0.vx)))
+        if (D_800C45B0.vx != 0 && (DIFF_SIGN(sp30.vx, D_800C4590.offset_0.vx) || abs(sp30.vx) >= ABS(D_800C4590.offset_0.vx)))
         {
-            sp40.vx = sp30.vx - D_800C4590.field_0.vx;
+            sp40.vx = sp30.vx - D_800C4590.offset_0.vx;
         }
         else
         {
             sp40.vx = 0;
         }
 
-        if (D_800C45B0.vz != 0 && (DIFF_SIGN(sp30.vz, D_800C4590.field_0.vz) || abs(sp30.vz) >= ABS(D_800C4590.field_0.vz)))
+        if (D_800C45B0.vz != 0 && (DIFF_SIGN(sp30.vz, D_800C4590.offset_0.vz) || abs(sp30.vz) >= ABS(D_800C4590.offset_0.vz)))
         {
-            sp40.vz = sp30.vz - D_800C4590.field_0.vz;
+            sp40.vz = sp30.vz - D_800C4590.offset_0.vz;
         }
         else
         {
@@ -6496,17 +6496,17 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
         g_MapOverlayHeader.func_158(-sp40.vx, -sp40.vz);
     }
 
-    chara->position_18.vx += D_800C4590.field_0.vx;
-    chara->position_18.vy += D_800C4590.field_0.vy;
-    chara->position_18.vz += D_800C4590.field_0.vz;
+    chara->position_18.vx += D_800C4590.offset_0.vx;
+    chara->position_18.vy += D_800C4590.offset_0.vy;
+    chara->position_18.vz += D_800C4590.offset_0.vz;
 
     if (g_SysWork.player_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_RunForward ||
         g_SysWork.player_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_RunRight ||
         g_SysWork.player_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_RunLeft)
     {
-        chara->properties_E4.player.runTimer_108 += SquareRoot0(SQUARE(D_800C4590.field_0.vx) +
-                                                                SQUARE(D_800C4590.field_0.vy) +
-                                                                SQUARE(D_800C4590.field_0.vz));
+        chara->properties_E4.player.runTimer_108 += SquareRoot0(SQUARE(D_800C4590.offset_0.vx) +
+                                                                SQUARE(D_800C4590.offset_0.vy) +
+                                                                SQUARE(D_800C4590.offset_0.vz));
     }
     else
     {

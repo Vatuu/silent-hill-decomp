@@ -1719,7 +1719,7 @@ typedef struct
 
 typedef struct
 {
-    VECTOR3 field_0; // For player, used as translation offset.
+    VECTOR3 offset_0;
     s32     field_C; // Absolute ground height?
     s16     field_10;
     s16     field_12;
@@ -3733,26 +3733,26 @@ void func_800699E4(s_IpdCollisionData* collData);
 
 void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ);
 
-s32 func_80069B24(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara);
+s32 func_80069B24(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara);
 
-s32 func_80069BA8(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara, s32 arg4);
+s32 func_80069BA8(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara, s32 arg4);
 
 void func_80069DF0(s_800C4590* arg0, VECTOR3* pos, s32 arg2, s32 arg3);
 
-s32 func_80069FFC(s_800C4590* arg0, VECTOR3* pos, s_SubCharacter* chara);
+s32 func_80069FFC(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara);
 
 void func_8006A178(s_800C4590* arg0, q19_12 posX, q19_12 posY, q19_12 posZ, q19_12 heightY);
 
 s_SubCharacter** func_8006A1A4(s32* charaCount, s_SubCharacter* chara, bool arg2);
 
-s32 func_8006A3B4(s32 arg0, VECTOR* pos, s_func_8006AB50* arg2);
+s32 func_8006A3B4(s32 arg0, VECTOR* offset, s_func_8006AB50* arg2);
 
-s32 func_8006A42C(s32 arg0, VECTOR3* pos, s_func_8006AB50* arg2);
+s32 func_8006A42C(s32 arg0, VECTOR3* offset, s_func_8006AB50* arg2);
 
-s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* pos, s_func_8006AB50* arg2, s32 arg3,
+s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* offset, s_func_8006AB50* arg2, s32 arg3,
                   s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7, s_SubCharacter** charas, s32 charaCount);
 
-void func_8006A940(VECTOR3* pos, s_func_8006AB50* arg1, s_SubCharacter** charas, s32 charaCount);
+void func_8006A940(VECTOR3* offset, s_func_8006AB50* arg1, s_SubCharacter** charas, s32 charaCount);
 
 void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* pos, s_func_8006AB50* arg2, s32 arg3);
 

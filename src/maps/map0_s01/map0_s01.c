@@ -51,7 +51,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D0C3C);
 void func_800D16C4(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord) // 0x800D16C4
 {
     s_Collision coll;
-    VECTOR3     sp20;
+    VECTOR3     offset;
     s32         headingAngle;
     s16         temp_v0;
     s32         temp_s0;
@@ -114,20 +114,20 @@ void func_800D16C4(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
     temp_v0_2 = Math_Sin(headingAngle) >> scaleReduceShift;
     temp_s0 = moveAmt >> scaleReduceShift;
     temp_s2 = FP_MULTIPLY_PRECISE(temp_s0, temp_v0_2, Q12_SHIFT);
-    sp20.vx = temp_s2 << scaleRestoreShift;
+    offset.vx = temp_s2 << scaleRestoreShift;
 
     temp_v0_3 = Math_Cos(headingAngle) >> scaleReduceShift;
     temp_s2   = FP_MULTIPLY_PRECISE(temp_s0, temp_v0_3, Q12_SHIFT);
-    sp20.vz   = temp_s2 << scaleRestoreShift;
+    offset.vz   = temp_s2 << scaleRestoreShift;
     
-    sp20.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
+    offset.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
 
     if (cond)
     {
-        func_80069B24(&D_800C4590, &sp20, chara);
-        chara->position_18.vx += D_800C4590.field_0.vx;
-        chara->position_18.vy += D_800C4590.field_0.vy;
-        chara->position_18.vz += D_800C4590.field_0.vz;
+        func_80069B24(&D_800C4590, &offset, chara);
+        chara->position_18.vx += D_800C4590.offset_0.vx;
+        chara->position_18.vy += D_800C4590.offset_0.vy;
+        chara->position_18.vz += D_800C4590.offset_0.vz;
 
         if (D_800C4590.field_14 == 0)
         {
@@ -142,8 +142,8 @@ void func_800D16C4(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
     }
     else
     {
-        chara->position_18.vx += sp20.vx;
-        chara->position_18.vz += sp20.vz;
+        chara->position_18.vx += offset.vx;
+        chara->position_18.vz += offset.vz;
         playerState = g_SysWork.player_4C.extra_128.state_1C;
 
         if (playerState < PlayerState_Unk87 || (playerState >= PlayerState_Unk89 && playerState != PlayerState_Unk106))
