@@ -1234,7 +1234,7 @@ typedef struct _SubCharacter
     s8      attackReceived_41; // Indicates what attack has been performed to the character. For enemies is based on `e_EquippedWeaponId` enum.
     s8      unk_42[2];
     s16     field_44;
-    s8      field_46; // In player: The ID (from `e_EquippedWeaponId`) of the weapon which player is using.
+    s8      field_46; // In player: packed weapon attack. See `WEAPON_ATTACK`.
                       // This is not the same as `attackReceived_41`, as this value only resets when player is aiming.
                       // In NPCs: Indicates attack performed on player.
     s8      field_47;

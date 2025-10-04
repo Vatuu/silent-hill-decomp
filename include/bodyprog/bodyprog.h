@@ -88,9 +88,14 @@ typedef enum _SpeedZoneType
 
 typedef enum _Sfx
 {
-    Sfx_Base        = 1280,
+    Sfx_Base        = 1280,          // Base SFX (not valid in itself).
 				    
     Sfx_StartGame   = Sfx_Base + 1,  // `SND/FIRST.VAB`
+
+    Sfx_Unk1286     = Sfx_Base + 6,
+
+    Sfx_Unk1296     = Sfx_Base + 16,
+    Sfx_Unk1297     = Sfx_Base + 17,
 				    
     Sfx_Denied      = Sfx_Base + 24, // `1ST/BASE.VAB` onward, but loaded out of order?
     Sfx_Back        = Sfx_Base + 25,
@@ -103,6 +108,7 @@ typedef enum _Sfx
 				    
     Sfx_Stumble0    = 1314,
 
+    Sfx_Unk1316     = 1316,
     Sfx_Unk1317     = 1317,
     Sfx_Unk1318     = 1318,
     Sfx_Unk1319     = 1319,
@@ -3594,7 +3600,7 @@ s32 func_8008A0CC(); /** Returns 0. */
 
 s64 func_8008A0D4(void); /** Returns 0. */
 
-s32 func_8008A0E4(s32 arg0, e_EquippedWeaponId weaponAttack, s_SubCharacter* chara, VECTOR3* pos, s32 arg4, s16 arg5, s16 arg6);
+s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* pos, s32 arg4, s16 arg5, s16 arg6);
 
 u8 func_8008A270(s32 idx);
 

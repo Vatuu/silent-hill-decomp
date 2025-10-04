@@ -2119,7 +2119,7 @@ s64 func_8008A0D4(void) // 0x8008A0D4
     return 0;
 }
 
-s32 func_8008A0E4(s32 arg0, e_EquippedWeaponId weaponAttack, s_SubCharacter* chara, VECTOR3* pos, s32 arg4, s16 arg5, s16 arg6) // 0x8008A0E4
+s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* pos, s32 arg4, s16 arg5, s16 arg6) // 0x8008A0E4
 {
     s32          var_t1;
     s32          temp_a1;
@@ -2261,9 +2261,6 @@ u8 func_8008A2E0(s32 arg0)
             case 12:
             case 22:
                 return 13;
-
-            default:
-                break;
         }
     }
 
@@ -2371,7 +2368,7 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
         case 16:
         case 20:
         case 26:
-            sfx = 0x511;
+            sfx = Sfx_Unk1297;
             break;
 
         case 1:
@@ -2383,13 +2380,13 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
         case 21:
         case 24:
         case 27:
-            sfx = 0x510;
+            sfx = Sfx_Unk1296;
             break;
 
         case 32:
         case 33:
         case 34:
-            sfx = 0x506;
+            sfx = Sfx_Unk1286;
             break;
 
         case 2:
@@ -2404,12 +2401,10 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
 
         case 8:
         case 9:
-            sfx = 0x524;
+            sfx = Sfx_Unk1316;
             break;
 
         case 35:
-        default:
-            break;
     }
 
     if (sfx != 0)
