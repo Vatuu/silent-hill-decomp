@@ -1420,7 +1420,7 @@ STATIC_ASSERT_SIZEOF(s_DmsEntry, 16);
 typedef struct
 {
     s16 startKeyframeIdx_0;
-    s16 frameCount_2; /** Keyframe count or frame duration at 30FPS? */
+    s16 frameCount_2; /** Frame duration at 30 FPS. */
 } s_DmsInterval;
 STATIC_ASSERT_SIZEOF(s_DmsInterval, 4);
 
@@ -3377,7 +3377,7 @@ void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q19_
 void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 alpha);
 
 /** @unused? Returns `96 * cotangent(angle / 2)`. Possibly camera/FOV related. */
-s16 func_8008CDBC(s16 angle);
+q3_12 func_8008CDBC(q3_12 angle);
 
 s32 Dms_CameraGetTargetPos(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* arg2, q19_12 time, s_DmsHeader* dmsHdr);
 
@@ -3386,13 +3386,13 @@ bool func_8008CF54(SVECTOR3* rot0, SVECTOR3* rot1);
 
 s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, const s_DmsKeyframeCamera* frame0, const s_DmsKeyframeCamera* frame1, s32 alpha);
 
-void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, s32* alpha, q19_12 time, s_DmsEntry* camEntry, s_DmsHeader* dmsHdr);
+void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, q19_12* alpha, q19_12 time, s_DmsEntry* camEntry, s_DmsHeader* dmsHdr);
 
-u32 Dms_IntervalStatusGet(s32 time, s_DmsHeader* dmsHdr);
+u32 Dms_IntervalStateGet(q19_12 time, s_DmsHeader* dmsHdr);
 
 s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry);
 
-s32 Math_LerpFixed12(s16 from, s16 to, s32 alpha);
+s32 Math_LerpFixed12(s16 from, s16 to, q19_12 alpha);
 
 void func_8008D41C();
 

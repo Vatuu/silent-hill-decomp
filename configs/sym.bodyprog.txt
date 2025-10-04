@@ -705,7 +705,7 @@ Dms_CharacterGetPosRotByIdx                 = 0x8008CB90; // type:func
 Dms_CharacterKeyframeInterpolate            = 0x8008CC98; // type:func
 Dms_CameraGetTargetPos                      = 0x8008CE1C; // type:func
 Dms_CameraKeyframeInterpolate               = 0x8008CFEC; // type:func
-Dms_IntervalStatusGet                       = 0x8008D2C4; // type:func
+Dms_IntervalStateGet                        = 0x8008D2C4; // type:func
 Math_LerpFixed12                            = 0x8008D3D4; // type:func
 Map_WaterZoneGet                            = 0x8008E51C; // type:func
 

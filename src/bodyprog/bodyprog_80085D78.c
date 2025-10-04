@@ -2420,7 +2420,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008BF84); // 0x
 
 void DmsHeader_FixOffsets(s_DmsHeader* dmsHdr) // 0x8008C9A0
 {
-    s_DmsEntry* entry;
+    s_DmsEntry* curEntry;
 
     if (dmsHdr->isLoaded_0)
     {
@@ -2435,11 +2435,11 @@ void DmsHeader_FixOffsets(s_DmsHeader* dmsHdr) // 0x8008C9A0
 
     DmsEntry_FixOffsets(&dmsHdr->camera_1C, dmsHdr);
 
-    for (entry = dmsHdr->characters_18;
-         entry < &dmsHdr->characters_18[dmsHdr->characterCount_1];
-         entry++)
+    for (curEntry = dmsHdr->characters_18;
+         curEntry < &dmsHdr->characters_18[dmsHdr->characterCount_1];
+         curEntry++)
     {
-        DmsEntry_FixOffsets(entry, dmsHdr);
+        DmsEntry_FixOffsets(curEntry, dmsHdr);
     }
 }
 
@@ -2533,7 +2533,7 @@ void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyfr
     result->rotation_6.vz = Math_LerpFixed12(frame0->rotation_6.vz, frame1->rotation_6.vz, alpha);
 }
 
-s16 func_8008CDBC(s16 angle) // 0x8008CDBC
+q3_12 func_8008CDBC(q3_12 angle) // 0x8008CDBC
 {
     return (96 * Math_Cos(angle / 2)) / Math_Sin(angle / 2);
 }
@@ -2599,7 +2599,7 @@ s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, const s_DmsKeyfra
     return result->field_C[1];
 }
 
-void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, s32* alpha, q19_12 time, s_DmsEntry* camEntry, s_DmsHeader* dmsHdr) // 0x8008D1D0
+void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, q19_12* alpha, q19_12 time, s_DmsEntry* camEntry, s_DmsHeader* dmsHdr) // 0x8008D1D0
 {
     s32 prevVal;
     s32 nextVal;
@@ -2607,24 +2607,24 @@ void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, s32* alpha, q19_12 time
     prevVal = 0;
     nextVal = 0;
     
-    switch (Dms_IntervalStatusGet(time, dmsHdr))
+    switch (Dms_IntervalStateGet(time, dmsHdr))
     {
-        case 0:
+        case DmsIntervalState_Interpolating:
             prevVal = FP_FROM(time, Q12_SHIFT);
             nextVal = prevVal + 1;
-            *alpha = Q12_FRACT(time);
+            *alpha  = Q12_FRACT(time);
             break;
 
-        case 1:
+        case DmsIntervalState_SingleFrame:
             prevVal = FP_FROM(time, Q12_SHIFT);
             nextVal = prevVal;
-            *alpha = 0;
+            *alpha  = Q12(0.0f);
             break;
 
-        case 2:
+        case DmsIntervalState_Ending:
             prevVal = FP_FROM(time, Q12_SHIFT) - 1;
             nextVal = prevVal + 1;
-            *alpha = Q12_FRACT(time) + Q12(1.0f);
+            *alpha  = Q12_FRACT(time) + Q12(1.0f);
             break;
     }
 
@@ -2632,31 +2632,31 @@ void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, s32* alpha, q19_12 time
     *nextKeyframe = func_8008D330(nextVal, camEntry);
 }
 
-u32 Dms_IntervalStatusGet(s32 time, s_DmsHeader* dmsHdr)
+u32 Dms_IntervalStateGet(q19_12 time, s_DmsHeader* dmsHdr)
 {
-    s_DmsInterval* interval;
+    s32            frameTime;
+    s_DmsInterval* curInterval;
 
-    // Keyframe index.
-    time = FP_FROM(time, Q12_SHIFT);
+    frameTime = FP_FROM(time, Q12_SHIFT);
 
-    for (interval = dmsHdr->intervalPtr_8;
-         interval < &dmsHdr->intervalPtr_8[dmsHdr->intervalCount_2];
-         interval++)
+    for (curInterval = dmsHdr->intervalPtr_8;
+         curInterval < &dmsHdr->intervalPtr_8[dmsHdr->intervalCount_2];
+         curInterval++)
     {
-        if (time != ((interval->startKeyframeIdx_0 + interval->frameCount_2) - 1))
+        if (frameTime != ((curInterval->startKeyframeIdx_0 + curInterval->frameCount_2) - 1))
         {
             continue;
         }
 
-        if (interval->frameCount_2 > 1)
+        if (curInterval->frameCount_2 > 1)
         {
-            return 2;
+            return DmsIntervalState_Ending;
         }
 
-        return 1;
+        return DmsIntervalState_SingleFrame;
     }
 
-    return 0;
+    return DmsIntervalState_Interpolating;
 }
 
 s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry) // 0x8008D330
@@ -2704,7 +2704,7 @@ s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry) // 0x8008D330
     return keyframeIdx1;
 }
 
-s32 Math_LerpFixed12(s16 from, s16 to, s32 alpha) // 0x8008D3D4
+s32 Math_LerpFixed12(s16 from, s16 to, q19_12 alpha) // 0x8008D3D4
 {
     return FP_ANGLE_NORM_S((s32)(FP_MULTIPLY_PRECISE(FP_ANGLE_NORM_S(to - from), alpha, Q12_SHIFT)) + from);
 }
