@@ -182,7 +182,7 @@ GsOT g_OrderingTable2[2] =
     { 4, &g_OtTags0[1][0], 0, 0, 0 }
 };
 
-q19_12 g_DeltaTime1      = 68;
+q19_12 g_DeltaTime1      = TIME_STEP_60_FPS;
 s32    g_IntervalVBlanks = 1;
 
 s_FsImageDesc g_Font16AtlasImg             = { { 0,   16  }, 0,    240, 304, 511 };

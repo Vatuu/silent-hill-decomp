@@ -3259,7 +3259,7 @@ void GameState_MapScreen_Update() // 0x80066EB0
             {
                 D_800C4448 = D_800C4449;
 
-                Sd_EngineCmd(0x51C);
+                Sd_EngineCmd(Sfx_Unk1308);
 
                 g_GameWork.gameStateStep_598[0] = 1;
                 g_SysWork.timer_20              = 0;

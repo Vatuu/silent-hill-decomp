@@ -2994,6 +2994,12 @@ void sharedFunc_800D0850_0_s01(VECTOR3* vec0, VECTOR3* vec1);
 
 void sharedFunc_800CFFD8_0_s01(VECTOR3* vec0, q3_12* rotX, q3_12* rotY);
 
+void sharedFunc_800CD7F8_3_s03(s_SubCharacter* chara, q19_12 posX, q19_12 posZ, q19_12 range);
+
+void sharedFunc_800CD920_3_s03(s_SubCharacter* chara, q19_12 posX, q19_12 posZ);
+
+q19_12 sharedFunc_800CD940_3_s03(q19_12 pos0, q19_12 pos1);
+
 static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo)
 {
     anim->animInfo_C  = animInfo;

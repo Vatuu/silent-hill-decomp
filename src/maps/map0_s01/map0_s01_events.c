@@ -554,8 +554,8 @@ void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
 
             Savegame_EventFlagSet(EventFlag_50);
 
-            Sd_EngineCmd(1321);
-            Sd_EngineCmd(1322);
+            Sd_EngineCmd(Sfx_Unk1321);
+            Sd_EngineCmd(Sfx_Unk1322);
 
             Savegame_EventFlagSet(EventFlag_52);
 

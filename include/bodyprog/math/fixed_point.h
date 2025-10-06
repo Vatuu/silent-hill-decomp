@@ -76,7 +76,7 @@
  * @return Precise fixed-point product of `a` and `b`.
  */
 #define FP_MULTIPLY_PRECISE(a, b, shift) \
-    (((s64)(a) * (s64)(b)) >> (shift))
+    ((s32)(((s64)(a) * (s64)(b)) >> (shift)))
 
 /** @brief Multiplies an integer in a fixed-point Q format by a float converted to a fixed-point Q format.
  *
@@ -98,6 +98,15 @@
  */
 #define FP_MULTIPLY_FLOAT_PRECISE(aInt, bFlt, shift) \
     FP_MULTIPLY((s64)(aInt), (s64)TO_FIXED(bFlt, shift), shift)
+
+/** @brief Squares a fixed-point value, using 64-bit intermediate for higher precision.
+ *
+ * @param x Fixed-point value to be squared.
+ * @param shift Fixed-point shift.
+ * @return Fixed-point square of `x`.
+ */
+#define FP_SQUARE_PRECISE(x, shift) \
+    FP_MULTIPLY_PRECISE(x, x, shift)
 
 /** @brief Computes the square 2D distance between two positions in Q19.12 fixed-point,
  * using Q21.8 fixed-point intermediates to avoid overflow.
