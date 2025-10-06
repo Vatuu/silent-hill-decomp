@@ -35,9 +35,9 @@ void sharedFunc_800D3B44_0_s00(s_SubCharacter* chara)
         }
     }
 
-    if (!(g_SysWork.field_22A0 & (1 << 4)))
+    if (!(g_SysWork.sysFlags_22A0 & SysFlag_4))
     {
-        g_SysWork.field_22A0 |= 1 << 4;
+        g_SysWork.sysFlags_22A0 |= SysFlag_4;
 
         for (i = 4; i > 0; i--)
         {

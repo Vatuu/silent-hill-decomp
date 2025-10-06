@@ -29,7 +29,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDIN
 
     sharedFunc_800D0F28_3_s03(chara, anmHdr, coords);
 
-    if (g_SysWork.field_22A0 & (1 << 6))
+    if (g_SysWork.sysFlags_22A0 & SysFlag_6)
     {
         chara->properties_E4.larvalStalker.properties_E8[13].val32 &= ~(1 << 0);
         chara->properties_E4.larvalStalker.properties_E8[13].val32 &= ~(1 << 1);

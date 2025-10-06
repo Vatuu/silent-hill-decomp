@@ -1701,7 +1701,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DBF08
             g_WorldGfx_ObjectAdd(&D_800E3A5C[0], &D_800E3A9C, &D_800E3AAC);
             g_WorldGfx_ObjectAdd(&D_800E3A5C[1], &D_800E3A9C, &D_800E3AAC);
         
-            if (g_SysWork.field_22A0 & 0x40)
+            if (g_SysWork.sysFlags_22A0 & SysFlag_6)
             {
                 Savegame_EventFlagClear(EventFlag_188);
             }

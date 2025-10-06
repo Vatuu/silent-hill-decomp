@@ -913,8 +913,8 @@ void func_80035F4C(s32 flags, s32 arg1, u8* arg2) // 0x80035F4C
     u8*  var_t4;
 
     flagsCpy = flags;
-    var_t4 = arg2;
-    ptr    = g_SysWork.field_2748;
+    var_t4   = arg2;
+    ptr      = g_SysWork.field_2748;
 
     if (var_t4 == NULL)
     {
@@ -928,18 +928,18 @@ void func_80035F4C(s32 flags, s32 arg1, u8* arg2) // 0x80035F4C
         arg1    = 0x333;
     }
     
-    if ((flagsCpy & (1 << 8)) == 0)
+    if (!(flagsCpy & (1 << 8)))
     {
         if (D_800A9A1C > 0 && g_SavegamePtr->flags_AC & (1 << 0))
         {
-            g_SysWork.field_22A0 |= 1 << 2;
+            g_SysWork.sysFlags_22A0 |= SysFlag_2;
         }
     }
 
-    if (g_SysWork.field_22A0 & (1 << 7))
+    if (g_SysWork.sysFlags_22A0 & SysFlag_7)
     {
-        flagsCpy              = (1 << 0) | (1 << 9);
-        g_SysWork.field_22A0 |= 1 << 1;
+        flagsCpy                 = (1 << 0) | (1 << 9);
+        g_SysWork.sysFlags_22A0 |= SysFlag_1;
     }
 
     if (flagsCpy & (1 << 0))
@@ -958,17 +958,17 @@ void func_80035F4C(s32 flags, s32 arg1, u8* arg2) // 0x80035F4C
         if (i == temp_s7) 
         {
             var_t0 = FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime1, 0.25f, Q12_SHIFT);
-            if (g_SysWork.field_22A0 & (1 << 1)) 
+            if (g_SysWork.sysFlags_22A0 & SysFlag_1)
             {
                 var_a0 = Q12(1.0f);
             } 
-            else if (g_SysWork.field_22A0 & (1 << 2)) 
+            else if (g_SysWork.sysFlags_22A0 & SysFlag_2)
             {
                 var_a0 = Q12(0.75f);
             } 
             else 
             {
-                var_a0 = (g_SysWork.field_22A0 << 8) & 0x800;
+                var_a0 = (g_SysWork.sysFlags_22A0 << 8) & 0x800; // TODO: Werid `SysFlag_3` check.
             }
         } 
         else 
@@ -1115,8 +1115,8 @@ void func_80035F4C(s32 flags, s32 arg1, u8* arg2) // 0x80035F4C
 
 void func_800363D0() // 0x800363D0
 {
-    D_800A9A1C            = 0;
-    g_SysWork.field_22A0 |= 1 << 3;
+    D_800A9A1C               = 0;
+    g_SysWork.sysFlags_22A0 |= SysFlag_3;
     func_80035DB4(0);
 }
 
@@ -1242,7 +1242,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
             return MapMsgState_Finish;
 
         case 1:
-            if (g_SysWork.field_22A0 & (1 << 5))
+            if (g_SysWork.sysFlags_22A0 & SysFlag_5)
             {
                 if (func_80045B28() == 4)
                 {
@@ -1290,7 +1290,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                         {
                             g_MapMsg_StateMachineIdx2 = FINISH_MAP_MSG;
 
-                            if (g_SysWork.field_22A0 & (1 << 5))
+                            if (g_SysWork.sysFlags_22A0 & SysFlag_5)
                             {
                                 Sd_EngineCmd(19);
                             }
@@ -1358,7 +1358,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                         return MapMsgState_Idle;
                     }
 
-                    if (g_SysWork.field_22A0 & (1 << 5))
+                    if (g_SysWork.sysFlags_22A0 & SysFlag_5)
                     {
                         Sd_EngineCmd(19);
                     }
@@ -1393,7 +1393,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
     g_SysWork.enableHighResGlyphs_2350_0 = false;
     g_MapMsg_DisplayLength               = 0;
 
-    if (g_SysWork.field_22A0 & (1 << 5))
+    if (g_SysWork.sysFlags_22A0 & SysFlag_5)
     {
         D_800BCD74 = 1;
     }
@@ -2097,7 +2097,7 @@ void GameState_InGame_Update() // 0x80038BD4
 
             g_IntervalVBlanks = 2;
             g_GameWork.gameStateStep_598[0]++;
-            g_SysWork.field_22A0 |= 1 << 6;
+            g_SysWork.sysFlags_22A0 |= SysFlag_6;
             break;
     }
 
@@ -2138,7 +2138,7 @@ void GameState_InGame_Update() // 0x80038BD4
 
     D_800A9A0C = ScreenFade_IsFinished() && Fs_QueueDoThingWhenEmpty();
 
-    if (!(g_SysWork.field_22A0 & (1 << 0)) && g_MapOverlayHeader.func_40 != NULL)
+    if (!(g_SysWork.sysFlags_22A0 & SysFlag_Freeze) && g_MapOverlayHeader.func_40 != NULL)
     {
         g_MapOverlayHeader.func_40();
     }
@@ -2148,7 +2148,7 @@ void GameState_InGame_Update() // 0x80038BD4
     Demo_DemoRandSeedRestore();
     Demo_DemoRandSeedRestore();
 
-    if (!(g_SysWork.field_22A0 & (1 << 0)))
+    if (!(g_SysWork.sysFlags_22A0 & SysFlag_Freeze))
     {
         func_80040014();
         vcMoveAndSetCamera(false, false, false, false, false, false, false, false);
@@ -2690,7 +2690,7 @@ void SysState_LoadArea_Update() // 0x80039C40
         g_SysWork.flags_22A4 &= ~(1 << 6);
     }
 
-    g_SysWork.field_22A0 |= 1 << 0;
+    g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
     Game_StateSetNext(GameState_MainLoadScreen);
     Gfx_2dBackgroundMotionBlur(SyncMode_Immediate);
 }
@@ -3048,7 +3048,7 @@ void SysState_GameOver_Update() // 0x8003A52C
 
     if (g_SysWork.sysStateStep_C[0] >= 2 || g_GameWork.gameState_594 != GameState_InGame)
     {
-        g_SysWork.field_22A0 |= 1 << 0;
+        g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
     }
 }
 

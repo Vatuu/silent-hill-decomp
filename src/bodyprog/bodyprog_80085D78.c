@@ -528,7 +528,7 @@ void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* sounds) // 0x800869E
 {
     s32 mapMsgState;
 
-    g_SysWork.field_22A0 |= 1 << 5;
+    g_SysWork.sysFlags_22A0 |= SysFlag_5;
 
     mapMsgState = Gfx_MapMsg_Draw(mapMsgIdx);
     if (mapMsgState == MapMsgState_SelectEntry0)
@@ -1218,26 +1218,26 @@ void func_80087EDC(s32 arg0) // 0x80087EDC
                 g_SysWork.sysStateStep_C[1] = 3;
                 g_SysWork.timer_2C          = Q12(0.0f);
                 g_SysWork.sysStateStep_C[2] = 0;
-                return;
+                break;
             }
             
             g_SysWork.timer_2C          = Q12(0.0f);
             g_SysWork.sysStateStep_C[2] = 0;
-            g_SysWork.field_22A0       |= 1 << 7;
+            g_SysWork.sysFlags_22A0    |= SysFlag_7;
             g_SysWork.sysStateStep_C[1]++;
-            return;
+            break;
         
         case 1:
-            g_SysWork.field_22A0 |= 1 << 7;
+            g_SysWork.sysFlags_22A0 |= SysFlag_7;
             Sd_EngineCmd(23);
             
             g_SysWork.timer_2C          = Q12(0.0f);
             g_SysWork.sysStateStep_C[2] = 0;
             g_SysWork.sysStateStep_C[1]++;
-            return;
+            break;
         
         case 2:
-            g_SysWork.field_22A0 |= 1 << 7;
+            g_SysWork.sysFlags_22A0 |= SysFlag_7;
             
             if (!func_80045BC8())
             {

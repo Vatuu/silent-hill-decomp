@@ -225,7 +225,7 @@ void Screen_CutsceneCameraStateUpdate() // 0x80032904
 
     vcSetEvCamRate(D_800A8F40);
 
-    if (g_SysWork.field_22A0 & (1 << 0))
+    if (g_SysWork.sysFlags_22A0 & SysFlag_Freeze)
     {
         return;
     }

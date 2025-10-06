@@ -165,7 +165,7 @@ void MainLoop() // 0x80032EE0
         GsClearOt(0, 0, &g_OrderingTable0[g_ActiveBufferIdx]);
         GsClearOt(0, 0, &g_OrderingTable2[g_ActiveBufferIdx]);
 
-        g_SysWork.field_22A0 = 0;
+        g_SysWork.sysFlags_22A0 = SysFlag_None;
 
         // Call update function for current GameState.
         g_GameStateUpdateFuncs[g_GameWork.gameState_594]();

@@ -64,7 +64,7 @@ void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image) // 0x800314EC
     }
 
     GsOUT_PACKET_P        = packet;
-    g_SysWork.field_22A0 |= 1 << 0;
+    g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
     g_BackgroundColor     = 0x80;
 }
 
@@ -118,7 +118,7 @@ void Gfx_BackgroundSpritesTransition(s_FsImageDesc* image0, s_FsImageDesc* image
         }
     }
 
-    g_SysWork.field_22A0 |= 1 << 0;
+    g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
     GsOUT_PACKET_P = (PACKET*)poly;
 }
 
@@ -163,7 +163,7 @@ void Gfx_BackgroundSpriteDraw_2(s_FsImageDesc* image) // 0x80031AAC
     }
 
     GsOUT_PACKET_P        = (PACKET*)poly;
-    g_SysWork.field_22A0 |= 1 << 0;
+    g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
     g_BackgroundColor     = 0x80;
 }
 

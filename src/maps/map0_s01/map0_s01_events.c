@@ -495,7 +495,7 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
             SysWork_StateSetNext(SysState_Gameplay);
             Game_WarmBoot();
 
-            g_SysWork.field_22A0 |= 1 << 0;
+            g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
             break;
     }
 }
@@ -1073,7 +1073,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
 
     if (Savegame_EventFlagGet(EventFlag_52))
     {
-        if (g_SysWork.field_22A0 & (1 << 6))
+        if (g_SysWork.sysFlags_22A0 & SysFlag_6)
         {
             Sd_EngineCmd(Sfx_Unk1321);
             Sd_EngineCmd(Sfx_Unk1322);

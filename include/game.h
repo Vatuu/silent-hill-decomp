@@ -371,6 +371,20 @@ typedef enum _Current2dMapIdx
     Current2dMap_AltHospital3F  = 23
 } e_Current2dMapIdx;
 
+// Temp name.
+typedef enum _SysFlags
+{
+    SysFlag_None   = 0,
+    SysFlag_Freeze = 1 << 0,
+    SysFlag_1      = 1 << 1,
+    SysFlag_2      = 1 << 2,
+    SysFlag_3      = 1 << 3,
+    SysFlag_4      = 1 << 4,
+    SysFlag_5      = 1 << 5,
+    SysFlag_6      = 1 << 6,
+    SysFlag_7      = 1 << 7
+} e_SysFlags;
+
 typedef enum _SysWorkProcessFlags
 {
     SysWorkProcessFlag_None              = 0,
@@ -1432,7 +1446,7 @@ typedef struct _SysWork
     s8              unk_0[8];
     s32             sysState_8;        /** `e_SysState` */
     s32             sysStateStep_C[3]; /** Temp data used by current `sysState_8`. Can be another state ID or other data. */
-    s32             field_18; // Probably a `VECTOR3`.
+    s32             field_18; // Related to map messages.
     s32             timer_1C;
     s32             timer_20;
     s32             timer_24;
@@ -1457,7 +1471,7 @@ typedef struct _SysWork
     s8              unk_2294[4];
     s32             processFlags_2298; /** `e_SysWorkProcessFlags` */
     s32             field_229C;
-    s32             field_22A0; // Flags.
+    e_SysFlags     sysFlags_22A0;
     s32             flags_22A4; // (1 << 6) passed as "use through door cam" flag in `vcSetFirstCamWork`.
     GsCOORDINATE2   coord_22A8; // For particles only?
     GsCOORDINATE2   coord_22F8; // Likely related to above.
