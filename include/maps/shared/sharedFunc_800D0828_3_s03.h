@@ -1,59 +1,62 @@
 void sharedFunc_800D0828_3_s03(s_SubCharacter* chara, GsCOORDINATE2* coords)
 {
-    MATRIX          sp10[4];
-    s_SubCharacter* chara2;
-    VECTOR3         sp90;
+    MATRIX          boneMats[4];
+    VECTOR3         unkPos;
     s32             unused[2];
+    q19_12          deltaX;
+    q19_12          deltaY;
+    q19_12          unkQ12;
+    q19_12          posY;
+    q19_12          offsetPosY;
+    q19_12          torsoPosY;
+    q19_12          headPosY;
+    q19_12          rightShinPosY;
+    q19_12          leftShinPosY;
+    q19_12          tempPosComp;
+    s_SubCharacter* charaCpy;
 
-    s32 deltaX;
-    s32 deltaY;
-    s32 temp_v1;
-    s32 temp_v0;
-    s32 temp_v0_4;
-    s32 temp_a0;
-    s32 temp_a1;
-    s32 temp_a3;
+    charaCpy = chara;
 
-    chara2 = chara;
+    // Get torso, head, right shin, and left shin bone matrices.
+    Vw_CoordHierarchyMatrixCompute(&coords[HarryBone_Torso],     &boneMats[0]);
+    Vw_CoordHierarchyMatrixCompute(&coords[HarryBone_Head],      &boneMats[1]);
+    Vw_CoordHierarchyMatrixCompute(&coords[HarryBone_RightShin], &boneMats[2]);
+    Vw_CoordHierarchyMatrixCompute(&coords[HarryBone_LeftShin],  &boneMats[3]);
 
-    Vw_CoordHierarchyMatrixCompute(&coords[1], &sp10[0]);
-    Vw_CoordHierarchyMatrixCompute(&coords[2], &sp10[1]);
-    Vw_CoordHierarchyMatrixCompute(&coords[16], &sp10[2]);
-    Vw_CoordHierarchyMatrixCompute(&coords[13], &sp10[3]);
+    posY             = charaCpy->position_18.vy;
+    rightShinPosY    = Q8_TO_Q12(boneMats[2].t[1]);
+    leftShinPosY     = Q8_TO_Q12(boneMats[3].t[1]);
+    chara->field_C8  = Q8_TO_Q12(boneMats[1].t[1]);
+    offsetPosY       = posY + Q12(0.25f);
+    chara->field_C8 -= offsetPosY;
+    chara->field_CA  = posY;
 
-    temp_a3          = chara2->position_18.vy;
-    temp_a0          = Q8_TO_Q12(sp10[2].t[1]);
-    temp_a1          = Q8_TO_Q12(sp10[3].t[1]);
-    chara->field_C8  = Q8_TO_Q12(sp10[1].t[1]);
-    temp_v1          = temp_a3 + Q12(0.25f);
-    chara->field_C8 -= temp_v1;
-    chara->field_CA  = temp_a3;
-
-    if (temp_a0 >= temp_a1)
+    if (rightShinPosY >= leftShinPosY)
     {
-        chara->field_CC = temp_a1 - chara->field_CA;
+        chara->field_CC = leftShinPosY - chara->field_CA;
     }
     else
     {
-        chara->field_CC = temp_a0 - chara->field_CA;
+        chara->field_CC = rightShinPosY - chara->field_CA;
     }
 
-    chara->field_CE = ((Q8_TO_Q12(sp10[1].t[1]) + Q8_TO_Q12(sp10[0].t[1])) >> 1) - temp_a3;
+    // `((torsoPosY - headPosY) / 2) - posY`
+    chara->field_CE = ((Q8_TO_Q12(boneMats[1].t[1]) + Q8_TO_Q12(boneMats[0].t[1])) >> 1) - posY;
 
-    temp_v0 = sharedFunc_800CD6B0_3_s03(sp10, 4, &sp90);
-    deltaX  = sp90.vx - chara->position_18.vx;
-    deltaY  = sp90.vz - chara->position_18.vz;
+    unkQ12 = sharedFunc_800CD6B0_3_s03(boneMats, 4, &unkPos);
+    deltaX = unkPos.vx - chara->position_18.vx;
+    deltaY = unkPos.vz - chara->position_18.vz;
 
-    temp_v0                   = sharedFunc_800CD940_3_s03(temp_v0 + 0xCC, chara->field_D4);
-    chara->field_D6           = temp_v0 - 0xCC;
-    chara->field_D4           = temp_v0;
+    unkQ12                    = sharedFunc_800CD940_3_s03(unkQ12 + Q12(0.05f), chara->field_D4);
+    chara->field_D6           = unkQ12 - Q12(0.05f);
+    chara->field_D4           = unkQ12;
     chara->field_D8.offsetX_0 = deltaX;
     chara->field_D8.offsetZ_2 = deltaY;
 
     sharedFunc_800CD920_3_s03(chara, deltaX, deltaY);
 
-    temp_v0_4                             = chara->position_18.vx;
-    chara2->properties_E4.npc.field_E8.vx = temp_v0_4;
-    temp_v0_4                             = chara->position_18.vz;
-    chara2->properties_E4.npc.field_E8.vz = temp_v0_4;
+    tempPosComp                             = chara->position_18.vx;
+    charaCpy->properties_E4.npc.field_E8.vx = tempPosComp;
+    tempPosComp                             = chara->position_18.vz;
+    charaCpy->properties_E4.npc.field_E8.vz = tempPosComp;
 }

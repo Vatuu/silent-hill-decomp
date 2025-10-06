@@ -1270,9 +1270,9 @@ typedef struct _SubCharacter
 
     // Fields seen used inside maps (eg. `map0_s00` `func_800D923C`)
 
-    q3_12             field_C8; // } Anim root offset?
-    q3_12             field_CA; // }
-    q3_12             field_CC; // }
+    q3_12             field_C8; // } Anim root offset? Set to player head position in `sharedFunc_800D0828_3_s03`.
+    q3_12             field_CA; // } } Computed as Y offsets in `sharedFunc_800D0828_3_s03`.
+    q3_12             field_CC; // } }
     q3_12             field_CE;
     s16               field_D0; // Q3.12? Maybe weapon range?
     s16               field_D2;
@@ -1472,7 +1472,7 @@ typedef struct _SysWork
     u32             inventoryItemSelectedIdx_2351   : 8;
     u32             flags_2352                      : 8;
     s8              enemyTargetIdx_2353; // Index of the enemy that is being attacked by the player.
-    s8              field_2354[4];       // Size dervied from `func_80070320`.
+    s8              npcIdxs_2354[4];
     u8              field_2358;          /** `bool` */
     s8              unk_2359[1];
     u8              field_235A; /** If the player stop walking or running forward the value (as a bit) changes

@@ -7179,9 +7179,9 @@ bool func_80070320() // 0x80070320
 {
     s32 i;
 
-    for (i = 0; i < ARRAY_SIZE(g_SysWork.field_2354); i++)
+    for (i = 0; i < ARRAY_SIZE(g_SysWork.npcIdxs_2354); i++)
     {
-        if (g_SysWork.field_2354[i] != NO_VALUE)
+        if (g_SysWork.npcIdxs_2354[i] != NO_VALUE)
         {
             return true;
         }

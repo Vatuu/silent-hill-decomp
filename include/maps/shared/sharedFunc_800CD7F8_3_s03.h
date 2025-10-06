@@ -1,33 +1,33 @@
 void sharedFunc_800CD7F8_3_s03(s_SubCharacter* chara, q19_12 posX, q19_12 posZ, q19_12 range)
 {
-    s32 deltaX;
-    s32 deltaZ;
-    s32 sqrDelta;
-    s32 sqrRootDelta;
-    s32 scale;
-    s32 scaledDeltaX;
-    s32 scaledDeltaZ;
+    q19_12 deltaX;
+    q19_12 deltaZ;
+    q19_12 deltaSqr;
+    q19_12 rootDeltaSqr;
+    q19_12 scale;
+    q19_12 scaledDeltaX;
+    q19_12 scaledDeltaZ;
 
     deltaX = chara->field_D8.offsetX_4 - posX;
     deltaZ = chara->field_D8.offsetZ_6 - posZ;
 
-    sqrDelta = FP_SQUARE_PRECISE(deltaX, Q12_SHIFT) + FP_SQUARE_PRECISE(deltaZ, Q12_SHIFT);
-    if (sqrDelta > FP_MULTIPLY_PRECISE(range, 4, Q12_SHIFT))
+    deltaSqr = FP_SQUARE_PRECISE(deltaX, Q12_SHIFT) + FP_SQUARE_PRECISE(deltaZ, Q12_SHIFT);
+    if (deltaSqr > FP_MULTIPLY_PRECISE(range, 4, Q12_SHIFT))
     {
-        sqrRootDelta = SquareRoot12(sqrDelta);
-        scale        = FP_TO(sqrRootDelta - 128, Q12_SHIFT) / sqrRootDelta;
+        rootDeltaSqr = SquareRoot12(deltaSqr);
+        scale        = FP_TO(rootDeltaSqr - 128, Q12_SHIFT) / rootDeltaSqr;
 
         scaledDeltaX = scale * deltaX;
-        if (scaledDeltaX < 0)
+        if (scaledDeltaX < Q12(0.0f))
         {
-            scaledDeltaX += 0xFFF;
+            scaledDeltaX += Q12_CLAMPED(1.0f);
         }
         deltaX = FP_FROM(scaledDeltaX, Q12_SHIFT);
 
         scaledDeltaZ = scale * deltaZ;
-        if (scaledDeltaZ < 0)
+        if (scaledDeltaZ < Q12(0.0f))
         {
-            scaledDeltaZ += 0xFFF;
+            scaledDeltaZ += Q12_CLAMPED(1.0f);
         }
         deltaZ = FP_FROM(scaledDeltaZ, Q12_SHIFT);
 

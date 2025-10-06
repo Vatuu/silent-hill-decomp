@@ -6,15 +6,15 @@ q19_12 sharedFunc_800CD940_3_s03(q19_12 pos0, q19_12 pos1)
 
     delta    = pos0 - pos1;
     absDelta = ABS(delta);
-    if (absDelta > Q12(0.03125f))
+    if (absDelta > Q12(1.0f / 32.0f))
     {
         if (delta <= 0)
         {
-            pos0 = pos1 - Q12(0.03125f);
+            pos0 = pos1 - Q12(1.0f / 32.0f);
         }
         else
         {
-            pos0 = pos1 + Q12(0.03125f);
+            pos0 = pos1 + Q12(1.0f / 32.0f);
         }
     }
 

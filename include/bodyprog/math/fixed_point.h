@@ -99,7 +99,7 @@
 #define FP_MULTIPLY_FLOAT_PRECISE(aInt, bFlt, shift) \
     FP_MULTIPLY((s64)(aInt), (s64)TO_FIXED(bFlt, shift), shift)
 
-/** @brief Squares a fixed-point value, using 64-bit intermediate for higher precision.
+/** @brief Squares a fixed-point value, using 64-bit intermediates for higher precision.
  *
  * @param x Fixed-point value to be squared.
  * @param shift Fixed-point shift.
@@ -154,6 +154,14 @@
  */
 #define Q12(x) \
     TO_FIXED(x, Q12_SHIFT)
+
+/** @brief Converts a floating-point value to clamped Q*.12 fixed-point.
+ *
+ * @param x Value to convert (`float`).
+ * @return `x` converted to clamped Q*.12 fixed-point.
+ */
+#define Q12_CLAMPED(x) \
+    CLAMP(Q12(x), 0, Q12(1.0f) - 1)
 
 /** @brief Converts a fixed-point value from Q*.4 to Q*.12.
  *
