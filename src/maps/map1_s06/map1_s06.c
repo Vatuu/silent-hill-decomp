@@ -205,7 +205,20 @@ INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D5D6C);
 
 INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D5DD8);
 
-INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D6338);
+void func_800D6338(void) // 0x800D6338
+{
+    g_BackgroundColor = 0x70;
+
+    if (Savegame_EventFlagGet(137))
+    {
+        func_80087360(FILE_TIM_RSCBOOK_TIM, 0, 0, 25);
+        g_SavegamePtr->mapMarkingFlags_1DC |= 1 << 4;
+    }
+    else
+    {
+        func_80087360(FILE_TIM_RSCBOOK_TIM, 0, 0, 24);
+    }
+}
 
 void func_800D63B0(void) // 0x800D63B0
 {

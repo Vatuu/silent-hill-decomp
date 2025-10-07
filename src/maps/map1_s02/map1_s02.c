@@ -2,6 +2,7 @@
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
 #include "maps/shared.h"
+#include "maps/map1/map1_s02.h"
 
 INCLUDE_RODATA("asm/maps/map1_s02/nonmatchings/map1_s02", D_800C9578);
 
@@ -308,9 +309,15 @@ INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DA384);
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DA8F8);
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DA9D4);
+void func_800DA9D4(void) // 0x800DA9D4
+{
+    func_80087360(FILE_TIM_GOLD2_TIM, 0x3000, 0x2800, 21);
+}
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DAA00);
+void func_800DAA00(void) // 0x800DAA00
+{
+    func_80087360(FILE_TIM_SILVER2_TIM, 0x3000, 0x2800, 22);
+}
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DAA2C);
 
@@ -322,15 +329,25 @@ INCLUDE_RODATA("asm/maps/map1_s02/nonmatchings/map1_s02", D_800CB860);
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DB058);
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DB310);
+void func_800DB310(void) // 0x800DB310
+{
+    Event_ItemTake(InventoryItemId_PictureCard, 1, EventFlag_M1S02_PickupPictureCard, 29);
+}
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DB33C);
+void func_800DB33C(void) // 0x800DB33C
+{
+    Event_ItemTake(InventoryItemId_RubberBall, 1, EventFlag_M1S02_PickupRubberBall, 37);
+}
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DB368);
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DBB7C);
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DBF88);
+void func_800DBF88(void) // 0x800DBF88
+{
+    Savegame_EventFlagSet(EventFlag_97);
+    func_80087360(FILE_TIM_LVTRYMSG_TIM, 0, 0, 38);
+}
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DBFC8);
 

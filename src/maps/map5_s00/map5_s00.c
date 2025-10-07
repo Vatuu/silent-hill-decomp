@@ -281,7 +281,10 @@ void func_800D691C(void) // 0x800D691C
 
 INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", func_800D69DC);
 
-INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", func_800D6AD4);
+void func_800D6AD4(void) // 0x800D6AD4
+{
+    Event_ItemTake(InventoryItemId_SewerKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M5S00_PickupSewerKey, 17);
+}
 
 INCLUDE_RODATA("asm/maps/map5_s00/nonmatchings/map5_s00", D_800CB008);
 

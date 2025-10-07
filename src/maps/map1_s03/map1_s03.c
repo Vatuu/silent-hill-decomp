@@ -379,7 +379,10 @@ INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DBEC8);
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DC0F8);
 
-INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DC2E4);
+void func_800DC2E4(void) // 0x800DC2E4
+{
+    func_80087360(FILE_TIM_LOCKER1_TIM, 0x2800, 0x2800, 43);
+}
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DC310);
 

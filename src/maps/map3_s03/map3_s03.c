@@ -2,6 +2,7 @@
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
 #include "maps/shared.h"
+#include "maps/map3/map3_s03.h"
 
 INCLUDE_RODATA("asm/maps/map3_s03/nonmatchings/map3_s03", D_800C9578);
 
@@ -289,21 +290,42 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D164C);
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D16E0);
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D1774);
+void func_800D1774(void) // 0x800D1774
+{
+    Event_ItemTake(InventoryItemId_PlateOfHatter, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupPlateOfHatter, 15);
+}
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D17A0);
+void func_800D17A0(void) // 0x800D17A0
+{
+    Event_ItemTake(InventoryItemId_PlateOfCat, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupPlateOfCat, 16);
+}
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D17CC);
+void func_800D17CC(void) // 0x800D17CC
+{
+    Event_ItemTake(InventoryItemId_PlateOfTurtle, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupPlateOfTurtle, 17);
+}
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D17F8);
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D1A58);
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D26D0);
+void func_800D26D0(void) // 0x800D26D0
+{
+    g_BackgroundColor = 0x68;
+    func_80087360(FILE_TIM_PLATECLR_TIM, 0, 0, 18);
+}
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D2708);
+void func_800D2708(void) // 0x800D2708
+{
+    g_BackgroundColor = 0x68;
+    func_80087360(FILE_TIM_LITHGRPH_TIM, 0, 0, 44);
+}
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D2740);
+void func_800D2740(void) // 0x800D2740
+{
+    g_BackgroundColor = 0x60;
+    func_80087360(FILE_TIM_LITHGR_2_TIM, 0, 0, 45);
+}
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D2778);
 
@@ -311,21 +333,40 @@ INCLUDE_RODATA("asm/maps/map3_s03/nonmatchings/map3_s03", D_800CB27C);
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D27F4);
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D2C2C);
+void func_800D2C2C(void) // 0x800D2C2C
+{
+    Event_ItemTake(InventoryItemId_BloodPack, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupBloodPack, 40);
+}
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D2C58);
+void func_800D2C58(void) // 0x800D2C58
+{
+    Event_ItemTake(InventoryItemId_DisinfectingAlcohol, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupDisinfectingAlcohol, 41);
+}
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D2C84);
+void func_800D2C84(void) // 0x800D2C84
+{
+    Event_ItemTake(InventoryItemId_Lighter, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupLighter, 42);
+}
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D2CB0);
+void func_800D2CB0(void) // 0x800D2CB0
+{
+    Event_ItemTake(InventoryItemId_BasementStoreroomKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupBasementStoreroomKey, 43);
+}
 
 INCLUDE_RODATA("asm/maps/map3_s03/nonmatchings/map3_s03", D_800CB2C8);
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D2CDC);
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D30FC);
+void func_800D30FC(void) // 0x800D30FC
+{
+    func_80087360(FILE_TIM_CAGEEMPT_TIM, 0, 0, 53);
+}
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D3128);
+void func_800D3128(void) // 0x800D3128
+{
+    g_BackgroundColor = 0x70;
+    func_80087360(FILE_TIM_ELCWIRE0_TIM, 0, 0, 55);
+}
 
 INCLUDE_RODATA("asm/maps/map3_s03/nonmatchings/map3_s03", D_800CB304);
 

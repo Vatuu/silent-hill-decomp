@@ -215,7 +215,10 @@ void func_800D17B0(void) // 0x800D17B0
     Event_MapTake(17, EventFlag_M3S00_PickupMap, 35);
 }
 
-INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800D17D8);
+void func_800D17D8(void) // 0x800D17D8
+{
+    Event_ItemTake(InventoryItemId_AntiqueShopKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S06_PickupAntiqueShopKey, 36);
+}
 
 INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800D1804);
 

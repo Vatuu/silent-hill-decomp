@@ -553,7 +553,27 @@ void func_800D667C(void) // 0x800D667C
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D6704);
+void func_800D6704(void) // 0x800D6704
+{
+    s32 i;
+
+    // Breaks from loop if there are any characters with ID in range [1, 24].
+    for (i = 0; i < 6; i++)
+    {
+        if (g_SysWork.npcs_1A0[i].model_0.charaId_0 >= Chara_Harry &&
+            g_SysWork.npcs_1A0[i].model_0.charaId_0 <= Chara_MonsterCybil)
+        {
+            break;
+        }
+    }
+
+    if (i != 6)
+    {
+        g_DeltaTime0 = 0;
+    }
+
+    Event_ItemTake(InventoryItemId_HuntingRifle, 6, EventFlag_M4S03_PickupHuntingRifle, 17);
+}
 
 INCLUDE_RODATA("asm/maps/map4_s03/nonmatchings/map4_s03", D_800CABE8);
 

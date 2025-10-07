@@ -64,26 +64,45 @@ typedef enum _EventFlag
     EventFlag_M0S02_PickupGasolineTank = 60,
     EventFlag_61                       = 61,
     EventFlag_62                       = 62,
+    EventFlag_M2S00_PickupChainsaw     = 63,
+    EventFlag_M2S00_PickupRockDrill    = 64,
 
-    EventFlag_M1S00_PickupMap = 67, // Shared with M1S06
+    EventFlag_M1S00_PickupMap      = 67, // Shared with M1S06
+    EventFlag_M1S01_PickupChemical = 68,
 
     EventFlag_M7S01_HealthDrink1 = 86,
+
+    EventFlag_M1S02_PickupPictureCard = 93,
+
+    EventFlag_M2S04_PickupShotgun = 95,
+
+    EventFlag_97 = 97,
 
     EventFlag_105 = 105,
     EventFlag_106 = 106,
 
+    EventFlag_M1S02_PickupRubberBall = 110,
+
     EventFlag_133 = 133,
     EventFlag_134 = 134,
 
-    EventFlag_143 = 143,
-
+    EventFlag_143                         = 143,
     EventFlag_M0S02_PickupChannelingStone = 144,
+    EventFlag_145                         = 145,
+    EventFlag_146                         = 146,
 
-    EventFlag_146 = 146,
+    EventFlag_M2S00_PickupKeyOfLion = 150,
+
+    EventFlag_M2S00_PickupKeyOfScarecrow = 152,
 
     EventFlag_159 = 159,
 
     EventFlag_M2S00_PickupMap = 171, // Shared with M2S04
+
+    EventFlag_M2S00_PickupHealthDrink = 175,
+
+    EventFlag_M2S01_PickupFlauros       = 177,
+    EventFlag_M2S01_PickupDrawbridgeKey = 178,
 
     EventFlag_181 = 181,
     EventFlag_182 = 182,
@@ -97,36 +116,67 @@ typedef enum _EventFlag
 
     EventFlag_M3S00_FirstAidKit = 199, // Odd numbering not with other common items, possibly some default that goes unused, shared with M3S01 and M3S06.
 
-    EventFlag_M3S00_PickupMap = 207,   // Shared with M3S01, M3S06
-    EventFlag_M3S01_PickupMap = 208,   // M3S01 also uses flag above.
+    EventFlag_M3S01_PickupPlasticBottle = 205,
+
+    EventFlag_M3S00_PickupMap         = 207, // Shared with M3S01, M3S06
+    EventFlag_M3S01_PickupMap         = 208, // M3S01 also uses flag above.
+    EventFlag_M3S01_PickupBasementKey = 209,
 
     EventFlag_211 = 211,
 
-    EventFlag_250 = 250,
+    EventFlag_M3S04_PickupPlateOfQueen  = 241,
+    EventFlag_M3S03_PickupPlateOfTurtle = 242,
+    EventFlag_M3S03_PickupPlateOfHatter = 243,
+    EventFlag_M3S03_PickupPlateOfCat    = 244,
+
+    EventFlag_M3S03_PickupBloodPack           = 249,
+    EventFlag_250                             = 250,
+    EventFlag_M3S03_PickupDisinfectingAlcohol = 251,
+    EventFlag_M3S03_PickupLighter             = 252,
+    EventFlag_M3S05_PickupVideoTape           = 253,
+
+    EventFlag_M3S03_PickupBasementStoreroomKey = 255,
+
+    EventFlag_M3S05_PickupExaminationRoomKey = 257,
 
     EventFlag_284 = 284,
 
-    EventFlag_295 = 295,
+    EventFlag_M3S05_PickupHammer = 289,
+
+    EventFlag_295                        = 295,
+    EventFlag_M3S06_PickupAntiqueShopKey = 296,
 
     EventFlag_303 = 303,
 
     EventFlag_306 = 306,
 
-    EventFlag_311 = 311,
-    EventFlag_312 = 312,
+    EventFlag_M4S01_PickupAxe = 310,
+    EventFlag_311             = 311,
+    EventFlag_312             = 312,
+
+    EventFlag_M4S03_PickupHuntingRifle = 328,
+
+    EventFlag_M5S00_PickupSewerKey = 353,
 
     EventFlag_M5S00_PickupMap = 361,
 
     EventFlag_M5S01_PickupMap = 370,
+
+    EventFlag_M5S02_PickupSafeKey = 376,
 
     EventFlag_378 = 378,
     EventFlag_379 = 379,
 
     EventFlag_381 = 381,
 
+    EventFlag_M5S03_PickupMagnet = 386,
+
     EventFlag_391 = 391,
 
     EventFlag_395 = 395,
+
+    EventFlag_397 = 397,
+    EventFlag_398 = 398,
 
     EventFlag_423 = 423,
     EventFlag_424 = 424,
@@ -154,6 +204,9 @@ typedef enum _EventFlag
 
     EventFlag_M7S01_PickupAmuletOfSolomon = 535,
     EventFlag_M7S01_PickupCrestOfMercury  = 536,
+    EventFlag_M7S02_PickupAnkh            = 537,
+
+    EventFlag_M7S02_PickupDiskOfOuroboros = 539,
 
     EventFlag_574 = 574,
 
