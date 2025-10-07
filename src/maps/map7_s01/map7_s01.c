@@ -111,9 +111,9 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CDF24_3_s03
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D20D8);
 
-bool func_800D238C(s32 arg0)
+bool func_800D238C(s32 arg0) // 0x800D238C
 {
-    return (arg0 == 36) || (arg0 == 34) || (arg0 == 37) || (arg0 == 35);
+    return arg0 == 36 || arg0 == 34 || arg0 == 37 || arg0 == 35;
 }
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CE3CC_3_s03); // 0x800D23C0
@@ -130,11 +130,11 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CEB90_3_s03
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CEC88_3_s03); // 0x800D2C7C
 
-s32 func_800D2EA0(void)
+s32 func_800D2EA0(void) // 0x800D2EA0
 {
     s32 temp_a0;
 
-    temp_a0 = g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 3;
+    temp_a0 = g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3;
     if (temp_a0 == 0)
     {
         return 0;
@@ -251,19 +251,19 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedSymbol_800D0ADC_3_s
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D6778);
 
-void func_800D6810(s32 arg0)
+void func_800D6810(s32 arg0) // 0x800D6810
 {
     (arg0 != 0) ? func_800D6878() : func_800D6938();
 }
 
-void func_800D6844(s32 arg0)
+void func_800D6844(s32 arg0) // 0x800D6844
 {
     (arg0 != 0) ? func_800D68F8() : func_800D6938();
 }
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D6878);
 
-void func_800D68F8(void)
+void func_800D68F8(void) // 0x800D68F8
 {
     func_8003640C(Savegame_EventFlagGet(EventFlag_391) ? 40 : 35);
 }
@@ -441,26 +441,26 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D87E0);
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D889C);
 
-void func_800D8958(void)
+void func_800D8958(void) // 0x800D8958
 {
-    func_80087360(FILE_TIM_BIRDCAGE_TIM, 0, 0, 78);
+    func_80087360(FILE_TIM_BIRDCAGE_TIM, Q12(0.0f), Q12(0.0f), 78);
 }
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D8984);
 
-void func_800D89D8(void)
+void func_800D89D8(void) // 0x800D89D8
 {
     Event_ItemTake(InventoryItemId_KeyOfPhaleg, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupKeyOfPhaleg, 59);
 }
 
-void func_800D8A04(void)
+void func_800D8A04(void) // 0x800D8A04
 {
-    func_80087360(FILE_TIM_CAGEEMPT_TIM, 0, 0, 80);
+    func_80087360(FILE_TIM_CAGEEMPT_TIM, Q12(0.0f), Q12(0.0f), 80);
 }
 
-void func_800D8A30(void)
+void func_800D8A30(void) // 0x800D8A30
 {
-    func_80087360(FILE_TIM_WATERTAP_TIM, 0, 0, 68);
+    func_80087360(FILE_TIM_WATERTAP_TIM, Q12(0.0f), Q12(0.0f), 68);
 }
 
 INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", D_800CC528);
@@ -473,9 +473,9 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D8A5C);
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D8DB4);
 
-void func_800D8FCC(void)
+void func_800D8FCC(void) // 0x800D8FCC
 {
-    func_80087360(FILE_TIM_CLOCKKEY_TIM, 0, 0, 65);
+    func_80087360(FILE_TIM_CLOCKKEY_TIM, Q12(0.0f), Q12(0.0f), 65);
 }
 
 INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", D_800CC594);
@@ -488,41 +488,41 @@ INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", D_800CC5B8);
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D8FF8);
 
-void func_800D93BC(void)
+void func_800D93BC(void) // 0x800D93BC
 {
     Event_ItemTake(InventoryItemId_KeyOfHagith, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupKeyOfHagith, 58);
 }
 
-void func_800D93E8(void)
+void func_800D93E8(void) // 0x800D93E8
 {
-    func_80087360(FILE_TIM_ABUSEDSK_TIM, 0, 0, 62);
+    func_80087360(FILE_TIM_ABUSEDSK_TIM, Q12(0.0f), Q12(0.0f), 62);
 }
 
-void func_800D9414(void)
+void func_800D9414(void) // 0x800D9414
 {
     Event_ItemTake(InventoryItemId_Pliers, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupPliers, 52);
 }
 
-void func_800D9440(void)
+void func_800D9440(void) // 0x800D9440
 {
     Event_ItemTake(InventoryItemId_Screwdriver, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupScrewdriver, 53);
 }
 
-void func_800D946C(void)
+void func_800D946C(void) // 0x800D946C
 {
     g_BackgroundColor = 0x68;
-    func_80087360(FILE_TIM_LITHGRPH_TIM, 0, 0, 70);
+    func_80087360(FILE_TIM_LITHGRPH_TIM, Q12(0.0f), Q12(0.0f), 70);
 }
 
-void func_800D94A4(void)
+void func_800D94A4(void) // 0x800D94A4
 {
     g_BackgroundColor = 0x68;
-    func_80087360(FILE_TIM_LITHGR_3_TIM, 0, 0, 71);
+    func_80087360(FILE_TIM_LITHGR_3_TIM, Q12(0.0f), Q12(0.0f), 71);
 }
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D94DC);
 
-void func_800D99DC(void)
+void func_800D99DC(void) // 0x800D99DC
 {
     Event_ItemTake(InventoryItemId_AmuletOfSolomon, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupAmuletOfSolomon, 60);
 }
@@ -539,17 +539,17 @@ INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", jtbl_800CC6A8);
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800DAB64);
 
-void func_800DAD7C(void)
+void func_800DAD7C(void) // 0x800DAD7C
 {
     Event_ItemTake(InventoryItemId_CrestOfMercury, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupCrestOfMercury, 61);
 }
 
-void func_800DADA8(void)
+void func_800DADA8(void) // 0x800DADA8
 {
     Event_ItemTake(InventoryItemId_RingOfContract, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupRingOfContract, 51);
 }
 
-void func_800DADD4(void)
+void func_800DADD4(void) // 0x800DADD4
 {
     Event_ItemTake(InventoryItemId_Camera, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupCamera, 55);
 }
@@ -576,7 +576,7 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800DBDE0);
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800DC028);
 
-void func_800DC080(void)
+void func_800DC080(void) // 0x800DC080
 {
     Event_ItemTake(InventoryItemId_BirdCageKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupBirdCageKey, 54);
 }

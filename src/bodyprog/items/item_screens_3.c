@@ -855,18 +855,18 @@ s16 D_800AF1FC[] =
     0x0666, 0x07AE, 0x07AE, 0x0000
 };
 
-s32   g_Player_GrabReleaseInputTimer       = 0;
-q3_12 g_Player_FlexRotationY             = FP_ANGLE(0.0f);
-q3_12 g_Player_FlexRotationX             = FP_ANGLE(0.0f);
-u8    g_Player_IsInWalkToRunTransition   = false;
-u8    g_Player_DisableControl            = false;
-u8    D_800AF216                         = 0; // Left Y analog stick value.
-s8    g_Player_RockDrill_DirectionAttack = 0;
-u32   D_800AF218                         = 0;
-s32   g_Player_TargetNpcIdx                         = NO_VALUE;
-u8    D_800AF220                         = 0;
+q19_12 g_Player_GrabReleaseInputTimer     = Q12(0.0f);
+q3_12  g_Player_FlexRotationY             = FP_ANGLE(0.0f);
+q3_12  g_Player_FlexRotationX             = FP_ANGLE(0.0f);
+u8     g_Player_IsInWalkToRunTransition   = false;
+u8     g_Player_DisableControl            = false;
+u8     D_800AF216                         = 0; // Left Y analog stick value.
+s8     g_Player_RockDrill_DirectionAttack = 0;
+u32    D_800AF218                         = 0;
+s32    g_Player_TargetNpcIdx              = NO_VALUE;
+u8     D_800AF220                         = 0;
 // 3 bytes of padding.
-s32   g_Player_WeaponAttack1                         = NO_VALUE; // Weapon attack.
+s32    g_Player_WeaponAttack1             = NO_VALUE;
 
 s_AnimInfo HARRY_BASE_ANIM_INFOS[57] =
 {
@@ -928,6 +928,8 @@ s_AnimInfo HARRY_BASE_ANIM_INFOS[57] =
     { Anim_Update1, ANIM_STATUS(HarryAnim_IdleExhausted,           true),  true,  NO_VALUE,                                             { func_800706E4 }, 543,      567 },
     {}
 };
+// TODO: `func_8007EBBC` indicates there should be more.
+
 u8 __padding1[14] = {};
 s16 D_800AF5C6 = 0;
 u32 D_800AF5C8[23] = {}; // Padding?

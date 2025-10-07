@@ -7791,7 +7791,7 @@ void func_8007E5AC() // 0x8007E5AC
     }
 
     g_SysWork.playerCombatInfo_38.isAiming_13 = false;
-    g_Player_GrabReleaseInputTimer              = 0;
+    g_Player_GrabReleaseInputTimer            = Q12(0.0f);
     D_800C4588                                = 0;
     D_800C457C                                = 0;
     g_Player_DisableControl                   = false;
@@ -8511,8 +8511,8 @@ void func_8007FD4C(s32 arg0) // 0x8007FD4C
 
     chara = &g_SysWork.player_4C.chara_0;
 
-    g_Player_GrabReleaseInputTimer = 0;
-    chara->field_40              = NO_VALUE;
+    g_Player_GrabReleaseInputTimer = Q12(0.0f);
+    chara->field_40                = NO_VALUE;
 
     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_DamageReceived;
 
