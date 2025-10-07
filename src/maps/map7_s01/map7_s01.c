@@ -81,7 +81,7 @@ void func_800D1638(void) {}
 
 #include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800D1690
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CD6B0_3_s03); // 0x800D16A4
+#include "maps/shared/sharedFunc_800CD6B0_3_s03.h" // 0x800D16A4
 
 #include "maps/shared/sharedFunc_800CD7F8_3_s03.h" // 0x800D17EC
 

@@ -110,7 +110,7 @@ void func_800D0450() {}
 
 #include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800D04A8
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", sharedFunc_800CD6B0_3_s03); // 0x800D04BC
+#include "maps/shared/sharedFunc_800CD6B0_3_s03.h" // 0x800D04BC
 
 #include "maps/shared/sharedFunc_800CD7F8_3_s03.h" // 0x800D0604
 

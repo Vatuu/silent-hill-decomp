@@ -2,7 +2,6 @@ void sharedFunc_800D0828_3_s03(s_SubCharacter* chara, GsCOORDINATE2* coords)
 {
     MATRIX          boneMats[4];
     VECTOR3         unkPos;
-    s32             unused[2];
     q19_12          deltaX;
     q19_12          deltaY;
     q19_12          unkQ12;
@@ -41,9 +40,9 @@ void sharedFunc_800D0828_3_s03(s_SubCharacter* chara, GsCOORDINATE2* coords)
     }
 
     // `((torsoPosY - headPosY) / 2) - posY`
-    chara->field_CE = ((Q8_TO_Q12(boneMats[1].t[1]) + Q8_TO_Q12(boneMats[0].t[1])) >> 1) - posY;
+    chara->field_CE = ((Q8_TO_Q12(boneMats[1].t[1]) + Q8_TO_Q12(boneMats[0].t[1])) / 2) - posY;
 
-    unkQ12 = sharedFunc_800CD6B0_3_s03(boneMats, 4, &unkPos);
+    unkQ12 = sharedFunc_800CD6B0_3_s03(boneMats, ARRAY_SIZE(boneMats), &unkPos);
     deltaX = unkPos.vx - chara->position_18.vx;
     deltaY = unkPos.vz - chara->position_18.vz;
 
