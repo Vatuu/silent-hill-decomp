@@ -572,7 +572,7 @@ void func_800D6704(void) // 0x800D6704
         g_DeltaTime0 = 0;
     }
 
-    Event_ItemTake(InventoryItemId_HuntingRifle, 6, EventFlag_M4S03_PickupHuntingRifle, 17);
+    Event_ItemTake(InventoryItemId_HuntingRifle, RIFLE_AMMO_PICKUP_ITEM_COUNT, EventFlag_M4S03_PickupHuntingRifle, 17);
 }
 
 INCLUDE_RODATA("asm/maps/map4_s03/nonmatchings/map4_s03", D_800CABE8);

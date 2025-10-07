@@ -800,7 +800,7 @@ void func_800E9A0C(void) // 0x800E9A0C
     {
         if (g_SavegamePtr->mapMarkingFlags_1D4[1] & (1 << 20))
         {
-            g_SavegamePtr->mapMarkingFlags_1D4[1] |= (1 << 21);
+            g_SavegamePtr->mapMarkingFlags_1D4[1] |= 1 << 21;
         }
     }
 }
@@ -815,7 +815,7 @@ void func_800E9CB4(void) // 0x800E9CB4
     {
         if (g_SavegamePtr->mapMarkingFlags_1D4[1] & (1 << 24))
         {
-            g_SavegamePtr->mapMarkingFlags_1D4[1] |= (1 << 25);
+            g_SavegamePtr->mapMarkingFlags_1D4[1] |= 1 << 25;
         }
     }
 }

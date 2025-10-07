@@ -209,10 +209,10 @@ void func_800D6338(void) // 0x800D6338
 {
     g_BackgroundColor = 0x70;
 
-    if (Savegame_EventFlagGet(137))
+    if (Savegame_EventFlagGet(EventFlag_137))
     {
         func_80087360(FILE_TIM_RSCBOOK_TIM, 0, 0, 25);
-        g_SavegamePtr->mapMarkingFlags_1DC |= 1 << 4;
+        g_SavegamePtr->mapMarkingFlags_1D4[2] |= 1 << 4;
     }
     else
     {

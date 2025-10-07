@@ -331,12 +331,12 @@ INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DB058);
 
 void func_800DB310(void) // 0x800DB310
 {
-    Event_ItemTake(InventoryItemId_PictureCard, 1, EventFlag_M1S02_PickupPictureCard, 29);
+    Event_ItemTake(InventoryItemId_PictureCard, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M1S02_PickupPictureCard, 29);
 }
 
 void func_800DB33C(void) // 0x800DB33C
 {
-    Event_ItemTake(InventoryItemId_RubberBall, 1, EventFlag_M1S02_PickupRubberBall, 37);
+    Event_ItemTake(InventoryItemId_RubberBall, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M1S02_PickupRubberBall, 37);
 }
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DB368);

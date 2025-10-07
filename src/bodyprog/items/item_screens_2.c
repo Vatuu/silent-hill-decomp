@@ -968,7 +968,7 @@ void Inventory_Logic() // 0x8004D518
                                     case InventoryItemId_AntiqueShopKey:
                                         if (Savegame_EventFlagGet(EventFlag_M2S00_PickupMap))
                                         {
-                                            g_SavegamePtr->mapMarkingFlags_1DC |= 1 << 16;
+                                            g_SavegamePtr->mapMarkingFlags_1D4[2] |= 1 << 16;
                                         }
 
                                         Fs_QueueStartReadTim(FILE_TIM_ANTIQUE_TIM, FS_BUFFER_1, &g_ItemInspectionImg);

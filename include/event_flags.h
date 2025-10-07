@@ -86,6 +86,8 @@ typedef enum _EventFlag
     EventFlag_133 = 133,
     EventFlag_134 = 134,
 
+    EventFlag_137 = 137,
+
     EventFlag_143                         = 143,
     EventFlag_M0S02_PickupChannelingStone = 144,
     EventFlag_145                         = 145,
