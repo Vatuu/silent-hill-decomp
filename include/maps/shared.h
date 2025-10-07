@@ -2739,7 +2739,7 @@ void sharedFunc_800D9774_1_s02(s_SubCharacter*);
 
 void sharedFunc_800D983C_1_s02(s_SubCharacter*);
 
-void sharedFunc_800D9960_1_s02(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
+void sharedFunc_800D9960_1_s02(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void sharedFunc_800D99D0_1_s02(s_SubCharacter*);
 
