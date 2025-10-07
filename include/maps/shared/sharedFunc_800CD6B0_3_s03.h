@@ -1,4 +1,4 @@
-q19_12 sharedFunc_800CD6B0_3_s03(MATRIX* mtx, s32 mtxCount, VECTOR3* center)
+q19_12 sharedFunc_800CD6B0_3_s03(MATRIX* mat, s32 matCount, VECTOR3* center)
 {
     s32    i;
     s32    x;
@@ -11,14 +11,14 @@ q19_12 sharedFunc_800CD6B0_3_s03(MATRIX* mtx, s32 mtxCount, VECTOR3* center)
     s32    maxZ;
     q19_12 radius;
 
-    maxX = minX = x = mtx->t[0];
-    maxZ = minZ = z = mtx->t[2];
-    mtx++;
+    maxX = minX = x = mat->t[0];
+    maxZ = minZ = z = mat->t[2];
+    mat++;
 
-    for (i = 1; i < mtxCount; i++, mtx++)
+    for (i = 1; i < matCount; i++, mat++)
     {
-        x = mtx->t[0];
-        z = mtx->t[2];
+        x = mat->t[0];
+        z = mat->t[2];
 
         // `minX = MIN(x, minX)`
         minXTemp = minX;

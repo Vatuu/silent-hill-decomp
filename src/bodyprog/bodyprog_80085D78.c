@@ -715,7 +715,7 @@ void func_80086D04(s_SubCharacter* chara) // 0x80086D04
     }
 }
 
-void func_80086DA8(s32 fileIdx, s32 fadeTimestep) // 0x80086DA8
+void func_80086DA8(s32 fileIdx, q19_12 fadeTimestep) // 0x80086DA8
 {
     switch (g_SysWork.sysStateStep_C[1])
     {
@@ -735,7 +735,7 @@ void func_80086DA8(s32 fileIdx, s32 fadeTimestep) // 0x80086DA8
     }
 }
 
-void func_80086E50(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1) // 0x80086E50
+void func_80086E50(s32 fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x80086E50
 {
     switch (g_SysWork.sysStateStep_C[1])
     {
@@ -759,7 +759,7 @@ void func_80086E50(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1) // 0x80086
     }
 }
 
-void func_80086F44(s32 fadeTimestep0, s32 fadeTimestep1) // 0x80086F44
+void func_80086F44(q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x80086F44
 {
     if (g_SysWork.sysStateStep_C[1] == 0)
     {
@@ -820,7 +820,7 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
     }
 }
 
-void func_8008716C(s32 itemId, s32 fadeTimestep0, s32 fadeTimestep1) // 0x8008716C
+void func_8008716C(s32 itemId, q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x8008716C
 {
     switch (g_SysWork.sysStateStep_C[1])
     {
@@ -869,7 +869,7 @@ void func_8008716C(s32 itemId, s32 fadeTimestep0, s32 fadeTimestep1) // 0x800871
     }
 }
 
-void func_80087360(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsgIdx) // 0x80087360
+void func_80087360(s32 fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx) // 0x80087360
 {
     switch (g_SysWork.sysStateStep_C[1])
     {
@@ -912,7 +912,7 @@ void func_80087360(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsg
     }
 }
 
-void func_80087540(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1) // 0x80087540
+void func_80087540(s32 fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1) // 0x80087540
 {
     switch (g_SysWork.sysStateStep_C[1])
     {

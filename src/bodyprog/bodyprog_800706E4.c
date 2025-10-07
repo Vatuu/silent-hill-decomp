@@ -81,8 +81,8 @@ void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 weapo
         chara->model_0.stateStep_3++;
     }
 
-    temp_a1 = Q12_FRACT(ratan2((g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].position_18.vx + g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].field_D8.offsetX_0) - g_SysWork.playerCombatInfo_38.field_0.vx, 
-                                 (g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].position_18.vz + g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].field_D8.offsetZ_2) - g_SysWork.playerCombatInfo_38.field_0.vz) +
+    temp_a1 = Q12_FRACT(ratan2((g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position_18.vx + g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].field_D8.offsetX_0) - g_SysWork.playerCombatInfo_38.field_0.vx, 
+                                 (g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position_18.vz + g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].field_D8.offsetZ_2) - g_SysWork.playerCombatInfo_38.field_0.vz) +
                           FP_ANGLE(360.0f));
     chara->rotation_24.pad = temp_a1;
     Math_ShortestAngleGet(chara->rotation_24.vy, temp_a1, &shortestAngle);
@@ -143,7 +143,7 @@ void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 weapo
         g_SysWork.player_4C.chara_0.field_D8.offsetZ_2              = Q12(0.0f);
         g_SysWork.player_4C.chara_0.field_D8.offsetX_0              = Q12(0.0f);
         g_SysWork.playerCombatInfo_38.weaponAttack_F                = (g_SavegamePtr->equippedWeapon_AA == InventoryItemId_Unequipped) ? NO_VALUE : (g_SavegamePtr->equippedWeapon_AA + InventoryItemId_KitchenKnife);
-        g_SysWork.enemyTargetIdx_2353                               = NO_VALUE;
+        g_SysWork.targetNpcIdx_2353                               = NO_VALUE;
         g_SysWork.playerCombatInfo_38.isAiming_13                   = false;
     }
 }
@@ -334,8 +334,8 @@ void Player_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
 
         if (g_Player_IsInWalkToRunTransition)
         {
-            g_Player_ActionRunPressed      = false;
-            g_Player_MovementInputDetected = false;
+            g_Player_HasActionInput      = false;
+            g_Player_HasMoveInput = false;
             g_Player_IsShooting            = false;
             g_Player_IsAttacking           = false;
             g_Player_IsHoldAttack          = false;
@@ -824,7 +824,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             }
 
 			// If player is not performing a movement.
-            if (!(g_Player_MovementInputDetected | g_Player_ActionRunPressed))
+            if (!(g_Player_HasMoveInput | g_Player_HasActionInput))
             {
                 break;
             }
@@ -869,7 +869,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             if (extra->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
             {
                 chara->attackReceived_41                                                = NO_VALUE;
-                g_SysWork.enemyTargetIdx_2353                                           = NO_VALUE;
+                g_SysWork.targetNpcIdx_2353                                           = NO_VALUE;
                 g_SysWork.player_4C.extra_128.state_1C                                  = PlayerState_None;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C             &= ~PlayerFlag_DamageReceived;
                 chara->model_0.stateStep_3                                              = 0;
@@ -1427,9 +1427,9 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             g_Player_HeadingAngle = headingAngle1;
             func_8007FB94(chara, extra, animStatus);
 
-            if (chara->health_B0 > Q12(0.0f) && (g_Player_MovementInputDetected | g_Player_ActionRunPressed))
+            if (chara->health_B0 > Q12(0.0f) && (g_Player_HasMoveInput | g_Player_HasActionInput))
             {
-                g_Player_GrabFree_InputCount += g_DeltaTime0;
+                g_Player_GrabReleaseInputTimer += g_DeltaTime0;
             }
 
             // If player isn't thrown to floor (Cybil shoot attack).
@@ -1438,7 +1438,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             {
                 if (unkDistThreshold < npcDist)
                 {
-                    g_Player_GrabFree_InputCount = playeGrabFree_RequiredInputCount;
+                    g_Player_GrabReleaseInputTimer = playeGrabFree_RequiredInputCount;
                     if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_EnemyGrabPinnedFront)
                     {
                         g_SysWork.npcs_1A0[g_SysWork.npcIdxs_2354[0]].moveSpeed_38 = Q12(0.0f);
@@ -1451,7 +1451,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                 }
             }
 
-            if (g_Player_GrabFree_InputCount >= playeGrabFree_RequiredInputCount)
+            if (g_Player_GrabReleaseInputTimer >= playeGrabFree_RequiredInputCount)
             {
                 func_8007FD4C(0);
 
@@ -2058,7 +2058,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             if (extra->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
             {
                 chara->attackReceived_41                                                = NO_VALUE;
-                g_SysWork.enemyTargetIdx_2353                                           = NO_VALUE;
+                g_SysWork.targetNpcIdx_2353                                           = NO_VALUE;
                 g_SysWork.player_4C.extra_128.state_1C                                  = PlayerState_None;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C             &= ~PlayerFlag_DamageReceived;
                 chara->model_0.stateStep_3                                              = 0;
@@ -2366,8 +2366,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
             if (g_GameWork.config_0.optExtraWeaponCtrl_23 == 0)
             {
-                g_Player_ActionRunPressed      = false;
-                g_Player_MovementInputDetected = false;
+                g_Player_HasActionInput      = false;
+                g_Player_HasMoveInput = false;
                 g_Player_IsShooting            = false;
                 g_Player_IsAttacking           = false;
                 g_Player_IsHoldAttack          = false;
@@ -2443,7 +2443,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         }
 
 		// Used for make continuos/hold shooting smoother?
-        if (g_SysWork.enemyTargetIdx_2353 != NO_VALUE &&
+        if (g_SysWork.targetNpcIdx_2353 != NO_VALUE &&
             g_SysWork.playerCombatInfo_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
         {
             if (!g_GameWork.config_0.optExtraAutoAiming_2C)
@@ -2451,26 +2451,26 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 1))
                 {
                     func_8005CD38(&enemyAttackedIdx, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x238, 0xA000, 0);
-                    func_8005D50C(&D_800AF21C, &D_800C4554, &D_800C4556, &g_SysWork.playerCombatInfo_38, enemyAttackedIdx, 0xE3);
+                    func_8005D50C(&g_Player_TargetNpcIdx, &D_800C4554, &D_800C4556, &g_SysWork.playerCombatInfo_38, enemyAttackedIdx, 0xE3);
                 }
                 else
                 {
                     func_8005CD38(&enemyAttackedIdx, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x238, 0x3000, 0);
-                    func_8005D50C(&D_800AF21C, &D_800C4554, &D_800C4556, &g_SysWork.playerCombatInfo_38, enemyAttackedIdx, 0xE3);
+                    func_8005D50C(&g_Player_TargetNpcIdx, &D_800C4554, &D_800C4556, &g_SysWork.playerCombatInfo_38, enemyAttackedIdx, 0xE3);
                 }
             }
             else
             {
-                enemyAttackedIdx = g_SysWork.enemyTargetIdx_2353;
+                enemyAttackedIdx = g_SysWork.targetNpcIdx_2353;
             }
 
-            if (enemyAttackedIdx == NO_VALUE && enemyAttackedIdx == D_800AF21C)
+            if (enemyAttackedIdx == NO_VALUE && enemyAttackedIdx == g_Player_TargetNpcIdx)
             {
                 D_800C4556 = NO_VALUE;
                 D_800C4554 = NO_VALUE;
             }
 
-            if (enemyAttackedIdx == g_SysWork.enemyTargetIdx_2353)
+            if (enemyAttackedIdx == g_SysWork.targetNpcIdx_2353)
             {
                 chara->rotation_24.pad = Q12_FRACT(ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetX_0) - g_SysWork.player_4C.chara_0.position_18.vx,
                                                            (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetZ_2) - g_SysWork.player_4C.chara_0.position_18.vz) +
@@ -2489,7 +2489,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         }
         else
         {
-            if (g_SysWork.enemyTargetIdx_2353 != NO_VALUE && !g_GameWork.config_0.optExtraAutoAiming_2C)
+            if (g_SysWork.targetNpcIdx_2353 != NO_VALUE && !g_GameWork.config_0.optExtraAutoAiming_2C)
             {
                 if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 0)))
                 {
@@ -2500,7 +2500,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                     func_8005CD38(&enemyAttackedIdx, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x1000, 0x1000, 5);
                 }
 
-                if (enemyAttackedIdx == g_SysWork.enemyTargetIdx_2353)
+                if (enemyAttackedIdx == g_SysWork.targetNpcIdx_2353)
                 {
                     temp_a1 = Q12_FRACT(ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetX_0) - g_SysWork.player_4C.chara_0.position_18.vx,
                                                 (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetZ_2) - g_SysWork.player_4C.chara_0.position_18.vz) + 0x1000);
@@ -3154,7 +3154,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             break;
 
         case PlayerUpperBodyState_Aim:
-            g_SysWork.enemyTargetIdx_2353 = NO_VALUE;
+            g_SysWork.targetNpcIdx_2353 = NO_VALUE;
 
             if (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
                 g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
@@ -3243,14 +3243,14 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
                 if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 0)))
                 {
-                    func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0xAAA, 0xA000, playerTurn);
+                    func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0xAAA, 0xA000, playerTurn);
                 }
                 else
                 {
-                    func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x555, 0x3000, playerTurn);
+                    func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x555, 0x3000, playerTurn);
                 }
 
-                if (D_800AF21C == NO_VALUE)
+                if (g_Player_TargetNpcIdx == NO_VALUE)
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk12;
                     chara->model_0.stateStep_3                                  = 0;
@@ -3274,15 +3274,15 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                     extra->model_0.state_2                                      = extra->model_0.stateStep_3 = 0;
                 }
 
-                g_SysWork.enemyTargetIdx_2353 = D_800AF21C;
+                g_SysWork.targetNpcIdx_2353 = g_Player_TargetNpcIdx;
             }
             else
             {
                 if (extra->model_0.state_2 != 0)
                 {
-                    if (g_TargetEnemyPosition.vx != g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].position_18.vx ||
-                        g_TargetEnemyPosition.vy != g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].position_18.vy ||
-                        g_TargetEnemyPosition.vz != g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].position_18.vz ||
+                    if (g_TargetEnemyPosition.vx != g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position_18.vx ||
+                        g_TargetEnemyPosition.vy != g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position_18.vy ||
+                        g_TargetEnemyPosition.vz != g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position_18.vz ||
 						g_Player_PrevPosition.vx != g_SysWork.player_4C.chara_0.position_18.vx ||
                         g_Player_PrevPosition.vy != g_SysWork.player_4C.chara_0.position_18.vy ||
                         g_Player_PrevPosition.vz != g_SysWork.player_4C.chara_0.position_18.vz)
@@ -3296,20 +3296,20 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                             func_8005CD38(&enemyAttackedIdx, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x11C, 0x3000, 0);
                         }
 
-                        g_TargetEnemyPosition = g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].position_18;
+                        g_TargetEnemyPosition = g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position_18;
                     }
                     else
                     {
-                        enemyAttackedIdx = g_SysWork.enemyTargetIdx_2353;
+                        enemyAttackedIdx = g_SysWork.targetNpcIdx_2353;
                     }
                 }
                 else
                 {
-                    enemyAttackedIdx      = g_SysWork.enemyTargetIdx_2353;
-                    g_TargetEnemyPosition = g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].position_18;
+                    enemyAttackedIdx      = g_SysWork.targetNpcIdx_2353;
+                    g_TargetEnemyPosition = g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position_18;
                 }
 
-                if (enemyAttackedIdx == g_SysWork.enemyTargetIdx_2353 && enemyAttackedIdx != NO_VALUE)
+                if (enemyAttackedIdx == g_SysWork.targetNpcIdx_2353 && enemyAttackedIdx != NO_VALUE)
                 {
                     chara->rotation_24.pad = Q12_FRACT(ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetX_0) - g_SysWork.player_4C.chara_0.position_18.vx,
                                                                (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetZ_2) - g_SysWork.player_4C.chara_0.position_18.vz) +
@@ -3320,7 +3320,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk12;
                     chara->model_0.stateStep_3                                  = 0;
                     g_SysWork.player_4C.chara_0.properties_E4.player.field_122  = 0x400;
-                    g_SysWork.enemyTargetIdx_2353                               = NO_VALUE;
+                    g_SysWork.targetNpcIdx_2353                               = NO_VALUE;
                     g_SysWork.player_4C.extra_128.state_1C                      = PlayerState_None;
                     g_SysWork.player_4C.extra_128.upperBodyState_20             = PlayerUpperBodyState_Aim;
                     extra->model_0.state_2                                      = extra->model_0.stateStep_3 = 0;
@@ -3427,23 +3427,23 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 {
                     if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 0)))
                     {
-                        func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x238, 0xa000, 0);
+                        func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x238, 0xa000, 0);
                     }
                     else
                     {
-                        func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x238, 0x3000, 0);
+                        func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x238, 0x3000, 0);
                     }
                 }
                 else if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 1))
                 {
-                    func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x3000, 0x7000, 4);
+                    func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x3000, 0x7000, 4);
                 }
                 else
                 {
-                    func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0xE66, 0x2199, 4);
+                    func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0xE66, 0x2199, 4);
                 }
 
-                g_SysWork.enemyTargetIdx_2353 = D_800AF21C;
+                g_SysWork.targetNpcIdx_2353 = g_Player_TargetNpcIdx;
             }
 
             D_800AF220 = 1;
@@ -3451,8 +3451,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
             if (!g_GameWork.config_0.optExtraWeaponCtrl_23)
             {
-                g_Player_ActionRunPressed      = false;
-                g_Player_MovementInputDetected = false;
+                g_Player_HasActionInput      = false;
+                g_Player_HasMoveInput = false;
                 g_Player_IsShooting            = false;
                 g_Player_IsAttacking           = false;
                 g_Player_IsHoldAttack          = false;
@@ -3484,7 +3484,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 extra->model_0.stateStep_3++;
             }
 
-            if (g_SysWork.enemyTargetIdx_2353 == NO_VALUE)
+            if (g_SysWork.targetNpcIdx_2353 == NO_VALUE)
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.field_122  = 0x400;
                 g_SysWork.player_4C.extra_128.upperBodyState_20             = PlayerUpperBodyState_Aim;
@@ -3496,8 +3496,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
             if (g_GameWork.config_0.optExtraAutoAiming_2C == 0)
             {
-                temp_v0_3 = ratan2((g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].position_18.vx + g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].field_D8.offsetX_0) - g_SysWork.player_4C.chara_0.position_18.vx,
-                                   (g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].position_18.vz + g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].field_D8.offsetZ_2) - g_SysWork.player_4C.chara_0.position_18.vz);
+                temp_v0_3 = ratan2((g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position_18.vx + g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].field_D8.offsetX_0) - g_SysWork.player_4C.chara_0.position_18.vx,
+                                   (g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position_18.vz + g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].field_D8.offsetZ_2) - g_SysWork.player_4C.chara_0.position_18.vz);
 
                 temp_s1_2 = FP_ANGLE_NORM_U(temp_v0_3 + FP_ANGLE(360.0f));
 
@@ -3569,11 +3569,11 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 break;
             }
 
-            temp_v0_3 = ratan2((g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].position_18.vx +
-                                g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].field_D8.offsetX_0) -
+            temp_v0_3 = ratan2((g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position_18.vx +
+                                g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].field_D8.offsetX_0) -
                                g_SysWork.player_4C.chara_0.position_18.vx,
-                                (g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].position_18.vz +
-                                 g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353].field_D8.offsetZ_2) -
+                                (g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position_18.vz +
+                                 g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].field_D8.offsetZ_2) -
                                 g_SysWork.player_4C.chara_0.position_18.vz);
 
             temp_s1_2 = FP_ANGLE_NORM_U(temp_v0_3 + FP_ANGLE(360.0f));
@@ -3673,7 +3673,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                     chara->model_0.state_2 = chara->model_0.stateStep_3 = 0;
                 }
 
-                g_SysWork.enemyTargetIdx_2353 = NO_VALUE;
+                g_SysWork.targetNpcIdx_2353 = NO_VALUE;
             }
 
             chara->rotation_24.pad = chara->rotation_24.vy;
@@ -3704,9 +3704,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
             if (extra->model_0.anim_4.keyframeIdx_8 == D_800AF626)
             {
-                D_800AF21C                                                  = NO_VALUE;
+                g_Player_TargetNpcIdx                                                  = NO_VALUE;
                 g_SysWork.player_4C.extra_128.upperBodyState_20             = PlayerUpperBodyState_Aim;
-                g_SysWork.enemyTargetIdx_2353                               = NO_VALUE;
+                g_SysWork.targetNpcIdx_2353                               = NO_VALUE;
                 g_SysWork.player_4C.extra_128.state_1C                      = PlayerState_None;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
                 extra->model_0.anim_4.status_0                             = ANIM_STATUS(HarryAnim_HandgunAim, true);
@@ -3772,7 +3772,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
 
                     if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                     {
-                        D_800AF21C = NO_VALUE;
+                        g_Player_TargetNpcIdx = NO_VALUE;
                     }
                     else
                     {
@@ -3780,25 +3780,25 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
                         {
                             if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 1))
                             {
-                                func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x238, 0xA000, 0);
+                                func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x238, 0xA000, 0);
                             }
                             else
                             {
-                                func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x238, 0x3000, 0);
+                                func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x238, 0x3000, 0);
                             }
                         }
                         else if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 1))
                         {
-                            func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x3000, 0x7000, 4);
+                            func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x3000, 0x7000, 4);
                         }
                         else
                         {
-                            func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0xE66, 0x2199, 4);
+                            func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0xE66, 0x2199, 4);
                         }
                     }
 
-                    g_SysWork.enemyTargetIdx_2353 = D_800AF21C;
-                    if (g_SysWork.enemyTargetIdx_2353 == NO_VALUE)
+                    g_SysWork.targetNpcIdx_2353 = g_Player_TargetNpcIdx;
+                    if (g_SysWork.targetNpcIdx_2353 == NO_VALUE)
                     {
                         g_SysWork.player_4C.extra_128.upperBodyState_20            = PlayerUpperBodyState_AimStart;
                         g_SysWork.player_4C.chara_0.properties_E4.player.field_122 = 0x400;
@@ -3908,7 +3908,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
             {
                 chara->properties_E4.player.field_F4                        = 0;
                 g_SysWork.player_4C.extra_128.upperBodyState_20             = PlayerUpperBodyState_AimStop;
-                g_SysWork.enemyTargetIdx_2353                               = NO_VALUE;
+                g_SysWork.targetNpcIdx_2353                               = NO_VALUE;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk0;
                 g_SysWork.player_4C.extra_128.state_1C                      = PlayerState_None;
                 g_SysWork.playerCombatInfo_38.isAiming_13                   = false;
@@ -4003,28 +4003,28 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
                 {
                     if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 0)))
                     {
-                        func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x3000, 0x3000, 5);
+                        func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x3000, 0x3000, 5);
                     }
                     else
                     {
-                        func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x1000, 0x1000, 5);
+                        func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x1000, 0x1000, 5);
                     }
 
-                    g_SysWork.enemyTargetIdx_2353 = D_800AF21C;
+                    g_SysWork.targetNpcIdx_2353 = g_Player_TargetNpcIdx;
                 }
                 else
                 {
                     if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & PlayerFlag_Unk0))
                     {
-                        func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x7000, 0x7000, 5);
+                        func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x7000, 0x7000, 5);
                     }
                     else
                     {
-                        func_8005CD38(&D_800AF21C, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x2199, 0x2199, 5);
+                        func_8005CD38(&g_Player_TargetNpcIdx, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x2199, 0x2199, 5);
                     }
                 }
 
-                switch (D_800AF21C)
+                switch (g_Player_TargetNpcIdx)
                 {
                     default:
                         if (g_SysWork.playerCombatInfo_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
@@ -4032,7 +4032,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
                             g_SysWork.player_4C.extra_128.state_1C                      = PlayerState_Combat;
                             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk0 | PlayerFlag_Unk9;
 
-                            if (g_SysWork.enemyTargetIdx_2353 != D_800AF21C)
+                            if (g_SysWork.targetNpcIdx_2353 != g_Player_TargetNpcIdx)
                             {
                                 g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_AimTargetLockSwitch;
                             }
@@ -4048,7 +4048,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
                                 }
                             }
 
-                            g_SysWork.enemyTargetIdx_2353 = D_800AF21C;
+                            g_SysWork.targetNpcIdx_2353 = g_Player_TargetNpcIdx;
                             break;
                         }
 
@@ -5930,7 +5930,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 }
             }
 
-            if (g_SysWork.enemyTargetIdx_2353 == NO_VALUE ||
+            if (g_SysWork.targetNpcIdx_2353 == NO_VALUE ||
                 g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
                 if (g_SysWork.playerCombatInfo_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
@@ -6708,7 +6708,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                 break;
             }
 
-            g_SysWork.enemyTargetIdx_2353                  = NO_VALUE;
+            g_SysWork.targetNpcIdx_2353                  = NO_VALUE;
             g_SysWork.playerCombatInfo_38.weaponAttack_F = (g_SavegamePtr->equippedWeapon_AA == InventoryItemId_Unequipped) ? NO_VALUE : (g_SavegamePtr->equippedWeapon_AA - InventoryItemId_KitchenKnife);
 
             if (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
@@ -7488,10 +7488,10 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
     {
         if (g_SysWork.playerCombatInfo_38.weaponAttack_F >= EquippedWeaponId_Handgun && g_SysWork.player_4C.extra_128.lowerBodyState_24 >= PlayerLowerBodyState_Aim)
         {
-            if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_Combat && D_800AF21C != NO_VALUE)
+            if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_Combat && g_Player_TargetNpcIdx != NO_VALUE)
             {
-                sp98.vx = ratan2((g_SysWork.npcs_1A0[D_800AF21C].position_18.vx + g_SysWork.npcs_1A0[D_800AF21C].field_D8.offsetX_0) - g_SysWork.playerCombatInfo_38.field_0.vx,
-                                 (g_SysWork.npcs_1A0[D_800AF21C].position_18.vz + g_SysWork.npcs_1A0[D_800AF21C].field_D8.offsetZ_2) - g_SysWork.playerCombatInfo_38.field_0.vz);
+                sp98.vx = ratan2((g_SysWork.npcs_1A0[g_Player_TargetNpcIdx].position_18.vx + g_SysWork.npcs_1A0[g_Player_TargetNpcIdx].field_D8.offsetX_0) - g_SysWork.playerCombatInfo_38.field_0.vx,
+                                 (g_SysWork.npcs_1A0[g_Player_TargetNpcIdx].position_18.vz + g_SysWork.npcs_1A0[g_Player_TargetNpcIdx].field_D8.offsetZ_2) - g_SysWork.playerCombatInfo_38.field_0.vz);
             }
             else
             {
@@ -7611,9 +7611,9 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
         {
             if (g_SysWork.player_4C.extra_128.state_1C < PlayerState_Idle)
             {
-                if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_None && g_SysWork.enemyTargetIdx_2353 != NO_VALUE)
+                if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_None && g_SysWork.targetNpcIdx_2353 != NO_VALUE)
                 {
-                    g_SysWork.enemyTargetIdx_2353 = NO_VALUE;
+                    g_SysWork.targetNpcIdx_2353 = NO_VALUE;
                 }
 
                 *(u32*)&sp90 = 0xFFD90000;
@@ -7791,7 +7791,7 @@ void func_8007E5AC() // 0x8007E5AC
     }
 
     g_SysWork.playerCombatInfo_38.isAiming_13 = false;
-    g_Player_GrabFree_InputCount              = 0;
+    g_Player_GrabReleaseInputTimer              = 0;
     D_800C4588                                = 0;
     D_800C457C                                = 0;
     g_Player_DisableControl                   = false;
@@ -7811,7 +7811,7 @@ void func_8007E5AC() // 0x8007E5AC
             break;
     }
 
-    D_800AF224                = NO_VALUE;
+    g_Player_WeaponAttack1                = NO_VALUE;
     g_GameWork.mapAnimIdx_5B1 = NO_VALUE;
 
     g_SavegamePtr->inventorySlotCount_AB  = CLAMP(g_SavegamePtr->inventorySlotCount_AB, INVENTORY_ITEM_COUNT_MAX / 5, INVENTORY_ITEM_COUNT_MAX);
@@ -7860,8 +7860,8 @@ void func_8007E9C4() // 0x8007E9C4
     chara->rotation_24.pad         = FP_ANGLE(90.0f);
     D_800C4561                     = 0;
     g_Player_DisableDamage         = false;
-    g_Player_ActionRunPressed      = false;
-    g_Player_MovementInputDetected = false;
+    g_Player_HasActionInput      = false;
+    g_Player_HasMoveInput = false;
     g_Player_IsShooting            = false;
     g_Player_IsAttacking           = false;
 
@@ -7883,7 +7883,7 @@ void func_8007E9C4() // 0x8007E9C4
     g_Player_IsHoldAttack         = false;
     chara->flags_3E              &= ~CharaFlag_Unk4;
     g_Player_PrevPosition         = chara->position_18;
-    g_SysWork.enemyTargetIdx_2353 = NO_VALUE;
+    g_SysWork.targetNpcIdx_2353 = NO_VALUE;
     chara->field_40               = NO_VALUE;
     chara->attackReceived_41      = NO_VALUE;
 
@@ -7929,7 +7929,7 @@ void func_8007EBBC() // 0x8007EBBC
     var_a1 = 0;
     var_a2 = 0;
 
-    g_SysWork.enemyTargetIdx_2353 = NO_VALUE;
+    g_SysWork.targetNpcIdx_2353 = NO_VALUE;
 
     temp_v1 = g_SysWork.playerCombatInfo_38.weaponAttack_F + 1;
     switch (temp_v1)
@@ -8034,9 +8034,9 @@ void func_8007EBBC() // 0x8007EBBC
         D_800C44F0[i] = D_800294F4[i + var_a2];
     }
 
-    if (g_SysWork.playerCombatInfo_38.weaponAttack_F != NO_VALUE && D_800AF224 != g_SysWork.playerCombatInfo_38.weaponAttack_F)
+    if (g_SysWork.playerCombatInfo_38.weaponAttack_F != NO_VALUE && g_Player_WeaponAttack1 != g_SysWork.playerCombatInfo_38.weaponAttack_F)
     {
-        D_800AF224 = g_SysWork.playerCombatInfo_38.weaponAttack_F;
+        g_Player_WeaponAttack1 = g_SysWork.playerCombatInfo_38.weaponAttack_F;
         func_8007F14C(g_SysWork.playerCombatInfo_38.weaponAttack_F);
 
         switch (g_SysWork.playerCombatInfo_38.weaponAttack_F)
@@ -8125,8 +8125,8 @@ void func_8007F14C(u8 arg0) // 0x8007F14C
 
 void Game_PlayerMovementsReset() // 0x8007F1CC
 {
-    g_Player_ActionRunPressed        = false;
-    g_Player_MovementInputDetected   = false;
+    g_Player_HasActionInput        = false;
+    g_Player_HasMoveInput   = false;
     g_Player_IsShooting              = false;
     g_Player_IsAttacking             = false;
     g_Player_IsHoldAttack            = false;
@@ -8196,7 +8196,7 @@ void Player_Controller() // 0x8007F32C
         g_Player_IsTurningRight        = g_Controller0->sticks_20.sticks_0.leftX >= STICK_THRESHOLD ? (g_Controller0->sticks_20.sticks_0.leftX - (STICK_THRESHOLD - 1)) : 0;
         g_Player_IsMovingForward      |= g_Controller0->sticks_20.sticks_0.leftY < -STICK_THRESHOLD;
         g_Player_IsMovingBackward      = (g_Controller0->sticks_20.sticks_0.leftY < STICK_THRESHOLD) ^ 1;
-        g_Player_MovementInputDetected = g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.stepLeft_10 |
+        g_Player_HasMoveInput = g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.stepLeft_10 |
                                                                           (ControllerFlag_LStickUp2 | ControllerFlag_LStickRight2 | ControllerFlag_LStickDown2 | ControllerFlag_LStickLeft2) |
                                                                           g_GameWorkPtr->config_0.controllerConfig_0.stepRight_12 | g_GameWorkPtr->config_0.controllerConfig_0.aim_8);
     }
@@ -8206,7 +8206,7 @@ void Player_Controller() // 0x8007F32C
         g_Player_IsTurningRight        = ((g_Controller0->btnsHeld_C & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)) == ControllerFlag_LStickRight) << 6;
         g_Player_IsMovingForward      |= (g_Controller0->btnsHeld_C & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)) == ControllerFlag_LStickUp;
         g_Player_IsMovingBackward      = (g_Controller0->btnsHeld_C & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)) == ControllerFlag_LStickDown;
-        g_Player_MovementInputDetected = g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.stepLeft_10 |
+        g_Player_HasMoveInput = g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.stepLeft_10 |
                                                                           (ControllerFlag_LStickUp | ControllerFlag_LStickRight | ControllerFlag_LStickDown | ControllerFlag_LStickLeft) |
                                                                           g_GameWorkPtr->config_0.controllerConfig_0.stepRight_12 | g_GameWorkPtr->config_0.controllerConfig_0.aim_8);
     }
@@ -8263,7 +8263,7 @@ void Player_Controller() // 0x8007F32C
         }
     }
 
-    g_Player_ActionRunPressed = g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.run_C | g_GameWorkPtr->config_0.controllerConfig_0.action_6);
+    g_Player_HasActionInput = g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.run_C | g_GameWorkPtr->config_0.controllerConfig_0.action_6);
 
     if (g_SysWork.sysState_8 != SysState_Gameplay)
     {
@@ -8381,7 +8381,7 @@ bool func_8007F95C() // 0x8007F95C
                     temp = sp30 + FP_ANGLE(89.98f);
                     if (temp < FP_ANGLE(202.49f))
                     {
-                        g_SysWork.enemyTargetIdx_2353 = i;
+                        g_SysWork.targetNpcIdx_2353 = i;
                         return true;
                     }
                 }
@@ -8389,7 +8389,7 @@ bool func_8007F95C() // 0x8007F95C
         }
     }
 
-    g_SysWork.enemyTargetIdx_2353 = NO_VALUE;
+    g_SysWork.targetNpcIdx_2353 = NO_VALUE;
     return false;
 }
 
@@ -8511,7 +8511,7 @@ void func_8007FD4C(s32 arg0) // 0x8007FD4C
 
     chara = &g_SysWork.player_4C.chara_0;
 
-    g_Player_GrabFree_InputCount = 0;
+    g_Player_GrabReleaseInputTimer = 0;
     chara->field_40              = NO_VALUE;
 
     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_DamageReceived;

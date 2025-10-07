@@ -564,7 +564,7 @@ void func_800D426C(s_SubCharacter* chara) // 0x800D426C
     {
         case 0:
             if (!chara->properties_E4.unk0.properties_120.val32 ||
-                chara == &g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353] ||
+                chara == &g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353] ||
                 Math_Distance2dGet(&chara->position_18, &g_SysWork.player_4C.chara_0.position_18) > Q12(6.5f))
             {
                 chara->model_0.state_2 = 47;

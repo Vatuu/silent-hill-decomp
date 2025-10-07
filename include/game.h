@@ -1485,7 +1485,7 @@ typedef struct _SysWork
     u8              silentYesSelection_2350_4       : 4; /** `bool` */
     u32             inventoryItemSelectedIdx_2351   : 8;
     u32             flags_2352                      : 8;
-    s8              enemyTargetIdx_2353; // Index of the enemy that is being attacked by the player.
+    s8              targetNpcIdx_2353; // Index of the enemy that is being attacked by the player.
     s8              npcIdxs_2354[4];
     u8              field_2358;          /** `bool` */
     s8              unk_2359[1];
