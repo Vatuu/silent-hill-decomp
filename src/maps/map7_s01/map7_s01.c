@@ -189,7 +189,7 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800D06AC_3_s03
 
 #include "maps/shared/Ai_GhostChildAlessa_Update.h" // 0x800D49B8
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800D4A2C_7_s01); // 0x800D4A2C
+#include "maps/shared/sharedFunc_800D4A2C_7_s01.h" // 0x800D4A2C
 
 #include "maps/shared/sharedFunc_800D4A74_7_s01.h" // 0x800D4A74
 
@@ -500,7 +500,7 @@ void func_800D93E8(void)
 
 void func_800D9414(void)
 {
-    Event_ItemTake(InventoryItemId_Pliers, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S03_PickupPliers, 52);
+    Event_ItemTake(InventoryItemId_Pliers, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupPliers, 52);
 }
 
 void func_800D9440(void)
