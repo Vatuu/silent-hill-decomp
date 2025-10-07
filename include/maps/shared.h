@@ -2417,10 +2417,11 @@ extern s32 sharedData_800DD588_0_s00[2];
 /** `g_ParticleSpawnCount`. Tracks how many particles have been added per call. */
 extern u8 sharedData_800E2156_0_s01;
 
-extern s_AnimInfo KAUFMANN_ANIM_INFOS[]; // Used by `Anim_StartKeyframeIdxGet`, `Ai_Kaufmann` related?
+extern s_AnimInfo KAUFMANN_ANIM_INFOS[];
 extern s_AnimInfo CYBIL_ANIM_INFOS[];
-
-extern s_AnimInfo BLOODY_LISA_ANIM_INFOS[]; // `Ai_BloodyLisa` related?
+extern s_AnimInfo BLOODY_LISA_ANIM_INFOS[];
+extern s_AnimInfo LISA_ANIM_INFOS[];
+extern s_AnimInfo GHOST_CHILD_ALESSA_ANIM_INFOS[];
 
 extern s32 g_Particle_SpeedX;
 extern s32 g_Particle_SpeedZ;
@@ -2913,7 +2914,7 @@ void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1);
 
 // `Ai_Lisa` related
 void Ai_Lisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void sharedFunc_800D08FC_3_s04(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
+void sharedFunc_800D08FC_3_s04(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void sharedFunc_800D0944_3_s04(s_SubCharacter* chara, GsCOORDINATE2* coord);
 void sharedSymbol_800D0ADC_3_s04(s_SubCharacter*, GsCOORDINATE2*); // `Ai_Lisa_Control`
 void Ai_Lisa_Init(s_SubCharacter* chara);
@@ -2935,7 +2936,7 @@ void Ai_Kaufmann_Init(s_SubCharacter* chara);
 
 // `Ai_GhostChildAlessa` related
 void Ai_GhostChildAlessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void sharedFunc_800D4A2C_7_s01(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
+void sharedFunc_800D4A2C_7_s01(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void sharedFunc_800D4A74_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coord);
 void sharedFunc_800D4C0C_7_s01(s_SubCharacter*, GsCOORDINATE2*);
 void Ai_GhostChildAlessa_Init(s_SubCharacter* chara);

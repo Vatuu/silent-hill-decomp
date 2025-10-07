@@ -165,7 +165,7 @@ INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", sharedFunc_800D06AC_3_s03
 
 #include "maps/shared/Ai_Lisa_Update.h" // 0x800D0888
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", sharedFunc_800D08FC_3_s04); // 0x800D08FC
+#include "maps/shared/sharedFunc_800D08FC_3_s04.h" // 0x800D08FC
 
 #include "maps/shared/sharedFunc_800D0944_3_s04.h" // 0x800D0944
 

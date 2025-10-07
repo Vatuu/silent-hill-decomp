@@ -111,7 +111,10 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CDF24_3_s03
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D20D8);
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D238C);
+bool func_800D238C(s32 arg0)
+{
+    return (arg0 == 36) || (arg0 == 34) || (arg0 == 37) || (arg0 == 35);
+}
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CE3CC_3_s03); // 0x800D23C0
 
@@ -127,7 +130,24 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CEB90_3_s03
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CEC88_3_s03); // 0x800D2C7C
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D2EA0);
+s32 func_800D2EA0(void)
+{
+    s32 temp_a0;
+
+    temp_a0 = g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 3;
+    if (temp_a0 == 0)
+    {
+        return 0;
+    }
+    else if (temp_a0 == 2)
+    {
+        return 1;
+    }
+    else
+    {
+        return 2;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D2ED4);
 
@@ -179,7 +199,7 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800D4C0C_7_s01
 
 #include "maps/shared/Ai_Lisa_Update.h" // 0x800D4DFC
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800D08FC_3_s04); // 0x800D4E70
+#include "maps/shared/sharedFunc_800D08FC_3_s04.h" // 0x800D4E70
 
 #include "maps/shared/sharedFunc_800D0944_3_s04.h" // 0x800D4EB8
 
@@ -231,13 +251,22 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedSymbol_800D0ADC_3_s
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D6778);
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D6810);
+void func_800D6810(s32 arg0)
+{
+    (arg0 != 0) ? func_800D6878() : func_800D6938();
+}
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D6844);
+void func_800D6844(s32 arg0)
+{
+    (arg0 != 0) ? func_800D68F8() : func_800D6938();
+}
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D6878);
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D68F8);
+void func_800D68F8(void)
+{
+    func_8003640C(Savegame_EventFlagGet(EventFlag_391) ? 40 : 35);
+}
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D6938);
 
@@ -412,15 +441,27 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D87E0);
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D889C);
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D8958);
+void func_800D8958(void)
+{
+    func_80087360(FILE_TIM_BIRDCAGE_TIM, 0, 0, 78);
+}
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D8984);
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D89D8);
+void func_800D89D8(void)
+{
+    Event_ItemTake(InventoryItemId_KeyOfPhaleg, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupKeyOfPhaleg, 59);
+}
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D8A04);
+void func_800D8A04(void)
+{
+    func_80087360(FILE_TIM_CAGEEMPT_TIM, 0, 0, 80);
+}
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D8A30);
+void func_800D8A30(void)
+{
+    func_80087360(FILE_TIM_WATERTAP_TIM, 0, 0, 68);
+}
 
 INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", D_800CC528);
 
@@ -432,7 +473,10 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D8A5C);
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D8DB4);
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D8FCC);
+void func_800D8FCC(void)
+{
+    func_80087360(FILE_TIM_CLOCKKEY_TIM, 0, 0, 65);
+}
 
 INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", D_800CC594);
 
@@ -444,21 +488,44 @@ INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", D_800CC5B8);
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D8FF8);
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D93BC);
+void func_800D93BC(void)
+{
+    Event_ItemTake(InventoryItemId_KeyOfHagith, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupKeyOfHagith, 58);
+}
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D93E8);
+void func_800D93E8(void)
+{
+    func_80087360(FILE_TIM_ABUSEDSK_TIM, 0, 0, 62);
+}
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D9414);
+void func_800D9414(void)
+{
+    Event_ItemTake(InventoryItemId_Pliers, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S03_PickupPliers, 52);
+}
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D9440);
+void func_800D9440(void)
+{
+    Event_ItemTake(InventoryItemId_Screwdriver, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupScrewdriver, 53);
+}
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D946C);
+void func_800D946C(void)
+{
+    g_BackgroundColor = 0x68;
+    func_80087360(FILE_TIM_LITHGRPH_TIM, 0, 0, 70);
+}
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D94A4);
+void func_800D94A4(void)
+{
+    g_BackgroundColor = 0x68;
+    func_80087360(FILE_TIM_LITHGR_3_TIM, 0, 0, 71);
+}
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D94DC);
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D99DC);
+void func_800D99DC(void)
+{
+    Event_ItemTake(InventoryItemId_AmuletOfSolomon, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupAmuletOfSolomon, 60);
+}
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D9A08);
 
@@ -472,11 +539,20 @@ INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", jtbl_800CC6A8);
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800DAB64);
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800DAD7C);
+void func_800DAD7C(void)
+{
+    Event_ItemTake(InventoryItemId_CrestOfMercury, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupCrestOfMercury, 61);
+}
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800DADA8);
+void func_800DADA8(void)
+{
+    Event_ItemTake(InventoryItemId_RingOfContract, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupRingOfContract, 51);
+}
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800DADD4);
+void func_800DADD4(void)
+{
+    Event_ItemTake(InventoryItemId_Camera, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupCamera, 55);
+}
 
 INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", D_800CC6E4);
 
@@ -500,7 +576,10 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800DBDE0);
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800DC028);
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800DC080);
+void func_800DC080(void)
+{
+    Event_ItemTake(InventoryItemId_BirdCageKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupBirdCageKey, 54);
+}
 
 INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", D_800CC788);
 
