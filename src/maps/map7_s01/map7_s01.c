@@ -361,9 +361,174 @@ const char* MAP_MESSAGES[] =
     "\tThere's_a_botanical ~N\n\treference_book. ~N\n\tDon't_need_to_read_it_now. ~E "
 };
 
-INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", D_800CC424);
+// TODO: Move to `func_800D725C` once other funcs that use it are added.
+const char D_800CC424[] = "HERO";
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D725C);
+void func_800D725C(void) // 0x800D725C
+{
+    s_FsImageDesc charaTex;
+
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4)
+    {
+        if (g_SysWork.sysStateStep_C[0] >= 4)
+        {
+            if (g_SysWork.sysStateStep_C[0] <= 20)
+            {
+                SysWork_NextStateStepSet(22);
+            }
+        }
+    }
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            D_800E2C64 = 0;
+
+            Fs_QueueStartRead(57, (void*)FS_BUFFER_4);
+            Fs_QueueStartRead(145, (void*)FS_BUFFER_11);
+            Fs_QueueWaitForEmpty();
+
+            DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_11);
+            D_800E2C68 = 0;
+            func_800348C0();
+
+            Chara_Load(0, Chara_Lisa, g_SysWork.npcCoords_FC0, -1, NULL, NULL);
+
+            g_Screen_FadeStatus   = 4;
+            g_SysWork.field_30    = 20;
+            g_SysWork.field_2378  = Q12(0.8f);
+            g_SysWork.flags_22A4 |= 8;
+
+            Game_TurnFlashlightOn();
+            D_800E1670 = 0;
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
+            sharedFunc_800D2EB4_0_s00();
+            func_8003D03C();
+            func_8003640C(4);
+            SysWork_StateStepIncrement();
+        case 1:
+            func_80087EDC(4);
+            break;
+
+        case 2:
+            func_8008616C(2, false, 0, Q12(1.0f), false);
+            break;
+
+        case 3:
+            func_80088D0C();
+            Chara_Spawn(Chara_Lisa, 0, Q12(130.0f), Q12(-70.0f), FP_ANGLE(0.0f), 3);
+            SysWork_StateStepIncrement();
+        case 4:
+            Map_MessageWithAudio(17, &D_800E2C64, &D_800E14E8);
+            sharedFunc_800DA8E8_0_s01(&D_800E2C68, Q12(10.0f), Q12(0.0f), Q12(20.0f), true, false);
+            func_80085E6C(Q12(0.8f), false);
+            break;
+
+        case 5:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 72, false);
+            SysWork_StateStepIncrement();
+        case 6:
+            Map_MessageWithAudio(17, &D_800E2C64, &D_800E14E8);
+            sharedFunc_800DA8E8_0_s01(&D_800E2C68, Q12(10.0f), Q12(0.0f), Q12(20.0f), true, false);
+            break;
+
+        case 7:
+            sharedFunc_800DA8E8_0_s01(&D_800E2C68, Q12(10.0f), Q12(0.0f), Q12(20.0f), true, true);
+            break;
+
+        case 8:
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 5, false);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
+            D_800E2C68 = Q12(21.0f);
+            SysWork_StateStepIncrement();
+        case 9:
+            Map_MessageWithAudio(18, &D_800E2C64, &D_800E14E8);
+            break;
+
+        case 10:
+            Map_MessageWithAudio(24, &D_800E2C64, &D_800E14E8);
+            break;
+
+        case 11:
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 17, false);
+            SysWork_StateStepIncrement();
+        case 12:
+            Map_MessageWithAudio(27, &D_800E2C64, &D_800E14E8);
+            sharedFunc_800DA8E8_0_s01(&D_800E2C68, Q12(10.0f), Q12(22.0f), Q12(97.0f), false, false);
+            break;
+
+        case 13:
+            SysWork_StateStepIncrement();
+        case 14:
+            sharedFunc_800DA8E8_0_s01(&D_800E2C68, Q12(10.0f), Q12(22.0f), Q12(97.0f), false, true);
+            break;
+
+        case 15:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 155, false);
+            Sd_EngineCmd(4664);
+            SysWork_StateStepIncrement();
+        case 16:
+            sharedFunc_800DA8E8_0_s01(&D_800E2C68, Q12(10.0f), Q12(22.0f), Q12(132.0f), true, true);
+            break;
+
+        case 17:
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 18, false);
+            Savegame_EventFlagSet(EventFlag_570);
+            SysWork_StateStepIncrement();
+        case 18:
+            sharedFunc_800DA8E8_0_s01(&D_800E2C68, Q12(10.0f), Q12(133.0f), Q12(157.0f), true, true);
+            break;
+
+        case 19:
+            Chara_FsImageCalc(&charaTex, Chara_BloodyLisa, 2);
+            Chara_Load(1, Chara_BloodyLisa, &g_SysWork.npcCoords_FC0[30], 0, (s_LmHeader*)0x8019E600, &charaTex);
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(180.0f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(-100.0f);
+            func_8003C3AC();
+            SysWork_StateStepIncrement();
+        case 20:
+            func_8008616C(2, true, 0, Q12(0.5f), false);
+            break;
+
+        case 21:
+            SysWork_StateStepReset();
+            break;
+
+        case 22:
+            func_8008616C(2, true, 0, Q12(0.0f), false);
+            break;
+
+        case 23:
+            Savegame_EventFlagSet(EventFlag_571);
+            SysWork_StateStepIncrement();
+        case 24:
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(180.0f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(-100.0f);
+            func_8003C3AC();
+            Chara_FsImageCalc(&charaTex, Chara_BloodyLisa, 2);
+            Chara_Load(1, Chara_BloodyLisa, &g_SysWork.npcCoords_FC0[30], 0, (s_LmHeader*)0x8019E600, &charaTex);
+            func_80088D0C();
+            SysWork_StateStepIncrement();
+        default:
+            SysWork_StateSetNext(0);
+            Savegame_EventFlagSet(EventFlag_482);
+            func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
+            func_80088D0C();
+            Sd_EngineCmd(19);
+            break;
+    }
+
+    if (D_800E2C68 >= 0)
+    {
+        // TODO: Change `D_800CC424` below to `HERO` once other funcs that use it are added.
+        Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, D_800CC424, D_800E2C68, (s_DmsHeader*)FS_BUFFER_11);
+        Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "LISA", D_800E2C68, (s_DmsHeader*)FS_BUFFER_11);
+        vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800E2C48, &D_800E2C58, NULL, D_800E2C68, (s_DmsHeader*)FS_BUFFER_11));
+        vcUserCamTarget(&D_800E2C48, NULL, true);
+        vcUserWatchTarget(&D_800E2C58, NULL, true);
+    }
+}
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D7A60);
 
@@ -443,7 +608,7 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D889C);
 
 void func_800D8958(void) // 0x800D8958
 {
-    func_80087360(FILE_TIM_BIRDCAGE_TIM, 0, 0, 78);
+    func_80087360(FILE_TIM_BIRDCAGE_TIM, Q12(0.0f), Q12(0.0f), 78);
 }
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D8984);
@@ -455,12 +620,12 @@ void func_800D89D8(void) // 0x800D89D8
 
 void func_800D8A04(void) // 0x800D8A04
 {
-    func_80087360(FILE_TIM_CAGEEMPT_TIM, 0, 0, 80);
+    func_80087360(FILE_TIM_CAGEEMPT_TIM, Q12(0.0f), Q12(0.0f), 80);
 }
 
 void func_800D8A30(void) // 0x800D8A30
 {
-    func_80087360(FILE_TIM_WATERTAP_TIM, 0, 0, 68);
+    func_80087360(FILE_TIM_WATERTAP_TIM, Q12(0.0f), Q12(0.0f), 68);
 }
 
 INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", D_800CC528);
@@ -475,7 +640,7 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D8DB4);
 
 void func_800D8FCC(void) // 0x800D8FCC
 {
-    func_80087360(FILE_TIM_CLOCKKEY_TIM, 0, 0, 65);
+    func_80087360(FILE_TIM_CLOCKKEY_TIM, Q12(0.0f), Q12(0.0f), 65);
 }
 
 INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", D_800CC594);
@@ -495,7 +660,7 @@ void func_800D93BC(void) // 0x800D93BC
 
 void func_800D93E8(void) // 0x800D93E8
 {
-    func_80087360(FILE_TIM_ABUSEDSK_TIM, 0, 0, 62);
+    func_80087360(FILE_TIM_ABUSEDSK_TIM, Q12(0.0f), Q12(0.0f), 62);
 }
 
 void func_800D9414(void) // 0x800D9414
@@ -511,13 +676,13 @@ void func_800D9440(void) // 0x800D9440
 void func_800D946C(void) // 0x800D946C
 {
     g_BackgroundColor = 0x68;
-    func_80087360(FILE_TIM_LITHGRPH_TIM, 0, 0, 70);
+    func_80087360(FILE_TIM_LITHGRPH_TIM, Q12(0.0f), Q12(0.0f), 70);
 }
 
 void func_800D94A4(void) // 0x800D94A4
 {
     g_BackgroundColor = 0x68;
-    func_80087360(FILE_TIM_LITHGR_3_TIM, 0, 0, 71);
+    func_80087360(FILE_TIM_LITHGR_3_TIM, Q12(0.0f), Q12(0.0f), 71);
 }
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D94DC);

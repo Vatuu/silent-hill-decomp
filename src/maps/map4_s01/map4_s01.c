@@ -281,7 +281,7 @@ void func_800D496C(void) // 0x800D496C
 
 void func_800D4998(void) // 0x800D4998
 {
-    func_80087360(FILE_TIM_CLOCKATQ_TIM, 0, 0, 114);
+    func_80087360(FILE_TIM_CLOCKATQ_TIM, Q12(0.0f), Q12(0.0f), 114);
 }
 
 INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D49C4);

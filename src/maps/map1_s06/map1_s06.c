@@ -211,12 +211,12 @@ void func_800D6338(void) // 0x800D6338
 
     if (Savegame_EventFlagGet(EventFlag_137))
     {
-        func_80087360(FILE_TIM_RSCBOOK_TIM, 0, 0, 25);
+        func_80087360(FILE_TIM_RSCBOOK_TIM, Q12(0.0f), Q12(0.0f), 25);
         g_SavegamePtr->mapMarkingFlags_1D4[2] |= 1 << 4;
     }
     else
     {
-        func_80087360(FILE_TIM_RSCBOOK_TIM, 0, 0, 24);
+        func_80087360(FILE_TIM_RSCBOOK_TIM, Q12(0.0f), Q12(0.0f), 24);
     }
 }
 

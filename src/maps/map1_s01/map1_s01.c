@@ -307,7 +307,7 @@ void func_800D7214(void) // 0x800D7214
 
 void func_800D72B0(void) // 0x800D72B0
 {
-    func_80087360(FILE_TIM_HAND_TIM, 0x2000, 0x1800, 15);
+    func_80087360(FILE_TIM_HAND_TIM, Q12(2.0f), Q12(1.5f), 15);
 }
 
 void func_800D72DC(void) // 0x800D72DC
@@ -327,7 +327,7 @@ INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D7864);
 
 void func_800D7EEC(void) // 0x800D7EEC
 {
-    func_80087360(FILE_TIM_PIANO1_TIM, 0, 0, 47);
+    func_80087360(FILE_TIM_PIANO1_TIM, Q12(0.0f), Q12(0.0f), 47);
 }
 
 INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D7F18);
@@ -336,7 +336,7 @@ INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D857C);
 
 void func_800D8794(void) // 0x800D8794
 {
-    func_80087360(FILE_TIM_LOCKER0_TIM, 0, 0, 32);
+    func_80087360(FILE_TIM_LOCKER0_TIM, Q12(0.0f), Q12(0.0f), 32);
 }
 
 INCLUDE_RODATA("asm/maps/map1_s01/nonmatchings/map1_s01", D_800CB6CC);

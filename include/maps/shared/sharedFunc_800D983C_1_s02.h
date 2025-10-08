@@ -1,6 +1,6 @@
 void sharedFunc_800D983C_1_s02(s_SubCharacter* chara)
 {
-    s32 unk[7]; // Type assumed.
+    s_800C4590 unused;
     s32 newMoveSpeed;
 
     chara->field_34 += g_DeltaTime2 >> 2;
@@ -31,7 +31,7 @@ void sharedFunc_800D983C_1_s02(s_SubCharacter* chara)
         chara->headingAngle_3C = chara->rotation_24.vy;
     }
 
-    func_8005CB20(chara, &unk, chara->properties_E4.larvalStalker.properties_E8[1].val16[0], chara->properties_E4.larvalStalker.properties_E8[1].val16[1]);
+    func_8005CB20(chara, &unused, chara->properties_E4.larvalStalker.properties_E8[1].val16[0], chara->properties_E4.larvalStalker.properties_E8[1].val16[1]);
     chara->properties_E4.larvalStalker.properties_E8[1].val16[1] = 0;
     chara->properties_E4.larvalStalker.properties_E8[1].val16[0] = 0;
 

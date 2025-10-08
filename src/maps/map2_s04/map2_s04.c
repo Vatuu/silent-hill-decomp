@@ -163,12 +163,12 @@ void func_800CCF9C(void) // 0x800CCF9C
 void func_800CD050(void) // 0x800CD050
 {
     g_BackgroundColor = 0x50;
-    func_80087360(FILE_TIM_PLCSMEMO_TIM, 0, 0, 15);
+    func_80087360(FILE_TIM_PLCSMEMO_TIM, Q12(0.0f), Q12(0.0f), 15);
 }
 
 void func_800CD088(void) // 0x800CD088
 {
-    func_80087360(FILE_TIM_PLCSBORD_TIM, 0, 0, 19);
+    func_80087360(FILE_TIM_PLCSBORD_TIM, Q12(0.0f), Q12(0.0f), 19);
     Savegame_EventFlagSet(EventFlag_145);
 }
 

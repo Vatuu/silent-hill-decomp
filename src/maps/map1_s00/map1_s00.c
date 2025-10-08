@@ -242,13 +242,13 @@ void func_800D7A28(void) // 0x800D7A28
 void func_800D7AC4(void) // 0x800D7AC4
 {
     g_DeltaTime0 = 0;
-    func_80087360(FILE_TIM_GOLD1_TIM, 0x2800, 0x2000, 19);
+    func_80087360(FILE_TIM_GOLD1_TIM, Q12(2.5f), Q12(2.0f), 19);
 }
 
 void func_800D7AF8(void) // 0x800D7AF8
 {
     g_DeltaTime0 = 0;
-    func_80087360(FILE_TIM_GOLD2_TIM, 0x2800, 0x2000, 19);
+    func_80087360(FILE_TIM_GOLD2_TIM, Q12(2.5f), Q12(2.0f), 19);
 }
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D7B2C);
@@ -256,13 +256,13 @@ INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D7B2C);
 void func_800D7E48(void) // 0x800D7E48
 {
     g_DeltaTime0 = 0;
-    func_80087360(FILE_TIM_SILVER1_TIM, 0x2800, 0x2000, 20);
+    func_80087360(FILE_TIM_SILVER1_TIM, Q12(2.5f), Q12(2.0f), 20);
 }
 
 void func_800D7E7C(void) // 0x800D7E7C
 {
     g_DeltaTime0 = 0;
-    func_80087360(FILE_TIM_SILVER2_TIM, 0x2800, 0x2000, 20);
+    func_80087360(FILE_TIM_SILVER2_TIM, Q12(2.5f), Q12(2.0f), 20);
 }
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D7EB0);
@@ -283,7 +283,7 @@ INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D8948);
 
 void func_800D8CC4(void) // 0x800D8CC4
 {
-    func_80087360(FILE_TIM_RECEPPIC_TIM, 0, 0, 27);
+    func_80087360(FILE_TIM_RECEPPIC_TIM, Q12(0.0f), Q12(0.0f), 27);
 }
 
 INCLUDE_RODATA("asm/maps/map1_s00/nonmatchings/map1_s00", D_800CB670);
@@ -306,7 +306,7 @@ void func_800D922C(void) // 0x800D922C
 void func_800D9254(void) // 0x800D9254
 {
     g_BackgroundColor = 0x68;
-    func_80087360(FILE_TIM_USCBOOK_TIM, 0, 0, 38);
+    func_80087360(FILE_TIM_USCBOOK_TIM, Q12(0.0f), Q12(0.0f), 38);
 }
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D928C);

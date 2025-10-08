@@ -1720,7 +1720,7 @@ typedef struct
 typedef struct
 {
     VECTOR3 offset_0;
-    s32     field_C; // Absolute ground height?
+    s32     field_C; // Absolute ground height? Might be using `s_Collision` substruct?
     s16     field_10;
     s16     field_12;
     s8      field_14; // Count of something? 12 is significant.

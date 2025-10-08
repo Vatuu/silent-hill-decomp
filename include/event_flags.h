@@ -191,6 +191,7 @@ typedef enum _EventFlag
     EventFlag_448 = 448,
 
     EventFlag_481 = 481,
+    EventFlag_482 = 482,
 
     EventFlag_485 = 485,
 
@@ -209,6 +210,9 @@ typedef enum _EventFlag
     EventFlag_M7S02_PickupAnkh            = 537,
 
     EventFlag_M7S02_PickupDiskOfOuroboros = 539,
+
+    EventFlag_570 = 570,
+    EventFlag_571 = 571,
 
     EventFlag_574 = 574,
 

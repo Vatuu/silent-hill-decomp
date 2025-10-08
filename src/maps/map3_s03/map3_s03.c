@@ -312,19 +312,19 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D1A58);
 void func_800D26D0(void) // 0x800D26D0
 {
     g_BackgroundColor = 0x68;
-    func_80087360(FILE_TIM_PLATECLR_TIM, 0, 0, 18);
+    func_80087360(FILE_TIM_PLATECLR_TIM, Q12(0.0f), Q12(0.0f), 18);
 }
 
 void func_800D2708(void) // 0x800D2708
 {
     g_BackgroundColor = 0x68;
-    func_80087360(FILE_TIM_LITHGRPH_TIM, 0, 0, 44);
+    func_80087360(FILE_TIM_LITHGRPH_TIM, Q12(0.0f), Q12(0.0f), 44);
 }
 
 void func_800D2740(void) // 0x800D2740
 {
     g_BackgroundColor = 0x60;
-    func_80087360(FILE_TIM_LITHGR_2_TIM, 0, 0, 45);
+    func_80087360(FILE_TIM_LITHGR_2_TIM, Q12(0.0f), Q12(0.0f), 45);
 }
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D2778);
@@ -359,13 +359,13 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D2CDC);
 
 void func_800D30FC(void) // 0x800D30FC
 {
-    func_80087360(FILE_TIM_CAGEEMPT_TIM, 0, 0, 53);
+    func_80087360(FILE_TIM_CAGEEMPT_TIM, Q12(0.0f), Q12(0.0f), 53);
 }
 
 void func_800D3128(void) // 0x800D3128
 {
     g_BackgroundColor = 0x70;
-    func_80087360(FILE_TIM_ELCWIRE0_TIM, 0, 0, 55);
+    func_80087360(FILE_TIM_ELCWIRE0_TIM, Q12(0.0f), Q12(0.0f), 55);
 }
 
 INCLUDE_RODATA("asm/maps/map3_s03/nonmatchings/map3_s03", D_800CB304);

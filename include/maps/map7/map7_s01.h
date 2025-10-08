@@ -4,6 +4,16 @@
 /** Character ID. */
 extern s8 D_800A9945;
 
+extern u16 D_800E14E8;
+
+extern s8 D_800E1670;
+
+extern VECTOR3 D_800E2C48;
+extern VECTOR3 D_800E2C58;
+
+extern u8  D_800E2C64;
+extern s32 D_800E2C68;
+
 s32 func_800D1630();
 
 bool func_800D238C(s32 arg0);
@@ -15,6 +25,8 @@ void func_800D6810(s32 arg0);
 void func_800D6844(s32 arg0);
 
 void func_800D68F8(void);
+
+void func_800D725C(void);
 
 void func_800D83EC(void);
 

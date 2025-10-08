@@ -255,7 +255,7 @@ INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D1904);
 
 void func_800D1A84(void) // 0x800D1A84
 {
-    func_80087360(FILE_TIM_DIARYMTL_TIM, 0x2800, 0x2000, 49);
+    func_80087360(FILE_TIM_DIARYMTL_TIM, Q12(2.5f), Q12(2.0f), 49);
     Savegame_EventFlagSet(EventFlag_398);
 }
 
