@@ -1,5 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/item_screens.h"
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map7/map7_s01.h"
@@ -1138,7 +1139,130 @@ void func_800D94A4(void) // 0x800D94A4
     func_80087360(FILE_TIM_LITHGR_3_TIM, Q12(0.0f), Q12(0.0f), 71);
 }
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D94DC);
+void func_800D94DC(void) // 0x800D94DC
+{
+    s32         i;
+    s32         j;
+    s_800E1510* var_s1;
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_8008616C(0, true, 0, 0, false);
+            D_800E2CAC = 0;
+            D_800E2CA8 = 0;
+            for (i = 0; i < 5; i++)
+            {
+                D_800E1688[i] = 26; // Sets all 5 values to length of `D_800E1510` array?
+            }
+            SysWork_StateStepIncrement();
+        case 1:
+            func_800862F8(7, FILE_TIM_ALERTDOR_TIM, false);
+            break;
+
+        case 2:
+            func_8008616C(1, true, 0, 0, false);
+            break;
+
+        case 3:
+            func_8008616C(2, false, 0, 0, false);
+            func_800862F8(2, 0, false);
+            break;
+
+        case 4:
+            func_800862F8(2, 0, false);
+
+            D_800E2CA8 += (g_Controller0->sticks_24.sticks_0.leftX * 16384) / 75;
+            D_800E2CA8  = CLAMP_RANGE(D_800E2CA8, Q12(-120.0f), Q12(120.0f));
+
+            D_800E2CAC += (g_Controller0->sticks_24.sticks_0.leftY * 16384) / 75;
+            D_800E2CAC  = CLAMP_RANGE(D_800E2CAC, Q12(-120.0f), Q12(120.0f));
+
+            Game_TimerUpdate();
+            func_800881B8((s16)(FP_FROM(D_800E2CA8, Q12_SHIFT) + 8), FP_FROM(D_800E2CAC, Q12_SHIFT) + 8, 8, 8, 0, 64, 32, 32, 128, 192, 0, 12);
+
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
+            {
+                // TODO: `SysWork_NextStateStepSet(8);`
+                g_SysWork.sysStateStep_C[0] = 8;
+                g_SysWork.field_28          = 0;
+                g_SysWork.sysStateStep_C[1] = 0;
+                g_SysWork.timer_2C          = 0;
+                g_SysWork.sysStateStep_C[2] = 0;
+                break;
+            }
+
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
+            {
+                for (i = 0; i < 26; i++)
+                {
+                    var_s1 = &D_800E1510[i];
+                    if (var_s1->field_0 - 174 <= FP_FROM(D_800E2CA8, Q12_SHIFT) &&
+                        var_s1->field_0 - 146 >= FP_FROM(D_800E2CA8, Q12_SHIFT))
+                    {
+                        if (var_s1->field_1 - 134 <= FP_FROM(D_800E2CAC, Q12_SHIFT) &&
+                            var_s1->field_1 - 106 >= FP_FROM(D_800E2CAC, Q12_SHIFT))
+                        {
+                            if (SQUARE(var_s1->field_0 - 160 - FP_FROM(D_800E2CA8, Q12_SHIFT)) +
+                                SQUARE(var_s1->field_1 - 120 - FP_FROM(D_800E2CAC, Q12_SHIFT)) < 197)
+                            {
+                                Sd_EngineCmd(Sfx_Unk1650);
+
+                                for (j = 0; j < 4; j++)
+                                {
+                                    D_800E1688[j] = D_800E1688[j + 1];
+                                }
+                                
+                                D_800E1688[4] = i;
+
+                                for (j = 0; j < 5; j++)
+                                {
+                                    if (D_800E1688[j] != D_800E1544[j])
+                                    {
+                                        break;
+                                    }
+                                }
+
+                                if (j == 5)
+                                {
+                                    Savegame_EventFlagSet(EventFlag_488);
+
+                                    // TODO: `SysWork_NextStateStepSet(5);`
+                                    g_SysWork.sysStateStep_C[0] = 5;
+                                    g_SysWork.field_28          = 0;
+                                    g_SysWork.sysStateStep_C[1] = 0;
+                                    g_SysWork.timer_2C          = 0;
+                                    g_SysWork.sysStateStep_C[2] = 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            break;
+
+        case 6:
+            Sd_EngineCmd(Sfx_Unk1343);
+            SysWork_StateStepIncrement();
+        case 5:
+        case 7:
+            func_80085E6C(Q12(0.6f), false);
+            func_800862F8(2, 0, false);
+            break;
+
+        case 8:
+            func_800862F8(2, 0, false);
+            func_8008616C(2, true, 0, 0, false);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            func_8008616C(0, false, 0, 0, false);
+            break;
+    }
+}
 
 void func_800D99DC(void) // 0x800D99DC
 {

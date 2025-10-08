@@ -258,7 +258,7 @@ s32 Inventory_HyperBlasterFunctionalTest() // 0x8004C4F8
     return 0;
 }
 
-u32 Game_HyperBlasterBeamColorGet() // 0x8004C54C
+s32 Game_HyperBlasterBeamColorGet() // 0x8004C54C
 {
     return g_SavegamePtr->pickedUpSpecialItemCount_25C_3 >> 3;
 }

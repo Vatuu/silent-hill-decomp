@@ -3,6 +3,12 @@
 
 typedef struct
 {
+    u8 field_0;
+    u8 field_1;
+} s_800E1510;
+
+typedef struct
+{
     u8  field_0;
     u8  unk_1[1];
     s16 field_2;
@@ -17,6 +23,12 @@ extern u16 D_800E14E8;
 
 extern u16     D_800E1500;
 extern VECTOR3 D_800E1504;
+
+extern s_800E1510 D_800E1510[26];
+
+extern u8 D_800E1544[5];
+
+extern u8 D_800E1688[5];
 
 extern u8 D_800E1670;
 extern u8 D_800E1671;
@@ -33,6 +45,9 @@ extern u8  D_800E2C64;
 extern s32 D_800E2C68;
 
 extern s_WorldObjectPos D_800E2C94; // Assumed type.
+
+extern s32 D_800E2CA8;
+extern s32 D_800E2CAC;
 
 s32 func_800D1630();
 
@@ -101,6 +116,8 @@ void func_800D9440(void);
 void func_800D946C(void);
 
 void func_800D94A4(void);
+
+void func_800D94DC(void);
 
 void func_800D99DC(void);
 

@@ -290,7 +290,7 @@ s32 Inventory_HyperBlasterUnlockTest(); // 0x8004C45C
 s32 Inventory_HyperBlasterFunctionalTest(); // 0x8004C4F8
 
 /** @note Rough name. */
-u32 Game_HyperBlasterBeamColorGet(); // 0x8004C54C
+s32 Game_HyperBlasterBeamColorGet(); // 0x8004C54C
 
 void Game_TimerUpdate(); // 0x8004C8DC
 
