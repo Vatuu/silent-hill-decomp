@@ -193,7 +193,9 @@ typedef enum _EventFlag
     EventFlag_481 = 481,
     EventFlag_482 = 482,
 
+    EventFlag_484 = 484,
     EventFlag_485 = 485,
+    EventFlag_486 = 486,
 
     EventFlag_M7S01_PickupCamera         = 519,
     EventFlag_M7S01_PickupRingOfContract = 520,

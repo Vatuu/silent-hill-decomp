@@ -125,6 +125,7 @@ typedef enum _Sfx
     Sfx_Unk1329     = 1329,
 				    
     Sfx_Stumble1    = 1333,
+    Sfx_Unk1334     = 1334,
 				    
     Sfx_Unk1336     = 1336,
     Sfx_Unk1337     = 1337,
@@ -132,6 +133,9 @@ typedef enum _Sfx
     Sfx_Unk1339     = 1339,
     Sfx_Unk1340     = 1340,
     Sfx_Unk1341     = 1341,
+    Sfx_Unk1342     = 1342,
+
+    Sfx_Unk1344     = 1344,
 				    
     Sfx_Unk1351     = 1351,
     Sfx_Unk1352     = 1352,
@@ -200,6 +204,9 @@ typedef enum _Sfx
 				    
     Sfx_Unk1609     = 1609,
     Sfx_Unk1610     = 1610,
+
+    Sfx_Unk1655     = 1655,
+    Sfx_Unk1656     = 1656,
 } e_Sfx;
 
 typedef enum _MainMenuEntry
