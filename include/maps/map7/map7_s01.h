@@ -15,8 +15,14 @@ extern VECTOR3 D_800E00CC[]; // Assumed type.
 
 extern u16 D_800E14E8;
 
+extern u16     D_800E1500;
+extern VECTOR3 D_800E1504;
+
 extern u8 D_800E1670;
 extern u8 D_800E1671;
+
+extern s16 D_800E1678[4];
+extern u8  D_800E1680;
 
 extern s_800E1690 D_800E1690;
 
@@ -52,7 +58,23 @@ void func_800D8358(void);
 
 void func_800D83EC(void);
 
+void func_800D84AC(void);
+
+void func_800D8540(void);
+
+void func_800D85D4(void);
+
+void func_800D8668(void);
+
+void func_800D8724(void);
+
+void func_800D87E0(void);
+
+void func_800D889C(void);
+
 void func_800D8958(void);
+
+void func_800D8984(void);
 
 void func_800D89D8(void);
 
@@ -60,7 +82,13 @@ void func_800D8A04(void);
 
 void func_800D8A30(void);
 
+void func_800D8A5C(void);
+
+void func_800D8DB4(void);
+
 void func_800D8FCC(void);
+
+void func_800D8FF8(void);
 
 void func_800D93BC(void);
 

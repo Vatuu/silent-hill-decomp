@@ -877,10 +877,9 @@ typedef struct _ControllerData
 } s_ControllerData;
 STATIC_ASSERT_SIZEOF(s_ControllerData, 44);
 
-/** @brief Controller key bindings for input actions.
+/** @brief Controller key bindings for input actions, contains bitfield of button presses assigned to each action.
  *
- * TODO: Instead of `u16`s, it should use 1-bit packed 16-bit `u32`, similar to `ControllerFlags` but not an enum because it can have multiple values.
- * Only the first 16 values are counted (analog directions are not included). Also, D-Pad is not registered.
+ * Bitfields only contain buttons, analog directions and D-Pad aren't included.
  */
 typedef struct _ControllerConfig
 {

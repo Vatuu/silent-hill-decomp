@@ -197,6 +197,10 @@ typedef enum _EventFlag
     EventFlag_485 = 485,
     EventFlag_486 = 486,
 
+    EventFlag_489 = 489,
+    EventFlag_490 = 490,
+    EventFlag_491 = 491,
+
     EventFlag_M7S01_PickupCamera         = 519,
     EventFlag_M7S01_PickupRingOfContract = 520,
     EventFlag_521                        = 521,
@@ -207,11 +211,17 @@ typedef enum _EventFlag
     EventFlag_M7S01_PickupKeyOfHagith    = 526,
     EventFlag_M7S01_PickupKeyOfPhaleg    = 527,
 
+    EventFlag_530 = 530,
+    EventFlag_531 = 531,
+    EventFlag_532 = 532,
+
     EventFlag_M7S01_PickupAmuletOfSolomon = 535,
     EventFlag_M7S01_PickupCrestOfMercury  = 536,
     EventFlag_M7S02_PickupAnkh            = 537,
 
     EventFlag_M7S02_PickupDiskOfOuroboros = 539,
+
+    EventFlag_563 = 563,
 
     EventFlag_570 = 570,
     EventFlag_571 = 571,
