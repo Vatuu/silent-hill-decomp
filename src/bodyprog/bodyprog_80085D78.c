@@ -57,7 +57,7 @@ void func_80085DC0(bool arg0, s32 sysStateStep) // 0x80085DC0
     }
 }
 
-void func_80085DF0() // 0x80085DF0
+void func_80085DF0(void) // 0x80085DF0
 {
     g_SysWork.timer_2C += g_DeltaTime1;
 

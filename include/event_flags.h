@@ -126,6 +126,8 @@ typedef enum _EventFlag
 
     EventFlag_211 = 211,
 
+    EventFlag_223 = 223,
+
     EventFlag_M3S04_PickupPlateOfQueen  = 241,
     EventFlag_M3S03_PickupPlateOfTurtle = 242,
     EventFlag_M3S03_PickupPlateOfHatter = 243,
@@ -202,6 +204,11 @@ typedef enum _EventFlag
     EventFlag_490 = 490,
     EventFlag_491 = 491,
 
+    EventFlag_496 = 496,
+    EventFlag_497 = 497,
+    EventFlag_498 = 498,
+    EventFlag_499 = 499,
+
     EventFlag_M7S01_PickupCamera         = 519,
     EventFlag_M7S01_PickupRingOfContract = 520,
     EventFlag_521                        = 521,
@@ -222,6 +229,7 @@ typedef enum _EventFlag
 
     EventFlag_M7S02_PickupDiskOfOuroboros = 539,
 
+    EventFlag_562 = 562,
     EventFlag_563 = 563,
 
     EventFlag_570 = 570,

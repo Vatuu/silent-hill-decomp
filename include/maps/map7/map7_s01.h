@@ -28,6 +28,8 @@ extern s_800E1510 D_800E1510[26];
 
 extern u8 D_800E1544[5];
 
+extern u16 D_800E154C[];
+
 extern u8 D_800E1688[5];
 
 extern u8 D_800E1670;
@@ -35,6 +37,8 @@ extern u8 D_800E1671;
 
 extern s16 D_800E1678[4];
 extern u8  D_800E1680;
+
+extern u8 D_800E168D;
 
 extern s_800E1690 D_800E1690;
 
@@ -48,6 +52,8 @@ extern s_WorldObjectPos D_800E2C94; // Assumed type.
 
 extern s32 D_800E2CA8;
 extern s32 D_800E2CAC;
+
+extern s16 D_800E2CE8;
 
 s32 func_800D1630();
 
@@ -121,6 +127,8 @@ void func_800D94DC(void);
 
 void func_800D99DC(void);
 
+void func_800D9A08(void);
+
 void func_800DAD7C(void);
 
 void func_800DADA8(void);
@@ -128,6 +136,18 @@ void func_800DADA8(void);
 void func_800DADD4(void);
 
 void func_800DAE00(void);
+
+void func_800DB13C(void);
+
+void func_800DB1F0(void);
+
+void func_800DB31C(void);
+
+void func_800DB3D0(void);
+
+void func_800DBDE0(void);
+
+void func_800DC028(void);
 
 void func_800DC080(void);
 

@@ -920,7 +920,7 @@ void func_800D9610(void) // 0x800D9610
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00(mapPoint, eventParam);
+            sharedFunc_800D20E4_0_s00();
             func_8005DC1C(Sfx_Unk1355, &posCpy, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement();
 
@@ -947,7 +947,7 @@ void func_800D9D98(void) // 0x800D9D98
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00(syswork);
+            sharedFunc_800D20E4_0_s00();
             func_8008616C(0, true, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement();
 
@@ -956,7 +956,7 @@ void func_800D9D98(void) // 0x800D9D98
             break;
 
         case 2:
-            func_80085DF0(syswork);
+            func_80085DF0();
             break;
 
         case 3:
@@ -1001,7 +1001,7 @@ void func_800DA028(void) // 0x800DA028
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00(syswork);
+            sharedFunc_800D20E4_0_s00();
             func_8008616C(0, true, 2, 0, false);
             SysWork_StateStepIncrement();
 
@@ -1010,7 +1010,7 @@ void func_800DA028(void) // 0x800DA028
             break;
 
         case 2:
-            func_80085DF0(syswork);
+            func_80085DF0();
             break;
 
         case 3:
@@ -1052,7 +1052,7 @@ void func_800DA254(void) // 0x800DA254
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00(syswork);
+            sharedFunc_800D20E4_0_s00();
             func_8008616C(0, true, 2, 0, false);
             SysWork_StateStepIncrement();
 
@@ -1061,7 +1061,7 @@ void func_800DA254(void) // 0x800DA254
             break;
 
         case 2:
-            func_80085DF0(syswork);
+            func_80085DF0();
             break;
 
         case 3:

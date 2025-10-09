@@ -2524,36 +2524,36 @@ bool sharedFunc_800D0B18_0_s00(s32 arg0);
 
 void sharedFunc_800D0CB8_0_s00(void);
 
-void sharedFunc_800D0E04_0_s00();
+void sharedFunc_800D0E04_0_s00(void);
 
-void sharedFunc_800D209C_0_s00();
+void sharedFunc_800D209C_0_s00(void);
 
-void sharedFunc_800D20D8_0_s00();
+void sharedFunc_800D20D8_0_s00(void);
 
-void sharedFunc_800D20E4_0_s00();
+void sharedFunc_800D20E4_0_s00(void);
 
 void sharedFunc_800D2244_0_s00(bool arg0);
 
 void sharedFunc_800D2C7C_0_s00(s32 arg0);
 
-void sharedFunc_800D2D2C_0_s00();
+void sharedFunc_800D2D2C_0_s00(void);
 
-void sharedFunc_800D2D44_0_s00();
+void sharedFunc_800D2D44_0_s00(void);
 
-s32 sharedFunc_800D2D6C_0_s00();
+s32 sharedFunc_800D2D6C_0_s00(void);
 
-void sharedFunc_800D2D84_0_s00();
+void sharedFunc_800D2D84_0_s00(void);
 
 /** Triggers at specific points after the start of a cutscene or dialogue. */
-s32 sharedFunc_800D2E50_0_s00();
+s32 sharedFunc_800D2E50_0_s00(void);
 
-void sharedFunc_800D2E60_0_s00();
+void sharedFunc_800D2E60_0_s00(void);
 
-u8 sharedFunc_800D2EA4_0_s00();
+u8 sharedFunc_800D2EA4_0_s00(void);
 
-void sharedFunc_800D2EB4_0_s00();
+void sharedFunc_800D2EB4_0_s00(void);
 
-void sharedFunc_800D2EF4_0_s00();
+void sharedFunc_800D2EF4_0_s00(void);
 
 void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara);
 
@@ -2667,9 +2667,9 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter*);
 void sharedFunc_800CEFD0_1_s02(s32 arg0, s_sharedFunc_800CEFD0_1_s02* arg1, u16* arg2, s32* deltaTime); // TODO make this match for s_Particle
 
 /** @brief Sets a map overlay value based on a whether a game event flag is set. */
-void sharedFunc_800D0994_3_s00();
+void sharedFunc_800D0994_3_s00(void);
 
-void sharedFunc_800D09D4_3_s00();
+void sharedFunc_800D09D4_3_s00(void);
 
 // MAP3_S03 puppet nurse/doctor funcs
 void sharedFunc_800CDA88_3_s03(s_SubCharacter*);
@@ -2877,7 +2877,7 @@ bool sharedFunc_800D62D8_0_s01(s_SubCharacter* chara);
 /** Returns anim-related index. */
 s32 sharedFunc_800D4A80_0_s01(s_SubCharacter* chara);
 
-s32 sharedFunc_800D5274_0_s01();
+s32 sharedFunc_800D5274_0_s01(void);
 
 void sharedFunc_800D633C_0_s01(s_SubCharacter* chara);
 void sharedFunc_800D63A4_0_s01(s_SubCharacter*);
@@ -2906,8 +2906,8 @@ void sharedFunc_800D8714_0_s01(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
 void sharedFunc_800D87FC_0_s01(s_SubCharacter* chara);
 
-s32 sharedFunc_800D929C_0_s00();
-s32 sharedFunc_800D2DAC_0_s00(); // Player anim func. Checks if the active keyframe is at the start or end of the anim's range.
+s32 sharedFunc_800D929C_0_s00(void);
+s32 sharedFunc_800D2DAC_0_s00(void); // Player anim func. Checks if the active keyframe is at the start or end of the anim's range.
 s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara); // NPC anim func. Checks if the active keyframe is at the start or end of the anim's range.
 bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, s32 sfx);
 void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1);

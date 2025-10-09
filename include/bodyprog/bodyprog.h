@@ -175,6 +175,8 @@ typedef enum _Sfx
 				    
     Sfx_Unk1458     = 1458,
     Sfx_Unk1459     = 1459,
+
+    Sfx_Unk1464     = 1464,
 				    
     Sfx_Unk1487     = 1487,
 				    
@@ -213,9 +215,11 @@ typedef enum _Sfx
 
     Sfx_Unk1650     = 1650,
 
+    Sfx_Unk1653     = 1653,
+    Sfx_Unk1654     = 1654,
     Sfx_Unk1655     = 1655,
     Sfx_Unk1656     = 1656,
-
+    Sfx_Unk1657     = 1657,
     Sfx_Unk1658     = 1658,
 
     Sfx_Unk1660     = 1660,
@@ -3610,7 +3614,7 @@ void func_80085D78(bool arg0);
 
 void func_80085DC0(bool arg0, s32 sysStateStep);
 
-void func_80085DF0();
+void func_80085DF0(void);
 
 void func_80085E6C(s32 delay, bool arg1);
 
