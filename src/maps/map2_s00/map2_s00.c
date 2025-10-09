@@ -733,20 +733,20 @@ void func_800E7D54(void) // 0x800E7D54
 {
     s32 i;
 
-    // Breaks from loop if there are any characters with ID in range [1, 24], with health above 0.
-    for (i = 0; i < 6; i++)
+    for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
     {
+        // Breaks if there are any characters with IDs in range `[Chara_Harry, Chara_MonsterCybil]` with health above `Q12(0.0f)`.
         if (g_SysWork.npcs_1A0[i].model_0.charaId_0 >= Chara_Harry &&
             g_SysWork.npcs_1A0[i].model_0.charaId_0 <= Chara_MonsterCybil &&
-            g_SysWork.npcs_1A0[i].health_B0 > 0)
+            g_SysWork.npcs_1A0[i].health_B0 > Q12(0.0f))
         {
             break;
         }
     }
 
-    if (i != 6)
+    if (i != ARRAY_SIZE(g_SysWork.npcs_1A0))
     {
-        g_DeltaTime0 = 0;
+        g_DeltaTime0 = Q12(0.0f);
     }
 
     switch (g_SysWork.sysStateStep_C[0])
@@ -754,12 +754,14 @@ void func_800E7D54(void) // 0x800E7D54
         case 0:
             sharedFunc_800D20E4_0_s00();
             SysWork_StateStepIncrement();
+
         case 1:
             MapMsg_DisplayAndHandleSelection(false, 46, 0, 0, 0, false);
-            return;
+            break;
+
         case 2:
             Event_ItemTake(InventoryItemId_HealthDrink, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M2S00_PickupHealthDrink, 6);
-            return;
+            break;
     }
 }
 

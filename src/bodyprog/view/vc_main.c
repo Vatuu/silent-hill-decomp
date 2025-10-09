@@ -357,7 +357,7 @@ void vcSetAllNpcDeadTimer() // 0x8008123C
     s_SubCharacter* curChara;
 
     // Run through NPCs.
-    for (curChara = &g_SysWork.npcs_1A0[0]; curChara < &g_SysWork.npcs_1A0[NPC_COUNT_MAX]; curChara++)
+    for (curChara = &g_SysWork.npcs_1A0[0]; curChara < &g_SysWork.npcs_1A0[ARRAY_SIZE(g_SysWork.npcs_1A0)]; curChara++)
     {
         // Continue if invalid character.
         if (curChara->model_0.charaId_0 == Chara_None)
@@ -868,7 +868,7 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
         return;
     }
 
-    for (sc_p = &g_SysWork.npcs_1A0[0]; sc_p < &g_SysWork.npcs_1A0[NPC_COUNT_MAX]; sc_p++)
+    for (sc_p = &g_SysWork.npcs_1A0[0]; sc_p < &g_SysWork.npcs_1A0[ARRAY_SIZE(g_SysWork.npcs_1A0)]; sc_p++)
     {
         if (sc_p->model_0.charaId_0 >= Chara_AirScreamer &&
             sc_p->model_0.charaId_0 <= Chara_MonsterCybil &&

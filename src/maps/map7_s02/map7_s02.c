@@ -577,8 +577,7 @@ INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02", D_800CD734);
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800DE1FC);
 
-void func_800DF1E8(void) {
-}
+void func_800DF1E8(void) {}
 
 void func_800DF1F0(void) // 0x800DF1F0
 {
@@ -599,13 +598,13 @@ void func_800DFA80(void) // 0x800DFA80
 
 void func_800DFAAC(void) // 0x800DFAAC
 {
-    g_BackgroundColor = 0x68;
+    g_BackgroundColor = 104;
     func_80087360(FILE_TIM_LITHGRPH_TIM, Q12(0.0f), Q12(0.0f), 101);
 }
 
 void func_800DFAE4(void) // 0x800DFAE4
 {
-    g_BackgroundColor = 0x68;
+    g_BackgroundColor = 104;
     func_80087360(FILE_TIM_LITHGR_3_TIM, Q12(0.0f), Q12(0.0f), 102);
 }
 

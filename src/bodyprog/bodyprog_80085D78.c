@@ -779,7 +779,7 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
     if (!(g_SysWork.flags_22A4 & (1 << 5)))
     {
         // Run through NPCs.
-        for (i = 0; i < NPC_COUNT_MAX; i++)
+        for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
         {
             if (g_SysWork.npcs_1A0[i].model_0.charaId_0 >= Chara_Harry && g_SysWork.npcs_1A0[i].model_0.charaId_0 <= Chara_MonsterCybil &&
                 g_SysWork.npcs_1A0[i].health_B0 > Q12(0.0f))
@@ -788,7 +788,7 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
             }
         }
 
-        if (i != NPC_COUNT_MAX)
+        if (i != ARRAY_SIZE(g_SysWork.npcs_1A0))
         {
             g_DeltaTime0 = Q12(0.0f);
         }
@@ -984,7 +984,7 @@ void Event_ItemTake(s32 itemId, s32 itemCount, s32 eventFlagIdx, s32 mapMsgIdx) 
     if (!(g_SysWork.flags_22A4 & (1 << 5)))
     {
         // Traverse NPCs.
-        for (i = 0; i < NPC_COUNT_MAX; i++)
+        for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
         {
             if (g_SysWork.npcs_1A0[i].model_0.charaId_0 >= Chara_Harry && g_SysWork.npcs_1A0[i].model_0.charaId_0 <= Chara_MonsterCybil &&
                 g_SysWork.npcs_1A0[i].health_B0 > Q12(0.0f))
@@ -993,7 +993,7 @@ void Event_ItemTake(s32 itemId, s32 itemCount, s32 eventFlagIdx, s32 mapMsgIdx) 
             }
         }
         
-        if (i != NPC_COUNT_MAX)
+        if (i != ARRAY_SIZE(g_SysWork.npcs_1A0))
         {
             g_DeltaTime0 = Q12(0.0f);
         }
@@ -1404,7 +1404,7 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12 rotY, u32
     {
         if (HAS_FLAG(&g_SysWork.field_228C, arg1_1))
         {
-            for (i = 0; i < NPC_COUNT_MAX; i++) 
+            for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
             {
                 if (g_SysWork.npcs_1A0[i].field_40 == arg1_1)
                 {
@@ -1412,11 +1412,11 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12 rotY, u32
                 }
             }
 
-            return NPC_COUNT_MAX;
+            return ARRAY_SIZE(g_SysWork.npcs_1A0);
         }
 
         var_a0 = 0;
-        for (i = 0; i < NPC_COUNT_MAX; i++)
+        for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
         {
             if (g_SysWork.npcs_1A0[i].model_0.charaId_0 != Chara_None)
             { 
@@ -1431,7 +1431,7 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12 rotY, u32
     }
 
     // Run through NPC slots.
-    for (i = 0; i < NPC_COUNT_MAX; i++)
+    for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
     {
         // Skip occupied slot.
         if (g_SysWork.npcs_1A0[i].model_0.charaId_0 != Chara_None)
@@ -1466,7 +1466,7 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12 rotY, u32
         return i;
     }
 
-    return NPC_COUNT_MAX;
+    return ARRAY_SIZE(g_SysWork.npcs_1A0);
 }
 
 void func_80088F94(s_SubCharacter* chara, s32 unused1, s32 unsued2) // 0x80088F94

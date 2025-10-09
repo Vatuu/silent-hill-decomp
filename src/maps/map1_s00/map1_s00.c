@@ -305,7 +305,7 @@ void func_800D922C(void) // 0x800D922C
 
 void func_800D9254(void) // 0x800D9254
 {
-    g_BackgroundColor = 0x68;
+    g_BackgroundColor = 104;
     func_80087360(FILE_TIM_USCBOOK_TIM, Q12(0.0f), Q12(0.0f), 38);
 }
 

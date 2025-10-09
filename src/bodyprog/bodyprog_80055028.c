@@ -1979,21 +1979,21 @@ s16 func_8005C7B0(s32 arg0) // 0x8005C7B0
 s32 func_8005C7D0(s_SubCharacter* chara) // 0x8005C7D0
 {
     s32             i;
-    s_SubCharacter* npc;
+    s_SubCharacter* curNpc;
     s_SubCharacter* player;
 
     i = 0;
 
     if (chara == &g_SysWork.player_4C.chara_0)
     {
-        return NPC_COUNT_MAX;
+        return ARRAY_SIZE(g_SysWork.npcs_1A0);
     }
 
-    npc    = &g_SysWork.npcs_1A0[0];
+    curNpc = &g_SysWork.npcs_1A0[0];
     player = chara;
-    for (i = 0; i < NPC_COUNT_MAX; i++, npc++)
+    for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++, curNpc++)
     {
-        if (player == npc)
+        if (player == curNpc)
         {
             return i;
         }
@@ -3876,7 +3876,7 @@ s_SubCharacter** func_8006A1A4(s32* charaCount, s_SubCharacter* chara, bool arg2
     *charaCount = 0;
     D_800C4474 = &D_800C4458;
 
-    for (curChara = &g_SysWork.npcs_1A0[0]; curChara < &g_SysWork.npcs_1A0[NPC_COUNT_MAX]; curChara++)
+    for (curChara = &g_SysWork.npcs_1A0[0]; curChara < &g_SysWork.npcs_1A0[ARRAY_SIZE(g_SysWork.npcs_1A0)]; curChara++)
     {
         if (curChara->model_0.charaId_0 != Chara_None)
         {
