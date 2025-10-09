@@ -2507,20 +2507,15 @@ s32 func_8005E7E0(s32 arg0) // 0x8005E7E0
     s32 i;
 
     idx = D_800C4408;
-    i = 0;
-    while (i < g_MapOverlayHeader.unkTable1Count_50)
+
+    for (i = 0; i < g_MapOverlayHeader.unkTable1Count_50; i++, idx++)
     {
         if (idx >= g_MapOverlayHeader.unkTable1Count_50)
         {
             idx = 0;
         }
 
-        if (g_MapOverlayHeader.unkTable1_4C[idx].field_A != 0)
-        {
-            i++;
-            idx++;
-        }
-        else
+        if (g_MapOverlayHeader.unkTable1_4C[idx].field_A == 0)
         {
             break;
         }
@@ -2831,7 +2826,76 @@ void func_8005E89C() // 0x8005E89C
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005F55C); // 0x8005F55C
+s32 func_8005F55C(s32 arg0) // 0x8005F55C
+{
+    if (arg0 == 0xF)
+    {
+        return 0;
+    }
+
+    switch (g_GameWork.config_0.optExtraBloodColor_24)
+    {
+        case 3:
+            return 6;
+        case 6:
+            return 7;
+        case 9:
+            return 5;
+        case 12:
+            return 4;
+        case 13:
+            return 0;
+    }
+
+    switch (arg0)
+    {
+        case 4:
+            return 9;
+        case 1:
+        case 14:
+        {
+            switch (g_GameWork.config_0.optExtraBloodColor_24)
+            {
+                case 5:
+                    return 7;
+                case 2:
+                    return 6;
+                case 8:
+                    return 5;
+                case 11:
+                    return 4;
+                default:
+                    return 0;
+            }
+        }
+
+        case 5:
+        case 8:
+        case 12:
+            return 6;
+
+        case 10:
+            return 7;
+    }
+
+    switch (g_GameWork.config_0.optExtraBloodColor_24)
+    {
+        case 1:
+        case 2:
+            return 6;
+        case 4:
+        case 5:
+            return 7;
+        case 7:
+        case 8:
+            return 5;
+        case 10:
+        case 11:
+            return 4;
+    }
+
+    return 0;
+}
 
 bool func_8005F680(s_Collision* coll) // 0x8005F680
 {
@@ -2937,7 +3001,175 @@ void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3) // 0x800625F4
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80062708); // 0x80062708
 
 // Displays gun shooting effects.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006342C); // 0x8006342C
+void func_8006342C(s32 weaponAttack, s16 arg1, s16 arg2, GsCOORDINATE2* arg3) // 0x8006342C
+{
+    s32              i;
+    s_func_8006342C* ptr;
+
+    ptr = PSX_SCRATCH;
+
+    switch (weaponAttack)
+    {
+        case 0x20:
+            D_800C440C               = arg3;
+            *(s32*)&ptr->field_20.vx = -0xEFFFE;
+            ptr->field_20.vz         = 0x47;
+            break;
+
+        case 0x22:
+            D_800C440C               = arg3;
+            *(s32*)&ptr->field_20.vx = -0x11FFFD;
+            ptr->field_20.vz         = 0x6D;
+            break;
+
+        case 0x21:
+            D_800C440C               = arg3;
+            *(s32*)&ptr->field_20.vx = -0x220002;
+            ptr->field_20.vz         = 0xDD;
+            break;
+
+        case 0x46:
+            D_800C4410               = arg3;
+            *(s32*)&ptr->field_20.vx = -0x17FFFD;
+            ptr->field_20.vz         = 0x5B;
+            break;
+
+        case 0x3F:
+            D_800C4410               = arg3;
+            *(s32*)&ptr->field_20.vx = -0xCFFFE;
+            ptr->field_20.vz         = 0x43;
+            break;
+
+        case 0x5:
+            D_800C440C               = arg3;
+            *(s32*)&ptr->field_20.vx = 0x140002;
+            ptr->field_20.vz         = 0x39;
+            break;
+
+        case 0x2:
+            D_800C440C               = arg3;
+            *(s32*)&ptr->field_20.vx = 0x180002;
+            ptr->field_20.vz         = 0x43;
+            break;
+
+        default:
+            return;
+    }
+
+    Vw_CoordHierarchyMatrixCompute(&arg3[10], &ptr->field_0);
+
+    gte_SetRotMatrix(&ptr->field_0);
+    gte_SetTransMatrix(&ptr->field_0);
+    gte_ldv0(&ptr->field_20);
+    gte_rt();
+    gte_stlvnl(&ptr->field_28);
+
+    switch (weaponAttack)
+    {
+        case 0x20:
+            ptr->field_38 = func_8005E7E0(0xF);
+            ptr->field_50 = 3;
+            for (i = 0; i < 3; i++)
+            {
+                ptr->field_3C[i] = func_8005E7E0(0x14);
+            }
+            break;
+
+        case 0x22:
+            ptr->field_38 = func_8005E7E0(0x10);
+            ptr->field_50 = 5;
+            for (i = 0; i < 5; i++)
+            {
+                ptr->field_3C[i] = func_8005E7E0(0x15);
+            }
+            break;
+
+        case 0x21:
+            ptr->field_38 = func_8005E7E0(0x11);
+            ptr->field_50 = 3;
+            for (i = 0; i < 3; i++)
+            {
+                ptr->field_3C[i] = func_8005E7E0(0x16);
+            }
+            break;
+
+        case 0x46:
+            ptr->field_38 = func_8005E7E0(0x12);
+            ptr->field_50 = 3;
+            for (i = 0; i < 3; i++)
+            {
+                ptr->field_3C[i] = func_8005E7E0(0x14);
+            }
+            break;
+
+        case 0x3F:
+            ptr->field_38 = func_8005E7E0(0x13);
+            ptr->field_50 = 3;
+            for (i = 0; i < 3; i++)
+            {
+                ptr->field_3C[i] = func_8005E7E0(0x14);
+            }
+            break;
+
+        case 0x2:
+        case 0x5:
+            ptr->field_50 = 3;
+            for (i = 0; i < 3; i++)
+            {
+                ptr->field_3C[i] = func_8005E7E0(0x14);
+            }
+            break;
+    }
+
+    if ((weaponAttack != 5) && (weaponAttack != 2))
+    {
+        if (ptr->field_38 != -1)
+        {
+            if (weaponAttack == 0x46)
+            {
+                g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_C.field_0 = -0x400;
+                g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_E.field_0 = 0x400;
+            }
+            else
+            {
+                g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_C.field_0 = arg1;
+                g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_E.field_0 = arg2;
+            }
+            g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_B              = Rng_TestProbabilityBits(1);
+            g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_10.s_0.field_0 = Rng_TestProbabilityBits(10);
+            g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_10.s_0.field_2 = 0;
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    for (i = 0; i < ptr->field_50; i++)
+    {
+        if (ptr->field_3C[i] == -1)
+        {
+            break;
+        }
+
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].vx_0 = ((ptr->field_28.vx * 0x10) + Rng_TestProbabilityBits(8)) - 0x80;
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].vy_8 = (((u16)ptr->field_28.vy * 0x10) + Rng_TestProbabilityBits(8)) - 0x80;
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].vz_4 = ((ptr->field_28.vz * 0x10) + Rng_TestProbabilityBits(8)) - 0x80;
+
+        if (i < 3)
+        {
+            g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_B = i;
+        }
+        else
+        {
+            g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_B = Rng_Rand16() % 3;
+        }
+
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_C.field_0      = Rng_Rand16() & 0xFFF;
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_E.field_0      = 0;
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_10.s_0.field_0 = 0;
+    }
+}
 
 s32 func_80063A50(POLY_FT4** arg0, s32 arg1)                               // 0x80063A50
 {
@@ -2954,7 +3186,7 @@ s32 func_80063A50(POLY_FT4** arg0, s32 arg1)                               // 0x
             ptr->field_1E8         = 0x100;
             *(s32*)&ptr->field_164 = -0xEFFFE;
             ptr->field_164.vz      = 0x47;
-            Vw_CoordHierarchyMatrixCompute(&D_800C440C->field_320, &ptr->field_12C);
+            Vw_CoordHierarchyMatrixCompute(&D_800C440C[10], &ptr->field_12C);
             break;
 
         default:
@@ -2967,7 +3199,7 @@ s32 func_80063A50(POLY_FT4** arg0, s32 arg1)                               // 0x
             ptr->field_1E8         = 0x180;
             *(s32*)&ptr->field_164 = -0x11FFFD;
             ptr->field_164.vz      = 0x6D;
-            Vw_CoordHierarchyMatrixCompute(&D_800C440C->field_320, &ptr->field_12C);
+            Vw_CoordHierarchyMatrixCompute(&D_800C440C[10], &ptr->field_12C);
             break;
 
         case 17:
@@ -2977,7 +3209,7 @@ s32 func_80063A50(POLY_FT4** arg0, s32 arg1)                               // 0x
             ptr->field_1E8         = 0xC0;
             *(s32*)&ptr->field_164 = -0x220002;
             ptr->field_164.vz      = 0xDD;
-            Vw_CoordHierarchyMatrixCompute(&D_800C440C->field_320, &ptr->field_12C);
+            Vw_CoordHierarchyMatrixCompute(&D_800C440C[10], &ptr->field_12C);
             break;
 
         case 18:
@@ -2987,7 +3219,7 @@ s32 func_80063A50(POLY_FT4** arg0, s32 arg1)                               // 0x
             ptr->field_1E8         = 0x100;
             *(s32*)&ptr->field_164 = -0x17FFFD;
             ptr->field_164.vz      = 0x5B;
-            Vw_CoordHierarchyMatrixCompute(&D_800C4410->field_320, &ptr->field_12C);
+            Vw_CoordHierarchyMatrixCompute(&D_800C4410[10], &ptr->field_12C);
             break;
 
         case 19:
@@ -2997,7 +3229,7 @@ s32 func_80063A50(POLY_FT4** arg0, s32 arg1)                               // 0x
             ptr->field_1E8         = 0x100;
             *(s32*)&ptr->field_164 = -0xCFFFE;
             ptr->field_164.vz      = 0x43;
-            Vw_CoordHierarchyMatrixCompute(&D_800C4410->field_320, &ptr->field_12C);
+            Vw_CoordHierarchyMatrixCompute(&D_800C4410[10], &ptr->field_12C);
             break;
     }
 

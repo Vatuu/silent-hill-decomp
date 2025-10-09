@@ -1952,12 +1952,6 @@ typedef struct
 
 typedef struct
 {
-    u8            unk_0[800];
-    GsCOORDINATE2 field_320;
-} s_800C440C;
-
-typedef struct
-{
     VECTOR3 field_0;
     MATRIX  field_C;
     s32     field_2C;
@@ -2047,6 +2041,16 @@ typedef struct
     s32             field_164;
     s32             field_168;
 } s_func_80064334;
+
+typedef struct
+{
+    MATRIX  field_0;
+    SVECTOR field_20;
+    VECTOR  field_28;
+    s32     field_38;
+    s32     field_3C[5];
+    s32     field_50;
+} s_func_8006342C;
 
 // ========
 // GLOBALS
@@ -2701,9 +2705,9 @@ extern u16 g_LoadedEffectTextureFlags;
 
 extern s16 D_800C4408;
 
-extern s_800C440C* D_800C440C;
+extern GsCOORDINATE2* D_800C440C;
 
-extern s_800C440C* D_800C4410;
+extern GsCOORDINATE2* D_800C4410;
 
 extern s8 D_800C4414;
 
@@ -3539,6 +3543,8 @@ void func_8005E70C();
 s32 func_8005E7E0(s32 arg0);
 
 void func_8005E89C();
+
+s32 func_8005F55C(s32 arg0);
 
 void func_8005F6B0(s_SubCharacter*, VECTOR*, s32, s32);
 
