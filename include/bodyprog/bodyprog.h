@@ -374,11 +374,34 @@ typedef struct
     s32 vz_4; // Q23.8
     s16 vy_8; // Q7.8
     u8  field_A;
-    s8  field_B;
-    s8  field_C;
-    s8  field_D;
-    s16 field_E;
-    s32 field_10;
+    u8  field_B;
+    union
+    {
+        s16 field_0;
+        struct
+        {
+            u8 field_0;
+            u8 field_1;
+        } s_0;
+    } field_C;
+    union
+    {
+        s16 field_0;
+        struct
+        {
+            u8 field_0;
+            u8 field_1;
+        } s_0;
+    } field_E;
+    union
+    {
+        u32 field_0;
+        struct
+        {
+            s16 field_0;
+            s16 field_2;
+        } s_0;
+    } field_10;
 } s_func_800625F4;
 STATIC_ASSERT_SIZEOF(s_func_800625F4, 20);
 
@@ -1577,8 +1600,51 @@ typedef struct
  */
 typedef struct _BloodSplat
 {
-    s16 unk_0; // Maybe an array of `u16`s?
+    s16 field_0; // Maybe an array of `u16`s?
 } s_BloodSplat;
+
+typedef struct
+{
+    u8  unk_0;
+    u8  field_1;
+    u8  field_2;
+    u8  unk_3;
+    u8  field_4;
+    u8  field_5;
+    u8  field_6;
+    u8  unk_7;
+    u8  unk_8[2];
+    s16 field_A;
+    u8  unk_C[2];
+    s16 field_E;
+    s16 field_10;
+    u8  unk_12[4];
+    s16 field_16;
+    u8  unk_18[8];
+    s32 field_20;
+    s32 field_24;
+} s_MapOverlayHeader_5C;
+
+typedef struct
+{
+    s8  unk_0[14];
+    s16 field_E;
+    s16 field_10;
+    s8  unk_12[8];
+    s32 field_1C;
+} s_MapOverlayHeader_7C;
+
+typedef struct
+{
+    u8  unk_0[48];
+    u8  field_30[4];
+    s16 field_34[4];
+    u8  unk_3C[32];
+    u16 field_5C[4];
+    u16 field_64[4];
+    u8  unk_6C[12];
+    u8  field_78;
+} s_MapOverlayHeader_94;
 
 /** TODO: `g_MapOverlayHeader` is part of the map overlay BIN files. Maybe should be moved to `maps/shared.h`. 
  * If field has a comment that lists only certain map(s) it means all others set this field to 0.
@@ -1615,29 +1681,29 @@ typedef struct _MapOverlayHeader
     s_BloodSplat*     bloodSplats_54;
     s16               bloodSplatCount_58;
     s8                unk_5A[2];
-    s32               always0_5C;
-    s32               always0_60;
-    s32               always0_64;
-    s32               always0_68;
+    s_MapOverlayHeader_5C* field_5C;
+    void                   (*func_60)(s32, s32);
+    s32                    (*func_64)(POLY_FT4**, s32);
+    s32                    (*func_68)(POLY_FT4**, s32);
     void              (*func_6C)(); // func(?).
-    void              (*func_70)(); // func(?).
+    s32                    (*func_70)(POLY_FT4**, s32);
     void              (*func_74)(); // func(?).
-    void              (*func_78)(); // func(?).
-    u8*               unk_7C; // only map1_s01, map6_s04. 
+    s32                    (*func_78)(POLY_FT4**, s32);
+    s_MapOverlayHeader_7C* field_7C;     // only map1_s01, map6_s04.
     void              (*func_80)(); // func(?).
-    void              (*func_84)(); // func(?).
+    s32                    (*func_84)(POLY_FT4**, s32);
     s32*              unk_88; // only map0_s01, map7_s01.
-    void              (*func_8C)(); // func(?) only map0_s01, map7_s01.
-    void              (*func_90)(); // func(?) only map5_s00.
-    s32*              unk_94; // only map1_s02, map1_s03.
-    s32*              unk_98; // only map1_s02, map1_s03.
-    s32*              unk_9C; // only map1_s02, map1_s03.
+    s32                    (*func_8C)(POLY_FT4**, s32); // func(?) only map0_s01, map7_s01.
+    s32                    (*func_90)(POLY_FT4**, s32); // func(?) only map5_s00.
+    s_MapOverlayHeader_94* field_94;                    // only map1_s02, map1_s03.
+    s32                    (*func_98)(POLY_FT4**, s32); // only map1_s02, map1_s03.
+    void                   (*func_9C)();                // only map1_s02, map1_s03.
     s32*              unk_A0; // only map1_s03.
-    void              (*func_A4)(); // func(?) only map1_s03.
+    s32                    (*func_A4)(POLY_FT4**, s32); // func(?) only map1_s03.
     void              (*func_A8)(); // func(?) only map6_s02.
-    void              (*func_AC)(); // func(?) only map4_s03, map4_s05.
-    void              (*func_B0)(); // func(?) only map4_s03, map4_s05.
-    void              (*func_B4)(); // func(?) only map1_s03, map4_s05, map6_s01, map6_s02, map5_s01.
+    s32                    (*func_AC)(POLY_FT4**, s32); // func(?) only map4_s03, map4_s05.
+    s32                    (*func_B0)(POLY_FT4**, s32); // func(?) only map4_s03, map4_s05.
+    s32                    (*func_B4)(POLY_FT4**, s32); // func(?) only map1_s03, map4_s05, map6_s01, map6_s02, map5_s01.
     void              (*func_B8)(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
     void              (*func_BC)(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
     void              (*func_C0)(); // func(?).
@@ -1873,10 +1939,48 @@ typedef struct
 
 typedef struct
 {
+    u8  field_0;
+    u8  field_1;
+    s16 field_2;
+    s32 field_4;
+    s32 field_8;
+} s_800C42E8;
+
+typedef struct
+{
+    u8            unk_0[800];
+    GsCOORDINATE2 field_320;
+} s_800C440C;
+
+typedef struct
+{
     VECTOR3 field_0;
-    s8      unk_C[32];
+    MATRIX  field_C;
     s32     field_2C;
-    s8      unk_30[252];
+    DVECTOR field_30;
+    s16     field_34[24];
+    s16     field_64[24];
+    s16     field_94[24];
+    s16     field_C4;
+    s16     field_C6;
+    s16     field_C8;
+    s16     field_CA;
+    s16     field_CC;
+    s16     field_CE;
+    s32     field_D0;
+    s32     field_D4;
+    s32     field_D8;
+    s16     field_DC[4];
+    s16     field_E4[4];
+    DVECTOR field_EC[4];
+    DVECTOR field_FC[4];
+    s32     field_10C[4];
+    s32     field_11C[4];
+} s_func_8005E89C;
+
+typedef struct
+{
+    s_func_8005E89C field_0;
     SVECTOR field_12C;
     s8      unk_138[8];
     DVECTOR field_13C;
@@ -1897,6 +2001,48 @@ typedef struct
     s16       field_60[3];
     s32       field_68;
 } s_func_800652F4;
+
+typedef struct
+{
+    s_func_8005E89C field_0;
+    MATRIX          field_12C;
+    SVECTOR         field_14C[3];
+    SVECTOR         field_164;
+    VECTOR          field_16C[3];
+    VECTOR          field_19C;
+    VECTOR          field_1AC;
+    s32             field_1BC;
+    s32             field_1C0;
+    s32             field_1C4;
+    s32             field_1C8;
+    DVECTOR         field_1CC;
+    s16             field_1D0;
+    u8              unk_1D2[2];
+    s32             field_1D4;
+    s32             field_1D8;
+    s32             field_1DC;
+    s32             field_1E0;
+    s32             field_1E4;
+    s32             field_1E8;
+} s_func_80063A50;
+
+typedef struct
+{
+    s_func_8005E89C field_0;
+    PACKET*         field_12C;
+    CVECTOR         field_130;
+    CVECTOR         field_134;
+    SVECTOR         field_138;
+    u8              unk_140[16];
+    s32             field_150;
+    DVECTOR         field_154;
+    u16             field_158;
+    u16             field_15A;
+    u8              field_15C;
+    s32             field_160;
+    s32             field_164;
+    s32             field_168;
+} s_func_80064334;
 
 // ========
 // GLOBALS
@@ -2545,9 +2691,15 @@ extern u16 D_800C42D0;
 
 extern u16 D_800C42D2;
 
+extern s_800C42E8 D_800C42E8[];
+
 extern u16 g_LoadedEffectTextureFlags;
 
 extern s16 D_800C4408;
+
+extern s_800C440C* D_800C440C;
+
+extern s_800C440C* D_800C4410;
 
 extern s8 D_800C4414;
 
@@ -3704,6 +3856,10 @@ s16 func_8005C7B0(s32 arg0);
 
 /** `arg0` type assumed. */
 void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3);
+
+s32 func_80063A50(POLY_FT4** arg0, s32 arg1);
+
+s32 func_80064334(POLY_FT4** arg0, s32 arg1);
 
 void func_8006342C(s32 weaponAttack, s16, s16, GsCOORDINATE2*);
 
