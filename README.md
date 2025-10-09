@@ -38,7 +38,15 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
             <td colspan=2>Main game logic.</td>
         </tr>
         <tr>
-            <th colspan=3>🎮 Game System Overlays 🎮</th>
+            <th colspan=3>🎮 Game Screen Overlays 🎮</th>
+        </tr>
+        <tr>
+            <td>Progress</td>
+            <td colspan=2>Purpose</td>
+        </tr>
+        <tr>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=screen"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=screen&color=rgb(255,215,0)"/></a></td>
+            <td colspan=2>Unique game screens.</td>
         </tr>
         <tr>
             <td colspan=3 align=center>
@@ -116,6 +124,14 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
 </td>
           <tr>
             <th colspan=3>🗺 Game Map Overlays 🗺</th>
+          </tr>
+          <tr>
+            <td>Progress</td>
+            <td colspan=2>Purpose</td>
+          </tr>
+          <tr>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map"/></a></td>
+            <td colspan=2>Map and character code.</td>
           </tr>
           <tr>
             <td colspan=3 align=center>
