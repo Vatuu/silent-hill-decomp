@@ -2495,7 +2495,7 @@ void func_8005E70C(void) // 0x8005E70C
     count = g_MapOverlayHeader.bloodSplatCount_58;
     for (i = 0; i < count; i++)
     {
-        g_MapOverlayHeader.bloodSplats_54[i].unk_0 = NO_VALUE;
+        g_MapOverlayHeader.bloodSplats_54[i].field_0 = NO_VALUE;
     }
 
     D_800C4414 = 0;
@@ -2537,7 +2537,299 @@ s32 func_8005E7E0(s32 arg0) // 0x8005E7E0
     return idx;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005E89C); // 0x8005E89C
+void func_8005E89C() // 0x8005E89C
+{
+#define CLAMP_CUSTOM(a, b, lo, hi) \
+    ((((a) >= (hi)) ? (hi) : (b)) < (lo) ? (lo) : (((b) >= (hi)) ? (hi) : (a)))
+
+    SVECTOR          sp10;
+    POLY_FT4*        sp18;
+    s32              temp_a2;
+    s32              temp_a3;
+    s32              temp_v0;
+    s32              i;
+    s_SubCharacter*  var_a2;
+    s_func_8005E89C* ptr;
+    s_800C42E8*      new_var;
+
+    ptr = PSX_SCRATCH;
+
+    temp_v0 = FP_FROM(g_SysWork.player_4C.chara_0.position_18.vx, Q12_SHIFT);
+    temp_a2 = FP_FROM(g_SysWork.player_4C.chara_0.position_18.vy, Q12_SHIFT);
+    temp_a3 = FP_FROM(g_SysWork.player_4C.chara_0.position_18.vz, Q12_SHIFT);
+
+    ptr->field_0.vx = temp_v0 << 8;
+    ptr->field_0.vy = temp_a2 << 8;
+    ptr->field_0.vz = temp_a3 << 8;
+
+    func_80049C2C(&ptr->field_C, FP_TO(temp_v0, Q12_SHIFT), FP_TO(temp_a2, Q12_SHIFT), FP_TO(temp_a3, Q12_SHIFT));
+
+    gte_SetRotMatrix(&ptr->field_C);
+    gte_SetTransMatrix(&ptr->field_C);
+    gte_ReadGeomScreen(&ptr->field_2C);
+
+    vwGetViewAngle(&sp10);
+    ptr->field_30.vx = sp10.vx;
+    ptr->field_30.vy = sp10.vy;
+
+    if (D_800C4414 & 1)
+    {
+        ptr->field_C4 = FP_MULTIPLY_PRECISE(g_DeltaTime0, g_MapOverlayHeader.field_5C->field_E, Q12_SHIFT);
+        ptr->field_C8 = g_MapOverlayHeader.field_5C->field_4 * 0x10;
+        ptr->field_CA = g_MapOverlayHeader.field_5C->field_5 * 0x10;
+        ptr->field_CC = (0x100 - g_MapOverlayHeader.field_5C->field_5) * 0x10;
+        ptr->field_CE = (g_DeltaTime0 * g_MapOverlayHeader.field_5C->field_E) / g_MapOverlayHeader.field_5C->field_16;
+        ptr->field_C6 = (u16)g_MapOverlayHeader.field_5C->field_A >> 2;
+        ptr->field_D0 = g_MapOverlayHeader.field_5C->field_20;
+        ptr->field_D4 = g_MapOverlayHeader.field_5C->field_24;
+        ptr->field_D8 = g_MapOverlayHeader.field_5C->field_6 * (2 * ptr->field_2C);
+
+        switch (g_MapOverlayHeader.field_5C->field_1)
+        {
+            case 0:
+                for (i = 0; i < g_MapOverlayHeader.unkTable1Count_50; i++)
+                {
+                    if (g_MapOverlayHeader.unkTable1_4C[i].field_A == 0xC)
+                    {
+                        g_MapOverlayHeader.func_60(i, 0);
+                    }
+                }
+                break;
+
+            case 1:
+                g_MapOverlayHeader.field_5C->field_10 = MIN(g_MapOverlayHeader.field_5C->field_10 +
+                                                                ((g_DeltaTime0 * g_MapOverlayHeader.field_5C->field_2) >> 5),
+                                                            0x1000);
+                break;
+
+            case 2:
+                for (i = 0; i < g_MapOverlayHeader.unkTable1Count_50; i++)
+                {
+                    switch (g_MapOverlayHeader.unkTable1_4C[i].field_A)
+                    {
+                        case 8:
+                        case 9:
+                        case 10:
+                        case 11:
+                            g_MapOverlayHeader.unkTable1_4C[i].field_A = 0xC;
+                            break;
+                    }
+                }
+                break;
+
+            case 3:
+                g_MapOverlayHeader.field_5C->field_10 = CLAMP_LOW(g_MapOverlayHeader.field_5C->field_10 -
+                                                                      ((g_DeltaTime0 * g_MapOverlayHeader.field_5C->field_2) >> 5),
+                                                                  0);
+
+                for (i = 0; i < g_MapOverlayHeader.unkTable1Count_50; i++)
+                {
+                    if (g_MapOverlayHeader.unkTable1_4C[i].field_A == 0xC &&
+                        Rng_TestProbabilityBits(12) > g_MapOverlayHeader.field_5C->field_10 && Rng_TestProbabilityBits(4))
+                    {
+                        g_MapOverlayHeader.func_60(i, 1);
+                    }
+                }
+                break;
+        }
+    }
+    else if (D_800C4414 & 2)
+    {
+        if (g_MapOverlayHeader.field_7C->field_1C > 0)
+        {
+            g_MapOverlayHeader.field_7C->field_1C -= g_DeltaTime0;
+            g_MapOverlayHeader.field_7C->field_1C  = MAX(g_MapOverlayHeader.field_7C->field_1C, 0);
+        }
+        else
+        {
+            g_MapOverlayHeader.field_7C->field_10 = FP_MULTIPLY_PRECISE(g_DeltaTime0, g_MapOverlayHeader.field_7C->field_E, Q12_SHIFT) + g_MapOverlayHeader.field_7C->field_10;
+            g_MapOverlayHeader.field_7C->field_10 = MIN(g_MapOverlayHeader.field_7C->field_10, 0x400);
+        }
+    }
+    else if (D_800C4414 & 8)
+    {
+        for (i = 0; i < g_MapOverlayHeader.field_94->field_78; i++)
+        {
+            if (g_MapOverlayHeader.field_94->field_30[i] == 0)
+            {
+                ptr->field_DC[i]            = Math_Sin(g_MapOverlayHeader.field_94->field_34[i]);
+                ptr->field_E4[i]            = Math_Cos(g_MapOverlayHeader.field_94->field_34[i]);
+                *(s32*)&ptr->field_EC[i].vx = (g_MapOverlayHeader.field_94->field_5C[i] >> 1) * Math_Sin(g_MapOverlayHeader.field_94->field_34[i]);
+                *(s32*)&ptr->field_FC[i].vx = (g_MapOverlayHeader.field_94->field_5C[i] >> 1) * Math_Cos(g_MapOverlayHeader.field_94->field_34[i]);
+                ptr->field_10C[i]           = g_MapOverlayHeader.field_94->field_64[i] * Math_Sin(g_MapOverlayHeader.field_94->field_34[i]);
+                ptr->field_11C[i]           = g_MapOverlayHeader.field_94->field_64[i] * Math_Cos(g_MapOverlayHeader.field_94->field_34[i]);
+            }
+            else
+            {
+                ptr->field_EC[i].vx = FP_MULTIPLY(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Sin(ptr->field_30.vy - 0x400), Q12_SHIFT);
+                ptr->field_EC[i].vy = FP_MULTIPLY(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Sin(ptr->field_30.vy + 0x400), Q12_SHIFT);
+                ptr->field_FC[i].vx = FP_MULTIPLY(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Cos(ptr->field_30.vy - 0x400), Q12_SHIFT);
+                ptr->field_FC[i].vy = FP_MULTIPLY(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Cos(ptr->field_30.vy + 0x400), Q12_SHIFT);
+            }
+        }
+        g_MapOverlayHeader.func_9C();
+    }
+
+    for (i = 0; i < 24; i++)
+    {
+        new_var = &D_800C42E8[i];
+        if (D_800C42E8[i].field_0 != 0)
+        {
+            if (D_800C42E8[i].field_1 == 6)
+            {
+                var_a2 = &g_SysWork.player_4C.chara_0;
+            }
+            else
+            {
+                var_a2 = &g_SysWork.npcs_1A0[D_800C42E8[i].field_1];
+            }
+
+            ptr->field_34[i] = CLAMP_CUSTOM((var_a2->position_18.vx + var_a2->field_D8.offsetX_0) - D_800C42E8[i].field_4,
+                                            (var_a2->position_18.vx + var_a2->field_D8.offsetX_0) - new_var->field_4,
+                                            -FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x1400, Q12_SHIFT),
+                                            FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x1400, Q12_SHIFT));
+
+            ptr->field_64[i] = CLAMP_CUSTOM((var_a2->position_18.vy + var_a2->field_CE) - D_800C42E8[i].field_2,
+                                            (var_a2->position_18.vy + var_a2->field_CE) - new_var->field_2,
+                                            -FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x1400, Q12_SHIFT) >> 4,
+                                            FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x1400, Q12_SHIFT));
+
+            ptr->field_94[i] = CLAMP_CUSTOM((var_a2->position_18.vz + var_a2->field_D8.offsetZ_2) - D_800C42E8[i].field_8,
+                                            (var_a2->position_18.vz + var_a2->field_D8.offsetZ_2) - new_var->field_8,
+                                            -FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x1400, Q12_SHIFT),
+                                            FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x1400, Q12_SHIFT));
+
+            D_800C42E8[i].field_4 += ptr->field_34[i];
+            D_800C42E8[i].field_2 += ptr->field_64[i];
+            D_800C42E8[i].field_8 += ptr->field_94[i];
+        }
+        else
+        {
+            ptr->field_34[i] = 0;
+            ptr->field_64[i] = 0;
+            ptr->field_94[i] = 0;
+        }
+    }
+
+    sp18 = (POLY_FT4*)GsOUT_PACKET_P;
+
+    for (i = 0; i < g_MapOverlayHeader.unkTable1Count_50; i++)
+    {
+        switch (g_MapOverlayHeader.unkTable1_4C[i].field_A)
+        {
+            case 0:
+                break;
+
+            case 1:
+                func_80060044(&sp18, i);
+                break;
+
+            case 2:
+                func_800611C0(&sp18, i);
+                break;
+
+            case 3:
+            case 4:
+                func_80062708(&sp18, i);
+                break;
+
+            case 15:
+            case 16:
+            case 17:
+            case 18:
+            case 19:
+                func_80063A50(&sp18, i);
+                break;
+
+            case 20:
+            case 21:
+            case 22:
+                func_80064334(&sp18, i);
+                break;
+
+            case 8:
+            case 10:
+                g_MapOverlayHeader.func_64(&sp18, i);
+                break;
+
+            case 9:
+            case 11:
+                g_MapOverlayHeader.func_68(&sp18, i);
+                break;
+
+            case 7:
+                g_MapOverlayHeader.func_70(&sp18, i);
+                break;
+
+            case 5:
+                g_MapOverlayHeader.func_78(&sp18, i);
+                break;
+
+            case 13:
+                g_MapOverlayHeader.func_80(i);
+                break;
+
+            case 14:
+                g_MapOverlayHeader.func_84(&sp18, i);
+                break;
+
+            case 23:
+            case 24:
+            case 25:
+            case 26:
+                g_MapOverlayHeader.func_8C(&sp18, i);
+                break;
+
+            case 27:
+                g_MapOverlayHeader.func_98(&sp18, i);
+                break;
+
+            case 28:
+                g_MapOverlayHeader.func_A4(&sp18, i);
+                break;
+
+            case 31:
+                func_80064FC0(&sp18, i);
+                break;
+
+            case 32:
+                g_MapOverlayHeader.func_90(&sp18, i);
+                break;
+
+            case 33:
+                g_MapOverlayHeader.func_AC(&sp18, i);
+                break;
+
+            case 34:
+                g_MapOverlayHeader.func_B0(&sp18, i);
+                break;
+
+            case 35:
+                g_MapOverlayHeader.func_B4(&sp18, i);
+                break;
+        }
+    }
+
+    GsOUT_PACKET_P = (PACKET*)sp18;
+
+    for (i = 0; i < g_MapOverlayHeader.bloodSplatCount_58; i++)
+    {
+        if ((g_MapOverlayHeader.bloodSplats_54[i].field_0 != -1) && (g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[i].field_0].field_A == 0))
+        {
+            g_MapOverlayHeader.bloodSplats_54[i].field_0 = -1;
+        }
+    }
+
+    if (D_800C4414 & 0x20)
+    {
+        g_MapOverlayHeader.func_A8();
+    }
+
+    if ((g_SysWork.field_2388.field_16 != 0) && (g_SysWork.sysState_8 == 0))
+    {
+        Game_TurnFlashlightOff();
+    }
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005F55C); // 0x8005F55C
 
@@ -2608,11 +2900,11 @@ void func_800622B8(s32 arg0, s_SubCharacter* chara, s32 animStatus, s32 arg3) //
         }
         else
         {
-            g_MapOverlayHeader.unkTable1_4C[idx].field_E  = D_800AE700[animStatus] + (Rng_Rand16() % (D_800AE700[animStatus] >> 2));
-            g_MapOverlayHeader.unkTable1_4C[idx].field_D  = arg3;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_E.field_0     = D_800AE700[animStatus] + (Rng_Rand16() % (D_800AE700[animStatus] >> 2));
+            g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_1 = arg3;
             g_MapOverlayHeader.unkTable1_4C[idx].field_B  = (Rng_Rand16() & 3) + 4; // TODO: `Rng_GenerateInt` doesn't match?
-            g_MapOverlayHeader.unkTable1_4C[idx].field_C  = func_8005C7D0(chara);
-            g_MapOverlayHeader.unkTable1_4C[idx].field_10 = Rng_Rand16() & 0x1FFF;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_0 = func_8005C7D0(chara);
+            g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0    = Rng_Rand16() & 0x1FFF;
         }
 
         i--;
@@ -2635,11 +2927,11 @@ void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3) // 0x800625F4
     g_MapOverlayHeader.unkTable1_4C[idx].vx_0     = arg0->vx;
     g_MapOverlayHeader.unkTable1_4C[idx].vy_8     = arg0->vy;
     g_MapOverlayHeader.unkTable1_4C[idx].vz_4     = arg0->vz;
-    g_MapOverlayHeader.unkTable1_4C[idx].field_E  = arg1;
-    g_MapOverlayHeader.unkTable1_4C[idx].field_D  = var;
+    g_MapOverlayHeader.unkTable1_4C[idx].field_E.field_0     = arg1;
+    g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_1 = var;
     g_MapOverlayHeader.unkTable1_4C[idx].field_B  = Rng_TestProbabilityBits(2);
-    g_MapOverlayHeader.unkTable1_4C[idx].field_C  = 6;
-    g_MapOverlayHeader.unkTable1_4C[idx].field_10 = arg3 * Q12(5.0f);
+    g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_0 = 6;
+    g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0    = arg3 * Q12(5.0f);
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80062708); // 0x80062708
@@ -2647,9 +2939,352 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80062708); // 0x
 // Displays gun shooting effects.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8006342C); // 0x8006342C
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80063A50); // 0x80063A50
+s32 func_80063A50(POLY_FT4** arg0, s32 arg1)                               // 0x80063A50
+{
+    s_func_80063A50* ptr;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80064334); // 0x80064334
+    ptr = PSX_SCRATCH;
+
+    switch (g_MapOverlayHeader.unkTable1_4C[arg1].field_A)
+    {
+        case 15:
+            ptr->field_1DC         = 0xCC;
+            ptr->field_1E0         = 0x333;
+            ptr->field_1E4         = 0xA3;
+            ptr->field_1E8         = 0x100;
+            *(s32*)&ptr->field_164 = -0xEFFFE;
+            ptr->field_164.vz      = 0x47;
+            Vw_CoordHierarchyMatrixCompute(&D_800C440C->field_320, &ptr->field_12C);
+            break;
+
+        default:
+            return 0;
+
+        case 16:
+            ptr->field_1DC         = 0xCC;
+            ptr->field_1E0         = 0x28F;
+            ptr->field_1E4         = 0xCC;
+            ptr->field_1E8         = 0x180;
+            *(s32*)&ptr->field_164 = -0x11FFFD;
+            ptr->field_164.vz      = 0x6D;
+            Vw_CoordHierarchyMatrixCompute(&D_800C440C->field_320, &ptr->field_12C);
+            break;
+
+        case 17:
+            ptr->field_1DC         = 0xA3;
+            ptr->field_1E0         = 0x2E1;
+            ptr->field_1E4         = 0x51;
+            ptr->field_1E8         = 0xC0;
+            *(s32*)&ptr->field_164 = -0x220002;
+            ptr->field_164.vz      = 0xDD;
+            Vw_CoordHierarchyMatrixCompute(&D_800C440C->field_320, &ptr->field_12C);
+            break;
+
+        case 18:
+            ptr->field_1DC         = 0x7A;
+            ptr->field_1E0         = 0x333;
+            ptr->field_1E4         = 0xA3;
+            ptr->field_1E8         = 0x100;
+            *(s32*)&ptr->field_164 = -0x17FFFD;
+            ptr->field_164.vz      = 0x5B;
+            Vw_CoordHierarchyMatrixCompute(&D_800C4410->field_320, &ptr->field_12C);
+            break;
+
+        case 19:
+            ptr->field_1DC         = 0xCC;
+            ptr->field_1E0         = 0x333;
+            ptr->field_1E4         = 0xA3;
+            ptr->field_1E8         = 0x100;
+            *(s32*)&ptr->field_164 = -0xCFFFE;
+            ptr->field_164.vz      = 0x43;
+            Vw_CoordHierarchyMatrixCompute(&D_800C4410->field_320, &ptr->field_12C);
+            break;
+    }
+
+    if (g_MapOverlayHeader.unkTable1_4C[arg1].field_10.s_0.field_2 == 0)
+    {
+        func_8003EDA8();
+    }
+    else if (ptr->field_1DC < g_MapOverlayHeader.unkTable1_4C[arg1].field_10.s_0.field_2)
+    {
+        g_MapOverlayHeader.unkTable1_4C[arg1].field_A = 0;
+        return 0;
+    }
+
+    g_MapOverlayHeader.unkTable1_4C[arg1].field_10.s_0.field_2 += g_DeltaTime0;
+
+    gte_SetRotMatrix(&ptr->field_12C);
+    gte_SetTransMatrix(&ptr->field_12C);
+    gte_ldv0(&ptr->field_164);
+    gte_rt();
+    gte_stlvnl(&ptr->field_1AC);
+
+    g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 = ptr->field_1AC.vx * 0x10;
+    g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 = (u16)ptr->field_1AC.vy * 0x10;
+    g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 = ptr->field_1AC.vz * 0x10;
+
+    for (ptr->field_1D4 = 0; ptr->field_1D4 < 6; ptr->field_1D4++)
+    {
+        ptr->field_1D0 = g_MapOverlayHeader.unkTable1_4C[arg1].field_10.field_0 + ((ptr->field_1D4 << 0xC) / 6);
+
+        *(s32*)&ptr->field_14C[0].vx = ((((u16)g_MapOverlayHeader.unkTable1_4C[arg1].field_C.field_0 + FP_MULTIPLY(ptr->field_1E8, Math_Cos(ptr->field_1D0), 0xC)) - 0x400) & 0xFFFF) +
+                                       ((g_MapOverlayHeader.unkTable1_4C[arg1].field_E.field_0 + FP_MULTIPLY(ptr->field_1E8, Math_Sin(ptr->field_1D0), 0xC)) << 16);
+
+        ptr->field_14C[0].vz = ptr->field_1D0;
+
+        Math_MatrixRotate1(&ptr->field_14C, &ptr->field_12C);
+
+        ptr->field_16C[0].vx = 0;
+        ptr->field_16C[0].vy = 0;
+        ptr->field_16C[0].vz = 0;
+
+        TransMatrix(&ptr->field_12C, &ptr->field_16C[0]);
+
+        gte_SetRotMatrix(&ptr->field_12C);
+        gte_SetTransMatrix(&ptr->field_12C);
+
+        for (ptr->field_1D8 = 0; ptr->field_1D8 < 4; ptr->field_1D8++)
+        {
+            *(u32*)&ptr->field_14C[0].vx = (ptr->field_1D8 & 1)
+                                               ? (u16)ptr->field_1E4
+                                               : -((u16)ptr->field_1E4) & 0xFFFF;
+
+            ptr->field_14C[0].vz = ptr->field_1D8 < 2 ? ptr->field_1E0 : 0;
+
+            gte_ldv0(&ptr->field_14C);
+            gte_rt();
+            gte_stlvnl(&ptr->field_16C[ptr->field_1D8]);
+        }
+
+        gte_SetRotMatrix(&ptr->field_0.field_C);
+        gte_SetTransMatrix(&ptr->field_0.field_C);
+
+        for (ptr->field_1D8 = 0; ptr->field_1D8 < 3; ptr->field_1D8++)
+        {
+            *(s32*)&ptr->field_14C[ptr->field_1D8] = (((((g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 + ptr->field_16C[ptr->field_1D8].vx) >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
+                                                      ((((g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 + ptr->field_16C[ptr->field_1D8].vy) >> 4) - ptr->field_0.field_0.vy) << 16));
+
+            (&ptr->field_14C[ptr->field_1D8])->vz = ((g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 + ptr->field_16C[ptr->field_1D8].vz) >> 4) - ptr->field_0.field_0.vz;
+        }
+
+        gte_ldv3c(&ptr->field_14C);
+        gte_rtpt();
+        gte_stsxy3_g3(*arg0);
+        gte_stsz3c(&ptr->field_1BC);
+
+        *(s32*)&ptr->field_14C[0].vx = ((((g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 + ptr->field_19C.vx) >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
+                                       ((((g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 + ptr->field_19C.vy) >> 4) - ptr->field_0.field_0.vy) << 16);
+        ptr->field_14C[0].vz = ((g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 + ptr->field_19C.vz) >> 4) - ptr->field_0.field_0.vz;
+
+        gte_ldv0(&ptr->field_14C);
+        gte_rtps();
+        gte_stsxy(&ptr->field_1CC);
+        gte_stsz(&ptr->field_1C8);
+
+        ptr->field_1BC = (ptr->field_1BC + ptr->field_1C0 + ptr->field_1C4 + ptr->field_1C8) >> 2;
+
+        if (ptr->field_1BC <= 0)
+        {
+            return 0;
+        }
+
+        if ((ptr->field_1BC >> 3) >= 0x800)
+        {
+            return 0;
+        }
+
+        if (ABS(ptr->field_1CC.vx) >= 0xC9)
+        {
+            return 0;
+        }
+
+        if (ABS(ptr->field_1CC.vy) >= 0xA1)
+        {
+            return 0;
+        }
+
+        *(s32*)&(*arg0)->x3 = *(s32*)&ptr->field_1CC;
+
+        if (!(g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 3))
+        {
+            *(s32*)&(*arg0)->r0 = 0x2E103030;
+        }
+        else
+        {
+            *(s32*)&(*arg0)->r0 = 0x2E406060;
+        }
+
+        *(s32*)&(*arg0)->u0 = g_MapOverlayHeader.unkTable1_4C[arg1].field_B ? 0xD380FF : 0xD380E0;
+        *(s32*)&(*arg0)->u1 = (g_MapOverlayHeader.unkTable1_4C[arg1].field_B ? 0xFF : 0xE0) +
+                              (g_MapOverlayHeader.unkTable1_4C[arg1].field_B ? 0x2B7FE1 : 0x2B801F);
+        *(u16*)&(*arg0)->u2 = g_MapOverlayHeader.unkTable1_4C[arg1].field_B ? 0x9FFF : 0x9FE0;
+        *(u16*)&(*arg0)->u3 = (g_MapOverlayHeader.unkTable1_4C[arg1].field_B ? 0xFF : 0xE0) -
+                              (g_MapOverlayHeader.unkTable1_4C[arg1].field_B ? 0x611F : 0x60E1);
+
+        addPrimFast(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_1BC >> 3], (*arg0), 9);
+        *arg0 += 1;
+    }
+    return 1;
+}
+
+s32 func_80064334(POLY_FT4** arg0, s32 arg1) // 0x80064334
+{
+    s32              temp_s0;
+    s32              temp_s4;
+    s32              temp_v0_2;
+    s32              temp_v0_3;
+    s32              temp_v1_5;
+    s_func_80064334* ptr;
+    POLY_FT4*        next;
+
+    ptr = PSX_SCRATCH;
+
+    temp_s4 = FP_MULTIPLY_PRECISE(g_DeltaTime0, Rng_GenerateInt(Rng_Rand16(), 0xCCC, 0x1331), Q12_SHIFT);
+
+    if (g_MapOverlayHeader.unkTable1_4C[arg1].field_A == 0x14)
+    {
+        ptr->field_164 = 0xCC;
+        ptr->field_168 = 0x666;
+    }
+    else if (g_MapOverlayHeader.unkTable1_4C[arg1].field_A == 0x15)
+    {
+        ptr->field_164 = 0xCC;
+        ptr->field_168 = 0x666;
+    }
+    else
+    {
+        ptr->field_164 = 0xA3;
+        ptr->field_168 = 0x599;
+    }
+
+    ptr->field_15A = g_MapOverlayHeader.unkTable1_4C[arg1].field_E.field_0;
+
+    temp_v0_2 = *g_MapOverlayHeader.windSpeedX_184 >> 6;
+    temp_v0_3 = *g_MapOverlayHeader.windSpeedZ_188 >> 6;
+
+    g_MapOverlayHeader.unkTable1_4C[arg1].field_E.field_0 += temp_s4 + (((SquareRoot0((temp_v0_2 * temp_v0_2) + (temp_v0_3 * temp_v0_3)) << 6) * temp_s4) >> 0xA);
+
+    if (ptr->field_168 < (u16)g_MapOverlayHeader.unkTable1_4C[arg1].field_E.field_0)
+    {
+        g_MapOverlayHeader.unkTable1_4C[arg1].field_A = 0;
+    }
+
+    ptr->field_158                                              = g_MapOverlayHeader.unkTable1_4C[arg1].field_10.field_0;
+    g_MapOverlayHeader.unkTable1_4C[arg1].field_10.s_0.field_0 += temp_s4;
+
+    *(s32*)&ptr->field_138 = (((g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) + ((((g_MapOverlayHeader.unkTable1_4C[arg1].vy_8) >> 4) - ptr->field_0.field_0.vy) << 16);
+    ptr->field_138.vz      = (g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 >> 4) - ptr->field_0.field_0.vz;
+
+    gte_ldv0(&ptr->field_138);
+    gte_rtps();
+    gte_stsxy(&ptr->field_154);
+    gte_stsz(&ptr->field_150);
+
+    if (ptr->field_150 <= 0 || (ptr->field_150 >> 3) >= 0x800)
+    {
+        return 0;
+    }
+
+    if (ABS(ptr->field_154.vx) >= 0xC9)
+    {
+        return 0;
+    }
+
+    if (ABS(ptr->field_154.vy) >= 0xA1)
+    {
+        return 0;
+    }
+
+    ptr->field_160 = (((ptr->field_158 >> 6) + 16) * ptr->field_0.field_2C) / ptr->field_150;
+
+    setPolyFT4(*arg0);
+
+    setXY0Fast(*arg0, (u16)ptr->field_154.vx - (u16)ptr->field_160, ptr->field_154.vy - ptr->field_160);
+    setXY1Fast(*arg0, (u16)ptr->field_154.vx + (u16)ptr->field_160, ptr->field_154.vy - ptr->field_160);
+    setXY2Fast(*arg0, (u16)ptr->field_154.vx - (u16)ptr->field_160, ptr->field_154.vy + ptr->field_160);
+    setXY3Fast(*arg0, (u16)ptr->field_154.vx + (u16)ptr->field_160, ptr->field_154.vy + ptr->field_160);
+
+    *(s32*)&(*arg0)->u0 = (((g_MapOverlayHeader.unkTable1_4C[arg1].field_B << 5) + 0xA0) << 8) + 0x011300E0;
+    *(s32*)&(*arg0)->u1 = (((g_MapOverlayHeader.unkTable1_4C[arg1].field_B << 5) + 0xA0) << 8) + 0x2B00FF;
+    *(u16*)&(*arg0)->u2 = (((g_MapOverlayHeader.unkTable1_4C[arg1].field_B << 5) + 0xBF) << 8) + 0xE0;
+    *(u16*)&(*arg0)->u3 = (((g_MapOverlayHeader.unkTable1_4C[arg1].field_B << 5) + 0xBF) << 8) + 0xFF;
+
+    setSemiTrans(*arg0, 1);
+
+    if (ptr->field_15A < (ptr->field_168 >> 3))
+    {
+        ptr->field_15C = MIN(((ptr->field_15A << 9) / ptr->field_168) + 0x30, 0x80);
+    }
+    else
+    {
+        ptr->field_15C = CLAMP_LOW(0x78 - (ptr->field_15A * 0x78) / ptr->field_168, 0);
+    }
+
+    if (!(g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 3))
+    {
+        func_80055A90(&ptr->field_134, &ptr->field_130, ptr->field_15C, ptr->field_150 * 16);
+
+        next  = *arg0 + 1;
+        *next = **arg0;
+
+        (*arg0 + 1)->clut = 0x93;
+
+        *(u16*)&(*arg0)->r0 = ptr->field_130.r + (ptr->field_130.g << 8);
+        (*arg0)->b0         = ptr->field_130.b;
+
+        *(u16*)&(*arg0 + 1)->r0 = ptr->field_134.r + (ptr->field_134.g << 8);
+        (*arg0 + 1)->b0         = ptr->field_134.b;
+
+        ptr->field_12C = (PACKET*)(*arg0) + 0x50;
+
+        SetPriority(ptr->field_12C, 0, 0);
+        SetPriority(ptr->field_12C + 0xC, 1, 1);
+
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_150 >> 3], *arg0);
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_150 >> 3], ptr->field_12C);
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_150 >> 3], *arg0 + 1);
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_150 >> 3], ptr->field_12C + 0xC);
+
+        *arg0 = ptr->field_12C + 0x18;
+    }
+    else
+    {
+        func_80055E90(&ptr->field_130, ptr->field_15C);
+        *(u16*)&(*arg0)->r0 = ptr->field_130.r + (ptr->field_130.g << 8);
+        (*arg0)->b0         = ptr->field_130.b;
+
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_150 >> 3], *arg0);
+
+        *arg0 = *arg0 + 1;
+    }
+
+    if (ptr->field_164 < ptr->field_158)
+    {
+        temp_v1_5 = Math_Sin(g_MapOverlayHeader.unkTable1_4C[arg1].field_C.field_0);
+        temp_s0   = FP_MULTIPLY_PRECISE(temp_s4, 0x199, Q12_SHIFT);
+
+        g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 += FP_MULTIPLY(temp_s0, temp_v1_5, Q12_SHIFT);
+        g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 += FP_MULTIPLY(temp_s0, Math_Cos(g_MapOverlayHeader.unkTable1_4C[arg1].field_C.field_0), Q12_SHIFT);
+
+        if (*g_MapOverlayHeader.data_190 != 0)
+        {
+            g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 += ((*g_MapOverlayHeader.windSpeedX_184 * temp_s4) / 136) >> 2;
+            g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 += ((*g_MapOverlayHeader.windSpeedZ_188 * temp_s4) / 136) >> 2;
+        }
+        else if (*g_MapOverlayHeader.data_18C != 0)
+        {
+            g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 += ((*g_MapOverlayHeader.windSpeedX_184 * temp_s4) / 136) >> 1;
+            g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 += ((*g_MapOverlayHeader.windSpeedZ_188 * temp_s4) / 136) >> 1;
+        }
+        else
+        {
+            g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 += (((*g_MapOverlayHeader.windSpeedX_184 * temp_s4) / 136) * 2) / 3;
+            g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 += (((*g_MapOverlayHeader.windSpeedZ_188 * temp_s4) / 136) * 2) / 3;
+        }
+    }
+
+    return 1;
+}
 
 void func_80064F04(VECTOR3* arg0, s8 arg1, s16 arg2) // 0x80064F04
 {
@@ -2661,8 +3296,8 @@ void func_80064F04(VECTOR3* arg0, s8 arg1, s16 arg2) // 0x80064F04
         g_MapOverlayHeader.unkTable1_4C[idx].vx_0    = Q12_TO_Q8(arg0->vx);
         g_MapOverlayHeader.unkTable1_4C[idx].vy_8    = Q12_TO_Q8(arg0->vy);
         g_MapOverlayHeader.unkTable1_4C[idx].vz_4    = Q12_TO_Q8(arg0->vz);
-        g_MapOverlayHeader.unkTable1_4C[idx].field_C = arg1;
-        g_MapOverlayHeader.unkTable1_4C[idx].field_E = arg2;
+        g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_0 = arg1;
+        g_MapOverlayHeader.unkTable1_4C[idx].field_E.field_0     = arg2;
     }
 }
 
@@ -2674,9 +3309,9 @@ bool func_80064FC0(POLY_FT4** polys, s32 arg1) // 0x80064FC0
     ptr = PSX_SCRATCH;
 
     g_MapOverlayHeader.unkTable1_4C[arg1].field_A = 0;
-    temp                                          = g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 - ptr->field_0.vx;
-    *(s32*)&ptr->field_12C.vx                     = (temp & 0xFFFF) + ((g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 - ptr->field_0.vy) << 16);
-    ptr->field_12C.vz                             = g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 - ptr->field_0.vz;
+    temp                                          = g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 - ptr->field_0.field_0.vx;
+    *(s32*)&ptr->field_12C.vx                     = (temp & 0xFFFF) + ((g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 - ptr->field_0.field_0.vy) << 16);
+    ptr->field_12C.vz                             = g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 - ptr->field_0.field_0.vz;
 
     gte_ldv0(&ptr->field_12C);
     gte_rtps();
@@ -2688,7 +3323,7 @@ bool func_80064FC0(POLY_FT4** polys, s32 arg1) // 0x80064FC0
         return false;
     }
 
-    ptr->field_144 = ((g_MapOverlayHeader.unkTable1_4C[arg1].field_E * ptr->field_2C) / ptr->field_140) >> 4;
+    ptr->field_144 = ((g_MapOverlayHeader.unkTable1_4C[arg1].field_E.field_0 * ptr->field_0.field_2C) / ptr->field_140) >> 4;
     setPolyFT4(*polys);
     setXY0Fast(*polys, (u16)ptr->field_13C.vx - (u16)ptr->field_144, ptr->field_13C.vy + ptr->field_144);
     setXY1Fast(*polys, (u16)ptr->field_13C.vx + (u16)ptr->field_144, ptr->field_13C.vy + ptr->field_144);
