@@ -900,28 +900,13 @@ const char* MAP_MESSAGES[] =
 
 void func_800D9610(void) // 0x800D9610
 {
-    VECTOR3       posCpy;
-    VECTOR3       pos;
-    s_MapPoint2d* mapPoint0;
-    s_MapPoint2d* mapPoint;
-    s_EventParam* eventParam;
-
-    // @hack Permuter finds.
-    do {} while (false);
-    eventParam = g_MapEventParam;
-    mapPoint0 = &MAP_POINTS;
-    mapPoint = mapPoint0;
-
-    pos.vx = MAP_POINTS[eventParam->field_5].positionX_0;
-    pos.vy = Q12(-1.2f);
-    pos.vz = MAP_POINTS[eventParam->field_5].positionZ_8;
-    posCpy = pos;
+    VECTOR3 pos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            func_8005DC1C(Sfx_Unk1355, &posCpy, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1355, &pos, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement();
 
         case 1:
@@ -938,11 +923,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D9748);
 
 void func_800D9D98(void) // 0x800D9D98
 {
-    s_SysWork* syswork;
-
     func_800DA454();
-
-    syswork = &g_SysWork;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -992,11 +973,7 @@ void func_800D9D98(void) // 0x800D9D98
 
 void func_800DA028(void) // 0x800DA028
 {
-    s_SysWork* syswork;
-
     func_800DA454();
-
-    syswork = &g_SysWork;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -1043,11 +1020,7 @@ void func_800DA028(void) // 0x800DA028
 
 void func_800DA254(void) // 0x800DA254
 {
-    s_SysWork* syswork;
-
     func_800DA454();
-
-    syswork = &g_SysWork;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
