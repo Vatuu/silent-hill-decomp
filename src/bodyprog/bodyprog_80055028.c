@@ -3165,7 +3165,7 @@ void func_8006342C(s32 weaponAttack, s16 arg1, s16 arg2, GsCOORDINATE2* arg3) //
             g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_B = Rng_Rand16() % 3;
         }
 
-        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_C.field_0      = Rng_Rand16() & 0xFFF;
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_C.field_0      = Rng_TestProbabilityBits(12);
         g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_E.field_0      = 0;
         g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_10.s_0.field_0 = 0;
     }
