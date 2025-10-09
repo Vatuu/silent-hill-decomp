@@ -1,7 +1,15 @@
 #ifndef _MAPS_MAP2_S04_H
 #define _MAPS_MAP2_S04_H
 
+void func_800CCF9C(void);
+
+void func_800CD050(void);
+
+void func_800CD088(void);
+
 /** @brief Map pickup event. */
 void func_800CD0D0(void);
+
+void func_800CD0F8(void);
 
 #endif

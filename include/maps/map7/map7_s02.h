@@ -20,4 +20,26 @@ void func_800D8C00(s_SubCharacter* chara, GsCOORDINATE2* coord);
 
 void func_800D9864();
 
+void func_800DC120(void);
+
+void func_800DF1F0(void);
+
+void func_800DFA54(void);
+
+void func_800DFA80(void);
+
+void func_800DFAAC(void);
+
+void func_800DFAE4(void);
+
+void func_800DFB1C(void);
+
+void func_800E0C30(void);
+
+void func_800E0C5C(void);
+
+void func_800E0C88(void);
+
+void func_800E2DC0(void);
+
 #endif

@@ -875,10 +875,9 @@ typedef struct _ControllerData
 } s_ControllerData;
 STATIC_ASSERT_SIZEOF(s_ControllerData, 44);
 
-/** @brief Controller key bindings for input actions.
+/** @brief Controller key bindings for input actions, contains bitfield of button presses assigned to each action.
  *
- * TODO: Instead of `u16`s, it should use 1-bit packed 16-bit `u32`, similar to `ControllerFlags` but not an enum because it can have multiple values.
- * Only the first 16 values are counted (analog directions are not included). Also, D-Pad is not registered.
+ * Bitfields only contain buttons, analog directions and D-Pad aren't included.
  */
 typedef struct _ControllerConfig
 {
@@ -924,9 +923,7 @@ typedef struct _Savegame
     s32             field_B0[45];
     s32             hasMapsFlags_164;         // See Sparagas' `HasMapsFlags` struct for details of every bit.
     u32             eventFlags_168[27];       // Can be accessed through `Savegame_EventFlagGet` / `Savegame_EventFlagSet`, only tested a few, but seems all are related to events and pick-up flags, grouped by location and not item types.
-    s32             mapMarkingFlags_1D4[2];   //----------------------------------------
-    s32             mapMarkingFlags_1DC;      // These 3 are one `u32 mapMarkingFlags[25];` (or maybe `u8 mapMarkingFlags[100];`?) See Sparagas' `MapMarkingsFlags` struct for details of every bit.
-    s32             mapMarkingFlags_1E0[22];  //----------------------------------------
+    s32             mapMarkingFlags_1D4[25];  // See Sparagas' `MapMarkingsFlags` struct for details of every bit.
     q19_12          healthSaturation_238;     /** Range: [0, 300]. Ampoules give extra stored health. If the player loses health, it will be slowly restored. */
     s16             pickedUpItemCount_23C;
     s8              field_23E;

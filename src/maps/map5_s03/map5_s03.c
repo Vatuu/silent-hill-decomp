@@ -2,6 +2,7 @@
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
 #include "maps/shared.h"
+#include "maps/map5/map5_s03.h"
 
 INCLUDE_RODATA("asm/maps/map5_s03/nonmatchings/map5_s03", D_800C9578);
 
@@ -252,9 +253,16 @@ INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D1628);
 
 INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D1904);
 
-INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D1A84);
+void func_800D1A84(void) // 0x800D1A84
+{
+    func_80087360(FILE_TIM_DIARYMTL_TIM, Q12(2.5f), Q12(2.0f), 49);
+    Savegame_EventFlagSet(EventFlag_398);
+}
 
-INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D1ACC);
+void func_800D1ACC(void) // 0x800D1ACC
+{
+    Event_ItemTake(InventoryItemId_Magnet, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M5S03_PickupMagnet, 53);
+}
 
 INCLUDE_RODATA("asm/maps/map5_s03/nonmatchings/map5_s03", D_800CB7F8);
 

@@ -2,6 +2,7 @@
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
 #include "maps/shared.h"
+#include "maps/map3/map3_s05.h"
 
 INCLUDE_RODATA("asm/maps/map3_s05/nonmatchings/map3_s05", D_800C9578);
 
@@ -294,17 +295,26 @@ INCLUDE_RODATA("asm/maps/map3_s05/nonmatchings/map3_s05", D_800CB3EC);
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D64E0);
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D6BB4);
+void func_800D6BB4(void) // 0x800D6BB4
+{
+    Event_ItemTake(InventoryItemId_VideoTape, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S05_PickupVideoTape, 15);
+}
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D6BE0);
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D6CF0);
+void func_800D6CF0(void) // 0x800D6CF0
+{
+    Event_ItemTake(InventoryItemId_ExaminationRoomKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S05_PickupExaminationRoomKey, 21);
+}
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D6D1C);
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D719C);
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D7280);
+void func_800D7280(void) // 0x800D7280
+{
+    Event_ItemTake(InventoryItemId_Hammer, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S05_PickupHammer, 31);
+}
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D72AC);
 

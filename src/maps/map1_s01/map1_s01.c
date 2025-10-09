@@ -305,9 +305,15 @@ void func_800D7214(void) // 0x800D7214
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D72B0);
+void func_800D72B0(void) // 0x800D72B0
+{
+    func_80087360(FILE_TIM_HAND_TIM, Q12(2.0f), Q12(1.5f), 15);
+}
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D72DC);
+void func_800D72DC(void) // 0x800D72DC
+{
+    Event_ItemTake(InventoryItemId_Chemical, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M1S01_PickupChemical, 18);
+}
 
 INCLUDE_RODATA("asm/maps/map1_s01/nonmatchings/map1_s01", D_800CB5A4);
 
@@ -319,13 +325,19 @@ INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D7830);
 
 INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D7864);
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D7EEC);
+void func_800D7EEC(void) // 0x800D7EEC
+{
+    func_80087360(FILE_TIM_PIANO1_TIM, Q12(0.0f), Q12(0.0f), 47);
+}
 
 INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D7F18);
 
 INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D857C);
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D8794);
+void func_800D8794(void) // 0x800D8794
+{
+    func_80087360(FILE_TIM_LOCKER0_TIM, Q12(0.0f), Q12(0.0f), 32);
+}
 
 INCLUDE_RODATA("asm/maps/map1_s01/nonmatchings/map1_s01", D_800CB6CC);
 

@@ -160,16 +160,27 @@ void func_800CCF9C(void) // 0x800CCF9C
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
-INCLUDE_ASM("asm/maps/map2_s04/nonmatchings/map2_s04", func_800CD050);
+void func_800CD050(void) // 0x800CD050
+{
+    g_BackgroundColor = 0x50;
+    func_80087360(FILE_TIM_PLCSMEMO_TIM, Q12(0.0f), Q12(0.0f), 15);
+}
 
-INCLUDE_ASM("asm/maps/map2_s04/nonmatchings/map2_s04", func_800CD088);
+void func_800CD088(void) // 0x800CD088
+{
+    func_80087360(FILE_TIM_PLCSBORD_TIM, Q12(0.0f), Q12(0.0f), 19);
+    Savegame_EventFlagSet(EventFlag_145);
+}
 
 void func_800CD0D0(void) // 0x800CD0D0
 {
     Event_MapTake(2, EventFlag_M2S00_PickupMap, 23);
 }
 
-INCLUDE_ASM("asm/maps/map2_s04/nonmatchings/map2_s04", func_800CD0F8);
+void func_800CD0F8(void) // 0x800CD0F8
+{
+    Event_ItemTake(InventoryItemId_Shotgun, SHOTGUN_AMMO_PICKUP_ITEM_COUNT, EventFlag_M2S04_PickupShotgun, 26);
+}
 
 INCLUDE_ASM("asm/maps/map2_s04/nonmatchings/map2_s04", func_800CD124);
 

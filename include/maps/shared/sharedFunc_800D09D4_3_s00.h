@@ -39,14 +39,14 @@ void sharedFunc_800D09D4_3_s00()
                     break;
             }
 
-            if ((g_SavegamePtr->mapMarkingFlags_1E0[18] & ((1 << 16) | (1 << 22))) == ((1 << 16) | (1 << 22)))
+            if ((g_SavegamePtr->mapMarkingFlags_1D4[21] & ((1 << 16) | (1 << 22))) == ((1 << 16) | (1 << 22)))
             {
                 flags |= 0x11E;
             }
             break;
 
         case 34:
-            if (!(g_SavegamePtr->mapMarkingFlags_1E0[14] & (1 << 19)))
+            if (!(g_SavegamePtr->mapMarkingFlags_1D4[17] & (1 << 19)))
             {
                 var   = 0xF0000;
                 flags = 0x201;

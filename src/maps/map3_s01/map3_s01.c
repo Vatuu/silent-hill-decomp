@@ -211,7 +211,10 @@ INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", D_800CB124);
 
 INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D25A8);
 
-INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D2720);
+void func_800D2720(void) // 0x800D2720
+{
+    Event_ItemTake(InventoryItemId_PlasticBottle, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S01_PickupPlasticBottle, 21);
+}
 
 void func_800D274C(void) // 0x800D274C
 {
@@ -223,7 +226,10 @@ void func_800D2774(void) // 0x800D2774
     Event_MapTake(16, EventFlag_M3S01_PickupMap, 23);
 }
 
-INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D279C);
+void func_800D279C(void) // 0x800D279C
+{
+    Event_ItemTake(InventoryItemId_BasementKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S01_PickupBasementKey, 24);
+}
 
 INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", D_800CB148);
 

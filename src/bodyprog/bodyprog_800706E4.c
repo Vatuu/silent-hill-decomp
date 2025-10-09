@@ -6507,7 +6507,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
         chara->properties_E4.player.runTimer_108 = 0;
     }
 
-    if (*(u16*)&g_SavegamePtr->mapOverlayId_A4 == 3331)
+    if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP1_S00 && g_SavegamePtr->mapRoomIdx_A5 == 13)
     {
         D_800C4590.field_C = 0;
     }

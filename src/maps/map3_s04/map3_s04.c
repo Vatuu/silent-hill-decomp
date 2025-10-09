@@ -313,7 +313,10 @@ INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800D250C);
 
 INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800D2668);
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800D2E58);
+void func_800D2E58(void) // 0x800D2E58
+{
+    Event_ItemTake(InventoryItemId_PlateOfQueen, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S04_PickupPlateOfQueen, 47);
+}
 
 INCLUDE_RODATA("asm/maps/map3_s04/nonmatchings/map3_s04", D_800CB2A8);
 

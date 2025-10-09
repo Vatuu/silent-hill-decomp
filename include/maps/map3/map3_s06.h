@@ -4,4 +4,6 @@
 /** @brief Map pickup event. */
 void func_800D17B0(void);
 
+void func_800D17D8(void);
+
 #endif

@@ -728,13 +728,52 @@ void func_800E7B74(void) // 0x800E7B74
 
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E7D54);
+
+void func_800E7D54(void) // 0x800E7D54
+{
+    s32 i;
+
+    // Breaks from loop if there are any characters with ID in range [1, 24], with health above 0.
+    for (i = 0; i < 6; i++)
+    {
+        if (g_SysWork.npcs_1A0[i].model_0.charaId_0 >= Chara_Harry &&
+            g_SysWork.npcs_1A0[i].model_0.charaId_0 <= Chara_MonsterCybil &&
+            g_SysWork.npcs_1A0[i].health_B0 > 0)
+        {
+            break;
+        }
+    }
+
+    if (i != 6)
+    {
+        g_DeltaTime0 = 0;
+    }
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            SysWork_StateStepIncrement();
+        case 1:
+            MapMsg_DisplayAndHandleSelection(false, 46, 0, 0, 0, false);
+            return;
+        case 2:
+            Event_ItemTake(InventoryItemId_HealthDrink, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M2S00_PickupHealthDrink, 6);
+            return;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E7E60);
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E816C);
+void func_800E816C(void) // 0x800E816C
+{
+    Event_ItemTake(InventoryItemId_RockDrill, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M2S00_PickupRockDrill, 73);
+}
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E8198);
+void func_800E8198(void) // 0x800E8198
+{
+    Event_ItemTake(InventoryItemId_Chainsaw, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M2S00_PickupChainsaw, 76);
+}
 
 void func_800E81C4(void) // 0x800E81C4
 {
@@ -753,11 +792,33 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E95F8);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E97E4);
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E9A0C);
+void func_800E9A0C(void) // 0x800E9A0C
+{
+    Event_ItemTake(InventoryItemId_KeyOfLion, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M2S00_PickupKeyOfLion, 28);
+
+    if (Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfLion))
+    {
+        if (g_SavegamePtr->mapMarkingFlags_1D4[1] & (1 << 20))
+        {
+            g_SavegamePtr->mapMarkingFlags_1D4[1] |= 1 << 21;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E9A74);
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E9CB4);
+void func_800E9CB4(void) // 0x800E9CB4
+{
+    Event_ItemTake(InventoryItemId_KeyOfScarecrow, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M2S00_PickupKeyOfScarecrow, 30);
+
+    if (Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfScarecrow))
+    {
+        if (g_SavegamePtr->mapMarkingFlags_1D4[1] & (1 << 24))
+        {
+            g_SavegamePtr->mapMarkingFlags_1D4[1] |= 1 << 25;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E9D1C);
 

@@ -543,7 +543,10 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800DB738);
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800DBB34);
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800DC120);
+void func_800DC120(void) // 0x800DC120
+{
+    Event_ItemTake(InventoryItemId_Ankh, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S02_PickupAnkh, 81);
+}
 
 INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02", D_800CD5C0);
 
@@ -577,29 +580,58 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800DE1FC);
 void func_800DF1E8(void) {
 }
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800DF1F0);
+void func_800DF1F0(void) // 0x800DF1F0
+{
+    Event_ItemTake(InventoryItemId_DiskOfOuroboros, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S02_PickupDiskOfOuroboros, 83);
+}
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800DF21C);
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800DFA54);
+void func_800DFA54(void) // 0x800DFA54
+{
+    func_80087360(FILE_TIM_ABUSEDSK_TIM, Q12(0.0f), Q12(0.0f), 98);
+}
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800DFA80);
+void func_800DFA80(void) // 0x800DFA80
+{
+    Event_ItemTake(InventoryItemId_Screwdriver, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupScrewdriver, 94);
+}
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800DFAAC);
+void func_800DFAAC(void) // 0x800DFAAC
+{
+    g_BackgroundColor = 0x68;
+    func_80087360(FILE_TIM_LITHGRPH_TIM, Q12(0.0f), Q12(0.0f), 101);
+}
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800DFAE4);
+void func_800DFAE4(void) // 0x800DFAE4
+{
+    g_BackgroundColor = 0x68;
+    func_80087360(FILE_TIM_LITHGR_3_TIM, Q12(0.0f), Q12(0.0f), 102);
+}
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800DFB1C);
+void func_800DFB1C(void) // 0x800DFB1C
+{
+    Event_ItemTake(InventoryItemId_AmuletOfSolomon, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupAmuletOfSolomon, 96);
+}
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800DFB48);
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800DFDDC);
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800E0C30);
+void func_800E0C30(void) // 0x800E0C30
+{
+    Event_ItemTake(InventoryItemId_CrestOfMercury, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupCrestOfMercury, 97);
+}
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800E0C5C);
+void func_800E0C5C(void) // 0x800E0C5C
+{
+    Event_ItemTake(InventoryItemId_RingOfContract, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupRingOfContract, 93);
+}
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800E0C88);
+void func_800E0C88(void) // 0x800E0C88
+{
+    Event_ItemTake(InventoryItemId_Camera, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupCamera, 95);
+}
 
 INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02", D_800CD878);
 
@@ -627,7 +659,10 @@ INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02", D_800CD944);
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800E204C);
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800E2DC0);
+void func_800E2DC0(void) // 0x800E2DC0
+{
+    func_80087360(FILE_TIM_ALESSA_TIM, Q12(0.0f), Q12(0.0f), 124);
+}
 
 INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02", D_800CD998);
 

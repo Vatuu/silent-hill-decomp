@@ -125,13 +125,18 @@ typedef enum _Sfx
     Sfx_Unk1329     = 1329,
 				    
     Sfx_Stumble1    = 1333,
-				    
+    Sfx_Unk1334     = 1334,
+    Sfx_Unk1335     = 1335,
     Sfx_Unk1336     = 1336,
     Sfx_Unk1337     = 1337,
     Sfx_Unk1338     = 1338,
     Sfx_Unk1339     = 1339,
     Sfx_Unk1340     = 1340,
     Sfx_Unk1341     = 1341,
+    Sfx_Unk1342     = 1342,
+
+    Sfx_Unk1343     = 1343,
+    Sfx_Unk1344     = 1344,
 				    
     Sfx_Unk1351     = 1351,
     Sfx_Unk1352     = 1352,
@@ -200,6 +205,23 @@ typedef enum _Sfx
 				    
     Sfx_Unk1609     = 1609,
     Sfx_Unk1610     = 1610,
+
+    Sfx_Unk1642     = 1642,
+    Sfx_Unk1643     = 1643,
+
+    Sfx_Unk1645     = 1645,
+
+    Sfx_Unk1650     = 1650,
+
+    Sfx_Unk1655     = 1655,
+    Sfx_Unk1656     = 1656,
+
+    Sfx_Unk1658     = 1658,
+
+    Sfx_Unk1660     = 1660,
+    Sfx_Unk1661     = 1661,
+
+    Sfx_Unk4664     = 4664
 } e_Sfx;
 
 typedef enum _MainMenuEntry
@@ -1720,7 +1742,7 @@ typedef struct
 typedef struct
 {
     VECTOR3 offset_0;
-    s32     field_C; // Absolute ground height?
+    s32     field_C; // Absolute ground height? Might be using `s_Collision` substruct?
     s16     field_10;
     s16     field_12;
     s8      field_14; // Count of something? 12 is significant.
