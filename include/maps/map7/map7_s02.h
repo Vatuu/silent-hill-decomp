@@ -8,7 +8,11 @@ typedef struct
     s16 field_2;
 } s_800EA494;
 
+extern VECTOR3 D_800E839C[]; // Assumed type.
+
 extern u16 D_800E9CE4;
+
+extern u16 D_800E9CFC;
 
 extern s8 D_800E9ECC;
 extern u8 D_800E9ECD;
@@ -45,6 +49,22 @@ void func_800D9864(void);
 void func_800DA248(void);
 
 void func_800DAA4C(void);
+
+void func_800DB21C(void);
+
+void func_800DB2B0(void);
+
+void func_800DB344(void);
+
+void func_800DB498(void);
+
+void func_800DB52C(void);
+
+void func_800DB5C0(void);
+
+void func_800DB67C(void);
+
+void func_800DB738(void);
 
 void func_800DC120(void);
 
