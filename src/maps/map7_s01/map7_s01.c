@@ -958,7 +958,7 @@ void func_800D8DB4(void) // 0x800D8DB4
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            func_80086470(0, 78, 0, false);
+            func_80086470(0, InventoryItemId_KeyOfOphiel, 0, false);
             SysWork_StateStepIncrement();
         case 1:
             func_80085DF0();
@@ -968,7 +968,7 @@ void func_800D8DB4(void) // 0x800D8DB4
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 59, false);
             SysWork_StateStepIncrement();
         case 3:
-            func_80086470(1, 78, 0, false);
+            func_80086470(1, InventoryItemId_KeyOfOphiel, 0, false);
             break;
 
         case 4:
@@ -976,7 +976,7 @@ void func_800D8DB4(void) // 0x800D8DB4
             break;
 
         case 5:
-            if (Gfx_PickupItemAnimate(78))
+            if (Gfx_PickupItemAnimate(InventoryItemId_KeyOfOphiel))
             {
                 MapMsg_DisplayAndHandleSelection(true, 57, 6, 7, 0, false);
             }
@@ -984,7 +984,7 @@ void func_800D8DB4(void) // 0x800D8DB4
             break;
 
         case 6:
-            func_80086470(3, 78, 1, false);
+            func_80086470(3, InventoryItemId_KeyOfOphiel, 1, false);
             // TODO: `SysWork_NextStateStepSet(8);`
             g_SysWork.sysStateStep_C[0] = 8;
             g_SysWork.field_28          = 0;
@@ -1609,7 +1609,7 @@ void func_800DB3D0(void) // 0x800DB3D0
             Savegame_EventFlagClear(EventFlag_496);
             Savegame_EventFlagClear(EventFlag_497);
             func_8008616C(0, false, 0, 0, false);
-            func_80086470(3, 120, 1, false);
+            func_80086470(3, InventoryItemId_Camera, 1, false);
             break;
     }
 }
@@ -1643,13 +1643,13 @@ void func_800DBDE0(void) // 0x800DBDE0
 
         case 4:
             func_800862F8(2, 0, false);
-            MapMsg_DisplayAndHandleSelection(false, 30, false, false, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 30, 0, 0, 0, false);
             break;
 
         case 5:
             g_BackgroundColor = 0x30;
             func_800862F8(2, 0, false);
-            MapMsg_DisplayAndHandleSelection(false, 31, false, false, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 31, 0, 0, 0, false);
             break;
 
         case 6:
@@ -1658,13 +1658,13 @@ void func_800DBDE0(void) // 0x800DBDE0
         case 7:
             g_BackgroundColor = 0x30;
             func_800862F8(2, 0, false);
-            MapMsg_DisplayAndHandleSelection(false, 32, false, false, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 32, 0, 0, 0, false);
             break;
 
         case 8:
             g_BackgroundColor = 0x30;
             func_800862F8(2, 0, false);
-            MapMsg_DisplayAndHandleSelection(false, 35, false, false, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 35, 0, 0, 0, false);
             break;
 
         case 9:

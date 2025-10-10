@@ -218,6 +218,7 @@ typedef enum _EventFlag
     EventFlag_525                        = 525,
     EventFlag_M7S01_PickupKeyOfHagith    = 526,
     EventFlag_M7S01_PickupKeyOfPhaleg    = 527,
+    EventFlag_M7S02_PickupKeyOfBethor    = 528,
 
     EventFlag_530                         = 530,
     EventFlag_531                         = 531,
@@ -229,6 +230,8 @@ typedef enum _EventFlag
     EventFlag_M7S02_PickupAnkh            = 537,
 
     EventFlag_M7S02_PickupDiskOfOuroboros = 539,
+
+    EventFlag_548 = 548,
 
     EventFlag_562 = 562,
     EventFlag_563 = 563,

@@ -225,7 +225,9 @@ typedef enum _Sfx
     Sfx_Unk1660     = 1660,
     Sfx_Unk1661     = 1661,
 
-    Sfx_Unk4664     = 4664
+    Sfx_Unk4664     = 4664,
+
+    Sfx_Unk4699     = 4699
 } e_Sfx;
 
 typedef enum _MainMenuEntry
@@ -3626,19 +3628,32 @@ void func_80085E6C(s32 delay, bool arg1);
 
 void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool arg3);
 
-void func_8008605C(s32 arg0, s32 arg1, s32 arg2, bool arg3);
-
-/** TODO: Detailed doc here.
- * Enry arguments correspond to selectable dialog menu entries.
+/** @brief Sets `sysStateStep_C` depending on whether `eventFlagIdx` flag is set.
+ *
+ * @param eventFlagIdx Flag index.
+ * @param stepTrue Step to use if flag is set.
+ * @param stepFalse Step to use if flag is not set.
+ * @param stepSecondary If `true`, sets `sysStateStep_C[1]` instead of `sysStateStep_C[0]`, otherwise sets `sysStateStep_C[0]`.
  */
-void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 entry0, s32 entry1, s32 entry2, bool arg5);
+void func_8008605C(s32 eventFlagIdx, s32 stepTrue, s32 stepFalse, bool stepSecondary);
+
+/** @brief Displays a selection menu, and sets `sysStateStep_C` depending on the chosen value.
+ *
+ * @param hasSelection If `false` will increment `sysStateStep_C` after displaying, otherwise will wait for selection.
+ * @param mapMsgIdx Map message index to display.
+ * @param step0 Step to use if selection #0 is chosen.
+ * @param step1 Step to use if selection #1 is chosen.
+ * @param step2 Step to use if selection #2 is chosen.
+ * @param stepSecondary If `true`, sets `sysStateStep_C[1]` instead of `sysStateStep_C[0]`, otherwise sets `sysStateStep_C[0]`.
+ */
+void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 step0, s32 step1, s32 step2, bool stepSecondary);
 
 /** Handles giving the player items. */
 void func_8008616C(s32 arg0, bool arg1, s32 arg2, q19_12 fadeTimestep, bool arg4);
 
 void func_800862F8(s32 arg0, s32 fileIdx, bool arg2);
 
-void func_80086470(u32 switchVar, s32 arg1, s32 arg2, bool arg3);
+void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, bool arg3);
 
 void func_800865FC(bool isPos, s32 idx0, s32 idx1, q3_12 angleY, q19_12 offsetOrPosX, q19_12 offsetOrPosZ);
 

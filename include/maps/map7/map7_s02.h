@@ -66,7 +66,11 @@ void func_800DB67C(void);
 
 void func_800DB738(void);
 
+void func_800DBB34(void);
+
 void func_800DC120(void);
+
+void func_800DC778(void);
 
 void func_800DF1F0(void);
 

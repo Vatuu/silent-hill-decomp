@@ -990,12 +990,135 @@ void func_800DB738(void) // 0x800DB738
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(false);
             func_8008616C(0, false, 2, 0, false);
-            func_80086470(3, 110, 1, false);
+            func_80086470(3, InventoryItemId_VideoTape, 1, false);
             break;
     }
 }
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800DBB34);
+void func_800DBB34(void) // 0x800DBB34
+{
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+        g_SysWork.sysStateStep_C[0] >= 1 && g_SysWork.sysStateStep_C[0] <= 13)
+    {
+        SysWork_NextStateStepSet(14);
+    }
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_800348C0();
+            Chara_Load(0, Chara_GhostChildAlessa, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+            g_SysWork.field_30 = 20;
+            ScreenFade_ResetTimestep();
+            Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, 1 << 1);
+            func_8008D438();
+            Camera_PositionSet(NULL, Q12(20.09f), Q12(-0.9f), Q12(-97.78f), 0, 0, 0, 0, true);
+            Camera_LookAtSet(NULL, Q12(18.5f), Q12(0.2f), Q12(-101.28f), 0, 0, 0, 0, true);
+            SysWork_StateStepIncrement();
+        case 1:
+            func_8008616C(2, false, 0, 0, false);
+            break;
+
+        case 2:
+            func_800868DC(3);
+            func_800868DC(4);
+            func_800868DC(5);
+            SysWork_StateStepIncrement();
+        case 3:
+            func_80085E6C(Q12(0.8f), false);
+            break;
+
+        case 4:
+            Camera_LookAtSet(NULL,
+                             func_800868F4(Q12(-0.7901f), Q12(3.0f), 3) + Q12(18.5f),
+                             func_800868F4(Q12(-2.1299f), Q12(3.0f), 4) + Q12(0.2f),
+                             func_800868F4(Q12(0.45f), Q12(3.0f), 5) + Q12(-101.28f), 0, 0, 0, 0, false);
+            func_80085E6C(Q12(3.0f), false);
+            break;
+
+        case 5:
+            func_800868DC(3);
+            func_800868DC(4);
+            func_800868DC(5);
+            func_80088D0C();
+            Chara_Spawn(Chara_GhostChildAlessa, 0, Q12(21.2f), Q12(-100.5f), FP_ANGLE(180.0f), 3);
+            SysWork_StateStepIncrement();
+            break;
+
+        case 6:
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 11, false);
+            Sd_EngineCmd(Sfx_Unk4699);
+            SysWork_StateStepIncrement();
+        case 7:
+            func_80085E6C(Q12(0.5f), false);
+            break;
+
+        case 8:
+            Camera_LookAtSet(NULL,
+                             func_800868F4(Q12(3.74f), Q12(3.4f), 3) + Q12(17.71f),
+                             func_800868F4(Q12(0.3902f), Q12(3.4f), 4) + Q12(-1.93f),
+                             func_800868F4(Q12(-0.6602f), Q12(3.4f), 5) + Q12(-100.83f), 0, 0, 0, 0, false);
+            func_80085E6C(Q12(3.4f), false);
+            break;
+
+        case 9:
+            func_800868DC(3);
+            func_800868DC(4);
+            func_800868DC(5);
+            SysWork_StateStepIncrement();
+            break;
+
+        case 10:
+            func_80085E6C(Q12(0.5f), false);
+            break;
+
+        case 11:
+            Camera_LookAtSet(NULL,
+                             func_800868F4(Q12(-0.1302f), Q12(0.6f), 3) + Q12(21.45f),
+                             func_800868F4(Q12(1.21f), Q12(0.6f), 4) + Q12(-1.54f),
+                             func_800868F4(Q12(-0.05f), Q12(0.6f), 5) + Q12(-101.49f), 0, 0, 0, 0, true);
+            func_80085E6C(Q12(0.6f), false);
+            break;
+
+        case 12:
+            g_SysWork.npcs_1A0[0].timer_C6 += FP_MULTIPLY_PRECISE(Q12(0.25f), g_DeltaTime0, Q12_SHIFT);
+            if (g_SysWork.npcs_1A0[0].timer_C6 > Q12(1.0f))
+            {
+                func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
+                SysWork_StateStepIncrement();
+            }
+            break;
+
+        case 13:
+            func_80085E6C(Q12(1.0f), false);
+            if (g_SysWork.sysStateStep_C[0] != 13)
+            {
+                SysWork_StateStepReset();
+            }
+            break;
+
+        case 14:
+            func_8008616C(2, true, 0, 0, false);
+            break;
+
+        case 15:
+            func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
+            Sd_EngineCmd(19);
+            func_8008616C(0, false, 0, 0, false);
+            SysWork_StateStepIncrement();
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            vcReturnPreAutoCamWork(true);
+            Savegame_EventFlagSet(EventFlag_548);
+            func_8008616C(0, false, 2, 0, false);
+            Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, 1 << 1);
+            func_8008D448();
+            func_800348C0();
+            break;
+    }
+}
 
 void func_800DC120(void) // 0x800DC120
 {
@@ -1008,7 +1131,57 @@ INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02", D_800CD5CC);
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800DC14C);
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800DC778);
+void func_800DC778(void) // 0x800DC778
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_80086470(0, InventoryItemId_KeyOfBethor, 0, false);
+            SysWork_StateStepIncrement();
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 59);
+            break;
+
+        case 3:
+            func_80086470(1, InventoryItemId_KeyOfBethor, 0, false);
+            break;
+
+        case 4:
+            Savegame_EventFlagSet(EventFlag_M7S02_PickupKeyOfBethor);
+            if (Gfx_PickupItemAnimate(InventoryItemId_KeyOfBethor))
+            {
+                MapMsg_DisplayAndHandleSelection(true, 79, 5, 6, 0, false);
+            }
+            break;
+
+        case 5:
+            func_80086470(3, InventoryItemId_KeyOfBethor, 1, false);
+            // TODO: `SysWork_NextStateStepSet(7);`
+            g_SysWork.sysStateStep_C[0] = 7;
+            g_SysWork.field_28          = 0;
+            g_SysWork.sysStateStep_C[1] = 0;
+            g_SysWork.timer_2C          = 0;
+            g_SysWork.sysStateStep_C[2] = 0;
+            break;
+
+        case 6:
+            Savegame_EventFlagClear(EventFlag_M7S02_PickupKeyOfBethor);
+            SysWork_StateStepIncrement();
+        case 7:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+}
 
 void func_800DC94C(void) {
 }

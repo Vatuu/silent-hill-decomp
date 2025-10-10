@@ -1506,11 +1506,11 @@ void func_800DB514(void) // 0x800DB514
             SysWork_StateStepIncrement();
 
         case 4:
-            MapMsg_DisplayAndHandleSelection(false, 25, false, false, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 25, 0, 0, 0, false);
             break;
 
         case 5:
-            func_8008605C(16, 6, 5, false);
+            func_8008605C(EventFlag_16, 6, 5, false);
             break;
 
         case 6:
@@ -1549,7 +1549,7 @@ void func_800DB514(void) // 0x800DB514
 
         case 11:
             Savegame_EventFlagSet(EventFlag_17);
-            MapMsg_DisplayAndHandleSelection(false, 30, false, false, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 30, 0, 0, 0, false);
             break;
 
         default:
