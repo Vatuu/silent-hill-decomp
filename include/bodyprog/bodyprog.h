@@ -2010,7 +2010,7 @@ typedef struct
     SVECTOR         field_164;
     VECTOR          field_16C[3];
     VECTOR          field_19C;
-    VECTOR          field_1AC;
+    VECTOR          field_1AC; // Q27.4
     s32             field_1BC;
     s32             field_1C0;
     s32             field_1C4;
@@ -2018,7 +2018,7 @@ typedef struct
     DVECTOR         field_1CC;
     s16             field_1D0;
     u8              unk_1D2[2];
-    s32             field_1D4;
+    s32             field_1D4; // Count.
     s32             field_1D8;
     s32             field_1DC;
     s32             field_1E0;
@@ -2048,7 +2048,7 @@ typedef struct
 {
     MATRIX  field_0;
     SVECTOR field_20;
-    VECTOR  field_28;
+    VECTOR  field_28; // Q27.4
     s32     field_38;
     s32     field_3C[5];
     s32     field_50;
@@ -2703,6 +2703,7 @@ extern u16 D_800C42D0;
 
 extern u16 D_800C42D2;
 
+/** Size 24? */
 extern s_800C42E8 D_800C42E8[];
 
 extern u16 g_LoadedEffectTextureFlags;
@@ -3639,10 +3640,10 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool arg3);
  */
 void func_8008605C(s32 eventFlagIdx, s32 stepTrue, s32 stepFalse, bool stepSecondary);
 
-/** @brief Displays a selection menu, and sets `sysStateStep_C` depending on the chosen value.
+/** @brief Displays a selection menu and sets `sysStateStep_C` depending on the chosen value.
  *
- * @param hasSelection If `false` will increment `sysStateStep_C` after displaying, otherwise will wait for selection.
- * @param mapMsgIdx Map message index to display.
+ * @param hasSelection `false` if `sysStateStep_C` increments after displaying, otherwise waits for selection.
+ * @param mapMsgIdx Map message index of the message to display.
  * @param step0 Step to use if selection #0 is chosen.
  * @param step1 Step to use if selection #1 is chosen.
  * @param step2 Step to use if selection #2 is chosen.
@@ -3884,11 +3885,12 @@ s16 func_8005C7B0(s32 arg0);
 /** `arg0` type assumed. */
 void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3);
 
-s32 func_80063A50(POLY_FT4** arg0, s32 arg1);
+bool func_80063A50(POLY_FT4** poly, s32 arg1);
 
-s32 func_80064334(POLY_FT4** arg0, s32 arg1);
+bool func_80064334(POLY_FT4** poly, s32 arg1);
 
-void func_8006342C(s32 weaponAttack, s16, s16, GsCOORDINATE2*);
+/** Displays gun shooting effects. */
+void func_8006342C(s32 weaponAttack, s16 arg1, s16 arg2, GsCOORDINATE2* coord);
 
 s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 x, s16 z);
 

@@ -981,7 +981,7 @@ typedef struct _EventParam
     u8  unk_0[2];
     s16 eventFlagId_2;
     u8  unk_4[1];
-    u8  field_5; // Something related to pickup items.
+    u8  field_5; // Index into `D_800E839C`. Related pickup item SFX.
     u8  unk_6[2];
     u32 triggerType_8_0        : 5;
     u32 pointOfInterestIdx_8_5 : 8; /** Index into `g_MapOverlayHeader.mapPointsOfInterest_1C`. */
@@ -1545,7 +1545,8 @@ extern s32 g_UncappedVBlanks;
 /** @brief Sets `sysState` in `g_SysWork` for the next tick. */
 static inline s32 SysWork_StateSetNext(e_SysState sysState)
 {
-    s32 state = g_SysWork.sysState_8 = sysState;
+    s32 state                   =
+    g_SysWork.sysState_8        = sysState;
     g_SysWork.timer_24          = 0;
     g_SysWork.sysStateStep_C[0] = 0;
     g_SysWork.field_28          = 0;
@@ -1568,7 +1569,8 @@ static inline void SysWork_StateStepIncrement()
 /** @brief Sets `sysStateStep` in `g_SysWork` for the next tick. */
 static inline s32 SysWork_NextStateStepSet(s32 sysStateStep)
 {
-    s32 step = g_SysWork.sysStateStep_C[0] = sysStateStep;
+    s32 step                    =
+    g_SysWork.sysStateStep_C[0] = sysStateStep;
     g_SysWork.field_28          = 0;
     g_SysWork.sysStateStep_C[1] = 0;
     g_SysWork.timer_2C          = 0;

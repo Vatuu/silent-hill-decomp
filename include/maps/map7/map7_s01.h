@@ -53,7 +53,8 @@ extern s_WorldObjectPos D_800E2C94; // Assumed type.
 extern s32 D_800E2CA8;
 extern s32 D_800E2CAC;
 
-extern s16 D_800E2CE8;
+/** Decrementing timer. */
+extern q3_12 D_800E2CE8;
 
 s32 func_800D1630();
 

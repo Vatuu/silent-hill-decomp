@@ -2534,8 +2534,8 @@ s32 func_8005E7E0(s32 arg0) // 0x8005E7E0
 
 void func_8005E89C() // 0x8005E89C
 {
-#define CLAMP_CUSTOM(a, b, lo, hi) \
-    ((((a) >= (hi)) ? (hi) : (b)) < (lo) ? (lo) : (((b) >= (hi)) ? (hi) : (a)))
+    #define CLAMP_CUSTOM(a, b, min, max) \
+        ((((a) >= (max)) ? (max) : (b)) < (min) ? (lo) : (((b) >= (max)) ? (max) : (a)))
 
     SVECTOR          sp10;
     POLY_FT4*        sp18;
@@ -2545,7 +2545,7 @@ void func_8005E89C() // 0x8005E89C
     s32              i;
     s_SubCharacter*  var_a2;
     s_func_8005E89C* ptr;
-    s_800C42E8*      new_var;
+    s_800C42E8*      curPtr;
 
     ptr = PSX_SCRATCH;
 
@@ -2570,9 +2570,9 @@ void func_8005E89C() // 0x8005E89C
     if (D_800C4414 & 1)
     {
         ptr->field_C4 = FP_MULTIPLY_PRECISE(g_DeltaTime0, g_MapOverlayHeader.field_5C->field_E, Q12_SHIFT);
-        ptr->field_C8 = g_MapOverlayHeader.field_5C->field_4 * 0x10;
-        ptr->field_CA = g_MapOverlayHeader.field_5C->field_5 * 0x10;
-        ptr->field_CC = (0x100 - g_MapOverlayHeader.field_5C->field_5) * 0x10;
+        ptr->field_C8 = g_MapOverlayHeader.field_5C->field_4 * 16;
+        ptr->field_CA = g_MapOverlayHeader.field_5C->field_5 * 16;
+        ptr->field_CC = (0x100 - g_MapOverlayHeader.field_5C->field_5) * 16;
         ptr->field_CE = (g_DeltaTime0 * g_MapOverlayHeader.field_5C->field_E) / g_MapOverlayHeader.field_5C->field_16;
         ptr->field_C6 = (u16)g_MapOverlayHeader.field_5C->field_A >> 2;
         ptr->field_D0 = g_MapOverlayHeader.field_5C->field_20;
@@ -2584,7 +2584,7 @@ void func_8005E89C() // 0x8005E89C
             case 0:
                 for (i = 0; i < g_MapOverlayHeader.unkTable1Count_50; i++)
                 {
-                    if (g_MapOverlayHeader.unkTable1_4C[i].field_A == 0xC)
+                    if (g_MapOverlayHeader.unkTable1_4C[i].field_A == 12)
                     {
                         g_MapOverlayHeader.func_60(i, 0);
                     }
@@ -2606,7 +2606,7 @@ void func_8005E89C() // 0x8005E89C
                         case 9:
                         case 10:
                         case 11:
-                            g_MapOverlayHeader.unkTable1_4C[i].field_A = 0xC;
+                            g_MapOverlayHeader.unkTable1_4C[i].field_A = 12;
                             break;
                     }
                 }
@@ -2619,8 +2619,9 @@ void func_8005E89C() // 0x8005E89C
 
                 for (i = 0; i < g_MapOverlayHeader.unkTable1Count_50; i++)
                 {
-                    if (g_MapOverlayHeader.unkTable1_4C[i].field_A == 0xC &&
-                        Rng_TestProbabilityBits(12) > g_MapOverlayHeader.field_5C->field_10 && Rng_TestProbabilityBits(4))
+                    if (g_MapOverlayHeader.unkTable1_4C[i].field_A == 12 &&
+                        Rng_TestProbabilityBits(12) > g_MapOverlayHeader.field_5C->field_10 &&
+                        Rng_TestProbabilityBits(4))
                     {
                         g_MapOverlayHeader.func_60(i, 1);
                     }
@@ -2662,12 +2663,14 @@ void func_8005E89C() // 0x8005E89C
                 ptr->field_FC[i].vy = FP_MULTIPLY(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Cos(ptr->field_30.vy + 0x400), Q12_SHIFT);
             }
         }
+
         g_MapOverlayHeader.func_9C();
     }
 
     for (i = 0; i < 24; i++)
     {
-        new_var = &D_800C42E8[i];
+        curPtr = &D_800C42E8[i];
+
         if (D_800C42E8[i].field_0 != 0)
         {
             if (D_800C42E8[i].field_1 == 6)
@@ -2680,19 +2683,19 @@ void func_8005E89C() // 0x8005E89C
             }
 
             ptr->field_34[i] = CLAMP_CUSTOM((var_a2->position_18.vx + var_a2->field_D8.offsetX_0) - D_800C42E8[i].field_4,
-                                            (var_a2->position_18.vx + var_a2->field_D8.offsetX_0) - new_var->field_4,
-                                            -FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x1400, Q12_SHIFT),
-                                            FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x1400, Q12_SHIFT));
+                                            (var_a2->position_18.vx + var_a2->field_D8.offsetX_0) - curPtr->field_4,
+                                            -FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.25f), Q12_SHIFT),
+                                            FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.25f), Q12_SHIFT));
 
             ptr->field_64[i] = CLAMP_CUSTOM((var_a2->position_18.vy + var_a2->field_CE) - D_800C42E8[i].field_2,
-                                            (var_a2->position_18.vy + var_a2->field_CE) - new_var->field_2,
-                                            -FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x1400, Q12_SHIFT) >> 4,
-                                            FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x1400, Q12_SHIFT));
+                                            (var_a2->position_18.vy + var_a2->field_CE) - curPtr->field_2,
+                                            -FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.25f), Q12_SHIFT) >> 4,
+                                            FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.25f), Q12_SHIFT));
 
             ptr->field_94[i] = CLAMP_CUSTOM((var_a2->position_18.vz + var_a2->field_D8.offsetZ_2) - D_800C42E8[i].field_8,
-                                            (var_a2->position_18.vz + var_a2->field_D8.offsetZ_2) - new_var->field_8,
-                                            -FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x1400, Q12_SHIFT),
-                                            FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x1400, Q12_SHIFT));
+                                            (var_a2->position_18.vz + var_a2->field_D8.offsetZ_2) - curPtr->field_8,
+                                            -FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.25f), Q12_SHIFT),
+                                            FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.25f), Q12_SHIFT));
 
             D_800C42E8[i].field_4 += ptr->field_34[i];
             D_800C42E8[i].field_2 += ptr->field_64[i];
@@ -2833,16 +2836,21 @@ s32 func_8005F55C(s32 arg0) // 0x8005F55C
         return 0;
     }
 
+    // TODO: Use available enums.
     switch (g_GameWork.config_0.optExtraBloodColor_24)
     {
         case 3:
             return 6;
+
         case 6:
             return 7;
+
         case 9:
             return 5;
+
         case 12:
             return 4;
+
         case 13:
             return 0;
     }
@@ -2851,19 +2859,25 @@ s32 func_8005F55C(s32 arg0) // 0x8005F55C
     {
         case 4:
             return 9;
+
         case 1:
         case 14:
         {
+            // TODO: Use available enums.
             switch (g_GameWork.config_0.optExtraBloodColor_24)
             {
                 case 5:
                     return 7;
+
                 case 2:
                     return 6;
+
                 case 8:
                     return 5;
+
                 case 11:
                     return 4;
+
                 default:
                     return 0;
             }
@@ -2878,17 +2892,21 @@ s32 func_8005F55C(s32 arg0) // 0x8005F55C
             return 7;
     }
 
+    // TODO: Use available enums.
     switch (g_GameWork.config_0.optExtraBloodColor_24)
     {
         case 1:
         case 2:
             return 6;
+
         case 4:
         case 5:
             return 7;
+
         case 7:
         case 8:
             return 5;
+
         case 10:
         case 11:
             return 4;
@@ -3000,8 +3018,7 @@ void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3) // 0x800625F4
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80062708); // 0x80062708
 
-// Displays gun shooting effects.
-void func_8006342C(s32 weaponAttack, s16 arg1, s16 arg2, GsCOORDINATE2* arg3) // 0x8006342C
+void func_8006342C(s32 weaponAttack, s16 arg1, s16 arg2, GsCOORDINATE2* coord) // 0x8006342C
 {
     s32              i;
     s_func_8006342C* ptr;
@@ -3011,43 +3028,43 @@ void func_8006342C(s32 weaponAttack, s16 arg1, s16 arg2, GsCOORDINATE2* arg3) //
     switch (weaponAttack)
     {
         case 0x20:
-            D_800C440C               = arg3;
+            D_800C440C               = coord;
             *(s32*)&ptr->field_20.vx = -0xEFFFE;
             ptr->field_20.vz         = 0x47;
             break;
 
         case 0x22:
-            D_800C440C               = arg3;
+            D_800C440C               = coord;
             *(s32*)&ptr->field_20.vx = -0x11FFFD;
             ptr->field_20.vz         = 0x6D;
             break;
 
         case 0x21:
-            D_800C440C               = arg3;
+            D_800C440C               = coord;
             *(s32*)&ptr->field_20.vx = -0x220002;
             ptr->field_20.vz         = 0xDD;
             break;
 
         case 0x46:
-            D_800C4410               = arg3;
+            D_800C4410               = coord;
             *(s32*)&ptr->field_20.vx = -0x17FFFD;
             ptr->field_20.vz         = 0x5B;
             break;
 
         case 0x3F:
-            D_800C4410               = arg3;
+            D_800C4410               = coord;
             *(s32*)&ptr->field_20.vx = -0xCFFFE;
             ptr->field_20.vz         = 0x43;
             break;
 
         case 0x5:
-            D_800C440C               = arg3;
+            D_800C440C               = coord;
             *(s32*)&ptr->field_20.vx = 0x140002;
             ptr->field_20.vz         = 0x39;
             break;
 
         case 0x2:
-            D_800C440C               = arg3;
+            D_800C440C               = coord;
             *(s32*)&ptr->field_20.vx = 0x180002;
             ptr->field_20.vz         = 0x43;
             break;
@@ -3056,7 +3073,7 @@ void func_8006342C(s32 weaponAttack, s16 arg1, s16 arg2, GsCOORDINATE2* arg3) //
             return;
     }
 
-    Vw_CoordHierarchyMatrixCompute(&arg3[10], &ptr->field_0);
+    Vw_CoordHierarchyMatrixCompute(&coord[10], &ptr->field_0);
 
     gte_SetRotMatrix(&ptr->field_0);
     gte_SetTransMatrix(&ptr->field_0);
@@ -3066,66 +3083,76 @@ void func_8006342C(s32 weaponAttack, s16 arg1, s16 arg2, GsCOORDINATE2* arg3) //
 
     switch (weaponAttack)
     {
-        case 0x20:
-            ptr->field_38 = func_8005E7E0(0xF);
+        case WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap):
+            ptr->field_38 = func_8005E7E0(15);
             ptr->field_50 = 3;
+
             for (i = 0; i < 3; i++)
             {
-                ptr->field_3C[i] = func_8005E7E0(0x14);
+                ptr->field_3C[i] = func_8005E7E0(20);
             }
             break;
 
-        case 0x22:
-            ptr->field_38 = func_8005E7E0(0x10);
+        case WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap):
+            ptr->field_38 = func_8005E7E0(16);
             ptr->field_50 = 5;
+
             for (i = 0; i < 5; i++)
             {
-                ptr->field_3C[i] = func_8005E7E0(0x15);
+                ptr->field_3C[i] = func_8005E7E0(21);
             }
             break;
 
-        case 0x21:
-            ptr->field_38 = func_8005E7E0(0x11);
+        case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
+            ptr->field_38 = func_8005E7E0(17);
             ptr->field_50 = 3;
+
             for (i = 0; i < 3; i++)
             {
-                ptr->field_3C[i] = func_8005E7E0(0x16);
+                ptr->field_3C[i] = func_8005E7E0(22);
             }
             break;
 
-        case 0x46:
-            ptr->field_38 = func_8005E7E0(0x12);
+        // TODO: What weapon attack?
+        case 70:
+            ptr->field_38 = func_8005E7E0(18);
             ptr->field_50 = 3;
+
             for (i = 0; i < 3; i++)
             {
-                ptr->field_3C[i] = func_8005E7E0(0x14);
+                ptr->field_3C[i] = func_8005E7E0(20);
             }
             break;
 
-        case 0x3F:
-            ptr->field_38 = func_8005E7E0(0x13);
+        // TODO: What weapon attack?
+        case 63:
+            ptr->field_38 = func_8005E7E0(19);
             ptr->field_50 = 3;
+
             for (i = 0; i < 3; i++)
             {
-                ptr->field_3C[i] = func_8005E7E0(0x14);
+                ptr->field_3C[i] = func_8005E7E0(20);
             }
             break;
 
-        case 0x2:
-        case 0x5:
+        case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
+        case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap):
             ptr->field_50 = 3;
+
             for (i = 0; i < 3; i++)
             {
-                ptr->field_3C[i] = func_8005E7E0(0x14);
+                ptr->field_3C[i] = func_8005E7E0(20);
             }
             break;
     }
 
-    if ((weaponAttack != 5) && (weaponAttack != 2))
+    if (weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
+        weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
     {
-        if (ptr->field_38 != -1)
+        if (ptr->field_38 != NO_VALUE)
         {
-            if (weaponAttack == 0x46)
+            // TODO: Demagic this.
+            if (weaponAttack == 70)
             {
                 g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_C.field_0 = -0x400;
                 g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_E.field_0 = 0x400;
@@ -3147,14 +3174,14 @@ void func_8006342C(s32 weaponAttack, s16 arg1, s16 arg2, GsCOORDINATE2* arg3) //
 
     for (i = 0; i < ptr->field_50; i++)
     {
-        if (ptr->field_3C[i] == -1)
+        if (ptr->field_3C[i] == NO_VALUE)
         {
             break;
         }
 
-        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].vx_0 = ((ptr->field_28.vx * 0x10) + Rng_TestProbabilityBits(8)) - 0x80;
-        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].vy_8 = (((u16)ptr->field_28.vy * 0x10) + Rng_TestProbabilityBits(8)) - 0x80;
-        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].vz_4 = ((ptr->field_28.vz * 0x10) + Rng_TestProbabilityBits(8)) - 0x80;
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].vx_0 = (Q4_TO_Q8(ptr->field_28.vx) + Rng_TestProbabilityBits(8)) - 0x80;
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].vy_8 = (Q4_TO_Q8((u16)ptr->field_28.vy) + Rng_TestProbabilityBits(8)) - 0x80;
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].vz_4 = (Q4_TO_Q8(ptr->field_28.vz) + Rng_TestProbabilityBits(8)) - 0x80;
 
         if (i < 3)
         {
@@ -3171,7 +3198,7 @@ void func_8006342C(s32 weaponAttack, s16 arg1, s16 arg2, GsCOORDINATE2* arg3) //
     }
 }
 
-s32 func_80063A50(POLY_FT4** arg0, s32 arg1)                               // 0x80063A50
+bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
 {
     s_func_80063A50* ptr;
 
@@ -3186,11 +3213,12 @@ s32 func_80063A50(POLY_FT4** arg0, s32 arg1)                               // 0x
             ptr->field_1E8         = 0x100;
             *(s32*)&ptr->field_164 = -0xEFFFE;
             ptr->field_164.vz      = 0x47;
+
             Vw_CoordHierarchyMatrixCompute(&D_800C440C[10], &ptr->field_12C);
             break;
 
         default:
-            return 0;
+            return false;
 
         case 16:
             ptr->field_1DC         = 0xCC;
@@ -3199,6 +3227,7 @@ s32 func_80063A50(POLY_FT4** arg0, s32 arg1)                               // 0x
             ptr->field_1E8         = 0x180;
             *(s32*)&ptr->field_164 = -0x11FFFD;
             ptr->field_164.vz      = 0x6D;
+
             Vw_CoordHierarchyMatrixCompute(&D_800C440C[10], &ptr->field_12C);
             break;
 
@@ -3219,6 +3248,7 @@ s32 func_80063A50(POLY_FT4** arg0, s32 arg1)                               // 0x
             ptr->field_1E8         = 0x100;
             *(s32*)&ptr->field_164 = -0x17FFFD;
             ptr->field_164.vz      = 0x5B;
+
             Vw_CoordHierarchyMatrixCompute(&D_800C4410[10], &ptr->field_12C);
             break;
 
@@ -3229,6 +3259,7 @@ s32 func_80063A50(POLY_FT4** arg0, s32 arg1)                               // 0x
             ptr->field_1E8         = 0x100;
             *(s32*)&ptr->field_164 = -0xCFFFE;
             ptr->field_164.vz      = 0x43;
+
             Vw_CoordHierarchyMatrixCompute(&D_800C4410[10], &ptr->field_12C);
             break;
     }
@@ -3240,7 +3271,7 @@ s32 func_80063A50(POLY_FT4** arg0, s32 arg1)                               // 0x
     else if (ptr->field_1DC < g_MapOverlayHeader.unkTable1_4C[arg1].field_10.s_0.field_2)
     {
         g_MapOverlayHeader.unkTable1_4C[arg1].field_A = 0;
-        return 0;
+        return false;
     }
 
     g_MapOverlayHeader.unkTable1_4C[arg1].field_10.s_0.field_2 += g_DeltaTime0;
@@ -3251,21 +3282,22 @@ s32 func_80063A50(POLY_FT4** arg0, s32 arg1)                               // 0x
     gte_rt();
     gte_stlvnl(&ptr->field_1AC);
 
-    g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 = ptr->field_1AC.vx * 0x10;
-    g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 = (u16)ptr->field_1AC.vy * 0x10;
-    g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 = ptr->field_1AC.vz * 0x10;
+    g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 = Q4_TO_Q8(ptr->field_1AC.vx);
+    g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 = Q4_TO_Q8((u16)ptr->field_1AC.vy);
+    g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 = Q4_TO_Q8(ptr->field_1AC.vz);
 
     for (ptr->field_1D4 = 0; ptr->field_1D4 < 6; ptr->field_1D4++)
     {
-        ptr->field_1D0 = g_MapOverlayHeader.unkTable1_4C[arg1].field_10.field_0 + ((ptr->field_1D4 << 0xC) / 6);
+        ptr->field_1D0 = g_MapOverlayHeader.unkTable1_4C[arg1].field_10.field_0 + (FP_TO(ptr->field_1D4, Q12_SHIFT) / 6);
 
-        *(s32*)&ptr->field_14C[0].vx = ((((u16)g_MapOverlayHeader.unkTable1_4C[arg1].field_C.field_0 + FP_MULTIPLY(ptr->field_1E8, Math_Cos(ptr->field_1D0), 0xC)) - 0x400) & 0xFFFF) +
-                                       ((g_MapOverlayHeader.unkTable1_4C[arg1].field_E.field_0 + FP_MULTIPLY(ptr->field_1E8, Math_Sin(ptr->field_1D0), 0xC)) << 16);
+        *(s32*)&ptr->field_14C[0].vx = ((((u16)g_MapOverlayHeader.unkTable1_4C[arg1].field_C.field_0 + FP_MULTIPLY(ptr->field_1E8, Math_Cos(ptr->field_1D0), Q12_SHIFT)) - FP_ANGLE(90.0f)) & 0xFFFF) +
+                                       ((g_MapOverlayHeader.unkTable1_4C[arg1].field_E.field_0 + FP_MULTIPLY(ptr->field_1E8, Math_Sin(ptr->field_1D0), Q12_SHIFT)) << 16);
 
         ptr->field_14C[0].vz = ptr->field_1D0;
 
         Math_MatrixRotate1(&ptr->field_14C, &ptr->field_12C);
 
+        // `Q8(0.0f)`?
         ptr->field_16C[0].vx = 0;
         ptr->field_16C[0].vy = 0;
         ptr->field_16C[0].vz = 0;
@@ -3277,11 +3309,10 @@ s32 func_80063A50(POLY_FT4** arg0, s32 arg1)                               // 0x
 
         for (ptr->field_1D8 = 0; ptr->field_1D8 < 4; ptr->field_1D8++)
         {
-            *(u32*)&ptr->field_14C[0].vx = (ptr->field_1D8 & 1)
-                                               ? (u16)ptr->field_1E4
-                                               : -((u16)ptr->field_1E4) & 0xFFFF;
+            *(u32*)&ptr->field_14C[0].vx = (ptr->field_1D8 & 1) ? (u16)ptr->field_1E4 :
+                                                                 -((u16)ptr->field_1E4) & 0xFFFF;
 
-            ptr->field_14C[0].vz = ptr->field_1D8 < 2 ? ptr->field_1E0 : 0;
+            ptr->field_14C[0].vz = (ptr->field_1D8 < 2) ? ptr->field_1E0 : 0;
 
             gte_ldv0(&ptr->field_14C);
             gte_rt();
@@ -3293,15 +3324,15 @@ s32 func_80063A50(POLY_FT4** arg0, s32 arg1)                               // 0x
 
         for (ptr->field_1D8 = 0; ptr->field_1D8 < 3; ptr->field_1D8++)
         {
-            *(s32*)&ptr->field_14C[ptr->field_1D8] = (((((g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 + ptr->field_16C[ptr->field_1D8].vx) >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
-                                                      ((((g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 + ptr->field_16C[ptr->field_1D8].vy) >> 4) - ptr->field_0.field_0.vy) << 16));
+            *(s32*)&ptr->field_14C[ptr->field_1D8] = (((Q8_TO_Q4(g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 + ptr->field_16C[ptr->field_1D8].vx) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
+                                                      ((Q8_TO_Q4(g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 + ptr->field_16C[ptr->field_1D8].vy) - ptr->field_0.field_0.vy) << 16));
 
-            (&ptr->field_14C[ptr->field_1D8])->vz = ((g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 + ptr->field_16C[ptr->field_1D8].vz) >> 4) - ptr->field_0.field_0.vz;
+            (&ptr->field_14C[ptr->field_1D8])->vz = Q8_TO_Q4(g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 + ptr->field_16C[ptr->field_1D8].vz)- ptr->field_0.field_0.vz;
         }
 
         gte_ldv3c(&ptr->field_14C);
         gte_rtpt();
-        gte_stsxy3_g3(*arg0);
+        gte_stsxy3_g3(*poly);
         gte_stsz3c(&ptr->field_1BC);
 
         *(s32*)&ptr->field_14C[0].vx = ((((g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 + ptr->field_19C.vx) >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
@@ -3317,55 +3348,56 @@ s32 func_80063A50(POLY_FT4** arg0, s32 arg1)                               // 0x
 
         if (ptr->field_1BC <= 0)
         {
-            return 0;
+            return false;
         }
 
-        if ((ptr->field_1BC >> 3) >= 0x800)
+        if ((ptr->field_1BC >> 3) >= 2048)
         {
-            return 0;
+            return false;
         }
 
-        if (ABS(ptr->field_1CC.vx) >= 0xC9)
+        if (ABS(ptr->field_1CC.vx) >= 201)
         {
-            return 0;
+            return false;
         }
 
-        if (ABS(ptr->field_1CC.vy) >= 0xA1)
+        if (ABS(ptr->field_1CC.vy) >= 161)
         {
-            return 0;
+            return false;
         }
 
-        *(s32*)&(*arg0)->x3 = *(s32*)&ptr->field_1CC;
+        *(s32*)&(*poly)->x3 = *(s32*)&ptr->field_1CC;
 
         if (!(g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 3))
         {
-            *(s32*)&(*arg0)->r0 = 0x2E103030;
+            *(s32*)&(*poly)->r0 = 0x2E103030;
         }
         else
         {
-            *(s32*)&(*arg0)->r0 = 0x2E406060;
+            *(s32*)&(*poly)->r0 = 0x2E406060;
         }
 
-        *(s32*)&(*arg0)->u0 = g_MapOverlayHeader.unkTable1_4C[arg1].field_B ? 0xD380FF : 0xD380E0;
-        *(s32*)&(*arg0)->u1 = (g_MapOverlayHeader.unkTable1_4C[arg1].field_B ? 0xFF : 0xE0) +
+        *(s32*)&(*poly)->u0 = g_MapOverlayHeader.unkTable1_4C[arg1].field_B ? 0xD380FF : 0xD380E0;
+        *(s32*)&(*poly)->u1 = (g_MapOverlayHeader.unkTable1_4C[arg1].field_B ? 0xFF : 0xE0) +
                               (g_MapOverlayHeader.unkTable1_4C[arg1].field_B ? 0x2B7FE1 : 0x2B801F);
-        *(u16*)&(*arg0)->u2 = g_MapOverlayHeader.unkTable1_4C[arg1].field_B ? 0x9FFF : 0x9FE0;
-        *(u16*)&(*arg0)->u3 = (g_MapOverlayHeader.unkTable1_4C[arg1].field_B ? 0xFF : 0xE0) -
+        *(u16*)&(*poly)->u2 = g_MapOverlayHeader.unkTable1_4C[arg1].field_B ? 0x9FFF : 0x9FE0;
+        *(u16*)&(*poly)->u3 = (g_MapOverlayHeader.unkTable1_4C[arg1].field_B ? 0xFF : 0xE0) -
                               (g_MapOverlayHeader.unkTable1_4C[arg1].field_B ? 0x611F : 0x60E1);
 
-        addPrimFast(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_1BC >> 3], (*arg0), 9);
-        *arg0 += 1;
+        addPrimFast(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_1BC >> 3], (*poly), 9);
+        *poly += 1;
     }
-    return 1;
+
+    return true;
 }
 
-s32 func_80064334(POLY_FT4** arg0, s32 arg1) // 0x80064334
+bool func_80064334(POLY_FT4** poly, s32 arg1) // 0x80064334
 {
     s32              temp_s0;
     s32              temp_s4;
     s32              temp_v0_2;
     s32              temp_v0_3;
-    s32              temp_v1_5;
+    q19_12           temp_v1_5;
     s_func_80064334* ptr;
     POLY_FT4*        next;
 
@@ -3373,12 +3405,12 @@ s32 func_80064334(POLY_FT4** arg0, s32 arg1) // 0x80064334
 
     temp_s4 = FP_MULTIPLY_PRECISE(g_DeltaTime0, Rng_GenerateInt(Rng_Rand16(), 0xCCC, 0x1331), Q12_SHIFT);
 
-    if (g_MapOverlayHeader.unkTable1_4C[arg1].field_A == 0x14)
+    if (g_MapOverlayHeader.unkTable1_4C[arg1].field_A == 20)
     {
         ptr->field_164 = 0xCC;
         ptr->field_168 = 0x666;
     }
-    else if (g_MapOverlayHeader.unkTable1_4C[arg1].field_A == 0x15)
+    else if (g_MapOverlayHeader.unkTable1_4C[arg1].field_A == 21)
     {
         ptr->field_164 = 0xCC;
         ptr->field_168 = 0x666;
@@ -3394,7 +3426,7 @@ s32 func_80064334(POLY_FT4** arg0, s32 arg1) // 0x80064334
     temp_v0_2 = *g_MapOverlayHeader.windSpeedX_184 >> 6;
     temp_v0_3 = *g_MapOverlayHeader.windSpeedZ_188 >> 6;
 
-    g_MapOverlayHeader.unkTable1_4C[arg1].field_E.field_0 += temp_s4 + (((SquareRoot0((temp_v0_2 * temp_v0_2) + (temp_v0_3 * temp_v0_3)) << 6) * temp_s4) >> 0xA);
+    g_MapOverlayHeader.unkTable1_4C[arg1].field_E.field_0 += temp_s4 + (((SquareRoot0((temp_v0_2 * temp_v0_2) + (temp_v0_3 * temp_v0_3)) << 6) * temp_s4) >> 10);
 
     if (ptr->field_168 < (u16)g_MapOverlayHeader.unkTable1_4C[arg1].field_E.field_0)
     {
@@ -3404,7 +3436,8 @@ s32 func_80064334(POLY_FT4** arg0, s32 arg1) // 0x80064334
     ptr->field_158                                              = g_MapOverlayHeader.unkTable1_4C[arg1].field_10.field_0;
     g_MapOverlayHeader.unkTable1_4C[arg1].field_10.s_0.field_0 += temp_s4;
 
-    *(s32*)&ptr->field_138 = (((g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) + ((((g_MapOverlayHeader.unkTable1_4C[arg1].vy_8) >> 4) - ptr->field_0.field_0.vy) << 16);
+    *(s32*)&ptr->field_138 = (((g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
+                             ((((g_MapOverlayHeader.unkTable1_4C[arg1].vy_8) >> 4) - ptr->field_0.field_0.vy) << 16);
     ptr->field_138.vz      = (g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 >> 4) - ptr->field_0.field_0.vz;
 
     gte_ldv0(&ptr->field_138);
@@ -3414,80 +3447,80 @@ s32 func_80064334(POLY_FT4** arg0, s32 arg1) // 0x80064334
 
     if (ptr->field_150 <= 0 || (ptr->field_150 >> 3) >= 0x800)
     {
-        return 0;
+        return false;
     }
 
     if (ABS(ptr->field_154.vx) >= 0xC9)
     {
-        return 0;
+        return false;
     }
 
     if (ABS(ptr->field_154.vy) >= 0xA1)
     {
-        return 0;
+        return false;
     }
 
     ptr->field_160 = (((ptr->field_158 >> 6) + 16) * ptr->field_0.field_2C) / ptr->field_150;
 
-    setPolyFT4(*arg0);
+    setPolyFT4(*poly);
 
-    setXY0Fast(*arg0, (u16)ptr->field_154.vx - (u16)ptr->field_160, ptr->field_154.vy - ptr->field_160);
-    setXY1Fast(*arg0, (u16)ptr->field_154.vx + (u16)ptr->field_160, ptr->field_154.vy - ptr->field_160);
-    setXY2Fast(*arg0, (u16)ptr->field_154.vx - (u16)ptr->field_160, ptr->field_154.vy + ptr->field_160);
-    setXY3Fast(*arg0, (u16)ptr->field_154.vx + (u16)ptr->field_160, ptr->field_154.vy + ptr->field_160);
+    setXY0Fast(*poly, (u16)ptr->field_154.vx - (u16)ptr->field_160, ptr->field_154.vy - ptr->field_160);
+    setXY1Fast(*poly, (u16)ptr->field_154.vx + (u16)ptr->field_160, ptr->field_154.vy - ptr->field_160);
+    setXY2Fast(*poly, (u16)ptr->field_154.vx - (u16)ptr->field_160, ptr->field_154.vy + ptr->field_160);
+    setXY3Fast(*poly, (u16)ptr->field_154.vx + (u16)ptr->field_160, ptr->field_154.vy + ptr->field_160);
 
-    *(s32*)&(*arg0)->u0 = (((g_MapOverlayHeader.unkTable1_4C[arg1].field_B << 5) + 0xA0) << 8) + 0x011300E0;
-    *(s32*)&(*arg0)->u1 = (((g_MapOverlayHeader.unkTable1_4C[arg1].field_B << 5) + 0xA0) << 8) + 0x2B00FF;
-    *(u16*)&(*arg0)->u2 = (((g_MapOverlayHeader.unkTable1_4C[arg1].field_B << 5) + 0xBF) << 8) + 0xE0;
-    *(u16*)&(*arg0)->u3 = (((g_MapOverlayHeader.unkTable1_4C[arg1].field_B << 5) + 0xBF) << 8) + 0xFF;
+    *(s32*)&(*poly)->u0 = (((g_MapOverlayHeader.unkTable1_4C[arg1].field_B << 5) + 160) << 8) + 0x011300E0;
+    *(s32*)&(*poly)->u1 = (((g_MapOverlayHeader.unkTable1_4C[arg1].field_B << 5) + 160) << 8) + 0x2B00FF;
+    *(u16*)&(*poly)->u2 = (((g_MapOverlayHeader.unkTable1_4C[arg1].field_B << 5) + 191) << 8) + 0xE0;
+    *(u16*)&(*poly)->u3 = (((g_MapOverlayHeader.unkTable1_4C[arg1].field_B << 5) + 191) << 8) + 0xFF;
 
-    setSemiTrans(*arg0, 1);
+    setSemiTrans(*poly, 1);
 
     if (ptr->field_15A < (ptr->field_168 >> 3))
     {
-        ptr->field_15C = MIN(((ptr->field_15A << 9) / ptr->field_168) + 0x30, 0x80);
+        ptr->field_15C = MIN(((ptr->field_15A << 9) / ptr->field_168) + 48, 128);
     }
     else
     {
-        ptr->field_15C = CLAMP_LOW(0x78 - (ptr->field_15A * 0x78) / ptr->field_168, 0);
+        ptr->field_15C = CLAMP_LOW(120 - (ptr->field_15A * 120) / ptr->field_168, 0);
     }
 
-    if (!(g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 3))
+    if (!(g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3))
     {
         func_80055A90(&ptr->field_134, &ptr->field_130, ptr->field_15C, ptr->field_150 * 16);
 
-        next  = *arg0 + 1;
-        *next = **arg0;
+        next  = *poly + 1;
+        *next = **poly;
 
-        (*arg0 + 1)->clut = 0x93;
+        (*poly + 1)->clut = 0x93;
 
-        *(u16*)&(*arg0)->r0 = ptr->field_130.r + (ptr->field_130.g << 8);
-        (*arg0)->b0         = ptr->field_130.b;
+        *(u16*)&(*poly)->r0 = ptr->field_130.r + (ptr->field_130.g << 8);
+        (*poly)->b0         = ptr->field_130.b;
 
-        *(u16*)&(*arg0 + 1)->r0 = ptr->field_134.r + (ptr->field_134.g << 8);
-        (*arg0 + 1)->b0         = ptr->field_134.b;
+        *(u16*)&(*poly + 1)->r0 = ptr->field_134.r + (ptr->field_134.g << 8);
+        (*poly + 1)->b0         = ptr->field_134.b;
 
-        ptr->field_12C = (PACKET*)(*arg0) + 0x50;
+        ptr->field_12C = (PACKET*)(*poly) + 0x50;
 
         SetPriority(ptr->field_12C, 0, 0);
         SetPriority(ptr->field_12C + 0xC, 1, 1);
 
-        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_150 >> 3], *arg0);
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_150 >> 3], *poly);
         addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_150 >> 3], ptr->field_12C);
-        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_150 >> 3], *arg0 + 1);
-        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_150 >> 3], ptr->field_12C + 0xC);
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_150 >> 3], *poly + 1);
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_150 >> 3], ptr->field_12C + 12);
 
-        *arg0 = ptr->field_12C + 0x18;
+        *poly = ptr->field_12C + 24;
     }
     else
     {
         func_80055E90(&ptr->field_130, ptr->field_15C);
-        *(u16*)&(*arg0)->r0 = ptr->field_130.r + (ptr->field_130.g << 8);
-        (*arg0)->b0         = ptr->field_130.b;
+        *(u16*)&(*poly)->r0 = ptr->field_130.r + (ptr->field_130.g << 8);
+        (*poly)->b0         = ptr->field_130.b;
 
-        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_150 >> 3], *arg0);
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_150 >> 3], *poly);
 
-        *arg0 = *arg0 + 1;
+        *poly = *poly + 1;
     }
 
     if (ptr->field_164 < ptr->field_158)
@@ -3515,7 +3548,7 @@ s32 func_80064334(POLY_FT4** arg0, s32 arg1) // 0x80064334
         }
     }
 
-    return 1;
+    return true;
 }
 
 void func_80064F04(VECTOR3* arg0, s8 arg1, s16 arg2) // 0x80064F04

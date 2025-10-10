@@ -1308,79 +1308,86 @@ void func_800D99DC(void) // 0x800D99DC
 void func_800D9A08(void) // 0x800D9A08
 {
     g_BackgroundColor = 0x48;
+
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
             func_800862F8(0, FILE_TIM_LISDIARY_TIM, false);
+
             D_800E168D = 0;
+
             SysWork_StateStepIncrement();
+
         case 1:
             func_80085DF0();
-            return;
+            break;
 
         case 2:
             func_80086C58(&g_SysWork.player_4C.chara_0, 59);
-            return;
+            break;
 
         case 3:
             MapMsg_DisplayAndHandleSelection(false, 92, 0, 0, 0, false);
-            return;
+            break;
 
         case 4:
             func_800862F8(1, 0, false);
-            return;
+            break;
 
         case 5:
             func_8008616C(2, true, 0, 0, false);
-            return;
+            break;
 
         case 6:
             func_8008616C(2, false, 0, 0, false);
             func_800862F8(2, 0, false);
-            return;
+            break;
 
         case 7:
             Sd_EngineCmd(Sfx_Unk1308);
             SysWork_StateStepIncrement();
+
         case 8:
             func_80085E6C(Q12(0.3f), false);
             func_800862F8(2, 0, false);
-            return;
+            break;
 
         case 9:
             MapMsg_DisplayAndHandleSelection(false, D_800E154C[D_800E168D], 0, 0, 0, false);
             func_800862F8(2, 0, false);
-            return;
+            break;
 
         case 10:
             func_800862F8(2, 0, false);
+
             D_800E168D++;
             if (D_800E168D >= 8)
             {
                 SysWork_StateStepIncrement();
                 break;
             }
+
             SysWork_NextStateStepSet(7);
-            return;
+            break;
 
         case 11:
             func_8008616C(2, true, 0, 0, false);
             func_800862F8(2, 0, false);
-            return;
+            break;
 
         case 12:
             func_8008616C(2, false, 0, 0, false);
-            return;
+            break;
 
         case 13:
             func_80086C58(&g_SysWork.player_4C.chara_0, 60);
-            return;
+            break;
 
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            return;
+            break;
     }
 }
 
@@ -1424,9 +1431,9 @@ void func_800DAE00(void) // 0x800DAE00
             g_SysWork.field_30    = 20;
             g_SysWork.flags_22A4 |= 1 << 3;
 
-            Fs_QueueStartRead(42, (void*)0x80169600);
+            Fs_QueueStartRead(42, (void*)FS_BUFFER_11);
             Fs_QueueWaitForEmpty();
-            DmsHeader_FixOffsets((s_DmsHeader*)0x80169600);
+            DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_11);
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 148, false);
             func_8008616C(0, false, 0, 0, false);
 
@@ -1499,8 +1506,8 @@ void func_800DAE00(void) // 0x800DAE00
 
     if (D_800E2C68 >= 0)
     {
-        Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, "HERO", D_800E2C68, (s_DmsHeader*)0x80169600);
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800E2C48, &D_800E2C58, NULL, D_800E2C68, (s_DmsHeader*)0x80169600));
+        Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, "HERO", D_800E2C68, (s_DmsHeader*)FS_BUFFER_11);
+        vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800E2C48, &D_800E2C58, NULL, D_800E2C68, (s_DmsHeader*)FS_BUFFER_11));
         vcUserCamTarget(&D_800E2C48, NULL, true);
         vcUserWatchTarget(&D_800E2C58, NULL, true);
     }
@@ -1512,12 +1519,12 @@ void func_800DB13C(void) // 0x800DB13C
 
     if (g_SysWork.sysStateStep_C[1] >= 3 && g_SysWork.sysStateStep_C[1] <= 5)
     {
-        if (D_800E2CE8 != 0)
+        if (D_800E2CE8 != Q12(0.0f))
         {
             D_800E2CE8 -= g_DeltaTime0;
-            if (D_800E2CE8 < 0)
+            if (D_800E2CE8 < Q12(0.0f))
             {
-                D_800E2CE8 = 0;
+                D_800E2CE8 = Q12(0.0f);
             }
         }
         else
@@ -1534,24 +1541,18 @@ void func_800DB1F0(void) // 0x800DB1F0
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-
             ScreenFade_ResetTimestep();
-
             Chara_Load(0, Chara_GhostChildAlessa, g_SysWork.npcCoords_FC0, CHARA_FORCE_FREE_ALL, NULL, NULL);
             func_80088D0C();
             Chara_Spawn(Chara_GhostChildAlessa, 0, Q12(57.2f), Q12(-20.4f), Q12(-0.25f), 3);
-
             SysWork_StateStepIncrement();
             break;
 
         default:
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 9, false);
             func_8008616C(0, false, 0, 0, false);
-
             sharedFunc_800D2244_0_s00(false);
-
             SysWork_StateSetNext(SysState_Gameplay);
-
             Savegame_EventFlagSet(EventFlag_562);
             Savegame_EventFlagSet(EventFlag_223);
             break;
@@ -1659,16 +1660,19 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800DB60C);
 
 void func_800DBDE0(void) // 0x800DBDE0
 {
-    const static VECTOR3 D_800CC754 = { Q12(100.8f), Q12(-1.0f), Q12(-20.0f) };
+    const static VECTOR3 SFX_POS = { Q12(100.8f), Q12(-1.0f), Q12(-20.0f) };
 
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
+
             D_800E2C64 = 0;
+
             func_800862F8(0, FILE_TIM_NEWSP3_TIM, false);
-            func_8005DC1C(Sfx_Unk1654, &D_800CC754, 128, 0);
+            func_8005DC1C(Sfx_Unk1654, &SFX_POS, 128, 0);
             SysWork_StateStepIncrement();
+
         case 1:
             func_8008616C(2, true, false, false, false);
             break;
@@ -1688,7 +1692,8 @@ void func_800DBDE0(void) // 0x800DBDE0
             break;
 
         case 5:
-            g_BackgroundColor = 0x30;
+            g_BackgroundColor = 48;
+
             func_800862F8(2, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 31, 0, 0, 0, false);
             break;
@@ -1696,20 +1701,24 @@ void func_800DBDE0(void) // 0x800DBDE0
         case 6:
             Sd_EngineCmd(Sfx_Unk1654);
             SysWork_StateStepIncrement();
+
         case 7:
-            g_BackgroundColor = 0x30;
+            g_BackgroundColor = 48;
+
             func_800862F8(2, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 32, 0, 0, 0, false);
             break;
 
         case 8:
-            g_BackgroundColor = 0x30;
+            g_BackgroundColor = 48;
+
             func_800862F8(2, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 35, 0, 0, 0, false);
             break;
 
         case 9:
-            g_BackgroundColor = 0x30;
+            g_BackgroundColor = 48;
+
             func_800862F8(2, 0, false);
             func_8008616C(2, true, false, false, false);
             break;
@@ -1724,11 +1733,11 @@ void func_800DBDE0(void) // 0x800DBDE0
 
 void func_800DC028(void) // 0x800DC028
 {
-    const static VECTOR3 D_800CC788 = { Q12(97.8f), Q12(-1.0f), Q12(-19.2f) };
+    const static VECTOR3 SFX_POS = { Q12(97.8f), Q12(-1.0f), Q12(-19.2f) };
 
     if (g_SysWork.sysStateStep_C[1] == 0)
     {
-        func_8005DC1C(Sfx_Unk1464, &D_800CC788, 128, 0);
+        func_8005DC1C(Sfx_Unk1464, &SFX_POS, 128, 0);
     }
 
     func_80087540(FILE_TIM_PLANTBK_TIM, 0, 0, 37, 38);
