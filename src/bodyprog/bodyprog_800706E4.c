@@ -1119,14 +1119,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                     if (chara->health_B0 <= Q12(0.0f) && chara->properties_E4.player.afkTimer_E8 <= Q12(0.0f))
                     {
                         g_MapOverlayHeader.func_DC();
-                        //SysWork_StateSetNext(SysState_GameOver); // TODO: Doesn't match.
-                        g_SysWork.sysState_8        = SysState_GameOver;
-                        g_SysWork.timer_24          = 0;
-                        g_SysWork.sysStateStep_C[0] = 0;
-                        g_SysWork.field_28          = 0;
-                        g_SysWork.sysStateStep_C[1] = 0;
-                        g_SysWork.timer_2C          = 0;
-                        g_SysWork.sysStateStep_C[2] = 0;
+                        SysWork_StateSetNext(SysState_GameOver);
 
                         chara->health_B0                                                         = Q12(100.0f);
                         g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(0.0f);
@@ -1219,14 +1212,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                     {
                         g_MapOverlayHeader.func_DC();
 
-                        //SysWork_StateSetNext(SysState_GameOver); // TODO: Doesn't match.
-                        g_SysWork.sysState_8        = SysState_GameOver;
-                        g_SysWork.timer_24          = 0;
-                        g_SysWork.sysStateStep_C[0] = 0;
-                        g_SysWork.field_28          = 0;
-                        g_SysWork.sysStateStep_C[1] = 0;
-                        g_SysWork.timer_2C          = 0;
-                        g_SysWork.sysStateStep_C[2] = 0;
+                        SysWork_StateSetNext(SysState_GameOver);
 
                         chara->health_B0                                                         = Q12(100.0f);
                         g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(0.0f);
@@ -1835,14 +1821,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             {
                 g_MapOverlayHeader.func_DC();
 
-                //SysWork_StateSetNext(SysState_GameOver); // TODO: Doesn't match.
-                g_SysWork.sysState_8        = SysState_GameOver;
-                g_SysWork.timer_24          = 0;
-                g_SysWork.sysStateStep_C[0] = 0;
-                g_SysWork.field_28          = 0;
-                g_SysWork.sysStateStep_C[1] = 0;
-                g_SysWork.timer_2C          = 0;
-                g_SysWork.sysStateStep_C[2] = 0;
+                SysWork_StateSetNext(SysState_GameOver);
 
                 func_8007E9C4();
 
@@ -1907,14 +1886,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
 
                 g_MapOverlayHeader.func_DC();
 
-                //SysWork_StateSetNext(SysState_GameOver); // TODO: Doesn't match.
-                g_SysWork.sysState_8        = SysState_GameOver;
-                g_SysWork.timer_24          = 0;
-                g_SysWork.sysStateStep_C[0] = 0;
-                g_SysWork.field_28          = 0;
-                g_SysWork.sysStateStep_C[1] = 0;
-                g_SysWork.timer_2C          = 0;
-                g_SysWork.sysStateStep_C[2] = 0;
+                SysWork_StateSetNext(SysState_GameOver);
 
                 func_8007E9C4();
 
@@ -1939,14 +1911,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             {
                 g_MapOverlayHeader.func_DC();
 
-                //SysWork_StateSetNext(SysState_GameOver); // TODO: Doesn't match.
-                g_SysWork.sysState_8        = SysState_GameOver;
-                g_SysWork.timer_24          = 0;
-                g_SysWork.sysStateStep_C[0] = 0;
-                g_SysWork.field_28          = 0;
-                g_SysWork.sysStateStep_C[1] = 0;
-                g_SysWork.timer_2C          = 0;
-                g_SysWork.sysStateStep_C[2] = 0;
+                SysWork_StateSetNext(SysState_GameOver);
 
                 func_8007E9C4();
 

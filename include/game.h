@@ -1541,15 +1541,16 @@ extern s32 g_VBlanks;         // 0x800B5C34
 extern s32 g_UncappedVBlanks; // 0x800B5C38
 
 /** @brief Sets `sysState` in `g_SysWork` for the next tick. */
-static inline void SysWork_StateSetNext(e_SysState sysState)
+static inline s32 SysWork_StateSetNext(e_SysState sysState)
 {
-    g_SysWork.sysState_8        = sysState;
+    s32 state = g_SysWork.sysState_8 = sysState;
     g_SysWork.timer_24          = 0;
     g_SysWork.sysStateStep_C[0] = 0;
     g_SysWork.field_28          = 0;
     g_SysWork.sysStateStep_C[1] = 0;
     g_SysWork.timer_2C          = 0;
     g_SysWork.sysStateStep_C[2] = 0;
+    return state;
 }
 
 /** @brief Increments `sysStateStep` in `g_SysWork` for the next tick. */
