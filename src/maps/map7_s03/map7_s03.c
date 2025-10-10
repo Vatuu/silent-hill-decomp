@@ -122,7 +122,7 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedSymbol_800CD4A0_2_s
 
 #include "maps/shared/Ai_Alessa_Update.h" // 0x800D2F08
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800CECFC_3_s02); // 0x800D2F7C
+#include "maps/shared/sharedFunc_800CECFC_3_s02.h" // 0x800D2F7C
 
 #include "maps/shared/sharedFunc_800CED44_3_s02.h" // 0x800D2FC4
 
