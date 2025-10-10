@@ -75,7 +75,7 @@ categories:
       - maps/map1_s04
 
   - id: map.map1_s05
-    name: 1_05 - School boss figh
+    name: 1_05 - School boss fight
     paths:
       - maps/map1_s05
 
@@ -90,12 +90,12 @@ categories:
       - maps/map2_s00
 
   - id: map.map2_s01
-    name: 2_01 - Churc
+    name: 2_01 - Church
     paths:
       - maps/map2_s01
 
   - id: map.map2_s02
-    name: 2_02 - Central Silent Hil
+    name: 2_02 - Central Silent Hill
     paths:
       - maps/map2_s02
 
@@ -220,7 +220,7 @@ categories:
       - maps/map6_s03
 
   - id: map.map6_s04
-    name: 6_04 - Cybil boss fight and cutscene of Dahlia kidnapping Alessa
+    name: 6_04 - Lakeside Amusement Park
     paths:
       - maps/map6_s04
 
@@ -230,7 +230,7 @@ categories:
       - maps/map6_s05
 
   - id: map.map7_s00
-    name: 7_00 - Hospital first floor in Nowhere and Lisa cutscene.
+    name: 7_00 - Hospital first floor in Nowhere and Lisa cutscene
     paths:
       - maps/map7_s00
 
