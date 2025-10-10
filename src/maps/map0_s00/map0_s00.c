@@ -900,28 +900,13 @@ const char* MAP_MESSAGES[] =
 
 void func_800D9610(void) // 0x800D9610
 {
-    VECTOR3       posCpy;
-    VECTOR3       pos;
-    s_MapPoint2d* mapPoint0;
-    s_MapPoint2d* mapPoint;
-    s_EventParam* eventParam;
-
-    // @hack Permuter finds.
-    do {} while (false);
-    eventParam = g_MapEventParam;
-    mapPoint0 = &MAP_POINTS;
-    mapPoint = mapPoint0;
-
-    pos.vx = MAP_POINTS[eventParam->field_5].positionX_0;
-    pos.vy = Q12(-1.2f);
-    pos.vz = MAP_POINTS[eventParam->field_5].positionZ_8;
-    posCpy = pos;
+    VECTOR3 pos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00(mapPoint, eventParam);
-            func_8005DC1C(Sfx_Unk1355, &posCpy, Q8_CLAMPED(0.5f), 0);
+            sharedFunc_800D20E4_0_s00();
+            func_8005DC1C(Sfx_Unk1355, &pos, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement();
 
         case 1:
@@ -938,16 +923,12 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D9748);
 
 void func_800D9D98(void) // 0x800D9D98
 {
-    s_SysWork* syswork;
-
     func_800DA454();
-
-    syswork = &g_SysWork;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00(syswork);
+            sharedFunc_800D20E4_0_s00();
             func_8008616C(0, true, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement();
 
@@ -956,7 +937,7 @@ void func_800D9D98(void) // 0x800D9D98
             break;
 
         case 2:
-            func_80085DF0(syswork);
+            func_80085DF0();
             break;
 
         case 3:
@@ -992,16 +973,12 @@ void func_800D9D98(void) // 0x800D9D98
 
 void func_800DA028(void) // 0x800DA028
 {
-    s_SysWork* syswork;
-
     func_800DA454();
-
-    syswork = &g_SysWork;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00(syswork);
+            sharedFunc_800D20E4_0_s00();
             func_8008616C(0, true, 2, 0, false);
             SysWork_StateStepIncrement();
 
@@ -1010,7 +987,7 @@ void func_800DA028(void) // 0x800DA028
             break;
 
         case 2:
-            func_80085DF0(syswork);
+            func_80085DF0();
             break;
 
         case 3:
@@ -1043,16 +1020,12 @@ void func_800DA028(void) // 0x800DA028
 
 void func_800DA254(void) // 0x800DA254
 {
-    s_SysWork* syswork;
-
     func_800DA454();
-
-    syswork = &g_SysWork;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00(syswork);
+            sharedFunc_800D20E4_0_s00();
             func_8008616C(0, true, 2, 0, false);
             SysWork_StateStepIncrement();
 
@@ -1061,7 +1034,7 @@ void func_800DA254(void) // 0x800DA254
             break;
 
         case 2:
-            func_80085DF0(syswork);
+            func_80085DF0();
             break;
 
         case 3:
@@ -1533,11 +1506,11 @@ void func_800DB514(void) // 0x800DB514
             SysWork_StateStepIncrement();
 
         case 4:
-            MapMsg_DisplayAndHandleSelection(false, 25, false, false, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 25, 0, 0, 0, false);
             break;
 
         case 5:
-            func_8008605C(16, 6, 5, false);
+            func_8008605C(EventFlag_16, 6, 5, false);
             break;
 
         case 6:
@@ -1576,7 +1549,7 @@ void func_800DB514(void) // 0x800DB514
 
         case 11:
             Savegame_EventFlagSet(EventFlag_17);
-            MapMsg_DisplayAndHandleSelection(false, 30, false, false, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 30, 0, 0, 0, false);
             break;
 
         default:

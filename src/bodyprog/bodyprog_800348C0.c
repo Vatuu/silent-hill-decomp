@@ -2242,14 +2242,7 @@ void SysState_Gameplay_Update() // 0x80038BD4
     }
     else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.pause_14)
     {
-        //SysWork_StateSetNext(SysState_GamePaused); // TODO: Doesn't match?
-        g_SysWork.sysState_8        = SysState_GamePaused;
-        g_SysWork.timer_24          = 0;
-        g_SysWork.sysStateStep_C[0] = 0;
-        g_SysWork.field_28          = 0;
-        g_SysWork.sysStateStep_C[1] = 0;
-        g_SysWork.timer_2C          = 0;
-        g_SysWork.sysStateStep_C[2] = 0;
+        SysWork_StateSetNext(SysState_GamePaused);
     }
     else if (func_8007F26C() == true)
     {
@@ -2257,26 +2250,12 @@ void SysState_Gameplay_Update() // 0x80038BD4
     }
     else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.item_16)
     {
-        //SysWork_StateSetNext(SysState_StatusMenu); // TODO: Doesn't match?
-        g_SysWork.sysState_8        = SysState_StatusMenu;
-        g_SysWork.timer_24          = 0;
-        g_SysWork.sysStateStep_C[0] = 0;
-        g_SysWork.field_28          = 0;
-        g_SysWork.sysStateStep_C[1] = 0;
-        g_SysWork.timer_2C          = 0;
-        g_SysWork.sysStateStep_C[2] = 0;
+        SysWork_StateSetNext(SysState_StatusMenu);
     }
     else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18)
     {
-        //SysWork_StateSetNext(SysState_MapScreen); // TODO: Doesn't match?
-        g_SysWork.sysState_8        = SysState_MapScreen;
-        g_SysWork.timer_24          = 0;
-        g_SysWork.sysStateStep_C[0] = 0;
-        g_SysWork.field_28          = 0;
-        g_SysWork.sysStateStep_C[1] = 0;
-        g_SysWork.timer_2C          = 0;
-        g_SysWork.sysStateStep_C[2] = 0;
-        g_SysWork.field_18          = 0;
+        SysWork_StateSetNext(SysState_MapScreen);
+        g_SysWork.field_18 = 0;
     }
     else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.option_1A)
     {

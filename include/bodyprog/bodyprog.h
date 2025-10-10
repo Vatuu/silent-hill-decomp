@@ -175,6 +175,8 @@ typedef enum _Sfx
 				    
     Sfx_Unk1458     = 1458,
     Sfx_Unk1459     = 1459,
+
+    Sfx_Unk1464     = 1464,
 				    
     Sfx_Unk1487     = 1487,
 				    
@@ -190,7 +192,7 @@ typedef enum _Sfx
     Sfx_Unk1521     = 1521,
 				    
     Sfx_Unk1525     = 1525,
-				    
+    Sfx_Unk1526     = 1526,
     Sfx_Unk1527     = 1527,
 				    
     Sfx_Unk1567     = 1567,
@@ -213,15 +215,19 @@ typedef enum _Sfx
 
     Sfx_Unk1650     = 1650,
 
+    Sfx_Unk1653     = 1653,
+    Sfx_Unk1654     = 1654,
     Sfx_Unk1655     = 1655,
     Sfx_Unk1656     = 1656,
-
+    Sfx_Unk1657     = 1657,
     Sfx_Unk1658     = 1658,
 
     Sfx_Unk1660     = 1660,
     Sfx_Unk1661     = 1661,
 
-    Sfx_Unk4664     = 4664
+    Sfx_Unk4664     = 4664,
+
+    Sfx_Unk4699     = 4699
 } e_Sfx;
 
 typedef enum _MainMenuEntry
@@ -374,11 +380,34 @@ typedef struct
     s32 vz_4; // Q23.8
     s16 vy_8; // Q7.8
     u8  field_A;
-    s8  field_B;
-    s8  field_C;
-    s8  field_D;
-    s16 field_E;
-    s32 field_10;
+    u8  field_B;
+    union
+    {
+        s16 field_0;
+        struct
+        {
+            u8 field_0;
+            u8 field_1;
+        } s_0;
+    } field_C;
+    union
+    {
+        s16 field_0;
+        struct
+        {
+            u8 field_0;
+            u8 field_1;
+        } s_0;
+    } field_E;
+    union
+    {
+        u32 field_0;
+        struct
+        {
+            s16 field_0;
+            s16 field_2;
+        } s_0;
+    } field_10;
 } s_func_800625F4;
 STATIC_ASSERT_SIZEOF(s_func_800625F4, 20);
 
@@ -1577,8 +1606,51 @@ typedef struct
  */
 typedef struct _BloodSplat
 {
-    s16 unk_0; // Maybe an array of `u16`s?
+    s16 field_0; // Maybe an array of `u16`s?
 } s_BloodSplat;
+
+typedef struct
+{
+    u8  unk_0;
+    u8  field_1;
+    u8  field_2;
+    u8  unk_3;
+    u8  field_4;
+    u8  field_5;
+    u8  field_6;
+    u8  unk_7;
+    u8  unk_8[2];
+    s16 field_A;
+    u8  unk_C[2];
+    s16 field_E;
+    s16 field_10;
+    u8  unk_12[4];
+    s16 field_16;
+    u8  unk_18[8];
+    s32 field_20;
+    s32 field_24;
+} s_MapOverlayHeader_5C;
+
+typedef struct
+{
+    s8  unk_0[14];
+    s16 field_E;
+    s16 field_10;
+    s8  unk_12[8];
+    s32 field_1C;
+} s_MapOverlayHeader_7C;
+
+typedef struct
+{
+    u8  unk_0[48];
+    u8  field_30[4];
+    s16 field_34[4];
+    u8  unk_3C[32];
+    u16 field_5C[4];
+    u16 field_64[4];
+    u8  unk_6C[12];
+    u8  field_78;
+} s_MapOverlayHeader_94;
 
 /** TODO: `g_MapOverlayHeader` is part of the map overlay BIN files. Maybe should be moved to `maps/shared.h`. 
  * If field has a comment that lists only certain map(s) it means all others set this field to 0.
@@ -1586,118 +1658,118 @@ typedef struct _BloodSplat
  */
 typedef struct _MapOverlayHeader
 {
-    s_MapType*        type_0;
-    u8                (*getMapRoomIdxFunc_4)(s32 x, s32 y); // Called by `Savegame_MapRoomIdxSet`.
-    s8                field_8;
-    s8                unk_9[3];
-    s32               (*func_C)();
-    void              (*func_10)(s32 arg);
-    s8                field_14; // Flags?
-    u8                field_15;
-    s8                field_16;
-    s8                field_17;
-    void              (**loadingScreenFuncs_18)();
-    s_MapPoint2d*     mapPointsOfInterest_1C;
-    void              (**mapEventFuncs_20)(); /** Points to array of event functions. */
-    u8*               unk_24;
-    GsCOORDINATE2*    field_28;
-    u8*               loadableItems_2C;
-    const char**      mapMessages_30; // Array of strings.
-    s_AnimInfo*       animInfos_34;   // Map-specific anim infos for Harry (for anims 38+).
-    s_UnkStruct3_Mo*  field_38;
-    void              (*func_3C)(); // func(?).
-    void              (*func_40)();
-    void              (*func_44)();
-    void              (*func_48)(); // func(?).
-    s_func_800625F4*  unkTable1_4C;
-    s16               unkTable1Count_50;
-    s8                unk_52[2];
-    s_BloodSplat*     bloodSplats_54;
-    s16               bloodSplatCount_58;
-    s8                unk_5A[2];
-    s32               always0_5C;
-    s32               always0_60;
-    s32               always0_64;
-    s32               always0_68;
-    void              (*func_6C)(); // func(?).
-    void              (*func_70)(); // func(?).
-    void              (*func_74)(); // func(?).
-    void              (*func_78)(); // func(?).
-    u8*               unk_7C; // only map1_s01, map6_s04. 
-    void              (*func_80)(); // func(?).
-    void              (*func_84)(); // func(?).
-    s32*              unk_88; // only map0_s01, map7_s01.
-    void              (*func_8C)(); // func(?) only map0_s01, map7_s01.
-    void              (*func_90)(); // func(?) only map5_s00.
-    s32*              unk_94; // only map1_s02, map1_s03.
-    s32*              unk_98; // only map1_s02, map1_s03.
-    s32*              unk_9C; // only map1_s02, map1_s03.
-    s32*              unk_A0; // only map1_s03.
-    void              (*func_A4)(); // func(?) only map1_s03.
-    void              (*func_A8)(); // func(?) only map6_s02.
-    void              (*func_AC)(); // func(?) only map4_s03, map4_s05.
-    void              (*func_B0)(); // func(?) only map4_s03, map4_s05.
-    void              (*func_B4)(); // func(?) only map1_s03, map4_s05, map6_s01, map6_s02, map5_s01.
-    void              (*func_B8)(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
-    void              (*func_BC)(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
-    void              (*func_C0)(); // func(?).
-    void              (*func_C4)(); // func(?).
-    void              (*freezePlayerControl_C8)();
-    void              (*unfreezePlayerControl_CC)(s32);
-    s32               (*func_D0)(s32, void*, s16, s32); // 0x800C964C
-    s32               (*func_D4)(s32);                  // Assumed return type.
-    void              (*func_D8)();                     // Assumed return type.
-    void              (*func_DC)();                     // Assumed return type.
-    void              (*func_E0)(); // func(?).
-    s32               (*func_E4)(s_SubCharacter*, s32); // Assumed return type.
-    s64               (*func_E8)(s_SubCharacter*);      // Is it really `s64`???
-    s32               (*func_EC)();
-    void              (*func_F0)(); // func(?).
-    void              (*func_F4)(); // func(?).
-    void              (*func_F8)(); // func(?).
-    void              (*func_FC)(); // func(?).
-    void              (*func_100)(); // func(?).
-    void              (*func_104)(); // func(?).
-    s32               (*func_108)();
-    void              (*func_10C)(); // func(?).
-    void              (*func_110)(); // func(?).
-    void              (*func_114)(); // func(?).
-    void              (*func_118)(); // func(?).
-    void              (*func_11C)(); // func(?).
-    void              (*func_120)(); // func(?).
-    void              (*func_124)(s_SubCharacter*); // Assumed return type.
-    s32               (*func_128)(s_SubCharacter*); // Assumed return type.
-    s32               (*func_12C)(s_SubCharacter*); // Assumed return type.
-    void              (*func_130)(); // func(?).
-    s32               (*func_134)(s_SubCharacter*); // Assumed return type.
-    s32               (*func_138)(s_SubCharacter*); // Keyframe getter. Return value depends on the anim update function being used.
-    s32               (*func_13C)(s32, s32, void*, s16, s32); // `arg0` is `s_SubCharacter*`.
-    void              (*func_140)(); // func(?).
-    void              (*func_144)(); // func(?).
-    void              (*func_148)(); // func(?).
-    void              (*func_14C)(); // func(?).
-    void              (*func_150)(); // func(?).
-    void              (*func_154)(); // func(?).
-    void              (*func_158)(s32, s32); // only map1_s05, map1_s06.
-    void              (*func_15C)(); // func(?) only map5_s01.
-    void              (*func_160)(); // func(?) only map5_s01.
-    void              (*func_164)(); // func(?) only map5_s01.
-    void              (*func_168)(s32, s32 mapId, s32);
-    void              (*func_16C)(VECTOR3*, s16);
-    void              (*func_170)(); // func(?).
-    void              (*func_174)(); // func(?).
-    void              (*func_178)(VECTOR3* vec0, s16* rotX, s16* rotY);
-    void              (*func_17C)(VECTOR3* vec0, VECTOR3* vec1);
-    void              (*func_180)(); // func(?).
-    s32*              windSpeedX_184;
-    s32*              windSpeedZ_188;
-    s32*              data_18C;
-    s32*              data_190;
-    void              (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
-    s8                charaGroupIds_248[4];                                              /** `e_CharacterId` values where if `s_MapPoint2d::data.spawnInfo.charaId_4 == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
-    s_MapPoint2d      charaSpawns_24C[2][16];                                            /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `func_80037F24`. */
-    VC_ROAD_DATA      roadDataList_3CC[48];
-    u32               unk_84C[512];
+    s_MapType*             type_0;
+    u8                     (*getMapRoomIdxFunc_4)(s32 x, s32 y); // Called by `Savegame_MapRoomIdxSet`.
+    s8                     field_8;
+    s8                     unk_9[3];
+    s32                    (*func_C)();
+    void                   (*func_10)(s32 arg);
+    s8                     field_14; // Flags?
+    u8                     field_15;
+    s8                     field_16;
+    s8                     field_17;
+    void                   (**loadingScreenFuncs_18)();
+    s_MapPoint2d*          mapPointsOfInterest_1C;
+    void                   (**mapEventFuncs_20)(); /** Points to array of event functions. */
+    u8*                    unk_24;
+    GsCOORDINATE2*         field_28;
+    u8*                    loadableItems_2C;
+    const char**           mapMessages_30; // Array of strings.
+    s_AnimInfo*            animInfos_34;   // Map-specific anim infos for Harry (for anims 38+).
+    s_UnkStruct3_Mo*       field_38;
+    void                   (*func_3C)(); // func(?).
+    void                   (*func_40)();
+    void                   (*func_44)();
+    void                   (*func_48)(); // func(?).
+    s_func_800625F4*       unkTable1_4C;
+    s16                    unkTable1Count_50;
+    s8                     unk_52[2];
+    s_BloodSplat*          bloodSplats_54;
+    s16                    bloodSplatCount_58;
+    s8                     unk_5A[2];
+    s_MapOverlayHeader_5C* field_5C;
+    void                   (*func_60)(s32, s32);
+    s32                    (*func_64)(POLY_FT4**, s32);
+    s32                    (*func_68)(POLY_FT4**, s32);
+    void                   (*func_6C)(); // func(?).
+    s32                    (*func_70)(POLY_FT4**, s32);
+    void                   (*func_74)(); // func(?).
+    s32                    (*func_78)(POLY_FT4**, s32);
+    s_MapOverlayHeader_7C* field_7C;     // only map1_s01, map6_s04.
+    void                   (*func_80)(); // func(?).
+    s32                    (*func_84)(POLY_FT4**, s32);
+    s32*                   unk_88; // only map0_s01, map7_s01.
+    s32                    (*func_8C)(POLY_FT4**, s32); // func(?) only map0_s01, map7_s01.
+    s32                    (*func_90)(POLY_FT4**, s32); // func(?) only map5_s00.
+    s_MapOverlayHeader_94* field_94;                    // only map1_s02, map1_s03.
+    s32                    (*func_98)(POLY_FT4**, s32); // only map1_s02, map1_s03.
+    void                   (*func_9C)();                // only map1_s02, map1_s03.
+    s32*                   unk_A0; // only map1_s03.
+    s32                    (*func_A4)(POLY_FT4**, s32); // func(?) only map1_s03.
+    void                   (*func_A8)(); // func(?) only map6_s02.
+    s32                    (*func_AC)(POLY_FT4**, s32); // func(?) only map4_s03, map4_s05.
+    s32                    (*func_B0)(POLY_FT4**, s32); // func(?) only map4_s03, map4_s05.
+    s32                    (*func_B4)(POLY_FT4**, s32); // func(?) only map1_s03, map4_s05, map6_s01, map6_s02, map5_s01.
+    void                   (*func_B8)(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
+    void                   (*func_BC)(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
+    void                   (*func_C0)(); // func(?).
+    void                   (*func_C4)(); // func(?).
+    void                   (*freezePlayerControl_C8)();
+    void                   (*unfreezePlayerControl_CC)(s32);
+    s32                    (*func_D0)(s32, void*, s16, s32); // 0x800C964C
+    s32                    (*func_D4)(s32);                  // Assumed return type.
+    void                   (*func_D8)();                     // Assumed return type.
+    void                   (*func_DC)();                     // Assumed return type.
+    void                   (*func_E0)(); // func(?).
+    s32                    (*func_E4)(s_SubCharacter*, s32); // Assumed return type.
+    s64                    (*func_E8)(s_SubCharacter*);      // Is it really `s64`???
+    s32                    (*func_EC)();
+    void                   (*func_F0)(); // func(?).
+    void                   (*func_F4)(); // func(?).
+    void                   (*func_F8)(); // func(?).
+    void                   (*func_FC)(); // func(?).
+    void                   (*func_100)(); // func(?).
+    void                   (*func_104)(); // func(?).
+    s32                    (*func_108)();
+    void                   (*func_10C)(); // func(?).
+    void                   (*func_110)(); // func(?).
+    void                   (*func_114)(); // func(?).
+    void                   (*func_118)(); // func(?).
+    void                   (*func_11C)(); // func(?).
+    void                   (*func_120)(); // func(?).
+    void                   (*func_124)(s_SubCharacter*); // Assumed return type.
+    s32                    (*func_128)(s_SubCharacter*); // Assumed return type.
+    s32                    (*func_12C)(s_SubCharacter*); // Assumed return type.
+    void                   (*func_130)(); // func(?).
+    s32                    (*func_134)(s_SubCharacter*); // Assumed return type.
+    s32                    (*func_138)(s_SubCharacter*); // Keyframe getter. Return value depends on the anim update function being used.
+    s32                    (*func_13C)(s32, s32, void*, s16, s32); // `arg0` is `s_SubCharacter*`.
+    void                   (*func_140)(); // func(?).
+    void                   (*func_144)(); // func(?).
+    void                   (*func_148)(); // func(?).
+    void                   (*func_14C)(); // func(?).
+    void                   (*func_150)(); // func(?).
+    void                   (*func_154)(); // func(?).
+    void                   (*func_158)(s32, s32); // only map1_s05, map1_s06.
+    void                   (*func_15C)(); // func(?) only map5_s01.
+    void                   (*func_160)(); // func(?) only map5_s01.
+    void                   (*func_164)(); // func(?) only map5_s01.
+    void                   (*func_168)(s32, s32 mapId, s32);
+    void                   (*func_16C)(VECTOR3*, s16);
+    void                   (*func_170)(); // func(?).
+    void                   (*func_174)(); // func(?).
+    void                   (*func_178)(VECTOR3* vec0, s16* rotX, s16* rotY);
+    void                   (*func_17C)(VECTOR3* vec0, VECTOR3* vec1);
+    void                   (*func_180)(); // func(?).
+    s32*                   windSpeedX_184;
+    s32*                   windSpeedZ_188;
+    s32*                   data_18C;
+    s32*                   data_190;
+    void                   (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
+    s8                     charaGroupIds_248[4];                                              /** `e_CharacterId` values where if `s_MapPoint2d::data.spawnInfo.charaId_4 == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
+    s_MapPoint2d           charaSpawns_24C[2][16];                                            /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `func_80037F24`. */
+    VC_ROAD_DATA           roadDataList_3CC[48];
+    u32                    unk_84C[512];
 } s_MapOverlayHeader;
 STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 4172); // Size incomplete.
 
@@ -1873,10 +1945,42 @@ typedef struct
 
 typedef struct
 {
+    u8  field_0;
+    u8  field_1;
+    s16 field_2;
+    s32 field_4;
+    s32 field_8;
+} s_800C42E8;
+
+typedef struct
+{
     VECTOR3 field_0;
-    s8      unk_C[32];
+    MATRIX  field_C;
     s32     field_2C;
-    s8      unk_30[252];
+    DVECTOR field_30;
+    s16     field_34[24];
+    s16     field_64[24];
+    s16     field_94[24];
+    s16     field_C4;
+    s16     field_C6;
+    s16     field_C8;
+    s16     field_CA;
+    s16     field_CC;
+    s16     field_CE;
+    s32     field_D0;
+    s32     field_D4;
+    s32     field_D8;
+    s16     field_DC[4];
+    s16     field_E4[4];
+    DVECTOR field_EC[4];
+    DVECTOR field_FC[4];
+    s32     field_10C[4];
+    s32     field_11C[4];
+} s_func_8005E89C;
+
+typedef struct
+{
+    s_func_8005E89C field_0;
     SVECTOR field_12C;
     s8      unk_138[8];
     DVECTOR field_13C;
@@ -1897,6 +2001,58 @@ typedef struct
     s16       field_60[3];
     s32       field_68;
 } s_func_800652F4;
+
+typedef struct
+{
+    s_func_8005E89C field_0;
+    MATRIX          field_12C;
+    SVECTOR         field_14C[3];
+    SVECTOR         field_164;
+    VECTOR          field_16C[3];
+    VECTOR          field_19C;
+    VECTOR          field_1AC;
+    s32             field_1BC;
+    s32             field_1C0;
+    s32             field_1C4;
+    s32             field_1C8;
+    DVECTOR         field_1CC;
+    s16             field_1D0;
+    u8              unk_1D2[2];
+    s32             field_1D4;
+    s32             field_1D8;
+    s32             field_1DC;
+    s32             field_1E0;
+    s32             field_1E4;
+    s32             field_1E8;
+} s_func_80063A50;
+
+typedef struct
+{
+    s_func_8005E89C field_0;
+    PACKET*         field_12C;
+    CVECTOR         field_130;
+    CVECTOR         field_134;
+    SVECTOR         field_138;
+    u8              unk_140[16];
+    s32             field_150;
+    DVECTOR         field_154;
+    u16             field_158;
+    u16             field_15A;
+    u8              field_15C;
+    s32             field_160;
+    s32             field_164;
+    s32             field_168;
+} s_func_80064334;
+
+typedef struct
+{
+    MATRIX  field_0;
+    SVECTOR field_20;
+    VECTOR  field_28;
+    s32     field_38;
+    s32     field_3C[5];
+    s32     field_50;
+} s_func_8006342C;
 
 // ========
 // GLOBALS
@@ -2547,9 +2703,15 @@ extern u16 D_800C42D0;
 
 extern u16 D_800C42D2;
 
+extern s_800C42E8 D_800C42E8[];
+
 extern u16 g_LoadedEffectTextureFlags;
 
 extern s16 D_800C4408;
+
+extern GsCOORDINATE2* D_800C440C;
+
+extern GsCOORDINATE2* D_800C4410;
 
 extern s8 D_800C4414;
 
@@ -3386,6 +3548,8 @@ s32 func_8005E7E0(s32 arg0);
 
 void func_8005E89C();
 
+s32 func_8005F55C(s32 arg0);
+
 void func_8005F6B0(s_SubCharacter*, VECTOR*, s32, s32);
 
 void DmsHeader_FixOffsets(s_DmsHeader* dmsHdr);
@@ -3460,25 +3624,38 @@ void func_80085D78(bool arg0);
 
 void func_80085DC0(bool arg0, s32 sysStateStep);
 
-void func_80085DF0();
+void func_80085DF0(void);
 
 void func_80085E6C(s32 delay, bool arg1);
 
 void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool arg3);
 
-void func_8008605C(s32 arg0, s32 arg1, s32 arg2, bool arg3);
-
-/** TODO: Detailed doc here.
- * Enry arguments correspond to selectable dialog menu entries.
+/** @brief Sets `sysStateStep_C` depending on whether `eventFlagIdx` flag is set.
+ *
+ * @param eventFlagIdx Flag index.
+ * @param stepTrue Step to use if flag is set.
+ * @param stepFalse Step to use if flag is not set.
+ * @param stepSecondary If `true`, sets `sysStateStep_C[1]` instead of `sysStateStep_C[0]`, otherwise sets `sysStateStep_C[0]`.
  */
-void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 entry0, s32 entry1, s32 entry2, bool arg5);
+void func_8008605C(s32 eventFlagIdx, s32 stepTrue, s32 stepFalse, bool stepSecondary);
+
+/** @brief Displays a selection menu, and sets `sysStateStep_C` depending on the chosen value.
+ *
+ * @param hasSelection If `false` will increment `sysStateStep_C` after displaying, otherwise will wait for selection.
+ * @param mapMsgIdx Map message index to display.
+ * @param step0 Step to use if selection #0 is chosen.
+ * @param step1 Step to use if selection #1 is chosen.
+ * @param step2 Step to use if selection #2 is chosen.
+ * @param stepSecondary If `true`, sets `sysStateStep_C[1]` instead of `sysStateStep_C[0]`, otherwise sets `sysStateStep_C[0]`.
+ */
+void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 step0, s32 step1, s32 step2, bool stepSecondary);
 
 /** Handles giving the player items. */
 void func_8008616C(s32 arg0, bool arg1, s32 arg2, q19_12 fadeTimestep, bool arg4);
 
 void func_800862F8(s32 arg0, s32 fileIdx, bool arg2);
 
-void func_80086470(u32 switchVar, s32 arg1, s32 arg2, bool arg3);
+void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, bool arg3);
 
 void func_800865FC(bool isPos, s32 idx0, s32 idx1, q3_12 angleY, q19_12 offsetOrPosX, q19_12 offsetOrPosZ);
 
@@ -3706,6 +3883,10 @@ s16 func_8005C7B0(s32 arg0);
 
 /** `arg0` type assumed. */
 void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3);
+
+s32 func_80063A50(POLY_FT4** arg0, s32 arg1);
+
+s32 func_80064334(POLY_FT4** arg0, s32 arg1);
 
 void func_8006342C(s32 weaponAttack, s16, s16, GsCOORDINATE2*);
 

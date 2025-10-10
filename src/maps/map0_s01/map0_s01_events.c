@@ -376,12 +376,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
             break;
 
         case 53:
-            //SysWork_NextStateStepSet(48); // TODO: Doesn't match?
-            g_SysWork.sysStateStep_C[0] = 48;
-            g_SysWork.field_28          = 0;
-            g_SysWork.sysStateStep_C[1] = 0;
-            g_SysWork.timer_2C          = 0;
-            g_SysWork.sysStateStep_C[2] = 0;
+            SysWork_NextStateStepSet(48);
             break;
 
         default:

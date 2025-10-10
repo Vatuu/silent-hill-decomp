@@ -126,6 +126,8 @@ typedef enum _EventFlag
 
     EventFlag_211 = 211,
 
+    EventFlag_223 = 223,
+
     EventFlag_M3S04_PickupPlateOfQueen  = 241,
     EventFlag_M3S03_PickupPlateOfTurtle = 242,
     EventFlag_M3S03_PickupPlateOfHatter = 243,
@@ -202,6 +204,11 @@ typedef enum _EventFlag
     EventFlag_490 = 490,
     EventFlag_491 = 491,
 
+    EventFlag_496 = 496,
+    EventFlag_497 = 497,
+    EventFlag_498 = 498,
+    EventFlag_499 = 499,
+
     EventFlag_M7S01_PickupCamera         = 519,
     EventFlag_M7S01_PickupRingOfContract = 520,
     EventFlag_521                        = 521,
@@ -211,17 +218,22 @@ typedef enum _EventFlag
     EventFlag_525                        = 525,
     EventFlag_M7S01_PickupKeyOfHagith    = 526,
     EventFlag_M7S01_PickupKeyOfPhaleg    = 527,
+    EventFlag_M7S02_PickupKeyOfBethor    = 528,
 
-    EventFlag_530 = 530,
-    EventFlag_531 = 531,
-    EventFlag_532 = 532,
-
+    EventFlag_530                         = 530,
+    EventFlag_531                         = 531,
+    EventFlag_532                         = 532,
+    EventFlag_533                         = 533,
+    EventFlag_534                         = 534,
     EventFlag_M7S01_PickupAmuletOfSolomon = 535,
     EventFlag_M7S01_PickupCrestOfMercury  = 536,
     EventFlag_M7S02_PickupAnkh            = 537,
 
     EventFlag_M7S02_PickupDiskOfOuroboros = 539,
 
+    EventFlag_548 = 548,
+
+    EventFlag_562 = 562,
     EventFlag_563 = 563,
 
     EventFlag_570 = 570,

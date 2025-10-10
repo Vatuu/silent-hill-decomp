@@ -1543,15 +1543,16 @@ extern s32 g_VBlanks;
 extern s32 g_UncappedVBlanks;
 
 /** @brief Sets `sysState` in `g_SysWork` for the next tick. */
-static inline void SysWork_StateSetNext(e_SysState sysState)
+static inline s32 SysWork_StateSetNext(e_SysState sysState)
 {
-    g_SysWork.sysState_8        = sysState;
+    s32 state = g_SysWork.sysState_8 = sysState;
     g_SysWork.timer_24          = 0;
     g_SysWork.sysStateStep_C[0] = 0;
     g_SysWork.field_28          = 0;
     g_SysWork.sysStateStep_C[1] = 0;
     g_SysWork.timer_2C          = 0;
     g_SysWork.sysStateStep_C[2] = 0;
+    return state;
 }
 
 /** @brief Increments `sysStateStep` in `g_SysWork` for the next tick. */
@@ -1565,13 +1566,14 @@ static inline void SysWork_StateStepIncrement()
 }
 
 /** @brief Sets `sysStateStep` in `g_SysWork` for the next tick. */
-static inline void SysWork_NextStateStepSet(s32 sysStateStep)
+static inline s32 SysWork_NextStateStepSet(s32 sysStateStep)
 {
-    g_SysWork.sysStateStep_C[0] = sysStateStep;
+    s32 step = g_SysWork.sysStateStep_C[0] = sysStateStep;
     g_SysWork.field_28          = 0;
     g_SysWork.sysStateStep_C[1] = 0;
     g_SysWork.timer_2C          = 0;
     g_SysWork.sysStateStep_C[2] = 0;
+    return step;
 }
 
 /** @brief Resets `sysStateStep` in `g_SysWork` for the next tick. */
@@ -1737,6 +1739,18 @@ static inline void Player_AnimFlagsSet(u32 flags)
 
     extra->model_0.anim_4.flags_2 |= flags;
     chara->model_0.anim_4.flags_2 |= flags;
+}
+
+/** @brief Sets the given animation flag on a model. */
+static inline void Model_AnimFlagsSet(s_Model* model, u32 flags)
+{
+    model->anim_4.flags_2 |= flags;
+}
+
+/** @brief Clears the given animation flag on a model. */
+static inline void Model_AnimFlagsClear(s_Model* model, u32 flags)
+{
+    model->anim_4.flags_2 &= ~flags;
 }
 
 #endif

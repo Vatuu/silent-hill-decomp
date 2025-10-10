@@ -57,7 +57,7 @@ void func_80085DC0(bool arg0, s32 sysStateStep) // 0x80085DC0
     }
 }
 
-void func_80085DF0() // 0x80085DF0
+void func_80085DF0(void) // 0x80085DF0
 {
     g_SysWork.timer_2C += g_DeltaTime1;
 
@@ -152,19 +152,19 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool arg3) // 0x80
     }
 }
 
-void func_8008605C(s32 arg0, s32 arg1, s32 arg2, bool arg3) // 0x8008605C
+void func_8008605C(s32 eventFlagIdx, s32 stepTrue, s32 stepFalse, bool stepSecondary) // 0x8008605C
 {
-    if (!Savegame_EventFlagGet(arg0))
+    if (!Savegame_EventFlagGet(eventFlagIdx))
     {
-        func_80085DC0(arg3, arg2);
+        func_80085DC0(stepSecondary, stepFalse);
     }
     else
     {
-        func_80085DC0(arg3, arg1);
+        func_80085DC0(stepSecondary, stepTrue);
     }
 }
 
-void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 entry0, s32 entry1, s32 entry2, bool arg5) // 0x800860B0
+void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 step0, s32 step1, s32 step2, bool stepSecondary) // 0x800860B0
 {
     s32 mapMsgState;
 
@@ -176,21 +176,21 @@ void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 entr
     
     if (!hasSelection)
     {
-        func_80085D78(arg5);
+        func_80085D78(stepSecondary);
         return;
     }
 
     if (mapMsgState == MapMsgState_SelectEntry0)
     {
-        func_80085DC0(arg5, entry0);
+        func_80085DC0(stepSecondary, step0);
     }
     if (mapMsgState == MapMsgState_SelectEntry1)
     {
-        func_80085DC0(arg5, entry1);
+        func_80085DC0(stepSecondary, step1);
     }
     if (mapMsgState == MapMsgState_SelectEntry2)
     {
-        func_80085DC0(arg5, entry2);
+        func_80085DC0(stepSecondary, step2);
     }
 }
 
