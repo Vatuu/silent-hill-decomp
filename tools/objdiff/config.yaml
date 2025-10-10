@@ -7,14 +7,247 @@ categories:
     name: Main Executable
     paths:
       - main
+      
   - id: screen
     name: Game Screens
     paths:
       - screens
+  - id: screen.b_konami
+    name: Boot Screen
+    paths:
+      - screens/b_konami
+  - id: screen.options
+    name: Options Screen
+    paths:
+      - screens/credits
+  - id: screen.saveload
+    name: Save Screen
+    paths:
+      - screens/saveload
+  - id: screen.stream
+    name: FMV Screen
+    paths:
+      - screens/stream
+      
   - id: map
     name: Map Overlays
     paths:
       - maps
+
+  - id: map.map0_s00
+    name: 0_00 - Nightmare intro sequence in Old Silent Hill
+    paths:
+      - maps/map0_s00
+
+  - id: map.map0_s01
+    name: 0_01 - Cafe in Old Silent Hill
+    paths:
+      - maps/map0_s01
+
+  - id: map.map0_s02
+    name: 0_02 - Bonus unlockable areas in Old Silent Hill
+    paths:
+      - maps/map0_s02
+
+  - id: map.map1_s00
+    name: 1_00 - School first floor, courtyard, and basement
+    paths:
+      - maps/map1_s00
+
+  - id: map.map1_s01
+    name: 1_01 - School second floor
+    paths:
+      - maps/map1_s01
+
+  - id: map.map1_s02
+    name: 1_02 - School first floor and courtyard in Otherworld
+    paths:
+      - maps/map1_s02
+
+  - id: map.map1_s03
+    name: 1_03 - School second floor and school roof in Otherworld
+    paths:
+      - maps/map1_s03
+
+  - id: map.map1_s04
+    name: 1_04 - Unknown (School location, likely in Otherworld)
+    paths:
+      - maps/map1_s04
+
+  - id: map.map1_s05
+    name: 1_05 - School boss figh
+    paths:
+      - maps/map1_s05
+
+  - id: map.map1_s06
+    name: 1_06 - School first floor and basement after the boss fight
+    paths:
+      - maps/map1_s06
+
+  - id: map.map2_s00
+    name: 2_00 - Old Silent Hill
+    paths:
+      - maps/map2_s00
+
+  - id: map.map2_s01
+    name: 2_01 - Churc
+    paths:
+      - maps/map2_s01
+
+  - id: map.map2_s02
+    name: 2_02 - Central Silent Hil
+    paths:
+      - maps/map2_s02
+
+  - id: map.map2_s03
+    name: 2_03 - Unknown (Location related to Central Silent Hill)
+    paths:
+      - maps/map2_s03
+
+  - id: map.map2_s04
+    name: 2_04 - Police station in Central Silent Hill
+    paths:
+      - maps/map2_s04
+
+  - id: map.map3_s00
+    name: 3_00 - Hospital beginning (Before Kaufmann meeting)
+    paths:
+      - maps/map3_s00
+
+  - id: map.map3_s01
+    name: 3_01 - Hospital 1st and basement floors (After Kaufmann meeting)
+    paths:
+      - maps/map3_s01
+
+  - id: map.map3_s02
+    name: 3_02 - Green Lion Antique Shop cutscene in the Hospital
+    paths:
+      - maps/map3_s02
+
+  - id: map.map3_s03
+    name: 3_03 - Hospital third and second floor in Otherworld
+    paths:
+      - maps/map3_s03
+
+  - id: map.map3_s04
+    name: 3_04 - Hospital first floor in Otherworld
+    paths:
+      - maps/map3_s04
+
+  - id: map.map3_s05
+    name: 3_05 - Hospital basement in Otherworld
+    paths:
+      - maps/map3_s05
+
+  - id: map.map3_s06
+    name: 3_06 - Hospital first floor after the Otherworld section
+    paths:
+      - maps/map3_s06
+
+  - id: map.map4_s00
+    name: 4_00 - Unknown (Possibly unused)
+    paths:
+      - maps/map4_s00
+
+  - id: map.map4_s01
+    name: 4_01 - Green Lion Antique Shop in Central Silent Hill and Otherworld
+    paths:
+      - maps/map4_s01
+
+  - id: map.map4_s02
+    name: 4_02 - Central Silent Hill in Otherworld
+    paths:
+      - maps/map4_s02
+
+  - id: map.map4_s03
+    name: 4_03 - Mall and boss fight
+    paths:
+      - maps/map4_s03
+
+  - id: map.map4_s04
+    name: 4_04 - Hospital First Floor
+    paths:
+      - maps/map4_s04
+
+  - id: map.map4_s05
+    name: 4_05 - Central Silent Hill Floatstinger boss fight in Otherworld
+    paths:
+      - maps/map4_s05
+
+  - id: map.map4_s06
+    name: 4_06 - Unknown (Possibly unused)
+    paths:
+      - maps/map4_s06
+
+  - id: map.map5_s00
+    name: 5_00 - Sewers lower and upper levels
+    paths:
+      - maps/map5_s00
+
+  - id: map.map5_s01
+    name: 5_01 - Silent Hill Resort Area
+    paths:
+      - maps/map5_s01
+
+  - id: map.map5_s02
+    name: 5_02 - Annie's Bar and Indian Runner in Resort Area
+    paths:
+      - maps/map5_s02
+
+  - id: map.map5_s03
+    name: 5_03 - Norman's Motel in Resort Area
+    paths:
+      - maps/map5_s03
+
+  - id: map.map6_s00
+    name: 6_00 - Silent Hill Resort Area in Otherworld
+    paths:
+      - maps/map6_s00
+
+  - id: map.map6_s01
+    name: 6_01 - Boat at Lakeside Pier
+    paths:
+      - maps/map6_s01
+
+  - id: map.map6_s02
+    name: 6_02 - Lakeside Pier and Lighthouse
+    paths:
+      - maps/map6_s02
+
+  - id: map.map6_s03
+    name: 6_03 - Sewer connecting to Lakeside Amusement Park
+    paths:
+      - maps/map6_s03
+
+  - id: map.map6_s04
+    name: 6_04 - Cybil boss fight and cutscene of Dahlia kidnapping Alessa
+    paths:
+      - maps/map6_s04
+
+  - id: map.map6_s05
+    name: 6_05 - Unknown (Possibly unused)
+    paths:
+      - maps/map6_s05
+
+  - id: map.map7_s00
+    name: 7_00 - Hospital first floor in Nowhere and Lisa cutscene.
+    paths:
+      - maps/map7_s00
+
+  - id: map.map7_s01
+    name: 7_01 - Unknown (Nowever related)
+    paths:
+      - maps/map7_s01
+
+  - id: map.map7_s02
+    name: 7_02 - Unknown (Nowever related)
+    paths:
+      - maps/map7_s02
+
+  - id: map.map7_s03
+    name: 7_03 - Final boss fight
+    paths:
+      - maps/map7_s03
 
 expected_paths:
   asm: expected/asm
