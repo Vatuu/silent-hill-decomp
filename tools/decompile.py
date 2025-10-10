@@ -136,21 +136,33 @@ def check_injected_code(func) -> InjectRes:
     print(f"make {func.overlay_name}")
     
     make_str = ""
+    make_defines = ""
     if func.overlay_name == "SLUS_007.07" or func.overlay_name == "main":
         make_str = ""
+        make_defines = "BUILD_ENGINE=0 BUILD_SCREENS=0 BUILD_MAPS=0"
     else:
         if func.overlay_name == "bodyprog":
             make_str = "build/out/1ST/BODYPROG.BIN"
+            make_defines = "BUILD_ENGINE=1 BUILD_SCREENS=0 BUILD_MAPS=0"
         elif func.overlay_name == "b_konami":
             make_str = "build/out/1ST/B_KONAMI.BIN"
+            make_defines = "BUILD_ENGINE=0 BUILD_SCREENS=1 BUILD_MAPS=0"
         elif func.overlay_name == "option" or func.overlay_name == "options":
             make_str = "build/out/VIN/OPTION.BIN"
+            make_defines = "BUILD_ENGINE=0 BUILD_SCREENS=1 BUILD_MAPS=0"
         elif func.overlay_name == "saveload":
             make_str = "build/out/VIN/SAVELOAD.BIN"
+            make_defines = "BUILD_ENGINE=0 BUILD_SCREENS=1 BUILD_MAPS=0"
         elif func.overlay_name == "stf_roll" or func.overlay_name == "credits":
             make_str = "build/out/VIN/STF_ROLL.BIN"
+            make_defines = "BUILD_ENGINE=0 BUILD_SCREENS=1 BUILD_MAPS=0"
         elif func.overlay_name == "stream":
             make_str = "build/out/VIN/STREAM.BIN"
+            make_defines = "BUILD_ENGINE=0 BUILD_SCREENS=1 BUILD_MAPS=0"
+
+    # Map speedup, only let make parse the config for this single map
+    if func.overlay_name.startswith("map"):
+        make_defines = f"BUILD_ENGINE=0 BUILD_SCREENS=0 BUILD_MAPS=1 BUILD_MAP={func.overlay_name}"
     
     result = 0
     # HACK: only_make_check gives speedup, but doesn't allow to tell difference between NOT_COMPILABLE and NON_MATCHING
@@ -168,7 +180,7 @@ def check_injected_code(func) -> InjectRes:
         # good news, the code was compilable
         # now checking for the checksum...
         check_result = subprocess.run(
-            "make check", cwd=root_dir, shell=True, check=False, capture_output=True
+            f"make check {make_defines}", cwd=root_dir, shell=True, check=False, capture_output=True
         )
         if check_result.returncode == 0:
             # decompilation successful! There is nothing else to do

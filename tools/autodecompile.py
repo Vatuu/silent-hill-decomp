@@ -93,6 +93,17 @@ def main():
     # Speedup by skipping the separate overlay-only build and only run `make check`
     decompile.only_make_check = True
 
+    print("\nRunning `make check`...")
+    check_result = subprocess.run(
+        "make check", shell=True, check=False, capture_output=True
+    )
+    if check_result.returncode != 0:
+        print("\nerror: `make check` failed, repo not clean? exiting")
+        return
+
+    print("\nStarting autodecompilation")
+    print("(will run `git restore` after each attempt - don't modify repo!)")
+
     # --- 2. Batch mode ---
     funcs = find_functions(filters)
     print(f"\nFound {len(funcs)} functions to decompile")
