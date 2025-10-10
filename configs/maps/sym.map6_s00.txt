@@ -168,6 +168,7 @@ sharedData_800DE170_0_s01   = 0x800F0518; // type:VECTOR3 size:0xC
 sharedData_800DE180_0_s01   = 0x800F0528; // type:VECTOR3 size:0xC
 sharedData_800DE190_0_s01   = 0x800F0538; // type:VECTOR3 size:0xC
 sharedData_800DE1E0_0_s01   = 0x800F05F8; // type:VECTOR3 size:0xC
+sharedData_800DE1F0_0_s01   = 0x800F0608; // type:VECTOR3 size:0xC
 g_Particle_SpeedX           = 0x800F0688; // type:s32
 g_Particle_SpeedZ           = 0x800F068C; // type:s32
 sharedData_800DFB6C_0_s00   = 0x800F0690; // type:s32
