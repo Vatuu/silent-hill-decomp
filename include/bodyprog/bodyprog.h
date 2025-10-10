@@ -3642,7 +3642,7 @@ void func_8008605C(s32 eventFlagIdx, s32 stepTrue, s32 stepFalse, bool stepSecon
 
 /** @brief Displays a selection menu and sets `sysStateStep_C` depending on the chosen value.
  *
- * @param hasSelection `false` if `sysStateStep_C` increments after displaying, otherwise waits for selection.
+ * @param hasSelection `true if it waits for a selection, `false` if `sysStateStep_C` increments after displaying. 
  * @param mapMsgIdx Map message index of the message to display.
  * @param step0 Step to use if selection #0 is chosen.
  * @param step1 Step to use if selection #1 is chosen.

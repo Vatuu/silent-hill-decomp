@@ -2535,7 +2535,7 @@ s32 func_8005E7E0(s32 arg0) // 0x8005E7E0
 void func_8005E89C() // 0x8005E89C
 {
     #define CLAMP_CUSTOM(a, b, min, max) \
-        ((((a) >= (max)) ? (max) : (b)) < (min) ? (lo) : (((b) >= (max)) ? (max) : (a)))
+        ((((a) >= (max)) ? (max) : (b)) < (min) ? (min) : (((b) >= (max)) ? (max) : (a)))
 
     SVECTOR          sp10;
     POLY_FT4*        sp18;
