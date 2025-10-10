@@ -138,4 +138,6 @@ void MapEvent_CafeCutscene();
 /** @brief @unused Handles the demo end screen event after the Air Screamer breaks through the cafe window. Seen in demo builds. */
 void MapEvent_ToBeContinued(void);
 
+void func_800D6EC4(s_SubCharacter* arg0);
+
 #endif

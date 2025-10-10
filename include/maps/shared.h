@@ -2288,7 +2288,12 @@ typedef struct
     GsCOORDINATE2* coords_8;
     MATRIX*        matrices_C;
     s8             unk_10[164];
-    s32            field_B4[35][4];
+    s32            field_B4[6][4];
+    s32            field_114;
+    s32            field_118;
+    VECTOR3        field_11C;
+    VECTOR3        field_128;
+    VECTOR3        field_134;
 } s_sharedData_800E21D0_0_s01;
 
 typedef struct 
@@ -3045,4 +3050,8 @@ static inline void WorldObjectPositionSet(s_WorldObjectPos* eventPos, q19_12 pos
       (g_SysWork.player_4C.chara_0.position_18.crd <= Q12(0.0f) && (__chunkIdx + (x2)) == (x3))))
 
 
+extern VECTOR3 D_800DE1E0;
+extern VECTOR3 D_800DE1F0;
+//extern VECTOR3 D_800E22EC;
+extern VECTOR3 D_800E2350;
 #endif
