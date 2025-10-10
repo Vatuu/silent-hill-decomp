@@ -2487,6 +2487,12 @@ extern u8 sharedData_800CFB44_0_s02[8];
 extern u8 sharedData_800CFB4C_0_s02[8];
 extern u8 sharedData_800CFB54_0_s02[8];
 
+extern VECTOR3 sharedData_800DE1E0_0_s01;
+
+extern VECTOR3 sharedData_800DE1F0_0_s01;
+
+extern VECTOR3 sharedData_800E2350_0_s01;
+
 typedef struct
 {
     VECTOR3 field_0; // Rotation?
@@ -3050,8 +3056,4 @@ static inline void WorldObjectPositionSet(s_WorldObjectPos* eventPos, q19_12 pos
       (g_SysWork.player_4C.chara_0.position_18.crd <= Q12(0.0f) && (__chunkIdx + (x2)) == (x3))))
 
 
-extern VECTOR3 D_800DE1E0;
-extern VECTOR3 D_800DE1F0;
-//extern VECTOR3 D_800E22EC;
-extern VECTOR3 D_800E2350;
 #endif

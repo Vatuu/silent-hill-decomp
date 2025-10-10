@@ -194,3 +194,6 @@ sharedData_800E22E4_0_s01   = 0x800F3D54; // type:s32
 sharedData_800E231C_0_s01   = 0x800F3D8C; // size:0x14
 sharedData_800E2330_0_s01   = 0x800F3DA0; // type:s32 - unknown type
 sharedData_800E2370_0_s01   = 0x800F3DE0; //type:s32 size:0x08
+sharedData_800DE1F0_0_s01 = 0x800F02F0; // type:VECTOR3 size:0x0C
+sharedData_800DE1E0_0_s01 = 0x800F02E0; // type:VECTOR3 size:0x0C
+sharedData_800E2350_0_s01 = 0x800F3DC0; // type:VECTOR3 size:0x0C

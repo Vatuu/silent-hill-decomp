@@ -19,19 +19,19 @@ void sharedFunc_800D63A4_0_s01(s_SubCharacter* chara)
 
     chara->headingAngle_3C = rot;
 
-    D_800DE1F0.vx = FP_MULTIPLY_PRECISE(speed, Math_Sin(rot), 12);
-    D_800DE1F0.vy = field34;
-    D_800DE1F0.vz = FP_MULTIPLY_PRECISE(speed, Math_Cos(rot), 12);
+    sharedData_800DE1F0_0_s01.vx = FP_MULTIPLY_PRECISE(speed, Math_Sin(rot), 12);
+    sharedData_800DE1F0_0_s01.vy = field34;
+    sharedData_800DE1F0_0_s01.vz = FP_MULTIPLY_PRECISE(speed, Math_Cos(rot), 12);
 
-    D_800DE1E0.vx = FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800DE1F0.vx, 12);
-    D_800DE1E0.vy = FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800DE1F0.vy, 12);
-    D_800DE1E0.vz = FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800DE1F0.vz, 12);
+    sharedData_800DE1E0_0_s01.vx = FP_MULTIPLY_PRECISE(g_DeltaTime0, sharedData_800DE1F0_0_s01.vx, 12);
+    sharedData_800DE1E0_0_s01.vy = FP_MULTIPLY_PRECISE(g_DeltaTime0, sharedData_800DE1F0_0_s01.vy, 12);
+    sharedData_800DE1E0_0_s01.vz = FP_MULTIPLY_PRECISE(g_DeltaTime0, sharedData_800DE1F0_0_s01.vz, 12);
 
     temp_s0 = sharedFunc_800D6A60_0_s01(
-        &D_800E2350,
-        &D_800DE1F0,
+        &sharedData_800E2350_0_s01,
+        &sharedData_800DE1F0_0_s01,
         chara,
-        sharedFunc_800D7440_0_s01(&D_800E2350, &D_800DE1E0, chara),
+        sharedFunc_800D7440_0_s01(&sharedData_800E2350_0_s01, &sharedData_800DE1E0_0_s01, chara),
         &sharedData_800E21D0_0_s01.field_11C
     );
 
@@ -58,5 +58,5 @@ void sharedFunc_800D63A4_0_s01(s_SubCharacter* chara)
 
     chara->field_34 = sharedData_800E21D0_0_s01.field_B4[6][3];
 
-    sharedFunc_800D6C7C_0_s01(&D_800DE1E0, chara, temp_s0, &sharedData_800E21D0_0_s01.field_134);
+    sharedFunc_800D6C7C_0_s01(&sharedData_800DE1E0_0_s01, chara, temp_s0, &sharedData_800E21D0_0_s01.field_134);
 }

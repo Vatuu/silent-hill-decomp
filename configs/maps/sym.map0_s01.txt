@@ -255,3 +255,6 @@ g_EventThing_Flashlight           = 0x800E24D0;
 g_EventThing_Map                  = 0x800E2500;
 g_EventThing_PocketRadio          = 0x800E2530;
 g_CommonWorldObjects              = 0x800E2570; // size:0xA8
+sharedData_800DE1F0_0_s01 = 0x800DE1F0; // type:VECTOR3 size:0x0C
+sharedData_800DE1E0_0_s01 = 0x800DE1E0; // type:VECTOR3 size:0x0C
+sharedData_800E2350_0_s01 = 0x800E2350; // type:VECTOR3 size:0x0C
