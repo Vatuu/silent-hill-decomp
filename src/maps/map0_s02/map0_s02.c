@@ -98,7 +98,22 @@ void func_800CE770(void) {}
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800CE7DC
 
-INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", Map_RoomIdxGet); // 0x800CE7EC
+u8 Map_RoomIdxGet(s32 x, s32 z) // 0x800CE7EC
+{
+    u32 ux;
+    x += Q12(200.0f);
+    ux = x;
+
+    if (ux >= Q12(400.0f) || z < 0 || z >= Q12(120.0f))
+    {
+        return 0;
+    }
+
+    x /= Q12(40.0f);
+    z /= Q12(40.0f);
+
+    return ux = MAP_ROOM_INDICES[x * 3 + z]; // @hack permuter find.
+}
 
 void func_800CE884(s32 arg0) // 0x800CE884
 {

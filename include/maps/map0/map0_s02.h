@@ -48,4 +48,5 @@ void MapEvent_KatanaItemTake(void);
 /** @brief Handles the channeling stone pickup event. */
 void MapEvent_ChannelingStoneItemTake(void);
 
+extern u8 MAP_ROOM_INDICES[30];
 #endif
