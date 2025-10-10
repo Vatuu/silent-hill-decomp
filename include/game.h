@@ -1563,13 +1563,14 @@ static inline void SysWork_StateStepIncrement()
 }
 
 /** @brief Sets `sysStateStep` in `g_SysWork` for the next tick. */
-static inline void SysWork_NextStateStepSet(s32 sysStateStep)
+static inline s32 SysWork_NextStateStepSet(s32 sysStateStep)
 {
-    g_SysWork.sysStateStep_C[0] = sysStateStep;
+    s32 step = g_SysWork.sysStateStep_C[0] = sysStateStep;
     g_SysWork.field_28          = 0;
     g_SysWork.sysStateStep_C[1] = 0;
     g_SysWork.timer_2C          = 0;
     g_SysWork.sysStateStep_C[2] = 0;
+    return step;
 }
 
 /** @brief Resets `sysStateStep` in `g_SysWork` for the next tick. */

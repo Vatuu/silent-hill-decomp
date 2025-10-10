@@ -632,12 +632,7 @@ void func_800D7A60(void) // 0x800D7A60
             break;
 
         case 16:
-            // TODO: `SysWork_NextStateStepSet(19)`
-            g_SysWork.sysStateStep_C[0] = 19;
-            g_SysWork.field_28          = 0;
-            g_SysWork.sysStateStep_C[1] = 0;
-            g_SysWork.timer_2C          = 0;
-            g_SysWork.sysStateStep_C[2] = 0;
+            SysWork_NextStateStepSet(19);
             break;
 
         case 17:
@@ -985,12 +980,7 @@ void func_800D8DB4(void) // 0x800D8DB4
 
         case 6:
             func_80086470(3, InventoryItemId_KeyOfOphiel, 1, false);
-            // TODO: `SysWork_NextStateStepSet(8);`
-            g_SysWork.sysStateStep_C[0] = 8;
-            g_SysWork.field_28          = 0;
-            g_SysWork.sysStateStep_C[1] = 0;
-            g_SysWork.timer_2C          = 0;
-            g_SysWork.sysStateStep_C[2] = 0;
+            SysWork_NextStateStepSet(8);
             break;
 
         case 7:
@@ -1184,12 +1174,7 @@ void func_800D94DC(void) // 0x800D94DC
 
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
-                // TODO: `SysWork_NextStateStepSet(8);`
-                g_SysWork.sysStateStep_C[0] = 8;
-                g_SysWork.field_28          = 0;
-                g_SysWork.sysStateStep_C[1] = 0;
-                g_SysWork.timer_2C          = 0;
-                g_SysWork.sysStateStep_C[2] = 0;
+                SysWork_NextStateStepSet(8);
                 break;
             }
 
@@ -1228,12 +1213,7 @@ void func_800D94DC(void) // 0x800D94DC
                                 {
                                     Savegame_EventFlagSet(EventFlag_488);
 
-                                    // TODO: `SysWork_NextStateStepSet(5);`
-                                    g_SysWork.sysStateStep_C[0] = 5;
-                                    g_SysWork.field_28          = 0;
-                                    g_SysWork.sysStateStep_C[1] = 0;
-                                    g_SysWork.timer_2C          = 0;
-                                    g_SysWork.sysStateStep_C[2] = 0;
+                                    SysWork_NextStateStepSet(5);
                                 }
                             }
                         }
@@ -1325,12 +1305,7 @@ void func_800D9A08(void) // 0x800D9A08
                 SysWork_StateStepIncrement();
                 break;
             }
-            // TODO: `SysWork_NextStateStepSet(7);`
-            g_SysWork.sysStateStep_C[0] = 7;
-            g_SysWork.field_28          = 0;
-            g_SysWork.sysStateStep_C[1] = 0;
-            g_SysWork.timer_2C          = 0;
-            g_SysWork.sysStateStep_C[2] = 0;
+            SysWork_NextStateStepSet(7);
             return;
 
         case 11:

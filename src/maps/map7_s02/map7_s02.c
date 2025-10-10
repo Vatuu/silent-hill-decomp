@@ -736,12 +736,7 @@ void func_800DAA4C(void) // 0x800DAA4C
             break;
 
         case 16:
-            // TODO: `SysWork_NextStateStepSet(19)`
-            g_SysWork.sysStateStep_C[0] = 19;
-            g_SysWork.field_28          = 0;
-            g_SysWork.sysStateStep_C[1] = 0;
-            g_SysWork.timer_2C          = 0;
-            g_SysWork.sysStateStep_C[2] = 0;
+            SysWork_NextStateStepSet(19);
             break;
 
         case 17:
@@ -1161,12 +1156,7 @@ void func_800DC778(void) // 0x800DC778
 
         case 5:
             func_80086470(3, InventoryItemId_KeyOfBethor, 1, false);
-            // TODO: `SysWork_NextStateStepSet(7);`
-            g_SysWork.sysStateStep_C[0] = 7;
-            g_SysWork.field_28          = 0;
-            g_SysWork.sysStateStep_C[1] = 0;
-            g_SysWork.timer_2C          = 0;
-            g_SysWork.sysStateStep_C[2] = 0;
+            SysWork_NextStateStepSet(7);
             break;
 
         case 6:
