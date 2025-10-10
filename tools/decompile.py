@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 import argparse
 import io
@@ -59,6 +59,11 @@ class NonMatchingFunc(object):
 
 def get_nonmatching_functions(base_path, func_name) -> list:
     function_list = list()
+    # Check if we've been provided a full path already
+    if "/nonmatchings/" in func_name:
+        function = NonMatchingFunc(func_name)
+        function_list.append(function)
+        return function_list
     for root, dirs, files in os.walk(base_path):
         if "/nonmatchings/" in root:
             for f in files:
@@ -307,16 +312,21 @@ def decompile(func_name: str, number_occurrence: int = None, force: bool = False
     inject_res = inject_decompiled_function_into_file(func, dec_res)
     if inject_res == InjectRes.SUCCESS:
         print(f"function '{func.name}' decompiled successfully!")
+        return "success"
     elif inject_res == InjectRes.NON_MATCHING:
         print(f"function '{func.name}' decompiled but not matching")
         show_asm_differ_command(func)
+        return "non_matching"
     elif inject_res == InjectRes.NOT_COMPILABLE:
         print(f"function '{func.name}' decompiled but cannot be compiled")
         show_asm_differ_command(func)
+        return "not_compilable"
     elif inject_res == InjectRes.NOT_INJECTED:
         print(f"function '{func.name}' might already be decompiled")
+        return "already_decompiled"
     else:
         print("unhandled error!")
+        return "error"
 
 
 if __name__ == "__main__":

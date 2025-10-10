@@ -1,0 +1,109 @@
+#!/usr/bin/env python3
+
+# Usage: `autodecompile.py [filters]`
+# Filters can be any directory/filename required to be in the path
+# eg 'bodyprog/' or 'map7_s01/'
+# Only files whose path contains all filters are attempted for decompile.
+# 
+# Script will try running decompile.py on each function, which uses m2ctx/m2c to decompile the function & inserts the decompilation into the C to check for match
+# If the func matches it will be printed out at the end, and will also be logged into `build/autodecompile.log`
+# The log can be viewed live via `tail -f build/autodecompile.log`
+# 
+# After each decompilation attempt `git restore` will be ran to restore the repo.
+# This will also be ran after all attempts have finished.
+# Once the script has listed the funcs that can be m2c decompiled, you'll need to insert/format each one manually.
+
+import os
+import sys
+import subprocess
+from pathlib import Path
+
+# Ensure running from repo root
+cwd = Path.cwd()
+if not (cwd / "asm").is_dir() or not (cwd / "src").is_dir():
+    print("Error: Must run from the repo root (both 'asm/' and 'src/' directories must exist in the current working directory).")
+    print("Change directory to repo and run `tools/autodecompile.py`")
+    sys.exit(1)
+
+from decompile import decompile
+import argparse
+
+ASM_PATH = Path("asm/")
+SUCCESS_LOG = Path("build/autodecompile.log")
+
+def find_functions(filters):
+    """
+    Recursively find all func_* files under ASM_PATH that match all filters.
+    """
+    funcs = []
+    for path in ASM_PATH.rglob("func_*"):
+        if path.is_file() and path.suffix in (".s", ".asm"):
+            path_str = str(path)
+            if "nonmatchings" in path_str:
+                if all(f in path_str for f in filters):
+                    func_name = path.stem
+                    funcs.append((func_name, path))
+    return funcs
+
+def try_decompile(func_name: str, func_path: Path = None):
+    """Try to decompile one function and log success if it works."""
+    subprocess.run(["git", "restore", "src/"], check=False)
+    try:
+        result = decompile(str(func_path.resolve()), force=True)
+    except Exception as e:
+        print(f"Error while decompiling {func_name}: {e}")
+        result = "error"
+        return False
+
+    if result == "success":
+        with open(SUCCESS_LOG, "a") as f:
+            f.write(f"{func_name} | {func_path or '(manual)'}\n")
+        print(f"Logged success for {func_name}")
+        return True
+    return False
+
+def main():
+    parser = argparse.ArgumentParser(description="Automatically try decompile functions with optional path filters")
+    parser.add_argument(
+        "filters",
+        nargs="*",
+        help="Filters, eg 'bodyprog/' or 'map7_s01/'. Only files whose path contains all filters are included.",
+    )
+    args = parser.parse_args()
+
+    filters = args.filters
+
+    if not filters:
+        parser.error("At least one filter must be provided as argument. Example: 'bodyprog/' or 'map7_s01/'")
+        return
+    # --- 1. Smoke test ---
+    #print("Running test decompile on func_800DC778 ...")
+    #try_decompile("func_800DC778")
+
+    # --- 2. Batch mode ---
+    funcs = find_functions(filters)
+    print(f"\nFound {len(funcs)} functions to decompile")
+    print("Will write successes to build/autodecompile.log")
+    print("(`tail -f build/autodecompile.log` to view live)")
+    print()
+    succeeded_paths = []
+
+    count = 0
+    for func_name, func_path in funcs:
+        print(f"=== ({count+1}/{len(funcs)}) Decompiling {func_name} ===")
+        count = count + 1
+        if try_decompile(func_name, func_path):
+            succeeded_paths.append(func_path)
+        print()
+        # restore src after each attempt
+        subprocess.run(["git", "restore", "src/"], check=False)
+
+    # summary
+    print(f"\nAutodecompiled {len(succeeded_paths)}/{len(funcs)} functions:")
+
+    if succeeded_paths:
+        for path in succeeded_paths:
+            print(f"  {path}")
+
+if __name__ == "__main__":
+    main()
