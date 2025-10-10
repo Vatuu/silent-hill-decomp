@@ -7,7 +7,6 @@
 
 #define func_800CECB0 (0x800CECB0)
 #define func_800CECDC (0x800CECDC)
-#define func_800CE7EC (0x800CE7EC)
 #define func_800CED08 (0x800CED08)
 #define func_800CEFD4 (0x800CEFD4)
 #define func_800CDD9C (0x800CDD9C)
@@ -45,7 +44,7 @@ const u32 D_800C9578 = 0x00000000; // rodata 0
 
 const s_MapOverlayHeader g_MapOverlayHeader = {
     .type_0                   = &MAP_TYPES[9],
-    .getMapRoomIdxFunc_4      = func_800CE7EC,
+    .getMapRoomIdxFunc_4      = Map_RoomIdxGet,
     .field_8                  = 0xFF,
     .unk_9                    = { 0, 0, 0 },
     .func_C                   = sharedFunc_800D929C_0_s00,
