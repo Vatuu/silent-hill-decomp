@@ -11,7 +11,7 @@ void sharedFunc_800D63A4_0_s01(s_SubCharacter* chara)
     s32 magSq;
     u8* base;
 
-    func_800D6EC4(chara);
+    sharedFunc_800D6EC4_0_s01(chara);
 
     rot     = chara->rotation_24.vy;
     speed   = chara->moveSpeed_38;
