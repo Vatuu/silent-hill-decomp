@@ -140,4 +140,6 @@ void MapEvent_ToBeContinued(void);
 
 void func_800D5E14(s_SubCharacter* chara);
 
+void func_800D49B0(s_SubCharacter* chara);
+
 #endif
