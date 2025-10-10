@@ -63,6 +63,17 @@ def try_decompile(func_name: str, func_path: Path = None):
         return True
     return False
 
+def has_unstaged_changes(path="src/"):
+    try:
+        # This returns 0 if no unstaged changes, 1 if there are
+        subprocess.run(
+            ["git", "diff", "--quiet", path],
+            check=True
+        )
+        return False
+    except subprocess.CalledProcessError:
+        return True
+
 def main():
     parser = argparse.ArgumentParser(description="Automatically try decompile functions with optional path filters")
     parser.add_argument(
@@ -84,11 +95,13 @@ def main():
         print("\nerror: at least one filter must be provided (e.g. 'bodyprog/' or 'map7_s01/')\n")
         return
 
+    # Prevent running if any unstaged changes in src/, since this would destroy them.
+    if has_unstaged_changes("src/"):
+        print("\nerror: unstaged changes in src/, stage or stash them first.")
+        return
+
     if args.stage:
         print("\nwarning: --stage mode enabled, staged funcs may cause later decompiled funcs to mismatch.")
-    # --- 1. Smoke test ---
-    #print("Running test decompile on func_800DC778 ...")
-    #try_decompile("func_800DC778")
 
     # Speedup by skipping the separate overlay-only build and only run `make check`
     decompile.only_make_check = True
@@ -129,7 +142,7 @@ def main():
     print(f"\nAutodecompiled {len(succeeded_paths)}/{len(funcs)} functions:")
 
     if succeeded_paths:
-        for path in succeeded_paths:
+        for path in sorted(succeeded_paths, key=lambda p: str(p)):
             print(f"  {path}")
 
         print("\nLog written to build/autodecompile.log")

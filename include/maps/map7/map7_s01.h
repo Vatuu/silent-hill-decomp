@@ -65,6 +65,8 @@ void func_800D6810(s32 arg0);
 
 void func_800D6844(s32 arg0);
 
+void func_800D6878(void);
+
 void func_800D68F8(void);
 
 void func_800D725C(void);

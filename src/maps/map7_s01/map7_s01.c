@@ -262,7 +262,32 @@ void func_800D6844(s32 arg0) // 0x800D6844
     (arg0 != 0) ? func_800D68F8() : func_800D6938();
 }
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D6878);
+void func_800D6878(void) // 0x800D6878
+{
+    s32 var_a0;
+
+    if (g_SavegamePtr->mapRoomIdx_A5 == 3)
+    {
+        var_a0 = 15;
+    }
+    else if (Savegame_EventFlagGet(EventFlag_481))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_574))
+        {
+            Savegame_EventFlagSet(EventFlag_574);
+            var_a0 = 1;
+        }
+        else
+        {
+            var_a0 = 22;
+        }
+    }
+    else
+    {
+        var_a0 = 14;
+    }
+    func_8003640C(var_a0);
+}
 
 void func_800D68F8(void) // 0x800D68F8
 {
@@ -1198,7 +1223,7 @@ void func_800D94DC(void) // 0x800D94DC
                                 {
                                     D_800E1688[j] = D_800E1688[j + 1];
                                 }
-                                
+
                                 D_800E1688[4] = i;
 
                                 for (j = 0; j < 5; j++)

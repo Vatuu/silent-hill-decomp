@@ -44,7 +44,13 @@ void Ai_GhostDoctor_Init(s_SubCharacter* chara);
 /** Likely takes Harry character based on property usage. */
 void func_800D8C00(s_SubCharacter* chara, GsCOORDINATE2* coord);
 
+void func_800D97FC(s32 arg0);
+
+void func_800D9830(s32 arg0);
+
 void func_800D9864(void);
+
+void func_800D98E4(void);
 
 void func_800DA248(void);
 
@@ -91,6 +97,8 @@ void func_800E0C5C(void);
 void func_800E0C88(void);
 
 void func_800E0CB4(void);
+
+void func_800E1FF4(void);
 
 void func_800E2DC0(void);
 
