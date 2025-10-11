@@ -307,7 +307,27 @@ INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DA2E4);
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DA384);
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DA8F8);
+void func_800DA8F8(void) // 0x800DA8F8
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            SysWork_StateStepIncrement();
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            MapMsg_DisplayAndHandleSelection(false, 0x12, 0, 0, 0, false);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+}
 
 void func_800DA9D4(void) // 0x800DA9D4
 {
@@ -363,7 +383,16 @@ INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DCF00);
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DD208);
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DD420);
+void func_800DD420(void) // 0x800DD420
+{
+    sharedFunc_800D08B8_0_s00(6, 127);
+
+    sharedFunc_800CB6B0_0_s00(0, g_SavegamePtr->mapOverlayId_A4, 0);
+
+    Savegame_EventFlagClear(EventFlag_225);
+
+    SysWork_StateSetNext(SysState_Gameplay);
+}
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DD494);
 

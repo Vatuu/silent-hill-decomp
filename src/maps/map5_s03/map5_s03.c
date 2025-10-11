@@ -144,7 +144,17 @@ INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", sharedSymbol_800CF470_3_s
 
 INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D0F6C);
 
-INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D1004);
+void func_800D1004(s32 arg0) // 0x800D1004
+{
+    if (arg0 != 0)
+    {
+        func_800D1038();
+    }
+    else
+    {
+        sharedFunc_800CE934_0_s02();
+    }
+}
 
 INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D1038);
 
@@ -270,7 +280,10 @@ INCLUDE_RODATA("asm/maps/map5_s03/nonmatchings/map5_s03", D_800CB804);
 
 INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D1AF8);
 
-INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D2640);
+void func_800D2640(void) // 0x800D2640
+{
+    func_80087540(FILE_TIM_NEWSP2_TIM, 0, 0, 46, 48);
+}
 
 INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D2674);
 

@@ -829,17 +829,16 @@ void Ai_Cheryl_Init(s_SubCharacter* chara) // 0x800D8888
 
 void func_800D94F8(void) // 0x800D94F8
 {
-    s32  i;
-    s32  flags1;
-    s32  flags0;
-    u16  saveFlag;
-    u32  saveByte;
-    u16* var_a2;
+    s32    i;
+    q19_12 var1;
+    s32    flags0;
+    u16    saveFlag;
+    u32    saveByte;
 
     // @hack Not used directly, but gets merged with  `Savegame_EventFlagGet` macros below.
     saveByte = g_SavegamePtr->eventFlags_168[0];
-    flags1 = 0x199;
-    flags0 = 0x100;
+    var1     = Q12(0.1f);
+    flags0   = 0x100;
 
     if (g_SysWork.player_4C.chara_0.health_B0 > 0 && (!(Savegame_EventFlagGet(23) && !Savegame_EventFlagGet(20))))
     {
@@ -855,10 +854,10 @@ void func_800D94F8(void) // 0x800D94F8
     else
     {     
         Savegame_EventFlagClear(EventFlag_20);
-        flags1 = 0x4CC;
+        var1 = Q12(0.3f);
     }
 
-    func_80035F4C(flags0, flags1, &D_800DF2F8);
+    func_80035F4C(flags0, var1, &D_800DF2F8);
 }
 
 void Gfx_LoadingScreen_StageString() // 0x800D95D4

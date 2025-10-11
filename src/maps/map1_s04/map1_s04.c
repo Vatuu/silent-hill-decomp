@@ -2,6 +2,7 @@
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
 #include "maps/shared.h"
+#include "maps/map1/map1_s04.h"
 
 INCLUDE_RODATA("asm/maps/map1_s04/nonmatchings/map1_s04", D_800C9578);
 
@@ -89,6 +90,20 @@ INCLUDE_ASM("asm/maps/map1_s04/nonmatchings/map1_s04", func_800CCA2C);
 
 void func_800CCE30(void) {}
 
-INCLUDE_ASM("asm/maps/map1_s04/nonmatchings/map1_s04", func_800CCE38);
+void func_800CCE38(void) // 0x800CCE38
+{
+    if (g_Controller0->btnsClicked_10 & ControllerFlag_R1)
+    {
+        Sd_EngineCmd(Sfx_Unk1335);
+    }
+    if (g_Controller0->btnsClicked_10 & ControllerFlag_R2)
+    {
+        Sd_EngineCmd(Sfx_Unk1342);
+    }
+    if (g_Controller0->btnsClicked_10 & ControllerFlag_R3)
+    {
+        Sd_EngineCmd(Sfx_Unk1343);
+    }
+}
 
 INCLUDE_RODATA("asm/maps/map1_s04/nonmatchings/map1_s04", D_800CA6A0);

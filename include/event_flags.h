@@ -114,9 +114,15 @@ typedef enum _EventFlag
 
     EventFlag_188 = 188,
 
+    EventFlag_191 = 191,
+
+    EventFlag_194 = 194,
+
     EventFlag_197 = 197,
 
     EventFlag_M3S00_FirstAidKit = 199, // Odd numbering not with other common items, possibly some default that goes unused, shared with M3S01 and M3S06.
+
+    EventFlag_203 = 203,
 
     EventFlag_M3S01_PickupPlasticBottle = 205,
 
@@ -127,6 +133,8 @@ typedef enum _EventFlag
     EventFlag_211 = 211,
 
     EventFlag_223 = 223,
+
+    EventFlag_225 = 225,
 
     EventFlag_M3S04_PickupPlateOfQueen  = 241,
     EventFlag_M3S03_PickupPlateOfTurtle = 242,

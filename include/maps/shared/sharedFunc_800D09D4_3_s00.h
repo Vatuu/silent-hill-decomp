@@ -1,11 +1,11 @@
 void sharedFunc_800D09D4_3_s00()
 {
-    s32         flags;
-    s32         var;
-    s32         mapRoomIdx;
+    s32    flags;
+    q19_12 var;
+    s32    mapRoomIdx;
 
     mapRoomIdx = g_SavegamePtr->mapRoomIdx_A5;
-    var        = 0x266;
+    var        = Q12(0.15f);
 
     switch (g_GameWork.soundCmd_5B2)
     {
@@ -48,17 +48,17 @@ void sharedFunc_800D09D4_3_s00()
         case 34:
             if (!(g_SavegamePtr->mapMarkingFlags_1D4[17] & (1 << 19)))
             {
-                var   = 0xF0000;
+                var   = Q12(240.0f);
                 flags = 0x201;
             }
             else if (Savegame_EventFlagGet(EventFlag_197))
             {
-                var   = 0x333;
+                var   = Q12(0.2f);
                 flags = 0x201;
             }
             else
             {
-                var   = 0xF0000;
+                var   = Q12(240.0f);
                 flags = 0x1FE;
             }
             break;
@@ -66,12 +66,12 @@ void sharedFunc_800D09D4_3_s00()
         case 25:
             if (!Savegame_EventFlagGet(EventFlag_295))
             {
-                var   = 0xF0000;
+                var   = Q12(240.0f);
                 flags = 0x1FE;
             }
             else
             {
-                var   = 0x333;
+                var   = Q12(0.2f);
                 flags = 0x301;
             }
             break;

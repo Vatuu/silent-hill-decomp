@@ -130,7 +130,17 @@ INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", sharedSymbol_800D8A68_0_s
 
 INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D1AE0);
 
-INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D1B78);
+void func_800D1B78(s32 arg0) // 0x800D1B78
+{
+    if (arg0 != 0)
+    {
+        func_800D1BAC();
+    }
+    else
+    {
+        sharedFunc_800CE934_0_s02();
+    }
+}
 
 INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D1BAC);
 

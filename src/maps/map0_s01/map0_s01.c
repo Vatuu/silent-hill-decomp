@@ -1061,15 +1061,15 @@ void func_800DA7AC() // 0x800DA7AC
 
 void func_800DA7FC() // 0x800DA7FC
 {
-    s32 flags;
-    s32 var1;
+    s32    flags;
+    q19_12 var1;
 
-    var1 = 0x553;
+    var1 = Q12(0.333f);
     if (!Savegame_EventFlagGet(EventFlag_146))
     {
         if (!(Savegame_EventFlagGet(EventFlag_48) || Savegame_EventFlagGet(EventFlag_49)))
         {
-            var1 = 0xF0000;
+            var1 = Q12(240.0f);
             if (Savegame_EventFlagGet(EventFlag_39) && g_GameWork.soundCmd_5B2 == 9)
             {
                 flags = 2;
@@ -1083,12 +1083,12 @@ void func_800DA7FC() // 0x800DA7FC
         {
             if (!Savegame_EventFlagGet(EventFlag_48))
             {
-                var1 = 0xF0000;
+                var1  = Q12(240.0f);
                 flags = 1 << 8;
             }
             else
             {
-                var1 = 0x200;
+                var1  = Q12(0.125f);
                 flags = (1 << 0) | (1 << 9);
             }
         }

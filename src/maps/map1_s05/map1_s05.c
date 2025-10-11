@@ -2,6 +2,7 @@
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
 #include "maps/shared.h"
+#include "maps/map1/map1_s05.h"
 
 INCLUDE_RODATA("asm/maps/map1_s05/nonmatchings/map1_s05", D_800C9578);
 
@@ -139,7 +140,11 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", sharedFunc_800D4070_1_s05
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D4408);
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D450C);
+void func_800D450C(s32 arg0, s32 arg1) // 0x800D450C
+{
+    sharedData_800D8614_1_s05 += arg0;
+    sharedData_800D8616_1_s05 += arg1;
+}
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D4530);
 
@@ -149,7 +154,22 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D4594);
 
 #include "maps/shared/sharedFunc_800D7758_1_s00.h" // 0x800D48AC
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D494C);
+void func_800D494C(void) // 0x800D494C
+{
+    s32 var_a0;
+
+    var_a0 = 1;
+    if (g_SysWork.npcs_1A0[0].health_B0 > 0)
+    {
+        var_a0 = 2;
+        if (g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[0].val16[0] & 0x10)
+        {
+            var_a0 = 6;
+        }
+    }
+
+    func_80035F4C(var_a0, Q12(0.1f), &D_800D5C3C);
+}
 
 void func_800D49A4(void) {}
 
