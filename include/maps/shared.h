@@ -2466,6 +2466,8 @@ extern s32 sharedData_800DFB4C_0_s00;
 
 extern s32 sharedData_800DFB50_0_s00;
 
+extern s32 sharedData_800CD77C_1_s04; // Used by `sharedFunc_800CB6B0_0_s00` only in MAP1_S04 and MAP4_S00? Similar usage to `sharedData_800DFB50_0_s00`?
+
 extern CVECTOR sharedData_800E3258_0_s00;
 
 extern CVECTOR sharedData_800E325C_0_s00;
