@@ -19,6 +19,8 @@ extern u8 D_800E9ECD;
 
 extern s_800EA494 D_800EA494;
 
+extern s_800C4590 D_800EB604;
+
 extern VECTOR3 D_800EB694;
 extern VECTOR3 D_800EB6A4;
 
