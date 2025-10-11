@@ -292,7 +292,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
 #endif
 
 #if defined(MAP1_S04) || defined(MAP4_S00)
-            sharedData_800CD77C_1_s04 = arg2; // TODO: Should this be a sharedData? Other maps don't use it here though.
+            sharedData_800CD77C_1_s04 = arg2;
 #else
             func_8003EDB8(&sharedData_800E3258_0_s00, &sharedData_800E325C_0_s00);
 
