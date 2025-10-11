@@ -96,6 +96,30 @@
 #define HAS_PlayerState_Unk141 // 0x8D
 #endif
 
+#if defined(MAP6_S04)
+#define HAS_PlayerState_Unk51  // 0x33
+#define HAS_PlayerState_Unk131 // 0x83
+#define HAS_PlayerState_Unk52  // 0x34
+#define HAS_PlayerState_Unk53  // 0x35
+#define HAS_PlayerState_Unk70  // 0x46
+#define HAS_PlayerState_Unk113 // 0x71
+#define HAS_PlayerState_Unk123 // 0x7B
+#define HAS_PlayerState_Unk149 // 0x95
+#define HAS_PlayerState_Unk150 // 0x96
+#define HAS_PlayerState_Unk151 // 0x97
+#define HAS_PlayerState_Unk152 // 0x98
+#define HAS_PlayerState_Unk160 // 0xA0
+#define HAS_PlayerState_Unk161 // 0xA1
+#define HAS_PlayerState_Unk189 // 0xBD
+#define HAS_PlayerState_Unk162 // 0xA2
+#define HAS_PlayerState_Unk163 // 0xA3
+#define HAS_PlayerState_Unk167 // 0xA7
+#define HAS_PlayerState_Unk168 // 0xA8
+#define HAS_PlayerState_Unk185 // 0xB9
+#define HAS_PlayerState_Unk170 // 0xAA
+#define HAS_PlayerState_Unk188 // 0xBC
+#endif
+
 // Very similar to `func_80071968_Switch1`
 static inline void sharedFunc_800CDAA8_0_s02_Switch()
 {
@@ -147,6 +171,9 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch()
 // TODO: Rename to sharedFunc_800D0E34_0_s00
 void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord)
 {
+#ifdef HAS_PlayerState_Unk151
+    const static VECTOR D_800CA618 = { Q12(14.94f), Q12(-0.05f), Q12(102.0f) };
+#endif
     s_Collision coll;
     s32         sfx;
     s8          pitch;
@@ -697,7 +724,6 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
 #endif
-
 #ifdef HAS_PlayerState_Unk72
         case PlayerState_Unk72:
             func_8007FB94(playerChara, extra, 0x154);
@@ -708,7 +734,6 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             }
             break;
 #endif
-
 #ifdef HAS_PlayerState_Unk143
         case PlayerState_Unk143:
             func_8007FB94(playerChara, extra, 0x1A2);
@@ -754,7 +779,6 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             }
             break;
 #endif
-
 #ifdef HAS_PlayerState_Unk145
         case PlayerState_Unk145:
             func_8007FC48(playerChara, extra, 0x1A4);
@@ -825,17 +849,6 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
 #endif
-#ifdef HAS_PlayerState_Unk167
-        case PlayerState_Unk167:
-            func_8007FB94(playerChara, extra, 0x1BA);
-            keyFrameIdx = 1070;
-            if (D_800C4606)
-            {
-                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
-                D_800C4606 = 0;
-            }
-            break;
-#endif
 #ifdef HAS_PlayerState_Unk70
         case PlayerState_Unk70:
             func_8007FB94(playerChara, extra, 0x156);
@@ -844,7 +857,213 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
                 Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
+#if !defined(MAP6_S04)
             func_8003D03C();
+#endif
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk113
+        case PlayerState_Unk113:
+            func_8007FB94(playerChara, extra, 0x185);
+            keyFrameIdx = 1084;
+            if (D_800C4606)
+            {
+                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                D_800C4606 = 0;
+            }
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk123
+        case PlayerState_Unk123:
+            func_8007FB94(playerChara, extra, 0x18F);
+            keyFrameIdx = 693;
+            if (D_800C4606)
+            {
+                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                D_800C4606 = 0;
+            }
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk149
+        case PlayerState_Unk149:
+            func_8007FB94(playerChara, extra, 0x1A8);
+            keyFrameIdx = 728;
+            if (D_800C4606)
+            {
+                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                D_800C4606 = 0;
+            }
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk150
+        case PlayerState_Unk150:
+            func_8007FC48(playerChara, extra, 0x1A9);
+            keyFrameIdx = 793;
+            if (D_800C4606)
+            {
+                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                D_800C4606 = 0;
+            }
+            sharedFunc_800CDAA8_0_s02_Switch();
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk151
+        case PlayerState_Unk151:
+            keyFrameIdx = 1106;
+            if (playerChara->model_0.anim_4.keyframeIdx_8 == keyFrameIdx + 11 || playerChara->model_0.anim_4.keyframeIdx_8 == keyFrameIdx + 7)
+            {
+                if (!(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & 0x40))
+                {
+                    func_8005F6B0(&g_SysWork.npcs_1A0[1], &D_800CA618, 3, 3);
+                    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 0x40;
+                }
+            }
+            if (playerChara->model_0.anim_4.keyframeIdx_8 == keyFrameIdx + 8 || playerChara->model_0.anim_4.keyframeIdx_8 == keyFrameIdx + 19)
+            {
+                g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~0x40;
+            }
+            func_8007FB94(playerChara, extra, 0x1AA);
+            if (D_800C4606)
+            {
+                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                D_800C4606 = 0;
+            }
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk152
+        case PlayerState_Unk152:
+            func_8007FC48(playerChara, extra, 0x1AB);
+            if (D_800C4606)
+            {
+                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                D_800C4606 = 0;
+            }
+            sharedFunc_800CDAA8_0_s02_Switch();
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk160
+        case PlayerState_Unk160:
+            func_8007FC48(playerChara, extra, 0x1B3);
+            keyFrameIdx = 1126;
+            if (D_800C4606)
+            {
+                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                D_800C4606 = 0;
+            }
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk161
+        case PlayerState_Unk161:
+            func_8007FC48(playerChara, extra, 0x1B4);
+            keyFrameIdx = 1207;
+            if (D_800C4606)
+            {
+                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                D_800C4606 = 0;
+            }
+            if (playerChara->model_0.anim_4.keyframeIdx_8 == 1236)
+            {
+                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk189);
+            }
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk189
+        case PlayerState_Unk189:
+            func_8007FC48(playerChara, extra, 0x1D0);
+            if (D_800C4606)
+            {
+                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                D_800C4606 = 0;
+            }
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk162
+        case PlayerState_Unk162:
+            func_8007FB94(playerChara, extra, 0x1B5);
+            keyFrameIdx = 1237;
+            if (D_800C4606)
+            {
+                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                D_800C4606 = 0;
+            }
+            sharedFunc_800CDAA8_0_s02_Switch();
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk163
+        case PlayerState_Unk163:
+            func_8007FC48(playerChara, extra, 0x1B6);
+            if (D_800C4606)
+            {
+                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                D_800C4606 = 0;
+            }
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk167
+        case PlayerState_Unk167:
+            func_8007FB94(playerChara, extra, 0x1BA);
+#if defined(MAP6_S04)
+            keyFrameIdx = 1347;
+#else
+            keyFrameIdx = 1070;
+#endif
+            if (D_800C4606)
+            {
+                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                D_800C4606 = 0;
+            }
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk168
+        case PlayerState_Unk168:
+            func_8007FB94(playerChara, extra, 0x1BB);
+            keyFrameIdx = 1363;
+            if (D_800C4606)
+            {
+                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                D_800C4606 = 0;
+            }
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk185
+        case PlayerState_Unk185:
+            func_8007FC48(playerChara, extra, 0x1CC);
+            keyFrameIdx = 1363;
+            if (D_800C4606)
+            {
+                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                D_800C4606 = 0;
+            }
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk170
+        case PlayerState_Unk170:
+            func_8007FB94(playerChara, extra, 0x1BD);
+            if (D_800C4606)
+            {
+                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                D_800C4606 = 0;
+            }
+            keyFrameIdx = 1411;
+            if (playerChara->model_0.anim_4.keyframeIdx_8 < 1417)
+            {
+                func_8003D01C();
+            }
+            else
+            {
+                func_8003D03C();
+            }
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk188
+        case PlayerState_Unk188:
+            func_8007FB94(playerChara, extra, 0x1CF);
+            if (D_800C4606)
+            {
+                Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
+                D_800C4606 = 0;
+            }
+            sharedFunc_800CDAA8_0_s02_Switch();
             break;
 #endif
 #ifdef HAS_PlayerState_Unk71
@@ -1156,9 +1375,153 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 12, keyFrameIdx + 5, sfx, sp2D);
             break;
 #endif
+#ifdef HAS_PlayerState_Unk113
+        case PlayerState_Unk113:
+            if (keyFrameIdx + 5 >= playerChara->model_0.anim_4.keyframeIdx_8)
+            {
+                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 14, keyFrameIdx + 5, sfx, pitch);
+            }
+            else
+            {
+                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 14, keyFrameIdx + 21, sfx, pitch);
+            }
+            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk123
+        case PlayerState_Unk123:
+            if (keyFrameIdx + 9 >= playerChara->model_0.anim_4.keyframeIdx_8)
+            {
+                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 14, keyFrameIdx + 9, sfx, pitch);
+            }
+            else
+            {
+                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 14, keyFrameIdx + 19, sfx, pitch);
+            }
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk149
+        case PlayerState_Unk149:
+            if (playerChara->model_0.anim_4.keyframeIdx_8 < keyFrameIdx + 2)
+            {
+                func_80071620(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx, Sfx_Unk1626);
+            }
+            else
+            {
+                if (playerChara->model_0.anim_4.keyframeIdx_8 < keyFrameIdx + 8)
+                {
+                    if (func_80071620(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 6, Q12(0.4f)) != false)
+                    {
+                        func_800892DC(8, 0x30); // Hex?
+                    }
+                }
+                else
+                {
+                    if (playerChara->model_0.anim_4.keyframeIdx_8 < keyFrameIdx + 41)
+                    {
+                        func_80071620(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 3, Sfx_Unk1627);
+                    }
+                    else
+                    {
+                        func_80071620(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 42, Sfx_Unk1628);
+                    }
+                }
+            }
+            if (keyFrameIdx + 43 >= playerChara->model_0.anim_4.keyframeIdx_8)
+            {
+                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 55, keyFrameIdx + 43, sfx, pitch);
+            }
+            else
+            {
+                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 55, keyFrameIdx + 59, sfx, pitch);
+            }
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk150
+        case PlayerState_Unk150:
+            if (func_80071620(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 0x15, Q12(0.4f)) != false)
+            {
+                func_800892DC(8, 0x30); // Hex?
+            }
+            if (keyFrameIdx + 8 >= playerChara->model_0.anim_4.keyframeIdx_8)
+            {
+                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 8, keyFrameIdx + 11, sfx, pitch);
+            }
+            else if (keyFrameIdx + 0xE >= playerChara->model_0.anim_4.keyframeIdx_8)
+            {
+                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 14, keyFrameIdx + 11, sfx, pitch);
+            }
+            else
+            {
+                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 8, keyFrameIdx + 16, sfx, pitch);
+            }
+
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk151
+        case PlayerState_Unk151:
+            if (playerChara->model_0.anim_4.status_0 & 1)
+            {
+                if (keyFrameIdx + 7 >= playerChara->model_0.anim_4.keyframeIdx_8)
+                {
+                    func_80071620(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 7, Sfx_Unk1619);
+                }
+                else
+                {
+                    func_80071620(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 11, Sfx_Unk1619);
+                }
+                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 16, keyFrameIdx + 16, sfx, pitch);
+            }
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk160
+        case PlayerState_Unk160:
+            if (keyFrameIdx + 33 >= playerChara->model_0.anim_4.keyframeIdx_8)
+            {
+                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 42, keyFrameIdx + 33, sfx, pitch);
+            }
+            else
+            {
+                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 42, keyFrameIdx + 55, sfx, pitch);
+            }
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk161
+        case PlayerState_Unk161:
+            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 24, keyFrameIdx + 22, sfx, pitch);
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk162
+        case PlayerState_Unk162:
+            if (playerChara->model_0.anim_4.status_0 & 1)
+            {
+                func_80071620(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 60, Sfx_Unk1623);
+            }
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk163
+        case PlayerState_Unk163:
+            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 6, 0, sfx, pitch);
+            break;
+#endif
 #ifdef HAS_PlayerState_Unk167
         case PlayerState_Unk167:
             func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 10, 0, sfx, pitch);
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk168
+        case PlayerState_Unk168:
+            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 38, keyFrameIdx + 22, sfx, pitch);
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk185
+        case PlayerState_Unk185:
+            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 38, keyFrameIdx + 22, sfx, pitch);
+            break;
+#endif
+#ifdef HAS_PlayerState_Unk170
+        case PlayerState_Unk170:
+            func_80071620(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 7, Sfx_Unk1629);
             break;
 #endif
 #ifdef HAS_PlayerState_Unk76

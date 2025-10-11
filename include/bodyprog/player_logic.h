@@ -209,7 +209,16 @@ typedef enum _PlayerState
     PlayerState_Unk177                    = 177,
     PlayerState_Unk178                    = 178,
     PlayerState_Unk179                    = 179,
-    PlayerState_Unk180                    = 180
+    PlayerState_Unk180                    = 180,
+    PlayerState_Unk181                    = 181,
+    PlayerState_Unk182                    = 182,
+    PlayerState_Unk183                    = 183,
+    PlayerState_Unk184                    = 184,
+    PlayerState_Unk185                    = 185,
+    PlayerState_Unk186                    = 186,
+    PlayerState_Unk187                    = 187,
+    PlayerState_Unk188                    = 188,
+    PlayerState_Unk189                    = 189,
 } e_PlayerState;
 
 /** @brief Upper body player states. */
