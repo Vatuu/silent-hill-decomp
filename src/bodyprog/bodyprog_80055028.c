@@ -2464,23 +2464,21 @@ void Map_EffectTexturesLoad(s32 mapIdx) // 0x8005E0DC
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005E414); // 0x8005E414
 
-void func_8005E650()                                                       // 0x8005E650
+void func_8005E650() // 0x8005E650
 {
     s32 i;
     s16 count;
 
     count = g_MapOverlayHeader.unkTable1Count_50;
-
     for (i = 0; i < count; i++)
     {
         g_MapOverlayHeader.unkTable1_4C[i].field_A = 0;
     }
 
     count = g_MapOverlayHeader.bloodSplatCount_58;
-
     for (i = 0; i < count; i++)
     {
-        g_MapOverlayHeader.bloodSplats_54[i].field_0 = -1;
+        g_MapOverlayHeader.bloodSplats_54[i].field_0 = NO_VALUE;
     }
 
     D_800C4408 = 0;
@@ -2956,7 +2954,7 @@ bool func_8005F680(s_Collision* coll) // 0x8005F680
     return cond;
 }
 
-void func_8005F6B0(s_SubCharacter* arg0, VECTOR* arg1, s32 arg2, s32 arg3) // 0x8005F6B0
+void func_8005F6B0(s_SubCharacter* chara, VECTOR* arg1, s32 arg2, s32 arg3) // 0x8005F6B0
 {
     s_Collision    sp10;
     VECTOR3        sp20;
@@ -2966,14 +2964,14 @@ void func_8005F6B0(s_SubCharacter* arg0, VECTOR* arg1, s32 arg2, s32 arg3) // 0x
     s32            var_a1;
     s32            var_a1_2;
     s32            var_s3;
-    s32            var_s4;
+    s32            j;
     s32            var_s5;
-    s32            var_s6;
+    s32            i;
     s32            var_s7;
     s32            var_v0;
     s32            temp_a0_2;
 
-    if (g_GameWork.config_0.optExtraBloodColor_24 == 0xE)
+    if (g_GameWork.config_0.optExtraBloodColor_24 == 14)
     {
         arg3 = 5;
     }
@@ -2993,19 +2991,19 @@ void func_8005F6B0(s_SubCharacter* arg0, VECTOR* arg1, s32 arg2, s32 arg3) // 0x
         case 2:
             var_s5 = 2;
             var_s7 = 1;
-            var_s3 = 0xC;
+            var_s3 = 12;
             break;
 
         case 3:
             var_s5 = 3;
             var_s7 = Rng_TestProbabilityBits(1) + 1;
-            var_s3 = 0x12;
+            var_s3 = 18;
             break;
 
         case 4:
             var_s5 = 3;
             var_s7 = Rng_TestProbabilityBits(2) + 1;
-            var_s3 = 0x18;
+            var_s3 = 24;
             break;
 
         case 5:
@@ -3017,13 +3015,13 @@ void func_8005F6B0(s_SubCharacter* arg0, VECTOR* arg1, s32 arg2, s32 arg3) // 0x
         case 6:
             var_s5 = 4;
             var_s7 = Rng_TestProbabilityBits(3) + 1;
-            var_s3 = 0x24;
+            var_s3 = 36;
             break;
 
         case 7:
             var_s5 = 5;
             var_s7 = Rng_TestProbabilityBits(3) + 2;
-            var_s3 = 0x2A;
+            var_s3 = 42;
             break;
 
         case 0:
@@ -3036,55 +3034,55 @@ void func_8005F6B0(s_SubCharacter* arg0, VECTOR* arg1, s32 arg2, s32 arg3) // 0x
         case 8:
             var_s5 = 3;
             var_s7 = 0;
-            var_s3 = 0x10;
+            var_s3 = 16;
             break;
 
         case 9:
             var_s5 = 1;
             var_s7 = 0;
-            var_s3 = 0x10;
+            var_s3 = 16;
             break;
     }
 
-    if (g_GameWork.config_0.optExtraBloodColor_24 == 0xE)
+    if (g_GameWork.config_0.optExtraBloodColor_24 == 14)
     {
         var_s7 = 0;
     }
 
     if (arg2 != 8)
     {
-        for (var_s6 = 0; var_s6 < 0x18; var_s6++)
+        for (i = 0; i < 24; i++)
         {
-            if (D_800C42E8[var_s6].field_0 == 0)
+            if (D_800C42E8[i].field_0 == 0)
             {
                 break;
             }
         }
 
-        if (arg0->model_0.charaId_0 == 0xE)
+        if (chara->model_0.charaId_0 == Chara_Splithead)
         {
-            var_s6 = 0x18;
+            i = 24;
         }
 
-        if (var_s6 != 0x18)
+        if (i != 24)
         {
-            D_800C42E8[var_s6].field_0 = 1;
-            D_800C42E8[var_s6].field_1 = func_8005C7D0(arg0);
-            D_800C42E8[var_s6].field_4 = arg0->position_18.vx + arg0->field_D8.offsetX_0;
-            D_800C42E8[var_s6].field_2 = arg0->position_18.vy + arg0->field_CE;
-            D_800C42E8[var_s6].field_8 = arg0->position_18.vz + arg0->field_D8.offsetZ_2;
+            D_800C42E8[i].field_0 = 1;
+            D_800C42E8[i].field_1 = func_8005C7D0(chara);
+            D_800C42E8[i].field_4 = chara->position_18.vx + chara->field_D8.offsetX_0;
+            D_800C42E8[i].field_2 = chara->position_18.vy + chara->field_CE;
+            D_800C42E8[i].field_8 = chara->position_18.vz + chara->field_D8.offsetZ_2;
         }
     }
     else
     {
-        var_s6 = 0x18;
+        i = 24;
     }
 
-    for (var_s4 = 0; var_s4 < var_s5; var_s4++)
+    for (j = 0; j < var_s5; j++)
     {
         temp_v0 = func_8005E7E0(1);
 
-        if (temp_v0 != -1)
+        if (temp_v0 != NO_VALUE)
         {
             if (arg2 != 9)
             {
@@ -3099,32 +3097,32 @@ void func_8005F6B0(s_SubCharacter* arg0, VECTOR* arg1, s32 arg2, s32 arg3) // 0x
                 g_MapOverlayHeader.unkTable1_4C[temp_v0].vz_4 = arg1->vz;
             }
 
-            if (Rng_Rand16() & 1)
+            if (Rng_Rand16() & 0x1)
             {
                 g_MapOverlayHeader.unkTable1_4C[temp_v0].field_C.s_0.field_0 = (Rng_Rand16() % 3) + (Rng_TestProbabilityBits(3) * 8);
             }
             else
             {
-                g_MapOverlayHeader.unkTable1_4C[temp_v0].field_C.s_0.field_0 = (Rng_Rand16() & 1) + 3 + (Rng_TestProbabilityBits(1) * 8);
+                g_MapOverlayHeader.unkTable1_4C[temp_v0].field_C.s_0.field_0 = (Rng_Rand16() & 0x1) + 3 + (Rng_TestProbabilityBits(1) * 8);
             }
 
             g_MapOverlayHeader.unkTable1_4C[temp_v0].field_C.s_0.field_1  = var_s3;
             g_MapOverlayHeader.unkTable1_4C[temp_v0].field_E.s_0.field_0  = arg3;
-            g_MapOverlayHeader.unkTable1_4C[temp_v0].field_B              = var_s6 * 4;
+            g_MapOverlayHeader.unkTable1_4C[temp_v0].field_B              = i * 4;
             g_MapOverlayHeader.unkTable1_4C[temp_v0].field_10.s_0.field_0 = Rng_TestProbabilityBits(8);
 
-            if (arg0->model_0.charaId_0 == 0xF)
+            if (chara->model_0.charaId_0 == Chara_Floatstinger)
             {
-                g_MapOverlayHeader.unkTable1_4C[temp_v0].field_E.s_0.field_1 = 0x60;
+                g_MapOverlayHeader.unkTable1_4C[temp_v0].field_E.s_0.field_1 = 96;
             }
             else
             {
-                g_MapOverlayHeader.unkTable1_4C[temp_v0].field_E.s_0.field_1 = 0x20;
+                g_MapOverlayHeader.unkTable1_4C[temp_v0].field_E.s_0.field_1 = 32;
             }
 
             if (arg2 == 9)
             {
-                g_MapOverlayHeader.unkTable1_4C[temp_v0].field_E.s_0.field_1 = 0x21;
+                g_MapOverlayHeader.unkTable1_4C[temp_v0].field_E.s_0.field_1 = 33;
             }
         }
         else
@@ -3144,69 +3142,69 @@ void func_8005F6B0(s_SubCharacter* arg0, VECTOR* arg1, s32 arg2, s32 arg3) // 0x
     sp20.vx  += temp_v0_2->coord.m[0][2] * 2;
     sp20.vz  += temp_v0_2->coord.m[2][2] * 2;
 
-    for (var_s4 = 0; var_s4 < g_MapOverlayHeader.bloodSplatCount_58; var_s4++)
+    for (j = 0; j < g_MapOverlayHeader.bloodSplatCount_58; j++)
     {
-        if (g_MapOverlayHeader.bloodSplats_54[var_s4].field_0 == -1)
+        if (g_MapOverlayHeader.bloodSplats_54[j].field_0 == NO_VALUE)
         {
-            sp30[var_s4] = 0x7FFFFFFF;
+            sp30[j] = 0x7FFFFFFF;
         }
         else
         {
-            if (g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[var_s4].field_0].field_B != 2)
+            if (g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[j].field_0].field_B != 2)
             {
-                sp30[var_s4] = 0;
+                sp30[j] = 0;
             }
             else
             {
 
-                var_a1 = ABS(sp20.vx - g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[var_s4].field_0].vx_0);
-                var_v0 = ABS(sp20.vz - g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[var_s4].field_0].vz_4);
+                var_a1 = ABS(sp20.vx - g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[j].field_0].vx_0);
+                var_v0 = ABS(sp20.vz - g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[j].field_0].vz_4);
 
-                sp30[var_s4] = MAX(var_a1, var_v0) + (CLAMP_HIGH(var_a1, var_v0) >> 1);
+                sp30[j] = MAX(var_a1, var_v0) + (CLAMP_HIGH(var_a1, var_v0) >> 1);
 
-                if (sp30[var_s4] > 0x50000)
+                if (sp30[j] > 0x50000)
                 {
-                    g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[var_s4].field_0].field_A = 0;
-                    g_MapOverlayHeader.bloodSplats_54[var_s4].field_0                                          = -1;
-                    sp30[var_s4]                                                                               = 0x7FFFFFFF;
+                    g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[j].field_0].field_A = 0;
+                    g_MapOverlayHeader.bloodSplats_54[j].field_0                                          = NO_VALUE;
+                    sp30[j]                                                                               = 0x7FFFFFFF;
                 }
                 else
                 {
-                    sp30[var_s4] += Rng_TestProbabilityBits(14);
+                    sp30[j] += Rng_TestProbabilityBits(14);
                 }
             }
         }
     }
 
-    for (var_s4 = 0; var_s4 < var_s7; var_s4++)
+    for (j = 0; j < var_s7; j++)
     {
-        if (sp30[var_s4] != 0x7FFFFFFF)
+        if (sp30[j] != 0x7FFFFFFF)
         {
-            for (var_a1_2 = var_s4 + 1; var_a1_2 < g_MapOverlayHeader.bloodSplatCount_58; var_a1_2++)
+            for (var_a1_2 = j + 1; var_a1_2 < g_MapOverlayHeader.bloodSplatCount_58; var_a1_2++)
             {
-                temp_a0_2 = sp30[var_s4];
+                temp_a0_2 = sp30[j];
 
                 if (sp30[var_a1_2] <= temp_a0_2)
                 {
                     continue;
                 }
 
-                sp30[var_s4]   = sp30[var_a1_2];
+                sp30[j]   = sp30[var_a1_2];
                 sp30[var_a1_2] = temp_a0_2;
 
-                var_s3                                              = g_MapOverlayHeader.bloodSplats_54[var_s4].field_0;
-                g_MapOverlayHeader.bloodSplats_54[var_s4].field_0   = g_MapOverlayHeader.bloodSplats_54[var_a1_2].field_0;
+                var_s3                                              = g_MapOverlayHeader.bloodSplats_54[j].field_0;
+                g_MapOverlayHeader.bloodSplats_54[j].field_0   = g_MapOverlayHeader.bloodSplats_54[var_a1_2].field_0;
                 g_MapOverlayHeader.bloodSplats_54[var_a1_2].field_0 = var_s3;
 
-                if (sp30[var_s4] == 0x7FFFFFFF)
+                if (sp30[j] == 0x7FFFFFFF)
                 {
                     break;
                 }
             }
 
-            if (sp30[var_s4] == 0)
+            if (sp30[j] == 0)
             {
-                var_s7 = var_s4;
+                var_s7 = j;
                 break;
             }
         }
@@ -3214,20 +3212,20 @@ void func_8005F6B0(s_SubCharacter* arg0, VECTOR* arg1, s32 arg2, s32 arg3) // 0x
 
     var_s3 = 0;
 
-    for (var_s4 = 0; var_s4 < var_s7; var_s4++)
+    for (j = 0; j < var_s7; j++)
     {
-        if (g_MapOverlayHeader.bloodSplats_54[var_s4].field_0 != -1)
+        if (g_MapOverlayHeader.bloodSplats_54[j].field_0 != NO_VALUE)
         {
-            g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[var_s4].field_0].field_B          = 3;
-            g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[var_s4].field_0].field_10.field_0 = 0;
-            g_MapOverlayHeader.bloodSplats_54[var_s4].field_0                                                   = -1;
+            g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[j].field_0].field_B          = 3;
+            g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[j].field_0].field_10.field_0 = 0;
+            g_MapOverlayHeader.bloodSplats_54[j].field_0                                                   = NO_VALUE;
         }
 
         temp_v0 = func_8005E7E0(2);
 
-        if (temp_v0 != -1)
+        if (temp_v0 != NO_VALUE)
         {
-            g_MapOverlayHeader.unkTable1_4C[temp_v0].field_B = var_s6 * 4;
+            g_MapOverlayHeader.unkTable1_4C[temp_v0].field_B = i * 4;
             g_MapOverlayHeader.unkTable1_4C[temp_v0].vx_0    = (arg1->vx + Rng_TestProbabilityBits(11)) - 0x3FF;
             g_MapOverlayHeader.unkTable1_4C[temp_v0].vy_8    = (arg1->vy + Rng_TestProbabilityBits(12)) - 0x7FF;
             g_MapOverlayHeader.unkTable1_4C[temp_v0].vz_4    = (arg1->vz + Rng_TestProbabilityBits(11)) - 0x3FF;
@@ -3254,7 +3252,7 @@ void func_8005F6B0(s_SubCharacter* arg0, VECTOR* arg1, s32 arg2, s32 arg3) // 0x
                 g_MapOverlayHeader.unkTable1_4C[temp_v0].field_C.s_0.field_0  = Rng_TestProbabilityBits(4);
                 g_MapOverlayHeader.unkTable1_4C[temp_v0].field_E.s_0.field_0  = arg3;
                 g_MapOverlayHeader.unkTable1_4C[temp_v0].field_C.s_0.field_1  = Rng_TestProbabilityBits(4) + 6;
-                g_MapOverlayHeader.bloodSplats_54[var_s4].field_0             = temp_v0;
+                g_MapOverlayHeader.bloodSplats_54[j].field_0                  = temp_v0;
                 var_s3++;
             }
         }
@@ -3264,9 +3262,9 @@ void func_8005F6B0(s_SubCharacter* arg0, VECTOR* arg1, s32 arg2, s32 arg3) // 0x
         }
     }
 
-    if (var_s3 != 0 && var_s6 != 0x18)
+    if (var_s3 != 0 && i != 24)
     {
-        D_800C42E8[var_s6].field_0 += 2;
+        D_800C42E8[i].field_0 += 2;
     }
 }
 

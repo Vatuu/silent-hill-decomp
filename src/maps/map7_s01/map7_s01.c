@@ -286,6 +286,7 @@ void func_800D6878(void) // 0x800D6878
     {
         var_a0 = 14;
     }
+
     func_8003640C(var_a0);
 }
 

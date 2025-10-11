@@ -3541,7 +3541,7 @@ void func_8005DD44(s32 sfx, VECTOR3* pos, q23_8 vol, s8 pitch); // Types assumed
 /** Checks `field_8` in collision struct. */
 bool func_8005F680(s_Collision* coll);
 
-void func_8005F6B0(s_SubCharacter* arg0, VECTOR* arg1, s32 arg2, s32 arg3);
+void func_8005F6B0(s_SubCharacter* chara, VECTOR* arg1, s32 arg2, s32 arg3);
 
 /** Spatial SFX func? */
 void func_8005DE0C(s32 sfx, VECTOR3*, s32, s32, s32); // Types assumed.

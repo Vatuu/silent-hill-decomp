@@ -1,12 +1,12 @@
 void sharedFunc_800D63A4_0_s01(s_SubCharacter* chara)
 {
-    s16 rot;
-    s32 speed;
-    s32 field34;
-    s32 temp_s0;
-    s32 x;
-    s32 z;
-    s32 magSq;
+    q3_12  rot;
+    q19_12 speed;
+    s32    field34;
+    s32    temp_s0;
+    s32    x;
+    s32    z;
+    s32    magSqr;
 
     sharedFunc_800D6EC4_0_s01(chara);
 
@@ -24,17 +24,15 @@ void sharedFunc_800D63A4_0_s01(s_SubCharacter* chara)
     sharedData_800DE1E0_0_s01.vy = FP_MULTIPLY_PRECISE(g_DeltaTime0, sharedData_800DE1F0_0_s01.vy, Q12_SHIFT);
     sharedData_800DE1E0_0_s01.vz = FP_MULTIPLY_PRECISE(g_DeltaTime0, sharedData_800DE1F0_0_s01.vz, Q12_SHIFT);
 
-    temp_s0 = sharedFunc_800D6A60_0_s01(
-        &sharedData_800E2350_0_s01,
-        &sharedData_800DE1F0_0_s01,
-        chara,
-        sharedFunc_800D7440_0_s01(&sharedData_800E2350_0_s01, &sharedData_800DE1E0_0_s01, chara),
-        &sharedData_800E21D0_0_s01.field_11C
-    );
+    temp_s0 = sharedFunc_800D6A60_0_s01(&sharedData_800E2350_0_s01,
+                                        &sharedData_800DE1F0_0_s01,
+                                        chara,
+                                        sharedFunc_800D7440_0_s01(&sharedData_800E2350_0_s01, &sharedData_800DE1E0_0_s01, chara),
+                                        &sharedData_800E21D0_0_s01.field_11C);
 
     chara->properties_E4.player.flags_11C &= ~PlayerFlag_Unk29;
 
-    // @hack permuter find.
+    // @hack Permuter find.
     temp_s0++;
     temp_s0--;
 
@@ -43,15 +41,13 @@ void sharedFunc_800D63A4_0_s01(s_SubCharacter* chara)
         x = sharedData_800E21D0_0_s01.field_11C.vx;
         z = sharedData_800E21D0_0_s01.field_11C.vz;
 
-        magSq = FP_MULTIPLY_PRECISE(x, x, Q12_SHIFT) + FP_MULTIPLY_PRECISE(z, z, Q12_SHIFT);
-
-        if (magSq < 0x7D7)
+        magSqr = FP_MULTIPLY_PRECISE(x, x, Q12_SHIFT) + FP_MULTIPLY_PRECISE(z, z, Q12_SHIFT);
+        if (magSqr < Q12(0.49f))
         {
             chara->properties_E4.player.flags_11C |= PlayerFlag_Unk29;
         }
     }
 
     chara->field_34 = sharedData_800E21D0_0_s01.field_B4[6][3];
-
     sharedFunc_800D6C7C_0_s01(&sharedData_800DE1E0_0_s01, chara, temp_s0, &sharedData_800E21D0_0_s01.field_134);
 }
