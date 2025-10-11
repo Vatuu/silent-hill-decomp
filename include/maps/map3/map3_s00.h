@@ -1,6 +1,8 @@
 #ifndef _MAPS_MAP3_S00_H
 #define _MAPS_MAP3_S00_H
 
+extern s_800C4590 D_800D5CD0;
+
 void func_800CCE88();
 
 s32 func_800CEF88();

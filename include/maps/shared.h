@@ -2539,6 +2539,8 @@ void sharedFunc_800D0CB8_0_s00(void);
 
 void sharedFunc_800D0E04_0_s00(void);
 
+void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
+
 void sharedFunc_800D209C_0_s00(void);
 
 void sharedFunc_800D20D8_0_s00(void);

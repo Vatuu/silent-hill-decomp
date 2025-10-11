@@ -1,6 +1,8 @@
 #ifndef _MAPS_MAP6_S04_H
 #define _MAPS_MAP6_S04_H
 
+extern s_800C4590 D_800ED4C0;
+
 extern s_AnimInfo FLAUROS_ANIM_INFOS[];
 extern s_AnimInfo PARASITE_ANIM_INFOS[];
 extern s_Model    g_Ai_MonsterCybil_ExtraModel; // Some kind of attachment or another `s_SubCharacter` instance?
