@@ -207,7 +207,7 @@ INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D5DD8);
 
 void func_800D6338(void) // 0x800D6338
 {
-    g_BackgroundColor = 0x70;
+    g_BackgroundColor = 112;
 
     if (Savegame_EventFlagGet(EventFlag_137))
     {

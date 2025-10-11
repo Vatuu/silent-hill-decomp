@@ -383,12 +383,12 @@ STATIC_ASSERT_SIZEOF(s_800AFBF4, 12);
 // ========
 
 /** @brief `bool` | Determines if the player is transitioning from a walk to a run and vice-versa. */
-extern u8 g_Player_IsInWalkToRunTransition; // 0x800AF214
+extern u8 g_Player_IsInWalkToRunTransition;
 
 /** Boolean. */
-extern u8 g_Player_DisableControl; // 0x800AF215
+extern u8 g_Player_DisableControl;
 
-extern u8 D_800AF216; // 0x800AF216
+extern u8 D_800AF216;
 
 /** @brief Indicates the direction which the Rock Drill will attack based on the press of
  * the movement directions.
@@ -397,24 +397,24 @@ extern u8 D_800AF216; // 0x800AF216
  *  0: No input      - Pointing at the center.
  *  1: Forward move  - Pointing up.
  */
-extern s8 g_Player_RockDrill_DirectionAttack; // 0x800AF217
+extern s8 g_Player_RockDrill_DirectionAttack;
 
 /** Another variable that saves the index of the enemy being attacked. */
-extern s32 D_800AF21C; // 0x800AF21C
+extern s32 g_Player_TargetNpcIdx;
 
 /** @brief Counts the amount inputs the player has pressed in order to free himselft from a grab. */
-extern s32 g_Player_GrabFree_InputCount; // 0x800AF20C
+extern s32 g_Player_GrabReleaseInputTimer;
 
 /** @brief current attack animation. */
-extern s32 g_Player_AttackAnimIdx; // 0x800AFBE8
+extern s32 g_Player_AttackAnimIdx;
 
 /** @brief Indicates if a multiple button taps attack is being perfomed. */
-extern s32 g_Player_IsMultiTapAttack; // 0x800AFBF0
+extern s32 g_Player_IsMultiTapAttack;
 
 /** @brief `e_AttackInputType` | Attack type performed by the player. */
-extern s32 g_Player_MeleeAttackType; // 0x800AFBEC
+extern s32 g_Player_MeleeAttackType;
 
-extern s_800AFBF4 D_800AFBF4[11]; // 0x800AFBF4
+extern s_800AFBF4 D_800AFBF4[11];
 
 /** @brief Player rotation speed.
  * More context is required for a name.
@@ -424,15 +424,15 @@ extern q19_12 D_800C454C;
 /** @brief Player movement speed.
  * More context is required for a name.
  */
-extern q19_12 D_800C4550; // 0x800C4550
+extern q19_12 D_800C4550;
 
 /** @brief Used to cancel the idle state if the Action or Run button is tapped. */
-extern s32 g_Player_ActionRunPressed; // 0x800C455C
+extern s32 g_Player_HasActionInput;
 
 /** @brief Determines if the player is pressing a movement button or the right analog stick. */
-extern s32 g_Player_MovementInputDetected; // 0x800C4558
+extern s32 g_Player_HasMoveInput;
 
-extern s_800AFBF4 g_Player_EquippedWeaponInfo; // 0x800C4570
+extern s_800AFBF4 g_Player_EquippedWeaponInfo;
 
 /** `D_800C457C` could be related to animations that play during cutscenes.
  * 
@@ -454,35 +454,35 @@ extern s_800AFBF4 g_Player_EquippedWeaponInfo; // 0x800C4570
  * next overlay where the value is 1 during the first
  * cutscene and doesn't change until the player makes an input.
  */
-extern u8 D_800C457C; // 0x800C457C
+extern u8 D_800C457C;
 
 /** @brief Defines if the player is triggering the aiming action. */
-extern u16 g_Player_IsAiming; // 0x800C457E
+extern u16 g_Player_IsAiming;
 
-extern u16 g_Player_IsSteppingLeftTap; // 0x800C4580
+extern u16 g_Player_IsSteppingLeftTap;
 
-extern u16 g_Player_IsSteppingRightTap; // 0x800C4582
+extern u16 g_Player_IsSteppingRightTap;
 
-extern u16 g_Player_IsTurningLeft; // 0x800C4584
+extern u16 g_Player_IsTurningLeft;
 
-extern u16 g_Player_IsTurningRight; // 0x800C4586
+extern u16 g_Player_IsTurningRight;
 
-extern u16 g_Player_IsSteppingLeftHold; // 0x800C45AC
+extern u16 g_Player_IsSteppingLeftHold;
 
-extern u16 g_Player_IsSteppingRightHold; // 0x800C45AE
+extern u16 g_Player_IsSteppingRightHold;
 
-extern u16 g_Player_IsHoldAttack; // 0x800C45BC
+extern u16 g_Player_IsHoldAttack;
 
-extern u16 g_Player_IsAttacking; // 0x800C45BE
+extern u16 g_Player_IsAttacking;
 
-extern u16 g_Player_IsShooting; // 0x800C45C0
+extern u16 g_Player_IsShooting;
 
-extern u16 g_Player_IsMovingForward; // 0x800C45E8
+extern u16 g_Player_IsMovingForward;
 
-extern u16 g_Player_IsMovingBackward; // 0x800C45F0
+extern u16 g_Player_IsMovingBackward;
 
 /** @brief Defines if the player is triggering the running action. */
-extern u16 g_Player_IsRunning; // 0x800C4604
+extern u16 g_Player_IsRunning;
 
 extern s32 g_Player_HeadingAngle;
 
@@ -491,7 +491,7 @@ extern s32 g_Player_HeadingAngle;
  * @note Possibly inaccurrate name or buggy functionality. If enemies grab the
  * player with this set to `true`, the user will be unable to interact with anything.
  */
-extern u8 g_Player_DisableDamage; // 0x800C4562
+extern u8 g_Player_DisableDamage;
 
 extern q19_12 D_800C45DC;
 
@@ -506,18 +506,18 @@ extern VECTOR3 g_Player_PrevPosition;
 void func_8005CD38(s32*, s32*, s_PlayerCombat*, s32, s32, s32);
 
 /** Used for running displacement. */
-void func_80070CF0(s_SubCharacter* chara, q19_12 arg1, s32 arg2, q19_12 arg3, s32 arg4); // 0x80070CF0
+void func_80070CF0(s_SubCharacter* chara, q19_12 arg1, s32 arg2, q19_12 arg3, s32 arg4);
 
-void Player_CharaTurn_0(s_SubCharacter* chara, e_PlayerLowerBodyState currentState); // 0x800711C4
+void Player_CharaTurn_0(s_SubCharacter* chara, e_PlayerLowerBodyState currentState);
 
-void Player_CharaTurn_1(s_SubCharacter* chara, e_PlayerLowerBodyState currentState); // 0x80071224
+void Player_CharaTurn_1(s_SubCharacter* chara, e_PlayerLowerBodyState currentState);
 
-void Player_CharaRotate(s32 speed); // 0x80071284
+void Player_CharaRotate(s32 speed);
 
 /** @brief Clears movement variables and reset Harry's lower body part animation states in case
  * of switching the player state.
  */
-void Player_MovementStateReset(s_SubCharacter* chara, e_PlayerLowerBodyState lowerBodyState); // 0x800713B4
+void Player_MovementStateReset(s_SubCharacter* chara, e_PlayerLowerBodyState lowerBodyState);
 
 /** Audio-related. */
 bool func_800713E8(s32 animStatus, s_SubCharacter* chara, s32 keyframe0, s32 keyframe1, s32 sfx, s8 pitch);
@@ -527,13 +527,13 @@ bool func_800713E8(s32 animStatus, s_SubCharacter* chara, s32 keyframe0, s32 key
  * @note SH2 symbols have a similar function named `PlayerFunction`, but code-wise they
  * doesn't share many similarities.
  */
-void Player_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords); // 0x800717D0
+void Player_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 /** Player anim handler? */
-void Player_AnimUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, s_AnmHeader* anmHdr, GsCOORDINATE2* coords); // 0x80071968
+void Player_AnimUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 /** @brief Main update function for player logic. */
-void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords); // 0x80071CE8
+void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
 
 /** @brief Updates `g_SysWork.player_4C.extra_128.upperBodyState_20` and prepares
  * transitions between running to and from walking animations.
@@ -547,10 +547,10 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
  * *       3: Left turn state.
  * *       4: Right turn state.
  */
-void Player_UpperBodyStateUpdate(s_MainCharacterExtra* extra, e_PlayerUpperBodyState upperState, s32 unused, s32 arg3); // 0x80073FC0
+void Player_UpperBodyStateUpdate(s_MainCharacterExtra* extra, e_PlayerUpperBodyState upperState, s32 unused, s32 arg3);
 
 /** @brief Triggers animations and actions performed by the player's upper body. */
-void Player_UpperBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x80074254
+void Player_UpperBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra);
 
 /** @brief Updates animations and status related to player attacks.
  * Returns `true` if animations where succefully finished and if performing a multitap attack.
@@ -560,16 +560,16 @@ bool Player_CombatAnimUpdate();
 /** @brief Main animation and state handler for the player's upper body.
  * Returns `true` if combat animations where completed or if the player's health is >60%.
  */
-bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x80075504
+bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra);
 
 /** @brief Updates upper body states related to combat. */
-void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x800771BC
+void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra);
 
 /** @brief Cancels movement when the player abruptly stops running sideways. */
-void Player_StepWallStop_MovementCancel(s_SubCharacter* chara, s32 arg1, s32 animStatus, s32 keyframeIdx, e_PlayerLowerBodyState lowerBodyState, s32 headingAngle, s32 aimState); // 0x80077BB8
+void Player_StepWallStop_MovementCancel(s_SubCharacter* chara, s32 arg1, s32 animStatus, s32 keyframeIdx, e_PlayerLowerBodyState lowerBodyState, s32 headingAngle, s32 aimState);
 
 /** @brief Main player movement function. */
-void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x80077D00
+void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra); 
 
 /** @brief Multiple purposes.
  * * Assigns the value used by a global that handles player movement.
@@ -577,7 +577,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra);
  * * Restarts the animation state if the player is not longer exhausted or has recovered health.
  * * Handles audio related to Harry's movements.
  */
-void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x8007B924
+void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra);
 
 /** @brief Checks for damage received by the player and handles the animations
  * for getting hurt or grabbed by monsters.
@@ -585,18 +585,18 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x800
  * @note SH2 symbols have a similar function named `PlayerCheckDamage`, but code-wise it has
  * no similarities.
  */
-void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra); // 0x8007C800
+void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra);
 
 // Removing this function makes it impossible to run.
-s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1); // 0x8007D6F0
+s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1);
 
-void func_8007EBBC(); // 0x8007EBBC
+void func_8007EBBC();
 
-void Game_PlayerMovementsReset(); // 0x8007F1CC
+void Game_PlayerMovementsReset();
 
-void Player_Controller(); // 0x8007F32C
+void Player_Controller();
 
 /** @brief Determines if the player can stomp or kick a knocked enemy. */
-bool func_8007F95C(); // 0x8007F95C
+bool func_8007F95C();
 
 #endif

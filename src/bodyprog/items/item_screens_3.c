@@ -855,18 +855,18 @@ s16 D_800AF1FC[] =
     0x0666, 0x07AE, 0x07AE, 0x0000
 };
 
-s32   g_Player_GrabFree_InputCount       = 0;
-q3_12 g_Player_FlexRotationY             = FP_ANGLE(0.0f);
-q3_12 g_Player_FlexRotationX             = FP_ANGLE(0.0f);
-u8    g_Player_IsInWalkToRunTransition   = false;
-u8    g_Player_DisableControl            = false;
-u8    D_800AF216                         = 0; // Left Y analog stick value.
-s8    g_Player_RockDrill_DirectionAttack = 0;
-u32   D_800AF218                         = 0;
-s32   D_800AF21C                         = NO_VALUE;
-u8    D_800AF220                         = 0;
+q19_12 g_Player_GrabReleaseInputTimer     = Q12(0.0f);
+q3_12  g_Player_FlexRotationY             = FP_ANGLE(0.0f);
+q3_12  g_Player_FlexRotationX             = FP_ANGLE(0.0f);
+u8     g_Player_IsInWalkToRunTransition   = false;
+u8     g_Player_DisableControl            = false;
+u8     D_800AF216                         = 0; // Left Y analog stick value.
+s8     g_Player_RockDrill_DirectionAttack = 0;
+u32    D_800AF218                         = 0;
+s32    g_Player_TargetNpcIdx              = NO_VALUE;
+u8     D_800AF220                         = 0;
 // 3 bytes of padding.
-s32   D_800AF224                         = NO_VALUE; // Weapon attack.
+s32    g_Player_WeaponAttack1             = NO_VALUE;
 
 s_AnimInfo HARRY_BASE_ANIM_INFOS[57] =
 {
@@ -928,6 +928,8 @@ s_AnimInfo HARRY_BASE_ANIM_INFOS[57] =
     { Anim_Update1, ANIM_STATUS(HarryAnim_IdleExhausted,           true),  true,  NO_VALUE,                                             { func_800706E4 }, 543,      567 },
     {}
 };
+// TODO: `func_8007EBBC` indicates there should be more.
+
 u8 __padding1[14] = {};
 s16 D_800AF5C6 = 0;
 u32 D_800AF5C8[23] = {}; // Padding?
@@ -1008,10 +1010,12 @@ void Inventory_DirectionalInputSet() // 0x8004F5DC
 
 void Gfx_ItemScreens_RenderInit(u32* selectedItemId) // 0x8004F764
 {
-    GsDOBJ2* ptr;
+    #define LABEL_COUNT 8
+
+    GsDOBJ2* obj;
     s32      i;
 
-    DVECTOR strPosTable[] = // 0x80027DD8
+    DVECTOR LABEL_STR_POS_TABLE[LABEL_COUNT] =
     {
         { 118, -80 },
         { 144, 304 },
@@ -1023,7 +1027,7 @@ void Gfx_ItemScreens_RenderInit(u32* selectedItemId) // 0x8004F764
         { 16, 200 }
     };
 
-    char* strs[] = // 0x80027E34
+    char* LABEL_STRS[LABEL_COUNT] =
     {
         "Equipment",
         "Exit",
@@ -1040,16 +1044,16 @@ void Gfx_ItemScreens_RenderInit(u32* selectedItemId) // 0x8004F764
     // In inventory.
     if (g_GameWork.gameStateStep_598[1] < 21)
     {
-        for (i = 0; i < 8; i++)
+        for (i = 0; i < ARRAY_SIZE(LABEL_STR_POS_TABLE); i++)
         {
-            Gfx_StringSetPosition(strPosTable[i].vx, strPosTable[i].vy);
-            Gfx_StringDraw(strs[i], 10);
+            Gfx_StringSetPosition(LABEL_STR_POS_TABLE[i].vx, LABEL_STR_POS_TABLE[i].vy);
+            Gfx_StringDraw(LABEL_STRS[i], 10);
         }
 
         Inventory_PlayerItemScroll(selectedItemId);
 
         // Player items.
-        for (i = 0, ptr = &g_Items_ItemsModelData[0]; i < 7; i++, ptr++)
+        for (i = 0, obj = &g_Items_ItemsModelData[0]; i < 7; i++, obj++)
         {
             if (D_800C3E18[i] == NO_VALUE)
             {
@@ -1067,7 +1071,7 @@ void Gfx_ItemScreens_RenderInit(u32* selectedItemId) // 0x8004F764
             func_800548D8(i);
             GsSetFlatLight(0, &g_Items_Lights[i][0]);
             GsSetFlatLight(1, &g_Items_Lights[i][1]);
-            func_8004BD74(i, ptr, 0);
+            func_8004BD74(i, obj, 0);
         }
 
         // Equipped item.
@@ -1080,7 +1084,7 @@ void Gfx_ItemScreens_RenderInit(u32* selectedItemId) // 0x8004F764
             func_800548D8(7);
             GsSetFlatLight(0, &D_800C3A88[0]);
             GsSetFlatLight(1, &D_800C3A88[1]);
-            func_8004BD74(7, ptr, 0);
+            func_8004BD74(7, obj, 0);
         }
 
         Gfx_Inventory_ItemDescriptionDraw(selectedItemId);

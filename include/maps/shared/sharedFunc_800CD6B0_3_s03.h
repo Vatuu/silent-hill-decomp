@@ -1,53 +1,57 @@
-q19_12 sharedFunc_800CD6B0_3_s03(MATRIX* mtx, s32 mtxCount, VECTOR3* center)
+q19_12 sharedFunc_800CD6B0_3_s03(MATRIX* mat, s32 matCount, VECTOR3* center)
 {
     s32    i;
-    s32    x;
-    s32    z;
-    s32    minXTemp;
-    s32    minX;
-    s32    maxX;
-    s32    minZTemp;
-    s32    minZ;
-    s32    maxZ;
+    q19_12 posX;
+    q19_12 posZ;
+    q23_8  minXTemp;
+    q23_8  minX;
+    q23_8  maxX;
+    q23_8  minZTemp;
+    q23_8  minZ;
+    q23_8  maxZ;
     q19_12 radius;
 
-    maxX = minX = x = mtx->t[0];
-    maxZ = minZ = z = mtx->t[2];
-    mtx++;
+    maxX =
+    minX =
+    posX = mat->t[0];
+    maxZ =
+    minZ =
+    posZ = mat->t[2];
+    mat++;
 
-    for (i = 1; i < mtxCount; i++, mtx++)
+    for (i = 1; i < matCount; i++, mat++)
     {
-        x = mtx->t[0];
-        z = mtx->t[2];
+        posX = mat->t[0];
+        posZ = mat->t[2];
 
-        // `minX = MIN(x, minX)`
+        // `minX = MIN(posX, minX)`
         minXTemp = minX;
-        if (minXTemp >= x)
+        if (minXTemp >= posX)
         {
-            minXTemp = x;
+            minXTemp = posX;
         }
         minX = minXTemp;
-        maxX = MAX(x, maxX);
+        maxX = MAX(posX, maxX);
 
-        // `minZ = MIN(z, minZ)`
+        // `minZ = MIN(posZ, minZ)`
         minZTemp = minZ;
-        if (minZTemp >= z)
+        if (minZTemp >= posZ)
         {
-            minZTemp = z;
+            minZTemp = posZ;
         }
         minZ = minZTemp;
-        maxZ = MAX(z, maxZ);
+        maxZ = MAX(posZ, maxZ);
     }
 
-    x      = maxX - minX;
-    x      = Q8_TO_Q12(x);
-    z      = maxZ - minZ;
-    z      = Q8_TO_Q12(z);
-    radius = SquareRoot12(FP_SQUARE_PRECISE(x, Q12_SHIFT) + FP_SQUARE_PRECISE(z, Q12_SHIFT));
+    posX      = maxX - minX;
+    posX      = Q8_TO_Q12(posX);
+    posZ      = maxZ - minZ;
+    posZ      = Q8_TO_Q12(posZ);
+    radius = SquareRoot12(FP_SQUARE_PRECISE(posX, Q12_SHIFT) + FP_SQUARE_PRECISE(posZ, Q12_SHIFT));
 
-    x          = Q8_TO_Q12(minX) + (x / 2);
-    z          = Q8_TO_Q12(minZ) + (z / 2);
-    center->vx = x;
-    center->vz = z;
+    posX       = Q8_TO_Q12(minX) + (posX / 2);
+    posZ       = Q8_TO_Q12(minZ) + (posZ / 2);
+    center->vx = posX;
+    center->vz = posZ;
     return radius / 2;
 }

@@ -57,9 +57,9 @@ void Ai_Creaper_Init(s_SubCharacter* chara)
 
         break;
     }
-    while (i < NPC_COUNT_MAX);
+    while (i < ARRAY_SIZE(g_SysWork.npcs_1A0));
 
-    if (i == NPC_COUNT_MAX)
+    if (i == ARRAY_SIZE(g_SysWork.npcs_1A0))
     {
         // No other Creapers present.
         sharedData_800E57CC_1_s02 = 0;
