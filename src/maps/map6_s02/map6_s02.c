@@ -83,7 +83,7 @@ void func_800CD6C8(void) {}
 
 #include "maps/shared/Ai_Alessa_Update.h" // 0x800CD734
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", sharedFunc_800CECFC_3_s02); // 0x800CD7A8
+#include "maps/shared/sharedFunc_800CECFC_3_s02.h" // 0x800CD7A8
 
 #include "maps/shared/sharedFunc_800CED44_3_s02.h" // 0x800CD7F0
 

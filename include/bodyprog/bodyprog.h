@@ -225,6 +225,10 @@ typedef enum _Sfx
     Sfx_Unk1660     = 1660,
     Sfx_Unk1661     = 1661,
 
+    Sfx_Unk1688     = 1688,
+    Sfx_Unk1689     = 1689,
+    Sfx_Unk1690     = 1690,
+
     Sfx_Unk4664     = 4664,
 
     Sfx_Unk4699     = 4699
@@ -3537,11 +3541,15 @@ void func_8005DD44(s32 sfx, VECTOR3* pos, q23_8 vol, s8 pitch); // Types assumed
 /** Checks `field_8` in collision struct. */
 bool func_8005F680(s_Collision* coll);
 
+void func_8005F6B0(s_SubCharacter* arg0, VECTOR* arg1, s32 arg2, s32 arg3);
+
 /** Spatial SFX func? */
 void func_8005DE0C(s32 sfx, VECTOR3*, s32, s32, s32); // Types assumed.
 
 /** Something related to events of the map and loading of textures? */
 void Map_EffectTexturesLoad(s32 mapIdx);
+
+void func_8005E650();
 
 void func_8005E70C();
 
@@ -3550,8 +3558,6 @@ s32 func_8005E7E0(s32 arg0);
 void func_8005E89C();
 
 s32 func_8005F55C(s32 arg0);
-
-void func_8005F6B0(s_SubCharacter*, VECTOR*, s32, s32);
 
 void DmsHeader_FixOffsets(s_DmsHeader* dmsHdr);
 

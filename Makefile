@@ -184,6 +184,10 @@ TARGET_MAPS				:= map0_s00 map0_s01 map0_s02 \
 							map5_s00 map5_s01 map5_s02 map5_s03 \
 							map6_s00 map6_s01 map6_s02 map6_s03 map6_s04 map6_s05 \
 							map7_s00 map7_s01 map7_s02 map7_s03
+
+# If BUILD_MAP is set, only use that; otherwise use the default huge list
+# (allows large speedup by skipping config parse of all maps)
+TARGET_MAPS				:= $(if $(BUILD_MAP),$(BUILD_MAP),$(TARGET_MAPS))
 TARGET_MAPS				:= $(addprefix $(TARGET_MAPS_SRC_DIR)/,$(TARGET_MAPS))
 
 endif

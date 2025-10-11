@@ -1,8 +1,25 @@
 #ifndef _MAPS_MAP7_S03_H
 #define _MAPS_MAP7_S03_H
 
+extern s32 D_800ED73C; // } RNG related values?
+extern s32 D_800ED740; // }
+
 extern s32 D_800EDA00;
+
 extern s16 D_800F23D0;
+
+extern s32 D_800F2430;
+extern s32 D_800F2434;
+
+extern s32 D_800F3D8C;
+
+extern u8 D_800F4805;
+
+extern s32 D_800F4820;
+
+extern s32 D_800F4830;
+
+extern s32 D_800F4838;
 
 extern s_AnimInfo LITTLE_INCUBUS_ANIM_INFOS[];
 extern s_AnimInfo INCUBUS_ANIM_INFOS[];
@@ -22,18 +39,36 @@ void Ai_Incubator_Init(s_SubCharacter* chara);
 
 void Ai_LittleIncubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
+void func_800D71A4(s32 arg0);
+
+void func_800D7CF8(void);
+
+void func_800D7ED0(void);
+
+void func_800D7EF0(void);
+
+PACKET* func_800D7F10(void);
+
+void func_800D7F20(u8* arg0);
+
+void func_800D88C4();
+
+void func_800D88CC(void);
+void func_800D88D8(void);
+
 void func_800DB608();
 void func_800DD67C(VECTOR3*, s_SubCharacter*, GsCOORDINATE2*);
+u8   func_800DD964(void);
 void func_800DD98C(s32);
 bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void func_800DDBBC(s_SubCharacter*);
 void func_800DEC74(s_SubCharacter*, GsCOORDINATE2*);
 void func_800DED68(s_SubCharacter*, GsCOORDINATE2*);
-void func_800DEE44(s_SubCharacter*);
+void func_800DEE44(s_SubCharacter* chara);
 void func_800DEE90(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 void func_800DEFE8(s_SubCharacter* chara, GsCOORDINATE2* coord);
-void func_800DF044(s_SubCharacter*, GsCOORDINATE2*);
-void func_800DF074(s_SubCharacter*);
+void func_800DF044(s_SubCharacter* chara, GsCOORDINATE2* coords);
+void func_800DF074(s_SubCharacter* chara);
 void Ai_Incubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void func_800DFA14();
@@ -42,11 +77,31 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void func_800DFCE4(s_SubCharacter*);
 void func_800E05DC(s_SubCharacter*, GsCOORDINATE2*);
 void func_800E0670(s_SubCharacter* chara, GsCOORDINATE2* coord);
-void func_800E0728(s_SubCharacter*);
-void func_800E0774(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
-void func_800E0888(s_SubCharacter*, GsCOORDINATE2*);
+void func_800E0728(s_SubCharacter* chara);
+void func_800E0774(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void func_800E0888(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void func_800E08E4(s_SubCharacter* chara, GsCOORDINATE2* coord);
 void func_800E0914(s_SubCharacter* chara);
 void Ai_Unknown23_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+
+void func_800E0B28(s32 arg0);
+void func_800E0B5C(s32 arg0);
+
+void func_800E0B90(void);
+void func_800E0C10(void);
+
+// Some kind of RNG? Constants don't seem well known?
+s32 func_800E28F4(void);
+
+void func_800E3D18(void);
+
+void func_800E941C(void);
+
+void func_800E9490(s8* arg0);
+
+void func_800E9498(void);
+void func_800E94AC(void);
+
+void func_800E9874(void);
 
 #endif

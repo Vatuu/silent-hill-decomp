@@ -205,4 +205,6 @@ bool func_800D8748(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 
 
 void func_800D0394(s32 count, VECTOR3* vecs);
 
+void func_800DADD4(void);
+
 #endif

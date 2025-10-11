@@ -191,6 +191,7 @@ typedef enum _EventFlag
     EventFlag_M6S03_PickupMap = 436,
 
     EventFlag_448 = 448,
+    EventFlag_449 = 449,
 
     EventFlag_481 = 481,
     EventFlag_482 = 482,
@@ -240,6 +241,10 @@ typedef enum _EventFlag
     EventFlag_571 = 571,
 
     EventFlag_574 = 574,
+
+    EventFlag_584 = 584,
+    EventFlag_586 = 586,
+    EventFlag_587 = 587,
 
     /** `MAP0_S01` common item pickups. */
     EventFlag_M0S01_HealthDrink0 = 596,

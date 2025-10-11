@@ -57,6 +57,8 @@ def import_c_file(in_file) -> str:
             if sym in defines:
                 del defines[sym]
         else:
+            if line.strip().startswith("__asm__ volatile"):
+                continue
             source_lines.append(line)
 
     for line in stock_macros.strip().splitlines():

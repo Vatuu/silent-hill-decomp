@@ -270,9 +270,15 @@ void func_800D8C00(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8C00
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800D9764);
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800D97FC);
+void func_800D97FC(s32 arg0) // 0x800D97FC
+{
+    (arg0 != 0) ? func_800D9864() : func_800D9924();
+}
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800D9830);
+void func_800D9830(s32 arg0) // 0x800D9830
+{
+    (arg0 != 0) ? func_800D98E4() : func_800D9924();
+}
 
 void func_800D9864(void) // 0x800D9864
 {
@@ -302,7 +308,10 @@ void func_800D9864(void) // 0x800D9864
     func_8003640C(var);
 }
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800D98E4);
+void func_800D98E4(void) // 0x800D98E4
+{
+    func_8003640C(Savegame_EventFlagGet(EventFlag_391) ? 40 : 35);
+}
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800D9924);
 
@@ -1406,9 +1415,17 @@ INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02", D_800CD904);
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800E1DAC);
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800E1FF4);
+void func_800E1FF4(void) // 0x800E1FF4
+{
+    const static VECTOR3 D_800CD938 = { Q12(97.8f), Q12(-1.0f), Q12(-19.2f) };
 
-INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02", D_800CD938);
+    if (g_SysWork.sysStateStep_C[1] == 0)
+    {
+        func_8005DC1C(Sfx_Unk1464, &D_800CD938, 128, 0);
+    }
+
+    func_80087540(FILE_TIM_PLANTBK_TIM, 0, 0, 22, 23);
+}
 
 INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02", D_800CD944);
 

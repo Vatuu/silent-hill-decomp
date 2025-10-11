@@ -832,7 +832,53 @@ void func_800D46C4(s_SubCharacter* chara) // 0x800D46C4
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D4894);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D49B0);
+void func_800D49B0(s_SubCharacter* chara)
+{
+    s32 status;
+    u32 stateStep;
+    bool cond;
+
+    stateStep = chara->model_0.stateStep_3;
+    status = chara->model_0.anim_4.status_0;
+    cond = 0;
+
+    switch (stateStep)
+    {
+        case 0:
+            if (IS_ANIM_STATUS_ACTIVE(status))
+            {
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(10, false);
+                chara->model_0.stateStep_3 = 1;
+            }
+            break;
+        case 1:
+            if (status != ANIM_STATUS(10, false))
+            {
+                chara->model_0.stateStep_3 = 2;
+                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
+            }
+            break;
+        case 2:
+            if (status != ANIM_STATUS(10, true))
+            {
+                cond = 1;
+            }
+            break;
+    }
+
+    func_800D5E14(chara);
+    Chara_DamageTake(chara, Q12(0.6f));
+
+    if (cond)
+    {
+        chara->model_0.state_2 = 2;
+        chara->model_0.stateStep_3 = 0;
+        // TODO: Looks similar to `field_E0` bitfield in `s_SubCharacter` but code doesn't match with that layout.
+        // Also present in sharedFunc_800D3928_0_s01
+        chara->properties_E4.unk0.properties_E8.val32 &= ~0xF00;
+        chara->properties_E4.unk0.properties_E8.val32 |= 0x100;
+    }
+}
 
 #include "maps/shared/sharedFunc_800D4A80_0_s01.h"
 
@@ -860,7 +906,27 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5C90);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5D80);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5E14);
+void func_800D5E14(s_SubCharacter* chara)
+{
+    s32 idx;
+    s_sharedData_800E21D0_0_s01* base;
+    s_func_800D2E04* src;
+
+    src = &sharedData_800CAA98_0_s01;
+    base = &sharedData_800E21D0_0_s01;
+
+    idx = 0;
+    base->field_B4[idx][2] = src->unk_380[7][0];
+    base->field_B4[idx][1] = src->unk_380[7][1];
+    idx = 1;
+    base->field_B4[idx][2] = src->unk_380[19][0];
+    base->field_B4[idx][1] = src->unk_380[19][1];
+    idx = 3;
+    base->field_B4[idx][2] = 0;
+    base->field_B4[idx][1] = src->unk_380[35][1];
+
+    sharedFunc_800D5E78_0_s01(chara, 0);
+}
 
 #include "maps/shared/sharedFunc_800D5E78_0_s01.h" // 0x800D5E78
 
@@ -870,7 +936,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5F00);
 
 #include "maps/shared/sharedFunc_800D633C_0_s01.h" // 0x800D633C
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D63A4_0_s01); // 0x800D63A4
+#include "maps/shared/sharedFunc_800D63A4_0_s01.h" // 0x800D63A4
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D6600_0_s01); // 0x800D6600
 
@@ -878,13 +944,13 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D6600_0_s01
 
 #include "maps/shared/sharedFunc_800D6C7C_0_s01.h" // 0x800D6C7C
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D6EC4);
+INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D6EC4_0_s01);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D7120_0_s01);
 
 #include "maps/shared/sharedFunc_800D71F0_0_s01.h" // 0x800D71F0
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D72E8);
+INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D72E8_0_s01);
 
 #include "maps/shared/sharedFunc_800D7440_0_s01.h" // 0x800D7440
 

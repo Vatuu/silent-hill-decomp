@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 import argparse
 import io
@@ -12,6 +12,7 @@ from enum import Enum
 import m2ctx
 import m2c.m2c.main as m2c
 
+only_make_check = False
 
 # gets the root directory of the project
 # the way it works is that it looks for the directory 'src'
@@ -59,6 +60,11 @@ class NonMatchingFunc(object):
 
 def get_nonmatching_functions(base_path, func_name) -> list:
     function_list = list()
+    # Check if we've been provided a full path already
+    if "/nonmatchings/" in func_name:
+        function = NonMatchingFunc(func_name)
+        function_list.append(function)
+        return function_list
     for root, dirs, files in os.walk(base_path):
         if "/nonmatchings/" in root:
             for f in files:
@@ -130,34 +136,51 @@ def check_injected_code(func) -> InjectRes:
     print(f"make {func.overlay_name}")
     
     make_str = ""
+    make_defines = ""
     if func.overlay_name == "SLUS_007.07" or func.overlay_name == "main":
         make_str = ""
+        make_defines = "BUILD_ENGINE=0 BUILD_SCREENS=0 BUILD_MAPS=0"
     else:
         if func.overlay_name == "bodyprog":
             make_str = "build/out/1ST/BODYPROG.BIN"
+            make_defines = "BUILD_ENGINE=1 BUILD_SCREENS=0 BUILD_MAPS=0"
         elif func.overlay_name == "b_konami":
             make_str = "build/out/1ST/B_KONAMI.BIN"
+            make_defines = "BUILD_ENGINE=0 BUILD_SCREENS=1 BUILD_MAPS=0"
         elif func.overlay_name == "option" or func.overlay_name == "options":
             make_str = "build/out/VIN/OPTION.BIN"
+            make_defines = "BUILD_ENGINE=0 BUILD_SCREENS=1 BUILD_MAPS=0"
         elif func.overlay_name == "saveload":
             make_str = "build/out/VIN/SAVELOAD.BIN"
+            make_defines = "BUILD_ENGINE=0 BUILD_SCREENS=1 BUILD_MAPS=0"
         elif func.overlay_name == "stf_roll" or func.overlay_name == "credits":
             make_str = "build/out/VIN/STF_ROLL.BIN"
+            make_defines = "BUILD_ENGINE=0 BUILD_SCREENS=1 BUILD_MAPS=0"
         elif func.overlay_name == "stream":
             make_str = "build/out/VIN/STREAM.BIN"
+            make_defines = "BUILD_ENGINE=0 BUILD_SCREENS=1 BUILD_MAPS=0"
+
+    # Map speedup, only let make parse the config for this single map
+    if func.overlay_name.startswith("map"):
+        make_defines = f"BUILD_ENGINE=0 BUILD_SCREENS=0 BUILD_MAPS=1 BUILD_MAP={func.overlay_name}"
     
-    compile_result = subprocess.run(
-        f"make {make_str}",
-        cwd=root_dir,
-        shell=True,
-        check=False,
-        capture_output=True,
-    )
-    if compile_result.returncode == 0:
+    result = 0
+    # HACK: only_make_check gives speedup, but doesn't allow to tell difference between NOT_COMPILABLE and NON_MATCHING
+    if not only_make_check:
+        compile_result = subprocess.run(
+            f"make {make_str}",
+            cwd=root_dir,
+            shell=True,
+            check=False,
+            capture_output=True,
+        )
+        result = compile_result.returncode
+
+    if result == 0:
         # good news, the code was compilable
         # now checking for the checksum...
         check_result = subprocess.run(
-            "make check", cwd=root_dir, shell=True, check=False, capture_output=True
+            f"make check {make_defines}", cwd=root_dir, shell=True, check=False, capture_output=True
         )
         if check_result.returncode == 0:
             # decompilation successful! There is nothing else to do
@@ -235,20 +258,20 @@ def resolve_jumptables(func: NonMatchingFunc):
                     break
                 print("good nop")
                 # Build a regex to search for the standard jump table setup
-                lw_regex = "lw\s*\\" + jumpreg + ", %lo\(([^)]*)\)\(\$at\)"
+                lw_regex = rf"lw\s*\{jumpreg}, %lo\(([^)]*)\)\(\$at\)"
                 lwcheck = re.search(lw_regex, lines[i - 2])
                 if lwcheck == None:
                     break
                 jumptable_name = lwcheck.group(1)
                 print(f"Jumptable: {jumptable_name}")
-                addu_regex = "addu\s*\$at, \$at, \$"
+                addu_regex = r"addu\s*\$at, \$at, \$"
                 adducheck = re.search(addu_regex, lines[i - 3])
                 if adducheck == None:
                     print("Couldn't get the addu")
                     print(lines[i - 3])
                     break
                 print("Good addu")
-                lui_regex = "lui\s*\$at, %hi\(" + jumptable_name + "\)"
+                lui_regex = rf"lui\s*\$at, %hi\({jumptable_name}\)"
                 luicheck = re.search(lui_regex, lines[i - 4])
                 if luicheck == None:
                     break
@@ -274,7 +297,7 @@ def resolve_jumptables(func: NonMatchingFunc):
                                         break
 
 
-def decompile(func_name: str, number_occurrence: int = None, force: bool = False):
+def decompile(func_name: str, number_occurrence: int = None, force: bool = False, resolve_jtbl: bool = True):
     funcs = get_nonmatching_functions(asm_dir, func_name)
     if len(funcs) == 0:
         print(f"function {func_name} not found or already decompiled")
@@ -299,7 +322,8 @@ def decompile(func_name: str, number_occurrence: int = None, force: bool = False
     # print(f"text: {func.text_offset}")
     # print(f"asm: {func.asm_path}")
     # print(f"src: {func.src_path}")
-    resolve_jumptables(func)
+    if resolve_jtbl:
+        resolve_jumptables(func)
 
     ctx = get_c_context(func.src_path)
     dec = run_m2c(func, ctx)
@@ -317,6 +341,7 @@ def decompile(func_name: str, number_occurrence: int = None, force: bool = False
         print(f"function '{func.name}' might already be decompiled")
     else:
         print("unhandled error!")
+    return inject_res
 
 
 if __name__ == "__main__":

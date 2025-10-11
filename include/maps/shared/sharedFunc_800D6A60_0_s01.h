@@ -68,7 +68,7 @@ s32 sharedFunc_800D6A60_0_s01(VECTOR3* vec0, VECTOR3* vec1, s_SubCharacter* char
     vec0Y = vec0Cpy->vy;
 
     calcY = func_80080884(chara->position_18.vx, chara->position_18.vz);
-    sharedData_800E22E4_0_s01 = calcY;
+    sharedData_800E21D0_0_s01.field_114 = calcY;
     retCode1 = 1;
 
     if (!(chara->field_E1_0))
