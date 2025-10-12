@@ -1214,12 +1214,6 @@ void func_800DACB0(void) // 0x800DACB0
 }
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DADD4);
-/* TODO: linker can't find `Event_ItemTake`.
-void func_800DADD4(void)
-{
-    Event_ItemTake(InventoryItemId_Camera, 1, 0x207, 0x37);
-}
-*/
 
 void func_800DAEFC(void) // 0x800DAEFC
 {
