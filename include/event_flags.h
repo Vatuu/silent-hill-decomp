@@ -209,6 +209,8 @@ typedef enum _EventFlag
 
     EventFlag_M6S03_PickupMap = 436,
 
+    EventFlag_440 = 440,
+
     EventFlag_448 = 448,
     EventFlag_449 = 449,
 
