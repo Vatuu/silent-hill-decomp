@@ -19,6 +19,10 @@ categories:
   - id: screen.options
     name: Options Screen
     paths:
+      - screens/options
+  - id: screen.credits
+    name: Credits Screen
+    paths:
       - screens/credits
   - id: screen.saveload
     name: Save Screen
@@ -70,7 +74,7 @@ categories:
       - maps/map1_s03
 
   - id: map.map1_s04
-    name: 1_04 - Unknown (School location, likely in Otherworld)
+    name: 1_04 - Unused (School Related)
     paths:
       - maps/map1_s04
 
@@ -100,7 +104,7 @@ categories:
       - maps/map2_s02
 
   - id: map.map2_s03
-    name: 2_03 - Unknown (Location related to Central Silent Hill)
+    name: 2_03 - Unused (Central Silent Hill Related)
     paths:
       - maps/map2_s03
 
@@ -145,7 +149,7 @@ categories:
       - maps/map3_s06
 
   - id: map.map4_s00
-    name: 4_00 - Unknown (Possibly unused)
+    name: 4_00 -- Unused (Central Silent Hill Related)
     paths:
       - maps/map4_s00
 
@@ -175,7 +179,7 @@ categories:
       - maps/map4_s05
 
   - id: map.map4_s06
-    name: 4_06 - Unknown (Possibly unused)
+    name: 4_06 -- Unused (Central Silent Hill Related)
     paths:
       - maps/map4_s06
 
@@ -225,7 +229,7 @@ categories:
       - maps/map6_s04
 
   - id: map.map6_s05
-    name: 6_05 - Unknown (Possibly unused)
+    name: 6_05 - Unused (Lakeside Amusement Park Related)
     paths:
       - maps/map6_s05
 
