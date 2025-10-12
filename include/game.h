@@ -1215,7 +1215,10 @@ STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesLarvalStalker, 68);
 typedef struct _SubCharPropertiesUnk0
 {
     s32        unk_E4;            // Is this part of `a_SubCharacter`?
-    u_Property properties_E8;
+    u32        field_E0_0: 4;
+    u32        field_E0_4: 4;
+    u32        field_E0_8: 4;
+    u32        field_E0_C: 20;
     u_Property properties_EC;
     u_Property properties_F0;
     u_Property properties_F4;

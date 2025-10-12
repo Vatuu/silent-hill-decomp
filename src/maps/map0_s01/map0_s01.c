@@ -756,10 +756,7 @@ void func_800D4894(s_SubCharacter* chara)
             {
                 chara->model_0.state_2 = ANIM_STATUS(23, true);
                 chara->model_0.stateStep_3 = 0;
-                // TODO: Looks similar to `field_E0` bitfield in `s_SubCharacter` but code doesn't match with that layout.
-                // Also present in sharedFunc_800D3928_0_s01
-                chara->properties_E4.unk0.properties_E8.val32 &= ~0xF00;
-                chara->properties_E4.unk0.properties_E8.val32 |= 0x300;
+                chara->properties_E4.unk0.field_E0_8 = 3;
             }
         }
         else if (dmgType < 5)
@@ -819,10 +816,7 @@ void func_800D49B0(s_SubCharacter* chara)
     {
         chara->model_0.state_2 = 2;
         chara->model_0.stateStep_3 = 0;
-        // TODO: Looks similar to `field_E0` bitfield in `s_SubCharacter` but code doesn't match with that layout.
-        // Also present in sharedFunc_800D3928_0_s01
-        chara->properties_E4.unk0.properties_E8.val32 &= ~0xF00;
-        chara->properties_E4.unk0.properties_E8.val32 |= 0x100;
+        chara->properties_E4.unk0.field_E0_8 = 1;
     }
 }
 
