@@ -1387,7 +1387,7 @@ typedef struct
     u8            field_3;
     s_WaterZone*  waterZones_4;
     s32           screenBrightness_8;
-    s8            unk_C[4];
+    s32           field_C;
     q23_8         drawDistance_10; // Name from SHME, "has no effect when fog is disabled".
     s32           fogRelated_14;   // "FogThing1" from SHME, seems to affect distance where fog begins.
     s32           fogRelated_18;   // "FogThing2" from SHME.
@@ -3411,6 +3411,10 @@ void func_80055648(s32 arg0, SVECTOR* arg1);
 s32 func_800557DC();
 
 void func_80055814(s32 arg0);
+
+void func_80055840(s32 arg0, s32 arg1);
+
+s32 func_800559A8(s32 arg0);
 
 u8 func_80055A50(s32 arg0);
 
