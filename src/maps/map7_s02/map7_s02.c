@@ -1368,7 +1368,7 @@ void func_800E1FF4(void) // 0x800E1FF4
         func_8005DC1C(Sfx_Unk1464, &D_800CD938, 128, 0);
     }
 
-    func_80087540(FILE_TIM_PLANTBK_TIM, 0, 0, 22, 23);
+    func_80087540(FILE_TIM_PLANTBK_TIM, Q12(0.0f), Q12(0.0f), 22, 23);
 }
 
 INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02", D_800CD944);

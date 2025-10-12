@@ -1691,7 +1691,7 @@ void func_800DC028(void) // 0x800DC028
         func_8005DC1C(Sfx_Unk1464, &D_800CC788, 128, 0);
     }
 
-    func_80087540(FILE_TIM_PLANTBK_TIM, 0, 0, 37, 38);
+    func_80087540(FILE_TIM_PLANTBK_TIM, Q12(0.0f), Q12(0.0f), 37, 38);
 }
 
 void func_800DC080(void) // 0x800DC080

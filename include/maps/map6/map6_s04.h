@@ -1,11 +1,15 @@
 #ifndef _MAPS_MAP6_S04_H
 #define _MAPS_MAP6_S04_H
 
-extern s_800C4590 D_800ED4C0;
-
 extern s_AnimInfo FLAUROS_ANIM_INFOS[];
 extern s_AnimInfo PARASITE_ANIM_INFOS[];
+
+extern s_800C4590 D_800ED4C0;
+
 extern s_Model    g_Ai_MonsterCybil_ExtraModel; // Some kind of attachment or another `s_SubCharacter` instance?
+
+extern s32 D_800ED588;
+extern s32 D_800ED58C;
 
 void Ai_MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void Ai_MonsterCybil_Init(s_SubCharacter*, s_Model*);
@@ -18,5 +22,15 @@ void func_800DB4CC(s_SubCharacter*, s_Model*, GsCOORDINATE2*);
 
 void Ai_Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void Ai_Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+
+void func_800DEA94(s32* arg0);
+
+void func_800E02E0(void);
+
+void func_800E10F8(void);
+
+void func_800E1258(s32 arg0);
+
+void func_800E1290(void);
 
 #endif

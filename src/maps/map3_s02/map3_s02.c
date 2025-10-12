@@ -2,6 +2,7 @@
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
 #include "maps/shared.h"
+#include "maps/map3/map3_s02.h"
 
 INCLUDE_RODATA("asm/maps/map3_s02/nonmatchings/map3_s02", D_800C9578);
 
@@ -145,9 +146,15 @@ INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", sharedFunc_800CEEDC_3_s02
 
 INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", func_800CFDE0);
 
-INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", func_800CFE78);
+void func_800CFE78(s32 arg0) // 0x800CFE78
+{
+    (arg0 != 0) ? func_800CFEAC() : func_800CFEEC();
+}
 
-INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", func_800CFEAC);
+void func_800CFEAC(void) // 0x800CFEAC
+{
+    func_8003640C(!Savegame_EventFlagGet(EventFlag_237) ? 8 : 2);
+}
 
 INCLUDE_RODATA("asm/maps/map3_s02/nonmatchings/map3_s02", D_800CA70C);
 
@@ -168,17 +175,79 @@ const char* MAP_MESSAGES[] =
     "\tIt's_locked! ~E "
 };
 
-INCLUDE_RODATA("asm/maps/map3_s02/nonmatchings/map3_s02", D_800CAAF8);
+const VECTOR3 D_800CAAF8 = { Q12(100.0f), Q12(-1.199951171875f), Q12(-127.199951171875f) };
 
-INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", func_800D02B4);
+void func_800D02B4(void) // 0x800D02B4
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            ScreenFade_ResetTimestep();
+            SysWork_StateStepIncrement();
+            break;
 
-INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", func_800D03FC);
+        case 1:
+            func_8008616C(0, false, 0, 0, false);
+            SysWork_StateStepIncrement();
+        case 2:
+            func_80085E6C(Q12(1.0f), false);
+            break;
+
+        case 3:
+            func_8005DC1C(Sfx_Unk1523, &D_800CAAF8, 128, 0);
+            SysWork_StateStepIncrement();
+        case 4:
+            func_80085E6C(Q12(0.3f), false);
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            return;
+    }
+}
+
+void func_800D03FC(void) // 0x800D03FC
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            D_800D1FBC = Q12(100.0f);
+            ScreenFade_ResetTimestep();
+            SysWork_StateStepIncrement();
+            break;
+
+        case 1:
+            func_8003ED74(7, 4);
+            D_800D3154 = 0;
+            Game_TurnFlashlightOff();
+            func_8008616C(0, false, 0, Q12(0.0f), false);
+            SysWork_StateStepIncrement();
+            break;
+
+        case 2:
+            func_80085E6C(Q12(0.6f), false);
+            break;
+
+        case 3:
+            Game_TurnFlashlightOn();
+            SysWork_StateStepIncrement();
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            Savegame_EventFlagSet(EventFlag_236);
+            break;
+    }
+}
 
 #include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800D0570
 
 INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", func_800D0608);
 
-INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", func_800D0F8C);
+void func_800D0F8C(void) // 0x800D0F8C
+{
+    D_800D3154 = 1;
+}
 
 INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", func_800D0F9C);
 

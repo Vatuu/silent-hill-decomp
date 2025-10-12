@@ -283,7 +283,7 @@ INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D1AF8);
 
 void func_800D2640(void) // 0x800D2640
 {
-    func_80087540(FILE_TIM_NEWSP2_TIM, 0, 0, 46, 48);
+    func_80087540(FILE_TIM_NEWSP2_TIM, Q12(0.0f), Q12(0.0f), 46, 48);
 }
 
 INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D2674);

@@ -125,7 +125,10 @@ INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", sharedSymbol_800CD4A0_2_s
 
 INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", func_800CE7C0);
 
-INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", func_800CE858);
+void func_800CE858(s32 arg0) // 0x800CE858
+{
+    (arg0 != 0) ? func_800CE88C() : sharedFunc_800CE934_0_s02();
+}
 
 INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", func_800CE88C);
 

@@ -123,7 +123,15 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D078C);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D0840);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D0C50);
+void func_800D0C50(SVECTOR* rot, MATRIX* mat) // 0x800D0C50
+{
+    MATRIX sp10;
+
+    SetRotMatrix(mat);
+    SetTransMatrix(mat);
+    func_80096A5C(rot, &sp10);
+    SetMulRotMatrix(&sp10);
+}
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D0CA0);
 
@@ -217,17 +225,34 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3694);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3AE0);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3B1C);
+u8 func_800D3B1C(void) // 0x800D3B1C
+{
+    u8 sp10;
+
+    func_8007F250(&sp10, 0);
+    return sp10;
+}
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3B44);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3B68);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3B74);
+void func_800D3B74(s_SubCharacter* chara) // 0x800D3B74
+{
+    if (chara->health_B0 >= 0)
+    {
+        chara->properties_E4.npc.field_11C = chara->health_B0;
+        chara->health_B0                   = -1;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3B98);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3CBC);
+void func_800D3CBC(s_SubCharacter* chara) // 0x800D3CBC
+{
+    chara->position_18.vy               = Q12(10.0f);
+    chara->properties_E4.npc.field_114 |= 4;
+}
 
 bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
 {
@@ -266,7 +291,7 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
     chara2->properties_E4.larvalStalker.properties_E8[6].val32     = charaPosX;
     chara2->properties_E4.larvalStalker.properties_E8[7].val32     = charaPosZ;
 
-    func_800D3CBC(chara, charaPosX, charaPosZ);
+    func_800D3CBC(chara);
 
     chara->field_D8.offsetX_4 = Q12(0.0f);
     chara->field_D8.offsetZ_6 = Q12(0.0f);
@@ -324,7 +349,10 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D4558);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D45C4);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D46E0);
+void func_800D46E0(VECTOR3* vec0, VECTOR3* vec1) // 0x800D46E0
+{
+    func_800CB0A4(vec0, vec1);
+}
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D4700);
 
@@ -346,7 +374,17 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D4C5C);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D4D80);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D4DD8);
+u32 func_800D4DD8(void) // 0x800D4DD8
+{
+    s32 var_v0;
+
+    var_v0 = (g_SysWork.player_4C.chara_0.rotation_24.vy - 256) & 0xFFF;
+    if (var_v0 < 0)
+    {
+        var_v0 += 0x1FF;
+    }
+    return var_v0 >> 9;
+}
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D4E00);
 
@@ -358,13 +396,64 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D50D8);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D511C);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D53B0);
+void func_800D53B0(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D53B0
+{
+    switch (chara->model_0.state_2)
+    {
+        case 11:
+            func_800D4028(chara);
+            break;
+        case 12:
+            func_800D4078(chara);
+            break;
+        case 13:
+            func_800D4248(chara);
+            break;
+        case 5:
+            func_800D45C4(chara);
+            break;
+        case 6:
+            func_800D4700(chara, coords);
+            break;
+        case 4:
+            func_800D4B28(chara);
+            break;
+        case 3:
+            func_800D4FC0(chara);
+            break;
+        case 7:
+            func_800D4A34(chara);
+            break;
+        case 8:
+            func_800D4A78(chara, coords);
+            break;
+        case 2:
+            func_800D50D8(chara);
+            break;
+        case 9:
+            func_800D511C(chara);
+            break;
+        case 10:
+            func_800D49C0(chara);
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D54B4);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D55C8);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D5888);
+void func_800D5888(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D5888
+{
+    s_AnimInfo* animInfo;
+
+    Math_MatrixTransform(&chara->position_18, &chara->rotation_24, coords);
+    if (chara->model_0.anim_4.status_0 != 0)
+    {
+        animInfo = &TWINFEELER_ANIM_INFOS[chara->model_0.anim_4.status_0];
+        animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
+    }
+}
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D5904);
 
@@ -372,19 +461,48 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D59C0);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D59EC);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D5B6C);
+void func_800D5B6C(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5B6C
+{
+    s32 posY;
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D5BC8);
+    if (chara->model_0.anim_4.flags_2 & 2)
+    {
+        func_800D5904(chara, coords);
+        return;
+    }
+
+    posY            = chara->position_18.vy;
+    chara->field_CA = posY;
+    chara->field_CC = posY;
+    chara->field_C8 = posY - Q12(1.0f);
+    chara->field_CE = posY - Q12(0.5f);
+}
+
+void func_800D5BC8(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5BC8
+{
+    if (chara->model_0.stateStep_3 == 0)
+    {
+        func_800D53B0(chara, coords);
+    }
+}
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D5BF8);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D5C3C);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D5DF4);
+void func_800D5DF4(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5DF4
+{
+    if (g_DeltaTime0 != 0)
+    {
+        func_800D5C3C(chara, coords);
+    }
+
+    func_800D35DC(&chara->rotation_24);
+}
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D5E30);
 
-void Ai_Twinfeeler_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void Ai_Twinfeeler_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D5F28
 {
     if (chara->model_0.state_2 == 0)
     {
@@ -584,7 +702,15 @@ INCLUDE_RODATA("asm/maps/map4_s03/nonmatchings/map4_s03", D_800CAC60);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D6F24);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D7394);
+s32 func_800D7394(void) // 0x800D7394
+{
+    if (g_DeltaTime0 != 0)
+    {
+        D_800DB914 = ((s32)(D_800DB918 * 0x7169AC35) >> 3) ^ 0xA547B39E;
+        D_800DB918 = ((u32)(D_800DB914 * 0x892D719C) >> 3) ^ 0xC65A4B97;
+    }
+    return (u16)D_800DB914 & 0x7FFF;
+}
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D7408);
 

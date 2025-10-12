@@ -322,7 +322,10 @@ INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D7308);
 
 INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D76F4);
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D7830);
+void func_800D7830(void) // 0x800D7830
+{
+    func_80087540(FILE_TIM_SCORE_TIM, Q12(2.0f), Q12(1.5f), 31, 23);
+}
 
 INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D7864);
 

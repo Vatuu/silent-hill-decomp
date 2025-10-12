@@ -366,7 +366,10 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D7BF4);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D7CB4);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800D7CEC);
+void func_800D7CEC(void) // 0x800D7CEC
+{
+    D_800F2434 = 0;
+}
 
 void func_800D7CF8(void) // 0x800D7CF8
 {
@@ -1188,7 +1191,30 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E2E90);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E3390);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E3B6C);
+void func_800E3B6C(void) // 0x800E3B6C
+{
+    switch (D_800F4805)
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            g_SysWork.field_30          = 20;
+            g_SysWork.sysStateStep_C[0] = 0;
+            g_SysWork.flags_22A4       |= 8;
+            func_8003D03C();
+            sharedFunc_800D2EB4_0_s00();
+            func_8005E70C();
+            D_800F4805++;
+        case 1:
+            func_800E62CC();
+            break;
+        default:
+            SysWork_StateSetNext(SysState_Gameplay);
+            D_800F4805 = 0;
+            Savegame_EventFlagSet(EventFlag_579);
+            break;
+    }
+    func_800E2E90();
+}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E3C48);
 

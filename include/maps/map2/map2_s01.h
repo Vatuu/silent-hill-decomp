@@ -3,6 +3,8 @@
 
 extern s_800C4590 D_800D16BC;
 
+void func_800CE858(s32 arg0);
+
 void func_800CED44(void);
 
 void func_800CF798(void);

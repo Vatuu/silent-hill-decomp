@@ -49,7 +49,8 @@ def find_functions(filters):
 def try_decompile(func_name: str, func_path: Path = None):
     """Try to decompile one function and log success if it works."""
     subprocess.run(["git", "restore", "src/"], check=False)
-    subprocess.run(["rm", "-rf", "build"], check=False) # faster than make clean
+    # Clear build folders for everything except main EXE, faster than using make clean, and we keep main intact for quicker build iterations
+    subprocess.run(["rm", "-rf", "build/asm/bodyprog", "build/asm/maps", "build/asm/screens", "build/out/1ST", "build/out/VIN", "build/src/bodyprog", "build/src/maps", "build/src/screens"], check=False) # faster than make clean
     try:
         result = decompile.decompile(str(func_path.resolve()), force=True, resolve_jtbl=False)
     except Exception as e:

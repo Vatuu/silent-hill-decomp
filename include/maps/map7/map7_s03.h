@@ -43,6 +43,8 @@ void Ai_LittleIncubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORD
 
 void func_800D71A4(s32 arg0);
 
+void func_800D7CEC(void);
+
 void func_800D7CF8(void);
 
 void func_800D7ED0(void);
@@ -94,6 +96,8 @@ void func_800E0C10(void);
 
 // Some kind of RNG? Constants don't seem well known?
 s32 func_800E28F4(void);
+
+void func_800E3B6C(void);
 
 void func_800E3D18(void);
 

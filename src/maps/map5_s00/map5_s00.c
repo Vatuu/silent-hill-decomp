@@ -117,7 +117,25 @@ INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800D029C_5_s00
 
 INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", func_800D03F8);
 
-INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", func_800D041C);
+void func_800D041C(s_SubCharacter* chara) // 0x800D041C
+{
+    s32 deltaX;
+    s32 deltaZ;
+
+    deltaX = g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx >> 6;
+    deltaZ = g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz >> 6;
+
+    // TODO: Invert to return early instead?
+    if (((SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)) << 6) < Q12(1.0f)) &&
+        (!func_800700F8(chara, &g_SysWork.player_4C.chara_0)) &&
+        ((((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 3) == 2) && (func_8006FD90(chara, 1, Q12(2.0f), Q12(1.5f)))) ||
+         ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 2) && (g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 1) &&
+          (func_8006FD90(chara, 1, Q12(1.5f), Q12(0.3f))))))
+    {
+        chara->model_0.state_2         = 3;
+        chara->model_0.anim_4.status_0 = 34;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", func_800D0514);
 
