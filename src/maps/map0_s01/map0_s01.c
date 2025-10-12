@@ -712,7 +712,71 @@ void func_800D46C4(s_SubCharacter* chara) // 0x800D46C4
     }
 }
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D4894);
+void func_800D4894(s_SubCharacter* chara)
+{
+    s32 dmgType;
+    s32 status;
+    u32 stateStep;
+    bool cond;
+
+    stateStep = chara->model_0.stateStep_3;
+    status = chara->model_0.anim_4.status_0;
+    cond = 0;
+    switch (stateStep)
+    {
+        case 0:
+            if (IS_ANIM_STATUS_ACTIVE(status))
+            {
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(7, false);
+                chara->model_0.stateStep_3 = 1;
+            }
+            break;
+        case 1:
+            if (status != ANIM_STATUS(7, false))
+            {
+                chara->model_0.stateStep_3 = 2;
+                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
+            }
+            break;
+        case 2:
+            if (status != ANIM_STATUS(7, true))
+            {
+                cond = 1;
+            }
+            break;
+    }
+
+    func_800D5D80(chara);
+    dmgType = Chara_DamageTake(chara, 0x999);
+    if (dmgType >= 0)
+    {
+        if (dmgType < 3)
+        {
+            if (cond)
+            {
+                chara->model_0.state_2 = ANIM_STATUS(23, true);
+                chara->model_0.stateStep_3 = 0;
+                // TODO: Looks similar to `field_E0` bitfield in `s_SubCharacter` but code doesn't match with that layout.
+                // Also present in sharedFunc_800D3928_0_s01
+                chara->properties_E4.unk0.properties_E8.val32 &= ~0xF00;
+                chara->properties_E4.unk0.properties_E8.val32 |= 0x300;
+            }
+        }
+        else if (dmgType < 5)
+        {
+            chara->model_0.state_2 = ANIM_STATUS(25, true);
+            chara->model_0.stateStep_3 = 0;
+            if (chara->health_B0 <= 0)
+            {
+                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
+            }
+            else
+            {
+                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
+            }
+        }
+    }
+}
 
 void func_800D49B0(s_SubCharacter* chara)
 {
