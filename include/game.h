@@ -737,6 +737,7 @@ typedef enum _PlayerFlags
     PlayerFlag_Unk18          = 1 << 18,
     PlayerFlag_Unk19          = 1 << 19,
     PlayerFlag_Unk20          = 1 << 20,
+
     PlayerFlag_Unk29          = 1 << 29,
     PlayerFlag_Unk30          = 1 << 30,
     PlayerFlag_Unk31          = 1 << 31
@@ -1546,10 +1547,16 @@ extern s32 g_PrevVBlanks;
 extern s32 g_VBlanks;
 extern s32 g_UncappedVBlanks;
 
-/** @brief Sets `sysState` in `g_SysWork` for the next tick. */
+/** @brief Sets `sysState` in `g_SysWork` for the next tick.
+ *
+ * @param sysState System state to set.
+ * @return New system state.
+ */
 static inline s32 SysWork_StateSetNext(e_SysState sysState)
 {
-    s32 state                   =
+    s32 state;
+
+    state                       =
     g_SysWork.sysState_8        = sysState;
     g_SysWork.timer_24          = 0;
     g_SysWork.sysStateStep_C[0] = 0;
@@ -1570,10 +1577,16 @@ static inline void SysWork_StateStepIncrement()
     g_SysWork.sysStateStep_C[0]++;
 }
 
-/** @brief Sets `sysStateStep` in `g_SysWork` for the next tick. */
+/** @brief Sets `sysStateStep` in `g_SysWork` for the next tick.
+ *
+ * @param sysStateStep System state step to set.
+ * @return New system state step.
+ */
 static inline s32 SysWork_NextStateStepSet(s32 sysStateStep)
 {
-    s32 step                    =
+    s32 step;
+
+    step                        =
     g_SysWork.sysStateStep_C[0] = sysStateStep;
     g_SysWork.field_28          = 0;
     g_SysWork.sysStateStep_C[1] = 0;
