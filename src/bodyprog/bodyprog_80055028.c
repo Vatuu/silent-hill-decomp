@@ -1970,9 +1970,126 @@ q3_12 func_8005BF38(q3_12 angle) // 0x8005BF38
     return outAngle;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005BF58); // 0x8005BF58
+s32 func_8005BF58(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9) // 0x8005BF58
+{
+    s32 temp_a0;
+    s32 temp_lo;
+    s32 temp_t4;
+    s32 var_a2;
+    s32 var_t0_5;
+    s32 var_v0_5;
+    s32 new_var;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005C1CC); // 0x8005C1CC
+    if (MAX(arg2, arg4) < CLAMP_HIGH(arg6, arg8) || MAX(arg6, arg8) < CLAMP_HIGH(arg2, arg4))
+    {
+        return 0;
+    }
+
+    if (MAX(arg3, arg5) < CLAMP_HIGH(arg7, arg9) || MAX(arg7, arg9) < CLAMP_HIGH(arg3, arg5))
+    {
+        return 0;
+    }
+
+    var_v0_5 = (arg6 - arg2) >> 6;
+    new_var  = (arg7 - arg3) >> 6;
+    temp_a0  = arg5 - arg3;
+    temp_t4  = arg4 - arg2;
+
+    if (((var_v0_5 * (temp_a0 >> 6)) - (new_var * (temp_t4 >> 6))) > 0 ||
+        ((((arg8 - arg2) >> 6) * (temp_a0 >> 6)) - (((arg9 - arg3) >> 6) * (temp_t4 >> 6))) < 0)
+    {
+        return 0;
+    }
+
+    if ((((arg2 - arg6) >> 6) * ((arg9 - arg7) >> 6)) - (((arg3 - arg7) >> 6) * ((arg8 - arg6) >> 6)) < 0 ||
+        (((arg4 - arg6) >> 6) * ((arg9 - arg7) >> 6)) - (((arg5 - arg7) >> 6) * ((arg8 - arg6) >> 6)) > 0)
+    {
+        return 0;
+    }
+
+    if (arg0 != NULL)
+    {
+        if (arg2 == arg4)
+        {
+            var_t0_5 = ((arg9 - arg7) << 9) / (arg8 - arg6);
+            *arg0    = arg2;
+            var_a2   = (arg7 << 9) - (var_t0_5 * arg6);
+        }
+        else
+        {
+            var_t0_5 = (temp_a0 << 9) / temp_t4;
+            var_a2   = (arg3 << 9) - (var_t0_5 * arg2);
+
+            if (arg6 == arg8)
+            {
+                *arg0 = arg6;
+            }
+            else
+            {
+                temp_lo = ((arg9 - arg7) << 9) / (arg8 - arg6);
+                *arg0   = (var_a2 - ((arg7 << 9) - (temp_lo * arg6))) / (temp_lo - var_t0_5);
+            }
+        }
+        *arg1 = ((var_t0_5 * *arg0) + var_a2) >> 9;
+    }
+    return 1;
+}
+
+s32 func_8005C1CC(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8) // 0x8005C1CC
+{
+    s16 temp_v0_6;
+    s16 temp_s0;
+    s32 temp_s0_2;
+    s32 temp_s0_3;
+    s32 temp_s1;
+    s32 temp_s2;
+    s32 var_s0;
+
+    if (arg2 + arg4 < CLAMP_HIGH(arg5, arg7) || arg2 - arg4 > MAX(arg5, arg7))
+    {
+        return 0;
+    }
+
+    if (arg3 + arg4 < CLAMP_HIGH(arg6, arg8) || arg3 - arg4 > MAX(arg6, arg8))
+    {
+        return 0;
+    }
+
+    temp_s2 = SquareRoot0(SQUARE((arg2 - arg5) >> 6) + SQUARE((arg3 - arg6) >> 6)) << 6;
+
+    if (arg4 < temp_s2 && (SQUARE((arg7 - arg5) >> 6) + SQUARE((arg8 - arg6) >> 6)) < SQUARE((temp_s2 - arg4) >> 6))
+    {
+        return 0;
+    }
+
+    temp_s0   = ratan2(arg3 - arg6, arg2 - arg5);
+    temp_v0_6 = ratan2(arg8 - arg6, arg7 - arg5);
+    temp_s1   = temp_s0 - temp_v0_6;
+
+    var_s0 = ABS(FP_MULTIPLY(temp_s2, Math_Sin(temp_s1), Q12_SHIFT));
+    if (arg4 < var_s0)
+    {
+        return 0;
+    }
+
+    if (arg0 != NULL)
+    {
+        if (temp_s2 < arg4)
+        {
+            *arg0 = arg5;
+            *arg1 = arg6;
+        }
+        else
+        {
+            temp_s0_2 = Math_Cos(temp_s0 - temp_v0_6);
+            temp_s0_3 = FP_MULTIPLY(temp_s2, temp_s0_2, Q12_SHIFT) - (SquareRoot0(SQUARE(arg4 >> 6) - SQUARE(var_s0 >> 6)) << 6);
+            *arg0     = arg5 + FP_MULTIPLY(temp_s0_3, Math_Cos(temp_v0_6), Q12_SHIFT);
+            *arg1     = arg6 + FP_MULTIPLY(temp_s0_3, Math_Sin(temp_v0_6), Q12_SHIFT);
+        }
+    }
+
+    return 1;
+}
 
 u32 func_8005C478(s16* arg0, s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2) // 0x8005C478
 {
