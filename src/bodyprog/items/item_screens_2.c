@@ -74,7 +74,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
     Gfx_StringSetColor(StringColorId_White);
     func_800363D0();
 
-    // Update timer ff current screen is inventory.
+    // Update timer if current screen is inventory.
     if (g_GameWork.gameStateStep_598[1] < 21)
     {
         Game_TimerUpdate();
