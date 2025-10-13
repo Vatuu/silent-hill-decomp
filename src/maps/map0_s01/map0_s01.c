@@ -205,7 +205,19 @@ void func_800D3A3C(s_SubCharacter* chara)
     chara->model_0.anim_4.time_4 = FP_TO(animTime, Q12_SHIFT);
 }
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D3AC0);
+void func_800D3AC0(s_SubCharacter* chara)
+{
+    switch(chara->model_0.stateStep_3)
+    {
+        case 1:
+        case 3:
+        case 5:
+            chara->model_0.stateStep_3++;
+            break;
+        default:
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedSymbol_800D3B0C_0_s01); // 0x800D3B0C
 
