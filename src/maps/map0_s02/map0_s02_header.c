@@ -9,7 +9,6 @@
 #define func_800CECDC (0x800CECDC)
 #define func_800CED08 (0x800CED08)
 #define func_800CEFD4 (0x800CEFD4)
-#define func_800CDD9C (0x800CDD9C)
 
 extern u8 D_800CFD90[];
 extern s_func_800625F4 D_800D03DC[100];
@@ -94,7 +93,7 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .func_B0                  = NULL,
     .func_B4                  = NULL,
     .func_B8                  = sharedFunc_800CDAA8_0_s02,
-    .func_BC                  = func_800CDD9C,
+    .func_BC                  = sharedFunc_800D1C38_0_s00,
     .func_C0                  = sharedFunc_800D209C_0_s00,
     .func_C4                  = sharedFunc_800D20D8_0_s00,
     .freezePlayerControl_C8   = sharedFunc_800D20E4_0_s00,

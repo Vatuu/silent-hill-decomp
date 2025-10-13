@@ -2466,6 +2466,8 @@ extern s32 sharedData_800DFB4C_0_s00;
 
 extern s32 sharedData_800DFB50_0_s00;
 
+extern s32 sharedData_800CD77C_1_s04; // Used by `sharedFunc_800CB6B0_0_s00` only in MAP1_S04 and MAP4_S00? Similar usage to `sharedData_800DFB50_0_s00`?
+
 extern CVECTOR sharedData_800E3258_0_s00;
 
 extern CVECTOR sharedData_800E325C_0_s00;
@@ -2536,6 +2538,8 @@ bool sharedFunc_800D0B18_0_s00(s32 arg0);
 void sharedFunc_800D0CB8_0_s00(void);
 
 void sharedFunc_800D0E04_0_s00(void);
+
+void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
 
 void sharedFunc_800D209C_0_s00(void);
 

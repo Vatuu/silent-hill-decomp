@@ -143,7 +143,7 @@ typedef enum _Sfx
     Sfx_Unk1353     = 1353,
     Sfx_Unk1354     = 1354,
     Sfx_Unk1355     = 1355,
-				    
+    Sfx_Unk1356     = 1356,
     Sfx_Unk1357     = 1357,
     Sfx_Unk1358     = 1358,
     Sfx_Unk1359     = 1359,
@@ -155,10 +155,14 @@ typedef enum _Sfx
     Sfx_Unk1365     = 1365,
     Sfx_Unk1366     = 1366,
 
+    Sfx_Unk1369     = 1369,
+
     Sfx_Unk1373     = 1373,
     Sfx_Unk1374     = 1374,
     Sfx_Unk1375     = 1375,
 				    
+    Sfx_Unk1385     = 1385,
+    Sfx_Unk1386     = 1386,
     Sfx_Unk1387     = 1387,
 				    
     Sfx_Unk1391     = 1391,
@@ -169,6 +173,8 @@ typedef enum _Sfx
     Sfx_Unk1399     = 1399,
 				    
     Sfx_Unk1418     = 1418,
+
+    Sfx_Unk1423     = 1423,
 				    
     Sfx_Unk1431     = 1431,
     Sfx_Unk1432     = 1432,
@@ -190,6 +196,8 @@ typedef enum _Sfx
     Sfx_Unk1505     = 1505,
 				    
     Sfx_Unk1521     = 1521,
+    Sfx_Unk1522     = 1522,
+    Sfx_Unk1523     = 1523,
 				    
     Sfx_Unk1525     = 1525,
     Sfx_Unk1526     = 1526,
@@ -207,6 +215,15 @@ typedef enum _Sfx
 				    
     Sfx_Unk1609     = 1609,
     Sfx_Unk1610     = 1610,
+
+    Sfx_Unk1619     = 1619,
+
+    Sfx_Unk1623     = 1623,
+
+    Sfx_Unk1626     = 1626,
+    Sfx_Unk1627     = 1627,
+    Sfx_Unk1628     = 1628,
+    Sfx_Unk1629     = 1629,
 
     Sfx_Unk1642     = 1642,
     Sfx_Unk1643     = 1643,
@@ -228,6 +245,8 @@ typedef enum _Sfx
     Sfx_Unk1688     = 1688,
     Sfx_Unk1689     = 1689,
     Sfx_Unk1690     = 1690,
+
+    Sfx_Unk1916     = 1916,
 
     Sfx_Unk4664     = 4664,
 
@@ -1369,7 +1388,7 @@ typedef struct
     u8            field_3;
     s_WaterZone*  waterZones_4;
     s32           screenBrightness_8;
-    s8            unk_C[4];
+    s32           field_C;
     q23_8         drawDistance_10; // Name from SHME, "has no effect when fog is disabled".
     s32           fogRelated_14;   // "FogThing1" from SHME, seems to affect distance where fog begins.
     s32           fogRelated_18;   // "FogThing2" from SHME.
@@ -3397,6 +3416,10 @@ s32 func_800557DC();
 
 void func_80055814(s32 arg0);
 
+void func_80055840(s32 arg0, s32 arg1);
+
+s32 func_800559A8(s32 arg0);
+
 u8 func_80055A50(s32 arg0);
 
 void func_80055A90(CVECTOR* arg0, CVECTOR* arg1, u8 arg2, s32 arg3);
@@ -4219,7 +4242,7 @@ bool func_80035E44();
 
 void func_80035ED0();
 
-void func_80035F4C(s32 flags, s32 arg1, u8* arg2);
+void func_80035F4C(s32 flags, q19_12 arg1, u8* arg2);
 
 void func_800363D0();
 

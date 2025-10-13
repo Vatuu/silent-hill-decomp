@@ -1,5 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map6/map6_s04.h"
@@ -30,11 +31,9 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800CD3AC);
 
 #include "maps/shared/sharedFunc_800D0850_0_s01.h" // 0x800CE148
 
-INCLUDE_RODATA("asm/maps/map6_s04/nonmatchings/map6_s04", D_800CA618);
+#include "maps/shared/sharedFunc_800CDAA8_0_s02.h" // 0x800CE534
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800CE534);
-
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800CF620);
+#include "maps/shared/sharedFunc_800D1C38_0_s00.h" // 0x800CF620
 
 #include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800CFA4C
 
@@ -398,7 +397,13 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800DE95C);
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800DEA4C);
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800DEA94);
+void func_800DEA94(s32* arg0) // 0x800DEA94
+{
+    if (arg0 != NULL)
+    {
+        *arg0 = 0;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800DEAA8);
 
@@ -456,7 +461,12 @@ INCLUDE_RODATA("asm/maps/map6_s04/nonmatchings/map6_s04", D_800CB6AC);
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800E0204);
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800E02E0);
+void func_800E02E0(void) // 0x800E02E0
+{
+    D_800ED588 = 0;
+    func_800DE26C();
+    func_800DF64C();
+}
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800E030C);
 
@@ -486,15 +496,24 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800E0F28);
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800E0FAC);
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800E10F8);
+void func_800E10F8(void) // 0x800E10F8
+{
+    D_800ED58C = 0;
+}
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800E1104
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800E1114);
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800E1258);
+void func_800E1258(s32 arg0) // 0x800E1258
+{
+    (arg0 == 1) ? func_800E1290() : func_800E12D0();
+}
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800E1290);
+void func_800E1290(void) // 0x800E1290
+{
+    func_8003640C(Savegame_EventFlagGet(EventFlag_440) ? 39 : 37);
+}
 
 INCLUDE_RODATA("asm/maps/map6_s04/nonmatchings/map6_s04", D_800CB728);
 

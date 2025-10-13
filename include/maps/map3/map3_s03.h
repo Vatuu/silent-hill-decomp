@@ -1,6 +1,12 @@
 #ifndef _MAPS_MAP3_S03_H
 #define _MAPS_MAP3_S03_H
 
+s32 func_800CE398(s32 arg0);
+
+void func_800D1210(s32 arg0);
+
+void func_800D1244(void);
+
 void func_800D151C(void);
 
 void func_800D1774(void);
@@ -14,6 +20,8 @@ void func_800D26D0(void);
 void func_800D2708(void);
 
 void func_800D2740(void);
+
+void func_800D2778(void);
 
 void func_800D2C2C(void);
 

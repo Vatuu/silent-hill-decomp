@@ -1,7 +1,9 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
+#include "maps/map7/map7_s00.h"
 
 INCLUDE_RODATA("asm/maps/map7_s00/nonmatchings/map7_s00", D_800C9578);
 
@@ -23,7 +25,7 @@ INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", func_800CB624);
 
 INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", func_800CC7AC);
 
-INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", func_800CD770);
+#include "maps/shared/sharedFunc_800D1C38_0_s00.h" // 0x800CD770
 
 #include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800CDB9C
 
@@ -118,13 +120,49 @@ INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", sharedSymbol_800D0ADC_3_s
 
 INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", func_800CFF50);
 
-INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", func_800CFFE8);
+void func_800CFFE8(s32 arg0) // 0x800CFFE8
+{
+    (arg0 != 0) ? func_800D0050() : func_800D0110();
+}
 
-INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", func_800D001C);
+void func_800D001C(s32 arg0) // 0x800D001C
+{
+    (arg0 != 0) ? func_800D00D0() : func_800D0110();
+}
 
-INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", func_800D0050);
+void func_800D0050(void) // 0x800D0050
+{
+    s32 var_a0;
+    u32 temp_v1;
 
-INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", func_800D00D0);
+    if (g_SavegamePtr->mapRoomIdx_A5 == 3)
+    {
+        var_a0 = 15;
+    }
+    else if (Savegame_EventFlagGet(EventFlag_481))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_574))
+        {
+            Savegame_EventFlagSet(EventFlag_574);
+            var_a0 = 1;
+        }
+        else
+        {
+            var_a0 = 22;
+        }
+    }
+    else
+    {
+        var_a0 = 14;
+    }
+
+    func_8003640C(var_a0);
+}
+
+void func_800D00D0(void) // 0x800D00D0
+{
+    func_8003640C(Savegame_EventFlagGet(EventFlag_391) ? 40 : 35);
+}
 
 INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", func_800D0110);
 

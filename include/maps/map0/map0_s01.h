@@ -49,8 +49,6 @@ extern u8 D_800DE250;
 
 extern u8 D_800DE251;
 
-void func_800D16C4(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord);
-
 /** `arg0` is a struct pointer, might be `s_SubCharacter`. */
 void func_800D2364(s_SubCharacter* chara);
 
@@ -141,5 +139,9 @@ void MapEvent_ToBeContinued(void);
 void func_800D5E14(s_SubCharacter* chara);
 
 void func_800D49B0(s_SubCharacter* chara);
+
+void func_800D5D80(s_SubCharacter* chara);
+
+void func_800D4894(s_SubCharacter* chara);
 
 #endif

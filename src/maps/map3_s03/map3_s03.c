@@ -1,5 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map3/map3_s03.h"
@@ -24,7 +25,7 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CB460);
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CC5E8);
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CCC4C);
+#include "maps/shared/sharedFunc_800D1C38_0_s00.h" // 0x800CCC4C
 
 #include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800CD09C
 
@@ -108,7 +109,10 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800CDF24_3_s03
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CE0E4);
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CE398);
+s32 func_800CE398(s32 arg0) // 0x800CE398
+{
+    return arg0 == 36 || arg0 == 34 || arg0 == 37 || arg0 == 35;
+}
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800CE3CC_3_s03);
 
@@ -182,9 +186,15 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800D0F28_3_s03
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D1178);
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D1210);
+void func_800D1210(s32 arg0) // 0x800D1210
+{
+    (arg0 != 0) ? func_800D1244() : func_800D1284();
+}
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D1244);
+void func_800D1244(void) // 0x800D1244
+{
+    func_8003640C(!Savegame_EventFlagGet(EventFlag_237) ? 8 : 2);
+}
 
 INCLUDE_RODATA("asm/maps/map3_s03/nonmatchings/map3_s03", D_800CA6F4);
 
@@ -327,7 +337,19 @@ void func_800D2740(void) // 0x800D2740
     func_80087360(FILE_TIM_LITHGR_2_TIM, Q12(0.0f), Q12(0.0f), 45);
 }
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D2778);
+void func_800D2778(void) // 0x800D2778
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            SysWork_StateStepIncrement();
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+}
 
 INCLUDE_RODATA("asm/maps/map3_s03/nonmatchings/map3_s03", D_800CB27C);
 

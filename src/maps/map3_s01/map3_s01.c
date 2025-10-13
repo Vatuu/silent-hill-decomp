@@ -1,5 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map3/map3_s01.h"
@@ -46,7 +47,7 @@ INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", sharedFunc_800CEFD0_1_s02
 
 INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800CDFE8);
 
-INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800CE3E8);
+#include "maps/shared/sharedFunc_800D1C38_0_s00.h" // 0x800CE3E8
 
 #include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800CE838
 
@@ -128,7 +129,17 @@ INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", sharedFunc_800D99D0_1_s02
 
 INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D10D0);
 
-INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D1178);
+void func_800D1178(s32 arg0) // 0x800D1178
+{
+    if (arg0 != 0)
+    {
+        sharedFunc_800D0994_3_s00();
+    }
+    else
+    {
+        sharedFunc_800D09D4_3_s00();
+    }
+}
 
 #include "maps/shared/sharedFunc_800D0994_3_s00.h" // 0x800D11AC
 
@@ -235,9 +246,41 @@ INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", D_800CB148);
 
 INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D27C8);
 
-INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D29A4);
+void func_800D29A4(void) // 0x800D29A4
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            SysWork_StateStepIncrement();
+        case 1:
+            func_80085DF0();
+            break;
 
-INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D2A88);
+        case 2:
+            MapMsg_DisplayAndHandleSelection(false, 27, 0, 0, 0, false);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+
+    func_800894B8(0x60); // Hex?
+}
+
+void func_800D2A88(void) // 0x800D2A88
+{
+    if (g_SysWork.sysStateStep_C[1] == 0)
+    {
+        func_8005DC1C(Sfx_Unk1308, &D_800CB170, 128, 0);
+    }
+
+    func_80087360(Sfx_Unk1916, Q12(0.0f), Q12(0.0f), 36);
+
+    Savegame_EventFlagSet(EventFlag_203);
+}
 
 INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", D_800CB170);
 

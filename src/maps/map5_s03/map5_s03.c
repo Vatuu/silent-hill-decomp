@@ -1,5 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map5/map5_s03.h"
@@ -46,7 +47,7 @@ INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", sharedFunc_800CEFD0_1_s02
 
 INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800CE59C);
 
-INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800CEE78);
+#include "maps/shared/sharedFunc_800D1C38_0_s00.h" // 0x800CEE78
 
 #include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800CF2C8
 
@@ -144,7 +145,17 @@ INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", sharedSymbol_800CF470_3_s
 
 INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D0F6C);
 
-INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D1004);
+void func_800D1004(s32 arg0) // 0x800D1004
+{
+    if (arg0 != 0)
+    {
+        func_800D1038();
+    }
+    else
+    {
+        sharedFunc_800CE934_0_s02();
+    }
+}
 
 INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D1038);
 
@@ -270,7 +281,10 @@ INCLUDE_RODATA("asm/maps/map5_s03/nonmatchings/map5_s03", D_800CB804);
 
 INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D1AF8);
 
-INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D2640);
+void func_800D2640(void) // 0x800D2640
+{
+    func_80087540(FILE_TIM_NEWSP2_TIM, Q12(0.0f), Q12(0.0f), 46, 48);
+}
 
 INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", func_800D2674);
 

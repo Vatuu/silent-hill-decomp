@@ -1,5 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map3/map3_s06.h"
@@ -46,7 +47,7 @@ INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", sharedFunc_800CEFD0_1_s02
 
 INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800CE0B4);
 
-INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800CE6B8);
+#include "maps/shared/sharedFunc_800D1C38_0_s00.h" // 0x800CE6B8
 
 #include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800CEAE4
 
@@ -102,7 +103,7 @@ void func_800CF08C(void) {}
 
 #include "maps/shared/Ai_Dahlia_Update.h" // 0x800CF0F8
 
-INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", sharedFunc_800CD280_2_s01);
+INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", sharedFunc_800CD280_2_s01); // 0x800CF16C
 
 INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", sharedFunc_800CD2C8_2_s01); // 0x800CF1B4
 
@@ -146,7 +147,10 @@ INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", sharedSymbol_800CD4A0_2_s
 
 INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800D06F8);
 
-INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800D07A0);
+void func_800D07A0(s32 arg0) // 0x800D07A0
+{
+    (arg0 != 0) ? sharedFunc_800D0994_3_s00() : sharedFunc_800D09D4_3_s00();
+}
 
 #include "maps/shared/sharedFunc_800D0994_3_s00.h" // 0x800D07D4
 
@@ -159,15 +163,6 @@ INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800D09BC);
 INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800D0A50);
 
 void func_800D0AE4(void) {}
-
-void func_800D0AEC(void) // 0x800D0AEC
-{
-    Event_CommonItemTake(CommonPickupItemId_FirstAidKit, EventFlag_M3S00_FirstAidKit);
-}
-
-INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800D0B10);
-
-#include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800D0B7C
 
 const char* MAP_MESSAGES[] =
 {
@@ -206,7 +201,25 @@ const char* MAP_MESSAGES[] =
     "\tThe_phone's_out. ~N\n\tCan't_get_a_dial_tone. ~E "
 };
 
-INCLUDE_RODATA("asm/maps/map3_s06/nonmatchings/map3_s06", D_800CB21C);
+void func_800D0AEC(void) // 0x800D0AEC
+{
+    Event_CommonItemTake(CommonPickupItemId_FirstAidKit, EventFlag_M3S00_FirstAidKit);
+}
+
+void func_800D0B10(void) // 0x800D0B10
+{
+    const static VECTOR3 D_800CB21C = { Q12(61.72f), Q12(-0.8f), Q12(100.51f) };
+
+    if (g_SysWork.sysStateStep_C[1] == 0)
+    {
+        func_8005DC1C(Sfx_Unk1308, &D_800CB21C, 128, 0);
+    }
+
+    func_80087360(FILE_TIM_NEWSP1_TIM, Q12(0.0f), Q12(0.0f), 41);
+    Savegame_EventFlagSet(EventFlag_203);
+}
+
+#include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800D0B7C
 
 INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", func_800D0C14);
 

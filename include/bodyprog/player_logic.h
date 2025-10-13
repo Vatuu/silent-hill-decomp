@@ -209,7 +209,16 @@ typedef enum _PlayerState
     PlayerState_Unk177                    = 177,
     PlayerState_Unk178                    = 178,
     PlayerState_Unk179                    = 179,
-    PlayerState_Unk180                    = 180
+    PlayerState_Unk180                    = 180,
+    PlayerState_Unk181                    = 181,
+    PlayerState_Unk182                    = 182,
+    PlayerState_Unk183                    = 183,
+    PlayerState_Unk184                    = 184,
+    PlayerState_Unk185                    = 185,
+    PlayerState_Unk186                    = 186,
+    PlayerState_Unk187                    = 187,
+    PlayerState_Unk188                    = 188,
+    PlayerState_Unk189                    = 189,
 } e_PlayerState;
 
 /** @brief Upper body player states. */
@@ -598,5 +607,18 @@ void Player_Controller();
 
 /** @brief Determines if the player can stomp or kick a knocked enemy. */
 bool func_8007F95C();
+
+static inline s32 Player_ExtraStateSet(s_SubCharacter* playerChara, s_MainCharacterExtra* extra, s32 state)
+{
+    s32 result =
+        g_SysWork.player_4C.extra_128.state_1C      = state;
+    playerChara->model_0.stateStep_3                = 0;
+    playerChara->model_0.state_2                    = 0;
+    extra->model_0.stateStep_3                      = 0;
+    extra->model_0.state_2                          = 0;
+    g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
+    g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
+    return result;
+}
 
 #endif

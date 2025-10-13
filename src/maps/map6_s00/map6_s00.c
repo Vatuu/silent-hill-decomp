@@ -1,7 +1,9 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
+#include "maps/map6/map6_s00.h"
 
 INCLUDE_RODATA("asm/maps/map6_s00/nonmatchings/map6_s00", D_800C9578);
 
@@ -49,7 +51,7 @@ INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", sharedFunc_800D0690_1_s03
 
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800D02EC);
 
-INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800D0A4C);
+#include "maps/shared/sharedFunc_800D1C38_0_s00.h" // 0x800D0A4C
 
 #include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800D0E78
 
@@ -327,11 +329,27 @@ INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800DD9F0);
 
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800DDAD8);
 
-INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800DDBB4);
+void func_800DDBB4(s_SubCharacter* chara) // 0x800DDBB4
+{
+    s32 temp_s1;
+    s32 temp_s2;
+    s32 temp_v0;
+
+    temp_s1                                        = chara->properties_E4.player.field_104;
+    temp_s2                                        = chara->properties_E4.npc.field_10C;
+    temp_v0                                        = func_80080884(temp_s1, temp_s2);
+    chara->properties_E4.player.runTimer_F8        = temp_s1;
+    chara->properties_E4.player.exhaustionTimer_FC = temp_v0;
+    chara->properties_E4.player.field_100          = temp_s2;
+    sharedFunc_800D4E84_0_s01(chara);
+}
 
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800DDC0C);
 
-INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800DDF34);
+void func_800DDF34(s_SubCharacter* chara) // 0x800DDF34
+{
+    func_800DDC0C(chara);
+}
 
 #include "maps/shared/sharedFunc_800D529C_0_s01.h" // 0x800DDF54
 
@@ -343,19 +361,34 @@ INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800DE2FC);
 
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800DE588);
 
-INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800DE620);
+void func_800DE620(s_SubCharacter* chara) // 0x800DE620
+{
+    func_800DDC0C(chara);
+}
 
-INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800DE640);
+void func_800DE640(s_SubCharacter* chara, s32 arg1, s32 angle) // 0x800DE640
+{
+    sharedFunc_800D529C_0_s01(chara, arg1, angle);
+}
 
-INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800DE660);
+void func_800DE660(s_SubCharacter* chara, s32* arg1, s32 arg2) // 0x800DE660
+{
+    func_800DE064(chara, arg1, arg2);
+}
 
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800DE680);
 
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800DE7E0);
 
-INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800DEBE8);
+void func_800DEBE8(s_SubCharacter* chara) // 0x800DEBE8
+{
+    func_800DE588(chara);
+}
 
-INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800DEC08);
+void func_800DEC08(s_SubCharacter* chara) // 0x800DEC08
+{
+    func_800DDC0C(chara);
+}
 
 #include "maps/shared/sharedFunc_800D5638_0_s01.h" // 0x800DEC28
 
@@ -537,8 +570,6 @@ void func_800EAFF0(void) {}
 
 #include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800EAFF8
 
-INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800EB090);
-
 const char* MAP_MESSAGES[] =
 {
     #include "maps/shared/mapMsg_common.h"
@@ -555,6 +586,33 @@ const char* MAP_MESSAGES[] =
     "\tCould_Cybil_have_gotten ~N\n\tto_the_Amusement_Park_from_here? ~E ",
     "~C3\tLAKE_SIDE_AMUSEMENT_PARK ~E "
 };
+
+void func_800EB090(void) // 0x800EB090
+{
+    u32 pickupType;
+    s32 eventFlagIdx;
+
+    pickupType   = CommonPickupItemId_FirstAidKit;
+    eventFlagIdx = 0;
+
+    switch (g_MapEventParam->field_5)
+    {
+        case 22:
+            pickupType   = CommonPickupItemId_HealthDrink;
+            eventFlagIdx = EventFlag_M6S00_HealthDrink;
+            break;
+        case 23:
+            pickupType   = CommonPickupItemId_ShotgunShells;
+            eventFlagIdx = EventFlag_M6S00_ShotgunShells;
+            break;
+        case 24:
+            pickupType   = CommonPickupItemId_FirstAidKit;
+            eventFlagIdx = EventFlag_M6S00_FirstAidKit;
+            break;
+    }
+
+    Event_CommonItemTake(pickupType, eventFlagIdx);
+}
 
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800EB11C);
 

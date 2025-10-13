@@ -305,8 +305,7 @@ u32 D_800AE1B4[3] = { 0x00000000, 0x000000CC, 0xFFFFFEC9 }; // `VECTOR3`?
 
 // Referenced only by `func_80055648` (https://decomp.me/scratch/joGmE)
 // Doesn't look like `VECTOR3` tbh. Each word is larger than the previous.
-u32 D_800AE1C0[] =
-{
+s32 D_800AE1C0[] = {
     0,
     0,
     0x26,

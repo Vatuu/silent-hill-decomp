@@ -1,5 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/player_logic.h"
 #include "maps/map1/map1_s03.h"
 #include "main/rng.h"
 #include "maps/shared.h"
@@ -68,7 +69,7 @@ INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", sharedFunc_800D0690_1_s03
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800D1B2C);
 
-INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800D235C);
+#include "maps/shared/sharedFunc_800D1C38_0_s00.h" // 0x800D235C
 
 #include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800D27AC
 
@@ -390,7 +391,51 @@ INCLUDE_RODATA("asm/maps/map1_s03/nonmatchings/map1_s03", D_800CBB88);
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DC780);
 
-INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DC9A0);
+void func_800DC9A0(void) // 0x800DC9A0
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_80086470(0, InventoryItemId_LibraryReserveKey, 0, false);
+            SysWork_StateStepIncrement();
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 59);
+            break;
+
+        case 3:
+            func_80086470(1, InventoryItemId_LibraryReserveKey, 0, false);
+            break;
+
+        case 4:
+            Savegame_EventFlagSet(EventFlag_M1S03_PickupLibraryReserveKey);
+            if (Gfx_PickupItemAnimate(InventoryItemId_LibraryReserveKey))
+            {
+                MapMsg_DisplayAndHandleSelection(true, 44, 5, 6, 0, false);
+            }
+            if (g_SysWork.sysStateStep_C[0] == 6)
+            {
+                Savegame_EventFlagClear(EventFlag_M1S03_PickupLibraryReserveKey);
+            }
+            break;
+
+        case 5:
+            func_80086470(3, InventoryItemId_LibraryReserveKey, 1, false);
+            SysWork_StateStepIncrement();
+        case 6:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+}
 
 INCLUDE_RODATA("asm/maps/map1_s03/nonmatchings/map1_s03", D_800CBBCC);
 

@@ -232,6 +232,8 @@ extern q3_12 D_800AE73C;
 
 extern s_800AE710 D_800AE710[4];
 
+extern s32 D_800AE1C0[];
+
 // ==========
 // FUNCTIONS
 // ==========

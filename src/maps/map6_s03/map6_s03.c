@@ -1,5 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map6/map6_s03.h"
@@ -46,9 +47,9 @@ INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", sharedFunc_800D0690_1_s03
 
 #include "maps/shared/sharedFunc_800D0850_0_s01.h" // 0x800CDC6C
 
-INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800CE058);
+#include "maps/shared/sharedFunc_800CDAA8_0_s02.h" // 0x800CE058
 
-INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800CE58C);
+#include "maps/shared/sharedFunc_800D1C38_0_s00.h" // 0x800CE58C
 
 #include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800CE9B8
 
@@ -156,7 +157,25 @@ INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", sharedFunc_800D029C_5_s00
 
 INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D4A38);
 
-INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D4A5C);
+void func_800D4A5C(s_SubCharacter* chara) // 0x800D4A5C
+{
+    s32 deltaX;
+    s32 deltaZ;
+
+    deltaX = g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx >> 6;
+    deltaZ = g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz >> 6;
+
+    // TODO: Invert to return early instead?
+    if (((SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)) << 6) < Q12(1.0f)) &&
+        (!func_800700F8(chara, &g_SysWork.player_4C.chara_0)) &&
+        ((((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 3) == 2) && (func_8006FD90(chara, 1, Q12(2.0f), Q12(1.5f)))) ||
+         ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 2) && (g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 1) &&
+          (func_8006FD90(chara, 1, Q12(1.5f), Q12(0.3f))))))
+    {
+        chara->model_0.state_2         = 3;
+        chara->model_0.anim_4.status_0 = 34;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D4B54);
 

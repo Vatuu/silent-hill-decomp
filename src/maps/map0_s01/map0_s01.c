@@ -46,127 +46,9 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800CEFD0_1_s02
 
 #include "maps/shared/sharedFunc_800D0850_0_s01.h" // 0x800D0850
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D0C3C);
+#include "maps/shared/sharedFunc_800CDAA8_0_s02.h" // 0x800D0C3C
 
-void func_800D16C4(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord) // 0x800D16C4
-{
-    s_Collision coll;
-    VECTOR3     offset;
-    s32         headingAngle;
-    s16         temp_v0;
-    s32         temp_s0;
-    s32         moveAmt;
-    s32         temp_s2;
-    s16         temp_s3;
-    s32         scaleRestoreShift;
-    u32         scaleReduceShift;
-    s32         temp_v0_2;
-    s32         temp_v0_3;
-    s32         playerState;
-    s32         moveSpeed;
-    s32         var_a0;
-    bool        cond;
-    s16         var_s0;
-    s16         var_v1;
-
-    playerState = g_SysWork.player_4C.extra_128.state_1C;
-    cond        = playerState < PlayerState_Unk58;
-
-    if (playerState == PlayerState_Unk53)
-    {
-        cond = false;
-    }
-
-    if (cond)
-    {
-        Collision_Get(&coll, chara->position_18.vx, chara->position_18.vz);
-        temp_s2 = FP_MULTIPLY(chara->moveSpeed_38, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
-        temp_s0 = FP_MULTIPLY(chara->moveSpeed_38, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
-
-        temp_s3 = Math_Cos(ABS(coll.field_4) >> 3); // `/ 8`.
-        temp_v0 = Math_Cos(ABS(coll.field_6) >> 3); // `/ 8`.
-
-        var_s0 = FP_MULTIPLY((FP_MULTIPLY(temp_s2, temp_s3, Q12_SHIFT)), temp_s3, Q12_SHIFT);
-        var_v1 = FP_MULTIPLY((FP_MULTIPLY(temp_s0, temp_v0, Q12_SHIFT)), temp_v0, Q12_SHIFT);
-    }
-    else
-    {
-        var_s0 = FP_MULTIPLY(chara->moveSpeed_38, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
-        var_v1 = FP_MULTIPLY(chara->moveSpeed_38, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
-    }
-    
-    if (chara->moveSpeed_38 >= 0)
-    {
-        chara->moveSpeed_38 = SquareRoot0(SQUARE(var_s0) + SQUARE(var_v1));
-    }
-    else
-    {
-        chara->moveSpeed_38 = -SquareRoot0(SQUARE(var_s0) + SQUARE(var_v1));
-    }
-
-    moveSpeed    = chara->moveSpeed_38;
-    headingAngle = chara->headingAngle_3C;
-    moveAmt      = FP_MULTIPLY_PRECISE(moveSpeed, g_DeltaTime0, Q12_SHIFT);
-
-    scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
-    scaleReduceShift = scaleRestoreShift >> 1;
-       
-    temp_v0_2 = Math_Sin(headingAngle) >> scaleReduceShift;
-    temp_s0 = moveAmt >> scaleReduceShift;
-    temp_s2 = FP_MULTIPLY_PRECISE(temp_s0, temp_v0_2, Q12_SHIFT);
-    offset.vx = temp_s2 << scaleRestoreShift;
-
-    temp_v0_3 = Math_Cos(headingAngle) >> scaleReduceShift;
-    temp_s2   = FP_MULTIPLY_PRECISE(temp_s0, temp_v0_3, Q12_SHIFT);
-    offset.vz   = temp_s2 << scaleRestoreShift;
-    
-    offset.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
-
-    if (cond)
-    {
-        func_80069B24(&D_800C4590, &offset, chara);
-        chara->position_18.vx += D_800C4590.offset_0.vx;
-        chara->position_18.vy += D_800C4590.offset_0.vy;
-        chara->position_18.vz += D_800C4590.offset_0.vz;
-
-        if (D_800C4590.field_14 == 0)
-        {
-            D_800C4590.field_C = chara->properties_E4.player.positionY_EC;
-        }
-
-        if (chara->position_18.vy > D_800C4590.field_C)
-        {
-            chara->position_18.vy = D_800C4590.field_C;
-            chara->field_34 = 0;
-        }
-    }
-    else
-    {
-        chara->position_18.vx += offset.vx;
-        chara->position_18.vz += offset.vz;
-        playerState = g_SysWork.player_4C.extra_128.state_1C;
-
-        if (playerState < PlayerState_Unk87 || (playerState >= PlayerState_Unk89 && playerState != PlayerState_Unk106))
-        {
-            chara->position_18.vy = Q12(0.0f);
-        }
-
-        chara->field_34 = 0;
-    }
-
-    if (g_DeltaTime0 == Q12(0.0f))
-    {
-        chara->rotationSpeed_2C.vy = FP_ANGLE(0.0f);
-    } 
-    else
-    {
-        chara->rotationSpeed_2C.vy = (sharedData_800E39D8_0_s00 << 8) / g_DeltaTime0;
-    }
-
-    coord->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
-    coord->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
-    coord->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
-}
+#include "maps/shared/sharedFunc_800D1C38_0_s00.h" // 0x800D16C4
 
 #include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800D1B00
 
@@ -830,7 +712,133 @@ void func_800D46C4(s_SubCharacter* chara) // 0x800D46C4
     }
 }
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D4894);
+void func_800D4894(s_SubCharacter* chara)
+{
+    s32 dmgType;
+    s32 status;
+    u32 stateStep;
+    bool cond;
+
+    stateStep = chara->model_0.stateStep_3;
+    status = chara->model_0.anim_4.status_0;
+    cond = 0;
+    switch (stateStep)
+    {
+        case 0:
+            if (IS_ANIM_STATUS_ACTIVE(status))
+            {
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(7, false);
+                chara->model_0.stateStep_3 = 1;
+            }
+            break;
+        case 1:
+            if (status != ANIM_STATUS(7, false))
+            {
+                chara->model_0.stateStep_3 = 2;
+                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
+            }
+            break;
+        case 2:
+            if (status != ANIM_STATUS(7, true))
+            {
+                cond = 1;
+            }
+            break;
+    }
+
+    func_800D5D80(chara);
+    dmgType = Chara_DamageTake(chara, 0x999);
+    if (dmgType >= 0)
+    {
+        if (dmgType < 3)
+        {
+            if (cond)
+            {
+                chara->model_0.state_2 = ANIM_STATUS(23, true);
+                chara->model_0.stateStep_3 = 0;
+                chara->properties_E4.unk0.field_E0_8 = 3;
+            }
+        }
+        else if (dmgType < 5)
+        {
+            chara->model_0.state_2 = ANIM_STATUS(25, true);
+            chara->model_0.stateStep_3 = 0;
+            if (chara->health_B0 <= 0)
+            {
+                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
+            }
+            else
+            {
+                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
+            }
+        }
+    }
+}
+
+void func_800D49B0(s_SubCharacter* chara) // 0x800D49B0
+{
+    s32 dmgType;
+    s32 status;
+    u32 stateStep;
+    bool cond;
+
+    stateStep = chara->model_0.stateStep_3;
+    status = chara->model_0.anim_4.status_0;
+    cond = 0;
+    switch (stateStep)
+    {
+        case 0:
+            if (IS_ANIM_STATUS_ACTIVE(animStatus))
+            {
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(7, false);
+                chara->model_0.stateStep_3 = 1;
+            }
+            break;
+
+        case 1:
+            if (status != ANIM_STATUS(7, false))
+            {
+                chara->model_0.stateStep_3           = 2;
+                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
+            }
+            break;
+
+        case 2:
+            if (status != ANIM_STATUS(7, true))
+            {
+                cond = true;
+            }
+            break;
+    }
+
+    func_800D5D80(chara);
+    dmgType = Chara_DamageTake(chara, 0x999);
+    if (dmgType >= 0)
+    {
+        if (dmgType < 3)
+        {
+            if (cond)
+            {
+                chara->model_0.state_2 = ANIM_STATUS(23, true);
+                chara->model_0.stateStep_3 = 0;
+                chara->properties_E4.unk0.field_E0_8 = 3;
+            }
+        }
+        else if (dmgType < 5)
+        {
+            chara->model_0.state_2 = ANIM_STATUS(25, true);
+            chara->model_0.stateStep_3 = 0;
+            if (chara->health_B0 <= 0)
+            {
+                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
+            }
+            else
+            {
+                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
+            }
+        }
+    }
+}
 
 void func_800D49B0(s_SubCharacter* chara) // 0x800D49B0
 {
@@ -875,11 +883,7 @@ void func_800D49B0(s_SubCharacter* chara) // 0x800D49B0
     {
         chara->model_0.state_2 = 2;
         chara->model_0.stateStep_3 = 0;
-
-        // TODO: Looks similar to `field_E0` bitfield in `s_SubCharacter` but code doesn't match with that layout.
-        // Also present in `sharedFunc_800D3928_0_s01`.
-        chara->properties_E4.unk0.properties_E8.val32 &= ~0xF00;
-        chara->properties_E4.unk0.properties_E8.val32 |= 0x100;
+        chara->properties_E4.unk0.field_E0_8 = 1;
     }
 }
 
@@ -907,7 +911,35 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5B10);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5C90);
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5D80);
+void func_800D5D80(s_SubCharacter* chara)
+{
+    s32 angle0;
+    s32 angle1;
+    s32 idx;
+    s_sharedData_800E21D0_0_s01* base;
+    s_func_800D2E04* src;
+
+    angle0 = func_80080478(&chara->position_18, &chara->properties_E4.unk0.field_F8);
+    angle1 = FP_ANGLE_NORM_S(angle0 - chara->rotation_24.vy);
+    src = &sharedData_800CAA98_0_s01;
+    base = &sharedData_800E21D0_0_s01;
+
+    idx = 0;
+    base->field_B4[idx][2] = src->unk_380[7][0];
+    base->field_B4[idx][1] = src->unk_380[7][1];
+    idx = 1;
+    base->field_B4[idx][2] = src->unk_380[0x14][0];
+    base->field_B4[idx][1] = src->unk_380[0x14][1];
+    idx = 3;
+    base->field_B4[idx][2] = 0;
+    base->field_B4[idx][1] = src->unk_380[0x23][1];
+
+    if (angle1 < 0)
+    {
+        angle1 += FP_ANGLE(0.3f);
+    }
+    sharedFunc_800D5E78_0_s01(chara, angle1 >> 2);
+}
 
 void func_800D5E14(s_SubCharacter* chara)
 {
@@ -1064,15 +1096,15 @@ void func_800DA7AC() // 0x800DA7AC
 
 void func_800DA7FC() // 0x800DA7FC
 {
-    s32 flags;
-    s32 var1;
+    s32    flags;
+    q19_12 var1;
 
-    var1 = 0x553;
+    var1 = Q12(0.333f);
     if (!Savegame_EventFlagGet(EventFlag_146))
     {
         if (!(Savegame_EventFlagGet(EventFlag_48) || Savegame_EventFlagGet(EventFlag_49)))
         {
-            var1 = 0xF0000;
+            var1 = Q12(240.0f);
             if (Savegame_EventFlagGet(EventFlag_39) && g_GameWork.soundCmd_5B2 == 9)
             {
                 flags = 2;
@@ -1086,12 +1118,12 @@ void func_800DA7FC() // 0x800DA7FC
         {
             if (!Savegame_EventFlagGet(EventFlag_48))
             {
-                var1 = 0xF0000;
+                var1  = Q12(240.0f);
                 flags = 1 << 8;
             }
             else
             {
-                var1 = 0x200;
+                var1  = Q12(0.125f);
                 flags = (1 << 0) | (1 << 9);
             }
         }

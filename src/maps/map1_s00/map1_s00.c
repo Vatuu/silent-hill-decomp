@@ -1,5 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map1/map1_s00.h"
@@ -42,9 +43,9 @@ INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", sharedFunc_800CFFF8_0_s00
 
 #include "maps/shared/sharedFunc_800D0850_0_s01.h" // 0x800CDCF0
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CE0DC);
+#include "maps/shared/sharedFunc_800CDAA8_0_s02.h" // 0x800CE0DC
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800CE610);
+#include "maps/shared/sharedFunc_800D1C38_0_s00.h" // 0x800CE610
 
 #include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800CEA3C
 
@@ -271,11 +272,20 @@ INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D81CC);
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D8354);
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D853C);
+void func_800D853C(void) // 0x800D853C
+{
+    func_80087540(FILE_TIM_PAPER1_TIM, Q12(2.5f), Q12(1.5f), 25, 22);
+}
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D8570);
+void func_800D8570(void) // 0x800D8570
+{
+    func_80087540(FILE_TIM_PAPER2_TIM, Q12(2.5f), Q12(1.5f), 25, 23);
+}
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D85A4);
+void func_800D85A4(void) // 0x800D85A4
+{
+    func_80087540(FILE_TIM_PAPER3_TIM, Q12(2.5f), Q12(1.5f), 25, 24);
+}
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D85D8);
 
@@ -296,7 +306,29 @@ INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D8CF0);
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D8FE0);
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D9148);
+void func_800D9148(void) // 0x800D9148
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            SysWork_StateStepIncrement();
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            MapMsg_DisplayAndHandleSelection(false, 31, 0, 0, 0, false);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+
+    func_800894B8(0x60); // Hex?
+}
 
 void func_800D922C(void) // 0x800D922C
 {
@@ -309,13 +341,25 @@ void func_800D9254(void) // 0x800D9254
     func_80087360(FILE_TIM_USCBOOK_TIM, Q12(0.0f), Q12(0.0f), 38);
 }
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D928C);
+void func_800D928C(void) // 0x800D928C
+{
+    sharedFunc_800D20E4_0_s00();
+    sharedFunc_800D2244_0_s00(false);
+    SysWork_StateSetNext(SysState_Gameplay);
+}
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D92D8);
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D9764);
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800DA3FC);
+void func_800DA3FC(void) // 0x800DA3FC
+{
+    if (Savegame_EventFlagGet(EventFlag_70))
+    {
+        func_80088FF4(Chara_GreyChild, 0, 3);
+        func_80088FF4(Chara_GreyChild, 1, 3);
+    }
+}
 
 INCLUDE_RODATA("asm/maps/map1_s00/nonmatchings/map1_s00", D_800CB784);
 

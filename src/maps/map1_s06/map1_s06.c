@@ -1,5 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map1/map1_s06.h"
@@ -58,7 +59,7 @@ INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", sharedFunc_800CFFF8_0_s00
 
 INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800CF468);
 
-INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800CF868);
+#include "maps/shared/sharedFunc_800D1C38_0_s00.h" // 0x800CF868
 
 #include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800CFCB8
 
@@ -154,7 +155,11 @@ INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", sharedFunc_800D4070_1_s05
 
 INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D4EBC);
 
-INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D4FC0);
+void func_800D4FC0(s32 arg0, s32 arg1) // 0x800D4FC0
+{
+    sharedData_800D8614_1_s05 += arg0;
+    sharedData_800D8616_1_s05 += arg1;
+}
 
 INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D4FE4);
 
@@ -164,7 +169,10 @@ INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D5048);
 
 #include "maps/shared/sharedFunc_800D7758_1_s00.h" // 0x800D5360
 
-INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D5400);
+void func_800D5400(void) // 0x800D5400
+{
+    func_80035F4C(Savegame_EventFlagGet(EventFlag_133) ? 0xFE : 1, Q12(0.1f), D_800D71E8);
+}
 
 void func_800D5448(void) {}
 
@@ -199,9 +207,59 @@ const char* MAP_MESSAGES[] =
 
 INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D5614);
 
-INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D5B98);
+void func_800D5B98(void) // 0x800D5B98
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_80086470(0, InventoryItemId_KGordonKey, 0, false);
+            SysWork_StateStepIncrement();
+        case 1:
+            func_80085DF0();
+            break;
 
-INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D5D6C);
+        case 2:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 59);
+            break;
+
+        case 3:
+            func_80086470(1, InventoryItemId_KGordonKey, 0, false);
+            break;
+
+        case 4:
+            Savegame_EventFlagSet(EventFlag_M1S06_PickupKGordonKey);
+            if (Gfx_PickupItemAnimate(InventoryItemId_KGordonKey))
+            {
+                MapMsg_DisplayAndHandleSelection(true, 18, 5, 6, 0, false);
+            }
+            break;
+
+        case 5:
+            func_80086470(3, InventoryItemId_KGordonKey, 1, false);
+            SysWork_NextStateStepSet(7);
+            break;
+
+        case 6:
+            Savegame_EventFlagClear(EventFlag_M1S06_PickupKGordonKey);
+            SysWork_StateStepIncrement();
+        case 7:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+}
+
+void func_800D5D6C(u16 arg0) // 0x800D5D6C
+{
+    func_800692A4(arg0, 120, Q12(0.5f));
+    func_80067914(1, arg0, 120, Q12(0.5f));
+    func_80068E0C(1, 1, 0, 0, arg0, 120, Q12(0.5f));
+}
 
 INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D5DD8);
 
@@ -209,7 +267,7 @@ void func_800D6338(void) // 0x800D6338
 {
     g_BackgroundColor = 112;
 
-    if (Savegame_EventFlagGet(EventFlag_137))
+    if (Savegame_EventFlagGet(EventFlag_M1S06_PickupKGordonKey))
     {
         func_80087360(FILE_TIM_RSCBOOK_TIM, Q12(0.0f), Q12(0.0f), 25);
         g_SavegamePtr->mapMarkingFlags_1D4[2] |= 1 << 4;
@@ -254,6 +312,15 @@ void Map_WorldObjectsInit(void) // 0x800D63D8
 
 INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D6578);
 
-INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D6C88);
+void func_800D6C88(void) // 0x800D6C88
+{
+    if (g_SysWork.player_4C.chara_0.position_18.vx == Q12(21.45f) && g_SysWork.player_4C.chara_0.position_18.vz == Q12(-15.26f))
+    {
+        Camera_PositionSet(NULL, Q12(21.69f), Q12(-2.38f), Q12(-19.16f), 0, 0, 0, 0, true);
+        Camera_LookAtSet(NULL, Q12(21.08f), Q12(-0.45f), Q12(-15.71f), 0, 0, 0, 0, true);
+        vcExecCamera();
+        vcReturnPreAutoCamWork(false);
+    }
+}
 
 INCLUDE_RODATA("asm/maps/map1_s06/nonmatchings/map1_s06", D_800CAFBC);

@@ -1,5 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map3/map3_s05.h"
@@ -30,9 +31,9 @@ INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800CC9A0);
 
 #include "maps/shared/sharedFunc_800D0850_0_s01.h" // 0x800CD73C
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800CDB28);
+#include "maps/shared/sharedFunc_800CDAA8_0_s02.h" // 0x800CDB28
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800CEBB4);
+#include "maps/shared/sharedFunc_800D1C38_0_s00.h" // 0x800CEBB4
 
 #include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800CF010
 
@@ -137,7 +138,10 @@ INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", sharedFunc_800CDF24_3_s03
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D2B54);
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D2E08);
+s32 func_800D2E08(s32 arg0) // 0x800D2E08
+{
+    return arg0 == 36 || arg0 == 34 || arg0 == 37 || arg0 == 35;
+}
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", sharedFunc_800CE3CC_3_s03); // 0x800D2E3C
 
@@ -197,9 +201,15 @@ INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", sharedFunc_800D06AC_3_s03
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D5444);
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D54DC);
+void func_800D54DC(s32 arg0) // 0x800D54DC
+{
+    (arg0 != 0) ? func_800D5510() : func_800D5550();
+}
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D5510);
+void func_800D5510(void) // 0x800D5510
+{
+    func_8003640C(!Savegame_EventFlagGet(EventFlag_237) ? 8 : 2);
+}
 
 INCLUDE_RODATA("asm/maps/map3_s05/nonmatchings/map3_s05", D_800CAB1C);
 
@@ -287,7 +297,39 @@ INCLUDE_RODATA("asm/maps/map3_s05/nonmatchings/map3_s05", D_800CB39C);
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D5FC4);
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D63C4);
+void func_800D63C4(void) // 0x800D63C4
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            SysWork_StateStepIncrement();
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 59);
+            break;
+
+        case 3:
+            MapMsg_DisplayAndHandleSelection(false, 26, 0, 0, 0, false);
+            break;
+
+        case 4:
+            func_80085E6C(Q12(0.3f), false);
+            break;
+
+        case 5:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+}
 
 INCLUDE_RODATA("asm/maps/map3_s05/nonmatchings/map3_s05", D_800CB3E0);
 
@@ -300,7 +342,32 @@ void func_800D6BB4(void) // 0x800D6BB4
     Event_ItemTake(InventoryItemId_VideoTape, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S05_PickupVideoTape, 15);
 }
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D6BE0);
+void func_800D6BE0(void) // 0x800D6BE0
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            SysWork_StateStepIncrement();
+        case 1:
+            func_80086E50(FILE_TIM_ALESSA_TIM, 0, 0);
+            break;
+
+        case 2:
+            func_800862F8(2, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 16, 0, 0, 0, false);
+            break;
+
+        case 3:
+            func_80086F44(0, 0);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+}
 
 void func_800D6CF0(void) // 0x800D6CF0
 {
@@ -309,7 +376,29 @@ void func_800D6CF0(void) // 0x800D6CF0
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D6D1C);
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D719C);
+void func_800D719C(void) // 0x800D719C
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            SysWork_StateStepIncrement();
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            MapMsg_DisplayAndHandleSelection(false, 29, 0, 0, 0, false);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+
+    func_800894B8(0x60); // Hex?
+}
 
 void func_800D7280(void) // 0x800D7280
 {

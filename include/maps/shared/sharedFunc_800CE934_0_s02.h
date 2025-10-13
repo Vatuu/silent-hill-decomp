@@ -1,16 +1,16 @@
 void sharedFunc_800CE934_0_s02(void)
 {
-    s32 flags;  // } Looks like numbers meant to be in hex? Could be `e_Sfx` or sound command related (upper 8 bits is cmd, lower 8 is param?)
-    s32 var_a1; // }
-    u8* var_a2; // Points to 8 bytes of data?
+    s32    flags;  // } Looks like numbers meant to be in hex? Could be `e_Sfx` or sound command related (upper 8 bits is cmd, lower 8 is param?)
+    q19_12 var_a1;
+    u8*    var_a2; // Points to 8 bytes of data?
 
-    var_a1 = 0x199;
+    var_a1 = Q12(0.1f);
     var_a2 = sharedData_800CFB14_0_s02;
 
     switch (g_SavegamePtr->mapRoomIdx_A5)
     {
         case 1:
-            var_a1 = 0xF0000;
+            var_a1 = Q12(240.0f);
             flags = Savegame_EventFlagGet(EventFlag_182) ? 0xFE : 0x201;
             break;
 
@@ -24,7 +24,7 @@ void sharedFunc_800CE934_0_s02(void)
         case 10:
         case 12:
         case 13:
-            var_a1 = 0x400;
+            var_a1 = Q12(0.25f);
             var_a2 = sharedData_800CFB24_0_s02;
 
             if (Savegame_EventFlagGet(EventFlag_312))
@@ -35,12 +35,12 @@ void sharedFunc_800CE934_0_s02(void)
             {
                 if (Savegame_EventFlagGet(EventFlag_311))
                 {
-                    var_a1 = 0x200;
+                    var_a1 = Q12(0.125f);
                     flags = 2;
                 }
                 else
                 {
-                    var_a1 = 0xF0000;
+                    var_a1 = Q12(240.0f);
                     flags = 0x201;
                 }
             }
@@ -66,23 +66,23 @@ void sharedFunc_800CE934_0_s02(void)
             {
                 if (Savegame_EventFlagGet(EventFlag_381))
                 {
-                    var_a1 = 0xF0000;
+                    var_a1 = Q12(240.0f);
                     Savegame_EventFlagClear(EventFlag_381);
                 }
                 else
                 {
-                    var_a1 = 0x200;
+                    var_a1 = Q12(0.125f);
                 }
                 flags = 0x301;
             }
             else if (Savegame_EventFlagGet(EventFlag_381))
             {
-                var_a1 = 0xF0000;
+                var_a1 = Q12(240.0f);
                 flags = 0x1FE;
             }
             else
             {
-                var_a1 = Savegame_EventFlagGet(EventFlag_378) ? 0x400 : 0x200;
+                var_a1 = Savegame_EventFlagGet(EventFlag_378) ? Q12(0.25f) : Q12(0.125f);
                 flags = 0x301;
             }
             break;
@@ -95,12 +95,12 @@ void sharedFunc_800CE934_0_s02(void)
             {
                 if (Savegame_EventFlagGet(EventFlag_391))
                 {
-                    var_a1 = 0xF0000;
+                    var_a1 = Q12(240.0f);
                     flags = 0x201;
                 }
                 else if (Savegame_EventFlagGet(EventFlag_395))
                 {
-                    var_a1 = 0xF0000;
+                    var_a1 = Q12(240.0f);
                     flags = 0xFE;
                 }
                 else
@@ -124,7 +124,7 @@ void sharedFunc_800CE934_0_s02(void)
             if (g_GameWork.soundCmd_5B2 == 23)
             {
                 var_a2 = sharedData_800CFB4C_0_s02;
-                var_a1 = 0x400;
+                var_a1 = Q12(0.25f);
 
                 if (Savegame_EventFlagGet(EventFlag_423) && !Savegame_EventFlagGet(EventFlag_424))
                 {

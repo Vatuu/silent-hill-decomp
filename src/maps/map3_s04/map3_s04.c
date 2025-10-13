@@ -1,5 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
 
@@ -23,7 +24,7 @@ INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CB37C);
 
 INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CC504);
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CCB10);
+#include "maps/shared/sharedFunc_800D1C38_0_s00.h" // 0x800CCB10
 
 #include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800CCF60
 
@@ -107,7 +108,10 @@ INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", sharedFunc_800CDF24_3_s03
 
 INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CDFA8);
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CE25C);
+s32 func_800CE25C(s32 arg0) // 0x800CE25C
+{
+    return arg0 == 36 || arg0 == 34 || arg0 == 37 || arg0 == 35;
+}
 
 INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", sharedFunc_800CE3CC_3_s03); // 0x800CE290
 
@@ -207,9 +211,15 @@ INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", sharedSymbol_800D0ADC_3_s
 
 INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800D1D8C);
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800D1E24);
+void func_800D1E24(s32 arg0) // 0x800D1E24
+{
+    (arg0 != 0) ? func_800D1E58() : func_800D1E98();
+}
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800D1E58);
+void func_800D1E58(void) // 0x800D1E58
+{
+    func_8003640C(!Savegame_EventFlagGet(EventFlag_237) ? 8 : 2);
+}
 
 INCLUDE_RODATA("asm/maps/map3_s04/nonmatchings/map3_s04", D_800CA72C);
 
@@ -328,7 +338,14 @@ INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800D3BD0);
 
 INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800D3DA4);
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800D43B8);
+void func_800D43B8(void) // 0x800D43B8
+{
+    if (Savegame_EventFlagGet(EventFlag_300))
+    {
+        func_80088FF4(Chara_PuppetDoctor, 2, 1);
+        func_80088FF4(Chara_PuppetDoctor, 3, 1);
+    }
+}
 
 INCLUDE_RODATA("asm/maps/map3_s04/nonmatchings/map3_s04", D_800CB35C);
 

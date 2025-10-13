@@ -828,7 +828,7 @@ void func_80035DB4(s32 arg0) // 0x80035DB4
         g_MapOverlayHeader.func_10(arg0);
         if (arg0 == 0 && D_800BCD5C == 0)
         {
-            func_80035F4C(1 << 0, 0xF0000, 0);
+            func_80035F4C(1 << 0, Q12(240.0f), 0);
         }
     }
 }
@@ -894,7 +894,7 @@ void func_80035ED0() // 0x80035ED0
     g_SysWork.field_2748[ARRAY_SIZE(g_SysWork.field_2748) - 1] = 0;
 }
 
-void func_80035F4C(s32 flags, s32 arg1, u8* arg2) // 0x80035F4C
+void func_80035F4C(s32 flags, q19_12 arg1, u8* arg2) // 0x80035F4C
 {
     s16  temp_v0;
     s32  var_a0;
@@ -925,7 +925,7 @@ void func_80035F4C(s32 flags, s32 arg1, u8* arg2) // 0x80035F4C
     {
         flagsCpy &= 1 << 8;
         flagsCpy |= 1 << 0;
-        arg1    = 0x333;
+        arg1      = Q12(0.2f);
     }
     
     if (!(flagsCpy & (1 << 8)))

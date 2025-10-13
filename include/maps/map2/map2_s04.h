@@ -1,6 +1,8 @@
 #ifndef _MAPS_MAP2_S04_H
 #define _MAPS_MAP2_S04_H
 
+void func_800CCB30(s32 arg0);
+
 void func_800CCF9C(void);
 
 void func_800CD050(void);

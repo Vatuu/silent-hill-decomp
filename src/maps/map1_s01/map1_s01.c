@@ -1,5 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map1/map1_s01.h"
@@ -32,7 +33,7 @@ INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800CC3C0);
 
 INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800CD548);
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800CDBE4);
+#include "maps/shared/sharedFunc_800D1C38_0_s00.h" // 0x800CDBE4
 
 #include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800CE034
 
@@ -321,7 +322,10 @@ INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D7308);
 
 INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D76F4);
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D7830);
+void func_800D7830(void) // 0x800D7830
+{
+    func_80087540(FILE_TIM_SCORE_TIM, Q12(2.0f), Q12(1.5f), 31, 23);
+}
 
 INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D7864);
 

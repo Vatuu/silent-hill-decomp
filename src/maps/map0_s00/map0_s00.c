@@ -257,126 +257,9 @@ bool func_800D0600() // 0x800D0600
 
 #include "maps/shared/sharedFunc_800D0850_0_s01.h" // 0x800D0E2C
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D0E34);
+#include "maps/shared/sharedFunc_800CDAA8_0_s02.h" // 0x800D0E34
 
-void func_800D1C38(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords) // 0x800D1C38
-{
-    s_Collision coll;
-    VECTOR3     offset;
-    q19_12      moveSpeedZ;
-    q19_12      moveSpeedX;
-    q3_12       cosRotX;
-    q3_12       cosRotZ;
-    s32         playerState;
-    bool        cond;
-    q3_12       moveX;
-    q3_12       moveZ;
-    q19_12      moveSpeed;
-    q3_12       headingAngle;
-    q19_12      moveStep;
-    s32         overflow;
-    s32         scale;
-
-    playerState = g_SysWork.player_4C.extra_128.state_1C;
-
-    cond = false;
-    if (playerState < PlayerState_Unk58)
-    {
-        cond = true;
-    }
-    else if (playerState == PlayerState_Unk74)
-    {
-        cond = g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP1_S02;
-    }
-
-    if (cond)
-    {
-        Collision_Get(&coll, chara->position_18.vx, chara->position_18.vz);
-
-        moveSpeedX = Math_Sin(chara->headingAngle_3C);
-        moveSpeedX = FP_MULTIPLY(chara->moveSpeed_38, moveSpeedX, Q12_SHIFT);
-
-        moveSpeedZ = Math_Cos(chara->headingAngle_3C);
-        moveSpeedZ = FP_MULTIPLY(chara->moveSpeed_38, moveSpeedZ, Q12_SHIFT);
-
-        cosRotX = Math_Cos(ABS(coll.field_4) >> 3); // `/ 8`.
-        cosRotZ = Math_Cos(ABS(coll.field_6) >> 3); // `/ 8`.
-
-        moveX = FP_MULTIPLY(FP_MULTIPLY(moveSpeedX, cosRotX, Q12_SHIFT), cosRotX, Q12_SHIFT);
-        moveZ = FP_MULTIPLY(FP_MULTIPLY(moveSpeedZ, cosRotZ, Q12_SHIFT), cosRotZ, Q12_SHIFT);
-    } 
-    else
-    {
-        moveX = FP_MULTIPLY(chara->moveSpeed_38, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
-        moveZ = FP_MULTIPLY(chara->moveSpeed_38, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
-    }
-
-    if (chara->moveSpeed_38 >= Q12(0.0f))
-    {
-        chara->moveSpeed_38 = SquareRoot0(SQUARE(moveX) + SQUARE(moveZ));
-    } 
-    else 
-    {
-        chara->moveSpeed_38 = -SquareRoot0(SQUARE(moveX) + SQUARE(moveZ));
-    }
-
-    moveSpeed = chara->moveSpeed_38;
-    headingAngle = chara->headingAngle_3C;
-    moveStep = FP_MULTIPLY_PRECISE(moveSpeed, g_DeltaTime0, Q12_SHIFT);
-
-    overflow = OVERFLOW_GUARD(moveStep);
-    scale    = overflow >> 1; // `/ 2`.
-
-    offset.vx = (s32)FP_MULTIPLY_PRECISE(moveStep >> scale, Math_Sin(headingAngle) >> scale, Q12_SHIFT) << overflow;
-    offset.vz = (s32)FP_MULTIPLY_PRECISE(moveStep >> scale, Math_Cos(headingAngle) >> scale, Q12_SHIFT) << overflow;
-    offset.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
-
-    if (cond)
-    {
-        func_80069B24(&D_800E39BC.offset_0, &offset, chara);
-
-        chara->position_18.vx += D_800E39BC.offset_0.vx;
-        chara->position_18.vy += D_800E39BC.offset_0.vy;
-        chara->position_18.vz += D_800E39BC.offset_0.vz;
-
-        if (D_800E39BC.field_14 == 0)
-        {
-            D_800E39BC.field_C = chara->properties_E4.player.positionY_EC;
-        }
-
-        if (chara->position_18.vy > D_800E39BC.field_C) 
-        {
-            chara->position_18.vy = D_800E39BC.field_C;
-            chara->field_34 = 0;
-        }
-    } 
-    else
-    {
-        chara->position_18.vx += offset.vx;
-        chara->position_18.vz += offset.vz;
-
-        playerState = g_SysWork.player_4C.extra_128.state_1C;
-        if (playerState < PlayerState_Unk87 || (playerState >= PlayerState_Unk89 && playerState != PlayerState_Unk106))
-        {
-            chara->position_18.vy = Q12(0.0f);
-        }
-
-        chara->field_34 = Q12(0.0f);
-    }
-
-    if (g_DeltaTime0 == Q12(0.0f))
-    {
-        chara->rotationSpeed_2C.vy = FP_ANGLE(0.0f);
-    }
-    else
-    {
-        chara->rotationSpeed_2C.vy = (sharedData_800E39D8_0_s00 << 8) / g_DeltaTime0;
-    }
-
-    coords->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
-    coords->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
-    coords->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
-}
+#include "maps/shared/sharedFunc_800D1C38_0_s00.h" // 0x800D1C38
 
 #include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800D209C
 
@@ -829,17 +712,16 @@ void Ai_Cheryl_Init(s_SubCharacter* chara) // 0x800D8888
 
 void func_800D94F8(void) // 0x800D94F8
 {
-    s32  i;
-    s32  flags1;
-    s32  flags0;
-    u16  saveFlag;
-    u32  saveByte;
-    u16* var_a2;
+    s32    i;
+    q19_12 var1;
+    s32    flags0;
+    u16    saveFlag;
+    u32    saveByte;
 
     // @hack Not used directly, but gets merged with  `Savegame_EventFlagGet` macros below.
     saveByte = g_SavegamePtr->eventFlags_168[0];
-    flags1 = 0x199;
-    flags0 = 0x100;
+    var1     = Q12(0.1f);
+    flags0   = 0x100;
 
     if (g_SysWork.player_4C.chara_0.health_B0 > 0 && (!(Savegame_EventFlagGet(23) && !Savegame_EventFlagGet(20))))
     {
@@ -855,10 +737,10 @@ void func_800D94F8(void) // 0x800D94F8
     else
     {     
         Savegame_EventFlagClear(EventFlag_20);
-        flags1 = 0x4CC;
+        var1 = Q12(0.3f);
     }
 
-    func_80035F4C(flags0, flags1, &D_800DF2F8);
+    func_80035F4C(flags0, var1, &D_800DF2F8);
 }
 
 void Gfx_LoadingScreen_StageString() // 0x800D95D4
@@ -1332,12 +1214,6 @@ void func_800DACB0(void) // 0x800DACB0
 }
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800DADD4);
-/* TODO: linker can't find `Event_ItemTake`.
-void func_800DADD4(void)
-{
-    Event_ItemTake(InventoryItemId_Camera, 1, 0x207, 0x37);
-}
-*/
 
 void func_800DAEFC(void) // 0x800DAEFC
 {

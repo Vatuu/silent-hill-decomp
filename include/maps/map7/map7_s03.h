@@ -8,6 +8,8 @@ extern s32 D_800EDA00;
 
 extern s16 D_800F23D0;
 
+extern s_800C4590 D_800F23D8;
+
 extern s32 D_800F2430;
 extern s32 D_800F2434;
 
@@ -40,6 +42,8 @@ void Ai_Incubator_Init(s_SubCharacter* chara);
 void Ai_LittleIncubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void func_800D71A4(s32 arg0);
+
+void func_800D7CEC(void);
 
 void func_800D7CF8(void);
 
@@ -92,6 +96,8 @@ void func_800E0C10(void);
 
 // Some kind of RNG? Constants don't seem well known?
 s32 func_800E28F4(void);
+
+void func_800E3B6C(void);
 
 void func_800E3D18(void);
 

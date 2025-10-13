@@ -70,6 +70,8 @@ typedef enum _EventFlag
     EventFlag_M1S00_PickupMap      = 67, // Shared with M1S06
     EventFlag_M1S01_PickupChemical = 68,
 
+    EventFlag_70 = 70,
+
     EventFlag_M7S01_HealthDrink1 = 86,
 
     EventFlag_M1S02_PickupPictureCard = 93,
@@ -77,16 +79,23 @@ typedef enum _EventFlag
     EventFlag_M2S04_PickupShotgun = 95,
 
     EventFlag_97 = 97,
+    EventFlag_98 = 98,
 
-    EventFlag_105 = 105,
-    EventFlag_106 = 106,
+    EventFlag_100 = 100,
+
+    EventFlag_105                           = 105,
+    EventFlag_106                           = 106,
+    EventFlag_107                           = 107,
+    EventFlag_M1S03_PickupLibraryReserveKey = 108,
 
     EventFlag_M1S02_PickupRubberBall = 110,
+
+    EventFlag_122 = 122,
 
     EventFlag_133 = 133,
     EventFlag_134 = 134,
 
-    EventFlag_137 = 137,
+    EventFlag_M1S06_PickupKGordonKey = 137,
 
     EventFlag_143                         = 143,
     EventFlag_M0S02_PickupChannelingStone = 144,
@@ -98,6 +107,8 @@ typedef enum _EventFlag
     EventFlag_M2S00_PickupKeyOfScarecrow = 152,
 
     EventFlag_159 = 159,
+
+    EventFlag_165 = 165,
 
     EventFlag_M2S00_PickupMap = 171, // Shared with M2S04
 
@@ -114,9 +125,17 @@ typedef enum _EventFlag
 
     EventFlag_188 = 188,
 
+    EventFlag_190 = 190,
+    EventFlag_191 = 191,
+
+    EventFlag_194 = 194,
+    EventFlag_195 = 195,
+
     EventFlag_197 = 197,
 
     EventFlag_M3S00_FirstAidKit = 199, // Odd numbering not with other common items, possibly some default that goes unused, shared with M3S01 and M3S06.
+
+    EventFlag_203 = 203,
 
     EventFlag_M3S01_PickupPlasticBottle = 205,
 
@@ -127,6 +146,11 @@ typedef enum _EventFlag
     EventFlag_211 = 211,
 
     EventFlag_223 = 223,
+
+    EventFlag_225 = 225,
+
+    EventFlag_236 = 236,
+    EventFlag_237 = 237,
 
     EventFlag_M3S04_PickupPlateOfQueen  = 241,
     EventFlag_M3S03_PickupPlateOfTurtle = 242,
@@ -150,6 +174,8 @@ typedef enum _EventFlag
     EventFlag_295                        = 295,
     EventFlag_M3S06_PickupAntiqueShopKey = 296,
 
+    EventFlag_300 = 300,
+
     EventFlag_303 = 303,
 
     EventFlag_306 = 306,
@@ -160,6 +186,7 @@ typedef enum _EventFlag
 
     EventFlag_M4S03_PickupHuntingRifle = 328,
 
+    EventFlag_352                  = 352,
     EventFlag_M5S00_PickupSewerKey = 353,
 
     EventFlag_M5S00_PickupMap = 361,
@@ -190,6 +217,8 @@ typedef enum _EventFlag
 
     EventFlag_M6S03_PickupMap = 436,
 
+    EventFlag_440 = 440,
+
     EventFlag_448 = 448,
     EventFlag_449 = 449,
 
@@ -212,7 +241,7 @@ typedef enum _EventFlag
 
     EventFlag_M7S01_PickupCamera         = 519,
     EventFlag_M7S01_PickupRingOfContract = 520,
-    EventFlag_521                        = 521,
+    EventFlag_M7S01_PickupStoneOfTime    = 521,
     EventFlag_M7S01_PickupPliers         = 522,
     EventFlag_M7S01_PickupScrewdriver    = 523,
     EventFlag_M7S01_PickupBirdCageKey    = 524,
@@ -241,6 +270,8 @@ typedef enum _EventFlag
     EventFlag_571 = 571,
 
     EventFlag_574 = 574,
+
+    EventFlag_579 = 579,
 
     EventFlag_584 = 584,
     EventFlag_586 = 586,
@@ -408,7 +439,9 @@ typedef enum _EventFlag
     EventFlag_M5S03_ShotgunShells = 717,
     EventFlag_M5S03_HealthDrink1  = 718,
 
-    // TODO: 719/720/721, might be used in other MAP5/MAP6 code.
+    EventFlag_M6S00_HealthDrink   = 719,
+    EventFlag_M6S00_ShotgunShells = 720,
+    EventFlag_M6S00_FirstAidKit   = 721,
 
     /** `MAP6_S01` common item pickups. */
     EventFlag_M6S01_RifleShells    = 722,
