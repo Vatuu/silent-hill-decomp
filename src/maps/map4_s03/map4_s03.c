@@ -625,8 +625,7 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D65E8);
 INCLUDE_RODATA("asm/maps/map4_s03/nonmatchings/map4_s03", D_800CA814);
 
 // Assumed type.
-const s32 D_800CA824[] =
-{
+const s32 D_800CA824[] = {
     -25,
     -25,
     -30,
@@ -645,8 +644,7 @@ const s32 D_800CA824[] =
     -28,
 };
 
-const char* MAP_MESSAGES[] =
-{
+const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
     "\tDaddy...where_are_you...? ",
     "~J0(1.0)\tCheryl! ~E  ",

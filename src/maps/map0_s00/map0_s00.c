@@ -13,8 +13,7 @@
 
 void func_800CBFB0(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId) // 0x800CBFB0
 {
-    VECTOR3 vecs[4] =
-    {
+    VECTOR3 vecs[4] = {
         VECTOR3(-258.0f, -1.4f, 244.1f),
         VECTOR3(-254.5f,  0.0f, 220.5f),
         VECTOR3(-249.4f,  0.0f, 219.5f),
@@ -751,8 +750,7 @@ void Gfx_LoadingScreen_StageString() // 0x800D95D4
     Gfx_DebugStringDraw("STAGE 0-0");
 }
 
-const char* MAP_MESSAGES[] =
-{
+const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
     "~J0(2.5)\tCheryl.__Where_could_you_be? ~E ",
     "~J0(1.5)\tIt's_strange... ",

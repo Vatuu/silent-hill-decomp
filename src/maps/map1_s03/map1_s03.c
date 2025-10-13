@@ -264,8 +264,7 @@ INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DA7F4);
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DA8B0);
 
-const char* MAP_MESSAGES[] =
-{
+const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
     "\tWhat's_this? ~E ",
     "\t[The_Monster_Lurks] ~N\n\tis_the_book's_title. ~E ",

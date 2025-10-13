@@ -791,8 +791,7 @@ void Options_ExtraOptionsMenu_EntryStringsDraw(void) // 0x801E416C
 
     const char* EXTRA_OPTIONS_STR = "EXTRA_OPTION_\x01\x01\x01\x01\x01S";
 
-    const char* ENTRY_STRS[] =
-    {
+    const char* ENTRY_STRS[] = {
         "Weapon_Control",
         "Blood_Color",
         "View_Control",
@@ -844,8 +843,7 @@ void Options_MainOptionsMenu_EntryStringsDraw(void) // 0x801E42EC
 
     const char* OPTIONS_STR = "OPTION_\x01\x01\x01\x01\x01S";
 
-    const char* ENTRY_STRS[] =
-    {
+    const char* ENTRY_STRS[] = {
         "Exit",
         "Brightness_Level",
         "Controller_Config",
@@ -900,20 +898,17 @@ void Options_ExtraOptionsMenu_SelectionHighlightDraw(void) // 0x801E4450
     s_Quad2d bulletQuads[2];
     DVECTOR* quadVerts;
 
-    const u8 SELECTION_HIGHLIGHT_WIDTHS[] =
-    {
+    const u8 SELECTION_HIGHLIGHT_WIDTHS[] = {
         157, 126, 135, 135, 157, 130, 112, 134
     };
 
     // 12x12 quad.
-    const DVECTOR FRONT_BULLET_QUAD[] =
-    {
+    const DVECTOR FRONT_BULLET_QUAD[] = {
         { -120, -47 }, { -120, -35 }, { -108, -47 }, { -108, -35 }
     };
 
     // 14x14 quad.
-    const DVECTOR BACK_BULLET_QUAD[] =
-    {
+    const DVECTOR BACK_BULLET_QUAD[] = {
         { -121, -48 }, { -121, -34 }, { -107, -48 }, { -107, -34 }
     };
 
@@ -980,14 +975,12 @@ void Options_MainOptionsMenu_SelectionHighlightDraw(void) // 0x801E472C
     s_Quad2d bulletQuads[2];
     DVECTOR* quadVerts;
 
-    const u8 SELECTION_HIGHLIGHT_WIDTHS[] =
-    {
+    const u8 SELECTION_HIGHLIGHT_WIDTHS[] = {
         59, 169, 174, 156, 104, 112, 75, 129, 112
     };
 
     // 12x12 quad.
-    const DVECTOR BULLET_QUAD_VERTS_FRONT[] =
-    {
+    const DVECTOR BULLET_QUAD_VERTS_FRONT[] = {
         { -120, -55 },
         { -120, -43 },
         { -108, -55 },
@@ -995,8 +988,7 @@ void Options_MainOptionsMenu_SelectionHighlightDraw(void) // 0x801E472C
     };
 
     // 14x14 quad.
-    const DVECTOR BULLET_QUAD_VERTS_BACK[] =
-    {
+    const DVECTOR BULLET_QUAD_VERTS_BACK[] = {
         { -121, -56 },
         { -121, -42 },
         { -107, -56 },
@@ -1097,8 +1089,7 @@ void Options_ExtraOptionsMenu_ConfigDraw(void) // 0x801E4B2C
     #define STR_BASE_Y   64
     #define STR_OFFSET_Y 16
 
-    const s_Triangle2d FRONT_ARROWS[] =
-    {
+    const s_Triangle2d FRONT_ARROWS[] = {
         { { 38, -42 }, { 46, -50 }, { 46, -34 } },
         { { 120, -42 }, { 112, -50 }, { 112, -34 } },
         { { 38, -26 }, { 46, -34 }, { 46, -18 } },
@@ -1117,8 +1108,7 @@ void Options_ExtraOptionsMenu_ConfigDraw(void) // 0x801E4B2C
         { { 104, 70 }, { 96, 62 }, { 96, 78 } }
     };
 
-    const s_Triangle2d BACK_ARROWS[] =
-    {
+    const s_Triangle2d BACK_ARROWS[] = {
         { { 37, -42 }, { 47, -52 }, { 47, -32 } },
         { { 121, -42 }, { 111, -52 }, { 111, -32 } },
         { { 37, -26 }, { 47, -36 }, { 47, -16 } },
@@ -1138,8 +1128,7 @@ void Options_ExtraOptionsMenu_ConfigDraw(void) // 0x801E4B2C
     };
 
     // TODO: Can this be split?
-    const char* CONFIG_STRS[] =
-    {
+    const char* CONFIG_STRS[] = {
         "Press",
         "Switch",
 
@@ -1267,8 +1256,7 @@ void Options_ExtraOptionsMenu_ConfigDraw(void) // 0x801E4B2C
 
 void Options_MainOptionsMenu_ConfigDraw(void) // 0x801E4FFC
 {
-    const s_Triangle2d FRONT_ARROWS[] =
-    {
+    const s_Triangle2d FRONT_ARROWS[] = {
         { { 40, 14 }, { 48, 6 }, { 48, 22 } },
         { { 96, 14 }, { 88, 6 }, { 88, 22 } },
         { { 40, 30 }, { 48, 22 }, { 48, 38 } },
@@ -1281,8 +1269,7 @@ void Options_MainOptionsMenu_ConfigDraw(void) // 0x801E4FFC
         { { 131, 78 }, { 123, 70 }, { 123, 86 } }
     };
 
-    const s_Triangle2d BACK_ARROWS[] =
-    {
+    const s_Triangle2d BACK_ARROWS[] = {
         { { 39, 14 }, { 49, 4 }, { 49, 24 } },
         { { 97, 14 }, { 87, 4 }, { 87, 24 } },
         { { 39, 30 }, { 49, 20 }, { 49, 40 } },
@@ -1555,16 +1542,14 @@ void Options_ScreenPosMenu_ArrowsDraw(void) // 0x801E5A08
 {
     #define DIR_COUNT 4
 
-    const s_Triangle2d FRONT_ARROWS[] =
-    {
+    const s_Triangle2d FRONT_ARROWS[] = {
         { { 0, -100 }, { -8, -92 }, { 8, -92 } },
         { { 0, 100 }, { -8, 92 }, { 8, 92 } },
         { { -148, 0 }, { -140, -8 }, { -140, 8 } },
         { { 148, 0 }, { 140, -8 }, { 140, 8 } }
     };
 
-    const s_Triangle2d BACK_ARROWS[] =
-    {
+    const s_Triangle2d BACK_ARROWS[] = {
         { { 0, -101 }, { -10, -91 }, { 9, -91 } },
         { { 0, 101 }, { -10, 91 }, { 9, 91 } },
         { { -149, 0 }, { -139, -10 }, { -139, 10 } },
@@ -1621,16 +1606,14 @@ void Options_ScreenPosMenu_ConfigDraw(void) // 0x801E5CBC
     POLY_F4* poly;
     GsOT*    ot = &g_OrderingTable2[g_ActiveBufferIdx];
 
-    const DVECTOR LINE_BASES[] =
-    {
+    const DVECTOR LINE_BASES[] = {
         { -60, 40 },
         { -60, 70 },
         { 60, 70 },
         { 60, 40 }
     };
 
-    const char* AXIS_OFFSET_STRS[] =
-    {
+    const char* AXIS_OFFSET_STRS[] = {
         "X:_",
         "Y:_"
     };
@@ -1774,14 +1757,12 @@ void Options_BrightnessMenu_ConfigDraw(void) // 0x801E6238
 
 void Options_BrightnessMenu_ArrowsDraw(void) // 0x801E628C
 {
-    const s_Triangle2d FRONT_ARROWS[] =
-    {
+    const s_Triangle2d FRONT_ARROWS[] = {
         { { 8, 84  }, { 16, 76 }, { 16, 92 } },
         { { 64, 84 }, { 56, 76 }, { 56, 92 } }
     };
 
-    const s_Triangle2d BORDER_ARROWS[] =
-    {
+    const s_Triangle2d BORDER_ARROWS[] = {
         { { 7, 84  }, { 17, 74 }, { 17, 94 } },
         { { 65, 84 }, { 55, 74 }, { 55, 94 } }
     };
@@ -2335,8 +2316,7 @@ s32 Options_ControllerMenu_ConfigUpdate(s32 actionIdx) // 0x801E6CF4
  * 0 corresponds to the presets pane on the left,
  * 1 corresponds to the actions pane on the right.
  */
-DR_MODE g_ControllerMenu_SelectionHighlightDrawModes[2] =
-{
+DR_MODE g_ControllerMenu_SelectionHighlightDrawModes[2] = {
     {
         .tag  = 0x03000000,
         .code = { 0xE1000200, 0 }
@@ -2351,8 +2331,7 @@ DR_MODE g_ControllerMenu_SelectionHighlightDrawModes[2] =
  * 0 corresponds to the presets pane on the left,
  * 1 corresponds to the actions pane on the right.
  */
-POLY_G4 g_ControllerMenu_SelectionHighlightQuads[2] =
-{
+POLY_G4 g_ControllerMenu_SelectionHighlightQuads[2] = {
     {
         .tag  = 0x08000000,
         .r0   = 255,
@@ -2376,8 +2355,7 @@ POLY_G4 g_ControllerMenu_SelectionHighlightQuads[2] =
 };
 
 /** @brief Controller menu entry strings for the presets pane on the left. */
-static const char* CONTROLLER_MENU_PRESETS_PANE_ENTRY_STRINGS[] =
-{
+static const char* CONTROLLER_MENU_PRESETS_PANE_ENTRY_STRINGS[] = {
     "EXIT",
     "TYPE_1",
     "TYPE_2",
@@ -2385,8 +2363,7 @@ static const char* CONTROLLER_MENU_PRESETS_PANE_ENTRY_STRINGS[] =
 };
 
 /** @brief Controller menu entry strings for the actions pane on the right. */
-static const char* CONTROLLER_MENU_ACTIONS_PANE_ENTRY_STRINGS[] =
-{
+static const char* CONTROLLER_MENU_ACTIONS_PANE_ENTRY_STRINGS[] = {
     "ENTER",
     "CANCEL",
     "SKIP",

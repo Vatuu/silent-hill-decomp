@@ -531,8 +531,7 @@ void func_800E1D48() {}
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800E1D50);
 
-const char* MAP_MESSAGES[] =
-{
+const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
     "\tGotta'_go_find_Cybil! ~N\n\tNo_time_to_go_back. ~E ",
     "~J0(10)\t~E ",

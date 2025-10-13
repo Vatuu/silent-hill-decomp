@@ -173,8 +173,7 @@ void func_800D494C(void) // 0x800D494C
 
 void func_800D49A4(void) {}
 
-const char* MAP_MESSAGES[] =
-{
+const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
 };
 

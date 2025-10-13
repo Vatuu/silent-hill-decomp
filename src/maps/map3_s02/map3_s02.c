@@ -168,8 +168,7 @@ INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", func_800D0218);
 
 void func_800D02AC(void) {}
 
-const char* MAP_MESSAGES[] =
-{
+const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
     "\tNothing_happens_when_the ~N\n\televator_button_is_pressed. ~E ",
     "\tIt's_locked! ~E "

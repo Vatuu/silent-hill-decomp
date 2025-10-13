@@ -151,8 +151,7 @@ INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D1394);
 
 INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D1428);
 
-const char* MAP_MESSAGES[] =
-{
+const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
     "\tThe_elevator_doesn't ~N\n\tappear_to_be_working. ~E ",
     "\tA_glass_vial_lies_shattered. ",

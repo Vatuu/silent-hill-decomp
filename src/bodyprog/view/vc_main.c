@@ -10,8 +10,7 @@
 #define MIN_IN_ROAD_DIST Q12(1.0f) // `vcGetMinInRoadDist` in SH2, hardcoded to `Q12(1.0f)` in SH1.
 
 /** @brief Fallback camera path collision. */
-VC_NEAR_ROAD_DATA vcNullNearRoad =
-{
+VC_NEAR_ROAD_DATA vcNullNearRoad = {
     .road_p_0              = vcNullRoadArray,
     .rd_dir_type_4         = VC_RD_DIR_Z,
     .use_priority_5        = 0,
@@ -23,8 +22,7 @@ VC_NEAR_ROAD_DATA vcNullNearRoad =
 };
 
 /** @brief Default look-at move parameters. */
-VC_WATCH_MV_PARAM deflt_watch_mv_prm =
-{
+VC_WATCH_MV_PARAM deflt_watch_mv_prm = {
     Q12(1.2f),
     Q12(2.2f),
     Q12(0.22f),
@@ -32,8 +30,7 @@ VC_WATCH_MV_PARAM deflt_watch_mv_prm =
 };
 
 /** @brief First-person look-at move parameters. */
-VC_WATCH_MV_PARAM self_view_watch_mv_prm =
-{
+VC_WATCH_MV_PARAM self_view_watch_mv_prm = {
     Q12(1.68f),
     Q12(3.08f),
     Q12(0.44f),
@@ -41,8 +38,7 @@ VC_WATCH_MV_PARAM self_view_watch_mv_prm =
 };
 
 /** @brief Camera move parameters for user? */
-VC_CAM_MV_PARAM cam_mv_prm_user =
-{
+VC_CAM_MV_PARAM cam_mv_prm_user = {
     Q12(10.0f),
     Q12(3.0f),
     Q12(6.0f),
@@ -50,8 +46,7 @@ VC_CAM_MV_PARAM cam_mv_prm_user =
 };
 
 /** @brief Boundary radii. */
-q19_12 excl_r_ary[9] =
-{
+q19_12 excl_r_ary[9] = {
     Q12(4.0f),
     Q12(4.0f),
     Q12(3.7f),

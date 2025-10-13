@@ -155,8 +155,7 @@ INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D1F54);
 
 void func_800D1FE8(void) {}
 
-const char* MAP_MESSAGES[] =
-{
+const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
     "~J0(1.6)\tWhat's_this? ~E ",
     "~J0(1.0)\tHarry! ",

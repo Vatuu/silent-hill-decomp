@@ -6,8 +6,7 @@ s_FsImageDesc D_800A8DA0 = { { 44, 0 }, 0, 0, 0, 0 };
 
 // Could also be some `s_FsImageDesc`, but the big negative numbers suggest not.
 // Might be some other primitive data (`POLY`, `RGBC0`, etc.).
-u32 D_800A8DA8[] =
-{
+u32 D_800A8DA8[] = {
     0x00010010,
     0x84438000,
     0x88658C62,
@@ -54,34 +53,30 @@ u32 D_800A8DA8[] =
     0x06DCCA31,
 };
 
-u8 g_BackgroundColor = 0x80;
-u8 D_800A8E59        = 0x0;
-u8 D_800A8E5A        = 0x3;
-u8 D_800A8E5B        = 0x0;
+u8 g_BackgroundColor = 128;
+u8 D_800A8E59        = 0;
+u8 D_800A8E5A        = 3;
+u8 D_800A8E5B        = 0;
 
-DR_MODE D_800A8E5C[] =
-{
+DR_MODE D_800A8E5C[] = {
     { 0x3000000, { 0xE1000240, 0x0 } },
     { 0x3000000, { 0xE1000240, 0x0 } }
 };
 
-TILE D_800A8E74[] =
-{
+TILE D_800A8E74[] = {
     { 0x3000000, 255, 0, 0, 0x62, -320, -240, 640, 480 },
     { 0x3000000, 255, 0, 0, 0x62, -320, -240, 640, 480 }
 };
 
 q19_12 g_ScreenFadeProgress = Q12(0.0f);
 
-DR_MODE D_800A8E98[] =
-{
+DR_MODE D_800A8E98[] = {
     { 0x3000000, { 0xE1000240, 0x0 } },
     { 0x3000000, { 0xE1000240, 0x0 } }
 };
 
 // TODO: Make a macro?
-POLY_G4 D_800A8EB0[] =
-{
+POLY_G4 D_800A8EB0[] = {
     {
         0x8000000,
         0x0, 0x0, 0x0, 0x3A,
@@ -130,8 +125,7 @@ POLY_G4 D_800A8EB0[] =
 
 s32 D_800A8F40 = 0;
 
-VC_ROAD_DATA vcNullRoadArray[] =
-{
+VC_ROAD_DATA vcNullRoadArray[] = {
     {
         .lim_sw_0          = { Q8(-30.0f), Q8(30.0f), Q8(-30.0f), Q8(30.0f) },
         .lim_rd_8          = { Q8(-30.0f), Q8(30.0f), Q8(-30.0f), Q8(30.0f) },
@@ -164,20 +158,17 @@ VC_ROAD_DATA vcNullRoadArray[] =
     },
 };
 
-GsOT g_OrderingTable0[2] =
-{
+GsOT g_OrderingTable0[2] = {
     { 11, &g_OtTags1[0][1], 0, 0, 0 },
     { 11, &g_OtTags1[1][1], 0, 0, 0 }
 };
 
-GsOT g_OrderingTable1[2] =
-{
+GsOT g_OrderingTable1[2] = {
     { 9, (GsOT_TAG*)FS_BUFFER_1, 0, 0, 0 },
     { 9, (GsOT_TAG*)0x801E2E00, 0, 0, 0 }
 };
 
-GsOT g_OrderingTable2[2] =
-{
+GsOT g_OrderingTable2[2] = {
     { 4, &g_OtTags0[0][0], 0, 0, 0 },
     { 4, &g_OtTags0[1][0], 0, 0, 0 }
 };
@@ -220,8 +211,7 @@ s_FsImageDesc D_800A90E4                   = { { 153, 0   }, 94,   0,  -38,  15 
 s_FsImageDesc D_800A90EC                   = { { 51,  0   }, 125,  0,  -56,  14  };
 s_FsImageDesc D_800A90F4                   = { { 0,   0   }, 0,    0,   0,   -1  };
 
-s_CharaFileInfo CHARA_FILE_INFOS[] =
-{
+s_CharaFileInfo CHARA_FILE_INFOS[] = {
 /* `Chara_` name       { `animFileIdx`          `modelFileIdx`         `textureFileIdx`       `field_6`  `materialBlendMode_6_10` `field_8`    `cameraAnchor_C_0`      `cameraOffsetY_C_2` } */
 /* None             */ {  NO_VALUE,              FILE_1ST_2ZANKO80_TIM, FILE_1ST_2ZANKO80_TIM, Q8(0.0f),  BlendMode_Average,       NULL,        CameraAnchor_Character, Q8(0.0f)           },
 /* Harry            */ {  FILE_ANIM_HB_BASE_ANM, FILE_CHARA_HERO_ILM,   FILE_CHARA_HERO_TIM,   Q8(0.25f), BlendMode_Additive,      NULL,        CameraAnchor_Character, Q8(-0.7f)          },
@@ -270,8 +260,7 @@ s_CharaFileInfo CHARA_FILE_INFOS[] =
 /* Padlock          */ {  FILE_1ST_2ZANKO80_TIM, FILE_1ST_2ZANKO80_TIM, FILE_1ST_2ZANKO80_TIM, Q8(0.0f),  BlendMode_Average,       NULL,        CameraAnchor_Character, Q8(0.0f)           }
 };
 
-s_sub_StructUnk3 D_800A93CC[] =
-{
+s_sub_StructUnk3 D_800A93CC[] = {
     {
         .field_0  = { .field_0 = 0xFF00 },
         .field_4  = 0,
@@ -426,10 +415,8 @@ s_sub_StructUnk3 D_800A93CC[] =
     }
 };
 
-s_StructUnk3 D_800A952C =
-{
-    .field_0 =
-    {
+s_StructUnk3 D_800A952C = {
+    .field_0 = {
         .field_0  = { .field_0 = 0x15006 },
         .field_4  = 1433,
         .field_6  = 1638,
@@ -591,16 +578,14 @@ s32 g_Demo_FrameCount = 0;
 s32 g_UnknownFrameCounter = 0;
 s32 g_PrevVBlanks = 0;
 
-u16 D_800A9774[] =
-{
+u16 D_800A9774[] = {
    160,
    162,
    0,
    0
 };
 
-void (*g_GameStateUpdateFuncs[])() =
-{
+void (*g_GameStateUpdateFuncs[])() = {
     GameState_Boot_Update,
     (void (*)())0x800C95AC, // Konami Logo.
     (void (*)())0x800C99A4, // KCET Logo.
@@ -638,8 +623,7 @@ s8 D_800A97E1 = 0;
 s8 D_800A97E2 = 0;
 s8 D_800A97E3 = 0;
 u32 D_800A97E4[8] = {};
-u16 g_UnknownEngineCmdTable0[] =
-{
+u16 g_UnknownEngineCmdTable0[] = {
     0x0,
     0x0,
     0x20,
@@ -683,8 +667,7 @@ u16 g_UnknownEngineCmdTable0[] =
     0x47,
     0x3F
 };
-u16 g_UnknownEngineCmdTable1[] =
-{
+u16 g_UnknownEngineCmdTable1[] = {
     0x0,
     0x0,
     0x301,
@@ -696,8 +679,7 @@ u16 g_UnknownEngineCmdTable1[] =
     0x307,
     0x308
 };
-s_800C37D4 D_800A986C[] =
-{
+s_800C37D4 D_800A986C[] = {
     { 9,  3, 778, 0x30C030B, 0x30F030D },
     { 16, 3, 785, 0x3130312, 0x3150314 },
     { 22, 3, 791, 0x3190318, 0x31B031A },
@@ -705,8 +687,7 @@ s_800C37D4 D_800A986C[] =
     { 35, 3, 804, 0x3260325, 0x327030E }
 };
 u32 D_800A98A8 = 0x03200328;
-u16 g_UnknownEngineCmdTable2[] =
-{
+u16 g_UnknownEngineCmdTable2[] = {
     0x0,
     0xA2,
     0xAA,
@@ -749,8 +730,7 @@ u16 g_UnknownEngineCmdTable2[] =
     0xCB
 };
 
-s8 D_800A98FC[Chara_Count] =
-{
+s8 D_800A98FC[Chara_Count] = {
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
@@ -763,8 +743,7 @@ s8 D_800A98FC[Chara_Count] =
  * of zeros, which are also zeroed at runtime in `func_800348C0`.
  * I think it is an array of this struct.
  */
-s_800A992C D_800A992C[4] =
-{
+s_800A992C D_800A992C[4] = {
     {
         .charaId0_0       = Chara_Harry,
         .charaId1_1       = Chara_Harry,
@@ -777,8 +756,7 @@ s_800A992C D_800A992C[4] =
     }, {}, {}, {}
 };
 
-s_AnimInfo D_800A998C =
-{
+s_AnimInfo D_800A998C = {
     .updateFunc_0           = Anim_Update1,
     .status_4               = 0,
     .hasVariableDuration_5 = false,
@@ -794,14 +772,12 @@ u8 D_800A99A4[8] = { 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80 };
 s32 g_MapMsg_CurrentIdx = 0;
 s16 g_MapMsg_SelectFlashTimer = 0;
 //s16 __padding = 0;
-s8 g_FullscreenMapTimFileIdxs[24] =
-{
+s8 g_FullscreenMapTimFileIdxs[24] = {
     0, 0, 1, 1, 9, 12, 10, 11,
     13, 12, 10, 11, 13, 2, 3, 4,
     8, 5, 6, 7, 8, 5, 6, 7
 };
-s8 g_MapMarkingTimFileIdxs[56] =
-{
+s8 g_MapMarkingTimFileIdxs[56] = {
     255, 0, 1, 1, 1, 4, 4, 4,
     4, 4, 4, 4, 4, 2, 2, 2,
     3, 3, 3, 3, 3, 3, 3, 3,

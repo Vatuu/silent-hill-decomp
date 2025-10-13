@@ -1088,8 +1088,7 @@ void Event_CommonItemTake(u32 pickupType, s32 eventFlagIdx) // 0x800879FC
 
 void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF4
 {
-    static const RECT D_8002ABA4 =
-    {
+    static const RECT D_8002ABA4 = {
         SCREEN_POSITION_X(100.0f), 256,
         SCREEN_WIDTH / 2, SCREEN_HEIGHT
     };
@@ -1603,8 +1602,7 @@ extern const u32 D_8002AF5C[];
 extern const u32 D_8002AF64[];
 extern const u32 D_8002AF70[];
 
-const s_8002AC04 D_8002AC04[] =
-{
+const s_8002AC04 D_8002AC04[] = {
     // 2nd field is used as index into `D_800AFD08` funcptr array.
     // Seems each function takes different kind of params in 5th/6th fields:
     // #0 5th field is some kind of index/counter.
@@ -2902,14 +2900,12 @@ s32 func_8008D8C0(s16 x0, s32 x1, s32 x2) // 0x8008D8C0
 
     // TODO: What Q format are the array values?
 
-    static s32 Y_ARRAY_0[2] =
-    {
+    static s32 Y_ARRAY_0[2] = {
         0,
         0x1000
     };
 
-    static s32 Y_ARRAY_1[7] =
-    {
+    static s32 Y_ARRAY_1[7] = {
         0x4000,
         0x14CC,
         0x0E66,
@@ -2919,8 +2915,7 @@ s32 func_8008D8C0(s16 x0, s32 x1, s32 x2) // 0x8008D8C0
         0x0333
     };
 
-    static s32 Y_ARRAY_2[7] =
-    {
+    static s32 Y_ARRAY_2[7] = {
         0x0266,
         0x0333,
         0x0400,
@@ -2940,8 +2935,7 @@ s32 func_8008D8C0(s16 x0, s32 x1, s32 x2) // 0x8008D8C0
 }
 
 // Used by `func_8008D990`.
-u16 D_800AFD7C[] =
-{
+u16 D_800AFD7C[] = {
     0xF839, 0xF889, 0xFA39, 0xFAE4,
     0xFD56, 0xFDC8, 0xFF56, 0xFFEA,
     0x38,   0x18E,  0x1C7,  0x2AA,

@@ -10,13 +10,11 @@
 #define FNP(c0, c1, c2, c3) (FA2N(c0) | (FA2N(c1) << 6) | (FA2N(c2) << 12) | (FA2N(c3) << 18))
 #define FN(c0, c1, c2, c3, c4, c5, c6, c7) FNP(c0, c1, c2, c3), FNP(c4, c5, c6, c7)
 
-s_FileInfo g_FileTable[FS_FILE_COUNT] =
-{
+s_FileInfo g_FileTable[FS_FILE_COUNT] = {
 #include "filetable.c.inc"
 };
 
-char* g_FilePaths[] =
-{
+char* g_FilePaths[] = {
     "\\1ST\\",
     "\\ANIM\\",
     "\\BG\\",
@@ -30,8 +28,7 @@ char* g_FilePaths[] =
     "\\XA\\"
 };
 
-char* g_FileExts[] =
-{
+char* g_FileExts[] = {
     ".TIM",
     ".VAB",
     ".BIN",
@@ -46,8 +43,7 @@ char* g_FileExts[] =
     ".CMP"
 };
 
-u32 g_FileXaLoc[] =
-{
+u32 g_FileXaLoc[] = {
     0x00000,
     0x099BF,
     0x0A227,

@@ -570,8 +570,7 @@ void func_800EAFF0(void) {}
 
 #include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800EAFF8
 
-const char* MAP_MESSAGES[] =
-{
+const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
     "~J0(1.5)\tWhat's_this! ~E ",
     "~J0(0.1)\t~E ",

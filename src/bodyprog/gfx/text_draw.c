@@ -26,8 +26,7 @@
 const s32 __PAD = 0;
 
 /** @brief Glyph widths for the 12x16 font. Used for kerning. */
-static const u8 FONT_12_X_16_GLYPH_WIDTHS[FONT_12_X_16_GLYPH_COUNT] =
-{
+static const u8 FONT_12_X_16_GLYPH_WIDTHS[FONT_12_X_16_GLYPH_COUNT] = {
     3,  7,  7,  11, 11, 4,  10, 4,  6,  10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 4,  4, 
     10, 11, 10, 8,  13, 12, 12, 12, 13, 11, 11, 13, 12, 9,  9,  12, 12, 13, 12, 13, 11,
     13, 12, 10, 11, 13, 12, 12, 12, 11, 12, 6,  4,  6,  8,  0,  3,  9,  10,  9, 9,  9,
@@ -35,8 +34,7 @@ static const u8 FONT_12_X_16_GLYPH_WIDTHS[FONT_12_X_16_GLYPH_COUNT] =
 };
 
 /** @brief See `e_StringColorId`. */
-static const u32 STRING_COLORS[StringColorId_Count] =
-{
+static const u32 STRING_COLORS[StringColorId_Count] = {
     PACKED_COLOR(160, 128, 64,  0x64),
     PACKED_COLOR(32,  32,  32,  0x64),
     PACKED_COLOR(24,  128, 40,  0x64),

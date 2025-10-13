@@ -1179,8 +1179,7 @@ void func_8003652C() // 0x8003652C
 {
     RECT rect;
 
-    u32 VALS[] =
-    {
+    u32 VALS[] = {
         0xFFFF0000, 0xBBEEE318, 0xFFEC9304, 0x83FFE30C,
         0x1F8318,   0x90840018, 0x90808080, 0x80048084
     };

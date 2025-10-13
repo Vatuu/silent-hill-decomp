@@ -233,8 +233,7 @@ INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", func_800D67F4);
 
 INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", func_800D6888);
 
-const char* MAP_MESSAGES[] =
-{
+const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
     "\tUsed_the_ ~C2 Sewer_key ~C7 . ~E ",
     "\tUsed_the_ ~C2 Sewer_exit_key ~C7 . ~E ",

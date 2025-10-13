@@ -392,8 +392,7 @@ void MainMenu_SelectedOptionIdxReset() // 0x8003B550
 
 void func_8003B560() {}
 
-static const char* MAIN_MENU_ENTRY_STRINGS[] =
-{
+static const char* MAIN_MENU_ENTRY_STRINGS[] = {
     "LOAD",
     "CONTINUE",
     "START",
@@ -443,8 +442,7 @@ void Gfx_MainMenu_MainTextDraw() // 0x8003B568
     }
 }
 
-static const char* DIFFICULTY_MENU_ENTRY_STRINGS[] =
-{
+static const char* DIFFICULTY_MENU_ENTRY_STRINGS[] = {
     "EASY",
     "NORMAL",
     "HARD"
@@ -509,8 +507,7 @@ void func_8003B7BC() // 0x8003B7BC
     D_800BCDE0 = s0;
 }
 
-u32 D_800A9AAC[256] =
-{
+u32 D_800A9AAC[256] = {
     0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000,
     0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000,
     0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000,
@@ -778,8 +775,7 @@ void GameFs_BgItemLoad() // 0x8003BE9C
 
 void func_8003BED0() // 0x8003BED0
 {
-    static s_FsImageDesc IMAGE_TIM =
-    {
+    static s_FsImageDesc IMAGE_TIM = {
         .tPage = { 0, 15 },
         .u     = 0,
         .v     = 0,
@@ -787,8 +783,7 @@ void func_8003BED0() // 0x8003BED0
         .clutY = 0
     };
 
-    static s_FsImageDesc IMAGE_ETC =
-    {
+    static s_FsImageDesc IMAGE_ETC = {
         .tPage = { 0, 12 },
         .u     = 0,
         .v     = 192,
@@ -3154,8 +3149,7 @@ void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructU
 
 s32 func_8003FEC0(s_sub_StructUnk3* arg0) // 0x8003FEC0
 {
-    static q19_12 Y_ARRAY[5] =
-    {
+    static q19_12 Y_ARRAY[5] = {
         Q12(1.75f),
         Q12(6.0f),
         Q12(9.5f),
