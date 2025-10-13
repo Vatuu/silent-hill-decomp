@@ -715,7 +715,7 @@ void func_800D46C4(s_SubCharacter* chara) // 0x800D46C4
 
 void func_800D4894(s_SubCharacter* chara)
 {
-    s32  dmgType;
+    s32  damageType;
     s32  animStatus;
     u32  stateStep;
     bool cond;
@@ -730,7 +730,7 @@ void func_800D4894(s_SubCharacter* chara)
             if (IS_ANIM_STATUS_ACTIVE(animStatus))
             {
                 chara->model_0.anim_4.status_0 = ANIM_STATUS(7, false);
-                chara->model_0.stateStep_3 = 1;
+                chara->model_0.stateStep_3     = 1;
             }
             break;
 
@@ -752,10 +752,10 @@ void func_800D4894(s_SubCharacter* chara)
 
     func_800D5D80(chara);
 
-    dmgType = Chara_DamageTake(chara, 0x999);
-    if (dmgType >= 0)
+    damageType = Chara_DamageTake(chara, 0x999);
+    if (damageType >= 0)
     {
-        if (dmgType < 3)
+        if (damageType < 3)
         {
             if (cond)
             {
@@ -764,9 +764,9 @@ void func_800D4894(s_SubCharacter* chara)
                 chara->properties_E4.unk0.field_E0_8 = 3;
             }
         }
-        else if (dmgType < 5)
+        else if (damageType < 5)
         {
-            chara->model_0.state_2 = ANIM_STATUS(25, true);
+            chara->model_0.state_2     = ANIM_STATUS(25, true);
             chara->model_0.stateStep_3 = 0;
 
             if (chara->health_B0 <= Q12(0.0f))
@@ -783,69 +783,48 @@ void func_800D4894(s_SubCharacter* chara)
 
 void func_800D49B0(s_SubCharacter* chara) // 0x800D49B0
 {
-    s32  dmgType;
     s32  animStatus;
     u32  stateStep;
     bool cond;
 
     stateStep  = chara->model_0.stateStep_3;
     animStatus = chara->model_0.anim_4.status_0;
-    cond       = 0;
+    cond       = false;
 
     switch (stateStep)
     {
         case 0:
             if (IS_ANIM_STATUS_ACTIVE(animStatus))
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(7, false);
-                chara->model_0.stateStep_3     = 1;
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(10, false);
+                chara->model_0.stateStep_3 = 1;
             }
             break;
 
         case 1:
-            if (animStatus != ANIM_STATUS(7, false))
+            if (animStatus != ANIM_STATUS(10, false))
             {
-                chara->model_0.stateStep_3           = 2;
+                chara->model_0.stateStep_3 = 2;
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             }
             break;
 
         case 2:
-            if (animStatus != ANIM_STATUS(7, true))
+            if (animStatus != ANIM_STATUS(10, true))
             {
                 cond = true;
             }
             break;
     }
 
-    func_800D5D80(chara);
+    func_800D5E14(chara);
+    Chara_DamageTake(chara, Q12(0.6f));
 
-    dmgType = Chara_DamageTake(chara, 0x999);
-    if (dmgType >= 0)
+    if (cond)
     {
-        if (dmgType < 3)
-        {
-            if (cond)
-            {
-                chara->model_0.state_2 = ANIM_STATUS(23, true);
-                chara->model_0.stateStep_3 = 0;
-                chara->properties_E4.unk0.field_E0_8 = 3;
-            }
-        }
-        else if (dmgType < 5)
-        {
-            chara->model_0.state_2 = ANIM_STATUS(25, true);
-            chara->model_0.stateStep_3 = 0;
-
-            if (chara->health_B0 <= Q12(0.0f))
-            {
-                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
-            }
-            else
-            {
-                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
-            }
-        }
+        chara->model_0.state_2 = 2;
+        chara->model_0.stateStep_3 = 0;
+        chara->properties_E4.unk0.field_E0_8 = 1;
     }
 }
 
@@ -873,7 +852,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5B10);
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5C90);
 
-void func_800D5D80(s_SubCharacter* chara) // 0x800D5D80
+void func_800D5D80(s_SubCharacter* chara)
 {
     q19_12                       angle0;
     q19_12                       angle1;
