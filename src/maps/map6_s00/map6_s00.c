@@ -601,10 +601,12 @@ void func_800EB090(void) // 0x800EB090
             pickupType   = CommonPickupItemId_HealthDrink;
             eventFlagIdx = EventFlag_M6S00_HealthDrink;
             break;
+
         case 23:
             pickupType   = CommonPickupItemId_ShotgunShells;
             eventFlagIdx = EventFlag_M6S00_ShotgunShells;
             break;
+
         case 24:
             pickupType   = CommonPickupItemId_FirstAidKit;
             eventFlagIdx = EventFlag_M6S00_FirstAidKit;

@@ -151,11 +151,13 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch()
             case 27:
                 func_8003DD80(1, 18);
                 break;
+
             case 32:
             case 34:
             case 35:
                 func_8003DD80(1, 19);
                 break;
+
             case 33:
                 func_8003DD80(1, 20);
                 break;
@@ -239,6 +241,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             headingAngle = g_SysWork.player_4C.chara_0.properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
             break;
 #endif
+
 #ifdef HAS_PlayerState_Unk131
         case PlayerState_Unk131:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
@@ -278,6 +281,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             headingAngle = g_SysWork.player_4C.chara_0.properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
             break;
 #endif
+
 #ifdef HAS_PlayerState_Unk52
         case PlayerState_Unk52:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
@@ -328,18 +332,22 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             headingAngle = g_SysWork.player_4C.chara_0.properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
             break;
 #endif
+
 #ifdef HAS_PlayerState_Unk87
         case PlayerState_Unk87:
             func_8007FC48(playerChara, extra, 0x166);
             keyframeIdx = 873;
+
             if (D_800C4606)
             {
                 Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
+
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
 #endif
+
 #ifdef HAS_PlayerState_Unk88
         case PlayerState_Unk88:
             func_8007FC48(playerChara, extra, 0x167);
@@ -354,6 +362,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
 #endif
+
 #ifdef HAS_PlayerState_Unk53
         case PlayerState_Unk53:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 > Q12(1.4f))
@@ -419,6 +428,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             headingAngle = g_SysWork.player_4C.chara_0.properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
             break;
 #endif
+
 #ifdef HAS_PlayerState_Unk54
         case PlayerState_Unk54:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 > Q12(4.0f))
@@ -479,6 +489,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             headingAngle = g_SysWork.player_4C.chara_0.properties_E4.player.headingAngle_124 = 0;
             break;
 #endif
+
 #ifdef HAS_PlayerState_Unk55
         case PlayerState_Unk55:
             sharedData_800D32A0_0_s02 = g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126;
@@ -509,6 +520,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             headingAngle = g_SysWork.player_4C.chara_0.properties_E4.player.headingAngle_124 = FP_ANGLE(180.0f);
             break;
 #endif
+
 #ifdef HAS_PlayerState_Unk56
         case PlayerState_Unk56:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
@@ -566,6 +578,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             g_Player_FlexRotationY = FP_ANGLE(-28.2f);
             break;
 #endif
+
 #ifdef HAS_PlayerState_Unk57
         case PlayerState_Unk57:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
@@ -623,6 +636,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             g_Player_FlexRotationY = FP_ANGLE(28.2f);
             break;
 #endif
+
 #ifdef HAS_PlayerState_Unk59
         case PlayerState_Unk59:
             func_8007FB94(playerChara, extra, 0x12C);
@@ -640,6 +654,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             }
             break;
 #endif
+
 #ifdef HAS_PlayerState_Unk60
         case PlayerState_Unk60:
             func_8007FB94(playerChara, extra, 0x12D);
@@ -657,6 +672,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             }
             break;
 #endif
+
 #if defined(HAS_PlayerState_Unk69) || defined(HAS_PlayerState_Unk105)
         case PlayerState_Unk69:
         case PlayerState_Unk105:
@@ -672,6 +688,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
 #endif
+
 #ifdef HAS_PlayerState_Unk81
         case PlayerState_Unk81:
             keyframeIdx = 998;

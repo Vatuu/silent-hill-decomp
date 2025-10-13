@@ -313,6 +313,7 @@ void func_800D9148(void) // 0x800D9148
         case 0:
             sharedFunc_800D20E4_0_s00();
             SysWork_StateStepIncrement();
+
         case 1:
             func_80085DF0();
             break;

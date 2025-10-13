@@ -2228,7 +2228,7 @@ INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80055028", D_80028544);
 // Important for combat.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005CD38); // 0x8005CD38
 
-s32 func_8005D50C(s32* arg0, s16* arg1, s16* arg2, VECTOR3* arg3, u32 arg4, s32 arg5) // 0x8005D50C
+bool func_8005D50C(s32* arg0, s16* arg1, s16* arg2, VECTOR3* arg3, u32 arg4, s32 arg5) // 0x8005D50C
 {
     s_func_800700F8_2 sp10;
     VECTOR3           sp30;
@@ -2242,7 +2242,7 @@ s32 func_8005D50C(s32* arg0, s16* arg1, s16* arg2, VECTOR3* arg3, u32 arg4, s32 
 
     if (arg4 >= 6)
     {
-        return 0;
+        return false;
     }
 
     sp30.vx = (g_SysWork.npcs_1A0[arg4].position_18.vx + g_SysWork.npcs_1A0[arg4].field_D8.offsetX_0) - arg3->vx;
@@ -2299,7 +2299,7 @@ s32 func_8005D50C(s32* arg0, s16* arg1, s16* arg2, VECTOR3* arg3, u32 arg4, s32 
         }
     }
 
-    return 1;
+    return true;
 }
 
 s32 func_8005D86C(s32 arg0) // 0x8005D86C

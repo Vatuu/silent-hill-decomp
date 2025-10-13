@@ -1198,22 +1198,28 @@ void func_800E3B6C(void) // 0x800E3B6C
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
+
             g_SysWork.field_30          = 20;
             g_SysWork.sysStateStep_C[0] = 0;
-            g_SysWork.flags_22A4       |= 8;
+            g_SysWork.flags_22A4       |= 1 << 3;
+
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
             func_8005E70C();
+
             D_800F4805++;
+
         case 1:
             func_800E62CC();
             break;
+
         default:
             SysWork_StateSetNext(SysState_Gameplay);
             D_800F4805 = 0;
             Savegame_EventFlagSet(EventFlag_579);
             break;
     }
+
     func_800E2E90();
 }
 

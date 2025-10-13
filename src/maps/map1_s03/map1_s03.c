@@ -399,6 +399,7 @@ void func_800DC9A0(void) // 0x800DC9A0
             sharedFunc_800D20E4_0_s00();
             func_80086470(0, InventoryItemId_LibraryReserveKey, 0, false);
             SysWork_StateStepIncrement();
+
         case 1:
             func_80085DF0();
             break;
@@ -426,6 +427,7 @@ void func_800DC9A0(void) // 0x800DC9A0
         case 5:
             func_80086470(3, InventoryItemId_LibraryReserveKey, 1, false);
             SysWork_StateStepIncrement();
+
         case 6:
             func_80086C58(&g_SysWork.player_4C.chara_0, 60);
             break;

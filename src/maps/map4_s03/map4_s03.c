@@ -403,36 +403,48 @@ void func_800D53B0(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D53B0
         case 11:
             func_800D4028(chara);
             break;
+
         case 12:
             func_800D4078(chara);
             break;
+
         case 13:
             func_800D4248(chara);
             break;
+
         case 5:
             func_800D45C4(chara);
             break;
+
         case 6:
             func_800D4700(chara, coords);
             break;
+
         case 4:
             func_800D4B28(chara);
             break;
+
         case 3:
             func_800D4FC0(chara);
             break;
+
         case 7:
             func_800D4A34(chara);
             break;
+
         case 8:
             func_800D4A78(chara, coords);
             break;
+
+
         case 2:
             func_800D50D8(chara);
             break;
+
         case 9:
             func_800D511C(chara);
             break;
+
         case 10:
             func_800D49C0(chara);
             break;
@@ -448,7 +460,8 @@ void func_800D5888(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
     s_AnimInfo* animInfo;
 
     Math_MatrixTransform(&chara->position_18, &chara->rotation_24, coords);
-    if (chara->model_0.anim_4.status_0 != 0)
+
+    if (chara->model_0.anim_4.status_0 != ANIM_STATUS(0, false))
     {
         animInfo = &TWINFEELER_ANIM_INFOS[chara->model_0.anim_4.status_0];
         animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
@@ -492,7 +505,7 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D5C3C);
 
 void func_800D5DF4(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5DF4
 {
-    if (g_DeltaTime0 != 0)
+    if (g_DeltaTime0 != Q12(0.0f))
     {
         func_800D5C3C(chara, coords);
     }
@@ -704,11 +717,12 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D6F24);
 
 s32 func_800D7394(void) // 0x800D7394
 {
-    if (g_DeltaTime0 != 0)
+    if (g_DeltaTime0 != Q12(0.0f))
     {
         D_800DB914 = ((s32)(D_800DB918 * 0x7169AC35) >> 3) ^ 0xA547B39E;
         D_800DB918 = ((u32)(D_800DB914 * 0x892D719C) >> 3) ^ 0xC65A4B97;
     }
+
     return (u16)D_800DB914 & 0x7FFF;
 }
 
