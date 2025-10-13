@@ -144,4 +144,6 @@ void func_800D5D80(s_SubCharacter* chara);
 
 void func_800D4894(s_SubCharacter* chara);
 
+void func_800D3A3C(s_SubCharacter* chara);
+
 #endif

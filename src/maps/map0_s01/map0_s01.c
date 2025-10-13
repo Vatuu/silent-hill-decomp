@@ -191,7 +191,19 @@ void func_800D39F4(s_SubCharacter* chara) // 0x800D39F4
     chara->model_0.anim_4.time_4 = FP_TO(animTime, Q12_SHIFT);
 }
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D3A3C);
+void func_800D3A3C(s_SubCharacter* chara)
+{
+    q19_12 animTime;
+    s32 idx;
+
+    idx = D_800A98FC[chara->model_0.charaId_0];
+    Ai_AirScreamer_Update(chara, (&D_800A992C[idx])->animFile1_8, (&D_800A992C[idx])->npcCoords_14);
+    chara->model_0.anim_4.status_0 = ANIM_STATUS(17, true);
+    animTime = func_80044918(&chara->model_0.anim_4)->startKeyframeIdx_C;
+    chara->model_0.stateStep_3 = 3;
+    chara->model_0.anim_4.keyframeIdx_8 = animTime;
+    chara->model_0.anim_4.time_4 = FP_TO(animTime, Q12_SHIFT);
+}
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D3AC0);
 
