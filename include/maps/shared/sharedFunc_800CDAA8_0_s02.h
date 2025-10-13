@@ -227,6 +227,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
                 case 3:
                     Player_ExtraStateSet(playerChara, extra, PlayerState_Unk56);
                     break;
+
                 case 4:
                     Player_ExtraStateSet(playerChara, extra, PlayerState_Unk57);
                     break;

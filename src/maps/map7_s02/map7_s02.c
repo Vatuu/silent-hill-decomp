@@ -1297,8 +1297,11 @@ void func_800DFB48(void) // 0x800DFB48
         case 0:
             sharedFunc_800D20E4_0_s00();
             func_800862F8(0, FILE_TIM_LISDIARY_TIM, false);
+
             D_800EA490 = 0;
+
             SysWork_StateStepIncrement();
+
         case 1:
             func_80085DF0();
             break;
@@ -1327,6 +1330,7 @@ void func_800DFB48(void) // 0x800DFB48
         case 7:
             Sd_EngineCmd(Sfx_Unk1308);
             SysWork_StateStepIncrement();
+
         case 8:
             func_80085E6C(Q12(0.3f), false);
             func_800862F8(2, 0, false);
@@ -1339,12 +1343,14 @@ void func_800DFB48(void) // 0x800DFB48
 
         case 10:
             func_800862F8(2, 0, false);
+
             D_800EA490++;
             if (D_800EA490 >= 8)
             {
                 SysWork_StateStepIncrement();
                 break;
             }
+
             SysWork_NextStateStepSet(7);
             break;
 

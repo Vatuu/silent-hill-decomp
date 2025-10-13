@@ -1434,6 +1434,7 @@ void func_800DAB64(void) // 0x800DAB64
             sharedFunc_800D20E4_0_s00();
             func_80086470(0, InventoryItemId_StoneOfTime, 0, false);
             SysWork_StateStepIncrement();
+
         case 1:
             func_80085DF0();
             break;
@@ -1441,6 +1442,7 @@ void func_800DAB64(void) // 0x800DAB64
         case 2:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 59, false);
             SysWork_StateStepIncrement();
+
         case 3:
             func_80086470(1, InventoryItemId_StoneOfTime, 0, false);
             break;
@@ -1454,6 +1456,7 @@ void func_800DAB64(void) // 0x800DAB64
             {
                 MapMsg_DisplayAndHandleSelection(true, 56, 6, 7, 0, false);
             }
+
             Savegame_EventFlagSet(EventFlag_M7S01_PickupStoneOfTime);
             break;
 
@@ -1465,6 +1468,7 @@ void func_800DAB64(void) // 0x800DAB64
         case 7:
             Savegame_EventFlagClear(EventFlag_M7S01_PickupStoneOfTime);
             SysWork_StateStepIncrement();
+
         case 8:
             func_80086C58(&g_SysWork.player_4C.chara_0, 60);
             break;
