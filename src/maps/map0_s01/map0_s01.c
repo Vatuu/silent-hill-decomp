@@ -4,6 +4,7 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map0/map0_s01.h"
+
 const u32 D_800CA5C8[4] = {};
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800CCB8C);
@@ -777,26 +778,27 @@ void func_800D4894(s_SubCharacter* chara)
 
 void func_800D49B0(s_SubCharacter* chara) // 0x800D49B0
 {
-    s32 dmgType;
-    s32 status;
-    u32 stateStep;
+    s32  dmgType;
+    s32  animStatus;
+    u32  stateStep;
     bool cond;
 
-    stateStep = chara->model_0.stateStep_3;
-    status = chara->model_0.anim_4.status_0;
-    cond = 0;
+    stateStep  = chara->model_0.stateStep_3;
+    animStatus = chara->model_0.anim_4.status_0;
+    cond       = 0;
+
     switch (stateStep)
     {
         case 0:
             if (IS_ANIM_STATUS_ACTIVE(animStatus))
             {
                 chara->model_0.anim_4.status_0 = ANIM_STATUS(7, false);
-                chara->model_0.stateStep_3 = 1;
+                chara->model_0.stateStep_3     = 1;
             }
             break;
 
         case 1:
-            if (status != ANIM_STATUS(7, false))
+            if (animStatus != ANIM_STATUS(7, false))
             {
                 chara->model_0.stateStep_3           = 2;
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
@@ -804,7 +806,7 @@ void func_800D49B0(s_SubCharacter* chara) // 0x800D49B0
             break;
 
         case 2:
-            if (status != ANIM_STATUS(7, true))
+            if (animStatus != ANIM_STATUS(7, true))
             {
                 cond = true;
             }
@@ -812,6 +814,7 @@ void func_800D49B0(s_SubCharacter* chara) // 0x800D49B0
     }
 
     func_800D5D80(chara);
+
     dmgType = Chara_DamageTake(chara, 0x999);
     if (dmgType >= 0)
     {
@@ -828,7 +831,8 @@ void func_800D49B0(s_SubCharacter* chara) // 0x800D49B0
         {
             chara->model_0.state_2 = ANIM_STATUS(25, true);
             chara->model_0.stateStep_3 = 0;
-            if (chara->health_B0 <= 0)
+
+            if (chara->health_B0 <= Q12(0.0f))
             {
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
             }
@@ -837,53 +841,6 @@ void func_800D49B0(s_SubCharacter* chara) // 0x800D49B0
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             }
         }
-    }
-}
-
-void func_800D49B0(s_SubCharacter* chara) // 0x800D49B0
-{
-    s32  animStatus;
-    u32  stateStep;
-    bool cond;
-
-    stateStep  = chara->model_0.stateStep_3;
-    animStatus = chara->model_0.anim_4.status_0;
-    cond       = false;
-
-    switch (stateStep)
-    {
-        case 0:
-            if (IS_ANIM_STATUS_ACTIVE(animStatus))
-            {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(10, false);
-                chara->model_0.stateStep_3     = 1;
-            }
-            break;
-
-        case 1:
-            if (animStatus != ANIM_STATUS(10, false))
-            {
-                chara->model_0.stateStep_3           = 2;
-                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
-            }
-            break;
-
-        case 2:
-            if (animStatus != ANIM_STATUS(10, true))
-            {
-                cond = true;
-            }
-            break;
-    }
-
-    func_800D5E14(chara);
-    Chara_DamageTake(chara, Q12(0.6f));
-
-    if (cond)
-    {
-        chara->model_0.state_2 = 2;
-        chara->model_0.stateStep_3 = 0;
-        chara->properties_E4.unk0.field_E0_8 = 1;
     }
 }
 
@@ -927,25 +884,28 @@ void func_800D5D80(s_SubCharacter* chara)
     idx = 0;
     base->field_B4[idx][2] = src->unk_380[7][0];
     base->field_B4[idx][1] = src->unk_380[7][1];
+
     idx = 1;
-    base->field_B4[idx][2] = src->unk_380[0x14][0];
-    base->field_B4[idx][1] = src->unk_380[0x14][1];
+    base->field_B4[idx][2] = src->unk_380[20][0];
+    base->field_B4[idx][1] = src->unk_380[20][1];
+
     idx = 3;
     base->field_B4[idx][2] = 0;
-    base->field_B4[idx][1] = src->unk_380[0x23][1];
+    base->field_B4[idx][1] = src->unk_380[35][1];
 
-    if (angle1 < 0)
+    if (angle1 < FP_ANGLE(0.0f))
     {
         angle1 += FP_ANGLE(0.3f);
     }
+
     sharedFunc_800D5E78_0_s01(chara, angle1 >> 2);
 }
 
 void func_800D5E14(s_SubCharacter* chara)
 {
-    s32 idx;
+    s32                          idx;
     s_sharedData_800E21D0_0_s01* base;
-    s_func_800D2E04* src;
+    s_func_800D2E04*             src;
 
     src = &sharedData_800CAA98_0_s01;
     base = &sharedData_800E21D0_0_s01;
@@ -953,9 +913,11 @@ void func_800D5E14(s_SubCharacter* chara)
     idx = 0;
     base->field_B4[idx][2] = src->unk_380[7][0];
     base->field_B4[idx][1] = src->unk_380[7][1];
+
     idx = 1;
     base->field_B4[idx][2] = src->unk_380[19][0];
     base->field_B4[idx][1] = src->unk_380[19][1];
+
     idx = 3;
     base->field_B4[idx][2] = 0;
     base->field_B4[idx][1] = src->unk_380[35][1];

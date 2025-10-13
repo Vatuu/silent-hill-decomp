@@ -610,8 +610,8 @@ bool func_8007F95C();
 
 static inline s32 Player_ExtraStateSet(s_SubCharacter* playerChara, s_MainCharacterExtra* extra, s32 state)
 {
-    s32 result =
-        g_SysWork.player_4C.extra_128.state_1C      = state;
+    s32 result                                      =
+    g_SysWork.player_4C.extra_128.state_1C          = state;
     playerChara->model_0.stateStep_3                = 0;
     playerChara->model_0.state_2                    = 0;
     extra->model_0.stateStep_3                      = 0;

@@ -253,6 +253,7 @@ void func_800D29A4(void) // 0x800D29A4
         case 0:
             sharedFunc_800D20E4_0_s00();
             SysWork_StateStepIncrement();
+
         case 1:
             func_80085DF0();
             break;
@@ -278,7 +279,6 @@ void func_800D2A88(void) // 0x800D2A88
     }
 
     func_80087360(Sfx_Unk1916, Q12(0.0f), Q12(0.0f), 36);
-
     Savegame_EventFlagSet(EventFlag_203);
 }
 

@@ -630,6 +630,7 @@ void func_800E9EAC(void) // 0x800E9EAC
         case 1:
             func_8008616C(0, false, 1, Q12(0.25f), false);
             SysWork_StateStepIncrement();
+
         case 2:
             func_80085E6C(Q12(1.2f), false);
             break;

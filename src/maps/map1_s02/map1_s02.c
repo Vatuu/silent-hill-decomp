@@ -315,6 +315,7 @@ void func_800DA8F8(void) // 0x800DA8F8
         case 0:
             sharedFunc_800D20E4_0_s00();
             SysWork_StateStepIncrement();
+
         case 1:
             func_80085DF0();
             break;
