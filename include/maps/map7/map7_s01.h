@@ -131,6 +131,8 @@ void func_800D99DC(void);
 
 void func_800D9A08(void);
 
+void func_800DAB64(void);
+
 void func_800DAD7C(void);
 
 void func_800DADA8(void);

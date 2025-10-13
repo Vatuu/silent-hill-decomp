@@ -1241,7 +1241,85 @@ void func_800DFB1C(void) // 0x800DFB1C
     Event_ItemTake(InventoryItemId_AmuletOfSolomon, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupAmuletOfSolomon, 96);
 }
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800DFB48);
+void func_800DFB48(void) // 0x800DFB48
+{
+    g_BackgroundColor = 0x48;
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_800862F8(0, FILE_TIM_LISDIARY_TIM, false);
+            D_800EA490 = 0;
+            SysWork_StateStepIncrement();
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 59);
+            break;
+
+        case 3:
+            MapMsg_DisplayAndHandleSelection(false, 147, 0, 0, 0, false);
+            break;
+
+        case 4:
+            func_800862F8(1, 0, false);
+            break;
+
+        case 5:
+            func_8008616C(2, true, 0, 0, false);
+            break;
+
+        case 6:
+            func_8008616C(2, false, 0, 0, false);
+            func_800862F8(2, 0, false);
+            break;
+
+        case 7:
+            Sd_EngineCmd(Sfx_Unk1308);
+            SysWork_StateStepIncrement();
+        case 8:
+            func_80085E6C(Q12(0.3f), false);
+            func_800862F8(2, 0, false);
+            break;
+
+        case 9:
+            MapMsg_DisplayAndHandleSelection(false, D_800E9D6C[D_800EA490], 0, 0, 0, false);
+            func_800862F8(2, 0, false);
+            break;
+
+        case 10:
+            func_800862F8(2, 0, false);
+            D_800EA490++;
+            if (D_800EA490 >= 8)
+            {
+                SysWork_StateStepIncrement();
+                break;
+            }
+            SysWork_NextStateStepSet(7);
+            break;
+
+        case 11:
+            func_8008616C(2, true, 0, 0, false);
+            func_800862F8(2, 0, false);
+            break;
+
+        case 12:
+            func_8008616C(2, false, 0, 0, false);
+            break;
+
+        case 13:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800DFDDC);
 

@@ -241,7 +241,7 @@ typedef enum _EventFlag
 
     EventFlag_M7S01_PickupCamera         = 519,
     EventFlag_M7S01_PickupRingOfContract = 520,
-    EventFlag_521                        = 521,
+    EventFlag_M7S01_PickupStoneOfTime    = 521,
     EventFlag_M7S01_PickupPliers         = 522,
     EventFlag_M7S01_PickupScrewdriver    = 523,
     EventFlag_M7S01_PickupBirdCageKey    = 524,

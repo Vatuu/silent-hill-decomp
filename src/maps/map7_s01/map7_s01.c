@@ -1362,7 +1362,55 @@ INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", jtbl_800CC668);
 
 INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", jtbl_800CC6A8);
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800DAB64);
+void func_800DAB64(void) // 0x800DAB64
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_80086470(0, InventoryItemId_StoneOfTime, 0, false);
+            SysWork_StateStepIncrement();
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 59, false);
+            SysWork_StateStepIncrement();
+        case 3:
+            func_80086470(1, InventoryItemId_StoneOfTime, 0, false);
+            break;
+
+        case 4:
+            func_80085EB8(1, &g_SysWork.player_4C.chara_0, 0, false);
+            break;
+
+        case 5:
+            if (Gfx_PickupItemAnimate(InventoryItemId_StoneOfTime) != false)
+            {
+                MapMsg_DisplayAndHandleSelection(true, 56, 6, 7, 0, false);
+            }
+            Savegame_EventFlagSet(EventFlag_M7S01_PickupStoneOfTime);
+            break;
+
+        case 6:
+            func_80086470(3, InventoryItemId_StoneOfTime, 1, false);
+            SysWork_NextStateStepSet(8);
+            break;
+
+        case 7:
+            Savegame_EventFlagClear(EventFlag_M7S01_PickupStoneOfTime);
+            SysWork_StateStepIncrement();
+        case 8:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+}
 
 void func_800DAD7C(void) // 0x800DAD7C
 {
@@ -1742,7 +1790,7 @@ void func_800DEDA4(void) // 0x800DEDA4
         func_80088D0C();
     }
 
-    if (Savegame_EventFlagGet(EventFlag_521))
+    if (Savegame_EventFlagGet(EventFlag_M7S01_PickupStoneOfTime))
     {
         if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
         {
