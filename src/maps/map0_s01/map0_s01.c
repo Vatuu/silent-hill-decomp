@@ -276,7 +276,7 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* chara) // 0x800D3B0C
                 var0 = 2;
                 var1 = 1;
                 var2 = 2;
-                animStatus = 5;
+                animStatus = ANIM_STATUS(2, true);
                 var3 = 46;
             }
             else
