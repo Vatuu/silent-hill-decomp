@@ -294,9 +294,9 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* chara) // 0x800D3B0C
     chara->model_0.state_2 = var3;
     chara->model_0.stateStep_3 = stateStep;
     chara->properties_E4.player.flags_11C = 0;
-    chara->properties_E4.unk0.field_E0_0 = var0;
-    chara->properties_E4.unk0.field_E0_4 = var1;
-    chara->properties_E4.unk0.field_E0_8 = var2;
+    chara->properties_E4.unk0.field_E8_0 = var0;
+    chara->properties_E4.unk0.field_E8_4 = var1;
+    chara->properties_E4.unk0.field_E8_8 = var2;
 
     if (var3 == 1)
     {
@@ -871,7 +871,7 @@ void func_800D4894(s_SubCharacter* chara)
             {
                 chara->model_0.state_2 = ANIM_STATUS(23, true);
                 chara->model_0.stateStep_3 = 0;
-                chara->properties_E4.unk0.field_E0_8 = 3;
+                chara->properties_E4.unk0.field_E8_8 = 3;
             }
         }
         else if (dmgType < 5)
@@ -931,7 +931,7 @@ void func_800D49B0(s_SubCharacter* chara)
     {
         chara->model_0.state_2 = 2;
         chara->model_0.stateStep_3 = 0;
-        chara->properties_E4.unk0.field_E0_8 = 1;
+        chara->properties_E4.unk0.field_E8_8 = 1;
     }
 }
 

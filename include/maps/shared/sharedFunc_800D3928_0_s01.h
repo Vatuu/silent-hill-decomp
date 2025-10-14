@@ -26,9 +26,9 @@ bool sharedFunc_800D3928_0_s01(s_SubCharacter* chara)
                                                                    &sharedData_800E231C_0_s01.field_C,
                                                                    &sharedData_800E231C_0_s01.field_10);
 
-    if (chara->properties_E4.unk0.field_E0_0 == 3)
+    if (chara->properties_E4.unk0.field_E8_0 == 3)
     {
-        chara->properties_E4.unk0.field_E0_8 = 0;
+        chara->properties_E4.unk0.field_E8_8 = 0;
     }
 
     func = sharedData_800DD7A0_0_s01[chara->model_0.state_2];
