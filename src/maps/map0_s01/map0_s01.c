@@ -219,7 +219,98 @@ void func_800D3AC0(s_SubCharacter* chara)
     }
 }
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedSymbol_800D3B0C_0_s01); // 0x800D3B0C
+void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* chara) // 0x800D3B0C
+{
+    s32 animTime;
+    s32 field40_0;
+    s32 var0;
+    s32 var1;
+    s32 var2;
+    u32 var3;
+    u32 stateStep;
+    s32 field40;
+    u32 modelState;
+    u32 animStatus;
+
+    field40 = chara->field_40;
+    switch (field40 % 3)
+    {
+        case 0:
+        default:
+            var2 = 0;
+            break;
+        case 1:
+            var2 = 1;
+            break;
+        case 2:
+            var2 = 2;
+            break;
+    }
+
+    switch(field40 - (field40 / 2) * 2)
+    {
+        case 0:
+        default:
+            var1 = 1;
+            break;
+        case 1:
+            var1 = 0;
+            break;
+    }
+
+    stateStep = 0;
+    switch (chara->model_0.stateStep_3)
+    {
+        case 12:
+        default:
+            var0 = 4;
+            var1 = 1;
+            var2 = 3;
+            animStatus = NO_VALUE;
+            var3 = 1;
+            break;
+        case 13:
+            animStatus = ANIM_STATUS(19, true);
+            if (g_SavegamePtr->mapOverlayId_A4 == 1)
+            {
+                var0 = 2;
+                var1 = 1;
+                var2 = 2;
+                animStatus = 5;
+                var3 = 46;
+            }
+            else
+            {
+                var0 = 2;
+                if (chara->model_0.anim_4.status_0 == ANIM_STATUS(19, true))
+                {
+                    animStatus = NO_VALUE;
+                }
+                var3 = 18;
+            }
+            break;
+    }
+
+    chara->model_0.state_2 = var3;
+    chara->model_0.stateStep_3 = stateStep;
+    chara->properties_E4.player.flags_11C = 0;
+    chara->properties_E4.unk0.field_E0_0 = var0;
+    chara->properties_E4.unk0.field_E0_4 = var1;
+    chara->properties_E4.unk0.field_E0_8 = var2;
+
+    if (var3 == 1)
+    {
+        chara->properties_E4.unk0.flags_11C = CharaUnk0Flag_Unk16;
+    }
+    if ((animStatus != NO_VALUE) && (animStatus != chara->model_0.anim_4.status_0))
+    {
+        chara->model_0.anim_4.status_0 = animStatus;
+        animTime = func_80044918(&chara->model_0.anim_4)->startKeyframeIdx_C;
+        chara->model_0.anim_4.alpha_A = 0;
+        chara->model_0.anim_4.keyframeIdx_8 = animTime;
+        chara->model_0.anim_4.time_4 = FP_TO(animTime, Q12_SHIFT);
+    }
+}
 
 INCLUDE_RODATA("asm/maps/map0_s01/nonmatchings/map0_s01", D_800CA9F0);
 

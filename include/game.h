@@ -763,7 +763,8 @@ typedef enum _CharaUnk0Flags
     CharaUnk0Flag_Unk12 = 1 << 12,
     CharaUnk0Flag_Unk13 = 1 << 13,
     CharaUnk0Flag_Unk14 = 1 << 14,
-    CharaUnk0Flag_Unk15 = 1 << 15
+    CharaUnk0Flag_Unk15 = 1 << 15,
+    CharaUnk0Flag_Unk16 = 1 << 16
 } e_CharaUnk0Flags;
 
 /** @brief Character IDs. The `CHARA_FILE_INFOS` array associates each character ID with animimation, model, and texture files. */
