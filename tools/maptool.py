@@ -629,6 +629,7 @@ def find_partial_shares():
     ]
 
     # Walk through all .c files under src/maps
+    unique_funcs = set()
     for root, _, files in os.walk(src_dir):
         for cfile in files:
             if not cfile.endswith(".c"):
@@ -636,10 +637,17 @@ def find_partial_shares():
             cpath = os.path.join(root, cfile)
             with open(cpath, "r", errors="ignore") as f:
                 lines = f.readlines()
-            for lineno, line in enumerate(lines, start=1):
-                for inc in include_files:
-                    if inc in line and "INCLUDE_ASM" in line:
-                        print(f"{cpath}:{lineno}: {line.strip()}")
+                for lineno, line in enumerate(lines, start=1):
+                    # Split at '//' to ignore comments
+                    code_part = line.split("//", 1)[0]
+                    for inc in include_files:
+                        if inc in code_part and "INCLUDE_ASM" in code_part:
+                            print(f"{cpath}:{lineno}: {line.strip()}")
+                            unique_funcs.add(inc)
+
+    print(f"\n{len(unique_funcs)} partially shared funcs:")
+    for inc in sorted(unique_funcs):
+        print(inc)
         
 # Map header related code
         
