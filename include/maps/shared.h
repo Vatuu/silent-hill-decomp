@@ -3020,6 +3020,8 @@ q19_12 sharedFunc_800CD6B0_3_s03(MATRIX* mtx, s32 mtxCount, VECTOR3* center);
 
 void sharedFunc_800D6EC4_0_s01(s_SubCharacter* arg0);
 
+void sharedFunc_800D7B14_0_s01(s_SubCharacter*, GsCOORDINATE2*);
+
 static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo)
 {
     anim->animInfo_C  = animInfo;

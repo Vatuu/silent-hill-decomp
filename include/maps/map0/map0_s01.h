@@ -150,6 +150,4 @@ void func_800D3AC0(s_SubCharacter* chara);
 
 void func_800D598C(s_SubCharacter* chara);
 
-void sharedFunc_800D7B14_0_s01(s_SubCharacter*, GsCOORDINATE2*);
-
 #endif
