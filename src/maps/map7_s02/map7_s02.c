@@ -1425,7 +1425,7 @@ void func_800E0CB4(void) // 0x800E0CB4
     }
 }
 
-void func_800E0FF0(void)
+void func_800E0FF0(void) // 0x800E0FF0
 {
     if (Savegame_EventFlagGet(EventFlag_486) && Savegame_EventFlagGet(EventFlag_549))
     {
@@ -1435,7 +1435,7 @@ void func_800E0FF0(void)
             case 0:
                 sharedFunc_800D20E4_0_s00();
                 SysWork_StateStepIncrement();
-            
+
             case 1:
                 func_80086DA8(FILE_TIM_ELCWIRE2_TIM, 0);
                 break;
@@ -1443,29 +1443,29 @@ void func_800E0FF0(void)
             case 2:
                 func_8008616C(0, false, 0, 0, false);
                 SysWork_StateStepIncrement();
-            
+
             case 3:
                 SysWork_StateStepIncrement();
-            
+
             case 4:
                 func_800862F8(2, 0, false);
                 func_8008616C(1, false, 0, 0, false);
                 break;
-                
+
             case 5:
                 func_800862F8(2, 0, false);
                 MapMsg_DisplayAndHandleSelection(true, 80, 6, 7, 0, false);
                 break;
-                
+
             case 6:
                 func_80086470(3, InventoryItemId_KeyOfAratron, 1, false);
                 Savegame_EventFlagSet(EventFlag_M7S02_PickupKeyOfAratron);
                 SysWork_StateStepIncrement();
-            
+
             case 7:
                 func_80086F44(0, 0);
                 break;
-                
+
             default:
                 sharedFunc_800D2244_0_s00(false);
                 SysWork_StateSetNext(SysState_Gameplay);
@@ -1503,15 +1503,172 @@ void func_800E0FF0(void)
     }
 }
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800E12E4);
+void func_800E12E4(void) // 0x800E12E4
+{
+    if (Savegame_EventFlagGet(EventFlag_496))
+    {
+        if (Savegame_EventFlagGet(EventFlag_498))
+        {
+            func_80087360(FILE_TIM_3X3HINT2_TIM, 0, 0, 108);
+        }
+        else
+        {
+            func_80087360(FILE_TIM_3X3PICT2_TIM, 0, 0, 108);
+        }
+    }
+    else
+    {
+        if (Savegame_EventFlagGet(EventFlag_499))
+        {
+            func_80087360(FILE_TIM_3X3HINT1_TIM, 0, 0, 107);
+        }
+        else
+        {
+            func_80087360(FILE_TIM_3X3PICT1_TIM, 0, 0, 107);
+        }
+    }
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800E1398);
+    Savegame_EventFlagClear(EventFlag_496);
+    Savegame_EventFlagClear(EventFlag_497);
+}
+
+void func_800E1398(void) // 0x800E1398
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+
+            if (Savegame_EventFlagGet(EventFlag_496))
+            {
+                func_800862F8(0, FILE_TIM_3X3HINT2_TIM, false);
+                Savegame_EventFlagSet(EventFlag_498);
+            }
+            else
+            {
+                func_800862F8(0, FILE_TIM_3X3HINT1_TIM, false);
+                Savegame_EventFlagSet(EventFlag_499);
+            }
+
+            ScreenFade_Reset();
+            g_SysWork.sysFlags_22A0 |= 1 << 0;
+
+            Sd_EngineCmd(0x679U);
+            SysWork_StateStepIncrement();
+            break;
+
+        case 1:
+            func_8008616C(2, true, 1, Q12(2.5f), false);
+            g_SysWork.sysFlags_22A0 |= 1 << 0;
+            break;
+
+        case 2:
+            func_800862F8(1, 0, false);
+            break;
+
+        case 3:
+            func_8008616C(2, false, 1, Q12(0.4f), false);
+            func_800862F8(2, 0, false);
+            break;
+
+        case 4:
+            if (Savegame_EventFlagGet(EventFlag_496))
+            {
+                MapMsg_DisplayAndHandleSelection(false, 108, 0, 0, 0, false);
+            }
+            else
+            {
+                MapMsg_DisplayAndHandleSelection(false, 107, 0, 0, 0, false);
+            }
+            
+            func_800862F8(2, 0, false);
+            break;
+
+        case 5:
+            func_8008616C(2, true, 0, 0, false);
+            func_800862F8(2, 0, false);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+
+            Savegame_EventFlagClear(EventFlag_496);
+            Savegame_EventFlagClear(EventFlag_497);
+
+            func_8008616C(0, false, 0, 0, false);
+            func_80086470(3, InventoryItemId_Camera, 1, false);
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800E15D4);
 
-INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02", D_800CD904);
+void func_800E1DAC(void) // 0x800E1DAC
+{
+    const static VECTOR3 D_800CD904 = { Q12(100.8f), Q12(-1.0f), Q12(-20.0f) };
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800E1DAC);
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            D_800EB6B0 = 0;
+            func_800862F8(0, FILE_TIM_NEWSP3_TIM, false);
+            func_8005DC1C(Sfx_Unk1654, &D_800CD904, 0x80, 0);
+            SysWork_StateStepIncrement();
+
+        case 1:
+            func_8008616C(2, true, 0, Q12(0.0f), false);
+            break;
+
+        case 2:
+            func_800862F8(1, 0, false);
+            break;
+
+        case 3:
+            func_8008616C(2, false, 0, Q12(0.0f), false);
+            func_800862F8(2, 0, false);
+            break;
+
+        case 4:
+            func_800862F8(2, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 15, 0, 0, 0, false);
+            break;
+        case 5:
+            g_BackgroundColor = 0x30;
+            func_800862F8(2, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 16, 0, 0, 0, false);
+            break;
+
+        case 6:
+            Sd_EngineCmd(Sfx_Unk1654);
+            SysWork_StateStepIncrement();
+
+        case 7:
+            g_BackgroundColor = 0x30;
+            func_800862F8(2, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 17, 0, 0, 0, false);
+            break;
+
+        case 8:
+            g_BackgroundColor = 0x30;
+            func_800862F8(2, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 20, 0, 0, 0, false);
+            break;
+
+        case 9:
+            g_BackgroundColor = 0x30;
+            func_800862F8(2, 0, false);
+            func_8008616C(2, true, 0, Q12(0.0f), false);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            func_8008616C(0, false, 0, Q12(0.0f), false);
+            break;
+    }
+}
 
 void func_800E1FF4(void) // 0x800E1FF4
 {

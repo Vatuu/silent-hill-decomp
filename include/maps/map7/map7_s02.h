@@ -110,6 +110,12 @@ void func_800E0CB4(void);
 
 void func_800E0FF0(void);
 
+void func_800E12E4(void);
+
+void func_800E1398(void);
+
+void func_800E1DAC(void);
+
 void func_800E1FF4(void);
 
 void func_800E2DC0(void);
