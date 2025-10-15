@@ -78,9 +78,9 @@ typedef enum _EventFlag
 
     EventFlag_M2S04_PickupShotgun = 95,
 
-    EventFlag_97 = 97,
-    EventFlag_98 = 98,
-
+    EventFlag_97  = 97,
+    EventFlag_98  = 98,
+    EventFlag_99  = 99,
     EventFlag_100 = 100,
 
     EventFlag_105                           = 105,
