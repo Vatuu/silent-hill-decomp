@@ -33,6 +33,8 @@ extern s32 D_800EB6B4;
 
 extern s_WorldObjectPos D_800EB6E0; // Assumed type.
 
+extern s16 D_800EBB94;
+
 void Ai_GhostDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void func_800D8B64(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
@@ -105,6 +107,8 @@ void func_800E0C5C(void);
 void func_800E0C88(void);
 
 void func_800E0CB4(void);
+
+void func_800E0FF0(void);
 
 void func_800E1FF4(void);
 

@@ -1425,7 +1425,83 @@ void func_800E0CB4(void) // 0x800E0CB4
     }
 }
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800E0FF0);
+void func_800E0FF0(void)
+{
+    if (Savegame_EventFlagGet(EventFlag_486) && Savegame_EventFlagGet(EventFlag_549))
+    {
+        g_BackgroundColor = 0x78;
+        switch (g_SysWork.sysStateStep_C[0])
+        {
+            case 0:
+                sharedFunc_800D20E4_0_s00();
+                SysWork_StateStepIncrement();
+            
+            case 1:
+                func_80086DA8(FILE_TIM_ELCWIRE2_TIM, 0);
+                break;
+
+            case 2:
+                func_8008616C(0, false, 0, 0, false);
+                SysWork_StateStepIncrement();
+            
+            case 3:
+                SysWork_StateStepIncrement();
+            
+            case 4:
+                func_800862F8(2, 0, false);
+                func_8008616C(1, false, 0, 0, false);
+                break;
+                
+            case 5:
+                func_800862F8(2, 0, false);
+                MapMsg_DisplayAndHandleSelection(true, 80, 6, 7, 0, false);
+                break;
+                
+            case 6:
+                func_80086470(3, InventoryItemId_KeyOfAratron, 1, false);
+                Savegame_EventFlagSet(EventFlag_M7S02_PickupKeyOfAratron);
+                SysWork_StateStepIncrement();
+            
+            case 7:
+                func_80086F44(0, 0);
+                break;
+                
+            default:
+                sharedFunc_800D2244_0_s00(false);
+                SysWork_StateSetNext(SysState_Gameplay);
+                break;
+        }
+    }
+    else
+    {
+        if (Savegame_EventFlagGet(EventFlag_486))
+        {
+            func_80087360(FILE_TIM_ELCWIRE1_TIM, 0, 0, 105);
+            if (g_SysWork.sysStateStep_C[1] >= 3 && g_SysWork.sysStateStep_C[1] <= 5)
+            {
+                // Plays sfx after random time between 0.2 - 2.2?
+                if (D_800EBB94 != 0)
+                {
+                    D_800EBB94 -= g_DeltaTime0;
+                    if (D_800EBB94 < 0)
+                    {
+                        D_800EBB94 = 0;
+                    }
+                }
+                else
+                {
+                    Sd_EngineCmd(Sfx_Unk1653);
+                    D_800EBB94 = Rng_GenerateInt(Rng_Rand16(), Q12(0.2f), Q12(2.2f) - 1);
+                }
+            }
+        }
+        else
+        {
+            g_BackgroundColor = 0x70;
+            func_80087360(FILE_TIM_ELCWIRE0_TIM, 0, 0, 110);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800E12E4);
 
