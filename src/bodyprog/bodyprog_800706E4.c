@@ -7889,21 +7889,19 @@ void func_8007EBBC() // 0x8007EBBC
     s32 var_a1;
     s32 var_a2;
     s32 i;
-    s8  temp_v1;
 
     var_a1 = 0;
     var_a2 = 0;
 
     g_SysWork.enemyTargetIdx_2353 = NO_VALUE;
 
-    temp_v1 = g_SysWork.playerCombatInfo_38.weaponAttack_F + 1;
-    switch (temp_v1)
+    switch (g_SysWork.playerCombatInfo_38.weaponAttack_F)
     {
-        case 0:
+        case NO_VALUE:
             g_Player_EquippedWeaponInfo = D_800AFBF4[0];
             return;
 
-        case 1:
+        case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
             var_a1                               = 30;
             var_a2                               = 15;
             g_Player_EquippedWeaponInfo          = D_800AFBF4[1];
@@ -7913,15 +7911,15 @@ void func_8007EBBC() // 0x8007EBBC
         default:
             return;
 
-        case 8:
+        case WEAPON_ATTACK(EquippedWeaponId_Axe, AttackInputType_Tap):
             var_a1                               = 0;
             var_a2                               = 0;
             g_Player_EquippedWeaponInfo          = D_800AFBF4[3];
             g_SysWork.player_4C.chara_0.field_D0 = -0xFD0;
             break;
 
-        case 2:
-        case 5:
+        case WEAPON_ATTACK(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
+        case WEAPON_ATTACK(EquippedWeaponId_Hammer, AttackInputType_Tap):
             g_Player_EquippedWeaponInfo = D_800AFBF4[2];
             switch (g_SysWork.playerCombatInfo_38.weaponAttack_F)
             {
@@ -7939,49 +7937,49 @@ void func_8007EBBC() // 0x8007EBBC
             g_SysWork.player_4C.chara_0.field_D0 = -0xEC0;
             break;
 
-        case 6:
+        case WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
             var_a1                               = 50;
             var_a2                               = 25;
             g_Player_EquippedWeaponInfo          = D_800AFBF4[4];
             g_SysWork.player_4C.chara_0.field_D0 = -0xE90;
             break;
 
-        case 3:
+        case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
             var_a1                               = 64;
             var_a2                               = 32;
             g_Player_EquippedWeaponInfo          = D_800AFBF4[5];
             g_SysWork.player_4C.chara_0.field_D0 = -0x12E0;
             break;
 
-        case 7:
+        case WEAPON_ATTACK(EquippedWeaponId_Katana, AttackInputType_Tap):
             var_a1                               = 40;
             var_a2                               = 20;
             g_Player_EquippedWeaponInfo          = D_800AFBF4[10];
             g_SysWork.player_4C.chara_0.field_D0 = -0xF20;
             break;
 
-        case 33:
+        case WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap):
             var_a1                               = 78;
             var_a2                               = 39;
             g_Player_EquippedWeaponInfo          = D_800AFBF4[6];
             g_SysWork.player_4C.chara_0.field_D0 = -0x1600;
             break;
 
-        case 34:
+        case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
             var_a1                               = 96;
             var_a2                               = 48;
             g_Player_EquippedWeaponInfo          = D_800AFBF4[7];
             g_SysWork.player_4C.chara_0.field_D0 = -0x1180;
             break;
 
-        case 35:
+        case WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap):
             var_a1                               = 114;
             var_a2                               = 57;
             g_Player_EquippedWeaponInfo          = D_800AFBF4[8];
             g_SysWork.player_4C.chara_0.field_D0 = -0x1600;
             break;
 
-        case 36:
+        case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
             var_a1                               = 132;
             var_a2                               = 66;
             g_Player_EquippedWeaponInfo          = D_800AFBF4[9];
