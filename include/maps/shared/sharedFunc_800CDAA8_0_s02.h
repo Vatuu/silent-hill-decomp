@@ -1,23 +1,37 @@
 #include "bodyprog/player_logic.h"
 
 // TODO:
-// - Make defines for each of the `keyFrameIdx = XXX` assignments that change between maps, so they can be overridden here.
-//   (better than having a bunch of #ifdef MAPXXX around those assignments)
-//
 // - Move these per-map defines into each maps header file instead, to get rid of this big block.
 //   (defines might also end up used in other parts of code too)
 //
 // - The order of the switch cases below isn't ideal, most of them can probably be sorted.
-//   Maps do depend on the order of the cases though, they're usually in descending order but seems some cases were inserted randomly.
+//   Maps do depend on the order of the cases though, they're usually in descending order but seems some cases were inserted randomly, likely some way to better sort them without breaking order they appear in maps.
 //   (unfortunately #define sections below don't always match map order, some were re-sorted during early work on this func, but later were left in original order)
 //
 // - Rename `sharedFunc_800CDAA8_0_s02` -> `sharedFunc_800D0E34_0_s00`, sharedData_800D32A0_0_s02` -> `sharedData_800E39DC_0_s00`
 
+// Keyframe indexes used for each state
+// Maps can override these by redefining the keyframe below, only indexes that change in certain maps are included here.
+// (most likely whatever tool they used to create the `g_MapOverlayHeader.animInfos_34` data also output a header defining these for each map)
+#define KEYFRAME_PlayerState_Unk59  927
+#define KEYFRAME_PlayerState_Unk60  942
+#define KEYFRAME_PlayerState_Unk69  984
+#define KEYFRAME_PlayerState_Unk87  873
+#define KEYFRAME_PlayerState_Unk88  910
+#define KEYFRAME_PlayerState_Unk111 678
+#define KEYFRAME_PlayerState_Unk113 1084
+#define KEYFRAME_PlayerState_Unk114 932
+#define KEYFRAME_PlayerState_Unk117 723
+#define KEYFRAME_PlayerState_Unk122 961
+#define KEYFRAME_PlayerState_Unk123 693
+#define KEYFRAME_PlayerState_Unk146 1074
+#define KEYFRAME_PlayerState_Unk147 1108
+#define KEYFRAME_PlayerState_Unk153 1036
+#define KEYFRAME_PlayerState_Unk162 1237
+#define KEYFRAME_PlayerState_Unk167 1070
+
 // All maps have 52
 #define HAS_PlayerState_Unk52
-
-// Offset applied to `PlayerState_Unk59` / `PlayerState_Unk60` in certain maps.
-#define KEYFRAME_OFFSET 0
 
 #if defined(MAP0_S00)
 #define HAS_PlayerState_Unk51  // 0x33
@@ -64,7 +78,8 @@
 #define HAS_PlayerState_Unk83  // 0x53
 #define HAS_PlayerState_Unk85  // 0x55
 #define HAS_PlayerState_Unk122 // 0x7A
-#define KEYFRAME_OFFSET        -54
+#define KEYFRAME_PlayerState_Unk59 873
+#define KEYFRAME_PlayerState_Unk60 888
 #endif
 
 #if defined(MAP1_S02)
@@ -82,7 +97,8 @@
 #define HAS_PlayerState_Unk97  // 0x61
 #define HAS_PlayerState_Unk98  // 0x62
 #define HAS_PlayerState_Unk106 // 0x6A
-#define KEYFRAME_OFFSET        -24
+#define KEYFRAME_PlayerState_Unk59 903
+#define KEYFRAME_PlayerState_Unk60 918
 #endif
 
 #if defined(MAP1_S03)
@@ -96,18 +112,25 @@
 #define HAS_PlayerState_Unk107 // 0x6B
 #define HAS_PlayerState_Unk108 // 0x6C
 #define HAS_PlayerState_Unk122 // 0x7A
-#define KEYFRAME_OFFSET        -24
+#define KEYFRAME_PlayerState_Unk59  903
+#define KEYFRAME_PlayerState_Unk60  918
+#define KEYFRAME_PlayerState_Unk122 1093
 #endif
 
-#if defined(MAP1_S06) || defined(MAP2_S00)
+#if defined(MAP1_S06)
 #define HAS_PlayerState_Unk52 // 0x34
 #define HAS_PlayerState_Unk59 // 0x3B
 #define HAS_PlayerState_Unk60 // 0x3C
-#if defined(MAP1_S06)
-#define KEYFRAME_OFFSET -249
-#elif defined(MAP2_S00)
-#define KEYFRAME_OFFSET 19
+#define KEYFRAME_PlayerState_Unk59 678
+#define KEYFRAME_PlayerState_Unk60 693
 #endif
+
+#if defined(MAP2_S00)
+#define HAS_PlayerState_Unk52      // 0x34
+#define HAS_PlayerState_Unk59      // 0x3B
+#define HAS_PlayerState_Unk60      // 0x3C
+#define KEYFRAME_PlayerState_Unk59 946
+#define KEYFRAME_PlayerState_Unk60 961
 #endif
 
 #if defined(MAP2_S01)
@@ -116,7 +139,7 @@
 #define HAS_PlayerState_Unk52       // 0x34
 #define HAS_PlayerState_Unk111      // 0x6F
 #define HAS_PlayerState_Unk113      // 0x71
-#define KEYFRAME_OFFSET        -361 // Affects `PlayerState_Unk113` keyframe.
+#define KEYFRAME_PlayerState_Unk113 723
 #endif
 
 #if defined(MAP3_S00)
@@ -131,7 +154,8 @@
 #define HAS_PlayerState_Unk52 // 0x34
 #define HAS_PlayerState_Unk59 // 0x3B
 #define HAS_PlayerState_Unk60 // 0x3C
-#define KEYFRAME_OFFSET       30
+#define KEYFRAME_PlayerState_Unk59 957
+#define KEYFRAME_PlayerState_Unk60 972
 #endif
 
 #if defined(MAP3_S03)
@@ -141,6 +165,8 @@
 #define HAS_PlayerState_Unk146 // 0x92
 #define HAS_PlayerState_Unk147 // 0x93
 #define HAS_PlayerState_Unk154 // 0x9A
+#define KEYFRAME_PlayerState_Unk146 954
+#define KEYFRAME_PlayerState_Unk147 988
 #endif
 
 #if defined(MAP3_S04)
@@ -150,7 +176,8 @@
 #define HAS_PlayerState_Unk59  // 0x3B
 #define HAS_PlayerState_Unk60  // 0x3C
 #define HAS_PlayerState_Unk125 // 0x7D
-#define KEYFRAME_OFFSET        30
+#define KEYFRAME_PlayerState_Unk59 957
+#define KEYFRAME_PlayerState_Unk60 972
 #endif
 
 #if defined(MAP3_S05)
@@ -167,7 +194,8 @@
 #define HAS_PlayerState_Unk81  // 0x51
 #define HAS_PlayerState_Unk116 // 0x74
 #define HAS_PlayerState_Unk141 // 0x8D
-#define KEYFRAME_OFFSET        30
+#define KEYFRAME_PlayerState_Unk59 957
+#define KEYFRAME_PlayerState_Unk60 972
 #endif
 
 #if defined(MAP3_S06)
@@ -197,6 +225,7 @@
 #define HAS_PlayerState_Unk142 // 0x8E
 #define HAS_PlayerState_Unk153 // 0x99
 #define HAS_PlayerState_Unk186 // 0xBA
+#define KEYFRAME_PlayerState_Unk69 678
 #endif
 
 #if defined(MAP4_S03)
@@ -204,6 +233,7 @@
 #define HAS_PlayerState_Unk123 // 0x7B
 #define HAS_PlayerState_Unk128 // 0x80
 #define HAS_PlayerState_Unk129 // 0x81
+#define KEYFRAME_PlayerState_Unk123 877
 #endif
 
 #if defined(MAP4_S04)
@@ -214,6 +244,7 @@
 #define HAS_PlayerState_Unk117 // 0x75
 #define HAS_PlayerState_Unk134 // 0x86
 #define HAS_PlayerState_Unk135 // 0x87
+#define KEYFRAME_PlayerState_Unk117 678
 #endif
 
 #if defined(MAP4_S05)
@@ -233,7 +264,10 @@
 #define HAS_PlayerState_Unk87  // 0x57
 #define HAS_PlayerState_Unk88  // 0x58
 #define HAS_PlayerState_Unk114 // 0x72
-#define KEYFRAME_OFFSET        -96
+#define KEYFRAME_PlayerState_Unk59 831
+#define KEYFRAME_PlayerState_Unk60 846
+#define KEYFRAME_PlayerState_Unk87 857
+#define KEYFRAME_PlayerState_Unk88 894
 #endif
 
 #if defined(MAP5_S02)
@@ -250,7 +284,9 @@
 #define HAS_PlayerState_Unk164 // 0xA4
 #define HAS_PlayerState_Unk165 // 0xA5
 #define HAS_PlayerState_Unk166 // 0xA6
-#define KEYFRAME_OFFSET        -126
+#define KEYFRAME_PlayerState_Unk59  801
+#define KEYFRAME_PlayerState_Unk60  816
+#define KEYFRAME_PlayerState_Unk153 889
 #endif
 
 #if defined(MAP5_S03)
@@ -264,7 +300,9 @@
 #define HAS_PlayerState_Unk159 // 0x9f
 #define HAS_PlayerState_Unk169 // 0xa9
 #define HAS_PlayerState_Unk187 // 0xbb
-#define KEYFRAME_OFFSET        -126
+#define KEYFRAME_PlayerState_Unk59 801
+#define KEYFRAME_PlayerState_Unk60 816
+#define KEYFRAME_PlayerState_Unk69 828
 #endif
 
 #if defined(MAP6_S00)
@@ -274,6 +312,7 @@
 #define HAS_PlayerState_Unk126 // 0x7e
 #define HAS_PlayerState_Unk127 // 0x7f
 #define HAS_PlayerState_Unk133 // 0x85
+#define KEYFRAME_PlayerState_Unk114 956
 #endif
 
 #if defined(MAP6_S01)
@@ -284,7 +323,7 @@
 #define HAS_PlayerState_Unk71  // 0x47
 #define HAS_PlayerState_Unk132 // 0x84
 #define HAS_PlayerState_Unk113 // 0x71
-#define KEYFRAME_OFFSET        -384
+#define KEYFRAME_PlayerState_Unk113 700
 #endif
 
 #if defined(MAP6_S02)
@@ -296,6 +335,7 @@
 #define HAS_PlayerState_Unk132 // 0x84
 #define HAS_PlayerState_Unk111 // 0x6F
 #define HAS_PlayerState_Unk175 // 0xaf
+#define KEYFRAME_PlayerState_Unk111 915
 #endif
 
 #if defined(MAP6_S04)
@@ -320,6 +360,7 @@
 #define HAS_PlayerState_Unk185 // 0xB9
 #define HAS_PlayerState_Unk170 // 0xAA
 #define HAS_PlayerState_Unk188 // 0xBC
+#define KEYFRAME_PlayerState_Unk167 1347
 #endif
 
 #if defined(MAP7_S00)
@@ -373,7 +414,8 @@
 #define HAS_PlayerState_Unk156 // 0x9C
 #define HAS_PlayerState_Unk157 // 0x9D
 #define HAS_PlayerState_Unk158 // 0x9E
-#define KEYFRAME_OFFSET        -65
+#define KEYFRAME_PlayerState_Unk59 862
+#define KEYFRAME_PlayerState_Unk60 877
 #endif
 
 #if defined(MAP7_S03)
@@ -396,6 +438,8 @@
 #define HAS_PlayerState_Unk181 // 0xb5
 #define HAS_PlayerState_Unk182 // 0xb6
 #define HAS_PlayerState_Unk183 // 0xb7
+#define KEYFRAME_PlayerState_Unk153 816
+#define KEYFRAME_PlayerState_Unk162 837
 #endif
 
 // Very similar to `func_80071968_Switch1`
@@ -918,7 +962,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 #ifdef HAS_PlayerState_Unk59
         case PlayerState_Unk59:
             func_8007FB94(playerChara, extra, 0x12C);
-            keyFrameIdx = 927 + KEYFRAME_OFFSET;
+            keyFrameIdx = KEYFRAME_PlayerState_Unk59;
             if (D_800C4606)
             {
                 Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
@@ -929,7 +973,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 #ifdef HAS_PlayerState_Unk60
         case PlayerState_Unk60:
             func_8007FB94(playerChara, extra, 0x12D);
-            keyFrameIdx = 942 + KEYFRAME_OFFSET;
+            keyFrameIdx = KEYFRAME_PlayerState_Unk60;
             if (D_800C4606)
             {
                 Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
@@ -951,11 +995,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 #ifdef HAS_PlayerState_Unk87
         case PlayerState_Unk87:
             func_8007FC48(playerChara, extra, 0x166);
-#ifdef MAP5_S00
-            keyFrameIdx = 857;
-#else
-            keyFrameIdx = 873;
-#endif
+            keyFrameIdx = KEYFRAME_PlayerState_Unk87;
             if (D_800C4606)
             {
                 Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
@@ -967,11 +1007,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 #ifdef HAS_PlayerState_Unk88
         case PlayerState_Unk88:
             func_8007FC48(playerChara, extra, 0x167);
-#ifdef MAP5_S00
-            keyFrameIdx = 894;
-#else
-            keyFrameIdx = 910;
-#endif
+            keyFrameIdx = KEYFRAME_PlayerState_Unk88;
             if (D_800C4606)
             {
                 Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
@@ -983,11 +1019,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 #ifdef HAS_PlayerState_Unk114
         case PlayerState_Unk114:
             func_8007FB94(playerChara, extra, 0x186);
-#ifdef MAP6_S00
-            keyFrameIdx = 956;
-#else
-            keyFrameIdx = 932;
-#endif
+            keyFrameIdx = KEYFRAME_PlayerState_Unk114;
             if (D_800C4606)
             {
                 Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
@@ -1125,11 +1157,10 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
         case PlayerState_Unk122:
 #ifdef MAP1_S03
             func_8007FB94(playerChara, extra, 0x18E);
-            keyFrameIdx = 1093;
 #else
             func_8007FC48(playerChara, extra, 0x18E);
-            keyFrameIdx = 961;
 #endif
+            keyFrameIdx = KEYFRAME_PlayerState_Unk122;
             if (D_800C4606)
             {
                 Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
@@ -1141,13 +1172,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
         case PlayerState_Unk69:
         case PlayerState_Unk105:
             func_8007FC48(playerChara, extra, 0x14B);
-#ifdef MAP4_S01
-            keyFrameIdx = 678;
-#elif defined(MAP5_S03)
-            keyFrameIdx = 828;
-#else
-            keyFrameIdx = 984;
-#endif
+            keyFrameIdx = KEYFRAME_PlayerState_Unk69;
             if (D_800C4606)
             {
                 Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
@@ -1358,7 +1383,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
                 Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
                 D_800C4606 = 0;
             }
-#if !defined(MAP6_S04) && !defined(MAP5_S02) && !defined(MAP6_S01)
+#ifdef MAP0_S01
             func_8003D03C();
 #endif
             break;
@@ -1376,13 +1401,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 #ifdef HAS_PlayerState_Unk153
         case PlayerState_Unk153:
             func_8007FB94(playerChara, extra, 0x1AC);
-#ifdef MAP5_S02
-            keyFrameIdx = 889;
-#elif defined(MAP7_S03)
-            keyFrameIdx = 816;
-#else
-            keyFrameIdx = 1036;
-#endif
+            keyFrameIdx = KEYFRAME_PlayerState_Unk153;
             if (D_800C4606)
             {
                 Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
@@ -1498,11 +1517,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 #ifdef HAS_PlayerState_Unk146
         case PlayerState_Unk146:
             func_8007FB94(playerChara, extra, 0x1A5);
-#ifdef MAP3_S03
-            keyFrameIdx = 954;
-#else
-            keyFrameIdx = 1074;
-#endif
+            keyFrameIdx = KEYFRAME_PlayerState_Unk146;
             if (D_800C4606)
             {
                 Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
@@ -1514,11 +1529,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 #ifdef HAS_PlayerState_Unk147
         case PlayerState_Unk147:
             func_8007FC48(playerChara, extra, 0x1A6);
-#ifdef MAP3_S03
-            keyFrameIdx = 988;
-#else
-            keyFrameIdx = 1108;
-#endif
+            keyFrameIdx = KEYFRAME_PlayerState_Unk147;
             if (D_800C4606)
             {
                 Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
@@ -1640,11 +1651,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 #ifdef HAS_PlayerState_Unk111
         case PlayerState_Unk111:
             func_8007FB94(playerChara, extra, 0x183);
-#ifdef MAP6_S02
-            keyFrameIdx = 915;
-#else
-            keyFrameIdx = 678;
-#endif
+            keyFrameIdx = KEYFRAME_PlayerState_Unk111;
             if (D_800C4606)
             {
                 Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
@@ -1655,7 +1662,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 #ifdef HAS_PlayerState_Unk113
         case PlayerState_Unk113:
             func_8007FB94(playerChara, extra, 0x185);
-            keyFrameIdx = 1084 + KEYFRAME_OFFSET;
+            keyFrameIdx = KEYFRAME_PlayerState_Unk113;
             if (D_800C4606)
             {
                 Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
@@ -1666,11 +1673,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 #ifdef HAS_PlayerState_Unk117
         case PlayerState_Unk117:
             func_8007FC48(playerChara, extra, 0x189);
-#ifdef MAP4_S04
-            keyFrameIdx = 678;
-#else
-            keyFrameIdx = 723;
-#endif
+            keyFrameIdx = KEYFRAME_PlayerState_Unk117;
             if (D_800C4606)
             {
                 Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
@@ -1681,11 +1684,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 #ifdef HAS_PlayerState_Unk123
         case PlayerState_Unk123:
             func_8007FB94(playerChara, extra, 0x18F);
-#ifdef MAP4_S03
-            keyFrameIdx = 877;
-#else
-            keyFrameIdx = 693;
-#endif
+            keyFrameIdx = KEYFRAME_PlayerState_Unk123;
             if (D_800C4606)
             {
                 Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
@@ -1899,11 +1898,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 #ifdef HAS_PlayerState_Unk162
         case PlayerState_Unk162:
             func_8007FB94(playerChara, extra, 0x1B5);
-#ifdef MAP7_S03
-            keyFrameIdx = 837;
-#else
-            keyFrameIdx = 1237;
-#endif
+            keyFrameIdx = KEYFRAME_PlayerState_Unk162;
             if (D_800C4606)
             {
                 Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
@@ -1925,11 +1920,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 #ifdef HAS_PlayerState_Unk167
         case PlayerState_Unk167:
             func_8007FB94(playerChara, extra, 0x1BA);
-#if defined(MAP6_S04)
-            keyFrameIdx = 1347;
-#else
-            keyFrameIdx = 1070;
-#endif
+            keyFrameIdx = KEYFRAME_PlayerState_Unk167;
             if (D_800C4606)
             {
                 Player_ExtraStateSet(playerChara, extra, PlayerState_Unk52);
@@ -2844,7 +2835,6 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             if (playerChara->model_0.anim_4.status_0 & 1)
             {
 #ifdef MAP7_S03
-#define Sfx_Unk1671 1671
                 func_80071620(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 60, Sfx_Unk1671);
 #else
                 func_80071620(playerChara->model_0.anim_4.status_0, playerChara, keyFrameIdx + 60, Sfx_Unk1623);
