@@ -93,6 +93,8 @@ typedef enum _Sfx
 				    
     Sfx_StartGame   = Sfx_Base + 1,  // `SND/FIRST.VAB`
 
+    Sfx_Unk1283     = Sfx_Base + 3,
+
     Sfx_Unk1286     = Sfx_Base + 6,
 
     Sfx_Unk1296     = Sfx_Base + 16,
