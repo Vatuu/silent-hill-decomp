@@ -150,4 +150,6 @@ void func_800D3AC0(s_SubCharacter* chara);
 
 void func_800D598C(s_SubCharacter* chara);
 
+q19_12 func_800D7714(s_SubCharacter* chara);
+
 #endif
