@@ -2326,8 +2326,6 @@ extern s_func_800700F8_2 sharedData_800E2330_0_s01;
 
 extern u8 sharedData_800DF158_1_s02;
 
-extern VECTOR sharedData_800CAB70_0_s00;
-
 extern s32 sharedData_800E0CA8_0_s00;
 extern s32 sharedData_800E0CAC_0_s00;
 extern u32 sharedData_800E0CB0_0_s00;

@@ -412,9 +412,6 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch_Unk85(s_MainCharacterExtra* 
 // TODO: Rename to sharedFunc_800D0E34_0_s00
 void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord)
 {
-#ifdef HAS_PlayerState_Unk151
-    const static VECTOR D_800CA618 = { Q12(14.94f), Q12(-0.05f), Q12(102.0f) };
-#endif
     s_Collision coll;
     s32         sfx;
     s8          pitch;
@@ -1252,7 +1249,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
                 if (!(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk6))
                 {
                     func_8006342C(0x20, 0x340, playerChara->rotation_24.vy, coord);
-                    func_8005F6B0(&g_SysWork.npcs_1A0[1], &sharedData_800CAB70_0_s00, 3, 3);
+                    func_8005F6B0(&g_SysWork.npcs_1A0[1], &(VECTOR3){ Q12(140.39f), Q12(-0.55f), Q12(22.76f) }, 3, 3);
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk6;
                 }
             }
@@ -1594,7 +1591,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             {
                 if (!(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk6))
                 {
-                    func_8005F6B0(&g_SysWork.npcs_1A0[1], &D_800CA618, 3, 3);
+                    func_8005F6B0(&g_SysWork.npcs_1A0[1], &(VECTOR3){ Q12(14.94f), Q12(-0.05f), Q12(102.0f) }, 3, 3);
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk6;
                 }
             }

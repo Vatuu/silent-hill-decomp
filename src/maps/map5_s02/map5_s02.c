@@ -23,10 +23,6 @@ INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800CB6CC);
 
 #include "maps/shared/sharedFunc_800D0850_0_s01.h" // 0x800CC468
 
-// `sharedData_800CAB70_0_s00` used in both `sharedFunc_800CDAA8_0_s02` and `sharedFunc_800D670C_0_s00`?
-// TODO: maybe both funcs used same values as a static and compiler folded both to this?
-INCLUDE_RODATA("asm/maps/map5_s02/nonmatchings/map5_s02", sharedData_800CAB70_0_s00);
-
 #include "maps/shared/sharedFunc_800CDAA8_0_s02.h" // 0x800CC854
 
 #include "maps/shared/sharedFunc_800D1C38_0_s00.h" // 0x800CD1A4

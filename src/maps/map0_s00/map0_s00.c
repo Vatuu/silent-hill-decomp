@@ -344,8 +344,6 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800D5C64_0_s00
 
 #include "maps/shared/sharedFunc_800D67FC_0_s00.h" // 0x800D67FC
 
-INCLUDE_RODATA("asm/maps/map0_s00/nonmatchings/map0_s00", sharedData_800CAB70_0_s00);
-
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800D6970_0_s00); // 0x800D6970
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800D70C4_0_s00); // 0x800D70C4
