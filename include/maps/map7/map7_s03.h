@@ -1,6 +1,28 @@
 #ifndef _MAPS_MAP7_S03_H
 #define _MAPS_MAP7_S03_H
 
+#define HAS_PlayerState_Unk51
+#define HAS_PlayerState_Unk131
+#define HAS_PlayerState_Unk52
+#define HAS_PlayerState_Unk153
+#define HAS_PlayerState_Unk186
+#define HAS_PlayerState_Unk162
+#define HAS_PlayerState_Unk171
+#define HAS_PlayerState_Unk172
+#define HAS_PlayerState_Unk173
+#define HAS_PlayerState_Unk174
+#define HAS_PlayerState_Unk176
+#define HAS_PlayerState_Unk177
+#define HAS_PlayerState_Unk184
+#define HAS_PlayerState_Unk178
+#define HAS_PlayerState_Unk179
+#define HAS_PlayerState_Unk180
+#define HAS_PlayerState_Unk181
+#define HAS_PlayerState_Unk182
+#define HAS_PlayerState_Unk183
+#define KEYFRAME_PlayerState_Unk153 816
+#define KEYFRAME_PlayerState_Unk162 837
+
 extern s32 D_800ED73C; // } RNG related values?
 extern s32 D_800ED740; // }
 

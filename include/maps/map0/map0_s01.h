@@ -6,6 +6,23 @@
 #include "game.h"
 #include "types.h"
 
+#define HAS_PlayerState_Unk51
+#define HAS_PlayerState_Unk131
+#define HAS_PlayerState_Unk52
+#define HAS_PlayerState_Unk53
+#define HAS_PlayerState_Unk70
+#define HAS_PlayerState_Unk71
+#define HAS_PlayerState_Unk132
+#define HAS_PlayerState_Unk76
+#define HAS_PlayerState_Unk77
+#define HAS_PlayerState_Unk78
+#define HAS_PlayerState_Unk89
+#define HAS_PlayerState_Unk90
+#define HAS_PlayerState_Unk91
+#define HAS_PlayerState_Unk92
+#define HAS_PlayerState_Unk93
+#define HAS_PlayerState_Unk110
+
 extern s8 D_800CBAD4;
 
 extern u16 D_800DE124;

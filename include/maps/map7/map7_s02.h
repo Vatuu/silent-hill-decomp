@@ -1,6 +1,24 @@
 #ifndef _MAPS_MAP7_S02_H
 #define _MAPS_MAP7_S02_H
 
+#define HAS_PlayerState_Unk51
+#define HAS_PlayerState_Unk131
+#define HAS_PlayerState_Unk52
+#define HAS_PlayerState_Unk59
+#define HAS_PlayerState_Unk60
+#define HAS_PlayerState_Unk72
+#define HAS_PlayerState_Unk143
+#define HAS_PlayerState_Unk144
+#define HAS_PlayerState_Unk146
+#define HAS_PlayerState_Unk147
+#define HAS_PlayerState_Unk148
+#define HAS_PlayerState_Unk155
+#define HAS_PlayerState_Unk156
+#define HAS_PlayerState_Unk157
+#define HAS_PlayerState_Unk158
+#define KEYFRAME_PlayerState_Unk59 862
+#define KEYFRAME_PlayerState_Unk60 877
+
 typedef struct
 {
     u8  field_0;

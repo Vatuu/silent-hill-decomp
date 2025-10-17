@@ -1,6 +1,12 @@
 #ifndef _MAPS_MAP3_S01_H
 #define _MAPS_MAP3_S01_H
 
+#define HAS_PlayerState_Unk52
+#define HAS_PlayerState_Unk59
+#define HAS_PlayerState_Unk60
+#define KEYFRAME_PlayerState_Unk59 957
+#define KEYFRAME_PlayerState_Unk60 972
+
 extern VECTOR3 D_800CB170;
 
 void func_800D1178(s32 arg0);

@@ -1,447 +1,78 @@
 #include "bodyprog/player_logic.h"
 
 // TODO:
-// - Move these per-map defines into each maps header file instead, to get rid of this big block.
-//   (defines might also end up used in other parts of code too)
-//
 // - Rename `sharedFunc_800CDAA8_0_s02` -> `sharedFunc_800D0E34_0_s00`, sharedData_800D32A0_0_s02` -> `sharedData_800E39DC_0_s00`
 
 // Keyframe indexes used for each state
-// Maps can override these by redefining the keyframe below, only indexes that change in certain maps are included here.
+// Maps can override these by defining the keyframe beforehand, only indexes that change in certain maps are included here.
 // (most likely whatever tool they used to create the `g_MapOverlayHeader.animInfos_34` data also output a header defining these for each map)
-#define KEYFRAME_PlayerState_Unk59  927
-#define KEYFRAME_PlayerState_Unk60  942
-#define KEYFRAME_PlayerState_Unk69  984
-#define KEYFRAME_PlayerState_Unk87  873
-#define KEYFRAME_PlayerState_Unk88  910
+#ifndef KEYFRAME_PlayerState_Unk59
+#define KEYFRAME_PlayerState_Unk59 927
+#endif
+
+#ifndef KEYFRAME_PlayerState_Unk60
+#define KEYFRAME_PlayerState_Unk60 942
+#endif
+
+#ifndef KEYFRAME_PlayerState_Unk69
+#define KEYFRAME_PlayerState_Unk69 984
+#endif
+
+#ifndef KEYFRAME_PlayerState_Unk87
+#define KEYFRAME_PlayerState_Unk87 873
+#endif
+
+#ifndef KEYFRAME_PlayerState_Unk88
+#define KEYFRAME_PlayerState_Unk88 910
+#endif
+
+#ifndef KEYFRAME_PlayerState_Unk111
 #define KEYFRAME_PlayerState_Unk111 678
+#endif
+
+#ifndef KEYFRAME_PlayerState_Unk113
 #define KEYFRAME_PlayerState_Unk113 1084
+#endif
+
+#ifndef KEYFRAME_PlayerState_Unk114
 #define KEYFRAME_PlayerState_Unk114 932
+#endif
+
+#ifndef KEYFRAME_PlayerState_Unk117
 #define KEYFRAME_PlayerState_Unk117 723
+#endif
+
+#ifndef KEYFRAME_PlayerState_Unk122
 #define KEYFRAME_PlayerState_Unk122 961
+#endif
+
+#ifndef KEYFRAME_PlayerState_Unk123
 #define KEYFRAME_PlayerState_Unk123 693
+#endif
+
+#ifndef KEYFRAME_PlayerState_Unk146
 #define KEYFRAME_PlayerState_Unk146 1074
+#endif
+
+#ifndef KEYFRAME_PlayerState_Unk147
 #define KEYFRAME_PlayerState_Unk147 1108
+#endif
+
+#ifndef KEYFRAME_PlayerState_Unk153
 #define KEYFRAME_PlayerState_Unk153 1036
+#endif
+
+#ifndef KEYFRAME_PlayerState_Unk162
 #define KEYFRAME_PlayerState_Unk162 1237
+#endif
+
+#ifndef KEYFRAME_PlayerState_Unk167
 #define KEYFRAME_PlayerState_Unk167 1070
+#endif
 
 // All maps have 52
+#ifndef HAS_PlayerState_Unk52
 #define HAS_PlayerState_Unk52
-
-#if defined(MAP0_S00)
-#define HAS_PlayerState_Unk51  // 0x33
-#define HAS_PlayerState_Unk131 // 0x83
-#define HAS_PlayerState_Unk52  // 0x34
-#define HAS_PlayerState_Unk53  // 0x35
-#define HAS_PlayerState_Unk54  // 0x36
-#define HAS_PlayerState_Unk55  // 0x37
-#define HAS_PlayerState_Unk56  // 0x38
-#define HAS_PlayerState_Unk57  // 0x39
-#define HAS_PlayerState_Unk74  // 0x4A
-#define HAS_PlayerState_Unk84  // 0x54
-#endif
-
-#if defined(MAP0_S01)
-#define HAS_PlayerState_Unk51  // 0x33
-#define HAS_PlayerState_Unk131 // 0x83
-#define HAS_PlayerState_Unk52  // 0x34
-#define HAS_PlayerState_Unk53  // 0x35
-#define HAS_PlayerState_Unk70  // 0x46
-#define HAS_PlayerState_Unk71  // 0x47
-#define HAS_PlayerState_Unk132 // 0x84
-#define HAS_PlayerState_Unk76  // 0x4C
-#define HAS_PlayerState_Unk77  // 0x4D
-#define HAS_PlayerState_Unk78  // 0x4E
-#define HAS_PlayerState_Unk89  // 0x59
-#define HAS_PlayerState_Unk90  // 0x5A
-#define HAS_PlayerState_Unk91  // 0x5B
-#define HAS_PlayerState_Unk92  // 0x5C
-#define HAS_PlayerState_Unk93  // 0x5D
-#define HAS_PlayerState_Unk110 // 0x6E
-#endif
-
-#if defined(MAP1_S00)
-#define HAS_PlayerState_Unk52 // 0x34
-#define HAS_PlayerState_Unk87 // 0x57
-#define HAS_PlayerState_Unk88 // 0x58
-#endif
-
-#if defined(MAP1_S01)
-#define HAS_PlayerState_Unk52  // 0x34
-#define HAS_PlayerState_Unk59  // 0x3B
-#define HAS_PlayerState_Unk60  // 0x3C
-#define HAS_PlayerState_Unk83  // 0x53
-#define HAS_PlayerState_Unk85  // 0x55
-#define HAS_PlayerState_Unk122 // 0x7A
-#define KEYFRAME_PlayerState_Unk59 873
-#define KEYFRAME_PlayerState_Unk60 888
-#endif
-
-#if defined(MAP1_S02)
-#define HAS_PlayerState_Unk52  // 0x34
-#define HAS_PlayerState_Unk53  // 0x35
-#define HAS_PlayerState_Unk54  // 0x36
-#define HAS_PlayerState_Unk55  // 0x37
-#define HAS_PlayerState_Unk56  // 0x38
-#define HAS_PlayerState_Unk57  // 0x39
-#define HAS_PlayerState_Unk59  // 0x3B
-#define HAS_PlayerState_Unk60  // 0x3C
-#define HAS_PlayerState_Unk74  // 0x4A
-#define HAS_PlayerState_Unk94  // 0x5E
-#define HAS_PlayerState_Unk95  // 0x5F
-#define HAS_PlayerState_Unk97  // 0x61
-#define HAS_PlayerState_Unk98  // 0x62
-#define HAS_PlayerState_Unk106 // 0x6A
-#define KEYFRAME_PlayerState_Unk59 903
-#define KEYFRAME_PlayerState_Unk60 918
-#endif
-
-#if defined(MAP1_S03)
-#define HAS_PlayerState_Unk52  // 0x34
-#define HAS_PlayerState_Unk59  // 0x3B
-#define HAS_PlayerState_Unk60  // 0x3C
-#define HAS_PlayerState_Unk85  // 0x55
-#define HAS_PlayerState_Unk86  // 0x56
-#define HAS_PlayerState_Unk99  // 0x63
-#define HAS_PlayerState_Unk100 // 0x64
-#define HAS_PlayerState_Unk107 // 0x6B
-#define HAS_PlayerState_Unk108 // 0x6C
-#define HAS_PlayerState_Unk122 // 0x7A
-#define KEYFRAME_PlayerState_Unk59  903
-#define KEYFRAME_PlayerState_Unk60  918
-#define KEYFRAME_PlayerState_Unk122 1093
-#endif
-
-#if defined(MAP1_S06)
-#define HAS_PlayerState_Unk52 // 0x34
-#define HAS_PlayerState_Unk59 // 0x3B
-#define HAS_PlayerState_Unk60 // 0x3C
-#define KEYFRAME_PlayerState_Unk59 678
-#define KEYFRAME_PlayerState_Unk60 693
-#endif
-
-#if defined(MAP2_S00)
-#define HAS_PlayerState_Unk52      // 0x34
-#define HAS_PlayerState_Unk59      // 0x3B
-#define HAS_PlayerState_Unk60      // 0x3C
-#define KEYFRAME_PlayerState_Unk59 946
-#define KEYFRAME_PlayerState_Unk60 961
-#endif
-
-#if defined(MAP2_S01)
-#define HAS_PlayerState_Unk51       // 0x33
-#define HAS_PlayerState_Unk131      // 0x83
-#define HAS_PlayerState_Unk52       // 0x34
-#define HAS_PlayerState_Unk111      // 0x6F
-#define HAS_PlayerState_Unk113      // 0x71
-#define KEYFRAME_PlayerState_Unk113 723
-#endif
-
-#if defined(MAP3_S00)
-#define HAS_PlayerState_Unk51  // 0x33
-#define HAS_PlayerState_Unk131 // 0x83
-#define HAS_PlayerState_Unk52  // 0x34
-#define HAS_PlayerState_Unk72  // 0x48
-#define HAS_PlayerState_Unk115 // 0x73
-#endif
-
-#if defined(MAP3_S01)
-#define HAS_PlayerState_Unk52 // 0x34
-#define HAS_PlayerState_Unk59 // 0x3B
-#define HAS_PlayerState_Unk60 // 0x3C
-#define KEYFRAME_PlayerState_Unk59 957
-#define KEYFRAME_PlayerState_Unk60 972
-#endif
-
-#if defined(MAP3_S03)
-#define HAS_PlayerState_Unk52  // 0x34
-#define HAS_PlayerState_Unk59  // 0x3B
-#define HAS_PlayerState_Unk60  // 0x3C
-#define HAS_PlayerState_Unk146 // 0x92
-#define HAS_PlayerState_Unk147 // 0x93
-#define HAS_PlayerState_Unk154 // 0x9A
-#define KEYFRAME_PlayerState_Unk146 954
-#define KEYFRAME_PlayerState_Unk147 988
-#endif
-
-#if defined(MAP3_S04)
-#define HAS_PlayerState_Unk51  // 0x33
-#define HAS_PlayerState_Unk131 // 0x83
-#define HAS_PlayerState_Unk52  // 0x34
-#define HAS_PlayerState_Unk59  // 0x3B
-#define HAS_PlayerState_Unk60  // 0x3C
-#define HAS_PlayerState_Unk125 // 0x7D
-#define KEYFRAME_PlayerState_Unk59 957
-#define KEYFRAME_PlayerState_Unk60 972
-#endif
-
-#if defined(MAP3_S05)
-#define HAS_PlayerState_Unk52  // 0x34
-#define HAS_PlayerState_Unk53  // 0x35
-#define HAS_PlayerState_Unk54  // 0x36
-#define HAS_PlayerState_Unk55  // 0x37
-#define HAS_PlayerState_Unk56  // 0x38
-#define HAS_PlayerState_Unk57  // 0x39
-#define HAS_PlayerState_Unk59  // 0x3B
-#define HAS_PlayerState_Unk60  // 0x3C
-#define HAS_PlayerState_Unk69  // 0x45
-#define HAS_PlayerState_Unk105 // 0x69
-#define HAS_PlayerState_Unk81  // 0x51
-#define HAS_PlayerState_Unk116 // 0x74
-#define HAS_PlayerState_Unk141 // 0x8D
-#define KEYFRAME_PlayerState_Unk59 957
-#define KEYFRAME_PlayerState_Unk60 972
-#endif
-
-#if defined(MAP3_S06)
-#define HAS_PlayerState_Unk51  // 0x33
-#define HAS_PlayerState_Unk131 // 0x83
-#define HAS_PlayerState_Unk52  // 0x34
-#define HAS_PlayerState_Unk111 // 0x6F
-#define HAS_PlayerState_Unk117 // 0x75
-#endif
-
-#if defined(MAP4_S01)
-#define HAS_PlayerState_Unk51  // 0x33
-#define HAS_PlayerState_Unk131 // 0x83
-#define HAS_PlayerState_Unk52  // 0x34
-#define HAS_PlayerState_Unk53  // 0x35
-#define HAS_PlayerState_Unk69  // 0x45
-#define HAS_PlayerState_Unk105 // 0x69
-#define HAS_PlayerState_Unk72  // 0x48
-#define HAS_PlayerState_Unk116 // 0x74
-#define HAS_PlayerState_Unk118 // 0x76
-#define HAS_PlayerState_Unk119 // 0x77
-#define HAS_PlayerState_Unk120 // 0x78
-#define HAS_PlayerState_Unk121 // 0x79
-#define HAS_PlayerState_Unk124 // 0x7c
-#define HAS_PlayerState_Unk130 // 0x82
-#define HAS_PlayerState_Unk140 // 0x8C
-#define HAS_PlayerState_Unk142 // 0x8E
-#define HAS_PlayerState_Unk153 // 0x99
-#define HAS_PlayerState_Unk186 // 0xBA
-#define KEYFRAME_PlayerState_Unk69 678
-#endif
-
-#if defined(MAP4_S03)
-#define HAS_PlayerState_Unk52  // 0x34
-#define HAS_PlayerState_Unk123 // 0x7B
-#define HAS_PlayerState_Unk128 // 0x80
-#define HAS_PlayerState_Unk129 // 0x81
-#define KEYFRAME_PlayerState_Unk123 877
-#endif
-
-#if defined(MAP4_S04)
-#define HAS_PlayerState_Unk51  // 0x33
-#define HAS_PlayerState_Unk131 // 0x83
-#define HAS_PlayerState_Unk52  // 0x34
-#define HAS_PlayerState_Unk53  // 0x35
-#define HAS_PlayerState_Unk117 // 0x75
-#define HAS_PlayerState_Unk134 // 0x86
-#define HAS_PlayerState_Unk135 // 0x87
-#define KEYFRAME_PlayerState_Unk117 678
-#endif
-
-#if defined(MAP4_S05)
-#define HAS_PlayerState_Unk52  // 0x34
-#define HAS_PlayerState_Unk53  // 0x35
-#define HAS_PlayerState_Unk54  // 0x36
-#define HAS_PlayerState_Unk55  // 0x37
-#define HAS_PlayerState_Unk56  // 0x38
-#define HAS_PlayerState_Unk57  // 0x39
-#define HAS_PlayerState_Unk109 // 0x6d
-#endif
-
-#if defined(MAP5_S00)
-#define HAS_PlayerState_Unk52  // 0x34
-#define HAS_PlayerState_Unk59  // 0x3B
-#define HAS_PlayerState_Unk60  // 0x3C
-#define HAS_PlayerState_Unk87  // 0x57
-#define HAS_PlayerState_Unk88  // 0x58
-#define HAS_PlayerState_Unk114 // 0x72
-#define KEYFRAME_PlayerState_Unk59 831
-#define KEYFRAME_PlayerState_Unk60 846
-#define KEYFRAME_PlayerState_Unk87 857
-#define KEYFRAME_PlayerState_Unk88 894
-#endif
-
-#if defined(MAP5_S02)
-#define HAS_PlayerState_Unk51  // 0x33
-#define HAS_PlayerState_Unk131 // 0x83
-#define HAS_PlayerState_Unk52  // 0x34
-#define HAS_PlayerState_Unk59  // 0x3B
-#define HAS_PlayerState_Unk60  // 0x3C
-#define HAS_PlayerState_Unk66  // 0x42
-#define HAS_PlayerState_Unk70  // 0x46
-#define HAS_PlayerState_Unk73  // 0x49
-#define HAS_PlayerState_Unk153 // 0x99
-#define HAS_PlayerState_Unk186 // 0xBA
-#define HAS_PlayerState_Unk164 // 0xA4
-#define HAS_PlayerState_Unk165 // 0xA5
-#define HAS_PlayerState_Unk166 // 0xA6
-#define KEYFRAME_PlayerState_Unk59  801
-#define KEYFRAME_PlayerState_Unk60  816
-#define KEYFRAME_PlayerState_Unk153 889
-#endif
-
-#if defined(MAP5_S03)
-#define HAS_PlayerState_Unk51  // 0x33
-#define HAS_PlayerState_Unk131 // 0x83
-#define HAS_PlayerState_Unk52  // 0x34
-#define HAS_PlayerState_Unk59  // 0x3B
-#define HAS_PlayerState_Unk60  // 0x3C
-#define HAS_PlayerState_Unk69  // 0x45
-#define HAS_PlayerState_Unk105 // 0x69
-#define HAS_PlayerState_Unk159 // 0x9f
-#define HAS_PlayerState_Unk169 // 0xa9
-#define HAS_PlayerState_Unk187 // 0xbb
-#define KEYFRAME_PlayerState_Unk59 801
-#define KEYFRAME_PlayerState_Unk60 816
-#define KEYFRAME_PlayerState_Unk69 828
-#endif
-
-#if defined(MAP6_S00)
-#define HAS_PlayerState_Unk52  // 0x34
-#define HAS_PlayerState_Unk53  // 0x35
-#define HAS_PlayerState_Unk114 // 0x72
-#define HAS_PlayerState_Unk126 // 0x7e
-#define HAS_PlayerState_Unk127 // 0x7f
-#define HAS_PlayerState_Unk133 // 0x85
-#define KEYFRAME_PlayerState_Unk114 956
-#endif
-
-#if defined(MAP6_S01)
-#define HAS_PlayerState_Unk51  // 0x33
-#define HAS_PlayerState_Unk131 // 0x83
-#define HAS_PlayerState_Unk52  // 0x34
-#define HAS_PlayerState_Unk70  // 0x46
-#define HAS_PlayerState_Unk71  // 0x47
-#define HAS_PlayerState_Unk132 // 0x84
-#define HAS_PlayerState_Unk113 // 0x71
-#define KEYFRAME_PlayerState_Unk113 700
-#endif
-
-#if defined(MAP6_S02)
-#define HAS_PlayerState_Unk51  // 0x33
-#define HAS_PlayerState_Unk131 // 0x83
-#define HAS_PlayerState_Unk52  // 0x34
-#define HAS_PlayerState_Unk53  // 0x35
-#define HAS_PlayerState_Unk71  // 0x47
-#define HAS_PlayerState_Unk132 // 0x84
-#define HAS_PlayerState_Unk111 // 0x6F
-#define HAS_PlayerState_Unk175 // 0xaf
-#define KEYFRAME_PlayerState_Unk111 915
-#endif
-
-#if defined(MAP6_S03)
-#define HAS_PlayerState_Unk52 // 0x34
-#define HAS_PlayerState_Unk87 // 0x57
-#define HAS_PlayerState_Unk88 // 0x58
-#endif
-
-#if defined(MAP6_S04)
-#define HAS_PlayerState_Unk51  // 0x33
-#define HAS_PlayerState_Unk131 // 0x83
-#define HAS_PlayerState_Unk52  // 0x34
-#define HAS_PlayerState_Unk53  // 0x35
-#define HAS_PlayerState_Unk70  // 0x46
-#define HAS_PlayerState_Unk113 // 0x71
-#define HAS_PlayerState_Unk123 // 0x7B
-#define HAS_PlayerState_Unk149 // 0x95
-#define HAS_PlayerState_Unk150 // 0x96
-#define HAS_PlayerState_Unk151 // 0x97
-#define HAS_PlayerState_Unk152 // 0x98
-#define HAS_PlayerState_Unk160 // 0xA0
-#define HAS_PlayerState_Unk161 // 0xA1
-#define HAS_PlayerState_Unk189 // 0xBD
-#define HAS_PlayerState_Unk162 // 0xA2
-#define HAS_PlayerState_Unk163 // 0xA3
-#define HAS_PlayerState_Unk167 // 0xA7
-#define HAS_PlayerState_Unk168 // 0xA8
-#define HAS_PlayerState_Unk185 // 0xB9
-#define HAS_PlayerState_Unk170 // 0xAA
-#define HAS_PlayerState_Unk188 // 0xBC
-#define KEYFRAME_PlayerState_Unk167 1347
-#endif
-
-#if defined(MAP7_S00)
-#define HAS_PlayerState_Unk52  // 0x34
-#define HAS_PlayerState_Unk53  // 0x35
-#define HAS_PlayerState_Unk54  // 0x36
-#define HAS_PlayerState_Unk55  // 0x37
-#define HAS_PlayerState_Unk56  // 0x38
-#define HAS_PlayerState_Unk57  // 0x39
-#define HAS_PlayerState_Unk135 // 0x87
-#define HAS_PlayerState_Unk136 // 0x88
-#define HAS_PlayerState_Unk137 // 0x89
-#define HAS_PlayerState_Unk138 // 0x8a
-#define HAS_PlayerState_Unk139 // 0x8b
-#endif
-
-#if defined(MAP7_S01)
-#define HAS_PlayerState_Unk51  // 0x33
-#define HAS_PlayerState_Unk131 // 0x83
-#define HAS_PlayerState_Unk52  // 0x34
-#define HAS_PlayerState_Unk53  // 0x35
-#define HAS_PlayerState_Unk54  // 0x36
-#define HAS_PlayerState_Unk55  // 0x37
-#define HAS_PlayerState_Unk56  // 0x38
-#define HAS_PlayerState_Unk57  // 0x39
-#define HAS_PlayerState_Unk59  // 0x3B
-#define HAS_PlayerState_Unk60  // 0x3C
-#define HAS_PlayerState_Unk72  // 0x48
-#define HAS_PlayerState_Unk145 // 0x91
-#define HAS_PlayerState_Unk148 // 0x94
-#define HAS_PlayerState_Unk155 // 0x9B
-#define HAS_PlayerState_Unk156 // 0x9C
-#define HAS_PlayerState_Unk157 // 0x9D
-#define HAS_PlayerState_Unk158 // 0x9E
-#define HAS_PlayerState_Unk167 // 0xA7
-#endif
-
-#if defined(MAP7_S02)
-#define HAS_PlayerState_Unk51  // 0x33
-#define HAS_PlayerState_Unk131 // 0x83
-#define HAS_PlayerState_Unk52  // 0x34
-#define HAS_PlayerState_Unk59  // 0x3B
-#define HAS_PlayerState_Unk60  // 0x3C
-#define HAS_PlayerState_Unk72  // 0x48
-#define HAS_PlayerState_Unk143 // 0x8F
-#define HAS_PlayerState_Unk144 // 0x90
-#define HAS_PlayerState_Unk146 // 0x92
-#define HAS_PlayerState_Unk147 // 0x93
-#define HAS_PlayerState_Unk148 // 0x94
-#define HAS_PlayerState_Unk155 // 0x9B
-#define HAS_PlayerState_Unk156 // 0x9C
-#define HAS_PlayerState_Unk157 // 0x9D
-#define HAS_PlayerState_Unk158 // 0x9E
-#define KEYFRAME_PlayerState_Unk59 862
-#define KEYFRAME_PlayerState_Unk60 877
-#endif
-
-#if defined(MAP7_S03)
-#define HAS_PlayerState_Unk51  // 0x33
-#define HAS_PlayerState_Unk131 // 0x83
-#define HAS_PlayerState_Unk52  // 0x34
-#define HAS_PlayerState_Unk153 // 0x99
-#define HAS_PlayerState_Unk186 // 0xBA
-#define HAS_PlayerState_Unk162 // 0xA2
-#define HAS_PlayerState_Unk171 // 0xab
-#define HAS_PlayerState_Unk172 // 0xac
-#define HAS_PlayerState_Unk173 // 0xad
-#define HAS_PlayerState_Unk174 // 0xae
-#define HAS_PlayerState_Unk176 // 0xb0
-#define HAS_PlayerState_Unk177 // 0xb1
-#define HAS_PlayerState_Unk184 // 0xb8
-#define HAS_PlayerState_Unk178 // 0xb2
-#define HAS_PlayerState_Unk179 // 0xb3
-#define HAS_PlayerState_Unk180 // 0xb4
-#define HAS_PlayerState_Unk181 // 0xb5
-#define HAS_PlayerState_Unk182 // 0xb6
-#define HAS_PlayerState_Unk183 // 0xb7
-#define KEYFRAME_PlayerState_Unk153 816
-#define KEYFRAME_PlayerState_Unk162 837
 #endif
 
 // Very similar to `func_80071968_Switch1`
