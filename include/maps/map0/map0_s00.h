@@ -1,7 +1,16 @@
 #ifndef _MAPS_MAP0_S00_H
 #define _MAPS_MAP0_S00_H
 
-#include "common.h"
+#define HAS_PlayerState_Unk51
+#define HAS_PlayerState_Unk131
+#define HAS_PlayerState_Unk52
+#define HAS_PlayerState_Unk53
+#define HAS_PlayerState_Unk54
+#define HAS_PlayerState_Unk55
+#define HAS_PlayerState_Unk56
+#define HAS_PlayerState_Unk57
+#define HAS_PlayerState_Unk74
+#define HAS_PlayerState_Unk84
 
 typedef struct
 {
@@ -91,7 +100,7 @@ s32 func_800CC8FC(VECTOR3*, s32*, MATRIX*);
 
 void func_800CD8E8(s32, s32, s_800E330C*);
 
-void func_800CE02C(s32, s32, VECTOR3*, s32 mapId);
+void func_800CE02C(s32, s32, s_800E34FC* arg2, s32 mapId);
 
 void func_800D0124();
 
@@ -204,5 +213,7 @@ bool func_800D8748(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 
 void func_800D0394(s32 count, VECTOR3* vecs);
 
 void func_800DADD4(void);
+
+void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2);
 
 #endif

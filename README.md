@@ -184,7 +184,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map1_s04"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map.map1_s04&label=MAP1_S04&color=rgb(255,215,0)"/></a></td>
             <td>Unused <a href="https://github.com/Vatuu/silent-hill-decomp/issues/335#issuecomment-3393749791">(Click here for more information)</a></td>
-			<td><a href="https://github.com/Vatuu/silent-hill-decomp/commit/c24f6f392e14eb4dbeac7fb0f0975f91a6539cb4">First fully decompiled and matching map overlay!</a></td>
+			<td><a href="https://github.com/Vatuu/silent-hill-decomp/commit/c24f6f392e14eb4dbeac7fb0f0975f91a6539cb4">First fully decompiled and matching</br>map overlay!</a></td>
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map1_s05"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map.map1_s05&label=MAP1_S05"/></a></td>
@@ -213,10 +213,9 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map2_s02"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&category=map.map2_s02&label=MAP2_S02"/></a></td>
             <td colspan=2>Central Silent Hill.</td>
         </tr>
-        <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map2_s03"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&category=map.map2_s03&label=MAP2_S03"/></a></td>
-            <td colspan=2>Unused <a href="https://github.com/Vatuu/silent-hill-decomp/issues/335#issuecomment-3393749791">(Click here for more information)</a></td>
-        </tr>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map2_s03"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map.map2_s03&label=MAP2_S03&color=rgb(255,215,0)"/></a></td>
+            <td>Unused <a href="https://github.com/Vatuu/silent-hill-decomp/issues/335#issuecomment-3393749791">(Click here for more information)</a></td>
+			<td><a href="https://github.com/Vatuu/silent-hill-decomp/commit/bce45a64f45e2b561b4f0e675a7bda9bfe805dbf">Second fully decompiled and matching</br>map overlay!</a></td>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map2_s04"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&category=map.map2_s04&label=MAP2_S04"/></a></td>
             <td colspan=2>Police station in Central Silent Hill.</td>
@@ -282,7 +281,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map4_s04"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&category=map.map4_s04&label=MAP4_S04"/></a></td>
             <td>Hospital First Floor.</td>
-            <td>Cutscene with Lisa after finding the altar<br/>in the Green Lion Antique Shop and<br/>meeting Lisa again after the mall boss fight.</td>
+            <td>Cutscene with Lisa after finding the<br/>altar in the Green Lion Antique Shop<br/>and meeting Lisa again after the mall<br/>boss fight.</td>
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map4_s05"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&category=map.map4_s05&label=MAP4_S05"/></a></td>

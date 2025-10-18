@@ -115,6 +115,7 @@ sharedFunc_800D7560_0_s01         = 0x800D7560; // type:func
 sharedFunc_800D76A0_0_s01         = 0x800D76A0; // type:func
 sharedFunc_800D77D0_0_s01         = 0x800D77D0; // type:func
 sharedFunc_800D7AB0_0_s01         = 0x800D7AB0; // type:func
+sharedFunc_800D7B14_0_s01         = 0x800D7B14; // type:func
 Model_AnimDurationGet             = 0x800D7E88; // type:func
 sharedFunc_800D7EBC_0_s01         = 0x800D7EBC; // type:func
 sharedFunc_800D81B0_0_s01         = 0x800D81B0; // type:func

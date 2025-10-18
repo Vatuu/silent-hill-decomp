@@ -1,6 +1,23 @@
 #ifndef _MAPS_MAP5_S02_H
 #define _MAPS_MAP5_S02_H
 
+#define HAS_PlayerState_Unk51
+#define HAS_PlayerState_Unk131
+#define HAS_PlayerState_Unk52
+#define HAS_PlayerState_Unk59
+#define HAS_PlayerState_Unk60
+#define HAS_PlayerState_Unk66
+#define HAS_PlayerState_Unk70
+#define HAS_PlayerState_Unk73
+#define HAS_PlayerState_Unk153
+#define HAS_PlayerState_Unk186
+#define HAS_PlayerState_Unk164
+#define HAS_PlayerState_Unk165
+#define HAS_PlayerState_Unk166
+#define KEYFRAME_PlayerState_Unk59  801
+#define KEYFRAME_PlayerState_Unk60  816
+#define KEYFRAME_PlayerState_Unk153 889
+
 extern s_800C4590 D_800DA64C;
 
 void func_800D45B4(s32 arg0);

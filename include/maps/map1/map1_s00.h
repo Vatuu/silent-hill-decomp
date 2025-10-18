@@ -1,6 +1,10 @@
 #ifndef _MAPS_MAP1_S00_H
 #define _MAPS_MAP1_S00_H
 
+#define HAS_PlayerState_Unk52
+#define HAS_PlayerState_Unk87
+#define HAS_PlayerState_Unk88
+
 void func_800D7AC4(void);
 
 void func_800D7AF8(void);

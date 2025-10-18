@@ -2268,8 +2268,6 @@ extern s_func_800700F8_2 sharedData_800E2330_0_s01;
 
 extern u8 sharedData_800DF158_1_s02;
 
-extern VECTOR sharedData_800CAB70_0_s00;
-
 extern s32 sharedData_800E0CA8_0_s00;
 extern s32 sharedData_800E0CAC_0_s00;
 extern u32 sharedData_800E0CB0_0_s00;
@@ -2443,8 +2441,8 @@ typedef struct
     s16     field_C;
     s16     field_E;
     s8      field_10;
-    s8      field_11;
-    s8      field_12;
+    u8      field_11;
+    u8      field_12;
     s8      field_13;
 } s_800E34FC;
 STATIC_ASSERT_SIZEOF(s_800E34FC, 20);
@@ -2851,7 +2849,7 @@ void sharedFunc_800D76A0_0_s01(s_SubCharacter* chara);
 
 s32 sharedFunc_800D77D0_0_s01(s_SubCharacter*); // Assumed return type.
 
-void sharedFunc_800D7AB0_0_s01(s_SubCharacter*);
+bool sharedFunc_800D7AB0_0_s01(s_SubCharacter* chara);
 
 void sharedFunc_800D7EBC_0_s01(s_SubCharacter*);
 
@@ -2961,6 +2959,8 @@ q19_12 sharedFunc_800CD940_3_s03(q19_12 pos0, q19_12 pos1);
 q19_12 sharedFunc_800CD6B0_3_s03(MATRIX* mat, s32 matCount, VECTOR3* center);
 
 void sharedFunc_800D6EC4_0_s01(s_SubCharacter* chara);
+
+void sharedFunc_800D7B14_0_s01(s_SubCharacter*, GsCOORDINATE2*);
 
 static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo)
 {

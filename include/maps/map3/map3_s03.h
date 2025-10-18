@@ -1,6 +1,15 @@
 #ifndef _MAPS_MAP3_S03_H
 #define _MAPS_MAP3_S03_H
 
+#define HAS_PlayerState_Unk52
+#define HAS_PlayerState_Unk59
+#define HAS_PlayerState_Unk60
+#define HAS_PlayerState_Unk146
+#define HAS_PlayerState_Unk147
+#define HAS_PlayerState_Unk154
+#define KEYFRAME_PlayerState_Unk146 954
+#define KEYFRAME_PlayerState_Unk147 988
+
 s32 func_800CE398(s32 arg0);
 
 void func_800D1210(s32 arg0);

@@ -23,7 +23,7 @@ void sharedFunc_800D670C_0_s00(s_SubCharacter* chara)
 
         if (chara->health_B0 != NO_VALUE)
         {
-            func_8005F6B0(&g_SysWork.npcs_1A0[1], &sharedData_800CAB70_0_s00, 3, 3);
+            func_8005F6B0(&g_SysWork.npcs_1A0[1], &(VECTOR3){ Q12(140.39f), Q12(-0.55f), Q12(22.76f) }, 3, 3);
 
             chara->health_B0 = NO_VALUE;
             *(u16*)&chara->properties_E4.player.afkTimer_E8 |= 1 << 14;

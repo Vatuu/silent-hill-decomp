@@ -1,6 +1,24 @@
 #ifndef _MAPS_MAP7_S02_H
 #define _MAPS_MAP7_S02_H
 
+#define HAS_PlayerState_Unk51
+#define HAS_PlayerState_Unk131
+#define HAS_PlayerState_Unk52
+#define HAS_PlayerState_Unk59
+#define HAS_PlayerState_Unk60
+#define HAS_PlayerState_Unk72
+#define HAS_PlayerState_Unk143
+#define HAS_PlayerState_Unk144
+#define HAS_PlayerState_Unk146
+#define HAS_PlayerState_Unk147
+#define HAS_PlayerState_Unk148
+#define HAS_PlayerState_Unk155
+#define HAS_PlayerState_Unk156
+#define HAS_PlayerState_Unk157
+#define HAS_PlayerState_Unk158
+#define KEYFRAME_PlayerState_Unk59 862
+#define KEYFRAME_PlayerState_Unk60 877
+
 typedef struct
 {
     u8  field_0;
@@ -32,6 +50,8 @@ extern u8  D_800EB6B0;
 extern s32 D_800EB6B4;
 
 extern s_WorldObjectPos D_800EB6E0; // Assumed type.
+
+extern s16 D_800EBB94;
 
 void Ai_GhostDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
@@ -105,6 +125,14 @@ void func_800E0C5C(void);
 void func_800E0C88(void);
 
 void func_800E0CB4(void);
+
+void func_800E0FF0(void);
+
+void func_800E12E4(void);
+
+void func_800E1398(void);
+
+void func_800E1DAC(void);
 
 void func_800E1FF4(void);
 

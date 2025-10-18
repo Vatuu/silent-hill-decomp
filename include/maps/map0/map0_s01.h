@@ -6,6 +6,23 @@
 #include "game.h"
 #include "types.h"
 
+#define HAS_PlayerState_Unk51
+#define HAS_PlayerState_Unk131
+#define HAS_PlayerState_Unk52
+#define HAS_PlayerState_Unk53
+#define HAS_PlayerState_Unk70
+#define HAS_PlayerState_Unk71
+#define HAS_PlayerState_Unk132
+#define HAS_PlayerState_Unk76
+#define HAS_PlayerState_Unk77
+#define HAS_PlayerState_Unk78
+#define HAS_PlayerState_Unk89
+#define HAS_PlayerState_Unk90
+#define HAS_PlayerState_Unk91
+#define HAS_PlayerState_Unk92
+#define HAS_PlayerState_Unk93
+#define HAS_PlayerState_Unk110
+
 extern s8 D_800CBAD4;
 
 extern u16 D_800DE124;
@@ -143,5 +160,13 @@ void func_800D49B0(s_SubCharacter* chara);
 void func_800D5D80(s_SubCharacter* chara);
 
 void func_800D4894(s_SubCharacter* chara);
+
+void func_800D3A3C(s_SubCharacter* chara);
+
+void func_800D3AC0(s_SubCharacter* chara);
+
+void func_800D598C(s_SubCharacter* chara);
+
+q19_12 func_800D7714(s_SubCharacter* chara);
 
 #endif

@@ -1,6 +1,12 @@
 #ifndef _MAPS_MAP1_S06_H
 #define _MAPS_MAP1_S06_H
 
+#define HAS_PlayerState_Unk52
+#define HAS_PlayerState_Unk59
+#define HAS_PlayerState_Unk60
+#define KEYFRAME_PlayerState_Unk59 678
+#define KEYFRAME_PlayerState_Unk60 693
+
 extern u8 D_800D71E8[];
 
 extern u8 D_800D7761;

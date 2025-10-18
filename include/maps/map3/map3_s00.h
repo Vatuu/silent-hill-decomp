@@ -1,6 +1,12 @@
 #ifndef _MAPS_MAP3_S00_H
 #define _MAPS_MAP3_S00_H
 
+#define HAS_PlayerState_Unk51
+#define HAS_PlayerState_Unk131
+#define HAS_PlayerState_Unk52
+#define HAS_PlayerState_Unk72
+#define HAS_PlayerState_Unk115
+
 extern s_800C4590 D_800D5CD0;
 
 void func_800CCE88();

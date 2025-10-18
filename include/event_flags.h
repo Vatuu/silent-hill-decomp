@@ -78,9 +78,9 @@ typedef enum _EventFlag
 
     EventFlag_M2S04_PickupShotgun = 95,
 
-    EventFlag_97 = 97,
-    EventFlag_98 = 98,
-
+    EventFlag_97  = 97,
+    EventFlag_98  = 98,
+    EventFlag_99  = 99,
     EventFlag_100 = 100,
 
     EventFlag_105                           = 105,
@@ -239,17 +239,17 @@ typedef enum _EventFlag
     EventFlag_498 = 498,
     EventFlag_499 = 499,
 
-    EventFlag_M7S01_PickupCamera         = 519,
-    EventFlag_M7S01_PickupRingOfContract = 520,
-    EventFlag_M7S01_PickupStoneOfTime    = 521,
-    EventFlag_M7S01_PickupPliers         = 522,
-    EventFlag_M7S01_PickupScrewdriver    = 523,
-    EventFlag_M7S01_PickupBirdCageKey    = 524,
-    EventFlag_525                        = 525,
-    EventFlag_M7S01_PickupKeyOfHagith    = 526,
-    EventFlag_M7S01_PickupKeyOfPhaleg    = 527,
-    EventFlag_M7S02_PickupKeyOfBethor    = 528,
-
+    EventFlag_M7S01_PickupCamera          = 519,
+    EventFlag_M7S01_PickupRingOfContract  = 520,
+    EventFlag_M7S01_PickupStoneOfTime     = 521,
+    EventFlag_M7S01_PickupPliers          = 522,
+    EventFlag_M7S01_PickupScrewdriver     = 523,
+    EventFlag_M7S01_PickupBirdCageKey     = 524,
+    EventFlag_525                         = 525,
+    EventFlag_M7S01_PickupKeyOfHagith     = 526,
+    EventFlag_M7S01_PickupKeyOfPhaleg     = 527,
+    EventFlag_M7S02_PickupKeyOfBethor     = 528,
+    EventFlag_M7S02_PickupKeyOfAratron    = 529,
     EventFlag_530                         = 530,
     EventFlag_531                         = 531,
     EventFlag_532                         = 532,
@@ -262,6 +262,7 @@ typedef enum _EventFlag
     EventFlag_M7S02_PickupDiskOfOuroboros = 539,
 
     EventFlag_548 = 548,
+    EventFlag_549 = 549,
 
     EventFlag_562 = 562,
     EventFlag_563 = 563,

@@ -93,6 +93,8 @@ typedef enum _Sfx
 				    
     Sfx_StartGame   = Sfx_Base + 1,  // `SND/FIRST.VAB`
 
+    Sfx_Unk1283     = Sfx_Base + 3,
+
     Sfx_Unk1286     = Sfx_Base + 6,
 
     Sfx_Unk1296     = Sfx_Base + 16,
@@ -178,6 +180,8 @@ typedef enum _Sfx
 				    
     Sfx_Unk1431     = 1431,
     Sfx_Unk1432     = 1432,
+
+    Sfx_Unk1456     = 1456,
 				    
     Sfx_Unk1458     = 1458,
     Sfx_Unk1459     = 1459,
@@ -202,6 +206,8 @@ typedef enum _Sfx
     Sfx_Unk1525     = 1525,
     Sfx_Unk1526     = 1526,
     Sfx_Unk1527     = 1527,
+
+    Sfx_Unk1539     = 1539,
 				    
     Sfx_Unk1567     = 1567,
 				    
@@ -241,6 +247,8 @@ typedef enum _Sfx
 
     Sfx_Unk1660     = 1660,
     Sfx_Unk1661     = 1661,
+
+    Sfx_Unk1671     = 1671,
 
     Sfx_Unk1688     = 1688,
     Sfx_Unk1689     = 1689,
@@ -3908,6 +3916,10 @@ void func_8005BF0C(s16 unused, s16 x, s16 y);
 
 /** Angle func. */
 q3_12 func_8005BF38(q3_12 angle);
+
+s32 func_8005BF58(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9);
+
+s32 func_8005C1CC(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
 
 s16 func_8005C7B0(s32 arg0);
 

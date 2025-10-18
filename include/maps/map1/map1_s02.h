@@ -1,6 +1,23 @@
 #ifndef _MAPS_MAP1_S02_H
 #define _MAPS_MAP1_S02_H
 
+#define HAS_PlayerState_Unk52
+#define HAS_PlayerState_Unk53
+#define HAS_PlayerState_Unk54
+#define HAS_PlayerState_Unk55
+#define HAS_PlayerState_Unk56
+#define HAS_PlayerState_Unk57
+#define HAS_PlayerState_Unk59
+#define HAS_PlayerState_Unk60
+#define HAS_PlayerState_Unk74
+#define HAS_PlayerState_Unk94
+#define HAS_PlayerState_Unk95
+#define HAS_PlayerState_Unk97
+#define HAS_PlayerState_Unk98
+#define HAS_PlayerState_Unk106
+#define KEYFRAME_PlayerState_Unk59 903
+#define KEYFRAME_PlayerState_Unk60 918
+
 void func_800DA8F8(void);
 
 void func_800DA9D4(void);

@@ -762,7 +762,8 @@ typedef enum _CharaUnk0Flags
     CharaUnk0Flag_Unk12 = 1 << 12,
     CharaUnk0Flag_Unk13 = 1 << 13,
     CharaUnk0Flag_Unk14 = 1 << 14,
-    CharaUnk0Flag_Unk15 = 1 << 15
+    CharaUnk0Flag_Unk15 = 1 << 15,
+    CharaUnk0Flag_Unk16 = 1 << 16
 } e_CharaUnk0Flags;
 
 /** @brief Character IDs. The `CHARA_FILE_INFOS` array associates each character ID with animimation, model, and texture files. */
@@ -1213,11 +1214,11 @@ STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesLarvalStalker, 68);
 
 typedef struct _SubCharPropertiesUnk0
 {
-    s32        unk_E4; // Is this part of `a_SubCharacter`?
-    u32        field_E0_0 : 4;
-    u32        field_E0_4 : 4;
-    u32        field_E0_8 : 4;
-    u32        field_E0_C : 20;
+    s32        unk_E4;            // Is this part of `a_SubCharacter`?
+    u32        field_E8_0: 4;
+    u32        field_E8_4: 4;
+    u32        field_E8_8: 4;
+    u32        field_E8_C: 20;
     u_Property properties_EC;
     u_Property properties_F0;
     u_Property properties_F4;
