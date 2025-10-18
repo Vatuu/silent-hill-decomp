@@ -279,7 +279,7 @@ void func_80034EC8() // 0x80034EC8
     g_SysWork.field_228C = 0;
     g_SysWork.field_2290 = 0;
 
-    bzero(g_SysWork.npcs_1A0, NPC_COUNT_MAX * sizeof(s_SubCharacter));
+    bzero(g_SysWork.npcs_1A0, ARRAY_SIZE(g_SysWork.npcs_1A0) * sizeof(s_SubCharacter));
 
     for (i = 0; i < 4; i++)
     {
@@ -294,7 +294,7 @@ void func_80034F18() // 0x80034F18
 
     if (g_SysWork.field_234A != 0)
     {
-        g_MapOverlayHeader.func_16C(g_SysWork.field_2349, 0x7F);
+        g_MapOverlayHeader.func_16C(g_SysWork.field_2349, 127);
         g_MapOverlayHeader.func_168(0, g_SavegamePtr->mapOverlayId_A4, 0);
     }
 
@@ -837,7 +837,7 @@ void func_80035E1C() // 0x80035E1C
 {
     s32 i;
 
-    for (i = 0; i < 9; i++)
+    for (i = 0; i < ARRAY_SIZE(g_SysWork.field_2748); i++)
     {
         g_SysWork.field_2748[i] = 0;
     }
@@ -848,7 +848,7 @@ bool func_80035E44()
     s32 i;
     u16 val;
     
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < (ARRAY_SIZE(g_SysWork.field_2748) - 1); i++)
     {
         if (g_SysWork.field_2748[i] != 0) 
         {
@@ -866,7 +866,7 @@ bool func_80035E44()
         return false;
     }
 
-    for (i = 1; i < 8; i++) 
+    for (i = 1; i < (ARRAY_SIZE(g_SysWork.field_2748) - 1); i++) 
     {
         if (func_80046BB4(i))
         {
@@ -881,7 +881,7 @@ void func_80035ED0() // 0x80035ED0
 {
     s32 i;
 
-    for (i = 1; i < 8; i++)
+    for (i = 1; i < (ARRAY_SIZE(g_SysWork.field_2748) - 1); i++)
     {
         g_SysWork.field_2748[i] = func_80046BB4(i) << 5;
     }
@@ -891,7 +891,7 @@ void func_80035ED0() // 0x80035ED0
         g_SysWork.field_2748[0] = Q12(1.0f);
     }
 
-    g_SysWork.field_2748[8] = 0;
+    g_SysWork.field_2748[ARRAY_SIZE(g_SysWork.field_2748) - 1] = 0;
 }
 
 void func_80035F4C(s32 flags, q19_12 arg1, u8* arg2) // 0x80035F4C
@@ -1179,8 +1179,7 @@ void func_8003652C() // 0x8003652C
 {
     RECT rect;
 
-    u32 VALS[] =
-    {
+    u32 VALS[] = {
         0xFFFF0000, 0xBBEEE318, 0xFFEC9304, 0x83FFE30C,
         0x1F8318,   0x90840018, 0x90808080, 0x80048084
     };
@@ -2704,7 +2703,7 @@ void SysState_ReadMessage_Update(s32 arg0) // 0x80039FB8
 
     if (!(g_MapEventParam->flags_8_13 & (1 << 0)) && !(g_SysWork.flags_22A4 & (1 << 5)))
     {
-        for (i = 0; i < NPC_COUNT_MAX; i++) 
+        for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
         {
             if (g_SysWork.npcs_1A0[i].model_0.charaId_0 >= Chara_Harry && g_SysWork.npcs_1A0[i].model_0.charaId_0 <= Chara_MonsterCybil &&
                 g_SysWork.npcs_1A0[i].health_B0 > Q12(0.0f))
@@ -2735,7 +2734,7 @@ void SysState_ReadMessage_Update(s32 arg0) // 0x80039FB8
 
         case MapMsgState_Idle:
             break;
-        
+
         case MapMsgState_SelectEntry0:
             Savegame_EventFlagSetAlt(g_MapEventParam->eventFlagId_2);
 

@@ -10,8 +10,7 @@
 const s32 rodataPad_80025EAC = 0;
 
 /** Something to do with inventory items. */
-static const s8 D_80025EB0[] =
-{
+static const s8 D_80025EB0[] = {
     0,  1,  2,  0,  0,  0,  0,  0,
     0,  0,  0,  0,  0,  0,  0,  0,
     0,  0,  0,  0,  0,  0,  0,  0,
@@ -75,7 +74,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
     Gfx_StringSetColor(StringColorId_White);
     func_800363D0();
 
-    // Update timer ff current screen is inventory.
+    // Update timer if current screen is inventory.
     if (g_GameWork.gameStateStep_598[1] < 21)
     {
         Game_TimerUpdate();
@@ -413,8 +412,7 @@ void Gfx_Results_Save() // 0x8004D1A0
 
     GsOT* ot = &g_OrderingTable2[g_ActiveBufferIdx];
 
-    const char* SAVE_DIALOG_STRS[] =
-    {
+    const char* SAVE_DIALOG_STRS[] = {
         "\x07Is_it_OK_to_save?",
         "\x07Yes_____________No"
     };
@@ -1184,8 +1182,7 @@ void Gfx_Inventory_CmdOptionsDraw() // 0x8004E864
     s32      x0;
     s32      y0;
 
-    const char* STRS[] =
-    {
+    const char* STRS[] = {
         "Use",
         "Equip",
         "Unequip",
@@ -1344,8 +1341,7 @@ void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId) // 0x8004EC7C
     POLY_G3* arrowPoly;
     GsOT*    ot = &g_OrderingTable2[g_ActiveBufferIdx];
 
-    const s_Triangle2d ARROW_TRIS[] =
-    {
+    const s_Triangle2d ARROW_TRIS[] = {
         { { -60,  12  }, { -52,   4   }, { -52,   20  } },
         { { -52,  12  }, { -44,   4   }, { -44,   20  } },
         { {  52,  12  }, {  44,   4   }, {  44,   20  } },

@@ -171,8 +171,7 @@ INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", func_800D118C);
 
 INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", func_800D1220);
 
-const char* MAP_MESSAGES[] =
-{
+const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
     "~J0(1.0)\tCybil! ~E ",
     "~J1(1.1)\tHarry! ",

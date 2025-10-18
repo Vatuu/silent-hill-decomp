@@ -80,7 +80,7 @@ void func_800CC738(void) {}
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800CC7A4
 
-s32 func_800CC7B4(s32 arg0, s32 arg1)
+s32 func_800CC7B4(s32 arg0, s32 arg1) // 0x800CC7B4
 {
     s32 result;
 
@@ -104,6 +104,7 @@ s32 func_800CC7B4(s32 arg0, s32 arg1)
     {
         result = 1;
     }
+
     return result;
 }
 

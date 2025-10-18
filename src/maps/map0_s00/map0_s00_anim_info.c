@@ -1,8 +1,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 
-s_AnimInfo HARRY_M0S00_ANIM_INFOS[] =
-{
+s_AnimInfo HARRY_M0S00_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10.0f) }, NO_VALUE, 676  },
     { Anim_Update0, ANIM_STATUS(38, true),  false, ANIM_STATUS(38, true), { Q12(10.0f) }, 676,      677  },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10.0f) }, NO_VALUE, 678  },
@@ -44,8 +43,7 @@ s_AnimInfo HARRY_M0S00_ANIM_INFOS[] =
 // These numbers produce very small and non-round values.
 // I also seen some code read this field and add very small numbers like 4 or 32.
 // This is why FP macros aren't used.
-s_UnkStruct3_Mo g_MapHeaderTable_38[18] =
-{
+s_UnkStruct3_Mo g_MapHeaderTable_38[18] = {
     { 0x4D4C, 0x0,   0x2A4, 0x2A5 },
     { 0x4F4E, 0xCA,  0x2A6, 0x2C9 },
     { 0x5150, 0xD2,  0x2CA, 0x2DC },
@@ -66,8 +64,7 @@ s_UnkStruct3_Mo g_MapHeaderTable_38[18] =
     {},
 };
 
-u8 LOADABLE_INVENTORY_ITEMS[8] =
-{
+u8 LOADABLE_INVENTORY_ITEMS[8] = {
     InventoryItemId_HealthDrink,
     InventoryItemId_Chainsaw,
     InventoryItemId_HyperBlaster,

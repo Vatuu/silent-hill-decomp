@@ -20,8 +20,7 @@
 
 const s32 __pad = 0;
 
-char* g_SaveLocationNames[] =
-{
+char* g_SaveLocationNames[] = {
     "Anywhere",
     "Cafe",
     "Bus",
@@ -64,8 +63,7 @@ s32 g_MemCardState = MemCardState_None;
 s32 g_MemCardStateTextTimer = 0;
 
 // Only used in `GameState_SaveScreen_Update`.
-void (*g_GameState_SaveScreen_Funcs[])() =
-{
+void (*g_GameState_SaveScreen_Funcs[])() = {
     Savegame_ScreenInit,
     Savegame_ScreenLogic,
     Savegame_FormatLogic,
@@ -79,8 +77,7 @@ s32 g_SaveWriteOption = 0;
 bool g_IsSaveSelected = false;
 
 // Only used in `GameState_DeathLoadScreen_Update`.
-void (*g_GameState_DeathLoadScreen_Funcs[])() =
-{
+void (*g_GameState_DeathLoadScreen_Funcs[])() = {
     Savegame_ScreenInit,
     func_801E737C,
     Savegame_LoadLogic,
@@ -170,8 +167,7 @@ void Gfx_SaveScreenBaseDraw() // 0x801E2EBC
         { 209, 16 }
     };
 
-    const char* SLOT_STRS[] =
-    {
+    const char* SLOT_STRS[] = {
         "SLOT1",
         "SLOT2"
     };
@@ -240,8 +236,7 @@ void Gfx_SavegameEntryLocationNameDraw(s_SavegameEntry* saveEntry, s32 saveIdx, 
 
     s32 nameIdx = saveEntry->locationId_8;
 
-    const u8 X_OFFSETS[] =
-    {
+    const u8 X_OFFSETS[] = {
         82, 37, 30, 44,
         81, 81, 61, 61,
         59, 51, 84, 81,
@@ -304,8 +299,7 @@ void Gfx_SaveEntryBorder(s_SavegameEntry* saveEntry, s_SavegameEntry* nextSaveEn
 
 void Gfx_SaveScreenDraw(s_SavegameEntry* saveEntry, s32 saveIdx, s32 slotIdx) // 0x801E3304
 {
-    const char* DIALOG_STRS[11] =
-    {
+    const char* DIALOG_STRS[11] = {
         "\x07MEMORY_CARD\nis_not_inserted",
         "\x07MEMORY_CARD\nis_\x01not_\x01""formatted",
         "\x07MEMORY_CARD\nmay_be_broken",
@@ -484,8 +478,7 @@ void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1) // 0x801E3910
 {
     s32 strIdx;
 
-    const char* DIALOG_STRS[] =
-    {
+    const char* DIALOG_STRS[] = {
         " ",
         "\x07You_\x01\x01removed_\x01\x01the_\x01\x01MEMORY_\x01\x01""CARD!",
         "\x07Now_formatting...",
@@ -500,8 +493,7 @@ void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1) // 0x801E3910
         "\x07Now_loading..."
     };
 
-    const s16 X_OFFSETS[] =
-    {
+    const s16 X_OFFSETS[] = {
         0,   268,
         141, 107,
         223, 136,
@@ -634,15 +626,13 @@ void Gfx_WriteOptionSaveDraw(s32 arg0, s32 optionIdx) // 0x801E3C44
     GsOT*     ot;
     POLY_F4*  poly;
 
-    const char* DIALOG_STRS[] =
-    {
+    const char* DIALOG_STRS[] = {
         "\x07Is_it_OK_to_overwrite?",
         "\x07Is_it_OK_to_format?",
         "\x07Yes__________No"
     };
 
-    const u8 X_OFFSETS[] =
-    {
+    const u8 X_OFFSETS[] = {
         180, 154
     };
 
@@ -743,8 +733,7 @@ void Gfx_SaveSlotBorderDraw() // 0x801E4010
     s32      j;
 
     // Lines for green border around slot. Each line is doubled for 2-pixel width.
-    const s_Line2d BORDER_LINES[BORDER_LINE_COUNT][BORDER_PIXEL_WIDTH] =
-    {
+    const s_Line2d BORDER_LINES[BORDER_LINE_COUNT][BORDER_PIXEL_WIDTH] = {
         // Top-left.
         {
             { { -107, -88 }, { -146, -88 } },
@@ -773,8 +762,7 @@ void Gfx_SaveSlotBorderDraw() // 0x801E4010
     };
 
     // Polygons for green glow of border around slot. Each line has 2 quads for inner and outer glow.
-    const s_Quad2d BORDER_GLOW_QUADS[BORDER_LINE_COUNT][BORDER_PIXEL_WIDTH] =
-    {
+    const s_Quad2d BORDER_GLOW_QUADS[BORDER_LINE_COUNT][BORDER_PIXEL_WIDTH] = {
         // Top-left.
         {
             { { -106, -88 }, { -106, -92 }, { -146, -88 }, { -150, -92 } },
@@ -915,14 +903,12 @@ void Gfx_SaveSlotBoxDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 se
 
     u32 selectedSaveHighlightTimer = (u8)g_SysWork.timer_1C & 0x3F;
 
-    const s_Quad2d SCROLL_BAR_TRACK_QUADS[] =
-    {
+    const s_Quad2d SCROLL_BAR_TRACK_QUADS[] = {
         { { 0, 0 }, { 0, 96 }, { 4, 0 }, { 4, 96 } }, // Left half.
         { { 8, 0 }, { 8, 96 }, { 4, 0 }, { 4, 96 } }  // Right half.
     };
 
-    const s_Triangle2d SCROLL_BAR_ARROW_TRIS[MEMORY_CARD_SLOT_COUNT][SCROLL_BAR_ARROW_COUNT] =
-    {
+    const s_Triangle2d SCROLL_BAR_ARROW_TRIS[MEMORY_CARD_SLOT_COUNT][SCROLL_BAR_ARROW_COUNT] = {
         // Up arrows.
         {
             { { 4, -1 }, { -1, 7 }, { 8, 7 } }, // Slot 1 up arrow.
@@ -935,8 +921,7 @@ void Gfx_SaveSlotBoxDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 se
         }
     };
 
-    const u8 THUMB_Y_OFFESTS[] =
-    {
+    const u8 THUMB_Y_OFFESTS[] = {
         79, 40, 27, 20, 16, 14, 12, 10,
         9, 8, 8, 7, 7, 6, 6, 5,
         5, 5, 5, 4, 4, 4, 4, 4,
@@ -1114,16 +1099,14 @@ void Gfx_SaveEntryBorderDraw(s_SavegameEntry* saveEntry, s_SavegameEntry* nextSa
     s32   i;
     s32   firstLineIdx;
 
-    s_Line2d entryBorderLines[] =
-    {
+    s_Line2d entryBorderLines[] = {
         { { -131, -62 }, { -11, -62 } },
         { { -131, -43 }, { -11, -43 } },
         { { -131, -62 }, { -131, -44 } },
         { { -11,  -62 }, { -11, -44 } }
     };
 
-    s_PrimColor fileColors[] =
-    {
+    s_PrimColor fileColors[] = {
         { 0x20, 0xA0, 0x20, 0x00 },
         { 0x60, 0xA0, 0x20, 0x00 },
         { 0xA0, 0xA0, 0x20, 0x00 },
@@ -1224,8 +1207,7 @@ void Gfx_SaveEntryBorderDraw(s_SavegameEntry* saveEntry, s_SavegameEntry* nextSa
 // "Now checking MEMORY CARD"?
 void Gfx_SaveSlotMemCardMsgBoxDraw(s32 slotIdx, s32 entryType) // 0x801E52D8
 {
-    const s_ColoredLine2d COLORED_LINES[MEMORY_CARD_SLOT_COUNT] =
-    {
+    const s_ColoredLine2d COLORED_LINES[MEMORY_CARD_SLOT_COUNT] = {
         // Red line.
         {
             { { -142, -33 }, { 136, 33 } },
@@ -1240,8 +1222,7 @@ void Gfx_SaveSlotMemCardMsgBoxDraw(s32 slotIdx, s32 entryType) // 0x801E52D8
         }
     };
 
-    const s_LineBorder BORDER_LINES =
-    {
+    const s_LineBorder BORDER_LINES = {
         {
             { { -144, -36 }, { -4,  -36 } },
             { { -144,  2  }, { -4,   2  } },
@@ -1250,8 +1231,7 @@ void Gfx_SaveSlotMemCardMsgBoxDraw(s32 slotIdx, s32 entryType) // 0x801E52D8
         }
     };
 
-    const s_QuadBorder BORDER_GLOW_QUADS =
-    {
+    const s_QuadBorder BORDER_GLOW_QUADS = {
         {
             { { -144, -36 }, { -148, -40 }, { -4,  -36 }, { 0,   -40 } },
             { { -144,  2  }, { -148,  6  }, { -4,   2  }, { 0,    6  } },
@@ -1350,8 +1330,7 @@ void Gfx_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
     LINE_G2* line_g2;
 
     // Adjusted lines?
-    DVECTOR adjLines[] =
-    {
+    DVECTOR adjLines[] = {
         { line->vertex0_0.vx,                            line->vertex0_0.vy },
         { (line->vertex0_0.vx + line->vertex1_4.vx) - 8, line->vertex0_0.vy },
         { line->vertex0_0.vx + line->vertex1_4.vx,       line->vertex0_0.vy + 8},
@@ -1360,8 +1339,7 @@ void Gfx_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
         { line->vertex0_0.vx,                            (line->vertex0_0.vy + line->vertex1_4.vy) - 8 }
     };
 
-    s_Triangle2d tris[] =
-    {
+    s_Triangle2d tris[] = {
         {
             { line->vertex0_0.vx + line->vertex1_4.vx,       line->vertex0_0.vy },
             { (line->vertex0_0.vx + line->vertex1_4.vx) - 8, line->vertex0_0.vy },
@@ -1442,8 +1420,7 @@ void Gfx_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
 
 void Gfx_SaveDataInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
 {
-    char* labelStrs[] =
-    {
+    char* labelStrs[] = {
         "Data",
         "Save",
         "Time",

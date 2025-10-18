@@ -169,8 +169,7 @@ INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D7900);
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D7994);
 
-const char* MAP_MESSAGES[] =
-{
+const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
     "\tThe_tower_door_is_locked. ~E ",
     "\tThe_hands_are_stopped_at_10:00. ~E ",
@@ -311,6 +310,7 @@ void func_800D9148(void) // 0x800D9148
         case 0:
             sharedFunc_800D20E4_0_s00();
             SysWork_StateStepIncrement();
+
         case 1:
             func_80085DF0();
             break;
@@ -335,7 +335,7 @@ void func_800D922C(void) // 0x800D922C
 
 void func_800D9254(void) // 0x800D9254
 {
-    g_BackgroundColor = 0x68;
+    g_BackgroundColor = 104;
     func_80087360(FILE_TIM_USCBOOK_TIM, Q12(0.0f), Q12(0.0f), 38);
 }
 

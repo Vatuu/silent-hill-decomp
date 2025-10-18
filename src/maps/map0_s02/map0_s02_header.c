@@ -15,16 +15,14 @@ extern s_func_800625F4 D_800D03DC[100];
 extern s_BloodSplat g_Effect_BloodSplats[BLOOD_SPLAT_COUNT_MAX];
 extern s_AnimInfo HARRY_M0S02_ANIM_INFOS[];
 
-void (*g_LoadScreenFuncs[])() =
-{
+void (*g_LoadScreenFuncs[])() = {
     NULL,
     Gfx_LoadingScreen_PlayerRun,
     Gfx_LoadingScreen_BackgroundTexture,
     Gfx_LoadingScreen_StageString
 };
 
-s_MapPoint2d MAP_POINTS[] =
-{
+s_MapPoint2d MAP_POINTS[] = {
     #include "area_load_params.h"
 };
 

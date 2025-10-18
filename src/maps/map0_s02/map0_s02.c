@@ -101,6 +101,7 @@ void func_800CE770(void) {}
 u8 Map_RoomIdxGet(s32 x, s32 z) // 0x800CE7EC
 {
     u32 ux;
+
     x += Q12(200.0f);
     ux = x;
 
@@ -111,8 +112,7 @@ u8 Map_RoomIdxGet(s32 x, s32 z) // 0x800CE7EC
 
     x /= Q12(40.0f);
     z /= Q12(40.0f);
-
-    return ux = MAP_ROOM_INDICES[x * 3 + z]; // @hack permuter find.
+    return ux = MAP_ROOM_IDXS[(x * 3) + z]; // @hack Permuter find.
 }
 
 void func_800CE884(s32 arg0) // 0x800CE884

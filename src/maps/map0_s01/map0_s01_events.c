@@ -5,8 +5,7 @@
 #include "maps/shared.h"
 #include "maps/map0/map0_s01.h"
 
-const char* MAP_MESSAGES[] =
-{
+const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
     "~J0(2.0)\tWas_I_dreaming?  ~E ",
     "~J0(2.5)\tHow_do_you_feel? ~E ",
@@ -495,43 +494,37 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
     }
 }
 
-const VECTOR3 D_800CCA1C =
-{
+const VECTOR3 D_800CCA1C = {
     0x00000CCC,
     0xFFFFE99A,
     0x0010BB33,
 };
 
-const VECTOR3 D_800CCA28 =
-{
+const VECTOR3 D_800CCA28 = {
     0x000004CC,
     0xFFFFE99A,
     0x0010BB33,
 };
 
-const VECTOR3 D_800CCA34 =
-{
+const VECTOR3 D_800CCA34 = {
     0x00000CCC,
     0xFFFFE334,
     0x0010BB33,
 };
 
-const VECTOR3 D_800CCA40 =
-{
+const VECTOR3 D_800CCA40 = {
     0x00000CCC,
     0xFFFFE99A,
     0x00111E66,
 };
 
-const VECTOR3 D_800CCA4C =
-{
+const VECTOR3 D_800CCA4C = {
     0x000004CC,
     0xFFFFE99A,
     0x00111E66,
 };
 
-const VECTOR3 D_800CCA58 =
-{
+const VECTOR3 D_800CCA58 = {
     0x00000CCC,
     0xFFFFE334,
     0x00108199,

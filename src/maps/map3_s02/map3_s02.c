@@ -168,8 +168,7 @@ INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", func_800D0218);
 
 void func_800D02AC(void) {}
 
-const char* MAP_MESSAGES[] =
-{
+const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
     "\tNothing_happens_when_the ~N\n\televator_button_is_pressed. ~E ",
     "\tIt's_locked! ~E "
@@ -190,6 +189,7 @@ void func_800D02B4(void) // 0x800D02B4
         case 1:
             func_8008616C(0, false, 0, 0, false);
             SysWork_StateStepIncrement();
+
         case 2:
             func_80085E6C(Q12(1.0f), false);
             break;
@@ -197,8 +197,10 @@ void func_800D02B4(void) // 0x800D02B4
         case 3:
             func_8005DC1C(Sfx_Unk1523, &D_800CAAF8, 128, 0);
             SysWork_StateStepIncrement();
+
         case 4:
             func_80085E6C(Q12(0.3f), false);
+
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
@@ -212,14 +214,18 @@ void func_800D03FC(void) // 0x800D03FC
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
+
             D_800D1FBC = Q12(100.0f);
+
             ScreenFade_ResetTimestep();
             SysWork_StateStepIncrement();
             break;
 
         case 1:
             func_8003ED74(7, 4);
+
             D_800D3154 = 0;
+
             Game_TurnFlashlightOff();
             func_8008616C(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement();
@@ -232,6 +238,7 @@ void func_800D03FC(void) // 0x800D03FC
         case 3:
             Game_TurnFlashlightOn();
             SysWork_StateStepIncrement();
+
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);

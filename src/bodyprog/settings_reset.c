@@ -31,8 +31,7 @@ void Settings_RestoreControlDefaults(s32 arg0) // 0x80033480
     u32  i;
     u16* ptr;
 
-    static const s_ControllerConfig DEFAULT_CONTROLLER_CONFIGS[3] =
-    {
+    static const s_ControllerConfig DEFAULT_CONTROLLER_CONFIGS[3] = {
         {
             .enter_0      = ControllerFlag_Start | ControllerFlag_Cross,
             .cancel_2     = ControllerFlag_Triangle | ControllerFlag_Circle | ControllerFlag_Square,

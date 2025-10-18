@@ -163,6 +163,14 @@
 #define Q12_CLAMPED(x) \
     CLAMP(Q12(x), 0, Q12(1.0f) - 1)
 
+/** @brief Converts a fixed-point value from Q*.4 to Q*.8.
+ *
+ * @param x Q*.4 fixed-point value to convert.
+ * @return `x` converted to Q*.8 fixed-point.
+ */
+#define Q4_TO_Q8(x) \
+    ((x) << 4)
+
 /** @brief Converts a fixed-point value from Q*.4 to Q*.12.
  *
  * @param x Q*.4 fixed-point value to convert.
@@ -186,6 +194,14 @@
  */
 #define Q8_TO_Q12(x) \
     ((x) << 4)
+
+/** @brief Converts a fixed-point value from Q*.8 to Q*.4.
+ *
+ * @param x Q*.8 fixed-point value to convert.
+ * @return `x` converted to Q*.4 fixed-point.
+ */
+#define Q8_TO_Q4(x) \
+    ((x) >> 4)
 
 /** @brief Converts a fixed-point value from Q*.12 to Q*.4.
  *

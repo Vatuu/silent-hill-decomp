@@ -221,8 +221,7 @@ INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D57E8);
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D58A0);
 
-const char* MAP_MESSAGES[] =
-{
+const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
     "\tThere_is_a_ ~C2 Video_tape ~C7 . ~N\n\tTake_it? ~S4 ",
     "~C3\tAlessa ~E ",
@@ -304,6 +303,7 @@ void func_800D63C4(void) // 0x800D63C4
         case 0:
             sharedFunc_800D20E4_0_s00();
             SysWork_StateStepIncrement();
+
         case 1:
             func_80085DF0();
             break;
@@ -349,6 +349,7 @@ void func_800D6BE0(void) // 0x800D6BE0
         case 0:
             sharedFunc_800D20E4_0_s00();
             SysWork_StateStepIncrement();
+
         case 1:
             func_80086E50(FILE_TIM_ALESSA_TIM, 0, 0);
             break;

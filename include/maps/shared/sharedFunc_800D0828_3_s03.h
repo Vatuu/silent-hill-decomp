@@ -1,6 +1,16 @@
 void sharedFunc_800D0828_3_s03(s_SubCharacter* chara, GsCOORDINATE2* coords)
 {
-    MATRIX          boneMats[4];
+    typedef enum _BoneMatIdx
+    {
+        BoneMatIdx_Torso     = 0,
+        BoneMatIdx_Head      = 1,
+        BoneMatIdx_RightShin = 2,
+        BoneMatIdx_LeftShin  = 3,
+
+        BoneMatIdx_Count     = 4
+    } e_BoneMatIdx;
+
+    MATRIX          boneMats[BoneMatIdx_Count];
     VECTOR3         unkPos;
     q19_12          deltaX;
     q19_12          deltaY;
@@ -17,15 +27,15 @@ void sharedFunc_800D0828_3_s03(s_SubCharacter* chara, GsCOORDINATE2* coords)
     charaCpy = chara;
 
     // Get torso, head, right shin, and left shin bone matrices.
-    Vw_CoordHierarchyMatrixCompute(&coords[HarryBone_Torso],     &boneMats[0]);
-    Vw_CoordHierarchyMatrixCompute(&coords[HarryBone_Head],      &boneMats[1]);
-    Vw_CoordHierarchyMatrixCompute(&coords[HarryBone_RightShin], &boneMats[2]);
-    Vw_CoordHierarchyMatrixCompute(&coords[HarryBone_LeftShin],  &boneMats[3]);
+    Vw_CoordHierarchyMatrixCompute(&coords[HarryBone_Torso],     &boneMats[BoneMatIdx_Torso]);
+    Vw_CoordHierarchyMatrixCompute(&coords[HarryBone_Head],      &boneMats[BoneMatIdx_Head]);
+    Vw_CoordHierarchyMatrixCompute(&coords[HarryBone_RightShin], &boneMats[BoneMatIdx_RightShin]);
+    Vw_CoordHierarchyMatrixCompute(&coords[HarryBone_LeftShin],  &boneMats[BoneMatIdx_LeftShin]);
 
     posY             = charaCpy->position_18.vy;
-    rightShinPosY    = Q8_TO_Q12(boneMats[2].t[1]);
-    leftShinPosY     = Q8_TO_Q12(boneMats[3].t[1]);
-    chara->field_C8  = Q8_TO_Q12(boneMats[1].t[1]);
+    rightShinPosY    = Q8_TO_Q12(boneMats[BoneMatIdx_RightShin].t[1]);
+    leftShinPosY     = Q8_TO_Q12(boneMats[BoneMatIdx_LeftShin].t[1]);
+    chara->field_C8  = Q8_TO_Q12(boneMats[BoneMatIdx_Head].t[1]);
     offsetPosY       = posY + Q12(0.25f);
     chara->field_C8 -= offsetPosY;
     chara->field_CA  = posY;
@@ -40,7 +50,7 @@ void sharedFunc_800D0828_3_s03(s_SubCharacter* chara, GsCOORDINATE2* coords)
     }
 
     // `((torsoPosY - headPosY) / 2) - posY`
-    chara->field_CE = ((Q8_TO_Q12(boneMats[1].t[1]) + Q8_TO_Q12(boneMats[0].t[1])) / 2) - posY;
+    chara->field_CE = ((Q8_TO_Q12(boneMats[BoneMatIdx_Head].t[1]) + Q8_TO_Q12(boneMats[BoneMatIdx_Torso].t[1])) / 2) - posY;
 
     unkQ12 = sharedFunc_800CD6B0_3_s03(boneMats, ARRAY_SIZE(boneMats), &unkPos);
     deltaX = unkPos.vx - chara->position_18.vx;

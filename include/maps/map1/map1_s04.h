@@ -5,8 +5,8 @@ extern u16 D_800CD038[][0x28];
 
 extern s32 D_800CD768;
 
-// @hack Added `D_800CD768_tbl` to lib_externs.ld, as D_800CD768_tbl has to live at same offset as D_800CD768.
-// Table has to be a separate symbol to get a code match, using (u16*)D_800CD768 just causes compiler to optimize out parts.
+// @hack Added `D_800CD768_tbl` to `lib_externs.ld`, as `D_800CD768_tbl` has to live at same offset as `D_800CD768`.
+// Table has to be a separate symbol to get a code match, using `(u16*)D_800CD768` just causes compiler to optimize out parts.
 // Not sure what would cause this.
 extern u16 D_800CD768_tbl[0];
 

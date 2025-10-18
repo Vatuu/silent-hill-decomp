@@ -1,8 +1,7 @@
 
 // TODO: Write corresponding names in comments similar to `CHARA_FILE_INFOS`.
 /** @brief Display rotation offsets on X and Z axes. */
-static const DVECTOR INVENTORY_ITEM_ROTATIONS[] =
-{
+static const DVECTOR INVENTORY_ITEM_ROTATIONS[] = {
     { FP_ANGLE(45.0f),  FP_ANGLE(0.0f) }, { FP_ANGLE(45.0f),  FP_ANGLE(0.0f)   },
     { FP_ANGLE(45.0f),  FP_ANGLE(0.0f) }, { FP_ANGLE(0.0f),   FP_ANGLE(0.0f)   },
     { FP_ANGLE(0.0f),   FP_ANGLE(0.0f) }, { FP_ANGLE(0.0f),   FP_ANGLE(0.0f)   },

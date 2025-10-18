@@ -16,8 +16,7 @@
 // PLAYER TABLES
 // ==============
 
-/*s_AnimInfo HARRY_M0S00_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M0S00_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -55,8 +54,7 @@
     {}
 }*/
 
-/*s_AnimInfo HARRY_M0S01_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M0S01_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -100,8 +98,7 @@
     {}
 }*/
 
-/*s_AnimInfo HARRY_M0S02_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M0S02_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -118,8 +115,7 @@
     { Anim_Update0, ANIM_STATUS(44, true), false, ANIM_STATUS(44, true), { Q12(20) }, 485, 502 }
 }*/
 
-/*s_AnimInfo HARRY_M1S00_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M1S00_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -151,8 +147,7 @@
     {}
 }*/
 
-/*s_AnimInfo HARRY_M1S01_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M1S01_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -190,8 +185,7 @@
     {}
 }*/
 
-/*s_AnimInfo HARRY_M1S02_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M1S02_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -243,8 +237,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M1S03_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M1S03_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -298,8 +291,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M1S05_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M1S05_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -325,8 +317,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M1S06_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M1S06_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -338,8 +329,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M2S00_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M2S00_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -381,8 +371,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M2S01_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M2S01_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -396,8 +385,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M2S02_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M2S02_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -433,8 +421,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M2S04_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M2S04_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -454,8 +441,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M3S00_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M3S00_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -469,8 +455,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M3S01_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M3S01_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -504,8 +489,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M3S02_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M3S02_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -535,8 +519,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M3S04_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M3S04_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -574,8 +557,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M3S05_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M3S05_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -617,8 +599,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M3S06_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M3S06_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -632,8 +613,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M4S01_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M4S01_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -667,8 +647,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M4S02_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M4S02_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -706,8 +685,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M4S03_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M4S03_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -741,8 +719,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M4S04_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M4S04_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -758,8 +735,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M4S05_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M4S05_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -787,8 +763,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M5S00_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M5S00_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -822,8 +797,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M5S00_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M5S00_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -861,8 +835,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M5S02_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M5S02_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -904,8 +877,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M5S03_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M5S03_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -939,8 +911,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M6S00_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M6S00_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -986,8 +957,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M6S01_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M6S01_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 680 },
@@ -1003,8 +973,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M6S02_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M6S02_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -1050,8 +1019,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M6S03_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M6S03_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -1083,8 +1051,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M6S04_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M6S04_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(3) }, NO_VALUE, 678 },
@@ -1164,8 +1131,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M7S00_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M7S00_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -1185,8 +1151,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M7S01_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M7S01_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -1234,8 +1199,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M7S02_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M7S02_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -1287,8 +1251,7 @@
     {}
 };*/
 
-/*s_AnimInfo HARRY_M7S03_ANIM_INFOS[] =
-{
+/*s_AnimInfo HARRY_M7S03_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10) }, NO_VALUE, 676 },
     { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10) }, 676, 677 },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10) }, NO_VALUE, 678 },
@@ -1346,8 +1309,7 @@
 // NPC TABLES
 // ===========
 
-/*s_AnimInfo AIR_SCREAMER_ANIM_INFOS[] =
-{
+/*s_AnimInfo AIR_SCREAMER_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(0, false), false, NO_VALUE, { Q12(10) }, NO_VALUE, NO_VALUE },
     { Anim_Update1, ANIM_STATUS(0, true), false, NO_VALUE, { Q12(10) }, NO_VALUE, NO_VALUE },
     { Anim_Update2, ANIM_STATUS(1, false), false, ANIM_STATUS(1, true), { Q12(10) }, NO_VALUE, 0 },
@@ -1406,8 +1368,7 @@
     { Anim_Update1, ANIM_STATUS(27, true), false, NO_VALUE, sharedFunc_800D77D0_0_s01, 365, 376 }
 };*/
 
-/*s_AnimInfo ALESSA_ANIM_INFOS[] =
-{
+/*s_AnimInfo ALESSA_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(0,  false), false, ANIM_STATUS(0,  false), { Q12(0)  }, NO_VALUE, 0   },
     { Anim_Update1, ANIM_STATUS(0,  true),  false, NO_VALUE,               { Q12(30) }, NO_VALUE, 1   },
     { Anim_Update2, ANIM_STATUS(1,  false), false, ANIM_STATUS(10, true),  { Q12(5)  }, NO_VALUE, 0   },
@@ -1432,8 +1393,7 @@
     { Anim_Update1, ANIM_STATUS(10, true),  false, NO_VALUE,               { Q12(3)  }, 326,      341 }
 };*/
 
-/*s_AnimInfo BLOODY_INCUBATOR_ANIM_INFOS[] =
-{
+/*s_AnimInfo BLOODY_INCUBATOR_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(0,  false), false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },
     { Anim_Update1, ANIM_STATUS(0,  true),  false, NO_VALUE, { Q12(30) }, NO_VALUE, 1 },
     { Anim_Update2, ANIM_STATUS(1,  false), false, ANIM_STATUS(1, true), { Q12(10) }, NO_VALUE, 0 },
@@ -1468,8 +1428,7 @@ typedef enum _BloodyLisaAnim
 } e_BloodyLisaAnim;
 
 /** @brief Bloody Lisa character anim infos. */
-/*s_AnimInfo BLOODY_LISA_ANIM_INFOS[] =
-{
+/*s_AnimInfo BLOODY_LISA_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(BloodyLisaAnim_Still, false), false, ANIM_STATUS(BloodyLisaAnim_Still, false), { Q12(0)  }, NO_VALUE, 0   },
     { Anim_Update1, ANIM_STATUS(BloodyLisaAnim_Still, true),  false, NO_VALUE,                                 { Q12(30) }, NO_VALUE, 1   },
     { Anim_Update2, ANIM_STATUS(BloodyLisaAnim_Walk,  false), false, ANIM_STATUS(BloodyLisaAnim_Walk,  true),  { Q12(10) }, NO_VALUE, 0   },
@@ -1489,8 +1448,7 @@ typedef enum _CatAnim
 /** @brief Cat character anim infos.
  * @unused Frames [1, 6].
  */
-/*s_AnimInfo CAT_ANIM_INFOS[] =
-{
+/*s_AnimInfo CAT_ANIM_INFOS[] = {
     { Anim_Update2, NO_VALUE,                                          false, ANIM_STATUS(CatAnim_Still,                 false), { Q12(0)     }, NO_VALUE, 0  },
     { NULL,         ANIM_STATUS(CatAnim_Still,                 false), false, ANIM_STATUS(CatAnim_Still,                 false), { Q12(0)     }, 0,        0  },
     { Anim_Update2, ANIM_STATUS(CatAnim_Jump,                  false), false, ANIM_STATUS(CatAnim_Jump,                  true),  { Q12(64)    }, NO_VALUE, 7  },
@@ -1503,8 +1461,7 @@ typedef enum _CatAnim
     { Anim_Update1, ANIM_STATUS(CatAnim_TransitionJumpToRun,   true),  false, NO_VALUE,                                          { Q12(0)     }, 22,       23 }
 };*/
 
-/*s_AnimInfo CYBIL_ANIM_INFOS[] =
-{
+/*s_AnimInfo CYBIL_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(0,  false), false, ANIM_STATUS(0,  false), { Q12(0)   }, NO_VALUE, 0   },
     { Anim_Update1, ANIM_STATUS(0,  true),  false, NO_VALUE,               { Q12(30)  }, NO_VALUE, 1   },
     { Anim_Update2, ANIM_STATUS(1,  false), false, ANIM_STATUS(1,  true),  { Q12(5)   }, NO_VALUE, 0   },
@@ -1577,8 +1534,7 @@ typedef enum _CatAnim
     { Anim_Update1, ANIM_STATUS(31, true),  false, NO_VALUE,               { Q12(2)   }, 356,      371 }
 };*/
 
-/*s_AnimInfo DAHLIA_ANIM_INFOS[] =
-{
+/*s_AnimInfo DAHLIA_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },
     { Anim_Update1, ANIM_STATUS(0, true), false, NO_VALUE, { Q12(30) }, NO_VALUE, 1 },
     { Anim_Update2, ANIM_STATUS(1, false), false, ANIM_STATUS(1, true), { Q12(10) }, NO_VALUE, 0 },
@@ -1651,8 +1607,7 @@ typedef enum _FloatstingerAnim
     FloatstingerAnim_Unk12 = 12
 } e_FloatstingerAnim;
 
-/*s_AnimInfo FLOATSTINGER_ANIM_INFOS[] =
-{
+/*s_AnimInfo FLOATSTINGER_ANIM_INFOS[] = {
     { Anim_Update2, NO_VALUE, false, ANIM_STATUS(FloatstingerAnim_Still, false), { Q12(0) }, NO_VALUE, 0 },
     { NULL, ANIM_STATUS(FloatstingerAnim_Still, false), false, ANIM_STATUS(FloatstingerAnim_Still, false), { Q12(0) }, 0, 0 },
     { Anim_Update2, ANIM_STATUS(FloatstingerAnim_Unk1, false), false, ANIM_STATUS(FloatstingerAnim_Unk1, true), { Q12(4) }, NO_VALUE, 1 },
@@ -1681,8 +1636,7 @@ typedef enum _FloatstingerAnim
     { Anim_Update0, ANIM_STATUS(FloatstingerAnim_Unk12, true), false, ANIM_STATUS(FloatstingerAnim_Unk9, false), { Q12(32) }, 1, 31 }
 };*/
 
-/*s_AnimInfo GHOST_CHILD_ALESSA_ANIM_INFOS[] =
-{
+/*s_AnimInfo GHOST_CHILD_ALESSA_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },
     { Anim_Update1, ANIM_STATUS(0, true), false, NO_VALUE, { Q12(30) }, NO_VALUE, 1 },
     { Anim_Update2, ANIM_STATUS(1, false), false, ANIM_STATUS(1, true), { Q12(5) }, NO_VALUE, 0 },
@@ -1703,8 +1657,7 @@ typedef enum _FloatstingerAnim
     { Anim_Update1, ANIM_STATUS(8, true), false, NO_VALUE, { Q12(5) }, 128, 137 }
 };*/
 
-/*s_AnimInfo GHOST_DOCTOR_ANIM_INFOS[] =
-{
+/*s_AnimInfo GHOST_DOCTOR_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },
     { Anim_Update1, ANIM_STATUS(0, true), false, NO_VALUE, { Q12(30) }, NO_VALUE, 1 },
     { Anim_Update2, ANIM_STATUS(1, false), false, ANIM_STATUS(1, true), { Q12(5) }, NO_VALUE, 0 },
@@ -1718,8 +1671,7 @@ typedef enum _GroanerAnim
     GroanerAnim_Unk17 = 17,
 } e_GroanerAnim;
 
-/*s_AnimInfo GROANER_ANIM_INFOS[] =
-{
+/*s_AnimInfo GROANER_ANIM_INFOS[] = {
     { Anim_Update2, NO_VALUE, false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },
     { NULL, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0) }, 0, 0 },
     { Anim_Update2, ANIM_STATUS(1, false), false, ANIM_STATUS(1, true), { Q12(2) }, NO_VALUE, 0 },
@@ -1781,8 +1733,7 @@ typedef enum _HangedScratcher
     HangedScratcherAnim_Unk15 = 15,
 } e_HangedScratcher;
 
-/*s_AnimInfo HANGED_SCRATCHER_ANIM_INFOS[] =
-{
+/*s_AnimInfo HANGED_SCRATCHER_ANIM_INFOS[] = {
     { Anim_Update2, NO_VALUE, false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },
     { NULL, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0) }, 0, 0 },
     { Anim_Update2, ANIM_STATUS(1, false), false, ANIM_STATUS(1, true), { Q12(0) }, NO_VALUE, 0 },
@@ -1839,8 +1790,7 @@ typedef enum _HangedScratcher
     { Anim_Update1, ANIM_STATUS(26, true), false, NO_VALUE, { Q12(0) }, 97, 98 }
 };*/
 
-/*s_AnimInfo INCUBATOR_ANIM_INFOS[] =
-{
+/*s_AnimInfo INCUBATOR_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0)    }, NO_VALUE, 0   },
     { Anim_Update1, ANIM_STATUS(0, true),  false, NO_VALUE,              { Q12(30)   }, NO_VALUE, 1   },
     { Anim_Update2, ANIM_STATUS(1, false), false, ANIM_STATUS(1, true),  { Q12(10)   }, NO_VALUE, 0   },
@@ -1851,8 +1801,7 @@ typedef enum _HangedScratcher
     { Anim_Update1, ANIM_STATUS(3, true),  false, NO_VALUE,              { Q12(10)   }, 116,      132 }
 };*/
 
-/*s_AnimInfo KAUFMANN_ANIM_INFOS[] =
-{
+/*s_AnimInfo KAUFMANN_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0)  }, NO_VALUE, 0 },
     { Anim_Update1, ANIM_STATUS(0, true),  false, NO_VALUE,              { Q12(30) }, NO_VALUE, 1 },
     { Anim_Update2, ANIM_STATUS(1, false), false, ANIM_STATUS(1, true),  { Q12(5)  }, NO_VALUE, 0 },
@@ -1860,8 +1809,7 @@ typedef enum _HangedScratcher
     { Anim_Update2, ANIM_STATUS(2, false), false, ANIM_STATUS(2, true),  { Q12(5)  }, NO_VALUE, 6 }
 };*/
 
-/*s_AnimInfo LISA_ANIM_INFOS[] =
-{
+/*s_AnimInfo LISA_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(0,  false), false, ANIM_STATUS(0,  false), { Q12(0)    }, NO_VALUE, 0   },
     { Anim_Update1, ANIM_STATUS(0,  true),  false, NO_VALUE,               { Q12(30)   }, NO_VALUE, 1   },
     { Anim_Update2, ANIM_STATUS(1,  false), false, ANIM_STATUS(1,  true),  { Q12(2)    }, NO_VALUE, 0   },
@@ -1908,13 +1856,11 @@ typedef enum _LockerDeadBodyAnim
     LockerDeadBodyAnim_3     = 3
 } e_LockerDeadBodyAnim;
 
-/*s_AnimInfo LOCKERR_DEAD_BODY_ANIM_INFOS[] =
-{
+/*s_AnimInfo LOCKERR_DEAD_BODY_ANIM_INFOS[] = {
 
 };*/
 
-/*s_AnimInfo MONSTER_CYBIL_ANIM_INFOS[] =
-{
+/*s_AnimInfo MONSTER_CYBIL_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0)  }, NO_VALUE, 0  },
     { Anim_Update1, ANIM_STATUS(0, true),  false, NO_VALUE,              { Q12(30) }, NO_VALUE, 1  },
     { Anim_Update2, ANIM_STATUS(1, false), false, ANIM_STATUS(1, true),  { Q12(1)  }, NO_VALUE, 0  },
@@ -1929,8 +1875,7 @@ typedef enum _RomperAnim
     RomperAnim_Unk15 = 15,
 } e_RomperAnim;
 
-/*s_AnimInfo ROMPER_ANIM_INFOS[] =
-{
+/*s_AnimInfo ROMPER_ANIM_INFOS[] = {
     { Anim_Update2, NO_VALUE, false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },
     { NULL, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0) }, 0, 0 },
     { Anim_Update2, ANIM_STATUS(1, false), false, ANIM_STATUS(1, true), { Q12(20) }, NO_VALUE, 0 },
@@ -1980,8 +1925,7 @@ typedef enum _SplitheadAnim
     SplitheadAnim_Unk10 = 10,
 } e_SplitheadAnim;
 
-/*s_AnimInfo SPLITHEAD_ANIM_INFOS[] =
-{
+/*s_AnimInfo SPLITHEAD_ANIM_INFOS[] = {
     { Anim_Update2, NO_VALUE, false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },
     { NULL, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0) }, 0, 0 },
     { Anim_Update2, ANIM_STATUS(1, false), false, ANIM_STATUS(1, true), { Q12(2) }, NO_VALUE, 0 },
@@ -2025,8 +1969,7 @@ typedef enum _StalkerAnim
     StalkerAnim_Unk30 = 30,
 } e_StalkerAnim;
 
-/*s_AnimInfo STALKER_ANIM_INFOS[] =
-{
+/*s_AnimInfo STALKER_ANIM_INFOS[] = {
     { Anim_Update2, NO_VALUE, false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },
     { NULL, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0) }, 0, 0 },
     { Anim_Update2, ANIM_STATUS(1, false), false, ANIM_STATUS(1, true), { Q12(5) }, NO_VALUE, 0 },
@@ -2126,8 +2069,7 @@ typedef enum _StalkerAnim
 };*/
 
 // Unknown.
-/*s_AnimInfo D_800D39A0[] =
-{
+/*s_AnimInfo D_800D39A0[] = {
     { Anim_Update2, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },
     { Anim_Update1, ANIM_STATUS(0, true), false, NO_VALUE, { Q12(30) }, NO_VALUE, 1 },
     { Anim_Update2, ANIM_STATUS(1, false), false, ANIM_STATUS(1, true), { Q12(10) }, NO_VALUE, 0 },
@@ -3014,9 +2956,9 @@ void sharedFunc_800CD920_3_s03(s_SubCharacter* chara, q19_12 posX, q19_12 posZ);
 
 q19_12 sharedFunc_800CD940_3_s03(q19_12 pos0, q19_12 pos1);
 
-q19_12 sharedFunc_800CD6B0_3_s03(MATRIX* mtx, s32 mtxCount, VECTOR3* center);
+q19_12 sharedFunc_800CD6B0_3_s03(MATRIX* mat, s32 matCount, VECTOR3* center);
 
-void sharedFunc_800D6EC4_0_s01(s_SubCharacter* arg0);
+void sharedFunc_800D6EC4_0_s01(s_SubCharacter* chara);
 
 void sharedFunc_800D7B14_0_s01(s_SubCharacter*, GsCOORDINATE2*);
 

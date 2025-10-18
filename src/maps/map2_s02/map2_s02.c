@@ -569,8 +569,7 @@ INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E9CC0);
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E9D54);
 
-const char* MAP_MESSAGES[] =
-{
+const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
     "\tUsed_the_ ~C2 Antique_shop_key ~C7 . ~E ",
     "~C3\tAlchemilla_Hospital ~E ",
@@ -630,6 +629,7 @@ void func_800E9EAC(void) // 0x800E9EAC
         case 1:
             func_8008616C(0, false, 1, Q12(0.25f), false);
             SysWork_StateStepIncrement();
+
         case 2:
             func_80085E6C(Q12(1.2f), false);
             break;

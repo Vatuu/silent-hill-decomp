@@ -188,8 +188,7 @@ INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DA0B4);
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DA16C);
 
-const char* MAP_MESSAGES[] =
-{
+const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
     "~J0(1.2)\tWhere_am_I? ~E ",
     "~J0(2.0)\tHave_I_been_here_before? ~E ",
@@ -313,6 +312,7 @@ void func_800DA8F8(void) // 0x800DA8F8
         case 0:
             sharedFunc_800D20E4_0_s00();
             SysWork_StateStepIncrement();
+
         case 1:
             func_80085DF0();
             break;

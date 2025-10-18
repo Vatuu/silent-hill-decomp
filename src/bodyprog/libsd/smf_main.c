@@ -16,8 +16,7 @@ u32  body_partly_size        = 0;
 s32 sd_reserved_voice = 24;
 u32 spu_reverb_sw     = 0;
 
-u32 spu_ch_tbl[24] =
-{
+u32 spu_ch_tbl[24] = {
     1 << 0,
     1 << 1,
     1 << 2,

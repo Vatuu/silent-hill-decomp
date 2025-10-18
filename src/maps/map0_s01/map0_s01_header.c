@@ -22,16 +22,14 @@ extern s32 D_800DFB10[];
 extern s_UnkStruct3_Mo g_MapHeaders_38[21];
 extern u8 LOADABLE_INVENTORY_ITEMS[34];
 
-void (*g_LoadScreenFuncs[])() =
-{
+void (*g_LoadScreenFuncs[])() = {
     NULL,
     Gfx_LoadingScreen_PlayerRun,
     Gfx_LoadingScreen_BackgroundTexture,
     Gfx_LoadingScreen_StageString
 };
 
-s_MapPoint2d MAP_POINTS[] =
-{
+s_MapPoint2d MAP_POINTS[] = {
     #include "area_load_params.h"
 };
 

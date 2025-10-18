@@ -543,8 +543,7 @@ bool Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ
     SVECTOR*                        temp_a3;
     s_Vw_AabbVisibleInFrustumCheck* cullData;
 
-    static u8 D_800AD480[24] =
-    {
+    static u8 D_800AD480[24] = {
         0, 1, 1, 2, 2, 3, 3, 0,
         4, 5, 5, 6, 6, 7, 7, 4,
         0, 4, 1, 5, 2, 6, 3, 7

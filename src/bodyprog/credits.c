@@ -17,18 +17,15 @@ struct
     char f3[5];
 } g_Credits_Digits = { "0.00", "0.00", "0.00", "0.00" };
 
-s_800AFE08 D_800AFE08 =
-{
+s_800AFE08 D_800AFE08 = {
     .field_6  = 0x18,
     .field_8  = 0x64FFFFFF,
     .field_C  = (s16*)0x801E5C24,
     .field_10 = (s32*)0x801E5E24
 };
 
-s_800AFE24 D_800AFE24 =
-{
-    .sub_0 =
-    {
+s_800AFE24 D_800AFE24 = {
+    .sub_0 = {
         .field_6   = 24,
         .field_8   = 0x2CFFFFFF,
         .field_C   = (s16*)0x801E5C24,
@@ -423,8 +420,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
 
     GsOT* ot = &g_OrderingTable2[g_ActiveBufferIdx];
 
-    char* D_8002B4C0[] =
-    {
+    char* D_8002B4C0[] = {
         "GAME_RESULT",
         "Mode",
         "EASY",

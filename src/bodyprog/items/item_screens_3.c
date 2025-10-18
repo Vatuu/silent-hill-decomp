@@ -13,8 +13,7 @@ const s32 rodataPad_800262F8 = 0;
 
 #include "D_800262FC_Rodata.h"
 
-static u8 g_Items_GunsMaxLoadAmmo[36] =
-{
+static u8 g_Items_GunsMaxLoadAmmo[36] = {
     0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0,
@@ -23,8 +22,7 @@ static u8 g_Items_GunsMaxLoadAmmo[36] =
 };
 
 u32 D_800AD4C4 = 0;
-s_800AD4C8 D_800AD4C8[70] =
-{
+s_800AD4C8 D_800AD4C8[70] = {
     { 1638,  { 0x99, 0x01, 0x82, 0x00 }, 0,    8, 0,   8, { 0x33, 0x03, 0x00, 0x00 }, 3,  3,  1, NO_VALUE, 2, &D_800AD4C4 },
     { 4096,  { 0x67, 0xFE, 0x46, 0x00 }, 102,  6, 0,   8, { 0xCC, 0x04, 0x00, 0x10 }, 7,  4,  2, NO_VALUE, 3, &D_800AD4C4 },
     { 4096,  { 0x99, 0x09, 0xC8, 0x00 }, 0,    8, 0,   8, { 0xCC, 0x04, 0x00, 0x10 }, 4,  6,  1, NO_VALUE, 1, &D_800AD4C4 },
@@ -100,8 +98,7 @@ s_800AD4C8 D_800AD4C8[70] =
 s32 g_Inventory_CmdSelectedIdx = 0;
 u32 g_Inventory_SelectionId = 0;
 
-const char* INVENTORY_ITEM_NAMES[] =
-{
+const char* INVENTORY_ITEM_NAMES[] = {
     "Health_drink(s)",
     "First_aid_kit(s)",
     "Ampoule(s)",
@@ -187,8 +184,7 @@ const char* INVENTORY_ITEM_NAMES[] =
     "Gasoline_tank"
 };
 
-const char* g_ItemDescriptions[] =
-{
+const char* g_ItemDescriptions[] = {
     "Supplies_nutrition_to\n\t\t\t\t\trecover_a_small_amount_of\n\t\t\t\t\tstamina.",
     "Heals_injury_to_provide\n\t\t\t\t\tmoderate_stamina_recovery.",
     "Relieve_pain_to_recover\n\t\t\t\t\tstamina_to_high.\n\t\t\t\t\tEffect_lasts_for_a_while.",
@@ -325,8 +321,7 @@ s32 D_800AE1C0[] = {
     0xFF
 };
 
-s_800AE204 D_800AE204[26] =
-{
+s_800AE204 D_800AE204[26] = {
     { 89,   102,  1820, 542,  387,  0,    0,    0,    0,    0,    0,    0,    0,    0 },
     { 21,   306,  3413, 573,  356,  0,    0,    0,    0,    0,    0,    0,    0,    0 },
     { 4,    306,  682,  558,  356,  0,    0,    0,    0,    0,    0,    0,    0,    0 },
@@ -362,16 +357,14 @@ s_800AE4DC D_800AE4DC[3] = // Used in `func_8005B62C` (https://decomp.me/scratch
     { &D_800AE204[12], 5,  0xFF67, 0, 0x80, 0x3F, 0xBF },
 };
 
-SVECTOR D_800AE500[4] =
-{
+SVECTOR D_800AE500[4] = {
     SVECTOR(0.0f,      255.65f,  255.65f),
     SVECTOR(-255.65f,  0.0f,     255.65f),
     SVECTOR(255.65f,   0.0f,     255.65f),
     SVECTOR(0.0f,     -255.65f,  255.65f)
 };
 
-s16 D_800AE520[] =
-{
+s16 D_800AE520[] = {
     0x3F6, 0x3E1, 0x3CD, 0x3B8,
     0x3A4, 0x38F, 0x37B, 0x366,
     0x351, 0x33B, 0x326, 0x310,
@@ -383,8 +376,7 @@ s16 D_800AE520[] =
     0x0, 0x0
 };
 
-s16 D_800AE564[] =
-{
+s16 D_800AE564[] = {
     0x1000, 0x0FCD, 0xF52, 0xEFE,
     0xEAC,  0xE5B,  0xE0C, 0xDBF,
     0xD73,  0xD2A,  0xCE2, 0xC9B,
@@ -400,8 +392,7 @@ s16 D_800AE564[] =
 
 // https://decomp.me/scratch/q3B9W `func_8005E414` accesses the table above using negative offsets from `D_800AE5B8`.
 // The last 0x10 bytes of the above table might be `RECT` as well.
-RECT D_800AE5B8[2] =
-{
+RECT D_800AE5B8[2] = {
     { 0x140, 0x100, 0x140, 0xE0  },
     { 0xA0,  0x90,  0xA0,  0x170 }
 };
@@ -421,8 +412,7 @@ s16 D_800AE5CC[18] =
 
 // https://decomp.me/scratch/HNL4n Referenced under `if (g_GameWork.config_0.optExtraBloodColor_24 != 0xE)`
 // Similar access pattern to the table above.
-s16 D_800AE5F0[136] =
-{
+s16 D_800AE5F0[136] = {
     0x0001, 0x0000, 0x0001, 0x0000,
     0x0360, 0x00C0, 0x03E0, 0xFD90,
     0x03E0, 0xFC20, 0x0320, 0xFE50,
@@ -459,16 +449,14 @@ s16 D_800AE5F0[136] =
     0x0300, 0xEDA0, 0x02E0, 0xFD70
 };
 // https://decomp.me/scratch/HNL4n `temp_a0 = D_800AE700[animStatus];`
-u8 D_800AE700[16] =
-{
+u8 D_800AE700[16] = {
     0x64, 0x48, 0x48, 0x3C,
     0x3C, 0x6E, 0x6E, 0x6E,
     0x3A, 0x50, 0x3C, 0x3C,
     0x48, 0x5E, 0x64, 0x64
 };
 
-s_800AE710 D_800AE710[4] =
-{
+s_800AE710 D_800AE710[4] = {
     {},
     { 0x4C, 0x27, 0x7F },
     {},
@@ -476,8 +464,7 @@ s_800AE710 D_800AE710[4] =
 };
 
 // Seems like a struct of 2 s32 based on `func_80066184`.
-s32 D_800AE71C[][2] =
-{
+s32 D_800AE71C[][2] = {
     { 0x00015AE1, 0xFFFEAEB9 },
     { 0x00017B33, 0xFFFEAEB9 },
     { 0x00015AE1, 0xFFFE8E67 },
@@ -492,8 +479,7 @@ s16 D_800AE73E = 0x8002;
 // Used by `func_80068CC0` and `GameState_MapScreen_Update`.
 // I think this is save file flags related to
 // placing the markings on the map.
-u8 D_800AE740[][2] =
-{
+u8 D_800AE740[][2] = {
     { 0x00, 0x00 },
     { 0x00, 0x00 },
     { 0x00, 0x00 },
@@ -524,8 +510,7 @@ s32 D_800AE770 = 0; // `GameState_MapScreen_Update` uses this like a `bool`.
 
 // `D_800AE774`. `D_800AE7E4`, `D_800AE820` are used by `func_80067914`. Might one big table.
 // Seems like a pair of bytes `(->unk0, ->unk1)`
-u8 D_800AE774[112] =
-{
+u8 D_800AE774[112] = {
     0x00, 0x00, 0x00, 0x00, 0xD5, 0x5A, 0xD0, 0x48,
     0xCD, 0x2A, 0xD0, 0xE0, 0xD1, 0x44, 0x00, 0x00,
     0x00, 0x00, 0xFF, 0x52, 0xDF, 0xFE, 0xF8, 0xB0,
@@ -542,8 +527,7 @@ u8 D_800AE774[112] =
     0x6B, 0x20, 0x75, 0xE0, 0x59, 0xB0, 0x40, 0x01
 };
 
-u8 D_800AE7E4[60] =
-{
+u8 D_800AE7E4[60] = {
     0x00, 0x00, 0x3C, 0xAD, 0x57, 0xAF, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x62, 0xDC,
     0x44, 0xED, 0x66, 0xFF, 0x00, 0x00, 0xCB, 0xE7,
@@ -554,8 +538,7 @@ u8 D_800AE7E4[60] =
     0xF6, 0xD7, 0x00, 0x00
 };
 
-u8 D_800AE820[128] =
-{
+u8 D_800AE820[128] = {
     0x00, 0x00, 0x20, 0x0B, 0xD8, 0x30, 0xFB, 0x48,
     0x3E, 0x47, 0xD9, 0xC2, 0x44, 0xBE, 0x00, 0x00,
     0x00, 0x00, 0x44, 0xBE, 0xD8, 0xBE, 0x00, 0x00,
@@ -574,8 +557,7 @@ u8 D_800AE820[128] =
     0x44, 0xE8, 0x65, 0xFB, 0x29, 0x56, 0x00, 0x00
 };
 
-u32 D_800AE8A0[327] =
-{
+u32 D_800AE8A0[327] = {
     0x00000000, 0x1F0F0000, 0x1F0F0010, 0x1F0F0020,
     0x1F0F0030, 0x1F0F0040, 0x1F0F0050, 0x1F0F0060,
     0x2F1F7050, 0x1F1F2020, 0x1F1F2040, 0x3F1F4000,
@@ -661,8 +643,7 @@ u32 D_800AE8A0[327] =
 };
 
 // Used by `func_80068E0C`. Contains pointers to the table above.
-s_800AEDBC D_800AEDBC[] =
-{
+s_800AEDBC D_800AEDBC[] = {
     {},
     { &D_800AE8A0[0x00], &D_800AE8A0[0x12], 0x0363, 0x03A8 },
     { &D_800AE8A0[0x34], &D_800AE8A0[0x3D], 0x03AF, 0x03BE },
@@ -689,8 +670,7 @@ s_800AEDBC D_800AEDBC[] =
     { &D_800AE8A0[0xF0], &D_800AE8A0[0x136],0x0649, 0x066C },
 };
 
-s16 D_800AEEDC[][2] =
-{
+s16 D_800AEEDC[][2] = {
     { 0xE667, 0xEE67 },
     { 0xE667, 0xEE67 },
     { 0xE667, 0xEE67 },
@@ -732,8 +712,7 @@ s16 D_800AEEDC[][2] =
     { 0xE667, 0xEE67 },
 };
 
-s16 D_800AEF78[][2] =
-{
+s16 D_800AEF78[][2] = {
     { 0xE667, 0xEE67 },
     { 0xE667, 0xEE67 },
     { 0xE6B9, 0xEEE2 },
@@ -774,8 +753,7 @@ s16 D_800AEF78[][2] =
     { 0xE667, 0xEE67 },
     { 0xE667, 0xEE67 },
 };
-s16 D_800AF014[] =
-{
+s16 D_800AF014[] = {
     0x0000, 0x0000, 0xFFD8, 0xFFAF,
     0xFF86, 0xFF5D, 0xFF0B, 0xFEB9,
     0xFE67, 0xFE15, 0xFDC3, 0xFD71,
@@ -785,8 +763,7 @@ s16 D_800AF014[] =
     0xFFAF, 0xFFD8, 0x0000, 0x0000,
 };
 
-s16 D_800AF04C[] =
-{
+s16 D_800AF04C[] = {
     0x0000, 0x0000, 0xFFD8, 0xFF86,
     0xFF34, 0xFEE2, 0xFE90, 0xFE3E,
     0xFDEC, 0xFD9A, 0xFD48, 0xFD1F,
@@ -794,8 +771,7 @@ s16 D_800AF04C[] =
     0xFF5D, 0x0000
 };
 
-s16 D_800AF070[] =
-{
+s16 D_800AF070[] = {
     0x0000, 0x00A3, 0x0147, 0x01EB,
     0x028F, 0x0333, 0x03D7, 0x047A,
     0x051E, 0x05C2, 0x0666, 0x070A,
@@ -848,27 +824,25 @@ s16 D_800AF070[] =
     0x04CC, 0x0000
 };
 
-s16 D_800AF1FC[] =
-{
+s16 D_800AF1FC[] = {
     0x0147, 0x028F, 0x03D7, 0x051E,
     0x0666, 0x07AE, 0x07AE, 0x0000
 };
 
-s32   g_Player_GrabFree_InputCount       = 0;
-q3_12 g_Player_FlexRotationY             = FP_ANGLE(0.0f);
-q3_12 g_Player_FlexRotationX             = FP_ANGLE(0.0f);
-u8    g_Player_IsInWalkToRunTransition   = false;
-u8    g_Player_DisableControl            = false;
-u8    D_800AF216                         = 0; // Left Y analog stick value.
-s8    g_Player_RockDrill_DirectionAttack = 0;
-u32   D_800AF218                         = 0;
-s32   D_800AF21C                         = NO_VALUE;
-u8    D_800AF220                         = 0;
+q19_12 g_Player_GrabReleaseInputTimer     = Q12(0.0f);
+q3_12  g_Player_FlexRotationY             = FP_ANGLE(0.0f);
+q3_12  g_Player_FlexRotationX             = FP_ANGLE(0.0f);
+u8     g_Player_IsInWalkToRunTransition   = false;
+u8     g_Player_DisableControl            = false;
+u8     D_800AF216                         = 0; // Left Y analog stick value.
+s8     g_Player_RockDrill_DirectionAttack = 0;
+u32    D_800AF218                         = 0;
+s32    g_Player_TargetNpcIdx              = NO_VALUE;
+u8     D_800AF220                         = 0;
 // 3 bytes of padding.
-s32   D_800AF224                         = NO_VALUE; // Weapon attack.
+s32    g_Player_WeaponAttack1             = NO_VALUE;
 
-s_AnimInfo HARRY_BASE_ANIM_INFOS[57] =
-{
+s_AnimInfo HARRY_BASE_ANIM_INFOS[57] = {
     { Anim_Update2, ANIM_STATUS(HarryAnim_Still,                   false), false, ANIM_STATUS(HarryAnim_Still,                   true), { Q12(10.0f)    }, NO_VALUE, 0   },
     { Anim_Update1, ANIM_STATUS(HarryAnim_Still,                   true),  false, NO_VALUE,                                             { Q12(30.0f)    }, NO_VALUE, 1   },
     { Anim_Update2, ANIM_STATUS(HarryAnim_TransitionToStill,       false), false, ANIM_STATUS(HarryAnim_TransitionToStill,       true), { Q12(10.0f)    }, NO_VALUE, 0   },
@@ -927,6 +901,8 @@ s_AnimInfo HARRY_BASE_ANIM_INFOS[57] =
     { Anim_Update1, ANIM_STATUS(HarryAnim_IdleExhausted,           true),  true,  NO_VALUE,                                             { func_800706E4 }, 543,      567 },
     {}
 };
+// TODO: `func_8007EBBC` indicates there should be more.
+
 u8 __padding1[14] = {};
 s16 D_800AF5C6 = 0;
 u32 D_800AF5C8[23] = {}; // Padding?
@@ -937,8 +913,7 @@ s32 g_Player_AttackAnimIdx = 0;
 s32 g_Player_MeleeAttackType = 0;
 s32 g_Player_IsMultiTapAttack = 0;
 
-s_800AFBF4 D_800AFBF4[11] =
-{
+s_800AFBF4 D_800AFBF4[11] = {
     {},
     { 1293, 0,    0,    64, 62, 63, 0,  52, 0 },
     { 1294, 0,    0,    64, 62, 63, 0,  52, 0 },
@@ -953,8 +928,7 @@ s_800AFBF4 D_800AFBF4[11] =
 };
 
 // Special collision global.
-s_CollisionPoint D_800AFC78 =
-{
+s_CollisionPoint D_800AFC78 = {
     .position_0 = {},
     .collision_C = {},
     .field_18 = NO_VALUE
@@ -1007,11 +981,12 @@ void Inventory_DirectionalInputSet() // 0x8004F5DC
 
 void Gfx_ItemScreens_RenderInit(u32* selectedItemId) // 0x8004F764
 {
-    GsDOBJ2* ptr;
+    #define LABEL_COUNT 8
+
+    GsDOBJ2* obj;
     s32      i;
 
-    DVECTOR strPosTable[] = // 0x80027DD8
-    {
+    DVECTOR LABEL_STR_POS_TABLE[LABEL_COUNT] = {
         { 118, -80 },
         { 144, 304 },
         { 36, 304 },
@@ -1022,8 +997,7 @@ void Gfx_ItemScreens_RenderInit(u32* selectedItemId) // 0x8004F764
         { 16, 200 }
     };
 
-    char* strs[] = // 0x80027E34
-    {
+    char* LABEL_STRS[LABEL_COUNT] = {
         "Equipment",
         "Exit",
         "Option",
@@ -1039,16 +1013,16 @@ void Gfx_ItemScreens_RenderInit(u32* selectedItemId) // 0x8004F764
     // In inventory.
     if (g_GameWork.gameStateStep_598[1] < 21)
     {
-        for (i = 0; i < 8; i++)
+        for (i = 0; i < ARRAY_SIZE(LABEL_STR_POS_TABLE); i++)
         {
-            Gfx_StringSetPosition(strPosTable[i].vx, strPosTable[i].vy);
-            Gfx_StringDraw(strs[i], 10);
+            Gfx_StringSetPosition(LABEL_STR_POS_TABLE[i].vx, LABEL_STR_POS_TABLE[i].vy);
+            Gfx_StringDraw(LABEL_STRS[i], 10);
         }
 
         Inventory_PlayerItemScroll(selectedItemId);
 
         // Player items.
-        for (i = 0, ptr = &g_Items_ItemsModelData[0]; i < 7; i++, ptr++)
+        for (i = 0, obj = &g_Items_ItemsModelData[0]; i < 7; i++, obj++)
         {
             if (D_800C3E18[i] == NO_VALUE)
             {
@@ -1066,7 +1040,7 @@ void Gfx_ItemScreens_RenderInit(u32* selectedItemId) // 0x8004F764
             func_800548D8(i);
             GsSetFlatLight(0, &g_Items_Lights[i][0]);
             GsSetFlatLight(1, &g_Items_Lights[i][1]);
-            func_8004BD74(i, ptr, 0);
+            func_8004BD74(i, obj, 0);
         }
 
         // Equipped item.
@@ -1079,7 +1053,7 @@ void Gfx_ItemScreens_RenderInit(u32* selectedItemId) // 0x8004F764
             func_800548D8(7);
             GsSetFlatLight(0, &D_800C3A88[0]);
             GsSetFlatLight(1, &D_800C3A88[1]);
-            func_8004BD74(7, ptr, 0);
+            func_8004BD74(7, obj, 0);
         }
 
         Gfx_Inventory_ItemDescriptionDraw(selectedItemId);
@@ -1608,8 +1582,7 @@ void Gfx_Inventory_HealthStatusDraw()
     POLY_G4*  poly_g4;
     DR_TPAGE* tPage;
 
-    u8 D_80027F04[] =
-    { 
+    u8 D_80027F04[] = { 
         0xFF, 0x00, 0x00, 0x00, 
         0xFF, 0xA0, 0x00, 0x00, 
         0xa0, 0xFF, 0x00, 0x00, 
@@ -1856,14 +1829,12 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
 
     DVECTOR stringPos = { 208, 200 };
 
-    char* D_80027F14[] =
-    {
+    char* D_80027F14[] = {
         "Can't_use_it_here.",
         "Too_dark_to_look_at\n\t\tthe_item_here."
     };
 
-    char* D_80027F94[] =
-    {
+    char* D_80027F94[] = {
         "Stock:",
         "==On==",
         "==Off==",
@@ -2143,8 +2114,7 @@ void Gfx_Results_ItemsPosition() // 0x8005227C
 
     s32 i;
 
-    const SVECTOR OFFSETS[DISPLAY_ITEM_COUNT] =
-    {
+    const SVECTOR OFFSETS[DISPLAY_ITEM_COUNT] = {
         { Q8(0.0f),      Q8(-3.25f), Q8(20.0f), Q8(0.0f) },
         { Q8(-3.03125f), Q8(-1.5f),  Q8(20.0f), Q8(0.0f) },
         { Q8(3.03125f),  Q8(-1.5f),  Q8(20.0f), Q8(0.0f) },
@@ -2851,8 +2821,7 @@ void Gfx_Items_Render() // 0x80054200
     else
     {
         // TODO: Make `const`?
-        u8 ITEM_IDS[] =
-        {
+        u8 ITEM_IDS[] = {
             InventoryItemId_GasolineTank,
             InventoryItemId_Chainsaw,
             InventoryItemId_RockDrill,

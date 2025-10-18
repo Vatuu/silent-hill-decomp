@@ -151,8 +151,7 @@ INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D1394);
 
 INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D1428);
 
-const char* MAP_MESSAGES[] =
-{
+const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
     "\tThe_elevator_doesn't ~N\n\tappear_to_be_working. ~E ",
     "\tA_glass_vial_lies_shattered. ",
@@ -253,6 +252,7 @@ void func_800D29A4(void) // 0x800D29A4
         case 0:
             sharedFunc_800D20E4_0_s00();
             SysWork_StateStepIncrement();
+
         case 1:
             func_80085DF0();
             break;
@@ -278,7 +278,6 @@ void func_800D2A88(void) // 0x800D2A88
     }
 
     func_80087360(Sfx_Unk1916, Q12(0.0f), Q12(0.0f), 36);
-
     Savegame_EventFlagSet(EventFlag_203);
 }
 

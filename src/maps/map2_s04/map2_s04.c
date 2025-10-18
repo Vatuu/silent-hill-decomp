@@ -97,8 +97,7 @@ INCLUDE_ASM("asm/maps/map2_s04/nonmatchings/map2_s04", func_800CCE74);
 
 INCLUDE_ASM("asm/maps/map2_s04/nonmatchings/map2_s04", func_800CCF08);
 
-const char* MAP_MESSAGES[] =
-{
+const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
     "\tThere's_a_memo_on_the_desk. ",
     "~C3\tCoroner_Seals_called. ",
@@ -165,7 +164,7 @@ void func_800CCF9C(void) // 0x800CCF9C
 
 void func_800CD050(void) // 0x800CD050
 {
-    g_BackgroundColor = 0x50;
+    g_BackgroundColor = 80;
     func_80087360(FILE_TIM_PLCSMEMO_TIM, Q12(0.0f), Q12(0.0f), 15);
 }
 

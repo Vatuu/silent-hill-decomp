@@ -570,8 +570,7 @@ void func_800EAFF0(void) {}
 
 #include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800EAFF8
 
-const char* MAP_MESSAGES[] =
-{
+const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
     "~J0(1.5)\tWhat's_this! ~E ",
     "~J0(0.1)\t~E ",
@@ -601,10 +600,12 @@ void func_800EB090(void) // 0x800EB090
             pickupType   = CommonPickupItemId_HealthDrink;
             eventFlagIdx = EventFlag_M6S00_HealthDrink;
             break;
+
         case 23:
             pickupType   = CommonPickupItemId_ShotgunShells;
             eventFlagIdx = EventFlag_M6S00_ShotgunShells;
             break;
+
         case 24:
             pickupType   = CommonPickupItemId_FirstAidKit;
             eventFlagIdx = EventFlag_M6S00_FirstAidKit;

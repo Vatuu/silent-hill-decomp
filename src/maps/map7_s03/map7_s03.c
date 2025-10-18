@@ -935,7 +935,7 @@ void func_800E0774(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
 
     Math_MatrixTransform(&chara->position_18, &chara->rotation_24, coords);
 
-    if (chara->model_0.anim_4.status_0 != 0)
+    if (chara->model_0.anim_4.status_0 != ANIM_STATUS(0, false))
     {
         animInfo = &UNKKOWN_23_ANIM_INFOS[chara->model_0.anim_4.status_0];
         animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
@@ -946,9 +946,9 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E07F0);
 
 void func_800E0888(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E0888
 {
-    s32 posY;
+    q19_12 posY;
 
-    if (chara->model_0.anim_4.flags_2 & 2)
+    if (chara->model_0.anim_4.flags_2 & AnimFlag_Visible)
     {
         func_800E07F0();
         return;
@@ -1045,6 +1045,7 @@ void func_800E0B90(void) // 0x800E0B90
     {
         var_a0 = 14;
     }
+
     func_8003640C(var_a0);
 }
 
@@ -1065,8 +1066,7 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E1788);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", func_800E17B8);
 
-const char* MAP_MESSAGES[] =
-{
+const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
     "~J1(4.9)\tI_was_shocked_to_realize ~N\n\t\t\tthe_talisman_of_Metraton ~N\n\t\t\twas_being_used. ",
     "~J1(4.0)\tIn_spite_of_the_lost_soul ~N\n\t\t\treturning_at_last, ",
@@ -1197,22 +1197,28 @@ void func_800E3B6C(void) // 0x800E3B6C
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
+
             g_SysWork.field_30          = 20;
             g_SysWork.sysStateStep_C[0] = 0;
-            g_SysWork.flags_22A4       |= 8;
+            g_SysWork.flags_22A4       |= 1 << 3;
+
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
             func_8005E70C();
+
             D_800F4805++;
+
         case 1:
             func_800E62CC();
             break;
+
         default:
             SysWork_StateSetNext(SysState_Gameplay);
             D_800F4805 = 0;
             Savegame_EventFlagSet(EventFlag_579);
             break;
     }
+
     func_800E2E90();
 }
 
@@ -1224,14 +1230,17 @@ void func_800E3D18(void) // 0x800E3D18
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
+
             g_SysWork.player_4C.chara_0.health_B0 = Q12(100.0f);
             g_SysWork.field_30                    = 20;
             g_SysWork.sysStateStep_C[0]           = 0;
             g_SysWork.flags_22A4                 |= 1 << 3;
+
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
             func_8005E70C();
             D_800F4805++;
+
         case 1:
             func_800E7380();
             break;
@@ -1245,17 +1254,22 @@ void func_800E3D18(void) // 0x800E3D18
             }
 
             D_800F4805 = 3;
+
             Savegame_EventFlagSet(EventFlag_586);
             func_8004690C(Sfx_Unk1688);
             func_8004690C(Sfx_Unk1689);
             func_8004690C(Sfx_Unk1690);
+
             D_800F4820 = 0;
+
         default:
             SysWork_StateSetNext(SysState_Gameplay);
             D_800F4805 = 0;
+
             Savegame_EventFlagSet(EventFlag_587);
             break;
     }
+
     func_800E2E90();
 }
 
@@ -1333,6 +1347,7 @@ void func_800E9874(void) // 0x800E9874
             func_800D5E78();
             func_800D7D08();
         }
+
         func_800D917C();
     }
 
