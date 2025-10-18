@@ -2,16 +2,22 @@ name: Check Executables Match
 
 on:
   push:
+    branches:
+      - master
+    paths-ignore:
+      - '**.md'
 
 jobs:
   build:
+    if: github.repository == 'Vatuu/silent-hill-decomp'
+    
     container: ghcr.io/vatuu/decomp-images-silent-hill:master
 
     strategy:
       fail-fast: true
       matrix:
         game_id: [ SLUS-00707 ]
-
+    
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository

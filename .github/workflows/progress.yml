@@ -2,9 +2,15 @@ name: Determine and Push Progress
 
 on:
   push:
+    branches:
+      - master
+    paths-ignore:
+      - '**.md'
 
 jobs:
   build:
+    if: github.repository == 'Vatuu/silent-hill-decomp'
+    
     container: ghcr.io/vatuu/decomp-images-silent-hill:master
 
     strategy:
@@ -28,7 +34,7 @@ jobs:
           mkdir -p ./rom/image
           cp -r -p /rom/* ./rom/image
 
-      - name: Setup Environment
+      - name: Extract Game Assets
         run: make extract
 
       - name: Generate Progress Report
