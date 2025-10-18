@@ -214,4 +214,6 @@ void func_800D0394(s32 count, VECTOR3* vecs);
 
 void func_800DADD4(void);
 
+void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2);
+
 #endif

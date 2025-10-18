@@ -2499,8 +2499,8 @@ typedef struct
     s16     field_C;
     s16     field_E;
     s8      field_10;
-    s8      field_11;
-    s8      field_12;
+    u8      field_11;
+    u8      field_12;
     s8      field_13;
 } s_800E34FC;
 STATIC_ASSERT_SIZEOF(s_800E34FC, 20);
