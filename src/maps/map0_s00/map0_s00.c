@@ -78,7 +78,7 @@ bool func_800CC6E8(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId) // 0x800CC6E8
     {
         for (i = 0; i < D_800E39AC; i++, curArg0++)
         {
-            func_800CE02C(i, func_800D012C(&curArg0->field_0, &sp50, temp_s4), &curArg0->field_0, mapId);
+            func_800CE02C(i, func_800D012C(&curArg0->field_0, &sp50, temp_s4), curArg0, mapId);
         }
 
     }

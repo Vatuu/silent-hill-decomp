@@ -100,7 +100,7 @@ s32 func_800CC8FC(VECTOR3*, s32*, MATRIX*);
 
 void func_800CD8E8(s32, s32, s_800E330C*);
 
-void func_800CE02C(s32, s32, VECTOR3*, s32 mapId);
+void func_800CE02C(s32, s32, s_800E34FC* arg2, s32 mapId);
 
 void func_800D0124();
 
