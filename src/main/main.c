@@ -17,8 +17,7 @@
 void* SECTION(".rodata") g_OvlDynamic = (void*)0x800C9578;
 void* SECTION(".rodata") g_OvlBodyprog = (void*)0x80024B60;
 
-s_FsImageDesc g_MainImg0 =
-{
+s_FsImageDesc g_MainImg0 = {
     .tPage = { 1, 13 },
     .u     = 32,
     .v     = 0,
@@ -26,8 +25,7 @@ s_FsImageDesc g_MainImg0 =
     .clutY = 480
 };
 
-s_FsImageDesc g_MainImg1 =
-{
+s_FsImageDesc g_MainImg1 = {
     .tPage = { 0, 20 },
     .u     = 0,
     .v     = 240,
@@ -37,14 +35,12 @@ s_FsImageDesc g_MainImg1 =
 
 s32 g_MainFbIdx = 0;
 
-DISPENV g_MainDispEnv =
-{
+DISPENV g_MainDispEnv = {
     .disp   = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT  },
     .screen = { 0, 8, 256,          224            }
 };
 
-DRAWENV g_MainDrawEnv =
-{
+DRAWENV g_MainDrawEnv = {
     .clip = { 0, 0, SCREEN_WIDTH, 224 },
     .dtd  = true,
     .isbg = true

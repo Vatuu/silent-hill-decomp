@@ -1,10 +1,8 @@
         {
             {
                 .positionX_0 = Q12(-29.5f),
-                .data =
-                {
-                    .spawnInfo =
-                    {
+                .data = {
+                    .spawnInfo = {
                         .charaId_4   = Chara_None,
                         .rotationY_5 = 176,
                         .flags_6     = 1 << 0,
@@ -19,10 +17,8 @@
         {
             {
                 .positionX_0 = Q12(-252.0f),
-                .data =
-                {
-                    .spawnInfo =
-                    {
+                .data = {
+                    .spawnInfo = {
                         .charaId_4   = Chara_None,
                         .rotationY_5 = FP_ANGLE_PACKED(180.0f),
                         .flags_6     = (1 << 0) | (1 << 2),
@@ -33,10 +29,8 @@
             },
             {
                 .positionX_0 = Q12(-254.0f),
-                .data =
-                {
-                    .spawnInfo =
-                    {
+                .data = {
+                    .spawnInfo = {
                         .charaId_4   = Chara_None,
                         .rotationY_5 = FP_ANGLE_PACKED(135.0f),
                         .flags_6     = (1 << 0) | (1 << 2),
@@ -47,10 +41,8 @@
             },
             {
                 .positionX_0 = Q12(-259.0f),
-                .data =
-                {
-                    .spawnInfo =
-                    {
+                .data = {
+                    .spawnInfo = {
                         .charaId_4   = Chara_None,
                         .rotationY_5 = FP_ANGLE_PACKED(0.0f),
                         .flags_6     = (1 << 0) | (1 << 2),

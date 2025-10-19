@@ -158,6 +158,7 @@ void func_800CCA2C(void) // 0x800CCA2C
             sharedFunc_800D20E4_0_s00();
             g_SysWork.field_30 = 20;
             SysWork_StateStepIncrement();
+
         case 1:
             if (g_Controller0->btnsClicked_10 & ControllerFlag_R3)
             {
@@ -228,7 +229,6 @@ void func_800CCA2C(void) // 0x800CCA2C
             {
                 SysWork_StateStepIncrement();
             }
-
             break;
 
         case 2:
@@ -259,7 +259,6 @@ void func_800CCA2C(void) // 0x800CCA2C
                     D_800CD768 = 0;
                 }
             }
-
             break;
     }
 }
@@ -272,10 +271,12 @@ void func_800CCE38(void) // 0x800CCE38
     {
         Sd_EngineCmd(Sfx_Unk1335);
     }
+
     if (g_Controller0->btnsClicked_10 & ControllerFlag_R2)
     {
         Sd_EngineCmd(Sfx_Unk1342);
     }
+
     if (g_Controller0->btnsClicked_10 & ControllerFlag_R3)
     {
         Sd_EngineCmd(Sfx_Unk1343);

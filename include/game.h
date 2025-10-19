@@ -64,15 +64,13 @@ struct _Model;
 
 /** @brief Retrieves the weapon ID from a packed weapon attack.
  *
- * @note The return value counts as a valid weapon attack with an `AttackInputType_Tap` attack input type.
- *
  * @param weaponAttack Packed weapon attack containing a weapon ID and attack input type.
  * @return Weapon ID.
  */
 #define WEAPON_ATTACK_ID_GET(weaponAttack) \
     ((weaponAttack) % 10)
 
-/** @brief Packs an animation status containing a animation index and active flag.
+/** @brief Packs an animation status containing an animation index and active flag.
  *
  * @param animIdx Animation index.
  * @param isActive Active status (`bool`).
@@ -309,7 +307,7 @@ typedef enum _MapOverlayId
     MapOverlayId_MAP7_S01 = 40,
     MapOverlayId_MAP7_S02 = 41,
     MapOverlayId_MAP7_S03 = 42,
-    MapOverlayId_MAPT_S00 = 43, // } Empty test maps, only remains are some code references and `HB_MTS00.ANM`/`HB_MTX00.ANM` anim files.
+    MapOverlayId_MAPT_S00 = 43, // } @unused Empty test maps. Only some code references remain and `HB_MTS00.ANM`/`HB_MTX00.ANM` anim files.
     MapOverlayId_MAPX_S00 = 44  // }
 } e_MapOverlayId;
 
@@ -495,7 +493,9 @@ typedef enum _GameState
     GameState_LoadStatusScreen    = 19,
     GameState_LoadMapScreen       = 20,
     GameState_Unk15               = 21,
-    GameState_Unk16               = 22 /** Removed debug menu? Doesn't exist in function array, but `DebugMoviePlayer` state tries to switch to it. */
+    GameState_Unk16               = 22, /** Removed debug menu? Doesn't exist in function array, but `DebugMoviePlayer` state tries to switch to it. */
+
+    GameState_Hack                = NO_VALUE // @hack Force enum to be treated as s32.
 } e_GameState;
 
 /** @brief State IDs used by `GameState_InGame`.
@@ -541,85 +541,85 @@ typedef enum _InventoryCmdId
 
 typedef enum _InventoryItemId
 {
-    InventoryItemId_Empty                = NO_VALUE,
-    InventoryItemId_Unequipped           = 0,
+    InventoryItemId_Empty                 = NO_VALUE,
+    InventoryItemId_Unequipped            = 0,
 
-    InventoryItemId_HealthDrink          = 32,
-    InventoryItemId_FirstAidKit          = 33,
-    InventoryItemId_Ampoule              = 34,
+    InventoryItemId_HealthDrink           = 32,
+    InventoryItemId_FirstAidKit           = 33,
+    InventoryItemId_Ampoule               = 34,
 
-    InventoryItemId_LobbyKey             = 64,
-    InventoryItemId_HouseKey             = 65,
-    InventoryItemId_KeyOfLion            = 66,
-    InventoryItemId_KeyOfWoodman         = 67,
-    InventoryItemId_KeyOfScarecrow       = 68,
-    InventoryItemId_LibraryReserveKey    = 69,
-    InventoryItemId_ClassroomKey         = 70,
-    InventoryItemId_KGordonKey           = 71,
-    InventoryItemId_DrawbridgeKey        = 72,
-    InventoryItemId_BasementKey          = 73,
-    InventoryItemId_BasementStoreroomKey = 74,
-    InventoryItemId_ExaminationRoomKey   = 75,
-    InventoryItemId_AntiqueShopKey       = 76,
-    InventoryItemId_SewerKey             = 77,
-    InventoryItemId_KeyOfOphiel          = 78,
-    InventoryItemId_KeyOfHagith          = 79,
-    InventoryItemId_KeyOfPhaleg          = 80,
-    InventoryItemId_KeyOfBethor          = 81,
-    InventoryItemId_KeyOfAratron         = 82,
-    InventoryItemId_NoteToSchool         = 83,
-    InventoryItemId_NoteDoghouse         = 84,
-    InventoryItemId_PictureCard          = 85,
+    InventoryItemId_LobbyKey              = 64,
+    InventoryItemId_HouseKey              = 65,
+    InventoryItemId_KeyOfLion             = 66,
+    InventoryItemId_KeyOfWoodman          = 67,
+    InventoryItemId_KeyOfScarecrow        = 68,
+    InventoryItemId_LibraryReserveKey     = 69,
+    InventoryItemId_ClassroomKey          = 70,
+    InventoryItemId_KGordonKey            = 71,
+    InventoryItemId_DrawbridgeKey         = 72,
+    InventoryItemId_BasementKey           = 73,
+    InventoryItemId_BasementStoreroomKey  = 74,
+    InventoryItemId_ExaminationRoomKey    = 75,
+    InventoryItemId_AntiqueShopKey        = 76,
+    InventoryItemId_SewerKey              = 77,
+    InventoryItemId_KeyOfOphiel           = 78,
+    InventoryItemId_KeyOfHagith           = 79,
+    InventoryItemId_KeyOfPhaleg           = 80,
+    InventoryItemId_KeyOfBethor           = 81,
+    InventoryItemId_KeyOfAratron          = 82,
+    InventoryItemId_NoteToSchool          = 83,
+    InventoryItemId_NoteDoghouse          = 84,
+    InventoryItemId_PictureCard           = 85,
 
-    InventoryItemId_SewerExitKey         = 87,
-    InventoryItemId_ChannelingStone      = 88,
+    InventoryItemId_SewerExitKey          = 87,
+    InventoryItemId_ChannelingStone       = 88,
 
-    InventoryItemId_Chemical             = 96,
-    InventoryItemId_GoldMedallion        = 97,
-    InventoryItemId_SilverMedallion      = 98,
-    InventoryItemId_RubberBall           = 99,
-    InventoryItemId_Flauros              = 100,
-    InventoryItemId_PlasticBottle        = 101,
-    InventoryItemId_UnknownLiquid        = 102,
-    InventoryItemId_PlateOfTurtle        = 103,
-    InventoryItemId_PlateOfHatter        = 104,
-    InventoryItemId_PlateOfCat           = 105,
-    InventoryItemId_PlateOfQueen         = 106,
-    InventoryItemId_BloodPack            = 107,
-    InventoryItemId_DisinfectingAlcohol  = 108,
-    InventoryItemId_Lighter              = 109,
-    InventoryItemId_VideoTape            = 110,
+    InventoryItemId_Chemical              = 96,
+    InventoryItemId_GoldMedallion         = 97,
+    InventoryItemId_SilverMedallion       = 98,
+    InventoryItemId_RubberBall            = 99,
+    InventoryItemId_Flauros               = 100,
+    InventoryItemId_PlasticBottle         = 101,
+    InventoryItemId_UnknownLiquid         = 102,
+    InventoryItemId_PlateOfTurtle         = 103,
+    InventoryItemId_PlateOfHatter         = 104,
+    InventoryItemId_PlateOfCat            = 105,
+    InventoryItemId_PlateOfQueen          = 106,
+    InventoryItemId_BloodPack             = 107,
+    InventoryItemId_DisinfectingAlcohol   = 108,
+    InventoryItemId_Lighter               = 109,
+    InventoryItemId_VideoTape             = 110,
 
-    InventoryItemId_KaufmannKey          = 112,
-    InventoryItemId_Receipt              = 113,
-    InventoryItemId_SafeKey              = 114,
-    InventoryItemId_Magnet               = 115,
-    InventoryItemId_MotorcycleKey        = 116,
-    InventoryItemId_BirdCageKey          = 117,
-    InventoryItemId_Pliers               = 118,
-    InventoryItemId_Screwdriver          = 119,
-    InventoryItemId_Camera               = 120,
-    InventoryItemId_RingOfContract       = 121,
-    InventoryItemId_StoneOfTime          = 122,
-    InventoryItemId_AmuletOfSolomon      = 123,
-    InventoryItemId_CrestOfMercury       = 124,
-    InventoryItemId_Ankh                 = 125,
-    InventoryItemId_DaggerOfMelchior     = 126,
-    InventoryItemId_DiskOfOuroboros      = 127,
+    InventoryItemId_KaufmannKey           = 112,
+    InventoryItemId_Receipt               = 113,
+    InventoryItemId_SafeKey               = 114,
+    InventoryItemId_Magnet                = 115,
+    InventoryItemId_MotorcycleKey         = 116,
+    InventoryItemId_BirdCageKey           = 117,
+    InventoryItemId_Pliers                = 118,
+    InventoryItemId_Screwdriver           = 119,
+    InventoryItemId_Camera                = 120,
+    InventoryItemId_RingOfContract        = 121,
+    InventoryItemId_StoneOfTime           = 122,
+    InventoryItemId_AmuletOfSolomon       = 123,
+    InventoryItemId_CrestOfMercury        = 124,
+    InventoryItemId_Ankh                  = 125,
+    InventoryItemId_DaggerOfMelchior      = 126,
+    InventoryItemId_DiskOfOuroboros       = 127,
 
-    InventoryItemId_KitchenKnife         = 128,
-    InventoryItemId_SteelPipe            = 129,
-    InventoryItemId_RockDrill            = 130,
+    InventoryItemId_KitchenKnife          = 128,
+    InventoryItemId_SteelPipe             = 129,
+    InventoryItemId_RockDrill             = 130,
 
-    InventoryItemId_Hammer               = 132,
-    InventoryItemId_Chainsaw             = 133,
-    InventoryItemId_Katana               = 134,
-    InventoryItemId_Axe                  = 135,
+    InventoryItemId_Hammer                = 132,
+    InventoryItemId_Chainsaw              = 133,
+    InventoryItemId_Katana                = 134,
+    InventoryItemId_Axe                   = 135,
 
-    InventoryItemId_Handgun              = 160,
-    InventoryItemId_HuntingRifle         = 161,
-    InventoryItemId_Shotgun              = 162,
-    InventoryItemId_HyperBlaster         = 163,
+    InventoryItemId_Handgun               = 160,
+    InventoryItemId_HuntingRifle          = 161,
+    InventoryItemId_Shotgun               = 162,
+    InventoryItemId_HyperBlaster          = 163,
 	
     InventoryItemId_CutscenePhone         = 164,
     InventoryItemId_CutsceneFlauros       = 165,
@@ -628,13 +628,13 @@ typedef enum _InventoryItemId
     InventoryItemId_CutsceneBaby          = 168,
     InventoryItemId_CutsceneBloodPack     = 169,
 
-    InventoryItemId_HandgunBullets       = 192,
-    InventoryItemId_RifleShells          = 193,
-    InventoryItemId_ShotgunShells        = 194,
+    InventoryItemId_HandgunBullets        = 192,
+    InventoryItemId_RifleShells           = 193,
+    InventoryItemId_ShotgunShells         = 194,
 
-    InventoryItemId_Flashlight           = 224,
-    InventoryItemId_PocketRadio          = 225,
-    InventoryItemId_GasolineTank         = 226
+    InventoryItemId_Flashlight            = 224,
+    InventoryItemId_PocketRadio           = 225,
+    InventoryItemId_GasolineTank          = 226
 } e_InventoryItemId;
 
 
@@ -739,6 +739,7 @@ typedef enum _PlayerFlags
     PlayerFlag_Unk18          = 1 << 18,
     PlayerFlag_Unk19          = 1 << 19,
     PlayerFlag_Unk20          = 1 << 20,
+
     PlayerFlag_Unk29          = 1 << 29,
     PlayerFlag_Unk30          = 1 << 30,
     PlayerFlag_Unk31          = 1 << 31
@@ -868,20 +869,20 @@ typedef struct _ControllerData
 {
     s_AnalogController analogController_0;
     s32                pulseTicks_8;
-    s32                btnsHeld_C;       /** `e_ControllerFlags` */
-    s32                btnsClicked_10;   /** `e_ControllerFlags` */
-    s32                btnsReleased_14;  /** `e_ControllerFlags` */
-    s32                btnsPulsed_18;    /** `e_ControllerFlags` */
-    s32                btnsPulsedGui_1C; /** `e_ControllerFlags` */
+    e_ControllerFlags  btnsHeld_C;
+    e_ControllerFlags  btnsClicked_10;
+    e_ControllerFlags  btnsReleased_14;
+    e_ControllerFlags  btnsPulsed_18;
+    e_ControllerFlags  btnsPulsedGui_1C;
     s_AnalogSticks     sticks_20;
     s_AnalogSticks     sticks_24;
     s32                field_28;
 } s_ControllerData;
 STATIC_ASSERT_SIZEOF(s_ControllerData, 44);
 
-/** @brief Controller key bindings for input actions, contains bitfield of button presses assigned to each action.
+/** @brief Controller key bindings for input actions. Bontains bitfield of button presses assigned to each action.
  *
- * Bitfields only contain buttons, analog directions and D-Pad aren't included.
+ * Bitfields only contain buttons. Analog directions and D-Pad aren't included.
  */
 typedef struct _ControllerConfig
 {
@@ -985,7 +986,7 @@ typedef struct _EventParam
     u8  unk_0[2];
     s16 eventFlagId_2;
     u8  unk_4[1];
-    u8  field_5; // Something related to pickup items.
+    u8  field_5; // Index into `D_800E839C`. Related pickup item SFX.
     u8  unk_6[2];
     u32 triggerType_8_0        : 5;
     u32 pointOfInterestIdx_8_5 : 8; /** Index into `g_MapOverlayHeader.mapPointsOfInterest_1C`. */
@@ -1062,8 +1063,8 @@ typedef struct _GameWork
     u8                 background2dColor_G_58D;
     u8                 background2dColor_B_58E;
     u8                 field_58F;            // Command code? Maybe `s_PrimColor` fits here.
-    s32                gameStatePrev_590;    /** `e_GameState` */
-    s32                gameState_594;        /** `e_GameState` */
+    e_GameState        gameStatePrev_590;
+    e_GameState        gameState_594;
     s32                gameStateStep_598[3]; /** Temp data used by current `gameState`. Can be another state ID or other data. 
                                               * This states could be sub-states for specific events of individual screens
                                               * because of the way it's normally used in menus. For example: in the settings
@@ -1158,27 +1159,27 @@ typedef struct
 // Probably easier to do that after it's merged with rest of code.
 typedef struct _SubCharaPropertiesPlayer
 {
-    s32    field_E4;
-    q19_12 afkTimer_E8; // Increments every tick for 10 seconds before AFK anim starts.
-    q19_12 positionY_EC;
-    s32    field_F0;
-    q19_12 field_F4; // Angle. Related to X axis flex rotation.
-    s32    runTimer_F8; // Tick counter?
-    q19_12 exhaustionTimer_FC;
-    q19_12 field_100;    // Angle?
-    s32    field_104;    // Distance?
-    q19_12 runTimer_108;
-    u8     field_10C;    // Player SFX pitch?
-    u8     field_10D;
-    s8     unk_10E[6];
-    q19_12 gasWeaponPowerTimer_114; // Timer for the rock drill and chainsaw power.
-    s16    field_118;
-    s8     unk_11A[2];
-    s32    flags_11C; /** `e_PlayerFlags`. */
-    s16    field_120; // Angle which the player turns when doing a quick turn. In order words, some sort of holder for angle Y.
-    s16    field_122; // Some sort of X angle for the player. Specially used when aiming an enemy.
-    q3_12  headingAngle_124;
-    q3_12  playerMoveDistance_126; // Used to indicate how much the player should move foward. Seems to be squared.
+    s32           field_E4;
+    q19_12        afkTimer_E8; // Increments every tick for 10 seconds before AFK anim starts.
+    q19_12        positionY_EC;
+    s32           field_F0;
+    q19_12        field_F4;    // Angle. Related to X axis flex rotation.
+    s32           runTimer_F8; // Tick counter?
+    q19_12        exhaustionTimer_FC;
+    q19_12        field_100;    // Angle?
+    s32           field_104;    // Distance?
+    q19_12        runTimer_108;
+    u8            field_10C;    // Player SFX pitch?
+    u8            field_10D;
+    s8            unk_10E[6];
+    q19_12        gasWeaponPowerTimer_114; // Timer for the rock drill and chainsaw power.
+    s16           field_118;
+    s8            unk_11A[2];
+    e_PlayerFlags flags_11C;
+    s16           field_120; // Angle which the player turns when doing a quick turn. In order words, some sort of holder for angle Y.
+    s16           field_122; // Some sort of X angle for the player. Specially used when aiming an enemy.
+    q3_12         headingAngle_124;
+    q3_12         playerMoveDistance_126; // Used to indicate how much the player should move foward. Seems to be squared.
 } s_SubCharaPropertiesPlayer;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPlayer, 68);
 
@@ -1215,11 +1216,11 @@ STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesLarvalStalker, 68);
 
 typedef struct _SubCharPropertiesUnk0
 {
-    s32        unk_E4;            // Is this part of `a_SubCharacter`?
-    u32        field_E8_0: 4;
-    u32        field_E8_4: 4;
-    u32        field_E8_8: 4;
-    u32        field_E8_C: 20;
+    s32        unk_E4; // Is this part of `a_SubCharacter`?
+    u32        field_E8_0 : 4;
+    u32        field_E8_4 : 4;
+    u32        field_E8_8 : 4;
+    u32        field_E8_C : 20;
     u_Property properties_EC;
     u_Property properties_F0;
     u_Property properties_F4;
@@ -1334,7 +1335,7 @@ typedef struct _PlayerCombat
 {
     VECTOR3 field_0;
     s8      unk_C[3];
-    s8      weaponAttack_F; /** Packed weapon attack. See `WEAPON_ATTACK`. */
+    s8      weaponAttack_F;        /** Packed weapon attack. See `WEAPON_ATTACK`. */
     u8      currentWeaponAmmo_10;
     u8      totalWeaponAmmo_11;
     s8      weaponInventoryIdx_12; /** Index of the currently equipped weapon in the inventory. */
@@ -1387,21 +1388,21 @@ STATIC_ASSERT_SIZEOF(s_StructUnk3, 52);
 
 typedef struct
 {
-    s32          field_0; /** `e_PrimitiveType` */
-    s8*          field_4; /** Points to different types of data depending on `field_0`. */
-    s32          field_8; // } Q19.12?
-    s32          field_C; // }
-    s32          field_10;
-    u8           field_14;
-    u8           isFlashlightOn_15; /** `bool` | Off: `false`, On: `true`. */
-    u8           field_16;          /** `bool` */
-    s8           unk_17;
-    q3_12        flashlightIntensity_18; // Alpha.
-    u16          field_1A;
-    s_StructUnk3 field_1C[2];
-    s_StructUnk3 field_84[2];
-    s_StructUnk3 field_EC[2];
-    s_StructUnk3 field_154;
+    s32             field_0; /** `e_PrimitiveType` */
+    s8*             field_4; /** Points to different types of data depending on `field_0`. */
+    s32             field_8; // } Q19.12?
+    s32             field_C; // }
+    s32             field_10;
+    u8              field_14;
+    u8              isFlashlightOn_15; /** `bool` */
+    u8              field_16;          /** `bool` */
+    s8              unk_17;
+    q3_12           flashlightIntensity_18; // Alpha.
+    u16             field_1A;
+    s_StructUnk3    field_1C[2];
+    s_StructUnk3    field_84[2];
+    s_StructUnk3    field_EC[2];
+    s_StructUnk3    field_154;
 } s_SysWork_2288;
 STATIC_ASSERT_SIZEOF(s_SysWork_2288, 392);
 
@@ -1443,10 +1444,17 @@ typedef struct
 } s_SysWork_2514;
 STATIC_ASSERT_SIZEOF(s_SysWork_2514, 56);
 
+typedef enum _GameFlags
+{
+    GameFlag_None   = 0,
+    GameFlag_Freeze = 1 << 0,
+
+} e_GameFlags;
+
 typedef struct _SysWork
 {
     s8              unk_0[8];
-    s32             sysState_8;        /** `e_SysState` */
+    e_SysState      sysState_8;
     s32             sysStateStep_C[3]; /** Temp data used by current `sysState_8`. Can be another state ID or other data. */
     s32             field_18; // Related to map messages.
     s32             timer_1C;
@@ -1471,9 +1479,9 @@ typedef struct _SysWork
     s32             field_228C;
     s32             field_2290;
     s8              unk_2294[4];
-    s32             processFlags_2298; /** `e_SysWorkProcessFlags` */
+    e_SysWorkProcessFlags processFlags_2298;
     s32             field_229C;
-    e_SysFlags     sysFlags_22A0;
+    e_SysFlags      sysFlags_22A0;
     s32             flags_22A4; // (1 << 6) passed as "use through door cam" flag in `vcSetFirstCamWork`.
     GsCOORDINATE2   coord_22A8; // For particles only?
     GsCOORDINATE2   coord_22F8; // Likely related to above.
@@ -1487,14 +1495,11 @@ typedef struct _SysWork
     u8              silentYesSelection_2350_4       : 4; /** `bool` */
     u32             inventoryItemSelectedIdx_2351   : 8;
     u32             flags_2352                      : 8;
-    s8              enemyTargetIdx_2353; // Index of the enemy that is being attacked by the player.
+    s8              targetNpcIdx_2353; /** Index of the NPC being targeted by the player. */
     s8              npcIdxs_2354[4];
     u8              field_2358;          /** `bool` */
     s8              unk_2359[1];
-    u8              field_235A; /** If the player stop walking or running forward the value (as a bit) changes
-                                 * to 00000001 and if the player stop walking backward the value changes
-                                 * to 00000010.
-                                 */
+    u8              field_235A; // If the player stops walking or running forward, the value changes to 1. If the player stops walking backward, the value changes to 2.
     s8              unk_235B[1];
     GsCOORDINATE2*  field_235C;
     VECTOR3         field_2360; // Position?
@@ -1510,45 +1515,52 @@ typedef struct _SysWork
     s32             field_2510;
     s_SysWork_2514  field_2514;
     u8              unk_254C[508];
-    s16             field_2748[9];  // `func_80035ED0` loops over this.
+    s16             field_2748[9]; // `func_80035ED0` loops over this.
     u8              unk_275A[2];
-    s32             field_275C; // QX_12?
+    s32             field_275C; // Q19.12?
     s32             field_2760;
     s32             field_2764;
 } s_SysWork;
 STATIC_ASSERT_SIZEOF(s_SysWork, 10088);
 
-extern void* g_OvlBodyprog; // 0x80010004
-extern void* g_OvlDynamic;  // 0x80010000
+extern void* g_OvlBodyprog;
+extern void* g_OvlDynamic;
 
-extern s_SysWork               g_SysWork;       // 0x800B9FC0
-extern s_GameWork              g_GameWork;      // 0x800BC728
-extern s_GameWork* const       g_GameWorkConst; // 0x80024D44
-extern s_GameWork* const       g_GameWorkPtr;   // 0x80024D54
-extern s_Savegame* const       g_SavegamePtr;   // 0x80024D48
-extern s_ControllerData* const g_Controller0;   // 0x80024D4C
-extern s_ControllerData* const g_Controller1;   // 0x80024D50
+extern s_SysWork               g_SysWork;
+extern s_GameWork              g_GameWork;
+extern s_GameWork* const       g_GameWorkConst;
+extern s_GameWork* const       g_GameWorkPtr;
+extern s_Savegame* const       g_SavegamePtr;
+extern s_ControllerData* const g_Controller0;
+extern s_ControllerData* const g_Controller1;
 
-extern s32  g_ActiveBufferIdx; // 0x800B9FB8
-extern GsOT g_OrderingTable0[2]; // 0x800A8F74
-extern GsOT g_OrderingTable1[2]; // 0x800A8F9C
-extern GsOT g_OrderingTable2[2]; // 0x800A8FC4
+extern s32  g_ActiveBufferIdx;
+extern GsOT g_OrderingTable0[2];
+extern GsOT g_OrderingTable1[2];
+extern GsOT g_OrderingTable2[2];
 
-extern q19_12        g_DeltaTime0;    // 0x800B5CC0
-extern q19_12        g_DeltaTime1;    // 0x800A8FEC
-extern q19_12        g_DeltaTime2;    // 0x800B9CC8
-extern u32           g_MapEventIdx;   // 0x800A9A14
-extern s_EventParam* g_MapEventParam; // 0x800BCDD8
+extern q19_12        g_DeltaTime0;
+extern q19_12        g_DeltaTime1;
+extern q19_12        g_DeltaTime2;
+extern u32           g_MapEventIdx;
+extern s_EventParam* g_MapEventParam;
 
-extern s32 g_IntervalVBlanks; // 0x800A8FF0
-extern s32 g_PrevVBlanks;     // 0x800A9770
-extern s32 g_VBlanks;         // 0x800B5C34
-extern s32 g_UncappedVBlanks; // 0x800B5C38
+extern s32 g_IntervalVBlanks;
+extern s32 g_PrevVBlanks;
+extern s32 g_VBlanks;
+extern s32 g_UncappedVBlanks;
 
-/** @brief Sets `sysState` in `g_SysWork` for the next tick. */
+/** @brief Sets `sysState` in `g_SysWork` for the next tick.
+ *
+ * @param sysState System state to set.
+ * @return New system state.
+ */
 static inline s32 SysWork_StateSetNext(e_SysState sysState)
 {
-    s32 state = g_SysWork.sysState_8 = sysState;
+    s32 state;
+
+    state                       =
+    g_SysWork.sysState_8        = sysState;
     g_SysWork.timer_24          = 0;
     g_SysWork.sysStateStep_C[0] = 0;
     g_SysWork.field_28          = 0;
@@ -1568,10 +1580,17 @@ static inline void SysWork_StateStepIncrement()
     g_SysWork.sysStateStep_C[0]++;
 }
 
-/** @brief Sets `sysStateStep` in `g_SysWork` for the next tick. */
+/** @brief Sets `sysStateStep` in `g_SysWork` for the next tick.
+ *
+ * @param sysStateStep System state step to set.
+ * @return New system state step.
+ */
 static inline s32 SysWork_NextStateStepSet(s32 sysStateStep)
 {
-    s32 step = g_SysWork.sysStateStep_C[0] = sysStateStep;
+    s32 step;
+
+    step                        =
+    g_SysWork.sysStateStep_C[0] = sysStateStep;
     g_SysWork.field_28          = 0;
     g_SysWork.sysStateStep_C[1] = 0;
     g_SysWork.timer_2C          = 0;
@@ -1620,11 +1639,9 @@ static inline void Game_StateSetNext(e_GameState gameState)
 
     prevState = g_GameWork.gameState_594;
 
-    g_GameWork.gameState_594 = gameState;
-
-    g_SysWork.timer_1C = 0;
-    g_SysWork.timer_20 = 0;
-
+    g_GameWork.gameState_594        = gameState;
+    g_SysWork.timer_1C              = 0;
+    g_SysWork.timer_20              = 0;
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;
 
@@ -1644,9 +1661,8 @@ static inline void Game_StateSetPrevious()
 
     prevState = g_GameWork.gameState_594;
 
-    g_SysWork.timer_1C = 0;
-    g_SysWork.timer_20 = 0;
-
+    g_SysWork.timer_1C              = 0;
+    g_SysWork.timer_20              = 0;
     g_GameWork.gameStateStep_598[1] = 0;
     g_GameWork.gameStateStep_598[2] = 0;
 
@@ -1737,8 +1753,8 @@ static inline void Character_AnimSet(s_SubCharacter* chara, s32 animStatus, s32 
 // TODO: Move to separate character/player header.
 static inline void Player_AnimFlagsSet(u32 flags)
 {
-    s_MainCharacterExtra* extra;
     s_SubCharacter*       chara;
+    s_MainCharacterExtra* extra;
 
     extra = &g_SysWork.player_4C.extra_128;
     chara = &g_SysWork.player_4C.chara_0;

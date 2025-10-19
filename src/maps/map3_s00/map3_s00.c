@@ -178,8 +178,7 @@ void func_800D0CD0(void) // 0x800D0CD0
     Event_MapTake(17, EventFlag_M3S00_PickupMap, 48);
 }
 
-const char* MAP_MESSAGES[] =
-{
+const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
     "~J0(1.0)\tHold_it... ~E ",
     "~J0(0.6)\t~E ",

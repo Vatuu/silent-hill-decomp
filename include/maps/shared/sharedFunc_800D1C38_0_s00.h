@@ -38,6 +38,7 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_MainCharacterExtra* extr
             case 128:
                 cond = 1;
                 break;
+
             case 129:
                 cond = 1;
                 break;

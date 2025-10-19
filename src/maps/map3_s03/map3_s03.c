@@ -202,8 +202,7 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D1284);
 
 void func_800D1514(void) {}
 
-const char* MAP_MESSAGES[] =
-{
+const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
     "\tThere_is_a_ ~C2 Plate_of_[Hatter] ~C7 . ~N\n\tTake_it? ~S4 ",
     "\tThere_is_a_ ~C2 Plate_of_[Cat] ~C7 . ~N\n\tTake_it? ~S4 ",
@@ -321,19 +320,19 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D1A58);
 
 void func_800D26D0(void) // 0x800D26D0
 {
-    g_BackgroundColor = 0x68;
+    g_BackgroundColor = 104;
     func_80087360(FILE_TIM_PLATECLR_TIM, Q12(0.0f), Q12(0.0f), 18);
 }
 
 void func_800D2708(void) // 0x800D2708
 {
-    g_BackgroundColor = 0x68;
+    g_BackgroundColor = 104;
     func_80087360(FILE_TIM_LITHGRPH_TIM, Q12(0.0f), Q12(0.0f), 44);
 }
 
 void func_800D2740(void) // 0x800D2740
 {
-    g_BackgroundColor = 0x60;
+    g_BackgroundColor = 96;
     func_80087360(FILE_TIM_LITHGR_2_TIM, Q12(0.0f), Q12(0.0f), 45);
 }
 
@@ -344,6 +343,7 @@ void func_800D2778(void) // 0x800D2778
         case 0:
             sharedFunc_800D20E4_0_s00();
             SysWork_StateStepIncrement();
+
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
@@ -386,7 +386,7 @@ void func_800D30FC(void) // 0x800D30FC
 
 void func_800D3128(void) // 0x800D3128
 {
-    g_BackgroundColor = 0x70;
+    g_BackgroundColor = 112;
     func_80087360(FILE_TIM_ELCWIRE0_TIM, Q12(0.0f), Q12(0.0f), 55);
 }
 

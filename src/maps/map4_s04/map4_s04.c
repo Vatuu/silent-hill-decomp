@@ -154,7 +154,7 @@ void func_800D143C(s32 arg0) // 0x800D143C
 
 void func_800D1470(void) // 0x800D1470
 {
-    func_8003640C(!Savegame_EventFlagGet(EventFlag_237) ? 8 : 2);
+    func_8003640C(!Savegame_EventFlagGet(EventFlag_237) ? (1 << 3) : (1 << 1));
 }
 
 INCLUDE_RODATA("asm/maps/map4_s04/nonmatchings/map4_s04", D_800CA964);
@@ -171,8 +171,7 @@ void func_800D1870(void) {}
 
 #include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800D1878
 
-const char* MAP_MESSAGES[] =
-{
+const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
     "~J0(1.8)\tWhere_am_I? ~E ",
     "~J1(1.0)\tHarry. ",

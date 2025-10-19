@@ -176,8 +176,7 @@ void func_800D0AC4() {}
 
 #include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800D0ACC
 
-const char* MAP_MESSAGES[] =
-{
+const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
     "~J0(1.2)\t~E ",
     "~J1(1.2)\tLisa? ",

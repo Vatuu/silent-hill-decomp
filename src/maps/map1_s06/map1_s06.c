@@ -184,8 +184,7 @@ INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D5578);
 
 void func_800D560C(void) {}
 
-const char* MAP_MESSAGES[] =
-{
+const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
     "~J0(1.3)\t",
     "~J2(1.5)\tWhat_was_that...? ~E ",
@@ -215,6 +214,7 @@ void func_800D5B98(void) // 0x800D5B98
             sharedFunc_800D20E4_0_s00();
             func_80086470(0, InventoryItemId_KGordonKey, 0, false);
             SysWork_StateStepIncrement();
+
         case 1:
             func_80085DF0();
             break;
@@ -229,6 +229,7 @@ void func_800D5B98(void) // 0x800D5B98
 
         case 4:
             Savegame_EventFlagSet(EventFlag_M1S06_PickupKGordonKey);
+
             if (Gfx_PickupItemAnimate(InventoryItemId_KGordonKey))
             {
                 MapMsg_DisplayAndHandleSelection(true, 18, 5, 6, 0, false);
@@ -243,6 +244,7 @@ void func_800D5B98(void) // 0x800D5B98
         case 6:
             Savegame_EventFlagClear(EventFlag_M1S06_PickupKGordonKey);
             SysWork_StateStepIncrement();
+
         case 7:
             func_80086C58(&g_SysWork.player_4C.chara_0, 60);
             break;
@@ -265,7 +267,7 @@ INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D5DD8);
 
 void func_800D6338(void) // 0x800D6338
 {
-    g_BackgroundColor = 0x70;
+    g_BackgroundColor = 112;
 
     if (Savegame_EventFlagGet(EventFlag_M1S06_PickupKGordonKey))
     {

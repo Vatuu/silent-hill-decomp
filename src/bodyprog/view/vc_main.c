@@ -10,8 +10,7 @@
 #define MIN_IN_ROAD_DIST Q12(1.0f) // `vcGetMinInRoadDist` in SH2, hardcoded to `Q12(1.0f)` in SH1.
 
 /** @brief Fallback camera path collision. */
-VC_NEAR_ROAD_DATA vcNullNearRoad =
-{
+VC_NEAR_ROAD_DATA vcNullNearRoad = {
     .road_p_0              = vcNullRoadArray,
     .rd_dir_type_4         = VC_RD_DIR_Z,
     .use_priority_5        = 0,
@@ -23,8 +22,7 @@ VC_NEAR_ROAD_DATA vcNullNearRoad =
 };
 
 /** @brief Default look-at move parameters. */
-VC_WATCH_MV_PARAM deflt_watch_mv_prm =
-{
+VC_WATCH_MV_PARAM deflt_watch_mv_prm = {
     Q12(1.2f),
     Q12(2.2f),
     Q12(0.22f),
@@ -32,8 +30,7 @@ VC_WATCH_MV_PARAM deflt_watch_mv_prm =
 };
 
 /** @brief First-person look-at move parameters. */
-VC_WATCH_MV_PARAM self_view_watch_mv_prm =
-{
+VC_WATCH_MV_PARAM self_view_watch_mv_prm = {
     Q12(1.68f),
     Q12(3.08f),
     Q12(0.44f),
@@ -41,8 +38,7 @@ VC_WATCH_MV_PARAM self_view_watch_mv_prm =
 };
 
 /** @brief Camera move parameters for user? */
-VC_CAM_MV_PARAM cam_mv_prm_user =
-{
+VC_CAM_MV_PARAM cam_mv_prm_user = {
     Q12(10.0f),
     Q12(3.0f),
     Q12(6.0f),
@@ -50,8 +46,7 @@ VC_CAM_MV_PARAM cam_mv_prm_user =
 };
 
 /** @brief Boundary radii. */
-q19_12 excl_r_ary[9] =
-{
+q19_12 excl_r_ary[9] = {
     Q12(4.0f),
     Q12(4.0f),
     Q12(3.7f),
@@ -357,7 +352,7 @@ void vcSetAllNpcDeadTimer() // 0x8008123C
     s_SubCharacter* curChara;
 
     // Run through NPCs.
-    for (curChara = &g_SysWork.npcs_1A0[0]; curChara < &g_SysWork.npcs_1A0[NPC_COUNT_MAX]; curChara++)
+    for (curChara = &g_SysWork.npcs_1A0[0]; curChara < &g_SysWork.npcs_1A0[ARRAY_SIZE(g_SysWork.npcs_1A0)]; curChara++)
     {
         // Continue if invalid character.
         if (curChara->model_0.charaId_0 == Chara_None)
@@ -868,7 +863,7 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
         return;
     }
 
-    for (sc_p = &g_SysWork.npcs_1A0[0]; sc_p < &g_SysWork.npcs_1A0[NPC_COUNT_MAX]; sc_p++)
+    for (sc_p = &g_SysWork.npcs_1A0[0]; sc_p < &g_SysWork.npcs_1A0[ARRAY_SIZE(g_SysWork.npcs_1A0)]; sc_p++)
     {
         if (sc_p->model_0.charaId_0 >= Chara_AirScreamer &&
             sc_p->model_0.charaId_0 <= Chara_MonsterCybil &&
@@ -902,7 +897,7 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
                 if (sc_p->flags_3E & CharaFlag_Unk2) // `sc_p->battle(ShBattleInfo).status & (1 << 2)` in SH2.
                 {
                     set_active_data_f = false;
-                    if (sc_p == &g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353])
+                    if (sc_p == &g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353])
                     {
                         set_active_data_f = g_SysWork.playerCombatInfo_38.isAiming_13 > false;
                     }

@@ -1,8 +1,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 
-s_AnimInfo HARRY_M0S01_ANIM_INFOS[] =
-{
+s_AnimInfo HARRY_M0S01_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10.0f)           }, NO_VALUE, 676  },
     { Anim_Update0, ANIM_STATUS(38, true),  false, ANIM_STATUS(38, true), { Q12(10.0f)           }, 676,      677  },
     { Anim_Update2, ANIM_STATUS(39, false), false, ANIM_STATUS(39, true), { Q12(10.0f)           }, NO_VALUE, 678  },
@@ -46,8 +45,7 @@ s_AnimInfo HARRY_M0S01_ANIM_INFOS[] =
     {}
 };
 
-s_UnkStruct3_Mo g_MapHeaders_38[21] =
-{
+s_UnkStruct3_Mo g_MapHeaders_38[21] = {
     { 0x4D4C, 0x0,   0x2A4, 0x2A5 },
     { 0x4F4E, 0xCA,  0x2A6, 0x2C9 },
     { 0x5150, 0xD2,  0x2CA, 0x2DC },
@@ -71,8 +69,7 @@ s_UnkStruct3_Mo g_MapHeaders_38[21] =
     {}
 };
 
-u8 LOADABLE_INVENTORY_ITEMS[35] =
-{
+u8 LOADABLE_INVENTORY_ITEMS[35] = {
     InventoryItemId_HealthDrink,
     InventoryItemId_FirstAidKit,
     InventoryItemId_Ampoule,

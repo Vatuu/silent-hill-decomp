@@ -140,10 +140,17 @@ void func_800D4E84(s_SubCharacter*);
 
 void func_800D529C(s_SubCharacter* chara, q19_12 arg1, q19_12 angle);
 
+/* TODO: This function is almost identical to `sharedFunc_800D57C8_0_s01`.
+ * Both are used in map0_s01 so ifdefs cannot be used based on the map name.
+ * Sections under `#if 0` are what is missing compared to `sharedFunc_800D57C8_0_s01`.
+ */
 void func_800D598C(s_SubCharacter* chara);
 
 void func_800D39F4(s_SubCharacter* chara);
 
+/* TODO: This function is almost identical to `sharedFunc_800D57C8_0_s01`.
+ * Also look at `func_800D598C`.
+ */
 void func_800D5B10(s_SubCharacter* chara);
 
 void func_800D5C90(s_SubCharacter*);

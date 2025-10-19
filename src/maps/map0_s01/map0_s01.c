@@ -4,6 +4,7 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map0/map0_s01.h"
+
 const u32 D_800CA5C8[4] = {};
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800CCB8C);
@@ -191,13 +192,14 @@ void func_800D39F4(s_SubCharacter* chara) // 0x800D39F4
     chara->model_0.anim_4.time_4 = FP_TO(animTime, Q12_SHIFT);
 }
 
-void func_800D3A3C(s_SubCharacter* chara)
+void func_800D3A3C(s_SubCharacter* chara) // 0x800D3A3C
 {
     q19_12 animTime;
-    s32 idx;
+    s32    idx;
 
     idx = D_800A98FC[chara->model_0.charaId_0];
     Ai_AirScreamer_Update(chara, (&D_800A992C[idx])->animFile1_8, (&D_800A992C[idx])->npcCoords_14);
+
     chara->model_0.anim_4.status_0 = ANIM_STATUS(17, true);
     animTime = func_80044918(&chara->model_0.anim_4)->startKeyframeIdx_C;
     chara->model_0.stateStep_3 = 3;
@@ -214,6 +216,7 @@ void func_800D3AC0(s_SubCharacter* chara)
         case 5:
             chara->model_0.stateStep_3++;
             break;
+
         default:
             break;
     }
@@ -470,7 +473,7 @@ void func_800D426C(s_SubCharacter* chara) // 0x800D426C
     {
         case 0:
             if (!chara->properties_E4.unk0.properties_120.val32 ||
-                chara == &g_SysWork.npcs_1A0[g_SysWork.enemyTargetIdx_2353] ||
+                chara == &g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353] ||
                 Math_Distance2dGet(&chara->position_18, &g_SysWork.player_4C.chara_0.position_18) > Q12(6.5f))
             {
                 chara->model_0.state_2 = 47;
@@ -738,43 +741,47 @@ void func_800D46C4(s_SubCharacter* chara) // 0x800D46C4
 
 void func_800D4894(s_SubCharacter* chara)
 {
-    s32 dmgType;
-    s32 status;
-    u32 stateStep;
+    s32  damageType;
+    s32  animStatus;
+    u32  stateStep;
     bool cond;
 
-    stateStep = chara->model_0.stateStep_3;
-    status = chara->model_0.anim_4.status_0;
-    cond = 0;
+    stateStep  = chara->model_0.stateStep_3;
+    animStatus = chara->model_0.anim_4.status_0;
+    cond       = false;
+
     switch (stateStep)
     {
         case 0:
-            if (IS_ANIM_STATUS_ACTIVE(status))
+            if (IS_ANIM_STATUS_ACTIVE(animStatus))
             {
                 chara->model_0.anim_4.status_0 = ANIM_STATUS(7, false);
-                chara->model_0.stateStep_3 = 1;
+                chara->model_0.stateStep_3     = 1;
             }
             break;
+
         case 1:
-            if (status != ANIM_STATUS(7, false))
+            if (animStatus != ANIM_STATUS(7, false))
             {
                 chara->model_0.stateStep_3 = 2;
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             }
             break;
+
         case 2:
-            if (status != ANIM_STATUS(7, true))
+            if (animStatus != ANIM_STATUS(7, true))
             {
-                cond = 1;
+                cond = true;
             }
             break;
     }
 
     func_800D5D80(chara);
-    dmgType = Chara_DamageTake(chara, 0x999);
-    if (dmgType >= 0)
+
+    damageType = Chara_DamageTake(chara, 0x999);
+    if (damageType >= 0)
     {
-        if (dmgType < 3)
+        if (damageType < 3)
         {
             if (cond)
             {
@@ -783,11 +790,12 @@ void func_800D4894(s_SubCharacter* chara)
                 chara->properties_E4.unk0.field_E8_8 = 3;
             }
         }
-        else if (dmgType < 5)
+        else if (damageType < 5)
         {
-            chara->model_0.state_2 = ANIM_STATUS(25, true);
+            chara->model_0.state_2     = ANIM_STATUS(25, true);
             chara->model_0.stateStep_3 = 0;
-            if (chara->health_B0 <= 0)
+
+            if (chara->health_B0 <= Q12(0.0f))
             {
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
             }
@@ -799,36 +807,38 @@ void func_800D4894(s_SubCharacter* chara)
     }
 }
 
-void func_800D49B0(s_SubCharacter* chara)
+void func_800D49B0(s_SubCharacter* chara) // 0x800D49B0
 {
-    s32 status;
-    u32 stateStep;
+    s32  animStatus;
+    u32  stateStep;
     bool cond;
 
-    stateStep = chara->model_0.stateStep_3;
-    status = chara->model_0.anim_4.status_0;
-    cond = 0;
+    stateStep  = chara->model_0.stateStep_3;
+    animStatus = chara->model_0.anim_4.status_0;
+    cond       = false;
 
     switch (stateStep)
     {
         case 0:
-            if (IS_ANIM_STATUS_ACTIVE(status))
+            if (IS_ANIM_STATUS_ACTIVE(animStatus))
             {
                 chara->model_0.anim_4.status_0 = ANIM_STATUS(10, false);
                 chara->model_0.stateStep_3 = 1;
             }
             break;
+
         case 1:
-            if (status != ANIM_STATUS(10, false))
+            if (animStatus != ANIM_STATUS(10, false))
             {
                 chara->model_0.stateStep_3 = 2;
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             }
             break;
+
         case 2:
-            if (status != ANIM_STATUS(10, true))
+            if (animStatus != ANIM_STATUS(10, true))
             {
-                cond = 1;
+                cond = true;
             }
             break;
     }
@@ -862,11 +872,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D53AC);
 
 #include "maps/shared/sharedFunc_800D57C8_0_s01.h" // 0x800D57C8
 
-/* TODO: This function is almost identical to `sharedFunc_800D57C8_0_s01`.
- * Both are used in map0_s01 so we cannot use ifdefs based on the map name.
- * Sections under `#if 0` are what is missing compared to `sharedFunc_800D57C8_0_s01`.
- */
-void func_800D598C(s_SubCharacter* chara)
+void func_800D598C(s_SubCharacter* chara) // 0x800D598C
 {
     q19_12                       angle;
     q19_12                       dist;
@@ -896,6 +902,7 @@ void func_800D598C(s_SubCharacter* chara)
     tmp    = sharedFunc_800D569C_0_s01(chara, chara->properties_E4.unk0.field_F8.vy, dist); // `sharedFunc_800D57C8_0_s01` uses `pos0->vy`. Here we access it from chara (full offset).
     var_t4 = 0;
     posY   = tmp - chara->position_18.vy;
+
 #if 0
     if (dist > (chara->field_D4 + Q12(0.05f)) && (angle + FP_ANGLE(45.0f)) < (u32)FP_ANGLE(90.0f))
     {
@@ -934,8 +941,9 @@ void func_800D598C(s_SubCharacter* chara)
         idx2 = 18;
     }
 
-    element0 = sharedData_800CAA98_0_s01.unk_380[35][0]; // hardcoded 35 instead of idx1.
+    element0 = sharedData_800CAA98_0_s01.unk_380[35][0]; // Hardcoded 35 instead of `idx1`.
     element1 = sharedData_800CAA98_0_s01.unk_380[35][1];
+
     if (angle <= FP_ANGLE(0.5f))
     {
         element1 = -element1;
@@ -951,7 +959,7 @@ void func_800D598C(s_SubCharacter* chara)
         }
     }
 
-    element2 = sharedData_800CAA98_0_s01.unk_380[7][0]; // hardcoded 7 instead of idx0.
+    element2 = sharedData_800CAA98_0_s01.unk_380[7][0]; // Hardcoded 7 instead of idx0.
     element3 = sharedData_800CAA98_0_s01.unk_380[7][1];
     base     = &sharedData_800E21D0_0_s01;
 
@@ -983,14 +991,11 @@ void func_800D598C(s_SubCharacter* chara)
     sharedFunc_800D5E78_0_s01(chara, idx0);
 }
 
-/* TODO: This function is almost identical to `sharedFunc_800D57C8_0_s01`.
- * Also look at `func_800D598C`.
- */
 void func_800D5B10(s_SubCharacter* chara)
 {
     q19_12                       angle;
     q19_12                       dist;
-    s32                          posY;
+    q19_12                       posY;
     s32                          idx0;
     s32                          idx1;
     s32                          idx2;
@@ -1004,11 +1009,10 @@ void func_800D5B10(s_SubCharacter* chara)
     s32                          element2;
     s32                          element4;
     s32                          element5;
-    s32                          tmp;
+    q19_12                       tmp;
     VECTOR3*                     pos0;
     VECTOR3*                     pos;
     s_sharedData_800E21D0_0_s01* base;
-
 
     pos   = &chara->position_18;
     pos0  = &chara->properties_E4.unk0.field_F8;
@@ -1016,7 +1020,7 @@ void func_800D5B10(s_SubCharacter* chara)
     angle = FP_ANGLE_NORM_S(func_80080478(pos, pos0) - chara->rotation_24.vy);
 
     tmp        = sharedFunc_800D569C_0_s01(chara, chara->properties_E4.unk0.field_F8.vy, dist);
-    cond       = 0;
+    cond       = false;
     posY       = tmp - chara->position_18.vy;
     animStatus = chara->model_0.anim_4.status_0;
 
@@ -1027,8 +1031,8 @@ void func_800D5B10(s_SubCharacter* chara)
     }
     else if (animStatus < animStatus0 || animStatus >= ANIM_STATUS(28, false) || animStatus < ANIM_STATUS(27, false))
     {
-        cond = 1;
-        idx2   = 14;
+        cond = true;
+        idx2 = 14;
 
         if (posY <= Q12(0.05f))
         {
@@ -1046,6 +1050,7 @@ void func_800D5B10(s_SubCharacter* chara)
 
     element0 = sharedData_800CAA98_0_s01.unk_380[34][0];
     element1 = sharedData_800CAA98_0_s01.unk_380[34][1];
+
     if (angle <= FP_ANGLE(0.5f))
     {
         element1 = -element1;
@@ -1060,7 +1065,6 @@ void func_800D5B10(s_SubCharacter* chara)
             element0 = 0;
         }
     }
-
 
     element2 = sharedData_800CAA98_0_s01.unk_380[6][0];
     element3 = sharedData_800CAA98_0_s01.unk_380[6][1];
@@ -1086,18 +1090,19 @@ void func_800D5B10(s_SubCharacter* chara)
     base->field_B4[idx3][2] = element0;
     base->field_B4[idx3][1] = element1;
     base->field_B4[idx3][3] = angle;
-    base->field_B4[idx3][0] = (tmp = 1);
+    base->field_B4[idx3][0] =
+    tmp                     = 1;
 
-    sharedFunc_800D5E78_0_s01(chara, angle/2);
+    sharedFunc_800D5E78_0_s01(chara, angle / 2);
 }
 
-void func_800D5C90(s_SubCharacter* chara)
+void func_800D5C90(s_SubCharacter* chara) // 0x800D5C90
 {
-    s32 angle1;
-    s32 angle0;
-    s32 element0;
-    s32 element1;
-    s32 idx;
+    s32                          angle0;
+    s32                          angle1;
+    s32                          element0;
+    s32                          element1;
+    s32                          idx;
     s_sharedData_800E21D0_0_s01* base;
 
     angle0 = func_80080478(&chara->position_18, &chara->properties_E4.unk0.field_F8);
@@ -1120,17 +1125,20 @@ void func_800D5C90(s_SubCharacter* chara)
         }
     }
 
-    base     = &sharedData_800E21D0_0_s01;
+    base = &sharedData_800E21D0_0_s01;
+
     idx = 0;
     base->field_B4[idx][3] = 0;
     base->field_B4[idx][0] = 1;
     base->field_B4[idx][2] = sharedData_800CAA98_0_s01.unk_380[7][0];
     base->field_B4[idx][1] = sharedData_800CAA98_0_s01.unk_380[7][1];
+
     idx = 1;
     base->field_B4[idx][3] = 0;
     base->field_B4[idx][0] = 1;
     base->field_B4[idx][2] = sharedData_800CAA98_0_s01.unk_380[15][0];
     base->field_B4[idx][1] = sharedData_800CAA98_0_s01.unk_380[15][1];
+
     idx = 3;
     base->field_B4[idx][2] = element0;
     base->field_B4[idx][1] = element1;
@@ -1142,11 +1150,11 @@ void func_800D5C90(s_SubCharacter* chara)
 
 void func_800D5D80(s_SubCharacter* chara)
 {
-    s32 angle0;
-    s32 angle1;
-    s32 idx;
+    q19_12                       angle0;
+    q19_12                       angle1;
+    s32                          idx;
     s_sharedData_800E21D0_0_s01* base;
-    s_func_800D2E04* src;
+    s_func_800D2E04*             src;
 
     angle0 = func_80080478(&chara->position_18, &chara->properties_E4.unk0.field_F8);
     angle1 = FP_ANGLE_NORM_S(angle0 - chara->rotation_24.vy);
@@ -1156,25 +1164,28 @@ void func_800D5D80(s_SubCharacter* chara)
     idx = 0;
     base->field_B4[idx][2] = src->unk_380[7][0];
     base->field_B4[idx][1] = src->unk_380[7][1];
+
     idx = 1;
-    base->field_B4[idx][2] = src->unk_380[0x14][0];
-    base->field_B4[idx][1] = src->unk_380[0x14][1];
+    base->field_B4[idx][2] = src->unk_380[20][0];
+    base->field_B4[idx][1] = src->unk_380[20][1];
+
     idx = 3;
     base->field_B4[idx][2] = 0;
-    base->field_B4[idx][1] = src->unk_380[0x23][1];
+    base->field_B4[idx][1] = src->unk_380[35][1];
 
-    if (angle1 < 0)
+    if (angle1 < FP_ANGLE(0.0f))
     {
         angle1 += FP_ANGLE(0.3f);
     }
+
     sharedFunc_800D5E78_0_s01(chara, angle1 >> 2);
 }
 
 void func_800D5E14(s_SubCharacter* chara)
 {
-    s32 idx;
+    s32                          idx;
     s_sharedData_800E21D0_0_s01* base;
-    s_func_800D2E04* src;
+    s_func_800D2E04*             src;
 
     src = &sharedData_800CAA98_0_s01;
     base = &sharedData_800E21D0_0_s01;
@@ -1182,9 +1193,11 @@ void func_800D5E14(s_SubCharacter* chara)
     idx = 0;
     base->field_B4[idx][2] = src->unk_380[7][0];
     base->field_B4[idx][1] = src->unk_380[7][1];
+
     idx = 1;
     base->field_B4[idx][2] = src->unk_380[19][0];
     base->field_B4[idx][1] = src->unk_380[19][1];
+
     idx = 3;
     base->field_B4[idx][2] = 0;
     base->field_B4[idx][1] = src->unk_380[35][1];
@@ -1222,12 +1235,13 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D72E8_0_s01
 
 #include "maps/shared/sharedFunc_800D76A0_0_s01.h" // 0x800D76A0
 
-q19_12 func_800D7714(s_SubCharacter* chara)
+q19_12 func_800D7714(s_SubCharacter* chara) // 0x00D7714
 {
     bool   state;
     q19_12 ret;
 
     state = chara->model_0.state_2 != 1;
+
     switch (chara->model_0.anim_4.status_0)
     {
         case ANIM_STATUS(23, true):
@@ -1289,6 +1303,7 @@ q19_12 func_800D7714(s_SubCharacter* chara)
         default:
             ret = Q12(10.0f);
     }
+
     return ret;
 }
 

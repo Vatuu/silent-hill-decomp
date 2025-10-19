@@ -115,8 +115,7 @@ void GameState_MovieIntroAlternate_Update() // 0x801E2A24
 s32 max_frame = 0; // 0x801E3F40
 s32 frame_cnt = 0; // 0x801E3F44
 
-DISPENV disp =
-{
+DISPENV disp = {
     { 0, 256, SCREEN_WIDTH, SCREEN_HEIGHT }, // `disp`
     { 0, 8,   256,          208           }, // `screen`
     false,                                   // `isinter`

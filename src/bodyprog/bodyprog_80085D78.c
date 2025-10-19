@@ -715,7 +715,7 @@ void func_80086D04(s_SubCharacter* chara) // 0x80086D04
     }
 }
 
-void func_80086DA8(s32 fileIdx, s32 fadeTimestep) // 0x80086DA8
+void func_80086DA8(s32 fileIdx, q19_12 fadeTimestep) // 0x80086DA8
 {
     switch (g_SysWork.sysStateStep_C[1])
     {
@@ -735,7 +735,7 @@ void func_80086DA8(s32 fileIdx, s32 fadeTimestep) // 0x80086DA8
     }
 }
 
-void func_80086E50(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1) // 0x80086E50
+void func_80086E50(s32 fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x80086E50
 {
     switch (g_SysWork.sysStateStep_C[1])
     {
@@ -759,7 +759,7 @@ void func_80086E50(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1) // 0x80086
     }
 }
 
-void func_80086F44(s32 fadeTimestep0, s32 fadeTimestep1) // 0x80086F44
+void func_80086F44(q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x80086F44
 {
     if (g_SysWork.sysStateStep_C[1] == 0)
     {
@@ -779,7 +779,7 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
     if (!(g_SysWork.flags_22A4 & (1 << 5)))
     {
         // Run through NPCs.
-        for (i = 0; i < NPC_COUNT_MAX; i++)
+        for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
         {
             if (g_SysWork.npcs_1A0[i].model_0.charaId_0 >= Chara_Harry && g_SysWork.npcs_1A0[i].model_0.charaId_0 <= Chara_MonsterCybil &&
                 g_SysWork.npcs_1A0[i].health_B0 > Q12(0.0f))
@@ -788,7 +788,7 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
             }
         }
 
-        if (i != NPC_COUNT_MAX)
+        if (i != ARRAY_SIZE(g_SysWork.npcs_1A0))
         {
             g_DeltaTime0 = Q12(0.0f);
         }
@@ -820,7 +820,7 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
     }
 }
 
-void func_8008716C(s32 itemId, s32 fadeTimestep0, s32 fadeTimestep1) // 0x8008716C
+void func_8008716C(s32 itemId, q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x8008716C
 {
     switch (g_SysWork.sysStateStep_C[1])
     {
@@ -869,7 +869,7 @@ void func_8008716C(s32 itemId, s32 fadeTimestep0, s32 fadeTimestep1) // 0x800871
     }
 }
 
-void func_80087360(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsgIdx) // 0x80087360
+void func_80087360(s32 fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx) // 0x80087360
 {
     switch (g_SysWork.sysStateStep_C[1])
     {
@@ -912,7 +912,7 @@ void func_80087360(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsg
     }
 }
 
-void func_80087540(s32 fileIdx, s32 fadeTimestep0, s32 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1) // 0x80087540
+void func_80087540(s32 fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1) // 0x80087540
 {
     switch (g_SysWork.sysStateStep_C[1])
     {
@@ -984,7 +984,7 @@ void Event_ItemTake(s32 itemId, s32 itemCount, s32 eventFlagIdx, s32 mapMsgIdx) 
     if (!(g_SysWork.flags_22A4 & (1 << 5)))
     {
         // Traverse NPCs.
-        for (i = 0; i < NPC_COUNT_MAX; i++)
+        for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
         {
             if (g_SysWork.npcs_1A0[i].model_0.charaId_0 >= Chara_Harry && g_SysWork.npcs_1A0[i].model_0.charaId_0 <= Chara_MonsterCybil &&
                 g_SysWork.npcs_1A0[i].health_B0 > Q12(0.0f))
@@ -993,7 +993,7 @@ void Event_ItemTake(s32 itemId, s32 itemCount, s32 eventFlagIdx, s32 mapMsgIdx) 
             }
         }
         
-        if (i != NPC_COUNT_MAX)
+        if (i != ARRAY_SIZE(g_SysWork.npcs_1A0))
         {
             g_DeltaTime0 = Q12(0.0f);
         }
@@ -1088,8 +1088,7 @@ void Event_CommonItemTake(u32 pickupType, s32 eventFlagIdx) // 0x800879FC
 
 void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF4
 {
-    static const RECT D_8002ABA4 =
-    {
+    static const RECT D_8002ABA4 = {
         SCREEN_POSITION_X(100.0f), 256,
         SCREEN_WIDTH / 2, SCREEN_HEIGHT
     };
@@ -1404,7 +1403,7 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12 rotY, u32
     {
         if (HAS_FLAG(&g_SysWork.field_228C, arg1_1))
         {
-            for (i = 0; i < NPC_COUNT_MAX; i++) 
+            for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
             {
                 if (g_SysWork.npcs_1A0[i].field_40 == arg1_1)
                 {
@@ -1412,11 +1411,11 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12 rotY, u32
                 }
             }
 
-            return NPC_COUNT_MAX;
+            return ARRAY_SIZE(g_SysWork.npcs_1A0);
         }
 
         var_a0 = 0;
-        for (i = 0; i < NPC_COUNT_MAX; i++)
+        for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
         {
             if (g_SysWork.npcs_1A0[i].model_0.charaId_0 != Chara_None)
             { 
@@ -1431,7 +1430,7 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12 rotY, u32
     }
 
     // Run through NPC slots.
-    for (i = 0; i < NPC_COUNT_MAX; i++)
+    for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
     {
         // Skip occupied slot.
         if (g_SysWork.npcs_1A0[i].model_0.charaId_0 != Chara_None)
@@ -1466,7 +1465,7 @@ s32 Chara_Spawn(s32 charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12 rotY, u32
         return i;
     }
 
-    return NPC_COUNT_MAX;
+    return ARRAY_SIZE(g_SysWork.npcs_1A0);
 }
 
 void func_80088F94(s_SubCharacter* chara, s32 unused1, s32 unsued2) // 0x80088F94
@@ -1603,8 +1602,7 @@ extern const u32 D_8002AF5C[];
 extern const u32 D_8002AF64[];
 extern const u32 D_8002AF70[];
 
-const s_8002AC04 D_8002AC04[] =
-{
+const s_8002AC04 D_8002AC04[] = {
     // 2nd field is used as index into `D_800AFD08` funcptr array.
     // Seems each function takes different kind of params in 5th/6th fields:
     // #0 5th field is some kind of index/counter.
@@ -2902,14 +2900,12 @@ s32 func_8008D8C0(s16 x0, s32 x1, s32 x2) // 0x8008D8C0
 
     // TODO: What Q format are the array values?
 
-    static s32 Y_ARRAY_0[2] =
-    {
+    static s32 Y_ARRAY_0[2] = {
         0,
         0x1000
     };
 
-    static s32 Y_ARRAY_1[7] =
-    {
+    static s32 Y_ARRAY_1[7] = {
         0x4000,
         0x14CC,
         0x0E66,
@@ -2919,8 +2915,7 @@ s32 func_8008D8C0(s16 x0, s32 x1, s32 x2) // 0x8008D8C0
         0x0333
     };
 
-    static s32 Y_ARRAY_2[7] =
-    {
+    static s32 Y_ARRAY_2[7] = {
         0x0266,
         0x0333,
         0x0400,
@@ -2940,8 +2935,7 @@ s32 func_8008D8C0(s16 x0, s32 x1, s32 x2) // 0x8008D8C0
 }
 
 // Used by `func_8008D990`.
-u16 D_800AFD7C[] =
-{
+u16 D_800AFD7C[] = {
     0xF839, 0xF889, 0xFA39, 0xFAE4,
     0xFD56, 0xFDC8, 0xFF56, 0xFFEA,
     0x38,   0x18E,  0x1C7,  0x2AA,

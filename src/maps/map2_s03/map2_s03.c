@@ -88,7 +88,7 @@ void func_800CCA1C(void) // 0x800CCA1C
     s32 mapRoomIdx;
 
     mapRoomIdx = g_SavegamePtr->mapRoomIdx_A5;
-    flags      = (g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 2) ? 0x4 : 0x2;
+    flags      = (g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1)) ? (1 << 2) : (1 << 1);
 
     switch (mapRoomIdx)
     {
@@ -97,20 +97,23 @@ void func_800CCA1C(void) // 0x800CCA1C
             {
                 if (Savegame_EventFlagGet(EventFlag_165))
                 {
-                    flags |= 0x10;
+                    flags |= 1 << 4;
                 }
             }
             break;
+
         case 37:
         case 38:
-            flags = (g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 2) ? 0x2 : 0x1;
+            flags = (g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1)) ? (1 << 1) : (1 << 0);
             break;
+
         case 27:
         case 30:
-            flags |= 0x2;
+            flags |= 1 << 1;
             break;
+
         case 35:
-            flags = 0x2 | 0x4;
+            flags = (1 << 1) | (1 << 2);
             break;
     }
 
