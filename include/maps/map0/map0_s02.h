@@ -48,7 +48,9 @@ void MapEvent_KatanaItemTake(void);
 /** @brief Handles the channeling stone pickup event. */
 void MapEvent_ChannelingStoneItemTake(void);
 
-void Map_WorldObjectsInit(void);;
+void Map_WorldObjectsInit(void);
+
+void Map_WorldObjectsUpdate(void);
 
 extern u8 MAP_ROOM_IDXS[30];
 
