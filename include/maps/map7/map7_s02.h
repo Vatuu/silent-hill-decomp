@@ -51,7 +51,8 @@ extern s32 D_800EB6B4;
 
 extern s_WorldObjectPos D_800EB6E0; // Assumed type.
 
-extern s16 D_800EBB94;
+/** Timer. */
+extern q3_12 D_800EBB94;
 
 void Ai_GhostDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 

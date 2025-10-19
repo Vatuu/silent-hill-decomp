@@ -1489,7 +1489,8 @@ void func_800E0FF0(void) // 0x800E0FF0
 {
     if (Savegame_EventFlagGet(EventFlag_486) && Savegame_EventFlagGet(EventFlag_549))
     {
-        g_BackgroundColor = 0x78;
+        g_BackgroundColor = 120;
+
         switch (g_SysWork.sysStateStep_C[0])
         {
             case 0:
@@ -1539,13 +1540,13 @@ void func_800E0FF0(void) // 0x800E0FF0
             func_80087360(FILE_TIM_ELCWIRE1_TIM, 0, 0, 105);
             if (g_SysWork.sysStateStep_C[1] >= 3 && g_SysWork.sysStateStep_C[1] <= 5)
             {
-                // Plays sfx after random time between 0.2 - 2.2?
-                if (D_800EBB94 != 0)
+                // Plays SFX after random time between 0.2f - 2.2f?
+                if (D_800EBB94 != Q12(0.0f))
                 {
                     D_800EBB94 -= g_DeltaTime0;
-                    if (D_800EBB94 < 0)
+                    if (D_800EBB94 < Q12(0.0f))
                     {
-                        D_800EBB94 = 0;
+                        D_800EBB94 = Q12(0.0f);
                     }
                 }
                 else
@@ -1557,7 +1558,7 @@ void func_800E0FF0(void) // 0x800E0FF0
         }
         else
         {
-            g_BackgroundColor = 0x70;
+            g_BackgroundColor = 112;
             func_80087360(FILE_TIM_ELCWIRE0_TIM, 0, 0, 110);
         }
     }
@@ -1640,7 +1641,7 @@ void func_800E1398(void) // 0x800E1398
             {
                 MapMsg_DisplayAndHandleSelection(false, 107, 0, 0, 0, false);
             }
-            
+
             func_800862F8(2, 0, false);
             break;
 
@@ -1694,6 +1695,7 @@ void func_800E1DAC(void) // 0x800E1DAC
             func_800862F8(2, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 15, 0, 0, 0, false);
             break;
+
         case 5:
             g_BackgroundColor = 0x30;
             func_800862F8(2, 0, false);

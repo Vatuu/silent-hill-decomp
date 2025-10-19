@@ -17,9 +17,11 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* chara)
         default:
             var2 = 0;
             break;
+
         case 1:
             var2 = 1;
             break;
+
         case 2:
             var2 = 2;
             break;
@@ -31,6 +33,7 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* chara)
         default:
             var1 = 1;
             break;
+
         case 1:
             var1 = 0;
             break;
@@ -48,6 +51,7 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* chara)
             animStatus = NO_VALUE;
             var3 = 1;
             break;
+
         case 13:
             animStatus = ANIM_STATUS(19, true);
             if (g_SavegamePtr->mapOverlayId_A4 == 1)
@@ -74,17 +78,20 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* chara)
             animStatus = ANIM_STATUS(23, true);
             var3 = 3;
             break;
+
         case 0:
         case 2:
             var0 = 1;
             animStatus = ANIM_STATUS(25, true);
             var3 = 5;
             break;
+
         case 3:
             var0 = 1;
             animStatus = ANIM_STATUS(19, true);
             var3 = 19;
             break;
+
         case 4:
             var0 = 0;
             animStatus = ANIM_STATUS(25, true);
@@ -97,6 +104,7 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* chara)
             var3 = 18;
             stateStep = 64;
             break;
+
         case 6:
             var0 = 0;
             animStatus = ANIM_STATUS(17, true);
@@ -104,12 +112,14 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* chara)
             var3 = 33;
             stateStep = 64;
             break;
+
         case 8:
             var0 = 1;
             animStatus = ANIM_STATUS(14, true);
             var2 = 4;
             var3 = 9;
             break;
+
         case 9:
             var0 = 3;
             animStatus = ANIM_STATUS(19, true);;
@@ -117,6 +127,7 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* chara)
             var2 = 2;
             chara->health_B0 *= 4;;
             break;
+
         case 11:
             var0 = 0;
             animStatus = ANIM_STATUS(17, true);
@@ -124,6 +135,7 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* chara)
             stateStep = 65;
             var2 = 2;
             break;
+
         case 7:
             var0 = 0;
             animStatus = ANIM_STATUS(17, true);
@@ -131,6 +143,7 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* chara)
             stateStep = 66;
             var2 = 2;
             break;
+
         case 10:
             var0 = 0;
             animStatus = ANIM_STATUS(17, true);
@@ -153,6 +166,7 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* chara)
     {
         chara->properties_E4.unk0.flags_11C = CharaUnk0Flag_Unk16;
     }
+
     if ((animStatus != NO_VALUE) && (animStatus != chara->model_0.anim_4.status_0))
     {
         chara->model_0.anim_4.status_0 = animStatus;

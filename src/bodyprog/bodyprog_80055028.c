@@ -1970,7 +1970,7 @@ q3_12 func_8005BF38(q3_12 angle) // 0x8005BF38
     return outAngle;
 }
 
-s32 func_8005BF58(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9) // 0x8005BF58
+bool func_8005BF58(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9) // 0x8005BF58
 {
     s32 temp_a0;
     s32 temp_lo;
@@ -1982,12 +1982,12 @@ s32 func_8005BF58(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, 
 
     if (MAX(arg2, arg4) < CLAMP_HIGH(arg6, arg8) || MAX(arg6, arg8) < CLAMP_HIGH(arg2, arg4))
     {
-        return 0;
+        return false;
     }
 
     if (MAX(arg3, arg5) < CLAMP_HIGH(arg7, arg9) || MAX(arg7, arg9) < CLAMP_HIGH(arg3, arg5))
     {
-        return 0;
+        return false;
     }
 
     var_v0_5 = (arg6 - arg2) >> 6;
@@ -1998,13 +1998,13 @@ s32 func_8005BF58(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, 
     if (((var_v0_5 * (temp_a0 >> 6)) - (new_var * (temp_t4 >> 6))) > 0 ||
         ((((arg8 - arg2) >> 6) * (temp_a0 >> 6)) - (((arg9 - arg3) >> 6) * (temp_t4 >> 6))) < 0)
     {
-        return 0;
+        return false;
     }
 
     if ((((arg2 - arg6) >> 6) * ((arg9 - arg7) >> 6)) - (((arg3 - arg7) >> 6) * ((arg8 - arg6) >> 6)) < 0 ||
         (((arg4 - arg6) >> 6) * ((arg9 - arg7) >> 6)) - (((arg5 - arg7) >> 6) * ((arg8 - arg6) >> 6)) > 0)
     {
-        return 0;
+        return false;
     }
 
     if (arg0 != NULL)
@@ -2030,9 +2030,11 @@ s32 func_8005BF58(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, 
                 *arg0   = (var_a2 - ((arg7 << 9) - (temp_lo * arg6))) / (temp_lo - var_t0_5);
             }
         }
+
         *arg1 = ((var_t0_5 * *arg0) + var_a2) >> 9;
     }
-    return 1;
+
+    return true;
 }
 
 s32 func_8005C1CC(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8) // 0x8005C1CC

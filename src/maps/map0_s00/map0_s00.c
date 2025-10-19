@@ -103,25 +103,26 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CD8E8);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CE02C);
 
-void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2)
+void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2) // 0x800CE544
 {
-    s16 rng0;
-    s16 angle;
-    s32 someMax;
-    s32 someMin;
+    s16     rng0;
+    q3_12   angle;
+    s32     someMax;
+    s32     someMin;
     VECTOR3 vecCpy;
 
     if (sharedData_800DD584_0_s00 == 0)
     {
         arg2->field_0.vx += TIME_STEP_SCALE(g_DeltaTime0, arg2->field_C);
         arg2->field_0.vz += TIME_STEP_SCALE(g_DeltaTime0, arg2->field_E);
+
         switch (arg2->field_11)
         {
             case 1:
                 arg2->field_12++;
                 if (arg1)
                 {
-                    if (Rng_Rand16() & 1)
+                    if (Rng_Rand16() & 0x1)
                     {
                         arg2->field_11 = 5;
                         arg2->field_12 = 0;
@@ -137,9 +138,11 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2)
                     arg2->field_11 = ((Rng_Rand16() & 1) * 3) + 1;
                     arg2->field_12 = 0;
                 }
+
                 arg2->field_C += Rng_GenerateInt(Rng_Rand16(), -4, 4);
                 arg2->field_E += Rng_GenerateInt(Rng_Rand16(), -4, 4);
                 break;
+
             case 2:
                 arg2->field_12++;
                 if (arg1)
@@ -147,8 +150,10 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2)
                     arg2->field_11 = 5;
                     arg2->field_12 = 0;
                 }
+
                 arg2->field_C += Rng_GenerateInt(Rng_Rand16(), -4, 4);
                 arg2->field_E += Rng_GenerateInt(Rng_Rand16(), -4, 4);
+
                 if (arg2->field_12 > Rng_GenerateInt((u32)Rng_Rand16(), 100, 227))
                 {
                     arg2->field_11 = (Rng_Rand16() & 1) + 3;
@@ -158,8 +163,10 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2)
                     arg2->field_E = (u32)(Math_Cos(rng0) * 3) / 0x100;
                 }
                 break;
+
             case 3:
                 arg2->field_12++;
+
                 if (arg2->field_12 > Rng_GenerateInt((u32)Rng_Rand16(), 100, 227))
                 {
                     arg2->field_11 = 2;
@@ -167,25 +174,31 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2)
                     arg2->field_C = 0;
                     arg2->field_12 = 0;
                 }
+
                 if (arg1)
                 {
                     arg2->field_11 = 5;
                     arg2->field_12 = 0;
                 }
                 break;
+
             case 4:
                 arg2->field_12++;
+
                 vecCpy.vx = D_800E32DC[(idx0 / 20) + 1].vx - arg2->field_0.vx;
                 vecCpy.vz = D_800E32DC[(idx0 / 20) + 1].vz - arg2->field_0.vz;
                 vecCpy.vy = 0;
+
                 angle = ratan2(vecCpy.vx, vecCpy.vz);
                 arg2->field_C = (u32)(Math_Sin(angle) * 3) / 0x100;
                 arg2->field_E = (u32)(Math_Cos(angle) * 3) / 0x100;
+
                 if (arg1)
                 {
                     arg2->field_11 = Rng_GenerateInt((u32)Rng_Rand16(), 5, 6);
                     arg2->field_12 = 0;
                 }
+
                 if (arg2->field_12 > 192)
                 {
                     arg2->field_11 = Rng_GenerateInt((u32)Rng_Rand16(), 1, 2);
@@ -194,27 +207,34 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2)
                     arg2->field_12 = 0;
                 }
                 break;
+
             case 5:
-                if (arg2->field_12 == 0) {
+                if (arg2->field_12 == 0)
+                {
                     vecCpy.vx = (arg2->field_0.vx - g_SysWork.player_4C.chara_0.position_18.vx) >> 4;
                     vecCpy.vz = (arg2->field_0.vz - g_SysWork.player_4C.chara_0.position_18.vz) >> 4;
                     angle = ratan2(vecCpy.vx, vecCpy.vz);
                     arg2->field_C = (u32)(Math_Sin(angle) * 3) / 0x10;
                     arg2->field_E = (u32)(Math_Cos(angle) * 3) / 0x10;
                 }
+
                 if (arg1)
                 {
                     arg2->field_12 = 0;
                 }
+
                 if (arg2->field_12 > 16)
                 {
                     arg2->field_11 = 2;
                     arg2->field_12 = 0;
                 }
+
                 arg2->field_12++;
                 break;
+
             case 6:
                 arg2->field_12++;
+
                 if (arg2->field_12 > Rng_GenerateInt((u32)Rng_Rand16(), 20, 21))
                 {
                     if (arg1)
@@ -227,6 +247,7 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2)
                         arg2->field_11 = (Rng_GenerateInt((u32)Rng_Rand16(), 0, 1) * 3) + 1;
                     }
                 }
+
                 arg2->field_C += Rng_GenerateInt(Rng_Rand16(), -4, 4);
                 arg2->field_E += Rng_GenerateInt(Rng_Rand16(), -4, 4);
                 break;

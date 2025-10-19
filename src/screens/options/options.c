@@ -1488,12 +1488,12 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
         if (i < 3)
         {
             setXY0(tile, -160, -97 + (96 * i));
-            setWH(tile, 0x140, 2);
+            setWH(tile, 320, 2);
         }
         else
         {
             setXY0(tile, -577 + (144 * i), -120);
-            setWH(tile, 2, 0xF0);
+            setWH(tile, 2, 240);
         }
 
         addPrim(g_OrderingTable0[g_ActiveBufferIdx].org, (TILE*)packet);
