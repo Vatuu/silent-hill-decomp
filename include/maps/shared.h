@@ -2972,7 +2972,7 @@ typedef struct
 {
     VECTOR3  position_0;
     SVECTOR3 rotation_C;
-    s16      __pad_12;
+    //s16      __pad_12;
 } s_WorldObjectPos;
 
 typedef struct

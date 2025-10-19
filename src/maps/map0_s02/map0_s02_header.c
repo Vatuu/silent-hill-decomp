@@ -7,7 +7,6 @@
 
 #define func_800CECB0 (0x800CECB0)
 #define func_800CECDC (0x800CECDC)
-#define func_800CED08 (0x800CED08)
 #define func_800CEFD4 (0x800CEFD4)
 
 extern u8 D_800CFD90[];
@@ -59,7 +58,7 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .mapMessages_30           = MAP_MESSAGES,
     .animInfos_34             = HARRY_M0S02_ANIM_INFOS,
     .field_38                 = (s_UnkStruct3_Mo*)0x800CFA7C,
-    .func_3C                  = func_800CED08,
+    .func_3C                  = Map_WorldObjectsInit,
     .func_40                  = func_800CEFD4,
     .func_44                  = NULL,
     .func_48                  = NULL,
