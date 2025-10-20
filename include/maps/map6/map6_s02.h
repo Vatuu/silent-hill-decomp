@@ -11,9 +11,6 @@
 #define HAS_PlayerState_Unk175
 #define KEYFRAME_PlayerState_Unk111 915
 
-extern SVECTOR D_800CAA98;
-extern VECTOR3 D_800CAAA0;
-
 extern s_FsImageDesc D_800D3B44[2];
 
 extern u16 D_800D3B6C;
