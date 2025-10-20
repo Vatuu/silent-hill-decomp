@@ -105,6 +105,11 @@ typedef enum _Sfx
     Sfx_Cancel  = Sfx_Base + 26,
     Sfx_Confirm = Sfx_Base + 27, // TODO: Continue this pattern.
 
+    Sfx_Unk1300 = Sfx_Base + 20,
+    Sfx_Unk1301 = Sfx_Base + 21,
+    Sfx_Unk1302 = Sfx_Base + 22,
+    Sfx_Unk1303 = Sfx_Base + 23,
+
     Sfx_Unk1308 = 1308,
     Sfx_Unk1309 = 1309,
     Sfx_Unk1310 = 1310,
@@ -4649,6 +4654,8 @@ s32 Math_MagnitudeShiftGet(s32 mag);
 u8 func_8008A2E0(s32 arg0);
 
 void func_800348C0();
+
+bool func_8008B474(s32 arg0, s32 arg1, s32 soundType);
 
 void GameState_Boot_Update();
 void GameState_StartMovieIntro_Update();
