@@ -11,6 +11,7 @@ from dataclasses import dataclass
 from typing import Dict, List, Set, Union
 from pathlib import Path
 import splat
+import spimdisasm
 import splat.scripts.split as split
 from splat.segtypes.linker_entry import LinkerEntry
 
@@ -107,56 +108,56 @@ DEFINE_FLAGS    = "-D_LANGUAGE_C -DUSE_INCLUDE_ASM"
 
 
 YAML_FILES = [
-    #"main.yaml",
-    #"bodyprog.yaml",
-    #"screens/b_konami.yaml",
-    #"screens/stream.yaml",
-    #"screens/options.yaml",
-    #"screens/credits.yaml",
-    #"screens/saveload.yaml",
-    #"maps/map0_s00.yaml",
-    #"maps/map0_s01.yaml",
-    #"maps/map0_s02.yaml",
-    #"maps/map1_s00.yaml",
-    #"maps/map1_s01.yaml",
-    #"maps/map1_s02.yaml",
-    #"maps/map1_s03.yaml",
-    #"maps/map1_s04.yaml",
-    #"maps/map1_s05.yaml",
-    #"maps/map1_s06.yaml",
-    #"maps/map2_s00.yaml",
-    #"maps/map2_s01.yaml",
-    #"maps/map2_s02.yaml",
-    #"maps/map2_s03.yaml",
-    #"maps/map2_s04.yaml",
-    #"maps/map3_s00.yaml",
-    #"maps/map3_s01.yaml",
-    #"maps/map3_s02.yaml",
-    #"maps/map3_s03.yaml",
-    #"maps/map3_s04.yaml",
-    #"maps/map3_s05.yaml",
-    #"maps/map3_s06.yaml",
-    #"maps/map4_s00.yaml",
-    #"maps/map4_s01.yaml",
-    #"maps/map4_s02.yaml",
-    #"maps/map4_s03.yaml",
-    #"maps/map4_s04.yaml",
-    #"maps/map4_s05.yaml",
-    #"maps/map4_s06.yaml",
-    #"maps/map5_s00.yaml",
-    #"maps/map5_s01.yaml",
-    #"maps/map5_s02.yaml",
-    #"maps/map5_s03.yaml",
-    #"maps/map6_s00.yaml",
-    #"maps/map6_s01.yaml",
-    #"maps/map6_s02.yaml",
-    #"maps/map6_s03.yaml",
-    #"maps/map6_s04.yaml",
-    #"maps/map6_s05.yaml",
-    #"maps/map7_s00.yaml",
-    #"maps/map7_s01.yaml",
+    "main.yaml",
+    "bodyprog.yaml",
+    "screens/b_konami.yaml",
+    "screens/stream.yaml",
+    "screens/options.yaml",
+    "screens/credits.yaml",
+    "screens/saveload.yaml",
+    "maps/map0_s00.yaml",
+    "maps/map0_s01.yaml",
+    #"maps/map0_s02.yaml", # Bugged
+    "maps/map1_s00.yaml",
+    "maps/map1_s01.yaml",
+    "maps/map1_s02.yaml",
+    "maps/map1_s03.yaml",
+    "maps/map1_s04.yaml",
+    "maps/map1_s05.yaml",
+    "maps/map1_s06.yaml",
+    "maps/map2_s00.yaml",
+    "maps/map2_s01.yaml",
+    "maps/map2_s02.yaml",
+    "maps/map2_s03.yaml",
+    "maps/map2_s04.yaml",
+    "maps/map3_s00.yaml",
+    "maps/map3_s01.yaml",
+    "maps/map3_s02.yaml",
+    "maps/map3_s03.yaml",
+    "maps/map3_s04.yaml",
+    "maps/map3_s05.yaml",
+    "maps/map3_s06.yaml",
+    "maps/map4_s00.yaml",
+    "maps/map4_s01.yaml",
+    "maps/map4_s02.yaml",
+    "maps/map4_s03.yaml",
+    "maps/map4_s04.yaml",
+    "maps/map4_s05.yaml",
+    "maps/map4_s06.yaml",
+    "maps/map5_s00.yaml",
+    "maps/map5_s01.yaml",
+    "maps/map5_s02.yaml",
+    "maps/map5_s03.yaml",
+    "maps/map6_s00.yaml",
+    "maps/map6_s01.yaml",
+    "maps/map6_s02.yaml",
+    "maps/map6_s03.yaml",
+    "maps/map6_s04.yaml",
+    "maps/map6_s05.yaml",
+    "maps/map7_s00.yaml",
+    "maps/map7_s01.yaml",
     "maps/map7_s02.yaml",
-    #"maps/map7_s03.yaml",
+    "maps/map7_s03.yaml"
 ]
 
 
@@ -167,8 +168,8 @@ def setup_ninja(split_entries):
     def build(
         object_paths: Union[Path, List[Path]],
         src_paths: List[Path],
-        task: str
-        
+        task: str,
+        ovl_map_flag: str = ""
         ):
         """
         Helper function to build objects.
@@ -182,21 +183,27 @@ def setup_ninja(split_entries):
         if task == "cc_ovl" or task == "cc":
             object_strs = [re.sub(".o$", ".s", str(obj)) for obj in object_paths]
             input_tar   = [re.sub(".c.o$", ".sjis.i", str(obj)) for obj in object_paths]
+            implicit1   = [re.sub(".c.o$", ".sjis.i", str(obj)) for obj in object_paths]
         elif task == "iconv":
             object_strs = [re.sub(".c.o$", ".sjis.i", str(obj)) for obj in object_paths]
             input_tar   = [re.sub(".c.o$", ".i", str(obj)) for obj in object_paths]
+            implicit1   = [re.sub(".c.o$", ".i", str(obj)) for obj in object_paths]
         elif task == "cpp":
             object_strs = [re.sub(".c.o$", ".i", str(obj)) for obj in object_paths]
             input_tar   = [str(s) for s in src_paths]
+            implicit1   = ''
         elif task == "objdump":
             object_strs = [re.sub(".o$", ".dump.s", str(obj)) for obj in object_paths]
             input_tar   = [str(obj) for obj in object_paths]
+            implicit1   = [str(obj) for obj in object_paths]
         elif task == "maspsx":
             object_strs = [str(obj) for obj in object_paths]
             input_tar   = [re.sub(".o$", ".s", str(obj)) for obj in object_paths]
+            implicit1   = [re.sub(".o$", ".s", str(obj)) for obj in object_paths]
         else:
             object_strs = [str(obj) for obj in object_paths]
             input_tar   = [str(s) for s in src_paths]
+            implicit1   = ''
         
         
 
@@ -204,11 +211,37 @@ def setup_ninja(split_entries):
         for object_path in object_paths:
             if object_path.suffix == ".o" or object_path.suffix == ".i":
                 built_objects.add(object_path)
-            ninja.build(
-                outputs=object_strs,
-                rule=task,
-                inputs=input_tar
-            )
+            if implicit1 != "" and task != "maspsx":
+                ninja.build(
+                    outputs=object_strs,
+                    rule=task,
+                    inputs=input_tar,
+                    implicit=implicit1
+                )
+            elif task == "cpp":
+                ninja.build(
+                    outputs=object_strs,
+                    rule=task,
+                    inputs=input_tar,
+                    variables={
+                        "OVL_FLAGS": ovl_map_flag
+                    }
+                )
+            elif task == "maspsx":
+                ninja.build(
+                    outputs=object_strs,
+                    rule=task,
+                    inputs=input_tar,
+                    variables={
+                        "MAPSXFLAG": ovl_map_flag
+                    }
+                )
+            else:
+                ninja.build(
+                    outputs=object_strs,
+                    rule=task,
+                    inputs=input_tar
+                )
 
     ninja = ninja_syntax.Writer(open(str("build.ninja"), "w", encoding="utf-8"), width=9999)
     
@@ -250,7 +283,7 @@ def setup_ninja(split_entries):
     ninja.rule(
         "maspsx",
         description="maspsx $in",
-        command=f"python3 tools/maspsx/maspsx.py --aspsx-version=2.77 --run-assembler -EL -Iinclude -I build -Iinclude/psyq -O2 -G0 -march=r3000 -mtune=r3000 -no-pad-sections -o $out $in",
+        command=f"python3 tools/maspsx/maspsx.py --aspsx-version=2.77 --run-assembler $MAPSXFLAG -EL -Iinclude -I build -Iinclude/psyq -O2 -G0 -march=r3000 -mtune=r3000 -no-pad-sections -o $out $in",
     )
     
     ninja.rule(
@@ -262,20 +295,38 @@ def setup_ninja(split_entries):
     ninja.rule(
         "elf",
         description="elf $out.elf",
-        command=f"{LD} {ENDIAN} {OPT_FLAGS} -nostdlib --no-check-sections -Map $out.map -T $in -T $undef_sym_path -T $undef_fun_path -o $out.elf",
+        command=f"{LD} {ENDIAN} {OPT_FLAGS} -nostdlib --no-check-sections -Map $out.map -T $in -T $undef_sym_path -T $undef_fun_path -T {CONFIG_DIR}/USA/lib_externs.ld -o $out",
     )
     
     ninja.rule(
         "objcopy",
         description="objcopy $out",
-        command=f"{OBJCOPY} -O binary $out $in",
+        command=f"{OBJCOPY} -O binary $in $out",
+    )
+    ninja.rule(
+        "sha256sum",
+        description="checksum",
+        command=f"sha256sum --ignore-missing --check $in",
+    )
+    ninja.rule(
+        "postbuild",
+        description="postbuild script",
+        command=f"tools/postbuild.sh $in",
     )
     
     mapId = ""
     implicits = []
+    outbuilds = []
     
     # Build all the objects
     for split_config in split_entries:
+        if split_config.SPLIT_BASENAME == "STREAM.BIN":
+            os.system(f"tools/prebuild.sh screens/stream")
+        elif split_config.SPLIT_BASENAME == "main":
+            os.system(f"tools/prebuild.sh main")
+        elif split_config.SPLIT_BASENAME == "BODYPROG.BIN":
+            os.system(f"tools/prebuild.sh bodyprog")
+        
         for split_entry in split_config.SPLIT_ENTRIES:
             for entry in split_entry:
                 seg = entry.segment
@@ -286,18 +337,15 @@ def setup_ninja(split_entries):
                 if seg.type[0] == ".":
                     continue
                 
-                
                 if isinstance(seg, splat.segtypes.common.asm.CommonSegAsm) or isinstance(seg, splat.segtypes.common.data.CommonSegData):
                     build(entry.object_path, entry.src_paths, "as")
                 elif isinstance(seg, splat.segtypes.common.c.CommonSegC):
-                    if re.search("^src/maps.*", str(entry.src_paths[0])) and mapId != re.search("map\d_s\d\d", str(entry.src_paths[0]))[0]:
+                    if re.search("^src/maps.*", str(entry.src_paths[0])):
                         mapId = re.search("map\d_s\d\d", str(entry.src_paths[0]))[0]
-                        ninja.variable(
-                            "OVL_FLAGS",
-                            f"-D{mapId}".upper()
-                        )
+                        build(entry.object_path, entry.src_paths, "cpp", f"-D{mapId}".upper())
+                    else:
+                        build(entry.object_path, entry.src_paths, "cpp")
                     
-                    build(entry.object_path, entry.src_paths, "cpp")
                     build(entry.object_path, "", "iconv")
                         
                     if re.search("^src/main.*", str(entry.src_paths[0])):
@@ -305,10 +353,14 @@ def setup_ninja(split_entries):
                     else:
                         build(entry.object_path, "", "cc_ovl")
                     
-                    build(entry.object_path, "", "maspsx")
+                    if re.search("smf_io", str(entry.src_paths[0])) or re.search("smf_mid", str(entry.src_paths[0])):
+                        build(entry.object_path, "", "maspsx", "--expand-div")
+                    else:
+                        build(entry.object_path, "", "maspsx")
+                    
                     build(entry.object_path, "", "objdump")
                     
-                elif isinstance(seg, splat.segtypes.common.databin.CommonSegDatabin):
+                elif isinstance(seg, splat.segtypes.common.databin.CommonSegDatabin) or seg.type == "header":
                     build(entry.object_path, entry.src_paths, "as")
                 elif isinstance(seg, splat.segtypes.common.rodatabin.CommonSegRodatabin):
                     build(entry.object_path, entry.src_paths, "as")
@@ -316,21 +368,33 @@ def setup_ninja(split_entries):
                     build(entry.object_path, entry.src_paths, "as")
                 elif isinstance(seg, splat.segtypes.common.bin.CommonSegBin):
                     build(entry.object_path, entry.src_paths, "ld")
+                elif isinstance(seg, splat.segtypes.common.lib.CommonSegLib):
+                    """Did you know that Silent Hill: Homecoming was meant to
+                    have a seccion where Alex would have to go through a forest
+                    and there he would have founded a hunter that would have
+                    tried to kill him, but due lack of direction the whole
+                    section was scrap and the hunter model was repurpose for
+                    Travis Grady"""
                 else:
                     print(f"ERROR: Unsupported build segment type {seg.type}")
                     sys.exit(1)
                 
-                implicits += [str(s) for s in [entry.object_path]]
+                if isinstance(seg, splat.segtypes.common.lib.CommonSegLib) != True:
+                    implicits += [str(s) for s in [entry.object_path]]
         
         if split_config.SPLIT_BASENAME == "BODYPROG.BIN" or split_config.SPLIT_BASENAME == "B_KONAMI.BIN":
             split_config.SPLIT_BASENAME = f"1ST/{split_config.SPLIT_BASENAME}"
-        else:
+        elif split_config.SPLIT_BASENAME != "main":
             split_config.SPLIT_BASENAME = f"VIN/{split_config.SPLIT_BASENAME}"
         
-        output = f"{BUILD_DIR}/out/{split_config.SPLIT_BASENAME}"
+        
+        if split_config.SPLIT_BASENAME != "main":
+            output = f"{BUILD_DIR}/out/{split_config.SPLIT_BASENAME}"
+        else:
+            output = f"{BUILD_DIR}/out/SLUS_007.07"
         
         ninja.build(
-            outputs=output,
+            outputs=f"{output}.elf",
             rule="elf",
             inputs=split_config.SPLIT_LINKER,
             variables={
@@ -340,11 +404,40 @@ def setup_ninja(split_entries):
             implicit=implicits
         )
         ninja.build(
-            outputs=f"{output}.elf",
+            outputs=output,
             rule="objcopy",
-            inputs=output
+            inputs=f"{output}.elf",
+            implicit=f"{output}.elf"
         )
         implicits=[]
+        
+        if split_config.SPLIT_BASENAME == "1ST/BODYPROG.BIN":
+            ninja.build(
+                outputs=f"{output}.fix",
+                rule="postbuild",
+                inputs=output,
+                implicit=output
+            )
+        elif split_config.SPLIT_BASENAME == "VIN/STREAM.BIN":
+            ninja.build(
+                outputs=f"{output}.fix",
+                rule="postbuild",
+                inputs=output,
+                implicit=output
+            )
+        
+        outbuilds += [str(s) for s in [output]]
+    
+    for s in range(len(outbuilds)):
+        if outbuilds[s] == "build/out/VIN/STREAM.BIN" or outbuilds[s] == "build/out/1ST/BODYPROG.BIN":
+            outbuilds[s] = f"{outbuilds[s]}.fix"
+    
+    ninja.build(
+        "build/out/checksum.ok",
+        "sha256sum",
+        "configs/USA/checksum.sha",
+        implicit=outbuilds
+    )
 
 
 def clean_files(clean_all):
@@ -419,8 +512,9 @@ def main():
     if args.setup == None:
         clean_files(True)
         for YAML_FILE in YAML_FILES:
-            #TODO MULT-VER-SUPPORT: Replace config dir to use multi-version support
-            split.main([Path(f"{CONFIG_DIR}/USA/{YAML_FILE}")], modes="all", verbose=False)
+            splat.util.symbols.spim_context = spimdisasm.common.Context()
+            splat.util.symbols.reset_symbols()
+            split.main([Path(f"{CONFIG_DIR}/USA/{YAML_FILE}")], modes="all", use_cache=False, verbose=False, disassemble_all=True, make_full_disasm_for_code=True)
             SPLITS_INFO += [SPLITINFO([split.linker_writer.entries], split.config['options']['basename'], split.config['options']['ld_script_path'], split.config['options']['undefined_funcs_auto_path'], split.config['options']['undefined_syms_auto_path'])]
         
         setup_ninja([SPLITS_INFO][0])

@@ -96,6 +96,9 @@ segments:
       - [0x99D8, .rodata, libsd/smf_mid]
 
       # .text section
+      - [0x9AD0,    c, bodyprog] # Data
+      - [0x9AD0,    c, globals] # Data
+      - [0x9AD0,    c, syswork_functable] # Data
       - [0x9AD0,    c, memcard/memcard_1]
       - [0xC98C,    c, gfx/background_draw]
       - [0xD39C,    c, gfx/text_draw_debug]
@@ -127,6 +130,7 @@ segments:
       - [0x61218,   c, bodyprog_80085D78]
       - [0x6A3C0,   c, demo]
       - [0x6ADEC,   c, credits]
+      - [0x6CF9C,   c, bodyprog_800A8D98] # Data
       - [0x6CF9C, lib, libapi, a09]
       - [0x6CFAC, lib, libapi, a11]
       - [0x6CFBC, lib, libapi, a39]
