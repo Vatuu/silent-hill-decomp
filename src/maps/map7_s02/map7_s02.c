@@ -490,8 +490,8 @@ void func_800DA248(void) // 0x800DA248
             sharedFunc_800D20E4_0_s00();
             D_800EB6B0 = 0;
 
-            Fs_QueueStartRead(57, FS_BUFFER_4);
-            Fs_QueueStartRead(145, FS_BUFFER_11);
+            Fs_QueueStartRead(FILE_ANIM_HBM7_SLS_ANM, FS_BUFFER_4);
+            Fs_QueueStartRead(FILE_ANIM_NURSE1_DMS, FS_BUFFER_11);
             Fs_QueueWaitForEmpty();
 
             DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_11);
@@ -672,7 +672,7 @@ void func_800DAA4C(void) // 0x800DAA4C
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            Fs_QueueStartRead(146, FS_BUFFER_11);
+            Fs_QueueStartRead(FILE_ANIM_NURSE2_DMS, FS_BUFFER_11);
             Fs_QueueWaitForEmpty();
             DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_11);
             Chara_Spawn(Chara_BloodyLisa, 0, g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz + Q12(1.0f), 0, 3);
@@ -1233,7 +1233,156 @@ void func_800DC94C(void) {}
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800DC954);
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", func_800DCD00);
+void func_800DCD00(void) // 0x800DCD00
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+
+            if (Savegame_EventFlagGet(EventFlag_552))
+            {
+                func_800862F8(0, FILE_TIM_CHAINRF2_TIM, false);
+            }
+            else
+            {
+                func_800862F8(0, FILE_TIM_CHAINRF1_TIM, false);
+            }
+
+            D_800E9ED8 = 0;
+            SysWork_StateStepIncrement();
+
+        case 1:
+            func_8008616C(2, true, 0, Q12(0.0f), false);
+            break;
+
+        case 2:
+            func_800862F8(1, 0, false);
+            break;
+
+        case 3:
+            func_800862F8(2, 0, false);
+            func_8008616C(2, false, 0, Q12(0.0f), false);
+
+            if (D_800E9ED8 == 0 && !Savegame_EventFlagGet(EventFlag_555))
+            {
+                Sd_PlaySfx(Sfx_Unk1664, 0, 224);
+                D_800E9ED8 = Rng_GenerateInt(Rng_Rand16(), Q12(1.2f), Q12(2.8f) - 1);
+            }
+            else
+            {
+                D_800E9ED8 = (D_800E9ED8 - g_DeltaTime0) >= 0 ? D_800E9ED8 - (s16)g_DeltaTime0 : 0;
+            }
+            break;
+
+        case 4:
+            Sd_PlaySfx(Sfx_Unk1665, 0, 128);
+            SysWork_StateStepIncrement();
+
+        case 5:
+            if (Savegame_EventFlagGet(EventFlag_552))
+            {
+                MapMsg_DisplayAndHandleSelection(false, 92, 0, 0, 0, false);
+            }
+            else
+            {
+                MapMsg_DisplayAndHandleSelection(false, 91, 0, 0, 0, false);
+            }
+
+            func_800862F8(2, 0, false);
+
+            if (D_800E9ED8 == 0 && !Savegame_EventFlagGet(EventFlag_555))
+            {
+                Sd_PlaySfx(Sfx_Unk1664, 0, 224);
+                D_800E9ED8 = Rng_GenerateInt(Rng_Rand16(), Q12(1.2f), Q12(2.8f) - 1);
+            }
+            else
+            {
+                D_800E9ED8 = (D_800E9ED8 - g_DeltaTime0) >= 0 ? D_800E9ED8 - (s16)g_DeltaTime0 : 0;
+            }
+            break;
+
+        case 6:
+            func_800862F8(2, 0, false);
+            func_8008605C(EventFlag_M7S02_PickupDaggerOfMelchior, 14, 7, false);
+            break;
+
+        case 7:
+            func_80086470(0, InventoryItemId_DaggerOfMelchior, 0, false);
+            SysWork_StateStepIncrement();
+
+        case 8:
+            func_800862F8(2, 0, false);
+            func_8008616C(2, true, 0, Q12(0.0f), false);
+
+            if (D_800E9ED8 == 0 && !Savegame_EventFlagGet(EventFlag_555))
+            {
+                Sd_PlaySfx(Sfx_Unk1664, 0, 224);
+                D_800E9ED8 = Rng_GenerateInt(Rng_Rand16(), Q12(1.2f), Q12(2.8f) - 1);
+            }
+            else
+            {
+                D_800E9ED8 = (D_800E9ED8 - g_DeltaTime0) >= 0 ? D_800E9ED8 - (s16)g_DeltaTime0 : 0;
+            }
+
+            if (g_SysWork.sysStateStep_C[0] != 8)
+            {
+                func_8004690C(Sfx_Unk1664);
+            }
+            break;
+
+        case 9:
+            func_8008616C(2, false, 0, Q12(0.0f), false);
+            break;
+
+        case 10:
+            func_80086470(1, InventoryItemId_DaggerOfMelchior, 0, false);
+            break;
+
+        case 11:
+            if (Gfx_PickupItemAnimate(InventoryItemId_DaggerOfMelchior) != false)
+            {
+                MapMsg_DisplayAndHandleSelection(true, 82, 12, 13, 0, false);
+            }
+
+            Savegame_EventFlagSet(EventFlag_M7S02_PickupDaggerOfMelchior);
+            break;
+
+        case 12:
+            func_80086470(3, InventoryItemId_DaggerOfMelchior, 1, false);
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+
+        case 13:
+            Savegame_EventFlagClear(EventFlag_M7S02_PickupDaggerOfMelchior);
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+
+        case 14:
+            func_800862F8(2, 0, false);
+            func_8008616C(2, true, 0, Q12(0.0f), false);
+
+            if (D_800E9ED8 == 0 && !Savegame_EventFlagGet(EventFlag_555))
+            {
+                Sd_PlaySfx(Sfx_Unk1664, 0, 224);
+                D_800E9ED8 = Rng_GenerateInt(Rng_Rand16(), Q12(1.2f), Q12(2.8f) - 1);
+            }
+            else
+            {
+                D_800E9ED8 = (D_800E9ED8 - g_DeltaTime0) >= 0 ? D_800E9ED8 - (s16)g_DeltaTime0 : 0;
+            }
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            func_8008616C(0, false, 0, Q12(0.0f), false);
+            func_8004690C(Sfx_Unk1664);
+            break;
+    }
+}
 
 INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02", D_800CD6A4);
 
@@ -1403,7 +1552,7 @@ void func_800E0CB4(void) // 0x800E0CB4
             g_SysWork.field_30    = 20;
             g_SysWork.flags_22A4 |= 1 << 3;
 
-            Fs_QueueStartRead(42, (void*)FS_BUFFER_11);
+            Fs_QueueStartRead(FILE_ANIM_DRIVR_DMS, (void*)FS_BUFFER_11);
             Fs_QueueWaitForEmpty();
             DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_11);
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 148, false);

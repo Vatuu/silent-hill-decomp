@@ -89,27 +89,27 @@ typedef enum _SpeedZoneType
 // TODO: Rename to `SfxId`. There's a name clash with an SFX struct.
 typedef enum _Sfx
 {
-    Sfx_Base        = 1280,          // Base SFX (not valid in itself).
-				    
-    Sfx_StartGame   = Sfx_Base + 1,  // `SND/FIRST.VAB`
+    Sfx_Base = 1280,              // Base SFX (not valid in itself).
 
-    Sfx_Unk1283     = Sfx_Base + 3,
+    Sfx_StartGame = Sfx_Base + 1, // `SND/FIRST.VAB`
 
-    Sfx_Unk1286     = Sfx_Base + 6,
+    Sfx_Unk1283 = Sfx_Base + 3,
 
-    Sfx_Unk1296     = Sfx_Base + 16,
-    Sfx_Unk1297     = Sfx_Base + 17,
-				    
-    Sfx_Denied      = Sfx_Base + 24, // `1ST/BASE.VAB` onward, but loaded out of order?
-    Sfx_Back        = Sfx_Base + 25,
-    Sfx_Cancel      = Sfx_Base + 26,
-    Sfx_Confirm     = Sfx_Base + 27, // TODO: Continue this pattern.
+    Sfx_Unk1286 = Sfx_Base + 6,
 
-    Sfx_Unk1308     = 1308,
-    Sfx_Unk1309     = 1309,
-    Sfx_Unk1310     = 1310,
-				    
-    Sfx_Stumble0    = 1314,
+    Sfx_Unk1296 = Sfx_Base + 16,
+    Sfx_Unk1297 = Sfx_Base + 17,
+
+    Sfx_Denied  = Sfx_Base + 24, // `1ST/BASE.VAB` onward, but loaded out of order?
+    Sfx_Back    = Sfx_Base + 25,
+    Sfx_Cancel  = Sfx_Base + 26,
+    Sfx_Confirm = Sfx_Base + 27, // TODO: Continue this pattern.
+
+    Sfx_Unk1308 = 1308,
+    Sfx_Unk1309 = 1309,
+    Sfx_Unk1310 = 1310,
+
+    Sfx_Stumble0 = 1314,
 
     Sfx_Unk1316     = 1316,
     Sfx_Unk1317     = 1317,
@@ -121,144 +121,150 @@ typedef enum _Sfx
     Sfx_Unk1323     = 1323,
     Sfx_Unk1324     = 1324,
 
-    Sfx_Unk1326     = 1326,
-    Sfx_Unk1327     = 1327,
-    Sfx_Unk1328     = 1328,
-    Sfx_Unk1329     = 1329,
-				    
-    Sfx_Stumble1    = 1333,
-    Sfx_Unk1334     = 1334,
-    Sfx_Unk1335     = 1335,
-    Sfx_Unk1336     = 1336,
-    Sfx_Unk1337     = 1337,
-    Sfx_Unk1338     = 1338,
-    Sfx_Unk1339     = 1339,
-    Sfx_Unk1340     = 1340,
-    Sfx_Unk1341     = 1341,
-    Sfx_Unk1342     = 1342,
+    Sfx_Unk1326 = 1326,
+    Sfx_Unk1327 = 1327,
+    Sfx_Unk1328 = 1328,
+    Sfx_Unk1329 = 1329,
 
-    Sfx_Unk1343     = 1343,
-    Sfx_Unk1344     = 1344,
-				    
-    Sfx_Unk1351     = 1351,
-    Sfx_Unk1352     = 1352,
-    Sfx_Unk1353     = 1353,
-    Sfx_Unk1354     = 1354,
-    Sfx_Unk1355     = 1355,
-    Sfx_Unk1356     = 1356,
-    Sfx_Unk1357     = 1357,
-    Sfx_Unk1358     = 1358,
-    Sfx_Unk1359     = 1359,
-    Sfx_Unk1360     = 1360,
-    Sfx_Unk1361     = 1361,
+    Sfx_Stumble1 = 1333,
+    Sfx_Unk1334  = 1334,
+    Sfx_Unk1335  = 1335,
+    Sfx_Unk1336  = 1336,
+    Sfx_Unk1337  = 1337,
+    Sfx_Unk1338  = 1338,
+    Sfx_Unk1339  = 1339,
+    Sfx_Unk1340  = 1340,
+    Sfx_Unk1341  = 1341,
+    Sfx_Unk1342  = 1342,
 
-    Sfx_Unk1363     = 1363,
-    Sfx_Unk1364     = 1364,
-    Sfx_Unk1365     = 1365,
-    Sfx_Unk1366     = 1366,
+    Sfx_Unk1343 = 1343,
+    Sfx_Unk1344 = 1344,
 
-    Sfx_Unk1369     = 1369,
+    Sfx_Unk1351 = 1351,
+    Sfx_Unk1352 = 1352,
+    Sfx_Unk1353 = 1353,
+    Sfx_Unk1354 = 1354,
+    Sfx_Unk1355 = 1355,
+    Sfx_Unk1356 = 1356,
+    Sfx_Unk1357 = 1357,
+    Sfx_Unk1358 = 1358,
+    Sfx_Unk1359 = 1359,
+    Sfx_Unk1360 = 1360,
+    Sfx_Unk1361 = 1361,
 
-    Sfx_Unk1373     = 1373,
-    Sfx_Unk1374     = 1374,
-    Sfx_Unk1375     = 1375,
-				    
-    Sfx_Unk1385     = 1385,
-    Sfx_Unk1386     = 1386,
-    Sfx_Unk1387     = 1387,
-				    
-    Sfx_Unk1391     = 1391,
-				    
-    Sfx_Unk1396     = 1396,
-    Sfx_Unk1397     = 1397,
-    Sfx_Unk1398     = 1398,
-    Sfx_Unk1399     = 1399,
-				    
-    Sfx_Unk1418     = 1418,
+    Sfx_Unk1363 = 1363,
+    Sfx_Unk1364 = 1364,
+    Sfx_Unk1365 = 1365,
+    Sfx_Unk1366 = 1366,
 
-    Sfx_Unk1423     = 1423,
-				    
-    Sfx_Unk1431     = 1431,
-    Sfx_Unk1432     = 1432,
+    Sfx_Unk1369 = 1369,
 
-    Sfx_Unk1456     = 1456,
-				    
-    Sfx_Unk1458     = 1458,
-    Sfx_Unk1459     = 1459,
+    Sfx_Unk1373 = 1373,
+    Sfx_Unk1374 = 1374,
+    Sfx_Unk1375 = 1375,
 
-    Sfx_Unk1464     = 1464,
-				    
-    Sfx_Unk1487     = 1487,
-				    
-    Sfx_Unk1490     = 1490,
-    Sfx_Unk1491     = 1491,
-				    
-    Sfx_Unk1501     = 1501,
-    Sfx_Unk1502     = 1502,
-				    
-    Sfx_Unk1504     = 1504,
-    Sfx_Unk1505     = 1505,
-				    
-    Sfx_Unk1521     = 1521,
-    Sfx_Unk1522     = 1522,
-    Sfx_Unk1523     = 1523,
-				    
-    Sfx_Unk1525     = 1525,
-    Sfx_Unk1526     = 1526,
-    Sfx_Unk1527     = 1527,
+    Sfx_Unk1385 = 1385,
+    Sfx_Unk1386 = 1386,
+    Sfx_Unk1387 = 1387,
 
-    Sfx_Unk1539     = 1539,
-				    
-    Sfx_Unk1567     = 1567,
-				    
-    Sfx_Unk1590     = 1590,
-				    
-    Sfx_Unk1601     = 1601,
-    Sfx_Unk1602     = 1602,
-				    
-    Sfx_Unk1604     = 1604,
-    Sfx_Unk1605     = 1605,
-				    
-    Sfx_Unk1609     = 1609,
-    Sfx_Unk1610     = 1610,
+    Sfx_Unk1391 = 1391,
 
-    Sfx_Unk1619     = 1619,
+    Sfx_Unk1396 = 1396,
+    Sfx_Unk1397 = 1397,
+    Sfx_Unk1398 = 1398,
+    Sfx_Unk1399 = 1399,
 
-    Sfx_Unk1623     = 1623,
+    Sfx_Unk1418 = 1418,
 
-    Sfx_Unk1626     = 1626,
-    Sfx_Unk1627     = 1627,
-    Sfx_Unk1628     = 1628,
-    Sfx_Unk1629     = 1629,
+    Sfx_Unk1423 = 1423,
 
-    Sfx_Unk1642     = 1642,
-    Sfx_Unk1643     = 1643,
+    Sfx_Unk1431 = 1431,
+    Sfx_Unk1432 = 1432,
 
-    Sfx_Unk1645     = 1645,
+    Sfx_Unk1456 = 1456,
 
-    Sfx_Unk1650     = 1650,
+    Sfx_Unk1458 = 1458,
+    Sfx_Unk1459 = 1459,
 
-    Sfx_Unk1653     = 1653,
-    Sfx_Unk1654     = 1654,
-    Sfx_Unk1655     = 1655,
-    Sfx_Unk1656     = 1656,
-    Sfx_Unk1657     = 1657,
-    Sfx_Unk1658     = 1658,
+    Sfx_Unk1464 = 1464,
 
-    Sfx_Unk1660     = 1660,
-    Sfx_Unk1661     = 1661,
+    Sfx_Unk1467 = 1467,
 
-    Sfx_Unk1671     = 1671,
+    Sfx_Unk1487 = 1487,
 
-    Sfx_Unk1688     = 1688,
-    Sfx_Unk1689     = 1689,
-    Sfx_Unk1690     = 1690,
+    Sfx_Unk1490 = 1490,
+    Sfx_Unk1491 = 1491,
 
-    Sfx_Unk1916     = 1916,
+    Sfx_Unk1501 = 1501,
+    Sfx_Unk1502 = 1502,
 
-    Sfx_Unk4664     = 4664,
+    Sfx_Unk1504 = 1504,
+    Sfx_Unk1505 = 1505,
 
-    Sfx_Unk4699     = 4699
+    Sfx_Unk1521 = 1521,
+    Sfx_Unk1522 = 1522,
+    Sfx_Unk1523 = 1523,
+
+    Sfx_Unk1525 = 1525,
+    Sfx_Unk1526 = 1526,
+    Sfx_Unk1527 = 1527,
+
+    Sfx_Unk1539 = 1539,
+
+    Sfx_Unk1567 = 1567,
+
+    Sfx_Unk1590 = 1590,
+
+    Sfx_Unk1601 = 1601,
+    Sfx_Unk1602 = 1602,
+
+    Sfx_Unk1604 = 1604,
+    Sfx_Unk1605 = 1605,
+
+    Sfx_Unk1609 = 1609,
+    Sfx_Unk1610 = 1610,
+    Sfx_Unk1611 = 1611,
+
+    Sfx_Unk1619 = 1619,
+
+    Sfx_Unk1623 = 1623,
+
+    Sfx_Unk1626 = 1626,
+    Sfx_Unk1627 = 1627,
+    Sfx_Unk1628 = 1628,
+    Sfx_Unk1629 = 1629,
+
+    Sfx_Unk1642 = 1642,
+    Sfx_Unk1643 = 1643,
+
+    Sfx_Unk1645 = 1645,
+
+    Sfx_Unk1650 = 1650,
+
+    Sfx_Unk1653 = 1653,
+    Sfx_Unk1654 = 1654,
+    Sfx_Unk1655 = 1655,
+    Sfx_Unk1656 = 1656,
+    Sfx_Unk1657 = 1657,
+    Sfx_Unk1658 = 1658,
+
+    Sfx_Unk1660 = 1660,
+    Sfx_Unk1661 = 1661,
+
+    Sfx_Unk1664 = 1664,
+    Sfx_Unk1665 = 1665,
+
+    Sfx_Unk1671 = 1671,
+
+    Sfx_Unk1688 = 1688,
+    Sfx_Unk1689 = 1689,
+    Sfx_Unk1690 = 1690,
+
+    Sfx_Unk1916 = 1916,
+
+    Sfx_Unk4664 = 4664,
+
+    Sfx_Unk4699 = 4699
 } e_Sfx;
 
 typedef enum _MainMenuEntry

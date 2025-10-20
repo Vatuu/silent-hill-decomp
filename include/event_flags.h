@@ -210,6 +210,10 @@ typedef enum _EventFlag
     EventFlag_397 = 397,
     EventFlag_398 = 398,
 
+    EventFlag_412 = 412,
+
+    EventFlag_417 = 417,
+
     EventFlag_423 = 423,
     EventFlag_424 = 424,
     EventFlag_425 = 425,
@@ -222,6 +226,14 @@ typedef enum _EventFlag
 
     EventFlag_448 = 448,
     EventFlag_449 = 449,
+
+    EventFlag_456 = 456,
+    EventFlag_457 = 457,
+    EventFlag_458 = 458,
+    EventFlag_459 = 459,
+    EventFlag_460 = 460,
+
+    EventFlag_469 = 469,
 
     EventFlag_481 = 481,
     EventFlag_482 = 482,
@@ -258,12 +270,17 @@ typedef enum _EventFlag
     EventFlag_534                         = 534,
     EventFlag_M7S01_PickupAmuletOfSolomon = 535,
     EventFlag_M7S01_PickupCrestOfMercury  = 536,
-    EventFlag_M7S02_PickupAnkh            = 537,
 
-    EventFlag_M7S02_PickupDiskOfOuroboros = 539,
+    EventFlag_M7S02_PickupAnkh             = 537,
+    EventFlag_M7S02_PickupDaggerOfMelchior = 538,
+    EventFlag_M7S02_PickupDiskOfOuroboros  = 539,
 
     EventFlag_548 = 548,
     EventFlag_549 = 549,
+
+    EventFlag_552 = 552,
+
+    EventFlag_555 = 555,
 
     EventFlag_562 = 562,
     EventFlag_563 = 563,

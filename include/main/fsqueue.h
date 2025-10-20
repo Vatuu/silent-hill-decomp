@@ -19,21 +19,22 @@
  * #define FS_BUFFER(idx) \
  *     (void*)(0x80100600 + ((idx) * 0x1000))
  */
-#define FS_BUFFER_0  (void*)0x8010A600
-#define FS_BUFFER_12 (void*)0x801201B4 // Used for weapon anim.     } Sub-buffers within the 4096-byte buffers?
-#define FS_BUFFER_4  (void*)0x80124384 // Used for player map anim. }
-#define FS_BUFFER_11 (void*)0x80169600
+#define FS_BUFFER_0      (void*)0x8010A600
+#define FS_BUFFER_12     (void*)0x801201B4 // Used for weapon anim.     } Sub-buffers within the 4096-byte buffers?
+#define FS_BUFFER_4      (void*)0x80124384 // Used for player map anim. }
+#define FS_BUFFER_11     (void*)0x80169600 // } Used for DMS cutscene data.
+#define FS_BUFFER_13     (void*)0x8016AE00 // }
 #define GLOBAL_LM_BUFFER (s_LmHeader*)0x8016B600
-#define IPD_BUFFER (s_IpdHeader*)0x80175600 // Used by map.
-#define FS_BUFFER_3  (void*)0x801B2600
-#define FS_BUFFER_8  (void*)0x801B5E80 // Used for loading inventory item models.
-#define FS_BUFFER_7  (void*)0x801C2600 // Used in `b_konami.c`.
-#define FS_BUFFER_2  (void*)0x801CF600
-#define FS_BUFFER_1  (void*)0x801E2600
-#define FS_BUFFER_5  (void*)0x801E3600 // Used in `b_konami.c`.
-#define FS_BUFFER_6  (void*)0x801E4600 // Used in `b_konami.c`.
-#define FS_BUFFER_10 (void*)0x801EA600
-#define FS_BUFFER_9  (void*)0x801EC600
+#define IPD_BUFFER       (s_IpdHeader*)0x80175600 // Used by map.
+#define FS_BUFFER_3      (void*)0x801B2600
+#define FS_BUFFER_8      (void*)0x801B5E80        // Used for loading inventory item models.
+#define FS_BUFFER_7      (void*)0x801C2600        // Used in `b_konami.c`.
+#define FS_BUFFER_2      (void*)0x801CF600
+#define FS_BUFFER_1      (void*)0x801E2600
+#define FS_BUFFER_5      (void*)0x801E3600 // Used in `b_konami.c`.
+#define FS_BUFFER_6      (void*)0x801E4600 // Used in `b_konami.c`.
+#define FS_BUFFER_10     (void*)0x801EA600
+#define FS_BUFFER_9      (void*)0x801EC600
 
 #define IMAGE_BUFFER   (u_long*)0x801AFA00
 #define IMAGE_BUFFER_0 (u_long*)0x801CFA00

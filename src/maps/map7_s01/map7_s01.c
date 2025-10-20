@@ -409,8 +409,8 @@ void func_800D725C(void) // 0x800D725C
             sharedFunc_800D20E4_0_s00();
             D_800E2C64 = 0;
 
-            Fs_QueueStartRead(57, FS_BUFFER_4);
-            Fs_QueueStartRead(145, FS_BUFFER_11);
+            Fs_QueueStartRead(FILE_ANIM_HBM7_SLS_ANM, FS_BUFFER_4);
+            Fs_QueueStartRead(FILE_ANIM_NURSE1_DMS, FS_BUFFER_11);
             Fs_QueueWaitForEmpty();
 
             DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_11);
@@ -590,7 +590,7 @@ void func_800D7A60(void) // 0x800D7A60
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            Fs_QueueStartRead(146, FS_BUFFER_11);
+            Fs_QueueStartRead(FILE_ANIM_NURSE2_DMS, FS_BUFFER_11);
             Fs_QueueWaitForEmpty();
             DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_11);
             Chara_Spawn(Chara_BloodyLisa, 0, g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz + Q12(1.0f), 0, 3);
@@ -1509,7 +1509,7 @@ void func_800DAE00(void) // 0x800DAE00
             g_SysWork.field_30    = 20;
             g_SysWork.flags_22A4 |= 1 << 3;
 
-            Fs_QueueStartRead(42, (void*)FS_BUFFER_11);
+            Fs_QueueStartRead(FILE_ANIM_DRIVR_DMS, (void*)FS_BUFFER_11);
             Fs_QueueWaitForEmpty();
             DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_11);
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 148, false);

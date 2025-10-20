@@ -11,4 +11,34 @@
 #define HAS_PlayerState_Unk175
 #define KEYFRAME_PlayerState_Unk111 915
 
+extern SVECTOR D_800CAA98;
+extern VECTOR3 D_800CAAA0;
+
+extern s_FsImageDesc D_800D3B44[2];
+
+extern u16 D_800D3B6C;
+
+extern s_FsImageDesc D_800D3B70;
+
+extern VECTOR3 D_800D3B78[];
+
+extern u16 D_800D3C2C[];
+
+extern u8 D_800D3C88;
+
+extern s32 D_800D3C8C;
+
+extern s32 D_800D3C90;
+
+extern s16 D_800D3C94;
+
+extern VECTOR3 D_800D4E0C;
+
+extern VECTOR3 D_800D4E1C;
+
+extern s32 D_800D4E28;
+
+/** Func related to the UFO ending cutscene? */
+void func_800CFC34(void);
+
 #endif
