@@ -30,6 +30,10 @@ void func_800DB33C(void);
 
 void func_800DBF88(void);
 
+void func_800DBFC8(void);
+
+void func_800DD208(void);
+
 void func_800DD420(void);
 
 #endif

@@ -638,7 +638,7 @@ void func_800E9EAC(void) // 0x800E9EAC
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_191);
-            Game_TurnFlashlightOff(g_SavegamePtr);
+            Game_TurnFlashlightOff();
             func_8003A16C();
             break;
     }

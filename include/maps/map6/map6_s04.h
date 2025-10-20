@@ -27,6 +27,18 @@
 extern s_AnimInfo FLAUROS_ANIM_INFOS[];
 extern s_AnimInfo PARASITE_ANIM_INFOS[];
 
+extern s32 D_800EBA30;
+
+extern VECTOR3 D_800ED590;
+
+extern VECTOR3 D_800ED5A0;
+
+extern s8 D_800ED5AC;
+
+extern s32 D_800ED5B0;
+
+extern s16 D_800ED5B6;
+
 extern s_800C4590 D_800ED4C0;
 
 extern s_Model    g_Ai_MonsterCybil_ExtraModel; // Some kind of attachment or another `s_SubCharacter` instance?
@@ -48,6 +60,8 @@ void Ai_Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE
 
 void func_800DEA94(s32* arg0);
 
+void func_800E01F4(void);
+
 void func_800E02E0(void);
 
 void func_800E10F8(void);
@@ -55,5 +69,7 @@ void func_800E10F8(void);
 void func_800E1258(s32 arg0);
 
 void func_800E1290(void);
+
+void func_800E2CA0(void);
 
 #endif

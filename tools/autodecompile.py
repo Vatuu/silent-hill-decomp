@@ -129,7 +129,7 @@ def main():
 
     count = 0
     for func_name, func_path in funcs:
-        print(f"=== ({count+1}/{len(funcs)}) Decompiling {'/'.join(func_path.parts[-2:])} ===")
+        print(f"=== ({count+1}/{len(funcs)}/{len(succeeded_paths)}) Decompiling {'/'.join(func_path.parts[-2:])} ===")
         count = count + 1
         if try_decompile(func_name, func_path):
             succeeded_paths.append(func_path)

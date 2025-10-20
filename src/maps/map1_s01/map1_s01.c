@@ -333,7 +333,59 @@ void func_800D7EEC(void) // 0x800D7EEC
 
 INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D7F18);
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D857C);
+void func_800D857C(void) // 0x800D857C
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_80086470(0, InventoryItemId_SilverMedallion, 0, false);
+            SysWork_StateStepIncrement();
+
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 59, false);
+            SysWork_StateStepIncrement();
+
+        case 3:
+            func_80086470(1, InventoryItemId_SilverMedallion, 0, false);
+            break;
+
+        case 4:
+            func_80085EB8(1, &g_SysWork.player_4C.chara_0, 0, false);
+            break;
+
+        case 5:
+            if (Gfx_PickupItemAnimate(InventoryItemId_SilverMedallion))
+            {
+                MapMsg_DisplayAndHandleSelection(true, 30, 6, 7, 0, false);
+            }
+
+            Savegame_EventFlagSet(EventFlag_M1S01_PickupSilverMedallion);
+            break;
+
+        case 6:
+            func_80086470(3, InventoryItemId_SilverMedallion, 1, false);
+            SysWork_NextStateStepSet(8);
+            break;
+
+        case 7:
+            Savegame_EventFlagClear(EventFlag_M1S01_PickupSilverMedallion);
+            SysWork_StateStepIncrement();
+
+        case 8:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+}
 
 void func_800D8794(void) // 0x800D8794
 {

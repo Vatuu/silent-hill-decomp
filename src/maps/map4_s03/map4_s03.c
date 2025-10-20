@@ -335,7 +335,17 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3FD8);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D4000);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D4028);
+void func_800D4028(s_SubCharacter* chara) // 0x800D4028
+{
+    if (chara->model_0.stateStep_3 == 0)
+    {
+        func_800D3B74(chara);
+        chara->moveSpeed_38 = 0;
+        chara->model_0.stateStep_3++;
+    }
+
+    func_800D3CBC(chara);
+}
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D4078);
 

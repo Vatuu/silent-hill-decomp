@@ -181,7 +181,7 @@ void func_800CD0D0(void) // 0x800CD0D0
 
 void func_800CD0F8(void) // 0x800CD0F8
 {
-    Event_ItemTake(InventoryItemId_Shotgun, SHOTGUN_AMMO_PICKUP_ITEM_COUNT, EventFlag_M2S04_PickupShotgun, 26);
+    Event_ItemTake(InventoryItemId_Shotgun, SHOTGUN_AMMO_PICKUP_ITEM_COUNT, EventFlag_M1S02_PickupShotgun, 26);
 }
 
 INCLUDE_ASM("asm/maps/map2_s04/nonmatchings/map2_s04", func_800CD124);

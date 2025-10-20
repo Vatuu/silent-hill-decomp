@@ -2584,13 +2584,13 @@ void func_8003EBF4(s_MapOverlayHeader* arg0) // 0x8003EBF4
     func_8003ED74(ptr->field_0, ptr->field_1);
 }
 
-void Game_TurnFlashlightOn() // 0x8003ECBC
+void Game_TurnFlashlightOn(void) // 0x8003ECBC
 {
     g_SysWork.field_2388.isFlashlightOn_15 = true;
     g_SavegamePtr->flags_AC               &= ~(1 << 1);
 }
 
-void Game_TurnFlashlightOff() // 0x8003ECE4
+void Game_TurnFlashlightOff(void) // 0x8003ECE4
 {
     g_SysWork.field_2388.isFlashlightOn_15 = false;
     g_SavegamePtr->flags_AC               |= 1 << 1;

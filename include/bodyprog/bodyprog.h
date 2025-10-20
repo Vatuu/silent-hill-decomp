@@ -230,6 +230,8 @@ typedef enum _Sfx
     Sfx_Unk1610 = 1610,
     Sfx_Unk1611 = 1611,
 
+    Sfx_Unk1617 = 1617,
+
     Sfx_Unk1619 = 1619,
 
     Sfx_Unk1623 = 1623,
@@ -3690,7 +3692,7 @@ void func_8008605C(s32 eventFlagIdx, s32 stepTrue, s32 stepFalse, bool stepSecon
 
 /** @brief Displays a selection menu and sets `sysStateStep_C` depending on the chosen value.
  *
- * @param hasSelection `true if it waits for a selection, `false` if `sysStateStep_C` increments after displaying. 
+ * @param hasSelection `true` if it waits for a selection, `false` if `sysStateStep_C` increments after displaying.
  * @param mapMsgIdx Map message index of the message to display.
  * @param step0 Step to use if selection #0 is chosen.
  * @param step1 Step to use if selection #1 is chosen.
@@ -4676,6 +4678,7 @@ void GameState_Options_Update();
 void GameState_LoadMapScreen_Update();
 void GameState_Unk15_Update();
 
-void Game_TurnFlashlightOn();
-void Game_TurnFlashlightOff();
+void Game_TurnFlashlightOn(void);
+void Game_TurnFlashlightOff(void);
+
 #endif

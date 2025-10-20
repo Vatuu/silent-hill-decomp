@@ -22,6 +22,7 @@ void func_800D3B74(s_SubCharacter* chara);
 void func_800D3CBC(s_SubCharacter* chara);
 bool Ai_Twinfeeler_Init(s_SubCharacter* chara);
 void func_800D3E58(s_SubCharacter*);
+void func_800D4028(s_SubCharacter* chara);
 void func_800D46E0(VECTOR3* vec0, VECTOR3* vec1);
 u32  func_800D4DD8(void);
 void func_800D53B0(s_SubCharacter* chara, GsCOORDINATE2* coords);

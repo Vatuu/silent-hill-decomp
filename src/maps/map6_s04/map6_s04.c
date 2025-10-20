@@ -451,7 +451,10 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800E00F4);
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800E0164);
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800E01F4);
+void func_800E01F4(void) // 0x800E01F4
+{
+    D_800ED588 = 6;
+}
 
 INCLUDE_RODATA("asm/maps/map6_s04/nonmatchings/map6_s04", D_800CB69C);
 
@@ -612,7 +615,146 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800E2724);
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800E2950);
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800E2CA0);
+void func_800E2CA0(void) // 0x800E2CA0
+{
+    // TODO: rodata used in a bunch of funcs, can't be inserted properly until they're all decomped.
+    extern s8 D_800CC4C4; // "HERO"
+    extern s8 D_800CC4CC; // "LIGHT"
+    extern s8 D_800CC4D4; // "L_INT"
+    extern s8 D_800CC4DC; // "MSB"
+
+    VECTOR3         lightIntPos;
+    SVECTOR3        unused;
+    q19_12          lightDistance;
+    s_SubCharacter* player;
+
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 && g_SysWork.sysStateStep_C[0] == 7)
+    {
+        SysWork_NextStateStepSet(8);
+    }
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            D_800EBA30 = 0;
+            D_800ED5B6 = 0;
+            Game_TurnFlashlightOn();
+            func_8003D03C();
+            func_8004690C(Sfx_Unk1617);
+            sharedFunc_800D20E4_0_s00();
+
+            g_SysWork.npcs_1A0[0].health_B0 = NO_VALUE;
+
+            D_800ED5AC           = 0;
+            D_800ED5B0           = Q12(96.0f);
+            g_SysWork.field_235C = NULL;
+            g_SysWork.field_236C = NULL;
+            g_SysWork.field_2378 = Q12(1.0f);
+
+            SysWork_StateStepIncrement();
+
+        case 1:
+            func_8008616C(2, true, 0, Q12(0.0f), false);
+            break;
+
+        case 2:
+            func_8008616C(2, false, 0, Q12(0.0f), false);
+            func_8008616C(0, true, 2, Q12(0.0f), false);
+            SysWork_StateStepIncrement();
+            break;
+
+        case 3:
+            Sd_EngineCmd(16);
+            Sd_EngineCmd(19);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 162, false);
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 7, false);
+            SysWork_StateStepIncrement();
+
+        case 4:
+            sharedFunc_800DA8E8_0_s01(&D_800ED5B0, Q12(10.0f), Q12(96.0f), Q12(131.0f), false, false);
+
+            // Possible inline?
+            player = &g_SysWork.player_4C.chara_0;
+            if (player->model_0.anim_4.keyframeIdx_8 > 1282)
+            {
+                func_80085EB8(2, player, 0, false);
+            }
+
+            SysWork_StateStepIncrement();
+
+        case 5:
+            // Possible inline?
+            player = &g_SysWork.player_4C.chara_0;
+            if (player->model_0.anim_4.keyframeIdx_8 > 1282)
+            {
+                func_80085EB8(2, player, 0, false);
+            }
+
+            SysWork_StateStepIncrement();
+
+        case 6:
+            func_80085EB8(3, &g_SysWork.player_4C.chara_0, 0, false);
+            SysWork_StateStepIncrement();
+
+        case 7:
+            sharedFunc_800DA8E8_0_s01(&D_800ED5B0, Q12(10.0f), Q12(131.0f), Q12(195.0f), false, false);
+            MapMsg_DisplayAndHandleSelection(false, 41, 0, 0, 0, false);
+
+            if (g_SysWork.sysStateStep_C[0] != 7)
+            {
+                Savegame_EventFlagSet(EventFlag_463);
+            }
+            break;
+
+        case 8:
+            func_8008616C(2, true, 0, Q12(0.5f), false);
+            break;
+
+        default:
+            D_800ED5B0 = NO_VALUE;
+            sharedFunc_800D2244_0_s00(false);
+
+            SysWork_StateSetNext(SysState_Gameplay);
+
+            Savegame_EventFlagSet(EventFlag_447);
+            Savegame_EventFlagSet(EventFlag_450);
+
+            vcReturnPreAutoCamWork(true);
+            func_8008D448();
+            func_8003EBA0();
+            g_SysWork.field_2378 = Q12(1.0f);
+            Sd_EngineCmd(19);
+            func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
+            break;
+    }
+
+    if (D_800ED5B0 > Q12(96.0f))
+    {
+        // Get "HERO" position.
+        Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, &D_800CC4C4, D_800ED5B0, FS_BUFFER_14);
+
+        // Get "MSB" position
+        Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, &D_800CC4DC, D_800ED5B0, FS_BUFFER_14);
+
+        vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800ED590, &D_800ED5A0, NULL, D_800ED5B0, FS_BUFFER_14));
+        vcUserCamTarget(&D_800ED590, NULL, true);
+        vcUserWatchTarget(&D_800ED5A0, NULL, true);
+
+        // "LIGHT", cutscene light position? (TODO: rename g_SysWork.field_2360?)
+        Dms_CharacterGetPosRot(&g_SysWork.field_2360, &unused, &D_800CC4CC, D_800ED5B0, FS_BUFFER_14);
+
+        // "L_INT", interior light or intersection point?
+        Dms_CharacterGetPosRot(&lightIntPos.vx, &unused, &D_800CC4D4, D_800ED5B0, FS_BUFFER_14);
+
+        // Distance between LIGHT and L_INT.
+        lightDistance = SquareRoot0(SQUARE((lightIntPos.vx - g_SysWork.field_2360.vx) >> 6) + SQUARE((lightIntPos.vz - g_SysWork.field_2360.vz) >> 6)) << 6;
+
+        // Light angle? (TODO: rename g_SysWork.field_2370?)
+        g_SysWork.field_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.field_2360.vy, lightDistance);
+        g_SysWork.field_2370.vy = ratan2(lightIntPos.vx - g_SysWork.field_2360.vx, lightIntPos.vz - g_SysWork.field_2360.vz);
+        g_SysWork.field_2370.vz = 0;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800E3244);
 

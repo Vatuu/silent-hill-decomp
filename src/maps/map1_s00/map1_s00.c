@@ -352,7 +352,7 @@ INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D9764);
 
 void func_800DA3FC(void) // 0x800DA3FC
 {
-    if (Savegame_EventFlagGet(EventFlag_70))
+    if (Savegame_EventFlagGet(EventFlag_M1S01_PickupSilverMedallion))
     {
         func_80088FF4(Chara_GreyChild, 0, 3);
         func_80088FF4(Chara_GreyChild, 1, 3);

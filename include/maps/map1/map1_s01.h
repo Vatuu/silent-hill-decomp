@@ -22,6 +22,8 @@ void func_800D7830(void);
 
 void func_800D7EEC(void);
 
+void func_800D857C(void);
+
 void func_800D8794(void);
 
 #endif

@@ -24,6 +24,7 @@
 #define FS_BUFFER_4      (void*)0x80124384 // Used for player map anim. }
 #define FS_BUFFER_11     (void*)0x80169600 // } Used for DMS cutscene data.
 #define FS_BUFFER_13     (void*)0x8016AE00 // }
+#define FS_BUFFER_14     (void*)0x800F9600 // }
 #define GLOBAL_LM_BUFFER (s_LmHeader*)0x8016B600
 #define IPD_BUFFER       (s_IpdHeader*)0x80175600 // Used by map.
 #define FS_BUFFER_3      (void*)0x801B2600

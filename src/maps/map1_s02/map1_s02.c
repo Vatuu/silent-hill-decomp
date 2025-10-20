@@ -368,7 +368,59 @@ void func_800DBF88(void) // 0x800DBF88
     func_80087360(FILE_TIM_LVTRYMSG_TIM, Q12(0.0f), Q12(0.0f), 38);
 }
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DBFC8);
+void func_800DBFC8(void) // 0x800DBFC8
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_80086470(0, InventoryItemId_Shotgun, 0, false);
+            SysWork_StateStepIncrement();
+
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 59, false);
+            SysWork_StateStepIncrement();
+
+        case 3:
+            func_80086470(1, InventoryItemId_Shotgun, 0, false);
+            break;
+
+        case 4:
+            func_80085EB8(1, &g_SysWork.player_4C.chara_0, 0, false);
+            break;
+
+        case 5:
+            if (Gfx_PickupItemAnimate(InventoryItemId_Shotgun))
+            {
+                MapMsg_DisplayAndHandleSelection(true, 40, 6, 7, 0, false);
+            }
+
+            Savegame_EventFlagSet(EventFlag_M1S02_PickupShotgun);
+            break;
+
+        case 6:
+            func_80086470(3, InventoryItemId_Shotgun, SHOTGUN_AMMO_PICKUP_ITEM_COUNT, false);
+            SysWork_NextStateStepSet(8);
+            break;
+
+        case 7:
+            Savegame_EventFlagClear(EventFlag_M1S02_PickupShotgun);
+            SysWork_StateStepIncrement();
+
+        case 8:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+}
 
 INCLUDE_RODATA("asm/maps/map1_s02/nonmatchings/map1_s02", D_800CB934);
 
@@ -380,8 +432,59 @@ INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DC1E0);
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DCF00);
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DD208);
+void func_800DD208(void) // 0x800DD208
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_80086470(0, InventoryItemId_ClassroomKey, 0, false);
+            SysWork_StateStepIncrement();
 
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 59, false);
+            SysWork_StateStepIncrement();
+
+        case 3:
+            func_80086470(1, InventoryItemId_ClassroomKey, 0, false);
+            break;
+
+        case 4:
+            func_80085EB8(1, &g_SysWork.player_4C.chara_0, 0, false);
+            break;
+
+        case 5:
+            if (Gfx_PickupItemAnimate(InventoryItemId_ClassroomKey))
+            {
+                MapMsg_DisplayAndHandleSelection(true, 51, 6, 7, 0, false);
+            }
+
+            Savegame_EventFlagSet(EventFlag_M1S02_PickupClassroomKey);
+            break;
+
+        case 6:
+            func_80086470(3, InventoryItemId_ClassroomKey, 1, false);
+            SysWork_NextStateStepSet(8);
+            break;
+
+        case 7:
+            Savegame_EventFlagClear(EventFlag_M1S02_PickupClassroomKey);
+            SysWork_StateStepIncrement();
+
+        case 8:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+}
 void func_800DD420(void) // 0x800DD420
 {
     sharedFunc_800D08B8_0_s00(6, 127);
