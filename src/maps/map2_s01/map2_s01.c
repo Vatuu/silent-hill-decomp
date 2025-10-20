@@ -206,7 +206,33 @@ void func_800CF7C4(void) // 0x800CF7C4
     Event_ItemTake(InventoryItemId_DrawbridgeKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M2S01_PickupDrawbridgeKey, 36);
 }
 
-INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", func_800CF7F0);
+extern u8 D_800D177C;
+extern s_WorldObject_0 g_CommonWorldObjects[6];
+extern s_WorldObjectDesc g_WorldObj_SavePad;
+extern s_WorldObjectDesc g_WorldObj_Key;
+extern s_WorldObjectDesc g_WorldObj_Item;
+
+void func_800CF7F0(void)
+{
+    func_8003ED74(1, 1);
+
+    Math_Vector3Set(&(g_WorldObj_Item.position_1C), Q12(19.8289f), Q12(-1.3633f), Q12(24.0735f));
+    WorldObject_ModelNameSet(&g_WorldObj_Item.object_0, "ITEM_HID");
+
+    WorldObjectPositionInit(&g_WorldObj_Key.position_1C, 20.073f, -0.858f, 24.1469f, 0.0f, 23.0f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObj_Key.object_0, "KEY_HIDE");
+
+    WorldObjectPositionInit(&g_WorldObj_SavePad.position_1C, 18.3345f, -0.9102f, 14.1985f, 0.0f, 10.5f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObj_SavePad.object_0, D_800A99E4.savePadName_4);
+
+    D_800D177C = 0;
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4.handgunBulletsName_14);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4.shotgunShellsName_18);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
+}
 
 INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", func_800CF938);
 
