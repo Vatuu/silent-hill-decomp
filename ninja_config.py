@@ -70,6 +70,17 @@ DUMPSXISO_DIR = f"{TOOLS_DIR}/psxiso/dumpsxiso{SYS_EXTENSION}"
 # Flags (for programs)
 DUMPSXISO_FLAGS = f"-x {ROM_DIR}/{GAMEVERSIONS.GAME_VERSION_DIR} -s {ROM_DIR}/{GAMEVERSIONS.GAME_VERSION_DIR}/layout.xml {IMAGE_DIR}/{GAMEVERSIONS.GAME_NAME}.bin"
 
+# Compilation flags
+INCLUDE_FLAGS   = f"-Iinclude -I {BUILD_DIR} -Iinclude/psyq"
+OPT_FLAGS       = "-O2"
+ENDIAN          = "-EL"
+DL_EXE_FLAGS    = "-G8"
+DL_OVL_FLAGS    = "-G0"
+DEFINE_FLAGS    = "-D_LANGUAGE_C -DUSE_INCLUDE_ASM"
+CC_FLAGS        = f"-mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet"
+
+
+
 # Compilation tools
 if sys.platform == "linux" or sys.platform == "linux2":
     CROSS   = "mips-linux-gnu"
@@ -91,21 +102,12 @@ else:
     OBJDIFF = f"{OBJDIFF_DIR}/objdiff.exe"
 
 @dataclass
-class SPLITINFO:
+class YAML_INFO:
     SPLIT_ENTRIES: List[str]
     SPLIT_BASENAME: str
     SPLIT_LINKER: str
     SPLIT_UNDEF_FUN: str
     SPLIT_UNDEF_SYM: str
-
-# Compilation flags
-INCLUDE_FLAGS   = f"-Iinclude -I {BUILD_DIR} -Iinclude/psyq"
-OPT_FLAGS       = "-O2"
-ENDIAN          = "-EL"
-DL_EXE_FLAGS    = "-G8"
-DL_OVL_FLAGS    = "-G0"
-DEFINE_FLAGS    = "-D_LANGUAGE_C -DUSE_INCLUDE_ASM"
-
 
 YAML_FILES = [
     "main.yaml",
@@ -160,88 +162,158 @@ YAML_FILES = [
     "maps/map7_s03.yaml"
 ]
 
+def build(ninja, object_paths: Union[Path, List[Path]], src_paths: List[Path], task: str, ovl_map_flag: str = ""):
+    """
+    Helper function to build objects.
+    """
 
-#def setup_ninja(linker_entries: List[LinkerEntry]):
-def setup_ninja(split_entries):
-    built_objects: Set[Path] = set()
+    # Convert object_paths to list if it is not already
+    if not isinstance(object_paths, list):
+        object_paths = [object_paths]
 
-    def build(
-        object_paths: Union[Path, List[Path]],
-        src_paths: List[Path],
-        task: str,
-        ovl_map_flag: str = ""
-        ):
-        """
-        Helper function to build objects.
-        """
+    # Convert paths to strings
+    if task == "cc_ovl" or task == "cc":
+        object_strs = [re.sub(".o$", ".s", str(obj)) for obj in object_paths]
+        input_tar   = [re.sub(".c.o$", ".sjis.i", str(obj)) for obj in object_paths]
+        implicit1   = [re.sub(".c.o$", ".sjis.i", str(obj)) for obj in object_paths]
+    elif task == "iconv":
+        object_strs = [re.sub(".c.o$", ".sjis.i", str(obj)) for obj in object_paths]
+        input_tar   = [re.sub(".c.o$", ".i", str(obj)) for obj in object_paths]
+        implicit1   = [re.sub(".c.o$", ".i", str(obj)) for obj in object_paths]
+    elif task == "cpp":
+        object_strs = [re.sub(".c.o$", ".i", str(obj)) for obj in object_paths]
+        input_tar   = [str(s) for s in src_paths]
+        implicit1   = ''
+    elif task == "objdump":
+        object_strs = [re.sub(".o$", ".dump.s", str(obj)) for obj in object_paths]
+        input_tar   = [str(obj) for obj in object_paths]
+        implicit1   = [str(obj) for obj in object_paths]
+    elif task == "maspsx":
+        object_strs = [str(obj) for obj in object_paths]
+        input_tar   = [re.sub(".o$", ".s", str(obj)) for obj in object_paths]
+        implicit1   = [re.sub(".o$", ".s", str(obj)) for obj in object_paths]
+    else:
+        object_strs = [str(obj) for obj in object_paths]
+        input_tar   = [str(s) for s in src_paths]
+        implicit1   = ''
+    
+    
 
-        # Convert object_paths to list if it is not already
-        if not isinstance(object_paths, list):
-            object_paths = [object_paths]
-
-        # Convert paths to strings
-        if task == "cc_ovl" or task == "cc":
-            object_strs = [re.sub(".o$", ".s", str(obj)) for obj in object_paths]
-            input_tar   = [re.sub(".c.o$", ".sjis.i", str(obj)) for obj in object_paths]
-            implicit1   = [re.sub(".c.o$", ".sjis.i", str(obj)) for obj in object_paths]
-        elif task == "iconv":
-            object_strs = [re.sub(".c.o$", ".sjis.i", str(obj)) for obj in object_paths]
-            input_tar   = [re.sub(".c.o$", ".i", str(obj)) for obj in object_paths]
-            implicit1   = [re.sub(".c.o$", ".i", str(obj)) for obj in object_paths]
+    # Add object paths to built_objects
+    for object_path in object_paths:
+        if implicit1 != "" and task != "maspsx":
+            ninja.build(
+                outputs=object_strs,
+                rule=task,
+                inputs=input_tar,
+                implicit=implicit1
+            )
         elif task == "cpp":
-            object_strs = [re.sub(".c.o$", ".i", str(obj)) for obj in object_paths]
-            input_tar   = [str(s) for s in src_paths]
-            implicit1   = ''
-        elif task == "objdump":
-            object_strs = [re.sub(".o$", ".dump.s", str(obj)) for obj in object_paths]
-            input_tar   = [str(obj) for obj in object_paths]
-            implicit1   = [str(obj) for obj in object_paths]
+            ninja.build(
+                outputs=object_strs,
+                rule=task,
+                inputs=input_tar,
+                variables={
+                    "OVL_FLAGS": ovl_map_flag
+                }
+            )
         elif task == "maspsx":
-            object_strs = [str(obj) for obj in object_paths]
-            input_tar   = [re.sub(".o$", ".s", str(obj)) for obj in object_paths]
-            implicit1   = [re.sub(".o$", ".s", str(obj)) for obj in object_paths]
+            ninja.build(
+                outputs=object_strs,
+                rule=task,
+                inputs=input_tar,
+                variables={
+                    "MAPSXFLAG": ovl_map_flag
+                }
+            )
         else:
-            object_strs = [str(obj) for obj in object_paths]
-            input_tar   = [str(s) for s in src_paths]
-            implicit1   = ''
-        
-        
+            ninja.build(
+                outputs=object_strs,
+                rule=task,
+                inputs=input_tar
+            )
 
-        # Add object paths to built_objects
-        for object_path in object_paths:
-            if object_path.suffix == ".o" or object_path.suffix == ".i":
-                built_objects.add(object_path)
-            if implicit1 != "" and task != "maspsx":
-                ninja.build(
-                    outputs=object_strs,
-                    rule=task,
-                    inputs=input_tar,
-                    implicit=implicit1
-                )
-            elif task == "cpp":
-                ninja.build(
-                    outputs=object_strs,
-                    rule=task,
-                    inputs=input_tar,
-                    variables={
-                        "OVL_FLAGS": ovl_map_flag
-                    }
-                )
-            elif task == "maspsx":
-                ninja.build(
-                    outputs=object_strs,
-                    rule=task,
-                    inputs=input_tar,
-                    variables={
-                        "MAPSXFLAG": ovl_map_flag
-                    }
-                )
-            else:
-                ninja.build(
-                    outputs=object_strs,
-                    rule=task,
-                    inputs=input_tar
-                )
+
+def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file):
+    global mapId
+    global isExpandDivEnabled
+    #print(f"{target_path} | {source_path} | {type(ninja_file)} | {mapId}")
+    
+    # Checks if the path indicates that the source file comes from a map file
+    if re.search("^src/maps.*", source_path):
+        mapId = re.search("map\d_s\d\d", source_path)[0]
+        ninja_file.build(
+            outputs=f"{target_path}.i", rule="cpp", inputs=source_path,
+            variables={
+                "MAPIDFLAG": f"-D{mapId}".upper()
+            }
+        )
+    else:
+        mapId = ""
+        ninja_file.build(
+            outputs=f"{target_path}.i", rule="cpp", inputs=source_path,
+            variables={
+                "MAPIDFLAG": ""
+            }
+        )
+            
+        
+    ninja_file.build(
+        outputs=f"{target_path}.sjis.i", rule="iconv", inputs=f"{target_path}.i", implicit=f"{target_path}.i"
+    )
+    
+    if re.search("^src/main.*", source_path):
+        ninja_file.build(
+            outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.sjis.i", implicit=f"{target_path}.sjis.i",
+            variables={
+                "DLFLAG": DL_EXE_FLAGS
+            }
+        )
+    else:
+        ninja_file.build(
+            outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.sjis.i", implicit=f"{target_path}.sjis.i",
+            variables={
+                "DLFLAG": DL_OVL_FLAGS
+            }
+        )
+    
+    if re.search("smf_io", source_path) or re.search("smf_mid", source_path):
+        if isExpandDivEnabled != True:
+            isExpandDivEnabled = True
+            ninja_file.build(
+                outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s", implicit=f"{target_path}.c.s",
+                variables={
+                    "EXPANDIVFLAG": "--expand-div"
+                }
+            )
+        else:
+            ninja_file.build(
+                outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s", implicit=f"{target_path}.c.s"
+            )
+    else:
+        if isExpandDivEnabled == True:
+            isExpandDivEnabled = False
+            ninja_file.build(
+                outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s", implicit=f"{target_path}.c.s",
+                variables={
+                    "EXPANDIVFLAG": ""
+                }
+            )
+        else:
+            ninja_file.build(
+                outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s", implicit=f"{target_path}.c.s"
+            )
+
+    # Objdump was ever needed?
+    #ninja_file.build(
+    #    outputs=f"{target_path}.c.dump.s", rule="objdump", inputs=f"{target_path}.c.o", implicit=f"{target_path}.c.o"
+    #)
+
+def ninja_setup(split_entries):
+    global mapId
+    global isExpandDivEnabled
+    mapId              = ""
+    isExpandDivEnabled = False
 
     ninja = ninja_syntax.Writer(open(str("build.ninja"), "w", encoding="utf-8"), width=9999)
     
@@ -254,18 +326,13 @@ def setup_ninja(split_entries):
     ninja.rule(
         "cc",
         description="cc $in",
-        command=f"{CC} {OPT_FLAGS} {DL_EXE_FLAGS} -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet -o $out $in",
-    )
-    ninja.rule(
-        "cc_ovl",
-        description="cc $in",
-        command=f"{CC} {OPT_FLAGS} {DL_OVL_FLAGS} -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet -o $out $in",
+        command=f"{CC} {OPT_FLAGS} $DLFLAG {CC_FLAGS} -o $out $in",
     )
     
     ninja.rule(
         "cpp",
         description="cpp $in",
-        command=f"{CPP} -P -MMD -MP -MT $out -MF $out.d {INCLUDE_FLAGS} {DEFINE_FLAGS} -P -MMD -MP -undef -Wall -lang-c -nostdinc $OVL_FLAGS -o $out $in",
+        command=f"{CPP} -P -MMD -MP -MT $out -MF $out.d {INCLUDE_FLAGS} {DEFINE_FLAGS} -P -MMD -MP -undef -Wall -lang-c -nostdinc $MAPIDFLAG -o $out $in",
     )
 
     ninja.rule(
@@ -283,7 +350,7 @@ def setup_ninja(split_entries):
     ninja.rule(
         "maspsx",
         description="maspsx $in",
-        command=f"python3 tools/maspsx/maspsx.py --aspsx-version=2.77 --run-assembler $MAPSXFLAG -EL -Iinclude -I build -Iinclude/psyq -O2 -G0 -march=r3000 -mtune=r3000 -no-pad-sections -o $out $in",
+        command=f"python3 tools/maspsx/maspsx.py --aspsx-version=2.77 --run-assembler $EXPANDIVFLAG -EL -Iinclude -I build -Iinclude/psyq -O2 -G0 -march=r3000 -mtune=r3000 -no-pad-sections -o $out $in",
     )
     
     ninja.rule(
@@ -338,42 +405,23 @@ def setup_ninja(split_entries):
                     continue
                 
                 if isinstance(seg, splat.segtypes.common.asm.CommonSegAsm) or isinstance(seg, splat.segtypes.common.data.CommonSegData):
-                    build(entry.object_path, entry.src_paths, "as")
+                    build(ninja, entry.object_path, entry.src_paths, "as")
                 elif isinstance(seg, splat.segtypes.common.c.CommonSegC):
-                    if re.search("^src/maps.*", str(entry.src_paths[0])):
-                        mapId = re.search("map\d_s\d\d", str(entry.src_paths[0]))[0]
-                        build(entry.object_path, entry.src_paths, "cpp", f"-D{mapId}".upper())
-                    else:
-                        build(entry.object_path, entry.src_paths, "cpp")
-                    
-                    build(entry.object_path, "", "iconv")
-                        
-                    if re.search("^src/main.*", str(entry.src_paths[0])):
-                        build(entry.object_path, "", "cc")
-                    else:
-                        build(entry.object_path, "", "cc_ovl")
-                    
-                    if re.search("smf_io", str(entry.src_paths[0])) or re.search("smf_mid", str(entry.src_paths[0])):
-                        build(entry.object_path, "", "maspsx", "--expand-div")
-                    else:
-                        build(entry.object_path, "", "maspsx")
-                    
-                    build(entry.object_path, "", "objdump")
-                    
+                    ninja_setup_list_add_source(str(entry.object_path).removesuffix(".c.o"), str(entry.src_paths[0]), ninja)
                 elif isinstance(seg, splat.segtypes.common.databin.CommonSegDatabin) or seg.type == "header":
-                    build(entry.object_path, entry.src_paths, "as")
+                    build(ninja, entry.object_path, entry.src_paths, "as")
                 elif isinstance(seg, splat.segtypes.common.rodatabin.CommonSegRodatabin):
-                    build(entry.object_path, entry.src_paths, "as")
+                    build(ninja, entry.object_path, entry.src_paths, "as")
                 elif isinstance(seg, splat.segtypes.common.textbin.CommonSegTextbin):
-                    build(entry.object_path, entry.src_paths, "as")
+                    build(ninja, entry.object_path, entry.src_paths, "as")
                 elif isinstance(seg, splat.segtypes.common.bin.CommonSegBin):
-                    build(entry.object_path, entry.src_paths, "ld")
+                    build(ninja, entry.object_path, entry.src_paths, "ld")
                 elif isinstance(seg, splat.segtypes.common.lib.CommonSegLib):
                     """Did you know that Silent Hill: Homecoming was meant to
                     have a seccion where Alex would have to go through a forest
                     and there he would have founded a hunter that would have
                     tried to kill him, but due lack of direction the whole
-                    section was scrap and the hunter model was repurpose for
+                    section was scrapped and the hunter model was repurpose for
                     Travis Grady"""
                 else:
                     print(f"ERROR: Unsupported build segment type {seg.type}")
@@ -441,7 +489,6 @@ def setup_ninja(split_entries):
 
 
 def clean_files(clean_all):
-
     shutil.rmtree(BUILD_DIR, ignore_errors=True)
     shutil.rmtree(PERMUTER_DIR, ignore_errors=True)
 
@@ -496,16 +543,16 @@ def main():
     )
     args = parser.parse_args()
 
-    clean_test         = (args.clean) or False
-    extract_files_test = (args.iso_extract) or False
-    SPLITS_INFO        = []
+    clean_compilation_files = (args.clean) or False
+    extract_game_files      = (args.iso_extract) or False
+    splits_yaml_info        = []
     
-    if clean_test:
+    if clean_compilation_files:
         print("Cleaning compilation files")
         clean_files(False)
         return
     
-    if extract_files_test:
+    if extract_game_files:
         extract_files()
         return
     
@@ -515,9 +562,9 @@ def main():
             splat.util.symbols.spim_context = spimdisasm.common.Context()
             splat.util.symbols.reset_symbols()
             split.main([Path(f"{CONFIG_DIR}/USA/{YAML_FILE}")], modes="all", use_cache=False, verbose=False, disassemble_all=True, make_full_disasm_for_code=True)
-            SPLITS_INFO += [SPLITINFO([split.linker_writer.entries], split.config['options']['basename'], split.config['options']['ld_script_path'], split.config['options']['undefined_funcs_auto_path'], split.config['options']['undefined_syms_auto_path'])]
+            splits_yaml_info.append(YAML_INFO([split.linker_writer.entries], split.config['options']['basename'], split.config['options']['ld_script_path'], split.config['options']['undefined_funcs_auto_path'], split.config['options']['undefined_syms_auto_path']))
         
-        setup_ninja([SPLITS_INFO][0])
+        ninja_setup(splits_yaml_info)
 
 if __name__ == "__main__":
     main()
