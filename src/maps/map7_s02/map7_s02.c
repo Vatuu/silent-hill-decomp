@@ -713,7 +713,7 @@ void func_800DAA4C(void) // 0x800DAA4C
             Dms_CharacterGetPosRot(&g_SysWork.field_2360, &rot, D_800CD4A4, D_800EB6B4, (s_DmsHeader*)FS_BUFFER_11);
             Dms_CharacterGetPosRot(&pos, &rot, D_800CD4AC, D_800EB6B4, (s_DmsHeader*)FS_BUFFER_11);
 
-            g_SysWork.field_2370.vx = -ratan2(pos.vy - g_SysWork.field_2360.vy, SquareRoot0(SQUARE((pos.vx - g_SysWork.field_2360.vx) >> 6) + SQUARE((pos.vz - g_SysWork.field_2360.vz) >> 6)) << 6);
+            g_SysWork.field_2370.vx = -ratan2(pos.vy - g_SysWork.field_2360.vy, Math_Vector2MagCalc(pos.vx - g_SysWork.field_2360.vx, pos.vz - g_SysWork.field_2360.vz));
             g_SysWork.field_2370.vy = ratan2(pos.vx - g_SysWork.field_2360.vx, pos.vz - g_SysWork.field_2360.vz);
             g_SysWork.field_2370.vz = 0;
             break;
