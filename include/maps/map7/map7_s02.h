@@ -32,6 +32,8 @@ extern u16 D_800E9CE4;
 
 extern u16 D_800E9CFC;
 
+extern VECTOR3 D_800E9D00;
+
 extern u16 D_800E9D50;
 
 extern u16 D_800E9D6C[];
@@ -40,6 +42,7 @@ extern s8 D_800E9ECC;
 extern u8 D_800E9ECD;
 
 extern s16 D_800E9ED8;
+extern s16 D_800E9EDA;
 
 extern u8 D_800EA490;
 
@@ -54,6 +57,8 @@ extern u8  D_800EB6B0;
 extern s32 D_800EB6B4;
 
 extern s_WorldObjectPos D_800EB6E0; // Assumed type.
+
+extern s8 D_800EBAF4;
 
 /** Timer. */
 extern q3_12 D_800EBB94;
@@ -110,6 +115,10 @@ void func_800DC120(void);
 void func_800DC778(void);
 
 void func_800DCD00(void);
+
+void func_800DD9E8(void);
+
+void func_800DDEC8(void);
 
 void func_800DF1F0(void);
 
