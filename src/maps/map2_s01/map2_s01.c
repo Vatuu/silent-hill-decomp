@@ -211,6 +211,7 @@ extern s_WorldObject_0 g_CommonWorldObjects[6];
 extern s_WorldObjectDesc g_WorldObj_SavePad;
 extern s_WorldObjectDesc g_WorldObj_Key;
 extern s_WorldObjectDesc g_WorldObj_Item;
+extern s_WorldObjectPos D_800D0528;
 
 void func_800CF7F0(void)
 {
@@ -234,6 +235,58 @@ void func_800CF7F0(void)
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", func_800CF938);
+void func_800CF938(void)
+{
+    s_Savegame* temp_s0;
+    MAP_CHUNK_CHECK_VARIABLE_DECL();
+    if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    {
+            temp_s0 = g_SavegamePtr;
+            if (Savegame_EventFlagGet(EventFlag_176) && !Savegame_EventFlagGet(EventFlag_M2S01_PickupFlauros))
+            {
+                g_WorldGfx_ObjectAdd(&g_WorldObj_Item.object_0, &g_WorldObj_Item.position_1C.position_0, &(SVECTOR3){});
+            }
+            if (!Savegame_EventFlagGet(EventFlag_M2S01_PickupDrawbridgeKey))
+            {
+                g_WorldGfx_ObjectAdd(&g_WorldObj_Key.object_0, &g_WorldObj_Key.position_1C.position_0, &g_WorldObj_Key.position_1C.rotation_C);
+                temp_s0->mapMarkingFlags_1D4[1] &= ~(1<<31);
+            }
+            else
+            {
+                temp_s0->mapMarkingFlags_1D4[1] |= (1<<31);
+            }
+            g_WorldGfx_ObjectAdd(&g_WorldObj_SavePad.object_0, &g_WorldObj_SavePad.position_1C.position_0, &g_WorldObj_SavePad.position_1C.rotation_C);
+    }
 
-INCLUDE_RODATA("asm/maps/map2_s01/nonmatchings/map2_s01", D_800CB008);
+    if (D_800D177C == 0)
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M2S01_PickupDrawbridgeKey))
+        {
+            if (PLAYER_NEAR_POS(vx, 20.0f, 0.7f) && PLAYER_NEAR_POS(vz, 23.9f, 0.5f))
+            {
+                    Camera_PositionSet(NULL, Q12(19.57f), Q12(-2.91f), Q12(23.91f), 0, 0, 0, 0, true);
+                    Camera_LookAtSet(NULL, Q12(20.69f), Q12(0.92f), Q12(24.22f), 0, 0, 0, 0, true);
+                    D_800D177C = 1;
+            }
+        }
+    }
+    else
+    {
+        // NOTE: This macro uses > comparison, but this part of the code is apparently suing >=
+        // which would require a separate macro or slightly larger number to compensate.
+        if (!(PLAYER_NEAR_POS(vx, 20.0f, 1.2004f) && PLAYER_NEAR_POS(vz, 23.9f, 1.0004f)))
+        {
+            vcReturnPreAutoCamWork(true);
+            D_800D177C = 0;
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M2S01_HealthDrink))
+        {
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &D_800D0528.position_0, &D_800D0528.rotation_C);
+        }
+    }
+}
+

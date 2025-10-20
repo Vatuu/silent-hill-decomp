@@ -117,6 +117,7 @@ typedef enum _EventFlag
 
     EventFlag_M2S00_PickupHealthDrink = 175,
 
+    EventFlag_176 = 176,
     EventFlag_M2S01_PickupFlauros       = 177,
     EventFlag_M2S01_PickupDrawbridgeKey = 178,
 

@@ -3004,4 +3004,11 @@ static inline void WorldObjectPositionSet(s_WorldObjectPos* eventPos, q19_12 pos
       (g_SysWork.player_4C.chara_0.position_18.crd <= Q12(0.0f) && (__chunkIdx + (x2)) == (x3))))
 
 
+#define PLAYER_NEAR_POS(crd, base, tol)                                                \
+    (                                                                                  \
+        (((g_SysWork.player_4C.chara_0.position_18.crd - Q12(base)) >= 0)              \
+         ? ((g_SysWork.player_4C.chara_0.position_18.crd - Q12(base)) < Q12(tol))      \
+         : ((Q12(base) - g_SysWork.player_4C.chara_0.position_18.crd) < Q12(tol)))     \
+    )
+
 #endif
