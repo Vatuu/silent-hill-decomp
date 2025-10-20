@@ -32,6 +32,8 @@ extern u16 D_800E9CE4;
 
 extern u16 D_800E9CFC;
 
+extern u16 D_800E9D50;
+
 extern u16 D_800E9D6C[];
 
 extern s8 D_800E9ECC;
@@ -110,6 +112,8 @@ void func_800DC778(void);
 void func_800DCD00(void);
 
 void func_800DF1F0(void);
+
+void func_800DF21C(void);
 
 void func_800DFA54(void);
 

@@ -288,6 +288,8 @@ typedef enum _EventFlag
 
     EventFlag_555 = 555,
 
+    EventFlag_560 = 560,
+
     EventFlag_562 = 562,
     EventFlag_563 = 563,
 
