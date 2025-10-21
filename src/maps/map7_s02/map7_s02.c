@@ -1264,14 +1264,14 @@ void func_800DCD00(void) // 0x800DCD00
             func_800862F8(2, 0, false);
             func_8008616C(2, false, 0, Q12(0.0f), false);
 
-            if (D_800E9ED8 == 0 && !Savegame_EventFlagGet(EventFlag_555))
+            if (D_800E9ED8 == Q12(0.0f) && !Savegame_EventFlagGet(EventFlag_555))
             {
                 Sd_PlaySfx(Sfx_Unk1664, 0, 224);
                 D_800E9ED8 = Rng_GenerateInt(Rng_Rand16(), Q12(1.2f), Q12(2.8f) - 1);
             }
             else
             {
-                D_800E9ED8 = (D_800E9ED8 - g_DeltaTime0) >= 0 ? D_800E9ED8 - (s16)g_DeltaTime0 : 0;
+                D_800E9ED8 = ((D_800E9ED8 - g_DeltaTime0) >= Q12(0.0f)) ? (D_800E9ED8 - (q3_12)g_DeltaTime0) : Q12(0.0f);
             }
             break;
 
@@ -1291,14 +1291,14 @@ void func_800DCD00(void) // 0x800DCD00
 
             func_800862F8(2, 0, false);
 
-            if (D_800E9ED8 == 0 && !Savegame_EventFlagGet(EventFlag_555))
+            if (D_800E9ED8 == Q12(0.0f) && !Savegame_EventFlagGet(EventFlag_555))
             {
                 Sd_PlaySfx(Sfx_Unk1664, 0, 224);
                 D_800E9ED8 = Rng_GenerateInt(Rng_Rand16(), Q12(1.2f), Q12(2.8f) - 1);
             }
             else
             {
-                D_800E9ED8 = (D_800E9ED8 - g_DeltaTime0) >= 0 ? D_800E9ED8 - (s16)g_DeltaTime0 : 0;
+                D_800E9ED8 = ((D_800E9ED8 - g_DeltaTime0) >= Q12(0.0f)) ? (D_800E9ED8 - (q3_12)g_DeltaTime0) : Q12(0.0f);
             }
             break;
 
@@ -1315,14 +1315,14 @@ void func_800DCD00(void) // 0x800DCD00
             func_800862F8(2, 0, false);
             func_8008616C(2, true, 0, Q12(0.0f), false);
 
-            if (D_800E9ED8 == 0 && !Savegame_EventFlagGet(EventFlag_555))
+            if (D_800E9ED8 == Q12(0.0f) && !Savegame_EventFlagGet(EventFlag_555))
             {
                 Sd_PlaySfx(Sfx_Unk1664, 0, 224);
                 D_800E9ED8 = Rng_GenerateInt(Rng_Rand16(), Q12(1.2f), Q12(2.8f) - 1);
             }
             else
             {
-                D_800E9ED8 = (D_800E9ED8 - g_DeltaTime0) >= 0 ? D_800E9ED8 - (s16)g_DeltaTime0 : 0;
+                D_800E9ED8 = ((D_800E9ED8 - g_DeltaTime0) >= Q12(0.0f)) ? (D_800E9ED8 - (q3_12)g_DeltaTime0) : Q12(0.0f);
             }
 
             if (g_SysWork.sysStateStep_C[0] != 8)
@@ -1364,14 +1364,14 @@ void func_800DCD00(void) // 0x800DCD00
             func_800862F8(2, 0, false);
             func_8008616C(2, true, 0, Q12(0.0f), false);
 
-            if (D_800E9ED8 == 0 && !Savegame_EventFlagGet(EventFlag_555))
+            if (D_800E9ED8 == Q12(0.0f) && !Savegame_EventFlagGet(EventFlag_555))
             {
                 Sd_PlaySfx(Sfx_Unk1664, 0, 224);
                 D_800E9ED8 = Rng_GenerateInt(Rng_Rand16(), Q12(1.2f), Q12(2.8f) - 1);
             }
             else
             {
-                D_800E9ED8 = (D_800E9ED8 - g_DeltaTime0) >= 0 ? D_800E9ED8 - (s16)g_DeltaTime0 : 0;
+                D_800E9ED8 = ((D_800E9ED8 - g_DeltaTime0) >= Q12(0.0f)) ? (D_800E9ED8 - (q3_12)g_DeltaTime0) : Q12(0.0f);
             }
             break;
 
@@ -1593,11 +1593,17 @@ void func_800DF21C(void) // 0x800DF21C
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
+
             D_800EB6B0 = 0;
+
             Game_TurnFlashlightOn();
+
             g_SysWork.field_30 = 20;
+
             ScreenFade_ResetTimestep();
+
             g_SysWork.flags_22A4 |= 1 << 3;
+
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
 
@@ -1660,7 +1666,9 @@ void func_800DF21C(void) // 0x800DF21C
         case 7:
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 10, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[1], 12, false);
+
             D_800EB6B4 = Q12(60.0f);
+
             Savegame_EventFlagClear(EventFlag_560);
             SysWork_StateStepIncrement();
 
@@ -1706,7 +1714,6 @@ void func_800DF21C(void) // 0x800DF21C
             func_8003EBA0();
 
             g_SysWork.field_2378 = Q12(1.0f);
-
             D_800EB6B4 = NO_VALUE;
 
             Sd_EngineCmd(19);

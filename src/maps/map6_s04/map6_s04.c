@@ -625,7 +625,7 @@ void func_800E2CA0(void) // 0x800E2CA0
 
     VECTOR3         lightIntPos;
     SVECTOR3        unused;
-    q19_12          lightDistance;
+    q19_12          lightDist;
     s_SubCharacter* player;
 
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 && g_SysWork.sysStateStep_C[0] == 7)
@@ -638,13 +638,13 @@ void func_800E2CA0(void) // 0x800E2CA0
         case 0:
             D_800EBA30 = 0;
             D_800ED5B6 = 0;
+
             Game_TurnFlashlightOn();
             func_8003D03C();
             func_8004690C(Sfx_Unk1617);
             sharedFunc_800D20E4_0_s00();
 
             g_SysWork.npcs_1A0[0].health_B0 = NO_VALUE;
-
             D_800ED5AC           = 0;
             D_800ED5B0           = Q12(96.0f);
             g_SysWork.field_235C = NULL;
@@ -722,7 +722,9 @@ void func_800E2CA0(void) // 0x800E2CA0
             vcReturnPreAutoCamWork(true);
             func_8008D448();
             func_8003EBA0();
+
             g_SysWork.field_2378 = Q12(1.0f);
+
             Sd_EngineCmd(19);
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
             break;
@@ -740,7 +742,7 @@ void func_800E2CA0(void) // 0x800E2CA0
         vcUserCamTarget(&D_800ED590, NULL, true);
         vcUserWatchTarget(&D_800ED5A0, NULL, true);
 
-        // "LIGHT", cutscene light position? (TODO: rename g_SysWork.field_2360?)
+        // "LIGHT", cutscene light position? TODO: rename `g_SysWork.field_2360`?
         Dms_CharacterGetPosRot(&g_SysWork.field_2360, &unused, &D_800CC4CC, D_800ED5B0, FS_BUFFER_14);
 
         // "L_INT", interior light or intersection point?
@@ -749,7 +751,7 @@ void func_800E2CA0(void) // 0x800E2CA0
         // Light angle? (TODO: rename g_SysWork.field_2370?)
         g_SysWork.field_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.field_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.field_2360.vx, lightIntPos.vz - g_SysWork.field_2360.vz));
         g_SysWork.field_2370.vy = ratan2(lightIntPos.vx - g_SysWork.field_2360.vx, lightIntPos.vz - g_SysWork.field_2360.vz);
-        g_SysWork.field_2370.vz = 0;
+        g_SysWork.field_2370.vz = FP_ANGLE(0.0f);
     }
 }
 

@@ -909,16 +909,16 @@ void Map_WorldObjectsInit() // 0x800DC9C8
     WorldObject_ModelNameSet(&D_800E2450[0], "OUT1_HID");
     WorldObject_ModelNameSet(&D_800E2450[1], "OUT_BLD_");
 
-    WorldObjectPositionInit(&g_EventThing_KitchenKnife.position_1C, 5.09f, -1.01f, 274.12f, 0.0f, 32.0f, 0.0f); 
+    WorldObjectPoseInit(&g_EventThing_KitchenKnife.pose_1C, 5.09f, -1.01f, 274.12f, 0.0f, 32.0f, 0.0f); 
     WorldObject_ModelNameSet(&g_EventThing_KitchenKnife.object_0, "KNIFE_HI");
 
-    WorldObjectPositionInit(&g_EventThing_Flashlight.position_1C, 5.18f, -1.0f, 267.28f, -3.0f, 111.0f, 0.0f);
+    WorldObjectPoseInit(&g_EventThing_Flashlight.pose_1C, 5.18f, -1.0f, 267.28f, -3.0f, 111.0f, 0.0f);
     WorldObject_ModelNameSet(&g_EventThing_Flashlight.object_0, "FLASH_HI");
 
-    WorldObjectPositionInit(&g_EventThing_Map.position_1C, 5.24f, -1.0f, 267.21f, 0.0f, 57.0f, 0.0f);
+    WorldObjectPoseInit(&g_EventThing_Map.pose_1C, 5.24f, -1.0f, 267.21f, 0.0f, 57.0f, 0.0f);
     WorldObject_ModelNameSet(&g_EventThing_Map.object_0, "MAP_HIDE");
 
-    WorldObjectPositionInit(&g_EventThing_PocketRadio.position_1C, 2.31f, -0.6f, 273.95f, 0.0f, 147.0f, 0.0f);
+    WorldObjectPoseInit(&g_EventThing_PocketRadio.pose_1C, 2.31f, -0.6f, 273.95f, 0.0f, 147.0f, 0.0f);
     WorldObject_ModelNameSet(&g_EventThing_PocketRadio.object_0, "RADIO_HI");
 
     if (Savegame_EventFlagGet(EventFlag_40) && !Savegame_EventFlagGet(EventFlag_47))
@@ -964,22 +964,22 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
     {
-        g_WorldGfx_ObjectAdd(&g_EventThing_Map.object_0, &g_EventThing_Map.position_1C.position_0, &g_EventThing_Map.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_EventThing_Map.object_0, &g_EventThing_Map.pose_1C.position_0, &g_EventThing_Map.pose_1C.rotation_C);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupFlashlight))
     {
-        g_WorldGfx_ObjectAdd(&g_EventThing_Flashlight.object_0, &g_EventThing_Flashlight.position_1C.position_0, &g_EventThing_Flashlight.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_EventThing_Flashlight.object_0, &g_EventThing_Flashlight.pose_1C.position_0, &g_EventThing_Flashlight.pose_1C.rotation_C);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupPocketRadio))
     {
-        g_WorldGfx_ObjectAdd(&g_EventThing_PocketRadio.object_0, &g_EventThing_PocketRadio.position_1C.position_0, &g_EventThing_PocketRadio.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_EventThing_PocketRadio.object_0, &g_EventThing_PocketRadio.pose_1C.position_0, &g_EventThing_PocketRadio.pose_1C.rotation_C);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupKitchenKnife))
     {
-        g_WorldGfx_ObjectAdd(&g_EventThing_KitchenKnife.object_0, &g_EventThing_KitchenKnife.position_1C.position_0, &g_EventThing_KitchenKnife.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_EventThing_KitchenKnife.object_0, &g_EventThing_KitchenKnife.pose_1C.position_0, &g_EventThing_KitchenKnife.pose_1C.rotation_C);
     }
 
     if (Savegame_EventFlagGet(EventFlag_M0S01_PickupKitchenKnife) && Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))

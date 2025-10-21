@@ -1641,7 +1641,7 @@ void func_800DBE00(void) // 0x800DBE00
 
 void Map_WorldObjectsInit(void) // 0x800DBE68
 {
-    s32 rotXY;
+    s32 rotXy; // Packed.
 
     WorldObject_ModelNameSet(&D_800E3A5C[0], "WHEEL1_H");
     WorldObject_ModelNameSet(&D_800E3A5C[1], "WHEEL2_H");
@@ -1650,11 +1650,11 @@ void Map_WorldObjectsInit(void) // 0x800DBE68
     D_800E3A9C.vy = Q12(-0.44f);
     D_800E3A9C.vz = Q12(245.72f);
 
-    rotXY = 0xFAE4FE17; // @hack `vx` and `vy` combined into `s32`.
+    rotXy = 0xFAE4FE17; // @hack `vx` and `vy` combined into `s32`.
     D_800E3AAC.vz = 0;
 
     Savegame_EventFlagClear(EventFlag_188);
-    *(s32*)&D_800E3AAC.vx = rotXY;
+    *(s32*)&D_800E3AAC.vx = rotXy;
 }
 
 void Map_WorldObjectsUpdate(void) // 0x800DBF08

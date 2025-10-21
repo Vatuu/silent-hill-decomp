@@ -542,23 +542,23 @@ void func_800CF7C4(void) // 0x800CF7C4
 
 extern u8 D_800D177C;
 extern s_WorldObject_0 g_CommonWorldObjects[6];
-extern s_WorldObjectDesc g_WorldObj_SavePad;
-extern s_WorldObjectDesc g_WorldObj_Key;
-extern s_WorldObjectDesc g_WorldObj_Item;
-extern s_WorldObjectPos D_800D0528;
+extern s_WorldObjectDesc g_WorldObject_SavePad;
+extern s_WorldObjectDesc g_WorldObject_Key;
+extern s_WorldObjectDesc g_WorldObject_Item;
+extern s_WorldObjectPose D_800D0528;
 
 void func_800CF7F0(void)
 {
     func_8003ED74(1, 1);
 
-    Math_Vector3Set(&(g_WorldObj_Item.position_1C), Q12(19.8289f), Q12(-1.3633f), Q12(24.0735f));
-    WorldObject_ModelNameSet(&g_WorldObj_Item.object_0, "ITEM_HID");
+    Math_Vector3Set(&(g_WorldObject_Item.pose_1C), Q12(19.8289f), Q12(-1.3633f), Q12(24.0735f));
+    WorldObject_ModelNameSet(&g_WorldObject_Item.object_0, "ITEM_HID");
 
-    WorldObjectPositionInit(&g_WorldObj_Key.position_1C, 20.073f, -0.858f, 24.1469f, 0.0f, 23.0f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObj_Key.object_0, "KEY_HIDE");
+    WorldObjectPoseInit(&g_WorldObject_Key.pose_1C, 20.073f, -0.858f, 24.1469f, 0.0f, 23.0f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject_Key.object_0, "KEY_HIDE");
 
-    WorldObjectPositionInit(&g_WorldObj_SavePad.position_1C, 18.3345f, -0.9102f, 14.1985f, 0.0f, 10.5f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObj_SavePad.object_0, D_800A99E4.savePadName_4);
+    WorldObjectPoseInit(&g_WorldObject_SavePad.pose_1C, 18.3345f, -0.9102f, 14.1985f, 0.0f, 10.5f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject_SavePad.object_0, D_800A99E4.savePadName_4);
 
     D_800D177C = 0;
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
@@ -578,18 +578,18 @@ void func_800CF938(void)
             temp_s0 = g_SavegamePtr;
             if (Savegame_EventFlagGet(EventFlag_176) && !Savegame_EventFlagGet(EventFlag_M2S01_PickupFlauros))
             {
-                g_WorldGfx_ObjectAdd(&g_WorldObj_Item.object_0, &g_WorldObj_Item.position_1C.position_0, &(SVECTOR3){});
+                g_WorldGfx_ObjectAdd(&g_WorldObject_Item.object_0, &g_WorldObject_Item.pose_1C.position_0, &(SVECTOR3){});
             }
             if (!Savegame_EventFlagGet(EventFlag_M2S01_PickupDrawbridgeKey))
             {
-                g_WorldGfx_ObjectAdd(&g_WorldObj_Key.object_0, &g_WorldObj_Key.position_1C.position_0, &g_WorldObj_Key.position_1C.rotation_C);
+                g_WorldGfx_ObjectAdd(&g_WorldObject_Key.object_0, &g_WorldObject_Key.pose_1C.position_0, &g_WorldObject_Key.pose_1C.rotation_C);
                 temp_s0->mapMarkingFlags_1D4[1] &= ~(1<<31);
             }
             else
             {
                 temp_s0->mapMarkingFlags_1D4[1] |= (1<<31);
             }
-            g_WorldGfx_ObjectAdd(&g_WorldObj_SavePad.object_0, &g_WorldObj_SavePad.position_1C.position_0, &g_WorldObj_SavePad.position_1C.rotation_C);
+            g_WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object_0, &g_WorldObject_SavePad.pose_1C.position_0, &g_WorldObject_SavePad.pose_1C.rotation_C);
     }
 
     if (D_800D177C == 0)

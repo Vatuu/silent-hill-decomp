@@ -29,9 +29,9 @@ extern u16 D_800DE124;
 
 extern u16 D_800DE128;
 
-extern s_WorldObjectPos D_800DE12C;
+extern s_WorldObjectPose D_800DE12C;
 
-extern s_WorldObjectPos D_800DE140;
+extern s_WorldObjectPose D_800DE140;
 
 extern VECTOR3 D_800DE154;
 

@@ -1227,9 +1227,9 @@ typedef struct
     s32              gsCoordinate1_4 : 14; // Used as `GsCOORDINATE2::coord.t[1].`
     s32              gsCoordinate2_8 : 18; // Used as `GsCOORDINATE2::coord.t[2].`
     s32              unk_8_18        : 14;
-    s32              vx_C            : 10;
-    s32              vy_C            : 12;
-    s32              vz_C            : 10;
+    s32              vx_C            : 10; // } Rotation?
+    s32              vy_C            : 12; // }
+    s32              vz_C            : 10; // }
 } s_WorldObject;
 STATIC_ASSERT_SIZEOF(s_WorldObject, 16);
 

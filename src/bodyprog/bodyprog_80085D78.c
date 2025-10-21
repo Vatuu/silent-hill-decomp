@@ -2351,7 +2351,7 @@ void func_8008B438(s32 arg0, s32 arg1, s32 arg2) // 0x8008B438
     }
 }
 
-bool func_8008B474(s32 arg0, s32 inVol, s32 soundType)
+bool func_8008B474(s32 arg0, s32 inVol, s32 soundType) // 0x8008B474
 {
     s32 vol;
     s32 cond;
@@ -2384,7 +2384,7 @@ bool func_8008B474(s32 arg0, s32 inVol, s32 soundType)
     }
 
     cond = !vol;
-    if (g_DeltaTime0 == 0)
+    if (g_DeltaTime0 == Q12(0.0f))
     {
         inVol = 0;
     }
@@ -2393,7 +2393,7 @@ bool func_8008B474(s32 arg0, s32 inVol, s32 soundType)
     {
         if (inVol != 0)
         {
-            if (inVol >= 256)
+            if (inVol > Q8_CLAMPED(1.0f))
             {
                 vol = Q12(511.0f);
             }
@@ -2409,7 +2409,7 @@ bool func_8008B474(s32 arg0, s32 inVol, s32 soundType)
     }
     else
     {
-        vol -= (g_DeltaTime0 << 9);
+        vol -= g_DeltaTime0 << 9;
         if (vol < 0)
         {
             vol = 0;
@@ -2449,15 +2449,17 @@ bool func_8008B474(s32 arg0, s32 inVol, s32 soundType)
         case 0:
             g_SysWork.field_2760 = vol;
             break;
+
         case 1:
         case 2:
             g_SysWork.field_275C = vol;
             break;
+
         case 3:
             g_SysWork.field_2764 = vol;
     }
 
-    return (vol > Q12(256.0f));
+    return vol > Q12(256.0f);
 }
 
 void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
@@ -2500,7 +2502,7 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
         case 25:
             if (g_SysWork.field_275C > 0x100000)
             {
-                func_8008B3E4(0x80);
+                func_8008B3E4(128);
                 break;
             }
 

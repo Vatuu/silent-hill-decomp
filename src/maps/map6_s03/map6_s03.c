@@ -157,7 +157,9 @@ INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D4A38);
 
 void func_800D4A5C(s_SubCharacter* chara) // 0x800D4A5C
 {
-    q19_12 playerDist = Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz);
+    q19_12 playerDist;
+
+    playerDist = Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz);
 
     // TODO: Invert to return early instead?
     if ((playerDist < Q12(1.0f)) &&

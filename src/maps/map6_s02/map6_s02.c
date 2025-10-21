@@ -179,6 +179,7 @@ void func_800CFC34(void) // 0x800CFC34
         {
             D_800D3C94 = 0;
         }
+
         func_800463C0(Sfx_Unk1467, 0, ~(D_800D3C94 >> 4), pitchDiv512);
     }
     else if (g_SysWork.sysStateStep_C[0] > 0)
@@ -188,6 +189,7 @@ void func_800CFC34(void) // 0x800CFC34
         {
             D_800D3C94 = 4080;
         }
+
         func_800463C0(Sfx_Unk1467, 0, ~(D_800D3C94 >> 4), pitchDiv512);
     }
 
@@ -218,7 +220,7 @@ void func_800CFC34(void) // 0x800CFC34
             D_800D3C90 = 0;
             Savegame_EventFlagSet(EventFlag_417);
 
-            D_800D3C8C = 0;
+            D_800D3C8C = Q12(0.0f);
             SysWork_StateStepIncrement();
 
         case 1:
@@ -234,6 +236,7 @@ void func_800CFC34(void) // 0x800CFC34
 
         case 3:
             D_800D4E28 = 0;
+
             func_8008616C(0, true, 3, Q12(0.0f), false);
             DmsHeader_FixOffsets(FS_BUFFER_13);
             func_8003D03C();
@@ -253,7 +256,7 @@ void func_800CFC34(void) // 0x800CFC34
 
             for (i = 0; i < 15; i++)
             {
-                func_800CABA0(&D_800D3B78[i], Q12(0.5f), 0xCC, 0);
+                func_800CABA0(&D_800D3B78[i], Q12(0.5f), 204, 0);
             }
             break;
 
@@ -267,9 +270,10 @@ void func_800CFC34(void) // 0x800CFC34
 
         case 8:
             MapMsg_DisplayAndHandleSelection(false, 24, 0, 0, 0, false);
+
             for (i = 0; i < 15; i++)
             {
-                func_800CABA0(&D_800D3B78[i], Q12(0.5f), 0xCC, 0);
+                func_800CABA0(&D_800D3B78[i], Q12(0.5f), 204, 0);
             }
             break;
 
@@ -331,6 +335,7 @@ void func_800CFC34(void) // 0x800CFC34
             func_80086470(3, InventoryItemId_ChannelingStone, 1, false);
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
+
             D_800D4E28 = NO_VALUE;
 
             if (Savegame_EventFlagGet(EventFlag_469))
@@ -359,13 +364,13 @@ void func_800CFC34(void) // 0x800CFC34
         {
             if (Savegame_EventFlagGet(EventFlag_469) || D_800D3C8C < D_800D3C2C[i])
             {
-                func_800CABA0(&D_800D3B78[i], Q12(0.5f), 0xCC, 0);
+                func_800CABA0(&D_800D3B78[i], Q12(0.5f), 204, 0);
 
                 if (D_800D3C8C > Q12(1.5f))
                 {
-                    D_800D3B78[i].vx += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 3.5f, 12);
-                    D_800D3B78[i].vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.2f, 12);
-                    D_800D3B78[i].vz += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, -0.2f, 12);
+                    D_800D3B78[i].vx += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0,  3.5f, Q12_SHIFT);
+                    D_800D3B78[i].vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0,  1.2f, Q12_SHIFT);
+                    D_800D3B78[i].vz += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, -0.2f, Q12_SHIFT);
                 }
             }
         }
