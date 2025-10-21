@@ -1,4 +1,4 @@
-s16 Anim_StartKeyframeIdxGet(s_SubCharacter* chara)
+s32 Anim_StartKeyframeIdxGet(s_SubCharacter* chara)
 {
     // TODO: Not sure if any of these match `KAUFMANN_ANIM_INFOS` in other maps.
 #if defined(MAP6_S01)
