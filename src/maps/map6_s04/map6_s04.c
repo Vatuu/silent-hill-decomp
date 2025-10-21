@@ -278,7 +278,7 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", sharedFunc_800CEEDC_3_s02
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", sharedFunc_800CD280_2_s01); // 0x800DCAA4
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", sharedFunc_800CD2C8_2_s01); // 0x800DCAEC
+#include "maps/shared/sharedFunc_800CD2C8_2_s01.h" // 0x800DCAEC
 
 INCLUDE_RODATA("asm/maps/map6_s04/nonmatchings/map6_s04", D_800CB554);
 
