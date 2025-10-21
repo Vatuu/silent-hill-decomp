@@ -20,6 +20,8 @@ void func_800CE858(s32 arg0);
 
 void func_800CED44(void);
 
+void func_800CED88(void);
+
 void func_800CF798(void);
 
 void func_800CF7C4(void);

@@ -246,20 +246,21 @@ void func_800CED44(void) // 0x800CED44
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
-void func_800CED88(void)
+void func_800CED88(void) // 0x800CED88
 {
-    s32 step;
+    #define CUTSCENE_SKIP_STATE 31
+
+    s32             step;
     s_SubCharacter* dahlia;
-    static const VECTOR3 soundPos = VECTOR3(12.0f, -1.2f, 24.0f);
-    #define DAHLIA_PTR (&g_SysWork.npcs_1A0[0])
-    #define PLAYER_PTR (&g_SysWork.player_4C.chara_0)
-    #define CUTSCENE_SKIP_STATE 0x1F
+
+    static const VECTOR3 SOUND_POS = VECTOR3(12.0f, -1.2f, 24.0f);
 
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         (g_SysWork.sysStateStep_C[0] > 0) && (g_SysWork.sysStateStep_C[0] < CUTSCENE_SKIP_STATE))
     {
         SysWork_NextStateStepSet(CUTSCENE_SKIP_STATE);
     }
+
     step = g_SysWork.sysStateStep_C[0];
     switch (step)
     {
@@ -271,166 +272,193 @@ void func_800CED88(void)
             Chara_Load(0, Chara_Dahlia, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             func_80088D0C();
             Chara_Spawn(Chara_Dahlia, 0, Q12(20.0f), Q12(23.5f), 0, 3);
-            sharedFunc_800D88AC_0_s00(DAHLIA_PTR);
-            g_Timer0 = 0;
+            sharedFunc_800D88AC_0_s00(&g_SysWork.npcs_1A0[0]);
+
+            g_Timer0 = Q12(0.0f);
             g_SysWork.field_30 = 20;
             g_SysWork.flags_22A4 |= 8;
-            func_80085EB8(0, PLAYER_PTR, 51, false);
-            func_80085EB8(0, DAHLIA_PTR, 0, false);
+
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 0, false);
             func_8003D03C();
+
             g_SavegamePtr->eventFlags_168[5] |= 0x400000;
             g_MapMsgSoundIdx = 0;
+
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         case 1:
             func_8008616C(2, false, 0, 0, false);
             break;
+
         case 2:
             Map_MessageWithAudio(15, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
+
         case 3:
             Map_MessageWithAudio(18, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
+
         case 4:
             Map_MessageWithAudio(23, &g_MapMsgSoundIdx, g_MapMsgSounds);
             func_80085E6C(Q12(1.2f), false);
             break;
+
         case 5:
-            func_80085EB8(0, PLAYER_PTR, 113, false);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 113, false);
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         case 6:
             Map_MessageWithAudio(23, &g_MapMsgSoundIdx, g_MapMsgSounds);
+
             if (g_Timer0 < Q12(1.0f))
             {
                 g_Timer0 = Q12(1.0f);
                 break;
             }
+
             g_Timer0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(5.0f), Q12_SHIFT);
             if (g_Timer0 > Q12(23.0f))
             {
                 g_Timer0 = Q12(23.0f);
             }
             break;
+
         case 7:
             Map_MessageWithAudio(0x18, &g_MapMsgSoundIdx, g_MapMsgSounds);
+
             if (g_Timer0 < Q12(1.0f))
             {
                 g_Timer0 = Q12(1.0f);
                 break;
             }
-            g_Timer0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(5.0f), Q12_SHIFT);
 
+            g_Timer0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(5.0f), Q12_SHIFT);
             if (g_Timer0 > Q12(23.0f))
             {
                 g_Timer0 = Q12(23.0f);
             }
             break;
+
         case 8:
-            func_80085EB8(4, PLAYER_PTR, 0, false);
+            func_80085EB8(4, &g_SysWork.player_4C.chara_0, 0, false);
             func_80085E6C(Q12(0.8f), false);
             break;
+
         case 9:
             Map_MessageWithAudio(25, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
+
         case 10:
-            func_80085EB8(0, DAHLIA_PTR, 9, false);
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 9, false);
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         case 11:
             func_80085E6C(Q12(0.5f), false);
             break;
+
         case 12:
-            func_80085EB8(1, DAHLIA_PTR, 0, false);
+            func_80085EB8(1, &g_SysWork.npcs_1A0[0], 0, false);
             Map_MessageWithAudio(29, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
+
         case 13:
             func_80085E6C(Q12(2.0f), false);
             Map_MessageWithAudio(29, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
+
         case 14:
-            func_80085EB8(0, DAHLIA_PTR, 10, false);
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 10, false);
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         case 15:
-            func_80085EB8(1, DAHLIA_PTR, 0, false);
+            func_80085EB8(1, &g_SysWork.npcs_1A0[0], 0, false);
             Map_MessageWithAudio(29, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
+
         case 16:
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         case 17:
             Map_MessageWithAudio(29, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
+
         case 18:
-            func_80085EB8(0, DAHLIA_PTR, 8, false);
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 8, false);
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         case 19:
             Map_MessageWithAudio(33, &g_MapMsgSoundIdx, g_MapMsgSounds);
+
             if (g_Timer0 >= Q12(142.0f))
             {
                 g_Timer0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(10.0f), Q12_SHIFT);
-        
                 if (g_Timer0 > Q12(165.0f))
                 {
                     g_Timer0 = Q12(165.0f);
                 }
                 break;
             }
+
             g_Timer0 = Q12(142.0f);
             break;
+
         case 20:
             func_80085E6C(Q12(0.3f), false);
+
             if (g_Timer0 < Q12(142.0f))
             {
                 g_Timer0 = Q12(142.0f);
                 break;
             }
-            g_Timer0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(10.0f), Q12_SHIFT);
 
+            g_Timer0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(10.0f), Q12_SHIFT);
             if (g_Timer0 > Q12(165.0f))
             {
                 g_Timer0 = Q12(165.0f);
             }
             break;
+
         case 21:
-            func_80085EB8(0, DAHLIA_PTR, 1, false);
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 1, false);
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         case 22:
             func_80085E6C(Q12(0.8f), false);
+
             if (g_Timer0 >= Q12(166.0f))
             {
                 g_Timer0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(15.0f), Q12_SHIFT);
-        
                 if (g_Timer0 > Q12(180.0f))
                 {
                     g_Timer0 = Q12(180.0f);
                 }
                 break;
             }
-            g_Timer0 = Q12(166.0f);
 
+            g_Timer0 = Q12(166.0f);
             break;
+
         case 23:
-            func_80085EB8(0, PLAYER_PTR, 111, false);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 111, false);
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         case 24:
             Map_MessageWithAudio(34, &g_MapMsgSoundIdx, g_MapMsgSounds);
+
             if (g_Timer0 < Q12(166.0f))
             {
                 g_Timer0 = Q12(166.0f);
                 break;
             }
-            g_Timer0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(15.0f), Q12_SHIFT);
 
+            g_Timer0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(15.0f), Q12_SHIFT);
             if (g_Timer0 > Q12(253.0f))
             {
                 g_Timer0 = Q12(253.0f);
             }
             break;
+
         case 25:
             if (g_Timer0 < Q12(166.0f))
             {
@@ -446,31 +474,37 @@ void func_800CED88(void)
                 }
             }
             break;
+
         case 26:
             func_80085E6C(Q12(0.8f), false);
             break;
+
         case 27:
-            func_8005DC1C(Sfx_Unk1323, &soundPos, 0x80, 0);
+            func_8005DC1C(Sfx_Unk1323, &SOUND_POS, 0x80, 0);
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         case 28:
             func_80085E6C(Q12(1.2f), false);
             break;
+
         case 29:
-            func_8005DC1C(Sfx_Unk1324, &soundPos, 0x80, 0);
-            func_80088F94(DAHLIA_PTR, 0, 0);
+            func_8005DC1C(Sfx_Unk1324, &SOUND_POS, 0x80, 0);
+            func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         case 30:
             func_80085E6C(Q12(0.5f), false);
             break;
+
         case CUTSCENE_SKIP_STATE:
             func_8008616C(2, true, 0, 0, false);
+
             if (g_SysWork.sysStateStep_C[0] != CUTSCENE_SKIP_STATE)
             {
                 g_Timer0 = Q12(253.0f);
             }
             break;
+
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
@@ -479,10 +513,14 @@ void func_800CED88(void)
             func_8008616C(0, false, 2, 0, false);
             Savegame_EventFlagSet(EventFlag_179);
             Savegame_EventFlagSet(EventFlag_176);
+
             g_SavegamePtr->mapMarkingFlags_1D4[2] |= 0x40000;
             g_SavegamePtr->mapMarkingFlags_1D4[3] |= 0x100000;
-            func_80088F94(DAHLIA_PTR, 0, 0);
-            g_Timer0 = -1;
+
+            func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
+
+            g_Timer0 = NO_VALUE;
+
             Sd_EngineCmd(19);
             func_8003D01C();
             break;
@@ -507,9 +545,9 @@ void func_800CED88(void)
             
             if (step > 13)
             {
-                dahlia = DAHLIA_PTR;
-                if (((dahlia->model_0.anim_4.time_4 - Q12(Anim_StartKeyframeIdxGet(dahlia))) <= Q12(30.0f)) &&
-                    ((dahlia->model_0.anim_4.time_4 - Q12(Anim_StartKeyframeIdxGet(dahlia))) >= Q12(21.0f)))
+                dahlia = &g_SysWork.npcs_1A0[0];
+                if ((dahlia->model_0.anim_4.time_4 - Q12(Anim_StartKeyframeIdxGet(dahlia))) <= Q12(30.0f) &&
+                    (dahlia->model_0.anim_4.time_4 - Q12(Anim_StartKeyframeIdxGet(dahlia))) >= Q12(21.0f))
                 {
                     Savegame_EventFlagSet(EventFlag_176);
                 }
@@ -519,12 +557,9 @@ void func_800CED88(void)
 
     if (g_Timer0 >= 0)
     {
-        Dms_CharacterGetPosRot(&PLAYER_PTR->position_18, (SVECTOR3*)&PLAYER_PTR->rotation_24,
-                "HERO", g_Timer0, (s_DmsHeader*)FS_BUFFER_15);
-        Dms_CharacterGetPosRot(&DAHLIA_PTR->position_18, (SVECTOR3*)&DAHLIA_PTR->rotation_24,
-                "DAHLIA", g_Timer0, (s_DmsHeader*)FS_BUFFER_15);
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CamPosTarget, &g_CamLookAtTarget, NULL,
-                    g_Timer0, (s_DmsHeader*)FS_BUFFER_15));
+        Dms_CharacterGetPosRot(&&g_SysWork.player_4C.chara_0->position_18, (SVECTOR3*)&&g_SysWork.player_4C.chara_0->rotation_24, "HERO", g_Timer0, (s_DmsHeader*)FS_BUFFER_15);
+        Dms_CharacterGetPosRot(&&g_SysWork.npcs_1A0[0]->position_18, (SVECTOR3*)&&g_SysWork.npcs_1A0[0]->rotation_24, "DAHLIA", g_Timer0, (s_DmsHeader*)FS_BUFFER_15);
+        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CamPosTarget, &g_CamLookAtTarget, NULL, g_Timer0, (s_DmsHeader*)FS_BUFFER_15));
         vcUserCamTarget(&g_CamPosTarget, NULL, true);
         vcUserWatchTarget(&g_CamLookAtTarget, NULL, true);
     }
@@ -547,7 +582,7 @@ extern s_WorldObjectDesc g_WorldObject_Key;
 extern s_WorldObjectDesc g_WorldObject_Item;
 extern s_WorldObjectPose D_800D0528;
 
-void func_800CF7F0(void)
+void func_800CF7F0(void) // 0x800CF7F0
 {
     func_8003ED74(1, 1);
 
@@ -561,6 +596,7 @@ void func_800CF7F0(void)
     WorldObject_ModelNameSet(&g_WorldObject_SavePad.object_0, D_800A99E4.savePadName_4);
 
     D_800D177C = 0;
+
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);
@@ -571,24 +607,28 @@ void func_800CF7F0(void)
 
 void func_800CF938(void)
 {
-    s_Savegame* temp_s0;
+    s_Savegame* save;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
+
     if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
     {
-            temp_s0 = g_SavegamePtr;
+            save = g_SavegamePtr;
+
             if (Savegame_EventFlagGet(EventFlag_176) && !Savegame_EventFlagGet(EventFlag_M2S01_PickupFlauros))
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObject_Item.object_0, &g_WorldObject_Item.pose_1C.position_0, &(SVECTOR3){});
             }
+
             if (!Savegame_EventFlagGet(EventFlag_M2S01_PickupDrawbridgeKey))
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObject_Key.object_0, &g_WorldObject_Key.pose_1C.position_0, &g_WorldObject_Key.pose_1C.rotation_C);
-                temp_s0->mapMarkingFlags_1D4[1] &= ~(1<<31);
+                save->mapMarkingFlags_1D4[1] &= ~(1 << 31);
             }
             else
             {
-                temp_s0->mapMarkingFlags_1D4[1] |= (1<<31);
+                save->mapMarkingFlags_1D4[1] |= 1 << 31;
             }
+
             g_WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object_0, &g_WorldObject_SavePad.pose_1C.position_0, &g_WorldObject_SavePad.pose_1C.rotation_C);
     }
 
@@ -606,7 +646,7 @@ void func_800CF938(void)
     }
     else
     {
-        // NOTE: This macro uses > comparison, but this part of the code is apparently suing >=
+        // NOTE: This macro uses `>` comparison, but this part of the code is apparently using `>=`
         // which would require a separate macro or slightly larger number to compensate.
         if (!(PLAYER_NEAR_POS(vx, 20.0f, 1.2004f) && PLAYER_NEAR_POS(vz, 23.9f, 1.0004f)))
         {
@@ -623,4 +663,3 @@ void func_800CF938(void)
         }
     }
 }
-
