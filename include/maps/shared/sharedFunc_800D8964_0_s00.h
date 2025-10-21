@@ -2,7 +2,7 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
 {
 #if defined(MAP6_S01)
     extern s_AnimInfo CYBIL_ANIM_INFOS[];
-    extern s_AnimInfo D_800D39A0[];
+    extern s_AnimInfo DAHLIA_ANIM_INFOS[];
 #elif defined(MAP6_S04)
     extern s_AnimInfo MONSTER_CYBIL_ANIM_INFOS[];
     extern s_AnimInfo DAHLIA_ANIM_INFOS[];
@@ -32,7 +32,7 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)
             break;
 
         default:
-            animInfo = &D_800D39A0[chara->model_0.anim_4.status_0];
+            animInfo = &DAHLIA_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
 #elif defined(MAP6_S04)
