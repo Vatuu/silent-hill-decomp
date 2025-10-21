@@ -2114,7 +2114,7 @@ extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: Part of main exe, move to
 
 extern const s_MapType MAP_TYPES[16];
 
-extern char D_80028544[0x10];
+extern char D_80028544[16];
 
 extern RECT D_80028A20;
 
@@ -3158,9 +3158,9 @@ bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHdr);
 
 s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHdr);
 
-void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_ActiveTextures* arg3, s_ActiveTextures* arg4, s32 arg5);
+void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_ActiveTextures* fullPageActiveTexs, s_ActiveTextures* halfPageActiveTexs, s32 fileIdx);
 
-void Ipd_MaterialsLoad(s_IpdHeader* ipdHdr, s_ActiveTextures* arg1, s_ActiveTextures* arg2, s32 fileIdx);
+void Ipd_MaterialsLoad(s_IpdHeader* ipdHdr, s_ActiveTextures* fullPageActiveTexs, s_ActiveTextures* halfPageActiveTexs, s32 fileIdx);
 
 /** Checks if IPD is loaded before returning texture count? */
 s32 Ipd_HalfPageMaterialCountGet(s_IpdHeader* ipdHdr);
