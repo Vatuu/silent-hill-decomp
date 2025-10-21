@@ -1,3 +1,4 @@
+#include <libapi.h>
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player_logic.h"
@@ -9,7 +10,41 @@ INCLUDE_RODATA("asm/maps/map2_s01/nonmatchings/map2_s01", D_800C9578);
 
 INCLUDE_RODATA("asm/maps/map2_s01/nonmatchings/map2_s01", g_MapOverlayHeader);
 
-INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", func_800CB010);
+void func_800CB010(s32 arg0, s32 arg1, s32 arg2)
+{
+    bool cond;
+
+    func_80055434(&D_800D164C.vector_0);
+    D_800D164C.field_28 = func_8005545C(&D_800D164C.svec_18);
+    vwGetViewPosition(&D_800D164C.viewPosition_C);
+    vwGetViewAngle(&D_800D164C.viewRotation_20);
+
+    cond = arg2 <= 0;
+    if (cond && arg2 >= -1)
+    {
+        if (arg2 == -1)
+        {
+            g_SysWork.field_2349 = g_MapOverlayHeader.field_17;
+            g_SysWork.field_2348 = g_MapOverlayHeader.field_17;
+        }
+
+        D_800CFDE4 = 0;
+        g_SysWork.field_234A = 1;
+        D_800D053C = arg1;
+        sharedData_800E0CB8_0_s00 = FP_FROM(sharedData_800E0CB0_0_s00, Q12_SHIFT);
+        sharedData_800E0CB6_0_s00 = sharedData_800E0CB0_0_s00;
+        sharedData_800E0CB4_0_s00 = sharedData_800E0CB0_0_s00;
+        SetSp(SetSp(0x1F8003D8));
+    }
+    else
+    {
+        D_800D0540 = arg1;
+        D_800CFDE3 = g_DeltaTime0 == 0;
+        SetSp(SetSp(0x1F8003D8));
+    }
+
+    D_800D167C = D_800D164C;
+}
 
 #include "maps/shared/sharedFunc_800D08B8_0_s00.h" // 0x800CB178
 
@@ -81,7 +116,7 @@ void func_800CD1A0(void) {}
 
 #include "maps/shared/Ai_Dahlia_Update.h" // 0x800CD20C
 
-INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", sharedFunc_800CD280_2_s01); // 0x800CD280
+#include "maps/shared/sharedFunc_800CD280_2_s01.h" // 0x800CD280
 
 #include "maps/shared/sharedFunc_800CD2C8_2_s01.h" // 0x800CD2C8
 

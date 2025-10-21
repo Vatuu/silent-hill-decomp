@@ -15,6 +15,14 @@ extern VECTOR3 g_CameraPositionTarget;
 extern VECTOR3 g_CameraLookAtTarget;
 extern u8 g_MapMsgSoundIdx;
 
+extern s8 D_800CFDE3;
+extern s32 D_800CFDE4;
+extern s32 D_800D053C;
+extern s32 D_800D0540;
+extern s_ParticleVectors D_800D164C;
+extern s_ParticleVectors D_800D167C;
+
+void func_800CB010(s32 arg0, s32 arg1, s32 arg2);
 
 void func_800CE858(s32 arg0);
 
