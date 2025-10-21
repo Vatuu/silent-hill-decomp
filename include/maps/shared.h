@@ -2287,7 +2287,7 @@ extern s32 sharedData_800E237C_0_s01;
 
 // Two variables used by `Ai_Dahlia_Init`.
 extern s32 sharedData_800D16E0_2_s01;
-extern s8  sharedData_800D16E4_2_s01;
+extern u8  sharedData_800D16E4_2_s01;
 
 extern s_AnimInfo ALESSA_ANIM_INFOS[];
 extern s32 sharedData_800D3150_3_s02; // Used by `Ai_Alessa_Init`.
