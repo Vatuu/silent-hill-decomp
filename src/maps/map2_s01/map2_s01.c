@@ -86,9 +86,7 @@ void func_800CD1A0(void) {}
 
 #include "maps/shared/sharedFunc_800CD2C8_2_s01.h" // 0x800CD2C8
 
-INCLUDE_RODATA("asm/maps/map2_s01/nonmatchings/map2_s01", D_800CA618);
-
-INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", sharedSymbol_800CD4A0_2_s01); // 0x800CD4A0
+#include "maps/shared/sharedSymbol_800CD4A0_2_s01.h" // 0x800CD4A0
 
 #include "maps/shared/Ai_Dahlia_Init.h" // 0x800CDD64
 

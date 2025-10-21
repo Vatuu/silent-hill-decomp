@@ -99,9 +99,7 @@ INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", sharedSymbol_800D8A68_0_s
 
 #include "maps/shared/sharedFunc_800CD2C8_2_s01.h" // 0x800CF88C
 
-INCLUDE_RODATA("asm/maps/map6_s01/nonmatchings/map6_s01", D_800CA708);
-
-INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", sharedSymbol_800CD4A0_2_s01); // 0x800CFA64
+#include "maps/shared/sharedSymbol_800CD4A0_2_s01.h" // 0x800CFA64
 
 #include "maps/shared/Ai_Dahlia_Init.h" // 0x800D031C
 
