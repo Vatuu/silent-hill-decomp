@@ -24,4 +24,6 @@ void func_800CF798(void);
 
 void func_800CF7C4(void);
 
+void func_800CE88C(void);
+
 #endif
