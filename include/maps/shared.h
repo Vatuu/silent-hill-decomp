@@ -2435,6 +2435,8 @@ extern VECTOR3 sharedData_800DE1F0_0_s01;
 
 extern VECTOR3 sharedData_800E2350_0_s01;
 
+extern u8 MAP_ROOM_IDXS[30];
+
 typedef struct
 {
     VECTOR3 field_0; // Rotation?
