@@ -162,9 +162,37 @@ void func_800CE88C(void)
 
 void func_800CEB94(void) {}
 
-INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", func_800CEB9C);
+void func_800CEB9C(void)
+{
+    VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", func_800CEC30);
+    func_80086FE8(11, Sfx_Unk1334, &vec);
+}
+
+void func_800CEC30(void)
+{
+    VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+
+    if (g_MapEventParam->field_5 == 2)
+    {
+        if (Savegame_EventFlagGet(EventFlag_180))
+        {
+            func_80086FE8(38, Sfx_Unk1486, &vec);
+            if (g_SysWork.sysState_8 == SysState_Gameplay)
+            {
+                Savegame_EventFlagSet(EventFlag_180);
+            }
+        }
+        else
+        {
+            func_80086FE8(12, Sfx_Unk1486, &vec);
+        }
+    }
+    else
+    {
+        func_80086FE8(12, Sfx_Unk1344, &vec);
+    }
+}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
