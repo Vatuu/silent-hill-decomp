@@ -2330,102 +2330,102 @@ void func_8008B398() // 0x8008B398
     func_8008B40C(0, 0);
 }
 
-void func_8008B3E4(s32 arg0) // 0x8008B3E4
+void func_8008B3E4(s32 vol) // 0x8008B3E4
 {
-    func_8008B474(0, arg0, 0);
+    func_8008B474(0, vol, 0);
 }
 
-void func_8008B40C(s32 arg0, s32 arg1) // 0x8008B40C
+void func_8008B40C(s32 vol, s32 soundType) // 0x8008B40C
 {
-    func_8008B474(3, arg0, arg1);
+    func_8008B474(3, vol, soundType);
 }
 
-void func_8008B438(s32 arg0, s32 arg1, s32 arg2) // 0x8008B438
+void func_8008B438(s32 arg0, s32 vol, s32 soundType) // 0x8008B438
 {
-    s32 cond;
+    bool cond;
 
     cond = arg0 != 0;
-    if (func_8008B474(2 - cond, arg1, arg2) != 0)
+    if (func_8008B474(2 - cond, vol, soundType))
     {
         func_80089314(cond);
     }
 }
 
-bool func_8008B474(s32 arg0, s32 inVol, s32 soundType) // 0x8008B474
+bool func_8008B474(s32 arg0, s32 vol, s32 soundType) // 0x8008B474
 {
-    s32 vol;
+    s32 unkVol;
     s32 cond;
     u16 sfx;
 
-    vol = 0;
+    unkVol = 0;
     sfx = 0;
     switch (arg0)
     {
         case 0:
             sfx = Sfx_Unk1300;
-            vol = g_SysWork.field_2760;
+            unkVol = g_SysWork.field_2760;
             soundType = 0;
             break;
 
         case 1:
             sfx = Sfx_Unk1301;
-            vol = g_SysWork.field_275C;
+            unkVol = g_SysWork.field_275C;
             break;
 
         case 2:
             sfx = Sfx_Unk1302;
-            vol = g_SysWork.field_275C;
+            unkVol = g_SysWork.field_275C;
             break;
 
         case 3:
             sfx = Sfx_Unk1303;
-            vol = g_SysWork.field_2764;
+            unkVol = g_SysWork.field_2764;
             break;
     }
 
-    cond = !vol;
+    cond = !unkVol;
     if (g_DeltaTime0 == Q12(0.0f))
     {
-        inVol = 0;
+        vol = 0;
     }
 
-    if (inVol >= 0)
+    if (vol >= 0)
     {
-        if (inVol != 0)
+        if (vol != 0)
         {
-            if (inVol > Q8_CLAMPED(1.0f))
+            if (vol > Q8_CLAMPED(1.0f))
             {
-                vol = Q12(511.0f);
+                unkVol = Q12(511.0f);
             }
             else
             {
-                vol = FP_TO(inVol, Q12_SHIFT) + Q12(256.0f);
+                unkVol = FP_TO(vol, Q12_SHIFT) + Q12(256.0f);
             }
         }
         else
         {
-            vol = 0;
+            unkVol = 0;
         }
     }
     else
     {
-        vol -= g_DeltaTime0 << 9;
-        if (vol < 0)
+        unkVol -= g_DeltaTime0 << 9;
+        if (unkVol < 0)
         {
-            vol = 0;
+            unkVol = 0;
         }
     }
 
-    if (vol == 0)
+    if (unkVol == 0)
     {
         func_8004690C(sfx);
     }
     else if (cond)
     {
         // NOTE: func_8005DC1C calls func_8005DC3C. `soundType` is `pitch` when calling `func_8005DC3C` directly.
-        if (vol > Q12(256.0f))
+        if (unkVol > Q12(256.0f))
         {
-            func_8005DC1C(sfx, &g_SysWork.player_4C.chara_0.position_18, FP_FROM(vol - Q12(256.0f), Q12_SHIFT), soundType);
+            func_8005DC1C(sfx, &g_SysWork.player_4C.chara_0.position_18, FP_FROM(unkVol - Q12(256.0f), Q12_SHIFT), soundType);
         }
         else
         {
@@ -2434,9 +2434,9 @@ bool func_8008B474(s32 arg0, s32 inVol, s32 soundType) // 0x8008B474
     }
     else
     {
-        if (vol > Q12(256.0f))
+        if (unkVol > Q12(256.0f))
         {
-            func_8005DC3C(sfx, &g_SysWork.player_4C.chara_0.position_18, FP_FROM(vol - Q12(256.0f), Q12_SHIFT), 4, soundType);
+            func_8005DC3C(sfx, &g_SysWork.player_4C.chara_0.position_18, FP_FROM(unkVol - Q12(256.0f), Q12_SHIFT), 4, soundType);
         }
         else
         {
@@ -2447,19 +2447,19 @@ bool func_8008B474(s32 arg0, s32 inVol, s32 soundType) // 0x8008B474
     switch (arg0)
     {
         case 0:
-            g_SysWork.field_2760 = vol;
+            g_SysWork.field_2760 = unkVol;
             break;
 
         case 1:
         case 2:
-            g_SysWork.field_275C = vol;
+            g_SysWork.field_275C = unkVol;
             break;
 
         case 3:
-            g_SysWork.field_2764 = vol;
+            g_SysWork.field_2764 = unkVol;
     }
 
-    return vol > Q12(256.0f);
+    return unkVol > Q12(256.0f);
 }
 
 void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664

@@ -11,8 +11,8 @@
 extern s_800C4590 D_800D16BC;
 extern u16 g_MapMsgSounds[20];
 extern q19_12 g_Timer0;
-extern VECTOR3 g_CamPosTarget;
-extern VECTOR3 g_CamLookAtTarget;
+extern VECTOR3 g_CameraPositionTarget;
+extern VECTOR3 g_CameraLookAtTarget;
 extern u8 g_MapMsgSoundIdx;
 
 
@@ -27,5 +27,9 @@ void func_800CF798(void);
 void func_800CF7C4(void);
 
 void func_800CE88C(void);
+
+void func_800CEB9C(void);
+
+void func_800CEC30(void);
 
 #endif

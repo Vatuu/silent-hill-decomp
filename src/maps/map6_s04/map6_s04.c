@@ -742,13 +742,13 @@ void func_800E2CA0(void) // 0x800E2CA0
         vcUserCamTarget(&D_800ED590, NULL, true);
         vcUserWatchTarget(&D_800ED5A0, NULL, true);
 
-        // "LIGHT", cutscene light position? TODO: rename `g_SysWork.field_2360`?
+        // "LIGHT", cutscene light position? TODO: Rename `g_SysWork.field_2360`?
         Dms_CharacterGetPosRot(&g_SysWork.field_2360, &unused, &D_800CC4CC, D_800ED5B0, FS_BUFFER_14);
 
         // "L_INT", interior light or intersection point?
         Dms_CharacterGetPosRot(&lightIntPos.vx, &unused, &D_800CC4D4, D_800ED5B0, FS_BUFFER_14);
 
-        // Light angle? (TODO: rename g_SysWork.field_2370?)
+        // Light angle? TODO: Rename `g_SysWork.field_2370`?
         g_SysWork.field_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.field_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.field_2360.vx, lightIntPos.vz - g_SysWork.field_2360.vz));
         g_SysWork.field_2370.vy = ratan2(lightIntPos.vx - g_SysWork.field_2360.vx, lightIntPos.vz - g_SysWork.field_2360.vz);
         g_SysWork.field_2370.vz = FP_ANGLE(0.0f);

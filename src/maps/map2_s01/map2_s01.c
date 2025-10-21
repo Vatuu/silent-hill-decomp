@@ -130,16 +130,16 @@ void func_800CE858(s32 arg0) // 0x800CE858
     (arg0 != 0) ? func_800CE88C() : sharedFunc_800CE934_0_s02();
 }
 
-void func_800CE88C(void)
+void func_800CE88C(void) // 0x800CE88C
 {
     s32 soundCmd;
 
     switch (g_SavegamePtr->mapRoomIdx_A5)
     {
         case 5:
-            soundCmd = 6;
-            func_8003640C(soundCmd);
+            func_8003640C(6);
             break;
+
         case 18:
             if (!Savegame_EventFlagGet(EventFlag_379))
             {
@@ -149,11 +149,12 @@ void func_800CE88C(void)
             {
                 soundCmd = 7;
             }
+
             func_8003640C(soundCmd);
             break;
+
         case 17:
-            soundCmd = 7;
-            func_8003640C(soundCmd);
+            func_8003640C(7);
             break;
     }
 }
@@ -162,22 +163,23 @@ void func_800CE88C(void)
 
 void func_800CEB94(void) {}
 
-void func_800CEB9C(void)
+void func_800CEB9C(void) // 0x800CEB9C
 {
-    VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 pos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    func_80086FE8(11, Sfx_Unk1334, &vec);
+    func_80086FE8(11, Sfx_Unk1334, &pos);
 }
 
-void func_800CEC30(void)
+void func_800CEC30(void) // 0x800CEC30
 {
-    VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 pos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     if (g_MapEventParam->field_5 == 2)
     {
         if (Savegame_EventFlagGet(EventFlag_180))
         {
-            func_80086FE8(38, Sfx_Unk1486, &vec);
+            func_80086FE8(38, Sfx_Unk1486, &pos);
+
             if (g_SysWork.sysState_8 == SysState_Gameplay)
             {
                 Savegame_EventFlagSet(EventFlag_180);
@@ -185,12 +187,12 @@ void func_800CEC30(void)
         }
         else
         {
-            func_80086FE8(12, Sfx_Unk1486, &vec);
+            func_80086FE8(12, Sfx_Unk1486, &pos);
         }
     }
     else
     {
-        func_80086FE8(12, Sfx_Unk1344, &vec);
+        func_80086FE8(12, Sfx_Unk1344, &pos);
     }
 }
 
@@ -480,7 +482,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 27:
-            func_8005DC1C(Sfx_Unk1323, &SOUND_POS, 0x80, 0);
+            func_8005DC1C(Sfx_Unk1323, &SOUND_POS, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement();
 
         case 28:
@@ -488,7 +490,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 29:
-            func_8005DC1C(Sfx_Unk1324, &SOUND_POS, 0x80, 0);
+            func_8005DC1C(Sfx_Unk1324, &SOUND_POS, Q8_CLAMPED(0.5f), 0);
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
             SysWork_StateStepIncrement();
 
@@ -555,13 +557,13 @@ void func_800CED88(void) // 0x800CED88
         }
     }
 
-    if (g_Timer0 >= 0)
+    if (g_Timer0 >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&&g_SysWork.player_4C.chara_0->position_18, (SVECTOR3*)&&g_SysWork.player_4C.chara_0->rotation_24, "HERO", g_Timer0, (s_DmsHeader*)FS_BUFFER_15);
-        Dms_CharacterGetPosRot(&&g_SysWork.npcs_1A0[0]->position_18, (SVECTOR3*)&&g_SysWork.npcs_1A0[0]->rotation_24, "DAHLIA", g_Timer0, (s_DmsHeader*)FS_BUFFER_15);
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CamPosTarget, &g_CamLookAtTarget, NULL, g_Timer0, (s_DmsHeader*)FS_BUFFER_15));
-        vcUserCamTarget(&g_CamPosTarget, NULL, true);
-        vcUserWatchTarget(&g_CamLookAtTarget, NULL, true);
+        Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, (SVECTOR3*)&g_SysWork.player_4C.chara_0.rotation_24, "HERO", g_Timer0, (s_DmsHeader*)FS_BUFFER_15);
+        Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, (SVECTOR3*)&g_SysWork.npcs_1A0[0].rotation_24, "DAHLIA", g_Timer0, (s_DmsHeader*)FS_BUFFER_15);
+        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CameraPositionTarget, &g_CameraLookAtTarget, NULL, g_Timer0, (s_DmsHeader*)FS_BUFFER_15));
+        vcUserCamTarget(&g_CameraPositionTarget, NULL, true);
+        vcUserWatchTarget(&g_CameraLookAtTarget, NULL, true);
     }
 }
 
@@ -575,7 +577,7 @@ void func_800CF7C4(void) // 0x800CF7C4
     Event_ItemTake(InventoryItemId_DrawbridgeKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M2S01_PickupDrawbridgeKey, 36);
 }
 
-extern u8 D_800D177C;
+extern u8 D_800D177C; // `bool`?
 extern s_WorldObject_0 g_CommonWorldObjects[6];
 extern s_WorldObjectDesc g_WorldObject_SavePad;
 extern s_WorldObjectDesc g_WorldObject_Key;

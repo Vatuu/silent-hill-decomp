@@ -2970,6 +2970,7 @@ static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo
     anim->animInfo_10 = NULL;
 }
 
+// TODO: Could also call this a "transform"? "Pose" is just the specific (but less common) term for position+rotation.
 typedef struct
 {
     VECTOR3  position_0;

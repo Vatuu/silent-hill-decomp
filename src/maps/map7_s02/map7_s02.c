@@ -1398,6 +1398,7 @@ void func_800DD9E8(void) // 0x800DD9E8
         if (D_800E9EDA == 0)
         {
             func_8005DC1C(Sfx_Unk1666, &D_800CD6A4, 128, 0);
+
             if (g_SysWork.sysStateStep_C[0] == 6)
             {
                 D_800E9EDA = Rng_GenerateInt(Rng_Rand16(), Q12(0.1f), Q12(0.2f) - 2);
@@ -1417,9 +1418,13 @@ void func_800DD9E8(void) // 0x800DD9E8
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
+
             D_800E9EDA = 0;
+
             Savegame_EventFlagSet(EventFlag_557);
+
             g_SysWork.field_30 = 20;
+
             SysWork_StateStepIncrement();
 
         case 1:
@@ -1430,9 +1435,11 @@ void func_800DD9E8(void) // 0x800DD9E8
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 144, false);
             Camera_PositionSet(NULL, Q12(20.98f), Q12(-4.08f), Q12(-59.9f), 0, 0, 0, 0, true);
             Camera_LookAtSet(NULL, Q12(18.56f), Q12(-1.07f), Q12(-60.94f), 0, 0, 0, 0, true);
+
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(19.2f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(-61.0f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(-90.0f);
+
             SysWork_StateStepIncrement();
 
         case 3:
@@ -1441,7 +1448,9 @@ void func_800DD9E8(void) // 0x800DD9E8
 
         case 4:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
+
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(90.0f);
+
             Camera_PositionSet(NULL, Q12(16.37f), Q12(-2.56f), Q12(-60.41f), 0, 0, 0, 0, true);
             Camera_LookAtSet(NULL, Q12(20.18f), Q12(-1.4f), Q12(-60.76f), 0, 0, 0, 0, true);
             func_800868DC(0);
@@ -1484,6 +1493,7 @@ void func_800DD9E8(void) // 0x800DD9E8
             func_8008616C(0, false, 2, 0, false);
             func_8008D448();
             func_8003EBA0();
+
             g_SysWork.field_2378 = Q12(1.0f);
             break;
     }

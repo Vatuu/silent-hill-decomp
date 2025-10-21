@@ -3883,9 +3883,9 @@ void func_8008B1DC(s_SubCharacter*, s32, s32);
 
 void func_8008B398();
 
-void func_8008B3E4(s32 arg0);
+void func_8008B3E4(s32 vol);
 
-void func_8008B40C(s32 arg0, s32 arg1);
+void func_8008B40C(s32 vol, s32 soundType);
 
 /** `arg0` is boolean. */
 void func_8008B438(s32 arg0, s32 arg1, s32 arg2);
@@ -4665,7 +4665,7 @@ u8 func_8008A2E0(s32 arg0);
 
 void func_800348C0();
 
-bool func_8008B474(s32 arg0, s32 arg1, s32 soundType);
+bool func_8008B474(s32 arg0, s32 vol, s32 soundType);
 
 void GameState_Boot_Update();
 void GameState_StartMovieIntro_Update();
