@@ -1,8 +1,8 @@
 # Configuration
 
 BUILD_ENGINE   ?= 1
-BUILD_SCREENS  ?= 0
-BUILD_MAPS     ?= 0
+BUILD_SCREENS  ?= 1
+BUILD_MAPS     ?= 1
 NON_MATCHING   ?= 0
 SKIP_ASM       ?= 0
 
@@ -13,7 +13,7 @@ SKIP_ASM       ?= 0
 # Retail:
 # USA
 
-GAME_VERSION = USA
+GAME_VERSION = JAP-2
 
 ifeq ($(GAME_VERSION), USA)
 
@@ -205,7 +205,7 @@ endif
 
 ifeq ($(BUILD_SCREENS), 1)
 
-TARGET_SCREENS := stream
+TARGET_SCREENS := credits options saveload stream
 
 TARGET_SCREENS := $(addprefix $(TARGET_SCREENS_SRC_DIR)/,$(TARGET_SCREENS))
 
@@ -213,7 +213,14 @@ endif
 
 ifeq ($(BUILD_MAPS), 1)
 
-TARGET_MAPS				:= map0_s02
+TARGET_MAPS				:= map0_s00 map0_s01 map0_s02 \
+							map1_s00 map1_s01 map1_s02 map1_s03 map1_s04 map1_s05 map1_s06 \
+							map2_s00 map2_s01 map2_s02 map2_s03 map2_s04 \
+							map3_s00 map3_s01 map3_s02 map3_s03 map3_s04 map3_s05 map3_s06 \
+							map4_s00 map4_s01 map4_s02 map4_s03 map4_s04 map4_s05 map4_s06 \
+							map5_s00 map5_s01 map5_s02 map5_s03 \
+							map6_s00 map6_s01 map6_s02 map6_s03 map6_s04 map6_s05 \
+							map7_s00 map7_s01 map7_s02 map7_s03
 
 # If BUILD_MAP is set, only use that; otherwise use the default huge list
 # (allows large speedup by skipping config parse of all maps)
