@@ -116,7 +116,7 @@ void func_800CD1A0(void) {}
 
 #include "maps/shared/Ai_Dahlia_Update.h" // 0x800CD20C
 
-INCLUDE_ASM("asm/maps/map2_s01/nonmatchings/map2_s01", sharedFunc_800CD280_2_s01); // 0x800CD280
+#include "maps/shared/sharedFunc_800CD280_2_s01.h" // 0x800CD280
 
 #include "maps/shared/sharedFunc_800CD2C8_2_s01.h" // 0x800CD2C8
 

@@ -95,7 +95,7 @@ INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", sharedSymbol_800D8A68_0_s
 
 #include "maps/shared/Ai_Dahlia_Update.h" // 0x800CF7D0
 
-INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", sharedFunc_800CD280_2_s01); // 0x800CF844
+#include "maps/shared/sharedFunc_800CD280_2_s01.h" // 0x800CF844
 
 #include "maps/shared/sharedFunc_800CD2C8_2_s01.h" // 0x800CF88C
 
