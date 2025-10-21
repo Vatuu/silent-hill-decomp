@@ -1798,4 +1798,27 @@ static inline void Model_AnimFlagsClear(s_Model* model, u32 flags)
     model->anim_4.flags_2 &= ~flags;
 }
 
+/** @brief Updates model anim to the given `animIdx` if `model->stateStep_3` is 0. */
+static inline void Model_AnimStatusSet(s_Model* model, s32 animIdx, bool active)
+{
+    if (model->stateStep_3 == 0)
+    {
+        model->anim_4.status_0 = ANIM_STATUS(animIdx, active);
+        model->stateStep_3++;
+    }
+}
+
+/** @brief Resets a humanoid NPCs animation state index to 0. */
+static inline void Character_AnimStateTryReset(s_SubCharacter* chara)
+{
+    // TODO: This uses `dahlia` part of union, but is most likely either a `human` part shared with all humanoid characters
+    // or humanoids only share a small portion early in the union.
+    if (chara->properties_E4.dahlia.resetStateIdx0_F8)
+    {
+        chara->properties_E4.dahlia.stateIdx0         = 0;
+        chara->model_0.stateStep_3                    = 0;
+        chara->properties_E4.dahlia.resetStateIdx0_F8 = 0;
+    }
+}
+
 #endif

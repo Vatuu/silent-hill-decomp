@@ -308,17 +308,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             sharedData_800E39D8_0_s00 = 0;
             sharedData_800D32A0_0_s02 = g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126;
 
-            if (extra->model_0.stateStep_3 == 0)
-            {
-                extra->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_Idle, false);
-                extra->model_0.stateStep_3++;
-            }
-
-            if (playerChara->model_0.stateStep_3 == 0)
-            {
-                playerChara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_Idle, false);
-                playerChara->model_0.stateStep_3++;
-            }
+            Model_AnimStatusSet(&extra->model_0, HarryAnim_Idle, false);
+            Model_AnimStatusSet(&playerChara->model_0, HarryAnim_Idle, false);
 
             if (extra->model_0.state_2 == 0)
             {
@@ -370,17 +361,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 
             sharedData_800D32A0_0_s02 = g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126;
 
-            if (extra->model_0.stateStep_3 == 0)
-            {
-                extra->model_0.anim_4.status_0 = 4;
-                extra->model_0.stateStep_3++;
-            }
-
-            if (playerChara->model_0.stateStep_3 == 0)
-            {
-                playerChara->model_0.anim_4.status_0 = 4;
-                playerChara->model_0.stateStep_3++;
-            }
+            Model_AnimStatusSet(&extra->model_0, HarryAnim_WalkForward, false);
+            Model_AnimStatusSet(&playerChara->model_0, HarryAnim_WalkForward, false);
 
             if (extra->model_0.state_2 == 0)
             {
@@ -430,17 +412,9 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             }
 
             sharedData_800D32A0_0_s02 = g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126;
-            if (extra->model_0.stateStep_3 == 0)
-            {
-                extra->model_0.anim_4.status_0 = 6;
-                extra->model_0.stateStep_3++;
-            }
 
-            if (playerChara->model_0.stateStep_3 == 0)
-            {
-                playerChara->model_0.anim_4.status_0 = 6;
-                playerChara->model_0.stateStep_3++;
-            }
+            Model_AnimStatusSet(&extra->model_0, HarryAnim_RunForward, false);
+            Model_AnimStatusSet(&playerChara->model_0, HarryAnim_RunForward, false);
 
             if (extra->model_0.state_2 == 0)
             {
@@ -476,17 +450,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
         case PlayerState_Unk55:
             sharedData_800D32A0_0_s02 = g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126;
 
-            if (extra->model_0.stateStep_3 == 0)
-            {
-                extra->model_0.anim_4.status_0 = 8;
-                extra->model_0.stateStep_3    += 1;
-            }
-
-            if (playerChara->model_0.stateStep_3 == 0)
-            {
-                playerChara->model_0.anim_4.status_0 = 8;
-                playerChara->model_0.stateStep_3    += 1;
-            }
+            Model_AnimStatusSet(&extra->model_0, HarryAnim_WalkBackward, false);
+            Model_AnimStatusSet(&playerChara->model_0, HarryAnim_WalkBackward, false);
 
             if (extra->model_0.state_2 == 0)
             {
@@ -517,17 +482,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             sharedData_800D32A0_0_s02 = g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126;
             sharedData_800E39D8_0_s00 = g_DeltaTime0 * 7;
 
-            if (extra->model_0.stateStep_3 == 0)
-            {
-                extra->model_0.anim_4.status_0 = 0x1A;
-                extra->model_0.stateStep_3    += 1;
-            }
-
-            if (playerChara->model_0.stateStep_3 == 0)
-            {
-                playerChara->model_0.anim_4.status_0 = 0x1A;
-                playerChara->model_0.stateStep_3    += 1;
-            }
+            Model_AnimStatusSet(&extra->model_0, HarryAnim_TurnRight, false);
+            Model_AnimStatusSet(&playerChara->model_0, HarryAnim_TurnRight, false);
 
             if (extra->model_0.state_2 == 0)
             {
@@ -575,17 +531,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             sharedData_800D32A0_0_s02 = g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126;
             sharedData_800E39D8_0_s00 = g_DeltaTime0 * -7;
 
-            if (extra->model_0.stateStep_3 == 0)
-            {
-                extra->model_0.anim_4.status_0 = 0x18;
-                extra->model_0.stateStep_3    += 1;
-            }
-
-            if (playerChara->model_0.stateStep_3 == 0)
-            {
-                playerChara->model_0.anim_4.status_0 = 0x18;
-                playerChara->model_0.stateStep_3    += 1;
-            }
+            Model_AnimStatusSet(&extra->model_0, HarryAnim_TurnLeft, false);
+            Model_AnimStatusSet(&playerChara->model_0, HarryAnim_TurnLeft, false);
 
             if (extra->model_0.state_2 == 0)
             {
@@ -2285,7 +2232,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
         case PlayerState_Unk52:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Moving)
             {
-                if (playerChara->model_0.anim_4.status_0 == 0x34)
+                if (playerChara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Idle, false))
                 {
                     func_8005DD44(sfx, &playerChara->position_18, 64, pitch0);
                     playerChara->properties_E4.player.field_10C                 = pitch0 + 16;
