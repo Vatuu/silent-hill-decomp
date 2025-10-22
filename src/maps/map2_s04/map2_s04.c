@@ -194,12 +194,19 @@ void func_800CD0F8(void) // 0x800CD0F8
     Event_ItemTake(InventoryItemId_Shotgun, SHOTGUN_AMMO_PICKUP_ITEM_COUNT, EventFlag_M1S02_PickupShotgun, 26);
 }
 
-extern s8 D_800CF280;
+extern u8 D_800CF280;
 extern s_WorldObject_0 g_CommonWorldObjects[8];
 extern s_WorldObjectDesc g_WorldObj_Map;
 extern s_WorldObjectDesc g_WorldObj_SavePad0;
 extern s_WorldObjectDesc g_WorldObj_SavePad1;
 extern s_WorldObjectDesc g_WorldObj_Shotgun;
+extern s_WorldObjectPos D_800CE024;
+extern s_WorldObjectPos D_800CE038;
+extern s_WorldObjectPos D_800CE04C;
+extern s_WorldObjectPos D_800CE060;
+extern s_WorldObjectPos D_800CE074;
+extern s_WorldObjectPos D_800CE088;
+extern s_WorldObjectPos D_800CE09C;
 
 void func_800CD124(void)
 {
@@ -224,4 +231,93 @@ void func_800CD124(void)
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-INCLUDE_ASM("asm/maps/map2_s04/nonmatchings/map2_s04", func_800CD2AC);
+void func_800CD2AC(void)
+{
+    MAP_CHUNK_CHECK_VARIABLE_DECL();
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    {
+        g_WorldGfx_ObjectAdd(&g_WorldObj_SavePad0.object_0, &g_WorldObj_SavePad0.position_1C.position_0, &g_WorldObj_SavePad0.position_1C.rotation_C);
+        if (!Savegame_EventFlagGet(EventFlag_M1S02_PickupShotgun))
+        {
+            g_WorldGfx_ObjectAdd(&g_WorldObj_Shotgun.object_0, &g_WorldObj_Shotgun.position_1C.position_0, &g_WorldObj_Shotgun.position_1C.rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupMap))
+        {
+            g_WorldGfx_ObjectAdd(&g_WorldObj_Map.object_0, &g_WorldObj_Map.position_1C.position_0, &g_WorldObj_Map.position_1C.rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    {
+        if (!D_800CF280)
+        {
+            func_8003ED74(7, 4);
+            D_800CF280++;
+        }
+        g_WorldGfx_ObjectAdd(&g_WorldObj_SavePad1.object_0, &g_WorldObj_SavePad1.position_1C.position_0, &g_WorldObj_SavePad1.position_1C.rotation_C);
+    }
+    else
+    {
+        D_800CF280 = 0;
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M2S04_ShotgunShells0))
+        {
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[5], &D_800CE024.position_0, &D_800CE024.rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M2S04_HandgunBullets0))
+        {
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &D_800CE038.position_0, &D_800CE038.rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M2S04_HandgunBullets1))
+        {
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &D_800CE04C.position_0, &D_800CE04C.rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M2S04_ShotgunShells1))
+        {
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[5], &D_800CE060.position_0, &D_800CE060.rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M2S04_HandgunBullets2))
+        {
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &D_800CE074.position_0, &D_800CE074.rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M2S04_HandgunBullets3))
+        {
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &D_800CE088.position_0, &D_800CE088.rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M2S04_RifleShells))
+        {
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[4], &D_800CE09C.position_0, &D_800CE09C.rotation_C);
+        }
+    }
+}
