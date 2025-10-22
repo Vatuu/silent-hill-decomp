@@ -194,6 +194,34 @@ void func_800CD0F8(void) // 0x800CD0F8
     Event_ItemTake(InventoryItemId_Shotgun, SHOTGUN_AMMO_PICKUP_ITEM_COUNT, EventFlag_M1S02_PickupShotgun, 26);
 }
 
-INCLUDE_ASM("asm/maps/map2_s04/nonmatchings/map2_s04", func_800CD124);
+extern s8 D_800CF280;
+extern s_WorldObject_0 g_CommonWorldObjects[8];
+extern s_WorldObjectDesc g_WorldObj_Map;
+extern s_WorldObjectDesc g_WorldObj_SavePad0;
+extern s_WorldObjectDesc g_WorldObj_SavePad1;
+extern s_WorldObjectDesc g_WorldObj_Shotgun;
+
+void func_800CD124(void)
+{
+    D_800CF280 = 0;
+    WorldObjectPositionInit(&g_WorldObj_SavePad0.position_1C, -60.9976f, -0.8289f, 20.1067f, 0.0f, -100.7f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObj_SavePad0.object_0, D_800A99E4.savePadName_4);
+
+    WorldObjectPositionInit(&g_WorldObj_Map.position_1C, -20.0f, 0.0f, 20.45f, 0, 180.0f, 0);
+    WorldObject_ModelNameSet(&g_WorldObj_Map.object_0, "MAP_HIDE");
+
+    WorldObjectPositionInit(&g_WorldObj_SavePad1.position_1C, -102.8699f, -1.25f, 57.15f, 0, -117.55f, 0);
+    WorldObject_ModelNameSet(&g_WorldObj_SavePad1.object_0, D_800A99E4.savePadName_4);
+
+    WorldObjectPositionInit(&g_WorldObj_Shotgun.position_1C, -59.484f, -0.8443f, 18.1517f, 0, -23.3f, 0);
+    WorldObject_ModelNameSet(&g_WorldObj_Shotgun.object_0, "SHOTGUN_");
+
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4.handgunBulletsName_14);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4.shotgunShellsName_18);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
+}
 
 INCLUDE_ASM("asm/maps/map2_s04/nonmatchings/map2_s04", func_800CD2AC);
