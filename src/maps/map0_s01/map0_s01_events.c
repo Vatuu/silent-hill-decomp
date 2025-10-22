@@ -1077,7 +1077,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
     {
         if (!Savegame_EventFlagGet(EventFlag_M0S01_HealthDrink0))
         {
-            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &D_800DE12C.position_0, &D_800DE12C.rotation_C);
+            G_WORLDGFX_OBJ_ADD_COMMON(1, 0);
         }
     }
 
@@ -1085,7 +1085,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
     {
         if (!Savegame_EventFlagGet(EventFlag_M0S01_HealthDrink1))
         {
-            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &D_800DE140.position_0, &D_800DE140.rotation_C);
+            G_WORLDGFX_OBJ_ADD_COMMON(1, 1);
         }
     }
 }
