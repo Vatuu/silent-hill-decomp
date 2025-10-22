@@ -901,25 +901,25 @@ void Map_WorldObjectsInit() // 0x800DC9C8
     D_800E23A1 = 224;
     Math_Vector3Set(&g_CutscenePosition, Q12(0.0f), Q12(0.0f), Q12(280.0f));
 
-    WorldObject_ModelNameSet(&D_800E23B0[0], "IN_BLD1_");
-    WorldObject_ModelNameSet(&D_800E23D0[0], "IN1_HIDE");
-    WorldObject_ModelNameSet(&D_800E23F0[0], "BRK_BLD1");
-    WorldObject_ModelNameSet(&D_800E23F0[1], "BRK_GLS1");
-    WorldObject_ModelNameSet(&D_800E23F0[2], "BRK_GLS2");
-    WorldObject_ModelNameSet(&D_800E2450[0], "OUT1_HID");
-    WorldObject_ModelNameSet(&D_800E2450[1], "OUT_BLD_");
+    WorldObject_ModelNameSet(&g_WorldObject_CutsceneObj0[0], "IN_BLD1_");
+    WorldObject_ModelNameSet(&g_WorldObject_CutsceneObj1[0], "IN1_HIDE");
+    WorldObject_ModelNameSet(&g_WorldObject_CutsceneObj2[0], "BRK_BLD1");
+    WorldObject_ModelNameSet(&g_WorldObject_CutsceneObj2[1], "BRK_GLS1");
+    WorldObject_ModelNameSet(&g_WorldObject_CutsceneObj2[2], "BRK_GLS2");
+    WorldObject_ModelNameSet(&g_WorldObject_CutsceneObj3[0], "OUT1_HID");
+    WorldObject_ModelNameSet(&g_WorldObject_CutsceneObj3[1], "OUT_BLD_");
 
-    WorldObjectPositionInit(&g_EventThing_KitchenKnife.position_1C, 5.09f, -1.01f, 274.12f, 0.0f, 32.0f, 0.0f); 
-    WorldObject_ModelNameSet(&g_EventThing_KitchenKnife.object_0, "KNIFE_HI");
+    WorldObjectPositionInit(&g_WorldObject_KitchenKnife.position_1C, 5.09f, -1.01f, 274.12f, 0.0f, 32.0f, 0.0f); 
+    WorldObject_ModelNameSet(&g_WorldObject_KitchenKnife.object_0, "KNIFE_HI");
 
-    WorldObjectPositionInit(&g_EventThing_Flashlight.position_1C, 5.18f, -1.0f, 267.28f, -3.0f, 111.0f, 0.0f);
-    WorldObject_ModelNameSet(&g_EventThing_Flashlight.object_0, "FLASH_HI");
+    WorldObjectPositionInit(&g_WorldObject_Flashlight.position_1C, 5.18f, -1.0f, 267.28f, -3.0f, 111.0f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject_Flashlight.object_0, "FLASH_HI");
 
-    WorldObjectPositionInit(&g_EventThing_Map.position_1C, 5.24f, -1.0f, 267.21f, 0.0f, 57.0f, 0.0f);
-    WorldObject_ModelNameSet(&g_EventThing_Map.object_0, "MAP_HIDE");
+    WorldObjectPositionInit(&g_WorldObject_Map.position_1C, 5.24f, -1.0f, 267.21f, 0.0f, 57.0f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject_Map.object_0, "MAP_HIDE");
 
-    WorldObjectPositionInit(&g_EventThing_PocketRadio.position_1C, 2.31f, -0.6f, 273.95f, 0.0f, 147.0f, 0.0f);
-    WorldObject_ModelNameSet(&g_EventThing_PocketRadio.object_0, "RADIO_HI");
+    WorldObjectPositionInit(&g_WorldObject_PocketRadio.position_1C, 2.31f, -0.6f, 273.95f, 0.0f, 147.0f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject_PocketRadio.object_0, "RADIO_HI");
 
     if (Savegame_EventFlagGet(EventFlag_40) && !Savegame_EventFlagGet(EventFlag_47))
     {
@@ -964,22 +964,22 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
     {
-        g_WorldGfx_ObjAdd(&g_EventThing_Map);
+        g_WorldGfx_ObjAdd(&g_WorldObject_Map);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupFlashlight))
     {
-        g_WorldGfx_ObjAdd(&g_EventThing_Flashlight);
+        g_WorldGfx_ObjAdd(&g_WorldObject_Flashlight);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupPocketRadio))
     {
-        g_WorldGfx_ObjAdd(&g_EventThing_PocketRadio);
+        g_WorldGfx_ObjAdd(&g_WorldObject_PocketRadio);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupKitchenKnife))
     {
-        g_WorldGfx_ObjAdd(&g_EventThing_KitchenKnife);
+        g_WorldGfx_ObjAdd(&g_WorldObject_KitchenKnife);
     }
 
     if (Savegame_EventFlagGet(EventFlag_M0S01_PickupKitchenKnife) && Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
@@ -1092,20 +1092,18 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
 
 void CutsceneObjects_Add(s32 arg0) // 0x800DD2EC
 {
-    static const SVECTOR3 DEFAULT_ROT = {};
-
     s32 i;
 
     if (arg0 == 0)
     {
         for (i = 0; i < 1; i++)
         {
-            g_WorldGfx_ObjectAdd(&D_800E23D0[i], &g_CutscenePosition, &DEFAULT_ROT);
+            g_WorldGfx_ObjectAdd(&g_WorldObject_CutsceneObj1[i], &g_CutscenePosition, &(SVECTOR3){});
         }
 
         for (i = 0; i < 1; i++)
         {
-            g_WorldGfx_ObjectAdd(&D_800E23B0[i], &g_CutscenePosition, &DEFAULT_ROT);
+            g_WorldGfx_ObjectAdd(&g_WorldObject_CutsceneObj0[i], &g_CutscenePosition, &(SVECTOR3){});
         }
 
         return;
@@ -1115,7 +1113,7 @@ void CutsceneObjects_Add(s32 arg0) // 0x800DD2EC
     {
         for (i = 0; i < 2; i++)
         {
-            g_WorldGfx_ObjectAdd(&D_800E2450[i], &g_CutscenePosition, &DEFAULT_ROT);
+            g_WorldGfx_ObjectAdd(&g_WorldObject_CutsceneObj3[i], &g_CutscenePosition, &(SVECTOR3){});
         }
 
         return;
@@ -1123,11 +1121,11 @@ void CutsceneObjects_Add(s32 arg0) // 0x800DD2EC
 
     for (i = 0; i < 1; i++)
     {
-        g_WorldGfx_ObjectAdd(&D_800E23D0[i], &g_CutscenePosition, &DEFAULT_ROT);
+        g_WorldGfx_ObjectAdd(&g_WorldObject_CutsceneObj1[i], &g_CutscenePosition, &(SVECTOR3){});
     }
 
     for (i = 0; i < 3; i++)
     {
-        g_WorldGfx_ObjectAdd(&D_800E23F0[i], &g_CutscenePosition, &DEFAULT_ROT);
+        g_WorldGfx_ObjectAdd(&g_WorldObject_CutsceneObj2[i], &g_CutscenePosition, &(SVECTOR3){});
     }
 }
