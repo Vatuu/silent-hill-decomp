@@ -220,13 +220,11 @@ extern s32 g_ExtraOptionsMenu_BulletMultMax;
 // ============
 
 /** @brief Options menu game state handler.
- *
  * Scratch: https://decomp.me/scratch/n8GDJ
  */
 void GameState_Options_Update(void);
 
 /** @brief Controller for the extra options menu.
- *
  * Scratch: https://decomp.me/scratch/HRrIM
  */
 void Options_ExtraOptionsMenu_Control(void);
@@ -234,7 +232,6 @@ void Options_ExtraOptionsMenu_Control(void);
 /** @brief Controller for the main options menu.
  *
  * Handles menu states, user input, and graphics draw calls.
- *
  * Scratch: https://decomp.me/scratch/N0xvj
  */
 void Options_MainOptionsMenu_Control(void);
@@ -243,14 +240,12 @@ void Options_MainOptionsMenu_Control(void);
 // `menu_graphics.c`
 // ==================
 
-/** @brief Draws the BGM volume bar in the main options menu.
- *
+/** @brief Draws a BGM volume bar in the main options menu.
  * Scratch: https://decomp.me/scratch/Zao7J
  */
 void Options_MainOptionsMenu_BgmVolumeBarDraw(void);
 
-/** @brief Draws the SFX volume bar in the main options menu.
- *
+/** @brief Draws an SFX volume bar in the main options menu.
  * Scratch: https://decomp.me/scratch/bE2Uz
  */
 void Options_MainOptionsMenu_SfxVolumeBarDraw(void);
@@ -258,51 +253,43 @@ void Options_MainOptionsMenu_SfxVolumeBarDraw(void);
 /** @brief Draws a volume bar.
  *
  * Called by `Options_MainOptionsMenu_BgmVolumeBarDraw` and `Options_MainOptionsMenu_SfxVolumeBarDraw`.
- *
  * Scratch: https://decomp.me/scratch/Hl65c
 */
 void Options_MainOptionsMenu_VolumeBarDraw(bool isSfx, u8 vol);
 
-/** @brief Draws the top heading and all listed entry strings in the extra options menu.
- *
+/** @brief Draws the heading and all listed entry strings in the extra options menu.
  * Scratch: https://decomp.me/scratch/IYutD
  */
 void Options_ExtraOptionsMenu_EntryStringsDraw(void);
 
-/** @brief Draws the top heading and all listed entry strings in the main options menu.
- *
+/** @brief Draws the heading and all listed entry strings in the main options menu.
  * Scratch: https://decomp.me/scratch/cbqqU
  */
 void Options_MainOptionsMenu_EntryStringsDraw(void);
 
-/** @brief Draws gold bullet points to the left of listed entries and the highlight indicating the
+/** @brief Draws gold bullet points next to the listed entries and a highlight indicating the
  * selected entry in the extra options menu.
- * 
  * Scratch: https://decomp.me/scratch/ghUNv
  */
 void Options_ExtraOptionsMenu_SelectionHighlightDraw(void);
 
-/** @brief Draws gold bullet points to the left of listed entries and the highlight indicating the
+/** @brief Draws gold bullet points next to the listed entries and a highlight indicating the
  * selected entry in the main options menu.
- *
  * Scratch: https://decomp.me/scratch/2gTWn
  */
 void Options_MainOptionsMenu_SelectionHighlightDraw(void);
 
 /** @brief Draws the background vignette of Harry in the main and extra options menus.
- *
  * Scratch: https://decomp.me/scratch/F32M5
  */
 void Options_Menu_VignetteDraw(void);
 
 /** @brief Draws configuration strings and blue arrows to the right of the listed entries in the extra options menu.
- *
  * Scratch: https://decomp.me/scratch/GW3Mi
  */
 void Options_ExtraOptionsMenu_ConfigDraw(void);
 
 /** @brief Draws configuration strings and blue arrows to the right of the listed entries in the main options menu.
- *
  * Scratch: https://decomp.me/scratch/5fuLW
  */
 void Options_MainOptionsMenu_ConfigDraw(void);
@@ -314,23 +301,18 @@ void Options_MainOptionsMenu_ConfigDraw(void);
 /** @brief Controller for the screen position options menu.
  *
  * Handles menu states, user input, SFX, and graphics drawing.
- *
  * Scratch: https://decomp.me/scratch/5F9Gq
 */
 void Options_ScreenPosMenu_Control(void);
 
 /** @brief Draws the arrows at the edges of the screen indicating input directions in the screen position options menu.
  *
- * Depending on the directional input from the user, it also draws a cyan border around the arrow
- * corresponding to the direction.
  * Called by `Options_ScreenPosMenu_Control`.
- *
  * Scratch: https://decomp.me/scratch/vYoKG
  */
 void Options_ScreenPosMenu_ArrowsDraw(void);
 
 /** @brief Draws the screen position configuration string and its background box.
- *
  * Scratch: https://decomp.me/scratch/TOnxP
  */
 void Options_ScreenPosMenu_ConfigDraw(void);
@@ -342,7 +324,6 @@ void Options_ScreenPosMenu_ConfigDraw(void);
 /** @brief Controller for the brightness options menu.
  *
  * Handles menu states, user input, SFX, and graphics drawing.
- *
  * Scratch: TODO
 */
 void Options_BrightnessMenu_Control(void);
@@ -352,10 +333,7 @@ void Options_BrightnessMenu_ConfigDraw(void);
 
 /** @brief Draws arrows on the left and right edges of the screen indicating input directions in the brightness options menu.
  *
- * Depending on the directional input from the user, it also draws a cyan border around the arrow
- * corresponding to the direction.
  * Called by `Options_BrightnessMenu_Control`.
- *
  * Scratch: TODO
  */
 void Options_BrightnessMenu_ArrowsDraw(void);
@@ -366,46 +344,34 @@ void Options_BrightnessMenu_ArrowsDraw(void);
 
 /** @brief Draws a scaling entry selection highlight in the main and extra options menus.
  *
- * The highlight Handles drawing of the underline and upward shadow gradient used to highlight the selected entry
- * in the main and extra options menus.
  * Called by `Options_MainOptionsMenu_SelectionHighlightDraw` and `Options_ExtraOptionsMenu_SelectionHighlightDraw`.
- *
  * Scratch: https://decomp.me/scratch/zHeCb
  *
  * @param line Reference line for the position and width of the highlight.
- * @param hasShadow If a shadow is to be drawn along with an underline.
- *                  `true` for a shadow, `false` for no shadow.
- * @param invertGradient @unused Whether to invert the color gradient of the underline. Non-functional.
+ * @param hasShadow `true` if drawing the highlight with a shadow a line, `false` for the line only.
+ * @param invertGradient @unused `true` to invert the color gradient of the line, `false` to not invert. Non-functional.
  */
 void Options_Selection_HighlightDraw(s_Line2d* line, bool hasShadow, bool invertGradient);
 
-/** @brief Draws a blue flashing arrow element used with certain listed entries in the main and extra options menus.
+/** @brief Draws a blue arrow element used for certain listed entries in the main and extra options menus.
  *
- * @note Called twice if the arrow requires a border, with `isFlashing` passed as `false` in the second call.
- *
+ * @note Called twice if the arrow requires a border with `isFlashing` passed as `false` in the second call.
  * Scratch: TODO
  *
  * @param arrow 2D polygon of the arrow element.
- * @param isFlashing Whether to draw the arrow element with a flowing color gradient.
- *                   `true` for an element with a dark blue and cyan gradient drawn in front,
- *                   `false` for an element with a solid cyan color drawn behind.
+ * @param isFlashing `true` if drawing the flashing element with a gradient, `false` if drawing the border.
  * @param resetColor @unused No meaningful purpose.
 */
 void Options_Selection_ArrowDraw(s_Triangle2d* arrow, bool isFlashing, bool resetColor);
 
 /** @brief Draws a gold bullet point element used next to listed entries in the main and extra options menus.
  *
- * @note Called twice to build a whole bullet point, with `isCenter` passed as `true` and `false` on consecutive calls.
- *
+ * @note Called twice to build a whole bullet point with `isCenter` passed as `true` and `false` on consecutive calls.
  * Scratch: https://decomp.me/scratch/A88oo
  *
- * @param quad 2D polygon of the bullet point element to draw.
- * @param isCenter If this is the center element of the bullet point.
- *                 `true` for a smaller element at the center drawn in front,
- *                 `false` for a larger one serving as the border with an inverted gradient drawn behind.
- * @param isInactive If the entry for which the bullet point is being drawn is unselected.
- *                   `true` for an unselected entry (draws darker bullet point),
- *                   `false` for a selected entry (draws darker bullet point).
+ * @param quad 2D polygon of the bullet point element.
+ * @param isCenter `true` if drawing the center element, `false` if drawing the border element.
+ * @param isInactive `true` if the entry is unselected, `false` if selected.
  */
 void Options_Selection_BulletPointDraw(s_Quad2d* quad, bool isCenter, bool isInactive);
 
@@ -413,40 +379,33 @@ void Options_Selection_BulletPointDraw(s_Quad2d* quad, bool isCenter, bool isIna
 // `controller.c'
 // ===============
 
-/** @brief Controller for the controller config options menu.
+/** @brief Controller for the controller configuration options menu.
  *
  * Handles the menu state, user input, SFX, and graphics drawing.
- *
  * Scratch: https://decomp.me/scratch/uAay2
 */
-void Options_Controller_Control(void);
+void Options_ControllerMenu_Control(void);
 
 /** @brief Changes the button mapping based on the input and updates the configuration.
- *
  * Scratch: https://decomp.me/scratch/GZGwV
  *
  * @param actionIdx Index of the input action for which to update the controller configuration.
  */
 s32 Options_ControllerMenu_ConfigUpdate(s32 actionIdx);
 
-/** @brief Draws entry strings and icons in the controller config options menu.
- *
+/** @brief Draws entry strings and icons in the controller configuration options menu.
  * Scratch: https://decomp.me/scratch/0U6fb
  *
- * @param isOnActionsPane If the user is navigating the right actions pane.
- *                        `true` for the right actions pane,
- *                        `false` for the left presets pane.
- * @param presetsEntryIdx Selected presets pane entry index
+ * @param isOnRightPane `true` if on the right pane, `false` if on the left pane.
+ * @param presetsEntryIdx Selected presets pane entry index.
  * @param actionsEntryIdx Selected actions pane entry index.
- * @param boundActionIdx Index of a newly bound input action.
+ * @param boundActionIdx Index of the newly bound input action.
  */
-void Options_ControllerMenu_EntriesDraw(bool isOnActionsPane, s32 presetsEntryIdx, s32 actionsEntryIdx, s32 boundActionIdx);
+void Options_ControllerMenu_EntriesDraw(bool isOnRightPane, s32 presetsEntryIdx, s32 actionsEntryIdx, s32 boundActionIdx);
 
-/** @brief Draws the button icons in the controller config options menu.
+/** @brief Draws button mapping icons in the controller configuration options menu.
  *
- * Handles drawing of a single row of 2D sprites representing a button mapping.
  * Called by `Options_ControllerMenu_EntriesDraw`.
- *
  * Scratch: https://decomp.me/scratch/rRQjd
  *
  * @param baseX Base X position at which to begin drawing.

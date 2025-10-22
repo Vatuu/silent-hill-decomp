@@ -160,7 +160,7 @@ void GameState_Options_Update(void) // 0x801E2D44
             break;
 
         case OptionsMenuState_Controller:
-            Options_Controller_Control();
+            Options_ControllerMenu_Control();
             break;
 
         case OptionsMenuState_Leave:
@@ -2037,7 +2037,7 @@ void Options_Selection_BulletPointDraw(s_Quad2d* quad, bool isCenter, bool isIna
 // CONTROLS OPTION SCREEN
 // ========================================
 
-void Options_Controller_Control(void) // 0x801E69BC
+void Options_ControllerMenu_Control(void) // 0x801E69BC
 {
     s32           boundActionIdx = NO_VALUE;
     e_InputAction actionIdx;
@@ -2417,7 +2417,7 @@ s32 g_ExtraOptionsMenu_SelectedBloodColorEntry = 0;
 
 s32 g_ExtraOptionsMenu_BulletMultMax = 0;
 
-void Options_ControllerMenu_EntriesDraw(bool isOnActionsPane, s32 presetsEntryIdx, s32 actionsEntryIdx, s32 boundActionIdx) // 0x801E6F60
+void Options_ControllerMenu_EntriesDraw(bool isOnRightPane, s32 presetsEntryIdx, s32 actionsEntryIdx, s32 boundActionIdx) // 0x801E6F60
 {
     #define STR_BASE_Y    22
     #define STR_OFFSET_Y  20
@@ -2444,7 +2444,7 @@ void Options_ControllerMenu_EntriesDraw(bool isOnActionsPane, s32 presetsEntryId
         Gfx_StringDraw(CONTROLLER_MENU_PRESETS_PANE_ENTRY_STRINGS[i], 20);
     }
 
-    if (!isOnActionsPane)
+    if (!isOnRightPane)
     {
         highlightY1 = presetsEntryIdx * STR_OFFSET_Y;
         highlightY0 = highlightY1 - 91;
@@ -2479,7 +2479,7 @@ void Options_ControllerMenu_EntriesDraw(bool isOnActionsPane, s32 presetsEntryId
         strYPos = (strYPos + ICON_SIZE_Y) + ((i == 2) ? ICON_SIZE_Y : 0);
     }
 
-    if (isOnActionsPane == true)
+    if (isOnRightPane == true)
     {
         setXY4(poly,
                -65, highlightY0,

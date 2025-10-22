@@ -2683,6 +2683,7 @@ extern s32 D_800C3958;
 
 extern s32 D_800C395C;
 
+/** `e_MapOverlayId ` */
 extern s8 D_800C3960;
 
 extern s8 D_800C3961;
