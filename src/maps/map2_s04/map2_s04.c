@@ -80,7 +80,7 @@ void func_800CCA1C(void) {}
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800CCA88
 
-INCLUDE_ASM("asm/maps/map2_s04/nonmatchings/map2_s04", func_800CCA98);
+#include "maps/shared/Map_RoomIdxGet.h"
 
 void func_800CCB30(s32 arg0) // 0x800CCB30
 {
