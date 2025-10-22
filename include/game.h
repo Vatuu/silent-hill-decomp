@@ -1237,22 +1237,22 @@ STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesUnk0, 68);
 
 typedef struct _SubCharPropertiesDahlia
 {
-    s32 unk_E4;
-    u32 stateIdx0;
+    s32        unk_E4;
+    u32        stateIdx0;
     u_Property properties_EC;
     u_Property properties_F0;
     u_Property properties_F4;
-    s32 resetStateIdx0_F8;
-    s32 field_FC;
-    s32 field_100;
+    s32        resetStateIdx0_F8;
+    s32        field_FC;
+    s32        field_100;
     u_Property properties_104;
     u_Property properties_108;
     u_Property properties_10C;
-    VECTOR3 field_110;
-    s32 flags_11C;
+    VECTOR3    field_110;
+    s32        flags_11C;
     u_Property properties_120;
-    s16 field_124;
-    s16 moveDistance_126;
+    s16        field_124;
+    s16        moveDistance_126;
 } s_SubCharaPropertiesDahlia;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesDahlia, 68);
 
@@ -1798,18 +1798,26 @@ static inline void Model_AnimFlagsClear(s_Model* model, u32 flags)
     model->anim_4.flags_2 &= ~flags;
 }
 
-/** @brief Updates model anim to the given `animIdx` if `model->stateStep_3` is 0. */
-static inline void Model_AnimStatusSet(s_Model* model, s32 animIdx, bool active)
+/** @brief Updates a model anim if `model->stateStep_3` is 0.
+ *
+ * @param model Model to update.
+ * @param animIdx Anim index to set.
+ * @param isActive Active status to set.
+ */
+static inline void Model_AnimStatusSet(s_Model* model, s32 animIdx, bool isActive)
 {
     if (model->stateStep_3 == 0)
     {
-        model->anim_4.status_0 = ANIM_STATUS(animIdx, active);
+        model->anim_4.status_0 = ANIM_STATUS(animIdx, isActive);
         model->stateStep_3++;
     }
 }
 
-/** @brief Resets a humanoid NPCs animation state index to 0. */
-static inline void Character_AnimStateTryReset(s_SubCharacter* chara)
+/** @brief Attempts to reset a humanoid NPC's anim state index to 0.
+ *
+ * @param chara Character to update.
+ */
+static inline void Character_AnimStateReset(s_SubCharacter* chara)
 {
     // TODO: This uses `dahlia` part of union, but is most likely either a `human` part shared with all humanoid characters
     // or humanoids only share a small portion early in the union.
