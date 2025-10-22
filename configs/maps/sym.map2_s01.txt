@@ -67,6 +67,8 @@ sharedFunc_800D923C_0_s00   = 0x800CE750; // type:func
 sharedFunc_800D929C_0_s00   = 0x800CE7B0; // type:func
 Map_RoomIdxGet              = 0x800CE7C0; // type:func
 sharedFunc_800CE934_0_s02   = 0x800CE908; // type:func
+Map_WorldObjectsInit        = 0x800CF7F0; // type:func
+Map_WorldObjectsUpdate      = 0x800CF938; // type:func
 
 
 
@@ -108,6 +110,7 @@ MAP_MESSAGES                = 0x800D02FC; // type:u32 size:0xB0
 //----------------------------------------------------
 g_MapMsgSounds              = 0x800D04FC; // type:u16 size:0x28
 g_Timer0                    = 0x800D0524; // type:s32
+g_CommonWorldObjectsPos     = 0x800D0528; // type:WorldObjectPos size:0x1C
 sharedData_800DFB4C_0_s00   = 0x800D053C;
 sharedData_800CD77C_1_s04   = 0x800D0540; // type:s32
 g_CamPosTarget              = 0x800D054C; // type:VECTOR3 size:0xC

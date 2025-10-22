@@ -200,15 +200,9 @@ extern s_WorldObjectDesc g_WorldObj_Map;
 extern s_WorldObjectDesc g_WorldObj_SavePad0;
 extern s_WorldObjectDesc g_WorldObj_SavePad1;
 extern s_WorldObjectDesc g_WorldObj_Shotgun;
-extern s_WorldObjectPos D_800CE024;
-extern s_WorldObjectPos D_800CE038;
-extern s_WorldObjectPos D_800CE04C;
-extern s_WorldObjectPos D_800CE060;
-extern s_WorldObjectPos D_800CE074;
-extern s_WorldObjectPos D_800CE088;
-extern s_WorldObjectPos D_800CE09C;
+extern s_WorldObjectPos g_CommonWorldObjectsPos[7];
 
-void func_800CD124(void)
+void Map_WorldObjectsInit(void)
 {
     D_800CF280 = 0;
     WorldObjectPositionInit(&g_WorldObj_SavePad0.position_1C, -60.9976f, -0.8289f, 20.1067f, 0.0f, -100.7f, 0.0f);
@@ -231,7 +225,7 @@ void func_800CD124(void)
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-void func_800CD2AC(void)
+void Map_WorldObjectsUpdate(void)
 {
     MAP_CHUNK_CHECK_VARIABLE_DECL();
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
@@ -269,7 +263,7 @@ void func_800CD2AC(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S04_ShotgunShells0))
         {
-            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[5], &D_800CE024.position_0, &D_800CE024.rotation_C);
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[5], &g_CommonWorldObjectsPos[0].position_0, &g_CommonWorldObjectsPos[0].rotation_C);
         }
     }
 
@@ -277,7 +271,7 @@ void func_800CD2AC(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S04_HandgunBullets0))
         {
-            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &D_800CE038.position_0, &D_800CE038.rotation_C);
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectsPos[1].position_0, &g_CommonWorldObjectsPos[1].rotation_C);
         }
     }
 
@@ -285,7 +279,7 @@ void func_800CD2AC(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S04_HandgunBullets1))
         {
-            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &D_800CE04C.position_0, &D_800CE04C.rotation_C);
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectsPos[2].position_0, &g_CommonWorldObjectsPos[2].rotation_C);
         }
     }
 
@@ -293,7 +287,7 @@ void func_800CD2AC(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S04_ShotgunShells1))
         {
-            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[5], &D_800CE060.position_0, &D_800CE060.rotation_C);
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[5], &g_CommonWorldObjectsPos[3].position_0, &g_CommonWorldObjectsPos[3].rotation_C);
         }
     }
 
@@ -301,7 +295,7 @@ void func_800CD2AC(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S04_HandgunBullets2))
         {
-            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &D_800CE074.position_0, &D_800CE074.rotation_C);
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectsPos[4].position_0, &g_CommonWorldObjectsPos[4].rotation_C);
         }
     }
 
@@ -309,7 +303,7 @@ void func_800CD2AC(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S04_HandgunBullets3))
         {
-            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &D_800CE088.position_0, &D_800CE088.rotation_C);
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectsPos[5].position_0, &g_CommonWorldObjectsPos[5].rotation_C);
         }
     }
 
@@ -317,7 +311,7 @@ void func_800CD2AC(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S04_RifleShells))
         {
-            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[4], &D_800CE09C.position_0, &D_800CE09C.rotation_C);
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[4], &g_CommonWorldObjectsPos[6].position_0, &g_CommonWorldObjectsPos[6].rotation_C);
         }
     }
 }
