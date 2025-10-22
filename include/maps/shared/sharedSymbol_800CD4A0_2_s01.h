@@ -6,16 +6,6 @@
 
 extern s_AnimInfo ANIM_TABLE[];
 
-// Similar to `Model_AnimStatusSet`, but also sets `anim_4.time_4` and `anim_4.keyframeIdx_8`
-#define Model_AnimStatusKeyframeSet(model, animIdx, active, kaufmannIdx)                             \
-    if (model.stateStep_3 == 0)                                                                      \
-    {                                                                                                \
-        model.anim_4.status_0 = ANIM_STATUS(animIdx, active);                                        \
-        model.stateStep_3++;                                                                         \
-        model.anim_4.time_4        = FP_TO(ANIM_TABLE[(kaufmannIdx)].startKeyframeIdx_C, Q12_SHIFT); \
-        model.anim_4.keyframeIdx_8 = ANIM_TABLE[(kaufmannIdx)].startKeyframeIdx_C;                   \
-    }
-
 void sharedSymbol_800CD4A0_2_s01(s_SubCharacter* dahlia, GsCOORDINATE2* coord)
 {
     s_Collision coll;
@@ -75,7 +65,7 @@ void sharedSymbol_800CD4A0_2_s01(s_SubCharacter* dahlia, GsCOORDINATE2* coord)
     case 11:
 #if defined(MAP3_S06) || defined(MAP6_S01) || defined(MAP6_S04) || defined(MAP7_S02) || \
     defined(MAP7_S03)
-        Model_AnimStatusKeyframeSet(dahlia->model_0, 7, true, 15);
+        Model_AnimStatusKeyframeSet(dahlia->model_0, 7, true, ANIM_TABLE);
 #else
         Model_AnimStatusSet(&dahlia->model_0, 7, false);
 #endif
@@ -102,7 +92,7 @@ void sharedSymbol_800CD4A0_2_s01(s_SubCharacter* dahlia, GsCOORDINATE2* coord)
     case 10:
 #if !defined(MAP6_S01) && !defined(MAP6_S04) && !defined(MAP7_S02) && !defined(MAP7_S03)
 #if defined(MAP3_S06)
-        Model_AnimStatusKeyframeSet(dahlia->model_0, 6, true, 13);
+        Model_AnimStatusKeyframeSet(dahlia->model_0, 6, true, ANIM_TABLE);
 #else
         Model_AnimStatusSet(&dahlia->model_0, 6, false);
 #endif
@@ -125,7 +115,7 @@ void sharedSymbol_800CD4A0_2_s01(s_SubCharacter* dahlia, GsCOORDINATE2* coord)
         }
         break;
     case 12:
-        Model_AnimStatusKeyframeSet(dahlia->model_0, 8, true, 17);
+        Model_AnimStatusKeyframeSet(dahlia->model_0, 8, true, ANIM_TABLE);
         Character_AnimStateTryReset(dahlia);
         break;
     case 13:
@@ -164,7 +154,7 @@ void sharedSymbol_800CD4A0_2_s01(s_SubCharacter* dahlia, GsCOORDINATE2* coord)
             sharedData_800D16E4_2_s01 = 1;
         }
 
-        Model_AnimStatusKeyframeSet(dahlia->model_0, 19, true, 39);
+        Model_AnimStatusKeyframeSet(dahlia->model_0, 19, true, ANIM_TABLE);
         Character_AnimStateTryReset(dahlia);
 
         if (DAHLIA_PROPS.stateIdx0 != 19)
@@ -177,11 +167,11 @@ void sharedSymbol_800CD4A0_2_s01(s_SubCharacter* dahlia, GsCOORDINATE2* coord)
         Character_AnimStateTryReset(dahlia);
         break;
     case 21:
-        Model_AnimStatusKeyframeSet(dahlia->model_0, 21, true, 43);
+        Model_AnimStatusKeyframeSet(dahlia->model_0, 21, true, ANIM_TABLE);
         Character_AnimStateTryReset(dahlia);
         break;
     case 22:
-        Model_AnimStatusKeyframeSet(dahlia->model_0, 22, true, 45);
+        Model_AnimStatusKeyframeSet(dahlia->model_0, 22, true, ANIM_TABLE);
         Character_AnimStateTryReset(dahlia);
         break;
     case 23:
@@ -216,12 +206,14 @@ void sharedSymbol_800CD4A0_2_s01(s_SubCharacter* dahlia, GsCOORDINATE2* coord)
         break;
     }
     Collision_Get(&coll, dahlia->position_18.vx, dahlia->position_18.vz);
+
     func_8007FDE0(coll.field_8, &sfx, &pitch0, &pitch1);
 #if defined(MAP6_S01)
     sfx = Sfx_Unk1606;
 #else
     sfx = Sfx_Unk1489;
 #endif
+
     switch (DAHLIA_PROPS.stateIdx0)
     {
     case 1:             

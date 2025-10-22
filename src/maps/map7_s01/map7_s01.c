@@ -205,7 +205,7 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800D06AC_3_s03
 
 #include "maps/shared/sharedFunc_800D0944_3_s04.h" // 0x800D4EB8
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedSymbol_800D0ADC_3_s04); // 0x800D5050
+#include "maps/shared/sharedSymbol_800D0ADC_3_s04.h" // 0x800D5050
 
 #include "maps/shared/Ai_Lisa_Init.h" // 0x800D58C4
 

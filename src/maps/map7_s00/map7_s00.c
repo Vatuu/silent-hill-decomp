@@ -82,7 +82,7 @@ void func_800CE9CC() {}
 
 #include "maps/shared/sharedFunc_800D0944_3_s04.h" // 0x800CEAF4
 
-INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", sharedSymbol_800D0ADC_3_s04); // 0x800CEC8C
+#include "maps/shared/sharedSymbol_800D0ADC_3_s04.h" // 0x800CEC8C
 
 #include "maps/shared/Ai_Lisa_Init.h" // 0x800CF514
 

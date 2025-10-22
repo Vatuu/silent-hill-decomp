@@ -1808,6 +1808,16 @@ static inline void Model_AnimStatusSet(s_Model* model, s32 animIdx, bool active)
     }
 }
 
+/** @brief Similar to `Model_AnimStatusSet`, but also sets `anim_4.time_4` and `anim_4.keyframeIdx_8` from the `animInfos` `s_AnimInfo` array. */
+#define Model_AnimStatusKeyframeSet(model, animIdx, active, animInfos)                                                     \
+    if ((model).stateStep_3 == 0)                                                                                          \
+    {                                                                                                                      \
+        (model).anim_4.status_0 = ANIM_STATUS((animIdx), (active));                                                        \
+        (model).stateStep_3++;                                                                                             \
+        (model).anim_4.time_4        = FP_TO((animInfos)[ANIM_STATUS((animIdx), (active))].startKeyframeIdx_C, Q12_SHIFT); \
+        (model).anim_4.keyframeIdx_8 = (animInfos)[ANIM_STATUS((animIdx), (active))].startKeyframeIdx_C;                   \
+    }
+
 /** @brief Resets a humanoid NPCs animation state index to 0. */
 static inline void Character_AnimStateTryReset(s_SubCharacter* chara)
 {
