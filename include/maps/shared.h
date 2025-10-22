@@ -2918,4 +2918,18 @@ static inline void WorldObjectPositionSet(s_WorldObjectPos* eventPos, q19_12 pos
          : ((Q12(base) - g_SysWork.player_4C.chara_0.position_18.crd) < Q12(tol)))     \
     )
 
+/** @brief A helper function for `g_WorldGfx_ObjectAdd` that takes one argument for less typing. **/
+static inline void g_WorldGfx_ObjAdd(s_WorldObjectDesc* obj)
+{
+    g_WorldGfx_ObjectAdd(&obj->object_0, &obj->position_1C.position_0, &obj->position_1C.rotation_C);
+}
+
+/** @brief A helper function for `g_WorldGfx_ObjectAdd` for common objects using only the indices. **/
+#define G_WORLDGFX_OBJ_ADD_COMMON(objIdx, posIdx)          \
+    g_WorldGfx_ObjectAdd(                                  \
+            &g_CommonWorldObjects[objIdx],                 \
+            &g_CommonWorldObjectsPos[posIdx].position_0,   \
+            &g_CommonWorldObjectsPos[posIdx].rotation_C    \
+    )
+
 #endif
