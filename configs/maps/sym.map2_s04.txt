@@ -69,6 +69,7 @@ sharedData_800CFB3C_0_s02 = 0x800CDCA8; // type:u8 size:8
 sharedData_800CFB44_0_s02 = 0x800CDCB0; // type:u8 size:8
 sharedData_800CFB4C_0_s02 = 0x800CDCB8; // type:u8 size:8
 sharedData_800CFB54_0_s02 = 0x800CDCC0; // type:u8 size:8
+MAP_POINTS                = 0x800CDCD8;
 
 //---------------------------------------------------------------
 //--- PA: 0x0048F0   VA: 0x800CDE68   subsegment: .data, map2_s04
