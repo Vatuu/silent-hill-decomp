@@ -3,7 +3,7 @@ s32 Anim_StartKeyframeIdxGet(s_SubCharacter* chara)
     // TODO: Not sure if any of these match `KAUFMANN_ANIM_INFOS` in other maps.
 #if defined(MAP6_S01)
     extern s_AnimInfo CYBIL_ANIM_INFOS[];
-    extern s_AnimInfo D_800D39A0[];
+    extern s_AnimInfo DAHLIA_ANIM_INFOS[];
 #elif defined(MAP6_S04)
     extern s_AnimInfo MONSTER_CYBIL_ANIM_INFOS[];
     extern s_AnimInfo DAHLIA_ANIM_INFOS[];
@@ -33,7 +33,7 @@ s32 Anim_StartKeyframeIdxGet(s_SubCharacter* chara)
             break;
 
         default:
-            animInfo = &D_800D39A0[chara->model_0.anim_4.status_0];
+            animInfo = &DAHLIA_ANIM_INFOS[chara->model_0.anim_4.status_0];
             break;
 
 #elif defined(MAP6_S04)

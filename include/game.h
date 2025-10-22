@@ -1234,6 +1234,28 @@ typedef struct _SubCharPropertiesUnk0
     u_Property properties_124;
 } s_SubCharaPropertiesUnk0;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesUnk0, 68);
+
+typedef struct _SubCharPropertiesDahlia
+{
+    s32 unk_E4;
+    u32 stateIdx0;
+    u_Property properties_EC;
+    u_Property properties_F0;
+    u_Property properties_F4;
+    s32 resetStateIdx0_F8;
+    s32 field_FC;
+    s32 field_100;
+    u_Property properties_104;
+    u_Property properties_108;
+    u_Property properties_10C;
+    VECTOR3 field_110;
+    s32 flags_11C;
+    u_Property properties_120;
+    s16 field_124;
+    s16 moveDistance_126;
+} s_SubCharaPropertiesDahlia;
+STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesDahlia, 68);
+
 /** Offsets for translation? */
 typedef struct
 {
@@ -1308,6 +1330,7 @@ typedef struct _SubCharacter
         s_SubCharaPropertiesNpc           npc;
         s_SubCharaPropertiesLarvalStalker larvalStalker;
         s_SubCharaPropertiesUnk0          unk0;
+        s_SubCharaPropertiesDahlia        dahlia;
     } properties_E4;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
@@ -1773,6 +1796,29 @@ static inline void Model_AnimFlagsSet(s_Model* model, u32 flags)
 static inline void Model_AnimFlagsClear(s_Model* model, u32 flags)
 {
     model->anim_4.flags_2 &= ~flags;
+}
+
+/** @brief Updates model anim to the given `animIdx` if `model->stateStep_3` is 0. */
+static inline void Model_AnimStatusSet(s_Model* model, s32 animIdx, bool active)
+{
+    if (model->stateStep_3 == 0)
+    {
+        model->anim_4.status_0 = ANIM_STATUS(animIdx, active);
+        model->stateStep_3++;
+    }
+}
+
+/** @brief Resets a humanoid NPCs animation state index to 0. */
+static inline void Character_AnimStateTryReset(s_SubCharacter* chara)
+{
+    // TODO: This uses `dahlia` part of union, but is most likely either a `human` part shared with all humanoid characters
+    // or humanoids only share a small portion early in the union.
+    if (chara->properties_E4.dahlia.resetStateIdx0_F8)
+    {
+        chara->properties_E4.dahlia.stateIdx0         = 0;
+        chara->model_0.stateStep_3                    = 0;
+        chara->properties_E4.dahlia.resetStateIdx0_F8 = 0;
+    }
 }
 
 #endif

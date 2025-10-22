@@ -85,6 +85,7 @@ sharedFunc_800DA8E8_0_s01   = 0x800D1340; // type:func
 HARRY_M6S01_ANIM_INFOS      = 0x800D346C;
 sharedData_800DD59C_0_s00   = 0x800D359C; // type:u8
 CYBIL_ANIM_INFOS            = 0x800D35A0;
+DAHLIA_ANIM_INFOS           = 0x800D39A0;
 sharedData_800DF1F4_0_s00   = 0x800D3CE0; // type:s32
 sharedData_800DF1F8_0_s00   = 0x800D3CE4; // type:s16
 sharedData_800DF1FA_0_s00   = 0x800D3CE6; // type:s16

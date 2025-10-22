@@ -161,9 +161,7 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", sharedFunc_800D0F28_3_s03
 
 #include "maps/shared/sharedFunc_800CD2C8_2_s01.h" // 0x800D6F90
 
-INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02", D_800CB048);
-
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", sharedSymbol_800CD4A0_2_s01); // 0x800D7168
+#include "maps/shared/sharedSymbol_800CD4A0_2_s01.h" // 0x800D7168
 
 #include "maps/shared/Ai_Dahlia_Init.h" // 0x800D7A20
 
@@ -173,7 +171,7 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", sharedSymbol_800CD4A0_2_s
 
 #include "maps/shared/sharedFunc_800D4A74_7_s01.h" // 0x800D7B24
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", sharedFunc_800D4C0C_7_s01); // 0x800D7CBC
+#include "maps/shared/sharedFunc_800D4C0C_7_s01.h" // 0x800D7CBC
 
 #include "maps/shared/Ai_GhostChildAlessa_Init.h" // 0x800D7E88
 
