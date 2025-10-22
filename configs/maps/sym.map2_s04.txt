@@ -20,6 +20,7 @@
 //-----------------------------------------------------------
 //--- PA: 0x001654   VA: 0x800CABCC   subsegment: c, map2_s04
 //-----------------------------------------------------------
+sharedFunc_800CB6B0_0_s00 = 0x800CABCC; // type:func
 sharedFunc_800D08B8_0_s00 = 0x800CAD34; // type:func
 sharedFunc_800D0A60_0_s00 = 0x800CAEB4; // type:func
 sharedFunc_800D0B18_0_s00 = 0x800CAF6C; // type:func
@@ -58,6 +59,8 @@ sharedFunc_800CE934_0_s02 = 0x800CCBE0; // type:func
 //--- PA: 0x004564   VA: 0x800CDADC   subsegment: data
 //----------------------------------------------------
 HARRY_M2S04_ANIM_INFOS    = 0x800CDADC;
+sharedData_800DD584_0_s00 = 0x800CDC57;
+sharedData_800DD598_0_s00 = 0x800CDC58;
 sharedData_800DD59C_0_s00 = 0x800CDC5C; // type:u8
 MAP_ROOM_IDXS             = 0x800CDC60; // type:u8 size:0x1E
 sharedData_800CFB14_0_s02 = 0x800CDC80; // type:u8 size:8
@@ -79,8 +82,12 @@ MAP_MESSAGES              = 0x800CDE68; // type:u32 size:0x6C
 //----------------------------------------------------
 //--- PA: 0x00495C   VA: 0x800CDED4   subsegment: data
 //----------------------------------------------------
+sharedData_800DFB4C_0_s00 = 0x800CE0B0;
+sharedData_800CD77C_1_s04 = 0x800CE0B4;
 sharedData_800DFB6C_0_s00 = 0x800CE0C0; // type:s32
 sharedData_800DFB70_0_s00 = 0x800CE0C4; // type:s32
+g_ParticleVectors0        = 0x800CF1A0; // type:ParticleVectors
+g_ParticleVectors1        = 0x800CF1D0; // type:ParticleVectors
 sharedData_800E0CA8_0_s00 = 0x800CF1FC; // type:s32
 sharedData_800E0CAC_0_s00 = 0x800CF200; // type:s32
 sharedData_800E0CB0_0_s00 = 0x800CF204; // type:u32
