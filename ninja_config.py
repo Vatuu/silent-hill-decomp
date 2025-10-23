@@ -57,56 +57,56 @@ class YAML_INFO:
     SPLIT_UNDEF_SYM: str
 
 CONFIG_FILES = [
-    #"main.yaml",
-    #"bodyprog.yaml",
-    #"screens/b_konami.yaml",
+    "main.yaml",
+    "bodyprog.yaml",
+    "screens/b_konami.yaml",
     "screens/stream.yaml",
-    #"screens/options.yaml",
-    #"screens/credits.yaml",
-    #"screens/saveload.yaml",
-    #"maps/map0_s00.yaml",
-    #"maps/map0_s01.yaml",
-    ##"maps/map0_s02.yaml", # Bugged
-    #"maps/map1_s00.yaml",
-    #"maps/map1_s01.yaml",
-    #"maps/map1_s02.yaml",
-    #"maps/map1_s03.yaml",
-    #"maps/map1_s04.yaml",
-    #"maps/map1_s05.yaml",
-    #"maps/map1_s06.yaml",
-    #"maps/map2_s00.yaml",
-    #"maps/map2_s01.yaml",
-    #"maps/map2_s02.yaml",
-    #"maps/map2_s03.yaml",
-    #"maps/map2_s04.yaml",
-    #"maps/map3_s00.yaml",
-    #"maps/map3_s01.yaml",
-    #"maps/map3_s02.yaml",
-    #"maps/map3_s03.yaml",
-    #"maps/map3_s04.yaml",
-    #"maps/map3_s05.yaml",
-    #"maps/map3_s06.yaml",
-    #"maps/map4_s00.yaml",
-    #"maps/map4_s01.yaml",
-    #"maps/map4_s02.yaml",
-    #"maps/map4_s03.yaml",
-    #"maps/map4_s04.yaml",
-    #"maps/map4_s05.yaml",
-    #"maps/map4_s06.yaml",
-    #"maps/map5_s00.yaml",
-    #"maps/map5_s01.yaml",
-    #"maps/map5_s02.yaml",
-    #"maps/map5_s03.yaml",
-    #"maps/map6_s00.yaml",
-    #"maps/map6_s01.yaml",
-    #"maps/map6_s02.yaml",
-    #"maps/map6_s03.yaml",
-    #"maps/map6_s04.yaml",
-    #"maps/map6_s05.yaml",
-    #"maps/map7_s00.yaml",
-    #"maps/map7_s01.yaml",
-    #"maps/map7_s02.yaml",
-    #"maps/map7_s03.yaml"
+    "screens/options.yaml",
+    "screens/credits.yaml",
+    "screens/saveload.yaml",
+    "maps/map0_s00.yaml",
+    "maps/map0_s01.yaml",
+    #"maps/map0_s02.yaml", # Bugged
+    "maps/map1_s00.yaml",
+    "maps/map1_s01.yaml",
+    "maps/map1_s02.yaml",
+    "maps/map1_s03.yaml",
+    "maps/map1_s04.yaml",
+    "maps/map1_s05.yaml",
+    "maps/map1_s06.yaml",
+    "maps/map2_s00.yaml",
+    "maps/map2_s01.yaml",
+    "maps/map2_s02.yaml",
+    "maps/map2_s03.yaml",
+    "maps/map2_s04.yaml",
+    "maps/map3_s00.yaml",
+    "maps/map3_s01.yaml",
+    "maps/map3_s02.yaml",
+    "maps/map3_s03.yaml",
+    "maps/map3_s04.yaml",
+    "maps/map3_s05.yaml",
+    "maps/map3_s06.yaml",
+    "maps/map4_s00.yaml",
+    "maps/map4_s01.yaml",
+    "maps/map4_s02.yaml",
+    "maps/map4_s03.yaml",
+    "maps/map4_s04.yaml",
+    "maps/map4_s05.yaml",
+    "maps/map4_s06.yaml",
+    "maps/map5_s00.yaml",
+    "maps/map5_s01.yaml",
+    "maps/map5_s02.yaml",
+    "maps/map5_s03.yaml",
+    "maps/map6_s00.yaml",
+    "maps/map6_s01.yaml",
+    "maps/map6_s02.yaml",
+    "maps/map6_s03.yaml",
+    "maps/map6_s04.yaml",
+    "maps/map6_s05.yaml",
+    "maps/map7_s00.yaml",
+    "maps/map7_s01.yaml",
+    "maps/map7_s02.yaml",
+    "maps/map7_s03.yaml"
 ]
 
 # Directories
@@ -126,7 +126,7 @@ OBJDIFF_DIR = f"{TOOLS_DIR}/objdiff"
 PSXISO_DIR  = f"{TOOLS_DIR}/psxiso"
 
 # Tooling Paths
-PYTHON = "py"
+PYTHON = "python"
 MASPSX = f"{PYTHON} tools/maspsx/maspsx.py"
 if sys.platform == "linux" or sys.platform == "linux2":
     CROSS     = "mips-linux-gnu"
@@ -140,6 +140,7 @@ if sys.platform == "linux" or sys.platform == "linux2":
     PREBUILD  = f"{TOOLS_DIR}/prebuild.sh"
     POSTBUILD = f"{TOOLS_DIR}/postbuild.sh"
     DUMPSXISO = f"{PSXISO_DIR}/dumpsxiso"
+    ICONV     = f"iconv"
 elif sys.platform == "win32":
     CROSS     = f"{TOOLS_DIR}/win-build/binutils/mips-linux-gnu"
     AS        = f"{CROSS}-as.exe"
@@ -152,6 +153,7 @@ elif sys.platform == "win32":
     PREBUILD  = f"{TOOLS_DIR}\\prebuild.bat"
     POSTBUILD = f"{TOOLS_DIR}\\postbuild.bat"
     DUMPSXISO = f"{PSXISO_DIR}/dumpsxiso.exe"
+    ICONV     = f"{TOOLS_DIR}\\win-build\\iconv\\iconv.bat"
 
 # Flags (for programs)
 DUMPSXISO_FLAGS = f"-x {ROM_DIR}/{GAMEVERSIONS.GAME_VERSION_DIR} -s {ROM_DIR}/{GAMEVERSIONS.GAME_VERSION_DIR}/layout.xml {IMAGE_DIR}/{GAMEVERSIONS.GAME_NAME}.bin"
@@ -168,9 +170,11 @@ DL_OVL_FLAGS    = "-G0"
 if sys.platform == "linux" or sys.platform == "linux2":
     CPP_FLAGS = f"{INCLUDE_FLAGS} -D_LANGUAGE_C -DUSE_INCLUDE_ASM -P -MMD -MP -undef -Wall -lang-c -nostdinc"
     MASPSX_FLAGS  = f"--aspsx-version=2.77 --run-assembler"
+    ICONV_FLAGS = f"-f UTF-8 -t SHIFT-JIS $in -o $out"
 elif sys.platform == "win32":
     CPP_FLAGS = f"{INCLUDE_FLAGS} -D_LANGUAGE_C -DUSE_INCLUDE_ASM -P -MMD -MP -N -Wall -I-"
     MASPSX_FLAGS  = f"--gnu-as-path {AS} --aspsx-version=2.77 --run-assembler"
+    ICONV_FLAGS = f"$in $out"
 CC_FLAGS      = f"{OPT_FLAGS} -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet"
 AS_FLAGS      = f"{ENDIAN} {INCLUDE_FLAGS} {OPT_FLAGS} -march=r3000 -mtune=r3000 -no-pad-sections"
 OBJDUMP_FLAGS = f"--disassemble-all --reloc --disassemble-zeroes -Mreg-names=32"
@@ -220,16 +224,19 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file):
                 }
             )
     elif sys.platform == "win32":
+        ninja_file.build(
+            outputs=f"{target_path}.sjis.i", rule="iconv", inputs=f"{target_path}.i", implicit=f"{target_path}.i"
+        )
         if re.search("^src.main.*", source_path):
             ninja_file.build(
-                outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.i", implicit=f"{target_path}.i",
+                outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.sjis.i", implicit=f"{target_path}.sjis.i",
                 variables={
                     "DLFLAG": DL_EXE_FLAGS
                 }
             )
         else:
             ninja_file.build(
-                outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.i", implicit=f"{target_path}.i",
+                outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.sjis.i", implicit=f"{target_path}.sjis.i",
                 variables={
                     "DLFLAG": DL_OVL_FLAGS
                 }
@@ -283,7 +290,7 @@ def ninja_setup(split_entries, skip_checksum: bool):
 
     ninja.rule(
         "iconv", description="iconv $in",
-        command=f"iconv -f UTF-8 -t SHIFT-JIS $in -o $out",
+        command=f"{ICONV} {ICONV_FLAGS}",
     )
 
     ninja.rule(
@@ -347,8 +354,8 @@ def ninja_setup(split_entries, skip_checksum: bool):
                     os.system(f"cmd.exe /c {PREBUILD} main")
                 case "STREAM.BIN":
                     os.system(f"cmd.exe /c {PREBUILD} screens\\stream")
-                #case "BODYPROG.BIN":
-                #    os.system(f"cmd.exe /c {PREBUILD} bodyprog")
+                case "BODYPROG.BIN":
+                    os.system(f"cmd.exe /c {PREBUILD} bodyprog")
         
         for split_entry in split_config.SPLIT_ENTRIES:
             for entry in split_entry:
