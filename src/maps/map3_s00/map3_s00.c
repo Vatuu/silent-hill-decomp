@@ -107,7 +107,7 @@ void func_800CF1B0() {}
 
 #include "maps/shared/sharedFunc_800CF2D8_3_s00.h" // 0x800CF2D8
 
-INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00", sharedSymbol_800CF470_3_s00); // 0x800CF470
+#include "maps/shared/sharedSymbol_800CF470_3_s00.h" // 0x800CF470
 
 #include "maps/shared/Ai_Kaufmann_Init.h" // 0x800CFE48
 

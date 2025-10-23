@@ -138,6 +138,7 @@ typedef enum _EventFlag
     EventFlag_195 = 195,
 
     EventFlag_197 = 197,
+    EventFlag_198 = 198,
 
     EventFlag_M3S00_FirstAidKit = 199, // Odd numbering not with other common items, possibly some default that goes unused, shared with M3S01 and M3S06.
 

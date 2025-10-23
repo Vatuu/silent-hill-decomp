@@ -181,7 +181,7 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", sharedFunc_800D0F28_3_s03
 
 #include "maps/shared/sharedFunc_800CF2D8_3_s00.h" // 0x800D7F68
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", sharedSymbol_800CF470_3_s00); // 0x800D8100
+#include "maps/shared/sharedSymbol_800CF470_3_s00.h" // 0x800D8100
 
 #include "maps/shared/Ai_Kaufmann_Init.h" // 0x800D8AA8
 

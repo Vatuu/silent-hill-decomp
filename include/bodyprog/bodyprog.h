@@ -201,6 +201,7 @@ typedef enum _Sfx
     Sfx_Unk1489 = 1489,
     Sfx_Unk1490 = 1490,
     Sfx_Unk1491 = 1491,
+    Sfx_Unk1492 = 1492,
 
     Sfx_Unk1494 = 1494,
     Sfx_Unk1495 = 1495,
@@ -230,6 +231,8 @@ typedef enum _Sfx
     Sfx_Unk1567 = 1567,
 
     Sfx_Unk1590 = 1590,
+
+    Sfx_Unk1594 = 1594,
 
     Sfx_Unk1601 = 1601,
     Sfx_Unk1602 = 1602,
@@ -1732,7 +1735,7 @@ typedef struct _MapOverlayHeader
     void                   (**loadingScreenFuncs_18)();
     s_MapPoint2d*          mapPointsOfInterest_1C;
     void                   (**mapEventFuncs_20)(); /** Points to array of event functions. */
-    u8*                    unk_24;
+    s_EventParam*          mapEvents_24;
     GsCOORDINATE2*         field_28;
     u8*                    loadableItems_2C;
     const char**           mapMessages_30; // Array of strings.

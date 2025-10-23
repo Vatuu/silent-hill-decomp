@@ -210,7 +210,7 @@ void Ai_Incubator_Init(s_SubCharacter* chara) // 0x800D3F38
 
 #include "maps/shared/sharedFunc_800CF2D8_3_s00.h" // 0x800D4014
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedSymbol_800CF470_3_s00); // 0x800D41AC
+#include "maps/shared/sharedSymbol_800CF470_3_s00.h" // 0x800D41AC
 
 #include "maps/shared/Ai_Kaufmann_Init.h" // 0x800D4C14
 
