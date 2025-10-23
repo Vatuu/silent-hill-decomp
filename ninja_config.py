@@ -121,9 +121,14 @@ BUILD_DIR    = "build"
 PERMUTER_DIR = "permuter"
 
 # Sub-directories
-IMAGE_DIR   = f"{ROM_DIR}/image"
-OBJDIFF_DIR = f"{TOOLS_DIR}/objdiff"
-PSXISO_DIR  = f"{TOOLS_DIR}/psxiso"
+if sys.platform == "linux" or sys.platform == "linux2":
+    IMAGE_DIR   = f"{ROM_DIR}/image"
+    OBJDIFF_DIR = f"{TOOLS_DIR}/objdiff"
+    PSXISO_DIR  = f"{TOOLS_DIR}/psxiso"
+elif sys.platform == "win32":
+    IMAGE_DIR   = f"{ROM_DIR}\\image"
+    OBJDIFF_DIR = f"{TOOLS_DIR}\\objdiff"
+    PSXISO_DIR  = f"{TOOLS_DIR}\\psxiso"
 
 # Tooling Paths
 PYTHON = "python"
@@ -152,7 +157,7 @@ elif sys.platform == "win32":
     OBJDIFF   = f"{OBJDIFF_DIR}/objdiff.exe"
     PREBUILD  = f"{TOOLS_DIR}\\prebuild.bat"
     POSTBUILD = f"{TOOLS_DIR}\\postbuild.bat"
-    DUMPSXISO = f"{PSXISO_DIR}/dumpsxiso.exe"
+    DUMPSXISO = f"{PSXISO_DIR}\\dumpsxiso.exe"
     ICONV     = f"{TOOLS_DIR}\\win-build\\iconv\\iconv.bat"
 
 # Flags (for programs)
