@@ -16,10 +16,8 @@ import splat.scripts.split as split
 from splat.segtypes.linker_entry import LinkerEntry
 
 if sys.platform == "linux" or sys.platform == "linux2":
-    SYS_EXTENSION = ""
     GAMEFILE_EXTENSION = "."
-else:
-    SYS_EXTENSION = ".exe"
+elif sys.platform == "win32":
     GAMEFILE_EXTENSION = ""
 
 # For multi-version support
@@ -62,7 +60,7 @@ CONFIG_FILES = [
     #"main.yaml",
     #"bodyprog.yaml",
     #"screens/b_konami.yaml",
-    #"screens/stream.yaml",
+    "screens/stream.yaml",
     #"screens/options.yaml",
     #"screens/credits.yaml",
     #"screens/saveload.yaml",
@@ -108,7 +106,7 @@ CONFIG_FILES = [
     #"maps/map7_s00.yaml",
     #"maps/map7_s01.yaml",
     #"maps/map7_s02.yaml",
-    "maps/map7_s03.yaml"
+    #"maps/map7_s03.yaml"
 ]
 
 # Directories
@@ -128,7 +126,7 @@ OBJDIFF_DIR = f"{TOOLS_DIR}/objdiff"
 PSXISO_DIR  = f"{TOOLS_DIR}/psxiso"
 
 # Tooling Paths
-PYTHON = "python3"
+PYTHON = "py"
 MASPSX = f"{PYTHON} tools/maspsx/maspsx.py"
 if sys.platform == "linux" or sys.platform == "linux2":
     CROSS     = "mips-linux-gnu"
@@ -142,15 +140,18 @@ if sys.platform == "linux" or sys.platform == "linux2":
     PREBUILD  = f"{TOOLS_DIR}/prebuild.sh"
     POSTBUILD = f"{TOOLS_DIR}/postbuild.sh"
     DUMPSXISO = f"{PSXISO_DIR}/dumpsxiso"
-else:
-    CROSS   = "tools/binutils-win"
-    AS      = f"{CROSS}/as.exe"
-    LD      = f"{CROSS}/ld.exe"
-    OBJCOPY = f"{CROSS}/objcopy.exe"
-    OBJDUMP = f"{CROSS}/objdump.exe"
-    CPP     = f"{CROSS}/c++.exe"
-    CC      = f"{TOOLS_DIR}/gcc-2.8.1-psx/cc1"
-    OBJDIFF = f"{OBJDIFF_DIR}/objdiff.exe"
+elif sys.platform == "win32":
+    CROSS     = f"{TOOLS_DIR}/win-build/binutils/mips-linux-gnu"
+    AS        = f"{CROSS}-as.exe"
+    LD        = f"{CROSS}-ld.exe"
+    OBJCOPY   = f"{CROSS}-objcopy.exe"
+    OBJDUMP   = f"{CROSS}-objdump.exe"
+    CPP       = f"{TOOLS_DIR}/win-build/mcpp/mcpp.exe"
+    CC        = f"{TOOLS_DIR}/win-build/gcc-psx/cc1psx.exe"
+    OBJDIFF   = f"{OBJDIFF_DIR}/objdiff.exe"
+    PREBUILD  = f"{TOOLS_DIR}\\prebuild.bat"
+    POSTBUILD = f"{TOOLS_DIR}\\postbuild.bat"
+    DUMPSXISO = f"{PSXISO_DIR}/dumpsxiso.exe"
 
 # Flags (for programs)
 DUMPSXISO_FLAGS = f"-x {ROM_DIR}/{GAMEVERSIONS.GAME_VERSION_DIR} -s {ROM_DIR}/{GAMEVERSIONS.GAME_VERSION_DIR}/layout.xml {IMAGE_DIR}/{GAMEVERSIONS.GAME_NAME}.bin"
@@ -163,19 +164,23 @@ DL_EXE_FLAGS    = "-G8"
 DL_OVL_FLAGS    = "-G0"
 
 # Compilation flags (Tool specific)
-CPP_FLAGS     = f"{INCLUDE_FLAGS} -D_LANGUAGE_C -DUSE_INCLUDE_ASM -P -MMD -MP -undef -Wall -lang-c -nostdinc"
-CC_FLAGS      = f"{OPT_FLAGS} -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet"
-AS_FLAGS      = f"{ENDIAN} {INCLUDE_FLAGS} {OPT_FLAGS} {DL_OVL_FLAGS} -march=r3000 -mtune=r3000 -no-pad-sections"
-OBJDUMP_FLAGS = f"--disassemble-all --reloc --disassemble-zeroes -Mreg-names=32"
 # Note - MASPSX: Some of the files from SD library modifies the parameters, see `ninja_setup_list_add_source`
-MASPSX_FLAGS  = f"--aspsx-version=2.77 --run-assembler"
+if sys.platform == "linux" or sys.platform == "linux2":
+    CPP_FLAGS = f"{INCLUDE_FLAGS} -D_LANGUAGE_C -DUSE_INCLUDE_ASM -P -MMD -MP -undef -Wall -lang-c -nostdinc"
+    MASPSX_FLAGS  = f"--aspsx-version=2.77 --run-assembler"
+elif sys.platform == "win32":
+    CPP_FLAGS = f"{INCLUDE_FLAGS} -D_LANGUAGE_C -DUSE_INCLUDE_ASM -P -MMD -MP -N -Wall -I-"
+    MASPSX_FLAGS  = f"--gnu-as-path {AS} --aspsx-version=2.77 --run-assembler"
+CC_FLAGS      = f"{OPT_FLAGS} -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet"
+AS_FLAGS      = f"{ENDIAN} {INCLUDE_FLAGS} {OPT_FLAGS} -march=r3000 -mtune=r3000 -no-pad-sections"
+OBJDUMP_FLAGS = f"--disassemble-all --reloc --disassemble-zeroes -Mreg-names=32"
 
 def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file):
     global isExpandDivEnabled
     #print(f"{target_path} | {source_path} | {type(ninja_file)} | {mapId}")
     
     # Checks if the path indicates that the source file comes from a map file
-    if re.search("^src/maps.*", source_path):
+    if re.search("^src.maps.*", source_path):
         mapId = (re.search("map\d_s\d\d", source_path)[0]).upper()
         ninja_file.build(
             outputs=f"{target_path}.i", rule="cpp", inputs=source_path,
@@ -191,54 +196,69 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file):
                 "MAPIDFLAG": ""
             }
         )
-        
-            
-        
-    ninja_file.build(
-        outputs=f"{target_path}.sjis.i", rule="iconv", inputs=f"{target_path}.i", implicit=f"{target_path}.i"
-    )
     
-    if re.search("^src/main.*", source_path):
+    # TODO: Emoose explains that the reason why this is being applied
+    # is because of some stuff related to memcard (from Bodyprog)
+    # so this code should be applied only on that case and also needs
+    # a windows counterpart
+    if sys.platform == "linux" or sys.platform == "linux2":
         ninja_file.build(
-            outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.sjis.i", implicit=f"{target_path}.sjis.i",
+            outputs=f"{target_path}.sjis.i", rule="iconv", inputs=f"{target_path}.i", implicit=f"{target_path}.i"
+        )
+        if re.search("^src/main.*", source_path):
+            ninja_file.build(
+                outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.sjis.i", implicit=f"{target_path}.sjis.i",
+                variables={
+                    "DLFLAG": DL_EXE_FLAGS
+                }
+            )
+        else:
+            ninja_file.build(
+                outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.sjis.i", implicit=f"{target_path}.sjis.i",
+                variables={
+                    "DLFLAG": DL_OVL_FLAGS
+                }
+            )
+    elif sys.platform == "win32":
+        if re.search("^src.main.*", source_path):
+            ninja_file.build(
+                outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.i", implicit=f"{target_path}.i",
+                variables={
+                    "DLFLAG": DL_EXE_FLAGS
+                }
+            )
+        else:
+            ninja_file.build(
+                outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.i", implicit=f"{target_path}.i",
+                variables={
+                    "DLFLAG": DL_OVL_FLAGS
+                }
+            )
+    
+    if re.search("smf_io", source_path) or re.search("smf_mid", source_path):
+        ninja_file.build(
+            outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s", implicit=f"{target_path}.c.s",
             variables={
+                "EXPANDIVFLAG": "--expand-div",
+                "DLFLAG": DL_OVL_FLAGS
+            }
+        )
+    elif re.search("^src/main.*", source_path):
+        ninja_file.build(
+            outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s", implicit=f"{target_path}.c.s",
+            variables={
+                "EXPANDIVFLAG": "",
                 "DLFLAG": DL_EXE_FLAGS
             }
         )
     else:
         ninja_file.build(
-            outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.sjis.i", implicit=f"{target_path}.sjis.i",
+            outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s", implicit=f"{target_path}.c.s",
             variables={
+                "EXPANDIVFLAG": "",
                 "DLFLAG": DL_OVL_FLAGS
             }
         )
-    
-    if re.search("smf_io", source_path) or re.search("smf_mid", source_path):
-        if isExpandDivEnabled != True:
-            isExpandDivEnabled = True
-            ninja_file.build(
-                outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s", implicit=f"{target_path}.c.s",
-                variables={
-                    "EXPANDIVFLAG": "--expand-div"
-                }
-            )
-        else:
-            ninja_file.build(
-                outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s", implicit=f"{target_path}.c.s"
-            )
-    else:
-        if isExpandDivEnabled == True:
-            isExpandDivEnabled = False
-            ninja_file.build(
-                outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s", implicit=f"{target_path}.c.s",
-                variables={
-                    "EXPANDIVFLAG": ""
-                }
-            )
-        else:
-            ninja_file.build(
-                outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s", implicit=f"{target_path}.c.s"
-            )
 
 def ninja_setup(split_entries, skip_checksum: bool):
     global isExpandDivEnabled
@@ -248,7 +268,7 @@ def ninja_setup(split_entries, skip_checksum: bool):
     
     ninja.rule(
         "as", description="as $in",
-        command=f"{AS} {AS_FLAGS} -o $out $in",
+        command=f"{AS} {AS_FLAGS} $DLFLAG -o $out $in",
     )
 
     ninja.rule(
@@ -273,7 +293,7 @@ def ninja_setup(split_entries, skip_checksum: bool):
 
     ninja.rule(
         "maspsx", description="maspsx $in",
-        command=f"{MASPSX} {MASPSX_FLAGS} $EXPANDIVFLAG {AS_FLAGS} -o $out $in",
+        command=f"{MASPSX} {MASPSX_FLAGS} $EXPANDIVFLAG {AS_FLAGS} $DLFLAG -o $out $in",
     )
     
     ninja.rule(
@@ -290,10 +310,18 @@ def ninja_setup(split_entries, skip_checksum: bool):
         "objcopy", description="objcopy $out",
         command=f"{OBJCOPY} -O binary $in $out",
     )
-    ninja.rule(
-        "sha256sum", description="checksum",
-        command=f"sha256sum --ignore-missing --check $in",
-    )
+    
+    if sys.platform == "linux" or sys.platform == "linux2":
+        ninja.rule(
+            "sha256sum", description="checksum",
+            command=f"sha256sum --ignore-missing --check $in",
+        )
+    elif sys.platform == "win32":
+        ninja.rule(
+            "sha256sum", description="checksum",
+            command=f"cmd.exe /c {TOOLS_DIR}\\sha256sum.bat $in",
+        )
+    
     ninja.rule(
         "postbuild", description="postbuild script",
         command=f"{POSTBUILD} $in",
@@ -301,16 +329,26 @@ def ninja_setup(split_entries, skip_checksum: bool):
     
     elfBuildRequirements = []
     checksumBuildRequirements = []
+    entriesPaths = []
     
     # Build all the objects
     for split_config in split_entries:
-        match split_config.SPLIT_BASENAME:
-            case "STREAM.BIN":
-                os.system(f"{PREBUILD} screens/stream")
-            case "main":
-                os.system(f"{PREBUILD} main")
-            case "BODYPROG.BIN":
-                os.system(f"{PREBUILD} bodyprog")
+        if sys.platform == "linux" or sys.platform == "linux2":
+            match split_config.SPLIT_BASENAME:
+                case "STREAM.BIN":
+                    os.system(f"{PREBUILD} screens/stream")
+                case "main":
+                    os.system(f"{PREBUILD} main")
+                case "BODYPROG.BIN":
+                    os.system(f"{PREBUILD} bodyprog")
+        elif sys.platform == "win32":
+            match split_config.SPLIT_BASENAME:
+                case "main":
+                    os.system(f"cmd.exe /c {PREBUILD} main")
+                case "STREAM.BIN":
+                    os.system(f"cmd.exe /c {PREBUILD} screens\\stream")
+                #case "BODYPROG.BIN":
+                #    os.system(f"cmd.exe /c {PREBUILD} bodyprog")
         
         for split_entry in split_config.SPLIT_ENTRIES:
             for entry in split_entry:
@@ -325,7 +363,18 @@ def ninja_setup(split_entries, skip_checksum: bool):
                 
                 match seg.type:
                     case "asm" | "data" | "sdata" | "bss" | "sbss" | "rodata" | "header":
-                        ninja.build(outputs=str(entry.object_path), rule="as", inputs=str(entry.src_paths[0]))
+                        if re.search("^asm.main.*", str(entry.src_paths[0])):
+                            ninja.build(outputs=str(entry.object_path), rule="as", inputs=str(entry.src_paths[0]),
+                                variables={
+                                    "DLFLAG": DL_EXE_FLAGS
+                                }
+                            )
+                        else:
+                            ninja.build(outputs=str(entry.object_path), rule="as", inputs=str(entry.src_paths[0]),
+                                variables={
+                                    "DLFLAG": DL_OVL_FLAGS
+                                }
+                            )
                     case "c":
                         ninja_setup_list_add_source(str(entry.object_path).removesuffix(".c.o"), str(entry.src_paths[0]), ninja)
                     case "bin":
@@ -390,15 +439,21 @@ def ninja_setup(split_entries, skip_checksum: bool):
         
         checksumBuildRequirements += [str(s) for s in [output]]
     
+    
     if skip_checksum != True:
         for s in range(len(checksumBuildRequirements)):
             if checksumBuildRequirements[s] == f"{BUILD_DIR}/out/VIN/STREAM.BIN" or checksumBuildRequirements[s] == f"{BUILD_DIR}/out/1ST/BODYPROG.BIN":
                 checksumBuildRequirements[s] = f"{checksumBuildRequirements[s]}.fix"
         
+        if sys.platform == "linux" or sys.platform == "linux2":
+            checksumTarget = f"{CONFIG_DIR}/{GAMEVERSIONS.GAME_VERSION_DIR}/checksum.sha"
+        elif sys.platform == "win32":
+            checksumTarget = f"{CONFIG_DIR}/{GAMEVERSIONS.GAME_VERSION_DIR}"
+        
         ninja.build(
-            f"{BUILD_DIR}/out/checksum.ok",
-            "sha256sum",
-            f"{CONFIG_DIR}/{GAMEVERSIONS.GAME_VERSION_DIR}/checksum.sha",
+            outputs=f"{BUILD_DIR}/out/checksum.ok",
+            rule="sha256sum",
+            inputs=checksumTarget,
             implicit=checksumBuildRequirements
         )
 
@@ -463,18 +518,18 @@ def main():
     )
     args = parser.parse_args()
 
-    clean_compilation_files = (args.clean) or False
-    extract_game_files      = (args.iso_extract) or False
-    splits_yaml_info        = []
-    skip_checksum_option    = (args.skip_checksum) or False
-    objdiff_config_option   = (args.objdiff_config) or False
+    cleanCompilationFiles = (args.clean) or False
+    extractGameFiles      = (args.iso_extract) or False
+    splitsYamlInfo        = []
+    skipChecksumOption    = (args.skip_checksum) or False
+    objdiffConfigOption   = (args.objdiff_config) or False
     
-    if clean_compilation_files:
+    if cleanCompilationFiles:
         print("Cleaning compilation files")
         clean_files(False)
         return
     
-    if extract_game_files:
+    if extractGameFiles:
         extract_files()
         return
     
@@ -484,9 +539,9 @@ def main():
             splat.util.symbols.spim_context = spimdisasm.common.Context()
             splat.util.symbols.reset_symbols()
             split.main([Path(f"{CONFIG_DIR}/{GAMEVERSIONS.GAME_VERSION_DIR}/{yaml}")], modes="all", use_cache=False, verbose=False, disassemble_all=True, make_full_disasm_for_code=True)
-            splits_yaml_info.append(YAML_INFO([split.linker_writer.entries], split.config['options']['basename'], split.config['options']['ld_script_path'], split.config['options']['undefined_funcs_auto_path'], split.config['options']['undefined_syms_auto_path']))
+            splitsYamlInfo.append(YAML_INFO([split.linker_writer.entries], split.config['options']['basename'], split.config['options']['ld_script_path'], split.config['options']['undefined_funcs_auto_path'], split.config['options']['undefined_syms_auto_path']))
         
-        ninja_setup(splits_yaml_info, skip_checksum_option)
+        ninja_setup(splitsYamlInfo, skipChecksumOption)
 
 if __name__ == "__main__":
     main()
