@@ -206,8 +206,9 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
             <td colspan=2>Old Silent Hill.</td>
         </tr>
         <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map2_s01"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&category=map.map2_s01&label=MAP2_S01"/></a></td>
-            <td colspan=2>Church.</td>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map2_s01"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map.map2_s01&label=MAP2_S01&color=rgb(255,215,0)"/></a></td>
+            <td>Church.</td>
+			<td><a href="https://github.com/Vatuu/silent-hill-decomp/commit/5921aa73fb75645a75ae9c6fa0fdc30a0e4d58b2">Third fully decompiled and matching</br>map overlay!</a></td>
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map2_s02"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&category=map.map2_s02&label=MAP2_S02"/></a></td>
@@ -217,8 +218,9 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
             <td>Unused <a href="https://github.com/Vatuu/silent-hill-decomp/issues/335#issuecomment-3393749791">(Click here for more information)</a></td>
 			<td><a href="https://github.com/Vatuu/silent-hill-decomp/commit/bce45a64f45e2b561b4f0e675a7bda9bfe805dbf">Second fully decompiled and matching</br>map overlay!</a></td>
         <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map2_s04"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&category=map.map2_s04&label=MAP2_S04"/></a></td>
-            <td colspan=2>Police station in Central Silent Hill.</td>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map2_s04"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map.map2_s04&label=MAP2_S04&color=rgb(255,215,0)"/></a></td>
+            <td>Police station in Central Silent Hill.</td>
+			<td><a href="https://github.com/Vatuu/silent-hill-decomp/commit/d7d655dfb59dc39328e7b14cae290b30ac0e992b">Fourth fully decompiled and matching</br>map overlay!</a></td>
         </tr>
         <tr>
           <th colspan=3>🏥 MAP3 🏥</th>
