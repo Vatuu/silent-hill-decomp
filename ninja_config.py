@@ -201,42 +201,27 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file):
             }
         )
     
-    # TODO: Emoose explains that the reason why this is being applied
-    # is because of some stuff related to memcard (from Bodyprog)
-    # so this code should be applied only on that case and also needs
-    # a windows counterpart
-    if sys.platform == "linux" or sys.platform == "linux2":
+    if re.search("^src.bodyprog.memcard*", source_path):
         ninja_file.build(
             outputs=f"{target_path}.sjis.i", rule="iconv", inputs=f"{target_path}.i", implicit=f"{target_path}.i"
         )
-        if re.search("^src/main.*", source_path):
-            ninja_file.build(
-                outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.sjis.i", implicit=f"{target_path}.sjis.i",
-                variables={
-                    "DLFLAG": DL_EXE_FLAGS
-                }
-            )
-        else:
-            ninja_file.build(
-                outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.sjis.i", implicit=f"{target_path}.sjis.i",
-                variables={
-                    "DLFLAG": DL_OVL_FLAGS
-                }
-            )
-    elif sys.platform == "win32":
         ninja_file.build(
-            outputs=f"{target_path}.sjis.i", rule="iconv", inputs=f"{target_path}.i", implicit=f"{target_path}.i"
+            outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.sjis.i", implicit=f"{target_path}.sjis.i",
+            variables={
+                "DLFLAG": DL_OVL_FLAGS
+            }
         )
+    else:
         if re.search("^src.main.*", source_path):
             ninja_file.build(
-                outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.sjis.i", implicit=f"{target_path}.sjis.i",
+                outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.i", implicit=f"{target_path}.i",
                 variables={
                     "DLFLAG": DL_EXE_FLAGS
                 }
             )
         else:
             ninja_file.build(
-                outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.sjis.i", implicit=f"{target_path}.sjis.i",
+                outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.i", implicit=f"{target_path}.i",
                 variables={
                     "DLFLAG": DL_OVL_FLAGS
                 }
