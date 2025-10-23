@@ -125,7 +125,7 @@ void func_800D102C() {}
 
 #include "maps/shared/sharedFunc_800CED44_3_s02.h" // 0x800D2FC4
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800CEEDC_3_s02); // 0x800D315C
+#include "maps/shared/sharedFunc_800CEEDC_3_s02.h" // 0x800D315C
 
 #include "maps/shared/Ai_Alessa_Init.h" // 0x800D3660
 

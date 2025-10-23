@@ -1237,22 +1237,22 @@ STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesUnk0, 68);
 
 typedef struct _SubCharPropertiesDahlia
 {
-    s32 unk_E4;
-    u32 stateIdx0;
+    s32        unk_E4;
+    s32        stateIdx0;
     u_Property properties_EC;
     u_Property properties_F0;
     u_Property properties_F4;
-    s32 resetStateIdx0_F8;
-    s32 field_FC;
-    s32 field_100;
+    s32        resetStateIdx0_F8;
+    s32        field_FC;
+    s32        field_100;
     u_Property properties_104;
     u_Property properties_108;
     u_Property properties_10C;
-    VECTOR3 field_110;
-    s32 flags_11C;
+    VECTOR3    field_110;
+    s32        flags_11C;
     u_Property properties_120;
-    s16 field_124;
-    s16 moveDistance_126;
+    s16        field_124;
+    s16        moveDistance_126;
 } s_SubCharaPropertiesDahlia;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesDahlia, 68);
 
