@@ -249,7 +249,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
 #elif defined(MAP5_S00) || defined(MAP6_S03)
             sharedData_800E32D4_0_s00 = 3;
 #elif !defined(MAP1_S04) && !defined(MAP2_S01) && !defined(MAP2_S03) && !defined(MAP2_S04) && \
-    !defined(MAP4_S00) && !defined(MAP4_S06) && !defined(MAP6_S05)
+    !defined(MAP4_S00) && !defined(MAP4_S06) && !defined(MAP6_S05) && !defined(MAP4_S01)
             sharedData_800DD592_0_s00 = 1;
 #endif
 
@@ -264,7 +264,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
             D_800F23D4 = 0;
 #endif
 #if !defined(MAP1_S04) && !defined(MAP2_S01) && !defined(MAP2_S04) && !defined(MAP2_S03) && !defined(MAP4_S00) && \
-    !defined(MAP4_S06) && !defined(MAP6_S05)
+    !defined(MAP4_S06) && !defined(MAP6_S05) && !defined(MAP4_S01)
             g_Particle_PrevPosition.vz = Q12(0.0f);
             g_Particle_PrevPosition.vx = Q12(0.0f);
 #endif
@@ -277,7 +277,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
 
             temp_s0 = SetSp(0x1F8003D8);
 #if !defined(MAP1_S04) && !defined(MAP2_S01) && !defined(MAP2_S04) && !defined(MAP2_S03) && !defined(MAP4_S00) && \
-    !defined(MAP4_S06) && !defined(MAP6_S05)
+    !defined(MAP4_S06) && !defined(MAP6_S05) && !defined(MAP4_S01)
             sharedFunc_800CBC94_0_s00(&sharedData_800E0CBC_0_s00);
 #if defined(MAP0_S00)
             func_800CBFB0(&sharedData_800E34FC_0_s00, &sharedData_800E330C_0_s00, sharedData_800DFB4C_0_s00);
@@ -295,7 +295,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
 #endif
 
 #if defined(MAP1_S04) || defined(MAP2_S01) || defined(MAP2_S03) || defined(MAP2_S04) || defined(MAP4_S00) || \
-    defined(MAP4_S06) || defined(MAP6_S05)
+    defined(MAP4_S06) || defined(MAP6_S05) || defined(MAP4_S01)
             sharedData_800CD77C_1_s04 = arg2;
 #else
             func_8003EDB8(&sharedData_800E3258_0_s00, &sharedData_800E325C_0_s00);
@@ -493,7 +493,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
             temp_s0_3 = SetSp(0x1F8003D8);
 
 #if !defined(MAP1_S04) && !defined(MAP2_S01) && !defined(MAP2_S03) && !defined(MAP2_S04) && !defined(MAP4_S00) && \
-    !defined(MAP4_S06) && !defined(MAP6_S05)
+    !defined(MAP4_S06) && !defined(MAP6_S05) && !defined(MAP4_S01)
             Particle_Update(sharedData_800E0CBC_0_s00);
 #if defined(MAP0_S00)
             func_800CC6E8(&sharedData_800E34FC_0_s00, &sharedData_800E330C_0_s00, sharedData_800DFB50_0_s00);
@@ -502,7 +502,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
             SetSp(temp_s0_3);
 
 #if !defined(MAP1_S04) && !defined(MAP2_S01) && !defined(MAP2_S03) && !defined(MAP2_S04) && !defined(MAP4_S00) && \
-    !defined(MAP4_S06) && !defined(MAP6_S05)
+    !defined(MAP4_S06) && !defined(MAP6_S05) && !defined(MAP4_S01)
             for (i = sharedData_800DD588_0_s00[0] + sharedData_800DD588_0_s00[1]; i < PARTICLE_COUNT_MAX; i++)
             {
                 sharedData_800E0CBC_0_s00[i].stateStep_1E = 0;
