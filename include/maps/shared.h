@@ -2920,8 +2920,13 @@ typedef struct
 {
     VECTOR3  position_0;
     SVECTOR3 rotation_C;
-    //s16      __pad_12;
 } s_WorldObjectPos;
+
+typedef struct
+{
+    s_WorldObject_0 object_0;
+    VECTOR3 position_1C;
+} s_WorldObjectDesc_norot;
 
 typedef struct
 {
