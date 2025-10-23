@@ -884,6 +884,7 @@ void Options_MainOptionsMenu_EntryStringsDraw(void) // 0x801E42EC
 
 void Options_ExtraOptionsMenu_SelectionHighlightDraw(void) // 0x801E4450
 {
+    #define BULLET_QUAD_COUNT  2
     #define LINE_BASE_X        64
     #define LINE_BASE_Y        56
     #define LINE_OFFSET_X      16
@@ -895,7 +896,7 @@ void Options_ExtraOptionsMenu_SelectionHighlightDraw(void) // 0x801E4450
     s32      j;
     s16      interpAlpha;
     s_Line2d highlightLine;
-    s_Quad2d bulletQuads[2];
+    s_Quad2d bulletQuads[BULLET_QUAD_COUNT];
     DVECTOR* quadVerts;
 
     const u8 SELECTION_HIGHLIGHT_WIDTHS[] = {
@@ -904,12 +905,18 @@ void Options_ExtraOptionsMenu_SelectionHighlightDraw(void) // 0x801E4450
 
     // 12x12 quad.
     const DVECTOR FRONT_BULLET_QUAD[] = {
-        { -120, -47 }, { -120, -35 }, { -108, -47 }, { -108, -35 }
+        { -120, -47 },
+        { -120, -35 },
+        { -108, -47 },
+        { -108, -35 }
     };
 
     // 14x14 quad.
     const DVECTOR BACK_BULLET_QUAD[] = {
-        { -121, -48 }, { -121, -34 }, { -107, -48 }, { -107, -34 }
+        { -121, -48 },
+        { -121, -34 },
+        { -107, -48 },
+        { -107, -34 }
     };
 
     // Set active selection highlight position references.
@@ -1803,7 +1810,7 @@ void Options_BrightnessMenu_ArrowsDraw(void) // 0x801E628C
 // DRAW OPTIONS FEATURES SCREEN
 // ========================================
 
-void Options_Selection_HighlightDraw(s_Line2d* line, bool hasShadow, bool invertGradient) // 0x801E641C
+void Options_Selection_HighlightDraw(const s_Line2d* line, bool hasShadow, bool invertGradient) // 0x801E641C
 {
     #define STR_OFFSET_Y 16
 
@@ -1838,7 +1845,6 @@ void Options_Selection_HighlightDraw(s_Line2d* line, bool hasShadow, bool invert
     GsOUT_PACKET_P = (u8*)linePrim + sizeof(LINE_G2);
 
     // Draw shadow gradient.
-    // @unused A line can be drawn independently without a shadow, though `hasShadow` is always passed as `true`.
     if (hasShadow)
     {
         poly = (POLY_G4*)GsOUT_PACKET_P;
@@ -1858,7 +1864,7 @@ void Options_Selection_HighlightDraw(s_Line2d* line, bool hasShadow, bool invert
     }
 }
 
-void Options_Selection_ArrowDraw(s_Triangle2d* arrow, bool isFlashing, bool resetColor) // 0x801E662C
+void Options_Selection_ArrowDraw(const s_Triangle2d* arrow, bool isFlashing, bool resetColor) // 0x801E662C
 {
     s32      colorFade;
     s32      colorStart;
@@ -1927,17 +1933,17 @@ void Options_Selection_ArrowDraw(s_Triangle2d* arrow, bool isFlashing, bool rese
     // Flash color from blue to cyan.
     if (isFlashing)
     {
-        // Base color is blue. `* 0x700` applies color shift somehow.
-        *((u32*)&arrowPoly->r0) = (colorEnd   * 0x700) + 0x30FF0000;
-        *((u32*)&arrowPoly->r1) = (colorStart * 0x700) + 0x30FF0000;
-        *((u32*)&arrowPoly->r2) = (colorStart * 0x700) + 0x30FF0000;
+        // Base color is blue. `* 0x700` Shifts green component into place.
+        *((u32*)&arrowPoly->r0) = (colorEnd   * 0x700) + PACKED_COLOR(0, 0, 255, 0x30);
+        *((u32*)&arrowPoly->r1) = (colorStart * 0x700) + PACKED_COLOR(0, 0, 255, 0x30);
+        *((u32*)&arrowPoly->r2) = (colorStart * 0x700) + PACKED_COLOR(0, 0, 255, 0x30);
     }
     // Set solid cyan color.
     else
     {
-        setRGBC0(arrowPoly, 0x00, 0xF0, 0xF0, 0x30);
-        setRGBC1(arrowPoly, 0x00, 0xF0, 0xF0, 0x30);
-        setRGBC2(arrowPoly, 0x00, 0xF0, 0xF0, 0x30);
+        setRGBC0(arrowPoly, 0, 240, 240, 0x30);
+        setRGBC1(arrowPoly, 0, 240, 240, 0x30);
+        setRGBC2(arrowPoly, 0, 240, 240, 0x30);
     }
 
     setXY0Fast(arrowPoly, arrow->vertex0_0.vx, arrow->vertex0_0.vy);
@@ -1947,36 +1953,35 @@ void Options_Selection_ArrowDraw(s_Triangle2d* arrow, bool isFlashing, bool rese
     GsOUT_PACKET_P = (u8*)arrowPoly + sizeof(POLY_G3);
 }
 
-void Options_Selection_BulletPointDraw(s_Quad2d* quad, bool isCenter, bool isInactive) // 0x801E67B0
+void Options_Selection_BulletPointDraw(const s_Quad2d* quad, bool isBorder, bool isInactive) // 0x801E67B0
 {
-    #define QUAD_COUNT 2
+    #define TRI_COUNT 2
 
     GsOT*    ot = &g_OrderingTable2[g_ActiveBufferIdx];
     s32      i;
     POLY_G3* poly;
 
-    // Draw quads as triangles with diagonal gradient.
-    for (i = 0; i < QUAD_COUNT; i++)
+    // Draw quad as triangles to achieve diagonal gradient.
+    for (i = 0; i < TRI_COUNT; i++)
     {
         poly = (POLY_G3*)GsOUT_PACKET_P;
         setPolyG3(poly);
 
-        // Center quad.
-        if (isCenter)
+        if (isBorder)
         {
             // Set color.
             switch (isInactive)
             {
                 case false:
-                    setRGBC0(poly, FP_COLOR(1.0f),   FP_COLOR(1.0f),  FP_COLOR(1.0f),  0x30);
-                    setRGBC1(poly, FP_COLOR(0.625f), FP_COLOR(0.5f),  FP_COLOR(0.25f), 0x30);
-                    setRGBC2(poly, FP_COLOR(0.25f),  FP_COLOR(0.25f), FP_COLOR(0.25f), 0x30);
+                    setRGBC0(poly, 255, 255, 255, 0x30);
+                    setRGBC1(poly, 160, 128, 64,  0x30);
+                    setRGBC2(poly, 64,  64,  64,  0x30);
                     break;
 
                 case true:
-                    setRGBC0(poly, FP_COLOR(0.5f),     FP_COLOR(0.5f),    FP_COLOR(0.5f),    0x30);
-                    setRGBC1(poly, FP_COLOR(0.15625f), FP_COLOR(0.125f),  FP_COLOR(0.0625f), 0x30);
-                    setRGBC2(poly, FP_COLOR(0.0625f),  FP_COLOR(0.0625f), FP_COLOR(0.0625f), 0x30);
+                    setRGBC0(poly, 128, 128, 128, 0x30);
+                    setRGBC1(poly, 40,  32,  16,  0x30);
+                    setRGBC2(poly, 16,  16,  16,  0x30);
                     break;
             }
 
@@ -1994,22 +1999,21 @@ void Options_Selection_BulletPointDraw(s_Quad2d* quad, bool isCenter, bool isIna
                 setXY2Fast(poly, quad->vertex3_C.vx, quad->vertex3_C.vy);
             }
         }
-        // Backing quad.
         else
         {
             // Set color.
             switch (isInactive)
             {
                 case false:
-                    setRGBC0(poly, FP_COLOR(0.625f), FP_COLOR(0.5f), FP_COLOR(0.25f), 0x30);
-                    setRGBC1(poly, FP_COLOR(1.0f),   FP_COLOR(1.0f), FP_COLOR(1.0f),  0x30);
-                    setRGBC2(poly, FP_COLOR(1.0f),   FP_COLOR(1.0f), FP_COLOR(1.0f),  0x30);
+                    setRGBC0(poly, 160, 128, 64,  0x30);
+                    setRGBC1(poly, 255, 255, 255, 0x30);
+                    setRGBC2(poly, 255, 255, 255, 0x30);
                     break;
 
                 case true:
-                    setRGBC0(poly, FP_COLOR(0.3125f), FP_COLOR(0.25f), FP_COLOR(0.125f), 0x30);
-                    setRGBC1(poly, FP_COLOR(0.625f), FP_COLOR(0.625f), FP_COLOR(0.625f), 0x30);
-                    setRGBC2(poly, FP_COLOR(0.625f), FP_COLOR(0.625f), FP_COLOR(0.625f), 0x30);
+                    setRGBC0(poly, 80,  64,  32,  0x30);
+                    setRGBC1(poly, 160, 160, 160, 0x30);
+                    setRGBC2(poly, 160, 160, 160, 0x30);
                     break;
             }
 
@@ -2316,7 +2320,7 @@ s32 Options_ControllerMenu_ConfigUpdate(s32 actionIdx) // 0x801E6CF4
  * 0 corresponds to the presets pane on the left,
  * 1 corresponds to the actions pane on the right.
  */
-DR_MODE g_ControllerMenu_SelectionHighlightDrawModes[2] = {
+DR_MODE g_ControllerMenu_SelectionHighlightDrawModes[MEMORY_CARD_SLOT_COUNT] = {
     {
         .tag  = 0x03000000,
         .code = { 0xE1000200, 0 }
@@ -2331,7 +2335,7 @@ DR_MODE g_ControllerMenu_SelectionHighlightDrawModes[2] = {
  * 0 corresponds to the presets pane on the left,
  * 1 corresponds to the actions pane on the right.
  */
-POLY_G4 g_ControllerMenu_SelectionHighlightQuads[2] = {
+POLY_G4 g_ControllerMenu_SelectionHighlightQuads[MEMORY_CARD_SLOT_COUNT] = {
     {
         .tag  = 0x08000000,
         .r0   = 255,
