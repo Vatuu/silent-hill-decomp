@@ -108,7 +108,7 @@ INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", sharedFunc_800D99D0_1_s02
 
 #include "maps/shared/sharedFunc_800CED44_3_s02.h" // 0x800CED44
 
-INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", sharedFunc_800CEEDC_3_s02);
+#include "maps/shared/sharedFunc_800CEEDC_3_s02.h" // 0x800CEEDC
 
 #include "maps/shared/Ai_Alessa_Init.h" // 0x800CF3E0
 

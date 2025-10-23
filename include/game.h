@@ -1238,10 +1238,13 @@ STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesUnk0, 68);
 typedef struct _SubCharPropertiesDahlia
 {
     s32        unk_E4;
-    u32        stateIdx0;
+    s32        stateIdx0;
     u_Property properties_EC;
     u_Property properties_F0;
     u_Property properties_F4;
+    s32        resetStateIdx0_F8;
+    s32        field_FC;
+    s32        field_100;
     s32        resetStateIdx0_F8;
     s32        field_FC;
     s32        field_100;
@@ -1250,7 +1253,11 @@ typedef struct _SubCharPropertiesDahlia
     u_Property properties_10C;
     VECTOR3    field_110;
     s32        flags_11C;
+    VECTOR3    field_110;
+    s32        flags_11C;
     u_Property properties_120;
+    s16        field_124;
+    s16        moveDistance_126;
     s16        field_124;
     s16        moveDistance_126;
 } s_SubCharaPropertiesDahlia;
@@ -1812,6 +1819,16 @@ static inline void Model_AnimStatusSet(s_Model* model, s32 animIdx, bool isActiv
         model->stateStep_3++;
     }
 }
+
+/** @brief Similar to `Model_AnimStatusSet`, but also sets `anim_4.time_4` and `anim_4.keyframeIdx_8` from the `animInfos` `s_AnimInfo` array. */
+#define Model_AnimStatusKeyframeSet(model, animIdx, active, animInfos, animInfosOffset)                                                        \
+    if ((model).stateStep_3 == 0)                                                                                                              \
+    {                                                                                                                                          \
+        (model).anim_4.status_0 = ANIM_STATUS((animIdx), (active));                                                                            \
+        (model).stateStep_3++;                                                                                                                 \
+        (model).anim_4.time_4        = FP_TO((animInfos)[ANIM_STATUS((animIdx), (active)) + (animInfosOffset)].startKeyframeIdx_C, Q12_SHIFT); \
+        (model).anim_4.keyframeIdx_8 = (animInfos)[ANIM_STATUS((animIdx), (active)) + (animInfosOffset)].startKeyframeIdx_C;                   \
+    }
 
 /** @brief Attempts to reset a humanoid NPC's anim state index to 0.
  *

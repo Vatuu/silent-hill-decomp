@@ -2729,7 +2729,7 @@ void sharedFunc_800D8888_0_s01(s_SubCharacter* chara, s_AnmHeader* animHdr, GsCO
 
 void sharedFunc_800D88D0_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coord);
 
-void sharedSymbol_800D8A68_0_s01(s_SubCharacter*, GsCOORDINATE2*);
+void sharedSymbol_800D8A68_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coords);
 
 void Ai_Cybil_Init(s_SubCharacter* chara);
 
@@ -2830,7 +2830,7 @@ void Ai_BloodyLisa_Init(s_SubCharacter* chara);
 
 // `Ai_Kaufmann` related
 void Ai_Kaufmann_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void sharedSymbol_800CF470_3_s00(s_SubCharacter*, GsCOORDINATE2*);
+void sharedSymbol_800CF470_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void sharedFunc_800CF2D8_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coord);
 void sharedFunc_800CF290_3_s00(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coord);
 void Ai_Kaufmann_Init(s_SubCharacter* chara);
@@ -2846,14 +2846,14 @@ void Ai_GhostChildAlessa_Init(s_SubCharacter* chara);
 void Ai_Alessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void sharedFunc_800CECFC_3_s02(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coord);
 void sharedFunc_800CED44_3_s02(s_SubCharacter* chara, GsCOORDINATE2* coord);
-void sharedFunc_800CEEDC_3_s02(s_SubCharacter*, GsCOORDINATE2*);
+void sharedFunc_800CEEDC_3_s02(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void Ai_Alessa_Init(s_SubCharacter* chara);
 
 // `Ai_Dahlia` related
 void Ai_Dahlia_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void sharedFunc_800CD280_2_s01(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 void sharedFunc_800CD2C8_2_s01(s_SubCharacter*, GsCOORDINATE2*);
-void sharedSymbol_800CD4A0_2_s01(s_SubCharacter*, GsCOORDINATE2*);
+void sharedSymbol_800CD4A0_2_s01(s_SubCharacter* dahlia, GsCOORDINATE2* coord);
 void Ai_Dahlia_Init(s_SubCharacter* chara);
 
 // `Ai_Bloodsucker` related

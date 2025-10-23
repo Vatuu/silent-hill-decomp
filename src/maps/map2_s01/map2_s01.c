@@ -581,13 +581,13 @@ extern s_WorldObject_0 g_CommonWorldObjects[6];
 extern s_WorldObjectDesc g_WorldObject_SavePad;
 extern s_WorldObjectDesc g_WorldObject_Key;
 extern s_WorldObjectDesc g_WorldObject_Item;
-extern s_WorldObjectPose D_800D0528;
+extern s_WorldObjectPose g_CommonWorldObjectsPos[1];
 
-void func_800CF7F0(void) // 0x800CF7F0
+void Map_WorldObjectsInit(void) // 0x800CF7F0
 {
     func_8003ED74(1, 1);
 
-    Math_Vector3Set(&(g_WorldObject_Item.pose_1C), Q12(19.8289f), Q12(-1.3633f), Q12(24.0735f));
+    Math_Vector3Set(&(g_WorldObject_Item.pose_1C.position_0), Q12(19.8289f), Q12(-1.3633f), Q12(24.0735f));
     WorldObject_ModelNameSet(&g_WorldObject_Item.object_0, "ITEM_HID");
 
     WorldObjectPoseInit(&g_WorldObject_Key.pose_1C, 20.073f, -0.858f, 24.1469f, 0.0f, 23.0f, 0.0f);
@@ -606,7 +606,7 @@ void func_800CF7F0(void) // 0x800CF7F0
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-void func_800CF938(void)
+void Map_WorldObjectsUpdate(void)
 {
     s_Savegame* save;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
@@ -660,7 +660,7 @@ void func_800CF938(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S01_HealthDrink))
         {
-            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &D_800D0528.position_0, &D_800D0528.rotation_C);
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectsPos[0].position_0, &g_CommonWorldObjectsPos[0].rotation_C);
         }
     }
 }

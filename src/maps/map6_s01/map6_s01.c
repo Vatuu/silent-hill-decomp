@@ -89,7 +89,7 @@ void func_800CE490(void) {}
 
 #include "maps/shared/sharedFunc_800D88D0_0_s01.h" // 0x800CE5B8
 
-INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", sharedSymbol_800D8A68_0_s01); // 0x800CE750 - Differs from `map0_s01`/`map4_s01` version.
+#include "maps/shared/sharedSymbol_800D8A68_0_s01.h" // 0x800CE750
 
 #include "maps/shared/Ai_Cybil_Init.h" // 0x800CF794
 

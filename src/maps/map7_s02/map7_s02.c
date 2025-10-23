@@ -127,7 +127,7 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", sharedFunc_800D70C4_0_s00
 
 #include "maps/shared/sharedFunc_800D0944_3_s04.h" // 0x800D5A54
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", sharedSymbol_800D0ADC_3_s04); // 0x800D5BEC
+#include "maps/shared/sharedSymbol_800D0ADC_3_s04.h" // 0x800D5BEC
 
 #include "maps/shared/Ai_Lisa_Init.h" // 0x800D6460
 
@@ -181,7 +181,7 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", sharedFunc_800D0F28_3_s03
 
 #include "maps/shared/sharedFunc_800CF2D8_3_s00.h" // 0x800D7F68
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", sharedSymbol_800CF470_3_s00); // 0x800D8100
+#include "maps/shared/sharedSymbol_800CF470_3_s00.h" // 0x800D8100
 
 #include "maps/shared/Ai_Kaufmann_Init.h" // 0x800D8AA8
 

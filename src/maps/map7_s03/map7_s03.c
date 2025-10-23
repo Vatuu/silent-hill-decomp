@@ -105,7 +105,7 @@ void func_800D102C() {}
 
 #include "maps/shared/sharedFunc_800D88D0_0_s01.h" // 0x800D1154
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedSymbol_800D8A68_0_s01); // 0x800D12EC - Differs from `map0_s01`/`map6_s01` versions, matches `map4_s01`.
+#include "maps/shared/sharedSymbol_800D8A68_0_s01.h" // 0x800D12EC
 
 #include "maps/shared/Ai_Cybil_Init.h" // 0x800D232C - Differs to other maps `Ai_Cybil_Init`, possibly `Ai_EndingCybil_Init` if other Cybil funcs are a lot different.
 
@@ -125,7 +125,7 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedSymbol_800D8A68_0_s
 
 #include "maps/shared/sharedFunc_800CED44_3_s02.h" // 0x800D2FC4
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedFunc_800CEEDC_3_s02); // 0x800D315C
+#include "maps/shared/sharedFunc_800CEEDC_3_s02.h" // 0x800D315C
 
 #include "maps/shared/Ai_Alessa_Init.h" // 0x800D3660
 
@@ -210,7 +210,7 @@ void Ai_Incubator_Init(s_SubCharacter* chara) // 0x800D3F38
 
 #include "maps/shared/sharedFunc_800CF2D8_3_s00.h" // 0x800D4014
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedSymbol_800CF470_3_s00); // 0x800D41AC
+#include "maps/shared/sharedSymbol_800CF470_3_s00.h" // 0x800D41AC
 
 #include "maps/shared/Ai_Kaufmann_Init.h" // 0x800D4C14
 
