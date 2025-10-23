@@ -162,7 +162,9 @@ typedef enum _Sfx
     Sfx_Unk1365 = 1365,
     Sfx_Unk1366 = 1366,
 
+    Sfx_Unk1368 = 1368,
     Sfx_Unk1369 = 1369,
+    Sfx_Unk1370 = 1370,
 
     Sfx_Unk1373 = 1373,
     Sfx_Unk1374 = 1374,
@@ -240,6 +242,7 @@ typedef enum _Sfx
     Sfx_Unk1604 = 1604,
     Sfx_Unk1605 = 1605,
     Sfx_Unk1606 = 1606,
+    Sfx_Unk1607 = 1607,
 
     Sfx_Unk1609 = 1609,
     Sfx_Unk1610 = 1610,
@@ -248,6 +251,8 @@ typedef enum _Sfx
     Sfx_Unk1617 = 1617,
 
     Sfx_Unk1619 = 1619,
+
+    Sfx_Unk1622 = 1622,
 
     Sfx_Unk1623 = 1623,
 
@@ -280,12 +285,16 @@ typedef enum _Sfx
     Sfx_Unk1666 = 1666,
 
     Sfx_Unk1671 = 1671,
+    Sfx_Unk1672 = 1672,
+    Sfx_Unk1673 = 1673,
     Sfx_Unk1674 = 1674,
     Sfx_Unk1675 = 1675,
 
     Sfx_Unk1688 = 1688,
     Sfx_Unk1689 = 1689,
     Sfx_Unk1690 = 1690,
+
+    Sfx_Unk1699 = 1699,
 
     Sfx_Unk1916 = 1916,
 

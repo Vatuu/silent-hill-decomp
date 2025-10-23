@@ -65,7 +65,7 @@ void sharedSymbol_800CD4A0_2_s01(s_SubCharacter* dahlia, GsCOORDINATE2* coord)
     case 11:
 #if defined(MAP3_S06) || defined(MAP6_S01) || defined(MAP6_S04) || defined(MAP7_S02) || \
     defined(MAP7_S03)
-        Model_AnimStatusKeyframeSet(dahlia->model_0, 7, true, ANIM_TABLE);
+        Model_AnimStatusKeyframeSet(dahlia->model_0, 7, true, ANIM_TABLE, 0);
 #else
         Model_AnimStatusSet(&dahlia->model_0, 7, false);
 #endif
@@ -92,7 +92,7 @@ void sharedSymbol_800CD4A0_2_s01(s_SubCharacter* dahlia, GsCOORDINATE2* coord)
     case 10:
 #if !defined(MAP6_S01) && !defined(MAP6_S04) && !defined(MAP7_S02) && !defined(MAP7_S03)
 #if defined(MAP3_S06)
-        Model_AnimStatusKeyframeSet(dahlia->model_0, 6, true, ANIM_TABLE);
+        Model_AnimStatusKeyframeSet(dahlia->model_0, 6, true, ANIM_TABLE, 0);
 #else
         Model_AnimStatusSet(&dahlia->model_0, 6, false);
 #endif
@@ -115,7 +115,7 @@ void sharedSymbol_800CD4A0_2_s01(s_SubCharacter* dahlia, GsCOORDINATE2* coord)
         }
         break;
     case 12:
-        Model_AnimStatusKeyframeSet(dahlia->model_0, 8, true, ANIM_TABLE);
+        Model_AnimStatusKeyframeSet(dahlia->model_0, 8, true, ANIM_TABLE, 0);
         Character_AnimStateTryReset(dahlia);
         break;
     case 13:
@@ -154,7 +154,7 @@ void sharedSymbol_800CD4A0_2_s01(s_SubCharacter* dahlia, GsCOORDINATE2* coord)
             sharedData_800D16E4_2_s01 = 1;
         }
 
-        Model_AnimStatusKeyframeSet(dahlia->model_0, 19, true, ANIM_TABLE);
+        Model_AnimStatusKeyframeSet(dahlia->model_0, 19, true, ANIM_TABLE, 0);
         Character_AnimStateTryReset(dahlia);
 
         if (DAHLIA_PROPS.stateIdx0 != 19)
@@ -167,11 +167,11 @@ void sharedSymbol_800CD4A0_2_s01(s_SubCharacter* dahlia, GsCOORDINATE2* coord)
         Character_AnimStateTryReset(dahlia);
         break;
     case 21:
-        Model_AnimStatusKeyframeSet(dahlia->model_0, 21, true, ANIM_TABLE);
+        Model_AnimStatusKeyframeSet(dahlia->model_0, 21, true, ANIM_TABLE, 0);
         Character_AnimStateTryReset(dahlia);
         break;
     case 22:
-        Model_AnimStatusKeyframeSet(dahlia->model_0, 22, true, ANIM_TABLE);
+        Model_AnimStatusKeyframeSet(dahlia->model_0, 22, true, ANIM_TABLE, 0);
         Character_AnimStateTryReset(dahlia);
         break;
     case 23:

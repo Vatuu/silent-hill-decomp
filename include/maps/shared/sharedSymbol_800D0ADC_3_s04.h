@@ -52,7 +52,7 @@ void sharedSymbol_800D0ADC_3_s04(s_SubCharacter* chara, GsCOORDINATE2* coords)
             }
             if (CHARA_PROPERTIES.stateIdx0 == 5)
             {
-                Model_AnimStatusKeyframeSet(chara->model_0, 1, true, ANIM_TABLE);
+                Model_AnimStatusKeyframeSet(chara->model_0, 1, true, ANIM_TABLE, 0);
             }
             else
             {
@@ -81,7 +81,7 @@ void sharedSymbol_800D0ADC_3_s04(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 9:
-            Model_AnimStatusKeyframeSet(chara->model_0, 6, true, ANIM_TABLE);
+            Model_AnimStatusKeyframeSet(chara->model_0, 6, true, ANIM_TABLE, 0);
             Character_AnimStateTryReset(chara);
             break;
 
@@ -91,12 +91,12 @@ void sharedSymbol_800D0ADC_3_s04(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 11:
-            Model_AnimStatusKeyframeSet(chara->model_0, 8, true, ANIM_TABLE);
+            Model_AnimStatusKeyframeSet(chara->model_0, 8, true, ANIM_TABLE, 0);
             Character_AnimStateTryReset(chara);
             break;
 
         case 12:
-            Model_AnimStatusKeyframeSet(chara->model_0, 9, true, ANIM_TABLE);
+            Model_AnimStatusKeyframeSet(chara->model_0, 9, true, ANIM_TABLE, 0);
             Character_AnimStateTryReset(chara);
             break;
 
@@ -106,7 +106,7 @@ void sharedSymbol_800D0ADC_3_s04(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 14:
-            Model_AnimStatusKeyframeSet(chara->model_0, 11, true, ANIM_TABLE);
+            Model_AnimStatusKeyframeSet(chara->model_0, 11, true, ANIM_TABLE, 0);
             break;
 
         case 15:
@@ -119,12 +119,12 @@ void sharedSymbol_800D0ADC_3_s04(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 17:
-            Model_AnimStatusKeyframeSet(chara->model_0, 14, true, ANIM_TABLE);
+            Model_AnimStatusKeyframeSet(chara->model_0, 14, true, ANIM_TABLE, 0);
             Character_AnimStateTryReset(chara);
             break;
 
         case 18:
-            Model_AnimStatusKeyframeSet(chara->model_0, 15, true, ANIM_TABLE);
+            Model_AnimStatusKeyframeSet(chara->model_0, 15, true, ANIM_TABLE, 0);
             Character_AnimStateTryReset(chara);
             break;
 

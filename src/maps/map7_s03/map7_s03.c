@@ -105,7 +105,7 @@ void func_800D102C() {}
 
 #include "maps/shared/sharedFunc_800D88D0_0_s01.h" // 0x800D1154
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03", sharedSymbol_800D8A68_0_s01); // 0x800D12EC - Differs from `map0_s01`/`map6_s01` versions, matches `map4_s01`.
+#include "maps/shared/sharedSymbol_800D8A68_0_s01.h" // 0x800D12EC
 
 #include "maps/shared/Ai_Cybil_Init.h" // 0x800D232C - Differs to other maps `Ai_Cybil_Init`, possibly `Ai_EndingCybil_Init` if other Cybil funcs are a lot different.
 

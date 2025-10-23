@@ -46,12 +46,12 @@ void sharedSymbol_800CF470_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coords)
 #endif
             break;
         case 5:
-            Model_AnimStatusKeyframeSet(chara->model_0, 1, true, KAUFMANN_ANIM_INFOS);
+            Model_AnimStatusKeyframeSet(chara->model_0, 1, true, KAUFMANN_ANIM_INFOS, 0);
             Character_AnimStateTryReset(chara);
             func_8003DD80(38, 1);
             break;
         case 24:
-            Model_AnimStatusKeyframeSet(chara->model_0, 20, true, KAUFMANN_ANIM_INFOS);
+            Model_AnimStatusKeyframeSet(chara->model_0, 20, true, KAUFMANN_ANIM_INFOS, 0);
             Character_AnimStateTryReset(chara);
 #if defined(MAP5_S03)
             func_8003DD80(38, 52);
@@ -60,7 +60,7 @@ void sharedSymbol_800CF470_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coords)
 #endif
             break;
         case 6:
-            Model_AnimStatusKeyframeSet(chara->model_0, 4, true, KAUFMANN_ANIM_INFOS);
+            Model_AnimStatusKeyframeSet(chara->model_0, 4, true, KAUFMANN_ANIM_INFOS, 0);
             Character_AnimStateTryReset(chara);
 #if defined(MAP3_S00)
             func_8003DD80(38, 19);
@@ -104,14 +104,14 @@ void sharedSymbol_800CF470_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coords)
             Character_AnimStateTryReset(chara);
             break;
         case 11:
-            Model_AnimStatusKeyframeSet(chara->model_0, 9, true, KAUFMANN_ANIM_INFOS);
+            Model_AnimStatusKeyframeSet(chara->model_0, 9, true, KAUFMANN_ANIM_INFOS, 0);
             Character_AnimStateTryReset(chara);
 #if defined(MAP5_S02)
             func_8003DD80(38, 17);
 #endif
             break;
         case 12:
-            Model_AnimStatusKeyframeSet(chara->model_0, 22, true, KAUFMANN_ANIM_INFOS);
+            Model_AnimStatusKeyframeSet(chara->model_0, 22, true, KAUFMANN_ANIM_INFOS, 0);
             Character_AnimStateTryReset(chara);
 #if defined(MAP5_S02)
             func_8003DD80(38, 17);
@@ -179,7 +179,7 @@ void sharedSymbol_800CF470_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coords)
 #endif
             break;
         case 20:
-            Model_AnimStatusKeyframeSet(chara->model_0, 18, true, KAUFMANN_ANIM_INFOS);
+            Model_AnimStatusKeyframeSet(chara->model_0, 18, true, KAUFMANN_ANIM_INFOS, 0);
             Character_AnimStateTryReset(chara);
 
 #if defined(MAP7_S03)
@@ -202,7 +202,7 @@ void sharedSymbol_800CF470_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coords)
 #endif
             break;
         case 22:
-            Model_AnimStatusKeyframeSet(chara->model_0, 19, true, KAUFMANN_ANIM_INFOS);
+            Model_AnimStatusKeyframeSet(chara->model_0, 19, true, KAUFMANN_ANIM_INFOS, 0);
             Character_AnimStateTryReset(chara);
 #if defined(MAP7_S03)
             func_8003DD80(39, 49);
