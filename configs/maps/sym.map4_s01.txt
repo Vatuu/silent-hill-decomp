@@ -106,8 +106,11 @@ MAP_MESSAGES                = 0x800D5718; // type:u32 size:0x1D8
 //----------------------------------------------------
 //--- PA: 0x00C378   VA: 0x800D58F0   subsegment: data
 //----------------------------------------------------
+g_MapMsgSounds              = 0x800D5A1C; // type:u16 size:0x52
 sharedData_800DFB4C_0_s00   = 0x800D5AE0;
 sharedData_800CD77C_1_s04   = 0x800D5AE4; // type:s32
+g_MapMsgSoundIdx            = 0x800D5AEA; // type:u8
+g_Timer0                    = 0x800D5AEC; // type:s32
 sharedData_800DFB6C_0_s00   = 0x800D5B10; // type:s32
 sharedData_800DFB70_0_s00   = 0x800D5B14; // type:s32
 g_ParticleVectors0          = 0x800D7F50; // type:ParticleVectors
@@ -123,6 +126,8 @@ sharedData_800E39D8_0_s00   = 0x800D7FC0; // type:s32
 sharedData_800D32A0_0_s02   = 0x800D7FC4; // type:s32
 sharedData_800E2378_0_s01   = 0x800D7FC8; // type:s32
 sharedData_800E237C_0_s01   = 0x800D7FCC; // type:s32
+g_CutsceneCameraPos         = 0x800D7FD0; // type:VECTOR3 size:0xC
+g_CutsceneCameraLookAt      = 0x800D7FE0; // type:VECTOR3 size:0xC
 Wobj_D_800D7FF0             = 0x800D7FF0; // type:WorldObjectDesc_norot size:0x28
 D_800D8018                  = 0x800D8018; // type:u8
 Wobj_D_800D8020             = 0x800D8020; // type:WorldObjectDesc size:0x2E

@@ -257,6 +257,12 @@ const char* MAP_MESSAGES[] = {
 
 INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D1FF0);
 
+// TODO replace these strings and vector once all users are decompiled
+extern const VECTOR3 D_800CBF88;
+extern const char* D_800CBF94;
+extern const char* D_800CBF9C;
+extern const char* D_800CBFA4;
+extern const char* D_800CBFAC;
 INCLUDE_RODATA("asm/maps/map4_s01/nonmatchings/map4_s01", D_800CBF88);
 
 INCLUDE_RODATA("asm/maps/map4_s01/nonmatchings/map4_s01", D_800CBF94);
@@ -267,7 +273,270 @@ INCLUDE_RODATA("asm/maps/map4_s01/nonmatchings/map4_s01", D_800CBFA4);
 
 INCLUDE_RODATA("asm/maps/map4_s01/nonmatchings/map4_s01", D_800CBFAC);
 
-INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D2408);
+
+#define SysWork_StateStepIncrementDelayed func_80085E6C
+void func_800D2408(void)
+{
+    #define CUTSCENE_SKIP_STATE 0x2B
+    #define PLAYER_PTR &g_SysWork.player_4C.chara_0
+    #define CYBIL_PTR &g_SysWork.npcs_1A0[0]
+    VECTOR3 sp18;
+    SVECTOR3 sp28;
+    s32 x;
+    s32 z;
+    //static const VECTOR3 soundPos = VECTOR3(182.0f, -1.2f, 58.9f);
+    #define soundPos D_800CBF88
+
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
+        g_SysWork.sysStateStep_C[0] >= 3 && g_SysWork.sysStateStep_C[0] < 41)
+    {
+        SysWork_NextStateStepSet(CUTSCENE_SKIP_STATE);
+    }
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+    case 0:
+        g_MapMsgSoundIdx = 0;
+        D_800D5AEB = 0;
+        Fs_QueueStartRead(FILE_ANIM_AQSH1_DMS, FS_BUFFER_11);
+        Fs_QueueWaitForEmpty();
+        DmsHeader_FixOffsets((s_DmsHeader* )FS_BUFFER_11);
+        g_Timer0 = 0;
+        func_80085EB8(0, PLAYER_PTR, 0x33, false);
+        g_SysWork.field_30 = 20;
+        g_SysWork.flags_22A4 |= 1 << 3;
+        func_8008D438();
+        g_SysWork.field_235C = 0;
+        g_SysWork.field_236C = 0;
+        g_SysWork.field_2378 = 0x1000;
+        SysWork_StateStepIncrement();
+
+        /* fallthrough */
+    case 1:
+        func_8008616C(2, false, 0, 0, false);
+        break;
+    case 2:
+        func_80088D0C();
+        SysWork_StateStepIncrement();
+        /* fallthrough */
+    case 3:
+        Map_MessageWithAudio(15, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        break;
+    case 4:
+        func_8005DC1C(Sfx_Unk1309, &soundPos, 0x80, 0);
+        SysWork_StateStepIncrement();
+        /* fallthrough */
+    case 5:
+        SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+        break;
+    case 6:
+        func_80085EB8(0, PLAYER_PTR, 0x76, false);
+        func_8005DC1C(Sfx_Unk1310, &soundPos, 0x80, 0);
+        SysWork_StateStepIncrement();
+        /* fallthrough */
+    case 7:
+        SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+        break;
+    case 8:
+        Chara_Spawn(Chara_Cybil, 0, Q12(183.0f), Q12(61.0f), 0, 3);
+        D_800D5AEB = 1;
+        func_80085EB8(0, CYBIL_PTR, 5, false);
+        func_8003D01C();
+        SysWork_StateStepIncrement();
+        /* fallthrough */
+    case 9:
+        func_80085EB8(1, PLAYER_PTR, 0, false);
+        sharedFunc_800DA8E8_0_s01(&g_Timer0, Q12(10.0f), 0, Q12(28.0f), true, false);
+        break;
+    case 10:
+        Map_MessageWithAudio(16, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        sharedFunc_800DA8E8_0_s01(&g_Timer0, Q12(10.0f), 0, Q12(28.0f), true, false);
+        break;
+    case 11:
+        func_80086C58(PLAYER_PTR, 0x77);
+        break;
+    case 12:
+        func_80085EB8(0, PLAYER_PTR, 0x33, false);
+        func_80085EB8(0, CYBIL_PTR, 1, false);
+        func_8003D03C();
+        Savegame_EventFlagSet(EventFlag_311);
+        SysWork_StateStepIncrement();
+        /* fallthrough */
+    case 13:
+        Map_MessageWithAudio(18, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        sharedFunc_800DA8E8_0_s01(&g_Timer0, Q12(16.0f), Q12(29.0f), Q12(56.0f), true, true);
+        break;
+    case 14:
+        func_80085EB8(0, CYBIL_PTR, 5, false);
+        g_Timer0 = Q12(57.0f);
+        g_SysWork.field_2378 = 0xB33;
+        SysWork_StateStepIncrement();
+        /* fallthrough */
+    case 15:
+        Map_MessageWithAudio(18, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        break;
+    case 16:
+        Map_MessageWithAudio(21, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        break;
+    case 17:
+        Map_MessageWithAudio(27, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        break;
+    case 18:
+        g_Timer0 = Q12(58.0f);
+        g_SysWork.field_2378 = 0x1000;
+        Map_MessageWithAudio(33, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        break;
+    case 19:
+        Map_MessageWithAudio(38, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        break;
+    case 20:
+        SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
+        break;
+    case 21:
+        Map_MessageWithAudio(41, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        break;
+    case 22:
+        g_Timer0 = Q12(59.0f);
+        g_SysWork.field_2378 = 0xB33;
+        Map_MessageWithAudio(47, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        break;
+    case 23:
+        Map_MessageWithAudio(50, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        break;
+    case 24:
+        SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
+        break;
+    case 25:
+        func_80085EB8(0, PLAYER_PTR, 0x48, false);
+        func_80085EB8(0, CYBIL_PTR, 1, false);
+        SysWork_StateStepIncrement();
+        /* fallthrough */
+    case 26:
+        sharedFunc_800DA8E8_0_s01(&g_Timer0, Q12(10.0f), Q12(59.0f), Q12(64.0f), true, true);
+        break;
+    case 27:
+        sharedFunc_800DA8E8_0_s01(&g_Timer0, Q12(16.0f), Q12(65.0f), Q12(83.0f), true, true);
+        g_SysWork.field_2378 = 0x1000;
+        break;
+    case 28:
+        func_80085EB8(3, PLAYER_PTR, 0, false);
+        func_80085EB8(0, PLAYER_PTR, 0x33, false);
+        func_80085EB8(0, CYBIL_PTR, 5, false);
+        g_Timer0 = Q12(87.0f);
+        g_SysWork.field_2378  = 0x800;
+        SysWork_StateStepIncrement();
+        /* fallthrough */
+    case 29:
+        Map_MessageWithAudio(0x3D, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        break;
+    case 30:
+        func_80085EB8(0U, PLAYER_PTR, 0x8C, false);
+        g_SysWork.field_2378  = 0x1000;
+        SysWork_StateStepIncrement();
+        /* fallthrough */
+    case 31:
+        g_Timer0 = Q12(88.0f);
+        Map_MessageWithAudio(73, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        break;
+    case 32:
+        SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
+        break;
+    case 33:
+        Map_MessageWithAudio(74, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        sharedFunc_800DA8E8_0_s01(&g_Timer0, Q12(10.0f), Q12(88.0f), Q12(121.0f), true, false);
+        break;
+    case 34:
+        sharedFunc_800DA8E8_0_s01(&g_Timer0, Q12(10.0f), Q12(88.0f), Q12(121.0f), true, true);
+        break;
+    case 35:
+        g_Timer0 = Q12(122.0f);
+        D_800D8018 = 1;
+        g_SysWork.field_2378 = 0x1333;
+        func_80085EB8(0U, PLAYER_PTR, 0x33, false);
+        SysWork_StateStepIncrement();
+        /* fallthrough */
+    case 36:
+        Map_MessageWithAudio(76, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        break;
+    case 37:
+        Map_MessageWithAudio(86, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        break;
+    case 38:
+        func_80085EB8(0U, PLAYER_PTR, 0x82, false);
+        D_800D8018 = 0;
+        g_SysWork.field_2378 = 0x1000;
+        SysWork_StateStepIncrement();
+        /* fallthrough */
+    case 39:
+        Map_MessageWithAudio(90, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        sharedFunc_800DA8E8_0_s01(&g_Timer0, Q12(10.0f), Q12(123.0f), Q12(139.0f), true, false);
+        break;
+    case 40:
+        func_80086C58(PLAYER_PTR, 0x78);
+        g_SysWork.field_2378 = 0x1666;
+        Savegame_EventFlagSet(EventFlag_313);
+        sharedFunc_800DA8E8_0_s01(&g_Timer0, Q12(10.0f), Q12(140.0f), Q12(165.0f), true, false);
+        break;
+    case 41:
+        sharedFunc_800D2EF4_0_s00();
+        func_8003CD6C(&g_SysWork.playerCombatInfo_38);
+        sharedFunc_800D2EB4_0_s00();
+        SysWork_StateStepIncrement();
+        /* fallthrough */
+    case 42:
+        func_8008616C(2, true, 0, 0, false);
+        if (g_SysWork.sysStateStep_C[0] != 42)
+        {
+            sharedFunc_800D2EF4_0_s00();
+            SysWork_NextStateStepSet(-1);
+        }
+        break;
+    case CUTSCENE_SKIP_STATE:
+        func_8008616C(2, true, 0, 0, false);
+        break;
+
+    case 44:
+        sharedFunc_800D2EF4_0_s00();
+        func_8003CD6C(&g_SysWork.playerCombatInfo_38);
+        SysWork_StateStepIncrement();
+        /* fallthrough */
+    default:
+        sharedFunc_800D2244_0_s00(false);
+        g_Timer0 = -1;
+        SysWork_StateSetNext(SysState_Gameplay);
+
+        D_800D8018 = 0;
+        func_80088F94(CYBIL_PTR, 0, 0);
+        Fs_QueueWaitForEmpty();
+        func_8003D01C();
+        Sd_EngineCmd(19);
+        Savegame_EventFlagSet(EventFlag_303);
+        func_8008D448();
+        func_8003EBA0();
+        g_SysWork.field_2378 = 0x1000;
+        Savegame_EventFlagClear(EventFlag_313);
+        g_SysWork.field_30 = 0;
+        break;
+    }
+    if (g_Timer0 >= 0)
+    {
+        Dms_CharacterGetPosRot(PLAYER_PTR.position_18, PLAYER_PTR.rotation_24, &D_800CBF94, g_Timer0, (s_DmsHeader* )FS_BUFFER_11);
+        if (D_800D5AEB)
+        {
+            Dms_CharacterGetPosRot(CYBIL_PTR.position_18, CYBIL_PTR.rotation_24, &D_800CBF9C, g_Timer0, (s_DmsHeader* )FS_BUFFER_11);
+        }
+        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPos, &g_CutsceneCameraLookAt, NULL, g_Timer0, (s_DmsHeader* )FS_BUFFER_11));
+        vcUserCamTarget(&g_CutsceneCameraPos, NULL, true);
+        vcUserWatchTarget(&g_CutsceneCameraLookAt, NULL, true);
+        Dms_CharacterGetPosRot(&g_SysWork.field_2360, &sp28, &D_800CBFA4, g_Timer0, (s_DmsHeader* )FS_BUFFER_11);
+        Dms_CharacterGetPosRot(&sp18, &sp28, &D_800CBFAC, g_Timer0, (s_DmsHeader* )FS_BUFFER_11);
+        x = Q12_TO_Q6(sp18.vx - g_SysWork.field_2360.vx);
+        z = Q12_TO_Q6(sp18.vz - g_SysWork.field_2360.vz);
+        g_SysWork.field_2370.vx = -ratan2(sp18.vy - g_SysWork.field_2360.vy, Q6_TO_Q12(SquareRoot0(SQUARE(x) + SQUARE(z))));
+        g_SysWork.field_2370.vy = ratan2(sp18.vx - g_SysWork.field_2360.vx, sp18.vz - g_SysWork.field_2360.vz);
+        g_SysWork.field_2370.vz = 0;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D2F74);
 
@@ -286,14 +555,6 @@ void func_800D4998(void) // 0x800D4998
 {
     func_80087360(FILE_TIM_CLOCKATQ_TIM, Q12(0.0f), Q12(0.0f), 114);
 }
-extern s_WorldObjectDesc_norot Wobj_D_800D7FF0;
-extern u8 D_800D8018;
-extern s_WorldObjectDesc Wobj_D_800D8020;
-extern s_WorldObjectDesc Wobj_D_800D8050;
-extern s_WorldObjectPos  Wobj_D_800D8070;
-extern s_WorldObjectPos  Wobj_D_800D8090;
-extern s_WorldObjectDesc Wobj_D_800D80B0;
-extern s_WorldObjectDesc_norot Wobj_D_800D80E0[2];
 
 void func_800D49C4(void)
 {
