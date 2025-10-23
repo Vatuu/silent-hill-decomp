@@ -126,36 +126,10 @@ void func_800CD1A0(void) {}
 
 void func_800CE858(s32 arg0) // 0x800CE858
 {
-    (arg0 != 0) ? func_800CE88C() : sharedFunc_800CE934_0_s02();
+    (arg0 != 0) ? sharedFunc_800CE8B8_0_s02() : sharedFunc_800CE934_0_s02();
 }
 
-void func_800CE88C(void)
-{
-    s32 soundCmd;
-
-    switch (g_SavegamePtr->mapRoomIdx_A5)
-    {
-        case 5:
-            soundCmd = 6;
-            func_8003640C(soundCmd);
-            break;
-        case 18:
-            if (!Savegame_EventFlagGet(EventFlag_379))
-            {
-                soundCmd = 29;
-            }
-            else
-            {
-                soundCmd = 7;
-            }
-            func_8003640C(soundCmd);
-            break;
-        case 17:
-            soundCmd = 7;
-            func_8003640C(soundCmd);
-            break;
-    }
-}
+#include "maps/shared/sharedFunc_800CE8B8_0_s02.h"
 
 #include "maps/shared/sharedFunc_800CE934_0_s02.h" // 0x800CE908
 

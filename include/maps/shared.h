@@ -2908,6 +2908,8 @@ void sharedFunc_800D6EC4_0_s01(s_SubCharacter* chara);
 
 void sharedFunc_800D7B14_0_s01(s_SubCharacter*, GsCOORDINATE2*);
 
+void sharedFunc_800CE8B8_0_s02(void);
+
 static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo)
 {
     anim->animInfo_C  = animInfo;

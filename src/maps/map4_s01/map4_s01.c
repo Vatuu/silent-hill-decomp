@@ -129,21 +129,14 @@ void func_800CFD84(void) {}
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D1AD0
 
-INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D1AE0);
+#include "maps/shared/Map_RoomIdxGet.h"
 
 void func_800D1B78(s32 arg0) // 0x800D1B78
 {
-    if (arg0 != 0)
-    {
-        func_800D1BAC();
-    }
-    else
-    {
-        sharedFunc_800CE934_0_s02();
-    }
+    (arg0 != 0) ? sharedFunc_800CE8B8_0_s02() : sharedFunc_800CE934_0_s02();
 }
 
-INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D1BAC);
+#include "maps/shared/sharedFunc_800CE8B8_0_s02.h"
 
 #include "maps/shared/sharedFunc_800CE934_0_s02.h" // 0x800D1C28
 

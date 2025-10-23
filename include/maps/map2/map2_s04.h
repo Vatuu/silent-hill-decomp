@@ -14,6 +14,4 @@ void func_800CD0D0(void);
 
 void func_800CD0F8(void);
 
-void func_800CCB64(void);
-
 #endif

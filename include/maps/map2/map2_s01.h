@@ -23,8 +23,6 @@ void func_800CF798(void);
 
 void func_800CF7C4(void);
 
-void func_800CE88C(void);
-
 void func_800CB010(s32 arg0, s32 arg1, s32 arg2);
 
 #endif
