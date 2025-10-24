@@ -1,4 +1,19 @@
-// Ai_Lisa
+#include "bodyprog/bodyprog.h"
+#include "bodyprog/math/math.h"
+#include "bodyprog/player_logic.h"
+#include "main/rng.h"
+#include "maps/shared.h"
+#include "maps/characters/Chara_Lisa.h"
+
+/** AI code for `Chara_Lisa`
+ *
+ * Included in:
+ *  MAP3_S04
+ *  MAP4_S04
+ *  MAP7_S00
+ *  MAP7_S01
+ *  MAP7_S02
+ */
 
 #if defined(MAP3_S04) || defined(MAP4_S04) || defined(MAP7_S00)
 #define ANIM_TABLE KAUFMANN_ANIM_INFOS
@@ -8,6 +23,95 @@
 
 extern s_AnimInfo ANIM_TABLE[];
 
+/** Addresses
+ * MAP3_S04: 0x800D0888
+ * MAP4_S04: 0x800CFEA0
+ * MAP7_S00: 0x800CEA38
+ * MAP7_S01: 0x800D4DFC
+ * MAP7_S02: 0x800D5998
+ */
+void Ai_Lisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+{
+    if (chara->model_0.state_2 == 0)
+    {
+        Ai_Lisa_Init(chara);
+    }
+
+    sharedSymbol_800D0ADC_3_s04(chara, coords);
+    sharedFunc_800D0944_3_s04(chara, coords);
+    sharedFunc_800D08FC_3_s04(chara, anmHdr, coords);
+}
+
+/** Addresses
+ * MAP3_S04: 0x800D08FC
+ * MAP4_S04: 0x800CFF14
+ * MAP7_S00: 0x800CEAAC
+ * MAP7_S01: 0x800D4E70
+ * MAP7_S02: 0x800D5A0C
+ */
+void sharedFunc_800D08FC_3_s04(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+{
+    s_AnimInfo* animInfo;
+
+    if (chara->properties_E4.player.field_F0 != 0)
+    {
+        return;
+    }
+
+    // TODO: This func belongs to Lisa but the animinfo is misnamed or shared with KAUFMANN in some maps.
+#if defined(MAP3_S04) || defined(MAP4_S04) || defined(MAP7_S00)
+    animInfo = &KAUFMANN_ANIM_INFOS[chara->model_0.anim_4.status_0];
+#else
+    animInfo = &LISA_ANIM_INFOS[chara->model_0.anim_4.status_0];
+#endif
+    animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
+}
+
+/** Addresses
+ * MAP3_S04: 0x800D0944
+ * MAP4_S04: 0x800CFF5C
+ * MAP7_S00: 0x800CEAF4
+ * MAP7_S01: 0x800D4EB8
+ * MAP7_S02: 0x800D5A54
+ */
+void sharedFunc_800D0944_3_s04(s_SubCharacter* chara, GsCOORDINATE2* coord)
+{
+    VECTOR3 unused;
+    VECTOR3 vec;
+    s32     moveSpeed;
+    s16     headingAngle;
+    s32     moveAmt;
+    s32     scaleRestoreShift;
+    u32     scaleReduceShift;
+
+    unused       = chara->position_18;
+    moveSpeed    = chara->moveSpeed_38;
+    headingAngle = chara->headingAngle_3C;
+    moveAmt      = FP_MULTIPLY_PRECISE(moveSpeed, g_DeltaTime0, Q12_SHIFT);
+
+    scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
+    scaleReduceShift  = scaleRestoreShift >> 1;
+
+    vec.vx = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    vec.vz = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    vec.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
+
+    chara->position_18.vx += vec.vx;
+    chara->position_18.vy  = 0;
+    chara->position_18.vz += vec.vz;
+
+    coord->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
+    coord->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
+    coord->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
+}
+
+/** Addresses
+ * MAP3_S04: 0x800D0ADC
+ * MAP4_S04: 0x800D00F4
+ * MAP7_S00: 0x800CEC8C
+ * MAP7_S01: 0x800D5050
+ * MAP7_S02: 0x800D5BEC
+ */
 void sharedSymbol_800D0ADC_3_s04(s_SubCharacter* chara, GsCOORDINATE2* coords)
 {
     s_Collision coll;
@@ -256,4 +360,17 @@ void sharedSymbol_800D0ADC_3_s04(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
     coords->flg = 0;
     Math_MatrixRotate1(&chara->rotation_24, &coords->coord);
+}
+
+/** Addresses
+ * MAP3_S04: 0x800D1350
+ * MAP4_S04: 0x800D0968
+ * MAP7_S00: 0x800CF514
+ * MAP7_S01: 0x800D58C4
+ * MAP7_S02: 0x800D6460
+ */
+void Ai_Lisa_Init(s_SubCharacter* chara)
+{
+    sharedFunc_800D923C_0_s00(chara);
+    sharedData_800D6BB8_3_s04 = 0;
 }

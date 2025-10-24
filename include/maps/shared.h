@@ -2277,8 +2277,6 @@ extern s16 sharedData_800D8616_1_s05;
 
 extern u8 sharedData_800DCC14_1_s00[];
 
-extern s32 sharedData_800D6BB8_3_s04; // Used by `Ai_Lisa_Init`.
-
 // Two variables used by `Ai_Cybil_Init`.
 extern s32 sharedData_800E2378_0_s01;
 extern s32 sharedData_800E237C_0_s01;
@@ -2812,13 +2810,6 @@ bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyfra
 void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1);
 
 bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 sfx, s32 pitch);
-
-// `Ai_Lisa` related
-void Ai_Lisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void sharedFunc_800D08FC_3_s04(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void sharedFunc_800D0944_3_s04(s_SubCharacter* chara, GsCOORDINATE2* coord);
-void sharedSymbol_800D0ADC_3_s04(s_SubCharacter* chara, GsCOORDINATE2* coords); // `Ai_Lisa_Control`
-void Ai_Lisa_Init(s_SubCharacter* chara);
 
 // `Ai_Kaufmann` related
 void Ai_Kaufmann_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
