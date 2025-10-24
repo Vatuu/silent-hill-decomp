@@ -122,7 +122,15 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D2214);
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D2444);
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D263C);
+void func_800D263C(s_SubCharacter* chara)
+{
+    if (Savegame_EventFlagGet(EventFlag_130))
+    {
+        chara->model_0.state_2 = 2;
+        chara->model_0.anim_4.status_0 = ANIM_STATUS(11, false);
+        chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 0x100;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", sharedFunc_800D267C_1_s05); // 0x800D267C
 
