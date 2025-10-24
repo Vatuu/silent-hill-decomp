@@ -3730,7 +3730,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
     return false;
 }
 #else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800706E4", Player_CombatAnimUpdate);
+INCLUDE_ASM("asm/bodyprog/matchings/bodyprog_800706E4", Player_CombatAnimUpdate);
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800706E4", Player_UpperBodyMainUpdate);
 #endif
 
