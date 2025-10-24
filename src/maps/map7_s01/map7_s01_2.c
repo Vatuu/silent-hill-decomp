@@ -6,26 +6,6 @@
 #include "maps/shared.h"
 #include "maps/map7/map7_s01.h"
 
-#include "maps/shared/Ai_Lisa_Update.h" // 0x800D4DFC
-
-#include "maps/shared/sharedFunc_800D08FC_3_s04.h" // 0x800D4E70
-
-#include "maps/shared/sharedFunc_800D0944_3_s04.h" // 0x800D4EB8
-
-#include "maps/shared/sharedSymbol_800D0ADC_3_s04.h" // 0x800D5050
-
-#include "maps/shared/Ai_Lisa_Init.h" // 0x800D58C4
-
-#include "maps/shared/Ai_BloodyLisa_Update.h" // 0x800D58E8
-
-#include "maps/shared/sharedFunc_800D595C_7_s01.h" // 0x800D595C
-
-#include "maps/shared/sharedFunc_800D59A4_7_s01.h" // 0x800D59A4
-
-#include "maps/shared/sharedFunc_800D5B3C_7_s01.h" // 0x800D5B3C
-
-#include "maps/shared/Ai_BloodyLisa_Init.h" // 0x800D5CB4
-
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800D5CD8
 
 #include "maps/shared/sharedFunc_800D88C0_0_s00.h" // 0x800D5CEC

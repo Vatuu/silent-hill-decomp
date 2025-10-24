@@ -3,12 +3,14 @@
 #include "bodyprog/player_logic.h"
 #include "maps/shared.h"
 #include "maps/map0/map0_s00.h" // TODO: Needed for `D_800E39BC`, which should probably be sharedData.
-#include "maps/characters/chara_cheryl.h"
+#include "maps/characters/Chara_Cheryl.h"
 
-// AI code for `Chara_GhostChildAlessa`
-//
-// Included in:
-//  MAP0_S00
+/** AI code for `Chara_Cheryl`
+ *
+ * Included in:
+ *  MAP0_S00
+ *  MAP7_S02
+ */
 
 void Ai_Cheryl_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D7FB8
 {
