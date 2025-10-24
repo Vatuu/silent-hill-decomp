@@ -193,7 +193,12 @@ void func_800D1EB4(void) {}
 
 #include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800D1EBC
 
-INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D1F54);
+void func_800D1F54(void)
+{
+    VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+
+    func_80086FE8(11, Sfx_Unk1541, &vec);
+}
 
 void func_800D1FE8(void) {}
 

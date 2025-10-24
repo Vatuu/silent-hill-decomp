@@ -66,6 +66,7 @@ Anim_StartKeyframeIdxGet    = 0x800D1A50; // type:func
 sharedFunc_800D923C_0_s00   = 0x800D1A70; // type:func
 sharedFunc_800D929C_0_s00   = 0x800D1AD0; // type:func
 Map_RoomIdxGet              = 0x800D1AE0; // type:func
+sharedFunc_800CE8B8_0_s02   = 0x800D1BAC; // type:func
 sharedFunc_800CE934_0_s02   = 0x800D1C28; // type:func
 sharedFunc_800DA8E8_0_s01   = 0x800D1EBC; // type:func
 
@@ -142,3 +143,4 @@ Wobj_D_800D8070             = 0x800D8070; // type:WorldObjectPos size:0x12
 Wobj_D_800D8090             = 0x800D8090; // type:WorldObjectPos size:0x12
 Wobj_D_800D80B0             = 0x800D80B0; // type:WorldObjectDesc size:0x2E
 Wobj_D_800D80E0             = 0x800D80E0; // type:WorldObjectDesc_norot size:0x50
+MAP_POINTS                = 0x800D55D0;
