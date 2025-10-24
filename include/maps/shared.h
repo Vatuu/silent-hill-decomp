@@ -2279,8 +2279,6 @@ extern u8 sharedData_800DCC14_1_s00[];
 
 extern s32 sharedData_800D6BB8_3_s04; // Used by `Ai_Lisa_Init`.
 
-extern s32 sharedData_800E2C38_7_s01; // Used by `Ai_BloodyLisa_Init`.
-
 // Two variables used by `Ai_Cybil_Init`.
 extern s32 sharedData_800E2378_0_s01;
 extern s32 sharedData_800E237C_0_s01;

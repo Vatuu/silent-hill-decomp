@@ -91,54 +91,49 @@ void sharedFunc_800D5B3C_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
 {
     s_Collision coll;
     s32         sfx;
-    s8          pitch;
-    s8          sp2D; // Type asssumed.
-    s32         tempVal;
+    s8          pitch0;
+    s8          pitch1;
 
-    tempVal = chara->properties_E4.larvalStalker.properties_E8[0].val32;
-    if (tempVal != 0 && chara->properties_E4.larvalStalker.properties_E8[0].val32 == 6)
+#define CHARA_PROPERTIES (chara->properties_E4.dahlia)
+
+    switch (CHARA_PROPERTIES.stateIdx0)
     {
-        if (chara->model_0.stateStep_3 == 0)
-        {
-            chara->model_0.anim_4.status_0 = ANIM_STATUS(1, false);
-            chara->model_0.stateStep_3++;
-        }
+        case 0:
+            break;
 
-        if (chara->properties_E4.larvalStalker.properties_E8[4].val32 != 0)
-        {
-            chara->properties_E4.larvalStalker.properties_E8[0].val32 = 0;
-            chara->model_0.stateStep_3 = 0;
-            chara->properties_E4.larvalStalker.properties_E8[4].val32 = 0;
-        }
+        case 6:
+            Model_AnimStatusSet(&chara->model_0, 1, false);
+            Character_AnimStateTryReset(chara);
+            break;
     }
 
     Collision_Get(&coll, chara->position_18.vx, chara->position_18.vz);
-    func_8007FDE0(coll.field_8, &sfx, &pitch, &sp2D);
+    func_8007FDE0(coll.field_8, &sfx, &pitch0, &pitch1);
 
-    if (chara->properties_E4.larvalStalker.properties_E8[0].val32 == 6)
+    switch (CHARA_PROPERTIES.stateIdx0)
     {
-        if (chara->model_0.anim_4.keyframeIdx_8 < 13)
-        {
-            sharedFunc_800D908C_0_s00(3, chara, 12, 27, sfx, pitch);
-        }
-        else if (chara->model_0.anim_4.keyframeIdx_8 < 50)
-        {
-            sharedFunc_800D908C_0_s00(3, chara, 49, 27, sfx, pitch);
-        }
-        else
-        {
-            sharedFunc_800D908C_0_s00(3, chara, 92, 69, sfx, pitch);
-        }
+        case 6:
+            if (chara->model_0.anim_4.keyframeIdx_8 <= 12)
+            {
+                sharedFunc_800D908C_0_s00(3, chara, 12, 27, sfx, pitch0);
+            }
+            else if (chara->model_0.anim_4.keyframeIdx_8 <= 49)
+            {
+                sharedFunc_800D908C_0_s00(3, chara, 49, 27, sfx, pitch0);
+            }
+            else
+            {
+                sharedFunc_800D908C_0_s00(3, chara, 92, 69, sfx, pitch0);
+            }
+            break;
     }
 
-    chara->headingAngle_3C =
-    chara->rotation_24.vy  = FP_ANGLE_NORM_U((chara->rotation_24.vy + (sharedData_800E2C38_7_s01 >> 4)) + FP_ANGLE(360.0f));
+    chara->rotation_24.vy  = ABS_ANGLE(chara->rotation_24.vy + Q8_TO_Q4(sharedData_800E2C38_7_s01));
+    chara->headingAngle_3C = chara->rotation_24.vy;
+    chara->moveSpeed_38    = CHARA_PROPERTIES.moveDistance_126;
+    chara->field_34       += g_DeltaTime2;
 
-    chara->moveSpeed_38 = chara->properties_E4.larvalStalker.properties_E8[15].val16[1];
-    chara->field_34    += g_DeltaTime2;
-
-    coords->flg = false;
-
+    coords->flg = 0;
     Math_MatrixRotate1(&chara->rotation_24, &coords->coord);
 }
 
