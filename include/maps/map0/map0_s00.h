@@ -32,9 +32,6 @@ extern char D_800CAE7C[];
 
 extern VECTOR3 D_800CB6A4;
 
-/** Timer. */
-extern q19_12 D_800E3A30;
-
 extern u8 D_800DD593;
 
 extern u8 D_800DD594;
@@ -83,8 +80,6 @@ extern u8 D_800DFB60;
 extern u8 D_800DF2F8;
 
 extern s16 D_800DF300[];
-
-extern s32 D_800DF1CC;
 
 extern s_800C4590 D_800E39BC;
 
@@ -136,16 +131,6 @@ void func_800D2E8C();
 s32 func_800D2E94();
 
 void func_800D2E9C();
-
-void Ai_Cheryl_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords); // 0x800D7FB8
-
-void func_800D802C(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*); // `Chara_Cheryl` related.
-
-void func_800D8124(s_SubCharacter*, GsCOORDINATE2*); // `Chara_Cheryl` related.
-
-void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords); // `Chara_Cheryl` related.
-
-void Ai_Cheryl_Init(s_SubCharacter* chara); // 0x800D8888
 
 void func_800D94F8(void);
 
