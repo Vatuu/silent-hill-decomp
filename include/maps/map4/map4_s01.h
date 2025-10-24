@@ -23,8 +23,12 @@
 
 extern u16 g_MapMsgSounds[84];
 extern u8 g_MapMsgSoundIdx;
+extern u16 g_MapMsgSounds1[4];
+extern u8 g_MapMsgSoundIdx1;
 extern u8 D_800D5AEB;
+extern u8 D_800D5AF0;
 extern s32 g_Timer0;
+extern s32 g_Timer1;
 extern VECTOR3 g_CutsceneCameraPos;
 extern VECTOR3 g_CutsceneCameraLookAt;
 

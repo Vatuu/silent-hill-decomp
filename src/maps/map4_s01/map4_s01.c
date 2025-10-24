@@ -320,7 +320,7 @@ void func_800D2408(void)
         SysWork_StateStepIncrement();
         /* fallthrough */
     case 3:
-        Map_MessageWithAudio(15, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        Map_MessageWithAudio(15, &g_MapMsgSoundIdx, g_MapMsgSounds);
         break;
     case 4:
         func_8005DC1C(Sfx_Unk1309, &soundPos, 0x80, 0);
@@ -349,7 +349,7 @@ void func_800D2408(void)
         sharedFunc_800DA8E8_0_s01(&g_Timer0, Q12(10.0f), 0, Q12(28.0f), true, false);
         break;
     case 10:
-        Map_MessageWithAudio(16, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        Map_MessageWithAudio(16, &g_MapMsgSoundIdx, g_MapMsgSounds);
         sharedFunc_800DA8E8_0_s01(&g_Timer0, Q12(10.0f), 0, Q12(28.0f), true, false);
         break;
     case 11:
@@ -363,7 +363,7 @@ void func_800D2408(void)
         SysWork_StateStepIncrement();
         /* fallthrough */
     case 13:
-        Map_MessageWithAudio(18, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        Map_MessageWithAudio(18, &g_MapMsgSoundIdx, g_MapMsgSounds);
         sharedFunc_800DA8E8_0_s01(&g_Timer0, Q12(16.0f), Q12(29.0f), Q12(56.0f), true, true);
         break;
     case 14:
@@ -373,35 +373,35 @@ void func_800D2408(void)
         SysWork_StateStepIncrement();
         /* fallthrough */
     case 15:
-        Map_MessageWithAudio(18, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        Map_MessageWithAudio(18, &g_MapMsgSoundIdx, g_MapMsgSounds);
         break;
     case 16:
-        Map_MessageWithAudio(21, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        Map_MessageWithAudio(21, &g_MapMsgSoundIdx, g_MapMsgSounds);
         break;
     case 17:
-        Map_MessageWithAudio(27, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        Map_MessageWithAudio(27, &g_MapMsgSoundIdx, g_MapMsgSounds);
         break;
     case 18:
         g_Timer0 = Q12(58.0f);
         g_SysWork.field_2378 = 0x1000;
-        Map_MessageWithAudio(33, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        Map_MessageWithAudio(33, &g_MapMsgSoundIdx, g_MapMsgSounds);
         break;
     case 19:
-        Map_MessageWithAudio(38, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        Map_MessageWithAudio(38, &g_MapMsgSoundIdx, g_MapMsgSounds);
         break;
     case 20:
         SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
         break;
     case 21:
-        Map_MessageWithAudio(41, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        Map_MessageWithAudio(41, &g_MapMsgSoundIdx, g_MapMsgSounds);
         break;
     case 22:
         g_Timer0 = Q12(59.0f);
         g_SysWork.field_2378 = 0xB33;
-        Map_MessageWithAudio(47, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        Map_MessageWithAudio(47, &g_MapMsgSoundIdx, g_MapMsgSounds);
         break;
     case 23:
-        Map_MessageWithAudio(50, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        Map_MessageWithAudio(50, &g_MapMsgSoundIdx, g_MapMsgSounds);
         break;
     case 24:
         SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
@@ -427,22 +427,22 @@ void func_800D2408(void)
         SysWork_StateStepIncrement();
         /* fallthrough */
     case 29:
-        Map_MessageWithAudio(0x3D, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        Map_MessageWithAudio(0x3D, &g_MapMsgSoundIdx, g_MapMsgSounds);
         break;
     case 30:
-        func_80085EB8(0U, PLAYER_PTR, 0x8C, false);
+        func_80085EB8(0, PLAYER_PTR, 0x8C, false);
         g_SysWork.field_2378  = 0x1000;
         SysWork_StateStepIncrement();
         /* fallthrough */
     case 31:
         g_Timer0 = Q12(88.0f);
-        Map_MessageWithAudio(73, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        Map_MessageWithAudio(73, &g_MapMsgSoundIdx, g_MapMsgSounds);
         break;
     case 32:
         SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
         break;
     case 33:
-        Map_MessageWithAudio(74, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        Map_MessageWithAudio(74, &g_MapMsgSoundIdx, g_MapMsgSounds);
         sharedFunc_800DA8E8_0_s01(&g_Timer0, Q12(10.0f), Q12(88.0f), Q12(121.0f), true, false);
         break;
     case 34:
@@ -456,19 +456,19 @@ void func_800D2408(void)
         SysWork_StateStepIncrement();
         /* fallthrough */
     case 36:
-        Map_MessageWithAudio(76, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        Map_MessageWithAudio(76, &g_MapMsgSoundIdx, g_MapMsgSounds);
         break;
     case 37:
-        Map_MessageWithAudio(86, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        Map_MessageWithAudio(86, &g_MapMsgSoundIdx, g_MapMsgSounds);
         break;
     case 38:
-        func_80085EB8(0U, PLAYER_PTR, 0x82, false);
+        func_80085EB8(0, PLAYER_PTR, 0x82, false);
         D_800D8018 = 0;
         g_SysWork.field_2378 = 0x1000;
         SysWork_StateStepIncrement();
         /* fallthrough */
     case 39:
-        Map_MessageWithAudio(90, &g_MapMsgSoundIdx, &g_MapMsgSounds);
+        Map_MessageWithAudio(90, &g_MapMsgSoundIdx, g_MapMsgSounds);
         sharedFunc_800DA8E8_0_s01(&g_Timer0, Q12(10.0f), Q12(123.0f), Q12(139.0f), true, false);
         break;
     case 40:
@@ -538,7 +538,100 @@ void func_800D2408(void)
     }
 }
 
-INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D2F74);
+void func_800D2F74(void)
+{
+    #define CUTSCENE_SKIP_STATE 10
+    #define PLAYER_PTR &g_SysWork.player_4C.chara_0
+
+
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
+        g_SysWork.sysStateStep_C[0] >= 3 && g_SysWork.sysStateStep_C[0] < 10)
+    {
+        SysWork_NextStateStepSet(CUTSCENE_SKIP_STATE);
+    }
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+    case 0:
+        sharedFunc_800D20E4_0_s00();
+        Fs_QueueStartRead(FILE_ANIM_AQRM_DMS, FS_BUFFER_11);
+        Fs_QueueWaitForEmpty();
+        DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_11);
+        g_SysWork.field_30 = 20;
+        ScreenFade_ResetTimestep();
+        g_MapMsgSoundIdx1 = 0;
+        g_Timer1 = 0;
+        g_SysWork.flags_22A4 |= (1<<3);
+        func_80085EB8(0, PLAYER_PTR, 0x79, false);
+        Game_TurnFlashlightOn();
+        sharedFunc_800D2EB4_0_s00();
+        func_8003D03C();
+        SysWork_StateStepIncrement();
+        g_SysWork.field_30 = 20;
+        g_SysWork.flags_22A4 |= (1<<3);
+        break;
+    case 1:
+        func_8008616C(0, false, 0, 0, false);
+        SysWork_StateStepIncrement();
+        /* fallthrough */
+    case 2:
+        SysWork_StateStepIncrement();
+        /* fallthrough */
+    case 3:
+        sharedFunc_800DA8E8_0_s01(&g_Timer1, Q12(10.0f), Q12(0.0f), 0x22000, true, true);
+        break;
+    case 4:
+        func_80086C58(PLAYER_PTR, 0x74);
+        sharedFunc_800DA8E8_0_s01(&g_Timer1, Q12(10.0f), Q12(35.0f), Q12(71.0f), true, false);
+        break;
+    case 5:
+        func_80085EB8(0, PLAYER_PTR, 0x35, false);
+        SysWork_StateStepIncrement();
+        /* fallthrough */
+    case 6:
+        sharedFunc_800DA8E8_0_s01(&g_Timer1, Q12(15.0f), Q12(72.0f), Q12(93.0f), true, true);
+        break;
+    case 7:
+        SysWork_StateStepIncrement();
+        break;
+    case 8:
+        func_80085EB8(0, PLAYER_PTR, 0x33, false);
+        g_Timer1 = Q12(95.0f);
+        SysWork_StateStepIncrement();
+        /* fallthrough */
+    case 9:
+        Map_MessageWithAudio(0x5B, &g_MapMsgSoundIdx1, g_MapMsgSounds1);
+        break;
+    case CUTSCENE_SKIP_STATE:
+        func_8008616C(2, true, 0, 0, false);
+        if (g_SysWork.sysStateStep_C[0] != 10)
+        {
+            g_Timer1 = Q12(95.0f);
+        }
+        break;
+    default:
+        g_Timer1 = -1;
+        sharedFunc_800D2244_0_s00(false);
+        SysWork_StateSetNext(SysState_Gameplay);
+
+        Savegame_EventFlagSet(EventFlag_305);
+        vcReturnPreAutoCamWork(true);
+        Fs_QueueWaitForEmpty();
+        func_8008616C(0, false, 0, 0, false);
+        func_8008616C(0, false, 2, 0, false);
+        Sd_EngineCmd(19);
+        sharedFunc_800D2EF4_0_s00();
+        func_8003D01C();
+        break;
+    }
+    if (g_Timer1 >= 0)
+    {
+        Dms_CharacterGetPosRot(PLAYER_PTR.position_18, PLAYER_PTR.rotation_24, &D_800CBF94, g_Timer1, (s_DmsHeader* )FS_BUFFER_11);
+        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPos, &g_CutsceneCameraLookAt, NULL, g_Timer1, (s_DmsHeader* )FS_BUFFER_11));
+        vcUserCamTarget(&g_CutsceneCameraPos, NULL, true);
+        vcUserWatchTarget(&g_CutsceneCameraLookAt, NULL, true);
+    }
+}
 
 INCLUDE_RODATA("asm/maps/map4_s01/nonmatchings/map4_s01", D_800CC09C);
 

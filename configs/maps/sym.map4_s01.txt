@@ -107,10 +107,13 @@ MAP_MESSAGES                = 0x800D5718; // type:u32 size:0x1D8
 //--- PA: 0x00C378   VA: 0x800D58F0   subsegment: data
 //----------------------------------------------------
 g_MapMsgSounds              = 0x800D5A1C; // type:u16 size:0x52
+g_MapMsgSounds1             = 0x800D5AC4; // type:u16 size:0x8
 sharedData_800DFB4C_0_s00   = 0x800D5AE0;
 sharedData_800CD77C_1_s04   = 0x800D5AE4; // type:s32
 g_MapMsgSoundIdx            = 0x800D5AEA; // type:u8
 g_Timer0                    = 0x800D5AEC; // type:s32
+g_MapMsgSoundIdx1           = 0x800D5AF0; // type:u8
+g_Timer1                    = 0x800D5AF4; // type:s32
 sharedData_800DFB6C_0_s00   = 0x800D5B10; // type:s32
 sharedData_800DFB70_0_s00   = 0x800D5B14; // type:s32
 g_ParticleVectors0          = 0x800D7F50; // type:ParticleVectors
