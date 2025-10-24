@@ -9,7 +9,6 @@
  *
  * Included in:
  *  MAP0_S00
- *  MAP7_S02
  */
 
 void Ai_Cheryl_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D7FB8
