@@ -456,6 +456,7 @@ Sd_SetReverbEnable                          = 0x80047AFC; // type:func
 //--- PA: 0x0231F0   VA: 0x80047D50   subsegment: c, libsd/bodyprog_CD_80047D50
 //-----------------------------------------------------------------------------
 Sd_StopSeq                                  = 0x8004839C; // type:func
+Cd_TryCmd                                   = 0x80048954; // type:func
 
 //---------------------------------------------------------------
 //--- PA: 0x023ED8   VA: 0x80048A38   subsegment: c, view/vw_main

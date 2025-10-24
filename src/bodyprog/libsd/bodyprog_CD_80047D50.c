@@ -55,7 +55,7 @@ void func_80047D50() // 0x80047D50
 {
     CdlLOC sp10;
 
-    if (!func_80048954(CdlSetloc, (u8*)CdIntToPos(D_800C37D4->field_8 + (D_800C37CC >> 11), &sp10), 0))
+    if (!Cd_TryCmd(CdlSetloc, (u8*)CdIntToPos(D_800C37D4->field_8 + (D_800C37CC >> 11), &sp10), 0))
     {
         D_800C1670.field_0 = 3;
     }
@@ -80,10 +80,10 @@ void func_80047DB0() // 0x80047DB0
         }
 
         D_800C1670.field_0 = 4;
-        D_800C1658.field_0 = 0;
+        D_800C1658.timer_0 = 0;
     }
 
-    D_800C1658.field_0++;
+    D_800C1658.timer_0++;
 }
 
 void func_80047E3C() // 0x80047E3C
@@ -106,7 +106,7 @@ void func_80047E3C() // 0x80047E3C
         D_800C1670.field_0 = 5;
     }
 
-    D_800C1658.field_0++;
+    D_800C1658.timer_0++;
 }
 
 void func_80047F18() // 0x80047F18
@@ -148,7 +148,7 @@ void func_80048000() // 0x80048000
         i = D_800C37D4->field_8 + ((D_800C37CC + 0x7FF) >> 11);
         cdLocRes = CdIntToPos(i, &cdLocArg);
 
-        if (!func_80048954(CdlSetloc, (u8*)cdLocRes, 0))
+        if (!Cd_TryCmd(CdlSetloc, (u8*)cdLocRes, 0))
         {
             D_800C1670.field_0 = 7;
         }
@@ -190,14 +190,14 @@ void func_800480FC() // 0x800480FC
     var1 = D_800C37D4->field_4 - D_800C37CC;
     if (var1 < 51200)
     {
-        var0 = SdVabTransBodyPartly((u8*)CD_ADDR_0, var1, D_800C37C8);
-        D_800C37CC = D_800C37D4->field_4;
+        var0               = SdVabTransBodyPartly((u8*)CD_ADDR_0, var1, D_800C37C8);
+        D_800C37CC         = D_800C37D4->field_4;
         D_800C1670.field_0 = 9;
     }
     else
     {
-        var0 = SdVabTransBodyPartly((u8*)CD_ADDR_0, 0xC800u, D_800C37C8);
-        D_800C37CC += 0xC800;
+        var0               = SdVabTransBodyPartly((u8*)CD_ADDR_0, 0xC800u, D_800C37C8);
+        D_800C37CC        += 0xC800;
         D_800C1670.field_0 = 6;
     }
 
@@ -215,8 +215,8 @@ void func_800481F8() // 0x800481F8
         return;
     }
 
-    D_800C1670.field_0 = 0;
-    D_800C1658.field_0 = 0;
+    D_800C1670.field_0  = 0;
+    D_800C1658.timer_0  = 0;
     D_800C1658.field_15 = 0;
     func_80047A70();
 }
@@ -360,7 +360,7 @@ void func_800483D4() // 0x800483D4
 {
     CdlLOC cdLoc;
 
-    if (!func_80048954(CdlSetloc, (u8*)CdIntToPos(D_800C37D8->field_8, &cdLoc), 0))
+    if (!Cd_TryCmd(CdlSetloc, (u8*)CdIntToPos(D_800C37D8->field_8, &cdLoc), 0))
     {
         D_800C1670.field_0 = 3;
     }
@@ -373,10 +373,10 @@ void func_80048424() // 0x80048424
         CdRead((D_800C37D8->field_4 + 2047) / 2048, FS_BUFFER_1, 128);
         
         D_800C1670.field_0 = 4;
-        D_800C1658.field_0 = 0;
+        D_800C1658.timer_0 = 0;
     }
 
-    D_800C1658.field_0++;
+    D_800C1658.timer_0++;
 }
 
 void func_80048498() // 0x80048498
@@ -410,10 +410,10 @@ void func_80048498() // 0x80048498
             func_80047A70();
         }
 
-        D_800C1658.field_0 = 0;
+        D_800C1658.timer_0 = 0;
     }
 
-    D_800C1658.field_0++;
+    D_800C1658.timer_0++;
 }
 
 void func_800485B0(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4) {}
@@ -563,10 +563,10 @@ void func_800485D8() // 0x800485D8
         }
     }
 
-    if (D_800C1658.field_0 > 600)
+    if (D_800C1658.timer_0 > CD_ERROR_LIMIT)
     {
         CdReset(0);
-        CdControlB(1, 0, 0);
+        CdControlB(CdlNop, NULL, NULL);
         if (D_800C1670.field_0 != 0)
         {
             D_800C1670.field_0 = 1;
@@ -575,29 +575,29 @@ void func_800485D8() // 0x800485D8
         D_800C1670.field_1 = 0;
         D_800C1670.field_2 = 0;
         D_800C1670.field_3 = 0;
-        D_800C1658.field_0 = 0;
+        D_800C1658.timer_0 = 0;
     }
 }
 
-u8 func_80048954(s32 com, u8* param, u8* res) // 0x80048954
+u8 Cd_TryCmd(s32 com, u8* param, u8* res) // 0x80048954
 {
     u8 syncRes;
     u8 comCopy;
     
     comCopy = com;
 
-    if (CdSync(1, &syncRes) == CdlComplete && CdControl(comCopy, param, res) != 0)
+    if (CdSync(1, &syncRes) == CdlComplete && CdControl(comCopy, param, res))
     {
-        D_800C1658.field_0 = 0;
+        D_800C1658.timer_0 = 0;
         return false;
     }
 
-    D_800C1658.field_0++;
+    D_800C1658.timer_0++;
 
-    if (D_800C1658.field_0 > CD_ERROR_LIMIT)
+    if (D_800C1658.timer_0 > CD_ERROR_LIMIT)
     {
         CdReset(0);
-        CdControlB(1, 0, 0);
+        CdControlB(CdlNop, NULL, NULL);
         VSync(SyncMode_Wait3);
         
         if (D_800C1670.field_0 != 0)
@@ -608,7 +608,7 @@ u8 func_80048954(s32 com, u8* param, u8* res) // 0x80048954
         D_800C1670.field_1 = 0;
         D_800C1670.field_2 = 0;
         D_800C1670.field_3 = 0;
-        D_800C1658.field_0 = 0;
+        D_800C1658.timer_0 = 0;
     }
 
     return true;

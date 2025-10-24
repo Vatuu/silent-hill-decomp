@@ -11,9 +11,14 @@
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
 
-// INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_800706E4", D_80028B94);
+/** @note
+ * Functions labeled as NON_MATCHING are actually matched, however,
+ * inserting them causes data shifting in the rodata segment.
+ */
 
-// INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_800706E4", D_800294F4); // Causes missmatch
+INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_800706E4", D_80028B94);
+
+INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_800706E4", D_800294F4);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800706E4", func_800706E4); // 0x800706E4
 
@@ -315,7 +320,7 @@ bool func_800713E8(s32 animStatus, s_SubCharacter* chara, s32 keyframe0, s32 key
     return false;  
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800706E4", func_80071620); // 0x80071620
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800706E4", func_80071620);
 
 void Player_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800717D0
 {
@@ -379,6 +384,7 @@ void Player_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
 
 INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_800706E4", D_800297B8);
 
+#ifdef NON_MATCHING
 static inline void func_80071968_Switch0()
 {
     if (g_SysWork.playerCombatInfo_38.weaponAttack_F != NO_VALUE)
@@ -724,7 +730,11 @@ void Player_AnimUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, s_Anm
         g_Player_IsInWalkToRunTransition = false;
     }
 }
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800706E4", Player_AnimUpdate);
+#endif
 
+#ifdef NON_MATCHING
 void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords)
 {
     SVECTOR       playerAngles;
@@ -2058,7 +2068,11 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
 
     Math_MatrixRotate1(&chara->rotation_24, &coords->coord);
 }
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800706E4", Player_LogicUpdate);
+#endif
 
+#ifdef NON_MATCHING
 void Player_UpperBodyStateUpdate(s_MainCharacterExtra* extra, e_PlayerUpperBodyState upperState, s32 unused, s32 arg3) // 0x80073FC0
 {
     e_PlayerUpperBodyState prevState;
@@ -2219,6 +2233,9 @@ void Player_UpperBodyStateUpdate(s_MainCharacterExtra* extra, e_PlayerUpperBodyS
             break;
     }
 }
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800706E4", Player_UpperBodyStateUpdate);
+#endif
 
 void Player_UpperBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x80074254
 {
@@ -2262,6 +2279,7 @@ void Player_UpperBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
     Player_CombatStateUpdate(chara, extra);
 }
 
+#ifdef NON_MATCHING
 bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x80075504
 {
     s32 enemyAttackedIdx;
@@ -3711,7 +3729,12 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
     return false;
 }
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800706E4", Player_CombatAnimUpdate);
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800706E4", Player_UpperBodyMainUpdate);
+#endif
 
+#ifdef NON_MATCHING
 void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x800771BC
 {
     s32 currentAmmoVar;
@@ -4084,6 +4107,9 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
             break;
     }
 }
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800706E4", Player_CombatStateUpdate);
+#endif
 
 void Player_StepWallStop_MovementCancel(s_SubCharacter* chara, s32 animStatus0, s32 animStatus1, s32 keyframeIdx, e_PlayerLowerBodyState lowerBodyState, s32 headingAngle, s32 aimState) // 0x80077BB8
 {
@@ -4128,6 +4154,7 @@ void Player_StepWallStop_MovementCancel(s_SubCharacter* chara, s32 animStatus0, 
     }
 }
 
+#ifdef NON_MATCHING
 void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x80077D00
 {
 	#define PLAYER_FLAG_STOP_WALKING (1 << 0)
@@ -6092,7 +6119,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
     func_8007B924(chara, extra);
 }
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800706E4", Player_LowerBodyUpdate);
+#endif
 
+#ifdef NON_MATCHING
 void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007B924
 {
     s32 sfx;
@@ -6365,6 +6396,9 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             break;
     }
 }
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800706E4", func_8007B924);
+#endif
 
 void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords) // 0x8007C0D8
 {
@@ -6533,6 +6567,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
     coords->coord.t[2]                        = Q12_TO_Q8(chara->position_18.vz);
 }
 
+#ifdef NON_MATCHING
 void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007C800
 {
     s16 headingAngle;
@@ -7062,6 +7097,9 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
         }
     }
 }
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800706E4", Player_ReceiveDamage);
+#endif
 
 void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords) // 0x8007D090
 {
@@ -7388,6 +7426,7 @@ s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1) // 0x8007D6F0
     return PlayerLowerBodyState_None;
 }
 
+#ifdef NON_MATCHING
 void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
 {
     VECTOR  sp20;
@@ -7666,6 +7705,9 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
 
     D_800C44E0.field_0 = g_SysWork.playerCombatInfo_38.field_0;
 }
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800706E4", func_8007D970);
+#endif
 
 void Game_SavegameResetPlayer() // 0x8007E530
 {
@@ -7884,6 +7926,8 @@ void GameFs_PlayerMapAnimLoad(s32 mapIdx) // 0x8007EB64
     }
 }
 
+
+#ifdef NON_MATCHING
 void func_8007EBBC() // 0x8007EBBC
 {
     s32 var_a1;
@@ -8047,7 +8091,11 @@ void func_8007EBBC() // 0x8007EBBC
         }
     }
 }
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800706E4", func_8007EBBC); // 0x8007EBBC
+#endif
 
+#ifdef NON_MATCHING
 void func_8007F14C(u8 arg0) // 0x8007F14C
 {
     switch (arg0)
@@ -8085,11 +8133,14 @@ void func_8007F14C(u8 arg0) // 0x8007F14C
             break;
     }
 }
+#else
+INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800706E4", func_8007F14C); // 0x8007F14C
+#endif
 
 void Game_PlayerMovementsReset() // 0x8007F1CC
 {
-    g_Player_HasActionInput        = false;
-    g_Player_HasMoveInput   = false;
+    g_Player_HasActionInput          = false;
+    g_Player_HasMoveInput            = false;
     g_Player_IsShooting              = false;
     g_Player_IsAttacking             = false;
     g_Player_IsHoldAttack            = false;

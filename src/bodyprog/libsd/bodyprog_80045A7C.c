@@ -248,7 +248,7 @@ void sd_work_init() // 0x80045E44
     Sd_SetVolXa(0, 0);
 
     D_800C15F0.field_0 = CdlModeSpeed;
-    func_80048954(CdlSetmode, &D_800C15F0.field_0, NULL);
+    Cd_TryCmd(CdlSetmode, &D_800C15F0.field_0, NULL);
 
     for (D_800C15B8 = 0; D_800C15B8 < 31; D_800C15B8++)
     {
@@ -266,7 +266,7 @@ void sd_work_init() // 0x80045E44
     D_800C1658.field_C            = 0;
     D_800C1658.field_4            = 0;
     D_800C1658.field_F.field_0[3] = 0;
-    D_800C1658.field_0            = 0;
+    D_800C1658.timer_0            = 0;
     D_800C1658.field_14           = 0;
     D_800C1658.field_15           = 0;
     D_800C1658.field_16           = 0;
@@ -601,6 +601,7 @@ void func_80046A24(u16 cmd) // 0x80046A24
     }
 }
 
+// Triggered when a FMV have just play.
 void func_80046A70() // 0x80046A70
 {
     u16 prevVal;
@@ -743,7 +744,7 @@ void func_80046C54(u8 arg0, u8 arg1) // 0x80046C54
 
     if (arg0 == 0)
     {
-        D_800C167E = (arg1 * 40) / 127;
+        D_800C1678.field_6 = (arg1 * 40) / 127;
     }
     else if (D_800C1658.field_E < 809)
     {
@@ -1938,19 +1939,20 @@ s32 func_80046DCC(s32 idx) // 0x80046DCC
     return (D_800AA894[idx & 0xFFF].field_8 & 0xFFFFFF) + 32;
 }
 
+// Related to voicelines in cutscenes.
 void func_80046E00() // 0x80046E00
 {
     u32* temp_a1;
     u32* temp_v0;
 
-    D_800C1658.field_0++;
+    D_800C1658.timer_0++;
 
     switch (D_800C1671)
     {
         case 0:
             if (D_800C1658.field_14 == 0)
             {
-                D_800C167E = 24;
+                D_800C1678.field_6 = 24;
             }
 
             D_800C15CA = D_800C1658.field_2;
@@ -1968,20 +1970,20 @@ void func_80046E00() // 0x80046E00
                 case 0x26C:
                 case 0x291:
                 case 0x25E:
-                    D_800C167A = Sd_GetVolSe(84);
+                    D_800C1678.field_2 = Sd_GetVolSe(84);
                     break;
 
                 case 0x2D3:
                 case 0x2D5:
-                    D_800C167A = 50;
+                    D_800C1678.field_2 = 50;
                     break;
 
                 case 0x2D4:
-                    D_800C167A = 40;
+                    D_800C1678.field_2 = 40;
                     break;
 
                 default:
-                    D_800C167A = 84;
+                    D_800C1678.field_2 = 84;
                     break;
             }
 
@@ -1992,9 +1994,9 @@ void func_80046E00() // 0x80046E00
             break;
 
         case 1:
-            if (!func_80048954(CdlSetmode, &D_800C15F0.field_0, NULL))
+            if (!Cd_TryCmd(CdlSetmode, &D_800C15F0.field_0, NULL))
             {
-                D_800C1658.field_0 = 0;
+                D_800C1658.timer_0 = 0;
                 D_800C1671         = 2;
             }
             break;
@@ -2009,9 +2011,9 @@ void func_80046E00() // 0x80046E00
             break;
 
         case 3:
-            if (!func_80048954(CdlSetfilter, &D_800C15F0.field_0, NULL))
+            if (!Cd_TryCmd(CdlSetfilter, &D_800C15F0.field_0, NULL))
             {
-                D_800C1658.field_0 = 0;
+                D_800C1658.timer_0 = 0;
                 D_800C1671         = 4;
             }
             break;
@@ -2034,17 +2036,17 @@ void func_80046E00() // 0x80046E00
             break;
 
         case 5:
-            if (!func_80048954(CdlSeekL, (u8*)&D_800C15E8, NULL))
+            if (!Cd_TryCmd(CdlSeekL, (u8*)&D_800C15E8, NULL))
             {
-                D_800C1658.field_0 = 0;
+                D_800C1658.timer_0 = 0;
                 D_800C1671         = 6;
             }
             break;
 
         case 6:
-            if (!func_80048954(CdlReadN, NULL, NULL))
+            if (!Cd_TryCmd(CdlReadN, NULL, NULL))
             {
-                D_800C1658.field_0 = 0;
+                D_800C1658.timer_0 = 0;
                 D_800C37DC         = 0;
                 D_800C1671         = 7;
             }
@@ -2059,7 +2061,7 @@ void func_80046E00() // 0x80046E00
             D_800C1671         = 0;
 
             func_80047A70();
-            D_800C1658.field_0  = 0;
+            D_800C1658.timer_0  = 0;
             D_800C1658.field_16 = 0;
             break;
     }
@@ -2083,26 +2085,27 @@ void func_800472BC(s32 arg0) // 0x800472BC
     func_800478DC(6);
 }
 
+// Possibly related to audio (Not voicelines) of cutscenes.
 void func_80047308() // 0x80047308
 {
     u32* temp_a1;
     u32* temp_v0;
 
-    D_800C1658.field_0++;
+    D_800C1658.timer_0++;
 
     switch (D_800C1673)
     {
         case 0:
-            D_800C15D0 = D_800C165A;
+            D_800C15D0 = D_800C1658.field_2;
             Sd_SetVolXa(0, 0);
             D_800C15F0.field_0 = CdlModeSF | CdlModeRT | CdlModeSpeed;
             D_800C1673         = 1;
             break;
 
         case 1:
-            if (!func_80048954(CdlSetmode, &D_800C15F0.field_0, NULL))
+            if (!Cd_TryCmd(CdlSetmode, &D_800C15F0.field_0, NULL))
             {
-                D_800C1658.field_0 = 0;
+                D_800C1658.timer_0 = 0;
                 D_800C1673         = 2;
             }
             break;
@@ -2114,9 +2117,9 @@ void func_80047308() // 0x80047308
             return;
 
         case 3:
-            if (!func_80048954(CdlSetfilter, &D_800C15F0.field_0, NULL))
+            if (!Cd_TryCmd(CdlSetfilter, &D_800C15F0.field_0, NULL))
             {
-                D_800C1658.field_0 = 0;
+                D_800C1658.timer_0 = 0;
                 D_800C1673         = 4;
             }
             break;
@@ -2139,20 +2142,20 @@ void func_80047308() // 0x80047308
             break;
 
         case 5:
-            if (!func_80048954(CdlSeekL, (u8*)&D_800C15E8, NULL))
+            if (!Cd_TryCmd(CdlSeekL, (u8*)&D_800C15E8, NULL))
             {
-                D_800C1658.field_0 = 0;
+                D_800C1658.timer_0 = 0;
                 D_800C1673         = 6;
             }
             break;
 
         case 6:
-            if (!func_80048954(CdlPause, NULL, NULL))
+            if (!Cd_TryCmd(CdlPause, NULL, NULL))
             {
                 D_800C1673 = 0;
                 D_800C37DC = 0;
                 func_80047A70();
-                D_800C1658.field_0 = 0;
+                D_800C1658.timer_0 = 0;
             }
             break;
 
@@ -2175,8 +2178,8 @@ void func_80047634() // 0x80047634
     {
         case 0:
             Sd_SetVolXa(D_800C1678.volumeXa_0, D_800C1678.volumeXa_0);
-            D_800C1678.volumeXa_0 = D_800C1678.volumeXa_0 - 24;
-            D_800C1678.field_2    = D_800C1678.volumeXa_0;
+            D_800C1678.volumeXa_0 -= 24;
+            D_800C1678.field_2     = D_800C1678.volumeXa_0;
 
             if (D_800C1678.volumeXa_0 < 2)
             {
@@ -2186,7 +2189,7 @@ void func_80047634() // 0x80047634
 
         case 1:
             D_800C1678.volumeXa_0 = 0;
-            D_800C1678.field_2 = 0;
+            D_800C1678.field_2    = 0;
 
             Sd_SetVolXa(0, 0);
             SdSetSerialAttr(0, 0, 0);
@@ -2195,13 +2198,13 @@ void func_80047634() // 0x80047634
             break;
 
         case 2:
-            if (!func_80048954(CdlPause, NULL, NULL))
+            if (!Cd_TryCmd(CdlPause, NULL, NULL))
             {
-                D_800C1658.field_0 = 0;
+                D_800C1658.timer_0 = 0;
                 D_800C1670.field_2 = 3;
             }
 
-            D_800C1658.field_0++;
+            D_800C1658.timer_0++;
             break;
 
         case 3:
@@ -2211,11 +2214,11 @@ void func_80047634() // 0x80047634
 
             if (D_800C1658.field_14 == 0)
             {
-                D_800C167E = 0x28;
+                D_800C1678.field_6 = 40;
             }
 
             func_80047A70(&D_800C1658);
-            D_800C1658.field_0 = 0;
+            D_800C1658.timer_0 = 0;
             break;
 
         default:
@@ -2257,6 +2260,8 @@ s16 Sd_GetVolSe(s16 arg0) // 0x800478B8
 
 void func_800478DC(u8 cmd) // 0x800478DC
 {
+	// If `cmd` is 2 then it shift the element next to an element containing a value
+	// that matches has 1 inside `D_800C16A8`.
     if (cmd == 2)
     {
         for (D_800C15D8 = 1; D_800C15D8 < 30; D_800C15D8++)
@@ -2273,7 +2278,7 @@ void func_800478DC(u8 cmd) // 0x800478DC
             }
         }
     }
-
+	// Shift the element next to an element containing a value that matches `cmd` inside `D_800C16A8`.
     for (D_800C15D8 = 1; D_800C15D8 < 30; D_800C15D8++)
     {
         if (D_800C16A8[D_800C15D8] == cmd)
@@ -2287,6 +2292,7 @@ void func_800478DC(u8 cmd) // 0x800478DC
         }
     }
 
+	// If element of `D_800C16A8` is empty it asign the value of `cmd`
     for (D_800C15D8 = 0; D_800C15D8 < 31; D_800C15D8++)
     {
         if (D_800C16A8[D_800C15D8] == 0)
@@ -2303,12 +2309,12 @@ void func_80047A70() // 0x80047A70
 {
     if (D_800C16A8[0] != 0)
     {
-        for (D_800C15E0 = 0; D_800C15E0 < 0x1F; D_800C15E0++)
+        for (D_800C15E0 = 0; D_800C15E0 < 31; D_800C15E0++)
         {
             D_800C16A8[D_800C15E0] = D_800C16A8[D_800C15E0 + 1];
         }
 
-        D_800C16A8[0x1F] = 0;
+        D_800C16A8[31] = 0;
     }
 }
 
