@@ -513,8 +513,8 @@ void Ai_Cheryl_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2*
         Ai_Cheryl_Init(chara);
     }
 
-    func_800D8310(chara, coords);       // Control.
-    func_800D8124(chara, coords);       // Translate + rotate.
+    func_800D8310(chara, coords);         // Control.
+    func_800D8124(chara, coords);         // Translate + rotate.
     func_800D802C(chara, anmHdr, coords); // Modulate speed and something else?
 }
 
@@ -524,7 +524,9 @@ void func_800D802C(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
     q19_12      animDur;
     s_AnimInfo* animInfo;
 
-    if (chara->properties_E4.player.afkTimer_E8 == 1)
+#define CHARA_PROPERTIES (chara->properties_E4.dahlia)
+
+    if (CHARA_PROPERTIES.stateIdx0 == 1)
     {
         D_800DF1CC = FP_MULTIPLY_PRECISE(chara->moveSpeed_38, Q12(30.2f), Q12_SHIFT);
     }
@@ -532,7 +534,7 @@ void func_800D802C(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
     moveSpeed = MIN(chara->moveSpeed_38, Q12(2.5f));
     chara->moveSpeed_38 = moveSpeed;
 
-    if (chara->properties_E4.player.afkTimer_E8 == 2)
+    if (CHARA_PROPERTIES.stateIdx0 == 2)
     {
         // TODO: KAUFMAN anim in map0_s00? This might be a different anim table after all.
         animInfo = KAUFMANN_ANIM_INFOS;
@@ -548,7 +550,7 @@ void func_800D802C(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
         animInfo[7].duration_8.constant = animDur;
     }
 
-    if (chara->properties_E4.player.field_F0 == 0)
+    if (CHARA_PROPERTIES.properties_F0.val32 == 0)
     {
         KAUFMANN_ANIM_INFOS[chara->model_0.anim_4.status_0].updateFunc_0(&chara->model_0, anmHdr, coord, &KAUFMANN_ANIM_INFOS[chara->model_0.anim_4.status_0]);
     }
@@ -603,124 +605,76 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
 
     D_800E3A30 = 0;
 
-    switch (chara->properties_E4.player.afkTimer_E8)
+#define CHARA_PROPERTIES (chara->properties_E4.dahlia)
+
+    switch (CHARA_PROPERTIES.stateIdx0)
     {
         case 0:
-            if (chara->properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
+            if (CHARA_PROPERTIES.moveDistance_126 != Q12(0.0f))
             {
-                chara->properties_E4.player.playerMoveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
-                if (chara->properties_E4.player.playerMoveDistance_126 < Q12(0.0f))
+                CHARA_PROPERTIES.moveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
+                if (CHARA_PROPERTIES.moveDistance_126 < Q12(0.0f))
                 {
-                    chara->properties_E4.player.playerMoveDistance_126 = Q12(0.0f);
+                    CHARA_PROPERTIES.moveDistance_126 = Q12(0.0f);
                 }
             }
 
-            if (chara->model_0.stateStep_3 == 0)
-            {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(1, false);
-                chara->model_0.stateStep_3++;
-            }
+            Model_AnimStatusSet(&chara->model_0, 1, false);
+            Character_AnimStateTryReset(chara);
 
-            if (chara->properties_E4.player.runTimer_F8 != 0)
-            {
-                chara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
-                chara->model_0.stateStep_3              = 0;
-                chara->properties_E4.player.runTimer_F8 = 0;
-            }
-
-            chara->properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
+            CHARA_PROPERTIES.field_124 = FP_ANGLE(0.0f);
             break;
 
         case 1:
-            chara->properties_E4.player.playerMoveDistance_126 = chara->properties_E4.player.headingAngle_124;
+            CHARA_PROPERTIES.moveDistance_126 = CHARA_PROPERTIES.field_124;
 
-            if (chara->model_0.stateStep_3 == 0)
-            {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(2, false);
-                chara->model_0.stateStep_3++;
-            }
-
-            if (chara->properties_E4.player.runTimer_F8 != 0)
-            {
-                chara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
-                chara->model_0.stateStep_3              = 0;
-                chara->properties_E4.player.runTimer_F8 = 0;
-            }
+            Model_AnimStatusSet(&chara->model_0, 2, false);
+            Character_AnimStateTryReset(chara);
             break;
 
         case 2:
-            chara->properties_E4.player.playerMoveDistance_126 = chara->properties_E4.player.headingAngle_124;
+            CHARA_PROPERTIES.moveDistance_126 = CHARA_PROPERTIES.field_124;
 
-            if (chara->model_0.stateStep_3 == 0)
-            {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(3, false);
-                chara->model_0.stateStep_3++;
-            }
-
-            if (chara->properties_E4.player.runTimer_F8 != 0)
-            {
-                chara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
-                chara->model_0.stateStep_3              = 0;
-                chara->properties_E4.player.runTimer_F8 = 0;
-            }
+            Model_AnimStatusSet(&chara->model_0, 3, false);
+            Character_AnimStateTryReset(chara);
             break;
 
         case 3:
-            if (chara->properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
+            if (CHARA_PROPERTIES.moveDistance_126 != Q12(0.0f))
             {
-                chara->properties_E4.player.playerMoveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
-                if (chara->properties_E4.player.playerMoveDistance_126 < Q12(0.0f))
+                CHARA_PROPERTIES.moveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
+                if (CHARA_PROPERTIES.moveDistance_126 < Q12(0.0f))
                 {
-                    chara->properties_E4.player.playerMoveDistance_126 = Q12(0.0f);
+                    CHARA_PROPERTIES.moveDistance_126 = Q12(0.0f);
                 }
             }
 
             D_800E3A30 = (g_DeltaTime0 * 8) - g_DeltaTime0;
 
-            if (chara->model_0.stateStep_3 == 0)
-            {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(2, false);
-                chara->model_0.stateStep_3++;
-            }
-
-            if (chara->properties_E4.player.runTimer_F8 != 0)
-            {
-                chara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
-                chara->model_0.stateStep_3              = 0;
-                chara->properties_E4.player.runTimer_F8 = 0;
-            }
+            Model_AnimStatusSet(&chara->model_0, 2, false);
+            Character_AnimStateTryReset(chara);
 
             g_SysWork.player_4C.chara_0.properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
-            chara->properties_E4.player.headingAngle_124                      = FP_ANGLE(0.0f);
+            CHARA_PROPERTIES.field_124                                        = FP_ANGLE(0.0f);
             break;
 
         case 4:
-            if (chara->properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
+            if (CHARA_PROPERTIES.moveDistance_126 != Q12(0.0f))
             {
-                chara->properties_E4.player.playerMoveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
-                if (chara->properties_E4.player.playerMoveDistance_126 < Q12(0.0f))
+                CHARA_PROPERTIES.moveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
+                if (CHARA_PROPERTIES.moveDistance_126 < Q12(0.0f))
                 {
-                    chara->properties_E4.player.playerMoveDistance_126 = Q12(0.0f);
+                    CHARA_PROPERTIES.moveDistance_126 = Q12(0.0f);
                 }
             }
 
             D_800E3A30 = g_DeltaTime0 - (g_DeltaTime0 * 8);
 
-            if (chara->model_0.stateStep_3 == 0)
-            {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(2, false);
-                chara->model_0.stateStep_3++;
-            }
-
-            if (chara->properties_E4.player.runTimer_F8 != 0)
-            {
-                chara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
-                chara->model_0.stateStep_3              = 0;
-                chara->properties_E4.player.runTimer_F8 = 0;
-            }
+            Model_AnimStatusSet(&chara->model_0, 2, false);
+            Character_AnimStateTryReset(chara);
 
             g_SysWork.player_4C.chara_0.properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
-            chara->properties_E4.player.headingAngle_124                      = FP_ANGLE(0.0f);
+            CHARA_PROPERTIES.field_124                                        = FP_ANGLE(0.0f);
             break;
     }
 
@@ -732,34 +686,34 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
 
     if (g_Player_DisableControl)
     {
-        switch (chara->properties_E4.player.afkTimer_E8)
+        switch (CHARA_PROPERTIES.stateIdx0)
         {
             case 1:
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(HarryAnim_WalkForward, true), chara, 16, 28, Sfx_Unk1353, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(2, true), chara, 16, 28, Sfx_Unk1353, pitch0);
                 break;
 
             case 2:
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(HarryAnim_RunForward, true), chara, 53, 42, Sfx_Unk1353, pitch1);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(3, true), chara, 53, 42, Sfx_Unk1353, pitch1);
                 break;
         }
     }
     else
     {
-        switch (chara->properties_E4.player.afkTimer_E8)
+        switch (CHARA_PROPERTIES.stateIdx0)
         {
             case 1:
-                func_800D8748(ANIM_STATUS(HarryAnim_WalkForward, true), chara, 16, 28, distSqr, pitch0);
+                func_800D8748(ANIM_STATUS(2, true), chara, 16, 28, distSqr, pitch0);
                 break;
 
             case 2:
-                func_800D8748(ANIM_STATUS(HarryAnim_RunForward, true), chara, 53, 42, distSqr, pitch1);
+                func_800D8748(ANIM_STATUS(3, true), chara, 53, 42, distSqr, pitch1);
                 break;
         }
     }
 
-    chara->rotation_24.vy  = ABS_ANGLE(chara->rotation_24.vy + (D_800E3A30 >> 4)); // TODO: Why shift 4?
+    chara->rotation_24.vy  = ABS_ANGLE(chara->rotation_24.vy + Q8_TO_Q4(D_800E3A30));
     chara->headingAngle_3C = chara->rotation_24.vy;
-    chara->moveSpeed_38    = chara->properties_E4.player.headingAngle_124;
+    chara->moveSpeed_38    = CHARA_PROPERTIES.field_124;
     chara->field_34       += g_DeltaTime2;
 
     coords->flg = false;
