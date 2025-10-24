@@ -5,9 +5,10 @@
 #include "maps/map0/map0_s00.h" // TODO: Needed for `D_800E39BC`, which should probably be sharedData.
 #include "maps/characters/chara_cheryl.h"
 
-// TODO: Move this to `src/maps/characters/chara_cheryl.c` & change Makefile to include during build
-// or just create a map0_s00/chara_cheryl.c which #includes the actual src/maps/characters/chara_cheryl.c
-// (shared characters will need something similar)
+// AI code for `Chara_GhostChildAlessa`
+//
+// Included in:
+//  MAP0_S00
 
 void Ai_Cheryl_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D7FB8
 {

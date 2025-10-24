@@ -56,13 +56,13 @@ segments:
       # .rodata section
       - [0x0, .rodata, map0_s00_header]
       - [0x1050, .rodata, map0_s00]
-      - [0x18C8, .rodata, chara_cheryl]
+      - [0x18C8, .rodata, Chara_Cheryl]
       - [0x18DC, rodata]
       - [0x18E0, .rodata, map0_s00_2]
 
       # .text section
       - [0x2138, c, map0_s00]
-      - [0xEA40, c, chara_cheryl]
+      - [0xEA40, c, Chara_Cheryl]
       - [0xF334, c, map0_s00_2]
 
       # .data section
