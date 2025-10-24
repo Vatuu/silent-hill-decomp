@@ -11,6 +11,11 @@
  *  MAP0_S00
  */
 
+// TODO: `KAUFMANN` table in map0_s00? This might be a different anim table after all.
+#define ANIM_TABLE KAUFMANN_ANIM_INFOS
+
+extern s_AnimInfo ANIM_TABLE[];
+
 void Ai_Cheryl_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D7FB8
 {
     if (chara->model_0.charaId_0 != Chara_Cheryl)
@@ -41,8 +46,7 @@ void func_800D802C(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
 
     if (CHARA_PROPERTIES.stateIdx0 == 2)
     {
-        // TODO: KAUFMAN anim in map0_s00? This might be a different anim table after all.
-        animInfo = KAUFMANN_ANIM_INFOS;
+        animInfo = ANIM_TABLE;
         if (moveSpeed <= Q12(1.5f))
         {
             animDur = FP_MULTIPLY_PRECISE(moveSpeed, Q12(18.6f), Q12_SHIFT);
@@ -57,7 +61,7 @@ void func_800D802C(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
 
     if (CHARA_PROPERTIES.properties_F0.val32 == 0)
     {
-        KAUFMANN_ANIM_INFOS[chara->model_0.anim_4.status_0].updateFunc_0(&chara->model_0, anmHdr, coord, &KAUFMANN_ANIM_INFOS[chara->model_0.anim_4.status_0]);
+        ANIM_TABLE[chara->model_0.anim_4.status_0].updateFunc_0(&chara->model_0, anmHdr, coord, &ANIM_TABLE[chara->model_0.anim_4.status_0]);
     }
 }
 
