@@ -3625,9 +3625,8 @@ bool func_8005F680(s_Collision* coll);
 void func_8005F6B0(s_SubCharacter* chara, VECTOR* arg1, s32 arg2, s32 arg3);
 
 /** Spatial SFX func? */
-void func_8005DE0C(s32 sfx, VECTOR3*, s32, s32, s32); // Types assumed.
+void func_8005DE0C(s32 sfx, VECTOR3* pos, s32 inVolume, s32 falloff, u8 pitch);
 
-/** Something related to events of the map and loading of textures? */
 void Map_EffectTexturesLoad(s32 mapIdx);
 
 void func_8005E650();

@@ -2632,7 +2632,67 @@ void func_8005DD44(s32 sfx, VECTOR3* pos, q23_8 vol, s8 pitch) // 0x8005DD44
     func_80046620(sfx, balance, ~volCpy, pitch);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005DE0C); // 0x8005DE0C
+static inline s32 calc_atten(s32 volume, VECTOR3* pos, s32 falloff)
+{
+    s32 dist;
+
+    dist = SquareRoot0(SQUARE((g_SysWork.player_4C.chara_0.position_18.vx - pos->vx) >> 6) +
+                       SQUARE((g_SysWork.player_4C.chara_0.position_18.vy - pos->vy) >> 6) +
+                       SQUARE((g_SysWork.player_4C.chara_0.position_18.vz - pos->vz) >> 6)) << 6;
+
+    return (volume * dist / falloff);
+}
+
+void func_8005DE0C(s32 sfx, VECTOR3* pos, s32 inVolume, s32 falloff, u8 pitch)
+{
+    s32 balance;
+
+    u16 finalVol;
+
+    s32 s3;
+    s32 att0;
+    u8 att1;
+    s32 att2;
+
+    if (g_GameWork.config_0.optSoundType_1E != 0)
+    {
+        balance = 0;
+    }
+    else
+    {
+        balance = Sound_StereoBalanceGet(pos);
+    }
+    
+    if (inVolume > 0xFF)
+    {
+        inVolume = 0xFF;
+    }
+
+    if (inVolume < 0)
+    {
+        return;
+    }
+    
+    att0 = calc_atten(inVolume, pos, falloff);
+    s3 = inVolume - 0xFF;
+    if (att0 - s3 >= 0xFF || calc_atten(inVolume, pos, falloff) - s3 >= 0)
+    {
+        att2 = calc_atten(inVolume, pos, falloff) - s3;
+        finalVol = 0xff;
+        if (att2 < 0xff)
+        {
+            att1 = calc_atten(inVolume, pos, falloff) - (inVolume + 1);
+            finalVol = att1;
+        }
+    }
+    else
+    {
+         finalVol = 0;
+    }
+
+
+    func_800463C0(sfx, balance, finalVol, pitch);
+}
 
 void Map_EffectTexturesLoad(s32 mapIdx) // 0x8005E0DC
 {
