@@ -22,13 +22,16 @@
 #define KEYFRAME_PlayerState_Unk69 678
 
 extern u16 g_MapMsgSounds[84];
-extern u8 g_MapMsgSoundIdx;
 extern u16 g_MapMsgSounds1[4];
+extern u16 g_MapMsgSounds2[2];
+extern u8 g_MapMsgSoundIdx;
 extern u8 g_MapMsgSoundIdx1;
+extern u8 g_MapMsgSoundIdx2;
 extern u8 D_800D5AEB;
 extern u8 D_800D5AF0;
 extern s32 g_Timer0;
 extern s32 g_Timer1;
+extern s32 g_Timer2;
 extern VECTOR3 g_CutsceneCameraPos;
 extern VECTOR3 g_CutsceneCameraLookAt;
 
@@ -48,5 +51,7 @@ void func_800D496C(void);
 void func_800D4998(void);
 
 void func_800D2408(void);
+
+void func_800D4410(void);
 
 #endif

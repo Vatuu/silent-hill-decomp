@@ -637,7 +637,124 @@ INCLUDE_RODATA("asm/maps/map4_s01/nonmatchings/map4_s01", D_800CC09C);
 
 INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D3420);
 
-INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D4410);
+void func_800D4410(void)
+{
+    #define CUTSCENE_SKIP_STATE 14
+    #define PLAYER_PTR &g_SysWork.player_4C.chara_0
+
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
+        g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < 13)
+    {
+        Sd_EngineCmd(0x13U);
+        g_SysWork.sysStateStep_C[0] = CUTSCENE_SKIP_STATE;
+    }
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+    case 0:
+        sharedFunc_800D20E4_0_s00();
+        g_SysWork.field_30 = 20;
+        ScreenFade_ResetTimestep();
+        g_SysWork.flags_22A4 |= (1<<3);
+        Fs_QueueStartRead(FILE_ANIM_SQSU_DMS, FS_BUFFER_11);
+        Fs_QueueWaitForEmpty();
+        DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_11);
+        g_Timer2 = 0;
+        g_MapMsgSoundIdx2 = 0;
+        func_80085EB8(0, PLAYER_PTR, 0x7C, false);
+        func_80085EB8(2, PLAYER_PTR, 0, false);
+        func_8008D438();
+        g_SysWork.field_2360.vx = Q12(19.6f);
+        g_SysWork.field_2360.vy = Q12(2.0f);
+        g_SysWork.field_2370.vx = Q12(0.25f);
+        g_SysWork.field_235C = NULL;
+        g_SysWork.field_2360.vz = Q12(62.0f);
+        g_SysWork.field_236C = NULL;
+        g_SysWork.field_2370.vy = 0;
+        g_SysWork.field_2370.vz = 0;
+        g_SysWork.field_2378 = 0x1000;
+        func_8003ED74(14, 14);
+        func_8003D03C();
+        sharedFunc_800D2EB4_0_s00();
+        SysWork_StateStepIncrement();
+        /* fallthrough */
+    case 1:
+        func_8008616C(2, false, 0, Q12(0.5f), false);
+        break;
+    case 2:
+        func_80085EB8(3, PLAYER_PTR, 0, false);
+        Map_MessageWithAudio(0x66, &g_MapMsgSoundIdx2, g_MapMsgSounds2);
+        sharedFunc_800DA8E8_0_s01(&g_Timer2, Q12(10.0f), Q12(0.0f), Q12(106.0f), true, false);
+        break;
+    case 3:
+        func_80085E6C(Q12(1.5f), false);
+        sharedFunc_800DA8E8_0_s01(&g_Timer2, Q12(10.0f), Q12(0.0f), Q12(106.0f), true, false);
+        break;
+    case 4:
+        Map_MessageWithAudio(0x67, &g_MapMsgSoundIdx2, g_MapMsgSounds2);
+        sharedFunc_800DA8E8_0_s01(&g_Timer2, Q12(10.0f), Q12(0.0f), Q12(106.0f), true, false);
+        break;
+    case 5:
+        sharedFunc_800DA8E8_0_s01(&g_Timer2, Q12(10.0f), Q12(0.0f), Q12(106.0f), true, true);
+        break;
+    case 6:
+        func_80085EB8(0, PLAYER_PTR, 0x99, false);
+        SysWork_StateStepIncrement();
+        /* fallthrough */
+    case 7:
+        sharedFunc_800DA8E8_0_s01(&g_Timer2, Q12(10.0f), Q12(107.0f), Q12(128.0f), true, true);
+        break;
+    case 8:
+        MapMsg_DisplayAndHandleSelection(false, 0x68, 0, 0, 0, false);
+        sharedFunc_800DA8E8_0_s01(&g_Timer2, Q12(3.8f), Q12(129.0f), Q12(228.0f), true, false);
+        break;
+    case 9:
+        func_80085E6C(Q12(1.5f), false);
+        sharedFunc_800DA8E8_0_s01(&g_Timer2, Q12(3.8f), Q12(129.0f), Q12(228.0f), true, false);
+        break;
+    case 10:
+        MapMsg_DisplayAndHandleSelection(false, 0x6C, 0, 0, 0, false);
+        sharedFunc_800DA8E8_0_s01(&g_Timer2, Q12(3.8f), Q12(129.0f), Q12(228.0f), true, false);
+        break;
+    case 11:
+        func_80085E6C(Q12(0.6f), false);
+        sharedFunc_800DA8E8_0_s01(&g_Timer2, Q12(3.8f), Q12(129.0f), Q12(228.0f), true, false);
+        break;
+    case 12:
+        func_8008616C(2, true, 0, Q12(1.0f), false);
+        sharedFunc_800DA8E8_0_s01(&g_Timer2, Q12(3.8f), Q12(129.0f), Q12(228.0f), true, false);
+        break;
+    case 13:
+        SysWork_NextStateStepSet(NO_VALUE);
+        break;
+    case CUTSCENE_SKIP_STATE:
+        func_8008616C(2, true, 0, 0, false);
+        break;
+    default:
+        sharedFunc_800D2244_0_s00(true);
+        SysWork_StateSetNext(SysState_Gameplay);
+        Savegame_EventFlagSet(EventFlag_309);
+        vcReturnPreAutoCamWork(true);
+        func_8008616C(0, false, 2, 0, false);
+        func_8008616C(0, false, 0, 0, false);
+        func_8003ED74(7, 4);
+        func_8008D448();
+        func_8003EBA0();
+        g_SysWork.field_2378 = 0x1000;
+        Game_TurnFlashlightOn();
+        g_Timer2 = -1;
+        func_8003D01C();
+        sharedFunc_800D2EF4_0_s00();
+        break;
+    }
+    if (g_Timer2 >= 0)
+    {
+        Dms_CharacterGetPosRot(PLAYER_PTR.position_18, PLAYER_PTR.rotation_24, &D_800CBF94, g_Timer2, (s_DmsHeader* )FS_BUFFER_11);
+        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPos, &g_CutsceneCameraLookAt, NULL, g_Timer2, (s_DmsHeader* )FS_BUFFER_11));
+        vcUserCamTarget(&g_CutsceneCameraPos, NULL, true);
+        vcUserWatchTarget(&g_CutsceneCameraLookAt, NULL, true);
+    }
+}
 
 void func_800D496C(void) // 0x800D496C
 {
