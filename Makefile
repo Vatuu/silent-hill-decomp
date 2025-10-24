@@ -202,6 +202,10 @@ TARGET_OUT := $(foreach target,$(TARGET_IN),$(call get_target_out,$(target)))
 CONFIG_FILES := $(foreach target,$(TARGET_IN),$(call get_yaml_path,$(target)))
 LD_FILES     := $(addsuffix .ld,$(addprefix $(LINKER_DIR)/,$(TARGET_IN)))
 
+# Recursively include any .d dependency files from previous builds.
+# Allowing Make to rebuild targets when any included headers/sources change.
+-include $(shell [ -d $(BUILD_DIR) ] && find $(BUILD_DIR) -name '*.d' || true)
+
 # Rules
 
 default: all
