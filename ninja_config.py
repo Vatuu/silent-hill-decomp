@@ -6,7 +6,7 @@ import subprocess
 import re
 
 
-import ninja_syntax
+from ninja import ninja_syntax
 from dataclasses import dataclass
 from typing import Dict, List, Set, Union
 from pathlib import Path
@@ -57,56 +57,56 @@ class YAML_INFO:
     SPLIT_UNDEF_SYM: str
 
 CONFIG_FILES = [
-    "main.yaml",
+    #"main.yaml",
     "bodyprog.yaml",
-    "screens/b_konami.yaml",
-    "screens/stream.yaml",
-    "screens/options.yaml",
-    "screens/credits.yaml",
-    "screens/saveload.yaml",
-    "maps/map0_s00.yaml",
-    "maps/map0_s01.yaml",
-    #"maps/map0_s02.yaml", # Bugged
-    "maps/map1_s00.yaml",
-    "maps/map1_s01.yaml",
-    "maps/map1_s02.yaml",
-    "maps/map1_s03.yaml",
-    "maps/map1_s04.yaml",
-    "maps/map1_s05.yaml",
-    "maps/map1_s06.yaml",
-    "maps/map2_s00.yaml",
-    "maps/map2_s01.yaml",
-    "maps/map2_s02.yaml",
-    "maps/map2_s03.yaml",
-    "maps/map2_s04.yaml",
-    "maps/map3_s00.yaml",
-    "maps/map3_s01.yaml",
-    "maps/map3_s02.yaml",
-    "maps/map3_s03.yaml",
-    "maps/map3_s04.yaml",
-    "maps/map3_s05.yaml",
-    "maps/map3_s06.yaml",
-    "maps/map4_s00.yaml",
-    "maps/map4_s01.yaml",
-    "maps/map4_s02.yaml",
-    "maps/map4_s03.yaml",
-    "maps/map4_s04.yaml",
-    "maps/map4_s05.yaml",
-    "maps/map4_s06.yaml",
-    "maps/map5_s00.yaml",
-    "maps/map5_s01.yaml",
-    "maps/map5_s02.yaml",
-    "maps/map5_s03.yaml",
-    "maps/map6_s00.yaml",
-    "maps/map6_s01.yaml",
-    "maps/map6_s02.yaml",
-    "maps/map6_s03.yaml",
-    "maps/map6_s04.yaml",
-    "maps/map6_s05.yaml",
-    "maps/map7_s00.yaml",
-    "maps/map7_s01.yaml",
-    "maps/map7_s02.yaml",
-    "maps/map7_s03.yaml"
+    #"screens/b_konami.yaml",
+    #"screens/stream.yaml",
+    #"screens/options.yaml",
+    #"screens/credits.yaml",
+    #"screens/saveload.yaml",
+    #"maps/map0_s00.yaml",
+    #"maps/map0_s01.yaml",
+    ##"maps/map0_s02.yaml", # Bugged
+    #"maps/map1_s00.yaml",
+    #"maps/map1_s01.yaml",
+    #"maps/map1_s02.yaml",
+    #"maps/map1_s03.yaml",
+    #"maps/map1_s04.yaml",
+    #"maps/map1_s05.yaml",
+    #"maps/map1_s06.yaml",
+    #"maps/map2_s00.yaml",
+    #"maps/map2_s01.yaml",
+    #"maps/map2_s02.yaml",
+    #"maps/map2_s03.yaml",
+    #"maps/map2_s04.yaml",
+    #"maps/map3_s00.yaml",
+    #"maps/map3_s01.yaml",
+    #"maps/map3_s02.yaml",
+    #"maps/map3_s03.yaml",
+    #"maps/map3_s04.yaml",
+    #"maps/map3_s05.yaml",
+    #"maps/map3_s06.yaml",
+    #"maps/map4_s00.yaml",
+    #"maps/map4_s01.yaml",
+    #"maps/map4_s02.yaml",
+    #"maps/map4_s03.yaml",
+    #"maps/map4_s04.yaml",
+    #"maps/map4_s05.yaml",
+    #"maps/map4_s06.yaml",
+    #"maps/map5_s00.yaml",
+    #"maps/map5_s01.yaml",
+    #"maps/map5_s02.yaml",
+    #"maps/map5_s03.yaml",
+    #"maps/map6_s00.yaml",
+    #"maps/map6_s01.yaml",
+    #"maps/map6_s02.yaml",
+    #"maps/map6_s03.yaml",
+    #"maps/map6_s04.yaml",
+    #"maps/map6_s05.yaml",
+    #"maps/map7_s00.yaml",
+    #"maps/map7_s01.yaml",
+    #"maps/map7_s02.yaml",
+    #"maps/map7_s03.yaml"
 ]
 
 # Directories
@@ -131,7 +131,7 @@ elif sys.platform == "win32":
     PSXISO_DIR  = f"{TOOLS_DIR}\\psxiso"
 
 # Tooling Paths
-PYTHON = "python"
+PYTHON = "py"
 MASPSX = f"{PYTHON} tools/maspsx/maspsx.py"
 if sys.platform == "linux" or sys.platform == "linux2":
     CROSS     = "mips-linux-gnu"
@@ -155,7 +155,7 @@ elif sys.platform == "win32":
     CPP       = f"{TOOLS_DIR}/win-build/mcpp/mcpp.exe"
     CC        = f"{TOOLS_DIR}/win-build/gcc-psx/cc1psx.exe"
     OBJDIFF   = f"{OBJDIFF_DIR}/objdiff.exe"
-    PREBUILD  = f"{TOOLS_DIR}\\prebuild.bat"
+    PREBUILD  = f"cmd.exe /c {TOOLS_DIR}\\prebuild.bat"
     POSTBUILD = f"{TOOLS_DIR}\\postbuild.bat"
     DUMPSXISO = f"{PSXISO_DIR}\\dumpsxiso.exe"
     ICONV     = f"{TOOLS_DIR}\\win-build\\iconv\\iconv.bat"
@@ -185,10 +185,13 @@ AS_FLAGS      = f"{ENDIAN} {INCLUDE_FLAGS} {OPT_FLAGS} -march=r3000 -mtune=r3000
 OBJDUMP_FLAGS = f"--disassemble-all --reloc --disassemble-zeroes -Mreg-names=32"
 
 def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file):
-    global isExpandDivEnabled
-    #print(f"{target_path} | {source_path} | {type(ninja_file)} | {mapId}")
+    
+    if sys.platform == "win32":
+        source_path = re.sub(r"\\", r"/", source_path)
+        target_path = re.sub(r"\\", r"/", target_path)
     
     # Checks if the path indicates that the source file comes from a map file
+    # in order to asign map flag
     if re.search("^src.maps.*", source_path):
         mapId = (re.search("map\d_s\d\d", source_path)[0]).upper()
         ninja_file.build(
@@ -206,6 +209,9 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file):
             }
         )
     
+    # Checks if the file is part from a memcard file (bodyprog) in order
+    # to enable iconv conversion, otherwise checks if the files is from
+    # the executable or an overlay in order to asign the intended DL flag
     if re.search("^src.bodyprog.memcard*", source_path):
         ninja_file.build(
             outputs=f"{target_path}.sjis.i", rule="iconv", inputs=f"{target_path}.i", implicit=f"{target_path}.i"
@@ -216,22 +222,24 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file):
                 "DLFLAG": DL_OVL_FLAGS
             }
         )
+    elif re.search("^src.main.*", source_path):
+        ninja_file.build(
+            outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.i", implicit=f"{target_path}.i",
+            variables={
+                "DLFLAG": DL_EXE_FLAGS
+            }
+        )
     else:
-        if re.search("^src.main.*", source_path):
-            ninja_file.build(
-                outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.i", implicit=f"{target_path}.i",
-                variables={
-                    "DLFLAG": DL_EXE_FLAGS
-                }
-            )
-        else:
-            ninja_file.build(
-                outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.i", implicit=f"{target_path}.i",
-                variables={
-                    "DLFLAG": DL_OVL_FLAGS
-                }
-            )
+        ninja_file.build(
+            outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.i", implicit=f"{target_path}.i",
+            variables={
+                "DLFLAG": DL_OVL_FLAGS
+            }
+        )
     
+    # Checks if the file are either `smf_io` or `smf_mid` (bodyprog) in order
+    # to enable `--expand-div` parameter, otherwise checks if the files is
+    # from the executable or an overlay in order to asign the intended DL flag
     if re.search("smf_io", source_path) or re.search("smf_mid", source_path):
         ninja_file.build(
             outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s", implicit=f"{target_path}.c.s",
@@ -240,7 +248,7 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file):
                 "DLFLAG": DL_OVL_FLAGS
             }
         )
-    elif re.search("^src/main.*", source_path):
+    elif re.search("^src.main.*", source_path):
         ninja_file.build(
             outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s", implicit=f"{target_path}.c.s",
             variables={
@@ -258,8 +266,6 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file):
         )
 
 def ninja_setup(split_entries, skip_checksum: bool):
-    global isExpandDivEnabled
-    isExpandDivEnabled = False
 
     ninja = ninja_syntax.Writer(open(str("build.ninja"), "w", encoding="utf-8"), width=9999)
     
@@ -330,22 +336,13 @@ def ninja_setup(split_entries, skip_checksum: bool):
     
     # Build all the objects
     for split_config in split_entries:
-        if sys.platform == "linux" or sys.platform == "linux2":
-            match split_config.SPLIT_BASENAME:
-                case "STREAM.BIN":
-                    os.system(f"{PREBUILD} screens/stream")
-                case "main":
-                    os.system(f"{PREBUILD} main")
-                case "BODYPROG.BIN":
-                    os.system(f"{PREBUILD} bodyprog")
-        elif sys.platform == "win32":
-            match split_config.SPLIT_BASENAME:
-                case "main":
-                    os.system(f"cmd.exe /c {PREBUILD} main")
-                case "STREAM.BIN":
-                    os.system(f"cmd.exe /c {PREBUILD} screens\\stream")
-                case "BODYPROG.BIN":
-                    os.system(f"cmd.exe /c {PREBUILD} bodyprog")
+        match split_config.SPLIT_BASENAME:
+            case "main":
+                os.system(f"{PREBUILD} main")
+            case "BODYPROG.BIN":
+                os.system(f"{PREBUILD} bodyprog")
+            case "STREAM.BIN":
+                os.system(f"{PREBUILD} stream")
         
         for split_entry in split_config.SPLIT_ENTRIES:
             for entry in split_entry:

@@ -13,7 +13,7 @@ SKIP_ASM       ?= 0
 # Retail:
 # USA
 
-GAME_VERSION = JAP-2
+GAME_VERSION = USA
 
 ifeq ($(GAME_VERSION), USA)
 

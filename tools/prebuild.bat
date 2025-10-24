@@ -1,21 +1,17 @@
 @echo off
 setlocal enabledelayedexpansion
-echo %1
 
 :: Pls don't make me get the BAD+ ending because of this horrid of code ;-; -Will
 
 if %1 == main (
-	echo MAIN
 	goto replace_o
 )
-if %1 == screens\stream (
-	echo STREAM
+if %1 == stream (
 	goto replace_bss
 	:return_stream
 	goto replace_o
 )
 if %1 == bodyprog (
-	echo BODYFROG
 	goto replace_bss
 	:return_bodyfrog
 	goto replace_o
@@ -23,7 +19,7 @@ if %1 == bodyprog (
 
 goto eof
 :replace_bss
-if %1 == screens\stream (
+if %1 == stream (
 	set mainbss=asm\\screens\\stream\\data\\stream_801F50E4.bss.s
 	set tempbss=!mainbss!.temp
 	
@@ -79,17 +75,6 @@ if %1 == bodyprog (
 	for /f "delims=" %%b in (!mainbss!) do (
 		set s=%%b
 		set s=!s:.word 0x2E090A0D=.word 0x00000000!
-		>>!tempbss! echo !s!
-	)
-
-	del !mainbss!
-	
-	copy !tempbss! !mainbss! > NUL
-	
-	del !tempbss!
-	
-	for /f "delims=" %%b in (!mainbss!) do (
-		set s=%%b
 		set s=!s:.word 0x61783009=.word 0x00000000!
 		>>!tempbss! echo !s!
 	)
@@ -104,8 +89,13 @@ if %1 == bodyprog (
 )
 goto eof
 :replace_o
-set "mainlinker=linkers\%1.ld"
-set "templinker=linkers\%1.ld.temp"
+if %1 == stream (
+	set "mainlinker=linkers\screens\%1.ld"
+	set "templinker=linkers\screens\%1.ld.temp"
+) else (
+	set "mainlinker=linkers\%1.ld"
+	set "templinker=linkers\%1.ld.temp"
+)
 
 for /f "delims=" %%a in (!mainlinker!) do (
 	set s=%%a
