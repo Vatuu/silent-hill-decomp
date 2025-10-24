@@ -304,7 +304,89 @@ const char* MAP_MESSAGES[] = {
     "\tLooks_like_an_altar. ~N\n\tWonder_what_they_worship? ~E "
 };
 
-INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800D1FF0);
+void func_800D1FF0(void)
+{
+    s32 tmp;
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+    case 0:
+        sharedFunc_800D20E4_0_s00();
+        SysWork_StateStepIncrement();
+        /* fallthrough */
+    case 1:
+        func_80085DF0();
+        break;
+    case 2:
+        MapMsg_DisplayAndHandleSelection(true, 100, 3, -1, 0, false); // Do you want to push the cabinet?
+        break;
+    case 3:
+        func_8008616C(0, true, 2, Q12(0.0f), false);
+        SysWork_StateStepIncrement();
+        /* fallthrough */
+    case 4:
+        func_80085E6C(Q12(1.5f), false);
+        break;
+    case 5:
+        Camera_PositionSet(NULL, Q12(179.35f), Q12(-1.5f), Q12(61.0098f), 0, 0, 0, 0, true);
+        Camera_LookAtSet(NULL, Q12(176.98f), Q12(-0.49f), Q12(64.07f), 0, 0, 0, 0, true);
+        Sd_EngineCmd(Sfx_Unk1538);
+        func_80085EB8(0, &g_SysWork.player_4C.chara_0, 105, false);
+        g_SysWork.player_4C.chara_0.position_18.vx = Q12(178.3f);
+        g_SysWork.player_4C.chara_0.position_18.vz = Q12(61.9f);
+        g_SysWork.player_4C.chara_0.rotation_24.vy = 0;
+        func_8003D03C();
+        sharedFunc_800D2EB4_0_s00();
+        func_8003CDA0(0xA0);
+        Chara_Load(0, Chara_Cybil, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+        Savegame_EventFlagSet(EventFlag_302);
+        SysWork_StateStepIncrement();
+        /* fallthrough */
+    case 6:
+        tmp = FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.22f), Q12_SHIFT);
+
+        g_SysWork.player_4C.chara_0.position_18.vz += tmp;
+        Wobj_D_800D7FF0.position_1C.vz += tmp;
+
+        D_800D5AE8 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(2.0f), Q12_SHIFT);
+        if (D_800D5AE8 > Q12(1.0f))
+        {
+            D_800D5AE8 = Q12(1.0f);
+        }
+
+        if (Wobj_D_800D7FF0.position_1C.vz > Q12(63.6814f))
+        {
+            tmp = Wobj_D_800D7FF0.position_1C.vz - Q12(63.6814f);
+            g_SysWork.player_4C.chara_0.position_18.vz -= tmp;
+            Wobj_D_800D7FF0.position_1C.vz -= tmp;
+            SysWork_StateStepIncrement();
+        }
+
+        func_8005DE0C(Sfx_Unk1538, &Wobj_D_800D7FF0.position_1C, D_800D5AE8 >> 5, Q12(12.0f), 0);
+        break;
+    case 7:
+        D_800D5AE8 -= FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(2.0f), Q12_SHIFT);
+        if (D_800D5AE8 < 0)
+        {
+            D_800D5AE8 = 0;
+        }
+        func_8008616C(2, true, 0, Q12(3.0f), false);
+        func_8005DE0C(Sfx_Unk1538, &Wobj_D_800D7FF0.position_1C, D_800D5AE8 >> 5, Q12(12.0f), 0);
+        break;
+    default:
+        if (Savegame_EventFlagGet(EventFlag_302))
+        {
+            func_8004690C(Sfx_Unk1538);
+            SysWork_StateSetNext(SysState_Gameplay);
+
+            func_8008616C(0, false, 2, Q12(0.0f), false);
+            break;
+        }
+        sharedFunc_800D2244_0_s00(false);
+        SysWork_StateSetNext(SysState_Gameplay);
+        break;
+    }
+}
 
 // TODO replace these strings and vector once all users are decompiled
 extern const VECTOR3 D_800CBF88;

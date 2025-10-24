@@ -86,6 +86,7 @@ extern s_WorldObjectPos  Wobj_D_800D8070;
 extern s_WorldObjectPos  Wobj_D_800D8090;
 extern s_WorldObjectDesc Wobj_D_800D80B0;
 extern s_WorldObjectDesc_norot Wobj_D_800D80E0[2];
+extern s16 D_800D5AE8;
 
 void func_800D1B78(s32 arg0);
 
