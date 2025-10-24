@@ -154,7 +154,20 @@ void func_800D450C(s32 arg0, s32 arg1) // 0x800D450C
     sharedData_800D8616_1_s05 += arg1;
 }
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D4530);
+s32 func_800D4530(s_SubCharacter* chara)
+{
+    u32 timer;
+    s32 ret;
+
+    timer = chara->properties_E4.player.runTimer_F8;
+    ret = 0;
+    if (((timer > 0xC6000) && (chara->model_0.anim_4.time_4 < 0xAF000)) ||
+        (( timer < 0xAF000) && (chara->model_0.anim_4.time_4 > 0xC6000)))
+    {
+        ret = 1;
+    }
+    return ret;
+}
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D4594);
 
