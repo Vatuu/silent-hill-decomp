@@ -2703,7 +2703,7 @@ void sharedFunc_800CF990_1_s05(s_SubCharacter*);
 
 void sharedFunc_800CFE94_1_s05(s_SubCharacter*);
 
-void sharedFunc_800D0054_1_s05(s_SubCharacter*);
+void sharedFunc_800D0054_1_s05(s_SubCharacter* splithead);
 
 void sharedFunc_800D267C_1_s05(s_SubCharacter*);
 
