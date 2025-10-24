@@ -1,5 +1,94 @@
-// Ai_Alessa
+#include "bodyprog/bodyprog.h"
+#include "bodyprog/math/math.h"
+#include "main/rng.h"
+#include "maps/shared.h"
+#include "maps/characters/Chara_Alessa.h"
 
+/** AI code for `Chara_Alessa`
+ *
+ * Included in:
+ *  MAP3_S02
+ *  MAP6_S02
+ *  MAP6_S04
+ *  MAP7_S03
+ */
+
+/** Addresses
+ * MAP3_S02: 0x800CEC88
+ * MAP6_S02: 0x800CD734
+ * MAP6_S04: 0x800DC2B4
+ * MAP7_S03: 0x800D2F08
+ */
+void Ai_Alessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+{
+    if (chara->model_0.state_2 == 0)
+    {
+        Ai_Alessa_Init(chara);
+    }
+
+    sharedFunc_800CEEDC_3_s02(chara, coords);
+    sharedFunc_800CED44_3_s02(chara, coords);
+    sharedFunc_800CECFC_3_s02(chara, anmHdr, coords);
+}
+
+/** Addresses
+ * MAP3_S02: 0x800CECFC
+ * MAP6_S02: 0x800CD7A8
+ * MAP6_S04: 0x800DC328
+ * MAP7_S03: 0x800D2F7C
+ */
+void sharedFunc_800CECFC_3_s02(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coord)
+{
+    if (chara->properties_E4.player.field_F0 == 0)
+    {
+        s_AnimInfo* animInfo = &ALESSA_ANIM_INFOS[chara->model_0.anim_4.status_0];
+        animInfo->updateFunc_0(&chara->model_0, anmHdr, coord, animInfo);
+    }
+}
+
+/** Addresses
+ * MAP3_S02: 0x800CED44
+ * MAP6_S02: 0x800CD7F0
+ * MAP6_S04: 0x800DC370
+ * MAP7_S03: 0x800D2FC4
+ */
+void sharedFunc_800CED44_3_s02(s_SubCharacter* chara, GsCOORDINATE2* coord)
+{
+    VECTOR3 unused;
+    VECTOR3 vec;
+    s32     moveSpeed;
+    s16     headingAngle;
+    s32     moveAmt;
+    s32     scaleRestoreShift;
+    u32     scaleReduceShift;
+
+    unused       = chara->position_18;
+    moveSpeed    = chara->moveSpeed_38;
+    headingAngle = chara->headingAngle_3C;
+    moveAmt      = FP_MULTIPLY_PRECISE(moveSpeed, g_DeltaTime0, Q12_SHIFT);
+
+    scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
+    scaleReduceShift  = scaleRestoreShift >> 1;
+
+    vec.vx = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    vec.vz = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    vec.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
+
+    chara->position_18.vx += vec.vx;
+    chara->position_18.vy = 0;
+    chara->position_18.vz += vec.vz;
+
+    coord->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
+    coord->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
+    coord->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
+}
+
+/** Addresses
+ * MAP3_S02: 0x800CEEDC
+ * MAP6_S02: 0x800CD988
+ * MAP6_S04: 0x800DC508
+ * MAP7_S03: 0x800D315C
+ */
 void sharedFunc_800CEEDC_3_s02(s_SubCharacter* chara, GsCOORDINATE2* coords)
 {
     s_Collision coll;
@@ -150,4 +239,16 @@ void sharedFunc_800CEEDC_3_s02(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
     coords->flg = 0;
     Math_MatrixRotate1(&chara->rotation_24, &coords->coord);
+}
+
+/** Addresses
+ * MAP3_S02: 0x800CF3E0
+ * MAP6_S02: 0x800CDE8C
+ * MAP6_S04: 0x800DCA0C
+ * MAP7_S03: 0x800D3660
+ */
+void Ai_Alessa_Init(s_SubCharacter* chara)
+{
+    sharedFunc_800D923C_0_s00(chara);
+    sharedData_800D3150_3_s02 = 0;
 }

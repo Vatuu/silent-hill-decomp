@@ -55,11 +55,24 @@ segments:
     subsegments:
       # .rodata section
       - [0x0, .rodata, map7_s03]
+      - [0x1528, .rodata, Chara_Cybil]
+      - [0x1618, .rodata, Chara_Dahlia]
+      - [0x16EC, rodata]
+      - [0x16F0, .rodata, Chara_Alessa]
+      - [0x171C, rodata]
+      - [0x1720, .rodata, Chara_BloodyIncubator]
+      - [0x1750, .rodata, Chara_Kaufmann]
       - [0x181C, rodata]
       - [0x1820, .rodata, map7_s03_2]
 
       # .text section
       - [0x3BF8, c, map7_s03]
+      - [0x7B20, c, Chara_Cybil]
+      - [0x8DF0, c, Chara_Dahlia]
+      - [0x9990, c, Chara_Alessa]
+      - [0xA10C, c, Chara_BloodyIncubator]
+      - [0xA64C, c, Chara_Incubator]
+      - [0xA9E0, c, Chara_Kaufmann]
       - [0xB6D8, c, Chara_BloodyLisa]
       - [0xBAC8, c, map7_s03_2]
 

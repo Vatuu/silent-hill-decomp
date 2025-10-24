@@ -2277,16 +2277,11 @@ extern s16 sharedData_800D8616_1_s05;
 
 extern u8 sharedData_800DCC14_1_s00[];
 
-// Two variables used by `Ai_Cybil_Init`.
-extern s32 sharedData_800E2378_0_s01;
-extern s32 sharedData_800E237C_0_s01;
-
 // Two variables used by `Ai_Dahlia_Init`.
 extern s32 sharedData_800D16E0_2_s01;
 extern u8  sharedData_800D16E4_2_s01;
 
 extern s_AnimInfo ALESSA_ANIM_INFOS[];
-extern s32 sharedData_800D3150_3_s02; // Used by `Ai_Alessa_Init`.
 
 extern s32 sharedData_800D5CF4_3_s00; // Used by `Ai_Kaufmann_Init`.
 
@@ -2718,16 +2713,6 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter*);
 void sharedFunc_800D4070_1_s05(s_SubCharacter*);
 
 extern GsCOORDINATE2* sharedData_800D8610_1_s05;
-
-void Ai_Cybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-
-void sharedFunc_800D8888_0_s01(s_SubCharacter* chara, s_AnmHeader* animHdr, GsCOORDINATE2* coord);
-
-void sharedFunc_800D88D0_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coord);
-
-void sharedSymbol_800D8A68_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coords);
-
-void Ai_Cybil_Init(s_SubCharacter* chara);
 
 void Ai_AirScreamer_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 

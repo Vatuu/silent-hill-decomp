@@ -1,4 +1,18 @@
-// Ai_Cybil
+#include "bodyprog/bodyprog.h"
+#include "bodyprog/math/math.h"
+#include "bodyprog/player_logic.h"
+#include "main/rng.h"
+#include "maps/shared.h"
+#include "maps/characters/Chara_Cybil.h"
+
+/** AI code for `Chara_Cybil`
+ *
+ * Included in:
+ *  MAP0_S01
+ *  MAP4_S01
+ *  MAP6_S01
+ *  MAP7_S03
+ */
 
 #if defined(MAP4_S01) || defined(MAP0_S01)
 #define ANIM_TABLE KAUFMANN_ANIM_INFOS
@@ -6,6 +20,84 @@
 #define ANIM_TABLE CYBIL_ANIM_INFOS
 #endif
 
+/** Addresses
+ * MAP0_S01: 0x800D8814
+ * MAP4_S01: 0x800CFDF0
+ * MAP6_S01: 0x800CE4FC
+ * MAP7_S03: 0x800D1098
+ */
+void Ai_Cybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+{
+    if (chara->model_0.state_2 == 0)
+    {
+        Ai_Cybil_Init(chara);
+    }
+
+    sharedSymbol_800D8A68_0_s01(chara, coords);
+    sharedFunc_800D88D0_0_s01(chara, coords);
+    sharedFunc_800D8888_0_s01(chara, anmHdr, coords);
+}
+
+/** Addresses
+ * MAP0_S01: 0x800D8888
+ * MAP4_S01: 0x800CFE64
+ * MAP6_S01: 0x800CE570
+ * MAP7_S03: 0x800D110C
+ */
+void sharedFunc_800D8888_0_s01(s_SubCharacter* chara, s_AnmHeader* animHdr, GsCOORDINATE2* coord)
+{
+    s_AnimInfo* animInfo;
+
+    if (chara->properties_E4.player.field_F0 == 0)
+    {
+        animInfo = &ANIM_TABLE[chara->model_0.anim_4.status_0];
+        animInfo->updateFunc_0(&chara->model_0, animHdr, coord, animInfo);
+    }
+}
+
+/** Addresses
+ * MAP0_S01: 0x800D88D0
+ * MAP4_S01: 0x800CFEAC
+ * MAP6_S01: 0x800CE5B8
+ * MAP7_S03: 0x800D1154
+ */
+void sharedFunc_800D88D0_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coord)
+{
+    VECTOR3 unused;
+    VECTOR3 vec;
+    s32     moveSpeed;
+    s16     headingAngle;
+    s32     moveAmt;
+    s32     scaleRestoreShift;
+    u32     scaleReduceShift;
+
+    unused       = chara->position_18;
+    moveSpeed    = chara->moveSpeed_38;
+    headingAngle = chara->headingAngle_3C;
+    moveAmt      = FP_MULTIPLY_PRECISE(moveSpeed, g_DeltaTime0, Q12_SHIFT);
+
+    scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
+    scaleReduceShift  = scaleRestoreShift >> 1;
+
+    vec.vx = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    vec.vz = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    vec.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
+
+    chara->position_18.vx += vec.vx;
+    chara->position_18.vy  = 0;
+    chara->position_18.vz += vec.vz;
+
+    coord->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
+    coord->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
+    coord->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
+}
+
+/** Addresses
+ * MAP0_S01: 
+ * MAP4_S01: 
+ * MAP6_S01: 
+ * MAP7_S03: 
+ */
 void sharedSymbol_800D8A68_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
 {
     s_Collision coll;
@@ -437,4 +529,23 @@ void sharedSymbol_800D8A68_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
     coords->flg = 0;
     Math_MatrixRotate1(&chara->rotation_24, &coords->coord);
+}
+
+/** Addresses
+ * MAP0_S01: 0x800D9AD0
+ * MAP4_S01: 0x800D1084
+ * MAP6_S01: 0x800CF794
+ * MAP7_S03: 0x800D232C
+ */
+void Ai_Cybil_Init(s_SubCharacter* chara)
+{
+    sharedFunc_800D923C_0_s00(chara);
+    sharedData_800E2378_0_s01 = 0;
+    sharedData_800E237C_0_s01 = 0;
+
+#ifdef MAP7_S03
+    func_8003DD80(Chara_EndingCybil, 17);
+#else
+    func_8003DD80(Chara_Cybil, 17);
+#endif
 }
