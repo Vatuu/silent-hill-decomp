@@ -486,9 +486,15 @@ typedef struct
             s16 field_0;
             s16 field_2;
         } s_0;
+        struct
+        {
+            s16 field_0;
+            u8  field_2;
+            u8  field_3;
+        } s_1;
     } field_10;
-} s_mapHeader_field_4C;
-STATIC_ASSERT_SIZEOF(s_mapHeader_field_4C, 20);
+} s_MapHdr_field_4C;
+STATIC_ASSERT_SIZEOF(s_MapHdr_field_4C, 20);
 
 typedef struct _Collision
 {
@@ -1762,7 +1768,7 @@ typedef struct _MapOverlayHeader
     void                   (*func_40)();
     void                   (*func_44)();
     void                   (*func_48)(); // func(?).
-    s_mapHeader_field_4C*  unkTable1_4C;
+    s_MapHdr_field_4C*  unkTable1_4C;
     s16                    unkTable1Count_50;
     s8                     unk_52[2];
     s_BloodSplat*          bloodSplats_54;

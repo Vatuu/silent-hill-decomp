@@ -9,7 +9,7 @@
 #define func_800CECDC (0x800CECDC)
 
 extern u8 D_800CFD90[];
-extern s_mapHeader_field_4C D_800D03DC[100];
+extern s_MapHdr_field_4C D_800D03DC[100];
 extern s_BloodSplat g_Effect_BloodSplats[BLOOD_SPLAT_COUNT_MAX];
 extern s_AnimInfo HARRY_M0S02_ANIM_INFOS[];
 

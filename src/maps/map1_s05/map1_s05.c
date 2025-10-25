@@ -16,7 +16,23 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CB040);
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CB884);
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CBE7C);
+void func_800CBE7C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
+{
+    s32 i;
+    i = func_8005E7E0(7);
+    if (i != NO_VALUE)
+    {
+        g_MapHdr_Table_4C[i].vx_0 = ((arg0 + (Rng_Rand16() & 63)) - 32) * 16;
+        g_MapHdr_Table_4C[i].vy_8 = (arg1 + (Rng_Rand16() & 63)) * 16;
+        g_MapHdr_Table_4C[i].vz_4 = ((arg2 + (Rng_Rand16() & 63)) - 32) * 16;
+        g_MapHdr_Table_4C[i].field_B = 0;
+        g_MapHdr_Table_4C[i].field_C.field_0 = 0;
+        g_MapHdr_Table_4C[i].field_E.field_0 = arg3;
+        g_MapHdr_Table_4C[i].field_10.s_1.field_0 = arg4;
+        g_MapHdr_Table_4C[i].field_10.s_1.field_2 = (Rng_Rand16() & 31) + 16;
+        g_MapHdr_Table_4C[i].field_10.s_1.field_3 = Rng_Rand16() & 15;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CBF74);
 

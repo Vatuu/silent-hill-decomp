@@ -3,6 +3,7 @@
 
 extern u8 D_800D5C3C;
 extern s16 D_800D5880;
+extern s_MapHdr_field_4C g_MapHdr_Table_4C[500];
 
 void func_800D450C(s32 arg0, s32 arg1);
 void func_800D17BC(s_SubCharacter* chara);

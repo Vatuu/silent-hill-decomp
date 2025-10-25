@@ -17,7 +17,7 @@
 
 extern u8 D_800DDFB8[];
 extern s_AnimInfo HARRY_M0S01_ANIM_INFOS[];
-extern s_mapHeader_field_4C D_800DE270[300];
+extern s_MapHdr_field_4C D_800DE270[300];
 extern s_BloodSplat g_Effect_BloodSplats[BLOOD_SPLAT_COUNT_MAX];
 extern s32 D_800DFB10[];
 extern s_UnkStruct3_Mo g_MapHeaders_38[21];

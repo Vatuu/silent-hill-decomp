@@ -14,7 +14,7 @@
 #define func_800DB94C (void(*)(void))0x800DB94C
 
 extern u8 D_800DF754[];
-extern s_mapHeader_field_4C D_800DFB7C[200];
+extern s_MapHdr_field_4C D_800DFB7C[200];
 extern s_BloodSplat g_Effect_BloodSplats[BLOOD_SPLAT_COUNT_MAX];
 
 extern s_AnimInfo HARRY_M0S00_ANIM_INFOS[];

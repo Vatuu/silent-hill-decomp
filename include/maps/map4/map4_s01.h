@@ -45,7 +45,7 @@ typedef struct _mapHeader_field_5C {
     s32 field_20;
     s32 field_24;
 } s_mapHeader_field_5C;
-extern s_mapHeader_field_4C D_800D5B20[450];
+extern s_MapHdr_field_4C D_800D5B20[450];
 extern s_mapHeader_field_5C D_800D7F20;
 
 extern u16 g_MapMsgSounds[84];
