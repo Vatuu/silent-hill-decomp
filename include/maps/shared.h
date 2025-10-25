@@ -2281,8 +2281,6 @@ extern u8  sharedData_800D16E4_2_s01;
 
 extern s_AnimInfo ALESSA_ANIM_INFOS[];
 
-extern s32 sharedData_800D5CF4_3_s00; // Used by `Ai_Kaufmann_Init`.
-
 extern s_AnimInfo BLOODSUCKER_ANIM_INFOS[];
 
 extern u8 sharedData_800DD591_0_s00;
@@ -2795,13 +2793,6 @@ bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyfra
 void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1);
 
 bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 sfx, s32 pitch);
-
-// `Ai_Kaufmann` related
-void Ai_Kaufmann_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void sharedSymbol_800CF470_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coords);
-void sharedFunc_800CF2D8_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coord);
-void sharedFunc_800CF290_3_s00(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coord);
-void Ai_Kaufmann_Init(s_SubCharacter* chara);
 
 // `Ai_Bloodsucker` related
 void Ai_Bloodsucker_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);

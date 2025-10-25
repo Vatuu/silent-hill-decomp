@@ -31,8 +31,16 @@ sharedData_800CAB70_0_s00      = 0x800CACD8; // type:VECTOR
 //--- PA: 0x001BA8   VA: 0x800CB120   subsegment: .rodata, Chara_GhostChildAlessa
 //-------------------------------------------------------------------------------
 
+//-----------------------------------------------------------------------
+//--- PA: 0x001BD8   VA: 0x800CB150   subsegment: .rodata, Chara_Kaufmann
+//-----------------------------------------------------------------------
+
+//------------------------------------------------------
+//--- PA: 0x001CA4   VA: 0x800CB21C   subsegment: rodata
+//------------------------------------------------------
+
 //-------------------------------------------------------------------
-//--- PA: 0x001BD8   VA: 0x800CB150   subsegment: .rodata, map7_s02_2
+//--- PA: 0x001CA8   VA: 0x800CB220   subsegment: .rodata, map7_s02_2
 //-------------------------------------------------------------------
 
 
@@ -137,17 +145,25 @@ sharedFunc_800D4A74_7_s01      = 0x800D7B24; // type:func
 sharedFunc_800D4C0C_7_s01      = 0x800D7CBC; // type:func
 Ai_GhostChildAlessa_Init       = 0x800D7E88; // type:func
 
-//-------------------------------------------------------------
-//--- PA: 0x00E934   VA: 0x800D7EAC   subsegment: c, map7_s02_2
-//-------------------------------------------------------------
+//-----------------------------------------------------------------
+//--- PA: 0x00E934   VA: 0x800D7EAC   subsegment: c, Chara_Kaufmann
+//-----------------------------------------------------------------
 Ai_Kaufmann_Update             = 0x800D7EAC; // type:func
 sharedFunc_800CF290_3_s00      = 0x800D7F20; // type:func
 sharedFunc_800CF2D8_3_s00      = 0x800D7F68; // type:func
 sharedSymbol_800CF470_3_s00    = 0x800D8100; // type:func
 Ai_Kaufmann_Init               = 0x800D8AA8; // type:func
+
+//--------------------------------------------------------------------
+//--- PA: 0x00F578   VA: 0x800D8AF0   subsegment: c, Chara_GhostDoctor
+//--------------------------------------------------------------------
 Ai_GhostDoctor_Update          = 0x800D8AF0; // type:func
 Character_CoordTransformUpdate = 0x800D8BAC; // type:func
 Ai_GhostDoctor_Init            = 0x800D8BE0; // type:func
+
+//-------------------------------------------------------------
+//--- PA: 0x00F6FC   VA: 0x800D8C74   subsegment: c, map7_s02_2
+//-------------------------------------------------------------
 sharedFunc_800D88AC_0_s00      = 0x800D8C74; // type:func
 sharedFunc_800D88C0_0_s00      = 0x800D8C88; // type:func
 sharedFunc_800D8904_0_s00      = 0x800D8CCC; // type:func

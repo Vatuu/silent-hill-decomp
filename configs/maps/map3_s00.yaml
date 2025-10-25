@@ -55,12 +55,17 @@ segments:
     subsegments:
       # .rodata section
       - [0x0, .rodata, map3_s00]
+      - [0x12C8, .rodata, Chara_Kaufmann]
+      - [0x1394, rodata]
+      - [0x1398, .rodata, map3_s00_2]
 
       # .text section
       - [0x1E90, c, map3_s00]
+      - [0x5CA4, c, Chara_Kaufmann]
+      - [0x690C, c, map3_s00_2]
 
       # .data section
       - [0x884C, data]
-      - [0x8DDC, .data, map3_s00]
+      - [0x8DDC, .data, map3_s00_2]
       - [0x8EAC, data]
   - [0xC900]

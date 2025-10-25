@@ -60,7 +60,9 @@ segments:
       - [0x1AE0, .rodata, Chara_Dahlia]
       - [0x1BA4, rodata]
       - [0x1BA8, .rodata, Chara_GhostChildAlessa]
-      - [0x1BD8, .rodata, map7_s02_2]
+      - [0x1BD8, .rodata, Chara_Kaufmann]
+      - [0x1CA4, rodata]
+      - [0x1CA8, .rodata, map7_s02_2]
 
       # .text section
       - [0x46EC, c, map7_s02]
@@ -69,7 +71,9 @@ segments:
       - [0xD2FC, c, Chara_Bloodsucker]
       - [0xD95C, c, Chara_Dahlia]
       - [0xE4F0, c, Chara_GhostChildAlessa]
-      - [0xE934, c, map7_s02_2]
+      - [0xE934, c, Chara_Kaufmann]
+      - [0xF578, c, Chara_GhostDoctor]
+      - [0xF6FC, c, map7_s02_2]
 
       # .data section
       - [0x1C1B8, data]
