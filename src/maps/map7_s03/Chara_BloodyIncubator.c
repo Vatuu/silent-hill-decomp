@@ -5,6 +5,8 @@
 #include "maps/shared.h"
 #include "maps/map7/map7_s03.h"
 
+// TODO: Move to src/maps/characters/ once matched.
+
 void Ai_BloodyIncubator_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D3684
 {
     if (chara->model_0.charaId_0 != Chara_BloodyIncubator)

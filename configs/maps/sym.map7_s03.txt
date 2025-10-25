@@ -240,6 +240,7 @@ sharedData_800E3258_0_s00   = 0x800F23C4;
 sharedData_800E325C_0_s00   = 0x800F23C8;
 g_Particle_PrevRotationY    = 0x800F23CC; // type:s16
 sharedData_800E2156_0_s01   = 0x800F23CE; // type:u8
+sharedData_800E39BC_0_s00   = 0x800F23D8;
 sharedData_800E39D8_0_s00   = 0x800F23F4; // type:s32
 sharedData_800D32A0_0_s02   = 0x800F23F8; // type:s32
 sharedData_800E2378_0_s01   = 0x800F23FC; // type:s32

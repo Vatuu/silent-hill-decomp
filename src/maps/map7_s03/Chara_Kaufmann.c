@@ -5,6 +5,8 @@
 #include "maps/shared.h"
 #include "maps/map7/map7_s03.h"
 
+// TODO: Move to src/maps/characters/ once other map usages are split.
+
 #include "maps/shared/Ai_Kaufmann_Update.h" // 0x800D3F58
 
 #include "maps/shared/sharedFunc_800CF290_3_s00.h" // 0x800D3FCC

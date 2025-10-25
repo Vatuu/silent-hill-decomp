@@ -30,8 +30,6 @@ extern s32 D_800EDA00;
 
 extern s16 D_800F23D0;
 
-extern s_800C4590 D_800F23D8;
-
 extern s32 D_800F2430;
 extern s32 D_800F2434;
 

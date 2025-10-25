@@ -129,27 +129,28 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_MainCharacterExtra* extr
     if (cond)
     {
         // Most maps use `D_800C4590` from bodyprog, but some use struct from inside map overlay.
-        // TODO: Not sure if these should be sharedData or not, maybe need to check if data matches.
+        // TODO: This ifdef block was updated to all use `sharedData_800E39BC_0_s00` except final else case.
+        // Need to find which maps match that case and change the block to just change to that.
 #if defined(MAP0_S00)
-    #define UnkStruct D_800E39BC
+    #define UnkStruct sharedData_800E39BC_0_s00
 #elif defined(MAP2_S01)
-    #define UnkStruct D_800D16BC
+    #define UnkStruct sharedData_800E39BC_0_s00
 #elif defined(MAP3_S00)
-    #define UnkStruct D_800D5CD0
+    #define UnkStruct sharedData_800E39BC_0_s00
 #elif defined(MAP3_S06)
-    #define UnkStruct D_800D5EA8
+    #define UnkStruct sharedData_800E39BC_0_s00
 #elif defined(MAP5_S02)
-    #define UnkStruct D_800DA64C
+    #define UnkStruct sharedData_800E39BC_0_s00
 #elif defined(MAP5_S03)
-    #define UnkStruct D_800D6F08
+    #define UnkStruct sharedData_800E39BC_0_s00
 #elif defined(MAP6_S01)
-    #define UnkStruct D_800D5314
+    #define UnkStruct sharedData_800E39BC_0_s00
 #elif defined(MAP6_S04)
-    #define UnkStruct D_800ED4C0
+    #define UnkStruct sharedData_800E39BC_0_s00
 #elif defined(MAP7_S02)
-    #define UnkStruct D_800EB604
+    #define UnkStruct sharedData_800E39BC_0_s00
 #elif defined(MAP7_S03)
-    #define UnkStruct D_800F23D8
+    #define UnkStruct sharedData_800E39BC_0_s00
 #else
     #define UnkStruct D_800C4590
 #endif

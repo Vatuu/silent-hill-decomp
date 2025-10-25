@@ -39,8 +39,6 @@ extern s32 D_800ED5B0;
 
 extern s16 D_800ED5B6;
 
-extern s_800C4590 D_800ED4C0;
-
 extern s_Model    g_Ai_MonsterCybil_ExtraModel; // Some kind of attachment or another `s_SubCharacter` instance?
 
 extern s32 D_800ED588;

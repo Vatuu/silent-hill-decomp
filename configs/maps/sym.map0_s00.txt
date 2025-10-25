@@ -209,6 +209,7 @@ sharedData_800E32D0_0_s00     = 0x800E32D0; // type:s32
 sharedData_800E32D4_0_s00     = 0x800E32D4; // type:u16
 sharedData_800E330C_0_s00     = 0x800E330C;
 sharedData_800E34FC_0_s00     = 0x800E34FC;
+sharedData_800E39BC_0_s00     = 0x800E39BC;
 sharedData_800E39D8_0_s00     = 0x800E39D8; // type:s32
 sharedData_800D32A0_0_s02     = 0x800E39DC; // type:s32
 sharedData_800E39E4_0_s00     = 0x800E39E4; // type:s32

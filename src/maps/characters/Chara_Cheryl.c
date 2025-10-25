@@ -2,7 +2,6 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/player_logic.h"
 #include "maps/shared.h"
-#include "maps/map0/map0_s00.h" // TODO: Needed for `D_800E39BC`, which should probably be sharedData.
 #include "maps/characters/Chara_Cheryl.h"
 
 /** AI code for `Chara_Cheryl`
@@ -87,15 +86,15 @@ void func_800D8124(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8124
     offset.vz = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
     offset.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
 
-    func_80069B24(&D_800E39BC, &offset, chara);
+    func_80069B24(&sharedData_800E39BC_0_s00, &offset, chara);
 
     chara->position_18.vx += offset.vx;
-    chara->position_18.vy += D_800E39BC.offset_0.vy;
+    chara->position_18.vy += sharedData_800E39BC_0_s00.offset_0.vy;
     chara->position_18.vz += offset.vz;
 
-    if (chara->position_18.vy > D_800E39BC.field_C)
+    if (chara->position_18.vy > sharedData_800E39BC_0_s00.field_C)
     {
-        chara->position_18.vy = D_800E39BC.field_C;
+        chara->position_18.vy = sharedData_800E39BC_0_s00.field_C;
         chara->field_34       = 0;
     }
 
