@@ -363,7 +363,37 @@ void func_800D8CF0(void)
     }
 }
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D8FE0);
+void func_800D8FE0(void)
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            SysWork_StateStepIncrement();
+            /* fallthrough */
+        case 1:
+            func_80085DF0();
+            break;
+        case 2:
+            g_SysWork.silentYesSelection_2350_4 = 1;
+            MapMsg_DisplayAndHandleSelection(true, 29, 3, -1, 0, false); // Do you want to press the switch?
+            break;
+        case 3:
+            func_8005DC1C(Sfx_Unk1420, &D_800CB670, 0x80, 0);
+            SysWork_StateStepIncrement();
+            /* fallthrough */
+        case 4:
+            func_80085E6C(Q12(0.5f), false);
+            break;
+        case 5:
+            MapMsg_DisplayAndHandleSelection(false, 30, 0, 0, 0, false); // Nothing appears to happen.
+            break;
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+}
 
 void func_800D9148(void) // 0x800D9148
 {
