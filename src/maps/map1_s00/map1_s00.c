@@ -1,4 +1,5 @@
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
@@ -346,7 +347,80 @@ void func_800D928C(void) // 0x800D928C
     SysWork_StateSetNext(SysState_Gameplay);
 }
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D92D8);
+void func_800D92D8(void)
+{
+    D_800E1180 = 0;
+    D_800E1182 = 0;
+    WorldObjectPositionSet(&g_WorldObj9.position_1C, 0x854B4, -0xDC8, 0x130A3, 0, 0x73A, 0);
+    WorldObject_ModelNameSet(&g_WorldObj9.object_0, "PICT00_H");
+
+    Math_Vector3Set(&g_WorldObj1[0].position_1C, 0x85A14, -0xD0E, 0x1116C);
+    WorldObject_ModelNameSet(&g_WorldObj1[0].object_0, "PAPER1_H");
+
+    Math_Vector3Set(&g_WorldObj1[1].position_1C, 0x85FDB, -0xCCC, 0x104E9);
+    WorldObject_ModelNameSet(&g_WorldObj1[1].object_0, "NOTE_HID");
+
+    Math_Vector3Set(&g_WorldObj1[2].position_1C, 0x85999, -0x1B33, 0x10000);
+    WorldObject_ModelNameSet(&g_WorldObj1[2].object_0, "TINORI1_");
+
+    Math_Vector3Set(&g_WorldObj1[3].position_1C, 0x85999, -0x130A, 0x12333);
+    WorldObject_ModelNameSet(&g_WorldObj1[3].object_0, "TINORI2_");
+
+    Math_Vector3Set(&g_WorldObj1[4].position_1C, 0x867C6, -0x130A, 0x12333);
+    WorldObject_ModelNameSet(&g_WorldObj1[4].object_0, "TINORI3_");
+
+    Math_Vector3Set(&g_WorldObj1[5].position_1C, 0x86666, -0xE8F, 0x11F4F);
+    WorldObject_ModelNameSet(&g_WorldObj1[5].object_0, "GRID2_HI");
+
+    Math_Vector3Set(&g_WorldObj2.position_1C, -0xC333, -0x1199, -0x43E14);
+    WorldObject_ModelNameSet(&g_WorldObj2.object_0, "GOLD_HID");
+
+    Math_Vector3Set(&g_WorldObj3.position_1C, -0xD851, -0x1199, -0x45199);
+    WorldObject_ModelNameSet(&g_WorldObj3.object_0, "SILVER_H");
+
+    Math_Vector3Set(&g_WorldObj4.position_1C, -0xCB85, -0x1000, -0x44999);
+    WorldObject_ModelNameSet(&g_WorldObj4.object_0, "ANA3_HID");
+
+    Math_Vector3Set(&g_WorldObj5.position_1C, -0xCCA3, -0x1000, -0x459EB);
+    WorldObject_ModelNameSet(&g_WorldObj5.object_0, "ANA2_HID");
+
+    Math_Vector3Set(&g_WorldObj6[0].position_1C, 0x1474F, -0xD5A, -0x11F85);
+    WorldObject_ModelNameSet(&g_WorldObj6[0].object_0, "REDX_HID");
+
+    Math_Vector3Set(&g_WorldObj6[1].position_1C, 0x13947, 0, Q12(-18.3f));
+    WorldObject_ModelNameSet(&g_WorldObj6[1].object_0, "R_HIDE_I");
+
+    Math_Vector3Set(&g_WorldObj0.position_1C, 0x13947, 0, Q12(-18.3f));
+    WorldObject_ModelNameSet(&g_WorldObj0.object_0, "G_HIDE_I");
+
+    WorldObjectPositionSet(&g_WorldObj7.position_1C, 0x3DDA6, -0xCE1, 0x8C9C2, 0, 0x420, 0);
+    WorldObject_ModelNameSet(&g_WorldObj7.object_0, D_800A99E4.savePadName_4);
+
+    WorldObjectPositionSet(&g_WorldObj8.position_1C, 0x60F0C, -0x562, 0x15178, 0, 0x2f8, 0);
+    WorldObject_ModelNameSet(&g_WorldObj8.object_0, "MAP_HIDE");
+
+    func_8004EE94(InventoryItemId_NoteToSchool, 1);
+    Savegame_EventFlagSet(EventFlag_147);
+    if (g_SavegamePtr->gameDifficulty_260 == -1)
+    {
+        func_80088FF4(Chara_GreyChild, 3, 0);
+        func_80088FF4(Chara_GreyChild, 9, 0);
+    }
+    if (g_SavegamePtr->gameDifficulty_260 == 1)
+    {
+        func_80088FF4(Chara_GreyChild, 10, 11);
+        func_80088FF4(Chara_GreyChild, 11, 3);
+        func_80088FF4(Chara_GreyChild, 12, 3);
+        func_80088FF4(Chara_GreyChild, 13, 3);
+    }
+
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4.handgunBulletsName_14);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4.shotgunShellsName_18);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
+}
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D9764);
 
