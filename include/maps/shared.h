@@ -2870,32 +2870,33 @@ static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo
     anim->animInfo_10 = NULL;
 }
 
+// TODO: Could also call this a "transform"? "Pose" is just the specific (but less common) term for position+rotation.
 typedef struct
 {
     VECTOR3  position_0;
     SVECTOR3 rotation_C;
-} s_WorldObjectPos;
+} s_WorldObjectPose;
 
 typedef struct
 {
     s_WorldObject_0 object_0;
-    VECTOR3 position_1C;
-} s_WorldObjectDesc_norot;
+    VECTOR3         position_1C;
+} s_WorldObjectDescNoRot;
 
 typedef struct
 {
-    s_WorldObject_0  object_0;
-    s_WorldObjectPos position_1C;
+    s_WorldObject_0   object_0;
+    s_WorldObjectPose pose_1C;
 } s_WorldObjectDesc;
 
-#define WorldObjectPositionInit(eventPos, posX, posY, posZ, rotX, rotY, rotZ) \
-    WorldObjectPositionSet(eventPos, Q12(posX), Q12(posY), Q12(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))
+#define WorldObjectPoseInit(eventPos, posX, posY, posZ, rotX, rotY, rotZ) \
+    WorldObjectPoseSet(eventPos, Q12(posX), Q12(posY), Q12(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))
 
-static inline void WorldObjectPositionSet(s_WorldObjectPos* eventPos, q19_12 posX, q19_12 posY, q19_12 posZ, q8_8 rotX, q8_8 rotY, q8_8 rotZ)
+static inline void WorldObjectPoseSet(s_WorldObjectPose* eventPose, q19_12 posX, q19_12 posY, q19_12 posZ, q8_8 rotX, q8_8 rotY, q8_8 rotZ)
 {
-    Math_Vector3Set(&eventPos->position_0, posX, posY, posZ);
-    *(u32*)&eventPos->rotation_C.vx = ((u32)rotY << 16) | (u32)rotX;
-    eventPos->rotation_C.vz         = rotZ;
+    Math_Vector3Set(&eventPose->position_0, posX, posY, posZ);
+    *(u32*)&eventPose->rotation_C.vx = ((u32)rotY << 16) | (u32)rotX;
+    eventPose->rotation_C.vz         = rotZ;
 }
 
 #define MAP_CHUNK_CHECK_VARIABLE_DECL() s32 __chunkIdx

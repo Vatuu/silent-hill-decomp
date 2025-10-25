@@ -1252,9 +1252,9 @@ typedef struct
     s32              gsCoordinate1_4 : 14; // Used as `GsCOORDINATE2::coord.t[1].`
     s32              gsCoordinate2_8 : 18; // Used as `GsCOORDINATE2::coord.t[2].`
     s32              unk_8_18        : 14;
-    s32              vx_C            : 10;
-    s32              vy_C            : 12;
-    s32              vz_C            : 10;
+    s32              vx_C            : 10; // } Rotation?
+    s32              vy_C            : 12; // }
+    s32              vz_C            : 10; // }
 } s_WorldObject;
 STATIC_ASSERT_SIZEOF(s_WorldObject, 16);
 
@@ -1386,10 +1386,8 @@ typedef struct
 // Sound data struct?
 typedef struct
 {
-    s16 volumeXa_0; // Might be wrong, but it's used in a `Sd_SetVolBXa` call.
-                    // Could also be event timer?
-					// Most values are shared with `field_2`.
-    s16 field_2;    // volumeVoice_2?
+    s16 volumeXa_0; // Might be wrong, but it's used in a `Sd_SetVolBXa` call. Could also be event timer? Most values are shared with `field_2`.
+    s16 field_2;    // `volumeVoice_2`?
     u16 field_4;
     s16 field_6;
     s16 volumeBgm_8; // Might be wrong, but it's used in a `Sd_SetVolBgm` call.
@@ -2141,7 +2139,7 @@ extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: Part of main exe, move to
 
 extern const s_MapType MAP_TYPES[16];
 
-extern char D_80028544[0x10];
+extern char D_80028544[16];
 
 extern RECT D_80028A20;
 
@@ -2710,6 +2708,7 @@ extern s32 D_800C3958;
 
 extern s32 D_800C395C;
 
+/** `e_MapOverlayId ` */
 extern s8 D_800C3960;
 
 extern s8 D_800C3961;
@@ -3185,9 +3184,9 @@ bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHdr);
 
 s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHdr);
 
-void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_ActiveTextures* arg3, s_ActiveTextures* arg4, s32 arg5);
+void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_ActiveTextures* fullPageActiveTexs, s_ActiveTextures* halfPageActiveTexs, s32 fileIdx);
 
-void Ipd_MaterialsLoad(s_IpdHeader* ipdHdr, s_ActiveTextures* arg1, s_ActiveTextures* arg2, s32 fileIdx);
+void Ipd_MaterialsLoad(s_IpdHeader* ipdHdr, s_ActiveTextures* fullPageActiveTexs, s_ActiveTextures* halfPageActiveTexs, s32 fileIdx);
 
 /** Checks if IPD is loaded before returning texture count? */
 s32 Ipd_HalfPageMaterialCountGet(s_IpdHeader* ipdHdr);
@@ -3419,11 +3418,10 @@ void func_800485C0(s32 idx);
 
 void func_800485D8();
 
-/** @brief 
- * Execute a new primitive command and check the status from previous.
- * If previous primitive commands haven't been finished then it start
- * adding to `D_800C1658.timer_0` each time the process fail and in case
- * of reaching 600 failed attemps it restart CD-ROM system.
+/** @brief Executes a new primitive command and checks the status against the previous.
+ * If the previous primitive commands haven't completed, it starts
+ * adding to `D_800C1658.timer_0` each time the process fails. When it
+ * reaches 600 failed attemps, it restarts the CD-ROM system.
  */
 u8 Cd_TryCmd(s32 com, u8* param, u8* res);
 
@@ -3914,9 +3912,9 @@ void func_8008B1DC(s_SubCharacter*, s32, s32);
 
 void func_8008B398();
 
-void func_8008B3E4(s32 arg0);
+void func_8008B3E4(s32 vol);
 
-void func_8008B40C(s32 arg0, s32 arg1);
+void func_8008B40C(s32 vol, s32 soundType);
 
 /** `arg0` is boolean. */
 void func_8008B438(s32 arg0, s32 arg1, s32 arg2);
@@ -4696,7 +4694,7 @@ u8 func_8008A2E0(s32 arg0);
 
 void func_800348C0();
 
-bool func_8008B474(s32 arg0, s32 arg1, s32 soundType);
+bool func_8008B474(s32 arg0, s32 vol, s32 soundType);
 
 void GameState_Boot_Update();
 void GameState_StartMovieIntro_Update();

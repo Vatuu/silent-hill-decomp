@@ -541,7 +541,7 @@ void func_800DACB0(void) // 0x800DACB0
     }
 }
 
-void func_800DADD4(void)
+void func_800DADD4(void) // 0x800DADD4
 {
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -549,19 +549,23 @@ void func_800DADD4(void)
             sharedFunc_800D20E4_0_s00();
             func_800865FC(false, 0, 0, Q12(0.375f), Q12(0.7f), Q12(-0.7f));
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         case 1:
             func_80085E6C(Q12(0.3f), false);
             break;
+
         case 2:
             func_80085DF0();
             break;
+
         case 3:
-            MapMsg_DisplayAndHandleSelection(false, 24, 0, 0, 0, false); // I'd better follow Cheryl...
+            MapMsg_DisplayAndHandleSelection(false, 24, 0, 0, 0, false); // "I'd better follow Cheryl..."
             break;
+
         case 4:
             func_800866D4(54, 1, 0);
             break;
+
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);

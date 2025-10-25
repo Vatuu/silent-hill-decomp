@@ -77,7 +77,7 @@ const static s_SpeedZone SPEED_ZONES_SC[] = {
     { SpeedZoneType_Normal, Q4(120.0f),  Q4(160.0f), Q4(160.0f), Q4(200.0f) },
     { SpeedZoneType_Normal, Q4(-80.0f),  Q4(0.0f),   Q4(-80.0f), Q4(0.0f)   },
     { SpeedZoneType_Normal, Q4(40.0f),   Q4(80.0f),  Q4(-40.0f), Q4(0.0f)   },
-    { NO_VALUE,             Q4(0.0f),    Q4(0.0f),    Q4(0.0f),  Q4(0.0f)   }
+    { NO_VALUE,             Q4(0.0f),    Q4(0.0f),   Q4(0.0f),   Q4(0.0f)   }
 };
 
 // 2 bytes of padding.

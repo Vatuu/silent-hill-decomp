@@ -1252,7 +1252,7 @@ typedef struct _SubCharPropertiesDahlia
     s32        flags_11C;
     u_Property properties_120;
     s16        field_124;
-    s16        moveDistance_126;
+    q3_12      moveDistance_126;
 } s_SubCharaPropertiesDahlia;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesDahlia, 68);
 
@@ -1798,28 +1798,44 @@ static inline void Model_AnimFlagsClear(s_Model* model, u32 flags)
     model->anim_4.flags_2 &= ~flags;
 }
 
-/** @brief Updates model anim to the given `animIdx` if `model->stateStep_3` is 0. */
-static inline void Model_AnimStatusSet(s_Model* model, s32 animIdx, bool active)
+/** @brief Updates a model anim if `model->stateStep_3` is 0.
+ *
+ * @param model Model to update.
+ * @param animIdx Anim index to set.
+ * @param isActive Active status to set.
+ */
+static inline void Model_AnimStatusSet(s_Model* model, s32 animIdx, bool isActive)
 {
     if (model->stateStep_3 == 0)
     {
-        model->anim_4.status_0 = ANIM_STATUS(animIdx, active);
+        model->anim_4.status_0 = ANIM_STATUS(animIdx, isActive);
         model->stateStep_3++;
     }
 }
 
-/** @brief Similar to `Model_AnimStatusSet`, but also sets `anim_4.time_4` and `anim_4.keyframeIdx_8` from the `animInfos` `s_AnimInfo` array. */
-#define Model_AnimStatusKeyframeSet(model, animIdx, active, animInfos, animInfosOffset)                                                        \
-    if ((model).stateStep_3 == 0)                                                                                                              \
-    {                                                                                                                                          \
-        (model).anim_4.status_0 = ANIM_STATUS((animIdx), (active));                                                                            \
-        (model).stateStep_3++;                                                                                                                 \
-        (model).anim_4.time_4        = FP_TO((animInfos)[ANIM_STATUS((animIdx), (active)) + (animInfosOffset)].startKeyframeIdx_C, Q12_SHIFT); \
-        (model).anim_4.keyframeIdx_8 = (animInfos)[ANIM_STATUS((animIdx), (active)) + (animInfosOffset)].startKeyframeIdx_C;                   \
+/** @brief Similar to `Model_AnimStatusSet`, but also sets `anim_4.time_4` and `anim_4.keyframeIdx_8`
+ * from the `animInfos` `s_AnimInfo` array.
+ *
+ * @param model Model to update.
+ * @param animIdx Anim index to set.
+ * @param isActive Active status to set.
+ * @param animInfos Reference anim infos.
+ * @param animInfosOffset Anim infos offset.
+ */
+#define Model_AnimStatusKeyframeSet(model, animIdx, isActive, animInfos, animInfosOffset)                                                    \
+    if ((model).stateStep_3 == 0)                                                                                                            \
+    {                                                                                                                                        \
+        (model).anim_4.status_0 = ANIM_STATUS(animIdx, isActive);                                                                            \
+        (model).stateStep_3++;                                                                                                               \
+        (model).anim_4.time_4        = FP_TO((animInfos)[ANIM_STATUS(animIdx, isActive) + (animInfosOffset)].startKeyframeIdx_C, Q12_SHIFT); \
+        (model).anim_4.keyframeIdx_8 = (animInfos)[ANIM_STATUS(animIdx, (isActive) + (animInfosOffset))].startKeyframeIdx_C;                 \
     }
 
-/** @brief Resets a humanoid NPCs animation state index to 0. */
-static inline void Character_AnimStateTryReset(s_SubCharacter* chara)
+/** @brief Attempts to reset a humanoid NPC's anim state index to 0.
+ *
+ * @param chara Character to update.
+ */
+static inline void Character_AnimStateReset(s_SubCharacter* chara)
 {
     // TODO: This uses `dahlia` part of union, but is most likely either a `human` part shared with all humanoid characters
     // or humanoids only share a small portion early in the union.

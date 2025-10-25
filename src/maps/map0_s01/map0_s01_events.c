@@ -394,8 +394,8 @@ void MapEvent_CafeCutscene() // 0x800DA980
 
     if (g_Timer0 >= Q12(0.0f))
     {
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_Timer0, FS_BUFFER_11));
-        vcUserCamTarget(&g_CutsceneCameraPositionTarget, NULL, true);
+        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPositionitionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_Timer0, FS_BUFFER_11));
+        vcUserCamTarget(&g_CutsceneCameraPositionitionTarget, NULL, true);
         vcUserWatchTarget(&g_CutsceneCameraLookAtTarget, NULL, true);
         Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, "HERO", g_Timer0, FS_BUFFER_11);
 
@@ -717,8 +717,8 @@ void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
             g_SysWork.npcs_1A0[0].position_18.vz += FP_MULTIPLY(Math_Cos(g_SysWork.npcs_1A0[0].rotation_24.vy), Q12(0.2f), Q12_SHIFT);
         }
 
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_Timer0, FS_BUFFER_11));
-        vcUserCamTarget(&g_CutsceneCameraPositionTarget, NULL, true);
+        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPositionitionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_Timer0, FS_BUFFER_11));
+        vcUserCamTarget(&g_CutsceneCameraPositionitionTarget, NULL, true);
         vcUserWatchTarget(&g_CutsceneCameraLookAtTarget, NULL, true);
     }
 }
@@ -811,8 +811,8 @@ void MapEvent_MapItemTake() // 0x800DC3C8
             Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "BIRD", 0, FS_BUFFER_11);
 
             // Set camera.
-            vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, 0, FS_BUFFER_11));
-            vcUserCamTarget(&g_CutsceneCameraPositionTarget, NULL, true);
+            vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPositionitionTarget, &g_CutsceneCameraLookAtTarget, NULL, 0, FS_BUFFER_11));
+            vcUserCamTarget(&g_CutsceneCameraPositionitionTarget, NULL, true);
             vcUserWatchTarget(&g_CutsceneCameraLookAtTarget, NULL, true);
 
             // Warp player.
@@ -909,16 +909,16 @@ void Map_WorldObjectsInit() // 0x800DC9C8
     WorldObject_ModelNameSet(&D_800E2450[0], "OUT1_HID");
     WorldObject_ModelNameSet(&D_800E2450[1], "OUT_BLD_");
 
-    WorldObjectPositionInit(&g_EventThing_KitchenKnife.position_1C, 5.09f, -1.01f, 274.12f, 0.0f, 32.0f, 0.0f); 
+    WorldObjectPoseInit(&g_EventThing_KitchenKnife.pose_1C, 5.09f, -1.01f, 274.12f, 0.0f, 32.0f, 0.0f); 
     WorldObject_ModelNameSet(&g_EventThing_KitchenKnife.object_0, "KNIFE_HI");
 
-    WorldObjectPositionInit(&g_EventThing_Flashlight.position_1C, 5.18f, -1.0f, 267.28f, -3.0f, 111.0f, 0.0f);
+    WorldObjectPoseInit(&g_EventThing_Flashlight.pose_1C, 5.18f, -1.0f, 267.28f, -3.0f, 111.0f, 0.0f);
     WorldObject_ModelNameSet(&g_EventThing_Flashlight.object_0, "FLASH_HI");
 
-    WorldObjectPositionInit(&g_EventThing_Map.position_1C, 5.24f, -1.0f, 267.21f, 0.0f, 57.0f, 0.0f);
+    WorldObjectPoseInit(&g_EventThing_Map.pose_1C, 5.24f, -1.0f, 267.21f, 0.0f, 57.0f, 0.0f);
     WorldObject_ModelNameSet(&g_EventThing_Map.object_0, "MAP_HIDE");
 
-    WorldObjectPositionInit(&g_EventThing_PocketRadio.position_1C, 2.31f, -0.6f, 273.95f, 0.0f, 147.0f, 0.0f);
+    WorldObjectPoseInit(&g_EventThing_PocketRadio.pose_1C, 2.31f, -0.6f, 273.95f, 0.0f, 147.0f, 0.0f);
     WorldObject_ModelNameSet(&g_EventThing_PocketRadio.object_0, "RADIO_HI");
 
     if (Savegame_EventFlagGet(EventFlag_40) && !Savegame_EventFlagGet(EventFlag_47))
@@ -964,22 +964,22 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
     {
-        g_WorldGfx_ObjectAdd(&g_EventThing_Map.object_0, &g_EventThing_Map.position_1C.position_0, &g_EventThing_Map.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_EventThing_Map.object_0, &g_EventThing_Map.pose_1C.position_0, &g_EventThing_Map.pose_1C.rotation_C);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupFlashlight))
     {
-        g_WorldGfx_ObjectAdd(&g_EventThing_Flashlight.object_0, &g_EventThing_Flashlight.position_1C.position_0, &g_EventThing_Flashlight.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_EventThing_Flashlight.object_0, &g_EventThing_Flashlight.pose_1C.position_0, &g_EventThing_Flashlight.pose_1C.rotation_C);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupPocketRadio))
     {
-        g_WorldGfx_ObjectAdd(&g_EventThing_PocketRadio.object_0, &g_EventThing_PocketRadio.position_1C.position_0, &g_EventThing_PocketRadio.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_EventThing_PocketRadio.object_0, &g_EventThing_PocketRadio.pose_1C.position_0, &g_EventThing_PocketRadio.pose_1C.rotation_C);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupKitchenKnife))
     {
-        g_WorldGfx_ObjectAdd(&g_EventThing_KitchenKnife.object_0, &g_EventThing_KitchenKnife.position_1C.position_0, &g_EventThing_KitchenKnife.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_EventThing_KitchenKnife.object_0, &g_EventThing_KitchenKnife.pose_1C.position_0, &g_EventThing_KitchenKnife.pose_1C.rotation_C);
     }
 
     if (Savegame_EventFlagGet(EventFlag_M0S01_PickupKitchenKnife) && Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))

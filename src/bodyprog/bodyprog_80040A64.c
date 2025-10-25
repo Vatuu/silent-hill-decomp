@@ -1509,7 +1509,7 @@ s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHdr) // 0x80043BA
     return NULL;
 }
 
-void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_ActiveTextures* arg3, s_ActiveTextures* arg4, s32 arg5) // 0x80043BC4
+void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_ActiveTextures* fullPageActiveTexs, s_ActiveTextures* halfPageActiveTexs, s32 fileIdx) // 0x80043BC4
 {
     if (ipdHdr->isLoaded_1)
     {
@@ -1521,27 +1521,27 @@ void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCou
     IpdCollData_FixOffsets(&ipdHdr->collisionData_54);
     LmHeader_FixOffsets(ipdHdr->lmHdr_4);
     func_8008E4EC(ipdHdr->lmHdr_4);
-    Ipd_MaterialsLoad(ipdHdr, arg3, arg4, arg5);
+    Ipd_MaterialsLoad(ipdHdr, fullPageActiveTexs, halfPageActiveTexs, fileIdx);
     Lm_MaterialFlagsApply(ipdHdr->lmHdr_4);
     IpdHeader_ModelLinkObjectLists(ipdHdr, lmHdrs, lmHdrCount);
     IpdHeader_ModelBufferLinkObjectLists(ipdHdr, ipdHdr->modelInfo_14);
 }
 
-void Ipd_MaterialsLoad(s_IpdHeader* ipdHdr, s_ActiveTextures* arg1, s_ActiveTextures* arg2, s32 fileIdx) // 0x80043C7C
+void Ipd_MaterialsLoad(s_IpdHeader* ipdHdr, s_ActiveTextures* fullPageActiveTexs, s_ActiveTextures* halfPageActiveTexs, s32 fileIdx) // 0x80043C7C
 {
     if (!ipdHdr->isLoaded_1)
     {
         return;
     }
 
-    if (arg1 != NULL)
+    if (fullPageActiveTexs != NULL)
     {
-        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr_4, arg1, &LmFilter_IsFullPage, fileIdx, BlendMode_Additive);
+        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr_4, fullPageActiveTexs, &LmFilter_IsFullPage, fileIdx, BlendMode_Additive);
     }
 
-    if (arg2 != NULL)
+    if (halfPageActiveTexs != NULL)
     {
-        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr_4, arg2, &LmFilter_IsHalfPage, fileIdx, BlendMode_Additive);
+        Lm_MaterialsLoadWithFilter(ipdHdr->lmHdr_4, halfPageActiveTexs, &LmFilter_IsHalfPage, fileIdx, BlendMode_Additive);
     }
 }
 
@@ -1582,20 +1582,20 @@ bool LmFilter_IsHalfPage(s_Material* mat) // 0x80043D64
 
 void IpdHeader_FixHeaderOffsets(s_IpdHeader* ipdHdr) // 0x80043DA4
 {
-    s_IpdModelBuffer* modelBuf;
+    s_IpdModelBuffer* curModelBuf;
 
-    ipdHdr->lmHdr_4       = (u8*)ipdHdr->lmHdr_4 + (u32)ipdHdr;
+    ipdHdr->lmHdr_4           = (u8*)ipdHdr->lmHdr_4 + (u32)ipdHdr;
     ipdHdr->modelInfo_14      = (u8*)ipdHdr->modelInfo_14 + (u32)ipdHdr;
     ipdHdr->modelBuffers_18   = (u8*)ipdHdr->modelBuffers_18 + (u32)ipdHdr;
     ipdHdr->modelOrderList_50 = (u8*)ipdHdr->modelOrderList_50 + (u32)ipdHdr;
 
-    for (modelBuf = &ipdHdr->modelBuffers_18[0];
-         modelBuf < &ipdHdr->modelBuffers_18[ipdHdr->modelBufferCount_9];
-         modelBuf++)
+    for (curModelBuf = &ipdHdr->modelBuffers_18[0];
+         curModelBuf < &ipdHdr->modelBuffers_18[ipdHdr->modelBufferCount_9];
+         curModelBuf++)
     {
-        modelBuf->field_C  = (u8*)modelBuf->field_C + (u32)ipdHdr;
-        modelBuf->field_10 = (u8*)modelBuf->field_10 + (u32)ipdHdr;
-        modelBuf->field_14 = (u8*)modelBuf->field_14 + (u32)ipdHdr;
+        curModelBuf->field_C  = (u8*)curModelBuf->field_C + (u32)ipdHdr;
+        curModelBuf->field_10 = (u8*)curModelBuf->field_10 + (u32)ipdHdr;
+        curModelBuf->field_14 = (u8*)curModelBuf->field_14 + (u32)ipdHdr;
     }
 }
 
@@ -1603,21 +1603,22 @@ void IpdHeader_ModelLinkObjectLists(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s3
 {
     s32             i;
     s32             j;
-    s_IpdModelInfo* modelInfo;
+    s_IpdModelInfo* curModelInfo;
 
     for (i = 0; i < ipdHdr->modelCount_8; i++)
     {
-        modelInfo = &ipdHdr->modelInfo_14[i];
-        if (!modelInfo->isGlobalPlm_0)
+        curModelInfo = &ipdHdr->modelInfo_14[i];
+
+        if (!curModelInfo->isGlobalPlm_0)
         {
-            modelInfo->modelHdr_C = LmHeader_ModelHeaderSearch(&modelInfo->modelName_4, ipdHdr->lmHdr_4);
+            curModelInfo->modelHdr_C = LmHeader_ModelHeaderSearch(&curModelInfo->modelName_4, ipdHdr->lmHdr_4);
         }
         else
         {
             for (j = 0; j < lmHdrCount; j++)
             {
-                modelInfo->modelHdr_C = LmHeader_ModelHeaderSearch(&modelInfo->modelName_4, lmHdrs[j]);
-                if (modelInfo->modelHdr_C != NULL)
+                curModelInfo->modelHdr_C = LmHeader_ModelHeaderSearch(&curModelInfo->modelName_4, lmHdrs[j]);
+                if (curModelInfo->modelHdr_C != NULL)
                 {
                     break;
                 }
@@ -1646,15 +1647,15 @@ s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmH
 
 void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHdr, s_IpdModelInfo* ipdModels) // 0x80043F88
 {
-    s_IpdModelBuffer*   modelBuffer;
+    s_IpdModelBuffer*   curModelBuffer;
     s_IpdModelBuffer_C* unkData;
 
-    for (modelBuffer = ipdHdr->modelBuffers_18;
-         modelBuffer < &ipdHdr->modelBuffers_18[ipdHdr->modelBufferCount_9];
-         modelBuffer++)
+    for (curModelBuffer = ipdHdr->modelBuffers_18;
+         curModelBuffer < &ipdHdr->modelBuffers_18[ipdHdr->modelBufferCount_9];
+         curModelBuffer++)
     {
-        for (unkData = &modelBuffer->field_C[0];
-             unkData < &modelBuffer->field_C[modelBuffer->field_0];
+        for (unkData = &curModelBuffer->field_C[0];
+             unkData < &curModelBuffer->field_C[curModelBuffer->field_0];
              unkData++)
         {
             // `unkData` originally stores model idx, replace that with pointer to the model's `modelHdr_C`.
@@ -1793,34 +1794,34 @@ void Anim_BoneInit(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800445A4
     s32            boneIdx;
     s32            i;
     s32            j;
-    s_AnmBindPose* bindPose;
-    GsCOORDINATE2* coord;
+    s_AnmBindPose* curBindPose;
+    GsCOORDINATE2* curCoord;
 
     GsInitCoordinate2(NULL, boneCoords);
 
-    for (boneIdx = 1, bindPose = &anmHdr->bindPoses_14[1], coord = &boneCoords[1];
+    for (boneIdx = 1, curBindPose = &anmHdr->bindPoses_14[1], curCoord = &boneCoords[1];
          boneIdx < anmHdr->boneCount_6;
-         boneIdx++, bindPose++, coord++)
+         boneIdx++, curBindPose++, curCoord++)
     {
-        coord->super = &boneCoords[anmHdr->bindPoses_14[boneIdx].parentBone];
+        curCoord->super = &boneCoords[anmHdr->bindPoses_14[boneIdx].parentBone];
 
         // If no translation for this bone, copy over `translationInitial_3`.
-        if (bindPose->translationDataIdx_2 < 0)
+        if (curBindPose->translationDataIdx_2 < 0)
         {
             for (i = 0; i < 3; i++)
             {
-                coord->coord.t[i] = anmHdr->bindPoses_14[boneIdx].translationInitial_3[i] << anmHdr->scaleLog2_12;
+                curCoord->coord.t[i] = anmHdr->bindPoses_14[boneIdx].translationInitial_3[i] << anmHdr->scaleLog2_12;
             }
         }
 
         // If no rotation for this bone, create identity matrix.
-        if (bindPose->rotationDataIdx_1 < 0)
+        if (curBindPose->rotationDataIdx_1 < 0)
         {
             for (i = 0; i < 3; i++)
             {
                 for (j = 0; j < 3; j++)
                 {
-                    coord->coord.m[i][j] = ((j == i) ? FP_ANGLE(360.0f) : FP_ANGLE(0.0f));
+                    curCoord->coord.m[i][j] = ((j == i) ? FP_ANGLE(360.0f) : FP_ANGLE(0.0f));
                 }
             }
         }
@@ -1846,8 +1847,8 @@ void Anim_BoneUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyfram
     void*          frame0RotData;
     void*          frame1Data;
     void*          frame1RotData;
-    GsCOORDINATE2* boneCoord;
-    s_AnmBindPose* bindPose;
+    GsCOORDINATE2* curBoneCoord;
+    s_AnmBindPose* curBindPose;
 
     boneCount     = anmHdr->boneCount_6;
     frame0Data    = ((u8*)anmHdr + anmHdr->dataOffset_0) + (anmHdr->keyframeDataSize_4 * keyframe0);
@@ -1867,20 +1868,20 @@ void Anim_BoneUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyfram
     }
 
     // Skip root bone (index 0) and start processing from bone 1.
-    boneCoords = &boneCoords[1];
-    bindPose   = &anmHdr->bindPoses_14[1];
+    boneCoords  = &boneCoords[1];
+    curBindPose = &anmHdr->bindPoses_14[1];
 
-    for (boneIdx = 1, boneCoord = boneCoords;
+    for (boneIdx = 1, curBoneCoord = boneCoords;
          boneIdx < boneCount;
-         boneIdx++, bindPose++, boneCoord++)
+         boneIdx++, curBindPose++, curBoneCoord++)
     {
         // Process bones marked as active.
         if (activeBoneIdxs & (1 << boneIdx))
         {
-            boneCoord->flg = false;
+            curBoneCoord->flg = false;
             scaleLog2      = anmHdr->scaleLog2_12;
 
-            boneTranslationDataIdx = bindPose->translationDataIdx_2;
+            boneTranslationDataIdx = curBindPose->translationDataIdx_2;
             if (boneTranslationDataIdx >= 0)
             {
                 // 3-byte vector translation.
@@ -1891,7 +1892,7 @@ void Anim_BoneUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyfram
                 for (i = 0; i < 3; i++)
                 {
                     // Linear interpolation with scaling: `frame0 + (frame1 - frame0) * alpha`.
-                    boneCoord->coord.t[i] = (*frame0TranslationData << scaleLog2) +
+                    curBoneCoord->coord.t[i] = (*frame0TranslationData << scaleLog2) +
                                             (((*frame1TranslationData - *frame0TranslationData) * alpha) >> (Q12_SHIFT - scaleLog2));
 
                     frame0TranslationData++;
@@ -1900,11 +1901,11 @@ void Anim_BoneUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyfram
 
                 if (boneTranslationDataIdx == 0)
                 {
-                    boneCoord->coord.t[1] -= anmHdr->rootYOffset_13; // TODO: Not sure of purpose of this yet.
+                    curBoneCoord->coord.t[1] -= anmHdr->rootYOffset_13; // TODO: Not sure of purpose of this yet.
                 }
             }
 
-            boneRotationDataIdx = bindPose->rotationDataIdx_1;
+            boneRotationDataIdx = curBindPose->rotationDataIdx_1;
             if (boneRotationDataIdx >= 0)
             {
                 // 9-byte rotation matrix.
@@ -1916,7 +1917,7 @@ void Anim_BoneUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyfram
                 {
                     for (j = 0; j < 3; j++)
                     {
-                        boneCoord->coord.m[i][j] = (*frame0RotationData << 5) +
+                        curBoneCoord->coord.m[i][j] = (*frame0RotationData << 5) +
                                                    (((*frame1RotationData - *frame0RotationData) * alpha) >> 7);
 
                         frame0RotationData++;
@@ -1978,7 +1979,7 @@ q19_12 Anim_DurationGet(s_Model* model, s_AnimInfo* anim) // 0x800449AC
     return anim->duration_8.variableFunc();
 }
 
-/** @brief Computes the time step of the target animation. */
+/** @brief Computes the timestep of the target animation. */
 static inline q19_12 Anim_TimestepGet(s_Model* model, s_AnimInfo* animInfo)
 {
     q19_12 duration;
@@ -2004,7 +2005,7 @@ void Anim_Update0(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coords, s_
 
     setNewAnimStatus = false;
 
-    // Get time step.
+    // Get timestep.
     timestep = Anim_TimestepGet(model, animInfo);
 
     // Compute new time and keyframe index.
@@ -2077,7 +2078,7 @@ void Anim_Update1(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_A
     nextStartTime = Q12(nextStartKeyframeIdx);
     duration      = Q12(keyframeCount);
 
-    // Get time step.
+    // Get timestep.
     timestep = Anim_TimestepGet(model, animInfo);
 
     // Wrap new time to valid keyframe range.
@@ -2130,7 +2131,7 @@ void Anim_Update2(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_A
         startKeyframeIdx = model->anim_4.keyframeIdx_8;
     }
 
-    // Get time step.
+    // Get timestep.
     timestep = Anim_TimestepGet(model, animInfo);
 
     // Update time to start or end keyframe, whichever is closest.
@@ -2185,7 +2186,7 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_A
     startKeyframeIdx = animInfo->startKeyframeIdx_C;
     endKeyframeIdx   = animInfo->endKeyframeIdx_E;
 
-    // Compute time step. TODO: Can't call `Anim_TimestepGet` inline due to register constraints.
+    // Compute timestep. TODO: Can't call `Anim_TimestepGet` inline due to register constraints.
     if (model->anim_4.flags_2 & AnimFlag_Unlocked)
     {
         timeDelta = Anim_DurationGet(model, animInfo);
@@ -2326,7 +2327,7 @@ void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHdr) // 0x8004506C
 void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2, s32 arg3) // 0x80045108
 {
     s_Bone*  curBone;
-    s_Bone** boneOrd;
+    s_Bone** curBoneOrd;
     s32      boneIdx;
 
     if (arg3 == 0)
@@ -2338,15 +2339,15 @@ void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2, s32 arg3) // 0
     boneIdx = skel->boneIdx_1;
     Skeleton_BoneModelAssign(skel, lmHdr, arg2);
 
-    boneOrd = &skel->bones_4;
-    while (*boneOrd != NULL)
+    curBoneOrd = &skel->bones_4;
+    while (*curBoneOrd != NULL)
     {
-        curBone = *boneOrd;
-        boneOrd = &curBone->next_14;
+        curBone    = *curBoneOrd;
+        curBoneOrd = &curBone->next_14;
     }
 
     // `Skeleton_BoneModelAssign` increments `boneIdx_1`.
-    func_80045258(boneOrd, &skel->bones_8[boneIdx], skel->boneIdx_1 - boneIdx, lmHdr);
+    func_80045258(curBoneOrd, &skel->bones_8[boneIdx], skel->boneIdx_1 - boneIdx, lmHdr);
     func_800453E8(skel, false);
 }
 
@@ -2564,7 +2565,7 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord,
         {
             func_80049B6C(&coord[(u8)curBone->field_10], &mat1, &mat0);
 
-            if (curBone->modelInfo_0.field_0 & 1)
+            if (curBone->modelInfo_0.field_0 & (1 << 0))
             {
                 mat0.m[2][2]         = 0;
                 *(s32*)&mat0.m[2][0] = 0;

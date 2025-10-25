@@ -1003,7 +1003,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
 
             model = &g_SysWork.npcs_1A0[npcIdx].model_0;
 
-            do { } while(false); // @hack Required for match.
+            do {} while(false); // @hack Required for match.
 
             g_Player_HeadingAngle =
             temp                  = headingAngle0;
