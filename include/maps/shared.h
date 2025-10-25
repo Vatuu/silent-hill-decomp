@@ -2888,14 +2888,14 @@ typedef struct
     s_WorldObjectPos position_1C;
 } s_WorldObjectDesc;
 
-#define WorldObjectPositionInit(eventPos, posX, posY, posZ, rotX, rotY, rotZ) \
-    WorldObjectPositionSet(eventPos, Q12(posX), Q12(posY), Q12(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))
+#define WorldObjectPositionInit(pos, posX, posY, posZ, rotX, rotY, rotZ) \
+    WorldObjectPositionSet(pos, Q12(posX), Q12(posY), Q12(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))
 
-static inline void WorldObjectPositionSet(s_WorldObjectPos* eventPos, q19_12 posX, q19_12 posY, q19_12 posZ, q8_8 rotX, q8_8 rotY, q8_8 rotZ)
+static inline void WorldObjectPositionSet(s_WorldObjectPos* pos, q19_12 posX, q19_12 posY, q19_12 posZ, q8_8 rotX, q8_8 rotY, q8_8 rotZ)
 {
-    Math_Vector3Set(&eventPos->position_0, posX, posY, posZ);
-    *(u32*)&eventPos->rotation_C.vx = ((u32)rotY << 16) | (u32)rotX;
-    eventPos->rotation_C.vz         = rotZ;
+    Math_Vector3Set(&pos->position_0, posX, posY, posZ);
+    *(u32*)&pos->rotation_C.vx = ((u32)rotY << 16) | (u32)rotX;
+    pos->rotation_C.vz         = rotZ;
 }
 
 #define MAP_CHUNK_CHECK_VARIABLE_DECL() s32 __chunkIdx
@@ -2916,6 +2916,26 @@ static inline void WorldObjectPositionSet(s_WorldObjectPos* eventPos, q19_12 pos
         (((g_SysWork.player_4C.chara_0.position_18.crd - Q12(base)) >= 0)              \
          ? ((g_SysWork.player_4C.chara_0.position_18.crd - Q12(base)) < Q12(tol))      \
          : ((Q12(base) - g_SysWork.player_4C.chara_0.position_18.crd) < Q12(tol)))     \
+    )
+
+/** @brief A helper function for `g_WorldGfx_ObjectAdd` that takes one argument for less typing. **/
+static inline void g_WorldGfx_ObjAdd(s_WorldObjectDesc* obj)
+{
+    g_WorldGfx_ObjectAdd(&obj->object_0, &obj->position_1C.position_0, &obj->position_1C.rotation_C);
+}
+
+/** @brief A helper function for `g_WorldGfx_ObjectAdd` that takes one argument for less typing.
+ * Uses an empty SVECTOR3. Note that this will end up in RODATA, so this is only usable once
+ * you decomp all functions that use the one common RODATA_ASM for that empty vector. **/
+#define g_WorldGfx_ObjAdd_norot(obj) \
+    g_WorldGfx_ObjectAdd(&(obj)->object_0, &(obj)->position_1C, &(SVECTOR3){})
+
+/** @brief A helper function for `g_WorldGfx_ObjectAdd` for common objects using only the indices. **/
+#define G_WORLDGFX_OBJ_ADD_COMMON(objIdx, posIdx)          \
+    g_WorldGfx_ObjectAdd(                                  \
+            &g_CommonWorldObjects[objIdx],                 \
+            &g_CommonWorldObjectsPos[posIdx].position_0,   \
+            &g_CommonWorldObjectsPos[posIdx].rotation_C    \
     )
 
 #endif

@@ -45,20 +45,21 @@ extern VECTOR3 g_CutsceneCameraPositionTarget; // 0x800E2380
 
 extern VECTOR3 g_CutsceneCameraLookAtTarget; // 0x800E2390
 
-extern s_WorldObject_0 D_800E23B0[1];
-extern s_WorldObject_0 D_800E23D0[1];
-extern s_WorldObject_0 D_800E23F0[3];
-extern s_WorldObject_0 D_800E2450[2];
+extern s_WorldObject_0 g_WorldObject_CutsceneObj0[1];
+extern s_WorldObject_0 g_WorldObject_CutsceneObj1[1];
+extern s_WorldObject_0 g_WorldObject_CutsceneObj2[3];
+extern s_WorldObject_0 g_WorldObject_CutsceneObj3[2];
 
 extern VECTOR3 g_CutscenePosition; // 0x800E2490
-extern s_WorldObjectDesc g_EventThing_KitchenKnife; // 0x800E24A0
-extern s_WorldObjectDesc g_EventThing_Flashlight; // 0x800E24D0
-extern s_WorldObjectDesc g_EventThing_Map; // 0x800E2500
-extern s_WorldObjectDesc g_EventThing_PocketRadio; // 0x800E2530
+extern s_WorldObjectDesc g_WorldObject_KitchenKnife; // 0x800E24A0
+extern s_WorldObjectDesc g_WorldObject_Flashlight; // 0x800E24D0
+extern s_WorldObjectDesc g_WorldObject_Map; // 0x800E2500
+extern s_WorldObjectDesc g_WorldObject_PocketRadio; // 0x800E2530
+extern s_WorldObjectPos g_CommonWorldObjectsPos[2];
+extern s_WorldObject_0 g_CommonWorldObjects[6];
 
 extern s16 D_800E2560;
 
-extern s_WorldObject_0 g_CommonWorldObjects[];
 
 extern u16 g_MapMsgSounds[];
 
