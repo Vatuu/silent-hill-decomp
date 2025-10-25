@@ -555,14 +555,14 @@ void Map_WorldObjectsUpdate(void)
             }
             if (!Savegame_EventFlagGet(EventFlag_M2S01_PickupDrawbridgeKey))
             {
-                g_WorldGfx_ObjectAdd(&g_WorldObj_Key.object_0, &g_WorldObj_Key.position_1C.position_0, &g_WorldObj_Key.position_1C.rotation_C);
+                g_WorldGfx_ObjAdd(&g_WorldObj_Key);
                 temp_s0->mapMarkingFlags_1D4[1] &= ~(1<<31);
             }
             else
             {
                 temp_s0->mapMarkingFlags_1D4[1] |= (1<<31);
             }
-            g_WorldGfx_ObjectAdd(&g_WorldObj_SavePad.object_0, &g_WorldObj_SavePad.position_1C.position_0, &g_WorldObj_SavePad.position_1C.rotation_C);
+            g_WorldGfx_ObjAdd(&g_WorldObj_SavePad);
     }
 
     if (D_800D177C == 0)
@@ -592,7 +592,7 @@ void Map_WorldObjectsUpdate(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S01_HealthDrink))
         {
-            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectsPos[0].position_0, &g_CommonWorldObjectsPos[0].rotation_C);
+            G_WORLDGFX_OBJ_ADD_COMMON(1, 0);
         }
     }
 }
