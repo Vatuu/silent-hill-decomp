@@ -71,6 +71,12 @@ typedef enum _EventFlag
     EventFlag_M1S01_PickupChemical = 68,
 
     EventFlag_M1S01_PickupSilverMedallion = 70,
+    EventFlag_71 = 71,
+    EventFlag_72 = 72,
+    EventFlag_73 = 73,
+
+    EventFlag_83 = 83,
+    EventFlag_84 = 84,
 
     EventFlag_M7S01_HealthDrink1 = 86,
 
@@ -157,6 +163,7 @@ typedef enum _EventFlag
     EventFlag_223 = 223,
 
     EventFlag_225 = 225,
+    EventFlag_226 = 226,
 
     EventFlag_236 = 236,
     EventFlag_237 = 237,

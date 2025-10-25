@@ -83,6 +83,7 @@ MAP_MESSAGES              = 0x800D5CAC; // type:u32 size:0x3C
 //----------------------------------------------------
 sharedData_800DFB6C_0_s00 = 0x800D5D1C; // type:s32
 sharedData_800DFB70_0_s00 = 0x800D5D20; // type:s32
+g_MapHdr_Table_4C         = 0x800D5D28; // type:MapHdr_field_4C size:0x2710
 sharedData_800E0CA8_0_s00 = 0x800D85F4; // type:s32
 sharedData_800E0CAC_0_s00 = 0x800D85F8; // type:s32
 sharedData_800E0CB0_0_s00 = 0x800D85FC; // type:u32
@@ -95,4 +96,3 @@ sharedData_800D32A0_0_s02 = 0x800D860C; // type:s32
 sharedData_800D8610_1_s05 = 0x800D8610; // type:s32
 sharedData_800D8614_1_s05 = 0x800D8614; // type:s16
 sharedData_800D8616_1_s05 = 0x800D8616; // type:s16
-g_MapHdr_Table_4C = 0x800D5D28; // type:MapHdr_field_4C size:0x2710
