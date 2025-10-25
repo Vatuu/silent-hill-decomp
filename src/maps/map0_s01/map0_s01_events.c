@@ -394,8 +394,8 @@ void MapEvent_CafeCutscene() // 0x800DA980
 
     if (g_Timer0 >= Q12(0.0f))
     {
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_Timer0, FS_BUFFER_11));
-        vcUserCamTarget(&g_CutsceneCameraPositionTarget, NULL, true);
+        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPositionitionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_Timer0, FS_BUFFER_11));
+        vcUserCamTarget(&g_CutsceneCameraPositionitionTarget, NULL, true);
         vcUserWatchTarget(&g_CutsceneCameraLookAtTarget, NULL, true);
         Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, "HERO", g_Timer0, FS_BUFFER_11);
 
@@ -717,8 +717,8 @@ void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
             g_SysWork.npcs_1A0[0].position_18.vz += FP_MULTIPLY(Math_Cos(g_SysWork.npcs_1A0[0].rotation_24.vy), Q12(0.2f), Q12_SHIFT);
         }
 
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_Timer0, FS_BUFFER_11));
-        vcUserCamTarget(&g_CutsceneCameraPositionTarget, NULL, true);
+        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPositionitionTarget, &g_CutsceneCameraLookAtTarget, NULL, g_Timer0, FS_BUFFER_11));
+        vcUserCamTarget(&g_CutsceneCameraPositionitionTarget, NULL, true);
         vcUserWatchTarget(&g_CutsceneCameraLookAtTarget, NULL, true);
     }
 }
@@ -811,8 +811,8 @@ void MapEvent_MapItemTake() // 0x800DC3C8
             Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "BIRD", 0, FS_BUFFER_11);
 
             // Set camera.
-            vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPositionTarget, &g_CutsceneCameraLookAtTarget, NULL, 0, FS_BUFFER_11));
-            vcUserCamTarget(&g_CutsceneCameraPositionTarget, NULL, true);
+            vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPositionitionTarget, &g_CutsceneCameraLookAtTarget, NULL, 0, FS_BUFFER_11));
+            vcUserCamTarget(&g_CutsceneCameraPositionitionTarget, NULL, true);
             vcUserWatchTarget(&g_CutsceneCameraLookAtTarget, NULL, true);
 
             // Warp player.

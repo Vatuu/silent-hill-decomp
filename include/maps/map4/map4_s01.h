@@ -75,17 +75,17 @@ extern u8 D_800D5AF0;
 extern s32 g_Timer0;
 extern s32 g_Timer1;
 extern s32 g_Timer2;
-extern VECTOR3 g_CutsceneCameraPos;
+extern VECTOR3 g_CutsceneCameraPosition;
 extern VECTOR3 g_CutsceneCameraLookAt;
 
-extern s_WorldObjectDesc_norot Wobj_D_800D7FF0;
+extern s_WorldObjectDescNoRot WorldObject_D_800D7FF0;
 extern u8 D_800D8018;
-extern s_WorldObjectDesc Wobj_D_800D8020;
-extern s_WorldObjectDesc Wobj_D_800D8050;
-extern s_WorldObjectPos  Wobj_D_800D8070;
-extern s_WorldObjectPos  Wobj_D_800D8090;
-extern s_WorldObjectDesc Wobj_D_800D80B0;
-extern s_WorldObjectDesc_norot Wobj_D_800D80E0[2];
+extern s_WorldObjectDesc WorldObject_D_800D8020;
+extern s_WorldObjectDesc WorldObject_D_800D8050;
+extern s_WorldObjectPose WorldObject_D_800D8070;
+extern s_WorldObjectPose WorldObject_D_800D8090;
+extern s_WorldObjectDesc WorldObject_D_800D80B0;
+extern s_WorldObjectDescNoRot WorldObject_D_800D80E0[2];
 extern s16 D_800D5AE8;
 
 void func_800D1B78(s32 arg0);
@@ -93,6 +93,10 @@ void func_800D1B78(s32 arg0);
 void func_800D496C(void);
 
 void func_800D4998(void);
+
+void func_800D49C4(void);
+
+void func_800D4BA4(void);
 
 void func_800D2408(void);
 

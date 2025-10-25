@@ -2881,7 +2881,7 @@ typedef struct
 {
     s_WorldObject_0 object_0;
     VECTOR3         position_1C;
-} s_WorldObjectDesc_norot;
+} s_WorldObjectDescNoRot;
 
 typedef struct
 {

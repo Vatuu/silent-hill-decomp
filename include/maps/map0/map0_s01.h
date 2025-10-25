@@ -41,7 +41,7 @@ extern u8 g_MapMsgSoundIdx; // 0x800E23A0
 
 extern u8 D_800E23A1;
 
-extern VECTOR3 g_CutsceneCameraPositionTarget; // 0x800E2380
+extern VECTOR3 g_CutsceneCameraPositionitionTarget; // 0x800E2380
 
 extern VECTOR3 g_CutsceneCameraLookAtTarget; // 0x800E2390
 
