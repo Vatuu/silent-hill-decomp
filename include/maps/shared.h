@@ -2925,7 +2925,8 @@ static inline void g_WorldGfx_ObjAdd(s_WorldObjectDesc* obj)
 }
 
 /** @brief A helper function for `g_WorldGfx_ObjectAdd` that takes one argument for less typing.
- * Takes a `_norot` variant of the WorldObjectDesc and uses an empty SVECTOR3 **/
+ * Uses an empty SVECTOR3. Note that this will end up in RODATA, so this is only usable once
+ * you decomp all functions that use the one common RODATA_ASM for that empty vector. **/
 #define g_WorldGfx_ObjAdd_norot(obj) \
     g_WorldGfx_ObjectAdd(&(obj)->object_0, &(obj)->position_1C, &(SVECTOR3){})
 
