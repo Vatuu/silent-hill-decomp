@@ -114,26 +114,26 @@ void sharedSymbol_800D0ADC_3_s04(s_SubCharacter* chara, GsCOORDINATE2* coords)
     s8          pitch0;
     s8          pitch1;
 
-#define CHARA_PROPERTIES (chara->properties_E4.dahlia)
+    #define dahliaProps (chara->properties_E4.dahlia)
 
-    switch (CHARA_PROPERTIES.stateIdx0)
+    switch (dahliaProps.stateIdx0)
     {
         case 0:
             break;
 
         case 1:
-            if (CHARA_PROPERTIES.moveDistance_126 > Q12(1.25f))
+            if (dahliaProps.moveDistance_126 > Q12(1.25f))
             {
-                CHARA_PROPERTIES.moveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.5f));
-                if (CHARA_PROPERTIES.moveDistance_126 < Q12(1.25f))
+                dahliaProps.moveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.5f));
+                if (dahliaProps.moveDistance_126 < Q12(1.25f))
                 {
-                    CHARA_PROPERTIES.moveDistance_126 = Q12(1.25f);
+                    dahliaProps.moveDistance_126 = Q12(1.25f);
                 }
             }
-            else if (CHARA_PROPERTIES.moveDistance_126 < Q12(1.25f))
+            else if (dahliaProps.moveDistance_126 < Q12(1.25f))
             {
-                CHARA_PROPERTIES.moveDistance_126 += TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f));
-                CHARA_PROPERTIES.moveDistance_126  = CLAMP(CHARA_PROPERTIES.moveDistance_126, 0, Q12(1.25f));
+                dahliaProps.moveDistance_126 += TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f));
+                dahliaProps.moveDistance_126  = CLAMP(dahliaProps.moveDistance_126, 0, Q12(1.25f));
             }
 
             Model_AnimStatusSet(&chara->model_0, 2, false);
@@ -142,16 +142,16 @@ void sharedSymbol_800D0ADC_3_s04(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
         case 5:
         case 20:
-            if (CHARA_PROPERTIES.moveDistance_126)
+            if (dahliaProps.moveDistance_126)
             {
-                CHARA_PROPERTIES.moveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
-                if (CHARA_PROPERTIES.moveDistance_126 < Q12(0.0f))
+                dahliaProps.moveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
+                if (dahliaProps.moveDistance_126 < Q12(0.0f))
                 {
-                    CHARA_PROPERTIES.moveDistance_126 = Q12(0.0f);
+                    dahliaProps.moveDistance_126 = Q12(0.0f);
                 }
             }
 
-            if (CHARA_PROPERTIES.stateIdx0 == 5)
+            if (dahliaProps.stateIdx0 == 5)
             {
                 Model_AnimStatusKeyframeSet(chara->model_0, 1, true, ANIM_TABLE, 0);
             }
@@ -173,7 +173,7 @@ void sharedSymbol_800D0ADC_3_s04(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
             if (chara->model_0.anim_4.keyframeIdx_8 == 72)
             {
-                CHARA_PROPERTIES.stateIdx0 = 20;
+                dahliaProps.stateIdx0 = 20;
                 chara->model_0.stateStep_3 = 0;
             }
             break;
@@ -247,7 +247,7 @@ void sharedSymbol_800D0ADC_3_s04(s_SubCharacter* chara, GsCOORDINATE2* coords)
     func_8007FDE0(coll.field_8, &sfx, &pitch0, &pitch1);
     sfx = Sfx_Unk1529;
 
-    switch (CHARA_PROPERTIES.stateIdx0)
+    switch (dahliaProps.stateIdx0)
     {
         case 1:
             sharedFunc_800D908C_0_s00(5, chara, 14, 31, sfx, pitch0);
@@ -354,7 +354,7 @@ void sharedSymbol_800D0ADC_3_s04(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
     chara->rotation_24.vy  = ABS_ANGLE(chara->rotation_24.vy + Q8_TO_Q4(sharedData_800D6BB8_3_s04));
     chara->headingAngle_3C = chara->rotation_24.vy;
-    chara->moveSpeed_38    = CHARA_PROPERTIES.moveDistance_126;
+    chara->moveSpeed_38    = dahliaProps.moveDistance_126;
     chara->field_34       += g_DeltaTime2;
 
     coords->flg = false;

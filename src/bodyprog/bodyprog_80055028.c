@@ -2640,18 +2640,16 @@ static inline s32 calc_atten(s32 volume, VECTOR3* pos, s32 falloff)
                        SQUARE((g_SysWork.player_4C.chara_0.position_18.vy - pos->vy) >> 6) +
                        SQUARE((g_SysWork.player_4C.chara_0.position_18.vz - pos->vz) >> 6)) << 6;
 
-    return (volume * dist / falloff);
+    return (volume * dist) / falloff;
 }
 
-void func_8005DE0C(s32 sfx, VECTOR3* pos, s32 inVolume, s32 falloff, u8 pitch)
+void func_8005DE0C(s32 sfx, VECTOR3* pos, s32 inVolume, s32 falloff, u8 pitch) // 0x8005DE0C
 {
     s32 balance;
-
     u16 finalVol;
-
     s32 s3;
     s32 att0;
-    u8 att1;
+    u8  att1;
     s32 att2;
 
     if (g_GameWork.config_0.optSoundType_1E != 0)
@@ -2662,7 +2660,7 @@ void func_8005DE0C(s32 sfx, VECTOR3* pos, s32 inVolume, s32 falloff, u8 pitch)
     {
         balance = Sound_StereoBalanceGet(pos);
     }
-    
+
     if (inVolume > 0xFF)
     {
         inVolume = 0xFF;
@@ -2672,14 +2670,14 @@ void func_8005DE0C(s32 sfx, VECTOR3* pos, s32 inVolume, s32 falloff, u8 pitch)
     {
         return;
     }
-    
+
     att0 = calc_atten(inVolume, pos, falloff);
     s3 = inVolume - 0xFF;
     if (att0 - s3 >= 0xFF || calc_atten(inVolume, pos, falloff) - s3 >= 0)
     {
         att2 = calc_atten(inVolume, pos, falloff) - s3;
-        finalVol = 0xff;
-        if (att2 < 0xff)
+        finalVol = 0xFF;
+        if (att2 < 0xFF)
         {
             att1 = calc_atten(inVolume, pos, falloff) - (inVolume + 1);
             finalVol = att1;
@@ -2689,7 +2687,6 @@ void func_8005DE0C(s32 sfx, VECTOR3* pos, s32 inVolume, s32 falloff, u8 pitch)
     {
          finalVol = 0;
     }
-
 
     func_800463C0(sfx, balance, finalVol, pitch);
 }
@@ -3887,11 +3884,6 @@ void func_8006342C(s32 weaponAttack, s16 arg1, s16 arg2, GsCOORDINATE2* coord) /
 
 bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
 {
-	
-	#define SetSVectorFast(v, x, y, z) \
-		*(s32*)&(v)->vx = (s32)((x) & 0xFFFF) | (s32)((y) << 16); \
-		(v)->vz = (z)
-
     s_func_80063A50* ptr;
 
     ptr = PSX_SCRATCH;
@@ -3927,7 +3919,7 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
             ptr->field_1E4         = 0x51;
             ptr->field_1E8         = 0xC0;
             SetSVectorFast(&ptr->field_164, 0xFFFE, 0xFFDD, 0xDD);
-			
+
             Vw_CoordHierarchyMatrixCompute(&D_800C440C[10], &ptr->field_12C);
             break;
 

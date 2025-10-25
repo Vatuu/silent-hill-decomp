@@ -4,6 +4,8 @@
 #include "maps/shared.h"
 #include "maps/map1/map1_s05.h"
 
+// TODO: Func declarations in header.
+
 INCLUDE_RODATA("asm/maps/map1_s05/nonmatchings/map1_s05", D_800C9578);
 
 INCLUDE_RODATA("asm/maps/map1_s05/nonmatchings/map1_s05", g_MapOverlayHeader);
@@ -54,7 +56,7 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CD5EC);
 
 #include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CF03C
 
-s32 func_800CF214()
+s32 func_800CF214() // 0x800CF214
 {
     return 0;
 }
@@ -85,7 +87,7 @@ void func_800CF424(void) {}
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CF42C);
 
-s32 func_800CF7A4()
+s32 func_800CF7A4() // 0x800CF7A4
 {
     return 0;
 }
@@ -122,7 +124,7 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D2214);
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D2444);
 
-void func_800D263C(s_SubCharacter* chara)
+void func_800D263C(s_SubCharacter* chara) // 0x800D263C
 {
     if (Savegame_EventFlagGet(EventFlag_130))
     {
@@ -154,15 +156,16 @@ void func_800D450C(s32 arg0, s32 arg1) // 0x800D450C
     sharedData_800D8616_1_s05 += arg1;
 }
 
-s32 func_800D4530(s_SubCharacter* chara)
+s32 func_800D4530(s_SubCharacter* chara) // 0x800D4530
 {
     u32 timer;
     s32 ret;
 
     timer = chara->properties_E4.player.runTimer_F8;
+
     ret = 0;
-    if (((timer > 0xC6000) && (chara->model_0.anim_4.time_4 < 0xAF000)) ||
-        (( timer < 0xAF000) && (chara->model_0.anim_4.time_4 > 0xC6000)))
+    if ((timer > 0xC6000 && chara->model_0.anim_4.time_4 < 0xAF000) ||
+        (timer < 0xAF000 && chara->model_0.anim_4.time_4 > 0xC6000))
     {
         ret = 1;
     }

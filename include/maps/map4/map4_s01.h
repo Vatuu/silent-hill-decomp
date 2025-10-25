@@ -22,9 +22,9 @@
 #define KEYFRAME_PlayerState_Unk69 678
 
 // TODO: An array of this struct is at map header `bloodSplats_54`.
-// In MAP0_S01 it is a simple array of u16, here it is a larger object.
+// In MAP0_S01 it is a simple array of `u16`s, here it is a larger object.
 // Figure out what it is.
-typedef struct _mapHeader_field_54
+typedef struct _MapHeader_field_54
 {
     s32 field_0;
     s32 field_4;
@@ -36,8 +36,10 @@ typedef struct _mapHeader_field_54
     s8  field_10;
     s8  field_11;
     s8  field_12;
-} s_mapHeader_field_54;
-typedef struct _mapHeader_field_5C {
+} s_MapHeader_field_54;
+
+typedef struct _MapHeader_field_5C
+{
     u8  field_0;
     u8  field_1;
     u8  field_2;
@@ -60,9 +62,10 @@ typedef struct _mapHeader_field_5C {
     s16 field_1E;
     s32 field_20;
     s32 field_24;
-} s_mapHeader_field_5C;
-extern s_mapHeader_field_54 D_800D5B20[450];
-extern s_mapHeader_field_5C D_800D7F20;
+} s_MapHeader_field_5C;
+
+extern s_MapHeader_field_54 D_800D5B20[450];
+extern s_MapHeader_field_5C D_800D7F20;
 
 extern u16 g_MapMsgSounds[84];
 extern u16 g_MapMsgSounds1[4];
@@ -89,6 +92,8 @@ extern s_WorldObjectDescNoRot WorldObject_D_800D80E0[2];
 extern s16 D_800D5AE8;
 
 void func_800D1B78(s32 arg0);
+
+void func_800D1FF0(void);
 
 void func_800D496C(void);
 

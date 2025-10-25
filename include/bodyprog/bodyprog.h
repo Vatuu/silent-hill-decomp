@@ -1386,10 +1386,8 @@ typedef struct
 // Sound data struct?
 typedef struct
 {
-    s16 volumeXa_0; // Might be wrong, but it's used in a `Sd_SetVolBXa` call.
-                    // Could also be event timer?
-					// Most values are shared with `field_2`.
-    s16 field_2;    // volumeVoice_2?
+    s16 volumeXa_0; // Might be wrong, but it's used in a `Sd_SetVolBXa` call. Could also be event timer? Most values are shared with `field_2`.
+    s16 field_2;    // `volumeVoice_2`?
     u16 field_4;
     s16 field_6;
     s16 volumeBgm_8; // Might be wrong, but it's used in a `Sd_SetVolBgm` call.
@@ -3420,11 +3418,10 @@ void func_800485C0(s32 idx);
 
 void func_800485D8();
 
-/** @brief 
- * Execute a new primitive command and check the status from previous.
- * If previous primitive commands haven't been finished then it start
- * adding to `D_800C1658.timer_0` each time the process fail and in case
- * of reaching 600 failed attemps it restart CD-ROM system.
+/** @brief Executes a new primitive command and checks the status against the previous.
+ * If the previous primitive commands haven't completed, it starts
+ * adding to `D_800C1658.timer_0` each time the process fails. When it
+ * reaches 600 failed attemps, it restarts the CD-ROM system.
  */
 u8 Cd_TryCmd(s32 com, u8* param, u8* res);
 

@@ -737,8 +737,8 @@ void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
 
         case 3:
         case 4:
-            if(chara->position_18.vx >= Q12(-100.0f) && chara->position_18.vx <= Q12(-94.5f) && 
-               chara->position_18.vz >= Q12(-70.3f) && chara->position_18.vz <= Q12(-62.0f)) 
+            if (chara->position_18.vx >= Q12(-100.0f) && chara->position_18.vx <= Q12(-94.5f) && 
+                chara->position_18.vz >= Q12(-70.3f) && chara->position_18.vz <= Q12(-62.0f)) 
             {
                 var_s0 = (var_s0 & ~0x2) | 0x4;
             }
