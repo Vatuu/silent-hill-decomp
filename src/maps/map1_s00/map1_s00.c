@@ -300,7 +300,68 @@ INCLUDE_RODATA("asm/maps/map1_s00/nonmatchings/map1_s00", D_800CB67C);
 
 INCLUDE_RODATA("asm/maps/map1_s00/nonmatchings/map1_s00", D_800CB684);
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D8CF0);
+void func_800D8CF0(void)
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            SysWork_StateStepIncrement();
+            /* fallthrough */
+        case 1:
+            func_80085DF0();
+            break;
+        case 2:
+            g_SysWork.silentYesSelection_2350_4 = 1;
+            MapMsg_DisplayAndHandleSelection(true, 29, 3, -1, 0, false); // Do you want to press the switch?
+            break;
+        case 3:
+            func_8005DC1C(Sfx_Unk1420, &D_800CB670, 0x80, 0);
+            Savegame_EventFlagSet(EventFlag_83);
+            SysWork_StateStepIncrement();
+    
+            /* fallthrough */
+        case 4:
+            func_80085E6C(Q12(1.0f), false);
+            break;
+        case 5:
+            D_800DD718 += g_DeltaTime0;
+            if ((D_800DD718 % Q12(0.8499f)) < Q12(0.45f))
+            {
+                g_WorldGfx_ObjectAdd(&g_WorldObj0.object_0, &g_WorldObj0.position_1C, &D_800CB67C);
+            }
+            if (D_800DD718 > Q12(3.5f))
+            {
+                SysWork_StateStepIncrement();
+            }
+            break;
+        case 6:
+            func_8005DC1C(Sfx_Unk1422, &D_800CB684, 0x80, 0);
+            SysWork_StateStepIncrement();
+            /* fallthrough */
+        case 7:
+            Savegame_EventFlagSet(EventFlag_73);
+            func_80085E6C(Q12(1.5f), false);
+            break;
+        case 8:
+            SysWork_NextStateStepSet(NO_VALUE);
+            Savegame_EventFlagSet(EventFlag_84);
+            break;
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+
+    if (Savegame_EventFlagGet(EventFlag_73))
+    {
+        func_800894B8(0x70);
+    }
+    else if (Savegame_EventFlagGet(EventFlag_83))
+    {
+        func_800894B8(0x90);
+    }
+}
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D8FE0);
 
@@ -421,8 +482,6 @@ void func_800D92D8(void)
     WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4.shotgunShellsName_18);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
-#define QV3(x,y,z) (VECTOR3)VECTOR3(x,y,z)
-extern SVECTOR3 D_800CB67C;
 void func_800D9764(void)
 {
     s32 i;
