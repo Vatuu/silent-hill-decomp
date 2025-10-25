@@ -125,7 +125,7 @@ void sharedSymbol_800CD4A0_2_s01(s_SubCharacter* dahlia, GsCOORDINATE2* coord)
 
     case 12:
         Model_AnimStatusKeyframeSet(dahlia->model_0, 8, true, ANIM_TABLE, 0);
-        Character_AnimStateTryReset(dahlia);
+        Character_AnimStateReset(dahlia);
         break;
 
     case 13:
@@ -172,7 +172,7 @@ void sharedSymbol_800CD4A0_2_s01(s_SubCharacter* dahlia, GsCOORDINATE2* coord)
         }
 
         Model_AnimStatusKeyframeSet(dahlia->model_0, 19, true, ANIM_TABLE, 0);
-        Character_AnimStateTryReset(dahlia);
+        Character_AnimStateReset(dahlia);
 
         if (dahlia->properties_E4.dahlia.stateIdx0 != 19)
         {
@@ -187,12 +187,12 @@ void sharedSymbol_800CD4A0_2_s01(s_SubCharacter* dahlia, GsCOORDINATE2* coord)
 
     case 21:
         Model_AnimStatusKeyframeSet(dahlia->model_0, 21, true, ANIM_TABLE, 0);
-        Character_AnimStateTryReset(dahlia);
+        Character_AnimStateReset(dahlia);
         break;
 
     case 22:
         Model_AnimStatusKeyframeSet(dahlia->model_0, 22, true, ANIM_TABLE, 0);
-        Character_AnimStateTryReset(dahlia);
+        Character_AnimStateReset(dahlia);
         break;
 
     case 23:

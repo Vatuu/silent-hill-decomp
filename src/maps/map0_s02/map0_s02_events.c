@@ -95,6 +95,7 @@ extern s_WorldObjectPose g_CommonWorldObjectPoses[7];
 void Map_WorldObjectsInit(void)
 {
     D_800D3474 = 0;
+
     if (!Savegame_EventFlagGet(EventFlag_131) && Savegame_EventFlagGet(EventFlag_159))
     {
         func_8003ED74(7, 4);
@@ -115,7 +116,6 @@ void Map_WorldObjectsInit(void)
     WorldObjectPoseInit(&g_WorldObjectPose_SavePad0, -100.47f, -1.575f, 22.22f, 0.0f, -75.8f, 0.0f);
     WorldObjectPoseInit(&g_WorldObjectPose_SavePad1, -178.08f, -0.705f, 22.0298f, 0.0f, 12.1f, 0.0f);
     WorldObjectPoseInit(&g_WorldObjectPose_SavePad2, -146.4248f, -0.911f, 21.325f, 0.0f, 8.0f, 0.0f);
-
 
     WorldObjectPoseInit(&g_WorldObject_Gas.pose_1C, -177.2998f, -1.2522f, 21.125f, 0.0f, -145.55f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject_Gas.object_0, "GAS_HIDE");

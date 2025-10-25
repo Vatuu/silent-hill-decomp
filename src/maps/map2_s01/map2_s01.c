@@ -581,7 +581,7 @@ extern s_WorldObject_0 g_CommonWorldObjects[6];
 extern s_WorldObjectDesc g_WorldObject_SavePad;
 extern s_WorldObjectDesc g_WorldObject_Key;
 extern s_WorldObjectDesc g_WorldObject_Item;
-extern s_WorldObjectPose g_CommonWorldObjectsPos[1];
+extern s_WorldObjectPose g_CommonWorldObjectPoses[1];
 
 void Map_WorldObjectsInit(void) // 0x800CF7F0
 {
@@ -660,7 +660,7 @@ void Map_WorldObjectsUpdate(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S01_HealthDrink))
         {
-            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectsPos[0].position_0, &g_CommonWorldObjectsPos[0].rotation_C);
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[0].position_0, &g_CommonWorldObjectPoses[0].rotation_C);
         }
     }
 }

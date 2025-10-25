@@ -84,7 +84,7 @@ MAP_MESSAGES              = 0x800CDE68; // type:u32 size:0x6C
 //----------------------------------------------------
 //--- PA: 0x00495C   VA: 0x800CDED4   subsegment: data
 //----------------------------------------------------
-g_CommonWorldObjectsPos   = 0x800CE024; // type:WorldObjectPos size:0xC4
+g_CommonWorldObjectPoses  = 0x800CE024; // type:WorldObjectPos size:0xC4
 sharedData_800DFB4C_0_s00 = 0x800CE0B0;
 sharedData_800CD77C_1_s04 = 0x800CE0B4;
 sharedData_800DFB6C_0_s00 = 0x800CE0C0; // type:s32
@@ -100,8 +100,8 @@ sharedData_800E0CB8_0_s00 = 0x800CF20C; // type:u16
 sharedData_800E0CBA_0_s00 = 0x800CF20E; // type:s8
 sharedData_800E39D8_0_s00 = 0x800CF210; // type:s32
 sharedData_800D32A0_0_s02 = 0x800CF214; // type:s32
-g_WorldObj_SavePad0       = 0x800CF220; // type:WorldObjectDesc size:0x30
-g_WorldObj_Map            = 0x800CF250; // type:WorldObjectDesc size:0x30
-g_WorldObj_SavePad1       = 0x800CF290; // type:WorldObjectDesc size:0x30
-g_WorldObj_Shotgun        = 0x800CF2C0; // type:WorldObjectDesc size:0x30
+g_WorldObject_SavePad0    = 0x800CF220; // type:WorldObjectDesc size:0x30
+g_WorldObject_Map         = 0x800CF250; // type:WorldObjectDesc size:0x30
+g_WorldObject_SavePad1    = 0x800CF290; // type:WorldObjectDesc size:0x30
+g_WorldObject_Shotgun     = 0x800CF2C0; // type:WorldObjectDesc size:0x30
 g_CommonWorldObjects      = 0x800CF2F0; // size:0xA8

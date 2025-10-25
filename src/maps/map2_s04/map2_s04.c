@@ -34,7 +34,7 @@ INCLUDE_RODATA("asm/maps/map2_s04/nonmatchings/map2_s04", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CC61C
 
-s32 func_800CC7F4()
+s32 func_800CC7F4() // 0x800CC7F4
 {
     return 0;
 }
@@ -65,7 +65,7 @@ void func_800CCA04(void) {}
 
 void func_800CCA0C(void) {}
 
-s32 func_800CCA14()
+s32 func_800CCA14() // 0x800CCA14
 {
     return 0;
 }
@@ -87,16 +87,16 @@ void func_800CCB30(s32 arg0) // 0x800CCB30
     (arg0 != 0) ? func_800CCB64() : sharedFunc_800CE934_0_s02();
 }
 
-void func_800CCB64(void)
+void func_800CCB64(void) // 0x800CCB64
 {
     s32 soundCmd;
 
     switch (g_SavegamePtr->mapRoomIdx_A5)
     {
         case 5:
-            soundCmd = 6;
-            func_8003640C(soundCmd);
+            func_8003640C(6);
             break;
+
         case 18:
             if (!Savegame_EventFlagGet(EventFlag_379))
             {
@@ -106,11 +106,12 @@ void func_800CCB64(void)
             {
                 soundCmd = 7;
             }
+
             func_8003640C(soundCmd);
             break;
+
         case 17:
-            soundCmd = 7;
-            func_8003640C(soundCmd);
+            func_8003640C(7);
             break;
     }
 
@@ -120,14 +121,14 @@ void func_800CCB64(void)
 
 void func_800CCE6C(void) {}
 
-void func_800CCE74(void)
+void func_800CCE74(void) // 0x800CCE74
 {
     VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     func_80086FE8(11, Sfx_Unk1334, &vec);
 }
 
-void func_800CCF08(void)
+void func_800CCF08(void) // 0x800CCF08
 {
     VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
@@ -223,26 +224,27 @@ void func_800CD0F8(void) // 0x800CD0F8
 
 extern u8 D_800CF280;
 extern s_WorldObject_0 g_CommonWorldObjects[8];
-extern s_WorldObjectDesc g_WorldObj_Map;
-extern s_WorldObjectDesc g_WorldObj_SavePad0;
-extern s_WorldObjectDesc g_WorldObj_SavePad1;
-extern s_WorldObjectDesc g_WorldObj_Shotgun;
-extern s_WorldObjectPos g_CommonWorldObjectsPos[7];
+extern s_WorldObjectDesc g_WorldObject_Map;
+extern s_WorldObjectDesc g_WorldObject_SavePad0;
+extern s_WorldObjectDesc g_WorldObject_SavePad1;
+extern s_WorldObjectDesc g_WorldObject_Shotgun;
+extern s_WorldObjectPose g_CommonWorldObjectPoses[7];
 
 void Map_WorldObjectsInit(void)
 {
     D_800CF280 = 0;
-    WorldObjectPositionInit(&g_WorldObj_SavePad0.position_1C, -60.9976f, -0.8289f, 20.1067f, 0.0f, -100.7f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObj_SavePad0.object_0, D_800A99E4.savePadName_4);
 
-    WorldObjectPositionInit(&g_WorldObj_Map.position_1C, -20.0f, 0.0f, 20.45f, 0, 180.0f, 0);
-    WorldObject_ModelNameSet(&g_WorldObj_Map.object_0, "MAP_HIDE");
+    WorldObjectPositionInit(&g_WorldObject_SavePad0.pose_1C, -60.9976f, -0.8289f, 20.1067f, 0.0f, -100.7f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject_SavePad0.object_0, D_800A99E4.savePadName_4);
 
-    WorldObjectPositionInit(&g_WorldObj_SavePad1.position_1C, -102.8699f, -1.25f, 57.15f, 0, -117.55f, 0);
-    WorldObject_ModelNameSet(&g_WorldObj_SavePad1.object_0, D_800A99E4.savePadName_4);
+    WorldObjectPositionInit(&g_WorldObject_Map.pose_1C, -20.0f, 0.0f, 20.45f, 0, 180.0f, 0);
+    WorldObject_ModelNameSet(&g_WorldObject_Map.object_0, "MAP_HIDE");
 
-    WorldObjectPositionInit(&g_WorldObj_Shotgun.position_1C, -59.484f, -0.8443f, 18.1517f, 0, -23.3f, 0);
-    WorldObject_ModelNameSet(&g_WorldObj_Shotgun.object_0, "SHOTGUN_");
+    WorldObjectPositionInit(&g_WorldObject_SavePad1.pose_1C, -102.8699f, -1.25f, 57.15f, 0, -117.55f, 0);
+    WorldObject_ModelNameSet(&g_WorldObject_SavePad1.object_0, D_800A99E4.savePadName_4);
+
+    WorldObjectPositionInit(&g_WorldObject_Shotgun.pose_1C, -59.484f, -0.8443f, 18.1517f, 0, -23.3f, 0);
+    WorldObject_ModelNameSet(&g_WorldObject_Shotgun.object_0, "SHOTGUN_");
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
@@ -255,12 +257,13 @@ void Map_WorldObjectsInit(void)
 void Map_WorldObjectsUpdate(void)
 {
     MAP_CHUNK_CHECK_VARIABLE_DECL();
+
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
     {
-        g_WorldGfx_ObjectAdd(&g_WorldObj_SavePad0.object_0, &g_WorldObj_SavePad0.position_1C.position_0, &g_WorldObj_SavePad0.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_WorldObject_SavePad0.object_0, &g_WorldObject_SavePad0.pose_1C.position_0, &g_WorldObject_SavePad0.pose_1C.rotation_C);
         if (!Savegame_EventFlagGet(EventFlag_M1S02_PickupShotgun))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObj_Shotgun.object_0, &g_WorldObj_Shotgun.position_1C.position_0, &g_WorldObj_Shotgun.position_1C.rotation_C);
+            g_WorldGfx_ObjectAdd(&g_WorldObject_Shotgun.object_0, &g_WorldObject_Shotgun.pose_1C.position_0, &g_WorldObject_Shotgun.pose_1C.rotation_C);
         }
     }
 
@@ -268,7 +271,7 @@ void Map_WorldObjectsUpdate(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupMap))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObj_Map.object_0, &g_WorldObj_Map.position_1C.position_0, &g_WorldObj_Map.position_1C.rotation_C);
+            g_WorldGfx_ObjectAdd(&g_WorldObject_Map.object_0, &g_WorldObject_Map.pose_1C.position_0, &g_WorldObject_Map.pose_1C.rotation_C);
         }
     }
 
@@ -279,7 +282,8 @@ void Map_WorldObjectsUpdate(void)
             func_8003ED74(7, 4);
             D_800CF280++;
         }
-        g_WorldGfx_ObjectAdd(&g_WorldObj_SavePad1.object_0, &g_WorldObj_SavePad1.position_1C.position_0, &g_WorldObj_SavePad1.position_1C.rotation_C);
+
+        g_WorldGfx_ObjectAdd(&g_WorldObject_SavePad1.object_0, &g_WorldObject_SavePad1.pose_1C.position_0, &g_WorldObject_SavePad1.pose_1C.rotation_C);
     }
     else
     {
@@ -290,7 +294,7 @@ void Map_WorldObjectsUpdate(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S04_ShotgunShells0))
         {
-            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[5], &g_CommonWorldObjectsPos[0].position_0, &g_CommonWorldObjectsPos[0].rotation_C);
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[5], &g_CommonWorldObjectPoses[0].position_0, &g_CommonWorldObjectPoses[0].rotation_C);
         }
     }
 
@@ -298,7 +302,7 @@ void Map_WorldObjectsUpdate(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S04_HandgunBullets0))
         {
-            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectsPos[1].position_0, &g_CommonWorldObjectsPos[1].rotation_C);
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[1].position_0, &g_CommonWorldObjectPoses[1].rotation_C);
         }
     }
 
@@ -306,7 +310,7 @@ void Map_WorldObjectsUpdate(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S04_HandgunBullets1))
         {
-            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectsPos[2].position_0, &g_CommonWorldObjectsPos[2].rotation_C);
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[2].position_0, &g_CommonWorldObjectPoses[2].rotation_C);
         }
     }
 
@@ -314,7 +318,7 @@ void Map_WorldObjectsUpdate(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S04_ShotgunShells1))
         {
-            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[5], &g_CommonWorldObjectsPos[3].position_0, &g_CommonWorldObjectsPos[3].rotation_C);
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[5], &g_CommonWorldObjectPoses[3].position_0, &g_CommonWorldObjectPoses[3].rotation_C);
         }
     }
 
@@ -322,7 +326,7 @@ void Map_WorldObjectsUpdate(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S04_HandgunBullets2))
         {
-            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectsPos[4].position_0, &g_CommonWorldObjectsPos[4].rotation_C);
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[4].position_0, &g_CommonWorldObjectPoses[4].rotation_C);
         }
     }
 
@@ -330,7 +334,7 @@ void Map_WorldObjectsUpdate(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S04_HandgunBullets3))
         {
-            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectsPos[5].position_0, &g_CommonWorldObjectsPos[5].rotation_C);
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[5].position_0, &g_CommonWorldObjectPoses[5].rotation_C);
         }
     }
 
@@ -338,7 +342,7 @@ void Map_WorldObjectsUpdate(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S04_RifleShells))
         {
-            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[4], &g_CommonWorldObjectsPos[6].position_0, &g_CommonWorldObjectsPos[6].rotation_C);
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[4], &g_CommonWorldObjectPoses[6].position_0, &g_CommonWorldObjectPoses[6].rotation_C);
         }
     }
 }

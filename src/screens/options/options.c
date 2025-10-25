@@ -894,7 +894,7 @@ void Options_ExtraOptionsMenu_SelectionHighlightDraw(void) // 0x801E4450
 
     s32      i;
     s32      j;
-    s16      interpAlpha;
+    q3_12    interpAlpha;
     s_Line2d highlightLine;
     s_Quad2d bulletQuads[BULLET_QUAD_COUNT];
     DVECTOR* quadVerts;
