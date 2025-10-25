@@ -287,7 +287,67 @@ void func_800D85A4(void) // 0x800D85A4
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D85D8);
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D8948);
+void func_800D8948(void)
+{
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+        (g_SysWork.sysStateStep_C[0] >= 4) && (g_SysWork.sysStateStep_C[0] < 6))
+    {
+        ScreenFade_ResetTimestep();
+        SysWork_NextStateStepSet(NO_VALUE);
+    }
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            Savegame_EventFlagClear(EventFlag_82);
+            Savegame_EventFlagClear(EventFlag_79);
+            Savegame_EventFlagClear(EventFlag_80);
+
+            func_8008616C(0, true, 0, Q12(1.5f), false);
+            SysWork_StateStepIncrement();
+            /* fallthrough */
+        case 1:
+            func_80085DF0();
+            break;
+        case 2:
+            func_8008616C(1, true, 0, 0, false);
+            break;
+        case 3:
+            Camera_PositionSet(NULL, Q12(-56.74f), Q12(-1.7698f), Q12(-55.13f), 0, 0, 0, 0, true);
+            Camera_LookAtSet(NULL, Q12(-55.43f), Q12(-5.5f), Q12(-54.56f), 0, 0, 0, 0, true);
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(-56.34f);
+            g_SysWork.player_4C.chara_0.position_18.vy = Q12(-2.276f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(-55.1f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(0.0f);
+            func_8008616C(0, false, 0, Q12(1.5f), false);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 87, false);
+            if (g_MapEventParam->field_5 == 16)
+            {
+                Savegame_EventFlagSet(EventFlag_79);
+            }
+            else if (g_MapEventParam->field_5 == 17)
+            {
+                Savegame_EventFlagSet(EventFlag_80);
+            }
+            SysWork_StateStepIncrement();
+
+            /* fallthrough */
+        case 4:
+            func_80085E6C(Q12(3.5f), false);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = 0;
+            g_SysWork.player_4C.chara_0.position_18.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.3f), Q12_SHIFT);
+            break;
+        case 5:
+            g_SysWork.player_4C.chara_0.position_18.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.3f), Q12_SHIFT);
+            func_8008616C(2, true, 0, Q12(1.5f), false);
+            break;
+        default:
+            sharedFunc_800D2244_0_s00(true);
+            SysWork_StateSetNext(SysState_Gameplay);
+            g_SysWork.player_4C.chara_0.position_18.vy = 0;
+            break;
+        }
+}
 
 void func_800D8CC4(void) // 0x800D8CC4
 {
@@ -515,7 +575,7 @@ void Map_WorldObjectsUpdate(void)
     if (!Savegame_EventFlagGet(EventFlag_226))
     {
         Savegame_EventFlagSet(EventFlag_226);
-        func_8003A16C(g_SavegamePtr);
+        func_8003A16C();
     }
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
     {
@@ -569,7 +629,7 @@ void Map_WorldObjectsUpdate(void)
         }
         else
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObj6->object_0, &g_WorldObj6->position_1C, &(SVECTOR3){});
+            g_WorldGfx_ObjectAdd(&g_WorldObj6[0].object_0, &g_WorldObj6[0].position_1C, &(SVECTOR3){});
         }
         if (Savegame_EventFlagGet(EventFlag_73))
         {
@@ -672,7 +732,7 @@ void Map_WorldObjectsUpdate(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S00_FirstAidKit))
         {
-            g_WorldGfx_ObjectAdd(g_CommonWorldObjects, &g_CommonWorldObjectsPos[4], &g_CommonWorldObjectsPos[4].rotation_C);
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[0], &g_CommonWorldObjectsPos[4], &g_CommonWorldObjectsPos[4].rotation_C);
         }
     }
 }
