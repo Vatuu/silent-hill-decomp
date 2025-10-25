@@ -21,10 +21,83 @@
 #define HAS_PlayerState_Unk186
 #define KEYFRAME_PlayerState_Unk69 678
 
+// TODO: An array of this struct is at map header `bloodSplats_54`.
+// In MAP0_S01 it is a simple array of u16, here it is a larger object.
+// Figure out what it is.
+typedef struct _mapHeader_field_54
+{
+    s32 field_0;
+    s32 field_4;
+    s16 field_8;
+    u8  field_A;
+    s8  field_B;
+    s16 field_C;
+    u16 field_E;
+    s8  field_10;
+    s8  field_11;
+    s8  field_12;
+} s_mapHeader_field_54;
+typedef struct _mapHeader_field_5C {
+    u8  field_0;
+    u8  field_1;
+    u8  field_2;
+    u8  field_3;
+    u8  field_4;
+    u8  field_5;
+    u8  field_6;
+    u8  field_7;
+    s16 field_8;
+    s16 field_A;
+    u16 field_C;
+    s16 field_E;
+    s16 field_10;
+    s16 field_12;
+    s16 field_14;
+    s16 field_16;
+    s16 field_18;
+    s16 field_1A;
+    u16 field_1C;
+    s16 field_1E;
+    s32 field_20;
+    s32 field_24;
+} s_mapHeader_field_5C;
+extern s_mapHeader_field_54 D_800D5B20[450];
+extern s_mapHeader_field_5C D_800D7F20;
+
+extern u16 g_MapMsgSounds[84];
+extern u16 g_MapMsgSounds1[4];
+extern u16 g_MapMsgSounds2[2];
+extern u8 g_MapMsgSoundIdx;
+extern u8 g_MapMsgSoundIdx1;
+extern u8 g_MapMsgSoundIdx2;
+extern u8 D_800D5AEB;
+extern u8 D_800D5AF0;
+extern s32 g_Timer0;
+extern s32 g_Timer1;
+extern s32 g_Timer2;
+extern VECTOR3 g_CutsceneCameraPos;
+extern VECTOR3 g_CutsceneCameraLookAt;
+
+extern s_WorldObjectDesc_norot Wobj_D_800D7FF0;
+extern u8 D_800D8018;
+extern s_WorldObjectDesc Wobj_D_800D8020;
+extern s_WorldObjectDesc Wobj_D_800D8050;
+extern s_WorldObjectPos  Wobj_D_800D8070;
+extern s_WorldObjectPos  Wobj_D_800D8090;
+extern s_WorldObjectDesc Wobj_D_800D80B0;
+extern s_WorldObjectDesc_norot Wobj_D_800D80E0[2];
+extern s16 D_800D5AE8;
+
 void func_800D1B78(s32 arg0);
 
 void func_800D496C(void);
 
 void func_800D4998(void);
+
+void func_800D2408(void);
+
+void func_800D4410(void);
+
+void func_800CC2C4(s32 arg0, s32 arg1);
 
 #endif

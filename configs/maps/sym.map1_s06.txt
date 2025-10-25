@@ -89,6 +89,7 @@ sharedData_800DD592_0_s00 = 0x800D6E26;
 sharedData_800DD598_0_s00 = 0x800D6E28;
 sharedData_800DD59C_0_s00 = 0x800D6E2C; // type:u8
 SPLITHEAD_ANIM_INFOS      = 0x800D6E34; // type:s32 unknown type
+sharedData_800D5A68_1_s05 = 0x800D7014;
 sharedData_800DCC14_1_s00 = 0x800D71B0; // type:u8
 
 //---------------------------------------------------------------

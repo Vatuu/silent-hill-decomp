@@ -228,7 +228,10 @@ typedef enum _Sfx
 
     Sfx_Unk1529 = 1529,
 
+    Sfx_Unk1538 = 1538,
     Sfx_Unk1539 = 1539,
+
+    Sfx_Unk1541 = 1541,
 
     Sfx_Unk1567 = 1567,
 
@@ -1353,7 +1356,7 @@ typedef struct
 
 typedef struct
 {
-    u16 field_0;
+    u16 timer_0; // A timer related to audio command processes.
     u16 field_2;
     u16 field_4;
     u16 field_6;
@@ -1384,7 +1387,9 @@ typedef struct
 typedef struct
 {
     s16 volumeXa_0; // Might be wrong, but it's used in a `Sd_SetVolBXa` call.
-    s16 field_2;
+                    // Could also be event timer?
+					// Most values are shared with `field_2`.
+    s16 field_2;    // volumeVoice_2?
     u16 field_4;
     s16 field_6;
     s16 volumeBgm_8; // Might be wrong, but it's used in a `Sd_SetVolBgm` call.
@@ -2629,10 +2634,13 @@ extern u16 D_800C15D0;
 
 extern u32 D_800C15D4;
 
+// Only used in `func_800478DC` as iterator variable.
 extern s32 D_800C15D8;
 
+// Only used in `func_800478DC` as iterator variable.
 extern s32 D_800C15DC; // Index.
 
+// Only used in `func_80047A70` as iterator variable.
 extern s32 D_800C15E0;
 
 extern s_800C15F0 D_800C15F0;
@@ -2662,11 +2670,7 @@ extern u8 D_800C166F;
 
 extern u8 D_800C1671;
 
-extern s16 D_800C167A;
-
 extern s16 D_800C167C;
-
-extern s16 D_800C167E;
 
 extern s_800C1670 D_800C1670;
 
@@ -2690,6 +2694,7 @@ extern s_800C1698 D_800C1698;
 
 extern s16 D_800C16A4;
 
+// Command pool related to audio and streaming.
 extern u8 D_800C16A8[32];
 
 extern s32 D_800C16C8; // Type assumed.
@@ -3415,8 +3420,13 @@ void func_800485C0(s32 idx);
 
 void func_800485D8();
 
-/** Boolean. */
-u8 func_80048954(s32 com, u8* param, u8* res);
+/** @brief 
+ * Execute a new primitive command and check the status from previous.
+ * If previous primitive commands haven't been finished then it start
+ * adding to `D_800C1658.timer_0` each time the process fail and in case
+ * of reaching 600 failed attemps it restart CD-ROM system.
+ */
+u8 Cd_TryCmd(s32 com, u8* param, u8* res);
 
 /** `arg0` is probably a bit flag. */
 void func_8004C564(u8 arg0, s32 weaponAttack);
@@ -3619,9 +3629,8 @@ bool func_8005F680(s_Collision* coll);
 void func_8005F6B0(s_SubCharacter* chara, VECTOR* arg1, s32 arg2, s32 arg3);
 
 /** Spatial SFX func? */
-void func_8005DE0C(s32 sfx, VECTOR3*, s32, s32, s32); // Types assumed.
+void func_8005DE0C(s32 sfx, VECTOR3* pos, s32 inVolume, s32 falloff, u8 pitch);
 
-/** Something related to events of the map and loading of textures? */
 void Map_EffectTexturesLoad(s32 mapIdx);
 
 void func_8005E650();

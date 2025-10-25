@@ -20,6 +20,7 @@
 //-----------------------------------------------------------
 //--- PA: 0x002C24   VA: 0x800CC19C   subsegment: c, map4_s01
 //-----------------------------------------------------------
+sharedFunc_800CB6B0_0_s00   = 0x800CD548; // type:func
 sharedFunc_800D08B8_0_s00   = 0x800CD6B0; // type:func
 sharedFunc_800D0A60_0_s00   = 0x800CD830; // type:func
 sharedFunc_800D0B18_0_s00   = 0x800CD8E8; // type:func
@@ -64,6 +65,8 @@ sharedFunc_800D9188_0_s00   = 0x800D199C; // type:func
 Anim_StartKeyframeIdxGet    = 0x800D1A50; // type:func
 sharedFunc_800D923C_0_s00   = 0x800D1A70; // type:func
 sharedFunc_800D929C_0_s00   = 0x800D1AD0; // type:func
+Map_RoomIdxGet              = 0x800D1AE0; // type:func
+sharedFunc_800CE8B8_0_s02   = 0x800D1BAC; // type:func
 sharedFunc_800CE934_0_s02   = 0x800D1C28; // type:func
 sharedFunc_800DA8E8_0_s01   = 0x800D1EBC; // type:func
 
@@ -78,11 +81,14 @@ sharedFunc_800DA8E8_0_s01   = 0x800D1EBC; // type:func
 //--- PA: 0x00B93C   VA: 0x800D4EB4   subsegment: data
 //----------------------------------------------------
 HARRY_M4S01_ANIM_INFOS      = 0x800D4EB4;
+sharedData_800DD584_0_s00   = 0x800D5147; // type:u8
+sharedData_800DD598_0_s00   = 0x800D5148;
 sharedData_800DD59C_0_s00   = 0x800D514C; // type:u8
 KAUFMANN_ANIM_INFOS         = 0x800D5150; // type:AnimInfo
 sharedData_800DF1F4_0_s00   = 0x800D5550; // type:s32
 sharedData_800DF1F8_0_s00   = 0x800D5554; // type:s16
 sharedData_800DF1FA_0_s00   = 0x800D5556; // type:s16
+MAP_ROOM_IDXS               = 0x800D5558; // type:u8 size:0x1E
 sharedData_800CFB14_0_s02   = 0x800D5578; // type:u8 size:8
 sharedData_800CFB1C_0_s02   = 0x800D5580; // type:u8 size:8
 sharedData_800CFB24_0_s02   = 0x800D5588; // type:u8 size:8
@@ -92,6 +98,7 @@ sharedData_800CFB3C_0_s02   = 0x800D55A0; // type:u8 size:8
 sharedData_800CFB44_0_s02   = 0x800D55A8; // type:u8 size:8
 sharedData_800CFB4C_0_s02   = 0x800D55B0; // type:u8 size:8
 sharedData_800CFB54_0_s02   = 0x800D55B8; // type:u8 size:8
+MAP_POINTS                  = 0x800D55D0;
 
 //---------------------------------------------------------------
 //--- PA: 0x00C1A0   VA: 0x800D5718   subsegment: .data, map4_s01
@@ -101,8 +108,21 @@ MAP_MESSAGES                = 0x800D5718; // type:u32 size:0x1D8
 //----------------------------------------------------
 //--- PA: 0x00C378   VA: 0x800D58F0   subsegment: data
 //----------------------------------------------------
+g_MapMsgSounds              = 0x800D5A1C; // type:u16 size:0x52
+g_MapMsgSounds1             = 0x800D5AC4; // type:u16 size:0x8
+g_MapMsgSounds2             = 0x800D5AD4; // type:u16 size:0x4
+g_MapMsgSoundIdx2           = 0x800D5AD8; // type:u8
+g_Timer2                    = 0x800D5ADC; // type:s32
+sharedData_800DFB4C_0_s00   = 0x800D5AE0;
+sharedData_800CD77C_1_s04   = 0x800D5AE4; // type:s32
+g_MapMsgSoundIdx            = 0x800D5AEA; // type:u8
+g_Timer0                    = 0x800D5AEC; // type:s32
+g_MapMsgSoundIdx1           = 0x800D5AF0; // type:u8
+g_Timer1                    = 0x800D5AF4; // type:s32
 sharedData_800DFB6C_0_s00   = 0x800D5B10; // type:s32
 sharedData_800DFB70_0_s00   = 0x800D5B14; // type:s32
+g_ParticleVectors0          = 0x800D7F50; // type:ParticleVectors
+g_ParticleVectors1          = 0x800D7F80; // type:ParticleVectors
 sharedData_800E0CA8_0_s00   = 0x800D7FAC; // type:s32
 sharedData_800E0CAC_0_s00   = 0x800D7FB0; // type:s32
 sharedData_800E0CB0_0_s00   = 0x800D7FB4; // type:u32
@@ -114,3 +134,13 @@ sharedData_800E39D8_0_s00   = 0x800D7FC0; // type:s32
 sharedData_800D32A0_0_s02   = 0x800D7FC4; // type:s32
 sharedData_800E2378_0_s01   = 0x800D7FC8; // type:s32
 sharedData_800E237C_0_s01   = 0x800D7FCC; // type:s32
+g_CutsceneCameraPos         = 0x800D7FD0; // type:VECTOR3 size:0xC
+g_CutsceneCameraLookAt      = 0x800D7FE0; // type:VECTOR3 size:0xC
+Wobj_D_800D7FF0             = 0x800D7FF0; // type:WorldObjectDesc_norot size:0x28
+D_800D8018                  = 0x800D8018; // type:u8
+Wobj_D_800D8020             = 0x800D8020; // type:WorldObjectDesc size:0x2E
+Wobj_D_800D8050             = 0x800D8050; // type:WorldObjectDesc size:0x2E
+Wobj_D_800D8070             = 0x800D8070; // type:WorldObjectPos size:0x12
+Wobj_D_800D8090             = 0x800D8090; // type:WorldObjectPos size:0x12
+Wobj_D_800D80B0             = 0x800D80B0; // type:WorldObjectDesc size:0x2E
+Wobj_D_800D80E0             = 0x800D80E0; // type:WorldObjectDesc_norot size:0x50

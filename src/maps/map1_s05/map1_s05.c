@@ -106,7 +106,7 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", sharedFunc_800CF990_1_s05
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", sharedFunc_800CFE94_1_s05); // 0x800CFE94
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", sharedFunc_800D0054_1_s05); // 0x800D0054
+#include "maps/shared/sharedFunc_800D0054_1_s05.h" // 0x800D0054
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D00D0);
 
@@ -122,7 +122,15 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D2214);
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D2444);
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D263C);
+void func_800D263C(s_SubCharacter* chara)
+{
+    if (Savegame_EventFlagGet(EventFlag_130))
+    {
+        chara->model_0.state_2 = 2;
+        chara->model_0.anim_4.status_0 = ANIM_STATUS(11, false);
+        chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 0x100;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", sharedFunc_800D267C_1_s05); // 0x800D267C
 
@@ -146,7 +154,20 @@ void func_800D450C(s32 arg0, s32 arg1) // 0x800D450C
     sharedData_800D8616_1_s05 += arg1;
 }
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D4530);
+s32 func_800D4530(s_SubCharacter* chara)
+{
+    u32 timer;
+    s32 ret;
+
+    timer = chara->properties_E4.player.runTimer_F8;
+    ret = 0;
+    if (((timer > 0xC6000) && (chara->model_0.anim_4.time_4 < 0xAF000)) ||
+        (( timer < 0xAF000) && (chara->model_0.anim_4.time_4 > 0xC6000)))
+    {
+        ret = 1;
+    }
+    return ret;
+}
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D4594);
 

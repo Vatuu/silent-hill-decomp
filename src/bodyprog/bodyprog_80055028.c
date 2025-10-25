@@ -2632,7 +2632,67 @@ void func_8005DD44(s32 sfx, VECTOR3* pos, q23_8 vol, s8 pitch) // 0x8005DD44
     func_80046620(sfx, balance, ~volCpy, pitch);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005DE0C); // 0x8005DE0C
+static inline s32 calc_atten(s32 volume, VECTOR3* pos, s32 falloff)
+{
+    s32 dist;
+
+    dist = SquareRoot0(SQUARE((g_SysWork.player_4C.chara_0.position_18.vx - pos->vx) >> 6) +
+                       SQUARE((g_SysWork.player_4C.chara_0.position_18.vy - pos->vy) >> 6) +
+                       SQUARE((g_SysWork.player_4C.chara_0.position_18.vz - pos->vz) >> 6)) << 6;
+
+    return (volume * dist / falloff);
+}
+
+void func_8005DE0C(s32 sfx, VECTOR3* pos, s32 inVolume, s32 falloff, u8 pitch)
+{
+    s32 balance;
+
+    u16 finalVol;
+
+    s32 s3;
+    s32 att0;
+    u8 att1;
+    s32 att2;
+
+    if (g_GameWork.config_0.optSoundType_1E != 0)
+    {
+        balance = 0;
+    }
+    else
+    {
+        balance = Sound_StereoBalanceGet(pos);
+    }
+    
+    if (inVolume > 0xFF)
+    {
+        inVolume = 0xFF;
+    }
+
+    if (inVolume < 0)
+    {
+        return;
+    }
+    
+    att0 = calc_atten(inVolume, pos, falloff);
+    s3 = inVolume - 0xFF;
+    if (att0 - s3 >= 0xFF || calc_atten(inVolume, pos, falloff) - s3 >= 0)
+    {
+        att2 = calc_atten(inVolume, pos, falloff) - s3;
+        finalVol = 0xff;
+        if (att2 < 0xff)
+        {
+            att1 = calc_atten(inVolume, pos, falloff) - (inVolume + 1);
+            finalVol = att1;
+        }
+    }
+    else
+    {
+         finalVol = 0;
+    }
+
+
+    func_800463C0(sfx, balance, finalVol, pitch);
+}
 
 void Map_EffectTexturesLoad(s32 mapIdx) // 0x8005E0DC
 {
@@ -3827,6 +3887,11 @@ void func_8006342C(s32 weaponAttack, s16 arg1, s16 arg2, GsCOORDINATE2* coord) /
 
 bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
 {
+	
+	#define SetSVectorFast(v, x, y, z) \
+		*(s32*)&(v)->vx = (s32)((x) & 0xFFFF) | (s32)((y) << 16); \
+		(v)->vz = (z)
+
     s_func_80063A50* ptr;
 
     ptr = PSX_SCRATCH;
@@ -3838,8 +3903,7 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
             ptr->field_1E0         = 0x333;
             ptr->field_1E4         = 0xA3;
             ptr->field_1E8         = 0x100;
-            *(s32*)&ptr->field_164 = -0xEFFFE;
-            ptr->field_164.vz      = 0x47;
+            SetSVectorFast(&ptr->field_164, 2, 0xFFF1, 0x47);
 
             Vw_CoordHierarchyMatrixCompute(&D_800C440C[10], &ptr->field_12C);
             break;
@@ -3852,8 +3916,7 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
             ptr->field_1E0         = 0x28F;
             ptr->field_1E4         = 0xCC;
             ptr->field_1E8         = 0x180;
-            *(s32*)&ptr->field_164 = -0x11FFFD;
-            ptr->field_164.vz      = 0x6D;
+            SetSVectorFast(&ptr->field_164, 3, 0xFFEE, 0x6D);
 
             Vw_CoordHierarchyMatrixCompute(&D_800C440C[10], &ptr->field_12C);
             break;
@@ -3863,8 +3926,8 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
             ptr->field_1E0         = 0x2E1;
             ptr->field_1E4         = 0x51;
             ptr->field_1E8         = 0xC0;
-            *(s32*)&ptr->field_164 = -0x220002;
-            ptr->field_164.vz      = 0xDD;
+            SetSVectorFast(&ptr->field_164, 0xFFFE, 0xFFDD, 0xDD);
+			
             Vw_CoordHierarchyMatrixCompute(&D_800C440C[10], &ptr->field_12C);
             break;
 
@@ -3873,8 +3936,7 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
             ptr->field_1E0         = 0x333;
             ptr->field_1E4         = 0xA3;
             ptr->field_1E8         = 0x100;
-            *(s32*)&ptr->field_164 = -0x17FFFD;
-            ptr->field_164.vz      = 0x5B;
+            SetSVectorFast(&ptr->field_164, 3, 0xFFE8, 0x5B);
 
             Vw_CoordHierarchyMatrixCompute(&D_800C4410[10], &ptr->field_12C);
             break;
@@ -3884,8 +3946,7 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
             ptr->field_1E0         = 0x333;
             ptr->field_1E4         = 0xA3;
             ptr->field_1E8         = 0x100;
-            *(s32*)&ptr->field_164 = -0xCFFFE;
-            ptr->field_164.vz      = 0x43;
+            SetSVectorFast(&ptr->field_164, 2, 0xFFF3, 0x43);
 
             Vw_CoordHierarchyMatrixCompute(&D_800C4410[10], &ptr->field_12C);
             break;

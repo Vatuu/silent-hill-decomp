@@ -11,6 +11,26 @@
 //-----------------------------------------------------------------
 sharedData_800CAB70_0_s00      = 0x800CACD8; // type:VECTOR
 
+//-------------------------------------------------------------------
+//--- PA: 0x001A30   VA: 0x800CAFA8   subsegment: .rodata, Chara_Lisa
+//-------------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+//--- PA: 0x001AD0   VA: 0x800CB048   subsegment: .rodata, map7_s02_800D6874
+//--------------------------------------------------------------------------
+
+//------------------------------------------------------
+//--- PA: 0x001BA4   VA: 0x800CB11C   subsegment: rodata
+//------------------------------------------------------
+
+//-------------------------------------------------------------------------------
+//--- PA: 0x001BA8   VA: 0x800CB120   subsegment: .rodata, Chara_GhostChildAlessa
+//-------------------------------------------------------------------------------
+
+//-------------------------------------------------------------------
+//--- PA: 0x001BD8   VA: 0x800CB150   subsegment: .rodata, map7_s02_2
+//-------------------------------------------------------------------
+
 
 
 //================================================
@@ -64,17 +84,29 @@ sharedFunc_800D6970_0_s00      = 0x800D4350; // type:func
 sharedFunc_800D70C4_0_s00      = 0x800D4AA4; // type:func
 sharedFunc_800D7BE8_0_s00      = 0x800D55C8; // type:func
 sharedFunc_800D7E04_0_s00      = 0x800D57E4; // type:func
+
+//-------------------------------------------------------------
+//--- PA: 0x00C420   VA: 0x800D5998   subsegment: c, Chara_Lisa
+//-------------------------------------------------------------
 Ai_Lisa_Update                 = 0x800D5998; // type:func
 sharedFunc_800D08FC_3_s04      = 0x800D5A0C; // type:func
 sharedFunc_800D0944_3_s04      = 0x800D5A54; // type:func
 sharedSymbol_800D0ADC_3_s04    = 0x800D5BEC; // type:func
 Ai_Lisa_Init                   = 0x800D6460; // type:func
+
+//-------------------------------------------------------------------
+//--- PA: 0x00CF0C   VA: 0x800D6484   subsegment: c, Chara_BloodyLisa
+//-------------------------------------------------------------------
 Ai_BloodyLisa_Update           = 0x800D6484; // type:func
 sharedFunc_800D595C_7_s01      = 0x800D64F8; // type:func
 sharedFunc_800D59A4_7_s01      = 0x800D6540; // type:func
 sharedFunc_800D654C_0_s00      = 0x800D654C; // type:func
 sharedFunc_800D5B3C_7_s01      = 0x800D66D8; // type:func
 Ai_BloodyLisa_Init             = 0x800D6850; // type:func
+
+//--------------------------------------------------------------------
+//--- PA: 0x00D2FC   VA: 0x800D6874   subsegment: c, map7_s02_800D6874
+//--------------------------------------------------------------------
 Ai_Bloodsucker_Update          = 0x800D6874; // type:func
 Ai_Bloodsucker_Init            = 0x800D6B8C; // type:func
 sharedFunc_800D0E20_3_s03      = 0x800D6C20; // type:func
@@ -87,11 +119,19 @@ sharedFunc_800CD280_2_s01      = 0x800D6F48; // type:func
 sharedFunc_800CD2C8_2_s01      = 0x800D6F90; // type:func
 sharedSymbol_800CD4A0_2_s01    = 0x800D7168; // type:func
 Ai_Dahlia_Init                 = 0x800D7A20; // type:func
+
+//-------------------------------------------------------------------------
+//--- PA: 0x00E4F0   VA: 0x800D7A68   subsegment: c, Chara_GhostChildAlessa
+//-------------------------------------------------------------------------
 Ai_GhostChildAlessa_Update     = 0x800D7A68; // type:func
 sharedFunc_800D4A2C_7_s01      = 0x800D7ADC; // type:func
 sharedFunc_800D4A74_7_s01      = 0x800D7B24; // type:func
 sharedFunc_800D4C0C_7_s01      = 0x800D7CBC; // type:func
 Ai_GhostChildAlessa_Init       = 0x800D7E88; // type:func
+
+//-------------------------------------------------------------
+//--- PA: 0x00E934   VA: 0x800D7EAC   subsegment: c, map7_s02_2
+//-------------------------------------------------------------
 Ai_Kaufmann_Update             = 0x800D7EAC; // type:func
 sharedFunc_800CF290_3_s00      = 0x800D7F20; // type:func
 sharedFunc_800CF2D8_3_s00      = 0x800D7F68; // type:func
@@ -143,9 +183,9 @@ sharedData_800DF1F4_0_s00      = 0x800E82E8; // type:s32
 sharedData_800DF1F8_0_s00      = 0x800E82EC; // type:s16
 sharedData_800DF1FA_0_s00      = 0x800E82EE; // type:s16
 
-//---------------------------------------------------------------
-//--- PA: 0x01F92C   VA: 0x800E8EA4   subsegment: .data, map7_s02
-//---------------------------------------------------------------
+//-----------------------------------------------------------------
+//--- PA: 0x01F92C   VA: 0x800E8EA4   subsegment: .data, map7_s02_2
+//-----------------------------------------------------------------
 MAP_MESSAGES                   = 0x800E8EA4; // type:u32 size:0x27C
 
 //----------------------------------------------------

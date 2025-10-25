@@ -2277,20 +2277,11 @@ extern s16 sharedData_800D8616_1_s05;
 
 extern u8 sharedData_800DCC14_1_s00[];
 
-extern s32 sharedData_800D6BB8_3_s04; // Used by `Ai_Lisa_Init`.
-
-extern s32 sharedData_800E2C38_7_s01; // Used by `Ai_BloodyLisa_Init`.
-
-// Two variables used by `Ai_Cybil_Init`.
-extern s32 sharedData_800E2378_0_s01;
-extern s32 sharedData_800E237C_0_s01;
-
 // Two variables used by `Ai_Dahlia_Init`.
 extern s32 sharedData_800D16E0_2_s01;
 extern u8  sharedData_800D16E4_2_s01;
 
 extern s_AnimInfo ALESSA_ANIM_INFOS[];
-extern s32 sharedData_800D3150_3_s02; // Used by `Ai_Alessa_Init`.
 
 extern s32 sharedData_800D5CF4_3_s00; // Used by `Ai_Kaufmann_Init`.
 
@@ -2707,7 +2698,7 @@ void sharedFunc_800CF990_1_s05(s_SubCharacter*);
 
 void sharedFunc_800CFE94_1_s05(s_SubCharacter*);
 
-void sharedFunc_800D0054_1_s05(s_SubCharacter*);
+void sharedFunc_800D0054_1_s05(s_SubCharacter* splithead);
 
 void sharedFunc_800D267C_1_s05(s_SubCharacter*);
 
@@ -2722,16 +2713,6 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter*);
 void sharedFunc_800D4070_1_s05(s_SubCharacter*);
 
 extern GsCOORDINATE2* sharedData_800D8610_1_s05;
-
-void Ai_Cybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-
-void sharedFunc_800D8888_0_s01(s_SubCharacter* chara, s_AnmHeader* animHdr, GsCOORDINATE2* coord);
-
-void sharedFunc_800D88D0_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coord);
-
-void sharedSymbol_800D8A68_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coords);
-
-void Ai_Cybil_Init(s_SubCharacter* chara);
 
 void Ai_AirScreamer_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
@@ -2813,20 +2794,7 @@ s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara); // NPC anim func. Checks i
 bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, s32 sfx);
 void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1);
 
-// `Ai_Lisa` related
-void Ai_Lisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void sharedFunc_800D08FC_3_s04(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void sharedFunc_800D0944_3_s04(s_SubCharacter* chara, GsCOORDINATE2* coord);
-void sharedSymbol_800D0ADC_3_s04(s_SubCharacter*, GsCOORDINATE2*); // `Ai_Lisa_Control`
-void Ai_Lisa_Init(s_SubCharacter* chara);
-
-// `Ai_BloodyLisa` related
-void Ai_BloodyLisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void sharedFunc_800D595C_7_s01(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coord);
-void sharedFunc_800D59A4_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords);
-void sharedFunc_800D5B3C_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords);
 bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 sfx, s32 pitch);
-void Ai_BloodyLisa_Init(s_SubCharacter* chara);
 
 // `Ai_Kaufmann` related
 void Ai_Kaufmann_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
@@ -2834,20 +2802,6 @@ void sharedSymbol_800CF470_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void sharedFunc_800CF2D8_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coord);
 void sharedFunc_800CF290_3_s00(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coord);
 void Ai_Kaufmann_Init(s_SubCharacter* chara);
-
-// `Ai_GhostChildAlessa` related
-void Ai_GhostChildAlessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void sharedFunc_800D4A2C_7_s01(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void sharedFunc_800D4A74_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coord);
-void sharedFunc_800D4C0C_7_s01(s_SubCharacter*, GsCOORDINATE2*);
-void Ai_GhostChildAlessa_Init(s_SubCharacter* chara);
-
-// `Ai_Alessa` related
-void Ai_Alessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void sharedFunc_800CECFC_3_s02(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coord);
-void sharedFunc_800CED44_3_s02(s_SubCharacter* chara, GsCOORDINATE2* coord);
-void sharedFunc_800CEEDC_3_s02(s_SubCharacter* chara, GsCOORDINATE2* coords);
-void Ai_Alessa_Init(s_SubCharacter* chara);
 
 // `Ai_Dahlia` related
 void Ai_Dahlia_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
@@ -2908,6 +2862,8 @@ void sharedFunc_800D6EC4_0_s01(s_SubCharacter* chara);
 
 void sharedFunc_800D7B14_0_s01(s_SubCharacter*, GsCOORDINATE2*);
 
+void sharedFunc_800CE8B8_0_s02(void);
+
 static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo)
 {
     anim->animInfo_C  = animInfo;
@@ -2920,6 +2876,12 @@ typedef struct
     VECTOR3  position_0;
     SVECTOR3 rotation_C;
 } s_WorldObjectPose;
+
+typedef struct
+{
+    s_WorldObject_0 object_0;
+    VECTOR3         position_1C;
+} s_WorldObjectDesc_norot;
 
 typedef struct
 {
