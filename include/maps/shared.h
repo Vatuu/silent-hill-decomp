@@ -2924,6 +2924,11 @@ static inline void g_WorldGfx_ObjAdd(s_WorldObjectDesc* obj)
     g_WorldGfx_ObjectAdd(&obj->object_0, &obj->position_1C.position_0, &obj->position_1C.rotation_C);
 }
 
+/** @brief A helper function for `g_WorldGfx_ObjectAdd` that takes one argument for less typing.
+ * Takes a `_norot` variant of the WorldObjectDesc and uses an empty SVECTOR3 **/
+#define g_WorldGfx_ObjAdd_norot(obj) \
+    g_WorldGfx_ObjectAdd(&(obj)->object_0, &(obj)->position_1C, &(SVECTOR3){})
+
 /** @brief A helper function for `g_WorldGfx_ObjectAdd` for common objects using only the indices. **/
 #define G_WORLDGFX_OBJ_ADD_COMMON(objIdx, posIdx)          \
     g_WorldGfx_ObjectAdd(                                  \
