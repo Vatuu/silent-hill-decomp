@@ -75,9 +75,10 @@ typedef enum _EventFlag
     EventFlag_72 = 72,
     EventFlag_73 = 73,
 
+    EventFlag_78 = 78,
     EventFlag_79 = 79,
     EventFlag_80 = 80,
-
+    EventFlag_81 = 81,
     EventFlag_82 = 82,
     EventFlag_83 = 83,
     EventFlag_84 = 84,
@@ -138,6 +139,8 @@ typedef enum _EventFlag
     EventFlag_181 = 181,
     EventFlag_182 = 182,
     EventFlag_183 = 183,
+    EventFlag_184 = 184,
+    EventFlag_185 = 185,
 
     EventFlag_SeenSaveScreen = 186,
 
