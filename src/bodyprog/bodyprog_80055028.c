@@ -3887,6 +3887,11 @@ void func_8006342C(s32 weaponAttack, s16 arg1, s16 arg2, GsCOORDINATE2* coord) /
 
 bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
 {
+	
+	#define SetSVectorFast(v, x, y, z) \
+		*(s32*)&(v)->vx = (s32)((x) & 0xFFFF) | (s32)((y) << 16); \
+		(v)->vz = (z)
+
     s_func_80063A50* ptr;
 
     ptr = PSX_SCRATCH;
@@ -3898,8 +3903,7 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
             ptr->field_1E0         = 0x333;
             ptr->field_1E4         = 0xA3;
             ptr->field_1E8         = 0x100;
-            *(s32*)&ptr->field_164 = -0xEFFFE;
-            ptr->field_164.vz      = 0x47;
+            SetSVectorFast(&ptr->field_164, 2, 0xFFF1, 0x47);
 
             Vw_CoordHierarchyMatrixCompute(&D_800C440C[10], &ptr->field_12C);
             break;
@@ -3912,8 +3916,7 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
             ptr->field_1E0         = 0x28F;
             ptr->field_1E4         = 0xCC;
             ptr->field_1E8         = 0x180;
-            *(s32*)&ptr->field_164 = -0x11FFFD;
-            ptr->field_164.vz      = 0x6D;
+            SetSVectorFast(&ptr->field_164, 3, 0xFFEE, 0x6D);
 
             Vw_CoordHierarchyMatrixCompute(&D_800C440C[10], &ptr->field_12C);
             break;
@@ -3923,8 +3926,8 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
             ptr->field_1E0         = 0x2E1;
             ptr->field_1E4         = 0x51;
             ptr->field_1E8         = 0xC0;
-            *(s32*)&ptr->field_164 = -0x220002;
-            ptr->field_164.vz      = 0xDD;
+            SetSVectorFast(&ptr->field_164, 0xFFFE, 0xFFDD, 0xDD);
+			
             Vw_CoordHierarchyMatrixCompute(&D_800C440C[10], &ptr->field_12C);
             break;
 
@@ -3933,8 +3936,7 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
             ptr->field_1E0         = 0x333;
             ptr->field_1E4         = 0xA3;
             ptr->field_1E8         = 0x100;
-            *(s32*)&ptr->field_164 = -0x17FFFD;
-            ptr->field_164.vz      = 0x5B;
+            SetSVectorFast(&ptr->field_164, 3, 0xFFE8, 0x5B);
 
             Vw_CoordHierarchyMatrixCompute(&D_800C4410[10], &ptr->field_12C);
             break;
@@ -3944,8 +3946,7 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
             ptr->field_1E0         = 0x333;
             ptr->field_1E4         = 0xA3;
             ptr->field_1E8         = 0x100;
-            *(s32*)&ptr->field_164 = -0xCFFFE;
-            ptr->field_164.vz      = 0x43;
+            SetSVectorFast(&ptr->field_164, 2, 0xFFF3, 0x43);
 
             Vw_CoordHierarchyMatrixCompute(&D_800C4410[10], &ptr->field_12C);
             break;
