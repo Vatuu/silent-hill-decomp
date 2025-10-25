@@ -7,10 +7,7 @@
 #define HAS_PlayerState_Unk88
 
 #define QV3(x,y,z) (VECTOR3)VECTOR3(x,y,z)
-extern VECTOR3 D_800CB670;
-extern VECTOR3 D_800CB684;
 extern s32 D_800DD718;
-extern SVECTOR3 D_800CB67C;
 
 extern s_WorldObjectPos g_CommonWorldObjectsPos[5]; // 0x800DD71C
 extern s_WorldObjectDesc_norot g_WorldObj0;    // 800E0EF0
@@ -43,7 +40,7 @@ void func_800D85A4(void);
 
 void func_800D8CC4(void);
 
-void func_800D9148(void);
+void Event_Boiler2(void);
 
 /** @brief Map pickup event. */
 void func_800D922C(void);
@@ -53,5 +50,11 @@ void func_800D9254(void);
 void func_800D928C(void);
 
 void func_800DA3FC(void);
+
+void Event_Boiler0(void);
+void Event_Boiler1(void);
+void Event_Boiler2(void);
+void Map_WorldObjectsInit(void);
+void Map_WorldObjectsUpdate(void);
 
 #endif
