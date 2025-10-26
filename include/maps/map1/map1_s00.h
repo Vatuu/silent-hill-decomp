@@ -24,6 +24,8 @@ extern s16 D_800E1182;
 extern s_WorldObjectDesc       g_WorldObj9;    // 800E1190
 extern s_WorldObject_0         g_CommonWorldObjects[6]; // 800E11C0
 extern s_MapPoint2d MAP_POINTS[];
+extern u8 D_800DCC4C;
+extern u16 D_800DCC54[42];
 
 void func_800D7AC4(void);
 
