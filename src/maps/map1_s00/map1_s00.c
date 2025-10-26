@@ -250,7 +250,78 @@ void func_800D7AF8(void) // 0x800D7AF8
     func_80087360(FILE_TIM_GOLD2_TIM, Q12(2.5f), Q12(2.0f), 19);
 }
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D7B2C);
+void func_800D7B2C(void)
+{
+    g_DeltaTime0 = 0;
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_8008616C(false, true, 0, Q12(2.5f), false);
+            SysWork_StateStepIncrement();
+            /* fallthrough */
+        case 1:
+            func_800862F8(7, FILE_TIM_GOLD1_TIM, false);
+            break;
+        case 2:
+            func_8008616C(true, true, 0, 0, false);
+            break;
+        case 3:
+            func_800862F8(3, 0, false);
+            func_8008616C(false, false, 0, Q12(2.0f), false);
+            SysWork_StateStepIncrement();
+            /* fallthrough */
+        case 4:
+            func_800862F8(2, 0, false);
+            func_800862F8(8, FILE_TIM_GOLD2_TIM, false);
+            break;
+        case 5:
+            func_800862F8(2, 0, false);
+            func_8008616C(true, false, 0, 0, false);
+            break;
+        case 6:
+            func_800862F8(2, 0, false);
+            func_80085E6C(Q12(0.5f), false);
+            break;
+        case 7:
+            Sd_EngineCmd(Sfx_Unk1416);
+            SysWork_StateStepIncrement();
+            /* fallthrough */
+        case 8:
+            Gfx_BackgroundSpritesTransition(&g_ItemInspectionImg, &D_800A9A04, g_SysWork.field_28);
+            g_SysWork.field_28 += Q12(0.0625f);
+            if (g_SysWork.field_28 > Q12(1.0f))
+            {
+                SysWork_StateStepIncrement();
+            }
+            break;
+        case 9:
+            Sd_EngineCmd(Sfx_Unk1419);
+            SysWork_StateStepIncrement();
+            /* fallthrough */
+        case 10:
+            func_800862F8(5, 0, false);
+            func_80085E6C(Q12(1.0f), false);
+            break;
+        case 11:
+            func_800862F8(5, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 19, 0, 0, 0, false); // A golden sun
+            break;
+        case 12:
+            func_800862F8(5, 0, false);
+            func_8008616C(2, true, 0, Q12(2.0f), false);
+            break;
+        default:
+            func_800862F8(6, 0, false);
+            func_8008616C(false, false, 0, Q12(2.5f), false);
+            Savegame_EventFlagSet(EventFlag_71);
+            g_SavegamePtr->mapMarkingFlags_1D4[8] |= 1;
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+
+            break;
+    }
+}
 
 void func_800D7E48(void) // 0x800D7E48
 {
