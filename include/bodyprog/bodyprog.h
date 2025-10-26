@@ -183,8 +183,12 @@ typedef enum _Sfx
 
     Sfx_Unk1418 = 1418,
 
+    Sfx_Unk1420 = 1420,
+
+    Sfx_Unk1422 = 1422,
     Sfx_Unk1423 = 1423,
 
+    Sfx_Unk1430 = 1430,
     Sfx_Unk1431 = 1431,
     Sfx_Unk1432 = 1432,
 
@@ -196,6 +200,8 @@ typedef enum _Sfx
     Sfx_Unk1464 = 1464,
 
     Sfx_Unk1467 = 1467,
+
+    Sfx_Unk1477 = 1477,
 
     Sfx_Unk1486 = 1486,
     Sfx_Unk1487 = 1487,
@@ -484,9 +490,15 @@ typedef struct
             s16 field_0;
             s16 field_2;
         } s_0;
+        struct
+        {
+            s16 field_0;
+            u8  field_2;
+            u8  field_3;
+        } s_1;
     } field_10;
-} s_func_800625F4;
-STATIC_ASSERT_SIZEOF(s_func_800625F4, 20);
+} s_MapHdr_field_4C;
+STATIC_ASSERT_SIZEOF(s_MapHdr_field_4C, 20);
 
 typedef struct _Collision
 {
@@ -1758,7 +1770,7 @@ typedef struct _MapOverlayHeader
     void                   (*func_40)();
     void                   (*func_44)();
     void                   (*func_48)(); // func(?).
-    s_func_800625F4*       unkTable1_4C;
+    s_MapHdr_field_4C*  unkTable1_4C;
     s16                    unkTable1Count_50;
     s8                     unk_52[2];
     s_BloodSplat*          bloodSplats_54;

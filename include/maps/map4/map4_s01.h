@@ -21,23 +21,6 @@
 #define HAS_PlayerState_Unk186
 #define KEYFRAME_PlayerState_Unk69 678
 
-// TODO: An array of this struct is at map header `bloodSplats_54`.
-// In MAP0_S01 it is a simple array of `u16`s, here it is a larger object.
-// Figure out what it is.
-typedef struct _MapHeader_field_54
-{
-    s32 field_0;
-    s32 field_4;
-    s16 field_8;
-    u8  field_A;
-    s8  field_B;
-    s16 field_C;
-    u16 field_E;
-    s8  field_10;
-    s8  field_11;
-    s8  field_12;
-} s_MapHeader_field_54;
-
 typedef struct _MapHeader_field_5C
 {
     u8  field_0;
@@ -62,7 +45,7 @@ typedef struct _MapHeader_field_5C
     s16 field_1E;
     s32 field_20;
     s32 field_24;
-} s_MapHeader_field_5C;
+} s_mMpHeader_field_5C;
 
 extern s_MapHeader_field_54 D_800D5B20[450];
 extern s_MapHeader_field_5C D_800D7F20;

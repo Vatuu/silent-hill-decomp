@@ -7,8 +7,6 @@
 #define HAS_PlayerState_Unk111
 #define HAS_PlayerState_Unk117
 
-extern s_800C4590 D_800D5EA8;
-
 void func_800D07A0(s32 arg0);
 
 void func_800D0AEC(void);

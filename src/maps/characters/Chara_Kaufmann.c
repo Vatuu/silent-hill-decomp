@@ -1,5 +1,100 @@
-// Ai_Kaufmann
+#include "bodyprog/bodyprog.h"
+#include "bodyprog/math/math.h"
+#include "maps/shared.h"
+#include "maps/characters/Chara_Kaufmann.h"
 
+/** AI code for `Chara_Kaufmann`
+ *
+ * Included in:
+ *  MAP3_S00
+ *  MAP5_S02
+ *  MAP5_S03
+ *  MAP7_S02
+ *  MAP7_S03
+ */
+
+/** Addresses
+ * MAP3_S00: 0x800CF21C
+ * MAP5_S02: 0x800D2EA8
+ * MAP5_S03: 0x800CF8DC
+ * MAP7_S02: 0x800D7EAC
+ * MAP7_S03: 0x800D3F58
+ */
+void Ai_Kaufmann_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+{
+    if (chara->model_0.state_2 == 0)
+    {
+        Ai_Kaufmann_Init(chara);
+    }
+
+    sharedSymbol_800CF470_3_s00(chara, coords);
+    sharedFunc_800CF2D8_3_s00(chara, coords);
+    sharedFunc_800CF290_3_s00(chara, anmHdr, coords);
+}
+
+/** Addresses
+ * MAP3_S00: 0x800CF290
+ * MAP5_S02: 0x800D2F1C
+ * MAP5_S03: 0x800CF950
+ * MAP7_S02: 0x800D7F20
+ * MAP7_S03: 0x800D3FCC
+ */
+void sharedFunc_800CF290_3_s00(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coord)
+{
+    s_AnimInfo* animInfo;
+
+    if (chara->properties_E4.player.field_F0 == 0)
+    {
+        animInfo = &KAUFMANN_ANIM_INFOS[chara->model_0.anim_4.status_0];
+        animInfo->updateFunc_0(&chara->model_0, anmHdr, coord, animInfo);
+    }
+}
+
+/** Addresses
+ * MAP3_S00: 0x800CF2D8
+ * MAP5_S02: 0x800D2F64
+ * MAP5_S03: 0x800CF998
+ * MAP7_S02: 0x800D7F68
+ * MAP7_S03: 0x800D4014
+ */
+void sharedFunc_800CF2D8_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coord)
+{
+    VECTOR3 unused;
+    VECTOR3 vec;
+    s32     moveSpeed;
+    s16     headingAngle;
+    s32     moveAmt;
+    s32     scaleRestoreShift;
+    u32     scaleReduceShift;
+
+    unused       = chara->position_18;
+    moveSpeed    = chara->moveSpeed_38;
+    headingAngle = chara->headingAngle_3C;
+    moveAmt      = FP_MULTIPLY_PRECISE(moveSpeed, g_DeltaTime0, Q12_SHIFT);
+
+    scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
+    scaleReduceShift  = scaleRestoreShift >> 1;
+
+    vec.vx = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    vec.vz = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    vec.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
+
+    chara->position_18.vx += vec.vx;
+    chara->position_18.vy  = 0;
+    chara->position_18.vz += vec.vz;
+
+    coord->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
+    coord->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
+    coord->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
+}
+
+/** Addresses
+ * MAP3_S00: 0x800CF470
+ * MAP5_S02: 0x800D30FC
+ * MAP5_S03: 0x800CFB30
+ * MAP7_S02: 0x800D8100
+ * MAP7_S03: 0x800D41AC
+ */
 void sharedSymbol_800CF470_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coords)
 {
     s_Collision coll;
@@ -322,4 +417,30 @@ void sharedSymbol_800CF470_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
     coords->flg = false;
     Math_MatrixRotate1(&chara->rotation_24, &coords->coord);
+}
+
+/** Addresses
+ * MAP3_S00: 0x800CFE48
+ * MAP5_S02: 0x800D3AC0
+ * MAP5_S03: 0x800D0510
+ * MAP7_S02: 0x800D8AA8
+ * MAP7_S03: 0x800D4C14
+ */
+void Ai_Kaufmann_Init(s_SubCharacter* chara)
+{
+    sharedFunc_800D923C_0_s00(chara);
+
+    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[14].val32 = 0; // TODO: Change to `properties_E4.humanoid`?
+
+    sharedData_800D5CF4_3_s00 = 0;
+
+#ifdef MAP7_S03
+    func_8003DD80(Chara_EndingKaufmann, 16); // TODO: MAP7_S03 Ai_Kaufmann funcs could be Ai_EndingKaufmann instead, if other Ai_Kaufmann funcs don't match other overlays.
+#else
+    func_8003DD80(Chara_Kaufmann, 16);
+#endif
+
+#ifdef MAP7_S02
+    func_8003D468(Chara_Kaufmann, true);
+#endif
 }

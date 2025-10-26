@@ -144,6 +144,7 @@ sharedData_800E0CB4_0_s00   = 0x800D530C; // type:u16
 sharedData_800E0CB6_0_s00   = 0x800D530E; // type:u16
 sharedData_800E0CB8_0_s00   = 0x800D5310; // type:u16
 sharedData_800E0CBA_0_s00   = 0x800D5312; // type:s8
+sharedData_800E39BC_0_s00   = 0x800D5314;
 sharedData_800E39D8_0_s00   = 0x800D5330; // type:s32
 sharedData_800D32A0_0_s02   = 0x800D5334; // type:s32
 sharedData_800E2378_0_s01   = 0x800D5338; // type:s32

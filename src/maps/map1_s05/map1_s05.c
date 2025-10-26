@@ -18,7 +18,23 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CB040);
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CB884);
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CBE7C);
+void func_800CBE7C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
+{
+    s32 i;
+    i = func_8005E7E0(7);
+    if (i != NO_VALUE)
+    {
+        g_MapHdr_Table_4C[i].vx_0 = ((arg0 + (Rng_Rand16() & 63)) - 32) * 16;
+        g_MapHdr_Table_4C[i].vy_8 = (arg1 + (Rng_Rand16() & 63)) * 16;
+        g_MapHdr_Table_4C[i].vz_4 = ((arg2 + (Rng_Rand16() & 63)) - 32) * 16;
+        g_MapHdr_Table_4C[i].field_B = 0;
+        g_MapHdr_Table_4C[i].field_C.field_0 = 0;
+        g_MapHdr_Table_4C[i].field_E.field_0 = arg3;
+        g_MapHdr_Table_4C[i].field_10.s_1.field_0 = arg4;
+        g_MapHdr_Table_4C[i].field_10.s_1.field_2 = (Rng_Rand16() & 31) + 16;
+        g_MapHdr_Table_4C[i].field_10.s_1.field_3 = Rng_Rand16() & 15;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CBF74);
 
@@ -116,7 +132,70 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D0948);
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D11A0);
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D17BC);
+void func_800D17BC(s_SubCharacter* chara)
+{
+    s32 movSpeed;
+    s32 newSpeed;
+    s32 volume;
+    s32 timer0;
+    s16 timer1;
+    s16 timer1_div6;
+
+    movSpeed = chara->moveSpeed_38;
+    if (movSpeed > 0)
+    {
+        newSpeed = MAX(movSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.5997f), Q12_SHIFT), 0);
+    }
+    else
+    {
+        newSpeed = MIN(movSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.5997f), Q12_SHIFT), 0);
+    }
+    chara->moveSpeed_38 = newSpeed;
+
+    switch (chara->model_0.anim_4.status_0)
+    {
+        case ANIM_STATUS(11, false):
+        case ANIM_STATUS(11, true):
+            chara->properties_E4.splitHead.flags_E8 |= (1<<3);
+            if (!func_800D4530(chara))
+            {
+                break;
+            }
+        case ANIM_STATUS(10, true):
+            chara->model_0.anim_4.status_0 = ANIM_STATUS(1, false);
+            Sd_EngineCmd(Sfx_Unk1477);
+            break;
+        case ANIM_STATUS(1, false):
+        case ANIM_STATUS(1, true):
+            timer0 = chara->properties_E4.splitHead.timer_F4;
+            timer1 = D_800D5880;
+            timer1_div6 = timer1 / 6;
+            if (timer0 < timer1_div6)
+            {
+                volume = (timer0 << 7) / timer1_div6;
+            }
+            else if ((( timer1 * 5) / 6) < timer0)
+            {
+                volume = (( D_800D5880 - timer0) << 7) / timer1_div6;
+            }
+            else
+            {
+                volume = 0x80;
+            }
+            func_8005DE0C(Sfx_Unk1477, &chara->position_18, volume, Q12(16.0f), 0);
+            if (chara->properties_E4.splitHead.timer_F4 > D_800D5880)
+            {
+                D_800D5880 = Q12(3.8f);
+                chara->model_0.state_2 = 5;
+                chara->properties_E4.splitHead.timer_F4 = Q12(0.0f);
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(11, false);
+                func_8004690C(Sfx_Unk1477);
+                break;
+            }
+            chara->properties_E4.splitHead.timer_F4 += g_DeltaTime0;
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D19B8);
 

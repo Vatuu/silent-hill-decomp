@@ -2277,13 +2277,9 @@ extern s16 sharedData_800D8616_1_s05;
 
 extern u8 sharedData_800DCC14_1_s00[];
 
-// Two variables used by `Ai_Dahlia_Init`.
-extern s32 sharedData_800D16E0_2_s01;
 extern u8  sharedData_800D16E4_2_s01;
 
 extern s_AnimInfo ALESSA_ANIM_INFOS[];
-
-extern s32 sharedData_800D5CF4_3_s00; // Used by `Ai_Kaufmann_Init`.
 
 extern s_AnimInfo BLOODSUCKER_ANIM_INFOS[];
 
@@ -2371,6 +2367,8 @@ extern VECTOR3 sharedData_800DE1F0_0_s01;
 extern VECTOR3 sharedData_800E2350_0_s01;
 
 extern u8 MAP_ROOM_IDXS[30];
+
+extern s_800C4590 sharedData_800E39BC_0_s00;
 
 typedef struct
 {
@@ -2795,20 +2793,6 @@ bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyfra
 void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1);
 
 bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 sfx, s32 pitch);
-
-// `Ai_Kaufmann` related
-void Ai_Kaufmann_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void sharedSymbol_800CF470_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coords);
-void sharedFunc_800CF2D8_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coord);
-void sharedFunc_800CF290_3_s00(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coord);
-void Ai_Kaufmann_Init(s_SubCharacter* chara);
-
-// `Ai_Dahlia` related
-void Ai_Dahlia_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void sharedFunc_800CD280_2_s01(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
-void sharedFunc_800CD2C8_2_s01(s_SubCharacter*, GsCOORDINATE2*);
-void sharedSymbol_800CD4A0_2_s01(s_SubCharacter* dahlia, GsCOORDINATE2* coord);
-void Ai_Dahlia_Init(s_SubCharacter* chara);
 
 // `Ai_Bloodsucker` related
 void Ai_Bloodsucker_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);

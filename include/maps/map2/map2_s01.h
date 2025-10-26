@@ -8,7 +8,6 @@
 #define HAS_PlayerState_Unk113
 #define KEYFRAME_PlayerState_Unk113 723
 
-extern s_800C4590 D_800D16BC;
 extern u16 g_MapMsgSounds[20];
 extern q19_12 g_Timer0;
 extern VECTOR3 g_CameraPositionTarget;

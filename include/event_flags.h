@@ -71,6 +71,17 @@ typedef enum _EventFlag
     EventFlag_M1S01_PickupChemical = 68,
 
     EventFlag_M1S01_PickupSilverMedallion = 70,
+    EventFlag_71 = 71,
+    EventFlag_72 = 72,
+    EventFlag_73 = 73,
+
+    EventFlag_78 = 78,
+    EventFlag_79 = 79,
+    EventFlag_80 = 80,
+    EventFlag_81 = 81,
+    EventFlag_82 = 82,
+    EventFlag_83 = 83,
+    EventFlag_84 = 84,
 
     EventFlag_M7S01_HealthDrink1 = 86,
 
@@ -105,6 +116,7 @@ typedef enum _EventFlag
     EventFlag_M0S02_PickupChannelingStone = 144,
     EventFlag_145                         = 145,
     EventFlag_146                         = 146,
+    EventFlag_147                         = 147,
 
     EventFlag_M2S00_PickupKeyOfLion = 150,
 
@@ -127,6 +139,8 @@ typedef enum _EventFlag
     EventFlag_181 = 181,
     EventFlag_182 = 182,
     EventFlag_183 = 183,
+    EventFlag_184 = 184,
+    EventFlag_185 = 185,
 
     EventFlag_SeenSaveScreen = 186,
 
@@ -156,6 +170,7 @@ typedef enum _EventFlag
     EventFlag_223 = 223,
 
     EventFlag_225 = 225,
+    EventFlag_226 = 226,
 
     EventFlag_236 = 236,
     EventFlag_237 = 237,
