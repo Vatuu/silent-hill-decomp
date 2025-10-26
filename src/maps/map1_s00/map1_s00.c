@@ -168,21 +168,21 @@ void func_800D786C(void)
 {
     VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    func_80086FE8(11, Sfx_Unk1334, &vec);
+    func_80086FE8(11, Sfx_Unk1334, &vec); // Lock is jammed.
 }
 
 void func_800D7900(void)
 {
     VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    func_80086FE8(12, Sfx_Unk1344, &vec);
+    func_80086FE8(12, Sfx_Unk1344, &vec); // It's locked.
 }
 
 void func_800D7994(void)
 {
     VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    func_80086FE8(13, Sfx_Unk1342, &vec);
+    func_80086FE8(13, Sfx_Unk1342, &vec); // It's unlocked.
 }
 
 const char* MAP_MESSAGES[] = {

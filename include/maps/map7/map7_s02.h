@@ -26,7 +26,7 @@ typedef struct
     s16 field_2;
 } s_800EA494;
 
-extern VECTOR3 D_800E839C[]; // Assumed type. Pickup SFX positions?
+extern s_MapPoint2d MAP_POINTS[];
 
 extern u16 D_800E9CE4;
 
