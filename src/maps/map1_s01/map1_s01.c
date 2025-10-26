@@ -404,7 +404,109 @@ INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D87C0);
 
 INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D91EC);
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D9514);
+void func_800D9514(void)
+{
+    MAP_CHUNK_CHECK_VARIABLE_DECL();
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3))
+    {
+        if (Savegame_EventFlagGet(EventFlag_74))
+        {
+            if (!Savegame_EventFlagGet(EventFlag_69))
+            {
+                g_WorldGfx_ObjectAdd(&g_WorldObj6, &D_800DF080, &D_800CB7D4);
+            } 
+            g_WorldGfx_ObjectAdd(&g_WorldObj5, &D_800DF080, &D_800CB7D4);
+        }
+        else
+        {
+            g_WorldGfx_ObjectAdd(&g_WorldObj4, &D_800DF080, &D_800CB7D4);
+        }
+    }
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3))
+    {
+        if (!(g_SavegamePtr->eventFlags_168[2] & 0x10))
+        {
+            g_WorldGfx_ObjectAdd(&g_WorldObj7.object_0, &g_WorldObj7.position_1C.position_0, &D_800CB7D4);
+        }       
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    {
+        func_800D9EC4();
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    {
+        if (Savegame_EventFlagGet(EventFlag_71))
+        {
+            g_WorldGfx_ObjectAdd(&g_WorldObj8.object_0, &g_WorldObj8.position_1C.position_0, &D_800CB7D4);
+        }
+        else
+        {
+            g_WorldGfx_ObjectAdd(&g_WorldObj9.object_0, &g_WorldObj9.position_1C.position_0, &D_800CB7D4);
+        }
+        if (!Savegame_EventFlagGet(EventFlag_M1S01_PickupSilverMedallion))
+        {
+            g_WorldGfx_ObjectAdd(&g_WorldObj0.object_0, &g_WorldObj0.position_1C.position_0, &g_WorldObj0.position_1C.rotation_C);
+        }
+    }
+
+    if (!Savegame_EventFlagGet(EventFlag_240))
+    {
+        if (PLAYER_IN_MAP_CHUNK(vx, 1, -4, -1, -4) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+        {
+            if (g_SysWork.player_4C.chara_0.position_18.vx < Q12(-138.5999f))
+            {
+                if (vcRetCamMvSmoothF() == 0)
+                {
+                    func_8005DC1C(0x5AA, &D_800CB7DC, 0xFF, 2);
+                    Savegame_EventFlagSet(EventFlag_240);
+                }
+            }
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M1S01_HandgunBullets0))
+        {
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectsPos[0].position_0, &g_CommonWorldObjectsPos[0].rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
+    {
+
+        if (!Savegame_EventFlagGet(EventFlag_M1S01_FirstAidKit))
+        {
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[0], &g_CommonWorldObjectsPos[1].position_0, &g_CommonWorldObjectsPos[1].rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -4, -1, -4) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M1S01_HealthDrink))
+        {
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectsPos[2].position_0, &g_CommonWorldObjectsPos[2].rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -4, -1, -4) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M1S01_HandgunBullets1))
+        {
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectsPos[3].position_0, &g_CommonWorldObjectsPos[3].rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M1S01_HandgunBullets2))
+        {
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectsPos[4].position_0, &g_CommonWorldObjectsPos[4].rotation_C);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D9DDC);
 
