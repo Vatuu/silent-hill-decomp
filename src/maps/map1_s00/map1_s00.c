@@ -266,7 +266,66 @@ void func_800D7E7C(void) // 0x800D7E7C
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D7EB0);
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D81CC);
+void func_800D81CC(void)
+{
+    g_DeltaTime0 = 0;
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            SysWork_StateStepIncrement();
+
+            /* fallthrough */
+        case 1:
+            func_80085E6C(0x4CC, false);
+            break;
+        case 2:
+            MapMsg_DisplayAndHandleSelection(false, 15, false, false, 0, false); // The tower door is locked.
+            break;
+        case 3:
+            if (Savegame_EventFlagGet(EventFlag_72))
+            {
+                 func_80086E50(FILE_TIM_CLOCK5_TIM, Q12(3.0f), Q12(2.0f));
+            }
+            else
+            {
+                if (Savegame_EventFlagGet(EventFlag_71))
+                {
+                    func_80086E50(FILE_TIM_CLOCK12_TIM, Q12(3.0f), Q12(2.0f));
+                }
+                else
+                {
+                    func_80086E50(FILE_TIM_CLOCK_TIM, Q12(3.0f), Q12(2.0f));
+                }
+            }
+            break;
+        case 4:
+            func_800862F8(2, 0, false);
+            if (Savegame_EventFlagGet(EventFlag_72))
+            {
+                 MapMsg_DisplayAndHandleSelection(false, 18, false, false, 0, false); // Hands are stopped at 5:00
+            }
+            else
+            {
+                if (Savegame_EventFlagGet(EventFlag_71))
+                {
+                    MapMsg_DisplayAndHandleSelection(false, 17, false, false, 0, false); // Hands are stopped at 12:00
+                }
+                else
+                {
+                    MapMsg_DisplayAndHandleSelection(false, 16, false, false, 0, false); // Hands are stopped at 10:00
+                }
+            }
+            break;
+        case 5:
+            func_80086F44(Q12(3.0f), Q12(2.0f));
+            break;
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+}
 
 void func_800D8354(void)
 {
