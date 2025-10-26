@@ -527,7 +527,7 @@ void sharedSymbol_800D8A68_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
     }
 
-    chara->rotation_24.vy  = ABS_ANGLE(chara->rotation_24.vy + (sharedData_800E2378_0_s01 >> 4));
+    chara->rotation_24.vy  = FP_ANGLE_ABS(chara->rotation_24.vy + (sharedData_800E2378_0_s01 >> 4));
     chara->headingAngle_3C = chara->rotation_24.vy;
     chara->moveSpeed_38    = dahliaProps.moveDistance_126;
     chara->field_34       += g_DeltaTime2;

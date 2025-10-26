@@ -317,7 +317,7 @@ void sharedSymbol_800CD4A0_2_s01(s_SubCharacter* dahlia, GsCOORDINATE2* coord)
         break;
     }
 
-    dahlia->rotation_24.vy  = ABS_ANGLE(dahlia->rotation_24.vy + (sharedData_800D16E0_2_s01 >> 4));
+    dahlia->rotation_24.vy  = FP_ANGLE_ABS(dahlia->rotation_24.vy + (sharedData_800D16E0_2_s01 >> 4));
     dahlia->headingAngle_3C = dahlia->rotation_24.vy;
     dahlia->moveSpeed_38    = dahlia->properties_E4.dahlia.moveDistance_126;
     dahlia->field_34       += g_DeltaTime2;

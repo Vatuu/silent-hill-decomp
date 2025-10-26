@@ -12,7 +12,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
     s32      dist;
     VECTOR3* arg2; // Q19.12
 
-    angleIn = ABS_ANGLE(angleIn);
+    angleIn = FP_ANGLE_ABS(angleIn);
     arg2 = arg2In;
 
     // TODO: This data is hard to keep track of and may not point to the right `properties_E4` struct.
@@ -37,7 +37,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             }
             else
             {
-                tmpAngle = ABS_ANGLE(ratan2(arg2[0].vx - chara->position_18.vx, arg2[0].vz - chara->position_18.vz));
+                tmpAngle = FP_ANGLE_ABS(ratan2(arg2[0].vx - chara->position_18.vx, arg2[0].vz - chara->position_18.vz));
                 rotY = chara->rotation_24.vy;
                 sharedData_800DF1FA_0_s00 = tmpAngle;
                 Math_ShortestAngleGet(rotY, tmpAngle, &shortestAngle);
@@ -99,7 +99,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             // Awkward interleaving.
             tmpAngle = ratan2(arg2[sharedData_800DF1F8_0_s00].vx - chara->position_18.vx, arg2[sharedData_800DF1F8_0_s00].vz - chara->position_18.vz);
             dist = FP_2D_DISTANCE_SQR(arg2[sharedData_800DF1F8_0_s00], chara->position_18);
-            sharedData_800DF1FA_0_s00 = ABS_ANGLE(tmpAngle);
+            sharedData_800DF1FA_0_s00 = FP_ANGLE_ABS(tmpAngle);
             sharedData_800DF1F4_0_s00 = SquareRoot0(dist);
 
             CHARA_STATE_EC = 5;
@@ -119,7 +119,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             }
 
             rotY = chara->rotation_24.vy;
-            sharedData_800DF1FA_0_s00 = ABS_ANGLE(sharedData_800DF1FA_0_s00);
+            sharedData_800DF1FA_0_s00 = FP_ANGLE_ABS(sharedData_800DF1FA_0_s00);
 
             Math_ShortestAngleGet(rotY, sharedData_800DF1FA_0_s00, &shortestAngle);
 
@@ -142,7 +142,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
                 }
             }
 
-            chara->rotation_24.vy = ABS_ANGLE(chara->rotation_24.vy);
+            chara->rotation_24.vy = FP_ANGLE_ABS(chara->rotation_24.vy);
             tmpIdx = sharedData_800DF1F8_0_s00;
 
             dist = SquareRoot0(FP_2D_DISTANCE_SQR(arg2[tmpIdx], chara->position_18));
