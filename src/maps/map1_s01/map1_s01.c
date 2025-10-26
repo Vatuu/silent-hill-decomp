@@ -91,13 +91,13 @@ void func_800CE5DC(void) {}
 
 INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", sharedFunc_800CF168_1_s00); // 0x800CE760
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", sharedFunc_800D140C_1_s00); // 0x800D0A04
+#include "maps/shared/sharedFunc_800D140C_1_s00.h" // 0x800D0A04
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", sharedFunc_800D1524_1_s00); // 0x800D0B1C
+#include "maps/shared/sharedFunc_800D1524_1_s00.h" // 0x800D0B1C
 
 #include "maps/shared/Ai_LarvalStalker_Init.h" // 0x800D0CF4
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", sharedFunc_800D17BC_1_s00); // 0x800D0DB4
+#include "maps/shared/sharedFunc_800D17BC_1_s00.h" // 0x800D0DB4
 
 INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", sharedFunc_800D1DBC_1_s00); // 0x800D13B4
 
