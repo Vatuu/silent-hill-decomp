@@ -268,7 +268,51 @@ INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D7EB0);
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D81CC);
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D8354);
+void func_800D8354(void)
+{
+    VECTOR3 soundPos;
+    VECTOR3 pos;
+
+    do {} while (0); // @hack permuter find.
+    pos.vx = MAP_POINTS[g_MapEventParam->field_5].positionX_0;
+    pos.vy = Q12(-1.2f);
+    pos.vz = MAP_POINTS[g_MapEventParam->field_5].positionZ_8;
+    g_DeltaTime0 = 0;
+    soundPos = pos;
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_8005DC1C(Sfx_Unk1344, &soundPos, 0x80, 0);
+            SysWork_StateStepIncrement();
+            /* fallthrough */
+        case 1:
+            func_80085DF0();
+            break;
+        case 2:
+            MapMsg_DisplayAndHandleSelection(false, 12, 0, 0, 0, false); // It's locked.
+            break;
+        case 3:
+            func_80086E50(FILE_TIM_PAPER1_TIM, Q12(3.0f), Q12(2.0f));
+            break;
+        case 4:
+            func_800862F8(2, 0, false);
+            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+            {
+                SysWork_StateStepIncrement();
+                break;
+            }
+            break;
+        case 5:
+            func_80086F44(Q12(3.0f), Q12(2.0f));
+            break;
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+}
 
 void func_800D853C(void) // 0x800D853C
 {
