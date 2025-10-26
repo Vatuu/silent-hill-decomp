@@ -508,7 +508,33 @@ void func_800D9514(void)
     }
 }
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D9DDC);
+void func_800D9DDC(void)
+{
+    if (g_SavegamePtr->gameDifficulty_260 != 1)
+    {
+        if (Savegame_EventFlagGet(EventFlag_M1S01_PickupChemical))
+        {
+            func_80088FF4(Chara_GreyChild, 0, 3);
+        }
+        if (Savegame_EventFlagGet(EventFlag_69))
+        {
+            func_80088FF4(Chara_GreyChild, 1, 3);
+            if (g_SavegamePtr->gameDifficulty_260 == 0)
+            {
+                func_80088FF4(Chara_GreyChild, 2, 7);
+            }
+        }
+    }
+
+    if (Savegame_EventFlagGet(EventFlag_77))
+    {
+        func_80088FF4(Chara_GreyChild, 3, 3);
+        if (g_SavegamePtr->gameDifficulty_260 == -1)
+        {
+            func_80088FF4(Chara_GreyChild, 7, 0);
+        }
+    }
+}
 
 void func_800D9EC4(void)
 {
