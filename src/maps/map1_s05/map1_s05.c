@@ -18,9 +18,10 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CB040);
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CB884);
 
-void func_800CBE7C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
+void func_800CBE7C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800CBE7C
 {
     s32 i;
+
     i = func_8005E7E0(7);
     if (i != NO_VALUE)
     {
@@ -132,7 +133,7 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D0948);
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D11A0);
 
-void func_800D17BC(s_SubCharacter* chara)
+void func_800D17BC(s_SubCharacter* chara) // 0x800D17BC
 {
     s32 movSpeed;
     s32 newSpeed;
@@ -161,15 +162,18 @@ void func_800D17BC(s_SubCharacter* chara)
             {
                 break;
             }
+
         case ANIM_STATUS(10, true):
             chara->model_0.anim_4.status_0 = ANIM_STATUS(1, false);
             Sd_EngineCmd(Sfx_Unk1477);
             break;
+
         case ANIM_STATUS(1, false):
         case ANIM_STATUS(1, true):
             timer0 = chara->properties_E4.splitHead.timer_F4;
             timer1 = D_800D5880;
             timer1_div6 = timer1 / 6;
+
             if (timer0 < timer1_div6)
             {
                 volume = (timer0 << 7) / timer1_div6;
@@ -182,7 +186,9 @@ void func_800D17BC(s_SubCharacter* chara)
             {
                 volume = 0x80;
             }
+
             func_8005DE0C(Sfx_Unk1477, &chara->position_18, volume, Q12(16.0f), 0);
+
             if (chara->properties_E4.splitHead.timer_F4 > D_800D5880)
             {
                 D_800D5880 = Q12(3.8f);
@@ -192,6 +198,7 @@ void func_800D17BC(s_SubCharacter* chara)
                 func_8004690C(Sfx_Unk1477);
                 break;
             }
+
             chara->properties_E4.splitHead.timer_F4 += g_DeltaTime0;
             break;
     }
