@@ -413,20 +413,20 @@ void func_800D9514(void)
         {
             if (!Savegame_EventFlagGet(EventFlag_69))
             {
-                g_WorldGfx_ObjectAdd(&g_WorldObj6, &D_800DF080, &D_800CB7D4);
+                g_WorldGfx_ObjectAdd(&g_WorldObj6, &D_800DF080, &(SVECTOR3){});
             } 
-            g_WorldGfx_ObjectAdd(&g_WorldObj5, &D_800DF080, &D_800CB7D4);
+            g_WorldGfx_ObjectAdd(&g_WorldObj5, &D_800DF080, &(SVECTOR3){});
         }
         else
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObj4, &D_800DF080, &D_800CB7D4);
+            g_WorldGfx_ObjectAdd(&g_WorldObj4, &D_800DF080, &(SVECTOR3){});
         }
     }
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3))
     {
         if (!(g_SavegamePtr->eventFlags_168[2] & 0x10))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObj7.object_0, &g_WorldObj7.position_1C.position_0, &D_800CB7D4);
+            g_WorldGfx_ObjectAdd(&g_WorldObj7.object_0, &g_WorldObj7.position_1C.position_0, &(SVECTOR3){});
         }       
     }
 
@@ -439,11 +439,11 @@ void func_800D9514(void)
     {
         if (Savegame_EventFlagGet(EventFlag_71))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObj8.object_0, &g_WorldObj8.position_1C.position_0, &D_800CB7D4);
+            g_WorldGfx_ObjectAdd(&g_WorldObj8.object_0, &g_WorldObj8.position_1C.position_0, &(SVECTOR3){});
         }
         else
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObj9.object_0, &g_WorldObj9.position_1C.position_0, &D_800CB7D4);
+            g_WorldGfx_ObjectAdd(&g_WorldObj9.object_0, &g_WorldObj9.position_1C.position_0, &(SVECTOR3){});
         }
         if (!Savegame_EventFlagGet(EventFlag_M1S01_PickupSilverMedallion))
         {
@@ -459,7 +459,7 @@ void func_800D9514(void)
             {
                 if (vcRetCamMvSmoothF() == 0)
                 {
-                    func_8005DC1C(0x5AA, &D_800CB7DC, 0xFF, 2);
+                    func_8005DC1C(0x5AA, &QV3(142.6f, -0.4f, 58.8f), 0xFF, 2);
                     Savegame_EventFlagSet(EventFlag_240);
                 }
             }
@@ -510,10 +510,62 @@ void func_800D9514(void)
 
 INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D9DDC);
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D9EC4);
+void func_800D9EC4(void)
+{
+    static const VECTOR3 soundPos = VECTOR3(-58.81f, -1.4f, 18.0198f);
+    if (!Savegame_EventFlagGet(EventFlag_76))
+    {
+        if (D_800DD57C == 0)
+        {
+            if (!(Rng_Rand16() & 0x1F))
+            {
+                D_800DD57C = -((Rng_Rand16() & 7) + 2);
+            }
+        }
 
-INCLUDE_RODATA("asm/maps/map1_s01/nonmatchings/map1_s01", D_800CB7D4);
+        if (D_800DD57C != 0)
+        {
+            if (ABS(D_800DD57C) == 1)
+            {
+                g_WorldObj1.position_1C.rotation_C.vy += D_800DD57C;
+            }
 
-INCLUDE_RODATA("asm/maps/map1_s01/nonmatchings/map1_s01", D_800CB7DC);
+            g_WorldObj1.position_1C.rotation_C.vy += D_800DD57C;
+            if (D_800DD57C > 0)
+            {
+                if (g_WorldObj1.position_1C.rotation_C.vy > 0)
+                {
+                    func_8005DC1C(Sfx_Unk1435, &soundPos, 0x80, 0);
+                    g_WorldObj1.position_1C.rotation_C.vy = 0;
+                    if ((D_800DD57C >= 8) && !(Rng_Rand16() & 3))
+                    {
+                        D_800DD57C = 0;
+                    }
+                    else
+                    {
+                        D_800DD57C = ((Rng_Rand16() & 3) - D_800DD57C) + 1;
+                    }
+                    D_800DD57C = MIN(D_800DD57C, 0);
+                }
+            }
+            else if (g_WorldObj1.position_1C.rotation_C.vy < -FP_ANGLE(1.8f))
+            {
+                func_8005DC1C(Sfx_Unk1435, &soundPos, 0x80, 0);
+                D_800DD57C = ~(Rng_Rand16() & 3) - D_800DD57C;
+                D_800DD57C = MAX(D_800DD57C, 1);
+            }
+        }
+    }
+    else if (!Savegame_EventFlagGet(EventFlag_77))
+    {
+        g_WorldGfx_ObjectAdd(&g_WorldObj3.object_0, &g_WorldObj3.position_1C.position_0, &(SVECTOR3){});
+    }
+    else
+    {
+        g_WorldObj1.position_1C.rotation_C.vy = -FP_ANGLE(2.9f);
+    }
 
-INCLUDE_RODATA("asm/maps/map1_s01/nonmatchings/map1_s01", D_800CB7E8);
+    g_WorldGfx_ObjectAdd(&g_WorldObj1.object_0, &g_WorldObj1.position_1C.position_0, &g_WorldObj1.position_1C.rotation_C);
+    g_WorldObj2.position_1C.rotation_C.vy = g_WorldObj1.position_1C.rotation_C.vy;
+    g_WorldGfx_ObjectAdd(&g_WorldObj2.object_0, &g_WorldObj2.position_1C.position_0, &g_WorldObj2.position_1C.rotation_C);
+}

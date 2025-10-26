@@ -77,6 +77,8 @@ typedef enum _EventFlag
     EventFlag_73 = 73,
     EventFlag_74 = 74,
 
+    EventFlag_76 = 76,
+    EventFlag_77 = 77,
     EventFlag_78 = 78,
     EventFlag_79 = 79,
     EventFlag_80 = 80,

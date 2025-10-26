@@ -14,6 +14,9 @@ extern s_AnimInfo CAT_ANIM_INFOS[];
 
 extern SVECTOR3 D_800CB7D4; // Empty
 extern VECTOR3 D_800CB7DC;
+extern VECTOR3 D_800CB7E8;
+
+extern s32 D_800DD57C;
 extern s_WorldObjectPos g_CommonWorldObjectsPos[5]; // 0x800DD518
 extern s_WorldObjectDesc g_WorldObj0;
 extern s_WorldObjectDesc g_WorldObj1;

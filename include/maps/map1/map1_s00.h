@@ -6,7 +6,6 @@
 #define HAS_PlayerState_Unk87
 #define HAS_PlayerState_Unk88
 
-#define QV3(x,y,z) (VECTOR3)VECTOR3(x,y,z)
 extern s32 D_800DD718;
 
 extern s_WorldObjectPos g_CommonWorldObjectsPos[5]; // 0x800DD71C
