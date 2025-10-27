@@ -206,6 +206,7 @@ GHOST_DOCTOR_ANIM_INFOS        = 0x800E82A8;
 sharedData_800DF1F4_0_s00      = 0x800E82E8; // type:s32
 sharedData_800DF1F8_0_s00      = 0x800E82EC; // type:s16
 sharedData_800DF1FA_0_s00      = 0x800E82EE; // type:s16
+MAP_POINTS                     = 0x800E839C; // type:MapPoint2d
 
 //-----------------------------------------------------------------
 //--- PA: 0x01F92C   VA: 0x800E8EA4   subsegment: .data, map7_s02_2

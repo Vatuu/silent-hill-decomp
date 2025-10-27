@@ -1,4 +1,5 @@
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
@@ -601,21 +602,21 @@ void func_800DAA4C(void) // 0x800DAA4C
 
 void func_800DB21C(void) // 0x800DB21C
 {
-    VECTOR3 vec = { D_800E839C[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E839C[g_MapEventParam->field_5].vz };
+    VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     func_80086FE8(11, Sfx_Unk1334, &vec);
 }
 
 void func_800DB2B0(void) // 0x800DB2B0
 {
-    VECTOR3 vec = { D_800E839C[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E839C[g_MapEventParam->field_5].vz };
+    VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     func_80086FE8(12, Sfx_Unk1344, &vec);
 }
 
 void func_800DB344(void) // 0x800DB344
 {
-    VECTOR3 vec = { D_800E839C[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E839C[g_MapEventParam->field_5].vz };
+    VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     func_80086FE8(13, Sfx_Unk1342, &vec);
 }
@@ -676,21 +677,21 @@ void func_800DB3D8(void) // 0x800DB3D8
 
 void func_800DB498(void) // 0x800DB498
 {
-    VECTOR3 pos = { D_800E839C[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E839C[g_MapEventParam->field_5].vz };
+    VECTOR3 pos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     func_80086FE8(86, Sfx_Unk1344, &pos);
 }
 
 void func_800DB52C(void) // 0x800DB52C
 {
-    VECTOR3 pos = { D_800E839C[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E839C[g_MapEventParam->field_5].vz };
+    VECTOR3 pos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     func_80086FE8(88, Sfx_Unk1344, &pos);
 }
 
 void func_800DB5C0(void) // 0x800DB5C0
 {
-    VECTOR3 pos = { D_800E839C[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E839C[g_MapEventParam->field_5].vz };
+    VECTOR3 pos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     func_8004EE94(81, 1);
     func_80086FE8(77, Sfx_Unk1335, &pos);
@@ -699,7 +700,7 @@ void func_800DB5C0(void) // 0x800DB5C0
 
 void func_800DB67C(void) // 0x800DB67C
 {
-    VECTOR3 pos = { D_800E839C[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E839C[g_MapEventParam->field_5].vz };
+    VECTOR3 pos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     func_8004EE94(82, 1);
     func_80086FE8(78, Sfx_Unk1335, &pos);

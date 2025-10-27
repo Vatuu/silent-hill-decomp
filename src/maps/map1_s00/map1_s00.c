@@ -104,13 +104,13 @@ void func_800CEFE4(void) {}
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", sharedFunc_800CF168_1_s00); // 0x800CF168
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", sharedFunc_800D140C_1_s00); // 0x800D140C
+#include "maps/shared/sharedFunc_800D140C_1_s00.h" // 0x800D140C
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", sharedFunc_800D1524_1_s00); // 0x800D1524
+#include "maps/shared/sharedFunc_800D1524_1_s00.h" // 0x800D1524
 
 #include "maps/shared/Ai_LarvalStalker_Init.h" // 0x800D16FC
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", sharedFunc_800D17BC_1_s00); // 0x800D17BC
+#include "maps/shared/sharedFunc_800D17BC_1_s00.h" // 0x800D17BC
 
 INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", sharedFunc_800D1DBC_1_s00); // 0x800D1DBC
 
@@ -160,15 +160,47 @@ INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", sharedFunc_800D70C4_0_s00
 
 #include "maps/shared/sharedFunc_800D7758_1_s00.h" // 0x800D7758
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D77F8);
+void func_800D77F8(void)
+{
+    u16 flags;
+
+    if (g_SavegamePtr->mapRoomIdx_A5 == 23)
+    {
+        flags = (1<<5);
+        if (Savegame_EventFlagGet(EventFlag_71) && Savegame_EventFlagGet(EventFlag_72))
+        {
+            flags = 0x1FE;
+        }
+    }
+    else
+    {
+        flags = D_800DCC54[g_SavegamePtr->mapRoomIdx_A5];
+    }
+    func_80035F4C(flags, Q12(0.1f), &D_800DCC4C);
+}
 
 void func_800D7864(void) {}
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D786C);
+void func_800D786C(void)
+{
+    VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D7900);
+    func_80086FE8(11, Sfx_Unk1334, &vec); // Lock is jammed.
+}
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D7994);
+void func_800D7900(void)
+{
+    VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+
+    func_80086FE8(12, Sfx_Unk1344, &vec); // It's locked.
+}
+
+void func_800D7994(void)
+{
+    VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+
+    func_80086FE8(13, Sfx_Unk1342, &vec); // It's unlocked.
+}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
@@ -250,7 +282,78 @@ void func_800D7AF8(void) // 0x800D7AF8
     func_80087360(FILE_TIM_GOLD2_TIM, Q12(2.5f), Q12(2.0f), 19);
 }
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D7B2C);
+void func_800D7B2C(void)
+{
+    g_DeltaTime0 = 0;
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_8008616C(false, true, 0, Q12(2.5f), false);
+            SysWork_StateStepIncrement();
+            /* fallthrough */
+        case 1:
+            func_800862F8(7, FILE_TIM_GOLD1_TIM, false);
+            break;
+        case 2:
+            func_8008616C(true, true, 0, 0, false);
+            break;
+        case 3:
+            func_800862F8(3, 0, false);
+            func_8008616C(false, false, 0, Q12(2.0f), false);
+            SysWork_StateStepIncrement();
+            /* fallthrough */
+        case 4:
+            func_800862F8(2, 0, false);
+            func_800862F8(8, FILE_TIM_GOLD2_TIM, false);
+            break;
+        case 5:
+            func_800862F8(2, 0, false);
+            func_8008616C(true, false, 0, 0, false);
+            break;
+        case 6:
+            func_800862F8(2, 0, false);
+            func_80085E6C(Q12(0.5f), false);
+            break;
+        case 7:
+            Sd_EngineCmd(Sfx_Unk1416);
+            SysWork_StateStepIncrement();
+            /* fallthrough */
+        case 8:
+            Gfx_BackgroundSpritesTransition(&g_ItemInspectionImg, &D_800A9A04, g_SysWork.field_28);
+            g_SysWork.field_28 += Q12(0.0625f);
+            if (g_SysWork.field_28 > Q12(1.0f))
+            {
+                SysWork_StateStepIncrement();
+            }
+            break;
+        case 9:
+            Sd_EngineCmd(Sfx_Unk1419);
+            SysWork_StateStepIncrement();
+            /* fallthrough */
+        case 10:
+            func_800862F8(5, 0, false);
+            func_80085E6C(Q12(1.0f), false);
+            break;
+        case 11:
+            func_800862F8(5, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 19, 0, 0, 0, false); // A golden sun
+            break;
+        case 12:
+            func_800862F8(5, 0, false);
+            func_8008616C(2, true, 0, Q12(2.0f), false);
+            break;
+        default:
+            func_800862F8(6, 0, false);
+            func_8008616C(false, false, 0, Q12(2.5f), false);
+            Savegame_EventFlagSet(EventFlag_71);
+            g_SavegamePtr->mapMarkingFlags_1D4[8] |= 1;
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+
+            break;
+    }
+}
 
 void func_800D7E48(void) // 0x800D7E48
 {
@@ -264,11 +367,185 @@ void func_800D7E7C(void) // 0x800D7E7C
     func_80087360(FILE_TIM_SILVER2_TIM, Q12(2.5f), Q12(2.0f), 20);
 }
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D7EB0);
+void func_800D7EB0(void)
+{
+    g_DeltaTime0 = 0;
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_8008616C(false, true, 0, Q12(2.5f), false);
+            SysWork_StateStepIncrement();
+            /* fallthrough */
+        case 1:
+            func_800862F8(7, FILE_TIM_SILVER1_TIM, false);
+            break;
+        case 2:
+            func_8008616C(true, true, 0, 0, false);
+            break;
+        case 3:
+            func_800862F8(3, 0, false);
+            func_8008616C(false, false, 0, Q12(2.0f), false);
+            SysWork_StateStepIncrement();
+            /* fallthrough */
+        case 4:
+            func_800862F8(2, 0, false);
+            func_800862F8(8, FILE_TIM_SILVER2_TIM, false);
+            break;
+        case 5:
+            func_800862F8(2, 0, false);
+            func_8008616C(true, false, 0, 0, false);
+            break;
+        case 6:
+            func_800862F8(2, 0, false);
+            func_80085E6C(Q12(0.5f), false);
+            break;
+        case 7:
+            Sd_EngineCmd(0x588U);
+            SysWork_StateStepIncrement();
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D81CC);
+            /* fallthrough */
+        case 8:
+            Gfx_BackgroundSpritesTransition(&g_ItemInspectionImg, &D_800A9A04, g_SysWork.field_28);
+            g_SysWork.field_28 += Q12(0.0625f);
+            if (g_SysWork.field_28 > Q12(1.0f))
+            {
+                SysWork_StateStepIncrement();
+            }
+            break;
+        case 9:
+            Sd_EngineCmd(Sfx_Unk1419);
+            SysWork_StateStepIncrement();
+            /* fallthrough */
+        case 10:
+            func_800862F8(5, 0, false);
+            func_80085E6C(Q12(1.0f), false);
+            break;
+        case 11:
+            func_800862F8(5, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 20, 0, 0, 0, false); // A silver moon
+            break;
+        case 12:
+            func_800862F8(5, 0, false);
+            func_8008616C(2, true, 0, Q12(2.0f), false);
+            break;
+        default:
+            func_800862F8(6, 0, false);
+            func_8008616C(false, false, 0, Q12(2.5f), false);
+            Savegame_EventFlagSet(EventFlag_72);
+            g_SavegamePtr->mapMarkingFlags_1D4[8] |= 1;
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+}
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", func_800D8354);
+void func_800D81CC(void)
+{
+    g_DeltaTime0 = 0;
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            SysWork_StateStepIncrement();
+
+            /* fallthrough */
+        case 1:
+            func_80085E6C(0x4CC, false);
+            break;
+        case 2:
+            MapMsg_DisplayAndHandleSelection(false, 15, false, false, 0, false); // The tower door is locked.
+            break;
+        case 3:
+            if (Savegame_EventFlagGet(EventFlag_72))
+            {
+                 func_80086E50(FILE_TIM_CLOCK5_TIM, Q12(3.0f), Q12(2.0f));
+            }
+            else
+            {
+                if (Savegame_EventFlagGet(EventFlag_71))
+                {
+                    func_80086E50(FILE_TIM_CLOCK12_TIM, Q12(3.0f), Q12(2.0f));
+                }
+                else
+                {
+                    func_80086E50(FILE_TIM_CLOCK_TIM, Q12(3.0f), Q12(2.0f));
+                }
+            }
+            break;
+        case 4:
+            func_800862F8(2, 0, false);
+            if (Savegame_EventFlagGet(EventFlag_72))
+            {
+                 MapMsg_DisplayAndHandleSelection(false, 18, false, false, 0, false); // Hands are stopped at 5:00
+            }
+            else
+            {
+                if (Savegame_EventFlagGet(EventFlag_71))
+                {
+                    MapMsg_DisplayAndHandleSelection(false, 17, false, false, 0, false); // Hands are stopped at 12:00
+                }
+                else
+                {
+                    MapMsg_DisplayAndHandleSelection(false, 16, false, false, 0, false); // Hands are stopped at 10:00
+                }
+            }
+            break;
+        case 5:
+            func_80086F44(Q12(3.0f), Q12(2.0f));
+            break;
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+}
+
+void func_800D8354(void)
+{
+    VECTOR3 soundPos;
+    VECTOR3 pos;
+
+    do {} while (0); // @hack permuter find.
+    pos.vx = MAP_POINTS[g_MapEventParam->field_5].positionX_0;
+    pos.vy = Q12(-1.2f);
+    pos.vz = MAP_POINTS[g_MapEventParam->field_5].positionZ_8;
+    g_DeltaTime0 = 0;
+    soundPos = pos;
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_8005DC1C(Sfx_Unk1344, &soundPos, 0x80, 0);
+            SysWork_StateStepIncrement();
+            /* fallthrough */
+        case 1:
+            func_80085DF0();
+            break;
+        case 2:
+            MapMsg_DisplayAndHandleSelection(false, 12, 0, 0, 0, false); // It's locked.
+            break;
+        case 3:
+            func_80086E50(FILE_TIM_PAPER1_TIM, Q12(3.0f), Q12(2.0f));
+            break;
+        case 4:
+            func_800862F8(2, 0, false);
+            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+            {
+                SysWork_StateStepIncrement();
+                break;
+            }
+            break;
+        case 5:
+            func_80086F44(Q12(3.0f), Q12(2.0f));
+            break;
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+}
 
 void func_800D853C(void) // 0x800D853C
 {

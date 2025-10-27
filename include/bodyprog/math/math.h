@@ -17,9 +17,14 @@
 #define VECTOR3(x, y, z) \
     { Q12(x), Q12(y), Q12(z) }
 
-// TODO: Dedupe.
-#define QVECTOR3(x, y, z) \
-    (VECTOR3)VECTOR3(x, y, z)
+/** @brief Constructs a `VECTOR3` in a fixed-point Q19.12 format for RODATA vectors used as inlined function parameters.
+ *
+ * @param x X component (`float`).
+ * @param y Y component (`float`).
+ * @param z Z component (`float`).
+ * @return `VECTOR3` in a fixed-point Q19.12 format.
+ */
+#define QVECTOR3(x,y,z) (VECTOR3)VECTOR3(x,y,z)
 
 /** @brief Constructs an `SVECTOR` containing Euler angles in a fixed-point Q3.12 format.
  *

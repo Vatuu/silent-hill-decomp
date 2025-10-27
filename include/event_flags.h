@@ -69,12 +69,16 @@ typedef enum _EventFlag
 
     EventFlag_M1S00_PickupMap      = 67, // Shared with M1S06
     EventFlag_M1S01_PickupChemical = 68,
+    EventFlag_69 = 69,
 
     EventFlag_M1S01_PickupSilverMedallion = 70,
     EventFlag_71 = 71,
     EventFlag_72 = 72,
     EventFlag_73 = 73,
-
+    EventFlag_74 = 74,
+    EventFlag_75 = 75,
+    EventFlag_76 = 76,
+    EventFlag_77 = 77,
     EventFlag_78 = 78,
     EventFlag_79 = 79,
     EventFlag_80 = 80,
@@ -175,6 +179,7 @@ typedef enum _EventFlag
     EventFlag_236 = 236,
     EventFlag_237 = 237,
 
+    EventFlag_240 = 240,
     EventFlag_M3S04_PickupPlateOfQueen  = 241,
     EventFlag_M3S03_PickupPlateOfTurtle = 242,
     EventFlag_M3S03_PickupPlateOfHatter = 243,

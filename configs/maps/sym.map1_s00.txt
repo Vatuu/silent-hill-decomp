@@ -112,6 +112,7 @@ LARVAL_STALKER_ANIM_INFOS = 0x800DA6C8;
 sharedData_800DD5A6_0_s00 = 0x800DB044; // type:u8
 STALKER_ANIM_INFOS        = 0x800DB048; // type:s32 unknown type
 sharedData_800DCC14_1_s00 = 0x800DCC14; // type:u8
+MAP_POINTS                = 0x800DCCB8;
 
 //---------------------------------------------------------------
 //--- PA: 0x013C44   VA: 0x800DD1BC   subsegment: .data, map1_s00
