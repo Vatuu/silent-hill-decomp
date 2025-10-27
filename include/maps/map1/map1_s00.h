@@ -9,7 +9,7 @@
 
 extern s32 D_800DD718;
 
-extern s_WorldObjectPose 	  g_CommonWorldObjectsPoses[5];
+extern s_WorldObjectPose 	  g_CommonWorldObjectPoses[5];
 extern s_WorldObjectDescNoRot g_WorldObject0;
 extern s_WorldObjectDescNoRot g_WorldObject1[6];
 extern s_WorldObjectDescNoRot g_WorldObject2;
@@ -27,13 +27,29 @@ extern s_MapPoint2d MAP_POINTS[];
 extern u8 D_800DCC4C;
 extern u16 D_800DCC54[42];
 
+void func_800D77F8(void);
+
+void func_800D786C(void);
+
+void func_800D7900(void);
+
+void func_800D7994(void);
+
 void func_800D7AC4(void);
 
 void func_800D7AF8(void);
 
+void func_800D7B2C(void);
+
 void func_800D7E48(void);
 
 void func_800D7E7C(void);
+
+void func_800D7EB0(void);
+
+void func_800D81CC(void);
+
+void func_800D8354(void);
 
 void func_800D853C(void);
 

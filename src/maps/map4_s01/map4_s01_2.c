@@ -290,8 +290,8 @@ void func_800D2408(void) // 0x800D2408
     s32      x;
     s32      z;
 
-    #define player &g_SysWork.player_4C.chara_0
-    #define cybil  &g_SysWork.npcs_1A0[0]
+    #define playerChara &g_SysWork.player_4C.chara_0
+    #define cybilChara  &g_SysWork.npcs_1A0[0]
 
     //static const VECTOR3 soundPos = `VECTOR3(182.0f, -1.2f, 58.9f)`;
     #define soundPos D_800CBF88
@@ -314,7 +314,7 @@ void func_800D2408(void) // 0x800D2408
 
             g_Timer0 = 0;
 
-            func_80085EB8(0, player, 51, false);
+            func_80085EB8(0, playerChara, 51, false);
 
             g_SysWork.field_30 = 20;
             g_SysWork.flags_22A4 |= 1 << 3;
@@ -347,7 +347,7 @@ void func_800D2408(void) // 0x800D2408
             break;
 
         case 6:
-            func_80085EB8(0, player, 118, false);
+            func_80085EB8(0, playerChara, 118, false);
             func_8005DC1C(Sfx_Unk1310, &soundPos, 128, 0);
             SysWork_StateStepIncrement();
 
@@ -360,12 +360,12 @@ void func_800D2408(void) // 0x800D2408
 
             D_800D5AEB = 1;
 
-            func_80085EB8(0, cybil, 5, false);
+            func_80085EB8(0, cybilChara, 5, false);
             func_8003D01C();
             SysWork_StateStepIncrement();
 
         case 9:
-            func_80085EB8(1, player, 0, false);
+            func_80085EB8(1, playerChara, 0, false);
             sharedFunc_800DA8E8_0_s01(&g_Timer0, Q12(10.0f), 0, Q12(28.0f), true, false);
             break;
 
@@ -375,12 +375,12 @@ void func_800D2408(void) // 0x800D2408
             break;
 
         case 11:
-            func_80086C58(player, 119);
+            func_80086C58(playerChara, 119);
             break;
 
         case 12:
-            func_80085EB8(0, player, 51, false);
-            func_80085EB8(0, cybil, 1, false);
+            func_80085EB8(0, playerChara, 51, false);
+            func_80085EB8(0, cybilChara, 1, false);
             func_8003D03C();
             Savegame_EventFlagSet(EventFlag_311);
             SysWork_StateStepIncrement();
@@ -391,7 +391,7 @@ void func_800D2408(void) // 0x800D2408
             break;
 
         case 14:
-            func_80085EB8(0, cybil, 5, false);
+            func_80085EB8(0, cybilChara, 5, false);
 
             g_Timer0 = Q12(57.0f);
             g_SysWork.field_2378 = 0xB33;
@@ -443,8 +443,8 @@ void func_800D2408(void) // 0x800D2408
             break;
 
         case 25:
-            func_80085EB8(0, player, 72, false);
-            func_80085EB8(0, cybil, 1, false);
+            func_80085EB8(0, playerChara, 72, false);
+            func_80085EB8(0, cybilChara, 1, false);
             SysWork_StateStepIncrement();
 
         case 26:
@@ -457,9 +457,9 @@ void func_800D2408(void) // 0x800D2408
             break;
 
         case 28:
-            func_80085EB8(3, player, 0, false);
-            func_80085EB8(0, player, 0x33, false);
-            func_80085EB8(0, cybil, 5, false);
+            func_80085EB8(3, playerChara, 0, false);
+            func_80085EB8(0, playerChara, 0x33, false);
+            func_80085EB8(0, cybilChara, 5, false);
 
             g_Timer0 = Q12(87.0f);
             g_SysWork.field_2378  = 0x800;
@@ -471,7 +471,7 @@ void func_800D2408(void) // 0x800D2408
             break;
 
         case 30:
-            func_80085EB8(0, player, 140, false);
+            func_80085EB8(0, playerChara, 140, false);
 
             g_SysWork.field_2378  = 0x1000;
 
@@ -500,7 +500,7 @@ void func_800D2408(void) // 0x800D2408
             D_800D8018 = 1;
             g_SysWork.field_2378 = 0x1333;
 
-            func_80085EB8(0u, player, 51, false);
+            func_80085EB8(0u, playerChara, 51, false);
             SysWork_StateStepIncrement();
 
         case 36:
@@ -512,7 +512,7 @@ void func_800D2408(void) // 0x800D2408
             break;
 
         case 38:
-            func_80085EB8(0, player, 0x82, false);
+            func_80085EB8(0, playerChara, 0x82, false);
 
             D_800D8018 = 0;
             g_SysWork.field_2378 = 0x1000;
@@ -525,7 +525,7 @@ void func_800D2408(void) // 0x800D2408
             break;
 
         case 40:
-            func_80086C58(player, 120);
+            func_80086C58(playerChara, 120);
 
             g_SysWork.field_2378 = 0x1666;
 
@@ -567,7 +567,7 @@ void func_800D2408(void) // 0x800D2408
 
             D_800D8018 = 0;
 
-            func_80088F94(cybil, 0, 0);
+            func_80088F94(cybilChara, 0, 0);
             Fs_QueueWaitForEmpty();
             func_8003D01C();
             Sd_EngineCmd(19);
@@ -583,11 +583,11 @@ void func_800D2408(void) // 0x800D2408
 
         if (g_Timer0 >= Q12(0.0f))
         {
-            Dms_CharacterGetPosRot(player.position_18, player.rotation_24, &D_800CBF94, g_Timer0, (s_DmsHeader*)FS_BUFFER_11);
+            Dms_CharacterGetPosRot(playerChara.position_18, playerChara.rotation_24, &D_800CBF94, g_Timer0, (s_DmsHeader*)FS_BUFFER_11);
 
             if (D_800D5AEB)
             {
-                Dms_CharacterGetPosRot(cybil.position_18, cybil.rotation_24, &D_800CBF9C, g_Timer0, (s_DmsHeader*)FS_BUFFER_11);
+                Dms_CharacterGetPosRot(cybilChara.position_18, cybilChara.rotation_24, &D_800CBF9C, g_Timer0, (s_DmsHeader*)FS_BUFFER_11);
             }
 
             vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPosition, &g_CutsceneCameraLookAt, NULL, g_Timer0, (s_DmsHeader*)FS_BUFFER_11));
@@ -608,7 +608,7 @@ void func_800D2F74(void) // 0x800D2F74
 {
     #define CUTSCENE_SKIP_STATE 10
 
-    #define player &g_SysWork.player_4C.chara_0
+    #define playerChara &g_SysWork.player_4C.chara_0
 
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
         g_SysWork.sysStateStep_C[0] >= 3 && g_SysWork.sysStateStep_C[0] < 10)
@@ -630,7 +630,7 @@ void func_800D2F74(void) // 0x800D2F74
             g_Timer1 = 0;
             g_SysWork.flags_22A4 |= 1 << 3;
 
-            func_80085EB8(0, player, 0x79, false);
+            func_80085EB8(0, playerChara, 0x79, false);
             Game_TurnFlashlightOn();
             sharedFunc_800D2EB4_0_s00();
             func_8003D03C();
@@ -651,12 +651,12 @@ void func_800D2F74(void) // 0x800D2F74
             break;
 
         case 4:
-            func_80086C58(player, 116);
+            func_80086C58(playerChara, 116);
             sharedFunc_800DA8E8_0_s01(&g_Timer1, Q12(10.0f), Q12(35.0f), Q12(71.0f), true, false);
             break;
 
         case 5:
-            func_80085EB8(0, player, 53, false);
+            func_80085EB8(0, playerChara, 53, false);
             SysWork_StateStepIncrement();
 
         case 6:
@@ -668,18 +668,19 @@ void func_800D2F74(void) // 0x800D2F74
             break;
 
         case 8:
-            func_80085EB8(0, player, 0x33, false);
+            func_80085EB8(0, playerChara, 0x33, false);
 
             g_Timer1 = Q12(95.0f);
 
             SysWork_StateStepIncrement();
 
         case 9:
-            Map_MessageWithAudio(0x5B, &g_MapMsgSoundIdx1, g_MapMsgSounds1);
+            Map_MessageWithAudio(91, &g_MapMsgSoundIdx1, g_MapMsgSounds1);
             break;
 
         case CUTSCENE_SKIP_STATE:
             func_8008616C(2, true, 0, 0, false);
+
             if (g_SysWork.sysStateStep_C[0] != 10)
             {
                 g_Timer1 = Q12(95.0f);
@@ -692,6 +693,7 @@ void func_800D2F74(void) // 0x800D2F74
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_305);
+
             vcReturnPreAutoCamWork(true);
             Fs_QueueWaitForEmpty();
             func_8008616C(0, false, 0, 0, false);
@@ -704,7 +706,7 @@ void func_800D2F74(void) // 0x800D2F74
 
     if (g_Timer1 >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(player.position_18, player.rotation_24, &D_800CBF94, g_Timer1, (s_DmsHeader*)FS_BUFFER_11);
+        Dms_CharacterGetPosRot(playerChara.position_18, playerChara.rotation_24, &D_800CBF94, g_Timer1, (s_DmsHeader*)FS_BUFFER_11);
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPosition, &g_CutsceneCameraLookAt, NULL, g_Timer1, (s_DmsHeader*)FS_BUFFER_11));
         vcUserCamTarget(&g_CutsceneCameraPosition, NULL, true);
         vcUserWatchTarget(&g_CutsceneCameraLookAt, NULL, true);
@@ -719,7 +721,7 @@ void func_800D4410(void) // 0x800D4410
 {
     #define CUTSCENE_SKIP_STATE 14
 
-    #define player &g_SysWork.player_4C.chara_0
+    #define playerChara &g_SysWork.player_4C.chara_0
 
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
         g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < 13)
@@ -744,8 +746,8 @@ void func_800D4410(void) // 0x800D4410
             g_Timer2 = 0;
             g_MapMsgSoundIdx2 = 0;
 
-            func_80085EB8(0, player, 124, false);
-            func_80085EB8(2, player, 0, false);
+            func_80085EB8(0, playerChara, 124, false);
+            func_80085EB8(2, playerChara, 0, false);
             func_8008D438();
 
             g_SysWork.field_2360.vx = Q12(19.6f);
@@ -768,8 +770,8 @@ void func_800D4410(void) // 0x800D4410
             break;
 
         case 2:
-            func_80085EB8(3, player, 0, false);
-            Map_MessageWithAudio(0x66, &g_MapMsgSoundIdx2, g_MapMsgSounds2);
+            func_80085EB8(3, playerChara, 0, false);
+            Map_MessageWithAudio(102, &g_MapMsgSoundIdx2, g_MapMsgSounds2);
             sharedFunc_800DA8E8_0_s01(&g_Timer2, Q12(10.0f), Q12(0.0f), Q12(106.0f), true, false);
             break;
 
@@ -779,7 +781,7 @@ void func_800D4410(void) // 0x800D4410
             break;
 
         case 4:
-            Map_MessageWithAudio(0x67, &g_MapMsgSoundIdx2, g_MapMsgSounds2);
+            Map_MessageWithAudio(103, &g_MapMsgSoundIdx2, g_MapMsgSounds2);
             sharedFunc_800DA8E8_0_s01(&g_Timer2, Q12(10.0f), Q12(0.0f), Q12(106.0f), true, false);
             break;
 
@@ -788,7 +790,7 @@ void func_800D4410(void) // 0x800D4410
             break;
 
         case 6:
-            func_80085EB8(0, player, 0x99, false);
+            func_80085EB8(0, playerChara, 153, false);
             SysWork_StateStepIncrement();
 
         case 7:
@@ -832,6 +834,7 @@ void func_800D4410(void) // 0x800D4410
             sharedFunc_800D2244_0_s00(true);
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_309);
+
             vcReturnPreAutoCamWork(true);
             func_8008616C(0, false, 2, 0, false);
             func_8008616C(0, false, 0, 0, false);
@@ -852,7 +855,7 @@ void func_800D4410(void) // 0x800D4410
 
     if (g_Timer2 >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(player.position_18, player.rotation_24, &D_800CBF94, g_Timer2, (s_DmsHeader*)FS_BUFFER_11);
+        Dms_CharacterGetPosRot(playerChara.position_18, playerChara.rotation_24, &D_800CBF94, g_Timer2, (s_DmsHeader*)FS_BUFFER_11);
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPosition, &g_CutsceneCameraLookAt, NULL, g_Timer2, (s_DmsHeader*)FS_BUFFER_11));
         vcUserCamTarget(&g_CutsceneCameraPosition, NULL, true);
         vcUserWatchTarget(&g_CutsceneCameraLookAt, NULL, true);

@@ -2550,7 +2550,7 @@ void sharedFunc_800D1524_1_s00(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 
 void Ai_LarvalStalker_Init(s_SubCharacter* chara);
 
-void sharedFunc_800D17BC_1_s00(s_SubCharacter*);
+void sharedFunc_800D17BC_1_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D1DBC_1_s00(s_SubCharacter*);
 

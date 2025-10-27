@@ -122,7 +122,7 @@ MAP_MESSAGES              = 0x800DD1BC; // type:u32 size:0xA0
 //----------------------------------------------------
 //--- PA: 0x013CE4   VA: 0x800DD25C   subsegment: data
 //----------------------------------------------------
-g_CommonWorldObjectsPoses = 0x800DD71C; // type:WorldObjectPose size:0x64
+g_CommonWorldObjectPoses = 0x800DD71C; // type:WorldObjectPose size:0x64
 sharedData_800DFB4C_0_s00 = 0x800DD780;
 sharedData_800DFB50_0_s00 = 0x800DD784;
 g_Particle_SpeedX         = 0x800DD788; // type:s32

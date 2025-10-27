@@ -7,7 +7,7 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* chara)
     s32 keyframe2;
     s16 keyframeOffset;
 
-    if (chara->damageReceived_C0 <= 0 || chara->health_B0 <= 0)
+    if (chara->damageReceived_C0 <= Q12(0.0f) || chara->health_B0 <= Q12(0.0f))
     {
         return;
     }

@@ -144,8 +144,8 @@ void func_800CED88(void) // 0x800CED88
 
     static const VECTOR3 soundPos = VECTOR3(12.0f, -1.2f, 24.0f);
 
-    #define npc0 (&g_SysWork.npcs_1A0[0])
-    #define player (&g_SysWork.player_4C.chara_0)
+    #define npc0Chara (&g_SysWork.npcs_1A0[0])
+    #define playerChara (&g_SysWork.player_4C.chara_0)
 
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         (g_SysWork.sysStateStep_C[0] > 0) && (g_SysWork.sysStateStep_C[0] < CUTSCENE_SKIP_STATE))
@@ -164,14 +164,14 @@ void func_800CED88(void) // 0x800CED88
             Chara_Load(0, Chara_Dahlia, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             func_80088D0C();
             Chara_Spawn(Chara_Dahlia, 0, Q12(20.0f), Q12(23.5f), 0, 3);
-            sharedFunc_800D88AC_0_s00(npc0);
+            sharedFunc_800D88AC_0_s00(npc0Chara);
 
             g_Timer0 = 0;
             g_SysWork.field_30 = 20;
             g_SysWork.flags_22A4 |= 8;
 
-            func_80085EB8(0, player, 51, false);
-            func_80085EB8(0, npc0, 0, false);
+            func_80085EB8(0, playerChara, 51, false);
+            func_80085EB8(0, npc0Chara, 0, false);
             func_8003D03C();
 
             g_SavegamePtr->eventFlags_168[5] |= 0x400000;
@@ -197,7 +197,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 5:
-            func_80085EB8(0, player, 113, false);
+            func_80085EB8(0, playerChara, 113, false);
             SysWork_StateStepIncrement();
 
         case 6:
@@ -233,7 +233,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 8:
-            func_80085EB8(4, player, 0, false);
+            func_80085EB8(4, playerChara, 0, false);
             func_80085E6C(Q12(0.8f), false);
             break;
 
@@ -242,7 +242,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 10:
-            func_80085EB8(0, npc0, 9, false);
+            func_80085EB8(0, npc0Chara, 9, false);
             SysWork_StateStepIncrement();
 
         case 11:
@@ -250,7 +250,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 12:
-            func_80085EB8(1, npc0, 0, false);
+            func_80085EB8(1, npc0Chara, 0, false);
             Map_MessageWithAudio(29, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
 
@@ -260,11 +260,11 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 14:
-            func_80085EB8(0, npc0, 10, false);
+            func_80085EB8(0, npc0Chara, 10, false);
             SysWork_StateStepIncrement();
 
         case 15:
-            func_80085EB8(1, npc0, 0, false);
+            func_80085EB8(1, npc0Chara, 0, false);
             Map_MessageWithAudio(29, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
         case 16:
@@ -274,7 +274,7 @@ void func_800CED88(void) // 0x800CED88
             Map_MessageWithAudio(29, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
         case 18:
-            func_80085EB8(0, npc0, 8, false);
+            func_80085EB8(0, npc0Chara, 8, false);
             SysWork_StateStepIncrement();
 
         case 19:
@@ -311,7 +311,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 21:
-            func_80085EB8(0, npc0, 1, false);
+            func_80085EB8(0, npc0Chara, 1, false);
             SysWork_StateStepIncrement();
 
         case 22:
@@ -332,7 +332,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 23:
-            func_80085EB8(0, player, 111, false);
+            func_80085EB8(0, playerChara, 111, false);
             SysWork_StateStepIncrement();
 
         case 24:
@@ -381,7 +381,7 @@ void func_800CED88(void) // 0x800CED88
 
         case 29:
             func_8005DC1C(Sfx_Unk1324, &soundPos, 0x80, 0);
-            func_80088F94(npc0, 0, 0);
+            func_80088F94(npc0Chara, 0, 0);
             SysWork_StateStepIncrement();
 
         case 30:
@@ -409,7 +409,7 @@ void func_800CED88(void) // 0x800CED88
             g_SavegamePtr->mapMarkingFlags_1D4[2] |= 0x40000;
             g_SavegamePtr->mapMarkingFlags_1D4[3] |= 0x100000;
 
-            func_80088F94(npc0, 0, 0);
+            func_80088F94(npc0Chara, 0, 0);
 
             g_Timer0 = NO_VALUE;
 
@@ -437,7 +437,7 @@ void func_800CED88(void) // 0x800CED88
             
             if (step > 13)
             {
-                dahlia = npc0;
+                dahlia = npc0Chara;
                 if (((dahlia->model_0.anim_4.time_4 - Q12(Anim_StartKeyframeIdxGet(dahlia))) <= Q12(30.0f)) &&
                     ((dahlia->model_0.anim_4.time_4 - Q12(Anim_StartKeyframeIdxGet(dahlia))) >= Q12(21.0f)))
                 {
@@ -449,8 +449,8 @@ void func_800CED88(void) // 0x800CED88
 
     if (g_Timer0 >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&player->position_18, (SVECTOR3*)&player->rotation_24, "HERO", g_Timer0, (s_DmsHeader*)FS_BUFFER_15);
-        Dms_CharacterGetPosRot(&npc0->position_18, (SVECTOR3*)&npc0->rotation_24, "DAHLIA", g_Timer0, (s_DmsHeader*)FS_BUFFER_15);
+        Dms_CharacterGetPosRot(&playerChara->position_18, (SVECTOR3*)&playerChara->rotation_24, "HERO", g_Timer0, (s_DmsHeader*)FS_BUFFER_15);
+        Dms_CharacterGetPosRot(&npc0Chara->position_18, (SVECTOR3*)&npc0Chara->rotation_24, "DAHLIA", g_Timer0, (s_DmsHeader*)FS_BUFFER_15);
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CameraPositionTarget, &g_CameraLookAtTarget, NULL, g_Timer0, (s_DmsHeader*)FS_BUFFER_15));
         vcUserCamTarget(&g_CameraLookAtTarget, NULL, true);
         vcUserWatchTarget(&g_CameraLookAtTarget, NULL, true);
@@ -472,7 +472,7 @@ extern s_WorldObject_0 g_CommonWorldObjects[6];
 extern s_WorldObjectDesc g_WorldObj_SavePad;
 extern s_WorldObjectDesc g_WorldObj_Key;
 extern s_WorldObjectDesc g_WorldObj_Item;
-extern s_WorldObjectPose g_CommonWorldObjectsPoses[1];
+extern s_WorldObjectPose g_CommonWorldObjectPoses[1];
 
 void Map_WorldObjectsInit(void)
 {
@@ -550,7 +550,7 @@ void Map_WorldObjectsUpdate(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S01_HealthDrink))
         {
-            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectsPoses[0].position_0, &g_CommonWorldObjectsPoses[0].rotation_C);
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[0].position_0, &g_CommonWorldObjectPoses[0].rotation_C);
         }
     }
 }
