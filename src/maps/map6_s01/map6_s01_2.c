@@ -180,7 +180,7 @@ void func_800D12B4(void) // 0x800D12B4
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
-#include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800D1340
+#include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D1340
 
 INCLUDE_RODATA("asm/maps/map6_s01/nonmatchings/map6_s01_2", D_800CB988);
 

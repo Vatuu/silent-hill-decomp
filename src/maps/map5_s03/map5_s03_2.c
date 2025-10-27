@@ -57,7 +57,7 @@ INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03_2", func_800D1038);
 
 void func_800D1340(void) {}
 
-#include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800D1348
+#include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D1348
 
 INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03_2", func_800D13E0);
 

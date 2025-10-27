@@ -440,7 +440,7 @@ INCLUDE_RODATA("asm/maps/map1_s03/nonmatchings/map1_s03", D_800CBBCC);
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DCB54);
 
-#include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800DCD44
+#include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800DCD44
 
 INCLUDE_RODATA("asm/maps/map1_s03/nonmatchings/map1_s03", D_800CBC04);
 

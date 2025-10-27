@@ -146,7 +146,7 @@ void func_800D2470(void) // 0x800D2470
 
 INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04_2", func_800D250C);
 
-#include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800D25D0
+#include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D25D0
 
 INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04_2", func_800D2668);
 

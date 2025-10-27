@@ -110,7 +110,7 @@ void func_800D0B10(void) // 0x800D0B10
     Savegame_EventFlagSet(EventFlag_203);
 }
 
-#include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800D0B7C
+#include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D0B7C
 
 INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06_2", func_800D0C14);
 

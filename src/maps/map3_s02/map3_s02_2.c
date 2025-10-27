@@ -80,11 +80,11 @@ void func_800D02B4(void) // 0x800D02B4
             break;
 
         case 1:
-            func_8008616C(0, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
             SysWork_StateStepIncrement();
 
         case 2:
-            func_80085E6C(Q12(1.0f), false);
+            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case 3:
@@ -92,7 +92,7 @@ void func_800D02B4(void) // 0x800D02B4
             SysWork_StateStepIncrement();
 
         case 4:
-            func_80085E6C(Q12(0.3f), false);
+            SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
 
         default:
             sharedFunc_800D2244_0_s00(false);
@@ -120,12 +120,12 @@ void func_800D03FC(void) // 0x800D03FC
             D_800D3154 = 0;
 
             Game_TurnFlashlightOff();
-            func_8008616C(0, false, 0, Q12(0.0f), false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement();
             break;
 
         case 2:
-            func_80085E6C(Q12(0.6f), false);
+            SysWork_StateStepIncrementDelayed(Q12(0.6f), false);
             break;
 
         case 3:
@@ -140,7 +140,7 @@ void func_800D03FC(void) // 0x800D03FC
     }
 }
 
-#include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800D0570
+#include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D0570
 
 INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02_2", func_800D0608);
 

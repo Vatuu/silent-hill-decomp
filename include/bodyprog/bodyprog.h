@@ -3724,15 +3724,15 @@ void func_8008E794(VECTOR3* arg0, q3_12 angle, s32 arg2);
 
 void func_8008EA68(SVECTOR*, VECTOR3*, s32);
 
-void func_80085D78(bool arg0);
+void func_80085D78(bool reset);
 
 void func_80085DC0(bool arg0, s32 sysStateStep);
 
 void func_80085DF0(void);
 
-void func_80085E6C(s32 delay, bool arg1);
+void SysWork_StateStepIncrementDelayed(s32 delay, bool reset);
 
-void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool arg3);
+void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset);
 
 /** @brief Sets `sysStateStep_C` depending on whether `eventFlagIdx` flag is set.
  *
@@ -3755,17 +3755,17 @@ void func_8008605C(s32 eventFlagIdx, s32 stepTrue, s32 stepFalse, bool stepSecon
 void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 step0, s32 step1, s32 step2, bool stepSecondary);
 
 /** Handles giving the player items. */
-void func_8008616C(s32 arg0, bool arg1, s32 arg2, q19_12 fadeTimestep, bool arg4);
+void SysWork_StateStepIncrementAfterFade(s32 arg0, bool arg1, s32 arg2, q19_12 fadeTimestep, bool reset);
 
-void func_800862F8(s32 arg0, s32 fileIdx, bool arg2);
+void func_800862F8(s32 arg0, s32 fileIdx, bool reset);
 
-void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, bool arg3);
+void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, bool reset);
 
 void func_800865FC(bool isPos, s32 idx0, s32 idx1, q3_12 angleY, q19_12 offsetOrPosX, q19_12 offsetOrPosZ);
 
-void func_800866D4(s32 arg0, s32 arg1, s32 arg2);
+void func_800866D4(s32 arg0, s32 arg1, bool reset);
 
-void func_80086728(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3);
+void func_80086728(s_SubCharacter* chara, s32 arg1, s32 arg2, bool reset);
 
 void func_8008677C(s_SubCharacter* chara, s32 arg1, s32 arg2);
 

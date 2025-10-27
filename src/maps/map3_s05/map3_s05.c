@@ -317,7 +317,7 @@ void func_800D63C4(void) // 0x800D63C4
             break;
 
         case 4:
-            func_80085E6C(Q12(0.3f), false);
+            SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
             break;
 
         case 5:

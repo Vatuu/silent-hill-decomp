@@ -122,4 +122,4 @@ void Gfx_LoadingScreen_StageString() // 0x800DA8A4
     Gfx_LoadingScreen_BackgroundTexture();
 }
 
-#include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800DA8E8
+#include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800DA8E8
