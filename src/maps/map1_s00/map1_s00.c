@@ -934,12 +934,14 @@ void Map_WorldObjectsInit(void)
 
     func_8004EE94(InventoryItemId_NoteToSchool, 1);
     Savegame_EventFlagSet(EventFlag_147);
-    if (g_SavegamePtr->gameDifficulty_260 == -1)
+
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
         func_80088FF4(Chara_GreyChild, 3, 0);
         func_80088FF4(Chara_GreyChild, 9, 0);
     }
-    if (g_SavegamePtr->gameDifficulty_260 == 1)
+
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
         func_80088FF4(Chara_GreyChild, 10, 11);
         func_80088FF4(Chara_GreyChild, 11, 3);
