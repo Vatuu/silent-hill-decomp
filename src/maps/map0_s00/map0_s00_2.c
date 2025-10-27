@@ -110,13 +110,13 @@ const char* MAP_MESSAGES[] = {
 
 void func_800D9610(void) // 0x800D9610
 {
-    VECTOR3 pos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            func_8005DC1C(Sfx_Unk1355, &pos, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1355, &sfxPos, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement();
 
         case 1:

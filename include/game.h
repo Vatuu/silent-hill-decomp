@@ -223,7 +223,7 @@ typedef enum _MapMsgIdx
     MapMsgIdx_HandgunAmmoSelect = 8,
     MapMsgIdx_RifleAmmoSelect   = 9,
     MapMsgIdx_ShotgunAmmoSelect = 10,
-    MapMsgIdx_DoorJammer        = 11,
+    MapMsgIdx_DoorJammed        = 11,
     MapMsgIdx_DoorLocked        = 12,
     MapMsgIdx_DoorUnlocked      = 13,
     MapMsgIdx_NowMaking         = 14  // @unused?

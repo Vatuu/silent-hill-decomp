@@ -186,21 +186,21 @@ void func_800D786C(void) // 0x800D786C
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    Map_MessageWithSfx(11, Sfx_Unk1334, &sfxPos); // "Lock is jammed."
+    Map_MessageWithSfx(MapMsgIdx_DoorJammed, Sfx_DoorJammed, &sfxPos);
 }
 
 void func_800D7900(void) // 0x800D7900
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    Map_MessageWithSfx(12, Sfx_Unk1344, &sfxPos); // "It's locked."
+    Map_MessageWithSfx(MapMsgIdx_DoorLocked, Sfx_DoorLocked, &sfxPos);
 }
 
 void func_800D7994(void) // 0x800D7994
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    Map_MessageWithSfx(13, Sfx_Unk1342, &sfxPos); // "It's unlocked."
+    Map_MessageWithSfx(MapMsgIdx_DoorUnlocked, Sfx_DoorUnlocked, &sfxPos);
 }
 
 const char* MAP_MESSAGES[] = {
@@ -549,7 +549,7 @@ void func_800D8354(void) // 0x800D8354
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            func_8005DC1C(Sfx_Unk1344, &soundPos, 0x80, 0);
+            func_8005DC1C(Sfx_DoorLocked, &soundPos, 0x80, 0);
             SysWork_StateStepIncrement();
 
         case 1:

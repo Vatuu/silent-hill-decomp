@@ -55,7 +55,7 @@ void func_800CEB9C(void)
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    Map_MessageWithSfx(11, Sfx_Unk1334, &sfxPos);
+    Map_MessageWithSfx(MapMsgIdx_DoorJammed, Sfx_DoorJammed, &sfxPos);
 }
 
 void func_800CEC30(void)
@@ -74,12 +74,12 @@ void func_800CEC30(void)
         }
         else
         {
-            Map_MessageWithSfx(12, Sfx_Unk1486, &sfxPos);
+            Map_MessageWithSfx(MapMsgIdx_DoorLocked, Sfx_Unk1486, &sfxPos);
         }
     }
     else
     {
-        Map_MessageWithSfx(12, Sfx_Unk1344, &sfxPos);
+        Map_MessageWithSfx(MapMsgIdx_DoorLocked, Sfx_DoorLocked, &sfxPos);
     }
 }
 

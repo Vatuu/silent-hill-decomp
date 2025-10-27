@@ -537,21 +537,21 @@ void func_800D8230(void) // 0x800D8230
 {
     VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
 
-    Map_MessageWithSfx(11, Sfx_Unk1334, &sfxPos);
+    Map_MessageWithSfx(MapMsgIdx_DoorJammed, Sfx_DoorJammed, &sfxPos);
 }
 
 void func_800D82C4(void) // 0x800D82C4
 {
     VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
 
-    Map_MessageWithSfx(12, Sfx_Unk1344, &sfxPos);
+    Map_MessageWithSfx(MapMsgIdx_DoorLocked, Sfx_DoorLocked, &sfxPos);
 }
 
 void func_800D8358(void) // 0x800D8358
 {
     VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
 
-    Map_MessageWithSfx(13, Sfx_Unk1342, &sfxPos);
+    Map_MessageWithSfx(MapMsgIdx_DoorUnlocked, Sfx_DoorUnlocked, &sfxPos);
 }
 
 void func_800D83EC(void) // 0x800D83EC
@@ -612,21 +612,21 @@ void func_800D84AC(void) // 0x800D84AC
 {
     VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
 
-    Map_MessageWithSfx(81, Sfx_Unk1344, &sfxPos);
+    Map_MessageWithSfx(81, Sfx_DoorLocked, &sfxPos);
 }
 
 void func_800D8540(void) // 0x800D8540
 {
     VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
 
-    Map_MessageWithSfx(83, Sfx_Unk1344, &sfxPos);
+    Map_MessageWithSfx(83, Sfx_DoorLocked, &sfxPos);
 }
 
 void func_800D85D4(void) // 0x800D85D4
 {
     VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
 
-    Map_MessageWithSfx(85, Sfx_Unk1344, &sfxPos);
+    Map_MessageWithSfx(85, Sfx_DoorLocked, &sfxPos);
 }
 
 void func_800D8668(void) // 0x800D8668

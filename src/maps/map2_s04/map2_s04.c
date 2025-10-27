@@ -97,14 +97,14 @@ void func_800CCE74(void) // 0x800CCE74
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    Map_MessageWithSfx(11, Sfx_Unk1334, &sfxPos);
+    Map_MessageWithSfx(MapMsgIdx_DoorJammed, Sfx_DoorJammed, &sfxPos);
 }
 
 void func_800CCF08(void) // 0x800CCF08
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    Map_MessageWithSfx(12, Sfx_Unk1344, &sfxPos);
+    Map_MessageWithSfx(MapMsgIdx_DoorLocked, Sfx_DoorLocked, &sfxPos);
 }
 
 const char* MAP_MESSAGES[] = {
