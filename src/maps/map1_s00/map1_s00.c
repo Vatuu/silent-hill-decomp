@@ -955,7 +955,7 @@ void Map_WorldObjectsInit(void)
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-void Map_WorldObjectsUpdate(void) // 0x0x800DBF08
+void Map_WorldObjectsUpdate(void) // 0x800DBF08
 {
     s32 i;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
