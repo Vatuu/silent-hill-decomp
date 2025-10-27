@@ -44,7 +44,7 @@ void func_80070B84(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3) // 0x800
     { 
         if (arg1 < g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126)
         {
-            temp_v0                                                                 = g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 - ((TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f))) * 2);
+            temp_v0                                                                 = g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 - ((TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f))) * 2);
             g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = temp_v0;
             if (temp_v0 < arg1)
             {
@@ -56,7 +56,7 @@ void func_80070B84(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3) // 0x800
             new_var = &g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126;
             if (chara->model_0.anim_4.keyframeIdx_8 >= arg3)
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = *new_var + TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f));
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = *new_var + TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f));
             }
 
             g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = CLAMP(*new_var, 0, arg1);
@@ -862,7 +862,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
 
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.5f));
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.5f));
                 
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < Q12(0.0f))
                 {
@@ -929,7 +929,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
 
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.5f)) >> 3;
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.5f)) >> 3;
                 
                 if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126) < 0)
                 {
@@ -1479,7 +1479,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             {
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f)) >> 1; // `/ 2`.
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f)) >> 1; // `/ 2`.
                     if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & 1)
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(0.0f);
@@ -1488,7 +1488,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             }
             else if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f)) >> 2; // `/ 4`.
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f)) >> 2; // `/ 4`.
 
                 if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & 1)
                 {
@@ -2016,7 +2016,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
 
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.5f)) >> 2;
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.5f)) >> 2;
                 
                 if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & 1)
                 {
@@ -4117,7 +4117,7 @@ void Player_StepWallStop_MovementCancel(s_SubCharacter* chara, s32 animStatus0, 
 
     if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
     {
-        g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f))) >> 1;
+        g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f))) >> 1;
         if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & (1 << 0))
         {
             g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(0.0f);
@@ -4169,7 +4169,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
     // Used for `player.playerMoveDistance_126`.
     #define GET_VAL(val)                                                                      \
-        (((val) < Q12(3.5f)) ? (((g_DeltaTime0) * Q12(0.75f)) / TIME_STEP_30_FPS) : \
+        (((val) < Q12(3.5f)) ? (((g_DeltaTime0) * Q12(0.75f)) / TIMESTEP_30_FPS) : \
                                     (((g_DeltaTime0) + (((g_DeltaTime0) < 0) ? 3 : 0)) >> 2))
 
     q19_12                 speedX;
@@ -4234,7 +4234,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             {
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f));
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f));
                     if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & 1)
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
@@ -4243,7 +4243,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             }
             else if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f))) * 2;
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f))) * 2;
                 if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & 1)
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
@@ -4550,7 +4550,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             {
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f))) * 2;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f))) * 2;
 
                     if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & (1 << 0))
                     {
@@ -4576,7 +4576,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                     // Reduce speed if going too fast while walking.
                     else if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 > Q12(1.4f))
                     {
-                        g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f))) * 2;
+                        g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f))) * 2;
                         if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < Q12(1.4f))
                         {
                             g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(1.4f);
@@ -4586,7 +4586,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                     {
                         if (chara->model_0.anim_4.keyframeIdx_8 >= 2)
                         {
-                            g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f));
+                            g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f));
                         }
                         
                         g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = CLAMP(g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126,
@@ -4719,7 +4719,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < Q12(3.5f)) 
                 {
-                    var_a3 = TIME_STEP_SCALE(g_DeltaTime0, Q12(0.75f));
+                    var_a3 = TIMESTEP_SCALE(g_DeltaTime0, Q12(0.75f));
                 } 
                 else 
                 {
@@ -4728,7 +4728,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                     var_a3 = speedZ >> 2;
                 }
 
-                func_80070CF0(chara, Q12(2.0f), speedX, var_a3, TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f)));
+                func_80070CF0(chara, Q12(2.0f), speedX, var_a3, TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f)));
             }
             // Stopped running.
             else
@@ -4739,7 +4739,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
                     if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < Q12(3.5f)) 
                     {
-                        var_a3 = TIME_STEP_SCALE(g_DeltaTime0, Q12(0.75f));
+                        var_a3 = TIMESTEP_SCALE(g_DeltaTime0, Q12(0.75f));
                     } 
                     else 
                     {
@@ -4748,11 +4748,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                         var_a3 = speedZ >> 2;
                     }
 
-                    func_80070CF0(chara, Q12(2.0f), speedX, var_a3, TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f)));
+                    func_80070CF0(chara, Q12(2.0f), speedX, var_a3, TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f)));
                 }
                 else if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 > GET_MOVE_SPEED(speedZoneType))
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f));
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f));
                     if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < GET_MOVE_SPEED(speedZoneType))
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = GET_MOVE_SPEED(speedZoneType);
@@ -4918,7 +4918,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
         case PlayerLowerBodyState_RunForwardWallStop:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f))) >> 1;
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f))) >> 1;
                 if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & (1 << 0))
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
@@ -4967,7 +4967,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             {
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= ((TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f))) * 2);
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= ((TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f))) * 2);
                     if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & (1 << 0))
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
@@ -4989,7 +4989,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 }
                 else if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 > Q12(1.15f))
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f))) * 2;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f))) * 2;
                     if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < Q12(1.15f))
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(1.15f);
@@ -4999,7 +4999,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 {
                     if (chara->model_0.anim_4.keyframeIdx_8 >= 2)
                     {
-                        g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f));
+                        g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f));
                     }
                         
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = CLAMP(g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126,
@@ -5111,7 +5111,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
         case PlayerLowerBodyState_AimSidestepRight:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 > Q12(1.25f))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f)));
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f)));
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < Q12(1.25f))
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(1.25f);
@@ -5122,11 +5122,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 if (chara->model_0.anim_4.keyframeIdx_8 >= 100 &&
                     chara->model_0.anim_4.keyframeIdx_8 <= 111)
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f));
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f));
                 }
                 else if (chara->model_0.anim_4.keyframeIdx_8 >= 112)
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f));
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f));
                 }
 
                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = CLAMP(g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126,
@@ -5193,7 +5193,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
         case PlayerLowerBodyState_AimSidestepLeft:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 > Q12(1.25f))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f));
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f));
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < Q12(1.25f))
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(1.25f);
@@ -5204,11 +5204,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 if (chara->model_0.anim_4.keyframeIdx_8 >= 75 &&
                     chara->model_0.anim_4.keyframeIdx_8 <= 86)
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f));
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f));
                 }
                 else if (chara->model_0.anim_4.keyframeIdx_8 >= 87)
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f));
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f));
                 }
 
                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = CLAMP(g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126,
@@ -5274,7 +5274,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             chara->properties_E4.player.exhaustionTimer_FC += g_DeltaTime0;
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 > Q12(3.1739f))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f));
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f));
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < Q12(3.1739f))
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(3.1739f);
@@ -5282,7 +5282,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             }
             else if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < Q12(3.1739f))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += TIME_STEP_SCALE(g_DeltaTime0, Q12(0.75f));
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += TIMESTEP_SCALE(g_DeltaTime0, Q12(0.75f));
                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126  = CLAMP(g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126,
                                                                                                  Q12(0.0f),
                                                                                                  Q12(3.1739f));
@@ -5365,7 +5365,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             chara->properties_E4.player.exhaustionTimer_FC += g_DeltaTime0;
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 > Q12(3.1739f))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f));
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f));
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < Q12(3.1739f))
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(3.1739f);
@@ -5373,7 +5373,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             }
             else if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < Q12(3.1739f))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += TIME_STEP_SCALE(g_DeltaTime0, Q12(0.75f));
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += TIMESTEP_SCALE(g_DeltaTime0, Q12(0.75f));
                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126  = CLAMP(g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126,
                                                                                                  Q12(0.0f),
                                                                                                  Q12(3.1739f));
@@ -5456,7 +5456,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.5f));
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.5f));
                 if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & (1 << 0))
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(0.0f);
@@ -5580,7 +5580,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.5f));
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.5f));
                 if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & (1 << 0))
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(0.0f);
@@ -5722,7 +5722,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             {
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= ((TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f))) * 2);
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= ((TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f))) * 2);
                     if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & (1 << 0))
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
@@ -5763,7 +5763,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
         case PlayerLowerBodyState_Stumble:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= ((TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f))) * 2) / 3;
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= ((TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f))) * 2) / 3;
                 if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & (1 << 0))
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(0.0f);
@@ -5773,7 +5773,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             if (D_800C45DC <= Q12(0.5f) &&
                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f))) * 4;
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f))) * 4;
                 if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & (1 << 0))
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(0.0f);
@@ -5804,7 +5804,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
         case PlayerLowerBodyState_RunLeftStumble:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f))) >> 2;
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f))) >> 2;
                 if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & (1 << 0))
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(0.0f);
@@ -5842,7 +5842,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
         case PlayerLowerBodyState_RunRightStumble:
             if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
             {
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f))) >> 2;
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f))) >> 2;
                 if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & (1 << 0))
                 {
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(0.0f);
@@ -5903,7 +5903,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             {
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, 0x444);
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, 0x444);
                     if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & (1 << 0))
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(0.0f);
@@ -5914,7 +5914,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             {
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f));
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f));
                     if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & (1 << 0))
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(0.0f);
@@ -7187,7 +7187,7 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                         flexRotStep = chara->properties_E4.player.field_F4 - g_Player_FlexRotationX;
                         if (g_Player_FlexRotationX < chara->properties_E4.player.field_F4)
                         {
-                            flexRotMax = chara->properties_E4.player.field_100 * TIME_STEP_SCALE(g_DeltaTime0, var_a2 + chara->properties_E4.player.field_100);
+                            flexRotMax = chara->properties_E4.player.field_100 * TIMESTEP_SCALE(g_DeltaTime0, var_a2 + chara->properties_E4.player.field_100);
                             if (flexRotMax < flexRotStep)
                             {
                                 g_Player_FlexRotationX = chara->properties_E4.larvalStalker.properties_E8[3].val16[0] - flexRotMax;
@@ -7195,7 +7195,7 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                         }
                         else
                         {
-                            flexRotMax = -(chara->properties_E4.player.field_100 * TIME_STEP_SCALE(g_DeltaTime0, var_a2 + chara->properties_E4.player.field_100));
+                            flexRotMax = -(chara->properties_E4.player.field_100 * TIMESTEP_SCALE(g_DeltaTime0, var_a2 + chara->properties_E4.player.field_100));
                             if (flexRotStep < flexRotMax)
                             {
                                 g_Player_FlexRotationX = chara->properties_E4.larvalStalker.properties_E8[3].val16[0] - flexRotMax;
@@ -7214,7 +7214,7 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                             temp_v0     = chara->properties_E4.player.field_100 + 1;
                             flexRotStep = temp_v0 - var_v1;
                             flexRotMax  = FP_ANGLE(0.4f);
-                            flexRotMax  = flexRotStep * TIME_STEP_SCALE(g_DeltaTime0, var_a2 + ((flexRotStep * 2) + flexRotMax));
+                            flexRotMax  = flexRotStep * TIMESTEP_SCALE(g_DeltaTime0, var_a2 + ((flexRotStep * 2) + flexRotMax));
 
                             // Clamp X-axis flex angle.
                             if (g_Player_FlexRotationX > FP_ANGLE(0.0f))
@@ -7272,7 +7272,7 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                 g_Player_FlexRotationX += FP_ANGLE(2.9f);
             }
 
-            flexRotStep = TIME_STEP_SCALE(g_DeltaTime0, FP_ANGLE(2.15f));
+            flexRotStep = TIMESTEP_SCALE(g_DeltaTime0, FP_ANGLE(2.15f));
 
             // Modulate X-axis flex angle.
             if (g_Player_FlexRotationX > FP_ANGLE(0.0f))

@@ -133,7 +133,7 @@ void sharedSymbol_800CD4A0_2_s01(s_SubCharacter* dahlia, GsCOORDINATE2* coord)
         case 5:
             if (dahliaProps.moveDistance_126)
             {
-                dahliaProps.moveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
+                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
                 if (dahliaProps.moveDistance_126 < 0)
                 {
                     dahliaProps.moveDistance_126 = 0;
@@ -147,7 +147,7 @@ void sharedSymbol_800CD4A0_2_s01(s_SubCharacter* dahlia, GsCOORDINATE2* coord)
         case 1:
             if (dahliaProps.moveDistance_126 > Q12(1.25f))
             {
-                dahliaProps.moveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.5f));
+                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.5f));
                 if (dahliaProps.moveDistance_126 < Q12(1.25f))
                 {
                     dahliaProps.moveDistance_126 = Q12(1.25f);
@@ -155,7 +155,7 @@ void sharedSymbol_800CD4A0_2_s01(s_SubCharacter* dahlia, GsCOORDINATE2* coord)
             }
             else if (dahliaProps.moveDistance_126 < Q12(1.25f))
             {
-                dahliaProps.moveDistance_126 += TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f));
+                dahliaProps.moveDistance_126 += TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f));
                 dahliaProps.moveDistance_126  = CLAMP(dahliaProps.moveDistance_126, 0, Q12(1.25f));
             }
 

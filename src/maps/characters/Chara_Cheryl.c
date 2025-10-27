@@ -120,7 +120,7 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
         case 0:
             if (dahliaProps.moveDistance_126 != Q12(0.0f))
             {
-                dahliaProps.moveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
+                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
                 if (dahliaProps.moveDistance_126 < Q12(0.0f))
                 {
                     dahliaProps.moveDistance_126 = Q12(0.0f);
@@ -150,7 +150,7 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
         case 3:
             if (dahliaProps.moveDistance_126 != Q12(0.0f))
             {
-                dahliaProps.moveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
+                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
                 if (dahliaProps.moveDistance_126 < Q12(0.0f))
                 {
                     dahliaProps.moveDistance_126 = Q12(0.0f);
@@ -169,7 +169,7 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
         case 4:
             if (dahliaProps.moveDistance_126 != Q12(0.0f))
             {
-                dahliaProps.moveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
+                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
                 if (dahliaProps.moveDistance_126 < Q12(0.0f))
                 {
                     dahliaProps.moveDistance_126 = Q12(0.0f);

@@ -124,7 +124,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             Math_ShortestAngleGet(rotY, sharedData_800DF1FA_0_s00, &shortestAngle);
 
             // Turn toward.
-            angleStep = TIME_STEP_SCALE(g_DeltaTime0, (shortestAngle < FP_ANGLE(45.0f)) ? FP_ANGLE(2.9f) : FP_ANGLE(22.5f));
+            angleStep = TIMESTEP_SCALE(g_DeltaTime0, (shortestAngle < FP_ANGLE(45.0f)) ? FP_ANGLE(2.9f) : FP_ANGLE(22.5f));
 
             if (ABS(shortestAngle) < ANGLE_THRESHOLD)
             {
