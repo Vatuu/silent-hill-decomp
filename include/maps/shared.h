@@ -2884,9 +2884,11 @@ static inline void WorldObjectPoseSet(s_WorldObjectPose* eventPose, q19_12 posX,
 }
 
 #define MAP_CHUNK_CHECK_VARIABLE_DECL() s32 __chunkIdx
+
 /** @hack This macro requires a variable `s32 __chunkIdx` to be declared before using it.
  * The macro `MAP_CHUNK_CHECK_VARIABLE_DECL` declares that variable and must be called before this macro.
  * The first argument is `vx` or `vz`, which is used as the component name in `VECTOR3`.
+ *
  * @bug Some maps appear to have a bug where the negative position check will never be true because they check
  * if the chunk index will be a positive number. Seems like they forgot to use `ABS`?
  */
@@ -2895,12 +2897,9 @@ static inline void WorldObjectPoseSet(s_WorldObjectPose* eventPose, q19_12 posX,
      ((g_SysWork.player_4C.chara_0.position_18.crd >  Q12(0.0f) && (__chunkIdx + (x0)) == (x1)) || \
       (g_SysWork.player_4C.chara_0.position_18.crd <= Q12(0.0f) && (__chunkIdx + (x2)) == (x3))))
 
-
-#define PLAYER_NEAR_POS(crd, base, tol)                                                \
-    (                                                                                  \
-        (((g_SysWork.player_4C.chara_0.position_18.crd - Q12(base)) >= 0)              \
-         ? ((g_SysWork.player_4C.chara_0.position_18.crd - Q12(base)) < Q12(tol))      \
-         : ((Q12(base) - g_SysWork.player_4C.chara_0.position_18.crd) < Q12(tol)))     \
-    )
+#define PLAYER_NEAR_POS(crd, base, tol)                                       \
+    (((g_SysWork.player_4C.chara_0.position_18.crd - Q12(base)) >= 0)       ? \
+     ((g_SysWork.player_4C.chara_0.position_18.crd - Q12(base)) < Q12(tol)) : \
+     ((Q12(base) - g_SysWork.player_4C.chara_0.position_18.crd) < Q12(tol)))
 
 #endif
