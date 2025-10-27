@@ -24,7 +24,8 @@
  * @param z Z component (`float`).
  * @return `VECTOR3` in a fixed-point Q19.12 format.
  */
-#define QVECTOR3(x,y,z) (VECTOR3)VECTOR3(x,y,z)
+#define QVECTOR3(x, y, z) \
+    (VECTOR3)VECTOR3(x, y, z)
 
 /** @brief Constructs an `SVECTOR` containing Euler angles in a fixed-point Q3.12 format.
  *
