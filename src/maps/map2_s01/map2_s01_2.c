@@ -144,7 +144,7 @@ void func_800CED88(void) // 0x800CED88
 
     static const VECTOR3 soundPos = VECTOR3(12.0f, -1.2f, 24.0f);
 
-    #define npc0Chara (&g_SysWork.npcs_1A0[0])
+    #define dahliaChara (&g_SysWork.npcs_1A0[0])
     #define playerChara (&g_SysWork.player_4C.chara_0)
 
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
@@ -164,14 +164,14 @@ void func_800CED88(void) // 0x800CED88
             Chara_Load(0, Chara_Dahlia, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             func_80088D0C();
             Chara_Spawn(Chara_Dahlia, 0, Q12(20.0f), Q12(23.5f), 0, 3);
-            sharedFunc_800D88AC_0_s00(npc0Chara);
+            sharedFunc_800D88AC_0_s00(dahliaChara);
 
             g_Timer0 = 0;
             g_SysWork.field_30 = 20;
             g_SysWork.flags_22A4 |= 8;
 
             func_80085EB8(0, playerChara, 51, false);
-            func_80085EB8(0, npc0Chara, 0, false);
+            func_80085EB8(0, dahliaChara, 0, false);
             func_8003D03C();
 
             g_SavegamePtr->eventFlags_168[5] |= 0x400000;
@@ -242,7 +242,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 10:
-            func_80085EB8(0, npc0Chara, 9, false);
+            func_80085EB8(0, dahliaChara, 9, false);
             SysWork_StateStepIncrement();
 
         case 11:
@@ -250,7 +250,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 12:
-            func_80085EB8(1, npc0Chara, 0, false);
+            func_80085EB8(1, dahliaChara, 0, false);
             Map_MessageWithAudio(29, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
 
@@ -260,11 +260,11 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 14:
-            func_80085EB8(0, npc0Chara, 10, false);
+            func_80085EB8(0, dahliaChara, 10, false);
             SysWork_StateStepIncrement();
 
         case 15:
-            func_80085EB8(1, npc0Chara, 0, false);
+            func_80085EB8(1, dahliaChara, 0, false);
             Map_MessageWithAudio(29, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
         case 16:
@@ -274,7 +274,7 @@ void func_800CED88(void) // 0x800CED88
             Map_MessageWithAudio(29, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
         case 18:
-            func_80085EB8(0, npc0Chara, 8, false);
+            func_80085EB8(0, dahliaChara, 8, false);
             SysWork_StateStepIncrement();
 
         case 19:
@@ -311,7 +311,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 21:
-            func_80085EB8(0, npc0Chara, 1, false);
+            func_80085EB8(0, dahliaChara, 1, false);
             SysWork_StateStepIncrement();
 
         case 22:
@@ -381,7 +381,7 @@ void func_800CED88(void) // 0x800CED88
 
         case 29:
             func_8005DC1C(Sfx_Unk1324, &soundPos, 0x80, 0);
-            func_80088F94(npc0Chara, 0, 0);
+            func_80088F94(dahliaChara, 0, 0);
             SysWork_StateStepIncrement();
 
         case 30:
@@ -409,7 +409,7 @@ void func_800CED88(void) // 0x800CED88
             g_SavegamePtr->mapMarkingFlags_1D4[2] |= 0x40000;
             g_SavegamePtr->mapMarkingFlags_1D4[3] |= 0x100000;
 
-            func_80088F94(npc0Chara, 0, 0);
+            func_80088F94(dahliaChara, 0, 0);
 
             g_Timer0 = NO_VALUE;
 
@@ -437,7 +437,7 @@ void func_800CED88(void) // 0x800CED88
             
             if (step > 13)
             {
-                dahlia = npc0Chara;
+                dahlia = dahliaChara;
                 if (((dahlia->model_0.anim_4.time_4 - Q12(Anim_StartKeyframeIdxGet(dahlia))) <= Q12(30.0f)) &&
                     ((dahlia->model_0.anim_4.time_4 - Q12(Anim_StartKeyframeIdxGet(dahlia))) >= Q12(21.0f)))
                 {
@@ -450,7 +450,7 @@ void func_800CED88(void) // 0x800CED88
     if (g_Timer0 >= Q12(0.0f))
     {
         Dms_CharacterGetPosRot(&playerChara->position_18, (SVECTOR3*)&playerChara->rotation_24, "HERO", g_Timer0, (s_DmsHeader*)FS_BUFFER_15);
-        Dms_CharacterGetPosRot(&npc0Chara->position_18, (SVECTOR3*)&npc0Chara->rotation_24, "DAHLIA", g_Timer0, (s_DmsHeader*)FS_BUFFER_15);
+        Dms_CharacterGetPosRot(&dahliaChara->position_18, (SVECTOR3*)&dahliaChara->rotation_24, "DAHLIA", g_Timer0, (s_DmsHeader*)FS_BUFFER_15);
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CameraPositionTarget, &g_CameraLookAtTarget, NULL, g_Timer0, (s_DmsHeader*)FS_BUFFER_15));
         vcUserCamTarget(&g_CameraLookAtTarget, NULL, true);
         vcUserWatchTarget(&g_CameraLookAtTarget, NULL, true);

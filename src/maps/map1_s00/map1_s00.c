@@ -480,7 +480,7 @@ void func_800D81CC(void) // 0x800D81CC
             break;
 
         case 2:
-            MapMsg_DisplayAndHandleSelection(false, 15, false, false, 0, false); // "The tower door is locked.""
+            MapMsg_DisplayAndHandleSelection(false, 15, false, false, 0, false); // "The tower door is locked."
             break;
 
         case 3:
@@ -516,7 +516,7 @@ void func_800D81CC(void) // 0x800D81CC
                 }
                 else
                 {
-                    MapMsg_DisplayAndHandleSelection(false, 16, false, false, 0, false); // "Hands are stopped at 10:00.""
+                    MapMsg_DisplayAndHandleSelection(false, 16, false, false, 0, false); // "Hands are stopped at 10:00."
                 }
             }
             break;
@@ -557,7 +557,7 @@ void func_800D8354(void) // 0x800D8354
             break;
 
         case 2:
-            MapMsg_DisplayAndHandleSelection(false, 12, 0, 0, 0, false); // "It's locked.""
+            MapMsg_DisplayAndHandleSelection(false, 12, 0, 0, 0, false); // "It's locked."
             break;
 
         case 3:

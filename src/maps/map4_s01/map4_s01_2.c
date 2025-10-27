@@ -197,8 +197,8 @@ void func_800D1FF0(void) // 0x800D1FF0
             break;
 
         case 5:
-            Camera_PositionSet(NULL, Q12(179.35f), Q12(-1.5f), Q12(61.0098f), 0, 0, 0, 0, true);
-            Camera_LookAtSet(NULL, Q12(176.98f), Q12(-0.49f), Q12(64.07f), 0, 0, 0, 0, true);
+            Camera_PositionSet(NULL, Q12(179.35f), Q12(-1.5f), Q12(61.0098f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(176.98f), Q12(-0.49f), Q12(64.07f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Sd_EngineCmd(Sfx_Unk1538);
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 105, false);
 
@@ -238,9 +238,9 @@ void func_800D1FF0(void) // 0x800D1FF0
 
         case 7:
             D_800D5AE8 -= FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(2.0f), Q12_SHIFT);
-            if (D_800D5AE8 < 0)
+            if (D_800D5AE8 < Q12(0.0f))
             {
-                D_800D5AE8 = 0;
+                D_800D5AE8 = Q12(0.0f);
             }
 
             func_8008616C(2, true, 0, Q12(3.0f), false);
