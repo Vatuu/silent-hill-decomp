@@ -123,6 +123,7 @@ sharedFunc_800D923C_0_s00     = 0x800D923C; // type:func
 sharedFunc_800D929C_0_s00     = 0x800D929C; // type:func
 sharedFunc_800D92AC_0_s00     = 0x800D92AC; // type:func
 Gfx_LoadingScreen_StageString = 0x800D95D4; // type:func
+MapEvent_OpeningCutscene      = 0x800D9748; // type:func
 Map_WorldObjectsInit          = 0x800DBE68; // type:func
 Map_WorldObjectsUpdate        = 0x800DBF08; // type:func
 Event_GreyChildrenSpawn       = 0x800DC1E8; // type:func
@@ -176,6 +177,7 @@ MAP_MESSAGES                  = 0x800DF6B8; // type:u32 size:0x9C
 //----------------------------------------------------
 //--- PA: 0x0161DC   VA: 0x800DF754   subsegment: data
 //----------------------------------------------------
+g_Timer0                      = 0x800DFAB4; // type:s32
 g_MapMsgSounds                = 0x800DFABC; // type:u16
 g_WarpCamera                  = 0x800DFAD8; // type:s32
 sharedData_800DFB4C_0_s00     = 0x800DFB4C;
@@ -222,7 +224,5 @@ sharedData_800E3A20_0_s00     = 0x800E3A20; // type:s32
 sharedData_800E3A24_0_s00     = 0x800E3A24; // type:s32
 sharedData_800E3A28_0_s00     = 0x800E3A28; // type:s32
 sharedData_800E3A2C_0_s00     = 0x800E3A2C; // type:s32
-g_Timer0 = 0x800DFAB4; // type:s32
-MapEvent_OpeningCutscene = 0x800D9748; // type:func
-g_CamPosTarget = 0x800E3A3C; // type:VECTOR3
-g_CamLookAtTarget = 0x800E3A4C; // type:VECTOR3
+g_CamPosTarget                = 0x800E3A3C; // type:VECTOR3
+g_CamLookAtTarget             = 0x800E3A4C; // type:VECTOR3

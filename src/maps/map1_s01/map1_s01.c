@@ -221,11 +221,26 @@ INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D6FE4);
 void func_800D7050(void) {
 }
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D7058);
+void func_800D7058(void)
+{
+    VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D70EC);
+    func_80086FE8(11, Sfx_Unk1334, &vec); // Lock is jammed.
+}
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D7180);
+void func_800D70EC(void)
+{
+    VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+
+    func_80086FE8(12, Sfx_Unk1344, &vec); // It's locked.
+}
+
+void func_800D7180(void)
+{
+    VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+
+    func_80086FE8(13, Sfx_Unk1342, &vec); // It's unlocked.
+}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
