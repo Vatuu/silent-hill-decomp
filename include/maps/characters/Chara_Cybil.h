@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARAS_CHARACTERS_CYBIL_H
-#define _MAPS_CHARAS_CHARACTERS_CYBIL_H
+#ifndef _MAPS_CHARACTERS_CYBIL_H
+#define _MAPS_CHARACTERS_CYBIL_H
 
 // Two variables used by `Ai_Cybil_Init`.
 extern s32 sharedData_800E2378_0_s01;

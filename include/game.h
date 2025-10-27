@@ -226,7 +226,7 @@ typedef enum _MapMsgIdx
     MapMsgIdx_DoorJammed        = 11,
     MapMsgIdx_DoorLocked        = 12,
     MapMsgIdx_DoorUnlocked      = 13,
-    MapMsgIdx_NowMaking         = 14  // @unused?
+    MapMsgIdx_NowMaking         = 14 // @unused?
 } e_MapMsgIdx;
 
 typedef enum _MapMsgCode

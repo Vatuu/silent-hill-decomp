@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARAS_CHARACTERS_LISA_H
-#define _MAPS_CHARAS_CHARACTERS_LISA_H
+#ifndef _MAPS_CHARACTERS_LISA_H
+#define _MAPS_CHARACTERS_LISA_H
 
 extern s32 sharedData_800D6BB8_3_s04; // Used by `Ai_Lisa_Init`.
 

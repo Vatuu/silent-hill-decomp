@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_CHARA_KAUFMANN_H
-#define _MAPS_CHARACTERS_CHARA_KAUFMANN_H
+#ifndef _MAPS_CHARACTERS_KAUFMANN_H
+#define _MAPS_CHARACTERS_KAUFMANN_H
 
 extern s32 sharedData_800D5CF4_3_s00; // Used by `Ai_Kaufmann_Init`.
 
