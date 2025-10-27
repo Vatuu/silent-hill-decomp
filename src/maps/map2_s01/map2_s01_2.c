@@ -67,6 +67,7 @@ void func_800CEC30(void)
         if (Savegame_EventFlagGet(EventFlag_180))
         {
             Map_MessageWithSfx(38, Sfx_Unk1486, &sfxPos);
+
             if (g_SysWork.sysState_8 == SysState_Gameplay)
             {
                 Savegame_EventFlagSet(EventFlag_180);

@@ -7,10 +7,6 @@ s32 func_800CCA14();
 
 void func_800CCB30(s32 arg0);
 
-void func_800CCE74(void);
-
-void func_800CCF08(void);
-
 void func_800CCF9C(void);
 
 void func_800CD050(void);

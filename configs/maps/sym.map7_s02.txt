@@ -181,6 +181,9 @@ Anim_StartKeyframeIdxGet            = 0x800D9654; // type:func
 sharedFunc_800D923C_0_s00           = 0x800D96F4; // type:func
 sharedFunc_800D929C_0_s00           = 0x800D9754; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800DA1B0; // type:func
+Event_DoorJammed                    = 0x800DB21C; // type:func
+Event_DoorLocked                    = 0x800DB2B0; // type:func
+Event_DoorUnlocked                  = 0x800DB344; // type:func
 
 
 

@@ -48,6 +48,8 @@ sharedFunc_800D929C_0_s00 = 0x800CCA88; // type:func
 Map_RoomIdxGet            = 0x800CCA98; // type:func
 sharedFunc_800CE8B8_0_s02 = 0x800CCB64; // type:func
 sharedFunc_800CE934_0_s02 = 0x800CCBE0; // type:func
+Event_DoorJammed          = 0x800CCE74; // type:func
+Event_DoorLocked          = 0x800CCF08; // type:func
 Map_WorldObjectsInit      = 0x800CD124; // type:func
 Map_WorldObjectsUpdate    = 0x800CD2AC; // type:func
 

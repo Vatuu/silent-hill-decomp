@@ -182,26 +182,11 @@ void func_800D77F8(void) // 0x800D77F8
 
 void func_800D7864(void) {}
 
-void func_800D786C(void) // 0x800D786C
-{
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+#include "maps/shared/Event_DoorJammed.h" // 0x800D786C
 
-    Map_MessageWithSfx(MapMsgIdx_DoorJammed, Sfx_DoorJammed, &sfxPos);
-}
+#include "maps/shared/Event_DoorLocked.h" // 0x800D7900
 
-void func_800D7900(void) // 0x800D7900
-{
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
-
-    Map_MessageWithSfx(MapMsgIdx_DoorLocked, Sfx_DoorLocked, &sfxPos);
-}
-
-void func_800D7994(void) // 0x800D7994
-{
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
-
-    Map_MessageWithSfx(MapMsgIdx_DoorUnlocked, Sfx_DoorUnlocked, &sfxPos);
-}
+#include "maps/shared/Event_DoorUnlocked.h" // 0x800D7994
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
@@ -347,7 +332,7 @@ void func_800D7B2C(void) // 0x800D7B2C
 
         case 11:
             func_800862F8(5, 0, false);
-            MapMsg_DisplayAndHandleSelection(false, 19, 0, 0, 0, false); // "A golden sun..."
+            MapMsg_DisplayAndHandleSelection(false, 19, 0, 0, 0, false); // "A golden sun."
             break;
 
         case 12:
@@ -444,7 +429,7 @@ void func_800D7EB0(void) // 0x800D7EB0
 
         case 11:
             func_800862F8(5, 0, false);
-            MapMsg_DisplayAndHandleSelection(false, 20, 0, 0, 0, false); // "A silver moon..."
+            MapMsg_DisplayAndHandleSelection(false, 20, 0, 0, 0, false); // "A silver moon."
             break;
 
         case 12:

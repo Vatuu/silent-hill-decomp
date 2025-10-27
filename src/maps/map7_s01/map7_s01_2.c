@@ -533,26 +533,11 @@ void func_800D7A60(void) // 0x800D7A60
     }
 }
 
-void func_800D8230(void) // 0x800D8230
-{
-    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
+#include "maps/shared/Event_DoorJammed.h" // 0x800D8230
 
-    Map_MessageWithSfx(MapMsgIdx_DoorJammed, Sfx_DoorJammed, &sfxPos);
-}
+#include "maps/shared/Event_DoorLocked.h" // 0x800D82C4
 
-void func_800D82C4(void) // 0x800D82C4
-{
-    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
-
-    Map_MessageWithSfx(MapMsgIdx_DoorLocked, Sfx_DoorLocked, &sfxPos);
-}
-
-void func_800D8358(void) // 0x800D8358
-{
-    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
-
-    Map_MessageWithSfx(MapMsgIdx_DoorUnlocked, Sfx_DoorUnlocked, &sfxPos);
-}
+#include "maps/shared/Event_DoorUnlocked.h" // 0x800D8358
 
 void func_800D83EC(void) // 0x800D83EC
 {

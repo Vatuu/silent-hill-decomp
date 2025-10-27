@@ -93,19 +93,9 @@ void func_800CCB30(s32 arg0) // 0x800CCB30
 
 void func_800CCE6C(void) {}
 
-void func_800CCE74(void) // 0x800CCE74
-{
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+#include "maps/shared/Event_DoorJammed.h" // 0x800CCE74
 
-    Map_MessageWithSfx(MapMsgIdx_DoorJammed, Sfx_DoorJammed, &sfxPos);
-}
-
-void func_800CCF08(void) // 0x800CCF08
-{
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
-
-    Map_MessageWithSfx(MapMsgIdx_DoorLocked, Sfx_DoorLocked, &sfxPos);
-}
+#include "maps/shared/Event_DoorLocked.h" // 0x800CCF08
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"

@@ -30,12 +30,6 @@ extern u16 			     D_800DCC54[42];
 
 void func_800D77F8(void);
 
-void func_800D786C(void);
-
-void func_800D7900(void);
-
-void func_800D7994(void);
-
 void func_800D7AC4(void);
 
 void func_800D7AF8(void);

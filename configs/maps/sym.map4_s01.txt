@@ -85,6 +85,7 @@ Map_RoomIdxGet                      = 0x800D1AE0; // type:func
 sharedFunc_800CE8B8_0_s02           = 0x800D1BAC; // type:func
 sharedFunc_800CE934_0_s02           = 0x800D1C28; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800D1EBC; // type:func
+Event_DoorJammed                    = 0x800D1F54; // type:func
 
 
 

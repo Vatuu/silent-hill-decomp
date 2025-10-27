@@ -92,12 +92,6 @@ void func_800DA248(void);
 
 void func_800DAA4C(void);
 
-void func_800DB21C(void);
-
-void func_800DB2B0(void);
-
-void func_800DB344(void);
-
 void func_800DB498(void);
 
 void func_800DB52C(void);

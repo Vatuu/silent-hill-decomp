@@ -600,26 +600,11 @@ void func_800DAA4C(void) // 0x800DAA4C
     }
 }
 
-void func_800DB21C(void) // 0x800DB21C
-{
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+#include "maps/shared/Event_DoorJammed.h" // 0x800DB21C
 
-    Map_MessageWithSfx(MapMsgIdx_DoorJammed, Sfx_DoorJammed, &sfxPos);
-}
+#include "maps/shared/Event_DoorLocked.h" // 0x800DB2B0
 
-void func_800DB2B0(void) // 0x800DB2B0
-{
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
-
-    Map_MessageWithSfx(MapMsgIdx_DoorLocked, Sfx_DoorLocked, &sfxPos);
-}
-
-void func_800DB344(void) // 0x800DB344
-{
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
-
-    Map_MessageWithSfx(MapMsgIdx_DoorUnlocked, Sfx_DoorUnlocked, &sfxPos);
-}
+#include "maps/shared/Event_DoorUnlocked.h" // 0x800DB344
 
 void func_800DB3D8(void) // 0x800DB3D8
 {
