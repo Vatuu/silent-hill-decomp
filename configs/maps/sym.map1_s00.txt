@@ -121,7 +121,7 @@ MAP_MESSAGES              = 0x800DD1BC; // type:u32 size:0xA0
 //----------------------------------------------------
 //--- PA: 0x013CE4   VA: 0x800DD25C   subsegment: data
 //----------------------------------------------------
-g_CommonWorldObjectsPoses = 0x800DD71C; // type:WorldObjectPos size:0x64
+g_CommonWorldObjectsPoses = 0x800DD71C; // type:WorldObjectPose size:0x64
 sharedData_800DFB4C_0_s00 = 0x800DD780;
 sharedData_800DFB50_0_s00 = 0x800DD784;
 g_Particle_SpeedX         = 0x800DD788; // type:s32
@@ -157,13 +157,13 @@ sharedData_800E3A20_0_s00 = 0x800E0ED4; // type:s32
 sharedData_800E3A24_0_s00 = 0x800E0ED8; // type:s32
 sharedData_800E3A28_0_s00 = 0x800E0EDC; // type:s32
 sharedData_800E3A2C_0_s00 = 0x800E0EE0; // type:s32
-g_WorldObject0            = 0x800E0EF0; // type:WorldObjectDesc_norot size:0x28
-g_WorldObject1            = 0x800E0F20; // type:WorldObjectDesc_norot size:0xF0
-g_WorldObject2            = 0x800E1010; // type:WorldObjectDesc_norot size:0x28
-g_WorldObject3            = 0x800E1040; // type:WorldObjectDesc_norot size:0x28
-g_WorldObject4            = 0x800E1070; // type:WorldObjectDesc_norot size:0x28
-g_WorldObject5            = 0x800E10A0; // type:WorldObjectDesc_norot size:0x28
-g_WorldObject6            = 0x800E10D0; // type:WorldObjectDesc_norot size:0x50
+g_WorldObject0            = 0x800E0EF0; // type:WorldObjectDescNoRot size:0x28
+g_WorldObject1            = 0x800E0F20; // type:WorldObjectDescNoRot size:0xF0
+g_WorldObject2            = 0x800E1010; // type:WorldObjectDescNoRot size:0x28
+g_WorldObject3            = 0x800E1040; // type:WorldObjectDescNoRot size:0x28
+g_WorldObject4            = 0x800E1070; // type:WorldObjectDescNoRot size:0x28
+g_WorldObject5            = 0x800E10A0; // type:WorldObjectDescNoRot size:0x28
+g_WorldObject6            = 0x800E10D0; // type:WorldObjectDescNoRot size:0x50
 g_WorldObject7            = 0x800E1120; // type:WorldObjectDesc size:0x2E
 g_WorldObject8            = 0x800E1150; // type:WorldObjectDesc size:0x2E
 g_WorldObject9            = 0x800E1190; // type:WorldObjectDesc size:0x2E
