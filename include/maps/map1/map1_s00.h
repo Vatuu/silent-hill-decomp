@@ -20,12 +20,13 @@ extern s_WorldObjectDescNoRot g_WorldObject6[2];
 extern s_WorldObjectDesc      g_WorldObject7;
 extern s_WorldObjectDesc      g_WorldObject8;
 
-extern u8 D_800E1180;
-extern s16 D_800E1182;
-
-extern s_MapPoint2d MAP_POINTS[];
-extern u8 D_800DCC4C;
-extern u16 D_800DCC54[42];
+extern u8 				 D_800E1180;
+extern s16 				 D_800E1182;
+extern s_WorldObjectDesc g_WorldObject9;
+extern s_WorldObject_0   g_CommonWorldObjects[6];
+extern s_MapPoint2d 	 MAP_POINTS[];
+extern u8 				 D_800DCC4C;
+extern u16 			     D_800DCC54[42];
 
 void func_800D77F8(void);
 
