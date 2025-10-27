@@ -102,6 +102,7 @@ MAP_MESSAGES              = 0x800DCF5C; // type:u32 size:0xC0
 //----------------------------------------------------
 //--- PA: 0x013AA4   VA: 0x800DD01C   subsegment: data
 //----------------------------------------------------
+g_Timer0                  = 0x800DD514; // type:s32
 g_CommonWorldObjectsPos   = 0x800DD518; // type:WorldObjectPos size:0x64
 sharedData_800DFB6C_0_s00 = 0x800DD5A4; // type:s32
 sharedData_800DFB70_0_s00 = 0x800DD5A8; // type:s32
@@ -128,8 +129,8 @@ g_WorldObj0               = 0x800DEF40; // type:WorldObjectDesc size:0x2E
 g_WorldObj1               = 0x800DEF70; // type:WorldObjectDesc size:0x2E
 g_WorldObj2               = 0x800DEFA0; // type:WorldObjectDesc size:0x2E
 g_WorldObj3               = 0x800DEFD0; // type:WorldObjectDesc size:0x2E
-D_800DF000                = 0x800DF000; // type:VECTOR3 size:0xC
-D_800DF010                = 0x800DF010; // type:VECTOR3 size:0xC
+g_CamPosTarget            = 0x800DF000; // type:VECTOR3
+g_CamLookAtTarget         = 0x800DF010; // type:VECTOR3
 g_WorldObj4               = 0x800DF020; // type:WorldObject_0 size:0x14
 g_WorldObj5               = 0x800DF040; // type:WorldObject_0 size:0x14
 g_WorldObj6               = 0x800DF060; // type:WorldObject_0 size:0x14
