@@ -3773,7 +3773,13 @@ void func_800867B4(s32 caseParam, s32 idx);
 
 void func_800868DC(s32 idx);
 
-void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* sounds);
+/** @brief Displays a map message with a sound.
+ *
+ * @param mapMsgIdx Index of the message to display.
+ * @param soundIdx Index of the sound to play.
+ * @param sounds Sound indices.
+ */
+void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* soundsIdxs);
 
 /** @brief Sets the camera position target.
  *
@@ -3815,7 +3821,13 @@ void func_80086E50(s32 fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
 
 void func_80086F44(s32 fadeTimestep0, q19_12 fadeTimestep1);
 
-void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos);
+/** @brief Displays a map message with SFX.
+ *
+ * @param mapMsgIdx Index of the message to display.
+ * @param sfx SFX to play.
+ * @param sfxPos SFX position.
+ */
+void Map_MessageWithSfx(s32 mapMsgIdx, s32 sfx, VECTOR3* sfxPos);
 
 void func_8008716C(s32 itemId, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
 

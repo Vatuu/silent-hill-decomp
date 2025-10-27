@@ -184,23 +184,23 @@ void func_800D7864(void) {}
 
 void func_800D786C(void) // 0x800D786C
 {
-    VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    func_80086FE8(11, Sfx_Unk1334, &vec); // "Lock is jammed."
+    Map_MessageWithSfx(11, Sfx_Unk1334, &sfxPos); // "Lock is jammed."
 }
 
 void func_800D7900(void) // 0x800D7900
 {
-    VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    func_80086FE8(12, Sfx_Unk1344, &vec); // "It's locked."
+    Map_MessageWithSfx(12, Sfx_Unk1344, &sfxPos); // "It's locked."
 }
 
 void func_800D7994(void) // 0x800D7994
 {
-    VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    func_80086FE8(13, Sfx_Unk1342, &vec); // "It's unlocked."
+    Map_MessageWithSfx(13, Sfx_Unk1342, &sfxPos); // "It's unlocked."
 }
 
 const char* MAP_MESSAGES[] = {

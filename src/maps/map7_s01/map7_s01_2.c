@@ -535,23 +535,23 @@ void func_800D7A60(void) // 0x800D7A60
 
 void func_800D8230(void) // 0x800D8230
 {
-    VECTOR3 vec = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
+    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
 
-    func_80086FE8(11, Sfx_Unk1334, &vec);
+    Map_MessageWithSfx(11, Sfx_Unk1334, &sfxPos);
 }
 
 void func_800D82C4(void) // 0x800D82C4
 {
-    VECTOR3 vec = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
+    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
 
-    func_80086FE8(12, Sfx_Unk1344, &vec);
+    Map_MessageWithSfx(12, Sfx_Unk1344, &sfxPos);
 }
 
 void func_800D8358(void) // 0x800D8358
 {
-    VECTOR3 vec = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
+    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
 
-    func_80086FE8(13, Sfx_Unk1342, &vec);
+    Map_MessageWithSfx(13, Sfx_Unk1342, &sfxPos);
 }
 
 void func_800D83EC(void) // 0x800D83EC
@@ -610,55 +610,49 @@ void func_800D83EC(void) // 0x800D83EC
 
 void func_800D84AC(void) // 0x800D84AC
 {
-    VECTOR3 vec = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
+    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
 
-    func_80086FE8(81, Sfx_Unk1344, &vec);
+    Map_MessageWithSfx(81, Sfx_Unk1344, &sfxPos);
 }
 
 void func_800D8540(void) // 0x800D8540
 {
-    VECTOR3 vec = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
+    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
 
-    func_80086FE8(83, Sfx_Unk1344, &vec);
+    Map_MessageWithSfx(83, Sfx_Unk1344, &sfxPos);
 }
 
 void func_800D85D4(void) // 0x800D85D4
 {
-    VECTOR3 vec = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
+    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
 
-    func_80086FE8(85, Sfx_Unk1344, &vec);
+    Map_MessageWithSfx(85, Sfx_Unk1344, &sfxPos);
 }
 
 void func_800D8668(void) // 0x800D8668
 {
-    VECTOR3 vec = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
+    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
 
     func_8004EE94(78, 1);
-
-    func_80086FE8(48, Sfx_Unk1335, &vec);
-
+    Map_MessageWithSfx(48, Sfx_Unk1335, &sfxPos);
     Savegame_EventFlagSet(EventFlag_530);
 }
 
 void func_800D8724(void) // 0x800D8724
 {
-    VECTOR3 vec = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
+    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
 
     func_8004EE94(79, 1);
-
-    func_80086FE8(49, Sfx_Unk1335, &vec);
-
+    Map_MessageWithSfx(49, Sfx_Unk1335, &sfxPos);
     Savegame_EventFlagSet(EventFlag_531);
 }
 
 void func_800D87E0(void) // 0x800D87E0
 {
-    VECTOR3 vec = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
+    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
 
     func_8004EE94(80, 1);
-
-    func_80086FE8(50, Sfx_Unk1335, &vec);
-
+    Map_MessageWithSfx(50, Sfx_Unk1335, &sfxPos);
     Savegame_EventFlagSet(EventFlag_532);
 }
 
@@ -689,9 +683,9 @@ void func_800D8958(void) // 0x800D8958
 
 void func_800D8984(void) // 0x800D8984
 {
-    const static VECTOR3 D_800CC528 = { Q12(-179.64f), Q12(-1.0f), Q12(-20.05f) };
+    const static VECTOR3 sfxPos = { Q12(-179.64f), Q12(-1.0f), Q12(-20.05f) };
 
-    func_80086FE8(79, Sfx_Unk1645, &D_800CC528);
+    Map_MessageWithSfx(79, Sfx_Unk1645, &sfxPos);
     func_8004EE94(117, 1);
     Savegame_EventFlagSet(EventFlag_491);
 }

@@ -95,16 +95,16 @@ void func_800CCE6C(void) {}
 
 void func_800CCE74(void) // 0x800CCE74
 {
-    VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    func_80086FE8(11, Sfx_Unk1334, &vec);
+    Map_MessageWithSfx(11, Sfx_Unk1334, &sfxPos);
 }
 
 void func_800CCF08(void) // 0x800CCF08
 {
-    VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    func_80086FE8(12, Sfx_Unk1344, &vec);
+    Map_MessageWithSfx(12, Sfx_Unk1344, &sfxPos);
 }
 
 const char* MAP_MESSAGES[] = {

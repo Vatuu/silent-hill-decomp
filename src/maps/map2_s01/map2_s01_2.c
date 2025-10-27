@@ -53,20 +53,20 @@ void func_800CEB94(void) {}
 
 void func_800CEB9C(void)
 {
-    VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    func_80086FE8(11, Sfx_Unk1334, &vec);
+    Map_MessageWithSfx(11, Sfx_Unk1334, &sfxPos);
 }
 
 void func_800CEC30(void)
 {
-    VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     if (g_MapEventParam->field_5 == 2)
     {
         if (Savegame_EventFlagGet(EventFlag_180))
         {
-            func_80086FE8(38, Sfx_Unk1486, &vec);
+            Map_MessageWithSfx(38, Sfx_Unk1486, &sfxPos);
             if (g_SysWork.sysState_8 == SysState_Gameplay)
             {
                 Savegame_EventFlagSet(EventFlag_180);
@@ -74,12 +74,12 @@ void func_800CEC30(void)
         }
         else
         {
-            func_80086FE8(12, Sfx_Unk1486, &vec);
+            Map_MessageWithSfx(12, Sfx_Unk1486, &sfxPos);
         }
     }
     else
     {
-        func_80086FE8(12, Sfx_Unk1344, &vec);
+        Map_MessageWithSfx(12, Sfx_Unk1344, &sfxPos);
     }
 }
 

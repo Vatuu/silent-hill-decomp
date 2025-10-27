@@ -56,9 +56,9 @@ void func_800D1EB4(void) {}
 
 void func_800D1F54(void) // 0x800D1F54
 {
-    VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    func_80086FE8(11, Sfx_Unk1541, &vec);
+    Map_MessageWithSfx(11, Sfx_Unk1541, &sfxPos);
 }
 
 void func_800D1FE8(void) {}

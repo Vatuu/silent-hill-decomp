@@ -524,7 +524,7 @@ s32 func_8008694C(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 idx)
     return FP_MULTIPLY(arg0, Math_Sin(arg1 + ((arg2 * D_800C4710[idx]) / arg3)), Q12_SHIFT);
 }
 
-void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* sounds) // 0x800869E4
+void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* soundsIdxs) // 0x800869E4
 {
     s32 mapMsgState;
 
@@ -537,7 +537,7 @@ void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* sounds) // 0x800869E
     }
     else if (mapMsgState == MapMsgState_Finish)
     {
-        Sd_EngineCmd(sounds[*soundIdx]);
+        Sd_EngineCmd(soundsIdxs[*soundIdx]);
         *soundIdx += 1;
     }
 }
@@ -772,7 +772,7 @@ void func_80086F44(q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x80086F44
     SysWork_StateStepIncrement();
 }
 
-void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
+void Map_MessageWithSfx(s32 mapMsgIdx, s32 sfx, VECTOR3* sfxPos) // 0x80086FE8
 {
     s32 i;
 
@@ -781,7 +781,8 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
         // Run through NPCs.
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
         {
-            if (g_SysWork.npcs_1A0[i].model_0.charaId_0 >= Chara_Harry && g_SysWork.npcs_1A0[i].model_0.charaId_0 <= Chara_MonsterCybil &&
+            if (g_SysWork.npcs_1A0[i].model_0.charaId_0 >= Chara_Harry &&
+                g_SysWork.npcs_1A0[i].model_0.charaId_0 <= Chara_MonsterCybil &&
                 g_SysWork.npcs_1A0[i].health_B0 > Q12(0.0f))
             {
                 break;
@@ -798,7 +799,7 @@ void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
     {
         case 0:
             g_MapOverlayHeader.freezePlayerControl_C8();
-            func_8005DC1C(sfx, pos, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(sfx, sfxPos, Q8_CLAMPED(0.5f), 0);
 
             g_SysWork.timer_2C = Q12(0.0f);
             g_SysWork.sysStateStep_C[2] = 0;
