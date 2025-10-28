@@ -1629,6 +1629,7 @@ void func_800DFB48(void) // 0x800DFB48
 
 void func_800DFDDC(void)
 {
+    // @note Mirror any changes to `map7_s01::func_800D9C9C` (likely copy-pasted func with some small differences).
     s32       i;
     s32       j;
     s32       temp_a0;
@@ -1701,7 +1702,7 @@ void func_800DFDDC(void)
 
         case 4:
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0 ||
-               g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
+                g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
                 if (!Savegame_EventFlagGet(EventFlag_487) && (D_800EA494.field_0 == 1 || D_800EA494.field_0 == 5 || D_800EA494.field_0 == 6))
                 {
@@ -1721,7 +1722,7 @@ void func_800DFDDC(void)
             break;
 
         case 6:
-            func_800862F8(7, 0x748, false);
+            func_800862F8(7, FILE_TIM_HS_PANEL_TIM, false);
             break;
 
         case 7:
@@ -1758,11 +1759,11 @@ void func_800DFDDC(void)
         case 9:
             func_800862F8(2, 0, false);
 
-            D_800EB68C = D_800EB68C + ((g_Controller0->sticks_24.sticks_0.leftX << 14) / 75);
-            D_800EB68C = CLAMP_RANGE(D_800EB68C, Q12(-80.0f), Q12(80.0f));
+            D_800EB68C += ((g_Controller0->sticks_24.sticks_0.leftX << 14) / 75);
+            D_800EB68C  = CLAMP_RANGE(D_800EB68C, Q12(-80.0f), Q12(80.0f));
 
-            D_800EB690 = D_800EB690 + ((g_Controller0->sticks_24.sticks_0.leftY << 14) / 75);
-            D_800EB690 = CLAMP_RANGE(D_800EB690, Q12(-80.0f), Q12(80.0f));
+            D_800EB690 += ((g_Controller0->sticks_24.sticks_0.leftY << 14) / 75);
+            D_800EB690  = CLAMP_RANGE(D_800EB690, Q12(-80.0f), Q12(80.0f));
 
             Game_TimerUpdate();
 

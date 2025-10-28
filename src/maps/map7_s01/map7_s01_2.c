@@ -1227,6 +1227,7 @@ const char D_800CC65C[] = "STONE3_H";
 
 void func_800D9C9C(void)
 {
+    // @note Mirror any changes to `map7_s02::func_800DFDDC` (likely copy-pasted func with some small differences).
     s32       i;
     s32       j;
     s32       temp_a0;
