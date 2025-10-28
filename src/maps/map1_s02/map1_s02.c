@@ -342,11 +342,61 @@ INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DAA2C);
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DAD2C);
 
-INCLUDE_RODATA("asm/maps/map1_s02/nonmatchings/map1_s02", D_800CB854);
-
-INCLUDE_RODATA("asm/maps/map1_s02/nonmatchings/map1_s02", D_800CB860);
-
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DB058);
+void func_800DB058(void)
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            sharedFunc_800D2E60_0_s00();
+            g_SysWork.field_30 = 20;
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(56.5f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(19.3f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = Q12(-0.25f);
+            Camera_PositionSet(NULL, Q12(60.59f), Q12(-0.83f), Q12(18.34f), 0, 0, 0, 0, true);
+            Camera_LookAtSet(NULL, Q12(56.7698f), Q12(-1.45f), Q12(19.34f), 0, 0, 0, 0, true);
+            func_8003D03C();
+            sharedFunc_800D2EB4_0_s00();
+            SysWork_StateStepIncrement();
+            /* fallthrough */
+        case 1:
+            func_8008616C(1, false, 0, 0, false);
+            break;
+        case 2:
+            func_80085E6C(Q12(0.2f), false);
+            break;
+        case 3:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 94);
+            break;
+        case 4:
+            func_8005DC1C(Sfx_Unk1454, &QV3(55.85f, -1.1f, 19.3f), 0x80, 0);
+            SysWork_StateStepIncrement();
+            /* fallthrough */
+        case 5:
+            MapMsg_DisplayAndHandleSelection(false, 30, 0, 0, 0, false); // Slid the Picture card into the slot.
+            break;
+        case 6:
+            func_8005DC1C(Sfx_Unk1343, &QV3(56.0f, -1.2f, 19.3f), 0x80, 0);
+            SysWork_StateStepIncrement();
+            /* fallthrough */
+        case 7:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 95);
+            break;
+        case 8:
+            func_8008616C(2, true, 0, 0, false);
+            break;
+        default:
+            sharedFunc_800D2244_0_s00(true);
+            SysWork_StateSetNext(SysState_Gameplay);
+            func_8008616C(0, false, 2, 0, false);
+            func_8008616C(0, false, 0, 0, false);
+            vcReturnPreAutoCamWork(true);
+            g_SavegamePtr->mapMarkingFlags_1D4[10] |= 0x800000;
+            func_8003D01C();
+            sharedFunc_800D2EF4_0_s00();
+            break;
+    }
+}
 
 void func_800DB310(void) // 0x800DB310
 {
