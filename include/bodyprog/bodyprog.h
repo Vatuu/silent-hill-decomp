@@ -195,6 +195,13 @@ typedef enum _Sfx
     Sfx_Unk1432 = 1432,
 
     Sfx_Unk1435 = 1435,
+    Sfx_Unk1436 = 1436,
+    Sfx_Unk1437 = 1437,
+
+    Sfx_Unk1446 = 1446,
+
+    Sfx_Unk1448 = 1448,
+    Sfx_Unk1449 = 1449,
 
     Sfx_Unk1456 = 1456,
 

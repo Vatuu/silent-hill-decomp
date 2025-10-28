@@ -9,8 +9,6 @@
 // Undefined functions, unknown signature.
 #define func_800D23EC (void(*)(void))0x800D23EC
 #define func_800D8A00 (void(*)(void))0x800D8A00
-
-#define func_800D9748 (void(*)(void))0x800D9748
 #define func_800DB94C (void(*)(void))0x800DB94C
 
 extern u8 D_800DF754[];
@@ -38,7 +36,7 @@ void (*g_MapEventFuncs[])() =
 {
     func_800D9610,
     NULL,
-    func_800D9748,
+    MapEvent_OpeningCutscene,
     func_800D9D98,
     func_800DA028,
     func_800DA254,
