@@ -340,7 +340,89 @@ void func_800DAA00(void) // 0x800DAA00
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DAA2C);
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DAD2C);
+extern s16 D_800E1FD0;
+
+void func_800DAD2C(void)
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_8008616C(0, true, 0, 0, false);
+            func_800862F8(0, FILE_TIM_RECEPDR1_TIM, false);
+            D_800E1FD0 = 0;
+            SysWork_StateStepIncrement();
+        case 1:
+            func_800862F8(1, 0, false);
+            break;
+        case 2:
+            func_8008616C(1, true, 0, 0, false);
+            break;
+        case 3:
+            func_800862F8(3, 0, false);
+            func_800862F8(4, FILE_TIM_RECEPDR2_TIM, false);
+            SysWork_StateStepIncrement();
+            /* fallthrough */
+        case 4:
+            func_800862F8(2, 0, false);
+            func_8008616C(2, false, 0, 0, false);
+            break;
+        case 5:
+            func_800862F8(2, 0, false);
+            if (Savegame_EventFlagGet(EventFlag_M1S02_SeenDoorWithHorizontalSlot))
+            {
+                MapMsg_DisplayAndHandleSelection(false, 25, false, false, 0, false); // If I push it, it moves a bit.
+            }
+            else
+            {
+                MapMsg_DisplayAndHandleSelection(false, 23, false, false, 0, false); //What? Is this a door?
+            }
+            break;
+        case 6:
+            func_800862F8(2, 0, false);
+            func_800862F8(1, 0, false);
+            break;
+        case 7:
+            if (Savegame_EventFlagGet(EventFlag_M1S02_SeenDoorWithHorizontalSlot))
+            {
+                SysWork_StateStepIncrement();
+            }
+            else
+            {
+                MapMsg_DisplayAndHandleSelection(false, 26, false, false, 0, false); // What's this? 
+            }
+            /* fallthrough */
+        case 8:
+            Gfx_BackgroundSpritesTransition(&g_ItemInspectionImg, &D_800A9A04, D_800E1FD0);
+            D_800E1FD0 += Q12(0.0313f);
+            if (D_800E1FD0 > Q12(1.0f))
+            {
+                if (g_SysWork.sysStateStep_C[0] == 8)
+                {
+                    SysWork_NextStateStepSet(9);
+                    break;
+                }
+                D_800E1FD0 = Q12(1.0f);
+                break;
+            }
+            break;
+        case 9:
+            func_800862F8(5, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 27, false, false, 0, false); // In the center of the door is a horizontal slot.
+            break;
+        case 10:
+            func_800862F8(5, 0, false);
+            func_8008616C(2, 1, 0, 0, false);
+            break;
+        default:
+            func_800862F8(6, 0, false);
+            func_8008616C(0, false, 0, 0, false);
+            Savegame_EventFlagSet(EventFlag_M1S02_SeenDoorWithHorizontalSlot);
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+        }
+}
 
 void func_800DB058(void)
 {

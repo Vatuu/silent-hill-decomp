@@ -89,6 +89,7 @@ typedef enum _EventFlag
     EventFlag_M7S01_HealthDrink1 = 86,
 
     EventFlag_M1S02_PickupPictureCard = 93,
+    EventFlag_M1S02_SeenDoorWithHorizontalSlot = 94,
 
     EventFlag_M1S02_PickupShotgun = 95,
 
