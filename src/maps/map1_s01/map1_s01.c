@@ -477,7 +477,7 @@ void func_800D87C0(void) // 0x800D87C0
             g_SysWork.npcs_1A0[0].model_0.state_2++;
             g_SavegamePtr->eventFlags_168[2] |= 4096;
 
-            func_80085EB8(0U, &g_SysWork.player_4C.chara_0, 0x7A, false);
+            func_80085EB8(0u, &g_SysWork.player_4C.chara_0, 0x7A, false);
             func_800892DC(0x12, 0x60);
             func_8005DC1C(Sfx_Unk1437, &QVECTOR3(-59.0f, -0.5f, 18.6f), 0x80, 0);
             func_8005DC1C(Sfx_Unk1436, &QVECTOR3(-58.8f, -1.2f, 18.8f), 0x80, 0);
