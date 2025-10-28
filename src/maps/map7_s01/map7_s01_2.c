@@ -1205,13 +1205,358 @@ void func_800D9A08(void) // 0x800D9A08
     }
 }
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", func_800D9C9C);
+// TODO: Move to funcs once other usages are decomped.
+const char D_800CC650[] = "STONE2_H";
+const char D_800CC65C[] = "STONE3_H";
 
-INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01_2", D_800CC65C);
+void func_800D9C9C(void)
+{
+    s32       i;
+    s32       j;
+    s32       temp_a0;
+    s32       temp_a3;
+    s32       temp_t0;
+    s32       temp_v0_2;
+    s32       temp_v0_3;
+    s32       temp_v1;
+    s32       var_v0_3;
+    s32       var_v0_4;
+    s32       var_v0;
+    SPRT*     sprt;
+    DR_TPAGE* tPage;
 
-INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01_2", jtbl_800CC668);
+    if (D_800E156E != 0)
+    {
+        if ((g_SysWork.sysStateStep_C[0] >= 8 && g_SysWork.sysStateStep_C[0] <= 10) || g_SysWork.sysStateStep_C[0] == 15)
+        {
+            sprt = (SPRT*)GsOUT_PACKET_P;
+            setCodeWord(sprt, PRIM_RECT | RECT_TEXTURE, PACKED_COLOR(128, 128, 128, 0));
+            setXY0Fast(sprt, (((D_800E156E - 1) % 3) * 35) - 42, (((D_800E156E - 1) / 3) * 35) - 32);
+            setUV0(sprt, 64, 16);
+            setWH(sprt, 14, 14);
+            sprt->clut = 0x38E; // TODO: Is this calculated from something?
 
-INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01_2", jtbl_800CC6A8);
+            addPrimFast(&g_OrderingTable0[g_ActiveBufferIdx].org[1], sprt, 4);
+
+            sprt++;
+
+            tPage = (DR_TPAGE*)sprt;
+            setDrawTPage(tPage, 0, 0, 135);
+            AddPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[1], tPage);
+
+            tPage++;
+
+            GsOUT_PACKET_P = (PACKET*)tPage;
+        }
+    }
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            D_800E156E         = 0;
+            D_800E1690.field_0 = 0;
+
+            while (true)
+            {
+                if (Savegame_EventFlagGet(EventFlag_500 + D_800E1690.field_0))
+                {
+                    break;
+                }
+                D_800E1690.field_0++;
+            }
+
+            func_800862F8(0, D_800E1560[D_800E1690.field_0], false);
+            SysWork_StateStepIncrement();
+
+        case 1:
+            func_8008616C(2, true, 0, Q12(0.0f), false);
+
+        case 2:
+            func_800862F8(1, 0, false);
+            break;
+
+        case 3:
+            func_8008616C(2, false, 0, Q12(0.0f), false);
+            func_800862F8(2, 0, false);
+            break;
+
+        case 4:
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
+            {
+                if (!Savegame_EventFlagGet(EventFlag_487) && (D_800E1690.field_0 == 1 || D_800E1690.field_0 == 5 || D_800E1690.field_0 == 6))
+                {
+                    SysWork_NextStateStepSet(5);
+                }
+                else
+                {
+                    SysWork_NextStateStepSet(15);
+                }
+            }
+            else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
+            {
+                SysWork_NextStateStepSet(15);
+            }
+
+            func_800862F8(2, 0, false);
+            break;
+
+        case 6:
+            Fs_QueueStartReadTim(FILE_TIM_HS_PANEL_TIM, (void*)0x801DE600, &g_ItemInspectionImg);
+            Fs_QueueWaitForEmpty();
+            SysWork_StateStepIncrement();
+
+        case 7:
+            if (D_800E1690.field_0 == 1)
+            {
+                var_v0 = EventFlag_507;
+            }
+            else if (D_800E1690.field_0 == 5)
+            {
+                var_v0 = EventFlag_511;
+            }
+            else
+            {
+                var_v0 = EventFlag_515;
+            }
+
+            for (i = 0; i < 4; i++)
+            {
+                if (Savegame_EventFlagGet(var_v0 + i))
+                {
+                    D_800E156E += 1 << i;
+                }
+            }
+
+            D_800E2CA8 = 0;
+            D_800E2CAC = 0;
+            SysWork_StateStepIncrement();
+
+        case 8:
+            func_800862F8(2, 0, false);
+            func_8008616C(2, false, 0, Q12(0.0f), false);
+            break;
+
+        case 9:
+            func_800862F8(2, 0, false);
+
+            D_800E2CA8 = D_800E2CA8 + ((g_Controller0->sticks_24.sticks_0.leftX << 14) / 75);
+            D_800E2CA8 = CLAMP_RANGE(D_800E2CA8, Q12(-80.0f), Q12(80.0f));
+
+            D_800E2CAC = D_800E2CAC + ((g_Controller0->sticks_24.sticks_0.leftY << 14) / 75);
+            D_800E2CAC = CLAMP_RANGE(D_800E2CAC, Q12(-80.0f), Q12(80.0f));
+
+            Game_TimerUpdate();
+
+            // TODO: Should `func_800881B8` first args be `s16`?
+            func_800881B8((s16)(FP_FROM(D_800E2CA8, 12) + 8), (s16)FP_FROM(D_800E2CAC, 12) + 8, 8, 8, 0, 0x40, 0x20, 0x20, 0x80, 0xC0, 0, 0xC);
+
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
+            {
+                SysWork_NextStateStepSet(15);
+                break;
+            }
+
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
+            {
+                for (i = 0; i < 3; i++)
+                {
+                    for (j = 0; j < 3; j++)
+                    {
+                        // TODO: Not sure what's with these multiplies/subtractions, something to do with menu selections?
+                        temp_t0  = j * 35;
+                        var_v0_3 = temp_t0 - 46; // Only matches as separate var, TODO: add another for `- 24`?
+                        temp_a3  = FP_FROM(D_800E2CA8, 12);
+                        if (temp_a3 < var_v0_3 || temp_a3 > (temp_t0 - 24))
+                        {
+                            continue;
+                        }
+
+                        temp_a0 = i * 35;
+                        var_v0_4  = temp_a0 - 37;
+                        temp_v1 = FP_FROM(D_800E2CAC, 12);
+                        if (temp_v1 < var_v0_4 || temp_v1 > (temp_a0 - 15))
+                        {
+                            continue;
+                        }
+
+                        temp_v0_2 = temp_a3 + 35;
+                        temp_v0_2 = temp_t0 - temp_v0_2;
+
+                        temp_v0_3 = temp_v1 + 26;
+                        temp_v0_3 = temp_a0 - temp_v0_3;
+
+                        if (SQUARE(temp_v0_2) + SQUARE(temp_v0_3) < 122)
+                        {
+                            D_800E156E = j + (i * 3) + 1;
+                            Sd_EngineCmd(Sfx_Unk1644);
+
+                            // @hack Maybe not meant to reuse `temp_a0_2`, but that helps it to match.
+                            if (D_800E1690.field_0 == 1)
+                            {
+                                temp_a0 = EventFlag_507;
+                            }
+                            else if (D_800E1690.field_0 == 5)
+                            {
+                                temp_a0 = EventFlag_511;
+                            }
+                            else
+                            {
+                                temp_a0 = EventFlag_515;
+                            }
+
+                            // @bug This is overwriting `i` from the outer loop?
+                            for (i = 0; i < 4; i++)
+                            {
+                                if ((D_800E156E >> i) & 1)
+                                {
+                                    Savegame_EventFlagSet(temp_a0 + i);
+                                }
+                                else
+                                {
+                                    Savegame_EventFlagClear(temp_a0 + i);
+                                }
+                            }
+
+                            for (i = 0, j = 0; i < 12; i++)
+                            {
+                                if (Savegame_EventFlagGet(EventFlag_507 + i))
+                                {
+                                    j += 1 << i;
+                                }
+                            }
+
+                            if (D_800E155C == j)
+                            {
+                                SysWork_NextStateStepSet(10);
+                            }
+                        }
+                    }
+                }
+            }
+            break;
+
+        case 11:
+            g_SysWork.field_30 = 20;
+            D_800E168E         = 0;
+            Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, 2);
+            func_8008D438();
+            Camera_PositionSet(NULL, Q12(-138.15f), Q12(-1.71f), Q12(-138.77f), 0, 0, 0, 0, true);
+            Camera_LookAtSet(NULL, Q12(-140.56f), Q12(-1.03f), Q12(-141.88f), 0, 0, 0, 0, true);
+            WorldObject_ModelNameSet(&D_800E2CB8.object_0, D_800CC650);
+            SysWork_StateStepIncrement();
+
+        case 12:
+            func_8008616C(2, false, 0, Q12(0.0f), false);
+            break;
+
+        case 13:
+            switch (g_SysWork.sysStateStep_C[1])
+            {
+                case 0:
+                    func_8005DC1C(Sfx_Unk1647, &D_800E2CD4, 128, 0);
+                    g_SysWork.timer_2C          = 0;
+                    g_SysWork.sysStateStep_C[2] = 0;
+                    g_SysWork.sysStateStep_C[1]++;
+
+                case 1:
+                    g_SysWork.field_28 += g_DeltaTime0;
+                    if (g_SysWork.field_28 > Q12(2.0f))
+                    {
+                        g_SysWork.field_28 = Q12(2.0f);
+                        WorldObject_ModelNameSet(&D_800E2CB8.object_0, D_800CC65C);
+                        g_SysWork.timer_2C          = 0;
+                        g_SysWork.sysStateStep_C[2] = 0;
+                        g_SysWork.sysStateStep_C[1]++;
+                        func_8004690C(Sfx_Unk1647);
+                    }
+                    D_800E2CB8.position_1C.position_0.vz = ((g_SysWork.field_28 * Q12(0.1f)) / Q12(2.0f)) - Q12(140.6f);
+                    break;
+
+                case 2:
+                    D_800E168E += g_DeltaTime2 >> 1;
+                    if (D_800E2CB8.position_1C.position_0.vy < Q12(-1.05f))
+                    {
+                        D_800E2CB8.position_1C.position_0.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800E168E, 12);
+                        if (D_800E2CB8.position_1C.position_0.vy > Q12(-1.05f))
+                        {
+                            D_800E2CB8.position_1C.position_0.vy = Q12(-1.05f);
+
+                            g_SysWork.timer_2C          = 0;
+                            g_SysWork.sysStateStep_C[2] = 0;
+                            g_SysWork.field_28          = 0;
+                            D_800E168E                  = 0;
+                            g_SysWork.sysStateStep_C[1]++;
+
+                            func_8005DC1C(Sfx_Unk1648, &D_800E2CB8.position_1C.position_0, 128, 0);
+                        }
+                    }
+                    break;
+
+                case 3:
+                    D_800E2CB8.position_1C.rotation_C.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.0694f), 12);
+                    D_800E2CB8.position_1C.position_0.vy  = FP_MULTIPLY(Math_Cos(D_800E2CB8.position_1C.rotation_C.vz), Q12(0.15f), 0xC) - (Q12(1.2f) - 1); // TODO: Why `- 1`?
+                    D_800E2CB8.position_1C.position_0.vz  = FP_MULTIPLY(Math_Sin(D_800E2CB8.position_1C.rotation_C.vz), -Q12(0.15f), 0xC) - Q12(140.5f);
+                    g_SysWork.field_28                   += g_DeltaTime0;
+                    if (g_SysWork.field_28 > Q12(0.5f))
+                    {
+                        g_SysWork.timer_2C          = 0;
+                        g_SysWork.sysStateStep_C[2] = 0;
+                        g_SysWork.field_28          = 0;
+                        g_SysWork.sysStateStep_C[1]++;
+                    }
+                    break;
+
+                case 4:
+                    D_800E168E                           += g_DeltaTime2;
+                    D_800E2CB8.position_1C.rotation_C.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.3333f), 12);
+                    D_800E2CB8.position_1C.position_0.vy += FP_MULTIPLY_PRECISE(D_800E168E, g_DeltaTime0, 12);
+                    D_800E2CB8.position_1C.position_0.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.3f), 12);
+                    if (D_800E2CB8.position_1C.position_0.vy > 0)
+                    {
+                        g_SysWork.timer_2C          = 0;
+                        g_SysWork.sysStateStep_C[2] = 0;
+                        g_SysWork.sysStateStep_C[1]++;
+                    }
+                    break;
+
+                case 5:
+                    D_800E2CB8.position_1C.position_0.vx = Q12(-139.5f);
+                    D_800E2CB8.position_1C.position_0.vy = Q12(-0.05f);
+                    D_800E2CB8.position_1C.position_0.vz = Q12(-140.0f);
+                    D_800E2CB8.position_1C.rotation_C.vz = Q12(-0.25f);
+                    func_8005DC1C(Sfx_Unk1649, &D_800E2CB8.position_1C.position_0, 128, 0);
+                    SysWork_StateStepIncrement();
+                    break;
+            }
+            break;
+
+        case 14:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            vcReturnPreAutoCamWork(true);
+            func_8008D448();
+            Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, 2);
+            Savegame_EventFlagClear(EventFlag_500 + D_800E1690.field_0);
+            Savegame_EventFlagSet(EventFlag_487);
+            func_8008616C(0, false, 2, Q12(0.0f), false);
+            break;
+
+        case 5:
+        case 10:
+        case 15:
+            func_800862F8(2, 0, false);
+            func_8008616C(2, true, 0, Q12(0.0f), false);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            func_8008616C(0, false, 0, Q12(0.0f), false);
+            Savegame_EventFlagClear(EventFlag_500 + D_800E1690.field_0);
+            break;
+    }
+}
 
 void func_800DAB64(void) // 0x800DAB64
 {
