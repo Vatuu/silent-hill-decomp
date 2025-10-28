@@ -10,6 +10,11 @@
 #define KEYFRAME_PlayerState_Unk146 954
 #define KEYFRAME_PlayerState_Unk147 988
 
+#define MAP_ROOM_MIN_X Q12(-160.0f)
+#define MAP_ROOM_MAX_X Q12(160.0f)
+#define MAP_ROOM_MIN_Z Q12(-160.0f)
+#define MAP_ROOM_MAX_Z Q12(160.0f)
+
 s32 func_800CE398(s32 arg0);
 
 void func_800D1210(s32 arg0);

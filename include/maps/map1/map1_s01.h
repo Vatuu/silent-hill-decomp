@@ -10,6 +10,11 @@
 #define KEYFRAME_PlayerState_Unk59 873
 #define KEYFRAME_PlayerState_Unk60 888
 
+#define MAP_ROOM_MIN_X Q12(-160.0f)
+#define MAP_ROOM_MAX_X Q12(160.0f)
+#define MAP_ROOM_MIN_Z Q12(-80.0f)
+#define MAP_ROOM_MAX_Z Q12(200.0f)
+
 extern s_AnimInfo CAT_ANIM_INFOS[];
 
 extern SVECTOR3 D_800CB7D4; // Empty

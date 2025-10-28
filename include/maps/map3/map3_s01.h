@@ -7,6 +7,11 @@
 #define KEYFRAME_PlayerState_Unk59 957
 #define KEYFRAME_PlayerState_Unk60 972
 
+#define MAP_ROOM_MIN_X Q12(-40.0f)
+#define MAP_ROOM_MAX_X Q12(160.0f)
+#define MAP_ROOM_MIN_Z Q12(-80.0f)
+#define MAP_ROOM_MAX_Z Q12(160.0f)
+
 extern VECTOR3 D_800CB170;
 
 void func_800D1178(s32 arg0);

@@ -37,7 +37,7 @@
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800CFDD0
 
-INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02_2", func_800CFDE0);
+#include "maps/shared/Map_RoomIdxGet.h" // 0x800CFDE0
 
 void func_800CFE78(s32 arg0) // 0x800CFE78
 {

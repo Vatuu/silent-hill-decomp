@@ -7,6 +7,11 @@
 #define HAS_PlayerState_Unk72
 #define HAS_PlayerState_Unk115
 
+#define MAP_ROOM_MIN_X Q12(-40.0f)
+#define MAP_ROOM_MAX_X Q12(160.0f)
+#define MAP_ROOM_MIN_Z Q12(-80.0f)
+#define MAP_ROOM_MAX_Z Q12(160.0f)
+
 void func_800CCE88();
 
 s32 func_800CEF88();

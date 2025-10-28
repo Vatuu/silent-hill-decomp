@@ -176,7 +176,7 @@ INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", sharedFunc_800D99D0_1_s02
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D9E0C
 
-#include "maps/shared/sharedFunc_800D7758_1_s00.h" // 0x800D9E1C
+#include "maps/shared/Map_RoomIdxGet.h" // 0x800D9E1C
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800D9EBC);
 

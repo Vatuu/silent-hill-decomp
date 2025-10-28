@@ -6,6 +6,11 @@
 #define HAS_PlayerState_Unk87
 #define HAS_PlayerState_Unk88
 
+#define MAP_ROOM_MIN_X Q12(-160.0f)
+#define MAP_ROOM_MAX_X Q12(160.0f)
+#define MAP_ROOM_MIN_Z Q12(-80.0f)
+#define MAP_ROOM_MAX_Z Q12(200.0f)
+
 extern s32 D_800DD718;
 
 extern s_WorldObjectPos g_CommonWorldObjectsPos[5]; // 0x800DD71C

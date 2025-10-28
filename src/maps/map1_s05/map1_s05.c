@@ -252,7 +252,7 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D4594);
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D489C
 
-#include "maps/shared/sharedFunc_800D7758_1_s00.h" // 0x800D48AC
+#include "maps/shared/Map_RoomIdxGet.h" // 0x800D48AC
 
 void func_800D494C(void) // 0x800D494C
 {

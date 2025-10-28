@@ -1,6 +1,11 @@
 #ifndef _MAPS_MAP1_S04_H
 #define _MAPS_MAP1_S04_H
 
+#define MAP_ROOM_MIN_X Q12(-160.0f)
+#define MAP_ROOM_MAX_X Q12(160.0f)
+#define MAP_ROOM_MIN_Z Q12(-80.0f)
+#define MAP_ROOM_MAX_Z Q12(200.0f)
+
 extern u16 D_800CD038[][0x28];
 
 extern s32 D_800CD768;

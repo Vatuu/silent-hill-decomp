@@ -214,7 +214,7 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D6F34
 
-#include "maps/shared/sharedFunc_800D7758_1_s00.h" // 0x800D6F44
+#include "maps/shared/Map_RoomIdxGet.h" // 0x800D6F44
 
 void func_800D6FE4(void) // NOTE: The same function in map1_s00: func_800D77F8
 {

@@ -18,6 +18,11 @@
 #define KEYFRAME_PlayerState_Unk60  816
 #define KEYFRAME_PlayerState_Unk153 889
 
+#define MAP_ROOM_MIN_X Q12(-200.0f)
+#define MAP_ROOM_MAX_X Q12(200.0f)
+#define MAP_ROOM_MIN_Z Q12(0.0f)
+#define MAP_ROOM_MAX_Z Q12(120.0f)
+
 void func_800D45B4(s32 arg0);
 
 void func_800D4AB8(void);

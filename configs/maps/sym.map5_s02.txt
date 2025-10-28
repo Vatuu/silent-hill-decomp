@@ -106,6 +106,7 @@ sharedFunc_800D9188_0_s00   = 0x800D43D8; // type:func
 Anim_StartKeyframeIdxGet    = 0x800D44A0; // type:func
 sharedFunc_800D923C_0_s00   = 0x800D44AC; // type:func
 sharedFunc_800D929C_0_s00   = 0x800D450C; // type:func
+Map_RoomIdxGet              = 0x800D451C; // type:func
 sharedFunc_800CE934_0_s02   = 0x800D4664; // type:func
 sharedFunc_800DA8E8_0_s01   = 0x800D48F8; // type:func
 
@@ -127,6 +128,7 @@ KAUFMANN_ANIM_INFOS         = 0x800D8E40; // type:AnimInfo
 sharedData_800DF1F4_0_s00   = 0x800D9120; // type:s32
 sharedData_800DF1F8_0_s00   = 0x800D9124; // type:s16
 sharedData_800DF1FA_0_s00   = 0x800D9126; // type:s16
+MAP_ROOM_IDXS               = 0x800D9128; // type:u8
 sharedData_800CFB14_0_s02   = 0x800D9148; // type:u8 size:8
 sharedData_800CFB1C_0_s02   = 0x800D9150; // type:u8 size:8
 sharedData_800CFB24_0_s02   = 0x800D9158; // type:u8 size:8
