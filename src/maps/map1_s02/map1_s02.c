@@ -500,6 +500,29 @@ INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DD494);
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DDA84);
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DEC88);
+void func_800DEC88(void)
+{
+    if (g_SavegamePtr->mapMarkingFlags_1D4[8] < 0)
+    {
+        if (g_SavegamePtr->gameDifficulty_260 == 1)
+        {
+            func_80089034(Chara_GreyChild, 12, Q12(134.1f), Q12(21.3f));
+        }
+        else
+        {
+            func_80088FF4(Chara_GreyChild, 12, 0);
+        }
+    }
+
+    if (Savegame_EventFlagGet(EventFlag_98))
+    {
+        func_80088FF4(Chara_Creaper, 7, 12);
+        func_80088FF4(Chara_Creaper, 8, 12);
+        if (g_SavegamePtr->gameDifficulty_260 == 1)
+        {
+            func_80088FF4(Chara_Creaper, 9, 12);
+        }
+    }
+}
 
 INCLUDE_RODATA("asm/maps/map1_s02/nonmatchings/map1_s02", D_800CBA44);
