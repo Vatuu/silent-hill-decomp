@@ -22,6 +22,7 @@ extern VECTOR3 D_800CB7DC;
 extern VECTOR3 D_800CB7E8;
 extern u8 D_800DC9FC;
 extern u16 D_800DCA04[42];
+extern s32 D_800DD4FC;
 extern s32 D_800DD57C;
 extern s_WorldObjectPos g_CommonWorldObjectsPos[5]; // 0x800DD518
 extern s_WorldObjectDesc g_WorldObj0;
@@ -55,4 +56,8 @@ void func_800D857C(void);
 void func_800D8794(void);
 
 void func_800D9EC4(void);
+
+void func_800D7F18(bool);
+
+void func_800D7864(void);
 #endif
