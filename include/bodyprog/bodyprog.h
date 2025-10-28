@@ -194,6 +194,7 @@ typedef enum _Sfx
     Sfx_Unk1430 = 1430,
     Sfx_Unk1431 = 1431,
     Sfx_Unk1432 = 1432,
+    Sfx_Unk1433 = 1433,
 
     Sfx_Unk1435 = 1435,
     Sfx_Unk1436 = 1436,
@@ -1739,10 +1740,20 @@ typedef struct
 
 typedef struct
 {
-    s8  unk_0[14];
+    u8  field_0;
+    u8  field_1;
+    u8  field_2;
+    u8  field_3;
+    s16 field_4;
+    s16 field_6;
+    s16 field_8;
+    s16 field_A;
+    s16 field_C;
     s16 field_E;
     s16 field_10;
-    s8  unk_12[8];
+    s16 field_12;
+    s32 field_14;
+    s32 field_18;
     s32 field_1C;
 } s_MapOverlayHeader_7C;
 

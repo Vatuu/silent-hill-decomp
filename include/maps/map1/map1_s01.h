@@ -39,7 +39,8 @@ extern s_WorldObjectDesc g_WorldObj7;
 extern s_WorldObjectDesc g_WorldObj8;
 extern s_WorldObjectDesc g_WorldObj9;
 extern s_WorldObject_0   g_CommonWorldObjects[6]; // 800DF120
-
+extern s_MapHdr_field_4C D_800DD5B0[300];
+extern s_MapOverlayHeader_7C D_800DEE50;
 
 void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
@@ -62,4 +63,6 @@ void func_800D7F18(bool);
 void func_800D7864(void);
 
 void func_800D76F4(void);
+
+void func_800CB7F4(void);
 #endif
