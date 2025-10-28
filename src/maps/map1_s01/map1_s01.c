@@ -216,7 +216,25 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
 
 #include "maps/shared/sharedFunc_800D7758_1_s00.h" // 0x800D6F44
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D6FE4);
+void func_800D6FE4(void) // NOTE: The same function in map1_s00: func_800D77F8
+{
+    u16 flags;
+
+    if (g_SavegamePtr->mapRoomIdx_A5 == 23)
+    {
+        flags = (1<<5);
+        if (Savegame_EventFlagGet(EventFlag_71) && Savegame_EventFlagGet(EventFlag_72))
+        {
+            flags = 0x1FE;
+        }
+    }
+    else
+    {
+        flags = D_800DCA04[g_SavegamePtr->mapRoomIdx_A5];
+    }
+    func_80035F4C(flags, Q12(0.1f), &D_800DC9FC);
+
+}
 
 void func_800D7050(void) {
 }

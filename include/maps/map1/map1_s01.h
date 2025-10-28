@@ -15,7 +15,8 @@ extern s_AnimInfo CAT_ANIM_INFOS[];
 extern SVECTOR3 D_800CB7D4; // Empty
 extern VECTOR3 D_800CB7DC;
 extern VECTOR3 D_800CB7E8;
-
+extern u8 D_800DC9FC;
+extern u16 D_800DCA04[42];
 extern s32 D_800DD57C;
 extern s_WorldObjectPos g_CommonWorldObjectsPos[5]; // 0x800DD518
 extern s_WorldObjectDesc g_WorldObj0;
@@ -32,6 +33,7 @@ extern s_WorldObjectDesc g_WorldObj7;
 extern s_WorldObjectDesc g_WorldObj8;
 extern s_WorldObjectDesc g_WorldObj9;
 extern s_WorldObject_0   g_CommonWorldObjects[6]; // 800DF120
+
 
 void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
