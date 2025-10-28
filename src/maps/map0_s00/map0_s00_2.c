@@ -130,49 +130,56 @@ void func_800D9610(void) // 0x800D9610
 }
 
 extern s32 g_Timer0;
-extern VECTOR3 g_CamPosTarget;
-extern VECTOR3 g_CamLookAtTarget;
+extern VECTOR3 g_CameraPositionTarget;
+extern VECTOR3 g_CameraLookAtTarget;
 
-void MapEvent_OpeningCutscene(void)
+void MapEvent_OpeningCutscene(void) // 0x0x800D9748
 {
     bool skipCutscene;
-    s32 time;
+    s32  time;
 
     skipCutscene = false;
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 3 && g_SysWork.sysStateStep_C[0] < 13)
     {
         skipCutscene = true;
         SysWork_NextStateStepSet(NO_VALUE);
     }
+
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
             Fs_QueueStartRead(FILE_ANIM_OPEN_DMS, FS_BUFFER_16);
+
             g_SysWork.field_30 = 20;
             g_Screen_FadeStatus = 4;
-            g_SysWork.flags_22A4 |= (1<<3);
+            g_SysWork.flags_22A4 |= 1 << 3;
+
             Sd_PlaySfx(Sfx_Unk1361, 0, 0x90);
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         case 1:
             if (Fs_QueueDoThingWhenEmpty())
             {
                 SysWork_StateStepIncrement();
             }
             break;
+
         case 2:
-            DmsHeader_FixOffsets((s_DmsHeader* )FS_BUFFER_16);
+            DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_16);
             Chara_Load(0, Chara_Cheryl, g_SysWork.npcCoords_FC0, 0, NULL, NULL);
-            func_8008616C(false, false, 0, Q12(3.0f), false);
-            g_Timer0 = 0;
+            SysWork_StateStepIncrementAfterFade(false, false, 0, Q12(3.0f), false);
+
+            g_Timer0 = Q12(0.0f);
+
             SysWork_StateStepIncrement();
             break;
+
         case 3:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 0x35, false);
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         case 4:
             time = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(10.0f), Q12_SHIFT);
             g_Timer0 = MIN(time, Q12(22.0f));
@@ -181,10 +188,11 @@ void MapEvent_OpeningCutscene(void)
                 SysWork_StateStepIncrement();
             }
             break;
+
         case 5:
-            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 0x4A, false);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 74, false);
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         case 6:
             time = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(8.0f), Q12_SHIFT);
             g_Timer0 = MIN(time, Q12(26.0f));
@@ -193,18 +201,22 @@ void MapEvent_OpeningCutscene(void)
                 SysWork_StateStepIncrement();
             }
             break;
+
         case 7:
             g_Timer0 = MIN((g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(4.0f), Q12_SHIFT)), Q12(72.0f));
             MapMsg_DisplayAndHandleSelection(false, 15, false, false, 0, false);
             break;
+
         case 8:
             g_Timer0 = MIN((g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(4.0f), Q12_SHIFT)), Q12(72.0f));
-            func_80085E6C(Q12(0.8f), false);
+            SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
             break;
+
         case 9:
             g_Timer0 = MIN((g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(4.0f), Q12_SHIFT)), Q12(72.0f));
             MapMsg_DisplayAndHandleSelection(false, 16, false, false, 0, false);
             break;
+
         case 10:
             time = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(4.0f), Q12_SHIFT);
             g_Timer0 = MIN(time, Q12(72.0f));
@@ -213,25 +225,30 @@ void MapEvent_OpeningCutscene(void)
                 SysWork_StateStepIncrement();
             }
             break;
+
         case 11:
-            func_80085E6C(Q12(1.5f), false);
+            SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
             break;
+
         case 12:
             MapMsg_DisplayAndHandleSelection(false, 19, false, false, 0, false);
             break;
+
         case 13:
-            func_80085E6C(Q12(1.0f), false);
+            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
             break;
+
         default:
             g_Timer0 = NO_VALUE;
+
             if (skipCutscene)
             {
                 sharedFunc_800D2244_0_s00(true);
                 SysWork_StateSetNext(SysState_Gameplay);
-    
+
                 if (ScreenFade_IsFinished())
                 {
-                    func_8008616C(false, false, 0, false, false);
+                    SysWork_StateStepIncrementAfterFade(false, false, 0, false, false);
                 }
             }
             else
@@ -239,18 +256,20 @@ void MapEvent_OpeningCutscene(void)
                 sharedFunc_800D2244_0_s00(false);
                 SysWork_StateSetNext(SysState_Gameplay);
             }
-            func_8008616C(false, false, 2, false, false);
+
+            SysWork_StateStepIncrementAfterFade(false, false, 2, false, false);
             vcReturnPreAutoCamWork(true);
             func_80088D0C();
             Chara_Spawn(Chara_Cheryl, 0, Q12(-29.5f), Q12(128.7f), Q12(-0.3125f), 1);
             break;
     }
-    if (g_Timer0 >= 0)
+
+    if (g_Timer0 >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, "HERO", g_Timer0, (s_DmsHeader* )FS_BUFFER_16);
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CamPosTarget, &g_CamLookAtTarget, NULL, g_Timer0, (s_DmsHeader* )FS_BUFFER_16));
-        vcUserCamTarget(&g_CamPosTarget, NULL, true);
-        vcUserWatchTarget(&g_CamLookAtTarget, NULL, true);
+        Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, "HERO", g_Timer0, (s_DmsHeader*)FS_BUFFER_16);
+        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CameraPositionTarget, &g_CameraLookAtTarget, NULL, g_Timer0, (s_DmsHeader*)FS_BUFFER_16));
+        vcUserCamTarget(&g_CameraPositionTarget, NULL, true);
+        vcUserWatchTarget(&g_CameraLookAtTarget, NULL, true);
     }
 }
 
