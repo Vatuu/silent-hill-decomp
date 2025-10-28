@@ -350,7 +350,44 @@ INCLUDE_RODATA("asm/maps/map1_s01/nonmatchings/map1_s01", D_800CB5A4);
 
 INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D7308);
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800D76F4);
+void func_800D76F4(void)
+{
+    #define PICKUP_MEDALION_STATE 4
+    #define DONT_PICKUP_MEDALION_STATE 5
+    switch ( g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_80086470(0, InventoryItemId_GoldMedallion, 0, false);
+            /* fallthrough */
+        case 1:
+            func_80085DF0();
+            return;
+        case 2:
+            func_80086470(1, InventoryItemId_GoldMedallion, 0, false);
+            return;
+        case 3:
+            if (Gfx_PickupItemAnimate(InventoryItemId_GoldMedallion))
+            {
+                MapMsg_DisplayAndHandleSelection(true, 17,
+                    PICKUP_MEDALION_STATE, DONT_PICKUP_MEDALION_STATE, 0, false); // Gold medalion. Take it ?
+            }
+            Savegame_EventFlagSet(EventFlag_M1S01_PickupGoldMedallion);
+            return;
+        case PICKUP_MEDALION_STATE:
+            func_80086470(3, InventoryItemId_GoldMedallion, 1, false);
+            /* fallthrough */
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            return;
+        case DONT_PICKUP_MEDALION_STATE:
+            Savegame_EventFlagClear(EventFlag_M1S01_PickupGoldMedallion);
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+
+    }
+}
 
 void func_800D7830(void) // 0x800D7830
 {
@@ -794,7 +831,7 @@ void func_800D9514(void)
     {
         if (Savegame_EventFlagGet(EventFlag_74))
         {
-            if (!Savegame_EventFlagGet(EventFlag_69))
+            if (!Savegame_EventFlagGet(EventFlag_M1S01_PickupGoldMedallion))
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObj6, &D_800DF080, &(SVECTOR3){});
             } 
@@ -899,7 +936,7 @@ void func_800D9DDC(void)
         {
             func_80088FF4(Chara_GreyChild, 0, 3);
         }
-        if (Savegame_EventFlagGet(EventFlag_69))
+        if (Savegame_EventFlagGet(EventFlag_M1S01_PickupGoldMedallion))
         {
             func_80088FF4(Chara_GreyChild, 1, 3);
             if (g_SavegamePtr->gameDifficulty_260 == 0)

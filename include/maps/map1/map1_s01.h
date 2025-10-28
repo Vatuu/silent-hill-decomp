@@ -60,4 +60,6 @@ void func_800D9EC4(void);
 void func_800D7F18(bool);
 
 void func_800D7864(void);
+
+void func_800D76F4(void);
 #endif
