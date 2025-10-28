@@ -38,6 +38,12 @@ extern u16 D_800E9D50;
 
 extern u16 D_800E9D6C[];
 
+extern u16 D_800E9D7C;
+
+extern s16 D_800E9D80[];
+
+extern u8 D_800E9D8E;
+
 extern s8 D_800E9ECC;
 extern u8 D_800E9ECD;
 
@@ -45,8 +51,12 @@ extern s16 D_800E9ED8;
 extern s16 D_800E9EDA;
 
 extern u8 D_800EA490;
+extern u16 D_800EA492;
 
 extern s_800EA494 D_800EA494;
+
+extern s32 D_800EB68C;
+extern s32 D_800EB690;
 
 extern VECTOR3 D_800EB694;
 extern VECTOR3 D_800EB6A4;
@@ -57,6 +67,8 @@ extern s32 D_800EB6B4;
 extern s_WorldObjectPos D_800EB6E0; // Assumed type.
 
 extern s8 D_800EBAF4;
+
+extern s_WorldObjectDesc D_800EBB64;
 
 /** Timer. */
 extern q3_12 D_800EBB94;
@@ -133,6 +145,9 @@ void func_800DFAE4(void);
 void func_800DFB1C(void);
 
 void func_800DFB48(void);
+
+/** @brief Earlier version of `map7_s01::func_800D9C9C` using unfinished sfx IDs, possibly unused here. */
+void func_800DFDDC(void);
 
 void func_800E0C30(void);
 
