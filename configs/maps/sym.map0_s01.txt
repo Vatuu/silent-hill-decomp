@@ -165,7 +165,7 @@ sharedFunc_800D9188_0_s00         = 0x800DA3E8; // type:func
 Anim_StartKeyframeIdxGet          = 0x800DA49C; // type:func
 sharedFunc_800D923C_0_s00         = 0x800DA4BC; // type:func
 sharedFunc_800D929C_0_s00         = 0x800DA51C; // type:func
-sharedFunc_800D92AC_0_s00         = 0x800DA52C; // type:func
+Map_RoomIdxGet                    = 0x800DA52C; // type:func
 Gfx_LoadingScreen_StageString     = 0x800DA8A4;
 sharedFunc_800DA8E8_0_s01         = 0x800DA8E8; // type:func
 
@@ -217,7 +217,7 @@ KAUFMANN_ANIM_INFOS               = 0x800DD890; // type:AnimInfo
 sharedData_800DF1F4_0_s00         = 0x800DDC90; // type:s32
 sharedData_800DF1F8_0_s00         = 0x800DDC94; // type:s16
 sharedData_800DF1FA_0_s00         = 0x800DDC96; // type:s16
-sharedData_800DF1FC_0_s00         = 0x800DDC98; // type:s32 unknown type
+MAP_ROOM_IDXS                     = 0x800DDC98; // type:u8 unknown type
 sharedData_800DF2DC_0_s00         = 0x800DDD78; // type:s32 unknown type
 
 //----------------------------------------------------------------------

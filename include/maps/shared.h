@@ -2366,8 +2366,6 @@ extern VECTOR3 sharedData_800DE1F0_0_s01;
 
 extern VECTOR3 sharedData_800E2350_0_s01;
 
-extern u8 MAP_ROOM_IDXS[30];
-
 extern s_800C4590 sharedData_800E39BC_0_s00;
 
 typedef struct
@@ -2513,8 +2511,6 @@ s32 Anim_StartKeyframeIdxGet(s_SubCharacter* chara);
 
 /** Humanoid init function? */
 void sharedFunc_800D923C_0_s00(s_SubCharacter* chara);
-
-u8 sharedFunc_800D92AC_0_s00(s32 x, s32 y);
 
 /** Snow effect init. */
 void sharedFunc_800CBC94_0_s00(s_Particle* particles);
