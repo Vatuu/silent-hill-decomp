@@ -28,7 +28,6 @@
 #define MAP_ROOM_MAX_X    Q12(200.0f)
 #define MAP_ROOM_MIN_Z    Q12(-160.0f)
 #define MAP_ROOM_MAX_Z    Q12(0.f)
-#define MAP_ROOM_STRIDE_Z 4
 
 extern s32 D_800ED73C; // } RNG related values?
 extern s32 D_800ED740; // }

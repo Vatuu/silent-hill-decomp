@@ -8,7 +8,6 @@
 #define MAP_ROOM_MAX_X    Q12(200.0f)
 #define MAP_ROOM_MIN_Z    Q12(0.0f)
 #define MAP_ROOM_MAX_Z    Q12(120.0f)
-#define MAP_ROOM_STRIDE_Z 3
 
 s32 func_800CE548(void);
 
