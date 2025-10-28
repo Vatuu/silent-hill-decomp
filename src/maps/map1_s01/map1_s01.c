@@ -406,7 +406,7 @@ void func_800D87C0(void) // 0x800D87C0
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < CUTSCENE_SKIP_STATE)
     {
-        if ( g_SysWork.sysStateStep_C[0]  < 4)
+        if (g_SysWork.sysStateStep_C[0] < 4)
         {
             D_800DD598 = 1;
         }
