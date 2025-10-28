@@ -13,6 +13,13 @@
 #define HAS_PlayerState_Unk138
 #define HAS_PlayerState_Unk139
 
+// Config used by `Map_RoomIdxGet`.
+#define MAP_ROOM_MIN_X    Q12(-200.0f)
+#define MAP_ROOM_MAX_X    Q12(200.0f)
+#define MAP_ROOM_MIN_Z    Q12(-160.0f)
+#define MAP_ROOM_MAX_Z    Q12(0.f)
+#define MAP_ROOM_STRIDE_Z 4
+
 void func_800CFFE8(s32 arg0);
 
 void func_800D001C(s32 arg0);

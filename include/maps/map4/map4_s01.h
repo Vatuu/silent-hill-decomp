@@ -21,6 +21,13 @@
 #define HAS_PlayerState_Unk186
 #define KEYFRAME_PlayerState_Unk69 678
 
+// Config used by `Map_RoomIdxGet`.
+#define MAP_ROOM_MIN_X    Q12(-200.0f)
+#define MAP_ROOM_MAX_X    Q12(200.0f)
+#define MAP_ROOM_MIN_Z    Q12(0.0f)
+#define MAP_ROOM_MAX_Z    Q12(120.0f)
+#define MAP_ROOM_STRIDE_Z 3
+
 typedef struct _mapHeader_field_5C {
     u8  field_0;
     u8  field_1;

@@ -176,6 +176,7 @@ Ai_Incubus_Update           = 0x800DF0D8; // type:func
 Ai_Unknown23_Init           = 0x800DFB98; // type:func
 Ai_Unknown23_Update         = 0x800E093C; // type:func
 sharedFunc_800D929C_0_s00   = 0x800E0A80; // type:func
+Map_RoomIdxGet              = 0x800E0A90; // type:func
 sharedFunc_800DA8E8_0_s01   = 0x800E2DF8; // type:func
 
 
@@ -208,6 +209,7 @@ sharedData_800DF1FA_0_s00   = 0x800EAFA6; // type:s16
 LITTLE_INCUBUS_ANIM_INFOS   = 0x800EAFA8; // type:AnimInfo
 INCUBUS_ANIM_INFOS          = 0x800EC808; // type:AnimInfo
 UNKKOWN_23_ANIM_INFOS       = 0x800ECE50; // type:AnimInfo
+MAP_ROOM_IDXS               = 0x800ECF10; // type:u8 - TODO add size
 
 //-----------------------------------------------------------------
 //--- PA: 0x023A74   VA: 0x800ECFEC   subsegment: .data, map7_s03_2

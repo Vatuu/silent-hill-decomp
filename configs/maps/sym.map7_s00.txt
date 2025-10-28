@@ -80,6 +80,7 @@ sharedFunc_800D9188_0_s00   = 0x800CFE14; // type:func
 Anim_StartKeyframeIdxGet    = 0x800CFEC0; // type:func
 sharedFunc_800D923C_0_s00   = 0x800CFEE0; // type:func
 sharedFunc_800D929C_0_s00   = 0x800CFF40; // type:func
+Map_RoomIdxGet              = 0x800CFF50; // type:func
 sharedFunc_800DA8E8_0_s01   = 0x800D0ACC; // type:func
 
 
@@ -98,6 +99,7 @@ KAUFMANN_ANIM_INFOS         = 0x800D2CA8; // type:AnimInfo
 sharedData_800DF1F4_0_s00   = 0x800D2EE8; // type:s32
 sharedData_800DF1F8_0_s00   = 0x800D2EEC; // type:s16
 sharedData_800DF1FA_0_s00   = 0x800D2EEE; // type:s16
+MAP_ROOM_IDXS               = 0x800D2EF0; // type:u8 - TODO add size
 
 //-----------------------------------------------------------------
 //--- PA: 0x009ABC   VA: 0x800D3034   subsegment: .data, map7_s00_2

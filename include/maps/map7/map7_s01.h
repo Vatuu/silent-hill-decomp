@@ -20,6 +20,13 @@
 #define HAS_PlayerState_Unk158
 #define HAS_PlayerState_Unk167
 
+// Config used by `Map_RoomIdxGet`.
+#define MAP_ROOM_MIN_X    Q12(-200.0f)
+#define MAP_ROOM_MAX_X    Q12(200.0f)
+#define MAP_ROOM_MIN_Z    Q12(-160.0f)
+#define MAP_ROOM_MAX_Z    Q12(0.f)
+#define MAP_ROOM_STRIDE_Z 4
+
 typedef struct
 {
     u8 field_0;
@@ -35,8 +42,6 @@ typedef struct
 
 /** Character ID. (TODO: Move to `bodyprog.h`)*/
 extern s8 D_800A9945;
-
-extern u8 D_800E0020[]; // TODO: Likely `MAP_ROOM_IDXS`.
 
 extern VECTOR3 D_800E00CC[]; // Assumed type.
 
@@ -94,9 +99,6 @@ s32 func_800D1630();
 bool func_800D238C(s32 arg0);
 
 s32 func_800D2EA0(void);
-
-// TODO: Might be same as `Map_RoomIdxGet`, maybe that could be configured in each map overlay header file.
-u8 func_800D6778(s32 x, s32 z);
 
 void func_800D6810(s32 arg0);
 

@@ -38,23 +38,7 @@
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D6768
 
-u8 func_800D6778(s32 x, s32 z)
-{
-    // Game map bounds? Might be configured per-overlay in header
-    s32 xOffset = Q12(200.0f);
-    s32 zOffset = Q12(160.0f);
-
-    // Weird way of checking if it's within [-xOffset:xOffset]?
-    // Removing the + xOffset from each of them (and from 400.0f) doesn't give match.
-    if ((x + xOffset) < 0 || (x + xOffset) >= Q12(400.0f) || z < -zOffset || z >= 0)
-    {
-        return 0;
-    }
-
-    x = (x + xOffset) / Q12(40.0f);
-    z = (z + zOffset) / Q12(40.0f);
-    return D_800E0020[x * 4 + z];
-}
+#include "maps/shared/Map_RoomIdxGet.h" // 0x800D6778
 
 void func_800D6810(s32 arg0) // 0x800D6810
 {

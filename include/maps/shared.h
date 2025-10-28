@@ -2848,6 +2848,14 @@ void sharedFunc_800D7B14_0_s01(s_SubCharacter*, GsCOORDINATE2*);
 
 void sharedFunc_800CE8B8_0_s02(void);
 
+/** @brief Gets the room index corresponding to the current 2D position.
+ *
+ * @param x X position in Q19.12.
+ * @param z Z position in Q19.12.
+ * @return Room index.
+ */
+u8 Map_RoomIdxGet(s32 x, s32 z);
+
 static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo)
 {
     anim->animInfo_C  = animInfo;

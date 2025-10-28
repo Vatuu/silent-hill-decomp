@@ -1,16 +1,13 @@
 u8 Map_RoomIdxGet(s32 x, s32 z)
 {
-    u32 ux;
-
-    x += Q12(200.0f);
-    ux = x;
-
-    if (ux >= Q12(400.0f) || z < 0 || z >= Q12(120.0f))
+    if (x < MAP_ROOM_MIN_X || x >= MAP_ROOM_MAX_X ||
+        z < MAP_ROOM_MIN_Z || z >= MAP_ROOM_MAX_Z)
     {
         return 0;
     }
 
-    x /= Q12(40.0f);
-    z /= Q12(40.0f);
-    return ux = MAP_ROOM_IDXS[(x * 3) + z]; // @hack Permuter find.
+    x = (x - MAP_ROOM_MIN_X) / Q12(40.0f);
+    z = (z - MAP_ROOM_MIN_Z) / Q12(40.0f);
+
+    return MAP_ROOM_IDXS[x * MAP_ROOM_STRIDE_Z + z];
 }

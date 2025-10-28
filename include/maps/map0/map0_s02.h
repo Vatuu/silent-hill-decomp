@@ -3,6 +3,13 @@
 
 #include "types.h"
 
+// Config used by `Map_RoomIdxGet`.
+#define MAP_ROOM_MIN_X    Q12(-200.0f)
+#define MAP_ROOM_MAX_X    Q12(200.0f)
+#define MAP_ROOM_MIN_Z    Q12(0.0f)
+#define MAP_ROOM_MAX_Z    Q12(120.0f)
+#define MAP_ROOM_STRIDE_Z 3
+
 s32 func_800CE548(void);
 
 void func_800CE740(void);
@@ -18,14 +25,6 @@ void func_800CE760(void);
 s32 func_800CE768();
 
 void func_800CE770(void);
-
-/** @brief Gets the room index corresponding to the current 2D position.
- *
- * @param x X position in Q19.12.
- * @param z Z position in Q19.12.
- * @return Room index.
- */
-u8 Map_RoomIdxGet(s32 x, s32 z);
 
 void func_800CE884(s32 arg0);
 
