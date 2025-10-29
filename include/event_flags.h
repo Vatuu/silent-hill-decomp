@@ -69,27 +69,27 @@ typedef enum _EventFlag
 
     EventFlag_M1S00_PickupMap      = 67, // Shared with M1S06
     EventFlag_M1S01_PickupChemical = 68,
-    EventFlag_69 = 69,
-
+    EventFlag_M1S01_PickupGoldMedallion   = 69,
     EventFlag_M1S01_PickupSilverMedallion = 70,
-    EventFlag_71 = 71,
-    EventFlag_72 = 72,
-    EventFlag_73 = 73,
-    EventFlag_74 = 74,
-    EventFlag_75 = 75,
-    EventFlag_76 = 76,
-    EventFlag_77 = 77,
-    EventFlag_78 = 78,
-    EventFlag_79 = 79,
-    EventFlag_80 = 80,
-    EventFlag_81 = 81,
-    EventFlag_82 = 82,
-    EventFlag_83 = 83,
-    EventFlag_84 = 84,
+    EventFlag_71                          = 71,
+    EventFlag_72                          = 72,
+    EventFlag_73                          = 73,
+    EventFlag_74                          = 74,
+    EventFlag_75                          = 75,
+    EventFlag_76                          = 76,
+    EventFlag_77                          = 77,
+    EventFlag_78                          = 78,
+    EventFlag_79                          = 79,
+    EventFlag_80                          = 80,
+    EventFlag_81                          = 81,
+    EventFlag_82                          = 82,
+    EventFlag_83                          = 83,
+    EventFlag_84                          = 84,
 
     EventFlag_M7S01_HealthDrink1 = 86,
 
     EventFlag_M1S02_PickupPictureCard = 93,
+    EventFlag_M1S02_SeenDoorWithHorizontalSlot = 94,
 
     EventFlag_M1S02_PickupShotgun = 95,
 
@@ -179,7 +179,7 @@ typedef enum _EventFlag
     EventFlag_236 = 236,
     EventFlag_237 = 237,
 
-    EventFlag_240 = 240,
+    EventFlag_240                       = 240,
     EventFlag_M3S04_PickupPlateOfQueen  = 241,
     EventFlag_M3S03_PickupPlateOfTurtle = 242,
     EventFlag_M3S03_PickupPlateOfHatter = 243,
@@ -276,7 +276,7 @@ typedef enum _EventFlag
     EventFlag_484 = 484,
     EventFlag_485 = 485,
     EventFlag_486 = 486,
-
+    EventFlag_487 = 487,
     EventFlag_488 = 488,
     EventFlag_489 = 489,
     EventFlag_490 = 490,
@@ -286,6 +286,23 @@ typedef enum _EventFlag
     EventFlag_497 = 497,
     EventFlag_498 = 498,
     EventFlag_499 = 499,
+
+    EventFlag_500 = 500, // Used as base event index added to `D_800E1690.field_0` in loop.
+
+    EventFlag_507 = 507, // } Used in `for(i < 4)` loop.
+    EventFlag_508 = 508, // }
+    EventFlag_509 = 509, // }
+    EventFlag_510 = 510, // }
+
+    EventFlag_511 = 511, // } Used in `for(i < 4)` loop.
+    EventFlag_512 = 512, // }
+    EventFlag_513 = 513, // }
+    EventFlag_514 = 514, // }
+
+    EventFlag_515 = 515, // } Used in `for(i < 4)` loop.
+    EventFlag_516 = 516, // }
+    EventFlag_517 = 517, // }
+    EventFlag_518 = 518, // }
 
     EventFlag_M7S01_PickupCamera          = 519,
     EventFlag_M7S01_PickupRingOfContract  = 520,

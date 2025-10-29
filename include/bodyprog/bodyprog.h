@@ -182,6 +182,7 @@ typedef enum _Sfx
     Sfx_Unk1399 = 1399,
 
     Sfx_Unk1416 = 1416,
+    Sfx_Unk1417 = 1417,
 
     Sfx_Unk1418 = 1418,
     Sfx_Unk1419 = 1419,
@@ -193,6 +194,7 @@ typedef enum _Sfx
     Sfx_Unk1430 = 1430,
     Sfx_Unk1431 = 1431,
     Sfx_Unk1432 = 1432,
+    Sfx_Unk1433 = 1433,
 
     Sfx_Unk1435 = 1435,
     Sfx_Unk1436 = 1436,
@@ -202,6 +204,8 @@ typedef enum _Sfx
 
     Sfx_Unk1448 = 1448,
     Sfx_Unk1449 = 1449,
+
+    Sfx_Unk1454 = 1454,
 
     Sfx_Unk1456 = 1456,
 
@@ -286,9 +290,12 @@ typedef enum _Sfx
 
     Sfx_Unk1642 = 1642,
     Sfx_Unk1643 = 1643,
-
+    Sfx_Unk1644 = 1644,
     Sfx_Unk1645 = 1645,
 
+    Sfx_Unk1647 = 1647,
+    Sfx_Unk1648 = 1648,
+    Sfx_Unk1649 = 1649,
     Sfx_Unk1650 = 1650,
 
     Sfx_Unk1653 = 1653,
@@ -1733,10 +1740,20 @@ typedef struct
 
 typedef struct
 {
-    s8  unk_0[14];
+    u8  field_0;
+    u8  field_1;
+    u8  field_2;
+    u8  field_3;
+    s16 field_4;
+    s16 field_6;
+    s16 field_8;
+    s16 field_A;
+    s16 field_C;
     s16 field_E;
     s16 field_10;
-    s8  unk_12[8];
+    s16 field_12;
+    s32 field_14;
+    s32 field_18;
     s32 field_1C;
 } s_MapOverlayHeader_7C;
 
@@ -4752,5 +4769,7 @@ void GameState_Unk15_Update();
 
 void Game_TurnFlashlightOn(void);
 void Game_TurnFlashlightOff(void);
+
+void func_80089034(s32 charaId, s32 arg1, q19_12 x, q19_12 z); // X and Z is guessed.
 
 #endif

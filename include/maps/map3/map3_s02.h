@@ -1,6 +1,11 @@
 #ifndef _MAPS_MAP3_S02_H
 #define _MAPS_MAP3_S02_H
 
+#define MAP_ROOM_MIN_X Q12(-160.0f)
+#define MAP_ROOM_MAX_X Q12(160.0f)
+#define MAP_ROOM_MIN_Z Q12(-160.0f)
+#define MAP_ROOM_MAX_Z Q12(160.0f)
+
 extern s32 D_800D1FBC;
 
 extern s8 D_800D3154;

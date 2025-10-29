@@ -81,7 +81,7 @@ void func_800CC7AC(void) {}
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800CC818
 
-#include "maps/shared/sharedFunc_800D7758_1_s00.h" // 0x800CC828
+#include "maps/shared/Map_RoomIdxGet.h" // 0x800CC828
 
 void func_800CC8C8(void) // 0x800CC8C8
 {

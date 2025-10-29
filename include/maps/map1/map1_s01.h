@@ -10,12 +10,19 @@
 #define KEYFRAME_PlayerState_Unk59 873
 #define KEYFRAME_PlayerState_Unk60 888
 
+#define MAP_ROOM_MIN_X Q12(-160.0f)
+#define MAP_ROOM_MAX_X Q12(160.0f)
+#define MAP_ROOM_MIN_Z Q12(-80.0f)
+#define MAP_ROOM_MAX_Z Q12(200.0f)
+
 extern s_AnimInfo CAT_ANIM_INFOS[];
 
 extern SVECTOR3 D_800CB7D4; // Empty
 extern VECTOR3 D_800CB7DC;
 extern VECTOR3 D_800CB7E8;
-
+extern u8 D_800DC9FC;
+extern u16 D_800DCA04[42];
+extern s32 D_800DD4FC;
 extern s32 D_800DD57C;
 extern s_WorldObjectPose g_CommonWorldObjectPoses[5];
 extern s_WorldObjectDesc g_WorldObject0;
@@ -32,6 +39,8 @@ extern s_WorldObjectDesc g_WorldObject7;
 extern s_WorldObjectDesc g_WorldObject8;
 extern s_WorldObjectDesc g_WorldObject9;
 extern s_WorldObject_0   g_CommonWorldObjects[6];
+extern s_MapHdr_field_4C D_800DD5B0[300];
+extern s_MapOverlayHeader_7C D_800DEE50;
 
 void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
@@ -56,4 +65,12 @@ void func_800D9514(void);
 void func_800D9DDC(void);
 
 void func_800D9EC4(void);
+
+void func_800D7F18(bool);
+
+void func_800D7864(void);
+
+void func_800D76F4(void);
+
+void func_800CB7F4(void);
 #endif

@@ -80,7 +80,7 @@ void func_800CC754() {}
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800CC7C0
 
-#include "maps/shared/sharedFunc_800D92AC_0_s00.h" // 0x800CC7D0
+#include "maps/shared/Map_RoomIdxGet.h" // 0x800CC7D0
 
 void func_800CCA1C(void) // 0x800CCA1C
 {

@@ -37,7 +37,7 @@
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800DA51C
 
-#include "maps/shared/sharedFunc_800D92AC_0_s00.h" // 0x800DA52C
+#include "maps/shared/Map_RoomIdxGet.h" // 0x800DA52C
 
 void func_800DA778(s32 arg0) // 0x800DA778
 {

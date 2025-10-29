@@ -122,7 +122,7 @@ sharedFunc_800E5EC4_2_s00   = 0x800E5EC4; // type:func
 sharedFunc_800E6338_2_s00   = 0x800E6338; // type:func
 sharedFunc_800E71E8_2_s00   = 0x800E71E8; // type:func
 sharedFunc_800D929C_0_s00   = 0x800E76B8; // type:func
-sharedFunc_800D92AC_0_s00   = 0x800E76C8; // type:func
+Map_RoomIdxGet              = 0x800E76C8; // type:func
 
 
 
@@ -146,7 +146,7 @@ sharedData_800DD7A0_0_s01   = 0x800EE9F4; // size:0xD0
 sharedData_800DD870_0_s01   = 0x800EEAF4; // type:VECTOR3 size:0xC
 sharedData_800DD880_0_s01   = 0x800EEB04; // type:VECTOR3 size:0xC
 GROANER_ANIM_INFOS          = 0x800EEB14; // type:s32 unknown type
-sharedData_800DF1FC_0_s00   = 0x800F05D8; // type:s32 unknown type
+MAP_ROOM_IDXS               = 0x800F05D8; // type:u8 unknown type
 sharedData_800DF2DC_0_s00   = 0x800F06B8; // type:s32 unknown type
 
 //---------------------------------------------------------------

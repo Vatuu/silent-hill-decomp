@@ -7,6 +7,11 @@
 #define KEYFRAME_PlayerState_Unk59 678
 #define KEYFRAME_PlayerState_Unk60 693
 
+#define MAP_ROOM_MIN_X Q12(-160.0f)
+#define MAP_ROOM_MAX_X Q12(160.0f)
+#define MAP_ROOM_MIN_Z Q12(-80.0f)
+#define MAP_ROOM_MAX_Z Q12(200.0f)
+
 extern u8 D_800D71E8[];
 
 extern u8 D_800D7761;

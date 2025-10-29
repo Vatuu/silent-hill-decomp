@@ -15,6 +15,11 @@
 #define KEYFRAME_PlayerState_Unk60  918
 #define KEYFRAME_PlayerState_Unk122 1093
 
+#define MAP_ROOM_MIN_X Q12(-160.0f)
+#define MAP_ROOM_MAX_X Q12(160.0f)
+#define MAP_ROOM_MIN_Z Q12(-80.0f)
+#define MAP_ROOM_MAX_Z Q12(200.0f)
+
 extern s_AnimInfo LOCKER_DEAD_BODY_ANIM_INFOS[8];
 
 void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);

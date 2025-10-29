@@ -111,6 +111,7 @@ sharedFunc_800D9188_0_s00           = 0x800D1C50; // type:func
 Anim_StartKeyframeIdxGet            = 0x800D1CFC; // type:func
 sharedFunc_800D923C_0_s00           = 0x800D1D1C; // type:func
 sharedFunc_800D929C_0_s00           = 0x800D1D7C; // type:func
+Map_RoomIdxGet              = 0x800D1D8C; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800D25D0; // type:func
 
 
@@ -130,6 +131,7 @@ KAUFMANN_ANIM_INFOS                 = 0x800D5064; // type:AnimInfo
 sharedData_800DF1F4_0_s00           = 0x800D52A4; // type:s32
 sharedData_800DF1F8_0_s00           = 0x800D52A8; // type:s16
 sharedData_800DF1FA_0_s00           = 0x800D52AA; // type:s16
+MAP_ROOM_IDXS               = 0x800D52AC; // type:u8
 
 //-----------------------------------------------------------------
 //--- PA: 0x00C0CC   VA: 0x800D5644   subsegment: .data, map3_s04_2

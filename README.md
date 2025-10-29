@@ -149,7 +149,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map0_s00"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&category=map.map0_s00&label=MAP0_S00"/></a></td>
-            <td colspan=2>Old Silent Hill.</td>
+            <td colspan=2>Intro sequence in Old Silent Hill.</td>
         </tr>
         <tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map0_s01"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&category=map.map0_s01&label=MAP0_S01"/></a></td>

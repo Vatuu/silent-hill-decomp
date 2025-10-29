@@ -2275,8 +2275,6 @@ extern s_AnimInfo SPLITHEAD_ANIM_INFOS[];
 extern s16 sharedData_800D8614_1_s05; // These two `s16`s could be `DVECTOR`?
 extern s16 sharedData_800D8616_1_s05;
 
-extern u8 sharedData_800DCC14_1_s00[];
-
 extern u8  sharedData_800D16E4_2_s01;
 
 extern s_AnimInfo ALESSA_ANIM_INFOS[];
@@ -2365,8 +2363,6 @@ extern VECTOR3 sharedData_800DE1E0_0_s01;
 extern VECTOR3 sharedData_800DE1F0_0_s01;
 
 extern VECTOR3 sharedData_800E2350_0_s01;
-
-extern u8 MAP_ROOM_IDXS[30];
 
 extern s_800C4590 sharedData_800E39BC_0_s00;
 
@@ -2513,8 +2509,6 @@ s32 Anim_StartKeyframeIdxGet(s_SubCharacter* chara);
 
 /** Humanoid init function? */
 void sharedFunc_800D923C_0_s00(s_SubCharacter* chara);
-
-u8 sharedFunc_800D92AC_0_s00(s32 x, s32 y);
 
 /** Snow effect init. */
 void sharedFunc_800CBC94_0_s00(s_Particle* particles);
@@ -2847,6 +2841,14 @@ void sharedFunc_800D6EC4_0_s01(s_SubCharacter* chara);
 void sharedFunc_800D7B14_0_s01(s_SubCharacter*, GsCOORDINATE2*);
 
 void sharedFunc_800CE8B8_0_s02(void);
+
+/** @brief Gets the room index corresponding to the current 2D position.
+ *
+ * @param x X position in Q19.12.
+ * @param z Z position in Q19.12.
+ * @return Room index.
+ */
+u8 Map_RoomIdxGet(s32 x, s32 z);
 
 static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo)
 {

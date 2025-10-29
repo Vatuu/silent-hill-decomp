@@ -20,6 +20,12 @@
 #define HAS_PlayerState_Unk158
 #define HAS_PlayerState_Unk167
 
+// Config used by `Map_RoomIdxGet`.
+#define MAP_ROOM_MIN_X    Q12(-200.0f)
+#define MAP_ROOM_MAX_X    Q12(200.0f)
+#define MAP_ROOM_MIN_Z    Q12(-160.0f)
+#define MAP_ROOM_MAX_Z    Q12(0.f)
+
 typedef struct
 {
     u8 field_0;
@@ -49,6 +55,12 @@ extern u8 D_800E1544[5];
 
 extern u16 D_800E154C[];
 
+extern u16 D_800E155C;
+
+extern s16 D_800E1560[];
+
+extern u8 D_800E156E;
+
 extern u8 D_800E1688[5];
 
 extern u8 D_800E1670;
@@ -58,6 +70,8 @@ extern s16 D_800E1678[4];
 extern u8  D_800E1680;
 
 extern u8 D_800E168D;
+
+extern u16 D_800E168E;
 
 extern s_800E1690 D_800E1690;
 
@@ -71,6 +85,10 @@ extern s_WorldObjectPose D_800E2C94; // Assumed type.
 
 extern s32 D_800E2CA8;
 extern s32 D_800E2CAC;
+
+extern VECTOR3 D_800E2CD4;
+
+extern s_WorldObjectDesc D_800E2CB8;
 
 /** Decrementing timer. */
 extern q3_12 D_800E2CE8;
@@ -144,6 +162,8 @@ void func_800D94DC(void);
 void func_800D99DC(void);
 
 void func_800D9A08(void);
+
+void func_800D9C9C(void);
 
 void func_800DAB64(void);
 

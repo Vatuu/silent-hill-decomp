@@ -184,7 +184,7 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800D0F28_3_s03
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D1168
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D1178);
+#include "maps/shared/Map_RoomIdxGet.h" // 0x800D1178
 
 void func_800D1210(s32 arg0) // 0x800D1210
 {
