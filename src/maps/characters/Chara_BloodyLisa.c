@@ -94,9 +94,9 @@ void sharedFunc_800D5B3C_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
     s8          pitch0;
     s8          pitch1;
 
-#define CHARA_PROPERTIES (chara->properties_E4.dahlia)
+    #define dahliaProps (chara->properties_E4.dahlia)
 
-    switch (CHARA_PROPERTIES.stateIdx0)
+    switch (dahliaProps.stateIdx0)
     {
         case 0:
             break;
@@ -110,7 +110,7 @@ void sharedFunc_800D5B3C_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
     Collision_Get(&coll, chara->position_18.vx, chara->position_18.vz);
     func_8007FDE0(coll.field_8, &sfx, &pitch0, &pitch1);
 
-    switch (CHARA_PROPERTIES.stateIdx0)
+    switch (dahliaProps.stateIdx0)
     {
         case 6:
             if (chara->model_0.anim_4.keyframeIdx_8 <= 12)
@@ -130,10 +130,10 @@ void sharedFunc_800D5B3C_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
     chara->rotation_24.vy  = FP_ANGLE_ABS(chara->rotation_24.vy + Q8_TO_Q4(sharedData_800E2C38_7_s01));
     chara->headingAngle_3C = chara->rotation_24.vy;
-    chara->moveSpeed_38    = CHARA_PROPERTIES.moveDistance_126;
+    chara->moveSpeed_38    = dahliaProps.moveDistance_126;
     chara->field_34       += g_DeltaTime2;
 
-    coords->flg = 0;
+    coords->flg = false;
     Math_MatrixRotate1(&chara->rotation_24, &coords->coord);
 }
 
