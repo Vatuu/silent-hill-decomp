@@ -156,7 +156,7 @@ elif sys.platform == "win32":
     CC        = f"{TOOLS_DIR}/win-build/gcc-psx/cc1psx.exe"
     OBJDIFF   = f"{OBJDIFF_DIR}/objdiff.exe"
     PREBUILD  = f"cmd.exe /c {TOOLS_DIR}\\prebuild.bat"
-    POSTBUILD = f"{TOOLS_DIR}\\postbuild.bat"
+    POSTBUILD = f"{PYTHON} {TOOLS_DIR}\\postbuild.py"
     DUMPSXISO = f"{PSXISO_DIR}\\dumpsxiso.exe"
     ICONV     = f"{TOOLS_DIR}\\win-build\\iconv\\iconv.bat"
 
@@ -326,7 +326,7 @@ def ninja_setup(split_entries, skip_checksum: bool):
         )
     
     ninja.rule(
-        "postbuild", description="postbuild script",
+        "postbuild", description="postbuild script $in",
         command=f"{POSTBUILD} $in",
     )
     
