@@ -820,7 +820,7 @@ void Map_WorldObjectsInit(void)
 {
     D_800E1180 = 0;
     D_800E1182 = 0;
-    WorldObjectPositionInit(&g_WorldObject9.position_1C, 133.294f, -0.8614f, 19.04f, 0.0f, 162.6f, 0.0f);
+    WorldObjectPoseInit(&g_WorldObject9.position_1C, 133.294f, -0.8614f, 19.04f, 0.0f, 162.6f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject9.object_0, "PICT00_H");
 
     Math_Vector3Set(&g_WorldObject1[0].position_1C, Q12(133.63f), Q12(-0.816f), Q12(17.089f));
@@ -862,10 +862,10 @@ void Map_WorldObjectsInit(void)
     Math_Vector3Set(&g_WorldObject0.position_1C, Q12(19.5799f), Q12(0.0f), Q12(-18.3f));
     WorldObject_ModelNameSet(&g_WorldObject0.object_0, "G_HIDE_I");
 
-    WorldObjectPositionInit(&g_WorldObject7.position_1C, 61.8531f, -0.805f, 140.6099f, 0.0f, 92.9f, 0.0f);
+    WorldObjectPoseInit(&g_WorldObject7.position_1C, 61.8531f, -0.805f, 140.6099f, 0.0f, 92.9f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject7.object_0, D_800A99E4.savePadName_4);
 
-    WorldObjectPositionInit(&g_WorldObject8.position_1C, 96.9405f, -0.3365f, 21.0918f, 0.0f, 66.8f, 0.0f);
+    WorldObjectPoseInit(&g_WorldObject8.position_1C, 96.9405f, -0.3365f, 21.0918f, 0.0f, 66.8f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject8.object_0, "MAP_HIDE");
 
     func_8004EE94(InventoryItemId_NoteToSchool, 1);

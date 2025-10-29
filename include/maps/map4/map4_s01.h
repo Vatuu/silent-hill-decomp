@@ -27,7 +27,8 @@
 #define MAP_ROOM_MIN_Z    Q12(0.0f)
 #define MAP_ROOM_MAX_Z    Q12(120.0f)
 
-typedef struct _mapHeader_field_5C {
+typedef struct _mapHeader_field_5C
+{
     u8  field_0;
     u8  field_1;
     u8  field_2;
@@ -51,6 +52,7 @@ typedef struct _mapHeader_field_5C {
     s32 field_20;
     s32 field_24;
 } s_mapHeader_field_5C;
+
 extern s_MapHdr_field_4C D_800D5B20[450];
 extern s_mapHeader_field_5C D_800D7F20;
 
@@ -68,21 +70,30 @@ extern s32 g_Timer2;
 extern VECTOR3 g_CutsceneCameraPos;
 extern VECTOR3 g_CutsceneCameraLookAt;
 
-extern s_WorldObjectDesc_norot WorldObject_D_800D7FF0;
+extern s_WorldObjectDescNoRot WorldObject_D_800D7FF0;
+
 extern u8 D_800D8018;
-extern s_WorldObjectDesc WorldObject_D_800D8020;
-extern s_WorldObjectDesc WorldObject_D_800D8050;
-extern s_WorldObjectPos  WorldObject_D_800D8070;
-extern s_WorldObjectPos  WorldObject_D_800D8090;
-extern s_WorldObjectDesc WorldObject_D_800D80B0;
-extern s_WorldObjectDesc_norot WorldObject_D_800D80E0[2];
+
+extern s_WorldObjectDesc      WorldObject_D_800D8020;
+extern s_WorldObjectDesc      WorldObject_D_800D8050;
+extern s_WorldObjectPose       WorldObject_D_800D8070;
+extern s_WorldObjectPose       WorldObject_D_800D8090;
+extern s_WorldObjectDesc      WorldObject_D_800D80B0;
+extern s_WorldObjectDescNoRot WorldObject_D_800D80E0[2];
+
 extern s16 D_800D5AE8;
 
 void func_800D1B78(s32 arg0);
 
+void func_800D1FF0(void);
+
 void func_800D496C(void);
 
 void func_800D4998(void);
+
+void func_800D49C4(void);
+
+void func_800D4BA4(void);
 
 void func_800D2408(void);
 

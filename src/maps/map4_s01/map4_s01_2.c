@@ -776,8 +776,8 @@ void func_800D49C4(void)
 
     WorldObject_ModelNameSet(&WorldObject_D_800D8050.object_0, D_800A99E4.savePadName_4);
 
-    WorldObjectPositionInit(&WorldObject_D_800D8070, 183.3833f, -1.2673f, 60.951f, 0.0f, 66.01, 0.0f);
-    WorldObjectPositionInit(&WorldObject_D_800D8090, 23.4f, -0.91f, 60.8f, 0.0f, 90.4f, 0.0f);
+    WorldObjectPoseInit(&WorldObject_D_800D8070, 183.3833f, -1.2673f, 60.951f, 0.0f, 66.01, 0.0f);
+    WorldObjectPoseInit(&WorldObject_D_800D8090, 23.4f, -0.91f, 60.8f, 0.0f, 90.4f, 0.0f);
 
     Math_Vector3Set(&WorldObject_D_800D80B0.position_1C.position_0, Q12(181.22f), 0, Q12(61.2015f));
     WorldObject_ModelNameSet(&WorldObject_D_800D80B0.object_0, "WALLX_HI");

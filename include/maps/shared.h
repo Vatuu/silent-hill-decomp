@@ -2856,52 +2856,52 @@ static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo
     anim->animInfo_10 = NULL;
 }
 
+// TODO: Could also call this a "transform"? "Pose" is a less common term for a position+rotation struct.
 typedef struct
 {
     VECTOR3  position_0;
     SVECTOR3 rotation_C;
-} s_WorldObjectPos;
+} s_WorldObjectPose;
 
 typedef struct
 {
     s_WorldObject_0 object_0;
-    VECTOR3 position_1C;
-} s_WorldObjectDesc_norot;
+    VECTOR3         position_1C;
+} s_WorldObjectDescNoRot;
 
 typedef struct
 {
-    s_WorldObject_0  object_0;
-    s_WorldObjectPos position_1C;
+    s_WorldObject_0   object_0;
+    s_WorldObjectPose position_1C;
 } s_WorldObjectDesc;
 
-#define WorldObjectPositionInit(eventPos, posX, posY, posZ, rotX, rotY, rotZ) \
-    WorldObjectPositionSet(eventPos, Q12(posX), Q12(posY), Q12(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))
+#define WorldObjectPoseInit(eventPos, posX, posY, posZ, rotX, rotY, rotZ) \
+    WorldObjectPoseSet(eventPos, Q12(posX), Q12(posY), Q12(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))
 
-static inline void WorldObjectPositionSet(s_WorldObjectPos* eventPos, q19_12 posX, q19_12 posY, q19_12 posZ, q8_8 rotX, q8_8 rotY, q8_8 rotZ)
+static inline void WorldObjectPoseSet(s_WorldObjectPose* eventPose, q19_12 posX, q19_12 posY, q19_12 posZ, q8_8 rotX, q8_8 rotY, q8_8 rotZ)
 {
-    Math_Vector3Set(&eventPos->position_0, posX, posY, posZ);
-    *(u32*)&eventPos->rotation_C.vx = ((u32)rotY << 16) | (u32)rotX;
-    eventPos->rotation_C.vz         = rotZ;
+    Math_Vector3Set(&eventPose->position_0, posX, posY, posZ);
+    *(u32*)&eventPose->rotation_C.vx = ((u32)rotY << 16) | (u32)rotX;
+    eventPose->rotation_C.vz         = rotZ;
 }
 
-#define MAP_CHUNK_CHECK_VARIABLE_DECL() s32 __chunkIdx
+#define MAP_CHUNK_CHECK_VARIABLE_DECL() \
+    s32 __chunkIdx
+
 /** @hack This macro requires a variable `s32 __chunkIdx` to be declared before using it.
  * The macro `MAP_CHUNK_CHECK_VARIABLE_DECL` declares that variable and must be called before this macro.
  * The first argument is `vx` or `vz`, which is used as the component name in `VECTOR3`.
  * @bug Some maps appear to have a bug where the negative position check will never be true because they check
  * if the chunk index will be a positive number. Seems like they forgot to use `ABS`?
  */
-#define PLAYER_IN_MAP_CHUNK(crd, x0, x1, x2, x3)                                                   \
-    (__chunkIdx = g_SysWork.player_4C.chara_0.position_18.crd / Q12(40.0f),                        \
-     ((g_SysWork.player_4C.chara_0.position_18.crd >  Q12(0.0f) && (__chunkIdx + (x0)) == (x1)) || \
-      (g_SysWork.player_4C.chara_0.position_18.crd <= Q12(0.0f) && (__chunkIdx + (x2)) == (x3))))
+#define PLAYER_IN_MAP_CHUNK(comp, x0, x1, x2, x3)                                                   \
+    (__chunkIdx = g_SysWork.player_4C.chara_0.position_18.comp / Q12(40.0f),                        \
+     ((g_SysWork.player_4C.chara_0.position_18.comp >  Q12(0.0f) && (__chunkIdx + (x0)) == (x1)) || \
+      (g_SysWork.player_4C.chara_0.position_18.comp <= Q12(0.0f) && (__chunkIdx + (x2)) == (x3))))
 
-
-#define PLAYER_NEAR_POS(crd, base, tol)                                                \
-    (                                                                                  \
-        (((g_SysWork.player_4C.chara_0.position_18.crd - Q12(base)) >= 0)              \
-         ? ((g_SysWork.player_4C.chara_0.position_18.crd - Q12(base)) < Q12(tol))      \
-         : ((Q12(base) - g_SysWork.player_4C.chara_0.position_18.crd) < Q12(tol)))     \
-    )
+#define PLAYER_NEAR_POS(comp, base, tol)                                       \
+    (((g_SysWork.player_4C.chara_0.position_18.comp - Q12(base)) >= 0)       ? \
+     ((g_SysWork.player_4C.chara_0.position_18.comp - Q12(base)) < Q12(tol)) : \
+     ((Q12(base) - g_SysWork.player_4C.chara_0.position_18.comp) < Q12(tol)))
 
 #endif

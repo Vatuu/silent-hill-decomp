@@ -8,7 +8,7 @@
 struct _AnmHeader;
 struct _Model;
 
-#define TICKS_PER_SECOND 60                                        /** Game has a variable time step with 60 ticks max. */
+#define TICKS_PER_SECOND 60                                       /** Game has a variable time step with 60 ticks max. */
 #define TIMESTEP_30_FPS Q12(1.0f / (float)(TICKS_PER_SECOND / 2)) /** Time step at 30 FPS. */
 #define TIMESTEP_60_FPS Q12(1.0f / (float)(TICKS_PER_SECOND))     /** Time step at 60 FPS. */
 

@@ -81,7 +81,7 @@ extern VECTOR3 D_800E2C58;
 extern u8  D_800E2C64;
 extern s32 D_800E2C68;
 
-extern s_WorldObjectPos D_800E2C94; // Assumed type.
+extern s_WorldObjectPose D_800E2C94; // Assumed type.
 
 extern s32 D_800E2CA8;
 extern s32 D_800E2CAC;

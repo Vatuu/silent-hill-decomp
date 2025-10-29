@@ -7,7 +7,7 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* chara)
     s32 keyframe2;
     s16 keyframeOffset;
 
-    if (chara->damageReceived_C0 <= 0 || chara->health_B0 <= 0)
+    if (chara->damageReceived_C0 <= Q12(0.0f) || chara->health_B0 <= Q12(0.0f))
     {
         return;
     }
@@ -39,7 +39,7 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* chara)
     {
         if (ANIM_STATUS_IDX_GET(chara->model_0.anim_4.status_0) == 2)
         {
-            chara->properties_E4.larvalStalker.properties_E8[3].val16[1] = -1;
+            chara->properties_E4.larvalStalker.properties_E8[3].val16[1] = NO_VALUE;
             chara->model_0.anim_4.status_0                               = ANIM_STATUS(18, false);
         }
     }
@@ -72,6 +72,7 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* chara)
                     {
                         chara->model_0.anim_4.time_4 -= Q12(1.0f);
                     }
+
                     chara->model_0.anim_4.status_0                               = ANIM_STATUS(5, false);
                     chara->properties_E4.larvalStalker.properties_E8[3].val16[0] = 76 - FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT);
                 }
@@ -175,6 +176,7 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* chara)
                         chara->model_0.anim_4.status_0                               = ANIM_STATUS(7, false);
                     }
                 }
+
                 chara->model_0.state_2 = 12;
             }
             else
@@ -207,10 +209,12 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* chara)
                     }
                     chara->model_0.anim_4.status_0 = ANIM_STATUS(8, false);
                 }
+
                 chara->model_0.state_2 = 11;
             }
         }
     }
+
     chara->properties_E4.larvalStalker.properties_E8[8].val16[0] = 0;
     chara->properties_E4.larvalStalker.properties_E8[1].val32    = 0;
 }

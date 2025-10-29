@@ -82,15 +82,15 @@ void MapEvent_ChannelingStoneItemTake(void) // 0x800CECDC
 extern s_WorldObject_0 g_WorldObject_Winr[4][2];
 extern VECTOR3 g_WorldObjectPose_Winr;
 extern s_WorldObject_0 g_WorldObject_SavePad;
-extern s_WorldObjectPos g_WorldObjectPose_SavePad0;
-extern s_WorldObjectPos g_WorldObjectPose_SavePad1;
-extern s_WorldObjectPos g_WorldObjectPose_SavePad2;
+extern s_WorldObjectPose g_WorldObjectPose_SavePad0;
+extern s_WorldObjectPose g_WorldObjectPose_SavePad1;
+extern s_WorldObjectPose g_WorldObjectPose_SavePad2;
 extern s_WorldObjectDesc g_WorldObject_Gas;
 extern s_WorldObjectDesc g_WorldObject_Katana;
 extern u8 D_800D3474;
 extern s_WorldObjectDesc g_WorldObject_Cosmo;
 extern s_WorldObject_0 g_CommonWorldObjects[6];
-extern s_WorldObjectPos g_CommonWorldObjectPoses[7];
+extern s_WorldObjectPose g_CommonWorldObjectPoses[7];
 
 void Map_WorldObjectsInit(void)
 {
@@ -112,18 +112,18 @@ void Map_WorldObjectsInit(void)
     Math_Vector3Set(&g_WorldObjectPose_Winr, Q12(-100.0f), Q12(0.0f), Q12(20.0f));
     WorldObject_ModelNameSet(&g_WorldObject_SavePad, D_800A99E4.savePadName_4);
 
-    WorldObjectPositionInit(&g_WorldObjectPose_SavePad0, -100.47f, -1.575f, 22.22f, 0.0f, -75.8f, 0.0f);
-    WorldObjectPositionInit(&g_WorldObjectPose_SavePad1, -178.08f, -0.705f, 22.0298f, 0.0f, 12.1f, 0.0f);
-    WorldObjectPositionInit(&g_WorldObjectPose_SavePad2, -146.4248f, -0.911f, 21.325f, 0.0f, 8.0f, 0.0f);
+    WorldObjectPoseInit(&g_WorldObjectPose_SavePad0, -100.47f, -1.575f, 22.22f, 0.0f, -75.8f, 0.0f);
+    WorldObjectPoseInit(&g_WorldObjectPose_SavePad1, -178.08f, -0.705f, 22.0298f, 0.0f, 12.1f, 0.0f);
+    WorldObjectPoseInit(&g_WorldObjectPose_SavePad2, -146.4248f, -0.911f, 21.325f, 0.0f, 8.0f, 0.0f);
 
 
-    WorldObjectPositionInit(&g_WorldObject_Gas.position_1C, -177.2998f, -1.2522f, 21.125f, 0.0f, -145.55f, 0.0f);
+    WorldObjectPoseInit(&g_WorldObject_Gas.position_1C, -177.2998f, -1.2522f, 21.125f, 0.0f, -145.55f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject_Gas.object_0, "GAS_HIDE");
 
     Math_Vector3Set(&g_WorldObject_Katana.position_1C.position_0, Q12(-140.8628f), Q12(-0.5511f), Q12(62.3404f));
     WorldObject_ModelNameSet(&g_WorldObject_Katana.object_0, "KATANA1_");
 
-    WorldObjectPositionInit(&g_WorldObject_Cosmo.position_1C, -145.75f, -0.92f, 18.3274f, 0.0f, -55.1f, 0.0f);
+    WorldObjectPoseInit(&g_WorldObject_Cosmo.position_1C, -145.75f, -0.92f, 18.3274f, 0.0f, -55.1f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject_Cosmo.object_0, "COSMO_HI");
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);

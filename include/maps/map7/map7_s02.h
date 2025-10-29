@@ -53,6 +53,7 @@ extern u8 D_800E9D8E;
 extern s8 D_800E9ECC;
 extern u8 D_800E9ECD;
 
+/** Time. */
 extern s16 D_800E9ED8;
 extern s16 D_800E9EDA;
 
@@ -70,7 +71,7 @@ extern VECTOR3 D_800EB6A4;
 extern u8  D_800EB6B0;
 extern s32 D_800EB6B4;
 
-extern s_WorldObjectPos D_800EB6E0; // Assumed type.
+extern s_WorldObjectPose D_800EB6E0; // Assumed type.
 
 extern s8 D_800EBAF4;
 

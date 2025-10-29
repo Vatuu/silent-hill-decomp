@@ -857,10 +857,10 @@ void func_800D87C0(void)
 
 void func_800D91EC(void)
 {
-    WorldObjectPositionInit(&g_WorldObject1.position_1C, -58.81f, -1.3f, 18.0198f, 0.0f, 0.0f, 0.0f);
+    WorldObjectPoseInit(&g_WorldObject1.position_1C, -58.81f, -1.3f, 18.0198f, 0.0f, 0.0f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject1.object_0, "TOBIRA00");
 
-    WorldObjectPositionInit(&g_WorldObject2.position_1C, -58.81f, -1.3f, 18.0198f, 0.0f, 0.0f, 0.0f);
+    WorldObjectPoseInit(&g_WorldObject2.position_1C, -58.81f, -1.3f, 18.0198f, 0.0f, 0.0f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject2.object_0, "TOBIRA01");
 
     Math_Vector3Set(&g_WorldObject3.position_1C.position_0, Q12(-58.81f), -0x1666, Q12(18.0198f));
@@ -882,12 +882,12 @@ void func_800D91EC(void)
 
     if (!Savegame_EventFlagGet(EventFlag_75))
     {
-        WorldObjectPositionInit(&g_WorldObject0.position_1C, -99.0f, -2.68f, 23.73f, 0.0f, 0.0f, 0.0f);
+        WorldObjectPoseInit(&g_WorldObject0.position_1C, -99.0f, -2.68f, 23.73f, 0.0f, 0.0f, 0.0f);
         WorldObject_ModelNameSet(&g_WorldObject0.object_0, "SILVER_H");
     }
     else
     {
-        WorldObjectPositionInit(&g_WorldObject0.position_1C, -98.8f, 0.0f, 22.8f, -90.0f, 28.5f, 0);
+        WorldObjectPoseInit(&g_WorldObject0.position_1C, -98.8f, 0.0f, 22.8f, -90.0f, 28.5f, 0);
         WorldObject_ModelNameSet(&g_WorldObject0.object_0, "SILVER_H");
     }
 

@@ -289,17 +289,17 @@ typedef enum _EventFlag
 
     EventFlag_500 = 500, // Used as base event index added to `D_800E1690.field_0` in loop.
 
-    EventFlag_507 = 507, // } Used in `for(i < 4)` loop.
+    EventFlag_507 = 507, // } Used in `for (i < 4)` loop.
     EventFlag_508 = 508, // }
     EventFlag_509 = 509, // }
     EventFlag_510 = 510, // }
 
-    EventFlag_511 = 511, // } Used in `for(i < 4)` loop.
+    EventFlag_511 = 511, // } Used in `for (i < 4)` loop.
     EventFlag_512 = 512, // }
     EventFlag_513 = 513, // }
     EventFlag_514 = 514, // }
 
-    EventFlag_515 = 515, // } Used in `for(i < 4)` loop.
+    EventFlag_515 = 515, // } Used in `for (i < 4)` loop.
     EventFlag_516 = 516, // }
     EventFlag_517 = 517, // }
     EventFlag_518 = 518, // }

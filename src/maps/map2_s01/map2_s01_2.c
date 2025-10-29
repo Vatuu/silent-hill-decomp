@@ -434,7 +434,7 @@ extern s_WorldObject_0 g_CommonWorldObjects[6];
 extern s_WorldObjectDesc g_WorldObject_SavePad;
 extern s_WorldObjectDesc g_WorldObject_Key;
 extern s_WorldObjectDesc g_WorldObject_Item;
-extern s_WorldObjectPos g_CommonWorldObjectPoses[1];
+extern s_WorldObjectPose g_CommonWorldObjectPoses[1];
 
 void Map_WorldObjectsInit(void)
 {
@@ -443,10 +443,10 @@ void Map_WorldObjectsInit(void)
     Math_Vector3Set(&(g_WorldObject_Item.position_1C.position_0), Q12(19.8289f), Q12(-1.3633f), Q12(24.0735f));
     WorldObject_ModelNameSet(&g_WorldObject_Item.object_0, "ITEM_HID");
 
-    WorldObjectPositionInit(&g_WorldObject_Key.position_1C, 20.073f, -0.858f, 24.1469f, 0.0f, 23.0f, 0.0f);
+    WorldObjectPoseInit(&g_WorldObject_Key.position_1C, 20.073f, -0.858f, 24.1469f, 0.0f, 23.0f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject_Key.object_0, "KEY_HIDE");
 
-    WorldObjectPositionInit(&g_WorldObject_SavePad.position_1C, 18.3345f, -0.9102f, 14.1985f, 0.0f, 10.5f, 0.0f);
+    WorldObjectPoseInit(&g_WorldObject_SavePad.position_1C, 18.3345f, -0.9102f, 14.1985f, 0.0f, 10.5f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject_SavePad.object_0, D_800A99E4.savePadName_4);
 
     D_800D177C = 0;
