@@ -7384,6 +7384,9 @@ s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1) // 0x8007D6F0
 
 void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
 {
+	#define SetSVectorFastSum(v, x, y, z) \
+		*(s32*)&(v)->vx = (s32)((x) & 0xFFFF) + (s32)((y) << 16); \
+		(v)->vz = (z)
     VECTOR  sp20;
     VECTOR  sp30;
     VECTOR  sp40;
@@ -7504,43 +7507,51 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
                         switch (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F))
                         {
                             case EquippedWeaponId_KitchenKnife:
-                                *(u32*)&sp90 = (FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT) & 0xFFFF) +
-                                               (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x4B, Q12_SHIFT - 1)) << 16);
-                                sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x4B, Q12_SHIFT) >> 1;
+                                SetSVectorFastSum(&sp90,
+                                               FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT),
+                                               -FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0,0x4B, Q12_SHIFT - 1),
+                                               FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x4B, Q12_SHIFT) >> 1);
                                 break;
-
+                            
                             case EquippedWeaponId_SteelPipe:
-                                *(u32*)&sp90 = (FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT) & 0xFFFF) +
-                                               (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xE1, Q12_SHIFT) >> 1) << 16);
-                                sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x2D, Q12_SHIFT - 2);
+								SetSVectorFastSum(&sp90,
+                								FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT),
+                								-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xE1, Q12_SHIFT) >> 1),
+                								FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x2D, Q12_SHIFT - 2));
                                 break;
-
+                            
                             case EquippedWeaponId_Chainsaw:
-                                *(u32*)&sp90 = ((FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT) >> 1) & 0xFFFF) +
-                                               (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x87, Q12_SHIFT) >> 1) << 16);
-                                sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x1EF, Q12_SHIFT) >> 1;
+								SetSVectorFastSum(&sp90,
+                								FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT) >> 1,
+                								-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x87, Q12_SHIFT) >> 1),
+                								(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x1EF, Q12_SHIFT) >> 1));
                                 break;
-
                             case EquippedWeaponId_RockDrill:
-                                *(u32*)&sp90 = (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x2D, Q12_SHIFT)) << 16);
-                                sp90.vz          = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x2D, Q12_SHIFT - 2);
+                                SetSVectorFastSum(&sp90,
+                								0,
+                								-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x2D, Q12_SHIFT)),
+                								FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x2D, Q12_SHIFT - 2));
                                 break;
-
+                            
                             case EquippedWeaponId_Axe:
-                                *(u32*)&sp90 = (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x2C1, Q12_SHIFT) >> 1) << 16);
-                                sp90.vz      = FP_MULTIPLY((u32)D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xC3, Q12_SHIFT);
+								SetSVectorFastSum(&sp90,
+                								0,
+                								-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x2C1, Q12_SHIFT) >> 1),
+                								FP_MULTIPLY((u32)D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xC3, Q12_SHIFT));
                                 break;
-
+                            
                             case EquippedWeaponId_Hammer:
-                                *(u32*)&sp90 = ((FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT) >> 1) & 0xFFFF) +
-                                               (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x69, Q12_SHIFT)) << 16);
-                                sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x13B, Q12_SHIFT) >> 1;
+								SetSVectorFastSum(&sp90,
+                								(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT) >> 1),
+                								-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x69, Q12_SHIFT)),
+                								FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x13B, Q12_SHIFT) >> 1);
                                 break;
-
+                            
                             case EquippedWeaponId_Katana:
-                                *(u32*)&sp90 = ((FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT) >> 1) & 0xFFFF) +
-                                               (-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x13B, Q12_SHIFT) >> 1) << 16);
-                                sp90.vz      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT);
+								SetSVectorFastSum(&sp90,
+                								(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT) >> 1),
+                								-(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x13B, Q12_SHIFT) >> 1),
+                								FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT));
                                 break;
                         }
 
