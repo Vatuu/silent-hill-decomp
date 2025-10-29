@@ -30,9 +30,9 @@ s16 D_800AFD1C[] = // Used by `func_8008A3E0`.
     0x155,  0x13B,  0x124, 0x111
 };
 
-void func_80085D78(bool arg0) // 0x80085D78
+void func_80085D78(bool reset) // 0x80085D78
 {
-    if (arg0)
+    if (reset)
     {
         g_SysWork.timer_2C = Q12(0.0f);
         g_SysWork.sysStateStep_C[2] = 0;
@@ -67,7 +67,7 @@ void func_80085DF0(void) // 0x80085DF0
     }
 }
 
-void SysWork_StateStepIncrementDelayed(s32 delay, bool arg1) // 0x80085E6C
+void SysWork_StateStepIncrementDelayed(s32 delay, bool reset) // 0x80085E6C
 {
     s32 elapsedTime;
 
@@ -76,11 +76,11 @@ void SysWork_StateStepIncrementDelayed(s32 delay, bool arg1) // 0x80085E6C
 
     if (delay < elapsedTime)
     {
-        func_80085D78(arg1);
+        func_80085D78(reset);
     }
 }
 
-void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool arg3) // 0x80085EB8
+void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset) // 0x80085EB8
 {
     s32 result;
 
@@ -103,7 +103,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool arg3) // 0x80
                 result = g_MapOverlayHeader.func_E8(chara);
                 if (result == 1) 
                 {
-                    func_80085D78(arg3);
+                    func_80085D78(reset);
                 }
             }
             else
@@ -111,7 +111,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool arg3) // 0x80
                 result = g_MapOverlayHeader.func_138(chara);
                 if (result == 1)
                 {
-                    func_80085D78(arg3);
+                    func_80085D78(reset);
                 }
             }
             break;
@@ -194,7 +194,7 @@ void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 step
     }
 }
 
-void SysWork_StateStepIncrementAfterFade(s32 arg0, bool arg1, s32 fadeType, q19_12 fadeTimestep, bool arg4) // 0x8008616C
+void SysWork_StateStepIncrementAfterFade(s32 arg0, bool arg1, s32 fadeType, q19_12 fadeTimestep, bool reset) // 0x8008616C
 {
     typedef enum _FadeType
     {
@@ -271,7 +271,7 @@ void SysWork_StateStepIncrementAfterFade(s32 arg0, bool arg1, s32 fadeType, q19_
                 {
                     if (arg1 == caseVar && ScreenFade_IsFinished())
                     {
-                        func_80085D78(arg4);
+                        func_80085D78(reset);
                     }
                     break;
                 }
@@ -281,7 +281,7 @@ void SysWork_StateStepIncrementAfterFade(s32 arg0, bool arg1, s32 fadeType, q19_
                 break;
             }
 
-            func_80085D78(arg4);
+            func_80085D78(reset);
             break;
     }
 }
@@ -292,7 +292,7 @@ const RECT D_8002AB10 =  // 0x8002AB10 .rodata
     (SCREEN_WIDTH / 5) * 3, SCREEN_HEIGHT
 };
 
-void func_800862F8(s32 arg0, s32 fileIdx, bool arg2) // 0x800862F8
+void func_800862F8(s32 arg0, s32 fileIdx, bool reset) // 0x800862F8
 {
     s32 switchVar;
 
@@ -324,7 +324,7 @@ void func_800862F8(s32 arg0, s32 fileIdx, bool arg2) // 0x800862F8
 
                 if (Fs_QueueDoThingWhenEmpty())
                 {
-                    func_80085D78(arg2);
+                    func_80085D78(reset);
                 }
             }
             break;
@@ -332,7 +332,7 @@ void func_800862F8(s32 arg0, s32 fileIdx, bool arg2) // 0x800862F8
         case 1:
             if (Fs_QueueDoThingWhenEmpty())
             {
-                func_80085D78(arg2);
+                func_80085D78(reset);
             }
             break;
 
@@ -366,7 +366,7 @@ void func_800862F8(s32 arg0, s32 fileIdx, bool arg2) // 0x800862F8
     }
 }
 
-void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, bool arg3) // 0x80086470
+void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, bool reset) // 0x80086470
 {
     s32 switchVarCpy;
 
@@ -417,7 +417,7 @@ void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, bool arg3) // 0x800
 
             if (switchVar == 1 || switchVar == 4)
             {
-                func_80085D78(arg3);
+                func_80085D78(reset);
                 break;
             }
 
@@ -454,19 +454,19 @@ void func_800865FC(bool isPos, s32 idx0, s32 idx1, q3_12 angleY, q19_12 offsetOr
     }
 }
 
-void func_800866D4(s32 arg0, s32 arg1, bool arg2) // 0x800866D4
+void func_800866D4(s32 arg0, s32 arg1, bool reset) // 0x800866D4
 {
     if (g_MapOverlayHeader.func_D0(arg0, &D_800C4640, D_800C4700[0], arg1) == 1)
     {
-        func_80085D78(arg2);
+        func_80085D78(reset);
     }
 }
 
-void func_80086728(s_SubCharacter* chara, s32 arg1, s32 arg2, bool arg3) // 0x80086728
+void func_80086728(s_SubCharacter* chara, s32 arg1, s32 arg2, bool reset) // 0x80086728
 {
     if (g_MapOverlayHeader.func_13C(chara, arg1, &D_800C46A0, D_800C4702, arg2) == 1)
     {
-        func_80085D78(arg3);
+        func_80085D78(reset);
     }
 }
 
@@ -524,7 +524,7 @@ s32 func_8008694C(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 idx)
     return FP_MULTIPLY(arg0, Math_Sin(arg1 + ((arg2 * D_800C4710[idx]) / arg3)), Q12_SHIFT);
 }
 
-void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* sounds) // 0x800869E4
+void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* soundsIdxs) // 0x800869E4
 {
     s32 mapMsgState;
 
@@ -537,7 +537,7 @@ void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* sounds) // 0x800869E
     }
     else if (mapMsgState == MapMsgState_Finish)
     {
-        Sd_EngineCmd(sounds[*soundIdx]);
+        Sd_EngineCmd(soundsIdxs[*soundIdx]);
         *soundIdx += 1;
     }
 }
@@ -676,7 +676,7 @@ void func_80086C58(s_SubCharacter* chara, s32 arg1) // 0x80086C58
     switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
-            func_80085EB8(0, chara, arg1, 0);
+            func_80085EB8(0, chara, arg1, false);
 
             g_SysWork.timer_2C = Q12(0.0f);
             g_SysWork.sysStateStep_C[2] = 0;
@@ -684,7 +684,7 @@ void func_80086C58(s_SubCharacter* chara, s32 arg1) // 0x80086C58
             break;
 
         case 1:
-            func_80085EB8(1, chara, 0, 1);
+            func_80085EB8(1, chara, 0, true);
             break;
 
         default:
@@ -698,7 +698,7 @@ void func_80086D04(s_SubCharacter* chara) // 0x80086D04
     switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
-            func_80085EB8(3, chara, 0, 0);
+            func_80085EB8(3, chara, 0, false);
 
             g_SysWork.timer_2C = Q12(0.0f);
             g_SysWork.sysStateStep_C[2] = 0;
@@ -706,7 +706,7 @@ void func_80086D04(s_SubCharacter* chara) // 0x80086D04
             break;
 
         case 1:
-            func_80085EB8(1, chara, 0, 1);
+            func_80085EB8(1, chara, 0, true);
             break;
 
         default:
@@ -772,7 +772,7 @@ void func_80086F44(q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x80086F44
     SysWork_StateStepIncrement();
 }
 
-void Map_MessageWithSfx(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
+void Map_MessageWithSfx(s32 mapMsgIdx, s32 sfx, VECTOR3* sfxPos) // 0x80086FE8
 {
     s32 i;
 
@@ -781,7 +781,8 @@ void Map_MessageWithSfx(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
         // Run through NPCs.
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
         {
-            if (g_SysWork.npcs_1A0[i].model_0.charaId_0 >= Chara_Harry && g_SysWork.npcs_1A0[i].model_0.charaId_0 <= Chara_MonsterCybil &&
+            if (g_SysWork.npcs_1A0[i].model_0.charaId_0 >= Chara_Harry &&
+                g_SysWork.npcs_1A0[i].model_0.charaId_0 <= Chara_MonsterCybil &&
                 g_SysWork.npcs_1A0[i].health_B0 > Q12(0.0f))
             {
                 break;
@@ -798,7 +799,7 @@ void Map_MessageWithSfx(s32 mapMsgIdx, s32 sfx, VECTOR3* pos) // 0x80086FE8
     {
         case 0:
             g_MapOverlayHeader.freezePlayerControl_C8();
-            func_8005DC1C(sfx, pos, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(sfx, sfxPos, Q8_CLAMPED(0.5f), 0);
 
             g_SysWork.timer_2C = Q12(0.0f);
             g_SysWork.sysStateStep_C[2] = 0;
@@ -2330,102 +2331,102 @@ void func_8008B398() // 0x8008B398
     func_8008B40C(0, 0);
 }
 
-void func_8008B3E4(s32 arg0) // 0x8008B3E4
+void func_8008B3E4(s32 vol) // 0x8008B3E4
 {
-    func_8008B474(0, arg0, 0);
+    func_8008B474(0, vol, 0);
 }
 
-void func_8008B40C(s32 arg0, s32 arg1) // 0x8008B40C
+void func_8008B40C(s32 vol, s32 soundType) // 0x8008B40C
 {
-    func_8008B474(3, arg0, arg1);
+    func_8008B474(3, vol, soundType);
 }
 
-void func_8008B438(s32 arg0, s32 arg1, s32 arg2) // 0x8008B438
+void func_8008B438(s32 arg0, s32 vol, s32 soundType) // 0x8008B438
 {
-    s32 cond;
+    bool cond;
 
     cond = arg0 != 0;
-    if (func_8008B474(2 - cond, arg1, arg2) != 0)
+    if (func_8008B474(2 - cond, vol, soundType))
     {
         func_80089314(cond);
     }
 }
 
-bool func_8008B474(s32 arg0, s32 inVol, s32 soundType)
+bool func_8008B474(s32 arg0, s32 vol, s32 soundType) // 0x8008B474
 {
-    s32 vol;
+    s32 unkVol;
     s32 cond;
     u16 sfx;
 
-    vol = 0;
+    unkVol = 0;
     sfx = 0;
     switch (arg0)
     {
         case 0:
             sfx = Sfx_Unk1300;
-            vol = g_SysWork.field_2760;
+            unkVol = g_SysWork.field_2760;
             soundType = 0;
             break;
 
         case 1:
             sfx = Sfx_Unk1301;
-            vol = g_SysWork.field_275C;
+            unkVol = g_SysWork.field_275C;
             break;
 
         case 2:
             sfx = Sfx_Unk1302;
-            vol = g_SysWork.field_275C;
+            unkVol = g_SysWork.field_275C;
             break;
 
         case 3:
             sfx = Sfx_Unk1303;
-            vol = g_SysWork.field_2764;
+            unkVol = g_SysWork.field_2764;
             break;
     }
 
-    cond = !vol;
-    if (g_DeltaTime0 == 0)
+    cond = !unkVol;
+    if (g_DeltaTime0 == Q12(0.0f))
     {
-        inVol = 0;
+        vol = 0;
     }
 
-    if (inVol >= 0)
+    if (vol >= 0)
     {
-        if (inVol != 0)
+        if (vol != 0)
         {
-            if (inVol >= 256)
+            if (vol > Q8_CLAMPED(1.0f))
             {
-                vol = Q12(511.0f);
+                unkVol = Q12(511.0f);
             }
             else
             {
-                vol = FP_TO(inVol, Q12_SHIFT) + Q12(256.0f);
+                unkVol = FP_TO(vol, Q12_SHIFT) + Q12(256.0f);
             }
         }
         else
         {
-            vol = 0;
+            unkVol = 0;
         }
     }
     else
     {
-        vol -= (g_DeltaTime0 << 9);
-        if (vol < 0)
+        unkVol -= g_DeltaTime0 << 9;
+        if (unkVol < 0)
         {
-            vol = 0;
+            unkVol = 0;
         }
     }
 
-    if (vol == 0)
+    if (unkVol == 0)
     {
         func_8004690C(sfx);
     }
     else if (cond)
     {
         // NOTE: func_8005DC1C calls func_8005DC3C. `soundType` is `pitch` when calling `func_8005DC3C` directly.
-        if (vol > Q12(256.0f))
+        if (unkVol > Q12(256.0f))
         {
-            func_8005DC1C(sfx, &g_SysWork.player_4C.chara_0.position_18, FP_FROM(vol - Q12(256.0f), Q12_SHIFT), soundType);
+            func_8005DC1C(sfx, &g_SysWork.player_4C.chara_0.position_18, FP_FROM(unkVol - Q12(256.0f), Q12_SHIFT), soundType);
         }
         else
         {
@@ -2434,9 +2435,9 @@ bool func_8008B474(s32 arg0, s32 inVol, s32 soundType)
     }
     else
     {
-        if (vol > Q12(256.0f))
+        if (unkVol > Q12(256.0f))
         {
-            func_8005DC3C(sfx, &g_SysWork.player_4C.chara_0.position_18, FP_FROM(vol - Q12(256.0f), Q12_SHIFT), 4, soundType);
+            func_8005DC3C(sfx, &g_SysWork.player_4C.chara_0.position_18, FP_FROM(unkVol - Q12(256.0f), Q12_SHIFT), 4, soundType);
         }
         else
         {
@@ -2447,17 +2448,19 @@ bool func_8008B474(s32 arg0, s32 inVol, s32 soundType)
     switch (arg0)
     {
         case 0:
-            g_SysWork.field_2760 = vol;
+            g_SysWork.field_2760 = unkVol;
             break;
+
         case 1:
         case 2:
-            g_SysWork.field_275C = vol;
+            g_SysWork.field_275C = unkVol;
             break;
+
         case 3:
-            g_SysWork.field_2764 = vol;
+            g_SysWork.field_2764 = unkVol;
     }
 
-    return (vol > Q12(256.0f));
+    return unkVol > Q12(256.0f);
 }
 
 void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
@@ -2500,7 +2503,7 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
         case 25:
             if (g_SysWork.field_275C > 0x100000)
             {
-                func_8008B3E4(0x80);
+                func_8008B3E4(128);
                 break;
             }
 
@@ -3247,4 +3250,3 @@ INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80085D78", hack_vcSetWatchTgt
 INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80085D78", D_8002B2BC);
 
 INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80085D78", D_8002B2CC);
-

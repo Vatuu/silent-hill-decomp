@@ -1003,7 +1003,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
 
             model = &g_SysWork.npcs_1A0[npcIdx].model_0;
 
-            do { } while(false); // @hack Required for match.
+            do {} while(false); // @hack Required for match.
 
             g_Player_HeadingAngle =
             temp                  = headingAngle0;
@@ -4163,14 +4163,14 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
     #define MOVE_DIST_MIN            1
 
     // Used for `player.playerMoveDistance_126`.
-    #define GET_MOVE_SPEED(zoneType)                           \
+    #define GET_MOVE_SPEED(zoneType)                      \
         (((zoneType) == SpeedZoneType_Fast) ? Q12(5.0f) : \
                                               (((zoneType) == SpeedZoneType_Slow) ? Q12(3.5f) : Q12(4.0f)))
 
     // Used for `player.playerMoveDistance_126`.
-    #define GET_VAL(val)                                                                      \
+    #define GET_VAL(val)                                                           \
         (((val) < Q12(3.5f)) ? (((g_DeltaTime0) * Q12(0.75f)) / TIMESTEP_30_FPS) : \
-                                    (((g_DeltaTime0) + (((g_DeltaTime0) < 0) ? 3 : 0)) >> 2))
+                               (((g_DeltaTime0) + (((g_DeltaTime0) < 0) ? 3 : 0)) >> 2))
 
     q19_12                 speedX;
     q19_12                 speedZ;
