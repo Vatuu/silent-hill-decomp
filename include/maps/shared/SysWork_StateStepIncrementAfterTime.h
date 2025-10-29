@@ -8,7 +8,7 @@
  * @param setTimerToMax Clamp the external timer to the max time when it is reached.
  * @param incStateStep Increment the system state step when max time is reached.
  */
-void SysWork_StateStepIncrementAfterTime(s32* timer, s32 inc, s32 timeMin, s32 timeMax, bool setTimerToMax, bool incStateStep) // 0x800DA8E8
+void SysWork_StateStepIncrementAfterTime(q19_12* timer, q19_12 inc, q19_12 timeMin, q19_12 timeMax, bool setTimerToMax, bool incStateStep) // 0x800DA8E8
 {
     if (*timer < timeMin)
     {

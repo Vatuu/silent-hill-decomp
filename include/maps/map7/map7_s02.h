@@ -42,6 +42,7 @@ extern VECTOR3 D_800E9D00;
 
 extern u16 D_800E9D50;
 
+/** Map message indices. */
 extern u16 D_800E9D6C[];
 
 extern u16 D_800E9D7C;
@@ -57,6 +58,7 @@ extern u8 D_800E9ECD;
 extern s16 D_800E9ED8;
 extern s16 D_800E9EDA;
 
+/** Index into `D_800E9D6C`. */
 extern u8 D_800EA490;
 extern u16 D_800EA492;
 

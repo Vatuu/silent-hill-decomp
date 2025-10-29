@@ -34,7 +34,7 @@ INCLUDE_RODATA("asm/maps/map2_s04/nonmatchings/map2_s04", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CC61C
 
-s32 func_800CC7F4()
+s32 func_800CC7F4() // 0x800CC7F4
 {
     return 0;
 }
@@ -65,7 +65,7 @@ void func_800CCA04(void) {}
 
 void func_800CCA0C(void) {}
 
-s32 func_800CCA14()
+s32 func_800CCA14() // 0x800CCA14
 {
     return 0;
 }
@@ -195,6 +195,7 @@ extern s_WorldObjectPose g_CommonWorldObjectPoses[7];
 void Map_WorldObjectsInit(void)
 {
     D_800CF280 = 0;
+
     WorldObjectPoseInit(&g_WorldObject_SavePad0.position_1C, -60.9976f, -0.8289f, 20.1067f, 0.0f, -100.7f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject_SavePad0.object_0, D_800A99E4.savePadName_4);
 
@@ -218,9 +219,11 @@ void Map_WorldObjectsInit(void)
 void Map_WorldObjectsUpdate(void)
 {
     MAP_CHUNK_CHECK_VARIABLE_DECL();
+
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
     {
         g_WorldGfx_ObjectAdd(&g_WorldObject_SavePad0.object_0, &g_WorldObject_SavePad0.position_1C.position_0, &g_WorldObject_SavePad0.position_1C.rotation_C);
+
         if (!Savegame_EventFlagGet(EventFlag_M1S02_PickupShotgun))
         {
             g_WorldGfx_ObjectAdd(&g_WorldObject_Shotgun.object_0, &g_WorldObject_Shotgun.position_1C.position_0, &g_WorldObject_Shotgun.position_1C.rotation_C);
@@ -242,6 +245,7 @@ void Map_WorldObjectsUpdate(void)
             func_8003ED74(7, 4);
             D_800CF280++;
         }
+
         g_WorldGfx_ObjectAdd(&g_WorldObject_SavePad1.object_0, &g_WorldObject_SavePad1.position_1C.position_0, &g_WorldObject_SavePad1.position_1C.rotation_C);
     }
     else

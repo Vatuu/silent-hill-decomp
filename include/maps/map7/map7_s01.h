@@ -53,6 +53,7 @@ extern s_800E1510 D_800E1510[26];
 
 extern u8 D_800E1544[5];
 
+/** Map message indices. */
 extern u16 D_800E154C[];
 
 extern u16 D_800E155C;
@@ -69,6 +70,7 @@ extern u8 D_800E1671;
 extern s16 D_800E1678[4];
 extern u8  D_800E1680;
 
+/** Index into `D_800E154C`. */
 extern u8 D_800E168D;
 
 extern u16 D_800E168E;
