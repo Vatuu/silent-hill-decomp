@@ -11,7 +11,27 @@ INCLUDE_RODATA("asm/maps/map1_s02/nonmatchings/map1_s02", g_MapOverlayHeader);
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800CBA4C);
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800CBC98);
+void func_800CBC98(void)
+{
+    s32 idx;
+    s32 i;
+
+    for (i = 0; i < D_800E30C8.field_74; i++)
+    {
+        idx = func_8005E7E0(27);
+        if (idx == NO_VALUE)
+        {
+            break;    
+        }
+        func_800CBA4C(idx, 2, 0);
+    }
+
+    for (i = 0; i <  D_800E30C8.field_78; i++)
+    {
+        D_800E30C8.field_54[i] = 0;
+    }
+    D_800C4414 |= (1<<3);
+}
 
 void func_800CBD58(void)
 {

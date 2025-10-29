@@ -24,6 +24,7 @@
 #define MAP_ROOM_MAX_Z Q12(200.0f)
 
 extern s_MapHdr_field_4C D_800E1FF8[200];
+extern s_MapOverlayHeader_94 D_800E30C8;
 
 void func_800DA8F8(void);
 
@@ -48,5 +49,7 @@ void func_800DD208(void);
 void func_800DD420(void);
 
 void func_800DEC88(void);
+
+void func_800CBA4C(s32 arg0, s32 arg1, s32 arg2);
 
 #endif
