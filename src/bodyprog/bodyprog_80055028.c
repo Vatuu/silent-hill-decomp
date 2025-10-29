@@ -1028,7 +1028,105 @@ void StringCopy(char* prevStr, char* newStr) // 0x80056D64
     strncpy(prevStr, newStr, 8);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80056D8C); // 0x80056D8C
+void func_80056D8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, GsOT* arg6, s32 arg7) // 0x80056D8C
+{
+    s16       var_a3;
+    s16       var_a3_2;
+    s16       var_v1;
+    s16       var_v1_2;
+    s32       temp_a0_2;
+    s32       var_s0;
+    s32       var_t1;
+    s32       var_v0;
+    s32       var_v1_3;
+    s32       var_v1_4;
+    POLY_G4*  poly;
+    DR_MODE*  mode;
+    PACKET*   packet;
+    PACKET*   packet2;
+    GsOT_TAG* tag;
+    s16       temp_s6;
+    s16       temp_s5;
+
+    var_t1  = arg4;
+    temp_s5 = arg3;
+
+    if (!D_800C4168.fogEnabled_1)
+    {
+        return;
+    }
+
+    var_a3 = MAX(arg0, ~(g_GameWork.gsScreenWidth_588 >> 1));
+    var_v1 = MAX(arg1, ~(g_GameWork.gsScreenHeight_58A >> 1));
+
+    var_v1_2 = CLAMP_HIGH(arg2, (g_GameWork.gsScreenWidth_588 >> 1) + 1);
+    temp_s6  = var_v1_2;
+
+    var_a3_2 = CLAMP_HIGH(temp_s5, (g_GameWork.gsScreenHeight_58A >> 1) + 1);
+    temp_s5  = var_a3_2;
+
+    temp_a0_2 = 0x79C << (arg7 + 2);
+
+    if (D_800C4168.fogEnabled_1)
+    {
+        var_v1_3 = MIN(temp_a0_2, D_800C4168.drawDistance_10);
+    }
+    else
+    {
+        var_v1_3 = temp_a0_2;
+    }
+
+    var_v0 = var_t1 >> 4;
+
+    if (var_v0 < (var_v1_3 + 0x300))
+    {
+        if (var_t1 < 0)
+        {
+            var_t1 = 0;
+        }
+
+        var_s0 = (func_80055A50(var_t1) * 16) + D_800C4168.fogRelated_18;
+        var_s0 = MIN(var_s0, 0x1000);
+
+        var_v1_4 = MAX(arg5 >> 7, 1);
+
+        packet = GsOUT_PACKET_P;
+        tag    = &arg6->org[var_v1_4];
+
+        SetPriority(packet, 0, 0);
+        AddPrim(tag, packet);
+
+        poly           = (POLY_G4*)(packet + 0xC);
+        GsOUT_PACKET_P = (PACKET*)poly;
+
+        *(u32*)&poly->r0 = *(u32*)&poly->r1 = *(u32*)&poly->r2 = *(u32*)&poly->r3 =
+            FP_MULTIPLY(D_800C4168.fogColor_1C.r, var_s0, Q12_SHIFT) +
+            (FP_MULTIPLY(D_800C4168.fogColor_1C.g, var_s0, Q12_SHIFT) << 8) +
+            (FP_MULTIPLY(D_800C4168.fogColor_1C.b, var_s0, Q12_SHIFT) << 16);
+
+        SetPolyG4(poly);
+
+        *(s32*)&poly->x0 = var_a3 + (var_v1 << 16);
+        *(s32*)&poly->x1 = temp_s6 + (var_v1 << 16);
+        *(s32*)&poly->x2 = var_a3 + (temp_s5 << 16);
+        *(s32*)&poly->x3 = temp_s6 + (temp_s5 << 16);
+
+        setSemiTrans(poly, 1);
+        AddPrim(tag, poly);
+
+        mode           = (DR_MODE*)(packet + 0x30);
+        GsOUT_PACKET_P = (PACKET*)mode;
+        SetDrawMode(mode, 0, 1, 0x20, NULL);
+        AddPrim(tag, mode);
+
+        packet2        = packet + 0x3C;
+        GsOUT_PACKET_P = packet2;
+        SetPriority(packet2, 1, 1);
+        AddPrim(tag, packet2);
+
+        GsOUT_PACKET_P = packet + 0x48;
+    }
+}
 
 void func_80057090(s_ModelInfo* modelInfo, GsOT* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5) // 0x80057090
 {
