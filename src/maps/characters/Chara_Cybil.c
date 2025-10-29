@@ -33,9 +33,9 @@ void Ai_Cybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* 
         Ai_Cybil_Init(chara);
     }
 
-    sharedSymbol_800D8A68_0_s01(chara, coords);
-    sharedFunc_800D88D0_0_s01(chara, coords);
-    sharedFunc_800D8888_0_s01(chara, anmHdr, coords);
+    Ai_Cybil_AnimStateUpdate(chara, coords);
+    Ai_Cybil_MovementUpdate(chara, coords);
+    Ai_Cybil_AnimUpdate(chara, anmHdr, coords);
 }
 
 /** Addresses
@@ -44,7 +44,7 @@ void Ai_Cybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* 
  * MAP6_S01: 0x800CE570
  * MAP7_S03: 0x800D110C
  */
-void sharedFunc_800D8888_0_s01(s_SubCharacter* chara, s_AnmHeader* animHdr, GsCOORDINATE2* coord)
+void Ai_Cybil_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* animHdr, GsCOORDINATE2* coord)
 {
     s_AnimInfo* animInfo;
 
@@ -61,7 +61,7 @@ void sharedFunc_800D8888_0_s01(s_SubCharacter* chara, s_AnmHeader* animHdr, GsCO
  * MAP6_S01: 0x800CE5B8
  * MAP7_S03: 0x800D1154
  */
-void sharedFunc_800D88D0_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coord)
+void Ai_Cybil_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord)
 {
     VECTOR3 unused;
     VECTOR3 vec;
@@ -98,7 +98,7 @@ void sharedFunc_800D88D0_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coord)
  * MAP6_S01: 
  * MAP7_S03: 
  */
-void sharedSymbol_800D8A68_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
+void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 {
     s_Collision coll;
     s32         sfx;
@@ -392,19 +392,19 @@ void sharedSymbol_800D8A68_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
     switch (dahliaProps.stateIdx0)
     {
         case 1:
-            sharedFunc_800D908C_0_s00(7, chara, 32, 45, sfx, pitch0);
+            sharedFunc_800D908C_0_s00(ANIM_STATUS(3, true), chara, 32, 45, sfx, pitch0);
             break;
 
         case 2:
-            sharedFunc_800D908C_0_s00(43, chara, 18, 7, sfx, pitch1);
+            sharedFunc_800D908C_0_s00(ANIM_STATUS(21, true), chara, 18, 7, sfx, pitch1);
             break;
 
         case 3:
-            sharedFunc_800D908C_0_s00(9, chara, 61, 57, sfx, pitch0);
+            sharedFunc_800D908C_0_s00(ANIM_STATUS(4, true), chara, 61, 57, sfx, pitch0);
             break;
 
         case 4:
-            sharedFunc_800D908C_0_s00(11, chara, 70, 74, sfx, pitch1);
+            sharedFunc_800D908C_0_s00(ANIM_STATUS(5, true), chara, 70, 74, sfx, pitch1);
             break;
 
         case 8:
@@ -412,49 +412,49 @@ void sharedSymbol_800D8A68_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 6:
-            sharedFunc_800D908C_0_s00(15, chara, 83, 86, sfx, pitch0);
-            sharedFunc_800D9188_0_s00(15, chara, 92, Sfx_Unk1369);
+            sharedFunc_800D908C_0_s00(ANIM_STATUS(7, true), chara, 83, 86, sfx, pitch0);
+            sharedFunc_800D9188_0_s00(ANIM_STATUS(7, true), chara, 92, Sfx_Unk1369);
             break;
 
         case 13:
             if (chara->model_0.anim_4.keyframeIdx_8 <= 185)
             {
-                sharedFunc_800D908C_0_s00(27, chara, 185, 189, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(13, true), chara, 185, 189, sfx, pitch0);
             }
             else if (chara->model_0.anim_4.keyframeIdx_8 <= 192)
             {
-                sharedFunc_800D908C_0_s00(27, chara, 192, 189, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(13, true), chara, 192, 189, sfx, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(27, chara, 227, 222, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(13, true), chara, 227, 222, sfx, pitch0);
             }
             break;
 
         case 15:
-            sharedFunc_800D908C_0_s00(31, chara, 260, 260, sfx, pitch0);
+            sharedFunc_800D908C_0_s00(ANIM_STATUS(15, true), chara, 260, 260, sfx, pitch0);
             break;
 
         case 14:
-            sharedFunc_800D908C_0_s00(29, chara, 239, 239, sfx, pitch0);
+            sharedFunc_800D908C_0_s00(ANIM_STATUS(14, true), chara, 239, 239, sfx, pitch0);
             break;
 
         case 19:
-            sharedFunc_800D908C_0_s00(39, chara, 362, 357, sfx, pitch0);
+            sharedFunc_800D908C_0_s00(ANIM_STATUS(19, true), chara, 362, 357, sfx, pitch0);
             break;
 
         case 20:
             if (chara->model_0.anim_4.keyframeIdx_8 <= 373)
             {
-                sharedFunc_800D908C_0_s00(41, chara, 373, 380, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(20, true), chara, 373, 380, sfx, pitch0);
             }
             else if (chara->model_0.anim_4.keyframeIdx_8 <= 391)
             {
-                sharedFunc_800D908C_0_s00(41, chara, 391, 380, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(20, true), chara, 391, 380, sfx, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(41, chara, 403, 398, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(20, true), chara, 403, 398, sfx, pitch0);
             }
             break;
 
@@ -467,32 +467,32 @@ void sharedSymbol_800D8A68_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
             {
                 if (chara->model_0.anim_4.keyframeIdx_8 <= 30)
                 {
-                    sharedFunc_800D908C_0_s00(45, chara, 30, 39, sfx, pitch0);
+                    sharedFunc_800D908C_0_s00(ANIM_STATUS(22, true), chara, 30, 39, sfx, pitch0);
                 }
                 else if (chara->model_0.anim_4.keyframeIdx_8 <= 46)
                 {
-                    sharedFunc_800D908C_0_s00(45, chara, 46, 39, sfx, pitch0);
+                    sharedFunc_800D908C_0_s00(ANIM_STATUS(22, true), chara, 46, 39, sfx, pitch0);
                 }
                 else
                 {
-                    sharedFunc_800D908C_0_s00(45, chara, 63, 56, sfx, pitch0);
+                    sharedFunc_800D908C_0_s00(ANIM_STATUS(22, true), chara, 63, 56, sfx, pitch0);
                 }
             }
             else
             {
                 if (chara->model_0.anim_4.keyframeIdx_8 <= 81)
                 {
-                    sharedFunc_800D908C_0_s00(45, chara, 81, 74, sfx, pitch0);
+                    sharedFunc_800D908C_0_s00(ANIM_STATUS(22, true), chara, 81, 74, sfx, pitch0);
                 }
                 else
                 {
-                    sharedFunc_800D908C_0_s00(45, chara, 97, 91, sfx, pitch0);
+                    sharedFunc_800D908C_0_s00(ANIM_STATUS(22, true), chara, 97, 91, sfx, pitch0);
                 }
             }
             break;
 
         case 28:
-            sharedFunc_800D908C_0_s00(51, chara, 201, 198, sfx, pitch0);
+            sharedFunc_800D908C_0_s00(ANIM_STATUS(25, true), chara, 201, 198, sfx, pitch0);
 
             if (sharedFunc_800D9188_0_s00(chara->model_0.anim_4.status_0, chara, 228, Sfx_Unk1699))
             {
@@ -519,11 +519,11 @@ void sharedSymbol_800D8A68_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 24:
-            sharedFunc_800D9188_0_s00(59, chara, 327, Sfx_Unk1672);
+            sharedFunc_800D9188_0_s00(ANIM_STATUS(29, true), chara, 327, Sfx_Unk1672);
             break;
 
         case 21:
-            sharedFunc_800D9188_0_s00(53, chara, 282, Sfx_Unk1539);
+            sharedFunc_800D9188_0_s00(ANIM_STATUS(26, true), chara, 282, Sfx_Unk1539);
             break;
     }
 

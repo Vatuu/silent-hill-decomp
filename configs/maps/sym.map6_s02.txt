@@ -60,9 +60,9 @@ sharedFunc_800D2EF4_0_s00           = 0x800CD720; // type:func
 //--- PA: 0x0041BC   VA: 0x800CD734   subsegment: c, Chara_Alessa
 //---------------------------------------------------------------
 Ai_Alessa_Update                    = 0x800CD734; // type:func
-sharedFunc_800CECFC_3_s02           = 0x800CD7A8; // type:func
-sharedFunc_800CED44_3_s02           = 0x800CD7F0; // type:func
-sharedFunc_800CEEDC_3_s02           = 0x800CD988; // type:func
+Ai_Alessa_AnimUpdate           = 0x800CD7A8; // type:func
+Ai_Alessa_MovementUpdate           = 0x800CD7F0; // type:func
+Ai_Alessa_AnimStateUpdate           = 0x800CD988; // type:func
 Ai_Alessa_Init                      = 0x800CDE8C; // type:func
 
 //-------------------------------------------------------------

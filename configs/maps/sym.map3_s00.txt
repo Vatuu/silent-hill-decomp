@@ -72,9 +72,9 @@ sharedFunc_800D2EF4_0_s00   = 0x800CF208; // type:func
 //--- PA: 0x005CA4   VA: 0x800CF21C   subsegment: c, Chara_Kaufmann
 //-----------------------------------------------------------------
 Ai_Kaufmann_Update          = 0x800CF21C; // type:func
-sharedFunc_800CF290_3_s00   = 0x800CF290; // type:func
-sharedFunc_800CF2D8_3_s00   = 0x800CF2D8; // type:func
-sharedSymbol_800CF470_3_s00 = 0x800CF470; // type:func
+Ai_Kaufmann_AnimUpdate   = 0x800CF290; // type:func
+Ai_Kaufmann_MovementUpdate   = 0x800CF2D8; // type:func
+Ai_Kaufmann_AnimStateUpdate = 0x800CF470; // type:func
 Ai_Kaufmann_Init            = 0x800CFE48; // type:func
 
 //-------------------------------------------------------------

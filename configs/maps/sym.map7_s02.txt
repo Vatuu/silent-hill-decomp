@@ -101,19 +101,18 @@ sharedFunc_800D7E04_0_s00           = 0x800D57E4; // type:func
 //--- PA: 0x00C420   VA: 0x800D5998   subsegment: c, Chara_Lisa
 //-------------------------------------------------------------
 Ai_Lisa_Update                      = 0x800D5998; // type:func
-sharedFunc_800D08FC_3_s04           = 0x800D5A0C; // type:func
-sharedFunc_800D0944_3_s04           = 0x800D5A54; // type:func
-sharedSymbol_800D0ADC_3_s04         = 0x800D5BEC; // type:func
+Ai_Lisa_AnimUpdate           = 0x800D5A0C; // type:func
+Ai_Lisa_MovementUpdate           = 0x800D5A54; // type:func
+Ai_Lisa_AnimStateUpdate         = 0x800D5BEC; // type:func
 Ai_Lisa_Init                        = 0x800D6460; // type:func
 
 //-------------------------------------------------------------------
 //--- PA: 0x00CF0C   VA: 0x800D6484   subsegment: c, Chara_BloodyLisa
 //-------------------------------------------------------------------
 Ai_BloodyLisa_Update                = 0x800D6484; // type:func
-sharedFunc_800D595C_7_s01           = 0x800D64F8; // type:func
-sharedFunc_800D59A4_7_s01           = 0x800D6540; // type:func
-sharedFunc_800D654C_0_s00           = 0x800D654C; // type:func
-sharedFunc_800D5B3C_7_s01           = 0x800D66D8; // type:func
+Ai_BloodyLisa_AnimUpdate           = 0x800D64F8; // type:func
+Ai_BloodyLisa_MovementUpdate           = 0x800D6540; // type:func
+Ai_BloodyLisa_AnimStateUpdate           = 0x800D66D8; // type:func
 Ai_BloodyLisa_Init                  = 0x800D6850; // type:func
 
 //--------------------------------------------------------------------
@@ -131,27 +130,27 @@ sharedFunc_800D0F28_3_s03           = 0x800D6C94; // type:func
 //--- PA: 0x00D95C   VA: 0x800D6ED4   subsegment: c, Chara_Dahlia
 //---------------------------------------------------------------
 Ai_Dahlia_Update                    = 0x800D6ED4; // type:func
-sharedFunc_800CD280_2_s01           = 0x800D6F48; // type:func
-sharedFunc_800CD2C8_2_s01           = 0x800D6F90; // type:func
-sharedSymbol_800CD4A0_2_s01         = 0x800D7168; // type:func
+Ai_Dahlia_AnimUpdate           = 0x800D6F48; // type:func
+Ai_Dahlia_MovementUpdate           = 0x800D6F90; // type:func
+Ai_Dahlia_AnimStateUpdate         = 0x800D7168; // type:func
 Ai_Dahlia_Init                      = 0x800D7A20; // type:func
 
 //-------------------------------------------------------------------------
 //--- PA: 0x00E4F0   VA: 0x800D7A68   subsegment: c, Chara_GhostChildAlessa
 //-------------------------------------------------------------------------
 Ai_GhostChildAlessa_Update          = 0x800D7A68; // type:func
-sharedFunc_800D4A2C_7_s01           = 0x800D7ADC; // type:func
-sharedFunc_800D4A74_7_s01           = 0x800D7B24; // type:func
-sharedFunc_800D4C0C_7_s01           = 0x800D7CBC; // type:func
+Ai_GhostChildAlessa_AnimUpdate           = 0x800D7ADC; // type:func
+Ai_GhostChildAlessa_MovementUpdate           = 0x800D7B24; // type:func
+Ai_GhostChildAlessa_AnimStateUpdate           = 0x800D7CBC; // type:func
 Ai_GhostChildAlessa_Init            = 0x800D7E88; // type:func
 
 //-----------------------------------------------------------------
 //--- PA: 0x00E934   VA: 0x800D7EAC   subsegment: c, Chara_Kaufmann
 //-----------------------------------------------------------------
 Ai_Kaufmann_Update                  = 0x800D7EAC; // type:func
-sharedFunc_800CF290_3_s00           = 0x800D7F20; // type:func
-sharedFunc_800CF2D8_3_s00           = 0x800D7F68; // type:func
-sharedSymbol_800CF470_3_s00         = 0x800D8100; // type:func
+Ai_Kaufmann_AnimUpdate           = 0x800D7F20; // type:func
+Ai_Kaufmann_MovementUpdate           = 0x800D7F68; // type:func
+Ai_Kaufmann_AnimStateUpdate         = 0x800D8100; // type:func
 Ai_Kaufmann_Init                    = 0x800D8AA8; // type:func
 
 //--------------------------------------------------------------------

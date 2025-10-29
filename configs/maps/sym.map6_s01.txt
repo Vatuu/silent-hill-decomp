@@ -64,18 +64,18 @@ sharedFunc_800D2EF4_0_s00           = 0x800CE4E8; // type:func
 //--- PA: 0x004F84   VA: 0x800CE4FC   subsegment: c, Chara_Cybil
 //--------------------------------------------------------------
 Ai_Cybil_Update                     = 0x800CE4FC; // type:func
-sharedFunc_800D8888_0_s01           = 0x800CE570; // type:func
-sharedFunc_800D88D0_0_s01           = 0x800CE5B8; // type:func
-sharedSymbol_800D8A68_0_s01         = 0x800CE750; // type:func
+Ai_Cybil_AnimUpdate           = 0x800CE570; // type:func
+Ai_Cybil_MovementUpdate           = 0x800CE5B8; // type:func
+Ai_Cybil_AnimStateUpdate         = 0x800CE750; // type:func
 Ai_Cybil_Init                       = 0x800CF794; // type:func
 
 //---------------------------------------------------------------
 //--- PA: 0x006258   VA: 0x800CF7D0   subsegment: c, Chara_Dahlia
 //---------------------------------------------------------------
 Ai_Dahlia_Update                    = 0x800CF7D0; // type:func
-sharedFunc_800CD280_2_s01           = 0x800CF844; // type:func
-sharedFunc_800CD2C8_2_s01           = 0x800CF88C; // type:func
-sharedSymbol_800CD4A0_2_s01         = 0x800CFA64; // type:func
+Ai_Dahlia_AnimUpdate           = 0x800CF844; // type:func
+Ai_Dahlia_MovementUpdate           = 0x800CF88C; // type:func
+Ai_Dahlia_AnimStateUpdate         = 0x800CFA64; // type:func
 Ai_Dahlia_Init                      = 0x800D031C; // type:func
 
 //-------------------------------------------------------------

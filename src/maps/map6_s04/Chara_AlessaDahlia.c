@@ -7,7 +7,7 @@
 
 #include "../src/maps/characters/Chara_Alessa.c"
 
-// TODO: Splitting Dahlia to separate file causes alignment issue inside `sharedSymbol_800CD4A0_2_s01` rodata
+// TODO: Splitting Dahlia to separate file causes alignment issue inside `Ai_Dahlia_AnimStateUpdate` rodata
 // (4 bytes inserted between VECTOR3 and jtbl both used in that func)
 // Including her here seems to let it work for now.
 

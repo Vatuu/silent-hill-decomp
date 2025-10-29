@@ -25,9 +25,9 @@ void Ai_BloodyLisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINA
         Ai_BloodyLisa_Init(chara);
     }
 
-    sharedFunc_800D5B3C_7_s01(chara, coords);
-    sharedFunc_800D59A4_7_s01(chara, coords);
-    sharedFunc_800D595C_7_s01(chara, anmHdr, coords);
+    Ai_BloodyLisa_AnimStateUpdate(chara, coords);
+    Ai_BloodyLisa_MovementUpdate(chara, coords);
+    Ai_BloodyLisa_AnimUpdate(chara, anmHdr, coords);
 }
 
  /** Addresses
@@ -35,7 +35,7 @@ void Ai_BloodyLisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINA
  * MAP7_S02: 0x800D64F8
  * MAP7_S03: 0x800D4CC4
  */
-void sharedFunc_800D595C_7_s01(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coord)
+void Ai_BloodyLisa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coord)
 {
     s_AnimInfo* animInfo;
 
@@ -51,7 +51,7 @@ void sharedFunc_800D595C_7_s01(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOO
  * MAP7_S02: 0x800D6540
  * MAP7_S03: 0x800D4D0C
  */
-void sharedFunc_800D59A4_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coord)
+void Ai_BloodyLisa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord)
 {
     VECTOR3 unused;
     VECTOR3 vec;
@@ -87,7 +87,7 @@ void sharedFunc_800D59A4_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coord)
  * MAP7_S02: 0x800D66D8
  * MAP7_S03: 0x800D4EA4
  */
-void sharedFunc_800D5B3C_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
+void Ai_BloodyLisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 {
     s_Collision coll;
     s32         sfx;
@@ -115,15 +115,15 @@ void sharedFunc_800D5B3C_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
         case 6:
             if (chara->model_0.anim_4.keyframeIdx_8 <= 12)
             {
-                sharedFunc_800D908C_0_s00(3, chara, 12, 27, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(1, true), chara, 12, 27, sfx, pitch0);
             }
             else if (chara->model_0.anim_4.keyframeIdx_8 <= 49)
             {
-                sharedFunc_800D908C_0_s00(3, chara, 49, 27, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(1, true), chara, 49, 27, sfx, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(3, chara, 92, 69, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(1, true), chara, 92, 69, sfx, pitch0);
             }
             break;
     }

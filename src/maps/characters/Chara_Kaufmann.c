@@ -27,9 +27,9 @@ void Ai_Kaufmann_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE
         Ai_Kaufmann_Init(chara);
     }
 
-    sharedSymbol_800CF470_3_s00(chara, coords);
-    sharedFunc_800CF2D8_3_s00(chara, coords);
-    sharedFunc_800CF290_3_s00(chara, anmHdr, coords);
+    Ai_Kaufmann_AnimStateUpdate(chara, coords);
+    Ai_Kaufmann_MovementUpdate(chara, coords);
+    Ai_Kaufmann_AnimUpdate(chara, anmHdr, coords);
 }
 
 /** Addresses
@@ -39,7 +39,7 @@ void Ai_Kaufmann_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE
  * MAP7_S02: 0x800D7F20
  * MAP7_S03: 0x800D3FCC
  */
-void sharedFunc_800CF290_3_s00(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coord)
+void Ai_Kaufmann_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coord)
 {
     s_AnimInfo* animInfo;
 
@@ -57,7 +57,7 @@ void sharedFunc_800CF290_3_s00(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOO
  * MAP7_S02: 0x800D7F68
  * MAP7_S03: 0x800D4014
  */
-void sharedFunc_800CF2D8_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coord)
+void Ai_Kaufmann_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord)
 {
     VECTOR3 unused;
     VECTOR3 vec;
@@ -95,7 +95,7 @@ void sharedFunc_800CF2D8_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coord)
  * MAP7_S02: 0x800D8100
  * MAP7_S03: 0x800D41AC
  */
-void sharedSymbol_800CF470_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coords)
+void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 {
     s_Collision coll;
     s32         sfx;
@@ -338,11 +338,11 @@ void sharedSymbol_800CF470_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coords)
     switch (dahliaProps.stateIdx0)
     {
         case 1:
-            sharedFunc_800D908C_0_s00(7, chara, 53, 41, sfx, pitch0);
+            sharedFunc_800D908C_0_s00(ANIM_STATUS(3, true), chara, 53, 41, sfx, pitch0);
             break;
 
         case 6:
-            sharedFunc_800D908C_0_s00(9, chara, 80, 0, sfx, pitch0);
+            sharedFunc_800D908C_0_s00(ANIM_STATUS(4, true), chara, 80, 0, sfx, pitch0);
             break;
 
         case 7:
@@ -350,62 +350,62 @@ void sharedSymbol_800CF470_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 9:
-            sharedFunc_800D908C_0_s00(15, chara, 132, 174, sfx, pitch0);
+            sharedFunc_800D908C_0_s00(ANIM_STATUS(7, true), chara, 132, 174, sfx, pitch0);
             break;
 
         case 10:
-            sharedFunc_800D908C_0_s00(17, chara, 191, 0, sfx, pitch0);
+            sharedFunc_800D908C_0_s00(ANIM_STATUS(8, true), chara, 191, 0, sfx, pitch0);
             break;
 
         case 17:
-            sharedFunc_800D908C_0_s00(27, chara, 393, 0, sfx, pitch0);
+            sharedFunc_800D908C_0_s00(ANIM_STATUS(13, true), chara, 393, 0, sfx, pitch0);
             break;
 
         case 13:
-            sharedFunc_800D9188_0_s00(21, chara, 307, Sfx_Unk1594);
+            sharedFunc_800D9188_0_s00(ANIM_STATUS(10, true), chara, 307, Sfx_Unk1594);
             break;
 
         case 15:
             if (chara->model_0.anim_4.keyframeIdx_8 <= 353)
             {
-                sharedFunc_800D908C_0_s00(25, chara, 357, 353, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(12, true), chara, 357, 353, sfx, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(25, chara, 357, 361, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(12, true), chara, 357, 361, sfx, pitch0);
             }
             break;
 
         case 16:
             if (chara->model_0.anim_4.keyframeIdx_8 <= 21)
             {
-                sharedFunc_800D908C_0_s00(5, chara, 28, 21, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(2, true), chara, 28, 21, sfx, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(5, chara, 28, 34, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(2, true), chara, 28, 34, sfx, pitch0);
             }
             break;
 
         case 25:
             if (chara->model_0.anim_4.keyframeIdx_8 <= 247)
             {
-                sharedFunc_800D908C_0_s00(43, chara, 254, 247, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(21, true), chara, 254, 247, sfx, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(43, chara, 254, 260, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(21, true), chara, 254, 260, sfx, pitch0);
             }
             break;
 
         case 22:
             if (chara->model_0.anim_4.keyframeIdx_8 <= 211)
             {
-                sharedFunc_800D908C_0_s00(39, chara, 217, 211, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(19, true), chara, 217, 211, sfx, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(39, chara, 217, 221, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(19, true), chara, 217, 221, sfx, pitch0);
             }
             break;
     }

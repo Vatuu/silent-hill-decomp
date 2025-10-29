@@ -39,9 +39,9 @@ void Ai_Dahlia_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2*
         Ai_Dahlia_Init(chara);
     }
 
-    sharedSymbol_800CD4A0_2_s01(chara, coords);
-    sharedFunc_800CD2C8_2_s01(chara, coords);
-    sharedFunc_800CD280_2_s01(chara, anmHdr, coords);
+    Ai_Dahlia_AnimStateUpdate(chara, coords);
+    Ai_Dahlia_MovementUpdate(chara, coords);
+    Ai_Dahlia_AnimUpdate(chara, anmHdr, coords);
 }
 
 /** Addresses
@@ -52,7 +52,7 @@ void Ai_Dahlia_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2*
  * MAP7_S02: 0x800D6F48
  * MAP7_S03: 0x800D23DC
  */
-void sharedFunc_800CD280_2_s01(s_SubCharacter* arg0, s_AnmHeader* arg1, GsCOORDINATE2* arg2)
+void Ai_Dahlia_AnimUpdate(s_SubCharacter* arg0, s_AnmHeader* arg1, GsCOORDINATE2* arg2)
 {
     s_AnimInfo* animInfo;
 
@@ -71,7 +71,7 @@ void sharedFunc_800CD280_2_s01(s_SubCharacter* arg0, s_AnmHeader* arg1, GsCOORDI
  * MAP7_S02: 0x800D6F90
  * MAP7_S03: 0x800D2424
  */
-void sharedFunc_800CD2C8_2_s01(s_SubCharacter* chara, GsCOORDINATE2* coord)
+void Ai_Dahlia_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord)
 {
     VECTOR3 unused;
     VECTOR3 vec;
@@ -118,7 +118,7 @@ void sharedFunc_800CD2C8_2_s01(s_SubCharacter* chara, GsCOORDINATE2* coord)
  * MAP7_S02: 0x800D7168
  * MAP7_S03: 0x800D25FC
  */
-void sharedSymbol_800CD4A0_2_s01(s_SubCharacter* dahlia, GsCOORDINATE2* coord)
+void Ai_Dahlia_AnimStateUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* coord)
 {
     s_Collision coll;
     s32         sfx;
@@ -358,15 +358,15 @@ void sharedSymbol_800CD4A0_2_s01(s_SubCharacter* dahlia, GsCOORDINATE2* coord)
     switch (dahliaProps.stateIdx0)
     {
         case 1:
-            sharedFunc_800D908C_0_s00(5, dahlia, 24, 37, sfx, pitch0);
+            sharedFunc_800D908C_0_s00(ANIM_STATUS(2, true), dahlia, 24, 37, sfx, pitch0);
             break;
 
         case 8:
-            sharedFunc_800D908C_0_s00(9, dahlia, 107, 98, sfx, pitch0);
+            sharedFunc_800D908C_0_s00(ANIM_STATUS(4, true), dahlia, 107, 98, sfx, pitch0);
             break;
 
         case 11:
-            sharedFunc_800D908C_0_s00(15, dahlia, 235, 245, sfx, pitch0);
+            sharedFunc_800D908C_0_s00(ANIM_STATUS(7, true), dahlia, 235, 245, sfx, pitch0);
             break;
 
         case 7:
@@ -386,11 +386,11 @@ void sharedSymbol_800CD4A0_2_s01(s_SubCharacter* dahlia, GsCOORDINATE2* coord)
         case 17:
             if (dahlia->model_0.anim_4.keyframeIdx_8 < 127)
             {
-                sharedFunc_800D9188_0_s00(35, dahlia, 120, Sfx_Unk1674);
+                sharedFunc_800D9188_0_s00(ANIM_STATUS(17, true), dahlia, 120, Sfx_Unk1674);
             }
             else
             {
-                sharedFunc_800D9188_0_s00(35, dahlia, 127, Sfx_Unk1675);
+                sharedFunc_800D9188_0_s00(ANIM_STATUS(17, true), dahlia, 127, Sfx_Unk1675);
             }
             break;
 
@@ -420,11 +420,11 @@ void sharedSymbol_800CD4A0_2_s01(s_SubCharacter* dahlia, GsCOORDINATE2* coord)
             if (dahlia->model_0.anim_4.keyframeIdx_8 < 175)
             {
 
-                sharedFunc_800D9188_0_s00(39, dahlia, 170, Sfx_Unk1674);
+                sharedFunc_800D9188_0_s00(ANIM_STATUS(19, true), dahlia, 170, Sfx_Unk1674);
             }
             else
             {
-                sharedFunc_800D9188_0_s00(39, dahlia, 177, Sfx_Unk1675);
+                sharedFunc_800D9188_0_s00(ANIM_STATUS(19, true), dahlia, 177, Sfx_Unk1675);
             }
             break;
     }

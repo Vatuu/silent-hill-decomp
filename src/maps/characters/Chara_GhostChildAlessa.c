@@ -21,16 +21,16 @@ void Ai_GhostChildAlessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCO
         Ai_GhostChildAlessa_Init(chara);
     }
 
-    sharedFunc_800D4C0C_7_s01(chara, coords);
-    sharedFunc_800D4A74_7_s01(chara, coords);
-    sharedFunc_800D4A2C_7_s01(chara, anmHdr, coords);
+    Ai_GhostChildAlessa_AnimStateUpdate(chara, coords);
+    Ai_GhostChildAlessa_MovementUpdate(chara, coords);
+    Ai_GhostChildAlessa_AnimUpdate(chara, anmHdr, coords);
 }
 
 /** Addresses
  * MAP7_S01: 0x800D4A2C
  * MAP7_S02: 0x800D7ADC
  */
-void sharedFunc_800D4A2C_7_s01(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void Ai_GhostChildAlessa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
     s_AnimInfo* animInfo;
 
@@ -47,7 +47,7 @@ void sharedFunc_800D4A2C_7_s01(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOO
  * MAP7_S01: 0x800D4A74
  * MAP7_S02: 0x800D7B24
  */
-void sharedFunc_800D4A74_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coord)
+void Ai_GhostChildAlessa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord)
 {
     VECTOR3 unused;
     VECTOR3 vec;
@@ -82,7 +82,7 @@ void sharedFunc_800D4A74_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coord)
  * MAP7_S01: 0x800D4C0C
  * MAP7_S02: 0x800D7CBC
  */
-void sharedFunc_800D4C0C_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
+void Ai_GhostChildAlessa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 {
     #define dahliaProps (chara->properties_E4.dahlia)
 
