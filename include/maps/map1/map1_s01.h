@@ -48,6 +48,14 @@ extern s_WorldObject_0   g_CommonWorldObjects[6]; // 800DF120
 extern s_MapHdr_field_4C D_800DD5B0[300];
 extern s_MapOverlayHeader_7C D_800DEE50;
 
+extern s8 g_PianoKeyTable[11];
+extern s8 g_PianoKeySequence[5];
+extern s32 g_PianoCursorX;
+extern s32 g_PianoCursorY;
+extern s32 g_PianoKeyCounter;
+extern s32 D_800DD594;
+
+
 void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 /**  The same function in map1_s00: `func_800D77F8`. */
@@ -58,6 +66,8 @@ void Event_DoorJammed(void);
 void Event_DoorLocked(void);
 
 void Event_DoorUnlocked(void);
+
+void Event_PianoPuzzle(bool play);
 
 void func_800D72B0(void);
 
@@ -82,8 +92,6 @@ void func_800D9514(void);
 void func_800D9DDC(void);
 
 void func_800D9EC4(void);
-
-void func_800D7F18(bool);
 
 void func_800D7864(void);
 

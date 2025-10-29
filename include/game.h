@@ -1645,6 +1645,23 @@ static inline s32 SysWork_NextStateStepSet(s32 sysStateStep)
     return step;
 }
 
+/** @brief Sets `sysStateStep[1]` in `g_SysWork` for the next tick.
+ *
+ * @param sysStateStep System state step[1] to set.
+ * @return New system state step.
+ */
+static inline s32 SysWork_NextStateStep1Set(s32 sysStateStep)
+{
+    s32 step;
+
+    step                        =
+    g_SysWork.sysStateStep_C[1] = sysStateStep;
+    g_SysWork.timer_2C          = 0;
+    g_SysWork.sysStateStep_C[2] = 0;
+    return step;
+}
+
+
 /** @brief Resets `sysStateStep` in `g_SysWork` for the next tick. */
 static inline void SysWork_StateStepReset()
 {

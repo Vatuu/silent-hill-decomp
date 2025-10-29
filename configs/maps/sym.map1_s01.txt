@@ -78,6 +78,7 @@ Map_RoomIdxGet            = 0x800D6F44; // type:func
 Event_DoorJammed          = 0x800D7058; // type:func
 Event_DoorLocked          = 0x800D70EC; // type:func
 Event_DoorUnlocked        = 0x800D7180; // type:func
+Event_PianoPuzzle         = 0x800D7F18; // type:func
 
 
 
@@ -106,8 +107,13 @@ MAP_MESSAGES              = 0x800DCF5C; // type:u32 size:0xC0
 //----------------------------------------------------
 //--- PA: 0x013AA4   VA: 0x800DD01C   subsegment: data
 //----------------------------------------------------
+g_PianoKeyTable           = 0x800DD500; // type:s8 size:0xB
+g_PianoKeySequence        = 0x800DD50C; // type:s8 size:0x5
 g_Timer0                  = 0x800DD514; // type:s32
 g_CommonWorldObjectPoses  = 0x800DD518; // type:WorldObjectPos size:0x64
+g_PianoCursorX            = 0x800DD588; // type:s32
+g_PianoCursorY            = 0x800DD58C; // type:s32
+g_PianoKeyCounter         = 0x800DD590; // type:s32
 sharedData_800DFB6C_0_s00 = 0x800DD5A4; // type:s32
 sharedData_800DFB70_0_s00 = 0x800DD5A8; // type:s32
 sharedData_800E0CA8_0_s00 = 0x800DEECC; // type:s32

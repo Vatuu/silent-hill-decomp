@@ -187,7 +187,7 @@ typedef enum _Sfx
     Sfx_Unk1418 = 1418,
     Sfx_Unk1419 = 1419,
     Sfx_Unk1420 = 1420,
-
+    Sfx_Unk1421 = 1421,
     Sfx_Unk1422 = 1422,
     Sfx_Unk1423 = 1423,
 
@@ -199,6 +199,14 @@ typedef enum _Sfx
     Sfx_Unk1435 = 1435,
     Sfx_Unk1436 = 1436,
     Sfx_Unk1437 = 1437,
+    Sfx_Unk1438 = 1438,
+    Sfx_Unk1439 = 1439,
+    Sfx_Unk1440 = 1440,
+    Sfx_Unk1441 = 1441,
+    Sfx_Unk1442 = 1442,
+    Sfx_Unk1443 = 1443,
+    Sfx_Unk1444 = 1444,
+    Sfx_Unk1445 = 1445,
 
     Sfx_Unk1446 = 1446,
 
