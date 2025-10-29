@@ -56,58 +56,80 @@ class YAML_INFO:
     SPLIT_UNDEF_FUN: str
     SPLIT_UNDEF_SYM: str
 
-CONFIG_FILES = [
-    "main.yaml",
-    "bodyprog.yaml",
+YAML_EXECUTABLE = ["main.yaml"]
+YAML_ENGINE = ["bodyprog.yaml"]
+
+YAML_SCREENS = [
     "screens/b_konami.yaml",
     "screens/stream.yaml",
     "screens/options.yaml",
     "screens/credits.yaml",
-    "screens/saveload.yaml",
+    "screens/saveload.yaml"
+]
+
+YAML_MAPS_0 = [
     "maps/map0_s00.yaml",
     "maps/map0_s01.yaml",
     #"maps/map0_s02.yaml", # Bugged
+]
+YAML_MAPS_1 = [
     "maps/map1_s00.yaml",
     "maps/map1_s01.yaml",
     "maps/map1_s02.yaml",
     "maps/map1_s03.yaml",
     "maps/map1_s04.yaml",
     "maps/map1_s05.yaml",
-    "maps/map1_s06.yaml",
+    "maps/map1_s06.yaml"
+]
+
+YAML_MAPS_2 = [
     "maps/map2_s00.yaml",
     "maps/map2_s01.yaml",
     "maps/map2_s02.yaml",
     "maps/map2_s03.yaml",
-    "maps/map2_s04.yaml",
+    "maps/map2_s04.yaml"
+]
+YAML_MAPS_3 = [
     "maps/map3_s00.yaml",
     "maps/map3_s01.yaml",
     "maps/map3_s02.yaml",
     "maps/map3_s03.yaml",
     "maps/map3_s04.yaml",
     "maps/map3_s05.yaml",
-    "maps/map3_s06.yaml",
+    "maps/map3_s06.yaml"
+]
+YAML_MAPS_4 = [
     "maps/map4_s00.yaml",
     "maps/map4_s01.yaml",
     "maps/map4_s02.yaml",
     "maps/map4_s03.yaml",
     "maps/map4_s04.yaml",
     "maps/map4_s05.yaml",
-    "maps/map4_s06.yaml",
+    "maps/map4_s06.yaml"
+]
+YAML_MAPS_5 = [
     "maps/map5_s00.yaml",
     "maps/map5_s01.yaml",
     "maps/map5_s02.yaml",
-    "maps/map5_s03.yaml",
+    "maps/map5_s03.yaml"
+]
+YAML_MAPS_6 = [
     "maps/map6_s00.yaml",
     "maps/map6_s01.yaml",
     "maps/map6_s02.yaml",
     "maps/map6_s03.yaml",
     "maps/map6_s04.yaml",
-    "maps/map6_s05.yaml",
+    "maps/map6_s05.yaml"
+]
+YAML_MAPS_7 = [
     "maps/map7_s00.yaml",
     "maps/map7_s01.yaml",
     "maps/map7_s02.yaml",
     "maps/map7_s03.yaml"
 ]
+
+
+
 
 # Directories
 ASSETS_DIR   = "assets"
@@ -451,7 +473,7 @@ def ninja_setup(split_entries, skip_checksum: bool):
             implicit=checksumBuildRequirements
         )
 
-def clean_files(clean_all):
+def clean_files(clean_all: bool):
     shutil.rmtree(BUILD_DIR, ignore_errors=True)
     shutil.rmtree(PERMUTER_DIR, ignore_errors=True)
 
@@ -497,8 +519,8 @@ def main():
     )
     parser.add_argument(
         "-set", "--setup",
-        choices=["extract", "insert"],
-        help="Setup individual overlays or the executable only"
+        help="Setup individual overlays or the executable only",
+        type=str
     )
     parser.add_argument(
         "-sc", "--skip_checksum",
@@ -514,9 +536,10 @@ def main():
 
     cleanCompilationFiles = (args.clean) or False
     extractGameFiles      = (args.iso_extract) or False
-    splitsYamlInfo        = []
     skipChecksumOption    = (args.skip_checksum) or False
     objdiffConfigOption   = (args.objdiff_config) or False
+    yamlsPaths            = []
+    splitsYamlInfo        = []
     
     if cleanCompilationFiles:
         print("Cleaning compilation files")
@@ -527,9 +550,64 @@ def main():
         extract_files()
         return
     
+    clean_files(True)
     if args.setup == None:
-        clean_files(True)
-        for yaml in CONFIG_FILES:
+        yamlsPaths.extend(YAML_EXECUTABLE)
+        yamlsPaths.extend(YAML_ENGINE)
+        yamlsPaths.extend(YAML_SCREENS)
+        yamlsPaths.extend(YAML_MAPS_0)
+        yamlsPaths.extend(YAML_MAPS_1)
+        yamlsPaths.extend(YAML_MAPS_2)
+        yamlsPaths.extend(YAML_MAPS_3)
+        yamlsPaths.extend(YAML_MAPS_4)
+        yamlsPaths.extend(YAML_MAPS_5)
+        yamlsPaths.extend(YAML_MAPS_6)
+        yamlsPaths.extend(YAML_MAPS_7)
+    else:
+        match args.setup:
+            case "exe":
+                yamlsPaths.extend(YAML_EXECUTABLE)
+            case "eng":
+                yamlsPaths.extend(YAML_ENGINE)
+            case "bko":
+                yamlsPaths.extend([YAML_SCREENS[0]])
+            case "fmv":
+                yamlsPaths.extend([YAML_SCREENS[1]])
+            case "opt":
+                yamlsPaths.extend([YAML_SCREENS[2]])
+            case "cre":
+                yamlsPaths.extend([YAML_SCREENS[3]])
+            case "sav":
+                yamlsPaths.extend([YAML_SCREENS[4]])
+            case "scr":
+                yamlsPaths.extend(YAML_SCREENS)
+            case "map":
+                yamlsPaths.extend(YAML_MAPS_0)
+                yamlsPaths.extend(YAML_MAPS_1)
+                yamlsPaths.extend(YAML_MAPS_2)
+                yamlsPaths.extend(YAML_MAPS_3)
+                yamlsPaths.extend(YAML_MAPS_4)
+                yamlsPaths.extend(YAML_MAPS_5)
+                yamlsPaths.extend(YAML_MAPS_6)
+                yamlsPaths.extend(YAML_MAPS_7)
+            case args.setup if re.match(r"m\d\d", args.setup):
+                try:
+                    yamlsPaths.extend([globals()[f"YAML_MAPS_{int(args.setup[1])}"][int(args.setup[2])]])
+                except:
+                    print("This map overlay doesn't exist!")
+                    sys.exit(1)
+            case args.setup if re.match(r"m\dx", args.setup):
+                try:
+                    yamlsPaths.extend(globals()[f"YAML_MAPS_{int(args.setup[1])}"])
+                except:
+                    print("There is no set of map overlay with this number!")
+                    sys.exit(1)
+            case _:
+                print("No recognizable overlay has been assigned.")
+                sys.exit(1)
+    
+    if objdiffConfigOption == False:
+        for yaml in yamlsPaths:
             splat.util.symbols.spim_context = spimdisasm.common.Context()
             splat.util.symbols.reset_symbols()
             split.main([Path(f"{CONFIG_DIR}/{GAMEVERSIONS.GAME_VERSION_DIR}/{yaml}")], modes="all", use_cache=False, verbose=False, disassemble_all=True, make_full_disasm_for_code=True)
