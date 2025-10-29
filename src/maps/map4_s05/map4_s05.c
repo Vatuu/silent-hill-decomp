@@ -153,7 +153,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
         
     }
 
-    chara->moveSpeed_38 = 0;
+    chara->moveSpeed_38 = Q12(0.0f);
     chara->field_34     = 0;
     chara->field_E1_0   = 4;
 
@@ -170,6 +170,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
 
             chara->properties_E4.larvalStalker.properties_E8[7].val16[1] = -0x90; // Could be `FP_ANGLE(-12.7f)`?
             break;
+
         case 4:
             chara->position_18.vx = Q12(-114.5f);
             chara->position_18.vy = Q12(2.0f);

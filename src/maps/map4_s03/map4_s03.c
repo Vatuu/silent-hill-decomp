@@ -340,7 +340,7 @@ void func_800D4028(s_SubCharacter* chara) // 0x800D4028
     if (chara->model_0.stateStep_3 == 0)
     {
         func_800D3B74(chara);
-        chara->moveSpeed_38 = 0;
+        chara->moveSpeed_38 = Q12(0.0f);
         chara->model_0.stateStep_3++;
     }
 

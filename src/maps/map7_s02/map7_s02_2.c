@@ -662,33 +662,33 @@ void func_800DB3D8(void) // 0x800DB3D8
 
 void func_800DB498(void) // 0x800DB498
 {
-    VECTOR3 pos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    Map_MessageWithSfx(86, Sfx_DoorLocked, &pos);
+    Map_MessageWithSfx(86, Sfx_DoorLocked, &sfxPos);
 }
 
 void func_800DB52C(void) // 0x800DB52C
 {
-    VECTOR3 pos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    Map_MessageWithSfx(88, Sfx_DoorLocked, &pos);
+    Map_MessageWithSfx(88, Sfx_DoorLocked, &sfxPos);
 }
 
 void func_800DB5C0(void) // 0x800DB5C0
 {
-    VECTOR3 pos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     func_8004EE94(81, 1);
-    Map_MessageWithSfx(77, Sfx_Unk1335, &pos);
+    Map_MessageWithSfx(77, Sfx_Unk1335, &sfxPos);
     Savegame_EventFlagSet(EventFlag_533);
 }
 
 void func_800DB67C(void) // 0x800DB67C
 {
-    VECTOR3 pos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     func_8004EE94(82, 1);
-    Map_MessageWithSfx(78, Sfx_Unk1335, &pos);
+    Map_MessageWithSfx(78, Sfx_Unk1335, &sfxPos);
     Savegame_EventFlagSet(EventFlag_534);
 }
 
@@ -718,8 +718,8 @@ void func_800DB738(void) // 0x800DB738
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(-59.59f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = Q12(0.8915f);
 
-            Camera_PositionSet(NULL, Q12(100.56f), Q12(-1.06f), Q12(-61.53f), 0, 0, 0, 0, true);
-            Camera_LookAtSet(NULL, Q12(97.61f), Q12(-0.73f), Q12(-59.2f), 0, 0, 0, 0, true);
+            Camera_PositionSet(NULL, Q12(100.56f), Q12(-1.06f), Q12(-61.53f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(97.61f), Q12(-0.73f), Q12(-59.2f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             SysWork_StateStepIncrement();
 
         case 3:
@@ -812,8 +812,8 @@ void func_800DBB34(void) // 0x800DBB34
             ScreenFade_ResetTimestep();
             Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, 1 << 1);
             func_8008D438();
-            Camera_PositionSet(NULL, Q12(20.09f), Q12(-0.9f), Q12(-97.78f), 0, 0, 0, 0, true);
-            Camera_LookAtSet(NULL, Q12(18.5f), Q12(0.2f), Q12(-101.28f), 0, 0, 0, 0, true);
+            Camera_PositionSet(NULL, Q12(20.09f), Q12(-0.9f), Q12(-97.78f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(18.5f), Q12(0.2f), Q12(-101.28f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             SysWork_StateStepIncrement();
 
         case 1:
@@ -834,7 +834,7 @@ void func_800DBB34(void) // 0x800DBB34
             Camera_LookAtSet(NULL,
                              func_800868F4(Q12(-0.7901f), Q12(3.0f), 3) + Q12(18.5f),
                              func_800868F4(Q12(-2.1299f), Q12(3.0f), 4) + Q12(0.2f),
-                             func_800868F4(Q12(0.45f), Q12(3.0f), 5) + Q12(-101.28f), 0, 0, 0, 0, false);
+                             func_800868F4(Q12(0.45f), Q12(3.0f), 5) + Q12(-101.28f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
             SysWork_StateStepIncrementDelayed(Q12(3.0f), false);
             break;
 
@@ -860,7 +860,7 @@ void func_800DBB34(void) // 0x800DBB34
             Camera_LookAtSet(NULL,
                              func_800868F4(Q12(3.74f), Q12(3.4f), 3) + Q12(17.71f),
                              func_800868F4(Q12(0.3902f), Q12(3.4f), 4) + Q12(-1.93f),
-                             func_800868F4(Q12(-0.6602f), Q12(3.4f), 5) + Q12(-100.83f), 0, 0, 0, 0, false);
+                             func_800868F4(Q12(-0.6602f), Q12(3.4f), 5) + Q12(-100.83f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
             SysWork_StateStepIncrementDelayed(Q12(3.4f), false);
             break;
 
@@ -879,7 +879,7 @@ void func_800DBB34(void) // 0x800DBB34
             Camera_LookAtSet(NULL,
                              func_800868F4(Q12(-0.1302f), Q12(0.6f), 3) + Q12(21.45f),
                              func_800868F4(Q12(1.21f), Q12(0.6f), 4) + Q12(-1.54f),
-                             func_800868F4(Q12(-0.05f), Q12(0.6f), 5) + Q12(-101.49f), 0, 0, 0, 0, true);
+                             func_800868F4(Q12(-0.05f), Q12(0.6f), 5) + Q12(-101.49f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             SysWork_StateStepIncrementDelayed(Q12(0.6f), false);
             break;
 
@@ -1184,8 +1184,8 @@ void func_800DD9E8(void) // 0x800DD9E8
 
         case 2:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 144, false);
-            Camera_PositionSet(NULL, Q12(20.98f), Q12(-4.08f), Q12(-59.9f), 0, 0, 0, 0, true);
-            Camera_LookAtSet(NULL, Q12(18.56f), Q12(-1.07f), Q12(-60.94f), 0, 0, 0, 0, true);
+            Camera_PositionSet(NULL, Q12(20.98f), Q12(-4.08f), Q12(-59.9f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(18.56f), Q12(-1.07f), Q12(-60.94f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(19.2f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(-61.0f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(-90.0f);
@@ -1198,8 +1198,8 @@ void func_800DD9E8(void) // 0x800DD9E8
         case 4:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(90.0f);
-            Camera_PositionSet(NULL, Q12(16.37f), Q12(-2.56f), Q12(-60.41f), 0, 0, 0, 0, true);
-            Camera_LookAtSet(NULL, Q12(20.18f), Q12(-1.4f), Q12(-60.76f), 0, 0, 0, 0, true);
+            Camera_PositionSet(NULL, Q12(16.37f), Q12(-2.56f), Q12(-60.41f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(20.18f), Q12(-1.4f), Q12(-60.76f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             func_800868DC(0);
             func_800868DC(2);
             func_800868DC(3);
@@ -1213,13 +1213,13 @@ void func_800DD9E8(void) // 0x800DD9E8
                                func_800868F4(Q12(1.7701f), Q12(2.0f), 0) + Q12(16.37f),
                                Q12(-2.56f),
                                func_800868F4(Q12(-0.16f), Q12(2.0f), 2) - Q12(60.41f),
-                               0, 0, 0, 0, false);
+                               Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
 
             Camera_LookAtSet(NULL,
                              func_800868F4(Q12(1.7801f), Q12(2.0f), 0) + Q12(20.18f),
                              Q12(-1.4f),
                              func_800868F4(Q12(-0.0301f), Q12(2.0f), 2) - Q12(60.76f),
-                             0, 0, 0, 0, false);
+                             Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
 
             SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
             break;
@@ -1612,7 +1612,7 @@ void func_800DFB48(void) // 0x800DFB48
     }
 }
 
-void func_800DFDDC(void)
+void func_800DFDDC(void) // 0x800DFDDC
 {
     // @note Mirror any changes to `map7_s01::func_800D9C9C` (likely copy-pasted func with some small differences).
     s32       i;
@@ -1842,11 +1842,12 @@ void func_800DFDDC(void)
 
         case 11:
             g_SysWork.field_30 = 20;
-            D_800EA492      = 0;
+            D_800EA492         = 0;
+
             Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, 2);
             func_8008D438();
-            Camera_PositionSet(NULL, Q12(-138.15f), Q12(-1.71f), Q12(-138.77f), 0, 0, 0, 0, true);
-            Camera_LookAtSet(NULL, Q12(-140.56f), Q12(-1.03f), Q12(-141.88f), 0, 0, 0, 0, true);
+            Camera_PositionSet(NULL, Q12(-138.15f), Q12(-1.71f), Q12(-138.77f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(-140.56f), Q12(-1.03f), Q12(-141.88f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             WorldObject_ModelNameSet(&D_800EBB64.object_0, "STONE2_H");
             SysWork_StateStepIncrement();
 
@@ -1865,17 +1866,21 @@ void func_800DFDDC(void)
                     if (g_SysWork.field_28 > Q12(2.0f))
                     {
                         g_SysWork.field_28 = Q12(2.0f);
+
                         WorldObject_ModelNameSet(&D_800EBB64.object_0, "STONE3_H");
                         func_8004690C(Sfx_Base);
+
                         g_SysWork.timer_2C          = 0;
                         g_SysWork.sysStateStep_C[2] = 0;
                         g_SysWork.sysStateStep_C[1]++;
                     }
+
                     D_800EBB64.position_1C.position_0.vz = ((g_SysWork.field_28 * Q12(0.1f)) / Q12(2.0f)) - Q12(140.6f);
                     break;
 
                 case 2:
                     D_800EA492 += g_DeltaTime2 >> 1;
+
                     if (D_800EBB64.position_1C.position_0.vy < Q12(-1.05f))
                     {
                         D_800EBB64.position_1C.position_0.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800EA492, 12);
@@ -1898,6 +1903,7 @@ void func_800DFDDC(void)
                     D_800EBB64.position_1C.rotation_C.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.0694f), 12);
                     D_800EBB64.position_1C.position_0.vy  = FP_MULTIPLY(Math_Cos(D_800EBB64.position_1C.rotation_C.vz), Q12(0.15f), 0xC) - (Q12(1.2f) - 1); // TODO: Why `- 1`?
                     D_800EBB64.position_1C.position_0.vz  = FP_MULTIPLY(Math_Sin(D_800EBB64.position_1C.rotation_C.vz), -Q12(0.15f), 0xC) - Q12(140.5f);
+
                     g_SysWork.field_28                   += g_DeltaTime0;
                     if (g_SysWork.field_28 > Q12(0.5f))
                     {
@@ -1913,6 +1919,7 @@ void func_800DFDDC(void)
                     D_800EBB64.position_1C.rotation_C.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.3333f), 12);
                     D_800EBB64.position_1C.position_0.vy += FP_MULTIPLY_PRECISE(D_800EA492, g_DeltaTime0, 12);
                     D_800EBB64.position_1C.position_0.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.3f), 12);
+
                     if (D_800EBB64.position_1C.position_0.vy > 0)
                     {
                         g_SysWork.timer_2C          = 0;
@@ -1923,10 +1930,12 @@ void func_800DFDDC(void)
 
                 case 5:
                     Sd_EngineCmd(Sfx_Base);
+
                     D_800EBB64.position_1C.position_0.vx = Q12(-139.5f);
                     D_800EBB64.position_1C.position_0.vy = Q12(-0.05f);
                     D_800EBB64.position_1C.position_0.vz = Q12(-140.0f);
                     D_800EBB64.position_1C.rotation_C.vz = Q12(-0.25f);
+
                     SysWork_StateStepIncrement();
                     break;
             }
