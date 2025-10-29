@@ -111,12 +111,6 @@ void func_800D725C(void);
 
 void func_800D7A60(void);
 
-void func_800D8230(void);
-
-void func_800D82C4(void);
-
-void func_800D8358(void);
-
 void func_800D83EC(void);
 
 void func_800D84AC(void);

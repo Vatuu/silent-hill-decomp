@@ -113,8 +113,8 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2) // 0x800CE544
 
     if (sharedData_800DD584_0_s00 == 0)
     {
-        arg2->field_0.vx += TIME_STEP_SCALE(g_DeltaTime0, arg2->field_C);
-        arg2->field_0.vz += TIME_STEP_SCALE(g_DeltaTime0, arg2->field_E);
+        arg2->field_0.vx += TIMESTEP_SCALE(g_DeltaTime0, arg2->field_C);
+        arg2->field_0.vz += TIMESTEP_SCALE(g_DeltaTime0, arg2->field_E);
 
         switch (arg2->field_11)
         {

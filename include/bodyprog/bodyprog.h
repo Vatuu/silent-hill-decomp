@@ -132,7 +132,7 @@ typedef enum _Sfx
     Sfx_Unk1329 = 1329,
 
     Sfx_Stumble1 = 1333,
-    Sfx_Unk1334  = 1334,
+    Sfx_DoorJammed = 1334,
     Sfx_Unk1335  = 1335,
     Sfx_Unk1336  = 1336,
     Sfx_Unk1337  = 1337,
@@ -140,10 +140,10 @@ typedef enum _Sfx
     Sfx_Unk1339  = 1339,
     Sfx_Unk1340  = 1340,
     Sfx_Unk1341  = 1341,
-    Sfx_Unk1342  = 1342,
+    Sfx_DoorUnlocked = 1342,
 
     Sfx_Unk1343 = 1343,
-    Sfx_Unk1344 = 1344,
+    Sfx_DoorLocked = 1344,
 
     Sfx_Unk1351 = 1351,
     Sfx_Unk1352 = 1352,
@@ -252,7 +252,7 @@ typedef enum _Sfx
     Sfx_Unk1538 = 1538,
     Sfx_Unk1539 = 1539,
 
-    Sfx_Unk1541 = 1541,
+    Sfx_Unk1541 = 1541, // Door jammed alt.
 
     Sfx_Unk1567 = 1567,
 
@@ -1282,9 +1282,9 @@ typedef struct
     s32              gsCoordinate1_4 : 14; // Used as `GsCOORDINATE2::coord.t[1].`
     s32              gsCoordinate2_8 : 18; // Used as `GsCOORDINATE2::coord.t[2].`
     s32              unk_8_18        : 14;
-    s32              vx_C            : 10;
-    s32              vy_C            : 12;
-    s32              vz_C            : 10;
+    s32              vx_C            : 10; // } Rotation?
+    s32              vy_C            : 12; // }
+    s32              vz_C            : 10; // }
 } s_WorldObject;
 STATIC_ASSERT_SIZEOF(s_WorldObject, 16);
 
@@ -1416,10 +1416,8 @@ typedef struct
 // Sound data struct?
 typedef struct
 {
-    s16 volumeXa_0; // Might be wrong, but it's used in a `Sd_SetVolBXa` call.
-                    // Could also be event timer?
-					// Most values are shared with `field_2`.
-    s16 field_2;    // volumeVoice_2?
+    s16 volumeXa_0; // Might be wrong, but it's used in a `Sd_SetVolBXa` call. Could also be event timer? Most values are shared with `field_2`.
+    s16 field_2;    // `volumeVoice_2`?
     u16 field_4;
     s16 field_6;
     s16 volumeBgm_8; // Might be wrong, but it's used in a `Sd_SetVolBgm` call.
@@ -1800,7 +1798,7 @@ typedef struct _MapOverlayHeader
     void                   (*func_40)();
     void                   (*func_44)();
     void                   (*func_48)(); // func(?).
-    s_MapHdr_field_4C*  unkTable1_4C;
+    s_MapHdr_field_4C*     unkTable1_4C;
     s16                    unkTable1Count_50;
     s8                     unk_52[2];
     s_BloodSplat*          bloodSplats_54;
@@ -2181,7 +2179,7 @@ extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: Part of main exe, move to
 
 extern const s_MapType MAP_TYPES[16];
 
-extern char D_80028544[0x10];
+extern char D_80028544[16];
 
 extern RECT D_80028A20;
 
@@ -2750,6 +2748,7 @@ extern s32 D_800C3958;
 
 extern s32 D_800C395C;
 
+/** `e_MapOverlayId ` */
 extern s8 D_800C3960;
 
 extern s8 D_800C3961;
@@ -3225,9 +3224,9 @@ bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHdr);
 
 s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHdr);
 
-void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_ActiveTextures* arg3, s_ActiveTextures* arg4, s32 arg5);
+void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_ActiveTextures* fullPageActiveTexs, s_ActiveTextures* halfPageActiveTexs, s32 fileIdx);
 
-void Ipd_MaterialsLoad(s_IpdHeader* ipdHdr, s_ActiveTextures* arg1, s_ActiveTextures* arg2, s32 fileIdx);
+void Ipd_MaterialsLoad(s_IpdHeader* ipdHdr, s_ActiveTextures* fullPageActiveTexs, s_ActiveTextures* halfPageActiveTexs, s32 fileIdx);
 
 /** Checks if IPD is loaded before returning texture count? */
 s32 Ipd_HalfPageMaterialCountGet(s_IpdHeader* ipdHdr);
@@ -3459,11 +3458,10 @@ void func_800485C0(s32 idx);
 
 void func_800485D8();
 
-/** @brief 
- * Execute a new primitive command and check the status from previous.
- * If previous primitive commands haven't been finished then it start
- * adding to `D_800C1658.timer_0` each time the process fail and in case
- * of reaching 600 failed attemps it restart CD-ROM system.
+/** @brief Executes a new primitive command and checks the status against the previous.
+ * If the previous primitive commands haven't completed, it starts
+ * adding to `D_800C1658.timer_0` each time the process fails. When it
+ * reaches 600 failed attemps, it restarts the CD-ROM system.
  */
 u8 Cd_TryCmd(s32 com, u8* param, u8* res);
 
@@ -3750,15 +3748,15 @@ void func_8008E794(VECTOR3* arg0, q3_12 angle, s32 arg2);
 
 void func_8008EA68(SVECTOR*, VECTOR3*, s32);
 
-void func_80085D78(bool arg0);
+void func_80085D78(bool reset);
 
 void func_80085DC0(bool arg0, s32 sysStateStep);
 
 void func_80085DF0(void);
 
-void func_80085E6C(s32 delay, bool arg1);
+void SysWork_StateStepIncrementDelayed(s32 delay, bool reset);
 
-void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool arg3);
+void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset);
 
 /** @brief Sets `sysStateStep_C` depending on whether `eventFlagIdx` flag is set.
  *
@@ -3781,17 +3779,17 @@ void func_8008605C(s32 eventFlagIdx, s32 stepTrue, s32 stepFalse, bool stepSecon
 void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 step0, s32 step1, s32 step2, bool stepSecondary);
 
 /** Handles giving the player items. */
-void func_8008616C(s32 arg0, bool arg1, s32 arg2, q19_12 fadeTimestep, bool arg4);
+void SysWork_StateStepIncrementAfterFade(s32 arg0, bool arg1, s32 arg2, q19_12 fadeTimestep, bool reset);
 
-void func_800862F8(s32 arg0, s32 fileIdx, bool arg2);
+void func_800862F8(s32 arg0, s32 fileIdx, bool reset);
 
-void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, bool arg3);
+void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, bool reset);
 
 void func_800865FC(bool isPos, s32 idx0, s32 idx1, q3_12 angleY, q19_12 offsetOrPosX, q19_12 offsetOrPosZ);
 
-void func_800866D4(s32 arg0, s32 arg1, s32 arg2);
+void func_800866D4(s32 arg0, s32 arg1, bool reset);
 
-void func_80086728(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3);
+void func_80086728(s_SubCharacter* chara, s32 arg1, s32 arg2, bool reset);
 
 void func_8008677C(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
@@ -3799,7 +3797,13 @@ void func_800867B4(s32 caseParam, s32 idx);
 
 void func_800868DC(s32 idx);
 
-void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* sounds);
+/** @brief Displays a map message with a sound.
+ *
+ * @param mapMsgIdx Index of the message to display.
+ * @param soundIdx Index of the sound to play.
+ * @param sounds Sound indices.
+ */
+void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* soundsIdxs);
 
 /** @brief Sets the camera position target.
  *
@@ -3841,7 +3845,13 @@ void func_80086E50(s32 fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
 
 void func_80086F44(s32 fadeTimestep0, q19_12 fadeTimestep1);
 
-void func_80086FE8(s32 mapMsgIdx, s32 sfx, VECTOR3* pos);
+/** @brief Displays a map message with SFX.
+ *
+ * @param mapMsgIdx Index of the message to display.
+ * @param sfx SFX to play.
+ * @param sfxPos SFX position.
+ */
+void Map_MessageWithSfx(s32 mapMsgIdx, s32 sfx, VECTOR3* sfxPos);
 
 void func_8008716C(s32 itemId, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
 
@@ -3954,9 +3964,9 @@ void func_8008B1DC(s_SubCharacter*, s32, s32);
 
 void func_8008B398();
 
-void func_8008B3E4(s32 arg0);
+void func_8008B3E4(s32 vol);
 
-void func_8008B40C(s32 arg0, s32 arg1);
+void func_8008B40C(s32 vol, s32 soundType);
 
 /** `arg0` is boolean. */
 void func_8008B438(s32 arg0, s32 arg1, s32 arg2);
@@ -4736,7 +4746,7 @@ u8 func_8008A2E0(s32 arg0);
 
 void func_800348C0();
 
-bool func_8008B474(s32 arg0, s32 arg1, s32 soundType);
+bool func_8008B474(s32 arg0, s32 vol, s32 soundType);
 
 void GameState_Boot_Update();
 void GameState_StartMovieIntro_Update();
@@ -4760,6 +4770,7 @@ void GameState_Unk15_Update();
 void Game_TurnFlashlightOn(void);
 void Game_TurnFlashlightOff(void);
 
-void func_80089034(s32 charaId, s32 arg1, q19_12 x, q19_12 z); // X and Z is guessed.
+/** X and Z are guessed. */
+void func_80089034(s32 charaId, s32 arg1, q19_12 x, q19_12 z);
 
 #endif

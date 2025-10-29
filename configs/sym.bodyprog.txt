@@ -687,10 +687,13 @@ vcGetXZSumDistFromLimArea                   = 0x80085C80; // type:func
 //--------------------------------------------------------------------
 //--- PA: 0x061218   VA: 0x80085D78   subsegment: c, bodyprog_80085D78
 //--------------------------------------------------------------------
+SysWork_StateStepIncrementDelayed           = 0x80085E6C; // type:func
 MapMsg_DisplayAndHandleSelection            = 0x800860B0; // type:func
+SysWork_StateStepIncrementAfterFade         = 0x8008616C; // type:func
 Map_MessageWithAudio                        = 0x800869E4; // type:func
 Camera_PositionSet                          = 0x80086A94; // type:func
 Camera_LookAtSet                            = 0x80086B70; // type:func
+Map_MessageWithSfx                          = 0x80086FE8; // type:func
 Event_ItemTake                              = 0x800877B8; // type:func
 Event_CommonItemTake                        = 0x800879FC; // type:func
 Event_MapTake                               = 0x80087AF4; // type:func

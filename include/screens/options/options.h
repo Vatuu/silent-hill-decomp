@@ -419,7 +419,7 @@ void Options_Selection_BulletPointDraw(s_Quad2d* quad, bool isCenter, bool isIna
  *
  * Scratch: https://decomp.me/scratch/uAay2
 */
-void Options_Controller_Control(void);
+void Options_ControllerMenu_Control(void);
 
 /** @brief Changes the button mapping based on the input and updates the configuration.
  *

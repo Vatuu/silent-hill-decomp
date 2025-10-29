@@ -2947,11 +2947,11 @@ void SysState_GameOver_Update() // 0x8003A52C
             SysWork_StateStepIncrement();
 
         case 1:
-            func_8008616C(2, true, 0, Q12(0.5f), false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.5f), false);
             break;
 
         case 2:
-            func_8008616C(0, false, 0, Q12(0.5f), false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.5f), false);
             SysWork_StateStepIncrement();
 
         case 3:
@@ -2970,7 +2970,7 @@ void SysState_GameOver_Update() // 0x8003A52C
         case 4:
             Gfx_StringSetPosition(SCREEN_POSITION_X(32.5f), SCREEN_POSITION_Y(43.5f));
             Gfx_StringDraw("\aGAME_OVER", DEFAULT_MAP_MESSAGE_LENGTH);
-            func_8008616C(2, true, 0, Q12(2.0f), false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(2.0f), false);
             break;
 
         case 5:
@@ -2987,7 +2987,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             }
 
         case 6:
-            func_8008616C(2, false, 0, Q12(2.0f), false);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(2.0f), false);
             g_SysWork.field_28 = 0;
             Gfx_BackgroundSpriteDraw(&g_DeathTipImg);
             break;
@@ -3014,7 +3014,7 @@ void SysState_GameOver_Update() // 0x8003A52C
 
         case 8:
             Gfx_BackgroundSpriteDraw(&g_DeathTipImg);
-            func_8008616C(2, true, 0, Q12(2.0f), false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(2.0f), false);
             break;
 
         default:

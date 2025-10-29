@@ -3887,11 +3887,6 @@ void func_8006342C(s32 weaponAttack, s16 arg1, s16 arg2, GsCOORDINATE2* coord) /
 
 bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
 {
-	
-	#define SetSVectorFast(v, x, y, z) \
-		*(s32*)&(v)->vx = (s32)((x) & 0xFFFF) | (s32)((y) << 16); \
-		(v)->vz = (z)
-
     s_func_80063A50* ptr;
 
     ptr = PSX_SCRATCH;

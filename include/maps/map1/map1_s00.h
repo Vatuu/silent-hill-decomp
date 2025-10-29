@@ -13,19 +13,19 @@
 
 extern s32 D_800DD718;
 
-extern s_WorldObjectPos g_CommonWorldObjectsPos[5]; // 0x800DD71C
-extern s_WorldObjectDesc_norot g_WorldObj0;    // 800E0EF0
-extern s_WorldObjectDesc_norot g_WorldObj1[6]; // 800E0F20
-extern s_WorldObjectDesc_norot g_WorldObj2;    // 800E1010
-extern s_WorldObjectDesc_norot g_WorldObj3;    // 800E1040
-extern s_WorldObjectDesc_norot g_WorldObj4;    // 800E1070
-extern s_WorldObjectDesc_norot g_WorldObj5;    // 800E10A0
-extern s_WorldObjectDesc_norot g_WorldObj6[2]; // 800E10D0
-extern s_WorldObjectDesc       g_WorldObj7;    // 800E1120
-extern s_WorldObjectDesc       g_WorldObj8;    // 800E1150
+extern s_WorldObjectPos g_CommonWorldObjectPoses[5]; // 0x800DD71C
+extern s_WorldObjectDesc_norot g_WorldObject0;    // 800E0EF0
+extern s_WorldObjectDesc_norot g_WorldObject1[6]; // 800E0F20
+extern s_WorldObjectDesc_norot g_WorldObject2;    // 800E1010
+extern s_WorldObjectDesc_norot g_WorldObject3;    // 800E1040
+extern s_WorldObjectDesc_norot g_WorldObject4;    // 800E1070
+extern s_WorldObjectDesc_norot g_WorldObject5;    // 800E10A0
+extern s_WorldObjectDesc_norot g_WorldObject6[2]; // 800E10D0
+extern s_WorldObjectDesc       g_WorldObject7;    // 800E1120
+extern s_WorldObjectDesc       g_WorldObject8;    // 800E1150
 extern u8 D_800E1180;
 extern s16 D_800E1182;
-extern s_WorldObjectDesc       g_WorldObj9;    // 800E1190
+extern s_WorldObjectDesc       g_WorldObject9;    // 800E1190
 extern s_WorldObject_0         g_CommonWorldObjects[6]; // 800E11C0
 extern s_MapPoint2d MAP_POINTS[];
 extern u8 D_800DCC4C;

@@ -93,7 +93,7 @@ INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00_2", func_800D0A30);
 
 void func_800D0AC4() {}
 
-#include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800D0ACC
+#include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D0ACC
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"

@@ -53,20 +53,20 @@ void func_800CEB94(void) {}
 
 void func_800CEB9C(void)
 {
-    VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    func_80086FE8(11, Sfx_Unk1334, &vec);
+    Map_MessageWithSfx(MapMsgIdx_DoorJammed, Sfx_DoorJammed, &sfxPos);
 }
 
 void func_800CEC30(void)
 {
-    VECTOR3 vec = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     if (g_MapEventParam->field_5 == 2)
     {
         if (Savegame_EventFlagGet(EventFlag_180))
         {
-            func_80086FE8(38, Sfx_Unk1486, &vec);
+            Map_MessageWithSfx(38, Sfx_Unk1486, &sfxPos);
             if (g_SysWork.sysState_8 == SysState_Gameplay)
             {
                 Savegame_EventFlagSet(EventFlag_180);
@@ -74,12 +74,12 @@ void func_800CEC30(void)
         }
         else
         {
-            func_80086FE8(12, Sfx_Unk1486, &vec);
+            Map_MessageWithSfx(MapMsgIdx_DoorLocked, Sfx_Unk1486, &sfxPos);
         }
     }
     else
     {
-        func_80086FE8(12, Sfx_Unk1344, &vec);
+        Map_MessageWithSfx(MapMsgIdx_DoorLocked, Sfx_DoorLocked, &sfxPos);
     }
 }
 
@@ -172,7 +172,7 @@ void func_800CED88(void)
             SysWork_StateStepIncrement();
             /* fallthrough */
         case 1:
-            func_8008616C(2, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
             break;
         case 2:
             Map_MessageWithAudio(15, &g_MapMsgSoundIdx, g_MapMsgSounds);
@@ -182,7 +182,7 @@ void func_800CED88(void)
             break;
         case 4:
             Map_MessageWithAudio(23, &g_MapMsgSoundIdx, g_MapMsgSounds);
-            func_80085E6C(Q12(1.2f), false);
+            SysWork_StateStepIncrementDelayed(Q12(1.2f), false);
             break;
         case 5:
             func_80085EB8(0, PLAYER_PTR, 113, false);
@@ -217,7 +217,7 @@ void func_800CED88(void)
             break;
         case 8:
             func_80085EB8(4, PLAYER_PTR, 0, false);
-            func_80085E6C(Q12(0.8f), false);
+            SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
             break;
         case 9:
             Map_MessageWithAudio(25, &g_MapMsgSoundIdx, g_MapMsgSounds);
@@ -227,14 +227,14 @@ void func_800CED88(void)
             SysWork_StateStepIncrement();
             /* fallthrough */
         case 11:
-            func_80085E6C(Q12(0.5f), false);
+            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
             break;
         case 12:
             func_80085EB8(1, DAHLIA_PTR, 0, false);
             Map_MessageWithAudio(29, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
         case 13:
-            func_80085E6C(Q12(2.0f), false);
+            SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
             Map_MessageWithAudio(29, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
         case 14:
@@ -270,7 +270,7 @@ void func_800CED88(void)
             g_Timer0 = Q12(142.0f);
             break;
         case 20:
-            func_80085E6C(Q12(0.3f), false);
+            SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
             if (g_Timer0 < Q12(142.0f))
             {
                 g_Timer0 = Q12(142.0f);
@@ -288,7 +288,7 @@ void func_800CED88(void)
             SysWork_StateStepIncrement();
             /* fallthrough */
         case 22:
-            func_80085E6C(Q12(0.8f), false);
+            SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
             if (g_Timer0 >= Q12(166.0f))
             {
                 g_Timer0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(15.0f), Q12_SHIFT);
@@ -336,14 +336,14 @@ void func_800CED88(void)
             }
             break;
         case 26:
-            func_80085E6C(Q12(0.8f), false);
+            SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
             break;
         case 27:
             func_8005DC1C(Sfx_Unk1323, &soundPos, 0x80, 0);
             SysWork_StateStepIncrement();
             /* fallthrough */
         case 28:
-            func_80085E6C(Q12(1.2f), false);
+            SysWork_StateStepIncrementDelayed(Q12(1.2f), false);
             break;
         case 29:
             func_8005DC1C(Sfx_Unk1324, &soundPos, 0x80, 0);
@@ -351,10 +351,10 @@ void func_800CED88(void)
             SysWork_StateStepIncrement();
             /* fallthrough */
         case 30:
-            func_80085E6C(Q12(0.5f), false);
+            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
             break;
         case CUTSCENE_SKIP_STATE:
-            func_8008616C(2, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
             if (g_SysWork.sysStateStep_C[0] != CUTSCENE_SKIP_STATE)
             {
                 g_Timer0 = Q12(253.0f);
@@ -363,9 +363,9 @@ void func_800CED88(void)
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            func_8008616C(0, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
             vcReturnPreAutoCamWork(true);
-            func_8008616C(0, false, 2, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
             Savegame_EventFlagSet(EventFlag_179);
             Savegame_EventFlagSet(EventFlag_176);
             g_SavegamePtr->mapMarkingFlags_1D4[2] |= 0x40000;
@@ -412,10 +412,10 @@ void func_800CED88(void)
                 "HERO", g_Timer0, (s_DmsHeader*)FS_BUFFER_15);
         Dms_CharacterGetPosRot(&DAHLIA_PTR->position_18, (SVECTOR3*)&DAHLIA_PTR->rotation_24,
                 "DAHLIA", g_Timer0, (s_DmsHeader*)FS_BUFFER_15);
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CamPosTarget, &g_CamLookAtTarget, NULL,
+        vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CameraPositionTarget, &g_CameraLookAtTarget, NULL,
                     g_Timer0, (s_DmsHeader*)FS_BUFFER_15));
-        vcUserCamTarget(&g_CamPosTarget, NULL, true);
-        vcUserWatchTarget(&g_CamLookAtTarget, NULL, true);
+        vcUserCamTarget(&g_CameraPositionTarget, NULL, true);
+        vcUserWatchTarget(&g_CameraLookAtTarget, NULL, true);
     }
 }
 
@@ -431,23 +431,23 @@ void func_800CF7C4(void) // 0x800CF7C4
 
 extern u8 D_800D177C;
 extern s_WorldObject_0 g_CommonWorldObjects[6];
-extern s_WorldObjectDesc g_WorldObj_SavePad;
-extern s_WorldObjectDesc g_WorldObj_Key;
-extern s_WorldObjectDesc g_WorldObj_Item;
-extern s_WorldObjectPos g_CommonWorldObjectsPos[1];
+extern s_WorldObjectDesc g_WorldObject_SavePad;
+extern s_WorldObjectDesc g_WorldObject_Key;
+extern s_WorldObjectDesc g_WorldObject_Item;
+extern s_WorldObjectPos g_CommonWorldObjectPoses[1];
 
 void Map_WorldObjectsInit(void)
 {
     func_8003ED74(1, 1);
 
-    Math_Vector3Set(&(g_WorldObj_Item.position_1C.position_0), Q12(19.8289f), Q12(-1.3633f), Q12(24.0735f));
-    WorldObject_ModelNameSet(&g_WorldObj_Item.object_0, "ITEM_HID");
+    Math_Vector3Set(&(g_WorldObject_Item.position_1C.position_0), Q12(19.8289f), Q12(-1.3633f), Q12(24.0735f));
+    WorldObject_ModelNameSet(&g_WorldObject_Item.object_0, "ITEM_HID");
 
-    WorldObjectPositionInit(&g_WorldObj_Key.position_1C, 20.073f, -0.858f, 24.1469f, 0.0f, 23.0f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObj_Key.object_0, "KEY_HIDE");
+    WorldObjectPositionInit(&g_WorldObject_Key.position_1C, 20.073f, -0.858f, 24.1469f, 0.0f, 23.0f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject_Key.object_0, "KEY_HIDE");
 
-    WorldObjectPositionInit(&g_WorldObj_SavePad.position_1C, 18.3345f, -0.9102f, 14.1985f, 0.0f, 10.5f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObj_SavePad.object_0, D_800A99E4.savePadName_4);
+    WorldObjectPositionInit(&g_WorldObject_SavePad.position_1C, 18.3345f, -0.9102f, 14.1985f, 0.0f, 10.5f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject_SavePad.object_0, D_800A99E4.savePadName_4);
 
     D_800D177C = 0;
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
@@ -467,18 +467,18 @@ void Map_WorldObjectsUpdate(void)
             temp_s0 = g_SavegamePtr;
             if (Savegame_EventFlagGet(EventFlag_176) && !Savegame_EventFlagGet(EventFlag_M2S01_PickupFlauros))
             {
-                g_WorldGfx_ObjectAdd(&g_WorldObj_Item.object_0, &g_WorldObj_Item.position_1C.position_0, &(SVECTOR3){});
+                g_WorldGfx_ObjectAdd(&g_WorldObject_Item.object_0, &g_WorldObject_Item.position_1C.position_0, &(SVECTOR3){});
             }
             if (!Savegame_EventFlagGet(EventFlag_M2S01_PickupDrawbridgeKey))
             {
-                g_WorldGfx_ObjectAdd(&g_WorldObj_Key.object_0, &g_WorldObj_Key.position_1C.position_0, &g_WorldObj_Key.position_1C.rotation_C);
+                g_WorldGfx_ObjectAdd(&g_WorldObject_Key.object_0, &g_WorldObject_Key.position_1C.position_0, &g_WorldObject_Key.position_1C.rotation_C);
                 temp_s0->mapMarkingFlags_1D4[1] &= ~(1<<31);
             }
             else
             {
                 temp_s0->mapMarkingFlags_1D4[1] |= (1<<31);
             }
-            g_WorldGfx_ObjectAdd(&g_WorldObj_SavePad.object_0, &g_WorldObj_SavePad.position_1C.position_0, &g_WorldObj_SavePad.position_1C.rotation_C);
+            g_WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object_0, &g_WorldObject_SavePad.position_1C.position_0, &g_WorldObject_SavePad.position_1C.rotation_C);
     }
 
     if (D_800D177C == 0)
@@ -508,7 +508,7 @@ void Map_WorldObjectsUpdate(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S01_HealthDrink))
         {
-            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectsPos[0].position_0, &g_CommonWorldObjectsPos[0].rotation_C);
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[0].position_0, &g_CommonWorldObjectPoses[0].rotation_C);
         }
     }
 }

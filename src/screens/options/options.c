@@ -160,7 +160,7 @@ void GameState_Options_Update(void) // 0x801E2D44
             break;
 
         case OptionsMenuState_Controller:
-            Options_Controller_Control();
+            Options_ControllerMenu_Control();
             break;
 
         case OptionsMenuState_Leave:
@@ -2037,7 +2037,7 @@ void Options_Selection_BulletPointDraw(s_Quad2d* quad, bool isCenter, bool isIna
 // CONTROLS OPTION SCREEN
 // ========================================
 
-void Options_Controller_Control(void) // 0x801E69BC
+void Options_ControllerMenu_Control(void) // 0x801E69BC
 {
     s32           boundActionIdx = NO_VALUE;
     e_InputAction actionIdx;

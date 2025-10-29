@@ -9,8 +9,8 @@ struct _AnmHeader;
 struct _Model;
 
 #define TICKS_PER_SECOND 60                                        /** Game has a variable time step with 60 ticks max. */
-#define TIME_STEP_30_FPS Q12(1.0f / (float)(TICKS_PER_SECOND / 2)) /** Time step at 30 FPS. */
-#define TIME_STEP_60_FPS Q12(1.0f / (float)(TICKS_PER_SECOND))     /** Time step at 60 FPS. */
+#define TIMESTEP_30_FPS Q12(1.0f / (float)(TICKS_PER_SECOND / 2)) /** Time step at 30 FPS. */
+#define TIMESTEP_60_FPS Q12(1.0f / (float)(TICKS_PER_SECOND))     /** Time step at 60 FPS. */
 
 #define SCREEN_WIDTH                   320
 #define SCREEN_HEIGHT                  240
@@ -223,7 +223,7 @@ typedef enum _MapMsgIdx
     MapMsgIdx_HandgunAmmoSelect = 8,
     MapMsgIdx_RifleAmmoSelect   = 9,
     MapMsgIdx_ShotgunAmmoSelect = 10,
-    MapMsgIdx_DoorJammer        = 11,
+    MapMsgIdx_DoorJammed        = 11,
     MapMsgIdx_DoorLocked        = 12,
     MapMsgIdx_DoorUnlocked      = 13,
     MapMsgIdx_NowMaking         = 14  // @unused?
@@ -1843,7 +1843,7 @@ static inline void Model_AnimStatusSet(s_Model* model, s32 animIdx, bool active)
     }
 
 /** @brief Resets a humanoid NPCs animation state index to 0. */
-static inline void Character_AnimStateTryReset(s_SubCharacter* chara)
+static inline void Character_AnimStateReset(s_SubCharacter* chara)
 {
     // TODO: This uses `dahlia` part of union, but is most likely either a `human` part shared with all humanoid characters
     // or humanoids only share a small portion early in the union.

@@ -109,7 +109,7 @@ void sharedSymbol_800CF470_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coords)
         case 0:
             if (CHARA_PROPERTIES.moveDistance_126)
             {
-                CHARA_PROPERTIES.moveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
+                CHARA_PROPERTIES.moveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
                 if (CHARA_PROPERTIES.moveDistance_126 < 0)
                 {
                     CHARA_PROPERTIES.moveDistance_126 = 0;
@@ -117,12 +117,12 @@ void sharedSymbol_800CF470_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coords)
             }
 
             Model_AnimStatusSet(&chara->model_0, 1, false);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
             break;
         case 1:
             if (CHARA_PROPERTIES.moveDistance_126 > Q12(1.25f))
             {
-                CHARA_PROPERTIES.moveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.5f));
+                CHARA_PROPERTIES.moveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.5f));
                 if (CHARA_PROPERTIES.moveDistance_126 < Q12(1.25f))
                 {
                     CHARA_PROPERTIES.moveDistance_126 = Q12(1.25f);
@@ -130,24 +130,24 @@ void sharedSymbol_800CF470_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coords)
             }
             else if (CHARA_PROPERTIES.moveDistance_126 < Q12(1.25f))
             {
-                CHARA_PROPERTIES.moveDistance_126 += TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f));
+                CHARA_PROPERTIES.moveDistance_126 += TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f));
                 CHARA_PROPERTIES.moveDistance_126  = CLAMP(CHARA_PROPERTIES.moveDistance_126, 0, Q12(1.25f));
             }
 
             Model_AnimStatusSet(&chara->model_0, 3, false);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
 #if defined(MAP5_S03)
             func_8003DD80(38, 52);
 #endif
             break;
         case 5:
             Model_AnimStatusKeyframeSet(chara->model_0, 1, true, KAUFMANN_ANIM_INFOS, 0);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
             func_8003DD80(38, 1);
             break;
         case 24:
             Model_AnimStatusKeyframeSet(chara->model_0, 20, true, KAUFMANN_ANIM_INFOS, 0);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
 #if defined(MAP5_S03)
             func_8003DD80(38, 52);
 #else
@@ -156,7 +156,7 @@ void sharedSymbol_800CF470_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
         case 6:
             Model_AnimStatusKeyframeSet(chara->model_0, 4, true, KAUFMANN_ANIM_INFOS, 0);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
 #if defined(MAP3_S00)
             func_8003DD80(38, 19);
 #endif
@@ -169,21 +169,21 @@ void sharedSymbol_800CF470_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coords)
             }
 
             Model_AnimStatusSet(&chara->model_0, 5, false);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
 #if defined(MAP3_S00)
             func_8003DD80(38, 19);
 #endif
             break;
         case 8:
             Model_AnimStatusSet(&chara->model_0, 6, false);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
 #if defined(MAP3_S00)
             func_8003DD80(38, 19);
 #endif
             break;
         case 9:
             Model_AnimStatusSet(&chara->model_0, 7, false);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
             if (chara->model_0.anim_4.keyframeIdx_8 < 139 || (chara->model_0.anim_4.status_0 & 1) == 0)
             {
                 func_8003DD80(38, 17);
@@ -196,39 +196,39 @@ void sharedSymbol_800CF470_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
         case 10:
             Model_AnimStatusSet(&chara->model_0, 8, false);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
             break;
         case 11:
             Model_AnimStatusKeyframeSet(chara->model_0, 9, true, KAUFMANN_ANIM_INFOS, 0);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
 #if defined(MAP5_S02)
             func_8003DD80(38, 17);
 #endif
             break;
         case 12:
             Model_AnimStatusKeyframeSet(chara->model_0, 22, true, KAUFMANN_ANIM_INFOS, 0);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
 #if defined(MAP5_S02)
             func_8003DD80(38, 17);
 #endif
             break;
         case 13:
             Model_AnimStatusSet(&chara->model_0, 10, false);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
 #if defined(MAP5_S02)
             func_8003DD80(38, 17);
 #endif
             break;
         case 14:
             Model_AnimStatusSet(&chara->model_0, 11, false);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
 #if defined(MAP5_S02)
             func_8003DD80(38, 17);
 #endif
             break;
         case 15:
             Model_AnimStatusSet(&chara->model_0, 12, false);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
             if (chara->model_0.anim_4.keyframeIdx_8 >= 364 && chara->model_0.anim_4.status_0 & 1)
             {
                 func_8003DD80(38, 4);
@@ -236,23 +236,23 @@ void sharedSymbol_800CF470_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
         case 16:
             Model_AnimStatusSet(&chara->model_0, 2, false);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
 #if defined(MAP5_S03)
             func_8003DD80(38, 49);
 #endif
             break;
         case 25:
             Model_AnimStatusSet(&chara->model_0, 21, false);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
             func_8003DD80(39, 51);
             break;
         case 17:
             Model_AnimStatusSet(&chara->model_0, 13, false);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
             break;
         case 18:
             Model_AnimStatusSet(&chara->model_0, 16, false);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
 
 #if defined(MAP7_S03)
             // TODO: invert like case 15? can't find how to match
@@ -268,14 +268,14 @@ void sharedSymbol_800CF470_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
         case 19:
             Model_AnimStatusSet(&chara->model_0, 17, false);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
 #if defined(MAP7_S03)
             func_8003DD80(39, 52);
 #endif
             break;
         case 20:
             Model_AnimStatusKeyframeSet(chara->model_0, 18, true, KAUFMANN_ANIM_INFOS, 0);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
 
 #if defined(MAP7_S03)
             if (chara->model_0.anim_4.keyframeIdx_8 < 141)
@@ -290,7 +290,7 @@ void sharedSymbol_800CF470_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
         case 21:
             Model_AnimStatusSet(&chara->model_0, 15, false);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
 
 #if defined(MAP7_S03)
             func_8003DD80(39, 17);
@@ -298,14 +298,14 @@ void sharedSymbol_800CF470_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
         case 22:
             Model_AnimStatusKeyframeSet(chara->model_0, 19, true, KAUFMANN_ANIM_INFOS, 0);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
 #if defined(MAP7_S03)
             func_8003DD80(39, 49);
 #endif
             break;
         case 23:
             Model_AnimStatusSet(&chara->model_0, 14, false);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
             break;
     }
 
@@ -377,7 +377,7 @@ void sharedSymbol_800CF470_3_s00(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
     }
 
-    chara->rotation_24.vy  = ABS_ANGLE(chara->rotation_24.vy + Q8_TO_Q4(sharedData_800D5CF4_3_s00));
+    chara->rotation_24.vy  = FP_ANGLE_ABS(chara->rotation_24.vy + Q8_TO_Q4(sharedData_800D5CF4_3_s00));
     chara->headingAngle_3C = chara->rotation_24.vy;
     chara->moveSpeed_38    = CHARA_PROPERTIES.moveDistance_126;
     chara->field_34       += g_DeltaTime2;

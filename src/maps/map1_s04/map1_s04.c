@@ -274,7 +274,7 @@ void func_800CCE38(void) // 0x800CCE38
 
     if (g_Controller0->btnsClicked_10 & ControllerFlag_R2)
     {
-        Sd_EngineCmd(Sfx_Unk1342);
+        Sd_EngineCmd(Sfx_DoorUnlocked);
     }
 
     if (g_Controller0->btnsClicked_10 & ControllerFlag_R3)

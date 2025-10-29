@@ -106,7 +106,7 @@ void sharedFunc_800CEEDC_3_s02(s_SubCharacter* chara, GsCOORDINATE2* coords)
         case 2:
             if (CHARA_PROPERTIES.moveDistance_126 > Q12(1.25f))
             {
-                CHARA_PROPERTIES.moveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.5f));
+                CHARA_PROPERTIES.moveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.5f));
                 if (CHARA_PROPERTIES.moveDistance_126 < Q12(1.25f))
                 {
                     CHARA_PROPERTIES.moveDistance_126 = Q12(1.25f);
@@ -114,18 +114,18 @@ void sharedFunc_800CEEDC_3_s02(s_SubCharacter* chara, GsCOORDINATE2* coords)
             }
             else if (CHARA_PROPERTIES.moveDistance_126 < Q12(1.25f))
             {
-                CHARA_PROPERTIES.moveDistance_126 += TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f));
+                CHARA_PROPERTIES.moveDistance_126 += TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f));
                 CHARA_PROPERTIES.moveDistance_126  = CLAMP(CHARA_PROPERTIES.moveDistance_126, 0, Q12(1.25f));
             }
 
             Model_AnimStatusSet(&chara->model_0, 2, false);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
             break;
 
         case 1:
             if (CHARA_PROPERTIES.moveDistance_126)
             {
-                CHARA_PROPERTIES.moveDistance_126 -= TIME_STEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
+                CHARA_PROPERTIES.moveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
                 if (CHARA_PROPERTIES.moveDistance_126 < 0)
                 {
                     CHARA_PROPERTIES.moveDistance_126 = 0;
@@ -133,47 +133,47 @@ void sharedFunc_800CEEDC_3_s02(s_SubCharacter* chara, GsCOORDINATE2* coords)
             }
 
             Model_AnimStatusKeyframeSet(chara->model_0, 1, true, ALESSA_ANIM_INFOS, 0);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
             break;
 
         case 4:
             Model_AnimStatusSet(&chara->model_0, 4, false);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
             break;
 
         case 3:
             Model_AnimStatusSet(&chara->model_0, 3, false);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
             break;
 
         case 5:
             Model_AnimStatusSet(&chara->model_0, 5, false);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
             break;
 
         case 6:
             Model_AnimStatusSet(&chara->model_0, 6, false);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
             break;
 
         case 7:
             Model_AnimStatusSet(&chara->model_0, 7, false);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
             break;
 
         case 8:
             Model_AnimStatusSet(&chara->model_0, 8, false);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
             break;
 
         case 9:
             Model_AnimStatusSet(&chara->model_0, 9, false);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
             break;
 
         case 10:
             Model_AnimStatusSet(&chara->model_0, 10, false);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
             break;
     }
 
@@ -232,7 +232,7 @@ void sharedFunc_800CEEDC_3_s02(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
     }
 
-    chara->rotation_24.vy  = ABS_ANGLE(chara->rotation_24.vy + Q8_TO_Q4(sharedData_800D3150_3_s02));
+    chara->rotation_24.vy  = FP_ANGLE_ABS(chara->rotation_24.vy + Q8_TO_Q4(sharedData_800D3150_3_s02));
     chara->headingAngle_3C = chara->rotation_24.vy;
     chara->moveSpeed_38    = CHARA_PROPERTIES.moveDistance_126;
     chara->field_34       += g_DeltaTime2;

@@ -103,7 +103,7 @@ void sharedFunc_800D5B3C_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
         case 6:
             Model_AnimStatusSet(&chara->model_0, 1, false);
-            Character_AnimStateTryReset(chara);
+            Character_AnimStateReset(chara);
             break;
     }
 
@@ -128,7 +128,7 @@ void sharedFunc_800D5B3C_7_s01(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
     }
 
-    chara->rotation_24.vy  = ABS_ANGLE(chara->rotation_24.vy + Q8_TO_Q4(sharedData_800E2C38_7_s01));
+    chara->rotation_24.vy  = FP_ANGLE_ABS(chara->rotation_24.vy + Q8_TO_Q4(sharedData_800E2C38_7_s01));
     chara->headingAngle_3C = chara->rotation_24.vy;
     chara->moveSpeed_38    = CHARA_PROPERTIES.moveDistance_126;
     chara->field_34       += g_DeltaTime2;

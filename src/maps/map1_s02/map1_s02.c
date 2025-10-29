@@ -348,7 +348,7 @@ void func_800DAD2C(void)
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            func_8008616C(0, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, true, 0, 0, false);
             func_800862F8(0, FILE_TIM_RECEPDR1_TIM, false);
             D_800E1FD0 = 0;
             SysWork_StateStepIncrement();
@@ -356,7 +356,7 @@ void func_800DAD2C(void)
             func_800862F8(1, 0, false);
             break;
         case 2:
-            func_8008616C(1, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(1, true, 0, 0, false);
             break;
         case 3:
             func_800862F8(3, 0, false);
@@ -365,7 +365,7 @@ void func_800DAD2C(void)
             /* fallthrough */
         case 4:
             func_800862F8(2, 0, false);
-            func_8008616C(2, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
             break;
         case 5:
             func_800862F8(2, 0, false);
@@ -412,11 +412,11 @@ void func_800DAD2C(void)
             break;
         case 10:
             func_800862F8(5, 0, false);
-            func_8008616C(2, 1, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, 1, 0, 0, false);
             break;
         default:
             func_800862F8(6, 0, false);
-            func_8008616C(0, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
             Savegame_EventFlagSet(EventFlag_M1S02_SeenDoorWithHorizontalSlot);
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
@@ -442,36 +442,36 @@ void func_800DB058(void)
             SysWork_StateStepIncrement();
             /* fallthrough */
         case 1:
-            func_8008616C(1, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(1, false, 0, 0, false);
             break;
         case 2:
-            func_80085E6C(Q12(0.2f), false);
+            SysWork_StateStepIncrementDelayed(Q12(0.2f), false);
             break;
         case 3:
             func_80086C58(&g_SysWork.player_4C.chara_0, 94);
             break;
         case 4:
-            func_8005DC1C(Sfx_Unk1454, &QV3(55.85f, -1.1f, 19.3f), 0x80, 0);
+            func_8005DC1C(Sfx_Unk1454, &QVECTOR3(55.85f, -1.1f, 19.3f), 0x80, 0);
             SysWork_StateStepIncrement();
             /* fallthrough */
         case 5:
             MapMsg_DisplayAndHandleSelection(false, 30, 0, 0, 0, false); // Slid the Picture card into the slot.
             break;
         case 6:
-            func_8005DC1C(Sfx_Unk1343, &QV3(56.0f, -1.2f, 19.3f), 0x80, 0);
+            func_8005DC1C(Sfx_Unk1343, &QVECTOR3(56.0f, -1.2f, 19.3f), 0x80, 0);
             SysWork_StateStepIncrement();
             /* fallthrough */
         case 7:
             func_80086C58(&g_SysWork.player_4C.chara_0, 95);
             break;
         case 8:
-            func_8008616C(2, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
             break;
         default:
             sharedFunc_800D2244_0_s00(true);
             SysWork_StateSetNext(SysState_Gameplay);
-            func_8008616C(0, false, 2, 0, false);
-            func_8008616C(0, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
             vcReturnPreAutoCamWork(true);
             g_SavegamePtr->mapMarkingFlags_1D4[10] |= 0x800000;
             func_8003D01C();
