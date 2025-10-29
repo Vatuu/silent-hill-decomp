@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARAS_CHARACTERS_ALESSA_H
-#define _MAPS_CHARAS_CHARACTERS_ALESSA_H
+#ifndef _MAPS_CHARACTERS_ALESSA_H
+#define _MAPS_CHARACTERS_ALESSA_H
 
 extern s32 sharedData_800D3150_3_s02; // Used by `Ai_Alessa_Init`.
 

@@ -185,6 +185,8 @@ void func_800DAB8C(void);
 
 void func_800DACB0(void);
 
+void func_800DADD4(void);
+
 void func_800DAEFC(void);
 
 void func_800DB26C(void);

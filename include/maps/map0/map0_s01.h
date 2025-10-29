@@ -41,26 +41,26 @@ extern s_WorldObjectPos D_800DE140;
 
 extern VECTOR3 D_800DE154;
 
-extern q19_12 g_Timer0; // 0x800E239C
+extern q19_12 g_Timer0;
 
-extern u8 g_MapMsgSoundIdx; // 0x800E23A0
+extern u8 g_MapMsgSoundIdx;
 
 extern u8 D_800E23A1;
 
-extern VECTOR3 g_CutsceneCameraPositionTarget; // 0x800E2380
+extern VECTOR3 g_CutsceneCameraPositionTarget;
 
-extern VECTOR3 g_CutsceneCameraLookAtTarget; // 0x800E2390
+extern VECTOR3 g_CutsceneCameraLookAtTarget;
 
 extern s_WorldObject_0 D_800E23B0[1];
 extern s_WorldObject_0 D_800E23D0[1];
 extern s_WorldObject_0 D_800E23F0[3];
 extern s_WorldObject_0 D_800E2450[2];
 
-extern VECTOR3 g_CutscenePosition; // 0x800E2490
-extern s_WorldObjectDesc g_EventThing_KitchenKnife; // 0x800E24A0
-extern s_WorldObjectDesc g_EventThing_Flashlight; // 0x800E24D0
-extern s_WorldObjectDesc g_EventThing_Map; // 0x800E2500
-extern s_WorldObjectDesc g_EventThing_PocketRadio; // 0x800E2530
+extern VECTOR3 g_CutscenePosition;
+extern s_WorldObjectDesc g_EventThing_KitchenKnife;
+extern s_WorldObjectDesc g_EventThing_Flashlight;
+extern s_WorldObjectDesc g_EventThing_Map;
+extern s_WorldObjectDesc g_EventThing_PocketRadio;
 
 extern s16 D_800E2560;
 
@@ -102,7 +102,8 @@ void MapEvent_FlashlightItemTake();
 
 /** @brief Handles the Silent Hill town map pickup event in the cafe.
  *
- * Also responsible for air screamer scene setup. */
+ * Also responsible for air screamer scene setup.
+ */
 void MapEvent_MapItemTake();
 
 /** @brief Handles the kitchen knife pickup event. */

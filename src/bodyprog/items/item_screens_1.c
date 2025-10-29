@@ -278,6 +278,7 @@ void func_8004C564(u8 arg0, s32 weaponAttack) // 0x8004C564
             D_800C3961 = 32;
 
             func_8008B398();
+
             g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(0.0f);
             break;
 
