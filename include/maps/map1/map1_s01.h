@@ -44,9 +44,14 @@ extern s_MapOverlayHeader_7C D_800DEE50;
 
 void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
+/**  The same function in map1_s00: `func_800D77F8`. */
+void func_800D6FE4(void);
+
 void func_800D72B0(void);
 
 void func_800D72DC(void);
+
+void func_800D7308(void);
 
 void func_800D7830(void);
 
@@ -73,4 +78,5 @@ void func_800D7864(void);
 void func_800D76F4(void);
 
 void func_800CB7F4(void);
+
 #endif

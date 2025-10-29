@@ -1188,7 +1188,7 @@ void func_800D9A08(void) // 0x800D9A08
 const char D_800CC650[] = "STONE2_H";
 const char D_800CC65C[] = "STONE3_H";
 
-void func_800D9C9C(void)
+void func_800D9C9C(void) // 0x800D9C9C
 {
     // @note Mirror any changes to `map7_s02::func_800DFDDC` (likely copy-pasted func with some small differences).
     s32       i;
@@ -1243,6 +1243,7 @@ void func_800D9C9C(void)
                 {
                     break;
                 }
+
                 D_800E1690.field_0++;
             }
 
@@ -1419,10 +1420,11 @@ void func_800D9C9C(void)
         case 11:
             g_SysWork.field_30 = 20;
             D_800E168E         = 0;
+
             Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, 2);
             func_8008D438();
-            Camera_PositionSet(NULL, Q12(-138.15f), Q12(-1.71f), Q12(-138.77f), 0, 0, 0, 0, true);
-            Camera_LookAtSet(NULL, Q12(-140.56f), Q12(-1.03f), Q12(-141.88f), 0, 0, 0, 0, true);
+            Camera_PositionSet(NULL, Q12(-138.15f), Q12(-1.71f), Q12(-138.77f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(-140.56f), Q12(-1.03f), Q12(-141.88f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             WorldObject_ModelNameSet(&D_800E2CB8.object_0, D_800CC650);
             SysWork_StateStepIncrement();
 
@@ -1435,6 +1437,7 @@ void func_800D9C9C(void)
             {
                 case 0:
                     func_8005DC1C(Sfx_Unk1647, &D_800E2CD4, 128, 0);
+
                     g_SysWork.timer_2C          = 0;
                     g_SysWork.sysStateStep_C[2] = 0;
                     g_SysWork.sysStateStep_C[1]++;
@@ -1444,23 +1447,28 @@ void func_800D9C9C(void)
                     if (g_SysWork.field_28 > Q12(2.0f))
                     {
                         g_SysWork.field_28 = Q12(2.0f);
+
                         WorldObject_ModelNameSet(&D_800E2CB8.object_0, D_800CC65C);
+
                         g_SysWork.timer_2C          = 0;
                         g_SysWork.sysStateStep_C[2] = 0;
                         g_SysWork.sysStateStep_C[1]++;
+
                         func_8004690C(Sfx_Unk1647);
                     }
-                    D_800E2CB8.position_1C.position_0.vz = ((g_SysWork.field_28 * Q12(0.1f)) / Q12(2.0f)) - Q12(140.6f);
+
+                    D_800E2CB8.pose_1C.position_0.vz = ((g_SysWork.field_28 * Q12(0.1f)) / Q12(2.0f)) - Q12(140.6f);
                     break;
 
                 case 2:
                     D_800E168E += g_DeltaTime2 >> 1;
-                    if (D_800E2CB8.position_1C.position_0.vy < Q12(-1.05f))
+
+                    if (D_800E2CB8.pose_1C.position_0.vy < Q12(-1.05f))
                     {
-                        D_800E2CB8.position_1C.position_0.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800E168E, 12);
-                        if (D_800E2CB8.position_1C.position_0.vy > Q12(-1.05f))
+                        D_800E2CB8.pose_1C.position_0.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800E168E, 12);
+                        if (D_800E2CB8.pose_1C.position_0.vy > Q12(-1.05f))
                         {
-                            D_800E2CB8.position_1C.position_0.vy = Q12(-1.05f);
+                            D_800E2CB8.pose_1C.position_0.vy = Q12(-1.05f);
 
                             g_SysWork.timer_2C          = 0;
                             g_SysWork.sysStateStep_C[2] = 0;
@@ -1468,16 +1476,17 @@ void func_800D9C9C(void)
                             D_800E168E                  = 0;
                             g_SysWork.sysStateStep_C[1]++;
 
-                            func_8005DC1C(Sfx_Unk1648, &D_800E2CB8.position_1C.position_0, 128, 0);
+                            func_8005DC1C(Sfx_Unk1648, &D_800E2CB8.pose_1C.position_0, 128, 0);
                         }
                     }
                     break;
 
                 case 3:
-                    D_800E2CB8.position_1C.rotation_C.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.0694f), 12);
-                    D_800E2CB8.position_1C.position_0.vy  = FP_MULTIPLY(Math_Cos(D_800E2CB8.position_1C.rotation_C.vz), Q12(0.15f), 0xC) - (Q12(1.2f) - 1); // TODO: Why `- 1`?
-                    D_800E2CB8.position_1C.position_0.vz  = FP_MULTIPLY(Math_Sin(D_800E2CB8.position_1C.rotation_C.vz), -Q12(0.15f), 0xC) - Q12(140.5f);
-                    g_SysWork.field_28                   += g_DeltaTime0;
+                    D_800E2CB8.pose_1C.rotation_C.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.0694f), 12);
+                    D_800E2CB8.pose_1C.position_0.vy  = FP_MULTIPLY(Math_Cos(D_800E2CB8.position_1C.rotation_C.vz), Q12(0.15f), Q12_SHIFT) - (Q12(1.2f) - 1); // TODO: Why `- 1`?
+                    D_800E2CB8.pose_1C.position_0.vz  = FP_MULTIPLY(Math_Sin(D_800E2CB8.position_1C.rotation_C.vz), -Q12(0.15f), Q12_SHIFT) - Q12(140.5f);
+
+                    g_SysWork.field_28 += g_DeltaTime0;
                     if (g_SysWork.field_28 > Q12(0.5f))
                     {
                         g_SysWork.timer_2C          = 0;
@@ -1488,11 +1497,12 @@ void func_800D9C9C(void)
                     break;
 
                 case 4:
-                    D_800E168E                           += g_DeltaTime2;
-                    D_800E2CB8.position_1C.rotation_C.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.3333f), 12);
-                    D_800E2CB8.position_1C.position_0.vy += FP_MULTIPLY_PRECISE(D_800E168E, g_DeltaTime0, 12);
-                    D_800E2CB8.position_1C.position_0.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.3f), 12);
-                    if (D_800E2CB8.position_1C.position_0.vy > 0)
+                    D_800E168E                       += g_DeltaTime2;
+                    D_800E2CB8.pose_1C.rotation_C.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.3333f), 12);
+                    D_800E2CB8.pose_1C.position_0.vy += FP_MULTIPLY_PRECISE(D_800E168E, g_DeltaTime0, 12);
+                    D_800E2CB8.pose_1C.position_0.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.3f), 12);
+
+                    if (D_800E2CB8.pose_1C.position_0.vy > 0)
                     {
                         g_SysWork.timer_2C          = 0;
                         g_SysWork.sysStateStep_C[2] = 0;
@@ -1501,11 +1511,12 @@ void func_800D9C9C(void)
                     break;
 
                 case 5:
-                    D_800E2CB8.position_1C.position_0.vx = Q12(-139.5f);
-                    D_800E2CB8.position_1C.position_0.vy = Q12(-0.05f);
-                    D_800E2CB8.position_1C.position_0.vz = Q12(-140.0f);
-                    D_800E2CB8.position_1C.rotation_C.vz = Q12(-0.25f);
-                    func_8005DC1C(Sfx_Unk1649, &D_800E2CB8.position_1C.position_0, 128, 0);
+                    D_800E2CB8.pose_1C.position_0.vx = Q12(-139.5f);
+                    D_800E2CB8.pose_1C.position_0.vy = Q12(-0.05f);
+                    D_800E2CB8.pose_1C.position_0.vz = Q12(-140.0f);
+                    D_800E2CB8.pose_1C.rotation_C.vz = Q12(-0.25f);
+
+                    func_8005DC1C(Sfx_Unk1649, &D_800E2CB8.pose_1C.position_0, 128, 0);
                     SysWork_StateStepIncrement();
                     break;
             }

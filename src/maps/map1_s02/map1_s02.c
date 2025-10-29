@@ -342,7 +342,7 @@ INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DAA2C);
 
 extern s16 D_800E1FD0;
 
-void func_800DAD2C(void)
+void func_800DAD2C(void) // 0x800DAD2C
 {
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -350,38 +350,47 @@ void func_800DAD2C(void)
             sharedFunc_800D20E4_0_s00();
             func_8008616C(0, true, 0, 0, false);
             func_800862F8(0, FILE_TIM_RECEPDR1_TIM, false);
+
             D_800E1FD0 = 0;
+
             SysWork_StateStepIncrement();
+
         case 1:
             func_800862F8(1, 0, false);
             break;
+
         case 2:
             func_8008616C(1, true, 0, 0, false);
             break;
+
         case 3:
             func_800862F8(3, 0, false);
             func_800862F8(4, FILE_TIM_RECEPDR2_TIM, false);
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         case 4:
             func_800862F8(2, 0, false);
             func_8008616C(2, false, 0, 0, false);
             break;
+
         case 5:
             func_800862F8(2, 0, false);
+
             if (Savegame_EventFlagGet(EventFlag_M1S02_SeenDoorWithHorizontalSlot))
             {
-                MapMsg_DisplayAndHandleSelection(false, 25, false, false, 0, false); // If I push it, it moves a bit.
+                MapMsg_DisplayAndHandleSelection(false, 25, false, false, 0, false); // "If I push it, it moves a bit."
             }
             else
             {
-                MapMsg_DisplayAndHandleSelection(false, 23, false, false, 0, false); //What? Is this a door?
+                MapMsg_DisplayAndHandleSelection(false, 23, false, false, 0, false); // "What? Is this a door?""
             }
             break;
+
         case 6:
             func_800862F8(2, 0, false);
             func_800862F8(1, 0, false);
             break;
+
         case 7:
             if (Savegame_EventFlagGet(EventFlag_M1S02_SeenDoorWithHorizontalSlot))
             {
@@ -389,11 +398,12 @@ void func_800DAD2C(void)
             }
             else
             {
-                MapMsg_DisplayAndHandleSelection(false, 26, false, false, 0, false); // What's this? 
+                MapMsg_DisplayAndHandleSelection(false, 26, false, false, 0, false); // "What's this?"
             }
-            /* fallthrough */
+
         case 8:
             Gfx_BackgroundSpritesTransition(&g_ItemInspectionImg, &D_800A9A04, D_800E1FD0);
+
             D_800E1FD0 += Q12(0.0313f);
             if (D_800E1FD0 > Q12(1.0f))
             {
@@ -402,18 +412,21 @@ void func_800DAD2C(void)
                     SysWork_NextStateStepSet(9);
                     break;
                 }
+
                 D_800E1FD0 = Q12(1.0f);
-                break;
             }
             break;
+
         case 9:
             func_800862F8(5, 0, false);
-            MapMsg_DisplayAndHandleSelection(false, 27, false, false, 0, false); // In the center of the door is a horizontal slot.
+            MapMsg_DisplayAndHandleSelection(false, 27, false, false, 0, false); // "In the center of the door is a horizontal slot."
             break;
+
         case 10:
             func_800862F8(5, 0, false);
             func_8008616C(2, 1, 0, 0, false);
             break;
+
         default:
             func_800862F8(6, 0, false);
             func_8008616C(0, false, 0, 0, false);
@@ -424,56 +437,66 @@ void func_800DAD2C(void)
         }
 }
 
-void func_800DB058(void)
+void func_800DB058(void) // 0x800DB058
 {
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
             sharedFunc_800D2E60_0_s00();
+
             g_SysWork.field_30 = 20;
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(56.5f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(19.3f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = Q12(-0.25f);
-            Camera_PositionSet(NULL, Q12(60.59f), Q12(-0.83f), Q12(18.34f), 0, 0, 0, 0, true);
-            Camera_LookAtSet(NULL, Q12(56.7698f), Q12(-1.45f), Q12(19.34f), 0, 0, 0, 0, true);
+
+            Camera_PositionSet(NULL, Q12(60.59f), Q12(-0.83f), Q12(18.34f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(56.7698f), Q12(-1.45f), Q12(19.34f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         case 1:
             func_8008616C(1, false, 0, 0, false);
             break;
+
         case 2:
             func_80085E6C(Q12(0.2f), false);
             break;
+
         case 3:
             func_80086C58(&g_SysWork.player_4C.chara_0, 94);
             break;
+
         case 4:
-            func_8005DC1C(Sfx_Unk1454, &QV3(55.85f, -1.1f, 19.3f), 0x80, 0);
+            func_8005DC1C(Sfx_Unk1454, &QVECTOR3(55.85f, -1.1f, 19.3f), 0x80, 0);
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         case 5:
-            MapMsg_DisplayAndHandleSelection(false, 30, 0, 0, 0, false); // Slid the Picture card into the slot.
+            MapMsg_DisplayAndHandleSelection(false, 30, 0, 0, 0, false); // "Slid the picture card into the slot."
             break;
+
         case 6:
-            func_8005DC1C(Sfx_Unk1343, &QV3(56.0f, -1.2f, 19.3f), 0x80, 0);
+            func_8005DC1C(Sfx_Unk1343, &QVECTOR3(56.0f, -1.2f, 19.3f), 0x80, 0);
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         case 7:
             func_80086C58(&g_SysWork.player_4C.chara_0, 95);
             break;
+
         case 8:
             func_8008616C(2, true, 0, 0, false);
             break;
+
         default:
             sharedFunc_800D2244_0_s00(true);
             SysWork_StateSetNext(SysState_Gameplay);
             func_8008616C(0, false, 2, 0, false);
             func_8008616C(0, false, 0, 0, false);
             vcReturnPreAutoCamWork(true);
+
             g_SavegamePtr->mapMarkingFlags_1D4[10] |= 0x800000;
+
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
             break;
@@ -617,14 +640,12 @@ void func_800DD208(void) // 0x800DD208
             break;
     }
 }
+
 void func_800DD420(void) // 0x800DD420
 {
     sharedFunc_800D08B8_0_s00(6, 127);
-
     sharedFunc_800CB6B0_0_s00(0, g_SavegamePtr->mapOverlayId_A4, 0);
-
     Savegame_EventFlagClear(EventFlag_225);
-
     SysWork_StateSetNext(SysState_Gameplay);
 }
 
@@ -632,11 +653,11 @@ INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DD494);
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DDA84);
 
-void func_800DEC88(void)
+void func_800DEC88(void) // 0x800DEC88
 {
     if (g_SavegamePtr->mapMarkingFlags_1D4[8] < 0)
     {
-        if (g_SavegamePtr->gameDifficulty_260 == 1)
+        if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
         {
             func_80089034(Chara_GreyChild, 12, Q12(134.1f), Q12(21.3f));
         }
@@ -650,7 +671,8 @@ void func_800DEC88(void)
     {
         func_80088FF4(Chara_Creaper, 7, 12);
         func_80088FF4(Chara_Creaper, 8, 12);
-        if (g_SavegamePtr->gameDifficulty_260 == 1)
+
+        if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
         {
             func_80088FF4(Chara_Creaper, 9, 12);
         }

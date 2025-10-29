@@ -1612,7 +1612,7 @@ void func_800DFB48(void) // 0x800DFB48
     }
 }
 
-void func_800DFDDC(void)
+void func_800DFDDC(void) // 0x800DFDDC
 {
     // @note Mirror any changes to `map7_s01::func_800D9C9C` (likely copy-pasted func with some small differences).
     s32       i;
@@ -1842,7 +1842,8 @@ void func_800DFDDC(void)
 
         case 11:
             g_SysWork.field_30 = 20;
-            D_800EA492      = 0;
+            D_800EA492         = 0;
+
             Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, 2);
             func_8008D438();
             Camera_PositionSet(NULL, Q12(-138.15f), Q12(-1.71f), Q12(-138.77f), 0, 0, 0, 0, true);
@@ -1865,23 +1866,26 @@ void func_800DFDDC(void)
                     if (g_SysWork.field_28 > Q12(2.0f))
                     {
                         g_SysWork.field_28 = Q12(2.0f);
+
                         WorldObject_ModelNameSet(&D_800EBB64.object_0, "STONE3_H");
                         func_8004690C(Sfx_Base);
+
                         g_SysWork.timer_2C          = 0;
                         g_SysWork.sysStateStep_C[2] = 0;
                         g_SysWork.sysStateStep_C[1]++;
                     }
-                    D_800EBB64.position_1C.position_0.vz = ((g_SysWork.field_28 * Q12(0.1f)) / Q12(2.0f)) - Q12(140.6f);
+                    D_800EBB64.pose_1C.position_0.vz = ((g_SysWork.field_28 * Q12(0.1f)) / Q12(2.0f)) - Q12(140.6f);
                     break;
 
                 case 2:
                     D_800EA492 += g_DeltaTime2 >> 1;
-                    if (D_800EBB64.position_1C.position_0.vy < Q12(-1.05f))
+
+                    if (D_800EBB64.pose_1C.position_0.vy < Q12(-1.05f))
                     {
-                        D_800EBB64.position_1C.position_0.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800EA492, 12);
-                        if (D_800EBB64.position_1C.position_0.vy > Q12(-1.05f))
+                        D_800EBB64.pose_1C.position_0.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800EA492, 12);
+                        if (D_800EBB64.pose_1C.position_0.vy > Q12(-1.05f))
                         {
-                            D_800EBB64.position_1C.position_0.vy = Q12(-1.05f);
+                            D_800EBB64.pose_1C.position_0.vy = Q12(-1.05f);
 
                             g_SysWork.timer_2C          = 0;
                             g_SysWork.sysStateStep_C[2] = 0;
@@ -1895,9 +1899,10 @@ void func_800DFDDC(void)
                     break;
 
                 case 3:
-                    D_800EBB64.position_1C.rotation_C.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.0694f), 12);
-                    D_800EBB64.position_1C.position_0.vy  = FP_MULTIPLY(Math_Cos(D_800EBB64.position_1C.rotation_C.vz), Q12(0.15f), 0xC) - (Q12(1.2f) - 1); // TODO: Why `- 1`?
-                    D_800EBB64.position_1C.position_0.vz  = FP_MULTIPLY(Math_Sin(D_800EBB64.position_1C.rotation_C.vz), -Q12(0.15f), 0xC) - Q12(140.5f);
+                    D_800EBB64.pose_1C.rotation_C.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.0694f), 12);
+                    D_800EBB64.pose_1C.position_0.vy  = FP_MULTIPLY(Math_Cos(D_800EBB64.position_1C.rotation_C.vz), Q12(0.15f), Q12_SHIFT) - (Q12(1.2f) - 1); // TODO: Why `- 1`?
+                    D_800EBB64.pose_1C.position_0.vz  = FP_MULTIPLY(Math_Sin(D_800EBB64.position_1C.rotation_C.vz), -Q12(0.15f), Q12_SHIFT) - Q12(140.5f);
+
                     g_SysWork.field_28                   += g_DeltaTime0;
                     if (g_SysWork.field_28 > Q12(0.5f))
                     {
@@ -1910,10 +1915,11 @@ void func_800DFDDC(void)
 
                 case 4:
                     D_800EA492                           += g_DeltaTime2;
-                    D_800EBB64.position_1C.rotation_C.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.3333f), 12);
-                    D_800EBB64.position_1C.position_0.vy += FP_MULTIPLY_PRECISE(D_800EA492, g_DeltaTime0, 12);
-                    D_800EBB64.position_1C.position_0.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.3f), 12);
-                    if (D_800EBB64.position_1C.position_0.vy > 0)
+                    D_800EBB64.pose_1C.rotation_C.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.3333f), 12);
+                    D_800EBB64.pose_1C.position_0.vy += FP_MULTIPLY_PRECISE(D_800EA492, g_DeltaTime0, 12);
+                    D_800EBB64.pose_1C.position_0.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.3f), 12);
+
+                    if (D_800EBB64.pose_1C.position_0.vy > 0)
                     {
                         g_SysWork.timer_2C          = 0;
                         g_SysWork.sysStateStep_C[2] = 0;
@@ -1923,10 +1929,12 @@ void func_800DFDDC(void)
 
                 case 5:
                     Sd_EngineCmd(Sfx_Base);
-                    D_800EBB64.position_1C.position_0.vx = Q12(-139.5f);
-                    D_800EBB64.position_1C.position_0.vy = Q12(-0.05f);
-                    D_800EBB64.position_1C.position_0.vz = Q12(-140.0f);
-                    D_800EBB64.position_1C.rotation_C.vz = Q12(-0.25f);
+
+                    D_800EBB64.pose_1C.position_0.vx = Q12(-139.5f);
+                    D_800EBB64.pose_1C.position_0.vy = Q12(-0.05f);
+                    D_800EBB64.pose_1C.position_0.vz = Q12(-140.0f);
+                    D_800EBB64.pose_1C.rotation_C.vz = Q12(-0.25f);
+
                     SysWork_StateStepIncrement();
                     break;
             }

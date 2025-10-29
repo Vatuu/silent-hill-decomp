@@ -216,13 +216,13 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800D6F44
 
-void func_800D6FE4(void) // NOTE: The same function in map1_s00: func_800D77F8
+void func_800D6FE4(void) // 0x800D6FE4
 {
     u16 flags;
 
     if (g_SavegamePtr->mapRoomIdx_A5 == 23)
     {
-        flags = (1<<5);
+        flags = 1 << 5;
         if (Savegame_EventFlagGet(EventFlag_71) && Savegame_EventFlagGet(EventFlag_72))
         {
             flags = 0x1FE;
@@ -232,8 +232,8 @@ void func_800D6FE4(void) // NOTE: The same function in map1_s00: func_800D77F8
     {
         flags = D_800DCA04[g_SavegamePtr->mapRoomIdx_A5];
     }
-    func_80035F4C(flags, Q12(0.1f), &D_800DC9FC);
 
+    func_80035F4C(flags, Q12(0.1f), &D_800DC9FC);
 }
 
 void func_800D7050(void) {}
@@ -330,13 +330,15 @@ void func_800D72DC(void) // 0x800D72DC
     Event_ItemTake(InventoryItemId_Chemical, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M1S01_PickupChemical, 18);
 }
 
-void func_800D7308(void)
+void func_800D7308(void) // 0x800D7308
 {
-    s32 i;
     #define CUTSCENE_SKIP_STATE 8
 
-    g_SysWork.sysFlags_22A0 |= 2;
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
+    s32 i;
+
+    g_SysWork.sysFlags_22A0 |= 1 << 1;
+
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < CUTSCENE_SKIP_STATE)
     {
         SysWork_NextStateStepSet(CUTSCENE_SKIP_STATE);
@@ -348,30 +350,35 @@ void func_800D7308(void)
             sharedFunc_800D20E4_0_s00();
             func_8008616C(false, true, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         case 1:
             func_80085DF0();
             break;
+
         case 2:
             func_8008616C(true, true, 2, Q12(0.0f), false);
             break;
+
         case 3:
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(-59.2f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(98.9f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(0.0f);
-            Camera_PositionSet(NULL, Q12(-59.61f), Q12(-0.41f), Q12(97.48f), 0, 0, 0, 0, true);
-            Camera_LookAtSet(NULL, Q12(-58.6f), Q12(-2.29f), Q12(100.87f), 0, 0, 0, 0, true);
+
+            Camera_PositionSet(NULL, Q12(-59.61f), Q12(-0.41f), Q12(97.48f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(-58.6f), Q12(-2.29f), Q12(100.87f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         case 4:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 83, false);
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         case 5:
             func_80085E6C(Q12(2.5f), false);
             break;
+
         case 6:
-            func_8005DC1C(Sfx_Unk1433, &QV3(-59.2f, -1.0f, 99.5f), 0x80, 0);
+            func_8005DC1C(Sfx_Unk1433, &QVECTOR3(-59.2f, -1.0f, 99.5f), 0x80, 0);
+
             D_800DEE50.field_0 = 0;
             D_800DEE50.field_4 = 0x96;
             D_800DEE50.field_A = 0x2E1;
@@ -385,16 +392,19 @@ void func_800D7308(void)
             D_800DEE50.field_18 = 0x63800;
             D_800DEE50.field_1C = 0x3000;
             D_800DEE50.field_12 = 0;
+
             func_800CB7F4();
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         case 7:
             func_80085E6C(Q12(6.0f), false);
             break;
+
         case 8:
             func_8004690C(Sfx_Unk1433);
             func_8008616C(2, true, 0, Q12(0.0f), false);
             break;
+
         case 9:
             for (i = 0; i < ARRAY_SIZE(D_800DD5B0); i++)
             {
@@ -403,53 +413,62 @@ void func_800D7308(void)
                     D_800DD5B0[i].field_A = 0;
                 }
             }
+
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
             func_8008616C(false, false, 2, 0, false);
+
             if (ScreenFade_IsFinished())
             {
                 func_8008616C(false, false, 0, 0, false);
             }
+
             Savegame_EventFlagSet(EventFlag_74);
             break;
     }
 }
 
-void func_800D76F4(void)
+void func_800D76F4(void) // 0x800D76F4
 {
-    #define PICKUP_MEDALION_STATE 4
+    #define PICKUP_MEDALION_STATE      4
     #define DONT_PICKUP_MEDALION_STATE 5
-    switch ( g_SysWork.sysStateStep_C[0])
+
+    switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
             func_80086470(0, InventoryItemId_GoldMedallion, 0, false);
-            /* fallthrough */
+
         case 1:
             func_80085DF0();
             return;
+
         case 2:
             func_80086470(1, InventoryItemId_GoldMedallion, 0, false);
             return;
+
         case 3:
             if (Gfx_PickupItemAnimate(InventoryItemId_GoldMedallion))
             {
                 MapMsg_DisplayAndHandleSelection(true, 17,
-                    PICKUP_MEDALION_STATE, DONT_PICKUP_MEDALION_STATE, 0, false); // Gold medalion. Take it ?
+                    PICKUP_MEDALION_STATE, DONT_PICKUP_MEDALION_STATE, 0, false); // "Gold medalion. Take it?"
             }
+
             Savegame_EventFlagSet(EventFlag_M1S01_PickupGoldMedallion);
             return;
+
         case PICKUP_MEDALION_STATE:
             func_80086470(3, InventoryItemId_GoldMedallion, 1, false);
-            /* fallthrough */
+
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             return;
+
         case DONT_PICKUP_MEDALION_STATE:
             Savegame_EventFlagClear(EventFlag_M1S01_PickupGoldMedallion);
             sharedFunc_800D2244_0_s00(false);
@@ -463,124 +482,144 @@ void func_800D7830(void) // 0x800D7830
     func_80087540(FILE_TIM_SCORE_TIM, Q12(2.0f), Q12(1.5f), 31, 23);
 }
 
-void func_800D7864(void)
+void func_800D7864(void) // 0x800D7864
 {
-    #define CANCEL_PIANO_STATE 17
-    #define START_PIANO_STATE 10
-    #define END_PIANO_STATE 19
-    #define CHECK_PIANO_STATE 5
-    #define DONT_CHECK_PIANO_STATE 21
-    g_SysWork.sysFlags_22A0 |= (1<<1);
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
+    #define CANCEL_PIANO_STATE   17
+    #define START_PIANO_STATE    10
+    #define END_PIANO_STATE      19
+    #define CHECK_PIANO_STATE     5
+    #define NO_PIANO_STATE_CHECK 21
+
+    g_SysWork.sysFlags_22A0 |= 1 << 1;
+
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= START_PIANO_STATE && g_SysWork.sysStateStep_C[0] < END_PIANO_STATE)
     {
         ScreenFade_ResetTimestep();
         SysWork_NextStateStepSet(CANCEL_PIANO_STATE);
-        g_WorldObj0.position_1C.rotation_C.vx = FP_ANGLE(-90.0f);
-        g_WorldObj0.position_1C.position_0.vx = Q12(-98.8f);
-        g_WorldObj0.position_1C.position_0.vy = Q12(0.0f);
-        g_WorldObj0.position_1C.position_0.vz = Q12(22.8f);
-        g_WorldObj0.position_1C.rotation_C.vy = FP_ANGLE(28.5f);
+        g_WorldObject0.pose_1C.rotation_C.vx = FP_ANGLE(-90.0f);
+        g_WorldObject0.pose_1C.position_0.vx = Q12(-98.8f);
+        g_WorldObject0.pose_1C.position_0.vy = Q12(0.0f);
+        g_WorldObject0.pose_1C.position_0.vz = Q12(22.8f);
+        g_WorldObject0.pose_1C.rotation_C.vy = FP_ANGLE(28.5f);
     }
+
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         case 1:
             func_80086DA8(FILE_TIM_PIANO1_TIM, Q12(2.5f));
             break;
         case 2:
             func_8008616C(0, false, 0, Q12(2.0f), false);
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         case 3:
             func_800862F8(2, 0, false);
-            MapMsg_DisplayAndHandleSelection(false, 27, false, false, 0, false); // There's some blood on some of the keys
+            MapMsg_DisplayAndHandleSelection(false, 27, false, false, 0, false); // "There's some blood on some of the keys."
             break;
+
         case 4:
             func_800862F8(2, 0, false);
-            MapMsg_DisplayAndHandleSelection(true, 29, CHECK_PIANO_STATE, DONT_CHECK_PIANO_STATE, 0, false); // Check the piano ?
+            MapMsg_DisplayAndHandleSelection(true, 29, CHECK_PIANO_STATE, NO_PIANO_STATE_CHECK, 0, false); // "Check the piano?"
             break;
+
         case CHECK_PIANO_STATE:
             func_800862F8(2, 0, false);
             func_8008616C(2, true, 0, Q12(1.5f), false);
             break;
+
         case 6:
             func_800862F8(7, FILE_TIM_PIANO2_TIM, false);
             break;
+
         case 7:
             func_8008616C(0, false, 0, Q12(1.5f), false);
             func_800D7F18(0);
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         case 8:
             func_800862F8(2, 0, false);
             func_800D7F18(1);
             break;
+
         case 9:
             func_800862F8(2, 0, false);
             func_8008605C(EventFlag_75, 10, 19, false);
             break;
+
         case START_PIANO_STATE:
             func_8008616C(0, true, 2, 0, false);
             SysWork_StateStepIncrement();
-            /* fallthrough */
+
         case 11:
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(-100.0f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(20.1f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(-22.5f);
+
             func_80085E6C(Q12(1.5f), false);
             Camera_PositionSet(NULL, Q12(-97.3f), Q12(-2.3699f), Q12(21.97f), 0, 0, 0, 0, true);
             Camera_LookAtSet(NULL, Q12(-100.37f), Q12(-2.2f), Q12(24.53f), 0, 0, 0, 0, true);
             break;
+
         case 12:
             func_80085E6C(Q12(0.5f), false);
-            g_WorldObj0.position_1C.rotation_C.vx += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.0555f), Q12_SHIFT);
-            g_WorldObj0.position_1C.position_0.vy =
-                FP_FROM((Math_Cos(g_WorldObj0.position_1C.rotation_C.vx) * FP_ANGLE(-43.2f)), Q12_SHIFT) - Q12(2.5601f);
-            g_WorldObj0.position_1C.position_0.vz =
-                FP_FROM((Math_Sin(g_WorldObj0.position_1C.rotation_C.vx) * FP_ANGLE(-43.2f)), Q12_SHIFT) + Q12(23.73f);
+            g_WorldObject0.pose_1C.rotation_C.vx += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.0555f), Q12_SHIFT);
+            g_WorldObject0.pose_1C.position_0.vy = FP_FROM((Math_Cos(g_WorldObject0.pose_1C.rotation_C.vx) * FP_ANGLE(-43.2f)), Q12_SHIFT) - Q12(2.5601f);
+            g_WorldObject0.pose_1C.position_0.vz = FP_FROM((Math_Sin(g_WorldObject0.pose_1C.rotation_C.vx) * FP_ANGLE(-43.2f)), Q12_SHIFT) + Q12(23.73f);
             break;
+
         case 13:
             D_800DD4FC += g_DeltaTime2;
-            g_WorldObj0.position_1C.rotation_C.vx += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.75f), Q12_SHIFT);
-            g_WorldObj0.position_1C.position_0.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800DD4FC, Q12_SHIFT);
-            g_WorldObj0.position_1C.position_0.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.5f), Q12_SHIFT);
-            if (g_WorldObj0.position_1C.position_0.vy  >= 0)
+
+            g_WorldObject0.pose_1C.rotation_C.vx += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.75f), Q12_SHIFT);
+            g_WorldObject0.pose_1C.position_0.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800DD4FC, Q12_SHIFT);
+            g_WorldObject0.pose_1C.position_0.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.5f), Q12_SHIFT);
+
+            if (g_WorldObject0.pose_1C.position_0.vy >= 0)
             {
                 Sd_EngineCmd(Sfx_Unk1417);
                 SysWork_StateStepIncrement();
             }
             break;
+
         case 14:
             func_80085E6C(Q12(1.0f), false);
             break;
+        
         case 15:
             func_80085E6C(Q12(2.0f), false);
-            g_WorldObj0.position_1C.position_0.vx = Q12(-98.8f);
-            g_WorldObj0.position_1C.rotation_C.vx = FP_ANGLE(-90.0f);
-            g_WorldObj0.position_1C.position_0.vy = Q12(0.0f);
-            g_WorldObj0.position_1C.position_0.vz = Q12(22.8f);
-            g_WorldObj0.position_1C.rotation_C.vy = FP_ANGLE(28.5f);
+
+            g_WorldObject0.pose_1C.position_0.vx = Q12(-98.8f);
+            g_WorldObject0.pose_1C.rotation_C.vx = FP_ANGLE(-90.0f);
+            g_WorldObject0.pose_1C.position_0.vy = Q12(0.0f);
+            g_WorldObject0.pose_1C.position_0.vz = Q12(22.8f);
+            g_WorldObject0.pose_1C.rotation_C.vy = FP_ANGLE(28.5f);
+
             Camera_PositionSet(NULL, Q12(-101.39f), Q12(-2.6099f), Q12(22.13f), 0, 0, 0, 0, true);
             Camera_LookAtSet(NULL, Q12(-98.4f), Q12(-0.14f), Q12(23.1f), 0, 0, 0, 0, true);
             break;
+
         case CANCEL_PIANO_STATE:
             func_8008616C(2, false, 2, 0, false);
             break;
+
         case 18:
         case 20:
             SysWork_NextStateStepSet(NO_VALUE);
             break;
+
         case END_PIANO_STATE:
-        case DONT_CHECK_PIANO_STATE:
+        case NO_PIANO_STATE_CHECK:
             func_800862F8(2, 0, false);
-            /* fallthrough */
+
         case 16:
             func_8008616C(2, true, 0, Q12(2.0f), false);
             break;
+
         default:
             func_8008616C(0, false, 0, Q12(2.5f), false);
             sharedFunc_800D2244_0_s00(false);

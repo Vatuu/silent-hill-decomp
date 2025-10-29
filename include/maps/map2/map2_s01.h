@@ -9,10 +9,10 @@
 #define KEYFRAME_PlayerState_Unk113 723
 
 // Config used by `Map_RoomIdxGet`.
-#define MAP_ROOM_MIN_X    Q12(-200.0f)
-#define MAP_ROOM_MAX_X    Q12(200.0f)
-#define MAP_ROOM_MIN_Z    Q12(0.0f)
-#define MAP_ROOM_MAX_Z    Q12(120.0f)
+#define MAP_ROOM_MIN_X Q12(-200.0f)
+#define MAP_ROOM_MAX_X Q12(200.0f)
+#define MAP_ROOM_MIN_Z Q12(0.0f)
+#define MAP_ROOM_MAX_Z Q12(120.0f)
 
 extern u16 g_MapMsgSounds[20];
 extern q19_12 g_Timer0;

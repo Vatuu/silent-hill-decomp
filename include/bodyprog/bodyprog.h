@@ -4770,6 +4770,7 @@ void GameState_Unk15_Update();
 void Game_TurnFlashlightOn(void);
 void Game_TurnFlashlightOff(void);
 
-void func_80089034(s32 charaId, s32 arg1, q19_12 x, q19_12 z); // X and Z is guessed.
+/** X and Z are guessed. */
+void func_80089034(s32 charaId, s32 arg1, q19_12 x, q19_12 z);
 
 #endif

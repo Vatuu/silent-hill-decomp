@@ -29,6 +29,10 @@ void func_800DA9D4(void);
 
 void func_800DAA00(void);
 
+void func_800DAD2C(void);
+
+void func_800DB058(void);
+
 void func_800DB310(void);
 
 void func_800DB33C(void);
@@ -40,5 +44,7 @@ void func_800DBFC8(void);
 void func_800DD208(void);
 
 void func_800DD420(void);
+
+void func_800DEC88(void);
 
 #endif

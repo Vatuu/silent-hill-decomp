@@ -24,10 +24,10 @@
 #define KEYFRAME_PlayerState_Unk162 837
 
 // Config used by `Map_RoomIdxGet`.
-#define MAP_ROOM_MIN_X    Q12(-200.0f)
-#define MAP_ROOM_MAX_X    Q12(200.0f)
-#define MAP_ROOM_MIN_Z    Q12(-160.0f)
-#define MAP_ROOM_MAX_Z    Q12(0.f)
+#define MAP_ROOM_MIN_X Q12(-200.0f)
+#define MAP_ROOM_MAX_X Q12(200.0f)
+#define MAP_ROOM_MIN_Z Q12(-160.0f)
+#define MAP_ROOM_MAX_Z Q12(0.f)
 
 extern s32 D_800ED73C; // } RNG related values?
 extern s32 D_800ED740; // }
