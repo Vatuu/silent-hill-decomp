@@ -234,6 +234,10 @@ extern s_800AE710 D_800AE710[4];
 
 extern s32 D_800AE1C0[];
 
+extern RECT D_800AE5A8[4];
+
+extern u16 D_800AE5C8[2];
+
 // ==========
 // FUNCTIONS
 // ==========

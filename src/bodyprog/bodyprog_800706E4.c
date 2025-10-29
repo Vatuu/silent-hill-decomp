@@ -8570,7 +8570,18 @@ q19_12 Math_Distance2dGet(const VECTOR3* posFrom, const VECTOR3* posTo) // 0x800
                         FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT));
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800706E4", func_800803FC); // 0x800803FC
+void func_800803FC(VECTOR3* pos, s32 idx) // 0x800803FC
+{
+    s32 posX;
+    s32 posZ;
+
+    posX = g_MapOverlayHeader.charaSpawns_24C[0][idx].positionX_0;
+    posZ = g_MapOverlayHeader.charaSpawns_24C[0][idx].positionZ_8;
+
+    pos->vx = posX;
+    pos->vy = func_80080884(posX, posZ);
+    pos->vz = posZ;
+}
 
 void Input_SelectClickSet() // 0x80080458
 {

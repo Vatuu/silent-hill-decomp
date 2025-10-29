@@ -3670,6 +3670,8 @@ void func_8005DE0C(s32 sfx, VECTOR3* pos, s32 inVolume, s32 falloff, u8 pitch);
 
 void Map_EffectTexturesLoad(s32 mapIdx);
 
+void func_8005E414(s32 arg0);
+
 void func_8005E650();
 
 void func_8005E70C();
@@ -4425,6 +4427,8 @@ q19_12 Math_DistanceGet(const VECTOR3* posFrom, const VECTOR3* posTo);
  * @return 2D distance between positions.
  */
 q19_12 Math_Distance2dGet(const VECTOR3* posFrom, const VECTOR3* posTo);
+
+void func_800803FC(VECTOR3* pos, s32 idx);
 
 /** @brief Forces a clicked controller input status for `ControllerFlag_Select`. */
 void Input_SelectClickSet();
