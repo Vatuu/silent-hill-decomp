@@ -130,6 +130,8 @@ sharedFunc_800E8730_2_s02   = 0x800E8730; // type:func
 sharedFunc_800E8A40_2_s02   = 0x800E8A40; // type:func
 sharedFunc_800E8DFC_2_s02   = 0x800E8DFC; // type:func
 sharedFunc_800D929C_0_s00   = 0x800E992C; // type:func
+Event_DoorJammed            = 0x800E9C2C; // type:func
+Event_DoorLocked            = 0x800E9CC0; // type:func
 
 
 
@@ -154,6 +156,7 @@ sharedData_800DD870_0_s01   = 0x800EAE6C; // type:VECTOR3 size:0xC
 sharedData_800DD880_0_s01   = 0x800EAE7C; // type:VECTOR3 size:0xC
 GROANER_ANIM_INFOS          = 0x800EAE8C; // type:s32 unknown type
 ROPMER_ANIM_INFOS           = 0x800EC954; // type:s32 unknown type
+MAP_POINTS                  = 0x800ED454; // type:MapPoint2d
 
 //---------------------------------------------------------------
 //--- PA: 0x02411C   VA: 0x800ED694   subsegment: .data, map2_s02

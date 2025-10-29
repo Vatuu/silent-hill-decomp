@@ -588,9 +588,9 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800EB6B0);
 
 void func_800EB874() {}
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800EB87C);
+#include "maps/shared/Event_DoorJammed.h" // 0x800EB87C
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800EB910);
+#include "maps/shared/Event_DoorLocked.h" // 0x800EB910
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"

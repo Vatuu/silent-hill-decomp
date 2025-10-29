@@ -84,6 +84,8 @@ sharedFunc_800D9188_0_s00           = 0x800CE77C; // type:func
 Anim_StartKeyframeIdxGet            = 0x800CE810; // type:func
 sharedFunc_800D923C_0_s00           = 0x800CE81C; // type:func
 sharedFunc_800D929C_0_s00           = 0x800CE87C; // type:func
+Event_DoorJammed                    = 0x800CEF88; // type:func
+Event_DoorLocked                    = 0x800CF01C; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800CFB9C; // type:func
 
 
@@ -102,6 +104,7 @@ ALESSA_ANIM_INFOS                   = 0x800D37A8; // type:AnimInfo
 sharedData_800DF1F4_0_s00           = 0x800D3908; // type:s32
 sharedData_800DF1F8_0_s00           = 0x800D390C; // type:s16
 sharedData_800DF1FA_0_s00           = 0x800D390E; // type:s16
+MAP_POINTS                          = 0x800D39C4; // type:MapPoint2d
 
 //-----------------------------------------------------------------
 //--- PA: 0x00A4D4   VA: 0x800D3A4C   subsegment: .data, map6_s02_2

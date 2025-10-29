@@ -261,9 +261,9 @@ void func_800D5FDC() {}
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D5FE4
 
-INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D607C);
+#include "maps/shared/Event_DoorJammed.h" // 0x800D607C
 
-INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D6110);
+#include "maps/shared/Event_DoorLocked.h" // 0x800D6110
 
 void func_800D61A4() {}
 

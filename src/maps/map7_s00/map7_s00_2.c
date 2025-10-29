@@ -87,9 +87,9 @@ INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00_2", func_800D0110);
 
 void func_800D0994() {}
 
-INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00_2", func_800D099C);
+#include "maps/shared/Event_DoorJammed.h" // 0x800D099C
 
-INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00_2", func_800D0A30);
+#include "maps/shared/Event_DoorLocked.h" // 0x800D0A30
 
 void func_800D0AC4() {}
 

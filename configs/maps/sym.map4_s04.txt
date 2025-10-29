@@ -94,6 +94,8 @@ Anim_StartKeyframeIdxGet            = 0x800D1314; // type:func
 sharedFunc_800D923C_0_s00           = 0x800D1334; // type:func
 sharedFunc_800D929C_0_s00           = 0x800D1394; // type:func
 Map_RoomIdxGet                      = 0x800D13A4; // type:func
+Event_DoorJammed                    = 0x800D1748; // type:func
+Event_DoorLocked                    = 0x800D17DC; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800D1878; // type:func
 
 
@@ -118,6 +120,7 @@ sharedData_800DF1F4_0_s00           = 0x800D3314; // type:s32
 sharedData_800DF1F8_0_s00           = 0x800D3318; // type:s16
 sharedData_800DF1FA_0_s00           = 0x800D331A; // type:s16
 MAP_ROOM_IDXS                       = 0x800D331C; // type:u8
+MAP_POINTS                          = 0x800D33EC; // type:MapPoint2d
 
 //-----------------------------------------------------------------
 //--- PA: 0x009F54   VA: 0x800D34CC   subsegment: .data, map4_s04_2

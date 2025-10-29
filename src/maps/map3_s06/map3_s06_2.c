@@ -50,9 +50,9 @@ void func_800D07A0(s32 arg0) // 0x800D07A0
 
 void func_800D09B4(void) {}
 
-INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06_2", func_800D09BC);
+#include "maps/shared/Event_DoorJammed.h" // 0x800D09BC
 
-INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06_2", func_800D0A50);
+#include "maps/shared/Event_DoorLocked.h" // 0x800D0A50
 
 void func_800D0AE4(void) {}
 

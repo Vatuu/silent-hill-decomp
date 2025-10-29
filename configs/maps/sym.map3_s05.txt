@@ -84,6 +84,7 @@ sharedFunc_800D0828_3_s03 = 0x800D5298; // type:func
 sharedFunc_800D0968_3_s03 = 0x800D53D8; // type:func
 sharedFunc_800D929C_0_s00 = 0x800D5434; // type:func
 Map_RoomIdxGet            = 0x800D5444; // type:func
+Event_DoorLocked          = 0x800D58A0; // type:func
 
 
 
@@ -100,6 +101,7 @@ sharedData_800DD59C_0_s00 = 0x800D931C; // type:u8
 CREAPER_ANIM_INFOS        = 0x800D9328; // type:s32 unknown type
 sharedData_800D5710_3_s03 = 0x800D9D80; // size:0xD0 - s_800D5710
 MAP_ROOM_IDXS             = 0x800DA12C; // type:u8
+MAP_POINTS                = 0x800DA1FC; // type:MapPoint2d
 
 //---------------------------------------------------------------
 //--- PA: 0x011178   VA: 0x800DA6F0   subsegment: .data, map3_s05

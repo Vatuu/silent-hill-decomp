@@ -35,6 +35,24 @@ from typing import List
 
 MapVramAddress = 0x800C9578
 
+# Known shared-data variables names, for data that isn't named sharedData_XXX
+# TODO: Not complete list atm
+SharedDataVariables = [
+    "MAP_POINTS",
+    "MAP_ROOM_IDXS",
+    "CREAPER_ANIM_INFOS",
+    "STALKER_ANIM_INFOS",
+    "MAP_MESSAGES",
+    "g_Particle_SpeedX",
+    "g_Particle_SpeedZ",
+    "g_ParticleVectors0",
+    "g_Particle_RotationY",
+    "g_ParticleVectors1",
+    "g_Particle_Position",
+    "g_Particle_PrevPosition",
+    "g_Particle_PrevRotationY"
+]
+
 # Funcs that have already been symbol-matched between all valid matching funcs in the project
 # Will only allow code sharing for these with funcs under the same symbol name
 # (workaround for some small non-related AI funcs that can have false-positive matches with these)
@@ -164,22 +182,42 @@ def find_shared_data_lines(text, funcName):
     Returns:
         dict[int, str]: Dictionary with line numbers as keys and the first matched string as value.
     """
+    # Pattern for sharedData_ variables
     pattern = r'sharedData_[a-fA-F0-9]{8}_[0-9]{1}_[a-zA-Z0-9]{3}'
+
+    # Compile secondary pattern for renamed sharedData vars
+    shared_vars = SharedDataVariables or []
+    if shared_vars:
+        # Escape special chars and join alternatives
+        vars_pattern = r'(' + '|'.join(map(re.escape, shared_vars)) + r')'
+    else:
+        vars_pattern = None
+
     result = {}
 
-    # If we have glabel then only return contents following it (in case .rodata/jtbls preceed the func)
+    # Limit search to text after the function label (if present)
     glabelStr = "glabel " + funcName
     index = text.find(glabelStr)
     if index != -1:
         text = text[index + len(glabelStr):].strip()
 
+    # Check each line
     lines = text.splitlines()
     for i, line in enumerate(lines):
         if " + 0x" in line:
-            continue # line contains offset, skip it
+            continue  # skip lines with offsets
+
+        # Check for sharedData_ pattern
         match = re.search(pattern, line)
         if match:
             result[i + 1] = match.group(0)
+            continue
+
+        # Check for named shared vars
+        if vars_pattern:
+            match = re.search(vars_pattern, line)
+            if match:
+                result[i + 1] = match.group(0)
 
     return result
 
@@ -306,6 +344,9 @@ def clean_file(content, funcName):
     content = re.sub(r'L[a-fA-F0-9]{8}', 'L', content) # then remove any labels that didn't have ":"
     content = re.sub(r'jtbl_[a-fA-F0-9]{8}', 'jtbl', content)
 
+    # Remove any known SharedDataVariables
+    content = re.sub(r'\b(' + '|'.join(map(re.escape, SharedDataVariables)) + r')\b', 'D', content)
+
     # Remove D_[8 chars], shared_[8 chars]_[digit]_[3 chars], along with optional "+ 0xXX" offset
     content = re.sub(
         r'sharedData_[a-fA-F0-9]{8}_[0-9]_[a-zA-Z0-9]{3}(?:\s*\+\s*0x[0-9a-fA-F]+)?',
@@ -317,6 +358,9 @@ def clean_file(content, funcName):
         'D',
         content
     )
+
+    # Remove .size directive
+    content = re.sub(r'^\s*\.size.*$\n?', '', content, flags=re.MULTILINE)
 
     # Strip AI func refs (Ai_xxxx)
     content = re.sub(r'(Ai_[a-zA-Z_]+)(?=(,)?(\s|$))', 'func', content)
@@ -499,7 +543,7 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
 
 
                     # If first dir func is named sharedFunc, print symbol names/includes for user to add to second map
-                    if "sharedFunc" in name_file1 or "Ai_" in name_file1:
+                    if "sharedFunc" in name_file1 or "Ai_" in name_file1 or "Event_" in name_file1:
                         addr = 0
 
                         # Try searching file2_syms for the addr of this func, in case this func had been renamed already

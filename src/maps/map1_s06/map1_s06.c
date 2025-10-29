@@ -176,11 +176,11 @@ void func_800D5400(void) // 0x800D5400
 
 void func_800D5448(void) {}
 
-INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D5450);
+#include "maps/shared/Event_DoorJammed.h" // 0x800D5450
 
-INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D54E4);
+#include "maps/shared/Event_DoorLocked.h" // 0x800D54E4
 
-INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D5578);
+#include "maps/shared/Event_DoorUnlocked.h" // 0x800D5578
 
 void func_800D560C(void) {}
 

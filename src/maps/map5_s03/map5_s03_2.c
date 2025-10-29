@@ -59,11 +59,11 @@ void func_800D1340(void) {}
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D1348
 
-INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03_2", func_800D13E0);
+#include "maps/shared/Event_DoorJammed.h" // 0x800D13E0
 
-INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03_2", func_800D1474);
+#include "maps/shared/Event_DoorLocked.h" // 0x800D1474
 
-INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03_2", func_800D1508);
+#include "maps/shared/Event_DoorUnlocked.h" // 0x800D1508
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"

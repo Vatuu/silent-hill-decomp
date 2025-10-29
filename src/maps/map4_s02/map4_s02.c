@@ -567,9 +567,9 @@ INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800E9F34);
 
 void func_800EA208(void) {}
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800EA210);
+#include "maps/shared/Event_DoorJammed.h" // 0x800EA210
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800EA2A4);
+#include "maps/shared/Event_DoorLocked.h" // 0x800EA2A4
 
 void func_800EA338(void) {}
 

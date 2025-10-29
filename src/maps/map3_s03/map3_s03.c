@@ -293,11 +293,11 @@ void func_800D151C(void) // 0x800D151C
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D15B8);
+#include "maps/shared/Event_DoorJammed.h" // 0x800D15B8
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D164C);
+#include "maps/shared/Event_DoorLocked.h" // 0x800D164C
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D16E0);
+#include "maps/shared/Event_DoorUnlocked.h" // 0x800D16E0
 
 void func_800D1774(void) // 0x800D1774
 {

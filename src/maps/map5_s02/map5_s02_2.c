@@ -52,9 +52,9 @@ void func_800D48F0(void) {}
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D48F8
 
-INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02_2", func_800D4990);
+#include "maps/shared/Event_DoorJammed.h" // 0x800D4990
 
-INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02_2", func_800D4A24);
+#include "maps/shared/Event_DoorLocked.h" // 0x800D4A24
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"

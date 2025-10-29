@@ -147,9 +147,9 @@ void func_800D1178(s32 arg0) // 0x800D1178
 
 void func_800D138C(void) {}
 
-INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D1394);
+#include "maps/shared/Event_DoorJammed.h" // 0x800D1394
 
-INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D1428);
+#include "maps/shared/Event_DoorLocked.h" // 0x800D1428
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
