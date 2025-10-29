@@ -2109,6 +2109,21 @@ typedef struct
 typedef struct
 {
     s_func_8005E89C field_0;
+    CVECTOR         field_12C;
+    CVECTOR         field_130;
+    SVECTOR         field_134[25];
+    VECTOR3         field_1FC;
+    u32             field_208;
+    s32             field_20C;
+    s32             field_210;
+    s32             field_214[25];
+    DVECTOR         field_278[25];
+    s32             field_2DC;
+} s_func_80062708;
+
+typedef struct
+{
+    s_func_8005E89C field_0;
     SVECTOR field_12C;
     s8      unk_138[8];
     DVECTOR field_13C;
@@ -3333,7 +3348,7 @@ void func_800453E8(s_Skeleton* skel, bool cond);
 /** Does something with skeleton bones. `arg0` is a struct pointer. */
 void func_80045468(s_Skeleton* skel, s32* arg1, bool cond);
 
-void func_80045534(s_Skeleton* skel, GsOT* ot, void* arg2, GsCOORDINATE2* coord, q3_12 arg4, u16 arg5, s_FsImageDesc* images);
+void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* coord, q3_12 arg4, u16 arg5, s_FsImageDesc* images);
 
 /** Passes a command to the sound driver. Plays SFX among other things. */
 void Sd_EngineCmd(u32 cmd);
@@ -3623,7 +3638,7 @@ bool Lm_ModelFind(s_WorldObject_0* arg0, s_LmHeader* lmHdr, s_WorldObject_0_10* 
 
 void StringCopy(char* prevStr, char* newStr);
 
-void func_80056D8C(s16, s16, s16, s16, s32, s32, GsOT*, void*);
+void func_80056D8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, GsOT* arg6, s32 arg7);
 
 void func_80057090(s_ModelInfo* modelInfo, GsOT* otTag, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5);
 
@@ -4040,6 +4055,8 @@ s16 func_8005C7B0(s32 arg0);
 
 /** `arg0` type assumed. */
 void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3);
+
+bool func_80062708(POLY_FT4** arg0, s32 arg1);
 
 bool func_80063A50(POLY_FT4** poly, s32 arg1);
 
