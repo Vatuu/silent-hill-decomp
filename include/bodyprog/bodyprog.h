@@ -2101,6 +2101,21 @@ typedef struct
 typedef struct
 {
     s_func_8005E89C field_0;
+    CVECTOR         field_12C;
+    CVECTOR         field_130;
+    SVECTOR         field_134[25];
+    VECTOR3         field_1FC;
+    u32             field_208;
+    s32             field_20C;
+    s32             field_210;
+    s32             field_214[25];
+    DVECTOR         field_278[25];
+    s32             field_2DC;
+} s_func_80062708;
+
+typedef struct
+{
+    s_func_8005E89C field_0;
     SVECTOR field_12C;
     s8      unk_138[8];
     DVECTOR field_13C;
@@ -4032,6 +4047,8 @@ s16 func_8005C7B0(s32 arg0);
 
 /** `arg0` type assumed. */
 void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3);
+
+bool func_80062708(POLY_FT4** arg0, s32 arg1);
 
 bool func_80063A50(POLY_FT4** poly, s32 arg1);
 
