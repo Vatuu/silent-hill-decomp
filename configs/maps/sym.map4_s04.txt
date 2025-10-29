@@ -69,9 +69,9 @@ sharedFunc_800D2EF4_0_s00           = 0x800CFE8C; // type:func
 //--- PA: 0x006928   VA: 0x800CFEA0   subsegment: c, Chara_Lisa
 //-------------------------------------------------------------
 Ai_Lisa_Update                      = 0x800CFEA0; // type:func
-Ai_Lisa_AnimUpdate           = 0x800CFF14; // type:func
-Ai_Lisa_MovementUpdate           = 0x800CFF5C; // type:func
-Ai_Lisa_AnimStateUpdate         = 0x800D00F4; // type:func
+Ai_Lisa_AnimUpdate                  = 0x800CFF14; // type:func
+Ai_Lisa_MovementUpdate              = 0x800CFF5C; // type:func
+Ai_Lisa_AnimStateUpdate             = 0x800D00F4; // type:func
 Ai_Lisa_Init                        = 0x800D0968; // type:func
 
 //-------------------------------------------------------------

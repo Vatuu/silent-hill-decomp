@@ -82,8 +82,8 @@ sharedFunc_800D7E04_0_s00           = 0x800D2CF4; // type:func
 //--- PA: 0x009930   VA: 0x800D2EA8   subsegment: c, Chara_Kaufmann
 //-----------------------------------------------------------------
 Ai_Kaufmann_Update                  = 0x800D2EA8; // type:func
-Ai_Kaufmann_AnimUpdate           = 0x800D2F1C; // type:func
-Ai_Kaufmann_MovementUpdate           = 0x800D2F64; // type:func
+Ai_Kaufmann_AnimUpdate              = 0x800D2F1C; // type:func
+Ai_Kaufmann_MovementUpdate          = 0x800D2F64; // type:func
 Ai_Kaufmann_AnimStateUpdate         = 0x800D30FC; // type:func
 Ai_Kaufmann_Init                    = 0x800D3AC0; // type:func
 

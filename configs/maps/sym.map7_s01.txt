@@ -91,27 +91,27 @@ sharedFunc_800D0968_3_s03           = 0x800D495C; // type:func
 //--- PA: 0x00B440   VA: 0x800D49B8   subsegment: c, Chara_GhostChildAlessa
 //-------------------------------------------------------------------------
 Ai_GhostChildAlessa_Update          = 0x800D49B8; // type:func
-Ai_GhostChildAlessa_AnimUpdate           = 0x800D4A2C; // type:func
-Ai_GhostChildAlessa_MovementUpdate           = 0x800D4A74; // type:func
-Ai_GhostChildAlessa_AnimStateUpdate           = 0x800D4C0C; // type:func
+Ai_GhostChildAlessa_AnimUpdate      = 0x800D4A2C; // type:func
+Ai_GhostChildAlessa_MovementUpdate  = 0x800D4A74; // type:func
+Ai_GhostChildAlessa_AnimStateUpdate = 0x800D4C0C; // type:func
 Ai_GhostChildAlessa_Init            = 0x800D4DD8; // type:func
 
 //-------------------------------------------------------------
 //--- PA: 0x00B884   VA: 0x800D4DFC   subsegment: c, Chara_Lisa
 //-------------------------------------------------------------
 Ai_Lisa_Update                      = 0x800D4DFC; // type:func
-Ai_Lisa_AnimUpdate           = 0x800D4E70; // type:func
-Ai_Lisa_MovementUpdate           = 0x800D4EB8; // type:func
-Ai_Lisa_AnimStateUpdate         = 0x800D5050; // type:func
+Ai_Lisa_AnimUpdate                  = 0x800D4E70; // type:func
+Ai_Lisa_MovementUpdate              = 0x800D4EB8; // type:func
+Ai_Lisa_AnimStateUpdate             = 0x800D5050; // type:func
 Ai_Lisa_Init                        = 0x800D58C4; // type:func
 
 //-------------------------------------------------------------------
 //--- PA: 0x00C370   VA: 0x800D58E8   subsegment: c, Chara_BloodyLisa
 //-------------------------------------------------------------------
 Ai_BloodyLisa_Update                = 0x800D58E8; // type:func
-Ai_BloodyLisa_AnimUpdate           = 0x800D595C; // type:func
-Ai_BloodyLisa_MovementUpdate           = 0x800D59A4; // type:func
-Ai_BloodyLisa_AnimStateUpdate           = 0x800D5B3C; // type:func
+Ai_BloodyLisa_AnimUpdate            = 0x800D595C; // type:func
+Ai_BloodyLisa_MovementUpdate        = 0x800D59A4; // type:func
+Ai_BloodyLisa_AnimStateUpdate       = 0x800D5B3C; // type:func
 Ai_BloodyLisa_Init                  = 0x800D5CB4; // type:func
 
 //-------------------------------------------------------------
