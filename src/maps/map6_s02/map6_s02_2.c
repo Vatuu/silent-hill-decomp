@@ -67,7 +67,7 @@ const char* MAP_MESSAGES[] = {
 
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02_2", func_800CF0B8);
 
-#include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800CFB9C
+#include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800CFB9C
 
 void func_800CFC34(void) // 0x800CFC34
 {
@@ -146,7 +146,7 @@ void func_800CFC34(void) // 0x800CFC34
 
         case 3:
             D_800D4E28 = 0;
-            func_8008616C(0, true, 3, Q12(0.0f), false);
+            SysWork_StateStepIncrementAfterFade(0, true, 3, Q12(0.0f), false);
             DmsHeader_FixOffsets(FS_BUFFER_13);
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
@@ -154,14 +154,14 @@ void func_800CFC34(void) // 0x800CFC34
             SysWork_StateStepIncrement();
 
         case 4:
-            func_8008616C(2, false, 0, Q12(0.0f), false);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
 
         case 5:
             Map_MessageWithAudio(23, &D_800D3C88, &D_800D3B6C);
             break;
 
         case 6:
-            sharedFunc_800DA8E8_0_s01(&D_800D4E28, Q12(40.0f), Q12(0.0f), Q12(30.0f), true, true);
+            SysWork_StateStepIncrementAfterTime(&D_800D4E28, Q12(40.0f), Q12(0.0f), Q12(30.0f), true, true);
 
             for (i = 0; i < 15; i++)
             {
@@ -193,7 +193,7 @@ void func_800CFC34(void) // 0x800CFC34
                 func_800CABA0(&D_800D3B78[i], Q12(0.5f), 0x266, 0);
             }
 
-            func_80085E6C(Q12(2.5f), false);
+            SysWork_StateStepIncrementDelayed(Q12(2.5f), false);
 
             if (g_SysWork.sysStateStep_C[0] != 9)
             {
@@ -216,7 +216,7 @@ void func_800CFC34(void) // 0x800CFC34
             break;
 
         case 11:
-            func_80085E6C(Q12(2.5f), false);
+            SysWork_StateStepIncrementDelayed(Q12(2.5f), false);
 
             if (g_SysWork.sysStateStep_C[0] != 11)
             {
@@ -225,16 +225,16 @@ void func_800CFC34(void) // 0x800CFC34
             break;
 
         case 12:
-            func_80085E6C(Q12(4.0f), false);
+            SysWork_StateStepIncrementDelayed(Q12(4.0f), false);
 
             if (g_SysWork.sysStateStep_C[0] != 12)
             {
-                func_8008616C(0, false, 2, Q12(0.0f), false);
+                SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             }
             break;
 
         case 13:
-            func_8008616C(2, true, 1, Q12(1.0f), false);
+            SysWork_StateStepIncrementAfterFade(2, true, 1, Q12(1.0f), false);
             break;
 
         default:
@@ -252,7 +252,7 @@ void func_800CFC34(void) // 0x800CFC34
             }
             else
             {
-                func_8008616C(0, false, 2, Q12(0.0f), false);
+                SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
                 sharedFunc_800D2244_0_s00(false);
 
                 SysWork_StateSetNext(SysState_Gameplay);

@@ -173,7 +173,7 @@ GsOT g_OrderingTable2[2] = {
     { 4, &g_OtTags0[1][0], 0, 0, 0 }
 };
 
-q19_12 g_DeltaTime1      = TIME_STEP_60_FPS;
+q19_12 g_DeltaTime1      = TIMESTEP_60_FPS;
 s32    g_IntervalVBlanks = 1;
 
 s_FsImageDesc g_Font16AtlasImg             = { { 0,   16  }, 0,    240, 304, 511 };
@@ -440,8 +440,7 @@ s_StructUnk3 D_800A952C = {
     .field_30 = 0x2661CCC
 };
 
-u32 D_800A9560[] = // Unknown
-{
+u32 D_800A9560[] = { // Unknown.
     0x0B331000,
     0x00000999,
     0x00028000,
@@ -686,7 +685,7 @@ s_800C37D4 D_800A986C[] = {
     { 28, 3, 797, 0x31F031E, 0x3220321 },
     { 35, 3, 804, 0x3260325, 0x327030E }
 };
-u32 D_800A98A8 = 0x03200328;
+u32 D_800A98A8 = 0x3200328;
 u16 g_UnknownEngineCmdTable2[] = {
     0x0,
     0xA2,

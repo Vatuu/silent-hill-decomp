@@ -737,8 +737,8 @@ void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
 
         case 3:
         case 4:
-            if(chara->position_18.vx >= Q12(-100.0f) && chara->position_18.vx <= Q12(-94.5f) && 
-               chara->position_18.vz >= Q12(-70.3f) && chara->position_18.vz <= Q12(-62.0f)) 
+            if (chara->position_18.vx >= Q12(-100.0f) && chara->position_18.vx <= Q12(-94.5f) && 
+                chara->position_18.vz >= Q12(-70.3f) && chara->position_18.vz <= Q12(-62.0f)) 
             {
                 var_s0 = (var_s0 & ~0x2) | 0x4;
             }
@@ -1111,9 +1111,9 @@ void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECT
     s32            vy;
     s32            vx;
     s32            vz;
-    s32            coord0; // Q23.8
-    s32            coord1; // Q23.8
-    s32            coord2; // Q23.8
+    q23_8          coordX; // Q23.8
+    q23_8          coordY; // Q23.8
+    q23_8          coordZ; // Q23.8
     s32            i;
     s32            lmIdx;
     s_WorldObject* obj;
@@ -1140,9 +1140,9 @@ void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECT
             arg0->field_10.lmIdx_9 = lmIdx;
         } 
 
-        coord0 = Q12_TO_Q8(pos->vx);
-        coord1 = Q12_TO_Q8(pos->vy);
-        coord2 = Q12_TO_Q8(pos->vz);
+        coordX = Q12_TO_Q8(pos->vx);
+        coordY = Q12_TO_Q8(pos->vy);
+        coordZ = Q12_TO_Q8(pos->vz);
         vx     = rot->vx >> 2;
         vz     = rot->vz >> 2;
         vy     = rot->vy;
@@ -1152,9 +1152,9 @@ void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECT
             obj = &g_WorldGfx.objects_2BEC[i];
     
             if (arg0 == obj->field_0 &&
-                coord0 == obj->gsCoordinate0_4 &&
-                coord2 == obj->gsCoordinate2_8 &&
-                coord1 == obj->gsCoordinate1_4 &&
+                coordX == obj->gsCoordinate0_4 &&
+                coordZ == obj->gsCoordinate2_8 &&
+                coordY == obj->gsCoordinate1_4 &&
                 vx == obj->vx_C &&
                 vy == obj->vy_C &&
                 vz == obj->vz_C)
@@ -1173,9 +1173,9 @@ void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECT
 
         obj->vz_C            = vz;
         obj->field_0         = arg0;
-        obj->gsCoordinate0_4 = coord0;
-        obj->gsCoordinate1_4 = coord1;
-        obj->gsCoordinate2_8 = coord2;
+        obj->gsCoordinate0_4 = coordX;
+        obj->gsCoordinate1_4 = coordY;
+        obj->gsCoordinate2_8 = coordZ;
         g_WorldGfx.objectCount_2BE8++;
     }
 }

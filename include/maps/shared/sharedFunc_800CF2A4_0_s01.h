@@ -28,7 +28,7 @@ void sharedFunc_800CF2A4_0_s01(s32 arg0, s_Particle* part, u16* rand, s32* delta
             part->movement_18.vy += Rng_GenerateInt(*rand, -1, 3);
 
             // Apply movement to position over time.
-            part->position0_0.vy += TIME_STEP_SCALE(*deltaTime, (part->movement_18.vy >> 1) << 2);
+            part->position0_0.vy += TIMESTEP_SCALE(*deltaTime, (part->movement_18.vy >> 1) << 2);
 #endif
             break;
 
@@ -41,7 +41,7 @@ void sharedFunc_800CF2A4_0_s01(s32 arg0, s_Particle* part, u16* rand, s32* delta
             part->position1_C.vy = pos->vy - part->movement_18.vy;
             part->movement_18.vy += sharedData_800E32D4_0_s00;
 
-            pos->vy += TIME_STEP_SCALE(*deltaTime, part->movement_18.vy << 2);
+            pos->vy += TIMESTEP_SCALE(*deltaTime, part->movement_18.vy << 2);
 #endif
             break;
     }

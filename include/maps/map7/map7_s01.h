@@ -53,6 +53,7 @@ extern s_800E1510 D_800E1510[26];
 
 extern u8 D_800E1544[5];
 
+/** Map message indices. */
 extern u16 D_800E154C[];
 
 extern u16 D_800E155C;
@@ -69,6 +70,7 @@ extern u8 D_800E1671;
 extern s16 D_800E1678[4];
 extern u8  D_800E1680;
 
+/** Index into `D_800E154C`. */
 extern u8 D_800E168D;
 
 extern u16 D_800E168E;
@@ -81,7 +83,7 @@ extern VECTOR3 D_800E2C58;
 extern u8  D_800E2C64;
 extern s32 D_800E2C68;
 
-extern s_WorldObjectPos D_800E2C94; // Assumed type.
+extern s_WorldObjectPose D_800E2C94; // Assumed type.
 
 extern s32 D_800E2CA8;
 extern s32 D_800E2CAC;
@@ -110,12 +112,6 @@ void func_800D68F8(void);
 void func_800D725C(void);
 
 void func_800D7A60(void);
-
-void func_800D8230(void);
-
-void func_800D82C4(void);
-
-void func_800D8358(void);
 
 void func_800D83EC(void);
 

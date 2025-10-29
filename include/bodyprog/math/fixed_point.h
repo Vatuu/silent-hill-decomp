@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_MATH_FIXED_POINT_H
-#define _BODYPROG_MATH_FIXED_POINT_H
+#ifndef _BODYPROG_MATH_FIXEDPOINT_H
+#define _BODYPROG_MATH_FIXEDPOINT_H
 
 #include "types.h"
 
@@ -307,7 +307,7 @@
  * @param angle Signed Q3.12 fixed-point angle, clamped integer range `[-2048, 2047]`.
  * @return Unsigned Q3.12 fixed-point angle, wrapped to the clamped integer range `[0, 4095]` (`s16`).
  */
-#define ABS_ANGLE(angle) \
+#define FP_ANGLE_ABS(angle) \
     Q12_FRACT((angle) + FP_ANGLE(360.0f))
 
 /** @brief Normalizes an unsigned Q3.12 fixed-point angle to the clamped signed integer range `[-2048, 2047]`.

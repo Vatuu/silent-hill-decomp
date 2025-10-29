@@ -17,15 +17,15 @@
 #define VECTOR3(x, y, z) \
     { Q12(x), Q12(y), Q12(z) }
 
-/** @brief Constructs a `VECTOR3` in a fixed-point Q19.12 format.
- *   For RODATA vectors used as inlined function parameters.
+/** @brief Constructs a `VECTOR3` in a fixed-point Q19.12 format for RODATA vectors used as inlined function parameters.
  *
  * @param x X component (`float`).
  * @param y Y component (`float`).
  * @param z Z component (`float`).
  * @return `VECTOR3` in a fixed-point Q19.12 format.
  */
-#define QV3(x,y,z) (VECTOR3)VECTOR3(x,y,z)
+#define QVECTOR3(x, y, z) \
+    (VECTOR3)VECTOR3(x, y, z)
 
 /** @brief Constructs an `SVECTOR` containing Euler angles in a fixed-point Q3.12 format.
  *
@@ -73,8 +73,8 @@
  * @param x Q19.12 fixed-point value to scale.
  * @return Scaled Q19.12 fixed-point value.
  */
-#define TIME_STEP_SCALE(deltaTime, x) \
-    (((x) * (deltaTime)) / TIME_STEP_30_FPS)
+#define TIMESTEP_SCALE(deltaTime, x) \
+    (((x) * (deltaTime)) / TIMESTEP_30_FPS)
 
 /** @brief Multiplies an integer in fixed-point Q format by a float converted to fixed-point Q format,
  * using a 64-bit intermediate via `Math_MulFixed` for higher precision.
@@ -106,6 +106,10 @@
  */
 #define Math_Vector2MagCalc(x, z) \
     Q6_TO_Q12(SquareRoot0(SQUARE(Q12_TO_Q6(x)) + SQUARE(Q12_TO_Q6(z))))
+
+#define SetSVectorFast(v, x, y, z) \
+    *(s32*)&(v)->vx = (s32)((x) & 0xFFFF) | (s32)((y) << 16); \
+    (v)->vz = (z)
 
 /** @brief Normalizes Q19.12 fixed-point degrees, unsigned integer range `[0, 4096]` to the signed integer range `[-2048, 2047]`.
  * Thin wrapper for `FP_ANGLE_NORM_S`.

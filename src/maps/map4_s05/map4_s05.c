@@ -153,7 +153,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
         
     }
 
-    chara->moveSpeed_38 = 0;
+    chara->moveSpeed_38 = Q12(0.0f);
     chara->field_34     = 0;
     chara->field_E1_0   = 4;
 
@@ -170,6 +170,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
 
             chara->properties_E4.larvalStalker.properties_E8[7].val16[1] = -0x90; // Could be `FP_ANGLE(-12.7f)`?
             break;
+
         case 4:
             chara->position_18.vx = Q12(-114.5f);
             chara->position_18.vy = Q12(2.0f);
@@ -258,7 +259,7 @@ INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D5D08);
 
 void func_800D5FDC() {}
 
-#include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800D5FE4
+#include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D5FE4
 
 INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D607C);
 

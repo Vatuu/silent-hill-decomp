@@ -23,6 +23,7 @@ extern u16 D_800D3C2C[];
 
 extern u8 D_800D3C88;
 
+/** Timer. */
 extern s32 D_800D3C8C;
 
 extern s32 D_800D3C90;

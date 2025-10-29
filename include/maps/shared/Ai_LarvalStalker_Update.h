@@ -25,7 +25,7 @@ void Ai_LarvalStalker_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORD
         return;
     }
 
-    // TODO: weird hack, or a drunk developer.
+    // TODO: Weird hack, or a drunk developer.
     mapOverlayPtr = &g_SavegamePtr->mapOverlayId_A4;
 
     chara->timer_C6        = Q12(1.0f);

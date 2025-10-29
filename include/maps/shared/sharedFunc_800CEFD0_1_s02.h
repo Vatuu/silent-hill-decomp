@@ -22,10 +22,10 @@ void sharedFunc_800CEFD0_1_s02(s32 arg0, s_sharedFunc_800CEFD0_1_s02* arg1, u16*
         var_s0->field_C.vy = var_s0->field_0.vy - var_s0->field_1A;
 
         // TODO: Similar to `Math_DeltaTimeDistScale`.
-        var_s0->field_0.vx += TIME_STEP_SCALE(*deltaTime, g_Particle_SpeedX + var_t0);
+        var_s0->field_0.vx += TIMESTEP_SCALE(*deltaTime, g_Particle_SpeedX + var_t0);
         var_s0->field_1A   += *(s32*)&sharedData_800E32D4_0_s00; // TODO: Should field be changed to `s32`?
-        var_s0->field_0.vy += TIME_STEP_SCALE(*deltaTime, var_s0->field_1A << 2);
-        var_s0->field_0.vz += TIME_STEP_SCALE(*deltaTime, g_Particle_SpeedZ + var_t1);
+        var_s0->field_0.vy += TIMESTEP_SCALE(*deltaTime, var_s0->field_1A << 2);
+        var_s0->field_0.vz += TIMESTEP_SCALE(*deltaTime, g_Particle_SpeedZ + var_t1);
 
         if (sharedData_800DF158_1_s02 != 0)
         {

@@ -23,7 +23,7 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* chara)
     temp_v1 = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT);
     if ((temp_v1 - 62) < 3u)
     {
-        chara->moveSpeed_38 = 0;
+        chara->moveSpeed_38 = Q12(0.0f);
         return;
     }
 

@@ -241,7 +241,7 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E12D0);
 
 void func_800E155C() {}
 
-#include "maps/shared/sharedFunc_800DA8E8_0_s01.h" // 0x800E1564
+#include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800E1564
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E15FC);
 
@@ -373,12 +373,12 @@ void func_800E2CA0(void) // 0x800E2CA0
             SysWork_StateStepIncrement();
 
         case 1:
-            func_8008616C(2, true, 0, Q12(0.0f), false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 2:
-            func_8008616C(2, false, 0, Q12(0.0f), false);
-            func_8008616C(0, true, 2, Q12(0.0f), false);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement();
             break;
 
@@ -390,7 +390,7 @@ void func_800E2CA0(void) // 0x800E2CA0
             SysWork_StateStepIncrement();
 
         case 4:
-            sharedFunc_800DA8E8_0_s01(&D_800ED5B0, Q12(10.0f), Q12(96.0f), Q12(131.0f), false, false);
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(96.0f), Q12(131.0f), false, false);
 
             // Possible inline?
             player = &g_SysWork.player_4C.chara_0;
@@ -416,7 +416,7 @@ void func_800E2CA0(void) // 0x800E2CA0
             SysWork_StateStepIncrement();
 
         case 7:
-            sharedFunc_800DA8E8_0_s01(&D_800ED5B0, Q12(10.0f), Q12(131.0f), Q12(195.0f), false, false);
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(131.0f), Q12(195.0f), false, false);
             MapMsg_DisplayAndHandleSelection(false, 41, 0, 0, 0, false);
 
             if (g_SysWork.sysStateStep_C[0] != 7)
@@ -426,7 +426,7 @@ void func_800E2CA0(void) // 0x800E2CA0
             break;
 
         case 8:
-            func_8008616C(2, true, 0, Q12(0.5f), false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.5f), false);
             break;
 
         default:

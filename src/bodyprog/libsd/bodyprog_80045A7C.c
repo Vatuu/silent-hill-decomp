@@ -2260,8 +2260,7 @@ s16 Sd_GetVolSe(s16 arg0) // 0x800478B8
 
 void func_800478DC(u8 cmd) // 0x800478DC
 {
-	// If `cmd` is 2 then it shift the element next to an element containing a value
-	// that matches has 1 inside `D_800C16A8`.
+    // If `cmd` is 2, shift field next to element containing value that matches 1 in `D_800C16A8`.
     if (cmd == 2)
     {
         for (D_800C15D8 = 1; D_800C15D8 < 30; D_800C15D8++)
@@ -2278,7 +2277,8 @@ void func_800478DC(u8 cmd) // 0x800478DC
             }
         }
     }
-	// Shift the element next to an element containing a value that matches `cmd` inside `D_800C16A8`.
+
+    // Shift field next to element containing value that matches `cmd` in `D_800C16A8`.
     for (D_800C15D8 = 1; D_800C15D8 < 30; D_800C15D8++)
     {
         if (D_800C16A8[D_800C15D8] == cmd)
@@ -2292,7 +2292,7 @@ void func_800478DC(u8 cmd) // 0x800478DC
         }
     }
 
-	// If element of `D_800C16A8` is empty it asign the value of `cmd`
+    // If `D_800C16A8` field is empty, assign value of `cmd`.
     for (D_800C15D8 = 0; D_800C15D8 < 31; D_800C15D8++)
     {
         if (D_800C16A8[D_800C15D8] == 0)

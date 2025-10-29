@@ -65,6 +65,7 @@ u8 Map_RoomIdxGet(s32 x, s32 z)
     // TODO: Used in map0_s00/map0_s01/map2_s00/map2_s03, maybe some kind of outdoor/exterior grid?
 #ifdef MAP_HAS_SECONDARY_GRID
     extern u8 sharedData_800DF2DC_0_s00[];
+
     // Check if coordinates are within primary grid bounds.
     if (x < Q12(-320.0f) || x >= Q12(240.0f) ||
         z < Q12(-240.0f) || z >= Q12(200.0f))

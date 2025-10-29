@@ -160,7 +160,7 @@ void GameState_Options_Update(void) // 0x801E2D44
             break;
 
         case OptionsMenuState_Controller:
-            Options_Controller_Control();
+            Options_ControllerMenu_Control();
             break;
 
         case OptionsMenuState_Leave:
@@ -884,6 +884,7 @@ void Options_MainOptionsMenu_EntryStringsDraw(void) // 0x801E42EC
 
 void Options_ExtraOptionsMenu_SelectionHighlightDraw(void) // 0x801E4450
 {
+    #define BULLET_QUAD_COUNT  2
     #define LINE_BASE_X        64
     #define LINE_BASE_Y        56
     #define LINE_OFFSET_X      16
@@ -893,9 +894,9 @@ void Options_ExtraOptionsMenu_SelectionHighlightDraw(void) // 0x801E4450
 
     s32      i;
     s32      j;
-    s16      interpAlpha;
+    q3_12    interpAlpha;
     s_Line2d highlightLine;
-    s_Quad2d bulletQuads[2];
+    s_Quad2d bulletQuads[BULLET_QUAD_COUNT];
     DVECTOR* quadVerts;
 
     const u8 SELECTION_HIGHLIGHT_WIDTHS[] = {
@@ -904,12 +905,18 @@ void Options_ExtraOptionsMenu_SelectionHighlightDraw(void) // 0x801E4450
 
     // 12x12 quad.
     const DVECTOR FRONT_BULLET_QUAD[] = {
-        { -120, -47 }, { -120, -35 }, { -108, -47 }, { -108, -35 }
+        { -120, -47 },
+        { -120, -35 },
+        { -108, -47 },
+        { -108, -35 }
     };
 
     // 14x14 quad.
     const DVECTOR BACK_BULLET_QUAD[] = {
-        { -121, -48 }, { -121, -34 }, { -107, -48 }, { -107, -34 }
+        { -121, -48 },
+        { -121, -34 },
+        { -107, -48 },
+        { -107, -34 }
     };
 
     // Set active selection highlight position references.
@@ -1090,41 +1097,41 @@ void Options_ExtraOptionsMenu_ConfigDraw(void) // 0x801E4B2C
     #define STR_OFFSET_Y 16
 
     const s_Triangle2d FRONT_ARROWS[] = {
-        { { 38, -42 }, { 46, -50 }, { 46, -34 } },
+        { { 38,  -42 }, { 46,  -50 }, { 46,  -34 } },
         { { 120, -42 }, { 112, -50 }, { 112, -34 } },
-        { { 38, -26 }, { 46, -34 }, { 46, -18 } },
+        { { 38,  -26 }, { 46,  -34 }, { 46,  -18 } },
         { { 120, -26 }, { 112, -34 }, { 112, -18 } },
-        { { 35, -10 }, { 43, -18 }, { 43, -2 } },
-        { { 123, -10 }, { 115, -18 }, { 115, -2 } },
-        { { 35, 6 }, { 43, -2 }, { 43, 14 } },
-        { { 123, 6 }, { 115, -2 }, { 115, 14 } },
-        { { 35, 22 }, { 43, 14 }, { 43, 30 } },
-        { { 123, 22 }, { 115, 14 }, { 115, 30 } },
-        { { 51, 38 }, { 59, 30 }, { 59, 46 } },
-        { { 107, 38 }, { 99, 30 }, { 99, 46 } },
-        { { 24, 54 }, { 32, 46 }, { 32, 62 } },
-        { { 131, 54 }, { 123, 46 }, { 123, 62 } },
-        { { 57, 70 }, { 65, 62 }, { 65, 78 } },
-        { { 104, 70 }, { 96, 62 }, { 96, 78 } }
+        { { 35,  -10 }, { 43,  -18 }, { 43,  -2  } },
+        { { 123, -10 }, { 115, -18 }, { 115, -2  } },
+        { { 35,   6  }, { 43,  -2  }, { 43,   14 } },
+        { { 123,  6  }, { 115, -2  }, { 115,  14 } },
+        { { 35,   22 }, { 43,   14 }, { 43,   30 } },
+        { { 123,  22 }, { 115,  14 }, { 115,  30 } },
+        { { 51,   38 }, { 59,   30 }, { 59,   46 } },
+        { { 107,  38 }, { 99,   30 }, { 99,   46 } },
+        { { 24,   54 }, { 32,   46 }, { 32,   62 } },
+        { { 131,  54 }, { 123,  46 }, { 123,  62 } },
+        { { 57,   70 }, { 65,   62 }, { 65,   78 } },
+        { { 104,  70 }, { 96,   62 }, { 96,   78 } }
     };
 
     const s_Triangle2d BACK_ARROWS[] = {
-        { { 37, -42 }, { 47, -52 }, { 47, -32 } },
+        { { 37,  -42 }, { 47,  -52 }, { 47,  -32 } },
         { { 121, -42 }, { 111, -52 }, { 111, -32 } },
-        { { 37, -26 }, { 47, -36 }, { 47, -16 } },
+        { { 37,  -26 }, { 47,  -36 }, { 47,  -16 } },
         { { 121, -26 }, { 111, -36 }, { 111, -16 } },
-        { { 34, -10 }, { 44, -20 }, { 44, 0 } },
-        { { 124, -10 }, { 114, -20 }, { 114, 0 } },
-        { { 34, 6 }, { 44, -4 }, { 44, 16 } },
-        { { 124, 6 }, { 114, -4 }, { 114, 16 } },
-        { { 34, 22 }, { 44, 12 }, { 44, 32 } },
-        { { 124, 22 }, { 114, 12 }, { 114, 32 } },
-        { { 50, 38 }, { 60, 28 }, { 60, 48 } },
-        { { 108, 38 }, { 98, 28 }, { 98, 48 } },
-        { { 23, 54 }, { 33, 44 }, { 33, 64 } },
-        { { 132, 54 }, { 122, 44 }, { 122, 64 } },
-        { { 56, 70 }, { 66, 60 }, { 66, 80 } },
-        { { 105, 70 }, { 95, 60 }, { 95, 80 } }
+        { { 34,  -10 }, { 44,  -20 }, { 44,   0  } },
+        { { 124, -10 }, { 114, -20 }, { 114,  0  } },
+        { { 34,   6  }, { 44,  -4  }, { 44,   16 } },
+        { { 124,  6  }, { 114, -4  }, { 114,  16 } },
+        { { 34,   22 }, { 44,   12 }, { 44,   32 } },
+        { { 124,  22 }, { 114,  12 }, { 114,  32 } },
+        { { 50,   38 }, { 60,   28 }, { 60,   48 } },
+        { { 108,  38 }, { 98,   28 }, { 98,   48 } },
+        { { 23,   54 }, { 33,   44 }, { 33,   64 } },
+        { { 132,  54 }, { 122,  44 }, { 122,  64 } },
+        { { 56,   70 }, { 66,   60 }, { 66,   80 } },
+        { { 105,  70 }, { 95,   60 }, { 95,   80 } }
     };
 
     // TODO: Can this be split?
@@ -1257,28 +1264,28 @@ void Options_ExtraOptionsMenu_ConfigDraw(void) // 0x801E4B2C
 void Options_MainOptionsMenu_ConfigDraw(void) // 0x801E4FFC
 {
     const s_Triangle2d FRONT_ARROWS[] = {
-        { { 40, 14 }, { 48, 6 }, { 48, 22 } },
-        { { 96, 14 }, { 88, 6 }, { 88, 22 } },
-        { { 40, 30 }, { 48, 22 }, { 48, 38 } },
-        { { 96, 30 }, { 88, 22 }, { 88, 38 } },
-        { { 19, 46 }, { 27, 38 }, { 27, 54 } },
+        { { 40,  14 }, { 48,  6  }, { 48,  22 } },
+        { { 96,  14 }, { 88,  6  }, { 88,  22 } },
+        { { 40,  30 }, { 48,  22 }, { 48,  38 } },
+        { { 96,  30 }, { 88,  22 }, { 88,  38 } },
+        { { 19,  46 }, { 27,  38 }, { 27,  54 } },
         { { 124, 46 }, { 116, 38 }, { 116, 54 } },
-        { { 12, 62 }, { 20, 54 }, { 20, 70 } },
+        { { 12,  62 }, { 20,  54 }, { 20,  70 } },
         { { 131, 62 }, { 123, 54 }, { 123, 70 } },
-        { { 12, 78 }, { 20, 70 }, { 20, 86 } },
+        { { 12,  78 }, { 20,  70 }, { 20,  86 } },
         { { 131, 78 }, { 123, 70 }, { 123, 86 } }
     };
 
     const s_Triangle2d BACK_ARROWS[] = {
-        { { 39, 14 }, { 49, 4 }, { 49, 24 } },
-        { { 97, 14 }, { 87, 4 }, { 87, 24 } },
-        { { 39, 30 }, { 49, 20 }, { 49, 40 } },
-        { { 97, 30 }, { 87, 20 }, { 87, 40 } },
-        { { 18, 46 }, { 28, 36 }, { 28, 56 } },
+        { { 39,  14 }, { 49,  4  }, { 49,  24 } },
+        { { 97,  14 }, { 87,  4  }, { 87,  24 } },
+        { { 39,  30 }, { 49,  20 }, { 49,  40 } },
+        { { 97,  30 }, { 87,  20 }, { 87,  40 } },
+        { { 18,  46 }, { 28,  36 }, { 28,  56 } },
         { { 125, 46 }, { 115, 36 }, { 115, 56 } },
-        { { 11, 62 }, { 21, 52 }, { 21, 72 } },
+        { { 11,  62 }, { 21,  52 }, { 21,  72 } },
         { { 132, 62 }, { 122, 52 }, { 122, 72 } },
-        { { 11, 78 }, { 21, 68 }, { 21, 88 } },
+        { { 11,  78 }, { 21,  68 }, { 21,  88 } },
         { { 132, 78 }, { 122, 68 }, { 122, 88 } }
     };
 
@@ -1543,17 +1550,17 @@ void Options_ScreenPosMenu_ArrowsDraw(void) // 0x801E5A08
     #define DIR_COUNT 4
 
     const s_Triangle2d FRONT_ARROWS[] = {
-        { { 0, -100 }, { -8, -92 }, { 8, -92 } },
-        { { 0, 100 }, { -8, 92 }, { 8, 92 } },
-        { { -148, 0 }, { -140, -8 }, { -140, 8 } },
-        { { 148, 0 }, { 140, -8 }, { 140, 8 } }
+        { {  0,  -100 }, { -8,   -92 }, {  8,  -92 } },
+        { {  0,   100 }, { -8,    92 }, {  8,   92 } },
+        { { -148, 0   }, { -140, -8  }, { -140, 8  } },
+        { {  148, 0   }, {  140, -8  }, {  140, 8  } }
     };
 
     const s_Triangle2d BACK_ARROWS[] = {
-        { { 0, -101 }, { -10, -91 }, { 9, -91 } },
-        { { 0, 101 }, { -10, 91 }, { 9, 91 } },
-        { { -149, 0 }, { -139, -10 }, { -139, 10 } },
-        { { 149, 0 }, { 139, -10 }, { 139, 10 } }
+        { {  0,  -101 }, { -10,  -91 }, {  9,  -91 } },
+        { {  0,   101 }, { -10,   91 }, {  9,   91 } },
+        { { -149, 0   }, { -139, -10 }, { -139, 10 } },
+        { {  149, 0   }, {  139, -10 }, {  139, 10 } }
     };
 
     u8  dirs[DIR_COUNT]; // Booleans.
@@ -1803,7 +1810,7 @@ void Options_BrightnessMenu_ArrowsDraw(void) // 0x801E628C
 // DRAW OPTIONS FEATURES SCREEN
 // ========================================
 
-void Options_Selection_HighlightDraw(s_Line2d* line, bool hasShadow, bool invertGradient) // 0x801E641C
+void Options_Selection_HighlightDraw(const s_Line2d* line, bool hasShadow, bool invertGradient) // 0x801E641C
 {
     #define STR_OFFSET_Y 16
 
@@ -1838,7 +1845,6 @@ void Options_Selection_HighlightDraw(s_Line2d* line, bool hasShadow, bool invert
     GsOUT_PACKET_P = (u8*)linePrim + sizeof(LINE_G2);
 
     // Draw shadow gradient.
-    // @unused A line can be drawn independently without a shadow, though `hasShadow` is always passed as `true`.
     if (hasShadow)
     {
         poly = (POLY_G4*)GsOUT_PACKET_P;
@@ -1858,7 +1864,7 @@ void Options_Selection_HighlightDraw(s_Line2d* line, bool hasShadow, bool invert
     }
 }
 
-void Options_Selection_ArrowDraw(s_Triangle2d* arrow, bool isFlashing, bool resetColor) // 0x801E662C
+void Options_Selection_ArrowDraw(const s_Triangle2d* arrow, bool isFlashing, bool resetColor) // 0x801E662C
 {
     s32      colorFade;
     s32      colorStart;
@@ -1927,17 +1933,17 @@ void Options_Selection_ArrowDraw(s_Triangle2d* arrow, bool isFlashing, bool rese
     // Flash color from blue to cyan.
     if (isFlashing)
     {
-        // Base color is blue. `* 0x700` applies color shift somehow.
-        *((u32*)&arrowPoly->r0) = (colorEnd   * 0x700) + 0x30FF0000;
-        *((u32*)&arrowPoly->r1) = (colorStart * 0x700) + 0x30FF0000;
-        *((u32*)&arrowPoly->r2) = (colorStart * 0x700) + 0x30FF0000;
+        // Base color is blue. `* 0x700` Shifts green component into place.
+        *((u32*)&arrowPoly->r0) = (colorEnd   * 0x700) + PACKED_COLOR(0, 0, 255, 0x30);
+        *((u32*)&arrowPoly->r1) = (colorStart * 0x700) + PACKED_COLOR(0, 0, 255, 0x30);
+        *((u32*)&arrowPoly->r2) = (colorStart * 0x700) + PACKED_COLOR(0, 0, 255, 0x30);
     }
     // Set solid cyan color.
     else
     {
-        setRGBC0(arrowPoly, 0x00, 0xF0, 0xF0, 0x30);
-        setRGBC1(arrowPoly, 0x00, 0xF0, 0xF0, 0x30);
-        setRGBC2(arrowPoly, 0x00, 0xF0, 0xF0, 0x30);
+        setRGBC0(arrowPoly, 0, 240, 240, 0x30);
+        setRGBC1(arrowPoly, 0, 240, 240, 0x30);
+        setRGBC2(arrowPoly, 0, 240, 240, 0x30);
     }
 
     setXY0Fast(arrowPoly, arrow->vertex0_0.vx, arrow->vertex0_0.vy);
@@ -1947,36 +1953,35 @@ void Options_Selection_ArrowDraw(s_Triangle2d* arrow, bool isFlashing, bool rese
     GsOUT_PACKET_P = (u8*)arrowPoly + sizeof(POLY_G3);
 }
 
-void Options_Selection_BulletPointDraw(s_Quad2d* quad, bool isCenter, bool isInactive) // 0x801E67B0
+void Options_Selection_BulletPointDraw(const s_Quad2d* quad, bool isBorder, bool isInactive) // 0x801E67B0
 {
-    #define QUAD_COUNT 2
+    #define TRI_COUNT 2
 
     GsOT*    ot = &g_OrderingTable2[g_ActiveBufferIdx];
     s32      i;
     POLY_G3* poly;
 
-    // Draw quads as triangles with diagonal gradient.
-    for (i = 0; i < QUAD_COUNT; i++)
+    // Draw quad as triangles to achieve diagonal gradient.
+    for (i = 0; i < TRI_COUNT; i++)
     {
         poly = (POLY_G3*)GsOUT_PACKET_P;
         setPolyG3(poly);
 
-        // Center quad.
-        if (isCenter)
+        if (isBorder)
         {
             // Set color.
             switch (isInactive)
             {
                 case false:
-                    setRGBC0(poly, FP_COLOR(1.0f),   FP_COLOR(1.0f),  FP_COLOR(1.0f),  0x30);
-                    setRGBC1(poly, FP_COLOR(0.625f), FP_COLOR(0.5f),  FP_COLOR(0.25f), 0x30);
-                    setRGBC2(poly, FP_COLOR(0.25f),  FP_COLOR(0.25f), FP_COLOR(0.25f), 0x30);
+                    setRGBC0(poly, 255, 255, 255, 0x30);
+                    setRGBC1(poly, 160, 128, 64,  0x30);
+                    setRGBC2(poly, 64,  64,  64,  0x30);
                     break;
 
                 case true:
-                    setRGBC0(poly, FP_COLOR(0.5f),     FP_COLOR(0.5f),    FP_COLOR(0.5f),    0x30);
-                    setRGBC1(poly, FP_COLOR(0.15625f), FP_COLOR(0.125f),  FP_COLOR(0.0625f), 0x30);
-                    setRGBC2(poly, FP_COLOR(0.0625f),  FP_COLOR(0.0625f), FP_COLOR(0.0625f), 0x30);
+                    setRGBC0(poly, 128, 128, 128, 0x30);
+                    setRGBC1(poly, 40,  32,  16,  0x30);
+                    setRGBC2(poly, 16,  16,  16,  0x30);
                     break;
             }
 
@@ -1994,22 +1999,21 @@ void Options_Selection_BulletPointDraw(s_Quad2d* quad, bool isCenter, bool isIna
                 setXY2Fast(poly, quad->vertex3_C.vx, quad->vertex3_C.vy);
             }
         }
-        // Backing quad.
         else
         {
             // Set color.
             switch (isInactive)
             {
                 case false:
-                    setRGBC0(poly, FP_COLOR(0.625f), FP_COLOR(0.5f), FP_COLOR(0.25f), 0x30);
-                    setRGBC1(poly, FP_COLOR(1.0f),   FP_COLOR(1.0f), FP_COLOR(1.0f),  0x30);
-                    setRGBC2(poly, FP_COLOR(1.0f),   FP_COLOR(1.0f), FP_COLOR(1.0f),  0x30);
+                    setRGBC0(poly, 160, 128, 64,  0x30);
+                    setRGBC1(poly, 255, 255, 255, 0x30);
+                    setRGBC2(poly, 255, 255, 255, 0x30);
                     break;
 
                 case true:
-                    setRGBC0(poly, FP_COLOR(0.3125f), FP_COLOR(0.25f), FP_COLOR(0.125f), 0x30);
-                    setRGBC1(poly, FP_COLOR(0.625f), FP_COLOR(0.625f), FP_COLOR(0.625f), 0x30);
-                    setRGBC2(poly, FP_COLOR(0.625f), FP_COLOR(0.625f), FP_COLOR(0.625f), 0x30);
+                    setRGBC0(poly, 80,  64,  32,  0x30);
+                    setRGBC1(poly, 160, 160, 160, 0x30);
+                    setRGBC2(poly, 160, 160, 160, 0x30);
                     break;
             }
 
@@ -2037,7 +2041,7 @@ void Options_Selection_BulletPointDraw(s_Quad2d* quad, bool isCenter, bool isIna
 // CONTROLS OPTION SCREEN
 // ========================================
 
-void Options_Controller_Control(void) // 0x801E69BC
+void Options_ControllerMenu_Control(void) // 0x801E69BC
 {
     s32           boundActionIdx = NO_VALUE;
     e_InputAction actionIdx;
@@ -2316,7 +2320,7 @@ s32 Options_ControllerMenu_ConfigUpdate(s32 actionIdx) // 0x801E6CF4
  * 0 corresponds to the presets pane on the left,
  * 1 corresponds to the actions pane on the right.
  */
-DR_MODE g_ControllerMenu_SelectionHighlightDrawModes[2] = {
+DR_MODE g_ControllerMenu_SelectionHighlightDrawModes[MEMORY_CARD_SLOT_COUNT] = {
     {
         .tag  = 0x03000000,
         .code = { 0xE1000200, 0 }
@@ -2331,7 +2335,7 @@ DR_MODE g_ControllerMenu_SelectionHighlightDrawModes[2] = {
  * 0 corresponds to the presets pane on the left,
  * 1 corresponds to the actions pane on the right.
  */
-POLY_G4 g_ControllerMenu_SelectionHighlightQuads[2] = {
+POLY_G4 g_ControllerMenu_SelectionHighlightQuads[MEMORY_CARD_SLOT_COUNT] = {
     {
         .tag  = 0x08000000,
         .r0   = 255,
@@ -2417,7 +2421,7 @@ s32 g_ExtraOptionsMenu_SelectedBloodColorEntry = 0;
 
 s32 g_ExtraOptionsMenu_BulletMultMax = 0;
 
-void Options_ControllerMenu_EntriesDraw(bool isOnActionsPane, s32 presetsEntryIdx, s32 actionsEntryIdx, s32 boundActionIdx) // 0x801E6F60
+void Options_ControllerMenu_EntriesDraw(bool isOnRightPane, s32 presetsEntryIdx, s32 actionsEntryIdx, s32 boundActionIdx) // 0x801E6F60
 {
     #define STR_BASE_Y    22
     #define STR_OFFSET_Y  20
@@ -2444,7 +2448,7 @@ void Options_ControllerMenu_EntriesDraw(bool isOnActionsPane, s32 presetsEntryId
         Gfx_StringDraw(CONTROLLER_MENU_PRESETS_PANE_ENTRY_STRINGS[i], 20);
     }
 
-    if (!isOnActionsPane)
+    if (!isOnRightPane)
     {
         highlightY1 = presetsEntryIdx * STR_OFFSET_Y;
         highlightY0 = highlightY1 - 91;
@@ -2479,7 +2483,7 @@ void Options_ControllerMenu_EntriesDraw(bool isOnActionsPane, s32 presetsEntryId
         strYPos = (strYPos + ICON_SIZE_Y) + ((i == 2) ? ICON_SIZE_Y : 0);
     }
 
-    if (isOnActionsPane == true)
+    if (isOnRightPane == true)
     {
         setXY4(poly,
                -65, highlightY0,
