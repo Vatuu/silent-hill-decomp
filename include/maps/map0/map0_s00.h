@@ -195,12 +195,6 @@ void func_800DB514(void);
 
 void func_800DB870(void);
 
-void func_800D802C(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coord);
-
-void func_800D8124(s_SubCharacter* chara, GsCOORDINATE2* coord);
-
-bool func_800D8748(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 arg4, s32 pitch);
-
 void func_800D0394(s32 count, VECTOR3* vecs);
 
 void func_800DADD4(void);

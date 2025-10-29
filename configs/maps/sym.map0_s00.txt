@@ -100,6 +100,10 @@ sharedFunc_800D7E04_0_s00     = 0x800D7E04; // type:func
 //--- PA: 0x00EA40   VA: 0x800D7FB8   subsegment: c, Chara_Cheryl
 //---------------------------------------------------------------
 Ai_Cheryl_Update              = 0x800D7FB8; // type:func
+Ai_Cheryl_AnimUpdate          = 0x800D802C; // type:func
+Ai_Cheryl_MovementUpdate      = 0x800D8124; // type:func
+Ai_Cheryl_AnimStateUpdate     = 0x800D8310; // type:func
+Ai_Cheryl_FootstepTrigger     = 0x800D8748; // type:func
 Ai_Cheryl_Init                = 0x800D8888; // type:func
 
 //-------------------------------------------------------------

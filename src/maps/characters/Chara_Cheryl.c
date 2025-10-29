@@ -22,12 +22,12 @@ void Ai_Cheryl_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2*
         Ai_Cheryl_Init(chara);
     }
 
-    func_800D8310(chara, coords);         // Control.
-    func_800D8124(chara, coords);         // Translate + rotate.
-    func_800D802C(chara, anmHdr, coords); // Modulate speed and something else?
+    Ai_Cheryl_AnimStateUpdate(chara, coords);
+    Ai_Cheryl_MovementUpdate(chara, coords);
+    Ai_Cheryl_AnimUpdate(chara, anmHdr, coords);
 }
 
-void func_800D802C(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coord) // 0x800D802C
+void Ai_Cheryl_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coord) // 0x800D802C
 {
     q19_12      moveSpeed;
     q19_12      animDur;
@@ -64,7 +64,7 @@ void func_800D802C(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
     }
 }
 
-void func_800D8124(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8124
+void Ai_Cheryl_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8124
 {
     VECTOR3 pos;               // @hack Unused but required.
     VECTOR3 offset;
@@ -103,7 +103,7 @@ void func_800D8124(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8124
     coord->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
 }
 
-void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
+void Ai_Cheryl_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
 {
     s_Collision coll;
     s32         unused;
@@ -210,11 +210,11 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
         switch (dahliaProps.stateIdx0)
         {
             case 1:
-                func_800D8748(ANIM_STATUS(2, true), chara, 16, 28, distSqr, pitch0);
+                Ai_Cheryl_FootstepTrigger(ANIM_STATUS(2, true), chara, 16, 28, distSqr, pitch0);
                 break;
 
             case 2:
-                func_800D8748(ANIM_STATUS(3, true), chara, 53, 42, distSqr, pitch1);
+                Ai_Cheryl_FootstepTrigger(ANIM_STATUS(3, true), chara, 53, 42, distSqr, pitch1);
                 break;
         }
     }
@@ -228,18 +228,18 @@ void func_800D8310(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
     Math_MatrixRotate1(&chara->rotation_24, &coords->coord);
 }
 
-bool func_800D8748(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 arg4, s32 pitch) // 0x800D8748
+bool Ai_Cheryl_FootstepTrigger(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 distSqr, s32 pitch) // 0x800D8748
 {
     u32 var_a0;
     u32 vol;
 
     if (chara->model_0.anim_4.status_0 == animStatus)
     {
-        if (arg4 >= 4000000)
+        if (distSqr >= 4000000)
         {
-            if (arg4 <= 12000000)
+            if (distSqr <= 12000000)
             {
-                var_a0 = arg4;
+                var_a0 = distSqr;
             }
             else
             {
