@@ -13,7 +13,19 @@ INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800CBA4C);
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800CBC98);
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800CBD58);
+void func_800CBD58(void)
+{
+    s32 i;
+    for (i = 0; i < ARRAY_SIZE(D_800E1FF8); i++)
+    {
+        if (D_800E1FF8[i].field_A == 27 || D_800E1FF8[i].field_A == 28)
+        {
+            D_800E1FF8[i].field_A = 0;
+        }
+    }
+
+    D_800C4414 &= ~(1<<3);
+}
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800CBDA8);
 

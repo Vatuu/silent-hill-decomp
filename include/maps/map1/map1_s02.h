@@ -23,6 +23,8 @@
 #define MAP_ROOM_MIN_Z Q12(-80.0f)
 #define MAP_ROOM_MAX_Z Q12(200.0f)
 
+extern s_MapHdr_field_4C D_800E1FF8[200];
+
 void func_800DA8F8(void);
 
 void func_800DA9D4(void);

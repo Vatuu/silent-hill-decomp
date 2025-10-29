@@ -423,7 +423,7 @@ void func_800D7308(void)
         case 9:
             for (i = 0; i < ARRAY_SIZE(D_800DD5B0); i++)
             {
-                if ((D_800DD5B0[i].field_A - 13) < 2u)
+                if (D_800DD5B0[i].field_A == 13 || D_800DD5B0[i].field_A == 14)
                 {
                     D_800DD5B0[i].field_A = 0;
                 }
