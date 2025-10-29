@@ -75,6 +75,9 @@ sharedFunc_800D7E04_0_s00 = 0x800D6B8C; // type:func
 Ai_Cat_Update             = 0x800D6D40; // type:func
 sharedFunc_800D929C_0_s00 = 0x800D6F34; // type:func
 Map_RoomIdxGet            = 0x800D6F44; // type:func
+Event_DoorJammed          = 0x800D7058; // type:func
+Event_DoorLocked          = 0x800D70EC; // type:func
+Event_DoorUnlocked        = 0x800D7180; // type:func
 
 
 

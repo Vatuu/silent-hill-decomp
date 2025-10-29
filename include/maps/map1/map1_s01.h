@@ -53,6 +53,12 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
 /**  The same function in map1_s00: `func_800D77F8`. */
 void func_800D6FE4(void);
 
+void Event_DoorJammed(void);
+
+void Event_DoorLocked(void);
+
+void Event_DoorUnlocked(void);
+
 void func_800D72B0(void);
 
 void func_800D72DC(void);
