@@ -2190,7 +2190,7 @@ extern s_AnimInfo D_80028B94[];
 
 extern s_800C44F0 D_800294F4[];
 
-extern s_AnimInfo* D_800297B8;
+extern const s_AnimInfo* D_800297B8;
 
 extern u_Filename D_8002B2CC;
 
