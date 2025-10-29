@@ -2813,7 +2813,54 @@ void Map_EffectTexturesLoad(s32 mapIdx) // 0x8005E0DC
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005E414); // 0x8005E414
+void func_8005E414(s32 arg0) // 0x8005E414
+{
+    RECT*      var_a2;
+    PACKET*    packet;
+    DR_AREA*   area;
+    DR_OFFSET* offset;
+
+    ClearImage(&D_800AE5A8[2], 0, 0, 0);
+
+    area = (DR_AREA*)GsOUT_PACKET_P;
+
+    SetDrawArea(area, &D_800AE5A8[2]);
+
+    var_a2 = &D_800AE5A8[0];
+
+    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2047], area);
+    area++;
+
+    if (g_ActiveBufferIdx == 0)
+    {
+        var_a2 = &D_800AE5A8[1];
+    }
+
+    SetDrawArea(area, var_a2);
+
+    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[arg0], area);
+    area++;
+
+    offset = area;
+
+    SetDrawOffset(offset, &D_800AE5C8[0]);
+
+    var_a2 = D_800AE5C8 - 4;
+
+    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2047], offset);
+    offset++;
+
+    if (g_ActiveBufferIdx == 0)
+    {
+        var_a2 = D_800AE5C8 - 2;
+    }
+    SetDrawOffset(offset, var_a2);
+
+    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[arg0], offset);
+    offset++;
+
+    GsOUT_PACKET_P = offset;
+}
 
 void func_8005E650() // 0x8005E650
 {
