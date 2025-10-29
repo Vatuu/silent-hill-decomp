@@ -1164,7 +1164,7 @@ typedef struct _SubCharaPropertiesPlayer
     q19_12        positionY_EC;
     s32           field_F0;
     q19_12        field_F4;    // Angle. Related to X axis flex rotation.
-    s32           runTimer_F8; // Tick counter?
+    q19_12        runTimer_F8;
     q19_12        exhaustionTimer_FC;
     q19_12        field_100;    // Angle?
     s32           field_104;    // Distance?
