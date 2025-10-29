@@ -157,7 +157,7 @@ void func_800CCA2C(void) // 0x800CCA2C
         case 0:
             sharedFunc_800D20E4_0_s00();
             g_SysWork.field_30 = 20;
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             if (g_Controller0->btnsClicked_10 & ControllerFlag_R3)
@@ -227,7 +227,7 @@ void func_800CCA2C(void) // 0x800CCA2C
 
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4)
             {
-                SysWork_StateStepIncrement();
+                SysWork_StateStepIncrement(0);
             }
             break;
 

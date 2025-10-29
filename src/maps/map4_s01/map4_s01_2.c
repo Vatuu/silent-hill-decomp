@@ -176,7 +176,7 @@ void func_800D1FF0(void) // 0x800D1FF0
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             func_80085DF0();
@@ -188,7 +188,7 @@ void func_800D1FF0(void) // 0x800D1FF0
 
         case 3:
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 4:
             SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
@@ -209,7 +209,7 @@ void func_800D1FF0(void) // 0x800D1FF0
             func_8003CDA0(InventoryItemId_Handgun);
             Chara_Load(0, Chara_Cybil, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Savegame_EventFlagSet(EventFlag_302);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 6:
             tmp = FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.22f), Q12_SHIFT);
@@ -229,7 +229,7 @@ void func_800D1FF0(void) // 0x800D1FF0
                 g_SysWork.player_4C.chara_0.position_18.vz -= tmp;
                 WorldObject_D_800D7FF0.position_1C.vz -= tmp;
 
-                SysWork_StateStepIncrement();
+                SysWork_StateStepIncrement(0);
             }
 
             func_8005DE0C(Sfx_Unk1538, &WorldObject_D_800D7FF0.position_1C, D_800D5AE8 >> 5, Q12(12.0f), 0);
@@ -296,7 +296,7 @@ void func_800D2408(void) // 0x800D2408
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
         g_SysWork.sysStateStep_C[0] >= 3 && g_SysWork.sysStateStep_C[0] < 41)
     {
-        SysWork_NextStateStepSet(CUTSCENE_SKIP_STATE);
+        SysWork_StateStepSet(0, CUTSCENE_SKIP_STATE);
     }
 
     switch (g_SysWork.sysStateStep_C[0])
@@ -322,7 +322,7 @@ void func_800D2408(void) // 0x800D2408
             g_SysWork.field_236C = 0;
             g_SysWork.field_2378 = 0x1000;
 
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
@@ -330,7 +330,7 @@ void func_800D2408(void) // 0x800D2408
 
         case 2:
             func_80088D0C();
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 3:
             Map_MessageWithAudio(15, &g_MapMsgSoundIdx, g_MapMsgSounds);
@@ -338,7 +338,7 @@ void func_800D2408(void) // 0x800D2408
 
         case 4:
             func_8005DC1C(Sfx_Unk1309, &soundPos, 0x80, 0);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 5:
             SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
@@ -347,7 +347,7 @@ void func_800D2408(void) // 0x800D2408
         case 6:
             func_80085EB8(0, playerChara, 0x76, false);
             func_8005DC1C(Sfx_Unk1310, &soundPos, 0x80, 0);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 7:
             SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
@@ -360,7 +360,7 @@ void func_800D2408(void) // 0x800D2408
 
             func_80085EB8(0, cybilChara, 5, false);
             func_8003D01C();
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 9:
             func_80085EB8(1, playerChara, 0, false);
@@ -381,7 +381,7 @@ void func_800D2408(void) // 0x800D2408
             func_80085EB8(0, cybilChara, 1, false);
             func_8003D03C();
             Savegame_EventFlagSet(EventFlag_311);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 13:
             Map_MessageWithAudio(18, &g_MapMsgSoundIdx, g_MapMsgSounds);
@@ -394,7 +394,7 @@ void func_800D2408(void) // 0x800D2408
             g_Timer0 = Q12(57.0f);
             g_SysWork.field_2378 = 0xB33;
 
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 15:
             Map_MessageWithAudio(18, &g_MapMsgSoundIdx, g_MapMsgSounds);
@@ -445,7 +445,7 @@ void func_800D2408(void) // 0x800D2408
         case 25:
             func_80085EB8(0, playerChara, 0x48, false);
             func_80085EB8(0, cybilChara, 1, false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 26:
             SysWork_StateStepIncrementAfterTime(&g_Timer0, Q12(10.0f), Q12(59.0f), Q12(64.0f), true, true);
@@ -464,7 +464,7 @@ void func_800D2408(void) // 0x800D2408
             g_Timer0 = Q12(87.0f);
             g_SysWork.field_2378  = 0x800;
 
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 29:
             Map_MessageWithAudio(0x3D, &g_MapMsgSoundIdx, g_MapMsgSounds);
@@ -473,7 +473,7 @@ void func_800D2408(void) // 0x800D2408
         case 30:
             func_80085EB8(0, playerChara, 140, false);
             g_SysWork.field_2378  = 0x1000;
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 31:
             g_Timer0 = Q12(88.0f);
@@ -499,7 +499,7 @@ void func_800D2408(void) // 0x800D2408
             g_SysWork.field_2378 = 0x1333;
 
             func_80085EB8(0U, playerChara, 51, false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 36:
             Map_MessageWithAudio(76, &g_MapMsgSoundIdx, g_MapMsgSounds);
@@ -515,7 +515,7 @@ void func_800D2408(void) // 0x800D2408
             D_800D8018 = 0;
             g_SysWork.field_2378 = 0x1000;
 
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 39:
             Map_MessageWithAudio(90, &g_MapMsgSoundIdx, g_MapMsgSounds);
@@ -535,7 +535,7 @@ void func_800D2408(void) // 0x800D2408
             sharedFunc_800D2EF4_0_s00();
             func_8003CD6C(&g_SysWork.playerCombatInfo_38);
             sharedFunc_800D2EB4_0_s00();
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 42:
             SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
@@ -543,7 +543,7 @@ void func_800D2408(void) // 0x800D2408
             if (g_SysWork.sysStateStep_C[0] != 42)
             {
                 sharedFunc_800D2EF4_0_s00();
-                SysWork_NextStateStepSet(-1);
+                SysWork_StateStepReset();
             }
             break;
 
@@ -554,7 +554,7 @@ void func_800D2408(void) // 0x800D2408
         case 44:
             sharedFunc_800D2EF4_0_s00();
             func_8003CD6C(&g_SysWork.playerCombatInfo_38);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         default:
             sharedFunc_800D2244_0_s00(false);
@@ -611,7 +611,7 @@ void func_800D2F74(void) // 0x800D2F74
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 3 && g_SysWork.sysStateStep_C[0] < 10)
     {
-        SysWork_NextStateStepSet(CUTSCENE_SKIP_STATE);
+        SysWork_StateStepSet(0, CUTSCENE_SKIP_STATE);
     }
 
     switch (g_SysWork.sysStateStep_C[0])
@@ -634,7 +634,7 @@ void func_800D2F74(void) // 0x800D2F74
             Game_TurnFlashlightOn();
             sharedFunc_800D2EB4_0_s00();
             func_8003D03C();
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
             g_SysWork.field_30 = 20;
             g_SysWork.flags_22A4 |= (1<<3);
@@ -642,10 +642,10 @@ void func_800D2F74(void) // 0x800D2F74
 
         case 1:
             SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 2:
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 3:
             SysWork_StateStepIncrementAfterTime(&g_Timer1, Q12(10.0f), Q12(0.0f), 0x22000, true, true);
@@ -658,14 +658,14 @@ void func_800D2F74(void) // 0x800D2F74
 
         case 5:
             func_80085EB8(0, playerChara, 53, false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 6:
             SysWork_StateStepIncrementAfterTime(&g_Timer1, Q12(15.0f), Q12(72.0f), Q12(93.0f), true, true);
             break;
 
         case 7:
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
             break;
 
         case 8:
@@ -673,7 +673,7 @@ void func_800D2F74(void) // 0x800D2F74
 
             g_Timer1 = Q12(95.0f);
 
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 9:
             Map_MessageWithAudio(0x5B, &g_MapMsgSoundIdx1, g_MapMsgSounds1);
@@ -766,7 +766,7 @@ void func_800D4410(void) // 0x800D4410
             func_8003ED74(14, 14);
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.5f), false);
@@ -794,7 +794,7 @@ void func_800D4410(void) // 0x800D4410
 
         case 6:
             func_80085EB8(0, playerChara, 153, false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 7:
             SysWork_StateStepIncrementAfterTime(&g_Timer2, Q12(10.0f), Q12(107.0f), Q12(128.0f), true, true);
@@ -826,7 +826,7 @@ void func_800D4410(void) // 0x800D4410
             break;
 
         case 13:
-            SysWork_NextStateStepSet(NO_VALUE);
+            SysWork_StateStepReset();
             break;
 
         case CUTSCENE_SKIP_STATE:

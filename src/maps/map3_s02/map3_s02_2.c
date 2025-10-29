@@ -76,12 +76,12 @@ void func_800D02B4(void) // 0x800D02B4
         case 0:
             sharedFunc_800D20E4_0_s00();
             ScreenFade_ResetTimestep();
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
             break;
 
         case 1:
             SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 2:
             SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
@@ -89,7 +89,7 @@ void func_800D02B4(void) // 0x800D02B4
 
         case 3:
             func_8005DC1C(Sfx_Unk1523, &D_800CAAF8, 128, 0);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 4:
             SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
@@ -111,7 +111,7 @@ void func_800D03FC(void) // 0x800D03FC
             D_800D1FBC = Q12(100.0f);
 
             ScreenFade_ResetTimestep();
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
             break;
 
         case 1:
@@ -121,7 +121,7 @@ void func_800D03FC(void) // 0x800D03FC
 
             Game_TurnFlashlightOff();
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
             break;
 
         case 2:
@@ -130,7 +130,7 @@ void func_800D03FC(void) // 0x800D03FC
 
         case 3:
             Game_TurnFlashlightOn();
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         default:
             sharedFunc_800D2244_0_s00(false);

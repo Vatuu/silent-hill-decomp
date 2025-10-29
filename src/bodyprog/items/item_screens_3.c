@@ -1859,9 +1859,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
     if (D_800AE185 != ((g_SavegamePtr->items_0[idx].id_0 >> 5) - 1) ||
         D_800AE186 != (g_SavegamePtr->items_0[idx].id_0 & 0x1F))
     {
-        g_SysWork.sysStateStep_C[1]      = 0;
-        g_SysWork.timer_2C               = 0;
-        g_SysWork.sysStateStep_C[2]      = 0;
+        SysWork_StateStepSet(1, 0);
         g_Inventory_ItemNameTimer        = 0;
         g_Inventory_DescriptionRollTimer = 0;
         D_800AE18C                       = 0;
@@ -2007,9 +2005,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
             if (Gfx_StringDraw(INVENTORY_ITEM_NAMES[g_SavegamePtr->items_0[idx].id_0 - 32], g_Inventory_ItemNameTimer) == true)
             {
                 g_Inventory_ItemNameTimer   = 100;
-                g_SysWork.timer_2C          = 0;
-                g_SysWork.sysStateStep_C[2] = 0;
-                g_SysWork.sysStateStep_C[1]++;
+                SysWork_StateStepIncrement(1);
             }
             break;
 
@@ -2028,9 +2024,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
             if (Gfx_StringDraw(g_ItemDescriptions[g_SavegamePtr->items_0[idx].id_0 - 32], g_Inventory_DescriptionRollTimer) == true)
             {
                 g_Inventory_DescriptionRollTimer = 100;
-                g_SysWork.timer_2C               = 0;
-                g_SysWork.sysStateStep_C[2]      = 0;
-                g_SysWork.sysStateStep_C[1]++;
+                SysWork_StateStepIncrement(1);
             }
             break;
 

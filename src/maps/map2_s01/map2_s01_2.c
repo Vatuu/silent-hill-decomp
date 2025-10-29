@@ -152,7 +152,7 @@ void func_800CED88(void) // 0x800CED88
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < CUTSCENE_SKIP_STATE)
     {
-        SysWork_NextStateStepSet(CUTSCENE_SKIP_STATE);
+        SysWork_StateStepSet(0, CUTSCENE_SKIP_STATE);
     }
 
     step = g_SysWork.sysStateStep_C[0];
@@ -179,7 +179,7 @@ void func_800CED88(void) // 0x800CED88
             g_SavegamePtr->eventFlags_168[5] |= 0x400000;
             g_MapMsgSoundIdx = 0;
 
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
@@ -200,7 +200,7 @@ void func_800CED88(void) // 0x800CED88
 
         case 5:
             func_80085EB8(0, playerChara, 113, false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 6:
             Map_MessageWithAudio(23, &g_MapMsgSoundIdx, g_MapMsgSounds);
@@ -245,7 +245,7 @@ void func_800CED88(void) // 0x800CED88
 
         case 10:
             func_80085EB8(0, dahliaChara, 9, false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 11:
             SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
@@ -263,21 +263,21 @@ void func_800CED88(void) // 0x800CED88
 
         case 14:
             func_80085EB8(0, dahliaChara, 10, false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 15:
             func_80085EB8(1, dahliaChara, 0, false);
             Map_MessageWithAudio(29, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
         case 16:
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 17:
             Map_MessageWithAudio(29, &g_MapMsgSoundIdx, g_MapMsgSounds);
             break;
         case 18:
             func_80085EB8(0, dahliaChara, 8, false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 19:
             Map_MessageWithAudio(33, &g_MapMsgSoundIdx, g_MapMsgSounds);
@@ -314,7 +314,7 @@ void func_800CED88(void) // 0x800CED88
 
         case 21:
             func_80085EB8(0, dahliaChara, 1, false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 22:
             SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
@@ -335,7 +335,7 @@ void func_800CED88(void) // 0x800CED88
 
         case 23:
             func_80085EB8(0, playerChara, 111, false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 24:
             Map_MessageWithAudio(34, &g_MapMsgSoundIdx, g_MapMsgSounds);
@@ -364,7 +364,7 @@ void func_800CED88(void) // 0x800CED88
                 if (g_Timer0 > Q12(253.0f))
                 {
                     g_Timer0 = Q12(253.0f);
-                    SysWork_StateStepIncrement();
+                    SysWork_StateStepIncrement(0);
                 }
             }
             break;
@@ -375,7 +375,7 @@ void func_800CED88(void) // 0x800CED88
 
         case 27:
             func_8005DC1C(Sfx_Unk1323, &soundPos, 0x80, 0);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 28:
             SysWork_StateStepIncrementDelayed(Q12(1.2f), false);
@@ -384,7 +384,7 @@ void func_800CED88(void) // 0x800CED88
         case 29:
             func_8005DC1C(Sfx_Unk1324, &soundPos, 0x80, 0);
             func_80088F94(dahliaChara, 0, 0);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 30:
             SysWork_StateStepIncrementDelayed(Q12(0.5f), false);

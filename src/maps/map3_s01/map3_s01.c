@@ -251,7 +251,7 @@ void func_800D29A4(void) // 0x800D29A4
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             func_80085DF0();

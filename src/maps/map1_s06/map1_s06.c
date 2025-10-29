@@ -213,7 +213,7 @@ void func_800D5B98(void) // 0x800D5B98
         case 0:
             sharedFunc_800D20E4_0_s00();
             func_80086470(0, InventoryItemId_KGordonKey, 0, false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             func_80085DF0();
@@ -238,12 +238,12 @@ void func_800D5B98(void) // 0x800D5B98
 
         case 5:
             func_80086470(3, InventoryItemId_KGordonKey, 1, false);
-            SysWork_NextStateStepSet(7);
+            SysWork_StateStepSet(0, 7);
             break;
 
         case 6:
             Savegame_EventFlagClear(EventFlag_M1S06_PickupKGordonKey);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 7:
             func_80086C58(&g_SysWork.player_4C.chara_0, 60);

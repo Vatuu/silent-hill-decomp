@@ -26,7 +26,7 @@ void SysWork_StateStepIncrementAfterTime(q19_12* timer, q19_12 inc, q19_12 timeM
 
         if (incStateStep)
         {
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
         }
     }
 }

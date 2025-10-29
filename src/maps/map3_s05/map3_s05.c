@@ -302,7 +302,7 @@ void func_800D63C4(void) // 0x800D63C4
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             func_80085DF0();
@@ -348,7 +348,7 @@ void func_800D6BE0(void) // 0x800D6BE0
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             func_80086E50(FILE_TIM_ALESSA_TIM, 0, 0);
@@ -383,7 +383,7 @@ void func_800D719C(void) // 0x800D719C
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
         case 1:
             func_80085DF0();
             break;

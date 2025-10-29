@@ -623,12 +623,12 @@ void func_800E9EAC(void) // 0x800E9EAC
             sharedFunc_800D20E4_0_s00();
             g_Screen_FadeStatus = 12; // TODO: Can't be created with `ScreenFade_Start` macro?
             func_8004690C(Sfx_Unk1522);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
             break;
 
         case 1:
             SysWork_StateStepIncrementAfterFade(0, false, 1, Q12(0.25f), false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 2:
             SysWork_StateStepIncrementDelayed(Q12(1.2f), false);

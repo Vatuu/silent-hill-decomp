@@ -1617,50 +1617,65 @@ static inline s32 SysWork_StateSetNext(e_SysState sysState)
     return state;
 }
 
-/** @brief Increments `sysStateStep` in `g_SysWork` for the next tick. */
-static inline void SysWork_StateStepIncrement()
+/** @brief Increments `sysStateStep` in `g_SysWork` for the next tick.
+ *
+ * @param stepIdx The `sysStateStep` index to change.
+ */
+static inline void SysWork_StateStepIncrement(s32 stepIdx)
 {
-    g_SysWork.field_28          = 0;
-    g_SysWork.sysStateStep_C[1] = 0;
-    g_SysWork.timer_2C          = 0;
-    g_SysWork.sysStateStep_C[2] = 0;
-    g_SysWork.sysStateStep_C[0]++;
+    if (stepIdx == 0)
+    {
+        g_SysWork.field_28          = 0;
+        g_SysWork.sysStateStep_C[1] = 0;
+        g_SysWork.timer_2C          = 0;
+        g_SysWork.sysStateStep_C[2] = 0;
+        g_SysWork.sysStateStep_C[0]++;
+    }
+    else if (stepIdx == 1)
+    {
+        g_SysWork.timer_2C          = 0;
+        g_SysWork.sysStateStep_C[2] = 0;
+        g_SysWork.sysStateStep_C[1]++;
+    }
+    else
+    {
+        g_SysWork.sysStateStep_C[2]++;
+    }
 }
 
-/** @brief Sets `sysStateStep` in `g_SysWork` for the next tick.
+/** @brief Sets `sysStateStep[stepIdx]` in `g_SysWork` for the next tick.
  *
+ * @param stepIdx The `sysStateStep` index to change.
  * @param sysStateStep System state step to set.
  * @return New system state step.
  */
-static inline s32 SysWork_NextStateStepSet(s32 sysStateStep)
+static inline s32 SysWork_StateStepSet(s32 stepIdx, s32 sysStateStep)
 {
     s32 step;
 
-    step                        =
-    g_SysWork.sysStateStep_C[0] = sysStateStep;
-    g_SysWork.field_28          = 0;
-    g_SysWork.sysStateStep_C[1] = 0;
-    g_SysWork.timer_2C          = 0;
-    g_SysWork.sysStateStep_C[2] = 0;
+    if (stepIdx == 0)
+    {
+        step                        =
+        g_SysWork.sysStateStep_C[0] = sysStateStep;
+        g_SysWork.field_28          = 0;
+        g_SysWork.sysStateStep_C[1] = 0;
+        g_SysWork.timer_2C          = 0;
+        g_SysWork.sysStateStep_C[2] = 0;
+    }
+    else if (stepIdx == 1)
+    {
+        step                        = 
+        g_SysWork.sysStateStep_C[1] = sysStateStep;
+        g_SysWork.timer_2C          = 0;
+        g_SysWork.sysStateStep_C[2] = 0;
+    }
+    else
+    {
+        step                        = 
+        g_SysWork.sysStateStep_C[2] = sysStateStep;
+    }
     return step;
 }
-
-/** @brief Sets `sysStateStep[1]` in `g_SysWork` for the next tick.
- *
- * @param sysStateStep System state step[1] to set.
- * @return New system state step.
- */
-static inline s32 SysWork_NextStateStep1Set(s32 sysStateStep)
-{
-    s32 step;
-
-    step                        =
-    g_SysWork.sysStateStep_C[1] = sysStateStep;
-    g_SysWork.timer_2C          = 0;
-    g_SysWork.sysStateStep_C[2] = 0;
-    return step;
-}
-
 
 /** @brief Resets `sysStateStep` in `g_SysWork` for the next tick. */
 static inline void SysWork_StateStepReset()

@@ -277,7 +277,7 @@ void func_800D7B2C(void)
         case 0:
             sharedFunc_800D20E4_0_s00();
             SysWork_StateStepIncrementAfterFade(false, true, 0, Q12(2.5f), false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             func_800862F8(7, FILE_TIM_GOLD1_TIM, false);
@@ -290,7 +290,7 @@ void func_800D7B2C(void)
         case 3:
             func_800862F8(3, 0, false);
             SysWork_StateStepIncrementAfterFade(false, false, 0, Q12(2.0f), false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 4:
             func_800862F8(2, 0, false);
@@ -309,7 +309,7 @@ void func_800D7B2C(void)
 
         case 7:
             Sd_EngineCmd(Sfx_Unk1416);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 8:
             Gfx_BackgroundSpritesTransition(&g_ItemInspectionImg, &D_800A9A04, g_SysWork.field_28);
@@ -317,13 +317,13 @@ void func_800D7B2C(void)
             g_SysWork.field_28 += Q12(0.0625f);
             if (g_SysWork.field_28 > Q12(1.0f))
             {
-                SysWork_StateStepIncrement();
+                SysWork_StateStepIncrement(0);
             }
             break;
 
         case 9:
             Sd_EngineCmd(Sfx_Unk1419);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 10:
             func_800862F8(5, 0, false);
@@ -375,7 +375,7 @@ void func_800D7EB0(void)
         case 0:
             sharedFunc_800D20E4_0_s00();
             SysWork_StateStepIncrementAfterFade(false, true, 0, Q12(2.5f), false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             func_800862F8(7, FILE_TIM_SILVER1_TIM, false);
@@ -388,7 +388,7 @@ void func_800D7EB0(void)
         case 3:
             func_800862F8(3, 0, false);
             SysWork_StateStepIncrementAfterFade(false, false, 0, Q12(2.0f), false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 4:
             func_800862F8(2, 0, false);
@@ -407,7 +407,7 @@ void func_800D7EB0(void)
 
         case 7:
             Sd_EngineCmd(0x588u);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 8:
             Gfx_BackgroundSpritesTransition(&g_ItemInspectionImg, &D_800A9A04, g_SysWork.field_28);
@@ -415,13 +415,13 @@ void func_800D7EB0(void)
             g_SysWork.field_28 += Q12(0.0625f);
             if (g_SysWork.field_28 > Q12(1.0f))
             {
-                SysWork_StateStepIncrement();
+                SysWork_StateStepIncrement(0);
             }
             break;
 
         case 9:
             Sd_EngineCmd(Sfx_Unk1419);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 10:
             func_800862F8(5, 0, false);
@@ -459,7 +459,7 @@ void func_800D81CC(void) // 0x800D81CC
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
@@ -536,7 +536,7 @@ void func_800D8354(void) // 0x800D8354
         case 0:
             sharedFunc_800D20E4_0_s00();
             func_8005DC1C(Sfx_DoorLocked, &soundPos, Q8_CLAMPED(0.5f), 0);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             func_80085DF0();
@@ -555,7 +555,7 @@ void func_800D8354(void) // 0x800D8354
 
             if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
-                SysWork_StateStepIncrement();
+                SysWork_StateStepIncrement(0);
                 break;
             }
             break;
@@ -592,14 +592,14 @@ void func_800D85D8(void)
         g_SysWork.sysStateStep_C[0] >= 3 && g_SysWork.sysStateStep_C[0] < 5)
     {
         ScreenFade_ResetTimestep();
-        SysWork_NextStateStepSet(NO_VALUE);
+        SysWork_StateStepReset();
     }
 
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             func_80085DF0();
@@ -614,7 +614,7 @@ void func_800D85D8(void)
 
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
             func_80085EB8(0u, &g_SysWork.player_4C.chara_0, 88, false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 3:
             SysWork_StateStepIncrementDelayed(Q12(3.5f), false);
@@ -662,7 +662,7 @@ void func_800D8948(void) // 0x800D8948
         g_SysWork.sysStateStep_C[0] >= 4 && g_SysWork.sysStateStep_C[0] < 6)
     {
         ScreenFade_ResetTimestep();
-        SysWork_NextStateStepSet(NO_VALUE);
+        SysWork_StateStepReset();
     }
 
     switch (g_SysWork.sysStateStep_C[0])
@@ -674,7 +674,7 @@ void func_800D8948(void) // 0x800D8948
             Savegame_EventFlagClear(EventFlag_80);
 
             SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(1.5f), false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             func_80085DF0();
@@ -705,7 +705,7 @@ void func_800D8948(void) // 0x800D8948
                 Savegame_EventFlagSet(EventFlag_80);
             }
 
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 4:
             SysWork_StateStepIncrementDelayed(Q12(3.5f), false);
@@ -738,7 +738,7 @@ void Event_Boiler0(void) // 0x800D8CF0
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             func_80085DF0();
@@ -751,8 +751,8 @@ void Event_Boiler0(void) // 0x800D8CF0
         case 3:
             func_8005DC1C(Sfx_Unk1420, &QVECTOR3(20.5f, -1.2f, -17.5f), 0x80, 0);
             Savegame_EventFlagSet(EventFlag_83);
-            SysWork_StateStepIncrement();
-    
+            SysWork_StateStepIncrement(0);
+
         case 4:
             SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
             break;
@@ -766,13 +766,13 @@ void Event_Boiler0(void) // 0x800D8CF0
 
             if (D_800DD718 > Q12(3.5f))
             {
-                SysWork_StateStepIncrement();
+                SysWork_StateStepIncrement(0);
             }
             break;
 
         case 6:
             func_8005DC1C(Sfx_Unk1422, &QVECTOR3(18.8f, 4.0f, -17.5f), 0x80, 0);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 7:
             Savegame_EventFlagSet(EventFlag_73);
@@ -780,7 +780,7 @@ void Event_Boiler0(void) // 0x800D8CF0
             break;
 
         case 8:
-            SysWork_NextStateStepSet(NO_VALUE);
+            SysWork_StateStepReset();
             Savegame_EventFlagSet(EventFlag_84);
             break;
 
@@ -806,7 +806,7 @@ void Event_Boiler1(void)
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             func_80085DF0();
@@ -819,7 +819,7 @@ void Event_Boiler1(void)
 
         case 3:
             func_8005DC1C(Sfx_Unk1420, &QVECTOR3(20.5f, -1.2f, -17.5f), 0x80, 0);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 4:
             SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
@@ -842,7 +842,7 @@ void Event_Boiler2(void) // 0x800D9148
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             func_80085DF0();

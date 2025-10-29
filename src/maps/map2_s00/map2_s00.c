@@ -753,7 +753,7 @@ void func_800E7D54(void) // 0x800E7D54
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             MapMsg_DisplayAndHandleSelection(false, 46, 0, 0, 0, false);

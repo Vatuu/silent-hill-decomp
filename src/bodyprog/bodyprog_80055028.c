@@ -5200,9 +5200,9 @@ void GameState_MapScreen_Update() // 0x80066EB0
             }
 
             D_800C4454  = CLAMP_LOW(D_800C4454 - 196, 0);
-            D_800C444C += ((g_Controller0->sticks_24.sticks_0.leftX << 14) / 75);
+            D_800C444C += (g_Controller0->sticks_24.sticks_0.leftX * 16384) / 75;
             D_800C444C  = CLAMP_RANGE(D_800C444C, 0, 0xA0000);
-            D_800C4450 += ((g_Controller0->sticks_24.sticks_0.leftY << 14) / 75);
+            D_800C4450 += (g_Controller0->sticks_24.sticks_0.leftY * 16384) / 75;
             D_800C4450  = CLAMP_RANGE(D_800C4450, 0, 0x78000);
             break;
 

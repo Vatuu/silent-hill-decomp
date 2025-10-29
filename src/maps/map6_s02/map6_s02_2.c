@@ -131,7 +131,7 @@ void func_800CFC34(void) // 0x800CFC34
             Savegame_EventFlagSet(EventFlag_417);
 
             D_800D3C8C = 0;
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             func_80085DF0();
@@ -140,7 +140,7 @@ void func_800CFC34(void) // 0x800CFC34
         case 2:
             if (Fs_QueueDoThingWhenEmpty())
             {
-                SysWork_StateStepIncrement();
+                SysWork_StateStepIncrement(0);
             }
             break;
 
@@ -151,7 +151,7 @@ void func_800CFC34(void) // 0x800CFC34
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
             Game_TurnFlashlightOn();
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 4:
             SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
@@ -175,7 +175,7 @@ void func_800CFC34(void) // 0x800CFC34
                 Fs_QueueStartReadTim(FILE_TIM_UFO1_TIM, FS_BUFFER_1, &D_800D3B44[0]);
                 Fs_QueueStartReadTim(FILE_TIM_UFO6_TIM, FS_BUFFER_1, &D_800D3B44[1]);
             }
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 8:
             MapMsg_DisplayAndHandleSelection(false, 24, 0, 0, 0, false);
@@ -206,11 +206,11 @@ void func_800CFC34(void) // 0x800CFC34
             {
                 if (Savegame_EventFlagGet(EventFlag_469))
                 {
-                    SysWork_NextStateStepSet(12);
+                    SysWork_StateStepSet(0, 12);
                 }
                 else
                 {
-                    SysWork_NextStateStepSet(11);
+                    SysWork_StateStepSet(0, 11);
                 }
             }
             break;

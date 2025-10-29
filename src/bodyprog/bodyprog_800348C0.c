@@ -2795,7 +2795,7 @@ void SysState_SaveMenu_Update() // 0x8003A230
                 GameFs_SaveLoadBinLoad();
 
                 ScreenFade_Start(true, false, false);
-                SysWork_StateStepIncrement();
+                SysWork_StateStepIncrement(0);
             }
             else if (Gfx_MapMsg_Draw(MapMsgIdx_SaveGame) == MapMsgState_SelectEntry0)
             {
@@ -2804,7 +2804,7 @@ void SysState_SaveMenu_Update() // 0x8003A230
                 GameFs_SaveLoadBinLoad();
 
                 ScreenFade_Start(true, false, false);
-                SysWork_StateStepIncrement();
+                SysWork_StateStepIncrement(0);
             }
             break;
         
@@ -2944,7 +2944,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             g_SysState_GameOver_TipIdx = tipIdx;
 
             Fs_QueueStartReadTim(FILE_TIM_TIPS_E01_TIM + tipIdx, FS_BUFFER_1, &g_DeathTipImg);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.5f), false);
@@ -2952,7 +2952,7 @@ void SysState_GameOver_Update() // 0x8003A52C
 
         case 2:
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.5f), false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 3:
             Gfx_StringSetPosition(SCREEN_POSITION_X(32.5f), SCREEN_POSITION_Y(43.5f));
@@ -2963,7 +2963,7 @@ void SysState_GameOver_Update() // 0x8003A52C
                                                   g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)) ||
                 g_SysWork.field_28 > 240)
             {
-                SysWork_StateStepIncrement();
+                SysWork_StateStepIncrement(0);
             }
             break;
 
@@ -2983,7 +2983,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             {
                 Fs_QueueWaitForEmpty();
                 func_80037188();
-                SysWork_StateStepIncrement();
+                SysWork_StateStepIncrement(0);
             }
 
         case 6:
@@ -3009,7 +3009,7 @@ void SysState_GameOver_Update() // 0x8003A52C
             temp_a0 = &g_GameWork.config_0.seenGameOverTips_2E[(g_SysState_GameOver_TipIdx >> 5)];
             *temp_a0 |= (1 << 0) << (g_SysState_GameOver_TipIdx & 0x1F);
 
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
             break;
 
         case 8:

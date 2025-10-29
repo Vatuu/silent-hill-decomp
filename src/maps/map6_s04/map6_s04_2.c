@@ -349,7 +349,7 @@ void func_800E2CA0(void) // 0x800E2CA0
 
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 && g_SysWork.sysStateStep_C[0] == 7)
     {
-        SysWork_NextStateStepSet(8);
+        SysWork_StateStepSet(0, 8);
     }
 
     switch (g_SysWork.sysStateStep_C[0])
@@ -370,7 +370,7 @@ void func_800E2CA0(void) // 0x800E2CA0
             g_SysWork.field_236C = NULL;
             g_SysWork.field_2378 = Q12(1.0f);
 
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
@@ -379,7 +379,7 @@ void func_800E2CA0(void) // 0x800E2CA0
         case 2:
             SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
             break;
 
         case 3:
@@ -387,7 +387,7 @@ void func_800E2CA0(void) // 0x800E2CA0
             Sd_EngineCmd(19);
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 162, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 7, false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 4:
             SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(96.0f), Q12(131.0f), false, false);
@@ -399,7 +399,7 @@ void func_800E2CA0(void) // 0x800E2CA0
                 func_80085EB8(2, player, 0, false);
             }
 
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 5:
             // Possible inline?
@@ -409,11 +409,11 @@ void func_800E2CA0(void) // 0x800E2CA0
                 func_80085EB8(2, player, 0, false);
             }
 
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 6:
             func_80085EB8(3, &g_SysWork.player_4C.chara_0, 0, false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 7:
             SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(131.0f), Q12(195.0f), false, false);

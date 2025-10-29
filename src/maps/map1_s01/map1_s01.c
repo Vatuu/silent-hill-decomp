@@ -357,7 +357,7 @@ void func_800D7308(void)
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < CUTSCENE_SKIP_STATE)
     {
-        SysWork_NextStateStepSet(CUTSCENE_SKIP_STATE);
+        SysWork_StateStepSet(0, CUTSCENE_SKIP_STATE);
     }
 
     switch (g_SysWork.sysStateStep_C[0])
@@ -365,7 +365,7 @@ void func_800D7308(void)
         case 0:
             sharedFunc_800D20E4_0_s00();
             SysWork_StateStepIncrementAfterFade(false, true, 2, Q12(0.0f), false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             func_80085DF0();
@@ -382,11 +382,11 @@ void func_800D7308(void)
 
             Camera_PositionSet(NULL, Q12(-59.61f), Q12(-0.41f), Q12(97.48f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(-58.6f), Q12(-2.29f), Q12(100.87f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 4:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 83, false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 5:
             SysWork_StateStepIncrementDelayed(Q12(2.5f), false);
@@ -410,7 +410,7 @@ void func_800D7308(void)
             D_800DEE50.field_12 = 0;
 
             func_800CB7F4();
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 7:
             SysWork_StateStepIncrementDelayed(Q12(6.0f), false);
@@ -430,7 +430,7 @@ void func_800D7308(void)
                 }
             }
 
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         default:
             sharedFunc_800D2244_0_s00(false);
@@ -511,7 +511,7 @@ void func_800D7864(void)
         g_SysWork.sysStateStep_C[0] >= START_MEDALION_CUTSCENE && g_SysWork.sysStateStep_C[0] < END_MEDALION_CUTSCENE)
     {
         ScreenFade_ResetTimestep();
-        SysWork_NextStateStepSet(SKIP_CUTSCENE_STATE);
+        SysWork_StateStepSet(0, SKIP_CUTSCENE_STATE);
 
         g_WorldObject0.position_1C.rotation_C.vx = FP_ANGLE(-90.0f);
         g_WorldObject0.position_1C.position_0.vx = Q12(-98.8f);
@@ -524,7 +524,7 @@ void func_800D7864(void)
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             func_80086DA8(FILE_TIM_PIANO1_TIM, Q12(2.5f));
@@ -532,7 +532,7 @@ void func_800D7864(void)
 
         case 2:
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(2.0f), false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 3:
             func_800862F8(2, 0, false);
@@ -556,7 +556,7 @@ void func_800D7864(void)
         case 7:
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
             Event_PianoPuzzle(false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 8:
             func_800862F8(2, 0, false);
@@ -570,7 +570,7 @@ void func_800D7864(void)
 
         case START_MEDALION_CUTSCENE:
             SysWork_StateStepIncrementAfterFade(0, true, 2, 0, false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 11:
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(-100.0f);
@@ -599,7 +599,7 @@ void func_800D7864(void)
             if (g_WorldObject0.position_1C.position_0.vy >= Q12(0.0f))
             {
                 Sd_EngineCmd(Sfx_Unk1417);
-                SysWork_StateStepIncrement();
+                SysWork_StateStepIncrement(0);
             }
             break;
 
@@ -626,7 +626,7 @@ void func_800D7864(void)
 
         case 18:
         case 20:
-            SysWork_NextStateStepSet(NO_VALUE);
+            SysWork_StateStepReset();
             break;
 
         case END_MEDALION_CUTSCENE:
@@ -688,7 +688,7 @@ void Event_PianoPuzzle(bool play)
     if (g_SysWork.sysStateStep_C[1] == 4)
     {
         Sd_EngineCmd(Sfx_Unk1421);
-        SysWork_NextStateStep1Set(5);
+        SysWork_StateStepSet(1, 5);
         return;
     }
 
@@ -697,20 +697,20 @@ void Event_PianoPuzzle(bool play)
     if (g_PianoKeyCounter == 5)
     {
         Savegame_EventFlagSet(EventFlag_M1S01_PianoPuzzleSolved);
-        SysWork_StateStepIncrement();
+        SysWork_StateStepIncrement(0);
         return;
     }
 
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
     {
-        SysWork_StateStepIncrement();
+        SysWork_StateStepIncrement(0);
         return;
     }
 
-    g_PianoCursorX += (g_Controller0->sticks_24.sticks_0.leftX << 14) / 75;
+    g_PianoCursorX += (g_Controller0->sticks_24.sticks_0.leftX * 16384) / 75;
     g_PianoCursorX = CLAMP_RANGE(g_PianoCursorX, Q12(-89.0f), Q12(85.0f));
-    
-    g_PianoCursorY += ((g_Controller0->sticks_24.sticks_0.leftY << 14) / 75);
+
+    g_PianoCursorY += (g_Controller0->sticks_24.sticks_0.leftY * 16384) / 75;
     g_PianoCursorY = CLAMP_RANGE(g_PianoCursorY, Q12(-71.0f), Q12(84.0f));
 
     Game_TimerUpdate();
@@ -724,8 +724,7 @@ void Event_PianoPuzzle(bool play)
         if (FP_FROM(g_PianoCursorY, Q12_SHIFT) >= 34)
         {
             tempX = FP_FROM(g_PianoCursorX, Q12_SHIFT);
-            keyIdx = 0;
-            
+
             if (tempX < -64)
             {
                 keyIdx = 0;
@@ -770,62 +769,62 @@ void Event_PianoPuzzle(bool play)
         switch (keyIdx)
         {
         case 0:
-            SysWork_NextStateStep1Set(1);
+            SysWork_StateStepSet(1, 1);
             Sd_EngineCmd(Sfx_Unk1438);
             g_PianoCursorX = Q12(-77.0f);
             break;
         case 1:
-            SysWork_NextStateStep1Set(3);
+            SysWork_StateStepSet(1, 3);
             Sd_EngineCmd(Sfx_Unk1445);
             g_PianoCursorX = Q12(-64.0f);
             break;
         case 2:
-            SysWork_NextStateStep1Set(3);
+            SysWork_StateStepSet(1, 3);
             Sd_EngineCmd(Sfx_Unk1445);
             g_PianoCursorX = Q12(-52.0f);
             break;
         case 3:
-            SysWork_NextStateStep1Set(1);
+            SysWork_StateStepSet(1, 1);
             Sd_EngineCmd(Sfx_Unk1439);
             g_PianoCursorX = Q12(-39.0f);
             break;
         case 4:
-            SysWork_NextStateStep1Set(1);
+            SysWork_StateStepSet(1, 1);
             Sd_EngineCmd(Sfx_Unk1440);
             g_PianoCursorX = Q12(-27.0f);
             break;
         case 5:
-            SysWork_NextStateStep1Set(1);
+            SysWork_StateStepSet(1, 1);
             Sd_EngineCmd(Sfx_Unk1441);
             g_PianoCursorX = Q12(-2.0f);
             break;
         case 6:
-            SysWork_NextStateStep1Set(1);
+            SysWork_StateStepSet(1, 1);
             Sd_EngineCmd(Sfx_Unk1442);
             g_PianoCursorX = Q12(8.0f);
             break;
         case 7:
-            SysWork_NextStateStep1Set(3);
+            SysWork_StateStepSet(1, 3);
             Sd_EngineCmd(Sfx_Unk1445);
             g_PianoCursorX = Q12(23.0f);
             break;
         case 8:
-            SysWork_NextStateStep1Set(1);
+            SysWork_StateStepSet(1, 1);
             Sd_EngineCmd(Sfx_Unk1443);
             g_PianoCursorX = Q12(36.0f);
             break;
         case 9:
-            SysWork_NextStateStep1Set(3);
+            SysWork_StateStepSet(1, 3);
             Sd_EngineCmd(Sfx_Unk1445);
             g_PianoCursorX = Q12(48.0f);
             break;
         case 10:
-            SysWork_NextStateStep1Set(3);
+            SysWork_StateStepSet(1, 3);
             Sd_EngineCmd(Sfx_Unk1445);
             g_PianoCursorX = Q12(64.0f);
             break;
         case 11:
-            SysWork_NextStateStep1Set(1);
+            SysWork_StateStepSet(1, 1);
             Sd_EngineCmd(Sfx_Unk1444);
             g_PianoCursorX = Q12(73.0f);
             break;
@@ -862,7 +861,7 @@ void func_800D857C(void) // 0x800D857C
         case 0:
             sharedFunc_800D20E4_0_s00();
             func_80086470(0, InventoryItemId_SilverMedallion, 0, false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             func_80085DF0();
@@ -870,7 +869,7 @@ void func_800D857C(void) // 0x800D857C
 
         case 2:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 59, false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 3:
             func_80086470(1, InventoryItemId_SilverMedallion, 0, false);
@@ -891,12 +890,12 @@ void func_800D857C(void) // 0x800D857C
 
         case 6:
             func_80086470(3, InventoryItemId_SilverMedallion, 1, false);
-            SysWork_NextStateStepSet(8);
+            SysWork_StateStepSet(0, 8);
             break;
 
         case 7:
             Savegame_EventFlagClear(EventFlag_M1S01_PickupSilverMedallion);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 8:
             func_80086C58(&g_SysWork.player_4C.chara_0, 60);
@@ -934,7 +933,7 @@ void func_800D87C0(void) // 0x800D87C0
             D_800DD598 = 1;
         }
 
-        SysWork_NextStateStepSet(CUTSCENE_SKIP_STATE);
+        SysWork_StateStepSet(0, CUTSCENE_SKIP_STATE);
     }
 
     switch (g_SysWork.sysStateStep_C[0])
@@ -946,7 +945,7 @@ void func_800D87C0(void) // 0x800D87C0
 
             D_800DD598 = 0;
 
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             func_80085DF0();
@@ -955,7 +954,7 @@ void func_800D87C0(void) // 0x800D87C0
         case 2:
             if (Fs_QueueDoThingWhenEmpty())
             {
-                SysWork_StateStepIncrement();
+                SysWork_StateStepIncrement(0);
             }
 
             if (g_SysWork.sysStateStep_C[0] != 2)
@@ -976,22 +975,22 @@ void func_800D87C0(void) // 0x800D87C0
             func_80085EB8(0u, &g_SysWork.player_4C.chara_0, 85, false);
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 5:
             g_Timer0 = MIN((g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(12.0f), Q12_SHIFT)), Q12(8.0f));
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 6:
             func_80088D0C();
             Chara_Spawn(Chara_Cat, 0, Q12(-60.0f), Q12(18.0f), Q12(0.0f), 3);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 7:
             g_Timer0 = MIN((g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(12.0f), Q12_SHIFT)), Q12(8.0f));
             if (g_Timer0 >= Q12(8.0f))
             {
-                SysWork_StateStepIncrement();
+                SysWork_StateStepIncrement(0);
             }
             break;
 
@@ -1004,13 +1003,13 @@ void func_800D87C0(void) // 0x800D87C0
             func_800892DC(18, 96);
             func_8005DC1C(Sfx_Unk1437, &QVECTOR3(-59.0f, -0.5f, 18.6f), Q8_CLAMPED(0.5f), 0);
             func_8005DC1C(Sfx_Unk1436, &QVECTOR3(-58.8f, -1.2f, 18.8f), Q8_CLAMPED(0.5f), 0);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 9:
             g_Timer0 = MIN((g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(18.0f), Q12_SHIFT)), Q12(33.0f));
             if (g_Timer0 >= Q12(33.0f))
             {
-                SysWork_StateStepIncrement();
+                SysWork_StateStepIncrement(0);
             }
 
             g_Timer0 = MAX(g_Timer0, Q12(16.0f));
@@ -1020,13 +1019,13 @@ void func_800D87C0(void) // 0x800D87C0
             g_SysWork.npcs_1A0[0].model_0.stateStep_3 = 0;
             g_SysWork.npcs_1A0[0].model_0.state_2++;
 
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 11:
             g_Timer0 = MIN((FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(21.0f), Q12_SHIFT) + g_Timer0), Q12(48.0f));
             if (g_Timer0 >= Q12(48.0f))
             {
-                SysWork_StateStepIncrement();
+                SysWork_StateStepIncrement(0);
             }
 
             g_Timer0 = MAX(g_Timer0, Q12(34.0f));
@@ -1043,7 +1042,7 @@ void func_800D87C0(void) // 0x800D87C0
             g_Timer0 = MIN((FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(20.0f), Q12_SHIFT) + g_Timer0), Q12(121.0f));
             if (g_Timer0 >= Q12(121.0f))
             {
-                SysWork_StateStepIncrement();
+                SysWork_StateStepIncrement(0);
             }
 
             g_Timer0 = MAX(g_Timer0, Q12(49.0f));
@@ -1052,7 +1051,7 @@ void func_800D87C0(void) // 0x800D87C0
         case 14:
             func_8005DC1C(Sfx_Unk1448, &QVECTOR3(-56.4f, -0.8f, 16.8f) , 0x80, 0);
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 15:
             SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
@@ -1060,7 +1059,7 @@ void func_800D87C0(void) // 0x800D87C0
 
         case 16:
             func_8005DC1C(Sfx_Unk1449, &QVECTOR3(-56.4f, -0.8f, 16.8f) , 0x80, 0);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 17:
             SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
@@ -1069,7 +1068,7 @@ void func_800D87C0(void) // 0x800D87C0
         case 18:
             func_8005DC1C(Sfx_Unk1446, &QVECTOR3(-57.6f, 0.0f, 16.0f), 0x80, 0);
             func_8005DC1C(Sfx_Unk1364, &QVECTOR3(-57.6f, 0.0f, 16.0f), 0x40, 0);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 19:
             SysWork_StateStepIncrementDelayed(Q12(3.0f), false);

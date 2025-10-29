@@ -343,7 +343,7 @@ void func_800DA8F8(void) // 0x800DA8F8
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             func_80085DF0();
@@ -383,7 +383,7 @@ void func_800DAD2C(void)
             SysWork_StateStepIncrementAfterFade(0, true, 0, 0, false);
             func_800862F8(0, FILE_TIM_RECEPDR1_TIM, false);
             D_800E1FD0 = 0;
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
         case 1:
             func_800862F8(1, 0, false);
             break;
@@ -393,7 +393,7 @@ void func_800DAD2C(void)
         case 3:
             func_800862F8(3, 0, false);
             func_800862F8(4, FILE_TIM_RECEPDR2_TIM, false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
             /* fallthrough */
         case 4:
             func_800862F8(2, 0, false);
@@ -417,7 +417,7 @@ void func_800DAD2C(void)
         case 7:
             if (Savegame_EventFlagGet(EventFlag_M1S02_SeenDoorWithHorizontalSlot))
             {
-                SysWork_StateStepIncrement();
+                SysWork_StateStepIncrement(0);
             }
             else
             {
@@ -431,7 +431,7 @@ void func_800DAD2C(void)
             {
                 if (g_SysWork.sysStateStep_C[0] == 8)
                 {
-                    SysWork_NextStateStepSet(9);
+                    SysWork_StateStepSet(0, 9);
                     break;
                 }
                 D_800E1FD0 = Q12(1.0f);
@@ -471,7 +471,7 @@ void func_800DB058(void)
             Camera_LookAtSet(NULL, Q12(56.7698f), Q12(-1.45f), Q12(19.34f), 0, 0, 0, 0, true);
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
             /* fallthrough */
         case 1:
             SysWork_StateStepIncrementAfterFade(1, false, 0, 0, false);
@@ -484,14 +484,14 @@ void func_800DB058(void)
             break;
         case 4:
             func_8005DC1C(Sfx_Unk1454, &QVECTOR3(55.85f, -1.1f, 19.3f), 0x80, 0);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
             /* fallthrough */
         case 5:
             MapMsg_DisplayAndHandleSelection(false, 30, 0, 0, 0, false); // Slid the Picture card into the slot.
             break;
         case 6:
             func_8005DC1C(Sfx_Unk1343, &QVECTOR3(56.0f, -1.2f, 19.3f), 0x80, 0);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
             /* fallthrough */
         case 7:
             func_80086C58(&g_SysWork.player_4C.chara_0, 95);
@@ -539,7 +539,7 @@ void func_800DBFC8(void) // 0x800DBFC8
         case 0:
             sharedFunc_800D20E4_0_s00();
             func_80086470(0, InventoryItemId_Shotgun, 0, false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             func_80085DF0();
@@ -547,7 +547,7 @@ void func_800DBFC8(void) // 0x800DBFC8
 
         case 2:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 59, false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 3:
             func_80086470(1, InventoryItemId_Shotgun, 0, false);
@@ -568,12 +568,12 @@ void func_800DBFC8(void) // 0x800DBFC8
 
         case 6:
             func_80086470(3, InventoryItemId_Shotgun, SHOTGUN_AMMO_PICKUP_ITEM_COUNT, false);
-            SysWork_NextStateStepSet(8);
+            SysWork_StateStepSet(0, 8);
             break;
 
         case 7:
             Savegame_EventFlagClear(EventFlag_M1S02_PickupShotgun);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 8:
             func_80086C58(&g_SysWork.player_4C.chara_0, 60);
@@ -603,7 +603,7 @@ void func_800DD208(void) // 0x800DD208
         case 0:
             sharedFunc_800D20E4_0_s00();
             func_80086470(0, InventoryItemId_ClassroomKey, 0, false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 1:
             func_80085DF0();
@@ -611,7 +611,7 @@ void func_800DD208(void) // 0x800DD208
 
         case 2:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 59, false);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 3:
             func_80086470(1, InventoryItemId_ClassroomKey, 0, false);
@@ -632,12 +632,12 @@ void func_800DD208(void) // 0x800DD208
 
         case 6:
             func_80086470(3, InventoryItemId_ClassroomKey, 1, false);
-            SysWork_NextStateStepSet(8);
+            SysWork_StateStepSet(0, 8);
             break;
 
         case 7:
             Savegame_EventFlagClear(EventFlag_M1S02_PickupClassroomKey);
-            SysWork_StateStepIncrement();
+            SysWork_StateStepIncrement(0);
 
         case 8:
             func_80086C58(&g_SysWork.player_4C.chara_0, 60);
