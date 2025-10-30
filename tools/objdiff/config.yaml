@@ -149,7 +149,7 @@ categories:
       - maps/map3_s06
 
   - id: map.map4_s00
-    name: 4_00 -- Unused (Central Silent Hill Related)
+    name: 4_00 - Unused (Central Silent Hill Related)
     paths:
       - maps/map4_s00
 
@@ -179,7 +179,7 @@ categories:
       - maps/map4_s05
 
   - id: map.map4_s06
-    name: 4_06 -- Unused (Central Silent Hill Related)
+    name: 4_06 - Unused (Central Silent Hill Related)
     paths:
       - maps/map4_s06
 
