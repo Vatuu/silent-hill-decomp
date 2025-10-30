@@ -1265,7 +1265,7 @@ typedef struct _MapType
 {
     s16                plmFileIdx_0;
     char               tag_2[4];
-    u8                 flags_6;
+    u8                 flags_6; /** `e_MapTypeFlags` */
     // 1 byte of padding.
     const s_WaterZone* waterZones_8;
     const s_SpeedZone* speedZones_C;
@@ -1796,7 +1796,7 @@ typedef struct _MapOverlayHeader
     void                   (*func_10)(s32 arg);
     s8                     field_14; // Flags?
     u8                     field_15;
-    s8                     field_16;
+    s8                     field_16; // Used for switch case in `func_8003EBF4`.
     s8                     field_17;
     void                   (**loadingScreenFuncs_18)();
     s_MapPoint2d*          mapPointsOfInterest_1C;
@@ -4650,7 +4650,7 @@ void GameFs_FlameGfxLoad();
 
 void func_8003EB54();
 
-void func_8003EBF4(s_MapOverlayHeader* arg0);
+void func_8003EBF4(s_MapOverlayHeader* mapHdr);
 
 void func_8003EBA0();
 
@@ -4672,14 +4672,17 @@ void func_8003F08C(s_StructUnk3* arg0, s_sub_StructUnk3* arg1);
 
 void func_8003F170();
 
-/** Resets player info in the savegame buffer (inventory, health, playtime). */
+/** Resets player info such as the inventory, health, and playtime in the savegame buffer. */
 void Game_SavegameResetPlayer();
 
 void func_8007E5AC();
 
 void func_8007E860();
 
-/** Loads player animations for a given map. Maybe for cutscenes? */
+/** Loads player animations for a given map. Maybe for cutscenes?
+ *
+ * @param mapIdx Map index.
+ */
 void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 
 void func_80070B84(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3);
@@ -4728,18 +4731,30 @@ s16 Player_AnimGetSomething();
  * @param angleTo Second angle in Q3.12, range `[0, 4096]`.
  * @param shortestAngle Shortest angle output in Q3.12, range `[0, 4096]`.
  */
-void Math_ShortestAngleGet(s16 angleFrom, s16 angleTo, s16* shortestAngle);
+void Math_ShortestAngleGet(q3_12 angleFrom, q3_12 angleTo, q3_12* shortestAngle);
 
-/** Anim func. */
+/** Anim func.
+ *
+ * @param chara Player character.
+ * @param extra Extra player character parameters.
+ * @param animStatus Packed anim status.
+ */
 void func_8007FB94(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 animStatus);
 
-/** Anim func. */
+/** Anim func.
+ *
+ * @param chara Player character.
+ * @param extra Extra player character parameters.
+ * @param animStatus Packed anim status.
 void func_8007FC48(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 animStatus);
 
 /** Gets property 8 from player. */
 s32 func_8007FD2C();
 
-/** @unused Gets current value from the power timer for gas based weapons. */
+/** @unused Gets current value from the power timer for gas based weapons.
+ *
+ * @return Power timer.
+ */
 q19_12 Game_GasWeaponPowerTimerValue();
 
 void func_8007FD4C(s32 arg0);
@@ -4798,9 +4813,19 @@ void GameState_Options_Update();
 void GameState_LoadMapScreen_Update();
 void GameState_Unk15_Update();
 
+/** @brief Toggles the player's flashlight on. */
 void Game_TurnFlashlightOn(void);
+
+/** @brief Toggles the player's flashlight off. */
 void Game_TurnFlashlightOff(void);
+
+/** @brief Toggles the player's flashlight. */
 void Game_FlashlightToggle(void);
+
+/** @brief Checks if the player's flashlight is on.
+ *
+ * @return `true` if the flashlight is on, `false` otherwise.
+ */
 bool Game_FlashlightIsOn(void);
 
 /** X and Z are guessed. */

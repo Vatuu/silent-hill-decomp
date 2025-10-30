@@ -2533,25 +2533,23 @@ void func_8003EBA0() // 0x8003EBA0
     Math_SVectorSet(&g_SysWork.field_2370, FP_ANGLE(-15.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
 }
 
-void func_8003EBF4(s_MapOverlayHeader* arg0) // 0x8003EBF4
+void func_8003EBF4(s_MapOverlayHeader* mapHdr) // 0x8003EBF4
 {
-    s32         var_v1;
-    u8          temp_a1;
+    bool        hasActiveChunk;
+    u8          flags;
     s_800A9F80* ptr;
 
-    temp_a1 = arg0->type_0->flags_6;
-
-    var_v1 = 0;
-
-    if (temp_a1 & (1 << 2))
+    flags          = mapHdr->type_0->flags_6;
+    hasActiveChunk = false;
+    if (flags & MapTypeFlag_Interior)
     {
-        var_v1 = (temp_a1 & 3) > 0;
+        hasActiveChunk = (flags & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks)) > 0;
     }
 
-    switch (arg0->field_16)
+    switch (mapHdr->field_16)
     {
         case 1:
-            if (var_v1 != 0)
+            if (hasActiveChunk)
             {
                 ptr = &D_800A9F84;
             }
@@ -2562,7 +2560,7 @@ void func_8003EBF4(s_MapOverlayHeader* arg0) // 0x8003EBF4
             break;
 
         case 2:
-            if (var_v1 != 0)
+            if (hasActiveChunk)
             {
                 ptr = &D_800A9F8C;
             }
@@ -2617,7 +2615,7 @@ bool Game_FlashlightIsOn() // 0x8003ED64
 
 void func_8003ED74(s32 arg0, s32 arg1) // 0x8003ED74
 {
-    func_8003EF10(arg0, arg1, 0, 0, 0, 0);
+    func_8003EF10(arg0, arg1, PrimitiveType_None, NULL, 0, 0);
     func_8003F170();
 }
 
@@ -2645,7 +2643,7 @@ void func_8003EE30(s32 arg0, s32* arg1, s32 arg2, s32 arg3) // 0x8003EE30
 
 void func_8003EEDC(s32 arg0, s32 arg1) // 0x8003EEDC
 {
-    func_8003EF10(arg0, arg1, 0, 0, 0, 0);
+    func_8003EF10(arg0, arg1, PrimitiveType_None, NULL, 0, 0);
     func_8003F170();
 }
 

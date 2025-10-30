@@ -12,28 +12,28 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
     s32      dist;
     VECTOR3* arg2; // Q19.12
 
+    // TODO: This data is hard to keep track of and may not point to the right `properties_E4` struct.
+    // Short-hand defines to make it easier to follow.
+    #define charaState3  chara->model_0.stateStep_3
+    #define charaStateE8 chara->properties_E4.larvalStalker.properties_E8[0].val32
+    #define charaStateEC chara->properties_E4.larvalStalker.properties_E8[1].val32
+    #define charaStateF4 chara->properties_E4.larvalStalker.properties_E8[3].val32
+    #define charaStateFC chara->properties_E4.larvalStalker.properties_E8[5].val32
+
     angleIn = FP_ANGLE_ABS(angleIn);
     arg2 = arg2In;
 
-    // TODO: This data is hard to keep track of and may not point to the right `properties_E4` struct.
-    // Short-hand defines to make it easier to follow.
-    #define CHARA_STATE_3 chara->model_0.stateStep_3
-    #define CHARA_STATE_E8 chara->properties_E4.larvalStalker.properties_E8[0].val32
-    #define CHARA_STATE_EC chara->properties_E4.larvalStalker.properties_E8[1].val32
-    #define CHARA_STATE_F4 chara->properties_E4.larvalStalker.properties_E8[3].val32
-    #define CHARA_STATE_FC chara->properties_E4.larvalStalker.properties_E8[5].val32
-    
-    switch (CHARA_STATE_EC)
+    switch (charaStateEC)
     {
         case 0:
             sharedData_800DF1F8_0_s00 = 0;
-            CHARA_STATE_EC = 1;
+            charaStateEC = 1;
             break;
         
         case 1:
             if (arg2[0].vx == chara->position_18.vx && arg2[0].vz == chara->position_18.vz)
             {
-                CHARA_STATE_EC = 6;
+                charaStateEC = 6;
             }
             else
             {
@@ -45,24 +45,24 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
                 if (ABS(shortestAngle) < ANGLE_THRESHOLD)
                 {
                     chara->rotation_24.vy = sharedData_800DF1FA_0_s00;
-                    CHARA_STATE_EC = 3;
+                    charaStateEC = 3;
                 }
                 else
                 {
-                    if (shortestAngle < 0)
+                    if (shortestAngle < FP_ANGLE(0.0f))
                     {
-                        CHARA_STATE_FC = 4;
-                        CHARA_STATE_E8 = 4;
-                        CHARA_STATE_3 = 0;
+                        charaStateFC = 4;
+                        charaStateE8 = 4;
+                        charaState3 = 0;
                     }
                     else
                     {
-                        CHARA_STATE_FC = 3;
-                        CHARA_STATE_E8 = 3;
-                        CHARA_STATE_3 = 0;
+                        charaStateFC = 3;
+                        charaStateE8 = 3;
+                        charaState3 = 0;
                     }
 
-                    CHARA_STATE_EC = 2;
+                    charaStateEC = 2;
                 }
             }
             break;
@@ -72,7 +72,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             if (ABS(shortestAngle) < ANGLE_THRESHOLD)
             {
                 chara->rotation_24.vy = sharedData_800DF1FA_0_s00;
-                CHARA_STATE_EC = 3;
+                charaStateEC = 3;
             }
             break;
         
@@ -82,16 +82,16 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
 
             if (Q12(0.00925f) >= ABS(dist))
             {
-                CHARA_STATE_E8 = 0;
-                CHARA_STATE_3 = 0;
-                CHARA_STATE_EC = 8;
+                charaStateE8 = 0;
+                charaState3 = 0;
+                charaStateEC = 8;
             }
             else
             {
-                CHARA_STATE_E8 = arg1;
-                CHARA_STATE_3 = 0;
-                CHARA_STATE_FC = arg1;
-                CHARA_STATE_EC = 4;
+                charaStateE8 = arg1;
+                charaState3 = 0;
+                charaStateFC = arg1;
+                charaStateEC = 4;
             }
             break;
         
@@ -102,7 +102,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             sharedData_800DF1FA_0_s00 = FP_ANGLE_ABS(tmpAngle);
             sharedData_800DF1F4_0_s00 = SquareRoot0(dist);
 
-            CHARA_STATE_EC = 5;
+            charaStateEC = 5;
             break;
             
         case 5:
@@ -132,7 +132,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             }
             else
             {
-                if (shortestAngle < 0)
+                if (shortestAngle < FP_ANGLE(0.0f))
                 {
                     chara->rotation_24.vy -= angleStep;
                 }
@@ -156,11 +156,11 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
 
                 if (sharedData_800DF1F8_0_s00 == arg4)
                 {
-                    CHARA_STATE_EC = 6;
+                    charaStateEC = 6;
                 }
                 else
                 {
-                    CHARA_STATE_EC = 4;
+                    charaStateEC = 4;
                 }
             }
             
@@ -172,24 +172,24 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             if (ABS(shortestAngle) < ANGLE_THRESHOLD)
             {
                 chara->rotation_24.vy = angleIn;
-                CHARA_STATE_EC = 8;
+                charaStateEC = 8;
             }
             else
             {
                 if (shortestAngle < FP_ANGLE(0.0f))
                 {
-                    CHARA_STATE_FC = 4;
-                    CHARA_STATE_E8 = 4;
-                    CHARA_STATE_3 = 0;
+                    charaStateFC = 4;
+                    charaStateE8 = 4;
+                    charaState3 = 0;
                 }
                 else
                 {
-                    CHARA_STATE_FC = 3;
-                    CHARA_STATE_E8 = 3;
-                    CHARA_STATE_3 = 0;
+                    charaStateFC = 3;
+                    charaStateE8 = 3;
+                    charaState3 = 0;
                 }
 
-                CHARA_STATE_EC = 7;
+                charaStateEC = 7;
             }
             break;
         
@@ -197,18 +197,18 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             Math_ShortestAngleGet(chara->rotation_24.vy, angleIn, &shortestAngle);
             if (ABS(shortestAngle) < ANGLE_THRESHOLD)
             {
-                CHARA_STATE_FC = arg1 - 1;
+                charaStateFC = arg1 - 1;
                 chara->rotation_24.vy = angleIn;
-                CHARA_STATE_E8 = 0;
-                CHARA_STATE_3 = 0;
-                CHARA_STATE_EC = 8;
+                charaStateE8 = 0;
+                charaState3 = 0;
+                charaStateEC = 8;
             }
             break;
         
         case 8:
-            CHARA_STATE_F4 = 1;
+            charaStateF4 = 1;
             sharedData_800DF1FA_0_s00 = 0;
-            CHARA_STATE_EC = 0;
+            charaStateEC = 0;
             chara->properties_E4.npc.field_124 = NULL;
             return true;
     }

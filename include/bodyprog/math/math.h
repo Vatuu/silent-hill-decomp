@@ -115,8 +115,8 @@
  * @param z Z component.
  */
 #define Math_SetSVectorFast(vec, x, y, z) \
-    *(s32*)&(vec)->vx = (s32)((x) & 0xFFFF) | (s32)((y) << 16); \
-    (vec)->vz         = (z)
+    *(s32*)&(vec).vx = (s32)((x) & 0xFFFF) | (s32)((y) << 16); \
+    (vec).vz         = (z)
 
 /** @brief Sets the sum of an `SVECTOR` using a fast bitwise method. TODO: Need more accurate description.
  *
@@ -126,8 +126,8 @@
  * @param z Z component.
  */
 #define Math_SetSVectorFastSum(vec, x, y, z) \
-    *(s32*)&(vec)->vx = (s32)((x) & 0xFFFF) + (s32)((y) << 16); \
-    (vec)->vz         = (z)
+    *(s32*)&(vec).vx = (s32)((x) & 0xFFFF) + (s32)((y) << 16); \
+    (vec).vz         = (z)
 
 /** @brief Normalizes Q19.12 fixed-point degrees, unsigned integer range `[0, 4096]` to the signed integer range `[-2048, 2047]`.
  * Thin wrapper for `FP_ANGLE_NORM_S`.

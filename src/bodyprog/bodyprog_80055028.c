@@ -4118,12 +4118,12 @@ void func_8006342C(s32 weaponAttack, q3_12 angle, s16 arg2, GsCOORDINATE2* coord
 
         case WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
             D_800C440C = coord;
-            Math_SetSVectorFast(&ptr->field_20, 2, 20, 57);
+            Math_SetSVectorFast(ptr->field_20, 2, 20, 57);
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
             D_800C440C = coord;
-            Math_SetSVectorFast(&ptr->field_20, 2, 24, 67);
+            Math_SetSVectorFast(ptr->field_20, 2, 24, 67);
             break;
 
         default:
@@ -4269,7 +4269,7 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
             ptr->field_1E0         = 0x333;
             ptr->field_1E4         = 0xA3;
             ptr->field_1E8         = 0x100;
-            Math_SetSVectorFast(&ptr->field_164, 2, 0xFFF1, 0x47);
+            Math_SetSVectorFast(ptr->field_164, 2, 0xFFF1, 0x47);
 
             Vw_CoordHierarchyMatrixCompute(&D_800C440C[10], &ptr->field_12C);
             break;
@@ -4282,7 +4282,7 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
             ptr->field_1E0         = 0x28F;
             ptr->field_1E4         = 0xCC;
             ptr->field_1E8         = 0x180;
-            Math_SetSVectorFast(&ptr->field_164, 3, 0xFFEE, 0x6D);
+            Math_SetSVectorFast(ptr->field_164, 3, 0xFFEE, 0x6D);
 
             Vw_CoordHierarchyMatrixCompute(&D_800C440C[10], &ptr->field_12C);
             break;
@@ -4292,7 +4292,7 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
             ptr->field_1E0         = 0x2E1;
             ptr->field_1E4         = 0x51;
             ptr->field_1E8         = 0xC0;
-            Math_SetSVectorFast(&ptr->field_164, 0xFFFE, 0xFFDD, 0xDD);
+            Math_SetSVectorFast(ptr->field_164, 0xFFFE, 0xFFDD, 0xDD);
 			
             Vw_CoordHierarchyMatrixCompute(&D_800C440C[10], &ptr->field_12C);
             break;
@@ -4302,7 +4302,7 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
             ptr->field_1E0         = 0x333;
             ptr->field_1E4         = 0xA3;
             ptr->field_1E8         = 0x100;
-            Math_SetSVectorFast(&ptr->field_164, 3, 0xFFE8, 0x5B);
+            Math_SetSVectorFast(ptr->field_164, 3, 0xFFE8, 0x5B);
 
             Vw_CoordHierarchyMatrixCompute(&D_800C4410[10], &ptr->field_12C);
             break;
@@ -4312,7 +4312,7 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
             ptr->field_1E0         = 0x333;
             ptr->field_1E4         = 0xA3;
             ptr->field_1E8         = 0x100;
-            Math_SetSVectorFast(&ptr->field_164, 2, 0xFFF3, 0x43);
+            Math_SetSVectorFast(ptr->field_164, 2, 0xFFF3, 0x43);
 
             Vw_CoordHierarchyMatrixCompute(&D_800C4410[10], &ptr->field_12C);
             break;
@@ -5604,7 +5604,7 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara, s32 
     s32             wallCount;
     s32             var_s6;
 
-    if (arg4 == -1)
+    if (arg4 == NO_VALUE)
     {
         arg4 = 1;
         if (chara == &g_SysWork.player_4C && chara->health_B0 > Q12(0.0f))
@@ -6043,7 +6043,7 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* offset, s_func_8006AB50* arg2, s32 
 
     if (var_s4 != 0)
     {
-        return -1;
+        return NO_VALUE;
     }
 
     return sp18.field_0_0 != 0;
