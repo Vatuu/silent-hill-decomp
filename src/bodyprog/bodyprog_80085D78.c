@@ -67,7 +67,6 @@ void func_80085DF0(void) // 0x80085DF0
 void SysWork_StateStepIncrementDelayed(s32 delay, bool reset) // 0x80085E6C
 {
     g_SysWork.timer_2C += g_DeltaTime1;
-
     if (delay < g_SysWork.timer_2C)
     {
         func_80085D78(reset);

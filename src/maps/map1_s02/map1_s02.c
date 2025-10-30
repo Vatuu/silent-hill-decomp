@@ -11,7 +11,7 @@ INCLUDE_RODATA("asm/maps/map1_s02/nonmatchings/map1_s02", g_MapOverlayHeader);
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800CBA4C);
 
-void func_800CBC98(void)
+void func_800CBC98(void) // 0x800CBC98
 {
     s32 idx;
     s32 i;
@@ -23,6 +23,7 @@ void func_800CBC98(void)
         {
             break;    
         }
+
         func_800CBA4C(idx, 2, 0);
     }
 
@@ -30,12 +31,14 @@ void func_800CBC98(void)
     {
         D_800E30C8.field_54[i] = 0;
     }
-    D_800C4414 |= (1<<3);
+
+    D_800C4414 |= 1 << 3;
 }
 
-void func_800CBD58(void)
+void func_800CBD58(void) // 0x800CBD58
 {
     s32 i;
+
     for (i = 0; i < ARRAY_SIZE(D_800E1FF8); i++)
     {
         if (D_800E1FF8[i].field_A == 27 || D_800E1FF8[i].field_A == 28)
@@ -44,7 +47,7 @@ void func_800CBD58(void)
         }
     }
 
-    D_800C4414 &= ~(1<<3);
+    D_800C4414 &= ~(1 << 3);
 }
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800CBDA8);

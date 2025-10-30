@@ -48,13 +48,12 @@ extern s_WorldObject_0   g_CommonWorldObjects[6]; // 800DF120
 extern s_MapHdr_field_4C D_800DD5B0[300];
 extern s_MapOverlayHeader_7C D_800DEE50;
 
-extern s8 g_PianoKeyTable[11];
-extern s8 g_PianoKeySequence[5];
-extern s32 g_PianoCursorX;
-extern s32 g_PianoCursorY;
-extern s32 g_PianoKeyCounter;
-extern s32 D_800DD594;
-
+extern s8     g_PianoKeys[11];
+extern s8     g_PianoKeySequence[5];
+extern q19_12 g_PianoCursorX;
+extern q19_12 g_PianoCursorY;
+extern s32    g_PianoKeyCounter;
+extern s32    D_800DD594;
 
 void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
@@ -67,17 +66,25 @@ void Event_DoorLocked(void);
 
 void Event_DoorUnlocked(void);
 
-void Event_PianoPuzzle(bool play);
-
 void func_800D72B0(void);
 
 void func_800D72DC(void);
 
 void func_800D7308(void);
 
+void func_800D76F4(void);
+
 void func_800D7830(void);
 
+void func_800D7864(void);
+
 void func_800D7EEC(void);
+
+/** @brief Handles the piano puzzle event.
+ *
+ * @param playNote Play a note.
+ */
+void Event_PianoPuzzle(bool playNote);
 
 void func_800D857C(void);
 
@@ -92,10 +99,6 @@ void func_800D9514(void);
 void func_800D9DDC(void);
 
 void func_800D9EC4(void);
-
-void func_800D7864(void);
-
-void func_800D76F4(void);
 
 void func_800CB7F4(void);
 

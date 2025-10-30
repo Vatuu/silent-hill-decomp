@@ -201,14 +201,14 @@ typedef enum _Sfx
     Sfx_Unk1435 = 1435,
     Sfx_Unk1436 = 1436,
     Sfx_Unk1437 = 1437,
-    Sfx_Unk1438 = 1438,
-    Sfx_Unk1439 = 1439,
-    Sfx_Unk1440 = 1440,
-    Sfx_Unk1441 = 1441,
-    Sfx_Unk1442 = 1442,
-    Sfx_Unk1443 = 1443,
-    Sfx_Unk1444 = 1444,
-    Sfx_Unk1445 = 1445,
+    Sfx_Unk1438 = 1438, // } Piano keys.
+    Sfx_Unk1439 = 1439, // }
+    Sfx_Unk1440 = 1440, // }
+    Sfx_Unk1441 = 1441, // }
+    Sfx_Unk1442 = 1442, // }
+    Sfx_Unk1443 = 1443, // }
+    Sfx_Unk1444 = 1444, // }
+    Sfx_Unk1445 = 1445, // }
 
     Sfx_Unk1446 = 1446,
 
@@ -1769,17 +1769,17 @@ typedef struct
 
 typedef struct
 {
-    u8 unk_0[48];
-    u8 field_30[4];
+    u8  unk_0[48];
+    u8  field_30[4];
     s16 field_34[4];
-    u8 unk_3C[24];
-    s16 field_54[4]; // might be different size, max count in field_78
+    u8  unk_3C[24];
+    s16 field_54[4]; // Might be different size, max count in `field_78`.
     u16 field_5C[4];
     u16 field_64[4];
-    u8 unk_6C[8];
+    u8  unk_6C[8];
     s16 field_74;
     s16 unk_76;
-    u8 field_78;
+    u8  field_78;
 } s_MapOverlayHeader_94;
 
 /** TODO: `g_MapOverlayHeader` is part of the map overlay BIN files. Maybe should be moved to `maps/shared.h`. 
@@ -2860,6 +2860,7 @@ extern GsCOORDINATE2* D_800C440C;
 
 extern GsCOORDINATE2* D_800C4410;
 
+/** Flags. */
 extern s8 D_800C4414;
 
 /** Angles. */

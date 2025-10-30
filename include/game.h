@@ -1680,6 +1680,7 @@ static inline s32 SysWork_StateStepSet(s32 stepIdx, s32 sysStateStep)
         step                        = 
         g_SysWork.sysStateStep_C[2] = sysStateStep;
     }
+
     return step;
 }
 

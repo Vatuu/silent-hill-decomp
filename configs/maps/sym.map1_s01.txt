@@ -107,7 +107,7 @@ MAP_MESSAGES              = 0x800DCF5C; // type:u32 size:0xC0
 //----------------------------------------------------
 //--- PA: 0x013AA4   VA: 0x800DD01C   subsegment: data
 //----------------------------------------------------
-g_PianoKeyTable           = 0x800DD500; // type:s8 size:0xB
+g_PianoKeys               = 0x800DD500; // type:s8 size:0xB
 g_PianoKeySequence        = 0x800DD50C; // type:s8 size:0x5
 g_Timer0                  = 0x800DD514; // type:s32
 g_CommonWorldObjectPoses  = 0x800DD518; // type:WorldObjectPos size:0x64

@@ -1099,10 +1099,12 @@ void func_80056D8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, G
         poly           = (POLY_G4*)(packet + 0xC);
         GsOUT_PACKET_P = (PACKET*)poly;
 
-        *(u32*)&poly->r0 = *(u32*)&poly->r1 = *(u32*)&poly->r2 = *(u32*)&poly->r3 =
-            FP_MULTIPLY(D_800C4168.fogColor_1C.r, var_s0, Q12_SHIFT) +
-            (FP_MULTIPLY(D_800C4168.fogColor_1C.g, var_s0, Q12_SHIFT) << 8) +
-            (FP_MULTIPLY(D_800C4168.fogColor_1C.b, var_s0, Q12_SHIFT) << 16);
+        *(u32*)&poly->r0 =
+        *(u32*)&poly->r1 =
+        *(u32*)&poly->r2 =
+        *(u32*)&poly->r3 = FP_MULTIPLY(D_800C4168.fogColor_1C.r,  var_s0, Q12_SHIFT)       +
+                           (FP_MULTIPLY(D_800C4168.fogColor_1C.g, var_s0, Q12_SHIFT) << 8) +
+                           (FP_MULTIPLY(D_800C4168.fogColor_1C.b, var_s0, Q12_SHIFT) << 16);
 
         SetPolyG4(poly);
 
@@ -1116,15 +1118,15 @@ void func_80056D8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, G
 
         mode           = (DR_MODE*)(packet + 0x30);
         GsOUT_PACKET_P = (PACKET*)mode;
-        SetDrawMode(mode, 0, 1, 0x20, NULL);
+        SetDrawMode(mode, 0, 1, 32, NULL);
         AddPrim(tag, mode);
 
-        packet2        = packet + 0x3C;
+        packet2        = packet + 60;
         GsOUT_PACKET_P = packet2;
         SetPriority(packet2, 1, 1);
         AddPrim(tag, packet2);
 
-        GsOUT_PACKET_P = packet + 0x48;
+        GsOUT_PACKET_P = packet + 72;
     }
 }
 
@@ -4267,7 +4269,7 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
             ptr->field_1E0         = 0x333;
             ptr->field_1E4         = 0xA3;
             ptr->field_1E8         = 0x100;
-            SetSVectorFast(&ptr->field_164, 2, 0xFFF1, 0x47);
+            Math_SetSVectorFast(&ptr->field_164, 2, 0xFFF1, 0x47);
 
             Vw_CoordHierarchyMatrixCompute(&D_800C440C[10], &ptr->field_12C);
             break;
@@ -4280,7 +4282,7 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
             ptr->field_1E0         = 0x28F;
             ptr->field_1E4         = 0xCC;
             ptr->field_1E8         = 0x180;
-            SetSVectorFast(&ptr->field_164, 3, 0xFFEE, 0x6D);
+            Math_SetSVectorFast(&ptr->field_164, 3, 0xFFEE, 0x6D);
 
             Vw_CoordHierarchyMatrixCompute(&D_800C440C[10], &ptr->field_12C);
             break;
@@ -4290,7 +4292,7 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
             ptr->field_1E0         = 0x2E1;
             ptr->field_1E4         = 0x51;
             ptr->field_1E8         = 0xC0;
-            SetSVectorFast(&ptr->field_164, 0xFFFE, 0xFFDD, 0xDD);
+            Math_SetSVectorFast(&ptr->field_164, 0xFFFE, 0xFFDD, 0xDD);
 			
             Vw_CoordHierarchyMatrixCompute(&D_800C440C[10], &ptr->field_12C);
             break;
@@ -4300,7 +4302,7 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
             ptr->field_1E0         = 0x333;
             ptr->field_1E4         = 0xA3;
             ptr->field_1E8         = 0x100;
-            SetSVectorFast(&ptr->field_164, 3, 0xFFE8, 0x5B);
+            Math_SetSVectorFast(&ptr->field_164, 3, 0xFFE8, 0x5B);
 
             Vw_CoordHierarchyMatrixCompute(&D_800C4410[10], &ptr->field_12C);
             break;
@@ -4310,7 +4312,7 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
             ptr->field_1E0         = 0x333;
             ptr->field_1E4         = 0xA3;
             ptr->field_1E8         = 0x100;
-            SetSVectorFast(&ptr->field_164, 2, 0xFFF3, 0x43);
+            Math_SetSVectorFast(&ptr->field_164, 2, 0xFFF3, 0x43);
 
             Vw_CoordHierarchyMatrixCompute(&D_800C4410[10], &ptr->field_12C);
             break;

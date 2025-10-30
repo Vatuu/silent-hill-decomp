@@ -68,9 +68,9 @@ void Ai_Cheryl_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x
 {
     VECTOR3 pos;               // @hack Unused but required.
     VECTOR3 offset;
-    s32     moveSpeed;
-    s16     headingAngle;
-    s32     moveAmt;
+    q19_12  moveSpeed;
+    q3_12   headingAngle;
+    q19_12  moveAmt;
     s32     scaleRestoreShift;
     u32     scaleReduceShift;
 

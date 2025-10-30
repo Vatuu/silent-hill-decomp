@@ -37,12 +37,12 @@ void Ai_Alessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2*
  * MAP6_S04: 0x800DC328
  * MAP7_S03: 0x800D2F7C
  */
-void Ai_Alessa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coord)
+void Ai_Alessa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
     if (chara->properties_E4.player.field_F0 == 0)
     {
         s_AnimInfo* animInfo = &ALESSA_ANIM_INFOS[chara->model_0.anim_4.status_0];
-        animInfo->updateFunc_0(&chara->model_0, anmHdr, coord, animInfo);
+        animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
     }
 }
 
@@ -52,13 +52,13 @@ void Ai_Alessa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINA
  * MAP6_S04: 0x800DC370
  * MAP7_S03: 0x800D2FC4
  */
-void Ai_Alessa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord)
+void Ai_Alessa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 {
     VECTOR3 unused;
-    VECTOR3 vec;
-    s32     moveSpeed;
-    s16     headingAngle;
-    s32     moveAmt;
+    VECTOR3 offset;
+    q19_12  moveSpeed;
+    q3_12   headingAngle;
+    q19_12  moveAmt;
     s32     scaleRestoreShift;
     u32     scaleReduceShift;
 
@@ -70,17 +70,17 @@ void Ai_Alessa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord)
     scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
     scaleReduceShift  = scaleRestoreShift >> 1;
 
-    vec.vx = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
-    vec.vz = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
-    vec.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
+    offset.vx = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    offset.vz = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    offset.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
 
-    chara->position_18.vx += vec.vx;
-    chara->position_18.vy = 0;
-    chara->position_18.vz += vec.vz;
+    chara->position_18.vx += offset.vx;
+    chara->position_18.vy = Q12(0.0f);
+    chara->position_18.vz += offset.vz;
 
-    coord->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
-    coord->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
-    coord->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
+    coords->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
+    coords->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
+    coords->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
 }
 
 /** Addresses

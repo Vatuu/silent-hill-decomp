@@ -107,9 +107,27 @@
 #define Math_Vector2MagCalc(x, z) \
     Q6_TO_Q12(SquareRoot0(SQUARE(Q12_TO_Q6(x)) + SQUARE(Q12_TO_Q6(z))))
 
-#define SetSVectorFast(v, x, y, z) \
-    *(s32*)&(v)->vx = (s32)((x) & 0xFFFF) | (s32)((y) << 16); \
-    (v)->vz = (z)
+/** @brief Sets an `SVECTOR` using a fast bitwise method.
+ *
+ * @param vec Vector to set.
+ * @param x X component.
+ * @param y Y component.
+ * @param z Z component.
+ */
+#define Math_SetSVectorFast(vec, x, y, z) \
+    *(s32*)&(vec)->vx = (s32)((x) & 0xFFFF) | (s32)((y) << 16); \
+    (vec)->vz         = (z)
+
+/** @brief Sets the sum of an `SVECTOR` using a fast bitwise method. TODO: Need more accurate description.
+ *
+ * @param vec Vector to set.
+ * @param x X component.
+ * @param y Y component.
+ * @param z Z component.
+ */
+#define Math_SetSVectorFastSum(vec, x, y, z) \
+    *(s32*)&(vec)->vx = (s32)((x) & 0xFFFF) + (s32)((y) << 16); \
+    (vec)->vz         = (z)
 
 /** @brief Normalizes Q19.12 fixed-point degrees, unsigned integer range `[0, 4096]` to the signed integer range `[-2048, 2047]`.
  * Thin wrapper for `FP_ANGLE_NORM_S`.

@@ -52,14 +52,14 @@ void Ai_Dahlia_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2*
  * MAP7_S02: 0x800D6F48
  * MAP7_S03: 0x800D23DC
  */
-void Ai_Dahlia_AnimUpdate(s_SubCharacter* arg0, s_AnmHeader* arg1, GsCOORDINATE2* arg2)
+void Ai_Dahlia_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
     s_AnimInfo* animInfo;
 
-    if (!arg0->properties_E4.player.field_F0)
+    if (!chara->properties_E4.player.field_F0)
     {
-        animInfo = &ANIM_TABLE[arg0->model_0.anim_4.status_0];
-        animInfo->updateFunc_0(&arg0->model_0, arg1, arg2, animInfo);
+        animInfo = &ANIM_TABLE[chara->model_0.anim_4.status_0];
+        animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
     }
 }
 
@@ -71,13 +71,13 @@ void Ai_Dahlia_AnimUpdate(s_SubCharacter* arg0, s_AnmHeader* arg1, GsCOORDINATE2
  * MAP7_S02: 0x800D6F90
  * MAP7_S03: 0x800D2424
  */
-void Ai_Dahlia_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord)
+void Ai_Dahlia_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 {
     VECTOR3 unused;
-    VECTOR3 vec;
-    s32     moveSpeed;
-    s16     headingAngle;
-    s32     moveAmt;
+    VECTOR3 offset;
+    q19_12  moveSpeed;
+    q3_12   headingAngle;
+    q19_12  moveAmt;
     s32     scaleRestoreShift;
     u32     scaleReduceShift;
 
@@ -89,15 +89,15 @@ void Ai_Dahlia_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord)
     scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
     scaleReduceShift  = scaleRestoreShift >> 1;
 
-    vec.vx = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
-    vec.vz = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
-    vec.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
+    offset.vx = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    offset.vz = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    offset.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
 
-    func_80069B24(&sharedData_800E39BC_0_s00, &vec, chara);
+    func_80069B24(&sharedData_800E39BC_0_s00, &offset, chara);
 
-    chara->position_18.vx += vec.vx;
-    chara->position_18.vy  = 0;
-    chara->position_18.vz += vec.vz;
+    chara->position_18.vx += offset.vx;
+    chara->position_18.vy  = Q12(0.0f);
+    chara->position_18.vz += offset.vz;
 
     if (chara->position_18.vy > sharedData_800E39BC_0_s00.field_C)
     {
@@ -105,9 +105,9 @@ void Ai_Dahlia_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord)
         chara->field_34       = 0;
     }
 
-    coord->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
-    coord->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
-    coord->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
+    coords->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
+    coords->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
+    coords->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
 }
 
 /** Addresses
@@ -118,7 +118,7 @@ void Ai_Dahlia_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord)
  * MAP7_S02: 0x800D7168
  * MAP7_S03: 0x800D25FC
  */
-void Ai_Dahlia_AnimStateUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* coord)
+void Ai_Dahlia_AnimStateUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* coords)
 {
     s_Collision coll;
     s32         sfx;
@@ -434,8 +434,8 @@ void Ai_Dahlia_AnimStateUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* coord)
     dahlia->moveSpeed_38    = dahliaProps.moveDistance_126;
     dahlia->field_34       += g_DeltaTime2;
 
-    coord->flg = false;
-    Math_MatrixRotate1(&dahlia->rotation_24, &coord->coord);
+    coords->flg = false;
+    Math_MatrixRotate1(&dahlia->rotation_24, &coords->coord);
 }
 
 /** Addresses

@@ -1,7 +1,7 @@
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player_logic.h"
-#include "bodyprog/item_screens.h"
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map1/map1_s01.h"
@@ -497,18 +497,19 @@ void func_800D7830(void) // 0x800D7830
     func_80087540(FILE_TIM_SCORE_TIM, Q12(2.0f), Q12(1.5f), 31, 23);
 }
 
-void func_800D7864(void)
+void func_800D7864(void) // 0x800D7864
 {
-    #define SKIP_CUTSCENE_STATE     17
-    #define START_MEDALION_CUTSCENE 10
-    #define END_MEDALION_CUTSCENE   19
-    #define CHECK_PIANO_STATE       5
-    #define DONT_CHECK_PIANO_STATE  21
+    // TODO: Mode these to an enum and fill out the rest.
+    #define CHECK_PIANO_STATE        5
+    #define MEDALLION_CUTSCENE_START 10
+    #define SKIP_CUTSCENE_STATE      17
+    #define MEDALLION_CUTSCENE_END   19
+    #define DONT_CHECK_PIANO_STATE   21
 
     g_SysWork.sysFlags_22A0 |= 1 << 1;
 
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
-        g_SysWork.sysStateStep_C[0] >= START_MEDALION_CUTSCENE && g_SysWork.sysStateStep_C[0] < END_MEDALION_CUTSCENE)
+        g_SysWork.sysStateStep_C[0] >= MEDALLION_CUTSCENE_START && g_SysWork.sysStateStep_C[0] < MEDALLION_CUTSCENE_END)
     {
         ScreenFade_ResetTimestep();
         SysWork_StateStepSet(0, SKIP_CUTSCENE_STATE);
@@ -565,10 +566,10 @@ void func_800D7864(void)
 
         case 9:
             func_800862F8(2, 0, false);
-            func_8008605C(EventFlag_M1S01_PianoPuzzleSolved, START_MEDALION_CUTSCENE, END_MEDALION_CUTSCENE, false);
+            func_8008605C(EventFlag_M1S01_PianoPuzzleSolved, MEDALLION_CUTSCENE_START, MEDALLION_CUTSCENE_END, false);
             break;
 
-        case START_MEDALION_CUTSCENE:
+        case MEDALLION_CUTSCENE_START:
             SysWork_StateStepIncrementAfterFade(0, true, 2, 0, false);
             SysWork_StateStepIncrement(0);
 
@@ -629,7 +630,7 @@ void func_800D7864(void)
             SysWork_StateStepReset();
             break;
 
-        case END_MEDALION_CUTSCENE:
+        case MEDALLION_CUTSCENE_END:
         case DONT_CHECK_PIANO_STATE:
             func_800862F8(2, 0, false);
 
@@ -651,20 +652,20 @@ void func_800D7EEC(void) // 0x800D7EEC
     func_80087360(FILE_TIM_PIANO1_TIM, Q12(0.0f), Q12(0.0f), 47);
 }
 
-void Event_PianoPuzzle(bool play)
+void Event_PianoPuzzle(bool playNote) // 0x800D7F18
 {
-    s16 cursorX;
-    s16 cursorY;
-    s32 tempX;
-    s32 keyIdx;
-    s32 i;
+    s16    cursorX;
+    s16    cursorY;
+    q19_12 curCursorX;
+    s32    keyIdx;
+    s32    i;
 
-    if (!play)
+    if (!playNote)
     {
         g_PianoKeyCounter = 0;
-        g_PianoCursorY = 0;
-        g_PianoCursorX = 0;
-        D_800DD594 = 0;
+        g_PianoCursorY    = 0;
+        g_PianoCursorX    = 0;
+        D_800DD594        = 0;
         return;
     }
 
@@ -672,15 +673,15 @@ void Event_PianoPuzzle(bool play)
     {
         if (g_SysWork.sysStateStep_C[1] == 1)
         {
-            SysWork_StateStepIncrementDelayed(Q12(0.3f), 1);
+            SysWork_StateStepIncrementDelayed(Q12(0.3f), true);
         }
         if (g_SysWork.sysStateStep_C[1] == 3)
         {
-            SysWork_StateStepIncrementDelayed(Q12(0.2f), 1);
+            SysWork_StateStepIncrementDelayed(Q12(0.2f), true);
         }
         if (g_SysWork.sysStateStep_C[1] == 5)
         {
-            SysWork_StateStepIncrementDelayed(Q12(0.3f), 1);
+            SysWork_StateStepIncrementDelayed(Q12(0.3f), true);
         }
         return;
     }
@@ -708,10 +709,10 @@ void Event_PianoPuzzle(bool play)
     }
 
     g_PianoCursorX += (g_Controller0->sticks_24.sticks_0.leftX * 16384) / 75;
-    g_PianoCursorX = CLAMP_RANGE(g_PianoCursorX, Q12(-89.0f), Q12(85.0f));
+    g_PianoCursorX  = CLAMP_RANGE(g_PianoCursorX, Q12(-89.0f), Q12(85.0f));
 
     g_PianoCursorY += (g_Controller0->sticks_24.sticks_0.leftY * 16384) / 75;
-    g_PianoCursorY = CLAMP_RANGE(g_PianoCursorY, Q12(-71.0f), Q12(84.0f));
+    g_PianoCursorY  = CLAMP_RANGE(g_PianoCursorY, Q12(-71.0f), Q12(84.0f));
 
     Game_TimerUpdate();
 
@@ -723,117 +724,133 @@ void Event_PianoPuzzle(bool play)
     {
         if (FP_FROM(g_PianoCursorY, Q12_SHIFT) >= 34)
         {
-            tempX = FP_FROM(g_PianoCursorX, Q12_SHIFT);
-
-            if (tempX < -64)
+            curCursorX = FP_FROM(g_PianoCursorX, Q12_SHIFT);
+            if (curCursorX < -64)
             {
                 keyIdx = 0;
             }
-            else if (tempX < -39)
+            else if (curCursorX < -39)
             {
                 keyIdx = 2;
             }
-            else if (tempX < -14)
+            else if (curCursorX < -14)
             {
                 keyIdx = 4;
             }
-            else if (tempX < 11)
+            else if (curCursorX < 11)
             {
                 keyIdx = 5;
             }
-            else if (tempX < 36)
+            else if (curCursorX < 36)
             {
                 keyIdx = 7;
             }
-            else if (tempX < 61)
+            else if (curCursorX < 61)
             {
                 keyIdx = 9;
             }
             else
             {
-                keyIdx = 11;
+                keyIdx = ARRAY_SIZE(g_PianoKeys);
             }
         } 
         else
         {
-            for (i = 0; i < 11; i++)
+            for (i = 0; i < ARRAY_SIZE(g_PianoKeys); i++)
             {
-                if (FP_FROM(g_PianoCursorX, Q12_SHIFT) < g_PianoKeyTable[i])
+                if (FP_FROM(g_PianoCursorX, Q12_SHIFT) < g_PianoKeys[i])
                 {
                     break;
                 }
             }
+
             keyIdx = i;
         }
 
         switch (keyIdx)
         {
-        case 0:
-            SysWork_StateStepSet(1, 1);
-            Sd_EngineCmd(Sfx_Unk1438);
-            g_PianoCursorX = Q12(-77.0f);
-            break;
-        case 1:
-            SysWork_StateStepSet(1, 3);
-            Sd_EngineCmd(Sfx_Unk1445);
-            g_PianoCursorX = Q12(-64.0f);
-            break;
-        case 2:
-            SysWork_StateStepSet(1, 3);
-            Sd_EngineCmd(Sfx_Unk1445);
-            g_PianoCursorX = Q12(-52.0f);
-            break;
-        case 3:
-            SysWork_StateStepSet(1, 1);
-            Sd_EngineCmd(Sfx_Unk1439);
-            g_PianoCursorX = Q12(-39.0f);
-            break;
-        case 4:
-            SysWork_StateStepSet(1, 1);
-            Sd_EngineCmd(Sfx_Unk1440);
-            g_PianoCursorX = Q12(-27.0f);
-            break;
-        case 5:
-            SysWork_StateStepSet(1, 1);
-            Sd_EngineCmd(Sfx_Unk1441);
-            g_PianoCursorX = Q12(-2.0f);
-            break;
-        case 6:
-            SysWork_StateStepSet(1, 1);
-            Sd_EngineCmd(Sfx_Unk1442);
-            g_PianoCursorX = Q12(8.0f);
-            break;
-        case 7:
-            SysWork_StateStepSet(1, 3);
-            Sd_EngineCmd(Sfx_Unk1445);
-            g_PianoCursorX = Q12(23.0f);
-            break;
-        case 8:
-            SysWork_StateStepSet(1, 1);
-            Sd_EngineCmd(Sfx_Unk1443);
-            g_PianoCursorX = Q12(36.0f);
-            break;
-        case 9:
-            SysWork_StateStepSet(1, 3);
-            Sd_EngineCmd(Sfx_Unk1445);
-            g_PianoCursorX = Q12(48.0f);
-            break;
-        case 10:
-            SysWork_StateStepSet(1, 3);
-            Sd_EngineCmd(Sfx_Unk1445);
-            g_PianoCursorX = Q12(64.0f);
-            break;
-        case 11:
-            SysWork_StateStepSet(1, 1);
-            Sd_EngineCmd(Sfx_Unk1444);
-            g_PianoCursorX = Q12(73.0f);
-            break;
+            case 0:
+                SysWork_StateStepSet(1, 1);
+                Sd_EngineCmd(Sfx_Unk1438);
+                g_PianoCursorX = Q12(-77.0f);
+                break;
+
+            case 1:
+                SysWork_StateStepSet(1, 3);
+                Sd_EngineCmd(Sfx_Unk1445);
+                g_PianoCursorX = Q12(-64.0f);
+                break;
+
+            case 2:
+                SysWork_StateStepSet(1, 3);
+                Sd_EngineCmd(Sfx_Unk1445);
+                g_PianoCursorX = Q12(-52.0f);
+                break;
+
+            case 3:
+                SysWork_StateStepSet(1, 1);
+                Sd_EngineCmd(Sfx_Unk1439);
+                g_PianoCursorX = Q12(-39.0f);
+                break;
+
+            case 4:
+                SysWork_StateStepSet(1, 1);
+                Sd_EngineCmd(Sfx_Unk1440);
+                g_PianoCursorX = Q12(-27.0f);
+                break;
+
+            case 5:
+                SysWork_StateStepSet(1, 1);
+                Sd_EngineCmd(Sfx_Unk1441);
+                g_PianoCursorX = Q12(-2.0f);
+                break;
+
+            case 6:
+                SysWork_StateStepSet(1, 1);
+                Sd_EngineCmd(Sfx_Unk1442);
+                g_PianoCursorX = Q12(8.0f);
+                break;
+
+            case 7:
+                SysWork_StateStepSet(1, 3);
+                Sd_EngineCmd(Sfx_Unk1445);
+                g_PianoCursorX = Q12(23.0f);
+                break;
+
+            case 8:
+                SysWork_StateStepSet(1, 1);
+                Sd_EngineCmd(Sfx_Unk1443);
+                g_PianoCursorX = Q12(36.0f);
+                break;
+
+            case 9:
+                SysWork_StateStepSet(1, 3);
+                Sd_EngineCmd(Sfx_Unk1445);
+                g_PianoCursorX = Q12(48.0f);
+                break;
+
+            case 10:
+                SysWork_StateStepSet(1, 3);
+                Sd_EngineCmd(Sfx_Unk1445);
+                g_PianoCursorX = Q12(64.0f);
+                break;
+
+            case 11:
+                SysWork_StateStepSet(1, 1);
+                Sd_EngineCmd(Sfx_Unk1444);
+                g_PianoCursorX = Q12(73.0f);
+                break;
         }
 
         switch (keyIdx)
         {
-            case 0: case 3: case 4: case 5:
-            case 6: case 8: case 11:
+            case 0:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 8:
+            case 11:
                 g_PianoKeyCounter = 0;
                 return;
 
@@ -843,11 +860,13 @@ void Event_PianoPuzzle(bool play)
                     g_PianoKeyCounter = 1;
                     return;
                 }
+
                 if (g_PianoKeySequence[g_PianoKeyCounter] == keyIdx)
                 {
                     g_PianoKeyCounter++;
                     return;
                 }
+
                 g_PianoKeyCounter = 0;
                 break;
         }
