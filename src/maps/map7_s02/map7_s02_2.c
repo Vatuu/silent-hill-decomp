@@ -486,7 +486,7 @@ void func_800DAA4C(void) // 0x800DAA4C
 
             g_SysWork.field_2370.vx = -ratan2(pos.vy - g_SysWork.field_2360.vy, Math_Vector2MagCalc(pos.vx - g_SysWork.field_2360.vx, pos.vz - g_SysWork.field_2360.vz));
             g_SysWork.field_2370.vy = ratan2(pos.vx - g_SysWork.field_2360.vx, pos.vz - g_SysWork.field_2360.vz);
-            g_SysWork.field_2370.vz = 0;
+            g_SysWork.field_2370.vz = FP_ANGLE(0.0f);
             break;
 
         case 6:
@@ -497,7 +497,7 @@ void func_800DAA4C(void) // 0x800DAA4C
 
             g_SysWork.field_2378 = Q12(0.8f);
 
-            func_8005DC1C(Sfx_Unk1336, &D_800EB6E0.position_0, 128, 0);
+            func_8005DC1C(Sfx_Unk1336, &D_800EB6E0.position_0, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -507,7 +507,7 @@ void func_800DAA4C(void) // 0x800DAA4C
         case 8:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 158, false);
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
-            func_8005DC1C(Sfx_Unk1337, &D_800EB6E0.position_0, 128, 0);
+            func_8005DC1C(Sfx_Unk1337, &D_800EB6E0.position_0, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -727,7 +727,7 @@ void func_800DB738(void) // 0x800DB738
             break;
 
         case 4:
-            func_8005DC1C(Sfx_Unk1526, &SFX_POS, 128, 0);
+            func_8005DC1C(Sfx_Unk1526, &SFX_POS, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -775,7 +775,7 @@ void func_800DB738(void) // 0x800DB738
             break;
 
         case 13:
-            func_8005DC1C(Sfx_Unk1526, &SFX_POS, 128, 0);
+            func_8005DC1C(Sfx_Unk1526, &SFX_POS, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 14:
@@ -1145,7 +1145,7 @@ INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02_2", D_800CD6A4);
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800DD2D4);
 
 // TODO: Move this rodata inside funcs once both usages are decomped.
-extern VECTOR3 D_800CD6A4;
+extern VECTOR3 D_800CD6A4; // SFX position.
 
 void func_800DD9E8(void) // 0x800DD9E8
 {
@@ -1153,7 +1153,8 @@ void func_800DD9E8(void) // 0x800DD9E8
     {
         if (D_800E9EDA == 0)
         {
-            func_8005DC1C(Sfx_Unk1666, &D_800CD6A4, 128, 0);
+            func_8005DC1C(Sfx_Unk1666, &D_800CD6A4, Q8_CLAMPED(0.5f), 0);
+
             if (g_SysWork.sysStateStep_C[0] == 6)
             {
                 D_800E9EDA = Rng_GenerateInt(Rng_Rand16(), Q12(0.1f), Q12(0.2f) - 2);
@@ -1262,15 +1263,17 @@ void func_800DDEC8(void) // 0x800DDEC8
             break;
 
         case 3:
-            g_SysWork.silentYesSelection_2350_4 = 1;
+            g_SysWork.silentYesSelection_2350_4 = true;
             MapMsg_DisplayAndHandleSelection(true, 85, 4, -1, 0, false);
             break;
 
         case 4:
-            func_8005DC1C(Sfx_Unk1494, &(VECTOR3){ Q12(180.5f), Q12(-0.5f), Q12(-60.6f) }, 128, 0);
+            func_8005DC1C(Sfx_Unk1494, &(VECTOR3){ Q12(180.5f), Q12(-0.5f), Q12(-60.6f) }, Q8_CLAMPED(0.5f), 0);
             Sd_EngineCmd(Sfx_Unk1495);
             Savegame_EventFlagClear(EventFlag_549);
+
             D_800EBAF4 = 1;
+
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -1278,14 +1281,16 @@ void func_800DDEC8(void) // 0x800DDEC8
             break;
 
         case 7:
-            g_SysWork.silentYesSelection_2350_4 = 1;
+            g_SysWork.silentYesSelection_2350_4 = true;
             MapMsg_DisplayAndHandleSelection(true, 84, 8, -1, 0, false);
             break;
 
         case 8:
-            func_8005DC1C(Sfx_Unk1494, &(VECTOR3){ Q12(180.5f), Q12(-0.5f), Q12(-60.6f) }, 128, 0);
+            func_8005DC1C(Sfx_Unk1494, &(VECTOR3){ Q12(180.5f), Q12(-0.5f), Q12(-60.6f) }, Q8_CLAMPED(0.5f), 0);
             Savegame_EventFlagSet(EventFlag_549);
+
             D_800EBAF4 = 0;
+
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -1302,7 +1307,7 @@ void func_800DDEC8(void) // 0x800DDEC8
         case 10:
             func_8004690C(Sfx_Unk1495);
             func_8004690C(Sfx_Unk1503);
-            func_8005DC1C(Sfx_Unk1497, &D_800E9D00, 128, 0);
+            func_8005DC1C(Sfx_Unk1497, &D_800E9D00, Q8_CLAMPED(0.5f), 0);
 
         case 6:
             SysWork_StateStepReset();
@@ -2008,7 +2013,7 @@ void func_800E0CB4(void) // 0x800E0CB4
             var_s0 = &D_800EA494.field_2;
             if (*var_s0 == 0)
             {
-                func_8005DC1C(Sfx_Unk1656, &SFX_POS_0, 128, 0);
+                func_8005DC1C(Sfx_Unk1656, &SFX_POS_0, Q8_CLAMPED(0.5f), 0);
                 *var_s0 = Q12(1.2f);
             }
             else
@@ -2029,7 +2034,7 @@ void func_800E0CB4(void) // 0x800E0CB4
             var_s0 = &D_800EA494.field_2;
             if (*var_s0 == 0)
             {
-                func_8005DC1C(Sfx_Unk1656, &SFX_POS_0, 128, 0);
+                func_8005DC1C(Sfx_Unk1656, &SFX_POS_0, Q8_CLAMPED(0.5f), 0);
                 *var_s0 = Q12(1.2f);
             }
             else
@@ -2043,7 +2048,7 @@ void func_800E0CB4(void) // 0x800E0CB4
             break;
 
         case 3:
-            func_8005DC1C(Sfx_Unk1655, &SFX_POS_1, 128, 0);
+            func_8005DC1C(Sfx_Unk1655, &SFX_POS_1, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -2254,15 +2259,17 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800E15D4);
 
 void func_800E1DAC(void) // 0x800E1DAC
 {
-    const static VECTOR3 D_800CD904 = { Q12(100.8f), Q12(-1.0f), Q12(-20.0f) };
+    const static VECTOR3 SFX_POS = { Q12(100.8f), Q12(-1.0f), Q12(-20.0f) };
 
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
+
             D_800EB6B0 = 0;
+
             func_800862F8(0, FILE_TIM_NEWSP3_TIM, false);
-            func_8005DC1C(Sfx_Unk1654, &D_800CD904, 0x80, 0);
+            func_8005DC1C(Sfx_Unk1654, &SFX_POS, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -2284,7 +2291,8 @@ void func_800E1DAC(void) // 0x800E1DAC
             break;
 
         case 5:
-            g_BackgroundColor = 0x30;
+            g_BackgroundColor = 48;
+
             func_800862F8(2, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 16, 0, 0, 0, false);
             break;
@@ -2294,19 +2302,22 @@ void func_800E1DAC(void) // 0x800E1DAC
             SysWork_StateStepIncrement(0);
 
         case 7:
-            g_BackgroundColor = 0x30;
+            g_BackgroundColor = 48;
+
             func_800862F8(2, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 17, 0, 0, 0, false);
             break;
 
         case 8:
-            g_BackgroundColor = 0x30;
+            g_BackgroundColor = 48;
+
             func_800862F8(2, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 20, 0, 0, 0, false);
             break;
 
         case 9:
-            g_BackgroundColor = 0x30;
+            g_BackgroundColor = 48;
+
             func_800862F8(2, 0, false);
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
@@ -2321,11 +2332,11 @@ void func_800E1DAC(void) // 0x800E1DAC
 
 void func_800E1FF4(void) // 0x800E1FF4
 {
-    const static VECTOR3 D_800CD938 = { Q12(97.8f), Q12(-1.0f), Q12(-19.2f) };
+    const static VECTOR3 SFX_POS = { Q12(97.8f), Q12(-1.0f), Q12(-19.2f) };
 
     if (g_SysWork.sysStateStep_C[1] == 0)
     {
-        func_8005DC1C(Sfx_Unk1464, &D_800CD938, 128, 0);
+        func_8005DC1C(Sfx_Unk1464, &SFX_POS, Q8_CLAMPED(0.5f), 0);
     }
 
     func_80087540(FILE_TIM_PLANTBK_TIM, Q12(0.0f), Q12(0.0f), 22, 23);

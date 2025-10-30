@@ -2576,7 +2576,7 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* coord, q
 
             func_80057090(&curBone->modelInfo_0, ot, arg2, &mat0, &mat1, arg5);
 
-            if (D_800C4168.fogEnabled_1)
+            if (D_800C4168.isFogEnabled_1)
             {
                 gte_SetRotMatrix(&mat0);
                 gte_SetTransMatrix(&mat0);
@@ -2619,7 +2619,7 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* coord, q
         }
     }
 
-    if (D_800C4168.fogEnabled_1)
+    if (D_800C4168.isFogEnabled_1)
     {
         temp_s1_2 = g_SysWork.playerBoneCoords_890[1].coord.t[1];
         temp_s1_2 = CLAMP(temp_s1_2, Q8(-2.0f), Q8(0.0f));

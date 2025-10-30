@@ -368,6 +368,7 @@ WorldGfx_HarryCharaLoad                     = 0x8003D160; // type:func
 WorldGfx_CharaLmBufferAdvance               = 0x8003D354; // type:func
 Chara_FsImageCalc                           = 0x8003D3BC; // type:func
 WorldGfx_IsCharaModelPresent                = 0x8003D444; // type:func
+WorldGfx_CharaModelMaterialSet              = 0x8003D550; // type:func
 WorldGfx_CharaLmBufferAssign                = 0x8003D5B4; // type:func
 WorldGfx_CharaFree                          = 0x8003D6A4; // type:func
 WorldGfx_CharaLoad                          = 0x8003D6E0; // type:func

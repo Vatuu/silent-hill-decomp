@@ -19,6 +19,7 @@ struct _Model;
 
 #define NPC_COUNT_MAX            6
 #define NPC_BONE_COUNT_MAX       10 * NPC_COUNT_MAX
+#define GROUP_CHARA_COUNT        4
 #define INVENTORY_ITEM_COUNT_MAX 40
 #define INPUT_ACTION_COUNT       14
 #define SAVEGAME_FOOTER_MAGIC    0xDCDC
@@ -1413,14 +1414,14 @@ typedef struct
     u_Unk0  field_0;
     s16     field_4; // FP alpha.
     s16     field_6;
-    s16     field_8;
-    s16     field_A;
-    s16     field_C;
+    s16     field_8; // } World tint color.
+    s16     field_A; // }
+    s16     field_C; // }
     u8      field_E; // Fog enabled if not set to 0, `func_8003F08C` checks for values 0/1/2/3.
     s8      unk_F;
     s32     field_10;
     CVECTOR fogColor_14;
-    u8      field_18;
+    u8      field_18; // `bool`?
     CVECTOR field_19;
     CVECTOR field_1D;
     CVECTOR field_21;

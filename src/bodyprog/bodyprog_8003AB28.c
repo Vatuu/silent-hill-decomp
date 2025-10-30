@@ -1010,7 +1010,7 @@ void func_8003C3AC() // 0x8003C3AC
         pos0.vz = Q12(200.0f);
     }
 
-    if (D_800C4168.fogEnabled_1)
+    if (D_800C4168.isFogEnabled_1)
     {
         vwGetViewPosition(&pos1);
         vwGetViewAngle(&pos2);
@@ -1549,7 +1549,7 @@ void WorldGfx_HarryCharaLoad() // 0x8003D160
     g_WorldGfx.harryModel_164C.texture_C = image;
 }
 
-s32 func_8003D21C(s_MapOverlayHeader* arg0) // 0x8003D21C
+s32 func_8003D21C(s_MapOverlayHeader* mapHdr) // 0x8003D21C
 {
     s_FsImageDesc image;
     bool          cond;
@@ -1560,10 +1560,10 @@ s32 func_8003D21C(s_MapOverlayHeader* arg0) // 0x8003D21C
     s_CharaModel* curModel;
 
     for (queueIdx = 0, i = 0, g_WorldGfx.charaLmBuffer_14 = MAP_CHARA_LM_BUFFER, cond = false;
-         i < 4;
+         i < GROUP_CHARA_COUNT;
          i++)
     {
-        curCharaId = arg0->charaGroupIds_248[i];
+        curCharaId = mapHdr->charaGroupIds_248[i];
         curModel   = &g_WorldGfx.charaModels_CC[i];
 
         if (curCharaId != Chara_None) 
@@ -1702,7 +1702,7 @@ void func_8003D468(s32 charaId, bool flag) // 0x8003D468
     LoadImage(&rect, &data);
 }
 
-void func_8003D550(s32 charaId, s32 blendMode) // 0x8003D550
+void WorldGfx_CharaModelMaterialSet(s32 charaId, s32 blendMode) // 0x8003D550
 {
     s_CharaModel* model;
 
@@ -1882,7 +1882,7 @@ void func_8003D9C8(s_CharaModel* model) // 0x8003D9C8
 
 void func_8003DA9C(s32 charaId, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4) // 0x8003DA9C
 {
-    CVECTOR sp20 = { 0 };
+    CVECTOR tintColor = { 0 };
     s16     ret;
 
     // Check if character is valid.
@@ -1903,10 +1903,9 @@ void func_8003DA9C(s32 charaId, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 ar
 
     if (arg3 != 0)
     {
-        sp20 = D_800C4168.worldTintColor_28;
+        tintColor = D_800C4168.worldTintColor_28;
 
-        func_80055330(D_800C4168.field_0, D_800C4168.field_20,
-                      D_800C4168.field_3,
+        func_80055330(D_800C4168.field_0, D_800C4168.field_20, D_800C4168.field_3,
                       FP_MULTIPLY_PRECISE(Q12(1.0f) - arg3, D_800C4168.worldTintColor_28.r, Q12_SHIFT) << 5,
                       FP_MULTIPLY_PRECISE(Q12(1.0f) - arg3, D_800C4168.worldTintColor_28.g, Q12_SHIFT) << 5,
                       FP_MULTIPLY_PRECISE(Q12(1.0f) - arg3, D_800C4168.worldTintColor_28.b, Q12_SHIFT) << 5,
@@ -1918,7 +1917,7 @@ void func_8003DA9C(s32 charaId, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 ar
 
     if (arg3 != 0)
     {
-        func_80055330(D_800C4168.field_0, D_800C4168.field_20, D_800C4168.field_3, sp20.r << 5, sp20.g << 5, sp20.b << 5, D_800C4168.screenBrightness_8);
+        func_80055330(D_800C4168.field_0, D_800C4168.field_20, D_800C4168.field_3, tintColor.r << 5, tintColor.g << 5, tintColor.b << 5, D_800C4168.screenBrightness_8);
     }
 }
 
@@ -1927,50 +1926,50 @@ s32 func_8003DD74(s32 charaId, s32 arg1) // 0x8003DD74
     return (arg1 << 10) & 0xFC00;
 }
 
-void func_8003DD80(s32 modelIdx, s32 arg1) // 0x8003DD80
+void func_8003DD80(s32 charaId, s32 arg1) // 0x8003DD80
 {
     s_CharaModel* model;
 
-    model = g_WorldGfx.registeredCharaModels_18[modelIdx];
+    model = g_WorldGfx.registeredCharaModels_18[charaId];
 
-    switch (modelIdx)
+    switch (charaId)
     {
-        case 1:
+        case Chara_Harry:
             func_8003DE60(&model->skeleton_14, arg1);
             break;
 
-        case 7:
+        case Chara_Stalker:
             func_8003E388(&model->skeleton_14, arg1);
             break;
 
-        case 26:
-        case 27:
+        case Chara_Cybil:
+        case Chara_EndingCybil:
             func_8003DF84(&model->skeleton_14, arg1);
             break;
 
-        case 24:
+        case Chara_MonsterCybil:
             func_8003E08C(&model->skeleton_14, arg1);
             break;
 
-        case 30:
-        case 31:
+        case Chara_Dahlia:
+        case Chara_EndingDahlia:
             func_8003E194(&model->skeleton_14, arg1);
             break;
 
-        case 38:
-        case 39:
+        case Chara_Kaufmann:
+        case Chara_EndingKaufmann:
             func_8003E238(&model->skeleton_14, arg1);
             break;
 
-        case 14:
+        case Chara_Splithead:
             func_8003E414(&model->skeleton_14, arg1);
             break;
 
-        case 16:
+        case Chara_PuppetNurse:
             func_8003E4A0(&model->skeleton_14, arg1);
             break;
 
-        case 18:
+        case Chara_PuppetDoctor:
             func_8003E544(&model->skeleton_14, arg1);
             break;
     }
@@ -2960,7 +2959,7 @@ q19_12 Math_WeightedAverageGet(s32 a, s32 b, q19_12 weight) // 0x8003F7E4
     return Math_MulFixed(a, Q12(1.0f) - weight, Q12_SHIFT) + Math_MulFixed(b, weight, Q12_SHIFT);
 }
 
-void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s32 weight) // 0x8003F838
+void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q19_12 weight) // 0x8003F838
 {
     q19_12 weight0;
     q19_12 weight1;
@@ -3147,7 +3146,7 @@ void func_8003FD38(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q
 
 void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructUnk3* arg2, q19_12 alphaTo) // 0x8003FE04
 {
-    s32 alphaFrom;
+    q19_12 alphaFrom;
 
     alphaFrom = Q12(1.0f) - alphaTo;
     LoadAverageCol(&arg1->field_19.r, &arg2->field_19.r, alphaFrom, alphaTo, &arg0->field_19.r);
@@ -3174,7 +3173,7 @@ s32 func_8003FEC0(s_sub_StructUnk3* arg0) // 0x8003FEC0
         Q12(15.0f)
     };
 
-    if (D_800C4168.fogEnabled_1)
+    if (D_800C4168.isFogEnabled_1)
     {
         return arg0->field_10;
     }
@@ -3191,12 +3190,12 @@ void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
 {
     s32   temp_a0;
     s32   temp_v1;
-    q23_8 var_t0;
+    q23_8 brightness;
 
-    temp_v1 = FP_MULTIPLY(arg0->field_2E, (g_GameWork.config_0.optBrightness_22 * 8) + 4, Q12_SHIFT);
-    var_t0  = CLAMP(temp_v1, Q8_CLAMPED(0.0f), Q8_CLAMPED(1.0f));
+    temp_v1    = FP_MULTIPLY(arg0->field_2E, (g_GameWork.config_0.optBrightness_22 * 8) + 4, Q12_SHIFT);
+    brightness = CLAMP(temp_v1, Q8_CLAMPED(0.0f), Q8_CLAMPED(1.0f));
 
-    func_80055330(arg0->field_0.field_0.s_field_0.field_2, arg0->field_0.field_6, arg0->field_0.field_0.s_field_0.field_1, arg0->field_0.field_8, arg0->field_0.field_A, arg0->field_0.field_C, var_t0);
+    func_80055330(arg0->field_0.field_0.s_field_0.field_2, arg0->field_0.field_6, arg0->field_0.field_0.s_field_0.field_1, arg0->field_0.field_8, arg0->field_0.field_A, arg0->field_0.field_C, brightness);
     Gfx_FogParamsSet(arg0->field_0.field_E != 0, arg0->field_0.fogColor_14.r, arg0->field_0.fogColor_14.g, arg0->field_0.fogColor_14.b);
 
     temp_a0 = arg0->field_0.field_10;

@@ -53,7 +53,7 @@ u32 D_800A8DA8[] = {
     0x06DCCA31,
 };
 
-u8 g_BackgroundColor = 128;
+u8 g_BackgroundColor = 128; // Or `g_BackgroundShade`, since it's applied to all components?
 u8 D_800A8E59        = 0;
 u8 D_800A8E5A        = 3;
 u8 D_800A8E5B        = 0;

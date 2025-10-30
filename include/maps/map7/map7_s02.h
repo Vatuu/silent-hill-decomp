@@ -38,6 +38,7 @@ extern u16 D_800E9CE4;
 
 extern u16 D_800E9CFC;
 
+/** Some SFX position. */
 extern VECTOR3 D_800E9D00;
 
 extern u16 D_800E9D50;

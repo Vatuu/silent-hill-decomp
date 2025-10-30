@@ -219,51 +219,59 @@ void func_800D23AC(void) // 0x800D23AC
 {
     switch (g_SysWork.sysStateStep_C[0])
     {
-    case 0:
-        sharedFunc_800D20E4_0_s00();
-        func_800862F8(0, FILE_TIM_SHATVIAL_TIM, false);
-        SysWork_StateStepIncrement(0);
-        /* fallthrough */
-    case 1:
-        func_80085DF0();
-        break;
-    case 2:
-        func_80086C58(&g_SysWork.player_4C.chara_0, 0x3B);
-        break;
-    case 3:
-        SysWork_StateStepIncrementAfterFade(false, true, 0, 0, false);
-        SysWork_StateStepIncrement(0);
-        /* fallthrough */
-    case 4:
-        func_800862F8(1, 0, false);
-        break;
-    case 5:
-        SysWork_StateStepIncrementAfterFade(true, true, 0, 0, false);
-        break;
-    case 6:
-        func_800862F8(2, 0, false);
-        SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
-        break;
-    case 7:
-        func_800862F8(2, 0, false);
-        MapMsg_DisplayAndHandleSelection(false, 16, 0, 0, 0, false); // A glass vial lies shattered.
-        break;
-    case 8:
-        func_800862F8(2, 0, false);
-        SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
-        break;
-    case 9:
-        SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
-        break;
-    case 10:
-        func_80086C58(&g_SysWork.player_4C.chara_0, 0x3C);
-        break;
-    default:
-        sharedFunc_800D2244_0_s00(false);
-        SysWork_StateSetNext(SysState_Gameplay);
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_800862F8(0, FILE_TIM_SHATVIAL_TIM, false);
+            SysWork_StateStepIncrement(0);
 
-        Savegame_EventFlagSet(EventFlag_204);
-        break;
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 59);
+            break;
+
+        case 3:
+            SysWork_StateStepIncrementAfterFade(false, true, 0, 0, false);
+            SysWork_StateStepIncrement(0);
+
+        case 4:
+            func_800862F8(1, 0, false);
+            break;
+
+        case 5:
+            SysWork_StateStepIncrementAfterFade(true, true, 0, 0, false);
+            break;
+
+        case 6:
+            func_800862F8(2, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            break;
+
+        case 7:
+            func_800862F8(2, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 16, 0, 0, 0, false); // "A glass vial lies shattered."
+            break;
+
+        case 8:
+            func_800862F8(2, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            break;
+
+        case 9:
+            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            break;
+
+        case 10:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            Savegame_EventFlagSet(EventFlag_204);
+            break;
     }
 }
 
@@ -323,44 +331,50 @@ void func_800D279C(void) // 0x800D279C
 
 void MapEvent_Generator0(void) // 0x800D27C8
 {
-    #define STATE_PRESS_SWITCH 3
+    #define STATE_PRESS_SWITCH      3
     #define STATE_DONT_PRESS_SWITCH NO_VALUE
+
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 1:
             func_80085DF0();
             break;
+
         case 2:
-            g_SysWork.silentYesSelection_2350_4 = 1;
-            MapMsg_DisplayAndHandleSelection(true, 25, STATE_PRESS_SWITCH, STATE_DONT_PRESS_SWITCH, 0, false); // Do you want to press the switch?
+            g_SysWork.silentYesSelection_2350_4 = true;
+            MapMsg_DisplayAndHandleSelection(true, 25, STATE_PRESS_SWITCH, STATE_DONT_PRESS_SWITCH, 0, false); // "Do you want to press the switch?"
             break;
+
         case STATE_PRESS_SWITCH:
-            func_8005DC1C(Sfx_Unk1494, &QVECTOR3(140.5f, -0.5f, -20.6f), 0x80, 0);
+            func_8005DC1C(Sfx_Unk1494, &QVECTOR3(140.5f, -0.5f, -20.6f), Q8_CLAMPED(0.5f), 0);
             Sd_EngineCmd(Sfx_Unk1495);
             Savegame_EventFlagSet(EventFlag_M3S01_GeneratorOn);
+
             D_800D8584 = 1;
+
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 4:
             SysWork_StateStepIncrementDelayed(Q12(2.5f), false);
             break;
+
         case 5:
             Savegame_EventFlagSet(EventFlag_M3S01_GeneratorOn);
             D_800D8584 = 1;
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
-        default: // STATE_DONT_PRESS_SWITCH
+
+        default: // `STATE_DONT_PRESS_SWITCH`
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
     if (Savegame_EventFlagGet(EventFlag_M3S01_GeneratorOn))
     {
-        func_800894B8(0x90);
+        func_800894B8(144);
     }
 }
 
@@ -393,7 +407,7 @@ void func_800D2A88(void) // 0x800D2A88
 {
     if (g_SysWork.sysStateStep_C[1] == 0)
     {
-        func_8005DC1C(Sfx_Unk1308, &QVECTOR3(61.72f, -0.8f, 100.5098f), 128, 0);
+        func_8005DC1C(Sfx_Unk1308, &QVECTOR3(61.72f, -0.8f, 100.5098f), Q8_CLAMPED(0.5f), 0);
     }
 
     func_80087360(Sfx_Unk1916, Q12(0.0f), Q12(0.0f), 36);

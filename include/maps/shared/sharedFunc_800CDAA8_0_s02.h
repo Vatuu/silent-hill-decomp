@@ -104,24 +104,24 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch()
             case 25:
             case 26:
             case 27:
-                func_8003DD80(1, 18);
+                func_8003DD80(Chara_Harry, 18);
                 break;
 
             case 32:
             case 34:
             case 35:
-                func_8003DD80(1, 19);
+                func_8003DD80(Chara_Harry, 19);
                 break;
 
             case 33:
-                func_8003DD80(1, 20);
+                func_8003DD80(Chara_Harry, 20);
                 break;
         }
     }
     else
     {
         func_8003D03C();
-        func_8003DD80(1, 17);
+        func_8003DD80(Chara_Harry, 17);
     }
 }
 
@@ -155,17 +155,17 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch_Unk85(s_MainCharacterExtra* 
             case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Multitap):
-                func_8003DD80(1, 18);
+                func_8003DD80(Chara_Harry, 18);
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
-                func_8003DD80(1, 19);
+                func_8003DD80(Chara_Harry, 19);
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
-                func_8003DD80(1, 20);
+                func_8003DD80(Chara_Harry, 20);
                 break;
         }
     }
@@ -175,11 +175,11 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch_Unk85(s_MainCharacterExtra* 
 
         if (extra->model_0.anim_4.keyframeIdx_8 >= 958)
         {
-            func_8003DD80(1, 21);
+            func_8003DD80(Chara_Harry, 21);
         }
         else
         {
-            func_8003DD80(1, 17);
+            func_8003DD80(Chara_Harry, 17);
         }
     }
 }
@@ -695,7 +695,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             func_8007FB94(playerChara, extra, 0x169);
 #ifdef MAP1_S03
             func_8003D03C();
-            func_8003DD80(1, 0x11);
+            func_8003DD80(Chara_Harry, 0x11);
 #else
             keyframeIdx = 949;
             sharedFunc_800CDAA8_0_s02_Switch_Unk85(extra);

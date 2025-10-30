@@ -233,15 +233,15 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
             if (chara->model_0.anim_4.keyframeIdx_8 < 91)
             {
-                func_8003DD80(26, 17);
+                func_8003DD80(Chara_Cybil, 17);
             }
             else if (chara->model_0.anim_4.keyframeIdx_8 < 105)
             {
-                func_8003DD80(26, 18);
+                func_8003DD80(Chara_Cybil, 18);
             }
             else
             {
-                func_8003DD80(26, 33);
+                func_8003DD80(Chara_Cybil, 33);
             }
             break;
 
@@ -258,7 +258,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
         case 9:
             Model_AnimStatusKeyframeSet(chara->model_0, 10, true, ANIM_TABLE, 0);
             Character_AnimStateReset(chara);
-            func_8003DD80(26, 17);
+            func_8003DD80(Chara_Cybil, 17);
             break;
 
         case 10:
@@ -315,7 +315,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             Model_AnimStatusSet(&chara->model_0, 26, false);
             Model_AnimStatusKeyframeSet(chara->model_0, 26, true, ANIM_TABLE, 0);
             Character_AnimStateReset(chara);
-            func_8003DD80(27, 18);
+            func_8003DD80(Chara_EndingCybil, 18);
 
             if (chara->model_0.anim_4.keyframeIdx_8 == 295)
             {
@@ -328,14 +328,14 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             Model_AnimStatusSet(&chara->model_0, 27, false);
             Model_AnimStatusKeyframeSet(chara->model_0, 27, true, ANIM_TABLE, 0);
             Character_AnimStateReset(chara);
-            func_8003DD80(27, 18);
+            func_8003DD80(Chara_EndingCybil, 18);
             break;
 
         case 23:
             Model_AnimStatusSet(&chara->model_0, 28, false);
             Model_AnimStatusKeyframeSet(chara->model_0, 28, true, ANIM_TABLE, 0);
             Character_AnimStateReset(chara);
-            func_8003DD80(27, 18);
+            func_8003DD80(Chara_EndingCybil, 18);
 
             if (dahliaProps.stateIdx0 != 23)
             {
@@ -347,7 +347,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             Model_AnimStatusSet(&chara->model_0, 29, false);
             Model_AnimStatusKeyframeSet(chara->model_0, 29, true, ANIM_TABLE, 0);
             Character_AnimStateReset(chara);
-            func_8003DD80(27, 18);
+            func_8003DD80(Chara_EndingCybil, 18);
             break;
 
         case 25:
@@ -378,7 +378,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
         case 30:
             Model_AnimStatusSet(&chara->model_0, 31, false);
             Character_AnimStateReset(chara);
-            func_8003DD80(27, 18);
+            func_8003DD80(Chara_EndingCybil, 18);
             break;
     }
 

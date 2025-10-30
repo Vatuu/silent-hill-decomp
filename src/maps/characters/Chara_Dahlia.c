@@ -166,7 +166,7 @@ void Ai_Dahlia_AnimStateUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* coords)
         case 6:
             Model_AnimStatusSet(&dahlia->model_0, 14, false);
 #if defined(MAP7_S03)
-            func_8003DD80(31, 1);
+            func_8003DD80(Chara_EndingDahlia, 1);
 #endif
             Character_AnimStateReset(dahlia);
             break;
@@ -196,15 +196,15 @@ void Ai_Dahlia_AnimStateUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* coords)
 
             if (dahlia->model_0.anim_4.keyframeIdx_8 < 144)
             {
-                func_8003DD80(30, 1);
+                func_8003DD80(Chara_Dahlia, 1);
             }
             else
             {
 #if !defined(MAP6_S01) && !defined(MAP6_S04) && !defined(MAP7_S02) && !defined(MAP7_S03)
 #if defined(MAP3_S06)
-                func_8003DD80(30, 2);
+                func_8003DD80(Chara_Dahlia, 2);
 #else
-                func_8003DD80(30, 3);
+                func_8003DD80(Chara_Dahlia, 3);
 #endif
 #endif
             }
@@ -224,15 +224,15 @@ void Ai_Dahlia_AnimStateUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* coords)
             {
 #if !defined(MAP6_S01) && !defined(MAP6_S04) && !defined(MAP7_S02) && !defined(MAP7_S03)
 #if defined(MAP3_S06)
-                func_8003DD80(30, 2);
+                func_8003DD80(Chara_Dahlia, 2);
 #else
-                func_8003DD80(30, 3);
+                func_8003DD80(Chara_Dahlia, 3);
 #endif
 #endif
             }
             else
             {
-                func_8003DD80(30, 1);
+                func_8003DD80(Chara_Dahlia, 1);
             }
             break;
 
@@ -320,11 +320,11 @@ void Ai_Dahlia_AnimStateUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* coords)
 
         case 25:
             Model_AnimStatusSet(&dahlia->model_0, 11, false);
-            func_8003DD80(30, 1);
+            func_8003DD80(Chara_Dahlia, 1);
 
             if (dahlia->model_0.anim_4.keyframeIdx_8 == 349)
             {
-                dahliaProps.stateIdx0      = 26;
+                dahliaProps.stateIdx0       = 26;
                 dahlia->model_0.stateStep_3 = 0;
                 break;
             }

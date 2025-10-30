@@ -400,17 +400,17 @@ static inline void func_80071968_Switch0()
             case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Multitap):
-                func_8003DD80(1, 0x22); // Second arg is hex, split with `& 0xF0` / `& 0x0F` later on.
+                func_8003DD80(Chara_Harry, 0x22); // Second arg is hex, split with `& 0xF0` / `& 0x0F` later on.
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
-                func_8003DD80(1, 0x23);
+                func_8003DD80(Chara_Harry, 0x23);
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
-                func_8003DD80(1, 0x24);
+                func_8003DD80(Chara_Harry, 0x24);
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Unk3, AttackInputType_Tap):
@@ -428,7 +428,7 @@ static inline void func_80071968_Switch0()
     }
     else
     {
-        func_8003DD80(1, 34);
+        func_8003DD80(Chara_Harry, 34);
     }
 }
 
@@ -459,17 +459,17 @@ static inline void func_80071968_Switch1()
             case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Multitap):
-                func_8003DD80(1, 0x12);
+                func_8003DD80(Chara_Harry, 0x12);
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
-                func_8003DD80(1, 0x13);
+                func_8003DD80(Chara_Harry, 0x13);
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
-                func_8003DD80(1, 0x14);
+                func_8003DD80(Chara_Harry, 0x14);
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Unk3, AttackInputType_Tap):
@@ -487,7 +487,7 @@ static inline void func_80071968_Switch1()
     }
     else
     {
-        func_8003DD80(1, g_SysWork.field_2358 ? 0x12 : 0x11);
+        func_8003DD80(Chara_Harry, g_SysWork.field_2358 ? 0x12 : 0x11);
     }
 }
 

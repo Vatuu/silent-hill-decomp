@@ -2896,7 +2896,7 @@ void func_800546A8(u8 weaponAttack) // 0x800546A8
     switch (weaponAttack)
     {
         case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
-            func_8003DD80(1, 34);
+            func_8003DD80(Chara_Harry, 34);
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
@@ -2905,17 +2905,17 @@ void func_800546A8(u8 weaponAttack) // 0x800546A8
         case WEAPON_ATTACK(EquippedWeaponId_Katana,    AttackInputType_Tap):
         case WEAPON_ATTACK(EquippedWeaponId_Axe,       AttackInputType_Tap):
         case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
-            func_8003DD80(1, 34);
+            func_8003DD80(Chara_Harry, 34);
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
         case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
         case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
-            func_8003DD80(1, 19);
+            func_8003DD80(Chara_Harry, 19);
             break;
 
         default:
-            func_8003DD80(1, 1);
+            func_8003DD80(Chara_Harry, 1);
             break;
     }
 }

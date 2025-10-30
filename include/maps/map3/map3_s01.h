@@ -36,6 +36,8 @@ void func_800D14BC(void);
 
 void func_800D1500(void);
 
+void func_800D23AC(void);
+
 void func_800D2720(void);
 
 /** @brief Map pickup event. */
@@ -46,6 +48,8 @@ void func_800D2774(void);
 
 void func_800D279C(void);
 
+void MapEvent_Generator0(void);
+
 void func_800D29A4(void);
 
 void func_800D2A88(void);
@@ -55,9 +59,5 @@ void func_800D2AF4(void);
 void func_800D2E54(void);
 
 void func_800D25A8(void);
-
-void MapEvent_Generator0(void);
-
-void func_800D23AC(void);
 
 #endif

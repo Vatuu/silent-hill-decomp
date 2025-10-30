@@ -745,11 +745,12 @@ void Event_Boiler0(void) // 0x800D8CF0
             break;
 
         case 2:
-            g_SysWork.silentYesSelection_2350_4 = 1;
+            g_SysWork.silentYesSelection_2350_4 = true;
             MapMsg_DisplayAndHandleSelection(true, 29, 3, -1, 0, false); // "Do you want to press the switch?"
             break;
+
         case 3:
-            func_8005DC1C(Sfx_Unk1420, &QVECTOR3(20.5f, -1.2f, -17.5f), 0x80, 0);
+            func_8005DC1C(Sfx_Unk1420, &QVECTOR3(20.5f, -1.2f, -17.5f), Q8_CLAMPED(0.5f), 0);
             Savegame_EventFlagSet(EventFlag_83);
             SysWork_StateStepIncrement(0);
 
@@ -771,7 +772,7 @@ void Event_Boiler0(void) // 0x800D8CF0
             break;
 
         case 6:
-            func_8005DC1C(Sfx_Unk1422, &QVECTOR3(18.8f, 4.0f, -17.5f), 0x80, 0);
+            func_8005DC1C(Sfx_Unk1422, &QVECTOR3(18.8f, 4.0f, -17.5f), Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -813,12 +814,12 @@ void Event_Boiler1(void)
             break;
 
         case 2:
-            g_SysWork.silentYesSelection_2350_4 = 1;
+            g_SysWork.silentYesSelection_2350_4 = true;
             MapMsg_DisplayAndHandleSelection(true, 29, 3, -1, 0, false); // "Do you want to press the switch?"
             break;
 
         case 3:
-            func_8005DC1C(Sfx_Unk1420, &QVECTOR3(20.5f, -1.2f, -17.5f), 0x80, 0);
+            func_8005DC1C(Sfx_Unk1420, &QVECTOR3(20.5f, -1.2f, -17.5f), Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 4:

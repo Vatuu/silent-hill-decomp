@@ -26,7 +26,7 @@ void func_80055028() // 0x80055028
     D_800C4168.worldTintColor_28.g = 128;
     D_800C4168.worldTintColor_28.b = 128;
 
-    D_800C4168.fogEnabled_1 = false;
+    D_800C4168.isFogEnabled_1 = false;
     D_800C4168.field_2 = 0;
 
     D_800C4168.fogColor_1C.r = 255;
@@ -126,35 +126,35 @@ void func_800550D0() // 0x800550D0
     GsOUT_PACKET_P = packet + 24;
 }
 
-void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) // 0x80055330
+void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 tintR, s32 tintG, s32 tintB, q23_8 brightness) // 0x80055330
 {
     D_800C4168.field_0             = arg0;
     D_800C4168.field_20            = arg1;
     D_800C4168.field_3             = arg2;
-    D_800C4168.worldTintColor_28.r = arg3 >> 5;
-    D_800C4168.field_2C.m[0][2]    = arg3;
-    D_800C4168.field_2C.m[0][1]    = arg3;
-    D_800C4168.field_2C.m[0][0]    = arg3;
-    D_800C4168.worldTintColor_28.g = arg4 >> 5;
-    D_800C4168.screenBrightness_8  = arg6;
-    D_800C4168.worldTintColor_28.b = arg5 >> 5;
-    D_800C4168.field_2C.m[1][2]    = (s16)arg4;
-    D_800C4168.field_2C.m[1][1]    = (s16)arg4;
-    D_800C4168.field_2C.m[1][0]    = (s16)arg4;
-    D_800C4168.field_2C.m[2][2]    = (s16)arg5;
-    D_800C4168.field_2C.m[2][1]    = (s16)arg5;
-    D_800C4168.field_2C.m[2][0]    = (s16)arg5;
-    D_800C4168.field_24            = (arg3 * arg1) >> 17;
-    D_800C4168.field_25            = (arg4 * arg1) >> 17;
-    D_800C4168.field_26            = (arg5 * arg1) >> 17;
+    D_800C4168.worldTintColor_28.r = tintR >> 5;
+    D_800C4168.field_2C.m[0][2]    = tintR;
+    D_800C4168.field_2C.m[0][1]    = tintR;
+    D_800C4168.field_2C.m[0][0]    = tintR;
+    D_800C4168.worldTintColor_28.g = tintG >> 5;
+    D_800C4168.screenBrightness_8  = brightness;
+    D_800C4168.worldTintColor_28.b = tintB >> 5;
+    D_800C4168.field_2C.m[1][2]    = (s16)tintG;
+    D_800C4168.field_2C.m[1][1]    = (s16)tintG;
+    D_800C4168.field_2C.m[1][0]    = (s16)tintG;
+    D_800C4168.field_2C.m[2][2]    = (s16)tintB;
+    D_800C4168.field_2C.m[2][1]    = (s16)tintB;
+    D_800C4168.field_2C.m[2][0]    = (s16)tintB;
+    D_800C4168.field_24            = (tintR * arg1) >> 17;
+    D_800C4168.field_25            = (tintG * arg1) >> 17;
+    D_800C4168.field_26            = (tintB * arg1) >> 17;
 }
 
-void Gfx_FogParamsSet(u8 fogEnabled, u8 fogColorR, u8 fogColorG, u8 fogColorB) // 0x800553C4
+void Gfx_FogParamsSet(u8 isFogEnabled, u8 fogColorR, u8 fogColorG, u8 fogColorB) // 0x800553C4
 {
-    D_800C4168.fogEnabled_1  = fogEnabled;
-    D_800C4168.fogColor_1C.r = fogColorR;
-    D_800C4168.fogColor_1C.g = fogColorG;
-    D_800C4168.fogColor_1C.b = fogColorB;
+    D_800C4168.isFogEnabled_1 = isFogEnabled;
+    D_800C4168.fogColor_1C.r  = fogColorR;
+    D_800C4168.fogColor_1C.g  = fogColorG;
+    D_800C4168.fogColor_1C.b  = fogColorB;
 }
 
 void func_800553E0(u32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6) // 0x800553E0
@@ -449,7 +449,7 @@ void func_80055C3C(CVECTOR* result, CVECTOR* color, s32 arg2, s32 arg3, s32 arg4
     var_s0  = arg5 >> 4;
     temp_a1 = func_80055D78(arg2, arg3, arg4);
 
-    if (D_800C4168.fogEnabled_1)
+    if (D_800C4168.isFogEnabled_1)
     {
         if (var_s0 < (1 << D_800C4168.fogRelated_14))
         {
@@ -888,13 +888,12 @@ void Lm_MaterialFlagsApply(s_LmHeader* lmHdr) // 0x80056954
         {
             flags |= 1 << 1;
         }
-
         if (curMat->field_14.u16 != curMat->field_16.u16)
         {
             flags |= 1 << 2;
         }
 
-        if (flags)
+        if (flags != 0)
         {
             for (j = 0; j < lmHdr->modelCount_8; j++)
             {
@@ -1051,7 +1050,7 @@ void func_80056D8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, G
     var_t1  = arg4;
     temp_s5 = arg3;
 
-    if (!D_800C4168.fogEnabled_1)
+    if (!D_800C4168.isFogEnabled_1)
     {
         return;
     }
@@ -1067,7 +1066,7 @@ void func_80056D8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, G
 
     temp_a0_2 = 0x79C << (arg7 + 2);
 
-    if (D_800C4168.fogEnabled_1)
+    if (D_800C4168.isFogEnabled_1)
     {
         var_v1_3 = MIN(temp_a0_2, D_800C4168.drawDistance_10);
     }
@@ -1546,7 +1545,7 @@ void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, void* arg2, MATRIX* 
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    if (D_800C4168.fogEnabled_1)
+    if (D_800C4168.isFogEnabled_1)
     {
         if (mat->t[2] < (1 << D_800C4168.fogRelated_14))
         {

@@ -1316,7 +1316,7 @@ typedef struct _WorldGfx
     VECTOR3           ipdSamplePoint_8; /** Used by IPD logic to sample which chunks to load or unload. */
     u8*               charaLmBuffer_14;
     s_CharaModel*     registeredCharaModels_18[Chara_Count];
-    s_CharaModel      charaModels_CC[4];
+    s_CharaModel      charaModels_CC[GROUP_CHARA_COUNT];
     s_CharaModel      harryModel_164C;
     s_HeldItem        heldItem_1BAC; /** The item held by the player. */
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; /** Debug camera info. */
@@ -1474,10 +1474,11 @@ typedef struct
     s8 positionIdx_1;
 } s_800C38B0;
 
+/** World GFX struct? */
 typedef struct
 {
-    u8            field_0;      // `bool`?
-    u8            fogEnabled_1; /** `bool` */
+    u8            field_0;        // `bool`?
+    u8            isFogEnabled_1; /** `bool` */
     u8            field_2;
     u8            field_3;
     s_WaterZone*  waterZones_4;
@@ -1488,9 +1489,9 @@ typedef struct
     s32           fogRelated_18;   // "FogThing2" from SHME.
     CVECTOR       fogColor_1C;
     s32           field_20;
-    u8            field_24;
-    u8            field_25;
-    u8            field_26;
+    u8            field_24; // } RGB.
+    u8            field_25; // }
+    u8            field_26; // }
     s8            unk_27;
     CVECTOR       worldTintColor_28;
     MATRIX        field_2C;
@@ -1896,7 +1897,7 @@ typedef struct _MapOverlayHeader
     s32*                   data_18C;
     s32*                   data_190;
     void                   (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
-    s8                     charaGroupIds_248[4];                                              /** `e_CharacterId` values where if `s_MapPoint2d::data.spawnInfo.charaId_4 == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
+    s8                     charaGroupIds_248[GROUP_CHARA_COUNT];                              /** `e_CharacterId` values where if `s_MapPoint2d::data.spawnInfo.charaId_4 == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
     s_MapPoint2d           charaSpawns_24C[2][16];                                            /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `func_80037F24`. */
     VC_ROAD_DATA           roadDataList_3CC[48];
     u32                    unk_84C[512];
@@ -3042,7 +3043,7 @@ void func_8003CD6C(s_PlayerCombat* combat);
 
 /** @brief Loads and sets an item held by the player.
  *
- * @param itemId ID of the held item to load.
+ * @param itemId ID of the held item to load (`e_InventoryItemId`).
  * @return Model or texture queue index.
  */
 s32 WorldGfx_PlayerHeldItemSet(s32 itemId);
@@ -3056,7 +3057,12 @@ void func_8003D058();
 
 bool WorldGfx_IsCharaModelPresent(s32 charaId);
 
-void func_8003D550(s32 charaId, s32 blendMode);
+/** @brief Sets the material for a character model.
+ *
+ * @param charaId ID of the character whose model to update.
+ * @param blendMode Material blend mode to set (`e_BlendMode`).
+ */
+void WorldGfx_CharaModelMaterialSet(s32 charaId, s32 blendMode);
 
 /** Called by some chara init funcs, similar to `func_8003DD80`? */
 void func_8003D468(s32 arg0, bool flag);
@@ -3065,13 +3071,14 @@ void WorldGfx_CharaFree(s_CharaModel* model);
 
 void WorldGfx_HarryCharaLoad();
 
-s32 func_8003D21C(s_MapOverlayHeader* arg0);
+s32 func_8003D21C(s_MapOverlayHeader* mapHdr);
 
 void WorldGfx_CharaLmBufferAssign(s8 forceFree);
 
 s32 func_8003DD74(s32 charaId, s32 arg1);
 
-void func_8003DD80(s32 modelIdx, s32 arg1); // Called by some chara init funcs.
+/** `arg1` is packed data. Each byte is a separate value. */
+void func_8003DD80(s32 charaId, s32 arg1); // Called by some chara init funcs.
 
 void func_8003E740();
 
@@ -3087,7 +3094,7 @@ u32 func_8003F654(s_SysWork_2288* arg0);
 
 s32 func_8003F6F0(s32 arg0, s32 arg1, s32 arg2);
 
-void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, s32 weight);
+void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q19_12 weight);
 
 s32 func_800868F4(s32 arg0, s32 arg1, s32 idx);
 
@@ -3528,9 +3535,10 @@ void func_80055028();
 
 void func_800550D0();
 
-void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
+/** Sets visual world parameters. */
+void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 tintR, s32 tintG, s32 tintB, q23_8 brightness);
 
-void Gfx_FogParamsSet(u8 fogEnabled, u8 fogColorR, u8 fogColorG, u8 fogColorB);
+void Gfx_FogParamsSet(u8 isFogEnabled, u8 fogColorR, u8 fogColorG, u8 fogColorB);
 
 void func_800553E0(u32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6);
 
@@ -4656,24 +4664,31 @@ void func_8003D9C8(s_CharaModel* model);
 
 void func_8003DA9C(s32 charaId, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4);
 
-void func_8003DD80(s32 arg0, s32 arg1);
-
+/** Something for Harry. */
 void func_8003DE60(s_Skeleton* skel, s32 arg1);
 
+/** Something for Cybil. */
 void func_8003DF84(s_Skeleton* skel, s32 arg1);
 
+/** Something for Monster Cybil. */
 void func_8003E08C(s_Skeleton* skel, s32 arg1);
 
+/** Something for Dahlia. */
 void func_8003E194(s_Skeleton* skel, s32 arg1);
 
+/** Something for Kaufmann. */
 void func_8003E238(s_Skeleton* skel, s32 arg1);
 
+/** Something for Stalker. */
 void func_8003E388(s_Skeleton* skel, s32 arg1);
 
+/** Something for Splithead. */
 void func_8003E414(s_Skeleton* skel, s32 arg1);
 
+/** Something for Puppet Nurse. */
 void func_8003E4A0(s_Skeleton* skel, s32 arg1);
 
+/** Something for Puppet Doctor. */
 void func_8003E544(s_Skeleton* skel, s32 arg1);
 
 void func_8003E5E8(s32 arg0);
