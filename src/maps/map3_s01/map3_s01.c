@@ -217,9 +217,39 @@ INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D15F0);
 
 INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D23AC);
 
-INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", D_800CB124);
-
-INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D25A8);
+void func_800D25A8(void)
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 1:
+            func_80085DF0();
+            break;
+        case 2:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 59);
+            break;
+        case 3:
+            func_8005DC1C(Sfx_Unk1493, &QVECTOR3(141.6f, -0.0999f, 20.75f), 0x80, 0);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 4:
+            MapMsg_DisplayAndHandleSelection(false, 18, 0, 0, 0, false); // The remaining liquid is emptied into the Plastic bottle.
+            break;
+        case 5:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            break;
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            Savegame_EventFlagSet(EventFlag_M3S01_PickupUnknownLiquid);
+            func_8004EE94(InventoryItemId_PlasticBottle, 1);
+            func_80086470(3, InventoryItemId_UnknownLiquid, 1, false);
+            break;
+    }
+}
 
 void func_800D2720(void) // 0x800D2720
 {

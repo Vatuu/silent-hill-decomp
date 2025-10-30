@@ -54,6 +54,8 @@ void func_800D2AF4(void);
 
 void func_800D2E54(void);
 
+void func_800D25A8(void);
+
 void MapEvent_Generator0(void);
 
 #endif
