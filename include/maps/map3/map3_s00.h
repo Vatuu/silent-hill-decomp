@@ -12,6 +12,13 @@
 #define MAP_ROOM_MIN_Z Q12(-80.0f)
 #define MAP_ROOM_MAX_Z Q12(160.0f)
 
+extern s_WorldObjectDescNoRot g_WorldObject0; // 800D5D00
+extern s_WorldObjectDescNoRot g_WorldObject1[2]; // 800D5D30
+extern s_WorldObjectDesc g_WorldObject2; // 800D5D80
+extern s_WorldObjectDesc g_WorldObject3; // 800D5DB0
+extern s_WorldObjectDesc g_WorldObject4; // 800D5DE0
+extern s_WorldObjectDesc g_WorldObject5; // 800D5E10
+
 void func_800CCE88();
 
 s32 func_800CEF88();
