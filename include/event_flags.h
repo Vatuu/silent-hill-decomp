@@ -116,6 +116,7 @@ typedef enum _EventFlag
 
     EventFlag_M1S06_PickupKGordonKey = 137,
 
+    EventFlag_142                         = 142,
     EventFlag_143                         = 143,
     EventFlag_M0S02_PickupChannelingStone = 144,
     EventFlag_145                         = 145,

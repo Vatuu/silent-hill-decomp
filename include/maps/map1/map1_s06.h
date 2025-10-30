@@ -30,6 +30,10 @@ extern s_WorldObjectDesc D_800DB064;
 
 extern u8 D_800DAFE4;
 
+extern s8 D_800DB054;
+
+extern s8 D_800DB055;
+
 void func_800D4FC0(s32 arg0, s32 arg1);
 
 void func_800D5400(void);
