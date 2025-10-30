@@ -283,12 +283,64 @@ void func_800D2A88(void) // 0x800D2A88
 
 INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", D_800CB170);
 
-INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D2AF4);
+void func_800D2AF4(void)
+{
+    D_800D8734 = 0;
+    D_800D8584 = 0;
 
-extern SVECTOR3 D_800CB20C;
-extern VECTOR3 D_800D4CE4;
-extern u8 D_800D8584;
-extern u8 D_800D8734;
+    Math_Vector3Set(&g_WorldObject1.position_1C, Q12(20.3f), Q12(0.0f), Q12(59.25f));
+    WorldObject_ModelNameSet(&g_WorldObject1.object_0, "BOT_HIDE");
+
+    WorldObjectPoseInit(&g_WorldObject2.position_1C, 60.0f, 0.0f, 60.0f, 0.0f, 9.7f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject2.object_0, "MAP_HIDE");
+
+    WorldObjectPoseInit(&g_WorldObject5.position_1C, 100.3f, 0.0f, 58.9f, 0.0f, 72.8f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject5.object_0, "KEY_HIDE");
+
+    Math_Vector3Set(&g_WorldObject3[0].position_1C, Q12(59.1f), Q12(0.0f), Q12(19.1f));
+    WorldObject_ModelNameSet(&g_WorldObject3[0].object_0, "BT3_HIDE");
+
+    Math_Vector3Set(&g_WorldObject3[1].position_1C, Q12(59.1f), Q12(0.0f), Q12(19.1f));
+    WorldObject_ModelNameSet(&g_WorldObject3[1].object_0, "BT4_HIDE");
+
+    Math_Vector3Set(&g_WorldObject0[0].position_1C, Q12(59.1f), Q12(0.0f), Q12(19.1f));
+    WorldObject_ModelNameSet(&g_WorldObject0[0].object_0, "DR1L_HID");
+
+    Math_Vector3Set(&g_WorldObject0[1].position_1C, Q12(59.1f), Q12(0.0f), Q12(19.1f));
+    WorldObject_ModelNameSet(&g_WorldObject0[1].object_0, "DR1R_HID");
+
+    Math_Vector3Set(&g_WorldObject0[2].position_1C, Q12(59.1f), Q12(0.0f), Q12(19.1f));
+    WorldObject_ModelNameSet(&g_WorldObject0[2].object_0, "DR3L_HID");
+
+    Math_Vector3Set(&g_WorldObject0[3].position_1C, Q12(59.1f), Q12(0.0f), Q12(19.1f));
+    WorldObject_ModelNameSet(&g_WorldObject0[3].object_0, "DR3R_HID");
+
+    Math_Vector3Set(&g_WorldObject0[4].position_1C, Q12(59.1f), Q12(0.0f), Q12(19.1f));
+    WorldObject_ModelNameSet(&g_WorldObject0[4].object_0, "DR2L_HID");
+
+    Math_Vector3Set(&g_WorldObject0[5].position_1C, Q12(59.1f), Q12(0.0f), Q12(19.1f));
+    WorldObject_ModelNameSet(&g_WorldObject0[5].object_0, "DR2R_HID");
+
+
+    WorldObjectPoseInit(&g_WorldObject6.position_1C, 26.0f, -1.0198f, 144.5498f, 0.0f, 163.8f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject6.object_0, D_800A99E4.savePadName_4);
+
+    WorldObjectPoseInit(&g_WorldObject7.position_1C, 24.6f, -1.56f, 143.16f, 0.0f, 180.0f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject7.object_0, "MAP_HIDE");
+
+    WorldObjectPoseInit(&g_WorldObject8.position_1C, 24.6f, -1.56f, 143.16f, 0.0f, 180.0f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject8.object_0, "MAP2_HID");
+
+    WorldObjectPoseInit(&g_WorldObject9.position_1C, 27.6f, -0.45f, 143.6f, 0.0f, -90.0f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject9.object_0, D_800A99E4.firstAidKitName_8);
+
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4.handgunBulletsName_14);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4.shotgunShellsName_18);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
+}
 
 void func_800D2E54(void)
 {
@@ -300,7 +352,7 @@ void func_800D2E54(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S01_PickupPlasticBottle))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C, &D_800CB20C);
+            g_WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C, &(SVECTOR3){});
         }
     }
 
@@ -375,15 +427,15 @@ void func_800D2E54(void)
         }
         for (i = 0; i < 6; i++)
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject0[i].object_0, &g_WorldObject0[i].position_1C, &D_800CB20C);
+            g_WorldGfx_ObjectAdd(&g_WorldObject0[i].object_0, &g_WorldObject0[i].position_1C, &(SVECTOR3){});
         }
         if ((g_SavegamePtr->mapMarkingFlags_1D4[21] & 0x410000) == 0x410000)
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject4.object_0, &g_WorldObject4.position_1C, &D_800CB20C);
+            g_WorldGfx_ObjectAdd(&g_WorldObject3[1].object_0, &g_WorldObject3[1].position_1C, &(SVECTOR3){});
         }
         else
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position_1C, &D_800CB20C);
+            g_WorldGfx_ObjectAdd(&g_WorldObject3[0].object_0, &g_WorldObject3[0].position_1C, &(SVECTOR3){});
         }
     }
 
@@ -456,5 +508,3 @@ void func_800D2E54(void)
         }
     }
 }
-
-INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", D_800CB20C);
