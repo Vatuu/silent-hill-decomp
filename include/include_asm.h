@@ -4,18 +4,18 @@
 #if !defined(SPLAT) && !defined(M2CTX) && !defined(PERMUTER) && !defined(SKIP_ASM)
 
         #ifndef INCLUDE_ASM
-                #define INCLUDE_ASM(FOLDER, NAME)                                                    \
-                        __asm__(".section .text\n"                                                   \
-                                "\t.set noat\n"                                                      \
-                                "\t.set noreorder\n"                                                 \
-                                "\t.align\t2\n"                                                      \
-                                "\t.globl\t" #NAME "\n"                                              \
-                                "\t.type " #NAME ", @function\n"                                     \
-                                "\t.ent\t" #NAME "\n" #NAME ":\n"                                    \
-                                "\t.include \"" FOLDER "/" #NAME ".s\"\n"                            \
-                                "\t.set reorder\n"                                                   \
-                                "\t.set at\n"                                                        \
-                                "\t.end\t" #NAME "\n")
+                #define INCLUDE_ASM(FOLDER, NAME) \
+                void __maspsx_include_asm_hack_##NAME() { \
+                        __asm__( \
+                        ".text # maspsx-keep \n" \
+                        "\t.align\t2 # maspsx-keep\n" \
+                        "\t.set noreorder # maspsx-keep\n" \
+                        "\t.set noat # maspsx-keep\n" \
+                        ".include \""FOLDER"/"#NAME".s\" # maspsx-keep\n" \
+                        "\t.set reorder # maspsx-keep\n" \
+                        "\t.set at # maspsx-keep\n" \
+                        ); \
+                }
         #endif
 
         #ifndef INCLUDE_RODATA
