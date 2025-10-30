@@ -206,7 +206,7 @@ void func_800D1FF0(void) // 0x800D1FF0
 
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
-            func_8003CDA0(InventoryItemId_Handgun);
+            WorldGfx_PlayerHeldItemSet(InventoryItemId_Handgun);
             Chara_Load(0, Chara_Cybil, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Savegame_EventFlagSet(EventFlag_302);
             SysWork_StateStepIncrement(0);

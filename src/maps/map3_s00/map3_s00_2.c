@@ -124,10 +124,11 @@ INCLUDE_RODATA("asm/maps/map3_s00/nonmatchings/map3_s00_2", D_800CB308);
 INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00_2", func_800D0CF8);
 
 INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00_2", func_800D18DC);
+
 /*
  * This function matches but causes data misaligment. Probably the same root cause as the vectors at the bottom.
 
-void func_800D18DC(void)
+void func_800D18DC(void) // 0x800D18DC
 {
     Math_Vector3Set(&g_WorldObject0.position_1C, Q12(97.2496f), Q12(0.0f), Q12(100.3428f));
     WorldObject_ModelNameSet(&g_WorldObject0.object_0, "TRUNK_HI");
@@ -152,9 +153,10 @@ void func_800D18DC(void)
 }
 */
 
-extern const SVECTOR3 emptyRot;
-extern const VECTOR3 soundPos;
-void func_800D1A98(void)
+extern const SVECTOR3 EmptyRotation;
+extern const VECTOR3  SoundPosition;
+
+void func_800D1A98(void) // 0x800D1A98
 {
     s32 x;
     s32 tmp;
@@ -166,16 +168,16 @@ void func_800D1A98(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_198))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &emptyRot);
+            g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &EmptyRotation);
         }
-        g_WorldGfx_ObjectAdd(&g_WorldObject1[0].object_0, &g_WorldObject1[0].position_1C, &emptyRot);
-        g_WorldGfx_ObjectAdd(&g_WorldObject1[1].object_0, &g_WorldObject1[1].position_1C, &emptyRot);
+        g_WorldGfx_ObjectAdd(&g_WorldObject1[0].object_0, &g_WorldObject1[0].position_1C, &EmptyRotation);
+        g_WorldGfx_ObjectAdd(&g_WorldObject1[1].object_0, &g_WorldObject1[1].position_1C, &EmptyRotation);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
     {
-
         g_WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position_1C.position_0, &g_WorldObject2.position_1C.rotation_C);
+
         if (Savegame_EventFlagGet(EventFlag_M3S00_PickupMap))
         {
             g_WorldGfx_ObjectAdd(&g_WorldObject4.object_0, &g_WorldObject4.position_1C.position_0, &g_WorldObject4.position_1C.rotation_C);
@@ -189,6 +191,7 @@ void func_800D1A98(void)
         {
             g_WorldGfx_ObjectAdd(&g_WorldObject5.object_0, &g_WorldObject5.position_1C.position_0, &g_WorldObject5.position_1C.rotation_C);
         }
+
         if (!Savegame_EventFlagGet(EventFlag_200) && (g_SysWork.player_4C.chara_0.position_18.vx < Q12(24.0f)))
         {
             tmp = Rng_Rand16() % Q12(3.0f);
@@ -206,7 +209,7 @@ void func_800D1A98(void)
 
             if (rand0 < Math_Sin(x))
             {
-                func_8005DC1C(Sfx_Unk1492, &soundPos, 0xE0, 2);
+                func_8005DC1C(Sfx_Unk1492, &SoundPosition, 0xE0, 2);
                 Savegame_EventFlagSet(EventFlag_200);
             }
         }
@@ -214,6 +217,6 @@ void func_800D1A98(void)
 }
 
 // TODO: These are only used by the function above but using them inline causes data misaligment.
-// Fixup the yaml sections ?
-static const SVECTOR3 emptyRot = {};
-static const VECTOR3 soundPos = VECTOR3(22.5f, -1.5f, 137.0f);
+// Fixup the yaml sections?
+static const SVECTOR3 EmptyRotation = {};
+static const VECTOR3  SoundPosition = VECTOR3(22.5f, -1.5f, 137.0f);

@@ -812,7 +812,7 @@ void Gfx_LoadingScreen_PlayerRun() // 0x80035BE0
     Anim_Update1(model, (s_Skeleton*)FS_BUFFER_0, boneCoords, &D_800A998C);
     vcMoveAndSetCamera(true, false, false, false, false, false, false, false);
     func_8003F170();
-    func_8003DA9C(1, boneCoords, 1, g_SysWork.player_4C.chara_0.timer_C6, 0);
+    func_8003DA9C(Chara_Harry, boneCoords, 1, g_SysWork.player_4C.chara_0.timer_C6, 0);
 }
 
 // ========================================
@@ -2171,7 +2171,7 @@ void GameState_InGame_Update() // 0x80038BD4
         Demo_DemoRandSeedRestore();
         if (player->model_0.anim_4.flags_2 & AnimFlag_Visible)
         {
-            func_8003DA9C(1, g_SysWork.playerBoneCoords_890, 1, g_SysWork.player_4C.chara_0.timer_C6, 0);
+            func_8003DA9C(Chara_Harry, g_SysWork.playerBoneCoords_890, 1, g_SysWork.player_4C.chara_0.timer_C6, 0);
             func_8008A384(&g_SysWork.player_4C.chara_0);
             func_8007D970(&g_SysWork.player_4C, g_SysWork.playerBoneCoords_890);
             func_8008A3AC(&g_SysWork.player_4C.chara_0);

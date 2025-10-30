@@ -26,7 +26,7 @@ extern s_WorldObjectPose      g_WorldObjectAPos; // 800D4CF0
 extern s_WorldObject_0        g_CommonWorldObjects[6]; //800D8744
 
 extern VECTOR3 D_800CB170;
-extern VECTOR3 D_800D4CE4; // used by func_800D2E54 only. For some reason it's not in RODATA
+extern VECTOR3 D_800D4CE4; // Used by `func_800D2E54` only. For some reason it's not in RODATA.
 extern u8 D_800D8584;
 extern u8 D_800D8734;
 
@@ -50,5 +50,9 @@ void func_800D279C(void);
 void func_800D29A4(void);
 
 void func_800D2A88(void);
+
+void func_800D2AF4(void);
+
+void func_800D2E54(void);
 
 #endif

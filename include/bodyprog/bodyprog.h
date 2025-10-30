@@ -1314,11 +1314,11 @@ typedef struct _WorldGfx
     u8                useStoredPoint_4; /** `bool` */
     u8                unk_5[3];
     VECTOR3           ipdSamplePoint_8; /** Used by IPD logic to sample which chunks to load or unload. */
-    u8*               charaLmBufferPtr_14;
-    s_CharaModel*     charaModels_18[Chara_Count];
+    u8*               charaLmBuffer_14;
+    s_CharaModel*     registeredCharaModels_18[Chara_Count];
     s_CharaModel      charaModels_CC[4];
     s_CharaModel      harryModel_164C;
-    s_HeldItem        heldItem_1BAC;
+    s_HeldItem        heldItem_1BAC; /** The item held by the player. */
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; /** Debug camera info. */
     s_LmHeader        itemLmHdr_1BE4;
     u8                itemLmData_1BF4[4096 - sizeof(s_LmHeader)]; // Retail game uses 2.75kb file, but they allocate 4kb for it.
@@ -3040,12 +3040,19 @@ s32 func_8003CD5C();
 
 void func_8003CD6C(s_PlayerCombat* combat);
 
-/** Returns `bool`? */
-s32 func_8003CDA0(s32 itemId);
+/** @brief Loads and sets an item held by the player.
+ *
+ * @param itemId ID of the held item to load.
+ * @return Model or texture queue index.
+ */
+s32 WorldGfx_PlayerHeldItemSet(s32 itemId);
 
 void func_8003D01C();
 
 void func_8003D03C();
+
+/** Loads the model of an item held by the player? */
+void func_8003D058();
 
 bool WorldGfx_IsCharaModelPresent(s32 charaId);
 
@@ -3061,8 +3068,6 @@ void WorldGfx_HarryCharaLoad();
 s32 func_8003D21C(s_MapOverlayHeader* arg0);
 
 void WorldGfx_CharaLmBufferAssign(s8 forceFree);
-
-void func_8003D6E0(s32 charaId, s32 modeIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 s32 func_8003DD74(s32 charaId, s32 arg1);
 
@@ -4556,7 +4561,12 @@ void func_8003BE28();
 
 // ====================
 
-s_Bone* func_8003BE50(s32 modelIdx);
+/** @brief Gets the bones of a registered character model.
+ *
+ * @param charaId ID of the character for which to get the skeleton bones (`e_CharacterId`).
+ * @return Character model bones or `NULL` if the character model is unregistered.
+ */
+s_Bone* WorldGfx_CharaModelBonesGet(s32 charaId);
 
 void GameFs_BgEtcGfxLoad();
 
@@ -4607,12 +4617,35 @@ void func_8003CBA4(s_WorldObject* obj);
 
 void func_8003CC7C(s_WorldObject_0* arg0, MATRIX* arg1, MATRIX* arg2);
 
-void WorldGfx_CharaLmBufferAdvance(u8** bufPtr, s32 charaId);
+/** @brief Advanced a character model LM buffer.
+ *
+ * @param buf Buffer to advance.
+ * @param charaID  ID of the character whose model to use (`e_CharacterId`).
+ */
+void WorldGfx_CharaLmBufferAdvance(u8** buf, s32 charaId);
 
-/** Texture UV setup for NPCs. */
+/** UV setup for character textures. */
 void Chara_FsImageCalc(s_FsImageDesc* image, s32 groupIds, s32 modelIdx);
 
-s32 WorldGfx_CharaLoad(u32 charaId, s32 modelIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex);
+/** @brief Loads a character model, setting the LM header and texture UVs as a prerequisite.
+ *
+ * @param charaId ID of the character whose model to load (`e_CharacterId`).
+ * @param modelIdx Slot index of the model array to load into.
+ * @param lmHdr LM header.
+ * @param tex Model texture.
+ * @return Model or texture queue index.
+ */
+void WorldGfx_CharaLoad(s32 charaId, s32 modeIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex);
+
+/** @brief Loads a character model.
+ *
+ * @param charaId ID of the character whose model to load (`e_CharacterId`).
+ * @param modelIdx Slot index of the model array to load into.
+ * @param lmHdr LM header.
+ * @param tex Model texture.
+ * @return Model or texture queue index.
+ */
+s32 WorldGfx_CharaModelLoad(u32 charaId, s32 modelIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 /** Something related to animations. */
 void func_8003D938();
@@ -4621,7 +4654,7 @@ void func_8003D95C();
 
 void func_8003D9C8(s_CharaModel* model);
 
-void func_8003DA9C(s32 arg0, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4);
+void func_8003DA9C(s32 charaId, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4);
 
 void func_8003DD80(s32 arg0, s32 arg1);
 

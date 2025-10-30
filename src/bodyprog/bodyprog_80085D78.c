@@ -1308,7 +1308,7 @@ bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coords, s8 forceFree, s
 {
     func_80035338(modelIdx + 1, charaId, NULL, coords);
     WorldGfx_CharaLmBufferAssign(forceFree);
-    func_8003D6E0(charaId, modelIdx, lmHdr, tex);
+    WorldGfx_CharaLoad(charaId, modelIdx, lmHdr, tex);
     return true;
 }
 
