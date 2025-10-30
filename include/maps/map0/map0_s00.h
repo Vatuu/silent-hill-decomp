@@ -70,6 +70,10 @@ extern u8 g_MapMsgSoundIdx;
 
 extern s32 D_800DFAC4;
 
+extern u16 D_800DFAC8;
+
+extern s32 D_800DFACC;
+
 extern VECTOR3 D_800DFAE0[];  // }  TODO might be one big table.
 extern VECTOR3 D_800DFB28[3]; // }
 
@@ -82,6 +86,8 @@ extern s_800DFB48 D_800DFB48;
 extern s32 D_800DFB5C;
 
 extern u8 D_800DFB60;
+
+extern u8 D_800DFB61;
 
 extern u8 D_800DF2F8;
 
@@ -140,6 +146,8 @@ void func_800D94F8(void);
 
 /** Debug function? */
 void Gfx_LoadingScreen_StageString();
+
+void func_800DB94C(void);
 
 void func_800DBE00();
 
