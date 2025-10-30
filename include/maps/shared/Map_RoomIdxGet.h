@@ -1,3 +1,5 @@
+#if !defined(M2CTX) // Inlines cause issues with M2C context
+
 #define CheckRange(axis, low, high)        \
     ({                                     \
         s32 val = (axis);                  \
@@ -108,3 +110,4 @@ u8 Map_RoomIdxGet(s32 x, s32 z)
 
     return res;
 }
+#endif

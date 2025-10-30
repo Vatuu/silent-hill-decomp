@@ -182,7 +182,8 @@ void func_800D12B4(void) // 0x800D12B4
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D1340
 
-INCLUDE_RODATA("asm/maps/map6_s01/nonmatchings/map6_s01_2", D_800CB988);
+// TODO: Move into funcs once all have been decomped.
+const static VECTOR3 D_800CB988 = { Q12(-21.3f), Q12(-1.2f), Q12(58.7f) };
 
 INCLUDE_RODATA("asm/maps/map6_s01/nonmatchings/map6_s01_2", D_800CB994);
 
@@ -190,7 +191,81 @@ INCLUDE_RODATA("asm/maps/map6_s01/nonmatchings/map6_s01_2", D_800CB9A0);
 
 INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01_2", func_800D13D8);
 
-INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01_2", func_800D236C);
+void func_800D236C(void)
+{
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 && g_SysWork.sysStateStep_C[0] >= 3)
+    {
+        if (g_SysWork.sysStateStep_C[0] < 8)
+        {
+            SysWork_StateStepSet(0, 8);
+        }
+    }
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            D_800D416E = 0;
+            ScreenFade_ResetTimestep();
+            g_SysWork.field_30 = 20;
+
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(-20.98);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(58.67f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(90.0f);
+
+            Camera_PositionSet(NULL, Q12(-18.7f), Q12(-5.59f), Q12(57.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(-19.46f), Q12(-1.92f), Q12(58.62f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
+            func_8005DC1C(Sfx_Unk1604, &D_800CB988, 128, 0);
+
+            Game_TurnFlashlightOn();
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
+            break;
+
+        case 2:
+            func_8005DC1C(Sfx_Unk1605, &D_800CB988, 128, 0);
+            SysWork_StateStepIncrement(0);
+
+        case 3:
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.5f), false);
+            break;
+
+        case 4:
+            SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
+            break;
+
+        case 5:
+            Map_MessageWithAudio(84, &D_800D416E, &D_800D4100);
+            break;
+
+        case 6:
+            SysWork_StateStepIncrementDelayed(Q12(3.5f), false);
+            break;
+
+        case 7:
+            Map_MessageWithAudio(85, &D_800D416E, &D_800D4100);
+            break;
+
+        case 8:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            vcReturnPreAutoCamWork(true);
+
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+
+            Savegame_EventFlagSet(EventFlag_426);
+            g_SavegamePtr->mapMarkingFlags_1D4[5] |= (1 << 2);
+            break;
+    }
+}
 
 INCLUDE_RODATA("asm/maps/map6_s01/nonmatchings/map6_s01_2", D_800CBACC);
 
