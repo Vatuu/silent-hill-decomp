@@ -1474,6 +1474,11 @@ typedef struct
     s8 positionIdx_1;
 } s_800C38B0;
 
+typedef struct
+{
+    VECTOR3 field_0[2][1];
+} s_800C4168_84;
+
 /** World GFX struct? */
 typedef struct
 {
@@ -1503,7 +1508,7 @@ typedef struct
     SVECTOR       field_6C; // Player current angles?
     SVECTOR       field_74;
     SVECTOR       field_7C;
-    VECTOR3       field_84[6];
+    s_800C4168_84 field_84[3];
     u8            field_CC[1]; // Unknown size.
 } s_800C4168;
 

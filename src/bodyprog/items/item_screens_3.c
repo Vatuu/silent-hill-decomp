@@ -297,7 +297,7 @@ s16 D_800AE1A8 = 0;
 s32    g_Items_PickupAnimState = 0;
 q19_12 g_Items_PickupScale     = Q12(0.0f);
 
-u32 D_800AE1B4[3] = { 0x00000000, 0x000000CC, 0xFFFFFEC9 }; // `VECTOR3`?
+VECTOR3 D_800AE1B4[1] = { 0x00000000, 0x000000CC, 0xFFFFFEC9 };
 
 // Referenced only by `func_80055648` (https://decomp.me/scratch/joGmE)
 // Doesn't look like `VECTOR3` tbh. Each word is larger than the previous.

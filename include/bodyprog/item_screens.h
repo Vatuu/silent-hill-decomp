@@ -232,6 +232,8 @@ extern q3_12 D_800AE73C;
 
 extern s_800AE710 D_800AE710[4];
 
+extern VECTOR3 D_800AE1B4[1];
+
 extern s32 D_800AE1C0[];
 
 extern RECT D_800AE5A8[4];

@@ -234,7 +234,53 @@ void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coo
     func_80055648(arg0, &D_800C4168.field_58);
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80055648); // 0x80055648
+void func_80055648(s32 arg0, SVECTOR* arg1) // 0x80055648
+{
+    s32            var_a2;
+    s32            temp_lo;
+    s32            temp_t1;
+    s32            temp_v0;
+    s32            temp_v1;
+    s32            j;
+    s32            i;
+    s_800C4168_84* ptr;
+
+    for (i = 0, ptr = D_800C4168.field_84; i < 3; i++, ptr++)
+    {
+        switch (i)
+        {
+            case 0:
+                var_a2 = arg1->vx;
+                break;
+
+            case 1:
+                var_a2 = arg1->vy;
+                break;
+
+            case 2:
+                var_a2 = arg1->vz;
+                break;
+
+            default:
+                var_a2 = 0;
+                break;
+        }
+
+        temp_t1 = FP_TO(var_a2 + 0x14CC, Q12_SHIFT) / 9420;
+        temp_v1 = FP_TO(0x14CC - var_a2, Q12_SHIFT) / 9420;
+        temp_v0 = 0x400000 / temp_t1;
+        temp_lo = 0x400000 / temp_v1;
+
+        for (j = 0; j < 1; j++)
+        {
+            ptr->field_0[0][j].vy = ptr->field_0[1][j].vy = FP_MULTIPLY(D_800AE1B4[j].vy, arg0, Q12_SHIFT);
+            ptr->field_0[0][j].vx                         = FP_MULTIPLY(D_800AE1B4[j].vx, temp_t1, Q12_SHIFT);
+            ptr->field_0[1][j].vx                         = FP_MULTIPLY(D_800AE1B4[j].vx, temp_v1, Q12_SHIFT);
+            ptr->field_0[0][j].vz                         = FP_MULTIPLY(FP_MULTIPLY(D_800AE1B4[j].vz, temp_v0, Q12_SHIFT - 2), arg0, Q12_SHIFT);
+            ptr->field_0[1][j].vz                         = FP_MULTIPLY(FP_MULTIPLY(D_800AE1B4[j].vz, temp_lo, Q12_SHIFT - 2), arg0, Q12_SHIFT);
+        }
+    }
+}
 
 s32 func_800557DC() // 0x800557DC
 {
