@@ -163,7 +163,7 @@ typedef enum _EventFlag
     EventFlag_200 = 200,
 
     EventFlag_203 = 203,
-
+    EventFlag_204 = 204,
     EventFlag_M3S01_PickupPlasticBottle = 205,
     EventFlag_M3S01_PickupUnknownLiquid = 206,
     EventFlag_M3S00_PickupMap         = 207, // Shared with M3S01, M3S06

@@ -215,9 +215,59 @@ INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", D_800CB0A0);
 
 INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D15F0);
 
-INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D23AC);
+void func_800D23AC(void) // 0x800D23AC
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+    case 0:
+        sharedFunc_800D20E4_0_s00();
+        func_800862F8(0, FILE_TIM_SHATVIAL_TIM, false);
+        SysWork_StateStepIncrement(0);
+        /* fallthrough */
+    case 1:
+        func_80085DF0();
+        break;
+    case 2:
+        func_80086C58(&g_SysWork.player_4C.chara_0, 0x3B);
+        break;
+    case 3:
+        SysWork_StateStepIncrementAfterFade(false, true, 0, 0, false);
+        SysWork_StateStepIncrement(0);
+        /* fallthrough */
+    case 4:
+        func_800862F8(1, 0, false);
+        break;
+    case 5:
+        SysWork_StateStepIncrementAfterFade(true, true, 0, 0, false);
+        break;
+    case 6:
+        func_800862F8(2, 0, false);
+        SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+        break;
+    case 7:
+        func_800862F8(2, 0, false);
+        MapMsg_DisplayAndHandleSelection(false, 16, 0, 0, 0, false); // A glass vial lies shattered.
+        break;
+    case 8:
+        func_800862F8(2, 0, false);
+        SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+        break;
+    case 9:
+        SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+        break;
+    case 10:
+        func_80086C58(&g_SysWork.player_4C.chara_0, 0x3C);
+        break;
+    default:
+        sharedFunc_800D2244_0_s00(false);
+        SysWork_StateSetNext(SysState_Gameplay);
 
-void func_800D25A8(void)
+        Savegame_EventFlagSet(EventFlag_204);
+        break;
+    }
+}
+
+void func_800D25A8(void) // 0x800D25A8
 {
     switch (g_SysWork.sysStateStep_C[0])
     {
