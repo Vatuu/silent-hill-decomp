@@ -105,6 +105,7 @@ MAP_MESSAGES              = 0x800D46FC; // type:u32 size:0xA4
 //----------------------------------------------------
 //--- PA: 0x00B228   VA: 0x800D47A0   subsegment: data
 //----------------------------------------------------
+g_WorldObjectAPos         = 0x800D4CF0; // type:WorldObjectPose size:0x14
 sharedData_800DFB4C_0_s00 = 0x800D4D04;
 sharedData_800DFB50_0_s00 = 0x800D4D08;
 g_Particle_SpeedX         = 0x800D4D1C; // type:s32
@@ -132,3 +133,14 @@ sharedData_800E5768_1_s02 = 0x800D8424;
 sharedData_800E39D8_0_s00 = 0x800D8484; // type:s32
 sharedData_800D32A0_0_s02 = 0x800D8488; // type:s32
 sharedData_800E57CC_1_s02 = 0x800D848C; // type:s8
+g_WorldObject0            = 0x800D8494; // type:WorldObjectDescNoRot size:0xF0
+g_WorldObject1            = 0x800D8594; // type:WorldObjectDescNoRot size:0x28
+g_WorldObject2            = 0x800D85C4; // type:WorldObjectDesc size:0x2E
+g_WorldObject5            = 0x800D85F4; // type:WorldObjectDesc size:0x2E
+g_WorldObject3            = 0x800D8624; // type:WorldObjectDescNoRot size:0x28
+g_WorldObject4            = 0x800D864C; // type:WorldObjectDescNoRot size:0x28
+g_WorldObject6            = 0x800D8674; // type:WorldObjectDesc size:0x2E
+g_WorldObject7            = 0x800D86A4; // type:WorldObjectDesc size:0x2E
+g_WorldObject8            = 0x800D86D4; // type:WorldObjectDesc size:0x2E
+g_WorldObject9            = 0x800D8704; // type:WorldObjectDesc size:0x2E
+g_WorldObjectA            = 0x800D8760; // type:WorldObject_0 size:0x1C

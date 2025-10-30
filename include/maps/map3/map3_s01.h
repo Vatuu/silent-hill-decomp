@@ -12,6 +12,19 @@
 #define MAP_ROOM_MIN_Z Q12(-80.0f)
 #define MAP_ROOM_MAX_Z Q12(160.0f)
 
+extern s_WorldObjectDescNoRot g_WorldObject0[6]; // 800D8494
+extern s_WorldObjectDescNoRot g_WorldObject1;    // 800D8594
+extern s_WorldObjectDesc      g_WorldObject2;    // 800D85C4
+extern s_WorldObjectDesc      g_WorldObject3;    // 800D85F4
+extern s_WorldObjectDescNoRot g_WorldObject4;    // 800D8624
+extern s_WorldObjectDesc      g_WorldObject5;    // 800D864C
+extern s_WorldObjectDesc      g_WorldObject6;    // 800D8674
+extern s_WorldObjectDesc      g_WorldObject7;    // 800D86A4
+extern s_WorldObjectDesc      g_WorldObject8;    // 800D86D4
+extern s_WorldObjectDesc      g_WorldObject9;    // 800D8704
+extern s_WorldObject_0        g_WorldObjectA;    // 800D8760
+extern s_WorldObjectPose      g_WorldObjectAPos; // 800D4CF0
+
 extern VECTOR3 D_800CB170;
 
 void func_800D1178(s32 arg0);
