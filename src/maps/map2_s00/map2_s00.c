@@ -486,7 +486,7 @@ void func_800E7A1C(void) {}
 
 #include "maps/shared/Event_DoorJammed.h" // 0x800E7A24
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E7AB8);
+#include "maps/shared/Event_DoorLocked.h" // 0x800E7AB8
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"

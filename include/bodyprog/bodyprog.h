@@ -145,6 +145,8 @@ typedef enum _Sfx
     Sfx_Unk1343 = 1343,
     Sfx_DoorLocked = 1344,
 
+    Sfx_Unk1349 = 1349,
+
     Sfx_Unk1351 = 1351,
     Sfx_Unk1352 = 1352,
     Sfx_Unk1353 = 1353,

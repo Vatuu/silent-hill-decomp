@@ -216,7 +216,7 @@ void func_800DA018(void) {}
 
 #include "maps/shared/Event_DoorJammed.h" // 0x800DA020
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", Event_DoorLocked);
+#include "maps/shared/Event_DoorLocked.h" // 0x800DA0B4
 
 #include "maps/shared/Event_DoorUnlocked.h" // 0x800DA16C
 
