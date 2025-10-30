@@ -205,7 +205,15 @@ void func_800D1500(void) // 0x800D1500
     Event_CommonItemTake(CommonPickupItemId_FirstAidKit, EventFlag_M3S00_FirstAidKit);
 }
 
-INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D1524);
+void func_800D1524(void)
+{
+    VECTOR3 vec1 = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+
+    func_8004EE94(InventoryItemId_BasementKey, 1);
+    Map_MessageWithSfx(28, Sfx_Unk1335, &vec1); // Used the basement key
+    g_SavegamePtr->mapMarkingFlags_1D4[0x12] |= 0x200;
+    Savegame_EventFlagSet(EventFlag_M3S01_BasementDoorOpen);
+}
 
 INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", D_800CB088);
 

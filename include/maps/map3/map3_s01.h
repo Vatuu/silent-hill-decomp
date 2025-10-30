@@ -60,4 +60,6 @@ void func_800D2E54(void);
 
 void func_800D25A8(void);
 
+void func_800D1524(void);
+
 #endif

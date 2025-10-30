@@ -169,7 +169,7 @@ typedef enum _EventFlag
     EventFlag_M3S00_PickupMap         = 207, // Shared with M3S01, M3S06
     EventFlag_M3S01_PickupMap         = 208, // M3S01 also uses flag above.
     EventFlag_M3S01_PickupBasementKey = 209,
-
+    EventFlag_M3S01_BasementDoorOpen  = 210,
     EventFlag_M3S01_GeneratorOn       = 211,
 
     EventFlag_223 = 223,
