@@ -205,8 +205,7 @@ endif
 
 ifeq ($(BUILD_SCREENS), 1)
 
-TARGET_SCREENS := credits options saveload stream
-
+TARGET_SCREENS := b_konami credits options saveload stream
 TARGET_SCREENS := $(addprefix $(TARGET_SCREENS_SRC_DIR)/,$(TARGET_SCREENS))
 
 endif
@@ -255,7 +254,8 @@ objdiff-config: regenerate
 	@$(MAKE) NON_MATCHING=1 SKIP_ASM=1 expected
 	@$(PYTHON) $(OBJDIFF_DIR)/objdiff_generate.py $(OBJDIFF_DIR)/config.yaml
 
-report: objdiff-config
+report:
+	@$(MAKE) BUILD_ENGINE=1 BUILD_SCREENS=1 BUILD_MAPS=1 objdiff-config
 	@$(OBJDIFF) report generate > $(BUILD_DIR)/progress.json
 
 check: build

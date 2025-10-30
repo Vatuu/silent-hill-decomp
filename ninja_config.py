@@ -129,8 +129,6 @@ YAML_MAPS_7 = [
 ]
 
 
-
-
 # Directories
 ASSETS_DIR   = "assets"
 ASM_DIR      = "asm"
@@ -246,14 +244,14 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file):
         )
     elif re.search("^src.main.*", source_path):
         ninja_file.build(
-            outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.i", implicit=f"{target_path}.i",
+            outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.i",
             variables={
                 "DLFLAG": DL_EXE_FLAGS
             }
         )
     else:
         ninja_file.build(
-            outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.i", implicit=f"{target_path}.i",
+            outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.i",
             variables={
                 "DLFLAG": DL_OVL_FLAGS
             }
@@ -264,7 +262,7 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file):
     # from the executable or an overlay in order to asign the intended DL flag
     if re.search("smf_io", source_path) or re.search("smf_mid", source_path):
         ninja_file.build(
-            outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s", implicit=f"{target_path}.c.s",
+            outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s",
             variables={
                 "EXPANDIVFLAG": "--expand-div",
                 "DLFLAG": DL_OVL_FLAGS
@@ -272,7 +270,7 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file):
         )
     elif re.search("^src.main.*", source_path):
         ninja_file.build(
-            outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s", implicit=f"{target_path}.c.s",
+            outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s",
             variables={
                 "EXPANDIVFLAG": "",
                 "DLFLAG": DL_EXE_FLAGS
@@ -280,7 +278,7 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file):
         )
     else:
         ninja_file.build(
-            outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s", implicit=f"{target_path}.c.s",
+            outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s",
             variables={
                 "EXPANDIVFLAG": "",
                 "DLFLAG": DL_OVL_FLAGS
