@@ -124,6 +124,33 @@ INCLUDE_RODATA("asm/maps/map3_s00/nonmatchings/map3_s00_2", D_800CB308);
 INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00_2", func_800D0CF8);
 
 INCLUDE_ASM("asm/maps/map3_s00/nonmatchings/map3_s00_2", func_800D18DC);
+/*
+ * This function matches but causes data misaligment. Probably the same root cause as the vectors at the bottom.
+
+void func_800D18DC(void)
+{
+    Math_Vector3Set(&g_WorldObject0.position_1C, Q12(97.2496f), Q12(0.0f), Q12(100.3428f));
+    WorldObject_ModelNameSet(&g_WorldObject0.object_0, "TRUNK_HI");
+
+    Math_Vector3Set(&g_WorldObject1[0].position_1C, Q12(98.4512f), Q12(0.0f), Q12(101.087f));
+    WorldObject_ModelNameSet(&g_WorldObject1[0].object_0, "BIRD_HID");
+
+    Math_Vector3Set(&g_WorldObject1[1].position_1C, Q12(98.4512f), Q12(0.0f), Q12(101.087f));
+    WorldObject_ModelNameSet(&g_WorldObject1[1].object_0, "BIRD2_HI");
+
+    WorldObjectPoseInit(&g_WorldObject2.position_1C, 26.0f, -1.0198f, 144.5498f, 0.0f, 163.8f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject2.object_0, D_800A99E4.savePadName_4);
+
+    WorldObjectPoseInit(&g_WorldObject3.position_1C, 24.6f, -1.56f, 143.16f, 0.0f, 180.0f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject3.object_0, "MAP_HIDE");
+
+    WorldObjectPoseInit(&g_WorldObject4.position_1C, 24.6f, -1.56f, 143.16f, 0.0f, 180.0f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject4.object_0, "MAP2_HID");
+
+    WorldObjectPoseInit(&g_WorldObject5.position_1C, 27.6f, -0.45f, 143.6f, 0.0f, -90.0f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject5.object_0, D_800A99E4.firstAidKitName_8);
+}
+*/
 
 extern const SVECTOR3 emptyRot;
 extern const VECTOR3 soundPos;
