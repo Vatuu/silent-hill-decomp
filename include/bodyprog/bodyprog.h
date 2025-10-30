@@ -494,7 +494,7 @@ typedef struct
     u8  field_B;
     union
     {
-        s16 field_0;
+        q3_12 field_0; // Angle.
         struct
         {
             u8 field_0;
@@ -503,7 +503,7 @@ typedef struct
     } field_C;
     union
     {
-        s16 field_0;
+        q3_12 field_0; // Angle.
         struct
         {
             u8 field_0;
@@ -4066,7 +4066,7 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1);
 bool func_80064334(POLY_FT4** poly, s32 arg1);
 
 /** Displays gun shooting effects. */
-void func_8006342C(s32 weaponAttack, s16 arg1, s16 arg2, GsCOORDINATE2* coord);
+void func_8006342C(s32 weaponAttack, q3_12 angle, s16 arg2, GsCOORDINATE2* coord);
 
 s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 x, s16 z);
 

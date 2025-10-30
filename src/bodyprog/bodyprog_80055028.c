@@ -4076,55 +4076,54 @@ bool func_80062708(POLY_FT4** arg0, s32 arg1) // 0x80062708
     return true;
 }
 
-void func_8006342C(s32 weaponAttack, s16 arg1, s16 arg2, GsCOORDINATE2* coord) // 0x8006342C
+void func_8006342C(s32 weaponAttack, q3_12 angle, s16 arg2, GsCOORDINATE2* coord) // 0x8006342C
 {
     s32              i;
     s_func_8006342C* ptr;
 
     ptr = PSX_SCRATCH;
 
+    // TODO: Use `Math_SetSVectorFast`.
     switch (weaponAttack)
     {
-        case 0x20:
+        case WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap):
             D_800C440C               = coord;
             *(s32*)&ptr->field_20.vx = -0xEFFFE;
-            ptr->field_20.vz         = 0x47;
+            ptr->field_20.vz         = 71;
             break;
 
-        case 0x22:
+        case WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap):
             D_800C440C               = coord;
             *(s32*)&ptr->field_20.vx = -0x11FFFD;
-            ptr->field_20.vz         = 0x6D;
+            ptr->field_20.vz         = 109;
             break;
 
-        case 0x21:
+        case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
             D_800C440C               = coord;
             *(s32*)&ptr->field_20.vx = -0x220002;
-            ptr->field_20.vz         = 0xDD;
+            ptr->field_20.vz         = 221;
             break;
 
-        case 0x46:
+        case 70: // TODO
             D_800C4410               = coord;
             *(s32*)&ptr->field_20.vx = -0x17FFFD;
-            ptr->field_20.vz         = 0x5B;
+            ptr->field_20.vz         = 91;
             break;
 
-        case 0x3F:
+        case 63: // TODO
             D_800C4410               = coord;
             *(s32*)&ptr->field_20.vx = -0xCFFFE;
-            ptr->field_20.vz         = 0x43;
+            ptr->field_20.vz         = 67;
             break;
 
-        case 0x5:
-            D_800C440C               = coord;
-            *(s32*)&ptr->field_20.vx = 0x140002;
-            ptr->field_20.vz         = 0x39;
+        case WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
+            D_800C440C = coord;
+            Math_SetSVectorFast(&ptr->field_20, 2, 20, 57);
             break;
 
-        case 0x2:
-            D_800C440C               = coord;
-            *(s32*)&ptr->field_20.vx = 0x180002;
-            ptr->field_20.vz         = 0x43;
+        case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
+            D_800C440C = coord;
+            Math_SetSVectorFast(&ptr->field_20, 2, 24, 67);
             break;
 
         default:
@@ -4212,14 +4211,15 @@ void func_8006342C(s32 weaponAttack, s16 arg1, s16 arg2, GsCOORDINATE2* coord) /
             // TODO: Demagic this.
             if (weaponAttack == 70)
             {
-                g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_C.field_0 = -0x400;
-                g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_E.field_0 = 0x400;
+                g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_C.field_0 = FP_ANGLE(-90.0f);
+                g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_E.field_0 = FP_ANGLE(90.0f);
             }
             else
             {
-                g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_C.field_0 = arg1;
+                g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_C.field_0 = angle;
                 g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_E.field_0 = arg2;
             }
+
             g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_B              = Rng_TestProbabilityBits(1);
             g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_10.s_0.field_0 = Rng_TestProbabilityBits(10);
             g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_10.s_0.field_2 = 0;

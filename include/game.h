@@ -1386,7 +1386,7 @@ STATIC_ASSERT_SIZEOF(s_MainCharacter, 340);
 
 typedef struct _PlayerCombat
 {
-    VECTOR3 field_0;
+    VECTOR3 field_0; // Q19.12 position offset?
     s8      unk_C[3];
     s8      weaponAttack_F;        /** Packed weapon attack. See `WEAPON_ATTACK`. */
     u8      currentWeaponAmmo_10;

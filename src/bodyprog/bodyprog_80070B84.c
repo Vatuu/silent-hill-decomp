@@ -7395,7 +7395,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
     s32      temp_s0;
     q23_8    temp_v0_5;
     q23_8    temp_v0_6;
-    s16      var_a1;
+    q3_12    unkAngle;
     VECTOR*  vec;  // Q19.12
     VECTOR*  vec2; // Q19.12
     VECTOR*  vec3; // Q19.12
@@ -7460,24 +7460,23 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
                 sp98.vx = chara->rotation_24.pad;
             }
 
-            sp98.vy = g_SysWork.player_4C.chara_0.properties_E4.player.field_122;
-            var_a1  = sp98.vy;
-
-            if (var_a1 >= 0x180)
+            sp98.vy  = g_SysWork.player_4C.chara_0.properties_E4.player.field_122;
+            unkAngle = sp98.vy;
+            if (unkAngle >= FP_ANGLE(33.75f))
             {
-                if (var_a1 > 0x680)
+                if (unkAngle > FP_ANGLE(146.25f))
                 {
-                    var_a1 = 0x680;
+                    unkAngle = FP_ANGLE(146.25f);
                 }
             }
             else
             {
-                var_a1 = 0x180;
+                unkAngle = FP_ANGLE(33.75f);
             }
 
             if (chara->field_44 > 0)
             {
-                func_8006342C(g_SysWork.playerCombatInfo_38.weaponAttack_F, var_a1, sp98.vx, coord);
+                func_8006342C(g_SysWork.playerCombatInfo_38.weaponAttack_F, unkAngle, sp98.vx, coord);
             }
         }
         else
@@ -7487,16 +7486,14 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
                 case NO_VALUE:
                 case EquippedWeaponId_Unk8:
                 case EquippedWeaponId_Unk9:
-                    *(u32*)&sp90 = 0x3C0000;
-                    sp90.vz      = 0x86;
+                    Math_SetSVectorFast(&sp90, 0, 60, 134);
                     Vw_CoordHierarchyMatrixCompute(&coord[17], &sp50);
                     break;
 
                 default:
                     if (g_SysWork.player_4C.extra_128.lowerBodyState_24 < PlayerLowerBodyState_Aim)
                     {
-                        *(u32*)&sp90 = 0x3C0000;
-                        sp90.vz      = 0x86;
+                        Math_SetSVectorFast(&sp90, 0, 60, 134);
                         Vw_CoordHierarchyMatrixCompute(&coord[17], &sp50);
                     }
                     else
@@ -7577,8 +7574,8 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
                     g_SysWork.targetNpcIdx_2353 = NO_VALUE;
                 }
 
-                *(u32*)&sp90 = 0xFFD90000;
-                sp90.vz      = 87;
+                Math_SetSVectorFast(&sp90, 0, -39, 87);
+                sp90.vz = 87;
 
                 Vw_CoordHierarchyMatrixCompute(&coord[10], &sp50);
                 gte_SetRotMatrix(&sp50);
@@ -7591,7 +7588,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
                 sp20.vy = Q8_TO_Q12(sp80.vy);
                 sp20.vz = Q8_TO_Q12(sp80.vz);
 
-                if (g_GameWork.config_0.optExtraAutoAiming_2C != 0)
+                if (g_GameWork.config_0.optExtraAutoAiming_2C)
                 {
                     sp98.vx = chara->rotation_24.pad;
                 }
@@ -7607,9 +7604,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
                 (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) &&
                  chara->model_0.anim_4.keyframeIdx_8 >= 577 && model->anim_4.keyframeIdx_8 <  583))
             {
-                *(u32*)&sp90 = 0;
-                sp90.vz      = 0;
-
+                Math_SetSVectorFast(&sp90, 0, 0, 0);
                 Vw_CoordHierarchyMatrixCompute(&coord[10], &sp50);
                 gte_SetRotMatrix(&sp50);
                 gte_SetTransMatrix(&sp50);
@@ -7617,11 +7612,10 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
                 gte_rt();
                 gte_stlvnl(&sp80);
 
-                *(u32*)&sp90 = 0;
-                sp90.vz      = 0;
-                sp30.vx      = Q8_TO_Q12(sp80.vx);
-                sp30.vy      = Q8_TO_Q12(sp80.vy);
-                sp30.vz      = Q8_TO_Q12(sp80.vz);
+                Math_SetSVectorFast(&sp90, 0, 0, 0);
+                sp30.vx = Q8_TO_Q12(sp80.vx);
+                sp30.vy = Q8_TO_Q12(sp80.vy);
+                sp30.vz = Q8_TO_Q12(sp80.vz);
 
                 Vw_CoordHierarchyMatrixCompute(&coord[6], &sp50);
                 gte_SetRotMatrix(&sp50);
