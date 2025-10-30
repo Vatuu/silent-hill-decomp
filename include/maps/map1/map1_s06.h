@@ -34,6 +34,14 @@ extern s8 D_800DB054;
 
 extern s8 D_800DB055;
 
+extern u8 D_800D778D;
+
+extern u8 D_800D778E;
+
+extern u8 D_800D778F;
+
+extern u8 D_800D7790;
+
 void func_800D4FC0(s32 arg0, s32 arg1);
 
 void func_800D5400(void);

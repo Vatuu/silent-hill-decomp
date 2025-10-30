@@ -138,3 +138,5 @@ D_800DAFB4                = 0x800DAFB4; // size:0x30
 D_800DAFF4                = 0x800DAFF4; // size:0x30
 D_800DB024                = 0x800DB024; // size:0x30
 D_800DB064                = 0x800DB064; // size:0x30
+D_800D778E                = 0x800D778E; // type:u8 size:0x1
+D_800D778F                = 0x800D778F; // type:u8 size:0x1

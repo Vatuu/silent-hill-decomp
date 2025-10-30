@@ -114,7 +114,8 @@ typedef enum _EventFlag
     EventFlag_133 = 133,
     EventFlag_134 = 134,
 
-    EventFlag_M1S06_PickupKGordonKey = 137,
+    EventFlag_M1S06_ChurchMarkedOnMap = 136,
+    EventFlag_M1S06_PickupKGordonKey  = 137,
 
     EventFlag_142                         = 142,
     EventFlag_143                         = 143,

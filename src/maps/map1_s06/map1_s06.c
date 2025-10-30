@@ -263,7 +263,129 @@ void func_800D5D6C(u16 arg0) // 0x800D5D6C
     func_80068E0C(1, 1, 0, 0, arg0, 120, Q12(0.5f));
 }
 
-INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D5DD8);
+void func_800D5DD8(void)
+{
+    #define CUTSCENE_SKIP_STATE 14
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4)
+    {
+        if (g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 6)
+        {
+            SysWork_StateStepSet(0, CUTSCENE_SKIP_STATE);
+        }
+        if (D_800D7790 == 0 && g_SysWork.sysStateStep_C[0] > 6 && g_SysWork.sysStateStep_C[0] < 12)
+        {
+            D_800D7790 = 1;
+            SysWork_StateStepIncrementAfterFade(0, true, 0, 0, false);
+        }
+    }
+    if (D_800D7790)
+    {
+        if (ScreenFade_IsFinished())
+        {
+            D_800D7790 = 0;
+            SysWork_StateStepSet(0, 13);
+        }
+    }
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            ScreenFade_ResetTimestep();
+            g_SysWork.field_30 = 20;
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(109.2f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(43.2f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = Q12(0.4553f);
+
+            D_800D778E = g_SavegamePtr->current2dMapIdx_A9;
+            g_SavegamePtr->current2dMapIdx_A9 = 1;
+            D_800D7790 = 0;
+            Camera_PositionSet(NULL, Q12(106.5799f), Q12(-3.6199f), Q12(45.23f), 0, 0, 0, 0, true);
+            Camera_LookAtSet(NULL, Q12(109.19f), Q12(-1.3699f), Q12(43.2f), 0, 0, 0, 0, true);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 1:
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(1.0f), false);
+            break;
+        case 2:
+            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            break;
+        case 3:
+            MapMsg_DisplayAndHandleSelection(false, 22, 0, 0, 0, false); // I hear a church bell
+            break;
+        case 4:
+            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + D_800A99B5);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 5:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            break;
+        case 6:
+            func_800867B4(0, 1);
+            D_800D778D = 0;
+            D_800D778F = 0;
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 7:
+            func_800D5D6C(0);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            break;
+        case 8:
+            func_800D5D6C(0);
+            SysWork_StateStepIncrementDelayed(Q12(0.6f), false);
+            break;
+        case 9:
+            D_800D778D++;
+            func_800D5D6C(D_800D778D);
+            if (D_800D778D == 122)
+            {
+                SysWork_StateStepIncrement(0);
+            }
+            break;
+        case 10:
+            func_800D5D6C(122);
+            SysWork_StateStepIncrementDelayed(Q12(0.6f), false);
+            break;
+        case 11:
+            func_800D5D6C(122);
+            func_80068E0C(2, 1, 926, D_800D778F, 122, 120, Q12(0.5f));
+            D_800D778F++;
+            if (D_800D778F >= 0x80)
+            {
+                D_800D778F = 0x80;
+                if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+                {
+                    SysWork_StateStepIncrement(0);
+                }
+                if (g_SysWork.sysStateStep_C[0] == 11)
+                {
+                    SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
+                }
+            }
+            break;
+        case 12:
+            func_800D5D6C(122);
+            func_80068E0C(2, 1, 926, 128, 122, 120, Q12(0.5f));
+            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            break;
+        case 13:
+            func_800867B4(2, 0);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case CUTSCENE_SKIP_STATE:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            break;
+        default:
+            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+            vcReturnPreAutoCamWork(true);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
+            g_SavegamePtr->current2dMapIdx_A9 = D_800D778E;
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            Savegame_EventFlagSet(EventFlag_M1S06_ChurchMarkedOnMap);
+            g_SavegamePtr->mapMarkingFlags_1D4[1] |= 0x40000000;
+            break;
+    }
+}
 
 void func_800D6338(void) // 0x800D6338
 {
