@@ -94,7 +94,7 @@ void MapEvent_CafeCutscene() // 0x800DA980
             g_SysWork.field_30 = 20;
             ScreenFade_ResetTimestep();
             g_SysWork.flags_22A4 |= 1 << 3;
-            g_SavegamePtr->flags_AC &= ~(1 << 0);
+            g_SavegamePtr->itemToggleFlags_AC &= ~ItemToggleFlag_RadioOn;
             g_SysWork.flags_22A4 |= (1 << 5) | (1 << 9);
             g_MapMsgSoundIdx = 0;
             D_800DE250 = 0;
@@ -726,7 +726,7 @@ void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
 void MapEvent_PocketRadioItemTake() // 0x800DC34C
 {
     Event_ItemTake(InventoryItemId_PocketRadio, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M0S01_PickupPocketRadio, 64);
-    g_SavegamePtr->flags_AC |= 1 << 0;
+    g_SavegamePtr->itemToggleFlags_AC |= ItemToggleFlag_RadioOn;
 }
 
 void MapEvent_FlashlightItemTake() // 0x800DC394

@@ -370,7 +370,7 @@ void Game_PlayerInit() // 0x80035178
 
     g_SysWork.field_229C = NO_VALUE;
 
-    if ((g_SavegamePtr->flags_AC >> 1) & (1 << 0))
+    if ((g_SavegamePtr->itemToggleFlags_AC >> 1) & (1 << 0)) // & `ItemToggleFlag_FlashlightOff`
     {
         Game_TurnFlashlightOff();
     }
@@ -930,7 +930,7 @@ void func_80035F4C(s32 flags, q19_12 arg1, u8* arg2) // 0x80035F4C
     
     if (!(flagsCpy & (1 << 8)))
     {
-        if (D_800A9A1C > 0 && g_SavegamePtr->flags_AC & (1 << 0))
+        if (D_800A9A1C > 0 && g_SavegamePtr->itemToggleFlags_AC & ItemToggleFlag_RadioOn)
         {
             g_SysWork.sysFlags_22A0 |= SysFlag_2;
         }
@@ -2232,7 +2232,7 @@ void SysState_Gameplay_Update() // 0x80038BD4
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.light_A &&
         g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1))
     {
-        func_8003ED08();
+        Game_FlashlightToggle();
     }
 
     if (D_800A9A10 != SysState_Unk15)

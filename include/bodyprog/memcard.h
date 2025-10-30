@@ -85,6 +85,7 @@ typedef struct
     char filenames_0[CARD_DEVICE_FILE_COUNT][21];
     u8   blockCounts_13B[CARD_DEVICE_FILE_COUNT]; // Size of each file in 8192 byte blocks.
 } s_CardDirectory;
+STATIC_ASSERT_SIZEOF(s_CardDirectory, 330);
 
 typedef struct
 {
@@ -153,6 +154,7 @@ typedef struct
 } s_PsxSaveBlock;
 STATIC_ASSERT_SIZEOF(s_PsxSaveBlock, 512);
 
+// OPM16 has `MCM_FUNC_WORK` struct with size 0x6D8, close to this 0x718.
 typedef struct
 {
     s_MemCardBasicInfo          devices_0[CARD_DEVICE_COUNT];

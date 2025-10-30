@@ -2587,30 +2587,30 @@ void func_8003EBF4(s_MapOverlayHeader* arg0) // 0x8003EBF4
 void Game_TurnFlashlightOn(void) // 0x8003ECBC
 {
     g_SysWork.field_2388.isFlashlightOn_15 = true;
-    g_SavegamePtr->flags_AC               &= ~(1 << 1);
+    g_SavegamePtr->itemToggleFlags_AC     &= ~ItemToggleFlag_FlashlightOff;
 }
 
 void Game_TurnFlashlightOff(void) // 0x8003ECE4
 {
     g_SysWork.field_2388.isFlashlightOn_15 = false;
-    g_SavegamePtr->flags_AC               |= 1 << 1;
+    g_SavegamePtr->itemToggleFlags_AC     |= ItemToggleFlag_FlashlightOff;
 }
 
-void func_8003ED08() // 0x8003ED08
+void Game_FlashlightToggle(void) // 0x8003ED08
 {
     // Awkward `isFlashlightOn_15` toggle.
     g_SysWork.field_2388.isFlashlightOn_15 ^= true;
     if (g_SysWork.field_2388.isFlashlightOn_15 == true)
     {
-        g_SavegamePtr->flags_AC &= ~(1 << 1);
+        g_SavegamePtr->itemToggleFlags_AC &= ~ItemToggleFlag_FlashlightOff;
     }
     else
     {
-        g_SavegamePtr->flags_AC |= 1 << 1;
+        g_SavegamePtr->itemToggleFlags_AC |= ItemToggleFlag_FlashlightOff;
     }
 }
 
-u32 func_8003ED64() // 0x8003ED64
+bool Game_FlashlightIsOn() // 0x8003ED64
 {
     return g_SysWork.field_2388.isFlashlightOn_15;
 }

@@ -1922,7 +1922,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
     {
         case InventoryItemId_Flashlight:
             Gfx_StringSetPosition(stringPos.vx, stringPos.vy);
-            if (func_8003ED64() == 0)
+            if (!Game_FlashlightIsOn())
             {
                 Gfx_StringDraw(D_80027F94[2], 10);
             } 
@@ -1934,7 +1934,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
 
         case InventoryItemId_PocketRadio:
             Gfx_StringSetPosition(stringPos.vx, stringPos.vy);
-            if (g_SavegamePtr->flags_AC & 1)
+            if (g_SavegamePtr->itemToggleFlags_AC & ItemToggleFlag_RadioOn)
             {
                 Gfx_StringDraw(D_80027F94[1], 10);
             }

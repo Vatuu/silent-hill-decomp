@@ -56,7 +56,7 @@ bool func_800CC6E8(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId) // 0x800CC6E8
     curArg0 = arg0;
     curArg1 = arg1;
 
-    if (func_8003ED64() == 0)
+    if (!Game_FlashlightIsOn())
     {
         D_800E0C64 = -0x400;
     }

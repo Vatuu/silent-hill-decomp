@@ -883,7 +883,7 @@ void Inventory_Logic() // 0x8004D518
                                     break;
 
                                 case InventoryItemId_PocketRadio:
-                                    g_SavegamePtr->flags_AC |= 1 << 0;
+                                    g_SavegamePtr->itemToggleFlags_AC |= ItemToggleFlag_RadioOn;
                                     break;
                             }
                         }
@@ -896,7 +896,7 @@ void Inventory_Logic() // 0x8004D518
                                     break;
 
                                 case InventoryItemId_PocketRadio:
-                                    g_SavegamePtr->flags_AC &= ~(1 << 0);
+                                    g_SavegamePtr->itemToggleFlags_AC &= ~ItemToggleFlag_RadioOn;
                                     break;
                             }
                         }

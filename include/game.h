@@ -912,6 +912,12 @@ typedef struct _InventoryItem
 } s_InventoryItem;
 STATIC_ASSERT_SIZEOF(s_InventoryItem, 4);
 
+typedef enum _ItemToggleFlags
+{
+    ItemToggleFlag_RadioOn       = 1 << 0,
+    ItemToggleFlag_FlashlightOff = 1 << 1,
+} e_ItemToggleFlags;
+
 typedef struct _Savegame
 {
     s_InventoryItem items_0[INVENTORY_ITEM_COUNT_MAX];
@@ -924,7 +930,7 @@ typedef struct _Savegame
     u8              current2dMapIdx_A9;       /** `e_Current2dMapIdx` Index to the 2D map shown when opening the map screen. */
     u8              equippedWeapon_AA;        /** `e_InventoryItemId` Affects only the visible player weapon model. */
     u8              inventorySlotCount_AB;    /** Item slots. */
-    u32             flags_AC;                 /** Flashlight state? On: 3, Off: 1*/
+    u32             itemToggleFlags_AC;       /** `e_ItemToggleFlags` */
     s32             field_B0[45];
     s32             hasMapsFlags_164;         // See Sparagas' `HasMapsFlags` struct for details of every bit.
     u32             eventFlags_168[27];       // Can be accessed through `Savegame_EventFlagGet` / `Savegame_EventFlagSet`, only tested a few, but seems all are related to events and pick-up flags, grouped by location and not item types.

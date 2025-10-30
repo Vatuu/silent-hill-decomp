@@ -4657,10 +4657,6 @@ void func_8003ECBC();
 
 void func_8003ECE4();
 
-void func_8003ED08();
-
-u32 func_8003ED64();
-
 void func_8003EDA8();
 
 void func_8003EDB8(CVECTOR* color0, CVECTOR* color1);
@@ -4803,6 +4799,8 @@ void GameState_Unk15_Update();
 
 void Game_TurnFlashlightOn(void);
 void Game_TurnFlashlightOff(void);
+void Game_FlashlightToggle(void);
+bool Game_FlashlightIsOn(void);
 
 /** X and Z are guessed. */
 void func_80089034(s32 charaId, s32 arg1, q19_12 x, q19_12 z);
