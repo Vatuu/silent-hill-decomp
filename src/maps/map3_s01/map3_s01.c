@@ -241,9 +241,48 @@ void func_800D279C(void) // 0x800D279C
     Event_ItemTake(InventoryItemId_BasementKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S01_PickupBasementKey, 24);
 }
 
-INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", D_800CB148);
-
-INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D27C8);
+void MapEvent_Generator0(void) // 0x800D27C8
+{
+    #define STATE_PRESS_SWITCH 3
+    #define STATE_DONT_PRESS_SWITCH NO_VALUE
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 1:
+            func_80085DF0();
+            break;
+        case 2:
+            g_SysWork.silentYesSelection_2350_4 = 1;
+            MapMsg_DisplayAndHandleSelection(true, 25, STATE_PRESS_SWITCH, STATE_DONT_PRESS_SWITCH, 0, false); // Do you want to press the switch?
+            break;
+        case STATE_PRESS_SWITCH:
+            func_8005DC1C(Sfx_Unk1494, &QVECTOR3(140.5f, -0.5f, -20.6f), 0x80, 0);
+            Sd_EngineCmd(Sfx_Unk1495);
+            Savegame_EventFlagSet(EventFlag_M3S01_GeneratorOn);
+            D_800D8584 = 1;
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 4:
+            SysWork_StateStepIncrementDelayed(Q12(2.5f), false);
+            break;
+        case 5:
+            Savegame_EventFlagSet(EventFlag_M3S01_GeneratorOn);
+            D_800D8584 = 1;
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        default: // STATE_DONT_PRESS_SWITCH
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+    if (Savegame_EventFlagGet(EventFlag_M3S01_GeneratorOn))
+    {
+        func_800894B8(0x90);
+    }
+}
 
 void func_800D29A4(void) // 0x800D29A4
 {
@@ -274,14 +313,12 @@ void func_800D2A88(void) // 0x800D2A88
 {
     if (g_SysWork.sysStateStep_C[1] == 0)
     {
-        func_8005DC1C(Sfx_Unk1308, &D_800CB170, 128, 0);
+        func_8005DC1C(Sfx_Unk1308, &QVECTOR3(61.72f, -0.8f, 100.5098f), 128, 0);
     }
 
     func_80087360(Sfx_Unk1916, Q12(0.0f), Q12(0.0f), 36);
     Savegame_EventFlagSet(EventFlag_203);
 }
-
-INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", D_800CB170);
 
 void func_800D2AF4(void) // 0x800D2AF4
 {
@@ -464,7 +501,7 @@ void func_800D2E54(void) // 0x800D2E54
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
     {
-        if (Savegame_EventFlagGet(EventFlag_211))
+        if (Savegame_EventFlagGet(EventFlag_M3S01_GeneratorOn))
         {
             if (D_800D8584 == 0)
             {

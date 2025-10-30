@@ -32,7 +32,7 @@ void sharedFunc_800D09D4_3_s00()
 
                 case 17:
                 case 20:
-                    if (Savegame_EventFlagGet(EventFlag_211))
+                    if (Savegame_EventFlagGet(EventFlag_M3S01_GeneratorOn))
                     {
                         flags |= 0x40;
                     }
