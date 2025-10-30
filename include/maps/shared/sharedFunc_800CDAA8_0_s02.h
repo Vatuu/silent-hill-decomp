@@ -104,24 +104,24 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch()
             case 25:
             case 26:
             case 27:
-                func_8003DD80(Chara_Harry, 18);
+                func_8003DD80(Chara_Harry, UNK_PACKED_DATA(2, 1));
                 break;
 
             case 32:
             case 34:
             case 35:
-                func_8003DD80(Chara_Harry, 19);
+                func_8003DD80(Chara_Harry, UNK_PACKED_DATA(3, 1));
                 break;
 
             case 33:
-                func_8003DD80(Chara_Harry, 20);
+                func_8003DD80(Chara_Harry, UNK_PACKED_DATA(4, 1));
                 break;
         }
     }
     else
     {
         func_8003D03C();
-        func_8003DD80(Chara_Harry, 17);
+        func_8003DD80(Chara_Harry, UNK_PACKED_DATA(1, 1));
     }
 }
 
@@ -155,17 +155,17 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch_Unk85(s_MainCharacterExtra* 
             case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Multitap):
-                func_8003DD80(Chara_Harry, 18);
+                func_8003DD80(Chara_Harry, UNK_PACKED_DATA(2, 1));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
-                func_8003DD80(Chara_Harry, 19);
+                func_8003DD80(Chara_Harry, UNK_PACKED_DATA(3, 1));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
-                func_8003DD80(Chara_Harry, 20);
+                func_8003DD80(Chara_Harry, UNK_PACKED_DATA(4, 1));
                 break;
         }
     }
@@ -175,11 +175,11 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch_Unk85(s_MainCharacterExtra* 
 
         if (extra->model_0.anim_4.keyframeIdx_8 >= 958)
         {
-            func_8003DD80(Chara_Harry, 21);
+            func_8003DD80(Chara_Harry, UNK_PACKED_DATA(5, 1));
         }
         else
         {
-            func_8003DD80(Chara_Harry, 17);
+            func_8003DD80(Chara_Harry, UNK_PACKED_DATA(1, 1));
         }
     }
 }
@@ -695,7 +695,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             func_8007FB94(playerChara, extra, 0x169);
 #ifdef MAP1_S03
             func_8003D03C();
-            func_8003DD80(Chara_Harry, 0x11);
+            func_8003DD80(Chara_Harry, UNK_PACKED_DATA(1, 1));
 #else
             keyframeIdx = 949;
             sharedFunc_800CDAA8_0_s02_Switch_Unk85(extra);
@@ -2288,7 +2288,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 
 #ifdef HAS_PlayerState_Unk76
         case PlayerState_Unk76:
-            if (IS_ANIM_STATUS_ACTIVE(playerChara->model_0.anim_4.status_0))
+            if (ANIM_STATUS_IS_ACTIVE(playerChara->model_0.anim_4.status_0))
             {
                 if (playerChara->model_0.anim_4.keyframeIdx_8 < (keyframeIdx + 31))
                 {
@@ -2347,7 +2347,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 
 #ifdef HAS_PlayerState_Unk93
         case PlayerState_Unk93:
-            if (IS_ANIM_STATUS_ACTIVE(playerChara->model_0.anim_4.status_0))
+            if (ANIM_STATUS_IS_ACTIVE(playerChara->model_0.anim_4.status_0))
             {
                 func_80071620(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 6, Sfx_Unk1385);
                 func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 18, 0, sfx, pitch0);
@@ -2410,7 +2410,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 
 #ifdef HAS_PlayerState_Unk111
         case PlayerState_Unk111:
-            if (IS_ANIM_STATUS_ACTIVE(playerChara->model_0.anim_4.status_0))
+            if (ANIM_STATUS_IS_ACTIVE(playerChara->model_0.anim_4.status_0))
             {
                 func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 11, keyframeIdx + 21, sfx, pitch0);
             }
@@ -2471,7 +2471,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
                 func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 12, keyframeIdx + 16, sfx, pitch0);
             }
 
-            if (IS_ANIM_STATUS_ACTIVE(playerChara->model_0.anim_4.status_0))
+            if (ANIM_STATUS_IS_ACTIVE(playerChara->model_0.anim_4.status_0))
             {
                 func_80071620(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 9, Sfx_Unk1539);
             }
@@ -2577,7 +2577,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 
 #ifdef HAS_PlayerState_Unk138
         case PlayerState_Unk138:
-            if (IS_ANIM_STATUS_ACTIVE(playerChara->model_0.anim_4.status_0))
+            if (ANIM_STATUS_IS_ACTIVE(playerChara->model_0.anim_4.status_0))
             {
                 func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 18, keyframeIdx + 14, sfx, pitch0);
             }
@@ -2684,7 +2684,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 
 #ifdef HAS_PlayerState_Unk151
         case PlayerState_Unk151:
-            if (IS_ANIM_STATUS_ACTIVE(playerChara->model_0.anim_4.status_0))
+            if (ANIM_STATUS_IS_ACTIVE(playerChara->model_0.anim_4.status_0))
             {
                 if ((keyframeIdx + 7) >= playerChara->model_0.anim_4.keyframeIdx_8)
                 {
@@ -2822,7 +2822,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
 
 #ifdef HAS_PlayerState_Unk162
         case PlayerState_Unk162:
-            if (IS_ANIM_STATUS_ACTIVE(playerChara->model_0.anim_4.status_0))
+            if (ANIM_STATUS_IS_ACTIVE(playerChara->model_0.anim_4.status_0))
             {
 #ifdef MAP7_S03
                 func_80071620(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 60, Sfx_Unk1671);

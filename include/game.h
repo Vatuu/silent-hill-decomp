@@ -35,6 +35,15 @@ struct _Model;
 #define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400  /** Long string length is used to display a whole message instantly without a rollout. */
 #define GLYPH_TABLE_ASCII_OFFSET       '\'' /** Subtracted from ASCII bytes to get index to some string-related table. */
 
+/** @brief Unknown packed data used for something to do with character model bones.
+ *
+ * @param a First value.
+ * @param b Second value.
+ * @return Packed `a` and `b`.
+ */
+#define UNK_PACKED_DATA(a, b) \
+    (s16)((a) | ((b) << 4))
+
 /** @brief Converts a floating-point X screen position in percent to a fixed-point X screen coodinate. */
 #define SCREEN_POSITION_X(percent) \
     (s32)(SCREEN_WIDTH * ((percent) / 100.0f))
@@ -93,7 +102,7 @@ struct _Model;
  * @param animStatus Packed animation status containing an animation index and active flag.
  * @return `true` if active, `false` otherwise.
  */
-#define IS_ANIM_STATUS_ACTIVE(animStatus) \
+#define ANIM_STATUS_IS_ACTIVE(animStatus) \
     ((animStatus) & (1 << 0))
 
 /** @brief Checks if an animation time is within the keyframe range `[low, high]`.

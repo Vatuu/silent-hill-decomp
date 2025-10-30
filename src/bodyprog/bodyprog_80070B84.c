@@ -107,7 +107,7 @@ void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 weapo
         }
     }
 
-    if (animStatus == ANIM_STATUS(HarryAnim_Kick, true) && IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0))
+    if (animStatus == ANIM_STATUS(HarryAnim_Kick, true) && ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0))
     {
         g_SysWork.player_4C.chara_0.field_D8.offsetX_0 = FP_MULTIPLY(D_800AF014[chara->model_0.anim_4.keyframeIdx_8 - 457], Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
         g_SysWork.player_4C.chara_0.field_D8.offsetZ_2 = -FP_MULTIPLY(D_800AF014[chara->model_0.anim_4.keyframeIdx_8 - 457], Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
@@ -115,7 +115,7 @@ void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 weapo
         g_SysWork.player_4C.chara_0.field_D8.offsetZ_6 = Q12(0.0f);
     }
 
-    if (animStatus == ANIM_STATUS(HarryAnim_Stomp, true) && IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0)) 
+    if (animStatus == ANIM_STATUS(HarryAnim_Stomp, true) && ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0)) 
     {
         g_SysWork.player_4C.chara_0.field_D8.offsetX_0 = FP_MULTIPLY(D_800AF04C[chara->model_0.anim_4.keyframeIdx_8 - 485], Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
         g_SysWork.player_4C.chara_0.field_D8.offsetZ_2 = -FP_MULTIPLY(D_800AF04C[chara->model_0.anim_4.keyframeIdx_8 - 485], Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
@@ -400,17 +400,17 @@ static inline void func_80071968_Switch0()
             case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Multitap):
-                func_8003DD80(Chara_Harry, 0x22); // Second arg is hex, split with `& 0xF0` / `& 0x0F` later on.
+                func_8003DD80(Chara_Harry, UNK_PACKED_DATA(2, 2));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
-                func_8003DD80(Chara_Harry, 0x23);
+                func_8003DD80(Chara_Harry, UNK_PACKED_DATA(3, 2));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
-                func_8003DD80(Chara_Harry, 0x24);
+                func_8003DD80(Chara_Harry, UNK_PACKED_DATA(4, 2));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Unk3, AttackInputType_Tap):
@@ -428,7 +428,7 @@ static inline void func_80071968_Switch0()
     }
     else
     {
-        func_8003DD80(Chara_Harry, 34);
+        func_8003DD80(Chara_Harry, UNK_PACKED_DATA(2, 2));
     }
 }
 
@@ -459,17 +459,17 @@ static inline void func_80071968_Switch1()
             case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Multitap):
-                func_8003DD80(Chara_Harry, 0x12);
+                func_8003DD80(Chara_Harry, UNK_PACKED_DATA(2, 1));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
-                func_8003DD80(Chara_Harry, 0x13);
+                func_8003DD80(Chara_Harry, UNK_PACKED_DATA(3, 1));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
-                func_8003DD80(Chara_Harry, 0x14);
+                func_8003DD80(Chara_Harry, UNK_PACKED_DATA(4, 1));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Unk3, AttackInputType_Tap):
@@ -951,7 +951,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             chara->field_D4 = Q12(0.25f);
             chara->field_D6 = Q12(0.0f);
 
-            if (IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0))
+            if (ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0))
             {
                 temp_s0 = -D_800AF1FC[chara->model_0.anim_4.keyframeIdx_8 - g_MapOverlayHeader.field_38[D_800AF220].time_4];
                 g_SysWork.player_4C.chara_0.field_D8.offsetX_0 = Q12(0.0f);
@@ -1009,7 +1009,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                 chara->properties_E4.player.afkTimer_E8         = Q12(15.0f);
             }
 
-            if (IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0))
+            if (ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0))
             {
                 if (g_SysWork.player_4C.extra_128.state_1C >= PlayerState_EnemyGrabPinnedFrontStart &&
 				    g_SysWork.player_4C.extra_128.state_1C < PlayerState_EnemyGrabPinnedFront)
@@ -1584,7 +1584,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                     g_SysWork.player_4C.chara_0.field_D8.offsetZ_2 = Q12(0.0f);
                     g_SysWork.player_4C.chara_0.field_D8.offsetX_0 = Q12(0.0f);
 
-                    if (IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0))
+                    if (ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0))
                     {
                         chara->field_D4 = ((chara->model_0.anim_4.keyframeIdx_8 - g_MapOverlayHeader.field_38[D_800AF220].time_4) * 0x4CC) / 21;
                     }
@@ -1683,7 +1683,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                     if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_FallForward)
                     {
                         chara->properties_E4.player.field_10D = 0;
-                        if (IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0))
+                        if (ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0))
                         {
                             g_SysWork.player_4C.chara_0.field_C8 = D_800AEEDC[chara->model_0.anim_4.keyframeIdx_8 - 379][0];
                             g_SysWork.player_4C.chara_0.field_CE = D_800AEEDC[chara->model_0.anim_4.keyframeIdx_8 - 379][1];
@@ -1722,7 +1722,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                     {
                         chara->properties_E4.player.field_10D = 1;
                         
-                        if (IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0))
+                        if (ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0))
                         {
                             g_SysWork.player_4C.chara_0.field_C8 = D_800AEF78[chara->model_0.anim_4.keyframeIdx_8 - 418][0];
                             g_SysWork.player_4C.chara_0.field_CE = D_800AEF78[chara->model_0.anim_4.keyframeIdx_8 - 418][1];
@@ -1799,7 +1799,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             chara->attackReceived_41 = NO_VALUE;
             func_8007FB94(chara, extra, ANIM_STATUS(126, false));
 
-            if (IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0))
+            if (ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0))
             {
                 if ((g_MapOverlayHeader.field_38[D_800AF220].time_4 + 12) >= chara->model_0.anim_4.keyframeIdx_8)
                 {
@@ -1832,7 +1832,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             func_8007FB94(chara, extra, ANIM_STATUS(101, false));
             chara->field_D6 = Q12(0.0f);
 
-            if (IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0))
+            if (ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0))
             {
                 if ((g_MapOverlayHeader.field_38[D_800AF220].time_4 + 12) >= chara->model_0.anim_4.keyframeIdx_8)
                 {
@@ -4312,8 +4312,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             // Set idle to move depending on user input.
             if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_Combat) // Aiming at or shooting enemy.
             {
-                if (IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0) &&
-                    IS_ANIM_STATUS_ACTIVE(extra->model_0.anim_4.status_0))
+                if (ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0) &&
+                    ANIM_STATUS_IS_ACTIVE(extra->model_0.anim_4.status_0))
                 {
                     if (chara->model_0.anim_4.status_0 >= ANIM_STATUS(HarryAnim_Unk29, false) ||
                         chara->model_0.anim_4.keyframeIdx_8 == D_800C44F0[0].field_6 || 
@@ -4335,8 +4335,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             // Aiming at nothing, or shooting at nothing, or idle.
             else
             {
-                if (IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0) &&
-                    IS_ANIM_STATUS_ACTIVE(extra->model_0.anim_4.status_0))
+                if (ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0) &&
+                    ANIM_STATUS_IS_ACTIVE(extra->model_0.anim_4.status_0))
                 {
                     if ((aimState == 0 && g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 == Q12(0.0f))||
                         chara->model_0.anim_4.status_0 >= ANIM_STATUS(HarryAnim_Unk29, false) ||
@@ -6002,7 +6002,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                  WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) != EquippedWeaponId_RockDrill &&
                  WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) != EquippedWeaponId_Katana))
             {
-                if (IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0) && IS_ANIM_STATUS_ACTIVE(extra->model_0.anim_4.status_0) &&
+                if (ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0) && ANIM_STATUS_IS_ACTIVE(extra->model_0.anim_4.status_0) &&
                     (chara->model_0.anim_4.status_0 >= ANIM_STATUS(HarryAnim_Unk29, false) || chara->model_0.anim_4.keyframeIdx_8 == D_800C44F0[0].field_6))
                 {
                     if (!g_Player_IsMovingForward)
@@ -6050,7 +6050,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 chara->model_0.stateStep_3++;
             }
 
-            if (IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0) && IS_ANIM_STATUS_ACTIVE(extra->model_0.anim_4.status_0) &&
+            if (ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0) && ANIM_STATUS_IS_ACTIVE(extra->model_0.anim_4.status_0) &&
                 (chara->model_0.anim_4.status_0 >= ANIM_STATUS(HarryAnim_Unk29, false) || chara->model_0.anim_4.keyframeIdx_8 == D_800C44F0[0].field_6))
             {
                 if (g_Player_IsMovingForward)
@@ -6107,7 +6107,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
         case PlayerLowerBodyState_RunForward:
         case PlayerLowerBodyState_RunRight:
         case PlayerLowerBodyState_RunLeft:
-            if (IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0) && chara->model_0.anim_4.status_0 >= ANIM_STATUS(HarryAnim_RunForward, true))
+            if (ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0) && chara->model_0.anim_4.status_0 >= ANIM_STATUS(HarryAnim_RunForward, true))
             {
                 chara->properties_E4.player.exhaustionTimer_FC += g_DeltaTime0;
             }

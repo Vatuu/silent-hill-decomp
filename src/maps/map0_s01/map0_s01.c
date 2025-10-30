@@ -753,7 +753,7 @@ void func_800D4894(s_SubCharacter* chara)
     switch (stateStep)
     {
         case 0:
-            if (IS_ANIM_STATUS_ACTIVE(animStatus))
+            if (ANIM_STATUS_IS_ACTIVE(animStatus))
             {
                 chara->model_0.anim_4.status_0 = ANIM_STATUS(7, false);
                 chara->model_0.stateStep_3     = 1;
@@ -820,7 +820,7 @@ void func_800D49B0(s_SubCharacter* chara) // 0x800D49B0
     switch (stateStep)
     {
         case 0:
-            if (IS_ANIM_STATUS_ACTIVE(animStatus))
+            if (ANIM_STATUS_IS_ACTIVE(animStatus))
             {
                 chara->model_0.anim_4.status_0 = ANIM_STATUS(10, false);
                 chara->model_0.stateStep_3 = 1;

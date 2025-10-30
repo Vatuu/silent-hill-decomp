@@ -2246,30 +2246,30 @@ void func_80044F14(GsCOORDINATE2* coord, q3_12 rotZ, q3_12 rotX, q3_12 rotY) // 
 s8 Bone_ModelIdxGet(s8* ptr, bool reset) // 0x80044F6C
 {
     // These two are probably part of a bigger struct.
-    // `boneModelIdx` is not referenced directly anywhere else.
+    // `boneMeshIdx` is not referenced directly anywhere else.
     // It must be reset somewhere at some point.
-    #define boneIdxs     D_800C15B0
-    #define boneModelIdx D_800C15B4
+    #define boneIdxs    D_800C15B0
+    #define boneMeshIdx D_800C15B4
 
     if (reset)
     {
         boneIdxs = ptr;
     }
 
-    // LM has <=1 model.
+    // LM has <= 1 model.
     if (boneIdxs[0] != -3)
     {
         // -2 for 0 models, 0 for 1 model.
-        boneModelIdx = boneIdxs[0];
+        boneMeshIdx = boneIdxs[0];
         boneIdxs++;
     }
-    // Increment `boneModelIdx` and break loop when equal to number of models.
-    else if (++boneModelIdx >= (boneIdxs[1] - 1))
+    // Increment `boneMeshIdx` and break loop when equal to number of models.
+    else if (++boneMeshIdx >= (boneIdxs[1] - 1))
     {
         boneIdxs++;
     }
 
-    return boneModelIdx;
+    return boneMeshIdx;
 }
 
 void Skeleton_Init(s_Skeleton* skel, s_Bone* bones, u8 boneCount) // 0x80044FE0

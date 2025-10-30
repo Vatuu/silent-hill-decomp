@@ -2220,15 +2220,15 @@ void func_8003E238(s_Skeleton* skel, s32 arg1) // 0x8003E238
 
 void func_8003E388(s_Skeleton* skel, s32 arg1) // 0x8003E388
 {
-    s32 temp_a1;
+    s32 val;
 
     static s32 D_800A9F48 = 0x0000FE05;
     static s32 D_800A9F4C = 0x0000FE06;
 
-    temp_a1 = arg1 & 0xF;
-    if (temp_a1 != 0)
+    val = arg1 & 0xF;
+    if (val != 0)
     {
-        switch (temp_a1)
+        switch (val)
         {
             case 1:
                 func_80045468(skel, &D_800A9F4C, false);
@@ -2245,18 +2245,18 @@ void func_8003E388(s_Skeleton* skel, s32 arg1) // 0x8003E388
 
 void func_8003E414(s_Skeleton* skel, s32 arg1) // 0x8003E414
 {
-    s32 temp_a1;
+    s32 val;
 
     static s32 D_800A9F50 = 0xFE19FD11;
     static s32 D_800A9F54 = 0xFE22FD1A;
 
-    temp_a1 = arg1 & 0x3;
-    if (temp_a1 == 0)
+    val = arg1 & 0x3;
+    if (val == 0)
     {
         return;
     }
 
-    switch (temp_a1)
+    switch (val)
     {
         case 1:
             func_80045468(skel, &D_800A9F50, false);

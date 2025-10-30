@@ -9178,7 +9178,7 @@ void func_80070400(s_SubCharacter* chara, s_func_80070400_1* arg1, s_func_800704
     q19_12 invAlpha;
 
     // Compute alpha.
-    if (IS_ANIM_STATUS_ACTIVE(chara->model_0.anim_4.status_0))
+    if (ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0))
     {
         alpha = Q12_FRACT(chara->model_0.anim_4.time_4);
     }
