@@ -31,14 +31,14 @@ def convert_flag_expression(expr):
                 * if written as '&= mask'  -> mask is already negated: bits to clear = ~mask & 0xFFFFFFFF
     Returns a string (single call or multiple calls joined).
     """
-    arr_pat   = r'.*?eventFlags_168\[(\d+)\]'
+    arr_pat = r'.*?eventFlags_168\[(0x[0-9a-fA-F]+|\d+)\]'
     mask_pat  = r'(0x[0-9a-fA-F]+(?:[uUlL]*)|\d+)'
     shift_pat = r'\(\s*1\s*<<\s*(\d+)\s*\)'
 
     # `(eventFlags_168 & xx) == xx` -> Get and possibly !Get
     m = re.search(arr_pat + r'\s*\(?\s*&\s*' + mask_pat + r'\s*\)?\s*==\s*' + mask_pat, expr)
     if m:
-        array_idx = int(m.group(1))
+        array_idx = int(m.group(1), 0)
         mask = _parse_mask(m.group(2))
         value = _parse_mask(m.group(3))
         conditions = []
@@ -54,13 +54,13 @@ def convert_flag_expression(expr):
     # |= (shift)
     m = re.search(arr_pat + r'\s*\|\=\s*' + shift_pat, expr)
     if m:
-        array_idx, bit_idx = int(m.group(1)), int(m.group(2))
+        array_idx, bit_idx = int(m.group(1), 0), int(m.group(2))
         return f"Savegame_EventFlagSet(EventFlag_{array_idx * 32 + bit_idx})"
 
     # |= (literal)
     m = re.search(arr_pat + r'\s*\|\=\s*' + mask_pat, expr)
     if m:
-        array_idx = int(m.group(1))
+        array_idx = int(m.group(1), 0)
         mask = _parse_mask(m.group(2))
         indices = _bit_indices(mask)
         return '; '.join(f"Savegame_EventFlagSet(EventFlag_{array_idx * 32 + i})" for i in indices) if indices else None
@@ -68,13 +68,13 @@ def convert_flag_expression(expr):
     # &= ~(shift)
     m = re.search(arr_pat + r'\s*\&\=\s*~' + shift_pat, expr)
     if m:
-        array_idx, bit_idx = int(m.group(1)), int(m.group(2))
+        array_idx, bit_idx = int(m.group(1), 0), int(m.group(2))
         return f"Savegame_EventFlagClear(EventFlag_{array_idx * 32 + bit_idx})"
 
     # &= ~(literal)
     m = re.search(arr_pat + r'\s*\&\=\s*~' + mask_pat, expr)
     if m:
-        array_idx = int(m.group(1))
+        array_idx = int(m.group(1), 0)
         mask = _parse_mask(m.group(2))
         indices = _bit_indices(mask)
         return '; '.join(f"Savegame_EventFlagClear(EventFlag_{array_idx * 32 + i})" for i in indices) if indices else None
@@ -82,7 +82,7 @@ def convert_flag_expression(expr):
     # &= (literal WITHOUT ~) -> mask is the negated form; bits to clear are zeros in mask
     m = re.search(arr_pat + r'\s*\&\=\s*' + mask_pat, expr)
     if m:
-        array_idx = int(m.group(1))
+        array_idx = int(m.group(1), 0)
         mask = _parse_mask(m.group(2))
         inverted = (~mask) & 0xFFFFFFFF
         indices = _bit_indices(inverted)
@@ -91,7 +91,7 @@ def convert_flag_expression(expr):
     # &= (shift WITHOUT ~) -> uncommon, but handle by inverting the single-bit mask
     m = re.search(arr_pat + r'\s*\&\=\s*' + shift_pat, expr)
     if m:
-        array_idx, bit_idx = int(m.group(1)), int(m.group(2))
+        array_idx, bit_idx = int(m.group(1), 0), int(m.group(2))
         inverted = (~(1 << bit_idx)) & 0xFFFFFFFF
         indices = _bit_indices(inverted)
         return '; '.join(f"Savegame_EventFlagClear(EventFlag_{array_idx * 32 + i})" for i in indices) if indices else None
@@ -99,13 +99,13 @@ def convert_flag_expression(expr):
     # & (shift) -> Get
     m = re.search(arr_pat + r'\s*\&\s*' + shift_pat, expr)
     if m:
-        array_idx, bit_idx = int(m.group(1)), int(m.group(2))
+        array_idx, bit_idx = int(m.group(1), 0), int(m.group(2))
         return f"Savegame_EventFlagGet(EventFlag_{array_idx * 32 + bit_idx})"
 
     # & (literal) -> Get (if multiple bits -> OR them)
     m = re.search(arr_pat + r'\s*\&\s*' + mask_pat, expr)
     if m:
-        array_idx = int(m.group(1))
+        array_idx = int(m.group(1), 0)
         mask = _parse_mask(m.group(2))
         indices = _bit_indices(mask)
         if not indices:
