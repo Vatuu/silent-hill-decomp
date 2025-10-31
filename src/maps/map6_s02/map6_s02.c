@@ -9,7 +9,7 @@ INCLUDE_RODATA("asm/maps/map6_s02/nonmatchings/map6_s02", D_800C9578);
 
 INCLUDE_RODATA("asm/maps/map6_s02/nonmatchings/map6_s02", g_MapOverlayHeader);
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CABA0);
+#include "maps/shared/sharedFunc_800CE5D4_1_s03.h" // 0x800CABA0
 
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02", func_800CAC54);
 

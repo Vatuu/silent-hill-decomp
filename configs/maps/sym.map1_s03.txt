@@ -21,6 +21,7 @@ sharedData_800CAB70_0_s00           = 0x800CAC18; // type:VECTOR
 //-----------------------------------------------------------
 //--- PA: 0x002768   VA: 0x800CBCE0   subsegment: c, map1_s03
 //-----------------------------------------------------------
+sharedFunc_800CE5D4_1_s03           = 0x800CE5D4; // type:func
 sharedFunc_800CB6B0_0_s00           = 0x800CED50; // type:func
 sharedFunc_800CBBBC_0_s00           = 0x800CF144; // type:func
 sharedFunc_800CBC94_0_s00           = 0x800CF21C; // type:func
@@ -136,6 +137,7 @@ g_Particle_SpeedX                   = 0x800E2104; // type:s32
 g_Particle_SpeedZ                   = 0x800E2108; // type:s32
 sharedData_800DFB6C_0_s00           = 0x800E210C; // type:s32
 sharedData_800DFB70_0_s00           = 0x800E2110; // type:s32
+sharedData_800E2120_1_s03           = 0x800E2120; // size:0x14
 g_ParticleVectors0                  = 0x800E3AA0; // type:ParticleVectors
 g_Particle_RotationY                = 0x800E3AC2; // type:s16
 g_ParticleVectors1                  = 0x800E3AD0; // type:ParticleVectors

@@ -714,7 +714,7 @@ void func_800D2658(void)
 
             for (i = 0; i < 5; i++)
             {
-                func_800CBB60(&D_800D4174[i], Q12(0.5f), Q12(0.05f), 0);
+                sharedFunc_800CE5D4_1_s03(&D_800D4174[i], Q12(0.5f), Q12(0.05f), 0);
             }
             break;
 
@@ -723,7 +723,7 @@ void func_800D2658(void)
 
             for (i = 0; i < 5; i++)
             {
-                func_800CBB60(&D_800D4174[i], Q12(0.5f), Q12(0.05f), 0);
+                sharedFunc_800CE5D4_1_s03(&D_800D4174[i], Q12(0.5f), Q12(0.05f), 0);
             }
             break;
 
@@ -732,7 +732,7 @@ void func_800D2658(void)
 
             for (i = 0; i < 5; i++)
             {
-                func_800CBB60(&D_800D4174[i], Q12(0.5f), Q12(0.05f), i == 0);
+                sharedFunc_800CE5D4_1_s03(&D_800D4174[i], Q12(0.5f), Q12(0.05f), i == 0);
             }
 
             SysWork_StateStepIncrementDelayed(Q12(2.5f), false);
@@ -760,7 +760,7 @@ void func_800D2658(void)
 
             for (i = 0; i < 5; i++)
             {
-                func_800CBB60(&D_800D4174[i], Q12(0.5f), Q12(0.05f), 0);
+                sharedFunc_800CE5D4_1_s03(&D_800D4174[i], Q12(0.5f), Q12(0.05f), 0);
             }
 
             g_SysWork.field_28 += g_DeltaTime0;
