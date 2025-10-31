@@ -28,13 +28,13 @@ typedef enum _EventFlag
     EventFlag_25 = 25,
 
     /** `MAP7_S01` and `MAP7_S02` common item pickups, early numbers could be reclaimed flags, or Nowhere was designed very early on? */
-    EventFlag_M7S01_RifleShells     = 27,
-    EventFlag_M7S01_HandgunBullets0 = 28,
-    EventFlag_M7S01_HealthDrink0    = 29,
-    EventFlag_M7S01_HandgunBullets1 = 30,
-    EventFlag_M7S01_ShotgunShells   = 31,
-    EventFlag_M7S01_FirstAidKit     = 32,
-    EventFlag_M7S01_HandgunBullets2 = 33,
+    EventFlag_M7S01_RifleShells        = 27,
+    EventFlag_M7S01_HandgunBullets0    = 28,
+    EventFlag_M7S01_HealthDrink0       = 29,
+    EventFlag_M7S01_HandgunBullets1    = 30,
+    EventFlag_M7S01_ShotgunShells      = 31,
+    EventFlag_M7S01_FirstAidKit        = 32,
+    EventFlag_M7S01_HandgunBullets2    = 33,
     EventFlag_M2S00_WaterWorksCutscene = 34,
     EventFlag_M0S01_PickupKitchenKnife = 35,
     EventFlag_M0S01_PickupFlashlight   = 36,
@@ -67,8 +67,8 @@ typedef enum _EventFlag
     EventFlag_M2S00_PickupChainsaw     = 63,
     EventFlag_M2S00_PickupRockDrill    = 64,
 
-    EventFlag_M1S00_PickupMap      = 67, // Shared with M1S06
-    EventFlag_M1S01_PickupChemical = 68,
+    EventFlag_M1S00_PickupMap             = 67, // Shared with M1S06
+    EventFlag_M1S01_PickupChemical        = 68,
     EventFlag_M1S01_PickupGoldMedallion   = 69,
     EventFlag_M1S01_PickupSilverMedallion = 70,
     EventFlag_71                          = 71,
@@ -88,7 +88,8 @@ typedef enum _EventFlag
 
     EventFlag_M7S01_HealthDrink1 = 86,
 
-    EventFlag_M1S02_PickupPictureCard = 93,
+    EventFlag_92                               = 92,
+    EventFlag_M1S02_PickupPictureCard          = 93,
     EventFlag_M1S02_SeenDoorWithHorizontalSlot = 94,
 
     EventFlag_M1S02_PickupShotgun = 95,
@@ -164,17 +165,17 @@ typedef enum _EventFlag
     EventFlag_198 = 198,
 
     EventFlag_M3S00_FirstAidKit = 199, // Odd numbering not with other common items, possibly some default that goes unused, shared with M3S01 and M3S06.
-    EventFlag_200 = 200,
+    EventFlag_200               = 200,
 
-    EventFlag_203 = 203,
-    EventFlag_204 = 204,
+    EventFlag_203                       = 203,
+    EventFlag_204                       = 204,
     EventFlag_M3S01_PickupPlasticBottle = 205,
     EventFlag_M3S01_PickupUnknownLiquid = 206,
-    EventFlag_M3S00_PickupMap         = 207, // Shared with M3S01, M3S06
-    EventFlag_M3S01_PickupMap         = 208, // M3S01 also uses flag above.
-    EventFlag_M3S01_PickupBasementKey = 209,
-    EventFlag_M3S01_BasementDoorOpen  = 210,
-    EventFlag_M3S01_GeneratorOn       = 211,
+    EventFlag_M3S00_PickupMap           = 207, // Shared with M3S01, M3S06
+    EventFlag_M3S01_PickupMap           = 208, // M3S01 also uses flag above.
+    EventFlag_M3S01_PickupBasementKey   = 209,
+    EventFlag_M3S01_BasementDoorOpen    = 210,
+    EventFlag_M3S01_GeneratorOn         = 211,
 
     EventFlag_219 = 219,
 

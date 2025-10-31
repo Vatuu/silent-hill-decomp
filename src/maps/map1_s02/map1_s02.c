@@ -301,9 +301,152 @@ void func_800DA200(void) // 0x800DA200
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DA2E4);
+void func_800DA2E4(void) // 0x800DA2E4
+{
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DA384);
+    func_8004EE94(64, 1);
+    Map_MessageWithSfx(19, Sfx_DoorUnlocked, &sfxPos); // Empty msg?
+}
+
+void func_800DA384(void) // 0x800DA384
+{
+    VECTOR3 viewPos;
+    bool    skipped;
+
+    skipped = false;
+
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
+        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 10)
+    {
+        skipped = true;
+        SysWork_StateStepReset();
+    }
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            Camera_PositionSet(NULL, Q12(-19.96f), Q12(-1.4f), Q12(-61.45f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(-17.14f), Q12(-1.49f), Q12(-64.27f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            break;
+
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+            break;
+
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+            if (D_800E1EE4 == 0)
+            {
+                Camera_PositionSet(NULL, Q12(-21.2f), Q12(-2.2798f), Q12(-59.23f), Q12(0.0f), Q12(0.0f), cam_mv_prm_user.max_spd_xz >> 3, cam_mv_prm_user.max_spd_y >> 3, false);
+                Camera_LookAtSet(NULL, Q12(-13.1f), Q12(-1.2f), Q12(-68.3f), Q12(0.0f), Q12(0.0f), deflt_watch_mv_prm.max_ang_spd_x >> 3, deflt_watch_mv_prm.max_ang_spd_y >> 3, false);
+                vwGetViewPosition(&viewPos);
+
+                if (ABS(viewPos.vx - Q12(-21.2f)) < Q12(0.3f) && ABS(viewPos.vz - Q12(-59.23f)) < Q12(0.3f))
+                {
+                    D_800E1EE4 = 1;
+                }
+            }
+            else
+            {
+                Camera_PositionSet(NULL, Q12(-17.79f), Q12(-5.03f), Q12(-54.09f), Q12(0.0f), Q12(0.0f), cam_mv_prm_user.max_spd_xz >> 3, cam_mv_prm_user.max_spd_y >> 3, false);
+                Camera_LookAtSet(NULL, Q12(-19.57f), Q12(0.0f), Q12(-61.21f), Q12(0.0f), Q12(0.0f), deflt_watch_mv_prm.max_ang_spd_x >> 3, deflt_watch_mv_prm.max_ang_spd_y >> 3, false);
+            }
+            break;
+
+        default:
+            g_SavegamePtr->mapMarkingFlags_1D4[10] |= 0x40000;
+            break;
+    }
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            Game_TurnFlashlightOn();
+            sharedFunc_800D08B8_0_s00(6, 127);
+            sharedFunc_800CB6B0_0_s00(0, g_SavegamePtr->mapOverlayId_A4, 0);
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(-13.3f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(-68.1f);
+            func_800865FC(true, 0, 0, FP_ANGLE(-45.0f), Q12(-18.18f), Q12(-62.24f));
+            Savegame_EventFlagClear(EventFlag_92);
+            D_800E1EE2 = 0;
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            SysWork_StateStepIncrementAfterFade(2, true, 2, Q12(0.0f), false);
+            break;
+
+        case 2:
+            SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
+            break;
+
+        case 3:
+            func_80085DF0();
+            break;
+
+        case 4:
+            Map_MessageWithAudio(15, &D_800E1EE2, &D_800E1EDC); // Where am I?
+            break;
+
+        case 5:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 74);
+            break;
+
+        case 6:
+            Map_MessageWithAudio(16, &D_800E1EE2, &D_800E1EDC); // Have I been here before?
+            break;
+
+        case 7:
+            Savegame_EventFlagSet(EventFlag_92);
+            func_800866D4(53, 1, false);
+            break;
+
+        case 8:
+            SysWork_StateStepIncrementDelayed(Q12(2.2f), false);
+            break;
+
+        case 9:
+            Map_MessageWithAudio(17, &D_800E1EE2, &D_800E1EDC); // I don't remember this being here before...
+            break;
+
+        case 10:
+            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            break;
+
+        default:
+            if (skipped)
+            {
+                g_SysWork.player_4C.chara_0.position_18.vx = Q12(-18.18f);
+                g_SysWork.player_4C.chara_0.position_18.vy = Q12(0.0f);
+                g_SysWork.player_4C.chara_0.position_18.vz = Q12(-62.24f);
+                g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(-45.0f);
+                sharedFunc_800D2244_0_s00(true);
+                SysWork_StateSetNext(SysState_Gameplay);
+                vcReturnPreAutoCamWork(true);
+            }
+            else
+            {
+                sharedFunc_800D2244_0_s00(false);
+                SysWork_StateSetNext(SysState_Gameplay);
+                vcReturnPreAutoCamWork(false);
+            }
+
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+
+            // Sets `EventFlag_225` temporarily for function call and clears afterward?
+            Savegame_EventFlagSet(EventFlag_225);
+            func_8003A16C();
+            Savegame_EventFlagClear(EventFlag_225);
+            break;
+    }
+}
 
 void func_800DA8F8(void) // 0x800DA8F8
 {
