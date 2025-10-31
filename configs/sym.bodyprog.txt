@@ -246,7 +246,7 @@ Screen_DisplayEnvXySet                      = 0x80032524; // type:func
 Screen_FadeDrawModeSet                      = 0x800325A4; // type:func
 Screen_FadeInProgressGet                    = 0x800325F8; // type:func
 Screen_FadeUpdate                           = 0x8003260C; // type:func
-Screen_BlackBorderDraw.56                   = 0x8003289C; // filename:Screen_BlackBorderDraw type:func The generated result of the compilation adds .56 at name end for some reason.
+Screen_BlackBorderDraw.64                   = 0x8003289C; // filename:Screen_BlackBorderDraw type:func The generated result of the compilation adds .64 at name end for some reason.
 Screen_CutsceneCameraStateUpdate            = 0x80032904; // type:func
 Screen_VSyncCallback                        = 0x80032B80; // type:func
 

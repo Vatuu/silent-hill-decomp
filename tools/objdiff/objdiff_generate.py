@@ -4,6 +4,8 @@ from dataclasses import dataclass, asdict
 import logging
 import yaml
 import json
+import sys
+import re
 
 @dataclass
 class UnitMetadata:
@@ -63,25 +65,25 @@ def _determine_categories(path: Path, config) -> tuple[UnitMetadata, str]:
     categories = []
     for category in config["categories"]:
         for prefix in category["paths"]:
-            if str(modified_path).startswith(prefix):
+            if re.sub(r"\\", r"/", str(modified_path)).startswith(prefix):
                 categories.append(category["id"])
     return (UnitMetadata(categories), str(modified_path))
 
 def main():
     logging.basicConfig(level = logging.INFO)
     config = _create_config()
-
+    
     expected_objects = _collect_objects(Path(config["expected_paths"]["asm"]), config)
     
     logging.info(f"Accounting for {len(expected_objects)} objects.")
     units = []
     for file in expected_objects:
         processed_path = _determine_categories(file, config)
-        base_path = "build/src/" + processed_path[1].removesuffix(".s.o").removesuffix(".c.o") + ".c.o"
+        base_path = "build/src/" + re.sub(r"\\", r"/", processed_path[1]).removesuffix(".s.o").removesuffix(".c.o") + ".c.o"
         unit = Unit(
-            processed_path[1].removesuffix(".s.o").removesuffix(".c.o"),
+            re.sub(r"\\", r"/", processed_path[1]).removesuffix(".s.o").removesuffix(".c.o"),
             base_path if Path(base_path).exists() else None,
-            str(file),
+            re.sub(r"\\", r"/", str(file)),
             processed_path[0])
         units.append(unit)
     
@@ -90,7 +92,7 @@ def main():
         categories.append(ProgressCategory(category["id"], category["name"]))
     
     with (Path(config["output"])).open("w") as json_file:
-        json.dump(asdict(Config(True, False, "make", ["progress"], units, categories)), json_file, indent=2)
+        json.dump(asdict(Config(False, False, "make", ["progress"], units, categories)), json_file, indent=2)
 
 if __name__ == "__main__":
     main()
