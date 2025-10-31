@@ -344,7 +344,7 @@ void func_800DA384(void) // 0x800DA384
         case 10:
             if (D_800E1EE4 == 0)
             {
-                Camera_PositionSet(NULL, Q12(-21.2f), Q12(-2.2798f), Q12(-59.23f), Q12(0.0f), Q12(0.0f), cam_mv_prm_user.max_spd_xz >> 3, cam_mv_prm_user.max_spd_y >> 3, false);
+                Camera_PositionSet(NULL, Q12(-21.2f), Q12(-2.28f), Q12(-59.23f), Q12(0.0f), Q12(0.0f), cam_mv_prm_user.max_spd_xz >> 3, cam_mv_prm_user.max_spd_y >> 3, false);
                 Camera_LookAtSet(NULL, Q12(-13.1f), Q12(-1.2f), Q12(-68.3f), Q12(0.0f), Q12(0.0f), deflt_watch_mv_prm.max_ang_spd_x >> 3, deflt_watch_mv_prm.max_ang_spd_y >> 3, false);
                 vwGetViewPosition(&viewPos);
 
