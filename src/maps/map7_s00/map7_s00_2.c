@@ -143,7 +143,37 @@ INCLUDE_RODATA("asm/maps/map7_s00/nonmatchings/map7_s00_2", jtbl_800CB528);
 
 INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00_2", func_800D1604);
 
-INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00_2", func_800D2700);
+void func_800D2700(void)
+{
+    s32 i;
+    s32 z;
+
+    WorldObject_ModelNameSet(&g_WorldObject0[0], "DR3R_HID");
+    WorldObject_ModelNameSet(&g_WorldObject0[1], "DR3L_HID");
+    WorldObject_ModelNameSet(&g_WorldObject0[2], "DR1R_HID");
+    WorldObject_ModelNameSet(&g_WorldObject0[3], "DR1L_HID");
+    WorldObject_ModelNameSet(&g_WorldObject0[4], "DR2R_HID");
+    WorldObject_ModelNameSet(&g_WorldObject0[5], "DR2L_HID");
+
+    z = Q12(-137.45f);
+    for (i = 3; i >= 0; i--)
+    {
+        D_800D4370[i] = z;
+    }
+    WorldObjectPoseSet(&g_WorldObject1.position_1C, Q12(15.63f), Q12(-0.91f), Q12(-140.5498f), 0, 0xfc00, 0);
+    WorldObject_ModelNameSet(&g_WorldObject1.object_0, D_800A99E4.savePadName_4);
+
+    if (Savegame_EventFlagGet(EventFlag_471))
+    {
+        Sd_EngineCmd(Sfx_Unk1640);
+        D_800D4362 = Q12(1.0f);
+    }
+    Savegame_EventFlagClear(EventFlag_219);
+    if (Savegame_EventFlagGet(EventFlag_145) && Savegame_EventFlagGet(EventFlag_307))
+    {
+        Savegame_EventFlagSet(EventFlag_477);
+    }
+}
 
 INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00_2", func_800D286C);
 

@@ -124,3 +124,6 @@ sharedData_800E0CBA_0_s00           = 0x800D432E; // type:s8
 sharedData_800E39D8_0_s00           = 0x800D4330; // type:s32
 sharedData_800D32A0_0_s02           = 0x800D4334; // type:s32
 sharedData_800D6BB8_3_s04           = 0x800D433C; // type:s32
+D_800D4370                          = 0x800D4370; // type:s32 size:0x10
+g_WorldObject0                      = 0x800D4380; // type:WorldObject_0 size:0xA8
+g_WorldObject1                      = 0x800D4430; // type:WorldObjectDesc size:0x2E

@@ -174,6 +174,8 @@ typedef enum _EventFlag
     EventFlag_M3S01_BasementDoorOpen  = 210,
     EventFlag_M3S01_GeneratorOn       = 211,
 
+    EventFlag_219 = 219,
+
     EventFlag_223 = 223,
 
     EventFlag_225 = 225,
@@ -212,6 +214,7 @@ typedef enum _EventFlag
 
     EventFlag_305 = 305,
     EventFlag_306 = 306,
+    EventFlag_307 = 307,
 
     EventFlag_309             = 309,
     EventFlag_M4S01_PickupAxe = 310,
@@ -272,6 +275,10 @@ typedef enum _EventFlag
     EventFlag_463 = 463,
 
     EventFlag_469 = 469,
+
+    EventFlag_471 = 471,
+
+    EventFlag_477 = 477,
 
     EventFlag_481 = 481,
     EventFlag_482 = 482,

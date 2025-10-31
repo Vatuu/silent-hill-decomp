@@ -19,6 +19,11 @@
 #define MAP_ROOM_MIN_Z    Q12(-160.0f)
 #define MAP_ROOM_MAX_Z    Q12(0.f)
 
+extern s32 D_800D4370[4]; // Z pos table ?
+extern s_WorldObject_0   g_WorldObject0[6]; // 800D4380
+extern s_WorldObjectDesc g_WorldObject1;    // 800D4430
+extern s16 D_800D4362;
+
 void func_800CFFE8(s32 arg0);
 
 void func_800D001C(s32 arg0);
