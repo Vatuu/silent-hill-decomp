@@ -278,6 +278,8 @@ typedef enum _EventFlag
 
     EventFlag_471 = 471,
 
+    EventFlag_474 = 474,
+    EventFlag_476 = 476,
     EventFlag_477 = 477,
 
     EventFlag_481 = 481,

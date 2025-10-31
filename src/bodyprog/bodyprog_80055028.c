@@ -2788,7 +2788,7 @@ static inline s32 calc_atten(s32 volume, VECTOR3* pos, s32 falloff)
     return (volume * dist / falloff);
 }
 
-void func_8005DE0C(s32 sfx, VECTOR3* pos, s32 inVolume, s32 falloff, u8 pitch)
+void func_8005DE0C(s32 sfx, VECTOR3* pos, s32 inVolume, s32 falloff, s8 pitch)
 {
     s32 balance;
 

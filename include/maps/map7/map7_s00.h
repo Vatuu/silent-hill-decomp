@@ -23,6 +23,13 @@ extern s32 D_800D4370[4]; // Z pos table ?
 extern s_WorldObject_0   g_WorldObject0[6]; // 800D4380
 extern s_WorldObjectDesc g_WorldObject1;    // 800D4430
 extern s16 D_800D4362;
+extern u8 g_MapMsgSoundIdx;
+extern VECTOR3 g_CutsceneCameraPosition;
+extern VECTOR3 g_CutsceneCameraLookAt;
+extern s32 g_Timer0;
+extern s8 D_800D31D8;
+
+extern u16 g_MapMsgSounds[24];
 
 void func_800CFFE8(s32 arg0);
 
