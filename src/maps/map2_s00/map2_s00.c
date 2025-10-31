@@ -782,7 +782,50 @@ void func_800E81C4(void) // 0x800E81C4
     Event_MapTake(2, EventFlag_M2S00_PickupMap, 60);
 }
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E81EC);
+void func_800E81EC(void)
+{
+    #define STATE_TAKE_STEELPIPE 5
+    #define STATE_DONT_TAKE_STEELPIPE 6
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_80086470(0U, InventoryItemId_SteelPipe, 0, false);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 1:
+            func_80085DF0();
+            break;
+        case 2:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 59);
+            break;
+        case 3:
+            func_80086470(1, InventoryItemId_SteelPipe, 0, false);
+            break;
+        case 4:
+            Savegame_EventFlagSet(EventFlag_M2S00_PickupSteelPipe);
+            if (Gfx_PickupItemAnimate(InventoryItemId_SteelPipe))
+            {
+                MapMsg_DisplayAndHandleSelection(true, 15, STATE_TAKE_STEELPIPE, STATE_DONT_TAKE_STEELPIPE, 0, false);
+            }
+            break;
+        case STATE_TAKE_STEELPIPE:
+            func_80086470(3, InventoryItemId_SteelPipe, 1, false);
+            SysWork_StateStepSet(0, 7);
+            break;
+        case STATE_DONT_TAKE_STEELPIPE:
+            Savegame_EventFlagClear(EventFlag_M2S00_PickupSteelPipe);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 7:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            break;
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E83C0);
 

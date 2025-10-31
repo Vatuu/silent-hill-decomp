@@ -30,4 +30,6 @@ void func_800E9CB4(void);
 
 u8 func_800EE5A8(u32 arg0);
 
+void func_800E81EC(void);
+
 #endif
