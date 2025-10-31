@@ -759,7 +759,10 @@ typedef struct _GteScratchData
 {
     DVECTOR screenXy_0[90];
     u16     screenZ_168[18];
-    s16     field_18C[150];
+
+    s16 field_18C[99]; // The size changed from 150 due to the addition of field_252. Not sure if this is correct.
+    u8  field_252[102];
+
     u8      field_2B8[200]; // Size likely incorrect.
     MATRIX  field_380;
 
@@ -3682,6 +3685,8 @@ void func_8005759C(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 ver
 void func_80057658(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, SVECTOR3* arg3, SVECTOR* arg4);
 
 void func_80057A3C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
+
+void func_80057B7C(s_MeshHeader* arg0, s32 arg1, s_GteScratchData* arg2, MATRIX* arg3);
 
 /** `arg4` unused. */
 s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* activeTexs, void* fsBuf9, s32 fileIdx, s32 arg4);
