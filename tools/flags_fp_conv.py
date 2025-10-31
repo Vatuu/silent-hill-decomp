@@ -8,6 +8,7 @@
 
 import re
 import readline
+import math
 
 # ---------- EventFlags converter ----------
 def _parse_mask(mask_str):
@@ -131,6 +132,8 @@ def process_fp_text(text):
         qval = int(match.group(1))
         text = re.sub(r'\bQ\d+\b', '', text, count=1)
 
+    scale = (1 << qval)
+
     def convert_value(match):
         prefix = match.group(1) or ""   # may be None if start-of-string
         value_str = match.group(2)
@@ -146,7 +149,21 @@ def process_fp_text(text):
         else:
             val = int(value_str, 10)
 
-        return f"{prefix}Q{qval}({val / (1 << qval)}f)"
+        float_val = val / scale;
+
+        # Try to find the shortest rounded representation that still matches
+        for digits in range(1, 12):  # up to 12 decimal places
+            rounded = round(float_val, digits)
+            if float_val < 0:
+                reconverted = int(math.ceil(rounded * scale))
+            else:
+                reconverted = int(math.floor(rounded * scale))
+            if reconverted == val:
+                # Good enough — this rounded value still maps to the same fixed integer
+                float_val = rounded
+                break
+
+        return f"{prefix}Q{qval}({float_val}f)"
 
     # prefix can be: start-of-string, space, or a punctuation
     pattern = re.compile(r'(^|[\s,(=:{\[])([-+]?0x[0-9A-Fa-f]+|[-+]?\d+)')
@@ -164,7 +181,7 @@ if __name__ == "__main__":
             line = input("> ").strip()
         except EOFError:
             break
-        if line.lower() in ("quit", "exit"):
+        if line.lower() in ("quit", "exit", "q"):
             break
         if not line:
             continue
