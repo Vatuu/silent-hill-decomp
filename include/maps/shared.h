@@ -2191,21 +2191,16 @@ typedef struct
     s32 field_10;
 } s_sharedData_800E231C_0_s01;
 
-typedef struct
-{
-    s32 field_0;
-    s32 field_4;
-    s16 field_8;
-    u8  unk_A;
-    u8  field_B;
-    u16 field_C;
-    u16 field_E;
-    s32 unk_10;
-} s_sharedData_800E2120_1_s03;
-
 extern s_sharedData_800E231C_0_s01 sharedData_800E231C_0_s01;
 
-extern s_sharedData_800E2120_1_s03 sharedData_800E2120_1_s03[];
+extern s_MapOverlayHeader_94 sharedData_800E30C8_1_s02;
+
+// TODO: Might use different size in other maps too.
+#if defined(MAP1_S03)
+extern s_MapHdr_field_4C sharedData_800E1FF8_1_s02[300];
+#else
+extern s_MapHdr_field_4C sharedData_800E1FF8_1_s02[200];
+#endif
 
 extern void (*sharedData_800DD7A0_0_s01[52])(s_SubCharacter*);
 
@@ -2855,6 +2850,12 @@ void sharedFunc_800D7B14_0_s01(s_SubCharacter*, GsCOORDINATE2*);
 void sharedFunc_800CE8B8_0_s02(void);
 
 void sharedFunc_800CE5D4_1_s03(VECTOR3* arg0, u16 arg1, u16 arg2, u32 arg3);
+
+void sharedFunc_800CBA4C_1_s02(s32, s32, s32);
+
+void sharedFunc_800CBC98_1_s02(void);
+
+void sharedFunc_800CBD58_1_s02(void);
 
 /** @brief Gets the room index corresponding to the current 2D position.
  *

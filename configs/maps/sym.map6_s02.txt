@@ -117,7 +117,7 @@ MAP_MESSAGES                        = 0x800D3A4C; // type:u32 size:0x64
 //----------------------------------------------------
 sharedData_800DFB6C_0_s00           = 0x800D3CAC; // type:s32
 sharedData_800DFB70_0_s00           = 0x800D3CB0; // type:s32
-sharedData_800E2120_1_s03           = 0x800D3CBC; // size:0x14
+sharedData_800E1FF8_1_s02           = 0x800D3CBC; // size:0x14
 sharedData_800E0CA8_0_s00           = 0x800D4DE8; // type:s32
 sharedData_800E0CAC_0_s00           = 0x800D4DEC; // type:s32
 sharedData_800E0CB0_0_s00           = 0x800D4DF0; // type:u32

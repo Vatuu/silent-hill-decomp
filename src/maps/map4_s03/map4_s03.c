@@ -9,7 +9,7 @@ INCLUDE_RODATA("asm/maps/map4_s03/nonmatchings/map4_s03", D_800C9578);
 
 INCLUDE_RODATA("asm/maps/map4_s03/nonmatchings/map4_s03", g_MapOverlayHeader);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800CB0A4);
+#include "maps/shared/sharedFunc_800CB0A4_4_s03.h" // 0x800CB0A4
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800CB1B0);
 
@@ -361,7 +361,7 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D45C4);
 
 void func_800D46E0(VECTOR3* vec0, VECTOR3* vec1) // 0x800D46E0
 {
-    func_800CB0A4(vec0, vec1);
+    sharedFunc_800CB0A4_4_s03(vec0, vec1);
 }
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D4700);

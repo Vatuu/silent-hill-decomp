@@ -2871,6 +2871,8 @@ extern GsCOORDINATE2* D_800C4410;
 /** Flags. */
 extern s8 D_800C4414;
 
+extern u16 D_800C4420;
+
 /** Angles. */
 extern q3_12 D_800C4428[];
 

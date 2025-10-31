@@ -20,6 +20,7 @@
 //-----------------------------------------------------------
 //--- PA: 0x00172C   VA: 0x800CACA4   subsegment: c, map4_s05
 //-----------------------------------------------------------
+sharedFunc_800CB0A4_4_s03           = 0x800CACA4; // type:func
 sharedFunc_800CE5D4_1_s03           = 0x800CC300; // type:func
 sharedFunc_800CB6B0_0_s00           = 0x800CCA7C; // type:func
 sharedFunc_800CBBBC_0_s00           = 0x800CCE70; // type:func
@@ -98,7 +99,7 @@ g_Particle_SpeedX                   = 0x800D7D98; // type:s32
 g_Particle_SpeedZ                   = 0x800D7D9C; // type:s32
 sharedData_800DFB6C_0_s00           = 0x800D7DA0; // type:s32
 sharedData_800DFB70_0_s00           = 0x800D7DA4; // type:s32
-sharedData_800E2120_1_s03           = 0x800D7DA8; // size:0x14
+sharedData_800E1FF8_1_s02           = 0x800D7DA8; // size:0x14
 g_ParticleVectors0                  = 0x800D9268; // type:ParticleVectors
 g_Particle_RotationY                = 0x800D928A; // type:s16
 g_ParticleVectors1                  = 0x800D9298; // type:ParticleVectors

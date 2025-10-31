@@ -9,46 +9,11 @@ INCLUDE_RODATA("asm/maps/map1_s02/nonmatchings/map1_s02", D_800C9578);
 
 INCLUDE_RODATA("asm/maps/map1_s02/nonmatchings/map1_s02", g_MapOverlayHeader);
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800CBA4C);
+INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", sharedFunc_800CBA4C_1_s02); // 0x800CBA4C
 
-void func_800CBC98(void) // 0x800CBC98
-{
-    s32 idx;
-    s32 i;
+#include "maps/shared/sharedFunc_800CBC98_1_s02.h" // 0x800CBC98
 
-    for (i = 0; i < D_800E30C8.field_74; i++)
-    {
-        idx = func_8005E7E0(27);
-        if (idx == NO_VALUE)
-        {
-            break;    
-        }
-
-        func_800CBA4C(idx, 2, 0);
-    }
-
-    for (i = 0; i <  D_800E30C8.field_78; i++)
-    {
-        D_800E30C8.field_54[i] = 0;
-    }
-
-    D_800C4414 |= 1 << 3;
-}
-
-void func_800CBD58(void) // 0x800CBD58
-{
-    s32 i;
-
-    for (i = 0; i < ARRAY_SIZE(D_800E1FF8); i++)
-    {
-        if (D_800E1FF8[i].field_A == 27 || D_800E1FF8[i].field_A == 28)
-        {
-            D_800E1FF8[i].field_A = 0;
-        }
-    }
-
-    D_800C4414 &= ~(1 << 3);
-}
+#include "maps/shared/sharedFunc_800CBD58_1_s02.h" // 0x800CBD58
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800CBDA8);
 
