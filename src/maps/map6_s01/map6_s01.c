@@ -9,7 +9,21 @@ INCLUDE_RODATA("asm/maps/map6_s01/nonmatchings/map6_s01", D_800C9578);
 
 INCLUDE_RODATA("asm/maps/map6_s01/nonmatchings/map6_s01", g_MapOverlayHeader);
 
-INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", func_800CBB60);
+void func_800CBB60(VECTOR3* arg0, u16 arg1, u16 arg2, u32 arg3)
+{
+    s32 temp_v0;
+
+    temp_v0 = func_8005E7E0(35);
+    if (temp_v0 != NO_VALUE)
+    {
+        D_800D41D4[temp_v0].field_0 = Q12_TO_Q8(arg0->vx);
+        D_800D41D4[temp_v0].field_8 = Q12_TO_Q8(arg0->vy);
+        D_800D41D4[temp_v0].field_4 = Q12_TO_Q8(arg0->vz);
+        D_800D41D4[temp_v0].field_C = arg1 / 2;
+        D_800D41D4[temp_v0].field_E = Q12_TO_Q8(arg2);
+        D_800D41D4[temp_v0].field_B = arg3;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", func_800CBC14);
 
