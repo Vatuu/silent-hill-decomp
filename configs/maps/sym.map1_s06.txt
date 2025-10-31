@@ -106,6 +106,8 @@ MAP_MESSAGES              = 0x800D7494; // type:u32 size:0x7C
 //----------------------------------------------------
 sharedData_800DFB4C_0_s00 = 0x800D7764;
 sharedData_800DFB50_0_s00 = 0x800D7768;
+D_800D778E                = 0x800D778E; // type:u8 size:0x1
+D_800D778F                = 0x800D778F; // type:u8 size:0x1
 g_Particle_SpeedX         = 0x800D7794; // type:s32
 g_Particle_SpeedZ         = 0x800D7798; // type:s32
 sharedData_800DFB6C_0_s00 = 0x800D779C; // type:s32
@@ -138,5 +140,3 @@ D_800DAFB4                = 0x800DAFB4; // size:0x30
 D_800DAFF4                = 0x800DAFF4; // size:0x30
 D_800DB024                = 0x800DB024; // size:0x30
 D_800DB064                = 0x800DB064; // size:0x30
-D_800D778E                = 0x800D778E; // type:u8 size:0x1
-D_800D778F                = 0x800D778F; // type:u8 size:0x1
