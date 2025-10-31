@@ -151,7 +151,10 @@ elif sys.platform == "win32":
     PSXISO_DIR  = f"{TOOLS_DIR}\\psxiso"
 
 # Tooling Paths
-PYTHON = "python3"
+if sys.platform == "win32":
+    PYTHON = "py"
+else:
+    PYTHON = "python3"
 MASPSX = f"{PYTHON} tools/maspsx/maspsx.py"
 if sys.platform == "linux" or sys.platform == "linux2":
     CROSS     = "mips-linux-gnu"
@@ -204,7 +207,28 @@ CC_FLAGS      = f"{OPT_FLAGS} -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -f
 AS_FLAGS      = f"{ENDIAN} {INCLUDE_FLAGS} {OPT_FLAGS} -march=r3000 -mtune=r3000 -no-pad-sections"
 OBJDUMP_FLAGS = f"--disassemble-all --reloc --disassemble-zeroes -Mreg-names=32"
 
-def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file):
+def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file, objdiff_file):
+    
+    if objdiff_file != None:
+        source_target_path = re.sub(r"^src\\", r"asm\\", source_path)
+        source_target_path = re.sub(r".c$", r".s", source_target_path)
+        expected_path = re.sub(r"^build\\src", r"expected\\asm", target_path)
+        if os.path.exists(source_target_path):
+            if re.search("^asm.main.*", source_path):
+                objdiff_file.build(outputs=f"{expected_path}.o", rule="as", inputs=source_target_path,
+                    variables={
+                        "DLFLAG": DL_EXE_FLAGS
+                    }
+                )
+            else:
+                objdiff_file.build(outputs=f"{expected_path}.s.o", rule="as", inputs=source_target_path,
+                    variables={
+                        "DLFLAG": DL_OVL_FLAGS
+                    }
+                )
+        else:
+            return
+    
     
     if sys.platform == "win32":
         source_path = re.sub(r"\\", r"/", source_path)
@@ -285,7 +309,7 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file):
             }
         )
 
-def ninja_setup(split_entries, skip_checksum: bool):
+def ninja_setup_main(split_entries, skip_checksum: bool):
 
     ninja = ninja_syntax.Writer(open(str("build.ninja"), "w", encoding="utf-8"), width=9999)
     
@@ -390,7 +414,7 @@ def ninja_setup(split_entries, skip_checksum: bool):
                                 }
                             )
                     case "c":
-                        ninja_setup_list_add_source(str(entry.object_path).removesuffix(".c.o"), str(entry.src_paths[0]), ninja)
+                        ninja_setup_list_add_source(str(entry.object_path).removesuffix(".c.o"), str(entry.src_paths[0]), ninja, None)
                     case "bin":
                         ninja.build(outputs=str(entry.object_path), rule="ld", inputs=str(entry.src_paths[0]))
                     case "lib":
@@ -471,6 +495,68 @@ def ninja_setup(split_entries, skip_checksum: bool):
             implicit=checksumBuildRequirements
         )
 
+def ninja_setup_objdiff(split_entries):
+
+    ninja = ninja_syntax.Writer(open(str("build.ninja"), "w", encoding="utf-8"), width=9999)
+    objdiff = ninja_syntax.Writer(open(str("objdiff.ninja"), "w", encoding="utf-8"), width=9999)
+    
+    objdiff.rule(
+        "as", description="as $in",
+        command=f"{AS} {AS_FLAGS} $DLFLAG -o $out $in",
+    )
+
+    ninja.rule(
+        "cc", description="cc $in",
+        command=f"{CC} {CC_FLAGS} $DLFLAG -o $out $in",
+    )
+    
+    ninja.rule(
+        "cpp", description="cpp $in",
+        command=f"{CPP} -P -MMD -MP -MT $out -MF $out.d {CPP_FLAGS} $MAPIDFLAG $SKIPASMFLAG $NONMATCHINGFLAG -o $out $in",
+    )
+
+    ninja.rule(
+        "iconv", description="iconv $in",
+        command=f"{ICONV} {ICONV_FLAGS}",
+    )
+
+    ninja.rule(
+        "maspsx", description="maspsx $in",
+        command=f"{MASPSX} {MASPSX_FLAGS} $EXPANDIVFLAG {AS_FLAGS} $DLFLAG -o $out $in",
+    )
+    
+    objdiff.rule(
+        "objdiff-config", description="objdiff-config",
+        command=f"{PYTHON} {OBJDIFF_DIR}\\objdiff_generate.py --ninja $in",
+    )
+    
+    # Build all the objects
+    for split_config in split_entries:
+        match split_config.SPLIT_BASENAME:
+            case "main":
+                os.system(f"{PREBUILD} main")
+            case "BODYPROG.BIN":
+                os.system(f"{PREBUILD} bodyprog")
+            case "STREAM.BIN":
+                os.system(f"{PREBUILD} stream")
+        
+        for split_entry in split_config.SPLIT_ENTRIES:
+            for entry in split_entry:
+                seg = entry.segment
+                
+                if entry.object_path is None:
+                    continue
+                
+                if seg.type[0] == ".":
+                    continue
+                    
+                if seg.type == "c":
+                    ninja_setup_list_add_source(str(entry.object_path).removesuffix(".c.o"), str(entry.src_paths[0]), ninja, objdiff)
+    
+    objdiff.build(outputs=f"{EXPECTED_DIR}\\objdiff.ok", rule="objdiff-config", inputs=f"{OBJDIFF_DIR}\\config.yaml")
+        
+        
+
 def clean_files(clean_all: bool):
     shutil.rmtree(BUILD_DIR, ignore_errors=True)
     shutil.rmtree(PERMUTER_DIR, ignore_errors=True)
@@ -482,6 +568,8 @@ def clean_files(clean_all: bool):
             os.remove(".ninja_log")
         if os.path.exists("build.ninja"):
             os.remove("build.ninja")
+        if os.path.exists("objdiff.ninja"):
+            os.remove("objdiff.ninja")
         shutil.rmtree(ASM_DIR, ignore_errors=True)
         shutil.rmtree(EXPECTED_DIR, ignore_errors=True)
         shutil.rmtree(LINKER_DIR, ignore_errors=True)
@@ -611,7 +699,16 @@ def main():
             split.main([Path(f"{CONFIG_DIR}/{GAMEVERSIONS.GAME_VERSION_DIR}/{yaml}")], modes="all", use_cache=False, verbose=False, disassemble_all=True, make_full_disasm_for_code=True)
             splitsYamlInfo.append(YAML_INFO([split.linker_writer.entries], split.config['options']['basename'], split.config['options']['ld_script_path'], split.config['options']['undefined_funcs_auto_path'], split.config['options']['undefined_syms_auto_path']))
         
-        ninja_setup(splitsYamlInfo, skipChecksumOption)
+        ninja_setup_main(splitsYamlInfo, skipChecksumOption)
+    else:
+        for yaml in yamlsPaths:
+            splat.util.symbols.spim_context = spimdisasm.common.Context()
+            splat.util.symbols.reset_symbols()
+            split.main([Path(f"{CONFIG_DIR}/{GAMEVERSIONS.GAME_VERSION_DIR}/{yaml}")], modes="all", use_cache=False, verbose=False, disassemble_all=True, make_full_disasm_for_code=True)
+            splitsYamlInfo.append(YAML_INFO([split.linker_writer.entries], split.config['options']['basename'], split.config['options']['ld_script_path'], split.config['options']['undefined_funcs_auto_path'], split.config['options']['undefined_syms_auto_path']))
+        ninja_setup_objdiff(splitsYamlInfo)
+        subprocess.call([PYTHON, "-m", "ninja",
+        "-f", "objdiff.ninja"])
 
 if __name__ == "__main__":
     main()

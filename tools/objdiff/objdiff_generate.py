@@ -38,11 +38,15 @@ class Config:
 def _create_config():
     parser = ArgumentParser()
     parser.add_argument("config", type = Path)
+    parser.add_argument("--ninja", action="store_true")
     args = parser.parse_args()
 
     if not args.config.exists() or args.config.is_dir() or args.config.suffix != ".yaml":
         raise ValueError(f"The given path {args.objects} is not pointing towards a valid config.")
 
+    global is_ninja
+    is_ninja = (args.ninja) or False
+    
     with open(args.config) as stream:
         try:
             return yaml.safe_load(stream)
@@ -113,18 +117,25 @@ def main():
     for file in expected_objects:
         processed_path = _determine_categories(file, config)
         base_path = "build/src/" + re.sub(r"\\", r"/", processed_path[1]).removesuffix(".s.o").removesuffix(".c.o") + ".c.o"
-        
         # Create mappings for clone/disambiguation symbol suffixes in base object
         # (disabled as objdiff report doesn't appear to support symbol mappings right now)
         #symbol_mappings = _normalize_suffixed_symbols(base_path) if Path(base_path).exists() else {}
         symbol_mappings = {}
 
-        unit = Unit(
-            re.sub(r"\\", r"/", processed_path[1]).removesuffix(".s.o").removesuffix(".c.o"),
-            base_path if Path(base_path).exists() else None,
-            re.sub(r"\\", r"/", str(file)),
-            processed_path[0],
-            symbol_mappings)
+        if is_ninja:
+            unit = Unit(
+                re.sub(r"\\", r"/", processed_path[1]).removesuffix(".s.o").removesuffix(".c.o"),
+                base_path,
+                re.sub(r"\\", r"/", str(file)),
+                processed_path[0],
+                symbol_mappings)
+        else:
+            unit = Unit(
+                processed_path[1].removesuffix(".s.o").removesuffix(".c.o"),
+                base_path if Path(base_path).exists() else None,
+                str(file),
+                processed_path[0],
+                symbol_mappings)
         units.append(unit)
     
     categories = []
