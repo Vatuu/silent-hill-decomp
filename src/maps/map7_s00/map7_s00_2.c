@@ -344,8 +344,6 @@ void func_800D0B64(void)
     }
 }
 
-//INCLUDE_RODATA("asm/maps/map7_s00/nonmatchings/map7_s00_2", jtbl_800CB528);
-
 INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00_2", func_800D1604);
 
 void func_800D2700(void)

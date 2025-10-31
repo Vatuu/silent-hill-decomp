@@ -137,7 +137,15 @@ INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D2CC8);
 
 INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D2EF8);
 
-INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D30F0);
+void func_800D30F0(s_SubCharacter* chara)
+{
+    if (Savegame_EventFlagGet(EventFlag_130))
+    {
+        chara->model_0.state_2 = 2;
+        chara->model_0.anim_4.status_0 = ANIM_STATUS(11, false);
+        chara->properties_E4.splitHead.flags_E8 |= CharaUnk0Flag_Unk8;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", sharedFunc_800D267C_1_s05); // 0x800D3130
 

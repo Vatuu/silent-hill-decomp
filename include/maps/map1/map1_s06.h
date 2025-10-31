@@ -65,4 +65,6 @@ void func_800D6578(void);
 
 void func_800D6C88(void);
 
+void func_800D30F0(s_SubCharacter* chara);
+
 #endif
