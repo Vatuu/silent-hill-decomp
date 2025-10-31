@@ -147,7 +147,7 @@ void func_800D94F8(void);
 /** Debug function? */
 void Gfx_LoadingScreen_StageString();
 
-void func_800DB94C(void);
+void Event_CutsceneAlleyNightmare(void);
 
 void func_800DBE00();
 

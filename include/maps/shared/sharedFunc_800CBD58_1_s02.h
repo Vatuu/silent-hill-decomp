@@ -1,4 +1,3 @@
-
 void sharedFunc_800CBD58_1_s02(void)
 {
     s32 i;

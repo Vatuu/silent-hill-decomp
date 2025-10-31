@@ -186,7 +186,7 @@ void func_800D12B4(void) // 0x800D12B4
 const static VECTOR3 D_800CB988   = { Q12(-21.3f), Q12(-1.2f), Q12(58.7f) };
 const static VECTOR3 D_800CB994   = { Q12(-19.95f), Q12(-1.2f), Q12(60.7f) };
 
-void func_800D13D8(void)
+void func_800D13D8(void) // 0x800D13D8
 {
     s_FsImageDesc charaTex;
     VECTOR3       pos;
@@ -318,12 +318,16 @@ void func_800D13D8(void)
 
         case 19:
             Chara_Spawn(Chara_Dahlia, 0, Q12(-19.0f), Q12(58.0f), FP_ANGLE(0.0f), 3);
+
             D_800D416D = 1;
+
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 5, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[1], 5, false);
             Savegame_EventFlagSet(EventFlag_427);
+
             D_800D4070 = Q12(35.0f);
+
             SysWork_StateStepIncrement(0);
 
         case 20:
@@ -356,8 +360,10 @@ void func_800D13D8(void)
 
         case 26:
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 16, false);
+
             D_800D4070 = Q12(50.0f);
             D_800D5345 = 1;
+
             Model_AnimFlagsClear(&g_SysWork.npcs_1A0[1].model_0, 2);
             SysWork_StateStepIncrement(0);
 
@@ -376,7 +382,9 @@ void func_800D13D8(void)
 
         case 30:
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 13, false);
+
             D_800D5345 = 0;
+
             Model_AnimFlagsSet(&g_SysWork.npcs_1A0[1].model_0, 2);
             SysWork_StateStepIncrement(0);
 
@@ -405,6 +413,7 @@ void func_800D13D8(void)
 
         case 36:
             SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
+
             if (g_SysWork.sysStateStep_C[0] != 36)
             {
                 func_8005DC1C(Sfx_Unk1610, &D_800CB994, Q8_CLAMPED(0.5f), 0);
@@ -415,6 +424,7 @@ void func_800D13D8(void)
             {
                 func_80085EB8(1, &g_SysWork.player_4C.chara_0, 0, false);
             }
+
             SysWork_StateStepIncrementAfterTime(&D_800D4070, Q12(10.0f), Q12(98.0f), Q12(121.0f), true, false);
             break;
 
@@ -494,8 +504,11 @@ void func_800D13D8(void)
         case 54:
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
             func_80088F94(&g_SysWork.npcs_1A0[1], 0, 0);
+
             D_800D4070 = Q12(169.0f);
+
             SysWork_StateStepIncrement(0);
+
             D_800D5345 = 0;
             break;
 
@@ -506,14 +519,19 @@ void func_800D13D8(void)
             func_8003ED74(7, 4);
             func_8008D448();
             func_8003EBA0();
+
             g_SysWork.field_2378 = Q12(1.0f);
+
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
-            D_800D4070 = -1;
+
+            D_800D4070 = NO_VALUE;
+
             Sd_EngineCmd(19);
             Savegame_EventFlagSet(EventFlag_424);
             g_SavegamePtr->mapMarkingFlags_1D4[5] |= 1 << 0;
+
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
             Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, 2);
@@ -538,15 +556,16 @@ void func_800D13D8(void)
 
         Dms_CharacterGetPosRot(&g_SysWork.field_2360, &rot, "LIGHT", D_800D4070, FS_BUFFER_15);
         Dms_CharacterGetPosRot(&pos, &rot, "L_INT", D_800D4070, FS_BUFFER_15);
+
         g_SysWork.field_2370.vx = -ratan2(pos.vy - g_SysWork.field_2360.vy, Math_Vector2MagCalc(pos.vx - g_SysWork.field_2360.vx, pos.vz - g_SysWork.field_2360.vz));
         g_SysWork.field_2370.vy = ratan2(pos.vx - g_SysWork.field_2360.vx, pos.vz - g_SysWork.field_2360.vz);
         g_SysWork.field_2370.vz = 0;
     }
 }
 
-void func_800D236C(void)
+void func_800D236C(void) // 0x800D236C
 {
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 && g_SysWork.sysStateStep_C[0] >= 3)
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) && g_SysWork.sysStateStep_C[0] >= 3)
     {
         if (g_SysWork.sysStateStep_C[0] < 8)
         {
@@ -620,10 +639,10 @@ void func_800D236C(void)
     }
 }
 
-void func_800D2658(void)
+void func_800D2658(void) // 0x800D2658
 {
-    const static SVECTOR D_800CBACC = {};
-    const static VECTOR3 D_800CBAD4 = { Q12(-23.37f), Q12(-1.25f), Q12(19.28f) };
+    const static SVECTOR EMPTY_ROT = {};
+    const static VECTOR3 UNK_POS   = { Q12(-23.37f), Q12(-1.25f), Q12(19.28f) };
 
     s32 temp_a0_4;
     s32 temp_s0;
@@ -631,7 +650,7 @@ void func_800D2658(void)
     s32 var_s4;
     s32 i;
 
-    // @unused, maybe some removed debug print.
+    // @unused Maybe some removed debug print.
     temp_s0 = D_800D41B4;
     temp_s1 = temp_s0 >> 1;
     Math_Cos(temp_s1);
@@ -664,12 +683,15 @@ void func_800D2658(void)
         case 0:
             sharedFunc_800D20E4_0_s00();
             D_800D5370 = 0;
+
             Fs_QueueStartReadTim(FILE_TIM_ENBAN_TIM, FS_BUFFER_1, &D_800D410C);
             Fs_QueueStartRead(FILE_ANIM_UFO4_DMS, FS_BUFFER_13);
             D_800D4070 = NO_VALUE;
+
             ScreenFade_ResetTimestep();
             Sd_EngineCmd(Sfx_Unk1467);
             func_800463C0(Sfx_Unk1467, 0, 255, 0);
+
             D_800D41B0 = 0;
             D_800D41B4 = 0;
 
@@ -695,6 +717,7 @@ void func_800D2658(void)
 
         case 3:
             D_800D4070 = 0;
+
             SysWork_StateStepIncrementAfterFade(0, true, 3, Q12(0.0f), false);
             DmsHeader_FixOffsets(FS_BUFFER_13);
             func_8003D03C();
@@ -728,7 +751,7 @@ void func_800D2658(void)
             break;
 
         case 8:
-            func_80080B58(&g_SysWork.playerBoneCoords_890[2], &D_800CBACC, &D_800CBAD4);
+            func_80080B58(&g_SysWork.playerBoneCoords_890[2], &EMPTY_ROT, &UNK_POS);
 
             for (i = 0; i < 5; i++)
             {

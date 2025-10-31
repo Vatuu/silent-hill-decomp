@@ -205,13 +205,14 @@ void func_800D1500(void) // 0x800D1500
     Event_CommonItemTake(CommonPickupItemId_FirstAidKit, EventFlag_M3S00_FirstAidKit);
 }
 
-void func_800D1524(void)
+void func_800D1524(void) // 0x800D1524
 {
-    VECTOR3 vec1 = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     func_8004EE94(InventoryItemId_BasementKey, 1);
-    Map_MessageWithSfx(28, Sfx_Unk1335, &vec1); // Used the basement key
-    g_SavegamePtr->mapMarkingFlags_1D4[0x12] |= 0x200;
+    Map_MessageWithSfx(28, Sfx_Unk1335, &sfxPos); // "Used basement key."
+
+    g_SavegamePtr->mapMarkingFlags_1D4[18] |= 0x200;
     Savegame_EventFlagSet(EventFlag_M3S01_BasementDoorOpen);
 }
 
@@ -223,7 +224,7 @@ INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", D_800CB0A0);
 
 INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D15F0);
 
-void func_800D23AC(void) // 0x800D23AC
+void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
 {
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -283,7 +284,7 @@ void func_800D23AC(void) // 0x800D23AC
     }
 }
 
-void func_800D25A8(void) // 0x800D25A8
+void MapEvent_UseBottleOnLiquid(void) // 0x800D25A8
 {
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -362,7 +363,7 @@ void MapEvent_Generator0(void) // 0x800D27C8
             Sd_EngineCmd(Sfx_Unk1495);
             Savegame_EventFlagSet(EventFlag_M3S01_GeneratorOn);
 
-            D_800D8584 = 1;
+            g_GeneratorMakeNoise = true;
 
             SysWork_StateStepIncrement(0);
 
@@ -372,7 +373,7 @@ void MapEvent_Generator0(void) // 0x800D27C8
 
         case 5:
             Savegame_EventFlagSet(EventFlag_M3S01_GeneratorOn);
-            D_800D8584 = 1;
+            g_GeneratorMakeNoise = true;
             SysWork_StateStepIncrement(0);
 
         default: // `STATE_DONT_PRESS_SWITCH`
@@ -425,7 +426,7 @@ void func_800D2A88(void) // 0x800D2A88
 void func_800D2AF4(void) // 0x800D2AF4
 {
     D_800D8734 = 0;
-    D_800D8584 = 0;
+    g_GeneratorMakeNoise = false;
 
     Math_Vector3Set(&g_WorldObject1.position_1C, Q12(20.3f), Q12(0.0f), Q12(59.25f));
     WorldObject_ModelNameSet(&g_WorldObject1.object_0, "BOT_HIDE");
@@ -605,12 +606,12 @@ void func_800D2E54(void) // 0x800D2E54
     {
         if (Savegame_EventFlagGet(EventFlag_M3S01_GeneratorOn))
         {
-            if (D_800D8584 == 0)
+            if (!g_GeneratorMakeNoise)
             {
                 Sd_EngineCmd(Sfx_Unk1503);
-                D_800D8584++;
+                g_GeneratorMakeNoise++;
             }
-            else if (D_800D8584 == 1)
+            else if (g_GeneratorMakeNoise == true)
             {
                 func_8005DE0C(Sfx_Unk1495, &D_800D4CE4, 0x80, Q12(16.0f), 0);
                 func_8005DE0C(Sfx_Unk1503, &D_800D4CE4, 0x80, Q12(16.0f), 0); 
@@ -619,11 +620,11 @@ void func_800D2E54(void) // 0x800D2E54
     }
     else
     {
-        if (D_800D8584 == 1)
+        if (g_GeneratorMakeNoise == true)
         {
             func_8004690C(Sfx_Unk1495);
             func_8004690C(Sfx_Unk1503);
-            D_800D8584 = 0;
+            g_GeneratorMakeNoise = false;
         }
     }
 

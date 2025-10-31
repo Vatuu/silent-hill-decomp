@@ -16,7 +16,8 @@ extern u8 D_800D71E8[];
 
 extern u8 D_800D7761;
 
-extern s16 D_800DAF78;
+/** Time. */
+extern q3_12 D_800DAF78;
 
 extern s_WorldObjectDesc D_800DAF84;
 
@@ -30,8 +31,10 @@ extern s_WorldObjectDesc D_800DB064;
 
 extern u8 D_800DAFE4;
 
+/** Related to stereo sound balance. */
 extern s8 D_800DB054;
 
+/** Stereo sound balance. */
 extern s8 D_800DB055;
 
 extern u8 D_800D778D;
@@ -50,12 +53,16 @@ void func_800D5B98(void);
 
 void func_800D5D6C(u16 arg0);
 
+void func_800D5DD8(void);
+
 void func_800D6338(void);
 
 void func_800D63B0(void);
 
-void func_800D6C88(void);
-
 void Map_WorldObjectsInit(void);
+
+void func_800D6578(void);
+
+void func_800D6C88(void);
 
 #endif

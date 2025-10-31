@@ -974,7 +974,7 @@ void func_800DB870(void) // 0x800DB870
     }
 }
 
-void func_800DB94C(void) // 0x800DB94C
+void Event_CutsceneAlleyNightmare(void) // 0x800DB94C
 {
     MATRIX  neck_lwm;
     SVECTOR offset;
@@ -990,6 +990,7 @@ void func_800DB94C(void) // 0x800DB94C
                 Camera_LookAtSet(&g_SysWork.player_4C.chara_0.position_18, Q12(0.0f), Q12(-0.6f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
                 D_800DFACC++;
             }
+
             Camera_LookAtSet(&g_SysWork.player_4C.chara_0.position_18, Q12(0.0f), Q12(-0.6f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.039f), false);
             break;
 
@@ -997,10 +998,12 @@ void func_800DB94C(void) // 0x800DB94C
             if (D_800DFACC == 1)
             {
                 s32 val = D_800DFACC;
+
                 Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, 2);
                 Camera_PositionSet(NULL, Q12(-250.81f), Q12(-0.32f), Q12(218.59f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), val);
                 Camera_LookAtSet(NULL, Q12(-247.13f), Q12(-0.56f), Q12(217.04f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), val);
                 Math_Vector3Set(&g_SysWork.player_4C.chara_0.position_18.vx, Q12(-251.12f), Q12(0.0f), Q12(218.56f));
+
                 D_800DFACC++;
             }
             else
@@ -1009,27 +1012,28 @@ void func_800DB94C(void) // 0x800DB94C
 
                 Vw_CoordHierarchyMatrixCompute(&g_SysWork.playerBoneCoords_890[2], &neck_lwm);
 
-                // Load transformation matrix
+                // Load transformation matrix.
                 gte_SetRotMatrix(&neck_lwm);
                 gte_SetTransMatrix(&neck_lwm);
 
-                // Transform offset into world space
+                // Transform offset into world space.
                 gte_ldv0(&offset);
                 gte_rtv0tr();
                 gte_stlvnl(&worldPos);
 
-                // Now extract worldPos from result.
+                // Extract `worldPos` from result.
                 worldPos.vx = Q8_TO_Q12(worldPos.vx);
                 worldPos.vy = Q8_TO_Q12(worldPos.vy);
                 worldPos.vz = Q8_TO_Q12(worldPos.vz);
 
-                // Use this position to update the camera
-                Camera_PositionSet(NULL, worldPos.vx, worldPos.vy, worldPos.vz, 0, Q12(3.0f), 0, 0, false);
-                // set camera orientation (look at some point in front of Harry)
-                Camera_LookAtSet(NULL, Q12(-247.43f), Q12(-1.0298f), Q12(217.34f), 0, 0, 0, 0, 0);
+                // Use position to update camera.
+                Camera_PositionSet(NULL, worldPos.vx, worldPos.vy, worldPos.vz, Q12(0.0f), Q12(3.0f), Q12(0.0f), Q12(0.0f), false);
 
-                break;
+                // Set camera rotation to look at point in front of player.
+                Camera_LookAtSet(NULL, Q12(-247.43f), Q12(-1.0298f), Q12(217.34f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
             }
+            break;
+
         case 0:
         case 1:
         case 2:
@@ -1045,12 +1049,14 @@ void func_800DB94C(void) // 0x800DB94C
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            Map_PlaceIpdAtGridPos(0x507, -7, 6);
+            Map_PlaceIpdAtGridPos(FILE_BG_THRF908_IPD, -7, 6);
             func_8004690C(Sfx_Unk1358);
             Sd_PlaySfx(Sfx_Unk1359, 0, 208);
             func_800865FC(true, 0, 0, FP_ANGLE(180.0f), Q12(-252.0f), Q12(219.0f));
             func_800865FC(true, 0, 1, FP_ANGLE(112.5f), Q12(-251.0f), Q12(218.5f));
+
             D_800DFB61 = 0;
+
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1066,7 +1072,7 @@ void func_800DB94C(void) // 0x800DB94C
             break;
 
         case 4:
-            Map_MessageWithAudio(27, &D_800DFB61, &D_800DFAC8); // What is this?
+            Map_MessageWithAudio(27, &D_800DFB61, &D_800DFAC8); // "What is this?"
             break;
 
         default:
@@ -1074,8 +1080,8 @@ void func_800DB94C(void) // 0x800DB94C
             SysWork_StateSetNext(SysState_Gameplay);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
-            // Make all grey children aggro?
-            for (i = 0; i < 6; i++)
+            // Make all grey children aggressive?
+            for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
             {
                 if (g_SysWork.npcs_1A0[i].model_0.charaId_0 == Chara_GreyChild)
                 {

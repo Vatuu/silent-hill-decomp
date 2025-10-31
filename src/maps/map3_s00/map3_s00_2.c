@@ -149,8 +149,8 @@ void func_800D18DC(void) // 0x800D18DC
 
 void func_800D1A98(void) // 0x800D1A98
 {
-    static const SVECTOR3 EmptyRotation = {};
-    static const VECTOR3  SoundPosition = VECTOR3(22.5f, -1.5f, 137.0f);
+    static const SVECTOR3 EMPTY_ROT = {};
+    static const VECTOR3  SOUND_POS = VECTOR3(22.5f, -1.5f, 137.0f);
     
     s32 x;
     s32 tmp;
@@ -162,10 +162,10 @@ void func_800D1A98(void) // 0x800D1A98
     {
         if (!Savegame_EventFlagGet(EventFlag_198))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &EmptyRotation);
+            g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &EMPTY_ROT);
         }
-        g_WorldGfx_ObjectAdd(&g_WorldObject1[0].object_0, &g_WorldObject1[0].position_1C, &EmptyRotation);
-        g_WorldGfx_ObjectAdd(&g_WorldObject1[1].object_0, &g_WorldObject1[1].position_1C, &EmptyRotation);
+        g_WorldGfx_ObjectAdd(&g_WorldObject1[0].object_0, &g_WorldObject1[0].position_1C, &EMPTY_ROT);
+        g_WorldGfx_ObjectAdd(&g_WorldObject1[1].object_0, &g_WorldObject1[1].position_1C, &EMPTY_ROT);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
@@ -203,7 +203,7 @@ void func_800D1A98(void) // 0x800D1A98
 
             if (rand0 < Math_Sin(x))
             {
-                func_8005DC1C(Sfx_Unk1492, &SoundPosition, 0xE0, 2);
+                func_8005DC1C(Sfx_Unk1492, &SOUND_POS, 0xE0, 2);
                 Savegame_EventFlagSet(EventFlag_200);
             }
         }

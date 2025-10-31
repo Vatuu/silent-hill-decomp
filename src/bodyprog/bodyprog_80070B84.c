@@ -4608,16 +4608,16 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                         {
                             if (chara->model_0.anim_4.keyframeIdx_8 >= 10 && chara->model_0.anim_4.keyframeIdx_8 <= 11)
                             {
-                                g_SysWork.player_4C.extra_128.lowerBodyState_24             = PlayerLowerBodyState_RunForward;
-                                HARRY_BASE_ANIM_INFOS[0].endKeyframeIdx_E                   = 36;
-                                HARRY_BASE_ANIM_INFOS[0].status_6                           = 7;
+                                g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunForward;
+                                HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx_E = 36;
+                                HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].status_6         = ANIM_STATUS(HarryAnim_RunForward, true);
                                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk5;
                             }
                             else if (chara->model_0.anim_4.keyframeIdx_8 >= 21 && chara->model_0.anim_4.keyframeIdx_8 <= 22)
                             {
                                 g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_RunForward;
-                                HARRY_BASE_ANIM_INFOS[0].endKeyframeIdx_E       = 26;
-                                HARRY_BASE_ANIM_INFOS[0].status_6               = 7;
+                                HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx_E = 26;
+                                HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].status_6         = ANIM_STATUS(HarryAnim_RunForward, true);
                             }
                         }
                     }
@@ -4768,15 +4768,15 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                                  chara->model_0.anim_4.keyframeIdx_8 <= 31)
                         {
                             g_SysWork.player_4C.extra_128.lowerBodyState_24 = temp_s3;
-                            HARRY_BASE_ANIM_INFOS[0].endKeyframeIdx_E            = 8;
-                            HARRY_BASE_ANIM_INFOS[0].status_6                 = 5;
+                            HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx_E = 8;
+                            HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].status_6         = ANIM_STATUS(HarryAnim_WalkForward, true);
                         }
                         else if (chara->model_0.anim_4.keyframeIdx_8 >= 41 &&
                                  chara->model_0.anim_4.keyframeIdx_8 <= 42)
                         {
                             g_SysWork.player_4C.extra_128.lowerBodyState_24 = temp_s3;
-                            HARRY_BASE_ANIM_INFOS[0].endKeyframeIdx_E            = 20;
-                            HARRY_BASE_ANIM_INFOS[0].status_6                 = 5;
+                            HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx_E = 20;
+                            HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].status_6         = ANIM_STATUS(HarryAnim_WalkForward, true);
                         }
                         break;
 
@@ -4789,15 +4789,15 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                                  chara->model_0.anim_4.keyframeIdx_8 <= 31)
                         {
                             g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_WalkForward;
-                            HARRY_BASE_ANIM_INFOS[0].endKeyframeIdx_E            = 8;
-                            HARRY_BASE_ANIM_INFOS[0].status_6                 = 5;
+                            HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx_E = 8;
+                            HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].status_6         = ANIM_STATUS(HarryAnim_WalkForward, true);
                         }
                         else if (chara->model_0.anim_4.keyframeIdx_8 >= 41 &&
                                  chara->model_0.anim_4.keyframeIdx_8 <= 42)
                         {
                             g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_WalkForward;
-                            HARRY_BASE_ANIM_INFOS[0].endKeyframeIdx_E            = 20;
-                            HARRY_BASE_ANIM_INFOS[0].status_6                 = 5;
+                            HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx_E = 20;
+                            HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].status_6         = ANIM_STATUS(HarryAnim_WalkForward, true);
                         }
                         break;
 
@@ -4811,15 +4811,15 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                                     chara->model_0.anim_4.keyframeIdx_8 <= 31)
                                 {
                                     g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_WalkForward;
-                                    HARRY_BASE_ANIM_INFOS[0].endKeyframeIdx_E            = 8;
-                                    HARRY_BASE_ANIM_INFOS[0].status_6                 = 5;
+                                    HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx_E = 8;
+                                    HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].status_6         = ANIM_STATUS(HarryAnim_WalkForward, true);
                                 }
                                 else if (chara->model_0.anim_4.keyframeIdx_8 >= 41 &&
                                          chara->model_0.anim_4.keyframeIdx_8 <= 42)
                                 {
                                     g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_WalkForward;
-                                    HARRY_BASE_ANIM_INFOS[0].endKeyframeIdx_E            = 20;
-                                    HARRY_BASE_ANIM_INFOS[0].status_6                 = 5;
+                                    HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx_E = 20;
+                                    HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].status_6         = ANIM_STATUS(HarryAnim_WalkForward, true);
                                 }
                             }
                             // Set stumble anim if crashed into a wall.
@@ -4848,15 +4848,15 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                                     chara->model_0.anim_4.keyframeIdx_8 <= 31)
                                 {
                                     g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_WalkForward;
-                                    HARRY_BASE_ANIM_INFOS[0].endKeyframeIdx_E            = 8;
-                                    HARRY_BASE_ANIM_INFOS[0].status_6                 = 5;
+                                    HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx_E = 8;
+                                    HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].status_6         = ANIM_STATUS(HarryAnim_WalkForward, true);
                                 }
                                 else if (chara->model_0.anim_4.keyframeIdx_8 >= 41 &&
                                          chara->model_0.anim_4.keyframeIdx_8 <= 42)
                                 {
                                     g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_WalkForward;
-                                    HARRY_BASE_ANIM_INFOS[0].endKeyframeIdx_E            = 20;
-                                    HARRY_BASE_ANIM_INFOS[0].status_6                 = 5;
+                                    HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx_E = 20;
+                                    HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].status_6         = ANIM_STATUS(HarryAnim_WalkForward, true);
                                 }
                             }
                         }
@@ -4883,12 +4883,12 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             break;
 
         case PlayerLowerBodyState_RunForwardWallStop:
-            if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != 0)
+            if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= (TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f))) >> 1;
                 if ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >> 16) & (1 << 0))
                 {
-                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
+                    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(0.0f);
                 }
             }
 

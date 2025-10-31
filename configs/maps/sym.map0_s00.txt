@@ -128,6 +128,7 @@ sharedFunc_800D929C_0_s00     = 0x800D929C; // type:func
 Map_RoomIdxGet                = 0x800D92AC; // type:func
 Gfx_LoadingScreen_StageString = 0x800D95D4; // type:func
 MapEvent_OpeningCutscene      = 0x800D9748; // type:func
+Event_CutsceneAlleyNightmare  = 0x800DB94C; // type:func
 Map_WorldObjectsInit          = 0x800DBE68; // type:func
 Map_WorldObjectsUpdate        = 0x800DBF08; // type:func
 Event_GreyChildrenSpawn       = 0x800DC1E8; // type:func

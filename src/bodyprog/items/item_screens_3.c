@@ -840,6 +840,7 @@ u8     D_800AF220                         = 0;
 // 3 bytes of padding.
 s32    g_Player_WeaponAttack1             = NO_VALUE;
 
+// TODO: First element is modified at runtime.
 s_AnimInfo HARRY_BASE_ANIM_INFOS[57] = {
     { Anim_Update2, ANIM_STATUS(HarryAnim_Still,                   false), false, ANIM_STATUS(HarryAnim_Still,                   true), { Q12(10.0f)    }, NO_VALUE, 0   },
     { Anim_Update1, ANIM_STATUS(HarryAnim_Still,                   true),  false, NO_VALUE,                                             { Q12(30.0f)    }, NO_VALUE, 1   },

@@ -3888,6 +3888,7 @@ void Camera_PositionSet(VECTOR3* pos, q19_12 offsetOrPosX, q19_12 offsetOrPosY, 
 void Camera_LookAtSet(VECTOR3* lookAt, q19_12 lookAtOffsetOrPosX, q19_12 lookAtOffsetOrPosY, q19_12 lookAtOffsetOrPosZ,
                       q19_12 angularAccelX, q19_12 angularAccelY, q19_12 angularSpeedXMax, q19_12 angularSpeedYMax, bool warp);
 
+/** Maybe `Chara_PlayAnim`. */
 void func_80086C58(s_SubCharacter* chara, s32 arg1);
 
 void func_80086D04(s_SubCharacter* chara);
