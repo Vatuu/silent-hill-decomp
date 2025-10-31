@@ -157,31 +157,33 @@ else:
     PYTHON = "python3"
 MASPSX = f"{PYTHON} tools/maspsx/maspsx.py"
 if sys.platform == "linux" or sys.platform == "linux2":
-    CROSS     = "mips-linux-gnu"
-    AS        = f"{CROSS}-as"
-    LD        = f"{CROSS}-ld"
-    OBJCOPY   = f"{CROSS}-objcopy"
-    OBJDUMP   = f"{CROSS}-objdump"
-    CPP       = f"{CROSS}-cpp"
-    CC        = f"{TOOLS_DIR}/gcc-2.8.1-psx/cc1"
-    OBJDIFF   = f"{OBJDIFF_DIR}/objdiff"
-    PREBUILD  = f"{TOOLS_DIR}/prebuild.sh"
-    POSTBUILD = f"{TOOLS_DIR}/postbuild.sh"
-    DUMPSXISO = f"{PSXISO_DIR}/dumpsxiso"
-    ICONV     = f"iconv"
+    CROSS             = "mips-linux-gnu"
+    AS                = f"{CROSS}-as"
+    LD                = f"{CROSS}-ld"
+    OBJCOPY           = f"{CROSS}-objcopy"
+    OBJDUMP           = f"{CROSS}-objdump"
+    CPP               = f"{CROSS}-cpp"
+    CC                = f"{TOOLS_DIR}/gcc-2.8.1-psx/cc1"
+    OBJDIFF           = f"{OBJDIFF_DIR}/objdiff"
+    OBJDIFF_GENSCRIPT = f"{OBJDIFF_DIR}/objdiff_generate.py"
+    PREBUILD          = f"{TOOLS_DIR}/prebuild.sh"
+    POSTBUILD         = f"{TOOLS_DIR}/postbuild.sh"
+    DUMPSXISO         = f"{PSXISO_DIR}/dumpsxiso"
+    ICONV             = f"iconv"
 elif sys.platform == "win32":
-    CROSS     = f"{TOOLS_DIR}/win-build/binutils/mips-linux-gnu"
-    AS        = f"{CROSS}-as.exe"
-    LD        = f"{CROSS}-ld.exe"
-    OBJCOPY   = f"{CROSS}-objcopy.exe"
-    OBJDUMP   = f"{CROSS}-objdump.exe"
-    CPP       = f"{TOOLS_DIR}/win-build/mcpp/mcpp.exe"
-    CC        = f"{TOOLS_DIR}/win-build/gcc-psx/cc1psx.exe"
-    OBJDIFF   = f"{OBJDIFF_DIR}/objdiff.exe"
-    PREBUILD  = f"cmd.exe /c {TOOLS_DIR}\\prebuild.bat"
-    POSTBUILD = f"{PYTHON} {TOOLS_DIR}\\postbuild.py"
-    DUMPSXISO = f"{PSXISO_DIR}\\dumpsxiso.exe"
-    ICONV     = f"{TOOLS_DIR}\\win-build\\iconv\\iconv.bat"
+    CROSS             = f"{TOOLS_DIR}/win-build/binutils/mips-linux-gnu"
+    AS                = f"{CROSS}-as.exe"
+    LD                = f"{CROSS}-ld.exe"
+    OBJCOPY           = f"{CROSS}-objcopy.exe"
+    OBJDUMP           = f"{CROSS}-objdump.exe"
+    CPP               = f"{TOOLS_DIR}/win-build/mcpp/mcpp.exe"
+    CC                = f"{TOOLS_DIR}/win-build/gcc-psx/cc1psx.exe"
+    OBJDIFF           = f"{OBJDIFF_DIR}\\objdiff.exe"
+    OBJDIFF_GENSCRIPT = f"{OBJDIFF_DIR}\\objdiff_generate.py"
+    PREBUILD          = f"cmd.exe /c {TOOLS_DIR}\\prebuild.bat"
+    POSTBUILD         = f"{PYTHON} {TOOLS_DIR}\\postbuild.py"
+    DUMPSXISO         = f"{PSXISO_DIR}\\dumpsxiso.exe"
+    ICONV             = f"{TOOLS_DIR}\\win-build\\iconv\\iconv.bat"
 
 # Flags (for programs)
 DUMPSXISO_FLAGS = f"-x {ROM_DIR}/{GAMEVERSIONS.GAME_VERSION_DIR} -s {ROM_DIR}/{GAMEVERSIONS.GAME_VERSION_DIR}/layout.xml {IMAGE_DIR}/{GAMEVERSIONS.GAME_NAME}.bin"
@@ -210,9 +212,14 @@ OBJDUMP_FLAGS = f"--disassemble-all --reloc --disassemble-zeroes -Mreg-names=32"
 def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file, objdiff_file):
     
     if objdiff_file != None:
-        source_target_path = re.sub(r"^src\\", r"asm\\", source_path)
-        source_target_path = re.sub(r".c$", r".s", source_target_path)
-        expected_path = re.sub(r"^build\\src", r"expected\\asm", target_path)
+        if sys.platform == "linux" or sys.platform == "linux2":
+            source_target_path = re.sub(r"^src/", r"asm/", source_path)
+            source_target_path = re.sub(r".c$", r".s", source_target_path)
+            expected_path = re.sub(r"^build/src", r"expected/asm", target_path)
+        elif sys.platform == "win32":
+            source_target_path = re.sub(r"^src\\", r"asm\\", source_path)
+            source_target_path = re.sub(r".c$", r".s", source_target_path)
+            expected_path = re.sub(r"^build\\src", r"expected\\asm", target_path)
         if os.path.exists(source_target_path):
             if re.search("^asm.main.*", source_path):
                 objdiff_file.build(outputs=f"{expected_path}.o", rule="as", inputs=source_target_path,
@@ -527,7 +534,7 @@ def ninja_setup_objdiff(split_entries):
     
     objdiff.rule(
         "objdiff-config", description="objdiff-config",
-        command=f"{PYTHON} {OBJDIFF_DIR}\\objdiff_generate.py --ninja $in",
+        command=f"{PYTHON} {OBJDIFF_GENSCRIPT} --ninja $in",
     )
     
     # Build all the objects
@@ -553,7 +560,10 @@ def ninja_setup_objdiff(split_entries):
                 if seg.type == "c":
                     ninja_setup_list_add_source(str(entry.object_path).removesuffix(".c.o"), str(entry.src_paths[0]), ninja, objdiff)
     
-    objdiff.build(outputs=f"{EXPECTED_DIR}\\objdiff.ok", rule="objdiff-config", inputs=f"{OBJDIFF_DIR}\\config.yaml")
+    if sys.platform == "linux" or sys.platform == "linux2":
+        objdiff.build(outputs=f"{EXPECTED_DIR}/objdiff.ok", rule="objdiff-config", inputs=f"{OBJDIFF_DIR}/config.yaml")
+    elif sys.platform == "win32":
+        objdiff.build(outputs=f"{EXPECTED_DIR}\\objdiff.ok", rule="objdiff-config", inputs=f"{OBJDIFF_DIR}\\config.yaml")
         
         
 
