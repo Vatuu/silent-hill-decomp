@@ -13,6 +13,8 @@
 #define MAP_ROOM_MAX_Z Q12(400.0f)
 #define MAP_HAS_SECONDARY_GRID
 
+extern u8 D_800F1CA8[3]; // = {0, 1, 2}
+
 void func_800E7D54(void);
 
 void func_800E816C(void);
@@ -25,5 +27,7 @@ void func_800E81C4(void);
 void func_800E9A0C(void);
 
 void func_800E9CB4(void);
+
+u8 func_800EE5A8(u32 arg0);
 
 #endif

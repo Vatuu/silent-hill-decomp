@@ -864,7 +864,14 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EC080);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EE518);
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EE5A8);
+u8 func_800EE5A8(u32 arg0)
+{
+    if (arg0 < 3) 
+    {
+        return D_800F1CA8[arg0];
+    }
+    return 10;
+}
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EE5D0);
 
