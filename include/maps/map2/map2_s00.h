@@ -32,4 +32,8 @@ u8 func_800EE5A8(u32 arg0);
 
 void func_800E81EC(void);
 
+void func_800EB824(s32);
+
+void func_800E7E60(void);
+
 #endif

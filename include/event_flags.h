@@ -35,7 +35,7 @@ typedef enum _EventFlag
     EventFlag_M7S01_ShotgunShells   = 31,
     EventFlag_M7S01_FirstAidKit     = 32,
     EventFlag_M7S01_HandgunBullets2 = 33,
-
+    EventFlag_M2S00_WaterWorksCutscene = 34,
     EventFlag_M0S01_PickupKitchenKnife = 35,
     EventFlag_M0S01_PickupFlashlight   = 36,
     EventFlag_M0S01_PickupPocketRadio  = 37,

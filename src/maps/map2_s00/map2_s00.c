@@ -765,7 +765,68 @@ void func_800E7D54(void) // 0x800E7D54
     }
 }
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E7E60);
+void func_800E7E60(void)
+{
+    s32 sysState0;
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(-255.78f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(-107.46f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(-45.0f);
+            ScreenFade_ResetTimestep();
+            func_800867B4(0, 1);
+            func_800EB824(1);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 1:
+        case 2:
+        case 3:
+            func_800692A4(0, 0x78, Q12(0.5f));
+            func_80068E0C(1, 1, 0, 0, 0, 0x78, Q12(0.5f));
+            func_80067914(1, 0, 0x78, Q12(0.5f));
+            sysState0 = g_SysWork.sysStateStep_C[0];
+            switch (sysState0)
+            {
+                case 2:
+                    SysWork_StateStepIncrementDelayed(Q12(3.5f), false);
+                    if (g_SysWork.sysStateStep_C[0] == sysState0 && 
+                        (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
+                    {
+                        SysWork_StateStepSet(0, 3);
+                    }
+                    break;
+                case 3:
+                    SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.0f), false);
+                    break;
+                case 1:
+                    SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(1.0f), false);
+                    break;
+            }
+            break;
+        case 4:
+            g_SysWork.field_30 = 20;
+            func_800867B4(2, 0);
+            Camera_PositionSet(NULL, Q12(-254.15f), Q12(-1.95f), Q12(-109.3f), 0, 0, 0, 0, true);
+            Camera_LookAtSet(NULL, Q12(-257.0398f), Q12(-1.94f), Q12(-106.54f), 0, 0, 0, 0, true);
+            SysWork_StateStepIncrement(0);
+        case 5:
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(1.0f), false);
+            break;
+        case 6:
+            MapMsg_DisplayAndHandleSelection(false, 78, 0, 0, 0, false); // This must be the water works.
+            break;
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            vcReturnPreAutoCamWork(false);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+            Savegame_EventFlagSet(EventFlag_M2S00_WaterWorksCutscene);
+            g_SysWork.flags_22A4 &= ~(1<<4);
+            break;
+    }
+}
 
 void func_800E816C(void) // 0x800E816C
 {
