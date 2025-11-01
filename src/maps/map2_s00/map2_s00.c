@@ -990,9 +990,17 @@ void func_800EB758(void)
     SysWork_StateSetNext(SysState_Gameplay);
 }
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EB79C);
+void func_800EB79C(void)
+{
+    func_800EB824(1);
+    SysWork_StateSetNext(SysState_Gameplay);
+}
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EB7E0);
+void func_800EB7E0(void)
+{
+    func_800EB824(2);
+    SysWork_StateSetNext(SysState_Gameplay);
+}
 
 void func_800EB824(s32 arg0)
 {
