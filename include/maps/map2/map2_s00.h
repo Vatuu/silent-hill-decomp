@@ -46,4 +46,6 @@ void func_800EA894(void);
 
 s32 func_800EE518(void);
 
+void func_800EB090(void);
+
 #endif
