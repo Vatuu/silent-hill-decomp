@@ -116,10 +116,10 @@ void func_800CC8C8(void) // 0x800CC8C8
             break;
 
         case 5:
-            if (g_SavegamePtr->eventFlags_168[3] & (1 << 25))
+            if (Savegame_EventFlagGet(EventFlag_121))
             {
                 var_a1 = Q12(240.0f);
-                if (g_SavegamePtr->eventFlags_168[3] & (1 << 0))
+                if (Savegame_EventFlagGet(EventFlag_96))
                 {
                     var_a3 |= 8;
                 }
@@ -131,7 +131,7 @@ void func_800CC8C8(void) // 0x800CC8C8
             break;
 
         case 11:
-            g_SavegamePtr->eventFlags_168[3] &= ~(1 << 25);
+            Savegame_EventFlagClear(EventFlag_121);
             break;
 
         case 7:

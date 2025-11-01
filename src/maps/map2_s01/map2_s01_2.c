@@ -176,7 +176,7 @@ void func_800CED88(void) // 0x800CED88
             func_80085EB8(0, dahliaChara, 0, false);
             func_8003D03C();
 
-            g_SavegamePtr->eventFlags_168[5] |= 0x400000;
+            Savegame_EventFlagSet(EventFlag_182);
             g_MapMsgSoundIdx = 0;
 
             SysWork_StateStepIncrement(0);

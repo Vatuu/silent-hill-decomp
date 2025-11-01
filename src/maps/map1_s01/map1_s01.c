@@ -1016,7 +1016,8 @@ void func_800D87C0(void) // 0x800D87C0
         case 8:
             g_SysWork.npcs_1A0[0].model_0.stateStep_3 = 0;
             g_SysWork.npcs_1A0[0].model_0.state_2++;
-            g_SavegamePtr->eventFlags_168[2] |= Q12(1.0f);
+
+            Savegame_EventFlagSet(EventFlag_76);
 
             func_80085EB8(0u, &g_SysWork.player_4C.chara_0, 122, false);
             func_800892DC(18, 96);
@@ -1221,7 +1222,7 @@ void func_800D9514(void) // 0x800D9514
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3))
     {
-        if (!(g_SavegamePtr->eventFlags_168[2] & 0x10))
+        if (!Savegame_EventFlagGet(EventFlag_M1S01_PickupChemical))
         {
             g_WorldGfx_ObjectAdd(&g_WorldObject7.object_0, &g_WorldObject7.position_1C.position_0, &(SVECTOR3){});
         }       

@@ -91,13 +91,12 @@ typedef enum _EventFlag
     EventFlag_92                               = 92,
     EventFlag_M1S02_PickupPictureCard          = 93,
     EventFlag_M1S02_SeenDoorWithHorizontalSlot = 94,
-
-    EventFlag_M1S02_PickupShotgun = 95,
-
-    EventFlag_97  = 97,
-    EventFlag_98  = 98,
-    EventFlag_99  = 99,
-    EventFlag_100 = 100,
+    EventFlag_M1S02_PickupShotgun              = 95,
+    EventFlag_96                               = 96,
+    EventFlag_97                               = 97,
+    EventFlag_98                               = 98,
+    EventFlag_99                               = 99,
+    EventFlag_100                              = 100,
 
     EventFlag_105                           = 105,
     EventFlag_106                           = 106,
@@ -108,6 +107,7 @@ typedef enum _EventFlag
 
     EventFlag_M1S02_PickupClassroomKey = 114,
 
+    EventFlag_121 = 121,
     EventFlag_122 = 122,
 
     EventFlag_130 = 130,
@@ -136,10 +136,10 @@ typedef enum _EventFlag
 
     EventFlag_165 = 165,
 
-    EventFlag_M2S00_PickupMap = 171, // Shared with M2S04
-    EventFlag_172 = 172,
-    EventFlag_173 = 173,
-    EventFlag_174 = 174,
+    EventFlag_M2S00_PickupMap         = 171, // Shared with M2S04
+    EventFlag_172                     = 172,
+    EventFlag_173                     = 173,
+    EventFlag_174                     = 174,
     EventFlag_M2S00_PickupHealthDrink = 175,
 
     EventFlag_176                       = 176,

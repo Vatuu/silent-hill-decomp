@@ -45,7 +45,6 @@ void func_800D94F8(void) // 0x800D94F8
     s32    i;
     q19_12 var1;
     s32    flags0;
-    u16    saveFlag;
     u32    saveByte;
 
     // @hack Not used directly, but gets merged with  `Savegame_EventFlagGet` macros below.
@@ -53,12 +52,11 @@ void func_800D94F8(void) // 0x800D94F8
     var1     = Q12(0.1f);
     flags0   = 0x100;
 
-    if (g_SysWork.player_4C.chara_0.health_B0 > 0 && (!(Savegame_EventFlagGet(23) && !Savegame_EventFlagGet(20))))
+    if (g_SysWork.player_4C.chara_0.health_B0 > 0 && (!(Savegame_EventFlagGet(EventFlag_23) && !Savegame_EventFlagGet(EventFlag_20))))
     {
         for (i = 1; i < 7; i++)
         {
-            saveFlag = D_800DF300[i];
-            if (Savegame_EventFlagGet((s16)saveFlag))
+            if (Savegame_EventFlagGet(D_800DF300[i]))
             {
                 flags0 |= 1 << i;
             }
