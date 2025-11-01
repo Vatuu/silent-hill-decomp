@@ -9,6 +9,7 @@
 import re
 import readline
 import math
+import os
 
 # ---------- EventFlags converter ----------
 def _parse_mask(mask_str):
@@ -19,6 +20,38 @@ def _parse_mask(mask_str):
 def _bit_indices(mask, width=32):
     """Return list of bit indices (0..width-1) that are set in mask."""
     return [i for i in range(width) if (mask >> i) & 1]
+
+def read_file(path):
+    try:
+        with open(path, 'r') as file:
+            text = file.read()
+            return text
+    except Exception as e:
+        print(f"Error reading {path}: {e}")
+        return None
+
+def parse_enum_header(path):
+    """
+    Parse a C enum definition and return a dict mapping values to names.
+    """
+    if not os.path.exists(path):
+        print(f"Warning: file not found: {path}")
+        return {}
+    text = read_file(path)
+    pattern = re.compile(r'\b([A-Za-z_]\w*)\s*=\s*(\d+)\s*,?')
+    result = {}
+    for match in pattern.finditer(text):
+        name, value = match.groups()
+        result[int(value)] = name
+    return result
+
+eventFlags = parse_enum_header("include/event_flags.h")
+mapMarkings = parse_enum_header("include/bodyprog/map_marking_flags.h")
+
+def get_flag_name(flagIdx, isMapMarking):
+    flags = mapMarkings if isMapMarking else eventFlags
+    enumName = "EventFlag_" if not isMapMarking else "MapMarkFlag_"
+    return flags.get(flagIdx, f"{enumName}{flagIdx}")
 
 def convert_flag_expression(expr):
     """
@@ -31,9 +64,13 @@ def convert_flag_expression(expr):
                 * if written as '&= mask'  -> mask is already negated: bits to clear = ~mask & 0xFFFFFFFF
     Returns a string (single call or multiple calls joined).
     """
-    arr_pat = r'.*?eventFlags_168\[(0x[0-9a-fA-F]+|\d+)\]'
+    arr_pat = r'.*?(?:eventFlags_168|mapMarkingFlags_1D4)\[(0x[0-9a-fA-F]+|\d+)\]'
     mask_pat  = r'(0x[0-9a-fA-F]+(?:[uUlL]*)|\d+)'
     shift_pat = r'\(\s*1\s*<<\s*(\d+)\s*\)'
+
+    isMapMarking = "mapMarkingFlags_1D4" in expr
+
+    flag_macro_name = "Savegame_EventFlag" if not isMapMarking else "Savegame_MapMarking"
 
     # `(eventFlags_168 & xx) == xx` -> Get and possibly !Get
     m = re.search(arr_pat + r'\s*\(?\s*&\s*' + mask_pat + r'\s*\)?\s*==\s*' + mask_pat, expr)
@@ -46,16 +83,16 @@ def convert_flag_expression(expr):
             if mask & (1 << bit):
                 final_idx = array_idx * 32 + bit
                 if value & (1 << bit):
-                    conditions.append(f"Savegame_EventFlagGet(EventFlag_{final_idx})")
+                    conditions.append(f"{flag_macro_name}Get({get_flag_name(final_idx, isMapMarking)})")
                 else:
-                    conditions.append(f"!Savegame_EventFlagGet(EventFlag_{final_idx})")
+                    conditions.append(f"!{flag_macro_name}Get({get_flag_name(final_idx, isMapMarking)})")
         return " && ".join(conditions) if conditions else None
 
     # |= (shift)
     m = re.search(arr_pat + r'\s*\|\=\s*' + shift_pat, expr)
     if m:
         array_idx, bit_idx = int(m.group(1), 0), int(m.group(2))
-        return f"Savegame_EventFlagSet(EventFlag_{array_idx * 32 + bit_idx})"
+        return f"{flag_macro_name}Set({get_flag_name(array_idx * 32 + bit_idx, isMapMarking)})"
 
     # |= (literal)
     m = re.search(arr_pat + r'\s*\|\=\s*' + mask_pat, expr)
@@ -63,13 +100,13 @@ def convert_flag_expression(expr):
         array_idx = int(m.group(1), 0)
         mask = _parse_mask(m.group(2))
         indices = _bit_indices(mask)
-        return '; '.join(f"Savegame_EventFlagSet(EventFlag_{array_idx * 32 + i})" for i in indices) if indices else None
+        return '; '.join(f"{flag_macro_name}Set({get_flag_name(array_idx * 32 + i, isMapMarking)})" for i in indices) if indices else None
 
     # &= ~(shift)
     m = re.search(arr_pat + r'\s*\&\=\s*~' + shift_pat, expr)
     if m:
         array_idx, bit_idx = int(m.group(1), 0), int(m.group(2))
-        return f"Savegame_EventFlagClear(EventFlag_{array_idx * 32 + bit_idx})"
+        return f"{flag_macro_name}Clear({get_flag_name(array_idx * 32 + bit_idx, isMapMarking)})"
 
     # &= ~(literal)
     m = re.search(arr_pat + r'\s*\&\=\s*~' + mask_pat, expr)
@@ -77,7 +114,7 @@ def convert_flag_expression(expr):
         array_idx = int(m.group(1), 0)
         mask = _parse_mask(m.group(2))
         indices = _bit_indices(mask)
-        return '; '.join(f"Savegame_EventFlagClear(EventFlag_{array_idx * 32 + i})" for i in indices) if indices else None
+        return '; '.join(f"{flag_macro_name}Clear({get_flag_name(array_idx * 32 + i, isMapMarking)})" for i in indices) if indices else None
 
     # &= (literal WITHOUT ~) -> mask is the negated form; bits to clear are zeros in mask
     m = re.search(arr_pat + r'\s*\&\=\s*' + mask_pat, expr)
@@ -86,7 +123,7 @@ def convert_flag_expression(expr):
         mask = _parse_mask(m.group(2))
         inverted = (~mask) & 0xFFFFFFFF
         indices = _bit_indices(inverted)
-        return '; '.join(f"Savegame_EventFlagClear(EventFlag_{array_idx * 32 + i})" for i in indices) if indices else None
+        return '; '.join(f"{flag_macro_name}Clear({get_flag_name(array_idx * 32 + i, isMapMarking)})" for i in indices) if indices else None
 
     # &= (shift WITHOUT ~) -> uncommon, but handle by inverting the single-bit mask
     m = re.search(arr_pat + r'\s*\&\=\s*' + shift_pat, expr)
@@ -94,13 +131,13 @@ def convert_flag_expression(expr):
         array_idx, bit_idx = int(m.group(1), 0), int(m.group(2))
         inverted = (~(1 << bit_idx)) & 0xFFFFFFFF
         indices = _bit_indices(inverted)
-        return '; '.join(f"Savegame_EventFlagClear(EventFlag_{array_idx * 32 + i})" for i in indices) if indices else None
+        return '; '.join(f"{flag_macro_name}Clear({get_flag_name(array_idx * 32 + i, isMapMarking)})" for i in indices) if indices else None
 
     # & (shift) -> Get
     m = re.search(arr_pat + r'\s*\&\s*' + shift_pat, expr)
     if m:
         array_idx, bit_idx = int(m.group(1), 0), int(m.group(2))
-        return f"Savegame_EventFlagGet(EventFlag_{array_idx * 32 + bit_idx})"
+        return f"{flag_macro_name}Get({get_flag_name(array_idx * 32 + bit_idx, isMapMarking)})"
 
     # & (literal) -> Get (if multiple bits -> OR them)
     m = re.search(arr_pat + r'\s*\&\s*' + mask_pat, expr)
@@ -111,8 +148,8 @@ def convert_flag_expression(expr):
         if not indices:
             return None
         if len(indices) == 1:
-            return f"Savegame_EventFlagGet(EventFlag_{array_idx * 32 + indices[0]})"
-        return ' || '.join(f"Savegame_EventFlagGet(EventFlag_{array_idx * 32 + i})" for i in indices)
+            return f"{flag_macro_name}Get({get_flag_name(array_idx * 32 + indices[0], isMapMarking)})"
+        return ' || '.join(f"{flag_macro_name}Get({get_flag_name(array_idx * 32 + i, isMapMarking)})" for i in indices)
 
     return None
 
