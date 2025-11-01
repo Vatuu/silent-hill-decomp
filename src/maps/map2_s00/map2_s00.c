@@ -976,7 +976,11 @@ INCLUDE_RODATA("asm/maps/map2_s00/nonmatchings/map2_s00", D_800CD468);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EB3F4);
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EB758);
+void func_800EB758(void)
+{
+    func_800EB824(0);
+    SysWork_StateSetNext(SysState_Gameplay);
+}
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EB79C);
 
