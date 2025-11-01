@@ -956,7 +956,15 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EA444);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EA6E0);
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EA894);
+void func_800EA894(void)
+{
+    VECTOR3 pos = {MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+
+    func_8004EE94(71, 1);
+    Map_MessageWithSfx(39, Sfx_Unk1335, &pos); // Used the K. Gordon key.
+    Savegame_EventFlagSet(EventFlag_M2S00_KGordonDoorOpen);
+    g_SavegamePtr->mapMarkingFlags_1D4[1] |= 0x40000;
+}
 
 INCLUDE_RODATA("asm/maps/map2_s00/nonmatchings/map2_s00", D_800CD3D0);
 

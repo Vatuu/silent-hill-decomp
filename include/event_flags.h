@@ -132,6 +132,7 @@ typedef enum _EventFlag
     EventFlag_159 = 159,
 
     EventFlag_M2S00_PickupSteelPipe = 161,
+    EventFlag_M2S00_KGordonDoorOpen = 162,
 
     EventFlag_165 = 165,
 
