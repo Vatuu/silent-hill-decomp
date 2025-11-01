@@ -1,5 +1,5 @@
 /** @brief Flag indices for map markings flags stored in savegame.
- * Accessed via `MapMarking_Set`.
+ * Accessed via `Savegame_MapMarkingGet`/`Savegame_MapMarkingSet`.
  */
 typedef enum _MapMarkingFlag
 {
@@ -151,7 +151,7 @@ typedef enum _MapMarkingFlag
     MapMarkFlag_AltSchool1F_RightCorridorMidBroken      = 334,
     MapMarkFlag_AltSchool1F_RightCorridorBotLocked      = 336,
     MapMarkFlag_AltSchool1F_RightCorridorBotArrows      = 337,
-    MapMarkFlag_AltSchool1F_CortyardQuestion            = 338,
+    MapMarkFlag_AltSchool1F_CourtyardQuestion           = 338,
     MapMarkFlag_AltSchool1F_UntitledLobbyTopCross       = 340,
     MapMarkFlag_AltSchool1F_SecretDoorLocked            = 342,
     MapMarkFlag_AltSchool1F_SecretDoorArrows            = 343,

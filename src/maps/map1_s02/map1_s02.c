@@ -361,7 +361,7 @@ void func_800DA384(void) // 0x800DA384
             break;
 
         default:
-            g_SavegamePtr->mapMarkingFlags_1D4[10] |= 0x40000;
+            Savegame_MapMarkingSet(MapMarkFlag_AltSchool1F_CourtyardQuestion);
             break;
     }
 
@@ -590,7 +590,7 @@ void func_800DB058(void)
             SysWork_StateStepIncrement(0);
             /* fallthrough */
         case 1:
-            SysWork_StateStepIncrementAfterFade(1, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(1, false, 0, Q12(0.0f), false);
             break;
         case 2:
             SysWork_StateStepIncrementDelayed(Q12(0.2f), false);
@@ -613,15 +613,15 @@ void func_800DB058(void)
             func_80086C58(&g_SysWork.player_4C.chara_0, 95);
             break;
         case 8:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
         default:
             sharedFunc_800D2244_0_s00(true);
             SysWork_StateSetNext(SysState_Gameplay);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
-            g_SavegamePtr->mapMarkingFlags_1D4[10] |= 0x800000;
+            Savegame_MapMarkingSet(MapMarkFlag_AltSchool1F_SecretDoorArrows);
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
             break;
@@ -782,7 +782,7 @@ INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DDA84);
 
 void func_800DEC88(void)
 {
-    if (g_SavegamePtr->mapMarkingFlags_1D4[8] < 0)
+    if (Savegame_MapMarkingGet(MapMarkFlag_AltSchool1F_ReceptionArrows))
     {
         if (g_SavegamePtr->gameDifficulty_260 == 1)
         {

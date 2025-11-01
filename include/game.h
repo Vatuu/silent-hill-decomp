@@ -1803,6 +1803,28 @@ static inline void Game_StateSetPrevious()
 #define Savegame_EventFlagSet(flagIdx) \
     (g_SavegamePtr->eventFlags_168[(flagIdx) >> 5] |= 1 << ((flagIdx) & 0x1F))
 
+/** @brief Gets a map marking state from the savegame map marking array.
+ *
+ * @param flagIdx Map marking index.
+ * @return Map marking state (`bool`).
+ */
+#define Savegame_MapMarkingGet(flagIdx) \
+    (g_SavegamePtr->mapMarkingFlags_1D4[(flagIdx) >> 5] & (1 << ((flagIdx) & 0x1F)))
+
+/** @brief Clears a map marking state in the savegame map marking array.
+ *
+ * @param flagIdx Map marking index.
+ */
+#define Savegame_MapMarkingClear(flagIdx) \
+    (g_SavegamePtr->mapMarkingFlags_1D4[(flagIdx) >> 5] &= ~(1 << ((flagIdx) & 0x1F)))
+
+/** @brief Sets a map marking in the savegame map marking array.
+ *
+ * @param flagIdx Map marking index.
+ */
+#define Savegame_MapMarkingSet(flagIdx) \
+    (g_SavegamePtr->mapMarkingFlags_1D4[(flagIdx) >> 5] |= 1 << ((flagIdx) & 0x1F))
+
 /** @brief Sets an event flag state in the savegame event flags array.
  *
  * @note Some map event code only seems to work with this inline version.
