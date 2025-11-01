@@ -343,9 +343,9 @@ void func_800D7B2C(void)
         default:
             func_800862F8(6, 0, false);
             SysWork_StateStepIncrementAfterFade(false, false, 0, Q12(2.5f), false);
+            
             Savegame_EventFlagSet(EventFlag_71);
-
-            g_SavegamePtr->mapMarkingFlags_1D4[8] |= 1 << 0;
+            Savegame_MapMarkingSet(MapMarkFlag_FogSchool1F_ClockTowerCircle);
 
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
@@ -441,9 +441,9 @@ void func_800D7EB0(void)
         default:
             func_800862F8(6, 0, false);
             SysWork_StateStepIncrementAfterFade(false, false, 0, Q12(2.5f), false);
-            Savegame_EventFlagSet(EventFlag_72);
 
-            g_SavegamePtr->mapMarkingFlags_1D4[8] |= 1 << 0;
+            Savegame_EventFlagSet(EventFlag_72);
+            Savegame_MapMarkingSet(MapMarkFlag_FogSchool1F_ClockTowerCircle);
 
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);

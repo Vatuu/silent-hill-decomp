@@ -66,7 +66,7 @@ def convert_flag_expression(expr):
     """
     arr_pat = r'.*?(?:eventFlags_168|mapMarkingFlags_1D4)\[(0x[0-9a-fA-F]+|\d+)\]'
     mask_pat  = r'(0x[0-9a-fA-F]+(?:[uUlL]*)|\d+)'
-    shift_pat = r'\(\s*1\s*<<\s*(\d+)\s*\)'
+    shift_pat = r'\(?\s*1\s*<<\s*(\d+)\s*\)?'
 
     isMapMarking = "mapMarkingFlags_1D4" in expr
 

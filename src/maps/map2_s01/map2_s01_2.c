@@ -405,11 +405,11 @@ void func_800CED88(void) // 0x800CED88
             SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
             vcReturnPreAutoCamWork(true);
             SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+
             Savegame_EventFlagSet(EventFlag_179);
             Savegame_EventFlagSet(EventFlag_176);
-
-            g_SavegamePtr->mapMarkingFlags_1D4[2] |= 0x40000;
-            g_SavegamePtr->mapMarkingFlags_1D4[3] |= 0x100000;
+            Savegame_MapMarkingSet(MapMarkFlag_FogCentralTown_HospitalCircle);
+            Savegame_MapMarkingSet(MapMarkFlag_AltCentralTown_HospitalCircle);
 
             func_80088F94(dahliaChara, 0, 0);
 
@@ -501,13 +501,10 @@ void Map_WorldObjectsInit(void)
 
 void Map_WorldObjectsUpdate(void) // 0x800CF938
 {
-    s_Savegame* save;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
     if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
     {
-            save = g_SavegamePtr;
-
             if (Savegame_EventFlagGet(EventFlag_176) && !Savegame_EventFlagGet(EventFlag_M2S01_PickupFlauros))
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObject_Item.object_0, &g_WorldObject_Item.position_1C.position_0, &(SVECTOR3){});
@@ -516,11 +513,11 @@ void Map_WorldObjectsUpdate(void) // 0x800CF938
             if (!Savegame_EventFlagGet(EventFlag_M2S01_PickupDrawbridgeKey))
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObject_Key.object_0, &g_WorldObject_Key.position_1C.position_0, &g_WorldObject_Key.position_1C.rotation_C);
-                save->mapMarkingFlags_1D4[1] &= ~(1 << 31);
+                Savegame_MapMarkingClear(MapMarkFlag_OldTown_BalkanChurchCheck);
             }
             else
             {
-                save->mapMarkingFlags_1D4[1] |= 1 << 31;
+                Savegame_MapMarkingSet(MapMarkFlag_OldTown_BalkanChurchCheck);
             }
 
             g_WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object_0, &g_WorldObject_SavePad.position_1C.position_0, &g_WorldObject_SavePad.position_1C.rotation_C);

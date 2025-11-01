@@ -97,10 +97,10 @@ void func_800CC8C8(void) // 0x800CC8C8
     {
         case 23:
             var_a3 = 1;
-            if (g_SavegamePtr->mapMarkingFlags_1D4[10] & (1 << 18))
+            if (Savegame_MapMarkingGet(MapMarkFlag_AltSchool1F_CourtyardQuestion))
             {
                 var_a3 = 0x1FE;
-                if (g_SavegamePtr->mapMarkingFlags_1D4[9] & (1 << 20 | 1 << 21))
+                if (Savegame_MapMarkingGet(MapMarkFlag_308) || Savegame_MapMarkingGet(MapMarkFlag_AltSchool1F_CortyardTopArrows))
                 {
                     var_a3 = 0x10;
                 }

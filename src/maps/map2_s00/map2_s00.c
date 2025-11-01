@@ -926,9 +926,9 @@ void func_800E9A0C(void) // 0x800E9A0C
 
     if (Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfLion))
     {
-        if (g_SavegamePtr->mapMarkingFlags_1D4[1] & (1 << 20))
+        if (Savegame_MapMarkingGet(MapMarkFlag_OldTown_FineyStRightKeyArrow))
         {
-            g_SavegamePtr->mapMarkingFlags_1D4[1] |= 1 << 21;
+            Savegame_MapMarkingSet(MapMarkFlag_53);
         }
     }
 }
@@ -941,9 +941,9 @@ void func_800E9CB4(void) // 0x800E9CB4
 
     if (Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfScarecrow))
     {
-        if (g_SavegamePtr->mapMarkingFlags_1D4[1] & (1 << 24))
+        if (Savegame_MapMarkingGet(MapMarkFlag_OldTown_EllroyStKeyCircle))
         {
-            g_SavegamePtr->mapMarkingFlags_1D4[1] |= 1 << 25;
+            Savegame_MapMarkingSet(MapMarkFlag_57);
         }
     }
 }

@@ -530,7 +530,7 @@ void func_800D13D8(void) // 0x800D13D8
 
             Sd_EngineCmd(19);
             Savegame_EventFlagSet(EventFlag_424);
-            g_SavegamePtr->mapMarkingFlags_1D4[5] |= 1 << 0;
+            Savegame_MapMarkingSet(MapMarkFlag_ResortTown_LighthouseCircle);
 
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
@@ -634,7 +634,7 @@ void func_800D236C(void) // 0x800D236C
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
             Savegame_EventFlagSet(EventFlag_426);
-            g_SavegamePtr->mapMarkingFlags_1D4[5] |= (1 << 2);
+            Savegame_MapMarkingSet(MapMarkFlag_ResortTown_ThemeParkArrow);
             break;
     }
 }

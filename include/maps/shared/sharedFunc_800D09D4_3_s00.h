@@ -39,14 +39,15 @@ void sharedFunc_800D09D4_3_s00()
                     break;
             }
 
-            if ((g_SavegamePtr->mapMarkingFlags_1D4[21] & ((1 << 16) | (1 << 22))) == ((1 << 16) | (1 << 22)))
+            if (Savegame_MapMarkingGet(MapMarkFlag_AltHospital2F_OperatingPrepRoomArrow) &&
+                Savegame_MapMarkingGet(MapMarkFlag_AltHospital2F_CorridorMidArrows))
             {
                 flags |= 0x11E;
             }
             break;
 
         case 34:
-            if (!(g_SavegamePtr->mapMarkingFlags_1D4[17] & (1 << 19)))
+            if (!Savegame_MapMarkingGet(MapMarkFlag_FogHospital1F_StairsLocked))
             {
                 var   = Q12(240.0f);
                 flags = 0x201;
