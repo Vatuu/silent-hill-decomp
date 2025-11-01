@@ -67,4 +67,8 @@ void func_800D6578(void);
 
 void func_800D6C88(void);
 
+s32 func_800D4FE4(s_SubCharacter* chara, s32 moveSpeed);
+
+void func_800D2CC8(s_SubCharacter* chara);
+
 #endif

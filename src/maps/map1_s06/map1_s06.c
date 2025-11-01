@@ -133,7 +133,98 @@ INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D2270);
 
 INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D246C);
 
-INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D2CC8);
+void func_800D2CC8(s_SubCharacter* chara)
+{
+    s32 tmp;
+    s32 tmp1;
+    q19_12 movSpeed;
+
+    switch (chara->model_0.anim_4.status_0)
+    {
+        case 23:
+            movSpeed = chara->moveSpeed_38;
+            if (movSpeed > 0)
+            {
+                tmp = movSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x800, Q12_SHIFT);
+                if (tmp < 0)
+                {
+                    tmp = 0;
+                }
+            }
+            else
+            {
+                tmp = movSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x800, Q12_SHIFT);
+                if (tmp > 0)
+                {
+                    tmp = 0;
+                }
+            }
+            chara->moveSpeed_38 = tmp;
+
+            if (!func_800D4FE4(chara, movSpeed))
+            {
+                break;
+            }
+        case 2:
+        case 3:
+        case 20:
+        case 21:
+        case 22:
+            chara->model_0.anim_4.status_0 = 0xE;
+            movSpeed = chara->moveSpeed_38;
+            if (movSpeed > 0)
+            {
+                tmp = movSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x1000, Q12_SHIFT);
+                if (tmp < 0)
+                {
+                    tmp = 0;
+                }
+            }
+            else
+            {
+                tmp = movSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x1000, Q12_SHIFT);
+                if (tmp > 0)
+                {
+                    tmp = 0;
+                }
+            }
+            chara->moveSpeed_38 = tmp;
+            break;
+        default:
+            break;
+        case 14:
+        case 15:
+        case 16:
+        case 17:
+        case 24:
+        case 25:
+        case 26:
+        case 27:
+            if (chara->moveSpeed_38 > 0)
+            {
+                tmp1 = chara->moveSpeed_38 - FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x1000, Q12_SHIFT);
+                if (tmp1 < 0)
+                {
+                    tmp1 = 0;
+                }
+            }
+            else
+            {
+                tmp1 = chara->moveSpeed_38 + FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x1000, Q12_SHIFT);
+                if (tmp1 > 0)
+                {
+                    tmp1 = 0;
+                }
+            }
+            chara->moveSpeed_38 = tmp1;
+            if (!Savegame_EventFlagGet(EventFlag_131))
+            {
+                func_8005DC1C(Sfx_Unk1479, &chara->position_18, 0x80, 0);
+            }
+            Savegame_EventFlagSet(EventFlag_131);
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D2EF8);
 
