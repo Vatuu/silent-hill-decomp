@@ -129,7 +129,76 @@ INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D13FC);
 
 INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D1C54);
 
-INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D2270);
+void func_800D2270(s_SubCharacter* chara)
+{
+    s16 timerDiv6;
+    s32 volume;
+    u16 timer;
+    s32 tmp;
+    s32 movSpeed;
+
+    movSpeed = chara->moveSpeed_38;
+    if (movSpeed > 0)
+    {
+        tmp = movSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.59961f), Q12_SHIFT);
+        if (tmp < 0)
+        {
+            tmp = 0;
+        }
+    }
+    else
+    {
+        tmp = movSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.59961f), Q12_SHIFT);
+        if (tmp > 0)
+        {
+            tmp = 0;
+        }
+    }
+    chara->moveSpeed_38 = tmp;
+    switch (chara->model_0.anim_4.status_0)
+    {
+        case ANIM_STATUS(11, false):
+        case ANIM_STATUS(11, true):
+            chara->properties_E4.splitHead.flags_E8 |= 8;
+            if (!func_800D4FE4(chara, movSpeed))
+            {
+                break;
+            }
+        case ANIM_STATUS(10, true):
+            chara->model_0.anim_4.status_0 = ANIM_STATUS(1, false);
+            Sd_EngineCmd(Sfx_Unk1477);
+            break;
+        case ANIM_STATUS(1, false):
+        case ANIM_STATUS(1, true):
+            timer = chara->properties_E4.splitHead.timer_F4;
+            timerDiv6 = D_800D6E2E / 6;
+            if (timer < timerDiv6)
+            {
+                volume = (timer << 7) / timerDiv6;
+            }
+            else if ((D_800D6E2E * 5) / 6 < timer) 
+            {
+                volume = ((D_800D6E2E - timer) << 7) / timerDiv6;
+            }
+            else
+            {
+                volume = 0x80;
+            }
+            func_8005DE0C(Sfx_Unk1477, &chara->position_18, volume, Q12(16.0f), 0);
+            timer = chara->properties_E4.splitHead.timer_F4;
+            if (D_800D6E2E < timer)
+            {
+                D_800D6E2E = 0x3CCC;
+                chara->model_0.state_2 = 5;
+                chara->properties_E4.splitHead.timer_F4 = 0;
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(11, false);
+                func_8004690C(Sfx_Unk1477);
+                break;
+            }
+            chara->properties_E4.splitHead.timer_F4 += g_DeltaTime0;
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D246C);
 
@@ -145,7 +214,7 @@ void func_800D2CC8(s_SubCharacter* chara)
             movSpeed = chara->moveSpeed_38;
             if (movSpeed > 0)
             {
-                tmp = movSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x800, Q12_SHIFT);
+                tmp = movSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.5f), Q12_SHIFT);
                 if (tmp < 0)
                 {
                     tmp = 0;
@@ -153,7 +222,7 @@ void func_800D2CC8(s_SubCharacter* chara)
             }
             else
             {
-                tmp = movSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x800, Q12_SHIFT);
+                tmp = movSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.5f), Q12_SHIFT);
                 if (tmp > 0)
                 {
                     tmp = 0;
@@ -174,7 +243,7 @@ void func_800D2CC8(s_SubCharacter* chara)
             movSpeed = chara->moveSpeed_38;
             if (movSpeed > 0)
             {
-                tmp = movSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x1000, Q12_SHIFT);
+                tmp = movSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.0f), Q12_SHIFT);
                 if (tmp < 0)
                 {
                     tmp = 0;
@@ -182,7 +251,7 @@ void func_800D2CC8(s_SubCharacter* chara)
             }
             else
             {
-                tmp = movSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x1000, Q12_SHIFT);
+                tmp = movSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.0f), Q12_SHIFT);
                 if (tmp > 0)
                 {
                     tmp = 0;
@@ -202,7 +271,7 @@ void func_800D2CC8(s_SubCharacter* chara)
         case 27:
             if (chara->moveSpeed_38 > 0)
             {
-                tmp1 = chara->moveSpeed_38 - FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x1000, Q12_SHIFT);
+                tmp1 = chara->moveSpeed_38 - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.0f), Q12_SHIFT);
                 if (tmp1 < 0)
                 {
                     tmp1 = 0;
@@ -210,7 +279,7 @@ void func_800D2CC8(s_SubCharacter* chara)
             }
             else
             {
-                tmp1 = chara->moveSpeed_38 + FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x1000, Q12_SHIFT);
+                tmp1 = chara->moveSpeed_38 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.0f), Q12_SHIFT);
                 if (tmp1 > 0)
                 {
                     tmp1 = 0;
