@@ -1000,7 +1000,37 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EB908);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EC080);
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EE518);
+s32 func_800EE518(void)
+{
+    s32 ret;
+
+    if (!Savegame_EventFlagGet(EventFlag_172))
+    {
+        if (Savegame_EventFlagGet(EventFlag_173))
+        {
+            ret = 1;
+        }
+        else if (Savegame_EventFlagGet(EventFlag_174))
+        {
+            ret = 2;
+        }
+        else
+        {
+            Savegame_EventFlagSet(EventFlag_172);
+            ret = 0;
+        }
+    }
+    else
+    {
+        ret = 0;
+    }
+    if (Savegame_EventFlagGet(EventFlag_131) && !Savegame_EventFlagGet(EventFlag_181) && ret == 1)
+    {
+        ret = 2;
+    }
+
+    return ret;
+}
 
 u8 func_800EE5A8(u32 arg0) // 0x800EE5A8
 {
