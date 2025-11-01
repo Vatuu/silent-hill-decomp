@@ -137,7 +137,7 @@ INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D2CC8);
 
 INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D2EF8);
 
-void func_800D30F0(s_SubCharacter* chara)
+void func_800D30F0(s_SubCharacter* chara) // 0x800D30F0
 {
     if (Savegame_EventFlagGet(EventFlag_130))
     {

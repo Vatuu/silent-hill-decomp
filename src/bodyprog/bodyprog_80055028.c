@@ -1556,70 +1556,72 @@ void func_80057A3C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
     }
 }
 
-void func_80057B7C(s_MeshHeader* arg0, s32 arg1, s_GteScratchData* arg2, MATRIX* arg3) // 0x80057B7C
+void func_80057B7C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, MATRIX* mat) // 0x80057B7C
 {
-    DVECTOR* temp_a1;
+    DVECTOR* screenXy;
     s16*     temp_a2;
     s32      temp_s2;
     u8*      var_t1;
 
     temp_s2 = D_800C4168.fogRelated_14;
 
-    SetRotMatrix(arg3);
-    SetTransMatrix(arg3);
+    SetRotMatrix(mat);
+    SetTransMatrix(mat);
 
-    temp_a1 = &arg2->screenXy_0[arg1];
+    screenXy = &scratchData->screenXy_0[offset];
 
-    *(s32*)&arg2->field_380.m[0][0] = *(s32*)&temp_a1[0];
-    *(s32*)&arg2->field_380.m[1][1] = *(s32*)&temp_a1[1];
-    *(s32*)&arg2->field_380.m[2][2] = *(s32*)&temp_a1[2];
+    *(s32*)&scratchData->field_380.m[0][0] = *(s32*)&screenXy[0];
+    *(s32*)&scratchData->field_380.m[1][1] = *(s32*)&screenXy[1];
+    *(s32*)&scratchData->field_380.m[2][2] = *(s32*)&screenXy[2];
 
-    temp_a2 = &arg2->field_18C[arg1];
+    temp_a2 = &scratchData->field_18C[offset];
 
-    arg2->field_380.m[0][2]      = temp_a2[0];
-    arg2->field_380.m[2][0]      = temp_a2[1];
-    *(s16*)&arg2->field_380.t[0] = temp_a2[2];
+    scratchData->field_380.m[0][2]      = temp_a2[0];
+    scratchData->field_380.m[2][0]      = temp_a2[1];
+    *(s16*)&scratchData->field_380.t[0] = temp_a2[2];
 
-    var_t1 = &arg2->field_252[arg1];
+    var_t1 = &scratchData->field_252[offset];
 
-    gte_ldv3c(&arg2->field_380);
+    gte_ldv3c(&scratchData->field_380);
     gte_rtpt();
-    gte_stsxy3c(temp_a1);
-    gte_stsz3(&arg2->field_380.m[0][2], &arg2->field_380.m[2][0], &arg2->field_380.t[0]);
+    gte_stsxy3c(screenXy);
+    gte_stsz3(&scratchData->field_380.m[0][2], &scratchData->field_380.m[2][0], &scratchData->field_380.t[0]);
 
-    temp_a2[0] = arg2->field_380.m[0][2];
-    temp_a2[1] = arg2->field_380.m[2][0];
-    temp_a2[2] = arg2->field_380.t[0];
+    temp_a2[0] = scratchData->field_380.m[0][2];
+    temp_a2[1] = scratchData->field_380.m[2][0];
+    temp_a2[2] = scratchData->field_380.t[0];
 
-    temp_a1 += 3;
+    screenXy += 3;
     var_t1  += 3;
     temp_a2 += 3;
 
     if (D_800C4168.isFogEnabled_1)
     {
-        for (; temp_a1 < &arg2->screenXy_0[arg0->vertexCount_1 + arg1]; temp_a1 += 3, temp_a2 += 3, var_t1 += 3)
+        for (;
+             screenXy < &scratchData->screenXy_0[meshHdr->vertexCount_1 + offset];
+             screenXy += 3, temp_a2 += 3, var_t1 += 3)
         {
-            *(s32*)&arg2->field_380.m[0][0] = *(s32*)&temp_a1[0];
-            *(s32*)&arg2->field_380.m[1][1] = *(s32*)&temp_a1[1];
-            *(s32*)&arg2->field_380.m[2][2] = *(s32*)&temp_a1[2];
+            *(s32*)&scratchData->field_380.m[0][0] = *(s32*)&screenXy[0];
+            *(s32*)&scratchData->field_380.m[1][1] = *(s32*)&screenXy[1];
+            *(s32*)&scratchData->field_380.m[2][2] = *(s32*)&screenXy[2];
 
-            arg2->field_380.m[0][2]      = temp_a2[0];
-            arg2->field_380.m[2][0]      = temp_a2[1];
-            *(s16*)&arg2->field_380.t[0] = temp_a2[2];
+            scratchData->field_380.m[0][2]      = temp_a2[0];
+            scratchData->field_380.m[2][0]      = temp_a2[1];
+            *(s16*)&scratchData->field_380.t[0] = temp_a2[2];
 
-            gte_ldv3c(&arg2->field_380);
+            gte_ldv3c(&scratchData->field_380);
             gte_rtpt();
 
             var_t1[-3] = temp_a2[-3] < (1 << temp_s2) ? D_800C4168.field_CC[(temp_a2[-3] << 7) >> temp_s2] : 0xFF;
             var_t1[-2] = temp_a2[-2] < (1 << temp_s2) ? D_800C4168.field_CC[(temp_a2[-2] << 7) >> temp_s2] : 0xFF;
             var_t1[-1] = temp_a2[-1] < (1 << temp_s2) ? D_800C4168.field_CC[(temp_a2[-1] << 7) >> temp_s2] : 0xFF;
 
-            gte_stsxy3c(temp_a1);
-            gte_stsz3(&arg2->field_380.m[0][2], &arg2->field_380.m[2][0], &arg2->field_380.t[0]);
+            gte_stsxy3c(screenXy);
+            gte_stsz3(&scratchData->field_380.m[0][2], &scratchData->field_380.m[2][0], &scratchData->field_380.t[0]);
 
-            temp_a2[0] = arg2->field_380.m[0][2];
-            temp_a2[1] = arg2->field_380.m[2][0];
-            temp_a2[2] = arg2->field_380.t[0];
+            temp_a2[0] = scratchData->field_380.m[0][2];
+            temp_a2[1] = scratchData->field_380.m[2][0];
+            temp_a2[2] = scratchData->field_380.t[0];
         }
 
         var_t1[-3] = temp_a2[-3] < (1 << temp_s2) ? D_800C4168.field_CC[(temp_a2[-3] << 7) >> temp_s2] : 0xFF;
@@ -1628,24 +1630,24 @@ void func_80057B7C(s_MeshHeader* arg0, s32 arg1, s_GteScratchData* arg2, MATRIX*
     }
     else
     {
-        for (; temp_a1 < &arg2->screenXy_0[arg0->vertexCount_1 + arg1]; temp_a1 += 3, temp_a2 += 3)
+        for (; screenXy < &scratchData->screenXy_0[meshHdr->vertexCount_1 + offset]; screenXy += 3, temp_a2 += 3)
         {
-            *(s32*)&arg2->field_380.m[0][0] = *(s32*)&temp_a1[0];
-            *(s32*)&arg2->field_380.m[1][1] = *(s32*)&temp_a1[1];
-            *(s32*)&arg2->field_380.m[2][2] = *(s32*)&temp_a1[2];
+            *(s32*)&scratchData->field_380.m[0][0] = *(s32*)&screenXy[0];
+            *(s32*)&scratchData->field_380.m[1][1] = *(s32*)&screenXy[1];
+            *(s32*)&scratchData->field_380.m[2][2] = *(s32*)&screenXy[2];
 
-            arg2->field_380.m[0][2]      = temp_a2[0];
-            arg2->field_380.m[2][0]      = temp_a2[1];
-            *(s16*)&arg2->field_380.t[0] = temp_a2[2];
+            scratchData->field_380.m[0][2]      = temp_a2[0];
+            scratchData->field_380.m[2][0]      = temp_a2[1];
+            *(s16*)&scratchData->field_380.t[0] = temp_a2[2];
 
-            gte_ldv3c(&arg2->field_380);
+            gte_ldv3c(&scratchData->field_380);
             gte_rtpt();
-            gte_stsxy3c(temp_a1);
-            gte_stsz3(&arg2->field_380.m[0][2], &arg2->field_380.m[2][0], &arg2->field_380.t[0]);
+            gte_stsxy3c(screenXy);
+            gte_stsz3(&scratchData->field_380.m[0][2], &scratchData->field_380.m[2][0], &scratchData->field_380.t[0]);
 
-            temp_a2[0] = arg2->field_380.m[0][2];
-            temp_a2[1] = arg2->field_380.m[2][0];
-            temp_a2[2] = arg2->field_380.t[0];
+            temp_a2[0] = scratchData->field_380.m[0][2];
+            temp_a2[1] = scratchData->field_380.m[2][0];
+            temp_a2[2] = scratchData->field_380.t[0];
         }
     }
 }

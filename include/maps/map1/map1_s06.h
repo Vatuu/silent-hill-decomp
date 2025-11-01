@@ -45,6 +45,8 @@ extern u8 D_800D778F;
 
 extern u8 D_800D7790;
 
+void func_800D30F0(s_SubCharacter* chara);
+
 void func_800D4FC0(s32 arg0, s32 arg1);
 
 void func_800D5400(void);
@@ -64,7 +66,5 @@ void Map_WorldObjectsInit(void);
 void func_800D6578(void);
 
 void func_800D6C88(void);
-
-void func_800D30F0(s_SubCharacter* chara);
 
 #endif

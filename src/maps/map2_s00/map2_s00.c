@@ -765,65 +765,79 @@ void func_800E7D54(void) // 0x800E7D54
     }
 }
 
-void func_800E7E60(void)
+void func_800E7E60(void) // 0x800E7E60
 {
     s32 sysState0;
+
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
+
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(-255.78f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(-107.46f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(-45.0f);
+
             ScreenFade_ResetTimestep();
             func_800867B4(0, 1);
             func_800EB824(1);
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 1:
         case 2:
         case 3:
-            func_800692A4(0, 0x78, Q12(0.5f));
-            func_80068E0C(1, 1, 0, 0, 0, 0x78, Q12(0.5f));
-            func_80067914(1, 0, 0x78, Q12(0.5f));
+            func_800692A4(0, 120, Q12(0.5f));
+            func_80068E0C(1, 1, 0, 0, 0, 120, Q12(0.5f));
+            func_80067914(1, 0, 120, Q12(0.5f));
+
             sysState0 = g_SysWork.sysStateStep_C[0];
             switch (sysState0)
             {
                 case 2:
                     SysWork_StateStepIncrementDelayed(Q12(3.5f), false);
-                    if (g_SysWork.sysStateStep_C[0] == sysState0 && 
-                        (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
+
+                    if (g_SysWork.sysStateStep_C[0] == sysState0 &&
+                        (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
+                                                          g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
                     {
                         SysWork_StateStepSet(0, 3);
                     }
                     break;
+
                 case 3:
                     SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.0f), false);
                     break;
+
                 case 1:
                     SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(1.0f), false);
                     break;
             }
             break;
+
         case 4:
             g_SysWork.field_30 = 20;
+
             func_800867B4(2, 0);
-            Camera_PositionSet(NULL, Q12(-254.15f), Q12(-1.95f), Q12(-109.3f), 0, 0, 0, 0, true);
-            Camera_LookAtSet(NULL, Q12(-257.0398f), Q12(-1.94f), Q12(-106.54f), 0, 0, 0, 0, true);
+            Camera_PositionSet(NULL, Q12(-254.15f), Q12(-1.95f), Q12(-109.3f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(-257.0398f), Q12(-1.94f), Q12(-106.54f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             SysWork_StateStepIncrement(0);
+
         case 5:
             SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(1.0f), false);
             break;
+
         case 6:
-            MapMsg_DisplayAndHandleSelection(false, 78, 0, 0, 0, false); // This must be the water works.
+            MapMsg_DisplayAndHandleSelection(false, 78, 0, 0, 0, false); // "This must be the water works."
             break;
+
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(false);
             SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
             Savegame_EventFlagSet(EventFlag_M2S00_WaterWorksCutscene);
-            g_SysWork.flags_22A4 &= ~(1<<4);
+
+            g_SysWork.flags_22A4 &= ~(1 << 4);
             break;
     }
 }
@@ -843,44 +857,52 @@ void func_800E81C4(void) // 0x800E81C4
     Event_MapTake(2, EventFlag_M2S00_PickupMap, 60);
 }
 
-void func_800E81EC(void)
+void func_800E81EC(void) // 0x800E81EC
 {
-    #define STATE_TAKE_STEELPIPE 5
-    #define STATE_DONT_TAKE_STEELPIPE 6
+    #define STATE_TAKE_STEEL_PIPE      5
+    #define STATE_DONT_TAKE_STEEL_PIPE 6
+
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
             func_80086470(0U, InventoryItemId_SteelPipe, 0, false);
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 1:
             func_80085DF0();
             break;
+
         case 2:
             func_80086C58(&g_SysWork.player_4C.chara_0, 59);
             break;
+
         case 3:
             func_80086470(1, InventoryItemId_SteelPipe, 0, false);
             break;
+
         case 4:
             Savegame_EventFlagSet(EventFlag_M2S00_PickupSteelPipe);
+
             if (Gfx_PickupItemAnimate(InventoryItemId_SteelPipe))
             {
-                MapMsg_DisplayAndHandleSelection(true, 15, STATE_TAKE_STEELPIPE, STATE_DONT_TAKE_STEELPIPE, 0, false);
+                MapMsg_DisplayAndHandleSelection(true, 15, STATE_TAKE_STEEL_PIPE, STATE_DONT_TAKE_STEEL_PIPE, 0, false);
             }
             break;
-        case STATE_TAKE_STEELPIPE:
+
+        case STATE_TAKE_STEEL_PIPE:
             func_80086470(3, InventoryItemId_SteelPipe, 1, false);
             SysWork_StateStepSet(0, 7);
             break;
-        case STATE_DONT_TAKE_STEELPIPE:
+
+        case STATE_DONT_TAKE_STEEL_PIPE:
             Savegame_EventFlagClear(EventFlag_M2S00_PickupSteelPipe);
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 7:
             func_80086C58(&g_SysWork.player_4C.chara_0, 60);
             break;
+
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
@@ -968,12 +990,13 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EC080);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EE518);
 
-u8 func_800EE5A8(u32 arg0)
+u8 func_800EE5A8(u32 arg0) // 0x800EE5A8
 {
     if (arg0 < 3) 
     {
         return D_800F1CA8[arg0];
     }
+
     return 10;
 }
 

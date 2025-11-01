@@ -14,14 +14,16 @@
 #define HAS_PlayerState_Unk139
 
 // Config used by `Map_RoomIdxGet`.
-#define MAP_ROOM_MIN_X    Q12(-200.0f)
-#define MAP_ROOM_MAX_X    Q12(200.0f)
-#define MAP_ROOM_MIN_Z    Q12(-160.0f)
-#define MAP_ROOM_MAX_Z    Q12(0.f)
+#define MAP_ROOM_MIN_X Q12(-200.0f)
+#define MAP_ROOM_MAX_X Q12(200.0f)
+#define MAP_ROOM_MIN_Z Q12(-160.0f)
+#define MAP_ROOM_MAX_Z Q12(0.f)
 
-extern s32 D_800D4370[4]; // Z pos table ?
-extern s_WorldObject_0   g_WorldObject0[6]; // 800D4380
-extern s_WorldObjectDesc g_WorldObject1;    // 800D4430
+extern s32 D_800D4370[4]; // Z position table?
+
+extern s_WorldObject_0   g_WorldObject0[6];
+extern s_WorldObjectDesc g_WorldObject1;
+
 extern s16 D_800D4362;
 extern u8 g_MapMsgSoundIdx;
 extern VECTOR3 g_CutsceneCameraPosition;
@@ -38,5 +40,9 @@ void func_800D001C(s32 arg0);
 void func_800D0050(void);
 
 void func_800D00D0(void);
+
+void func_800D0B64(void);
+
+void func_800D2700(void);
 
 #endif

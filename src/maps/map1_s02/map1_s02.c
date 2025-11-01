@@ -306,20 +306,20 @@ void func_800DA2E4(void) // 0x800DA2E4
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     func_8004EE94(64, 1);
-    Map_MessageWithSfx(19, Sfx_DoorUnlocked, &sfxPos); // Empty msg?
+    Map_MessageWithSfx(19, Sfx_DoorUnlocked, &sfxPos); // Empty message?
 }
 
 void func_800DA384(void) // 0x800DA384
 {
     VECTOR3 viewPos;
-    bool    skipped;
+    bool    isSkipped;
 
-    skipped = false;
+    isSkipped = false;
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 10)
     {
-        skipped = true;
+        isSkipped = true;
         SysWork_StateStepReset();
     }
 
@@ -372,11 +372,15 @@ void func_800DA384(void) // 0x800DA384
             Game_TurnFlashlightOn();
             sharedFunc_800D08B8_0_s00(6, 127);
             sharedFunc_800CB6B0_0_s00(0, g_SavegamePtr->mapOverlayId_A4, 0);
+
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(-13.3f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(-68.1f);
+
             func_800865FC(true, 0, 0, FP_ANGLE(-45.0f), Q12(-18.18f), Q12(-62.24f));
             Savegame_EventFlagClear(EventFlag_92);
+
             D_800E1EE2 = 0;
+
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -392,7 +396,7 @@ void func_800DA384(void) // 0x800DA384
             break;
 
         case 4:
-            Map_MessageWithAudio(15, &D_800E1EE2, &D_800E1EDC); // Where am I?
+            Map_MessageWithAudio(15, &D_800E1EE2, &D_800E1EDC); // "Where am I?"
             break;
 
         case 5:
@@ -400,7 +404,7 @@ void func_800DA384(void) // 0x800DA384
             break;
 
         case 6:
-            Map_MessageWithAudio(16, &D_800E1EE2, &D_800E1EDC); // Have I been here before?
+            Map_MessageWithAudio(16, &D_800E1EE2, &D_800E1EDC); // "Have I been here before?"
             break;
 
         case 7:
@@ -413,7 +417,7 @@ void func_800DA384(void) // 0x800DA384
             break;
 
         case 9:
-            Map_MessageWithAudio(17, &D_800E1EE2, &D_800E1EDC); // I don't remember this being here before...
+            Map_MessageWithAudio(17, &D_800E1EE2, &D_800E1EDC); // "I don't remember this being here before..."
             break;
 
         case 10:
@@ -421,12 +425,13 @@ void func_800DA384(void) // 0x800DA384
             break;
 
         default:
-            if (skipped)
+            if (isSkipped)
             {
                 g_SysWork.player_4C.chara_0.position_18.vx = Q12(-18.18f);
                 g_SysWork.player_4C.chara_0.position_18.vy = Q12(0.0f);
                 g_SysWork.player_4C.chara_0.position_18.vz = Q12(-62.24f);
                 g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(-45.0f);
+
                 sharedFunc_800D2244_0_s00(true);
                 SysWork_StateSetNext(SysState_Gameplay);
                 vcReturnPreAutoCamWork(true);
