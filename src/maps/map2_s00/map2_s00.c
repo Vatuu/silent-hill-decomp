@@ -959,7 +959,7 @@ void func_800E95F8(void)
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            func_80086470(3U, 84, 1, false);
+            func_80086470(3, InventoryItemId_NoteDoghouse, 1, false);
             break;
     }
 }
@@ -999,9 +999,9 @@ void func_800E97E4(void)
             MapMsg_DisplayAndHandleSelection(true, 27, STATE_TAKE_KEY, STATE_DONT_TAKE_KEY, 0, false); // House key in doghouse, take it?
             break;
         case STATE_TAKE_KEY:
-            func_80086470(3, 65, 1, false);
+            func_80086470(3, InventoryItemId_HouseKey, 1, false);
             Savegame_EventFlagSet(EventFlag_M2S00_PickupDogHouseKey);
-            func_8004EE94(84, 1);
+            func_8004EE94(InventoryItemId_NoteDoghouse, 1);
             SysWork_StateStepIncrement(0);
             /* fallthrough */
         case STATE_DONT_TAKE_KEY:
@@ -1034,7 +1034,58 @@ void func_800E9A0C(void) // 0x800E9A0C
     }
 }
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E9A74);
+void func_800E9A74(void)
+{
+    #define STATE_TAKE_KEY      6
+    #define STATE_DONT_TAKE_KEY 7
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_80086470(0, InventoryItemId_KeyOfWoodman, 0, false);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 1:
+            func_80085DF0();
+            break;
+        case 2:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 59, false);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 3:
+            func_80086470(1, InventoryItemId_KeyOfWoodman, 0, false);
+            break;
+        case 4:
+            func_80085EB8(1, &g_SysWork.player_4C.chara_0, 0, false);
+            break;
+        case 5:
+            if (Gfx_PickupItemAnimate(InventoryItemId_KeyOfWoodman))
+            {
+                MapMsg_DisplayAndHandleSelection(true, 29, STATE_TAKE_KEY, STATE_DONT_TAKE_KEY, 0, false); // Key of Woodman. Take it?
+            }
+            Savegame_EventFlagSet(EventFlag_M2S00_PickupKeyOfWoodman);
+            break;
+        case STATE_TAKE_KEY:
+            func_80086470(3, InventoryItemId_KeyOfWoodman, 1, false);
+            if (g_SavegamePtr->mapMarkingFlags_1D4[1] & 0x400000)
+            {
+                g_SavegamePtr->mapMarkingFlags_1D4[1] |= 0x800000;
+            }
+            SysWork_StateStepSet(0, 8);
+            break;
+        case STATE_DONT_TAKE_KEY:
+            Savegame_EventFlagClear(EventFlag_M2S00_PickupKeyOfWoodman);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 8:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            break;
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+        }
+}
 
 void func_800E9CB4(void) // 0x800E9CB4
 {

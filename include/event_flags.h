@@ -126,9 +126,9 @@ typedef enum _EventFlag
     EventFlag_147                         = 147,
     EventFlag_M2S00_DogHouseNoteFound     = 148,
     EventFlag_M2S00_PickupDogHouseKey     = 149,
-    EventFlag_M2S00_PickupKeyOfLion = 150,
-
-    EventFlag_M2S00_PickupKeyOfScarecrow = 152,
+    EventFlag_M2S00_PickupKeyOfLion       = 150,
+    EventFlag_M2S00_PickupKeyOfWoodman    = 151,
+    EventFlag_M2S00_PickupKeyOfScarecrow  = 152,
 
     EventFlag_159 = 159,
 

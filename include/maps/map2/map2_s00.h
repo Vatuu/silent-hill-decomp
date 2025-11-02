@@ -58,4 +58,6 @@ void func_800EB090(void);
 
 void func_800E97E4(void);
 
+void func_800E9A74(void);
+
 #endif
