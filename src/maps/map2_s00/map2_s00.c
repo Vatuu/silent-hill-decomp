@@ -1672,13 +1672,103 @@ void MapEvent_KGordonKeyUse(void) // 0x800EA894
     g_SavegamePtr->mapMarkingFlags_1D4[1] |= 0x40000;
 }
 
-INCLUDE_RODATA("asm/maps/map2_s00/nonmatchings/map2_s00", D_800CD3D0);
-
-INCLUDE_RODATA("asm/maps/map2_s00/nonmatchings/map2_s00", D_800CD3DC);
+const VECTOR3 D_800CD3D0 = VECTOR3(-41.576f, -3.619f, 345.992f);
+const VECTOR3 D_800CD3DC = VECTOR3(-35.0f, 0.0f, 352.0f);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EA960);
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EAD2C);
+void func_800EAD2C(void)
+{
+    s32 vol;
+    s32 balance;
+
+    #define STATE_PRESS_SWITCH      3
+    #define STATE_DONT_PRESS_SWITCH NO_VALUE
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 1:
+            func_80085DF0();
+            break;
+        case 2:
+            g_SysWork.silentYesSelection_2350_4 = true;
+            // The machinery is running. Do you want to press the switch?
+            MapMsg_DisplayAndHandleSelection(true, 44, STATE_PRESS_SWITCH, STATE_DONT_PRESS_SWITCH, 0, false);
+            break;
+        case STATE_PRESS_SWITCH:
+            SysWork_StateStepIncrementAfterFade(0, true, 3, 0, false);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 4:
+            func_8005DC1C(Sfx_Unk1483, &D_800CD3D0, Q8_CLAMPED(0.5f), 0);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 5:
+            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            break;
+        case 6:
+            Sd_EngineCmd(Sfx_Unk1484);
+            D_800F534E = 0;
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 7:
+
+            D_800F534E += g_DeltaTime0;
+            if (D_800F534E > Q12(1.0f))
+            {
+                D_800F534E = Q12(1.0f);
+            }
+
+            balance = Sound_StereoBalanceGet(&D_800CD3DC);
+            if ((Q8_CLAMPED(1.0f) - (D_800F534E >> 4)) >= 0)
+            {
+                vol = ~(D_800F534E >> 4) & Q8_CLAMPED(1.0f);
+            }
+            else
+            {
+                vol = 0;
+            }
+            func_800463C0(Sfx_Unk1484, balance, vol, 0);
+
+            D_800F5344[2] += FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x88, Q12_SHIFT);
+            if (D_800F5344[2] > 0)
+            {
+                D_800F5344[2] = 0;
+                func_8004690C(Sfx_Unk1484);
+                Sd_PlaySfx(Sfx_Unk1485, Sound_StereoBalanceGet(&D_800CD3DC), 0);
+                SysWork_StateStepIncrement(0);
+            }
+            break;
+        case 8:
+            Savegame_EventFlagSet(EventFlag_165);
+            Savegame_EventFlagSet(EventFlag_166);
+            
+            if (Savegame_MapMarkingGet(MapMarkFlag_OldTown_BotBridgeCross))
+            {
+                Savegame_MapMarkingSet(MapMarkFlag_OldTown_BotBridgeCorrection);
+                Savegame_MapMarkingSet(MapMarkFlag_OldTown_BotBridgeArrow);
+            }
+            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+
+    if (g_SysWork.sysStateStep_C[0] > 3)
+    {
+        func_800894B8(0x90);
+    }
+    else
+    {
+        func_800894B8(0x70);
+    }
+}
 
 void func_800EB090(void) // 0x800EB090
 {

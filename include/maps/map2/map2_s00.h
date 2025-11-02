@@ -17,7 +17,8 @@ extern u8 D_800F1CA8[3]; // = { 0, 1, 2 }
 
 extern s16 D_800F22AE;
 
-extern s16 D_800F538C[];
+extern s16 D_800F538C[]; // } -- Might be one larger structure or array of stuff
+extern s16 D_800F5344[]; // } -- I've seen more references to this general area on memory.
 
 extern s16 D_800F228C;
 
@@ -36,6 +37,8 @@ extern s32 D_800F2298;
 extern s32 D_800F229C;
 
 extern s32 D_800F1A24;
+
+extern s16 D_800F534E;
 
 void func_800E7D54(void);
 
@@ -92,5 +95,7 @@ void MapEvent_HouseKeyUse(void);
 void MapEvent_DoorOfEclipseEnter(void);
 
 void func_800EA6E0(void);
+
+void func_800EAD2C(void);
 
 #endif

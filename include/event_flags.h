@@ -141,6 +141,7 @@ typedef enum _EventFlag
     EventFlag_M2S00_KGordonDoorOpen = 162,
 
     EventFlag_165 = 165,
+    EventFlag_166 = 166,
 
     EventFlag_169 = 169,
 
