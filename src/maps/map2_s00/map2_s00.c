@@ -1735,10 +1735,10 @@ void func_800EA960(void)
             }
             func_800463C0(Sfx_Unk1484, balance, vol, 0);
 
-            D_800F5344[2] += FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x88, Q12_SHIFT);
-            if (D_800F5344[2] > 0)
+            D_800F5344.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x88, Q12_SHIFT);
+            if (D_800F5344.vz > 0)
             {
-                D_800F5344[2] = 0;
+                D_800F5344.vz = 0;
                 func_8004690C(Sfx_Unk1484);
                 Sd_PlaySfx(Sfx_Unk1485, Sound_StereoBalanceGet(&QVECTOR3(-35.0f, 0.0f, 352.0f)), 0);
                 SysWork_StateStepIncrement(0);
@@ -1833,10 +1833,10 @@ void func_800EAD2C(void) // 0x800EAD2C
 
             func_800463C0(Sfx_Unk1484, balance, vol, 0);
 
-            D_800F5344[2] += FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x88, Q12_SHIFT);
-            if (D_800F5344[2] > 0)
+            D_800F5344.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x88, Q12_SHIFT);
+            if (D_800F5344.vz > 0)
             {
-                D_800F5344[2] = 0;
+                D_800F5344.vz = 0;
                 func_8004690C(Sfx_Unk1484);
                 Sd_PlaySfx(Sfx_Unk1485, Sound_StereoBalanceGet(&QVECTOR3(-35.0f, 0.0f, 352.0f)), 0);
                 SysWork_StateStepIncrement(0);
@@ -2005,10 +2005,10 @@ void func_800EB3F4(void) // 0x800EB3F4
             D_800F22AE    += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.0277f), Q12_SHIFT);
             D_800F22AE     = MAX(Q12(-0.0137f), D_800F22AE);
 
-            D_800F538C[1] += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800F22AE, Q12_SHIFT);
-            if (D_800F538C[1] < Q12(-0.02222f)) // TODO: `MAX`? Currently doesn't match.
+            D_800F538C.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800F22AE, Q12_SHIFT);
+            if (D_800F538C.vy < Q12(-0.02222f)) // TODO: `MAX`? Currently doesn't match.
             {
-                D_800F538C[1] = Q12(-0.02222f);
+                D_800F538C.vy = Q12(-0.02222f);
             }
             break;
 
@@ -2078,7 +2078,137 @@ void func_800EB824(s32 arg0) // 0x800EB824
     func_800EE5D0();
 }
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EB908);
+void func_800EB908(void)
+{
+    D_800F534C = 0;
+    WorldObjectPoseInit(&g_WorldObject9.position_1C, 236.7151f, -0.281f, 345.046f, 2.8f, 7.5f, -180.5f);
+    WorldObject_ModelNameSet(&g_WorldObject9.object_0, "DRILL_NE");
+
+    WorldObjectPoseInit(&g_WorldObjectA.position_1C, -82.3f, -0.7f, -91.6f, -17.0f, 18.1f, -7.22f);
+    WorldObject_ModelNameSet(&g_WorldObjectA.object_0, "CHAINSAW");
+
+    WorldObjectPoseInit(&g_WorldObject0.position_1C, -187.591f, -0.093f, 300.271f, 4.4f, 36.8f, 2.9f);
+    WorldObject_ModelNameSet(&g_WorldObject0.object_0, "IRONPIPE");
+
+    WorldObjectPoseInit(&g_WorldObject1.position_1C, -186.68f, -0.483f, 300.829f, 4.1f, -74.05f, -9.5f);
+    WorldObject_ModelNameSet(&g_WorldObject1.object_0, "SKB2_NEA");
+
+    WorldObjectPoseInit(&g_WorldObject2.position_1C, -154.56f, 0.0f, 1.78f, 0.0f, -51.7f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject2.object_0, "PPR1_NEA");
+
+    WorldObjectPoseInit(&g_WorldObject3.position_1C, -154.6f, 0.0f, 2.22f, 0.0f, 74.3f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject3.object_0, "PPR2_NEA");
+
+    Math_Vector3Set(&g_WorldObjectB[0].position_1C, Q12(111.94f), Q12(-0.81f), Q12(216.25f));
+    WorldObject_ModelNameSet(&g_WorldObjectB[0].object_0, "JO0A_HID");
+
+    Math_Vector3Set(&g_WorldObjectB[1].position_1C, Q12(111.94f), Q12(-0.57f), Q12(216.25f));
+    WorldObject_ModelNameSet(&g_WorldObjectB[1].object_0, "JO0B_HID");
+
+    Math_Vector3Set(&g_WorldObjectB[2].position_1C, Q12(111.94f), Q12(-0.32f), Q12(216.25f));
+    WorldObject_ModelNameSet(&g_WorldObjectB[2].object_0, "JO0C_HID");
+
+
+    WorldObjectPoseInit(&g_WorldObject4[0].position_1C, 185.76f,-0.59f, 116.12f, 0.0f, 0.0f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject4[0].object_0, "KEY_HIDE");
+    /*
+        @hack Doesn't match when used in a function.
+    WorldObjectPoseSet(&g_WorldObject4[1].position_1C, 0xFFF41948, 0, 0x178A14, 0, 0x299, 0);
+    */
+    Math_Vector3Set(&(g_WorldObject4 + 1)->position_1C.position_0, Q12(-190.42f), Q12(0.0f), Q12(376.63f));
+    *(s32*)&g_WorldObject4[1].position_1C.rotation_C.vx = 0x2990000;
+    (&(g_WorldObject4 + 1)->position_1C.rotation_C)->vz = 0;
+    WorldObject_ModelNameSet(&(g_WorldObject4 + 1)->object_0, "KEY_NEAR");
+
+    /*
+        @hack Doesn't match when used in a function.
+    WorldObjectPoseSet(&g_WorldObject4[2].position_1C, 0x63666, -0x599, 0xFFFDEBD8, 0, 0x12, 0xA);
+    */
+    Math_Vector3Set(&g_WorldObject4[2].position_1C.position_0, Q12(99.4f), Q12(-0.35f), Q12(-33.26f));
+    *(s32*)&g_WorldObject4[2].position_1C.rotation_C.vx = 0x12;
+    (&(g_WorldObject4 + 2)->position_1C.rotation_C)->vz = 0xA;
+    WorldObject_ModelNameSet(&g_WorldObject4[2].object_0, "KEY_NEAR");
+
+    WorldObject_ModelNameSet(&g_WorldObject5[0], "AXIS1_HI");
+    WorldObject_ModelNameSet(&g_WorldObject5[1], "AXIS2_BA");
+    WorldObject_ModelNameSet(&g_WorldObject5[2], "AXIS1_HI");
+    WorldObject_ModelNameSet(&g_WorldObject5[3], "AXIS2_BA");
+
+    Math_Vector3Set(&D_800F55DC[0], Q12(205.0f), Q12(0.0f), Q12(-80.0f));
+    Math_Vector3Set(&D_800F55DC[1], Q12(-35.0f), Q12(0.0f), Q12(360.0f));
+
+    Math_SetSVectorFast(D_800F5344, 0, 0, 0);
+
+    WorldObject_ModelNameSet(&g_WorldObject6[0], "CHAIN1_1");
+    WorldObject_ModelNameSet(&g_WorldObject6[1], "CHAIN1_2");
+    WorldObject_ModelNameSet(&g_WorldObject6[2], "CHAIN1_3");
+    WorldObject_ModelNameSet(&g_WorldObject7[0], "CHAIN2_1");
+    WorldObject_ModelNameSet(&g_WorldObject7[1], "CHAIN2_2");
+    WorldObject_ModelNameSet(&g_WorldObject7[2], "CHAIN2_3");
+    WorldObject_ModelNameSet(&g_WorldObject7[3], "CHAIN2_4");
+
+    Math_Vector3Set(&D_800F56CC[0], Q12(-262.0f), Q12(0.0f), Q12(-104.0f));
+    Math_Vector3Set(&D_800F56CC[1], Q12(-263.0f), Q12(0.0f), Q12(-104.0f));
+
+    WorldObject_ModelNameSet(&D_800F535C, "DOOR1_BA");
+    Math_Vector3Set(&D_800F537C, Q12(-263.0f), Q12(0.0f), Q12(-104.0f));
+
+    Math_SetSVectorFast(D_800F538C, 0, 0, 0);
+    WorldObject_ModelNameSet(&D_800F56EC, D_800A99E4.savePadName_4);
+
+    WorldObjectPoseInit(&D_800F570C.position_0, 117.681641f, -1.01f, 216.263f, 0.0f, 193.51f, 0.0f);
+    WorldObjectPoseInit(&D_800F572C.position_0, 116.3013f, -0.905f, 299.1139f, 0.0f, 84.56f, 0.0f);
+    WorldObjectPoseInit(&D_800F574C.position_0, -44.234f, -3.453f, 345.2f, 0.0f, 180.0f, 0.0f);
+
+    WorldObjectPoseSet(&g_WorldObject8.position_1C, Q12(-43.694f), Q12(-3.1824f), Q12(345.764f), 0x4C, 0x45, 0);
+    WorldObject_ModelNameSet(&g_WorldObject8.object_0, "MAP_NEAR");
+    D_800F56E4 = 0;
+    if (!Savegame_EventFlagGet(EventFlag_146) || 
+        (Savegame_EventFlagGet(EventFlag_193) &&  !Savegame_EventFlagGet(EventFlag_M2S00_WaterWorksCutscene))) 
+    {
+        g_SysWork.flags_22A4 |= (1<<4);
+    }
+
+    if (Savegame_EventFlagGet(EventFlag_159))
+    {
+        D_800F1A24 = 0x64000;
+    }
+    if (!Savegame_EventFlagGet(EventFlag_166))
+    {
+        D_800F5344.vz = FP_ANGLE(-49.94f);
+    }
+    if (Savegame_EventFlagGet(EventFlag_168))
+    {
+        D_800F538C.vy = FP_ANGLE(8.0f);
+    }
+    func_800EE5D0();
+    if (Savegame_EventFlagGet(EventFlag_132) && !Savegame_EventFlagGet(EventFlag_M2S00_KGordonDoorOpen))
+    {
+        g_SavegamePtr->field_B0[10] &= 0xF3FFFEFF;
+    }
+
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    {
+        g_SysWork.field_2280 = 2;
+    }
+    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
+    {
+        g_SysWork.field_2280 = 3;
+    }
+    else
+    {
+        g_SysWork.field_2280 = 4;
+    }
+
+    g_SysWork.field_2280++;
+    g_SysWork.field_2290 |= 1 << (g_SysWork.field_2280 - 1);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4.handgunBulletsName_14);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4.shotgunShellsName_18);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
+}
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EC080);
 

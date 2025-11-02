@@ -112,6 +112,7 @@ typedef enum _EventFlag
 
     EventFlag_130 = 130,
     EventFlag_131 = 131,
+    EventFlag_132 = 132,
     EventFlag_133 = 133,
     EventFlag_134 = 134,
 
@@ -144,7 +145,7 @@ typedef enum _EventFlag
     EventFlag_165 = 165,
     EventFlag_166 = 166,
     EventFlag_167 = 167,
-
+    EventFlag_168 = 168,
     EventFlag_169 = 169,
 
     EventFlag_M2S00_PickupMap         = 171, // Shared with M2S04
@@ -172,6 +173,7 @@ typedef enum _EventFlag
     EventFlag_190 = 190,
     EventFlag_191 = 191,
 
+    EventFlag_193 = 193,
     EventFlag_194 = 194,
     EventFlag_195 = 195,
 

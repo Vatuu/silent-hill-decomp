@@ -2893,7 +2893,7 @@ typedef struct
 #define WorldObjectPoseInit(eventPos, posX, posY, posZ, rotX, rotY, rotZ) \
     WorldObjectPoseSet(eventPos, Q12(posX), Q12(posY), Q12(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))
 
-static inline void WorldObjectPoseSet(s_WorldObjectPose* eventPose, q19_12 posX, q19_12 posY, q19_12 posZ, q8_8 rotX, q8_8 rotY, q8_8 rotZ)
+static inline void WorldObjectPoseSet(s_WorldObjectPose* eventPose, q19_12 posX, q19_12 posY, q19_12 posZ, q8_8 rotX, q8_8 rotY, q7_8 rotZ)
 {
     Math_Vector3Set(&eventPose->position_0, posX, posY, posZ);
     *(u32*)&eventPose->rotation_C.vx = ((u32)rotY << 16) | (u32)rotX;
