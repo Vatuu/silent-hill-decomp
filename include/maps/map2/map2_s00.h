@@ -50,6 +50,8 @@ void MapEvent_SteelPipeTake(void);
 
 void MapEvent_CutsceneExitCafe(void);
 
+void MapEvent_CherylsSketchbook(void);
+
 void MapEvent_DoghouseNote(void);
 
 void MapEvent_DoghouseKeyTake(void);
@@ -77,7 +79,5 @@ void func_800EB824(s32);
 s32 func_800EE518(void);
 
 u8 func_800EE5A8(u32 arg0);
-
-void func_800E8C0C(void);
 
 #endif

@@ -1091,7 +1091,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
     }
 }
 
-void func_800E8C0C(void) // 0x800E8C0C
+void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
 {
     s16 curve;
 
