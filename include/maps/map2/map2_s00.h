@@ -90,4 +90,6 @@ void func_800E9D1C(void);
 
 void func_800EA444(void);
 
+void func_800EA6E0(void);
+
 #endif

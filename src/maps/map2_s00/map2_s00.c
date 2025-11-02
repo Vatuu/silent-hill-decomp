@@ -1585,7 +1585,50 @@ void func_800EA444(void)
     }
 }
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EA6E0);
+void func_800EA6E0(void)
+{
+    g_BackgroundColor = 0x48;
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_800862F8(0, FILE_TIM_KEYMAP_TIM, false);
+            SysWork_StateStepIncrement(0);
+        case 1:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            return;
+        case 2:
+            func_800862F8(1, 0, false);
+            return;
+        case 3:
+            func_800862F8(2, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            return;
+        case 4:
+            if (Savegame_MapMarkingGet(MapMarkFlag_OldTown_FineyStRightKeyArrow))
+            {
+                MapMsg_DisplayAndHandleSelection(false, 54, 0, 0, 0, false);// Something is written on the map on the wall.(end)
+            }
+            else
+            {
+                MapMsg_DisplayAndHandleSelection(false, 52, 0, 0, 0, false); // ^... Copied it to the map
+            }
+            func_800862F8(2, 0, false);
+            return;
+        case 5:
+            func_800862F8(2, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            return;
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
+            Savegame_MapMarkingSet(MapMarkFlag_OldTown_FineyStRightKeyArrow);
+            Savegame_MapMarkingSet(MapMarkFlag_OldTown_DogYardKeyLine);
+            Savegame_MapMarkingSet(MapMarkFlag_OldTown_EllroyStKeyCircle);
+            return;
+        }
+}
 
 void MapEvent_KGordonKeyUse(void) // 0x800EA894
 {
