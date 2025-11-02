@@ -48,6 +48,8 @@ void func_800EB79C(void);
 
 void func_800EB7E0(void);
 
+void func_800E95F8(void);
+
 void func_800EA894(void);
 
 s32 func_800EE518(void);

@@ -916,7 +916,53 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E8C0C);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E9470);
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E95F8);
+void func_800E95F8(void)
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_800862F8(0, FILE_TIM_STKENNEL_TIM, false);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 1:
+            func_80085DF0();
+            break;
+        case 2:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 59);
+            break;
+        case 3:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            break;
+        case 4:
+            func_800862F8(1, 0, false);
+            break;
+        case 5:
+            func_800862F8(2, 0, false);
+            Savegame_EventFlagSet(EventFlag_M2S00_DogHouseNoteFound);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            break;
+        case 6:
+            func_800862F8(2, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 23, 0, 0, 0, false); // Doghouse Levin st.
+            break;
+        case 7:
+            func_800862F8(2, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            break;
+        case 8:
+            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            break;
+        case 9:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            break;
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            func_80086470(3U, 84, 1, false);
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E97E4);
 
