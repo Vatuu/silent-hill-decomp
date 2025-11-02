@@ -54,20 +54,20 @@ void func_800D0960(s32 arg0) // 0x800D0960
 
 #include "maps/shared/sharedFunc_800D09D4_3_s00.h" // 0x800D0994
 
-void func_800D0B74() {}
+void func_800D0B74(void) {}
 
-#include "maps/shared/Event_DoorJammed.h" // 0x800D0B7C
+#include "maps/shared/MapEvent_DoorJammed.h" // 0x800D0B7C
 
-#include "maps/shared/Event_DoorLocked.h" // 0x800D0C10
+#include "maps/shared/MapEvent_DoorLocked.h" // 0x800D0C10
 
-void func_800D0CA4() {}
+void func_800D0CA4(void) {}
 
-void func_800D0CAC() // 0x800D0CAC
+void MapEvent_FirstAidKitTake(void) // 0x800D0CAC
 {
     Event_CommonItemTake(CommonPickupItemId_FirstAidKit, EventFlag_M3S00_FirstAidKit);
 }
 
-void func_800D0CD0(void) // 0x800D0CD0
+void MapEvent_MapTake(void) // 0x800D0CD0
 {
     Event_MapTake(17, EventFlag_M3S00_PickupMap, 48);
 }

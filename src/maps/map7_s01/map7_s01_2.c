@@ -629,30 +629,30 @@ void func_800D85D4(void) // 0x800D85D4
     Map_MessageWithSfx(85, Sfx_DoorLocked, &sfxPos);
 }
 
-void func_800D8668(void) // 0x800D8668
+void MapEvent_KeyOfOphielUse(void) // 0x800D8668
 {
     VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
 
     Player_ItemRemove(InventoryItemId_KeyOfOphiel, 1);
-    Map_MessageWithSfx(48, Sfx_Unk1335, &sfxPos);
+    Map_MessageWithSfx(48, Sfx_UseKey, &sfxPos);
     Savegame_EventFlagSet(EventFlag_530);
 }
 
-void func_800D8724(void) // 0x800D8724
+void MapEvent_KeyOfHagithUse(void) // 0x800D8724
 {
     VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
 
     Player_ItemRemove(InventoryItemId_KeyOfHagith, 1);
-    Map_MessageWithSfx(49, Sfx_Unk1335, &sfxPos);
+    Map_MessageWithSfx(49, Sfx_UseKey, &sfxPos);
     Savegame_EventFlagSet(EventFlag_531);
 }
 
-void func_800D87E0(void) // 0x800D87E0
+void MapEvent_KeyOfPhalegUse(void) // 0x800D87E0
 {
     VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
 
     Player_ItemRemove(InventoryItemId_KeyOfPhaleg, 1);
-    Map_MessageWithSfx(50, Sfx_Unk1335, &sfxPos);
+    Map_MessageWithSfx(50, Sfx_UseKey, &sfxPos);
     Savegame_EventFlagSet(EventFlag_532);
 }
 
@@ -681,7 +681,7 @@ void func_800D8958(void) // 0x800D8958
     func_80087360(FILE_TIM_BIRDCAGE_TIM, Q12(0.0f), Q12(0.0f), 78);
 }
 
-void func_800D8984(void) // 0x800D8984
+void MapEvent_BirdCageKeyUse(void) // 0x800D8984
 {
     const static VECTOR3 sfxPos = { Q12(-179.64f), Q12(-1.0f), Q12(-20.05f) };
 

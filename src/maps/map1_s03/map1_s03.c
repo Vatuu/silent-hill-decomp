@@ -252,11 +252,11 @@ INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DA4D4);
 
 void func_800DA630(void) {}
 
-#include "maps/shared/Event_DoorJammed.h" // 0x800DA638
+#include "maps/shared/MapEvent_DoorJammed.h" // 0x800DA638
 
-#include "maps/shared/Event_DoorLocked.h" // 0x800DA6CC
+#include "maps/shared/MapEvent_DoorLocked.h" // 0x800DA6CC
 
-#include "maps/shared/Event_DoorUnlocked.h" // 0x800DA760
+#include "maps/shared/MapEvent_DoorUnlocked.h" // 0x800DA760
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DA7F4);
 

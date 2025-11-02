@@ -1094,7 +1094,7 @@ void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             SysWork_StateStepIncrement(1);
 
         case 3:
-            g_BackgroundColor = 0x58;
+            g_BackgroundColor = 88;
 
             Gfx_BackgroundSpriteDraw(&g_MapImg);
             MapMsg_DisplayAndHandleSelection(true, mapMsgIdx, 4, 5, 0, true); // 4 is "No", 5 is "Yes".
@@ -1136,7 +1136,7 @@ void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF
             SysWork_StateStepIncrement(1);
 
         case 5:
-            g_BackgroundColor = 0x58;
+            g_BackgroundColor = 88;
 
             Gfx_BackgroundSpriteDraw(&g_MapImg);
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), true);

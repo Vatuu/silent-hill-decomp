@@ -269,7 +269,7 @@ void func_800CCE38(void) // 0x800CCE38
 {
     if (g_Controller0->btnsClicked_10 & ControllerFlag_R1)
     {
-        Sd_EngineCmd(Sfx_Unk1335);
+        Sd_EngineCmd(Sfx_UseKey);
     }
 
     if (g_Controller0->btnsClicked_10 & ControllerFlag_R2)

@@ -132,8 +132,8 @@ sharedFunc_800E8730_2_s02   = 0x800E8B2C; // type:func
 sharedFunc_800E8A40_2_s02   = 0x800E8E3C; // type:func
 sharedFunc_800E8DFC_2_s02   = 0x800E91F8; // type:func
 sharedFunc_800D929C_0_s00   = 0x800E9D28; // type:func
-Event_DoorJammed            = 0x800EA210; // type:func
-Event_DoorLocked            = 0x800EA2A4; // type:func
+MapEvent_DoorJammed         = 0x800EA210; // type:func
+MapEvent_DoorLocked         = 0x800EA2A4; // type:func
 
 
 

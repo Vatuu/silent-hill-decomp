@@ -259,7 +259,7 @@ INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D822C);
 
 INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D84EC);
 
-void func_800D87F0(void) // 0x800D87F0
+void MapEvent_MapTake(void) // 0x800D87F0
 {
     Event_MapTake(15, EventFlag_M6S03_PickupMap, 15);
 }
@@ -268,8 +268,7 @@ INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D8818);
 
 INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D89A0);
 
-void func_800D936C(void) {
-}
+void func_800D936C(void) {}
 
 INCLUDE_RODATA("asm/maps/map6_s03/nonmatchings/map6_s03", D_800CB258);
 

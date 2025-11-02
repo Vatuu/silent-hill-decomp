@@ -147,7 +147,7 @@ void func_800D94F8(void);
 /** Debug function? */
 void Gfx_LoadingScreen_StageString();
 
-void Event_CutsceneAlleyNightmare(void);
+void MapEvent_CutsceneAlleyNightmare(void);
 
 void func_800DBE00();
 
@@ -169,7 +169,7 @@ void Map_WorldObjectsInit(void);
 
 void Map_WorldObjectsUpdate(void);
 
-void Event_GreyChildrenSpawn(void);
+void MapEvent_GreyChildrenSpawn(void);
 
 void func_800DD0CC();
 

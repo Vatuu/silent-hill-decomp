@@ -588,9 +588,9 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800EB6B0);
 
 void func_800EB874() {}
 
-#include "maps/shared/Event_DoorJammed.h" // 0x800EB87C
+#include "maps/shared/MapEvent_DoorJammed.h" // 0x800EB87C
 
-#include "maps/shared/Event_DoorLocked.h" // 0x800EB910
+#include "maps/shared/MapEvent_DoorLocked.h" // 0x800EB910
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
@@ -642,7 +642,7 @@ void func_800EB9A4(void) // 0x800EB9A4
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800EBA40);
 
-void func_800EBF48(void) // 0x800EBF48
+void MapEvent_MapTake(void) // 0x800EBF48
 {
     Event_MapTake(4, EventFlag_M5S01_PickupMap, 15);
 }

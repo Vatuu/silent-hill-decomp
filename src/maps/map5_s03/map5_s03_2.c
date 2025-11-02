@@ -59,11 +59,11 @@ void func_800D1340(void) {}
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D1348
 
-#include "maps/shared/Event_DoorJammed.h" // 0x800D13E0
+#include "maps/shared/MapEvent_DoorJammed.h" // 0x800D13E0
 
-#include "maps/shared/Event_DoorLocked.h" // 0x800D1474
+#include "maps/shared/MapEvent_DoorLocked.h" // 0x800D1474
 
-#include "maps/shared/Event_DoorUnlocked.h" // 0x800D1508
+#include "maps/shared/MapEvent_DoorUnlocked.h" // 0x800D1508
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"

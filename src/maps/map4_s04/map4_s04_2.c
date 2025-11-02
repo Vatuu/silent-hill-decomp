@@ -55,9 +55,9 @@ INCLUDE_ASM("asm/maps/map4_s04/nonmatchings/map4_s04_2", func_800D14B0);
 
 void func_800D1740(void) {}
 
-#include "maps/shared/Event_DoorJammed.h" // 0x800D1748
+#include "maps/shared/MapEvent_DoorJammed.h" // 0x800D1748
 
-#include "maps/shared/Event_DoorLocked.h" // 0x800D17DC
+#include "maps/shared/MapEvent_DoorLocked.h" // 0x800D17DC
 
 void func_800D1870(void) {}
 

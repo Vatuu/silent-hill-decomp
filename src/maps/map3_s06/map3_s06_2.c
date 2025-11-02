@@ -50,9 +50,9 @@ void func_800D07A0(s32 arg0) // 0x800D07A0
 
 void func_800D09B4(void) {}
 
-#include "maps/shared/Event_DoorJammed.h" // 0x800D09BC
+#include "maps/shared/MapEvent_DoorJammed.h" // 0x800D09BC
 
-#include "maps/shared/Event_DoorLocked.h" // 0x800D0A50
+#include "maps/shared/MapEvent_DoorLocked.h" // 0x800D0A50
 
 void func_800D0AE4(void) {}
 
@@ -114,7 +114,7 @@ void func_800D0B10(void) // 0x800D0B10
 
 INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06_2", func_800D0C14);
 
-void func_800D17B0(void) // 0x800D17B0
+void MapEvent_MapTake(void) // 0x800D17B0
 {
     Event_MapTake(17, EventFlag_M3S00_PickupMap, 35);
 }

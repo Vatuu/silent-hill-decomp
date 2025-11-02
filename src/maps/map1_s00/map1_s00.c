@@ -182,11 +182,11 @@ void func_800D77F8(void) // 0x800D77F8
 
 void func_800D7864(void) {}
 
-#include "maps/shared/Event_DoorJammed.h" // 0x800D786C
+#include "maps/shared/MapEvent_DoorJammed.h" // 0x800D786C
 
-#include "maps/shared/Event_DoorLocked.h" // 0x800D7900
+#include "maps/shared/MapEvent_DoorLocked.h" // 0x800D7900
 
-#include "maps/shared/Event_DoorUnlocked.h" // 0x800D7994
+#include "maps/shared/MapEvent_DoorUnlocked.h" // 0x800D7994
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
@@ -732,7 +732,7 @@ void func_800D8CC4(void) // 0x800D8CC4
     func_80087360(FILE_TIM_RECEPPIC_TIM, Q12(0.0f), Q12(0.0f), 27);
 }
 
-void Event_Boiler0(void) // 0x800D8CF0
+void MapEvent_Boiler0(void) // 0x800D8CF0
 {
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -801,7 +801,7 @@ void Event_Boiler0(void) // 0x800D8CF0
     }
 }
 
-void Event_Boiler1(void)
+void MapEvent_Boiler1(void)
 {
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -837,7 +837,7 @@ void Event_Boiler1(void)
     }
 }
 
-void Event_Boiler2(void) // 0x800D9148
+void MapEvent_Boiler2(void) // 0x800D9148
 {
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -862,7 +862,7 @@ void Event_Boiler2(void) // 0x800D9148
     func_800894B8(96);
 }
 
-void func_800D922C(void) // 0x800D922C
+void MapEvent_TownMapTake(void) // 0x800D922C
 {
     Event_MapTake(6, EventFlag_M1S00_PickupMap, 37);
 }

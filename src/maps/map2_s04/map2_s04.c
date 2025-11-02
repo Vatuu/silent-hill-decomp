@@ -93,9 +93,9 @@ void func_800CCB30(s32 arg0) // 0x800CCB30
 
 void func_800CCE6C(void) {}
 
-#include "maps/shared/Event_DoorJammed.h" // 0x800CCE74
+#include "maps/shared/MapEvent_DoorJammed.h" // 0x800CCE74
 
-#include "maps/shared/Event_DoorLocked.h" // 0x800CCF08
+#include "maps/shared/MapEvent_DoorLocked.h" // 0x800CCF08
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
@@ -174,7 +174,7 @@ void func_800CD088(void) // 0x800CD088
     Savegame_EventFlagSet(EventFlag_145);
 }
 
-void func_800CD0D0(void) // 0x800CD0D0
+void MapEvent_MapTake(void) // 0x800CD0D0
 {
     Event_MapTake(2, EventFlag_M2S00_PickupMap, 23);
 }

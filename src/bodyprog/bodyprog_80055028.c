@@ -3905,7 +3905,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* arg1, s32 arg2, s32 arg3) // 0
     }
 }
 
-bool func_80060044(POLY_FT4** arg0, s32 arg1) // 0x80060044
+bool func_80060044(POLY_FT4** poly, s32 arg1) // 0x80060044
 {
     s32              temp_v0_2;
     s32              temp_v1_5;
@@ -3922,11 +3922,11 @@ bool func_80060044(POLY_FT4** arg0, s32 arg1) // 0x80060044
 
     ptr->field_148 = g_MapOverlayHeader.unkTable1_4C[arg1].field_10.s_0.field_0;
 
-    if (g_GameWork.config_0.optExtraBloodColor_24 == 0xE)
+    if (g_GameWork.config_0.optExtraBloodColor_24 == 14)
     {
         g_MapOverlayHeader.unkTable1_4C[arg1].field_10.s_0.field_0 += (u16)g_DeltaTime0 * 4;
     }
-    else if (g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_1 == 0x21)
+    else if (g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_1 == 33)
     {
         g_MapOverlayHeader.unkTable1_4C[arg1].field_10.s_0.field_0 += (u16)g_DeltaTime0 * 2;
     }
@@ -3936,20 +3936,22 @@ bool func_80060044(POLY_FT4** arg0, s32 arg1) // 0x80060044
     }
 
     temp_a1 = g_MapOverlayHeader.unkTable1_4C[arg1].field_B >> 2;
-    if ((u16)g_MapOverlayHeader.unkTable1_4C[arg1].field_10.s_0.field_0 >= 0x1471)
+    if ((u16)g_MapOverlayHeader.unkTable1_4C[arg1].field_10.s_0.field_0 >= 5233)
     {
         g_MapOverlayHeader.unkTable1_4C[arg1].field_A = 0;
-        if (temp_a1 != 0x18)
+
+        if (temp_a1 != 24)
         {
             if (D_800C42E8[temp_a1].field_0 & 1)
             {
                 D_800C42E8[temp_a1].field_0 -= 1;
             }
         }
+
         return false;
     }
 
-    if (temp_a1 != 0x18)
+    if (temp_a1 != 24)
     {
         g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 += ptr->field_0.field_34[temp_a1];
         g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 += ptr->field_0.field_64[temp_a1];
@@ -3971,7 +3973,7 @@ bool func_80060044(POLY_FT4** arg0, s32 arg1) // 0x80060044
         return false;
     }
 
-    if (ABS(ptr->field_144.vx) >= 0xC9 || ABS(ptr->field_144.vy) >= 0xA1)
+    if (ABS(ptr->field_144.vx) >= 201 || ABS(ptr->field_144.vy) >= 161)
     {
         return false;
     }
@@ -3980,22 +3982,22 @@ bool func_80060044(POLY_FT4** arg0, s32 arg1) // 0x80060044
                       (g_MapOverlayHeader.unkTable1_4C[arg1].field_C.s_0.field_0 < 3 ? g_MapOverlayHeader.unkTable1_4C[arg1].field_C.s_0.field_1 : 0)) *
                      ptr->field_0.field_2C / ptr->field_140;
 
-    setPolyFT4(*arg0);
+    setPolyFT4(*poly);
 
-    setXY0Fast(*arg0, (u16)ptr->field_144.vx - (u16)ptr->field_14C, ptr->field_144.vy - ptr->field_14C);
-    setXY1Fast(*arg0, (u16)ptr->field_144.vx + (u16)ptr->field_14C, ptr->field_144.vy - ptr->field_14C);
-    setXY2Fast(*arg0, (u16)ptr->field_144.vx - (u16)ptr->field_14C, ptr->field_144.vy + ptr->field_14C);
-    setXY3Fast(*arg0, (u16)ptr->field_144.vx + (u16)ptr->field_14C, ptr->field_144.vy + ptr->field_14C);
+    setXY0Fast(*poly, (u16)ptr->field_144.vx - (u16)ptr->field_14C, ptr->field_144.vy - ptr->field_14C);
+    setXY1Fast(*poly, (u16)ptr->field_144.vx + (u16)ptr->field_14C, ptr->field_144.vy - ptr->field_14C);
+    setXY2Fast(*poly, (u16)ptr->field_144.vx - (u16)ptr->field_14C, ptr->field_144.vy + ptr->field_14C);
+    setXY3Fast(*poly, (u16)ptr->field_144.vx + (u16)ptr->field_14C, ptr->field_144.vy + ptr->field_14C);
 
     var_a2    = (g_MapOverlayHeader.unkTable1_4C[arg1].field_C.s_0.field_0) >> 3;
     temp_a2_2 = var_a2;
 
-    temp_v1_5_ = temp_a2_2 ^ 1;
-    temp_v1_5_ = temp_v1_5_ & 1;
+    temp_v1_5_ = temp_a2_2 ^ 0x1;
+    temp_v1_5_ = temp_v1_5_ & 0x1;
 
     temp_v1_5 = (u32)temp_a2_2 >> 1;
-    temp_v1_5 = temp_v1_5 ^ 1;
-    temp_v1_5 = temp_v1_5 & 1;
+    temp_v1_5 = temp_v1_5 ^ 0x1;
+    temp_v1_5 = temp_v1_5 & 0x1;
 
     temp_v1_5 = temp_v1_5_ ^ temp_v1_5;
 
@@ -4018,8 +4020,8 @@ bool func_80060044(POLY_FT4** arg0, s32 arg1) // 0x80060044
         ptr->field_168 = 0;
     }
 
-    temp_v1_5 = temp_a2_2 ^ 1;
-    temp_v1_5 = temp_v1_5 & 1;
+    temp_v1_5 = temp_a2_2 ^ 0x1;
+    temp_v1_5 = temp_v1_5 & 0x1;
 
     if ((!(temp_a2_2 & 4) && (temp_v1_5 ^ 1) != 0) || ((temp_a2_2 & 4) && (temp_v1_5) != 0))
     {
@@ -4035,7 +4037,7 @@ bool func_80060044(POLY_FT4** arg0, s32 arg1) // 0x80060044
     temp_v1_5 = temp_v1_5 ^ 1;
     temp_v1_5 = temp_v1_5 & 1;
 
-    if ((!(temp_a2_2 & 4) && (temp_v1_5 ^ 1) != 0) || ((temp_a2_2 & 4) && (temp_v1_5) != 0))
+    if ((!(temp_a2_2 & 0x4) && (temp_v1_5 ^ 0x1) != 0) || ((temp_a2_2 & 0x4) && temp_v1_5 != 0))
     {
         var_v0_6 = 0x1F;
     }
@@ -4045,10 +4047,10 @@ bool func_80060044(POLY_FT4** arg0, s32 arg1) // 0x80060044
     }
     ptr->field_16C = var_v0_6;
 
-    temp_v1_5 = temp_a2_2 ^ 1;
-    temp_v1_5 = temp_v1_5 & 1;
+    temp_v1_5 = temp_a2_2 ^ 0x1;
+    temp_v1_5 = temp_v1_5 & 0x1;
 
-    if ((!(temp_a2_2 & 4) && (temp_v1_5 ^ 1) != 0) || ((temp_a2_2 & 4) && (temp_v1_5) != 0))
+    if ((!(temp_a2_2 & 0x4) && (temp_v1_5 ^ 0x1) != 0) || ((temp_a2_2 & 0x4) && temp_v1_5 != 0))
     {
         var_v0_6 = 0x1F;
     }
@@ -4062,7 +4064,7 @@ bool func_80060044(POLY_FT4** arg0, s32 arg1) // 0x80060044
     temp_v1_5 = temp_v1_5 ^ 1;
     temp_v1_5 = temp_v1_5 & 1;
 
-    if ((!(temp_a2_2 & 4) && (temp_v1_5 ^ 1) != 0) || ((temp_a2_2 & 4) && (temp_v1_5) != 0))
+    if ((!(temp_a2_2 & 0x4) && (temp_v1_5 ^ 0x1) != 0) || ((temp_a2_2 & 0x4) && temp_v1_5 != 0))
     {
         var_v0_6 = 0;
     }
@@ -4072,16 +4074,16 @@ bool func_80060044(POLY_FT4** arg0, s32 arg1) // 0x80060044
     }
     ptr->field_170 = var_v0_6;
 
-    temp_v1_5_ = temp_a2_2 ^ 1;
-    temp_v1_5_ = temp_v1_5_ & 1;
+    temp_v1_5_ = temp_a2_2 ^ 0x1;
+    temp_v1_5_ = temp_v1_5_ & 0x1;
 
     temp_v1_5 = (u32)temp_a2_2 >> 1;
-    temp_v1_5 = temp_v1_5 ^ 1;
-    temp_v1_5 = temp_v1_5 & 1;
+    temp_v1_5 = temp_v1_5 ^ 0x1;
+    temp_v1_5 = temp_v1_5 & 0x1;
 
     temp_v1_5 = temp_v1_5_ ^ temp_v1_5;
 
-    if ((!(temp_a2_2 & 4) && (temp_v1_5 ^ 1) != 0) || ((temp_a2_2 & 4) && (temp_v1_5) != 0))
+    if ((!(temp_a2_2 & 0x4) && (temp_v1_5 ^ 0x1) != 0) || ((temp_a2_2 & 0x4) && temp_v1_5 != 0))
     {
         var_v0_6 = 0x1F;
     }
@@ -4100,46 +4102,46 @@ bool func_80060044(POLY_FT4** arg0, s32 arg1) // 0x80060044
         ptr->field_174 = 0;
     }
 
-    ptr->field_150 = ((g_MapOverlayHeader.unkTable1_4C[arg1].field_C.s_0.field_0 & 7) + 2);
+    ptr->field_150 = ((g_MapOverlayHeader.unkTable1_4C[arg1].field_C.s_0.field_0 & 0x7) + 2);
     ptr->field_164 = CLAMP_LOW_THEN_MIN((ptr->field_148 / 327), 0, 7);
 
-    setSemiTrans(*arg0, 1);
+    setSemiTrans(*poly, 1);
 
     if (g_GameWork.config_0.optExtraBloodColor_24 == 0xE)
     {
-        *(s32*)&(*arg0)->u1 = (((ptr->field_164 << 5) + ptr->field_16C) << 8) + 0x2B0000 + ((ptr->field_150 << 5) + ptr->field_158);
-        *(s32*)&(*arg0)->u2 = (((ptr->field_164 << 5) + ptr->field_170) << 8) + ((ptr->field_150 << 5) + ptr->field_15C);
-        *(s32*)&(*arg0)->u3 = (((ptr->field_164 << 5) + ptr->field_174) << 8) + ((ptr->field_150 << 5) + ptr->field_160);
+        *(s32*)&(*poly)->u1 = (((ptr->field_164 << 5) + ptr->field_16C) << 8) + 0x2B0000 + ((ptr->field_150 << 5) + ptr->field_158);
+        *(s32*)&(*poly)->u2 = (((ptr->field_164 << 5) + ptr->field_170) << 8) + ((ptr->field_150 << 5) + ptr->field_15C);
+        *(s32*)&(*poly)->u3 = (((ptr->field_164 << 5) + ptr->field_174) << 8) + ((ptr->field_150 << 5) + ptr->field_160);
     }
     else
     {
-        *(s32*)&(*arg0)->u1 = (((ptr->field_164 << 5) + ptr->field_16C) << 8) + 0x4B0000 + ((ptr->field_150 << 5) + ptr->field_158);
-        *(s32*)&(*arg0)->u2 = (((ptr->field_164 << 5) + ptr->field_170) << 8) + ((ptr->field_150 << 5) + ptr->field_15C);
-        *(s32*)&(*arg0)->u3 = (((ptr->field_164 << 5) + ptr->field_174) << 8) + ((ptr->field_150 << 5) + ptr->field_160);
+        *(s32*)&(*poly)->u1 = (((ptr->field_164 << 5) + ptr->field_16C) << 8) + 0x4B0000 + ((ptr->field_150 << 5) + ptr->field_158);
+        *(s32*)&(*poly)->u2 = (((ptr->field_164 << 5) + ptr->field_170) << 8) + ((ptr->field_150 << 5) + ptr->field_15C);
+        *(s32*)&(*poly)->u3 = (((ptr->field_164 << 5) + ptr->field_174) << 8) + ((ptr->field_150 << 5) + ptr->field_160);
     }
 
     if (!(g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 3))
     {
-        if (g_GameWork.config_0.optExtraBloodColor_24 == 0xE)
+        if (g_GameWork.config_0.optExtraBloodColor_24 == 14)
         {
-            func_80055A90(&ptr->field_130, &ptr->field_134, 0x40, ptr->field_140 * 0x10);
+            func_80055A90(&ptr->field_130, &ptr->field_134, 0x40, ptr->field_140 * 16);
 
-            *(u16*)&(*arg0)->r0 = ptr->field_130.r + (ptr->field_130.g << 8);
-            (*arg0)->b0         = ptr->field_130.b;
+            *(u16*)&(*poly)->r0 = ptr->field_130.r + (ptr->field_130.g << 8);
+            (*poly)->b0         = ptr->field_130.b;
 
-            *(s32*)&(*arg0)->u0 = (((ptr->field_164 << 5) + ptr->field_154) << 8) + 0x930000 + ((ptr->field_150 << 5) + ptr->field_168);
+            *(s32*)&(*poly)->u0 = (((ptr->field_164 << 5) + ptr->field_154) << 8) + 0x930000 + ((ptr->field_150 << 5) + ptr->field_168);
 
-            *(*arg0 + 1) = **arg0;
+            *(*poly + 1) = **poly;
 
-            *(u16*)&(*arg0 + 1)->r0 = ptr->field_134.r + ((ptr->field_134.g >> 4) << 8);
-            (*arg0 + 1)->b0         = ptr->field_134.b >> 4;
-            (*arg0 + 1)->clut       = (g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_0 << 6) | 0x13;
+            *(u16*)&(*poly + 1)->r0 = ptr->field_134.r + ((ptr->field_134.g >> 4) << 8);
+            (*poly + 1)->b0         = ptr->field_134.b >> 4;
+            (*poly + 1)->clut       = (g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_0 << 6) | 0x13;
 
-            setSemiTrans(*arg0 + 1, 0);
+            setSemiTrans(*poly + 1, 0);
 
-            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_1) >> 3], *arg0);
-            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_1) >> 3], *arg0 + 1);
-            *arg0 += 2;
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_1) >> 3], *poly);
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_1) >> 3], *poly + 1);
+            *poly += 2;
         }
         else
         {
@@ -4148,58 +4150,58 @@ bool func_80060044(POLY_FT4** arg0, s32 arg1) // 0x80060044
             {
                 var_a2 = 0;
             }
-            func_80055A90(&ptr->field_130, &ptr->field_134, var_a2, ptr->field_140 * 0x10);
+            func_80055A90(&ptr->field_130, &ptr->field_134, var_a2, ptr->field_140 * 16);
 
-            *(u16*)&(*arg0)->r0 = ptr->field_130.r + (ptr->field_130.g << 8);
-            (*arg0)->b0         = ptr->field_130.b;
+            *(u16*)&(*poly)->r0 = ptr->field_130.r + (ptr->field_130.g << 8);
+            (*poly)->b0         = ptr->field_130.b;
 
-            *(s32*)&(*arg0)->u0 = (((ptr->field_164 << 5) + ptr->field_154) << 8) + 0x930000 + ((ptr->field_150 << 5) + ptr->field_168);
+            *(s32*)&(*poly)->u0 = (((ptr->field_164 << 5) + ptr->field_154) << 8) + 0x930000 + ((ptr->field_150 << 5) + ptr->field_168);
 
-            *(*arg0 + 3) = *(*arg0 + 2) = *(*arg0 + 1) = **arg0;
+            *(*poly + 3) = *(*poly + 2) = *(*poly + 1) = **poly;
 
-            *(u16*)&(*arg0 + 1)->r0 = ptr->field_134.r + (ptr->field_134.g << 8);
-            (*arg0 + 1)->b0         = ptr->field_134.b;
-            (*arg0)->tpage          = 0x2B;
-            (*arg0 + 1)->clut       = (g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_0 << 6) | 0x13;
-            (*arg0 + 3)->tpage      = 0x2B;
+            *(u16*)&(*poly + 1)->r0 = ptr->field_134.r + (ptr->field_134.g << 8);
+            (*poly + 1)->b0         = ptr->field_134.b;
+            (*poly)->tpage          = 43;
+            (*poly + 1)->clut       = (g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_0 << 6) | 0x13;
+            (*poly + 3)->tpage      = 43;
 
-            ptr->field_12C = (PACKET*)*arg0 + 0xA0;
+            ptr->field_12C = (PACKET*)*poly + 0xA0;
             SetPriority(ptr->field_12C, 0, 0);
             SetPriority(ptr->field_12C + 0xC, 1, 1);
 
-            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_1) >> 3], *arg0);
-            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_1) >> 3], *arg0 + 1);
-            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_1) >> 3], *arg0 + 2);
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_1) >> 3], *poly);
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_1) >> 3], *poly + 1);
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_1) >> 3], *poly + 2);
             addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_1) >> 3], ptr->field_12C);
-            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_1) >> 3], *arg0 + 3);
-            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_1) >> 3], ptr->field_12C + 0xC);
-            *arg0 = ptr->field_12C + 0x18;
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_1) >> 3], *poly + 3);
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_1) >> 3], ptr->field_12C + 12);
+            *poly = ptr->field_12C + 0x18;
         }
         return true;
     }
 
-    if (g_GameWork.config_0.optExtraBloodColor_24 == 0xE)
+    if (g_GameWork.config_0.optExtraBloodColor_24 == 14)
     {
         temp_s0             = func_80055D78(g_MapOverlayHeader.unkTable1_4C[arg1].vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].vy_8, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4);
-        *(u16*)&(*arg0)->r0 = temp_s0 + (func_80055D78(g_MapOverlayHeader.unkTable1_4C[arg1].vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].vy_8, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4) << 8);
-        (*arg0)->b0         = func_80055D78(g_MapOverlayHeader.unkTable1_4C[arg1].vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].vy_8, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4);
+        *(u16*)&(*poly)->r0 = temp_s0 + (func_80055D78(g_MapOverlayHeader.unkTable1_4C[arg1].vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].vy_8, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4) << 8);
+        (*poly)->b0         = func_80055D78(g_MapOverlayHeader.unkTable1_4C[arg1].vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].vy_8, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4);
     }
     else
     {
-        var_a2 = 0xFF - (ptr->field_148 * 0x10) / 327;
+        var_a2 = 0xFF - (ptr->field_148 * 16) / 327;
         if (var_a2 < 0)
         {
             var_a2 = 0;
         }
-        *(u16*)&(*arg0)->r0 = var_a2 + (var_a2 << 8);
-        (*arg0)->b0         = var_a2;
+        *(u16*)&(*poly)->r0 = var_a2 + (var_a2 << 8);
+        (*poly)->b0         = var_a2;
     }
 
-    *(s32*)&(*arg0)->u0 = (((g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_0 << 6) | 0x13) << 16) + (((ptr->field_164 << 5) + ptr->field_168) << 8) + ((ptr->field_150 << 5) + ptr->field_154);
+    *(s32*)&(*poly)->u0 = (((g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_0 << 6) | 0x13) << 16) + (((ptr->field_164 << 5) + ptr->field_168) << 8) + ((ptr->field_150 << 5) + ptr->field_154);
 
-    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_1) >> 3], *arg0);
+    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_1) >> 3], *poly);
 
-    *arg0 += 1;
+    *poly += 1;
 
     return true;
 }
@@ -4207,7 +4209,7 @@ bool func_80060044(POLY_FT4** arg0, s32 arg1) // 0x80060044
 bool func_800611C0(POLY_FT4** arg0, s32 arg1) // 0x800611C0
 {
     s_func_800611C0  sp10;
-    s_Collision      sp1B8[4];
+    s_Collision      colls[4];
     s16              temp_v1_6;
     s32              temp_v1_15;
     s32              temp_v1_15_;
@@ -4220,11 +4222,11 @@ bool func_800611C0(POLY_FT4** arg0, s32 arg1) // 0x800611C0
 
     ptr = PSX_SCRATCH;
 
-    if (!(g_MapOverlayHeader.unkTable1_4C[arg1].field_B & 3))
+    if (!(g_MapOverlayHeader.unkTable1_4C[arg1].field_B & 0x3))
     {
         temp_a3 = g_MapOverlayHeader.unkTable1_4C[arg1].field_B >> 2;
 
-        if (temp_a3 != 0x18)
+        if (temp_a3 != 24)
         {
             g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 += ptr->field_0.field_34[temp_a3];
             g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 += ptr->field_0.field_64[temp_a3];
@@ -4237,7 +4239,7 @@ bool func_800611C0(POLY_FT4** arg0, s32 arg1) // 0x800611C0
 
         if (g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 > g_MapOverlayHeader.unkTable1_4C[arg1].field_10.s_0.field_2)
         {
-            if (temp_a3 != 0x18)
+            if (temp_a3 != 24)
             {
                 if (D_800C42E8[temp_a3].field_0 & 2)
                 {
@@ -4251,14 +4253,14 @@ bool func_800611C0(POLY_FT4** arg0, s32 arg1) // 0x800611C0
 
             ptr->field_178 = g_MapOverlayHeader.unkTable1_4C[arg1].field_C.s_0.field_1 << 5;
 
-            Collision_Get(&sp1B8[0], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 + ptr->field_178, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4);
-            Collision_Get(&sp1B8[1], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 - ptr->field_178, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4);
-            Collision_Get(&sp1B8[2], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 + ptr->field_178);
-            Collision_Get(&sp1B8[3], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 - ptr->field_178);
+            Collision_Get(&colls[0], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 + ptr->field_178, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4);
+            Collision_Get(&colls[1], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 - ptr->field_178, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4);
+            Collision_Get(&colls[2], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 + ptr->field_178);
+            Collision_Get(&colls[3], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 - ptr->field_178);
 
-            if (func_8005F680(&sp1B8[0]) || func_8005F680(&sp1B8[1]) || func_8005F680(&sp1B8[2]) || func_8005F680(&sp1B8[3]) ||
-                (g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 - sp1B8[0].groundHeight_0) < -0x333 || (g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 - sp1B8[1].groundHeight_0) < -0x333 ||
-                (g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 - sp1B8[2].groundHeight_0) < -0x333 || (g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 - sp1B8[3].groundHeight_0) < -0x333)
+            if (func_8005F680(&colls[0]) || func_8005F680(&colls[1]) || func_8005F680(&colls[2]) || func_8005F680(&colls[3]) ||
+                (g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 - colls[0].groundHeight_0) < Q12(-0.2f) || (g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 - colls[1].groundHeight_0) < Q12(-0.2f) ||
+                (g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 - colls[2].groundHeight_0) < Q12(-0.2f) || (g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 - colls[3].groundHeight_0) < Q12(-0.2f))
             {
                 g_MapOverlayHeader.unkTable1_4C[arg1].field_A = 0;
             }
@@ -4273,6 +4275,7 @@ bool func_800611C0(POLY_FT4** arg0, s32 arg1) // 0x800611C0
             gte_SetRotMatrix(&ptr->field_0.field_C);
             gte_SetTransMatrix(&ptr->field_0.field_C);
         }
+
         return true;
     }
 
@@ -4287,6 +4290,7 @@ bool func_800611C0(POLY_FT4** arg0, s32 arg1) // 0x800611C0
             {
                 g_MapOverlayHeader.unkTable1_4C[arg1].field_10.field_0 = 0x32000;
             }
+
             ptr->field_168 = 0xCC0;
         }
     }
@@ -4312,20 +4316,19 @@ bool func_800611C0(POLY_FT4** arg0, s32 arg1) // 0x800611C0
 
     vwGetViewPosition(&ptr->field_14C);
 
-    if (ABS(ptr->field_14C.vx - g_MapOverlayHeader.unkTable1_4C[arg1].vx_0) +
-            ABS(ptr->field_14C.vz - g_MapOverlayHeader.unkTable1_4C[arg1].vz_4) >
-        0x14000)
+    if (ABS(ptr->field_14C.vx - g_MapOverlayHeader.unkTable1_4C[arg1].vx_0) + ABS(ptr->field_14C.vz - g_MapOverlayHeader.unkTable1_4C[arg1].vz_4) > 0x14000)
     {
         if (g_MapOverlayHeader.unkTable1_4C[arg1].field_B == 3)
         {
             g_MapOverlayHeader.unkTable1_4C[arg1].field_A = 0;
         }
+
         return false;
     }
 
     if ((u32)(g_MapOverlayHeader.unkTable1_4C[arg1].field_B & 3) < 3U)
     {
-        temp           = g_MapOverlayHeader.unkTable1_4C[arg1].field_C.s_0.field_1 * 0x10;
+        temp           = g_MapOverlayHeader.unkTable1_4C[arg1].field_C.s_0.field_1 * 16;
         temp           = (ptr->field_168 * temp) / 816;
         ptr->field_178 = temp < (g_MapOverlayHeader.unkTable1_4C[arg1].field_C.s_0.field_1 << 5) ? temp : (g_MapOverlayHeader.unkTable1_4C[arg1].field_C.s_0.field_1 << 5);
     }
@@ -4373,12 +4376,12 @@ bool func_800611C0(POLY_FT4** arg0, s32 arg1) // 0x800611C0
         return false;
     }
 
-    if (ABS(ptr->field_16C.vx) >= 0xC9)
+    if (ABS(ptr->field_16C.vx) >= 201)
     {
         return false;
     }
 
-    if (ABS(ptr->field_16C.vy) >= 0xA1)
+    if (ABS(ptr->field_16C.vy) >= 161)
     {
         return false;
     }
@@ -4389,7 +4392,7 @@ bool func_800611C0(POLY_FT4** arg0, s32 arg1) // 0x800611C0
 
     if (g_MapOverlayHeader.unkTable1_4C[arg1].field_B == 3)
     {
-        ptr->field_190 = 0xE0;
+        ptr->field_190 = 224;
     }
     else
     {
@@ -4398,16 +4401,16 @@ bool func_800611C0(POLY_FT4** arg0, s32 arg1) // 0x800611C0
 
     var_t0 = g_MapOverlayHeader.unkTable1_4C[arg1].field_C.s_0.field_0 & 7;
 
-    temp_v1_15_ = var_t0 ^ 1;
-    temp_v1_15_ = temp_v1_15_ & 1;
+    temp_v1_15_ = var_t0 ^ 0x1;
+    temp_v1_15_ = temp_v1_15_ & 0x1;
 
     temp_v1_15 = (u32)var_t0 >> 1;
-    temp_v1_15 = temp_v1_15 ^ 1;
-    temp_v1_15 = temp_v1_15 & 1;
+    temp_v1_15 = temp_v1_15 ^ 0x1;
+    temp_v1_15 = temp_v1_15 & 0x1;
 
     temp_v1_15 = temp_v1_15_ ^ temp_v1_15;
 
-    if ((!(var_t0 & 4) && (temp_v1_15 ^ 1) != 0) || ((var_t0 & 4) && (temp_v1_15) != 0))
+    if ((!(var_t0 & 0x4) && (temp_v1_15 ^ 0x1) != 0) || ((var_t0 & 0x4) && temp_v1_15 != 0))
     {
         var_v0_6 = 0;
     }
@@ -4426,10 +4429,10 @@ bool func_800611C0(POLY_FT4** arg0, s32 arg1) // 0x800611C0
         ptr->field_194 = 0;
     }
 
-    temp_v1_15 = var_t0 ^ 1;
-    temp_v1_15 = temp_v1_15 & 1;
+    temp_v1_15 = var_t0 ^ 0x1;
+    temp_v1_15 = temp_v1_15 & 0x1;
 
-    if ((!(var_t0 & 4) && (temp_v1_15 ^ 1) != 0) || ((var_t0 & 4) && (temp_v1_15) != 0))
+    if ((!(var_t0 & 0x4) && (temp_v1_15 ^ 0x1) != 0) || ((var_t0 & 0x4) && temp_v1_15 != 0))
     {
         var_v0_6 = 0;
     }
@@ -4443,7 +4446,7 @@ bool func_800611C0(POLY_FT4** arg0, s32 arg1) // 0x800611C0
     temp_v1_15 = temp_v1_15 ^ 1;
     temp_v1_15 = temp_v1_15 & 1;
 
-    if ((!(var_t0 & 4) && (temp_v1_15 ^ 1) != 0) || ((var_t0 & 4) && (temp_v1_15) != 0))
+    if ((!(var_t0 & 0x4) && (temp_v1_15 ^ 0x1) != 0) || ((var_t0 & 0x4) && temp_v1_15 != 0))
     {
         var_v0_6 = 0x1F;
     }
@@ -4456,7 +4459,7 @@ bool func_800611C0(POLY_FT4** arg0, s32 arg1) // 0x800611C0
     temp_v1_15 = var_t0 ^ 1;
     temp_v1_15 = temp_v1_15 & 1;
 
-    if ((!(var_t0 & 4) && (temp_v1_15 ^ 1) != 0) || ((var_t0 & 4) && (temp_v1_15) != 0))
+    if ((!(var_t0 & 0x4) && (temp_v1_15 ^ 0x1) != 0) || ((var_t0 & 0x4) && temp_v1_15 != 0))
     {
         var_v0_6 = 0x1F;
     }
@@ -4470,7 +4473,7 @@ bool func_800611C0(POLY_FT4** arg0, s32 arg1) // 0x800611C0
     temp_v1_15 = temp_v1_15 ^ 1;
     temp_v1_15 = temp_v1_15 & 1;
 
-    if ((!(var_t0 & 4) && (temp_v1_15 ^ 1) != 0) || ((var_t0 & 4) && (temp_v1_15) != 0))
+    if ((!(var_t0 & 0x4) && (temp_v1_15 ^ 0x1) != 0) || ((var_t0 & 0x4) && temp_v1_15 != 0))
     {
         var_v0_6 = 0;
     }
@@ -4480,16 +4483,16 @@ bool func_800611C0(POLY_FT4** arg0, s32 arg1) // 0x800611C0
     }
     ptr->field_19C = var_v0_6;
 
-    temp_v1_15_ = var_t0 ^ 1;
-    temp_v1_15_ = temp_v1_15_ & 1;
+    temp_v1_15_ = var_t0 ^ 0x1;
+    temp_v1_15_ = temp_v1_15_ & 0x1;
 
     temp_v1_15 = (u32)var_t0 >> 1;
-    temp_v1_15 = temp_v1_15 ^ 1;
-    temp_v1_15 = temp_v1_15 & 1;
+    temp_v1_15 = temp_v1_15 ^ 0x1;
+    temp_v1_15 = temp_v1_15 & 0x1;
 
     temp_v1_15 = temp_v1_15_ ^ temp_v1_15;
 
-    if ((!(var_t0 & 4) && (temp_v1_15 ^ 1) != 0) || ((var_t0 & 4) && (temp_v1_15) != 0))
+    if ((!(var_t0 & 0x4) && (temp_v1_15 ^ 0x1) != 0) || ((var_t0 & 0x4) && temp_v1_15 != 0))
     {
         var_v0_6 = 0x1F;
     }
@@ -4622,7 +4625,7 @@ void func_800622B8(s32 arg0, s_SubCharacter* chara, s32 animStatus, s32 arg3) //
         {
             g_MapOverlayHeader.unkTable1_4C[idx].field_E.field_0     = D_800AE700[animStatus] + (Rng_Rand16() % (D_800AE700[animStatus] >> 2));
             g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_1 = arg3;
-            g_MapOverlayHeader.unkTable1_4C[idx].field_B  = (Rng_Rand16() & 3) + 4; // TODO: `Rng_GenerateInt` doesn't match?
+            g_MapOverlayHeader.unkTable1_4C[idx].field_B  = (Rng_Rand16() & 0x3) + 4; // TODO: `Rng_GenerateInt` doesn't match?
             g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_0 = func_8005C7D0(chara);
             g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0    = Rng_Rand16() & 0x1FFF;
         }
@@ -4654,10 +4657,10 @@ void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3) // 0x800625F4
     g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0    = arg3 * Q12(5.0f);
 }
 
-bool func_80062708(POLY_FT4** arg0, s32 arg1) // 0x80062708
+bool func_80062708(POLY_FT4** poly, s32 arg1) // 0x80062708
 {
     s_func_80062708  sp10;
-    s_Collision      sp2F0[4];
+    s_Collision      colls[4];
     s32              temp_a1_3;
     s32              temp_s2;
     s32              j;
@@ -4735,24 +4738,24 @@ bool func_80062708(POLY_FT4** arg0, s32 arg1) // 0x80062708
 
         if (Rng_TestProbabilityBits(1))
         {
-            Collision_Get(&sp2F0[0], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 - temp_s2, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4);
-            Collision_Get(&sp2F0[1], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 + temp_s2, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4);
-            Collision_Get(&sp2F0[2], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 - temp_s2);
-            Collision_Get(&sp2F0[3], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 + temp_s2);
+            Collision_Get(&colls[0], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 - temp_s2, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4);
+            Collision_Get(&colls[1], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 + temp_s2, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4);
+            Collision_Get(&colls[2], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 - temp_s2);
+            Collision_Get(&colls[3], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 + temp_s2);
         }
         else
         {
-            Collision_Get(&sp2F0[0], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 - temp_s2, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 - temp_s2);
-            Collision_Get(&sp2F0[1], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 + temp_s2, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 - temp_s2);
-            Collision_Get(&sp2F0[2], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 - temp_s2, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 + temp_s2);
-            Collision_Get(&sp2F0[3], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 + temp_s2, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 + temp_s2);
+            Collision_Get(&colls[0], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 - temp_s2, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 - temp_s2);
+            Collision_Get(&colls[1], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 + temp_s2, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 - temp_s2);
+            Collision_Get(&colls[2], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 - temp_s2, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 + temp_s2);
+            Collision_Get(&colls[3], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 + temp_s2, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 + temp_s2);
         }
 
-        if (func_8005F680(&sp2F0[0]) || func_8005F680(&sp2F0[1]) || func_8005F680(&sp2F0[2]) || func_8005F680(&sp2F0[3]) ||
-            ABS(sp2F0[0].groundHeight_0 - g_MapOverlayHeader.unkTable1_4C[arg1].vy_8) >= 0x267 ||
-            ABS(sp2F0[1].groundHeight_0 - g_MapOverlayHeader.unkTable1_4C[arg1].vy_8) >= 0x267 ||
-            ABS(sp2F0[2].groundHeight_0 - g_MapOverlayHeader.unkTable1_4C[arg1].vy_8) >= 0x267 ||
-            ABS(sp2F0[3].groundHeight_0 - g_MapOverlayHeader.unkTable1_4C[arg1].vy_8) >= 0x267)
+        if (func_8005F680(&colls[0]) || func_8005F680(&colls[1]) || func_8005F680(&colls[2]) || func_8005F680(&colls[3]) ||
+            ABS(colls[0].groundHeight_0 - g_MapOverlayHeader.unkTable1_4C[arg1].vy_8) >= 0x267 ||
+            ABS(colls[1].groundHeight_0 - g_MapOverlayHeader.unkTable1_4C[arg1].vy_8) >= 0x267 ||
+            ABS(colls[2].groundHeight_0 - g_MapOverlayHeader.unkTable1_4C[arg1].vy_8) >= 0x267 ||
+            ABS(colls[3].groundHeight_0 - g_MapOverlayHeader.unkTable1_4C[arg1].vy_8) >= 0x267)
         {
             g_MapOverlayHeader.unkTable1_4C[arg1].field_E.field_0  = ptr->field_2DC;
             g_MapOverlayHeader.unkTable1_4C[arg1].field_10.field_0 = 0x5000;
@@ -4813,21 +4816,21 @@ bool func_80062708(POLY_FT4** arg0, s32 arg1) // 0x80062708
                 continue;
             }
 
-            setPolyFT4(*arg0);
+            setPolyFT4(*poly);
 
-            *(s32*)&(*arg0)->x0 = *(s32*)&ptr->field_278[temp_a1_3];
-            *(s32*)&(*arg0)->x1 = *(s32*)&ptr->field_278[temp_a1_3 + 1];
-            *(s32*)&(*arg0)->x2 = *(s32*)&ptr->field_278[temp_a1_3 + 5];
-            *(s32*)&(*arg0)->x3 = *(s32*)&ptr->field_278[temp_a1_3 + 6];
+            *(s32*)&(*poly)->x0 = *(s32*)&ptr->field_278[temp_a1_3];
+            *(s32*)&(*poly)->x1 = *(s32*)&ptr->field_278[temp_a1_3 + 1];
+            *(s32*)&(*poly)->x2 = *(s32*)&ptr->field_278[temp_a1_3 + 5];
+            *(s32*)&(*poly)->x3 = *(s32*)&ptr->field_278[temp_a1_3 + 6];
 
             temp_s2             = (j * 8) + (i << 0xB) + ptr->field_210;
-            *(s32*)&(*arg0)->u0 = (((g_MapOverlayHeader.unkTable1_4C[arg1].field_C.s_0.field_1 << 6) | 0x13) << 16) + temp_s2;
-            *(s32*)&(*arg0)->u1 = temp_s2 + 0x4B0007;
+            *(s32*)&(*poly)->u0 = (((g_MapOverlayHeader.unkTable1_4C[arg1].field_C.s_0.field_1 << 6) | 0x13) << 16) + temp_s2;
+            *(s32*)&(*poly)->u1 = temp_s2 + 0x4B0007;
 
-            setSemiTrans(*arg0, 1);
+            setSemiTrans(*poly, 1);
 
-            *(s32*)&(*arg0)->u2 = temp_s2 + 0x700;
-            *(s32*)&(*arg0)->u3 = temp_s2 + 0x707;
+            *(s32*)&(*poly)->u2 = temp_s2 + 0x700;
+            *(s32*)&(*poly)->u3 = temp_s2 + 0x707;
 
             if (ptr->field_208 > 0x5000)
             {
@@ -4849,30 +4852,30 @@ bool func_80062708(POLY_FT4** arg0, s32 arg1) // 0x80062708
             if (!(g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 3))
             {
                 func_80055A90(&ptr->field_12C, &ptr->field_130, temp_s2, ptr->field_20C * 0x10);
-                *(u16*)&(*arg0)->r0 = ptr->field_12C.r + (ptr->field_12C.g << 8);
-                (*arg0)->b0         = ptr->field_12C.b;
+                *(u16*)&(*poly)->r0 = ptr->field_12C.r + (ptr->field_12C.g << 8);
+                (*poly)->b0         = ptr->field_12C.b;
 
-                *(*arg0 + 2) = *(*arg0 + 1) = **arg0;
+                *(*poly + 2) = *(*poly + 1) = **poly;
 
-                (*arg0)->tpage = 0x2B;
-                (*arg0)->clut = (*arg0 + 2)->clut = 0x93;
-                *(u16*)&(*arg0 + 1)->r0           = ptr->field_130.r + (ptr->field_130.g << 8);
-                (*arg0 + 1)->b0                   = ptr->field_130.b;
+                (*poly)->tpage = 0x2B;
+                (*poly)->clut = (*poly + 2)->clut = 0x93;
+                *(u16*)&(*poly + 1)->r0           = ptr->field_130.r + (ptr->field_130.g << 8);
+                (*poly + 1)->b0                   = ptr->field_130.b;
 
-                addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_20C + var_s7) >> 3], *arg0);
-                addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_20C + var_s7) >> 3], *arg0 + 1);
-                addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_20C + var_s7) >> 3], *arg0 + 2);
+                addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_20C + var_s7) >> 3], *poly);
+                addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_20C + var_s7) >> 3], *poly + 1);
+                addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_20C + var_s7) >> 3], *poly + 2);
 
-                *arg0 = *arg0 + 3;
+                *poly = *poly + 3;
             }
             else
             {
-                *(u16*)&(*arg0)->r0 = temp_s2 + (temp_s2 << 8);
-                (*arg0)->b0         = temp_s2;
+                *(u16*)&(*poly)->r0 = temp_s2 + (temp_s2 << 8);
+                (*poly)->b0         = temp_s2;
 
-                addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_20C + var_s7) >> 3], *arg0);
+                addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_20C + var_s7) >> 3], *poly);
 
-                *arg0 = *arg0 + 1;
+                *poly = *poly + 1;
             }
         }
     }

@@ -19,7 +19,7 @@ void func_800DF548(s_SubCharacter* chara);
 
 void func_800DF568(s_SubCharacter* chara);
 
-/** @brief Map pickup event. */
-void func_800EBF48(void);
+/** @brief ? map pickup event. */
+void MapEvent_MapTake(void);
 
 #endif

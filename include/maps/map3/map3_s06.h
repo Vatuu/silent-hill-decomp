@@ -18,8 +18,8 @@ void func_800D0AEC(void);
 
 void func_800D0B10(void);
 
-/** @brief Map pickup event. */
-void func_800D17B0(void);
+/** @brief ? map pickup event. */
+void MapEvent_MapTake(void);
 
 void func_800D17D8(void);
 

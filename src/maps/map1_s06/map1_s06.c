@@ -357,11 +357,11 @@ void func_800D5400(void) // 0x800D5400
 
 void func_800D5448(void) {}
 
-#include "maps/shared/Event_DoorJammed.h" // 0x800D5450
+#include "maps/shared/MapEvent_DoorJammed.h" // 0x800D5450
 
-#include "maps/shared/Event_DoorLocked.h" // 0x800D54E4
+#include "maps/shared/MapEvent_DoorLocked.h" // 0x800D54E4
 
-#include "maps/shared/Event_DoorUnlocked.h" // 0x800D5578
+#include "maps/shared/MapEvent_DoorUnlocked.h" // 0x800D5578
 
 void func_800D560C(void) {}
 
@@ -610,7 +610,7 @@ void func_800D6338(void) // 0x800D6338
     }
 }
 
-void func_800D63B0(void) // 0x800D63B0
+void MapEvent_MapTake(void) // 0x800D63B0
 {
     Event_MapTake(6, EventFlag_M1S00_PickupMap, 27);
 }

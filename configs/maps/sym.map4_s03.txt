@@ -65,8 +65,8 @@ Ai_Twinfeeler_TextureLoad = 0x800D3038; // type:func
 Ai_Twinfeeler_Init        = 0x800D3CD4; // type:func
 Ai_Twinfeeler_Update      = 0x800D5F28; // type:func
 sharedFunc_800D929C_0_s00 = 0x800D606C; // type:func
-Event_DoorJammed          = 0x800D6554; // type:func
-Event_DoorLocked          = 0x800D65E8; // type:func
+MapEvent_DoorJammed       = 0x800D6554; // type:func
+MapEvent_DoorLocked       = 0x800D65E8; // type:func
 
 
 

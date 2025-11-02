@@ -63,8 +63,8 @@ void func_800D8948(void);
 
 void func_800D8CC4(void);
 
-/** @brief Map pickup event. */
-void func_800D922C(void);
+/** @brief Town map pickup event. */
+void MapEvent_TownMapTake(void);
 
 void func_800D9254(void);
 
@@ -72,11 +72,11 @@ void func_800D928C(void);
 
 void func_800DA3FC(void);
 
-void Event_Boiler0(void);
+void MapEvent_Boiler0(void);
 
-void Event_Boiler1(void);
+void MapEvent_Boiler1(void);
 
-void Event_Boiler2(void);
+void MapEvent_Boiler2(void);
 
 void Map_WorldObjectsInit(void);
 

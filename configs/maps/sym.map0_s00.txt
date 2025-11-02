@@ -13,7 +13,7 @@
 //-----------------------------------------------------------------
 //--- PA: 0x001050   VA: 0x800CA5C8   subsegment: .rodata, map0_s00
 //-----------------------------------------------------------------
-sharedData_800CAB70_0_s00     = 0x800CAB70; // type:s32
+sharedData_800CAB70_0_s00       = 0x800CAB70; // type:s32
 
 //---------------------------------------------------------------------
 //--- PA: 0x0018C8   VA: 0x800CAE40   subsegment: .rodata, Chara_Cheryl
@@ -37,101 +37,101 @@ sharedData_800CAB70_0_s00     = 0x800CAB70; // type:s32
 //-----------------------------------------------------------
 //--- PA: 0x002138   VA: 0x800CB6B0   subsegment: c, map0_s00
 //-----------------------------------------------------------
-sharedFunc_800CB6B0_0_s00     = 0x800CB6B0; // type:func
-sharedFunc_800CBBBC_0_s00     = 0x800CBBBC; // type:func
-sharedFunc_800CBC94_0_s00     = 0x800CBC94; // type:func
-Particle_Update               = 0x800CC04C; // type:func
-sharedFunc_800CEB24_0_s00     = 0x800CEB24; // type:func
-sharedFunc_800CEFF4_0_s00     = 0x800CEFF4; // type:func
-sharedFunc_800CF2A4_0_s01     = 0x800CF7AC; // type:func
-sharedFunc_800CEFD0_1_s02     = 0x800CF974; // type:func
-sharedFunc_800CFFF8_0_s00     = 0x800CFFF8; // type:func
-sharedFunc_800CE954_7_s03     = 0x800D0124; // type:func
-sharedFunc_800D01BC_0_s00     = 0x800D01BC; // type:func
-sharedFunc_800CF9A8_0_s01     = 0x800D0274; // type:func
-sharedFunc_800D0700_0_s00     = 0x800D0700; // type:func
-sharedFunc_800D08B8_0_s00     = 0x800D08B8; // type:func
-sharedFunc_800D0A60_0_s00     = 0x800D0A60; // type:func
-sharedFunc_800D0B18_0_s00     = 0x800D0B18; // type:func
-sharedFunc_800D0CB8_0_s00     = 0x800D0CB8; // type:func
-sharedFunc_800D0E04_0_s00     = 0x800D0E04; // type:func
-sharedFunc_800CFFD8_0_s01     = 0x800D0E24; // type:func
-sharedFunc_800D0850_0_s01     = 0x800D0E2C; // type:func
-sharedFunc_800CDAA8_0_s02     = 0x800D0E34; // type:func
-sharedFunc_800D1C38_0_s00     = 0x800D1C38; // type:func
-sharedFunc_800D209C_0_s00     = 0x800D209C; // type:func
-sharedFunc_800D20D8_0_s00     = 0x800D20D8; // type:func
-sharedFunc_800D20E4_0_s00     = 0x800D20E4; // type:func
-sharedFunc_800D2244_0_s00     = 0x800D2244; // type:func
-sharedFunc_800D2C7C_0_s00     = 0x800D2C7C; // type:func
-sharedFunc_800D2D2C_0_s00     = 0x800D2D2C; // type:func
-sharedFunc_800D2D44_0_s00     = 0x800D2D44; // type:func
-sharedFunc_800D2D6C_0_s00     = 0x800D2D6C; // type:func
-sharedFunc_800D2D84_0_s00     = 0x800D2D84; // type:func
-sharedFunc_800D2DAC_0_s00     = 0x800D2DAC; // type:func
-sharedFunc_800D2E50_0_s00     = 0x800D2E50; // type:func
-sharedFunc_800D2E60_0_s00     = 0x800D2E60; // type:func
-sharedFunc_800D2EA4_0_s00     = 0x800D2EA4; // type:func
-sharedFunc_800D2EB4_0_s00     = 0x800D2EB4; // type:func
-sharedFunc_800D2EF4_0_s00     = 0x800D2EF4; // type:func
-Ai_Stalker_Update             = 0x800D2F08; // type:func
-Ai_Stalker_Init               = 0x800D309C; // type:func
-sharedFunc_800D3308_0_s00     = 0x800D3308; // type:func
-sharedFunc_800D3B44_0_s00     = 0x800D3B44; // type:func
-sharedFunc_800D3EF4_0_s00     = 0x800D3EF4; // type:func
-sharedFunc_800D4924_0_s00     = 0x800D4924; // type:func
-sharedFunc_800D492C_0_s00     = 0x800D492C; // type:func
-sharedFunc_800D5098_0_s00     = 0x800D5098; // type:func
-sharedFunc_800D54A8_0_s00     = 0x800D54A8; // type:func
-sharedFunc_800D5B48_0_s00     = 0x800D5B48; // type:func
-sharedFunc_800D5C64_0_s00     = 0x800D5C64; // type:func
-sharedFunc_800D5FCC_0_s00     = 0x800D5FCC; // type:func
-sharedFunc_800D63D0_0_s00     = 0x800D63D0; // type:func
-sharedFunc_800D654C_0_s00     = 0x800D654C; // type:func
-sharedFunc_800D6554_0_s00     = 0x800D6554; // type:func
-sharedFunc_800D670C_0_s00     = 0x800D670C; // type:func
-sharedFunc_800D67FC_0_s00     = 0x800D67FC; // type:func
-sharedFunc_800D6970_0_s00     = 0x800D6970; // type:func
-sharedFunc_800D70C4_0_s00     = 0x800D70C4; // type:func
-sharedFunc_800D7BE8_0_s00     = 0x800D7BE8; // type:func
-sharedFunc_800D7E04_0_s00     = 0x800D7E04; // type:func
+sharedFunc_800CB6B0_0_s00       = 0x800CB6B0; // type:func
+sharedFunc_800CBBBC_0_s00       = 0x800CBBBC; // type:func
+sharedFunc_800CBC94_0_s00       = 0x800CBC94; // type:func
+Particle_Update                 = 0x800CC04C; // type:func
+sharedFunc_800CEB24_0_s00       = 0x800CEB24; // type:func
+sharedFunc_800CEFF4_0_s00       = 0x800CEFF4; // type:func
+sharedFunc_800CF2A4_0_s01       = 0x800CF7AC; // type:func
+sharedFunc_800CEFD0_1_s02       = 0x800CF974; // type:func
+sharedFunc_800CFFF8_0_s00       = 0x800CFFF8; // type:func
+sharedFunc_800CE954_7_s03       = 0x800D0124; // type:func
+sharedFunc_800D01BC_0_s00       = 0x800D01BC; // type:func
+sharedFunc_800CF9A8_0_s01       = 0x800D0274; // type:func
+sharedFunc_800D0700_0_s00       = 0x800D0700; // type:func
+sharedFunc_800D08B8_0_s00       = 0x800D08B8; // type:func
+sharedFunc_800D0A60_0_s00       = 0x800D0A60; // type:func
+sharedFunc_800D0B18_0_s00       = 0x800D0B18; // type:func
+sharedFunc_800D0CB8_0_s00       = 0x800D0CB8; // type:func
+sharedFunc_800D0E04_0_s00       = 0x800D0E04; // type:func
+sharedFunc_800CFFD8_0_s01       = 0x800D0E24; // type:func
+sharedFunc_800D0850_0_s01       = 0x800D0E2C; // type:func
+sharedFunc_800CDAA8_0_s02       = 0x800D0E34; // type:func
+sharedFunc_800D1C38_0_s00       = 0x800D1C38; // type:func
+sharedFunc_800D209C_0_s00       = 0x800D209C; // type:func
+sharedFunc_800D20D8_0_s00       = 0x800D20D8; // type:func
+sharedFunc_800D20E4_0_s00       = 0x800D20E4; // type:func
+sharedFunc_800D2244_0_s00       = 0x800D2244; // type:func
+sharedFunc_800D2C7C_0_s00       = 0x800D2C7C; // type:func
+sharedFunc_800D2D2C_0_s00       = 0x800D2D2C; // type:func
+sharedFunc_800D2D44_0_s00       = 0x800D2D44; // type:func
+sharedFunc_800D2D6C_0_s00       = 0x800D2D6C; // type:func
+sharedFunc_800D2D84_0_s00       = 0x800D2D84; // type:func
+sharedFunc_800D2DAC_0_s00       = 0x800D2DAC; // type:func
+sharedFunc_800D2E50_0_s00       = 0x800D2E50; // type:func
+sharedFunc_800D2E60_0_s00       = 0x800D2E60; // type:func
+sharedFunc_800D2EA4_0_s00       = 0x800D2EA4; // type:func
+sharedFunc_800D2EB4_0_s00       = 0x800D2EB4; // type:func
+sharedFunc_800D2EF4_0_s00       = 0x800D2EF4; // type:func
+Ai_Stalker_Update               = 0x800D2F08; // type:func
+Ai_Stalker_Init                 = 0x800D309C; // type:func
+sharedFunc_800D3308_0_s00       = 0x800D3308; // type:func
+sharedFunc_800D3B44_0_s00       = 0x800D3B44; // type:func
+sharedFunc_800D3EF4_0_s00       = 0x800D3EF4; // type:func
+sharedFunc_800D4924_0_s00       = 0x800D4924; // type:func
+sharedFunc_800D492C_0_s00       = 0x800D492C; // type:func
+sharedFunc_800D5098_0_s00       = 0x800D5098; // type:func
+sharedFunc_800D54A8_0_s00       = 0x800D54A8; // type:func
+sharedFunc_800D5B48_0_s00       = 0x800D5B48; // type:func
+sharedFunc_800D5C64_0_s00       = 0x800D5C64; // type:func
+sharedFunc_800D5FCC_0_s00       = 0x800D5FCC; // type:func
+sharedFunc_800D63D0_0_s00       = 0x800D63D0; // type:func
+sharedFunc_800D654C_0_s00       = 0x800D654C; // type:func
+sharedFunc_800D6554_0_s00       = 0x800D6554; // type:func
+sharedFunc_800D670C_0_s00       = 0x800D670C; // type:func
+sharedFunc_800D67FC_0_s00       = 0x800D67FC; // type:func
+sharedFunc_800D6970_0_s00       = 0x800D6970; // type:func
+sharedFunc_800D70C4_0_s00       = 0x800D70C4; // type:func
+sharedFunc_800D7BE8_0_s00       = 0x800D7BE8; // type:func
+sharedFunc_800D7E04_0_s00       = 0x800D7E04; // type:func
 
 //---------------------------------------------------------------
 //--- PA: 0x00EA40   VA: 0x800D7FB8   subsegment: c, Chara_Cheryl
 //---------------------------------------------------------------
-Ai_Cheryl_Update              = 0x800D7FB8; // type:func
-Ai_Cheryl_AnimUpdate          = 0x800D802C; // type:func
-Ai_Cheryl_MovementUpdate      = 0x800D8124; // type:func
-Ai_Cheryl_AnimStateUpdate     = 0x800D8310; // type:func
-Ai_Cheryl_FootstepTrigger     = 0x800D8748; // type:func
-Ai_Cheryl_Init                = 0x800D8888; // type:func
+Ai_Cheryl_Update                = 0x800D7FB8; // type:func
+Ai_Cheryl_AnimUpdate            = 0x800D802C; // type:func
+Ai_Cheryl_MovementUpdate        = 0x800D8124; // type:func
+Ai_Cheryl_AnimStateUpdate       = 0x800D8310; // type:func
+Ai_Cheryl_FootstepTrigger       = 0x800D8748; // type:func
+Ai_Cheryl_Init                  = 0x800D8888; // type:func
 
 //-------------------------------------------------------------
 //--- PA: 0x00F334   VA: 0x800D88AC   subsegment: c, map0_s00_2
 //-------------------------------------------------------------
-sharedFunc_800D88AC_0_s00     = 0x800D88AC; // type:func
-sharedFunc_800D88C0_0_s00     = 0x800D88C0; // type:func
-sharedFunc_800D8904_0_s00     = 0x800D8904; // type:func
-sharedFunc_800D891C_0_s00     = 0x800D891C; // type:func
-sharedFunc_800D8928_0_s00     = 0x800D8928; // type:func
-sharedFunc_800D893C_0_s00     = 0x800D893C; // type:func
-sharedFunc_800D8950_0_s00     = 0x800D8950; // type:func
-sharedFunc_800D8964_0_s00     = 0x800D8964; // type:func
-sharedFunc_800D8A00_0_s00     = 0x800D8A00; // type:func
-sharedFunc_800D9064_0_s00     = 0x800D9064; // type:func
-sharedFunc_800D9078_0_s00     = 0x800D9078; // type:func
-sharedFunc_800D908C_0_s00     = 0x800D908C; // type:func
-sharedFunc_800D9188_0_s00     = 0x800D9188; // type:func
-Anim_StartKeyframeIdxGet      = 0x800D921C; // type:func
-sharedFunc_800D923C_0_s00     = 0x800D923C; // type:func
-sharedFunc_800D929C_0_s00     = 0x800D929C; // type:func
-Map_RoomIdxGet                = 0x800D92AC; // type:func
-Gfx_LoadingScreen_StageString = 0x800D95D4; // type:func
-MapEvent_OpeningCutscene      = 0x800D9748; // type:func
-Event_CutsceneAlleyNightmare  = 0x800DB94C; // type:func
-Map_WorldObjectsInit          = 0x800DBE68; // type:func
-Map_WorldObjectsUpdate        = 0x800DBF08; // type:func
-Event_GreyChildrenSpawn       = 0x800DC1E8; // type:func
+sharedFunc_800D88AC_0_s00       = 0x800D88AC; // type:func
+sharedFunc_800D88C0_0_s00       = 0x800D88C0; // type:func
+sharedFunc_800D8904_0_s00       = 0x800D8904; // type:func
+sharedFunc_800D891C_0_s00       = 0x800D891C; // type:func
+sharedFunc_800D8928_0_s00       = 0x800D8928; // type:func
+sharedFunc_800D893C_0_s00       = 0x800D893C; // type:func
+sharedFunc_800D8950_0_s00       = 0x800D8950; // type:func
+sharedFunc_800D8964_0_s00       = 0x800D8964; // type:func
+sharedFunc_800D8A00_0_s00       = 0x800D8A00; // type:func
+sharedFunc_800D9064_0_s00       = 0x800D9064; // type:func
+sharedFunc_800D9078_0_s00       = 0x800D9078; // type:func
+sharedFunc_800D908C_0_s00       = 0x800D908C; // type:func
+sharedFunc_800D9188_0_s00       = 0x800D9188; // type:func
+Anim_StartKeyframeIdxGet        = 0x800D921C; // type:func
+sharedFunc_800D923C_0_s00       = 0x800D923C; // type:func
+sharedFunc_800D929C_0_s00       = 0x800D929C; // type:func
+Map_RoomIdxGet                  = 0x800D92AC; // type:func
+Gfx_LoadingScreen_StageString   = 0x800D95D4; // type:func
+MapEvent_OpeningCutscene        = 0x800D9748; // type:func
+MapEvent_CutsceneAlleyNightmare = 0x800DB94C; // type:func
+Map_WorldObjectsInit            = 0x800DBE68; // type:func
+Map_WorldObjectsUpdate          = 0x800DBF08; // type:func
+MapEvent_GreyChildrenSpawn      = 0x800DC1E8; // type:func
 
 
 
@@ -143,91 +143,91 @@ Event_GreyChildrenSpawn       = 0x800DC1E8; // type:func
 //-------------------------------------------------------------------------
 //--- PA: 0x013D44   VA: 0x800DD2BC   subsegment: .data, map0_s00_anim_info
 //-------------------------------------------------------------------------
-HARRY_M0S00_ANIM_INFOS        = 0x800DD2BC;
-g_MapHeaders_38               = 0x800DD4EC; // type:UnkStruct3_Mo size:0x90
-LOADABLE_INVENTORY_ITEMS      = 0x800DD57C; // type:u8 size:0x08
+HARRY_M0S00_ANIM_INFOS          = 0x800DD2BC;
+g_MapHeaders_38                 = 0x800DD4EC; // type:UnkStruct3_Mo size:0x90
+LOADABLE_INVENTORY_ITEMS        = 0x800DD57C; // type:u8 size:0x08
 
 //----------------------------------------------------
 //--- PA: 0x01400C   VA: 0x800DD584   subsegment: data
 //----------------------------------------------------
-sharedData_800DD584_0_s00     = 0x800DD584; // type:u8
-sharedData_800DD588_0_s00     = 0x800DD588; // type:s32
-sharedData_800DD58C_0_s00     = 0x800DD58C; // type:s32
-sharedData_800DF158_1_s02     = 0x800DD590; // type:u8
-sharedData_800DD591_0_s00     = 0x800DD591; // type:u8
-sharedData_800DD592_0_s00     = 0x800DD592;
-sharedData_800DD598_0_s00     = 0x800DD598;
-sharedData_800DD59C_0_s00     = 0x800DD59C; // type:u8
-sharedData_800DD5A6_0_s00     = 0x800DD5A6; // type:u8 size:1
-STALKER_ANIM_INFOS            = 0x800DD5A8; // type:s32 unknown type
-KAUFMANN_ANIM_INFOS           = 0x800DF174; // type:AnimInfo
-sharedData_800DF1F4_0_s00     = 0x800DF1F4; // type:s32
-sharedData_800DF1F8_0_s00     = 0x800DF1F8; // type:s16
-sharedData_800DF1FA_0_s00     = 0x800DF1FA; // type:s16
-MAP_ROOM_IDXS                 = 0x800DF1FC; // type:u8 unknown type
-sharedData_800DF2DC_0_s00     = 0x800DF2DC; // type:s32 unknown type
+sharedData_800DD584_0_s00       = 0x800DD584; // type:u8
+sharedData_800DD588_0_s00       = 0x800DD588; // type:s32
+sharedData_800DD58C_0_s00       = 0x800DD58C; // type:s32
+sharedData_800DF158_1_s02       = 0x800DD590; // type:u8
+sharedData_800DD591_0_s00       = 0x800DD591; // type:u8
+sharedData_800DD592_0_s00       = 0x800DD592;
+sharedData_800DD598_0_s00       = 0x800DD598;
+sharedData_800DD59C_0_s00       = 0x800DD59C; // type:u8
+sharedData_800DD5A6_0_s00       = 0x800DD5A6; // type:u8 size:1
+STALKER_ANIM_INFOS              = 0x800DD5A8; // type:s32 unknown type
+KAUFMANN_ANIM_INFOS             = 0x800DF174; // type:AnimInfo
+sharedData_800DF1F4_0_s00       = 0x800DF1F4; // type:s32
+sharedData_800DF1F8_0_s00       = 0x800DF1F8; // type:s16
+sharedData_800DF1FA_0_s00       = 0x800DF1FA; // type:s16
+MAP_ROOM_IDXS                   = 0x800DF1FC; // type:u8 unknown type
+sharedData_800DF2DC_0_s00       = 0x800DF2DC; // type:s32 unknown type
 
 //----------------------------------------------------------------------
 //--- PA: 0x015D98   VA: 0x800DF310   subsegment: .data, map0_s00_header
 //----------------------------------------------------------------------
-g_LoadScreenFuncs             = 0x800DF310;
-MAP_POINTS                    = 0x800DF320;
-g_MapEventFuncs               = 0x800DF674;
+g_LoadScreenFuncs               = 0x800DF310;
+MAP_POINTS                      = 0x800DF320;
+g_MapEventFuncs                 = 0x800DF674;
 
 //-----------------------------------------------------------------
 //--- PA: 0x016140   VA: 0x800DF6B8   subsegment: .data, map0_s00_2
 //-----------------------------------------------------------------
-MAP_MESSAGES                  = 0x800DF6B8; // type:u32 size:0x9C
+MAP_MESSAGES                    = 0x800DF6B8; // type:u32 size:0x9C
 
 //----------------------------------------------------
 //--- PA: 0x0161DC   VA: 0x800DF754   subsegment: data
 //----------------------------------------------------
-g_Timer0                      = 0x800DFAB4; // type:s32
-g_MapMsgSounds                = 0x800DFABC; // type:u16
-g_WarpCamera                  = 0x800DFAD8; // type:s32
-sharedData_800DFB4C_0_s00     = 0x800DFB4C;
-sharedData_800DFB50_0_s00     = 0x800DFB50;
-g_MapMsgSoundIdx              = 0x800DFB58; // type:u8
-g_Particle_SpeedX             = 0x800DFB64; // type:s32
-g_Particle_SpeedZ             = 0x800DFB68; // type:s32
-sharedData_800DFB6C_0_s00     = 0x800DFB6C; // type:s32
-sharedData_800DFB70_0_s00     = 0x800DFB70; // type:s32
-g_Effect_BloodSplats          = 0x800E0B1C;
-g_ParticleVectors0            = 0x800E0C4C; // type:ParticleVectors
-g_Particle_RotationY          = 0x800E0C6E; // type:s16
-g_ParticleVectors1            = 0x800E0C7C; // type:ParticleVectors
-sharedData_800E0CA8_0_s00     = 0x800E0CA8; // type:s32
-sharedData_800E0CAC_0_s00     = 0x800E0CAC; // type:s32
-sharedData_800E0CB0_0_s00     = 0x800E0CB0; // type:u32
-sharedData_800E0CB4_0_s00     = 0x800E0CB4; // type:u16
-sharedData_800E0CB6_0_s00     = 0x800E0CB6; // type:u16
-sharedData_800E0CB8_0_s00     = 0x800E0CB8; // type:u16
-sharedData_800E0CBA_0_s00     = 0x800E0CBA; // type:s8
-sharedData_800E0CBC_0_s00     = 0x800E0CBC; // type:Particle size:0x2580
-g_Particle_Position           = 0x800E323C; // type:VECTOR3 size:0xC
-g_Particle_PrevPosition       = 0x800E324C; // type:VECTOR3 size:0xC
-sharedData_800E3258_0_s00     = 0x800E3258;
-sharedData_800E325C_0_s00     = 0x800E325C;
-g_Particle_PrevRotationY      = 0x800E3260; // type:s16
-sharedData_800E2156_0_s01     = 0x800E3262; // type:u8
-sharedData_800E326C_0_s00     = 0x800E326C;
-sharedData_800E32CC_0_s00     = 0x800E32CC; // type:s32
-sharedData_800E32D0_0_s00     = 0x800E32D0; // type:s32
-sharedData_800E32D4_0_s00     = 0x800E32D4; // type:u16
-sharedData_800E330C_0_s00     = 0x800E330C;
-sharedData_800E34FC_0_s00     = 0x800E34FC;
-sharedData_800E39BC_0_s00     = 0x800E39BC;
-sharedData_800E39D8_0_s00     = 0x800E39D8; // type:s32
-sharedData_800D32A0_0_s02     = 0x800E39DC; // type:s32
-sharedData_800E39E4_0_s00     = 0x800E39E4; // type:s32
-sharedData_800E39E8_0_s00     = 0x800E39E8; // type:s32
-sharedData_800E39EC_0_s00     = 0x800E39EC; // type:s32
-sharedData_800E3A0C_0_s00     = 0x800E3A0C; // type:u16
-sharedData_800E3A18_0_s00     = 0x800E3A18; // type:s32
-sharedData_800E3A1C_0_s00     = 0x800E3A1C; // type:s32
-sharedData_800E3A20_0_s00     = 0x800E3A20; // type:s32
-sharedData_800E3A24_0_s00     = 0x800E3A24; // type:s32
-sharedData_800E3A28_0_s00     = 0x800E3A28; // type:s32
-sharedData_800E3A2C_0_s00     = 0x800E3A2C; // type:s32
-g_CameraPositionTarget        = 0x800E3A3C; // type:VECTOR3
-g_CameraLookAtTarget          = 0x800E3A4C; // type:VECTOR3
+g_Timer0                        = 0x800DFAB4; // type:s32
+g_MapMsgSounds                  = 0x800DFABC; // type:u16
+g_WarpCamera                    = 0x800DFAD8; // type:s32
+sharedData_800DFB4C_0_s00       = 0x800DFB4C;
+sharedData_800DFB50_0_s00       = 0x800DFB50;
+g_MapMsgSoundIdx                = 0x800DFB58; // type:u8
+g_Particle_SpeedX               = 0x800DFB64; // type:s32
+g_Particle_SpeedZ               = 0x800DFB68; // type:s32
+sharedData_800DFB6C_0_s00       = 0x800DFB6C; // type:s32
+sharedData_800DFB70_0_s00       = 0x800DFB70; // type:s32
+g_Effect_BloodSplats            = 0x800E0B1C;
+g_ParticleVectors0              = 0x800E0C4C; // type:ParticleVectors
+g_Particle_RotationY            = 0x800E0C6E; // type:s16
+g_ParticleVectors1              = 0x800E0C7C; // type:ParticleVectors
+sharedData_800E0CA8_0_s00       = 0x800E0CA8; // type:s32
+sharedData_800E0CAC_0_s00       = 0x800E0CAC; // type:s32
+sharedData_800E0CB0_0_s00       = 0x800E0CB0; // type:u32
+sharedData_800E0CB4_0_s00       = 0x800E0CB4; // type:u16
+sharedData_800E0CB6_0_s00       = 0x800E0CB6; // type:u16
+sharedData_800E0CB8_0_s00       = 0x800E0CB8; // type:u16
+sharedData_800E0CBA_0_s00       = 0x800E0CBA; // type:s8
+sharedData_800E0CBC_0_s00       = 0x800E0CBC; // type:Particle size:0x2580
+g_Particle_Position             = 0x800E323C; // type:VECTOR3 size:0xC
+g_Particle_PrevPosition         = 0x800E324C; // type:VECTOR3 size:0xC
+sharedData_800E3258_0_s00       = 0x800E3258;
+sharedData_800E325C_0_s00       = 0x800E325C;
+g_Particle_PrevRotationY        = 0x800E3260; // type:s16
+sharedData_800E2156_0_s01       = 0x800E3262; // type:u8
+sharedData_800E326C_0_s00       = 0x800E326C;
+sharedData_800E32CC_0_s00       = 0x800E32CC; // type:s32
+sharedData_800E32D0_0_s00       = 0x800E32D0; // type:s32
+sharedData_800E32D4_0_s00       = 0x800E32D4; // type:u16
+sharedData_800E330C_0_s00       = 0x800E330C;
+sharedData_800E34FC_0_s00       = 0x800E34FC;
+sharedData_800E39BC_0_s00       = 0x800E39BC;
+sharedData_800E39D8_0_s00       = 0x800E39D8; // type:s32
+sharedData_800D32A0_0_s02       = 0x800E39DC; // type:s32
+sharedData_800E39E4_0_s00       = 0x800E39E4; // type:s32
+sharedData_800E39E8_0_s00       = 0x800E39E8; // type:s32
+sharedData_800E39EC_0_s00       = 0x800E39EC; // type:s32
+sharedData_800E3A0C_0_s00       = 0x800E3A0C; // type:u16
+sharedData_800E3A18_0_s00       = 0x800E3A18; // type:s32
+sharedData_800E3A1C_0_s00       = 0x800E3A1C; // type:s32
+sharedData_800E3A20_0_s00       = 0x800E3A20; // type:s32
+sharedData_800E3A24_0_s00       = 0x800E3A24; // type:s32
+sharedData_800E3A28_0_s00       = 0x800E3A28; // type:s32
+sharedData_800E3A2C_0_s00       = 0x800E3A2C; // type:s32
+g_CameraPositionTarget          = 0x800E3A3C; // type:VECTOR3
+g_CameraLookAtTarget            = 0x800E3A4C; // type:VECTOR3

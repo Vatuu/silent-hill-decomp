@@ -68,9 +68,10 @@ sharedFunc_800D3B30_1_s05 = 0x800D45E4; // type:func
 sharedFunc_800D4070_1_s05 = 0x800D4B24; // type:func
 sharedFunc_800D929C_0_s00 = 0x800D5350; // type:func
 Map_RoomIdxGet            = 0x800D5360; // type:func
-Event_DoorJammed          = 0x800D5450; // type:func
-Event_DoorLocked          = 0x800D54E4; // type:func
-Event_DoorUnlocked        = 0x800D5578; // type:func
+MapEvent_DoorJammed       = 0x800D5450; // type:func
+MapEvent_DoorLocked       = 0x800D54E4; // type:func
+MapEvent_DoorUnlocked     = 0x800D5578; // type:func
+MapEvent_MapTake          = 0x800D63B0; // type:func
 Map_WorldObjectsInit      = 0x800D63D8; // type:func
 
 

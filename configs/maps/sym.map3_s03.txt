@@ -79,9 +79,9 @@ sharedSymbol_800D0ECC_3_s03 = 0x800D0ECC; // type:func
 sharedFunc_800D0F28_3_s03   = 0x800D0F28; // type:func
 sharedFunc_800D929C_0_s00   = 0x800D1168; // type:func
 Map_RoomIdxGet              = 0x800D1178; // type:func
-Event_DoorJammed            = 0x800D15B8; // type:func
-Event_DoorLocked            = 0x800D164C; // type:func
-Event_DoorUnlocked          = 0x800D16E0; // type:func
+MapEvent_DoorJammed         = 0x800D15B8; // type:func
+MapEvent_DoorLocked         = 0x800D164C; // type:func
+MapEvent_DoorUnlocked       = 0x800D16E0; // type:func
 
 
 

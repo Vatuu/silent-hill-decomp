@@ -99,8 +99,10 @@ sharedFunc_800D929C_0_s00   = 0x800D08A8; // type:func
 Map_RoomIdxGet              = 0x800D08B8; // type:func
 sharedFunc_800D0994_3_s00   = 0x800D0994; // type:func
 sharedFunc_800D09D4_3_s00   = 0x800D09D4; // type:func
-Event_DoorJammed            = 0x800D0B7C; // type:func
-Event_DoorLocked            = 0x800D0C10; // type:func
+MapEvent_DoorJammed         = 0x800D0B7C; // type:func
+MapEvent_DoorLocked         = 0x800D0C10; // type:func
+MapEvent_FirstAidKitTake    = 0x800D0CAC; // type:func
+MapEvent_MapTake            = 0x800D0CD0; // type:func
 
 
 

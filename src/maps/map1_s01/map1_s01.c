@@ -239,21 +239,21 @@ void func_800D6FE4(void) // 0x800D6FE4
 
 void func_800D7050(void) {}
 
-void Event_DoorJammed(void) // 0x800D7058
+void MapEvent_DoorJammed(void) // 0x800D7058
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     Map_MessageWithSfx(MapMsgIdx_DoorJammed, Sfx_DoorJammed, &sfxPos);
 }
 
-void Event_DoorLocked(void) // 0x800D70EC
+void MapEvent_DoorLocked(void) // 0x800D70EC
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     Map_MessageWithSfx(MapMsgIdx_DoorLocked, Sfx_DoorLocked, &sfxPos);
 }
 
-void Event_DoorUnlocked(void) // 0x800D7180
+void MapEvent_DoorUnlocked(void) // 0x800D7180
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
@@ -556,12 +556,12 @@ void func_800D7864(void) // 0x800D7864
 
         case 7:
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
-            Event_PianoPuzzle(false);
+            MapEvent_PianoPuzzle(false);
             SysWork_StateStepIncrement(0);
 
         case 8:
             func_800862F8(2, 0, false);
-            Event_PianoPuzzle(true);
+            MapEvent_PianoPuzzle(true);
             break;
 
         case 9:
@@ -652,7 +652,7 @@ void func_800D7EEC(void) // 0x800D7EEC
     func_80087360(FILE_TIM_PIANO1_TIM, Q12(0.0f), Q12(0.0f), 47);
 }
 
-void Event_PianoPuzzle(bool playNote) // 0x800D7F18
+void MapEvent_PianoPuzzle(bool playNote) // 0x800D7F18
 {
     s16    cursorX;
     s16    cursorY;

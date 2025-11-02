@@ -600,11 +600,11 @@ void func_800DAA4C(void) // 0x800DAA4C
     }
 }
 
-#include "maps/shared/Event_DoorJammed.h" // 0x800DB21C
+#include "maps/shared/MapEvent_DoorJammed.h" // 0x800DB21C
 
-#include "maps/shared/Event_DoorLocked.h" // 0x800DB2B0
+#include "maps/shared/MapEvent_DoorLocked.h" // 0x800DB2B0
 
-#include "maps/shared/Event_DoorUnlocked.h" // 0x800DB344
+#include "maps/shared/MapEvent_DoorUnlocked.h" // 0x800DB344
 
 void func_800DB3D8(void) // 0x800DB3D8
 {
@@ -674,21 +674,21 @@ void func_800DB52C(void) // 0x800DB52C
     Map_MessageWithSfx(88, Sfx_DoorLocked, &sfxPos);
 }
 
-void func_800DB5C0(void) // 0x800DB5C0
+void MapEvent_KeyOfBethorUse(void) // 0x800DB5C0
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     Player_ItemRemove(InventoryItemId_KeyOfBethor, 1);
-    Map_MessageWithSfx(77, Sfx_Unk1335, &sfxPos);
+    Map_MessageWithSfx(77, Sfx_UseKey, &sfxPos);
     Savegame_EventFlagSet(EventFlag_533);
 }
 
-void func_800DB67C(void) // 0x800DB67C
+void MapEvent_KeyOfAratronUse(void) // 0x800DB67C
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     Player_ItemRemove(InventoryItemId_KeyOfAratron, 1);
-    Map_MessageWithSfx(78, Sfx_Unk1335, &sfxPos);
+    Map_MessageWithSfx(78, Sfx_UseKey, &sfxPos);
     Savegame_EventFlagSet(EventFlag_534);
 }
 

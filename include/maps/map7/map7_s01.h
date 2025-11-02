@@ -121,21 +121,21 @@ void func_800D8540(void);
 
 void func_800D85D4(void);
 
-// MapEvent_UseKeyOfOphiel
-void func_800D8668(void);
+/** @brief Key of Ophiel use event. */
+void MapEvent_KeyOfOphielUse(void);
 
-// MapEvent_UseKeyOfHagith
-void func_800D8724(void);
+/** @brief Key of Hagith use event. */
+void MapEvent_KeyOfHagithUse(void);
 
-// MapEvent_UseKeyOfPhaleg
-void func_800D87E0(void);
+/** @brief Key of Phaleg use event. */
+void MapEvent_KeyOfPhalegUse(void);
 
 void func_800D889C(void);
 
 void func_800D8958(void);
 
-// MapEvent_UseBirdCageKey
-void func_800D8984(void);
+/** @brief Bird Cage Key use event. */
+void MapEvent_BirdCageKeyUse(void);
 
 void func_800D89D8(void);
 

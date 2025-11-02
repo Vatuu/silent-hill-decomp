@@ -219,7 +219,7 @@ void func_800D57E0(void) {}
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D57E8);
 
-#include "maps/shared/Event_DoorLocked.h" // 0x800D58A0
+#include "maps/shared/MapEvent_DoorLocked.h" // 0x800D58A0
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"

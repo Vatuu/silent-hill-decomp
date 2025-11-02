@@ -972,7 +972,7 @@ void func_800DB870(void) // 0x800DB870
     }
 }
 
-void Event_CutsceneAlleyNightmare(void) // 0x800DB94C
+void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
 {
     MATRIX  neck_lwm;
     SVECTOR offset;
@@ -1186,7 +1186,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DBF08
     }
 }
 
-void Event_GreyChildrenSpawn(void) // 0x800DC1E8
+void MapEvent_GreyChildrenSpawn(void) // 0x800DC1E8
 {
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 

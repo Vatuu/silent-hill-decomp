@@ -100,8 +100,8 @@ sharedFunc_800D923C_0_s00           = 0x800D0D70; // type:func
 sharedFunc_800D929C_0_s00           = 0x800D0DD0; // type:func
 Map_RoomIdxGet                      = 0x800D0DE0; // type:func
 sharedFunc_800CE934_0_s02           = 0x800D0EF8; // type:func
-Event_DoorJammed                    = 0x800D118C; // type:func
-Event_DoorLocked                    = 0x800D1220; // type:func
+MapEvent_DoorJammed                 = 0x800D118C; // type:func
+MapEvent_DoorLocked                 = 0x800D1220; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800D1340; // type:func
 
 

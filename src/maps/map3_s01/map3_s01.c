@@ -147,9 +147,9 @@ void func_800D1178(s32 arg0) // 0x800D1178
 
 void func_800D138C(void) {}
 
-#include "maps/shared/Event_DoorJammed.h" // 0x800D1394
+#include "maps/shared/MapEvent_DoorJammed.h" // 0x800D1394
 
-#include "maps/shared/Event_DoorLocked.h" // 0x800D1428
+#include "maps/shared/MapEvent_DoorLocked.h" // 0x800D1428
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
@@ -210,7 +210,7 @@ void func_800D1524(void) // 0x800D1524
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     Player_ItemRemove(InventoryItemId_BasementKey, 1);
-    Map_MessageWithSfx(28, Sfx_Unk1335, &sfxPos); // "Used basement key."
+    Map_MessageWithSfx(28, Sfx_UseKey, &sfxPos); // "Used basement key."
 
     Savegame_MapMarkingSet(MapMarkFlag_585);
     Savegame_EventFlagSet(EventFlag_M3S01_BasementDoorOpen);
@@ -323,12 +323,12 @@ void func_800D2720(void) // 0x800D2720
     Event_ItemTake(InventoryItemId_PlasticBottle, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S01_PickupPlasticBottle, 21);
 }
 
-void func_800D274C(void) // 0x800D274C
+void MapEvent_MapTake0(void) // 0x800D274C
 {
     Event_MapTake(17, EventFlag_M3S00_PickupMap, 22);
 }
 
-void func_800D2774(void) // 0x800D2774
+void MapEvent_MapTake1(void) // 0x800D2774
 {
     Event_MapTake(16, EventFlag_M3S01_PickupMap, 23);
 }

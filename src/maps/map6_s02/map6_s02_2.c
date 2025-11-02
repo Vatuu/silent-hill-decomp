@@ -45,9 +45,9 @@ void func_800CED6C(void) {}
 
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02_2", func_800CED74);
 
-#include "maps/shared/Event_DoorJammed.h" // 0x800CEF88
+#include "maps/shared/MapEvent_DoorJammed.h" // 0x800CEF88
 
-#include "maps/shared/Event_DoorLocked.h" // 0x800CF01C
+#include "maps/shared/MapEvent_DoorLocked.h" // 0x800CF01C
 
 void func_800CF0B0(void) {}
 

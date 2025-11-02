@@ -39,12 +39,14 @@ void func_800E7D54(void);
 
 void MapEvent_AtWaterWorks(void);
 
+void MapEvent_CherylsSketchbook(void);
+
 void func_800E816C(void);
 
 void func_800E8198(void);
 
-/** @brief Map pickup event. */
-void func_800E81C4(void);
+/** @brief ? map pickup event. */
+void MapEvent_MapTake(void);
 
 void MapEvent_SteelPipeTake(void);
 

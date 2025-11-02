@@ -85,8 +85,8 @@ sharedFunc_800D9188_0_s00           = 0x800CE77C; // type:func
 Anim_StartKeyframeIdxGet            = 0x800CE810; // type:func
 sharedFunc_800D923C_0_s00           = 0x800CE81C; // type:func
 sharedFunc_800D929C_0_s00           = 0x800CE87C; // type:func
-Event_DoorJammed                    = 0x800CEF88; // type:func
-Event_DoorLocked                    = 0x800CF01C; // type:func
+MapEvent_DoorJammed                 = 0x800CEF88; // type:func
+MapEvent_DoorLocked                 = 0x800CF01C; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800CFB9C; // type:func
 
 

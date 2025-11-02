@@ -97,9 +97,9 @@ sharedFunc_800D99D0_1_s02           = 0x800D9E48; // type:func
 Ai_LockerDeadBody_Update            = 0x800DA284; // type:func
 sharedFunc_800D929C_0_s00           = 0x800DA424; // type:func
 Map_RoomIdxGet                      = 0x800DA434; // type:func
-Event_DoorJammed                    = 0x800DA638; // type:func
-Event_DoorLocked                    = 0x800DA6CC; // type:func
-Event_DoorUnlocked                  = 0x800DA760; // type:func
+MapEvent_DoorJammed                 = 0x800DA638; // type:func
+MapEvent_DoorLocked                 = 0x800DA6CC; // type:func
+MapEvent_DoorUnlocked               = 0x800DA760; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800DCD44; // type:func
 
 

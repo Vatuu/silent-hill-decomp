@@ -52,7 +52,7 @@ void func_800D1EB4(void) {}
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D1EBC
 
-void Event_DoorJammed(void) // 0x800D1F54
+void MapEvent_DoorJammed(void) // 0x800D1F54
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 

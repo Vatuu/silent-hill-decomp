@@ -182,11 +182,11 @@ INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800D9EBC);
 
 void func_800DA018(void) {}
 
-#include "maps/shared/Event_DoorJammed.h" // 0x800DA020
+#include "maps/shared/MapEvent_DoorJammed.h" // 0x800DA020
 
-#include "maps/shared/Event_DoorLocked.h" // 0x800DA0B4
+#include "maps/shared/MapEvent_DoorLocked.h" // 0x800DA0B4
 
-#include "maps/shared/Event_DoorUnlocked.h" // 0x800DA16C
+#include "maps/shared/MapEvent_DoorUnlocked.h" // 0x800DA16C
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
@@ -301,7 +301,7 @@ void func_800DA200(void) // 0x800DA200
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
-void func_800DA2E4(void) // 0x800DA2E4
+void MapEvent_LobbyKeyUse(void) // 0x800DA2E4
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 

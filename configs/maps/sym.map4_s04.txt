@@ -94,8 +94,8 @@ Anim_StartKeyframeIdxGet            = 0x800D1314; // type:func
 sharedFunc_800D923C_0_s00           = 0x800D1334; // type:func
 sharedFunc_800D929C_0_s00           = 0x800D1394; // type:func
 Map_RoomIdxGet                      = 0x800D13A4; // type:func
-Event_DoorJammed                    = 0x800D1748; // type:func
-Event_DoorLocked                    = 0x800D17DC; // type:func
+MapEvent_DoorJammed                 = 0x800D1748; // type:func
+MapEvent_DoorLocked                 = 0x800D17DC; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800D1878; // type:func
 
 

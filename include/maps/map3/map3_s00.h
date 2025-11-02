@@ -47,8 +47,11 @@ void func_800D0B74();
 
 void func_800D0CA4();
 
-/** @brief Map pickup event. */
-void func_800D0CD0(void);
+/** @brief First Aid Kit pickup event. */
+void MapEvent_FirstAidKitTake(void);
+
+/** @brief ? map pickup event. */
+void MapEvent_MapTake(void);
 
 void func_800D18DC(void);
 

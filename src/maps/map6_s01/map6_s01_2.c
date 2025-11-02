@@ -67,9 +67,9 @@ void func_800D0EAC(void) // 0x800D0EAC
 
 void func_800D1184(void) {}
 
-#include "maps/shared/Event_DoorJammed.h" // 0x800D118C
+#include "maps/shared/MapEvent_DoorJammed.h" // 0x800D118C
 
-#include "maps/shared/Event_DoorLocked.h" // 0x800D1220
+#include "maps/shared/MapEvent_DoorLocked.h" // 0x800D1220
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"

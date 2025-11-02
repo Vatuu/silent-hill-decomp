@@ -484,9 +484,9 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E7914);
 
 void func_800E7A1C(void) {}
 
-#include "maps/shared/Event_DoorJammed.h" // 0x800E7A24
+#include "maps/shared/MapEvent_DoorJammed.h" // 0x800E7A24
 
-#include "maps/shared/Event_DoorLocked.h" // 0x800E7AB8
+#include "maps/shared/MapEvent_DoorLocked.h" // 0x800E7AB8
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
@@ -852,7 +852,7 @@ void func_800E8198(void) // 0x800E8198
     Event_ItemTake(InventoryItemId_Chainsaw, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M2S00_PickupChainsaw, 76);
 }
 
-void func_800E81C4(void) // 0x800E81C4
+void MapEvent_MapTake(void) // 0x800E81C4
 {
     Event_MapTake(2, EventFlag_M2S00_PickupMap, 60);
 }
@@ -866,7 +866,7 @@ void MapEvent_SteelPipeTake(void) // 0x800E81EC
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            func_80086470(0U, InventoryItemId_SteelPipe, 0, false);
+            func_80086470(0u, InventoryItemId_SteelPipe, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1533,7 +1533,7 @@ void MapEvent_KGordonKeyUse(void) // 0x800EA894
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     Player_ItemRemove(InventoryItemId_KGordonKey, 1);
-    Map_MessageWithSfx(39, Sfx_Unk1335, &sfxPos); // "Used the K. Gordon key."
+    Map_MessageWithSfx(39, Sfx_UseKey, &sfxPos); // "Used the K. Gordon key."
 
     Savegame_EventFlagSet(EventFlag_M2S00_KGordonDoorOpen);
     g_SavegamePtr->mapMarkingFlags_1D4[1] |= 0x40000;

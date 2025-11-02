@@ -112,7 +112,7 @@ Anim_StartKeyframeIdxGet            = 0x800D1CFC; // type:func
 sharedFunc_800D923C_0_s00           = 0x800D1D1C; // type:func
 sharedFunc_800D929C_0_s00           = 0x800D1D7C; // type:func
 Map_RoomIdxGet                      = 0x800D1D8C; // type:func
-Event_DoorJammed                    = 0x800D2130; // type:func
+MapEvent_DoorJammed                 = 0x800D2130; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800D25D0; // type:func
 
 

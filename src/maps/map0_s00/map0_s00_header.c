@@ -48,7 +48,7 @@ void (*g_MapEventFuncs[])() =
     func_800DB26C,
     func_800DB514,
     func_800DB870,
-    Event_CutsceneAlleyNightmare,
+    MapEvent_CutsceneAlleyNightmare,
     func_800DBE00
 };
 
@@ -77,7 +77,7 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .func_3C                  = Map_WorldObjectsInit,
     .func_40                  = Map_WorldObjectsUpdate,
     .func_44                  = NULL,
-    .func_48                  = Event_GreyChildrenSpawn,
+    .func_48                  = MapEvent_GreyChildrenSpawn,
     .unkTable1_4C             = D_800DFB7C,
     .unkTable1Count_50        = ARRAY_SIZE(D_800DFB7C),
     .bloodSplats_54           = g_Effect_BloodSplats,

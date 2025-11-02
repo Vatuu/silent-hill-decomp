@@ -41,11 +41,11 @@ void MapEvent_UnknownLiquidInteract(void);
 
 void func_800D2720(void);
 
-/** @brief Map pickup event. */
-void func_800D274C(void);
+/** @brief ? map pickup event. */
+void MapEvent_MapTake0(void);
 
-/** @brief Map pickup event. */
-void func_800D2774(void);
+/** @brief ? map pickup event. */
+void MapEvent_MapTake1(void);
 
 void func_800D279C(void);
 
