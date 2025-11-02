@@ -255,9 +255,113 @@ void func_800D81AC(void) // 0x800D81AC
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
-INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D822C);
+void func_800D822C(void) // 0x800D822C
+{
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4)
+    {
+        if (g_SysWork.sysStateStep_C[0] == 3)
+        {
+            SysWork_StateStepSet(0, 4);
+        }
+    }
 
-INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D84EC);
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            ScreenFade_ResetTimestep();
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(-20.0486f);
+            g_SysWork.player_4C.chara_0.position_18.vy = Q12(-4.07f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(24.7134f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(180.0f);
+            Game_TurnFlashlightOn();
+            Camera_PositionSet(NULL, Q12(-19.66f), Q12(0.17f), Q12(26.3f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(-20.49f), Q12(-3.23f), Q12(24.37f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 88, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
+            SysWork_StateStepIncrement(0);
+
+        case 3:
+            g_SysWork.player_4C.chara_0.position_18.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.4f, Q12_SHIFT);
+            SysWork_StateStepIncrementDelayed(Q12(3.8f), false);
+            break;
+
+        case 4:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
+            g_SysWork.player_4C.chara_0.position_18.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.4f, Q12_SHIFT);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(true);
+            SysWork_StateSetNext(SysState_Gameplay);
+            Savegame_EventFlagSet(EventFlag_431);
+            func_8003A16C();
+            break;
+    }
+}
+
+void func_800D84EC(void) // 0x800D84EC
+{
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4)
+    {
+        if (g_SysWork.sysStateStep_C[0] == 4)
+        {
+            SysWork_StateStepSet(0, 5);
+        }
+    }
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
+            Savegame_EventFlagSet(EventFlag_437);
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            SysWork_StateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+            break;
+
+        case 3:
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(89.9092f);
+            g_SysWork.player_4C.chara_0.position_18.vy = Q12(-0.0733f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(18.8875f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(90.0f);
+            Game_TurnFlashlightOn();
+            Camera_PositionSet(NULL, Q12(88.92f), Q12(-1.64f), Q12(20.16f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(90.98f), Q12(-4.45f), Q12(18.2f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            func_80085EB8(0U, &g_SysWork.player_4C.chara_0, 87, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
+            SysWork_StateStepIncrement(0);
+
+        case 4:
+            g_SysWork.player_4C.chara_0.position_18.vy -= FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.415f, 12);
+            SysWork_StateStepIncrementDelayed(Q12(5.0f), false);
+            break;
+
+        case 5:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
+            g_SysWork.player_4C.chara_0.position_18.vy -= FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.41f, 12);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(true);
+            SysWork_StateSetNext(SysState_Gameplay);
+            Savegame_EventFlagSet(EventFlag_433);
+            break;
+    }
+}
 
 void MapEvent_MapTake(void) // 0x800D87F0
 {

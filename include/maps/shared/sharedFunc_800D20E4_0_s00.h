@@ -1,6 +1,6 @@
 #include <bodyprog/player_logic.h>
 
-void sharedFunc_800D20E4_0_s00()
+void sharedFunc_800D20E4_0_s00(void)
 {
     // TODO: Pointers here are odd, might be full of inlines.
 

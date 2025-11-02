@@ -7,6 +7,10 @@
 
 void func_800D4A5C(s_SubCharacter* chara);
 
+void func_800D822C(void);
+
+void func_800D84EC(void);
+
 /** @brief Handles the ? map pickup event. */
 void MapEvent_MapTake(void);
 
