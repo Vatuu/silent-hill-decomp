@@ -56,4 +56,6 @@ s32 func_800EE518(void);
 
 void func_800EB090(void);
 
+void func_800E97E4(void);
+
 #endif

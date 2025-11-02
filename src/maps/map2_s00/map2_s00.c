@@ -964,7 +964,62 @@ void func_800E95F8(void)
     }
 }
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E97E4);
+void func_800E97E4(void)
+{
+    #define STATE_TAKE_KEY      8
+    #define STATE_DONT_TAKE_KEY 9
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_800862F8(0, FILE_TIM_INKENNEL_TIM, false);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 1:
+            func_80085DF0();
+            break;
+        case 2:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 59);
+            break;
+        case 3:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            break;
+        case 4:
+            func_800862F8(1, 0, false);
+            break;
+        case 5:
+            func_800862F8(2, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            break;
+        case 6:
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 7:
+            func_800862F8(2, 0, false);
+            MapMsg_DisplayAndHandleSelection(true, 27, STATE_TAKE_KEY, STATE_DONT_TAKE_KEY, 0, false); // House key in doghouse, take it?
+            break;
+        case STATE_TAKE_KEY:
+            func_80086470(3, 65, 1, false);
+            Savegame_EventFlagSet(EventFlag_M2S00_PickupDogHouseKey);
+            func_8004EE94(84, 1);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case STATE_DONT_TAKE_KEY:
+            func_800862F8(2, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            break;
+        case 10:
+            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            break;
+        case 11:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            break;
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+        }
+}
 
 void func_800E9A0C(void) // 0x800E9A0C
 {
