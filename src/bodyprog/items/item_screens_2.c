@@ -1379,7 +1379,7 @@ void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId) // 0x8004EC7C
     Gfx_Primitive2dTextureSet(0, 0, 7, 1);
 }
 
-bool func_8004EE94(u8 itemId, u8 arg1) // 0x8004EE94
+bool Player_ItemRemove(u8 itemId, u8 count) // 0x8004EE94
 {
     s32 i;
 
@@ -1390,7 +1390,7 @@ bool func_8004EE94(u8 itemId, u8 arg1) // 0x8004EE94
             continue;
         }
 
-        switch (arg1)
+        switch (count)
         {
             case 0:
                 break;

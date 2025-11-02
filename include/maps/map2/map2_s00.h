@@ -37,7 +37,7 @@ extern s32 D_800F229C;
 
 void func_800E7D54(void);
 
-void func_800E7E60(void);
+void MapEvent_AtWaterWorks(void);
 
 void func_800E816C(void);
 
@@ -46,17 +46,25 @@ void func_800E8198(void);
 /** @brief Map pickup event. */
 void func_800E81C4(void);
 
-void func_800E81EC(void);
+void MapEvent_SteelPipeTake(void);
+
+void MapEvent_CutsceneExitCafe(void);
+
+void MapEvent_DoghouseNote(void);
+
+void MapEvent_DoghouseKeyTake(void);
 
 void func_800E9A0C(void);
+
+void func_800E9A74(void);
 
 void func_800E9CB4(void);
 
 void func_800EB3F4(void);
 
-void func_800EB824(s32 arg0);
+void MapEvent_KGordonKeyUse(void);
 
-u8 func_800EE5A8(u32 arg0);
+void func_800EB090(void);
 
 void func_800EB758(void);
 
@@ -64,17 +72,11 @@ void func_800EB79C(void);
 
 void func_800EB7E0(void);
 
-void func_800E95F8(void);
-
-void func_800EA894(void);
+void func_800EB824(s32);
 
 s32 func_800EE518(void);
 
-void func_800EB090(void);
-
-void func_800E97E4(void);
-
-void func_800E9A74(void);
+u8 func_800EE5A8(u32 arg0);
 
 void func_800E8C0C(void);
 

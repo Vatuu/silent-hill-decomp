@@ -932,7 +932,7 @@ void Map_WorldObjectsInit(void)
     WorldObjectPoseInit(&g_WorldObject8.position_1C, 96.9405f, -0.3365f, 21.0918f, 0.0f, 66.8f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject8.object_0, "MAP_HIDE");
 
-    func_8004EE94(InventoryItemId_NoteToSchool, 1);
+    Player_ItemRemove(InventoryItemId_NoteToSchool, 1);
     Savegame_EventFlagSet(EventFlag_147);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)

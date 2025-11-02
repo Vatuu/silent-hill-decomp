@@ -678,7 +678,7 @@ void func_800DB5C0(void) // 0x800DB5C0
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    func_8004EE94(81, 1);
+    Player_ItemRemove(InventoryItemId_KeyOfBethor, 1);
     Map_MessageWithSfx(77, Sfx_Unk1335, &sfxPos);
     Savegame_EventFlagSet(EventFlag_533);
 }
@@ -687,7 +687,7 @@ void func_800DB67C(void) // 0x800DB67C
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    func_8004EE94(82, 1);
+    Player_ItemRemove(InventoryItemId_KeyOfAratron, 1);
     Map_MessageWithSfx(78, Sfx_Unk1335, &sfxPos);
     Savegame_EventFlagSet(EventFlag_534);
 }

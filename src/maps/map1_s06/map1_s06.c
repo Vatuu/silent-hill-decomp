@@ -129,62 +129,67 @@ INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D13FC);
 
 INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D1C54);
 
-void func_800D2270(s_SubCharacter* chara)
+void func_800D2270(s_SubCharacter* chara) // 0x800D2270
 {
-    s16 timerDiv6;
-    s32 volume;
-    u16 timer;
-    s32 tmp;
-    s32 movSpeed;
+    s16    timerDiv6;
+    s32    vol;
+    u16    timer;
+    q19_12 newMoveSpeed;
+    q19_12 moveSpeed;
 
-    movSpeed = chara->moveSpeed_38;
-    if (movSpeed > 0)
+    moveSpeed = chara->moveSpeed_38;
+    if (moveSpeed > Q12(0.0f))
     {
-        tmp = movSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.59961f), Q12_SHIFT);
-        if (tmp < 0)
+        newMoveSpeed = moveSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.59961f), Q12_SHIFT);
+        if (newMoveSpeed < Q12(0.0f))
         {
-            tmp = 0;
+            newMoveSpeed = Q12(0.0f);
         }
     }
     else
     {
-        tmp = movSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.59961f), Q12_SHIFT);
-        if (tmp > 0)
+        newMoveSpeed = moveSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.59961f), Q12_SHIFT);
+        if (newMoveSpeed > Q12(0.0f))
         {
-            tmp = 0;
+            newMoveSpeed = Q12(0.0f);
         }
     }
-    chara->moveSpeed_38 = tmp;
+    chara->moveSpeed_38 = newMoveSpeed;
+
     switch (chara->model_0.anim_4.status_0)
     {
         case ANIM_STATUS(11, false):
         case ANIM_STATUS(11, true):
             chara->properties_E4.splitHead.flags_E8 |= 8;
-            if (!func_800D4FE4(chara, movSpeed))
+            if (!func_800D4FE4(chara, moveSpeed))
             {
                 break;
             }
+
         case ANIM_STATUS(10, true):
             chara->model_0.anim_4.status_0 = ANIM_STATUS(1, false);
             Sd_EngineCmd(Sfx_Unk1477);
             break;
+
         case ANIM_STATUS(1, false):
         case ANIM_STATUS(1, true):
             timer = chara->properties_E4.splitHead.timer_F4;
             timerDiv6 = D_800D6E2E / 6;
             if (timer < timerDiv6)
             {
-                volume = (timer << 7) / timerDiv6;
+                vol = (timer << 7) / timerDiv6;
             }
             else if ((D_800D6E2E * 5) / 6 < timer) 
             {
-                volume = ((D_800D6E2E - timer) << 7) / timerDiv6;
+                vol = ((D_800D6E2E - timer) << 7) / timerDiv6;
             }
             else
             {
-                volume = 0x80;
+                vol = 0x80;
             }
-            func_8005DE0C(Sfx_Unk1477, &chara->position_18, volume, Q12(16.0f), 0);
+
+            func_8005DE0C(Sfx_Unk1477, &chara->position_18, vol, Q12(16.0f), 0);
+
             timer = chara->properties_E4.splitHead.timer_F4;
             if (D_800D6E2E < timer)
             {
@@ -192,9 +197,11 @@ void func_800D2270(s_SubCharacter* chara)
                 chara->model_0.state_2 = 5;
                 chara->properties_E4.splitHead.timer_F4 = 0;
                 chara->model_0.anim_4.status_0 = ANIM_STATUS(11, false);
+
                 func_8004690C(Sfx_Unk1477);
                 break;
             }
+
             chara->properties_E4.splitHead.timer_F4 += g_DeltaTime0;
             break;
     }
@@ -202,65 +209,69 @@ void func_800D2270(s_SubCharacter* chara)
 
 INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D246C);
 
-void func_800D2CC8(s_SubCharacter* chara)
+void func_800D2CC8(s_SubCharacter* chara) // 0x800D2CC8
 {
-    s32 tmp;
-    s32 tmp1;
-    q19_12 movSpeed;
+    q19_12 newMoveSpeed0;
+    q19_12 newMoveSpeed1;
+    q19_12 moveSpeed;
 
     switch (chara->model_0.anim_4.status_0)
     {
         case 23:
-            movSpeed = chara->moveSpeed_38;
-            if (movSpeed > 0)
+            moveSpeed = chara->moveSpeed_38;
+            if (moveSpeed > Q12(0.0f))
             {
-                tmp = movSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.5f), Q12_SHIFT);
-                if (tmp < 0)
+                newMoveSpeed0 = moveSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.5f), Q12_SHIFT);
+                if (newMoveSpeed0 < Q12(0.0f))
                 {
-                    tmp = 0;
+                    newMoveSpeed0 = Q12(0.0f);
                 }
             }
             else
             {
-                tmp = movSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.5f), Q12_SHIFT);
-                if (tmp > 0)
+                newMoveSpeed0 = moveSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.5f), Q12_SHIFT);
+                if (newMoveSpeed0 > Q12(0.0f))
                 {
-                    tmp = 0;
+                    newMoveSpeed0 = Q12(0.0f);
                 }
             }
-            chara->moveSpeed_38 = tmp;
+            chara->moveSpeed_38 = newMoveSpeed0;
 
-            if (!func_800D4FE4(chara, movSpeed))
+            if (!func_800D4FE4(chara, moveSpeed))
             {
                 break;
             }
+
         case 2:
         case 3:
         case 20:
         case 21:
         case 22:
-            chara->model_0.anim_4.status_0 = 0xE;
-            movSpeed = chara->moveSpeed_38;
-            if (movSpeed > 0)
+            chara->model_0.anim_4.status_0 = ANIM_STATUS(7, false);
+
+            moveSpeed = chara->moveSpeed_38;
+            if (moveSpeed > Q12(0.0f))
             {
-                tmp = movSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.0f), Q12_SHIFT);
-                if (tmp < 0)
+                newMoveSpeed0 = moveSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.0f), Q12_SHIFT);
+                if (newMoveSpeed0 < Q12(0.0f))
                 {
-                    tmp = 0;
+                    newMoveSpeed0 = Q12(0.0f);
                 }
             }
             else
             {
-                tmp = movSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.0f), Q12_SHIFT);
-                if (tmp > 0)
+                newMoveSpeed0 = moveSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.0f), Q12_SHIFT);
+                if (newMoveSpeed0 > Q12(0.0f))
                 {
-                    tmp = 0;
+                    newMoveSpeed0 = Q12(0.0f);
                 }
             }
-            chara->moveSpeed_38 = tmp;
+            chara->moveSpeed_38 = newMoveSpeed0;
             break;
+
         default:
             break;
+
         case 14:
         case 15:
         case 16:
@@ -269,27 +280,29 @@ void func_800D2CC8(s_SubCharacter* chara)
         case 25:
         case 26:
         case 27:
-            if (chara->moveSpeed_38 > 0)
+            if (chara->moveSpeed_38 > Q12(0.0f))
             {
-                tmp1 = chara->moveSpeed_38 - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.0f), Q12_SHIFT);
-                if (tmp1 < 0)
+                newMoveSpeed1 = chara->moveSpeed_38 - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.0f), Q12_SHIFT);
+                if (newMoveSpeed1 < Q12(0.0f))
                 {
-                    tmp1 = 0;
+                    newMoveSpeed1 = Q12(0.0f);
                 }
             }
             else
             {
-                tmp1 = chara->moveSpeed_38 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.0f), Q12_SHIFT);
-                if (tmp1 > 0)
+                newMoveSpeed1 = chara->moveSpeed_38 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.0f), Q12_SHIFT);
+                if (newMoveSpeed1 > Q12(0.0f))
                 {
-                    tmp1 = 0;
+                    newMoveSpeed1 = Q12(0.0f);
                 }
             }
-            chara->moveSpeed_38 = tmp1;
+            chara->moveSpeed_38 = newMoveSpeed1;
+
             if (!Savegame_EventFlagGet(EventFlag_131))
             {
-                func_8005DC1C(Sfx_Unk1479, &chara->position_18, 0x80, 0);
+                func_8005DC1C(Sfx_Unk1479, &chara->position_18, Q8_CLAMPED(0.5f), 0);
             }
+
             Savegame_EventFlagSet(EventFlag_131);
             break;
     }

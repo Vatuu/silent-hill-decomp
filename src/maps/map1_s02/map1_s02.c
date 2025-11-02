@@ -305,7 +305,7 @@ void func_800DA2E4(void) // 0x800DA2E4
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    func_8004EE94(64, 1);
+    Player_ItemRemove(InventoryItemId_LobbyKey, 1);
     Map_MessageWithSfx(19, Sfx_DoorUnlocked, &sfxPos); // Empty message?
 }
 

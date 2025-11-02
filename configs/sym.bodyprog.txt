@@ -534,6 +534,7 @@ Inventory_Logic                             = 0x8004D518; // type:func
 Inventory_ItemUse                           = 0x8004E6D4; // type:func
 Gfx_Inventory_CmdOptionsDraw                = 0x8004E864; // type:func
 Gfx_Inventory_ScrollArrowsDraw              = 0x8004EC7C; // type:func
+Player_ItemRemove                           = 0x8004EE94; // type:func
 Gfx_Inventory_UnavailableMapText            = 0x8004F57C; // type:func
 
 //-----------------------------------------------------------------------

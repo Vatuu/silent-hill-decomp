@@ -324,7 +324,7 @@ void Gfx_Inventory_CmdOptionsDraw(); // 0x8004E864
 
 void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId); // 0x8004EC7C
 
-bool func_8004EE94(u8 itemId, u8 arg1);
+bool Player_ItemRemove(u8 itemId, u8 count);
 
 s32 func_8004F190(s_Savegame* save);
 

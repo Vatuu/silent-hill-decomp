@@ -47,6 +47,10 @@ extern u8 D_800D7790;
 
 extern s16 D_800D6E2E;
 
+void func_800D2270(s_SubCharacter* chara);
+
+void func_800D2CC8(s_SubCharacter* chara);
+
 void func_800D30F0(s_SubCharacter* chara);
 
 void func_800D4FC0(s32 arg0, s32 arg1);
@@ -70,9 +74,5 @@ void func_800D6578(void);
 void func_800D6C88(void);
 
 s32 func_800D4FE4(s_SubCharacter* chara, s32 moveSpeed);
-
-void func_800D2CC8(s_SubCharacter* chara);
-
-void func_800D2270(s_SubCharacter* chara);
 
 #endif

@@ -209,7 +209,7 @@ void func_800D1524(void) // 0x800D1524
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    func_8004EE94(InventoryItemId_BasementKey, 1);
+    Player_ItemRemove(InventoryItemId_BasementKey, 1);
     Map_MessageWithSfx(28, Sfx_Unk1335, &sfxPos); // "Used basement key."
 
     Savegame_MapMarkingSet(MapMarkFlag_585);
@@ -312,7 +312,7 @@ void MapEvent_UseBottleOnLiquid(void) // 0x800D25A8
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_M3S01_PickupUnknownLiquid);
-            func_8004EE94(InventoryItemId_PlasticBottle, 1);
+            Player_ItemRemove(InventoryItemId_PlasticBottle, 1);
             func_80086470(3, InventoryItemId_UnknownLiquid, 1, false);
             break;
     }

@@ -29,6 +29,7 @@ extern u8 D_800E1EE2;
 
 extern s32 D_800E1EE4;
 
+// MapEvent_UseLobbyKey
 void func_800DA2E4(void);
 
 void func_800DA384(void);

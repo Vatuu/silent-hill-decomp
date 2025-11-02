@@ -116,8 +116,10 @@ void func_800DB498(void);
 
 void func_800DB52C(void);
 
+// MapEvent_UseKeyOfBethor
 void func_800DB5C0(void);
 
+// MapEvent_UseKeyOfAratron
 void func_800DB67C(void);
 
 void func_800DB738(void);
