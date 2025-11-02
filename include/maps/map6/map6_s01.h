@@ -47,6 +47,16 @@ extern VECTOR3 D_800D5364;
 
 extern u8 D_800D5370;
 
+extern s8 D_800CBB54;
+
+extern s8 D_800D5345;
+
+extern s_WorldObjectDesc D_800D5374;
+
+extern s_WorldObjectDesc D_800D53A4[7];
+
+extern s_WorldObject_0 g_CommonWorldObjects[6];
+
 void func_800D0E78(s32 arg0);
 
 void func_800D0EAC(void);
@@ -56,5 +66,7 @@ void func_800D13D8(void);
 void func_800D236C(void);
 
 void func_800D2658(void);
+
+void func_800D2E6C(void);
 
 #endif
