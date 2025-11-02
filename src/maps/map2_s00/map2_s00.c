@@ -1532,7 +1532,58 @@ void func_800E9D1C(void)
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E9DD8);
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EA444);
+void func_800EA444(void)
+{
+    s32 tmp;
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_8003ED74(1, 1);
+            func_8003EF10(6, 6, PrimitiveType_S32, &D_800F1A24, 0, Q12(100.0f));
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(147.7f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(376.5f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = Q12(-0.25f);
+            g_SysWork.field_30 = 20;
+            g_SysWork.flags_22A4 |= (1<<3);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 1:
+            g_SysWork.field_28 += g_DeltaTime0;
+            tmp = Q12(1.0f) - Math_Cos(g_SysWork.field_28/12);
+            D_800F1A24 = FP_MULTIPLY_PRECISE(tmp, Q12(60.0f), Q12_SHIFT) + Q12(40.0f);
+            if (g_SysWork.field_28 > Q12(1.5f) && g_SysWork.field_28 < Q12(4.5f))
+            {
+                MapMsg_DisplayAndHandleSelection(false, 35, 0, 0, 0, false); // What? It's getting dark again?
+            }
+            SysWork_StateStepIncrementDelayed(Q12(6.0f), false);
+            break;
+        case 2:
+            D_800F1A24 = Q12(100.0f);
+            Game_TurnFlashlightOff();
+            SysWork_StateStepIncrementDelayed(Q12(0.2f), false);
+            break;
+        case 3:
+            MapMsg_DisplayAndHandleSelection(false, 0x24, 0, 0, 0, false);
+            break;
+        case 4:
+            func_8003ED74(6, 3);
+            Game_TurnFlashlightOn();
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 5:
+            SysWork_StateStepIncrementDelayed(Q12(1.2f), false);
+            break;
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+            Savegame_EventFlagSet(EventFlag_159);
+            vcReturnPreAutoCamWork(false);
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EA6E0);
 

@@ -35,6 +35,8 @@ extern s32 D_800F2298;
 
 extern s32 D_800F229C;
 
+extern s32 D_800F1A24;
+
 void func_800E7D54(void);
 
 void MapEvent_AtWaterWorks(void);
@@ -85,5 +87,7 @@ u8 func_800EE5A8(u32 arg0);
 void func_800E8C0C(void);
 
 void func_800E9D1C(void);
+
+void func_800EA444(void);
 
 #endif
