@@ -466,7 +466,61 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E554C);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E55B0);
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E5930);
+void func_800E5930(s_SubCharacter* chara)
+{
+    s32 newAnimStatus;
+    s32 newSpeed;
+    u32 animStatus;
+
+    // NOTE: This code reads chara->field_E8 both as word and a half... (half here)
+    if (!(chara->properties_E4.splitHead.flags_E8 & CharaUnk0Flag_Unk1))
+    {
+        if (chara->moveSpeed_38 > 0)
+        {
+            newSpeed = chara->moveSpeed_38 - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.8f), Q12_SHIFT);
+            newSpeed = MAX(newSpeed, 0);
+        } 
+        else
+        {
+            newSpeed = chara->moveSpeed_38 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.8f), Q12_SHIFT);
+            newSpeed = MIN(newSpeed, 0);
+        }
+        chara->moveSpeed_38 = newSpeed;
+    }
+
+    if (!chara->health_B0)
+    {
+        if (g_SysWork.targetNpcIdx_2353 != func_8005C7D0(chara))
+        {
+            chara->health_B0 = -1;
+            chara->field_E1_0 = 0;
+        }
+    }
+    // NOTE: This code reads chara->field_E8 both as word and a half... (word here)
+    if (!(chara->properties_E4.player.afkTimer_E8 & 0x44) && (chara->moveSpeed_38 == 0))
+    {
+        animStatus = ANIM_STATUS_IDX_GET(chara->model_0.anim_4.status_0);
+        newAnimStatus = 0;
+        if (animStatus == 18)
+        {
+            newAnimStatus = ANIM_STATUS(2, true);
+        }
+        if (animStatus == 19)
+        {
+            newAnimStatus = ANIM_STATUS(3, false);
+        }
+        if (animStatus == 20)
+        {
+            newAnimStatus = ANIM_STATUS(3, true);
+        }
+
+        if (newAnimStatus)
+        {
+            func_800622B8(3, chara, newAnimStatus, 6);
+            chara->properties_E4.splitHead.flags_E8 |= CharaUnk0Flag_Unk6;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", sharedFunc_800E5AA4_2_s00); // 0x800E5AA4
 
