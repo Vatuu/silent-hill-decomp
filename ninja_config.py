@@ -21,32 +21,30 @@ elif sys.platform == "win32":
     GAMEFILE_EXTENSION = ""
 
 # For multi-version support
-GAMEVERSION = "USA"
-
 @dataclass
-class GAMEVERSIONINFO:
+class GAMEVERSIONSETUPINFO:
     GAME_NAME: str
     GAME_VERSION_DIR: str
     GAME_FILE_EXE: str
     GAME_FILE_SILENT: str
     GAME_FILE_HILL: str
 
+@dataclass
+class GAMEVERSIONINFO:
+    GAME_IDX: int
+    GAME_NAME_VERSION: str
+    GAME_SETUP_INFO: GAMEVERSIONSETUPINFO
+
+
 GAMEVERSIONS = (
     # Retail
-    GAMEVERSIONINFO("SLUS-00707", "USA", "SLUS_007.07", f"SILENT{GAMEFILE_EXTENSION}", f"HILL{GAMEFILE_EXTENSION}")
+    GAMEVERSIONINFO(0, "USA",
+        GAMEVERSIONSETUPINFO("SLUS-00707", "USA", "SLUS_007.07", f"SILENT{GAMEFILE_EXTENSION}", f"HILL{GAMEFILE_EXTENSION}")
+    ),
+    GAMEVERSIONINFO(3, "JAP2",
+        GAMEVERSIONSETUPINFO("SLPM-86192", "JAP-2", "SLPM_861.92", f"SILENT{GAMEFILE_EXTENSION}", f"HILL{GAMEFILE_EXTENSION}")
+    )
 )
-
-GAMEVERSIONINDEX = 0
-
-# Version selected (made for future multi-version support)
-def matchVersion(version):
-    global GAMEVERSIONINDEX
-    match version:
-        case "USA": # Retail
-            GAMEVERSIONINDEX = 0
-        case _:
-            GAMEVERSIONINDEX = -1
-            print("Unknown version.")
 
 @dataclass
 class YAML_INFO:
@@ -66,11 +64,10 @@ YAML_SCREENS = [
     "screens/credits.yaml",
     "screens/saveload.yaml"
 ]
-
 YAML_MAPS_0 = [
     "maps/map0_s00.yaml",
     "maps/map0_s01.yaml",
-    #"maps/map0_s02.yaml", # Bugged
+    "maps/map0_s02.yaml",
 ]
 YAML_MAPS_1 = [
     "maps/map1_s00.yaml",
@@ -81,7 +78,6 @@ YAML_MAPS_1 = [
     "maps/map1_s05.yaml",
     "maps/map1_s06.yaml"
 ]
-
 YAML_MAPS_2 = [
     "maps/map2_s00.yaml",
     "maps/map2_s01.yaml",
@@ -185,9 +181,6 @@ elif sys.platform == "win32":
     DUMPSXISO         = f"{PSXISO_DIR}\\dumpsxiso.exe"
     ICONV             = f"{TOOLS_DIR}\\win-build\\iconv\\iconv.bat"
 
-# Flags (for programs)
-DUMPSXISO_FLAGS = f"-x {ROM_DIR}/{GAMEVERSIONS.GAME_VERSION_DIR} -s {ROM_DIR}/{GAMEVERSIONS.GAME_VERSION_DIR}/layout.xml {IMAGE_DIR}/{GAMEVERSIONS.GAME_NAME}.bin"
-
 # Compilation flags (General)
 INCLUDE_FLAGS   = f"-Iinclude -I {BUILD_DIR} -Iinclude/psyq"
 OPT_FLAGS       = "-O2"
@@ -209,9 +202,14 @@ CC_FLAGS      = f"{OPT_FLAGS} -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -f
 AS_FLAGS      = f"{ENDIAN} {INCLUDE_FLAGS} {OPT_FLAGS} -march=r3000 -mtune=r3000 -no-pad-sections"
 OBJDUMP_FLAGS = f"--disassemble-all --reloc --disassemble-zeroes -Mreg-names=32"
 
-def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file, objdiff_file):
+def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file, objdiff_file, non_matching_enabled):
+    
+    skipAsm = ""
+    nonMatching = ""
     
     if objdiff_file != None:
+        skipAsm = "-DSKIP_ASM"
+        nonMatching = "-DNON_MATCHING"
         if sys.platform == "linux" or sys.platform == "linux2":
             source_target_path = re.sub(r"^src/", r"asm/", source_path)
             source_target_path = re.sub(r".c$", r".s", source_target_path)
@@ -235,6 +233,8 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file, 
                 )
         else:
             return
+    elif non_matching_enabled != False:
+        nonMatching = "-DNON_MATCHING"
     
     
     if sys.platform == "win32":
@@ -248,7 +248,9 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file, 
         ninja_file.build(
             outputs=f"{target_path}.i", rule="cpp", inputs=source_path,
             variables={
-                "MAPIDFLAG": f"-D{mapId}"
+                "MAPIDFLAG": f"-D{mapId}",
+                "SKIPASMFLAG": skipAsm,
+                "NONMATCHINGFLAG": nonMatching
             }
         )
     else:
@@ -256,7 +258,9 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file, 
         ninja_file.build(
             outputs=f"{target_path}.i", rule="cpp", inputs=source_path,
             variables={
-                "MAPIDFLAG": ""
+                "MAPIDFLAG": "",
+                "SKIPASMFLAG": skipAsm,
+                "NONMATCHINGFLAG": nonMatching
             }
         )
     
@@ -316,7 +320,7 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file, 
             }
         )
 
-def ninja_setup_main(split_entries, skip_checksum: bool):
+def ninja_setup_main(game_version_idx: int, split_entries, skip_checksum: bool, non_matching: bool):
 
     ninja = ninja_syntax.Writer(open(str("build.ninja"), "w", encoding="utf-8"), width=9999)
     
@@ -357,7 +361,7 @@ def ninja_setup_main(split_entries, skip_checksum: bool):
     
     ninja.rule(
         "elf", description="elf $out.elf",
-        command=f"{LD} {ENDIAN} {OPT_FLAGS} -nostdlib --no-check-sections -Map $out.map -T $in -T $undef_sym_path -T $undef_fun_path -T {CONFIG_DIR}/{GAMEVERSIONS.GAME_VERSION_DIR}/lib_externs.ld -o $out",
+        command=f"{LD} {ENDIAN} {OPT_FLAGS} -nostdlib --no-check-sections -Map $out.map -T $in -T $undef_sym_path -T $undef_fun_path -T {CONFIG_DIR}/{GAMEVERSIONS[game_version_idx].GAME_SETUP_INFO.GAME_VERSION_DIR}/lib_externs.ld -o $out",
     )
     
     ninja.rule(
@@ -421,7 +425,7 @@ def ninja_setup_main(split_entries, skip_checksum: bool):
                                 }
                             )
                     case "c":
-                        ninja_setup_list_add_source(str(entry.object_path).removesuffix(".c.o"), str(entry.src_paths[0]), ninja, None)
+                        ninja_setup_list_add_source(str(entry.object_path).removesuffix(".c.o"), str(entry.src_paths[0]), ninja, None, non_matching)
                     case "bin":
                         ninja.build(outputs=str(entry.object_path), rule="ld", inputs=str(entry.src_paths[0]))
                     case "lib":
@@ -467,14 +471,7 @@ def ninja_setup_main(split_entries, skip_checksum: bool):
             implicit=f"{output}.elf"
         )
         
-        if split_config.SPLIT_BASENAME == "1ST/BODYPROG.BIN":
-            ninja.build(
-                outputs=f"{output}.fix",
-                rule="postbuild",
-                inputs=output,
-                implicit=output
-            )
-        elif split_config.SPLIT_BASENAME == "VIN/STREAM.BIN":
+        if split_config.SPLIT_BASENAME == "1ST/BODYPROG.BIN" or split_config.SPLIT_BASENAME == "VIN/STREAM.BIN":
             ninja.build(
                 outputs=f"{output}.fix",
                 rule="postbuild",
@@ -491,9 +488,9 @@ def ninja_setup_main(split_entries, skip_checksum: bool):
                 checksumBuildRequirements[s] = f"{checksumBuildRequirements[s]}.fix"
         
         if sys.platform == "linux" or sys.platform == "linux2":
-            checksumTarget = f"{CONFIG_DIR}/{GAMEVERSIONS.GAME_VERSION_DIR}/checksum.sha"
+            checksumTarget = f"{CONFIG_DIR}/{GAMEVERSIONS[game_version_idx].GAME_SETUP_INFO.GAME_VERSION_DIR}/checksum.sha"
         elif sys.platform == "win32":
-            checksumTarget = f"{CONFIG_DIR}/{GAMEVERSIONS.GAME_VERSION_DIR}"
+            checksumTarget = f"{CONFIG_DIR}/{GAMEVERSIONS[game_version_idx].GAME_SETUP_INFO.GAME_VERSION_DIR}"
         
         ninja.build(
             outputs=f"{BUILD_DIR}/out/checksum.ok",
@@ -558,7 +555,7 @@ def ninja_setup_objdiff(split_entries):
                     continue
                     
                 if seg.type == "c":
-                    ninja_setup_list_add_source(str(entry.object_path).removesuffix(".c.o"), str(entry.src_paths[0]), ninja, objdiff)
+                    ninja_setup_list_add_source(str(entry.object_path).removesuffix(".c.o"), str(entry.src_paths[0]), ninja, objdiff, False)
     
     if sys.platform == "linux" or sys.platform == "linux2":
         objdiff.build(outputs=f"{EXPECTED_DIR}/objdiff.ok", rule="objdiff-config", inputs=f"{OBJDIFF_DIR}/config.yaml")
@@ -584,22 +581,23 @@ def clean_files(clean_all: bool):
         shutil.rmtree(EXPECTED_DIR, ignore_errors=True)
         shutil.rmtree(LINKER_DIR, ignore_errors=True)
 
-def extract_files():
-    matchVersion(GAMEVERSION)
-    print(f"Extracting files for version {GAMEVERSION}")
+def extract_files(version: int):
+    print(f"Extracting files for version {GAMEVERSIONS[version].GAME_NAME_VERSION}")
     
-    target_assets = f"{ASSETS_DIR}/{GAMEVERSIONS.GAME_VERSION_DIR}"
-    target_rom    = f"{ROM_DIR}/{GAMEVERSIONS.GAME_VERSION_DIR}"
+    targetAssets = f"{ASSETS_DIR}/{GAMEVERSIONS[version].GAME_SETUP_INFO.GAME_VERSION_DIR}"
+    targetRom    = f"{ROM_DIR}/{GAMEVERSIONS[version].GAME_SETUP_INFO.GAME_VERSION_DIR}"
     
-    shutil.rmtree(target_assets, ignore_errors=True)
-    shutil.rmtree(target_rom, ignore_errors=True)
+    shutil.rmtree(targetAssets, ignore_errors=True)
+    shutil.rmtree(targetRom, ignore_errors=True)
     
-    os.system(f"{DUMPSXISO} {DUMPSXISO_FLAGS}")
+    dumpsxisoFlags = f"-x {ROM_DIR}/{GAMEVERSIONS[version].GAME_SETUP_INFO.GAME_VERSION_DIR} -s {ROM_DIR}/{GAMEVERSIONS[version].GAME_SETUP_INFO.GAME_VERSION_DIR}/layout.xml {IMAGE_DIR}/{GAMEVERSIONS[version].GAME_SETUP_INFO.GAME_NAME}.bin"
+
+    os.system(f"{DUMPSXISO} {dumpsxisoFlags}")
     subprocess.call([PYTHON, f"{TOOLS_DIR}/silentassets/extract.py",
-    "-exe", f"{target_rom}/{GAMEVERSIONS.GAME_FILE_EXE}",
-    "-fs", f"{target_rom}/{GAMEVERSIONS.GAME_FILE_SILENT}",
-    "-fh", f"{target_rom}/{GAMEVERSIONS.GAME_FILE_HILL}",
-    target_assets])
+    "-exe", f"{targetRom}/{GAMEVERSIONS[version].GAME_SETUP_INFO.GAME_FILE_EXE}",
+    "-fs", f"{targetRom}/{GAMEVERSIONS[version].GAME_SETUP_INFO.GAME_FILE_SILENT}",
+    "-fh", f"{targetRom}/{GAMEVERSIONS[version].GAME_SETUP_INFO.GAME_FILE_HILL}",
+    targetAssets])
 
 def main():
     parser = argparse.ArgumentParser(description="Configure the project")
@@ -611,7 +609,7 @@ def main():
     parser.add_argument(
         "-iso_e", "--iso_extract",
         help="Extract game files",
-        action="store_true",
+        type=str
     )
     parser.add_argument(
         "-set", "--setup",
@@ -624,29 +622,54 @@ def main():
         action="store_true",
     )
     parser.add_argument(
+        "-nm", "--non_matching",
+        help="Compile functions labeled as Non Matching",
+        action="store_true",
+    )
+    parser.add_argument(
         "-obj", "--objdiff_config",
         help="Builds setup for Objdiff",
         action="store_true",
     )
+    parser.add_argument(
+        "-ver", "--game_version",
+        help="Extract and work under a specific version of the game (NOT IMPLEMENTED)",
+        type=str,
+    )
     args = parser.parse_args()
 
     cleanCompilationFiles = (args.clean) or False
-    extractGameFiles      = (args.iso_extract) or False
     skipChecksumOption    = (args.skip_checksum) or False
     objdiffConfigOption   = (args.objdiff_config) or False
+    nonMatchingOption     = (args.non_matching) or False
+    gameVersionOption     = 0 # USA by default
     yamlsPaths            = []
     splitsYamlInfo        = []
+    
+    if args.game_version != None:
+        for gameVersionInfo in GAMEVERSIONS:
+            if args.game_version.upper() == gameVersionInfo.GAME_NAME_VERSION:
+                print(f"Version selected: {gameVersionInfo.GAME_NAME_VERSION}")
+                gameVersionOption = gameVersionInfo.GAME_IDX
+                break
+        else:
+            print("Version not supported.")
+            sys.exit(1)
+    
     
     if cleanCompilationFiles:
         print("Cleaning compilation files")
         clean_files(False)
         return
     
-    if extractGameFiles:
-        extract_files()
+    if args.iso_extract != None:
+        extract_files(gameVersionOption)
         return
     
-    clean_files(True)
+    if gameVersionOption != 0:
+        print("Support for other versions of the game haven't been implemented as we are still focused on the USA retail release.")
+        sys.exit(1)
+    
     if args.setup == None:
         yamlsPaths.extend(YAML_EXECUTABLE)
         yamlsPaths.extend(YAML_ENGINE)
@@ -667,7 +690,7 @@ def main():
                 yamlsPaths.extend(YAML_ENGINE)
             case "bko":
                 yamlsPaths.extend([YAML_SCREENS[0]])
-            case "fmv":
+            case "fmv" | "str":
                 yamlsPaths.extend([YAML_SCREENS[1]])
             case "opt":
                 yamlsPaths.extend([YAML_SCREENS[2]])
@@ -702,23 +725,18 @@ def main():
                 print("No recognizable overlay has been assigned.")
                 sys.exit(1)
     
+    clean_files(True)
+    for yaml in yamlsPaths:
+        splat.util.symbols.spim_context = spimdisasm.common.Context()
+        splat.util.symbols.reset_symbols()
+        split.main([Path(f"{CONFIG_DIR}/{GAMEVERSIONS[gameVersionOption].GAME_SETUP_INFO.GAME_VERSION_DIR}/{yaml}")], modes="all", use_cache=False, verbose=False, disassemble_all=True, make_full_disasm_for_code=True)
+        splitsYamlInfo.append(YAML_INFO([split.linker_writer.entries], split.config['options']['basename'], split.config['options']['ld_script_path'], split.config['options']['undefined_funcs_auto_path'], split.config['options']['undefined_syms_auto_path']))
+    
     if objdiffConfigOption == False:
-        for yaml in yamlsPaths:
-            splat.util.symbols.spim_context = spimdisasm.common.Context()
-            splat.util.symbols.reset_symbols()
-            split.main([Path(f"{CONFIG_DIR}/{GAMEVERSIONS.GAME_VERSION_DIR}/{yaml}")], modes="all", use_cache=False, verbose=False, disassemble_all=True, make_full_disasm_for_code=True)
-            splitsYamlInfo.append(YAML_INFO([split.linker_writer.entries], split.config['options']['basename'], split.config['options']['ld_script_path'], split.config['options']['undefined_funcs_auto_path'], split.config['options']['undefined_syms_auto_path']))
-        
-        ninja_setup_main(splitsYamlInfo, skipChecksumOption)
+        ninja_setup_main(gameVersionOption, splitsYamlInfo, skipChecksumOption, nonMatchingOption)
     else:
-        for yaml in yamlsPaths:
-            splat.util.symbols.spim_context = spimdisasm.common.Context()
-            splat.util.symbols.reset_symbols()
-            split.main([Path(f"{CONFIG_DIR}/{GAMEVERSIONS.GAME_VERSION_DIR}/{yaml}")], modes="all", use_cache=False, verbose=False, disassemble_all=True, make_full_disasm_for_code=True)
-            splitsYamlInfo.append(YAML_INFO([split.linker_writer.entries], split.config['options']['basename'], split.config['options']['ld_script_path'], split.config['options']['undefined_funcs_auto_path'], split.config['options']['undefined_syms_auto_path']))
         ninja_setup_objdiff(splitsYamlInfo)
-        subprocess.call([PYTHON, "-m", "ninja",
-        "-f", "objdiff.ninja"])
+        subprocess.call([PYTHON, "-m", "ninja", "-f", "objdiff.ninja"])
 
 if __name__ == "__main__":
     main()

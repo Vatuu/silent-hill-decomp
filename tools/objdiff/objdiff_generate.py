@@ -11,6 +11,7 @@ import re
 @dataclass
 class UnitMetadata:
     progress_categories: list[str]
+    source_path: str
 
 @dataclass
 class Unit:
@@ -104,7 +105,7 @@ def _determine_categories(path: Path, config) -> tuple[UnitMetadata, str]:
         for prefix in category["paths"]:
             if re.sub(r"\\", r"/", str(modified_path)).startswith(prefix):
                 categories.append(category["id"])
-    return (UnitMetadata(categories), str(modified_path))
+    return (UnitMetadata(categories, f"src/{re.sub( r"\.s\.o", r".c", re.sub(r"\\", r"/", str(modified_path)))}"), str(modified_path))
 
 def main():
     logging.basicConfig(level = logging.INFO)
@@ -114,6 +115,7 @@ def main():
     
     logging.info(f"Accounting for {len(expected_objects)} objects.")
     units = []
+    build_method = str
     for file in expected_objects:
         processed_path = _determine_categories(file, config)
         base_path = "build/src/" + re.sub(r"\\", r"/", processed_path[1]).removesuffix(".s.o").removesuffix(".c.o") + ".c.o"
@@ -129,6 +131,7 @@ def main():
                 re.sub(r"\\", r"/", str(file)),
                 processed_path[0],
                 symbol_mappings)
+            build_method = "ninja"
         else:
             unit = Unit(
                 processed_path[1].removesuffix(".s.o").removesuffix(".c.o"),
@@ -136,6 +139,7 @@ def main():
                 str(file),
                 processed_path[0],
                 symbol_mappings)
+            build_method = "make"
         units.append(unit)
     
     categories = []
@@ -143,7 +147,7 @@ def main():
         categories.append(ProgressCategory(category["id"], category["name"]))
     
     with (Path(config["output"])).open("w") as json_file:
-        json.dump(asdict(Config(False, False, "make", ["progress"], units, categories)), json_file, indent=2)
+        json.dump(asdict(Config(False, False, build_method, ["progress"] if build_method != "ninja" else None, units, categories)), json_file, indent=2)
 
 if __name__ == "__main__":
     main()
