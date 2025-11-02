@@ -1520,7 +1520,15 @@ void func_800E9CB4(void) // 0x800E9CB4
     }
 }
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E9D1C);
+void func_800E9D1C(void)
+{
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+
+    Player_ItemRemove(InventoryItemId_HouseKey, 1);
+    Map_MessageWithSfx(31, Sfx_UseKey, &sfxPos); // Used the House key
+    Savegame_MapMarkingSet(MapMarkFlag_OldTown_DoghouseDotOnly);
+}
+
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E9DD8);
 

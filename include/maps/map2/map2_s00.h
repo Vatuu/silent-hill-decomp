@@ -82,4 +82,8 @@ s32 func_800EE518(void);
 
 u8 func_800EE5A8(u32 arg0);
 
+void func_800E8C0C(void);
+
+void func_800E9D1C(void);
+
 #endif

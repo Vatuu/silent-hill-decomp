@@ -130,6 +130,11 @@ typedef enum _EventFlag
     EventFlag_M2S00_PickupKeyOfWoodman    = 151,
     EventFlag_M2S00_PickupKeyOfScarecrow  = 152,
 
+    EventFlag_M2S00_LockOfLionOpen      = 154,
+    EventFlag_M2S00_LockOfWoodmanOpen   = 155,
+    EventFlag_M2S00_LockOfScarecrowOpen = 156,
+    EventFlag_M2S00_DoorOfEclypseOpen   = 157,
+    EventFlag_158 = 158,
     EventFlag_159 = 159,
 
     EventFlag_M2S00_PickupSteelPipe = 161,
