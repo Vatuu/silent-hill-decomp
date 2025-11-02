@@ -2111,22 +2111,11 @@ void func_800EB908(void)
 
     WorldObjectPoseInit(&g_WorldObject4[0].position_1C, 185.76f,-0.59f, 116.12f, 0.0f, 0.0f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject4[0].object_0, "KEY_HIDE");
-    /*
-        @hack Doesn't match when used in a function.
-    WorldObjectPoseSet(&g_WorldObject4[1].position_1C, 0xFFF41948, 0, 0x178A14, 0, 0x299, 0);
-    */
-    Math_Vector3Set(&(g_WorldObject4 + 1)->position_1C.position_0, Q12(-190.42f), Q12(0.0f), Q12(376.63f));
-    *(s32*)&g_WorldObject4[1].position_1C.rotation_C.vx = 0x2990000;
-    (&(g_WorldObject4 + 1)->position_1C.rotation_C)->vz = 0;
-    WorldObject_ModelNameSet(&(g_WorldObject4 + 1)->object_0, "KEY_NEAR");
 
-    /*
-        @hack Doesn't match when used in a function.
-    WorldObjectPoseSet(&g_WorldObject4[2].position_1C, 0x63666, -0x599, 0xFFFDEBD8, 0, 0x12, 0xA);
-    */
-    Math_Vector3Set(&g_WorldObject4[2].position_1C.position_0, Q12(99.4f), Q12(-0.35f), Q12(-33.26f));
-    *(s32*)&g_WorldObject4[2].position_1C.rotation_C.vx = 0x12;
-    (&(g_WorldObject4 + 2)->position_1C.rotation_C)->vz = 0xA;
+    WorldObjectPoseSet(&g_WorldObject4[1].position_1C, 0xFFF41948, 0, 0x178A14, 0, 0x299, 0);
+    WorldObject_ModelNameSet(&(g_WorldObject4 + 1)->object_0, "KEY_NEAR");
+    
+    WorldObjectPoseSet(&g_WorldObject4[2].position_1C, 0x63666, -0x599, 0xFFFDEBD8, 0x12, 0, 0xA);
     WorldObject_ModelNameSet(&g_WorldObject4[2].object_0, "KEY_NEAR");
 
     WorldObject_ModelNameSet(&g_WorldObject5[0], "AXIS1_HI");
@@ -2156,9 +2145,9 @@ void func_800EB908(void)
     Math_SetSVectorFast(D_800F538C, 0, 0, 0);
     WorldObject_ModelNameSet(&D_800F56EC, D_800A99E4.savePadName_4);
 
-    WorldObjectPoseInit(&D_800F570C.position_0, 117.681641f, -1.01f, 216.263f, 0.0f, 193.51f, 0.0f);
-    WorldObjectPoseInit(&D_800F572C.position_0, 116.3013f, -0.905f, 299.1139f, 0.0f, 84.56f, 0.0f);
-    WorldObjectPoseInit(&D_800F574C.position_0, -44.234f, -3.453f, 345.2f, 0.0f, 180.0f, 0.0f);
+    WorldObjectPoseInit(&D_800F570C, 117.681641f, -1.01f, 216.263f, 0.0f, 193.51f, 0.0f);
+    WorldObjectPoseInit(&D_800F572C, 116.3013f, -0.905f, 299.1139f, 0.0f, 84.56f, 0.0f);
+    WorldObjectPoseInit(&D_800F574C, -44.234f, -3.453f, 345.2f, 0.0f, 180.0f, 0.0f);
 
     WorldObjectPoseSet(&g_WorldObject8.position_1C, Q12(-43.694f), Q12(-3.1824f), Q12(345.764f), 0x4C, 0x45, 0);
     WorldObject_ModelNameSet(&g_WorldObject8.object_0, "MAP_NEAR");

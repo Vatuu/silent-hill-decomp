@@ -2890,14 +2890,18 @@ typedef struct
     s_WorldObjectPose position_1C;
 } s_WorldObjectDesc;
 
+#define Math_SetSVectorFast(vec, x, y, z) \
+    *(s32*)&(vec).vx = (s32)((x) & 0xFFFF) | (s32)((y) << 16); \
+    *(s16*)&(vec).vz = (z)
+
 #define WorldObjectPoseInit(eventPos, posX, posY, posZ, rotX, rotY, rotZ) \
     WorldObjectPoseSet(eventPos, Q12(posX), Q12(posY), Q12(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))
 
-static inline void WorldObjectPoseSet(s_WorldObjectPose* eventPose, q19_12 posX, q19_12 posY, q19_12 posZ, q8_8 rotX, q8_8 rotY, q7_8 rotZ)
-{
-    Math_Vector3Set(&eventPose->position_0, posX, posY, posZ);
-    *(u32*)&eventPose->rotation_C.vx = ((u32)rotY << 16) | (u32)rotX;
-    eventPose->rotation_C.vz         = rotZ;
+#define WorldObjectPoseSet(eventPose, posX, posY, posZ, rotX, rotY, rotZ) \
+{ \
+    Math_Vector3Set(&(eventPose)->position_0, posX, posY, posZ); \
+    *(s32*)&((eventPose)->rotation_C).vx = (s32)((rotX) & 0xFFFF) | (s32)((rotY) << 16); \
+    *(s16*)&((eventPose)->rotation_C).vz = (rotZ); \
 }
 
 #define MAP_CHUNK_CHECK_VARIABLE_DECL() \
