@@ -43,18 +43,18 @@ typedef enum _Sfx
     Sfx_Unk1328 = 1328,
     Sfx_Unk1329 = 1329,
 
-    Sfx_Stumble1 = 1333,
-    Sfx_DoorJammed = 1334,
-    Sfx_Unk1335  = 1335,
-    Sfx_Unk1336  = 1336,
-    Sfx_Unk1337  = 1337,
-    Sfx_Unk1338  = 1338,
-    Sfx_Unk1339  = 1339,
-    Sfx_Unk1340  = 1340,
-    Sfx_Unk1341  = 1341,
+    Sfx_Stumble1     = 1333,
+    Sfx_DoorJammed   = 1334,
+    Sfx_Unk1335      = 1335,
+    Sfx_Unk1336      = 1336,
+    Sfx_Unk1337      = 1337,
+    Sfx_Unk1338      = 1338,
+    Sfx_Unk1339      = 1339,
+    Sfx_Unk1340      = 1340,
+    Sfx_Unk1341      = 1341,
     Sfx_DoorUnlocked = 1342,
 
-    Sfx_Unk1343 = 1343,
+    Sfx_Unk1343    = 1343,
     Sfx_DoorLocked = 1344,
 
     Sfx_Unk1349 = 1349,
@@ -89,6 +89,9 @@ typedef enum _Sfx
     Sfx_Unk1387 = 1387,
 
     Sfx_Unk1391 = 1391,
+
+    Sfx_Unk1393 = 1393,
+    Sfx_Unk1394 = 1394,
 
     Sfx_Unk1396 = 1396,
     Sfx_Unk1397 = 1397,

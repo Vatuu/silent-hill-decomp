@@ -998,11 +998,77 @@ void func_800EB090(void)
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EB174);
 
-INCLUDE_RODATA("asm/maps/map2_s00/nonmatchings/map2_s00", D_800CD45C);
+void func_800EB3F4(void) // 0x800EB3F4
+{
+    const static VECTOR3 D_800CD45C = { Q12(-261.977f), Q12(-0.1f), Q12(-104.286f) };
+    const static VECTOR3 D_800CD468 = { Q12(-263.0f), Q12(-1.25f), Q12(-104.0f) };
 
-INCLUDE_RODATA("asm/maps/map2_s00/nonmatchings/map2_s00", D_800CD468);
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_8005DC1C(Sfx_Unk1393, &D_800CD45C, Q8_CLAMPED(0.5f), 0);
+            SysWork_StateStepIncrement(0);
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EB3F4);
+        case 1:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        case 2:
+            func_80085DF0();
+            break;
+
+        case 3:
+            Camera_PositionSet(NULL, Q12(-263.03f), Q12(-3.43f), Q12(-105.37f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(-261.58f), Q12(-0.08f), Q12(-103.73f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
+            D_800F22AE = 0;
+
+            Savegame_EventFlagSet(EventFlag_169);
+
+            g_SysWork.field_30 = 20;
+            Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, 2);
+            SysWork_StateStepIncrement(0);
+
+        case 4:
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            break;
+
+        case 5:
+            SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
+            break;
+
+        case 6:
+            func_8005DC1C(Sfx_Unk1394, &D_800CD468, Q8_CLAMPED(0.5f), 0);
+            SysWork_StateStepIncrement(0);
+
+        case 7:
+            SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
+
+            // TODO: Odd float values, maybe using different Q format for `s16`?
+            D_800F22AE    += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.0277f), Q12_SHIFT);
+            D_800F22AE     = MAX(Q12(-0.0137f), D_800F22AE);
+
+            D_800F538C[1] += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800F22AE, Q12_SHIFT);
+            if (D_800F538C[1] < Q12(-0.02222f)) // TODO: `MAX`? Currently doesn't match.
+            {
+                D_800F538C[1] = Q12(-0.02222f);
+            }
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, 2);
+            if (g_SysWork.playerCombatInfo_38.weaponAttack_F < 32)
+            {
+                g_SysWork.playerCombatInfo_38.weaponAttack_F %= 10;
+            }
+            vcReturnPreAutoCamWork(true);
+            break;
+    }
+}
 
 void func_800EB758(void)
 {
@@ -1032,6 +1098,7 @@ void func_800EB824(s32 arg0)
     {
         Savegame_EventFlagClear(EventFlag_172);
     }
+
     if (arg0 == 1)
     {
         Savegame_EventFlagSet(EventFlag_173);
@@ -1040,6 +1107,7 @@ void func_800EB824(s32 arg0)
     {
         Savegame_EventFlagClear(EventFlag_173);
     }
+
     if (arg0 == 2)
     {
         Savegame_EventFlagSet(EventFlag_174);
@@ -1079,6 +1147,7 @@ s32 func_800EE518(void)
     {
         ret = 0;
     }
+    
     if (Savegame_EventFlagGet(EventFlag_131) && !Savegame_EventFlagGet(EventFlag_181) && ret == 1)
     {
         ret = 2;

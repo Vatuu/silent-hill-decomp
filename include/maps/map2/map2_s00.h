@@ -15,6 +15,10 @@
 
 extern u8 D_800F1CA8[3]; // = { 0, 1, 2 }
 
+extern s16 D_800F22AE;
+
+extern s16 D_800F538C[];
+
 void func_800E7D54(void);
 
 void func_800E7E60(void);
@@ -32,7 +36,9 @@ void func_800E9A0C(void);
 
 void func_800E9CB4(void);
 
-void func_800EB824(s32);
+void func_800EB3F4(void);
+
+void func_800EB824(s32 arg0);
 
 u8 func_800EE5A8(u32 arg0);
 
