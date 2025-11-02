@@ -1897,7 +1897,62 @@ void func_800EB090(void) // 0x800EB090
     func_800894B8(96);
 }
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EB174);
+void func_800EB174(void)
+{
+    VECTOR3 soundPos;
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            soundPos.vx = MAP_POINTS[g_MapEventParam->field_5].positionX_0;
+            soundPos.vy = Q12(-1.2f);
+            soundPos.vz = MAP_POINTS[g_MapEventParam->field_5].positionZ_8;
+    
+            func_8005DC1C(Sfx_Unk1349, &soundPos, Q8_CLAMPED(0.5f), 0);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 1:
+            SysWork_StateStepIncrementDelayed(Q12(0.2f), false);
+            break;
+        case 2:
+            func_80085DF0();
+            break;
+        case 3:
+            MapMsg_DisplayAndHandleSelection(false, MapMsgIdx_DoorLocked, false, false, 0, false);
+            break;
+        case 4:
+            Camera_PositionSet(NULL, Q12(-261.27f), Q12(-2.11f), Q12(-105.46f), 0, 0, 0, 0, true);
+            Camera_LookAtSet(NULL, Q12(-262.74f), Q12(0.07f), Q12(-102.45f), 0, 0, 0, 0, true);
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(-262.39f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(-104.33f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(45.0f);
+            func_8003D03C();
+            sharedFunc_800D2EB4_0_s00();
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 5:
+            SysWork_StateStepIncrementAfterFade(2, true, 2, false, false);
+            break;
+        case 6:
+            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            break;
+        case 7:
+            MapMsg_DisplayAndHandleSelection(false, 50, false, false, 0, false); // "Hmm... the lock is worn out."
+            break;
+        case 8:
+            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            break;
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            vcReturnPreAutoCamWork(true);
+            func_8003D01C();
+            sharedFunc_800D2EF4_0_s00();
+            Savegame_EventFlagSet(EventFlag_167);
+            SysWork_StateStepIncrementAfterFade(false, false, 2, false, false);
+            break;
+    }
+}
 
 void func_800EB3F4(void) // 0x800EB3F4
 {

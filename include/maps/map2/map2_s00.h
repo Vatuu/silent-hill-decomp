@@ -102,4 +102,6 @@ void func_800EAD2C(void);
 
 void func_800EA960(void);
 
+void func_800EB174(void);
+
 #endif
