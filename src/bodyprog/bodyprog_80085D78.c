@@ -358,39 +358,39 @@ void func_800862F8(s32 stateStep, s32 fileIdx, bool reset) // 0x800862F8
     }
 }
 
-void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, bool reset) // 0x80086470
+void func_80086470(u32 stateStep, s32 itemId, s32 itemCount, bool reset) // 0x80086470
 {
-    s32 switchVarCpy;
+    s32 activeStateStep;
 
-    if (switchVar == 6 && g_SysWork.sysStateStep_C[2] == 0)
+    if (stateStep == 6 && g_SysWork.sysStateStep_C[2] == 0)
     {
         SysWork_StateStepSet(2, 2);
     }
 
-    switchVarCpy = switchVar;
+    activeStateStep = stateStep;
 
-    if (switchVar >= 2)
+    if (stateStep >= 2)
     {
-        if (switchVar == 2)
+        if (stateStep == 2)
         {
-            switchVarCpy = 3;
+            activeStateStep = 3;
         }
-        else if (switchVar == 3)
+        else if (stateStep == 3)
         {
-            switchVarCpy = 2;
+            activeStateStep = 2;
         }
         else
         {
-            switchVarCpy = g_SysWork.sysStateStep_C[2];
+            activeStateStep = g_SysWork.sysStateStep_C[2];
         }
     }
 
-    switch (switchVarCpy)
+    switch (activeStateStep)
     {
         case 0:
             GameFs_UniqueItemModelLoad(itemId);
             
-            if (switchVar == 0)
+            if (stateStep == 0)
             {
                 SysWork_StateStepIncrement(1);
                 g_SysWork.sysStateStep_C[1]--;
@@ -406,7 +406,7 @@ void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, bool reset) // 0x80
 
             func_80054A04(itemId);
 
-            if (switchVar == 1 || switchVar == 4)
+            if (stateStep == 1 || stateStep == 4)
             {
                 func_80085D78(reset);
                 break;
@@ -417,7 +417,7 @@ void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, bool reset) // 0x80
         case 2:
             SysWork_StateStepSet(2, 0);
 
-            if (switchVar == 3 || switchVar == 6)
+            if (stateStep == 3 || stateStep == 6)
             {
                 Inventory_AddSpecialItem(itemId, itemCount);
             }

@@ -430,7 +430,7 @@ void func_800D7A60(void) // 0x800D7A60
 
             g_SysWork.field_2378 = Q12(0.8f);
 
-            func_8005DC1C(Sfx_Unk1336, &D_800E2C94.position_0, 128, 0);
+            func_8005DC1C(Sfx_Unk1336, &D_800E2C94.position_0, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -440,7 +440,7 @@ void func_800D7A60(void) // 0x800D7A60
         case 8:
             func_80085EB8(0u, &g_SysWork.player_4C.chara_0, 158, false);
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
-            func_8005DC1C(Sfx_Unk1337, &D_800E2C94.position_0, 128, 0);
+            func_8005DC1C(Sfx_Unk1337, &D_800E2C94.position_0, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -481,7 +481,7 @@ void func_800D7A60(void) // 0x800D7A60
             break;
 
         case 17:
-            SysWork_StateStepIncrementAfterFade(2, true, false, false, false);
+            SysWork_StateStepIncrementAfterFade(2, true, false, Q12(0.0f), false);
             break;
 
         case 18:
@@ -503,7 +503,7 @@ void func_800D7A60(void) // 0x800D7A60
 
             vcReturnPreAutoCamWork(true);
             Savegame_EventFlagSet(EventFlag_484);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, false, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             func_8008D448();
             func_8003EBA0();
 
@@ -722,7 +722,7 @@ void func_800D8A5C(void) // 0x800D8A5C
             D_800E1678[2] = Q12(1.5f);
             D_800E1678[3] = Q12(0.4f);
 
-            SysWork_StateStepIncrementAfterFade(false, true, 2, 0, false);
+            SysWork_StateStepIncrementAfterFade(false, true, 2, Q12(0.0f), false);
             sharedFunc_800D2EB4_0_s00();
             func_8003D03C();
             SysWork_StateStepIncrement(0);
@@ -732,13 +732,13 @@ void func_800D8A5C(void) // 0x800D8A5C
             break;
 
         case 2:
-            SysWork_StateStepIncrementAfterFade(1, true, 2, 0, false);
+            SysWork_StateStepIncrementAfterFade(1, true, 2, Q12(0.0f), false);
             break;
 
         case 3:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 145, false);
-            Camera_PositionSet(NULL, Q12(-139.38f), Q12(-0.92f), Q12(-19.99f), 0, 0, 0, 0, true);
-            Camera_LookAtSet(NULL, Q12(-141.0f), Q12(-1.64f), Q12(-23.58f), 0, 0, 0, 0, true);
+            Camera_PositionSet(NULL, Q12(-139.38f), Q12(-0.92f), Q12(-19.99f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(-141.0f), Q12(-1.64f), Q12(-23.58f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(-140.0f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(-21.7f);
@@ -766,14 +766,14 @@ void func_800D8A5C(void) // 0x800D8A5C
                         break;
                     }
 
-                    func_8005DC1C(Sfx_Unk1642, &D_800CC534, 128, 0);
+                    func_8005DC1C(Sfx_Unk1642, &D_800CC534, Q8_CLAMPED(0.5f), 0);
                     break;
                 }
             }
             break;
 
         case 5:
-            func_8005DC1C(Sfx_Unk1643, &D_800CC540, 128, 0);
+            func_8005DC1C(Sfx_Unk1643, &D_800CC540, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -781,7 +781,7 @@ void func_800D8A5C(void) // 0x800D8A5C
             break;
 
         case 7:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         default:
@@ -790,8 +790,8 @@ void func_800D8A5C(void) // 0x800D8A5C
             sharedFunc_800D2EF4_0_s00();
             func_8003D01C();
             vcReturnPreAutoCamWork(true);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_490);
             break;
     }
@@ -844,7 +844,7 @@ void func_800D8DB4(void) // 0x800D8DB4
             func_80086C58(&g_SysWork.player_4C.chara_0, 60);
             break;
 
-        default:
+        default: // `EventState_Finish`
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -872,13 +872,15 @@ void func_800D8FF8(void) // 0x800D8FF8
 
             Fs_QueueStartReadTim(FILE_TIM_GLASS_TIM, FS_BUFFER_1, &D_800A908C);
             Savegame_EventFlagSet(EventFlag_563);
-            func_8005DC1C(Sfx_Unk1660, &D_800E1504, 128, 0);
+            func_8005DC1C(Sfx_Unk1660, &D_800E1504, Q8_CLAMPED(0.5f), 0);
 
             D_800E1680 = 0;
 
-            Camera_PositionSet(NULL, Q12(-15.39f), Q12(-3.6f), Q12(-61.47f), 0, 0, 0, 0, true);
-            Camera_LookAtSet(NULL, Q12(-17.38f), Q12(-0.18f), Q12(-60.85f), 0, 0, 0, 0, true);
+            // Warp camera.
+            Camera_PositionSet(NULL, Q12(-15.39f), Q12(-3.6f), Q12(-61.47f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(-17.38f), Q12(-0.18f), Q12(-60.85f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
+            // Warp player.
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(-16.7f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(-61.15f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = Q12(0.5f);
@@ -886,7 +888,7 @@ void func_800D8FF8(void) // 0x800D8FF8
             SysWork_StateStepIncrement(0);
 
         case 1:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 3:
@@ -899,7 +901,7 @@ void func_800D8FF8(void) // 0x800D8FF8
         case 4:
             if (g_SysWork.field_28 == 0)
             {
-                func_8005DC1C(Sfx_Unk1661, &D_800E1504, 128, 0);
+                func_8005DC1C(Sfx_Unk1661, &D_800E1504, Q8_CLAMPED(0.5f), 0);
 
                 D_800E1680++;
                 if (D_800E1680 == 5)
@@ -926,7 +928,7 @@ void func_800D8FF8(void) // 0x800D8FF8
 
         case 6:
             func_800CC9A4(&D_800CC594, &D_800CC5A0, Q12(2.4f), 90, Q12(0.18f), Q12(0.2f), 204, 0);
-            func_8005DC1C(Sfx_Unk1658, &D_800CC5AC, 128, 0);
+            func_8005DC1C(Sfx_Unk1658, &D_800CC5AC, Q8_CLAMPED(0.5f), 0);
             func_80085EB8(0U, &g_SysWork.player_4C.chara_0, 167, false);
             SysWork_StateStepIncrement(0);
 
@@ -935,7 +937,7 @@ void func_800D8FF8(void) // 0x800D8FF8
             break;
 
         case 8:
-            func_8005DC1C(Sfx_Unk1327, &D_800CC5B8, 128, 0);
+            func_8005DC1C(Sfx_Unk1327, &D_800CC5B8, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 2:
@@ -948,9 +950,10 @@ void func_800D8FF8(void) // 0x800D8FF8
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
 
+            // Warp player.
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(-60.7f);
 
-            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_489);
             break;
     }
@@ -998,7 +1001,7 @@ void func_800D94DC(void) // 0x800D94DC
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            SysWork_StateStepIncrementAfterFade(0, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
             D_800E2CAC = 0;
             D_800E2CA8 = 0;
 
@@ -1014,11 +1017,11 @@ void func_800D94DC(void) // 0x800D94DC
             break;
 
         case 2:
-            SysWork_StateStepIncrementAfterFade(1, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
             break;
 
         case 3:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             func_800862F8(2, 0, false);
             break;
 
@@ -1097,13 +1100,13 @@ void func_800D94DC(void) // 0x800D94DC
 
         case 8:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             break;
     }
 }
@@ -1144,11 +1147,11 @@ void func_800D9A08(void) // 0x800D9A08
             break;
 
         case 5:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 6:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             func_800862F8(2, 0, false);
             break;
 
@@ -1180,12 +1183,12 @@ void func_800D9A08(void) // 0x800D9A08
             break;
 
         case 11:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             func_800862F8(2, 0, false);
             break;
 
         case 12:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 13:
@@ -1451,7 +1454,7 @@ void func_800D9C9C(void)
             switch (g_SysWork.sysStateStep_C[1])
             {
                 case 0:
-                    func_8005DC1C(Sfx_Unk1647, &D_800E2CD4, 128, 0);
+                    func_8005DC1C(Sfx_Unk1647, &D_800E2CD4, Q8_CLAMPED(0.5f), 0);
                     SysWork_StateStepIncrement(1);
 
                 case 1:
@@ -1483,7 +1486,7 @@ void func_800D9C9C(void)
                             g_SysWork.field_28 = 0;
                             D_800E168E         = 0;
 
-                            func_8005DC1C(Sfx_Unk1648, &D_800E2CB8.position_1C.position_0, 128, 0);
+                            func_8005DC1C(Sfx_Unk1648, &D_800E2CB8.position_1C.position_0, Q8_CLAMPED(0.5f), 0);
                         }
                     }
                     break;
@@ -1519,7 +1522,7 @@ void func_800D9C9C(void)
                     D_800E2CB8.position_1C.position_0.vz = Q12(-140.0f);
                     D_800E2CB8.position_1C.rotation_C.vz = Q12(-0.25f);
 
-                    func_8005DC1C(Sfx_Unk1649, &D_800E2CB8.position_1C.position_0, 128, 0);
+                    func_8005DC1C(Sfx_Unk1649, &D_800E2CB8.position_1C.position_0, Q8_CLAMPED(0.5f), 0);
                     SysWork_StateStepIncrement(0);
                     break;
             }
@@ -1547,6 +1550,7 @@ void func_800D9C9C(void)
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+
             Savegame_EventFlagClear(EventFlag_500 + D_800E1690.field_0);
             break;
     }
@@ -1623,8 +1627,8 @@ void func_800DADD4(void) // 0x800DADD4
 
 void func_800DAE00(void) // 0x800DAE00
 {
-    const static VECTOR3 D_800CC6E4 = { Q12(-63.2f), Q12(-1.45f), Q12(-139.05f) };
-    const static VECTOR3 D_800CC6F0 = { Q12(-62.9f), Q12(0.0f), Q12(-139.1f) };
+    const static VECTOR3 SFX_POS_0 = { Q12(-63.2f), Q12(-1.45f), Q12(-139.05f) };
+    const static VECTOR3 SFX_POS_1 = { Q12(-62.9f), Q12(0.0f), Q12(-139.1f) };
 
     s16* var_s0;
 
@@ -1654,7 +1658,7 @@ void func_800DAE00(void) // 0x800DAE00
             var_s0 = &D_800E1690.field_2;
             if (*var_s0 == 0)
             {
-                func_8005DC1C(Sfx_Unk1656, &D_800CC6E4, 128, 0);
+                func_8005DC1C(Sfx_Unk1656, &SFX_POS_0, Q8_CLAMPED(0.5f), 0);
                 *var_s0 = Q12(1.2f);
             }
             else
@@ -1675,21 +1679,21 @@ void func_800DAE00(void) // 0x800DAE00
             var_s0 = &D_800E1690.field_2;
             if (*var_s0 == 0)
             {
-                func_8005DC1C(Sfx_Unk1656, &D_800CC6E4, 128, 0);
+                func_8005DC1C(Sfx_Unk1656, &SFX_POS_0, Q8_CLAMPED(0.5f), 0);
                 *var_s0 = Q12(1.2f);
             }
             else
             {
                 *var_s0 -= g_DeltaTime0;
-                if (*var_s0 < 0)
+                if (*var_s0 < Q12(0.0f))
                 {
-                    *var_s0 = 0;
+                    *var_s0 = Q12(0.0f);
                 }
             }
             break;
 
         case 3:
-            func_8005DC1C(Sfx_Unk1655, &D_800CC6F0, 128, 0);
+            func_8005DC1C(Sfx_Unk1655, &SFX_POS_1, 128, 0);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -1704,8 +1708,8 @@ void func_800DAE00(void) // 0x800DAE00
             D_800E2C68 = NO_VALUE;
 
             Savegame_EventFlagSet(EventFlag_486);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             break;
     }
 
@@ -1755,9 +1759,10 @@ void func_800DB1F0(void) // 0x800DB1F0
 
         default:
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 9, false);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
+
             Savegame_EventFlagSet(EventFlag_562);
             Savegame_EventFlagSet(EventFlag_223);
             break;
@@ -1812,7 +1817,7 @@ void func_800DB3D0(void) // 0x800DB3D0
             }
 
             ScreenFade_Reset();
-            g_SysWork.sysFlags_22A0 |= 1 << 0;
+            g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
 
             Sd_EngineCmd(Sfx_Unk1657);
             SysWork_StateStepIncrement(0);
@@ -1820,7 +1825,7 @@ void func_800DB3D0(void) // 0x800DB3D0
 
         case 1:
             SysWork_StateStepIncrementAfterFade(2, true, 1, Q12(2.5f), false);
-            g_SysWork.sysFlags_22A0 |= 1 << 0;
+            g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
             break;
 
         case 2:
@@ -1846,16 +1851,18 @@ void func_800DB3D0(void) // 0x800DB3D0
             break;
 
         case 5:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             func_800862F8(2, 0, false);
             break;
 
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
+
             Savegame_EventFlagClear(EventFlag_496);
             Savegame_EventFlagClear(EventFlag_497);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
+
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             func_80086470(3, InventoryItemId_Camera, 1, false);
             break;
     }
@@ -1875,7 +1882,7 @@ void func_800DBDE0(void) // 0x800DBDE0
             D_800E2C64 = 0;
 
             func_800862F8(0, FILE_TIM_NEWSP3_TIM, false);
-            func_8005DC1C(Sfx_Unk1654, &SFX_POS, 128, 0);
+            func_8005DC1C(Sfx_Unk1654, &SFX_POS, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1942,7 +1949,7 @@ void func_800DC028(void) // 0x800DC028
 
     if (g_SysWork.sysStateStep_C[1] == 0)
     {
-        func_8005DC1C(Sfx_Unk1464, &SFX_POS, 128, 0);
+        func_8005DC1C(Sfx_Unk1464, &SFX_POS, Q8_CLAMPED(0.5f), 0);
     }
 
     func_80087540(FILE_TIM_PLANTBK_TIM, Q12(0.0f), Q12(0.0f), 37, 38);
