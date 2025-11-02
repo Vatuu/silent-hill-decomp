@@ -1672,10 +1672,106 @@ void MapEvent_KGordonKeyUse(void) // 0x800EA894
     g_SavegamePtr->mapMarkingFlags_1D4[1] |= 0x40000;
 }
 
-const VECTOR3 D_800CD3D0 = VECTOR3(-41.576f, -3.619f, 345.992f);
-const VECTOR3 D_800CD3DC = VECTOR3(-35.0f, 0.0f, 352.0f);
+void func_800EA960(void)
+{
+    s32 vol;
+    s32 balance;
+    s16 time;
+    #define STATE_PRESS_SWITCH      5
+    #define STATE_DONT_PRESS_SWITCH NO_VALUE
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EA960);
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            SysWork_StateStepIncrementAfterFade(0, true, 3, 0, false);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 1:
+            func_80085DF0();
+            break;
+        case 2:
+            func_8005DC1C(Sfx_Unk1481, &QVECTOR3(-41.576f, -3.619f, 345.992f), Q8_CLAMPED(0.5f), 0);
+            Savegame_EventFlagSet(EventFlag_164);
+            Sd_EngineCmd(Sfx_Unk1482);
+            D_800F534C = -1;
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 3:
+            SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
+            break;
+        case 4:
+            g_SysWork.silentYesSelection_2350_4 = true;
+            // The machinery is running. Do you want to press the switch?
+            MapMsg_DisplayAndHandleSelection(true, 44, STATE_PRESS_SWITCH, STATE_DONT_PRESS_SWITCH, 0, false);
+            break;
+        case STATE_PRESS_SWITCH:
+            func_8005DC1C(Sfx_Unk1483, &QVECTOR3(-41.576f, -3.619f, 345.992f), Q8_CLAMPED(0.5f), 0);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 6:
+            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            break;
+        case 7:
+            Sd_EngineCmd(Sfx_Unk1484);
+            D_800F534E = 0;
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 8:
+            D_800F534E += ((u16)g_DeltaTime0 * 4);
+            if (D_800F534E > Q12(1.0f))
+            {
+                D_800F534E = Q12(1.0f);
+            }
+
+            balance = Sound_StereoBalanceGet(&QVECTOR3(-35.0f, 0.0f, 352.0f));
+            if ((Q8_CLAMPED(1.0f) - (D_800F534E >> 4)) >= 0)
+            {
+                vol = ~(D_800F534E >> 4) & Q8_CLAMPED(1.0f);
+            }
+            else
+            {
+                vol = 0;
+            }
+            func_800463C0(Sfx_Unk1484, balance, vol, 0);
+
+            D_800F5344[2] += FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x88, Q12_SHIFT);
+            if (D_800F5344[2] > 0)
+            {
+                D_800F5344[2] = 0;
+                func_8004690C(Sfx_Unk1484);
+                Sd_PlaySfx(Sfx_Unk1485, Sound_StereoBalanceGet(&QVECTOR3(-35.0f, 0.0f, 352.0f)), 0);
+                SysWork_StateStepIncrement(0);
+            }
+            break;
+        case 9:
+            Savegame_EventFlagSet(EventFlag_165);
+            Savegame_EventFlagSet(EventFlag_166);
+            if (Savegame_MapMarkingGet(MapMarkFlag_OldTown_BotBridgeCross))
+            {
+                Savegame_MapMarkingSet(MapMarkFlag_OldTown_BotBridgeCorrection);
+                Savegame_MapMarkingSet(MapMarkFlag_OldTown_BotBridgeArrow);
+            }
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+            break;
+    }
+    if (Savegame_EventFlagGet(EventFlag_164))
+    {
+        if (g_SysWork.sysStateStep_C[0] > 4)
+        {
+            func_800894B8(0x90);
+        }
+        else
+        {
+            func_800894B8(0x70);
+        }
+    }
+}
 
 void func_800EAD2C(void) // 0x800EAD2C
 {
@@ -1706,7 +1802,7 @@ void func_800EAD2C(void) // 0x800EAD2C
             SysWork_StateStepIncrement(0);
 
         case 4:
-            func_8005DC1C(Sfx_Unk1483, &D_800CD3D0, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1483, &QVECTOR3(-41.576f, -3.619f, 345.992f), Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -1725,7 +1821,7 @@ void func_800EAD2C(void) // 0x800EAD2C
                 D_800F534E = Q12(1.0f);
             }
 
-            balance = Sound_StereoBalanceGet(&D_800CD3DC);
+            balance = Sound_StereoBalanceGet(&QVECTOR3(-35.0f, 0.0f, 352.0f));
             if ((Q8_CLAMPED(1.0f) - (D_800F534E >> 4)) >= 0)
             {
                 vol = ~(D_800F534E >> 4) & Q8_CLAMPED(1.0f);
@@ -1742,7 +1838,7 @@ void func_800EAD2C(void) // 0x800EAD2C
             {
                 D_800F5344[2] = 0;
                 func_8004690C(Sfx_Unk1484);
-                Sd_PlaySfx(Sfx_Unk1485, Sound_StereoBalanceGet(&D_800CD3DC), 0);
+                Sd_PlaySfx(Sfx_Unk1485, Sound_StereoBalanceGet(&QVECTOR3(-35.0f, 0.0f, 352.0f)), 0);
                 SysWork_StateStepIncrement(0);
             }
             break;

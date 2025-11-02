@@ -40,6 +40,8 @@ extern s32 D_800F1A24;
 
 extern s16 D_800F534E;
 
+extern s8 D_800F534C;
+
 void func_800E7D54(void);
 
 void MapEvent_AtWaterWorks(void);
@@ -97,5 +99,7 @@ void MapEvent_DoorOfEclipseEnter(void);
 void func_800EA6E0(void);
 
 void func_800EAD2C(void);
+
+void func_800EA960(void);
 
 #endif
