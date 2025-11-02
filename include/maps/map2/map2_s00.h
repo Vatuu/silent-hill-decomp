@@ -19,6 +19,12 @@ extern s16 D_800F22AE;
 
 extern s16 D_800F538C[];
 
+extern s16 D_800F228C;
+
+extern u8 D_800F228E;
+
+extern s32 D_800F2290;
+
 void func_800E7D54(void);
 
 void func_800E7E60(void);

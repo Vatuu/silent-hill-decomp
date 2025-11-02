@@ -910,7 +910,167 @@ void func_800E81EC(void) // 0x800E81EC
     }
 }
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E83C0);
+void func_800E83C0(void)
+{
+    s32 zoomX;
+    s32 zoomZ;
+    s32 zoomHuh;
+    s16 curve;
+
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4)
+    {
+        if (g_SysWork.sysStateStep_C[0] == 2)
+        {
+            SysWork_StateStepSet(0, 13);
+        }
+        else
+        {
+            if (!D_800F228E)
+            {
+                if (g_SysWork.sysStateStep_C[0] > 5)
+                {
+                    if (g_SysWork.sysStateStep_C[0] < 11)
+                    {
+                        SysWork_StateStepIncrementAfterFade(0, true, 0, 0, false);
+                        D_800F228E = 1;
+                    }
+                }
+            }
+        }
+    }
+    if (D_800F228E)
+    {
+        if ((g_Screen_FadeStatus & 7) == 5)
+        {
+            D_800F228E = 0;
+            SysWork_StateStepSet(0, 12);
+        }
+    }
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            g_SysWork.field_30 = 20;
+            D_800F228C = 0;
+            D_800F2290 = 0;
+            Savegame_MapMarkingSet(MapMarkFlag_OldTown_CofeArrowOnly);
+            Savegame_MapMarkingSet(MapMarkFlag_OldTown_CofeSignOnly);
+            D_800F228E = 0;
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 1:
+            Camera_PositionSet(NULL, Q12(15.54f), Q12(-1.5f), Q12(55.64f), 0, 0, 0, 0, true);
+            Camera_LookAtSet(NULL, Q12(19.42f), Q12(-1.75f), Q12(56.6f), 0, 0, 0, 0, true);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 2:
+            MapMsg_DisplayAndHandleSelection(false, 16, 0, 0, 0, false); // Where could Cheryl have gone?
+            return;
+        case 3:
+            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + D_800A99B5);
+            SysWork_StateStepIncrement(0);
+        case 4:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            return;
+        case 5:
+            func_800867B4(0, 1);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 6:
+            func_800692A4(0, 0, Q12(1.0f));
+            func_80068E0C(1, 1, 0, 0, 0, 0, Q12(1.0f));
+            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            return;
+        case 7:
+            func_800692A4(0, 0, 0x1000);
+            func_80068E0C(1, 1, 0, 0, 0, 0, 0x1000);
+            D_800F228C += 0x20;
+            func_80088370(D_800F228C, -0xA0, -0xE0, 0x13F, 0x1BF, -0x58, -0xC0, 0x9F, 0xDF);
+            if (D_800F228C == 0x1000)
+            {
+                SysWork_StateStepIncrement(0);
+                return;
+            }
+            return;
+        case 8:
+            // dec zoom counter
+            D_800F228C -= 0x40;
+                 
+            func_800692A4(
+                0x48 - FP_MULTIPLY_PRECISE(D_800F228C, 0x48, 12),
+                0x10 - FP_MULTIPLY_PRECISE(D_800F228C, 0x10, 12),
+                ((D_800F228C >> 1) + 0x800)
+            );
+
+            func_80068E0C(1, 1, 0, 0,
+                          0x48 - FP_MULTIPLY_PRECISE(D_800F228C, 0x48, 12),
+                          0x10 - FP_MULTIPLY_PRECISE(D_800F228C, 0x10, 12),
+                          ((D_800F228C >> 1) + 0x800)
+            );
+
+            curve = (FP_TO(D_800F228C, 12) / (D_800F228C + Q12(1.0f))) * -1;
+            func_80088370(curve, -0xA0, -0xE0, 0x13F, 0x1BF, -0x10, -0xA0, 0, 0);
+            if (D_800F228C == 0)
+            {
+                SysWork_StateStepIncrement(0);
+                return;
+            }
+            break;
+        case 9:
+            func_800692A4(0x48, 0x10, 0x800);
+            func_80068E0C(1, 1, 0, 0, 0x48, 0x10, 0x800);
+            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            return;
+        case 10:
+            func_800692A4(0x48, 0x10, 0x800);
+            func_80068E0C(1, 1, 0, 0, 0x48, 0x10, 0x800);
+            func_80068E0C(2, 1, 0x36A, D_800F2290, 0x48, 0x10, 0x800);
+            D_800F2290++;
+            if (D_800F2290 >= 0x80)
+            {
+                if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+                {
+                    SysWork_StateStepIncrement(0);
+                }
+                SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
+                if (g_SysWork.sysStateStep_C[0] > 11)
+                {
+                    g_SysWork.sysStateStep_C[0] = 11;
+                }
+                D_800F2290 = 0x80;
+                return;
+            }
+            break;
+        case 11:
+            func_800692A4(0x48, 0x10, 0x800);
+            func_80068E0C(1, 1, 0, 0, 0x48, 0x10, 0x800);
+            func_80068E0C(2, 1, 0x36A, 0x80, 0x48, 0x10, 0x800);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            return;
+        case 12:
+            func_800867B4(2, 0);
+            D_800F228E = 0;
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 13:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            return;
+        case 14:
+            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            Savegame_MapMarkingSet(MapMarkFlag_OldTown_CherylArrowAndSign);
+            vcReturnPreAutoCamWork(false);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+            g_SysWork.flags_22A4 &= ~(1<<4);
+            func_8003A16C();
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E8C0C);
 

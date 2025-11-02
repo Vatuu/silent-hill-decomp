@@ -10,6 +10,7 @@ import re
 import readline
 import math
 import os
+import pyperclip
 
 # ---------- EventFlags converter ----------
 def _parse_mask(mask_str):
@@ -225,8 +226,10 @@ if __name__ == "__main__":
 
         # Try eventFlags conversion first
         result = convert_flag_expression(line)
+        if result is None:
+            # fallback to FP converter
+            result = process_fp_text(line)
+
         if result is not None:
             print(result)
-        else:
-            # fallback to FP converter
-            print(process_fp_text(line))
+            pyperclip.copy(result)

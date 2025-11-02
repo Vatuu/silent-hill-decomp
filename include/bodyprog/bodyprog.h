@@ -4639,4 +4639,7 @@ bool Game_FlashlightIsOn(void);
 /** X and Z are guessed. */
 void func_80089034(s32 charaId, s32 arg1, q19_12 x, q19_12 z);
 
+/* Does the map zoom in, red lines ? Argument types guessed based on func_800E83C0 in MAP2_S00 */
+void func_80088370(s16, s16, s16, s16, s32, s32, s32, s32, s32);
+
 #endif
