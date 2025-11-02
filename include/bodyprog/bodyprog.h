@@ -1867,6 +1867,60 @@ typedef struct
 typedef struct
 {
     s_func_8005E89C field_0;
+    PACKET*         field_12C;
+    CVECTOR         field_130;
+    CVECTOR         field_134;
+    SVECTOR         field_138;
+    s32             field_140;
+    DVECTOR         field_144;
+    u16             field_148;
+    u8              unk_14A[2];
+    s32             field_14C;
+    s32             field_150;
+    s32             field_154;
+    s32             field_158;
+    s32             field_15C;
+    s32             field_160;
+    s32             field_164;
+    s32             field_168;
+    s32             field_16C;
+    s32             field_170;
+    s32             field_174;
+} s_func_80060044;
+
+typedef struct
+{
+    s_func_8005E89C field_0;
+    CVECTOR         field_12C;
+    CVECTOR         field_130;
+    SVECTOR         field_134;
+    SVECTOR         field_13C;
+    SVECTOR         field_144;
+    VECTOR3         field_14C;
+    s32             field_158;
+    s32             field_15C;
+    s32             field_160;
+    s32             field_164;
+    s32             field_168;
+    DVECTOR         field_16C;
+    s32             field_170;
+    s32             field_174;
+    s32             field_178;
+    s32             field_17C;
+    s32             field_180;
+    s32             field_184;
+    s32             field_188;
+    s32             field_18C;
+    s32             field_190;
+    s32             field_194;
+    s32             field_198;
+    s32             field_19C;
+    s32             field_1A0;
+} s_func_800611C0;
+
+typedef struct
+{
+    s_func_8005E89C field_0;
     CVECTOR         field_12C;
     CVECTOR         field_130;
     SVECTOR         field_134[25];
@@ -3844,6 +3898,10 @@ void func_8006342C(s32 weaponAttack, q3_12 angle, s16 arg2, GsCOORDINATE2* coord
 s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 x, s16 z);
 
 bool func_8005D50C(s32* arg0, s16* arg1, s16* arg2, VECTOR3* arg3, u32 arg4, s32 arg5);
+
+bool func_80060044(POLY_FT4** arg0, s32 arg1);
+
+bool func_800611C0(POLY_FT4** arg0, s32 arg1);
 
 void func_800622B8(s32 arg0, s_SubCharacter* chara, s32 animStatus, s32 arg3);
 
