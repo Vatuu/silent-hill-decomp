@@ -364,7 +364,7 @@ void func_800D13D8(void) // 0x800D13D8
             D_800D4070 = Q12(50.0f);
             D_800D5345 = 1;
 
-            Model_AnimFlagsClear(&g_SysWork.npcs_1A0[1].model_0, 2);
+            Model_AnimFlagsClear(&g_SysWork.npcs_1A0[1].model_0, AnimFlag_Visible);
             SysWork_StateStepIncrement(0);
 
         case 27:
@@ -385,7 +385,7 @@ void func_800D13D8(void) // 0x800D13D8
 
             D_800D5345 = 0;
 
-            Model_AnimFlagsSet(&g_SysWork.npcs_1A0[1].model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.npcs_1A0[1].model_0, AnimFlag_Visible);
             SysWork_StateStepIncrement(0);
 
         case 31:
@@ -449,7 +449,7 @@ void func_800D13D8(void) // 0x800D13D8
 
         case 42:
             func_80085EB8(0, &g_SysWork.npcs_1A0[1], 8, false);
-            Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, 2);
+            Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, AnimFlag_Visible);
             SysWork_StateStepIncrement(0);
 
         case 43:
@@ -484,7 +484,7 @@ void func_800D13D8(void) // 0x800D13D8
 
         case 50:
             func_80086C58(&g_SysWork.player_4C.chara_0, 71);
-            Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, AnimFlag_Visible);
             SysWork_StateStepIncrementAfterTime(&D_800D4070, Q12(10.0f), Q12(158.0f), Q12(168.0f), true, false);
             break;
 
@@ -534,7 +534,7 @@ void func_800D13D8(void) // 0x800D13D8
 
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
-            Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, AnimFlag_Visible);
             break;
     }
 

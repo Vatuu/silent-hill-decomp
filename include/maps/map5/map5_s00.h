@@ -14,9 +14,10 @@
 
 void func_800D041C(s_SubCharacter* chara);
 
-void func_800D6AD4(void);
+/** @brief Handles the Sewer Key pickup event. */
+void MapEvent_SewerKeyTake(void);
 
-/** @brief ? map pickup event. */
+/** @brief Handles the ? map pickup event. */
 void MapEvent_MapTake(void);
 
 #endif

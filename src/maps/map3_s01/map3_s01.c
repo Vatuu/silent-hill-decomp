@@ -286,39 +286,55 @@ void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
 
 void MapEvent_UseBottleOnLiquid(void) // 0x800D25A8
 {
+    typedef enum _EventState
+    {
+        EventState_0   = 0,
+        EventState_1   = 1,
+        EventState_2   = 2,
+        EventState_Sfx = 3,
+        EventState_Msg = 4,
+        EventState_5   = 5
+    } e_EventState;
+
     switch (g_SysWork.sysStateStep_C[0])
     {
-        case 0:
+        case EventState_0:
             sharedFunc_800D20E4_0_s00();
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
-        case 1:
+
+        case EventState_1:
             func_80085DF0();
             break;
-        case 2:
+
+        case EventState_2:
             func_80086C58(&g_SysWork.player_4C.chara_0, 59);
             break;
-        case 3:
-            func_8005DC1C(Sfx_Unk1493, &QVECTOR3(141.6f, -0.0999f, 20.75f), 0x80, 0);
+
+        case EventState_Sfx:
+            func_8005DC1C(Sfx_Unk1493, &QVECTOR3(141.6f, -0.0999f, 20.75f), Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
-        case 4:
-            MapMsg_DisplayAndHandleSelection(false, 18, 0, 0, 0, false); // The remaining liquid is emptied into the Plastic bottle.
+
+        case EventState_Msg:
+            MapMsg_DisplayAndHandleSelection(false, 18, 0, 0, 0, false); // "The remaining liquid is emptied into the Plastic bottle."
             break;
-        case 5:
+
+        case EventState_5:
             func_80086C58(&g_SysWork.player_4C.chara_0, 60);
             break;
+
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_M3S01_PickupUnknownLiquid);
+
+            // Replace Plastic Bottle with Unknown Liquid in inventory.
             Player_ItemRemove(InventoryItemId_PlasticBottle, 1);
-            func_80086470(3, InventoryItemId_UnknownLiquid, 1, false);
+            func_80086470(3, InventoryItemId_UnknownLiquid, DEFAULT_PICKUP_ITEM_COUNT, false);
             break;
     }
 }
 
-void func_800D2720(void) // 0x800D2720
+void MapEvent_PlasticBottleTake(void) // 0x800D2720
 {
     Event_ItemTake(InventoryItemId_PlasticBottle, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S01_PickupPlasticBottle, 21);
 }

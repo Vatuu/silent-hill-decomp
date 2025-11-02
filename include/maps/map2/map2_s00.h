@@ -47,7 +47,7 @@ void func_800E816C(void);
 
 void func_800E8198(void);
 
-/** @brief ? map pickup event. */
+/** @brief Handles the ? map pickup event. */
 void MapEvent_MapTake(void);
 
 void MapEvent_SteelPipeTake(void);
@@ -86,9 +86,10 @@ u8 func_800EE5A8(u32 arg0);
 
 void func_800E8C0C(void);
 
-void func_800E9D1C(void);
+/** @brief Handles the House Key use event. */
+void MapEvent_HouseKeyUse(void);
 
-void func_800EA444(void);
+void MapEvent_DoorOfEclipseEnter(void);
 
 void func_800EA6E0(void);
 

@@ -179,7 +179,7 @@ void MapEvent_MapTake(void) // 0x800CD0D0
     Event_MapTake(2, EventFlag_M2S00_PickupMap, 23);
 }
 
-void func_800CD0F8(void) // 0x800CD0F8
+void MapEvent_ShotgunTake(void) // 0x800CD0F8
 {
     Event_ItemTake(InventoryItemId_Shotgun, SHOTGUN_AMMO_PICKUP_ITEM_COUNT, EventFlag_M1S02_PickupShotgun, 26);
 }

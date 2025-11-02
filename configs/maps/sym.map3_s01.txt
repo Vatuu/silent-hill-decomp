@@ -75,6 +75,7 @@ MapEvent_DoorJammed            = 0x800D1394; // type:func
 MapEvent_DoorLocked            = 0x800D1428; // type:func
 MapEvent_UnknownLiquidInteract = 0x800D23AC; // type:func
 MapEvent_UseBottleOnLiquid     = 0x800D25A8; // type:func
+MapEvent_PlasticBottleTake     = 0x800D2720; // type:func
 MapEvent_MapTake0              = 0x800D274C; // type:func
 MapEvent_MapTake1              = 0x800D2774; // type:func
 MapEvent_Generator0            = 0x800D27C8; // type:func

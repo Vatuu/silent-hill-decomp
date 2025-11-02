@@ -63,7 +63,7 @@ INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800D0690_1_s03
 
 #include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CF7B8
 
-s32 func_800CF990()
+s32 func_800CF990() // 0x800CF990
 {
     return 0;
 }
@@ -94,7 +94,7 @@ void func_800CFBA0(void) {}
 
 void func_800CFBA8(void) {}
 
-s32 func_800CFBB0()
+s32 func_800CFBB0() // 0x800CFBB0
 {
     return 0;
 }
@@ -298,7 +298,7 @@ void func_800D691C(void) // 0x800D691C
 
 INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", func_800D69DC);
 
-void func_800D6AD4(void) // 0x800D6AD4
+void MapEvent_SewerKeyTake(void) // 0x800D6AD4
 {
     Event_ItemTake(InventoryItemId_SewerKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M5S00_PickupSewerKey, 17);
 }

@@ -3638,7 +3638,8 @@ void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 step
 /** Handles giving the player items. */
 void SysWork_StateStepIncrementAfterFade(s32 arg0, bool arg1, s32 arg2, q19_12 fadeTimestep, bool reset);
 
-void func_800862F8(s32 arg0, s32 fileIdx, bool reset);
+/** Handles a busy wait while loading assets? */
+void func_800862F8(s32 stateStep, s32 fileIdx, bool reset);
 
 void func_80086470(u32 switchVar, s32 itemId, s32 itemCount, bool reset);
 

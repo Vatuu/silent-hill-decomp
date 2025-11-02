@@ -184,8 +184,16 @@ SysWork_StateStepIncrementAfterTime = 0x800DA1B0; // type:func
 MapEvent_DoorJammed                 = 0x800DB21C; // type:func
 MapEvent_DoorLocked                 = 0x800DB2B0; // type:func
 MapEvent_DoorUnlocked               = 0x800DB344; // type:func
+MapEvent_CommonItemTake             = 0x800DB3D8; // type:func
 MapEvent_KeyOfBethorUse             = 0x800DB5C0; // type:func
 MapEvent_KeyOfAratronUse            = 0x800DB67C; // type:func
+MapEvent_AnkhTake                   = 0x800DC120; // type:func
+MapEvent_DiskOfOuroborosTake        = 0x800DF1F0; // type:func
+MapEvent_ScrewdriverTake            = 0x800DFA80; // type:func
+MapEvent_AmuletOfSolomonTake        = 0x800DFB1C; // type:func
+MapEvent_CrestOfMercuryTake         = 0x800E0C30; // type:func
+MapEvent_RingOfContractTake         = 0x800E0C5C; // type:func
+MapEvent_CameraTake                 = 0x800E0C88; // type:func
 
 
 

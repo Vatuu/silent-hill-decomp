@@ -51,6 +51,7 @@ sharedFunc_800CE934_0_s02 = 0x800CCBE0; // type:func
 MapEvent_DoorJammed       = 0x800CCE74; // type:func
 MapEvent_DoorLocked       = 0x800CCF08; // type:func
 MapEvent_MapTake          = 0x800CD0D0; // type:func
+MapEvent_ShotgunTake      = 0x800CD0F8; // type:func
 Map_WorldObjectsInit      = 0x800CD124; // type:func
 Map_WorldObjectsUpdate    = 0x800CD2AC; // type:func
 

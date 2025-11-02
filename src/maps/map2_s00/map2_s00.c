@@ -1520,113 +1520,144 @@ void func_800E9CB4(void) // 0x800E9CB4
     }
 }
 
-void func_800E9D1C(void)
+void MapEvent_HouseKeyUse(void) // 0x800E9D1C
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     Player_ItemRemove(InventoryItemId_HouseKey, 1);
-    Map_MessageWithSfx(31, Sfx_UseKey, &sfxPos); // Used the House key
+    Map_MessageWithSfx(31, Sfx_UseKey, &sfxPos); // "Used the House Key."
     Savegame_MapMarkingSet(MapMarkFlag_OldTown_DoghouseDotOnly);
 }
 
-
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E9DD8);
 
-void func_800EA444(void)
+void MapEvent_DoorOfEclipseEnter(void) // 0x800EA444
 {
     s32 tmp;
+
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
             func_8003ED74(1, 1);
             func_8003EF10(6, 6, PrimitiveType_S32, &D_800F1A24, 0, Q12(100.0f));
+
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(147.7f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(376.5f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = Q12(-0.25f);
             g_SysWork.field_30 = 20;
-            g_SysWork.flags_22A4 |= (1<<3);
+            g_SysWork.flags_22A4 |= 1 << 3;
+
             SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 1:
             g_SysWork.field_28 += g_DeltaTime0;
             tmp = Q12(1.0f) - Math_Cos(g_SysWork.field_28/12);
             D_800F1A24 = FP_MULTIPLY_PRECISE(tmp, Q12(60.0f), Q12_SHIFT) + Q12(40.0f);
+
             if (g_SysWork.field_28 > Q12(1.5f) && g_SysWork.field_28 < Q12(4.5f))
             {
-                MapMsg_DisplayAndHandleSelection(false, 35, 0, 0, 0, false); // What? It's getting dark again?
+                MapMsg_DisplayAndHandleSelection(false, 35, 0, 0, 0, false); // "What? It's getting dark again?"
             }
+
             SysWork_StateStepIncrementDelayed(Q12(6.0f), false);
             break;
+
         case 2:
             D_800F1A24 = Q12(100.0f);
+
             Game_TurnFlashlightOff();
             SysWork_StateStepIncrementDelayed(Q12(0.2f), false);
             break;
+
         case 3:
-            MapMsg_DisplayAndHandleSelection(false, 0x24, 0, 0, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 36, 0, 0, 0, false);
             break;
+
         case 4:
             func_8003ED74(6, 3);
             Game_TurnFlashlightOn();
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 5:
             SysWork_StateStepIncrementDelayed(Q12(1.2f), false);
             break;
+
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
             Savegame_EventFlagSet(EventFlag_159);
+
             vcReturnPreAutoCamWork(false);
             break;
     }
 }
 
-void func_800EA6E0(void)
+void func_800EA6E0(void) // 0x800EA6E0
 {
-    g_BackgroundColor = 0x48;
+    // TODO: Probably inaccurate. Need to figure out what the unknown functions are doing.
+    typedef enum _EventState
+    {
+        EventState_Setup       = 0,
+        EventState_FadeOutGame = 1,
+        EventState_Load        = 2, // TODO: Something else?
+        EventState_FadeInMap   = 3,
+        EventState_Msg         = 4,
+        EventState_FadeOutMap  = 5,
+        EventState_Finish      = 6
+    } e_EventState;
+
+    g_BackgroundColor = 72;
+
     switch (g_SysWork.sysStateStep_C[0])
     {
-        case 0:
+        case EventState_Setup:
             sharedFunc_800D20E4_0_s00();
             func_800862F8(0, FILE_TIM_KEYMAP_TIM, false);
             SysWork_StateStepIncrement(0);
-        case 1:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
-            return;
-        case 2:
-            func_800862F8(1, 0, false);
-            return;
-        case 3:
-            func_800862F8(2, 0, false);
+
+        case EventState_FadeOutGame:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        case EventState_Load:
+            func_800862F8(1, FILE_1ST_2ZANKO80_TIM, false);
+            break;
+
+        case EventState_FadeInMap:
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
-            return;
-        case 4:
+            break;
+
+        case EventState_Msg:
             if (Savegame_MapMarkingGet(MapMarkFlag_OldTown_FineyStRightKeyArrow))
             {
-                MapMsg_DisplayAndHandleSelection(false, 54, 0, 0, 0, false);// Something is written on the map on the wall.(end)
+                MapMsg_DisplayAndHandleSelection(false, 54, 0, 0, 0, false); // "Something is written on the map on the wall.{E}"
             }
             else
             {
-                MapMsg_DisplayAndHandleSelection(false, 52, 0, 0, 0, false); // ^... Copied it to the map
+                MapMsg_DisplayAndHandleSelection(false, 52, 0, 0, 0, false); // "... Copied it to the map."
             }
-            func_800862F8(2, 0, false);
-            return;
-        case 5:
-            func_800862F8(2, 0, false);
+
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            break;
+
+        case EventState_FadeOutMap:
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
-            return;
-        default:
+            break;
+
+        default: // `EventState_Finish`
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
+
             Savegame_MapMarkingSet(MapMarkFlag_OldTown_FineyStRightKeyArrow);
             Savegame_MapMarkingSet(MapMarkFlag_OldTown_DogYardKeyLine);
             Savegame_MapMarkingSet(MapMarkFlag_OldTown_EllroyStKeyCircle);
-            return;
+            break;
         }
 }
 
@@ -1678,8 +1709,8 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EB174);
 
 void func_800EB3F4(void) // 0x800EB3F4
 {
-    const static VECTOR3 D_800CD45C = { Q12(-261.977f), Q12(-0.1f), Q12(-104.286f) };
-    const static VECTOR3 D_800CD468 = { Q12(-263.0f), Q12(-1.25f), Q12(-104.0f) };
+    const static VECTOR3 D_800CD45C = { Q12(-261.977f), Q12(-0.1f),  Q12(-104.286f) };
+    const static VECTOR3 D_800CD468 = { Q12(-263.0f),   Q12(-1.25f), Q12(-104.0f)   };
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -1705,7 +1736,7 @@ void func_800EB3F4(void) // 0x800EB3F4
             Savegame_EventFlagSet(EventFlag_169);
 
             g_SysWork.field_30 = 20;
-            Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, 2);
+            Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, AnimFlag_Visible);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -1738,7 +1769,7 @@ void func_800EB3F4(void) // 0x800EB3F4
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
-            Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, AnimFlag_Visible);
 
             if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {

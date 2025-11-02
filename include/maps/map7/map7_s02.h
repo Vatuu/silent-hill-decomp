@@ -112,6 +112,9 @@ void func_800DA248(void);
 
 void func_800DAA4C(void);
 
+/** @brief Handles a first aid kit, health drink, handgun bullets, or shotgun shells pickup event. */
+void MapEvent_CommonItemTake(void);
+
 void func_800DB498(void);
 
 void func_800DB52C(void);
@@ -126,7 +129,8 @@ void func_800DB738(void);
 
 void func_800DBB34(void);
 
-void func_800DC120(void);
+/** @brief Handles the Ankh pickup event. */
+void MapEvent_AnkhTake(void);
 
 void func_800DC778(void);
 
@@ -136,30 +140,36 @@ void func_800DD9E8(void);
 
 void func_800DDEC8(void);
 
-void func_800DF1F0(void);
+/** @brief Handles the Disk of Ouroboros pickup event. */
+void MapEvent_DiskOfOuroborosTake(void);
 
 void func_800DF21C(void);
 
 void func_800DFA54(void);
 
-void func_800DFA80(void);
+/** @brief Handles the Screwdriver pickup event. */
+void MapEvent_ScrewdriverTake(void);
 
 void func_800DFAAC(void);
 
 void func_800DFAE4(void);
 
-void func_800DFB1C(void);
+/** @brief Handles the Amulet of Solomon pickup event. */
+void MapEvent_AmuletOfSolomonTake(void);
 
 void func_800DFB48(void);
 
 /** @brief Earlier version of `map7_s01::func_800D9C9C` using unfinished sfx IDs, possibly unused here. */
 void func_800DFDDC(void);
 
-void func_800E0C30(void);
+/** @brief Handles the Crest of Mercury pickup event. */
+void MapEvent_CrestOfMercuryTake(void);
 
-void func_800E0C5C(void);
+/** @brief Handles the Ring of Contract pickup event. */
+void MapEvent_RingOfContractTake(void);
 
-void func_800E0C88(void);
+/** @brief Handles the Camera pickup event. */
+void MapEvent_CameraTake(void);
 
 void func_800E0CB4(void);
 

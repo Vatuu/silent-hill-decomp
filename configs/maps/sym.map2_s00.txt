@@ -132,6 +132,8 @@ MapEvent_CutsceneExitCafe   = 0x800E83C0; // type:func
 MapEvent_CherylsSketchbook  = 0x800E8C0C; // type:func
 MapEvent_DoghouseNote       = 0x800E95F8; // type:func
 MapEvent_DoghouseKeyTake    = 0x800E97E4; // type:func
+MapEvent_HouseKeyUse        = 0x800E9D1C; // type:func
+MapEvent_DoorOfEclipseEnter = 0x800EA444; // type:func
 MapEvent_KGordonKeyUse      = 0x800EA894; // type:func
 
 

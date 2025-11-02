@@ -284,33 +284,33 @@ const RECT D_8002AB10 =  // 0x8002AB10 .rodata
     (SCREEN_WIDTH / 5) * 3, SCREEN_HEIGHT
 };
 
-void func_800862F8(s32 arg0, s32 fileIdx, bool reset) // 0x800862F8
+void func_800862F8(s32 stateStep, s32 fileIdx, bool reset) // 0x800862F8
 {
-    s32 switchVar;
+    s32 activeStateStep;
 
-    if (arg0 == 7)
+    if (stateStep == 7)
     {
-        switchVar = g_SysWork.sysStateStep_C[2];
+        activeStateStep = g_SysWork.sysStateStep_C[2];
     }
     else
     {
-        switchVar = arg0;
-        if (switchVar == 8)
+        activeStateStep = stateStep;
+        if (activeStateStep == 8)
         {
-            switchVar = 1;
+            activeStateStep = 1;
             if (g_SysWork.sysStateStep_C[2] == 0)
             {
-                switchVar = 4;
+                activeStateStep = 4;
             }
         }
     }
 
-    switch (switchVar)
+    switch (activeStateStep)
     {
         case 0:
             Fs_QueueStartReadTim(fileIdx, FS_BUFFER_1, &g_ItemInspectionImg);
 
-            if (arg0 != 0)
+            if (stateStep != 0)
             {
                 SysWork_StateStepIncrement(2);
 
@@ -341,7 +341,7 @@ void func_800862F8(s32 arg0, s32 fileIdx, bool reset) // 0x800862F8
         case 4:
             Fs_QueueStartReadTim(fileIdx, FS_BUFFER_1, &D_800A9A04);
 
-            if (arg0 == 8)
+            if (stateStep == 8)
             {
                 SysWork_StateStepSet(2, 1);
             }

@@ -1436,10 +1436,10 @@ void func_800D9C9C(void)
             g_SysWork.field_30 = 20;
             D_800E168E         = 0;
 
-            Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, 2);
+            Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, AnimFlag_Visible);
             func_8008D438();
-            Camera_PositionSet(NULL, Q12(-138.15f), Q12(-1.71f), Q12(-138.77f), 0, 0, 0, 0, true);
-            Camera_LookAtSet(NULL, Q12(-140.56f), Q12(-1.03f), Q12(-141.88f), 0, 0, 0, 0, true);
+            Camera_PositionSet(NULL, Q12(-138.15f), Q12(-1.71f), Q12(-138.77f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(-140.56f), Q12(-1.03f), Q12(-141.88f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             WorldObject_ModelNameSet(&D_800E2CB8.object_0, D_800CC650);
             SysWork_StateStepIncrement(0);
 
@@ -1530,7 +1530,7 @@ void func_800D9C9C(void)
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
             func_8008D448();
-            Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, AnimFlag_Visible);
             Savegame_EventFlagClear(EventFlag_500 + D_800E1690.field_0);
             Savegame_EventFlagSet(EventFlag_487);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);

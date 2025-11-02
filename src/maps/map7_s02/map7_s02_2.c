@@ -606,7 +606,7 @@ void func_800DAA4C(void) // 0x800DAA4C
 
 #include "maps/shared/MapEvent_DoorUnlocked.h" // 0x800DB344
 
-void func_800DB3D8(void) // 0x800DB3D8
+void MapEvent_CommonItemTake(void) // 0x800DB3D8
 {
     u32 pickupType;
     s32 eventFlagIdx;
@@ -810,7 +810,7 @@ void func_800DBB34(void) // 0x800DBB34
             g_SysWork.field_30 = 20;
 
             ScreenFade_ResetTimestep();
-            Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, 1 << 1);
+            Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, AnimFlag_Visible);
             func_8008D438();
             Camera_PositionSet(NULL, Q12(20.09f), Q12(-0.9f), Q12(-97.78f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(18.5f), Q12(0.2f), Q12(-101.28f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -917,14 +917,14 @@ void func_800DBB34(void) // 0x800DBB34
             vcReturnPreAutoCamWork(true);
             Savegame_EventFlagSet(EventFlag_548);
             SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
-            Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, 1 << 1);
+            Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, AnimFlag_Visible);
             func_8008D448();
             func_800348C0();
             break;
     }
 }
 
-void func_800DC120(void) // 0x800DC120
+void MapEvent_AnkhTake(void) // 0x800DC120
 {
     Event_ItemTake(InventoryItemId_Ankh, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S02_PickupAnkh, 81);
 }
@@ -1331,7 +1331,7 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800DE1FC);
 
 void func_800DF1E8(void) {}
 
-void func_800DF1F0(void) // 0x800DF1F0
+void MapEvent_DiskOfOuroborosTake(void) // 0x800DF1F0
 {
     Event_ItemTake(InventoryItemId_DiskOfOuroboros, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S02_PickupDiskOfOuroboros, 83);
 }
@@ -1389,7 +1389,7 @@ void func_800DF21C(void) // 0x800DF21C
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 6, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[1], 25, false);
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
-            Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, 2);
+            Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, AnimFlag_Visible);
             Map_MessageWithAudio(62, &D_800EB6B0, &D_800E9D50);
             SysWork_StateStepIncrement(0);
             break;
@@ -1406,7 +1406,7 @@ void func_800DF21C(void) // 0x800DF21C
         case 4:
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 8, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[1], 27, false);
-            Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, AnimFlag_Visible);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -1474,7 +1474,7 @@ void func_800DF21C(void) // 0x800DF21C
             Savegame_EventFlagSet(EventFlag_560);
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
-            Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, AnimFlag_Visible);
             break;
     }
 
@@ -1509,7 +1509,7 @@ void func_800DFA54(void) // 0x800DFA54
     func_80087360(FILE_TIM_ABUSEDSK_TIM, Q12(0.0f), Q12(0.0f), 98);
 }
 
-void func_800DFA80(void) // 0x800DFA80
+void MapEvent_ScrewdriverTake(void) // 0x800DFA80
 {
     Event_ItemTake(InventoryItemId_Screwdriver, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupScrewdriver, 94);
 }
@@ -1526,7 +1526,7 @@ void func_800DFAE4(void) // 0x800DFAE4
     func_80087360(FILE_TIM_LITHGR_3_TIM, Q12(0.0f), Q12(0.0f), 102);
 }
 
-void func_800DFB1C(void) // 0x800DFB1C
+void MapEvent_AmuletOfSolomonTake(void) // 0x800DFB1C
 {
     Event_ItemTake(InventoryItemId_AmuletOfSolomon, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupAmuletOfSolomon, 96);
 }
@@ -1849,7 +1849,7 @@ void func_800DFDDC(void) // 0x800DFDDC
             g_SysWork.field_30 = 20;
             D_800EA492         = 0;
 
-            Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, 2);
+            Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, AnimFlag_Visible);
             func_8008D438();
             Camera_PositionSet(NULL, Q12(-138.15f), Q12(-1.71f), Q12(-138.77f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(-140.56f), Q12(-1.03f), Q12(-141.88f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -1943,7 +1943,7 @@ void func_800DFDDC(void) // 0x800DFDDC
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
             func_8008D448();
-            Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, AnimFlag_Visible);
             Savegame_EventFlagClear(EventFlag_500 + D_800EA494.field_0);
             Savegame_EventFlagSet(EventFlag_487);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
@@ -1965,17 +1965,17 @@ void func_800DFDDC(void) // 0x800DFDDC
     }
 }
 
-void func_800E0C30(void) // 0x800E0C30
+void MapEvent_CrestOfMercuryTake(void) // 0x800E0C30
 {
     Event_ItemTake(InventoryItemId_CrestOfMercury, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupCrestOfMercury, 97);
 }
 
-void func_800E0C5C(void) // 0x800E0C5C
+void MapEvent_RingOfContractTake(void) // 0x800E0C5C
 {
     Event_ItemTake(InventoryItemId_RingOfContract, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupRingOfContract, 93);
 }
 
-void func_800E0C88(void) // 0x800E0C88
+void MapEvent_CameraTake(void) // 0x800E0C88
 {
     Event_ItemTake(InventoryItemId_Camera, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupCamera, 95);
 }
