@@ -25,6 +25,16 @@ extern u8 D_800F228E;
 
 extern s32 D_800F2290;
 
+extern u16 g_MapMsgSounds[2];
+
+extern u8 g_MapMsgSoundIdx;
+
+extern u8 D_800F2295;
+
+extern s32 D_800F2298;
+
+extern s32 D_800F229C;
+
 void func_800E7D54(void);
 
 void func_800E7E60(void);
@@ -65,5 +75,7 @@ void func_800EB090(void);
 void func_800E97E4(void);
 
 void func_800E9A74(void);
+
+void func_800E8C0C(void);
 
 #endif

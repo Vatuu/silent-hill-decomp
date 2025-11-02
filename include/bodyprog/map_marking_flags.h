@@ -7,6 +7,7 @@ typedef enum _MapMarkingFlag
     MapMarkFlag_OldTown_CofeArrowOnly                   = 6,
     MapMarkFlag_OldTown_CofeSignOnly                    = 8,
     MapMarkFlag_OldTown_CherylArrowAndSign              = 10,
+    MapMarkFlag_11                                      = 11,
     MapMarkFlag_OldTown_FinneyStLeftCross               = 12,
     MapMarkFlag_OldTown_MidwitchStTopCross              = 14,
     MapMarkFlag_OldTown_UntitledStLeftCross             = 16,
