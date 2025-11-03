@@ -20,4 +20,5 @@ void func_800D03FC(void);
 
 void func_800D0F8C(void);
 
+s16 func_800D1354(void);
 #endif
