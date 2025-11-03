@@ -172,7 +172,7 @@ typedef enum _EventFlag
 
     EventFlag_190 = 190,
     EventFlag_191 = 191,
-
+    EventFlag_192 = 192,
     EventFlag_193 = 193,
     EventFlag_194 = 194,
     EventFlag_195 = 195,
@@ -242,6 +242,8 @@ typedef enum _EventFlag
     EventFlag_313             = 313,
 
     EventFlag_M4S03_PickupHuntingRifle = 328,
+
+    EventFlag_346 = 346,
 
     EventFlag_352                  = 352,
     EventFlag_M5S00_PickupSewerKey = 353,

@@ -648,7 +648,117 @@ INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E9FDC);
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800EA0E0);
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800EA1C4);
+void func_800EA1C4(void)
+{
+    s32 x;
+    s32 z;
+    MAP_CHUNK_CHECK_VARIABLE_DECL();
+    func_80069844(0xFFFF);
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
+    {
+        if (Savegame_EventFlagGet(EventFlag_346))
+        {
+            func_8006982C(4);
+            func_80069844(2);
+            if (g_SysWork.player_4C.chara_0.position_18.vz < Q12(-68.0f))
+            {
+                Savegame_EventFlagClear(EventFlag_346);
+            }
+        }
+        else
+        {
+            func_80069844(4);
+            func_8006982C(2);
+        }
+    }
+    if (Savegame_EventFlagGet(EventFlag_191) && !Savegame_EventFlagGet(EventFlag_194))
+    {
+        if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3))
+        {
+                if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(-116.0f))
+                {
+                    if (g_SysWork.player_4C.chara_0.position_18.vy > Q12(0.0f))
+                    {
+                        if (g_ScreenFadeTimestep > Q12(0.0f))
+                        {
+                            g_ScreenFadeTimestep = MIN(g_ScreenFadeTimestep + g_DeltaTime0, Q12(3.0f));
+                        }
+                    }
+                }
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -6, -1, -6) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3))
+    {
+            Game_TurnFlashlightOff();
+    }
+    if (!Savegame_EventFlagGet(EventFlag_192))
+    {
+        if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, -3, -1, -3))
+        {
+            if (D_800F0B2C == 0)
+            {
+                x = (g_SysWork.player_4C.chara_0.position_18.vx + Q12(96.0f)) >> 6;
+                z = (g_SysWork.player_4C.chara_0.position_18.vz + Q12(89.0f)) >> 6;
+                if ((SquareRoot0(SQUARE(x) + SQUARE(z)) << 6) < Q12(4.0f))
+                {
+                    func_8005DC1C(Sfx_Unk1492, &D_800ED938, Q8_CLAMPED(0.766f), 2);
+                    D_800F0B2C = Q12(0.3f);
+                }
+            }
+        }
+
+        if (D_800F0B2C > 0)
+        {
+            D_800F0B2C -= g_DeltaTime0;
+            if (D_800F0B2C < 0)
+            {
+                Savegame_EventFlagSet(EventFlag_192);
+                func_8005DC1C(Sfx_Unk1492, &D_800ED938, Q8_CLAMPED(0.766f), 2);
+            }
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M2S02_HealthDrink0))
+        {
+            g_WorldGfx_ObjectAdd(&D_800F0B50, &g_CommonWorldObjectPoses[0].position_0, &g_CommonWorldObjectPoses[0].rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 1, -3, -1, -3))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M2S02_HealthDrink1))
+        {
+            g_WorldGfx_ObjectAdd(&D_800F0B50, &g_CommonWorldObjectPoses[1].position_0, &g_CommonWorldObjectPoses[1].rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 1, -3, -1, -3))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M2S02_HandgunBullets0))
+        {
+            g_WorldGfx_ObjectAdd(&D_800F0B88, &g_CommonWorldObjectPoses[2].position_0, &g_CommonWorldObjectPoses[2].rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -4, -1, -4) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M2S02_HandgunBullets1))
+        {
+            g_WorldGfx_ObjectAdd(&D_800F0B88, &g_CommonWorldObjectPoses[3].position_0, &g_CommonWorldObjectPoses[3].rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -5, -1, -5) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M2S02_HealthDrink2))
+        {
+            g_WorldGfx_ObjectAdd(&D_800F0B50, &g_CommonWorldObjectPoses[4].position_0, &g_CommonWorldObjectPoses[4].rotation_C);
+        }
+    }
+}
 
 void func_800EAA50(void) // 0x800EAA50
 {

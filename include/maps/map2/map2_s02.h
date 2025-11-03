@@ -1,6 +1,12 @@
 #ifndef _MAPS_MAP2_S02_H
 #define _MAPS_MAP2_S02_H
 
+extern s_WorldObjectPose g_CommonWorldObjectPoses[6];
+extern VECTOR3 D_800ED938;
+extern s16 D_800F0B2C;
+extern s_WorldObject_0 D_800F0B50;
+extern s_WorldObject_0 D_800F0B88;
+
 void func_800DC9E0(s_SubCharacter* chara);
 
 void func_800DCD60(s_SubCharacter* chara);

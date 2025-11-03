@@ -86,6 +86,7 @@ sharedFunc_800D4A80_0_s01   = 0x800DA704; // type:func
 sharedFunc_800D4E84_0_s01   = 0x800DB50C; // type:func
 sharedFunc_800D5274_0_s01   = 0x800DB8FC; // type:func
 sharedFunc_800D529C_0_s01   = 0x800DCD80; // type:func
+g_CommonWorldObjectPoses    = 0x800ED8D4; // type:WorldObjectPos size:0x64
 sharedFunc_800D5638_0_s01   = 0x800DDA54; // type:func
 sharedFunc_800D569C_0_s01   = 0x800DE138; // type:func
 sharedFunc_800D57C8_0_s01   = 0x800DE264; // type:func
