@@ -261,6 +261,8 @@ typedef enum _EventFlag
 
     EventFlag_391 = 391,
 
+    EventFlag_M5S03_SeenSecondNewspaper = 393,
+
     EventFlag_395 = 395,
 
     EventFlag_397 = 397,

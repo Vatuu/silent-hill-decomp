@@ -177,6 +177,12 @@ INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03_2", func_800D1AF8);
 void func_800D2640(void) // 0x800D2640
 {
     func_80087540(FILE_TIM_NEWSP2_TIM, Q12(0.0f), Q12(0.0f), 46, 48);
+
+    // @bug NTSC-U release is missing code to set `EventFlag_M5S03_SeenSecondNewspaper` here,
+    // causing later newspaper in `M7S01` & `M7S02` not to appear.
+#if defined(VERSION_NTSCJ) || defined(VERSION_PAL)
+    Savegame_EventFlagSet(EventFlag_M5S03_SeenSecondNewspaper);
+#endif
 }
 
 INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03_2", func_800D2674);
