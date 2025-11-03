@@ -644,7 +644,31 @@ void func_800E9EAC(void) // 0x800E9EAC
     }
 }
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E9FDC);
+void func_800E9FDC(void)
+{
+    g_DeltaTime0 = 0;
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            ScreenFade_ResetTimestep();
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 1:
+            if (func_8003599C())
+            {
+                break;
+            }
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            Savegame_EventFlagSet(EventFlag_189);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
+            break;
+    }
+}
 
 void func_800EA0E0(void)
 {
