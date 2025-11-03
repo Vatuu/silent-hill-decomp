@@ -114,7 +114,7 @@
  * @param y Y component.
  * @param z Z component.
  */
-#define Math_SetSVectorFast(vec, x, y, z) \
+#define Math_SetSVectorFast(vec, x, y, z)                      \
     *(s32*)&(vec).vx = (s32)((x) & 0xFFFF) | (s32)((y) << 16); \
     (vec).vz         = (z)
 

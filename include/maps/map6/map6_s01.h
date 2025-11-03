@@ -37,7 +37,8 @@ extern VECTOR3 D_800D4174[];
 
 extern s16 D_800D41B0;
 
-extern s32 D_800D41B4;
+/** Time. */
+extern q19_12 D_800D41B4;
 
 extern s8 D_800D5345;
 

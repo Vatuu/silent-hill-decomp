@@ -2890,7 +2890,7 @@ typedef struct
     s_WorldObjectPose position_1C;
 } s_WorldObjectDesc;
 
-#define Math_SetSVectorFast(vec, x, y, z) \
+#define Math_SetSVectorFast(vec, x, y, z)                      \
     *(s32*)&(vec).vx = (s32)((x) & 0xFFFF) | (s32)((y) << 16); \
     *(s16*)&(vec).vz = (z)
 

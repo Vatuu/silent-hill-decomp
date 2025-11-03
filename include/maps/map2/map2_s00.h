@@ -36,37 +36,37 @@ extern s32 D_800F229C;
 
 extern s32 D_800F1A24;
 
-extern s16 D_800F534E;
+/** Time. */
+extern q3_12 D_800F534E;
 
-
-/* TODO: Rename these, give them a sequental name (not really essential, but'd be nice */
+/* TODO: Rename these, give them sequental namea (not really essential, but would be nice). */
 extern SVECTOR3               D_800F5344;
 extern s8                     D_800F534C;
 extern s_WorldObject_0        D_800F535C;
 extern VECTOR3                D_800F537C;
 extern SVECTOR3               D_800F538C;
-extern s_WorldObjectDesc      g_WorldObject0;    // D_800F539C
-extern s_WorldObjectDesc      g_WorldObject1;    // D_800F53CC
-extern s_WorldObjectDesc      g_WorldObject2;    // D_800F53FC
-extern s_WorldObjectDesc      g_WorldObject3;    // D_800F542C
-extern s_WorldObjectDescNoRot g_WorldObjectB[3]; // D_800F545C
-extern s_WorldObjectDesc      g_WorldObject4[3]; // D_800F54DC
-extern s_WorldObject_0        g_WorldObject5[4]; // D_800F556C
+extern s_WorldObjectDesc      g_WorldObject0;
+extern s_WorldObjectDesc      g_WorldObject1;
+extern s_WorldObjectDesc      g_WorldObject2;
+extern s_WorldObjectDesc      g_WorldObject3;
+extern s_WorldObjectDescNoRot g_WorldObjectB[3];
+extern s_WorldObjectDesc      g_WorldObject4[3];
+extern s_WorldObject_0        g_WorldObject5[4];
 extern VECTOR3                D_800F55DC[2];
-extern s_WorldObject_0        g_WorldObject6[3]; // D_800F55FC
-extern s_WorldObject_0        g_WorldObject7[4]; // D_800F565C
+extern s_WorldObject_0        g_WorldObject6[3];
+extern s_WorldObject_0        g_WorldObject7[4];
 extern VECTOR3                D_800F56CC[2];
 extern s8                     D_800F56E4;
 extern s_WorldObject_0        D_800F56EC;
 extern s_WorldObjectPose      D_800F570C;
 extern s_WorldObjectPose      D_800F572C;
 extern s_WorldObjectPose      D_800F574C;
-extern s_WorldObjectDesc      g_WorldObject8;    // D_800F576C
-extern s_WorldObjectDesc      g_WorldObject9;    // D_800F579C
-extern s_WorldObjectDesc      g_WorldObjectA;    // D_800F57CC
-extern s_WorldObject_0        g_CommonWorldObjects[6]; // D_800F57FC
+extern s_WorldObjectDesc      g_WorldObject8;
+extern s_WorldObjectDesc      g_WorldObject9;
+extern s_WorldObjectDesc      g_WorldObjectA;
+extern s_WorldObject_0        g_CommonWorldObjects[6];
 
-
+void func_800E5930(s_SubCharacter* chara);
 
 void func_800EE5D0(void);
 
@@ -126,12 +126,10 @@ void MapEvent_DoorOfEclipseEnter(void);
 
 void func_800EA6E0(void);
 
-void func_800EAD2C(void);
-
 void func_800EA960(void);
 
-void func_800EB174(void);
+void func_800EAD2C(void);
 
-void func_800E5930(s_SubCharacter* chara);
+void func_800EB174(void);
 
 #endif

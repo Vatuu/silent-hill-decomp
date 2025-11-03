@@ -466,41 +466,42 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E554C);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E55B0);
 
-void func_800E5930(s_SubCharacter* chara)
+void func_800E5930(s_SubCharacter* chara) // 0x800E5930
 {
-    s32 newAnimStatus;
-    s32 newSpeed;
-    u32 animStatus;
+    q19_12 newMoveSpeed;
+    s32    newAnimStatus;
+    u32    animStatus;
 
     // NOTE: This code reads chara->field_E8 both as word and a half... (half here)
     if (!(chara->properties_E4.splitHead.flags_E8 & CharaUnk0Flag_Unk1))
     {
-        if (chara->moveSpeed_38 > 0)
+        if (chara->moveSpeed_38 > Q12(0.0f))
         {
-            newSpeed = chara->moveSpeed_38 - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.8f), Q12_SHIFT);
-            newSpeed = MAX(newSpeed, 0);
+            newMoveSpeed = chara->moveSpeed_38 - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.8f), Q12_SHIFT);
+            newMoveSpeed = MAX(newMoveSpeed, Q12(0.0f));
         } 
         else
         {
-            newSpeed = chara->moveSpeed_38 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.8f), Q12_SHIFT);
-            newSpeed = MIN(newSpeed, 0);
+            newMoveSpeed = chara->moveSpeed_38 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.8f), Q12_SHIFT);
+            newMoveSpeed = MIN(newMoveSpeed, Q12(0.0f));
         }
-        chara->moveSpeed_38 = newSpeed;
+        chara->moveSpeed_38 = newMoveSpeed;
     }
 
-    if (!chara->health_B0)
+    if (chara->health_B0 == Q12(0.0f))
     {
         if (g_SysWork.targetNpcIdx_2353 != func_8005C7D0(chara))
         {
-            chara->health_B0 = -1;
+            chara->health_B0 = NO_VALUE;
             chara->field_E1_0 = 0;
         }
     }
-    // NOTE: This code reads chara->field_E8 both as word and a half... (word here)
-    if (!(chara->properties_E4.player.afkTimer_E8 & 0x44) && (chara->moveSpeed_38 == 0))
+
+    // NOTE: Reads `chara->field_E8` both as word and a half.
+    if (!(chara->properties_E4.player.afkTimer_E8 & 0x44) && chara->moveSpeed_38 == Q12(0.0f))
     {
         animStatus = ANIM_STATUS_IDX_GET(chara->model_0.anim_4.status_0);
-        newAnimStatus = 0;
+        newAnimStatus = ANIM_STATUS(0, false);
         if (animStatus == 18)
         {
             newAnimStatus = ANIM_STATUS(2, true);
@@ -1726,13 +1727,14 @@ void MapEvent_KGordonKeyUse(void) // 0x800EA894
     g_SavegamePtr->mapMarkingFlags_1D4[1] |= 0x40000;
 }
 
-void func_800EA960(void)
+void func_800EA960(void) // 0x800EA960
 {
+    #define STATE_PRESS_SWITCH      5
+    #define STATE_DONT_PRESS_SWITCH NO_VALUE
+
     s32 vol;
     s32 balance;
     s16 time;
-    #define STATE_PRESS_SWITCH      5
-    #define STATE_DONT_PRESS_SWITCH NO_VALUE
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -1740,37 +1742,43 @@ void func_800EA960(void)
             sharedFunc_800D20E4_0_s00();
             SysWork_StateStepIncrementAfterFade(0, true, 3, 0, false);
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 1:
             func_80085DF0();
             break;
+
         case 2:
             func_8005DC1C(Sfx_Unk1481, &QVECTOR3(-41.576f, -3.619f, 345.992f), Q8_CLAMPED(0.5f), 0);
             Savegame_EventFlagSet(EventFlag_164);
             Sd_EngineCmd(Sfx_Unk1482);
-            D_800F534C = -1;
+
+            D_800F534C = NO_VALUE;
+
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 3:
             SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
             break;
+
         case 4:
             g_SysWork.silentYesSelection_2350_4 = true;
-            // The machinery is running. Do you want to press the switch?
+
+            // "The machinery is running. Do you want to press the switch?"
             MapMsg_DisplayAndHandleSelection(true, 44, STATE_PRESS_SWITCH, STATE_DONT_PRESS_SWITCH, 0, false);
             break;
+
         case STATE_PRESS_SWITCH:
             func_8005DC1C(Sfx_Unk1483, &QVECTOR3(-41.576f, -3.619f, 345.992f), Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 6:
             SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
             break;
         case 7:
             Sd_EngineCmd(Sfx_Unk1484);
-            D_800F534E = 0;
+            D_800F534E = Q12(0.0f);
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 8:
             D_800F534E += ((u16)g_DeltaTime0 * 4);
             if (D_800F534E > Q12(1.0f))
@@ -1787,33 +1795,39 @@ void func_800EA960(void)
             {
                 vol = 0;
             }
+
             func_800463C0(Sfx_Unk1484, balance, vol, 0);
 
             D_800F5344.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x88, Q12_SHIFT);
             if (D_800F5344.vz > 0)
             {
                 D_800F5344.vz = 0;
+
                 func_8004690C(Sfx_Unk1484);
                 Sd_PlaySfx(Sfx_Unk1485, Sound_StereoBalanceGet(&QVECTOR3(-35.0f, 0.0f, 352.0f)), 0);
                 SysWork_StateStepIncrement(0);
             }
             break;
+
         case 9:
             Savegame_EventFlagSet(EventFlag_165);
             Savegame_EventFlagSet(EventFlag_166);
+
             if (Savegame_MapMarkingGet(MapMarkFlag_OldTown_BotBridgeCross))
             {
                 Savegame_MapMarkingSet(MapMarkFlag_OldTown_BotBridgeCorrection);
                 Savegame_MapMarkingSet(MapMarkFlag_OldTown_BotBridgeArrow);
             }
+
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
             break;
     }
+
     if (Savegame_EventFlagGet(EventFlag_164))
     {
         if (g_SysWork.sysStateStep_C[0] > 4)
@@ -1865,7 +1879,7 @@ void func_800EAD2C(void) // 0x800EAD2C
 
         case 6:
             Sd_EngineCmd(Sfx_Unk1484);
-            D_800F534E = 0;
+            D_800F534E = Q12(0.0f);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -1951,9 +1965,10 @@ void func_800EB090(void) // 0x800EB090
     func_800894B8(96);
 }
 
-void func_800EB174(void)
+void func_800EB174(void) // 0x800EB174
 {
     VECTOR3 soundPos;
+
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
@@ -1964,44 +1979,54 @@ void func_800EB174(void)
     
             func_8005DC1C(Sfx_Unk1349, &soundPos, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 1:
             SysWork_StateStepIncrementDelayed(Q12(0.2f), false);
             break;
+
         case 2:
             func_80085DF0();
             break;
+
         case 3:
             MapMsg_DisplayAndHandleSelection(false, MapMsgIdx_DoorLocked, false, false, 0, false);
             break;
+
         case 4:
-            Camera_PositionSet(NULL, Q12(-261.27f), Q12(-2.11f), Q12(-105.46f), 0, 0, 0, 0, true);
-            Camera_LookAtSet(NULL, Q12(-262.74f), Q12(0.07f), Q12(-102.45f), 0, 0, 0, 0, true);
+            Camera_PositionSet(NULL, Q12(-261.27f), Q12(-2.11f), Q12(-105.46f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(-262.74f), Q12(0.07f), Q12(-102.45f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(-262.39f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(-104.33f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(45.0f);
+
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 5:
             SysWork_StateStepIncrementAfterFade(2, true, 2, false, false);
             break;
+
         case 6:
             SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
             break;
+
         case 7:
             MapMsg_DisplayAndHandleSelection(false, 50, false, false, 0, false); // "Hmm... the lock is worn out."
             break;
+
         case 8:
             SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
             break;
+
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
+
             Savegame_EventFlagSet(EventFlag_167);
             SysWork_StateStepIncrementAfterFade(false, false, 2, false, false);
             break;
@@ -2132,7 +2157,7 @@ void func_800EB824(s32 arg0) // 0x800EB824
     func_800EE5D0();
 }
 
-void func_800EB908(void)
+void func_800EB908(void) // 0x800EB908
 {
     D_800F534C = 0;
     WorldObjectPoseInit(&g_WorldObject9.position_1C, 236.7151f, -0.281f, 345.046f, 2.8f, 7.5f, -180.5f);
@@ -2161,7 +2186,6 @@ void func_800EB908(void)
 
     Math_Vector3Set(&g_WorldObjectB[2].position_1C, Q12(111.94f), Q12(-0.32f), Q12(216.25f));
     WorldObject_ModelNameSet(&g_WorldObjectB[2].object_0, "JO0C_HID");
-
 
     WorldObjectPoseInit(&g_WorldObject4[0].position_1C, 185.76f,-0.59f, 116.12f, 0.0f, 0.0f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject4[0].object_0, "KEY_HIDE");
@@ -2205,26 +2229,32 @@ void func_800EB908(void)
 
     WorldObjectPoseSet(&g_WorldObject8.position_1C, Q12(-43.694f), Q12(-3.1824f), Q12(345.764f), 0x4C, 0x45, 0);
     WorldObject_ModelNameSet(&g_WorldObject8.object_0, "MAP_NEAR");
+
     D_800F56E4 = 0;
+
     if (!Savegame_EventFlagGet(EventFlag_146) || 
         (Savegame_EventFlagGet(EventFlag_193) &&  !Savegame_EventFlagGet(EventFlag_M2S00_WaterWorksCutscene))) 
     {
-        g_SysWork.flags_22A4 |= (1<<4);
+        g_SysWork.flags_22A4 |= 1 << 4;
     }
 
     if (Savegame_EventFlagGet(EventFlag_159))
     {
         D_800F1A24 = 0x64000;
     }
+
     if (!Savegame_EventFlagGet(EventFlag_166))
     {
         D_800F5344.vz = FP_ANGLE(-49.94f);
     }
+
     if (Savegame_EventFlagGet(EventFlag_168))
     {
         D_800F538C.vy = FP_ANGLE(8.0f);
     }
+
     func_800EE5D0();
+
     if (Savegame_EventFlagGet(EventFlag_132) && !Savegame_EventFlagGet(EventFlag_M2S00_KGordonDoorOpen))
     {
         g_SavegamePtr->field_B0[10] &= 0xF3FFFEFF;
@@ -2245,6 +2275,7 @@ void func_800EB908(void)
 
     g_SysWork.field_2280++;
     g_SysWork.field_2290 |= 1 << (g_SysWork.field_2280 - 1);
+
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);

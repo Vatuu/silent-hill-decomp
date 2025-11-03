@@ -690,10 +690,10 @@ void func_800D2658(void) // 0x800D2658
 
             ScreenFade_ResetTimestep();
             Sd_EngineCmd(Sfx_Unk1467);
-            func_800463C0(Sfx_Unk1467, 0, 255, 0);
+            func_800463C0(Sfx_Unk1467, 0, Q8_CLAMPED(1.0f), 0);
 
             D_800D41B0 = 0;
-            D_800D41B4 = 0;
+            D_800D41B4 = Q12(0.0f);
 
             for (i = 0; i < 5; i++)
             {
@@ -776,8 +776,8 @@ void func_800D2658(void) // 0x800D2658
                 {
                     temp_a0_4         = FP_MULTIPLY_PRECISE(var_s4, D_800D4114[i].vy, Q12_SHIFT) + D_800D4114[i].vy;
                     temp_a0_4         = FP_MULTIPLY_FLOAT_PRECISE(temp_a0_4, 1.2f, Q12_SHIFT);
-                    D_800D4174[i].vx += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_MULTIPLY(temp_a0_4, Math_Sin(FP_TO(i, Q12_SHIFT) / 5), 12), Q12_SHIFT);
-                    D_800D4174[i].vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_MULTIPLY(temp_a0_4, Math_Cos(FP_TO(i, Q12_SHIFT) / 5), 12), Q12_SHIFT);
+                    D_800D4174[i].vx += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_MULTIPLY(temp_a0_4, Math_Sin(FP_TO(i, Q12_SHIFT) / 5), Q12_SHIFT), Q12_SHIFT);
+                    D_800D4174[i].vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_MULTIPLY(temp_a0_4, Math_Cos(FP_TO(i, Q12_SHIFT) / 5), Q12_SHIFT), Q12_SHIFT);
                 }
             }
 
@@ -822,7 +822,7 @@ void func_800D2658(void) // 0x800D2658
     }
 }
 
-void func_800D2E6C(void)
+void func_800D2E6C(void) // 0x800D2E6C
 {
     D_800D5345 = 0;
 

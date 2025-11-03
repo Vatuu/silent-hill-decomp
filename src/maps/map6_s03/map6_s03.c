@@ -281,6 +281,7 @@ void func_800D822C(void) // 0x800D822C
             g_SysWork.player_4C.chara_0.position_18.vy = Q12(-4.07f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(24.7134f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(180.0f);
+
             Game_TurnFlashlightOn();
             Camera_PositionSet(NULL, Q12(-19.66f), Q12(0.17f), Q12(26.3f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(-20.49f), Q12(-3.23f), Q12(24.37f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);

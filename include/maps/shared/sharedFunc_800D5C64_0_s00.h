@@ -1,122 +1,125 @@
-void sharedFunc_800D5C64_0_s00(s_SubCharacter* arg0)
+void sharedFunc_800D5C64_0_s00(s_SubCharacter* chara)
 {
-    u32 animTime;
-    s32 animDivTmp;
-    s32 animDiv;
-    s32 step;
-    s32 animMult;
-    s32 frame;
-    s32 flags;
-    s32 var;
-    s32 movSpeed0;
-    s32 movSpeed1;
-    s32 duration;
-    
-#define CHARA_PROPS arg0->properties_E4.larvalStalker
+    q20_12 animFrameIdx;
+    s32    animDivTmp;
+    s32    animDiv;
+    s32    step;
+    q19_12 animMult;
+    s32    frameIdx;
+    s32    flags;
+    s32    var;
+    q19_12 moveSpeed0;
+    q19_12 moveSpeed1;
+    q19_12 duration;
 
-    arg0->flags_3E &= ~(1<<1);
-    if (!(CHARA_PROPS.properties_E8[0].val16[0] & (1<<13)))
+    #define larvalStalkerProps chara->properties_E4.larvalStalker
+
+    chara->flags_3E &= ~CharaFlag_Unk2;
+    if (!(larvalStalkerProps.properties_E8[0].val16[0] & (1 << 13)))
     {
-        movSpeed0 = arg0->moveSpeed_38;
-        if (movSpeed0 > 0)
+        moveSpeed0 = chara->moveSpeed_38;
+        if (moveSpeed0 > Q12(0.0f))
         {
-            arg0->moveSpeed_38 = MAX(0, movSpeed0 - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.5f), 12));
+            chara->moveSpeed_38 = MAX(Q12(0.0f), moveSpeed0 - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.5f), Q12_SHIFT));
         }
         else
         {
-            arg0->moveSpeed_38 = MIN(0, movSpeed0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.5f), 12));
+            chara->moveSpeed_38 = MIN(Q12(0.0f), moveSpeed0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.5f), Q12_SHIFT));
         }
     }
-    
-    movSpeed0 = arg0->moveSpeed_38;
-    if (movSpeed0 > 0)
+
+    moveSpeed0 = chara->moveSpeed_38;
+    if (moveSpeed0 > Q12(0.0f))
     {
-        movSpeed1 = MAX(0, movSpeed0 - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.5f), 12));
+        moveSpeed1 = MAX(Q12(0.0f), moveSpeed0 - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.5f), Q12_SHIFT));
     }
     else
     {
-        movSpeed1 = MIN(0, movSpeed0 +  FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.5f), 12));
+        moveSpeed1 = MIN(Q12(0.0f), moveSpeed0 +  FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.5f), Q12_SHIFT));
     }
-    arg0->moveSpeed_38 = movSpeed1;
+    chara->moveSpeed_38 = moveSpeed1;
 
-    animTime = FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT);
+    animFrameIdx = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT);
     animDivTmp = 0;
-    animMult = 0;
-    if (animTime >= 0x6E && animTime < 0x6E + 7)
+    animMult = Q12(0.0f);
+
+    if (animFrameIdx >= 110 && animFrameIdx < 117)
     {
         animMult = Q12(0.3f);
         animDivTmp = 7;
     } 
-    else if (animTime >= 0x75 && animTime < 0x75 + 4)
+    else if (animFrameIdx >= 117 && animFrameIdx < 121)
     {
         animMult = Q12(0.3f);
         animDivTmp = 4;
     }
-    else if (animTime >= 0x79 && animTime < 0x79 + 3)
+    else if (animFrameIdx >= 121 && animFrameIdx < 124)
     {
         animMult = Q12(0.1f);
         animDivTmp = 4;
     }
 
-    if (animMult)
+    if (animMult != Q12(0.0f))
     {
-        animDiv = FP_TO(animDivTmp, Q12_SHIFT);
-        duration = STALKER_ANIM_INFOS[arg0->model_0.anim_4.status_0].duration_8.constant;
-        step = (FP_MULTIPLY_PRECISE(duration, g_DeltaTime0, Q12_SHIFT) * animMult) / animDiv;
+        animDiv  = FP_TO(animDivTmp, Q12_SHIFT);
+        duration = STALKER_ANIM_INFOS[chara->model_0.anim_4.status_0].duration_8.constant;
+        step     = (FP_MULTIPLY_PRECISE(duration, g_DeltaTime0, Q12_SHIFT) * animMult) / animDiv;
 
-        CHARA_PROPS.properties_E8[1].val16[0] = FP_MULTIPLY(step, Math_Sin(arg0->rotation_24.vy), 12);
-        CHARA_PROPS.properties_E8[1].val16[1] = FP_MULTIPLY(step, Math_Cos(arg0->rotation_24.vy), 12);
+        larvalStalkerProps.properties_E8[1].val16[0] = FP_MULTIPLY(step, Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
+        larvalStalkerProps.properties_E8[1].val16[1] = FP_MULTIPLY(step, Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
     }
 
-    if (CHARA_PROPS.properties_E8[0].val16[0] & (1<<7))
+    if (larvalStalkerProps.properties_E8[0].val16[0] & (1 << 7))
     {
-        frame = FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT);
-        if ((frame >= 0x79 && frame < 0x79 + 8) ||
-            (frame >= 0x95 && frame < 0x95 + 9) ||
-            (frame >= 0xAB && frame < 0xAB + 5))
+        frameIdx = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT);
+        if ((frameIdx >= 121 && frameIdx < 129) ||
+            (frameIdx >= 149 && frameIdx < 158) ||
+            (frameIdx >= 171 && frameIdx < 176))
         {
-            CHARA_PROPS.properties_E8[0].val16[0] &= ~(1<<7);
+            larvalStalkerProps.properties_E8[0].val16[0] &= ~(1 << 7);
         }
     }
-    
-    if ((arg0->model_0.anim_4.status_0 == ANIM_STATUS(27, true)) && !(Rng_Rand16() & 3))
+
+    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(27, true) && !Rng_TestProbabilityBits(2))
     {
-        if(CHARA_PROPS.properties_E8[0].val16[0] & (1<<1))
+        if (larvalStalkerProps.properties_E8[0].val16[0] & (1 << 1))
         {
-            arg0->model_0.state_2 = 2;
+            chara->model_0.state_2 = 2;
         }
         else
         {
-            arg0->model_0.state_2 = 3;
+            chara->model_0.state_2 = 3;
         }
-        arg0->model_0.anim_4.status_0 = ANIM_STATUS(30, false);
-        CHARA_PROPS.properties_E8[5].val16[0] = 55;
-        CHARA_PROPS.properties_E8[5].val16[1] = FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) - 0x1AB;
+
+        chara->model_0.anim_4.status_0 = ANIM_STATUS(30, false);
+        larvalStalkerProps.properties_E8[5].val16[0] = 55;
+        larvalStalkerProps.properties_E8[5].val16[1] = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 427;
     }
-    // @hack animDiv has to be used for certain stuff for a match, weird.
+
+    // @hack `animDiv` has to be used for certain stuff for a match, weird.
     animDiv = g_SysWork.field_2388.field_154.field_0.field_0.field_0;
-    flags = animDiv & 3;
+    flags = animDiv & 0x3;
     if (flags == 0)
     {
-        var = func_8006FD90(arg0, 0, Q12(7.5f), Q12(0.0f));
+        var = func_8006FD90(chara, 0, Q12(7.5f), Q12(0.0f));
     }
     else if (flags == 2)
     {
         #if defined(MAP1_S00) || defined(MAP1_S01)
-            var = func_8006FD90(arg0, 0, Q12(6.0f), Q12(0.0f));
+            var = func_8006FD90(chara, 0, Q12(6.0f), Q12(0.0f));
         #else
-            var = func_8006FD90(arg0, 0, Q12(8.0f), Q12(0.0f));
+            var = func_8006FD90(chara, 0, Q12(8.0f), Q12(0.0f));
         #endif
     }
     else
     {
-        var = func_8006FD90(arg0, 1, Q12(0.4f), Q12(0.0f));
+        var = func_8006FD90(chara, 1, Q12(0.4f), Q12(0.0f));
 
     }
 
-    if (var || func_80070360(arg0, Q12(0.0f), Q12(1.0f)))
+    if (var || func_80070360(chara, Q12(0.0f), Q12(1.0f)))
     {
-        arg0->properties_E4.player.field_F0 = g_SysWork.player_4C.chara_0.position_18.vx;
-        arg0->properties_E4.player.field_F4 = g_SysWork.player_4C.chara_0.position_18.vz;
+        chara->properties_E4.player.field_F0 = g_SysWork.player_4C.chara_0.position_18.vx;
+        chara->properties_E4.player.field_F4 = g_SysWork.player_4C.chara_0.position_18.vz;
     }
 }
