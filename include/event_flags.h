@@ -170,7 +170,7 @@ typedef enum _EventFlag
 
     EventFlag_188 = 188,
     EventFlag_189 = 189,
-    EventFlag_190 = 190,
+    EventFlag_M2S02_AnitqueShopOpen = 190,
     EventFlag_191 = 191,
     EventFlag_192 = 192,
     EventFlag_193 = 193,
