@@ -14,7 +14,8 @@
 
 void func_800D07A0(s32 arg0);
 
-void func_800D0AEC(void);
+/** @brief Handles a First Aid Kit, Health Drink, Handgun Bullets, or Shotgun Shells item pickup event. */
+void MapEvent_CommonItemTake(void);
 
 void func_800D0B10(void);
 

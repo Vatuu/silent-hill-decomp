@@ -3613,6 +3613,7 @@ void func_80085DF0(void);
 
 void SysWork_StateStepIncrementDelayed(s32 delay, bool reset);
 
+/** Unknown state handler. */
 void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset);
 
 /** @brief Sets `sysStateStep_C` depending on whether `eventFlagIdx` flag is set.

@@ -33,6 +33,7 @@ sharedData_800CAB70_0_s00           = 0x800CA618; // type:VECTOR
 //-----------------------------------------------------------
 //--- PA: 0x002154   VA: 0x800CB6CC   subsegment: c, map5_s02
 //-----------------------------------------------------------
+MapEvent_CommonItemTake = 0x800D4AB8; // type:func
 sharedFunc_800D08B8_0_s00           = 0x800CB834; // type:func
 sharedFunc_800D0A60_0_s00           = 0x800CB9B4; // type:func
 sharedFunc_800D0B18_0_s00           = 0x800CBA6C; // type:func

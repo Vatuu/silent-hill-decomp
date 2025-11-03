@@ -226,7 +226,7 @@ const char* MAP_MESSAGES[] = {
     "\tGotta'_go_find_Cybil! ~N\n\tNo_time_to_go_back. ~E "
 };
 
-void func_800D81AC(void) // 0x800D81AC
+void MapEvent_CommonItemTake(void) // 0x800D81AC
 {
     u32 pickupType;
     s32 eventFlagIdx;
@@ -277,14 +277,19 @@ void func_800D822C(void) // 0x800D822C
             break;
 
         case 2:
+            // Warp player.
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(-20.0486f);
             g_SysWork.player_4C.chara_0.position_18.vy = Q12(-4.07f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(24.7134f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(180.0f);
 
+            // Turn on flashlight.
             Game_TurnFlashlightOn();
+
+            // Warp camera.
             Camera_PositionSet(NULL, Q12(-19.66f), Q12(0.17f), Q12(26.3f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(-20.49f), Q12(-3.23f), Q12(24.37f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 88, false);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
             SysWork_StateStepIncrement(0);

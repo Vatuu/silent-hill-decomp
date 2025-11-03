@@ -22,7 +22,7 @@ void func_800CD088(void);
 /** @brief Handles the ? map pickup event. */
 void MapEvent_MapTake(void);
 
-/** @brief Handles the Shotgun pickup event. */
+/** @brief Handles the Shotgun item pickup event. */
 void MapEvent_ShotgunTake(void);
 
 #endif

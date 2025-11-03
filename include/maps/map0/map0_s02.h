@@ -32,18 +32,18 @@ void func_800CE8B8(void);
 // TODO: Make shared function?
 void Gfx_LoadingScreen_StageString();
 
-/** @brief Handles a first aid kit, health drink, or handgun bullets pickup event. */
+/** @brief Handles a First Aid Kit, Health Drink, or Handgun Bullets item pickup event. */
 void MapEvent_CommonItemTake(void);
 
 void MapEvent_EmptyFunction();
 
-/** @brief Handles the gasoline tank pickup event. */
+/** @brief Handles the Gasoline Tank item pickup event. */
 void MapEvent_GasolineTankItemTake(void);
 
-/** @brief Handles the katana pickup event. */
+/** @brief Handles the Katana item pickup event. */
 void MapEvent_KatanaItemTake(void);
 
-/** @brief Handles the channeling stone pickup event. */
+/** @brief Handles the Channeling Stone item pickup event. */
 void MapEvent_ChannelingStoneItemTake(void);
 
 void Map_WorldObjectsInit(void);

@@ -94,10 +94,10 @@ void Gfx_LoadingScreen_StageString();
 /** @brief Handles the Air Screamer cutscene in the cafe. */
 void MapEvent_AirScreamerIntroCutscene();
 
-/** @brief Handles the pocket radio item pickup event. */
+/** @brief Handles the Pocket Radio item pickup event. */
 void MapEvent_PocketRadioItemTake();
 
-/** @brief Handles the flashlight item pickup event. */
+/** @brief Handles the Flashlight item pickup event. */
 void MapEvent_FlashlightItemTake();
 
 /** @brief Handles the Silent Hill town map pickup event in the cafe.
@@ -106,12 +106,12 @@ void MapEvent_FlashlightItemTake();
  */
 void MapEvent_MapItemTake();
 
-/** @brief Handles the kitchen knife pickup event. */
+/** @brief Handles the Kitchen Knife item pickup event. */
 void MapEvent_KitchenKnifeItemTake();
 
 void MapEvent_EmptyFunction();
 
-/** @brief Handles a first aid kit or health drink pickup event. */
+/** @brief Handles a First Aid Kit or Health Drink item pickup event. */
 void MapEvent_CommonItemTake();
 
 /** @brief Handles the Air Screamer death event. */

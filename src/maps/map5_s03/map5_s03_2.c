@@ -122,7 +122,7 @@ const char* MAP_MESSAGES[] = {
     "\tAn_old_motorcycle. ~E "
 };
 
-void func_800D159C(void) // 0x800D159C
+void MapEvent_CommonItemTake(void) // 0x800D159C
 {
     u32 pickupType;
     s32 eventFlagIdx;

@@ -607,7 +607,7 @@ const char* MAP_MESSAGES[] = {
     "\tCheryl... ~N\n\twhere_could_she_be? ~E "
 };
 
-void func_800D667C(void) // 0x800D667C
+void MapEvent_CommonItemTake(void) // 0x800D667C
 {
     u32 pickupType;
     s32 eventFlagIdx;

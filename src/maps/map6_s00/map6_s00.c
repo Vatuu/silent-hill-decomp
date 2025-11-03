@@ -586,7 +586,7 @@ const char* MAP_MESSAGES[] = {
     "~C3\tLAKE_SIDE_AMUSEMENT_PARK ~E "
 };
 
-void func_800EB090(void) // 0x800EB090
+void MapEvent_CommonItemTake(void) // 0x800EB090
 {
     u32 pickupType;
     s32 eventFlagIdx;

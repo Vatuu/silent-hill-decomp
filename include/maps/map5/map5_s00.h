@@ -14,7 +14,10 @@
 
 void func_800D041C(s_SubCharacter* chara);
 
-/** @brief Handles the Sewer Key pickup event. */
+/** @brief Handles a First Aid Kit, Health Drink, Handgun Bullets, or Shotgun Shells item pickup event. */
+void MapEvent_CommonItemTake(void);
+
+/** @brief Handles the Sewer Key item pickup event. */
 void MapEvent_SewerKeyTake(void);
 
 /** @brief Handles the ? map pickup event. */

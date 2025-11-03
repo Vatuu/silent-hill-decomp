@@ -554,7 +554,7 @@ void func_800D8358(void) // 0x800D8358
     Map_MessageWithSfx(MapMsgIdx_DoorUnlocked, Sfx_DoorUnlocked, &sfxPos);
 }
 
-void func_800D83EC(void) // 0x800D83EC
+void MapEvent_CommonItemTake(void) // 0x800D83EC
 {
     u32 pickupType;
     s32 eventFlagIdx;

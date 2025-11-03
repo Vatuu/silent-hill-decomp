@@ -39,7 +39,7 @@ void func_800D1524(void);
 
 void MapEvent_UnknownLiquidInteract(void);
 
-/** @brief Handles the Plastic Bottle pickup event. */
+/** @brief Handles the Plastic Bottle item pickup event. */
 void MapEvent_PlasticBottleTake(void);
 
 /** @brief Handles the ? map pickup event. */

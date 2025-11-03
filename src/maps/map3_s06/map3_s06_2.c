@@ -92,7 +92,7 @@ const char* MAP_MESSAGES[] = {
     "\tThe_phone's_out. ~N\n\tCan't_get_a_dial_tone. ~E "
 };
 
-void func_800D0AEC(void) // 0x800D0AEC
+void MapEvent_CommonItemTake(void) // 0x800D0AEC
 {
     Event_CommonItemTake(CommonPickupItemId_FirstAidKit, EventFlag_M3S00_FirstAidKit);
 }

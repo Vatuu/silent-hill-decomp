@@ -20,6 +20,7 @@
 //-----------------------------------------------------------
 //--- PA: 0x001B60   VA: 0x800CB0D8   subsegment: c, map5_s00
 //-----------------------------------------------------------
+MapEvent_CommonItemTake = 0x800D691C; // type:func
 sharedFunc_800CB6B0_0_s00   = 0x800CBD2C; // type:func
 sharedFunc_800CBBBC_0_s00   = 0x800CC120; // type:func
 sharedFunc_800CBC94_0_s00   = 0x800CC1F8; // type:func

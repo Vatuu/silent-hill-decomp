@@ -242,7 +242,7 @@ const char* MAP_MESSAGES[] = {
     "~H\tThere_is_a_ ~C5 Sewer_map ~N\n\t(connecting_to_resort_area) ~C7 . ~N\n\tTake_it? ~S4 "
 };
 
-void func_800D691C(void) // 0x800D691C
+void MapEvent_CommonItemTake(void) // 0x800D691C
 {
     u32 pickupType;
     s32 eventFlagIdx;

@@ -63,7 +63,7 @@ void func_800D8948(void);
 
 void func_800D8CC4(void);
 
-/** @brief Town map pickup event. */
+/** @brief Handles the town map pickup event. */
 void MapEvent_TownMapTake(void);
 
 void func_800D9254(void);

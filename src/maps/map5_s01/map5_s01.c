@@ -601,7 +601,7 @@ const char* MAP_MESSAGES[] = {
     "~J0(2.5)\tThat_light!? ~E "
 };
 
-void func_800EB9A4(void) // 0x800EB9A4
+void MapEvent_CommonItemTake(void) // 0x800EB9A4
 {
     u32 pickupType;
     s32 eventFlagIdx;

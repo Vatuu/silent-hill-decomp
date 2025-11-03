@@ -96,7 +96,7 @@ const char* MAP_MESSAGES[] = {
     "\tI've_got_a_ ~C2 Kaufmann_key ~C7 . ~E "
 };
 
-void func_800D4AB8(void) // 0x800D4AB8
+void MapEvent_CommonItemTake(void) // 0x800D4AB8
 {
     u32 pickupType;
     s32 eventFlagIdx;

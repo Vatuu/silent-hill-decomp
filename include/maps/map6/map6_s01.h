@@ -62,6 +62,9 @@ void func_800D0E78(s32 arg0);
 
 void func_800D0EAC(void);
 
+/** @breif Handles a Health Drink, Handgun Bullets, or Rifle Shells item pickup event. */
+void MapEvent_CommonItemTake(void);
+
 void func_800D13D8(void);
 
 void func_800D236C(void);
