@@ -36,7 +36,6 @@
 //-----------------------------------------------------------
 //--- PA: 0x00342C   VA: 0x800CC9A4   subsegment: c, map7_s01
 //-----------------------------------------------------------
-MapEvent_CommonItemTake = 0x800D83EC; // type:func
 sharedFunc_800D08B8_0_s00           = 0x800CDF80; // type:func
 sharedFunc_800D0A60_0_s00           = 0x800CE100; // type:func
 sharedFunc_800D0B18_0_s00           = 0x800CE1B8; // type:func
@@ -136,6 +135,7 @@ sharedFunc_800D923C_0_s00           = 0x800D6708; // type:func
 sharedFunc_800D929C_0_s00           = 0x800D6768; // type:func
 Map_RoomIdxGet                      = 0x800D6778; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800D71C4; // type:func
+MapEvent_CommonItemTake             = 0x800D83EC; // type:func
 MapEvent_KeyOfOphielUse             = 0x800D8668; // type:func
 MapEvent_KeyOfHagithUse             = 0x800D8724; // type:func
 MapEvent_KeyOfPhalegUse             = 0x800D87E0; // type:func

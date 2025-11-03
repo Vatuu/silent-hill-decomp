@@ -21,7 +21,6 @@ sharedData_800CAA98_0_s01           = 0x800CA898; // type:s32 size:0xD6C
 //-----------------------------------------------------------
 //--- PA: 0x003518   VA: 0x800CCA90   subsegment: c, map5_s01
 //-----------------------------------------------------------
-MapEvent_CommonItemTake = 0x800EB9A4; // type:func
 sharedFunc_800CE5D4_1_s03           = 0x800CCA90; // type:func
 sharedFunc_800CB6B0_0_s00           = 0x800CE2B4; // type:func
 sharedFunc_800CBBBC_0_s00           = 0x800CE76C; // type:func
@@ -134,6 +133,7 @@ sharedFunc_800E8DFC_2_s02           = 0x800EA930; // type:func
 sharedFunc_800D929C_0_s00           = 0x800EB460; // type:func
 MapEvent_DoorJammed                 = 0x800EB87C; // type:func
 MapEvent_DoorLocked                 = 0x800EB910; // type:func
+MapEvent_CommonItemTake             = 0x800EB9A4; // type:func
 MapEvent_MapTake                    = 0x800EBF48; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800EC394; // type:func
 

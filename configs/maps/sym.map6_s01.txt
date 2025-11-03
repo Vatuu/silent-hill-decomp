@@ -36,7 +36,6 @@
 //-----------------------------------------------------------
 //--- PA: 0x0025E8   VA: 0x800CBB60   subsegment: c, map6_s01
 //-----------------------------------------------------------
-MapEvent_CommonItemTake = 0x800D12B4; // type:func
 sharedFunc_800CE5D4_1_s03           = 0x800CBB60; // type:func
 sharedFunc_800D08B8_0_s00           = 0x800CC444; // type:func
 sharedFunc_800D0A60_0_s00           = 0x800CC5C4; // type:func
@@ -103,6 +102,7 @@ Map_RoomIdxGet                      = 0x800D0DE0; // type:func
 sharedFunc_800CE934_0_s02           = 0x800D0EF8; // type:func
 MapEvent_DoorJammed                 = 0x800D118C; // type:func
 MapEvent_DoorLocked                 = 0x800D1220; // type:func
+MapEvent_CommonItemTake             = 0x800D12B4; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800D1340; // type:func
 
 

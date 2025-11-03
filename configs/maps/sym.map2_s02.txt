@@ -86,7 +86,6 @@ sharedFunc_800D4A80_0_s01   = 0x800DA704; // type:func
 sharedFunc_800D4E84_0_s01   = 0x800DB50C; // type:func
 sharedFunc_800D5274_0_s01   = 0x800DB8FC; // type:func
 sharedFunc_800D529C_0_s01   = 0x800DCD80; // type:func
-g_CommonWorldObjectPoses    = 0x800ED8D4; // type:WorldObjectPos size:0x64
 sharedFunc_800D5638_0_s01   = 0x800DDA54; // type:func
 sharedFunc_800D569C_0_s01   = 0x800DE138; // type:func
 sharedFunc_800D57C8_0_s01   = 0x800DE264; // type:func
@@ -167,6 +166,7 @@ MAP_MESSAGES                = 0x800ED694; // type:u32 size:0x48
 //----------------------------------------------------
 //--- PA: 0x024164   VA: 0x800ED6DC   subsegment: data
 //----------------------------------------------------
+g_CommonWorldObjectPoses    = 0x800ED8D4; // type:WorldObjectPos size:0x64
 sharedData_800DFB4C_0_s00   = 0x800ED944;
 sharedData_800DFB50_0_s00   = 0x800ED948;
 sharedData_800DE170_0_s01   = 0x800ED954; // type:VECTOR3 size:0xC
@@ -203,3 +203,4 @@ sharedData_800E231C_0_s01   = 0x800F0AD0; // size:0x14
 sharedData_800E2330_0_s01   = 0x800F0AE4; // type:s32 - unknown type
 sharedData_800E2350_0_s01   = 0x800F0B04; // type:VECTOR3 size:0xC
 sharedData_800E2370_0_s01   = 0x800F0B24; //type:s32 size:0x08
+g_CommonWorldObjects        = 0x800F0B34; // type:WorldObject_0 size:0xA8

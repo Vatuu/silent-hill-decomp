@@ -20,7 +20,6 @@
 //-----------------------------------------------------------
 //--- PA: 0x001B2C   VA: 0x800CB0A4   subsegment: c, map4_s03
 //-----------------------------------------------------------
-MapEvent_CommonItemTake = 0x800D667C; // type:func
 sharedFunc_800CB0A4_4_s03 = 0x800CB0A4; // type:func
 sharedFunc_800CB6B0_0_s00 = 0x800CC700; // type:func
 sharedFunc_800CBBBC_0_s00 = 0x800CCB4C; // type:func
@@ -68,6 +67,7 @@ Ai_Twinfeeler_Update      = 0x800D5F28; // type:func
 sharedFunc_800D929C_0_s00 = 0x800D606C; // type:func
 MapEvent_DoorJammed       = 0x800D6554; // type:func
 MapEvent_DoorLocked       = 0x800D65E8; // type:func
+MapEvent_CommonItemTake   = 0x800D667C; // type:func
 
 
 
