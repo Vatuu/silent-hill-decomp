@@ -435,7 +435,7 @@ void func_800D2A88(void) // 0x800D2A88
         func_8005DC1C(Sfx_Unk1308, &QVECTOR3(61.72f, -0.8f, 100.5098f), Q8_CLAMPED(0.5f), 0);
     }
 
-    func_80087360(Sfx_Unk1916, Q12(0.0f), Q12(0.0f), 36);
+    MapMsg_DisplayWithTexture(Sfx_Unk1916, Q12(0.0f), Q12(0.0f), 36);
     Savegame_EventFlagSet(EventFlag_203);
 }
 

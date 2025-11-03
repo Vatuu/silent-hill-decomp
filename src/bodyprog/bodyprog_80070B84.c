@@ -6089,9 +6089,9 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
 void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007B924
 {
-    s32 sfx;
-    s8  pitch0;
-    s8  pitch1;
+    e_Sfx sfx;
+    s8    pitch0;
+    s8    pitch1;
 
     func_8007FDE0(D_800C4590.field_14, &sfx, &pitch0, &pitch1);
 

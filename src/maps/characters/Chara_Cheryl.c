@@ -106,7 +106,7 @@ void Ai_Cheryl_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x
 void Ai_Cheryl_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
 {
     s_Collision coll;
-    s32         unused;
+    e_Sfx       sfx;
     s8          pitch0;
     s8          pitch1;
     s32         distSqr;
@@ -187,7 +187,7 @@ void Ai_Cheryl_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords) // 
     }
 
     Collision_Get(&coll, chara->position_18.vx, chara->position_18.vz);
-    func_8007FDE0(coll.field_8, &unused, &pitch0, &pitch1);
+    func_8007FDE0(coll.field_8, &sfx, &pitch0, &pitch1);
 
     distSqr = SQUARE(Q12_TO_Q8(chara->position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx)) +
               SQUARE(Q12_TO_Q8(chara->position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz));

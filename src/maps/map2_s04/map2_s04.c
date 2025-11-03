@@ -165,12 +165,12 @@ void func_800CCF9C(void) // 0x800CCF9C
 void func_800CD050(void) // 0x800CD050
 {
     g_BackgroundColor = 80;
-    func_80087360(FILE_TIM_PLCSMEMO_TIM, Q12(0.0f), Q12(0.0f), 15);
+    MapMsg_DisplayWithTexture(FILE_TIM_PLCSMEMO_TIM, Q12(0.0f), Q12(0.0f), 15);
 }
 
 void func_800CD088(void) // 0x800CD088
 {
-    func_80087360(FILE_TIM_PLCSBORD_TIM, Q12(0.0f), Q12(0.0f), 19);
+    MapMsg_DisplayWithTexture(FILE_TIM_PLCSBORD_TIM, Q12(0.0f), Q12(0.0f), 19);
     Savegame_EventFlagSet(EventFlag_145);
 }
 

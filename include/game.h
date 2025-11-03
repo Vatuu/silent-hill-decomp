@@ -827,7 +827,9 @@ typedef enum _CharacterId
     Chara_Parasite         = 43,
     Chara_Padlock          = 44,
 
-    Chara_Count
+    Chara_Count,
+
+    Chara_Hack = -1, // @hack Force enum to be treated as `s32`.
 } e_CharacterId;
 
 /** Based on LIBOVR.PDF `Buffer Data Format` section. */

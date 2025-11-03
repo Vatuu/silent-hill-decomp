@@ -110,7 +110,7 @@ void Ai_Lisa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 void Ai_Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 {
     s_Collision coll;
-    s32         sfx;
+    e_Sfx       sfx;
     s8          pitch0;
     s8          pitch1;
 

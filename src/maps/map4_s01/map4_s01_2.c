@@ -871,7 +871,7 @@ void func_800D496C(void) // 0x800D496C
 
 void func_800D4998(void) // 0x800D4998
 {
-    func_80087360(FILE_TIM_CLOCKATQ_TIM, Q12(0.0f), Q12(0.0f), 114);
+    MapMsg_DisplayWithTexture(FILE_TIM_CLOCKATQ_TIM, Q12(0.0f), Q12(0.0f), 114);
 }
 
 void func_800D49C4(void) // 0x800D49C4

@@ -430,7 +430,7 @@ bool func_8003528C(s32 idx0, s32 idx1) // 0x8003528C
     return true;
 }
 
-s32 func_800352F8(s32 charaId) // 0x800352F8
+s32 func_800352F8(e_CharacterId charaId) // 0x800352F8
 {
     s32         i;
 

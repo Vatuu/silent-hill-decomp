@@ -187,7 +187,7 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch_Unk85(s_MainCharacterExtra* 
 void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord)
 {
     s_Collision coll;
-    s32         sfx;
+    e_Sfx       sfx;
     s8          pitch0;
     s8          pitch1;
     s32         newMoveSpeed;

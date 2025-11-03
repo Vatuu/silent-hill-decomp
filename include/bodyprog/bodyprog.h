@@ -2857,7 +2857,7 @@ void func_8003CD6C(s_PlayerCombat* combat);
  * @param itemId ID of the held item to load (`e_InventoryItemId`).
  * @return Model or texture queue index.
  */
-s32 WorldGfx_PlayerHeldItemSet(s32 itemId);
+s32 WorldGfx_PlayerHeldItemSet(e_InventoryItemId itemId);
 
 void func_8003D01C();
 
@@ -2866,14 +2866,14 @@ void func_8003D03C();
 /** Loads the model of an item held by the player? */
 void func_8003D058();
 
-bool WorldGfx_IsCharaModelPresent(s32 charaId);
+bool WorldGfx_IsCharaModelPresent(e_CharacterId charaId);
 
 /** @brief Sets the material for a character model.
  *
  * @param charaId ID of the character whose model to update.
  * @param blendMode Material blend mode to set (`e_BlendMode`).
  */
-void WorldGfx_CharaModelMaterialSet(s32 charaId, s32 blendMode);
+void WorldGfx_CharaModelMaterialSet(e_CharacterId charaId, s32 blendMode);
 
 /** Called by some chara init funcs, similar to `func_8003DD80`? */
 void func_8003D468(s32 arg0, bool flag);
@@ -2886,10 +2886,10 @@ s32 func_8003D21C(s_MapOverlayHeader* mapHdr);
 
 void WorldGfx_CharaLmBufferAssign(s8 forceFree);
 
-s32 func_8003DD74(s32 charaId, s32 arg1);
+s32 func_8003DD74(e_CharacterId charaId, s32 arg1);
 
 /** `arg1` is packed data. Each byte is a separate value. */
-void func_8003DD80(s32 charaId, s32 arg1); // Called by some chara init funcs.
+void func_8003DD80(e_CharacterId charaId, s32 arg1); // Called by some chara init funcs.
 
 void func_8003E740();
 
@@ -2939,7 +2939,7 @@ void func_80040014();
  */
 s8 Sound_StereoBalanceGet(const VECTOR3* soundPos);
 
-bool func_80040B74(s32 charaId);
+bool func_80040B74(e_CharacterId charaId);
 
 /** Related to the screen. */
 void func_80040BAC();
@@ -2988,7 +2988,7 @@ void Map_GlobalLmFree();
 
 s_Texture* func_80042178(char* texName);
 
-void func_800421D8(char* mapTag, s32 plmIdx, s32 activeIpdCount, bool isExterior, s32 ipdFileIdx, s32 texFileIdx);
+void func_800421D8(char* mapTag, e_FsFile plmIdx, s32 activeIpdCount, bool isExterior, e_FsFile ipdFileIdx, e_FsFile texFileIdx);
 
 void Ipd_ActiveChunksClear(s_Map* map, s32 arg1);
 
@@ -2998,7 +2998,7 @@ void Ipd_ActiveChunksClear(s_Map* map, s32 arg1);
  * Map type THR.
  * `file 1100` is `THR0205.IPD`, `ipdGridCenter_42C[2][5] = 1100`.
  */
-void Map_MakeIpdGrid(s_Map* map, char* mapTag, s32 fileIdxStart);
+void Map_MakeIpdGrid(s_Map* map, char* mapTag, e_FsFile fileIdxStart);
 
 /** @brief Converts two hex `char`s to an integer hex value.
  *
@@ -3059,7 +3059,7 @@ bool Map_IsIpdPresent(s_IpdChunk* chunks, s32 chunkCoordX, s32 chunkCoordZ);
 
 s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool isExterior);
 
-s32 Ipd_LoadStart(s_IpdChunk* chunk, s32 fileIdx, s32 chunkCoordX, s32 chunkCoordZ, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
+s32 Ipd_LoadStart(s_IpdChunk* chunk, e_FsFile fileIdx, s32 chunkCoordX, s32 chunkCoordZ, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
 
 bool func_80043740();
 
@@ -3076,9 +3076,9 @@ bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHdr);
 
 s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHdr);
 
-void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_ActiveTextures* fullPageActiveTexs, s_ActiveTextures* halfPageActiveTexs, s32 fileIdx);
+void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_ActiveTextures* fullPageActiveTexs, s_ActiveTextures* halfPageActiveTexs, e_FsFile fileIdx);
 
-void Ipd_MaterialsLoad(s_IpdHeader* ipdHdr, s_ActiveTextures* fullPageActiveTexs, s_ActiveTextures* halfPageActiveTexs, s32 fileIdx);
+void Ipd_MaterialsLoad(s_IpdHeader* ipdHdr, s_ActiveTextures* fullPageActiveTexs, s_ActiveTextures* halfPageActiveTexs, e_FsFile fileIdx);
 
 /** Checks if IPD is loaded before returning texture count? */
 s32 Ipd_HalfPageMaterialCountGet(s_IpdHeader* ipdHdr);
@@ -3436,7 +3436,7 @@ void func_8005B424(VECTOR3* vec0, VECTOR3* vec1);
 /** @unused No references. */
 void func_800563E8(s_LmHeader* lmHdr, s32 arg1, s32 arg2, s32 arg3);
 
-void Lm_MaterialFileIdxApply(s_LmHeader* lmHdr, s32 fileIdx, s_FsImageDesc* image, s32 blendMode);
+void Lm_MaterialFileIdxApply(s_LmHeader* lmHdr, e_FsFile fileIdx, s_FsImageDesc* image, s32 blendMode);
 
 void func_80056504(s_LmHeader* lmHdr, char* newStr, s_FsImageDesc* image, s32 blendMode);
 
@@ -3446,7 +3446,7 @@ void Material_FsImageApply(s_Material* mat, s_FsImageDesc* image, s32 blendMode)
 
 void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* images, s8 unused, s32 startIdx, s32 blendMode);
 
-void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* activeTexs, bool (*filterFunc)(s_Material* mat), s32 fileIdx, s32 blendMode);
+void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* activeTexs, bool (*filterFunc)(s_Material* mat), e_FsFile fileIdx, s32 blendMode);
 
 /** Checks if LM textures are loaded? */
 bool LmHeader_IsTextureLoaded(s_LmHeader* lmHdr);
@@ -3487,7 +3487,7 @@ void func_80057A3C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
 void func_80057B7C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, MATRIX* mat);
 
 /** `arg4` unused. */
-s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* activeTexs, void* fsBuf9, s32 fileIdx, s32 arg4);
+s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* activeTexs, void* fsBuf9, e_FsFile fileIdx, s32 arg4);
 
 void func_8005B55C(GsCOORDINATE2* coord);
 
@@ -3507,13 +3507,13 @@ s32 func_8005D974(s32 arg0);
 s32 func_8005D9B8(VECTOR3* pos, q23_8 vol);
 
 /** Spatial SFX func? */
-void func_8005DC1C(s32 sfx, const VECTOR3* pos, q23_8 vol, s32 soundType); // Types assumed.
+void func_8005DC1C(e_Sfx sfx, const VECTOR3* pos, q23_8 vol, s32 soundType); // Types assumed.
 
 /** Spatial SFX func? */
-void func_8005DC3C(s32 sfx, const VECTOR3* pos, q23_8 vol, s32 soundType, s32 pitch);
+void func_8005DC3C(e_Sfx sfx, const VECTOR3* pos, q23_8 vol, s32 soundType, s32 pitch);
 
 /** Spatial SFX func? */
-void func_8005DD44(s32 sfx, VECTOR3* pos, q23_8 vol, s8 pitch); // Types assumed.
+void func_8005DD44(e_Sfx sfx, VECTOR3* pos, q23_8 vol, s8 pitch); // Types assumed.
 
 /** Checks `field_8` in collision struct. */
 bool func_8005F680(s_Collision* coll);
@@ -3521,7 +3521,7 @@ bool func_8005F680(s_Collision* coll);
 void func_8005F6B0(s_SubCharacter* chara, VECTOR* arg1, s32 arg2, s32 arg3);
 
 /** Spatial SFX func? */
-void func_8005DE0C(s32 sfx, VECTOR3* pos, s32 inVolume, s32 falloff, s8 pitch);
+void func_8005DE0C(e_Sfx sfx, VECTOR3* pos, s32 inVolume, s32 falloff, s8 pitch);
 
 void Map_EffectTexturesLoad(s32 mapIdx);
 
@@ -3622,7 +3622,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset);
  * @param stepFalse Step to use if flag is not set.
  * @param stepSecondary If `true`, sets `sysStateStep_C[1]` instead of `sysStateStep_C[0]`, otherwise sets `sysStateStep_C[0]`.
  */
-void func_8008605C(s32 eventFlagIdx, s32 stepTrue, s32 stepFalse, bool stepSecondary);
+void func_8008605C(e_EventFlag eventFlagIdx, s32 stepTrue, s32 stepFalse, bool stepSecondary);
 
 /** @brief Displays a selection menu and sets `sysStateStep_C` depending on the chosen value.
  *
@@ -3639,10 +3639,10 @@ void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 step
 void SysWork_StateStepIncrementAfterFade(s32 arg0, bool arg1, s32 arg2, q19_12 fadeTimestep, bool reset);
 
 /** Handles a busy wait while loading assets? */
-void func_800862F8(s32 stateStep, s32 fileIdx, bool reset);
+void func_800862F8(s32 stateStep, e_FsFile fileIdx, bool reset);
 
 /** Stepped state handler for displaying picked up items? */
-void func_80086470(u32 stateStep, s32 itemId, s32 itemCount, bool reset);
+void func_80086470(u32 stateStep, e_InventoryItemId itemId, s32 itemCount, bool reset);
 
 void func_800865FC(bool isPos, s32 idx0, s32 idx1, q3_12 angleY, q19_12 offsetOrPosX, q19_12 offsetOrPosZ);
 
@@ -3699,9 +3699,9 @@ void func_80086C58(s_SubCharacter* chara, s32 arg1);
 
 void func_80086D04(s_SubCharacter* chara);
 
-void func_80086DA8(s32 fileIdx, q19_12 fadeTimestep);
+void func_80086DA8(e_FsFile fileIdx, q19_12 fadeTimestep);
 
-void func_80086E50(s32 fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
+void func_80086E50(e_FsFile fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
 
 void func_80086F44(s32 fadeTimestep0, q19_12 fadeTimestep1);
 
@@ -3711,19 +3711,19 @@ void func_80086F44(s32 fadeTimestep0, q19_12 fadeTimestep1);
  * @param sfx SFX to play.
  * @param sfxPos SFX position.
  */
-void Map_MessageWithSfx(s32 mapMsgIdx, s32 sfx, VECTOR3* sfxPos);
+void Map_MessageWithSfx(s32 mapMsgIdx, e_Sfx sfx, VECTOR3* sfxPos);
 
-void func_8008716C(s32 itemId, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
+void func_8008716C(e_InventoryItemId itemId, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
 
-void func_80087360(s32 fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx);
+void MapMsg_DisplayWithTexture(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx);
 
-void func_80087540(s32 fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1);
+void func_80087540(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1);
 
-void Event_ItemTake(s32 itemId, s32 itemCount, s32 eventFlagIdx, s32 mapMsgIdx);
+void Event_ItemTake(e_InventoryItemId itemId, s32 itemCount, e_EventFlag eventFlagIdx, s32 mapMsgIdx);
 
-void Event_CommonItemTake(u32 pickupType, s32 eventFlagIdx);
+void Event_CommonItemTake(u32 pickupType, e_EventFlag eventFlagIdx);
 
-void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx);
+void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx);
 
 void func_80087EA8(s32 cmd);
 
@@ -3743,7 +3743,7 @@ bool func_80088D0C();
 
 void func_80088D34(s32 idx);
 
-s32 Chara_Spawn(s32 charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12 rotY, u32 stateStep);
+s32 Chara_Spawn(e_CharacterId charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12 rotY, u32 stateStep);
 
 void func_80088F94(s_SubCharacter* chara, s32 unused1, s32 unused2);
 
@@ -4169,7 +4169,7 @@ void GameFs_MapLoad(s32 mapIdx);
 bool func_8003528C(s32 idx0, s32 idx1);
 
 /** Searches for the index of the character animation data in `D_800A992C`. */
-s32 func_800352F8(s32 charaId);
+s32 func_800352F8(e_CharacterId charaId);
 
 /** Either allocates or determines where to allocate animation data. */
 void func_80035338(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coords);
@@ -4394,7 +4394,7 @@ void func_8003BE28();
  * @param charaId ID of the character for which to get the skeleton bones (`e_CharacterId`).
  * @return Character model bones or `NULL` if the character model is unregistered.
  */
-s_Bone* WorldGfx_CharaModelBonesGet(s32 charaId);
+s_Bone* WorldGfx_CharaModelBonesGet(e_CharacterId charaId);
 
 void GameFs_BgEtcGfxLoad();
 
@@ -4450,7 +4450,7 @@ void func_8003CC7C(s_WorldObject_0* arg0, MATRIX* arg1, MATRIX* arg2);
  * @param buf Buffer to advance.
  * @param charaID  ID of the character whose model to use (`e_CharacterId`).
  */
-void WorldGfx_CharaLmBufferAdvance(u8** buf, s32 charaId);
+void WorldGfx_CharaLmBufferAdvance(u8** buf, e_CharacterId charaId);
 
 /** UV setup for character textures. */
 void Chara_FsImageCalc(s_FsImageDesc* image, s32 groupIds, s32 modelIdx);
@@ -4463,7 +4463,7 @@ void Chara_FsImageCalc(s_FsImageDesc* image, s32 groupIds, s32 modelIdx);
  * @param tex Model texture.
  * @return Model or texture queue index.
  */
-void WorldGfx_CharaLoad(s32 charaId, s32 modeIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex);
+void WorldGfx_CharaLoad(e_CharacterId charaId, s32 modeIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 /** @brief Loads a character model.
  *
@@ -4473,7 +4473,7 @@ void WorldGfx_CharaLoad(s32 charaId, s32 modeIdx, s_LmHeader* lmHdr, s_FsImageDe
  * @param tex Model texture.
  * @return Model or texture queue index.
  */
-s32 WorldGfx_CharaModelLoad(u32 charaId, s32 modelIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex);
+s32 WorldGfx_CharaModelLoad(e_CharacterId charaId, s32 modelIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 /** Something related to animations. */
 void func_8003D938();
@@ -4482,7 +4482,7 @@ void func_8003D95C();
 
 void func_8003D9C8(s_CharaModel* model);
 
-void func_8003DA9C(s32 charaId, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4);
+void func_8003DA9C(e_CharacterId charaId, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4);
 
 /** Something for Harry. */
 void func_8003DE60(s_Skeleton* skel, s32 arg1);
@@ -4561,7 +4561,7 @@ void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 weapo
 s32 func_800706E4();
 
 /** Special player SFX handler for heavy breath and damage. */
-bool func_80071620(u8 animStatus, s_SubCharacter*, s32, s32 sfx);
+bool func_80071620(u8 animStatus, s_SubCharacter*, s32, e_Sfx sfx);
 
 void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
 
@@ -4628,7 +4628,7 @@ q19_12 Game_GasWeaponPowerTimerValue();
 void func_8007FD4C(s32 arg0);
 
 /** Returns data in last 3 pointer args. Outputs? */
-void func_8007FDE0(s8, s32* sfx, s8* pitch0, s8* pitch1);
+void func_8007FDE0(s8, e_Sfx* sfx, s8* pitch0, s8* pitch1);
 
 s32 func_80080478(const VECTOR3* pos0, const VECTOR3* pos1);
 
@@ -4697,7 +4697,7 @@ void Game_FlashlightToggle(void);
 bool Game_FlashlightIsOn(void);
 
 /** X and Z are guessed. */
-void func_80089034(s32 charaId, s32 arg1, q19_12 x, q19_12 z);
+void func_80089034(e_CharacterId charaId, s32 arg1, q19_12 x, q19_12 z);
 
 /* Does the map zoom in, red lines? Argument types guessed based on f`unc_800E83C0` in MAP2_S00. */
 void func_80088370(s16, s16, s16, s16, s32, s32, s32, s32, s32);

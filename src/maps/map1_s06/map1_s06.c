@@ -601,12 +601,12 @@ void func_800D6338(void) // 0x800D6338
 
     if (Savegame_EventFlagGet(EventFlag_M1S06_PickupKGordonKey))
     {
-        func_80087360(FILE_TIM_RSCBOOK_TIM, Q12(0.0f), Q12(0.0f), 25);
+        MapMsg_DisplayWithTexture(FILE_TIM_RSCBOOK_TIM, Q12(0.0f), Q12(0.0f), 25);
         Savegame_MapMarkingSet(MapMarkFlag_OldTown_KGordonDotAndSignOnly);
     }
     else
     {
-        func_80087360(FILE_TIM_RSCBOOK_TIM, Q12(0.0f), Q12(0.0f), 24);
+        MapMsg_DisplayWithTexture(FILE_TIM_RSCBOOK_TIM, Q12(0.0f), Q12(0.0f), 24);
     }
 }
 

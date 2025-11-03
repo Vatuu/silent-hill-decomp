@@ -752,7 +752,7 @@ void func_8003BE28() // 0x8003BE28
     func_80069820(D_800BCE14);
 }
 
-s_Bone* WorldGfx_CharaModelBonesGet(s32 charaId) // 0x8003BE50
+s_Bone* WorldGfx_CharaModelBonesGet(e_CharacterId charaId) // 0x8003BE50
 {
     return g_WorldGfx.registeredCharaModels_18[charaId]->skeleton_14.bones_C;
 }
@@ -1272,7 +1272,7 @@ void func_8003CD6C(s_PlayerCombat* combat) // 0x8003CD6C
     WorldGfx_PlayerHeldItemSet(itemId);
 }
 
-s32 WorldGfx_PlayerHeldItemSet(s32 itemId) // 0x8003CDA0
+s32 WorldGfx_PlayerHeldItemSet(e_InventoryItemId itemId) // 0x8003CDA0
 {
     s32         fileIdx;
     s_HeldItem* heldItem;
@@ -1593,7 +1593,7 @@ s32 func_8003D21C(s_MapOverlayHeader* mapHdr) // 0x8003D21C
     return queueIdx;
 }
 
-void WorldGfx_CharaLmBufferAdvance(u8** buf, s32 charaId) // 0x8003D354
+void WorldGfx_CharaLmBufferAdvance(u8** buf, e_CharacterId charaId) // 0x8003D354
 {
     s16 modelFileIdx;
     s32 fileSize;
@@ -1657,14 +1657,14 @@ void Chara_FsImageCalc(s_FsImageDesc* image, s32 charaId, s32 modelIdx) // 0x800
     image->clutY    = clutY;
 }
 
-bool WorldGfx_IsCharaModelPresent(s32 charaId) // 0x8003D444
+bool WorldGfx_IsCharaModelPresent(e_CharacterId charaId) // 0x8003D444
 {
     return g_WorldGfx.registeredCharaModels_18[charaId] != NULL;
 }
 
 void func_8003D460() {}
 
-void func_8003D468(s32 charaId, bool flag) // 0x8003D468
+void func_8003D468(e_CharacterId charaId, bool flag) // 0x8003D468
 {
     s16           data[256];
     RECT          rect;
@@ -1754,7 +1754,7 @@ void WorldGfx_CharaFree(s_CharaModel* model) // 0x8003D6A4
     }
 }
 
-void WorldGfx_CharaLoad(s32 charaId, s32 modeIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x8003D6E0
+void WorldGfx_CharaLoad(e_CharacterId charaId, s32 modeIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x8003D6E0
 {
     s_FsImageDesc image;
     s_LmHeader*   lmHdrBuf;
@@ -1787,7 +1787,7 @@ void WorldGfx_CharaLoad(s32 charaId, s32 modeIdx, s_LmHeader* lmHdr, s_FsImageDe
     WorldGfx_CharaModelLoad(charaId, modeIdx, lmHdrBuf, &image);
 }
 
-s32 WorldGfx_CharaModelLoad(u32 charaId, s32 modelIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x8003D7D4
+s32 WorldGfx_CharaModelLoad(e_CharacterId charaId, s32 modelIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x8003D7D4
 {
     s32            queueIdx;
     s32            modelCharaId; // `e_CharacterId`
@@ -1880,7 +1880,7 @@ void func_8003D9C8(s_CharaModel* model) // 0x8003D9C8
     }
 }
 
-void func_8003DA9C(s32 charaId, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4) // 0x8003DA9C
+void func_8003DA9C(e_CharacterId charaId, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4) // 0x8003DA9C
 {
     CVECTOR tintColor = { 0 };
     s16     ret;
@@ -1921,12 +1921,12 @@ void func_8003DA9C(s32 charaId, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 ar
     }
 }
 
-s32 func_8003DD74(s32 charaId, s32 arg1) // 0x8003DD74
+s32 func_8003DD74(e_CharacterId charaId, s32 arg1) // 0x8003DD74
 {
-    return (arg1 << 10) & 0xFC00;
+    return ((s32)arg1 << 10) & 0xFC00;
 }
 
-void func_8003DD80(s32 charaId, s32 arg1) // 0x8003DD80
+void func_8003DD80(e_CharacterId charaId, s32 arg1) // 0x8003DD80
 {
     s_CharaModel* model;
 

@@ -259,13 +259,13 @@ void func_800D7A28(void) // 0x800D7A28
 void func_800D7AC4(void) // 0x800D7AC4
 {
     g_DeltaTime0 = 0;
-    func_80087360(FILE_TIM_GOLD1_TIM, Q12(2.5f), Q12(2.0f), 19);
+    MapMsg_DisplayWithTexture(FILE_TIM_GOLD1_TIM, Q12(2.5f), Q12(2.0f), 19);
 }
 
 void func_800D7AF8(void) // 0x800D7AF8
 {
     g_DeltaTime0 = 0;
-    func_80087360(FILE_TIM_GOLD2_TIM, Q12(2.5f), Q12(2.0f), 19);
+    MapMsg_DisplayWithTexture(FILE_TIM_GOLD2_TIM, Q12(2.5f), Q12(2.0f), 19);
 }
 
 void func_800D7B2C(void)
@@ -357,13 +357,13 @@ void func_800D7B2C(void)
 void func_800D7E48(void) // 0x800D7E48
 {
     g_DeltaTime0 = Q12(0.0f);
-    func_80087360(FILE_TIM_SILVER1_TIM, Q12(2.5f), Q12(2.0f), 20);
+    MapMsg_DisplayWithTexture(FILE_TIM_SILVER1_TIM, Q12(2.5f), Q12(2.0f), 20);
 }
 
 void func_800D7E7C(void) // 0x800D7E7C
 {
     g_DeltaTime0 = Q12(0.0f);
-    func_80087360(FILE_TIM_SILVER2_TIM, Q12(2.5f), Q12(2.0f), 20);
+    MapMsg_DisplayWithTexture(FILE_TIM_SILVER2_TIM, Q12(2.5f), Q12(2.0f), 20);
 }
 
 void func_800D7EB0(void)
@@ -729,7 +729,7 @@ void func_800D8948(void) // 0x800D8948
 
 void func_800D8CC4(void) // 0x800D8CC4
 {
-    func_80087360(FILE_TIM_RECEPPIC_TIM, Q12(0.0f), Q12(0.0f), 27);
+    MapMsg_DisplayWithTexture(FILE_TIM_RECEPPIC_TIM, Q12(0.0f), Q12(0.0f), 27);
 }
 
 void MapEvent_Boiler0(void) // 0x800D8CF0
@@ -870,7 +870,7 @@ void MapEvent_TownMapTake(void) // 0x800D922C
 void func_800D9254(void) // 0x800D9254
 {
     g_BackgroundColor = 104;
-    func_80087360(FILE_TIM_USCBOOK_TIM, Q12(0.0f), Q12(0.0f), 38);
+    MapMsg_DisplayWithTexture(FILE_TIM_USCBOOK_TIM, Q12(0.0f), Q12(0.0f), 38);
 }
 
 void func_800D928C(void) // 0x800D928C

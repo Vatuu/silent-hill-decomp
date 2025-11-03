@@ -106,7 +106,7 @@ void func_800D0B10(void) // 0x800D0B10
         func_8005DC1C(Sfx_Unk1308, &D_800CB21C, 128, 0);
     }
 
-    func_80087360(FILE_TIM_NEWSP1_TIM, Q12(0.0f), Q12(0.0f), 41);
+    MapMsg_DisplayWithTexture(FILE_TIM_NEWSP1_TIM, Q12(0.0f), Q12(0.0f), 41);
     Savegame_EventFlagSet(EventFlag_203);
 }
 

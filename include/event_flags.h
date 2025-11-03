@@ -566,4 +566,6 @@ typedef enum _EventFlag
     EventFlag_M6S03_HealthDrink0   = 725,
     EventFlag_M6S03_HandgunBullets = 726,
     EventFlag_M6S03_HealthDrink1   = 727,
+
+    EventFlag_Hack = -1, // @hack Force enum to be treated as `s32`.
 } e_EventFlag;

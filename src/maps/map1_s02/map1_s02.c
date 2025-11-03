@@ -478,12 +478,12 @@ void func_800DA8F8(void) // 0x800DA8F8
 
 void func_800DA9D4(void) // 0x800DA9D4
 {
-    func_80087360(FILE_TIM_GOLD2_TIM, Q12(3.0f), Q12(2.5f), 21);
+    MapMsg_DisplayWithTexture(FILE_TIM_GOLD2_TIM, Q12(3.0f), Q12(2.5f), 21);
 }
 
 void func_800DAA00(void) // 0x800DAA00
 {
-    func_80087360(FILE_TIM_SILVER2_TIM, Q12(3.0f), Q12(2.5f), 22);
+    MapMsg_DisplayWithTexture(FILE_TIM_SILVER2_TIM, Q12(3.0f), Q12(2.5f), 22);
 }
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DAA2C);
@@ -645,7 +645,7 @@ INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DBB7C);
 void func_800DBF88(void) // 0x800DBF88
 {
     Savegame_EventFlagSet(EventFlag_97);
-    func_80087360(FILE_TIM_LVTRYMSG_TIM, Q12(0.0f), Q12(0.0f), 38);
+    MapMsg_DisplayWithTexture(FILE_TIM_LVTRYMSG_TIM, Q12(0.0f), Q12(0.0f), 38);
 }
 
 void func_800DBFC8(void) // 0x800DBFC8

@@ -379,7 +379,7 @@ INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DC0F8);
 
 void func_800DC2E4(void) // 0x800DC2E4
 {
-    func_80087360(FILE_TIM_LOCKER1_TIM, Q12(2.5f), Q12(2.5f), 43);
+    MapMsg_DisplayWithTexture(FILE_TIM_LOCKER1_TIM, Q12(2.5f), Q12(2.5f), 43);
 }
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DC310);

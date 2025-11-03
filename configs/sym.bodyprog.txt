@@ -709,6 +709,7 @@ Map_MessageWithAudio                        = 0x800869E4; // type:func
 Camera_PositionSet                          = 0x80086A94; // type:func
 Camera_LookAtSet                            = 0x80086B70; // type:func
 Map_MessageWithSfx                          = 0x80086FE8; // type:func
+MapMsg_DisplayWithTexture                   = 0x80087360; // type:func
 Event_ItemTake                              = 0x800877B8; // type:func
 Event_CommonItemTake                        = 0x800879FC; // type:func
 Event_MapTake                               = 0x80087AF4; // type:func

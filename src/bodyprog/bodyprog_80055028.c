@@ -771,7 +771,7 @@ void func_800563E8(s_LmHeader* lmHdr, s32 arg1, s32 arg2, s32 arg3) // 0x800563E
     }
 }
 
-void Lm_MaterialFileIdxApply(s_LmHeader* lmHdr, s32 fileIdx, s_FsImageDesc* image, s32 blendMode) // 0x80056464
+void Lm_MaterialFileIdxApply(s_LmHeader* lmHdr, e_FsFile fileIdx, s_FsImageDesc* image, s32 blendMode) // 0x80056464
 {
     char  sp10[8];
     char  sp18[16];
@@ -871,7 +871,7 @@ void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* images, s8 unused, s32 star
     }
 }
 
-void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* activeTexs, bool (*filterFunc)(s_Material* mat), s32 fileIdx, s32 blendMode) // 0x80056774
+void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveTextures* activeTexs, bool (*filterFunc)(s_Material* mat), e_FsFile fileIdx, s32 blendMode) // 0x80056774
 {
     s_Material* curMat;
 
@@ -2019,7 +2019,7 @@ void Texture_Init1(s_Texture* tex, char* texName, u8 tPage0, u8 tPage1, s32 u, s
     tex->queueIdx_10 = NO_VALUE;
 }
 
-s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* activeTexs, void* fsBuffer9, s32 fileIdx, s32 arg4)
+s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* activeTexs, void* fsBuffer9, e_FsFile fileIdx, s32 arg4)
 {
     s8         filename[12];
     s8         debugStr[12];
@@ -2783,12 +2783,12 @@ s32 func_8005D9B8(VECTOR3* pos, q23_8 vol) // 0x8005D9B8
     return var_v0;
 }
 
-void func_8005DC1C(s32 sfx, const VECTOR3* pos, q23_8 vol, s32 soundType)
+void func_8005DC1C(e_Sfx sfx, const VECTOR3* pos, q23_8 vol, s32 soundType)
 {
     func_8005DC3C(sfx, pos, vol, soundType, 0);
 }
 
-void func_8005DC3C(s32 sfx, const VECTOR3* pos, q23_8 vol, s32 soundType, s32 pitch) // 0x8005DC3C
+void func_8005DC3C(e_Sfx sfx, const VECTOR3* pos, q23_8 vol, s32 soundType, s32 pitch) // 0x8005DC3C
 {
     q23_8 volCpy;
     s32   balance;
@@ -2837,7 +2837,7 @@ void func_8005DC3C(s32 sfx, const VECTOR3* pos, q23_8 vol, s32 soundType, s32 pi
     }
 }
 
-void func_8005DD44(s32 sfx, VECTOR3* pos, q23_8 vol, s8 pitch) // 0x8005DD44
+void func_8005DD44(e_Sfx sfx, VECTOR3* pos, q23_8 vol, s8 pitch) // 0x8005DD44
 {
     q23_8 volCpy;
     s32   balance;
@@ -2882,7 +2882,7 @@ static inline s32 calc_atten(s32 volume, VECTOR3* pos, s32 falloff)
     return (volume * dist / falloff);
 }
 
-void func_8005DE0C(s32 sfx, VECTOR3* pos, s32 inVolume, s32 falloff, s8 pitch)
+void func_8005DE0C(e_Sfx sfx, VECTOR3* pos, s32 inVolume, s32 falloff, s8 pitch)
 {
     s32 balance;
 

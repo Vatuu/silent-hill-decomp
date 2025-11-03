@@ -145,7 +145,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset) // 0x8
     }
 }
 
-void func_8008605C(s32 eventFlagIdx, s32 stepTrue, s32 stepFalse, bool stepSecondary) // 0x8008605C
+void func_8008605C(e_EventFlag eventFlagIdx, s32 stepTrue, s32 stepFalse, bool stepSecondary) // 0x8008605C
 {
     if (!Savegame_EventFlagGet(eventFlagIdx))
     {
@@ -284,7 +284,7 @@ const RECT D_8002AB10 =  // 0x8002AB10 .rodata
     (SCREEN_WIDTH / 5) * 3, SCREEN_HEIGHT
 };
 
-void func_800862F8(s32 stateStep, s32 fileIdx, bool reset) // 0x800862F8
+void func_800862F8(s32 stateStep, e_FsFile fileIdx, bool reset) // 0x800862F8
 {
     s32 activeStateStep;
 
@@ -358,7 +358,7 @@ void func_800862F8(s32 stateStep, s32 fileIdx, bool reset) // 0x800862F8
     }
 }
 
-void func_80086470(u32 stateStep, s32 itemId, s32 itemCount, bool reset) // 0x80086470
+void func_80086470(u32 stateStep, e_InventoryItemId itemId, s32 itemCount, bool reset) // 0x80086470
 {
     s32 activeStateStep;
 
@@ -702,7 +702,7 @@ void func_80086D04(s_SubCharacter* chara) // 0x80086D04
     }
 }
 
-void func_80086DA8(s32 fileIdx, q19_12 fadeTimestep) // 0x80086DA8
+void func_80086DA8(e_FsFile fileIdx, q19_12 fadeTimestep) // 0x80086DA8
 {
     switch (g_SysWork.sysStateStep_C[1])
     {
@@ -720,7 +720,7 @@ void func_80086DA8(s32 fileIdx, q19_12 fadeTimestep) // 0x80086DA8
     }
 }
 
-void func_80086E50(s32 fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x80086E50
+void func_80086E50(e_FsFile fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x80086E50
 {
     switch (g_SysWork.sysStateStep_C[1])
     {
@@ -755,7 +755,7 @@ void func_80086F44(q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x80086F44
     SysWork_StateStepIncrement(0);
 }
 
-void Map_MessageWithSfx(s32 mapMsgIdx, s32 sfx, VECTOR3* sfxPos) // 0x80086FE8
+void Map_MessageWithSfx(s32 mapMsgIdx, e_Sfx sfx, VECTOR3* sfxPos) // 0x80086FE8
 {
     s32 i;
 
@@ -802,7 +802,7 @@ void Map_MessageWithSfx(s32 mapMsgIdx, s32 sfx, VECTOR3* sfxPos) // 0x80086FE8
     }
 }
 
-void func_8008716C(s32 itemId, q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x8008716C
+void func_8008716C(e_InventoryItemId itemId, q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x8008716C
 {
     switch (g_SysWork.sysStateStep_C[1])
     {
@@ -847,7 +847,7 @@ void func_8008716C(s32 itemId, q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x
     }
 }
 
-void func_80087360(s32 fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx) // 0x80087360
+void MapMsg_DisplayWithTexture(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx) // 0x80087360
 {
     switch (g_SysWork.sysStateStep_C[1])
     {
@@ -858,7 +858,7 @@ void func_80087360(s32 fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 
             SysWork_StateStepIncrement(1);
 
         case 1:
-            func_800862F8(7, fileIdx, true);
+            func_800862F8(7, textureFileIdx, true);
             break;
 
         case 2:
@@ -888,7 +888,7 @@ void func_80087360(s32 fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 
     }
 }
 
-void func_80087540(s32 fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1) // 0x80087540
+void func_80087540(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1) // 0x80087540
 {
     switch (g_SysWork.sysStateStep_C[1])
     {
@@ -899,7 +899,7 @@ void func_80087540(s32 fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 
             SysWork_StateStepIncrement(1);
 
         case 1:
-            func_800862F8(7, fileIdx, true);
+            func_800862F8(7, textureFileIdx, true);
             break;
 
         case 2:
@@ -948,7 +948,7 @@ void func_80087540(s32 fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 
     }
 }
 
-void Event_ItemTake(s32 itemId, s32 itemCount, s32 eventFlagIdx, s32 mapMsgIdx) // 0x800877B8
+void Event_ItemTake(e_InventoryItemId itemId, s32 itemCount, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0x800877B8
 {
     s32 i            = itemId;
     s32 mapMsgIdxCpy = mapMsgIdx;
@@ -1012,7 +1012,7 @@ void Event_ItemTake(s32 itemId, s32 itemCount, s32 eventFlagIdx, s32 mapMsgIdx) 
     }
 }
 
-void Event_CommonItemTake(u32 pickupType, s32 eventFlagIdx) // 0x800879FC
+void Event_CommonItemTake(u32 pickupType, e_EventFlag eventFlagIdx) // 0x800879FC
 {
     #define EASY_DIFFICULTY_AMMO_COUNT_MULT_MIN 2
 
@@ -1054,7 +1054,7 @@ void Event_CommonItemTake(u32 pickupType, s32 eventFlagIdx) // 0x800879FC
     }
 }
 
-void Event_MapTake(s32 mapFlagIdx, s32 eventFlagIdx, s32 mapMsgIdx) // 0x80087AF4
+void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0x80087AF4
 {
     static const RECT D_8002ABA4 = {
         SCREEN_POSITION_X(100.0f), 256,
@@ -1325,7 +1325,7 @@ void func_80088D34(s32 idx) // 0x80088D34
     Anim_BoneInit(D_800A992C[idx].animFile1_8, D_800A992C[idx].npcCoords_14);
 }
 
-s32 Chara_Spawn(s32 charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12 rotY, u32 stateStep) // 0x80088D78
+s32 Chara_Spawn(e_CharacterId charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12 rotY, u32 stateStep) // 0x80088D78
 {
     #define HAS_FLAG(ptr, idx) \
         ((((u32*)ptr)[(idx) >> 5] >> ((idx) & 0x1F)) & (1 << 0))

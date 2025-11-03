@@ -1506,7 +1506,7 @@ void func_800DF21C(void) // 0x800DF21C
 
 void func_800DFA54(void) // 0x800DFA54
 {
-    func_80087360(FILE_TIM_ABUSEDSK_TIM, Q12(0.0f), Q12(0.0f), 98);
+    MapMsg_DisplayWithTexture(FILE_TIM_ABUSEDSK_TIM, Q12(0.0f), Q12(0.0f), 98);
 }
 
 void MapEvent_ScrewdriverTake(void) // 0x800DFA80
@@ -1517,13 +1517,13 @@ void MapEvent_ScrewdriverTake(void) // 0x800DFA80
 void func_800DFAAC(void) // 0x800DFAAC
 {
     g_BackgroundColor = 104;
-    func_80087360(FILE_TIM_LITHGRPH_TIM, Q12(0.0f), Q12(0.0f), 101);
+    MapMsg_DisplayWithTexture(FILE_TIM_LITHGRPH_TIM, Q12(0.0f), Q12(0.0f), 101);
 }
 
 void func_800DFAE4(void) // 0x800DFAE4
 {
     g_BackgroundColor = 104;
-    func_80087360(FILE_TIM_LITHGR_3_TIM, Q12(0.0f), Q12(0.0f), 102);
+    MapMsg_DisplayWithTexture(FILE_TIM_LITHGR_3_TIM, Q12(0.0f), Q12(0.0f), 102);
 }
 
 void MapEvent_AmuletOfSolomonTake(void) // 0x800DFB1C
@@ -2129,7 +2129,7 @@ void func_800E0FF0(void) // 0x800E0FF0
     {
         if (Savegame_EventFlagGet(EventFlag_486))
         {
-            func_80087360(FILE_TIM_ELCWIRE1_TIM, 0, 0, 105);
+            MapMsg_DisplayWithTexture(FILE_TIM_ELCWIRE1_TIM, 0, 0, 105);
             if (g_SysWork.sysStateStep_C[1] >= 3 && g_SysWork.sysStateStep_C[1] <= 5)
             {
                 // Plays SFX after random time between 0.2f - 2.2f?
@@ -2151,7 +2151,7 @@ void func_800E0FF0(void) // 0x800E0FF0
         else
         {
             g_BackgroundColor = 112;
-            func_80087360(FILE_TIM_ELCWIRE0_TIM, 0, 0, 110);
+            MapMsg_DisplayWithTexture(FILE_TIM_ELCWIRE0_TIM, 0, 0, 110);
         }
     }
 }
@@ -2162,22 +2162,22 @@ void func_800E12E4(void) // 0x800E12E4
     {
         if (Savegame_EventFlagGet(EventFlag_498))
         {
-            func_80087360(FILE_TIM_3X3HINT2_TIM, 0, 0, 108);
+            MapMsg_DisplayWithTexture(FILE_TIM_3X3HINT2_TIM, 0, 0, 108);
         }
         else
         {
-            func_80087360(FILE_TIM_3X3PICT2_TIM, 0, 0, 108);
+            MapMsg_DisplayWithTexture(FILE_TIM_3X3PICT2_TIM, 0, 0, 108);
         }
     }
     else
     {
         if (Savegame_EventFlagGet(EventFlag_499))
         {
-            func_80087360(FILE_TIM_3X3HINT1_TIM, 0, 0, 107);
+            MapMsg_DisplayWithTexture(FILE_TIM_3X3HINT1_TIM, 0, 0, 107);
         }
         else
         {
-            func_80087360(FILE_TIM_3X3PICT1_TIM, 0, 0, 107);
+            MapMsg_DisplayWithTexture(FILE_TIM_3X3PICT1_TIM, 0, 0, 107);
         }
     }
 
@@ -2348,7 +2348,7 @@ INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800E204C);
 
 void func_800E2DC0(void) // 0x800E2DC0
 {
-    func_80087360(FILE_TIM_ALESSA_TIM, Q12(0.0f), Q12(0.0f), 124);
+    MapMsg_DisplayWithTexture(FILE_TIM_ALESSA_TIM, Q12(0.0f), Q12(0.0f), 124);
 }
 
 INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02_2", D_800CD998);

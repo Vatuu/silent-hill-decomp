@@ -45,7 +45,7 @@ typedef enum _Sfx
 
     Sfx_Stumble1     = 1333,
     Sfx_DoorJammed   = 1334,
-    Sfx_UseKey      = 1335,
+    Sfx_UseKey       = 1335,
     Sfx_Unk1336      = 1336,
     Sfx_Unk1337      = 1337,
     Sfx_Unk1338      = 1338,
@@ -262,5 +262,7 @@ typedef enum _Sfx
 
     Sfx_Unk4664 = 4664,
 
-    Sfx_Unk4699 = 4699
+    Sfx_Unk4699 = 4699,
+
+    Sfx_Hack = -1, // @hack Force enum to be treated as `s32`.
 } e_Sfx;
