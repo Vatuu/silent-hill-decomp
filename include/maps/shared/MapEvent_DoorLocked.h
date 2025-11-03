@@ -14,6 +14,9 @@ void MapEvent_DoorLocked(void)
         Map_MessageWithSfx(MapMsgIdx_DoorLocked, Sfx_Unk1349, &sfxPos);
         return;
     }
+#elif defined(MAP3_S02)
+    Map_MessageWithSfx(16, Sfx_DoorLocked, &sfxPos); // "It's locked!"
+    return;
 #endif
 
     Map_MessageWithSfx(MapMsgIdx_DoorLocked, Sfx_DoorLocked, &sfxPos);

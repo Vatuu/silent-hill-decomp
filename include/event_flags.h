@@ -200,6 +200,9 @@ typedef enum _EventFlag
     EventFlag_225 = 225,
     EventFlag_226 = 226,
 
+    EventFlag_233 = 233,
+    EventFlag_234 = 234,
+
     EventFlag_236 = 236,
     EventFlag_237 = 237,
 
