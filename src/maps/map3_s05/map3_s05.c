@@ -171,7 +171,26 @@ INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D4070);
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D4264);
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D437C);
+s32 func_800D437C(s_SubCharacter* chara)
+{
+    s_SubCharacter* npcs;
+    s32 i;
+    for (i = 0; i < 6; i++)
+    {
+        if ((g_SysWork.npcs_1A0[i].model_0.charaId_0 == Chara_PuppetNurse || g_SysWork.npcs_1A0[i].model_0.charaId_0 == Chara_PuppetDoctor) &&
+            g_SysWork.npcs_1A0[i].health_B0 > 0 && 
+            g_SysWork.npcs_1A0[i].field_40 != chara->field_40 &&
+            !Math_Distance2dCheck(&chara->position_18, &g_SysWork.npcs_1A0[i].position_18, Q12(4.0f)))
+        {
+            npcs = g_SysWork.npcs_1A0;
+            if (!(npcs[i].flags_3E & 2))
+            {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", sharedFunc_800CF9F8_3_s03); // 0x800D4468
 

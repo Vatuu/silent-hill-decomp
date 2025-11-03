@@ -42,4 +42,6 @@ void func_800D719C(void);
 
 void func_800D7280(void);
 
+s32 func_800D437C(s_SubCharacter* chara);
+
 #endif
