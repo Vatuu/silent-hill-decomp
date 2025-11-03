@@ -5,6 +5,8 @@ extern s_WorldObjectPose g_CommonWorldObjectPoses[6];
 extern VECTOR3 D_800ED938;
 extern s16 D_800F0B2C;
 extern s_WorldObject_0   g_CommonWorldObjects[6];
+extern u8 D_800ED43C;
+extern s8 D_800ED43F;
 
 void func_800DC9E0(s_SubCharacter* chara);
 
@@ -31,5 +33,7 @@ void func_800EA1C4(void);
 void func_800E9FDC(void);
 
 void func_800E9D54(void);
+
+void func_800E9B38(void);
 
 #endif

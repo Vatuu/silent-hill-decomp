@@ -559,7 +559,38 @@ INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E9714);
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E993C);
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E9B38);
+void func_800E9B38(void)
+{
+    s32 flags;
+    s32 tmp;
+
+    flags = (1<<1);
+    if (g_SavegamePtr->mapRoomIdx_A5 != 12)
+    {
+        if ((g_SavegamePtr->mapRoomIdx_A5 == 17) && Savegame_EventFlagGet(EventFlag_295) && !Savegame_EventFlagGet(EventFlag_352))
+        {
+            flags = (1<<1) | (1<<2);
+        }
+    }
+    else if (!Savegame_EventFlagGet(EventFlag_295))
+    {
+        flags = (1<<4) | (1<<1);
+    }
+
+    if (Savegame_EventFlagGet(EventFlag_M3S06_PickupAntiqueShopKey))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M2S02_AnitqueShopOpen))
+        {
+            flags |= (1<<3);
+        }
+    }
+    if (flags & (1<<3))
+    {
+        tmp = func_800364BC();
+        D_800ED43F = tmp;
+    }
+    func_80035F4C(flags, Q12(0.1f), &D_800ED43C);
+}
 
 void func_800E9C24(void) {}
 
