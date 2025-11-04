@@ -1,20 +1,12 @@
-// _noParticles version of sharedFunc_800CB6B0_0_s00
-// used in:
-// MAP1_S04 MAP2_S01 MAP2_S03 MAP2_S04 MAP3_S02 MAP4_S00 MAP4_S06 MAP6_S05 MAP4_S01
+/** Barebones version of `sharedFunc_800CB6B0_0_s00`, missing calls to `Particle_Update` and other particle-related code.
+ * Used in:
+ * MAP1_S04 MAP2_S01 MAP2_S03 MAP2_S04 MAP3_S02 MAP4_S00 MAP4_S06 MAP6_S05 MAP4_S01
+ * Changes to this file should be reflected inside `sharedFunc_800CB6B0_0_s00.h`
+ */
 
 void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
 {
-    s32 temp_a2;
     s32 temp_s0;
-    s32 temp_s0_2;
-    s32 temp_s0_3;
-    s32 temp_v0;
-    s32 i;
-    s32 var_v0;
-    s32 var_v0_3;
-    u32 temp_t0;
-    u32 temp_v1_2;
-    u16 temp_v1_3;
 
     func_80055434(&g_ParticleVectors0.vector_0);
     g_ParticleVectors0.field_28 = func_8005545C(&g_ParticleVectors0.svec_18);
@@ -49,8 +41,9 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
 
             sharedData_800CD77C_1_s04 = arg2;
 
-            temp_s0_3 = SetSp(0x1F8003D8);
-            SetSp(temp_s0_3);
+            temp_s0 = SetSp(0x1F8003D8);
+            SetSp(temp_s0);
+            break;
     }
 
     g_ParticleVectors1 = g_ParticleVectors0;

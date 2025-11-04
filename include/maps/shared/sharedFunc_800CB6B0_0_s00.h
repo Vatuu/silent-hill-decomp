@@ -1,3 +1,8 @@
+/** Full version of `sharedFunc_800CB6B0_0_s00` used by most maps.
+ * Maps that are missing calls to `Particle_Update` should use the `sharedFunc_800CB6B0_0_s00_noParticles.h` version.
+ * Changes to this file should be reflected inside `sharedFunc_800CB6B0_0_s00_noParticles.h`
+ */
+
 void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
 {
     s32 temp_a2;
@@ -487,6 +492,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
             {
                 sharedData_800E0CBC_0_s00[i].stateStep_1E = 0;
             }
+            break;
     }
 
     g_ParticleVectors1 = g_ParticleVectors0;
