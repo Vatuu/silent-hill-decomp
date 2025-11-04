@@ -103,7 +103,7 @@ void func_800D0B10(void) // 0x800D0B10
 
     if (g_SysWork.sysStateStep_C[1] == 0)
     {
-        func_8005DC1C(Sfx_UiMap, &D_800CB21C, 128, 0);
+        func_8005DC1C(Sfx_MenuMap, &D_800CB21C, Q8_CLAMPED(0.5f), 0);
     }
 
     MapMsg_DisplayWithTexture(FILE_TIM_NEWSP1_TIM, Q12(0.0f), Q12(0.0f), 41);

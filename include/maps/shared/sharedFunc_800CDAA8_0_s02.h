@@ -187,7 +187,7 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch_Unk85(s_MainCharacterExtra* 
 void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord)
 {
     s_Collision coll;
-    e_SfxId       sfx;
+    e_SfxId     sfx;
     s8          pitch0;
     s8          pitch1;
     s32         newMoveSpeed;
@@ -680,7 +680,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra
             if (sharedFunc_800D2DAC_0_s00() == 1 && g_SysWork.field_2358 == 0)
             {
                 g_SysWork.field_2358 = 1;
-                func_8005DC1C(Sfx_Unk1356, &playerChara->position_18, 128, 0);
+                func_8005DC1C(Sfx_Unk1356, &playerChara->position_18, Q8_CLAMPED(0.5f), 0);
             }
 
             if (playerChara->model_0.anim_4.keyframeIdx_8 >= keyframeIdxMax)

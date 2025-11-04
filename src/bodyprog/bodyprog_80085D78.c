@@ -2379,7 +2379,7 @@ bool func_8008B474(s32 arg0, s32 vol, s32 soundType) // 0x8008B474
         }
         else
         {
-            func_8005DC1C(sfx, &g_SysWork.player_4C.chara_0.position_18, 0, soundType);
+            func_8005DC1C(sfx, &g_SysWork.player_4C.chara_0.position_18, Q8_CLAMPED(0.0f), soundType);
         }
     }
     else

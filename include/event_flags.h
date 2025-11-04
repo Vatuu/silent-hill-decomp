@@ -1,4 +1,4 @@
-/** @brief Flag indices for game event flags stored in savegame.
+/** @brief Indices for game event flags stored in the savegame.
  * Accessed via `Savegame_EventFlagGet`/`Savegame_EventFlagSet`.
  */
 typedef enum _EventFlag
@@ -27,7 +27,8 @@ typedef enum _EventFlag
     EventFlag_24 = 24,
     EventFlag_25 = 25,
 
-    /** `MAP7_S01` and `MAP7_S02` common item pickups, early numbers could be reclaimed flags, or Nowhere was designed very early on? */
+    /** `MAP7_S01` and `MAP7_S02` common item pickups. Early numbers could be reclaimed flags or Nowhere was designed very early on? */
+
     EventFlag_M7S01_RifleShells        = 27,
     EventFlag_M7S01_HandgunBullets0    = 28,
     EventFlag_M7S01_HealthDrink0       = 29,
@@ -180,14 +181,14 @@ typedef enum _EventFlag
     EventFlag_197 = 197,
     EventFlag_198 = 198,
 
-    EventFlag_M3S00_FirstAidKit = 199, // Odd numbering not with other common items, possibly some default that goes unused, shared with M3S01 and M3S06.
+    EventFlag_M3S00_FirstAidKit = 199, // Odd numbering not with other common items, possibly some default that goes unused. Shared with M3S01 and M3S06.
     EventFlag_200               = 200,
 
     EventFlag_203                       = 203,
     EventFlag_204                       = 204,
     EventFlag_M3S01_PickupPlasticBottle = 205,
     EventFlag_M3S01_PickupUnknownLiquid = 206,
-    EventFlag_M3S00_PickupMap           = 207, // Shared with M3S01, M3S06
+    EventFlag_M3S00_PickupMap           = 207, // Shared with M3S01 and M3S06.
     EventFlag_M3S01_PickupMap           = 208, // M3S01 also uses flag above.
     EventFlag_M3S01_PickupBasementKey   = 209,
     EventFlag_M3S01_BasementDoorOpen    = 210,
@@ -397,10 +398,12 @@ typedef enum _EventFlag
     EventFlag_587 = 587,
 
     /** `MAP0_S01` common item pickups. */
+
     EventFlag_M0S01_HealthDrink0 = 596,
     EventFlag_M0S01_HealthDrink1 = 597,
 
     /** `MAP0_S02` common item pickups. */
+
     EventFlag_M0S02_FirstAidKit    = 598,
     EventFlag_M0S02_HealthDrink0   = 599,
     EventFlag_M0S02_HealthDrink1   = 600,
@@ -411,6 +414,7 @@ typedef enum _EventFlag
 
     // TODO: Following flags came from ghidra, not tested in decomp yet.
     /** `MAP1_S00` common item pickups. */
+
     EventFlag_M1S00_HandgunBullets0 = 605,
     EventFlag_M1S00_HandgunBullets1 = 606,
     EventFlag_M1S00_HandgunBullets2 = 607,
@@ -418,6 +422,7 @@ typedef enum _EventFlag
     EventFlag_M1S00_FirstAidKit     = 609,
 
     /** `MAP1_S01` common item pickups. */
+
     EventFlag_M1S01_HandgunBullets0 = 610,
     EventFlag_M1S01_FirstAidKit     = 611,
     EventFlag_M1S01_HealthDrink     = 612,
@@ -425,6 +430,7 @@ typedef enum _EventFlag
     EventFlag_M1S01_HandgunBullets2 = 614,
 
     /** `MAP1_S02` common item pickups. */
+
     EventFlag_M1S02_Ampoule0        = 615,
     EventFlag_M1S02_ShotgunShells0  = 616,
     EventFlag_M1S02_ShotgunShells1  = 617,
@@ -438,6 +444,7 @@ typedef enum _EventFlag
     EventFlag_M1S02_HealthDrink1    = 625,
 
     /** `MAP1_S03` common item pickups. */
+
     EventFlag_M1S03_ShotgunShells0  = 626,
     EventFlag_M1S03_HandgunBullets0 = 627,
     EventFlag_M1S03_HealthDrink0    = 628,
@@ -450,6 +457,7 @@ typedef enum _EventFlag
     EventFlag_M1S03_FirstAidKit     = 635,
 
     /** `MAP2_S00` common item pickups. */
+
     EventFlag_M2S00_FirstAidKit0     = 636,
     EventFlag_M2S00_HandgunBullets0  = 637,
     EventFlag_M2S00_HandgunBullets1  = 638,
@@ -484,9 +492,11 @@ typedef enum _EventFlag
     EventFlag_M2S00_FirstAidKit2     = 667,
 
     /** `MAP2_S01` common item pickups. */
+
     EventFlag_M2S01_HealthDrink = 668,
 
     /** `MAP2_S02` common item pickups. */
+
     EventFlag_M2S02_HealthDrink0    = 669,
     EventFlag_M2S02_HealthDrink1    = 670,
     EventFlag_M2S02_HandgunBullets0 = 671,
@@ -494,6 +504,7 @@ typedef enum _EventFlag
     EventFlag_M2S02_HealthDrink2    = 673,
 
     /** `MAP2_S04` common item pickups. */
+
     EventFlag_M2S04_ShotgunShells0  = 674,
     EventFlag_M2S04_HandgunBullets0 = 675,
     EventFlag_M2S04_HandgunBullets1 = 676,
@@ -503,9 +514,11 @@ typedef enum _EventFlag
     EventFlag_M2S04_RifleShells     = 680,
 
     /** `MAP3_S01` common item pickups. */
+
     EventFlag_M3S01_HealthDrink = 681,
 
     /** `MAP3_S03` common item pickups. */
+
     EventFlag_M3S03_FirstAidKit0   = 682,
     EventFlag_M3S03_HealthDrink    = 683,
     EventFlag_M3S03_HandgunBullets = 684,
@@ -513,6 +526,7 @@ typedef enum _EventFlag
     EventFlag_M3S03_ShotgunShells  = 686,
 
     /** `MAP3_S04` common item pickups. */
+
     EventFlag_M3S04_HealthDrink0   = 687,
     EventFlag_M3S04_HealthDrink1   = 688,
     EventFlag_M3S04_HealthDrink2   = 689,
@@ -520,17 +534,20 @@ typedef enum _EventFlag
     EventFlag_M3S04_HandgunBullets = 691,
 
     /** `MAP3_S05` common item pickups. */
+
     EventFlag_M3S05_Ampoule        = 692,
     EventFlag_M3S05_HealthDrink    = 693,
     EventFlag_M3S05_HandgunBullets = 694,
     EventFlag_M3S05_ShotgunShells  = 695,
 
     /** `MAP4_S03` common item pickups. */
+
     EventFlag_M4S03_FirstAidKit  = 696,
     EventFlag_M4S03_RifleShells0 = 697,
     EventFlag_M4S03_RifleShells1 = 698,
 
     /** `MAP5_S00` common item pickups. */
+
     EventFlag_M5S00_ShotgunShells   = 699,
     EventFlag_M5S00_HealthDrink0    = 700,
     EventFlag_M5S00_HandgunBullets0 = 701,
@@ -541,6 +558,7 @@ typedef enum _EventFlag
     EventFlag_M5S00_HandgunBullets1 = 706,
 
     /** `MAP5_S01` common item pickups. */
+
     EventFlag_M5S01_RifleShells0   = 707,
     EventFlag_M5S01_HandgunBullets = 708,
     EventFlag_M5S01_FirstAidKit    = 709,
@@ -548,12 +566,14 @@ typedef enum _EventFlag
     EventFlag_M5S01_RifleShells1   = 711,
 
     /** `MAP5_S02` common item pickups. */
+
     EventFlag_M5S02_HealthDrink0 = 712,
     EventFlag_M5S02_HealthDrink1 = 713,
     EventFlag_M5S02_RifleShells  = 714,
     EventFlag_M5S02_HealthDrink2 = 715,
 
     /** `MAP5_S03` common item pickups. */
+
     EventFlag_M5S03_HealthDrink0  = 716,
     EventFlag_M5S03_ShotgunShells = 717,
     EventFlag_M5S03_HealthDrink1  = 718,
@@ -563,11 +583,13 @@ typedef enum _EventFlag
     EventFlag_M6S00_FirstAidKit   = 721,
 
     /** `MAP6_S01` common item pickups. */
+
     EventFlag_M6S01_RifleShells    = 722,
     EventFlag_M6S01_HandgunBullets = 723,
     EventFlag_M6S01_HealthDrink    = 724,
 
     /** `MAP6_S03` common item pickups. */
+
     EventFlag_M6S03_HealthDrink0   = 725,
     EventFlag_M6S03_HandgunBullets = 726,
     EventFlag_M6S03_HealthDrink1   = 727,

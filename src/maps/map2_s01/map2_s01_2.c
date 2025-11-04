@@ -374,7 +374,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 27:
-            func_8005DC1C(Sfx_Unk1323, &soundPos, 0x80, 0);
+            func_8005DC1C(Sfx_Unk1323, &soundPos, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 28:
@@ -382,7 +382,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 29:
-            func_8005DC1C(Sfx_Unk1324, &soundPos, 0x80, 0);
+            func_8005DC1C(Sfx_Unk1324, &soundPos, Q8_CLAMPED(0.5f), 0);
             func_80088F94(dahliaChara, 0, 0);
             SysWork_StateStepIncrement(0);
 

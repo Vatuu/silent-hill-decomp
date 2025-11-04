@@ -87,7 +87,7 @@ void func_800D02B4(void) // 0x800D02B4
             break;
 
         case 3:
-            func_8005DC1C(Sfx_Unk1523, &D_800CAAF8, 128, 0);
+            func_8005DC1C(Sfx_Unk1523, &D_800CAAF8, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 4:

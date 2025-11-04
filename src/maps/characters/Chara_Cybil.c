@@ -101,7 +101,7 @@ void Ai_Cybil_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 {
     s_Collision coll;
-    e_SfxId       sfx;
+    e_SfxId     sfx;
     s8          pitch0;
     s8          pitch1;
 
@@ -503,7 +503,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
         case 22:
             if (sharedData_800E237C_0_s01 == 1)
             {
-                func_8005DC1C(Sfx_Unk1673, &g_SysWork.npcs_1A0[1].position_18, 192, 0);
+                func_8005DC1C(Sfx_Unk1673, &g_SysWork.npcs_1A0[1].position_18, Q8_CLAMPED(0.75f), 0);
                 sharedData_800E237C_0_s01 = 2;
             }
 
@@ -512,7 +512,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
                 if (sharedData_800E237C_0_s01 == 0)
                 {
                     func_8006342C(63, 1024, chara->rotation_24.vy, &g_SysWork.npcCoords_FC0[0]);
-                    func_8005DC1C(Sfx_Unk1622, &chara->position_18, 192, 0);
+                    func_8005DC1C(Sfx_Unk1622, &chara->position_18, Q8_CLAMPED(0.75f), 0);
                     sharedData_800E237C_0_s01 = 1;
                 }
             }

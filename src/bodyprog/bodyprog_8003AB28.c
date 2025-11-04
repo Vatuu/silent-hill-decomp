@@ -130,7 +130,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
             if (g_Controller0->btnsPulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
             {
-                Sd_EngineCmd(Sfx_UiMove);
+                Sd_EngineCmd(Sfx_MenuMove);
                 g_GameWork.gameState_594 = GameState_MainMenu;
 
                 if (g_GameWork.gameStateStep_598[0] != 1)
@@ -173,11 +173,11 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
                 if (g_MainMenu_SelectedEntry < (u32)MainMenuEntry_Start) // TODO: Odd cast.
                 {
-                    Sd_EngineCmd(Sfx_StartGame);
+                    Sd_EngineCmd(Sfx_MenuStartGame);
                 }
                 else
                 {
-                    Sd_EngineCmd(Sfx_UiConfirm);
+                    Sd_EngineCmd(Sfx_MenuConfirm);
                 }
 
                 switch (g_MainMenu_SelectedEntry)
@@ -272,7 +272,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
             // Play scroll sound.
             if (g_Controller0->btnsPulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
             {
-                Sd_EngineCmd(Sfx_UiMove);
+                Sd_EngineCmd(Sfx_MenuMove);
             }
 
             // Select game difficulty.
@@ -285,7 +285,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
                 GameFs_MapLoad(MapOverlayId_MAP0_S00);
                 GameFs_StreamBinLoad();
-                Sd_EngineCmd(Sfx_StartGame);
+                Sd_EngineCmd(Sfx_MenuStartGame);
 
                 ScreenFade_Start(true, false, false);
                 g_MainMenuState     = 4;
@@ -293,7 +293,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
             // Cancel.
             else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
-                Sd_EngineCmd(Sfx_UiCancel);
+                Sd_EngineCmd(Sfx_MenuCancel);
                 g_MainMenuState = 1;
             }
             break;

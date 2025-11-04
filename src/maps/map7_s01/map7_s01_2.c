@@ -1156,7 +1156,7 @@ void func_800D9A08(void) // 0x800D9A08
             break;
 
         case 7:
-            Sd_EngineCmd(Sfx_UiMap);
+            Sd_EngineCmd(Sfx_MenuMap);
             SysWork_StateStepIncrement(0);
 
         case 8:
@@ -1693,7 +1693,7 @@ void func_800DAE00(void) // 0x800DAE00
             break;
 
         case 3:
-            func_8005DC1C(Sfx_Unk1655, &SFX_POS_1, 128, 0);
+            func_8005DC1C(Sfx_Unk1655, &SFX_POS_1, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 4:

@@ -599,14 +599,14 @@ void func_800DB058(void)
             func_80086C58(&g_SysWork.player_4C.chara_0, 94);
             break;
         case 4:
-            func_8005DC1C(Sfx_Unk1454, &QVECTOR3(55.85f, -1.1f, 19.3f), 0x80, 0);
+            func_8005DC1C(Sfx_Unk1454, &QVECTOR3(55.85f, -1.1f, 19.3f), Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
             /* fallthrough */
         case 5:
             MapMsg_DisplayAndHandleSelection(false, 30, 0, 0, 0, false); // Slid the Picture card into the slot.
             break;
         case 6:
-            func_8005DC1C(Sfx_Unk1343, &QVECTOR3(56.0f, -1.2f, 19.3f), 0x80, 0);
+            func_8005DC1C(Sfx_Unk1343, &QVECTOR3(56.0f, -1.2f, 19.3f), Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
             /* fallthrough */
         case 7:

@@ -829,7 +829,7 @@ typedef enum _CharacterId
 
     Chara_Count,
 
-    Chara_Hack = -1, // @hack Force enum to be treated as `s32`.
+    Chara_Hack = NO_VALUE, // @hack Force enum to be treated as `s32`.
 } e_CharacterId;
 
 /** Based on LIBOVR.PDF `Buffer Data Format` section. */
@@ -1423,7 +1423,7 @@ typedef union
 typedef struct
 {
     u_Unk0  field_0;
-    s16     field_4; // FP alpha.
+    q3_12   field_4; // FP alpha.
     s16     field_6;
     s16     field_8; // } World tint color.
     s16     field_A; // }
@@ -1508,13 +1508,6 @@ typedef struct
     s_SysWork_2514_18 head_18;
 } s_SysWork_2514;
 STATIC_ASSERT_SIZEOF(s_SysWork_2514, 56);
-
-typedef enum _GameFlags
-{
-    GameFlag_None   = 0,
-    GameFlag_Freeze = 1 << 0,
-
-} e_GameFlags;
 
 typedef struct _SysWork
 {

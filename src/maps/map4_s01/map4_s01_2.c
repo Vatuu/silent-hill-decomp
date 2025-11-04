@@ -337,7 +337,7 @@ void func_800D2408(void) // 0x800D2408
             break;
 
         case 4:
-            func_8005DC1C(Sfx_DoorOpen0, &soundPos, 0x80, 0);
+            func_8005DC1C(Sfx_DoorOpen0, &soundPos, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -346,7 +346,7 @@ void func_800D2408(void) // 0x800D2408
 
         case 6:
             func_80085EB8(0, playerChara, 0x76, false);
-            func_8005DC1C(Sfx_DoorClose0, &soundPos, 0x80, 0);
+            func_8005DC1C(Sfx_DoorClose0, &soundPos, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 7:

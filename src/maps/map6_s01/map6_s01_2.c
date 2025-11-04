@@ -588,7 +588,7 @@ void func_800D236C(void) // 0x800D236C
             Camera_PositionSet(NULL, Q12(-18.7f), Q12(-5.59f), Q12(57.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(-19.46f), Q12(-1.92f), Q12(58.62f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            func_8005DC1C(Sfx_Unk1604, &D_800CB988, 128, 0);
+            func_8005DC1C(Sfx_Unk1604, &D_800CB988, Q8_CLAMPED(0.5f), 0);
 
             Game_TurnFlashlightOn();
             SysWork_StateStepIncrement(0);
@@ -598,7 +598,7 @@ void func_800D236C(void) // 0x800D236C
             break;
 
         case 2:
-            func_8005DC1C(Sfx_Unk1605, &D_800CB988, 128, 0);
+            func_8005DC1C(Sfx_Unk1605, &D_800CB988, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 3:

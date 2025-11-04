@@ -3,7 +3,7 @@ typedef enum _SfxId
 {
     Sfx_Base = 1280, // Base SFX (not valid in itself).
 
-    Sfx_StartGame = Sfx_Base + 1, // `SND/FIRST.VAB`
+    Sfx_MenuStartGame = Sfx_Base + 1, // `SND/FIRST.VAB`
 
     Sfx_Unk1283 = Sfx_Base + 3,
 
@@ -17,20 +17,20 @@ typedef enum _SfxId
     Sfx_Unk1302 = Sfx_Base + 22,
     Sfx_Unk1303 = Sfx_Base + 23,
 
-    Sfx_UiError    = Sfx_Base + 24, // `1ST/BASE.VAB` onward, but loaded out of order?
-    Sfx_UiMove     = Sfx_Base + 25,
-    Sfx_UiCancel   = Sfx_Base + 26,
-    Sfx_UiConfirm  = Sfx_Base + 27,
-    Sfx_UiMap      = Sfx_Base + 28,
-    Sfx_DoorOpen0  = Sfx_Base + 29,
-    Sfx_DoorClose0 = Sfx_Base + 30,
+    Sfx_MenuError   = Sfx_Base + 24, // `1ST/BASE.VAB` onward, but loaded out of order?
+    Sfx_MenuMove    = Sfx_Base + 25,
+    Sfx_MenuCancel  = Sfx_Base + 26,
+    Sfx_MenuConfirm = Sfx_Base + 27,
+    Sfx_MenuMap     = Sfx_Base + 28,
+    Sfx_DoorOpen0   = Sfx_Base + 29,
+    Sfx_DoorClose0  = Sfx_Base + 30,
 
     Sfx_Unk1307 = 1307,
     Sfx_Unk1308 = 1308,
     Sfx_Unk1309 = 1309,
     Sfx_Unk1310 = 1310,
 
-    Sfx_Stumble0 = 1314,
+    Sfx_Stumble0 = Sfx_Base + 34,
 
     Sfx_Unk1316              = 1316,
     Sfx_Unk1317              = 1317,
@@ -266,5 +266,5 @@ typedef enum _SfxId
 
     Sfx_Unk4699 = 4699,
 
-    Sfx_Hack = -1, // @hack Force enum to be treated as `s32`.
+    Sfx_Hack = NO_VALUE, // @hack Force enum to be treated as `s32`.
 } e_SfxId;

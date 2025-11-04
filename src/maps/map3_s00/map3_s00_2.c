@@ -203,7 +203,7 @@ void func_800D1A98(void) // 0x800D1A98
 
             if (rand0 < Math_Sin(x))
             {
-                func_8005DC1C(Sfx_Unk1492, &SOUND_POS, 0xE0, 2);
+                func_8005DC1C(Sfx_Unk1492, &SOUND_POS, Q8_CLAMPED(0.875f), 2);
                 Savegame_EventFlagSet(EventFlag_200);
             }
         }

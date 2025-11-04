@@ -393,7 +393,7 @@ void func_800D7308(void)
             break;
 
         case 6:
-            func_8005DC1C(Sfx_Unk1433, &QVECTOR3(-59.2f, -1.0f, 99.5f), 0x80, 0);
+            func_8005DC1C(Sfx_Unk1433, &QVECTOR3(-59.2f, -1.0f, 99.5f), Q8_CLAMPED(0.5f), 0);
 
             D_800DEE50.field_0 = 0;
             D_800DEE50.field_4 = 0x96;
@@ -1069,7 +1069,7 @@ void func_800D87C0(void) // 0x800D87C0
             break;
 
         case 14:
-            func_8005DC1C(Sfx_Unk1448, &QVECTOR3(-56.4f, -0.8f, 16.8f) , 0x80, 0);
+            func_8005DC1C(Sfx_Unk1448, &QVECTOR3(-56.4f, -0.8f, 16.8f), Q8_CLAMPED(0.5f), 0);
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
             SysWork_StateStepIncrement(0);
 
@@ -1078,7 +1078,7 @@ void func_800D87C0(void) // 0x800D87C0
             break;
 
         case 16:
-            func_8005DC1C(Sfx_Unk1449, &QVECTOR3(-56.4f, -0.8f, 16.8f) , 0x80, 0);
+            func_8005DC1C(Sfx_Unk1449, &QVECTOR3(-56.4f, -0.8f, 16.8f), Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 17:
@@ -1086,8 +1086,8 @@ void func_800D87C0(void) // 0x800D87C0
             break;
 
         case 18:
-            func_8005DC1C(Sfx_Unk1446, &QVECTOR3(-57.6f, 0.0f, 16.0f), 0x80, 0);
-            func_8005DC1C(Sfx_Unk1364, &QVECTOR3(-57.6f, 0.0f, 16.0f), 0x40, 0);
+            func_8005DC1C(Sfx_Unk1446, &QVECTOR3(-57.6f, 0.0f, 16.0f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1364, &QVECTOR3(-57.6f, 0.0f, 16.0f), Q8_CLAMPED(0.25f), 0);
             SysWork_StateStepIncrement(0);
 
         case 19:
@@ -1258,7 +1258,7 @@ void func_800D9514(void) // 0x800D9514
             {
                 if (vcRetCamMvSmoothF() == 0)
                 {
-                    func_8005DC1C(0x5AA, &QVECTOR3(142.6f, -0.4f, 58.8f), 0xFF, 2);
+                    func_8005DC1C(0x5AA, &QVECTOR3(142.6f, -0.4f, 58.8f), Q8_CLAMPED(1.0f), 2);
                     Savegame_EventFlagSet(EventFlag_240);
                 }
             }

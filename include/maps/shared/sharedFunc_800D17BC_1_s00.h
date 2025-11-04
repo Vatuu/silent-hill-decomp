@@ -12,11 +12,11 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* chara)
         return;
     }
 
-    func_8005DC1C(0, &chara->position_18, 128, 0);
+    func_8005DC1C(0, &chara->position_18, Q8_CLAMPED(0.5f), 0);
 
     chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 7;
 
-    chara->health_B0       = MAX(chara->health_B0 - chara->damageReceived_C0, 0);
+    chara->health_B0       = MAX(chara->health_B0 - chara->damageReceived_C0, Q12(0.0f));
     chara->field_B4       += FP_FROM(chara->moveSpeed_38 * Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
     chara->field_BC       += FP_FROM(chara->moveSpeed_38 * Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
     chara->moveSpeed_38    = FP_TO(Math_Vector2MagCalc(chara->field_B4, chara->field_BC), Q12_SHIFT) / Q12(2.4f);
@@ -31,7 +31,7 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* chara)
     {
         if (ANIM_STATUS_IDX_GET(chara->model_0.anim_4.status_0) == 9)
         {
-            chara->properties_E4.larvalStalker.properties_E8[3].val16[1] = -1;
+            chara->properties_E4.larvalStalker.properties_E8[3].val16[1] = NO_VALUE;
             chara->model_0.anim_4.status_0                               = ANIM_STATUS(17, false);
         }
     }
