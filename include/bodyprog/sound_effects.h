@@ -12,20 +12,19 @@ typedef enum _Sfx
     Sfx_Unk1296 = Sfx_Base + 16,
     Sfx_Unk1297 = Sfx_Base + 17,
 
-    Sfx_Denied  = Sfx_Base + 24, // `1ST/BASE.VAB` onward, but loaded out of order?
-    Sfx_Back    = Sfx_Base + 25,
-    Sfx_Cancel  = Sfx_Base + 26,
-    Sfx_Confirm = Sfx_Base + 27, // TODO: Continue this pattern.
+    Sfx_Ui_Error   = Sfx_Base + 24, // `1ST/BASE.VAB` onward, but loaded out of order?
+    Sfx_Ui_Move    = Sfx_Base + 25,
+    Sfx_Ui_Cancel  = Sfx_Base + 26,
+    Sfx_Ui_Confirm = Sfx_Base + 27,
+    Sfx_Ui_Map     = Sfx_Base + 28,
+
+    Sfx_DoorOpen_A  = Sfx_Base + 29,
+    Sfx_DoorClose_A = Sfx_Base + 30,
 
     Sfx_Unk1300 = Sfx_Base + 20,
     Sfx_Unk1301 = Sfx_Base + 21,
     Sfx_Unk1302 = Sfx_Base + 22,
     Sfx_Unk1303 = Sfx_Base + 23,
-
-    Sfx_Unk1307 = 1307,
-    Sfx_Unk1308 = 1308,
-    Sfx_Unk1309 = 1309,
-    Sfx_Unk1310 = 1310,
 
     Sfx_Stumble0 = 1314,
 
@@ -34,10 +33,12 @@ typedef enum _Sfx
     Sfx_Unk1318     = 1318,
     Sfx_Unk1319     = 1319,
     Sfx_HeavyBreath = 1320,
-    Sfx_Unk1321     = 1321,
-    Sfx_Unk1322     = 1322,
-    Sfx_Unk1323     = 1323,
-    Sfx_Unk1324     = 1324,
+
+    Sfx_RadioScary_Loop  = Sfx_Base + 41,
+    Sfx_RadioStatic_Loop = Sfx_Base + 42,
+
+    Sfx_Unk1323 = 1323,
+    Sfx_Unk1324 = 1324,
 
     Sfx_Unk1326 = 1326,
     Sfx_Unk1327 = 1327,

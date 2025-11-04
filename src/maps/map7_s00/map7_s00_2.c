@@ -275,7 +275,7 @@ void func_800D0B64(void) // 0x800D0B64
             *(s32*)&g_SysWork.field_2370.vx = 0x02E3FF34;
             (&g_SysWork.field_2370)->vz = 0;
 
-            func_8005DC1C(Sfx_Unk1309, &QVECTOR3(14.6f, -1.2f, -138.5f), 128, 0);
+            func_8005DC1C(Sfx_DoorOpen_A, &QVECTOR3(14.6f, -1.2f, -138.5f), 128, 0);
             SysWork_StateStepIncrement(0);
 
         case 19:
@@ -284,7 +284,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case 20:
-            func_8005DC1C(Sfx_Unk1310, &QVECTOR3(14.6f, -1.2f, -138.5f), 128, 0);
+            func_8005DC1C(Sfx_DoorClose_A, &QVECTOR3(14.6f, -1.2f, -138.5f), 128, 0);
             SysWork_StateStepIncrement(0);
 
         case 21:
