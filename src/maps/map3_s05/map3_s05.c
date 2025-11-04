@@ -437,7 +437,62 @@ INCLUDE_RODATA("asm/maps/map3_s05/nonmatchings/map3_s05", D_800CB4FC);
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D76D8);
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D8424);
+void func_800D8424(void)
+{
+    D_800DD528 = 0;
+    D_800DD52A = 0;
+    WorldObjectPoseInit(&g_WorldObject7.position_1C, 140.4485f, -0.5f, -18.9f, -87.05f, -73.2f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject7.object_0, "HAMMER_H");
+ 
+    WorldObjectPoseInit(&g_WorldObject2.position_1C, 59.64f, -0.85f, -100.27f, 0.0f, 7.5f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject2.object_0, "TAPE_HID");
+
+    WorldObjectPoseInit(&g_WorldObject3.position_1C, 19.6f, 0.0f, -99.6f, 0.0f, 90.0f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject3.object_0, "BED3_HID");
+
+    WorldObjectPoseInit(&g_WorldObject4.position_1C, 20.6587f, -0.81055f, -98.93555f, 0.0f, -31.7f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject4.object_0, "KEY_HIDE");
+
+    WorldObjectPoseInit(&g_WorldObject0.position_1C, 60.0f, 0.0f, -21.6f, 0.0f, 180.0f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject0.object_0, "TANA_HID");
+    if (Savegame_EventFlagGet(EventFlag_282))
+    {
+        g_WorldObject0.position_1C.position_0.vx = Q12(61.25f);
+    }
+
+    WorldObject_ModelNameSet(&g_WorldObject5, "DOR1_HID");
+    WorldObject_ModelNameSet(&g_WorldObject6, "DOR2_HID");
+
+    Math_Vector3Set(&D_800DD420, Q12(20.0f), Q12(0.0f), Q12(-20.0f));
+    Math_Vector3Set(&D_800DD430, Q12(19.9998f), Q12(-0.682f), Q12(-21.05005f));
+    Math_SetSVectorFast(D_800DD440, FP_ANGLE(0.0f), FP_ANGLE(180.0f), FP_ANGLE(0.0f));
+    Math_SetSVectorFast(D_800DD448, FP_ANGLE(58.05f), FP_ANGLE(180.0f), FP_ANGLE(0.0f));
+
+    Math_Vector3Set(&g_WorldObject1[0].position_1C, Q12(19.1f), Q12(0.0f), Q12(59.1f));
+    WorldObject_ModelNameSet(&g_WorldObject1[0].object_0, "DR1L_HID");
+
+    Math_Vector3Set(&g_WorldObject1[1].position_1C, Q12(19.1f), Q12(0.0f), Q12(59.1f));
+    WorldObject_ModelNameSet(&g_WorldObject1[1].object_0, "DR1R_HID");
+
+    Math_Vector3Set(&g_WorldObject1[2].position_1C, Q12(19.1f), Q12(0.0f), Q12(59.1f));
+    WorldObject_ModelNameSet(&g_WorldObject1[2].object_0, "DR3L_HID");
+
+    Math_Vector3Set(&g_WorldObject1[3].position_1C, Q12(19.1f), Q12(0.0f), Q12(59.1f));
+    WorldObject_ModelNameSet(&g_WorldObject1[3].object_0, "DR3R_HID");
+
+    Math_Vector3Set(&g_WorldObject1[4].position_1C, Q12(19.1f), Q12(0.0f), Q12(59.1f));
+    WorldObject_ModelNameSet(&g_WorldObject1[4].object_0, "DR2L_HID");
+
+    Math_Vector3Set(&g_WorldObject1[5].position_1C, Q12(19.1f), Q12(0.0f), Q12(59.1f));
+    WorldObject_ModelNameSet(&g_WorldObject1[5].object_0, "DR2R_HID");
+
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4.handgunBulletsName_14);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4.shotgunShellsName_18);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
+}
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D87AC);
 
