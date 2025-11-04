@@ -1510,7 +1510,7 @@ const s32 RodataPad_800252B8 = 0;
  * opening and closing door SFX when the player moves between rooms. */
 s_AreaLoadSfx const SfxPairs[25] = {
     { Sfx_Base, Sfx_Base },
-    { Sfx_DoorOpen0, Sfx_DoorClose1 },
+    { Sfx_DoorOpen0, Sfx_DoorClose0 },
     { Sfx_Unk1323, Sfx_Unk1324 },
     { Sfx_Unk1418, Sfx_Base },
     { Sfx_Unk1354, Sfx_Base },
@@ -1718,7 +1718,7 @@ void func_80037188() // 0x80037188
 
     for (i = 0; i < 2; i++)
     {
-        func_8004690C(Sfx_RadioScaryLoop + i);
+        func_8004690C(Sfx_RadioHeavyStaticLoop + i);
     }
 }
 

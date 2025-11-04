@@ -23,7 +23,7 @@ typedef enum _Sfx
     Sfx_UiConfirm  = Sfx_Base + 27,
     Sfx_UiMap      = Sfx_Base + 28,
     Sfx_DoorOpen0  = Sfx_Base + 29,
-    Sfx_DoorClose1 = Sfx_Base + 30,
+    Sfx_DoorClose0 = Sfx_Base + 30,
 
     Sfx_Unk1307 = 1307,
     Sfx_Unk1308 = 1308,
@@ -32,15 +32,15 @@ typedef enum _Sfx
 
     Sfx_Stumble0 = 1314,
 
-    Sfx_Unk1316          = 1316,
-    Sfx_Unk1317          = 1317,
-    Sfx_Unk1318          = 1318,
-    Sfx_Unk1319          = 1319,
-    Sfx_HarryHeavyBreath = Sfx_Base + 40,
-    Sfx_RadioScaryLoop   = Sfx_Base + 41,
-    Sfx_RadioStaticLoop  = Sfx_Base + 42,
-    Sfx_Unk1323          = 1323,
-    Sfx_Unk1324          = 1324,
+    Sfx_Unk1316              = 1316,
+    Sfx_Unk1317              = 1317,
+    Sfx_Unk1318              = 1318,
+    Sfx_Unk1319              = 1319,
+    Sfx_HarryHeavyBreath     = Sfx_Base + 40,
+    Sfx_RadioHeavyStaticLoop = Sfx_Base + 41,
+    Sfx_RadioLightStaticLoop = Sfx_Base + 42,
+    Sfx_Unk1323              = 1323,
+    Sfx_Unk1324              = 1324,
 
     Sfx_Unk1326 = 1326,
     Sfx_Unk1327 = 1327,

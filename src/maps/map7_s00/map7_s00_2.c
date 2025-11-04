@@ -284,7 +284,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case 20:
-            func_8005DC1C(Sfx_DoorClose1, &QVECTOR3(14.6f, -1.2f, -138.5f), 128, 0);
+            func_8005DC1C(Sfx_DoorClose0, &QVECTOR3(14.6f, -1.2f, -138.5f), 128, 0);
             SysWork_StateStepIncrement(0);
 
         case 21:
