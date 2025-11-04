@@ -240,6 +240,12 @@ extern RECT D_800AE5A8[4];
 
 extern u16 D_800AE5C8[2];
 
+extern s8 D_800AE774[8][7][2];
+
+extern s8 D_800AE7E4[5][6][2];
+
+extern s8 D_800AE820[8][8][2];
+
 // ==========
 // FUNCTIONS
 // ==========

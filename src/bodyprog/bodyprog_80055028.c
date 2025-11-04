@@ -6079,7 +6079,506 @@ void GameState_MapScreen_Update() // 0x80066EB0
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80067914); // 0x80067914
+static inline s32 MapCoordIndex(s32 coord, s32 bias, s32 shift, s32 offset)
+{
+    if (coord < 0)
+    {
+        coord += bias;
+    }
+    return (coord >> shift) + offset;
+}
+
+s32 func_80067914(s32 arg0, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
+{
+#define MAP_OFFSET(coord) ((coord) + ((coord) < 0 ? 0x14 : 0x15))
+#define MAP_INDEX(x, z)   (MAP_OFFSET(x) * 0x64 + MAP_OFFSET(z))
+
+    s32      sp10[6];
+    s16      temp_s1;
+    s16      temp_s2;
+    s16      temp_v0_7;
+    s32      var_a3;
+    s32      temp_s4;
+    s32      temp_t3;
+    s32      temp_t4;
+    s32      temp_v0_13;
+    s32      temp_v1_7;
+    s32      var_v0_16;
+    s32      var_v1_10;
+    s16      var_t5;
+    u32      temp_a0;
+    s16      var_a1;
+    s16      var_a2;
+    LINE_F4* line;
+    POLY_G3* poly;
+    s32      temp;
+    s32      temp2;
+    s32      temp3;
+    s32      temp4;
+    MAP_CHUNK_CHECK_VARIABLE_DECL();
+
+    if (g_SavegamePtr->current2dMapIdx_A9 != arg0)
+    {
+        return 0;
+    }
+
+    if (g_SysWork.player_4C.chara_0.position_18.vx <= 0)
+    {
+        temp_t3 = (g_SysWork.player_4C.chara_0.position_18.vx - 0x28000) / 0x28000;
+    }
+    else
+    {
+        temp_t3 = (g_SysWork.player_4C.chara_0.position_18.vx / 0x28000);
+    }
+
+    if (g_SysWork.player_4C.chara_0.position_18.vz <= 0)
+    {
+        temp_t4 = (g_SysWork.player_4C.chara_0.position_18.vz - 0x28000) / 0x28000;
+    }
+    else
+    {
+        temp_t4 = g_SysWork.player_4C.chara_0.position_18.vz / 0x28000;
+    }
+
+    var_a1 = 0x7FFF;
+    var_t5 = g_SysWork.player_4C.chara_0.rotation_24.vy;
+    var_a2 = 0x7FFF;
+
+    switch (arg0)
+    {
+        case 1:
+            switch (g_SavegamePtr->mapOverlayId_A4)
+            {
+                case 10:
+                    if (temp_t4 < 4 || (temp_t4 < 6 && (temp_t3 >= -1 && temp_t3 < 1)))
+                    {
+                        var_a1 = MapCoordIndex(g_SysWork.player_4C.chara_0.position_18.vx, 0x1FFF, 0xD, 0x13);
+                        var_a2 = MapCoordIndex(-g_SysWork.player_4C.chara_0.position_18.vz, 0x1FFF, 0xD, 1);
+                        break;
+                    }
+
+                    switch (MAP_INDEX(temp_t3, temp_t4))
+                    {
+                        case 0x5FA:
+                            var_a1 = 0x2B;
+                            var_a2 = -0x22;
+                            break;
+
+                        case 0x5F8:
+                        case 0x6BE:
+                        case 0x6BF:
+                            var_a1 = -0xB;
+                            var_a2 = -0x13;
+                            break;
+
+                        case 0x8B6:
+                            var_a1 = -0x3F;
+                            var_a2 = 0x49;
+                            break;
+
+                        case 0x97E:
+                            var_a1 = -0x3F;
+                            var_a2 = -0x1C;
+                            break;
+
+                        case 0x918:
+                        case 0x97C:
+                            var_a1 = -0x3A;
+                            var_a2 = 0x49;
+                            break;
+
+                        case 0x916:
+                        case 0x97A:
+                            var_a1 = -0x3A;
+                            var_a2 = -0x1C;
+                            break;
+
+                        case 0xA42:
+                            var_a1 = -0x70;
+                            var_a2 = 0x33;
+                            break;
+
+                        case 0x725:
+                        case 0xA45:
+                            var_a1 = 0x74;
+                            var_a2 = 0x2F;
+                            break;
+                    }
+                    break;
+
+                case 2:
+                    switch (MAP_INDEX(temp_t3, temp_t4))
+                    {
+                        case 0x6B9:
+                            var_a1 = -0x67;
+                            var_a2 = 0x67;
+                            break;
+
+                        case 0x655:
+                            var_a1  = 0x24;
+                            var_a2  = -0x4C;
+                            var_t5 += 0x400;
+                            break;
+
+                        case 0x5F1:
+                            var_a1  = 0x3E;
+                            var_a2  = 0x32;
+                            var_t5 += 0x800;
+                            break;
+                    }
+                    break;
+
+                case 11:
+                    var_a1  = 0x26;
+                    var_a2  = 0x32;
+                    var_t5 += 0x800;
+                    break;
+
+                case 1:
+                    var_a1 = 0x21;
+                    var_a2 = -0x1C;
+                    break;
+
+                case 9:
+                    var_a1  = -0x7B;
+                    var_a2  = 0x51;
+                    var_t5 -= 0x400;
+                    break;
+            }
+            break;
+
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+        case 12:
+            if (temp_t3 == -2 && temp_t4 == 0)
+            {
+                var_t5 += 0x800;
+                var_a1  = D_800AE774[2][2][0] + (((g_SysWork.player_4C.chara_0.position_18.vx - (temp_t3 * 0x28000)) - 0x14000) / -0x333);
+                var_a2  = D_800AE774[2][2][1] + (((g_SysWork.player_4C.chara_0.position_18.vz - (temp_t4 * 0x28000)) - 0x14000) / 0x333);
+            }
+            else
+            {
+                var_a1 = D_800AE774[temp_t3 + 4][temp_t4 + 2][0] + (((g_SysWork.player_4C.chara_0.position_18.vx - (temp_t3 * 0x28000)) - 0x14000) / 0x333);
+                var_a2 = D_800AE774[temp_t3 + 4][temp_t4 + 2][1] + (((g_SysWork.player_4C.chara_0.position_18.vz - (temp_t4 * 0x28000)) - 0x14000) / -0x333);
+            }
+            break;
+
+        case 16:
+        case 17:
+        case 18:
+        case 19:
+            var_a1 = D_800AE7E4[temp_t3 + 1][temp_t4 + 2][0] + (((g_SysWork.player_4C.chara_0.position_18.vx - (temp_t3 * 0x28000)) - 0x14000) / 0x222);
+            var_a2 = D_800AE7E4[temp_t3 + 1][temp_t4 + 2][1] + (((g_SysWork.player_4C.chara_0.position_18.vz - (temp_t4 * 0x28000)) - 0x14000) * 6 / -0xCCC);
+            break;
+
+        case 20:
+        case 21:
+        case 22:
+        case 23:
+            var_a1 = D_800AE820[temp_t3 + 4][temp_t4 + 4][0] + (((g_SysWork.player_4C.chara_0.position_18.vx - (temp_t3 * 0x28000)) - 0x14000) / 0x222);
+            var_a2 = D_800AE820[temp_t3 + 4][temp_t4 + 4][1] + (((g_SysWork.player_4C.chara_0.position_18.vz - (temp_t4 * 0x28000)) - 0x14000) * 6 / -0xCCC);
+            break;
+
+        case 4:
+            switch (g_SavegamePtr->mapOverlayId_A4)
+            {
+                case 30:
+                    var_a1 = MapCoordIndex(g_SysWork.player_4C.chara_0.position_18.vx, 0x1FFF, 0xD, 0x3C);
+                    var_a2 = MapCoordIndex(-g_SysWork.player_4C.chara_0.position_18.vz, 0x1FFF, 0xD, -0x55);
+
+                    temp_v1_7 = g_SysWork.player_4C.chara_0.position_18.vx / 163840;
+                    if ((g_SysWork.player_4C.chara_0.position_18.vx > 0 && (temp_v1_7 + 1) == -4) ||
+                        (g_SysWork.player_4C.chara_0.position_18.vx <= 0 && (temp_v1_7 - 1) == -4))
+                    // if (PLAYER_IN_MAP_CHUNK(vx, 1, -4, -1, -4)) // causing mismatch
+                    {
+                        if (PLAYER_IN_MAP_CHUNK(vz, 1, -1, -1, -1))
+                        {
+                            var_a1 += 0x57;
+                            var_a2 += 0x3D;
+                            break;
+                        }
+                    }
+
+                    if (PLAYER_IN_MAP_CHUNK(vx, 1, -5, -1, -5) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, -1, -1))
+                    {
+                        var_a1 += 0x57;
+                        var_a2 += 0x3D;
+                        break;
+                    }
+                    break;
+
+                case 31:
+                    if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+                    {
+                        var_a1  = 0x57;
+                        var_a2  = -0x38;
+                        var_t5 += 0x400;
+                    }
+                    else if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 1, 1, -1, 1))
+                    {
+                        var_a1  = 0x36;
+                        var_a2  = -0x35;
+                        var_t5 += 0x400;
+                    }
+                    break;
+
+                case 32:
+                    switch (MAP_INDEX(temp_t3, temp_t4))
+                    {
+                        case 0x912:
+                            var_a1 = 0x45;
+                            var_a2 = -0x13;
+                            break;
+
+                        case 0x911:
+                            var_a1  = 0x4A;
+                            var_a2  = -0xC;
+                            var_t5 -= 0x400;
+                            break;
+
+                        case 0x8AD:
+                            var_a1 = 0x4A;
+                            var_a2 = -0xE;
+                            break;
+
+                        case 0x8AE:
+                            var_a1 = 0x49;
+                            var_a2 = -0xE;
+                            break;
+                    }
+                    break;
+
+                case 33:
+                    var_a1 = MapCoordIndex(g_SysWork.player_4C.chara_0.position_18.vx, 0x1FFF, 0xD, 0);
+                    var_a2 = MapCoordIndex(-g_SysWork.player_4C.chara_0.position_18.vz, 0x1FFF, 0xD, 0x37);
+                    break;
+
+                case 34:
+                    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+                    {
+                        var_a2 = 0x2B;
+                    }
+                    else
+                    {
+                        var_a2 = 0x2E;
+                    }
+                    var_a1 = -0x4D;
+                    break;
+
+                case 35:
+                    var_a1 = -0x37;
+                    var_a2 = 0x54;
+                    if (!PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2))
+                    {
+                        var_t5 += 0x400;
+                    }
+                    else if (PLAYER_NOT_IN_MAP_CHUNK(vz, 1, -1, -1, -1))
+                    {
+                        var_t5 += 0x400;
+                    }
+                    break;
+            }
+            break;
+
+        case 2:
+        case 3:
+            switch (g_SavegamePtr->mapOverlayId_A4)
+            {
+                case 12:
+                case 24:
+                case 27:
+                    switch (MAP_INDEX(temp_t3, temp_t4))
+                    {
+                        case 0x58F:
+                            var_a1 = 0x5E;
+                            var_a2 = -0x67;
+                            break;
+
+                        case 0x6BB:
+                        case 0x657:
+                            var_a1  = -0xC;
+                            var_a2  = 0x3F;
+                            var_t5 += 0x800;
+                            break;
+
+                        case 0x973:
+                            var_a1 = -0x10;
+                            var_a2 = 0x5B;
+                            break;
+
+                        case 0x6BD:
+                        case 0x6BE:
+                            var_a1 = MapCoordIndex(g_SysWork.player_4C.chara_0.position_18.vx, 0xFFF, 0xC, 0x50);
+                            var_a2 = MapCoordIndex(0x118000 - g_SysWork.player_4C.chara_0.position_18.vz, 0xFFF, 0xC, 0);
+                            break;
+
+                        default:
+                            var_a1 = MapCoordIndex(g_SysWork.player_4C.chara_0.position_18.vx, 0xFFF, 0xC, 0x50);
+                            var_a2 = MapCoordIndex(-g_SysWork.player_4C.chara_0.position_18.vz, 0xFFF, 0xC, 0);
+                            break;
+                    }
+                    break;
+
+                case 23:
+                    var_a1 = 0x5F;
+                    var_a2 = -0x67;
+                    break;
+
+                case 25:
+                    switch (MAP_INDEX(temp_t3, temp_t4))
+                    {
+                        case 0x976:
+                        case 0x9DA:
+                            var_a1 = 0x64;
+                            var_a2 = -0x3D;
+                            break;
+
+                        case 0x90D:
+                        case 0x971:
+                            var_a1 = 0x73;
+                            var_a2 = -0x3D;
+                            break;
+
+                        case 0xA3B:
+                            var_a1  = 0x73;
+                            var_a2  = -0x3F;
+                            var_t5 += 0x400;
+                            break;
+
+                        case 0x914:
+                        case 0x978:
+                            var_a1 = 0x7D;
+                            var_a2 = -0x3C;
+                            break;
+                    }
+                    break;
+
+                case 14:
+                    var_v1_10 = temp_t3 + 0x15;
+                    if (temp_t3 < 0)
+                    {
+                        var_v1_10 = temp_t3 + 0x14;
+                    }
+
+                    temp_v0_13 = var_v1_10 * 0x64;
+                    if (temp_t4 < 0)
+                    {
+                        var_v0_16 = temp_v0_13 + 0x14;
+                    }
+                    else
+                    {
+                        var_v0_16 = temp_v0_13 + 0x15;
+                    }
+
+                    switch (var_v0_16 + temp_t4)
+                    // switch (MAP_INDEX(temp_t3, temp_t4)) // causing mismatch
+                    {
+                        case 0x6BA:
+                            var_a1 = -0x13;
+                            var_a2 = -0xE;
+                            break;
+
+                        case 0x781:
+                            var_a1 = -0x13;
+                            var_a2 = -0xE;
+                            break;
+
+                        case 0x71D:
+                            var_a1 = -0x15;
+                            var_a2 = -0xE;
+                            break;
+                    }
+                    break;
+            }
+            break;
+
+        case 13:
+            var_a1  = MapCoordIndex(-g_SysWork.player_4C.chara_0.position_18.vz, 0x7FF, 0xB, 0);
+            var_a2  = MapCoordIndex(-g_SysWork.player_4C.chara_0.position_18.vx, 0x7FF, 0xB, 0x28);
+            var_t5 -= 0x400;
+            break;
+
+        case 14:
+            var_a1  = MapCoordIndex(-g_SysWork.player_4C.chara_0.position_18.vz, 0x7FF, 0xB, -0x50);
+            var_a2  = MapCoordIndex(-g_SysWork.player_4C.chara_0.position_18.vx, 0x7FF, 0xB, -0x8C);
+            var_t5 -= 0x400;
+            break;
+
+        case 15:
+            var_a1  = MapCoordIndex(-g_SysWork.player_4C.chara_0.position_18.vx, 0x7FF, 0xB, 0x37);
+            var_a2  = MapCoordIndex(g_SysWork.player_4C.chara_0.position_18.vz, 0x7FF, 0xB, -0x50);
+            var_t5 += 0x800;
+            break;
+
+        default:
+            return 0;
+    }
+
+    var_a3 = var_a1;
+
+    if (var_a3 == 0x7FFF)
+    {
+        return 0;
+    }
+
+    temp_s4 = (var_a2 << 0x10) + var_a3;
+
+    if (g_Controller0->btnsHeld_C & (ControllerFlag_L1 | ControllerFlag_R1))
+    {
+        return temp_s4;
+    }
+
+    temp_a0 = 0xA0;
+    temp3   = ((var_a3 - (arg1 - temp_a0)) * 0x140);
+    temp    = FP_MULTIPLY_PRECISE(arg3, 0x140, Q12_SHIFT);
+    temp_s2 = (temp3 / temp) - 0xA0;
+
+    temp_a0 = 0x78;
+    temp4   = ((var_a2 - (arg2 - temp_a0)) * 0xF0);
+    temp2   = FP_MULTIPLY_PRECISE(arg3, 0xF0, Q12_SHIFT);
+    temp_s1 = (temp4 / temp2) - 0x78;
+
+    temp_v0_7 = func_8005BF38(var_t5);
+
+    sp10[0] = temp_s2 + FP_FROM(Math_Sin(temp_v0_7) * 6, Q12_SHIFT);
+    sp10[1] = (temp_s1 + FP_FROM(Math_Cos(temp_v0_7) * -6, Q12_SHIFT)) * 2;
+    sp10[2] = temp_s2 + FP_FROM(Math_Cos(temp_v0_7) * 4 - Math_Sin(temp_v0_7) * 6, Q12_SHIFT);
+    sp10[3] = (temp_s1 + FP_FROM(Math_Sin(temp_v0_7) * 4 + Math_Cos(temp_v0_7) * 6, Q12_SHIFT)) * 2;
+    sp10[4] = temp_s2 + FP_FROM(Math_Cos(temp_v0_7) * -4 - Math_Sin(temp_v0_7) * 6, Q12_SHIFT);
+    sp10[5] = (temp_s1 + FP_FROM(Math_Sin(temp_v0_7) * -4 + Math_Cos(temp_v0_7) * 6, Q12_SHIFT)) * 2;
+
+    line = (LINE_F4*)GsOUT_PACKET_P;
+    setLineF4(line);
+    setXY0Fast(line, sp10[0], sp10[1]);
+    setXY1Fast(line, sp10[2], sp10[3]);
+    setXY2Fast(line, sp10[4], sp10[5]);
+    setXY3Fast(line, sp10[0], sp10[1]);
+    *(u16*)&line->r0 = 0x1010;
+    line->b0         = 0x10;
+
+    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], line);
+
+    poly = (POLY_G3*)(++line);
+    setPolyG3(poly);
+    setXY0Fast(poly, sp10[0], sp10[1]);
+    setXY1Fast(poly, sp10[2], sp10[3]);
+    setXY2Fast(poly, sp10[4], sp10[5]);
+    *(u16*)&poly->r0 = 0x0000;
+    poly->b0         = 0xFF;
+    *(u16*)&poly->r1 = 0xFF00;
+    poly->b1         = 0x00;
+    *(u16*)&poly->r2 = 0xFF00;
+    poly->b2         = 0x00;
+
+    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], poly);
+    GsOUT_PACKET_P = (PACKET*)poly + sizeof(POLY_G3);
+    return temp_s4;
+}
 
 bool func_80068CC0(s32 arg0) // 0x80068CC0
 {

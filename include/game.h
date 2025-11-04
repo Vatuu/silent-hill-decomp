@@ -185,6 +185,28 @@ struct _Model;
 #define ScreenFade_ResetTimestep() \
     g_Screen_FadeStatus = ScreenFadeState_ResetTimestep
 
+#define MAP_CHUNK_CHECK_VARIABLE_DECL() \
+    s32 __chunkIdx
+
+/** @hack This macro requires a variable `s32 __chunkIdx` to be declared before using it.
+ * The macro `MAP_CHUNK_CHECK_VARIABLE_DECL` declares that variable and must be called before this macro.
+ * The first argument is `vx` or `vz`, which is used as the component name in `VECTOR3`.
+ * @bug Some maps appear to have a bug where the negative position check will never be true because they check
+ * if the chunk index will be a positive number. Seems like they forgot to use `ABS`?
+ */
+#define PLAYER_IN_MAP_CHUNK(comp, x0, x1, x2, x3)                                                  \
+    (__chunkIdx = g_SysWork.player_4C.chara_0.position_18.comp / Q12(40.0f),                       \
+     ((g_SysWork.player_4C.chara_0.position_18.comp > Q12(0.0f) && (__chunkIdx + (x0)) == (x1)) || \
+      (g_SysWork.player_4C.chara_0.position_18.comp <= Q12(0.0f) && (__chunkIdx + (x2)) == (x3))))
+
+#define PLAYER_NOT_IN_MAP_CHUNK(comp, x0, x1, x2, x3)                                              \
+    (__chunkIdx = g_SysWork.player_4C.chara_0.position_18.comp / Q12(40.0f),                       \
+     ((g_SysWork.player_4C.chara_0.position_18.comp > Q12(0.0f) && (__chunkIdx + (x0)) != (x1)) || \
+      (g_SysWork.player_4C.chara_0.position_18.comp <= Q12(0.0f) && (__chunkIdx + (x2)) != (x3))))
+
+#define PLAYER_NEAR_POS(comp, base, tol) \
+    (((g_SysWork.player_4C.chara_0.position_18.comp - Q12(base)) >= 0) ? ((g_SysWork.player_4C.chara_0.position_18.comp - Q12(base)) < Q12(tol)) : ((Q12(base) - g_SysWork.player_4C.chara_0.position_18.comp) < Q12(tol)))
+
 /** @brief Sync modes used by `DrawSync` and `VSync`. */
 typedef enum _SyncMode
 {
