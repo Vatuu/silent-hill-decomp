@@ -6,3 +6,4 @@ spimdisasm<1.36.0
 clang-format
 clang-tidy
 pycparser
+pyelftools

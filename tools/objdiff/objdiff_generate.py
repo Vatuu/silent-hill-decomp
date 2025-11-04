@@ -1,6 +1,7 @@
 from pathlib import Path
 from argparse import ArgumentParser
 from dataclasses import dataclass, asdict
+from elftools.elf.elffile import ELFFile
 import logging
 import yaml
 import json
@@ -17,6 +18,7 @@ class Unit:
     base_path: str
     target_path: str
     metadata: UnitMetadata
+    symbol_mappings: dict[str, str]
 
 @dataclass
 class ProgressCategory:
@@ -46,6 +48,37 @@ def _create_config():
             return yaml.safe_load(stream)
         except yaml.YAMLError as exc:
             raise exc
+
+def _read_symbols_from_elf(path: Path):
+    addr_to_name = {}
+    with open(path, 'rb') as f:
+        elffile = ELFFile(f)
+
+        for section in elffile.iter_sections():
+            if not hasattr(section, 'iter_symbols'):
+                continue
+            for sym in section.iter_symbols():
+                if sym['st_info']['type'] != 'STT_FUNC':
+                    continue  # skip non-function symbols
+                addr = sym['st_value']
+                name = sym.name
+                if addr != 0 and name:  # skip undefined/empty
+                    addr_to_name[addr] = name
+    return addr_to_name
+
+def _normalize_suffixed_symbols(path: Path):
+    """Scan elf for symbols with numeric suffixes, return a dictionary of non-suffix -> suffix pairs"""
+    symbols = _read_symbols_from_elf(path)
+    suffix_pattern = re.compile(r'\.(\d+)$')
+    normalized = {}
+
+    for name in symbols.values():
+        match = suffix_pattern.search(name)
+        if match:
+            base_name = name[: match.start()]  # strip the .<digits> suffix
+            normalized[base_name] = name
+
+    return normalized
 
 EXCLUDED_NAMES = {"data", "rodata", "sdata", "bss"}
 
@@ -80,11 +113,16 @@ def main():
     for file in expected_objects:
         processed_path = _determine_categories(file, config)
         base_path = "build/src/" + re.sub(r"\\", r"/", processed_path[1]).removesuffix(".s.o").removesuffix(".c.o") + ".c.o"
+        
+        # Create mappings for clone/disambiguation symbol suffixes in base object
+        symbol_mappings = _normalize_suffixed_symbols(base_path) if Path(base_path).exists() else {}
+
         unit = Unit(
             re.sub(r"\\", r"/", processed_path[1]).removesuffix(".s.o").removesuffix(".c.o"),
             base_path if Path(base_path).exists() else None,
             re.sub(r"\\", r"/", str(file)),
-            processed_path[0])
+            processed_path[0],
+            symbol_mappings)
         units.append(unit)
     
     categories = []
