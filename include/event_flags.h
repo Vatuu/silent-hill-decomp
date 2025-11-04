@@ -223,6 +223,8 @@ typedef enum _EventFlag
 
     EventFlag_M3S05_PickupExaminationRoomKey = 257,
 
+    EventFlag_282 = 282,
+
     EventFlag_284 = 284,
 
     EventFlag_M3S05_PickupHammer = 289,

@@ -22,6 +22,22 @@
 #define MAP_ROOM_MIN_Z Q12(-160.0f)
 #define MAP_ROOM_MAX_Z Q12(160.0f)
 
+extern s8 D_800DD528;
+extern s16 D_800DD52A;
+extern VECTOR3 D_800DD420;
+extern VECTOR3 D_800DD430;
+extern SVECTOR3 D_800DD440;
+extern SVECTOR3 D_800DD448;
+extern s_WorldObjectDesc      g_WorldObject0;
+extern s_WorldObjectDescNoRot g_WorldObject1[6];
+extern s_WorldObjectDesc      g_WorldObject2;
+extern s_WorldObjectDesc      g_WorldObject3;
+extern s_WorldObjectDesc      g_WorldObject4;
+extern s_WorldObject_0        g_WorldObject5;
+extern s_WorldObject_0        g_WorldObject6;
+extern s_WorldObjectDesc      g_WorldObject7;
+extern s_WorldObject_0   g_CommonWorldObjects[6];
+
 s32 func_800D2E08(s32 arg0);
 
 /** Puppet Nurse/Doctor related. */
@@ -44,5 +60,7 @@ void func_800D6CF0(void);
 void func_800D719C(void);
 
 void func_800D7280(void);
+
+void func_800D8424(void);
 
 #endif

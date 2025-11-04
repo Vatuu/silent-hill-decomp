@@ -1,3 +1,7 @@
+VECTOR3 D_800DD420        = 0xD_800DD420; // type:VECTOR3 size:0xC
+VECTOR3 D_800DD430        = 0xD_800DD430; // type:VECTOR3 size:0xC
+SVECTOR3 D_800DD440       = 0xD_800DD440; // type:SVECTOR3 size:0x8
+SVECTOR3 D_800DD448       = 0xD_800DD448; // type:SVECTOR3 size:0x8
 
 
 
@@ -123,3 +127,12 @@ sharedData_800E0CBA_0_s00 = 0x800DD21E; // type:s8
 sharedData_800E39D8_0_s00 = 0x800DD220; // type:s32
 sharedData_800D32A0_0_s02 = 0x800DD224; // type:s32
 sharedData_800E57CC_1_s02 = 0x800DD22C; // type:s8
+g_WorldObject0            = 0x800DD230; // type:WorldObjectDesc size:0x2E
+g_WorldObject1            = 0x800DD260; // type:WorldObjectDescNoRot size:0xF0
+g_WorldObject2            = 0x800DD350; // type:WorldObjectDesc size:0x2E
+g_WorldObject3            = 0x800DD380; // type:WorldObjectDesc size:0x2E
+g_WorldObject4            = 0x800DD3B0; // type:WorldObjectDesc size:0x2E
+g_WorldObject5            = 0x800DD3E0; // type:WorldObject_0 size:0x1C
+g_WorldObject6            = 0x800DD400; // type:WorldObject_0 size:0x1C
+g_WorldObject7            = 0x800DD450; // type:WorldObjectDesc size:0x2E
+g_CommonWorldObjects      = 0x800DD480; // type:WorldObject_0 size:0xA8
