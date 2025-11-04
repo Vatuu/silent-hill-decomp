@@ -7,7 +7,7 @@
 
 void func_800D4A5C(s_SubCharacter* chara);
 
-/** @breif Handles a Health Drink or Handgun Bullets item pickup event. */
+/** @brief Handles a Health Drink or Handgun Bullets item pickup event. */
 void MapEvent_CommonItemTake(void);
 
 void func_800D822C(void);

@@ -23,7 +23,7 @@ void func_800DEBE8(s_SubCharacter* chara);
 
 void func_800DEC08(s_SubCharacter* chara);
 
-/** @breif Handles a First Aid Kit, Health Drink, or Shotgun Shells item pickup event. */
+/** @brief Handles a First Aid Kit, Health Drink, or Shotgun Shells item pickup event. */
 void MapEvent_CommonItemTake(void);
 
 #endif

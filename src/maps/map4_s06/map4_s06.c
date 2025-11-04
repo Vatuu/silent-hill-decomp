@@ -107,7 +107,7 @@ void func_800CC99C(void) // 0x800CC99C
 
     if (Savegame_EventFlagGet(EventFlag_M3S06_PickupAntiqueShopKey))
     {
-        if (!Savegame_EventFlagGet(EventFlag_M2S02_AnitqueShopOpen))
+        if (!Savegame_EventFlagGet(EventFlag_M2S02_AntiqueShopOpen))
         {
             flags |= 1 << 3;
         }

@@ -168,14 +168,14 @@ typedef enum _EventFlag
 
     EventFlag_SeenSaveScreen = 186,
 
-    EventFlag_188 = 188,
-    EventFlag_189 = 189,
-    EventFlag_M2S02_AnitqueShopOpen = 190,
-    EventFlag_191 = 191,
-    EventFlag_192 = 192,
-    EventFlag_193 = 193,
-    EventFlag_194 = 194,
-    EventFlag_195 = 195,
+    EventFlag_188                   = 188,
+    EventFlag_189                   = 189,
+    EventFlag_M2S02_AntiqueShopOpen = 190,
+    EventFlag_191                   = 191,
+    EventFlag_192                   = 192,
+    EventFlag_193                   = 193,
+    EventFlag_194                   = 194,
+    EventFlag_195                   = 195,
 
     EventFlag_197 = 197,
     EventFlag_198 = 198,
@@ -256,9 +256,9 @@ typedef enum _EventFlag
     EventFlag_M5S01_PickupMap = 370,
 
     EventFlag_M5S02_PickupSafeKey = 376,
-
-    EventFlag_378 = 378,
-    EventFlag_379 = 379,
+    EventFlag_M5S02_UsedSafeKey   = 377,
+    EventFlag_378                 = 378,
+    EventFlag_379                 = 379,
 
     EventFlag_381 = 381,
 
@@ -269,7 +269,7 @@ typedef enum _EventFlag
     EventFlag_M5S03_SeenSecondNewspaper = 393,
 
     EventFlag_395 = 395,
-
+    EventFlag_396 = 396,
     EventFlag_397 = 397,
     EventFlag_398 = 398,
 

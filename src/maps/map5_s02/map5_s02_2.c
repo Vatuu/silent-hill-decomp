@@ -145,13 +145,165 @@ void func_800D4E24(void) // 0x800D4E24
     MapMsg_DisplayWithTexture(FILE_TIM_DIARYINR_TIM, Q12(0.0f), Q12(0.0f), 35);
 }
 
-INCLUDE_RODATA("asm/maps/map5_s02/nonmatchings/map5_s02_2", D_800CB494);
+void func_800D4E64(void) // 0x800D4E64
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
 
-INCLUDE_RODATA("asm/maps/map5_s02/nonmatchings/map5_s02_2", D_800CB4A0);
+            Savegame_EventFlagSet(EventFlag_396);
 
-INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02_2", func_800D4E64);
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(135.05f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(59.75f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(180.0f);
 
-INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02_2", func_800D519C);
+            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 59);
+            break;
+
+        case 3:
+            func_8005DC1C(Sfx_Unk1592, &QVECTOR3(134.9f, -0.5f, 59.5f), Q8_CLAMPED(0.5f), 0);
+            SysWork_StateStepIncrement(0);
+
+        case 4:
+            MapMsg_DisplayAndHandleSelection(false, 46, 0, 0, 0, false); // "Used the Safe Key."
+            break;
+
+        case 5:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        case 6:
+            Savegame_EventFlagSet(EventFlag_M5S02_UsedSafeKey);
+            func_8005DC1C(Sfx_Unk1591, &QVECTOR3(134.7f, -0.5f, 59.5f), Q8_CLAMPED(0.5f), 0);
+            Camera_PositionSet(NULL, Q12(135.26f), Q12(-1.61f), Q12(60.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(133.36f), Q12(1.12f), Q12(58.01f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            D_800DA726 = -1618;
+            SysWork_StateStepIncrement(0);
+
+        case 7:
+            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            break;
+
+        case 8:
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            break;
+
+        case 9:
+            MapMsg_DisplayAndHandleSelection(false, 34, 0, 0, 0, false); // "What is this? Drugs?""
+            break;
+
+        case 10:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        case 11:
+            vcReturnPreAutoCamWork(true);
+            D_800DA726 = -85;
+            SysWork_StateStepIncrement(0);
+
+        case 12:
+            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            break;
+
+        case 13:
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            SysWork_StateStepIncrement(0);
+
+        case 14:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            vcReturnPreAutoCamWork(true);
+            break;
+    }
+}
+
+void func_800D519C(void) // 0x800D519C
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 59);
+            break;
+
+        case 3:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        case 4:
+            Savegame_EventFlagSet(EventFlag_M5S02_UsedSafeKey);
+            func_8005DC1C(Sfx_Unk1591, &QVECTOR3(134.7f, -0.5f, 59.5f), Q8_CLAMPED(0.5f), 0);
+            Camera_PositionSet(NULL, Q12(135.26f), Q12(-1.61f), Q12(60.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(133.36f), Q12(1.12f), Q12(58.01f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            D_800DA726                                 = -1618;
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(135.05f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(59.75f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(180.f);
+            SysWork_StateStepIncrement(0);
+
+        case 5:
+            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            break;
+
+        case 6:
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            break;
+
+        case 7:
+            MapMsg_DisplayAndHandleSelection(false, 34, 0, 0, 0, false); // "What is this? Drugs?""
+            break;
+
+        case 8:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        case 9:
+            vcReturnPreAutoCamWork(true);
+            D_800DA726 = -85;
+            SysWork_StateStepIncrement(0);
+
+        case 10:
+            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            break;
+
+        case 11:
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            SysWork_StateStepIncrement(0);
+
+        case 12:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            vcReturnPreAutoCamWork(true);
+            break;
+    }
+}
 
 void func_800D5478(void) // 0x800D5478
 {

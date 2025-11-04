@@ -2890,19 +2890,14 @@ typedef struct
     s_WorldObjectPose position_1C;
 } s_WorldObjectDesc;
 
-#define Math_SetSVectorFast(vec, x, y, z)                      \
-    *(s32*)&(vec).vx = (s32)((x) & 0xFFFF) | (s32)((y) << 16); \
-    *(s16*)&(vec).vz = (z)
-
 #define WorldObjectPoseInit(eventPos, posX, posY, posZ, rotX, rotY, rotZ) \
     WorldObjectPoseSet(eventPos, Q12(posX), Q12(posY), Q12(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))
 
 #define WorldObjectPoseSet(eventPose, posX, posY, posZ, rotX, rotY, rotZ) \
-{ \
-    Math_Vector3Set(&(eventPose)->position_0, posX, posY, posZ); \
-    *(s32*)&((eventPose)->rotation_C).vx = (s32)((rotX) & 0xFFFF) | (s32)((rotY) << 16); \
-    *(s16*)&((eventPose)->rotation_C).vz = (rotZ); \
-}
+    {                                                                     \
+        Math_Vector3Set(&(eventPose)->position_0, posX, posY, posZ);      \
+        Math_SetSVectorFast((eventPose)->rotation_C, rotX, rotY, rotZ);   \
+    }
 
 #define MAP_CHUNK_CHECK_VARIABLE_DECL() \
     s32 __chunkIdx

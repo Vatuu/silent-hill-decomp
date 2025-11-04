@@ -23,14 +23,20 @@
 #define MAP_ROOM_MIN_Z Q12(0.0f)
 #define MAP_ROOM_MAX_Z Q12(120.0f)
 
+extern s16 D_800DA726;
+
 void func_800D45B4(s32 arg0);
 
-/** @breif Handles a Health Drink or Rifle Shells item pickup event. */
+/** @brief Handles a Health Drink or Rifle Shells item pickup event. */
 void MapEvent_CommonItemTake(void);
 
 void func_800D4DF8(void);
 
 void func_800D4E24(void);
+
+void func_800D4E64(void);
+
+void func_800D519C(void);
 
 void func_800D5478(void);
 

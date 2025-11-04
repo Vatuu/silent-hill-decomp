@@ -579,7 +579,7 @@ void func_800E9B38(void)
 
     if (Savegame_EventFlagGet(EventFlag_M3S06_PickupAntiqueShopKey))
     {
-        if (!Savegame_EventFlagGet(EventFlag_M2S02_AnitqueShopOpen))
+        if (!Savegame_EventFlagGet(EventFlag_M2S02_AntiqueShopOpen))
         {
             flags |= (1<<3);
         }
@@ -603,7 +603,7 @@ void func_800E9D54(void)
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
     Player_ItemRemove(InventoryItemId_AntiqueShopKey, 1);
     Map_MessageWithSfx(15, Sfx_UseKey, &sfxPos);
-    Savegame_EventFlagSet(EventFlag_M2S02_AnitqueShopOpen);
+    Savegame_EventFlagSet(EventFlag_M2S02_AntiqueShopOpen);
 }
 
 const char* MAP_MESSAGES[] = {
