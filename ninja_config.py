@@ -210,14 +210,13 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file, 
     if objdiff_file != None:
         skipAsm = "-DSKIP_ASM"
         nonMatching = "-DNON_MATCHING"
+        source_target_path = re.sub(r"^src", r"asm", source_path)
+        source_target_path = re.sub(r".c$", r".s", source_target_path)
         if sys.platform == "linux" or sys.platform == "linux2":
-            source_target_path = re.sub(r"^src/", r"asm/", source_path)
-            source_target_path = re.sub(r".c$", r".s", source_target_path)
             expected_path = re.sub(r"^build/src", r"expected/asm", target_path)
         elif sys.platform == "win32":
-            source_target_path = re.sub(r"^src\\", r"asm\\", source_path)
-            source_target_path = re.sub(r".c$", r".s", source_target_path)
             expected_path = re.sub(r"^build\\src", r"expected\\asm", target_path)
+        
         if os.path.exists(source_target_path):
             if re.search("^asm.main.*", source_path):
                 objdiff_file.build(outputs=f"{expected_path}.o", rule="as", inputs=source_target_path,
@@ -536,14 +535,6 @@ def ninja_setup_objdiff(split_entries):
     
     # Build all the objects
     for split_config in split_entries:
-        match split_config.SPLIT_BASENAME:
-            case "main":
-                os.system(f"{PREBUILD} main")
-            case "BODYPROG.BIN":
-                os.system(f"{PREBUILD} bodyprog")
-            case "STREAM.BIN":
-                os.system(f"{PREBUILD} stream")
-        
         for split_entry in split_config.SPLIT_ENTRIES:
             for entry in split_entry:
                 seg = entry.segment
@@ -561,22 +552,69 @@ def ninja_setup_objdiff(split_entries):
         objdiff.build(outputs=f"{EXPECTED_DIR}/objdiff.ok", rule="objdiff-config", inputs=f"{OBJDIFF_DIR}/config.yaml")
     elif sys.platform == "win32":
         objdiff.build(outputs=f"{EXPECTED_DIR}\\objdiff.ok", rule="objdiff-config", inputs=f"{OBJDIFF_DIR}\\config.yaml")
-        
-        
 
-def clean_files(clean_all: bool):
+def ninja_append(split_entries, objdiff_mode: bool):
+    """Horrid code - Will"""
+    if objdiff_mode:
+        ninjaFileRead   = open("build.ninja", "r", encoding="utf-8").read()
+        ninjaFile       = open("build.ninja", "w", encoding="utf-8")
+        ninjaFile.write(ninjaFileRead)
+        ninjaFileSyntax = ninja_syntax.Writer(ninjaFile, width=9999)
+        objdiffFileRead   = open("objdiff.ninja", "r", encoding="utf-8").read()
+        objdiffFile       = open("objdiff.ninja", "w", encoding="utf-8")
+        objdiffFileEndPos = re.search(r"build expected\\objdiff", objdiffFileRead).start()
+        print(f"objdiffFileEndPos: {objdiffFileEndPos}")
+        objdiffFile.write(objdiffFileRead[0:objdiffFileEndPos])
+        objdiffFileSyntax = ninja_syntax.Writer(objdiffFile, width=9999)
+    else:
+        print("Normal append mode uninplemented")
+        return
+    
+    for split_config in split_entries:
+        for split_entry in split_config.SPLIT_ENTRIES:
+            for entry in split_entry:
+                seg = entry.segment
+                
+                if entry.object_path is None or seg.type[0] == ".":
+                    continue
+                
+                if objdiff_mode:
+                    source_path = str(entry.src_paths[0])
+                    if sys.platform == "linux" or sys.platform == "linux2":
+                        expected_path = re.sub(r"^build/src", r"expected/asm", f"{str(entry.object_path).removesuffix(".c.o")}.s.o")
+                    elif sys.platform == "win32":
+                        expected_path = re.sub(r"^build\\src", r"expected\\asm", f"{str(entry.object_path).removesuffix(".c.o")}.s.o")
+                    
+                    if source_path in ninjaFileRead or expected_path in objdiffFileRead or source_path in objdiffFileRead or expected_path in ninjaFileRead:
+                        #print(f"{source_path} / {expected_path} | PREVIOUSLY ADDED")
+                        continue
+                    else:
+                        #print(f"{source_path} / {expected_path} | NEWLY ADDED")
+                        if seg.type == "c":
+                            ninja_setup_list_add_source(str(entry.object_path).removesuffix(".c.o"), str(entry.src_paths[0]), ninjaFileSyntax, objdiffFileSyntax, True)
+    
+    if objdiff_mode:
+        if sys.platform == "linux" or sys.platform == "linux2":
+            objdiffFileSyntax.build(outputs=f"{EXPECTED_DIR}/objdiff.ok", rule="objdiff-config", inputs=f"{OBJDIFF_DIR}/config.yaml")
+        elif sys.platform == "win32":
+            objdiffFileSyntax.build(outputs=f"{EXPECTED_DIR}\\objdiff.ok", rule="objdiff-config", inputs=f"{OBJDIFF_DIR}\\config.yaml")
+    
+    
+    
+
+def clean_working_files(clean_build_files: bool):
     shutil.rmtree(BUILD_DIR, ignore_errors=True)
     shutil.rmtree(PERMUTER_DIR, ignore_errors=True)
+    if os.path.exists(".splache"):
+        os.remove(".splache")
 
-    if clean_all:
-        if os.path.exists(".splache"):
-            os.remove(".splache")
-        if os.path.exists(".ninja_log"):
-            os.remove(".ninja_log")
+    if clean_build_files:
         if os.path.exists("build.ninja"):
             os.remove("build.ninja")
         if os.path.exists("objdiff.ninja"):
             os.remove("objdiff.ninja")
+        if os.path.exists(".ninja_log"):
+            os.remove(".ninja_log")
         shutil.rmtree(ASM_DIR, ignore_errors=True)
         shutil.rmtree(EXPECTED_DIR, ignore_errors=True)
         shutil.rmtree(LINKER_DIR, ignore_errors=True)
@@ -645,6 +683,8 @@ def main():
     gameVersionOption     = 0 # USA by default
     yamlsPaths            = []
     splitsYamlInfo        = []
+    regenMode             = False
+    
     
     if args.game_version != None:
         for gameVersionInfo in GAMEVERSIONS:
@@ -656,10 +696,9 @@ def main():
             print("Version not supported.")
             sys.exit(1)
     
-    
     if cleanCompilationFiles:
         print("Cleaning compilation files")
-        clean_files(False)
+        clean_working_files(False)
         return
     
     if args.iso_extract != None:
@@ -683,7 +722,15 @@ def main():
         yamlsPaths.extend(YAML_MAPS_6)
         yamlsPaths.extend(YAML_MAPS_7)
     else:
-        match args.setup:
+        matchSet = ""
+        if len(args.setup) == 3:
+            matchSet = args.setup.lower()
+        elif len(args.setup) == 4:
+            matchSet = args.setup.lower()[0:3]
+            if args.setup.lower()[3] == "r":
+                regenMode = True
+        
+        match matchSet:
             case "exe":
                 yamlsPaths.extend(YAML_EXECUTABLE)
             case "eng":
@@ -709,34 +756,53 @@ def main():
                 yamlsPaths.extend(YAML_MAPS_5)
                 yamlsPaths.extend(YAML_MAPS_6)
                 yamlsPaths.extend(YAML_MAPS_7)
-            case args.setup if re.match(r"m\d\d", args.setup):
-                try:
-                    yamlsPaths.extend([globals()[f"YAML_MAPS_{int(args.setup[1])}"][int(args.setup[2])]])
-                except:
-                    print("This map overlay doesn't exist!")
-                    sys.exit(1)
-            case args.setup if re.match(r"m\dx", args.setup):
-                try:
-                    yamlsPaths.extend(globals()[f"YAML_MAPS_{int(args.setup[1])}"])
-                except:
-                    print("There is no set of map overlay with this number!")
-                    sys.exit(1)
             case _:
-                print("No recognizable overlay has been assigned.")
-                sys.exit(1)
+                try:
+                    if re.match(r"m\d\dr?", matchSet):
+                        yamlsPaths.extend([globals()[f"YAML_MAPS_{int(args.setup[1])}"][int(args.setup[2])]])
+                    elif re.match(r"m\dxr?", matchSet):
+                        yamlsPaths.extend(globals()[f"YAML_MAPS_{int(args.setup[1])}"])
+                    else:
+                        print("No recognizable overlay has been assigned.")
+                        sys.exit(1)
+                except:
+                    print("Map overlay(s) not found.")
+                    sys.exit(1)
     
-    clean_files(True)
+    if regenMode == False:
+        clean_working_files(True)
+    else:
+        appendSplits = []
+        for asm_path in yamlsPaths:
+            shutil.rmtree(f"{BUILD_DIR}/src/{asm_path.split(".yaml")[0]}", ignore_errors=True)
+            if os.path.exists(f"{ASM_DIR}/{asm_path.split(".yaml")[0]}") == False:
+                appendSplits += [asm_path]
+            else:
+                shutil.rmtree(f"{ASM_DIR}/{asm_path.split(".yaml")[0]}", ignore_errors=True)
+    
     for yaml in yamlsPaths:
         splat.util.symbols.spim_context = spimdisasm.common.Context()
         splat.util.symbols.reset_symbols()
         split.main([Path(f"{CONFIG_DIR}/{GAMEVERSIONS[gameVersionOption].GAME_SETUP_INFO.GAME_VERSION_DIR}/{yaml}")], modes="all", use_cache=False, verbose=False, disassemble_all=True, make_full_disasm_for_code=True)
-        splitsYamlInfo.append(YAML_INFO([split.linker_writer.entries], split.config['options']['basename'], split.config['options']['ld_script_path'], split.config['options']['undefined_funcs_auto_path'], split.config['options']['undefined_syms_auto_path']))
+        if regenMode == True and appendSplits != []:
+            for splitToAppend in appendSplits:
+                if yaml == splitToAppend:
+                    splitsYamlInfo.append(YAML_INFO([split.linker_writer.entries], split.config['options']['basename'], split.config['options']['ld_script_path'], split.config['options']['undefined_funcs_auto_path'], split.config['options']['undefined_syms_auto_path']))
+        elif regenMode == False:
+            splitsYamlInfo.append(YAML_INFO([split.linker_writer.entries], split.config['options']['basename'], split.config['options']['ld_script_path'], split.config['options']['undefined_funcs_auto_path'], split.config['options']['undefined_syms_auto_path']))
     
-    if objdiffConfigOption == False:
-        ninja_setup_main(gameVersionOption, splitsYamlInfo, skipChecksumOption, nonMatchingOption)
+    
+    if regenMode == False:
+        if objdiffConfigOption == False:
+            ninja_setup_main(gameVersionOption, splitsYamlInfo, skipChecksumOption, nonMatchingOption)
+        else:
+            ninja_setup_objdiff(splitsYamlInfo)
     else:
-        ninja_setup_objdiff(splitsYamlInfo)
+        ninja_append(splitsYamlInfo, objdiffConfigOption)
+    
+    if objdiffConfigOption:
         subprocess.call([PYTHON, "-m", "ninja", "-f", "objdiff.ninja"])
+        
 
 if __name__ == "__main__":
     main()
