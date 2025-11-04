@@ -22,6 +22,7 @@ typedef enum _Sfx
     Sfx_Unk1302 = Sfx_Base + 22,
     Sfx_Unk1303 = Sfx_Base + 23,
 
+    Sfx_Unk1307 = 1307,
     Sfx_Unk1308 = 1308,
     Sfx_Unk1309 = 1309,
     Sfx_Unk1310 = 1310,

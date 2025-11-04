@@ -1910,6 +1910,12 @@ static inline void Model_AnimStatusSet(s_Model* model, s32 animIdx, bool isActiv
     }
 }
 
+/** @brief Decrements a model anims current `status_0` */
+static inline void ModelAnim_StatusDecrement(s_ModelAnim* anim)
+{
+    anim->status_0--;
+}
+
 /** @brief Similar to `Model_AnimStatusSet`, but also sets `anim_4.time_4` and `anim_4.keyframeIdx_8`
  * from the `animInfos` `s_AnimInfo` array.
  *

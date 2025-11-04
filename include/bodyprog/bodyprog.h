@@ -2859,7 +2859,7 @@ void func_8003CD6C(s_PlayerCombat* combat);
  */
 s32 WorldGfx_PlayerHeldItemSet(e_InventoryItemId itemId);
 
-void func_8003D01C();
+void func_8003D01C(void);
 
 void func_8003D03C();
 
@@ -3740,7 +3740,7 @@ void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6,
 
 bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coords, s8 forceFree, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
-bool func_80088D0C();
+bool func_80088D0C(void);
 
 void func_80088D34(s32 idx);
 

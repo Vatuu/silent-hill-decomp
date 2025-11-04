@@ -259,8 +259,8 @@ typedef enum _EventFlag
     EventFlag_M5S02_UsedSafeKey   = 377,
     EventFlag_378                 = 378,
     EventFlag_379                 = 379,
-
-    EventFlag_381 = 381,
+    EventFlag_380                 = 380,
+    EventFlag_381                 = 381,
 
     EventFlag_M5S03_PickupMagnet = 386,
 

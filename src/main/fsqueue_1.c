@@ -19,7 +19,7 @@ s32 Fs_QueueGetLength()
     return (g_FsQueue.last.idx + 1) - g_FsQueue.postLoad.idx;
 }
 
-bool Fs_QueueDoThingWhenEmpty()
+bool Fs_QueueDoThingWhenEmpty(void)
 {
     bool result;
 
