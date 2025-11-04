@@ -86,21 +86,21 @@ void func_800CC99C(void) // 0x800CC99C
 {
     s32 flags;
 
-    flags = 0x2;
+    flags = 1 << 1;
 
     switch (g_SavegamePtr->mapRoomIdx_A5)
     {
         case 17:
             if (Savegame_EventFlagGet(EventFlag_295) && !Savegame_EventFlagGet(EventFlag_352))
             {
-                flags = 0x2 | 0x4;
+                flags = (1 << 1) | (1 << 2);
             }
             break;
 
         case 12:
             if (!Savegame_EventFlagGet(EventFlag_295))
             {
-                flags = 0x12;
+                flags = (1 << 1) | (1 << 4);
             }
             break;
     }
@@ -109,11 +109,11 @@ void func_800CC99C(void) // 0x800CC99C
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S02_AntiqueShopOpen))
         {
-            flags |= 0x8;
+            flags |= 1 << 3;
         }
     }
 
-    if (flags & 8)
+    if (flags & (1 << 3))
     {
         s8 temp_v0 = func_800364BC();
         D_800CCBAF = temp_v0;

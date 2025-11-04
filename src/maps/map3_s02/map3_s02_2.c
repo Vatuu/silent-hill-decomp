@@ -150,7 +150,7 @@ void func_800D0F8C(void) // 0x800D0F8C
 
 INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02_2", func_800D0F9C);
 
-s16 func_800D1354(void)
+s16 func_800D1354(void) // 0x800D1354
 {
     s32 cos0;
     s32 tmp0;
@@ -160,16 +160,16 @@ s16 func_800D1354(void)
     s32 var;
     s32 x6;
     s32 z6;
+
+    // TODO: Use `Math_Vector2MagCalc`.
     x = (g_SysWork.player_4C.chara_0.position_18.vx - Q12(95.2f));
     z = (g_SysWork.player_4C.chara_0.position_18.vz + Q12(140.0f));
+    cos0 = Math_Cos(func_8005BF38((ratan2(x, z) - ratan2(Q12(4.8f) + 1, Q12(12.8f) + 1))));
 
-    cos0 = Math_Cos(func_8005BF38((ratan2(x, z) - ratan2(0x4CCD, 0xCCCD))));
     x6 = Q12_TO_Q6(g_SysWork.player_4C.chara_0.position_18.vx - Q12(95.2f));
     z6 = Q12_TO_Q6(g_SysWork.player_4C.chara_0.position_18.vz + Q12(140.0f));
 
-    tmp0 = FP_FROM((cos0 * 
-                        Q6_TO_Q12((SquareRoot0(SQUARE(x6) + SQUARE(z6))))
-                        ), Q12_SHIFT);
+    tmp0 = FP_FROM((cos0 * Q6_TO_Q12((SquareRoot0(SQUARE(x6) + SQUARE(z6))))), Q12_SHIFT);
     var1 = FP_TO(tmp0, Q12_SHIFT) / Q6_TO_Q12(SquareRoot0(0xBAC52));
     var = MIN(var1, Q8(16.0f));
 
@@ -179,8 +179,10 @@ s16 func_800D1354(void)
         {
             var1 = Q8(16.0f);
         }
+
         return Q8(16.0f) - var1;
     }
+
     return Q8(16.0f);
 }
 

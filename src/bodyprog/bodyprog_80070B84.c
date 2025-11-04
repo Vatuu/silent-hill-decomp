@@ -2228,7 +2228,7 @@ void Player_UpperBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
     switch (g_SysWork.player_4C.extra_128.upperBodyState_20)
     {
         case PlayerUpperBodyState_None:
-            func_80071620(55, chara, 551, Sfx_HeavyBreath);
+            func_80071620(55, chara, 551, Sfx_HarryHeavyBreath);
             break;
 
         case PlayerUpperBodyState_LowerBodyStumble:

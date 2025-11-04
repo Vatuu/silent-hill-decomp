@@ -154,6 +154,7 @@ void func_800D4E64(void) // 0x800D4E64
 
             Savegame_EventFlagSet(EventFlag_396);
 
+            // Warp player.
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(135.05f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(59.75f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(180.0f);
@@ -184,8 +185,11 @@ void func_800D4E64(void) // 0x800D4E64
         case 6:
             Savegame_EventFlagSet(EventFlag_M5S02_UsedSafeKey);
             func_8005DC1C(Sfx_Unk1591, &QVECTOR3(134.7f, -0.5f, 59.5f), Q8_CLAMPED(0.5f), 0);
+
+            // Warp camera.
             Camera_PositionSet(NULL, Q12(135.26f), Q12(-1.61f), Q12(60.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(133.36f), Q12(1.12f), Q12(58.01f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
             D_800DA726 = -1618;
             SysWork_StateStepIncrement(0);
 
@@ -397,7 +401,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
     SVECTOR3 unused;
     s32      i;
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 3)
     {
         if (g_SysWork.sysStateStep_C[0] < 41)
@@ -426,7 +430,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             DmsHeader_FixOffsets(FS_BUFFER_17);
 
             D_800DA6EC                                 = 0;
-            g_SysWork.player_4C.chara_0.position_18.vy = 0;
+            g_SysWork.player_4C.chara_0.position_18.vy = Q12(0.0f);
 
             Chara_Load(0, Chara_Kaufmann, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_Load(1, Chara_Mumbler, &g_SysWork.npcCoords_FC0[30], 0, NULL, NULL);
@@ -603,7 +607,9 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
         case 35:
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
+
             D_800DA6EC = Q12(316.0f);
+
             sharedFunc_800D2EF4_0_s00();
             func_8003CD6C(&g_SysWork.playerCombatInfo_38);
             sharedFunc_800D2EB4_0_s00();
@@ -667,6 +673,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
                 g_SysWork.npcs_1A0[1].model_0.stateStep_3 = 3;
                 func_800625F4(&QVECTOR3(139.3f, 0.0f, 23.6f), 120, 3, 1);
             }
+
             Fs_QueueWaitForEmpty();
             SysWork_StateStepIncrement(0);
             break;
@@ -679,6 +686,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
                     sharedData_800E1FF8_1_s02[i].field_A = 0;
                 }
             }
+
             SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
             SysWork_StateStepIncrement(0);
 
@@ -692,7 +700,9 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
 
             Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, 2);
             vcReturnPreAutoCamWork(true);
+
             D_800DA6EC = NO_VALUE;
+
             Savegame_EventFlagSet(EventFlag_379);
             func_8008D448(g_SavegamePtr);
             func_8003EBA0();
@@ -717,16 +727,16 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
         vcUserCamTarget(&D_800DA6CC, NULL, true);
         vcUserWatchTarget(&D_800DA6DC, NULL, true);
 
-        // "LIGHT", cutscene light position? (TODO: rename g_SysWork.field_2360?)
+        // "LIGHT", cutscene light position? (TODO: Rename `g_SysWork.field_2360`?)
         Dms_CharacterGetPosRot(&g_SysWork.field_2360, &unused, "LIGHT", D_800DA6EC, FS_BUFFER_17);
 
         // "L_INT", interior light or intersection point?
         Dms_CharacterGetPosRot(&lightIntPos.vx, &unused, "L_INT", D_800DA6EC, FS_BUFFER_17);
 
-        // Light angle? (TODO: rename g_SysWork.field_2370?)
+        // Light angle? (TODO: Rename `g_SysWork.field_2370`?)
         g_SysWork.field_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.field_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.field_2360.vx, lightIntPos.vz - g_SysWork.field_2360.vz));
         g_SysWork.field_2370.vy = ratan2(lightIntPos.vx - g_SysWork.field_2360.vx, lightIntPos.vz - g_SysWork.field_2360.vz);
-        g_SysWork.field_2370.vz = 0;
+        g_SysWork.field_2370.vz = FP_ANGLE(0.0f);
     }
 }
 

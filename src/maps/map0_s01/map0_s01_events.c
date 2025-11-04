@@ -458,8 +458,8 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
 
         case 8:
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
-            func_8004690C(Sfx_RadioScary_Loop);
-            func_8004690C(Sfx_RadioStatic_Loop);
+            func_8004690C(Sfx_RadioScaryLoop);
+            func_8004690C(Sfx_RadioStaticLoop);
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -542,8 +542,8 @@ void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
 
             Savegame_EventFlagSet(EventFlag_50);
 
-            Sd_EngineCmd(Sfx_RadioScary_Loop);
-            Sd_EngineCmd(Sfx_RadioStatic_Loop);
+            Sd_EngineCmd(Sfx_RadioScaryLoop);
+            Sd_EngineCmd(Sfx_RadioStaticLoop);
 
             Savegame_EventFlagSet(EventFlag_52);
 
@@ -876,8 +876,8 @@ void MapEvent_AirScreamerDeath() // 0x800DC8C8
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            func_8004690C(Sfx_RadioScary_Loop);
-            func_8004690C(Sfx_RadioStatic_Loop);
+            func_8004690C(Sfx_RadioScaryLoop);
+            func_8004690C(Sfx_RadioStaticLoop);
 
             Savegame_EventFlagClear(EventFlag_52);
             g_MapMsgSoundIdx = 0;
@@ -1063,12 +1063,12 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
     {
         if (g_SysWork.sysFlags_22A0 & SysFlag_6)
         {
-            Sd_EngineCmd(Sfx_RadioScary_Loop);
-            Sd_EngineCmd(Sfx_RadioStatic_Loop);
+            Sd_EngineCmd(Sfx_RadioScaryLoop);
+            Sd_EngineCmd(Sfx_RadioStaticLoop);
         }
 
-        func_8005DE0C(Sfx_RadioScary_Loop, &D_800DE154, D_800E23A1, 0x10000, 0);
-        func_8005DE0C(Sfx_RadioStatic_Loop, &D_800DE154, D_800E23A1, 0x10000, 0);
+        func_8005DE0C(Sfx_RadioScaryLoop, &D_800DE154, D_800E23A1, 0x10000, 0);
+        func_8005DE0C(Sfx_RadioStaticLoop, &D_800DE154, D_800E23A1, 0x10000, 0);
 
         Savegame_EventFlagSet(EventFlag_52);
     }

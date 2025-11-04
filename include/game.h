@@ -1910,7 +1910,10 @@ static inline void Model_AnimStatusSet(s_Model* model, s32 animIdx, bool isActiv
     }
 }
 
-/** @brief Decrements a model anims current `status_0` */
+/** @brief Decrements the anim status of a model anim.
+ *
+ * @param anim Anim to update.
+ */
 static inline void ModelAnim_StatusDecrement(s_ModelAnim* anim)
 {
     anim->status_0--;

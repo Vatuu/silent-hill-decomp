@@ -1,7 +1,7 @@
 // TODO: Rename to `SfxId`. There's a name clash with an SFX struct.
 typedef enum _Sfx
 {
-    Sfx_Base = 1280,              // Base SFX (not valid in itself).
+    Sfx_Base = 1280, // Base SFX (not valid in itself).
 
     Sfx_StartGame = Sfx_Base + 1, // `SND/FIRST.VAB`
 
@@ -12,52 +12,53 @@ typedef enum _Sfx
     Sfx_Unk1296 = Sfx_Base + 16,
     Sfx_Unk1297 = Sfx_Base + 17,
 
-    Sfx_Ui_Error   = Sfx_Base + 24, // `1ST/BASE.VAB` onward, but loaded out of order?
-    Sfx_Ui_Move    = Sfx_Base + 25,
-    Sfx_Ui_Cancel  = Sfx_Base + 26,
-    Sfx_Ui_Confirm = Sfx_Base + 27,
-    Sfx_Ui_Map     = Sfx_Base + 28,
-
-    Sfx_DoorOpen_A  = Sfx_Base + 29,
-    Sfx_DoorClose_A = Sfx_Base + 30,
-
     Sfx_Unk1300 = Sfx_Base + 20,
     Sfx_Unk1301 = Sfx_Base + 21,
     Sfx_Unk1302 = Sfx_Base + 22,
     Sfx_Unk1303 = Sfx_Base + 23,
 
+    Sfx_UiError    = Sfx_Base + 24, // `1ST/BASE.VAB` onward, but loaded out of order?
+    Sfx_UiMove     = Sfx_Base + 25,
+    Sfx_UiCancel   = Sfx_Base + 26,
+    Sfx_UiConfirm  = Sfx_Base + 27,
+    Sfx_UiMap      = Sfx_Base + 28,
+    Sfx_DoorOpen0  = Sfx_Base + 29,
+    Sfx_DoorClose1 = Sfx_Base + 30,
+
+    Sfx_Unk1307 = 1307,
+    Sfx_Unk1308 = 1308,
+    Sfx_Unk1309 = 1309,
+    Sfx_Unk1310 = 1310,
+
     Sfx_Stumble0 = 1314,
 
-    Sfx_Unk1316     = 1316,
-    Sfx_Unk1317     = 1317,
-    Sfx_Unk1318     = 1318,
-    Sfx_Unk1319     = 1319,
-    Sfx_HeavyBreath = 1320,
-
-    Sfx_RadioScary_Loop  = Sfx_Base + 41,
-    Sfx_RadioStatic_Loop = Sfx_Base + 42,
-
-    Sfx_Unk1323 = 1323,
-    Sfx_Unk1324 = 1324,
+    Sfx_Unk1316          = 1316,
+    Sfx_Unk1317          = 1317,
+    Sfx_Unk1318          = 1318,
+    Sfx_Unk1319          = 1319,
+    Sfx_HarryHeavyBreath = Sfx_Base + 40,
+    Sfx_RadioScaryLoop   = Sfx_Base + 41,
+    Sfx_RadioStaticLoop  = Sfx_Base + 42,
+    Sfx_Unk1323          = 1323,
+    Sfx_Unk1324          = 1324,
 
     Sfx_Unk1326 = 1326,
     Sfx_Unk1327 = 1327,
     Sfx_Unk1328 = 1328,
     Sfx_Unk1329 = 1329,
 
-    Sfx_Stumble1     = 1333,
-    Sfx_DoorJammed   = 1334,
-    Sfx_UseKey       = 1335,
+    Sfx_Stumble1     = Sfx_Base + 53,
+    Sfx_DoorJammed   = Sfx_Base + 54,
+    Sfx_UseKey       = Sfx_Base + 55,
     Sfx_Unk1336      = 1336,
     Sfx_Unk1337      = 1337,
     Sfx_Unk1338      = 1338,
     Sfx_Unk1339      = 1339,
     Sfx_Unk1340      = 1340,
     Sfx_Unk1341      = 1341,
-    Sfx_DoorUnlocked = 1342,
-
-    Sfx_Unk1343    = 1343,
-    Sfx_DoorLocked = 1344,
+    Sfx_DoorUnlocked = Sfx_Base + 62,
+    Sfx_Unk1343      = 1343,
+    Sfx_DoorLocked   = Sfx_Base + 64,
 
     Sfx_Unk1349 = 1349,
 

@@ -24,6 +24,9 @@
 
 s32 func_800D2E08(s32 arg0);
 
+/** Puppet Nurse/Doctor related. */
+bool func_800D437C(s_SubCharacter* chara);
+
 void func_800D54DC(s32 arg0);
 
 void func_800D5510(void);
@@ -41,7 +44,5 @@ void func_800D6CF0(void);
 void func_800D719C(void);
 
 void func_800D7280(void);
-
-s32 func_800D437C(s_SubCharacter* chara);
 
 #endif

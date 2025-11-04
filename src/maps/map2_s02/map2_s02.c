@@ -559,36 +559,38 @@ INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E9714);
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E993C);
 
-void func_800E9B38(void)
+void func_800E9B38(void) // 0x800E9B38
 {
     s32 flags;
     s32 tmp;
 
-    flags = (1<<1);
+    flags = 1 << 1;
     if (g_SavegamePtr->mapRoomIdx_A5 != 12)
     {
         if ((g_SavegamePtr->mapRoomIdx_A5 == 17) && Savegame_EventFlagGet(EventFlag_295) && !Savegame_EventFlagGet(EventFlag_352))
         {
-            flags = (1<<1) | (1<<2);
+            flags = (1 << 1) | (1 << 2);
         }
     }
     else if (!Savegame_EventFlagGet(EventFlag_295))
     {
-        flags = (1<<4) | (1<<1);
+        flags = (1 << 4) | (1 << 1);
     }
 
     if (Savegame_EventFlagGet(EventFlag_M3S06_PickupAntiqueShopKey))
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S02_AntiqueShopOpen))
         {
-            flags |= (1<<3);
+            flags |= 1 << 3;
         }
     }
-    if (flags & (1<<3))
+
+    if (flags & (1 << 3))
     {
         tmp = func_800364BC();
         D_800ED43F = tmp;
     }
+
     func_80035F4C(flags, Q12(0.1f), &D_800ED43C);
 }
 
@@ -598,9 +600,10 @@ void func_800E9C24(void) {}
 
 #include "maps/shared/MapEvent_DoorLocked.h" // 0x800E9CC0
 
-void func_800E9D54(void)
+void func_800E9D54(void) // 0x800E9D54
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+
     Player_ItemRemove(InventoryItemId_AntiqueShopKey, 1);
     Map_MessageWithSfx(15, Sfx_UseKey, &sfxPos);
     Savegame_EventFlagSet(EventFlag_M2S02_AntiqueShopOpen);
@@ -681,23 +684,25 @@ void func_800E9EAC(void) // 0x800E9EAC
     }
 }
 
-void func_800E9FDC(void)
+void func_800E9FDC(void) // 0xfunc_800E9FDC
 {
-    g_DeltaTime0 = 0;
+    g_DeltaTime0 = Q12(0.0f);
+
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
             ScreenFade_ResetTimestep();
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 1:
             if (func_8003599C())
             {
                 break;
             }
+
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
@@ -707,13 +712,14 @@ void func_800E9FDC(void)
     }
 }
 
-void func_800EA0E0(void)
+void func_800EA0E0(void) // 0x800EA0E0
 {
     if (Savegame_MapMarkingGet(MapMarkFlag_FogCentralTown_AntiqueWholeSign))
     {
         Savegame_MapMarkingSet(MapMarkFlag_AltCentralTown_AntiqueWholeSign);
     }
-    D_800F0B2C = 0;
+
+    D_800F0B2C = Q12(0.0f);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
@@ -736,18 +742,19 @@ void func_800EA0E0(void)
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-void func_800EA1C4(void)
+void func_800EA1C4(void) // 0x800EA1C4
 {
-    s32 x;
-    s32 z;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
+
     func_80069844(0xFFFF);
+
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
     {
         if (Savegame_EventFlagGet(EventFlag_346))
         {
             func_8006982C(4);
             func_80069844(2);
+
             if (g_SysWork.player_4C.chara_0.position_18.vz < Q12(-68.0f))
             {
                 Savegame_EventFlagClear(EventFlag_346);
@@ -759,6 +766,7 @@ void func_800EA1C4(void)
             func_8006982C(2);
         }
     }
+
     if (Savegame_EventFlagGet(EventFlag_191) && !Savegame_EventFlagGet(EventFlag_194))
     {
         if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3))
@@ -780,15 +788,15 @@ void func_800EA1C4(void)
     {
             Game_TurnFlashlightOff();
     }
+
     if (!Savegame_EventFlagGet(EventFlag_192))
     {
         if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, -3, -1, -3))
         {
-            if (D_800F0B2C == 0)
+            if (D_800F0B2C == Q12(0.0f))
             {
-                x = (g_SysWork.player_4C.chara_0.position_18.vx + Q12(96.0f)) >> 6;
-                z = (g_SysWork.player_4C.chara_0.position_18.vz + Q12(89.0f)) >> 6;
-                if ((SquareRoot0(SQUARE(x) + SQUARE(z)) << 6) < Q12(4.0f))
+                if (Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx + Q12(96.0f),
+                                        g_SysWork.player_4C.chara_0.position_18.vz + Q12(89.0f)) < Q12(4.0f))
                 {
                     func_8005DC1C(Sfx_Unk1492, &D_800ED938, Q8_CLAMPED(0.766f), 2);
                     D_800F0B2C = Q12(0.3f);
@@ -796,10 +804,10 @@ void func_800EA1C4(void)
             }
         }
 
-        if (D_800F0B2C > 0)
+        if (D_800F0B2C > Q12(0.0f))
         {
             D_800F0B2C -= g_DeltaTime0;
-            if (D_800F0B2C < 0)
+            if (D_800F0B2C < Q12(0.0f))
             {
                 Savegame_EventFlagSet(EventFlag_192);
                 func_8005DC1C(Sfx_Unk1492, &D_800ED938, Q8_CLAMPED(0.766f), 2);

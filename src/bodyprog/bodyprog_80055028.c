@@ -5872,7 +5872,7 @@ void GameState_MapScreen_Update() // 0x80066EB0
             D_800C4448 = temp_a0;
 
             func_80037188(temp_a0);
-            Sd_EngineCmd(Sfx_Ui_Map);
+            Sd_EngineCmd(Sfx_UiMap);
             func_80066E40();
             Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[D_800C4448], FS_BUFFER_2, &g_MapImg);
             Fs_QueueWaitForEmpty();
@@ -5920,7 +5920,7 @@ void GameState_MapScreen_Update() // 0x80066EB0
                 (g_GameWork.gameStatePrev_590 != GameState_InventoryScreen && g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.cancel_2 |
                                                                                                                g_GameWorkPtr->config_0.controllerConfig_0.map_18)))
             {
-                Sd_EngineCmd(Sfx_Ui_Map);
+                Sd_EngineCmd(Sfx_UiMap);
 
                 if (g_GameWork.gameStatePrev_590 == GameState_InventoryScreen)
                 {
@@ -6020,7 +6020,7 @@ void GameState_MapScreen_Update() // 0x80066EB0
             {
                 D_800C4448 = D_800C4449;
 
-                Sd_EngineCmd(Sfx_Ui_Map);
+                Sd_EngineCmd(Sfx_UiMap);
 
                 g_GameWork.gameStateStep_598[0] = 1;
                 g_SysWork.timer_20              = 0;

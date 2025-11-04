@@ -1301,7 +1301,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                         g_MapMsg_Select.maxIdx_0           = temp;
                         g_MapMsg_Select.selectedEntryIdx_1 = g_MapMsg_SelectCancelIdx;
 
-                        Sd_PlaySfx(Sfx_Ui_Cancel, 0, Q8_CLAMPED(0.25f));
+                        Sd_PlaySfx(Sfx_UiCancel, 0, Q8_CLAMPED(0.25f));
 
                         if (g_SysWork.silentYesSelection_2350_4)
                         {
@@ -1317,11 +1317,11 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 
                         if ((u8)g_MapMsg_Select.selectedEntryIdx_1 == (s8)g_MapMsg_SelectCancelIdx)
                         {
-                            Sd_PlaySfx(Sfx_Ui_Cancel, 0, Q8_CLAMPED(0.25f));
+                            Sd_PlaySfx(Sfx_UiCancel, 0, Q8_CLAMPED(0.25f));
                         }
                         else if (!g_SysWork.silentYesSelection_2350_4)
                         {
-                            Sd_PlaySfx(Sfx_Ui_Confirm, 0, Q8_CLAMPED(0.25f));
+                            Sd_PlaySfx(Sfx_UiConfirm, 0, Q8_CLAMPED(0.25f));
                         }
 
                         if (g_SysWork.silentYesSelection_2350_4)
@@ -1479,7 +1479,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                 g_MapMsg_SelectFlashTimer = Q12(0.0f);
                 g_MapMsg_Select.selectedEntryIdx_1--;
 
-                Sd_PlaySfx(Sfx_Ui_Move, 0, Q8_CLAMPED(0.25f));
+                Sd_PlaySfx(Sfx_UiMove, 0, Q8_CLAMPED(0.25f));
             }
 
             if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickDown &&
@@ -1488,7 +1488,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                 g_MapMsg_SelectFlashTimer = Q12(0.0f);
                 g_MapMsg_Select.selectedEntryIdx_1++;
 
-                Sd_PlaySfx(Sfx_Ui_Move, 0, Q8_CLAMPED(0.25f));
+                Sd_PlaySfx(Sfx_UiMove, 0, Q8_CLAMPED(0.25f));
             }
 
             mapMsgCode = NO_VALUE;
@@ -1508,34 +1508,33 @@ const s32 RodataPad_800252B8 = 0;
  * 
  * @note Used when loading areas. Maybe facilitates things like the
  * opening and closing door SFX when the player moves between rooms. */
-s_AreaLoadSfx const SfxPairs[25] = // 0x800252BC
-    {
-        { Sfx_Base, Sfx_Base },
-        { Sfx_DoorOpen_A, Sfx_DoorClose_A },
-        { Sfx_Unk1323, Sfx_Unk1324 },
-        { Sfx_Unk1418, Sfx_Base },
-        { Sfx_Unk1354, Sfx_Base },
-        { Sfx_Unk1387, Sfx_Base },
-        { Sfx_Unk1391, Sfx_Base },
-        { Sfx_Unk1521, Sfx_Base },
-        { Sfx_Unk1458, Sfx_Unk1459 },
-        { Sfx_Unk1604, Sfx_Unk1605 },
-        { Sfx_Unk1609, Sfx_Unk1610 },
-        { Sfx_Unk1396, Sfx_Unk1397 },
-        { Sfx_Unk1336, Sfx_Unk1337 },
-        { Sfx_Unk1338, Sfx_Unk1339 },
-        { Sfx_Unk1340, Sfx_Unk1341 },
-        { Sfx_Unk1601, Sfx_Unk1602 },
-        { Sfx_Unk1490, Sfx_Unk1491 },
-        { Sfx_Unk1431, Sfx_Unk1432 },
-        { Sfx_Unk1398, Sfx_Unk1399 },
-        { Sfx_Unk1504, Sfx_Unk1505 },
-        { Sfx_DoorOpen_A, Sfx_Base },
-        { Sfx_Unk1323, Sfx_Base },
-        { Sfx_Base, Sfx_Unk1324 },
-        { Sfx_Unk1351, Sfx_Unk1352 },
-        { Sfx_Unk1487, Sfx_Base }
-    };
+s_AreaLoadSfx const SfxPairs[25] = {
+    { Sfx_Base, Sfx_Base },
+    { Sfx_DoorOpen0, Sfx_DoorClose1 },
+    { Sfx_Unk1323, Sfx_Unk1324 },
+    { Sfx_Unk1418, Sfx_Base },
+    { Sfx_Unk1354, Sfx_Base },
+    { Sfx_Unk1387, Sfx_Base },
+    { Sfx_Unk1391, Sfx_Base },
+    { Sfx_Unk1521, Sfx_Base },
+    { Sfx_Unk1458, Sfx_Unk1459 },
+    { Sfx_Unk1604, Sfx_Unk1605 },
+    { Sfx_Unk1609, Sfx_Unk1610 },
+    { Sfx_Unk1396, Sfx_Unk1397 },
+    { Sfx_Unk1336, Sfx_Unk1337 },
+    { Sfx_Unk1338, Sfx_Unk1339 },
+    { Sfx_Unk1340, Sfx_Unk1341 },
+    { Sfx_Unk1601, Sfx_Unk1602 },
+    { Sfx_Unk1490, Sfx_Unk1491 },
+    { Sfx_Unk1431, Sfx_Unk1432 },
+    { Sfx_Unk1398, Sfx_Unk1399 },
+    { Sfx_Unk1504, Sfx_Unk1505 },
+    { Sfx_DoorOpen0, Sfx_Base },
+    { Sfx_Unk1323, Sfx_Base },
+    { Sfx_Base, Sfx_Unk1324 },
+    { Sfx_Unk1351, Sfx_Unk1352 },
+    { Sfx_Unk1487, Sfx_Base }
+};
 
 // These are referenced by pointers at `0x800A99E8`, which are then used by `func_800D3EAC`.
 // Maybe meant to be separate .c file with .h externs.
@@ -1719,7 +1718,7 @@ void func_80037188() // 0x80037188
 
     for (i = 0; i < 2; i++)
     {
-        func_8004690C(Sfx_RadioScary_Loop + i);
+        func_8004690C(Sfx_RadioScaryLoop + i);
     }
 }
 

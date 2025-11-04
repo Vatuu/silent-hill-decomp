@@ -130,7 +130,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
 
             if (g_Controller0->btnsPulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
             {
-                Sd_EngineCmd(Sfx_Ui_Move);
+                Sd_EngineCmd(Sfx_UiMove);
                 g_GameWork.gameState_594 = GameState_MainMenu;
 
                 if (g_GameWork.gameStateStep_598[0] != 1)
@@ -177,7 +177,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
                 }
                 else
                 {
-                    Sd_EngineCmd(Sfx_Ui_Confirm);
+                    Sd_EngineCmd(Sfx_UiConfirm);
                 }
 
                 switch (g_MainMenu_SelectedEntry)
@@ -272,7 +272,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
             // Play scroll sound.
             if (g_Controller0->btnsPulsed_18 & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
             {
-                Sd_EngineCmd(Sfx_Ui_Move);
+                Sd_EngineCmd(Sfx_UiMove);
             }
 
             // Select game difficulty.
@@ -293,7 +293,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
             // Cancel.
             else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
-                Sd_EngineCmd(Sfx_Ui_Cancel);
+                Sd_EngineCmd(Sfx_UiCancel);
                 g_MainMenuState = 1;
             }
             break;
