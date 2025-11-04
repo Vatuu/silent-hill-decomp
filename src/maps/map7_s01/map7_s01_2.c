@@ -1156,7 +1156,7 @@ void func_800D9A08(void) // 0x800D9A08
             break;
 
         case 7:
-            Sd_EngineCmd(Sfx_Unk1308);
+            Sd_EngineCmd(Sfx_Ui_Map);
             SysWork_StateStepIncrement(0);
 
         case 8:

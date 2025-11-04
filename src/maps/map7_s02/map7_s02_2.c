@@ -1571,7 +1571,7 @@ void func_800DFB48(void) // 0x800DFB48
             break;
 
         case 7:
-            Sd_EngineCmd(Sfx_Unk1308);
+            Sd_EngineCmd(Sfx_Ui_Map);
             SysWork_StateStepIncrement(0);
 
         case 8:

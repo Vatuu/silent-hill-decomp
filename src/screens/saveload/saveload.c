@@ -1637,7 +1637,7 @@ void Savegame_ScreenLogic() // 0x801E649C
                 (g_Controller0->btnsClicked_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)))
             {
                 g_SelectedSaveSlotIdx ^= 1;
-                Sd_EngineCmd(Sfx_Back);
+                Sd_EngineCmd(Sfx_Ui_Move);
             }
 
             // A memory card is inserted.
@@ -1653,7 +1653,7 @@ void Savegame_ScreenLogic() // 0x801E649C
                     if (g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx] != 0) 
                     {
                         g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx]--;
-                        Sd_EngineCmd(Sfx_Back);
+                        Sd_EngineCmd(Sfx_Ui_Move);
                     }
                 }
 
@@ -1663,7 +1663,7 @@ void Savegame_ScreenLogic() // 0x801E649C
                     if (g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx] < g_MemCardElementCount[g_SelectedSaveSlotIdx] - 1)
                     {
                         g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx]++;
-                        Sd_EngineCmd(Sfx_Back);
+                        Sd_EngineCmd(Sfx_Ui_Move);
                     }
                 }
 
@@ -1704,7 +1704,7 @@ void Savegame_ScreenLogic() // 0x801E649C
                         g_GameWork.gameStateStep_598[0] += D_800BCD38;
                     }
 
-                    Sd_EngineCmd(Sfx_Confirm);
+                    Sd_EngineCmd(Sfx_Ui_Confirm);
                 }
             }
 
@@ -1715,7 +1715,7 @@ void Savegame_ScreenLogic() // 0x801E649C
                 g_GameWork.gameStateStep_598[1] = 2;
                 g_GameWork.gameStateStep_598[2] = 0;
 
-                Sd_EngineCmd(Sfx_Cancel);
+                Sd_EngineCmd(Sfx_Ui_Cancel);
 
                 if (g_GameWork.gameStatePrev_590 == GameState_InventoryScreen) 
                 {
@@ -1737,13 +1737,13 @@ void Savegame_ScreenLogic() // 0x801E649C
             if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickLeft) 
             {
                 g_IsSaveWriteOptionSelected = gameStateStep;
-                Sd_EngineCmd(Sfx_Back);
+                Sd_EngineCmd(Sfx_Ui_Move);
             }
 
             if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickRight) 
             {
                 g_IsSaveWriteOptionSelected = false;
-                Sd_EngineCmd(Sfx_Back);
+                Sd_EngineCmd(Sfx_Ui_Move);
             }
 
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0) 
@@ -1762,7 +1762,7 @@ void Savegame_ScreenLogic() // 0x801E649C
                     g_GameWork.gameStateStep_598[2] = 0;
                     g_GameWork.gameStateStep_598[0] = g_IsSaveSelected + 2;
                 }
-                Sd_EngineCmd(Sfx_Confirm);
+                Sd_EngineCmd(Sfx_Ui_Confirm);
             }
 
             // Cancel overwrite.
@@ -1770,7 +1770,7 @@ void Savegame_ScreenLogic() // 0x801E649C
             {
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
-                Sd_EngineCmd(Sfx_Cancel);
+                Sd_EngineCmd(Sfx_Ui_Cancel);
             }
 
             Gfx_WriteOptionSave(g_SaveWriteOption, g_IsSaveWriteOptionSelected);
