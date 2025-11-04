@@ -1718,7 +1718,7 @@ void func_80037188() // 0x80037188
 
     for (i = 0; i < 2; i++)
     {
-        func_8004690C(Sfx_RadioHeavyStaticLoop + i);
+        func_8004690C(Sfx_RadioInterferenceLoop + i);
     }
 }
 

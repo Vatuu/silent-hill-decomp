@@ -1,7 +1,7 @@
 // TODO: Rename to `SfxId`. There's a name clash with an SFX struct.
 typedef enum _SfxId
 {
-    Sfx_Base = 1280, // Base SFX (not valid in itself).
+    Sfx_Base = 1280,                  // Base SFX (not valid in itself).
 
     Sfx_MenuStartGame = Sfx_Base + 1, // `SND/FIRST.VAB`
 
@@ -32,33 +32,34 @@ typedef enum _SfxId
 
     Sfx_Stumble0 = Sfx_Base + 34,
 
-    Sfx_Unk1316              = 1316,
-    Sfx_Unk1317              = 1317,
-    Sfx_Unk1318              = 1318,
-    Sfx_Unk1319              = 1319,
-    Sfx_HarryHeavyBreath     = Sfx_Base + 40,
-    Sfx_RadioHeavyStaticLoop = Sfx_Base + 41,
-    Sfx_RadioLightStaticLoop = Sfx_Base + 42,
-    Sfx_Unk1323              = 1323, // } Pair.
-    Sfx_Unk1324              = 1324, // }
+    Sfx_Unk1316               = 1316,
+    Sfx_Unk1317               = 1317,
+    Sfx_Unk1318               = 1318,
+    Sfx_Unk1319               = 1319,
+    Sfx_HarryHeavyBreath      = Sfx_Base + 40,
+    Sfx_RadioInterferenceLoop = Sfx_Base + 41,
+    Sfx_RadioStaticLoop       = Sfx_Base + 42,
+    Sfx_Unk1323               = 1323, // } Pair.
+    Sfx_Unk1324               = 1324, // }
 
     Sfx_Unk1326 = 1326,
     Sfx_Unk1327 = 1327,
     Sfx_Unk1328 = 1328,
     Sfx_Unk1329 = 1329,
 
-    Sfx_Stumble1     = Sfx_Base + 53,
-    Sfx_DoorJammed   = Sfx_Base + 54,
-    Sfx_UseKey       = Sfx_Base + 55,
-    Sfx_Unk1336      = 1336, // } Pair.
-    Sfx_Unk1337      = 1337, // }
-    Sfx_Unk1338      = 1338, // } Pair.
-    Sfx_Unk1339      = 1339, // }
-    Sfx_Unk1340      = 1340, // } Pair.
-    Sfx_Unk1341      = 1341, // }
-    Sfx_DoorUnlocked = Sfx_Base + 62,
-    Sfx_Unk1343      = 1343,
-    Sfx_DoorLocked   = Sfx_Base + 64,
+    Sfx_FootstepMetal = Sfx_Base + 52,
+    Sfx_Stumble1      = Sfx_Base + 53,
+    Sfx_DoorJammed    = Sfx_Base + 54,
+    Sfx_UseKey        = Sfx_Base + 55,
+    Sfx_Unk1336       = 1336, // } Pair.
+    Sfx_Unk1337       = 1337, // }
+    Sfx_Unk1338       = 1338, // } Pair.
+    Sfx_Unk1339       = 1339, // }
+    Sfx_Unk1340       = 1340, // } Pair.
+    Sfx_Unk1341       = 1341, // }
+    Sfx_DoorUnlocked  = Sfx_Base + 62,
+    Sfx_Unk1343       = 1343,
+    Sfx_DoorLocked    = Sfx_Base + 64,
 
     Sfx_Unk1349 = 1349,
 
