@@ -1562,7 +1562,7 @@ typedef struct _MapOverlayHeader
     u8*                    loadableItems_2C;
     const char**           mapMessages_30; // Array of strings.
     s_AnimInfo*            animInfos_34;   // Map-specific anim infos for Harry (for anims 38+).
-    s_UnkStruct3_Mo*       field_38;
+    s_UnkStruct3_Mo*       field_38; // Array of 40?
     void                   (*func_3C)(); // func(?).
     void                   (*func_40)();
     void                   (*func_44)();
@@ -4578,8 +4578,6 @@ void func_8007F14C(u8 arg0);
 
 void func_8007FB94(s_SubCharacter*, s_MainCharacterExtra*, s32);
 
-void func_8007FD4C(s32);
-
 /** Resets several global variables to 0. */
 void func_8007F1CC();
 
@@ -4626,7 +4624,7 @@ s32 func_8007FD2C();
  */
 q19_12 Game_GasWeaponPowerTimerValue();
 
-void func_8007FD4C(s32 arg0);
+void func_8007FD4C(bool cond);
 
 /** Returns data in last 3 pointer args. Outputs? */
 void func_8007FDE0(s8, e_SfxId* sfx, s8* pitch0, s8* pitch1);

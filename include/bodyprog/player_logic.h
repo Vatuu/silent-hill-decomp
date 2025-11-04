@@ -336,7 +336,7 @@ typedef enum _HarryAnim
     HarryAnim_Unk36                   = 36,
     HarryAnim_Unk37                   = 37,
 
-    // NOTE: Anims 28 and above are per-map. Will need separate enums or could do `#ifdef` magic here if it works.
+    // NOTE: Anims 38 and above are per-map. Will need separate enums or could do `#ifdef` magic here if it works.
 
     HarryAnim_Death                   = 40,
 

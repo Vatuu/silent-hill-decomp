@@ -40,7 +40,7 @@ void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
 
     if (!isPuppetDoctor)
     {
-        charStatIdx                                 = charPalette + 1; // skip doctor stat at beginning
+        charStatIdx                                 = charPalette + 1; // Skip doctor stat at beginning.
         chara->properties_E4.npc.modelVariation_119 = modelVariation + 1;
     }
     else
@@ -64,12 +64,14 @@ void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
             chara->model_0.anim_4.time_4        = Q12(459.0f);
             chara->model_0.anim_4.keyframeIdx_8 = 459;
             break;
+
         case 1:
             chara->model_0.state_2              = 10;
             chara->model_0.stateStep_3          = 0;
             chara->model_0.anim_4.time_4        = Q12(459.0f);
             chara->model_0.anim_4.keyframeIdx_8 = 459;
             break;
+
         case 2:
             chara->model_0.state_2              = 9;
             chara->model_0.stateStep_3          = 0;
@@ -83,5 +85,5 @@ void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
     chara->model_0.anim_4.status_0 = ANIM_STATUS(17, false);
     chara->model_0.anim_4.alpha_A  = Q12(0.0f);
 
-    chara2->properties_E4.npc.field_120 = 4096;
+    chara2->properties_E4.npc.field_120 = Q12(1.0f);
 }

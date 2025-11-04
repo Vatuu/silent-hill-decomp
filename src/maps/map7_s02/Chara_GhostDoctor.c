@@ -35,7 +35,7 @@ void Ai_GhostDoctor_Init(s_SubCharacter* chara) // 0x800D8BE0
 
 void func_800D8C00(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8C00
 {
-    if (chara->properties_E4.player.afkTimer_E8 == 0)
+    if (chara->properties_E4.player.afkTimer_E8 == Q12(0.0f))
     {
         if (chara->model_0.stateStep_3 == 0)
         {
@@ -43,11 +43,11 @@ void func_800D8C00(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8C00
             chara->model_0.stateStep_3++;
         }
 
-        if (chara->properties_E4.player.runTimer_F8 != 0)
+        if (chara->properties_E4.player.runTimer_F8 != Q12(0.0f))
         {
-            chara->properties_E4.player.afkTimer_E8 = 0;
+            chara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
             chara->model_0.stateStep_3              = 0;
-            chara->properties_E4.player.runTimer_F8 = 0;
+            chara->properties_E4.player.runTimer_F8 = Q12(0.0f);
         }
     }
 

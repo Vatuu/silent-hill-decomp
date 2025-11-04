@@ -330,9 +330,9 @@ INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DCD00);
 
 void func_800DCDDC(s_SubCharacter* chara) // 0x800DCDDC
 {
-    s32 temp_s1;
-    s32 temp_s2;
-    s32 temp_v0;
+    q19_12 temp_s1;
+    s32    temp_s2;
+    q19_12 temp_v0;
 
     temp_s1                                        = chara->properties_E4.player.field_104;
     temp_s2                                        = chara->properties_E4.npc.field_10C;
