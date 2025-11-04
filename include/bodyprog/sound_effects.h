@@ -1,5 +1,5 @@
 // TODO: Rename to `SfxId`. There's a name clash with an SFX struct.
-typedef enum _Sfx
+typedef enum _SfxId
 {
     Sfx_Base = 1280, // Base SFX (not valid in itself).
 
@@ -39,8 +39,8 @@ typedef enum _Sfx
     Sfx_HarryHeavyBreath     = Sfx_Base + 40,
     Sfx_RadioHeavyStaticLoop = Sfx_Base + 41,
     Sfx_RadioLightStaticLoop = Sfx_Base + 42,
-    Sfx_Unk1323              = 1323,
-    Sfx_Unk1324              = 1324,
+    Sfx_Unk1323              = 1323, // } Pair.
+    Sfx_Unk1324              = 1324, // }
 
     Sfx_Unk1326 = 1326,
     Sfx_Unk1327 = 1327,
@@ -50,20 +50,20 @@ typedef enum _Sfx
     Sfx_Stumble1     = Sfx_Base + 53,
     Sfx_DoorJammed   = Sfx_Base + 54,
     Sfx_UseKey       = Sfx_Base + 55,
-    Sfx_Unk1336      = 1336,
-    Sfx_Unk1337      = 1337,
-    Sfx_Unk1338      = 1338,
-    Sfx_Unk1339      = 1339,
-    Sfx_Unk1340      = 1340,
-    Sfx_Unk1341      = 1341,
+    Sfx_Unk1336      = 1336, // } Pair.
+    Sfx_Unk1337      = 1337, // }
+    Sfx_Unk1338      = 1338, // } Pair.
+    Sfx_Unk1339      = 1339, // }
+    Sfx_Unk1340      = 1340, // } Pair.
+    Sfx_Unk1341      = 1341, // }
     Sfx_DoorUnlocked = Sfx_Base + 62,
     Sfx_Unk1343      = 1343,
     Sfx_DoorLocked   = Sfx_Base + 64,
 
     Sfx_Unk1349 = 1349,
 
-    Sfx_Unk1351 = 1351,
-    Sfx_Unk1352 = 1352,
+    Sfx_Unk1351 = 1351, // } Pair.
+    Sfx_Unk1352 = 1352, // }
     Sfx_Unk1353 = 1353,
     Sfx_Unk1354 = 1354,
     Sfx_Unk1355 = 1355,
@@ -97,10 +97,10 @@ typedef enum _Sfx
     Sfx_Unk1393 = 1393,
     Sfx_Unk1394 = 1394,
 
-    Sfx_Unk1396 = 1396,
-    Sfx_Unk1397 = 1397,
-    Sfx_Unk1398 = 1398,
-    Sfx_Unk1399 = 1399,
+    Sfx_Unk1396 = 1396, // } Pair.
+    Sfx_Unk1397 = 1397, // }
+    Sfx_Unk1398 = 1398, // } Pair.
+    Sfx_Unk1399 = 1399, // }
 
     Sfx_Unk1416 = 1416,
     Sfx_Unk1417 = 1417,
@@ -113,8 +113,8 @@ typedef enum _Sfx
     Sfx_Unk1423 = 1423,
 
     Sfx_Unk1430 = 1430,
-    Sfx_Unk1431 = 1431,
-    Sfx_Unk1432 = 1432,
+    Sfx_Unk1431 = 1431, // } Pair.
+    Sfx_Unk1432 = 1432, // }
     Sfx_Unk1433 = 1433,
 
     Sfx_Unk1435 = 1435,
@@ -128,7 +128,6 @@ typedef enum _Sfx
     Sfx_Unk1443 = 1443, // }
     Sfx_Unk1444 = 1444, // }
     Sfx_Unk1445 = 1445, // }
-
     Sfx_Unk1446 = 1446,
 
     Sfx_Unk1448 = 1448,
@@ -138,8 +137,8 @@ typedef enum _Sfx
 
     Sfx_Unk1456 = 1456,
 
-    Sfx_Unk1458 = 1458,
-    Sfx_Unk1459 = 1459,
+    Sfx_Unk1458 = 1458, // } Pair.
+    Sfx_Unk1459 = 1459, // }
 
     Sfx_Unk1464 = 1464,
 
@@ -158,22 +157,20 @@ typedef enum _Sfx
     Sfx_Unk1487 = 1487,
     Sfx_Unk1488 = 1488,
     Sfx_Unk1489 = 1489,
-    Sfx_Unk1490 = 1490,
-    Sfx_Unk1491 = 1491,
+    Sfx_Unk1490 = 1490, // } Pair.
+    Sfx_Unk1491 = 1491, // }
     Sfx_Unk1492 = 1492,
     Sfx_Unk1493 = 1493,
     Sfx_Unk1494 = 1494,
     Sfx_Unk1495 = 1495,
     Sfx_Unk1496 = 1496,
-
     Sfx_Unk1497 = 1497,
 
     Sfx_Unk1501 = 1501,
     Sfx_Unk1502 = 1502,
     Sfx_Unk1503 = 1503,
-
-    Sfx_Unk1504 = 1504,
-    Sfx_Unk1505 = 1505,
+    Sfx_Unk1504 = 1504, // } Pair.
+    Sfx_Unk1505 = 1505, // }
 
     Sfx_Unk1521 = 1521,
     Sfx_Unk1522 = 1522,
@@ -198,16 +195,16 @@ typedef enum _Sfx
 
     Sfx_Unk1594 = 1594,
 
-    Sfx_Unk1601 = 1601,
-    Sfx_Unk1602 = 1602,
+    Sfx_Unk1601 = 1601, // } Pair.
+    Sfx_Unk1602 = 1602, // }
 
-    Sfx_Unk1604 = 1604,
-    Sfx_Unk1605 = 1605,
+    Sfx_Unk1604 = 1604, // } Pair.
+    Sfx_Unk1605 = 1605, // }
     Sfx_Unk1606 = 1606,
     Sfx_Unk1607 = 1607,
 
-    Sfx_Unk1609 = 1609,
-    Sfx_Unk1610 = 1610,
+    Sfx_Unk1609 = 1609, // } Pair.
+    Sfx_Unk1610 = 1610, // }
     Sfx_Unk1611 = 1611,
 
     Sfx_Unk1617 = 1617,
@@ -270,4 +267,4 @@ typedef enum _Sfx
     Sfx_Unk4699 = 4699,
 
     Sfx_Hack = -1, // @hack Force enum to be treated as `s32`.
-} e_Sfx;
+} e_SfxId;

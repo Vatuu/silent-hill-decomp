@@ -291,7 +291,7 @@ void MapEvent_UseBottleOnLiquid(void) // 0x800D25A8
         EventState_0   = 0,
         EventState_1   = 1,
         EventState_2   = 2,
-        EventState_Sfx = 3,
+        EventState_SfxId = 3,
         EventState_Msg = 4,
         EventState_5   = 5
     } e_EventState;
@@ -310,7 +310,7 @@ void MapEvent_UseBottleOnLiquid(void) // 0x800D25A8
             func_80086C58(&g_SysWork.player_4C.chara_0, 59);
             break;
 
-        case EventState_Sfx:
+        case EventState_SfxId:
             func_8005DC1C(Sfx_Unk1493, &QVECTOR3(141.6f, -0.0999f, 20.75f), Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 

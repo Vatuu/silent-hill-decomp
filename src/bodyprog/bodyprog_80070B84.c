@@ -6089,7 +6089,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
 void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007B924
 {
-    e_Sfx sfx;
+    e_SfxId sfx;
     s8    pitch0;
     s8    pitch1;
 

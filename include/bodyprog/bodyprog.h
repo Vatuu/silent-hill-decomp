@@ -3507,13 +3507,13 @@ s32 func_8005D974(s32 arg0);
 s32 func_8005D9B8(VECTOR3* pos, q23_8 vol);
 
 /** Spatial SFX func? */
-void func_8005DC1C(e_Sfx sfx, const VECTOR3* pos, q23_8 vol, s32 soundType); // Types assumed.
+void func_8005DC1C(e_SfxId sfx, const VECTOR3* pos, q23_8 vol, s32 soundType); // Types assumed.
 
 /** Spatial SFX func? */
-void func_8005DC3C(e_Sfx sfx, const VECTOR3* pos, q23_8 vol, s32 soundType, s32 pitch);
+void func_8005DC3C(e_SfxId sfx, const VECTOR3* pos, q23_8 vol, s32 soundType, s32 pitch);
 
 /** Spatial SFX func? */
-void func_8005DD44(e_Sfx sfx, VECTOR3* pos, q23_8 vol, s8 pitch); // Types assumed.
+void func_8005DD44(e_SfxId sfx, VECTOR3* pos, q23_8 vol, s8 pitch); // Types assumed.
 
 /** Checks `field_8` in collision struct. */
 bool func_8005F680(s_Collision* coll);
@@ -3521,7 +3521,7 @@ bool func_8005F680(s_Collision* coll);
 void func_8005F6B0(s_SubCharacter* chara, VECTOR* arg1, s32 arg2, s32 arg3);
 
 /** Spatial SFX func? */
-void func_8005DE0C(e_Sfx sfx, VECTOR3* pos, s32 inVolume, s32 falloff, s8 pitch);
+void func_8005DE0C(e_SfxId sfx, VECTOR3* pos, s32 inVolume, s32 falloff, s8 pitch);
 
 void Map_EffectTexturesLoad(s32 mapIdx);
 
@@ -3712,7 +3712,7 @@ void func_80086F44(s32 fadeTimestep0, q19_12 fadeTimestep1);
  * @param sfx SFX to play.
  * @param sfxPos SFX position.
  */
-void Map_MessageWithSfx(s32 mapMsgIdx, e_Sfx sfx, VECTOR3* sfxPos);
+void Map_MessageWithSfx(s32 mapMsgIdx, e_SfxId sfx, VECTOR3* sfxPos);
 
 void func_8008716C(e_InventoryItemId itemId, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
 
@@ -4562,7 +4562,7 @@ void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 weapo
 s32 func_800706E4();
 
 /** Special player SFX handler for heavy breath and damage. */
-bool func_80071620(u8 animStatus, s_SubCharacter*, s32, e_Sfx sfx);
+bool func_80071620(u8 animStatus, s_SubCharacter*, s32, e_SfxId sfx);
 
 void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
 
@@ -4629,7 +4629,7 @@ q19_12 Game_GasWeaponPowerTimerValue();
 void func_8007FD4C(s32 arg0);
 
 /** Returns data in last 3 pointer args. Outputs? */
-void func_8007FDE0(s8, e_Sfx* sfx, s8* pitch0, s8* pitch1);
+void func_8007FDE0(s8, e_SfxId* sfx, s8* pitch0, s8* pitch1);
 
 s32 func_80080478(const VECTOR3* pos0, const VECTOR3* pos1);
 

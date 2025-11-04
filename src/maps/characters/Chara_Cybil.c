@@ -101,7 +101,7 @@ void Ai_Cybil_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 {
     s_Collision coll;
-    e_Sfx       sfx;
+    e_SfxId       sfx;
     s8          pitch0;
     s8          pitch1;
 

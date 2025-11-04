@@ -755,7 +755,7 @@ void func_80086F44(q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x80086F44
     SysWork_StateStepIncrement(0);
 }
 
-void Map_MessageWithSfx(s32 mapMsgIdx, e_Sfx sfx, VECTOR3* sfxPos) // 0x80086FE8
+void Map_MessageWithSfx(s32 mapMsgIdx, e_SfxId sfx, VECTOR3* sfxPos) // 0x80086FE8
 {
     s32 i;
 

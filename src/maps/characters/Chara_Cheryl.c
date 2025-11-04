@@ -106,7 +106,7 @@ void Ai_Cheryl_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x
 void Ai_Cheryl_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D8310
 {
     s_Collision coll;
-    e_Sfx       sfx;
+    e_SfxId       sfx;
     s8          pitch0;
     s8          pitch1;
     s32         distSqr;

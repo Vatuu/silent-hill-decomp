@@ -1,6 +1,6 @@
 void sharedFunc_800CE934_0_s02(void)
 {
-    s32    flags;  // } Looks like numbers meant to be in hex? Could be `e_Sfx` or sound command related (upper 8 bits is cmd, lower 8 is param?)
+    s32    flags;  // } Looks like numbers meant to be in hex? Could be `e_SfxId` or sound command related (upper 8 bits is cmd, lower 8 is param?)
     q19_12 var_a1;
     u8*    var_a2; // Points to 8 bytes of data?
 

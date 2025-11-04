@@ -2783,12 +2783,12 @@ s32 func_8005D9B8(VECTOR3* pos, q23_8 vol) // 0x8005D9B8
     return var_v0;
 }
 
-void func_8005DC1C(e_Sfx sfx, const VECTOR3* pos, q23_8 vol, s32 soundType)
+void func_8005DC1C(e_SfxId sfx, const VECTOR3* pos, q23_8 vol, s32 soundType)
 {
     func_8005DC3C(sfx, pos, vol, soundType, 0);
 }
 
-void func_8005DC3C(e_Sfx sfx, const VECTOR3* pos, q23_8 vol, s32 soundType, s32 pitch) // 0x8005DC3C
+void func_8005DC3C(e_SfxId sfx, const VECTOR3* pos, q23_8 vol, s32 soundType, s32 pitch) // 0x8005DC3C
 {
     q23_8 volCpy;
     s32   balance;
@@ -2837,7 +2837,7 @@ void func_8005DC3C(e_Sfx sfx, const VECTOR3* pos, q23_8 vol, s32 soundType, s32 
     }
 }
 
-void func_8005DD44(e_Sfx sfx, VECTOR3* pos, q23_8 vol, s8 pitch) // 0x8005DD44
+void func_8005DD44(e_SfxId sfx, VECTOR3* pos, q23_8 vol, s8 pitch) // 0x8005DD44
 {
     q23_8 volCpy;
     s32   balance;
@@ -2882,7 +2882,7 @@ static inline s32 calc_atten(s32 volume, VECTOR3* pos, s32 falloff)
     return (volume * dist / falloff);
 }
 
-void func_8005DE0C(e_Sfx sfx, VECTOR3* pos, s32 inVolume, s32 falloff, s8 pitch)
+void func_8005DE0C(e_SfxId sfx, VECTOR3* pos, s32 inVolume, s32 falloff, s8 pitch)
 {
     s32 balance;
 
