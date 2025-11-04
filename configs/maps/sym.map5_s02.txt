@@ -15,12 +15,10 @@ sharedData_800CAB70_0_s00           = 0x800CA618; // type:VECTOR
 //--- PA: 0x001490   VA: 0x800CAA08   subsegment: .rodata, Chara_Kaufmann
 //-----------------------------------------------------------------------
 
-sharedData_800E1FF8_1_s02           = 0x800D950C; // size:0x14
 //------------------------------------------------------
 //--- PA: 0x00155C   VA: 0x800CAAD4   subsegment: rodata
 //------------------------------------------------------
 
-MapEvent_KaufmannBarFightCutscene = 0x800D5744; // type:func
 //-------------------------------------------------------------------
 //--- PA: 0x001560   VA: 0x800CAAD8   subsegment: .rodata, map5_s02_2
 //-------------------------------------------------------------------
@@ -114,6 +112,7 @@ SysWork_StateStepIncrementAfterTime = 0x800D48F8; // type:func
 MapEvent_DoorJammed                 = 0x800D4990; // type:func
 MapEvent_DoorLocked                 = 0x800D4A24; // type:func
 MapEvent_CommonItemTake             = 0x800D4AB8; // type:func
+MapEvent_KaufmannBarFightCutscene   = 0x800D5744; // type:func
 
 
 
@@ -155,6 +154,7 @@ MAP_MESSAGES                        = 0x800D92B4; // type:u32 size:0xCC
 //----------------------------------------------------
 sharedData_800DFB6C_0_s00           = 0x800D9500; // type:s32
 sharedData_800DFB70_0_s00           = 0x800D9504; // type:s32
+sharedData_800E1FF8_1_s02           = 0x800D950C; // size:0x14
 sharedData_800E0CA8_0_s00           = 0x800DA638; // type:s32
 sharedData_800E0CAC_0_s00           = 0x800DA63C; // type:s32
 sharedData_800E0CB0_0_s00           = 0x800DA640; // type:u32
