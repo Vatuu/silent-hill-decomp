@@ -115,6 +115,7 @@ MAP_MESSAGES              = 0x800DA6F0; // type:u32 size:0xA0
 //----------------------------------------------------
 //--- PA: 0x011218   VA: 0x800DA790   subsegment: data
 //----------------------------------------------------
+g_CommonWorldObjectPoses  = 0x800DAC84; // type:WorldObjectPos size:0x64
 sharedData_800DFB6C_0_s00 = 0x800DAD0C; // type:s32
 sharedData_800DFB70_0_s00 = 0x800DAD10; // type:s32
 sharedData_800E0CA8_0_s00 = 0x800DD20C; // type:s32
