@@ -23,6 +23,7 @@
 #define FS_BUFFER_12     (void*)0x801201B4 // Used for weapon anim.     } Sub-buffers within the 4096-byte buffers?
 #define FS_BUFFER_4      (void*)0x80124384 // Used for player map anim. }
 #define FS_BUFFER_11     (void*)0x80169600 // } Used for DMS cutscene data.
+#define FS_BUFFER_17     (void*)0x80169E00 // }
 #define FS_BUFFER_13     (void*)0x8016AE00 // }
 #define FS_BUFFER_14     (void*)0x800F9600 // }
 #define FS_BUFFER_15     (void*)0x801F3600 // }
@@ -255,7 +256,7 @@ s32 Fs_QueueGetLength();
 /** @brief TODO: Unknown. If queue is empty, call `func_8003C850`.
  * @return `true` when queue is empty and the call succeeds, `false` otherwise.
  */
-bool Fs_QueueDoThingWhenEmpty();
+bool Fs_QueueDoThingWhenEmpty(void);
 
 /** @brief Spin-waits for the queue to become empty while calling `Fs_QueueUpdate`.
  * Calls some bodyprog functions before and after the wait, `VSync` during the waits and `DrawSync`

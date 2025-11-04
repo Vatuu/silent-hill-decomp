@@ -23,7 +23,21 @@
 #define MAP_ROOM_MIN_Z Q12(0.0f)
 #define MAP_ROOM_MAX_Z Q12(120.0f)
 
+extern u16 D_800D947C;
+
+extern u8 D_800D94F4;
+
+extern VECTOR3 D_800DA6CC;
+
+extern VECTOR3 D_800DA6DC;
+
+extern u8 D_800DA6E8;
+
+extern s32 D_800DA6EC;
+
 extern s16 D_800DA726;
+
+extern s_WorldObjectDesc D_800DA72C;
 
 void func_800D45B4(s32 arg0);
 
@@ -41,5 +55,9 @@ void func_800D519C(void);
 void func_800D5478(void);
 
 void func_800D54A4(void);
+
+void func_800D54D0(void);
+
+void MapEvent_KaufmannBarFightCutscene(void);
 
 #endif

@@ -1472,7 +1472,7 @@ s32 WorldGfx_PlayerHeldItemSet(e_InventoryItemId itemId) // 0x8003CDA0
     return 0;
 }
 
-void func_8003D01C() // 0x8003D01C
+void func_8003D01C(void) // 0x8003D01C
 {
     g_WorldGfx.heldItem_1BAC.bone_18.modelInfo_0.field_0 &= ~(1 << 31);
 }
