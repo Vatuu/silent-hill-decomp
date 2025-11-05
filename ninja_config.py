@@ -568,7 +568,11 @@ def ninja_append(split_entries, objdiff_mode: bool, skip_checksum: bool, non_mat
         ninjaFileSyntax   = ninja_syntax.Writer(ninjaFile, width=9999)
         objdiffFileRead   = open("objdiff.ninja", "r", encoding="utf-8").read()
         objdiffFile       = open("objdiff.ninja", "w", encoding="utf-8")
-        objdiffFileEndPos = re.search(r"build expected\\objdiff", objdiffFileRead).start()
+        if sys.platform == "linux" or sys.platform == "linux2":
+            objdiffFileEndPos = re.search(r"build expected/objdiff", objdiffFileRead).start()
+        elif sys.platform == "win32":
+            objdiffFileEndPos = re.search(r"build expected\\objdiff", objdiffFileRead).start()
+        
         objdiffFileRule   = objdiffFileRead[objdiffFileEndPos:len(objdiffFileRead)]
         objdiffFile.write(objdiffFileRead[0:objdiffFileEndPos])
         objdiffFileSyntax = ninja_syntax.Writer(objdiffFile, width=9999)
