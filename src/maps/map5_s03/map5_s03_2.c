@@ -185,7 +185,87 @@ void func_800D2640(void) // 0x800D2640
 #endif
 }
 
-INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03_2", func_800D2674);
+void func_800D2674(void) // 0x800D2674
+{
+    s32 moveAmt;
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            MapMsg_DisplayAndHandleSelection(true, 66, 4, 3, 0, false); // "Do you want to push the shelf?"
+            break;
+
+        case 3:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+
+        case 4:
+            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(104.17f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(59.5f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(0.0f);
+
+            Camera_PositionSet(NULL, Q12(102.07f), Q12(-1.42f), Q12(58.77f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(105.14f), Q12(0.37f), Q12(60.61f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
+            func_80085EB8(0U, &g_SysWork.player_4C.chara_0, 105, false);
+            Sd_EngineCmd(Sfx_Unk1520);
+            SysWork_StateStepIncrement(0);
+
+        case 5:
+        case 6:
+            moveAmt                                     = FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.14f, Q12_SHIFT);
+            g_SysWork.player_4C.chara_0.position_18.vz += moveAmt;
+            D_800D6F68.field_24                        += moveAmt;
+
+            if (g_SysWork.sysStateStep_C[0] == 5)
+            {
+                if (D_800D6F68.field_24 > Q12(60.35f))
+                {
+                    SysWork_StateStepSet(0, 6);
+                }
+
+                D_800D3C44 = MIN(D_800D3C44 + (g_DeltaTime0 * 2), Q12(1.0f));
+            }
+            else
+            {
+                if (D_800D6F68.field_24 > Q12(60.44f))
+                {
+                    moveAmt                                     = D_800D6F68.field_24 - Q12(60.44f);
+                    g_SysWork.player_4C.chara_0.position_18.vz -= moveAmt;
+                    D_800D6F68.field_24                        -= moveAmt;
+                }
+
+                // D_800D3C44 = MAX(D_800D3C44 - (g_DeltaTime0 * 2), 0); ?
+                D_800D3C44 = (D_800D3C44 - (g_DeltaTime0 * 2)) >= 0 ? (D_800D3C44 - ((u16)g_DeltaTime0 * 2)) : 0;
+
+                SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            }
+
+            func_8005DE0C(Sfx_Unk1538, &D_800D6F84, D_800D3C44 >> 5, Q12(12.0f), 0);
+            break;
+
+        default:
+            Savegame_EventFlagSet(EventFlag_389);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            sharedFunc_800D2244_0_s00(true);
+            SysWork_StateSetNext(SysState_Gameplay);
+            vcReturnPreAutoCamWork(true);
+            func_8004690C(Sfx_Unk1520);
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03_2", func_800D2A04);
 

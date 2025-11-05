@@ -20,6 +20,18 @@
 #define MAP_ROOM_MIN_Z Q12(0.0f)
 #define MAP_ROOM_MAX_Z Q12(120.0f)
 
+typedef struct
+{
+    u8  unk_0[36];
+    s32 field_24;
+} s_800D6F68; // TODO: Likely an already known struct.
+
+extern s16 D_800D3C44;
+
+extern s_800D6F68 D_800D6F68;
+
+extern VECTOR3 D_800D6F84;
+
 void func_800D1004(s32 arg0);
 
 /** @brief Handles a Health Drink or Shotgun Shells item pickup event. */
@@ -30,5 +42,7 @@ void func_800D1A84(void);
 void func_800D1ACC(void);
 
 void func_800D2640(void);
+
+void func_800D2674(void);
 
 #endif
