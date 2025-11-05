@@ -2847,6 +2847,8 @@ void sharedFunc_800D6EC4_0_s01(s_SubCharacter* chara);
 
 void sharedFunc_800D7B14_0_s01(s_SubCharacter*, GsCOORDINATE2*);
 
+void sharedFunc_800CE884_0_s02(s32 arg0);
+
 void sharedFunc_800CE8B8_0_s02(void);
 
 void sharedFunc_800CE5D4_1_s03(VECTOR3* arg0, u16 arg1, u16 arg2, u32 arg3);

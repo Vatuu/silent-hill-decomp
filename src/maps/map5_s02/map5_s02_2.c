@@ -39,12 +39,9 @@
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800D451C
 
-void func_800D45B4(s32 arg0) // 0x800D45B4
-{
-    (arg0 != 0) ? func_800D45E8() : sharedFunc_800CE934_0_s02();
-}
+#include "maps/shared/sharedFunc_800CE884_0_s02.h" // 0x800D45B4
 
-INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02_2", func_800D45E8);
+#include "maps/shared/sharedFunc_800CE8B8_0_s02.h" // 0x800D45E8
 
 #include "maps/shared/sharedFunc_800CE934_0_s02.h" // 0x800D4664
 

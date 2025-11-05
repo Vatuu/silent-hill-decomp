@@ -100,34 +100,9 @@ void func_800CE770(void) {}
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800CE7EC
 
-void func_800CE884(s32 arg0) // 0x800CE884
-{
-    if (arg0 != 0)
-    {
-        func_800CE8B8();
-        return;
-    }
+#include "maps/shared/sharedFunc_800CE884_0_s02.h" // 0x800CE884
 
-    sharedFunc_800CE934_0_s02();
-}
-
-void func_800CE8B8(void) // 0x800CE8B8
-{
-    switch (g_SavegamePtr->mapRoomIdx_A5)
-    {
-        case 5:
-            func_8003640C(6);
-            break;
-
-        case 18:
-            func_8003640C(!Savegame_EventFlagGet(EventFlag_379) ? 29 : 7);
-            break;
-
-        case 17:
-            func_8003640C(7);
-            break;
-    }
-}
+#include "maps/shared/sharedFunc_800CE8B8_0_s02.h" // 0x800CE8B8
 
 #include "maps/shared/sharedFunc_800CE934_0_s02.h" // 0x800CE934
 

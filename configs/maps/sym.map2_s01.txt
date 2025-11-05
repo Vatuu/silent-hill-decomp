@@ -86,6 +86,7 @@ Anim_StartKeyframeIdxGet  = 0x800CE730; // type:func
 sharedFunc_800D923C_0_s00 = 0x800CE750; // type:func
 sharedFunc_800D929C_0_s00 = 0x800CE7B0; // type:func
 Map_RoomIdxGet            = 0x800CE7C0; // type:func
+sharedFunc_800CE884_0_s02 = 0x800CE858; // type:func
 sharedFunc_800CE8B8_0_s02 = 0x800CE88C; // type:func
 sharedFunc_800CE934_0_s02 = 0x800CE908; // type:func
 Map_WorldObjectsInit      = 0x800CF7F0; // type:func

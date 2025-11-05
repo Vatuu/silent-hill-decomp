@@ -41,12 +41,9 @@
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800CE7C0
 
-void func_800CE858(s32 arg0) // 0x800CE858
-{
-    (arg0 != 0) ? sharedFunc_800CE8B8_0_s02() : sharedFunc_800CE934_0_s02();
-}
+#include "maps/shared/sharedFunc_800CE884_0_s02.h" // 0x800CE858
 
-#include "maps/shared/sharedFunc_800CE8B8_0_s02.h"
+#include "maps/shared/sharedFunc_800CE8B8_0_s02.h" // 0x800CE88C
 
 #include "maps/shared/sharedFunc_800CE934_0_s02.h" // 0x800CE908
 

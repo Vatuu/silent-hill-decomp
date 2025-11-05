@@ -82,12 +82,9 @@ void func_800CCA1C(void) {}
 
 #include "maps/shared/Map_RoomIdxGet.h"
 
-void func_800CCB30(s32 arg0) // 0x800CCB30
-{
-    (arg0 != 0) ? sharedFunc_800CE8B8_0_s02() : sharedFunc_800CE934_0_s02();
-}
+#include "maps/shared/sharedFunc_800CE884_0_s02.h" // 0x800CCB30
 
-#include "maps/shared/sharedFunc_800CE8B8_0_s02.h"
+#include "maps/shared/sharedFunc_800CE8B8_0_s02.h" // 0x800CCB64
 
 #include "maps/shared/sharedFunc_800CE934_0_s02.h" // 0x800CCBE0
 

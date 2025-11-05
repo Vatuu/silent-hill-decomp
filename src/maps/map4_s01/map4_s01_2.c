@@ -37,14 +37,11 @@
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D1AD0
 
-#include "maps/shared/Map_RoomIdxGet.h"
+#include "maps/shared/Map_RoomIdxGet.h" // 0x800D1AE0
 
-void func_800D1B78(s32 arg0) // 0x800D1B78
-{
-    (arg0 != 0) ? sharedFunc_800CE8B8_0_s02() : sharedFunc_800CE934_0_s02();
-}
+#include "maps/shared/sharedFunc_800CE884_0_s02.h" // 0x800D1B78
 
-#include "maps/shared/sharedFunc_800CE8B8_0_s02.h"
+#include "maps/shared/sharedFunc_800CE8B8_0_s02.h" // 0x800D1BAC
 
 #include "maps/shared/sharedFunc_800CE934_0_s02.h" // 0x800D1C28
 
