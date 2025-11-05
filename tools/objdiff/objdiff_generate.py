@@ -115,7 +115,9 @@ def main():
         base_path = "build/src/" + re.sub(r"\\", r"/", processed_path[1]).removesuffix(".s.o").removesuffix(".c.o") + ".c.o"
         
         # Create mappings for clone/disambiguation symbol suffixes in base object
-        symbol_mappings = _normalize_suffixed_symbols(base_path) if Path(base_path).exists() else {}
+        # (disabled as objdiff report doesn't appear to support symbol mappings right now)
+        #symbol_mappings = _normalize_suffixed_symbols(base_path) if Path(base_path).exists() else {}
+        symbol_mappings = {}
 
         unit = Unit(
             re.sub(r"\\", r"/", processed_path[1]).removesuffix(".s.o").removesuffix(".c.o"),
