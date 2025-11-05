@@ -19,6 +19,17 @@ extern s_WorldObjectDesc	  g_WorldObject3;
 extern s_WorldObjectDesc	  g_WorldObject4;
 extern s_WorldObjectDesc	  g_WorldObject5;
 
+extern VECTOR3 D_800CB2E4;
+extern VECTOR3 D_800CB2F0;
+extern VECTOR3 D_800CB2FC;
+extern VECTOR3 D_800CB308;
+extern u16 D_800D24F0;
+extern VECTOR3 D_800D2530;
+extern s32 D_800D253C;
+extern VECTOR3 D_800D2550;
+extern VECTOR3 D_800D2560;
+extern u8 D_800D256C;
+
 void func_800CCE88();
 
 s32 func_800CEF88();
@@ -56,5 +67,7 @@ void MapEvent_MapTake(void);
 void func_800D18DC(void);
 
 void func_800D1A98(void);
+
+void func_800D0CF8(void);
 
 #endif
