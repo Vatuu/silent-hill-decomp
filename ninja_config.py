@@ -832,7 +832,6 @@ def main():
     splitsYamlInfo          = []
     regenMode               = False
     allConfigsOption        = (args.ninja_all) or False
-    #allConfigsOption        = True if objdiffConfigOnlyOption == False and args.ninja_all == True else False
     
     if args.game_version != None:
         for gameVersionInfo in GAMEVERSIONS:
@@ -918,7 +917,7 @@ def main():
                     sys.exit(1)
     
     if regenMode == False and allConfigsOption and objdiffConfigOnlyOption:
-        print("\nPlease specify the mode you want to work in:\nNinja files mode (-nall/--ninja_all)\nObjdiff mode (-obj/--objdiff)\nMatching mode (no args).")
+        print("\nPlease specify only one mode you want to work in:\nNinja files mode (-nall/--ninja_all)\nObjdiff mode (-obj/--objdiff)\nMatching mode (no args).")
         sys.exit(1)
     
     if regenMode == False:
