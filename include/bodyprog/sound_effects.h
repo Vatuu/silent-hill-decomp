@@ -1,7 +1,7 @@
 // TODO: Rename to `SfxId`. There's a name clash with an SFX struct.
 typedef enum _SfxId
 {
-    Sfx_Base = 1280, // Base SFX (not valid in itself).
+    Sfx_Base = 1280,                  // Base SFX (not valid in itself).
 
     Sfx_MenuStartGame = Sfx_Base + 1, // `SND/FIRST.VAB`
 
@@ -17,48 +17,51 @@ typedef enum _SfxId
     Sfx_Unk1302 = Sfx_Base + 22,
     Sfx_Unk1303 = Sfx_Base + 23,
 
-    Sfx_MenuError   = Sfx_Base + 24, // `1ST/BASE.VAB` onward, but loaded out of order?
-    Sfx_MenuMove    = Sfx_Base + 25,
-    Sfx_MenuCancel  = Sfx_Base + 26,
-    Sfx_MenuConfirm = Sfx_Base + 27,
-    Sfx_MenuMap     = Sfx_Base + 28,
-    Sfx_DoorOpen0   = Sfx_Base + 29,
-    Sfx_DoorClose0  = Sfx_Base + 30,
+    Sfx_MenuError        = Sfx_Base + 0x18, // `1ST/BASE.VAB` onward, but loaded out of order?
+    Sfx_MenuMove         = Sfx_Base + 0x19,
+    Sfx_MenuCancel       = Sfx_Base + 0x1A,
+    Sfx_MenuConfirm      = Sfx_Base + 0x1B,
+    Sfx_MenuMap          = Sfx_Base + 0x1C,
+    Sfx_DoorOpen0        = Sfx_Base + 0x1D,
+    Sfx_DoorClose0       = Sfx_Base + 0x1E,
+    Sfx_FootstepConcrete = Sfx_Base + 0x1F,
+    Sfx_FootstepGrass    = Sfx_Base + 0x20,
 
     Sfx_Unk1307 = 1307,
     Sfx_Unk1308 = 1308,
     Sfx_Unk1309 = 1309,
     Sfx_Unk1310 = 1310,
 
-    Sfx_Stumble0 = Sfx_Base + 34,
+    Sfx_Stumble0 = Sfx_Base + 0x22,
 
-    Sfx_Unk1316              = 1316,
-    Sfx_Unk1317              = 1317,
-    Sfx_Unk1318              = 1318,
-    Sfx_Unk1319              = 1319,
-    Sfx_HarryHeavyBreath     = Sfx_Base + 40,
-    Sfx_RadioHeavyStaticLoop = Sfx_Base + 41,
-    Sfx_RadioLightStaticLoop = Sfx_Base + 42,
-    Sfx_Unk1323              = 1323, // } Pair.
-    Sfx_Unk1324              = 1324, // }
+    Sfx_Unk1316               = 1316,
+    Sfx_Unk1317               = 1317,
+    Sfx_Unk1318               = 1318,
+    Sfx_Unk1319               = 1319,
+    Sfx_HarryHeavyBreath      = Sfx_Base + 0x28,
+    Sfx_RadioInterferenceLoop = Sfx_Base + 0x29,
+    Sfx_RadioStaticLoop       = Sfx_Base + 0x2A,
+    Sfx_Unk1323               = 1323, // } Pair.
+    Sfx_Unk1324               = 1324, // }
 
     Sfx_Unk1326 = 1326,
     Sfx_Unk1327 = 1327,
     Sfx_Unk1328 = 1328,
     Sfx_Unk1329 = 1329,
 
-    Sfx_Stumble1     = Sfx_Base + 53,
-    Sfx_DoorJammed   = Sfx_Base + 54,
-    Sfx_UseKey       = Sfx_Base + 55,
-    Sfx_Unk1336      = 1336, // } Pair.
-    Sfx_Unk1337      = 1337, // }
-    Sfx_Unk1338      = 1338, // } Pair.
-    Sfx_Unk1339      = 1339, // }
-    Sfx_Unk1340      = 1340, // } Pair.
-    Sfx_Unk1341      = 1341, // }
-    Sfx_DoorUnlocked = Sfx_Base + 62,
-    Sfx_Unk1343      = 1343,
-    Sfx_DoorLocked   = Sfx_Base + 64,
+    Sfx_FootstepMetal = Sfx_Base + 0x34,
+    Sfx_Stumble1      = Sfx_Base + 0x35,
+    Sfx_DoorJammed    = Sfx_Base + 0x36,
+    Sfx_UseKey        = Sfx_Base + 0x37,
+    Sfx_Unk1336       = 1336, // } Pair.
+    Sfx_Unk1337       = 1337, // }
+    Sfx_Unk1338       = 1338, // } Pair.
+    Sfx_Unk1339       = 1339, // }
+    Sfx_Unk1340       = 1340, // } Pair.
+    Sfx_Unk1341       = 1341, // }
+    Sfx_DoorUnlocked  = Sfx_Base + 0x3E,
+    Sfx_Unk1343       = 1343,
+    Sfx_DoorLocked    = Sfx_Base + 0x40,
 
     Sfx_Unk1349 = 1349,
 

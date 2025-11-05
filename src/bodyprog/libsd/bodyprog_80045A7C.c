@@ -358,14 +358,14 @@ u8 Sd_PlaySfx(u16 sfx, s8 balance, u8 vol) // 0x80046048
         D_800C1698.volumeRight_E = 0;
     }
 
-    if (sfx == Sfx_RadioHeavyStaticLoop)
+    if (sfx == Sfx_RadioInterferenceLoop)
     {
         D_800C1698.field_6 = g_Sfx_Table0[D_800C15BC].field_0;
         SdUtKeyOnV(22, D_800C1698.field_2, D_800C1698.field_4, D_800C1698.field_6, D_800C1698.field_8, 0,
                    Sd_GetVolSe(D_800C1698.volumeLeft_C), Sd_GetVolSe(D_800C1698.volumeRight_E));
         D_800C1698.field_0 = 22;
     }
-    else if (sfx == Sfx_RadioLightStaticLoop)
+    else if (sfx == Sfx_RadioStaticLoop)
     {
         D_800C1698.field_6 = g_Sfx_Table0[D_800C15BC].field_0;
         SdUtKeyOnV(23, D_800C1698.field_2, D_800C1698.field_4, D_800C1698.field_6, D_800C1698.field_8, 120,
@@ -415,12 +415,12 @@ void func_800463C0(u16 sfx, s8 balance, u8 vol, s8 pitch) // 0x800463C0
     g_Sound_ActiveSfxIdx = sfx - Sfx_Base;
     D_800C16A4 = D_800C167C + g_Sfx_Table0[g_Sound_ActiveSfxIdx].field_5;
 
-    if (sfx == Sfx_RadioHeavyStaticLoop)
+    if (sfx == Sfx_RadioInterferenceLoop)
     {
         voiceIdx   = 22;
         attr.voice = 1 << 22;
     }
-    else if (sfx == Sfx_RadioLightStaticLoop)
+    else if (sfx == Sfx_RadioStaticLoop)
     {
         voiceIdx   = 23;
         attr.voice = 1 << 23;
