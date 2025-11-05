@@ -3572,15 +3572,15 @@ s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry);
 
 s32 Math_LerpFixed12(s16 from, s16 to, q19_12 alpha);
 
-void func_8008D41C();
+void func_8008D41C(void);
 
-void func_8008D438();
+void func_8008D438(void);
 
-void func_8008D448();
+void func_8008D448(void);
 
-void func_8008D454();
+void func_8008D454(void);
 
-void func_8008D464();
+void func_8008D464(void);
 
 void func_8008D470(s16 arg0, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones);
 
@@ -4613,6 +4613,7 @@ void func_8007FB94(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 animS
  * @param chara Player character.
  * @param extra Extra player character parameters.
  * @param animStatus Packed anim status.
+ */
 void func_8007FC48(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 animStatus);
 
 /** Gets property 8 from player. */

@@ -26,7 +26,19 @@ typedef struct
     s32 field_24;
 } s_800D6F68; // TODO: Likely an already known struct.
 
+extern u16 D_800D3BDC;
+
+extern s32 D_800D3C40;
+
 extern s16 D_800D3C44;
+
+extern VECTOR3 D_800D6F38;
+
+extern VECTOR3 D_800D6F48;
+
+extern u8 D_800D6F54;
+
+extern s32 D_800D6F58;
 
 extern s_800D6F68 D_800D6F68;
 
@@ -40,6 +52,8 @@ void MapEvent_CommonItemTake(void);
 void func_800D1A84(void);
 
 void func_800D1ACC(void);
+
+void func_800D1AF8(void);
 
 void func_800D2640(void);
 

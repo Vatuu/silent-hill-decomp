@@ -2764,7 +2764,7 @@ s32 Math_LerpFixed12(s16 from, s16 to, q19_12 alpha) // 0x8008D3D4
     return FP_ANGLE_NORM_S((s32)(FP_MULTIPLY_PRECISE(FP_ANGLE_NORM_S(to - from), alpha, Q12_SHIFT)) + from);
 }
 
-void func_8008D41C() // 0x8008D41C
+void func_8008D41C(void) // 0x8008D41C
 {
     D_800C4818.field_0 = 0;
     D_800C4818.field_1 = 0;
@@ -2772,22 +2772,22 @@ void func_8008D41C() // 0x8008D41C
     D_800C4818.field_A = 0;
 }
 
-void func_8008D438() // 0x8008D438
+void func_8008D438(void) // 0x8008D438
 {
     D_800C4818.field_0 = 1;
 }
 
-void func_8008D448() // 0x8008D448
+void func_8008D448(void) // 0x8008D448
 {
     D_800C4818.field_0 = 0;
 }
 
-void func_8008D454() // 0x8008D454
+void func_8008D454(void) // 0x8008D454
 {
     D_800C4818.field_1 = 1;
 }
 
-void func_8008D464() // 0x8008D464
+void func_8008D464(void) // 0x8008D464
 {
     D_800C4818.field_1 = 0;
 }

@@ -704,7 +704,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             D_800DA6EC = NO_VALUE;
 
             Savegame_EventFlagSet(EventFlag_379);
-            func_8008D448(g_SavegamePtr);
+            func_8008D448();
             func_8003EBA0();
             g_SysWork.field_2378 = Q12(1.0f);
             SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);

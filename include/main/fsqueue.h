@@ -164,9 +164,9 @@ STATIC_ASSERT_SIZEOF(s_FsImageDesc, 8);
  */
 typedef struct _FsAnmDesc
 {
-    u32 field_0; // Unknown index.
-    u32 charaId_4;
-    u32 coords_8; /** TODO: `GsCOORDINATE2` pointer. */
+    u32            field_0; // Unknown index.
+    u32            charaId_4;
+    GsCOORDINATE2* coords_8;
 } s_FsAnmDesc;
 STATIC_ASSERT_SIZEOF(s_FsAnmDesc, 12);
 
@@ -269,7 +269,7 @@ void Fs_QueueWaitForEmpty();
  * @param fileIdx File table index of the file to seek to.
  * @return Index of the new queue entry.
  */
-s32 Fs_QueueStartSeek(s32 fileIdx);
+s32 Fs_QueueStartSeek(e_FsFile fileIdx);
 
 /** @brief Add a new read operation to the queue.
  *
@@ -277,7 +277,7 @@ s32 Fs_QueueStartSeek(s32 fileIdx);
  * @param dest Destination buffer. Seems there are no size checks.
  * @return Index of the new queue entry.
  */
-s32 Fs_QueueStartRead(s32 fileIdx, void* dest);
+s32 Fs_QueueStartRead(e_FsFile fileIdx, void* dest);
 
 /** @brief Add a new TIM read operation to the queue.
  * Adds a read operation with `post-load = FS_POST_LOAD_TIM`.
@@ -287,7 +287,7 @@ s32 Fs_QueueStartRead(s32 fileIdx, void* dest);
  * @param image Where to upload the TIM in VRAM.
  * @return Index of the new queue entry.
  */
-s32 Fs_QueueStartReadTim(s32 fileIdx, void* dest, const s_FsImageDesc* image);
+s32 Fs_QueueStartReadTim(e_FsFile fileIdx, void* dest, const s_FsImageDesc* image);
 
 /** @brief Add a new ANM read operation to the queue.
  * Adds a read operation with `postLoad = FS_POST_LOAD_ANM`.
@@ -316,7 +316,7 @@ s32 Fs_QueueStartReadAnm(s32 idx, s32 charaId, void* dest, GsCOORDINATE2* coords
  * @param extra Extra data for operation (`s_FsQueueEntry::extra`).
  * @return Index of the new queue entry.
  */
-s32 Fs_QueueEnqueue(s32 fileIdx, u8 op, u8 postLoad, u8 alloc, void* data, u32 unused0, s_FsQueueExtra* extra);
+s32 Fs_QueueEnqueue(e_FsFile fileIdx, u8 op, u8 postLoad, u8 alloc, void* data, u32 unused0, s_FsQueueExtra* extra);
 
 /** @brief Initialize FS queue and FS memory.
  * Initializes `g_FsQueue` and calls `Fs_InitializeMem`.

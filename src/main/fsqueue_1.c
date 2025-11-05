@@ -56,17 +56,17 @@ void Fs_QueueWaitForEmpty()
     VSync(SyncMode_Wait);
 }
 
-s32 Fs_QueueStartSeek(s32 fileIdx)
+s32 Fs_QueueStartSeek(e_FsFile fileIdx)
 {
     return Fs_QueueEnqueue(fileIdx, FS_OP_SEEK, FS_POST_LOAD_NONE, false, NULL, 0, NULL);
 }
 
-s32 Fs_QueueStartRead(s32 fileIdx, void* dest)
+s32 Fs_QueueStartRead(e_FsFile fileIdx, void* dest)
 {
     return Fs_QueueEnqueue(fileIdx, FS_OP_READ, FS_POST_LOAD_NONE, false, dest, 0, NULL);
 }
 
-s32 Fs_QueueStartReadTim(s32 fileIdx, void* dest, const s_FsImageDesc* image)
+s32 Fs_QueueStartReadTim(e_FsFile fileIdx, void* dest, const s_FsImageDesc* image)
 {
     s_FsQueueExtra extra;
 
@@ -97,7 +97,7 @@ s32 Fs_QueueStartReadAnm(s32 idx, s32 charaId, void* dest, GsCOORDINATE2* coords
     return Fs_QueueEnqueue(fileIdx, FS_OP_READ, FS_POST_LOAD_ANM, false, dest, 0, &extra);
 }
 
-s32 Fs_QueueEnqueue(s32 fileIdx, u8 op, u8 postLoad, u8 alloc, void* data, u32 unused0, s_FsQueueExtra* extra)
+s32 Fs_QueueEnqueue(e_FsFile fileIdx, u8 op, u8 postLoad, u8 alloc, void* data, u32 unused0, s_FsQueueExtra* extra)
 {
     s_FsQueueEntry* newEntry;
     s_FsQueuePtr*   lastPtr;
