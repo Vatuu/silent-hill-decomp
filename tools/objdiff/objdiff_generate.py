@@ -96,16 +96,16 @@ def _collect_objects(path: Path, config) -> list[Path]:
 
 def _determine_categories(path: Path, config) -> tuple[UnitMetadata, str]:
     if path.name.endswith(".s.o"):
-        modified_path = path.relative_to(config["expected_paths"]["asm"])
+        modified_path = path.relative_to(config["expected_paths"]["asm"]).as_posix()
     else:
-        modified_path = path.relative_to(config["expected_paths"]["src"])
+        modified_path = path.relative_to(config["expected_paths"]["src"]).as_posix()
 
     categories = []
     for category in config["categories"]:
         for prefix in category["paths"]:
-            if re.sub(r"\\", r"/", str(modified_path)).startswith(prefix):
+            if str(modified_path).startswith(prefix):
                 categories.append(category["id"])
-    return (UnitMetadata(categories, f"src/{re.sub( r"\.s\.o", r".c", re.sub(r"\\", r"/", str(modified_path)))}"), str(modified_path))
+    return (UnitMetadata(categories, f"src/{re.sub( '.s.o', '.c', modified_path)}"), str(modified_path))
 
 def main():
     logging.basicConfig(level = logging.INFO)
@@ -118,7 +118,9 @@ def main():
     build_method = str
     for file in expected_objects:
         processed_path = _determine_categories(file, config)
-        base_path = "build/src/" + re.sub(r"\\", r"/", processed_path[1]).removesuffix(".s.o").removesuffix(".c.o") + ".c.o"
+        input_path = Path(processed_path[1].removesuffix(".s.o").removesuffix(".c.o")).as_posix()
+        base_path = "build/src/" + input_path + ".c.o"
+        
         # Create mappings for clone/disambiguation symbol suffixes in base object
         # (disabled as objdiff report doesn't appear to support symbol mappings right now)
         #symbol_mappings = _normalize_suffixed_symbols(base_path) if Path(base_path).exists() else {}
@@ -126,15 +128,15 @@ def main():
 
         if is_ninja:
             unit = Unit(
-                re.sub(r"\\", r"/", processed_path[1]).removesuffix(".s.o").removesuffix(".c.o"),
+                input_path,
                 base_path,
-                re.sub(r"\\", r"/", str(file)),
+                str(file.as_posix()),
                 processed_path[0],
                 symbol_mappings)
             build_method = "ninja"
         else:
             unit = Unit(
-                processed_path[1].removesuffix(".s.o").removesuffix(".c.o"),
+                input_path,
                 base_path if Path(base_path).exists() else None,
                 str(file),
                 processed_path[0],
