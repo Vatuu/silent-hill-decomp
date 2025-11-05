@@ -1,39 +1,48 @@
-void sharedFunc_800CFFF8_0_s00(s32 arg0, s_func_800CFFF8* arg1, s16* rand)
+void sharedFunc_800CFFF8_0_s00(s32 pass, s_func_800CFFF8* part, s16* rand)
 {
     s32 absX;
     s32 threshold;
+#if defined(MAP7_S03)
+    #define PASS_ADD 8
+#else
+    #define PASS_ADD 5
+#endif
 
-    arg1->field_0.vx += g_Particle_PrevPosition.vx - g_Particle_Position.vx;
-    arg1->field_0.vz += g_Particle_PrevPosition.vz - g_Particle_Position.vz;
+    part->field_0.vx += g_Particle_PrevPosition.vx - g_Particle_Position.vx;
+    part->field_0.vz += g_Particle_PrevPosition.vz - g_Particle_Position.vz;
+#if defined(MAP7_S03)
+    part->field_0.vz += ((g_Particle_PrevPosition.vz - g_Particle_Position.vz) - D_800F23D0);
+#endif
 
-    if (arg0 == 0 && sharedData_800E0CAC_0_s00 == 3)
+    if (pass == 0 && sharedData_800E0CAC_0_s00 == 3)
     {
-        arg1->field_0.vx += FP_FROM(g_Particle_SpeedX, Q4_SHIFT);
-        arg1->field_0.vz += FP_FROM(g_Particle_SpeedZ, Q4_SHIFT);
+        part->field_0.vx += FP_FROM(g_Particle_SpeedX, Q4_SHIFT);
+        part->field_0.vz += FP_FROM(g_Particle_SpeedZ, Q4_SHIFT);
     }
-
+#if !defined(MAP7_S03)
     if (sharedData_800DD591_0_s00 != 0)
     {
         return;
     }
+#endif
 
-    absX = abs(arg1->field_0.vx);
+    absX = abs(part->field_0.vx);
 
     // This helps match the original code: `threshold = threshold = ...` 
-    threshold = threshold = FP_TO(arg0 + 5, Q12_SHIFT);
+    threshold = threshold = FP_TO(pass + PASS_ADD, Q12_SHIFT);
 
     // Also matches:
-    // threshold = FP_TO(arg0 + 5, Q12_SHIFT);
+    // threshold = FP_TO(pass + 5, Q12_SHIFT);
     // threshold = threshold += 0;
     
-    if (ABS_ADD(arg1->field_0.vz, absX) > threshold)
+    if (ABS_ADD(part->field_0.vz, absX) > threshold)
     {
-        arg1->field_1E = 0;
+        part->field_1E = 0;
     }
     
-    if (arg1->field_1F == 3 || arg1->field_1F == 0xF3)
+    if (part->field_1F == 3 || part->field_1F == 0xF3)
     {
-        arg1->field_C.vx = arg1->field_0.vx;
-        arg1->field_C.vz = arg1->field_0.vz;
+        part->field_C.vx = part->field_0.vx;
+        part->field_C.vz = part->field_0.vz;
     }
 }

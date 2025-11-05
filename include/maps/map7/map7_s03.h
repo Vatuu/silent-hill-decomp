@@ -51,6 +51,8 @@ extern s32 D_800F4830;
 
 extern s32 D_800F4838;
 
+extern s16 D_800F23D0;
+
 extern s_AnimInfo LITTLE_INCUBUS_ANIM_INFOS[];
 extern s_AnimInfo INCUBUS_ANIM_INFOS[];
 extern s_AnimInfo UNKKOWN_23_ANIM_INFOS[];
