@@ -322,35 +322,35 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DE034);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DE11C);
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DE1F8);
+#include "maps/shared/sharedFunc_800DE1F8_2_s00.h" // 0x800DE1F8
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DE250);
+INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", sharedFunc_800DE250_2_s00); // 0x800DE250
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DE578);
+#include "maps/shared/sharedFunc_800DE578_2_s00.h" // 0x800DE578
 
 #include "maps/shared/sharedFunc_800D529C_0_s01.h" // 0x800DE598
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DE6A8);
+INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", sharedFunc_800DE6A8_2_s00); // 0x800DE6A8
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DE7E0);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DE940);
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DEBCC);
+INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", sharedFunc_800DEBCC_2_s00); // 0x800DEBCC
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DEC64);
+#include "maps/shared/sharedFunc_800DEC64_2_s00.h" // 0x800DEC64
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DEC84);
+#include "maps/shared/sharedFunc_800DEC84_2_s00.h" // 0x800DEC84
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DECA4);
+#include "maps/shared/sharedFunc_800DECA4_2_s00.h" // 0x800DECA4
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DECC4);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DEE24);
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DF22C);
+#include "maps/shared/sharedFunc_800DF22C_2_s00.h" // 0x800DF22C
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DF24C);
+#include "maps/shared/sharedFunc_800DF24C_2_s00.h" // 0x800DF24C
 
 #include "maps/shared/sharedFunc_800D5638_0_s01.h" // 0x800DF26C
 
