@@ -323,9 +323,9 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file, 
     if objdiff_file != None:
         return f"{expected_path}.s.o"
 
-def ninja_setup_main(game_version_idx: int, split_entries, skip_checksum: bool, non_matching: bool):
+def ninja_setup_main(ninja_file_prefix: str, game_version_idx: int, split_entries, skip_checksum: bool, non_matching: bool):
 
-    ninja = ninja_syntax.Writer(open(str("build.ninja"), "w", encoding="utf-8"), width=9999)
+    ninja = ninja_syntax.Writer(open(str(f"{ninja_file_prefix}.ninja"), "w", encoding="utf-8"), width=9999)
     
     ninja.rule(
         "as", description="as $in",
@@ -559,15 +559,24 @@ def ninja_setup_objdiff(split_entries):
     elif sys.platform == "win32":
         objdiff.build(outputs=f"{EXPECTED_DIR}\\objdiff.ok", rule="objdiff-config", inputs=f"{OBJDIFF_DIR}\\config.yaml", implicit=objdiffConfigRequirements)
 
-def ninja_append(split_entries, objdiff_mode: bool, skip_checksum: bool, non_matching: bool, game_version_idx: int):
+def ninja_append(split_entries, skip_checksum: bool, non_matching: bool, game_version_idx: int, build_matching_nall_mode: bool):
     """Horrid code - Will"""
+    
+    ninjaMatchingPrefix = "ninja"
+    objdiff_mode = False
+    
+    if os.path.exists("objdiff.ninja") and build_matching_nall_mode == False:
+        objdiff_mode = True
+    elif build_matching_nall_mode:
+        ninjaMatchingPrefix = "matching"
+    
     if objdiff_mode:
         ninjaFileRead     = open("build.ninja", "r", encoding="utf-8").read()
         ninjaFile         = open("build.ninja", "w", encoding="utf-8")
         ninjaFile.write(ninjaFileRead)
         ninjaFileSyntax   = ninja_syntax.Writer(ninjaFile, width=9999)
-        objdiffFileRead   = open("objdiff.ninja", "r", encoding="utf-8").read()
-        objdiffFile       = open("objdiff.ninja", "w", encoding="utf-8")
+        objdiffFileRead   = open(f"objdiff.ninja", "r", encoding="utf-8").read()
+        objdiffFile       = open(f"objdiff.ninja", "w", encoding="utf-8")
         if sys.platform == "linux" or sys.platform == "linux2":
             objdiffFileEndPos = re.search(r"build expected/objdiff", objdiffFileRead).start()
         elif sys.platform == "win32":
@@ -581,8 +590,12 @@ def ninja_append(split_entries, objdiff_mode: bool, skip_checksum: bool, non_mat
         elfBuildRequirements      = []
         checksumBuildRequirements = []
         entriesPaths              = []
-        ninjaFileRead             = open("build.ninja", "r", encoding="utf-8").read()
-        ninjaFile                 = open("build.ninja", "w", encoding="utf-8")
+        ninjaFileRead             = open(f"{ninjaMatchingPrefix}.ninja", "r", encoding="utf-8").read()
+        ninjaFile                 = open(f"{ninjaMatchingPrefix}.ninja", "w", encoding="utf-8")
+        if non_matching:
+            print("Enabled #IFDEF NON_MATCHING build.")
+            ninjaFileRead = re.sub("NONMATCHINGFLAG = \r\n", "NONMATCHINGFLAG = -DNON_MATCHING\r\n", ninjaFileRead)
+        
         if re.search("checksum.ok", ninjaFileRead):
             ninjaFileEndPos = re.search("build build/out/checksum.ok", ninjaFileRead).start()
         else:
@@ -738,6 +751,8 @@ def clean_working_files(clean_build_files: bool):
     if clean_build_files:
         if os.path.exists("build.ninja"):
             os.remove("build.ninja")
+        if os.path.exists("matching.ninja"):
+            os.remove("matching.ninja")
         if os.path.exists("objdiff.ninja"):
             os.remove("objdiff.ninja")
         if os.path.exists(".ninja_log"):
@@ -797,21 +812,27 @@ def main():
         action="store_true",
     )
     parser.add_argument(
+        "-nall", "--ninja_all",
+        help="Builds setup for both matching build and Objdiff\nUse `ninja -f matching.ninja` to build the matching files",
+        action="store_true",
+    )
+    parser.add_argument(
         "-ver", "--game_version",
         help="Extract and work under a specific version of the game (NOT IMPLEMENTED)",
         type=str,
     )
     args = parser.parse_args()
 
-    cleanCompilationFiles = (args.clean) or False
-    skipChecksumOption    = (args.skip_checksum) or False
-    objdiffConfigOption   = (args.objdiff_config) or False
-    nonMatchingOption     = (args.non_matching) or False
-    gameVersionOption     = 0 # USA by default
-    yamlsPaths            = []
-    splitsYamlInfo        = []
-    regenMode             = False
-    
+    cleanCompilationFiles   = (args.clean) or False
+    skipChecksumOption      = (args.skip_checksum) or False
+    objdiffConfigOnlyOption = (args.objdiff_config) or False
+    nonMatchingOption       = (args.non_matching) or False
+    gameVersionOption       = 0 # USA by default
+    yamlsPaths              = []
+    splitsYamlInfo          = []
+    regenMode               = False
+    allConfigsOption        = (args.ninja_all) or False
+    #allConfigsOption        = True if objdiffConfigOnlyOption == False and args.ninja_all == True else False
     
     if args.game_version != None:
         for gameVersionInfo in GAMEVERSIONS:
@@ -896,6 +917,10 @@ def main():
                     print("Map overlay(s) not found.")
                     sys.exit(1)
     
+    if regenMode == False and allConfigsOption and objdiffConfigOnlyOption:
+        print("\nPlease specify the mode you want to work in:\nNinja files mode (-nall/--ninja_all)\nObjdiff mode (-obj/--objdiff)\nMatching mode (no args).")
+        sys.exit(1)
+    
     if regenMode == False:
         clean_working_files(True)
     else:
@@ -920,14 +945,21 @@ def main():
     
     
     if regenMode == False:
-        if objdiffConfigOption == False and os.path.exists("objdiff.ninja") == False:
-            ninja_setup_main(gameVersionOption, splitsYamlInfo, skipChecksumOption, nonMatchingOption)
-        else:
+        if objdiffConfigOnlyOption:
             ninja_setup_objdiff(splitsYamlInfo)
+        elif allConfigsOption:
+            ninja_setup_main("matching", gameVersionOption, splitsYamlInfo, False, False)
+            ninja_setup_objdiff(splitsYamlInfo)
+        else:
+            ninja_setup_main("build", gameVersionOption, splitsYamlInfo, skipChecksumOption, nonMatchingOption)
     else:
-        ninja_append(splitsYamlInfo, objdiffConfigOption, skipChecksumOption, nonMatchingOption, gameVersionOption)
+        ninja_append(splitsYamlInfo, skipChecksumOption, nonMatchingOption, gameVersionOption, False)
+        if os.path.exists("matching.ninja"):
+            ninja_append(splitsYamlInfo, False, False, gameVersionOption, True)
     
-    if objdiffConfigOption:
+    
+    
+    if objdiffConfigOnlyOption or allConfigsOption:
         subprocess.call([PYTHON, "-m", "ninja", "-f", "objdiff.ninja"])
         
 
