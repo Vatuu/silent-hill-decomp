@@ -329,7 +329,7 @@ def ninja_setup_main(ninja_file_prefix: str, game_version_idx: int, split_entrie
     
     ninja.rule(
         "as", description="as $in",
-        command=f"{AS} {AS_FLAGS} $DLFLAG -o $out $in",
+        command=f"{AS} {AS_FLAGS} $DLFLAG -o $out $in"
     )
 
     ninja.rule(
@@ -340,6 +340,7 @@ def ninja_setup_main(ninja_file_prefix: str, game_version_idx: int, split_entrie
     ninja.rule(
         "cpp", description="cpp $in",
         command=f"{CPP} -P -MMD -MP -MT $out -MF $out.d {CPP_FLAGS} $MAPIDFLAG $SKIPASMFLAG $NONMATCHINGFLAG -o $out $in",
+        depfile="$out.d"
     )
 
     ninja.rule(
