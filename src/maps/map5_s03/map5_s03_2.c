@@ -1,4 +1,5 @@
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
@@ -141,11 +142,131 @@ void MapEvent_CommonItemTake(void) // 0x800D159C
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
-INCLUDE_RODATA("asm/maps/map5_s03/nonmatchings/map5_s03_2", D_800CB7A4);
+void func_800D1628(void) // 0x800D1628
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
 
-INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03_2", func_800D1628);
+            func_80086470(0, InventoryItemId_MotorcycleKey, 0, false);
 
-INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03_2", func_800D1904);
+            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(103.64f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(59.49f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(51.0f);
+
+            Camera_PositionSet(NULL, Q12(103.54f), Q12(-2.91f), Q12(59.2f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(104.65f), Q12(0.72f), Q12(60.44f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 187, false);
+            SysWork_StateStepIncrement(0);
+
+        case 3:
+            SysWork_StateStepIncrementDelayed(Q12(3.8f), false);
+            break;
+
+        case 4:
+            func_80085EB8(2, &g_SysWork.player_4C.chara_0, 0, false);
+            func_8005DC1C(Sfx_Unk1598, &QVECTOR3(104.25f, 0.1f, 60.0f), Q8_CLAMPED(0.5f), 0);
+            SysWork_StateStepIncrement(0);
+
+        case 5:
+            func_80086470(1, InventoryItemId_MotorcycleKey, 0, false);
+            break;
+
+        case 6:
+            if (Gfx_PickupItemAnimate(InventoryItemId_MotorcycleKey))
+            {
+                MapMsg_DisplayAndHandleSelection(false, 15, 0, 0, 0, false);
+                if (g_SysWork.sysStateStep_C[0] != 6)
+                {
+                    Sd_EngineCmd(Sfx_Unk1307);
+                }
+            }
+            break;
+
+        case 7:
+            func_80086D04(&g_SysWork.player_4C.chara_0);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+
+            SysWork_StateSetNext(SysState_Gameplay);
+            vcReturnPreAutoCamWork(true);
+
+            Player_ItemRemove(InventoryItemId_Magnet, 1);
+            func_80086470(3, InventoryItemId_MotorcycleKey, 1, false);
+            Savegame_EventFlagSet(EventFlag_390);
+
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            break;
+    }
+}
+
+void func_800D1904(void) // 0x800D1904
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_800862F8(0, FILE_TIM_MOTELKEY_TIM, false);
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 59);
+            break;
+
+        case 3:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        case 4:
+            func_800862F8(1, FILE_1ST_2ZANKO80_TIM, false);
+            break;
+
+        case 5:
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            break;
+
+        case 6:
+            MapMsg_DisplayAndHandleSelection(false, 17, 0, 0, 0, false);
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            break;
+
+        case 7:
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            break;
+
+        case 8:
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            break;
+
+        case 9:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+}
 
 void func_800D1A84(void) // 0x800D1A84
 {

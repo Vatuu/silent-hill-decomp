@@ -49,6 +49,10 @@ void func_800D1004(s32 arg0);
 /** @brief Handles a Health Drink or Shotgun Shells item pickup event. */
 void MapEvent_CommonItemTake(void);
 
+void func_800D1628(void);
+
+void func_800D1904(void);
+
 void func_800D1A84(void);
 
 void func_800D1ACC(void);

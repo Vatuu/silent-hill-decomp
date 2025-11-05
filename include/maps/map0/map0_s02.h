@@ -25,8 +25,6 @@ s32 func_800CE768();
 
 void func_800CE770(void);
 
-void func_800CE8B8(void);
-
 // TODO: Make shared function?
 void Gfx_LoadingScreen_StageString();
 
