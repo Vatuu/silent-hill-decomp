@@ -24,6 +24,7 @@
 
 extern u8 D_800DD528;
 extern s16 D_800DD52A;
+extern s16 D_800DACF0;
 extern VECTOR3 D_800DD420;
 extern VECTOR3 D_800DD430;
 extern SVECTOR3 D_800DD440;
@@ -66,5 +67,7 @@ void func_800D7280(void);
 void func_800D8424(void);
 
 void func_800D87AC(void);
+
+void func_800D72AC(void);
 
 #endif
