@@ -204,7 +204,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             SysWork_StateStepIncrement(0);
 
         case 1:
-            MapMsg_DisplayAndHandleSelection(false, 54, 0, 0, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 54, 0, 0, 0, false); // "Used the Motorcycle Key."
             break;
 
         case 2:
@@ -230,16 +230,17 @@ void func_800D1AF8(void) // 0x800D1AF8
 
         case 6:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            MapMsg_DisplayAndHandleSelection(false, 24, 0, 0, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 24, 0, 0, 0, false); // "A small glass vial, wrapped in a plastic bag."
             if (g_SysWork.sysStateStep_C[0] != 6 && !Savegame_EventFlagGet(EventFlag_204))
             {
+                // Skip next step if event flag not set.
                 SysWork_StateStepSet(0, 8);
             }
             break;
 
         case 7:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            MapMsg_DisplayAndHandleSelection(false, 26, 0, 0, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 26, 0, 0, 0, false); // "It's like the busted vial I found in the director's office at the hospital."
             break;
 
         case 8:
@@ -368,11 +369,11 @@ void func_800D1AF8(void) // 0x800D1AF8
                 Savegame_EventFlagGet(EventFlag_397) &&
                 Savegame_EventFlagGet(EventFlag_398))
             {
-                MapMsg_DisplayAndHandleSelection(false, 38, 0, 0, 0, false);
+                MapMsg_DisplayAndHandleSelection(false, 38, 0, 0, 0, false); // "That guy's gotta be involved in the local drug racket."
             }
             else
             {
-                MapMsg_DisplayAndHandleSelection(false, 44, 0, 0, 0, false);
+                MapMsg_DisplayAndHandleSelection(false, 44, 0, 0, 0, false); // "Man, was he pissed. And in such a rush, too."
             }
             break;
 
@@ -391,7 +392,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             SysWork_StateStepIncrement(0);
 
         case 30:
-            MapMsg_DisplayAndHandleSelection(false, 42, 0, 0, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 42, 0, 0, 0, false); // "I guess I wasted my time."
             break;
 
         case 31:
@@ -454,7 +455,7 @@ void func_800D1AF8(void) // 0x800D1AF8
         Dms_CharacterGetPosRot(&g_SysWork.field_2360, &unused, "LIGHT", D_800D6F58, FS_BUFFER_17);
 
         // "L_INT", interior light or intersection point?
-        Dms_CharacterGetPosRot(&lightIntPos.vx, &unused, "L_INT", D_800D6F58, FS_BUFFER_17);
+        Dms_CharacterGetPosRot(&lightIntPos, &unused, "L_INT", D_800D6F58, FS_BUFFER_17);
 
         // Light angle? (TODO: Rename `g_SysWork.field_2370`?)
         g_SysWork.field_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.field_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.field_2360.vx, lightIntPos.vz - g_SysWork.field_2360.vz));

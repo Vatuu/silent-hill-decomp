@@ -44,6 +44,8 @@ void func_800D45B4(s32 arg0);
 /** @brief Handles a Health Drink or Rifle Shells item pickup event. */
 void MapEvent_CommonItemTake(void);
 
+void func_800D4B58(void);
+
 void func_800D4DF8(void);
 
 void func_800D4E24(void);

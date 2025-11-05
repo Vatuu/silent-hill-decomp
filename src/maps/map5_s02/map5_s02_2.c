@@ -130,9 +130,62 @@ void MapEvent_CommonItemTake(void) // 0x800D4AB8
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
-INCLUDE_RODATA("asm/maps/map5_s02/nonmatchings/map5_s02_2", D_800CB464);
+void func_800D4B58(void) // 0x800D4B58
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            SysWork_StateStepIncrement(0);
 
-INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02_2", func_800D4B58);
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            MapMsg_DisplayAndHandleSelection(true, 45, 3, NO_VALUE, 0, false); // "There is a drawer. Do you want to open it?"
+            break;
+
+        case 3:
+            func_80085EB8(0U, &g_SysWork.player_4C.chara_0, 66, false);
+            g_SysWork.field_30 = 20;
+            Camera_PositionSet(NULL, Q12(135.17f), Q12(-3.3f), Q12(61.09f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(134.29f), Q12(-0.21f), Q12(63.18f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(134.9f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(62.45f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(-90.0f);
+            SysWork_StateStepIncrement(0);
+
+        case 4:
+            SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
+            break;
+
+        case 5:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        case 6:
+            func_8005DC1C(Sfx_Unk1593, &QVECTOR3(134.6f, -1.5f, 62.45f), Q8_CLAMPED(0.5f), 0);
+            SysWork_StateStepIncrement(0);
+
+        case 7:
+            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            break;
+
+        case 8:
+            vcReturnPreAutoCamWork(true);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Savegame_EventFlagSet(EventFlag_375);
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(135.15f);
+            SysWork_StateStepIncrement(0);
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+}
 
 void func_800D4DF8(void) // 0x800D4DF8
 {
@@ -731,7 +784,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
         Dms_CharacterGetPosRot(&g_SysWork.field_2360, &unused, "LIGHT", D_800DA6EC, FS_BUFFER_17);
 
         // "L_INT", interior light or intersection point?
-        Dms_CharacterGetPosRot(&lightIntPos.vx, &unused, "L_INT", D_800DA6EC, FS_BUFFER_17);
+        Dms_CharacterGetPosRot(&lightIntPos, &unused, "L_INT", D_800DA6EC, FS_BUFFER_17);
 
         // Light angle? (TODO: Rename `g_SysWork.field_2370`?)
         g_SysWork.field_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.field_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.field_2360.vx, lightIntPos.vz - g_SysWork.field_2360.vz));
