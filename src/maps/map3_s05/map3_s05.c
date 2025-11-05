@@ -315,9 +315,86 @@ INCLUDE_RODATA("asm/maps/map3_s05/nonmatchings/map3_s05", D_800CB35C);
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D5C98);
 
-INCLUDE_RODATA("asm/maps/map3_s05/nonmatchings/map3_s05", D_800CB39C);
+void func_800D5FC4(void)
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            SysWork_StateStepIncrementAfterFade(0, true, 2, 0, false);
+            D_800DACE8 = Q12(-0.3f);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 1:
+            func_80085DF0();
+            return;
+        case 2:
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(20.3f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(-20.0f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(90.0f);
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D5FC4);
+            Camera_PositionSet(NULL, Q12(19.5f), Q12(-1.09f), Q12(-20.0f), 0, 0, 0, 0, true);
+            Camera_LookAtSet(NULL, Q12(23.49f), Q12(-0.85f), Q12(-19.74f), 0, 0, 0, 0, true);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 141, false);
+            SysWork_StateStepIncrement(0);
+
+            /* fallthrough */
+        case 3:
+            SysWork_StateStepIncrementDelayed(Q12(1.05f), false);
+            return;
+        case 4:
+            g_SysWork.field_28 += g_DeltaTime0;
+            if (g_SysWork.field_28 > Q12(3.8f))
+            {
+                SysWork_StateStepIncrement(0);
+                return;
+            }
+            if (g_SysWork.field_28 < Q12(3.2f))
+            {
+                if (D_800DACE8 > 0)
+                {
+                    D_800DACE8 -= g_DeltaTime0;
+                    if (D_800DACE8 < 0)
+                    {
+                        D_800DACE8 = ((u16)D_800DACE8 - Q12(0.3f)) - (Rng_Rand16() % Q12(0.1f));
+                        func_8005DC1C(Sfx_Unk1536, &QVECTOR3(21.6f, 0.0f, -20.0f), Q8_CLAMPED(0.5f), 0);
+                        return;
+                    }
+                }
+                else
+                {
+                    D_800DACE8 += g_DeltaTime0;
+                    if (D_800DACE8 >= 0)
+                    {
+                        D_800DACE8 += Q12(0.05f) + (Rng_Rand16() % Q12(0.05f));
+                        func_8005DC1C(Sfx_Unk1531, &QVECTOR3(21.6f, 0.0f, -20.0f), Q8_CLAMPED(0.5f), 0);
+                        return;
+                    }
+                }
+            } else {
+                return;
+            }
+            break;
+        case 5:
+            func_80085EB8(2, &g_SysWork.player_4C.chara_0, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 25, 0, 0, 0, false); // "Poured Disinfecting alcohol on the vines."
+            return;
+        case 6:
+            func_80085EB8(3, &g_SysWork.player_4C.chara_0, 0, false);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 7:
+            func_80085EB8(1, &g_SysWork.player_4C.chara_0, 0, false);
+            return;
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            Savegame_EventFlagSet(EventFlag_M3S05_AlcoholPouredOnVeins);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+            vcReturnPreAutoCamWork(true);
+            break;
+    }
+}
 
 void func_800D63C4(void) // 0x800D63C4
 {

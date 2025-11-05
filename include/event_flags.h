@@ -224,7 +224,7 @@ typedef enum _EventFlag
     EventFlag_M3S05_PickupExaminationRoomKey = 257,
 
     EventFlag_M3S05_CabinedPushed = 282,
-
+    EventFlag_M3S05_AlcoholPouredOnVeins = 283,
     EventFlag_284 = 284,
 
     EventFlag_288 = 288,
