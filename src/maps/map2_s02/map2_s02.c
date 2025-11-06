@@ -468,7 +468,58 @@ INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E3BCC);
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E3C30);
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E3FB0);
+void func_800E3FB0(s_SubCharacter* chara)
+{
+    s32 animStatus;
+    s32 speed;
+    u32 animIdx;
+
+    if (!(chara->properties_E4.splitHead.flags_E8 & 2))
+    {
+        if (chara->moveSpeed_38 > 0)
+        {
+            speed = chara->moveSpeed_38 - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.8f), Q12_SHIFT);
+            speed = MAX(speed, 0);
+        }
+        else
+        {
+            speed = chara->moveSpeed_38 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.8f), Q12_SHIFT);
+            speed= MIN(speed, 0);
+        }
+        chara->moveSpeed_38 = speed;
+    }
+    if (!chara->health_B0)
+    {
+        if (g_SysWork.targetNpcIdx_2353 != func_8005C7D0(chara))
+        {
+            chara->health_B0 = -1;
+            chara->field_E1_0 = 0;
+        }
+    }
+
+    if (!(*(s32*)&chara->properties_E4.splitHead.flags_E8 & 0x44) && !chara->moveSpeed_38)
+    {
+        animIdx = ANIM_STATUS_IDX_GET(chara->model_0.anim_4.status_0);
+        animStatus = 0;
+        if (animIdx == 18)
+        {
+            animStatus = ANIM_STATUS(2, true);
+        }
+        if (animIdx == 19)
+        {
+            animStatus = ANIM_STATUS(3, false);
+        }
+        if (animIdx == 20)
+        {
+            animStatus = ANIM_STATUS(3, true);
+        }
+        if (animStatus)
+        {
+            func_800622B8(3, chara, animStatus, 6);
+            chara->properties_E4.splitHead.flags_E8 |= 0x40;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800E5AA4_2_s00); // 0x800E4124
 
