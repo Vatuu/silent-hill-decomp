@@ -292,7 +292,52 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D49AC);
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D4D1C);
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D525C);
+void func_800D525C(void)
+{
+    D_800D86F8[0] = 0;
+    D_800D86F8[1] = 0;
+    D_800D86FC[0] = 0x40;
+    D_800D86FC[1] = 0x40;
+    D_800D8568.field_0 = 9;
+    D_800D8568.field_C = 0x12C;
+    D_800D8568.field_12 = -0x2CCCU;
+    D_800D8568.field_14 = -0x800;
+    D_800D8568.field_1C = 0xA00;
+    D_800D8568.field_E = -0x1000;
+    D_800D8568.field_4 = 0x80;
+    D_800D8568.field_5 = 0xC4;
+    D_800D8568.field_6 = 0x3C;
+    D_800D8568.field_8 = 0x200;
+    D_800D8568.field_A = 0x400;
+    D_800D8568.field_1 = 2;
+    D_800D8568.field_2 = 8;
+    D_800D8568.field_3 = 0x40;
+    D_800D8568.field_20 = Q12(19.7f);
+    D_800D8568.field_24 = Q12(-19.1f);
+    D_800D86FE = 48;
+    if (Savegame_EventFlagGet(EventFlag_130))
+    {
+        g_SysWork.field_2378 = Q12(1.3843f);
+        D_800D8568.field_1 = 0;
+    }
+    func_800CAAD0();
+    WorldObjectPoseInit(&g_WorldObject0.position_1C, 19.7f, 1.58f, -19.1f, 0.0f, 0.0f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject0.object_0, "SPHERE_H");
+
+    WorldObjectPoseInit(&g_WorldObject1.position_1C, 19.7f, -0.06f, -19.1f, 0.0f, 0.0f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject1.object_0, "WHEEL_HI");
+
+    g_SysWork.field_235C = NULL;
+    g_SysWork.field_2360.vx = Q12(19.7f);
+    g_SysWork.field_2360.vy = Q12(-3.0f);
+    g_SysWork.field_2360.vz = Q12(-19.1f);
+
+    g_SysWork.field_236C = NULL;
+    g_SysWork.field_2370.vx = Q12(-0.25f);
+    g_SysWork.field_2370.vy = Q12(0.0f);
+    g_SysWork.field_2370.vz = Q12(0.0f);
+    Sd_EngineCmd(0x5C6U);
+}
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D5400);
 
