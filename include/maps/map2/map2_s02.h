@@ -33,4 +33,6 @@ void func_800E3FB0(s_SubCharacter* chara);
 
 void func_800DEC98(s_SubCharacter* arg0);
 
+void func_800DEC04(s_SubCharacter* chara);
+
 #endif
