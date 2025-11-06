@@ -7,6 +7,9 @@
 #define HAS_PlayerState_Unk111
 #define HAS_PlayerState_Unk117
 
+#define HAS_Chara_Dahlia
+#define MAP_CHARA_COUNT 1
+
 #define HAS_PARTICLE_CASE_9
 #define PARTICLE_CASE_COUNT 1
 

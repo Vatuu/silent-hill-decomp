@@ -15,14 +15,6 @@
  *  MAP7_S02
  */
 
-#if defined(MAP3_S04) || defined(MAP4_S04) || defined(MAP7_S00)
-#define ANIM_TABLE KAUFMANN_ANIM_INFOS
-#else
-#define ANIM_TABLE LISA_ANIM_INFOS
-#endif
-
-extern s_AnimInfo ANIM_TABLE[];
-
 /** Addresses
  * MAP3_S04: 0x800D0888
  * MAP4_S04: 0x800CFEA0
@@ -58,7 +50,7 @@ void Ai_Lisa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE
         return;
     }
 
-    animInfo = &ANIM_TABLE[chara->model_0.anim_4.status_0];
+    animInfo = &LISA_ANIM_INFOS[chara->model_0.anim_4.status_0];
     animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
 }
 
@@ -153,7 +145,7 @@ void Ai_Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
             if (dahliaProps.stateIdx0 == 5)
             {
-                Model_AnimStatusKeyframeSet(chara->model_0, 1, true, ANIM_TABLE, 0);
+                Model_AnimStatusKeyframeSet(chara->model_0, 1, true, LISA_ANIM_INFOS, 0);
             }
             else
             {
@@ -184,7 +176,7 @@ void Ai_Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 9:
-            Model_AnimStatusKeyframeSet(chara->model_0, 6, true, ANIM_TABLE, 0);
+            Model_AnimStatusKeyframeSet(chara->model_0, 6, true, LISA_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             break;
 
@@ -194,12 +186,12 @@ void Ai_Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 11:
-            Model_AnimStatusKeyframeSet(chara->model_0, 8, true, ANIM_TABLE, 0);
+            Model_AnimStatusKeyframeSet(chara->model_0, 8, true, LISA_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             break;
 
         case 12:
-            Model_AnimStatusKeyframeSet(chara->model_0, 9, true, ANIM_TABLE, 0);
+            Model_AnimStatusKeyframeSet(chara->model_0, 9, true, LISA_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             break;
 
@@ -209,7 +201,7 @@ void Ai_Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 14:
-            Model_AnimStatusKeyframeSet(chara->model_0, 11, true, ANIM_TABLE, 0);
+            Model_AnimStatusKeyframeSet(chara->model_0, 11, true, LISA_ANIM_INFOS, 0);
             break;
 
         case 15:
@@ -222,12 +214,12 @@ void Ai_Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 17:
-            Model_AnimStatusKeyframeSet(chara->model_0, 14, true, ANIM_TABLE, 0);
+            Model_AnimStatusKeyframeSet(chara->model_0, 14, true, LISA_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             break;
 
         case 18:
-            Model_AnimStatusKeyframeSet(chara->model_0, 15, true, ANIM_TABLE, 0);
+            Model_AnimStatusKeyframeSet(chara->model_0, 15, true, LISA_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             break;
 

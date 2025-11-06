@@ -6,6 +6,7 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map2/map2_s01.h"
+#include "maps/characters/Chara_Dahlia.h"
 
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800CDDA0
 

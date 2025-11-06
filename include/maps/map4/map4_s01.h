@@ -21,6 +21,9 @@
 #define HAS_PlayerState_Unk186
 #define KEYFRAME_PlayerState_Unk69 678
 
+#define HAS_Chara_Cybil
+#define MAP_CHARA_COUNT 1
+
 // Config used by `Map_RoomIdxGet`.
 #define MAP_ROOM_MIN_X Q12(-200.0f)
 #define MAP_ROOM_MAX_X Q12(200.0f)

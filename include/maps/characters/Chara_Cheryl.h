@@ -1,6 +1,8 @@
 #ifndef _MAPS_CHARACTERS_CHERYL_H
 #define _MAPS_CHARACTERS_CHERYL_H
 
+extern s_AnimInfo CHERYL_ANIM_INFOS[];
+
 extern s32 D_800DF1CC;
 
 /** Timer. */

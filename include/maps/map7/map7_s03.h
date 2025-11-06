@@ -23,6 +23,15 @@
 #define KEYFRAME_PlayerState_Unk153 816
 #define KEYFRAME_PlayerState_Unk162 837
 
+#define HAS_Chara_EndingCybil
+#define HAS_Chara_EndingDahlia
+#define HAS_Chara_Alessa
+#define HAS_Chara_EndingKaufmann
+#define HAS_Chara_BloodyLisa
+#define HAS_Chara_Incubator
+#define HAS_Chara_BloodyIncubator
+#define MAP_CHARA_COUNT 7
+
 // Config used by `Map_RoomIdxGet`.
 #define MAP_ROOM_MIN_X    Q12(-200.0f)
 #define MAP_ROOM_MAX_X    Q12(200.0f)

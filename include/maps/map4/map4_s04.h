@@ -10,6 +10,9 @@
 #define HAS_PlayerState_Unk135
 #define KEYFRAME_PlayerState_Unk117 678
 
+#define HAS_Chara_Lisa
+#define MAP_CHARA_COUNT 1
+
 #define MAP_ROOM_MIN_X Q12(-160.0f)
 #define MAP_ROOM_MAX_X Q12(160.0f)
 #define MAP_ROOM_MIN_Z Q12(-160.0f)

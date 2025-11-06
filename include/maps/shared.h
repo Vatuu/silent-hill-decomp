@@ -2302,9 +2302,12 @@ extern u8 sharedData_800E2156_0_s01;
 
 extern s_AnimInfo KAUFMANN_ANIM_INFOS[];
 extern s_AnimInfo CYBIL_ANIM_INFOS[];
+extern s_AnimInfo MONSTER_CYBIL_ANIM_INFOS[];
 extern s_AnimInfo BLOODY_LISA_ANIM_INFOS[];
-extern s_AnimInfo LISA_ANIM_INFOS[];
 extern s_AnimInfo GHOST_CHILD_ALESSA_ANIM_INFOS[];
+extern s_AnimInfo BLOODY_INCUBATOR_ANIM_INFOS[];
+extern s_AnimInfo INCUBATOR_ANIM_INFOS[];
+extern s_AnimInfo GHOST_DOCTOR_ANIM_INFOS[];
 
 extern s32 g_Particle_SpeedX;
 extern s32 g_Particle_SpeedZ;

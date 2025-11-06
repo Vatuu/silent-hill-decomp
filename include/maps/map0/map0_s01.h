@@ -23,6 +23,9 @@
 #define HAS_PlayerState_Unk93
 #define HAS_PlayerState_Unk110
 
+#define HAS_Chara_Cybil
+#define MAP_CHARA_COUNT 1
+
 #define MAP_ROOM_MIN_X Q12(-320.0f)
 #define MAP_ROOM_MAX_X Q12(240.0f)
 #define MAP_ROOM_MIN_Z Q12(-240.0f)

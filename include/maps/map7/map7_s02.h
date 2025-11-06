@@ -19,6 +19,12 @@
 #define KEYFRAME_PlayerState_Unk59 862
 #define KEYFRAME_PlayerState_Unk60 877
 
+#define HAS_Chara_Dahlia
+#define HAS_Chara_GhostChildAlessa
+#define HAS_Chara_Kaufmann
+#define HAS_Chara_GhostDoctor
+#define MAP_CHARA_COUNT 4
+
 // Config used by `Map_RoomIdxGet`.
 #define MAP_ROOM_MIN_X    Q12(-200.0f)
 #define MAP_ROOM_MAX_X    Q12(200.0f)

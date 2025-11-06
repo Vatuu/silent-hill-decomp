@@ -13,6 +13,9 @@
 #define HAS_PlayerState_Unk138
 #define HAS_PlayerState_Unk139
 
+#define HAS_Chara_Lisa
+#define MAP_CHARA_COUNT 1
+
 // Config used by `Map_RoomIdxGet`.
 #define MAP_ROOM_MIN_X Q12(-200.0f)
 #define MAP_ROOM_MAX_X Q12(200.0f)

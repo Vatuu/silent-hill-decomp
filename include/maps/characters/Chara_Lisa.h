@@ -1,6 +1,8 @@
 #ifndef _MAPS_CHARACTERS_LISA_H
 #define _MAPS_CHARACTERS_LISA_H
 
+extern s_AnimInfo LISA_ANIM_INFOS[];
+
 extern s32 sharedData_800D6BB8_3_s04; // Used by `Ai_Lisa_Init`.
 
 void Ai_Lisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);

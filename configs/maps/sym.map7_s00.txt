@@ -97,7 +97,7 @@ SysWork_StateStepIncrementAfterTime = 0x800D0ACC; // type:func
 //----------------------------------------------------
 HARRY_M7S00_ANIM_INFOS              = 0x800D2B14;
 sharedData_800DD59C_0_s00           = 0x800D2C9C; // type:u8
-KAUFMANN_ANIM_INFOS                 = 0x800D2CA8; // type:AnimInfo
+LISA_ANIM_INFOS                     = 0x800D2CA8; // type:AnimInfo
 sharedData_800DF1F4_0_s00           = 0x800D2EE8; // type:s32
 sharedData_800DF1F8_0_s00           = 0x800D2EEC; // type:s16
 sharedData_800DF1FA_0_s00           = 0x800D2EEE; // type:s16

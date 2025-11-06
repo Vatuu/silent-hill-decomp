@@ -1,6 +1,8 @@
 #ifndef _MAPS_CHARACTERS_DAHLIA_H
 #define _MAPS_CHARACTERS_DAHLIA_H
 
+extern s_AnimInfo DAHLIA_ANIM_INFOS[];
+
 extern s32 sharedData_800D16E0_2_s01; // Used by `Ai_Dahlia_Init`.
 
 void Ai_Dahlia_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);

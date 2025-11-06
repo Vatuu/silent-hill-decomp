@@ -24,6 +24,11 @@
 #define HAS_PlayerState_Unk188
 #define KEYFRAME_PlayerState_Unk167 1347
 
+#define HAS_Chara_MonsterCybil
+#define HAS_Chara_Dahlia
+#define HAS_Chara_Alessa
+#define MAP_CHARA_COUNT 3
+
 extern s_AnimInfo FLAUROS_ANIM_INFOS[];
 extern s_AnimInfo PARASITE_ANIM_INFOS[];
 

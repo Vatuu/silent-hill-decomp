@@ -20,6 +20,11 @@
 #define HAS_PlayerState_Unk158
 #define HAS_PlayerState_Unk167
 
+#define HAS_Chara_GhostChildAlessa
+#define HAS_Chara_Lisa
+#define HAS_Chara_BloodyLisa
+#define MAP_CHARA_COUNT 3
+
 // Config used by `Map_RoomIdxGet`.
 #define MAP_ROOM_MIN_X    Q12(-200.0f)
 #define MAP_ROOM_MAX_X    Q12(200.0f)

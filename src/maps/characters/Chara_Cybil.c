@@ -14,12 +14,6 @@
  *  MAP7_S03
  */
 
-#if defined(MAP4_S01) || defined(MAP0_S01)
-#define ANIM_TABLE KAUFMANN_ANIM_INFOS
-#else
-#define ANIM_TABLE CYBIL_ANIM_INFOS
-#endif
-
 /** Addresses
  * MAP0_S01: 0x800D8814
  * MAP4_S01: 0x800CFDF0
@@ -50,7 +44,7 @@ void Ai_Cybil_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* animHdr, GsCOORDINA
 
     if (chara->properties_E4.player.field_F0 == 0)
     {
-        animInfo = &ANIM_TABLE[chara->model_0.anim_4.status_0];
+        animInfo = &CYBIL_ANIM_INFOS[chara->model_0.anim_4.status_0];
         animInfo->updateFunc_0(&chara->model_0, animHdr, coords, animInfo);
     }
 }
@@ -139,7 +133,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             }
 
 #if defined(MAP0_S01)
-            Model_AnimStatusKeyframeSet(chara->model_0, 3, true, ANIM_TABLE, 0);
+            Model_AnimStatusKeyframeSet(chara->model_0, 3, true, CYBIL_ANIM_INFOS, 0);
 #else
             Model_AnimStatusSet(&chara->model_0, 3, false);
 #endif
@@ -163,7 +157,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
             // TODO: This uses `ANIM_STATUS(21, false)`, but then fetches `ANIM_STATUS(22, true)` keyframe.
             // Added `animInfosOffset` but maybe there's better way.
-            Model_AnimStatusKeyframeSet(chara->model_0, 21, false, ANIM_TABLE, 1);
+            Model_AnimStatusKeyframeSet(chara->model_0, 21, false, CYBIL_ANIM_INFOS, 1);
             Character_AnimStateReset(chara);
             break;
 
@@ -209,7 +203,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
                 }
             }
 
-            Model_AnimStatusKeyframeSet(chara->model_0, 1, true, ANIM_TABLE, 0);
+            Model_AnimStatusKeyframeSet(chara->model_0, 1, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             break;
 
@@ -228,7 +222,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 6:
-            Model_AnimStatusKeyframeSet(chara->model_0, 7, true, ANIM_TABLE, 0);
+            Model_AnimStatusKeyframeSet(chara->model_0, 7, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
 
             if (chara->model_0.anim_4.keyframeIdx_8 < 91)
@@ -246,17 +240,17 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 7:
-            Model_AnimStatusKeyframeSet(chara->model_0, 8, true, ANIM_TABLE, 0);
+            Model_AnimStatusKeyframeSet(chara->model_0, 8, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             break;
 
         case 8:
-            Model_AnimStatusKeyframeSet(chara->model_0, 9, true, ANIM_TABLE, 0);
+            Model_AnimStatusKeyframeSet(chara->model_0, 9, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             break;
 
         case 9:
-            Model_AnimStatusKeyframeSet(chara->model_0, 10, true, ANIM_TABLE, 0);
+            Model_AnimStatusKeyframeSet(chara->model_0, 10, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             func_8003DD80(Chara_Cybil, UNK_PACKED_DATA(1, 1));
             break;
@@ -267,7 +261,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 11:
-            Model_AnimStatusKeyframeSet(chara->model_0, 12, true, ANIM_TABLE, 0);
+            Model_AnimStatusKeyframeSet(chara->model_0, 12, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             break;
 
@@ -313,7 +307,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
         case 21:
             Model_AnimStatusSet(&chara->model_0, 26, false);
-            Model_AnimStatusKeyframeSet(chara->model_0, 26, true, ANIM_TABLE, 0);
+            Model_AnimStatusKeyframeSet(chara->model_0, 26, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             func_8003DD80(Chara_EndingCybil, UNK_PACKED_DATA(2, 1));
 
@@ -326,14 +320,14 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
         case 22:
             Model_AnimStatusSet(&chara->model_0, 27, false);
-            Model_AnimStatusKeyframeSet(chara->model_0, 27, true, ANIM_TABLE, 0);
+            Model_AnimStatusKeyframeSet(chara->model_0, 27, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             func_8003DD80(Chara_EndingCybil, UNK_PACKED_DATA(2, 1));
             break;
 
         case 23:
             Model_AnimStatusSet(&chara->model_0, 28, false);
-            Model_AnimStatusKeyframeSet(chara->model_0, 28, true, ANIM_TABLE, 0);
+            Model_AnimStatusKeyframeSet(chara->model_0, 28, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             func_8003DD80(Chara_EndingCybil, UNK_PACKED_DATA(2, 1));
 
@@ -345,18 +339,18 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
         case 24:
             Model_AnimStatusSet(&chara->model_0, 29, false);
-            Model_AnimStatusKeyframeSet(chara->model_0, 29, true, ANIM_TABLE, 0);
+            Model_AnimStatusKeyframeSet(chara->model_0, 29, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             func_8003DD80(Chara_EndingCybil, UNK_PACKED_DATA(2, 1));
             break;
 
         case 25:
-            Model_AnimStatusKeyframeSet(chara->model_0, 22, true, ANIM_TABLE, 0);
+            Model_AnimStatusKeyframeSet(chara->model_0, 22, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             break;
 
         case 26:
-            Model_AnimStatusKeyframeSet(chara->model_0, 23, true, ANIM_TABLE, 0);
+            Model_AnimStatusKeyframeSet(chara->model_0, 23, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             break;
 
@@ -371,7 +365,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 28:
-            Model_AnimStatusKeyframeSet(chara->model_0, 25, true, ANIM_TABLE, 0);
+            Model_AnimStatusKeyframeSet(chara->model_0, 25, true, CYBIL_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             break;
 

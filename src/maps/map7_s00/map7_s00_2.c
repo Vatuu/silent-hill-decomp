@@ -4,6 +4,7 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map7/map7_s00.h"
+#include "maps/characters/Chara_Lisa.h"
 
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800CF538
 

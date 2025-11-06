@@ -10,6 +10,10 @@
 #define HAS_PlayerState_Unk113
 #define KEYFRAME_PlayerState_Unk113 700
 
+#define HAS_Chara_Cybil
+#define HAS_Chara_Dahlia
+#define MAP_CHARA_COUNT 2
+
 #define MAP_ROOM_MIN_X Q12(-200.0f)
 #define MAP_ROOM_MAX_X Q12(200.0f)
 #define MAP_ROOM_MIN_Z Q12(0.0f)
