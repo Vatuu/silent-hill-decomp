@@ -8,7 +8,7 @@
 
 /** @note The game handles the upper and lower part of the player's body independently.
  *
- * SH2 symbols indicate a similar system with 4 enums used depending on the controls cheme:
+ * SH2 symbols indicate a similar system with 4 enums used depending on the control scheme:
  * `lower_*_2D`
  * `lower_*_3D`
  * `upper_*_2D`
@@ -610,7 +610,9 @@ bool func_8007F95C();
 
 static inline s32 Player_ExtraStateSet(s_SubCharacter* playerChara, s_MainCharacterExtra* extra, s32 state)
 {
-    s32 result                                      =
+    s32 activeState;
+
+    activeState                                     =
     g_SysWork.player_4C.extra_128.state_1C          = state;
     playerChara->model_0.stateStep_3                = 0;
     playerChara->model_0.state_2                    = 0;
@@ -618,7 +620,7 @@ static inline s32 Player_ExtraStateSet(s_SubCharacter* playerChara, s_MainCharac
     extra->model_0.state_2                          = 0;
     g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
     g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
-    return result;
+    return activeState;
 }
 
 #endif

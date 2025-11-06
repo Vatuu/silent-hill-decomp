@@ -1160,7 +1160,7 @@ typedef struct
         u16 field_01;
     } field_F;
     u8  field_14;
-    u8  field_15;
+    u8  field_15; // Padding?
     s8  field_16;
     s8  field_17;
 } s_800C1658;

@@ -5,7 +5,7 @@
                     .spawnInfo = {
                         .charaId_4   = Chara_None,
                         .rotationY_5 = 176,
-                        .flags_6     = 1 << 0,
+                        .flags_6     = MapTypeFlag_OneActiveChunk,
                         .unk_7       = 0xF,
                     }
                 },
@@ -21,7 +21,7 @@
                     .spawnInfo = {
                         .charaId_4   = Chara_None,
                         .rotationY_5 = FP_ANGLE_PACKED(180.0f),
-                        .flags_6     = (1 << 0) | (1 << 2),
+                        .flags_6     = MapTypeFlag_OneActiveChunk | MapTypeFlag_Interior,
                         .unk_7       = 0xF,
                     }
                 },
@@ -33,7 +33,7 @@
                     .spawnInfo = {
                         .charaId_4   = Chara_None,
                         .rotationY_5 = FP_ANGLE_PACKED(135.0f),
-                        .flags_6     = (1 << 0) | (1 << 2),
+                        .flags_6     = MapTypeFlag_OneActiveChunk | MapTypeFlag_Interior,
                         .unk_7       = 0xF,
                     }
                 },
@@ -45,7 +45,7 @@
                     .spawnInfo = {
                         .charaId_4   = Chara_None,
                         .rotationY_5 = FP_ANGLE_PACKED(0.0f),
-                        .flags_6     = (1 << 0) | (1 << 2),
+                        .flags_6     = MapTypeFlag_OneActiveChunk | MapTypeFlag_Interior,
                         .unk_7       = 0xF,
                     }
                 },

@@ -53,26 +53,25 @@ void func_800CFEAC(void) // 0x800CFEAC
 extern const u8 D_800CA70C[];
 INCLUDE_RODATA("asm/maps/map3_s02/nonmatchings/map3_s02_2", D_800CA70C);
 
-void func_800CFEEC(void)
+void func_800CFEEC(void) // 0x800CFEEC
 {
-
-    u16 flags;
-    q19_12 f_arg1;
-    u8* dataPtr;
-    u8 data[8];
-    s32 roomId;
+    u16    flags;
+    q19_12 fArg1;
+    u8*    dataPtr;
+    u8     data[8];
+    s32    roomIdx;
 
     dataPtr = D_800D1D14;
-    roomId = g_SavegamePtr->mapRoomIdx_A5;
+    roomIdx = g_SavegamePtr->mapRoomIdx_A5;
 
     if (g_GameWork.soundCmd_5B2 == 8)
     {
-        f_arg1 = Q12(240.0f);
-        flags = 0xFe;
+        fArg1 = Q12(240.0f);
+        flags = 0xFE;
     }
-    else if (g_GameWork.soundCmd_5B2 == 0x20)
+    else if (g_GameWork.soundCmd_5B2 == 32)
     {
-        f_arg1 = Q12(0.15f);
+        fArg1 = Q12(0.15f);
         if (Savegame_EventFlagGet(EventFlag_338))
         {
             flags = 4;
@@ -92,15 +91,15 @@ void func_800CFEEC(void)
     }
     else
     {
-        flags = D_800D1D1C[roomId];
-        f_arg1 = Q12(0.15f);
+        flags = D_800D1D1C[roomIdx];
+        fArg1 = Q12(0.15f);
     
-        switch (roomId)
+        switch (roomIdx)
         {
-            case 0x17:
-            case 0x1A:
-            case 0x26:
-            case 0x2D:
+            case 23:
+            case 26:
+            case 38:
+            case 45:
                 if (!(Savegame_EventFlagGet(EventFlag_285) || Savegame_EventFlagGet(EventFlag_286)))
                 {
                     flags = 0x1E;
@@ -111,9 +110,9 @@ void func_800CFEEC(void)
                 }
                 break;
     
-            case 0x5:
-            case 0x19:
-            case 0x25:
+            case 5:
+            case 25:
+            case 37:
                 if (!Savegame_EventFlagGet(EventFlag_285) && Savegame_EventFlagGet(EventFlag_286))
                 {
                     Savegame_EventFlagSet(EventFlag_285);
@@ -131,45 +130,44 @@ void func_800CFEEC(void)
     
                 break;
     
-            case 0x4:
+            case 4:
                 if (!Player_ItemRemove(InventoryItemId_ExaminationRoomKey, 0))
                 {
-                    flags = 1;
+                    flags = 1 << 0;
                 }
-                // fallthrough
-            case 0x6:
-            case 0x7:
-            case 0xA:
-            case 0xB:
-            case 0xC:
-            case 0xD:
-            case 0xE:
-            case 0xF:
-            case 0x15:
-            case 0x16:
-            case 0x18:
-            case 0x1B:
-            case 0x1C:
-            case 0x1D:
-            case 0x1E:
-            case 0x1F:
-            case 0x20:
-            case 0x22:
-            case 0x23:
-            case 0x24:
-            case 0x27:
-            case 0x28:
-            case 0x29:
-            case 0x2A:
-            case 0x2B:
-            case 0x2C:
-            case 0x2E:
-            case 0x2F:
+
+            case 6:
+            case 7:
+            case 10:
+            case 11:
+            case 12:
+            case 13:
+            case 14:
+            case 15:
+            case 21:
+            case 22:
+            case 24:
+            case 27:
+            case 28:
+            case 29:
+            case 30:
+            case 31:
+            case 32:
+            case 34:
+            case 35:
+            case 36:
+            case 39:
+            case 40:
+            case 41:
+            case 42:
+            case 43:
+            case 44:
+            case 46:
+            case 47:
                 Savegame_EventFlagSet(EventFlag_286);
                 break;
     
-            case 0x3:
-    
+            case 3:
                 if (g_GameWork.soundCmd_5B2 == 31)
                 {
                     memcpy(data, D_800CA70C, 8);
@@ -177,52 +175,49 @@ void func_800CFEEC(void)
     
                     if (!Savegame_EventFlagGet(EventFlag_293))
                     {
-                        f_arg1 = Q12(240.0f);
-                        flags = 4;
+                        fArg1 = Q12(240.0f);
+                        flags = 1 << 2;
                     } 
                     else if (!Savegame_EventFlagGet(EventFlag_298))
                     {
-                        f_arg1 = Q12(0.25f);
-                        flags = 2;
+                        fArg1 = Q12(0.25f);
+                        flags = 1 << 1;
                     } 
                     else if (!Savegame_EventFlagGet(EventFlag_299))
                     {
-                        f_arg1 = Q12(0.125f);
-                        flags = 8;
+                        fArg1 = Q12(0.125f);
+                        flags = 1 << 3;
                     } 
                     else 
                     {
-                        f_arg1 = Q12(240.0f);
+                        fArg1 = Q12(240.0f);
                         if (!Savegame_EventFlagGet(EventFlag_294))
                         {
-                            f_arg1 = Q12(0.5f);
-                            flags = 0x201;
+                            fArg1 = Q12(0.5f);
+                            flags = (1 << 0) | (1 << 9);
                         } 
                         else 
                         {
-                            flags = 1;
+                            flags = 1 << 0;
                         }
                     }
                 }
                 else
                 {
-                    flags = 0x201;
+                    flags = (1 << 0) | (1 << 9);
                 }
                 break;
     
-            case 0x3A:
+            case 58:
                 if (!Savegame_EventFlagGet(EventFlag_260))
                 {
-                    flags = 1;
+                    flags = 1 << 0;
                 }
-                break;
-    
-            default:
-    
                 break;
         }
     }
-    func_80035F4C(flags, f_arg1, dataPtr);
+
+    func_80035F4C(flags, fArg1, dataPtr);
 }
 
 void func_800D017C(void) {}
@@ -230,6 +225,7 @@ void func_800D017C(void) {}
 #include "maps/shared/MapEvent_DoorJammed.h" // 0x800D0184
 
 #include "maps/shared/MapEvent_DoorLocked.h" // 0x800D0218
+
 void func_800D02AC(void) {}
 
 const char* MAP_MESSAGES[] = {
@@ -238,34 +234,44 @@ const char* MAP_MESSAGES[] = {
     "\tIt's_locked! ~E "
 };
 
-const VECTOR3 D_800CAAF8 = { Q12(100.0f), Q12(-1.199951171875f), Q12(-127.199951171875f) };
+const VECTOR3 D_800CAAF8 = { Q12(100.0f), Q12(-1.2f), Q12(-127.2f) };
 
 void func_800D02B4(void) // 0x800D02B4
 {
+    typedef enum _EventState
+    {
+        EventState_0   = 0,
+        EventState_1   = 1,
+        EventState_2   = 2,
+        EventState_3   = 3,
+        EventState_4   = 4,
+        EventState_End = 5
+    } e_EventState;
+
     switch (g_SysWork.sysStateStep_C[0])
     {
-        case 0:
+        case EventState_0:
             sharedFunc_800D20E4_0_s00();
             ScreenFade_ResetTimestep();
             SysWork_StateStepIncrement(0);
             break;
 
-        case 1:
+        case EventState_1:
             SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
             SysWork_StateStepIncrement(0);
 
-        case 2:
+        case EventState_2:
             SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
-        case 3:
+        case EventState_3:
             func_8005DC1C(Sfx_Unk1523, &D_800CAAF8, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
-        case 4:
+        case EventState_4:
             SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
 
-        default:
+        default: // `EventState_End`
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             return;
@@ -334,8 +340,8 @@ s16 func_800D1354(void) // 0x800D1354
     s32 z6;
 
     // TODO: Use `Math_Vector2MagCalc`.
-    x = (g_SysWork.player_4C.chara_0.position_18.vx - Q12(95.2f));
-    z = (g_SysWork.player_4C.chara_0.position_18.vz + Q12(140.0f));
+    x = g_SysWork.player_4C.chara_0.position_18.vx - Q12(95.2f);
+    z = g_SysWork.player_4C.chara_0.position_18.vz + Q12(140.0f);
     cos0 = Math_Cos(func_8005BF38((ratan2(x, z) - ratan2(Q12(4.8f) + 1, Q12(12.8f) + 1))));
 
     x6 = Q12_TO_Q6(g_SysWork.player_4C.chara_0.position_18.vx - Q12(95.2f));
