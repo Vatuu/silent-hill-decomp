@@ -3,6 +3,8 @@
 BUILD_ENGINE   ?= 1
 BUILD_SCREENS  ?= 1
 BUILD_MAPS     ?= 1
+BUILD_ONLY     ?= ALL
+CHECKSUM       ?= 1
 NON_MATCHING   ?= 0
 SKIP_ASM       ?= 0
 
@@ -17,7 +19,7 @@ GAME_VERSION = USA
 
 ifeq ($(GAME_VERSION), USA)
 
-# RETAIL
+# Version - Retail NTSC (1.1)
 
 GAME_NAME        := SLUS-00707
 GAME_VERSION_DIR := USA
@@ -195,12 +197,16 @@ endif
 TARGET_SCREENS_SRC_DIR := screens
 TARGET_MAPS_SRC_DIR := maps
 
+
+ifeq ($(BUILD_ONLY), ALL)
+
 TARGET_MAIN := main
 
 ifeq ($(BUILD_ENGINE), 1)
 
 TARGET_BODYPROG := bodyprog
 
+#endif BUILD_ENGINE
 endif
 
 ifeq ($(BUILD_SCREENS), 1)
@@ -208,27 +214,32 @@ ifeq ($(BUILD_SCREENS), 1)
 TARGET_SCREENS := b_konami credits options saveload stream
 TARGET_SCREENS := $(addprefix $(TARGET_SCREENS_SRC_DIR)/,$(TARGET_SCREENS))
 
+#endif BUILD_SCREENS
 endif
 
 ifeq ($(BUILD_MAPS), 1)
 
-TARGET_MAPS				:= map0_s00 map0_s01 map0_s02 \
-							map1_s00 map1_s01 map1_s02 map1_s03 map1_s04 map1_s05 map1_s06 \
-							map2_s00 map2_s01 map2_s02 map2_s03 map2_s04 \
-							map3_s00 map3_s01 map3_s02 map3_s03 map3_s04 map3_s05 map3_s06 \
-							map4_s00 map4_s01 map4_s02 map4_s03 map4_s04 map4_s05 map4_s06 \
-							map5_s00 map5_s01 map5_s02 map5_s03 \
-							map6_s00 map6_s01 map6_s02 map6_s03 map6_s04 map6_s05 \
-							map7_s00 map7_s01 map7_s02 map7_s03
+TARGET_MAPS := map0_s00 map0_s01 map0_s02 \
+                map1_s00 map1_s01 map1_s02 map1_s03 map1_s04 map1_s05 map1_s06 \
+                map2_s00 map2_s01 map2_s02 map2_s03 map2_s04 \
+                map3_s00 map3_s01 map3_s02 map3_s03 map3_s04 map3_s05 map3_s06 \
+                map4_s00 map4_s01 map4_s02 map4_s03 map4_s04 map4_s05 map4_s06 \
+                map5_s00 map5_s01 map5_s02 map5_s03 \
+                map6_s00 map6_s01 map6_s02 map6_s03 map6_s04 map6_s05 \
+                map7_s00 map7_s01 map7_s02 map7_s03
 
 # If BUILD_MAP is set, only use that; otherwise use the default huge list
 # (allows large speedup by skipping config parse of all maps)
 TARGET_MAPS				:= $(if $(BUILD_MAP),$(BUILD_MAP),$(TARGET_MAPS))
 TARGET_MAPS				:= $(addprefix $(TARGET_MAPS_SRC_DIR)/,$(TARGET_MAPS))
 
+#endif BUILD_MAPS
 endif
 
 TARGET_OVERLAYS			:= $(TARGET_BODYPROG) $(TARGET_SCREENS) $(TARGET_MAPS)
+
+#endif BUILD_ONLY
+endif
 
 # Source Definitions
 
@@ -244,31 +255,57 @@ LD_FILES     := $(addsuffix .ld,$(addprefix $(LINKER_DIR)/,$(TARGET_IN)))
 
 # Rules
 
-default: all
+# Rules - Build (Normal/Matching)
 
-all: build
+default: build
 
 build: $(TARGET_OUT)
+	$(MAKE) checksum
 
-objdiff-config: regenerate
-	@$(MAKE) NON_MATCHING=1 SKIP_ASM=1 expected
-	@$(PYTHON) $(OBJDIFF_DIR)/objdiff_generate.py $(OBJDIFF_DIR)/config.yaml
+reset-build:
+	rm -rf $(BUILD_DIR)/src
+	rm -rf $(OUT_DIR)
+	$(MAKE) build $(TARGET_OUT)
+	$(MAKE) checksum
 
-report:
-	@$(MAKE) BUILD_ENGINE=1 BUILD_SCREENS=1 BUILD_MAPS=1 objdiff-config
-	@$(OBJDIFF) report generate > $(BUILD_DIR)/progress.json
+clean-build: reset
+	$(MAKE) generate
+	$(MAKE) build
 
-check: build
-	@sha256sum --ignore-missing --check "$(CONFIG_DIR)/checksum.sha"
+generate: $(LD_FILES)
 
-progress:
-	$(MAKE) build NON_MATCHING=1 SKIP_ASM=1
+# Rules - Build (Objdiff/Progress)
 
-expected: build
+objdiff-config:
+	rm -rf $(EXPECTED_DIR)
+	$(MAKE) regenerate
+	$(MAKE) NON_MATCHING=1 SKIP_ASM=1 build
 	mkdir -p $(EXPECTED_DIR)
 	mv $(BUILD_DIR)/asm $(EXPECTED_DIR)/asm
+	$(PYTHON) $(OBJDIFF_DIR)/objdiff_generate.py $(OBJDIFF_DIR)/config.yaml
 
-iso:
+report:
+	$(MAKE) BUILD_ENGINE=1 BUILD_SCREENS=1 BUILD_MAPS=1 objdiff-config
+	$(OBJDIFF) report generate > $(BUILD_DIR)/progress.json
+
+progress:
+	$(MAKE) NON_MATCHING=1 SKIP_ASM=1 build
+
+reset-progress:
+	rm -rf $(BUILD_DIR)/src
+	rm -rf $(OUT_DIR)
+	$(MAKE) NON_MATCHING=1 SKIP_ASM=1 build $(TARGET_OUT)
+
+# Rules - Rom handling (Extraction/Insertion)
+# TODO: Allow to insert any files to the game Files
+# At the moment only overlays have been handled
+
+setup: reset
+	rm -rf $(EXPECTED_DIR)
+	$(MAKE) extract
+	$(MAKE) generate
+
+insert-ovl:
 	$(INSERT_OVLS) $(INSERT_OVLS_FLAGS)
 	$(MKPSXISO) $(MKPSXISO_FLAGS)
 
@@ -277,7 +314,11 @@ extract:
 	$(DUMPSXISO) $(DUMPSXISO_FLAGS)
 	$(SILENT_ASSETS) $(SILENT_ASSETS_FLAGS)
 
-generate: $(LD_FILES)
+# Rules - Cleaning
+
+clean-rom:
+	find $(ROM_DIR) -maxdepth 1 -type f -delete
+	find $(ROM_DIR)/$(GAME_VERSION_DIR) -maxdepth 1 -type f -delete
 
 clean:
 	rm -rf $(BUILD_DIR)
@@ -286,40 +327,21 @@ clean:
 reset: clean
 	rm -rf $(ASM_DIR)
 	rm -rf $(LINKER_DIR)
-	rm -rf $(EXPECTED_DIR)
 
-clean-rom:
-	find rom -maxdepth 1 -type f -delete
+# Rules - Misc.
 
 regenerate: reset
 	$(MAKE) generate
 
-setup: reset
-	$(MAKE) extract
-	$(MAKE) generate
-
-clean-build: clean
-	rm -rf $(LINKER_DIR)
-	$(MAKE) generate
-	$(MAKE) build
-
-clean-check: clean
-	rm -rf $(ASM_DIR)
-	rm -rf $(LINKER_DIR)
-	$(MAKE) generate
-	$(MAKE) check
-
-clean-progress: clean
-	rm -rf $(ASM_DIR)
-	rm -rf $(LINKER_DIR)
-	$(MAKE) generate
-	$(MAKE) progress
-
 compilation-test:
 	$(COMPTEST)
 
-compilation-test-sm:
-	$(COMPTEST) --skip-maps
+checksum:
+ifeq ($(CHECKSUM),1)
+ifeq ($(SKIP_ASM),0)
+	@sha256sum --ignore-missing --check "$(CONFIG_DIR)/checksum.sha"
+endif
+endif
 
 # Recipes
 
@@ -348,8 +370,7 @@ $(BUILD_DIR)/%.c.s: $(BUILD_DIR)/%.sjis.i
 $(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.c.s
 	@mkdir -p $(dir $@)
 	$(call FlagsSwitch, $@)
-	-$(MASPSX) $(MASPSX_FLAGS) -o $@ $<
-	-$(OBJDUMP) $(OBJDUMP_FLAGS) $@ > $(@:.o=.dump.s)
+	$(MASPSX) $(MASPSX_FLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.s.o: %.s
 	@mkdir -p $(dir $@)
@@ -368,5 +389,5 @@ $(LINKER_DIR)/%.ld: $(CONFIG_DIR)/%.yaml
 
 ### Settings
 .SECONDARY:
-.PHONY: all clean default
+.PHONY: clean default
 SHELL = /bin/bash -e -o pipefail
