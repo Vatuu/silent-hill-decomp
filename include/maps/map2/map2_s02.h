@@ -1,6 +1,9 @@
 #ifndef _MAPS_MAP2_S02_H
 #define _MAPS_MAP2_S02_H
 
+#define HAS_PARTICLE_CASE_10
+#define PARTICLE_CASE_COUNT 1
+
 extern s_WorldObjectPose g_CommonWorldObjectPoses[6];
 extern VECTOR3 D_800ED938;
 extern q3_12 D_800F0B2C; // Time.

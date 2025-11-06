@@ -1,12 +1,33 @@
 #include "inline_no_dmpsx.h"
 
+#if !defined(PARTICLE_CASE_COUNT)
+#define PARTICLE_CASE_COUNT 1
+#define HAS_PARTICLE_FALLBACK_CASE
+#endif
+
+/*
+ * Particle case switch handling
+ *
+ * Maps define one or more HAS_PARTICLE_CASE_X flags to include their
+ * respective switch cases.
+ * When only a single case is present (PARTICLE_CASE_COUNT == 1), the 
+ * macro below replaces `case N:` with `default:` so that the compiler
+ * collapses the switch into a direct block, matching single-case maps 
+ * that skip checking the case entirely.
+ */
+#if PARTICLE_CASE_COUNT > 1
+#define PARTICLE_CASE(id) case id:
+#else
+#define PARTICLE_CASE(id) default:
+#endif
+
 void sharedFunc_800CEB24_0_s00(s_Particle* part)
 {
 #if !defined(MAP1_S00) && !defined(MAP6_S00) && !defined(MAP7_S03)
     VECTOR3     particlePos;
 #endif
 
-#if defined(MAP0_S00) || defined(MAP2_S00)
+#if defined(HAS_PARTICLE_CASE_1)
     VECTOR3     partCorners[2];
 #endif
 
@@ -39,53 +60,12 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part)
         {
             particlePos = part->position0_0;
 
-#if defined(MAP0_S00)
-            if (part->position0_0.vy < sharedData_800E326C_0_s00.corners_0[0].vy)
-            {
-                sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
-            }
-            else
-            {
-                s32 temp_v1;
-                partCorners[0].vx = sharedData_800E326C_0_s00.corners_0[0].vx;
-                partCorners[1].vx = sharedData_800E326C_0_s00.corners_0[1].vx;
-                temp_v1           = sharedData_800E326C_0_s00.corners_0[0].vz + 0x1400;
-                temp_v1          += part->position0_0.vy >> 2;
-                partCorners[1].vz = temp_v1;
-                partCorners[0].vz = temp_v1;
-
-                sharedFunc_800D0700_0_s00(&particlePos, &partCorners[0], &partCorners[1], 0);
-            }
-#elif defined(MAP0_S02)
-            if (g_SysWork.player_4C.chara_0.position_18.vx < Q12(-120.0f))
-            {
-                sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
-            }
-            else
-            {
-                sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 1);
-                if (particlePos.vy == 0)
-                {
-                    sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 1);
-                    if (particlePos.vy == 0)
-                    {
-                        sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[4], &sharedData_800E326C_0_s00.corners_0[5], 1);
-                        if (particlePos.vy == 0)
-                        {
-                            sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[6], &sharedData_800E326C_0_s00.corners_0[7], 0);
-                        }
-                    }
-                }
-            }
-
-#elif defined(MAP2_S00)
-            // TODO: This switch contains most of the other `#if defined(xx)` blocks
-            // Maybe this is a similar thing to the `HAS_PlayerState_Unk59` switches, where maps define which blocks to include.
-            // (and in this case map2_s00 includes all of them)
-            // Not sure how to make that work so that maps with only 1 block would get treated as the default case though?
+            // TODO: Check value of `sharedData_800DD591_0_s00` on each map, some of the `#if defined(MAPX)` changes in the switch below could be separate cases.
+            // (fallback case might also have its own value too)
             switch (sharedData_800DD591_0_s00)
             {
-                case 1:
+#ifdef HAS_PARTICLE_CASE_1
+                PARTICLE_CASE(1)
                     if (part->position0_0.vy < sharedData_800E326C_0_s00.corners_0[0].vy)
                     {
                         sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
@@ -103,15 +83,26 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part)
                         sharedFunc_800D0700_0_s00(&particlePos, &partCorners[0], &partCorners[1], 0);
                     }
                     break;
-                case 9:
-                    sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00, &sharedData_800E326C_0_s00.corners_0[1], 1);
+#endif
+
+#ifdef HAS_PARTICLE_CASE_9
+                PARTICLE_CASE(9)
+#if defined(MAP3_S00) || defined(MAP3_S01) || defined(MAP3_S06)
+                    sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
+                    if (g_SavegamePtr->mapRoomIdx_A5 == 5)
+#else
+                    sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 1);
                     if (particlePos.vy == 0)
+#endif
                     {
                         sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 0);
                     }
                     break;
-                case 10:
-                    sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00, &sharedData_800E326C_0_s00.corners_0[1], 1);
+#endif
+
+#ifdef HAS_PARTICLE_CASE_10
+                PARTICLE_CASE(10)
+                    sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 1);
                     if (particlePos.vy == 0)
                     {
                         sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 1);
@@ -121,8 +112,18 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part)
                         }
                     }
                     break;
-                case 11:
-                    sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00, &sharedData_800E326C_0_s00.corners_0[1], 1);
+#endif
+
+#ifdef HAS_PARTICLE_CASE_11
+                PARTICLE_CASE(11)
+#if defined(MAP0_S02)
+                    if (g_SysWork.player_4C.chara_0.position_18.vx < Q12(-120.0f))
+                    {
+                        sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
+                        break;
+                    }
+#endif
+                    sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 1);
                     if (particlePos.vy == 0)
                     {
                         sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 1);
@@ -136,29 +137,14 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part)
                         }
                     }
                     break;
-            }
-
-#elif defined(MAP3_S00) || defined(MAP3_S01) || defined(MAP3_S06)
-            sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
-            if (g_SavegamePtr->mapRoomIdx_A5 == 5)
-            {
-                sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 0);
-            }
-
-#elif defined(MAP2_S02) || defined(MAP5_S01)
-            sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 1);
-            if (particlePos.vy == 0)
-            {
-                sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 1);
-                if (particlePos.vy == 0)
-                {
-                    sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[4], &sharedData_800E326C_0_s00.corners_0[5], 0);
-                }
-            }
-
-#else
-            sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
 #endif
+
+#ifdef HAS_PARTICLE_FALLBACK_CASE
+                default:
+                    sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
+                    break;
+#endif
+            }
 
             particlePosQ8.vx = Q12_TO_Q8(particlePos.vx);
             particlePosQ8.vy = Q12_TO_Q8(localPart->position0_0.vy);

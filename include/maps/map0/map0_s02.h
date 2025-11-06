@@ -3,6 +3,9 @@
 
 #include "types.h"
 
+#define HAS_PARTICLE_CASE_11
+#define PARTICLE_CASE_COUNT 1
+
 // Config used by `Map_RoomIdxGet`.
 #define MAP_ROOM_MIN_X Q12(-200.0f)
 #define MAP_ROOM_MAX_X Q12(200.0f)

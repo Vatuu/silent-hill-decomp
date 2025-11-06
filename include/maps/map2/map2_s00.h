@@ -7,6 +7,12 @@
 #define KEYFRAME_PlayerState_Unk59 946
 #define KEYFRAME_PlayerState_Unk60 961
 
+#define HAS_PARTICLE_CASE_1
+#define HAS_PARTICLE_CASE_9
+#define HAS_PARTICLE_CASE_10
+#define HAS_PARTICLE_CASE_11
+#define PARTICLE_CASE_COUNT 4
+
 #define MAP_ROOM_MIN_X Q12(-320.0f)
 #define MAP_ROOM_MAX_X Q12(240.0f)
 #define MAP_ROOM_MIN_Z Q12(-240.0f)

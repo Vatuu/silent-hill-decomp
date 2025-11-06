@@ -12,6 +12,9 @@
 #define HAS_PlayerState_Unk74
 #define HAS_PlayerState_Unk84
 
+#define HAS_PARTICLE_CASE_1
+#define PARTICLE_CASE_COUNT 1
+
 #define MAP_ROOM_MIN_X Q12(-320.0f)
 #define MAP_ROOM_MAX_X Q12(240.0f)
 #define MAP_ROOM_MIN_Z Q12(-240.0f)
