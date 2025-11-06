@@ -128,7 +128,7 @@ void Ai_Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
                 dahliaProps.moveDistance_126  = CLAMP(dahliaProps.moveDistance_126, 0, Q12(1.25f));
             }
 
-            Model_AnimStatusSet(&chara->model_0, 2, false);
+            Model_AnimStatusSet(&chara->model_0, LisaAnim_2, false);
             Character_AnimStateReset(chara);
             break;
 
@@ -145,23 +145,23 @@ void Ai_Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
             if (dahliaProps.stateIdx0 == 5)
             {
-                Model_AnimStatusKeyframeSet(chara->model_0, 1, true, LISA_ANIM_INFOS, 0);
+                Model_AnimStatusKeyframeSet(chara->model_0, LisaAnim_1, true, LISA_ANIM_INFOS, 0);
             }
             else
             {
-                Model_AnimStatusSet(&chara->model_0, 1, true);
+                Model_AnimStatusSet(&chara->model_0, LisaAnim_1, true);
             }
 
             Character_AnimStateReset(chara);
             break;
 
         case 6:
-            Model_AnimStatusSet(&chara->model_0, 3, false);
+            Model_AnimStatusSet(&chara->model_0, LisaAnim_3, false);
             Character_AnimStateReset(chara);
             break;
 
         case 7:
-            Model_AnimStatusSet(&chara->model_0, 4, false);
+            Model_AnimStatusSet(&chara->model_0, LisaAnim_4, false);
 
             if (chara->model_0.anim_4.keyframeIdx_8 == 72)
             {
@@ -171,65 +171,65 @@ void Ai_Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 8:
-            Model_AnimStatusSet(&chara->model_0, 5, false);
+            Model_AnimStatusSet(&chara->model_0, LisaAnim_5, false);
             Character_AnimStateReset(chara);
             break;
 
         case 9:
-            Model_AnimStatusKeyframeSet(chara->model_0, 6, true, LISA_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(chara->model_0, LisaAnim_6, true, LISA_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             break;
 
         case 10:
-            Model_AnimStatusSet(&chara->model_0, 7, false);
+            Model_AnimStatusSet(&chara->model_0, LisaAnim_7, false);
             Character_AnimStateReset(chara);
             break;
 
         case 11:
-            Model_AnimStatusKeyframeSet(chara->model_0, 8, true, LISA_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(chara->model_0, LisaAnim_8, true, LISA_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             break;
 
         case 12:
-            Model_AnimStatusKeyframeSet(chara->model_0, 9, true, LISA_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(chara->model_0, LisaAnim_9, true, LISA_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             break;
 
         case 13:
-            Model_AnimStatusSet(&chara->model_0, 10, false);
+            Model_AnimStatusSet(&chara->model_0, LisaAnim_10, false);
             Character_AnimStateReset(chara);
             break;
 
         case 14:
-            Model_AnimStatusKeyframeSet(chara->model_0, 11, true, LISA_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(chara->model_0, LisaAnim_11, true, LISA_ANIM_INFOS, 0);
             break;
 
         case 15:
-            Model_AnimStatusSet(&chara->model_0, 12, false);
+            Model_AnimStatusSet(&chara->model_0, LisaAnim_12, false);
             break;
 
         case 16:
-            Model_AnimStatusSet(&chara->model_0, 13, false);
+            Model_AnimStatusSet(&chara->model_0, LisaAnim_13, false);
             Character_AnimStateReset(chara);
             break;
 
         case 17:
-            Model_AnimStatusKeyframeSet(chara->model_0, 14, true, LISA_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(chara->model_0, LisaAnim_14, true, LISA_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             break;
 
         case 18:
-            Model_AnimStatusKeyframeSet(chara->model_0, 15, true, LISA_ANIM_INFOS, 0);
+            Model_AnimStatusKeyframeSet(chara->model_0, LisaAnim_15, true, LISA_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
             break;
 
         case 19:
-            Model_AnimStatusSet(&chara->model_0, 16, false);
+            Model_AnimStatusSet(&chara->model_0, LisaAnim_16, false);
             Character_AnimStateReset(chara);
             break;
 
         case 21:
-            Model_AnimStatusSet(&chara->model_0, 17, false);
+            Model_AnimStatusSet(&chara->model_0, LisaAnim_17, false);
             Character_AnimStateReset(chara);
             break;
     }
@@ -242,21 +242,21 @@ void Ai_Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
     switch (dahliaProps.stateIdx0)
     {
         case 1:
-            sharedFunc_800D908C_0_s00(ANIM_STATUS(2, true), chara, 14, 31, sfx, pitch0);
+            sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_2, true), chara, 14, 31, sfx, pitch0);
             break;
 
         case 8:
             if (chara->model_0.anim_4.keyframeIdx_8 <= 125)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(5, true), chara, 125, 138, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_5, true), chara, 125, 138, sfx, pitch0);
             }
             else if (chara->model_0.anim_4.keyframeIdx_8 <= 153)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(5, true), chara, 153, 138, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_5, true), chara, 153, 138, sfx, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(5, true), chara, 189, 184, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_5, true), chara, 189, 184, sfx, pitch0);
             }
             break;
 
@@ -264,82 +264,82 @@ void Ai_Lisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             if (chara->model_0.anim_4.keyframeIdx_8 <= 258)
             {
                 // @bug From the other `keyframeIdx_8` checks here, should this be 258 instead of 263?
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(9, true), chara, 263, 258, sfx, pitch1);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_9, true), chara, 263, 258, sfx, pitch1);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(9, true), chara, 263, 266, sfx, pitch1);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_9, true), chara, 263, 266, sfx, pitch1);
             }
             break;
 
         case 13:
             if (chara->model_0.anim_4.keyframeIdx_8 <= 332)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(10, true), chara, 332, 337, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_10, true), chara, 332, 337, sfx, pitch0);
             }
             else if (chara->model_0.anim_4.keyframeIdx_8 <= 344)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(10, true), chara, 344, 337, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_10, true), chara, 344, 337, sfx, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(10, true), chara, 352, 348, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_10, true), chara, 352, 348, sfx, pitch0);
             }
             break;
 
         case 11:
-            sharedFunc_800D908C_0_s00(ANIM_STATUS(8, true), chara, 240, 240, sfx, pitch0);
+            sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_8, true), chara, 240, 240, sfx, pitch0);
             break;
 
         case 15:
 #if defined(MAP7_S00)
-            sharedFunc_800D9188_0_s00(ANIM_STATUS(12, true), chara, 408, Sfx_Unk1639);
+            sharedFunc_800D9188_0_s00(ANIM_STATUS(LisaAnim_12, true), chara, 408, Sfx_Unk1639);
 #endif
-            sharedFunc_800D908C_0_s00(ANIM_STATUS(12, true), chara, 406, 406, sfx, pitch0);
+            sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_12, true), chara, 406, 406, sfx, pitch0);
             break;
 
         case 16:
             if (chara->model_0.anim_4.keyframeIdx_8 <= 423)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(13, true), chara, 423, 425, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_13, true), chara, 423, 425, sfx, pitch0);
             }
             else if (chara->model_0.anim_4.keyframeIdx_8 <= 429)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(13, true), chara, 429, 425, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_13, true), chara, 429, 425, sfx, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(13, true), chara, 435, 432, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_13, true), chara, 435, 432, sfx, pitch0);
             }
             break;
 
         case 17:
             if (chara->model_0.anim_4.keyframeIdx_8 <= 460)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(14, true), chara, 460, 477, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_14, true), chara, 460, 477, sfx, pitch0);
             }
             else if (chara->model_0.anim_4.keyframeIdx_8 <= 497)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(14, true), chara, 497, 477, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_14, true), chara, 497, 477, sfx, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(14, true), chara, 536, 516, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_14, true), chara, 536, 516, sfx, pitch0);
             }
             break;
 
         case 18:
             if (chara->model_0.anim_4.keyframeIdx_8 <= 551)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(15, true), chara, 551, 555, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_15, true), chara, 551, 555, sfx, pitch0);
             }
             else if (chara->model_0.anim_4.keyframeIdx_8 <= 559)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(15, true), chara, 559, 555, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_15, true), chara, 559, 555, sfx, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(15, true), chara, 564, 564, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_15, true), chara, 564, 564, sfx, pitch0);
             }
             break;
     }

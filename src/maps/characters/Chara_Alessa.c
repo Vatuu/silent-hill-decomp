@@ -118,7 +118,7 @@ void Ai_Alessa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
                 dahliaProps.moveDistance_126  = CLAMP(dahliaProps.moveDistance_126, 0, Q12(1.25f));
             }
 
-            Model_AnimStatusSet(&chara->model_0, 2, false);
+            Model_AnimStatusSet(&chara->model_0, AlessaAnim_2, false);
             Character_AnimStateReset(chara);
             break;
 
@@ -137,42 +137,42 @@ void Ai_Alessa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 4:
-            Model_AnimStatusSet(&chara->model_0, 4, false);
+            Model_AnimStatusSet(&chara->model_0, AlessaAnim_4, false);
             Character_AnimStateReset(chara);
             break;
 
         case 3:
-            Model_AnimStatusSet(&chara->model_0, 3, false);
+            Model_AnimStatusSet(&chara->model_0, AlessaAnim_3, false);
             Character_AnimStateReset(chara);
             break;
 
         case 5:
-            Model_AnimStatusSet(&chara->model_0, 5, false);
+            Model_AnimStatusSet(&chara->model_0, AlessaAnim_5, false);
             Character_AnimStateReset(chara);
             break;
 
         case 6:
-            Model_AnimStatusSet(&chara->model_0, 6, false);
+            Model_AnimStatusSet(&chara->model_0, AlessaAnim_6, false);
             Character_AnimStateReset(chara);
             break;
 
         case 7:
-            Model_AnimStatusSet(&chara->model_0, 7, false);
+            Model_AnimStatusSet(&chara->model_0, AlessaAnim_7, false);
             Character_AnimStateReset(chara);
             break;
 
         case 8:
-            Model_AnimStatusSet(&chara->model_0, 8, false);
+            Model_AnimStatusSet(&chara->model_0, AlessaAnim_8, false);
             Character_AnimStateReset(chara);
             break;
 
         case 9:
-            Model_AnimStatusSet(&chara->model_0, 9, false);
+            Model_AnimStatusSet(&chara->model_0, AlessaAnim_9, false);
             Character_AnimStateReset(chara);
             break;
 
         case 10:
-            Model_AnimStatusSet(&chara->model_0, 10, false);
+            Model_AnimStatusSet(&chara->model_0, AlessaAnim_10, false);
             Character_AnimStateReset(chara);
             break;
     }

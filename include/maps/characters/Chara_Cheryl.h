@@ -1,6 +1,15 @@
 #ifndef _MAPS_CHARACTERS_CHERYL_H
 #define _MAPS_CHARACTERS_CHERYL_H
 
+/** @brief Cheryl character animation indices. */
+typedef enum _CherylAnim
+{
+    CherylAnim_Still = 0,
+    CherylAnim_1     = 1,
+    CherylAnim_2     = 2,
+    CherylAnim_3     = 3
+} e_CherylAnim;
+
 /** @brief Cheryl character anim infos. */
 extern s_AnimInfo CHERYL_ANIM_INFOS[];
 

@@ -1,8 +1,8 @@
    {
-      .positionX_0            = Q12(-100.0f),
-      .data = 
+      .positionX_0 = Q12(-100.0f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -12,13 +12,13 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8            = Q12(20.79980468750f) 
+      .positionZ_8 = Q12(20.8f) 
    },
    {
-      .positionX_0            = Q12(-144.0f),
-      .data = 
+      .positionX_0 = Q12(-144.0f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -28,13 +28,13 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8            = Q12(18.0f) 
+      .positionZ_8 = Q12(18.0f) 
    },
    {
-      .positionX_0            = Q12(-178.399902343750f),
-      .data = 
+      .positionX_0 = Q12(-178.4f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -44,13 +44,13 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8            = Q12(20.79980468750f) 
+      .positionZ_8 = Q12(20.8f) 
    },
    {
-      .positionX_0            = Q12(-101.1999511718750f),
-      .data = 
+      .positionX_0 = Q12(-101.2f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -60,13 +60,13 @@
             .field_4_24 = 6,
          }
       },
-      .positionZ_8            = Q12(17.899902343750f) 
+      .positionZ_8 = Q12(17.9f) 
    },
    {
-      .positionX_0            = Q12(-247.50f),
-      .data = 
+      .positionX_0 = Q12(-247.50f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -76,13 +76,13 @@
             .field_4_24 = 6,
          }
       },
-      .positionZ_8            = Q12(-206.899902343750f) 
+      .positionZ_8 = Q12(-206.9f) 
    },
    {
-      .positionX_0            = Q12(-100.3498535156250f),
-      .data = 
+      .positionX_0 = Q12(-100.35f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -92,13 +92,13 @@
             .field_4_24 = 3,
          }
       },
-      .positionZ_8            = Q12(22.1999511718750f) 
+      .positionZ_8 = Q12(22.2f) 
    },
    {
-      .positionX_0            = Q12(-144.0f),
-      .data = 
+      .positionX_0 = Q12(-144.0f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -108,13 +108,13 @@
             .field_4_24 = 16,
          }
       },
-      .positionZ_8            = Q12(16.0f) 
+      .positionZ_8 = Q12(16.0f) 
    },
    {
-      .positionX_0            = Q12(30.0f),
-      .data = 
+      .positionX_0 = Q12(30.0f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -124,13 +124,13 @@
             .field_4_24 = 16,
          }
       },
-      .positionZ_8            = Q12(154.0f) 
+      .positionZ_8 = Q12(154.0f) 
    },
    {
-      .positionX_0            = Q12(-177.95996093750f),
-      .data = 
+      .positionX_0 = Q12(-177.95996093750f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -140,13 +140,13 @@
             .field_4_24 = 4,
          }
       },
-      .positionZ_8            = Q12(22.29980468750f) 
+      .positionZ_8 = Q12(22.3f) 
    },
    {
-      .positionX_0            = Q12(-177.8098144531250f),
-      .data = 
+      .positionX_0 = Q12(-177.8098144531250f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -156,13 +156,13 @@
             .field_4_24 = 4,
          }
       },
-      .positionZ_8            = Q12(21.9299316406250f) 
+      .positionZ_8 = Q12(21.9299316406250f) 
    },
    {
-      .positionX_0            = Q12(-178.1799316406250f),
-      .data = 
+      .positionX_0 = Q12(-178.1799316406250f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -172,13 +172,13 @@
             .field_4_24 = 4,
          }
       },
-      .positionZ_8            = Q12(21.779785156250f) 
+      .positionZ_8 = Q12(21.779785156250f) 
    },
    {
-      .positionX_0            = Q12(-178.3298339843750f),
-      .data = 
+      .positionX_0 = Q12(-178.3298339843750f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -188,13 +188,13 @@
             .field_4_24 = 4,
          }
       },
-      .positionZ_8            = Q12(22.149902343750f) 
+      .positionZ_8 = Q12(22.149902343750f) 
    },
    {
-      .positionX_0            = Q12(-177.5998535156250f),
-      .data = 
+      .positionX_0 = Q12(-177.6f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -204,13 +204,13 @@
             .field_4_24 = 5,
          }
       },
-      .positionZ_8            = Q12(20.899902343750f) 
+      .positionZ_8 = Q12(20.9f) 
    },
    {
-      .positionX_0            = Q12(-177.79980468750f),
-      .data = 
+      .positionX_0 = Q12(-177.8f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -220,13 +220,13 @@
             .field_4_24 = 8,
          }
       },
-      .positionZ_8            = Q12(16.0f) 
+      .positionZ_8 = Q12(16.0f) 
    },
    {
-      .positionX_0            = Q12(82.5998535156250f),
-      .data = 
+      .positionX_0 = Q12(82.6f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -236,13 +236,13 @@
             .field_4_24 = 8,
          }
       },
-      .positionZ_8            = Q12(-97.399902343750f) 
+      .positionZ_8 = Q12(-97.4f) 
    },
    {
-      .positionX_0            = Q12(-177.5998535156250f),
-      .data = 
+      .positionX_0 = Q12(-177.6f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -252,13 +252,13 @@
             .field_4_24 = 20,
          }
       },
-      .positionZ_8            = Q12(21.649902343750f) 
+      .positionZ_8 = Q12(21.649902343750f) 
    },
    {
-      .positionX_0            = Q12(-178.979980468750f),
-      .data = 
+      .positionX_0 = Q12(-178.98f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -268,13 +268,13 @@
             .field_4_24 = 4,
          }
       },
-      .positionZ_8            = Q12(19.779785156250f) 
+      .positionZ_8 = Q12(19.779785156250f) 
    },
    {
-      .positionX_0            = Q12(-179.069824218750f),
-      .data = 
+      .positionX_0 = Q12(-179.069824218750f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -284,13 +284,13 @@
             .field_4_24 = 4,
          }
       },
-      .positionZ_8            = Q12(19.3898925781250f) 
+      .positionZ_8 = Q12(19.3898925781250f) 
    },
    {
-      .positionX_0            = Q12(-179.45996093750f),
-      .data = 
+      .positionX_0 = Q12(-179.45996093750f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -300,13 +300,13 @@
             .field_4_24 = 4,
          }
       },
-      .positionZ_8            = Q12(19.479980468750f) 
+      .positionZ_8 = Q12(19.48f) 
    },
    {
-      .positionX_0            = Q12(-179.3698730468750f),
-      .data = 
+      .positionX_0 = Q12(-179.3698730468750f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -316,13 +316,13 @@
             .field_4_24 = 4,
          }
       },
-      .positionZ_8            = Q12(19.8698730468750f) 
+      .positionZ_8 = Q12(19.8698730468750f) 
    },
    {
-      .positionX_0            = Q12(-177.5197753906250f),
-      .data = 
+      .positionX_0 = Q12(-177.5197753906250f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -332,13 +332,13 @@
             .field_4_24 = 5,
          }
       },
-      .positionZ_8            = Q12(19.649902343750f) 
+      .positionZ_8 = Q12(19.649902343750f) 
    },
    {
-      .positionX_0            = Q12(-146.399902343750f),
-      .data = 
+      .positionX_0 = Q12(-146.4f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -348,13 +348,13 @@
             .field_4_24 = 7,
          }
       },
-      .positionZ_8            = Q12(21.0998535156250f) 
+      .positionZ_8 = Q12(21.1f) 
    },
    {
-      .positionX_0            = Q12(-146.399902343750f),
-      .data = 
+      .positionX_0 = Q12(-146.4f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -364,13 +364,13 @@
             .field_4_24 = 7,
          }
       },
-      .positionZ_8            = Q12(21.5998535156250f) 
+      .positionZ_8 = Q12(21.6f) 
    },
    {
-      .positionX_0            = Q12(-177.609863281250f),
-      .data = 
+      .positionX_0 = Q12(-177.609863281250f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -380,13 +380,13 @@
             .field_4_24 = 8,
          }
       },
-      .positionZ_8            = Q12(21.1999511718750f) 
+      .positionZ_8 = Q12(21.2f) 
    },
    {
-      .positionX_0            = Q12(-140.2697753906250f),
-      .data = 
+      .positionX_0 = Q12(-140.2697753906250f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -396,13 +396,13 @@
             .field_4_24 = 8,
          }
       },
-      .positionZ_8            = Q12(58.0998535156250f) 
+      .positionZ_8 = Q12(58.1f) 
    },
    {
-      .positionX_0            = Q12(-140.8698730468750f),
-      .data = 
+      .positionX_0 = Q12(-140.8698730468750f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -412,13 +412,13 @@
             .field_4_24 = 12,
          }
       },
-      .positionZ_8            = Q12(62.0998535156250f) 
+      .positionZ_8 = Q12(62.1f) 
    },
    {
-      .positionX_0            = Q12(122.50f),
-      .data = 
+      .positionX_0 = Q12(122.50f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -428,13 +428,13 @@
             .field_4_24 = 8,
          }
       },
-      .positionZ_8            = Q12(218.0f) 
+      .positionZ_8 = Q12(218.0f) 
    },
    {
-      .positionX_0            = Q12(-146.0f),
-      .data = 
+      .positionX_0 = Q12(-146.0f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -444,13 +444,13 @@
             .field_4_24 = 8,
          }
       },
-      .positionZ_8            = Q12(18.3498535156250f) 
+      .positionZ_8 = Q12(18.35f) 
    },
    {
-      .positionX_0            = Q12(-145.399902343750f),
-      .data = 
+      .positionX_0 = Q12(-145.4f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -460,13 +460,13 @@
             .field_4_24 = 8,
          }
       },
-      .positionZ_8            = Q12(18.3498535156250f) 
+      .positionZ_8 = Q12(18.35f) 
    },
    {
-      .positionX_0            = Q12(-147.1250f),
-      .data = 
+      .positionX_0 = Q12(-147.1250f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -476,13 +476,13 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8            = Q12(22.1999511718750f) 
+      .positionZ_8 = Q12(22.2f) 
    },
    {
-      .positionX_0            = Q12(-141.7268066406250f),
-      .data = 
+      .positionX_0 = Q12(-141.7268066406250f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -492,13 +492,13 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8            = Q12(21.0f) 
+      .positionZ_8 = Q12(21.0f) 
    },
    {
-      .positionX_0            = Q12(-141.0f),
-      .data = 
+      .positionX_0 = Q12(-141.0f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -508,13 +508,13 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8            = Q12(19.024902343750f) 
+      .positionZ_8 = Q12(19.024902343750f) 
    },
    {
-      .positionX_0            = Q12(-137.750f),
-      .data = 
+      .positionX_0 = Q12(-137.750f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -524,13 +524,13 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8            = Q12(18.5998535156250f) 
+      .positionZ_8 = Q12(18.6f) 
    },
    {
-      .positionX_0            = Q12(-182.8750f),
-      .data = 
+      .positionX_0 = Q12(-182.8750f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -540,13 +540,13 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8            = Q12(19.4748535156250f) 
+      .positionZ_8 = Q12(19.4748535156250f) 
    },
    {
-      .positionX_0            = Q12(-100.3098144531250f),
-      .data = 
+      .positionX_0 = Q12(-100.3098144531250f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -556,13 +556,13 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8            = Q12(18.8698730468750f) 
+      .positionZ_8 = Q12(18.8698730468750f) 
    },
    {
-      .positionX_0            = Q12(-100.3698730468750f),
-      .data = 
+      .positionX_0 = Q12(-100.3698730468750f),
+      .data =
       {
-         .areaLoad = 
+         .areaLoad =
          {
             .mapIdx_4_0 = 0,
             .field_4_5 = 0,
@@ -572,5 +572,5 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8            = Q12(18.7399902343750f) 
+      .positionZ_8 = Q12(18.74f) 
    }

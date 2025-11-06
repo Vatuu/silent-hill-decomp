@@ -102,7 +102,7 @@ void Ai_BloodyLisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             break;
 
         case 6:
-            Model_AnimStatusSet(&chara->model_0, 1, false);
+            Model_AnimStatusSet(&chara->model_0, BloodyLisaAnim_Walk, false);
             Character_AnimStateReset(chara);
             break;
     }
@@ -115,15 +115,15 @@ void Ai_BloodyLisa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
         case 6:
             if (chara->model_0.anim_4.keyframeIdx_8 <= 12)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(1, true), chara, 12, 27, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(BloodyLisaAnim_Walk, true), chara, 12, 27, sfx, pitch0);
             }
             else if (chara->model_0.anim_4.keyframeIdx_8 <= 49)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(1, true), chara, 49, 27, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(BloodyLisaAnim_Walk, true), chara, 49, 27, sfx, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(1, true), chara, 92, 69, sfx, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(BloodyLisaAnim_Walk, true), chara, 92, 69, sfx, pitch0);
             }
             break;
     }

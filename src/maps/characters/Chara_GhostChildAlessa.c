@@ -93,18 +93,18 @@ void Ai_GhostChildAlessa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* c
 
         case 1:
             dahliaProps.moveDistance_126 = dahliaProps.field_124;
-            Model_AnimStatusSet(&chara->model_0, 1, false);
+            Model_AnimStatusSet(&chara->model_0, GhostChildAlessaAnim_1, false);
             Character_AnimStateReset(chara);
             break;
 
         case 2:
             dahliaProps.moveDistance_126 = dahliaProps.field_124;
-            Model_AnimStatusSet(&chara->model_0, 2, false);
+            Model_AnimStatusSet(&chara->model_0, GhostChildAlessaAnim_2, false);
             Character_AnimStateReset(chara);
             break;
 
         case 6:
-            Model_AnimStatusSet(&chara->model_0, 3, false);
+            Model_AnimStatusSet(&chara->model_0, GhostChildAlessaAnim_3, false);
             if (chara->model_0.anim_4.keyframeIdx_8 == 63)
             {
                 dahliaProps.stateIdx0 = 7;
@@ -113,27 +113,27 @@ void Ai_GhostChildAlessa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* c
             break;
 
         case 7:
-            Model_AnimStatusSet(&chara->model_0, 4, false);
+            Model_AnimStatusSet(&chara->model_0, GhostChildAlessaAnim_4, false);
             Character_AnimStateReset(chara);
             break;
 
         case 8:
-            Model_AnimStatusSet(&chara->model_0, 5, false);
+            Model_AnimStatusSet(&chara->model_0, GhostChildAlessaAnim_5, false);
             Character_AnimStateReset(chara);
             break;
 
         case 9:
-            Model_AnimStatusSet(&chara->model_0, 6, false);
+            Model_AnimStatusSet(&chara->model_0, GhostChildAlessaAnim_6, false);
             Character_AnimStateReset(chara);
             break;
 
         case 10:
-            Model_AnimStatusSet(&chara->model_0, 7, false);
+            Model_AnimStatusSet(&chara->model_0, GhostChildAlessaAnim_7, false);
             Character_AnimStateReset(chara);
             break;
 
         case 11:
-            Model_AnimStatusSet(&chara->model_0, 8, false);
+            Model_AnimStatusSet(&chara->model_0, GhostChildAlessaAnim_8, false);
             Character_AnimStateReset(chara);
             break;
     }

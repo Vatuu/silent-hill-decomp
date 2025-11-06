@@ -122,7 +122,7 @@ void Ai_Cheryl_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords) // 
                 }
             }
 
-            Model_AnimStatusSet(&chara->model_0, 1, false);
+            Model_AnimStatusSet(&chara->model_0, CherylAnim_1, false);
             Character_AnimStateReset(chara);
 
             dahliaProps.field_124 = FP_ANGLE(0.0f);
@@ -131,14 +131,14 @@ void Ai_Cheryl_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords) // 
         case 1:
             dahliaProps.moveDistance_126 = dahliaProps.field_124;
 
-            Model_AnimStatusSet(&chara->model_0, 2, false);
+            Model_AnimStatusSet(&chara->model_0, CherylAnim_2, false);
             Character_AnimStateReset(chara);
             break;
 
         case 2:
             dahliaProps.moveDistance_126 = dahliaProps.field_124;
 
-            Model_AnimStatusSet(&chara->model_0, 3, false);
+            Model_AnimStatusSet(&chara->model_0, CherylAnim_3, false);
             Character_AnimStateReset(chara);
             break;
 
@@ -154,7 +154,7 @@ void Ai_Cheryl_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords) // 
 
             D_800E3A30 = g_DeltaTime0 * 7;
 
-            Model_AnimStatusSet(&chara->model_0, 2, false);
+            Model_AnimStatusSet(&chara->model_0, CherylAnim_2, false);
             Character_AnimStateReset(chara);
 
             g_SysWork.player_4C.chara_0.properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
@@ -173,7 +173,7 @@ void Ai_Cheryl_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords) // 
 
             D_800E3A30 = g_DeltaTime0 * -7;
 
-            Model_AnimStatusSet(&chara->model_0, 2, false);
+            Model_AnimStatusSet(&chara->model_0, CherylAnim_2, false);
             Character_AnimStateReset(chara);
 
             g_SysWork.player_4C.chara_0.properties_E4.player.headingAngle_124 = FP_ANGLE(0.0f);
@@ -192,11 +192,11 @@ void Ai_Cheryl_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords) // 
         switch (dahliaProps.stateIdx0)
         {
             case 1:
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(2, true), chara, 16, 28, Sfx_Unk1353, pitch0);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(CherylAnim_2, true), chara, 16, 28, Sfx_Unk1353, pitch0);
                 break;
 
             case 2:
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(3, true), chara, 53, 42, Sfx_Unk1353, pitch1);
+                sharedFunc_800D908C_0_s00(ANIM_STATUS(CherylAnim_3, true), chara, 53, 42, Sfx_Unk1353, pitch1);
                 break;
         }
     }
@@ -205,11 +205,11 @@ void Ai_Cheryl_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords) // 
         switch (dahliaProps.stateIdx0)
         {
             case 1:
-                Ai_Cheryl_FootstepTrigger(ANIM_STATUS(2, true), chara, 16, 28, distSqr, pitch0);
+                Ai_Cheryl_FootstepTrigger(ANIM_STATUS(CherylAnim_2, true), chara, 16, 28, distSqr, pitch0);
                 break;
 
             case 2:
-                Ai_Cheryl_FootstepTrigger(ANIM_STATUS(3, true), chara, 53, 42, distSqr, pitch1);
+                Ai_Cheryl_FootstepTrigger(ANIM_STATUS(CherylAnim_3, true), chara, 53, 42, distSqr, pitch1);
                 break;
         }
     }

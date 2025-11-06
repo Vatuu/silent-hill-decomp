@@ -4,6 +4,7 @@
 /** @brief Kaufmann character anim infos. */
 extern s_AnimInfo KAUFMANN_ANIM_INFOS[];
 
+// TODO: Not Kaufmann anims.
 /*s_AnimInfo KAUFMANN_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0.0f)  }, NO_VALUE, 0 },
     { Anim_Update1, ANIM_STATUS(0, true),  false, NO_VALUE,              { Q12(30.0f) }, NO_VALUE, 1 },
