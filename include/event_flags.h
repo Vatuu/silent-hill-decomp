@@ -223,17 +223,25 @@ typedef enum _EventFlag
 
     EventFlag_M3S05_PickupExaminationRoomKey = 257,
 
+    EventFlag_260 = 260,
+
     EventFlag_M3S05_CabinedPushed = 282,
     EventFlag_M3S05_AlcoholPouredOnVeins = 283,
     EventFlag_284 = 284,
+    EventFlag_285 = 285,
+    EventFlag_286 = 286,
 
     EventFlag_288 = 288,
 
     EventFlag_M3S05_PickupHammer = 289,
 
+    EventFlag_293 = 293,
+    EventFlag_294 = 294,
     EventFlag_295                        = 295,
     EventFlag_M3S06_PickupAntiqueShopKey = 296,
 
+    EventFlag_298 = 298,
+    EventFlag_299 = 299,
     EventFlag_300 = 300,
 
     EventFlag_302 = 302,
@@ -250,6 +258,10 @@ typedef enum _EventFlag
     EventFlag_313             = 313,
 
     EventFlag_M4S03_PickupHuntingRifle = 328,
+
+    EventFlag_338 = 338,
+    EventFlag_339 = 339,
+    EventFlag_340 = 340,
 
     EventFlag_346 = 346,
 

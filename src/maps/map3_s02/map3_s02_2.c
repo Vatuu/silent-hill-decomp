@@ -49,9 +49,181 @@ void func_800CFEAC(void) // 0x800CFEAC
     func_8003640C(!Savegame_EventFlagGet(EventFlag_237) ? 8 : 2);
 }
 
+//const u8 D_800CA70C[8] = {0x80, 0x70, 0x80, 0x80, 0x00, 0x00, 0x00, 0x00};
+extern const u8 D_800CA70C[];
 INCLUDE_RODATA("asm/maps/map3_s02/nonmatchings/map3_s02_2", D_800CA70C);
 
-INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02_2", func_800CFEEC);
+void func_800CFEEC(void)
+{
+
+    u16 flags;
+    q19_12 f_arg1;
+    u8* dataPtr;
+    u8 data[8];
+    s32 roomId;
+
+    dataPtr = D_800D1D14;
+    roomId = g_SavegamePtr->mapRoomIdx_A5;
+
+    if (g_GameWork.soundCmd_5B2 == 8)
+    {
+        f_arg1 = Q12(240.0f);
+        flags = 0xFe;
+    }
+    else if (g_GameWork.soundCmd_5B2 == 0x20)
+    {
+        f_arg1 = Q12(0.15f);
+        if (Savegame_EventFlagGet(EventFlag_338))
+        {
+            flags = 4;
+            if (!Savegame_EventFlagGet(EventFlag_340))
+            {
+                flags = 2;
+                if (Savegame_EventFlagGet(EventFlag_339))
+                {
+                    flags = 0xE;
+                }
+            }
+        }
+        else
+        {
+            flags = 1;
+        }
+    }
+    else
+    {
+        flags = D_800D1D1C[roomId];
+        f_arg1 = Q12(0.15f);
+    
+        switch (roomId)
+        {
+            case 0x17:
+            case 0x1A:
+            case 0x26:
+            case 0x2D:
+                if (!(Savegame_EventFlagGet(EventFlag_285) || Savegame_EventFlagGet(EventFlag_286)))
+                {
+                    flags = 0x1E;
+                }
+                else if (Savegame_EventFlagGet(EventFlag_285))
+                {
+                    Savegame_EventFlagSet(EventFlag_286);
+                }
+                break;
+    
+            case 0x5:
+            case 0x19:
+            case 0x25:
+                if (!Savegame_EventFlagGet(EventFlag_285) && Savegame_EventFlagGet(EventFlag_286))
+                {
+                    Savegame_EventFlagSet(EventFlag_285);
+                    Savegame_EventFlagClear(EventFlag_286);
+                }
+    
+                if (!Savegame_EventFlagGet(EventFlag_285))
+                {
+                    flags = 0x1FE;
+                }
+                else if (!Savegame_EventFlagGet(EventFlag_286))
+                {
+                    flags = 0x13E;
+                }
+    
+                break;
+    
+            case 0x4:
+                if (!Player_ItemRemove(InventoryItemId_ExaminationRoomKey, 0))
+                {
+                    flags = 1;
+                }
+                // fallthrough
+            case 0x6:
+            case 0x7:
+            case 0xA:
+            case 0xB:
+            case 0xC:
+            case 0xD:
+            case 0xE:
+            case 0xF:
+            case 0x15:
+            case 0x16:
+            case 0x18:
+            case 0x1B:
+            case 0x1C:
+            case 0x1D:
+            case 0x1E:
+            case 0x1F:
+            case 0x20:
+            case 0x22:
+            case 0x23:
+            case 0x24:
+            case 0x27:
+            case 0x28:
+            case 0x29:
+            case 0x2A:
+            case 0x2B:
+            case 0x2C:
+            case 0x2E:
+            case 0x2F:
+                Savegame_EventFlagSet(EventFlag_286);
+                break;
+    
+            case 0x3:
+    
+                if (g_GameWork.soundCmd_5B2 == 31)
+                {
+                    memcpy(data, D_800CA70C, 8);
+                    dataPtr = data;
+    
+                    if (!Savegame_EventFlagGet(EventFlag_293))
+                    {
+                        f_arg1 = Q12(240.0f);
+                        flags = 4;
+                    } 
+                    else if (!Savegame_EventFlagGet(EventFlag_298))
+                    {
+                        f_arg1 = Q12(0.25f);
+                        flags = 2;
+                    } 
+                    else if (!Savegame_EventFlagGet(EventFlag_299))
+                    {
+                        f_arg1 = Q12(0.125f);
+                        flags = 8;
+                    } 
+                    else 
+                    {
+                        f_arg1 = Q12(240.0f);
+                        if (!Savegame_EventFlagGet(EventFlag_294))
+                        {
+                            f_arg1 = Q12(0.5f);
+                            flags = 0x201;
+                        } 
+                        else 
+                        {
+                            flags = 1;
+                        }
+                    }
+                }
+                else
+                {
+                    flags = 0x201;
+                }
+                break;
+    
+            case 0x3A:
+                if (!Savegame_EventFlagGet(EventFlag_260))
+                {
+                    flags = 1;
+                }
+                break;
+    
+            default:
+    
+                break;
+        }
+    }
+    func_80035F4C(flags, f_arg1, dataPtr);
+}
 
 void func_800D017C(void) {}
 
