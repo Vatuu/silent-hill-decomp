@@ -149,15 +149,15 @@ void func_800D1628(void) // 0x800D1628
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-
             func_80086470(0, InventoryItemId_MotorcycleKey, 0, false);
-
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
 
+            // Warp player.
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(103.64f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(59.49f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(51.0f);
 
+            // Warp camera.
             Camera_PositionSet(NULL, Q12(103.54f), Q12(-2.91f), Q12(59.2f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(104.65f), Q12(0.72f), Q12(60.44f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
@@ -188,6 +188,7 @@ void func_800D1628(void) // 0x800D1628
             if (Gfx_PickupItemAnimate(InventoryItemId_MotorcycleKey))
             {
                 MapMsg_DisplayAndHandleSelection(false, 15, 0, 0, 0, false);
+
                 if (g_SysWork.sysStateStep_C[0] != 6)
                 {
                     Sd_EngineCmd(Sfx_Unk1307);
@@ -343,6 +344,7 @@ void func_800D1AF8(void) // 0x800D1AF8
         case 6:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             MapMsg_DisplayAndHandleSelection(false, 24, 0, 0, 0, false); // "A small glass vial, wrapped in a plastic bag."
+
             if (g_SysWork.sysStateStep_C[0] != 6 && !Savegame_EventFlagGet(EventFlag_204))
             {
                 // Skip next step if event flag not set.
@@ -371,7 +373,7 @@ void func_800D1AF8(void) // 0x800D1AF8
 
         case 11:
             g_SysWork.field_30    = 20;
-            g_SysWork.flags_22A4 |= 8;
+            g_SysWork.flags_22A4 |= 1 << 3;
 
             func_8008D438();
 
@@ -430,7 +432,9 @@ void func_800D1AF8(void) // 0x800D1AF8
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 5, false);
             func_8003D03C();
+
             D_800D6F58 = Q12(76.0f);
+
             SysWork_StateStepIncrement(0);
 
         case 20:
@@ -648,7 +652,7 @@ void func_800D2674(void) // 0x800D2674
                     D_800D6F68.field_24                        -= moveAmt;
                 }
 
-                // D_800D3C44 = MAX(D_800D3C44 - (g_DeltaTime0 * 2), 0); ?
+                // `D_800D3C44 = MAX(D_800D3C44 - (g_DeltaTime0 * 2), 0);`?
                 D_800D3C44 = (D_800D3C44 - (g_DeltaTime0 * 2)) >= 0 ? (D_800D3C44 - ((u16)g_DeltaTime0 * 2)) : 0;
 
                 SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
@@ -659,10 +663,12 @@ void func_800D2674(void) // 0x800D2674
 
         default:
             Savegame_EventFlagSet(EventFlag_389);
+
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             sharedFunc_800D2244_0_s00(true);
             SysWork_StateSetNext(SysState_Gameplay);
+
             vcReturnPreAutoCamWork(true);
             func_8004690C(Sfx_Unk1520);
             break;

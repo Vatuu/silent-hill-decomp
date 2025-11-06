@@ -6085,13 +6085,14 @@ static inline s32 MapCoordIndex(s32 coord, s32 bias, s32 shift, s32 offset)
     {
         coord += bias;
     }
+
     return (coord >> shift) + offset;
 }
 
-s32 func_80067914(s32 arg0, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
+s32 func_80067914(s32 map2dIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
 {
-#define MAP_OFFSET(coord) ((coord) + ((coord) < 0 ? 0x14 : 0x15))
-#define MAP_INDEX(x, z)   (MAP_OFFSET(x) * 0x64 + MAP_OFFSET(z))
+    #define MAP_OFFSET(coord) ((coord) + (((coord) < 0) ? 0x14 : 0x15))
+    #define MAP_IDX(x, z)     ((MAP_OFFSET(x) * 0x64) + MAP_OFFSET(z))
 
     s32      sp10[6];
     s16      temp_s1;
@@ -6117,34 +6118,34 @@ s32 func_80067914(s32 arg0, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
     s32      temp4;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
-    if (g_SavegamePtr->current2dMapIdx_A9 != arg0)
+    if (g_SavegamePtr->current2dMapIdx_A9 != map2dIdx)
     {
         return 0;
     }
 
-    if (g_SysWork.player_4C.chara_0.position_18.vx <= 0)
+    if (g_SysWork.player_4C.chara_0.position_18.vx <= Q12(0.0f))
     {
-        temp_t3 = (g_SysWork.player_4C.chara_0.position_18.vx - 0x28000) / 0x28000;
+        temp_t3 = (g_SysWork.player_4C.chara_0.position_18.vx - Q12(40.0f)) / Q12(40.0f);
     }
     else
     {
-        temp_t3 = (g_SysWork.player_4C.chara_0.position_18.vx / 0x28000);
+        temp_t3 = (g_SysWork.player_4C.chara_0.position_18.vx / Q12(40.0f));
     }
 
-    if (g_SysWork.player_4C.chara_0.position_18.vz <= 0)
+    if (g_SysWork.player_4C.chara_0.position_18.vz <= Q12(0.0f))
     {
-        temp_t4 = (g_SysWork.player_4C.chara_0.position_18.vz - 0x28000) / 0x28000;
+        temp_t4 = (g_SysWork.player_4C.chara_0.position_18.vz - Q12(40.0f)) / Q12(40.0f);
     }
     else
     {
-        temp_t4 = g_SysWork.player_4C.chara_0.position_18.vz / 0x28000;
+        temp_t4 = g_SysWork.player_4C.chara_0.position_18.vz / Q12(40.0f);
     }
 
     var_a1 = 0x7FFF;
     var_t5 = g_SysWork.player_4C.chara_0.rotation_24.vy;
     var_a2 = 0x7FFF;
 
-    switch (arg0)
+    switch (map2dIdx)
     {
         case 1:
             switch (g_SavegamePtr->mapOverlayId_A4)
@@ -6152,12 +6153,12 @@ s32 func_80067914(s32 arg0, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                 case 10:
                     if (temp_t4 < 4 || (temp_t4 < 6 && (temp_t3 >= -1 && temp_t3 < 1)))
                     {
-                        var_a1 = MapCoordIndex(g_SysWork.player_4C.chara_0.position_18.vx, 0x1FFF, 0xD, 0x13);
-                        var_a2 = MapCoordIndex(-g_SysWork.player_4C.chara_0.position_18.vz, 0x1FFF, 0xD, 1);
+                        var_a1 = MapCoordIndex(g_SysWork.player_4C.chara_0.position_18.vx, 0x1FFF, 13, 19);
+                        var_a2 = MapCoordIndex(-g_SysWork.player_4C.chara_0.position_18.vz, 0x1FFF, 13, 1);
                         break;
                     }
 
-                    switch (MAP_INDEX(temp_t3, temp_t4))
+                    switch (MAP_IDX(temp_t3, temp_t4))
                     {
                         case 0x5FA:
                             var_a1 = 0x2B;
@@ -6207,7 +6208,7 @@ s32 func_80067914(s32 arg0, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                     break;
 
                 case 2:
-                    switch (MAP_INDEX(temp_t3, temp_t4))
+                    switch (MAP_IDX(temp_t3, temp_t4))
                     {
                         case 0x6B9:
                             var_a1 = -0x67;
@@ -6258,13 +6259,13 @@ s32 func_80067914(s32 arg0, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
             if (temp_t3 == -2 && temp_t4 == 0)
             {
                 var_t5 += 0x800;
-                var_a1  = D_800AE774[2][2][0] + (((g_SysWork.player_4C.chara_0.position_18.vx - (temp_t3 * 0x28000)) - 0x14000) / -0x333);
-                var_a2  = D_800AE774[2][2][1] + (((g_SysWork.player_4C.chara_0.position_18.vz - (temp_t4 * 0x28000)) - 0x14000) / 0x333);
+                var_a1  = D_800AE774[2][2][0] + (((g_SysWork.player_4C.chara_0.position_18.vx - (temp_t3 * Q12(40.0f))) - 0x14000) / -0x333);
+                var_a2  = D_800AE774[2][2][1] + (((g_SysWork.player_4C.chara_0.position_18.vz - (temp_t4 * Q12(40.0f))) - 0x14000) / 0x333);
             }
             else
             {
-                var_a1 = D_800AE774[temp_t3 + 4][temp_t4 + 2][0] + (((g_SysWork.player_4C.chara_0.position_18.vx - (temp_t3 * 0x28000)) - 0x14000) / 0x333);
-                var_a2 = D_800AE774[temp_t3 + 4][temp_t4 + 2][1] + (((g_SysWork.player_4C.chara_0.position_18.vz - (temp_t4 * 0x28000)) - 0x14000) / -0x333);
+                var_a1 = D_800AE774[temp_t3 + 4][temp_t4 + 2][0] + (((g_SysWork.player_4C.chara_0.position_18.vx - (temp_t3 * Q12(40.0f))) - 0x14000) / 0x333);
+                var_a2 = D_800AE774[temp_t3 + 4][temp_t4 + 2][1] + (((g_SysWork.player_4C.chara_0.position_18.vz - (temp_t4 * Q12(40.0f))) - 0x14000) / -0x333);
             }
             break;
 
@@ -6272,16 +6273,16 @@ s32 func_80067914(s32 arg0, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
         case 17:
         case 18:
         case 19:
-            var_a1 = D_800AE7E4[temp_t3 + 1][temp_t4 + 2][0] + (((g_SysWork.player_4C.chara_0.position_18.vx - (temp_t3 * 0x28000)) - 0x14000) / 0x222);
-            var_a2 = D_800AE7E4[temp_t3 + 1][temp_t4 + 2][1] + (((g_SysWork.player_4C.chara_0.position_18.vz - (temp_t4 * 0x28000)) - 0x14000) * 6 / -0xCCC);
+            var_a1 = D_800AE7E4[temp_t3 + 1][temp_t4 + 2][0] + (((g_SysWork.player_4C.chara_0.position_18.vx - (temp_t3 * Q12(40.0f))) - 0x14000) / 0x222);
+            var_a2 = D_800AE7E4[temp_t3 + 1][temp_t4 + 2][1] + (((g_SysWork.player_4C.chara_0.position_18.vz - (temp_t4 * Q12(40.0f))) - 0x14000) * 6 / -0xCCC);
             break;
 
         case 20:
         case 21:
         case 22:
         case 23:
-            var_a1 = D_800AE820[temp_t3 + 4][temp_t4 + 4][0] + (((g_SysWork.player_4C.chara_0.position_18.vx - (temp_t3 * 0x28000)) - 0x14000) / 0x222);
-            var_a2 = D_800AE820[temp_t3 + 4][temp_t4 + 4][1] + (((g_SysWork.player_4C.chara_0.position_18.vz - (temp_t4 * 0x28000)) - 0x14000) * 6 / -0xCCC);
+            var_a1 = D_800AE820[temp_t3 + 4][temp_t4 + 4][0] + (((g_SysWork.player_4C.chara_0.position_18.vx - (temp_t3 * Q12(40.0f))) - 0x14000) / 0x222);
+            var_a2 = D_800AE820[temp_t3 + 4][temp_t4 + 4][1] + (((g_SysWork.player_4C.chara_0.position_18.vz - (temp_t4 * Q12(40.0f))) - 0x14000) * 6 / -0xCCC);
             break;
 
         case 4:
@@ -6328,7 +6329,7 @@ s32 func_80067914(s32 arg0, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                     break;
 
                 case 32:
-                    switch (MAP_INDEX(temp_t3, temp_t4))
+                    switch (MAP_IDX(temp_t3, temp_t4))
                     {
                         case 0x912:
                             var_a1 = 0x45;
@@ -6373,6 +6374,7 @@ s32 func_80067914(s32 arg0, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                 case 35:
                     var_a1 = -0x37;
                     var_a2 = 0x54;
+
                     if (!PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2))
                     {
                         var_t5 += 0x400;
@@ -6392,7 +6394,7 @@ s32 func_80067914(s32 arg0, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                 case 12:
                 case 24:
                 case 27:
-                    switch (MAP_INDEX(temp_t3, temp_t4))
+                    switch (MAP_IDX(temp_t3, temp_t4))
                     {
                         case 0x58F:
                             var_a1 = 0x5E;
@@ -6414,7 +6416,7 @@ s32 func_80067914(s32 arg0, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                         case 0x6BD:
                         case 0x6BE:
                             var_a1 = MapCoordIndex(g_SysWork.player_4C.chara_0.position_18.vx, 0xFFF, 0xC, 0x50);
-                            var_a2 = MapCoordIndex(0x118000 - g_SysWork.player_4C.chara_0.position_18.vz, 0xFFF, 0xC, 0);
+                            var_a2 = MapCoordIndex(Q12(280.0f) - g_SysWork.player_4C.chara_0.position_18.vz, 0xFFF, 0xC, 0);
                             break;
 
                         default:
@@ -6430,7 +6432,7 @@ s32 func_80067914(s32 arg0, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                     break;
 
                 case 25:
-                    switch (MAP_INDEX(temp_t3, temp_t4))
+                    switch (MAP_IDX(temp_t3, temp_t4))
                     {
                         case 0x976:
                         case 0x9DA:
@@ -6476,7 +6478,7 @@ s32 func_80067914(s32 arg0, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                     }
 
                     switch (var_v0_16 + temp_t4)
-                    // switch (MAP_INDEX(temp_t3, temp_t4)) // causing mismatch
+                    // switch (MAP_IDX(temp_t3, temp_t4)) // TODO: Causing mismatch.
                     {
                         case 0x6BA:
                             var_a1 = -0x13;
@@ -6558,7 +6560,7 @@ s32 func_80067914(s32 arg0, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
     setXY1Fast(line, sp10[2], sp10[3]);
     setXY2Fast(line, sp10[4], sp10[5]);
     setXY3Fast(line, sp10[0], sp10[1]);
-    *(u16*)&line->r0 = 0x1010;
+    *(u16*)&line->r0 = 0x1010; // TODO: Use packing macro?
     line->b0         = 0x10;
 
     addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], line);

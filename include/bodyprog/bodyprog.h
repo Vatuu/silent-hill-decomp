@@ -3924,7 +3924,7 @@ void func_80066E40();
 
 void func_80066E7C();
 
-s32 func_80067914(s32 arg0, u16 arg1, u16 arg2, u16 arg3);
+s32 func_80067914(s32 map2dIdx, u16 arg1, u16 arg2, u16 arg3);
 
 bool func_80068CC0(s32 arg0);
 

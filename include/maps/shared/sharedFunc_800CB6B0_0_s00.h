@@ -184,7 +184,6 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                     sharedData_800E326C_0_s00.corners_0[1].vz = Q12(105.0f);
                     break;
 
-
                 case 5:
                     sharedData_800DD591_0_s00                 = 1;
                     sharedData_800E326C_0_s00.corners_0[0].vx = Q12(17.7f);
@@ -196,6 +195,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                     sharedData_800E326C_0_s00.corners_0[3].vx = Q12(15.0f);
                     sharedData_800E326C_0_s00.corners_0[3].vz = Q12(15.0f);
                     break;
+
                 case 8:
                     sharedData_800DD591_0_s00                 = 2;
                     sharedData_800E326C_0_s00.corners_0[0].vx = Q12(63.5f);

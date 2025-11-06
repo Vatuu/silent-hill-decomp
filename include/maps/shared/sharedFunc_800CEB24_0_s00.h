@@ -1,24 +1,23 @@
 #include "inline_no_dmpsx.h"
 
 #if !defined(PARTICLE_CASE_COUNT)
-#define PARTICLE_CASE_COUNT 1
-#define HAS_PARTICLE_FALLBACK_CASE
+    #define PARTICLE_CASE_COUNT 1
+    #define HAS_PARTICLE_FALLBACK_CASE
 #endif
 
-/*
- * Particle case switch handling
+/** Particle case switch handling.
  *
  * Maps define one or more HAS_PARTICLE_CASE_X flags to include their
  * respective switch cases.
- * When only a single case is present (PARTICLE_CASE_COUNT == 1), the 
+ * When only a single case is present (`PARTICLE_CASE_COUNT == 1`), the 
  * macro below replaces `case N:` with `default:` so that the compiler
  * collapses the switch into a direct block, matching single-case maps 
  * that skip checking the case entirely.
  */
 #if PARTICLE_CASE_COUNT > 1
-#define PARTICLE_CASE(id) case id:
+    #define PARTICLE_CASE(id) case id:
 #else
-#define PARTICLE_CASE(id) default:
+    #define PARTICLE_CASE(id) default:
 #endif
 
 void sharedFunc_800CEB24_0_s00(s_Particle* part)
@@ -211,6 +210,7 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part)
             setSemiTrans(polyFt3, 1);
             polyFt3->x1 = polyFt3->x0;
             polyFt3->y2 = polyFt3->y0;
+
             if (zScreenStart < 64)
             {
                 if (Game_FlashlightIsOn())
@@ -222,6 +222,7 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part)
                         primColorB = primColorR;
                     }
                 }
+
                 polyFt3->clut = 0x1830;
                 polyFt3->u0   = 3;
                 polyFt3->v0   = 112;
@@ -243,6 +244,7 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part)
                         primColorB = primColorR;
                     }
                 }
+
                 polyFt3->clut = 0x19F0;
                 polyFt3->x2   = polyFt3->x0 + 1;
                 polyFt3->y1   = polyFt3->y0 + 1;
@@ -260,7 +262,9 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part)
                 }
 
                 clutBase = ((zScreenStart >> 5) + 96) << 6;
+
                 do {} while (false); // @hack
+
                 polyFt3->clut = clutBase | 0x30;
                 polyFt3->x2   = polyFt3->x0 + 3;
                 polyFt3->y1   = polyFt3->y0 + 3;
@@ -283,6 +287,7 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part)
                         addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[zScreenStart + 256], polyFt3);
                     }
                     break;
+
                 default:
                     addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[zScreenStart], polyFt3);
                     break;

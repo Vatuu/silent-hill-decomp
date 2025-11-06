@@ -33,7 +33,7 @@ extern u16 D_800D3BDC;
 
 extern s32 D_800D3C40;
 
-extern s16 D_800D3C44;
+extern s16 D_800D3C44; // Time.
 
 extern VECTOR3 D_800D6F38;
 

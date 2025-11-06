@@ -315,40 +315,47 @@ INCLUDE_RODATA("asm/maps/map3_s05/nonmatchings/map3_s05", D_800CB35C);
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D5C98);
 
-void func_800D5FC4(void)
+void func_800D5FC4(void) // 0x800D5FC4
 {
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
             SysWork_StateStepIncrementAfterFade(0, true, 2, 0, false);
+
             D_800DACE8 = Q12(-0.3f);
+
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 1:
             func_80085DF0();
-            return;
+            break;
+
         case 2:
+            // Warp player.
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(20.3f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(-20.0f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(90.0f);
 
-            Camera_PositionSet(NULL, Q12(19.5f), Q12(-1.09f), Q12(-20.0f), 0, 0, 0, 0, true);
-            Camera_LookAtSet(NULL, Q12(23.49f), Q12(-0.85f), Q12(-19.74f), 0, 0, 0, 0, true);
+            // Warp camera.
+            Camera_PositionSet(NULL, Q12(19.5f), Q12(-1.09f), Q12(-20.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(23.49f), Q12(-0.85f), Q12(-19.74f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 141, false);
             SysWork_StateStepIncrement(0);
 
-            /* fallthrough */
         case 3:
             SysWork_StateStepIncrementDelayed(Q12(1.05f), false);
-            return;
+            break;
+
         case 4:
             g_SysWork.field_28 += g_DeltaTime0;
             if (g_SysWork.field_28 > Q12(3.8f))
             {
                 SysWork_StateStepIncrement(0);
-                return;
+                break;
             }
+
             if (g_SysWork.field_28 < Q12(3.2f))
             {
                 if (D_800DACE8 > 0)
@@ -358,7 +365,7 @@ void func_800D5FC4(void)
                     {
                         D_800DACE8 = ((u16)D_800DACE8 - Q12(0.3f)) - (Rng_Rand16() % Q12(0.1f));
                         func_8005DC1C(Sfx_Unk1536, &QVECTOR3(21.6f, 0.0f, -20.0f), Q8_CLAMPED(0.5f), 0);
-                        return;
+                        break;
                     }
                 }
                 else
@@ -368,24 +375,29 @@ void func_800D5FC4(void)
                     {
                         D_800DACE8 += Q12(0.05f) + (Rng_Rand16() % Q12(0.05f));
                         func_8005DC1C(Sfx_Unk1531, &QVECTOR3(21.6f, 0.0f, -20.0f), Q8_CLAMPED(0.5f), 0);
-                        return;
+                        break;
                     }
                 }
-            } else {
-                return;
+            }
+            else
+            {
+                break;
             }
             break;
+
         case 5:
             func_80085EB8(2, &g_SysWork.player_4C.chara_0, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 25, 0, 0, 0, false); // "Poured Disinfecting alcohol on the vines."
-            return;
+            break;
+
         case 6:
             func_80085EB8(3, &g_SysWork.player_4C.chara_0, 0, false);
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 7:
             func_80085EB8(1, &g_SysWork.player_4C.chara_0, 0, false);
-            return;
+            break;
+
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
@@ -506,53 +518,67 @@ void func_800D7280(void) // 0x800D7280
     Event_ItemTake(InventoryItemId_Hammer, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S05_PickupHammer, 31);
 }
 
-void func_800D72AC(void)
+void func_800D72AC(void) // 0x800D72AC
 {
-    s32 tmp0;
-    s32 distAdd;
-    #define STATE_PUSH_CABINET 4 
-    #define STATE_DONT_PUSH_CABINET 3
+    typedef enum _EventState
+    {
+        EventState_DontPushCabinet = 3,
+        EventState_PushCabinet     = 4
+    } e_EventState;
+
+    s32    tmp0;
+    q19_12 distAdd;
+
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
             D_800DACF0 = 0;
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 1:
             func_80085DF0();
             break;
+
         case 2:
-            MapMsg_DisplayAndHandleSelection(true, 28, STATE_PUSH_CABINET, STATE_DONT_PUSH_CABINET, 0, false); // "Do you want to push the cabinet?"
+            MapMsg_DisplayAndHandleSelection(true, 28, EventState_PushCabinet, EventState_DontPushCabinet, 0, false); // "Do you want to push the cabinet?"
             break;
-        case STATE_DONT_PUSH_CABINET:
+
+        case EventState_DontPushCabinet:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
-        case STATE_PUSH_CABINET:
+
+        case EventState_PushCabinet:
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 5:
-            Camera_PositionSet(NULL, Q12(57.86f), Q12(-3.62f), Q12(-21.1f), 0, 0, 0, 0, true);
-            Camera_LookAtSet(NULL, Q12(58.37f), Q12(-0.4f), Q12(-23.42f), 0, 0, 0, 0, true);
+            // Warp camera.
+            Camera_PositionSet(NULL, Q12(57.86f), Q12(-3.62f), Q12(-21.1f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(58.37f), Q12(-0.4f), Q12(-23.42f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
             SysWork_StateStepIncrementAfterFade(0, true, 2, 0, false);
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 105, false);
+
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(57.15f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(-22.8f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(90.0f);
+
             Sd_EngineCmd(Sfx_Unk1535);
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 6:
             tmp0 = FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.23f), Q12_SHIFT);
             distAdd = tmp0;
             g_SysWork.player_4C.chara_0.position_18.vx += distAdd;
             g_WorldObject0.position_1C.position_0.vx += distAdd;
+
             if (g_WorldObject0.position_1C.position_0.vx > Q12(61.0f))
             {
                 SysWork_StateStepIncrement(0);
 
             }
+
             D_800DACF0 += ((u16) g_DeltaTime0 * 2);
             if (D_800DACF0 > Q12(1.0f))
             {
@@ -561,29 +587,35 @@ void func_800D72AC(void)
 
             func_8005DE0C(Sfx_Unk1535, &g_WorldObject0.position_1C.position_0, D_800DACF0 >> 5, Q12(16.0f), 0);
             break;
+
         case 7:
             tmp0 = FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.23f), Q12_SHIFT);
             distAdd = tmp0;
             g_SysWork.player_4C.chara_0.position_18.vx += distAdd;
             g_WorldObject0.position_1C.position_0.vx += distAdd;
+
             if (g_WorldObject0.position_1C.position_0.vx > Q12(61.25f))
             {
                 tmp0 = g_WorldObject0.position_1C.position_0.vx - Q12(61.25f);
                 g_SysWork.player_4C.chara_0.position_18.vx -= tmp0;
                 g_WorldObject0.position_1C.position_0.vx -= tmp0;
             }
+
             D_800DACF0 -= ((u16) g_DeltaTime0 * 2);
             if (D_800DACF0 < 0)
             {
                 D_800DACF0 = 0;
             }
+
             func_8005DE0C(Sfx_Unk1535, &g_WorldObject0.position_1C.position_0, D_800DACF0 >> 5, Q12(16.0f), 0);
             SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+
             if (g_SysWork.sysStateStep_C[0] != 7)
             {
                 Savegame_EventFlagSet(EventFlag_M3S05_CabinedPushed);
             }
             break;
+
         default:
             sharedFunc_800D2244_0_s00(true);
             SysWork_StateSetNext(SysState_Gameplay);
@@ -601,10 +633,11 @@ INCLUDE_RODATA("asm/maps/map3_s05/nonmatchings/map3_s05", D_800CB4FC);
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D76D8);
 
-void func_800D8424(void)
+void func_800D8424(void) // 0x800D8424
 {
     D_800DD528 = 0;
     D_800DD52A = 0;
+
     WorldObjectPoseInit(&g_WorldObject7.position_1C, 140.4485f, -0.5f, -18.9f, -87.05f, -73.2f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject7.object_0, "HAMMER_H");
  
@@ -619,6 +652,7 @@ void func_800D8424(void)
 
     WorldObjectPoseInit(&g_WorldObject0.position_1C, 60.0f, 0.0f, -21.6f, 0.0f, 180.0f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject0.object_0, "TANA_HID");
+
     if (Savegame_EventFlagGet(EventFlag_M3S05_CabinedPushed))
     {
         g_WorldObject0.position_1C.position_0.vx = Q12(61.25f);
@@ -657,55 +691,61 @@ void func_800D8424(void)
     WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4.shotgunShellsName_18);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
-void func_800D87AC(void)
+void func_800D87AC(void) // 0x800D87AC
 {
     VECTOR3 soundPos;
-    s32 cz;
-    s32 cx;
-    s32 flags;
-    s32 i;
-    s32 newZ;
-    s32 chunkX;
-    s32 chunkZ;
-    s32 rng0;
-    s32 rng1;
+    s32     cz;
+    s32     cx;
+    s32     flags;
+    s32     i;
+    s32     newZ;
+    s32     chunkX;
+    s32     chunkZ;
+    s32     rng0;
+    s32     rng1;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
     chunkX = g_SysWork.player_4C.chara_0.position_18.vx / Q12(40.0f);
-    cx = (g_SysWork.player_4C.chara_0.position_18.vx > 0) ? chunkX + 1 : chunkX - 1;
+    cx = (g_SysWork.player_4C.chara_0.position_18.vx > Q12(0.0f)) ? (chunkX + 1) : (chunkX - 1);
 
     chunkZ = g_SysWork.player_4C.chara_0.position_18.vz / Q12(40.0f);
-    cz = (g_SysWork.player_4C.chara_0.position_18.vz > 0) ? chunkZ + 1 : chunkZ - 1;
+    cz = (g_SysWork.player_4C.chara_0.position_18.vz > Q12(0.0f)) ? (chunkZ + 1) : (chunkZ - 1);
 
     flags = 0;
     func_80069844(0xFFFF);
+
     if (cx == 2 && cz == -3 && !Savegame_EventFlagGet(EventFlag_M3S05_PickupVideoTape))
     {
         g_WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position_1C.position_0, &g_WorldObject2.position_1C.rotation_C);
     }
+
     if (cx == 1 && cz == -3)
     {
         g_WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position_1C.position_0, &g_WorldObject3.position_1C.rotation_C);
+
         if (!Savegame_EventFlagGet(EventFlag_M3S05_PickupExaminationRoomKey))
         {
             g_WorldGfx_ObjectAdd(&g_WorldObject4.object_0, &g_WorldObject4.position_1C.position_0, &g_WorldObject4.position_1C.rotation_C);
         }
     }
+
     if (cx == 2 && cz == -1)
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S05_CabinedPushed))
         {
-            flags |= 2;
+            flags |= 1 << 1;
             Savegame_EventFlagSet(EventFlag_288);
         }
         else
         {
-            flags |= 4;
+            flags |= 1 << 2;
             Savegame_EventFlagClear(EventFlag_288);
         }
+
         g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C.position_0, &g_WorldObject0.position_1C.rotation_C);
     }
-    if ((cx == 1) && (cz == -1))
+
+    if (cx == 1 && cz == -1)
     {
         if (!Savegame_EventFlagGet(EventFlag_284))
         {
@@ -718,17 +758,20 @@ void func_800D87AC(void)
         }
         
     }
-    if ((cx == 4) && (cz == -1))
+
+    if (cx == 4 && cz == -1)
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S05_PickupHammer))
         {
             g_WorldGfx_ObjectAdd(&g_WorldObject7.object_0, &g_WorldObject7.position_1C.position_0, &g_WorldObject7.position_1C.rotation_C);
         }
+
         if (D_800DD528 == 0)
         {
             Sd_EngineCmd(Sfx_Unk1503);
             D_800DD528++;
         }
+
         func_8005DE0C(Sfx_Unk1503, &g_CommonWorldObjectPoses[4].position_0, Q8_CLAMPED(0.5f), Q12(16.0f), 0);
     }
     else if (D_800DD528)
@@ -736,14 +779,17 @@ void func_800D87AC(void)
         func_8004690C(Sfx_Unk1503);
         D_800DD528 = 0;
     }
+
     func_8006982C(flags);
-    if ((cx == 4) && (cz == -2))
+
+    if (cx == 4 && cz == -2)
     {
-        if (D_800DD52A > 0)
+        if (D_800DD52A > Q12(0.0f))
         {
-            D_800DD52A = CLAMP_LOW(D_800DD52A - g_DeltaTime0, 0);
+            D_800DD52A = CLAMP_LOW(D_800DD52A - g_DeltaTime0, Q12(0.0f));
         }
-        if ((D_800DD52A == 0) && !(Rng_Rand16() & 0x3F))
+
+        if (D_800DD52A == Q12(0.0f) && !(Rng_Rand16() & 0x3F))
         {
             D_800DD52A = 0xCCC;
             soundPos.vx = (Rng_Rand16() % Q12(5.0f)) + Q12(137.5f);
@@ -761,9 +807,10 @@ void func_800D87AC(void)
             func_8005DC1C(Sfx_Unk1537, &soundPos, (Rng_Rand16() & 0x3F) + 0xC0, 2);
         }
     }
+
     if (cx == 1 && cz == 2)
     {
-        if ((g_SysWork.sysState_8 == SysState_Gameplay) && (g_WorldObject1->position_1C.vz != Q12(59.1f)))
+        if (g_SysWork.sysState_8 == SysState_Gameplay && g_WorldObject1->position_1C.vz != Q12(59.1f))
         {
             newZ = Q12(59.1f);
             for (i = 5; i >= 0; i--)
@@ -771,11 +818,13 @@ void func_800D87AC(void)
                 g_WorldObject1[i].position_1C.vz = newZ;
             }
         }
-        for (i = 0; i < 6; i++)
+
+        for (i = 0; i < ARRAY_SIZE(g_WorldObject1); i++)
         {
             g_WorldGfx_ObjectAdd(&g_WorldObject1[i].object_0, &g_WorldObject1[i].position_1C, &(SVECTOR3){});
         }
     }
+
     if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S05_Ampoule))
@@ -783,6 +832,7 @@ void func_800D87AC(void)
             g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[2], &g_CommonWorldObjectPoses[0].position_0, &g_CommonWorldObjectPoses[0].rotation_C);
         }
     }
+
     if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S05_HealthDrink))
@@ -790,6 +840,7 @@ void func_800D87AC(void)
             g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[1].position_0, &g_CommonWorldObjectPoses[1].rotation_C);
         }
     }
+
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S05_HandgunBullets))
@@ -797,6 +848,7 @@ void func_800D87AC(void)
             g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[2].position_0, &g_CommonWorldObjectPoses[2].rotation_C);
         }
     }
+
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S05_ShotgunShells))

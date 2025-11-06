@@ -145,13 +145,18 @@ void func_800D4B58(void) // 0x800D4B58
             break;
 
         case 3:
-            func_80085EB8(0U, &g_SysWork.player_4C.chara_0, 66, false);
+            func_80085EB8(0u, &g_SysWork.player_4C.chara_0, 66, false);
             g_SysWork.field_30 = 20;
+
+            // Warp camera.
             Camera_PositionSet(NULL, Q12(135.17f), Q12(-3.3f), Q12(61.09f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(134.29f), Q12(-0.21f), Q12(63.18f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
+            // Warp player.
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(134.9f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(62.45f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(-90.0f);
+
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -175,7 +180,10 @@ void func_800D4B58(void) // 0x800D4B58
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_375);
+
+            // Warp player.
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(135.15f);
+
             SysWork_StateStepIncrement(0);
 
         default:
