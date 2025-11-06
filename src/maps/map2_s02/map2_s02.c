@@ -168,7 +168,92 @@ INCLUDE_RODATA("asm/maps/map2_s02/nonmatchings/map2_s02", sharedData_800CAA98_0_
 
 #include "maps/shared/sharedFunc_800D3DFC_0_s01.h" // 0x800D2350
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800D240C);
+void func_800D240C(s_SubCharacter* arg0)
+{
+    bool cond0;
+    bool cond1;
+    s32 newStep;
+    s32 animStatus;
+    s32 animState;
+    s32 check;
+    u32 tmp0;
+    u32 step;
+
+    animStatus = arg0->model_0.anim_4.status_0;
+    sharedFunc_800D5638_0_s01(arg0);
+    step = arg0->model_0.stateStep_3;
+    animState = ANIM_STATUS(12, true);
+    check = animStatus | 1;
+    switch (step)
+    {
+        case 0:
+            newStep = func_800DEE80(arg0);
+            cond1 = 0;
+            cond0 = arg0->position_18.vy >= 0x8000;
+            if (func_800808AC(arg0->position_18.vx, arg0->position_18.vz) == 7)
+            {
+                cond1 = (arg0->position_18.vy < func_80080884(arg0->position_18.vx, arg0->position_18.vz)) ^ 1;
+            }
+            if (cond0 != 0)
+            {
+                Chara_DamageTake(arg0, 0);
+                arg0->position_18.vx = g_SysWork.player_4C.chara_0.position_18.vx + Q12(100.0f);
+                arg0->position_18.vz = g_SysWork.player_4C.chara_0.position_18.vz + Q12(100.0f);
+                sharedFunc_800D3DFC_0_s01(arg0);
+                return;
+            }
+            if (cond1 != 0)
+            {
+                Chara_DamageTake(arg0, 0);
+                sharedFunc_800D2364_0_s01(arg0);
+                arg0->position_18.vx = g_SysWork.player_4C.chara_0.position_18.vx + Q12(100.0f);
+                arg0->position_18.vz = g_SysWork.player_4C.chara_0.position_18.vz + Q12(100.0f);
+                sharedFunc_800D3DFC_0_s01(arg0);
+                return;
+            }
+            if (arg0->health_B0 <= 0)
+            {
+                Chara_DamageTake(arg0, 0);
+                if (animStatus == ANIM_STATUS(26, true) && newStep == 1)
+                {
+                    arg0->health_B0 = NO_VALUE;
+                    func_800622B8(3, arg0, 9, 2);
+                    arg0->model_0.stateStep_3 = newStep;
+                    sharedFunc_800D3DFC_0_s01(arg0);
+                    return;
+                }
+            } 
+            else
+            {
+                arg0->flags_3E |= 2;
+                if (Chara_DamageTake(arg0, Q12(1.0f)) == 4) 
+                {
+                    if (arg0->health_B0 <= 0) 
+                    {
+                        arg0->model_0.anim_4.status_0 = ANIM_STATUS(5, false);
+                        arg0->properties_E4.player.flags_11C |= 0x40;
+                        return;
+                    }
+                    arg0->model_0.anim_4.status_0 = ANIM_STATUS(12, false);
+                    arg0->model_0.stateStep_3 = 2;
+                    arg0->properties_E4.player.flags_11C |= 8;
+                    return;
+                }
+                return;
+            }
+            break;
+        case 1:
+            Chara_DamageTake(arg0, 0);
+            break;
+        case 2:
+            Chara_DamageTake(arg0, Q12(0.5f));
+            if (check != animState)
+            {
+                arg0->model_0.stateStep_3 = 0;
+            }
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800D262C);
 

@@ -35,4 +35,8 @@ void func_800DEC98(s_SubCharacter* arg0);
 
 void func_800DEC04(s_SubCharacter* chara);
 
+u32 func_800DEE80(s_SubCharacter* chara);
+
+void func_800D240C(s_SubCharacter* arg0);
+
 #endif
