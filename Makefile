@@ -1,5 +1,6 @@
 # Configuration
 
+BUILD_EXE      ?= 1
 BUILD_ENGINE   ?= 1
 BUILD_SCREENS  ?= 1
 BUILD_MAPS     ?= 1
@@ -205,9 +206,14 @@ endif
 TARGET_SCREENS_SRC_DIR := screens
 TARGET_MAPS_SRC_DIR := maps
 
-ifeq ($(BUILD_ONLY), ALL)
+ifeq ($(EXE)$(ENG)$(BKO)$(CRE)$(OPT)$(SAV)$(FMV)$(M00)$(M01)$(M02)$(M10)$(M11)$(M12)$(M13)$(M14)$(M15)$(M16)$(M20)$(M21)$(M22)$(M23)$(M24)$(M30)$(M31)$(M32)$(M33)$(M34)$(M35)$(M36)$(M40)$(M41)$(M42)$(M43)$(M44)$(M45)$(M46)$(M50)$(M51)$(M52)$(M53)$(M60)$(M61)$(M62)$(M63)$(M64)$(M65)$(M70)$(M71)$(M72)$(M73)$(M0X)$(M1X)$(M2X)$(M3X)$(M4X)$(M5X)$(M6X)$(M7X)$(SCR)$(STR),)
+
+ifeq ($(BUILD_EXE), 1)
 
 TARGET_MAIN := main
+
+#endif BUILD_EXE
+endif
 
 ifeq ($(BUILD_ENGINE), 1)
 
@@ -240,183 +246,68 @@ TARGET_MAPS := $(addprefix $(TARGET_MAPS_SRC_DIR)/,$(TARGET_MAPS))
 #endif BUILD_MAPS
 endif
 
+TARGET_IN  := $(TARGET_MAIN) $(TARGET_BODYPROG) $(TARGET_SCREENS) $(TARGET_MAPS)
+
+else
 # Specific overlay compilation/generation
 
-else ifeq ($(BUILD_ONLY),EXE)
+TARGET_EXE_$(EXE)             := main
+TARGET_ENG_$(ENG)             := bodyprog
+TARGET_BKO_$(BKO)$(SCR)       := $(TARGET_SCREENS_SRC_DIR)/b_konami
+TARGET_CRE_$(CRE)$(SCR)       := $(TARGET_SCREENS_SRC_DIR)/credits
+TARGET_OPT_$(OPT)$(SCR)       := $(TARGET_SCREENS_SRC_DIR)/options
+TARGET_SAV_$(SAV)$(SCR)       := $(TARGET_SCREENS_SRC_DIR)/saveload
+TARGET_FMV_$(FMV)$(STR)$(SCR) := $(TARGET_SCREENS_SRC_DIR)/stream
+TARGET_M00_$(M00)$(M0X)       := $(TARGET_MAPS_SRC_DIR)/map0_s00
+TARGET_M01_$(M01)$(M0X)       := $(TARGET_MAPS_SRC_DIR)/map0_s01
+TARGET_M02_$(M02)$(M0X)       := $(TARGET_MAPS_SRC_DIR)/map0_s02
+TARGET_M10_$(M10)$(M1X)       := $(TARGET_MAPS_SRC_DIR)/map1_s00
+TARGET_M11_$(M11)$(M1X)       := $(TARGET_MAPS_SRC_DIR)/map1_s01
+TARGET_M12_$(M12)$(M1X)       := $(TARGET_MAPS_SRC_DIR)/map1_s02
+TARGET_M13_$(M13)$(M1X)       := $(TARGET_MAPS_SRC_DIR)/map1_s03
+TARGET_M14_$(M14)$(M1X)       := $(TARGET_MAPS_SRC_DIR)/map1_s04
+TARGET_M15_$(M15)$(M1X)       := $(TARGET_MAPS_SRC_DIR)/map1_s05
+TARGET_M16_$(M16)$(M1X)       := $(TARGET_MAPS_SRC_DIR)/map1_s06
+TARGET_M20_$(M20)$(M2X)       := $(TARGET_MAPS_SRC_DIR)/map2_s00
+TARGET_M21_$(M21)$(M2X)       := $(TARGET_MAPS_SRC_DIR)/map2_s01
+TARGET_M22_$(M22)$(M2X)       := $(TARGET_MAPS_SRC_DIR)/map2_s02
+TARGET_M23_$(M23)$(M2X)       := $(TARGET_MAPS_SRC_DIR)/map2_s03
+TARGET_M24_$(M24)$(M2X)       := $(TARGET_MAPS_SRC_DIR)/map2_s04
+TARGET_M30_$(M30)$(M3X)       := $(TARGET_MAPS_SRC_DIR)/map3_s00
+TARGET_M31_$(M31)$(M3X)       := $(TARGET_MAPS_SRC_DIR)/map3_s01
+TARGET_M32_$(M32)$(M3X)       := $(TARGET_MAPS_SRC_DIR)/map3_s02
+TARGET_M33_$(M33)$(M3X)       := $(TARGET_MAPS_SRC_DIR)/map3_s03
+TARGET_M34_$(M34)$(M3X)       := $(TARGET_MAPS_SRC_DIR)/map3_s04
+TARGET_M35_$(M35)$(M3X)       := $(TARGET_MAPS_SRC_DIR)/map3_s05
+TARGET_M36_$(M36)$(M3X)       := $(TARGET_MAPS_SRC_DIR)/map3_s06
+TARGET_M40_$(M40)$(M4X)       := $(TARGET_MAPS_SRC_DIR)/map4_s00
+TARGET_M41_$(M41)$(M4X)       := $(TARGET_MAPS_SRC_DIR)/map4_s01
+TARGET_M42_$(M42)$(M4X)       := $(TARGET_MAPS_SRC_DIR)/map4_s02
+TARGET_M43_$(M43)$(M4X)       := $(TARGET_MAPS_SRC_DIR)/map4_s03
+TARGET_M44_$(M44)$(M4X)       := $(TARGET_MAPS_SRC_DIR)/map4_s04
+TARGET_M45_$(M45)$(M4X)       := $(TARGET_MAPS_SRC_DIR)/map4_s05
+TARGET_M46_$(M46)$(M4X)       := $(TARGET_MAPS_SRC_DIR)/map4_s06
+TARGET_M50_$(M50)$(M5X)       := $(TARGET_MAPS_SRC_DIR)/map5_s00
+TARGET_M51_$(M51)$(M5X)       := $(TARGET_MAPS_SRC_DIR)/map5_s01
+TARGET_M52_$(M52)$(M5X)       := $(TARGET_MAPS_SRC_DIR)/map5_s02
+TARGET_M53_$(M53)$(M5X)       := $(TARGET_MAPS_SRC_DIR)/map5_s03
+TARGET_M60_$(M60)$(M6X)       := $(TARGET_MAPS_SRC_DIR)/map6_s00
+TARGET_M61_$(M61)$(M6X)       := $(TARGET_MAPS_SRC_DIR)/map6_s01
+TARGET_M62_$(M62)$(M6X)       := $(TARGET_MAPS_SRC_DIR)/map6_s02
+TARGET_M63_$(M63)$(M6X)       := $(TARGET_MAPS_SRC_DIR)/map6_s03
+TARGET_M64_$(M64)$(M6X)       := $(TARGET_MAPS_SRC_DIR)/map6_s04
+TARGET_M65_$(M65)$(M6X)       := $(TARGET_MAPS_SRC_DIR)/map6_s05
+TARGET_M70_$(M70)$(M7X)       := $(TARGET_MAPS_SRC_DIR)/map7_s00
+TARGET_M71_$(M71)$(M7X)       := $(TARGET_MAPS_SRC_DIR)/map7_s01
+TARGET_M72_$(M72)$(M7X)       := $(TARGET_MAPS_SRC_DIR)/map7_s02
+TARGET_M73_$(M73)$(M7X)       := $(TARGET_MAPS_SRC_DIR)/map7_s03
 
-TARGET_MAIN     := main
+TARGET_IN := $(TARGET_EXE_1) $(TARGET_ENG_1) $(TARGET_BKO_1) $(TARGET_CRE_1) $(TARGET_OPT_1) $(TARGET_SAV_1) $(TARGET_FMV_1) $(TARGET_M00_1) $(TARGET_M01_1) $(TARGET_M02_1) $(TARGET_M10_1) $(TARGET_M11_1) $(TARGET_M12_1) $(TARGET_M13_1) $(TARGET_M14_1) $(TARGET_M15_1) $(TARGET_M16_1) $(TARGET_M20_1) $(TARGET_M21_1) $(TARGET_M22_1) $(TARGET_M23_1) $(TARGET_M24_1) $(TARGET_M30_1) $(TARGET_M31_1) $(TARGET_M32_1) $(TARGET_M33_1) $(TARGET_M34_1) $(TARGET_M35_1) $(TARGET_M36_1) $(TARGET_M40_1) $(TARGET_M41_1) $(TARGET_M42_1) $(TARGET_M43_1) $(TARGET_M44_1) $(TARGET_M45_1) $(TARGET_M46_1) $(TARGET_M50_1) $(TARGET_M51_1) $(TARGET_M52_1) $(TARGET_M53_1) $(TARGET_M60_1) $(TARGET_M61_1) $(TARGET_M62_1) $(TARGET_M63_1) $(TARGET_M64_1) $(TARGET_M65_1) $(TARGET_M70_1) $(TARGET_M71_1) $(TARGET_M72_1) $(TARGET_M73_1)
 
-else ifeq ($(BUILD_ONLY),ENG)
-
-TARGET_BODYPROG := bodyprog
-
-else ifeq ($(BUILD_ONLY),SCR)
-
-TARGET_SCREENS  := b_konami credits options saveload stream
-TARGET_SCREENS  := $(addprefix $(TARGET_SCREENS_SRC_DIR)/,$(TARGET_SCREENS))
-
-else ifeq ($(BUILD_ONLY),BKO)
-TARGET_SCREENS  := $(TARGET_SCREENS_SRC_DIR)/b_konami
-
-else ifeq ($(BUILD_ONLY),CRE)
-TARGET_SCREENS  := $(TARGET_SCREENS_SRC_DIR)/credits
-
-else ifeq ($(BUILD_ONLY),SAV)
-TARGET_SCREENS  := $(TARGET_SCREENS_SRC_DIR)/saveload
-
-else ifeq ($(if $(or $(findstring FMV,$(BUILD_ONLY)), $(findstring STR,$(BUILD_ONLY))),STR),STR)
-TARGET_SCREENS  := $(TARGET_SCREENS_SRC_DIR)/stream
-
-else ifeq ($(BUILD_ONLY),MAP)
-
-TARGET_MAPS      := map0_s00 map0_s01 map0_s02 \
-                map1_s00 map1_s01 map1_s02 map1_s03 map1_s04 map1_s05 map1_s06 \
-                map2_s00 map2_s01 map2_s02 map2_s03 map2_s04 \
-                map3_s00 map3_s01 map3_s02 map3_s03 map3_s04 map3_s05 map3_s06 \
-                map4_s00 map4_s01 map4_s02 map4_s03 map4_s04 map4_s05 map4_s06 \
-                map5_s00 map5_s01 map5_s02 map5_s03 \
-                map6_s00 map6_s01 map6_s02 map6_s03 map6_s04 map6_s05 \
-                map7_s00 map7_s01 map7_s02 map7_s03
-
-TARGET_MAPS      := $(addprefix $(TARGET_MAPS_SRC_DIR)/,$(TARGET_MAPS))
-
-#else BUILD_ONLY
-else
-
-ifeq ($(BUILD_ONLY),M0X)
-TARGET_MAPS      := map0_s00 map0_s01 map0_s02
-
-else ifeq ($(BUILD_ONLY),M1X)
-TARGET_MAPS      := map1_s00 map1_s01 map1_s02 map1_s03 map1_s04 map1_s05 map1_s06
-
-else ifeq ($(BUILD_ONLY),M2X)
-TARGET_MAPS      := map2_s00 map2_s01 map2_s02 map2_s03 map2_s04
-
-else ifeq ($(BUILD_ONLY),M3X)
-TARGET_MAPS      := map3_s00 map3_s01 map3_s02 map3_s03 map3_s04 map3_s05 map3_s06
-
-else ifeq ($(BUILD_ONLY),M4X)
-TARGET_MAPS      := map4_s00 map4_s01 map4_s02 map4_s03 map4_s04 map4_s05 map4_s06
-
-else ifeq ($(BUILD_ONLY),M5X)
-TARGET_MAPS      := map5_s00 map5_s01 map5_s02 map5_s03
-
-else ifeq ($(BUILD_ONLY),M6X)
-TARGET_MAPS      := map6_s00 map6_s01 map6_s02 map6_s03 map6_s04 map6_s05
-
-else ifeq ($(BUILD_ONLY),M7X)
-TARGET_MAPS      := map7_s00 map7_s01 map7_s02 map7_s03
-
-else
-
-ifeq ($(BUILD_ONLY),M00)
-	TARGET_MAPS := map0_s00
-else ifeq ($(BUILD_ONLY),M01)
-	TARGET_MAPS := map0_s01
-else ifeq ($(BUILD_ONLY),M02)
-	TARGET_MAPS := map0_s02
-
-else ifeq ($(BUILD_ONLY),M10)
-	TARGET_MAPS := map1_s00
-else ifeq ($(BUILD_ONLY),M11)
-	TARGET_MAPS := map1_s01
-else ifeq ($(BUILD_ONLY),M12)
-	TARGET_MAPS := map1_s02
-else ifeq ($(BUILD_ONLY),M13)
-	TARGET_MAPS := map1_s03
-else ifeq ($(BUILD_ONLY),M14)
-	TARGET_MAPS := map1_s04
-else ifeq ($(BUILD_ONLY),M15)
-	TARGET_MAPS := map1_s05
-else ifeq ($(BUILD_ONLY),M16)
-	TARGET_MAPS := map1_s06
-
-else ifeq ($(BUILD_ONLY),M20)
-	TARGET_MAPS := map2_s00
-else ifeq ($(BUILD_ONLY),M21)
-	TARGET_MAPS := map2_s01
-else ifeq ($(BUILD_ONLY),M22)
-	TARGET_MAPS := map2_s02
-else ifeq ($(BUILD_ONLY),M23)
-	TARGET_MAPS := map2_s03
-else ifeq ($(BUILD_ONLY),M24)
-	TARGET_MAPS := map2_s04
-
-else ifeq ($(BUILD_ONLY),M30)
-	TARGET_MAPS := map3_s00
-else ifeq ($(BUILD_ONLY),M31)
-	TARGET_MAPS := map3_s01
-else ifeq ($(BUILD_ONLY),M32)
-	TARGET_MAPS := map3_s02
-else ifeq ($(BUILD_ONLY),M33)
-	TARGET_MAPS := map3_s03
-else ifeq ($(BUILD_ONLY),M34)
-	TARGET_MAPS := map3_s04
-else ifeq ($(BUILD_ONLY),M35)
-	TARGET_MAPS := map3_s05
-else ifeq ($(BUILD_ONLY),M36)
-	TARGET_MAPS := map3_s06
-
-else ifeq ($(BUILD_ONLY),M40)
-	TARGET_MAPS := map4_s00
-else ifeq ($(BUILD_ONLY),M41)
-	TARGET_MAPS := map4_s01
-else ifeq ($(BUILD_ONLY),M42)
-	TARGET_MAPS := map4_s02
-else ifeq ($(BUILD_ONLY),M43)
-	TARGET_MAPS := map4_s03
-else ifeq ($(BUILD_ONLY),M44)
-	TARGET_MAPS := map4_s04
-else ifeq ($(BUILD_ONLY),M45)
-	TARGET_MAPS := map4_s05
-else ifeq ($(BUILD_ONLY),M46)
-	TARGET_MAPS := map4_s06
-
-else ifeq ($(BUILD_ONLY),M50)
-	TARGET_MAPS := map5_s00
-else ifeq ($(BUILD_ONLY),M51)
-	TARGET_MAPS := map5_s01
-else ifeq ($(BUILD_ONLY),M52)
-	TARGET_MAPS := map5_s02
-else ifeq ($(BUILD_ONLY),M53)
-	TARGET_MAPS := map5_s03
-
-else ifeq ($(BUILD_ONLY),M60)
-	TARGET_MAPS := map6_s00
-else ifeq ($(BUILD_ONLY),M61)
-	TARGET_MAPS := map6_s01
-else ifeq ($(BUILD_ONLY),M62)
-	TARGET_MAPS := map6_s02
-else ifeq ($(BUILD_ONLY),M63)
-	TARGET_MAPS := map6_s03
-else ifeq ($(BUILD_ONLY),M64)
-	TARGET_MAPS := map6_s04
-else ifeq ($(BUILD_ONLY),M65)
-	TARGET_MAPS := map6_s05
-
-else ifeq ($(BUILD_ONLY),M70)
-	TARGET_MAPS := map7_s00
-else ifeq ($(BUILD_ONLY),M71)
-	TARGET_MAPS := map7_s01
-else ifeq ($(BUILD_ONLY),M72)
-	TARGET_MAPS := map7_s02
-else ifeq ($(BUILD_ONLY),M73)
-	TARGET_MAPS := map7_s03
-else
-$(error No recognizable overlay has been assigned)
-endif
-
-	
-endif
-
-TARGET_MAPS      := $(addprefix $(TARGET_MAPS_SRC_DIR)/,$(TARGET_MAPS))
-
-#endif BUILD_ONLY
 endif
 
 # Source Definitions
 
-TARGET_IN  := $(TARGET_MAIN) $(TARGET_BODYPROG) $(TARGET_SCREENS) $(TARGET_MAPS)
 TARGET_OUT := $(foreach target,$(TARGET_IN),$(call get_target_out,$(target)))
 
 CONFIG_FILES := $(foreach target,$(TARGET_IN),$(call get_yaml_path,$(target)))
@@ -458,7 +349,7 @@ objdiff-config:
 	$(PYTHON) $(OBJDIFF_DIR)/objdiff_generate.py $(OBJDIFF_DIR)/config.yaml
 
 report:
-	$(MAKE) BUILD_ENGINE=1 BUILD_SCREENS=1 BUILD_MAPS=1 objdiff-config
+	$(MAKE) BUILD_EXE=1 BUILD_ENGINE=1 BUILD_SCREENS=1 BUILD_MAPS=1 objdiff-config
 	$(OBJDIFF) report generate > $(BUILD_DIR)/progress.json
 
 progress:
