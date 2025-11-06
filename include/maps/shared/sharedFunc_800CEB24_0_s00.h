@@ -15,9 +15,9 @@
  * that skip checking the case entirely.
  */
 #if PARTICLE_CASE_COUNT > 1
-    #define PARTICLE_CASE(id) case id:
+    #define PARTICLE_CASE(id) case id
 #else
-    #define PARTICLE_CASE(id) default:
+    #define PARTICLE_CASE(id) default
 #endif
 
 void sharedFunc_800CEB24_0_s00(s_Particle* part)
@@ -64,7 +64,7 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part)
             switch (sharedData_800DD591_0_s00)
             {
 #ifdef HAS_PARTICLE_CASE_1
-                PARTICLE_CASE(1)
+                PARTICLE_CASE(1):
                     if (part->position0_0.vy < sharedData_800E326C_0_s00.corners_0[0].vy)
                     {
                         sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
@@ -85,7 +85,7 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part)
 #endif
 
 #ifdef HAS_PARTICLE_CASE_9
-                PARTICLE_CASE(9)
+                PARTICLE_CASE(9):
 #if defined(MAP3_S00) || defined(MAP3_S01) || defined(MAP3_S06)
                     sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
                     if (g_SavegamePtr->mapRoomIdx_A5 == 5)
@@ -100,7 +100,7 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part)
 #endif
 
 #ifdef HAS_PARTICLE_CASE_10
-                PARTICLE_CASE(10)
+                PARTICLE_CASE(10):
                     sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 1);
                     if (particlePos.vy == 0)
                     {
@@ -114,7 +114,7 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part)
 #endif
 
 #ifdef HAS_PARTICLE_CASE_11
-                PARTICLE_CASE(11)
+                PARTICLE_CASE(11):
 #if defined(MAP0_S02)
                     if (g_SysWork.player_4C.chara_0.position_18.vx < Q12(-120.0f))
                     {
