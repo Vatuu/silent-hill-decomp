@@ -25,4 +25,6 @@ void func_800EA1C4(void);
 
 void func_800EAA50(void);
 
+void func_800E6758(s_SubCharacter* arg0);
+
 #endif
