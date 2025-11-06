@@ -12,7 +12,7 @@
 
 #include "maps/shared/Particle_Update.h" // 0x800CB560
 
-INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", sharedFunc_800CEB24_0_s00); // 0x800CBBF4
+#include "maps/shared/sharedFunc_800CEB24_0_s00.h" // 0x800CBBF4
 
 #include "maps/shared/sharedFunc_800CF2A4_0_s01.h" // 0x800CC110
 

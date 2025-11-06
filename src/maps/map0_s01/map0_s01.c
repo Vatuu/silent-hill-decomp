@@ -19,7 +19,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800CD1F8);
 
 #include "maps/shared/Particle_Update.h" // 0x800CE8A8
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800CEB24_0_s00); // 0x800CEE2C
+#include "maps/shared/sharedFunc_800CEB24_0_s00.h" // 0x800CEE2C
 
 #include "maps/shared/sharedFunc_800CF2A4_0_s01.h" // 0x800CF2A4
 

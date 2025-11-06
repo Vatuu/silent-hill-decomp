@@ -44,58 +44,56 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
     {
         case 0:
         case -1:
-            // TODO: `sharedData_800E326C_0_s00` should be changed to same type as `sharedData_800E5768_1_s02`?
-            // (may also need to rename them to same symbol name, not completely sure yet though)
 #if defined(MAP0_S00)
             sharedData_800DD591_0_s00 = 1;
-            
-            sharedData_800E326C_0_s00.vector_0.vx = Q12(-5.0f);
-            sharedData_800E326C_0_s00.vector_0.vy = Q12(-4.5f);
-            sharedData_800E326C_0_s00.vector_0.vz = Q12(211.0f);
 
-            sharedData_800E326C_0_s00.vector_C.vx = Q12(15.0f);
-            sharedData_800E326C_0_s00.vector_C.vy = Q12(-4.5f);
-            sharedData_800E326C_0_s00.vector_C.vz = Q12(211.0f);
+            sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-5.0f);
+            sharedData_800E326C_0_s00.corners_0[0].vy = Q12(-4.5f);
+            sharedData_800E326C_0_s00.corners_0[0].vz = Q12(211.0f);
+
+            sharedData_800E326C_0_s00.corners_0[1].vx = Q12(15.0f);
+            sharedData_800E326C_0_s00.corners_0[1].vy = Q12(-4.5f);
+            sharedData_800E326C_0_s00.corners_0[1].vz = Q12(211.0f);
 #elif defined(MAP0_S01)
             sharedData_800DD591_0_s00 = 1;
 
-            sharedData_800E326C_0_s00.vector_0.vx = Q12(-0.30f);
-            sharedData_800E326C_0_s00.vector_0.vz = Q12(275.0f);
-            sharedData_800E326C_0_s00.vector_C.vx = Q12(-0.30f);
-            sharedData_800E326C_0_s00.vector_C.vz = Q12(265.0f);
+            sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-0.30f);
+            sharedData_800E326C_0_s00.corners_0[0].vz = Q12(275.0f);
+            sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-0.30f);
+            sharedData_800E326C_0_s00.corners_0[1].vz = Q12(265.0f);
 #elif defined(MAP1_S06)
             switch (g_SavegamePtr->mapRoomIdx_A5)
             {
                 case 12:
                     sharedData_800DD591_0_s00             = 1;
-                    sharedData_800E326C_0_s00.vector_0.vx = Q12(105.5f);
-                    sharedData_800E326C_0_s00.vector_0.vz = Q12(67.0f);
-                    sharedData_800E326C_0_s00.vector_C.vx = Q12(105.5f);
-                    sharedData_800E326C_0_s00.vector_C.vz = Q12(50.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(105.5f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(67.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(105.5f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(50.0f);
                     break;
 
                 case 13:
                     sharedData_800DD591_0_s00             = 1;
-                    sharedData_800E326C_0_s00.vector_0.vx = Q12(145.0f);
-                    sharedData_800E326C_0_s00.vector_0.vz = Q12(24.0f);
-                    sharedData_800E326C_0_s00.vector_C.vx = Q12(132.0f);
-                    sharedData_800E326C_0_s00.vector_C.vz = Q12(24.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(145.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(24.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(132.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(24.0f);
                     break;
 
                 case 9:
                     sharedData_800DD591_0_s00             = 1;
-                    sharedData_800E326C_0_s00.vector_0.vx = Q12(55.0f);
-                    sharedData_800E326C_0_s00.vector_0.vz = Q12(137.0f);
-                    sharedData_800E326C_0_s00.vector_C.vx = Q12(62.0f);
-                    sharedData_800E326C_0_s00.vector_C.vz = Q12(137.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(55.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(137.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(62.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(137.0f);
                     break;
 
                 case 14:
                     sharedData_800DD591_0_s00             = 2;
-                    sharedData_800E326C_0_s00.vector_0.vx = Q12(96.5f);
-                    sharedData_800E326C_0_s00.vector_0.vz = Q12(15.0f);
-                    sharedData_800E326C_0_s00.vector_C.vx = Q12(103.5f);
-                    sharedData_800E326C_0_s00.vector_C.vz = Q12(15.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(96.5f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(15.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(103.5f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(15.0f);
                     break;
             }
 #elif defined(MAP2_S00)
@@ -103,58 +101,58 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
             {
                 case 38:
                     sharedData_800DD591_0_s00                 = 10;
-                    sharedData_800E5768_1_s02.corners_0[0].vx = Q12(120.0f);
-                    sharedData_800E5768_1_s02.corners_0[0].vz = Q12(303.5f);
-                    sharedData_800E5768_1_s02.corners_0[1].vx = Q12(110.0f);
-                    sharedData_800E5768_1_s02.corners_0[1].vz = Q12(303.5f);
-                    sharedData_800E5768_1_s02.corners_0[2].vx = Q12(128.3f);
-                    sharedData_800E5768_1_s02.corners_0[2].vz = Q12(295.0f);
-                    sharedData_800E5768_1_s02.corners_0[3].vx = Q12(128.3f);
-                    sharedData_800E5768_1_s02.corners_0[3].vz = Q12(305.0f);
-                    sharedData_800E5768_1_s02.corners_0[4].vx = Q12(111.3f);
-                    sharedData_800E5768_1_s02.corners_0[4].vz = Q12(298.0f);
-                    sharedData_800E5768_1_s02.corners_0[5].vx = Q12(111.3f);
-                    sharedData_800E5768_1_s02.corners_0[5].vz = Q12(295.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(120.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(303.5f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(110.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(303.5f);
+                    sharedData_800E326C_0_s00.corners_0[2].vx = Q12(128.3f);
+                    sharedData_800E326C_0_s00.corners_0[2].vz = Q12(295.0f);
+                    sharedData_800E326C_0_s00.corners_0[3].vx = Q12(128.3f);
+                    sharedData_800E326C_0_s00.corners_0[3].vz = Q12(305.0f);
+                    sharedData_800E326C_0_s00.corners_0[4].vx = Q12(111.3f);
+                    sharedData_800E326C_0_s00.corners_0[4].vz = Q12(298.0f);
+                    sharedData_800E326C_0_s00.corners_0[5].vx = Q12(111.3f);
+                    sharedData_800E326C_0_s00.corners_0[5].vz = Q12(295.0f);
                     break;
 
                 case 23:
                     sharedData_800DD591_0_s00                 = 1;
-                    sharedData_800E5768_1_s02.corners_0[0].vx = Q12(-186.0f);
-                    sharedData_800E5768_1_s02.corners_0[0].vz = Q12(301.0f);
-                    sharedData_800E5768_1_s02.corners_0[1].vx = Q12(-188.0f);
-                    sharedData_800E5768_1_s02.corners_0[1].vz = Q12(301.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-186.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(301.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-188.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(301.0f);
                     break;
 
                 case 37:
                     sharedData_800DD591_0_s00                 = 9;
-                    sharedData_800E5768_1_s02.corners_0[0].vx = Q12(121.0f);
-                    sharedData_800E5768_1_s02.corners_0[0].vz = Q12(223.0f);
-                    sharedData_800E5768_1_s02.corners_0[1].vx = Q12(114.0f);
-                    sharedData_800E5768_1_s02.corners_0[1].vz = Q12(223.0f);
-                    sharedData_800E5768_1_s02.corners_0[2].vx = Q12(128.3f);
-                    sharedData_800E5768_1_s02.corners_0[2].vz = Q12(215.0f);
-                    sharedData_800E5768_1_s02.corners_0[3].vx = Q12(128.3f);
-                    sharedData_800E5768_1_s02.corners_0[3].vz = Q12(220.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(121.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(223.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(114.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(223.0f);
+                    sharedData_800E326C_0_s00.corners_0[2].vx = Q12(128.3f);
+                    sharedData_800E326C_0_s00.corners_0[2].vz = Q12(215.0f);
+                    sharedData_800E326C_0_s00.corners_0[3].vx = Q12(128.3f);
+                    sharedData_800E326C_0_s00.corners_0[3].vz = Q12(220.0f);
                     break;
 
                 case 40:
                     sharedData_800DD591_0_s00                 = 11;
-                    sharedData_800E5768_1_s02.corners_0[0].vx = Q12(-48.0f);
-                    sharedData_800E5768_1_s02.corners_0[0].vz = Q12(349.0f);
-                    sharedData_800E5768_1_s02.corners_0[1].vx = Q12(-48.0f);
-                    sharedData_800E5768_1_s02.corners_0[1].vz = Q12(343.0f);
-                    sharedData_800E5768_1_s02.corners_0[2].vx = Q12(-39.0f);
-                    sharedData_800E5768_1_s02.corners_0[2].vz = Q12(343.0f);
-                    sharedData_800E5768_1_s02.corners_0[3].vx = Q12(-39.0f);
-                    sharedData_800E5768_1_s02.corners_0[3].vz = Q12(349.0f);
-                    sharedData_800E5768_1_s02.corners_0[4].vx = Q12(-39.0f);
-                    sharedData_800E5768_1_s02.corners_0[4].vz = Q12(349.0f);
-                    sharedData_800E5768_1_s02.corners_0[5].vx = Q12(-48.0f);
-                    sharedData_800E5768_1_s02.corners_0[5].vz = Q12(349.0f);
-                    sharedData_800E5768_1_s02.corners_0[6].vx = Q12(-48.0f);
-                    sharedData_800E5768_1_s02.corners_0[6].vz = Q12(343.0f);
-                    sharedData_800E5768_1_s02.corners_0[7].vx = Q12(-39.0f);
-                    sharedData_800E5768_1_s02.corners_0[7].vz = Q12(343.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-48.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(349.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-48.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(343.0f);
+                    sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-39.0f);
+                    sharedData_800E326C_0_s00.corners_0[2].vz = Q12(343.0f);
+                    sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-39.0f);
+                    sharedData_800E326C_0_s00.corners_0[3].vz = Q12(349.0f);
+                    sharedData_800E326C_0_s00.corners_0[4].vx = Q12(-39.0f);
+                    sharedData_800E326C_0_s00.corners_0[4].vz = Q12(349.0f);
+                    sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-48.0f);
+                    sharedData_800E326C_0_s00.corners_0[5].vz = Q12(349.0f);
+                    sharedData_800E326C_0_s00.corners_0[6].vx = Q12(-48.0f);
+                    sharedData_800E326C_0_s00.corners_0[6].vz = Q12(343.0f);
+                    sharedData_800E326C_0_s00.corners_0[7].vx = Q12(-39.0f);
+                    sharedData_800E326C_0_s00.corners_0[7].vz = Q12(343.0f);
                     break;
 
                 default:
@@ -163,63 +161,63 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
             }
 #elif defined(MAP2_S02)
             sharedData_800DD591_0_s00                 = 0;
-            sharedData_800E5768_1_s02.corners_0[0].vx = Q12(-31.0f);
-            sharedData_800E5768_1_s02.corners_0[0].vz = Q12(-8.0f);
-            sharedData_800E5768_1_s02.corners_0[1].vx = Q12(-31.0f);
-            sharedData_800E5768_1_s02.corners_0[1].vz = Q12(-11.0f);
-            sharedData_800E5768_1_s02.corners_0[2].vx = Q12(-25.5f);
-            sharedData_800E5768_1_s02.corners_0[2].vz = Q12(-8.0f);
-            sharedData_800E5768_1_s02.corners_0[3].vx = Q12(-31.0f);
-            sharedData_800E5768_1_s02.corners_0[3].vz = Q12(-8.0f);
-            sharedData_800E5768_1_s02.corners_0[4].vx = Q12(-25.5f);
-            sharedData_800E5768_1_s02.corners_0[4].vz = Q12(-11.0f);
-            sharedData_800E5768_1_s02.corners_0[5].vx = Q12(-25.5f);
-            sharedData_800E5768_1_s02.corners_0[5].vz = Q12(-8.0f);
+            sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-31.0f);
+            sharedData_800E326C_0_s00.corners_0[0].vz = Q12(-8.0f);
+            sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-31.0f);
+            sharedData_800E326C_0_s00.corners_0[1].vz = Q12(-11.0f);
+            sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-25.5f);
+            sharedData_800E326C_0_s00.corners_0[2].vz = Q12(-8.0f);
+            sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-31.0f);
+            sharedData_800E326C_0_s00.corners_0[3].vz = Q12(-8.0f);
+            sharedData_800E326C_0_s00.corners_0[4].vx = Q12(-25.5f);
+            sharedData_800E326C_0_s00.corners_0[4].vz = Q12(-11.0f);
+            sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-25.5f);
+            sharedData_800E326C_0_s00.corners_0[5].vz = Q12(-8.0f);
 #elif defined(MAP3_S00) || defined(MAP3_S01) || defined(MAP3_S06)
             switch (g_SavegamePtr->mapRoomIdx_A5)
             {
                 case 3:
                     sharedData_800DD591_0_s00                 = 2;
-                    sharedData_800E5768_1_s02.corners_0[0].vx = Q12(101.5f);
-                    sharedData_800E5768_1_s02.corners_0[0].vz = Q12(100.0f);
-                    sharedData_800E5768_1_s02.corners_0[1].vx = Q12(101.5f);
-                    sharedData_800E5768_1_s02.corners_0[1].vz = Q12(105.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(101.5f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(100.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(101.5f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(105.0f);
                     break;
 
 
                 case 5:
                     sharedData_800DD591_0_s00                 = 1;
-                    sharedData_800E5768_1_s02.corners_0[0].vx = Q12(17.7f);
-                    sharedData_800E5768_1_s02.corners_0[0].vz = Q12(30.0f);
-                    sharedData_800E5768_1_s02.corners_0[1].vx = Q12(17.7f);
-                    sharedData_800E5768_1_s02.corners_0[1].vz = Q12(17.0f);
-                    sharedData_800E5768_1_s02.corners_0[2].vx = Q12(17.5f);
-                    sharedData_800E5768_1_s02.corners_0[2].vz = Q12(15.0f);
-                    sharedData_800E5768_1_s02.corners_0[3].vx = Q12(15.0f);
-                    sharedData_800E5768_1_s02.corners_0[3].vz = Q12(15.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(17.7f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(30.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(17.7f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(17.0f);
+                    sharedData_800E326C_0_s00.corners_0[2].vx = Q12(17.5f);
+                    sharedData_800E326C_0_s00.corners_0[2].vz = Q12(15.0f);
+                    sharedData_800E326C_0_s00.corners_0[3].vx = Q12(15.0f);
+                    sharedData_800E326C_0_s00.corners_0[3].vz = Q12(15.0f);
                     break;
                 case 8:
                     sharedData_800DD591_0_s00                 = 2;
-                    sharedData_800E5768_1_s02.corners_0[0].vx = Q12(63.5f);
-                    sharedData_800E5768_1_s02.corners_0[0].vz = Q12(57.0f);
-                    sharedData_800E5768_1_s02.corners_0[1].vx = Q12(63.5f);
-                    sharedData_800E5768_1_s02.corners_0[1].vz = Q12(63.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(63.5f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(57.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(63.5f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(63.0f);
                     break;
 
                 case 9:
                     sharedData_800DD591_0_s00                 = 2;
-                    sharedData_800E5768_1_s02.corners_0[0].vx = Q12(104.0f);
-                    sharedData_800E5768_1_s02.corners_0[0].vz = Q12(56.0f);
-                    sharedData_800E5768_1_s02.corners_0[1].vx = Q12(104.0f);
-                    sharedData_800E5768_1_s02.corners_0[1].vz = Q12(61.5f);
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(104.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(56.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(104.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(61.5f);
                     break;
 
                 case 11:
                     sharedData_800DD591_0_s00                 = 2;
-                    sharedData_800E5768_1_s02.corners_0[0].vx = Q12(143.8f);
-                    sharedData_800E5768_1_s02.corners_0[0].vz = Q12(18.0f);
-                    sharedData_800E5768_1_s02.corners_0[1].vx = Q12(143.8f);
-                    sharedData_800E5768_1_s02.corners_0[1].vz = Q12(22.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(143.8f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(18.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(143.8f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(22.0f);
                     break;
 
                 default:
@@ -230,10 +228,10 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
             if (g_SavegamePtr->mapRoomIdx_A5 == 20)
             {
                 sharedData_800DD591_0_s00                 = 1;
-                sharedData_800E5768_1_s02.corners_0[0].vx = Q12(133.0f);
-                sharedData_800E5768_1_s02.corners_0[0].vz = Q12(130.0f);
-                sharedData_800E5768_1_s02.corners_0[1].vx = Q12(133.0f);
-                sharedData_800E5768_1_s02.corners_0[1].vz = Q12(150.0f);
+                sharedData_800E326C_0_s00.corners_0[0].vx = Q12(133.0f);
+                sharedData_800E326C_0_s00.corners_0[0].vz = Q12(130.0f);
+                sharedData_800E326C_0_s00.corners_0[1].vx = Q12(133.0f);
+                sharedData_800E326C_0_s00.corners_0[1].vz = Q12(150.0f);
             }
 
 #elif defined(MAP5_S03)

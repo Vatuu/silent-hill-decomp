@@ -144,36 +144,36 @@ bool Particle_Update(s_Particle* partHead)
     switch (g_SavegamePtr->mapRoomIdx_A5)
     {
         case 2:
-            sharedData_800E5768_1_s02.corners_0[0].vx = Q12(-101.5f);
-            sharedData_800E5768_1_s02.corners_0[0].vz = Q12(23.8f);
-            sharedData_800E5768_1_s02.corners_0[1].vx = Q12(-101.5f);
-            sharedData_800E5768_1_s02.corners_0[1].vz = Q12(17.0f);
-            sharedData_800E5768_1_s02.corners_0[2].vx = Q12(-98.5f);
-            sharedData_800E5768_1_s02.corners_0[2].vz = Q12(17.0f);
-            sharedData_800E5768_1_s02.corners_0[3].vx = Q12(-98.5f);
-            sharedData_800E5768_1_s02.corners_0[3].vz = Q12(23.8f);
-            sharedData_800E5768_1_s02.corners_0[4].vx = Q12(-98.5f);
-            sharedData_800E5768_1_s02.corners_0[4].vz = Q12(23.8f);
-            sharedData_800E5768_1_s02.corners_0[5].vx = Q12(-101.5f);
-            sharedData_800E5768_1_s02.corners_0[5].vz = Q12(23.8f);
-            sharedData_800E5768_1_s02.corners_0[6].vx = Q12(-101.5f);
-            sharedData_800E5768_1_s02.corners_0[6].vz = Q12(17.0f);
-            sharedData_800E5768_1_s02.corners_0[7].vx = Q12(-98.5f);
-            sharedData_800E5768_1_s02.corners_0[7].vz = Q12(17.0f);
+            sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-101.5f);
+            sharedData_800E326C_0_s00.corners_0[0].vz = Q12(23.8f);
+            sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-101.5f);
+            sharedData_800E326C_0_s00.corners_0[1].vz = Q12(17.0f);
+            sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-98.5f);
+            sharedData_800E326C_0_s00.corners_0[2].vz = Q12(17.0f);
+            sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-98.5f);
+            sharedData_800E326C_0_s00.corners_0[3].vz = Q12(23.8f);
+            sharedData_800E326C_0_s00.corners_0[4].vx = Q12(-98.5f);
+            sharedData_800E326C_0_s00.corners_0[4].vz = Q12(23.8f);
+            sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-101.5f);
+            sharedData_800E326C_0_s00.corners_0[5].vz = Q12(23.8f);
+            sharedData_800E326C_0_s00.corners_0[6].vx = Q12(-101.5f);
+            sharedData_800E326C_0_s00.corners_0[6].vz = Q12(17.0f);
+            sharedData_800E326C_0_s00.corners_0[7].vx = Q12(-98.5f);
+            sharedData_800E326C_0_s00.corners_0[7].vz = Q12(17.0f);
             break;
 
         case 3:
-            sharedData_800E5768_1_s02.corners_0[0].vx = Q12(-145.0f);
-            sharedData_800E5768_1_s02.corners_0[0].vz = Q12(15.5f);
-            sharedData_800E5768_1_s02.corners_0[1].vx = Q12(-135.0f);
-            sharedData_800E5768_1_s02.corners_0[1].vz = Q12(15.5f);
+            sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-145.0f);
+            sharedData_800E326C_0_s00.corners_0[0].vz = Q12(15.5f);
+            sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-135.0f);
+            sharedData_800E326C_0_s00.corners_0[1].vz = Q12(15.5f);
             break;
 
         case 4:
-            sharedData_800E5768_1_s02.corners_0[0].vx = Q12(-184.0f);
-            sharedData_800E5768_1_s02.corners_0[0].vz = Q12(23.0f);
-            sharedData_800E5768_1_s02.corners_0[1].vx = Q12(-184.0f);
-            sharedData_800E5768_1_s02.corners_0[1].vz = Q12(16.0f);
+            sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-184.0f);
+            sharedData_800E326C_0_s00.corners_0[0].vz = Q12(23.0f);
+            sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-184.0f);
+            sharedData_800E326C_0_s00.corners_0[1].vz = Q12(16.0f);
             break;
     }
 
@@ -197,12 +197,12 @@ bool Particle_Update(s_Particle* partHead)
             if (g_SysWork.player_4C.chara_0.position_18.vz > Q12(200.0f))
             {
                 sharedData_800DD591_0_s00 = 1;
-                sharedData_800E5768_1_s02.corners_0[0].vx = Q12(-5.0f);
-                sharedData_800E5768_1_s02.corners_0[0].vy = Q12(-4.5f);
-                sharedData_800E5768_1_s02.corners_0[0].vz = Q12(211.0f);
-                sharedData_800E5768_1_s02.corners_0[1].vx = Q12(15.0f);
-                sharedData_800E5768_1_s02.corners_0[1].vy = Q12(-4.5f);
-                sharedData_800E5768_1_s02.corners_0[1].vz = Q12(211.0f);
+                sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-5.0f);
+                sharedData_800E326C_0_s00.corners_0[0].vy = Q12(-4.5f);
+                sharedData_800E326C_0_s00.corners_0[0].vz = Q12(211.0f);
+                sharedData_800E326C_0_s00.corners_0[1].vx = Q12(15.0f);
+                sharedData_800E326C_0_s00.corners_0[1].vy = Q12(-4.5f);
+                sharedData_800E326C_0_s00.corners_0[1].vz = Q12(211.0f);
             }
             else
             {
@@ -215,35 +215,35 @@ bool Particle_Update(s_Particle* partHead)
                 g_SysWork.player_4C.chara_0.position_18.vz > Q12(-14.0f) && g_SysWork.player_4C.chara_0.position_18.vz < Q12(0.0f))
             {
                     sharedData_800DD591_0_s00 = 10;
-                    sharedData_800E5768_1_s02.corners_0[0].vx = Q12(-44.5f);
-                    sharedData_800E5768_1_s02.corners_0[0].vz = Q12(-11.2f);
-                    sharedData_800E5768_1_s02.corners_0[1].vx = Q12(-44.5f);
-                    sharedData_800E5768_1_s02.corners_0[1].vz = Q12(-13.0f);
-                    sharedData_800E5768_1_s02.corners_0[2].vx = Q12(-43.0f);
-                    sharedData_800E5768_1_s02.corners_0[2].vz = Q12(-13.0f);
-                    sharedData_800E5768_1_s02.corners_0[3].vx = Q12(-43.0f);
-                    sharedData_800E5768_1_s02.corners_0[3].vz = Q12(-11.2f);
-                    sharedData_800E5768_1_s02.corners_0[4].vx = Q12(-43.0f);
-                    sharedData_800E5768_1_s02.corners_0[4].vz = Q12(-11.2f);
-                    sharedData_800E5768_1_s02.corners_0[5].vx = Q12(-44.5f);
-                    sharedData_800E5768_1_s02.corners_0[5].vz = Q12(-11.2f);
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-44.5f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(-11.2f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-44.5f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(-13.0f);
+                    sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-43.0f);
+                    sharedData_800E326C_0_s00.corners_0[2].vz = Q12(-13.0f);
+                    sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-43.0f);
+                    sharedData_800E326C_0_s00.corners_0[3].vz = Q12(-11.2f);
+                    sharedData_800E326C_0_s00.corners_0[4].vx = Q12(-43.0f);
+                    sharedData_800E326C_0_s00.corners_0[4].vz = Q12(-11.2f);
+                    sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-44.5f);
+                    sharedData_800E326C_0_s00.corners_0[5].vz = Q12(-11.2f);
             }
             else if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(-90.0f) && g_SysWork.player_4C.chara_0.position_18.vx < Q12(-56.0f) && 
                      g_SysWork.player_4C.chara_0.position_18.vz > Q12(-14.0f) && g_SysWork.player_4C.chara_0.position_18.vz < Q12(0.0f))
             {
                     sharedData_800DD591_0_s00 = 10;
-                    sharedData_800E5768_1_s02.corners_0[0].vx = Q12(-79.0f);
-                    sharedData_800E5768_1_s02.corners_0[0].vz = Q12(-10.5f);
-                    sharedData_800E5768_1_s02.corners_0[1].vx = Q12(-79.0f);
-                    sharedData_800E5768_1_s02.corners_0[1].vz = Q12(-13.0f);
-                    sharedData_800E5768_1_s02.corners_0[2].vx = Q12(-66.5f);
-                    sharedData_800E5768_1_s02.corners_0[2].vz = Q12(-13.0f);
-                    sharedData_800E5768_1_s02.corners_0[3].vx = Q12(-66.5f);
-                    sharedData_800E5768_1_s02.corners_0[3].vz = Q12(-10.5f);
-                    sharedData_800E5768_1_s02.corners_0[4].vx = Q12(-66.5f);
-                    sharedData_800E5768_1_s02.corners_0[4].vz = Q12(-10.5f);
-                    sharedData_800E5768_1_s02.corners_0[5].vx = Q12(-79.0f);
-                    sharedData_800E5768_1_s02.corners_0[5].vz = Q12(-10.5f);
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-79.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(-10.5f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-79.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(-13.0f);
+                    sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-66.5f);
+                    sharedData_800E326C_0_s00.corners_0[2].vz = Q12(-13.0f);
+                    sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-66.5f);
+                    sharedData_800E326C_0_s00.corners_0[3].vz = Q12(-10.5f);
+                    sharedData_800E326C_0_s00.corners_0[4].vx = Q12(-66.5f);
+                    sharedData_800E326C_0_s00.corners_0[4].vz = Q12(-10.5f);
+                    sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-79.0f);
+                    sharedData_800E326C_0_s00.corners_0[5].vz = Q12(-10.5f);
             }
             else
             {
@@ -256,30 +256,30 @@ bool Particle_Update(s_Particle* partHead)
                 g_SysWork.player_4C.chara_0.position_18.vz > Q12(136.0f))
             {
                 sharedData_800DD591_0_s00 = 10;
-                sharedData_800E5768_1_s02.corners_0[0].vx = Q12(-232.0f);
-                sharedData_800E5768_1_s02.corners_0[0].vz = Q12(151.0f);
-                sharedData_800E5768_1_s02.corners_0[1].vx = Q12(-229.0f);
-                sharedData_800E5768_1_s02.corners_0[1].vz = Q12(151.0f);
-                sharedData_800E5768_1_s02.corners_0[2].vx = Q12(-232.0f);
-                sharedData_800E5768_1_s02.corners_0[2].vz = Q12(158.0f);
-                sharedData_800E5768_1_s02.corners_0[3].vx = Q12(-232.0f);
-                sharedData_800E5768_1_s02.corners_0[3].vz = Q12(151.0f);
-                sharedData_800E5768_1_s02.corners_0[4].vx = Q12(-228.0f);
-                sharedData_800E5768_1_s02.corners_0[4].vz = Q12(151.0f);
-                sharedData_800E5768_1_s02.corners_0[5].vx = Q12(-228.0f);
-                sharedData_800E5768_1_s02.corners_0[5].vz = Q12(158.0f);
+                sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-232.0f);
+                sharedData_800E326C_0_s00.corners_0[0].vz = Q12(151.0f);
+                sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-229.0f);
+                sharedData_800E326C_0_s00.corners_0[1].vz = Q12(151.0f);
+                sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-232.0f);
+                sharedData_800E326C_0_s00.corners_0[2].vz = Q12(158.0f);
+                sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-232.0f);
+                sharedData_800E326C_0_s00.corners_0[3].vz = Q12(151.0f);
+                sharedData_800E326C_0_s00.corners_0[4].vx = Q12(-228.0f);
+                sharedData_800E326C_0_s00.corners_0[4].vz = Q12(151.0f);
+                sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-228.0f);
+                sharedData_800E326C_0_s00.corners_0[5].vz = Q12(158.0f);
             }
             else if (g_SysWork.player_4C.chara_0.position_18.vx <= Q12(-240.0f) && g_SysWork.player_4C.chara_0.position_18.vz > Q12(133.0f))
             {
                 sharedData_800DD591_0_s00 = 9;
-                sharedData_800E5768_1_s02.corners_0[0].vx = Q12(-251.0f);
-                sharedData_800E5768_1_s02.corners_0[0].vz = Q12(142.0f);
-                sharedData_800E5768_1_s02.corners_0[1].vx = Q12(-248.2f);
-                sharedData_800E5768_1_s02.corners_0[1].vz = Q12(142.0f);
-                sharedData_800E5768_1_s02.corners_0[2].vx = Q12(-248.2f);
-                sharedData_800E5768_1_s02.corners_0[2].vz = Q12(142.0f);
-                sharedData_800E5768_1_s02.corners_0[3].vx = Q12(-248.2f);
-                sharedData_800E5768_1_s02.corners_0[3].vz = Q12(147.0f);
+                sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-251.0f);
+                sharedData_800E326C_0_s00.corners_0[0].vz = Q12(142.0f);
+                sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-248.2f);
+                sharedData_800E326C_0_s00.corners_0[1].vz = Q12(142.0f);
+                sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-248.2f);
+                sharedData_800E326C_0_s00.corners_0[2].vz = Q12(142.0f);
+                sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-248.2f);
+                sharedData_800E326C_0_s00.corners_0[3].vz = Q12(147.0f);
             }
             else
             {
@@ -292,18 +292,18 @@ bool Particle_Update(s_Particle* partHead)
                 g_SysWork.player_4C.chara_0.position_18.vz > Q12(-100.0f) && g_SysWork.player_4C.chara_0.position_18.vz < Q12(-72.0f))
             {
                 sharedData_800DD591_0_s00 = 10;
-                sharedData_800E5768_1_s02.corners_0[0].vx = Q12(-208.0f);
-                sharedData_800E5768_1_s02.corners_0[0].vz = Q12(-93.0f);
-                sharedData_800E5768_1_s02.corners_0[1].vx = Q12(-208.0f);
-                sharedData_800E5768_1_s02.corners_0[1].vz = Q12(-91.0f);
-                sharedData_800E5768_1_s02.corners_0[2].vx = Q12(-212.0f);
-                sharedData_800E5768_1_s02.corners_0[2].vz = Q12(-91.0f);
-                sharedData_800E5768_1_s02.corners_0[3].vx = Q12(-212.0f);
-                sharedData_800E5768_1_s02.corners_0[3].vz = Q12(-93.0f);
-                sharedData_800E5768_1_s02.corners_0[4].vx = Q12(-208.0f);
-                sharedData_800E5768_1_s02.corners_0[4].vz = Q12(-91.0f);
-                sharedData_800E5768_1_s02.corners_0[5].vx = Q12(-212.0f);
-                sharedData_800E5768_1_s02.corners_0[5].vz = Q12(-91.0f);
+                sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-208.0f);
+                sharedData_800E326C_0_s00.corners_0[0].vz = Q12(-93.0f);
+                sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-208.0f);
+                sharedData_800E326C_0_s00.corners_0[1].vz = Q12(-91.0f);
+                sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-212.0f);
+                sharedData_800E326C_0_s00.corners_0[2].vz = Q12(-91.0f);
+                sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-212.0f);
+                sharedData_800E326C_0_s00.corners_0[3].vz = Q12(-93.0f);
+                sharedData_800E326C_0_s00.corners_0[4].vx = Q12(-208.0f);
+                sharedData_800E326C_0_s00.corners_0[4].vz = Q12(-91.0f);
+                sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-212.0f);
+                sharedData_800E326C_0_s00.corners_0[5].vz = Q12(-91.0f);
             }
             else
             {
@@ -315,18 +315,18 @@ bool Particle_Update(s_Particle* partHead)
             if (g_SysWork.player_4C.chara_0.position_18.vx < Q12(-275.0f) && g_SysWork.player_4C.chara_0.position_18.vz < Q12(-175.0f))
             {
                 sharedData_800DD591_0_s00 = 0xA;
-                sharedData_800E5768_1_s02.corners_0[0].vx = Q12(-287.0f);
-                sharedData_800E5768_1_s02.corners_0[0].vz = Q12(-182.5f);
-                sharedData_800E5768_1_s02.corners_0[1].vx = Q12(-285.5f);
-                sharedData_800E5768_1_s02.corners_0[1].vz = Q12(-182.5f);
-                sharedData_800E5768_1_s02.corners_0[2].vx = Q12(-285.5f);
-                sharedData_800E5768_1_s02.corners_0[2].vz = Q12(-177.5f);
-                sharedData_800E5768_1_s02.corners_0[3].vx = Q12(-287.0f);
-                sharedData_800E5768_1_s02.corners_0[3].vz = Q12(-177.5f);
-                sharedData_800E5768_1_s02.corners_0[4].vx = Q12(-285.5f);
-                sharedData_800E5768_1_s02.corners_0[4].vz = Q12(-181.5f);
-                sharedData_800E5768_1_s02.corners_0[5].vx = Q12(-285.5f);
-                sharedData_800E5768_1_s02.corners_0[5].vz = Q12(-178.4f);
+                sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-287.0f);
+                sharedData_800E326C_0_s00.corners_0[0].vz = Q12(-182.5f);
+                sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-285.5f);
+                sharedData_800E326C_0_s00.corners_0[1].vz = Q12(-182.5f);
+                sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-285.5f);
+                sharedData_800E326C_0_s00.corners_0[2].vz = Q12(-177.5f);
+                sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-287.0f);
+                sharedData_800E326C_0_s00.corners_0[3].vz = Q12(-177.5f);
+                sharedData_800E326C_0_s00.corners_0[4].vx = Q12(-285.5f);
+                sharedData_800E326C_0_s00.corners_0[4].vz = Q12(-181.5f);
+                sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-285.5f);
+                sharedData_800E326C_0_s00.corners_0[5].vz = Q12(-178.4f);
             }
             else
             {
@@ -403,34 +403,34 @@ bool Particle_Update(s_Particle* partHead)
     if (g_SysWork.player_4C.chara_0.position_18.vz > Q12(-33.0f) && g_SysWork.player_4C.chara_0.position_18.vz < Q12(-20.0f) &&
         g_SysWork.player_4C.chara_0.position_18.vx > Q12(13.0f) && g_SysWork.player_4C.chara_0.position_18.vx < Q12(44.0f))
     {
-        sharedData_800E5768_1_s02.corners_0[0].vx = Q12(24.0f);
-        sharedData_800E5768_1_s02.corners_0[0].vz = Q12(-19.0f);
-        sharedData_800E5768_1_s02.corners_0[1].vx = Q12(24.0f);
-        sharedData_800E5768_1_s02.corners_0[1].vz = Q12(-21.5f);
-        sharedData_800E5768_1_s02.corners_0[2].vx = Q12(31.5f);
-        sharedData_800E5768_1_s02.corners_0[2].vz = Q12(-21.5f);
-        sharedData_800E5768_1_s02.corners_0[3].vx = Q12(31.5f);
-        sharedData_800E5768_1_s02.corners_0[3].vz = Q12(-19.0f);
-        sharedData_800E5768_1_s02.corners_0[4].vx = Q12(24.0f);
-        sharedData_800E5768_1_s02.corners_0[4].vz = Q12(-21.5f);
-        sharedData_800E5768_1_s02.corners_0[5].vx = Q12(31.5f);
-        sharedData_800E5768_1_s02.corners_0[5].vz = Q12(-21.5f);
+        sharedData_800E326C_0_s00.corners_0[0].vx = Q12(24.0f);
+        sharedData_800E326C_0_s00.corners_0[0].vz = Q12(-19.0f);
+        sharedData_800E326C_0_s00.corners_0[1].vx = Q12(24.0f);
+        sharedData_800E326C_0_s00.corners_0[1].vz = Q12(-21.5f);
+        sharedData_800E326C_0_s00.corners_0[2].vx = Q12(31.5f);
+        sharedData_800E326C_0_s00.corners_0[2].vz = Q12(-21.5f);
+        sharedData_800E326C_0_s00.corners_0[3].vx = Q12(31.5f);
+        sharedData_800E326C_0_s00.corners_0[3].vz = Q12(-19.0f);
+        sharedData_800E326C_0_s00.corners_0[4].vx = Q12(24.0f);
+        sharedData_800E326C_0_s00.corners_0[4].vz = Q12(-21.5f);
+        sharedData_800E326C_0_s00.corners_0[5].vx = Q12(31.5f);
+        sharedData_800E326C_0_s00.corners_0[5].vz = Q12(-21.5f);
     }
     else if (g_SysWork.player_4C.chara_0.position_18.vz > Q12(-82.0f) && g_SysWork.player_4C.chara_0.position_18.vz < Q12(-56.0f) &&
              g_SysWork.player_4C.chara_0.position_18.vx > Q12(43.0f) && g_SysWork.player_4C.chara_0.position_18.vx < Q12(70.0f))
     {
-        sharedData_800E5768_1_s02.corners_0[0].vx = Q12(58.7f);
-        sharedData_800E5768_1_s02.corners_0[0].vz = Q12(-70.5f);
-        sharedData_800E5768_1_s02.corners_0[1].vx = Q12(58.7f);
-        sharedData_800E5768_1_s02.corners_0[1].vz = Q12(-68.0f);
-        sharedData_800E5768_1_s02.corners_0[2].vx = Q12(54.5f);
-        sharedData_800E5768_1_s02.corners_0[2].vz = Q12(-68.0f);
-        sharedData_800E5768_1_s02.corners_0[3].vx = Q12(54.5f);
-        sharedData_800E5768_1_s02.corners_0[3].vz = Q12(-70.5f);
-        sharedData_800E5768_1_s02.corners_0[4].vx = Q12(54.5f);
-        sharedData_800E5768_1_s02.corners_0[4].vz = Q12(-70.5f);
-        sharedData_800E5768_1_s02.corners_0[5].vx = Q12(58.7f);
-        sharedData_800E5768_1_s02.corners_0[5].vz = Q12(-70.5f);
+        sharedData_800E326C_0_s00.corners_0[0].vx = Q12(58.7f);
+        sharedData_800E326C_0_s00.corners_0[0].vz = Q12(-70.5f);
+        sharedData_800E326C_0_s00.corners_0[1].vx = Q12(58.7f);
+        sharedData_800E326C_0_s00.corners_0[1].vz = Q12(-68.0f);
+        sharedData_800E326C_0_s00.corners_0[2].vx = Q12(54.5f);
+        sharedData_800E326C_0_s00.corners_0[2].vz = Q12(-68.0f);
+        sharedData_800E326C_0_s00.corners_0[3].vx = Q12(54.5f);
+        sharedData_800E326C_0_s00.corners_0[3].vz = Q12(-70.5f);
+        sharedData_800E326C_0_s00.corners_0[4].vx = Q12(54.5f);
+        sharedData_800E326C_0_s00.corners_0[4].vz = Q12(-70.5f);
+        sharedData_800E326C_0_s00.corners_0[5].vx = Q12(58.7f);
+        sharedData_800E326C_0_s00.corners_0[5].vz = Q12(-70.5f);
     }
     else
     {
@@ -443,17 +443,17 @@ bool Particle_Update(s_Particle* partHead)
     switch (g_SavegamePtr->mapRoomIdx_A5)
     {
         case 7:
-            sharedData_800E5768_1_s02.corners_0[0].vx = Q12(55.5f);
-            sharedData_800E5768_1_s02.corners_0[0].vz = Q12(63.0f);
-            sharedData_800E5768_1_s02.corners_0[1].vx = Q12(55.5f);
-            sharedData_800E5768_1_s02.corners_0[1].vz = Q12(58.0f);
+            sharedData_800E326C_0_s00.corners_0[0].vx = Q12(55.5f);
+            sharedData_800E326C_0_s00.corners_0[0].vz = Q12(63.0f);
+            sharedData_800E326C_0_s00.corners_0[1].vx = Q12(55.5f);
+            sharedData_800E326C_0_s00.corners_0[1].vz = Q12(58.0f);
             break;
 
         case 8:
-            sharedData_800E5768_1_s02.corners_0[0].vx = Q12(100.0f);
-            sharedData_800E5768_1_s02.corners_0[0].vz = Q12(56.5f);
-            sharedData_800E5768_1_s02.corners_0[1].vx = Q12(104.0f);
-            sharedData_800E5768_1_s02.corners_0[1].vz = Q12(56.5f);
+            sharedData_800E326C_0_s00.corners_0[0].vx = Q12(100.0f);
+            sharedData_800E326C_0_s00.corners_0[0].vz = Q12(56.5f);
+            sharedData_800E326C_0_s00.corners_0[1].vx = Q12(104.0f);
+            sharedData_800E326C_0_s00.corners_0[1].vz = Q12(56.5f);
             break;
 
         default:

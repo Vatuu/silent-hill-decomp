@@ -2319,7 +2319,7 @@ extern s32 sharedData_800D32A0_0_s02; // `sharedFunc_800CDAA8_0_s02`
 
 extern u16 sharedData_800D21E8_3_s00[];
 
-extern s_func_800CB560 sharedData_800E5768_1_s02;
+extern s_func_800CB560 sharedData_800E326C_0_s00;
 
 extern u16 sharedData_800E32D4_0_s00;
 
@@ -2332,12 +2332,6 @@ extern s_ParticleVectors g_ParticleVectors1;
 
 extern u8 sharedData_800DD592_0_s00;
 
-typedef struct
-{
-    VECTOR3 vector_0;
-    VECTOR3 vector_C;
-} s_2Vectors;
-
 extern s32 sharedData_800DD598_0_s00;
 
 extern s32 sharedData_800DFB4C_0_s00;
@@ -2349,8 +2343,6 @@ extern s32 sharedData_800CD77C_1_s04; // Used by `sharedFunc_800CB6B0_0_s00` onl
 extern CVECTOR sharedData_800E3258_0_s00;
 
 extern CVECTOR sharedData_800E325C_0_s00;
-
-extern s_2Vectors sharedData_800E326C_0_s00;
 
 extern s32 sharedData_800E2370_0_s01[2];
 
@@ -2791,6 +2783,9 @@ s32 sharedFunc_800D929C_0_s00(void);
 s32 sharedFunc_800D2DAC_0_s00(void); // Player anim func. Checks if the active keyframe is at the start or end of the anim's range.
 s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara); // NPC anim func. Checks if the active keyframe is at the start or end of the anim's range.
 bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, s32 sfx);
+
+void sharedFunc_800D0700_0_s00(VECTOR3* point, VECTOR3* lineStart, VECTOR3* lineEnd, s32 flag);
+
 void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1);
 
 bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 sfx, s32 pitch);

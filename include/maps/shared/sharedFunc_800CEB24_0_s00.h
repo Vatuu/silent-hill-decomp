@@ -2,15 +2,23 @@
 
 void sharedFunc_800CEB24_0_s00(s_Particle* part)
 {
+#if !defined(MAP1_S00) && !defined(MAP6_S00) && !defined(MAP7_S03)
     VECTOR3     particlePos;
+#endif
+
+#if defined(MAP0_S00) || defined(MAP2_S00)
+    VECTOR3     partCorners[2];
+#endif
+
     SVECTOR3    particlePosQ8;
     s32         zScreenStart;
-    s_Particle* localPart;
 
-    u8        primColorG;
-    u8        primColorB;
-    u8        primColorR;
-    POLY_FT3* polyFt3;
+    u8          primColorG;
+    u8          primColorB;
+    u8          primColorR;
+    
+    s_Particle* localPart;
+    POLY_FT3*   polyFt3;
 
     localPart = part;
     polyFt3   = (POLY_FT3*)GsOUT_PACKET_P;
@@ -26,19 +34,138 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part)
     }
     else if (part->stateStep_1E != 0)
     {
+#if !defined(MAP1_S00) && !defined(MAP6_S00) && !defined(MAP7_S03)
         if (sharedData_800DD591_0_s00 != 0)
         {
             particlePos = part->position0_0;
-            sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E5768_1_s02, &sharedData_800E5768_1_s02.corners_0[1], 0);
+
+#if defined(MAP0_S00)
+            if (part->position0_0.vy < sharedData_800E326C_0_s00.corners_0[0].vy)
+            {
+                sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
+            }
+            else
+            {
+                s32 temp_v1;
+                partCorners[0].vx = sharedData_800E326C_0_s00.corners_0[0].vx;
+                partCorners[1].vx = sharedData_800E326C_0_s00.corners_0[1].vx;
+                temp_v1           = sharedData_800E326C_0_s00.corners_0[0].vz + 0x1400;
+                temp_v1          += part->position0_0.vy >> 2;
+                partCorners[1].vz = temp_v1;
+                partCorners[0].vz = temp_v1;
+
+                sharedFunc_800D0700_0_s00(&particlePos, &partCorners[0], &partCorners[1], 0);
+            }
+#elif defined(MAP0_S02)
+            if (g_SysWork.player_4C.chara_0.position_18.vx < Q12(-120.0f))
+            {
+                sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
+            }
+            else
+            {
+                sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 1);
+                if (particlePos.vy == 0)
+                {
+                    sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 1);
+                    if (particlePos.vy == 0)
+                    {
+                        sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[4], &sharedData_800E326C_0_s00.corners_0[5], 1);
+                        if (particlePos.vy == 0)
+                        {
+                            sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[6], &sharedData_800E326C_0_s00.corners_0[7], 0);
+                        }
+                    }
+                }
+            }
+
+#elif defined(MAP2_S00)
+            // TODO: This switch contains most of the other `#if defined(xx)` blocks
+            // Maybe this is a similar thing to the `HAS_PlayerState_Unk59` switches, where maps define which blocks to include.
+            // (and in this case map2_s00 includes all of them)
+            // Not sure how to make that work so that maps with only 1 block would get treated as the default case though?
+            switch (sharedData_800DD591_0_s00)
+            {
+                case 1:
+                    if (part->position0_0.vy < sharedData_800E326C_0_s00.corners_0[0].vy)
+                    {
+                        sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
+                    }
+                    else
+                    {
+                        s32 temp_v1;
+                        partCorners[0].vx = sharedData_800E326C_0_s00.corners_0[0].vx;
+                        partCorners[1].vx = sharedData_800E326C_0_s00.corners_0[1].vx;
+                        temp_v1           = sharedData_800E326C_0_s00.corners_0[0].vz + 0x1400;
+                        temp_v1          += part->position0_0.vy >> 2;
+                        partCorners[1].vz = temp_v1;
+                        partCorners[0].vz = temp_v1;
+
+                        sharedFunc_800D0700_0_s00(&particlePos, &partCorners[0], &partCorners[1], 0);
+                    }
+                    break;
+                case 9:
+                    sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00, &sharedData_800E326C_0_s00.corners_0[1], 1);
+                    if (particlePos.vy == 0)
+                    {
+                        sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 0);
+                    }
+                    break;
+                case 10:
+                    sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00, &sharedData_800E326C_0_s00.corners_0[1], 1);
+                    if (particlePos.vy == 0)
+                    {
+                        sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 1);
+                        if (particlePos.vy == 0)
+                        {
+                            sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[4], &sharedData_800E326C_0_s00.corners_0[5], 0);
+                        }
+                    }
+                    break;
+                case 11:
+                    sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00, &sharedData_800E326C_0_s00.corners_0[1], 1);
+                    if (particlePos.vy == 0)
+                    {
+                        sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 1);
+                        if (particlePos.vy == 0)
+                        {
+                            sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[4], &sharedData_800E326C_0_s00.corners_0[5], 1);
+                            if (particlePos.vy == 0)
+                            {
+                                sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[6], &sharedData_800E326C_0_s00.corners_0[7], 0);
+                            }
+                        }
+                    }
+                    break;
+            }
+
+#elif defined(MAP3_S00) || defined(MAP3_S01) || defined(MAP3_S06)
+            sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
             if (g_SavegamePtr->mapRoomIdx_A5 == 5)
             {
-                sharedFunc_800D0700_0_s00(&particlePos, (s_func_800CB560*)&sharedData_800E5768_1_s02.corners_0[2], &sharedData_800E5768_1_s02.corners_0[3], 0);
+                sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 0);
             }
+
+#elif defined(MAP2_S02) || defined(MAP5_S01)
+            sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 1);
+            if (particlePos.vy == 0)
+            {
+                sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 1);
+                if (particlePos.vy == 0)
+                {
+                    sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[4], &sharedData_800E326C_0_s00.corners_0[5], 0);
+                }
+            }
+
+#else
+            sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
+#endif
+
             particlePosQ8.vx = Q12_TO_Q8(particlePos.vx);
             particlePosQ8.vy = Q12_TO_Q8(localPart->position0_0.vy);
             particlePosQ8.vz = Q12_TO_Q8(particlePos.vz);
         }
         else
+#endif
         {
             particlePosQ8.vx = Q12_TO_Q8(localPart->position0_0.vx);
             particlePosQ8.vy = Q12_TO_Q8(localPart->position0_0.vy);
@@ -153,6 +280,15 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part)
                 polyFt3->y1   = polyFt3->y0 + 3;
             }
 
+#if defined(MAP1_S00) || defined(MAP6_S00)
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[zScreenStart], polyFt3);
+#elif defined(MAP7_S03)
+            if (zScreenStart > 64 && D_800F23D4 > Q12(7.0f))
+            {
+                zScreenStart = 64;
+            }
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[zScreenStart], polyFt3);
+#else
             switch (sharedData_800DD591_0_s00)
             {
                 case 2:
@@ -165,7 +301,7 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part)
                     addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[zScreenStart], polyFt3);
                     break;
             }
-
+#endif
             GsOUT_PACKET_P = (PACKET*)&polyFt3[1];
         }
     }

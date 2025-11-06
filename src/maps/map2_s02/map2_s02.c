@@ -16,7 +16,7 @@ INCLUDE_RODATA("asm/maps/map2_s02/nonmatchings/map2_s02", g_MapOverlayHeader);
 
 #include "maps/shared/Particle_Update.h" // 0x800CD174
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800CEB24_0_s00); // 0x800CD71C
+#include "maps/shared/sharedFunc_800CEB24_0_s00.h" // 0x800CD71C
 
 #include "maps/shared/sharedFunc_800CF2A4_0_s01.h" // 0x800CDBEC
 
