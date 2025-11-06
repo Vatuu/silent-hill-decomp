@@ -44,6 +44,7 @@ C_DIR        := src
 EXPECTED_DIR := expected
 
 # Tools
+# Note: CPP stands for `C Pre-Processor` not `C++`
 
 CROSS   := mips-linux-gnu
 AS      := $(CROSS)-as
@@ -149,8 +150,10 @@ define make_elf_target
 $2: $2.elf
 
 $2.elf: $(call gen_o_files, $1)
+#endef make_elf_target
 endef
 
+#else SKIP_ASM
 else
 
 define make_elf_target
@@ -173,6 +176,7 @@ $2.elf: $(call gen_o_files, $1)
 		-T $(CONFIG_DIR)/lib_externs.ld \
 		-o $$@
 
+#else GAME_VERSION
 else
 
 $2: $2.elf
@@ -186,17 +190,20 @@ $2.elf: $(call gen_o_files, $1)
 		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_syms_auto.$(notdir $1).txt \
 		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_funcs_auto.$(notdir $1).txt \
 		-o $$@
+
+#endif GAME_VERSION
 endif
 
+#endef make_elf_target
 endef
 
+#endif SKIP_ASM
 endif
 
 # Targets
 
 TARGET_SCREENS_SRC_DIR := screens
 TARGET_MAPS_SRC_DIR := maps
-
 
 ifeq ($(BUILD_ONLY), ALL)
 
@@ -228,22 +235,188 @@ TARGET_MAPS := map0_s00 map0_s01 map0_s02 \
                 map6_s00 map6_s01 map6_s02 map6_s03 map6_s04 map6_s05 \
                 map7_s00 map7_s01 map7_s02 map7_s03
 
-# If BUILD_MAP is set, only use that; otherwise use the default huge list
-# (allows large speedup by skipping config parse of all maps)
-TARGET_MAPS				:= $(if $(BUILD_MAP),$(BUILD_MAP),$(TARGET_MAPS))
-TARGET_MAPS				:= $(addprefix $(TARGET_MAPS_SRC_DIR)/,$(TARGET_MAPS))
+TARGET_MAPS := $(addprefix $(TARGET_MAPS_SRC_DIR)/,$(TARGET_MAPS))
 
 #endif BUILD_MAPS
 endif
 
-TARGET_OVERLAYS			:= $(TARGET_BODYPROG) $(TARGET_SCREENS) $(TARGET_MAPS)
+# Specific overlay compilation/generation
+
+else ifeq ($(BUILD_ONLY),EXE)
+
+TARGET_MAIN     := main
+
+else ifeq ($(BUILD_ONLY),ENG)
+
+TARGET_BODYPROG := bodyprog
+
+else ifeq ($(BUILD_ONLY),SCR)
+
+TARGET_SCREENS  := b_konami credits options saveload stream
+TARGET_SCREENS  := $(addprefix $(TARGET_SCREENS_SRC_DIR)/,$(TARGET_SCREENS))
+
+else ifeq ($(BUILD_ONLY),BKO)
+TARGET_SCREENS  := $(TARGET_SCREENS_SRC_DIR)/b_konami
+
+else ifeq ($(BUILD_ONLY),CRE)
+TARGET_SCREENS  := $(TARGET_SCREENS_SRC_DIR)/credits
+
+else ifeq ($(BUILD_ONLY),SAV)
+TARGET_SCREENS  := $(TARGET_SCREENS_SRC_DIR)/saveload
+
+else ifeq ($(if $(or $(findstring FMV,$(BUILD_ONLY)), $(findstring STR,$(BUILD_ONLY))),STR),STR)
+TARGET_SCREENS  := $(TARGET_SCREENS_SRC_DIR)/stream
+
+else ifeq ($(BUILD_ONLY),MAP)
+
+TARGET_MAPS      := map0_s00 map0_s01 map0_s02 \
+                map1_s00 map1_s01 map1_s02 map1_s03 map1_s04 map1_s05 map1_s06 \
+                map2_s00 map2_s01 map2_s02 map2_s03 map2_s04 \
+                map3_s00 map3_s01 map3_s02 map3_s03 map3_s04 map3_s05 map3_s06 \
+                map4_s00 map4_s01 map4_s02 map4_s03 map4_s04 map4_s05 map4_s06 \
+                map5_s00 map5_s01 map5_s02 map5_s03 \
+                map6_s00 map6_s01 map6_s02 map6_s03 map6_s04 map6_s05 \
+                map7_s00 map7_s01 map7_s02 map7_s03
+
+TARGET_MAPS      := $(addprefix $(TARGET_MAPS_SRC_DIR)/,$(TARGET_MAPS))
+
+#else BUILD_ONLY
+else
+
+ifeq ($(BUILD_ONLY),M0X)
+TARGET_MAPS      := map0_s00 map0_s01 map0_s02
+
+else ifeq ($(BUILD_ONLY),M1X)
+TARGET_MAPS      := map1_s00 map1_s01 map1_s02 map1_s03 map1_s04 map1_s05 map1_s06
+
+else ifeq ($(BUILD_ONLY),M2X)
+TARGET_MAPS      := map2_s00 map2_s01 map2_s02 map2_s03 map2_s04
+
+else ifeq ($(BUILD_ONLY),M3X)
+TARGET_MAPS      := map3_s00 map3_s01 map3_s02 map3_s03 map3_s04 map3_s05 map3_s06
+
+else ifeq ($(BUILD_ONLY),M4X)
+TARGET_MAPS      := map4_s00 map4_s01 map4_s02 map4_s03 map4_s04 map4_s05 map4_s06
+
+else ifeq ($(BUILD_ONLY),M5X)
+TARGET_MAPS      := map5_s00 map5_s01 map5_s02 map5_s03
+
+else ifeq ($(BUILD_ONLY),M6X)
+TARGET_MAPS      := map6_s00 map6_s01 map6_s02 map6_s03 map6_s04 map6_s05
+
+else ifeq ($(BUILD_ONLY),M7X)
+TARGET_MAPS      := map7_s00 map7_s01 map7_s02 map7_s03
+
+else
+
+ifeq ($(BUILD_ONLY),M00)
+	TARGET_MAPS := map0_s00
+else ifeq ($(BUILD_ONLY),M01)
+	TARGET_MAPS := map0_s01
+else ifeq ($(BUILD_ONLY),M02)
+	TARGET_MAPS := map0_s02
+
+else ifeq ($(BUILD_ONLY),M10)
+	TARGET_MAPS := map1_s00
+else ifeq ($(BUILD_ONLY),M11)
+	TARGET_MAPS := map1_s01
+else ifeq ($(BUILD_ONLY),M12)
+	TARGET_MAPS := map1_s02
+else ifeq ($(BUILD_ONLY),M13)
+	TARGET_MAPS := map1_s03
+else ifeq ($(BUILD_ONLY),M14)
+	TARGET_MAPS := map1_s04
+else ifeq ($(BUILD_ONLY),M15)
+	TARGET_MAPS := map1_s05
+else ifeq ($(BUILD_ONLY),M16)
+	TARGET_MAPS := map1_s06
+
+else ifeq ($(BUILD_ONLY),M20)
+	TARGET_MAPS := map2_s00
+else ifeq ($(BUILD_ONLY),M21)
+	TARGET_MAPS := map2_s01
+else ifeq ($(BUILD_ONLY),M22)
+	TARGET_MAPS := map2_s02
+else ifeq ($(BUILD_ONLY),M23)
+	TARGET_MAPS := map2_s03
+else ifeq ($(BUILD_ONLY),M24)
+	TARGET_MAPS := map2_s04
+
+else ifeq ($(BUILD_ONLY),M30)
+	TARGET_MAPS := map3_s00
+else ifeq ($(BUILD_ONLY),M31)
+	TARGET_MAPS := map3_s01
+else ifeq ($(BUILD_ONLY),M32)
+	TARGET_MAPS := map3_s02
+else ifeq ($(BUILD_ONLY),M33)
+	TARGET_MAPS := map3_s03
+else ifeq ($(BUILD_ONLY),M34)
+	TARGET_MAPS := map3_s04
+else ifeq ($(BUILD_ONLY),M35)
+	TARGET_MAPS := map3_s05
+else ifeq ($(BUILD_ONLY),M36)
+	TARGET_MAPS := map3_s06
+
+else ifeq ($(BUILD_ONLY),M40)
+	TARGET_MAPS := map4_s00
+else ifeq ($(BUILD_ONLY),M41)
+	TARGET_MAPS := map4_s01
+else ifeq ($(BUILD_ONLY),M42)
+	TARGET_MAPS := map4_s02
+else ifeq ($(BUILD_ONLY),M43)
+	TARGET_MAPS := map4_s03
+else ifeq ($(BUILD_ONLY),M44)
+	TARGET_MAPS := map4_s04
+else ifeq ($(BUILD_ONLY),M45)
+	TARGET_MAPS := map4_s05
+else ifeq ($(BUILD_ONLY),M46)
+	TARGET_MAPS := map4_s06
+
+else ifeq ($(BUILD_ONLY),M50)
+	TARGET_MAPS := map5_s00
+else ifeq ($(BUILD_ONLY),M51)
+	TARGET_MAPS := map5_s01
+else ifeq ($(BUILD_ONLY),M52)
+	TARGET_MAPS := map5_s02
+else ifeq ($(BUILD_ONLY),M53)
+	TARGET_MAPS := map5_s03
+
+else ifeq ($(BUILD_ONLY),M60)
+	TARGET_MAPS := map6_s00
+else ifeq ($(BUILD_ONLY),M61)
+	TARGET_MAPS := map6_s01
+else ifeq ($(BUILD_ONLY),M62)
+	TARGET_MAPS := map6_s02
+else ifeq ($(BUILD_ONLY),M63)
+	TARGET_MAPS := map6_s03
+else ifeq ($(BUILD_ONLY),M64)
+	TARGET_MAPS := map6_s04
+else ifeq ($(BUILD_ONLY),M65)
+	TARGET_MAPS := map6_s05
+
+else ifeq ($(BUILD_ONLY),M70)
+	TARGET_MAPS := map7_s00
+else ifeq ($(BUILD_ONLY),M71)
+	TARGET_MAPS := map7_s01
+else ifeq ($(BUILD_ONLY),M72)
+	TARGET_MAPS := map7_s02
+else ifeq ($(BUILD_ONLY),M73)
+	TARGET_MAPS := map7_s03
+else
+$(error No recognizable overlay has been assigned)
+endif
+
+	
+endif
+
+TARGET_MAPS      := $(addprefix $(TARGET_MAPS_SRC_DIR)/,$(TARGET_MAPS))
 
 #endif BUILD_ONLY
 endif
 
 # Source Definitions
 
-TARGET_IN  := $(TARGET_MAIN) $(TARGET_OVERLAYS)
+TARGET_IN  := $(TARGET_MAIN) $(TARGET_BODYPROG) $(TARGET_SCREENS) $(TARGET_MAPS)
 TARGET_OUT := $(foreach target,$(TARGET_IN),$(call get_target_out,$(target)))
 
 CONFIG_FILES := $(foreach target,$(TARGET_IN),$(call get_yaml_path,$(target)))
