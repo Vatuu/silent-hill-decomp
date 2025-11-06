@@ -482,7 +482,56 @@ INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800E71E8_2_s00
 
 #include "maps/shared/Ai_Romper_Init.h" // 0x800E5DD8
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800E5FC8);
+void func_800E5FC8(s_SubCharacter* chara, s16 arg1, s16 arg2, u8* arg3)
+{
+    s32 animTime;
+    s32 arg1_plus_2;
+    s32 pitch;
+    s32 vol;
+
+    animTime = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT);
+    arg1_plus_2 = arg1 + arg2;
+    pitch = 0;
+    vol = 0;
+    if ((animTime >= arg1_plus_2) && (animTime < (arg1_plus_2 + 2)))
+    {
+        if (*arg3 == 0)
+        {
+            switch (arg1)
+            {
+                case 2:
+                    pitch = Q8(0.125f);
+                    vol = Q8(0.765625f);
+                    break;
+
+                case 8:
+                case 15:
+                case 93:
+                    pitch = Q8(-0.125f);
+                    vol = Q8(0.5f);
+                    break;
+
+                case 109:
+                    pitch = Q8(0.0f);
+                    vol = Q8(0.5f);
+                    break;
+
+                case 110:
+                default:
+                    pitch = -Q8(0.25f);
+                    vol = Q8(0.125f);
+                    break;
+            }
+
+            func_8005DD44(1405, &chara->position_18, vol, pitch + ((Rng_Rand16() & 0xF)- 7));
+            *arg3 = 1;
+        }
+    }
+    else
+    {
+        *arg3 = 0;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800E60FC_2_s02);
 
