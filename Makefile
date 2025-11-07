@@ -415,24 +415,7 @@ $(foreach target,$(TARGET_IN),$(eval $(call make_elf_target,$(target),$(call get
 # Generate objects.
 # (Running make with MAKE_COMPILE_LOG=1 will create a compile.log that can be passed to tools/create_compile_commands.py)
 
-# Rules specifically done to handle special characters used in memcard/*.c files
-$(BUILD_DIR)/src/bodyprog/memcard/%.i: $(BUILD_DIR)/src/bodyprog/memcard/%.c
-	@mkdir -p $(dir $@)
-	$(call FlagsSwitch, $@)
-ifeq ($(MAKE_COMPILE_LOG),1)
-	@echo "$(CPP) -P -MMD -MP -MT $@ -MF $@.d $(CPP_FLAGS) $(OVL_FLAGS) -o $@ $<" >> compile.log
-endif
-	$(CPP) -P -MMD -MP -MT $@ -MF $@.d $(CPP_FLAGS) $(OVL_FLAGS) -o $@ $<
 
-$(BUILD_DIR)/src/bodyprog/memcard/%.sjis.i: $(BUILD_DIR)/src/bodyprog/memcard/%.i;
-	iconv -f UTF-8 -t SHIFT-JIS $< -o $@
-
-$(BUILD_DIR)/src/bodyprog/memcard/%.c.s: $(BUILD_DIR)/src/bodyprog/memcard/%.sjis.i
-	@mkdir -p $(dir $@)
-	$(call FlagsSwitch, $@)
-	$(CC) $(CC_FLAGS) -o $@ $<
-
-# Building rules
 $(BUILD_DIR)/%.i: %.c
 	@mkdir -p $(dir $@)
 	$(call FlagsSwitch, $@)
@@ -441,7 +424,10 @@ ifeq ($(MAKE_COMPILE_LOG),1)
 endif
 	$(CPP) -P -MMD -MP -MT $@ -MF $@.d $(CPP_FLAGS) $(OVL_FLAGS) -o $@ $<
 
-$(BUILD_DIR)/%.c.s: $(BUILD_DIR)/%.i
+$(BUILD_DIR)/%.sjis.i: $(BUILD_DIR)/%.i
+	iconv -f UTF-8 -t SHIFT-JIS $< -o $@
+
+$(BUILD_DIR)/%.c.s: $(BUILD_DIR)/%.sjis.i
 	@mkdir -p $(dir $@)
 	$(call FlagsSwitch, $@)
 	$(CC) $(CC_FLAGS) -o $@ $<
